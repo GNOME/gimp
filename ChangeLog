@@ -1,5 +1,10 @@
 2000-12-21  Sven Neumann  <sven@gimp.org>
 
+	* docs/Wilber_Construction_Kit.xcf.gz: a new hat for Wilber courtesy 
+	of Seth Burgess. 
+
+2000-12-21  Sven Neumann  <sven@gimp.org>
+
 	* app/gradient.c
 	* app/gradient_select.[ch]: reviewed the gradient code. The old code
 	used to use list indices which led to bug #35612 and other problems.
