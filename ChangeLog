@@ -1,6 +1,20 @@
 2001-02-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/Makefile.am
+	* app/tools/edit_selection.[ch]: back as real tool which gets
+	temporarily pushed to the tool_manager's new tool stack.
+
+	* app/tools/move.c
+	* app/tools/text_tool.c: call the edit_selection stuff again.
+
+	* app/tools/tool.c: added a STUB().
+
+	* app/tools/tool_manager.[ch]: implemented tool_manager_push_tool()
+	and tool_manager_pop_tool().
+
+2001-02-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/Makefile.am
 	* app/tools/bucket_fill.[ch]: one more...
 
 	* app/tools/fuzzy_select.c: everything commented out except the

@@ -26,6 +26,10 @@
 /*  Function declarations  */
 void        tool_manager_select_tool           (GimpTool       *tool);
 
+void        tool_manager_push_tool             (GimpTool       *tool);
+void        tool_manager_pop_tool              (void);
+
+
 void        tool_manager_initialize_tool       (GimpTool       *tool,
 						GDisplay       *gdisp);
 

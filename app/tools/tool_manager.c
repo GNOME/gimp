@@ -48,6 +48,9 @@ GimpTool      *active_tool           = NULL;
 GimpContainer *global_tool_info_list = NULL;
 
 
+static GSList *tool_stack = NULL;
+
+
 /*  Function definitions  */
 
 static void
@@ -64,11 +67,42 @@ active_tool_unref (void)
 void
 tool_manager_select_tool (GimpTool *tool)
 {
+  g_return_if_fail (tool != NULL);
+  g_return_if_fail (GIMP_IS_TOOL (tool));
+
   if (active_tool)
     active_tool_unref ();
 
   active_tool = tool;
 }
+
+void
+tool_manager_push_tool (GimpTool *tool)
+{
+  g_return_if_fail (tool != NULL);
+  g_return_if_fail (GIMP_IS_TOOL (tool));
+
+  if (active_tool)
+    {
+      gtk_object_ref (GTK_OBJECT (active_tool));
+
+      tool_stack = g_slist_prepend (tool_stack, active_tool);
+    }
+
+  tool_manager_select_tool (tool);
+}
+
+void
+tool_manager_pop_tool (void)
+{
+  if (tool_stack)
+    {
+      tool_manager_select_tool (GIMP_TOOL (tool_stack->data));
+
+      tool_stack = g_slist_remove (tool_stack, active_tool);
+    }
+}
+
 
 void
 tool_manager_initialize_tool (GimpTool *tool, /* FIXME: remove tool param */

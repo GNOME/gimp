@@ -200,8 +200,6 @@ move_tool_button_press (GimpTool       *tool,
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y,
 			       FALSE, FALSE);
 
-#warning FIXME fix edit_selection (allow pushing of temp tools)
-#if 0
   if (bevent->state & GDK_MOD1_MASK &&
       !gimage_mask_is_empty (gdisp->gimage))
     {
@@ -215,7 +213,6 @@ move_tool_button_press (GimpTool       *tool,
     }
   else
     {
-#endif
       if (gdisp->draw_guides &&
 	  (guide = gdisplay_find_guide (gdisp, bevent->x, bevent->y)))
 	{
@@ -244,18 +241,14 @@ move_tool_button_press (GimpTool       *tool,
 	    {
 	      move->layer = gimp_image_floating_sel (gdisp->gimage);
 	    }
-#if 0
 	  /*  Otherwise, init the edit selection  */
 	  else
 	    {
 	      gimp_image_set_active_layer (gdisp->gimage, layer);
 	      init_edit_selection (tool, gdisp, bevent, EDIT_LAYER_TRANSLATE);
 	    }
-#endif
 	  tool->state = ACTIVE;
-#if 0
 	}
-#endif
     }
 
   /* if we've got an active tool grab the pointer */

@@ -36,8 +36,8 @@ libapptools_la_SOURCES = \
 ##	dodgeburn.h		\
 	gimpdrawtool.c		\
 	gimpdrawgtool.h		\
-##	edit_selection.c	\
-##	edit_selection.h	\
+	edit_selection.c	\
+	edit_selection.h	\
 ##	ellipse_select.c	\
 ##	ellipse_select.h	\
 ##	eraser.c		\

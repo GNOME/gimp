@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __EDIT_SELECTION_H__
-#define __EDIT_SELECTION_H__
+#ifndef __GIMP_EDIT_SELECTION_TOOL_H__
+#define __GIMP_EDIT_SELECTION_TOOL_H__
 
 
 typedef enum
@@ -29,27 +29,10 @@ typedef enum
 } EditType;
 
 
-void   init_edit_selection           (Tool           *tool,
-				      GDisplay       *gdisp,
-				      GdkEventButton *bevent,
-				      EditType        edit_type);
-
-void   edit_selection_button_release (Tool           *tool,
-				      GdkEventButton *bevent,
-				      GDisplay       *gdisp);
-void   edit_selection_motion         (Tool           *tool,
-				      GdkEventMotion *mevent,
-				      GDisplay       *gdisp);
-void   edit_selection_control        (Tool           *tool,
-				      ToolAction      action,
-				      GDisplay       *gdisp);
-void   edit_selection_cursor_update  (Tool           *tool,
-				      GdkEventMotion *mevent,
-				      GDisplay       *gdisp);
-void   edit_selection_draw           (Tool           *tool);
-void   edit_sel_arrow_keys_func      (Tool           *tool,
-				      GdkEventKey    *kevent,
-				      GDisplay       *gdisp);
+void   init_edit_selection (GimpTool       *tool,
+                            GDisplay       *gdisp,
+                            GdkEventButton *bevent,
+                            EditType        edit_type);
 
 
-#endif  /*  __EDIT_SELECTION_H__  */
+#endif  /*  __GIMP_EDIT_SELECTION_TOOL_H__  */

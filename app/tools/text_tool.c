@@ -414,10 +414,8 @@ text_tool_button_press (GimpTool       *tool,
     /*  If there is a floating selection, and this aint it, use the move tool  */
     if (gimp_layer_is_floating_sel (layer))
       {
-#warning FIXME (edit_selection)
-#if 0
 	init_edit_selection (tool, gdisp, bevent, EDIT_LAYER_TRANSLATE);
-#endif
+
 	return;
       }
 

@@ -561,6 +561,7 @@ STUB(clone_non_gui)
 STUB(clone_non_gui_default)
 STUB(convolve_non_gui)
 STUB(convolve_non_gui_default)
+STUB(path_transform_xy)
 
 #warning obsolete crap
 #ifdef STONE_AGE
