@@ -1,3 +1,11 @@
+2005-01-07  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* app/composite/gimp-composite-x86.h
+	* app/composite/gimp-composite-sse.c: applied patch from Andreas
+	Jochens that fixes the build on amd64 with gcc-4.0 (bug #163041).
+
 2005-01-06  Manish Singh  <yosh@gimp.org>
 
 	* libgimpwidgets/gimpdialog.c: flush the display in dispose if we're
@@ -26,11 +34,11 @@
 	(gimp_container_tree_view_remove_item)
 	(gimp_container_tree_view_clear_items): removed compiler warnings.
 
-2005-01-03  Sven Neumann  <neumann@jpk.com>
+2005-01-03  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimp.def: added missing symbols.
 
-2005-01-03  Sven Neumann  <neumann@jpk.com>
+2005-01-03  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD branch:
 
@@ -341,7 +349,7 @@
 	* plug-ins/common/unsharp.c: more code cleanup and micro
 	optimizations.
 
-2004-12-21  Sven Neumann  <neumann@jpk.com>
+2004-12-21  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/unsharp.c: reverted the last change since it
 	introduced artefacts. Even had to increase the border around the
