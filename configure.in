@@ -26,6 +26,10 @@ LT_AGE=`expr $GIMP_BINARY_AGE - $GIMP_INTERFACE_AGE`
 VERSION=$GIMP_VERSION
 PACKAGE=gimp
 
+GETTEXT_PACKAGE=gimp14
+AC_SUBST(GETTEXT_PACKAGE)
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE")
+
 AM_INIT_AUTOMAKE($PACKAGE, $VERSION, no-define)
 
 dnl Specify a configuration file
@@ -97,8 +101,7 @@ AC_SUBST(STRIP_END)
 
 dnl i18n stuff
 ALL_LINGUAS="ca cs da de en_GB es fi fr ga gl hu hr it ja ko nl no pl pt_BR ro ru sk sv tr uk zh_TW.Big5"
-
-AM_GNU_GETTEXT
+AM_GLIB_GNU_GETTEXT
 
 AC_PATH_XTRA
 
@@ -823,7 +826,6 @@ gimp.spec
 Makefile
 build/Makefile
 build/win32/Makefile
-intl/Makefile
 tools/Makefile
 tools/authorsgen/Makefile
 tools/pdbgen/Makefile
@@ -924,10 +926,16 @@ po/Makefile.in
 po-libgimp/Makefile.in
 po-plug-ins/Makefile.in
 po-script-fu/Makefile.in
-plug-ins/perl/po/Makefile.in],
-[
+plug-ins/perl/po/Makefile.in
+],[
    chmod +x gimptool-1.4
-   sed -e "s/^     ..\/..\/..\//     ..\//" plug-ins/perl/po/Makefile > plug-ins/perl/po/Makefile.eek && mv plug-ins/perl/po/Makefile.eek plug-ins/perl/po/Makefile
+
+   sed -e "/POTFILES =/r po-libgimp/POTFILES" po-libgimp/Makefile.in > po-libgimp/Makefile
+   sed -e "/POTFILES =/r po-plug-ins/POTFILES" po-plug-ins/Makefile.in > po-plug-ins/Makefile
+   sed -e "/POTFILES =/r po-script-fu/POTFILES" po-script-fu/Makefile.in > po-script-fu/Makefile
+
+   sed -e "/POTFILES =/r plug-ins/perl/po/POTFILES" plug-ins/perl/po/Makefile.in > plug-ins/perl/po/Makefile
+
    case "$CONFIG_FILES" in
    *plug-ins/perl*)
       if test -f plug-ins/perl/config.status; then

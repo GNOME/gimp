@@ -58,8 +58,8 @@ _exit()
 BOOT:
 #ifdef ENABLE_NLS
 	setlocale (LC_MESSAGES, ""); /* calling twice doesn't hurt, no? */
-        bindtextdomain ("gimp-perl", datadir "/locale");
-        textdomain ("gimp-perl");
+        bindtextdomain ("gimp14-perl", datadir "/locale");
+        textdomain ("gimp14-perl");
 #endif
 
 char *

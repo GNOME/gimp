@@ -1,3 +1,23 @@
+2001-09-27  Sven Neumann  <sven@gimp.org>
+
+	* HACKING
+	* Makefile.am
+	* acconfig.h
+	* autogen.sh
+	* configure.in: use AM_GLIB_GNU_GETTEXT. Since glib and GTK+ rely on
+	gettext being available, we don't need to ship with the option to use
+	an included implementation. The intl subdirectory will not be created
+	anymore. Had to put the old sed hacks back in that create Makefiles
+	from Makefile.in in the extra po directories.
+
+	* almost all Makefile.am: removed $(top_srcdir)/intl from INCLUDES.
+	
+	* app/main.c
+	* libgimp/stdplugins-intl.h
+	* plug-ins/perl/Gimp.xs
+	* plug-ins/script-fu/script-fu-intl.h: changed package names to 
+	gimp14* so the po files don't clash with gimp12.
+
 2001-09-26  Manish Singh  <yosh@gimp.org>
 
 	* app/gui/preferences-dialog.c: replaced CTree with a TreeView

@@ -3,7 +3,6 @@
 SUBDIRS = \
 	m4macros		\
 	tools			\
-	intl			\
 	regexrepl		\
 	pixmaps			\
 	themes			\

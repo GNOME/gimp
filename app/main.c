@@ -119,7 +119,7 @@ main (int    argc,
   prog_name = argv[0];
 
   /* Initialize i18n support */
-  INIT_LOCALE ("gimp");
+  INIT_LOCALE (GETTEXT_PACKAGE);
 
 #ifdef ENABLE_NLS
   bindtextdomain ("gimp-libgimp", LOCALEDIR);

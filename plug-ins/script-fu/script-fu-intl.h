@@ -24,17 +24,17 @@
 #include "libgimp/gimpintl.h"
 
 #ifdef HAVE_LC_MESSAGES
-#define INIT_I18N()	G_STMT_START{			\
-  setlocale(LC_MESSAGES, ""); 				\
-  bindtextdomain("gimp-libgimp", LOCALEDIR);            \
-  bindtextdomain("gimp-script-fu", LOCALEDIR);	        \
-  textdomain("gimp-script-fu");			        \
-  			}G_STMT_END
+#define INIT_I18N()	G_STMT_START{			  \
+  setlocale(LC_MESSAGES, ""); 				  \
+  bindtextdomain(GETTEXT_PACKAGE"-libgimp", LOCALEDIR);   \
+  bindtextdomain(GETTEXT_PACKAGE"-script-fu", LOCALEDIR); \
+  textdomain(GETTEXT_PACKAGE"-script-fu");		  \
+                        }G_STMT_END
 #else
-#define INIT_I18N()	G_STMT_START{			\
-  bindtextdomain("gimp-libgimp", LOCALEDIR);            \
-  bindtextdomain("gimp-script-fu", LOCALEDIR);	        \
-  textdomain("gimp-script-fu");                         \
+#define INIT_I18N()	G_STMT_START{			  \
+  bindtextdomain(GETTEXT_PACKAGE"-libgimp", LOCALEDIR);   \
+  bindtextdomain(GETTEXT_PACKAGE"-script-fu", LOCALEDIR); \
+  textdomain(GETTEXT_PACKAGE"-script-fu");                \
   			}G_STMT_END
 #endif
 

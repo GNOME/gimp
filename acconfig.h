@@ -52,6 +52,9 @@
 #undef SRAND_FUNC
 
 #undef USE_PTHREADS
+
+#undef GETTEXT_PACKAGE
+
 
 /* Leave that blank line there!!  Autoheader needs it.
    If you're adding to this file, keep in mind:

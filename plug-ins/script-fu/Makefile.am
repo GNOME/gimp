@@ -34,7 +34,6 @@ AM_CPPFLAGS = -DLOCALEDIR=\""$(localedir)"\"
 
 INCLUDES = @STRIP_BEGIN@ \
 	-I$(top_srcdir)			\
-	-I$(top_srcdir)/intl		\
 	$(GTK_CFLAGS)			\
 	-I$(includedir)			\
 @STRIP_END@

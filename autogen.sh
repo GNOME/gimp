@@ -36,9 +36,9 @@ DIE=0
 	DIE=1
 }
 
-echo "I am testing that you have the required versions of libtool, autoconf," 
-echo "automake and gettext. This test is not foolproof, so if anything goes"
-echo "wrong, see the file HACKING for more information..."
+echo "I am testing that you have the required versions of libtool, autoconf" 
+echo "and automake. This test is not foolproof, so if anything goes wrong,"
+echo "see the file HACKING for more information..."
 echo
 
 echo "Testing libtool... "
@@ -68,15 +68,6 @@ else
 	DIE=1
 fi
 
-echo "Testing gettextize... "
-VER=`gettextize --version | grep gettext | sed "s/.* \([0-9.]*\)[a-z]*$/\1/;s/0.//"`
-if expr $VER \>= 10.38 >/dev/null; then
-	echo "looks OK."
-else
-	echo "too old! (Need (0.)10.38, have $VER)"
-	DIE=1
-fi
-
 echo
 
 if test "$DIE" -eq 1; then
@@ -100,7 +91,7 @@ esac
 if test -z "$ACLOCAL_FLAGS"; then
 
         acdir=`aclocal --print-ac-dir`
-        m4list="gtk.m4 gettext.m4"
+        m4list="glib-2.0.m4 glib-gettext.m4 gtk-2.0.m4"
 
         for file in $m4list
         do
@@ -115,12 +106,6 @@ if test -z "$ACLOCAL_FLAGS"; then
                 fi
         done
 fi
-
-echo "Running gettextize...  Ignore non-fatal messages."
-# Hmm, we specify --force here, since otherwise things dont'
-# get added reliably, but we don't want to overwrite intl
-# while making dist.
-echo "no" | gettextize --copy --force
 
 aclocal $ACLOCAL_FLAGS
 

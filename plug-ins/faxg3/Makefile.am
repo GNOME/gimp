@@ -17,7 +17,6 @@ AM_CPPFLAGS = @STRIP_BEGIN@ \
 
 INCLUDES = @STRIP_BEGIN@ \
 	-I$(top_srcdir)			\
-	-I$(top_srcdir)/intl		\
 	$(GLIB_CFLAGS)			\
 	-I$(includedir)			\
 @STRIP_END@

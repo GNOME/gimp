@@ -6,13 +6,11 @@ to have the following packages (or newer versions) installed:
 	- GNU autoconf 2.13
 	- GNU automake 1.4
 	- GNU libtool 1.3.4
-	- GNU gettext 10.38
-		Available in ftp://alpha.gnu.org/gnu
 
 These should be available by ftp from prep.ai.mit.edu or any of the
 fine GNU mirrors.  Beta software can be found at alpha.gnu.org.
 
-	- pkg-config 0.7.0 or better
+	- pkg-config 0.7.0 (or a newer version)
 		Available from http://www.freedesktop.org/software/pkgconfig
 
 
