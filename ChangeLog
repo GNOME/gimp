@@ -1,5 +1,9 @@
 2003-12-28  Simon Budig  <simon@gimp.org>
 
+	* app/widgets/gimpstrokeeditor.c: Fixed packing of the widgets.
+
+2003-12-28  Simon Budig  <simon@gimp.org>
+
 	* app/widgets/gimpdasheditor.[ch]: Added functions to shift the
 	dash pattern to the left or right.
 	

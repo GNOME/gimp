@@ -223,7 +223,7 @@ gimp_stroke_editor_constructor (GType                   type,
   button = g_object_new (GTK_TYPE_BUTTON,
                          "width-request", 14,
                          NULL);
-  gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (box), button, FALSE, TRUE, 0);
   g_signal_connect_object (G_OBJECT (button), "clicked",
                            G_CALLBACK (gimp_dash_editor_shift_left),
                            dash_editor, G_CONNECT_SWAPPED);
@@ -239,7 +239,7 @@ gimp_stroke_editor_constructor (GType                   type,
   button = g_object_new (GTK_TYPE_BUTTON,
                          "width-request", 14,
                          NULL);
-  gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (box), button, FALSE, TRUE, 0);
   g_signal_connect_object (G_OBJECT (button), "clicked",
                            G_CALLBACK (gimp_dash_editor_shift_right),
                            dash_editor, G_CONNECT_SWAPPED);
