@@ -235,7 +235,7 @@ flip_tool_flip (GImage      *gimage,
 	    copy_region (&srcPR, &destPR); 
 	  }
       else
-	for (i = 0; i < orig->width; i++)
+	for (i = 0; i < orig->height; i++)
 	  {
 	    pixel_region_init (&srcPR, orig, 0, i, orig->width, 1, FALSE);
 	    pixel_region_init (&destPR, new, 0, (orig->height - i - 1), orig->width, 1, TRUE);

@@ -1,3 +1,8 @@
+1999-04-30  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/flip_tool.c: fixed a cut-and-paste bug: vertical flip
+	iterates over rows, not columns.
+
 Thu Apr 29 16:32:11 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
 
 	* plug-ins/url/url.c (load_image): 
