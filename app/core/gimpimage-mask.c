@@ -222,7 +222,7 @@ gimp_image_mask_extract (GimpImage    *gimage,
   gboolean           non_empty;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
   /*  If there are no bounds, then just extract the entire image
    *  This may not be the correct behavior, but after getting rid

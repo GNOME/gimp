@@ -1,3 +1,8 @@
+2001-12-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage-mask.c: oops, GIMP_IS_DRAWABLE(gimage) will
+	always fail :-) fixed.
+
 2001-12-17  Sven Neumann  <sven@gimp.org>
 
 	* gimpconfig.[ch]: don't serialize unknown tokens; leave that to
