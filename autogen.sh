@@ -165,12 +165,12 @@ if (intltoolize --version) < /dev/null > /dev/null 2>&1; then
         if expr $VER \<= $INTLTOOL_BUG_MAX_VERSION > /dev/null; then
             echo "no"
             echo
-            echo "  Versions of intltool between 0.28 and 0.31 are known to"
-            echo "  generate incorrect XML output.  Please consider using an"
-            echo "  earlier version of intltool in order to avoid these"
-            echo "  problems until a newer version of intltool is released."
+            echo " Versions of intltool between 0.28 and 0.31 are known to"
+            echo " generate incorrect XML output when processing gimp-tips.xml."
+	    echo " Please consider updating to a more recent version."
 	    echo
-	    echo "  This problem is harmless, you may continue the build." 
+	    echo " This problem is not harmless, but you may continue to build."
+	    echo " Please don't package the result of this build though." 
 	    echo
         else
             echo "yes"
