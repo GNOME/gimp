@@ -281,6 +281,7 @@ browser_dialog_load (const gchar *ref,
   gchar        *abs;
   gchar        *new_ref;
   gchar        *anchor;
+  gchar        *tmp;
 
   g_return_if_fail (ref != NULL);
 
@@ -312,14 +313,15 @@ browser_dialog_load (const gchar *ref,
       anchor = NULL;
     }
 
-  if (strcmp (current_ref, abs))
+  if (! has_case_prefix (abs, "file:/"))
     {
-      if (! has_case_prefix (abs, "file:/"))
-        {
-          load_remote_page (ref);
-          return;
-        }
+      load_remote_page (ref);
+      return;
+    }
 
+  tmp = uri_to_abs (current_ref, current_ref);
+  if (!tmp || strcmp (tmp, abs))
+    {
       html_document_clear (doc);
       html_document_open_stream (doc, "text/html");
       gtk_adjustment_set_value (gtk_layout_get_vadjustment (GTK_LAYOUT (html)),
@@ -327,9 +329,12 @@ browser_dialog_load (const gchar *ref,
 
       request_url (doc, abs, doc->current_stream, NULL);
     }
+  g_free (tmp);
 
   if (anchor)
     html_view_jump_to_anchor (HTML_VIEW (html), anchor);
+  else
+    gtk_adjustment_set_value (GTK_LAYOUT (html)->vadjustment, 0.0);
 
   g_free (current_ref);
   current_ref = new_ref;
@@ -352,9 +357,6 @@ button_callback (GtkWidget *widget,
   switch (GPOINTER_TO_INT (data))
     {
     case BUTTON_HOME:
-      browser_dialog_load ("index.html", TRUE);
-      break;
-
     case BUTTON_INDEX:
       browser_dialog_load ("index.html", TRUE);
       break;
@@ -496,7 +498,7 @@ request_url (HtmlDocument *doc,
   g_return_if_fail (stream != NULL);
 
   abs = uri_to_abs (url, current_ref);
-  if (!abs)
+  if (! abs)
     return;
 
   filename = g_filename_from_uri (abs, NULL, NULL);
