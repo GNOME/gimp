@@ -38,20 +38,19 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_eraser_class_init    (GimpEraserClass    *klass);
-static void   gimp_eraser_init          (GimpEraser         *eraser);
+static void   gimp_eraser_class_init (GimpEraserClass    *klass);
+static void   gimp_eraser_init       (GimpEraser         *eraser);
 
-static void   gimp_eraser_paint         (GimpPaintCore      *paint_core,
-                                         GimpDrawable       *drawable,
-                                         GimpPaintOptions   *paint_options,
-                                         GimpPaintCoreState  paint_state);
+static void   gimp_eraser_paint      (GimpPaintCore      *paint_core,
+                                      GimpDrawable       *drawable,
+                                      GimpPaintOptions   *paint_options,
+                                      GimpPaintCoreState  paint_state);
+static void   gimp_eraser_motion     (GimpPaintCore      *paint_core,
+                                      GimpDrawable       *drawable,
+                                      GimpPaintOptions   *paint_options);
 
-static void   gimp_eraser_motion        (GimpPaintCore      *paint_core,
-                                         GimpDrawable       *drawable,
-                                         GimpPaintOptions   *paint_options);
 
-
-static GimpPaintCoreClass *parent_class = NULL;
+static GimpBrushCoreClass *parent_class = NULL;
 
 
 void
@@ -74,17 +73,17 @@ gimp_eraser_get_type (void)
       static const GTypeInfo info =
       {
         sizeof (GimpEraserClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_eraser_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpEraser),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_eraser_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_eraser_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpEraser),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_eraser_init,
       };
 
-      type = g_type_register_static (GIMP_TYPE_PAINT_CORE,
+      type = g_type_register_static (GIMP_TYPE_BRUSH_CORE,
                                      "GimpEraser",
                                      &info, 0);
     }
@@ -95,9 +94,7 @@ gimp_eraser_get_type (void)
 static void
 gimp_eraser_class_init (GimpEraserClass *klass)
 {
-  GimpPaintCoreClass *paint_core_class;
-
-  paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
+  GimpPaintCoreClass *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -107,9 +104,7 @@ gimp_eraser_class_init (GimpEraserClass *klass)
 static void
 gimp_eraser_init (GimpEraser *eraser)
 {
-  GimpPaintCore *paint_core;
-
-  paint_core = GIMP_PAINT_CORE (eraser);
+  GimpPaintCore *paint_core = GIMP_PAINT_CORE (eraser);
 
   paint_core->flags |= CORE_HANDLES_CHANGING_BRUSH;
 }
@@ -136,28 +131,21 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
                     GimpDrawable     *drawable,
                     GimpPaintOptions *paint_options)
 {
-  GimpEraserOptions   *options;
-  GimpPressureOptions *pressure_options;
-  GimpContext         *context;
+  GimpEraserOptions   *options          = GIMP_ERASER_OPTIONS (paint_options);
+  GimpContext         *context          = GIMP_CONTEXT (paint_options);
+  GimpPressureOptions *pressure_options = paint_options->pressure_options;
   GimpImage           *gimage;
   gdouble              opacity;
   TempBuf             *area;
   guchar               col[MAX_CHANNELS];
   gdouble              scale;
 
-  if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
-    return;
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   opacity = gimp_paint_options_get_fade (paint_options, gimage,
                                          paint_core->pixel_dist);
-
   if (opacity == 0.0)
     return;
-
-  options = GIMP_ERASER_OPTIONS (paint_options);
-  context = GIMP_CONTEXT (paint_options);
-
-  pressure_options = paint_options->pressure_options;
 
   gimp_image_get_background (gimage, drawable, context, col);
 
@@ -180,7 +168,7 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   if (pressure_options->opacity)
     opacity *= PRESSURE_SCALE * paint_core->cur_coords.pressure;
 
-  gimp_paint_core_paste_canvas (paint_core, drawable,
+  gimp_brush_core_paste_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
 				MIN (opacity, GIMP_OPACITY_OPAQUE),
 				gimp_context_get_opacity (context),
 				(options->anti_erase ?

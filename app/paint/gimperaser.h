@@ -20,7 +20,7 @@
 #define __GIMP_ERASER_H__
 
 
-#include "gimppaintcore.h"
+#include "gimpbrushcore.h"
 
 
 #define GIMP_TYPE_ERASER            (gimp_eraser_get_type ())
@@ -36,12 +36,12 @@ typedef struct _GimpEraserClass GimpEraserClass;
 
 struct _GimpEraser
 {
-  GimpPaintCore parent_instance;
+  GimpBrushCore parent_instance;
 };
 
 struct _GimpEraserClass
 {
-  GimpPaintCoreClass parent_class;
+  GimpBrushCoreClass parent_class;
 };
 
 

@@ -31,7 +31,7 @@
 
 /* the different states that the painting function can be called with  */
 
-typedef enum /*< pdb-skip >*/
+typedef enum
 {
   INIT_PAINT,       /* Setup PaintFunc internals */
   MOTION_PAINT,     /* PaintFunc performs motion-related rendering */
@@ -42,7 +42,7 @@ typedef enum /*< pdb-skip >*/
   POSTTRACE_PAINT   /* PaintFunc performs window tracing activity following rendering */
 } GimpPaintCoreState;
 
-typedef enum /*< pdb-skip >*/
+typedef enum
 {
   /*  Set for tools that don't mind if
    *  the brush changes while painting.
@@ -84,12 +84,9 @@ struct _GimpPaintCore
 
   gdouble             distance;      /*  distance traveled by brush       */
   gdouble             pixel_dist;    /*  distance in pixels               */
-  gdouble             spacing;       /*  spacing                          */
 
   gint                x1, y1;        /*  undo extents in image coords     */
   gint                x2, y2;        /*  undo extents in image coords     */
-
-  GimpBrush          *brush;         /*  current brush	                  */
 
   GimpPaintCoreFlags  flags;         /*  tool flags, see ToolFlags above  */
   gboolean            use_pressure;  /*  look at coords->pressure         */
@@ -101,45 +98,34 @@ struct _GimpPaintCore
   /*  paint buffers variables  */
   TempBuf            *orig_buf;
   TempBuf            *canvas_buf;
-
-  /*  brush buffers  */
-  MaskBuf            *pressure_brush;
-
-  MaskBuf            *solid_brushes[PAINT_CORE_SOLID_SUBSAMPLE][PAINT_CORE_SOLID_SUBSAMPLE];
-  MaskBuf            *last_solid_brush;
-  gboolean            solid_cache_invalid;
-
-  MaskBuf            *scale_brush;
-  MaskBuf            *last_scale_brush;
-  gint                last_scale_width;
-  gint                last_scale_height;
-
-  MaskBuf            *scale_pixmap;
-  MaskBuf            *last_scale_pixmap;
-  gint                last_scale_pixmap_width;
-  gint                last_scale_pixmap_height;
-
-  MaskBuf            *kernel_brushes[PAINT_CORE_SUBSAMPLE + 1][PAINT_CORE_SUBSAMPLE + 1];
-
-  MaskBuf            *last_brush_mask;
-  gboolean            cache_invalid;
-
-  /*  don't use these...  */
-  GimpBrush          *grr_brush;
-  BoundSeg           *brush_bound_segs;
-  gint                n_brush_bound_segs;
 };
 
 struct _GimpPaintCoreClass
 {
   GimpObjectClass  parent_class;
 
-  /*  virtual function  */
+  /*  virtual functions  */
+  gboolean  (* start)          (GimpPaintCore      *core,
+                                GimpDrawable       *drawable,
+                                GimpPaintOptions   *paint_options,
+                                GimpCoords         *coords);
 
-  void (* paint) (GimpPaintCore      *core,
-		  GimpDrawable 	     *drawable,
-                  GimpPaintOptions   *paint_options,
-		  GimpPaintCoreState  paint_state);
+  gboolean  (* pre_paint)      (GimpPaintCore      *core,
+                                GimpDrawable       *drawable,
+                                GimpPaintOptions   *paint_options,
+                                GimpPaintCoreState  paint_state);
+  void      (* paint)          (GimpPaintCore      *core,
+                                GimpDrawable       *drawable,
+                                GimpPaintOptions   *paint_options,
+                                GimpPaintCoreState  paint_state);
+
+  void      (* interpolate)    (GimpPaintCore      *core,
+                                GimpDrawable       *drawable,
+                                GimpPaintOptions   *paint_options);
+
+  TempBuf * (* get_paint_area) (GimpPaintCore      *core,
+				GimpDrawable       *drawable,
+				gdouble             scale);
 };
 
 
@@ -178,28 +164,20 @@ TempBuf * gimp_paint_core_get_orig_image (GimpPaintCore            *core,
                                           gint                      y1,
                                           gint                      x2,
                                           gint                      y2);
-void      gimp_paint_core_paste_canvas   (GimpPaintCore            *core,
-                                          GimpDrawable             *drawable,
-                                          gdouble                   brush_opacity,
-                                          gdouble                   image_opacity,
+
+void      gimp_paint_core_paste          (GimpPaintCore            *core,
+                                          MaskBuf	           *paint_mask,
+                                          GimpDrawable	           *drawable,
+                                          gdouble	            paint_opacity,
+                                          gdouble	            image_opacity,
                                           GimpLayerModeEffects      paint_mode,
-                                          GimpBrushApplicationMode  brush_hardness,
-                                          gdouble                   brush_scale,
                                           GimpPaintApplicationMode  mode);
-void      gimp_paint_core_replace_canvas (GimpPaintCore            *core,
-                                          GimpDrawable             *drawable,
-                                          gdouble                   brush_opacity,
+void      gimp_paint_core_replace        (GimpPaintCore            *core,
+                                          MaskBuf                  *paint_mask,
+                                          GimpDrawable	           *drawable,
+                                          gdouble	            paint_opacity,
                                           gdouble                   image_opacity,
-                                          GimpBrushApplicationMode  brush_hardness,
-                                          gdouble                   brush_scale,
                                           GimpPaintApplicationMode  mode);
-void     gimp_paint_core_color_area_with_pixmap
-                                         (GimpPaintCore            *core,
-                                          GimpImage                *dest,
-                                          GimpDrawable             *drawable,
-                                          TempBuf                  *area,
-                                          gdouble                   scale,
-                                          GimpBrushApplicationMode  mode);
 
 
 #endif  /*  __GIMP_PAINT_CORE_H__  */

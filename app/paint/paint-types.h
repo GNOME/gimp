@@ -27,6 +27,7 @@
 /*  objects  */
 
 typedef struct _GimpPaintCore    GimpPaintCore;
+typedef struct _GimpBrushCore    GimpBrushCore;
 typedef struct _GimpPaintOptions GimpPaintOptions;
 
 

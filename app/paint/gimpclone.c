@@ -31,7 +31,6 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "core/gimp.h"
-#include "core/gimpbrush.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimppattern.h"
@@ -42,41 +41,41 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_clone_class_init       (GimpCloneClass      *klass);
-static void   gimp_clone_init             (GimpClone           *clone);
+static void   gimp_clone_class_init       (GimpCloneClass     *klass);
+static void   gimp_clone_init             (GimpClone          *clone);
 
-static void   gimp_clone_paint            (GimpPaintCore       *paint_core,
-                                           GimpDrawable        *drawable,
-                                           GimpPaintOptions    *paint_options,
-                                           GimpPaintCoreState   paint_state);
-static void   gimp_clone_motion           (GimpPaintCore       *paint_core,
-                                           GimpDrawable        *drawable,
-                                           GimpPaintOptions    *paint_options);
+static void   gimp_clone_paint            (GimpPaintCore      *paint_core,
+                                           GimpDrawable       *drawable,
+                                           GimpPaintOptions   *paint_options,
+                                           GimpPaintCoreState  paint_state);
+static void   gimp_clone_motion           (GimpPaintCore      *paint_core,
+                                           GimpDrawable       *drawable,
+                                           GimpPaintOptions   *paint_options);
 
-static void   gimp_clone_line_image       (GimpImage           *dest,
-                                           GimpImage           *src,
-                                           GimpDrawable        *d_drawable,
-                                           GimpDrawable        *s_drawable,
-                                           guchar              *s,
-                                           guchar              *d,
-                                           gint                 has_alpha,
-                                           gint                 src_bytes,
-                                           gint                 dest_bytes,
-                                           gint                 width);
-static void   gimp_clone_line_pattern     (GimpImage           *dest,
-                                           GimpDrawable        *drawable,
-                                           GimpPattern         *pattern,
-                                           guchar              *d,
-                                           gint                 x,
-                                           gint                 y,
-                                           gint                 bytes,
-                                           gint                 width);
+static void   gimp_clone_line_image       (GimpImage          *dest,
+                                           GimpImage          *src,
+                                           GimpDrawable       *d_drawable,
+                                           GimpDrawable       *s_drawable,
+                                           guchar             *s,
+                                           guchar             *d,
+                                           gint                has_alpha,
+                                           gint                src_bytes,
+                                           gint                dest_bytes,
+                                           gint                width);
+static void   gimp_clone_line_pattern     (GimpImage          *dest,
+                                           GimpDrawable       *drawable,
+                                           GimpPattern        *pattern,
+                                           guchar             *d,
+                                           gint                x,
+                                           gint                y,
+                                           gint                bytes,
+                                           gint                width);
 
-static void   gimp_clone_set_src_drawable (GimpClone           *clone,
-                                           GimpDrawable        *drawable);
+static void   gimp_clone_set_src_drawable (GimpClone          *clone,
+                                           GimpDrawable       *drawable);
 
 
-static GimpPaintCoreClass *parent_class = NULL;
+static GimpBrushCoreClass *parent_class = NULL;
 
 
 void
@@ -99,17 +98,17 @@ gimp_clone_get_type (void)
       static const GTypeInfo info =
       {
         sizeof (GimpCloneClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_clone_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpClone),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_clone_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_clone_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpClone),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_clone_init,
       };
 
-      type = g_type_register_static (GIMP_TYPE_PAINT_CORE,
+      type = g_type_register_static (GIMP_TYPE_BRUSH_CORE,
                                      "GimpClone",
                                      &info, 0);
     }
@@ -120,9 +119,7 @@ gimp_clone_get_type (void)
 static void
 gimp_clone_class_init (GimpCloneClass *klass)
 {
-  GimpPaintCoreClass *paint_core_class;
-
-  paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
+  GimpPaintCoreClass *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -132,9 +129,7 @@ gimp_clone_class_init (GimpCloneClass *klass)
 static void
 gimp_clone_init (GimpClone *clone)
 {
-  GimpPaintCore *paint_core;
-
-  paint_core = GIMP_PAINT_CORE (clone);
+  GimpPaintCore *paint_core = GIMP_PAINT_CORE (clone);
 
   paint_core->flags |= CORE_HANDLES_CHANGING_BRUSH;
   paint_core->flags |= CORE_TRACES_ON_WINDOW;
@@ -165,13 +160,9 @@ gimp_clone_paint (GimpPaintCore      *paint_core,
   static gint   orig_src_x = 0;
   static gint   orig_src_y = 0;
 
-  GimpClone        *clone;
-  GimpCloneOptions *options;
-  GimpContext      *context;
-
-  clone   = GIMP_CLONE (paint_core);
-  options = GIMP_CLONE_OPTIONS (paint_options);
-  context = GIMP_CONTEXT (paint_options);
+  GimpClone        *clone   = GIMP_CLONE (paint_core);
+  GimpCloneOptions *options = GIMP_CLONE_OPTIONS (paint_options);
+  GimpContext      *context = GIMP_CONTEXT (paint_options);
 
   switch (paint_state)
     {
@@ -272,12 +263,12 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
                    GimpDrawable     *drawable,
                    GimpPaintOptions *paint_options)
 {
-  GimpClone           *clone;
-  GimpCloneOptions    *options;
-  GimpPressureOptions *pressure_options;
+  GimpClone           *clone            = GIMP_CLONE (paint_core);
+  GimpCloneOptions    *options          = GIMP_CLONE_OPTIONS (paint_options);
+  GimpContext         *context          = GIMP_CONTEXT (paint_options);
+  GimpPressureOptions *pressure_options = paint_options->pressure_options;
   GimpImage           *gimage;
   GimpImage           *src_gimage = NULL;
-  GimpContext         *context;
   guchar              *s;
   guchar              *d;
   TempBuf             *area;
@@ -292,18 +283,10 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
   gint                 offset_x;
   gint                 offset_y;
 
-  clone   = GIMP_CLONE (paint_core);
-  options = GIMP_CLONE_OPTIONS (paint_options);
-  context = GIMP_CONTEXT (paint_options);
-
-  pressure_options = paint_options->pressure_options;
-
-  if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
-    return;
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   opacity = gimp_paint_options_get_fade (paint_options, gimage,
                                          paint_core->pixel_dist);
-
   if (opacity == 0.0)
     return;
 
@@ -449,7 +432,7 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
     opacity *= PRESSURE_SCALE * paint_core->cur_coords.pressure;
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
-  gimp_paint_core_paste_canvas (paint_core, drawable,
+  gimp_brush_core_paste_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
 				MIN (opacity, GIMP_OPACITY_OPAQUE),
 				gimp_context_get_opacity (context),
 				gimp_context_get_paint_mode (context),

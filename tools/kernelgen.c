@@ -5,7 +5,7 @@
  *
  *    Simple hack to create brush subsampling kernels.  If you want to
  *    play with it, change some of the #defines at the top and copy
- *    the output to app/paint/gimppaintcore-kernels.h.
+ *    the output to app/paint/gimpbrushcore-kernels.h.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -86,13 +86,13 @@ main (int    argc,
   int    i, j;
   double x, y;
 
-  printf ("/* gimppaintcore-kernels.h\n"
+  printf ("/* gimpbrushcore-kernels.h\n"
 	  " *\n"
 	  " *   This file was generated using kernelgen as found in the tools dir.\n");
   printf (" *   (threshold = %g)\n", THRESHOLD);
   printf (" */\n\n");
-  printf ("#ifndef __GIMP_PAINT_CORE_KERNELS_H__\n");
-  printf ("#define __GIMP_PAINT_CORE_KERNELS_H__\n\n");
+  printf ("#ifndef __GIMP_BRUSH_CORE_KERNELS_H__\n");
+  printf ("#define __GIMP_BRUSH_CORE_KERNELS_H__\n\n");
   printf ("#define KERNEL_WIDTH     %d\n", KERNEL_WIDTH);
   printf ("#define KERNEL_HEIGHT    %d\n", KERNEL_HEIGHT);
   printf ("#define KERNEL_SUBSAMPLE %d\n", SUBSAMPLE);
@@ -121,7 +121,7 @@ main (int    argc,
 
   printf ("};\n\n");
 
-  printf ("#endif /* __GIMP_PAINT_CORE_KERNELS_H__ */\n");
+  printf ("#endif /* __GIMP_BRUSH_CORE_KERNELS_H__ */\n");
 
   return 0;
 }

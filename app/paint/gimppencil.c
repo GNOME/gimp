@@ -28,13 +28,6 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_pencil_class_init (GimpPencilClass *klass);
-static void   gimp_pencil_init       (GimpPencil      *pencil);
-
-
-static GimpPaintbrushClass *parent_class = NULL;
-
-
 void
 gimp_pencil_register (Gimp                      *gimp,
                       GimpPaintRegisterCallback  callback)
@@ -55,14 +48,14 @@ gimp_pencil_get_type (void)
       static const GTypeInfo info =
       {
         sizeof (GimpPencilClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_pencil_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpPencil),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_pencil_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        NULL,           /* class_init     */
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpPencil),
+        0,              /* n_preallocs    */
+        NULL            /* instance_init  */
       };
 
       type = g_type_register_static (GIMP_TYPE_PAINTBRUSH,
@@ -71,15 +64,4 @@ gimp_pencil_get_type (void)
     }
 
   return type;
-}
-
-static void
-gimp_pencil_class_init (GimpPencilClass *klass)
-{
-  parent_class = g_type_class_peek_parent (klass);
-}
-
-static void
-gimp_pencil_init (GimpPencil *pencil)
-{
 }

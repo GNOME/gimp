@@ -20,7 +20,7 @@
 #define __GIMP_CLONE_H__
 
 
-#include "gimppaintcore.h"
+#include "gimpbrushcore.h"
 
 
 #define GIMP_TYPE_CLONE            (gimp_clone_get_type ())
@@ -36,7 +36,7 @@ typedef struct _GimpCloneClass GimpCloneClass;
 
 struct _GimpClone
 {
-  GimpPaintCore parent_instance;
+  GimpBrushCore parent_instance;
 
   gboolean      set_source;
 
@@ -62,7 +62,7 @@ struct _GimpClone
 
 struct _GimpCloneClass
 {
-  GimpPaintCoreClass parent_class;
+  GimpBrushCoreClass parent_class;
 };
 
 

@@ -20,7 +20,7 @@
 #define __GIMP_CONVOLVE_H__
 
 
-#include "gimppaintcore.h"
+#include "gimpbrushcore.h"
 
 
 #define GIMP_TYPE_CONVOLVE            (gimp_convolve_get_type ())
@@ -36,12 +36,12 @@ typedef struct _GimpConvolveClass GimpConvolveClass;
 
 struct _GimpConvolve
 {
-  GimpPaintCore parent_instance;
+  GimpBrushCore parent_instance;
 };
 
 struct _GimpConvolveClass
 {
-  GimpPaintCoreClass parent_class;
+  GimpBrushCoreClass parent_class;
 };
 
 

@@ -29,6 +29,7 @@
 #include "vectors/gimpstroke.h"
 #include "vectors/gimpvectors.h"
 
+#include "gimpbrushcore.h"
 #include "gimppaintcore.h"
 #include "gimppaintcore-stroke.h"
 #include "gimppaintoptions.h"
@@ -49,17 +50,18 @@ gimp_paint_core_stroke (GimpPaintCore    *core,
 
   if (gimp_paint_core_start (core, drawable, paint_options, &strokes[0]))
     {
-      GimpBrush *current_brush;
-      gint       i;
+      GimpBrushCore *brush_core = GIMP_BRUSH_CORE (core);
+      GimpBrush     *current_brush;
+      gint           i;
 
       core->start_coords = strokes[0];
       core->last_coords  = strokes[0];
 
       gimp_paint_core_paint (core, drawable, paint_options, INIT_PAINT);
 
-      current_brush = core->brush;
+      current_brush = brush_core->brush;
       gimp_paint_core_paint (core, drawable, paint_options, MOTION_PAINT);
-      core->brush = current_brush;
+      brush_core->brush = current_brush;
 
       for (i = 1; i < n_strokes; i++)
         {
@@ -135,7 +137,8 @@ gimp_paint_core_stroke_boundary (GimpPaintCore    *core,
 
   for (s = 0; s < n_stroke_segs; s++)
     {
-      GimpBrush *current_brush;
+      GimpBrushCore *brush_core = GIMP_BRUSH_CORE (core);
+      GimpBrush     *current_brush;
 
       while (stroke_segs[seg].x1 != -1 ||
              stroke_segs[seg].x2 != -1 ||
@@ -172,9 +175,9 @@ gimp_paint_core_stroke_boundary (GimpPaintCore    *core,
 
           gimp_paint_core_paint (core, drawable, paint_options, INIT_PAINT);
 
-          current_brush = core->brush;
+          current_brush = brush_core->brush;
           gimp_paint_core_paint (core, drawable, paint_options, MOTION_PAINT);
-          core->brush = current_brush;
+          brush_core->brush = current_brush;
 
           for (i = 1; i < n_coords; i++)
             {
@@ -243,8 +246,9 @@ gimp_paint_core_stroke_vectors (GimpPaintCore    *core,
 
       if (coords && coords->len)
         {
-          GimpBrush *current_brush;
-          gint       i;
+          GimpBrushCore *brush_core = GIMP_BRUSH_CORE (core);
+          GimpBrush     *current_brush;
+          gint           i;
 
           for (i = 0; i < coords->len; i++)
             {
@@ -263,10 +267,10 @@ gimp_paint_core_stroke_vectors (GimpPaintCore    *core,
 
               gimp_paint_core_paint (core, drawable, paint_options, INIT_PAINT);
 
-              current_brush = core->brush;
+              current_brush = brush_core->brush;
               gimp_paint_core_paint (core, drawable, paint_options,
                                      MOTION_PAINT);
-              core->brush = current_brush;
+              brush_core->brush = current_brush;
 
               for (i = 1; i < coords->len; i++)
                 {

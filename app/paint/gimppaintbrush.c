@@ -84,7 +84,7 @@ gimp_paintbrush_get_type (void)
 	(GInstanceInitFunc) gimp_paintbrush_init,
       };
 
-      type = g_type_register_static (GIMP_TYPE_PAINT_CORE,
+      type = g_type_register_static (GIMP_TYPE_BRUSH_CORE,
                                      "GimpPaintbrush",
                                      &info, 0);
     }
@@ -95,9 +95,7 @@ gimp_paintbrush_get_type (void)
 static void
 gimp_paintbrush_class_init (GimpPaintbrushClass *klass)
 {
-  GimpPaintCoreClass *paint_core_class;
-
-  paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
+  GimpPaintCoreClass *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -107,9 +105,7 @@ gimp_paintbrush_class_init (GimpPaintbrushClass *klass)
 static void
 gimp_paintbrush_init (GimpPaintbrush *paintbrush)
 {
-  GimpPaintCore *paint_core;
-
-  paint_core = GIMP_PAINT_CORE (paintbrush);
+  GimpPaintCore *paint_core = GIMP_PAINT_CORE (paintbrush);
 
   paint_core->flags |= CORE_HANDLES_CHANGING_BRUSH;
 }
@@ -138,10 +134,9 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
                          GimpPaintOptions *paint_options,
                          gdouble           opacity)
 {
-  GimpPressureOptions      *pressure_options;
-  GimpFadeOptions          *fade_options;
-  GimpGradientOptions      *gradient_options;
-  GimpContext              *context;
+  GimpBrushCore            *brush_core       = GIMP_BRUSH_CORE (paint_core);
+  GimpContext              *context          = GIMP_CONTEXT (paint_options);
+  GimpPressureOptions      *pressure_options = paint_options->pressure_options;
   GimpImage                *gimage;
   GimpRGB                   gradient_color;
   TempBuf                  *area;
@@ -149,18 +144,10 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   gdouble                   scale;
   GimpPaintApplicationMode  paint_appl_mode;
 
-  context = GIMP_CONTEXT (paint_options);
-
-  pressure_options = paint_options->pressure_options;
-  fade_options     = paint_options->fade_options;
-  gradient_options = paint_options->gradient_options;
-
-  if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
-    return;
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   opacity *= gimp_paint_options_get_fade (paint_options, gimage,
                                           paint_core->pixel_dist);
-
   if (opacity == 0.0)
     return;
 
@@ -194,10 +181,10 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
 
       paint_appl_mode = GIMP_PAINT_INCREMENTAL;
     }
-  else if (paint_core->brush && paint_core->brush->pixmap)
+  else if (brush_core->brush && brush_core->brush->pixmap)
     {
       /* if it's a pixmap, do pixmap stuff */
-      gimp_paint_core_color_area_with_pixmap (paint_core, gimage, drawable,
+      gimp_brush_core_color_area_with_pixmap (brush_core, gimage, drawable,
                                               area,
                                               scale,
                                               gimp_paint_options_get_brush_mode (paint_options));
@@ -216,7 +203,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   if (pressure_options->opacity)
     opacity *= PRESSURE_SCALE * paint_core->cur_coords.pressure;
 
-  gimp_paint_core_paste_canvas (paint_core, drawable,
+  gimp_brush_core_paste_canvas (brush_core, drawable,
                                 MIN (opacity, GIMP_OPACITY_OPAQUE),
                                 gimp_context_get_opacity (context),
                                 gimp_context_get_paint_mode (context),

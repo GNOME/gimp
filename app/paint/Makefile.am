@@ -24,6 +24,9 @@ libapppaint_a_sources = \
 	gimpairbrush.h		\
 	gimpairbrushoptions.c	\
 	gimpairbrushoptions.h	\
+	gimpbrushcore.c		\
+	gimpbrushcore.h		\
+	gimpbrushcore-kernels.h	\
 	gimpclone.c		\
 	gimpclone.h		\
 	gimpcloneoptions.c	\
@@ -42,7 +45,6 @@ libapppaint_a_sources = \
 	gimperaseroptions.h	\
 	gimppaintcore.c		\
 	gimppaintcore.h		\
-	gimppaintcore-kernels.h	\
 	gimppaintcore-stroke.c	\
 	gimppaintcore-stroke.h	\
 	gimppaintcore-undo.c	\

@@ -20,8 +20,7 @@
 #define __GIMP_DODGE_BURN_H__
 
 
-#include "gimppaintcore.h"
-#include "gimppaintoptions.h"
+#include "gimpbrushcore.h"
 
 
 #define GIMP_TYPE_DODGE_BURN            (gimp_dodge_burn_get_type ())
@@ -36,14 +35,14 @@ typedef struct _GimpDodgeBurnClass GimpDodgeBurnClass;
 
 struct _GimpDodgeBurn
 {
-  GimpPaintCore  parent_instance;
+  GimpBrushCore  parent_instance;
 
   GimpLut       *lut;
 };
 
 struct _GimpDodgeBurnClass
 {
-  GimpPaintCoreClass parent_class;
+  GimpBrushCoreClass parent_class;
 };
 
 

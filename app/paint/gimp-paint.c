@@ -32,6 +32,7 @@
 #include "gimpconvolve.h"
 #include "gimpdodgeburn.h"
 #include "gimperaser.h"
+#include "gimppaintoptions.h"
 #include "gimppaintbrush.h"
 #include "gimppencil.h"
 #include "gimpsmudge.h"

@@ -18,14 +18,8 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <string.h>
-
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
-
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpbase/gimpbase.h"
 
 #include "tools-types.h"
 
@@ -44,6 +38,7 @@
 #include "core/gimppaintinfo.h"
 #include "core/gimptoolinfo.h"
 
+#include "paint/gimpbrushcore.h"
 #include "paint/gimppaintcore.h"
 #include "paint/gimppaintoptions.h"
 
@@ -150,15 +145,10 @@ gimp_paint_tool_get_type (void)
 static void
 gimp_paint_tool_class_init (GimpPaintToolClass *klass)
 {
-  GObjectClass       *object_class;
-  GimpToolClass      *tool_class;
-  GimpDrawToolClass  *draw_tool_class;
-  GimpColorToolClass *color_tool_class;
-
-  object_class     = G_OBJECT_CLASS (klass);
-  tool_class       = GIMP_TOOL_CLASS (klass);
-  draw_tool_class  = GIMP_DRAW_TOOL_CLASS (klass);
-  color_tool_class = GIMP_COLOR_TOOL_CLASS (klass);
+  GObjectClass       *object_class     = G_OBJECT_CLASS (klass);
+  GimpToolClass      *tool_class       = GIMP_TOOL_CLASS (klass);
+  GimpDrawToolClass  *draw_tool_class  = GIMP_DRAW_TOOL_CLASS (klass);
+  GimpColorToolClass *color_tool_class = GIMP_COLOR_TOOL_CLASS (klass);;
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -267,11 +257,10 @@ gimp_paint_tool_control (GimpTool       *tool,
 			 GimpToolAction  action,
 			 GimpDisplay    *gdisp)
 {
-  GimpPaintTool *paint_tool;
+  GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
   GimpDrawable  *drawable;
 
-  paint_tool = GIMP_PAINT_TOOL (tool);
-  drawable   = gimp_image_active_drawable (gdisp->gimage);
+  drawable = gimp_image_active_drawable (gdisp->gimage);
 
   switch (action)
     {
@@ -354,8 +343,8 @@ gimp_paint_tool_button_press (GimpTool        *tool,
 			      GdkModifierType  state,
 			      GimpDisplay     *gdisp)
 {
-  GimpDrawTool     *draw_tool;
-  GimpPaintTool    *paint_tool;
+  GimpDrawTool     *draw_tool  = GIMP_DRAW_TOOL (tool);
+  GimpPaintTool    *paint_tool = GIMP_PAINT_TOOL (tool);
   GimpPaintOptions *paint_options;
   GimpPaintCore    *core;
   GimpBrush        *current_brush;
@@ -364,11 +353,7 @@ gimp_paint_tool_button_press (GimpTool        *tool,
   GimpCoords        curr_coords;
   gint              off_x, off_y;
 
-  draw_tool     = GIMP_DRAW_TOOL (tool);
-  paint_tool    = GIMP_PAINT_TOOL (tool);
   paint_options = GIMP_PAINT_OPTIONS (tool->tool_info->tool_options);
-
-  gdk_display = gtk_widget_get_display (gdisp->shell);
 
   core = paint_tool->core;
 
@@ -396,6 +381,8 @@ gimp_paint_tool_button_press (GimpTool        *tool,
 
       tool->gdisp = gdisp;
     }
+
+  gdk_display = gtk_widget_get_display (gdisp->shell);
 
   core->use_pressure = (gimp_devices_get_current (gdisp->gimage->gimp) !=
                         gdk_display_get_core_pointer (gdk_display));
@@ -441,7 +428,7 @@ gimp_paint_tool_button_press (GimpTool        *tool,
   gimp_paint_core_paint (core, drawable, paint_options, INIT_PAINT);
 
   /*  store the current brush pointer  */
-  current_brush = core->brush;
+  current_brush = GIMP_BRUSH_CORE (core)->brush;
 
   if (core->flags & CORE_TRACES_ON_WINDOW)
     gimp_paint_core_paint (core, drawable, paint_options, PRETRACE_PAINT);
@@ -462,7 +449,7 @@ gimp_paint_tool_button_press (GimpTool        *tool,
     gimp_paint_core_paint (core, drawable, paint_options, POSTTRACE_PAINT);
 
   /*  restore the current brush pointer  */
-  core->brush = current_brush;
+  GIMP_BRUSH_CORE (core)->brush = current_brush;
 }
 
 static void
@@ -509,13 +496,12 @@ gimp_paint_tool_motion (GimpTool        *tool,
 			GdkModifierType  state,
 			GimpDisplay     *gdisp)
 {
-  GimpPaintTool    *paint_tool;
+  GimpPaintTool    *paint_tool = GIMP_PAINT_TOOL (tool);
   GimpPaintOptions *paint_options;
   GimpPaintCore    *core;
   GimpDrawable     *drawable;
   gint              off_x, off_y;
 
-  paint_tool    = GIMP_PAINT_TOOL (tool);
   paint_options = GIMP_PAINT_OPTIONS (tool->tool_info->tool_options);
 
   core = paint_tool->core;
@@ -750,11 +736,8 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
 {
   if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (draw_tool)))
     {
-      GimpPaintTool *paint_tool;
-      GimpPaintCore *core;
-
-      paint_tool = GIMP_PAINT_TOOL (draw_tool);
-      core       = paint_tool->core;
+      GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (draw_tool);
+      GimpPaintCore *core       = paint_tool->core;
 
       if (paint_tool->draw_line)
         {
@@ -787,11 +770,12 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
                                     TRUE);
         }
 
-      if (paint_tool->draw_brush)
+      if (paint_tool->draw_brush && GIMP_IS_BRUSH_CORE (core))
         {
-          GimpContext *context;
-          GimpBrush   *brush;
-          TempBuf     *mask;
+          GimpBrushCore *brush_core = GIMP_BRUSH_CORE (core);
+          GimpContext   *context;
+          GimpBrush     *brush;
+          TempBuf       *mask;
 
           context =
             GIMP_CONTEXT (GIMP_TOOL (draw_tool)->tool_info->tool_options);
@@ -799,14 +783,14 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
           brush = gimp_context_get_brush (context);
           mask  = gimp_brush_get_mask (brush);
 
-          if (brush != core->grr_brush && core->brush_bound_segs)
+          if (brush != brush_core->grr_brush && brush_core->brush_bound_segs)
             {
-              g_free (core->brush_bound_segs);
-              core->brush_bound_segs   = NULL;
-              core->n_brush_bound_segs = 0;
+              g_free (brush_core->brush_bound_segs);
+              brush_core->brush_bound_segs   = NULL;
+              brush_core->n_brush_bound_segs = 0;
             }
 
-          if (! core->brush_bound_segs)
+          if (! brush_core->brush_bound_segs)
             {
               PixelRegion PR = { 0, };
 
@@ -818,15 +802,15 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
               PR.bytes     = mask->bytes;
               PR.rowstride = PR.w * PR.bytes;
 
-              core->brush_bound_segs =
-                find_mask_boundary (&PR, &core->n_brush_bound_segs,
+              brush_core->brush_bound_segs =
+                find_mask_boundary (&PR, &brush_core->n_brush_bound_segs,
                                     WithinBounds,
                                     0, 0,
                                     PR.w, PR.h,
                                     0);
             }
 
-          if (core->brush_bound_segs)
+          if (brush_core->brush_bound_segs)
             {
               GimpPaintOptions *paint_options;
               gdouble           brush_x, brush_y;
@@ -851,8 +835,8 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
                 }
 
               gimp_draw_tool_draw_boundary (draw_tool,
-                                            core->brush_bound_segs,
-                                            core->n_brush_bound_segs,
+                                            brush_core->brush_bound_segs,
+                                            brush_core->n_brush_bound_segs,
                                             brush_x,
                                             brush_y,
                                             FALSE);

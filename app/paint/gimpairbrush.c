@@ -78,14 +78,14 @@ gimp_airbrush_get_type (void)
       static const GTypeInfo info =
       {
         sizeof (GimpAirbrushClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_airbrush_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpAirbrush),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_airbrush_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_airbrush_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpAirbrush),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_airbrush_init,
       };
 
       type = g_type_register_static (GIMP_TYPE_PAINTBRUSH,
@@ -99,11 +99,8 @@ gimp_airbrush_get_type (void)
 static void
 gimp_airbrush_class_init (GimpAirbrushClass *klass)
 {
-  GObjectClass       *object_class;
-  GimpPaintCoreClass *paint_core_class;
-
-  object_class     = G_OBJECT_CLASS (klass);
-  paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
+  GObjectClass       *object_class     = G_OBJECT_CLASS (klass);
+  GimpPaintCoreClass *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -138,11 +135,8 @@ gimp_airbrush_paint (GimpPaintCore      *paint_core,
                      GimpPaintOptions   *paint_options,
                      GimpPaintCoreState  paint_state)
 {
-  GimpAirbrush        *airbrush;
-  GimpAirbrushOptions *options;
-
-  airbrush = GIMP_AIRBRUSH (paint_core);
-  options  = GIMP_AIRBRUSH_OPTIONS (paint_options);
+  GimpAirbrush        *airbrush = GIMP_AIRBRUSH (paint_core);
+  GimpAirbrushOptions *options  = GIMP_AIRBRUSH_OPTIONS (paint_options);
 
   switch (paint_state)
     {
@@ -206,11 +200,9 @@ gimp_airbrush_motion (GimpPaintCore    *paint_core,
                       GimpDrawable     *drawable,
                       GimpPaintOptions *paint_options)
 {
-  GimpAirbrushOptions *options;
+  GimpAirbrushOptions *options = GIMP_AIRBRUSH_OPTIONS (paint_options);
   gdouble              opacity;
   gboolean             saved_pressure;
-
-  options  = GIMP_AIRBRUSH_OPTIONS (paint_options);
 
   opacity = options->pressure / 100.0;
 

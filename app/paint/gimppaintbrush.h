@@ -20,7 +20,7 @@
 #define __GIMP_PAINTBRUSH_H__
 
 
-#include "gimppaintcore.h"
+#include "gimpbrushcore.h"
 
 
 #define GIMP_TYPE_PAINTBRUSH            (gimp_paintbrush_get_type ())
@@ -36,12 +36,12 @@ typedef struct _GimpPaintbrushClass GimpPaintbrushClass;
 
 struct _GimpPaintbrush
 {
-  GimpPaintCore parent_instance;
+  GimpBrushCore parent_instance;
 };
 
 struct _GimpPaintbrushClass
 {
-  GimpPaintCoreClass parent_class;
+  GimpBrushCoreClass parent_class;
 };
 
 

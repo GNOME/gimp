@@ -68,21 +68,21 @@ static void   gimp_convolve_motion           (GimpPaintCore       *paint_core,
 
 static void   gimp_convolve_calculate_matrix (GimpConvolveType     type,
                                               gdouble              rate);
-static void   gimp_convolve_integer_matrix   (gfloat              *source,
+static void   gimp_convolve_integer_matrix   (const gfloat        *source,
                                               gint                *dest,
                                               gint                 size);
-static void   gimp_convolve_copy_matrix      (gfloat              *src,
+static void   gimp_convolve_copy_matrix      (const gfloat        *src,
                                               gfloat              *dest,
                                               gint                 size);
-static gint   gimp_convolve_sum_matrix       (gint                *matrix,
+static gint   gimp_convolve_sum_matrix       (const gint          *matrix,
                                               gint                 size);
 
 
-static gint   matrix [25];
-static gint   matrix_size;
-static gint   matrix_divisor;
+static gint matrix[25];
+static gint matrix_size;
+static gint matrix_divisor;
 
-static gfloat custom_matrix [25] =
+static gfloat custom_matrix[25] =
 {
   0, 0, 0, 0, 0,
   0, 0, 0, 0, 0,
@@ -91,7 +91,7 @@ static gfloat custom_matrix [25] =
   0, 0, 0, 0, 0,
 };
 
-static gfloat blur_matrix [25] =
+static gfloat blur_matrix[25] =
 {
   0, 0, 0, 0, 0,
   0, 1, 1, 1, 0,
@@ -100,7 +100,7 @@ static gfloat blur_matrix [25] =
   0, 0 ,0, 0, 0,
 };
 
-static gfloat sharpen_matrix [25] =
+static gfloat sharpen_matrix[25] =
 {
   0, 0, 0, 0, 0,
   0, 1, 1, 1, 0,
@@ -109,7 +109,8 @@ static gfloat sharpen_matrix [25] =
   0, 0, 0, 0, 0,
 };
 
-static GimpPaintCoreClass *parent_class;
+
+static GimpBrushCoreClass *parent_class;
 
 
 void
@@ -132,17 +133,17 @@ gimp_convolve_get_type (void)
       static const GTypeInfo info =
       {
         sizeof (GimpConvolveClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_convolve_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpConvolve),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_convolve_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_convolve_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpConvolve),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_convolve_init,
       };
 
-      type = g_type_register_static (GIMP_TYPE_PAINT_CORE,
+      type = g_type_register_static (GIMP_TYPE_BRUSH_CORE,
                                      "GimpConvolve",
                                      &info, 0);
     }
@@ -153,9 +154,7 @@ gimp_convolve_get_type (void)
 static void
 gimp_convolve_class_init (GimpConvolveClass *klass)
 {
-  GimpPaintCoreClass *paint_core_class;
-
-  paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
+  GimpPaintCoreClass *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -189,9 +188,10 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
                       GimpDrawable     *drawable,
                       GimpPaintOptions *paint_options)
 {
-  GimpConvolveOptions *options;
-  GimpPressureOptions *pressure_options;
-  GimpContext         *context;
+  GimpBrushCore       *brush_core       = GIMP_BRUSH_CORE (paint_core);
+  GimpConvolveOptions *options          = GIMP_CONVOLVE_OPTIONS (paint_options);
+  GimpContext         *context          = GIMP_CONTEXT (paint_options);
+  GimpPressureOptions *pressure_options = paint_options->pressure_options;
   GimpImage           *gimage;
   TempBuf             *area;
   guchar              *temp_data;
@@ -205,25 +205,18 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   gint                 marginx    = 0;
   gint                 marginy    = 0;
 
-  options = GIMP_CONVOLVE_OPTIONS (paint_options);
-  context = GIMP_CONTEXT (paint_options);
-
-  pressure_options = paint_options->pressure_options;
-
-  if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
-    return;
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   if (gimp_drawable_is_indexed (drawable))
     return;
 
   /* If the brush is smaller than the convolution matrix, don't convolve */
-  if (paint_core->brush->mask->width  < matrix_size ||
-      paint_core->brush->mask->height < matrix_size)
+  if (brush_core->brush->mask->width  < matrix_size ||
+      brush_core->brush->mask->height < matrix_size)
     return;
 
   opacity = gimp_paint_options_get_fade (paint_options, gimage,
                                          paint_core->pixel_dist);
-
   if (opacity == 0.0)
     return;
 
@@ -259,15 +252,35 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   /*  Image region near edges? If so, paint area will be clipped   */
   /*  with respect to brush mask + 1 pixel border (# 19285)        */
 
-  if ((marginx = (gint) paint_core->cur_coords.x - paint_core->brush->mask->width / 2 - 1) != area->x)
-    area_hclip = CONVOLVE_NCLIP;
-  else if ((marginx = area->width - paint_core->brush->mask->width - 2) != 0)
-    area_hclip = CONVOLVE_PCLIP;
+  marginx = ((gint) paint_core->cur_coords.x -
+             brush_core->brush->mask->width / 2 - 1);
 
-  if ((marginy = (gint) paint_core->cur_coords.y - paint_core->brush->mask->height / 2 - 1) != area->y)
-    area_vclip = CONVOLVE_NCLIP;
-  else if ((marginy = area->height - paint_core->brush->mask->height - 2) != 0)
-    area_vclip = CONVOLVE_PCLIP;
+  if (marginx != area->x)
+    {
+      area_hclip = CONVOLVE_NCLIP;
+    }
+  else
+    {
+      marginx = area->width - brush_core->brush->mask->width - 2;
+
+      if (marginx != 0)
+        area_hclip = CONVOLVE_PCLIP;
+    }
+
+  marginy = ((gint) paint_core->cur_coords.y -
+             brush_core->brush->mask->height / 2 - 1);
+
+  if (marginy != area->y)
+    {
+      area_vclip = CONVOLVE_NCLIP;
+    }
+  else
+    {
+      marginy = area->height - brush_core->brush->mask->height - 2;
+
+      if (marginy != 0)
+        area_vclip = CONVOLVE_PCLIP;
+    }
 
   /*  Has the TempBuf been clipped by a canvas edge or two?  */
   if (area_hclip == CONVOLVE_NOT_CLIPPED &&
@@ -295,19 +308,21 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
 	     tempPR the same number of bytes as srcPR, and extend the
 	     paint_core_replace_canvas API to handle non-alpha images. */
 
-	  tempPR.bytes     = srcPR.bytes + 1;
-	  tempPR.rowstride = tempPR.bytes * tempPR.w;
-	  temp_data        = g_malloc (tempPR.h * tempPR.rowstride);
-	  tempPR.data      = temp_data;
-	  add_alpha_region (&srcPR, &tempPR);
+          tempPR.bytes     = srcPR.bytes + 1;
+          tempPR.rowstride = tempPR.bytes * tempPR.w;
+          temp_data        = g_malloc (tempPR.h * tempPR.rowstride);
+          tempPR.data      = temp_data;
+
+          add_alpha_region (&srcPR, &tempPR);
 	}
       else
 	{
-	  tempPR.bytes     = srcPR.bytes;
-	  tempPR.rowstride = tempPR.bytes * tempPR.w;
-	  temp_data        = g_malloc (tempPR.h * tempPR.rowstride);
-	  tempPR.data      = temp_data;
-	  copy_region (&srcPR, &tempPR);
+          tempPR.bytes     = srcPR.bytes;
+          tempPR.rowstride = tempPR.bytes * tempPR.w;
+          temp_data        = g_malloc (tempPR.h * tempPR.rowstride);
+          tempPR.data      = temp_data;
+
+          copy_region (&srcPR, &tempPR);
 	}
 
       /*  Convolve the region  */
@@ -319,7 +334,7 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
       tempPR.data = temp_data;
 
       convolve_region (&tempPR, &destPR, matrix, matrix_size,
-		       matrix_divisor, GIMP_NORMAL_CONVOL);
+                       matrix_divisor, GIMP_NORMAL_CONVOL);
 
       /*  Free the allocated temp space  */
       g_free (temp_data);
@@ -338,10 +353,10 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
       guchar      *fillcolor;
 
       fillcolor = gimp_drawable_get_color_at
-	(drawable,
-	 CLAMP ((gint) paint_core->cur_coords.x,
+        (drawable,
+         CLAMP ((gint) paint_core->cur_coords.x,
                 0, gimp_item_width  (GIMP_ITEM (drawable)) - 1),
-	 CLAMP ((gint) paint_core->cur_coords.y,
+         CLAMP ((gint) paint_core->cur_coords.y,
                 0, gimp_item_height (GIMP_ITEM (drawable)) - 1));
 
       marginx *= (marginx < 0) ? -1 : 0;
@@ -397,7 +412,7 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
       ovrsz1PR.data = ovrsz1_data;
 
       convolve_region (&ovrsz1PR, &ovrsz2PR, matrix, matrix_size,
-		       matrix_divisor, GIMP_NORMAL_CONVOL);
+                       matrix_divisor, GIMP_NORMAL_CONVOL);
 
       /* Crop and copy to destination */
 
@@ -416,8 +431,7 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
       g_free (fillcolor);
     }
 
-  /*  paste the newly painted canvas to the gimage which is being worked on  */
-  gimp_paint_core_replace_canvas (paint_core, drawable,
+  gimp_brush_core_replace_canvas (brush_core, drawable,
                                   MIN (opacity, GIMP_OPACITY_OPAQUE),
 				  gimp_context_get_opacity (context),
 				  gimp_paint_options_get_brush_mode (paint_options),
@@ -439,13 +453,13 @@ gimp_convolve_calculate_matrix (GimpConvolveType type,
     {
     case GIMP_BLUR_CONVOLVE:
       matrix_size = 5;
-      blur_matrix [12] = MIN_BLUR + percent * (MAX_BLUR - MIN_BLUR);
+      blur_matrix[12] = MIN_BLUR + percent * (MAX_BLUR - MIN_BLUR);
       gimp_convolve_copy_matrix (blur_matrix, custom_matrix, matrix_size);
       break;
 
     case GIMP_SHARPEN_CONVOLVE:
       matrix_size = 5;
-      sharpen_matrix [12] = MIN_SHARPEN + percent * (MAX_SHARPEN - MIN_SHARPEN);
+      sharpen_matrix[12] = MIN_SHARPEN + percent * (MAX_SHARPEN - MIN_SHARPEN);
       gimp_convolve_copy_matrix (sharpen_matrix, custom_matrix, matrix_size);
       break;
 
@@ -462,9 +476,9 @@ gimp_convolve_calculate_matrix (GimpConvolveType type,
 }
 
 static void
-gimp_convolve_integer_matrix (gfloat *source,
-                              gint   *dest,
-                              gint    size)
+gimp_convolve_integer_matrix (const gfloat *source,
+                              gint         *dest,
+                              gint          size)
 {
   gint i;
 
@@ -475,9 +489,9 @@ gimp_convolve_integer_matrix (gfloat *source,
 }
 
 static void
-gimp_convolve_copy_matrix (gfloat *src,
-                           gfloat *dest,
-                           gint    size)
+gimp_convolve_copy_matrix (const gfloat *src,
+                           gfloat       *dest,
+                           gint          size)
 {
   gint i;
 
@@ -486,8 +500,8 @@ gimp_convolve_copy_matrix (gfloat *src,
 }
 
 static gint
-gimp_convolve_sum_matrix (gint *matrix,
-                          gint  size)
+gimp_convolve_sum_matrix (const gint *matrix,
+                          gint        size)
 {
   gint sum = 0;
 

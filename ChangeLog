@@ -1,3 +1,31 @@
+2004-05-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/Makefile.am
+	* app/paint/gimpbrushcore-kernels.h
+	* app/paint/gimpbrushcore.[ch]: new GimpPaintCore subclass
+	containing all the brush painting specific stuff.
+
+	* app/paint/gimppaintcore-kernels.h: removed this file.
+
+	* app/paint/gimppaintcore.[ch]: removed all brush stuff.
+
+	* app/paint/gimpairbrush.c
+	* app/paint/gimpclone.[ch]
+	* app/paint/gimpconvolve.[ch]
+	* app/paint/gimpdodgeburn.[ch]
+	* app/paint/gimperaser.[ch]
+	* app/paint/gimppaintbrush.[ch]
+	* app/paint/gimppencil.c
+	* app/paint/gimpsmudge.[ch]: changed accordingly. Derive all
+	classes which used to derive directly from GimpPaintCore from
+	GimpBrushCore now. Lots of cleanup.
+
+	* app/paint/paint-types.h
+	* app/paint/gimp-paint.c
+	* app/paint/gimppaintcore-stroke.c
+	* app/tools/gimppainttool.c
+	* tools/kernelgen.c: changed accordingly.
+
 2004-05-25  Maurits Rijk  <m.rijk@chello.nl>
 
 	* plug-ins/common/align_layers.c

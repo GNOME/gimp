@@ -85,17 +85,17 @@ gimp_smudge_get_type (void)
       static const GTypeInfo info =
       {
         sizeof (GimpSmudgeClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_smudge_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpSmudge),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_smudge_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_smudge_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpSmudge),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_smudge_init,
       };
 
-      type = g_type_register_static (GIMP_TYPE_PAINT_CORE,
+      type = g_type_register_static (GIMP_TYPE_BRUSH_CORE,
                                      "GimpSmudge",
                                      &info, 0);
     }
@@ -106,11 +106,8 @@ gimp_smudge_get_type (void)
 static void
 gimp_smudge_class_init (GimpSmudgeClass *klass)
 {
-  GObjectClass       *object_class;
-  GimpPaintCoreClass *paint_core_class;
-
-  object_class     = G_OBJECT_CLASS (klass);
-  paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
+  GObjectClass       *object_class     = G_OBJECT_CLASS (klass);
+  GimpPaintCoreClass *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -122,10 +119,6 @@ gimp_smudge_class_init (GimpSmudgeClass *klass)
 static void
 gimp_smudge_init (GimpSmudge *smudge)
 {
-  GimpPaintCore *paint_core;
-
-  paint_core = GIMP_PAINT_CORE (smudge);
-
   smudge->initialized = FALSE;
   smudge->accum_data  = NULL;
 }
@@ -133,9 +126,7 @@ gimp_smudge_init (GimpSmudge *smudge)
 static void
 gimp_smudge_finalize (GObject *object)
 {
-  GimpSmudge *smudge;
-
-  smudge = GIMP_SMUDGE (object);
+  GimpSmudge *smudge = GIMP_SMUDGE (object);
 
   if (smudge->accum_data)
     {
@@ -152,9 +143,7 @@ gimp_smudge_paint (GimpPaintCore      *paint_core,
                    GimpPaintOptions   *paint_options,
                    GimpPaintCoreState  paint_state)
 {
-  GimpSmudge *smudge;
-
-  smudge = GIMP_SMUDGE (paint_core);
+  GimpSmudge *smudge = GIMP_SMUDGE (paint_core);
 
   switch (paint_state)
     {
@@ -187,16 +176,13 @@ static gboolean
 gimp_smudge_start (GimpPaintCore *paint_core,
                    GimpDrawable  *drawable)
 {
-  GimpSmudge  *smudge;
+  GimpSmudge  *smudge = GIMP_SMUDGE (paint_core);
   GimpImage   *gimage;
   TempBuf     *area;
   PixelRegion  srcPR;
   gint         x, y, w, h;
 
-  smudge = GIMP_SMUDGE (paint_core);
-
-  if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
-    return FALSE;
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   if (gimp_drawable_is_indexed (drawable))
     return FALSE;
@@ -266,10 +252,10 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
                     GimpDrawable     *drawable,
                     GimpPaintOptions *paint_options)
 {
-  GimpSmudge          *smudge;
-  GimpSmudgeOptions   *options;
-  GimpPressureOptions *pressure_options;
-  GimpContext         *context;
+  GimpSmudge          *smudge           = GIMP_SMUDGE (paint_core);
+  GimpSmudgeOptions   *options          = GIMP_SMUDGE_OPTIONS (paint_options);
+  GimpContext         *context          = GIMP_CONTEXT (paint_options);
+  GimpPressureOptions *pressure_options = paint_options->pressure_options;
   GimpImage           *gimage;
   TempBuf             *area;
   PixelRegion          srcPR, destPR, tempPR;
@@ -277,21 +263,13 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   gdouble              opacity;
   gint                 x, y, w, h;
 
-  smudge  = GIMP_SMUDGE (paint_core);
-  options = GIMP_SMUDGE_OPTIONS (paint_options);
-  context = GIMP_CONTEXT (paint_options);
-
-  pressure_options = paint_options->pressure_options;
-
-  if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
-    return;
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   if (gimp_drawable_is_indexed (drawable))
     return;
 
   opacity = gimp_paint_options_get_fade (paint_options, gimage,
                                          paint_core->pixel_dist);
-
   if (opacity == 0.0)
     return;
 
@@ -363,8 +341,7 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   if (pressure_options->opacity)
     opacity *= PRESSURE_SCALE * paint_core->cur_coords.pressure;
 
-  /* Replace the newly made paint area to the gimage */
-  gimp_paint_core_replace_canvas (paint_core, drawable,
+  gimp_brush_core_replace_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
 				  MIN (opacity, GIMP_OPACITY_OPAQUE),
 				  gimp_context_get_opacity (context),
 				  gimp_paint_options_get_brush_mode (paint_options),
@@ -379,11 +356,11 @@ gimp_smudge_nonclipped_painthit_coords (GimpPaintCore *paint_core,
                                         gint          *w,
                                         gint          *h)
 {
+  GimpBrushCore *brush_core = GIMP_BRUSH_CORE (paint_core);
+
   /* Note: these are the brush mask size plus a border of 1 pixel */
-  *x =
-    (gint) paint_core->cur_coords.x - paint_core->brush->mask->width  / 2 - 1;
-  *y =
-    (gint) paint_core->cur_coords.y - paint_core->brush->mask->height / 2 - 1;
-  *w = paint_core->brush->mask->width  + 2;
-  *h = paint_core->brush->mask->height + 2;
+  *x = (gint) paint_core->cur_coords.x - brush_core->brush->mask->width  / 2 - 1;
+  *y = (gint) paint_core->cur_coords.y - brush_core->brush->mask->height / 2 - 1;
+  *w = brush_core->brush->mask->width  + 2;
+  *h = brush_core->brush->mask->height + 2;
 }
