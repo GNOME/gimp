@@ -24,6 +24,7 @@ API generalization
    gimp_desaturate -> drawable
 
 bugs
+  * try to work around the redhat-undef $fh => no close problem.
   * .pot file -> add to dist.
   * damnit libintl crazy shit
   * font_text with negative size? bug report #5523

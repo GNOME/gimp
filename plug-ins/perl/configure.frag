@@ -2,6 +2,9 @@ AC_CHECK_FUNCS(vsnprintf,AC_DEFINE(HAVE_VSNPRINTF),[
    AC_MSG_WARN(vsnprintf not found.. I hope you are using gcc...)
 ])
 
+AC_MSG_CHECKING(for intelligent life)
+AC_MSG_RESULT(not found)
+
 dnl disable some warnings I don't want to see
 if test "x$GCC" = xyes; then
    nowarn="-Wno-parentheses -Wno-unused -Wno-uninitialized"

@@ -1,3 +1,8 @@
+Thu Apr  6 22:38:51 CEST 2000  Marc Lehmann <pcg@goof.com>
+
+        * Makefile.PL: msgmerge will no longer be called under any
+        circumstances (except for update.sh or make update-po).
+
 Wed Apr  5 06:02:58 CEST 2000  Marc Lehmann <pcg@goof.com>
 
         * Makefile.PL: possible fix for #8148. basically, nothing at all

@@ -13,10 +13,8 @@ if ($MSGFMT =~ /./ && $MSGFMT ne "no") {
       $uninstall .= "	\$(RM_F) \$(datadir)/locale/$po/LC_MESSAGES/gimp-perl.mo\n";
       $mofiles   .= " $po.gmo";
    }
-   $alltarget = "update-po";
 } else {
    print " skipped";
-   $alltarget = "";
 }
 print "\n";
 
