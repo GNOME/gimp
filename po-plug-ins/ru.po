@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-plugin-1.1.21+\n"
-"POT-Creation-Date: 2000-10-30 21:56-0800\n"
-"PO-Revision-Date: 2000-10-31 01:29+03:00\n"
+"POT-Creation-Date: 2000-11-03 15:43+0300\n"
+"PO-Revision-Date: 2000-11-03 15:44+03:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -71,7 +71,7 @@ msgstr "О программе"
 #: plug-ins/common/snoise.c:512 plug-ins/common/sobel.c:251
 #: plug-ins/common/sparkle.c:349 plug-ins/common/spheredesigner.c:2232
 #: plug-ins/common/spread.c:382 plug-ins/common/struc.c:1281
-#: plug-ins/common/sunras.c:1589 plug-ins/common/tga.c:1448
+#: plug-ins/common/sunras.c:1589 plug-ins/common/tga.c:1062
 #: plug-ins/common/threshold_alpha.c:271 plug-ins/common/tiff.c:1582
 #: plug-ins/common/tile.c:383 plug-ins/common/tileit.c:386
 #: plug-ins/common/uniteditor.c:173 plug-ins/common/unsharp.c:786
@@ -153,7 +153,7 @@ msgstr "Да"
 #: plug-ins/common/sobel.c:253 plug-ins/common/sparkle.c:351
 #: plug-ins/common/spheredesigner.c:2236 plug-ins/common/spread.c:384
 #: plug-ins/common/struc.c:1283 plug-ins/common/sunras.c:1591
-#: plug-ins/common/tga.c:1450 plug-ins/common/threshold_alpha.c:273
+#: plug-ins/common/tga.c:1064 plug-ins/common/threshold_alpha.c:273
 #: plug-ins/common/tiff.c:1584 plug-ins/common/tile.c:385
 #: plug-ins/common/tileit.c:388 plug-ins/common/uniteditor.c:175
 #: plug-ins/common/unsharp.c:788 plug-ins/common/video.c:2157
@@ -1363,7 +1363,7 @@ msgstr "Показать скрыть каркас просмотра"
 #: plug-ins/common/pix.c:326 plug-ins/common/png.c:426
 #: plug-ins/common/png.c:428 plug-ins/common/pnm.c:414
 #: plug-ins/common/psd.c:1731 plug-ins/common/sunras.c:441
-#: plug-ins/common/tga.c:429 plug-ins/common/tiff.c:455
+#: plug-ins/common/tga.c:422 plug-ins/common/tiff.c:455
 #: plug-ins/common/xbm.c:734 plug-ins/common/xpm.c:334
 #: plug-ins/common/xwd.c:430 plug-ins/faxg3/faxg3.c:196
 #: plug-ins/gfli/gfli.c:459 plug-ins/sgi/sgi.c:330 plug-ins/sgi/sgi.c:332
@@ -1407,7 +1407,7 @@ msgstr "%s: плохая цветовая карта"
 #: plug-ins/common/pcx.c:338 plug-ins/common/pix.c:370
 #: plug-ins/common/png.c:547 plug-ins/common/pnm.c:502
 #: plug-ins/common/psd.c:2114 plug-ins/common/smooth_palette.c:241
-#: plug-ins/common/sunras.c:931 plug-ins/common/tga.c:1014
+#: plug-ins/common/sunras.c:931 plug-ins/common/tga.c:836
 #: plug-ins/common/tiff.c:681 plug-ins/common/tile.c:268
 #: plug-ins/common/winclipboard.c:515 plug-ins/common/wmf.c:2350
 #: plug-ins/common/xbm.c:872 plug-ins/faxg3/faxg3.c:448
@@ -1437,7 +1437,7 @@ msgstr "Невозможно открыть %s"
 #: plug-ins/common/pcx.c:547 plug-ins/common/pix.c:532
 #: plug-ins/common/png.c:775 plug-ins/common/png.c:777
 #: plug-ins/common/pnm.c:786 plug-ins/common/ps.c:1003
-#: plug-ins/common/sunras.c:524 plug-ins/common/tga.c:1196
+#: plug-ins/common/sunras.c:524 plug-ins/common/tga.c:927
 #: plug-ins/common/tiff.c:1334 plug-ins/common/xbm.c:982
 #: plug-ins/common/xpm.c:653 plug-ins/common/xwd.c:534
 #: plug-ins/fits/fits.c:472 plug-ins/gfli/gfli.c:679 plug-ins/sgi/sgi.c:548
@@ -6284,17 +6284,32 @@ msgstr "Сохранить как SUNRAS"
 msgid "RunLength Encoded"
 msgstr "RLE-кодирование"
 
-#: plug-ins/common/tga.c:1443
+#: plug-ins/common/tga.c:418
+#, c-format
+msgid "TGA: can't open \"%s\"\n"
+msgstr "TGA: невозможно открыть \"%s\"\n"
+
+#: plug-ins/common/tga.c:430
+#, c-format
+msgid "TGA: Cannot read footer from \"%s\"\n"
+msgstr "TGA: невозможно прочесть сноску из \"%s\"\n"
+
+#: plug-ins/common/tga.c:443
+#, c-format
+msgid "TGA: Cannot read extension from \"%s\"\n"
+msgstr "TGA: невозможно прочесть расширение из \"%s\"\n"
+
+#: plug-ins/common/tga.c:1057
 msgid "Save as TGA"
 msgstr "Сохранить как TGA"
 
 #. regular tga parameter settings
-#: plug-ins/common/tga.c:1460
+#: plug-ins/common/tga.c:1074
 msgid "Targa Options"
 msgstr "Параметры Targa"
 
 #. rle
-#: plug-ins/common/tga.c:1470
+#: plug-ins/common/tga.c:1084
 msgid "RLE compression"
 msgstr "RLE сжатие"
 
