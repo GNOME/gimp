@@ -1,3 +1,13 @@
+2003-05-13  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* plug-ins/script-fu/script-fu.c: Merged a partial fix for
+	bug #86586 (memory leaks in script-fu) from HEAD.
+
+	* tools/pdbgen/pdb/color.pdb (histogram): Call gimp_histogram_free
+	when no longer needed.
+
+	* app/color_cmds.c: Regenerated.
+
 2003-05-13  Adam D. Moss  <adam@gimp.org>
 
 	* plug-ins/common/gif.c

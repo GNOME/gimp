@@ -966,6 +966,8 @@ histogram_invoker (Argument *args)
 	  /* Calculate the statistics */
 	  histogram_tool_histogram_range (htd.histogram, start_range, end_range,
 					  &htd);
+    
+	  gimp_histogram_free (htd.hist);
 	}
     }
 

@@ -547,6 +547,27 @@ marshall_proc_db_call (LISP a)
     return my_err ("Invalid procedure name specified.", NIL);
 
 
+  /*  Free unused query information.  */
+
+  g_free (proc_blurb);
+  g_free (proc_help);
+  g_free (proc_author);
+  g_free (proc_copyright);
+  g_free (proc_date);
+
+  for (i = 0; i < nparams; i++)
+    {
+      g_free (params[i].name);
+      g_free (params[i].description);
+    }
+
+  for (i = 0; i < nreturn_vals; i++)
+    {
+      g_free (return_vals[i].name);
+      g_free (return_vals[i].description);
+    }
+
+
   /*  Check the supplied number of arguments  */
   if ((nlength (a) - 1) != nparams)
     {
@@ -1047,12 +1068,6 @@ marshall_proc_db_call (LISP a)
   /*  free up arguments and values  */
   g_free (args);
 
-  /*  free the query information  */
-  g_free (proc_blurb);
-  g_free (proc_help);
-  g_free (proc_author);
-  g_free (proc_copyright);
-  g_free (proc_date);
   g_free (params);
   g_free (return_vals);
 
