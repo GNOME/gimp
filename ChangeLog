@@ -1,3 +1,8 @@
+2000-04-05  Nick Lamb <njl195@zepler.org.uk>
+
+	* plug-ins/common/pat.c: Don't claim to export ALPHA or to be
+	suitable for RGB*, GREY* - this plug-in creates flat patterns
+
 Tue Apr  4 17:33:40 PDT 2000 Manish Singh <yosh@gimp.org>
 
 	* gimptool.in: resync the variable names. Fixes #8360

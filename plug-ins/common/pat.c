@@ -2,6 +2,8 @@
  * pat plug-in version 1.01
  * Loads/saves version 1 GIMP .pat files, by Tim Newsome <drz@frody.bloke.com>
  * Some bits stolen from the .99.7 source tree.
+ * Updated to fix various outstanding problems, brief help -- Nick Lamb
+ * njl195@zepler.org.uk, April 2000
  */
 
 #include "config.h"
@@ -104,8 +106,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("file_pat_load",
-                          "loads files of the .pat file format",
-                          "FIXME: write help",
+                          "Loads Gimp's .PAT pattern files",
+                          "The images in the pattern dialog can be loaded directly with this plug-in",
                           "Tim Newsome",
                           "Tim Newsome",
                           "1997",
@@ -116,13 +118,13 @@ query (void)
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_pat_save",
-                          "saves files in the .pat file format",
-                          "Yeah!",
+                          "Saves Gimp pattern file (.PAT)",
+                          "New Gimp patterns can be created by saving them in the appropriate place with this plug-in.",
                           "Tim Newsome",
                           "Tim Newsome",
                           "1997",
                           "<Save>/PAT",
-                          "RGB*, GRAY*",
+                          "RGB, GRAY",
                           PROC_PLUG_IN,
                           nsave_args, 0,
                           save_args, NULL);
@@ -186,9 +188,7 @@ run (gchar   *name,
 	  INIT_I18N_UI();
 	  init_gtk ();
 	  export = gimp_export_image (&image_ID, &drawable_ID, "PAT", 
-				      (CAN_HANDLE_RGB |
-				       CAN_HANDLE_GRAY |
-				       CAN_HANDLE_ALPHA));
+				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY));
 	  if (export == EXPORT_CANCEL)
 	    {
 	      values[0].data.d_status = STATUS_CANCEL;
