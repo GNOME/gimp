@@ -477,9 +477,9 @@ nav_window_update_preview (NavWinData *iwd)
     {
       TempBuf *tmp;
 
-      tmp = gimp_viewable_preview_new (GIMP_VIEWABLE (gimage),
-				       gimage->width,
-				       gimage->height);
+      tmp = gimp_viewable_get_new_preview (GIMP_VIEWABLE (gimage),
+					   gimage->width,
+					   gimage->height);
       preview_buf = temp_buf_scale (tmp, 
 				    pwidth, 
 				    pheight);
@@ -487,9 +487,9 @@ nav_window_update_preview (NavWinData *iwd)
     } 
   else 
     {
-      preview_buf = gimp_viewable_preview_new (GIMP_VIEWABLE (gimage),
-					       MAX (pwidth, 2),
-					       MAX (pheight, 2));
+      preview_buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (gimage),
+						   MAX (pwidth, 2),
+						   MAX (pheight, 2));
     }
 
   /* reset & get new preview */

@@ -53,12 +53,12 @@
 #include "libgimp/gimpintl.h"
 
 
-static void      gimp_pattern_class_init  (GimpPatternClass *klass);
-static void      gimp_pattern_init        (GimpPattern      *pattern);
-static void      gimp_pattern_destroy     (GtkObject        *object);
-static TempBuf * gimp_pattern_preview_new (GimpViewable     *viewable,
-					   gint              width,
-					   gint              height);
+static void      gimp_pattern_class_init      (GimpPatternClass *klass);
+static void      gimp_pattern_init            (GimpPattern      *pattern);
+static void      gimp_pattern_destroy         (GtkObject        *object);
+static TempBuf * gimp_pattern_get_new_preview (GimpViewable     *viewable,
+					       gint              width,
+					       gint              height);
 
 
 static GimpViewableClass *parent_class = NULL;
@@ -102,7 +102,7 @@ gimp_pattern_class_init (GimpPatternClass *klass)
 
   object_class->destroy = gimp_pattern_destroy;
 
-  viewable_class->preview_new = gimp_pattern_preview_new;
+  viewable_class->get_new_preview = gimp_pattern_get_new_preview;
 }
 
 static void
@@ -129,9 +129,9 @@ gimp_pattern_destroy (GtkObject *object)
 }
 
 static TempBuf *
-gimp_pattern_preview_new (GimpViewable *viewable,
-			  gint          width,
-			  gint          height)
+gimp_pattern_get_new_preview (GimpViewable *viewable,
+			      gint          width,
+			      gint          height)
 {
   GimpPattern *pattern;
   TempBuf     *temp_buf;

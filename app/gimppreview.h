@@ -60,7 +60,9 @@ struct _GimpPreviewClass
 {
   GtkPreviewClass  parent_class;
 
-  void (* clicked) (GimpPreview *preview);
+  void        (* clicked)        (GimpPreview *preview);
+  TempBuf   * (* create_preview) (GimpPreview *preview);
+  GtkWidget * (* create_popup)   (GimpPreview *preview);
 };
 
 

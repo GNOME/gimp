@@ -1085,7 +1085,7 @@ gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (preview), width, height);
 
-  tmpbuf = gimp_viewable_preview (GIMP_VIEWABLE (drawable), width, height);
+  tmpbuf = gimp_viewable_get_preview (GIMP_VIEWABLE (drawable), width, height);
 
   if (! tmpbuf)
     {

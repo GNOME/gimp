@@ -1,6 +1,9 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * GimpDrawablePreview Widget
+ * Copyright (C) 2001 Michael Natterer
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -20,13 +23,39 @@
 #define __GIMP_DRAWABLE_PREVIEW_H__
 
 
-/*
- *  virtual function of GimpDrawable -- dont't call directly
- */
+#include "gimppreview.h"
 
-TempBuf * gimp_drawable_preview (GimpViewable *viewable,
-				 gint          width, 
-				 gint          height);
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+
+#define GIMP_TYPE_DRAWABLE_PREVIEW            (gimp_drawable_preview_get_type ())
+#define GIMP_DRAWABLE_PREVIEW(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_DRAWABLE_PREVIEW, GimpDrawablePreview))
+#define GIMP_DRAWABLE_PREVIEW_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DRAWABLE_PREVIEW, GimpDrawablePreviewClass))
+#define GIMP_IS_DRAWABLE_PREVIEW(obj)         (GTK_CHECK_TYPE (obj, GIMP_TYPE_DRAWABLE_PREVIEW))
+#define GIMP_IS_DRAWABLE_PREVIEW_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DRAWABLE_PREVIEW))
+
+
+typedef struct _GimpDrawablePreviewClass  GimpDrawablePreviewClass;
+
+struct _GimpDrawablePreview
+{
+  GimpPreview  parent_instance;
+};
+
+struct _GimpDrawablePreviewClass
+{
+  GimpPreviewClass  parent_class;
+};
+
+
+GtkType   gimp_drawable_preview_get_type (void);
+
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* __GIMP_DRAWABLE_PREVIEW_H__ */

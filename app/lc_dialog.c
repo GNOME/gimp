@@ -470,17 +470,17 @@ lc_dialog_fill_preview_with_thumb (GtkWidget *widget,
     {
       TempBuf *tmp;
 
-      tmp = gimp_viewable_preview_new (GIMP_VIEWABLE (gimage),
-				       gimage->width, 
-				       gimage->height);
+      tmp = gimp_viewable_get_new_preview (GIMP_VIEWABLE (gimage),
+					   gimage->width, 
+					   gimage->height);
       buf = temp_buf_scale (tmp, width, height);
       temp_buf_free (tmp);
     }
   else
     {
-      buf = gimp_viewable_preview_new (GIMP_VIEWABLE (gimage),
-				       width,
-				       height);
+      buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (gimage),
+					   width,
+					   height);
     }
 
   gtk_preview_size (GTK_PREVIEW (widget), width, height);

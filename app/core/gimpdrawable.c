@@ -32,7 +32,7 @@
 #include "gimage_mask.h"
 #include "gimpchannel.h"
 #include "gimpdrawable.h"
-#include "gimpdrawablepreview.h"
+#include "gimpdrawable-preview.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
 #include "gimppreviewcache.h"
@@ -128,7 +128,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   gimp_object_class->name_changed = gimp_drawable_name_changed;
 
   viewable_class->invalidate_preview = gimp_drawable_invalidate_preview;
-  viewable_class->preview            = gimp_drawable_preview;
+  viewable_class->get_preview        = gimp_drawable_get_preview;
 
   klass->removed = NULL;
 }

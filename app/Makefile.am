@@ -122,8 +122,8 @@ gimp_SOURCES = \
 	gimpdnd.h		\
 	gimpdrawable.c		\
 	gimpdrawable.h		\
-	gimpdrawablepreview.c	\
-	gimpdrawablepreview.h	\
+	gimpdrawable-preview.c	\
+	gimpdrawable-preview.h	\
 	gimphelp.c		\
 	gimphelp.h		\
 	gimphistogram.c		\
@@ -282,12 +282,18 @@ gimp_SOURCES = \
 	tile_swap.c		\
 	tile_swap.h		\
 	\
+	gimpbrushpreview.c		\
+	gimpbrushpreview.h		\
 	gimpcontainergridview.h		\
 	gimpcontainergridview.c		\
 	gimpcontainerlistview.h		\
 	gimpcontainerlistview.c		\
 	gimpcontainerview.h		\
 	gimpcontainerview.c		\
+	gimpdrawablepreview.c		\
+	gimpdrawablepreview.h		\
+	gimppatternpreview.h		\
+	gimppatternpreview.c		\
 	gimppreview.h			\
 	gimppreview.c			\
 	gtkwrapbox.c			\

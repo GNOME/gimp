@@ -1,3 +1,53 @@
+2001-02-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/gimpdrawable-preview.[ch]: new files formerly known as
+	gimpdrawablepreview.[ch].
+
+	This a new naming scheme for methods of objects which live outside
+	their object's file. The old name implied a derived object (and
+	is in fact now taken by a GimpPreview subclass, see below).
+
+	Further candidates for renaming are e.g. gimpdrawable-invert.[ch],
+	gimpimage-convert.[ch] etc.  Finaly, the main objects (image,
+	drawable) will go to their own directories together with their
+	subclasses.
+
+	* app/apptypes.h: added typedefs for the new objects:
+
+	* app/gimpbrushpreview.[ch]
+	* app/gimppatternpreview.[ch]: new subclasses of GimpPreview.
+
+	* app/gimpdrawablepreview.[ch]: contains a subclass of GimpPreview
+	now.
+
+	* app/gimpviewable.[ch]: renamed the virtual functions to
+	"get_preview" and "get_new_preview" to avoid confusion with the
+	new GimpPreview subclasses.
+
+	* app/gimppreview.[ch]: virtualized "create_preview" and
+	"create_popup".
+
+	* app/gimpmarshal.[ch]: new marsaller for GimpPreview.
+
+	* app/channels_dialog.c
+	* app/fileops.c
+	* app/gimpbrush.c
+	* app/gimpdnd.c
+	* app/gimpdrawable.c
+	* app/gimpimage.c
+	* app/gimppattern.c
+	* app/layer_select.c
+	* app/layers_dialog.c
+	* app/lc_dialog.c
+	* app/nav_window.c
+	* app/palette_import.c
+	* app/undo_history.c
+	* app/pdb/drawable_cmds.c
+	* app/pdb/image_cmds.c
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/image.pdb: changed accordingly.
+
 2001-02-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimpcontainergridview.[ch]

@@ -2124,9 +2124,9 @@ channel_widget_preview_redraw (ChannelWidget *channel_widget)
       if (channelsD->ratio > 1.0) /*  Preview is scaling up!  */
 	{
 	  preview_buf =
-	    gimp_viewable_preview (GIMP_VIEWABLE (channel_widget->channel),
-				   channelsD->gimage_width,
-				   channelsD->gimage_height);
+	    gimp_viewable_get_preview (GIMP_VIEWABLE (channel_widget->channel),
+				       channelsD->gimage_width,
+				       channelsD->gimage_height);
 
 	  preview_buf = temp_buf_scale (preview_buf,
 					channel_widget->width,
@@ -2135,9 +2135,9 @@ channel_widget_preview_redraw (ChannelWidget *channel_widget)
       else
 	{
 	  preview_buf =
-	    gimp_viewable_preview (GIMP_VIEWABLE (channel_widget->channel),
-				   channel_widget->width,
-				   channel_widget->height);
+	    gimp_viewable_get_preview (GIMP_VIEWABLE (channel_widget->channel),
+				       channel_widget->width,
+				       channel_widget->height);
 	}
       break;
 
@@ -2150,9 +2150,9 @@ channel_widget_preview_redraw (ChannelWidget *channel_widget)
       if (channelsD->ratio > 1.0) /*  Preview is scaling up!  */
 	{
 	  preview_buf =
-	    gimp_viewable_preview (GIMP_VIEWABLE (channel_widget->gimage),
-				   width,
-				   height);
+	    gimp_viewable_get_preview (GIMP_VIEWABLE (channel_widget->gimage),
+				       width,
+				       height);
 
 	  preview_buf = temp_buf_scale (preview_buf,
 					channel_widget->width,
@@ -2161,9 +2161,9 @@ channel_widget_preview_redraw (ChannelWidget *channel_widget)
       else
 	{
 	  preview_buf =
-	    gimp_viewable_preview (GIMP_VIEWABLE (channel_widget->gimage),
-				   channel_widget->width,
-				   channel_widget->height);
+	    gimp_viewable_get_preview (GIMP_VIEWABLE (channel_widget->gimage),
+				       channel_widget->width,
+				       channel_widget->height);
 	}
       break;
     }

@@ -201,9 +201,9 @@ palette_import_update_image_preview (GimpImage *gimage)
     }
   
   /* Min size is 2 */
-  preview_buf = gimp_viewable_preview_new (GIMP_VIEWABLE (gimage),
-					   MAX (pwidth, 2),
-					   MAX (pheight, 2));
+  preview_buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (gimage),
+					       MAX (pwidth, 2),
+					       MAX (pheight, 2));
 
   gtk_preview_size (GTK_PREVIEW (import_dialog->preview),
 		    preview_buf->width,

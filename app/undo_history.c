@@ -280,12 +280,12 @@ undo_history_set_pixmap_idle (gpointer data)
 
   utype = undo_get_undo_top_type (idle->gimage);
 
-  if((utype != MASK_UNDO && utype != QMASK_UNDO) || 
-     (mbuf = mask_render_preview (idle->gimage,&width,&height)) == NULL)
+  if ((utype != MASK_UNDO && utype != QMASK_UNDO) || 
+      (mbuf = mask_render_preview (idle->gimage, &width, &height)) == NULL)
     {
-      buf = gimp_viewable_preview_new (GIMP_VIEWABLE (idle->gimage),
-				       width,
-				       height);
+      buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (idle->gimage),
+					   width,
+					   height);
       bpp = buf->bytes;
       src = temp_buf_data (buf);
     }

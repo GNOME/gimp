@@ -51,6 +51,7 @@
 
 /*  this needs to go away  */
 #include "tools/paint_core.h"
+#include "brush_scale.h"
 #include "gimpbrushpipe.h"
 
 #include "libgimp/gimpintl.h"
@@ -66,7 +67,7 @@ enum
 static void        gimp_brush_class_init       (GimpBrushClass *klass);
 static void        gimp_brush_init             (GimpBrush      *brush);
 static void        gimp_brush_destroy          (GtkObject      *object);
-static TempBuf   * gimp_brush_preview_new      (GimpViewable   *viewable,
+static TempBuf   * gimp_brush_get_new_preview  (GimpViewable   *viewable,
 						gint            width,
 						gint            height);
 
@@ -127,7 +128,7 @@ gimp_brush_class_init (GimpBrushClass *klass)
 
   object_class->destroy = gimp_brush_destroy;
 
-  viewable_class->preview_new = gimp_brush_preview_new;
+  viewable_class->get_new_preview = gimp_brush_get_new_preview;
 
   klass->dirty            = NULL;
 
@@ -167,9 +168,9 @@ gimp_brush_destroy (GtkObject *object)
 }
 
 static TempBuf *
-gimp_brush_preview_new (GimpViewable *viewable,
-			gint          width,
-			gint          height)
+gimp_brush_get_new_preview (GimpViewable *viewable,
+			    gint          width,
+			    gint          height)
 {
   GimpBrush   *brush;
   gboolean     is_popup   = FALSE;

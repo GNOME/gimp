@@ -98,6 +98,21 @@ gimp_marshal_INT__POINTER (GtkObject     *object,
 }
 
 
+typedef gpointer (* GimpSignal_POINTER__NONE) (GtkObject *object,
+					       gpointer   user_data);
+
+void
+gimp_marshal_POINTER__NONE (GtkObject     *object,
+			    GtkSignalFunc  func,
+			    gpointer       func_data,
+			    GtkArg        *args)
+{
+  *GTK_RETLOC_POINTER (args[0]) =
+    (* (GimpSignal_POINTER__NONE) func) (object,
+					 func_data);
+}
+
+
 typedef gpointer (* GimpSignal_POINTER__INT) (GtkObject *object,
 					      gint       arg1,
 					      gpointer   user_data);

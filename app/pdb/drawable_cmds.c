@@ -1405,8 +1405,8 @@ drawable_thumbnail_invoker (Argument *args)
 	  else
 	    req_width = (req_height * dwidth) / dheight;
     
-	  buf = gimp_viewable_preview (GIMP_VIEWABLE (drawable),
-				       req_width, req_height);
+	  buf = gimp_viewable_get_preview (GIMP_VIEWABLE (drawable),
+					   req_width, req_height);
     
 	  num_pixels = buf->height * buf->width * buf->bytes;
 	  thumbnail_data = g_new (guint8, num_pixels);

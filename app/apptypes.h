@@ -70,6 +70,13 @@ typedef struct _GimpPalette         GimpPalette;
 /*  widgets  */
 
 typedef struct _GimpPreview           GimpPreview;
+typedef struct _GimpImagePreview      GimpImagePreview;
+typedef struct _GimpDrawablePreview   GimpDrawablePreview;
+typedef struct _GimpBrushPreview      GimpBrushPreview;
+typedef struct _GimpPatternPreview    GimpPatternPreview;
+typedef struct _GimpPalettePreview    GimpPalettePreview;
+typedef struct _GimpGradientPreview   GimpGradientPreview;
+
 typedef struct _GimpContainerListView GimpContainerListView;
 typedef struct _GimpContainerGridView GimpContainerGridView;
 typedef struct _HistogramWidget       HistogramWidget;

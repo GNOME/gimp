@@ -3042,17 +3042,19 @@ layer_widget_preview_redraw (LayerWidget *layer_widget,
       switch (preview_type)
 	{
 	case LAYER_PREVIEW:
-	  preview_buf = gimp_viewable_preview (GIMP_VIEWABLE (layer_widget->layer),
-					       layer_widget->width,
-					       layer_widget->height);
+	  preview_buf =
+	    gimp_viewable_get_preview (GIMP_VIEWABLE (layer_widget->layer),
+				       layer_widget->width,
+				       layer_widget->height);
 	  
 	  layer_widget->layer_pixmap_valid = TRUE;
 	  break;
 
 	case MASK_PREVIEW:
-	  preview_buf = gimp_viewable_preview (GIMP_VIEWABLE (layer_widget->layer->mask),
-					       layer_widget->width,
-					       layer_widget->height);
+	  preview_buf =
+	    gimp_viewable_get_preview (GIMP_VIEWABLE (layer_widget->layer->mask),
+				       layer_widget->width,
+				       layer_widget->height);
 	  break;
 	}
 

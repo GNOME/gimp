@@ -67,10 +67,10 @@ static void     gimp_image_init                  (GimpImage      *gimage);
 static void     gimp_image_destroy               (GtkObject      *object);
 static void     gimp_image_name_changed          (GimpObject     *object);
 static void     gimp_image_invalidate_preview    (GimpViewable   *viewable);
-static TempBuf *gimp_image_preview               (GimpViewable   *gimage,
+static TempBuf *gimp_image_get_preview           (GimpViewable   *gimage,
 						  gint            width,
 						  gint            height);
-static TempBuf *gimp_image_preview_new           (GimpViewable   *viewable,
+static TempBuf *gimp_image_get_new_preview       (GimpViewable   *viewable,
 						  gint            width, 
 						  gint            height);
 static void     gimp_image_free_projection       (GimpImage      *gimage);
@@ -282,8 +282,8 @@ gimp_image_class_init (GimpImageClass *klass)
   gimp_object_class->name_changed = gimp_image_name_changed;
 
   viewable_class->invalidate_preview = gimp_image_invalidate_preview;
-  viewable_class->preview            = gimp_image_preview;
-  viewable_class->preview_new        = gimp_image_preview_new;
+  viewable_class->get_preview        = gimp_image_get_preview;
+  viewable_class->get_new_preview    = gimp_image_get_new_preview;
 
   klass->clean            = NULL;
   klass->dirty            = NULL;
@@ -3934,9 +3934,9 @@ gimp_image_preview_valid (const GimpImage *gimage)
 }
 
 static TempBuf *
-gimp_image_preview (GimpViewable *viewable,
-		    gint          width, 
-		    gint          height)
+gimp_image_get_preview (GimpViewable *viewable,
+			gint          width, 
+			gint          height)
 {
   GimpImage *gimage;
 
@@ -3959,7 +3959,8 @@ gimp_image_preview (GimpViewable *viewable,
        *  This might seem ridiculous, but it's actually the best way, given
        *  a number of unsavory alternatives.
        */
-      gimage->comp_preview = gimp_image_preview_new (viewable, width, height);
+      gimage->comp_preview = gimp_image_get_new_preview (viewable,
+							 width, height);
 
       gimage->comp_preview_valid = TRUE;
 
@@ -3968,9 +3969,9 @@ gimp_image_preview (GimpViewable *viewable,
 }
 
 static TempBuf *
-gimp_image_preview_new (GimpViewable *viewable,
-			gint          width, 
-			gint          height)
+gimp_image_get_new_preview (GimpViewable *viewable,
+			    gint          width, 
+			    gint          height)
 {
   GimpImage   *gimage;
   GimpLayer   *layer;
@@ -4064,7 +4065,7 @@ gimp_image_preview_new (GimpViewable *viewable,
       src1PR.data      = 
 	temp_buf_data (comp) + y1 * src1PR.rowstride + x1 * src1PR.bytes;
 
-      layer_buf = gimp_viewable_preview (GIMP_VIEWABLE (layer), w, h);
+      layer_buf = gimp_viewable_get_preview (GIMP_VIEWABLE (layer), w, h);
       src2PR.bytes     = layer_buf->bytes;
       src2PR.w         = src1PR.w;  
       src2PR.h         = src1PR.h;
@@ -4076,7 +4077,8 @@ gimp_image_preview_new (GimpViewable *viewable,
 
       if (layer->mask && layer->apply_mask)
 	{
-	  mask_buf = gimp_viewable_preview (GIMP_VIEWABLE (layer->mask), w, h);
+	  mask_buf = gimp_viewable_get_preview (GIMP_VIEWABLE (layer->mask),
+						w, h);
 	  maskPR.bytes     = mask_buf->bytes;
 	  maskPR.rowstride = mask_buf->width;
 	  maskPR.data      = mask_buf_data (mask_buf) +

@@ -456,7 +456,7 @@ preview_redraw (LayerSelect *layer_select)
       offx = (gint) (layer_select->ratio * off_x);
       offy = (gint) (layer_select->ratio * off_y);
 
-      preview_buf = gimp_viewable_preview (GIMP_VIEWABLE (layer), w, h);
+      preview_buf = gimp_viewable_get_preview (GIMP_VIEWABLE (layer), w, h);
       preview_buf->x = offx;
       preview_buf->y = offy;
 
