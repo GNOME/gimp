@@ -1,3 +1,8 @@
+2000-02-09  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/film.c: hacked the ui and added widgets for
+	the advanced options.
+
 Tue Feb  8 21:35:10 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/devices.c
