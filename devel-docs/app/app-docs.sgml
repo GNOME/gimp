@@ -147,12 +147,12 @@
       <title>The GIMP Application Instance Object</title>
       <xi:include href="xml/gimp.xml"/>
       <xi:include href="xml/gimp-documents.xml"/>
+      <xi:include href="xml/gimp-edit.xml"/>
       <xi:include href="xml/gimp-gradients.xml"/>
+      <xi:include href="xml/gimp-modules.xml"/>
       <xi:include href="xml/gimp-parasites.xml"/>
       <xi:include href="xml/gimp-templates.xml"/>
-      <xi:include href="xml/gimpedit.xml"/>
-      <xi:include href="xml/gimpmodules.xml"/>
-      <xi:include href="xml/gimpunits.xml"/>
+      <xi:include href="xml/gimp-units.xml"/>
     </chapter>
 
     <chapter id="app-core-data">
@@ -191,7 +191,6 @@
       <xi:include href="xml/gimpdrawable-invert.xml"/>
       <xi:include href="xml/gimpdrawable-offset.xml"/>
       <xi:include href="xml/gimpdrawable-preview.xml"/>
-      <xi:include href="xml/gimpdrawable-transform-utils.xml"/>
       <xi:include href="xml/gimpdrawable-transform.xml"/>
       <xi:include href="xml/gimpchannel.xml"/>
       <xi:include href="xml/gimplayermask.xml"/>
@@ -250,6 +249,7 @@
     <chapter id="app-core-misc-utils">
       <title>Misc. Utilities</title>
       <xi:include href="xml/gimp-utils.xml"/>
+      <xi:include href="xml/gimp-transform-utils.xml"/>
       <xi:include href="xml/gimpmarshal.xml"/>
       <xi:include href="xml/gimppreviewcache.xml"/>
       <xi:include href="xml/gimpscanconvert.xml"/>
@@ -367,7 +367,7 @@
 
     <chapter id="app-text-fonts">
       <title>Initialization &amp; Font Management</title>
-      <xi:include href="xml/gimpfonts.xml"/>
+      <xi:include href="xml/gimp-fonts.xml"/>
       <xi:include href="xml/gimpfont.xml"/>
       <xi:include href="xml/gimpfontlist.xml"/>
     </chapter>

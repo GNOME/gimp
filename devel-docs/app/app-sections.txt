@@ -138,6 +138,14 @@ GimpCreateDisplayFunc
 GimpSetBusyFunc
 GimpUnsetBusyFunc
 GimpMessageFunc
+GimpMenusInitFunc
+GimpMenusCreateFunc
+GimpMenusDeleteFunc
+GimpProgressStartFunc
+GimpProgressRestartFunc
+GimpProgressUpdateFunc
+GimpProgressEndFunc
+GimpPDBDialogsCheckFunc
 <TITLE>Gimp</TITLE>
 Gimp
 gimp_new
@@ -153,6 +161,14 @@ gimp_unset_busy
 gimp_message
 gimp_create_image
 gimp_create_display
+gimp_menus_init
+gimp_menus_create_entry
+gimp_menus_delete_entry
+gimp_start_progress
+gimp_restart_progress
+gimp_update_progress
+gimp_end_progress
+gimp_pdb_dialogs_check
 gimp_get_standard_context
 gimp_set_default_context
 gimp_get_default_context
@@ -169,6 +185,83 @@ GIMP_TYPE_GIMP
 gimp_get_type
 GIMP_CLASS
 GIMP_IS_GIMP_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimp-documents</FILE>
+<TITLE>Gimp-documents</TITLE>
+gimp_documents_load
+gimp_documents_save
+</SECTION>
+
+<SECTION>
+<FILE>gimp-edit</FILE>
+<TITLE>Gimp-edit</TITLE>
+gimp_edit_cut
+gimp_edit_copy
+gimp_edit_paste
+gimp_edit_paste_as_new
+gimp_edit_clear
+gimp_edit_fill
+</SECTION>
+
+<SECTION>
+<FILE>gimp-gradients</FILE>
+<TITLE>Gimp-gradients</TITLE>
+gimp_gradients_init
+</SECTION>
+
+<SECTION>
+<FILE>gimp-modules</FILE>
+<TITLE>Gimp-modules</TITLE>
+gimp_modules_init
+gimp_modules_exit
+gimp_modules_load
+gimp_modules_unload
+gimp_modules_refresh
+</SECTION>
+
+<SECTION>
+<FILE>gimp-parasites</FILE>
+<TITLE>Gimp-parasites</TITLE>
+gimp_parasite_attach
+gimp_parasite_detach
+gimp_parasite_find
+gimp_parasite_list
+gimp_parasite_shift_parent
+gimp_parasiterc_load
+gimp_parasiterc_save
+</SECTION>
+
+<SECTION>
+<FILE>gimp-templates</FILE>
+<TITLE>Gimp-templates</TITLE>
+gimp_templates_load
+gimp_templates_save
+</SECTION>
+
+<SECTION>
+<FILE>gimp-units</FILE>
+<TITLE>Gimp-units</TITLE>
+gimp_units_init
+gimp_units_exit
+gimp_unitrc_load
+gimp_unitrc_save
+</SECTION>
+
+<SECTION>
+<FILE>gimp-utils</FILE>
+gimp_rectangle_intersect
+</SECTION>
+
+<SECTION>
+<FILE>gimp-transform-utils</FILE>
+gimp_transform_matrix_flip
+gimp_transform_matrix_rotate
+gimp_transform_matrix_rotate_center
+gimp_transform_matrix_scale
+gimp_transform_matrix_shear
+gimp_transform_matrix_perspective
 </SECTION>
 
 <SECTION>
@@ -1806,7 +1899,8 @@ GIMP_SMUDGE_OPTIONS_GET_CLASS
 </SECTION>
 
 <SECTION>
-<FILE>gimpfonts</FILE>
+<FILE>gimp-fonts</FILE>
+<TITLE>Gimp-fonts</TITLE>
 gimp_fonts_init
 gimp_fonts_load
 gimp_fonts_reset
@@ -3110,11 +3204,13 @@ gimp_vectors_get_new_preview
 
 <SECTION>
 <FILE>gimpvectors-import</FILE>
+<TITLE>GimpVectors-import</TITLE>
 gimp_vectors_import
 </SECTION>
 
 <SECTION>
 <FILE>gimpvectors-export</FILE>
+<TITLE>GimpVectors-export</TITLE>
 gimp_vectors_export
 </SECTION>
 
@@ -4347,6 +4443,7 @@ batch_init
 
 <SECTION>
 <FILE>errors</FILE>
+gimp_errors_init
 gimp_message_log_func
 gimp_error_log_func
 gimp_fatal_error
@@ -5010,39 +5107,6 @@ MF
 </SECTION>
 
 <SECTION>
-<FILE>gimp-documents</FILE>
-gimp_documents_load
-gimp_documents_save
-</SECTION>
-
-<SECTION>
-<FILE>gimp-gradients</FILE>
-gimp_gradients_init
-</SECTION>
-
-<SECTION>
-<FILE>gimp-parasites</FILE>
-gimp_parasite_attach
-gimp_parasite_detach
-gimp_parasite_find
-gimp_parasite_list
-gimp_parasite_shift_parent
-gimp_parasiterc_load
-gimp_parasiterc_save
-</SECTION>
-
-<SECTION>
-<FILE>gimp-templates</FILE>
-gimp_templates_load
-gimp_templates_save
-</SECTION>
-
-<SECTION>
-<FILE>gimp-utils</FILE>
-gimp_rectangle_intersect
-</SECTION>
-
-<SECTION>
 <FILE>gimpdrawable-blend</FILE>
 <TITLE>GimpDrawable-blend</TITLE>
 gimp_drawable_blend
@@ -5094,17 +5158,6 @@ gimp_drawable_get_preview
 </SECTION>
 
 <SECTION>
-<FILE>gimpdrawable-transform-utils</FILE>
-<TITLE>GimpDrawable-transform-utils</TITLE>
-gimp_drawable_transform_matrix_flip
-gimp_drawable_transform_matrix_rotate
-gimp_drawable_transform_matrix_rotate_center
-gimp_drawable_transform_matrix_scale
-gimp_drawable_transform_matrix_shear
-gimp_drawable_transform_matrix_perspective
-</SECTION>
-
-<SECTION>
 <FILE>gimpdrawable-transform</FILE>
 <TITLE>GimpDrawable-transform</TITLE>
 GimpTransformBoundingBox
@@ -5116,16 +5169,6 @@ gimp_drawable_transform_flip
 gimp_drawable_transform_rotate
 gimp_drawable_transform_cut
 gimp_drawable_transform_paste
-</SECTION>
-
-<SECTION>
-<FILE>gimpedit</FILE>
-gimp_edit_cut
-gimp_edit_copy
-gimp_edit_paste
-gimp_edit_paste_as_new
-gimp_edit_clear
-gimp_edit_fill
 </SECTION>
 
 <SECTION>
@@ -5394,15 +5437,6 @@ floating_sel_invalidate
 </SECTION>
 
 <SECTION>
-<FILE>gimpmodules</FILE>
-gimp_modules_init
-gimp_modules_exit
-gimp_modules_load
-gimp_modules_unload
-gimp_modules_refresh
-</SECTION>
-
-<SECTION>
 <FILE>gimppalette-import</FILE>
 gimp_palette_import_from_gradient
 gimp_palette_import_from_image
@@ -5430,14 +5464,6 @@ gimp_scan_convert_to_channel
 
 <SECTION>
 <FILE>gimpunit</FILE>
-</SECTION>
-
-<SECTION>
-<FILE>gimpunits</FILE>
-gimp_units_init
-gimp_units_exit
-gimp_unitrc_load
-gimp_unitrc_save
 </SECTION>
 
 <SECTION>
@@ -6652,6 +6678,7 @@ gimp_anchor_new
 gimp_anchor_free
 gimp_anchor_duplicate
 <SUBSECTION Standard>
+GIMP_TYPE_ANCHOR
 gimp_anchor_get_type
 </SECTION>
 
@@ -6844,6 +6871,7 @@ PropType
 XcfCompressionType
 XcfOrientationType
 XcfInfo
+XcfStrokeType
 </SECTION>
 
 <SECTION>

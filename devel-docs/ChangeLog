@@ -1,3 +1,8 @@
+2003-09-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/app-docs.sgml
+	* app/app-sections.txt: updated for recent core file moving.
+
 2003-09-15  Sven Neumann  <sven@gimp.org>
 
 	* app/app-docs.sgml
