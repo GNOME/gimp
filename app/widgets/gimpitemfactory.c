@@ -2459,7 +2459,7 @@ menus_last_opened_update_labels (GimpContainer *container,
 
       g_free (path_str);
 
-      if (i < num_documents - 1)
+      if (i < num_documents)
         {
           GimpImagefile *imagefile;
 
