@@ -5,7 +5,6 @@ use Config;
 $|=1;
 
 @examples =
-   # not yet: magick
    qw(windy.pl prep4gif.pl webify.pl PDB alpha2color.pl tex-to-float ditherize.pl
       border.pl view3d.pl feedback.pl xachlego.pl xachshadow.pl parasite-editor
       scratches.pl blowinout.pl terral_text xachvision.pl perlcc gouge
@@ -13,7 +12,8 @@ $|=1;
       perlotine randomblends innerbevel fit-text guidegrid roundrectsel
       repdup centerguide stampify goldenmean triangle billboard mirrorsplit
       oneliners randomart1 pixelmap glowing_steel frame_reshuffle frame_filter
-      logulator miff magick guide_remove guides_to_selection burst
+      logulator miff magick guide_remove guides_to_selection burst map_to_gradient
+      fire
    );
 @shebang = (map("examples/$_",@examples),
    qw(Perl-Server examples/example-net.pl examples/homepage-logo.pl

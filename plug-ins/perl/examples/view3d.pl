@@ -25,7 +25,7 @@ sub {
 
     my $regn = $dwb->pixel_rgn (0, 0, $w, $h, 0, 0);
     my $surf = $regn->get_rect (0, 0, $w, $h);
-    $surf=$surf->slice("(0)") if $surf->getndims>2;
+    $surf=$surf->slice("(0)");
 
     imag3d [ $polar ? 'POLAR2D' : 'SURF2D', $surf ],
            { 'Lines' => $lines, 'Smooth' => $smooth };

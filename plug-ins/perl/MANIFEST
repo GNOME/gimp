@@ -112,3 +112,5 @@ examples/guide_remove
 examples/glowing_steel
 examples/guides_to_selection
 examples/burst
+examples/map_to_gradient
+examples/fire

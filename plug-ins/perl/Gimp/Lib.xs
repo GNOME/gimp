@@ -103,7 +103,7 @@ static pdl *new_pdl (int a, int b, int c)
   PDL_Long dims[3];
   int ndims = 0;
 
-  if (c > 1) dims[ndims++] = c;
+  if (c > 0) dims[ndims++] = c;
   if (b > 0) dims[ndims++] = b;
   if (a > 0) dims[ndims++] = a;
 
@@ -2152,23 +2152,21 @@ gimp_pixel_rgn_data(pr,newdata=0)
           }
         else
           {
-            int ndims = 2 + (pr->bpp > 1);
-
             pdl *p = PDL->new();
             PDL_Long dims[3];
 
             dims[0] = pr->bpp;
-            dims[ndims-2] = pr->rowstride / pr->bpp;
-            dims[ndims-1] = pr->h;
+            dims[1] = pr->w;/*D*/
+            dims[2] = pr->h;
 
-            PDL->setdims (p, dims, ndims);
+            PDL->setdims (p, dims, 3);
             p->datatype = PDL_B;
             p->data = pr->data;
             p->state |= PDL_DONTTOUCHDATA | PDL_ALLOCATED;
             PDL->add_deletedata_magic(p, pixel_rgn_pdl_delete_data, 0);
 
-            if (pr->w != dims[ndims-2])
-              p = redim_pdl (p, ndims-2, pr->w);
+            if (pr->w != dims[1])
+              p = redim_pdl (p, 1, pr->w);
 
             RETVAL = p;
           }

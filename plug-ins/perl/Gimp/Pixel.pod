@@ -2,8 +2,9 @@
 
 Gimp::Pixel - how to operate on raw pixels.
 
-***WARNING*** this manpage is no longer up-to-date. See C<examples/colourtoalpha>
-for a simple raw-piyxel-manipulating plug-in.
+***WARNING*** this manpage is no longer up-to-date. See
+C<examples/map_to_gradient> for a simple raw-pixel-manipulating
+plug-in. If you bug me enough I'll rewrite this document.
 
 =head1 SYNOPSIS
 

@@ -127,12 +127,21 @@ sub import($;@) {
 
    # make a quick but dirty guess ;)
    
-   @_=(@_procs,':consts',':auto') unless @_;
+   @_=(@_procs,':consts',':_auto2') unless @_;
    
    for(@_) {
       if ($_ eq ":auto") {
          push(@export,@_consts,@_procs);
          *{"$up\::AUTOLOAD"} = sub {
+            croak "Cannot call '$AUTOLOAD' at this time" unless initialized();
+            my ($class,$name) = $AUTOLOAD =~ /^(.*)::(.*?)$/;
+            *{$AUTOLOAD} = sub { Gimp->$name(@_) };
+            goto &$AUTOLOAD;
+         };
+      } elsif ($_ eq ":_auto2") {
+         push(@export,@_consts,@_procs);
+         *{"$up\::AUTOLOAD"} = sub {
+            warn "$function: calling $AUTOLOAD without specifying the :auto import tag is deprecated!\n";
             croak "Cannot call '$AUTOLOAD' at this time" unless initialized();
             my ($class,$name) = $AUTOLOAD =~ /^(.*)::(.*?)$/;
             *{$AUTOLOAD} = sub { Gimp->$name(@_) };

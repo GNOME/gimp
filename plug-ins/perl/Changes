@@ -5,6 +5,16 @@ Revision history for Gimp-Perl extension.
         - data types for RADIO, SPINNER etc.. are guessed better now.
         - added examples/guides_to_selection.
         - added examples/burst, without even looking at it ;)
+        - warn about deprecated :auto behaviour, remove in next version.
+        - call displays_flush in more cases now.
+        - always leave a dummy dimension of 1 into the pdl, for gray and
+          indexed drawables. down the other road lies madness.
+        - implemented & added examples/map_to_gradient, needed for my next
+          plug-in ;)
+        - implemented & added examples/fire. I gained a bit of understanding
+          now.
+        - fixed a few bugs in Gimp::Fu. PF_PATTERN & friends confused the
+          current with the default value and didn't restore it properly.
         
 1.1   Fri Jul 30 07:37:30 CEST 1999
 	- one of the most successful releases, in terms of features & bugfixes.

@@ -158,7 +158,7 @@ sub GTK_OBJECT_INIT {
    $l->set_selection_mode(-browse);
    $self->{list}=$l;
    
-   for($self->get_list) {
+   for(sort $self->get_list) {
       $l->add(new Gtk::ListItem $_);
    }
    

@@ -1,0 +1,111 @@
+#!/usr/bin/perl
+
+use Gimp;
+use Gimp::Fu;
+
+sub fire {
+   my ($image, $drawable, $threshold, $strength, $gradient, $displace) = @_;
+
+   my ($w,$h) = ($drawable->width, $drawable->height);
+
+   $drawable->layer or die "sorry, this function needs to call functions that work only for layers :(\n";
+
+   $image->undo_push_group_start;
+   $drawable->wind($threshold, 0, $strength, 0, 1);
+   $drawable->wind($threshold, 1, $strength, 0, 1);
+   $drawable->layer_rot270;
+   $drawable->wind($threshold, 0, $strength, 0, 1);
+   $drawable->wind($threshold, 1, $strength, 0, 1);
+   $drawable->layer_rot90;
+   $drawable->gauss_rle(($w**2+*$h**2)**0.5*0.003+1,1,1);
+   $drawable->desaturate if $drawable->color;
+   $drawable->ripple($w*0.05,$w*0.002,0,2,1,1,0);
+   $drawable->ripple($h*0.05,$h*0.002,1,2,1,1,0);
+   $drawable->displace($w*0.05,$w*0.05,1,1,$drawable,$drawable,BLACK) if $displace;
+   $drawable->c_astretch;
+   $drawable->map_to_gradient($gradient);
+   $image->undo_push_group_end;
+
+   ();
+}
+
+register "fire",
+	 "Create a burning (depending on the gradient) halo around an object.",
+	 "=pod(DESCRIPTION)",
+	 "Marc Lehmann <pcg\@goof.com>",
+	 "Marc Lehmann",
+	 "19990802",
+	 "<Image>/Filters/Colors/Fire",
+	 "*",
+	 [
+          [PF_SLIDER,	"threshold",	"Intensity at which to start smearing", 10, [0,255,1]],
+          [PF_SLIDER,	"strength",	"The strength (length) of the bursts", 30, [1,300,5]],
+          [PF_GRADIENT,	"gradient",	"The gradient to use for the colour, e.g. 'Incandescent' or 'Burning_Paper'", 'Burning_Transparency'],
+          [PF_TOGGLE,	"displace",	"Additionally displace with itself?", 0],
+         ],
+         [],
+         ['gimp-1.1'],
+         \&fire;
+
+register "firetext",
+	 "Create a burning (depending on the gradient) halo around a string (see <Image>/Filters/Color/Fire).",
+	 "=pod(DESCRIPTION)",
+	 "Marc Lehmann <pcg\@goof.com>",
+	 "Marc Lehmann",
+	 "19990802",
+	 "<Toolbox>/Xtns/Render/Logos/Firetext",
+	 "*",
+	 [
+          [PF_TEXT,	"text",		"The text to render (can be multi-line)", "burn,\nBurn,\nBURN!"],
+          [PF_FONT,	"font",		"The font to use"],
+          [PF_TOGGLE,	"inverse",	"Invert source mask?", 1],
+          [PF_SLIDER,	"strength",	"The strength (length) of the bursts", 50, [1,300,5]],
+          [PF_GRADIENT,	"gradient",	"The gradient to use for the colour, e.g. 'Incandescent' or 'Burning_Paper'", 'Burning_Transparency'],
+          [PF_TOGGLE,	"displace",	"Additionally displace with itself?", 0],
+         ],
+         [[PF_IMAGE,	"image",	"The resulting image"]],
+         ['gimp-1.1'],
+	 sub {
+   my ($text, $font, $inverse, $strength, $gradient, $displace) = @_;
+   
+   if ($inverse) {
+      Palette->set_foreground('black');
+      Palette->set_background('white');
+   } else {
+      Palette->set_foreground('white');
+      Palette->set_background('black');
+   }
+
+   my ($w,$h) = Gimp->text_get_extents_fontname($text, xlfd_size $font, $font);
+   my $image = new Image $w+40, $h+40, RGB;
+
+   $image->disable_undo;
+   
+   my $layer = new Layer $image, $w+40, $h+40, RGBA_IMAGE, "text layer", 100, NORMAL_MODE;
+   $layer->fill(BG_IMAGE_FILL);
+   $layer->add_layer(0);
+   $layer->text_fontname(20,20, $text,0, 1, xlfd_size $font, $font)->anchor;
+
+   fire($image,$layer,5,$strength,$gradient,$displace);
+
+   Palette->set_foreground('black');
+   $image->text_fontname(-1,20-10*$displace,20-10*$displace, $text,0, 1, xlfd_size $font, $font);
+
+   $image->enable_undo;
+   $image->clean_all;
+
+   ($image);
+};
+
+exit main;
+
+=head1 DESCRIPTION
+
+This plug-in creates a kind of "burning" effect around a drawable. Both
+black-on-white and white-on-black source images make sense and create
+different effects (do not use displace with black-on-white drawables,
+though ;).
+
+Although the original colour of the image does not matter, supplying a
+greyscale drawable (though working) does not look very cool.
+

@@ -24,15 +24,13 @@ sub iterate {
       my $src = new PixelRgn ($drawable,@bounds[0,1],$bounds[2]+1,$bounds[3]+1,0,0);
       my $dst = new PixelRgn ($drawable,@bounds,1,1);
 
-      my $bpp = $src->bpp > 1 ? ":," : "";
-
       my $iter = Gimp->pixel_rgns_register ($dst);
       my $area = $bounds[2]*$bounds[3];
       my $progress = 0;
 
       do {
          my ($x,$y,$w,$h)=($dst->x,$dst->y,$dst->w,$dst->h);
-         $dst->data($kernel->($bpp,$src->get_rect($x,$y,$w+1,$h+1)->convert(short)));
+         $dst->data($kernel->($src->get_rect($x,$y,$w+1,$h+1)->convert(short)));
          $progress += $w*$h/$area;
          Gimp->progress_update ($progress);
       } while (Gimp->pixel_rgns_process ($iter));
@@ -60,10 +58,10 @@ register "blur_2x2",
    iterate $drawable,
            "2x2 smoothing...",
            sub {
-              ($_[1]->slice("$_[0]0:-2,0:-2")+
-               $_[1]->slice("$_[0]1:-1,0:-2")+
-               $_[1]->slice("$_[0]1:-1,1:-1")+
-               $_[1]->slice("$_[0]0:-2,1:-1"))>>2;
+              ($_[0]->slice(":,0:-2,0:-2")+
+               $_[0]->slice(":,1:-1,0:-2")+
+               $_[0]->slice(":,1:-1,1:-1")+
+               $_[0]->slice(":,0:-2,1:-1"))>>2;
            };
 };
 
@@ -82,8 +80,8 @@ register "contrast_enhance_2x2",
    iterate $drawable,
            "2x2 contrast enhancing...",
            sub {
-              my $T = $_[1]->slice("$_[0]0:-2,0:-2");
-              my $D = $_[1]->slice("$_[0]1:-1,1:-1");
+              my $T = $_[0]->slice(":,0:-2,0:-2");
+              my $D = $_[0]->slice(":,1:-1,1:-1");
 
               (($T<<1)-$D)->clip(0,255);
            };
@@ -100,19 +98,18 @@ register "edge_detect_2x2",
          [],
          sub {
    my($image,$drawable)=@_;
-   my $bpp = 3-!!($drawable->gray);
 
    iterate $drawable,
            "2x2 cross gradient...",
            sub {
-              my $T = $_[1]->slice("$_[0]0:-2,0:-2");
-              my $R = $_[1]->slice("$_[0]1:-1,0:-2");
-              my $D = $_[1]->slice("$_[0]1:-1,1:-1");
+              my $T = $_[0]->slice(":,0:-2,0:-2");
+              my $R = $_[0]->slice(":,1:-1,0:-2");
+              my $D = $_[0]->slice(":,1:-1,1:-1");
 
-              255-abs(cat($T-$R,$T-$D))
-                  ->convert(byte)
-                  ->mv($bpp,0)
-                  ->maximum;
+              abs(cat($T-$R,$T-$D))
+              ->convert(byte)
+              ->mv(3,0)
+              ->maximum;
            };
 };
 

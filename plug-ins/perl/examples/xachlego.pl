@@ -29,7 +29,7 @@
 #                   in a directory more suitable than the lame "Misc"
 # Here's the boring start of every script...
 
-use Gimp;
+use Gimp ':auto';
 use Gimp::Fu;
 
 register "xach_blocks",

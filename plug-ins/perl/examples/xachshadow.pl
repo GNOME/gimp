@@ -22,7 +22,7 @@
 #
 # Here's the boring start of every script...
 
-use Gimp;
+use Gimp ':auto';
 use Gimp::Fu;
 
 register "xach_shadows",

@@ -300,7 +300,7 @@ sub interact($$$$@) {
            
         } elsif($type == PF_FONT) {
            my $fs=new Gtk::FontSelectionDialog "Font Selection Dialog ($desc)";
-           my $def = "-*-helvetica-medium-r-normal-*-24-*-*-*-p-*-iso8859-1";
+           my $def = "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1";
            my $val;
            
            my $l=new Gtk::Label "!error!";
@@ -431,8 +431,8 @@ sub interact($$$$@) {
            if ($gimp_10) {
               &new_PF_STRING;
            } else {
-              $a=new Gimp::UI::PatternSelect -active => $default;
-              push(@setvals,sub{$a->set('active',$default)});
+              $a=new Gimp::UI::PatternSelect -active => defined $value ? $value : (Gimp->gradients_get_pattern)[0];
+              push(@setvals,sub{$a->set('active',$_[0])});
               push(@getvals,sub{$a->get('active')});
            }
            
@@ -440,8 +440,8 @@ sub interact($$$$@) {
            if ($gimp_10) {
               &new_PF_STRING;
            } else {
-              $a=new Gimp::UI::BrushSelect -active => $default;
-              push(@setvals,sub{$a->set('active',$default)});
+              $a=new Gimp::UI::BrushSelect -active =>  defined $value ? $value : (Gimp->gradients_get_brush)[0];
+              push(@setvals,sub{$a->set('active',$_[0])});
               push(@getvals,sub{$a->get('active')});
            }
            
@@ -449,8 +449,8 @@ sub interact($$$$@) {
            if ($gimp_10) {
               &new_PF_STRING;
            } else {
-              $a=new Gimp::UI::GradientSelect -active => $default;
-              push(@setvals,sub{$a->set('active',$default)});
+              $a=new Gimp::UI::GradientSelect -active => defined $value ? $value : (Gimp->gradients_get_active)[0];
+              push(@setvals,sub{$a->set('active',$_[0])});
               push(@getvals,sub{$a->get('active')});
            }
            
@@ -1160,26 +1160,28 @@ sub register($$$$$$$$$;@) {
       my @imgs = &$code(@pre,@_);
       $old_trace = Gimp::set_trace (0);
       
-      if (@imgs && $menupath !~ /^<Load>\//) {
-         for my $i (0..$#imgs) {
-            my $img = $imgs[$i];
-            next unless defined $img;
-            if (ref $img eq "Gimp::Image") {
-               if ($outputfile) {
-                  my $path = sprintf $outputfile,$i;
-                  if ($#imgs and $path eq $outputfile) {
-                     $path=~s/\.(?=[^.]*$)/$i./; # insert image number before last dot
+      if ($menupath !~ /^<Load>\//) {
+         if (@imgs) {
+            for my $i (0..$#imgs) {
+               my $img = $imgs[$i];
+               next unless defined $img;
+               if (ref $img eq "Gimp::Image") {
+                  if ($outputfile) {
+                     my $path = sprintf $outputfile,$i;
+                     if ($#imgs and $path eq $outputfile) {
+                        $path=~s/\.(?=[^.]*$)/$i./; # insert image number before last dot
+                     }
+                     print "saving image $path\n" if $Gimp::verbose;
+                     save_image($img,$path);
+                     $img->delete;
+                  } elsif ($run_mode != &Gimp::RUN_NONINTERACTIVE) {
+                     $img->display_new unless $input_image && $$img == $$input_image;
                   }
-                  print "saving image $path\n" if $Gimp::verbose;
-                  save_image($img,$path);
-                  $img->delete;
-               } elsif ($run_mode != &Gimp::RUN_NONINTERACTIVE) {
-                  $img->display_new unless $input_image && $$img == $$input_image;
+               } elsif (!@$retvals) { 
+                  warn "WARNING: $function returned something that is not an image: \"$img\"\n";
                }
-            } elsif (!@$retvals) { 
-               warn "WARNING: $function returned something that is not an image: \"$img\"\n";
             }
-	 }
+         }
          Gimp->displays_flush;
       }
       

@@ -8,18 +8,18 @@ gimp ~/pix/ka001.jpg -b "(extension-perl-server 0 0 0)"
 file:///usr/app/lib/perl5/site_perl/i686-linux/PDL/HtmlDocs/PDL/
 make test TEST_VERBOSE=1
 
-aaron sherman email schicken(!!!!) wegen logulator
+API generalization
+   guide ->
+   gimp_desaturate -> drawable
 
-paint_funcs.h convolve.h gimpdrawable.h gimpimage.h lut_funcs.h paint_core.h plug_in.h flip_tool.h
-
-Guides->To Selection
-firetext!
+firetext! AND _grayscale_ for map_gradient(!)
 
 script-fu 4.9 vs. 3.3
 
 bugs
 
-  * /root/gimprelease && TODO -> publish!
+  * map_to_gradient does not work on GRAYA thingies. Argh.
+[DONE]  * /root/gimprelease && TODO -> publish!
   * perl_require_pv with _59?
   * scroll behaviour, use clist instead of list?
 [DONE]  * can_Default for oter OK-buttons
