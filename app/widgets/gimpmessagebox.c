@@ -35,8 +35,6 @@
 enum
 {
   PROP_0,
-  PROP_TITLE,
-  PROP_MESSAGE,
   PROP_STOCK_ID
 };
 
@@ -123,16 +121,6 @@ gimp_message_box_class_init (GimpMessageBoxClass *klass)
 
   container_class->forall     = gimp_message_box_forall;
 
-  g_object_class_install_property (object_class, PROP_TITLE,
-                                   g_param_spec_string ("title", NULL, NULL,
-                                                        NULL,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
-  g_object_class_install_property (object_class, PROP_MESSAGE,
-                                   g_param_spec_string ("message", NULL, NULL,
-                                                        NULL,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
   g_object_class_install_property (object_class, PROP_STOCK_ID,
                                    g_param_spec_string ("stock-id", NULL, NULL,
                                                         NULL,
@@ -143,7 +131,29 @@ gimp_message_box_class_init (GimpMessageBoxClass *klass)
 static void
 gimp_message_box_init (GimpMessageBox *box)
 {
+  gint i;
+
   gtk_box_set_spacing (GTK_BOX (box), 12);
+
+  for (i = 0; i < 2; i++)
+    {
+      GtkWidget *label = g_object_new (GTK_TYPE_LABEL,
+                                       "wrap",       TRUE,
+                                       "selectable", TRUE,
+                                       "xalign",     0.0,
+                                       "yalign",     0.5,
+                                       NULL);
+
+      if (i == 0)
+        gimp_label_set_attributes (GTK_LABEL (label),
+                                   PANGO_ATTR_SCALE,  PANGO_SCALE_LARGE,
+                                   PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
+                                   -1);
+
+      gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
+
+      box->label[i] = label;
+    }
 }
 
 static void
@@ -151,16 +161,6 @@ gimp_message_box_finalize (GObject *object)
 {
   GimpMessageBox *box = GIMP_MESSAGE_BOX (object);
 
-  if (box->title)
-    {
-      g_free (box->title);
-      box->title = NULL;
-    }
-  if (box->message)
-    {
-      g_free (box->message);
-      box->message = NULL;
-    }
   if (box->stock_id)
     {
       g_free (box->stock_id);
@@ -181,32 +181,6 @@ gimp_message_box_constructor (GType                  type,
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
   box = GIMP_MESSAGE_BOX (object);
-
-  if (box->title)
-    {
-      GtkWidget *label = gtk_label_new (box->title);
-
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-      gimp_label_set_attributes (GTK_LABEL (label),
-                                 PANGO_ATTR_SCALE,  PANGO_SCALE_LARGE,
-                                 PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
-                                 -1);
-
-      gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
-    }
-
-  if (box->message)
-    {
-      GtkWidget *label = gtk_label_new (box->message);
-
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-      gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-      gtk_label_set_selectable (GTK_LABEL (label), TRUE);
-
-      gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
-    }
 
   if (box->stock_id)
     {
@@ -233,12 +207,6 @@ gimp_message_box_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_TITLE:
-      box->title = g_value_dup_string (value);
-      break;
-    case PROP_MESSAGE:
-      box->message = g_value_dup_string (value);
-      break;
     case PROP_STOCK_ID:
       box->stock_id = g_value_dup_string (value);
       break;
@@ -258,12 +226,6 @@ gimp_message_box_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_TITLE:
-      g_value_set_string (value, box->title);
-      break;
-    case PROP_MESSAGE:
-      g_value_set_string (value, box->message);
-      break;
     case PROP_STOCK_ID:
       g_value_set_string (value, box->stock_id);
       break;
@@ -368,16 +330,102 @@ gimp_message_box_forall (GtkContainer *container,
                                               callback, callback_data);
 }
 
+static void
+gimp_message_box_set_label_text (GimpMessageBox *box,
+                                 gint            n,
+                                 const gchar    *format,
+                                 va_list         args)
+{
+  GtkWidget *label = box->label[n];
+
+  if (format)
+    {
+      gchar *text = g_strdup_vprintf (format, args);
+
+      gtk_label_set_text (GTK_LABEL (label), text);
+      gtk_widget_show (label);
+
+      g_free (text);
+    }
+  else
+    {
+      gtk_widget_hide (label);
+      gtk_label_set_text (GTK_LABEL (label), NULL);
+    }
+}
+
+static void
+gimp_message_box_set_label_markup (GimpMessageBox *box,
+                                   gint            n,
+                                   const gchar    *format,
+                                   va_list         args)
+{
+  GtkWidget *label = box->label[n];
+
+  if (format)
+    {
+      gchar *text = g_markup_vprintf_escaped (format, args);
+
+      gtk_label_set_markup (GTK_LABEL (label), text);
+      gtk_widget_show (label);
+
+      g_free (text);
+    }
+  else
+    {
+      gtk_widget_hide (label);
+      gtk_label_set_text (GTK_LABEL (label), NULL);
+    }
+}
+
 /*  public functions  */
 
 GtkWidget *
-gimp_message_box_new (const gchar *title,
-                      const gchar *message,
-                      const gchar *stock_id)
+gimp_message_box_new (const gchar *stock_id)
 {
   return g_object_new (GIMP_TYPE_MESSAGE_BOX,
-                       "title",    title,
-                       "message",  message,
-                       "stock_id", stock_id,
+                       "stock_id",  stock_id,
                        NULL);
+}
+
+void
+gimp_message_box_set_primary_text (GimpMessageBox *box,
+                                   const gchar    *format,
+                                   ...)
+{
+  va_list args;
+
+  g_return_if_fail (GIMP_IS_MESSAGE_BOX (box));
+
+  va_start (args, format);
+  gimp_message_box_set_label_text (box, 0, format, args);
+  va_end (args);
+}
+
+void
+gimp_message_box_set_text (GimpMessageBox *box,
+                           const gchar    *format,
+                           ...)
+{
+  va_list args;
+
+  g_return_if_fail (GIMP_IS_MESSAGE_BOX (box));
+
+  va_start (args, format);
+  gimp_message_box_set_label_text (box, 1, format, args);
+  va_end (args);
+}
+
+void
+gimp_message_box_set_markup (GimpMessageBox *box,
+                             const gchar    *format,
+                             ...)
+{
+  va_list args;
+
+  g_return_if_fail (GIMP_IS_MESSAGE_BOX (box));
+
+  va_start (args, format);
+  gimp_message_box_set_label_markup (box, 1,format, args);
+  va_end (args);
 }

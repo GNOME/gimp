@@ -1,3 +1,10 @@
+2004-08-24  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpmessagebox.[ch]: added API to change the labels.
+	Modeled after the proposed new API for GtkMessageDialog.
+
+	* app/widgets/gimpwidgets-utils.c: changed accordingly.
+
 2004-08-24  DindinX  <david@dindinx.org>
 
 	* app/widgets/gimppreview.c

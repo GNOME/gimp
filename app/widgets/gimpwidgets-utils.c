@@ -80,7 +80,6 @@ gimp_message_box (const gchar *stock_id,
   GtkWidget  *dialog;
   GtkWidget  *box;
   GList      *list;
-  gchar      *title;
 
   g_return_if_fail (stock_id != NULL);
   g_return_if_fail (message != NULL);
@@ -156,11 +155,10 @@ gimp_message_box (const gchar *stock_id,
                     G_CALLBACK (gimp_message_box_response),
                     msg_box);
 
-  title = g_strdup_printf (_("%s Message"), domain);
-
-  box = gimp_message_box_new (title, message, stock_id);
-
-  g_free (title);
+  box = gimp_message_box_new (stock_id);
+  gimp_message_box_set_primary_text (GIMP_MESSAGE_BOX (box),
+                                     _("%s Message"), domain);
+  gimp_message_box_set_text (GIMP_MESSAGE_BOX (box), message);
 
   gtk_container_set_border_width (GTK_CONTAINER (box), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), box);

@@ -39,10 +39,9 @@ struct _GimpMessageBox
 {
   GtkVBox       parent_instance;
 
-  gchar        *title;
-  gchar        *message;
   gchar        *stock_id;
 
+  GtkWidget    *label[2];
   GtkWidget    *image;
 };
 
@@ -52,11 +51,18 @@ struct _GimpMessageBoxClass
 };
 
 
-GType       gimp_message_box_get_type (void) G_GNUC_CONST;
+GType       gimp_message_box_get_type         (void) G_GNUC_CONST;
 
-GtkWidget * gimp_message_box_new      (const gchar *title,
-                                       const gchar *message,
-                                       const gchar *stock_id);
+GtkWidget * gimp_message_box_new              (const gchar    *stock_id);
+void        gimp_message_box_set_primary_text (GimpMessageBox *box,
+                                               const gchar    *format,
+                                               ...);
+void        gimp_message_box_set_text         (GimpMessageBox *box,
+                                               const gchar    *format,
+                                               ...);
+void        gimp_message_box_set_markup       (GimpMessageBox *box,
+                                               const gchar    *format,
+                                               ...);
 
 
 G_END_DECLS
