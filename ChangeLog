@@ -1,5 +1,17 @@
 2000-11-06  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/gap/gap_filter_foreach.c
+	* plug-ins/gap/gap_filter_pdb.c
+	* plug-ins/gap/gap_lib.c
+	* plug-ins/gap/gap_mod_layer.c
+	* plug-ins/gap/gap_range_ops.c
+	* plug-ins/gap/gap_split.c: check if return_value of PDB calls is
+	!= GIMP_PDB_SUCCESS, not == FALSE. Use GIMP_RUN_WITH_LAST_VALS on
+	consecutive calls of gimp_file_save procedures, so the values set
+	in the first interactive call are used for all frames.
+		
+2000-11-06  Sven Neumann  <sven@gimp.org>
+
 	* app/convolve.[ch]: moved the new enum Garry introduced recently
 	from the header to the .c file so it does not get exported to the
 	PDB by enumgen.pl.

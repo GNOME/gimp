@@ -28,6 +28,7 @@
  */
 
 /* revision history:
+ * 1.1.28a; 2000/11/05   hof: check for GIMP_PDB_SUCCESS (not for FALSE)
  * 1.1.20a; 2000/04/25   hof: new: p_get_video_paste_name p_vid_edit_clear
  * 1.1.17b; 2000/02/27   hof: bug/style fixes
  * 1.1.14a; 1999/12/18   hof: handle .xvpics on fileops (copy, rename and delete)
@@ -1092,7 +1093,7 @@ gint32 p_save_named_image(gint32 image_id, char *sav_name, GimpRunModeType run_m
   g_free (l_drawable);
 
 
-  if (l_params[0].data.d_status == FALSE)
+  if (l_params[0].data.d_status != GIMP_PDB_SUCCESS)
   {
     fprintf(stderr, "ERROR: p_save_named_image  gimp_file_save failed '%s'\n", sav_name);
     g_free(l_params);
@@ -1100,6 +1101,7 @@ gint32 p_save_named_image(gint32 image_id, char *sav_name, GimpRunModeType run_m
   }
   else
   {
+printf("HOF gimp_file_save returned GIMP_PDB_SUCCESS\n");
     g_free(l_params);
     return image_id;
   }
@@ -1202,8 +1204,9 @@ int p_save_named_frame(gint32 image_id, char *sav_name)
 			         GIMP_PDB_END);
     if(gap_debug) fprintf(stderr, "DEBUG: after   xcf  p_save_named_frame: '%s'\n", l_tmpname);
 
-    if (l_params[0].data.d_status != FALSE)
+    if (l_params[0].data.d_status == GIMP_PDB_SUCCESS)
     {
+printf("HOF gimp_xcf_save returned GIMP_PDB_SUCCESS\n");
        l_rc = image_id;
     }
     g_free(l_params);

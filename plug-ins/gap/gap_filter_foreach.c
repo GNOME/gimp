@@ -28,6 +28,7 @@
  */
 
 /* revision history:
+ * 1.1.28a; 2000/11/05   hof: check for GIMP_PDB_SUCCESS (not for FALSE)
  * version 0.97.00              hof: - modul splitted (2.nd part is now gap_filter_pdb.c)
  * version 0.96.03              hof: - pitstop dialog provides optional backup on each step
  *                                     (and skip option)
@@ -481,7 +482,7 @@ int p_foreach_multilayer(GimpRunModeType run_mode, gint32 image_id,
 			           GIMP_PDB_FLOAT,   (gdouble)l_idx,    /* current step */
 			           GIMP_PDB_INT32,   l_plugin_data_len, /* length of stored data struct */
 			           GIMP_PDB_END);
-             if (l_params[0].data.d_status == FALSE) 
+             if (l_params[0].data.d_status != GIMP_PDB_SUCCESS) 
              { 
                fprintf(stderr, "ERROR: iterator %s  failed\n", l_plugin_iterator);
                l_rc = -1;

@@ -27,6 +27,7 @@
  */
 
 /* revision history:
+ * 1.1.28a; 2000/11/05   hof: check for GIMP_PDB_SUCCESS (not for FALSE)
  * version gimp 1.1.17b  2000.02.22  hof: - removed limit PLUGIN_DATA_SIZE
  *                                        - removed support for old gimp 1.0.x PDB-interface.
  * version 0.97.00                   hof: - created module (as extract gap_filter_foreach)
@@ -169,7 +170,7 @@ gint p_call_plugin(char *plugin_name, gint32 image_id, gint32 layer_id, GimpRunM
 
 
 
-  if (l_ret_params[0].data.d_status == FALSE)
+  if (l_ret_params[0].data.d_status != GIMP_PDB_SUCCESS)
   {
     fprintf(stderr, "ERROR: p_call_plugin %s failed.\n", plugin_name);
     g_free(l_ret_params);
@@ -203,7 +204,7 @@ p_save_xcf(gint32 image_id, char *sav_name)
 			         GIMP_PDB_STRING, sav_name, /* raw name ? */
 			         GIMP_PDB_END);
 
-    if (l_params[0].data.d_status == FALSE) return(-1);
+    if (l_params[0].data.d_status != GIMP_PDB_SUCCESS) return(-1);
     
     return 0;
 }

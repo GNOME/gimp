@@ -7,9 +7,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.27\n"
-"POT-Creation-Date: 2000-10-30 21:56-0800\n"
-"PO-Revision-Date: 2000-10-29 18:58+01:00\n"
+"Project-Id-Version: GIMP 1.1.29\n"
+"POT-Creation-Date: 2000-11-06 13:35+0100\n"
+"PO-Revision-Date: 2000-11-06 13:37+01:00\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -75,7 +75,7 @@ msgstr "Über"
 #: plug-ins/common/snoise.c:512 plug-ins/common/sobel.c:251
 #: plug-ins/common/sparkle.c:349 plug-ins/common/spheredesigner.c:2232
 #: plug-ins/common/spread.c:382 plug-ins/common/struc.c:1281
-#: plug-ins/common/sunras.c:1589 plug-ins/common/tga.c:1448
+#: plug-ins/common/sunras.c:1589 plug-ins/common/tga.c:1062
 #: plug-ins/common/threshold_alpha.c:271 plug-ins/common/tiff.c:1582
 #: plug-ins/common/tile.c:383 plug-ins/common/tileit.c:386
 #: plug-ins/common/uniteditor.c:173 plug-ins/common/unsharp.c:786
@@ -87,7 +87,7 @@ msgstr "Über"
 #: plug-ins/flame/flame.c:631 plug-ins/flame/flame.c:920
 #: plug-ins/fp/fp_gtk.c:895 plug-ins/gap/gap_arr_dialog.c:768
 #: plug-ins/gap/gap_arr_dialog.c:1010 plug-ins/gap/gap_decode_xanim.c:177
-#: plug-ins/gap/gap_lib.c:221 plug-ins/gap/gap_mod_layer.c:145
+#: plug-ins/gap/gap_lib.c:222 plug-ins/gap/gap_mod_layer.c:146
 #: plug-ins/gap/gap_mov_dialog.c:487 plug-ins/gap/gap_mpege.c:191
 #: plug-ins/gap/gap_resi_dialog.c:149 plug-ins/gdyntext/gdyntext_ui.c:199
 #: plug-ins/gdyntext/gdyntext_ui.c:573 plug-ins/gfig/gfig.c:4080
@@ -157,7 +157,7 @@ msgstr "OK"
 #: plug-ins/common/sobel.c:253 plug-ins/common/sparkle.c:351
 #: plug-ins/common/spheredesigner.c:2236 plug-ins/common/spread.c:384
 #: plug-ins/common/struc.c:1283 plug-ins/common/sunras.c:1591
-#: plug-ins/common/tga.c:1450 plug-ins/common/threshold_alpha.c:273
+#: plug-ins/common/tga.c:1064 plug-ins/common/threshold_alpha.c:273
 #: plug-ins/common/tiff.c:1584 plug-ins/common/tile.c:385
 #: plug-ins/common/tileit.c:388 plug-ins/common/uniteditor.c:175
 #: plug-ins/common/unsharp.c:788 plug-ins/common/video.c:2157
@@ -169,11 +169,11 @@ msgstr "OK"
 #: plug-ins/flame/flame.c:922 plug-ins/fp/fp_gtk.c:899
 #: plug-ins/gap/gap_arr_dialog.c:1012 plug-ins/gap/gap_dbbrowser_utils.c:210
 #: plug-ins/gap/gap_decode_mpeg_main.c:336 plug-ins/gap/gap_decode_xanim.c:175
-#: plug-ins/gap/gap_decode_xanim.c:340 plug-ins/gap/gap_filter_foreach.c:132
-#: plug-ins/gap/gap_lib.c:1018 plug-ins/gap/gap_mod_layer.c:147
-#: plug-ins/gap/gap_mod_layer.c:261 plug-ins/gap/gap_mov_dialog.c:518
+#: plug-ins/gap/gap_decode_xanim.c:340 plug-ins/gap/gap_filter_foreach.c:133
+#: plug-ins/gap/gap_lib.c:1019 plug-ins/gap/gap_mod_layer.c:148
+#: plug-ins/gap/gap_mod_layer.c:262 plug-ins/gap/gap_mov_dialog.c:518
 #: plug-ins/gap/gap_mov_dialog.c:3023 plug-ins/gap/gap_mpege.c:189
-#: plug-ins/gap/gap_mpege.c:240 plug-ins/gap/gap_range_ops.c:1243
+#: plug-ins/gap/gap_mpege.c:240 plug-ins/gap/gap_range_ops.c:1244
 #: plug-ins/gap/gap_resi_dialog.c:158 plug-ins/gfig/gfig.c:3933
 #: plug-ins/gfig/gfig.c:4080 plug-ins/gfig/gfig.c:4427
 #: plug-ins/gfig/gfig.c:4510 plug-ins/gfig/gfig.c:5021
@@ -428,7 +428,7 @@ msgstr "Farben"
 
 #. Number of Colors frame
 #: plug-ins/FractalExplorer/Dialogs.c:625 plug-ins/common/borderaverage.c:431
-#: plug-ins/gap/gap_range_ops.c:345
+#: plug-ins/gap/gap_range_ops.c:346
 msgid "Number of Colors"
 msgstr "Anzahl der Farben"
 
@@ -1371,7 +1371,7 @@ msgstr "Zeige/Verberge Vorschau-Drahtgitter"
 #: plug-ins/common/pix.c:326 plug-ins/common/png.c:426
 #: plug-ins/common/png.c:428 plug-ins/common/pnm.c:414
 #: plug-ins/common/psd.c:1731 plug-ins/common/sunras.c:441
-#: plug-ins/common/tga.c:429 plug-ins/common/tiff.c:455
+#: plug-ins/common/tga.c:422 plug-ins/common/tiff.c:455
 #: plug-ins/common/xbm.c:734 plug-ins/common/xpm.c:334
 #: plug-ins/common/xwd.c:430 plug-ins/faxg3/faxg3.c:196
 #: plug-ins/gfli/gfli.c:459 plug-ins/sgi/sgi.c:330 plug-ins/sgi/sgi.c:332
@@ -1415,7 +1415,7 @@ msgstr "%s: fehlerhafte Palette"
 #: plug-ins/common/pcx.c:338 plug-ins/common/pix.c:370
 #: plug-ins/common/png.c:547 plug-ins/common/pnm.c:502
 #: plug-ins/common/psd.c:2114 plug-ins/common/smooth_palette.c:241
-#: plug-ins/common/sunras.c:931 plug-ins/common/tga.c:1014
+#: plug-ins/common/sunras.c:931 plug-ins/common/tga.c:836
 #: plug-ins/common/tiff.c:681 plug-ins/common/tile.c:268
 #: plug-ins/common/winclipboard.c:515 plug-ins/common/wmf.c:2350
 #: plug-ins/common/xbm.c:872 plug-ins/faxg3/faxg3.c:448
@@ -1443,7 +1443,7 @@ msgstr "Kann %s nicht öffnen"
 #: plug-ins/common/pcx.c:547 plug-ins/common/pix.c:532
 #: plug-ins/common/png.c:775 plug-ins/common/png.c:777
 #: plug-ins/common/pnm.c:786 plug-ins/common/ps.c:1003
-#: plug-ins/common/sunras.c:524 plug-ins/common/tga.c:1196
+#: plug-ins/common/sunras.c:524 plug-ins/common/tga.c:927
 #: plug-ins/common/tiff.c:1334 plug-ins/common/xbm.c:982
 #: plug-ins/common/xpm.c:653 plug-ins/common/xwd.c:534
 #: plug-ins/fits/fits.c:472 plug-ins/gfli/gfli.c:679 plug-ins/sgi/sgi.c:548
@@ -2629,8 +2629,8 @@ msgstr "Farbe zu Transparenz"
 
 #: plug-ins/common/colortoalpha.c:425 plug-ins/common/mapcolor.c:652
 #: plug-ins/gap/gap_decode_mpeg_main.c:652 plug-ins/gap/gap_decode_xanim.c:223
-#: plug-ins/gap/gap_lib.c:2103 plug-ins/gap/gap_lib.c:2282
-#: plug-ins/gap/gap_range_ops.c:252 plug-ins/gap/gap_range_ops.c:601
+#: plug-ins/gap/gap_lib.c:2106 plug-ins/gap/gap_lib.c:2285
+#: plug-ins/gap/gap_range_ops.c:253 plug-ins/gap/gap_range_ops.c:602
 #: plug-ins/gfli/gfli.c:847 plug-ins/gfli/gfli.c:916
 msgid "From:"
 msgstr "Von:"
@@ -4271,7 +4271,7 @@ msgstr "Max. Tiefe:"
 
 #. parameter settings
 #: plug-ins/common/iwarp.c:1120 plug-ins/common/sample_colorize.c:1384
-#: plug-ins/common/sinus.c:1847 plug-ins/gap/gap_mod_layer.c:219
+#: plug-ins/common/sinus.c:1847 plug-ins/gap/gap_mod_layer.c:220
 #: plug-ins/gfig/gfig.c:3967 plug-ins/gflare/gflare.c:3041
 msgid "Settings"
 msgstr "Einstellungen"
@@ -4618,9 +4618,9 @@ msgid "Destination color range"
 msgstr "Ziel-Farbbereich"
 
 #: plug-ins/common/mapcolor.c:652 plug-ins/gap/gap_decode_mpeg_main.c:662
-#: plug-ins/gap/gap_decode_xanim.c:233 plug-ins/gap/gap_lib.c:2111
-#: plug-ins/gap/gap_lib.c:2290 plug-ins/gap/gap_range_ops.c:259
-#: plug-ins/gap/gap_range_ops.c:609 plug-ins/gfli/gfli.c:856
+#: plug-ins/gap/gap_decode_xanim.c:233 plug-ins/gap/gap_lib.c:2114
+#: plug-ins/gap/gap_lib.c:2293 plug-ins/gap/gap_range_ops.c:260
+#: plug-ins/gap/gap_range_ops.c:610 plug-ins/gfli/gfli.c:856
 #: plug-ins/gfli/gfli.c:925
 msgid "To:"
 msgstr "Bis:"
@@ -6316,17 +6316,32 @@ msgstr "Als SunRas sichern"
 msgid "RunLength Encoded"
 msgstr "RL kodiert"
 
-#: plug-ins/common/tga.c:1443
+#: plug-ins/common/tga.c:418
+#, c-format
+msgid "TGA: can't open \"%s\"\n"
+msgstr "TGA:Kann \"%s\" nicht öffnen\n"
+
+#: plug-ins/common/tga.c:430
+#, c-format
+msgid "TGA: Cannot read footer from \"%s\"\n"
+msgstr "TGA: Kann Footer von \"%s\" nicht lesen\n"
+
+#: plug-ins/common/tga.c:443
+#, c-format
+msgid "TGA: Cannot read extension from \"%s\"\n"
+msgstr "TGA: Kann Erweiterung von \"%s\" nicht lesen\n"
+
+#: plug-ins/common/tga.c:1057
 msgid "Save as TGA"
 msgstr "Als TGA speichern"
 
 #. regular tga parameter settings
-#: plug-ins/common/tga.c:1460
+#: plug-ins/common/tga.c:1074
 msgid "Targa Options"
 msgstr "Targa Einstellungen"
 
 #. rle
-#: plug-ins/common/tga.c:1470
+#: plug-ins/common/tga.c:1084
 msgid "RLE compression"
 msgstr "RL Kompression"
 
@@ -7661,7 +7676,7 @@ msgid "Animated Filter apply (please wait)"
 msgstr "Animation Filtern (bitte warten)"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:744
-#: plug-ins/gap/gap_filter_foreach.c:161 plug-ins/gap/gap_mod_layer.c:284
+#: plug-ins/gap/gap_filter_foreach.c:162 plug-ins/gap/gap_mod_layer.c:285
 msgid "Animated Filter apply"
 msgstr "Animationen Filtern"
 
@@ -7682,17 +7697,17 @@ msgid "<Toolbox>/Xtns/Split Video to Frames/MPEG1"
 msgstr "<Toolbox>/Xtns/Video in Frames aufteilen/MPEG1"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:332 plug-ins/gap/gap_decode_xanim.c:336
-#: plug-ins/gap/gap_range_ops.c:1239
+#: plug-ins/gap/gap_range_ops.c:1240
 msgid "Overwrite Frame"
 msgstr "Frame Überschreiben"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:334 plug-ins/gap/gap_decode_xanim.c:338
-#: plug-ins/gap/gap_range_ops.c:1241
+#: plug-ins/gap/gap_range_ops.c:1242
 msgid "Overwrite All"
 msgstr "Alle Überschreiben"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:342 plug-ins/gap/gap_decode_xanim.c:346
-#: plug-ins/gap/gap_lib.c:1026 plug-ins/gap/gap_range_ops.c:1246
+#: plug-ins/gap/gap_lib.c:1027 plug-ins/gap/gap_range_ops.c:1247
 msgid "GAP Question"
 msgstr "GAP Frage"
 
@@ -7760,7 +7775,7 @@ msgid "Split MPEG1 Video to Frames"
 msgstr "MPEG1-Film in Frames aufteilen"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:689 plug-ins/gap/gap_decode_xanim.c:297
-#: plug-ins/gap/gap_range_ops.c:1461
+#: plug-ins/gap/gap_range_ops.c:1462
 msgid "Select Frame Range"
 msgstr "Frame-Reichweite auswählen"
 
@@ -7996,20 +8011,20 @@ msgstr "Benenne Frames um..."
 msgid "converting frames..."
 msgstr "Konvertiere Frames..."
 
-#: plug-ins/gap/gap_filter_foreach.c:124
+#: plug-ins/gap/gap_filter_foreach.c:125
 msgid "backup to file"
 msgstr "In Datei sichern"
 
 #. pixel
-#: plug-ins/gap/gap_filter_foreach.c:126
+#: plug-ins/gap/gap_filter_foreach.c:127
 msgid "Make backup of the image after each step"
 msgstr "Sichere Bild nach jedem Schritt"
 
-#: plug-ins/gap/gap_filter_foreach.c:130 plug-ins/gap/gap_mod_layer.c:259
+#: plug-ins/gap/gap_filter_foreach.c:131 plug-ins/gap/gap_mod_layer.c:260
 msgid "Continue"
 msgstr "Weiter"
 
-#: plug-ins/gap/gap_filter_foreach.c:153 plug-ins/gap/gap_mod_layer.c:278
+#: plug-ins/gap/gap_filter_foreach.c:154 plug-ins/gap/gap_mod_layer.c:279
 #, c-format
 msgid ""
 "2nd call of %s\n"
@@ -8018,7 +8033,7 @@ msgstr ""
 "2. Aufruf von %s\n"
 "(stellen Sie die End-Parameter ein)"
 
-#: plug-ins/gap/gap_filter_foreach.c:157
+#: plug-ins/gap/gap_filter_foreach.c:158
 #, c-format
 msgid ""
 "Non-Interactive call of %s\n"
@@ -8027,21 +8042,21 @@ msgstr ""
 "Nicht-interaktive Aufrufe von %s\n"
 "(für alle dazwischenliegenden Ebenen)"
 
-#: plug-ins/gap/gap_filter_foreach.c:276
+#: plug-ins/gap/gap_filter_foreach.c:277
 msgid "Applying Filter to all Layers..."
 msgstr "Filter wird auf alle Ebenen angewandt..."
 
 # nicht so wörtlich ?
-#: plug-ins/gap/gap_filter_foreach.c:550
+#: plug-ins/gap/gap_filter_foreach.c:551
 msgid "Select Filter for Animated apply"
 msgstr "Wählen Sie den Filter für \"Animation filtern\""
 
-#: plug-ins/gap/gap_filter_foreach.c:551 plug-ins/gap/gap_mod_layer.c:661
+#: plug-ins/gap/gap_filter_foreach.c:552 plug-ins/gap/gap_mod_layer.c:662
 msgid "Apply Constant"
 msgstr "Konstant anwenden"
 
 # besserer Ausdruck?
-#: plug-ins/gap/gap_filter_foreach.c:552 plug-ins/gap/gap_mod_layer.c:662
+#: plug-ins/gap/gap_filter_foreach.c:553 plug-ins/gap/gap_mod_layer.c:663
 msgid "Apply Varying"
 msgstr "Variierend anwenden"
 
@@ -8065,11 +8080,11 @@ msgstr "<Image>/Video/Komprimieren/MPEG1..."
 msgid "<Image>/Video/Encode/MPEG2..."
 msgstr "<Image>/Video/Komprimieren/MPEG2..."
 
-#: plug-ins/gap/gap_lib.c:232
+#: plug-ins/gap/gap_lib.c:233
 msgid "GAP Message"
 msgstr "GAP Nachricht"
 
-#: plug-ins/gap/gap_lib.c:895
+#: plug-ins/gap/gap_lib.c:896
 msgid ""
 "OPERATION CANCELLED.\n"
 "Current frame changed while dialog was open."
@@ -8078,7 +8093,7 @@ msgstr ""
 "Aktueller Frame wurde geändert\n"
 "während der Dialog geöffnet war."
 
-#: plug-ins/gap/gap_lib.c:917
+#: plug-ins/gap/gap_lib.c:918
 msgid ""
 "OPERATION CANCELLED.\n"
 "GAP-plugins works only with filenames\n"
@@ -8090,7 +8105,7 @@ msgstr ""
 "deren Namen mit _NNNN.xcf enden (z.B.: ani_0001.xcf)\n"
 "=> Benennen Sie Ihr Bild um und versuchen Sie es erneut."
 
-#: plug-ins/gap/gap_lib.c:1004
+#: plug-ins/gap/gap_lib.c:1005
 msgid ""
 "You are using a file format != xcf\n"
 "Save Operations may result\n"
@@ -8100,74 +8115,74 @@ msgstr ""
 "Wenn Sie speichern, können\n"
 "Ebeneninformationen verlorengehen."
 
-#: plug-ins/gap/gap_lib.c:1020
+#: plug-ins/gap/gap_lib.c:1021
 msgid "Save Flattened"
 msgstr "Zusammengefügt sichern"
 
-#: plug-ins/gap/gap_lib.c:1022
+#: plug-ins/gap/gap_lib.c:1023
 msgid "Save As Is"
 msgstr "Sichern, wie es ist"
 
-#: plug-ins/gap/gap_lib.c:1497 plug-ins/gap/gap_lib.c:1614
-#: plug-ins/gap/gap_lib.c:1693 plug-ins/gap/gap_lib.c:1700
-#: plug-ins/gap/gap_lib.c:1707 plug-ins/gap/gap_lib.c:1790
-#: plug-ins/gap/gap_lib.c:1812 plug-ins/gap/gap_lib.c:2701
+#: plug-ins/gap/gap_lib.c:1500 plug-ins/gap/gap_lib.c:1617
+#: plug-ins/gap/gap_lib.c:1696 plug-ins/gap/gap_lib.c:1703
+#: plug-ins/gap/gap_lib.c:1710 plug-ins/gap/gap_lib.c:1793
+#: plug-ins/gap/gap_lib.c:1815 plug-ins/gap/gap_lib.c:2704
 #, c-format
 msgid "Error: could not rename frame %ld to %ld"
 msgstr "Fehler: Konnte Frame %ld nicht in %ld umbenennen."
 
-#: plug-ins/gap/gap_lib.c:1602
+#: plug-ins/gap/gap_lib.c:1605
 msgid "Duplicating frames..."
 msgstr "Dupliziere Frames..."
 
 # TODO
-#: plug-ins/gap/gap_lib.c:1778
+#: plug-ins/gap/gap_lib.c:1781
 msgid "Renumber Framesequence..."
 msgstr "Reihenfolge der Frames wird verändert..."
 
-#: plug-ins/gap/gap_lib.c:1964
+#: plug-ins/gap/gap_lib.c:1967
 #, c-format
 msgid "Goto Frame (%ld/%ld)"
 msgstr "Lade Frame (%ld/%ld)"
 
-#: plug-ins/gap/gap_lib.c:1967
+#: plug-ins/gap/gap_lib.c:1970
 #, c-format
 msgid "Destination Frame Number (%ld  - %ld)"
 msgstr "Nummer des Ziel-Frames (%ld - %ld)"
 
-#: plug-ins/gap/gap_lib.c:1971 plug-ins/gap/gap_lib.c:2048
-#: plug-ins/gap/gap_lib.c:2236
+#: plug-ins/gap/gap_lib.c:1974 plug-ins/gap/gap_lib.c:2051
+#: plug-ins/gap/gap_lib.c:2239
 msgid "Number:"
 msgstr "Nummer:"
 
-#: plug-ins/gap/gap_lib.c:2032
+#: plug-ins/gap/gap_lib.c:2035
 #, c-format
 msgid "Delete Frames (%ld/%ld)"
 msgstr "Entferne Frames (%ld/%ld)"
 
-#: plug-ins/gap/gap_lib.c:2035
+#: plug-ins/gap/gap_lib.c:2038
 #, c-format
 msgid "Delete Frames from %ld to (number)"
 msgstr "Entferne Frames von %ld bis (Nummer)"
 
-#: plug-ins/gap/gap_lib.c:2098
+#: plug-ins/gap/gap_lib.c:2101
 #, c-format
 msgid "Duplicate Frames (%ld/%ld)"
 msgstr "Dupliziere Frames (%ld/%ld)"
 
-#: plug-ins/gap/gap_lib.c:2108
+#: plug-ins/gap/gap_lib.c:2111
 msgid "Source Range starts at this framenumber"
 msgstr "Quellbereich fängt bei dieser Framenummer an"
 
-#: plug-ins/gap/gap_lib.c:2116
+#: plug-ins/gap/gap_lib.c:2119
 msgid "Source Range ends at this framenumber"
 msgstr "Quellbereich hört bei dieser Framenummer auf"
 
-#: plug-ins/gap/gap_lib.c:2119
+#: plug-ins/gap/gap_lib.c:2122
 msgid "N times:"
 msgstr "N-mal:"
 
-#: plug-ins/gap/gap_lib.c:2126
+#: plug-ins/gap/gap_lib.c:2129
 msgid ""
 "Copy selected Range n-times  \n"
 "(you may type in Values > 99)"
@@ -8175,38 +8190,38 @@ msgstr ""
 "Kopiere ausgewählten Frame n-mal  \n"
 "(Sie können Werte > 99 eingeben)"
 
-#: plug-ins/gap/gap_lib.c:2128
+#: plug-ins/gap/gap_lib.c:2131
 msgid "Duplicate Frame Range"
 msgstr "Ausgewählte Frames duplizieren"
 
-#: plug-ins/gap/gap_lib.c:2231
+#: plug-ins/gap/gap_lib.c:2234
 #, c-format
 msgid "Exchange current Frame (%ld)"
 msgstr "Vertausche momentanen Frame (%ld)"
 
-#: plug-ins/gap/gap_lib.c:2235
+#: plug-ins/gap/gap_lib.c:2238
 msgid "With Frame (number)"
 msgstr "Mit Frame (Nummer)"
 
-#: plug-ins/gap/gap_lib.c:2277
+#: plug-ins/gap/gap_lib.c:2280
 #, c-format
 msgid "Framesequence Shift (%ld/%ld)"
 msgstr "Reihenfolge der Frames verschieben (%ld/%ld)"
 
-#: plug-ins/gap/gap_lib.c:2287
+#: plug-ins/gap/gap_lib.c:2290
 msgid "Affected Range starts at this framenumber"
 msgstr "Betroffener Bereich fängt bei dieser Frame-Nummer an"
 
-#: plug-ins/gap/gap_lib.c:2295
+#: plug-ins/gap/gap_lib.c:2298
 msgid "Affected Range ends at this framenumber"
 msgstr "Betroffener Bereich hört bei dieser Frame-Nummer auf"
 
 # TODO!
-#: plug-ins/gap/gap_lib.c:2298
+#: plug-ins/gap/gap_lib.c:2301
 msgid "N-Shift:"
 msgstr "N-Verschiebung:"
 
-#: plug-ins/gap/gap_lib.c:2303
+#: plug-ins/gap/gap_lib.c:2306
 msgid ""
 "Renumber the affected framesequence     \n"
 "(numbers are shifted in circle by N)"
@@ -8214,7 +8229,7 @@ msgstr ""
 "Stelle die Reihenfolge der Frames um     \n"
 "(Verschiebung um N im Kreis)"
 
-#: plug-ins/gap/gap_lib.c:2305
+#: plug-ins/gap/gap_lib.c:2308
 msgid "Framesequence shift"
 msgstr "Verschiebung der Frame-Reihenfolge"
 
@@ -8296,53 +8311,53 @@ msgid "<Image>/Video/Frames Modify..."
 msgstr "<Image>/Video/Frames modifizieren..."
 
 #. Layer select modes
-#: plug-ins/gap/gap_mod_layer.c:82 plug-ins/gap/gap_range_ops.c:573
+#: plug-ins/gap/gap_mod_layer.c:83 plug-ins/gap/gap_range_ops.c:574
 msgid "Pattern is equal to LayerName"
 msgstr "Muster ist gleich dem Ebenennamen"
 
-#: plug-ins/gap/gap_mod_layer.c:83 plug-ins/gap/gap_range_ops.c:574
+#: plug-ins/gap/gap_mod_layer.c:84 plug-ins/gap/gap_range_ops.c:575
 msgid "Pattern is Start of LayerName"
 msgstr "Muster ist der Anfang des Ebenennamens"
 
-#: plug-ins/gap/gap_mod_layer.c:84 plug-ins/gap/gap_range_ops.c:575
+#: plug-ins/gap/gap_mod_layer.c:85 plug-ins/gap/gap_range_ops.c:576
 msgid "Pattern is End of Layername"
 msgstr "Muster ist das Ende des Ebenennamens"
 
-#: plug-ins/gap/gap_mod_layer.c:85 plug-ins/gap/gap_range_ops.c:576
+#: plug-ins/gap/gap_mod_layer.c:86 plug-ins/gap/gap_range_ops.c:577
 msgid "Pattern is a Part of LayerName"
 msgstr "Muster ist ein Teil des Ebenennamens"
 
 # TODO ???
-#: plug-ins/gap/gap_mod_layer.c:86 plug-ins/gap/gap_range_ops.c:577
+#: plug-ins/gap/gap_mod_layer.c:87 plug-ins/gap/gap_range_ops.c:578
 msgid "Pattern is LayerstackNumber List"
 msgstr "Muster ist Ebenen-Stapelnummer Liste"
 
 # TODO ???
-#: plug-ins/gap/gap_mod_layer.c:87 plug-ins/gap/gap_range_ops.c:578
+#: plug-ins/gap/gap_mod_layer.c:88 plug-ins/gap/gap_range_ops.c:579
 msgid "Pattern is REVERSE-stack List"
 msgstr "Muster ist UMGEKEHRTER-Stapel Liste"
 
-#: plug-ins/gap/gap_mod_layer.c:88 plug-ins/gap/gap_range_ops.c:579
+#: plug-ins/gap/gap_mod_layer.c:89 plug-ins/gap/gap_range_ops.c:580
 msgid "All Visible (ignore Pattern)"
 msgstr "Alle sichtbar (Muster ignorieren)"
 
-#: plug-ins/gap/gap_mod_layer.c:90
+#: plug-ins/gap/gap_mod_layer.c:91
 msgid "Select all Layers where Layername is equal to Pattern"
 msgstr "Alle Ebenen auswählen, deren Name auf Muster passt"
 
-#: plug-ins/gap/gap_mod_layer.c:91
+#: plug-ins/gap/gap_mod_layer.c:92
 msgid "Select all Layers where Layername starts with Pattern"
 msgstr "Alle Ebenen auswählen, deren Name mit Muster anfängt"
 
-#: plug-ins/gap/gap_mod_layer.c:92
+#: plug-ins/gap/gap_mod_layer.c:93
 msgid "Select all Layers where Layername ends up with Pattern"
 msgstr "Alle Ebenen auswählen, deren Name mit Muster endet"
 
-#: plug-ins/gap/gap_mod_layer.c:93
+#: plug-ins/gap/gap_mod_layer.c:94
 msgid "Select all Layers where Layername contains Pattern"
 msgstr "Alle Ebenen auswählen, deren Name Muster enthält"
 
-#: plug-ins/gap/gap_mod_layer.c:94
+#: plug-ins/gap/gap_mod_layer.c:95
 msgid ""
 "Select Layerstack positions.\n"
 "0, 4-5, 8\n"
@@ -8352,7 +8367,7 @@ msgstr ""
 "0, 4-5, 8\n"
 "(0 ist die oberste Ebene)"
 
-#: plug-ins/gap/gap_mod_layer.c:95
+#: plug-ins/gap/gap_mod_layer.c:96
 msgid ""
 "Select Layerstack positions.\n"
 "0, 4-5, 8\n"
@@ -8362,66 +8377,66 @@ msgstr ""
 "0, 4-5, 8\n"
 "(0 ist die Hintergrundebene)"
 
-#: plug-ins/gap/gap_mod_layer.c:96
+#: plug-ins/gap/gap_mod_layer.c:97
 msgid "Select all visible Layers"
 msgstr "Alle sichtbaren Ebenen auswählen"
 
 #. action items what to do with the selected layer(s)
-#: plug-ins/gap/gap_mod_layer.c:100
+#: plug-ins/gap/gap_mod_layer.c:101
 msgid "Set Layer(s) visible"
 msgstr "Ebene(n) sichtbar machen"
 
-#: plug-ins/gap/gap_mod_layer.c:101
+#: plug-ins/gap/gap_mod_layer.c:102
 msgid "Set Layer(s) invisible"
 msgstr "Ebene(n) unsichtbar machen"
 
-#: plug-ins/gap/gap_mod_layer.c:102
+#: plug-ins/gap/gap_mod_layer.c:103
 msgid "Set Layer(s) linked"
 msgstr "Ebene(n) verknüpfen"
 
 # besser ?
-#: plug-ins/gap/gap_mod_layer.c:103
+#: plug-ins/gap/gap_mod_layer.c:104
 msgid "Set Layer(s) unlinked"
 msgstr "Ebene(n) trennen"
 
-#: plug-ins/gap/gap_mod_layer.c:104
+#: plug-ins/gap/gap_mod_layer.c:105
 msgid "Raise Layer(s)"
 msgstr "Ebene(n) anheben"
 
-#: plug-ins/gap/gap_mod_layer.c:105
+#: plug-ins/gap/gap_mod_layer.c:106
 msgid "Lower Layer(s)"
 msgstr "Ebene(n) absenken"
 
-#: plug-ins/gap/gap_mod_layer.c:106
+#: plug-ins/gap/gap_mod_layer.c:107
 msgid "Merge Layer(s) expand as necessary"
 msgstr "Ebene(n) vereinen, wenn nötig erweitern"
 
 # besser für kappen ? TODO
-#: plug-ins/gap/gap_mod_layer.c:107
+#: plug-ins/gap/gap_mod_layer.c:108
 msgid "Merge Layer(s) clipped to image"
 msgstr "Ebene(n) vereinen, am Bild kappen"
 
-#: plug-ins/gap/gap_mod_layer.c:108
+#: plug-ins/gap/gap_mod_layer.c:109
 msgid "Merge Layer(s) clipped to bg-layer"
 msgstr "Ebene(n) vereinen, an der Hintergrundebene kappen"
 
-#: plug-ins/gap/gap_mod_layer.c:109
+#: plug-ins/gap/gap_mod_layer.c:110
 msgid "Apply filter on Layer(s)"
 msgstr "Filter auf Ebene(n) anwenden"
 
-#: plug-ins/gap/gap_mod_layer.c:110
+#: plug-ins/gap/gap_mod_layer.c:111
 msgid "Duplicate Layer(s)"
 msgstr "Ebene(n) duplizieren"
 
-#: plug-ins/gap/gap_mod_layer.c:111
+#: plug-ins/gap/gap_mod_layer.c:112
 msgid "Delete Layer(s)"
 msgstr "Ebene(n) entfernen"
 
-#: plug-ins/gap/gap_mod_layer.c:112
+#: plug-ins/gap/gap_mod_layer.c:113
 msgid "Rename Layer(s)"
 msgstr "Ebene(n) umbenennen"
 
-#: plug-ins/gap/gap_mod_layer.c:151
+#: plug-ins/gap/gap_mod_layer.c:152
 msgid ""
 "Perform function on one or more Layer(s)\n"
 "in all frames of the selected frame range\n"
@@ -8429,36 +8444,36 @@ msgstr ""
 "Führe Funktion an einer oder mehreren Ebene(n)\n"
 "in allen angegebenen Frames aus.\n"
 
-#: plug-ins/gap/gap_mod_layer.c:155 plug-ins/gap/gap_mpege.c:258
-#: plug-ins/gap/gap_range_ops.c:442
+#: plug-ins/gap/gap_mod_layer.c:156 plug-ins/gap/gap_mpege.c:258
+#: plug-ins/gap/gap_range_ops.c:443
 msgid "From Frame:"
 msgstr "Von Frame:"
 
-#: plug-ins/gap/gap_mod_layer.c:156 plug-ins/gap/gap_mpege.c:259
-#: plug-ins/gap/gap_range_ops.c:443 plug-ins/gap/gap_range_ops.c:602
+#: plug-ins/gap/gap_mod_layer.c:157 plug-ins/gap/gap_mpege.c:259
+#: plug-ins/gap/gap_range_ops.c:444 plug-ins/gap/gap_range_ops.c:603
 msgid "first handled frame"
 msgstr "Erster bearbeiteter Frame"
 
-#: plug-ins/gap/gap_mod_layer.c:163 plug-ins/gap/gap_range_ops.c:450
+#: plug-ins/gap/gap_mod_layer.c:164 plug-ins/gap/gap_range_ops.c:451
 msgid "To Frame:"
 msgstr "Bis Frame:"
 
-#: plug-ins/gap/gap_mod_layer.c:164 plug-ins/gap/gap_mpege.c:267
-#: plug-ins/gap/gap_range_ops.c:451 plug-ins/gap/gap_range_ops.c:610
+#: plug-ins/gap/gap_mod_layer.c:165 plug-ins/gap/gap_mpege.c:267
+#: plug-ins/gap/gap_range_ops.c:452 plug-ins/gap/gap_range_ops.c:611
 msgid "last handled frame"
 msgstr "Letzter bearbeiteter Frame"
 
 # TODO, lange version?
-#: plug-ins/gap/gap_mod_layer.c:172 plug-ins/gap/gap_range_ops.c:649
+#: plug-ins/gap/gap_mod_layer.c:173 plug-ins/gap/gap_range_ops.c:650
 msgid "Select Layer(s):"
 msgstr "Ebene(n) auswählen:"
 
-#: plug-ins/gap/gap_mod_layer.c:181 plug-ins/gap/gap_range_ops.c:658
+#: plug-ins/gap/gap_mod_layer.c:182 plug-ins/gap/gap_range_ops.c:659
 msgid "Select Pattern:"
 msgstr "Muster auswählen:"
 
 #. pixel
-#: plug-ins/gap/gap_mod_layer.c:183 plug-ins/gap/gap_range_ops.c:660
+#: plug-ins/gap/gap_mod_layer.c:184 plug-ins/gap/gap_range_ops.c:661
 msgid ""
 "String to identify layer names    \n"
 "or layerstack position numbers\n"
@@ -8469,37 +8484,37 @@ msgstr ""
 "0,3-5"
 
 # kürzer ? TODO
-#: plug-ins/gap/gap_mod_layer.c:189 plug-ins/gap/gap_range_ops.c:666
+#: plug-ins/gap/gap_mod_layer.c:190 plug-ins/gap/gap_range_ops.c:667
 msgid "Case sensitive"
 msgstr "Gross-/Kleinschreibung beachten"
 
-#: plug-ins/gap/gap_mod_layer.c:190 plug-ins/gap/gap_range_ops.c:667
+#: plug-ins/gap/gap_mod_layer.c:191 plug-ins/gap/gap_range_ops.c:668
 msgid "Lowercase and UPPERCASE letters are considered as different"
 msgstr "Es wird zwischen GROSS- und Kleinbuchstaben unterschieden"
 
-#: plug-ins/gap/gap_mod_layer.c:195 plug-ins/gap/gap_range_ops.c:672
+#: plug-ins/gap/gap_mod_layer.c:196 plug-ins/gap/gap_range_ops.c:673
 msgid "Invert Selection"
 msgstr "Auswahl invertieren"
 
-#: plug-ins/gap/gap_mod_layer.c:196
+#: plug-ins/gap/gap_mod_layer.c:197
 msgid "Perform actions on all unselected Layers"
 msgstr "Aktionen auf alle nicht ausgewählten Ebenen anwenden"
 
-#: plug-ins/gap/gap_mod_layer.c:201
+#: plug-ins/gap/gap_mod_layer.c:202
 msgid "Function:"
 msgstr "Funktion:"
 
 #. argv[7].radio_help_argv = action_help
-#: plug-ins/gap/gap_mod_layer.c:205
+#: plug-ins/gap/gap_mod_layer.c:206
 msgid "Function to be performed on all selected layers"
 msgstr "Funktion, die auf alle Ebenen angewandt werden soll"
 
-#: plug-ins/gap/gap_mod_layer.c:211
+#: plug-ins/gap/gap_mod_layer.c:212
 msgid "New Layername:"
 msgstr "Neuer Ebenenname"
 
 #. pixel
-#: plug-ins/gap/gap_mod_layer.c:213
+#: plug-ins/gap/gap_mod_layer.c:214
 msgid ""
 "New Layername for all handled layers \n"
 "[####] is replaced by frame number\n"
@@ -8509,11 +8524,11 @@ msgstr ""
 "[####] wird durch die Frame-Nummer ersetzt\n"
 "(wird nur in 'umbenennen' benutzt)"
 
-#: plug-ins/gap/gap_mod_layer.c:218
+#: plug-ins/gap/gap_mod_layer.c:219
 msgid "Frames Modify"
 msgstr "Frames modifizieren"
 
-#: plug-ins/gap/gap_mod_layer.c:282
+#: plug-ins/gap/gap_mod_layer.c:283
 #, c-format
 msgid ""
 "Non-Interactive call of %s\n"
@@ -8524,20 +8539,20 @@ msgstr ""
 
 #. GAP-PDB-Browser Dialog
 #. ----------------------
-#: plug-ins/gap/gap_mod_layer.c:660
+#: plug-ins/gap/gap_mod_layer.c:661
 msgid "Select Filter for Animated frames-apply"
 msgstr "Wählen Sie den Filter für 'Animation filtern'"
 
-#: plug-ins/gap/gap_mod_layer.c:802
+#: plug-ins/gap/gap_mod_layer.c:803
 msgid "GAP Modify: No layer selected in last handled frame"
 msgstr ""
 "GAP Modifizieren: Im letzten bearbeiteten Frame war keine Ebene ausgewählt"
 
-#: plug-ins/gap/gap_mod_layer.c:888
+#: plug-ins/gap/gap_mod_layer.c:889
 msgid "Modifying Frames/Layer(s)..."
 msgstr "Modifiziere Frames/Ebene(n)..."
 
-#: plug-ins/gap/gap_mod_layer.c:969
+#: plug-ins/gap/gap_mod_layer.c:970
 msgid "No selected Layer in start frame"
 msgstr "Keine Ebene ausgewählt im ersten Frame"
 
@@ -8697,7 +8712,7 @@ msgstr "Dieser Frame wird angezeigt, wenn Vorschau Auffrischen gedrückt wird"
 
 #. the Layerstack scale_entry
 #. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:606 plug-ins/gap/gap_range_ops.c:266
+#: plug-ins/gap/gap_mov_dialog.c:606 plug-ins/gap/gap_range_ops.c:267
 msgid "Layerstack:"
 msgstr "Ebenenstapel:"
 
@@ -9565,90 +9580,90 @@ msgstr "Zeitdehnung:"
 msgid "Video Navigator"
 msgstr "Video Navigator"
 
-#: plug-ins/gap/gap_range_ops.c:119
+#: plug-ins/gap/gap_range_ops.c:120
 msgid "New Width:"
 msgstr "Neue Breite:"
 
-#: plug-ins/gap/gap_range_ops.c:128
+#: plug-ins/gap/gap_range_ops.c:129
 msgid "New Height:"
 msgstr "Neue Höhe:"
 
-#: plug-ins/gap/gap_range_ops.c:137
+#: plug-ins/gap/gap_range_ops.c:138
 msgid "Offset X:"
 msgstr "Versatz X:"
 
-#: plug-ins/gap/gap_range_ops.c:146
+#: plug-ins/gap/gap_range_ops.c:147
 msgid "Offset Y:"
 msgstr "Versatz Y:"
 
-#: plug-ins/gap/gap_range_ops.c:157
+#: plug-ins/gap/gap_range_ops.c:158
 msgid "Crop AnimFrames (all)"
 msgstr "Schneide alle AnimFrames zu"
 
-#: plug-ins/gap/gap_range_ops.c:158
+#: plug-ins/gap/gap_range_ops.c:159
 #, c-format
 msgid "Crop (original %dx%d)"
 msgstr "Zuschneiden (ursprünglich %dx%d)"
 
-#: plug-ins/gap/gap_range_ops.c:168
+#: plug-ins/gap/gap_range_ops.c:169
 msgid "Resize AnimFrames (all)"
 msgstr "Grösse der AnimFrames verändern"
 
-#: plug-ins/gap/gap_range_ops.c:169
+#: plug-ins/gap/gap_range_ops.c:170
 #, c-format
 msgid "Resize (original %dx%d)"
 msgstr "Grösse verändern (ursprünglich %dx%d)"
 
-#: plug-ins/gap/gap_range_ops.c:175
+#: plug-ins/gap/gap_range_ops.c:176
 msgid "Scale AnimFrames (all)"
 msgstr "AnimFrames skalieren"
 
-#: plug-ins/gap/gap_range_ops.c:176
+#: plug-ins/gap/gap_range_ops.c:177
 #, c-format
 msgid "Scale (original %dx%d)"
 msgstr "Skaliere (ursprünglich %dx%d)"
 
-#: plug-ins/gap/gap_range_ops.c:307
+#: plug-ins/gap/gap_range_ops.c:308
 msgid "Generate Optimal Palette"
 msgstr "Erzeuge optimale Palette"
 
-#: plug-ins/gap/gap_range_ops.c:308
+#: plug-ins/gap/gap_range_ops.c:309
 msgid "WEB Palette"
 msgstr "Web Palette"
 
-#: plug-ins/gap/gap_range_ops.c:309
+#: plug-ins/gap/gap_range_ops.c:310
 msgid "Use Custom Palette"
 msgstr "Benutze eigene Palette"
 
-#: plug-ins/gap/gap_range_ops.c:310
+#: plug-ins/gap/gap_range_ops.c:311
 msgid "Use Black/White (1-Bit) Palette"
 msgstr "Benutze Schwarz/Weiss (1-Bit) Palette"
 
-#: plug-ins/gap/gap_range_ops.c:312
+#: plug-ins/gap/gap_range_ops.c:313
 msgid "Floyd-Steinberg Color Dithering (Normal)"
 msgstr "Floyd-Steinberg Farb-Rasterung (Normal)"
 
-#: plug-ins/gap/gap_range_ops.c:313
+#: plug-ins/gap/gap_range_ops.c:314
 msgid "Floyd-Steinberg Color Dithering (Reduced Color Bleeding)"
 msgstr "Floyd-Steinberg Farb-Rasterung (Reduziertes Farbbluten)"
 
-#: plug-ins/gap/gap_range_ops.c:314
+#: plug-ins/gap/gap_range_ops.c:315
 msgid "Positioned Color Dithering"
 msgstr "Positionierte Farb-Rasterung"
 
-#: plug-ins/gap/gap_range_ops.c:315
+#: plug-ins/gap/gap_range_ops.c:316
 msgid "No Color Dithering"
 msgstr "Keine Farb-Rasterung"
 
-#: plug-ins/gap/gap_range_ops.c:326
+#: plug-ins/gap/gap_range_ops.c:327
 msgid "Palette Type"
 msgstr "Palettenart"
 
-#: plug-ins/gap/gap_range_ops.c:333
+#: plug-ins/gap/gap_range_ops.c:334
 msgid "Custom Palette"
 msgstr "Benutzer-Palette"
 
-#: plug-ins/gap/gap_range_ops.c:334
+#: plug-ins/gap/gap_range_ops.c:335
 msgid ""
 "Name of a cutom palette\n"
 "(is ignored if Palette Type is not custom)"
@@ -9656,11 +9671,11 @@ msgstr ""
 "Name einer Palette\n"
 "(ignoriert, wenn Palettentyp nicht Benutzer-Palette)"
 
-#: plug-ins/gap/gap_range_ops.c:339
+#: plug-ins/gap/gap_range_ops.c:340
 msgid "Remove Unused"
 msgstr "Entferne unbenutzte"
 
-#: plug-ins/gap/gap_range_ops.c:340
+#: plug-ins/gap/gap_range_ops.c:341
 msgid ""
 "Remove unused or double colors\n"
 "(is ignored if Palette Type is not custom)"
@@ -9668,7 +9683,7 @@ msgstr ""
 "Entferne unbenutzte oder doppelte Farben\n"
 "(ignoriert, wenn Palettentyp nicht Benutzer-Palette)"
 
-#: plug-ins/gap/gap_range_ops.c:346
+#: plug-ins/gap/gap_range_ops.c:347
 msgid ""
 "Number of resulting Colors\t\t \n"
 "(ignored if Palette Type is not Generate optimal palette)"
@@ -9676,43 +9691,43 @@ msgstr ""
 "Anzahl der Farben in den resultierenden Frames\n"
 "(nur relevant für indizierte Bilder)"
 
-#: plug-ins/gap/gap_range_ops.c:353
+#: plug-ins/gap/gap_range_ops.c:354
 msgid "Dither Options"
 msgstr "Rasterung Einstellungen"
 
-#: plug-ins/gap/gap_range_ops.c:360
+#: plug-ins/gap/gap_range_ops.c:361
 msgid "Enable transparency"
 msgstr "Transparenz ermöglichen"
 
-#: plug-ins/gap/gap_range_ops.c:361
+#: plug-ins/gap/gap_range_ops.c:362
 msgid "Enable dithering of transparency"
 msgstr "Aktiviere Dithering basierend auf Transparenz"
 
-#: plug-ins/gap/gap_range_ops.c:364
+#: plug-ins/gap/gap_range_ops.c:365
 msgid "Convert Frames to Indexed"
 msgstr "Frames in indiziertes Format umwandeln"
 
-#: plug-ins/gap/gap_range_ops.c:365
+#: plug-ins/gap/gap_range_ops.c:366
 msgid "Palette and Dither Settings"
 msgstr "Paletten- und Dithering-Einstellungen"
 
-#: plug-ins/gap/gap_range_ops.c:430
+#: plug-ins/gap/gap_range_ops.c:431
 msgid "Keep Type"
 msgstr "Typ erhalten"
 
-#: plug-ins/gap/gap_range_ops.c:431
+#: plug-ins/gap/gap_range_ops.c:432
 msgid "Convert to RGB"
 msgstr "In RGB-Bild konv."
 
-#: plug-ins/gap/gap_range_ops.c:432
+#: plug-ins/gap/gap_range_ops.c:433
 msgid "Convert to Gray"
 msgstr "In Graustufenbild konv."
 
-#: plug-ins/gap/gap_range_ops.c:433
+#: plug-ins/gap/gap_range_ops.c:434
 msgid "Convert to Indexed"
 msgstr "In indiziertes Format konv."
 
-#: plug-ins/gap/gap_range_ops.c:457
+#: plug-ins/gap/gap_range_ops.c:458
 msgid ""
 "\n"
 "Select destination fileformat by extension\n"
@@ -9722,11 +9737,11 @@ msgstr ""
 "Ziel-Dateiformat wird durch Erweiterung bestimmt,\n"
 "wenn nötig wird konvertiert\n"
 
-#: plug-ins/gap/gap_range_ops.c:460
+#: plug-ins/gap/gap_range_ops.c:461
 msgid "Basename:"
 msgstr "Basisname:"
 
-#: plug-ins/gap/gap_range_ops.c:461
+#: plug-ins/gap/gap_range_ops.c:462
 msgid ""
 "basename of the resulting frames       \n"
 "(0001.ext is added)"
@@ -9734,11 +9749,11 @@ msgstr ""
 "Basisname der resultierenden Frames\n"
 "(0001.ext wird hinzugefügt)"
 
-#: plug-ins/gap/gap_range_ops.c:466 plug-ins/gap/gap_split.c:234
+#: plug-ins/gap/gap_range_ops.c:467 plug-ins/gap/gap_split.c:235
 msgid "Extension:"
 msgstr "Erweiterung:"
 
-#: plug-ins/gap/gap_range_ops.c:467
+#: plug-ins/gap/gap_range_ops.c:468
 msgid ""
 "extension of resulting frames       \n"
 "(is also used to define Fileformat)"
@@ -9746,11 +9761,11 @@ msgstr ""
 "Erweiterung der resultierenden Frames                \n"
 "(wird auch dazu benutzt, das Dateiformat zu bestimmen)"
 
-#: plug-ins/gap/gap_range_ops.c:473
+#: plug-ins/gap/gap_range_ops.c:474
 msgid "Imagetype:"
 msgstr "Bildtyp:"
 
-#: plug-ins/gap/gap_range_ops.c:474
+#: plug-ins/gap/gap_range_ops.c:475
 msgid ""
 "Convert to, or keep imagetype           \n"
 "(most fileformats can't handle all types)"
@@ -9758,11 +9773,11 @@ msgstr ""
 "Zum Bildtyp konvertieren (oder beibehalten)       \n"
 "(die meisten Formate können nicht mit allen Typen umgehen)"
 
-#: plug-ins/gap/gap_range_ops.c:480 plug-ins/gap/gap_split.c:245
+#: plug-ins/gap/gap_range_ops.c:481 plug-ins/gap/gap_split.c:246
 msgid "Flatten:"
 msgstr "Zusammenfügen:"
 
-#: plug-ins/gap/gap_range_ops.c:481
+#: plug-ins/gap/gap_range_ops.c:482
 msgid ""
 "Flatten all resulting frames               \n"
 "(most fileformats need flattened frames)"
@@ -9770,32 +9785,32 @@ msgstr ""
 "Alle resultierenden Frames zusammenfügen             \n"
 "(die meisten Formate können nicht mit Ebenen umgehen)"
 
-#: plug-ins/gap/gap_range_ops.c:486
+#: plug-ins/gap/gap_range_ops.c:487
 msgid "Convert Frames to other Formats"
 msgstr "AnimFrames in andere Formate konvertieren"
 
-#: plug-ins/gap/gap_range_ops.c:487
+#: plug-ins/gap/gap_range_ops.c:488
 msgid "Convert Settings"
 msgstr "Konvertierungs-Einstellungen"
 
-#: plug-ins/gap/gap_range_ops.c:564
+#: plug-ins/gap/gap_range_ops.c:565
 msgid "Expand as necessary"
 msgstr "Vergrössern falls notwendig"
 
-#: plug-ins/gap/gap_range_ops.c:565
+#: plug-ins/gap/gap_range_ops.c:566
 msgid "Clipped to image"
 msgstr "Am Bild kappen"
 
-#: plug-ins/gap/gap_range_ops.c:566
+#: plug-ins/gap/gap_range_ops.c:567
 msgid "Clipped to bottom layer"
 msgstr "An der untersten Ebene kappen"
 
 # TODO ?
-#: plug-ins/gap/gap_range_ops.c:567
+#: plug-ins/gap/gap_range_ops.c:568
 msgid "Flattened image"
 msgstr "Zusammengefügtes Bild"
 
-#: plug-ins/gap/gap_range_ops.c:568
+#: plug-ins/gap/gap_range_ops.c:569
 msgid ""
 "Resulting Layer Size is made of the outline-rectangle \n"
 "of all visible layers (may differ from frame to frame)"
@@ -9803,11 +9818,11 @@ msgstr ""
 "Grösse der resultierenden Ebenen wird durch das Umriss-Rechteck aller\n"
 "sichtbaren Ebenen bestimmt (könnte von Frame zu Frame versch. sein)"
 
-#: plug-ins/gap/gap_range_ops.c:569
+#: plug-ins/gap/gap_range_ops.c:570
 msgid "Resulting Layer Size is the frame size"
 msgstr "Grösse der resultierenden Ebenen = Grösse des Frames"
 
-#: plug-ins/gap/gap_range_ops.c:570
+#: plug-ins/gap/gap_range_ops.c:571
 msgid ""
 "Resulting Layer Size is the size of the bottom layer\n"
 "(may differ from frame to frame)"
@@ -9815,7 +9830,7 @@ msgstr ""
 "Grösse der resultierenden Ebenen wird durch die Grösse der untersten Ebene\n"
 "bestimmt (kann von Frame zu Frame verschieden sein)"
 
-#: plug-ins/gap/gap_range_ops.c:571
+#: plug-ins/gap/gap_range_ops.c:572
 msgid ""
 "Resulting Layer Size is the frame size     \n"
 "transparent parts are filled with BG color"
@@ -9823,23 +9838,23 @@ msgstr ""
 "Grösse der resultierenden Ebenen = Grösse des Frames,\n"
 "transparente Stellen werden mit der Hintergrundfarbe gefüllt"
 
-#: plug-ins/gap/gap_range_ops.c:581
+#: plug-ins/gap/gap_range_ops.c:582
 msgid "select all Layers where Layername is equal to Pattern"
 msgstr "Alle Ebenen auswählen, deren Name auf Muster passt"
 
-#: plug-ins/gap/gap_range_ops.c:582
+#: plug-ins/gap/gap_range_ops.c:583
 msgid "select all Layers where Layername starts with Pattern"
 msgstr "Alle Ebenen auswählen, deren Name mit Muster anfängt"
 
-#: plug-ins/gap/gap_range_ops.c:583
+#: plug-ins/gap/gap_range_ops.c:584
 msgid "select all Layers where Layername ends up with Pattern"
 msgstr "Alle Ebenen auswählen, deren Name mit Muster endet"
 
-#: plug-ins/gap/gap_range_ops.c:584
+#: plug-ins/gap/gap_range_ops.c:585
 msgid "select all Layers where Layername contains Pattern"
 msgstr "Alle Ebenen auswählen, deren Name Muster enthält"
 
-#: plug-ins/gap/gap_range_ops.c:585
+#: plug-ins/gap/gap_range_ops.c:586
 msgid ""
 "select Layerstack positions.\n"
 "0, 4-5, 8\n"
@@ -9849,7 +9864,7 @@ msgstr ""
 "0, 4-5, 8\n"
 "(0 ist die oberste Ebene)"
 
-#: plug-ins/gap/gap_range_ops.c:586
+#: plug-ins/gap/gap_range_ops.c:587
 msgid ""
 "select Layerstack positions.\n"
 "0, 4-5, 8\n"
@@ -9859,15 +9874,15 @@ msgstr ""
 "0, 4-5, 8\n"
 "(0 ist die Hintergrundebene)"
 
-#: plug-ins/gap/gap_range_ops.c:587
+#: plug-ins/gap/gap_range_ops.c:588
 msgid "select all visible Layers"
 msgstr "Alle sichtbaren Ebenen auswählen"
 
-#: plug-ins/gap/gap_range_ops.c:616
+#: plug-ins/gap/gap_range_ops.c:617
 msgid "Layer Basename:"
 msgstr "Basisname der Ebenen"
 
-#: plug-ins/gap/gap_range_ops.c:617
+#: plug-ins/gap/gap_range_ops.c:618
 msgid ""
 "Basename for all Layers    \n"
 "[####] is replaced by frame number"
@@ -9875,15 +9890,15 @@ msgstr ""
 "Basisname für alle Ebenen     \n"
 "[####] wird durch die Frame-Nummer ersetzt"
 
-#: plug-ins/gap/gap_range_ops.c:635
+#: plug-ins/gap/gap_range_ops.c:636
 msgid "Layer Mergemode:"
 msgstr "Ebenen-Kombinationsmodus:"
 
-#: plug-ins/gap/gap_range_ops.c:642
+#: plug-ins/gap/gap_range_ops.c:643
 msgid "Exclude BG-Layer"
 msgstr "HG-Ebene ausschliessen"
 
-#: plug-ins/gap/gap_range_ops.c:643
+#: plug-ins/gap/gap_range_ops.c:644
 msgid ""
 "Exclude the BG-Layers    \n"
 "in all handled frames\n"
@@ -9893,31 +9908,31 @@ msgstr ""
 "bearbeiteten Frames ausschliessen\n"
 "(Auswahl wird nicht beachtet)"
 
-#: plug-ins/gap/gap_range_ops.c:673
+#: plug-ins/gap/gap_range_ops.c:674
 msgid "Use all unselected Layers"
 msgstr "Alle nicht-ausgewählten Ebenen benutzen"
 
-#: plug-ins/gap/gap_range_ops.c:747
+#: plug-ins/gap/gap_range_ops.c:748
 msgid "Creating Layer-Animated Image..."
 msgstr "Erstelle Ebenenanimation..."
 
-#: plug-ins/gap/gap_range_ops.c:969
+#: plug-ins/gap/gap_range_ops.c:970
 msgid "Frames to Image"
 msgstr "Frames zu Bild"
 
-#: plug-ins/gap/gap_range_ops.c:970
+#: plug-ins/gap/gap_range_ops.c:971
 msgid "Create Multilayer-Image from Frames"
 msgstr "Erstelle Multi-Ebenen Bild aus Frames"
 
-#: plug-ins/gap/gap_range_ops.c:1111
+#: plug-ins/gap/gap_range_ops.c:1112
 msgid "Flattening Frames..."
 msgstr "Füge Ebenen zusammen..."
 
-#: plug-ins/gap/gap_range_ops.c:1112
+#: plug-ins/gap/gap_range_ops.c:1113
 msgid "Converting Frames..."
 msgstr "Konvertiere Frames..."
 
-#: plug-ins/gap/gap_range_ops.c:1260
+#: plug-ins/gap/gap_range_ops.c:1261
 msgid ""
 "Convert Frames: SAVE operation FAILED.\n"
 "Desired save plugin can't handle type\n"
@@ -9927,40 +9942,40 @@ msgstr ""
 "Das Plugin zum Speichern kann mit dem Bild-Typ nicht umgehen\n"
 "oder das ausgewählte Plugin zum Speichern ist nicht verfügbar."
 
-#: plug-ins/gap/gap_range_ops.c:1368
+#: plug-ins/gap/gap_range_ops.c:1369
 msgid "Cropping all Animation Frames..."
 msgstr "Alle Animations-Frames werden zugeschnitten..."
 
-#: plug-ins/gap/gap_range_ops.c:1371
+#: plug-ins/gap/gap_range_ops.c:1372
 msgid "Resizing all Animation Frames..."
 msgstr "Verändere die Grösse aller Animations-Frames..."
 
-#: plug-ins/gap/gap_range_ops.c:1374
+#: plug-ins/gap/gap_range_ops.c:1375
 msgid "Scaling all Animation Frames..."
 msgstr "Skaliere alle Animations-Frames..."
 
-#: plug-ins/gap/gap_range_ops.c:1460
+#: plug-ins/gap/gap_range_ops.c:1461
 msgid "Flatten Frames"
 msgstr "Frames zusammenfügen"
 
-#: plug-ins/gap/gap_range_ops.c:1516
+#: plug-ins/gap/gap_range_ops.c:1517
 #, c-format
 msgid "Removing Layer (pos:%ld) from Frames..."
 msgstr "Entferne Ebene (pos:%ld) aus Frames..."
 
-#: plug-ins/gap/gap_range_ops.c:1640
+#: plug-ins/gap/gap_range_ops.c:1641
 msgid "Delete Layers in Frames"
 msgstr "Entferne Ebene aus Frames"
 
-#: plug-ins/gap/gap_range_ops.c:1641
+#: plug-ins/gap/gap_range_ops.c:1642
 msgid "Select Frame Range & Position"
 msgstr "Frame-Reichweite & Position auswählen"
 
-#: plug-ins/gap/gap_split.c:100
+#: plug-ins/gap/gap_split.c:101
 msgid "Splitting into Frames..."
 msgstr "Bild in Frames aufteilen..."
 
-#: plug-ins/gap/gap_split.c:175
+#: plug-ins/gap/gap_split.c:176
 msgid ""
 "Split Frames: SAVE operation FAILED.\n"
 "desired save plugin can't handle type\n"
@@ -9970,7 +9985,7 @@ msgstr ""
 "Plugin zum Speichern kann mit dem Bild-Typ nicht umgehen\n"
 "oder das ausgewählte Speichern-Plugin ist nicht verfügbar."
 
-#: plug-ins/gap/gap_split.c:225
+#: plug-ins/gap/gap_split.c:226
 #, c-format
 msgid ""
 "%s\n"
@@ -9981,29 +9996,29 @@ msgstr ""
 "%s\n"
 "(%s_0001.%s)\n"
 
-#: plug-ins/gap/gap_split.c:226
+#: plug-ins/gap/gap_split.c:227
 msgid "Make a frame (diskfile) from each Layer"
 msgstr "Erstelle einen Frame (auf Festpl.) aus jeder Ebene"
 
-#: plug-ins/gap/gap_split.c:227
+#: plug-ins/gap/gap_split.c:228
 msgid "frames are named: base_nr.extension"
 msgstr "Frames werden benannt: base_nr.extension"
 
-#: plug-ins/gap/gap_split.c:235
+#: plug-ins/gap/gap_split.c:236
 msgid "extension of resulting frames (is also used to define Fileformat)"
 msgstr ""
 "Erweiterung der resultierenden Frames (wird auch dazu benutzt, das "
 "Dateiformat zu bestimmen)"
 
-#: plug-ins/gap/gap_split.c:240
+#: plug-ins/gap/gap_split.c:241
 msgid "Inverse Order:"
 msgstr "Umgekehrte Reihenfolge:"
 
-#: plug-ins/gap/gap_split.c:241
+#: plug-ins/gap/gap_split.c:242
 msgid "Start frame 0001 at Top Layer"
 msgstr "Starte Frame 0001 bei der Obersten Ebene"
 
-#: plug-ins/gap/gap_split.c:246
+#: plug-ins/gap/gap_split.c:247
 msgid ""
 "Remove Alpha Channel in resulting Frames. Transparent parts are filled with "
 "BG color."
@@ -10011,16 +10026,16 @@ msgstr ""
 "Entferne Alpha-Kanal aus resultierenden Frames. Transparente Teile werden "
 "mit HG-Farbe gefüllt."
 
-#: plug-ins/gap/gap_split.c:249
+#: plug-ins/gap/gap_split.c:250
 msgid "Split Image into Frames"
 msgstr "Bild in Frames aufteilen"
 
 # TODO ?
-#: plug-ins/gap/gap_split.c:250
+#: plug-ins/gap/gap_split.c:251
 msgid "Split Settings"
 msgstr "Einstellungen"
 
-#: plug-ins/gap/gap_split.c:297
+#: plug-ins/gap/gap_split.c:298
 msgid ""
 "OPERATION CANCELLED.\n"
 "This image is already an AnimFrame.\n"

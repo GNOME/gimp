@@ -28,6 +28,7 @@
  */
 
 /* revision history:
+ * 1.1.28a; 2000/11/05   hof: check for GIMP_PDB_SUCCESS (not for FALSE)
  * gimp   1.1.6;     1999/06/21  hof: bugix: wrong iterator total_steps and direction
  * gimp   1.1.15.1;  1999/05/08  hof: bugix (dont mix GimpImageType with GimpImageBaseType)
  * version 0.98.00   1998.11.27  hof: - use new module gap_pdb_calls.h
@@ -1081,7 +1082,7 @@ p_frames_modify(t_anim_info *ainfo_ptr,
 	  		     GIMP_PDB_FLOAT,   (gdouble)l_cur_step,    /* current step */
 	  		     GIMP_PDB_INT32,   l_plugin_data_len, /* length of stored data struct */
 	  		     GIMP_PDB_END);
-       if (l_params[0].data.d_status == FALSE) 
+       if (l_params[0].data.d_status != GIMP_PDB_SUCCESS) 
        { 
          fprintf(stderr, "ERROR: iterator %s  failed\n", l_plugin_iterator);
          l_rc = -1;

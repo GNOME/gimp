@@ -26,6 +26,7 @@
  */
 
 /* revision history
+ * 1.1.28a; 2000/10/29   hof: subsequent save calls use GIMP_RUN_WITH_LAST_VALS
  * 1.1.9a;  1999/09/21   hof: bugfix GIMP_RUN_NONINTERACTIVE mode did not work
  * 1.1.8a;  1999/08/31   hof: accept anim framenames without underscore '_'
  * 1.1.5a;  1999/05/08   hof: bugix (dont mix GimpImageType with GimpImageBaseType)
@@ -178,7 +179,7 @@ p_split_image(t_anim_info *ainfo_ptr,
             break;
           }
 
-          l_run_mode  = GIMP_RUN_NONINTERACTIVE;  /* for all further calls */
+          l_run_mode  = GIMP_RUN_WITH_LAST_VALS;  /* for all further calls */
 
           /* set image name */
           gimp_image_set_filename (l_new_image_id, l_sav_name);

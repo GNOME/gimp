@@ -32,6 +32,7 @@
  */
 
 /* revision history
+ * 1.1.28a; 2000/11/05   hof: check for GIMP_PDB_SUCCESS (not for FALSE)
  * 1.1.24a  2000/07/01   hof: bugfix: flatten of singlelayer images has to remove alpha channel
  * 1.1.17b  2000/02/26   hof: bugfixes
  * 1.1.14a  2000/01/06   hof: gap_range_to_multilayer: use framerate (from video info file) in framenames
@@ -1059,7 +1060,7 @@ p_type_convert(gint32 image_id, GimpImageBaseType dest_type, gint32 dest_colors,
   }
 
 
-  if (l_params[0].data.d_status == FALSE) 
+  if (l_params[0].data.d_status != GIMP_PDB_SUCCESS) 
   {  l_rc = -1;
   }
   
