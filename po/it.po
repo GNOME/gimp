@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-06 02:03+0200\n"
-"PO-Revision-Date: 2004-08-02 01:40+0200\n"
+"POT-Creation-Date: 2004-08-10 09:36+0200\n"
+"PO-Revision-Date: 2004-08-10 09:39+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -71,7 +71,7 @@ msgstr ""
 "Controllare la corretta esistenza dell'impostazione dell'ambiente grafico."
 
 #: app/main.c:221 app/widgets/gimptoolbox.c:553
-#: data/misc/gimp.desktop.in.in.h:2
+#: data/misc/gimp.desktop.in.in.h:3
 msgid "The GIMP"
 msgstr "The GIMP"
 
@@ -560,7 +560,7 @@ msgid "_Context"
 msgstr "_Contesto"
 
 #: app/actions/context-actions.c:47 app/actions/layers-actions.c:51
-#: app/actions/plug-in-actions.c:68
+#: app/actions/plug-in-actions.c:66
 msgid "_Colors"
 msgstr "_Colori"
 
@@ -572,7 +572,7 @@ msgstr "_Opacità"
 msgid "_Brush"
 msgstr "_Pennello"
 
-#: app/actions/context-actions.c:50 app/actions/plug-in-actions.c:82
+#: app/actions/context-actions.c:50 app/actions/plug-in-actions.c:80
 #: app/gui/preferences-dialog.c:1587
 msgid "_Pattern"
 msgstr "_Motivo"
@@ -591,34 +591,28 @@ msgid "_Font"
 msgstr "_Caratteri"
 
 #: app/actions/context-actions.c:55
-#, fuzzy
 msgid "_Shape"
-msgstr "Taglio"
+msgstr "_Forma"
 
 #: app/actions/context-actions.c:56
-#, fuzzy
 msgid "_Radius"
-msgstr "Raggio:"
+msgstr "_Raggio"
 
 #: app/actions/context-actions.c:57
-#, fuzzy
 msgid "S_pikes"
-msgstr "Picchi:"
+msgstr "_Picchi"
 
 #: app/actions/context-actions.c:58
-#, fuzzy
 msgid "_Hardness"
-msgstr "Durezza"
+msgstr "_Durezza"
 
 #: app/actions/context-actions.c:59
-#, fuzzy
 msgid "_Aspect"
-msgstr "_Prospettiva"
+msgstr "_Aspetto"
 
 #: app/actions/context-actions.c:60
-#, fuzzy
 msgid "A_ngle"
-msgstr "Angolo:"
+msgstr "A_ngolo"
 
 #: app/actions/context-actions.c:63
 msgid "_Default Colors"
@@ -1625,53 +1619,53 @@ msgstr "Scala di _grigi"
 msgid "_Indexed..."
 msgstr "_Indicizzata..."
 
-#: app/actions/image-commands.c:260
+#: app/actions/image-commands.c:262
 msgid "Flipping..."
 msgstr "Riflessione..."
 
-#: app/actions/image-commands.c:280 app/tools/gimprotatetool.c:164
+#: app/actions/image-commands.c:282 app/tools/gimprotatetool.c:159
 msgid "Rotating..."
 msgstr "Rotazione..."
 
-#: app/actions/image-commands.c:302 app/actions/layers-commands.c:327
+#: app/actions/image-commands.c:304 app/actions/layers-commands.c:327
 msgid "Cannot crop because the current selection is empty."
 msgstr "Non è possibile ritagliare perché la regione selezionata è vuota."
 
-#: app/actions/image-commands.c:352
+#: app/actions/image-commands.c:354
 msgid "Merge Layers"
 msgstr "Fondi i livelli"
 
-#: app/actions/image-commands.c:354
+#: app/actions/image-commands.c:356
 msgid "Layers Merge Options"
 msgstr "Opzioni di fusione livelli"
 
-#: app/actions/image-commands.c:372
+#: app/actions/image-commands.c:374
 msgid "Final, Merged Layer should be:"
 msgstr "Infine, il livello fuso dovrebbe essere:"
 
-#: app/actions/image-commands.c:376
+#: app/actions/image-commands.c:378
 msgid "Expanded as necessary"
 msgstr "Espandi se necessario"
 
-#: app/actions/image-commands.c:379
+#: app/actions/image-commands.c:381
 msgid "Clipped to image"
 msgstr "Legato all'immagine"
 
-#: app/actions/image-commands.c:382
+#: app/actions/image-commands.c:384
 msgid "Clipped to bottom layer"
 msgstr "Legato al livello inferiore"
 
-#: app/actions/image-commands.c:451
+#: app/actions/image-commands.c:453
 msgid "Resizing..."
 msgstr "Ridimensionamento..."
 
-#: app/actions/image-commands.c:468
+#: app/actions/image-commands.c:470
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr ""
 "Errore di ridimensionamento: sia la larghezza che l'altezza devono essere "
 "maggiori di zero."
 
-#: app/actions/image-commands.c:506
+#: app/actions/image-commands.c:508
 #, c-format
 msgid ""
 "You are trying to create an image with a size of %s.\n"
@@ -1690,15 +1684,15 @@ msgstr ""
 "Per evitare questa finestra di dialogo, aumentate la \"Dimensione massima "
 "immagine\" (attualmente %s) nelle finestra preferenze."
 
-#: app/actions/image-commands.c:518
+#: app/actions/image-commands.c:520
 msgid "Image exceeds maximum image size"
 msgstr "L'immagine eccede la dimensione massima"
 
-#: app/actions/image-commands.c:526
+#: app/actions/image-commands.c:528
 msgid "Layer Too Small"
 msgstr "Livello troppo piccolo"
 
-#: app/actions/image-commands.c:527
+#: app/actions/image-commands.c:529
 msgid ""
 "The chosen image size will shrink some layers completely away. Is this what "
 "you want?"
@@ -1706,17 +1700,17 @@ msgstr ""
 "Le dimensioni scelte per l'immagine annulleranno completamente alcuni "
 "livelli. Sei sicuro di quello che fai?"
 
-#: app/actions/image-commands.c:591 app/core/gimpimage-scale.c:70
+#: app/actions/image-commands.c:593 app/core/gimpimage-scale.c:70
 #: app/gui/resize-dialog.c:212
 msgid "Scale Image"
 msgstr "Scala immagine"
 
-#: app/actions/image-commands.c:607 app/actions/layers-commands.c:1091
-#: app/tools/gimpscaletool.c:161
+#: app/actions/image-commands.c:609 app/actions/layers-commands.c:1091
+#: app/tools/gimpscaletool.c:153
 msgid "Scaling..."
 msgstr "Scalatura..."
 
-#: app/actions/image-commands.c:620
+#: app/actions/image-commands.c:622
 msgid "Scale Error: Both width and height must be greater than zero."
 msgstr ""
 "Errore di scalatura: sia la larghezza che l'altezza devono essere maggiori "
@@ -1927,7 +1921,7 @@ msgid "Width:"
 msgstr "Larghezza:"
 
 #: app/actions/layers-commands.c:712 app/tools/gimpcroptool.c:1017
-#: app/tools/gimpscaletool.c:173 app/tools/gimpselectionoptions.c:574
+#: app/tools/gimpscaletool.c:166 app/tools/gimpselectionoptions.c:574
 #: app/widgets/gimptemplateeditor.c:231
 msgid "Height:"
 msgstr "Altezza:"
@@ -2117,100 +2111,100 @@ msgstr "Aggio_rna motivi"
 msgid "Refresh patterns"
 msgstr "Aggiorna motivi"
 
-#: app/actions/plug-in-actions.c:66
+#: app/actions/plug-in-actions.c:64
 msgid "Filte_rs"
 msgstr "Filt_ri"
 
-#: app/actions/plug-in-actions.c:67
+#: app/actions/plug-in-actions.c:65
 msgid "_Blur"
 msgstr "Sf_umata"
 
-#: app/actions/plug-in-actions.c:69
+#: app/actions/plug-in-actions.c:67
 msgid "Ma_p"
 msgstr "Ma_ppa"
 
-#: app/actions/plug-in-actions.c:70
+#: app/actions/plug-in-actions.c:68
 msgid "_Noise"
 msgstr "_Rumore"
 
-#: app/actions/plug-in-actions.c:71
+#: app/actions/plug-in-actions.c:69
 msgid "Edge-De_tect"
 msgstr "Rileva mar_gini"
 
-#: app/actions/plug-in-actions.c:72
+#: app/actions/plug-in-actions.c:70
 msgid "En_hance"
 msgstr "_Incremento"
 
-#: app/actions/plug-in-actions.c:73
+#: app/actions/plug-in-actions.c:71
 msgid "_Generic"
 msgstr "_Generico"
 
-#: app/actions/plug-in-actions.c:74
+#: app/actions/plug-in-actions.c:72
 msgid "Gla_ss Effects"
 msgstr "Effetti _vetro"
 
-#: app/actions/plug-in-actions.c:75
+#: app/actions/plug-in-actions.c:73
 msgid "_Light Effects"
 msgstr "Effetti _luce"
 
-#: app/actions/plug-in-actions.c:76
+#: app/actions/plug-in-actions.c:74
 msgid "_Distorts"
 msgstr "_Distorsioni"
 
-#: app/actions/plug-in-actions.c:77
+#: app/actions/plug-in-actions.c:75
 msgid "_Artistic"
 msgstr "_Artistici"
 
-#: app/actions/plug-in-actions.c:78
+#: app/actions/plug-in-actions.c:76
 msgid "_Map"
 msgstr "_Mappa"
 
-#: app/actions/plug-in-actions.c:79
+#: app/actions/plug-in-actions.c:77
 msgid "_Render"
 msgstr "_Render"
 
-#: app/actions/plug-in-actions.c:80
+#: app/actions/plug-in-actions.c:78
 msgid "_Clouds"
 msgstr "N_uvole"
 
-#: app/actions/plug-in-actions.c:81
+#: app/actions/plug-in-actions.c:79
 msgid "_Nature"
 msgstr "_Natura"
 
-#: app/actions/plug-in-actions.c:83
+#: app/actions/plug-in-actions.c:81
 msgid "_Web"
 msgstr "_Web"
 
-#: app/actions/plug-in-actions.c:84
+#: app/actions/plug-in-actions.c:82
 msgid "An_imation"
 msgstr "An_imazione"
 
-#: app/actions/plug-in-actions.c:85
+#: app/actions/plug-in-actions.c:83
 msgid "C_ombine"
 msgstr "C_ombina"
 
-#: app/actions/plug-in-actions.c:86
+#: app/actions/plug-in-actions.c:84
 msgid "To_ys"
 msgstr "_Giocattoli"
 
-#: app/actions/plug-in-actions.c:89
+#: app/actions/plug-in-actions.c:87
 msgid "Reset all Filters..."
 msgstr "Reimposta tutti i filtri..."
 
-#: app/actions/plug-in-actions.c:97 app/actions/plug-in-actions.c:364
+#: app/actions/plug-in-actions.c:95 app/actions/plug-in-actions.c:338
 msgid "Repeat Last"
 msgstr "Ripeti ultimo"
 
-#: app/actions/plug-in-actions.c:102 app/actions/plug-in-actions.c:366
+#: app/actions/plug-in-actions.c:100 app/actions/plug-in-actions.c:340
 msgid "Re-Show Last"
 msgstr "Ri-mostra ultimo"
 
-#: app/actions/plug-in-actions.c:347
+#: app/actions/plug-in-actions.c:324
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "Ripeti \"%s\""
 
-#: app/actions/plug-in-actions.c:348
+#: app/actions/plug-in-actions.c:325
 #, c-format
 msgid "R_e-show \"%s\""
 msgstr "/Ri-mostra \"%s\""
@@ -3198,12 +3192,9 @@ msgstr ""
 "è stato aperto, altrimenti sarà visualizzato con scala 1:1."
 
 #: app/config/gimprc-blurbs.h:167
-#, fuzzy
 msgid ""
 "Install a private colormap; might be useful on 8-bit (256 colors) displays."
-msgstr ""
-"Installa una mappa colori privata; è utile per visualizzazioni in "
-"pseudocolori."
+msgstr "Installa una mappa colori privata; è utile per visualizzare su schermi a 8 bit (256 colori)."
 
 #: app/config/gimprc-blurbs.h:170
 msgid ""
@@ -4291,12 +4282,12 @@ msgstr ""
 "Errore fatale di analisi nel file pennello '%s': forma di pennello "
 "sconosciuta."
 
-#: app/core/gimpbrushgenerated.c:747
+#: app/core/gimpbrushgenerated.c:749
 #, c-format
 msgid "Error while reading brush file '%s': %s"
 msgstr "Errore durante la lettura del file pennello '%s': %s"
 
-#: app/core/gimpbrushgenerated.c:749
+#: app/core/gimpbrushgenerated.c:751
 msgid "File is truncated"
 msgstr "Il file è troncato"
 
@@ -4490,7 +4481,7 @@ msgid "Flip"
 msgstr "Riflessione"
 
 #. Start a transform undo group
-#: app/core/gimpdrawable-transform.c:995 app/tools/gimprotatetool.c:103
+#: app/core/gimpdrawable-transform.c:995 app/tools/gimprotatetool.c:97
 msgid "Rotate"
 msgstr "Rotazione"
 
@@ -4592,15 +4583,15 @@ msgstr "Cambia voce in tavolozza indicizzata"
 msgid "Add Color to Indexed Palette"
 msgstr "Aggiungi colore alla tavolozza indicizzata"
 
-#: app/core/gimpimage-convert.c:767
+#: app/core/gimpimage-convert.c:786
 msgid "Convert Image to RGB"
 msgstr "Converti in RGB"
 
-#: app/core/gimpimage-convert.c:771
+#: app/core/gimpimage-convert.c:790
 msgid "Convert Image to Grayscale"
 msgstr "Converti in scala di grigi"
 
-#: app/core/gimpimage-convert.c:775
+#: app/core/gimpimage-convert.c:794
 msgid "Convert Image to Indexed"
 msgstr "Converti in indicizzata"
 
@@ -5420,56 +5411,56 @@ msgstr "Informazioni su GIMP"
 msgid "Add the current color to the color history"
 msgstr "Aggiungi il colore corrente allo cronologia colori"
 
-#: app/gui/convert-dialog.c:118
+#: app/gui/convert-dialog.c:124
 msgid "Indexed Color Conversion"
 msgstr "Conversione a indicizzato"
 
-#: app/gui/convert-dialog.c:121
+#: app/gui/convert-dialog.c:127
 msgid "Convert Image to Indexed Colors"
 msgstr "Converti immagine a indicizzata"
 
-#: app/gui/convert-dialog.c:145
+#: app/gui/convert-dialog.c:151
 msgid "General Palette Options"
 msgstr "Opzioni generali della tavolozza"
 
-#: app/gui/convert-dialog.c:158
+#: app/gui/convert-dialog.c:164
 msgid "Generate optimum palette:"
 msgstr "Genera tavolozza ottimale:"
 
-#: app/gui/convert-dialog.c:183
+#: app/gui/convert-dialog.c:189
 msgid "Max. number of colors:"
 msgstr "Numero max di colori:"
 
-#: app/gui/convert-dialog.c:202
+#: app/gui/convert-dialog.c:208
 msgid "Use WWW-Optimized Palette"
 msgstr "Usa tavolozza ottimizzata per il Web"
 
-#: app/gui/convert-dialog.c:216
+#: app/gui/convert-dialog.c:222
 msgid "Use black and white (1-bit) palette"
 msgstr "Usa tavolozza bianco/nero (1-bit)"
 
-#: app/gui/convert-dialog.c:232
+#: app/gui/convert-dialog.c:238
 msgid "Remove unused colors from final palette"
 msgstr "Rimuovi colori inutilizzati dalla tavolozza finale"
 
-#: app/gui/convert-dialog.c:245
+#: app/gui/convert-dialog.c:251
 msgid "Use custom palette:"
 msgstr "Usa tavolozza personalizzata:"
 
 #. the dither type
-#: app/gui/convert-dialog.c:285
+#: app/gui/convert-dialog.c:291
 msgid "Dithering Options"
 msgstr "Opzioni di dithering"
 
-#: app/gui/convert-dialog.c:301
+#: app/gui/convert-dialog.c:307
 msgid "Enable dithering of transparency"
 msgstr "Abilita dithering della trasparenza"
 
-#: app/gui/convert-dialog.c:315
+#: app/gui/convert-dialog.c:321
 msgid "[ Warning ]"
 msgstr "[ Attenzione ]"
 
-#: app/gui/convert-dialog.c:320
+#: app/gui/convert-dialog.c:326
 msgid ""
 "You are attempting to convert an image with an alpha channel to indexed "
 "colors.\n"
@@ -5481,11 +5472,20 @@ msgstr ""
 "Non usare una tavolozza con più di 255 colori si desidera creare un file GIF "
 "trasparente o con animazione da questo formato."
 
-#: app/gui/convert-dialog.c:457
+#: app/gui/convert-dialog.c:427
+#, c-format
+msgid "Stage %d"
+msgstr "Fase %d"
+
+#: app/gui/convert-dialog.c:445
+msgid "Stage 1"
+msgstr "Fase 1"
+
+#: app/gui/convert-dialog.c:491
 msgid "Select Custom Palette"
 msgstr "Seleziona tavolozza personalizzata"
 
-#: app/gui/convert-dialog.c:495
+#: app/gui/convert-dialog.c:529
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "Impossibile convertire in una tavolozza con più di 256 colori."
 
@@ -5683,7 +5683,7 @@ msgid "X:"
 msgstr "X:"
 
 #: app/gui/info-window.c:161 app/gui/info-window.c:183
-#: app/tools/gimprotatetool.c:193
+#: app/tools/gimprotatetool.c:189
 msgid "Y:"
 msgstr "Y:"
 
@@ -6622,11 +6622,11 @@ msgid "Set Image Canvas Size"
 msgstr "Configura la dimensione della superficie"
 
 #. the original width & height labels
-#: app/gui/resize-dialog.c:291 app/tools/gimpscaletool.c:177
+#: app/gui/resize-dialog.c:291 app/tools/gimpscaletool.c:170
 msgid "Current width:"
 msgstr "Larghezza corrente:"
 
-#: app/gui/resize-dialog.c:297 app/tools/gimpscaletool.c:181
+#: app/gui/resize-dialog.c:297 app/tools/gimpscaletool.c:174
 msgid "Current height:"
 msgstr "Altezza corrente:"
 
@@ -8259,7 +8259,7 @@ msgid "Size:"
 msgstr "Dimensione:"
 
 #: app/tools/gimpinkoptions-gui.c:78 app/tools/gimpmeasuretool.c:865
-#: app/tools/gimprotatetool.c:173 app/widgets/gimpbrusheditor.c:203
+#: app/tools/gimprotatetool.c:169 app/widgets/gimpbrusheditor.c:203
 msgid "Angle:"
 msgstr "Angolo:"
 
@@ -8526,27 +8526,27 @@ msgstr "Disegna punti con spigoli vivi"
 msgid "Pe_ncil"
 msgstr "_Matita"
 
-#: app/tools/gimpperspectivetool.c:83
+#: app/tools/gimpperspectivetool.c:81
 msgid "Perspective"
 msgstr "Prospettiva"
 
-#: app/tools/gimpperspectivetool.c:84
+#: app/tools/gimpperspectivetool.c:82
 msgid "Change perspective of the layer or selection"
 msgstr "Cambia la prospettiva del livello o della selezione"
 
-#: app/tools/gimpperspectivetool.c:85
+#: app/tools/gimpperspectivetool.c:83
 msgid "_Perspective"
 msgstr "_Prospettiva"
 
-#: app/tools/gimpperspectivetool.c:141
+#: app/tools/gimpperspectivetool.c:140
 msgid "Perspective Transform Information"
 msgstr "Informazioni trasformazione prospettiva"
 
-#: app/tools/gimpperspectivetool.c:142
+#: app/tools/gimpperspectivetool.c:141
 msgid "Perspective..."
 msgstr "Prospettiva..."
 
-#: app/tools/gimpperspectivetool.c:148
+#: app/tools/gimpperspectivetool.c:149
 msgid "Matrix:"
 msgstr "Matrice:"
 
@@ -8598,54 +8598,53 @@ msgstr "Selezione: SOSTITUISCI"
 msgid "Selection: "
 msgstr "Selezione: "
 
-#: app/tools/gimprotatetool.c:104
+#: app/tools/gimprotatetool.c:98
 msgid "Rotate the layer or selection"
 msgstr "Rotazione del livello o della selezione"
 
-#: app/tools/gimprotatetool.c:105
+#: app/tools/gimprotatetool.c:99
 msgid "_Rotate"
 msgstr "_Rotazione"
 
-#: app/tools/gimprotatetool.c:163
+#: app/tools/gimprotatetool.c:158
 msgid "Rotation Information"
 msgstr "Informazioni sulla rotazione"
 
-#: app/tools/gimprotatetool.c:189
+#: app/tools/gimprotatetool.c:185
 msgid "Center X:"
 msgstr "Centro X:"
 
-#: app/tools/gimpscaletool.c:100
+#: app/tools/gimpscaletool.c:91
 msgid "Scale"
 msgstr "Scala"
 
-#: app/tools/gimpscaletool.c:101
+#: app/tools/gimpscaletool.c:92
 msgid "Scale the layer or selection"
 msgstr "Scala del livello o della selezione"
 
-#: app/tools/gimpscaletool.c:102
+#: app/tools/gimpscaletool.c:93
 msgid "_Scale"
 msgstr "_Scala"
 
-#: app/tools/gimpscaletool.c:160
+#: app/tools/gimpscaletool.c:152
 msgid "Scaling information"
 msgstr "Informazioni scalatura"
 
-#: app/tools/gimpscaletool.c:170
+#: app/tools/gimpscaletool.c:163
 msgid "Original Width:"
 msgstr "Larghezza originale:"
 
-#: app/tools/gimpscaletool.c:196
+#: app/tools/gimpscaletool.c:189
 msgid "Scale ratio X:"
 msgstr "Fattore di scala X:"
 
-#: app/tools/gimpscaletool.c:199
+#: app/tools/gimpscaletool.c:192
 msgid "Scale ratio Y:"
 msgstr "Fattore di scala Y:"
 
-#: app/tools/gimpscaletool.c:203
-#, fuzzy
+#: app/tools/gimpscaletool.c:196
 msgid "Aspect Ratio:"
-msgstr "Rapporto di aspetto:"
+msgstr "Proporzioni:"
 
 #: app/tools/gimpselectionoptions.c:139
 msgid "Smooth edges"
@@ -8683,31 +8682,31 @@ msgstr "Seleziona aree trasparenti"
 msgid "Auto shrink selection"
 msgstr "Auto riduzione della selezione"
 
-#: app/tools/gimpsheartool.c:100
+#: app/tools/gimpsheartool.c:98
 msgid "Shear"
 msgstr "Cesoie"
 
-#: app/tools/gimpsheartool.c:101
+#: app/tools/gimpsheartool.c:99
 msgid "Shear the layer or selection"
 msgstr "Ritaglia il livello o la selezione"
 
-#: app/tools/gimpsheartool.c:102
+#: app/tools/gimpsheartool.c:100
 msgid "S_hear"
 msgstr "_Cesoie"
 
-#: app/tools/gimpsheartool.c:158
+#: app/tools/gimpsheartool.c:157
 msgid "Shearing Information"
 msgstr "Informazioni sulle cesoie"
 
-#: app/tools/gimpsheartool.c:159
+#: app/tools/gimpsheartool.c:158
 msgid "Shearing..."
 msgstr "Ritaglio..."
 
-#: app/tools/gimpsheartool.c:166
+#: app/tools/gimpsheartool.c:167
 msgid "Shear magnitude X:"
 msgstr "Grandezza cesoia X:"
 
-#: app/tools/gimpsheartool.c:173
+#: app/tools/gimpsheartool.c:174
 msgid "Shear magnitude Y:"
 msgstr "Grandezza cesoia Y:"
 
@@ -10389,7 +10388,7 @@ msgstr "Messaggio GIMP"
 #. The format string which is used to display modifier names
 #. *  <Shift>, <Ctrl> and <Alt>
 #.
-#: app/widgets/gimpwidgets-utils.c:536
+#: app/widgets/gimpwidgets-utils.c:539
 #, c-format
 msgid "<%s>"
 msgstr "<%s>"
@@ -10528,3 +10527,7 @@ msgstr "Errore XCF: riscontrata versione file XCF %d non supportata"
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
 msgstr "Crea e modifica immagini o fotografie"
+
+#: data/misc/gimp.desktop.in.in.h:2
+msgid "Image Editor"
+msgstr "Editor immagine"

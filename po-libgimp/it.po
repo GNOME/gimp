@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.16\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-06 02:06+0200\n"
-"PO-Revision-Date: 2004-05-10 17:04+0200\n"
+"POT-Creation-Date: 2004-08-10 10:24+0200\n"
+"PO-Revision-Date: 2004-08-10 10:27+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "Brush Selection"
 msgstr "Selezione pennelli"
 
-#: libgimp/gimpbrushmenu.c:157 libgimp/gimppatternmenu.c:142
+#: libgimp/gimpbrushmenu.c:155 libgimp/gimppatternmenu.c:140
 msgid "_Browse..."
 msgstr "_Naviga..."
 
@@ -190,7 +190,7 @@ msgstr ""
 msgid "Font Selection"
 msgstr "Selezione caratteri"
 
-#: libgimp/gimpgradientmenu.c:103
+#: libgimp/gimpgradientmenu.c:98
 msgid "Gradient Selection"
 msgstr "Selezione gradiente"
 
@@ -208,36 +208,35 @@ msgstr "percento"
 
 #: libgimpbase/gimpbaseenums.c:15
 msgid "RGB color"
-msgstr ""
+msgstr "Colore RGB"
 
 #: libgimpbase/gimpbaseenums.c:16 libgimpbase/gimpbaseenums.c:39
-#, fuzzy
 msgid "Grayscale"
-msgstr "Converti in scala di grigi"
+msgstr "Scala di grigi"
 
 #: libgimpbase/gimpbaseenums.c:17
 msgid "Indexed color"
-msgstr ""
+msgstr "Colore indicizzato"
 
 #: libgimpbase/gimpbaseenums.c:37
 msgid "RGB"
-msgstr ""
+msgstr "RGB"
 
 #: libgimpbase/gimpbaseenums.c:38
 msgid "RGB-alpha"
-msgstr ""
+msgstr "RGB-alfa"
 
 #: libgimpbase/gimpbaseenums.c:40
 msgid "Grayscale-alpha"
-msgstr ""
+msgstr "Scala di grigi-alfa"
 
 #: libgimpbase/gimpbaseenums.c:41
 msgid "Indexed"
-msgstr ""
+msgstr "Indicizzato"
 
 #: libgimpbase/gimpbaseenums.c:42
 msgid "Indexed-alpha"
-msgstr ""
+msgstr "Indicizzato-alfa"
 
 #: libgimpbase/gimpmemsize.c:177
 #, c-format
@@ -409,13 +408,12 @@ msgid "Alpha"
 msgstr "Alfa"
 
 #: libgimpwidgets/gimpcolorscales.c:243
-#, fuzzy
 msgid "Hexadecimal color notation as used in HTML and CSS"
-msgstr "Notazione colore esadecimale come si usa in HTML"
+msgstr "Notazione colore esadecimale come si usa in HTML e nei CSS"
 
 #: libgimpwidgets/gimpcolorscales.c:248
 msgid "HTML _Notation:"
-msgstr ""
+msgstr "_Notazione HTML:"
 
 #: libgimpwidgets/gimpcolorselection.c:203
 msgid "Current:"
@@ -709,6 +707,3 @@ msgstr "Acquerelli"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Pressione"
-
-#~ msgid "He_x Triplet:"
-#~ msgstr "Tripletta h_ex:"
