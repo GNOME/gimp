@@ -103,6 +103,11 @@ gimp_help_show (Gimp        *gimp,
 	idle_help->help_id = g_strdup (help_id);
 
       g_idle_add (gimp_idle_help, idle_help);
+
+      if (gimp->be_verbose)
+        g_print ("HELP: request for help-id '%s' from help-domain '%s'\n",
+                 help_id     ? help_id      : "(null)",
+                 help_domain ? help_domain  : "(null)");
     }
 }
 
@@ -311,9 +316,9 @@ gimp_help_call (Gimp        *gimp,
 #ifdef GIMP_HELP_DEBUG
       g_printerr ("Calling help via %s: %s %s %s\n",
                   procedure,
-                  help_domain  ? help_domain  : NULL,
-                  help_locales ? help_locales : NULL,
-                  help_id      ? help_id      : NULL);
+                  help_domain  ? help_domain  : "(null)",
+                  help_locales ? help_locales : "(null)",
+                  help_id      ? help_id      : "(null)");
 #endif
 
       return_vals =

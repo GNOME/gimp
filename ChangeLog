@@ -1,7 +1,13 @@
 2004-07-27  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimphelp.c (gimp_help): print the help-id and
+	help-domain to stdout if gimp was started with the --verbose
+	command-line option.
+
+2004-07-27  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpfiledialog.c (gimp_file_dialog_add_filters):
-	show extensions in the filters menu.
+	show extensions in the filters menu. Is this a good idea at all?
 
 2004-07-27  Sven Neumann  <sven@gimp.org>
 
