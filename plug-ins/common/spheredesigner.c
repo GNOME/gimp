@@ -260,9 +260,6 @@ struct camera_t
   double fov, tilt;
 };
 
-static gint traceray      (ray * r, vector * col, int level, double imp);
-static gdouble turbulence (gdouble *point, gdouble lofreq, gdouble hifreq);
-
 static GtkWidget *drawarea = NULL;
 
 static guchar img[PREVIEWSIZE * PREVIEWSIZE * 3];
@@ -298,18 +295,23 @@ struct
 }
 settings = { 1, 1, 1 };
 
-static inline void vset   (vector *v, gdouble a, gdouble b, gdouble c);
-static void restartrender (void);
-static void drawcolor1    (GtkWidget *widget);
-static void drawcolor2    (GtkWidget *widget);
-static void render        (void);
-static void realrender    (GimpDrawable *drawable);
-static void fileselect    (gint);
 
-#define COLORBUTTONWIDTH 30
+static inline void vset      (vector *v, gdouble a, gdouble b, gdouble c);
+static void    restartrender (void);
+static void    drawcolor1    (GtkWidget *widget);
+static void    drawcolor2    (GtkWidget *widget);
+static void    render        (void);
+static void    realrender    (GimpDrawable *drawable);
+static void    fileselect    (gint);
+static gint    traceray      (ray * r, vector * col, gint level, gdouble imp);
+static gdouble turbulence    (gdouble *point, gdouble lofreq, gdouble hifreq);
+
+
+#define COLORBUTTONWIDTH  30
 #define COLORBUTTONHEIGHT 20
 
 static GtkWidget *texturelist = NULL;
+
 static GtkObject *scalexscale, *scaleyscale, *scalezscale;
 static GtkObject *rotxscale, *rotyscale, *rotzscale;
 static GtkObject *posxscale, *posyscale, *poszscale;
@@ -326,10 +328,11 @@ static GtkWidget *texturemenu;
 
 #define B 256
 
-static gint p[B + B + 2];
-static gdouble g[B + B + 2][3];
-static gint start = 1;
-static GRand *gr;
+static gint      p[B + B + 2];
+static gdouble   g[B + B + 2][3];
+static gboolean  start = TRUE;
+static GRand    *gr;
+
 
 static void
 init (void)
@@ -340,19 +343,19 @@ init (void)
   /* Create an array of random gradient vectors uniformly on the unit sphere */
 
   gr = g_rand_new ();
-  g_rand_set_seed (gr, 1);	/* Use static seed, to get reproducable results */
+  g_rand_set_seed (gr, 1);    /* Use static seed, to get reproducable results */
 
   for (i = 0; i < B; i++)
     {
       do
-	{			/* Choose uniformly in a cube */
+	{		      /* Choose uniformly in a cube */
 	  for (j = 0; j < 3; j++)
 	    v[j] = g_rand_double_range (gr, -1, 1);
 	  s = DOT (v, v);
 	}
-      while (s > 1.0);		/* If not in sphere try again */
+      while (s > 1.0);	      /* If not in sphere try again */
       s = sqrt (s);
-      for (j = 0; j < 3; j++)	/* Else normalize */
+      for (j = 0; j < 3; j++) /* Else normalize */
 	g[i][j] = v[j] / s;
     }
 
@@ -367,7 +370,7 @@ init (void)
       p[j] = k;
     }
 
-/* Extend g and p arrays to allow for faster indexing */
+  /* Extend g and p arrays to allow for faster indexing */
 
   for (i = 0; i < B + 2; i++)
     {
@@ -385,16 +388,16 @@ init (void)
         r1 = r0 - 1.;
 
 
-static double
+static gdouble
 noise3 (gdouble * vec)
 {
-  gint bx0, bx1, by0, by1, bz0, bz1, b00, b10, b01, b11;
+  gint    bx0, bx1, by0, by1, bz0, bz1, b00, b10, b01, b11;
   gdouble rx0, rx1, ry0, ry1, rz0, rz1, *q, sx, sy, sz, a, b, c, d, t, u, v;
-  gint i, j;
+  gint    i, j;
 
   if (start)
     {
-      start = 0;
+      start = FALSE;
       init ();
     }
 
@@ -473,7 +476,7 @@ turbulence (gdouble * point, gdouble lofreq, gdouble hifreq)
 }
 
 struct camera_t camera;
-struct world_t world;
+struct world_t  world;
 
 static inline void
 vcopy (vector * a, vector * b)
@@ -506,7 +509,7 @@ vdot (vector * a, vector * b)
   return s;
 }
 
-static inline double
+static inline gdouble
 vdist (vector * a, vector * b)
 {
   gdouble x, y, z;
@@ -518,7 +521,7 @@ vdist (vector * a, vector * b)
   return sqrt (x * x + y * y + z * z);
 }
 
-static inline double
+static inline gdouble
 vlen (vector * a)
 {
   gdouble l;
@@ -529,7 +532,7 @@ vlen (vector * a)
 }
 
 static inline void
-vnorm (vector * a, double v)
+vnorm (vector * a, gdouble v)
 {
   gdouble d;
 
@@ -540,27 +543,27 @@ vnorm (vector * a, double v)
 }
 
 static inline void
-vrotate (vector * axis, double ang, vector * vector)
+vrotate (vector * axis, gdouble ang, vector * vector)
 {
   gdouble rad = ang / 180.0 * G_PI;
-  gdouble ax = vector->x;
-  gdouble ay = vector->y;
-  gdouble az = vector->z;
-  gdouble x = axis->x;
-  gdouble y = axis->y;
-  gdouble z = axis->z;
-  gdouble c = cos (rad);
-  gdouble s = sin (rad);
-  gdouble c1 = 1.0 - c;
-  gdouble xx = c1 * x * x;
-  gdouble yy = c1 * y * y;
-  gdouble zz = c1 * z * z;
-  gdouble xy = c1 * x * y;
-  gdouble xz = c1 * x * z;
-  gdouble yz = c1 * y * z;
-  gdouble sx = s * x;
-  gdouble sy = s * y;
-  gdouble sz = s * z;
+  gdouble ax  = vector->x;
+  gdouble ay  = vector->y;
+  gdouble az  = vector->z;
+  gdouble x   = axis->x;
+  gdouble y   = axis->y;
+  gdouble z   = axis->z;
+  gdouble c   = cos (rad);
+  gdouble s   = sin (rad);
+  gdouble c1  = 1.0 - c;
+  gdouble xx  = c1 * x * x;
+  gdouble yy  = c1 * y * y;
+  gdouble zz  = c1 * z * z;
+  gdouble xy  = c1 * x * y;
+  gdouble xz  = c1 * x * z;
+  gdouble yz  = c1 * y * z;
+  gdouble sx  = s * x;
+  gdouble sy  = s * y;
+  gdouble sz  = s * z;
 
   vector->x = (xx + c) * ax + (xy + sz) * ay + (xz - sy) * az;
   vector->y = (xy - sz) * ax + (yy + c) * ay + (yz + sx) * az;
@@ -794,28 +797,26 @@ checksphere (ray * r, sphere * sphere)
     {
       return solmax;
       /*
-       *hits = solmax;
-       return 1;
+       * hits = solmax;
+       * return 1;
        */
     }
   else
     {
       return solmin;
       /*
-       *hits++ = solmin;
-       *hits = solmax;
-       return 2;
+       * hits++ = solmin;
+       * hits = solmax;
+       * return 2;
        */
     }
-
-
 }
 
 static gdouble
 checkcylinder (ray * r, cylinder * cylinder)
 {
-  /* fixme */
-  return 0;
+  /* FIXME */
+  return 0.0;
 }
 
 
@@ -839,8 +840,8 @@ checkplane (ray * r, plane * plane)
 static gdouble
 checktri (ray * r, triangle * tri)
 {
-  vector ed1, ed2;
-  vector tvec, pvec, qvec;
+  vector  ed1, ed2;
+  vector  tvec, pvec, qvec;
   gdouble det, idet, t, u, v;
   vector *orig, dir;
 
@@ -909,7 +910,7 @@ transformpoint (vector * p, texture * t)
 static void
 checker (vector * q, vector * col, texture * t)
 {
-  gint c = 0;
+  gint   c = 0;
   vector p;
 
   vcopy (&p, q);
@@ -1133,9 +1134,9 @@ imagepixel (vector * q, vector * col, texture * t)
 static void
 objcolor (vector * col, vector * p, common * obj)
 {
-  int i;
+  gint     i;
   texture *t;
-  vector tmpcol;
+  vector   tmpcol;
 
   vcset (col, 0, 0, 0, 0);
 
@@ -1204,7 +1205,7 @@ objcolor (vector * col, vector * p, common * obj)
 static void
 objnormal (vector * res, common * obj, vector * p)
 {
-  int i;
+  gint i;
 
   switch (obj->type)
     {
@@ -1232,11 +1233,11 @@ objnormal (vector * res, common * obj, vector * p)
 
   for (i = 0; i < obj->numnormal; i++)
     {
-      int k;
-      vector tmpcol[6];
-      vector q[6], nres;
+      gint     k;
+      vector   tmpcol[6];
+      vector   q[6], nres;
       texture *t = &obj->normal[i];
-      double nstep = 0.1;
+      gdouble  nstep = 0.1;
 
       vset (&nres, 0, 0, 0);
       for (k = 0; k < 6; k++)
@@ -1398,13 +1399,13 @@ calclight (vector * col, vector * point, common * obj)
 static void
 calcphong (common * obj, ray * r2, vector * col)
 {
-  int i, j, o;
-  ray r;
-  double d, b;
-  vector lcol;
-  vector norm;
-  vector pcol;
-  double ps;
+  gint    i, j, o;
+  ray     r;
+  gdouble d, b;
+  vector  lcol;
+  vector  norm;
+  vector  pcol;
+  gdouble ps;
 
   vcopy (&pcol, col);
 
@@ -1454,14 +1455,14 @@ calcphong (common * obj, ray * r2, vector * col)
 }
 
 static int
-traceray (ray * r, vector * col, int level, double imp)
+traceray (ray * r, vector * col, gint level, gdouble imp)
 {
-  int i, b = -1;
-  double t = -1.0, min = 0.0;
-  int type = -1;
-  common *obj, *bobj = NULL;
-  int hits = 0;
-  vector p;
+  gint     i, b = -1;
+  gdouble  t = -1.0, min = 0.0;
+  gint     type = -1;
+  common  *obj, *bobj = NULL;
+  gint     hits = 0;
+  vector   p;
 
   if ((level == 0) || (imp < 0.005))
     {
@@ -1524,7 +1525,7 @@ traceray (ray * r, vector * col, int level, double imp)
 
       if (world.flags & SMARTAMBIENT)
 	{
-	  double ambient = 0.3 * exp (-min / world.smartambient);
+	  gdouble ambient = 0.3 * exp (-min / world.smartambient);
 	  vector lcol;
 	  objcolor (&lcol, &p, bobj);
 	  vmul (&lcol, ambient);
@@ -1719,7 +1720,7 @@ traceray (ray * r, vector * col, int level, double imp)
       vector tmpcol;
       if (world.atmos[i].type == FOG)
 	{
-	  double v, pt[3];
+	  gdouble v, pt[3];
 	  pt[0] = p.x;
 	  pt[1] = p.y;
 	  pt[2] = p.z;
@@ -1785,10 +1786,11 @@ mklabel (texture * t)
 }
 
 static GtkWidget *
-currentitem (GtkWidget * list)
+currentitem (GtkWidget *list)
 {
-  GList *h;
+  GList     *h;
   GtkWidget *tmpw;
+
   h = GTK_LIST (list)->selection;
   if (!h)
     return NULL;
@@ -1800,7 +1802,8 @@ static texture *
 currenttexture (void)
 {
   GtkWidget *tmpw;
-  texture *t;
+  texture   *t;
+
   tmpw = currentitem (texturelist);
   if (!tmpw)
     return NULL;
@@ -1812,7 +1815,8 @@ static void
 relabel (void)
 {
   GtkWidget *tmpw = currentitem (texturelist);
-  texture *t = currenttexture ();
+  texture   *t    = currenttexture ();
+
   if (!tmpw || !t)
     return;
   tmpw = GTK_BIN (tmpw)->child;
@@ -1871,7 +1875,8 @@ setvals (texture * t)
 
 
 static void
-selectitem (GtkWidget * wg, GtkWidget * p)
+selectitem (GtkWidget *widget,
+            gpointer   data)
 {
   setvals (currenttexture ());
 }
@@ -1880,7 +1885,7 @@ static void
 addtexture (void)
 {
   GtkWidget *item;
-  int n = s.com.numtexture;
+  gint       n = s.com.numtexture;
 
   if (n == MAXTEXTUREPEROBJ - 1)
     return;
@@ -1902,8 +1907,8 @@ static void
 duptexture (void)
 {
   GtkWidget *item;
-  texture *t = currenttexture ();
-  int n = s.com.numtexture;
+  texture   *t = currenttexture ();
+  gint       n = s.com.numtexture;
 
   if (n == MAXTEXTUREPEROBJ - 1)
     return;
@@ -1927,7 +1932,7 @@ static void
 rebuildlist (void)
 {
   GtkWidget *item;
-  gint n;
+  gint       n;
 
   for (n = 0; n < s.com.numtexture; n++)
     {
@@ -1976,8 +1981,9 @@ sphere_reset (void)
 static void
 deltexture (void)
 {
-  texture *t;
+  texture   *t;
   GtkWidget *tmpw;
+
   tmpw = currentitem (texturelist);
   if (!tmpw)
     return;
@@ -1991,15 +1997,21 @@ deltexture (void)
 static void
 loadit (const gchar * fn)
 {
-  FILE *f;
-  gchar *end;
-  gchar line[1024];
-  gint i;
+  FILE    *f;
+  gchar   *end;
+  gchar    line[1024];
+  gint     i;
   texture *t;
 
   s.com.numtexture = 0;
 
   f = fopen (fn, "rt");
+  if (!f)
+    {
+      g_message ("Failed to open '%s': %s", fn, g_strerror (errno));
+      return;
+    }
+
   while (!feof (f))
     {
 
@@ -2055,13 +2067,16 @@ loadit (const gchar * fn)
 
       s.com.numtexture++;
     }
+
   fclose (f);
 }
 
 static void
-loadpreset_ok (GtkWidget * w, GtkFileSelection * fs)
+loadpreset_ok (GtkWidget        *widget,
+               GtkFileSelection *fs)
 {
   const gchar *fn = gtk_file_selection_get_filename (GTK_FILE_SELECTION (fs));
+
   gtk_widget_hide (GTK_WIDGET (fs));
   gtk_list_clear_items (GTK_LIST (texturelist), 0, -1);
   loadit (fn);
@@ -2070,13 +2085,18 @@ loadpreset_ok (GtkWidget * w, GtkFileSelection * fs)
 }
 
 static void
-saveit (const gchar * fn)
+saveit (const gchar *fn)
 {
-  gint i;
-  FILE *f;
-  gchar buf[G_ASCII_DTOSTR_BUF_SIZE];
+  gint   i;
+  FILE  *f;
+  gchar  buf[G_ASCII_DTOSTR_BUF_SIZE];
 
   f = fopen (fn, "wt");
+  if (!f)
+    {
+      g_message ("Failed to open '%s': %s", fn, g_strerror (errno));
+      return;
+    }
 
   for (i = 0; i < s.com.numtexture; i++)
     {
@@ -2114,7 +2134,8 @@ saveit (const gchar * fn)
 }
 
 static void
-savepreset_ok (GtkWidget * w, GtkFileSelection * fs)
+savepreset_ok (GtkWidget        *widget,
+               GtkFileSelection *fs)
 {
   const char *fn = gtk_file_selection_get_filename (GTK_FILE_SELECTION (fs));
   gtk_widget_hide (GTK_WIDGET (fs));
@@ -2134,7 +2155,7 @@ savepreset (void)
 }
 
 static void
-fileselect (int action)
+fileselect (gint action)
 {
   static GtkWidget *windows[2] = { NULL, NULL };
 
@@ -2269,7 +2290,8 @@ static void
 selecttexture (GtkWidget * wg, gpointer data)
 {
   texture *t;
-  gint n = GPOINTER_TO_INT (data);
+  gint     n = GPOINTER_TO_INT (data);
+
   if (noupdate)
     return;
   t = currenttexture ();
@@ -2284,7 +2306,8 @@ static void
 selecttype (GtkWidget * wg, gpointer data)
 {
   texture *t;
-  gint n = GPOINTER_TO_INT (data);
+  gint     n = GPOINTER_TO_INT (data);
+
   if (noupdate)
     return;
   t = currenttexture ();
@@ -2296,10 +2319,12 @@ selecttype (GtkWidget * wg, gpointer data)
 }
 
 static void
-getscales (GtkWidget * wg, gpointer data)
+getscales (GtkWidget *widget,
+           gpointer   data)
 {
   gdouble f;
   texture *t;
+
   if (noupdate)
     return;
   t = currenttexture ();
@@ -2325,9 +2350,9 @@ getscales (GtkWidget * wg, gpointer data)
 }
 
 static void
-mktexturemenu (GtkWidget * texturemenu_menu)
+mktexturemenu (GtkWidget *texturemenu_menu)
 {
-  GtkWidget *item;
+  GtkWidget         *item;
   struct textures_t *t;
 
   t = textures;
@@ -2365,9 +2390,10 @@ color2_changed (GimpColorButton *button,
 }
 
 static void
-drawcolor1 (GtkWidget * w)
+drawcolor1 (GtkWidget *w)
 {
   static GtkWidget *lastw = NULL;
+
   texture *t = currenttexture ();
 
   if (w)
@@ -2384,9 +2410,10 @@ drawcolor1 (GtkWidget * w)
 }
 
 static void
-drawcolor2 (GtkWidget * w)
+drawcolor2 (GtkWidget *w)
 {
   static GtkWidget *lastw = NULL;
+
   texture *t = currenttexture ();
 
   if (w)
@@ -2406,7 +2433,8 @@ drawcolor2 (GtkWidget * w)
 static gboolean do_run = FALSE;
 
 static void
-sphere_ok (GtkWidget * widget, gpointer data)
+sphere_ok (GtkWidget *widget,
+           gpointer   data)
 {
   running = -1;
   do_run = TRUE;
@@ -2415,7 +2443,8 @@ sphere_ok (GtkWidget * widget, gpointer data)
 }
 
 static void
-sphere_cancel (GtkWidget * widget, gpointer data)
+sphere_cancel (GtkWidget *widget,
+               gpointer   data)
 {
   gtk_widget_hide (GTK_WIDGET (data));
   gtk_main_quit ();
@@ -2441,12 +2470,19 @@ makewindow (void)
 
   window = gimp_dialog_new (_("Sphere Designer"), "spheredesigner",
 			    gimp_standard_help_func,
-			    "filters/spheredesigner.html", GTK_WIN_POS_MOUSE,
-			    FALSE, TRUE, FALSE, GIMP_STOCK_RESET,
-			    sphere_reset, NULL, NULL, NULL, FALSE, FALSE,
-			    GTK_STOCK_CANCEL, sphere_cancel, NULL, NULL, NULL,
-			    FALSE, TRUE, GTK_STOCK_OK, sphere_ok, NULL, NULL,
-			    NULL, TRUE, FALSE, NULL);
+			    "filters/spheredesigner.html",
+                            GTK_WIN_POS_MOUSE, FALSE, TRUE, FALSE,
+
+                            GIMP_STOCK_RESET,
+                            sphere_reset, NULL, NULL, NULL, FALSE, FALSE,
+			    
+                            GTK_STOCK_CANCEL,
+                            sphere_cancel, NULL, NULL, NULL, FALSE, TRUE,
+                            
+                            GTK_STOCK_OK,
+                            sphere_ok, NULL, NULL, NULL, TRUE, FALSE,
+
+                            NULL);
 
   table = gtk_table_new (3, 3, FALSE);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (window)->vbox), table);
@@ -3016,8 +3052,9 @@ realrender (GimpDrawable * drawable)
       gimp_pixel_rgn_get_row (&pr, ibuffer, x1, y1 + y, x2 - x1);
       for (x = 0; x < (x2 - x1); x++)
 	{
-	  int k, dx = x * 4, sx = x * bpp;
-	  float a = buffer[dx + 3] / 255.0;
+	  gint   k, dx = x * 4, sx = x * bpp;
+	  gfloat a     = buffer[dx + 3] / 255.0;
+
 	  for (k = 0; k < bpp; k++)
 	    {
 	      ibuffer[sx + k] =
@@ -3025,7 +3062,7 @@ realrender (GimpDrawable * drawable)
 	    }
 	}
       gimp_pixel_rgn_set_row (&dpr, ibuffer, x1, y1 + y, x2 - x1);
-      gimp_progress_update ((double) y / (double) ty);
+      gimp_progress_update ((gdouble) y / (gdouble) ty);
     }
   g_free (buffer);
   g_free (ibuffer);
