@@ -31,12 +31,12 @@
 
 #include "libgimp/libgimp-intl.h"
 
+
 enum
 {
   VALUE_CHANGED,
   LAST_SIGNAL
 };
-
 
 static void  gimp_memsize_entry_class_init    (GimpMemsizeEntryClass *klass);
 static void  gimp_memsize_entry_init          (GimpMemsizeEntry      *entry);
@@ -128,6 +128,38 @@ gimp_memsize_entry_finalize (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
+
+static void
+gimp_memsize_entry_adj_callback (GtkAdjustment    *adj,
+				 GimpMemsizeEntry *entry)
+{
+  gulong size = gtk_adjustment_get_value (adj);
+
+  entry->value = size << entry->shift;
+
+  g_signal_emit (entry, gimp_memsize_entry_signals[VALUE_CHANGED], 0);
+}
+
+static void
+gimp_memsize_entry_unit_callback (GtkWidget        *widget,
+				  GimpMemsizeEntry *entry)
+{
+  guint shift = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (widget),
+						     "gimp-item-data"));
+
+  if (shift != entry->shift)
+    {
+      entry->shift = shift;
+
+      entry->adjustment->value = entry->value >> shift;
+      entry->adjustment->lower = entry->lower >> shift;
+      entry->adjustment->upper = entry->upper >> shift;
+
+      gtk_adjustment_value_changed (entry->adjustment);
+      gtk_adjustment_changed (entry->adjustment);
+    }
+}
+
 
 /**
  * gimp_memsize_entry_new:
@@ -221,6 +253,8 @@ gimp_memsize_entry_set_value (GimpMemsizeEntry *entry,
   if (shift != entry->shift)
     {
       entry->shift = shift;
+      entry->value = value;
+
       gimp_option_menu_set_history (GTK_OPTION_MENU (entry->menu),
 				    GUINT_TO_POINTER (shift));
     }
@@ -242,39 +276,4 @@ gimp_memsize_entry_get_value (GimpMemsizeEntry *entry)
   g_return_val_if_fail (GIMP_IS_MEMSIZE_ENTRY (entry), 0);
 
   return entry->value;
-}
-
-
-static void
-gimp_memsize_entry_adj_callback (GtkAdjustment    *adj,
-				 GimpMemsizeEntry *entry)
-{
-  gulong size;
-
-  size = gtk_adjustment_get_value (adj);
-
-  entry->value = size << entry->shift;
-
-  g_signal_emit (entry, gimp_memsize_entry_signals[VALUE_CHANGED], 0);
-}
-
-static void
-gimp_memsize_entry_unit_callback (GtkWidget        *widget,
-				  GimpMemsizeEntry *entry)
-{
-  guint shift = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (widget),
-						     "gimp-item-data"));
-
-  if (shift != entry->shift)
-    {
-      entry->shift = shift;
-
-      entry->adjustment->lower = entry->lower >> shift;
-      entry->adjustment->upper = entry->upper >> shift;
-
-      gtk_adjustment_changed (entry->adjustment);
-
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (entry->adjustment),
-				entry->value >> shift);
-    }
 }

@@ -1,3 +1,9 @@
+2003-11-12  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpmemsizeentry.c: fixed a problem with the
+	value being clamped to wrong boundaries when setting the value
+	prorammatically.
+
 2003-11-12  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpquerybox.c (create_query_box): set proper
