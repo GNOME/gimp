@@ -128,7 +128,7 @@ msgid "OK"
 msgstr "了解"
 
 #. the  Action Button
-#: libgimp/gimpexport.c:287 plug-ins/AlienMap/AlienMap.c:636
+#: plug-ins/AlienMap/AlienMap.c:636
 #: plug-ins/AlienMap2/AlienMap2.c:628 plug-ins/FractalExplorer/Dialogs.c:785
 #: plug-ins/FractalExplorer/FractalExplorer.c:627
 #: plug-ins/FractalExplorer/FractalExplorer.c:831
@@ -2093,8 +2093,6 @@ msgstr "<Image>/フィルタ/アニメーション/アニメーション再生..."
 msgid "Animation Playback: "
 msgstr "アニメーション再生: "
 
-#. The close button
-#: libgimp/gimpfileselection.c:363 libgimp/gimpunitmenu.c:464
 #: plug-ins/common/animationplay.c:709 plug-ins/common/plugindetails.c:998
 #: plug-ins/common/sample_colorize.c:1300
 #: plug-ins/dbbrowser/dbbrowser_utils.c:164
@@ -5321,7 +5319,7 @@ msgstr "サイズ:"
 msgid "Fractional Pixels"
 msgstr "ピクセル断片"
 
-#: libgimp/gimpexport.c:285 plug-ins/common/papertile.c:316
+#: plug-ins/common/papertile.c:316
 msgid "Ignore"
 msgstr "無視"
 
@@ -5829,7 +5827,7 @@ msgid "Keep Aspect Ratio"
 msgstr "アスペクト比を保つ"
 
 #. Unit
-#: libgimp/gimpunitmenu.c:493 plug-ins/common/ps.c:2539
+#: plug-ins/common/ps.c:2539
 msgid "Unit"
 msgstr "単位"
 
@@ -8207,7 +8205,6 @@ msgstr "値: "
 msgid "Press Button"
 msgstr "押しボタン"
 
-#: libgimp/gimpfileselection.c:362 libgimp/gimpunitmenu.c:462
 #: plug-ins/gap/gap_arr_dialog.c:1221 plug-ins/gfig/gfig.c:4988
 #: plug-ins/imagemap/imap_cmd_select.c:49
 msgid "Select"
@@ -10083,7 +10080,7 @@ msgid "MAX_FONTS exceeded. Some fonts may be missing."
 msgstr ""
 
 #. "-*-(fn)-(wg)-(sl)-(sp)-*-(px)-(po * 10)-*-*-*-*-*-*"
-#: libgimp/gimpunit.c:44 plug-ins/gdyntext/font_selection.c:212
+#: plug-ins/gdyntext/font_selection.c:212
 #: plug-ins/gdyntext/font_selection.c:266
 #: plug-ins/gdyntext/font_selection.c:350
 #: plug-ins/gdyntext/font_selection.c:374 plug-ins/imagemap/imap_circle.c:264
@@ -10097,7 +10094,7 @@ msgstr ""
 msgid "pixels"
 msgstr ""
 
-#: libgimp/gimpunit.c:51 plug-ins/gdyntext/font_selection.c:213
+#: plug-ins/gdyntext/font_selection.c:213
 #: plug-ins/gdyntext/font_selection.c:350
 msgid "points"
 msgstr "ポイント"
@@ -10569,7 +10566,7 @@ msgstr "なし"
 msgid "Not found \"%s\": used \"%s\" instead"
 msgstr ""
 
-#: libgimp/gimpunitmenu.c:215 plug-ins/gflare/gflare.c:4645
+#: plug-ins/gflare/gflare.c:4645
 msgid "More..."
 msgstr "詳細設定..."
 
@@ -12963,155 +12960,3 @@ msgstr "%s が開けません"
 msgid "Can't open (read): %s"
 msgstr "%s が開けません"
 
-#: libgimp/gimpcolorbutton.c:104
-msgid "/Use Foreground Color"
-msgstr "/前景色を使用"
-
-#: libgimp/gimpcolorbutton.c:105
-msgid "/Use Background Color"
-msgstr "/背景色を使用"
-
-#: libgimp/gimpexport.c:123
-msgid "can't Handle Layers"
-msgstr "レイヤーを取り扱えません"
-
-#: libgimp/gimpexport.c:124 libgimp/gimpexport.c:133
-msgid "Merge Visible Layers"
-msgstr "可視レイヤーの結合"
-
-#: libgimp/gimpexport.c:132
-msgid "can only Handle Layers as Animation Frames"
-msgstr "アニメーションフレームとしてしかレイヤーを取り扱えません"
-
-#: libgimp/gimpexport.c:133
-msgid "Save as Animation"
-msgstr "アニメーションとして保存"
-
-#: libgimp/gimpexport.c:141
-msgid "can't Handle Transparency"
-msgstr "透明情報を取り扱えません"
-
-#: libgimp/gimpexport.c:142
-msgid "Flatten Image"
-msgstr "画像の統合"
-
-#: libgimp/gimpexport.c:150
-msgid "can only Handle RGB Images"
-msgstr "RGB 画像しか取り扱えません"
-
-#: libgimp/gimpexport.c:151 libgimp/gimpexport.c:179 libgimp/gimpexport.c:188
-msgid "Convert to RGB"
-msgstr "RGB に変換"
-
-#: libgimp/gimpexport.c:159
-msgid "can only Handle Grayscale Images"
-msgstr "グレースケール画像しか取り扱えません"
-
-#: libgimp/gimpexport.c:160 libgimp/gimpexport.c:179 libgimp/gimpexport.c:200
-msgid "Convert to Grayscale"
-msgstr "グレースケールに変換"
-
-#: libgimp/gimpexport.c:168
-msgid "can only Handle Indexed Images"
-msgstr "インデックス画像しか取り扱えません"
-
-#: libgimp/gimpexport.c:169 libgimp/gimpexport.c:188 libgimp/gimpexport.c:198
-msgid ""
-"Convert to indexed using default settings\n"
-"(Do it manually to tune the result)"
-msgstr ""
-
-#: libgimp/gimpexport.c:178
-msgid "can only Handle RGB or Grayscale Images"
-msgstr "RGB もしくはグレースケール画像しか取り扱えません"
-
-#: libgimp/gimpexport.c:187
-msgid "can only Handle RGB or Indexed Images"
-msgstr "RGB もしくはインデックス画像しか取り扱えません"
-
-#: libgimp/gimpexport.c:197
-msgid "can only Handle Grayscale or Indexed Images"
-msgstr "グレースケールもしくはインデックス画像しか取り扱えません"
-
-#: libgimp/gimpexport.c:208
-msgid "needs an Alpha Channel"
-msgstr "アルファチャンネルが必要です"
-
-#: libgimp/gimpexport.c:209
-msgid "Add Alpha Channel"
-msgstr "アルファチャンネルを追加"
-
-#.
-#. *  Plug-ins have called gtk_init () before calling gimp_export ().
-#. *  Otherwise bad things will happen now!!
-#.
-#. the dialog
-#: libgimp/gimpexport.c:278
-msgid "Export File"
-msgstr "エクスポートファイル"
-
-#: libgimp/gimpexport.c:283
-msgid "Export"
-msgstr "エクスポート"
-
-#: libgimp/gimpexport.c:302
-msgid ""
-"Your image should be exported before it can be saved for the following "
-"reasons:"
-msgstr ""
-
-#. the footline
-#: libgimp/gimpexport.c:365
-msgid "The export conversion won't modify your original image."
-msgstr ""
-
-#: libgimp/gimpfileselection.c:352
-msgid "Select File"
-msgstr "ファイル選択"
-
-#. pseudo unit
-#: libgimp/gimpunit.c:44
-msgid "pixel"
-msgstr "ピクセル"
-
-#. standard units
-#: libgimp/gimpunit.c:47
-msgid "inch"
-msgstr "インチ"
-
-#: libgimp/gimpunit.c:47
-msgid "inches"
-msgstr "インチ"
-
-#: libgimp/gimpunit.c:48
-msgid "millimeter"
-msgstr "ミリメートル"
-
-#: libgimp/gimpunit.c:48
-msgid "millimeters"
-msgstr "ミリメートル"
-
-#. professional units
-#: libgimp/gimpunit.c:51
-msgid "point"
-msgstr "ポイント"
-
-#: libgimp/gimpunit.c:52
-msgid "pica"
-msgstr "パイカ"
-
-#: libgimp/gimpunit.c:52
-msgid "picas"
-msgstr "パイカ"
-
-#: libgimp/gimpunit.c:59
-msgid "percent"
-msgstr "パーセント"
-
-#: libgimp/gimpunitmenu.c:457
-msgid "Unit Selection"
-msgstr "単位選択"
-
-#: libgimp/gimpunitmenu.c:494
-msgid "Factor"
-msgstr "倍率"

@@ -130,7 +130,7 @@ msgid "OK"
 msgstr "OK"
 
 #. the  Action Button
-#: libgimp/gimpexport.c:287 plug-ins/AlienMap/AlienMap.c:637
+#: plug-ins/AlienMap/AlienMap.c:637
 #: plug-ins/AlienMap2/AlienMap2.c:629 plug-ins/FractalExplorer/Dialogs.c:785
 #: plug-ins/FractalExplorer/FractalExplorer.c:627
 #: plug-ins/FractalExplorer/FractalExplorer.c:831
@@ -2118,8 +2118,6 @@ msgstr "<Image>/Filtres/Animation/Rejouer l'animation..."
 msgid "Animation Playback: "
 msgstr "Jouer une animation: "
 
-#. The close button
-#: libgimp/gimpfileselection.c:363 libgimp/gimpunitmenu.c:464
 #: plug-ins/common/animationplay.c:709 plug-ins/common/plugindetails.c:998
 #: plug-ins/common/sample_colorize.c:1300
 #: plug-ins/dbbrowser/dbbrowser_utils.c:164
@@ -5419,7 +5417,7 @@ msgstr "Taille :"
 msgid "Fractional Pixels"
 msgstr ""
 
-#: libgimp/gimpexport.c:285 plug-ins/common/papertile.c:317
+#: plug-ins/common/papertile.c:317
 msgid "Ignore"
 msgstr "Ignorer"
 
@@ -5924,7 +5922,7 @@ msgid "Keep Aspect Ratio"
 msgstr "conserver le rapport hauteur/largeur"
 
 #. Unit
-#: libgimp/gimpunitmenu.c:493 plug-ins/common/ps.c:2541
+#: plug-ins/common/ps.c:2541
 msgid "Unit"
 msgstr "Unité"
 
@@ -8394,7 +8392,6 @@ msgstr "Valeur :"
 msgid "Press Button"
 msgstr "Bouton poussoir"
 
-#: libgimp/gimpfileselection.c:362 libgimp/gimpunitmenu.c:462
 #: plug-ins/gap/gap_arr_dialog.c:1221 plug-ins/gfig/gfig.c:4988
 #: plug-ins/imagemap/imap_cmd_select.c:49
 msgid "Select"
@@ -10260,7 +10257,7 @@ msgid "MAX_FONTS exceeded. Some fonts may be missing."
 msgstr ""
 
 #. "-*-(fn)-(wg)-(sl)-(sp)-*-(px)-(po * 10)-*-*-*-*-*-*"
-#: libgimp/gimpunit.c:44 plug-ins/gdyntext/font_selection.c:212
+#: plug-ins/gdyntext/font_selection.c:212
 #: plug-ins/gdyntext/font_selection.c:266
 #: plug-ins/gdyntext/font_selection.c:350
 #: plug-ins/gdyntext/font_selection.c:374 plug-ins/imagemap/imap_circle.c:264
@@ -10274,7 +10271,7 @@ msgstr ""
 msgid "pixels"
 msgstr "pixels"
 
-#: libgimp/gimpunit.c:51 plug-ins/gdyntext/font_selection.c:213
+#: plug-ins/gdyntext/font_selection.c:213
 #: plug-ins/gdyntext/font_selection.c:350
 msgid "points"
 msgstr "points"
@@ -10761,7 +10758,7 @@ msgstr "aucun"
 msgid "Not found \"%s\": used \"%s\" instead"
 msgstr ""
 
-#: libgimp/gimpunitmenu.c:215 plug-ins/gflare/gflare.c:4647
+#: plug-ins/gflare/gflare.c:4647
 msgid "More..."
 msgstr "Suite..."
 
@@ -13176,582 +13173,3 @@ msgstr "Impossible d'ouvrir %s"
 msgid "Can't open (read): %s"
 msgstr "Impossible d'ouvrir %s"
 
-#: libgimp/gimpcolorbutton.c:104
-msgid "/Use Foreground Color"
-msgstr "/Utiliser la couleur d'avant plan"
-
-#: libgimp/gimpcolorbutton.c:105
-msgid "/Use Background Color"
-msgstr "/Utiliser la couleur d'arrière plan"
-
-#: libgimp/gimpexport.c:123
-msgid "can't Handle Layers"
-msgstr "je ne peux gérer les calques"
-
-#: libgimp/gimpexport.c:124 libgimp/gimpexport.c:133
-msgid "Merge Visible Layers"
-msgstr "Fusionner les calques visibles"
-
-#: libgimp/gimpexport.c:132
-msgid "can only Handle Layers as Animation Frames"
-msgstr "je peux uniquement gérer les calques en tant qu'images d'une animation"
-
-#: libgimp/gimpexport.c:133
-msgid "Save as Animation"
-msgstr "Sauver en tant qu'animation"
-
-#: libgimp/gimpexport.c:141
-msgid "can't Handle Transparency"
-msgstr "je ne peux gérer la transparence"
-
-#: libgimp/gimpexport.c:142
-msgid "Flatten Image"
-msgstr "Aplatir l'image"
-
-#: libgimp/gimpexport.c:150
-msgid "can only Handle RGB Images"
-msgstr "Je ne gère que les images RVB."
-
-#: libgimp/gimpexport.c:151 libgimp/gimpexport.c:179 libgimp/gimpexport.c:188
-msgid "Convert to RGB"
-msgstr "Convertir en RVB"
-
-#: libgimp/gimpexport.c:159
-msgid "can only Handle Grayscale Images"
-msgstr "Je ne gère que les images en niveaux de gris"
-
-#: libgimp/gimpexport.c:160 libgimp/gimpexport.c:179 libgimp/gimpexport.c:200
-msgid "Convert to Grayscale"
-msgstr "Convertir en niveaux de gris"
-
-#: libgimp/gimpexport.c:168
-msgid "can only Handle Indexed Images"
-msgstr "je ne gère que les images indexées"
-
-#: libgimp/gimpexport.c:169 libgimp/gimpexport.c:188 libgimp/gimpexport.c:198
-msgid ""
-"Convert to indexed using default settings\n"
-"(Do it manually to tune the result)"
-msgstr ""
-"Convertir en couleurs indexées en utilisant\n"
-"les réglages par défaut (faites-le à la main\n"
-"pour régler le résultat)."
-
-#: libgimp/gimpexport.c:178
-msgid "can only Handle RGB or Grayscale Images"
-msgstr "je ne gère que les images RVB ou en niveaux de gris"
-
-#: libgimp/gimpexport.c:187
-msgid "can only Handle RGB or Indexed Images"
-msgstr "je ne gère que les images RVB ou indexées"
-
-#: libgimp/gimpexport.c:197
-msgid "can only Handle Grayscale or Indexed Images"
-msgstr "je ne gère que les images en nveau de gris ou indexées"
-
-#: libgimp/gimpexport.c:208
-msgid "needs an Alpha Channel"
-msgstr "j'ai besoin d'un canal Aplpha"
-
-#: libgimp/gimpexport.c:209
-msgid "Add Alpha Channel"
-msgstr "Ajouter un Canal Alpha"
-
-#.
-#. *  Plug-ins have called gtk_init () before calling gimp_export ().
-#. *  Otherwise bad things will happen now!!
-#.
-#. the dialog
-#: libgimp/gimpexport.c:278
-msgid "Export File"
-msgstr "Exporter fichier"
-
-#: libgimp/gimpexport.c:283
-msgid "Export"
-msgstr "Exporter"
-
-#: libgimp/gimpexport.c:302
-msgid ""
-"Your image should be exported before it can be saved for the following "
-"reasons:"
-msgstr ""
-"Votre image devrait être exportée avant d'être enregistrée pour les raison "
-"suivantes :"
-
-#. the footline
-#: libgimp/gimpexport.c:365
-msgid "The export conversion won't modify your original image."
-msgstr "La conversion exporter ne modifier pas l'image d'origine."
-
-#: libgimp/gimpfileselection.c:352
-msgid "Select File"
-msgstr "Sélection du fichier"
-
-#. pseudo unit
-#: libgimp/gimpunit.c:44
-msgid "pixel"
-msgstr "pixel"
-
-#. standard units
-#: libgimp/gimpunit.c:47
-msgid "inch"
-msgstr "pouce"
-
-#: libgimp/gimpunit.c:47
-msgid "inches"
-msgstr "pouces"
-
-#: libgimp/gimpunit.c:48
-msgid "millimeter"
-msgstr "millimètre"
-
-#: libgimp/gimpunit.c:48
-msgid "millimeters"
-msgstr "millimètres"
-
-#. professional units
-#: libgimp/gimpunit.c:51
-msgid "point"
-msgstr "point"
-
-#: libgimp/gimpunit.c:52
-msgid "pica"
-msgstr "pica"
-
-#: libgimp/gimpunit.c:52
-msgid "picas"
-msgstr "picas"
-
-#: libgimp/gimpunit.c:59
-msgid "percent"
-msgstr "pourcent"
-
-#: libgimp/gimpunitmenu.c:457
-msgid "Unit Selection"
-msgstr "Sélection des unités"
-
-#: libgimp/gimpunitmenu.c:494
-msgid "Factor"
-msgstr "Facteur"
-
-#~ msgid "align visible layers"
-#~ msgstr "aligner les calques visibles"
-
-#~ msgid "Randomization Seed:"
-#~ msgstr "Graine du générateur aléatoire :"
-
-#~ msgid "Current Time"
-#~ msgstr "Heure actuelle"
-
-#~ msgid ""
-#~ "Seed random number generator from the current time - this guarantees a "
-#~ "reasonable randomization"
-#~ msgstr ""
-#~ "Règle la valeur initiale (graine) du générateur de nombres aléatoires sur "
-#~ "l'heure actuelle - cela garantit un aléa raisonnable."
-
-#~ msgid "Other Value"
-#~ msgstr "Autre valeur"
-
-#~ msgid ""
-#~ "Enable user-entered value for random number generator seed - this allows you "
-#~ "to repeat a given \"random\" operation"
-#~ msgstr ""
-#~ "Utilise une valeur rentrée par l'utilisateur comme valeur initiale (graine) "
-#~ "du générateur de nombres aléatoires - cela permet d'obtenir des résultats "
-#~ "reproductibles"
-
-#~ msgid "Value for seeding the random number generator"
-#~ msgstr "Valeur d'initialisation du générateur de nombres aléatoires"
-
-#~ msgid "Comment: "
-#~ msgstr "Commentaire :"
-
-#~ msgid "Opacity: "
-#~ msgstr "Opacité :"
-
-#~ msgid "On Edges: "
-#~ msgstr "Sur les bords :"
-
-#~ msgid "DEPTH"
-#~ msgstr "PROFONDEUR"
-
-#~ msgid "fractaltrace"
-#~ msgstr "Tracé de fractale"
-
-#~ msgid "Save as HRZ"
-#~ msgstr "Enregistrer en HRZ"
-
-#~ msgid "Custom Color"
-#~ msgstr "Couleur personnalisée"
-
-#~ msgid "Plasma Options"
-#~ msgstr "Options du Plasma"
-
-#~ msgid "X-offset:"
-#~ msgstr "Décalage-X:"
-
-#~ msgid "Y-offset:"
-#~ msgstr "Décalage-Y:"
-
-#~ msgid "0"
-#~ msgstr "0"
-
-#~ msgid "90"
-#~ msgstr "90"
-
-#~ msgid "180"
-#~ msgstr "180"
-
-#~ msgid "270"
-#~ msgstr "270"
-
-#~ msgid "Made with Gimp"
-#~ msgstr "Réalisé avec Gimp"
-
-#~ msgid "Tile Size"
-#~ msgstr "Taille de carreau"
-
-#~ msgid "Use RGB_MODEL color model"
-#~ msgstr "Utiliser le modèle de couleurs en canaux rouge-vert-bleu"
-
-#~ msgid "Use HSL_MODEL color model"
-#~ msgstr ""
-#~ "Utiliser le modèle de couleurs par canaux teinte-saturation-luminance"
-
-#~ msgid "Offset"
-#~ msgstr "Décalage"
-
-#~ msgid " pixels"
-#~ msgstr " pixels"
-
-#~ msgid "Depth"
-#~ msgstr "Profondeur"
-
-#~ msgid "Bump map"
-#~ msgstr "Relief"
-
-#~ msgid "X offset"
-#~ msgstr "Décalage X"
-
-#~ msgid "Y offset"
-#~ msgstr "Décalage Y"
-
-#~ msgid "Ambient"
-#~ msgstr "Ambiant"
-
-# flag ?
-#~ msgid "Blacken (flag)"
-#~ msgstr "Noircir"
-
-#~ msgid "Show information about this plug-in and the author"
-#~ msgstr "Montrer des informations sur cet extension et son auteur"
-
-#~ msgid "Accept settings and apply filter on image"
-#~ msgstr "Accepter les paratétres et appliquer le filtre sur l'image"
-
-#~ msgid "Reject any changes and close plug-in"
-#~ msgstr "Annuler les changements et fermer l'extension"
-
-#~ msgid "This closes the information box"
-#~ msgstr "Ceci referme la fenêtre d'information"
-
-# Option section = ?
-#~ msgid ""
-#~ "File '%s' is corrupt\n"
-#~ "Line %d Option section incorrect"
-#~ msgstr ""
-#~ "Le fichier \"%s\" a été endommagé.\n"
-#~ "Ligne %d : section d'option incorrecte."
-
-#~ msgid "Number of colors"
-#~ msgstr "Nombre de couleurs"
-
-#~ msgid "Parameter settings"
-#~ msgstr "Réglage de paramètres"
-
-#~ msgid "Edge Detection Options"
-#~ msgstr "Paramètres de la détection de contours"
-
-#~ msgid "Blur Radius: "
-#~ msgstr "Rayon :"
-
-#~ msgid "Description: "
-#~ msgstr "Description: "
-
-#~ msgid "Save as Xpm"
-#~ msgstr "Enregistrer en Xpm"
-
-#~ msgid ""
-#~ "\n"
-#~ "Cotting Software Productions\n"
-#~ "Bahnhofstrasse 31\n"
-#~ "CH-3066 Stettlen (Switzerland)\n"
-#~ "\n"
-#~ "cotting@mygale.org\n"
-#~ "http://www.mygale.org/~cotting\n"
-#~ "\n"
-#~ "AlienMap Plug-In for the GIMP\n"
-#~ "Version 1.01\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Cotting Software Productions\n"
-#~ "Bahnhofstrasse 31\n"
-#~ "CH-3066 Stettlen (Suisse)\n"
-#~ "\n"
-#~ "cotting@mygale.org\n"
-#~ "http://www.mygale.org/~cotting\n"
-#~ "\n"
-#~ "Effet de couleurs « Psychédélique » pour Gimp\n"
-#~ "Version 1.01\n"
-
-#~ msgid ""
-#~ "\n"
-#~ "Martin Weber\n"
-#~ "martin.weber@usa.net\n"
-#~ "http://diverse.freepage.de/martin.weber\n"
-#~ "\n"
-#~ "AlienMap2 Plug-In for the GIMP\n"
-#~ "Version 1.0\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Martin Weber\n"
-#~ "martin.weber@usa.net\n"
-#~ "http://diverse.freepage.de/martin.weber\n"
-#~ "\n"
-#~ "Effet de couleurs « Psychédélique 2 » pour Gimp\n"
-#~ "Version 1.0\n"
-
-#~ msgid "OS/2 unsupported!\n"
-#~ msgstr "Format BMP OS/2 non géré !\n"
-
-#~ msgid "playback: Asked for frame number %d in a %d-frame animation!\n"
-#~ msgstr ""
-#~ "Animation: Dem1ande de l'image %d dans une animation à %d images !\n"
-
-#~ msgid "Accept settings and apply filter to image"
-#~ msgstr "Accepter les réglages et appliquer le filtre"
-
-#~ msgid "Close plug-in without making any changes"
-#~ msgstr "Fermer l'extension sans effectuer de changement"
-
-#~ msgid "bz2: fork failed: %s\n"
-#~ msgstr "bz2: échec de fork(): %s\n"
-
-#~ msgid "bz2: fopen failed: %s\n"
-#~ msgstr "bz2: échec de fopen: %s\n"
-
-#~ msgid "bz2: dup2 failed: %s\n"
-#~ msgstr "bz2: échec de dup2: %s\n"
-
-#~ msgid "bz2: exec failed: bzip2: %s\n"
-#~ msgstr "bz2: échec de exec: bzip2: %s\n"
-
-#~ msgid "bz2: bzip2 exited abnormally on file %s\n"
-#~ msgstr "bz2: bzip2 a quitté anormalement sur le fichier %s\n"
-
-#~ msgid "bz2: exec failed: bunzip2: %s\n"
-#~ msgstr "bz2: échec de exec: bunzip2: %s\n"
-
-#~ msgid "c_astretch: cmap was NULL!  Quitting...\n"
-#~ msgstr "c_astretch: cmap était NUL!  Abandon...\n"
-
-#~ msgid "Color_Enhance: cmap was NULL!  Quitting...\n"
-#~ msgstr "Color_Enhance: cmap est NUL!  Abandon...\n"
-
-#~ msgid "compose: not enough memory"
-#~ msgstr "compose: plus de mémoire"
-
-#~ msgid "plug_in_decompose: Can only work on RGB*_IMAGE"
-#~ msgstr "plug_in_decompose: fonctionne seulement avec des images RGB*"
-
-#~ msgid "decompose: not an RGB image"
-#~ msgstr "decompose: ce n'est pas une image RGB"
-
-#~ msgid "decompose: No alpha channel available"
-#~ msgstr "decompose: Pas de canal alpha disponible"
-
-#~ msgid "decompose: out of memory"
-#~ msgstr "decompose: plus de mémoire"
-
-#~ msgid ""
-#~ "Warning: I don't _like_ this color space.  This is a suggestion, not a "
-#~ "threat.\n"
-#~ msgstr ""
-#~ "Avertissement: je n'apprécie pas cet espace de couleurs. Ceci est une "
-#~ "suggestion, pas une menace.\n"
-
-#~ msgid "GIF: colorstobpp - Eep! too many colours: %d\n"
-#~ msgstr "GIF: colorstobpp - Hé ! Trop de couleurs : %d\n"
-
-#~ msgid "GIF: bpptocolors - Eep! bpp==%d !\n"
-#~ msgstr "GIF: bpptocolors - Hé ! bpp=%d !\n"
-
-#~ msgid "GIF: can't open \"%s\"\n"
-#~ msgstr "GIF: impossible d' %s\"\n"
-
-#~ msgid "GIF: error reading magic number\n"
-#~ msgstr "GIF: erreur lors de la lecture du magic number\n"
-
-#~ msgid "GIF: not a GIF file\n"
-#~ msgstr "GIF: n'est pas un fichier GIF\n"
-
-#~ msgid "GIF: bad version number, not '87a' or '89a'\n"
-#~ msgstr "GIF: mauvais numéro de version; pas '87a' ou '89a'\n"
-
-#~ msgid "GIF: failed to read screen descriptor\n"
-#~ msgstr "GIF: impossible de lire le descripteur d'écran\n"
-
-#~ msgid "GIF: error reading global colormap\n"
-#~ msgstr "GIF: erreur de lecture de la palette globale\n"
-
-#~ msgid "GIF: warning - non-square pixels\n"
-#~ msgstr "GIF: avertissement -- pixels non carrés\n"
-
-#~ msgid "GIF: EOF / read error on image data\n"
-#~ msgstr "GIF: EOF / erreur de lecture sur les données de l'image\n"
-
-#~ msgid "GIF: EOF / read error on extension function code\n"
-#~ msgstr "GIF : EOF / erreur de lecture d'un code de fonction étendue\n"
-
-#~ msgid "GIF: bogus character 0x%02x, ignoring\n"
-#~ msgstr "GIF: caractère incorrect 0x%02x, ignoré\n"
-
-#~ msgid "GIF: couldn't read left/top/width/height\n"
-#~ msgstr "GIF: je n'ai pas pu lire gauche/haut/largeur/hauteur\n"
-
-#~ msgid "GIF: error reading local colormap\n"
-#~ msgstr "GIF: erreur de lecture de palette locale\n"
-
-#~ msgid "GIF: bad colormap\n"
-#~ msgstr "GIF: palette incorrecte\n"
-
-#~ msgid "GIF: error in reading DataBlock\n"
-#~ msgstr "GIF: erreur de lecture d'un bloc de données\n"
-
-#~ msgid "GIF: missing EOD in data stream (common occurence)"
-#~ msgstr "GIF: EOD manquant dans les données (problème fréquent)"
-
-#~ msgid "GIF: circular table entry BIG ERROR\n"
-#~ msgstr "GIF: entrée circulaire dans une table (ERREUR GRAVE)\n"
-
-#~ msgid "GIF: error while reading\n"
-#~ msgstr "GIF: erreur lors de la lecture\n"
-
-#~ msgid " (combine)"
-#~ msgstr " (combiner)"
-
-#~ msgid " (replace)"
-#~ msgstr " (remplacer)"
-
-#~ msgid " (unknown disposal)"
-#~ msgstr " (disposition inconnue)"
-
-#~ msgid ""
-#~ "GIF: Hmm... please forward this GIF to the GIF plugin author!\n"
-#~ "  (adam@foxbox.org)\n"
-#~ msgstr ""
-#~ "GIF: Hum... pourriez-vous s'il vous plaît envoyer ce GIF à\n"
-#~ "l'auteur de l'extension GIF ? (adam@foxbox.org)\n"
-
-#~ msgid "GIF: Something got corrupted.\n"
-#~ msgstr "GIF: Quelque chose a été endommagé.\n"
-
-#~ msgid "GIF: reading %d by %d%s GIF image, ncols=%d\n"
-#~ msgstr "GIF: lecture d'une image %d x %d, ncouls=%d\n"
-
-#~ msgid ""
-#~ "GIF: Ouchie!  Can't handle non-alpha RGB frames.\n"
-#~ "     Please mail the plugin author.  (adam@gimp.org)\n"
-#~ msgstr ""
-#~ "GIF: Aïe ! Je ne peux gérer les images RVB non alpha.\n"
-#~ "Veuillez prendre contact avec l'auteur de l'extension\n"
-#~ "(adam@gimp.org).\n"
-
-#~ msgid "GIF: too much input data, ignoring extra...\n"
-#~ msgstr "GIF: fichier trop long, donnés en trop ignorées...\n"
-
-#~ msgid "Aie!  Aie!  Aie!\n"
-#~ msgstr "Aïe!  Aïe!  Aïe!\n"
-
-#~ msgid "Yay... found %d horizontal guides and %d vertical guides.\n"
-#~ msgstr "Trouvé %d guides horizontaux et %d  guides verticaux.\n"
-
-#~ msgid "Poopy, no guides.\n"
-#~ msgstr "Argh! aucun guide.\n"
-
-#~ msgid ""
-#~ "don't know how to load JPEGs\n"
-#~ "with %d color channels"
-#~ msgstr ""
-#~ "Je ne sais pas sauver des JPEGs\n"
-#~ "avec %d canaux de couleur."
-
-#~ msgid ""
-#~ "unknown density unit %d\n"
-#~ "assuming dots per inch"
-#~ msgstr ""
-#~ "Unité de densité %d inconnue -\n"
-#~ "utilisation de points par pouce."
-
-#~ msgid "2x2,1x1,1x1"
-#~ msgstr "2x2,1x1,1x1"
-
-#~ msgid "2x1,1x1,1x1 (4:2:2)"
-#~ msgstr "2x1,1x1,1x1 (4:2:2)"
-
-#~ msgid "1x1,1x1,1x1"
-#~ msgstr "1x1,1x1,1x1"
-
-#~ msgid "normalize: cmap was NULL!  Quitting...\n"
-#~ msgstr "normalize: cmap est NUL!  Abandon...\n"
-
-#~ msgid "b/w"
-#~ msgstr "n/b"
-
-#~ msgid "gray"
-#~ msgstr "gris"
-
-#~ msgid "automatic"
-#~ msgstr "automatique"
-
-#~ msgid "XBM: can only save two color indexed images\n"
-#~ msgstr ""
-#~ "XBM: je ne peux sauver que des images indexées comprenant 2 couleurs\n"
-
-#~ msgid "ZealousCrop(tm): Nothing to be done.\n"
-#~ msgstr "DécoupageZélé(tm) : Rien à faire.\n"
-
-#~ msgid "Unknown widget type %d ignored\n"
-#~ msgstr "Type d'objet d'interface graphique %d inconnu, ignoré\n"
-
-#~ msgid ""
-#~ "Error: Plugin %s has changed Nr. of layers from %d to %d\n"
-#~ "could not restore Layer visibilty.\n"
-#~ msgstr ""
-#~ "Erreur: l'extension %s a fait passer le nombre de calques de %d à %d;\n"
-#~ "je ne peux remettre la visibilité des calques.\n"
-
-#~ msgid "Warning: cant get layers (maybe the image was closed)\n"
-#~ msgstr ""
-#~ "Avertissement: je ne peux récupérer les calques (peut-être l'image a-t-elle "
-#~ "été fermée)\n"
-
-#~ msgid ""
-#~ "Error: Plugin %s has changed Nr. of layers from %d to %d\n"
-#~ "Anim Filter apply stopped.\n"
-#~ msgstr ""
-#~ "Erreur: l'extension %s a fait passer le nombre de calques de %d à %d;\n"
-#~ "l'application du filtre animé s'est arrêtée.\n"
-
-#~ msgid "ERROR: Plugin not available or wrong type %s\n"
-#~ msgstr "ERREUR: Appendice non disponible ou d'un mauvais type %s\n"
-
-#~ msgid "ERROR: need at 1 Layers to apply plugin !\n"
-#~ msgstr "ERREUR: il faut au moins 1 calque pour appliquer l'extension !\n"
-
-#~ msgid "ERROR: fork failed !\n"
-#~ msgstr "ERREUR: échec de fork() !\n"
-
-#~ msgid "Saving image to backupfile:%s step = %d\n"
-#~ msgstr "Sauvegarde de l'image dans le fichier de sauvegarde: %s, étape=%d\n"

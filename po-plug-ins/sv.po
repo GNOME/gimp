@@ -6981,271 +6981,29 @@ msgstr ""
 msgid "Bottom-right"
 msgstr ""
 
-#~ msgid "loads files in the JPEG file format"
-#~ msgstr "laddar filer i JPEG-formatet"
 
-#~ msgid "saves files in the JPEG file format"
-#~ msgstr "sparar filer i JPEG-formatet"
 
-#~ msgid "Export Preview"
-#~ msgstr "Export förhandsvisning"
 
-#~ msgid "can't open \"%s\"\n"
-#~ msgstr "kan ej öppna \"%s\"\n"
 
-#~ msgid ""
-#~ "don't know how to load JPEGs\n"
-#~ "with %d color channels"
-#~ msgstr ""
-#~ "vet inte hur man laddar JPEG:ar\n"
-#~ "med %d färgkanaler"
 
-#~ msgid "JPEG preview"
-#~ msgstr "JPEG förhandsvisning"
 
-#~ msgid ""
-#~ "unknown density unit %d\n"
-#~ "assuming dots per inch"
-#~ msgstr ""
-#~ "okänd densitetsenhet %d\n"
-#~ "antar punkter per tum"
 
-#~ msgid "Size: %lu bytes (%02.01f kB)"
-#~ msgstr "Storlek: %lu bytes (%02.01f kB)"
 
-#~ msgid "Size: unknown"
-#~ msgstr "Storlek: okänd"
 
-#~ msgid "Save as Jpeg"
-#~ msgstr "Spara som Jpeg"
 
-#~ msgid "Image Preview"
-#~ msgstr "Förhandsvisning"
 
-#~ msgid "Preview (in image window)"
-#~ msgstr "Förhandsvisning (i bildfönstret)"
 
-#~ msgid "Quality"
-#~ msgstr "Kvalitet"
 
-#~ msgid "Smoothing"
-#~ msgstr "Gör mjukare"
 
-#~ msgid "Restart markers"
-#~ msgstr "Starta om markeringar"
 
-#~ msgid "Restart frequency (rows)"
-#~ msgstr "Omstartsfrekvens (rader)"
 
-#~ msgid "Optimize"
-#~ msgstr "Optimera"
 
-#~ msgid "Progressive"
-#~ msgstr "Progressiv"
 
-#~ msgid "Force baseline JPEG (readable by all decoders)"
-#~ msgstr "Tvinga 'baseline' JPEG (läsbar av alla avkodare)"
 
-#~ msgid "2x2,1x1,1x1"
-#~ msgstr "2x2,1x1,1x1"
 
-#~ msgid "2x1,1x1,1x1 (4:2:2)"
-#~ msgstr "2x1,1x1,1x1 (4:2:2)"
 
-#~ msgid "1x1,1x1,1x1"
-#~ msgstr "1x1,1x1,1x1"
 
-#~ msgid "Subsampling"
-#~ msgstr "Delsampling"
 
-#~ msgid "Floating-point"
-#~ msgstr "Flyttal"
 
-#~ msgid "DCT method (speed/quality tradeoff)"
-#~ msgstr "DCT-metod (snabbhet/kvalitet)"
 
-#~ msgid "Image Comments"
-#~ msgstr "Bildkommentar"
 
-#: libgimp/gimpexport.c:305
-msgid "Cancel"
-msgstr "Avbryt"
-
-#: libgimp/gimpfileselection.c:356 libgimp/gimpunitmenu.c:518
-msgid "Close"
-msgstr "Stäng"
-
-#: libgimp/gimpunit.c:44
-msgid "pixel"
-msgstr "pixel"
-
-#: libgimp/gimpunit.c:44
-msgid "pixels"
-msgstr "pixlar"
-
-#: libgimp/gimpunit.c:47
-msgid "inch"
-msgstr "tum"
-
-#: libgimp/gimpunit.c:47
-msgid "inches"
-msgstr "tum"
-
-#: libgimp/gimpunit.c:48
-msgid "millimeter"
-msgstr "millimeter"
-
-#: libgimp/gimpunit.c:48
-msgid "millimeters"
-msgstr "millimeter"
-
-#: libgimp/gimpunit.c:51
-msgid "point"
-msgstr "punkt"
-
-#: libgimp/gimpunit.c:51
-msgid "points"
-msgstr "punkter"
-
-#: libgimp/gimpunit.c:52
-msgid "pica"
-msgstr "pica"
-
-#: libgimp/gimpunit.c:52
-msgid "picas"
-msgstr "picas"
-
-#: libgimp/gimpunit.c:59
-msgid "percent"
-msgstr "procent:"
-
-#: libgimp/gimpexport.c:298
-msgid "Ignore"
-msgstr "Ignorera"
-
-#: libgimp/gimpfileselection.c:355
-#: libgimp/gimpunitmenu.c:510
-msgid "Select"
-msgstr "Välj"
-
-#: libgimp/gimpfileselection.c:352
-msgid "Select File"
-msgstr "Välj fil"
-
-#: libgimp/gimpenv.c:86
-msgid "warning: no home directory."
-msgstr "varning: ingen hemkatalog"
-
-#: libgimp/gimpunitmenu.c:207
-msgid "More..."
-msgstr "Mer..."
-
-#: libgimp/gimpunitmenu.c:333
-msgid "unit-menu-format string ended within %%-sequence"
-msgstr "enhet-meny-format strängen slutade inom %%-sekvens"
-
-#: libgimp/gimpunitmenu.c:366
-msgid "unit-menu-format contains unknown format sequence '%%%c'"
-msgstr "enhet-meny-format innehåller okänd formatsekvens '%%%c'"
-
-#: libgimp/gimpunitmenu.c:453
-msgid "Unit Selection"
-msgstr "Enhetsval"
-
-#: libgimp/gimpunitmenu.c:479
-msgid "Unit "
-msgstr "Enhet "
-
-#: libgimp/gimpunitmenu.c:481
-msgid "Factor"
-msgstr "Faktor"
-
-#: libgimp/gimpexport.c:121
-msgid "can't handle layers"
-msgstr "kan ej hantera lager"
-
-#: libgimp/gimpexport.c:122 libgimp/gimpexport.c:131
-msgid "Merge visible layers"
-msgstr "Sammanfoga synliga lager"
-
-#: libgimp/gimpexport.c:130
-msgid "can only handle layers as animation frames"
-msgstr "kan endast hantera lager som bildrutor i en animation"
-
-#: libgimp/gimpexport.c:131
-msgid "Save as animation"
-msgstr "Spara som animation"
-
-#: libgimp/gimpexport.c:139
-msgid "can't handle transparency"
-msgstr "kan ej hantera transparens"
-
-#: libgimp/gimpexport.c:140
-msgid "Flatten Image"
-msgstr "Platta till bilden"
-
-#: libgimp/gimpexport.c:148
-msgid "can only handle RGB images"
-msgstr "kan endast hantera RGB-bilder"
-
-#: libgimp/gimpexport.c:149 libgimp/gimpexport.c:176 libgimp/gimpexport.c:185
-msgid "Convert to RGB"
-msgstr "Konvertera till RGB"
-
-#: libgimp/gimpexport.c:157
-msgid "can only handle grayscale images"
-msgstr "kan endast hantera gråskalebilder"
-
-#: libgimp/gimpexport.c:158 libgimp/gimpexport.c:176 libgimp/gimpexport.c:195
-msgid "Convert to grayscale"
-msgstr "Konvertera till gråskala"
-
-#: libgimp/gimpexport.c:166
-msgid "can only handle indexed images"
-msgstr "kan endast hantera indexerade bilder"
-
-#: libgimp/gimpexport.c:167 libgimp/gimpexport.c:185 libgimp/gimpexport.c:194
-msgid ""
-"Convert to indexed using default settings\n"
-"(Do it manually to tune the result)"
-msgstr ""
-"Konvertera till indexerat läge med standardinställningar\n"
-"(Gör det manuellt om du vill finjustera)"
-
-#: libgimp/gimpexport.c:175
-msgid "can only handle RGB or grayscale images"
-msgstr "kan endast hantera RGB eller gråskalebilder"
-
-#: libgimp/gimpexport.c:184
-msgid "can only handle RGB or indexed images"
-msgstr "kan endast hantera RGB eller indexerade bilder"
-
-#: libgimp/gimpexport.c:193
-msgid "can only handle grayscale or indexed images"
-msgstr "kan endast hantera gråskale- eller indexerade bilder"
-
-#: libgimp/gimpexport.c:203
-msgid "needs an alpha channel"
-msgstr "behöver en alfa-kanal"
-
-#: libgimp/gimpexport.c:204
-msgid "Add alpha channel"
-msgstr "Lägg till alfa-kanal"
-
-#: libgimp/gimpexport.c:274
-msgid "Export File"
-msgstr "Exportera fil"
-
-#: libgimp/gimpexport.c:290
-msgid "Export"
-msgstr "Export"
-
-#: libgimp/gimpexport.c:315
-msgid ""
-"Your image should be exported before it can be saved for the following "
-"reasons:"
-msgstr "Din bild borde exporteras före den kan sparas av följande anledning:"
-
-#: libgimp/gimpexport.c:373
-msgid "The export conversion won't modify your original image."
-msgstr "Konverteringen vid export modifierar inte originalbilden."

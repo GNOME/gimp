@@ -1,0 +1,210 @@
+# gimp po-plug-ins/fr.po
+# Copyright (C) 1998 Free Software Foundation, Inc.
+# Vincent Renardias <vincent@ldsol.com>, 1998, 1999.
+# David Monniaux <monniaux@ens.fr>, 1999.
+# Joaquim Fellmann <joaquim@hrnet.fr>, 2000.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp 1.1.15\n"
+"POT-Creation-Date: 2000-01-25 20:47+0100\n"
+"PO-Revision-Date: 1999-11-05 15:37+0100\n"
+"Last-Translator: Joaquim Fellmann <joaquim@hrnet.fr>\n"
+"Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. the  Action Button
+#: libgimp/gimpexport.c:287
+msgid "Cancel"
+msgstr "Annuler"
+
+#. The close button
+#: libgimp/gimpfileselection.c:363 libgimp/gimpunitmenu.c:464
+msgid "Close"
+msgstr "Fermer"
+
+#: libgimp/gimpexport.c:285
+msgid "Ignore"
+msgstr "Ignorer"
+
+#. Unit
+#: libgimp/gimpunitmenu.c:493
+msgid "Unit"
+msgstr "Unité"
+
+#: libgimp/gimpfileselection.c:362 libgimp/gimpunitmenu.c:462
+msgid "Select"
+msgstr "Sélectionner"
+
+#. "-*-(fn)-(wg)-(sl)-(sp)-*-(px)-(po * 10)-*-*-*-*-*-*"
+#: libgimp/gimpunit.c:44
+msgid "pixels"
+msgstr "pixels"
+
+#: libgimp/gimpunit.c:51
+msgid "points"
+msgstr "points"
+
+#: libgimp/gimpunitmenu.c:215
+msgid "More..."
+msgstr "Suite..."
+
+#: libgimp/gimpcolorbutton.c:104
+msgid "/Use Foreground Color"
+msgstr "/Utiliser la couleur d'avant plan"
+
+#: libgimp/gimpcolorbutton.c:105
+msgid "/Use Background Color"
+msgstr "/Utiliser la couleur d'arrière plan"
+
+#: libgimp/gimpexport.c:123
+msgid "can't Handle Layers"
+msgstr "je ne peux gérer les calques"
+
+#: libgimp/gimpexport.c:124 libgimp/gimpexport.c:133
+msgid "Merge Visible Layers"
+msgstr "Fusionner les calques visibles"
+
+#: libgimp/gimpexport.c:132
+msgid "can only Handle Layers as Animation Frames"
+msgstr "je peux uniquement gérer les calques en tant qu'images d'une animation"
+
+#: libgimp/gimpexport.c:133
+msgid "Save as Animation"
+msgstr "Sauver en tant qu'animation"
+
+#: libgimp/gimpexport.c:141
+msgid "can't Handle Transparency"
+msgstr "je ne peux gérer la transparence"
+
+#: libgimp/gimpexport.c:142
+msgid "Flatten Image"
+msgstr "Aplatir l'image"
+
+#: libgimp/gimpexport.c:150
+msgid "can only Handle RGB Images"
+msgstr "Je ne gère que les images RVB."
+
+#: libgimp/gimpexport.c:151 libgimp/gimpexport.c:179 libgimp/gimpexport.c:188
+msgid "Convert to RGB"
+msgstr "Convertir en RVB"
+
+#: libgimp/gimpexport.c:159
+msgid "can only Handle Grayscale Images"
+msgstr "Je ne gère que les images en niveaux de gris"
+
+#: libgimp/gimpexport.c:160 libgimp/gimpexport.c:179 libgimp/gimpexport.c:200
+msgid "Convert to Grayscale"
+msgstr "Convertir en niveaux de gris"
+
+#: libgimp/gimpexport.c:168
+msgid "can only Handle Indexed Images"
+msgstr "je ne gère que les images indexées"
+
+#: libgimp/gimpexport.c:169 libgimp/gimpexport.c:188 libgimp/gimpexport.c:198
+msgid ""
+"Convert to indexed using default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+"Convertir en couleurs indexées en utilisant\n"
+"les réglages par défaut (faites-le à la main\n"
+"pour régler le résultat)."
+
+#: libgimp/gimpexport.c:178
+msgid "can only Handle RGB or Grayscale Images"
+msgstr "je ne gère que les images RVB ou en niveaux de gris"
+
+#: libgimp/gimpexport.c:187
+msgid "can only Handle RGB or Indexed Images"
+msgstr "je ne gère que les images RVB ou indexées"
+
+#: libgimp/gimpexport.c:197
+msgid "can only Handle Grayscale or Indexed Images"
+msgstr "je ne gère que les images en nveau de gris ou indexées"
+
+#: libgimp/gimpexport.c:208
+msgid "needs an Alpha Channel"
+msgstr "j'ai besoin d'un canal Aplpha"
+
+#: libgimp/gimpexport.c:209
+msgid "Add Alpha Channel"
+msgstr "Ajouter un Canal Alpha"
+
+#.
+#. *  Plug-ins have called gtk_init () before calling gimp_export ().
+#. *  Otherwise bad things will happen now!!
+#.
+#. the dialog
+#: libgimp/gimpexport.c:278
+msgid "Export File"
+msgstr "Exporter fichier"
+
+#: libgimp/gimpexport.c:283
+msgid "Export"
+msgstr "Exporter"
+
+#: libgimp/gimpexport.c:302
+msgid ""
+"Your image should be exported before it can be saved for the following "
+"reasons:"
+msgstr ""
+"Votre image devrait être exportée avant d'être enregistrée pour les raison "
+"suivantes :"
+
+#. the footline
+#: libgimp/gimpexport.c:365
+msgid "The export conversion won't modify your original image."
+msgstr "La conversion exporter ne modifier pas l'image d'origine."
+
+#: libgimp/gimpfileselection.c:352
+msgid "Select File"
+msgstr "Sélection du fichier"
+
+#. pseudo unit
+#: libgimp/gimpunit.c:44
+msgid "pixel"
+msgstr "pixel"
+
+#. standard units
+#: libgimp/gimpunit.c:47
+msgid "inch"
+msgstr "pouce"
+
+#: libgimp/gimpunit.c:47
+msgid "inches"
+msgstr "pouces"
+
+#: libgimp/gimpunit.c:48
+msgid "millimeter"
+msgstr "millimètre"
+
+#: libgimp/gimpunit.c:48
+msgid "millimeters"
+msgstr "millimètres"
+
+#. professional units
+#: libgimp/gimpunit.c:51
+msgid "point"
+msgstr "point"
+
+#: libgimp/gimpunit.c:52
+msgid "pica"
+msgstr "pica"
+
+#: libgimp/gimpunit.c:52
+msgid "picas"
+msgstr "picas"
+
+#: libgimp/gimpunit.c:59
+msgid "percent"
+msgstr "pourcent"
+
+#: libgimp/gimpunitmenu.c:457
+msgid "Unit Selection"
+msgstr "Sélection des unités"
+
+#: libgimp/gimpunitmenu.c:494
+msgid "Factor"
+msgstr "Facteur"

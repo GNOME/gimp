@@ -1,0 +1,167 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 1999-11-01 08:54-0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: ENCODING\n"
+
+#: libgimp/gimpexport.c:121
+msgid "can't handle layers"
+msgstr "ei pysty k‰sittelem‰‰n tasoja"
+
+#: libgimp/gimpexport.c:122 libgimp/gimpexport.c:131
+msgid "Merge visible layers"
+msgstr "Yhdist‰ n‰kyv‰t tasot"
+
+#: libgimp/gimpexport.c:130
+msgid "can only handle layers as animation frames"
+msgstr "voi k‰ytt‰‰ tasoja ainoastaan animaation ruutuina"
+
+#: libgimp/gimpexport.c:131
+msgid "Save as animation"
+msgstr "Tallenna animaationa"
+
+#: libgimp/gimpexport.c:139
+msgid "can't handle transparency"
+msgstr "ei pysty k‰sittelem‰‰n l‰pin‰kyvyytt‰"
+
+#: libgimp/gimpexport.c:140
+msgid "Flatten Image"
+msgstr "Yhdist‰ kuva"
+
+#: libgimp/gimpexport.c:148
+msgid "can only handle RGB images"
+msgstr "k‰sittelee ainoastaan t‰ysv‰rikuvia"
+
+#: libgimp/gimpexport.c:149 libgimp/gimpexport.c:176 libgimp/gimpexport.c:185
+msgid "Convert to RGB"
+msgstr "Muunna t‰ysv‰rikuvaksi"
+
+#: libgimp/gimpexport.c:157
+msgid "can only handle grayscale images"
+msgstr "k‰sittelee ainoastaan harmaas‰vykuvia"
+
+#: libgimp/gimpexport.c:158 libgimp/gimpexport.c:176 libgimp/gimpexport.c:195
+msgid "Convert to grayscale"
+msgstr "Muunna harmaas‰vyksi"
+
+#: libgimp/gimpexport.c:166
+msgid "can only handle indexed images"
+msgstr "k‰sittelee ainoastaan indeksoituja kuvia"
+
+#: libgimp/gimpexport.c:167 libgimp/gimpexport.c:185 libgimp/gimpexport.c:194
+msgid ""
+"Convert to indexed using default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+"Muunna indeksoiduksi k‰ytt‰en oletusasetuksia\n"
+"(Tee se k‰sin jos haluat k‰ytt‰‰ muita kuin oletuksia)"
+
+#: libgimp/gimpexport.c:175
+msgid "can only handle RGB or grayscale images"
+msgstr "k‰sittelee ainoastaan t‰ysv‰ri- tai harmaas‰vykuvia"
+
+#: libgimp/gimpexport.c:184
+msgid "can only handle RGB or indexed images"
+msgstr "k‰sittelee ainoastaan t‰ysv‰ri- tai indeksoituja kuvia"
+
+#: libgimp/gimpexport.c:193
+msgid "can only handle grayscale or indexed images"
+msgstr "k‰sittelee ainoastaan harmaas‰vy- tai indeksoituja kuvia"
+
+#: libgimp/gimpexport.c:203
+msgid "needs an alpha channel"
+msgstr "vaatii ett‰ kuvassa on alfakanava"
+
+#: libgimp/gimpexport.c:204
+msgid "Add alpha channel"
+msgstr "Lis‰‰ alfakanava"
+
+#: libgimp/gimpexport.c:274
+msgid "Export File"
+msgstr "Tiedoston ulosvienti"
+
+#: libgimp/gimpexport.c:290
+msgid "Export"
+msgstr "Vie"
+
+#: libgimp/gimpexport.c:315
+msgid ""
+"Your image should be exported before it can be saved for the following "
+"reasons:"
+msgstr ""
+"Kuvaasi pit‰‰ ennen tallennusta muokata ulosvienti‰ varten koska:"
+
+#: libgimp/gimpexport.c:373
+msgid "The export conversion won't modify your original image."
+msgstr "Muokkaus ulosvienti‰ varten ei vaikuta alkuper‰iseen kuvaan."
+
+#: libgimp/gimpexport.c:305
+msgid "Cancel"
+msgstr "Peru"
+
+#: libgimp/gimpfileselection.c:356 libgimp/gimpunitmenu.c:518
+msgid "Close"
+msgstr "Sulje"
+
+#: libgimp/gimpunit.c:44
+msgid "pixel"
+msgstr ""
+
+#: libgimp/gimpunit.c:44
+msgid "pixels"
+msgstr ""
+
+#: libgimp/gimpunit.c:47
+msgid "inch"
+msgstr "tuuma"
+
+#: libgimp/gimpunit.c:47
+msgid "inches"
+msgstr "tuumaa"
+
+#: libgimp/gimpunit.c:48
+msgid "millimeter"
+msgstr "millimetri"
+
+#: libgimp/gimpunit.c:48
+msgid "millimeters"
+msgstr "millimetrej‰"
+
+#: libgimp/gimpunit.c:51
+msgid "point"
+msgstr "piste"
+
+#: libgimp/gimpunit.c:51
+msgid "points"
+msgstr "pistett‰"
+
+#: libgimp/gimpunit.c:52
+msgid "pica"
+msgstr ""
+
+#: libgimp/gimpunit.c:52
+msgid "picas"
+msgstr "picaa"
+
+#: libgimp/gimpunit.c:59
+msgid "percent"
+msgstr "%"
+
+#: libgimp/gimpexport.c:298
+msgid "Ignore"
+msgstr "Ohita"
+
+#: libgimp/gimpfileselection.c:355
+#: libgimp/gimpunitmenu.c:510
+msgid "Select"
+msgstr "Valitse"

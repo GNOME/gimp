@@ -127,7 +127,7 @@ msgid "OK"
 msgstr "Да"
 
 #. the  Action Button
-#: libgimp/gimpexport.c:287 plug-ins/AlienMap/AlienMap.c:637
+#: plug-ins/AlienMap/AlienMap.c:637
 #: plug-ins/AlienMap2/AlienMap2.c:629 plug-ins/FractalExplorer/Dialogs.c:785
 #: plug-ins/FractalExplorer/FractalExplorer.c:627
 #: plug-ins/FractalExplorer/FractalExplorer.c:831
@@ -2085,8 +2085,6 @@ msgstr "<Image>/Фильтры/Анимация/Воспроизведение..."
 msgid "Animation Playback: "
 msgstr "Воспроизведение фильма: "
 
-#. The close button
-#: libgimp/gimpfileselection.c:363 libgimp/gimpunitmenu.c:464
 #: plug-ins/common/animationplay.c:709 plug-ins/common/plugindetails.c:998
 #: plug-ins/common/sample_colorize.c:1300
 #: plug-ins/dbbrowser/dbbrowser_utils.c:164
@@ -5349,7 +5347,7 @@ msgstr "Размер:"
 msgid "Fractional Pixels"
 msgstr "Дробные пикселы"
 
-#: libgimp/gimpexport.c:285 plug-ins/common/papertile.c:421
+#: plug-ins/common/papertile.c:421
 msgid "Ignore"
 msgstr "Игнорировать"
 
@@ -5898,7 +5896,7 @@ msgid "Keep Aspect Ratio"
 msgstr "Сохранить пропорции"
 
 #. Unit
-#: libgimp/gimpunitmenu.c:493 plug-ins/common/ps.c:2601
+#: plug-ins/common/ps.c:2601
 msgid "Unit"
 msgstr "Единица"
 
@@ -8350,7 +8348,6 @@ msgstr "Значение: "
 msgid "Press Button"
 msgstr "Нажмите кнопку"
 
-#: libgimp/gimpfileselection.c:362 libgimp/gimpunitmenu.c:462
 #: plug-ins/gap/gap_arr_dialog.c:1221 plug-ins/gfig/gfig.c:4988
 #: plug-ins/imagemap/imap_cmd_select.c:49
 msgid "Select"
@@ -10312,7 +10309,7 @@ msgid "MAX_FONTS exceeded. Some fonts may be missing."
 msgstr ""
 
 #. "-*-(fn)-(wg)-(sl)-(sp)-*-(px)-(po * 10)-*-*-*-*-*-*"
-#: libgimp/gimpunit.c:44 plug-ins/gdyntext/font_selection.c:212
+#: plug-ins/gdyntext/font_selection.c:212
 #: plug-ins/gdyntext/font_selection.c:266
 #: plug-ins/gdyntext/font_selection.c:350
 #: plug-ins/gdyntext/font_selection.c:374 plug-ins/imagemap/imap_circle.c:264
@@ -10326,7 +10323,7 @@ msgstr ""
 msgid "pixels"
 msgstr "пикселы"
 
-#: libgimp/gimpunit.c:51 plug-ins/gdyntext/font_selection.c:213
+#: plug-ins/gdyntext/font_selection.c:213
 #: plug-ins/gdyntext/font_selection.c:350
 msgid "points"
 msgstr "пункты"
@@ -10802,7 +10799,7 @@ msgstr "никакое"
 msgid "Not found \"%s\": used \"%s\" instead"
 msgstr "%s не найдено: используется %s"
 
-#: libgimp/gimpunitmenu.c:215 plug-ins/gflare/gflare.c:4647
+#: plug-ins/gflare/gflare.c:4647
 msgid "More..."
 msgstr "Дополнительно..."
 
@@ -13195,160 +13192,3 @@ msgstr "Захватить весь экран"
 msgid "No data captured"
 msgstr "Данные не захвачены"
 
-#: libgimp/gimpcolorbutton.c:104
-msgid "/Use Foreground Color"
-msgstr "/Использовать цвет переднего плана"
-
-#: libgimp/gimpcolorbutton.c:105
-msgid "/Use Background Color"
-msgstr "/Использовать цвет фона"
-
-#: libgimp/gimpexport.c:123
-msgid "can't Handle Layers"
-msgstr "невозможно обработать слои"
-
-#: libgimp/gimpexport.c:124 libgimp/gimpexport.c:133
-msgid "Merge Visible Layers"
-msgstr "Объединить видимые слои"
-
-#: libgimp/gimpexport.c:132
-msgid "can only Handle Layers as Animation Frames"
-msgstr "можно обработать слои только как анимированные кадры"
-
-#: libgimp/gimpexport.c:133
-msgid "Save as Animation"
-msgstr "Сохранить как анимацию"
-
-#: libgimp/gimpexport.c:141
-msgid "can't Handle Transparency"
-msgstr "невозможно обработать прозрачность"
-
-#: libgimp/gimpexport.c:142
-msgid "Flatten Image"
-msgstr "Свести изображение"
-
-#: libgimp/gimpexport.c:150
-msgid "can only Handle RGB Images"
-msgstr "можно обработать только RGB-изображения"
-
-#: libgimp/gimpexport.c:151 libgimp/gimpexport.c:179 libgimp/gimpexport.c:188
-msgid "Convert to RGB"
-msgstr "Преобразовать в RGB"
-
-#: libgimp/gimpexport.c:159
-msgid "can only Handle Grayscale Images"
-msgstr "можно обработать только изображения в оттенках серого"
-
-#: libgimp/gimpexport.c:160 libgimp/gimpexport.c:179 libgimp/gimpexport.c:200
-msgid "Convert to Grayscale"
-msgstr "Преобразовать в оттенки серого"
-
-#: libgimp/gimpexport.c:168
-msgid "can only Handle Indexed Images"
-msgstr "можно обработать только индексированные изображения"
-
-#: libgimp/gimpexport.c:169 libgimp/gimpexport.c:188 libgimp/gimpexport.c:198
-msgid ""
-"Convert to indexed using default settings\n"
-"(Do it manually to tune the result)"
-msgstr ""
-"Преобразовать в индексированное используя настройки по умолчанию\n"
-"(Результат можно подстроить вручную)"
-
-#: libgimp/gimpexport.c:178
-msgid "can only Handle RGB or Grayscale Images"
-msgstr "можно обработать только изображения в оттенках серого или RGB"
-
-#: libgimp/gimpexport.c:187
-msgid "can only Handle RGB or Indexed Images"
-msgstr "можно обработать только RGB или индексированные изображения"
-
-#: libgimp/gimpexport.c:197
-msgid "can only Handle Grayscale or Indexed Images"
-msgstr ""
-"можно обработать только изображения в оттенках серого или индексированные"
-
-#: libgimp/gimpexport.c:208
-msgid "needs an Alpha Channel"
-msgstr "требуется альфа канал"
-
-#: libgimp/gimpexport.c:209
-msgid "Add Alpha Channel"
-msgstr "Добавить альфа-канал"
-
-#.
-#. *  Plug-ins have called gtk_init () before calling gimp_export ().
-#. *  Otherwise bad things will happen now!!
-#.
-#. the dialog
-#: libgimp/gimpexport.c:278
-msgid "Export File"
-msgstr "Экспортировать файл"
-
-#: libgimp/gimpexport.c:283
-msgid "Export"
-msgstr "Экспорт"
-
-#: libgimp/gimpexport.c:302
-msgid ""
-"Your image should be exported before it can be saved for the following "
-"reasons:"
-msgstr ""
-"Ваше изображение должно быть экспортированно до того как оно может быть "
-"сохранено по следующим причинам:"
-
-#. the footline
-#: libgimp/gimpexport.c:365
-msgid "The export conversion won't modify your original image."
-msgstr "Экспортное преобразование не изменит ваше исходное изображение."
-
-#: libgimp/gimpfileselection.c:352
-msgid "Select File"
-msgstr "Выбрать файл"
-
-#. pseudo unit
-#: libgimp/gimpunit.c:44
-msgid "pixel"
-msgstr "пиксел"
-
-#. standard units
-#: libgimp/gimpunit.c:47
-msgid "inch"
-msgstr "дюйм"
-
-#: libgimp/gimpunit.c:47
-msgid "inches"
-msgstr "дюймы"
-
-#: libgimp/gimpunit.c:48
-msgid "millimeter"
-msgstr "миллиметр"
-
-#: libgimp/gimpunit.c:48
-msgid "millimeters"
-msgstr "миллиметры"
-
-#. professional units
-#: libgimp/gimpunit.c:51
-msgid "point"
-msgstr "пункт"
-
-#: libgimp/gimpunit.c:52
-msgid "pica"
-msgstr "пика"
-
-#: libgimp/gimpunit.c:52
-msgid "picas"
-msgstr "пики"
-
-#: libgimp/gimpunit.c:59
-msgid "percent"
-msgstr "процент"
-
-#: libgimp/gimpunitmenu.c:457
-msgid "Unit Selection"
-msgstr "Выбор единиц"
-
-#: libgimp/gimpunitmenu.c:494
-msgid "Factor"
-msgstr "Множитель"

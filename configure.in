@@ -745,6 +745,7 @@ data/palettes/Makefile
 data/patterns/Makefile
 Makefile
 po/Makefile.in
+po-libgimp/Makefile.in
 po-plug-ins/Makefile.in
 intl/Makefile
 tools/Makefile
@@ -785,6 +786,7 @@ help/images/Makefile],
 [
    chmod +x gimptool
    sed -e "/POTFILES =/r po/POTFILES" po/Makefile.in > po/Makefile
+   sed -e "/POTFILES =/r po-libgimp/POTFILES" po-libgimp/Makefile.in > po-libgimp/Makefile
    sed -e "/POTFILES =/r po-plug-ins/POTFILES" po-plug-ins/Makefile.in > po-plug-ins/Makefile
    case "$CONFIG_FILES" in
    *plug-ins/perl*)

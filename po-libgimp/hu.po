@@ -1,0 +1,218 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 1999-11-01 08:54-0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: ENCODING\n"
+
+#: libgimp/gimpexport.c:305
+msgid "Cancel"
+msgstr "Mégsem"
+
+#: libgimp/gimpfileselection.c:356 libgimp/gimpunitmenu.c:518
+msgid "Close"
+msgstr "Bezár"
+
+#: libgimp/gimpunit.c:44
+#, fuzzy
+msgid "pixel"
+msgstr "Pixel"
+
+#: libgimp/gimpunit.c:44
+#, fuzzy
+msgid "pixels"
+msgstr "Pixel"
+
+#: libgimp/gimpunit.c:47
+msgid "inch"
+msgstr "coll"
+
+#: libgimp/gimpunit.c:47
+msgid "inches"
+msgstr "coll"
+
+#: libgimp/gimpunit.c:48
+msgid "millimeter"
+msgstr ""
+
+#: libgimp/gimpunit.c:48
+#, fuzzy
+msgid "millimeters"
+msgstr "Kitöltés típusa"
+
+#: libgimp/gimpunit.c:51
+msgid "point"
+msgstr ""
+
+#: libgimp/gimpunit.c:51
+msgid "points"
+msgstr ""
+
+#: libgimp/gimpunit.c:52
+msgid "pica"
+msgstr ""
+
+#: libgimp/gimpunit.c:52
+msgid "picas"
+msgstr ""
+
+#: libgimp/gimpunit.c:59
+#, fuzzy
+msgid "percent"
+msgstr "Perspektíva"
+
+#: libgimp/gimpexport.c:298
+msgid "Ignore"
+msgstr ""
+
+#: libgimp/gimpfileselection.c:355
+#: libgimp/gimpunitmenu.c:510
+#, fuzzy
+msgid "Select"
+msgstr "/Kijelölés/Teljes kép"
+
+#: libgimp/gimpfileselection.c:352
+#, fuzzy
+msgid "Select File"
+msgstr "Kijelölés"
+
+#: libgimp/gimpenv.c:86
+msgid "warning: no home directory."
+msgstr "figyelmeztetés: nincs home könyvtár."
+
+#: libgimp/gimpunitmenu.c:207
+msgid "More..."
+msgstr ""
+
+#: libgimp/gimpunitmenu.c:333
+msgid "unit-menu-format string ended within %%-sequence"
+msgstr ""
+
+#: libgimp/gimpunitmenu.c:366
+msgid "unit-menu-format contains unknown format sequence '%%%c'"
+msgstr ""
+
+#: libgimp/gimpunitmenu.c:453
+#, fuzzy
+msgid "Unit Selection"
+msgstr "Kijelölés"
+
+#: libgimp/gimpunitmenu.c:479
+#, fuzzy
+msgid "Unit "
+msgstr "Névtelen"
+
+#: libgimp/gimpunitmenu.c:481
+msgid "Factor"
+msgstr ""
+
+#: libgimp/gimpexport.c:121
+#, fuzzy
+msgid "can't handle layers"
+msgstr "Réteg skálázása"
+
+#: libgimp/gimpexport.c:122 libgimp/gimpexport.c:131
+#, fuzzy
+msgid "Merge visible layers"
+msgstr "Látható rétegek összefésülése"
+
+#: libgimp/gimpexport.c:130
+msgid "can only handle layers as animation frames"
+msgstr ""
+
+#: libgimp/gimpexport.c:131
+#, fuzzy
+msgid "Save as animation"
+msgstr "Kimentés beállítások"
+
+#: libgimp/gimpexport.c:139
+#, fuzzy
+msgid "can't handle transparency"
+msgstr "Háttérszínig vagy átlátszóságig töröl"
+
+#: libgimp/gimpexport.c:140
+#, fuzzy
+msgid "Flatten Image"
+msgstr "Egy réteggé"
+
+#: libgimp/gimpexport.c:148
+msgid "can only handle RGB images"
+msgstr ""
+
+#: libgimp/gimpexport.c:149 libgimp/gimpexport.c:176 libgimp/gimpexport.c:185
+#, fuzzy
+msgid "Convert to RGB"
+msgstr "Kontraszt"
+
+#: libgimp/gimpexport.c:157
+msgid "can only handle grayscale images"
+msgstr ""
+
+#: libgimp/gimpexport.c:158 libgimp/gimpexport.c:176 libgimp/gimpexport.c:195
+#, fuzzy
+msgid "Convert to grayscale"
+msgstr "fekete-fehér"
+
+#: libgimp/gimpexport.c:166
+#, fuzzy
+msgid "can only handle indexed images"
+msgstr "Színátmenet: indexelt képeknél érvénytelen."
+
+#: libgimp/gimpexport.c:167 libgimp/gimpexport.c:185 libgimp/gimpexport.c:194
+msgid ""
+"Convert to indexed using default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+
+#: libgimp/gimpexport.c:175
+msgid "can only handle RGB or grayscale images"
+msgstr ""
+
+#: libgimp/gimpexport.c:184
+#, fuzzy
+msgid "can only handle RGB or indexed images"
+msgstr "Színátmenet: indexelt képeknél érvénytelen."
+
+#: libgimp/gimpexport.c:193
+#, fuzzy
+msgid "can only handle grayscale or indexed images"
+msgstr "Színátmenet: indexelt képeknél érvénytelen."
+
+#: libgimp/gimpexport.c:203
+#, fuzzy
+msgid "needs an alpha channel"
+msgstr "Réteg alfa csatornája"
+
+#: libgimp/gimpexport.c:204
+#, fuzzy
+msgid "Add alpha channel"
+msgstr "Alfa csatorna létrehozás"
+
+#: libgimp/gimpexport.c:274
+#, fuzzy
+msgid "Export File"
+msgstr "Színpaletta"
+
+#: libgimp/gimpexport.c:290
+#, fuzzy
+msgid "Export"
+msgstr "Forrás"
+
+#: libgimp/gimpexport.c:315
+msgid ""
+"Your image should be exported before it can be saved for the following "
+"reasons:"
+msgstr ""
+
+#: libgimp/gimpexport.c:373
+msgid "The export conversion won't modify your original image."
+msgstr ""

@@ -130,7 +130,7 @@ msgid "OK"
 msgstr "OK"
 
 #. the  Action Button
-#: libgimp/gimpexport.c:287 plug-ins/AlienMap/AlienMap.c:636
+#: plug-ins/AlienMap/AlienMap.c:636
 #: plug-ins/AlienMap2/AlienMap2.c:628 plug-ins/FractalExplorer/Dialogs.c:785
 #: plug-ins/FractalExplorer/FractalExplorer.c:627
 #: plug-ins/FractalExplorer/FractalExplorer.c:831
@@ -2098,7 +2098,6 @@ msgid "Animation Playback: "
 msgstr "Animation abspielen: "
 
 #. The close button
-#: libgimp/gimpfileselection.c:363 libgimp/gimpunitmenu.c:464
 #: plug-ins/common/animationplay.c:709 plug-ins/common/plugindetails.c:998
 #: plug-ins/common/sample_colorize.c:1300
 #: plug-ins/dbbrowser/dbbrowser_utils.c:164
@@ -5394,7 +5393,7 @@ msgstr "Grösse:"
 msgid "Fractional Pixels"
 msgstr "Teilpixel"
 
-#: libgimp/gimpexport.c:285 plug-ins/common/papertile.c:316
+#: plug-ins/common/papertile.c:316
 msgid "Ignore"
 msgstr "Ignorieren"
 
@@ -5901,7 +5900,7 @@ msgid "Keep Aspect Ratio"
 msgstr "Seitenverhältnis beibehalten"
 
 #. Unit
-#: libgimp/gimpunitmenu.c:493 plug-ins/common/ps.c:2539
+#: plug-ins/common/ps.c:2539
 msgid "Unit"
 msgstr "Einheit"
 
@@ -8306,7 +8305,6 @@ msgid "Press Button"
 msgstr "Klicken Sie den Button"
 
 # gehört zu einem GAP-Dialog (z.b. wollen sie speichern ?). 'Auswahl' ist am allgemeinsten, so kollidiert es nicht mit anderen Vorkommen von 'Select'
-#: libgimp/gimpfileselection.c:362 libgimp/gimpunitmenu.c:462
 #: plug-ins/gap/gap_arr_dialog.c:1221 plug-ins/gfig/gfig.c:4988
 #: plug-ins/imagemap/imap_cmd_select.c:49
 msgid "Select"
@@ -10385,7 +10383,7 @@ msgid "MAX_FONTS exceeded. Some fonts may be missing."
 msgstr "MAX_FONTS überlaufen. Es kann sein, dass Schriftarten fehlen."
 
 #. "-*-(fn)-(wg)-(sl)-(sp)-*-(px)-(po * 10)-*-*-*-*-*-*"
-#: libgimp/gimpunit.c:44 plug-ins/gdyntext/font_selection.c:212
+#: plug-ins/gdyntext/font_selection.c:212
 #: plug-ins/gdyntext/font_selection.c:266
 #: plug-ins/gdyntext/font_selection.c:350
 #: plug-ins/gdyntext/font_selection.c:374 plug-ins/imagemap/imap_circle.c:264
@@ -10399,7 +10397,7 @@ msgstr "MAX_FONTS überlaufen. Es kann sein, dass Schriftarten fehlen."
 msgid "pixels"
 msgstr "Pixel"
 
-#: libgimp/gimpunit.c:51 plug-ins/gdyntext/font_selection.c:213
+#: plug-ins/gdyntext/font_selection.c:213
 #: plug-ins/gdyntext/font_selection.c:350
 msgid "points"
 msgstr "Punkte"
@@ -10867,7 +10865,7 @@ msgstr "Kein"
 msgid "Not found \"%s\": used \"%s\" instead"
 msgstr ""
 
-#: libgimp/gimpunitmenu.c:215 plug-ins/gflare/gflare.c:4645
+#: plug-ins/gflare/gflare.c:4645
 msgid "More..."
 msgstr "Mehr..."
 
@@ -13369,256 +13367,3 @@ msgstr "Kann %s nicht öffnen"
 msgid "Can't open (read): %s"
 msgstr "Kann %s nicht öffnen (lesend)"
 
-#: libgimp/gimpcolorbutton.c:104
-msgid "/Use Foreground Color"
-msgstr "/Benutze Vordergrundfarbe"
-
-#: libgimp/gimpcolorbutton.c:105
-msgid "/Use Background Color"
-msgstr "/Benutze Hintergrundfarbe"
-
-#: libgimp/gimpexport.c:123
-msgid "can't Handle Layers"
-msgstr "kennt keine Ebenen"
-
-#: libgimp/gimpexport.c:124 libgimp/gimpexport.c:133
-msgid "Merge Visible Layers"
-msgstr "Sichtbare Ebenen vereinen"
-
-#: libgimp/gimpexport.c:132
-msgid "can only Handle Layers as Animation Frames"
-msgstr "kann Ebenen nur als Animation abspeichern"
-
-#: libgimp/gimpexport.c:133
-msgid "Save as Animation"
-msgstr "Speichere als Animation"
-
-#: libgimp/gimpexport.c:141
-msgid "can't Handle Transparency"
-msgstr "kennt keine Transparenz"
-
-#: libgimp/gimpexport.c:142
-msgid "Flatten Image"
-msgstr "Bild zusammenfügen"
-
-#: libgimp/gimpexport.c:150
-msgid "can only Handle RGB Images"
-msgstr "kennt nur RGB"
-
-#: libgimp/gimpexport.c:151 libgimp/gimpexport.c:179 libgimp/gimpexport.c:188
-msgid "Convert to RGB"
-msgstr "In RGB umwandeln"
-
-#: libgimp/gimpexport.c:159
-msgid "can only Handle Grayscale Images"
-msgstr "kennt nur Graustufen"
-
-#: libgimp/gimpexport.c:160 libgimp/gimpexport.c:179 libgimp/gimpexport.c:200
-msgid "Convert to Grayscale"
-msgstr "In Graustufen umwandeln"
-
-#: libgimp/gimpexport.c:168
-msgid "can only Handle Indexed Images"
-msgstr "kennt nur indizierte Paletten"
-
-#: libgimp/gimpexport.c:169 libgimp/gimpexport.c:188 libgimp/gimpexport.c:198
-msgid ""
-"Convert to indexed using default settings\n"
-"(Do it manually to tune the result)"
-msgstr ""
-"Mit Standardeinstellungen in indiziertes Format umwandeln\n"
-"(Für bessere Resultate, diesen Schritt manuell durchführen)"
-
-#: libgimp/gimpexport.c:178
-msgid "can only Handle RGB or Grayscale Images"
-msgstr "kennt nur RGB und Graustufen"
-
-#: libgimp/gimpexport.c:187
-msgid "can only Handle RGB or Indexed Images"
-msgstr "kennt nur RGB und indizierte Paletten"
-
-#: libgimp/gimpexport.c:197
-msgid "can only Handle Grayscale or Indexed Images"
-msgstr "kennt nur Graustufen und indizierte Paletten"
-
-#: libgimp/gimpexport.c:208
-msgid "needs an Alpha Channel"
-msgstr "benötigt einen Alphakanal"
-
-#: libgimp/gimpexport.c:209
-msgid "Add Alpha Channel"
-msgstr "Alphakanal hinzufügen"
-
-#.
-#. *  Plug-ins have called gtk_init () before calling gimp_export ().
-#. *  Otherwise bad things will happen now!!
-#.
-#. the dialog
-#: libgimp/gimpexport.c:278
-msgid "Export File"
-msgstr "Datei exportieren"
-
-#: libgimp/gimpexport.c:283
-msgid "Export"
-msgstr "Exportieren"
-
-#: libgimp/gimpexport.c:302
-msgid ""
-"Your image should be exported before it can be saved for the following "
-"reasons:"
-msgstr "Das Bild sollte vor dem Abspeichern exportiert werden, denn:"
-
-#. the footline
-#: libgimp/gimpexport.c:365
-msgid "The export conversion won't modify your original image."
-msgstr "Dieser Vorgang wird das Originalbild nicht verändern."
-
-#: libgimp/gimpfileselection.c:352
-msgid "Select File"
-msgstr "Datei auswählen"
-
-#. pseudo unit
-#: libgimp/gimpunit.c:44
-msgid "pixel"
-msgstr "Pixel"
-
-#. standard units
-#: libgimp/gimpunit.c:47
-msgid "inch"
-msgstr "Inch"
-
-#: libgimp/gimpunit.c:47
-msgid "inches"
-msgstr "Inch"
-
-#: libgimp/gimpunit.c:48
-msgid "millimeter"
-msgstr "Millimeter"
-
-#: libgimp/gimpunit.c:48
-msgid "millimeters"
-msgstr "Millimeter"
-
-#. professional units
-#: libgimp/gimpunit.c:51
-msgid "point"
-msgstr "Punkt"
-
-#: libgimp/gimpunit.c:52
-msgid "pica"
-msgstr "Pica"
-
-#: libgimp/gimpunit.c:52
-msgid "picas"
-msgstr "Picas"
-
-#: libgimp/gimpunit.c:59
-msgid "percent"
-msgstr "Prozent"
-
-#: libgimp/gimpunitmenu.c:457
-msgid "Unit Selection"
-msgstr "Einheit auswählen"
-
-#: libgimp/gimpunitmenu.c:494
-msgid "Factor"
-msgstr "Faktor"
-
-#~ msgid "Anti-Alias"
-#~ msgstr "Anti-Alias"
-
-#~ msgid "align visible layers"
-#~ msgstr "Sichtbare Ebenen anordnen"
-
-#~ msgid "Randomization Seed:"
-#~ msgstr "init-Zahl für den Zufallsgenerator:"
-
-#~ msgid "Current Time"
-#~ msgstr "Aktuelle Zeit"
-
-#~ msgid ""
-#~ "Seed random number generator from the current time - this guarantees a "
-#~ "reasonable randomization"
-#~ msgstr ""
-#~ "Erstellt die init-Zahl für den Zufallszahlen-generator aus der aktuellen "
-#~ "Zeit, dadurch wird ein gewisser Zufall garantiert"
-
-#~ msgid "Other Value"
-#~ msgstr "Anderer Wert"
-
-#~ msgid ""
-#~ "Enable user-entered value for random number generator seed - this allows you "
-#~ "to repeat a given \"random\" operation"
-#~ msgstr ""
-#~ "Benutzerdefinierten Wert für Zufallszahlen-Generator einsetzen - damit "
-#~ "können\n"
-#~ "Sie einen \"zufälligen\" Vorgang wiederholen"
-
-#~ msgid "Value for seeding the random number generator"
-#~ msgstr "der Wert, mit dem der Zufallszahlen-Generator initialisiert wird"
-
-#~ msgid "Comment: "
-#~ msgstr "Kommentar: "
-
-#~ msgid "Opacity: "
-#~ msgstr "Deckkraft: "
-
-#~ msgid "On Edges: "
-#~ msgstr "Am Rand: "
-
-#~ msgid "DEPTH"
-#~ msgstr "TIEFE"
-
-#~ msgid "fractaltrace"
-#~ msgstr "Fraktalspur"
-
-#~ msgid "Save as HRZ"
-#~ msgstr "Als HRZ sichern"
-
-#~ msgid "line"
-#~ msgstr "Linie"
-
-#~ msgid "angle"
-#~ msgstr "Winkel"
-
-#~ msgid "Cell size "
-#~ msgstr "Zellgrösse "
-
-#~ msgid "Custom Color"
-#~ msgstr "Benutzerdefinierte Farbe"
-
-#~ msgid "Plasma Options"
-#~ msgstr "Plasma Einstellungen"
-
-#~ msgid "X-offset:"
-#~ msgstr "X-Versatz"
-
-#~ msgid "Y-offset:"
-#~ msgstr "Y-Versatz"
-
-#~ msgid "0"
-#~ msgstr "0"
-
-#~ msgid "90"
-#~ msgstr "90"
-
-#~ msgid "180"
-#~ msgstr "180"
-
-#~ msgid "270"
-#~ msgstr "270"
-
-#~ msgid "Yes"
-#~ msgstr "Ja"
-
-#~ msgid "No"
-#~ msgstr "Nein"
-
-#~ msgid "Made with Gimp"
-#~ msgstr "Erstellt mit GIMP"
-
-#~ msgid "Tile Size"
-#~ msgstr "Kachelgrösse"
-
-#~ msgid "Tile Height"
-#~ msgstr "Kachelhöhe"

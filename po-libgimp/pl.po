@@ -1,0 +1,216 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-plug-ins 1.1.10\n"
+"POT-Creation-Date: 2000-01-13 14:39-0800\n"
+"PO-Revision-Date: 1999-11-06 19:21+0200\n"
+"Last-Translator: Artur Polaczyñski <artie@kmfms.com>\n"
+"Language-Team: Polish <pl@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO8859-2\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. the  Action Button
+#: libgimp/gimpexport.c:287
+msgid "Cancel"
+msgstr "Anuluj"
+
+#. The close button
+#: libgimp/gimpfileselection.c:363 libgimp/gimpunitmenu.c:464
+msgid "Close"
+msgstr "Zamknij"
+
+#: libgimp/gimpexport.c:285
+msgid "Ignore"
+msgstr "Ignoruj"
+
+#. Unit
+#: libgimp/gimpunitmenu.c:493
+#, fuzzy
+msgid "Unit"
+msgstr "BezNazwy"
+
+#: libgimp/gimpfileselection.c:362 libgimp/gimpunitmenu.c:462
+msgid "Select"
+msgstr "Zaznacz"
+
+#. "-*-(fn)-(wg)-(sl)-(sp)-*-(px)-(po * 10)-*-*-*-*-*-*"
+#: libgimp/gimpunit.c:44
+msgid "pixels"
+msgstr "piksele"
+
+#: libgimp/gimpunit.c:51
+msgid "points"
+msgstr "punkty"
+
+#: libgimp/gimpcolorbutton.c:104
+#, fuzzy
+msgid "/Use Foreground Color"
+msgstr "Kolor FG"
+
+#: libgimp/gimpcolorbutton.c:105
+#, fuzzy
+msgid "/Use Background Color"
+msgstr "Kolor FG"
+
+#: libgimp/gimpexport.c:123
+#, fuzzy
+msgid "can't Handle Layers"
+msgstr "Skaluj warstwê"
+
+#: libgimp/gimpexport.c:124 libgimp/gimpexport.c:133
+msgid "Merge Visible Layers"
+msgstr "Po³±cz widoczne warstwy"
+
+#: libgimp/gimpexport.c:132
+#, fuzzy
+msgid "can only Handle Layers as Animation Frames"
+msgstr "Zlewanie: Niedostêpne w trybach indeksowanych."
+
+#: libgimp/gimpexport.c:133
+msgid "Save as Animation"
+msgstr "Zapisz jako animacje"
+
+#: libgimp/gimpexport.c:141
+#, fuzzy
+msgid "can't Handle Transparency"
+msgstr "Wycieranie do t³a lub prze¼roczysto¶ci"
+
+#: libgimp/gimpexport.c:142
+msgid "Flatten Image"
+msgstr "Sp³aszcz obraz"
+
+#: libgimp/gimpexport.c:150
+#, fuzzy
+msgid "can only Handle RGB Images"
+msgstr "Zlewanie: Niedostêpne w trybach indeksowanych."
+
+#: libgimp/gimpexport.c:151 libgimp/gimpexport.c:179 libgimp/gimpexport.c:188
+msgid "Convert to RGB"
+msgstr ""
+
+#: libgimp/gimpexport.c:159
+#, fuzzy
+msgid "can only Handle Grayscale Images"
+msgstr "Zlewanie: Niedostêpne w trybach indeksowanych."
+
+#: libgimp/gimpexport.c:160 libgimp/gimpexport.c:179 libgimp/gimpexport.c:200
+msgid "Convert to Grayscale"
+msgstr ""
+
+#: libgimp/gimpexport.c:168
+#, fuzzy
+msgid "can only Handle Indexed Images"
+msgstr "Zlewanie: Niedostêpne w trybach indeksowanych."
+
+#: libgimp/gimpexport.c:169 libgimp/gimpexport.c:188 libgimp/gimpexport.c:198
+msgid ""
+"Convert to indexed using default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+
+#: libgimp/gimpexport.c:178
+#, fuzzy
+msgid "can only Handle RGB or Grayscale Images"
+msgstr "Zlewanie: Niedostêpne w trybach indeksowanych."
+
+#: libgimp/gimpexport.c:187
+#, fuzzy
+msgid "can only Handle RGB or Indexed Images"
+msgstr "Zlewanie: Niedostêpne w trybach indeksowanych."
+
+#: libgimp/gimpexport.c:197
+#, fuzzy
+msgid "can only Handle Grayscale or Indexed Images"
+msgstr "Zlewanie: Niedostêpne w trybach indeksowanych."
+
+#: libgimp/gimpexport.c:208
+msgid "needs an Alpha Channel"
+msgstr "potrzebuje kana³ alfa"
+
+#: libgimp/gimpexport.c:209
+msgid "Add Alpha Channel"
+msgstr "Dodaj kana³ alfa"
+
+#.
+#. *  Plug-ins have called gtk_init () before calling gimp_export ().
+#. *  Otherwise bad things will happen now!!
+#.
+#. the dialog
+#: libgimp/gimpexport.c:278
+msgid "Export File"
+msgstr "Eksportuj Plik"
+
+#: libgimp/gimpexport.c:283
+msgid "Export"
+msgstr "Eksportuj"
+
+#: libgimp/gimpexport.c:302
+msgid ""
+"Your image should be exported before it can be saved for the following "
+"reasons:"
+msgstr ""
+
+#. the footline
+#: libgimp/gimpexport.c:365
+msgid "The export conversion won't modify your original image."
+msgstr ""
+
+#: libgimp/gimpfileselection.c:352
+msgid "Select File"
+msgstr "Wybór pliku"
+
+#. pseudo unit
+#: libgimp/gimpunit.c:44
+msgid "pixel"
+msgstr "piksel"
+
+#. standard units
+#: libgimp/gimpunit.c:47
+msgid "inch"
+msgstr "cal"
+
+#: libgimp/gimpunit.c:47
+msgid "inches"
+msgstr "cale"
+
+#: libgimp/gimpunit.c:48
+msgid "millimeter"
+msgstr "milimetr"
+
+#: libgimp/gimpunit.c:48
+msgid "millimeters"
+msgstr "milimetry"
+
+#. professional units
+#: libgimp/gimpunit.c:51
+msgid "point"
+msgstr "punkt"
+
+#: libgimp/gimpunit.c:52
+msgid "pica"
+msgstr ""
+
+#: libgimp/gimpunit.c:52
+msgid "picas"
+msgstr ""
+
+#: libgimp/gimpunit.c:59
+msgid "percent"
+msgstr "procent"
+
+#: libgimp/gimpunitmenu.c:215
+msgid "More..."
+msgstr "Wiêcej..."
+
+#: libgimp/gimpunitmenu.c:457
+msgid "Unit Selection"
+msgstr "Wybór Jednostki"
+
+#: libgimp/gimpunitmenu.c:494
+msgid "Factor"
+msgstr "Wspó³czynnik"
+

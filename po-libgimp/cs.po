@@ -1,0 +1,205 @@
+# Czech translation of GIMP plugins 1.1.15.
+# Copyright (C) 1999 Free Software Foundation, Inc.
+# Stanislav Brabec <utx@k332.feld.cvut.cz>, 1999.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-std-plugins 1.1.15\n"
+"POT-Creation-Date: 2000-01-25 21:34+0100\n"
+"PO-Revision-Date: 2000-01-25 21:50+01:00\n"
+"Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
+"Language-Team: Czech <cs@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-2\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. the  Action Button
+#: libgimp/gimpexport.c:287
+msgid "Cancel"
+msgstr "Zru¹it"
+
+#. The close button
+#: libgimp/gimpfileselection.c:363 libgimp/gimpunitmenu.c:464
+msgid "Close"
+msgstr "Zavøít"
+
+#: libgimp/gimpexport.c:285
+msgid "Ignore"
+msgstr "Ignorovat"
+
+#. Unit
+#: libgimp/gimpunitmenu.c:493
+msgid "Unit"
+msgstr "Jednotka"
+
+#: libgimp/gimpfileselection.c:362 libgimp/gimpunitmenu.c:462
+msgid "Select"
+msgstr "Výbìr"
+
+#. "-*-(fn)-(wg)-(sl)-(sp)-*-(px)-(po * 10)-*-*-*-*-*-*"
+#: libgimp/gimpunit.c:44
+msgid "pixels"
+msgstr "pixely"
+
+#: libgimp/gimpunit.c:51
+msgid "points"
+msgstr "body"
+
+#: libgimp/gimpunitmenu.c:215
+msgid "More..."
+msgstr "Více..."
+
+#: libgimp/gimpcolorbutton.c:104
+msgid "/Use Foreground Color"
+msgstr "/Pou¾ít barvy popøedí"
+
+#: libgimp/gimpcolorbutton.c:105
+msgid "/Use Background Color"
+msgstr "/Pou¾ít barvy pozadí"
+
+#: libgimp/gimpexport.c:123
+msgid "can't Handle Layers"
+msgstr "neumí zpracovat vrstvy"
+
+#: libgimp/gimpexport.c:124 libgimp/gimpexport.c:133
+msgid "Merge Visible Layers"
+msgstr "Slouèit viditelné vrstvy"
+
+#: libgimp/gimpexport.c:132
+msgid "can only Handle Layers as Animation Frames"
+msgstr "umí zpracovat vrstvy pouze jako políèka animace"
+
+#: libgimp/gimpexport.c:133
+msgid "Save as Animation"
+msgstr "Zapsat jako animaci"
+
+#: libgimp/gimpexport.c:141
+msgid "can't Handle Transparency"
+msgstr "neumí zpracovat prùhlednost"
+
+#: libgimp/gimpexport.c:142
+msgid "Flatten Image"
+msgstr "Slouèit obraz"
+
+#: libgimp/gimpexport.c:150
+msgid "can only Handle RGB Images"
+msgstr "umí zpracovat pouze RGB obrázky"
+
+#: libgimp/gimpexport.c:151 libgimp/gimpexport.c:179 libgimp/gimpexport.c:188
+msgid "Convert to RGB"
+msgstr "Pøevést do RGB"
+
+#: libgimp/gimpexport.c:159
+msgid "can only Handle Grayscale Images"
+msgstr "umí zpracovat pouze obrázky v ¹edích"
+
+#: libgimp/gimpexport.c:160 libgimp/gimpexport.c:179 libgimp/gimpexport.c:200
+msgid "Convert to Grayscale"
+msgstr "Pøevést do ¹edí"
+
+#: libgimp/gimpexport.c:168
+msgid "can only Handle Indexed Images"
+msgstr "umí zpracovat pouze indexované obrázky"
+
+#: libgimp/gimpexport.c:169 libgimp/gimpexport.c:188 libgimp/gimpexport.c:198
+msgid ""
+"Convert to indexed using default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+"Konverze do indexovaného pou¾ije implicitní nastavení\n"
+"(Ruèním provedením lze doladit výsledek)"
+
+#: libgimp/gimpexport.c:178
+msgid "can only Handle RGB or Grayscale Images"
+msgstr "umí zpracovat pouze RGB obrázky nebo obrázky v ¹edích"
+
+#: libgimp/gimpexport.c:187
+msgid "can only Handle RGB or Indexed Images"
+msgstr "umí zpracovat pouze RGB nebo indexované obrázky"
+
+#: libgimp/gimpexport.c:197
+msgid "can only Handle Grayscale or Indexed Images"
+msgstr "umí zpracovat pouze obrázky v ¹edích nebo indexované"
+
+#: libgimp/gimpexport.c:208
+msgid "needs an Alpha Channel"
+msgstr "vy¾aduje alfa kanál"
+
+#: libgimp/gimpexport.c:209
+msgid "Add Alpha Channel"
+msgstr "Pøidat alfa kanál"
+
+#.
+#. *  Plug-ins have called gtk_init () before calling gimp_export ().
+#. *  Otherwise bad things will happen now!!
+#.
+#. the dialog
+#: libgimp/gimpexport.c:278
+msgid "Export File"
+msgstr "Exportovat soubor"
+
+#: libgimp/gimpexport.c:283
+msgid "Export"
+msgstr "Exportovat"
+
+#: libgimp/gimpexport.c:302
+msgid ""
+"Your image should be exported before it can be saved for the following "
+"reasons:"
+msgstr "Pøed zápisem je tøeba obrázek exportovat z následujících dùvodù:"
+
+#. the footline
+#: libgimp/gimpexport.c:365
+msgid "The export conversion won't modify your original image."
+msgstr "Exportní konverze by nemìla zmìnit pùvodní obrázek."
+
+#: libgimp/gimpfileselection.c:352
+msgid "Select File"
+msgstr "Výbìr souboru"
+
+#. pseudo unit
+#: libgimp/gimpunit.c:44
+msgid "pixel"
+msgstr "pixel"
+
+#. standard units
+#: libgimp/gimpunit.c:47
+msgid "inch"
+msgstr "palec"
+
+#: libgimp/gimpunit.c:47
+msgid "inches"
+msgstr "palcù"
+
+#: libgimp/gimpunit.c:48
+msgid "millimeter"
+msgstr "milimetr"
+
+#: libgimp/gimpunit.c:48
+msgid "millimeters"
+msgstr "milimetrù"
+
+#. professional units
+#: libgimp/gimpunit.c:51
+msgid "point"
+msgstr "bod"
+
+#: libgimp/gimpunit.c:52
+msgid "pica"
+msgstr "pika"
+
+#: libgimp/gimpunit.c:52
+msgid "picas"
+msgstr "piky"
+
+#: libgimp/gimpunit.c:59
+msgid "percent"
+msgstr "procenta"
+
+#: libgimp/gimpunitmenu.c:457
+msgid "Unit Selection"
+msgstr "Výbìr jednotek"
+
+#: libgimp/gimpunitmenu.c:494
+msgid "Factor"
+msgstr "Faktor"

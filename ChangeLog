@@ -1,3 +1,12 @@
+Fri Jan 28 00:37:10 PST 2000 Manish Singh <yosh@gimp.org>
+
+	* configure.in
+	* po-plug-ins
+	* po-libgimp: moved libgimp strings into their own catalog.
+	Mitch/Sven, could you take care of the domain rebinding?
+
+	* Makefile.am: make a gimp-config symlink to gimptool
+
 Fri Jan 28 02:43:36 CET 2000  Marc Lehmann <pcg@goof.com>
 
         * tools/pdbgen/pdb/gimage_mask.pdb, app/gimage_mask_cmds.c: Allow

@@ -122,7 +122,7 @@ msgid "OK"
 msgstr "OK"
 
 #. the  Action Button
-#: libgimp/gimpexport.c:287 plug-ins/AlienMap/AlienMap.c:670
+#: plug-ins/AlienMap/AlienMap.c:670
 #: plug-ins/AlienMap2/AlienMap2.c:642 plug-ins/FractalExplorer/Dialogs.c:800
 #: plug-ins/FractalExplorer/FractalExplorer.c:627
 #: plug-ins/FractalExplorer/FractalExplorer.c:831
@@ -2099,8 +2099,6 @@ msgstr "<Image>/Filtry/Artystyczne/GIMPressionist"
 msgid "Animation Playback: "
 msgstr ""
 
-#. The close button
-#: libgimp/gimpfileselection.c:363 libgimp/gimpunitmenu.c:464
 #: plug-ins/common/animationplay.c:709 plug-ins/common/plugindetails.c:998
 #: plug-ins/common/sample_colorize.c:1300
 #: plug-ins/dbbrowser/dbbrowser_utils.c:164
@@ -5440,7 +5438,7 @@ msgstr "Rozmiar:"
 msgid "Fractional Pixels"
 msgstr "Typ fraktala"
 
-#: libgimp/gimpexport.c:285 plug-ins/common/papertile.c:421
+#: plug-ins/common/papertile.c:421
 msgid "Ignore"
 msgstr "Ignoruj"
 
@@ -6022,7 +6020,7 @@ msgid "Keep Aspect Ratio"
 msgstr ""
 
 #. Unit
-#: libgimp/gimpunitmenu.c:493 plug-ins/common/ps.c:2432
+#: plug-ins/common/ps.c:2432
 #, fuzzy
 msgid "Unit"
 msgstr "BezNazwy"
@@ -8378,7 +8376,6 @@ msgstr "Warto¶æ: "
 msgid "Press Button"
 msgstr ""
 
-#: libgimp/gimpfileselection.c:362 libgimp/gimpunitmenu.c:462
 #: plug-ins/gap/gap_arr_dialog.c:1236 plug-ins/imagemap/imap_cmd_select.c:49
 msgid "Select"
 msgstr "Zaznacz"
@@ -10313,7 +10310,7 @@ msgid "MAX_FONTS exceeded. Some fonts may be missing."
 msgstr ""
 
 #. "-*-(fn)-(wg)-(sl)-(sp)-*-(px)-(po * 10)-*-*-*-*-*-*"
-#: libgimp/gimpunit.c:44 plug-ins/gdyntext/font_selection.c:212
+#: plug-ins/gdyntext/font_selection.c:212
 #: plug-ins/gdyntext/font_selection.c:266
 #: plug-ins/gdyntext/font_selection.c:350
 #: plug-ins/gdyntext/font_selection.c:374 plug-ins/imagemap/imap_circle.c:264
@@ -10327,7 +10324,7 @@ msgstr ""
 msgid "pixels"
 msgstr "piksele"
 
-#: libgimp/gimpunit.c:51 plug-ins/gdyntext/font_selection.c:213
+#: plug-ins/gdyntext/font_selection.c:213
 #: plug-ins/gdyntext/font_selection.c:350
 msgid "points"
 msgstr "punkty"
@@ -12881,215 +12878,3 @@ msgstr "Okno:"
 msgid "Current"
 msgstr "Sterownik:"
 
-#: libgimp/gimpcolorbutton.c:104
-#, fuzzy
-msgid "/Use Foreground Color"
-msgstr "Kolor FG"
-
-#: libgimp/gimpcolorbutton.c:105
-#, fuzzy
-msgid "/Use Background Color"
-msgstr "Kolor FG"
-
-#: libgimp/gimpexport.c:123
-#, fuzzy
-msgid "can't Handle Layers"
-msgstr "Skaluj warstwê"
-
-#: libgimp/gimpexport.c:124 libgimp/gimpexport.c:133
-msgid "Merge Visible Layers"
-msgstr "Po³±cz widoczne warstwy"
-
-#: libgimp/gimpexport.c:132
-#, fuzzy
-msgid "can only Handle Layers as Animation Frames"
-msgstr "Zlewanie: Niedostêpne w trybach indeksowanych."
-
-#: libgimp/gimpexport.c:133
-msgid "Save as Animation"
-msgstr "Zapisz jako animacje"
-
-#: libgimp/gimpexport.c:141
-#, fuzzy
-msgid "can't Handle Transparency"
-msgstr "Wycieranie do t³a lub prze¼roczysto¶ci"
-
-#: libgimp/gimpexport.c:142
-msgid "Flatten Image"
-msgstr "Sp³aszcz obraz"
-
-#: libgimp/gimpexport.c:150
-#, fuzzy
-msgid "can only Handle RGB Images"
-msgstr "Zlewanie: Niedostêpne w trybach indeksowanych."
-
-#: libgimp/gimpexport.c:151 libgimp/gimpexport.c:179 libgimp/gimpexport.c:188
-msgid "Convert to RGB"
-msgstr ""
-
-#: libgimp/gimpexport.c:159
-#, fuzzy
-msgid "can only Handle Grayscale Images"
-msgstr "Zlewanie: Niedostêpne w trybach indeksowanych."
-
-#: libgimp/gimpexport.c:160 libgimp/gimpexport.c:179 libgimp/gimpexport.c:200
-msgid "Convert to Grayscale"
-msgstr ""
-
-#: libgimp/gimpexport.c:168
-#, fuzzy
-msgid "can only Handle Indexed Images"
-msgstr "Zlewanie: Niedostêpne w trybach indeksowanych."
-
-#: libgimp/gimpexport.c:169 libgimp/gimpexport.c:188 libgimp/gimpexport.c:198
-msgid ""
-"Convert to indexed using default settings\n"
-"(Do it manually to tune the result)"
-msgstr ""
-
-#: libgimp/gimpexport.c:178
-#, fuzzy
-msgid "can only Handle RGB or Grayscale Images"
-msgstr "Zlewanie: Niedostêpne w trybach indeksowanych."
-
-#: libgimp/gimpexport.c:187
-#, fuzzy
-msgid "can only Handle RGB or Indexed Images"
-msgstr "Zlewanie: Niedostêpne w trybach indeksowanych."
-
-#: libgimp/gimpexport.c:197
-#, fuzzy
-msgid "can only Handle Grayscale or Indexed Images"
-msgstr "Zlewanie: Niedostêpne w trybach indeksowanych."
-
-#: libgimp/gimpexport.c:208
-msgid "needs an Alpha Channel"
-msgstr "potrzebuje kana³ alfa"
-
-#: libgimp/gimpexport.c:209
-msgid "Add Alpha Channel"
-msgstr "Dodaj kana³ alfa"
-
-#.
-#. *  Plug-ins have called gtk_init () before calling gimp_export ().
-#. *  Otherwise bad things will happen now!!
-#.
-#. the dialog
-#: libgimp/gimpexport.c:278
-msgid "Export File"
-msgstr "Eksportuj Plik"
-
-#: libgimp/gimpexport.c:283
-msgid "Export"
-msgstr "Eksportuj"
-
-#: libgimp/gimpexport.c:302
-msgid ""
-"Your image should be exported before it can be saved for the following "
-"reasons:"
-msgstr ""
-
-#. the footline
-#: libgimp/gimpexport.c:365
-msgid "The export conversion won't modify your original image."
-msgstr ""
-
-#: libgimp/gimpfileselection.c:352
-msgid "Select File"
-msgstr "Wybór pliku"
-
-#. pseudo unit
-#: libgimp/gimpunit.c:44
-msgid "pixel"
-msgstr "piksel"
-
-#. standard units
-#: libgimp/gimpunit.c:47
-msgid "inch"
-msgstr "cal"
-
-#: libgimp/gimpunit.c:47
-msgid "inches"
-msgstr "cale"
-
-#: libgimp/gimpunit.c:48
-msgid "millimeter"
-msgstr "milimetr"
-
-#: libgimp/gimpunit.c:48
-msgid "millimeters"
-msgstr "milimetry"
-
-#. professional units
-#: libgimp/gimpunit.c:51
-msgid "point"
-msgstr "punkt"
-
-#: libgimp/gimpunit.c:52
-msgid "pica"
-msgstr ""
-
-#: libgimp/gimpunit.c:52
-msgid "picas"
-msgstr ""
-
-#: libgimp/gimpunit.c:59
-msgid "percent"
-msgstr "procent"
-
-#: libgimp/gimpunitmenu.c:215
-msgid "More..."
-msgstr "Wiêcej..."
-
-#: libgimp/gimpunitmenu.c:457
-msgid "Unit Selection"
-msgstr "Wybór Jednostki"
-
-#: libgimp/gimpunitmenu.c:494
-msgid "Factor"
-msgstr "Wspó³czynnik"
-
-#~ msgid "Accept settings and apply filter on image"
-#~ msgstr "Zaakceptuj ustawienia filtru na obrazku"
-
-#, fuzzy
-#~ msgid "deinterlace"
-#~ msgstr "Przeplot"
-
-#~ msgid "GIF: not a GIF file\n"
-#~ msgstr "GIF: to nie jest GIF\n"
-
-#~ msgid "GIF: bad version number, not '87a' or '89a'\n"
-#~ msgstr "GIF: z³a wersja pliku, nie '87a' lub '89a'\n"
-
-#~ msgid "none"
-#~ msgstr "brak"
-
-#~ msgid "Phase"
-#~ msgstr "Faza"
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Distorts/Whirl and Pinch..."
-#~ msgstr "<Image>/Filtry/Artystyczne/GIMPressionist"
-
-#, fuzzy
-#~ msgid "wind"
-#~ msgstr "Przewiñ"
-
-#, fuzzy
-#~ msgid "Style"
-#~ msgstr "Krok"
-
-#, fuzzy
-#~ msgid "Blast"
-#~ msgstr "Czarny"
-
-#~ msgid "What!? No brushes?!\n"
-#~ msgstr "Co!? Nie ma pêdzli ?!\n"
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Artistic/Mosaic..."
-#~ msgstr "<Image>/Filtry/Artystyczne/GIMPressionist"
-
-#~ msgid "Transparency"
-#~ msgstr "Przeroczysto¶æ"

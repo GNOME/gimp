@@ -1,6 +1,19 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = tools po po-plug-ins intl libgimp app $(GIMP_PLUGINS) $(GIMP_MODULES) data tips help $(GIMPDOCS)
+SUBDIRS = \
+	tools		\
+	po		\
+	po-libgimp	\
+	po-plug-ins	\
+	intl		\
+	libgimp		\
+	app		\
+	$(GIMP_PLUGINS)	\
+	$(GIMP_MODULES)	\
+	data		\
+	tips		\
+	help		\
+	$(GIMPDOCS)
 
 bin_SCRIPTS = gimptool @GIMPINSTALL@
 
@@ -116,6 +129,14 @@ scriptdata =
 
 gimpinstall:
 	$(LN_S) $(srcdir)/install-sh $(srcdir)/gimpinstall
+
+install-exec-local:
+	cd $(DESTDIR)$(bindir) \
+	&& rm -f gimp-config \
+	&& $(LN_S) gimptool gimp-config
+
+uninstall-local:
+	rm -f $(DESTDIR)$(bindir)/gimp-config
 
 .PHONY: files populate checkin release
 
