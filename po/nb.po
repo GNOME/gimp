@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-02 21:00+0100\n"
-"PO-Revision-Date: 2004-12-20 17:16+0100\n"
+"PO-Revision-Date: 2004-12-21 01:15+0100\n"
 "Last-Translator: Runar Ingebrigtsen <ringe@skolelinux.no>\n"
 "Language-Team: Norwegian <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -6450,7 +6450,7 @@ msgstr "/Fil/Menyer/_Utvalgsredigering"
 
 #: app/gui/toolbox-menu.c:151
 msgid "/File/Dialogs/Na_vigation"
-msgstr "/Fil/Menyer/_Navigering"
+msgstr "/Fil/Menyer/Na_vigering"
 
 #: app/gui/toolbox-menu.c:156
 msgid "/File/Dialogs/_Undo History"
@@ -6478,7 +6478,7 @@ msgstr "/Fil/Menyer/Pal_etter"
 
 #: app/gui/toolbox-menu.c:189
 msgid "/File/Dialogs/_Fonts"
-msgstr "/Fil/Menyer/_Skrifttyper"
+msgstr "/Fil/Menyer/_Skrifter"
 
 #: app/gui/toolbox-menu.c:194
 msgid "/File/Dialogs/_Buffers"
@@ -6511,11 +6511,11 @@ msgstr "/Fil/_Feilsøking"
 #. <Toolbox>/Xtns
 #: app/gui/toolbox-menu.c:249
 msgid "/_Xtns"
-msgstr "/_Tillegg"
+msgstr "/_Utvd"
 
 #: app/gui/toolbox-menu.c:251
 msgid "/Xtns/_Module Manager"
-msgstr "/Tillegg/Modulhåndterer"
+msgstr "/Utvd/_Modulhåndterer"
 
 #. <Toolbox>/Help
 #: app/gui/toolbox-menu.c:260
