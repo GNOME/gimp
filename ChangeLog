@@ -1,3 +1,17 @@
+Mon Nov 29 18:17:34 PST 1999 Manish Singh <yosh@gimp.org>
+
+	* configure.in: support for optional gap_decode_mpeg plugin
+
+	* plug-ins/gap/Makefile.am
+	* plug-ins/gap/README
+	* plug-ins/gap/gap_arr_dialog.c
+	* plug-ins/gap/gap_decode_mpeg_main.c
+	* plug-ins/gap/gap_decode_xanim.c
+	* plug-ins/gap/gap_decode_xanim.h
+	* plug-ins/gap/gap_frontends_main.c
+	* plug-ins/gap/gap_main.c
+	* plug-ins/gap/gap_mpege.c: patches from Wolfgang Hofer
+
 Tue Nov 30 01:55:43 MET 1999  Sven Neumann <sven@gimp.org>
 
 	* app/menus.c: make it compile with strict ANSI C compilers

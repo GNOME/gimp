@@ -96,8 +96,13 @@ EXTRA_DIST = \
 	$(scriptdata_DATA)
 
 libexec_PROGRAMS = \
-	gap_plugins	\
-	gap_filter
+	gap_plugins		\
+	gap_filter		\
+	gap_frontends		\
+	$(GAP_DECODE_MPEG)
+
+EXTRA_PROGRAMS = \
+	gap_decode_mpeg
 
 gap_plugins_SOURCES = \
 	gap_main.c		\
@@ -115,8 +120,6 @@ gap_plugins_SOURCES = \
 	gap_split.h		\
 	gap_resi_dialog.c	\
 	gap_resi_dialog.h	\
-	gap_mpege.c		\
-	gap_mpege.h		\
 	gap_mod_layer.c		\
 	gap_mod_layer.h		\
 	gap_filter_pdb.c	\
@@ -152,6 +155,34 @@ gap_filter_SOURCES = \
 	gap_pdb_calls.h		\
 	gap_filter.h
 
+gap_frontends_SOURCES = \
+	gap_frontends_main.c	\
+	gap_arr_dialog.c	\
+	gap_arr_dialog.h	\
+	gap_layer_copy.c	\
+	gap_layer_copy.h 	\
+	gap_match.c		\
+	gap_match.h		\
+	gap_lib.c		\
+	gap_lib.h		\
+	gap_exchange_image.c	\
+	gap_exchange_image.h	\
+	gap_pdb_calls.c		\
+	gap_pdb_calls.h		\
+	gap_mpege.c		\
+	gap_mpege.h		\
+	gap_decode_xanim.c	\
+	gap_decode_xanim.h
+
+
+gap_decode_mpeg_SOURCES = \
+	gap_decode_mpeg_main.c	\
+	gap_arr_dialog.c	\
+	gap_arr_dialog.h	\
+	gap_pdb_calls.c		\
+	gap_pdb_calls.h
+
+
 AM_CPPFLAGS = \
         -DLOCALEDIR=\""$(localedir)"\"
 
@@ -163,6 +194,13 @@ INCLUDES = \
 LDADD = \
 	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
+	$(GTK_LIBS)				\
+	$(INTLLIBS)
+
+gap_decode_mpeg_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
+	$(top_builddir)/libgimp/libgimp.la	\
+	$(LIBMPEG)				\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
 

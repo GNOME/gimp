@@ -39,8 +39,10 @@ Concept:
 	
 	gimp's xcf Fileformat should be used to store the frames,
 	so that each frame can have more Layers.
-	(Notes: Sound is not supported in this Concept,
-	Playbackrates have to be added when save as animation format)
+	(Notes: 
+	Sound is not supported in this Concept, but can be added
+	by some of the supported Video Encoders.
+	Playbackrates (framerate) is also set at video encoding)
 	
 	This requires a lot of Diskspace but offers much more flexibility
 	while working on the animation.
@@ -50,20 +52,21 @@ Concept:
 	(gzip has to be installed on your system to do that)
 	If you can accept lossy compression you may also use 
 	the xjt fileformat to store your frames on jpeg based compression.
-	(xjt load and save plugins are available in the Plugin Registry)
 	
-	The final Product can be converted to one multilayerd Image
-	that can be saved as Animated-Gif.
+	The final Product can be encoded as videofile
+	or converted to one multilayerd Image
+	that can be saved as Animated-Gif
 	(or, in the future in other Animation Formats 
 	when other Load/Save Modules were added to the gimp)
 	
 	GAP provides frontend dialog interfaces for
-	2 different software MPEG encoder programs.
+	software MPEG video encoder programs.
 	(mpeg_encode and mpeg2encode)
 	
-	GAP also provides a way to load AnimFrames from multimedia fileformats
+	GAP also provides an XANIM frontend to load AnimFrames from multimedia fileformats
 	(avi, quicktime, ....) based on the famous xanim multimedia player.
 	see the file README_xanim_hack for more details.
+	
 	
 
 --------------------------------------------------------------------
@@ -75,14 +78,21 @@ should get installed along with the other plug-ins.
 
     
    Notes:
-   - GAP provides frontend dialog for mpeg_encode (V1.5R2)
-     and mpeg2encode (V1.2)
+   - GAP provides frontend dialogs for:
+      - mpeg_encode (V1.5R2)
+      - mpeg2encode (V1.2)
+      - xanim 2.80.1 exporting edition (with the extensions from loki entertainment)
+
+     The frontends and the external Programs need UNIX environment to run.
+      
      If you like to use that stuff, you should install
        mpeg_encode and mpeg_play
        mpeg2encode and mpeg2decode
+       xanim 2.80.1 (loki)
      on your system.
      
-     (There is no need to install the mpeg encoders to compile GAP)
+     
+     (There is no need to install those external programs to compile GAP)
         
    - GAP-Patch support for some older gimp releases
      is available at the Registry:
@@ -90,8 +100,31 @@ should get installed along with the other plug-ins.
         http://registry.gimp.org/detailview.phtml?plugin=gap_patches
 
 
-   - See the File README_xanim_hack for further optional Installation
-    
+--------------------------------------------------------------------
+Supported Videoformats
+--------------------------------------------------------------------
+
+Read(decode):
+  Any Multimedia Fileformat, XANIM can read
+  (AVI, Quicktime, and a lot more, see xanim docu for more information)
+  
+  MPEG1
+    support based om mpeg library (libmpeg.a 1.3.1)   *** has NO Audio support ****
+
+Write (encode)
+  Quicktime
+     (under development)
+     support based on the quicktime4linux  library 1.1.3  (requires libjpeg, libpng libz)
+     (Warning: most of the common codecs are not supported)
+
+  AVI
+     (under development)
+       
+  MJPEG
+     (under development)
+  
+  SMJPEG
+     (under development)
 
 
 --------------------------------------------------------------------

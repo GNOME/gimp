@@ -276,7 +276,7 @@ dnl Test for libmpeg
   if test -z "$LIBMPEG"; then
     AC_CHECK_LIB(mpeg, GetMPEGFrame,
       AC_CHECK_HEADER(mpeg.h,
-	MPEG='mpeg'; LIBMPEG='-lmpeg',
+	MPEG='mpeg'; LIBMPEG='-lmpeg'; GAP_DECODE_MPEG='gap_decode_mpeg',
 	AC_MSG_WARN(*** MPEG plug-in will not be built (MPEG header file not found) ***)),
       AC_MSG_WARN(*** MPEG plug-in will not be built (MPEG library not found) ***))
   fi
@@ -650,6 +650,7 @@ AC_SUBST(AA)
 AC_SUBST(LIBAA)
 AC_SUBST(MPEG)
 AC_SUBST(LIBMPEG)
+AC_SUBST(GAP_DECODE_MPEG)
 AC_SUBST(XPM)
 AC_SUBST(LIBXPM)
 AC_SUBST(LIBUCB)

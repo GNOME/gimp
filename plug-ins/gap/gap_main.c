@@ -38,9 +38,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-static char *gap_main_version =  "1.1.11a; 1999/11/16";
+static char *gap_main_version =  "1.1.13a; 1999/11/26";
 
 /* revision history:
+ * gimp    1.1.13a; 1999/11/26  hof: splitted frontends for external programs (mpeg encoders)
+ *                                   to gap_frontends_main.c
  * gimp    1.1.11a; 1999/11/15  hof: changed Menunames (AnimFrames to Video, Submenu Encode)
  * gimp    1.1.10a; 1999/10/22  hof: extended dither options for gap_range_convert
  * gimp    1.1.8a;  1999/08/31  hof: updated main version
@@ -83,7 +85,6 @@ static char *gap_main_version =  "1.1.11a; 1999/11/16";
 #include "gap_range_ops.h"
 #include "gap_split.h"
 #include "gap_mov_exec.h"
-#include "gap_mpege.h"
 #include "gap_mod_layer.h"
 #include "gap_arr_dialog.h"
 
@@ -300,17 +301,8 @@ query ()
   static int nreturn_split = sizeof(return_split) / sizeof(return_split[0]);
 
 
-  static GParamDef args_mpege[] =
-  {
-    {PARAM_INT32, "run_mode", "Interactive, non-interactive"},
-    {PARAM_IMAGE, "image", "Input image (one of the Anim Frames)"},
-    {PARAM_DRAWABLE, "drawable", "Input drawable (unused)"},
-  };
-  static int nargs_mpege = sizeof(args_mpege) / sizeof(args_mpege[0]);
-
   static GParamDef *return_vals = NULL;
   static int nreturn_vals = 0;
-
 
   static GParamDef args_shift[] =
   {
@@ -556,31 +548,6 @@ query ()
 			 PROC_PLUG_IN,
 			 nargs_split, nreturn_split,
 			 args_split, return_split);
-
-  gimp_install_procedure("plug_in_gap_mpeg_encode",
-			 _("This plugin calls mpeg_encode to convert anim frames to MPEG1, or just generates a param file for mpeg_encode. (mpeg_encode must be installed on your system)"),
-			 "",
-			 "Wolfgang Hofer (hof@hotbot.com)",
-			 "Wolfgang Hofer",
-			 gap_main_version,
-			 N_("<Image>/Video/Encode/MPEG1..."),
-			 "RGB*, INDEXED*, GRAY*",
-			 PROC_PLUG_IN,
-			 nargs_mpege, nreturn_vals,
-			 args_mpege, return_vals);
-
-
-  gimp_install_procedure("plug_in_gap_mpeg2encode",
-			 _("This plugin calls mpeg2encode to convert anim frames to MPEG1 or MPEG2, or just generates a param file for mpeg2encode. (mpeg2encode must be installed on your system)"),
-			 "",
-			 "Wolfgang Hofer (hof@hotbot.com)",
-			 "Wolfgang Hofer",
-			 gap_main_version,
-			 N_("<Image>/Video/Encode/MPEG2..."),
-			 "RGB*, INDEXED*, GRAY*",
-			 PROC_PLUG_IN,
-			 nargs_mpege, nreturn_vals,
-			 args_mpege, return_vals);
 
 
   gimp_install_procedure("plug_in_gap_shift",
@@ -1141,56 +1108,6 @@ run (char    *name,
       *nreturn_vals = 2;
       values[1].type = PARAM_IMAGE;
       values[1].data.d_int32 = l_rc;   /* return the new generated image_id */
-  }
-  else if (strcmp (name, "plug_in_gap_mpeg_encode") == 0)
-  {
-      if (run_mode == RUN_NONINTERACTIVE)
-      {
-        if (n_params != 3)
-        {
-          status = STATUS_CALLING_ERROR;
-        }
-        else
-        {
-          /* planed: define non interactive PARAMS */
-          l_extension[sizeof(l_extension) -1] = '\0';
-        }
-      }
-
-      if (status == STATUS_SUCCESS)
-      {
-
-        image_id    = param[1].data.d_image;
-        /* planed: define non interactive PARAMS */
-
-        l_rc = gap_mpeg_encode(run_mode, image_id, MPEG_ENCODE /* more PARAMS */);
-
-      }
-  }
-  else if (strcmp (name, "plug_in_gap_mpeg2encode") == 0)
-  {
-      if (run_mode == RUN_NONINTERACTIVE)
-      {
-        if (n_params != 3)
-        {
-          status = STATUS_CALLING_ERROR;
-        }
-        else
-        {
-          /* planed: define non interactive PARAMS */
-          l_extension[sizeof(l_extension) -1] = '\0';
-        }
-      }
-
-      if (status == STATUS_SUCCESS)
-      {
-
-        image_id    = param[1].data.d_image;
-        /* planed: define non interactive PARAMS */
-
-        l_rc = gap_mpeg_encode(run_mode, image_id, MPEG2ENCODE /* more PARAMS */);
-
-      }
   }
   else if (strcmp (name, "plug_in_gap_shift") == 0)
   {

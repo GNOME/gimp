@@ -38,7 +38,12 @@
  */
 
 /* revision history:
- * gimp   1.1.15.1; 1999/05/08  hof: call fileselect in gtk+1.2 style 
+ * gimp    1.1.11b; 1999/11/20  hof: some cosmetic gtk fixes:
+ *                                   - allow X-expansion (useful for the scale widgets)
+ *                                   - use a hbox on WGT_INT_PAIR and WGT_FLT_PAIR
+ *                                     (reduces the waste of horizontal space
+ *                                      when used together with other widget types in the table)
+ * gimp    1.1.5.1; 1999/05/08  hof: call fileselect in gtk+1.2 style 
  * version 0.96.03; 1998/08/15  hof: p_arr_gtk_init 
  * version 0.96.01; 1998/07/09  hof: Bugfix: gtk_init should be called only
  *                                           once in a plugin process 
@@ -181,7 +186,7 @@ entry_create_value(char *title, GtkTable *table, int row, t_arr_arg *arr_ptr,
     gtk_signal_connect(GTK_OBJECT(entry), "changed",
 		       (GtkSignalFunc) entry_update_cb,
 		       arr_ptr);
-    gtk_table_attach(GTK_TABLE(table), entry, 1, 2, row, row + 1, GTK_FILL, GTK_FILL, 4, 0);
+    gtk_table_attach(GTK_TABLE(table), entry, 1, 2, row, row + 1, GTK_FILL, GTK_FILL | GTK_EXPAND, 4, 0);
     if(arr_ptr->help_txt != NULL)
     { 
        gtk_tooltips_set_tip(g_tooltips, entry, arr_ptr->help_txt,NULL);
@@ -479,7 +484,7 @@ radio_create_value(char *title, GtkTable *table, int row, t_arr_arg *arr_ptr)
     
      radio_button = gtk_radio_button_new_with_label ( radio_group, l_radio_txt );
      radio_group = gtk_radio_button_group ( GTK_RADIO_BUTTON (radio_button) );  
-     gtk_table_attach ( GTK_TABLE (radio_table), radio_button, 0, 2, l_idy, l_idy+1, GTK_FILL, 0, 0, 0);
+     gtk_table_attach ( GTK_TABLE (radio_table), radio_button, 0, 2, l_idy, l_idy+1, GTK_FILL | GTK_EXPAND, 0, 0, 0);
 
      gtk_signal_connect ( GTK_OBJECT (radio_button), "toggled",
 		         (GtkSignalFunc) radio_update_cb,
@@ -496,7 +501,7 @@ radio_create_value(char *title, GtkTable *table, int row, t_arr_arg *arr_ptr)
 
   
   /* attach radio_table */
-  gtk_table_attach ( GTK_TABLE (table), radio_table, 1, 3, row, row+1, GTK_FILL, 0, 0, 0);
+  gtk_table_attach ( GTK_TABLE (table), radio_table, 1, 3, row, row+1, GTK_FILL | GTK_EXPAND, 0, 0, 0);
   gtk_widget_show (radio_table);
 }
 
@@ -530,7 +535,7 @@ optionmenu_create_value(char *title, GtkTable *table, int row, t_arr_arg *arr_pt
   /* optionmenu */
   option_menu = gtk_option_menu_new();
   gtk_table_attach(GTK_TABLE(table), option_menu, 1, 2, row, row +1,
-		   GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+		   GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(option_menu);
 
   if(arr_ptr->help_txt != NULL)
@@ -651,6 +656,7 @@ static void
 pair_flt_create_value(t_pair *pair, char *title, GtkTable *table, int row, t_arr_arg *arr_ptr)
 {
     GtkObject *scale_data;
+    GtkWidget *hbox;
     char       buf[256];
 
     if(arr_ptr->flt_format == NULL)
@@ -692,7 +698,7 @@ pair_flt_create_value(t_pair *pair, char *title, GtkTable *table, int row, t_arr
 
     pair->scale = gtk_hscale_new(GTK_ADJUSTMENT(scale_data));
     gtk_widget_set_usize(pair->scale, arr_ptr->scale_width, 0);
-    gtk_table_attach(table, pair->scale, 2, 3, row, row + 1, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+    /* gtk_table_attach(table, pair->scale, 2, 3, row, row + 1, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0); */
     gtk_scale_set_draw_value(GTK_SCALE(pair->scale), FALSE);
     gtk_scale_set_digits(GTK_SCALE(pair->scale), 3);
     gtk_range_set_update_policy(GTK_RANGE(pair->scale), GTK_UPDATE_CONTINUOUS);
@@ -711,12 +717,20 @@ pair_flt_create_value(t_pair *pair, char *title, GtkTable *table, int row, t_arr
     gtk_signal_connect(GTK_OBJECT(pair->entry), "changed",
 		       (GtkSignalFunc) pair_flt_entry_update_cb,
 		       arr_ptr);
-    gtk_table_attach(GTK_TABLE(table), pair->entry, 1, 2, row, row + 1, GTK_FILL, GTK_FILL, 4, 0);
+    /* gtk_table_attach(GTK_TABLE(table), pair->entry, 1, 2, row, row + 1, GTK_FILL, GTK_FILL, 4, 0); */
     if(arr_ptr->help_txt != NULL)
     { 
        gtk_tooltips_set_tip(g_tooltips, pair->entry, arr_ptr->help_txt,NULL);
     }
     gtk_widget_show(pair->entry);
+
+    /*  Horizontal box for entry and scale */
+    hbox = gtk_hbox_new (FALSE, 2+3);
+    gtk_box_pack_start (GTK_BOX (hbox), pair->entry, FALSE, TRUE, 0);
+    gtk_box_pack_start (GTK_BOX (hbox), pair->scale, TRUE, TRUE, 0);
+    gtk_widget_show(hbox);
+
+    gtk_table_attach(GTK_TABLE(table), hbox, 1, 3, row, row + 1, GTK_FILL | GTK_EXPAND, GTK_FILL, 4, 0);
 }
 
 
@@ -795,6 +809,7 @@ static void
 pair_int_create_value(t_pair *pair, char *title, GtkTable *table, int row, t_arr_arg *arr_ptr)
 {
     GtkObject *scale_data;
+    GtkWidget *hbox;
     char       buf[256];
 
     if(arr_ptr->int_format == NULL)
@@ -803,7 +818,7 @@ pair_int_create_value(t_pair *pair, char *title, GtkTable *table, int row, t_arr
     }
     else
     {
-       /* short check if formatstring starts with % and ends with f */
+       /* short check if formatstring starts with % and ends with d */
        if((*arr_ptr->int_format != '%') 
        || (arr_ptr->int_format[strlen(arr_ptr->int_format) -1] != 'd'))
        {
@@ -821,7 +836,7 @@ pair_int_create_value(t_pair *pair, char *title, GtkTable *table, int row, t_arr
     gtk_misc_set_alignment(GTK_MISC(pair->label), 0.0, 0.5);
     gtk_table_attach(table, pair->label, 0, 1, row, row + 1, GTK_FILL, GTK_FILL, 4, 0);
     gtk_widget_show(pair->label);
-
+    
     scale_data = gtk_adjustment_new((double)arr_ptr->int_ret,
 	                            (double)arr_ptr->int_min,
 	                            (double)arr_ptr->int_max,
@@ -836,7 +851,7 @@ pair_int_create_value(t_pair *pair, char *title, GtkTable *table, int row, t_arr
 
     pair->scale = gtk_hscale_new(GTK_ADJUSTMENT(scale_data));
     gtk_widget_set_usize(pair->scale, arr_ptr->scale_width, 0);
-    gtk_table_attach(table, pair->scale, 2, 3, row, row + 1, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+    /* gtk_table_attach(table, pair->scale, 2, 3, row, row + 1, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0); */
     gtk_scale_set_draw_value(GTK_SCALE(pair->scale), FALSE);
     gtk_scale_set_digits(GTK_SCALE(pair->scale), 3);
     gtk_range_set_update_policy(GTK_RANGE(pair->scale), GTK_UPDATE_CONTINUOUS);
@@ -855,12 +870,20 @@ pair_int_create_value(t_pair *pair, char *title, GtkTable *table, int row, t_arr
     gtk_signal_connect(GTK_OBJECT(pair->entry), "changed",
 		       (GtkSignalFunc) pair_int_entry_update_cb,
 		       arr_ptr);
-    gtk_table_attach(GTK_TABLE(table), pair->entry, 1, 2, row, row + 1, GTK_FILL, GTK_FILL, 4, 0);
+    /* gtk_table_attach(GTK_TABLE(table), pair->entry, 1, 2, row, row + 1, GTK_FILL, GTK_FILL, 4, 0); */
     if(arr_ptr->help_txt != NULL)
     { 
        gtk_tooltips_set_tip(g_tooltips, pair->entry, arr_ptr->help_txt,NULL);
     }
     gtk_widget_show(pair->entry);
+
+    /*  Horizontal box for entry and scale */
+    hbox = gtk_hbox_new (FALSE, 2+3);
+    gtk_box_pack_start (GTK_BOX (hbox), pair->entry, FALSE, TRUE, 0);
+    gtk_box_pack_start (GTK_BOX (hbox), pair->scale, TRUE, TRUE, 0);
+    gtk_widget_show(hbox);
+
+    gtk_table_attach(GTK_TABLE(table), hbox, 1, 3, row, row + 1, GTK_FILL | GTK_EXPAND, GTK_FILL, 4, 0);
 }
 
 /* ============================================================================

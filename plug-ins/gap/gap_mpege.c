@@ -36,6 +36,7 @@
  */
 
 /* revision history
+ * 1.1.11b; 1999/11/20   hof: Changed menunames AnimFrames to Video in menu hints
  * 1.1.8a;  1999/08/31   hof: accept anim framenames without underscore '_'
  * 0.99.00; 1999/03/15   hof: prepared for win/dos filename conventions
  * 0.96.00; 1998/07/08   hof: first release
@@ -156,11 +157,11 @@ int p_mpege_info(t_anim_info *ainfo_ptr, char *errlist, t_gap_mpeg_encoder encod
 
   l_idx++;
   p_init_arr_arg(&argv[l_idx], WGT_LABEL);
-  argv[l_idx].label_txt = _("    (use 'Frames Convert' from the AnimFrames Menu");
+  argv[l_idx].label_txt = _("    (use 'Frames Convert' from the Video Menu");
 
   l_idx++;
   p_init_arr_arg(&argv[l_idx], WGT_LABEL);
-  argv[l_idx].label_txt = _("    or 'Split Img to Frames' from the AnimFrames Menu)");
+  argv[l_idx].label_txt = _("    or 'Split Img to Frames' from the Video Menu)");
 
   l_idx++;
   p_init_arr_arg(&argv[l_idx], WGT_LABEL);
@@ -175,7 +176,7 @@ int p_mpege_info(t_anim_info *ainfo_ptr, char *errlist, t_gap_mpeg_encoder encod
 
      l_idx++;
      p_init_arr_arg(&argv[l_idx], WGT_LABEL);
-     argv[l_idx].label_txt = _("    (use Scale or Crop from the AnimFrames Menu)");
+     argv[l_idx].label_txt = _("    (use Scale or Crop from the Video Menu)");
   }
 
   l_idx++;
@@ -291,7 +292,7 @@ int p_mpege_dialog(t_anim_info *ainfo_ptr, t_mpg_par *mp_ptr, t_gap_mpeg_encoder
 
   p_init_arr_arg(&argv[l_idx], WGT_FILESEL);
   argv[l_idx].label_txt = _("Outputfile:");
-  argv[l_idx].entry_width = 140;       /* pixel */
+  argv[l_idx].entry_width = 250;       /* pixel */
   argv[l_idx].help_txt  = _("Name of the resulting MPEG outputfile");
   argv[l_idx].text_buf_len = sizeof(l_outfile);
   argv[l_idx].text_buf_ret = &l_outfile[0];
@@ -299,7 +300,7 @@ int p_mpege_dialog(t_anim_info *ainfo_ptr, t_mpg_par *mp_ptr, t_gap_mpeg_encoder
   l_idx++;
   p_init_arr_arg(&argv[l_idx], WGT_FILESEL);
   argv[l_idx].label_txt = _("Paramfile:");
-  argv[l_idx].entry_width = 140;       /* pixel */
+  argv[l_idx].entry_width = 250;       /* pixel */
   argv[l_idx].help_txt  = _("Name of the Encoder-Parameterfile\n(is generated)");
   argv[l_idx].text_buf_len = sizeof(l_parfile);
   argv[l_idx].text_buf_ret = &l_parfile[0];
@@ -307,7 +308,7 @@ int p_mpege_dialog(t_anim_info *ainfo_ptr, t_mpg_par *mp_ptr, t_gap_mpeg_encoder
   l_idx++;
   p_init_arr_arg(&argv[l_idx], WGT_FILESEL);
   argv[l_idx].label_txt = _("Startscript:");
-  argv[l_idx].entry_width = 140;       /* pixel */
+  argv[l_idx].entry_width = 250;       /* pixel */
   argv[l_idx].help_txt  = _("Name of the Startscript           \n(is generated/executed)");
   argv[l_idx].text_buf_len = sizeof(l_startscript);
   argv[l_idx].text_buf_ret = &l_startscript[0];
