@@ -756,7 +756,7 @@ gimp_display_shell_close (GimpDisplayShell *shell,
     {
       gchar *basename;
 
-      basename = g_path_get_basename (gimp_image_get_filename (gimage));
+      basename = g_path_get_basename (gimp_image_get_uri (gimage));
 
       gimp_display_shell_close_warning_dialog (shell, basename);
 
@@ -2144,8 +2144,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 	      {
 		gchar *basename;
 
-		basename =
-                  g_path_get_basename (gimp_image_get_filename (gimage));
+		basename = g_path_get_basename (gimp_image_get_uri (gimage));
 
 		i += print (title, title_len, i, "%s", basename);
 
@@ -2154,7 +2153,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 	      break;
 
 	    case 'F': /* full filename */
-	      i += print (title, title_len, i, "%s", gimp_image_get_filename (gimage));
+	      i += print (title, title_len, i, "%s", gimp_image_get_uri (gimage));
 	      break;
 
 	    case 'p': /* PDB id */

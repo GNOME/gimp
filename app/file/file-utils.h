@@ -23,15 +23,14 @@
 #include <stdio.h>
 
 
-PlugInProcDef * file_proc_find        (GSList        *procs,
-				       const gchar   *filename);
+gchar         * file_utils_filename_to_uri (Gimp          *gimp,
+                                            const gchar   *filename,
+                                            GError       **error);
+PlugInProcDef * file_utils_find_proc       (GSList        *procs,
+                                            const gchar   *filename);
 
-/* Return values are 0: no match, 1: magic match, 2: size match */
-gint            file_check_magic_list (GSList        *magics_list,
-				       gint           headsize,
-				       guchar        *head,
-				       FILE          *ifp);
 
+/* .xvpics thumbnail stuff  */
 
 TempBuf       * make_thumb_tempbuf    (GimpImage     *gimage);
 guchar        * readXVThumb           (const gchar   *fnam,

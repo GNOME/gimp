@@ -64,7 +64,7 @@
 
 GimpImage *
 file_open_image (Gimp              *gimp,
-		 const gchar       *filename,
+		 const gchar       *uri,
 		 const gchar       *raw_filename,
 		 const gchar       *open_mode,
 		 PlugInProcDef     *file_proc,
@@ -76,7 +76,7 @@ file_open_image (Gimp              *gimp,
   Argument      *return_vals;
   gint           gimage_id;
   gint           i;
-  struct stat    statbuf;
+  gchar         *filename;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (status != NULL, NULL);
@@ -84,7 +84,7 @@ file_open_image (Gimp              *gimp,
   *status = GIMP_PDB_CANCEL;  /* inhibits error messages by caller */
 
   if (! file_proc)
-    file_proc = file_proc_find (gimp->load_procs, filename);
+    file_proc = file_utils_find_proc (gimp->load_procs, uri);
 
   if (! file_proc)
     {
@@ -92,35 +92,42 @@ file_open_image (Gimp              *gimp,
       if (run_mode == GIMP_RUN_INTERACTIVE)
 	g_message (_("%s failed.\n"
 		     "%s: Unknown file type."),
-		   open_mode, filename);
+		   open_mode, uri);
 
       return NULL;
     }
 
-  /* check if we are opening a file */
-  if (stat (filename, &statbuf) == 0)
+  filename = g_filename_from_uri (uri, NULL, NULL);
+
+  if (filename)
     {
-      if (! (statbuf.st_mode & S_IFREG))
-	{
-	  /*  no errors when making thumbnails  */
-	  if (run_mode == GIMP_RUN_INTERACTIVE)
-	    g_message (_("%s failed.\n"
-			 "%s is not a regular file."),
-		       open_mode, filename);
+      struct stat statbuf;
 
-	  return NULL;
-	}
+      /* check if we are opening a file */
+      if (stat (filename, &statbuf) == 0)
+        {
+          if (! (statbuf.st_mode & S_IFREG))
+            {
+              /*  no errors when making thumbnails  */
+              if (run_mode == GIMP_RUN_INTERACTIVE)
+                g_message (_("%s failed.\n"
+                             "%s is not a regular file."),
+                           open_mode, uri);
 
-      if (access (filename, R_OK) != 0)
-	{
-	  /*  no errors when making thumbnails  */
-	  if (run_mode == GIMP_RUN_INTERACTIVE)
-	    g_message (_("%s failed.\n"
-			 "%s: %s."),
-		       open_mode, filename, g_strerror (errno));
+              return NULL;
+            }
 
-	  return NULL;
-	}
+          if (access (filename, R_OK) != 0)
+            {
+              /*  no errors when making thumbnails  */
+              if (run_mode == GIMP_RUN_INTERACTIVE)
+                g_message (_("%s failed.\n"
+                             "%s: %s."),
+                           open_mode, uri, g_strerror (errno));
+
+              return NULL;
+            }
+        }
     }
 
   proc = plug_in_proc_def_get_proc (file_proc);
@@ -131,10 +138,13 @@ file_open_image (Gimp              *gimp,
     args[i].arg_type = proc->args[i].arg_type;
 
   args[0].value.pdb_int     = run_mode;
-  args[1].value.pdb_pointer = (gchar *) filename;
+  args[1].value.pdb_pointer = filename ? filename : (gchar *) uri;
   args[2].value.pdb_pointer = (gchar *) raw_filename;
 
   return_vals = procedural_db_execute (gimp, proc->name, args);
+
+  if (filename)
+    g_free (filename);
 
   *status   = return_vals[0].value.pdb_int;
   gimage_id = return_vals[1].value.pdb_int;
@@ -152,27 +162,26 @@ file_open_image (Gimp              *gimp,
 
 GimpPDBStatusType
 file_open_with_display (Gimp        *gimp,
-                        const gchar *filename)
+                        const gchar *uri)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), GIMP_PDB_CALLING_ERROR);
 
-  return file_open_with_proc_and_display (gimp, filename, filename, NULL);
+  return file_open_with_proc_and_display (gimp, uri, uri, NULL);
 }
 
 GimpPDBStatusType
 file_open_with_proc_and_display (Gimp          *gimp,
-                                 const gchar   *filename,
+                                 const gchar   *uri,
                                  const gchar   *raw_filename,
                                  PlugInProcDef *file_proc)
 {
   GimpImage         *gimage;
-  gchar             *absolute;
   GimpPDBStatusType  status;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), GIMP_PDB_CALLING_ERROR);
 
   if ((gimage = file_open_image (gimp,
-				 filename,
+				 uri,
 				 raw_filename,
 				 _("Open"),
 				 file_proc,
@@ -189,49 +198,8 @@ file_open_with_proc_and_display (Gimp          *gimp,
 
       g_object_unref (G_OBJECT (gimage));
 
-      absolute = file_open_absolute_filename (gimp, filename);
-
-      gimp_documents_add (gimp, filename);
-
-      g_free (absolute);
+      gimp_documents_add (gimp, uri);
     }
 
   return status;
-}
-
-gchar *
-file_open_absolute_filename (Gimp        *gimp,
-                             const gchar *name)
-{
-  PlugInProcDef *proc;
-  GSList        *procs;
-  GSList        *prefixes;
-  gchar         *absolute;
-  gchar         *current;
-
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (name != NULL, NULL);
-
-  /*  check for prefixes like http or ftp  */
-  for (procs = gimp->load_procs; procs; procs = g_slist_next (procs))
-    {
-      proc = (PlugInProcDef *)procs->data;
-
-      for (prefixes = proc->prefixes_list;
-	   prefixes;
-	   prefixes = g_slist_next (prefixes))
-	{
-	  if (strncmp (name, prefixes->data, strlen (prefixes->data)) == 0)
-	    return g_strdup (name);
-	}
-     }
-
-  if (g_path_is_absolute (name))
-    return g_strdup (name);
-
-  current = g_get_current_dir ();
-  absolute = g_build_filename (current, name, NULL);
-  g_free (current);
-
-  return absolute;
 }

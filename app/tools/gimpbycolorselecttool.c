@@ -732,7 +732,7 @@ by_color_select_draw (ByColorDialog *bcd,
 
   gtk_widget_queue_draw (bcd->preview);
 
-  basename = g_path_get_basename (gimp_image_get_filename (gimage));
+  basename = g_path_get_basename (gimp_image_get_uri (gimage));
 
   gtk_label_set_text (GTK_LABEL (bcd->gimage_name), basename);
 

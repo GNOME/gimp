@@ -231,14 +231,14 @@ gimp_document_view_raise_display (gpointer data,
 {
   GimpDisplay  *gdisp;
   RaiseClosure *closure;
-  const gchar  *filename;
+  const gchar  *uri;
 
   gdisp   = (GimpDisplay *) data;
   closure = (RaiseClosure *) user_data;
 
-  filename = gimp_object_get_name (GIMP_OBJECT (gdisp->gimage));
+  uri = gimp_object_get_name (GIMP_OBJECT (gdisp->gimage));
 
-  if (filename && ! strcmp (closure->name, filename))
+  if (uri && ! strcmp (closure->name, uri))
     {
       closure->found = TRUE;
       gdk_window_raise (gdisp->shell->window);

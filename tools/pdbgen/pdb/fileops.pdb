@@ -69,7 +69,7 @@ HELP
 	{ name => 'filename', type => 'string',
 	  desc => 'The name of the file to load' },
 	{ name => 'raw_filename', type => 'string',
-	  desc => 'The name entered' }
+	  desc => 'The name as entered by the user' }
     );
 
     @outargs = ( &std_image_arg );
@@ -80,7 +80,7 @@ HELP
 	vars => [ 'PlugInProcDef *file_proc', 'ProcRecord *proc' ],
 	code => <<'CODE'
 {
-  file_proc = file_proc_find (gimp->load_procs, %%raw_filename%%);
+  file_proc = file_utils_find_proc (gimp->load_procs, %%raw_filename%%);
 
   if (! file_proc)
     return %%fail%%;
@@ -118,7 +118,7 @@ HELP
 	{ name => 'filename', type => 'string',
 	  desc => 'The name of the file to save the image in' },
 	{ name => 'raw_filename', type => 'string',
-	  desc => 'The name of the file to save the image in' }
+	  desc => 'The name as entered by the user' }
     );
 
 
@@ -129,7 +129,7 @@ HELP
 	vars => [ 'PlugInProcDef *file_proc', 'ProcRecord *proc', 'gint i' ],
 	code => <<'CODE'
 {
-  file_proc = file_proc_find (gimp->save_procs, %%raw_filename%%);
+  file_proc = file_utils_find_proc (gimp->save_procs, %%raw_filename%%);
 
   if (! file_proc) 
     return %%fail%%;

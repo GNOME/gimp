@@ -78,7 +78,7 @@ file_load_invoker (Gimp     *gimp,
   PlugInProcDef *file_proc;
   ProcRecord *proc;
 
-  file_proc = file_proc_find (gimp->load_procs, (gchar *) args[2].value.pdb_pointer);
+  file_proc = file_utils_find_proc (gimp->load_procs, (gchar *) args[2].value.pdb_pointer);
 
   if (! file_proc)
     return procedural_db_return_args (&file_load_proc, FALSE);
@@ -103,7 +103,7 @@ static ProcArg file_load_inargs[] =
   {
     GIMP_PDB_STRING,
     "raw_filename",
-    "The name entered"
+    "The name as entered by the user"
   }
 };
 
@@ -142,7 +142,7 @@ file_save_invoker (Gimp     *gimp,
   ProcRecord *proc;
   gint i;
 
-  file_proc = file_proc_find (gimp->save_procs, (gchar *) args[4].value.pdb_pointer);
+  file_proc = file_utils_find_proc (gimp->save_procs, (gchar *) args[4].value.pdb_pointer);
 
   if (! file_proc) 
     return procedural_db_return_args (&file_save_proc, FALSE);
@@ -191,7 +191,7 @@ static ProcArg file_save_inargs[] =
   {
     GIMP_PDB_STRING,
     "raw_filename",
-    "The name of the file to save the image in"
+    "The name as entered by the user"
   }
 };
 

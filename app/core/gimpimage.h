@@ -224,9 +224,13 @@ gint            gimp_image_get_ID                (const GimpImage    *gimage);
 GimpImage     * gimp_image_get_by_ID             (Gimp               *gimp,
                                                   gint                id);
 
+void            gimp_image_set_uri               (GimpImage          *gimage,
+                                                  const gchar        *uri);
+const gchar   * gimp_image_get_uri               (const GimpImage    *gimage);
+
 void            gimp_image_set_filename          (GimpImage          *gimage,
                                                   const gchar        *filename);
-const gchar   * gimp_image_get_filename          (const GimpImage    *gimage);
+gchar         * gimp_image_get_filename          (const GimpImage    *gimage);
 
 void            gimp_image_set_save_proc         (GimpImage          *gimage,
                                                   PlugInProcDef      *proc);

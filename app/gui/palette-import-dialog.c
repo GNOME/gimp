@@ -145,7 +145,7 @@ palette_import_image_changed (GimpContext *context,
       gimp_preview_set_viewable (GIMP_PREVIEW (import_dialog->preview),
                                  GIMP_VIEWABLE (gimage));
 
-      basename = g_path_get_basename (gimp_image_get_filename (gimage));
+      basename = g_path_get_basename (gimp_image_get_uri (gimage));
       label = g_strdup_printf ("%s-%d", basename, gimp_image_get_ID (gimage));
       g_free (basename);
 

@@ -66,18 +66,18 @@
 
 GimpPDBStatusType
 file_save (GimpImage     *gimage,
-	   const gchar   *filename,
+	   const gchar   *uri,
 	   const gchar   *raw_filename,
            PlugInProcDef *file_proc,
            GimpRunMode    run_mode,
-	   gboolean       set_filename)
+	   gboolean       set_uri)
 {
   ProcRecord        *proc;
   Argument          *args;
   Argument          *return_vals;
   GimpPDBStatusType  status;
   gint               i;
-  struct stat        statbuf;
+  gchar             *filename;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), GIMP_PDB_CALLING_ERROR);
 
@@ -96,38 +96,46 @@ file_save (GimpImage     *gimage,
       file_proc = gimp_image_get_save_proc (gimage);
 
       if (! file_proc)
-        file_proc = file_proc_find (gimage->gimp->save_procs, raw_filename);
+        file_proc = file_utils_find_proc (gimage->gimp->save_procs,
+                                          raw_filename);
 
       if (! file_proc)
         {
           g_message (_("Save failed.\n"
                        "%s: Unknown file type."),
-                     filename);
+                     uri);
 
           return GIMP_PDB_CANCEL;  /* inhibits error messages by caller */
         }
     }
 
-  /* check if we are saving to a file */
-  if (stat (filename, &statbuf) == 0)
+  filename = g_filename_from_uri (uri, NULL, NULL);
+
+  if (filename)
     {
-      if (! (statbuf.st_mode & S_IFREG))
+      struct stat statbuf;
+
+      /* check if we are saving to a file */
+      if (stat (filename, &statbuf) == 0)
         {
-	  g_message (_("Save failed.\n"
-		       "%s is not a regular file."),
-		     filename);
+          if (! (statbuf.st_mode & S_IFREG))
+            {
+              g_message (_("Save failed.\n"
+                           "%s is not a regular file."),
+                         uri);
 
-          return GIMP_PDB_CANCEL;  /* inhibits error messages by caller */
-        }
+              return GIMP_PDB_CANCEL;  /* inhibits error messages by caller */
+            }
 
-      if (access (filename, W_OK) != 0)
-        {
-	  g_message (_("Save failed.\n"
-		       "%s: %s."),
-		     filename,
-                     g_strerror (errno));
+          if (access (filename, W_OK) != 0)
+            {
+              g_message (_("Save failed.\n"
+                           "%s: %s."),
+                         uri,
+                         g_strerror (errno));
 
-          return GIMP_PDB_CANCEL;  /* inhibits error messages by caller */
+              return GIMP_PDB_CANCEL;  /* inhibits error messages by caller */
+            }
         }
     }
 
@@ -144,10 +152,13 @@ file_save (GimpImage     *gimage,
   args[0].value.pdb_int     = run_mode;
   args[1].value.pdb_int     = gimp_image_get_ID (gimage);
   args[2].value.pdb_int     = gimp_item_get_ID (GIMP_ITEM (gimp_image_active_drawable (gimage)));
-  args[3].value.pdb_pointer = (gpointer) filename;
+  args[3].value.pdb_pointer = (gpointer) (filename ? filename : uri);
   args[4].value.pdb_pointer = (gpointer) raw_filename;
 
   return_vals = procedural_db_execute (gimage->gimp, proc->name, args);
+
+  if (filename)
+    g_free (filename);
 
   status = return_vals[0].value.pdb_int;
 
@@ -156,7 +167,7 @@ file_save (GimpImage     *gimage,
       /*  set this image to clean  */
       gimp_image_clean_all (gimage);
 
-      gimp_documents_add (gimage->gimp, filename);
+      gimp_documents_add (gimage->gimp, uri);
 
       /*  use the same plug-in for this image next time  */
       /* DISABLED - gets stuck on first saved format... needs
@@ -172,10 +183,10 @@ file_save (GimpImage     *gimage,
           file_save_thumbnail (gimage, filename, tempbuf);
 	}
 
-      if (set_filename)
+      if (set_uri)
 	{
 	  /*  set the image title  */
-	  gimp_object_set_name (GIMP_OBJECT (gimage), filename);
+	  gimp_image_set_uri (gimage, uri);
 	}
     }
 

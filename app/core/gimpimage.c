@@ -52,6 +52,8 @@
 #include "gimpparasitelist.h"
 #include "gimpundostack.h"
 
+#include "file/file-utils.h"
+
 #include "vectors/gimpvectors.h"
 
 #include "path.h"
@@ -1004,24 +1006,61 @@ gimp_image_get_by_ID (Gimp *gimp,
 }
 
 void
-gimp_image_set_filename (GimpImage   *gimage,
-			 const gchar *filename)
+gimp_image_set_uri (GimpImage   *gimage,
+                    const gchar *uri)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  gimp_object_set_name (GIMP_OBJECT (gimage), filename);
+  gimp_object_set_name (GIMP_OBJECT (gimage), uri);
 }
 
 const gchar *
-gimp_image_get_filename (const GimpImage *gimage)
+gimp_image_get_uri (const GimpImage *gimage)
 {
-  const gchar *filename;
+  const gchar *uri;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
-  filename = gimp_object_get_name (GIMP_OBJECT (gimage));
+  uri = gimp_object_get_name (GIMP_OBJECT (gimage));
 
-  return filename ? filename : _("Untitled");
+  return uri ? uri : _("Untitled");
+}
+
+void
+gimp_image_set_filename (GimpImage   *gimage,
+                         const gchar *filename)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  if (filename)
+    {
+      gchar *uri;
+
+      uri = file_utils_filename_to_uri (gimage->gimp, filename, NULL);
+
+      gimp_image_set_uri (gimage, uri);
+
+      g_free (uri);
+    }
+  else
+    {
+      gimp_image_set_uri (gimage, NULL);
+    }
+}
+
+gchar *
+gimp_image_get_filename (const GimpImage *gimage)
+{
+  const gchar *uri;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+
+  uri = gimp_object_get_name (GIMP_OBJECT (gimage));
+
+  if (! uri)
+    return NULL;
+
+  return g_filename_from_uri (uri, NULL, NULL);
 }
 
 void

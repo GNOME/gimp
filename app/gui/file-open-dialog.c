@@ -697,6 +697,7 @@ file_open_ok_callback (GtkWidget *widget,
   GimpPDBStatusType   status;
   gchar             **selections;
   gint                i;
+  gchar              *uri = NULL;
 
   fs = GTK_FILE_SELECTION (data);
 
@@ -734,12 +735,23 @@ file_open_ok_callback (GtkWidget *widget,
   gtk_widget_set_sensitive (GTK_WIDGET (fs), FALSE);
 
   if (err) /* e.g. http://server/filename.jpg */
-    full_filename = raw_filename;
+    {
+      full_filename = raw_filename;
+    }
+  else
+    {
+      uri = g_filename_to_uri (full_filename, NULL, NULL);
+
+      full_filename = uri;
+    }
 
   status = file_open_with_proc_and_display (gimp,
                                             full_filename, 
                                             raw_filename, 
                                             load_file_proc);
+
+  if (uri)
+    g_free (uri);
 
   if (status == GIMP_PDB_SUCCESS)
     {
@@ -765,13 +777,16 @@ file_open_ok_callback (GtkWidget *widget,
       err = stat (full_filename, &buf);
           
       if (! (err == 0 && (buf.st_mode & S_IFDIR)))
-	{ /* Is not directory. */
-              
+	{
+          /* Is not directory. */
+
+          uri = g_filename_to_uri (full_filename, NULL, NULL);
+
 	  status = file_open_with_proc_and_display (gimp,
-						    full_filename,
+						    uri,
 						    raw_filename,
 						    load_file_proc);
-              
+
 	  if (status == GIMP_PDB_SUCCESS)
 	    {
 	      file_dialog_hide (data);
@@ -779,8 +794,10 @@ file_open_ok_callback (GtkWidget *widget,
 	  else if (status != GIMP_PDB_CANCEL)
 	    {
 	      /* same as previous. --bex */
-	      g_message (_("Opening '%s' failed."), full_filename);
+	      g_message (_("Opening '%s' failed."), uri);
 	    }
+
+          g_free (uri);
 	}
     }
 

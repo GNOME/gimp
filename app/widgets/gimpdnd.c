@@ -692,15 +692,15 @@ gimp_dnd_set_file_data (GtkWidget     *widget,
 
   buffer = (gchar *) vals;
 
+  g_print ("%s: raw buffer >>%s<<\n", G_GNUC_FUNCTION, buffer);
+
   {
-    gchar  name_buffer[1024];
-    const gchar *data_type = "file:";
-    const gint   sig_len = strlen (data_type);
+    gchar name_buffer[1024];
 
     while (*buffer)
       {
 	gchar *name = name_buffer;
-	gint len = 0;
+	gint   len  = 0;
 
 	while ((*buffer != 0) && (*buffer != '\n') && len < 1024)
 	  {
@@ -717,11 +717,8 @@ gimp_dnd_set_file_data (GtkWidget     *widget,
 
 	name = name_buffer;
 
-	if ((sig_len < len) && (! strncmp (name, data_type, sig_len)))
-	  name += sig_len;
-
 	if (name && strlen (name) > 2)
-	  files = g_list_append (files, name);
+	  files = g_list_append (files, g_strdup (name));
 
 	if (*buffer)
 	  buffer++;
@@ -733,6 +730,7 @@ gimp_dnd_set_file_data (GtkWidget     *widget,
       (* (GimpDndDropFileFunc) set_file_func) (widget, files,
 					       set_file_data);
 
+      g_list_foreach (files, (GFunc) g_free, NULL);
       g_list_free (files);
     }
 }
@@ -761,6 +759,88 @@ gimp_dnd_file_dest_unset (GtkWidget *widget)
   gimp_dnd_data_dest_unset (GIMP_DND_TYPE_NETSCAPE_URL, widget);
 }
 
+/*  the next two functions are straight cut'n'paste from glib/glib/gconvert.c,
+ *  except that gimp_unescape_uri_string() does not try to UTF-8 validate
+ *  the unescaped result.
+ */
+static int
+unescape_character (const char *scanner)
+{
+  int first_digit;
+  int second_digit;
+
+  first_digit = g_ascii_xdigit_value (scanner[0]);
+  if (first_digit < 0) 
+    return -1;
+  
+  second_digit = g_ascii_xdigit_value (scanner[1]);
+  if (second_digit < 0) 
+    return -1;
+  
+  return (first_digit << 4) | second_digit;
+}
+
+static gchar *
+gimp_unescape_uri_string (const char *escaped,
+                          int         len,
+                          const char *illegal_escaped_characters,
+                          gboolean    ascii_must_not_be_escaped)
+{
+  const gchar *in, *in_end;
+  gchar *out, *result;
+  int c;
+  
+  if (escaped == NULL)
+    return NULL;
+
+  if (len < 0)
+    len = strlen (escaped);
+
+  result = g_malloc (len + 1);
+  
+  out = result;
+  for (in = escaped, in_end = escaped + len; in < in_end; in++)
+    {
+      c = *in;
+
+      if (c == '%')
+        {
+          /* catch partial escape sequences past the end of the substring */
+          if (in + 3 > in_end)
+            break;
+
+          c = unescape_character (in + 1);
+
+          /* catch bad escape sequences and NUL characters */
+          if (c <= 0)
+            break;
+
+          /* catch escaped ASCII */
+          if (ascii_must_not_be_escaped && c <= 0x7F)
+            break;
+
+          /* catch other illegal escaped characters */
+          if (strchr (illegal_escaped_characters, c) != NULL)
+            break;
+
+          in += 2;
+        }
+
+      *out++ = c;
+    }
+  
+  g_assert (out - result <= len);
+  *out = '\0';
+
+  if (in != in_end)
+    {
+      g_free (result);
+      return NULL;
+    }
+
+  return result;
+}
+
 void
 gimp_dnd_open_files (GtkWidget *widget,
 		     GList     *files,
@@ -770,9 +850,71 @@ gimp_dnd_open_files (GtkWidget *widget,
 
   for (list = files; list; list = g_list_next (list))
     {
-      gchar *filename = (gchar *) list->data;
+      const gchar *dnd_crap;
+      gchar       *filename;
+      gchar       *uri = NULL;
 
-      file_open_with_display (the_gimp, filename);
+      dnd_crap = (const gchar *) list->data;
+
+      g_print ("%s: trying to convert \"%s\" to an uri...\n", G_GNUC_FUNCTION,
+               dnd_crap);
+
+      filename = g_filename_from_uri (dnd_crap, NULL, NULL);
+
+      if (filename) /*  if we got a correctly encoded "file:" uri  */
+        {
+          uri = g_filename_to_uri (filename, NULL, NULL);
+
+          g_free (filename);
+        }
+      else  /*  else to evil things...  */
+        {
+          filename = (gchar *) dnd_crap;
+
+          if (! strncmp (dnd_crap, "file://", strlen ("file://")))
+            {
+              filename += strlen ("file://");
+            }
+          else if (! strncmp (dnd_crap, "file:", strlen ("file:")))
+            {
+              filename += strlen ("file:");
+            }
+
+          if (filename != (gchar *) dnd_crap)
+            {
+              /*  try if we got a "file:" uri in the local filename encoding  */
+
+              gchar *unescaped_filename;
+
+              if (strstr (filename, "%"))
+                {
+                  unescaped_filename = gimp_unescape_uri_string (filename, -1,
+                                                                 "/", FALSE);
+                }
+              else
+                {
+                  unescaped_filename = g_strdup (filename);
+                }
+
+              uri = g_filename_to_uri (unescaped_filename, NULL, NULL);
+
+              g_free (unescaped_filename);
+            }
+          else
+            {
+              /*  otherwise try the crap passed anyway, in case it's
+               *  a "http:" or whatever uri a plug-in might handle
+               */
+              uri = g_strdup (dnd_crap);
+            }
+        }
+
+      g_print ("%s: ...trying to open resulting uri \"%s\"\n",
+               G_GNUC_FUNCTION, uri);
+
+      file_open_with_display (the_gimp, uri);
+
+      g_free (uri);
     }
 }
 

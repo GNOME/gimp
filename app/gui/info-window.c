@@ -376,7 +376,7 @@ info_window_title (GimpDisplay *gdisp)
   gchar *basename;
   gchar *title;
 
-  basename = g_path_get_basename (gimp_image_get_filename (gdisp->gimage));
+  basename = g_path_get_basename (gimp_image_get_uri (gdisp->gimage));
   
   title = g_strdup_printf (_("Info: %s-%d.%d"), 
 			   basename,

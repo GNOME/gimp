@@ -120,15 +120,16 @@ file_last_opened_cmd_callback (GtkWidget *widget,
 
   if (imagefile)
     {
-      status = file_open_with_display (gimp,
-                                       GIMP_OBJECT (imagefile)->name);
+      status = file_open_with_display (gimp, GIMP_OBJECT (imagefile)->name);
 
       if (status != GIMP_PDB_SUCCESS &&
           status != GIMP_PDB_CANCEL)
         {
-	  /* This string needs to be fixed. Mitch is supposed to do it.  Needs a :
-added at the end followed by the error.  Also something about the GIMP_OBJECT 
-needs to be changed. --bex */
+	  /* This string needs to be fixed. Mitch is supposed to do
+           * it.  Needs a : added at the end followed by the error.
+           * Also something about the GIMP_OBJECT needs to be
+           * changed. --bex
+           */
           g_message (_("Error opening file '%s'"),
                      GIMP_OBJECT (imagefile)->name);
         }
@@ -155,39 +156,32 @@ file_save_cmd_callback (GtkWidget *widget,
   /*  Only save if the gimage has been modified  */
   if (! gimprc.trust_dirty_flag || gdisp->gimage->dirty != 0)
     {
-      gchar *filename;
+      const gchar *uri;
 
-      filename = g_strdup (gimp_object_get_name (GIMP_OBJECT (gdisp->gimage)));
+      uri = gimp_object_get_name (GIMP_OBJECT (gdisp->gimage));
 
-      if (! filename)
+      if (! uri)
 	{
 	  file_save_as_cmd_callback (widget, data);
 	}
       else
 	{
-	  gchar *basename;
-	  gint   status;
+	  GimpPDBStatusType status;
 
-	  basename = g_path_get_basename (filename);
-	  
 	  status = file_save (gdisp->gimage,
-			      filename,
-			      basename,
+			      uri,
+			      uri,
                               NULL,
 			      GIMP_RUN_WITH_LAST_VALS,
 			      TRUE);
-
-	  g_free (basename);
 
 	  if (status != GIMP_PDB_SUCCESS &&
 	      status != GIMP_PDB_CANCEL)
 	    {
 	      /* Error message should be added. --bex */
-	      g_message (_("Saving '%s' failed."), filename);
+	      g_message (_("Saving '%s' failed."), uri);
 	    }
 	}
-
-      g_free (filename);
     }
 }
 
@@ -217,15 +211,15 @@ file_revert_cmd_callback (GtkWidget *widget,
 {
   GimpDisplay *gdisp;
   GtkWidget   *query_box;
-  const gchar *filename;
+  const gchar *uri;
 
   return_if_no_display (gdisp, data);
 
-  filename = gimp_object_get_name (GIMP_OBJECT (gdisp->gimage));
+  uri = gimp_object_get_name (GIMP_OBJECT (gdisp->gimage));
 
   query_box = g_object_get_data (G_OBJECT (gdisp->gimage), REVERT_DATA_KEY);
 
-  if (! filename)
+  if (! uri)
     {
       g_message (_("Revert failed.\n"
 		   "No file name associated with this image."));
@@ -239,13 +233,13 @@ file_revert_cmd_callback (GtkWidget *widget,
       gchar *basename;
       gchar *text;
 
-      basename = g_path_get_basename (filename);
+      basename = g_path_get_basename (uri);
 
       text = g_strdup_printf (_("Revert '%s' to\n"
 				"'%s'?\n\n"
 				"(You will lose all your changes,\n"
 				"including all undo information)"),
-			      basename, filename);
+			      basename, uri);
 
       g_free (basename);
 
@@ -303,14 +297,14 @@ file_revert_confirm_callback (GtkWidget *widget,
   if (revert)
     {
       GimpImage         *new_gimage;
-      const gchar       *filename;
+      const gchar       *uri;
       GimpPDBStatusType  status;
 
-      filename = gimp_object_get_name (GIMP_OBJECT (old_gimage));
+      uri = gimp_object_get_name (GIMP_OBJECT (old_gimage));
 
       new_gimage = file_open_image (old_gimage->gimp,
-				    filename,
-                                    filename,
+				    uri,
+                                    uri,
 				    _("Revert"),
 				    NULL,
 				    GIMP_RUN_INTERACTIVE,
@@ -329,7 +323,7 @@ file_revert_confirm_callback (GtkWidget *widget,
       else if (status != GIMP_PDB_CANCEL)
 	{
 	  /* Needs error information. --bex */
-	  g_message (_("Reverting '%s' failed."), filename);
+	  g_message (_("Reverting '%s' failed."), uri);
 	}
     }
 }

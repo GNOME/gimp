@@ -27,7 +27,7 @@
  * gimp_file_load:
  * @run_mode: The run mode.
  * @filename: The name of the file to load.
- * @raw_filename: The name entered.
+ * @raw_filename: The name as entered by the user.
  *
  * Loads a file by extension.
  *
@@ -70,7 +70,7 @@ gimp_file_load (GimpRunMode  run_mode,
  * @image_ID: Input image.
  * @drawable_ID: Drawable to save.
  * @filename: The name of the file to save the image in.
- * @raw_filename: The name of the file to save the image in.
+ * @raw_filename: The name as entered by the user.
  *
  * Saves a file by extension.
  *

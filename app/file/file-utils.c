@@ -47,6 +47,7 @@
 
 #include "base/temp-buf.h"
 
+#include "core/gimp.h"
 #include "core/gimpimage.h"
 
 #include "pdb/procedural_db.h"
@@ -57,13 +58,162 @@
 #include "file-utils.h"
 
 
+/*  local function prototypes  */
+
+static PlugInProcDef * file_proc_find_by_name  (GSList      *procs,
+                                                const gchar *uri,
+                                                gboolean     skip_magic);
+static void            file_convert_string     (gchar       *instr,
+                                                gchar       *outmem,
+                                                gint         maxmem,
+                                                gint        *nmem);
+static gint            file_check_single_magic (gchar       *offset,
+                                                gchar       *type,
+                                                gchar       *value,
+                                                gint         headsize,
+                                                guchar      *file_head,
+                                                FILE        *ifp);
+static gint            file_check_magic_list   (GSList      *magics_list,
+                                                gint         headsize,
+                                                guchar      *head,
+                                                FILE        *ifp);
+
+
+/*  public functions  */
+
+gchar *
+file_utils_filename_to_uri (Gimp         *gimp,
+                            const gchar  *filename,
+                            GError      **error)
+{
+  PlugInProcDef *proc;
+  GSList        *procs;
+  GSList        *prefixes;
+  gchar         *absolute;
+  gchar         *uri;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (filename != NULL, NULL);
+
+  /*  check for prefixes like http or ftp  */
+  for (procs = gimp->load_procs; procs; procs = g_slist_next (procs))
+    {
+      proc = (PlugInProcDef *)procs->data;
+
+      for (prefixes = proc->prefixes_list;
+	   prefixes;
+	   prefixes = g_slist_next (prefixes))
+	{
+	  if (strncmp (filename, prefixes->data, strlen (prefixes->data)) == 0)
+	    return g_strdup (filename);
+	}
+     }
+
+  if (! g_path_is_absolute (filename))
+    {
+      gchar *current;
+
+      current = g_get_current_dir ();
+      absolute = g_build_filename (current, filename, NULL);
+      g_free (current);
+    }
+  else
+    {
+      absolute = g_strdup (filename);
+    }
+
+  uri = g_filename_to_uri (absolute, NULL, error);
+
+  g_free (absolute);
+
+  return uri;
+}
+
+PlugInProcDef *
+file_utils_find_proc (GSList       *procs,
+                      const gchar  *uri)
+{
+  PlugInProcDef *file_proc;
+  GSList        *all_procs = procs;
+  gchar         *filename;
+
+  g_return_val_if_fail (procs != NULL, NULL);
+  g_return_val_if_fail (uri != NULL, NULL);
+
+  /* First, check magicless prefixes/suffixes */
+  file_proc = file_proc_find_by_name (all_procs, uri, TRUE);
+
+  if (file_proc)
+    return file_proc;
+
+  filename = g_filename_from_uri (uri, NULL, NULL);
+
+  /* Then look for magics */
+  if (filename)
+    {
+      PlugInProcDef *size_matched_proc = NULL;
+      FILE          *ifp               = NULL;
+      gint           head_size         = -2;
+      gint           size_match_count  = 0;
+      gint           match_val;
+      guchar         head[256];
+
+      while (procs)
+        {
+          file_proc = procs->data;
+          procs = procs->next;
+
+          if (file_proc->magics_list)
+            {
+              if (head_size == -2)
+                {
+                  head_size = 0;
+                  if ((ifp = fopen (filename, "rb")) != NULL)
+                    head_size = fread ((gchar *) head, 1, sizeof (head), ifp);
+                }
+              if (head_size >= 4)
+                {
+                  match_val = file_check_magic_list (file_proc->magics_list,
+                                                     head_size, head, ifp);
+                  if (match_val == 2)  /* size match ? */
+                    { /* Use it only if no other magic matches */
+                      size_match_count++;
+                      size_matched_proc = file_proc;
+                    }
+                  else if (match_val)
+                    {
+                      fclose (ifp);
+                      g_free (filename);
+
+                      return file_proc;
+                    }
+                }
+            }
+        }
+
+      if (ifp)
+        fclose (ifp);
+
+      g_free (filename);
+
+      if (size_match_count == 1)
+        return size_matched_proc;
+    }
+
+  /* As a last ditch, try matching by name */
+  return file_proc_find_by_name (all_procs, uri, FALSE);
+}
+
+
+/*  private functions  */
+
 static PlugInProcDef *
 file_proc_find_by_name (GSList      *procs,
-		        const gchar *filename,
+		        const gchar *uri,
 		        gboolean     skip_magic)
 {
   GSList *p;
-  gchar  *ext = strrchr (filename, '.');
+  gchar  *ext = strrchr (uri, '.');
 
   if (ext)
     ext++;
@@ -80,7 +230,7 @@ file_proc_find_by_name (GSList      *procs,
 	   prefixes;
 	   prefixes = g_slist_next (prefixes))
 	{
-	  if (strncmp (filename, prefixes->data, strlen (prefixes->data)) == 0)
+	  if (strncmp (uri, prefixes->data, strlen (prefixes->data)) == 0)
 	    return proc;
 	}
      }
@@ -115,62 +265,6 @@ file_proc_find_by_name (GSList      *procs,
     }
 
   return NULL;
-}
-
-PlugInProcDef *
-file_proc_find (GSList      *procs,
-		const gchar *filename)
-{
-  PlugInProcDef *file_proc;
-  PlugInProcDef *size_matched_proc = NULL;
-  GSList        *all_procs         = procs;
-  FILE          *ifp               = NULL;
-  gint           head_size         = -2;
-  gint           size_match_count  = 0;
-  gint           match_val;
-  guchar         head[256];
-
-  /* First, check magicless prefixes/suffixes */
-  if ( (file_proc = file_proc_find_by_name (all_procs, filename, TRUE)) != NULL)
-    return file_proc;
-
-  /* Then look for magics */
-  while (procs)
-    {
-      file_proc = procs->data;
-      procs = procs->next;
-
-      if (file_proc->magics_list)
-        {
-          if (head_size == -2)
-            {
-              head_size = 0;
-              if ((ifp = fopen (filename, "rb")) != NULL)
-                head_size = fread ((gchar *) head, 1, sizeof (head), ifp);
-            }
-          if (head_size >= 4)
-            {
-              match_val = file_check_magic_list (file_proc->magics_list,
-                                                 head_size, head, ifp);
-              if (match_val == 2)  /* size match ? */
-                { /* Use it only if no other magic matches */
-                  size_match_count++;
-                  size_matched_proc = file_proc;
-                }
-              else if (match_val)
-                {
-                  fclose (ifp);
-                  return (file_proc);
-                }
-            }
-        }
-    }
-  if (ifp) fclose (ifp);
-  if (size_match_count == 1)
-    return (size_matched_proc);
-
-  /* As a last ditch, try matching by name */
-  return file_proc_find_by_name (all_procs, filename, FALSE);
 }
 
 static void
@@ -369,14 +463,16 @@ file_check_single_magic (gchar  *offset,
   return found;
 }
 
-gint
+/*
+ *  Return values are 0: no match, 1: magic match, 2: size match
+ */
+static gint
 file_check_magic_list (GSList *magics_list,
 		       gint    headsize,
 		       guchar *head,
 		       FILE   *ifp)
 
 {
-  /* Return values are 0: no match, 1: magic match, 2: size match */
   gchar *offset;
   gchar *type;
   gchar *value;
@@ -408,6 +504,9 @@ file_check_magic_list (GSList *magics_list,
 
   return 0;
 }
+
+
+/* .xvpics thumbnail stuff  */
 
 TempBuf *
 make_thumb_tempbuf (GimpImage *gimage)

@@ -1,5 +1,56 @@
 2002-04-14  Michael Natterer  <mitch@gimp.org>
 
+	Use UTF-8 encoded escaped URIs for GimpImage and GimpImageFile.
+
+	* app/file/file-open.[ch]
+	* app/file/file-save.[ch]
+	* app/file/file-utils.[ch]: port everything to using URIs, removed
+	file_open_absolute_filename() and added file_utils_filename_to_uri()
+	instead.
+
+	* app/core/gimpimage.[ch]: added gimp_image_[get|set]_uri() which
+	works like the old gimp_image_[get|set]_filename().
+	Changed gimp_image_[get|set]_filename() to call uri conversion
+	functions.
+
+	* app/app_procs.c: removed lots of code and use the new uri
+	functions to open images passed on the command line.
+
+	* app/gui/file-open-dialog.c
+	* app/gui/file-save-dialog.c: changed accordingly.
+
+	* app/nav_window.c
+	* app/undo_history.c
+	* app/display/gimpdisplayshell.c
+	* app/gui/info-window.c
+	* app/gui/palette-import-dialog.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/widgets/gimpcontainerview-utils.c: 
+	s/gimp_image_get_filename()/gimp_image_get_uri()/g. Need to add
+	a utility function which returns the basename in unescaped UTF-8.
+
+	* app/gui/file-commands.c
+	* app/widgets/gimpdocumentview.c: use "uri", not "filename" as
+	variable name where appropriate.
+
+	* app/gui/menus.c: some broken code for the "Open Recent" items,
+	will be fixed soon...
+
+	* app/widgets/gimpdnd.c: evil (!!!) hackery to convert dropped
+	filenames to uris.
+
+	* tools/pdbgen/pdb/fileops.pdb: changed accordingly. Clarified
+	the meaning of the "raw_filename" parameter.
+
+	* tools/pdbgen/pdb/message.pdb: use g_message("%s", message),
+	*not* g_message(message).
+
+	* app/pdb/fileops_cmds.c
+	* app/pdb/message_cmds.c
+	* libgimp/gimpfileops_pdb.c: regenerated.
+
+2002-04-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimp.c: removed some #if 0'ed stuff.
 
 	* app/gui/edit-commands.c (edit_copy_cmd_callback): call

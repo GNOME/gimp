@@ -2524,17 +2524,40 @@ menus_last_opened_update (GimpContainer   *container,
               (gpointer) imagefile)
             {
               gchar *basename;
+              gchar *utf8;
 
               basename = g_path_get_basename (GIMP_OBJECT (imagefile)->name);
 
-              gtk_label_set_text (GTK_LABEL (GTK_BIN (widget)->child),
-                                  basename);
+              utf8 = g_filename_to_utf8 (basename, -1, NULL, NULL, NULL);
+
+              if (utf8)
+                {
+                  gtk_label_set_text (GTK_LABEL (GTK_BIN (widget)->child), utf8);
+                  g_free (utf8);
+                }
+              else
+                {
+                  gtk_label_set_text (GTK_LABEL (GTK_BIN (widget)->child),
+                                      "(broken filename)");
+                }
 
               g_free (basename);
 
-              gimp_help_set_help_data (widget,
-                                       GIMP_OBJECT (imagefile)->name,
-                                       NULL);
+              utf8 = g_filename_to_utf8 (GIMP_OBJECT (imagefile)->name, -1,
+                                         NULL, NULL, NULL);
+
+              if (utf8)
+                {
+                  gimp_help_set_help_data (widget, utf8, NULL);
+                  g_free (utf8);
+                }
+              else
+                {
+                  gimp_help_set_help_data (widget,
+                                           "filename contains characters which "
+                                           "can't be converted to UFT-8",
+                                           NULL);                  
+                }
 
               g_object_set_data (G_OBJECT (widget), "gimp-imagefile", imagefile);
               gtk_widget_show (widget);

@@ -45,6 +45,7 @@
 #include "plug-in/plug-ins.h"
 
 #include "file/file-open.h"
+#include "file/file-utils.h"
 
 #include "display/gimpdisplay-foreach.h"
 
@@ -174,59 +175,29 @@ app_init (gint    gimp_argc,
    */
   if (gimp_argc > 0)
     {
-      gchar *current_dir;
-      gint   i;
-
-      current_dir = g_get_current_dir ();
+      gint i;
 
       for (i = 0; i < gimp_argc; i++)
         {
           if (gimp_argv[i])
             {
-              gchar *absolute_filename;
+              GError *error = NULL;
+              gchar  *uri;
 
-              if (g_file_test (gimp_argv[i], G_FILE_TEST_IS_REGULAR) &&
-                  ! g_path_is_absolute (gimp_argv[i]))
-                {
-                  absolute_filename = g_build_filename (current_dir,
-                                                        gimp_argv[i],
-                                                        NULL);
+              uri = file_utils_filename_to_uri (the_gimp, gimp_argv[i], &error);
 
-                  g_print ("completing relative path: \"%s\" -> \"%s\"\n",
-                           gimp_argv[i], absolute_filename);
-                }
-              else
+              if (! uri)
                 {
-                  absolute_filename = g_strdup (gimp_argv[i]);
+                  g_printerr ("conversion filename -> uri failed: %s\n",
+                              error->message);
+                  g_error_free (error);
                 }
 
-              /* test */
-              {
-                GError *error = NULL;
-                gchar  *uri;
+              file_open_with_display (the_gimp, uri);
 
-                uri = g_filename_to_uri (absolute_filename, NULL, &error);
-
-                if (uri)
-                  {
-                    g_print ("filename as uri: %s\n", uri);
-                    g_free (uri);
-                  }
-                else
-                  {
-                    g_printerr ("conversion filename -> uri failed: %s\n",
-                                error->message);
-                    g_error_free (error);
-                  }
-              }
-
-              file_open_with_display (the_gimp, absolute_filename);
-
-              g_free (absolute_filename);
+              g_free (uri);
             }
         }
-
-      g_free (current_dir);
     }
 
   batch_init (the_gimp, batch_cmds);

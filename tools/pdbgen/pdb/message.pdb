@@ -36,7 +36,7 @@ HELP
 	  desc => 'Message to display in the dialog' }
     );
 
-    %invoke = ( code => 'g_message (message, NULL, NULL);' );
+    %invoke = ( code => 'g_message ("%s", message);' );
 }
 
 sub message_get_handler {

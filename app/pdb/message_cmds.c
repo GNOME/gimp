@@ -56,7 +56,7 @@ message_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    g_message (message, NULL, NULL);
+    g_message ("%s", message);
 
   return procedural_db_return_args (&message_proc, success);
 }

@@ -59,14 +59,14 @@ typedef struct _OverwriteData OverwriteData;
 
 struct _OverwriteData
 {
-  gchar *full_filename;
+  gchar *uri;
   gchar *raw_filename;
 };
 
 
 static void    file_save_dialog_create      (void);
 
-static void    file_overwrite               (const gchar   *filename,
+static void    file_overwrite               (const gchar   *uri,
 					     const gchar   *raw_filename);
 static void    file_overwrite_callback      (GtkWidget     *widget,
 					     gboolean       overwrite,
@@ -85,7 +85,7 @@ static GtkWidget  *save_options = NULL;
 static PlugInProcDef *save_file_proc = NULL;
 
 static GimpImage *the_gimage   = NULL;
-static gboolean   set_filename = TRUE;
+static gboolean   set_uri      = TRUE;
 
 
 /*  public functions  */
@@ -151,7 +151,8 @@ file_save_dialog_menu_reset (void)
 void
 file_save_dialog_show (GimpImage *gimage)
 {
-  const gchar *filename;
+  const gchar *uri;
+  gchar       *filename = NULL;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
@@ -160,9 +161,12 @@ file_save_dialog_show (GimpImage *gimage)
 
   the_gimage = gimage;
 
-  set_filename = TRUE;
+  set_uri = TRUE;
 
-  filename = gimp_object_get_name (GIMP_OBJECT (gimage));
+  uri = gimp_object_get_name (GIMP_OBJECT (gimage));
+
+  if (uri)
+    filename = g_filename_from_uri (uri, NULL, NULL);
 
   if (! filesave)
     file_save_dialog_create ();
@@ -187,7 +191,8 @@ file_save_dialog_show (GimpImage *gimage)
 void
 file_save_a_copy_dialog_show (GimpImage *gimage)
 {
-  const gchar *filename;
+  const gchar *uri;
+  gchar       *filename = NULL;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
@@ -196,9 +201,12 @@ file_save_a_copy_dialog_show (GimpImage *gimage)
 
   the_gimage = gimage;
 
-  set_filename = FALSE;
+  set_uri = FALSE;
 
-  filename = gimp_object_get_name (GIMP_OBJECT (gimage));
+  uri = gimp_object_get_name (GIMP_OBJECT (gimage));
+
+  if (uri)
+    filename = g_filename_from_uri (uri, NULL, NULL);
 
   if (! filesave)
     file_save_dialog_create ();
@@ -311,6 +319,7 @@ file_save_ok_callback (GtkWidget *widget,
   GtkFileSelection *fs;
   const gchar      *filename;
   const gchar      *raw_filename;
+  gchar            *uri;
   gchar            *dot;
   gint              x;
   struct stat       buf;
@@ -322,6 +331,8 @@ file_save_ok_callback (GtkWidget *widget,
   raw_filename = gtk_entry_get_text (GTK_ENTRY (fs->selection_entry));
 
   g_assert (filename && raw_filename);
+
+  uri = g_filename_to_uri (filename, NULL, NULL);
 
   for (dot = strrchr (filename, '.'), x = 0; dot && *(++dot);)
     {
@@ -380,7 +391,7 @@ file_save_ok_callback (GtkWidget *widget,
       else
 	{
 	  gtk_widget_set_sensitive (GTK_WIDGET (fs), FALSE);
-	  file_overwrite (filename, raw_filename);
+	  file_overwrite (uri, raw_filename);
 	}
     }
   else
@@ -390,17 +401,17 @@ file_save_ok_callback (GtkWidget *widget,
       gtk_widget_set_sensitive (GTK_WIDGET (fs), FALSE);
 
       status = file_save (the_gimage,
-                          filename,
+                          uri,
                           raw_filename,
                           save_file_proc,
                           GIMP_RUN_INTERACTIVE,
-                          set_filename);
+                          set_uri);
 
       if (status != GIMP_PDB_SUCCESS &&
           status != GIMP_PDB_CANCEL)
 	{
 	  /* Please add error. (: %s) --bex */
-          g_message (_("Saving %s failed."), filename);
+          g_message (_("Saving %s failed."), uri);
 	}
       else
         {
@@ -412,7 +423,7 @@ file_save_ok_callback (GtkWidget *widget,
 }
 
 static void
-file_overwrite (const gchar *filename,
+file_overwrite (const gchar *uri,
 		const gchar *raw_filename)
 {
   OverwriteData *overwrite_data;
@@ -421,11 +432,11 @@ file_overwrite (const gchar *filename,
 
   overwrite_data = g_new0 (OverwriteData, 1);
 
-  overwrite_data->full_filename = g_strdup (filename);
-  overwrite_data->raw_filename  = g_strdup (raw_filename);
+  overwrite_data->uri          = g_strdup (uri);
+  overwrite_data->raw_filename = g_strdup (raw_filename);
 
   overwrite_text = g_strdup_printf (_("File '%s' exists.\n"
-                                      "Overwrite it?"), filename);
+                                      "Overwrite it?"), uri);
 
   query_box = gimp_query_boolean_box (_("File Exists!"),
 				      gimp_standard_help_func,
@@ -456,17 +467,17 @@ file_overwrite_callback (GtkWidget *widget,
       GimpPDBStatusType status;
 
       status = file_save (the_gimage,
-                          overwrite_data->full_filename,
+                          overwrite_data->uri,
                           overwrite_data->raw_filename,
                           save_file_proc,
                           GIMP_RUN_INTERACTIVE,
-                          set_filename);
+                          set_uri);
 
       if (status != GIMP_PDB_SUCCESS &&
           status != GIMP_PDB_CANCEL)
         {
 	  /* Another error required. --bex */
-          g_message (_("Saving '%s' failed."), overwrite_data->full_filename);
+          g_message (_("Saving '%s' failed."), overwrite_data->uri);
         }
       else
 	{
@@ -477,7 +488,7 @@ file_overwrite_callback (GtkWidget *widget,
   /* always make file save dialog sensitive */
   gtk_widget_set_sensitive (GTK_WIDGET (filesave), TRUE);
 
-  g_free (overwrite_data->full_filename);
+  g_free (overwrite_data->uri);
   g_free (overwrite_data->raw_filename);
   g_free (overwrite_data);
 }
