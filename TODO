@@ -1,8 +1,6 @@
 Please add things to this file when the need to do them is
 discovered.  
 
-* Fix srand/srandom and rand/random confusion in plugins
-
 * configure: SunOS 4 SEEK_* and RAND_MAX defines
 
 * configure: check for regex library presence 

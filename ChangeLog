@@ -1,3 +1,15 @@
+Sun Mar 22 01:59:31 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* autoconfed for random/lrand48/rand madness
+
+	* dbbrowser uses clist now, thanks to msw
+
+	* gfig.c: minor fix for buggy compilers
+
+	* plasma.c, snoise.c: applied gimp-kmt-980321-[0,1]
+
+	* tiff.c: minor fix
+
 Sat Mar 21 18:34:56 MET 1998 Sven Neumann <sven@gimp.org>
 
 	* fixed ripply-anim.scm and readded it

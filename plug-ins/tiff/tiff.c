@@ -481,13 +481,13 @@ load_image (char *filename)
 		      NEXTSAMPLE;
 		      alpha_val = sample;
 		      if (alpha_val)
-			*d++ = (gray_val * 255) / alpha_val;
+			*d++ = (gray_val * 65025) / (alpha_val * maxval);
 		      else
 			*d++ = 0;
 		      *d++ = alpha_val;
 		    }
 		  else
-		    *d++ = gray_val;
+		    *d++ = (gray_val * 255) / maxval;
 		  for (k= 0; alpha + k < num_extra; ++k)
 		    {
 		      NEXTSAMPLE;
@@ -506,13 +506,14 @@ load_image (char *filename)
 		      NEXTSAMPLE;
 		      alpha_val = sample;
 		      if (alpha_val)
-			*d++ = ((maxval - gray_val) * 255) / alpha_val;
+			*d++ = ((maxval - gray_val) * 65025)
+                                                    / (alpha_val * maxval);
 		      else
 			*d++ = 0;
 		      *d++ = alpha_val;
 		    }
 		  else
-		    *d++ = maxval - gray_val;
+		    *d++ = ((maxval - gray_val) * 255) / maxval ;
 		  for (k= 0; alpha + k < num_extra; ++k)
 		    {
 		      NEXTSAMPLE;

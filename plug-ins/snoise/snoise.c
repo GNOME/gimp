@@ -56,6 +56,7 @@
 
 #include <math.h>
 #include <stdlib.h>
+#include <time.h> /* For random seeding */
 
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
@@ -80,6 +81,8 @@ typedef struct {
   gint    detail;
   gdouble xsize;
   gdouble ysize;
+     /* Interface only */
+  gboolean timeseed;
 } SolidNoiseValues;
 
 typedef struct {
@@ -126,7 +129,8 @@ static SolidNoiseValues snvals = {
   1,   /* seed */
   1,   /* detail */
   4.0, /* xsize */
-  4.0  /* ysize */
+  4.0, /* ysize */
+  TRUE /* Time seed? */ 
 };
 
 static SolidNoiseInterface snint = {
@@ -252,7 +256,8 @@ run (char *name, int nparams, GParam *param, int *nreturn_vals,
         gimp_displays_flush();
 
       /*  Store data  */
-      if (run_mode == RUN_INTERACTIVE)
+      if (run_mode == RUN_INTERACTIVE || 
+	  (snvals.timeseed && run_mode == RUN_WITH_LAST_VALS))
         gimp_set_data("plug_in_solid_noise", &snvals,
                       sizeof(SolidNoiseValues));
     }
@@ -348,6 +353,8 @@ solid_noise_init (void)
     snvals.seed = 0;
   
   /*  Define the pseudo-random number generator seed  */
+  if (snvals.timeseed)
+       snvals.seed = time(NULL);
   srand (snvals.seed);
 
   /*  Set scaling factors  */
@@ -458,6 +465,8 @@ solid_noise_dialog (void)
   GtkWidget *button;
   GtkWidget *label;
   GtkWidget *entry;
+  GtkWidget *seed_hbox;
+  GtkWidget *time_button;
   GtkWidget *scale;
   GtkObject *scale_data;
   gchar **argv;
@@ -491,15 +500,27 @@ solid_noise_dialog (void)
                     GTK_FILL, GTK_FILL, 1, 0);
   gtk_widget_show (label);
   
+  seed_hbox = gtk_hbox_new(FALSE, 2);
+  gtk_table_attach (GTK_TABLE (table), seed_hbox, 1, 2, 0, 1,
+		    GTK_FILL, GTK_FILL, 0, 0);
+
   entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 0, 1,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_box_pack_start(GTK_BOX(seed_hbox), entry, TRUE, TRUE, 0);
   gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
   sprintf(buffer, "%d", snvals.seed);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
                       (GtkSignalFunc) dialog_entry_callback, &snvals.seed);
   gtk_widget_show (entry);
+
+  time_button = gtk_toggle_button_new_with_label ("Time");
+  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(time_button),snvals.timeseed);
+  gtk_signal_connect (GTK_OBJECT (time_button), "toggled",
+		      (GtkSignalFunc) dialog_toggle_update,
+		      &snvals.timeseed);
+  gtk_box_pack_end (GTK_BOX (seed_hbox), time_button, FALSE, FALSE, 0);
+  gtk_widget_show (time_button);
+  gtk_widget_show (seed_hbox);
 
   /*  Entry #2  */
   label = gtk_label_new ("Detail");
