@@ -18,7 +18,7 @@
  * See http://www.iki.fi/tml/gimp/wmf/
  */
 
-#define VERSION "1999-03-17"
+#define VERSION "1999-09-30"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -2315,10 +2315,15 @@ load_image (char *filename)
 	      bshift = visual->blue_shift;
 	      
 	      if ((image->depth > 8 && image->bpp == 1)
-		  || image->bpp > 3)
+		  || image->bpp > 4)
 		{
 		  /* Workaround for bugs in GDK */
-		  if (image->depth > 24)
+		  if (image->bpp > 4)
+		    /* GDK has set image->bpp to bits-per-pixel,
+		     * correct it to bytes-per-pixel.
+		     */
+		    image->bpp = (image->bpp + 7) / 8;
+		  else if (image->depth > 24)
 		    image->bpp = 4;
 		  else if (image->depth > 16)
 		    image->bpp = 3;

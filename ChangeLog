@@ -1,3 +1,9 @@
+1999-09-30  Tor Lillqvist  <tml@iki.fi>
+
+	* plug-ins/common/wmf.c (load_image): Better workaround for GDK
+	bug (gdk_image_get() sets the bpp field to bits-per-pixel instead
+	of bytes-per-pixel).
+
 1999-09-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/colormap_dialog.i.c: "F1" for the indexed palette dialog.
