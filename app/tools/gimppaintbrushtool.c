@@ -110,7 +110,8 @@ gimp_paintbrush_tool_init (GimpPaintbrushTool *paintbrush)
   tool       = GIMP_TOOL (paintbrush);
   paint_tool = GIMP_PAINT_TOOL (paintbrush);
 
-  gimp_tool_control_set_tool_cursor (tool->control, GIMP_PAINTBRUSH_TOOL_CURSOR);
+  gimp_tool_control_set_tool_cursor (tool->control,
+                                     GIMP_PAINTBRUSH_TOOL_CURSOR);
 
   paint_tool->pick_colors = TRUE;
   paint_tool->core        = g_object_new (GIMP_TYPE_PAINTBRUSH, NULL);

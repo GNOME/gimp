@@ -1,3 +1,22 @@
+2003-06-05  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpcoloroptions.c: changed the default radius.
+
+	* app/tools/gimpcolortool.[ch]: pass GimpColorOptions to
+	gimp_color_tool_enable(). Added gimp_color_tool_disable() and
+	gimp_color_tool_is_enabled().
+
+	* app/tools/gimpcolorpickertool.c: changed accordingly.
+
+	* app/tools/gimppainttool.[ch]: derived GimpPaintTool from
+	GimpColorTool and removed most color picking code.
+
+	* app/tools/gimpdodgeburntool.c (gimp_dodgeburn_tool_modifier_key)
+	* app/tools/gimperasertool.c (gimp_eraser_tool_modifier_key):
+	chain up to the parent class.
+
+	* app/tools/gimppaintbrushtool.c: purely cosmetic change.
+
 2003-06-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpchannel.c (gimp_channel_bounds): always return

@@ -162,7 +162,8 @@ gimp_dodgeburn_tool_modifier_key (GimpTool        *tool,
         }
     }
 
-  gimp_tool_control_set_toggle (tool->control, (options->type == GIMP_BURN));
+  GIMP_TOOL_CLASS (parent_class)->modifier_key (tool,
+                                                key, press, state, gdisp);
 }
 
 static void

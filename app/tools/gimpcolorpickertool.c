@@ -58,9 +58,10 @@
 
 static void 	  gimp_color_picker_tool_class_init (GimpColorPickerToolClass *klass);
 static void       gimp_color_picker_tool_init       (GimpColorPickerTool      *tool);
+static void       gimp_color_picker_tool_finalize   (GObject                  *object);
 
-static void       gimp_color_picker_tool_finalize   (GObject        *object);
-
+static void       gimp_color_picker_tool_initialize (GimpTool       *tool,
+                                                     GimpDisplay    *gdisp);
 static void       gimp_color_picker_tool_control    (GimpTool       *tool,
                                                      GimpToolAction  action,
                                                      GimpDisplay    *gdisp);
@@ -149,6 +150,7 @@ gimp_color_picker_tool_class_init (GimpColorPickerToolClass *klass)
 
   object_class->finalize   = gimp_color_picker_tool_finalize;
 
+  tool_class->initialize   = gimp_color_picker_tool_initialize;
   tool_class->control      = gimp_color_picker_tool_control;
 
   color_tool_class->picked = gimp_color_picker_tool_picked;
@@ -159,8 +161,8 @@ gimp_color_picker_tool_init (GimpColorPickerTool *tool)
 {
   gimp_tool_control_set_preserve (GIMP_TOOL (tool)->control, FALSE);
 
-  /*  always pick colors  */
-  gimp_color_tool_enable (GIMP_COLOR_TOOL (tool), TRUE);
+  gimp_tool_control_set_tool_cursor (GIMP_TOOL (tool)->control,
+                                     GIMP_COLOR_PICKER_TOOL_CURSOR);
 }
 
 static void
@@ -175,6 +177,17 @@ gimp_color_picker_tool_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_color_picker_tool_initialize (GimpTool    *tool,
+                                   GimpDisplay *gdisp)
+{
+  GIMP_TOOL_CLASS (parent_class)->initialize (tool, gdisp);
+
+  /*  always pick colors  */
+  gimp_color_tool_enable (GIMP_COLOR_TOOL (tool),
+                          GIMP_COLOR_OPTIONS (tool->tool_info->tool_options));
 }
 
 static void
@@ -215,7 +228,7 @@ gimp_color_picker_tool_picked (GimpColorTool *color_tool,
 
   gimp_color_picker_tool_info_update (sample_type, color, color_index);
 
-  options = GIMP_COLOR_PICKER_OPTIONS (tool->tool_info->tool_options);
+  options = GIMP_COLOR_PICKER_OPTIONS (color_tool->options);
 
   if (options->update_active)
     {

@@ -20,7 +20,7 @@
 #define __GIMP_PAINT_TOOL_H__
 
 
-#include "gimpdrawtool.h"
+#include "gimpcolortool.h"
 
 
 #define GIMP_TYPE_PAINT_TOOL            (gimp_paint_tool_get_type ())
@@ -35,17 +35,16 @@ typedef struct _GimpPaintToolClass GimpPaintToolClass;
 
 struct _GimpPaintTool
 {
-  GimpDrawTool     parent_instance;
+  GimpColorTool    parent_instance;
 
-  gboolean         pick_colors;  /*  pick color if ctrl or alt is pressed   */
-  gboolean         pick_state;   /*  was ctrl or alt pressed when clicked?  */
+  gboolean         pick_colors;  /*  pick color if ctrl is pressed   */
 
   GimpPaintCore   *core;
 };
 
 struct _GimpPaintToolClass
 {
-  GimpDrawToolClass parent_class;
+  GimpColorToolClass  parent_class;
 };
 
 

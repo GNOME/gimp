@@ -108,7 +108,7 @@ gimp_color_options_class_init (GimpColorOptionsClass *klass)
                                     0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_AVERAGE_RADIUS,
                                    "average-radius", NULL,
-                                   1.0, 15.0, 1.0,
+                                   1.0, 30.0, 3.0,
                                    0);
 }
 

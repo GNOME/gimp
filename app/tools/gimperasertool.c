@@ -142,17 +142,20 @@ gimp_eraser_tool_modifier_key (GimpTool        *tool,
                                GdkModifierType  state,
                                GimpDisplay     *gdisp)
 {
-  GimpEraserOptions *options;
-
-  options = GIMP_ERASER_OPTIONS (tool->tool_info->tool_options);
-
   if ((key == GDK_CONTROL_MASK) &&
       ! (state & GDK_SHIFT_MASK)) /* leave stuff untouched in line draw mode */
     {
+      GimpEraserOptions *options;
+      
+      options = GIMP_ERASER_OPTIONS (tool->tool_info->tool_options);
+
       g_object_set (options,
                     "anti-erase", ! options->anti_erase,
                     NULL);
     }
+
+  GIMP_TOOL_CLASS (parent_class)->modifier_key (tool,
+                                                key, press, state, gdisp);
 }
   
 static void

@@ -35,11 +35,13 @@ typedef struct _GimpColorToolClass GimpColorToolClass;
 
 struct _GimpColorTool
 {
-  GimpDrawTool  parent_instance;
+  GimpDrawTool      parent_instance;
 
-  gboolean      enabled;
-  gint          center_x;
-  gint          center_y;
+  gboolean          enabled;
+  gint              center_x;
+  gint              center_y;
+
+  GimpColorOptions *options;
 };
 
 struct _GimpColorToolClass
@@ -62,9 +64,12 @@ struct _GimpColorToolClass
 };
 
 
-GType      gimp_color_tool_get_type (void) G_GNUC_CONST;
+GType      gimp_color_tool_get_type   (void) G_GNUC_CONST;
 
-void       gimp_color_tool_enable   (GimpColorTool *color_tool,
-                                     gboolean       enable);
+void       gimp_color_tool_enable     (GimpColorTool    *color_tool,
+                                       GimpColorOptions *options);
+void       gimp_color_tool_disable    (GimpColorTool    *color_tool);
+gboolean   gimp_color_tool_is_enabled (GimpColorTool    *color_tool);
+
 
 #endif  /*  __GIMP_COLOR_TOOL_H__  */
