@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -52,31 +53,37 @@
 enum
 {
   PROP_0,
-  PROP_TEXT
+  PROP_FONT_SIZE,
+  PROP_UNIT,
+  PROP_HINTING,
+  PROP_AUTOHINT,
+  PROP_ANTIALIAS,
+  PROP_LANGUAGE,
+  PROP_BASE_DIR,
+  PROP_JUSTIFICATION,
+  PROP_INDENTATION,
+  PROP_LINE_SPACING,
+  PROP_COLOR
 };
 
 
-static void  gimp_text_options_init        (GimpTextOptions      *options);
-static void  gimp_text_options_class_init  (GimpTextOptionsClass *options_class);
+static void  gimp_text_options_class_init   (GimpTextOptionsClass *options_class);
+static void  gimp_text_options_init         (GimpTextOptions      *options);
 
-static void  gimp_text_options_finalize         (GObject         *object);
-static void  gimp_text_options_set_property     (GObject         *object,
-                                                 guint            property_id,
-                                                 const GValue    *value,
-                                                 GParamSpec      *pspec);
-static void  gimp_text_options_get_property     (GObject         *object,
-                                                 guint            property_id,
-                                                 GValue          *value,
-                                                 GParamSpec      *pspec);
+static void  gimp_text_options_set_property (GObject      *object,
+                                             guint         property_id,
+                                             const GValue *value,
+                                             GParamSpec   *pspec);
+static void  gimp_text_options_get_property (GObject      *object,
+                                             guint         property_id,
+                                             GValue       *value,
+                                             GParamSpec   *pspec);
 
-static void  gimp_text_options_reset            (GimpToolOptions *options);
-
-static void  gimp_text_options_notify_font      (GimpContext     *context,
-                                                 GParamSpec      *pspec,
-                                                 GimpText        *text);
-static void  gimp_text_options_notify_text_font (GimpText        *text,
-                                                 GParamSpec      *pspec,
-                                                 GimpContext     *context);
+static void  gimp_text_options_notify_color (GObject      *object,
+                                             GParamSpec   *pspec);
+static void  gimp_text_options_notify_font  (GimpContext  *context,
+                                             GParamSpec   *pspec,
+                                             GimpText     *text);
 
 
 static GimpToolOptionsClass *parent_class = NULL;
@@ -99,7 +106,7 @@ gimp_text_options_get_type (void)
 	NULL,           /* class_data     */
 	sizeof (GimpTextOptions),
 	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_text_options_init,
+	(GInstanceInitFunc) gimp_text_options_init
       };
 
       type = g_type_register_static (GIMP_TYPE_TOOL_OPTIONS,
@@ -113,80 +120,81 @@ gimp_text_options_get_type (void)
 static void
 gimp_text_options_class_init (GimpTextOptionsClass *klass)
 {
-  GObjectClass         *object_class;
-  GimpToolOptionsClass *options_class;
-
-  object_class = G_OBJECT_CLASS (klass);
-  options_class = GIMP_TOOL_OPTIONS_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GimpRGB       black;
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize     = gimp_text_options_finalize;
   object_class->set_property = gimp_text_options_set_property;
   object_class->get_property = gimp_text_options_get_property;
 
-  options_class->reset       = gimp_text_options_reset;
+  GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_UNIT,
+				 "font-size-unit", NULL,
+				 TRUE, FALSE, GIMP_UNIT_PIXEL,
+				 0);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FONT_SIZE,
+				   "font-size", NULL,
+				   0.0, 8192.0, 18.0,
+				   0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_HINTING,
+                                    "hinting",
+                                    N_("Hinting alters the font outline to "
+                                       "produce a crisp bitmap at small "
+                                       "sizes"),
+                                    TRUE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_AUTOHINT,
+                                    "autohint",
+                                    N_("If available, hints from the font are "
+                                       "used but you may prefer to always use "
+                                       "the automatic hinter"),
+                                    FALSE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
+                                    "antialias", NULL,
+                                    TRUE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_LANGUAGE,
+				   "language", NULL,
+				   (const gchar *) gtk_get_default_language (),
+				   0);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BASE_DIR,
+                                "base-direction", NULL,
+                                 GIMP_TYPE_TEXT_DIRECTION,
+                                 GIMP_TEXT_DIRECTION_LTR,
+                                 0);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_JUSTIFICATION,
+                                "justify", NULL,
+                                 GIMP_TYPE_TEXT_JUSTIFICATION,
+                                 GIMP_TEXT_JUSTIFY_LEFT,
+                                 0);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_INDENTATION,
+				   "indent",
+                                   N_("Indentation of the first line"),
+				   -8192.0, 8192.0, 0.0,
+				   GIMP_PARAM_DEFAULTS);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LINE_SPACING,
+				   "line-spacing",
+                                   N_("Modify line spacing"),
+				   -8192.0, 8192.0, 0.0,
+				   GIMP_PARAM_DEFAULTS);
 
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_TEXT,
-                                   "text", NULL,
-                                   GIMP_TYPE_TEXT,
-                                   GIMP_PARAM_AGGREGATE);
+  gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
+
+  g_object_class_install_property (object_class, PROP_COLOR,
+                                   gimp_param_spec_color ("color", NULL, NULL,
+                                                          &black,
+                                                          G_PARAM_READWRITE));
 }
 
 static void
 gimp_text_options_init (GimpTextOptions *options)
 {
-  options->text   = g_object_new (GIMP_TYPE_TEXT, NULL);
-  options->buffer = gimp_prop_text_buffer_new (G_OBJECT (options->text),
-                                               "text", -1);
+  gimp_context_get_foreground (GIMP_CONTEXT (options), &options->color);
 
-  g_signal_connect_object (options, "notify::font",
-                           G_CALLBACK (gimp_text_options_notify_font),
-                           options->text, 0);
-  g_signal_connect_object (options->text, "notify::font",
-                           G_CALLBACK (gimp_text_options_notify_text_font),
-                           options, 0);
-}
-
-static void
-gimp_text_options_finalize (GObject *object)
-{
-  GimpTextOptions *options = GIMP_TEXT_OPTIONS (object);
-
-  if (options->buffer)
-    {
-      g_object_unref (options->buffer);
-      options->buffer = NULL;
-    }
-
-  if (options->text)
-    {
-      g_object_unref (options->text);
-      options->text = NULL;
-    }
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
-}
-
-static void
-gimp_text_options_set_property (GObject      *object,
-                                guint         property_id,
-                                const GValue *value,
-                                GParamSpec   *pspec)
-{
-  GimpTextOptions *options = GIMP_TEXT_OPTIONS (object);
-
-  switch (property_id)
-    {
-    case PROP_TEXT:
-      if (g_value_get_object (value))
-        gimp_config_sync (GIMP_CONFIG (g_value_get_object (value)),
-                          GIMP_CONFIG (options->text), 0);
-      break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
+  g_signal_connect (options, "notify::foreground",
+                    G_CALLBACK (gimp_text_options_notify_color),
+                    NULL);
 }
 
 static void
@@ -199,8 +207,38 @@ gimp_text_options_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_TEXT:
-      g_value_set_object (value, options->text);
+    case PROP_FONT_SIZE:
+      g_value_set_double (value, options->font_size);
+      break;
+    case PROP_UNIT:
+      g_value_set_int (value, options->unit);
+      break;
+    case PROP_HINTING:
+      g_value_set_boolean (value, options->hinting);
+      break;
+    case PROP_AUTOHINT:
+      g_value_set_boolean (value, options->autohint);
+      break;
+    case PROP_ANTIALIAS:
+      g_value_set_boolean (value, options->antialias);
+      break;
+    case PROP_LANGUAGE:
+      g_value_set_string (value, options->language);
+      break;
+    case PROP_BASE_DIR:
+      g_value_set_enum (value, options->base_dir);
+      break;
+    case PROP_JUSTIFICATION:
+      g_value_set_enum (value, options->justify);
+      break;
+    case PROP_INDENTATION:
+      g_value_set_double (value, options->indent);
+      break;
+    case PROP_LINE_SPACING:
+      g_value_set_double (value, options->line_spacing);
+      break;
+    case PROP_COLOR:
+      g_value_set_boxed (value, &options->color);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -209,21 +247,66 @@ gimp_text_options_get_property (GObject    *object,
 }
 
 static void
-gimp_text_options_reset (GimpToolOptions *options)
+gimp_text_options_set_property (GObject      *object,
+                                guint         property_id,
+                                const GValue *value,
+                                GParamSpec   *pspec)
 {
-  GimpTextOptions *text_options = GIMP_TEXT_OPTIONS (options);
-  gchar           *text;
+  GimpTextOptions *options = GIMP_TEXT_OPTIONS (object);
+  GimpRGB         *color;
 
-  g_object_freeze_notify (G_OBJECT (text_options->text));
+  switch (property_id)
+    {
+    case PROP_FONT_SIZE:
+      options->font_size = g_value_get_double (value);
+      break;
+    case PROP_UNIT:
+      options->unit = g_value_get_int (value);
+      break;
+    case PROP_HINTING:
+      options->hinting = g_value_get_boolean (value);
+      break;
+    case PROP_AUTOHINT:
+      options->autohint = g_value_get_boolean (value);
+      break;
+    case PROP_ANTIALIAS:
+      options->antialias = g_value_get_boolean (value);
+      break;
+    case PROP_BASE_DIR:
+      options->base_dir = g_value_get_enum (value);
+      break;
+    case PROP_LANGUAGE:
+      g_free (options->language);
+      options->language = g_value_dup_string (value);
+      break;
+    case PROP_JUSTIFICATION:
+      options->justify = g_value_get_enum (value);
+      break;
+    case PROP_INDENTATION:
+      options->indent = g_value_get_double (value);
+      break;
+    case PROP_LINE_SPACING:
+      options->line_spacing = g_value_get_double (value);
+      break;
+    case PROP_COLOR:
+      color = g_value_get_boxed (value);
+      options->color = *color;
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
 
-  text = text_options->text->text;
-  text_options->text->text = NULL;
+static void
+gimp_text_options_notify_color (GObject    *object,
+                                GParamSpec *pspec)
+{
+  GimpRGB  color;
 
-  GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (options);
+  gimp_context_get_foreground (GIMP_CONTEXT (object), &color);
 
-  text_options->text->text = text;
-
-  g_object_thaw_notify (G_OBJECT (text_options->text));
+  g_object_set (object, "color", &color, NULL);
 }
 
 static void
@@ -231,48 +314,65 @@ gimp_text_options_notify_font (GimpContext *context,
                                GParamSpec  *pspec,
                                GimpText    *text)
 {
-  GimpFont *font = gimp_context_get_font (context);
-
-  g_signal_handlers_block_by_func (text,
-                                   gimp_text_options_notify_text_font,
-                                   context);
-
-  g_object_set (text,
-                "font", font ? gimp_object_get_name (GIMP_OBJECT (font)) : NULL,
-                NULL);
-
-  g_signal_handlers_unblock_by_func (text,
-                                     gimp_text_options_notify_text_font,
-                                     context);
+  g_object_set (text, "font", gimp_context_get_font_name (context), NULL);
 }
 
-static void
-gimp_text_options_notify_text_font (GimpText    *text,
-                                    GParamSpec  *pspec,
-                                    GimpContext *context)
+GimpText *
+gimp_text_options_create_text (GimpTextOptions *options)
 {
-  GimpObject *font;
-  gchar      *value;
+  GimpText *text;
 
-  g_object_get (text,
-                "font", &value,
-                NULL);
+  g_return_val_if_fail (GIMP_IS_TEXT_OPTIONS (options), NULL);
 
-  font = gimp_container_get_child_by_name (context->gimp->fonts, value);
+  text = g_object_new (GIMP_TYPE_TEXT,
+                       "font",
+                       gimp_context_get_font_name (GIMP_CONTEXT (options)),
+                       NULL);
 
-  g_free (value);
+  gimp_config_sync (GIMP_CONFIG (options), GIMP_CONFIG (text), 0);
 
-  g_signal_handlers_block_by_func (context,
-                                   gimp_text_options_notify_font,
-                                   text);
+  return text;
+}
 
-  g_object_set (context,
-                "font", font,
-                NULL);
+void
+gimp_text_options_connect_text (GimpTextOptions *options,
+                                GimpText        *text)
+{
+  g_return_if_fail (GIMP_IS_TEXT_OPTIONS (options));
+  g_return_if_fail (GIMP_IS_TEXT (text));
 
-  g_signal_handlers_unblock_by_func (context,
-                                     gimp_text_options_notify_font,
-                                     text);
+  g_signal_handlers_block_by_func (options,
+                                   gimp_text_options_notify_color, NULL);
+
+  gimp_config_sync (GIMP_CONFIG (text), GIMP_CONFIG (options), 0);
+  gimp_context_set_font_name (GIMP_CONTEXT (options), text->font);
+
+  gimp_config_connect (G_OBJECT (options), G_OBJECT (text), NULL);
+
+  g_signal_connect_object (options, "notify::font",
+                           G_CALLBACK (gimp_text_options_notify_font),
+                           text, 0);
+}
+
+void
+gimp_text_options_disconnect_text (GimpTextOptions *options,
+                                   GimpText        *text)
+{
+  GimpRGB  color;
+
+  g_return_if_fail (GIMP_IS_TEXT_OPTIONS (options));
+  g_return_if_fail (GIMP_IS_TEXT (text));
+
+  gimp_config_disconnect (G_OBJECT (options), G_OBJECT (text));
+
+  g_signal_handlers_disconnect_by_func (options,
+                                        gimp_text_options_notify_font, text);
+
+  gimp_context_get_foreground (GIMP_CONTEXT (options), &color);
+  g_object_set (options, "color", &color, NULL);
+
+  g_signal_handlers_unblock_by_func (options,
+                                     gimp_text_options_notify_color, NULL);
 }
 
 GtkWidget *
@@ -292,7 +392,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gint               row = 0;
 
   options = GIMP_TEXT_OPTIONS (tool_options);
-  config = G_OBJECT (options->text);
+  config = G_OBJECT (options);
 
   vbox = gimp_tool_options_gui (tool_options);
 
@@ -316,7 +416,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
                              _("_Font:"), 1.0, 0.5,
                              button, 2, TRUE);
 
-  digits = gimp_unit_get_digits (options->text->unit);
+  digits = gimp_unit_get_digits (options->unit);
   spinbutton = gimp_prop_spin_button_new (config, "font-size",
 					  1.0, 10.0, digits);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row,
@@ -343,7 +443,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (auto_button);
   row++;
 
-  gtk_widget_set_sensitive (auto_button, options->text->hinting);
+  gtk_widget_set_sensitive (auto_button, options->hinting);
   g_object_set_data (G_OBJECT (button), "set_sensitive", auto_button);
 
   button = gimp_prop_check_button_new (config, "antialias", _("Antialiasing"));
@@ -352,8 +452,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (button);
   row++;
 
-  button = gimp_prop_color_button_new (config, "color",
-				       _("Text Color"),
+  button = gimp_prop_color_button_new (config, "color", _("Text Color"),
 				       -1, 24, GIMP_COLOR_AREA_FLAT);
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
                                 GIMP_CONTEXT (options));
@@ -389,24 +488,30 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   return vbox;
 }
 
+static void
+gimp_text_options_text_changed (GimpTextEditor  *editor,
+                                GimpTextOptions *options)
+{
+
+}
 
 static void
-gimp_text_options_dir_changed (GimpTextEditor *editor,
-                               GimpText       *text)
+gimp_text_options_dir_changed (GimpTextEditor  *editor,
+                               GimpTextOptions *options)
 {
-  g_object_set (text,
+  g_object_set (options,
                 "base-direction", editor->base_dir,
                 NULL);
 }
 
 static void
-gimp_text_options_notify_dir (GimpText       *text,
-                              GParamSpec     *pspec,
-                              GimpTextEditor *editor)
+gimp_text_options_notify_dir (GimpTextOptions *options,
+                              GParamSpec      *pspec,
+                              GimpTextEditor  *editor)
 {
   GimpTextDirection  dir;
 
-  g_object_get (text,
+  g_object_get (options,
                 "base-direction", &dir,
                 NULL);
 
@@ -420,18 +525,24 @@ gimp_text_options_editor_new (GimpTextOptions *options,
   GtkWidget *editor;
 
   g_return_val_if_fail (GIMP_IS_TEXT_OPTIONS (options), NULL);
+  g_return_val_if_fail (title != NULL, NULL);
 
-  editor = gimp_text_editor_new (title, options->buffer);
+  editor = gimp_text_editor_new (title);
 
   gimp_text_editor_set_direction (GIMP_TEXT_EDITOR (editor),
-                                  options->text->base_dir);
+                                  options->base_dir);
+
+  g_signal_connect_object (editor, "text_changed",
+                           G_CALLBACK (gimp_text_options_text_changed),
+                           options, 0);
 
   g_signal_connect_object (editor, "dir_changed",
                            G_CALLBACK (gimp_text_options_dir_changed),
-                           options->text, 0);
-  g_signal_connect_object (options->text, "notify::base-direction",
+                           options, 0);
+  g_signal_connect_object (options, "notify::base-direction",
                            G_CALLBACK (gimp_text_options_notify_dir),
                            editor, 0);
 
   return editor;
 }
+

@@ -36,19 +36,35 @@ typedef struct _GimpToolOptionsClass GimpTextOptionsClass;
 
 struct _GimpTextOptions
 {
-  GimpToolOptions  tool_options;
+  GimpToolOptions        tool_options;
 
-  GimpText        *text;
-  GtkTextBuffer   *buffer;
+  GimpUnit               unit;
+  gdouble                font_size;
+  gboolean               hinting;
+  gboolean               autohint;
+  gboolean               antialias;
+  gchar                 *language;
+  GimpTextDirection      base_dir;
+  GimpTextJustification  justify;
+  gdouble                indent;
+  gdouble                line_spacing;
+
+  GimpRGB                color;
 };
 
 
-GType       gimp_text_options_get_type   (void) G_GNUC_CONST;
+GType       gimp_text_options_get_type    (void) G_GNUC_CONST;
 
-GtkWidget * gimp_text_options_gui        (GimpToolOptions *tool_options);
+GimpText  * gimp_text_options_create_text     (GimpTextOptions *options);
+void        gimp_text_options_connect_text    (GimpTextOptions *options,
+                                               GimpText        *text);
+void        gimp_text_options_disconnect_text (GimpTextOptions *options,
+                                               GimpText        *text);
 
-GtkWidget * gimp_text_options_editor_new (GimpTextOptions *options,
-                                          const gchar     *title);
+GtkWidget * gimp_text_options_gui             (GimpToolOptions *tool_options);
+
+GtkWidget * gimp_text_options_editor_new      (GimpTextOptions *options,
+                                               const gchar     *title);
 
 
 #endif /* __GIMP_TEXT_OPTIONS_H__ */

@@ -1,3 +1,7 @@
+2004-03-11  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: removed app/text/gimptext.c.
+
 2004-03-11  Gustavo Maciel Dias Vieira  <gdvieira@zaz.com.br>
 
 	* pt_BR.po: Updated Brazilian Portuguese translation done by Joao

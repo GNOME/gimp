@@ -43,24 +43,34 @@ gimp_config_connect_notify (GObject    *src,
                             GParamSpec *param_spec,
                             GObject    *dest)
 {
-  if ((param_spec->flags & G_PARAM_READABLE) &&
-      (param_spec->flags & G_PARAM_WRITABLE) &&
-      ! (param_spec->flags & G_PARAM_CONSTRUCT_ONLY))
+  if (param_spec->flags & G_PARAM_READABLE)
     {
-      GValue value = { 0, };
+      GParamSpec *dest_spec;
 
-      g_value_init (&value, param_spec->value_type);
+      dest_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (dest),
+                                                param_spec->name);
 
-      g_object_get_property (src,  param_spec->name, &value);
+      if (dest_spec                                         &&
+          (dest_spec->value_type == param_spec->value_type) &&
+          (dest_spec->flags & G_PARAM_WRITABLE)             &&
+          (dest_spec->flags & G_PARAM_CONSTRUCT_ONLY) == 0)
+        {
+          GValue value = { 0, };
 
-      g_signal_handlers_block_by_func (dest, gimp_config_connect_notify, src);
-      g_object_set_property (dest, param_spec->name, &value);
-      g_signal_handlers_unblock_by_func (dest, gimp_config_connect_notify, src);
+          g_value_init (&value, param_spec->value_type);
 
-      g_value_unset (&value);
+          g_object_get_property (src,  param_spec->name, &value);
+
+          g_signal_handlers_block_by_func (dest,
+                                           gimp_config_connect_notify, src);
+          g_object_set_property (dest, param_spec->name, &value);
+          g_signal_handlers_unblock_by_func (dest,
+                                             gimp_config_connect_notify, src);
+
+          g_value_unset (&value);
+        }
     }
 }
-
 
 /**
  * gimp_config_connect:
@@ -72,11 +82,9 @@ gimp_config_connect_notify (GObject    *src,
  * one are propagated to the other. This is a two-way connection.
  *
  * If @property_name is %NULL the connection is setup for all
- * properties.  It is then required that @a and @b are of the same
- * type.  If a name is given, only this property is connected. In this
- * case, the two objects don't need to be of the same type but they
- * should both have a property of the same type that has the given
- * @property_name.
+ * properties. It is not required that @a and @b are of the same type.
+ * Only changes on properties that exist in both object classes and
+ * are of the same value_type are propagated.
  **/
 void
 gimp_config_connect (GObject     *a,
@@ -86,10 +94,7 @@ gimp_config_connect (GObject     *a,
   gchar *signal_name;
 
   g_return_if_fail (a != b);
-  g_return_if_fail (G_IS_OBJECT (a));
-  g_return_if_fail (G_IS_OBJECT (b));
-  g_return_if_fail (property_name != NULL ||
-                    G_TYPE_FROM_INSTANCE (a) == G_TYPE_FROM_INSTANCE (b));
+  g_return_if_fail (G_IS_OBJECT (a) && G_IS_OBJECT (b));
 
   if (property_name)
     signal_name = g_strconcat ("notify::", property_name, NULL);
@@ -119,8 +124,7 @@ void
 gimp_config_disconnect (GObject *a,
                         GObject *b)
 {
-  g_return_if_fail (G_IS_OBJECT (a));
-  g_return_if_fail (G_IS_OBJECT (b));
+  g_return_if_fail (G_IS_OBJECT (a) && G_IS_OBJECT (b));
 
   g_signal_handlers_disconnect_by_func (b,
                                         G_CALLBACK (gimp_config_connect_notify),
@@ -130,11 +134,50 @@ gimp_config_disconnect (GObject *a,
                                         b);
 }
 
+static gboolean
+gimp_config_diff_property (GObject    *a,
+                           GObject    *b,
+                           GParamSpec *prop_spec)
+{
+  GValue    a_value = { 0, };
+  GValue    b_value = { 0, };
+  gboolean  retval  = FALSE;
+
+  g_value_init (&a_value, prop_spec->value_type);
+  g_value_init (&b_value, prop_spec->value_type);
+
+  g_object_get_property (a, prop_spec->name, &a_value);
+  g_object_get_property (b, prop_spec->name, &b_value);
+
+  if (g_param_values_cmp (prop_spec, &a_value, &b_value))
+    {
+      if ((prop_spec->flags & GIMP_PARAM_AGGREGATE) &&
+          G_IS_PARAM_SPEC_OBJECT (prop_spec)        &&
+          g_type_interface_peek (g_type_class_peek (prop_spec->value_type),
+                                 GIMP_TYPE_CONFIG))
+        {
+          if (! gimp_config_is_equal_to (g_value_get_object (&a_value),
+                                         g_value_get_object (&b_value)))
+            {
+              retval = TRUE;
+            }
+        }
+      else
+        {
+          retval = TRUE;
+        }
+    }
+
+  g_value_unset (&a_value);
+  g_value_unset (&b_value);
+
+  return retval;
+}
 
 static GList *
-gimp_config_diff_internal (GimpConfig  *a,
-                           GimpConfig  *b,
-                           GParamFlags  flags)
+gimp_config_diff_same (GimpConfig  *a,
+                       GimpConfig  *b,
+                       GParamFlags  flags)
 {
   GParamSpec **param_specs;
   guint        n_param_specs;
@@ -150,36 +193,9 @@ gimp_config_diff_internal (GimpConfig  *a,
 
       if (! flags || ((prop_spec->flags & flags) == flags))
         {
-          GValue a_value = { 0, };
-          GValue b_value = { 0, };
-
-          g_value_init (&a_value, prop_spec->value_type);
-          g_value_init (&b_value, prop_spec->value_type);
-
-          g_object_get_property (G_OBJECT (a), prop_spec->name, &a_value);
-          g_object_get_property (G_OBJECT (b), prop_spec->name, &b_value);
-
-          if (g_param_values_cmp (param_specs[i], &a_value, &b_value))
-            {
-              if ((prop_spec->flags & GIMP_PARAM_AGGREGATE) &&
-                  G_IS_PARAM_SPEC_OBJECT (prop_spec)        &&
-                  g_type_interface_peek (g_type_class_peek (prop_spec->value_type),
-                                         GIMP_TYPE_CONFIG))
-                {
-                  if (! gimp_config_is_equal_to (g_value_get_object (&a_value),
-                                                 g_value_get_object (&b_value)))
-                    {
-                      list = g_list_prepend (list, prop_spec);
-                    }
-                }
-              else
-                {
-                  list = g_list_prepend (list, prop_spec);
-                }
-            }
-
-          g_value_unset (&a_value);
-          g_value_unset (&b_value);
+          if (gimp_config_diff_property (G_OBJECT (a),
+                                         G_OBJECT (b), prop_spec))
+            list = g_list_prepend (list, prop_spec);
         }
     }
 
@@ -188,14 +204,52 @@ gimp_config_diff_internal (GimpConfig  *a,
   return list;
 }
 
+static GList *
+gimp_config_diff_other (GimpConfig  *a,
+                        GimpConfig  *b,
+                        GParamFlags  flags)
+{
+  GParamSpec **param_specs;
+  guint        n_param_specs;
+  gint         i;
+  GList       *list = NULL;
+
+  param_specs = g_object_class_list_properties (G_OBJECT_GET_CLASS (a),
+                                                &n_param_specs);
+
+  for (i = 0; i < n_param_specs; i++)
+    {
+      GParamSpec *a_spec = param_specs[i];
+      GParamSpec *b_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (b),
+                                                         a_spec->name);
+
+      if (b_spec &&
+          (a_spec->value_type == b_spec->value_type) &&
+          (! flags || (a_spec->flags & b_spec->flags & flags) == flags))
+        {
+          if (gimp_config_diff_property (G_OBJECT (a), G_OBJECT (b), b_spec))
+            list = g_list_prepend (list, b_spec);
+        }
+    }
+
+  g_free (param_specs);
+
+  return list;
+}
+
+
 /**
  * gimp_config_diff:
- * @a: a #GimpConfig
- * @b: another #GimpConfig of the same type as @a
+ * @a: a #GimpConfig object
+ * @b: another #GimpConfig object
  * @flags: a mask of GParamFlags
  *
  * Compares all properties of @a and @b that have all @flags set. If
  * @flags is 0, all properties are compared.
+ *
+ * If the two objects are not of the same type, only properties that
+ * exist in both object classes and are of the same value_type are
+ * compared.
  *
  * Return value: a GList of differing GParamSpecs.
  **/
@@ -204,24 +258,34 @@ gimp_config_diff (GimpConfig  *a,
                   GimpConfig  *b,
                   GParamFlags  flags)
 {
+  GList *diff;
+
   g_return_val_if_fail (GIMP_IS_CONFIG (a), FALSE);
   g_return_val_if_fail (GIMP_IS_CONFIG (b), FALSE);
-  g_return_val_if_fail (G_TYPE_FROM_INSTANCE (a) == G_TYPE_FROM_INSTANCE (b),
-                        FALSE);
 
-  return g_list_reverse (gimp_config_diff_internal (a, b, flags));
+  if (G_TYPE_FROM_INSTANCE (a) == G_TYPE_FROM_INSTANCE (b))
+    diff = gimp_config_diff_same (a, b, flags);
+  else
+    diff = gimp_config_diff_other (a, b, flags);
+
+  return g_list_reverse (diff);
 }
 
 /**
  * gimp_config_sync:
- * @src: a #GimpConfig
- * @dest: another #GimpConfig of the same type as @src
+ * @src: a #GimpConfig object
+ * @dest: another #GimpConfig object
  * @flags: a mask of GParamFlags
  *
  * Compares all read- and write-able properties from @src and @dest
  * that have all @flags set. Differing values are then copied from
- * @src to @dest. If @flags is 0, all differing read/write properties
- * are synced.
+ * @src to @dest. If @flags is 0, all differing read/write properties.
+ *
+ * Properties marked as "construct-only" are not touched.
+ *
+ * If the two objects are not of the same type, only
+ * properties that exist in both object classes and are of the same
+ * value_type are synchronized
  *
  * Return value: %TRUE if @dest was modified, %FALSE otherwise
  **/
@@ -235,15 +299,16 @@ gimp_config_sync (GimpConfig  *src,
 
   g_return_val_if_fail (GIMP_IS_CONFIG (src), FALSE);
   g_return_val_if_fail (GIMP_IS_CONFIG (dest), FALSE);
-  g_return_val_if_fail (G_TYPE_FROM_INSTANCE (src) == G_TYPE_FROM_INSTANCE (dest),
-                        FALSE);
 
-  /* we use the internal version here for a number of reasons:
+  /* we use the internal versions here for a number of reasons:
    *  - it saves a g_list_reverse()
    *  - it avoids duplicated parameter checks
    *  - it makes GimpTemplateEditor work (resolution is set before size)
    */
-  diff = gimp_config_diff_internal (src, dest, (flags | G_PARAM_READWRITE));
+  if (G_TYPE_FROM_INSTANCE (src) == G_TYPE_FROM_INSTANCE (dest))
+    diff = gimp_config_diff_same (src, dest, (flags | G_PARAM_READWRITE));
+  else
+    diff = gimp_config_diff_other (src, dest, flags);
 
   if (!diff)
     return FALSE;
@@ -275,7 +340,8 @@ gimp_config_sync (GimpConfig  *src,
  * @config: a #GimpConfig
  *
  * Resets all writable properties of @object to the default values as
- * defined in their #GParamSpec.
+ * defined in their #GParamSpec. Properties marked as "construct-only"
+ * are not touched.
  **/
 void
 gimp_config_reset_properties (GimpConfig *config)

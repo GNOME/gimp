@@ -46,6 +46,7 @@
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimptexteditor.h"
 
 #include "display/gimpdisplay.h"
 
@@ -83,7 +84,7 @@ static void   gimp_text_tool_create_vectors (GimpTextTool      *text_tool);
 static void   gimp_text_tool_create_layer   (GimpTextTool      *text_tool);
 
 static void   gimp_text_tool_editor         (GimpTextTool      *text_tool);
-static void   gimp_text_tool_buffer_changed (GtkTextBuffer     *buffer,
+static void   gimp_text_tool_text_changed   (GimpTextEditor    *editor,
 					     GimpTextTool      *text_tool);
 
 
@@ -101,7 +102,7 @@ gimp_text_tool_register (GimpToolRegisterCallback  callback,
   (* callback) (GIMP_TYPE_TEXT_TOOL,
                 GIMP_TYPE_TEXT_OPTIONS,
                 gimp_text_options_gui,
-                GIMP_CONTEXT_FONT_MASK,
+                GIMP_CONTEXT_FOREGROUND_MASK | GIMP_CONTEXT_FONT_MASK,
                 "gimp-text-tool",
                 _("Text"),
                 _("Add text to the image"),
@@ -145,9 +146,7 @@ gimp_text_tool_get_type (void)
 static void
 gimp_text_tool_class_init (GimpTextToolClass *klass)
 {
-  GimpToolClass *tool_class;
-
-  tool_class = GIMP_TOOL_CLASS (klass);
+  GimpToolClass *tool_class = GIMP_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -251,20 +250,20 @@ gimp_text_tool_cursor_update (GimpTool        *tool,
 			      GdkModifierType  state,
 			      GimpDisplay     *gdisp)
 {
+  /* FIXME: should do something fancy here... */
+
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
 
 static void
 gimp_text_tool_create_vectors (GimpTextTool *text_tool)
 {
-  GimpTool    *tool = GIMP_TOOL (text_tool);
+  GimpTool    *tool   = GIMP_TOOL (text_tool);
+  GimpImage   *gimage = tool->gdisp->gimage;
   GimpVectors *vectors;
-  GimpImage   *gimage;
 
   if (! text_tool->text)
     return;
-
-  gimage = tool->gdisp->gimage;
 
   gimp_tool_control_set_preserve (tool->control, TRUE);
 
@@ -295,10 +294,14 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool)
 
   gimage = tool->gdisp->gimage;
 
-  text = gimp_config_duplicate (GIMP_CONFIG (options->text));
+  text = gimp_text_options_create_text (options);
+
+  g_object_set (text,
+                "text",
+                gimp_text_editor_get_text (GIMP_TEXT_EDITOR (text_tool->editor)),
+                NULL);
 
   layer = gimp_text_layer_new (gimage, text);
-
   g_object_unref (text);
 
   if (! layer)
@@ -353,28 +356,20 @@ gimp_text_tool_connect (GimpTextTool *text_tool,
                                                 text_tool);
         }
 
-      gimp_config_disconnect (G_OBJECT (options->text),
-                              G_OBJECT (text_tool->text));
+      gimp_text_options_disconnect_text (options, text_tool->text);
 
       g_object_unref (text_tool->text);
       text_tool->text = NULL;
 
       text_tool->offset_x = 0;
       text_tool->offset_y = 0;
-
-      g_object_set (options->text, "text", NULL, NULL);
     }
 
   if (text)
     {
       text_tool->text = g_object_ref (text);
 
-      gimp_config_sync (GIMP_CONFIG (text_tool->text),
-                        GIMP_CONFIG (options->text), 0);
-
-      gimp_config_connect (G_OBJECT (options->text),
-                           G_OBJECT (text_tool->text),
-                           NULL);
+      gimp_text_options_connect_text (options, text);
 
       text_tool->offset_x = off_x;
       text_tool->offset_y = off_y;
@@ -412,25 +407,36 @@ gimp_text_tool_editor (GimpTextTool *text_tool)
                                    "gimp-text-tool-dialog",
                                    text_tool->editor);
 
-  gtk_widget_show (text_tool->editor);
-
   if (! text_tool->text)
     {
-      GClosure *closure;
-
-      closure = g_cclosure_new (G_CALLBACK (gimp_text_tool_buffer_changed),
-                                text_tool, NULL);
-      g_object_watch_closure (G_OBJECT (text_tool->editor), closure);
-      g_signal_connect_closure (options->buffer, "changed", closure, FALSE);
+      g_signal_connect_object (text_tool->editor, "text_changed",
+                               G_CALLBACK (gimp_text_tool_text_changed),
+                               text_tool, 0);
     }
+
+  gtk_widget_show (text_tool->editor);
 }
 
 static void
-gimp_text_tool_buffer_changed (GtkTextBuffer *buffer,
-			       GimpTextTool  *text_tool)
+gimp_text_tool_text_changed (GimpTextEditor *editor,
+                             GimpTextTool   *text_tool)
 {
-  if (! text_tool->text)
-    gimp_text_tool_create_layer (text_tool);
+  if (text_tool->text)
+    {
+      gchar *text;
+
+      text = gimp_text_editor_get_text (GIMP_TEXT_EDITOR (text_tool->editor));
+
+      g_object_set (text_tool->text,
+                    "text", text,
+                    NULL);
+
+      g_free (text);
+    }
+  else
+    {
+      gimp_text_tool_create_layer (text_tool);
+    }
 }
 
 void

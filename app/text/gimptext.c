@@ -41,8 +41,6 @@
 
 #include "gimptext.h"
 
-#include "gimp-intl.h"
-
 
 enum
 {
@@ -174,17 +172,11 @@ gimp_text_class_init (GimpTextClass *klass)
 				 TRUE, FALSE, GIMP_UNIT_PIXEL,
 				 0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_HINTING,
-                                    "hinting",
-                                    N_("Hinting alters the font outline to "
-                                       "produce a crisp bitmap at small "
-                                       "sizes"),
+                                    "hinting", NULL,
                                     TRUE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_AUTOHINT,
-                                    "autohint",
-                                    N_("If available, hints from the font are "
-                                       "used but you may prefer to always use "
-                                       "the automatic hinter"),
+                                    "autohint", NULL,
                                     FALSE,
                                     GIMP_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
@@ -200,8 +192,7 @@ gimp_text_class_init (GimpTextClass *klass)
 				   language,
 				   0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BASE_DIR,
-                                "base-direction",
-                                 NULL,
+                                "base-direction", NULL,
                                  GIMP_TYPE_TEXT_DIRECTION,
                                  GIMP_TEXT_DIRECTION_LTR,
                                  0);
@@ -215,24 +206,20 @@ gimp_text_class_init (GimpTextClass *klass)
                                  GIMP_TEXT_OUTLINE_NONE,
                                  GIMP_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_JUSTIFICATION,
-                                "justify",
-                                 NULL,
+                                "justify", NULL,
                                  GIMP_TYPE_TEXT_JUSTIFICATION,
                                  GIMP_TEXT_JUSTIFY_LEFT,
                                  0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_INDENTATION,
-				   "indent",
-                                   N_("Indentation of the first line"),
+				   "indent", NULL,
 				   -8192.0, 8192.0, 0.0,
 				   GIMP_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LINE_SPACING,
-				   "line-spacing",
-                                   N_("Modify line spacing"),
+				   "line-spacing", NULL,
 				   -8192.0, 8192.0, 0.0,
 				   GIMP_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LETTER_SPACING,
-				   "letter-spacing",
-                                   N_("Modify letter spacing"),
+				   "letter-spacing", NULL,
 				   -8192.0, 8192.0, 0.0,
 				   GIMP_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BOX_MODE,

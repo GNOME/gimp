@@ -34,10 +34,8 @@ struct _GimpTextEditor
 {
   GimpDialog         parent_instance;
 
-  GimpTextDirection  base_dir;
-
   /*<  private  >*/
-  GtkTextBuffer     *buffer;
+  GimpTextDirection  base_dir;
   GtkWidget         *group;
   GtkWidget         *view;
   GtkWidget         *file_dialog;
@@ -47,15 +45,22 @@ struct _GimpTextEditorClass
 {
   GimpDialogClass   parent_class;
 
-  void (* dir_changed) (GimpTextEditor *editor);
+  void (* text_changed) (GimpTextEditor *editor);
+  void (* dir_changed)  (GimpTextEditor *editor);
 };
 
 
-GType        gimp_text_editor_get_type      (void) G_GNUC_CONST;
-GtkWidget  * gimp_text_editor_new           (const gchar       *title,
-                                             GtkTextBuffer     *buffer);
-void         gimp_text_editor_set_direction (GimpTextEditor    *editor,
-                                             GimpTextDirection  base_dir);
+GType               gimp_text_editor_get_type      (void) G_GNUC_CONST;
+GtkWidget         * gimp_text_editor_new           (const gchar       *title);
+
+void                gimp_text_editor_set_text      (GimpTextEditor    *editor,
+                                                    const gchar       *text,
+                                                    gint               len);
+gchar             * gimp_text_editor_get_text      (GimpTextEditor    *editor);
+
+void                gimp_text_editor_set_direction (GimpTextEditor    *editor,
+                                                    GimpTextDirection  base_dir);
+GimpTextDirection   gimp_text_editor_get_direction (GimpTextEditor    *editor);
 
 
 #endif  /* __GIMP_TEXT_EDITOR_H__ */

@@ -44,6 +44,7 @@
 
 enum
 {
+  TEXT_CHANGED,
   DIR_CHANGED,
   LAST_SIGNAL
 };
@@ -51,8 +52,9 @@ enum
 
 static void      gimp_text_editor_class_init    (GimpTextEditorClass *klass);
 static void      gimp_text_editor_init          (GimpTextEditor      *editor);
-static void      gimp_text_editor_dispose       (GObject             *object);
 
+static void      gimp_text_editor_text_changed  (GtkTextBuffer  *buffer,
+                                                 GimpTextEditor *editor);
 static void      gimp_text_editor_dir_changed   (GtkWidget      *widget,
                                                  GimpTextEditor *editor);
 
@@ -61,7 +63,7 @@ static void      gimp_text_editor_load          (GtkWidget      *widget,
 static void      gimp_text_editor_load_response (GtkWidget      *dialog,
                                                  gint            response_id,
                                                  GimpTextEditor *editor);
-static gboolean  gimp_text_editor_load_file     (GtkTextBuffer  *buffer,
+static gboolean  gimp_text_editor_load_file     (GimpTextEditor *editor,
                                                  const gchar    *filename);
 static void      gimp_text_editor_clear         (GtkWidget      *widget,
                                                  GimpTextEditor *editor);
@@ -102,12 +104,16 @@ gimp_text_editor_get_type (void)
 static void
 gimp_text_editor_class_init (GimpTextEditorClass *klass)
 {
-  GObjectClass *object_class;
-
-  object_class = G_OBJECT_CLASS (klass);
-
   parent_class = g_type_class_peek_parent (klass);
 
+  text_editor_signals[TEXT_CHANGED] =
+    g_signal_new ("text_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpTextEditorClass, text_changed),
+		  NULL, NULL,
+		  gimp_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
   text_editor_signals[DIR_CHANGED] =
     g_signal_new ("dir_changed",
 		  G_TYPE_FROM_CLASS (klass),
@@ -117,15 +123,13 @@ gimp_text_editor_class_init (GimpTextEditorClass *klass)
 		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
-  object_class->dispose = gimp_text_editor_dispose;
-
-  klass->dir_changed    = NULL;
+  klass->text_changed = NULL;
+  klass->dir_changed  = NULL;
 }
 
 static void
 gimp_text_editor_init (GimpTextEditor  *editor)
 {
-  editor->buffer      = NULL;
   editor->view        = NULL;
   editor->group       = NULL;
   editor->file_dialog = NULL;
@@ -142,25 +146,11 @@ gimp_text_editor_init (GimpTextEditor  *editor)
     }
 }
 
-static void
-gimp_text_editor_dispose (GObject *object)
-{
-  GimpTextEditor *editor = GIMP_TEXT_EDITOR (object);
-
-  if (editor->buffer)
-    {
-      g_object_unref (editor->buffer);
-      editor->buffer = NULL;
-    }
-
-  G_OBJECT_CLASS (parent_class)->dispose (object);
-}
-
 GtkWidget *
-gimp_text_editor_new (const gchar   *title,
-                      GtkTextBuffer *buffer)
+gimp_text_editor_new (const gchar *title)
 {
   GimpTextEditor *editor;
+  GtkTextBuffer  *buffer;
   GtkToolbar     *toolbar;
   GtkWidget      *scrolled_window;
   GtkWidget      *box;
@@ -169,7 +159,6 @@ gimp_text_editor_new (const gchar   *title,
   GList          *list;
 
   g_return_val_if_fail (title != NULL, NULL);
-  g_return_val_if_fail (GTK_IS_TEXT_BUFFER (buffer), NULL);
 
   editor = g_object_new (GIMP_TYPE_TEXT_EDITOR,
                          "title", title,
@@ -239,10 +228,15 @@ gimp_text_editor_new (const gchar   *title,
                       scrolled_window, TRUE, TRUE, 0);
   gtk_widget_show (scrolled_window);
 
-  editor->buffer = g_object_ref (buffer);
-  editor->view = gtk_text_view_new_with_buffer (buffer);
+  editor->view = gtk_text_view_new ();
   gtk_container_add (GTK_CONTAINER (scrolled_window), editor->view);
   gtk_widget_show (editor->view);
+
+  buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (editor->view));
+
+  g_signal_connect (buffer, "changed",
+		    G_CALLBACK (gimp_text_editor_text_changed),
+		    editor);
 
   switch (editor->base_dir)
     {
@@ -257,6 +251,47 @@ gimp_text_editor_new (const gchar   *title,
   gtk_widget_set_size_request (editor->view, 128, 64);
 
   return GTK_WIDGET (editor);
+}
+
+void
+gimp_text_editor_set_text (GimpTextEditor *editor,
+                           const gchar    *text,
+                           gint            len)
+{
+  GtkTextBuffer *buffer;
+
+  g_return_if_fail (GIMP_IS_TEXT_EDITOR (editor));
+  g_return_if_fail (text != NULL || len == 0);
+
+  buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (editor->view));
+
+  if (text)
+    gtk_text_buffer_set_text (buffer, text, len);
+  else
+    gtk_text_buffer_set_text (buffer, "", 0);
+}
+
+gchar *
+gimp_text_editor_get_text (GimpTextEditor *editor)
+{
+  GtkTextBuffer *buffer;
+  GtkTextIter    start_iter;
+  GtkTextIter    end_iter;
+
+  g_return_val_if_fail (GIMP_IS_TEXT_EDITOR (editor), NULL);
+
+  buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (editor->view));
+
+  gtk_text_buffer_get_bounds (buffer, &start_iter, &end_iter);
+
+  return gtk_text_buffer_get_text (buffer, &start_iter, &end_iter, FALSE);
+}
+
+static void
+gimp_text_editor_text_changed (GtkTextBuffer  *buffer,
+                               GimpTextEditor *editor)
+{
+  g_signal_emit (editor, text_editor_signals[TEXT_CHANGED], 0);
 }
 
 void
@@ -291,6 +326,14 @@ gimp_text_editor_set_direction (GimpTextEditor    *editor,
     }
 
   g_signal_emit (editor, text_editor_signals[DIR_CHANGED], 0);
+}
+
+GimpTextDirection
+gimp_text_editor_get_direction (GimpTextEditor *editor)
+{
+  g_return_val_if_fail (GIMP_IS_TEXT_EDITOR (editor), GIMP_TEXT_DIRECTION_LTR);
+
+  return editor->base_dir;
 }
 
 static void
@@ -351,7 +394,7 @@ gimp_text_editor_load_response (GtkWidget      *dialog,
 
       filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (dialog));
 
-      if (! gimp_text_editor_load_file (editor->buffer, filename))
+      if (! gimp_text_editor_load_file (editor, filename))
         return;
     }
 
@@ -359,13 +402,16 @@ gimp_text_editor_load_response (GtkWidget      *dialog,
 }
 
 static gboolean
-gimp_text_editor_load_file (GtkTextBuffer *buffer,
-			    const gchar   *filename)
+gimp_text_editor_load_file (GimpTextEditor *editor,
+			    const gchar    *filename)
 {
-  FILE        *file;
-  gchar        buf[2048];
-  gint         remaining = 0;
-  GtkTextIter  iter;
+  GtkTextBuffer *buffer;
+  FILE          *file;
+  gchar          buf[2048];
+  gint           remaining = 0;
+  GtkTextIter    iter;
+
+  buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (editor->view));
 
   file = fopen (filename, "r");
 
@@ -410,5 +456,9 @@ static void
 gimp_text_editor_clear (GtkWidget      *widget,
                         GimpTextEditor *editor)
 {
-  gtk_text_buffer_set_text (editor->buffer, "", 0);
+  GtkTextBuffer *buffer;
+
+  buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (editor->view));
+
+  gtk_text_buffer_set_text (buffer, "", 0);
 }

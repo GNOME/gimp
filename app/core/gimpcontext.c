@@ -87,8 +87,8 @@ static void       gimp_context_get_property   (GObject               *object,
                                                guint                  property_id,
                                                GValue                *value,
                                                GParamSpec            *pspec);
-static gint64    gimp_context_get_memsize    (GimpObject            *object,
-                                              gint64                *gui_size);
+static gint64     gimp_context_get_memsize    (GimpObject            *object,
+                                               gint64                *gui_size);
 
 static gboolean   gimp_context_serialize            (GimpConfig       *config,
                                                      GimpConfigWriter *writer,
@@ -1124,11 +1124,11 @@ gimp_context_serialize_property (GimpConfig       *config,
 
   context = GIMP_CONTEXT (config);
 
-#if 0
+  //#if 0
   /*  serialize nothing if the property is not defined  */
   if (! ((1 << property_id) & context->defined_props))
     return TRUE;
-#endif
+  //#endif
 
   switch (property_id)
     {
@@ -2694,6 +2694,28 @@ gimp_context_set_font (GimpContext *context,
   gimp_context_real_set_font (context, font);
 }
 
+const gchar *
+gimp_context_get_font_name (GimpContext *context)
+{
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  return (context->font ?
+          gimp_object_get_name (GIMP_OBJECT (context->font)) : NULL);
+}
+
+void
+gimp_context_set_font_name (GimpContext *context,
+                            const gchar *name)
+{
+  GimpObject *font;
+
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
+
+  font = gimp_container_get_child_by_name (context->gimp->fonts, name);
+
+  gimp_context_set_font (context, GIMP_FONT (font));
+}
+
 void
 gimp_context_font_changed (GimpContext *context)
 {
@@ -2704,7 +2726,7 @@ gimp_context_font_changed (GimpContext *context)
 		 context->font);
 }
 
-/*  the active palette was modified  */
+/*  the active font was modified  */
 static void
 gimp_context_font_dirty (GimpFont    *font,
                          GimpContext *context)

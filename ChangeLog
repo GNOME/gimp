@@ -1,5 +1,29 @@
 2004-03-11  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpconfig-utils.c: made gimp_config_sync() and
+	gimp_config_connect() also work on objects of different types.
+	Properties with the same name and the same type are synced /
+	connected.
+ 
+	* app/core/gimpcontext.[ch]: added convenience functions to get/set
+	the font by name.
+
+	* app/tools/gimptextoptions.[ch]: don't hold a GimpText object
+	that duplicates properties like font and color which are in
+	GimpContext already. Instead added all text properties that are
+	controlled from the text tool options.  Handling of the foreground
+	color is somewhat broken and needs a GimpContext wizard (Mitch!).
+
+	* app/text/gimptext.c: blurbs are not any longer needed now that
+	the property widgets are created from the GimpTextOptions.
+
+	* app/tools/gimptexttool.c: changed accordingly.
+
+	* app/widgets/gimptexteditor.[ch]: use an internal GtkTextBuffer
+	and emit "text-changed" when it changes.
+
+2004-03-11  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/colortoalpha.c: when running in interactive
 	mode, get the foreground color after restoring the parameters from
 	the last run.

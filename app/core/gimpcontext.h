@@ -265,6 +265,9 @@ void            gimp_context_palette_changed    (GimpContext     *context);
 GimpFont      * gimp_context_get_font           (GimpContext     *context);
 void            gimp_context_set_font           (GimpContext     *context,
                                                  GimpFont        *font);
+const gchar   * gimp_context_get_font_name      (GimpContext     *context);
+void            gimp_context_set_font_name      (GimpContext     *context,
+                                                 const gchar     *name);
 void            gimp_context_font_changed       (GimpContext     *context);
 
 
