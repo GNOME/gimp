@@ -72,8 +72,6 @@
 #include "display/gimpnavigationeditor.h"
 
 #include "actions/channels-commands.h"
-#include "actions/edit-commands.h"
-#include "actions/file-commands.h"
 #include "actions/layers-commands.h"
 #include "actions/vectors-commands.h"
 

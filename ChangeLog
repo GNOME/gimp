@@ -1,5 +1,9 @@
 2004-09-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/dialogs/dialogs-constructors.c: removed useless #includes.
+
+2004-09-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/buffers-commands.c
 	* app/actions/file-commands.c
 	* app/actions/layers-commands.c
