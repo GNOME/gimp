@@ -360,7 +360,10 @@ run (char    *name,
       }
 
       if (save_image (param[3].data.d_string, param[1].data.d_int32, param[2].data.d_int32))
-	status = STATUS_SUCCESS;
+	{
+	  gimp_set_data ("file_gpb_save", &info, sizeof (info));
+	  status = STATUS_SUCCESS;
+	}
       else
 	status = STATUS_EXECUTION_ERROR;
     }

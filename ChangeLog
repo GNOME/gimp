@@ -1,7 +1,8 @@
 1999-08-22  Tor Lillqvist  <tml@iki.fi>
 
 	* plug-ins/common/psp.c: Use g_message, not gimp_message.
-	g_message calls gimp_message eventually.
+	g_message calls gimp_message eventually. Disable the debugging
+	messages.
 
 	* plug-ins/common/gpb.c: New plug-in for saving Adrian's gpb files
 	(pixmap brushes) from an RGBA image. Probably just of temporary
