@@ -50,6 +50,7 @@
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
 #include "colormaps.h"
+#include "context_manager.h"
 #include "errorconsole.h"
 #include "fileops.h"
 #include "gimprc.h"
@@ -470,9 +471,9 @@ app_init (void)
   gtk_rc_parse (filename);
 
   if (no_interface == FALSE)
-      get_standard_colormaps ();
+    get_standard_colormaps ();
 
-  make_initialization_status_window();
+  make_initialization_status_window ();
 
   if (no_interface == FALSE && no_splash == FALSE && win_initstatus)
     splash_text_draw (logo_area);
@@ -480,8 +481,7 @@ app_init (void)
   /* Create the context of all existing images */
   image_context = gimp_set_new (GIMP_TYPE_IMAGE, TRUE);
 
-  /*
-   *  Initialize the procedural database
+  /*  Initialize the procedural database
    *    We need to do this first because any of the init
    *    procedures might install or query it as needed.
    */
@@ -493,7 +493,7 @@ app_init (void)
   parse_buffers_init ();
   parse_unitrc ();         /*  this needs to be done before gimprc loading */
   parse_gimprc ();         /*  parse the local GIMP configuration file  */
-  
+
   if (always_restore_session)
     restore_session = TRUE;
 
@@ -547,6 +547,9 @@ app_init (void)
 			  swap_path, (unsigned long) getpid ());
   tile_swap_add (path, NULL, NULL);
   g_free (path);
+
+  /* Initialize the context system */
+  context_manager_init ();
 
   destroy_initialization_status_window ();
 
@@ -632,6 +635,7 @@ app_exit_finish (void)
   global_edit_free ();
   named_buffers_free ();
   swapping_free ();
+  context_manager_free ();
   brushes_free ();
   patterns_free ();
   palettes_free ();

@@ -96,6 +96,8 @@ gimp_SOURCES = \
 	colormap_dialog.h	\
 	commands.c		\
 	commands.h		\
+	context_manager.c	\
+	context_manager.h	\
 	convert.c		\
 	convert.h		\
 	convert_cmds.c		\

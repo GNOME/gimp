@@ -1,3 +1,27 @@
+1999-06-18  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/Makefile.am
+	* app/context_manager.[ch]: new files. Currently only init and
+	destroy the static contexts (user, standard and default).
+
+	* app/app_procs.c: call the context manager's init and free
+	functions. Still have to figure out the right time to do this.
+
+	* app/gimpcontext.[ch]: alpha version 0.0.1 :-)
+
+	Features:
+	- Each context has a name
+	- Attributes: opacity, paint mode, image, display
+	- Signal emission on attribute change
+	- Possibility to set a "parent" context
+	- Each attribute can be defined or undefined. In the latter case
+	  the values are taken from the parent context.
+	- Possibility to pass a template and parent context to the
+	  constructor
+	Bugs:
+	- Many attributes/functions still missing
+	- It's connected to nothing
+
 Fri Jun 18 18:25:24 BST 1999  Adam D. Moss  <adam@gimp.org>
 
 	* app/paint_funcs.c: Fixed a problem with hidden/unaffected
