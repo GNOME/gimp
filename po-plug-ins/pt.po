@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.2\n"
-"POT-Creation-Date: 2003-03-05 20:52+0000\n"
-"PO-Revision-Date: 2003-03-05 23:34+0000\n"
+"POT-Creation-Date: 2003-03-05 01:31+0000\n"
+"PO-Revision-Date: 2003-03-05 01:34+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -230,7 +230,8 @@ msgstr "Utiliza Uniformidade de registro"
 
 #: plug-ins/FractalExplorer/Dialogs.c:671
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
-msgstr "Utiliza uniformidade de registro para eliminar \"ligação\" no resultado"
+msgstr ""
+"Utiliza uniformidade de registro para eliminar \"ligação\" no resultado"
 
 #. Color Density frame
 #: plug-ins/FractalExplorer/Dialogs.c:675
@@ -322,8 +323,8 @@ msgid ""
 "Use linear mapping instead of any trigonometrical function for this color "
 "channel"
 msgstr ""
-"Utilizar mapeamento linear em vez de qualquer função trigonométrica para este "
-"canal de cor"
+"Utilizar mapeamento linear em vez de qualquer função trigonométrica para "
+"este canal de cor"
 
 #: plug-ins/FractalExplorer/Dialogs.c:757
 #: plug-ins/FractalExplorer/Dialogs.c:798
@@ -338,8 +339,8 @@ msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
 msgstr ""
-"Se activar esta opção os valores de cor mais altos serão trocados com "
-"os mais baixos e vice versa"
+"Se activar esta opção os valores de cor mais altos serão trocados com os "
+"mais baixos e vice versa"
 
 #. Greenmode radio frame
 #: plug-ins/FractalExplorer/Dialogs.c:770 plug-ins/common/AlienMap.c:1251
@@ -1175,7 +1176,8 @@ msgstr "Fundo"
 #: plug-ins/bmp/bmpwrite.c:136
 msgid "BMP: cannot operate on unknown image types or alpha images"
 msgstr ""
-"BMP: impossível trabalhar sobre tipos de imagens desconhecidas ou imagens alfa"
+"BMP: impossível trabalhar sobre tipos de imagens desconhecidas ou imagens "
+"alfa"
 
 #: plug-ins/bmp/bmpwrite.c:198
 #, c-format
@@ -1299,7 +1301,8 @@ msgstr "Utilizar função de cosseno para componente verde."
 msgid ""
 "Green channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
-"Canal verde: utilizar mapeamento linear em vez de qualquer função trigonométrica"
+"Canal verde: utilizar mapeamento linear em vez de qualquer função "
+"trigonométrica"
 
 #: plug-ins/common/AlienMap.c:1285
 msgid "Use sine-function for blue component."
@@ -1313,7 +1316,8 @@ msgstr "Utilizar função de cosseno para componente azul."
 msgid ""
 "Blue channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
-"Canal azul: utilizar mapeamento linear em vez de qualquer função trigonométrica"
+"Canal azul: utilizar mapeamento linear em vez de qualquer função "
+"trigonométrica"
 
 #: plug-ins/common/AlienMap.c:1355
 msgid "About AlienMap"
@@ -2536,8 +2540,8 @@ msgid "Redness_cr709f:"
 msgstr "Avermelhado_cr709f:"
 
 #: plug-ins/common/compose.c:257
-msgid "<Image>/Image/Mode/Compose..."
-msgstr "<Image>/Imagem/Modo/Compor..."
+msgid "<Image>/Filters/Colors/Compose..."
+msgstr "<Image>/Filtros/Cores/Compor..."
 
 #: plug-ins/common/compose.c:320
 #, c-format
@@ -3002,8 +3006,8 @@ msgid "redness_cr709f"
 msgstr "avermelhado_cr709f"
 
 #: plug-ins/common/decompose.c:229
-msgid "<Image>/Image/Mode/Decompose..."
-msgstr "<Image>/Imagem/Modo/Decompor..."
+msgid "<Image>/Filters/Colors/Decompose..."
+msgstr "<Image>/Filtros/Cores/Decompor..."
 
 #: plug-ins/common/decompose.c:310
 msgid "Decomposing..."
@@ -3700,8 +3704,7 @@ msgid ""
 "GIF: Sorry, can't save RGB images as GIFs - convert to INDEXED\n"
 "or GRAY first.\n"
 msgstr ""
-"GIF: Incapaz de gravar imagens RGB como GIFs - converta para INDEXADA "
-"ou\n"
+"GIF: Incapaz de gravar imagens RGB como GIFs - converta para INDEXADA ou\n"
 "CINZA primeiro.\n"
 
 #: plug-ins/common/gif.c:957
@@ -4046,8 +4049,8 @@ msgid ""
 "control."
 msgstr ""
 "Activar esta etiqueta fará com que o GTM não deixe espaços em branco entre "
-"as etiquetas TD e o conteúdo das células. Isto é necessário somente para controlo "
-"de posicionamento do nível de pixeis."
+"as etiquetas TD e o conteúdo das células. Isto é necessário somente para "
+"controlo de posicionamento do nível de pixeis."
 
 #: plug-ins/common/gtm.c:486
 msgid "C_aption"
@@ -4558,7 +4561,8 @@ msgstr "MIME"
 
 #: plug-ins/common/mail.c:689
 msgid "mail: some sort of error with the file extension or lack thereof \n"
-msgstr "mail: algum tipo de erro com a extensão dos ficheiros ou sua ausência\n"
+msgstr ""
+"mail: algum tipo de erro com a extensão dos ficheiros ou sua ausência\n"
 
 #: plug-ins/common/mapcolor.c:147
 msgid "First Source Color"
@@ -5186,7 +5190,8 @@ msgstr ""
 
 #: plug-ins/common/png.c:1182
 msgid "Couldn't losslessly save transparency, saving opacity instead.\n"
-msgstr "Incapaz de gravar transparência sem perder qualidade, a gravar opaco.\n"
+msgstr ""
+"Incapaz de gravar transparência sem perder qualidade, a gravar opaco.\n"
 
 #: plug-ins/common/png.c:1205
 msgid "Save as PNG"
@@ -5222,7 +5227,8 @@ msgstr "Nível de Co_mpressão:"
 
 #: plug-ins/common/png.c:1293
 msgid "Choose a high compression level for small file size"
-msgstr "Seleccione um nível de compressão elevado para um tamanho de ficheiro pequeno"
+msgstr ""
+"Seleccione um nível de compressão elevado para um tamanho de ficheiro pequeno"
 
 #: plug-ins/common/pnm.c:417
 #, c-format
@@ -7657,7 +7663,7 @@ msgid "_Zoom:"
 msgstr "_Zoom:"
 
 #: plug-ins/fp/fp.c:92
-msgid "<Image>/Layer/Colors/Filter Pack..."
+msgid "<Image>/Filters/Colors/Filter Pack..."
 msgstr "<Image>/Camadas/Cores/Pacote Filtros..."
 
 #: plug-ins/fp/fp.c:127
@@ -7894,8 +7900,7 @@ msgstr "Exibir Fotograma de Linha"
 #: plug-ins/gfig/gfig.c:1925
 msgid "Draws lines between the control points. Only during curve creation"
 msgstr ""
-"Desenha linhas entre os pontos de controlo. Apenas durante a criação da "
-"curva"
+"Desenha linhas entre os pontos de controlo. Apenas durante a criação da curva"
 
 #: plug-ins/gfig/gfig.c:1941
 msgid "Regular Polygon Number of Sides"
@@ -8371,8 +8376,7 @@ msgstr "<NONE>"
 
 #: plug-ins/gfig/gfig.c:4996
 msgid "Editing read-only object - you will not be able to save it"
-msgstr ""
-"Edição de objectos em modo apenas de leitura- não poderá gravá-los"
+msgstr "Edição de objectos em modo apenas de leitura- não poderá gravá-los"
 
 #. Create new entry with name + copy at end & copy object into it
 #: plug-ins/gfig/gfig.c:5103
@@ -9074,8 +9078,8 @@ msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
 msgstr ""
-"Modo-Voronoi faz com que apenas o vector mais próximo de um dado ponto "
-"tenha qualquer influência"
+"Modo-Voronoi faz com que apenas o vector mais próximo de um dado ponto tenha "
+"qualquer influência"
 
 #: plug-ins/gimpressionist/orientmap.c:579
 msgid "A_ngle:"
@@ -9385,9 +9389,9 @@ msgid ""
 "before reporting this error as a bug."
 msgstr ""
 "Não foi possível encontrar o documento pedido no seu caminho da ajuda GIMP, "
-"tal como indicado acima. Isto significa que ou, o tópico de ajuda ainda não foi "
-"escrito, ou a sua instalação está incompleta. Certifique-se de que a sua instalação "
-"está completa antes de reportar isto como um erro."
+"tal como indicado acima. Isto significa que ou, o tópico de ajuda ainda não "
+"foi escrito, ou a sua instalação está incompleta. Certifique-se de que a sua "
+"instalação está completa antes de reportar isto como um erro."
 
 #: plug-ins/helpbrowser/helpbrowser.c:595
 msgid "GIMP Help Browser"
@@ -9849,7 +9853,8 @@ msgstr "Ligação relati_va"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:248
 msgid "_Target frame name/ID: (optional - used for FRAMES only)"
-msgstr "Nome/ID do fo_tograma alvo: (opcional - apenas utilizado para FOTOGRAMAS)"
+msgstr ""
+"Nome/ID do fo_tograma alvo: (opcional - apenas utilizado para FOTOGRAMAS)"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:251
 msgid "ALT te_xt: (optional)"
@@ -11125,8 +11130,8 @@ msgid "File"
 msgstr "Ficheiro"
 
 #: plug-ins/rcm/rcm.c:113
-msgid "<Image>/Layer/Colors/Colormap Rotation..."
-msgstr "<Image>/Camadas/Cores/Rot. Mapa Cores..."
+msgid "<Image>/Filters/Colors/Map/Colormap Rotation..."
+msgstr "<Image>/Camadas/Cores/Mapa/Rotação Mapa Cores..."
 
 #: plug-ins/rcm/rcm.c:276
 msgid "Rotating the colormap..."
@@ -11389,6 +11394,12 @@ msgstr "Erro: Impossível ler ficheiro de propriedade %s XJT"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Erro: o ficheiro de propriedade %s XJT está vazio"
+
+#~ msgid "<Image>/Image/Mode/Compose..."
+#~ msgstr "<Image>/Imagem/Modo/Compor..."
+
+#~ msgid "<Image>/Image/Mode/Decompose..."
+#~ msgstr "<Image>/Imagem/Modo/Decompor..."
 
 #~ msgid "Del"
 #~ msgstr "Apagar"
