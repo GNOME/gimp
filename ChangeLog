@@ -1,3 +1,9 @@
+2004-09-18  Manish Singh  <yosh@gimp.org>
+
+	* app/Makefile.am: remove LDFLAGS references to now private
+	file_open_dialog_show, file_open_location_dialog_show, and
+	file_save_dialog_show.
+
 2004-09-18  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/qmask-commands.c
