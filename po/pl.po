@@ -1,13 +1,19 @@
-# (C) 2001 the Free Software Foundation
+# Copyright (C) 2001 Free Software Foundation, Inc.
+# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+# Aktualn± wersjê tego pliku mo¿esz odnale¼æ w repozytorium cvs.gnome.pl
+# (:pserver:anonymous@cvs.gnome.pl:/home/cvs, puste has³o)
+# Je¶li masz jakiekolwiek uwagi odnosz±ce siê do t³umaczenia lub chcesz
+# pomóc w jego rozwijaniu i pielêgnowaniu, napisz do nas na adres:
+# translators@gnome.pl
+# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 # GNOME PL Team <translators@gnome.pl>, 1999-2001
 # Pawe³ Dziekoñski <pdziekonski@mml.ch.pwr.wroc.pl>, 1999-2000
-#
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "POT-Creation-Date: 2001-06-25 22:35+0200\n"
-"PO-Revision-Date: 2001-07-29 12:47+0200\n"
+"PO-Revision-Date: 2001-09-27 01:33+0200\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -160,7 +166,7 @@ msgstr "Aktualny kolor na kolor t³a (RGB)"
 
 #: app/blend.c:1
 msgid "FG to Transparent"
-msgstr "Aktualny kolor na prze¼roczysto¶æ"
+msgstr "Aktualny kolor na przezroczysto¶æ"
 
 #: app/blend.c:1
 msgid "Custom Gradient"
@@ -513,7 +519,7 @@ msgstr "T³o"
 
 #: app/channel_ops.c:1 app/image_new.c:1 app/layers_dialog.c:1
 msgid "Transparent"
-msgstr "Prze¼roczyste"
+msgstr "Przezroczyste"
 
 #. The by half height and half width option
 #: app/channel_ops.c:1
@@ -885,7 +891,7 @@ msgstr "Dithering kolorów Floyda-Steinberga (zwyk³y)"
 
 #: app/convert.c:1
 msgid "Enable Dithering of Transparency"
-msgstr "Dithering prze¼roczysto¶ci"
+msgstr "Dithering przezroczysto¶ci"
 
 #: app/convert.c:1
 msgid "[ Warning ]"
@@ -900,7 +906,7 @@ msgid ""
 msgstr ""
 "Nast±pi konwersja obrazu RGB lub z kana³em alfa lub warstwami z formatu RGB "
 "albo z odcieniami szaro¶ci na INDEKSOWANY.\n"
-"Aby utworzyæ z tego obrazu prze¼roczystego lub animowanego GIF-a, nale¿y "
+"Aby utworzyæ z tego obrazu przezroczystego lub animowanego GIF-a, nale¿y "
 "utworzyæ paletê z co najwy¿ej 255 kolorami."
 
 #: app/convert.c:1
@@ -2579,7 +2585,7 @@ msgstr "Maska obrazu"
 
 #: app/internal_procs.c:1
 msgid "Text procedures"
-msgstr "Modyfikuj krzyw±"
+msgstr "Zmodyfikuj krzyw±"
 
 #: app/internal_procs.c:1
 msgid "Tool procedures"
@@ -2692,7 +2698,7 @@ msgstr "Prze¼r."
 
 #: app/layers_dialog.c:1
 msgid "Keep Transparency"
-msgstr "Zachowanie prze¼roczysto¶ci"
+msgstr "Zachowanie przezroczysto¶ci"
 
 #: app/layers_dialog.c:1
 msgid "Empty Layer Copy"
@@ -2739,11 +2745,11 @@ msgstr "Pocz±tkowa maska warstwy:"
 
 #: app/layers_dialog.c:1
 msgid "White (Full Opacity)"
-msgstr "Bia³a (bez prze¼roczysto¶ci)"
+msgstr "Bia³a (bez przezroczysto¶ci)"
 
 #: app/layers_dialog.c:1
 msgid "Black (Full Transparency)"
-msgstr "Czarna (pe³na prze¼roczysto¶æ)"
+msgstr "Czarna (pe³na przezroczysto¶æ)"
 
 #: app/layers_dialog.c:1
 msgid "Layer's Alpha Channel"
@@ -3643,7 +3649,7 @@ msgstr "/Zaznaczenie z kana³u alfa"
 
 #: app/menus.c:1
 msgid "/Edit Layer Attributes..."
-msgstr "/Modyfikuj atrybuty warstwy..."
+msgstr "/Zmodyfikuj atrybuty warstwy..."
 
 #: app/menus.c:1
 msgid "/New Channel..."
@@ -3683,7 +3689,7 @@ msgstr "/Usuñ kana³"
 
 #: app/menus.c:1
 msgid "/Edit Channel Attributes..."
-msgstr "/Modyfikuj atrybuty kana³u..."
+msgstr "/Zmodyfikuj atrybuty kana³u..."
 
 #: app/menus.c:1
 msgid "/New Path"
@@ -4363,7 +4369,7 @@ msgstr "Wy¶wietlanie"
 
 #: app/preferences_dialog.c:1
 msgid "Transparency"
-msgstr "Prze¼roczysto¶æ"
+msgstr "Przezroczysto¶æ"
 
 #: app/preferences_dialog.c:1
 msgid "Light Checks"
@@ -4391,7 +4397,7 @@ msgstr "Tylko czarny"
 
 #: app/preferences_dialog.c:1
 msgid "Transparency Type:"
-msgstr "Renderowanie prze¼roczysto¶ci:"
+msgstr "Renderowanie przezroczysto¶ci:"
 
 #: app/preferences_dialog.c:1 app/preferences_dialog.c:1
 #: app/preferences_dialog.c:1
@@ -5381,7 +5387,7 @@ msgstr "/Narzêdzia/Rysowanie/Gumka"
 
 #: app/tools.c:1
 msgid "Erase to background or transparency"
-msgstr "Wycieranie do t³a lub prze¼roczysto¶ci"
+msgstr "Wycieranie do t³a lub przezroczysto¶ci"
 
 #: app/tools.c:1
 msgid "/Tools/Paint Tools/Airbrush"

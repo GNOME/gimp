@@ -1,13 +1,19 @@
-# (C) 2001 the Free Software Foundation
+# Copyright (C) 2001 Free Software Foundation, Inc.
+# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+# Aktualn± wersjê tego pliku mo¿esz odnale¼æ w repozytorium cvs.gnome.pl
+# (:pserver:anonymous@cvs.gnome.pl:/home/cvs, puste has³o)
+# Je¶li masz jakiekolwiek uwagi odnosz±ce siê do t³umaczenia lub chcesz
+# pomóc w jego rozwijaniu i pielêgnowaniu, napisz do nas na adres:
+# translators@gnome.pl
+# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 # GNOME PL Team <translators@gnome.pl>, 1999-2001
 # Artur Polaczyñski <artie@kmfms.com>, 1999.
-#
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins\n"
-"POT-Creation-Date: 2001-06-25 22:42+0200\n"
-"PO-Revision-Date: 2001-07-29 12:36+0200\n"
+"POT-Creation-Date: 2001-10-02 22:23+0200\n"
+"PO-Revision-Date: 2001-10-02 22:26+0200\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -808,12 +814,12 @@ msgstr "Opcje ogólne"
 #.
 #: plug-ins/Lighting/lighting_ui.c:1 plug-ins/MapObject/mapobject_ui.c:1
 msgid "Transparent Background"
-msgstr "Prze¼roczyste t³o"
+msgstr "Przezroczyste t³o"
 
 #: plug-ins/Lighting/lighting_ui.c:1
 msgid "Make destination image transparent where bump height is zero"
 msgstr ""
-"Tworzenie obrazu docelowego jako prze¼roczystego z zerow± wysoko¶ci± "
+"Tworzenie obrazu docelowego jako przezroczystego z zerow± wysoko¶ci± "
 "wypuk³o¶ci"
 
 #: plug-ins/Lighting/lighting_ui.c:1 plug-ins/MapObject/mapobject_ui.c:1
@@ -1173,7 +1179,7 @@ msgstr "Typ obiektu bêd±cego celem odwzorowania"
 
 #: plug-ins/MapObject/mapobject_ui.c:1
 msgid "Make image transparent outside object"
-msgstr "Ustawia t³o poza obiektem na prze¼roczyste"
+msgstr "Ustawia t³o poza obiektem na przezroczyste"
 
 #: plug-ins/MapObject/mapobject_ui.c:1
 msgid "Tile Source Image"
@@ -2355,7 +2361,7 @@ msgstr "Ustawienie otoczenia na kolor t³a"
 
 #: plug-ins/common/apply_lens.c:1
 msgid "Make Surroundings Transparent"
-msgstr "Otoczenie prze¼roczyste"
+msgstr "Otoczenie przezroczyste"
 
 #: plug-ins/common/apply_lens.c:1
 msgid "Lens Refraction Index:"
@@ -2407,7 +2413,7 @@ msgstr "Pionowo"
 #: plug-ins/common/papertile.c:1 plug-ins/gfig/gfig.c:1
 #: plug-ins/gimpressionist/general.c:1
 msgid "Transparent"
-msgstr "Prze¼roczysty"
+msgstr "Przezroczysty"
 
 #: plug-ins/common/blinds.c:1
 msgid "Displacement:"
@@ -2536,7 +2542,7 @@ msgstr "Przesuniêcie Y:"
 
 #: plug-ins/common/bumpmap.c:1
 msgid "Waterlevel:"
-msgstr "Poziom prze¼roczysto¶ci:"
+msgstr "Poziom przezroczysto¶ci:"
 
 #: plug-ins/common/bz2.c:1 plug-ins/common/bz2.c:1
 msgid "bz2: can't open bzip2ed file without a sensible extension\n"
@@ -3786,7 +3792,7 @@ msgid ""
 "Saving as opaque.\n"
 msgstr ""
 "GIF: Nie mo¿na w prosty sposób zredukowaæ bardziej kolorów.\n"
-"Zapis bez prze¼roczysto¶ci.\n"
+"Zapis bez przezroczysto¶ci.\n"
 
 #: plug-ins/common/gif.c:1
 msgid ""
@@ -4466,10 +4472,6 @@ msgstr "Optymalizacja"
 #: plug-ins/common/jpeg.c:1
 msgid "Progressive"
 msgstr "Przyrostowy"
-
-#: plug-ins/common/jpeg.c:1
-msgid "Force baseline JPEG (Readable by all decoders)"
-msgstr "Wymuszone \"JPEG baseline\" (odczytywane przez wszystkie dekodery)"
 
 #: plug-ins/common/jpeg.c:1
 msgid "Subsampling:"
@@ -6232,7 +6234,7 @@ msgstr "<Image>/Obraz/Alfa/Progowanie alfy..."
 
 #: plug-ins/common/threshold_alpha.c:1
 msgid "The layer preserves transparency."
-msgstr "Warstwa zachowuje prze¼roczysto¶æ."
+msgstr "Warstwa zachowuje przezroczysto¶æ."
 
 #: plug-ins/common/threshold_alpha.c:1
 msgid "RGBA/GRAYA drawable is not selected."
@@ -6240,7 +6242,7 @@ msgstr "Nie wybrano obrazu RGBA lub GRAYA"
 
 #: plug-ins/common/threshold_alpha.c:1
 msgid "Threshold Alpha: Coloring Transparency..."
-msgstr "Progowanie alfy: Kolorowanie prze¼roczysto¶ci..."
+msgstr "Progowanie alfy: Kolorowanie przezroczysto¶ci..."
 
 #: plug-ins/common/threshold_alpha.c:1
 msgid "Threshold Alpha"
@@ -6612,11 +6614,11 @@ msgstr "Tylko t³o"
 
 #: plug-ins/common/vpropagate.c:1
 msgid "More Opaque"
-msgstr "Mniej prze¼roczysty"
+msgstr "Mniej przezroczysty"
 
 #: plug-ins/common/vpropagate.c:1
 msgid "More Transparent"
-msgstr "Bardziej prze¼roczysty"
+msgstr "Bardziej przezroczysty"
 
 #: plug-ins/common/vpropagate.c:1
 msgid "<Image>/Filters/Distorts/Value Propagate..."
@@ -6828,6 +6830,14 @@ msgstr "<Toolbox>/Plik/Pobierz/Ze schowka"
 #: plug-ins/common/winclipboard.c:1
 msgid "Copying ..."
 msgstr "Kopiowanie..."
+
+#: plug-ins/common/winclipboard.c:1
+msgid "Unsupported format or Clipboard empty!"
+msgstr "Schowek jest pusty lub zawiera dane w nieobs³ugiwanym formacie!"
+
+#: plug-ins/common/winclipboard.c:1
+msgid "Can't get Clipboard data."
+msgstr "Nie mo¿na pobraæ danych ze schowka."
 
 #. ??? gimp_convert_rgb (image_ID);
 #.
@@ -7899,6 +7909,11 @@ msgstr "Kopia zapasowa obrazu po ka¿dym kroku"
 msgid "Continue"
 msgstr "Kontynuuj"
 
+#: plug-ins/gap/gap_filter_foreach.c:1
+#, c-format
+msgid "Skip %d"
+msgstr "Pomiñ %d"
+
 #: plug-ins/gap/gap_filter_foreach.c:1 plug-ins/gap/gap_mod_layer.c:1
 #, c-format
 msgid ""
@@ -8194,7 +8209,7 @@ msgstr "<Image>/Video/Przesuniêcie sekwencji ramek..."
 
 #: plug-ins/gap/gap_main.c:1
 msgid "<Image>/Video/Frames Modify..."
-msgstr "<Image>/Video/Modyfikuj ramki..."
+msgstr "<Image>/Video/Zmodyfikuj ramki..."
 
 #. Layer select modes
 #: plug-ins/gap/gap_mod_layer.c:1 plug-ins/gap/gap_range_ops.c:1
@@ -9598,11 +9613,11 @@ msgstr "Opcje ditheringu"
 
 #: plug-ins/gap/gap_range_ops.c:1
 msgid "Enable transparency"
-msgstr "Prze¼roczysto¶æ"
+msgstr "Przezroczysto¶æ"
 
 #: plug-ins/gap/gap_range_ops.c:1
 msgid "Enable dithering of transparency"
-msgstr "Dithering prze¼roczysto¶ci"
+msgstr "Dithering przezroczysto¶ci"
 
 #: plug-ins/gap/gap_range_ops.c:1
 msgid "Convert Frames to Indexed"
@@ -9737,7 +9752,7 @@ msgid ""
 "transparent parts are filled with BG color"
 msgstr ""
 "Rozmiar wynikowej warstwy jest rozmiarem ramki\n"
-"prze¼roczyste czê¶ci s± wype³niane kolorem t³a"
+"przezroczyste czê¶ci s± wype³niane kolorem t³a"
 
 #: plug-ins/gap/gap_range_ops.c:1
 msgid "select all Layers where Layername is equal to Pattern"
@@ -9924,7 +9939,7 @@ msgid ""
 "Remove Alpha Channel in resulting Frames. Transparent parts are filled with "
 "BG color."
 msgstr ""
-"Usuniêcie kana³u alfa w ramkach wynikowych. Prze¼roczyste czê¶ci s± "
+"Usuniêcie kana³u alfa w ramkach wynikowych. Przezroczyste czê¶ci s± "
 "wype³niane kolorem t³a."
 
 #: plug-ins/gap/gap_split.c:1
@@ -11185,7 +11200,7 @@ msgstr "T³o o jednolitym kolorze"
 #: plug-ins/gimpressionist/general.c:1
 msgid "Use a transparent background; Only the strokes painted will be visible"
 msgstr ""
-"Wykorzystuje prze¼roczyste t³o; widoczne bêd± tylko namalowane poci±gniêcia"
+"Wykorzystuje przezroczyste t³o; widoczne bêd± tylko namalowane poci±gniêcia"
 
 #: plug-ins/gimpressionist/general.c:1
 msgid "Paint edges"
@@ -11963,6 +11978,7 @@ msgstr "Utwórz"
 msgid "Edit Object"
 msgstr "Zmodyfikuj obiekt"
 
+#: plug-ins/imagemap/imap_cmd_guides.c:1
 #: plug-ins/imagemap/imap_cmd_guides.c:1
 msgid "Create Guides"
 msgstr "Utwórz prowadnice"
@@ -13065,6 +13081,11 @@ msgstr "G³ówny"
 msgid "Misc"
 msgstr "Ró¿ne"
 
+#. printf("width = %d, height = %d\n",BITMAP_WIDTH(marked),BITMAP_HEIGHT(marked));
+#: plug-ins/sel2path/pxl-outline.c:1
+msgid "Selection to Path..."
+msgstr "Zaznaczenie do ¶cie¿ki..."
+
 #: plug-ins/sel2path/sel2path.c:1
 msgid "<Image>/Select/To Path"
 msgstr "<Image>/Zaznaczenie/Do ¶cie¿ki"
@@ -13202,7 +13223,7 @@ msgstr "Zapis jako XJT"
 
 #: plug-ins/xjt/xjt.c:1
 msgid "Clear Transparent"
-msgstr "Czyszczenie prze¼roczystych"
+msgstr "Czyszczenie przezroczystych"
 
 #: plug-ins/xjt/xjt.c:1
 #, c-format
