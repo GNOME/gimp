@@ -1,16 +1,16 @@
-.TH GIMP 1 "13 Apr 1998" Version 1.0
+.TH GIMP 1 "31 May 1998" Version 1.0
 .SH NAME
 Gimp - an image manipulation and paint program.
 .SH SYNOPSIS
 .B gimp
 [\-h] [\-\-help] [-v] [\-\-version] [\-b] [\-\-batch \fI<commands>\fP] [\-n] [\-\-no\-interface]
 [\-\-no\-data] [\-\-verbose] [\-\-no\-shm] [\-\-no\-xshm] [\-\-display \fIdisplay\fP]
-[\-\-no\-splash] [\-\-no\-splash\-image] [\-\-debug\-handlers]
+[\-\-no\-splash] [\-\-no\-splash\-image] [\-\-debug\-handlers] [\-\-console\-messages]
 
 
 .SH DESCRIPTION
 .PP
-The \fIgimp\fP is the GNU Image Manipulation Program. It is used to edit and
+The \fIGIMP\fP is the GNU Image Manipulation Program. It is used to edit and
 manipulate images. It can load and save a variety of image formats and can
 be used to convert between formats. 
 .PP
@@ -18,8 +18,8 @@ Gimp can also be used as a paint program. It features a set of drawing and
 painting tools such as airbrush, clone, pencil, and paint brush. Painting 
 and drawing tools can be applied to an image with a variety of paint modes.
 It also offers an extensive array of selection tools like
- rectangle, ellipse, fuzzy select, bezier select,
- intelligent scissors, and select by color.  
+rectangle, ellipse, fuzzy select, bezier select,
+intelligent scissors, and select by color.  
 .PP
 Gimp offers a variety of plugins that perform a variety of image manipulations.
 Examples include bumpmap, edge detect, gaussian blur, and many others. 
@@ -73,6 +73,10 @@ Do not show the splash screen image as part of the splash screen.
 .TP 8
 .B \-\-debug\-handlers
 Enable debugging signal handlers.
+.TP 8
+.B \-\-console\-messages
+Do not popup dialog boxes on errors or warnings. Print the messages on
+the console instead.
 
 .SH ENVIRONMENT
 .PP

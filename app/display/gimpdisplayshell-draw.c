@@ -886,10 +886,10 @@ message_box (char        *message,
   GtkWidget *label_vbox;
   GtkWidget *label;
   GtkWidget *button;
-  char *str;
+  char *str, *orig;
 
   if (message)
-    message = g_strdup (message);
+    message = orig = g_strdup (message);
   else
     return NULL;
 
@@ -943,7 +943,7 @@ message_box (char        *message,
       gtk_widget_show (label);
     }
 
-  g_free (message);
+  g_free (orig);
 
   msg_box->mbox = mbox;
   msg_box->callback = callback;

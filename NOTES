@@ -1,8 +1,0 @@
-Some notes on GIMP-0.99.31:
-
-Please remove everything from your old plugins dir before upgrading to
-0.99.31. Some plugins are no longer in the dist and will not be updated.
-
--- Federico Mena <federico@nuclecu.unam.mx>
--- Christoph Hoegl <darkwing@bsddmail.franken.de>
--- Manish Singh <yosh@gimp.org>

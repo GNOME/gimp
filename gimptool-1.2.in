@@ -7,7 +7,7 @@ plug_in_dir=@gimpplugindir@
 data_dir=@gimpdatadir@
 
 usage="\
-Usage: gimptool [--prefix[=DIR]] [--exec-prefix[=DIR]] [--version] [--libs] [--cflags] [--build plug-in.c] [--install plug-in.c] [--install-admin plug-in.c] [--install-script script.scm] [--install-admin-script script.scm]"
+Usage: gimptool [--prefix[=DIR]] [--exec-prefix[=DIR]] [--version] [--libs] [--cflags] [--build plug-in.c] [--install plug-in.c] [--install-admin plug-in.c] [--install-bin plug-in] [--install-admin-bin plug-in] [--install-script script.scm] [--install-admin-script script.scm]"
 
 noarg="\
 Error: Need a plug-in source file to build"

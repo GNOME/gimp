@@ -1,42 +1,76 @@
 .TH GIMP "11 May 1998" Version 1.0
 .SH NAME
-gimp-tool - script to perform various Gimpy functions
+gimptool - script to perform various Gimpy functions
 .SH SYNOPSIS
-.B gimp-tool
+.B gimptool
 [\-\-prefix\fI[=DIR]\fP] [\-\-exec\-prefix\fI[=DIR]\fP] [\-\-version] [\-\-libs] [\-\-cflags]
-[\-\-build \fIplug-in.c\fP] [\-\-install \fIplug-in.c\fP] [\-\-install-admin plug-in.c]
+[\-\-build \fIplug\-in.c\fP] [\-\-install \fIplug\-in.c\fP] [\-\-install-admin \fIplug-in.c\fP]
+[\-\-install\-bin \fIplug\-in\fP] [\-\-\install\-admin\-bin \fIplug\-in\fP]
+[\-\-install\-script \fIscript.scm\fP] [\-\-\install\-admin\-script \fIscript.scm\fP]
+
+
 .SH DESCRIPTION
 .PP
-\fIgimp-tool\fP is a tool that can, among other things, build plug-ins
-and install them if they are distributed in one .c file.
+\fIgimptool\fP is a tool that can, among other things, build plug-ins
+or scripts and install them if they are distributed in one source file.
 .PP
-\fIgimp-tool\fP is also used by programs that need to know what libraries
-and include-paths \fIGimp\fP was compiled with. .m4 macros for use
-with GNU autoconf are also included, to make detection of these libraries
-et cetera easy for the upstream maintainer.
+\fIgimptool\fP can also be used by programs that need to know what libraries
+and include-paths \fIGimp\fP was compiled with. This is especially useful
+in Makefiles.
+
 .SH OPTIONS
 .l
-\fIgimp-tool\fP accepts the following options:
-.TP 8
-.B  \-\-build \fIplug-in.c\fP
-Compile and link \fIplug-in.c\fP into a Gimp plug-in.
-.TP 8
-.B  \-\-install \fIplug-in.c\fP
-Compile, link, and install \fIplug-in.c\fP into the user's personal Gimp
-configuration directory (for example, /home/che/.gimp/plug-ins/)
-.TP 8
-.B  \-\-install\-admin \fIplug-in.c\fP
-Compile, link, and install \fIplug-in.c\fP into the system-wide Gimp
-plug-ins directory (for example, /usr/lib/gimp/0.99/plug-ins/)
+\fIgimptool\fP accepts the following options:
 .TP 8
 .B  \-\-version
-Display the currently installed version of Gimp.
+Print the currently installed version of \fIGimp\fP on the standard output.
+.TP 8
+.B  \-\-build \fIplug-in.c\fP
+Compile and link \fIplug-in.c\fP into a \fIGimp\fP plug-in.
+.TP 8
+.B  \-\-install \fIplug-in.c\fP
+Compile, link, and install \fIplug-in.c\fP into the user's personal \fIGimp\fP
+plug-in directory (\fB$HOME\fP/.gimp/plug-ins)
+.TP 8
+.B  \-\-install\-admin \fIplug-in.c\fP
+Compile, link, and install \fIplug-in.c\fP into the system-wide \fIGimp\fP
+plug-in directory (\fB$PREFIX\fP/lib/gimp/1.0/plug-ins)
+.TP 8
+.B  \-\-install\-bin \fIplug-in\fP
+Install \fIplug-in\fP into the user's personal \fIGimp\fP
+plug-in directory (\fB$HOME\fP/.gimp/plug-ins)
+.TP 8
+.B  \-\-install\-admin\-bin \fIplug-in\fP
+Install \fIplug-in\fP into the system-wide \fIGimp\fP
+plug-in directory (\fB$PREFIX\fP/lib/gimp/1.0/plug-ins)
+.TP 8
+.B  \-\-install\-script \fIscript.scm\fP
+Install \fIscript.scm\fP into the user's personal \fIGimp\fP
+script directory (\fB$HOME\fP/.gimp/scripts)
+.TP 8
+.B  \-\-install\-admin\-script \fIscript.scm\fP
+Install \fIscript.scm\fP into the system-wide \fIGimp\fP
+script directory (\fB$PREFIX\fP/share/gimp/scripts)
 .TP 8
 .B  \-\-libs
-Display the libraries Gimp was compiled with.
+Print the linker flags that are necessary to link a \fIGimp\fP plug-in.
 .TP 8
 .B  \-\-cflags
-Display the flags that were passed to the compiler when Gimp was compiled.
+Print the compiler flags that are necessary to compile a \fIGimp\fP plug-in.
+.TP 8
+.B  \-\-prefix=PREFIX
+If specified, use PREFIX instead of the installation prefix that \fIGimp\fP
+was built with when computing the output for the \-\-cflags and
+\-\-libs options. This option is also used for the exec prefix
+if \-\-exec\-prefix was not specified. This option must be specified
+before any \-\-libs or \-\-cflags options.
+.TP 8
+.B  \-\-exec\-prefix=PREFIX
+If specified, use PREFIX instead of the installation exec prefix that
+\fIGimp\fP was built with when computing the output for the \-\-cflags
+and \-\-libs options. This option must be specified before any
+\-\-libs or \-\-cflags options.
+
 .SH ENVIRONMENT
 .PP
 .TP 8
@@ -47,7 +81,7 @@ to get the location of the gtk-config program.
 to get the name of the desired C compiler.
 .TP 8
 .B CFLAGS
-to get the preferred flags to pass to the C compiler.
+to get the preferred flags to pass to the C compiler for plug-in building.
 .SH SEE ALSO
 .BR gimp (1),
 .BR gtk-config (1)

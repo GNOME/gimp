@@ -1,3 +1,21 @@
+Sun May 31 01:58:36 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* README
+	* INSTALL: make info a bit more current
+
+	* gimptool.in: update usage message
+
+	* gtkrc.forest2: sample gtkrc file with cool stuff from tigert
+
+	* gimp.1
+	* gimptool.1: updated/rewrote some
+
+	* app/fileops.c: removed the "might have tried to save an RGB
+	image with an indexed plugin" since g_message gives nice user
+	feedback now
+
+	* app/interface.c: fix the mem leak properly
+
 Sat May 30 23:42:12 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/interface.c: plug mem leak in message_box
