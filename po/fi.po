@@ -3,6 +3,12 @@
 # Ville Hautamäki <villeh@cs.joensuu.fi>
 # Tor Lillqvist <tml@iki.fi>
 #
+#	Convolve = konvoluution (Signaalin käsittelyssä käytetty käännös)
+#	drawable = kuva?, eikös sillä ole gimp:ssä ihan specifi merkitys?
+#	dodge = ?
+#	burn = ? (pitäisi tarkistaa nuo finski photoshopista)
+#
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1\n"
@@ -542,8 +548,7 @@ msgstr "Kahdenna kanava"
 msgid ""
 "Channel to Selection \n"
 "<Shift> Add          <Ctrl> Subtract      <Shift><Ctrl> Intersect"
-msgstr ""
-"Kanava valinnaksi \n"
+msgstr """Kanava valinnaksi \n"
 "<Shift> Lisää          <Ctrl> Poista      <Shift><Ctrl> Leikkaus"
 
 #: app/channels_dialog.c:251
@@ -621,7 +626,7 @@ msgstr "Linjassa"
 
 #: app/clone.c:157
 msgid "Registered"
-msgstr ""
+msgstr "Rekisteröity"
 
 #: app/clone.c:270
 msgid "No patterns available for this operation."
@@ -872,7 +877,7 @@ msgstr "Valitse räätälöity paletti"
 
 #: app/convolve.c:172
 msgid "Convolve Type"
-msgstr ""
+msgstr "Konvoluution tyyppi"
 
 #: app/convolve.c:176
 msgid "Blur"
@@ -1258,7 +1263,7 @@ msgstr "Päättele tiedoston tyyppi:"
 msgid "Can't revert. No filename associated with this image"
 msgstr ""
 "En voi palauttaa kuvaa ennalleen. En tiedä mistä tiedostosta kuva on "
-"alunperin lluettu."
+"alunperin luettu."
 
 #: app/fileops.c:575
 msgid "Revert failed."
@@ -1405,6 +1410,8 @@ msgid ""
 "Image resolution is out of bounds,\n"
 "using the default resolution instead."
 msgstr ""
+"Kuvan tarkkuus on rajan ulkopuolella,\n"
+"käytetään alkuarvo tarkkuutta."
 
 #: app/gimage_mask.c:211
 msgid ""
@@ -1506,7 +1513,7 @@ msgstr "Tuntemattoman kuvatyypin täyttö ei mahdollista."
 
 #: app/gimpdrawable.c:498
 msgid "parasite attach to drawable"
-msgstr ""
+msgstr "parasiitin liittäminen kuvaan"
 
 #: app/gimpdrawable.c:533
 msgid "detach parasite from drawable"
@@ -1527,14 +1534,18 @@ msgid ""
 "It probably was not compiled because\n"
 "you don't have GtkXmHTML installed."
 msgstr ""
+"Ei voitu löytää GIMP Help Browser proseduuria.\n"
+"Sitä ei todennäköisesti ole käännetty mukaan\n"
+"koska sinulla ei ole GtkXmHTML kirjastoa asennettuna."
+
 
 #: app/gimpimage.c:1176
 msgid "attach parasite to image"
-msgstr ""
+msgstr "liitä parasiitti kuvaan"
 
 #: app/gimpimage.c:1201
 msgid "detach parasite from image"
-msgstr ""
+msgstr "poista parasiitti kuvasta"
 
 #: app/gimpimage.c:2305
 msgid "Layer cannot be raised any further"
@@ -1619,7 +1630,7 @@ msgstr "Toiminnon eteneminen"
 
 #: app/gimpprogress.c:123 app/gimpprogress.c:170
 msgid "Please wait..."
-msgstr ""
+msgstr "Odota..."
 
 #: app/gimprc.c:415 app/plug_in.c:306
 msgid "Resource configuration"
@@ -1732,7 +1743,7 @@ msgstr "picaa"
 
 #: app/gimpunit.c:74
 msgid "percent"
-msgstr "%"
+msgstr "prosentti"
 
 #: app/global_edit.c:748
 msgid "Paste"
@@ -2597,7 +2608,7 @@ msgstr "Jakautuminen (Dodge)"
 
 #: app/layers_dialog.c:376 app/paint_funcs.c:87 app/tool_options.c:922
 msgid "Screen"
-msgstr ""
+msgstr "Kuva"
 
 #: app/layers_dialog.c:377 app/paint_funcs.c:88 app/tool_options.c:923
 msgid "Overlay"
@@ -2683,7 +2694,7 @@ msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
 msgstr ""
-"EPäkelpo leveys tai korkeus.\n"
+"Epäkelpo leveys tai korkeus.\n"
 "Molempien täytyy olla suurempi kuin nolla."
 
 #: app/layers_dialog.c:3956
@@ -3672,7 +3683,7 @@ msgstr "ohitan moduulia: \"%s\"\n"
 #: app/module_db.c:597
 #, c-format
 msgid "module load error: %s: %s"
-msgstr ""
+msgstr "moduulin latatus virhe: %s: %s"
 
 #: app/module_db.c:778
 msgid "<No modules>"
@@ -3738,7 +3749,7 @@ msgstr "Ikkuna-navigointi:%s-%d.%d"
 
 #: app/nav_window.c:1531
 msgid "Navigation: No Image"
-msgstr ""
+msgstr "Navigointi: ei kuvaa"
 
 #: app/paint_core.c:735
 msgid "No brushes available for use with this tool."
@@ -3763,7 +3774,7 @@ msgstr ""
 #. the gradient type
 #: app/paintbrush.c:300
 msgid "Type:"
-msgstr ""
+msgstr "Tyyppi:"
 
 #: app/paintbrush.c:314
 msgid "Once Forward"
@@ -3789,6 +3800,10 @@ msgid ""
 "missing magic header\n"
 "Does this file need converting from DOS?"
 msgstr ""
+"Ladataan palettia %s:\n"
+"Korruptoitunut paletti:\n"
+"puuttuva magic header\n"
+"Pitäisikö tämä tiedosto muuntaa DOS muodosta?"
 
 #: app/palette.c:419
 #, c-format
@@ -3796,6 +3811,8 @@ msgid ""
 "Loading palette %s:\n"
 "Corrupt palette: missing magic header"
 msgstr ""
+"Ladataan palettia %s:\n"
+"Korruptoitunut paletti: puuttuva magic header\n"
 
 #: app/palette.c:432
 #, c-format
@@ -3803,6 +3820,8 @@ msgid ""
 "Loading palette %s (line %d):\n"
 "Read error"
 msgstr ""
+"Ladataan palettia %s (rivi %d):\n"
+"Luku virhe"
 
 #. maybe we should just abort?
 #: app/palette.c:448
@@ -3811,6 +3830,8 @@ msgid ""
 "Loading palette %s (line %d):\n"
 "Missing RED component"
 msgstr ""
+"Ladataan palettia %s (rivi %d):\n"
+"Puuttuva PUNAINEN komponentti"
 
 #: app/palette.c:455
 #, c-format
@@ -3818,6 +3839,8 @@ msgid ""
 "Loading palette %s (line %d):\n"
 "Missing GREEN component"
 msgstr ""
+"Ladataan palettia %s (rivi %d):\n"
+"Puuttuva VIHREÄ komponentti"
 
 #: app/palette.c:462
 #, c-format
@@ -3825,6 +3848,8 @@ msgid ""
 "Loading palette %s (line %d):\n"
 "Missing BLUE component"
 msgstr ""
+"Ladataan palettia %s (rivi %d):\n"
+"Puuttuva SININEN komponentti"
 
 #: app/palette.c:471
 #, c-format
@@ -3832,11 +3857,13 @@ msgid ""
 "Loading palette %s (line %d):\n"
 "RGB value out of range"
 msgstr ""
+"Ladataan palettia %s (rivi %d):\n"
+"RGB arvot säädetyn alueen ulkopuolella"
 
 #: app/palette.c:519
 #, c-format
 msgid "can't save palette \"%s\"\n"
-msgstr ""
+msgstr "ei voi tallettaa palettia \"%s\"\n""
 
 #: app/palette.c:1162
 msgid "Black"
@@ -4168,7 +4195,7 @@ msgstr ""
 #: app/preferences_dialog.c:1007
 #, c-format
 msgid "The default comment is limited to %d characters."
-msgstr ""
+msgstr "Alkuperäinen kommentti on rajattu %d merkkiin."
 
 #: app/preferences_dialog.c:1430
 msgid "Preferences"
@@ -4689,7 +4716,7 @@ msgstr "Tilapäinen proseduuri"
 
 #: app/qmask.c:273
 msgid "Edit Qmask Attributes"
-msgstr ""
+msgstr "Muuta Qmask ominaisuuksia"
 
 #. The opacity scale
 #: app/qmask.c:301
@@ -4718,7 +4745,7 @@ msgstr "Valinta: "
 
 #: app/resize.c:156
 msgid "Scale Layer"
-msgstr ""
+msgstr "Skaalaa layeria"
 
 #: app/resize.c:158 app/resize.c:183 app/tool_options.c:796
 msgid "Size"
@@ -4770,7 +4797,7 @@ msgstr "Virhe: Sekä leveyden että korkeuden pitää olla nollaa suurempia."
 
 #: app/resize.c:1334
 msgid "Layer Too Small"
-msgstr ""
+msgstr "Layer liian pieni"
 
 #: app/resize.c:1338
 msgid ""
@@ -4778,6 +4805,9 @@ msgid ""
 "some layers completely away.\n"
 "Is this what you want?"
 msgstr ""
+"Valittu kuvakoko tulee poistamaan jotkut\n"
+"layerit kokonaan pois.\n"
+"Tätäkö haluat?"
 
 #: app/rotate_tool.c:83
 msgid "Rotation Information"
@@ -5223,7 +5253,7 @@ msgstr "Maalaa käyttäen kuviota tai kuvan osia"
 
 #: app/tools.c:502
 msgid "Convolve"
-msgstr ""
+msgstr "Konvoluutio"
 
 #: app/tools.c:503
 msgid "/Tools/Paint Tools/Convolve"
@@ -5516,7 +5546,7 @@ msgstr ""
 
 #: app/undo.c:2885
 msgid "guide"
-msgstr ""
+msgstr "apu"
 
 #: app/undo.c:2886
 msgid "text"
@@ -5586,11 +5616,11 @@ msgstr ""
 
 #: app/undo.c:2902
 msgid "attach parasite"
-msgstr ""
+msgstr "liitä parasiitti"
 
 #: app/undo.c:2903
 msgid "remove parasite"
-msgstr ""
+msgstr "poista parasiitti"
 
 #: app/undo.c:2904
 msgid "resolution change"
@@ -5611,7 +5641,7 @@ msgstr "sekalaiset"
 #: app/undo_history.c:427 app/undo_history.c:744
 #, c-format
 msgid "Undo History: %s"
-msgstr ""
+msgstr "Peruttujen historia: %s"
 
 #: app/undo_history.c:483
 msgid "[ base image ]"
@@ -5900,6 +5930,8 @@ msgid ""
 "Please wait while your personal\n"
 "GIMP directory is being created..."
 msgstr ""
+"Odotota kun henkilökohtainen\n"
+"GIMP hakemistoa luodaan..."
 
 #: app/user_install.c:541
 msgid "GIMP User Installation"
@@ -6140,15 +6172,17 @@ msgid ""
 "You can also press the \"Calibrate\" button to open a window\n"
 "which lets you determine your monitor resolution interactively."
 msgstr ""
+"Voit myös painaa \"Kalibroi\" nappia avataksesi ikkunan\n"
+"jolla voit määritellä monitorin tarkkuuden interaktiivisesti."
 
 #: app/user_install.c:1428
 msgid "Calibrate"
-msgstr ""
+msgstr "Kalibroi"
 
 #: app/xcf.c:383
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
-msgstr ""
+msgstr "XCF virhe: havaittua XCF tiedoston versiota %d ei tueta"
 
 #: app/xcf.c:1814
 msgid ""
@@ -6156,6 +6190,9 @@ msgid ""
 "did not save indexed colormaps correctly.\n"
 "Substituting grayscale map."
 msgstr ""
+"XCF varoitus: XCF tiedosto formaatin 0 versio\n"
+"ei tallettanut indeksoitujen väripaletteja oikein.\n"
+"Korvataan harmaasävy väripaletteja."
 
 #: modules/cdisplay_gamma.c:91
 msgid "Gamma color display filter"
