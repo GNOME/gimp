@@ -819,14 +819,15 @@ static gboolean
 bumpmap_dialog (void)
 {
   GtkWidget *dialog;
-  GtkWidget *main_vbox;
+  GtkWidget *hbox;
+  GtkWidget *vbox;
   GtkWidget *preview;
   GtkWidget *table;
   GtkWidget *combo;
   GtkWidget *button;
   GtkObject *adj;
-  gint       row = 0;
   gboolean   run;
+  gint       row = 0;
 
   gimp_ui_init ("bumpmap", TRUE);
 
@@ -839,13 +840,13 @@ bumpmap_dialog (void)
 
                             NULL);
 
-  main_vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
-  gtk_widget_show (main_vbox);
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), hbox);
+  gtk_widget_show (hbox);
 
   preview = gimp_drawable_preview_new (drawable, NULL);
-  gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
   g_signal_connect (preview, "invalidated",
                     G_CALLBACK (dialog_update_preview),
@@ -853,11 +854,14 @@ bumpmap_dialog (void)
   g_signal_connect (GIMP_PREVIEW (preview)->area, "event",
                     G_CALLBACK (dialog_preview_events), preview);
 
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
 
   table = gtk_table_new (12, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   /* Bump map menu */
