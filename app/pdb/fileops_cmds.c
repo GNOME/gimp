@@ -258,14 +258,16 @@ file_load_thumbnail_invoker (Gimp     *gimp,
     
       if (imagefile)
 	{
+	  gimp_imagefile_update (imagefile, GIMP_THUMBNAIL_SIZE_NORMAL);
 	  temp_buf = gimp_viewable_get_preview (GIMP_VIEWABLE (imagefile),
-						    GIMP_THUMBNAIL_SIZE_NORMAL,
+						GIMP_THUMBNAIL_SIZE_NORMAL,
 						GIMP_THUMBNAIL_SIZE_NORMAL);
-	  g_object_unref (imagefile);
 	}
     
       if (temp_buf)
 	{
+	  TempBuf *checks = NULL;
+    
 	  width  = temp_buf->width;
 	  height = temp_buf->height;
     
@@ -276,16 +278,18 @@ file_load_thumbnail_invoker (Gimp     *gimp,
     
 	    case 4:
 	      {
+		guchar *src, *dest;
+    
+		checks = temp_buf_new_check (width, height,
+					     GIMP_GRAY_CHECKS,
+					     GIMP_SMALL_CHECKS);
+    
+		src  = temp_buf_data (temp_buf);
+		dest = temp_buf_data (checks);
+    
     #define INT_MULT(a,b,t)  ((t) = (a) * (b) + 0x80, ((((t) >> 8) + (t)) >> 8))
     #define INT_BLEND(a,b,alpha,t)  (INT_MULT((a)-(b), alpha, t) + (b))
     
-		TempBuf *checks = temp_buf_new_check (width, height,
-							  GIMP_SMALL_CHECKS,
-						      GIMP_GRAY_CHECKS);
-    
-		guchar  *src  = temp_buf_data (temp_buf);
-		guchar  *dest = temp_buf_data (checks);
-		    
 		num_bytes = width * height;
 		while (num_bytes--)
 		  {
@@ -298,7 +302,6 @@ file_load_thumbnail_invoker (Gimp     *gimp,
 		    dest += 3;
 		  }
     
-		temp_buf_free (temp_buf);
 		temp_buf = checks;
 	      }
 	      break;
@@ -311,13 +314,18 @@ file_load_thumbnail_invoker (Gimp     *gimp,
 	  num_bytes  = 3 * width * height;
 	  thumb_data = g_memdup (temp_buf_data (temp_buf), num_bytes);
     
-	  temp_buf_free (temp_buf);
+	  if (checks)
+	    temp_buf_free (checks);
+    
 	  success = TRUE;
 	}
       else
 	{
 	  success = FALSE;
 	}
+    
+	if (imagefile)
+	  g_object_unref (imagefile);    
     
 	g_free (uri);
     }

@@ -1,3 +1,18 @@
+2003-08-25  Sven Neumann  <sven@gimp.org>
+
+	Fixed some issues with the PDB thumbnail functions spotted by
+	Wolfgang Hofer and loosely based on patches he provided:
+	
+	* tools/pdbgen/pdb/fileops.pdb (file_load_thumbnail): keep a
+	reference on the GimpImagefile as long as we need the associated
+	preview temp_buf. Call gimp_imagefile_update() before requesting
+	the preview.
+
+	* app/pdb/fileops_cmds.c: regenerated.
+
+	* app/base/temp-buf.c (temp_buf_new_check): use a checkerboard
+	algorithm similar to the one the displayshell-render code uses.
+
 2003-08-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpobject.[ch]: changed GimpObject::get_memsize() to

@@ -95,7 +95,7 @@ temp_buf_to_color (TempBuf *src_buf,
           *dest++ = tmpch;
         }
       break;
-      
+
     case 4:
       g_return_if_fail (src_buf->bytes == 2);
       while (num_pixels--)
@@ -239,7 +239,7 @@ temp_buf_new (gint    width,
 }
 
 /* This function simply renders a checkerboard with the given
-   parameters into a newly allocated tempbuf */
+   parameters into a newly allocated RGB tempbuf */
 
 TempBuf *
 temp_buf_new_check (gint           width,
@@ -250,25 +250,29 @@ temp_buf_new_check (gint           width,
   TempBuf *newbuf;
   guchar  *data;
   guchar   check_shift = 0;
-  guchar   fg_color = 0;
-  guchar   bg_color = 0;
-  gint     i, j;
+  guchar   check_mod   = 0;
+  guchar   fg_color    = 0;
+  guchar   bg_color    = 0;
+  gint     x, y;
 
   g_return_val_if_fail (width > 0 && height > 0, NULL);
 
   switch (check_size)
     {
     case GIMP_SMALL_CHECKS:
+      check_mod   = 0x3;
       check_shift = 2;
       break;
     case GIMP_MEDIUM_CHECKS:
-      check_shift = 4;
+      check_mod   = 0x7;
+      check_shift = 3;
       break;
     case GIMP_LARGE_CHECKS:
-      check_shift = 6;
+      check_mod   = 0xf;
+      check_shift = 4;
       break;
     }
- 
+
   switch (check_type)
     {
     case GIMP_LIGHT_CHECKS:
@@ -295,18 +299,28 @@ temp_buf_new_check (gint           width,
       fg_color = 0;
       bg_color = 0;
     }
- 
+
   newbuf = temp_buf_new (width, height, 3, 0, 0, NULL);
   data = temp_buf_data (newbuf);
 
-  for (i = 0, j = 1; i <= height; j++)
+  for (y = 0; y <= height; y++)
     {
-      for (i = 1; i <= width; i++)
+      guchar dark  = y >> check_shift;
+      guchar color = (dark & 0x1) ? bg_color : fg_color;
+
+      for (x = 0; x <= width; x++)
 	{
-	  *(data + i - 1) = ((j & check_shift) && (i & check_shift)) 
-	                    ? fg_color : bg_color;
-	}	  
-    } 
+          *data++ = color;
+          *data++ = color;
+          *data++ = color;
+
+          if (((x + 1) & check_mod) == 0)
+            {
+              dark += 1;
+              color = (dark & 0x1) ? bg_color : fg_color;
+            }
+        }
+    }
 
   return newbuf;
 }
@@ -393,7 +407,7 @@ temp_buf_resize (TempBuf *buf,
 
 TempBuf *
 temp_buf_scale (TempBuf *src,
-		gint     new_width, 
+		gint     new_width,
 		gint     new_height)
 {
   gint     loop1;
@@ -409,7 +423,7 @@ temp_buf_scale (TempBuf *src,
 
   dest = temp_buf_new (new_width,
 		       new_height,
-		       src->bytes, 
+		       src->bytes,
 		       0, 0, NULL);
 
   src_data  = temp_buf_data (src);
@@ -417,7 +431,7 @@ temp_buf_scale (TempBuf *src,
 
   x_ratio = (gdouble) src->width  / (gdouble) new_width;
   y_ratio = (gdouble) src->height / (gdouble) new_height;
-  
+
   for (loop1 = 0 ; loop1 < new_height ; loop1++)
     {
       for (loop2 = 0 ; loop2 < new_width ; loop2++)
@@ -511,7 +525,7 @@ temp_buf_copy_area (TempBuf *src,
 
 void
 temp_buf_free (TempBuf *temp_buf)
-{  
+{
   g_return_if_fail (temp_buf != NULL);
 
   if (temp_buf->data)
@@ -622,7 +636,7 @@ mask_buf_data_clear (MaskBuf *mask_buf)
  *    from disk.  In the former case, cached_in_memory is set to NULL;
  *    in the latter case, cached_in_memory is left unchanged.
  *    If temp_buf_swap_free is called, cached_in_memory must be checked
- *    against the temp buf being freed.  If they are the same, then 
+ *    against the temp buf being freed.  If they are the same, then
  *    cached_in_memory must be set to NULL;
  *
  *  In the case where memory usage is set to "stingy":
