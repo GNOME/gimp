@@ -364,9 +364,7 @@ gimp_iscissors_tool_init (GimpIscissorsTool *iscissors)
 static void
 gimp_iscissors_tool_finalize (GObject *object)
 {
-  GimpIscissorsTool *iscissors;
-
-  iscissors = GIMP_ISCISSORS_TOOL (object);
+  GimpIscissorsTool *iscissors = GIMP_ISCISSORS_TOOL (object);
 
   gimp_iscissors_tool_reset (iscissors);
 
@@ -529,14 +527,18 @@ static void
 iscissors_convert (GimpIscissorsTool *iscissors,
 		   GimpDisplay       *gdisp)
 {
-  GimpScanConvert *sc;
-  GimpVector2     *points;
-  guint            n_points;
-  GSList          *list;
-  ICurve          *icurve;
-  guint            packed;
-  gint             i;
-  gint             index;
+  GimpSelectionOptions *options;
+  GimpScanConvert      *sc;
+  GimpVector2          *points;
+  guint                 n_points;
+  GSList               *list;
+  ICurve               *icurve;
+  guint                 packed;
+  gint                  i;
+  gint                  index;
+
+  options =
+    GIMP_SELECTION_OPTIONS (GIMP_TOOL (iscissors)->tool_info->tool_options);
 
   sc = gimp_scan_convert_new ();
 
@@ -568,7 +570,8 @@ iscissors_convert (GimpIscissorsTool *iscissors,
   iscissors->mask = gimp_channel_new_mask (gdisp->gimage,
                                            gdisp->gimage->width,
                                            gdisp->gimage->height);
-  gimp_scan_convert_render (sc, GIMP_DRAWABLE (iscissors)->tiles, 0, 0, TRUE);
+  gimp_scan_convert_render (sc, GIMP_DRAWABLE (iscissors->mask)->tiles,
+                            0, 0, options->antialias);
   gimp_scan_convert_free (sc);
 }
 
@@ -962,9 +965,7 @@ gimp_iscissors_tool_oper_update (GimpTool        *tool,
                                  GdkModifierType  state,
                                  GimpDisplay     *gdisp)
 {
-  GimpIscissorsTool *iscissors;
-
-  iscissors = GIMP_ISCISSORS_TOOL (tool);
+  GimpIscissorsTool *iscissors = GIMP_ISCISSORS_TOOL (tool);
 
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, gdisp);
 
@@ -1010,11 +1011,9 @@ gimp_iscissors_tool_cursor_update (GimpTool        *tool,
                                    GdkModifierType  state,
                                    GimpDisplay     *gdisp)
 {
-  GimpIscissorsTool  *iscissors;
+  GimpIscissorsTool  *iscissors = GIMP_ISCISSORS_TOOL (tool);
   GdkCursorType       cursor    = GIMP_MOUSE_CURSOR;
   GimpCursorModifier  cmodifier = GIMP_CURSOR_MODIFIER_NONE;
-
-  iscissors = GIMP_ISCISSORS_TOOL (tool);
 
   switch (iscissors->op)
     {
@@ -1183,10 +1182,8 @@ mouse_over_vertex (GimpIscissorsTool *iscissors,
 static gboolean
 clicked_on_vertex (GimpTool *tool)
 {
-  GimpIscissorsTool *iscissors;
+  GimpIscissorsTool *iscissors    = GIMP_ISCISSORS_TOOL (tool);
   gint               curves_found = 0;
-
-  iscissors = GIMP_ISCISSORS_TOOL (tool);
 
   curves_found = mouse_over_vertex (iscissors, iscissors->x, iscissors->y);
 

@@ -1,3 +1,23 @@
+2003-10-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/core-types.h: added GimpScanConvert typedef.
+
+	* app/core/gimpscanconvert.h: removed it here.
+
+	* app/core/gimpchannel-select.[ch]: factored out new
+	function gimp_channel_select_scan_convert().
+
+	(gimp_channel_select_polygon)
+	(gimp_channel_select_vectors): use it.
+
+	(gimp_channel_select_alpha): when called on a layer without alpha,
+	don't fail but fake the effect of a fully opaque alpha channel.
+
+	* app/tools/gimpiscissorstool.c: some cleanup.
+
+	(iscissors_convert): fixed my latest cleanup (don't cast the
+	tool to a GimpGrawable ;). Don't ignore options->antialias.
+
 2003-10-08  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/script-fu/script-fu-scripts.c: fix SF_ADJUSTMENT handling

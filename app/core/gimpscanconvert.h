@@ -20,9 +20,6 @@
 #define __GIMP_SCAN_CONVERT_H__
 
 
-typedef struct _GimpScanConvert GimpScanConvert;
-
-
 /* Create a new scan conversion context.
  */
 GimpScanConvert * gimp_scan_convert_new        (void);

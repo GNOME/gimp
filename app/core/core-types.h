@@ -122,18 +122,13 @@ typedef struct _GimpUndoAccumulator GimpUndoAccumulator;
 /*  non-object types  */
 
 typedef struct _GimpCoords          GimpCoords;
-
 typedef struct _GimpGradientSegment GimpGradientSegment;
-
 typedef struct _GimpGuide           GimpGuide;
-
 typedef struct _GimpProgress        GimpProgress;
-
 typedef         guint32             GimpTattoo;
-
 typedef struct _GimpPaletteEntry    GimpPaletteEntry;
-
 typedef struct _GimpPlugInDebug     GimpPlugInDebug;
+typedef struct _GimpScanConvert     GimpScanConvert;
 
 
 /*  functions  */

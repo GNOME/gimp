@@ -37,6 +37,8 @@
 #include "gimp-intl.h"
 
 
+/*  basic selection functions  */
+
 void
 gimp_channel_select_rectangle (GimpChannel    *channel,
                                gint            x,
@@ -137,6 +139,53 @@ gimp_channel_select_ellipse (GimpChannel    *channel,
     }
 }
 
+
+/*  select by GimpScanConvert functions  */
+
+void
+gimp_channel_select_scan_convert (GimpChannel     *channel,
+                                  const gchar     *undo_desc,
+                                  GimpScanConvert *scan_convert,
+                                  gint             offset_x,
+                                  gint             offset_y,
+                                  GimpChannelOps   op,
+                                  gboolean         antialias,
+                                  gboolean         feather,
+                                  gdouble          feather_radius_x,
+                                  gdouble          feather_radius_y)
+{
+  GimpItem    *item;
+  GimpChannel *add_on;
+
+  g_return_if_fail (GIMP_IS_CHANNEL (channel));
+  g_return_if_fail (undo_desc != NULL);
+  g_return_if_fail (scan_convert != NULL);
+
+  gimp_channel_push_undo (channel, undo_desc);
+
+  /*  if applicable, replace the current selection  */
+  if (op == GIMP_CHANNEL_OP_REPLACE)
+    gimp_channel_clear (channel, NULL, FALSE);
+
+  item = GIMP_ITEM (channel);
+
+  add_on = gimp_channel_new_mask (gimp_item_get_image (item),
+                                  gimp_item_width (item),
+                                  gimp_item_height (item));
+  gimp_scan_convert_render (scan_convert,
+                            gimp_drawable_data (GIMP_DRAWABLE (add_on)),
+                            offset_x, offset_y, antialias);
+
+  if (feather)
+    gimp_channel_feather (add_on,
+                          feather_radius_x,
+                          feather_radius_y,
+                          FALSE /* no undo */);
+
+  gimp_channel_combine_mask (channel, add_on, op, 0, 0);
+  g_object_unref (add_on);
+}
+
 void
 gimp_channel_select_polygon (GimpChannel    *channel,
                              const gchar    *undo_desc,
@@ -148,41 +197,20 @@ gimp_channel_select_polygon (GimpChannel    *channel,
                              gdouble         feather_radius_x,
                              gdouble         feather_radius_y)
 {
-  GimpItem        *item;
   GimpScanConvert *scan_convert;
-  GimpChannel     *add_on;
 
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
-
-  gimp_channel_push_undo (channel, undo_desc);
-
-  /*  if applicable, replace the current selection  */
-  if (op == GIMP_CHANNEL_OP_REPLACE)
-    gimp_channel_clear (channel, NULL, FALSE);
+  g_return_if_fail (undo_desc != NULL);
 
   scan_convert = gimp_scan_convert_new ();
 
   gimp_scan_convert_add_polyline (scan_convert, n_points, points, TRUE);
 
-  item = GIMP_ITEM (channel);
-
-  add_on = gimp_channel_new_mask (gimp_item_get_image (item),
-                                  gimp_item_width (item),
-                                  gimp_item_height (item));
-  gimp_scan_convert_render (scan_convert,
-                            gimp_drawable_data (GIMP_DRAWABLE (add_on)),
-                            0, 0, antialias);
+  gimp_channel_select_scan_convert (channel, undo_desc, scan_convert, 0, 0,
+                                    op, antialias, feather,
+                                    feather_radius_x, feather_radius_y);
 
   gimp_scan_convert_free (scan_convert);
-
-  if (feather)
-    gimp_channel_feather (add_on,
-                          feather_radius_x,
-                          feather_radius_y,
-                          FALSE /* no undo */);
-
-  gimp_channel_combine_mask (channel, add_on, op, 0, 0);
-  g_object_unref (add_on);
 }
 
 void
@@ -200,6 +228,7 @@ gimp_channel_select_vectors (GimpChannel    *channel,
   gboolean         coords_added = FALSE;
 
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
+  g_return_if_fail (undo_desc != NULL);
   g_return_if_fail (GIMP_IS_VECTORS (vectors));
 
   scan_convert = gimp_scan_convert_new ();
@@ -237,38 +266,15 @@ gimp_channel_select_vectors (GimpChannel    *channel,
     }
 
   if (coords_added)
-    {
-      GimpItem    *item;
-      GimpChannel *add_on;
-
-      gimp_channel_push_undo (channel, undo_desc);
-
-      /*  if applicable, replace the current selection  */
-      if (op == GIMP_CHANNEL_OP_REPLACE)
-        gimp_channel_clear (channel, NULL, FALSE);
-
-      item = GIMP_ITEM (channel);
-
-      add_on = gimp_channel_new_mask (gimp_item_get_image (item),
-                                      gimp_item_width (item),
-                                      gimp_item_height (item));
-
-      gimp_scan_convert_render (scan_convert,
-                                gimp_drawable_data (GIMP_DRAWABLE (add_on)),
-                                0, 0, antialias);
-
-      if (feather)
-        gimp_channel_feather (add_on,
-                              feather_radius_x,
-                              feather_radius_y,
-                              FALSE /* no undo */);
-
-      gimp_channel_combine_mask (channel, add_on, op, 0, 0);
-      g_object_unref (add_on);
-    }
+    gimp_channel_select_scan_convert (channel, undo_desc, scan_convert, 0, 0,
+                                      op, antialias, feather,
+                                      feather_radius_x, feather_radius_y);
 
   gimp_scan_convert_free (scan_convert);
 }
+
+
+/*  select by GimpChannel functions  */
 
 void
 gimp_channel_select_channel (GimpChannel    *channel,
@@ -282,6 +288,7 @@ gimp_channel_select_channel (GimpChannel    *channel,
                              gdouble         feather_radius_y)
 {
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
+  g_return_if_fail (undo_desc != NULL);
   g_return_if_fail (GIMP_IS_CHANNEL (add_on));
 
   gimp_channel_push_undo (channel, undo_desc);
@@ -329,31 +336,40 @@ gimp_channel_select_alpha (GimpChannel    *channel,
 {
   GimpItem    *item;
   GimpChannel *add_on;
-  GimpRGB      color;
   gint         off_x, off_y;
 
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
   g_return_if_fail (GIMP_IS_LAYER (layer));
 
-  gimp_rgba_set (&color, 0.0, 0.0, 0.0, 1.0);
-
   item = GIMP_ITEM (channel);
 
-  add_on = gimp_channel_new_from_alpha (gimp_item_get_image (item),
-                                        layer, NULL, &color);
+  if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
+    {
+      GimpRGB color;
 
-  if (feather)
-    gimp_channel_feather (add_on,
-                          feather_radius_x,
-                          feather_radius_y,
-                          FALSE /* no undo */);
+      gimp_rgba_set (&color, 0.0, 0.0, 0.0, 1.0);
+
+      add_on = gimp_channel_new_from_alpha (gimp_item_get_image (item),
+                                            layer, NULL, &color);
+    }
+  else
+    {
+      /*  no alpha is equivalent to completely opaque alpha,
+       *  so simply select the whole layer's extents.  --mitch
+       */
+      add_on = gimp_channel_new_mask (gimp_item_get_image (item),
+                                      gimp_item_width (GIMP_ITEM (layer)),
+                                      gimp_item_height (GIMP_ITEM (layer)));
+      gimp_channel_all (add_on, FALSE);
+    }
 
   gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
 
   gimp_channel_select_channel (channel, _("Alpha to Selection"), add_on,
-                               off_x, off_y, op,
-                               FALSE, 0.0, 0.0);
-
+                               off_x, off_y,
+                               op, feather,
+                               feather_radius_x,
+                               feather_radius_y);
   g_object_unref (add_on);
 }
 
@@ -370,7 +386,7 @@ gimp_channel_select_component (GimpChannel     *channel,
   GimpRGB      color;
   GEnumClass  *enum_class;
   GEnumValue  *enum_value;
-  gchar       *name;
+  gchar       *undo_desc;
 
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
 
@@ -391,14 +407,14 @@ gimp_channel_select_component (GimpChannel     *channel,
   enum_value = g_enum_get_value (enum_class, component);
   g_type_class_unref (enum_class);
 
-  name = g_strdup_printf (_("%s Channel to Selection"),
-                          gettext (enum_value->value_name));
+  undo_desc = g_strdup_printf (_("%s Channel to Selection"),
+                               gettext (enum_value->value_name));
 
-  gimp_channel_select_channel (channel, name, add_on,
+  gimp_channel_select_channel (channel, undo_desc, add_on,
                                0, 0, op,
                                FALSE, 0.0, 0.0);
 
-  g_free (name);
+  g_free (undo_desc);
   g_object_unref (add_on);
 }
 
