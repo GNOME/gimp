@@ -194,17 +194,13 @@ gimp_layer_invalidate_preview (GimpViewable *viewable)
 {
   GimpLayer *layer;
 
+  if (GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview)
+    GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview (viewable);
+
   layer = GIMP_LAYER (viewable);
 
   if (gimp_layer_is_floating_sel (layer))
-    {
-      floating_sel_invalidate (layer);
-    }
-  else
-    {
-      if (GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview)
-	GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview (viewable);
-    }
+    floating_sel_invalidate (layer);
 }
 
 static void
@@ -1300,10 +1296,10 @@ gimp_layer_invalidate_boundary (GimpLayer *layer)
     return;
 
   /*  Turn the current selection off  */
-  gdisplays_selection_visibility (gimage, SelectionOff);
+  gdisplays_selection_visibility (gimage, SELECTION_OFF);
 
   /*  clear the affected region surrounding the layer  */
-  gdisplays_selection_visibility (gimage, SelectionLayerOff); 
+  gdisplays_selection_visibility (gimage, SELECTION_LAYER_OFF);
 
   /*  get the selection mask channel  */
   mask = gimp_image_get_mask (gimage);

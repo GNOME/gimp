@@ -143,40 +143,79 @@ gdisplay_new (GimpImage *gimage,
   /*
    *  Set all GDisplay parameters...
    */
-  gdisp = g_new (GDisplay, 1);
+  gdisp = g_new0 (GDisplay, 1);
 
-  gdisp->offset_x           = 0;
-  gdisp->offset_y           = 0;
-  gdisp->scale              = scale;
-  gdisp->dot_for_dot        = gimprc.default_dot_for_dot;
-  gdisp->gimage             = gimage;
-  gdisp->window_info_dialog = NULL;
-  gdisp->window_nav_dialog  = NULL;
-  gdisp->nav_popup          = NULL;
-  gdisp->select             = NULL;
-  gdisp->ID                 = display_num++;
-  gdisp->instance           = gimage->instance_count;
-  gdisp->update_areas       = NULL;
-  gdisp->display_areas      = NULL;
-  gdisp->disp_xoffset       = 0;
-  gdisp->disp_yoffset       = 0;
-  gdisp->current_cursor     = (GdkCursorType) -1;
-  gdisp->tool_cursor        = GIMP_TOOL_CURSOR_NONE;
-  gdisp->cursor_modifier    = GIMP_CURSOR_MODIFIER_NONE;
-  gdisp->draw_guides        = TRUE;
-  gdisp->snap_to_guides     = TRUE;
+  gdisp->ID                    = display_num++;
 
-  gdisp->draw_cursor           = FALSE;
-  gdisp->proximity             = FALSE;
-  gdisp->have_cursor           = FALSE;
-  gdisp->cursor_x              = 0;
-  gdisp->cursor_y              = 0;
-  gdisp->using_override_cursor = FALSE;
+  gdisp->ifactory              = NULL;
 
+  gdisp->shell                 = NULL;
+  gdisp->canvas                = NULL;
+  gdisp->hsb                   = NULL;
+  gdisp->vsb                   = NULL;
+  gdisp->qmaskoff              = NULL;
+  gdisp->qmaskon               = NULL;
+  gdisp->hrule                 = NULL;
+  gdisp->vrule                 = NULL;
+  gdisp->origin                = NULL;
+  gdisp->statusarea            = NULL;
+  gdisp->progressbar           = NULL;
+  gdisp->cursor_label          = NULL;
+  gdisp->cursor_format_str[0]  = '\0';
+  gdisp->cancelbutton          = NULL;
   gdisp->progressid = FALSE;
 
+  gdisp->window_info_dialog    = NULL;
+  gdisp->window_nav_dialog     = NULL;
+  gdisp->nav_popup             = NULL;
+  gdisp->warning_dialog        = NULL;
+
+  gdisp->hsbdata               = NULL;
+  gdisp->vsbdata               = NULL;
+
+  gdisp->icon                  = NULL;
+  gdisp->iconmask              = NULL;
+  gdisp->iconsize              = 0;
+  gdisp->icon_needs_update     = FALSE;
+  gdisp->icon_timeout_id       = 0;
+  gdisp->icon_idle_id          = 0;
+
+  gdisp->gimage                = gimage;
+  gdisp->instance              = gimage->instance_count;
+
+  gdisp->disp_width            = 0;
+  gdisp->disp_height           = 0;
+  gdisp->disp_xoffset          = 0;
+  gdisp->disp_yoffset          = 0;
+
+  gdisp->offset_x              = 0;
+  gdisp->offset_y              = 0;
+  gdisp->scale                 = scale;
+  gdisp->dot_for_dot           = gimprc.default_dot_for_dot;
+  gdisp->draw_guides           = TRUE;
+  gdisp->snap_to_guides        = TRUE;
+
+  gdisp->select                = NULL;
+
+  gdisp->scroll_gc             = NULL;
+
+  gdisp->update_areas          = NULL;
+  gdisp->display_areas         = NULL;
+
+  gdisp->current_cursor        = (GdkCursorType) -1;
+  gdisp->tool_cursor           = GIMP_TOOL_CURSOR_NONE;
+  gdisp->cursor_modifier       = GIMP_CURSOR_MODIFIER_NONE;
+
+  gdisp->override_cursor       = (GdkCursorType) -1;
+  gdisp->using_override_cursor = FALSE;
+
+  gdisp->draw_cursor           = FALSE;
+  gdisp->cursor_x              = 0;
+  gdisp->cursor_y              = 0;
+  gdisp->proximity             = FALSE;
+  gdisp->have_cursor           = FALSE;
+
   gdisp->idle_render.idleid       = -1;
-  /*gdisp->idle_render.handlerid = -1;*/
   gdisp->idle_render.update_areas = NULL;
   gdisp->idle_render.active       = FALSE;
 
@@ -185,13 +224,11 @@ gdisplay_new (GimpImage *gimage,
   gdisp->cd_ui   = NULL;
 #endif /* DISPLAY_FILTERS */
 
-  gdisp->warning_dialog = NULL;
-
   /* format the title */
   gdisplay_format_title (gdisp, title, MAX_TITLE_BUF);
 
   /*  add the new display to the list so that it isn't lost  */
-  display_list = g_slist_append (display_list, (void *) gdisp);
+  display_list = g_slist_append (display_list, gdisp);
 
   /*  create the shell for the image  */
   create_display_shell (gdisp, gimage->width, gimage->height,
@@ -223,7 +260,8 @@ gdisplay_new (GimpImage *gimage,
   gtk_object_sink (GTK_OBJECT (gimage));
 
   /* We're interested in clean and dirty signals so we can update the
-   * title if need be. */
+   * title if need be.
+   */
   gtk_signal_connect (GTK_OBJECT (gimage), "dirty",
 		      GTK_SIGNAL_FUNC (gdisplay_cleandirty_handler), gdisp);
   gtk_signal_connect (GTK_OBJECT (gimage), "clean",
@@ -421,14 +459,14 @@ gdisplay_delete (GDisplay *gdisp)
   info_window_free (gdisp->window_info_dialog);
 
   /* Remove navigation dialog */
-  nav_window_free (gdisp, gdisp->window_nav_dialog);
+  nav_dialog_free (gdisp, gdisp->window_nav_dialog);
 
   /*  free the gimage  */
   gdisp->gimage->disp_count--;
   gtk_object_unref (GTK_OBJECT (gdisp->gimage));
 
   if (gdisp->nav_popup)
-    nav_popup_free (gdisp->nav_popup);
+    nav_dialog_free (gdisp, gdisp->nav_popup);
 
   if (gdisp->icon_timeout_id)
     g_source_remove (gdisp->icon_timeout_id);
@@ -2146,6 +2184,33 @@ gdisplay_expose_full (GDisplay *gdisp)
 			     gdisp->disp_height);
 }
 
+void
+gdisplay_selection_visibility (GDisplay         *gdisp,
+			       SelectionControl  function)
+{
+  if (gdisp->select)
+    {
+      switch (function)
+	{
+	case SELECTION_OFF:
+	  selection_invis (gdisp->select);
+	  break;
+	case SELECTION_LAYER_OFF:
+	  selection_layer_invis (gdisp->select);
+	  break;
+	case SELECTION_ON:
+	  selection_start (gdisp->select, TRUE);
+	  break;
+	case SELECTION_PAUSE:
+	  selection_pause (gdisp->select);
+	  break;
+	case SELECTION_RESUME:
+	  selection_resume (gdisp->select);
+	  break;
+	}
+    }
+}
+
 /**************************************************/
 /*  Functions independent of a specific gdisplay  */
 /**************************************************/
@@ -2414,10 +2479,13 @@ gdisplays_nav_preview_resized (void)
       gdisp = (GDisplay *) list->data;
 
       if (gdisp->window_nav_dialog)
-	nav_window_preview_resized (gdisp->window_nav_dialog);
+	nav_dialog_preview_resized (gdisp->window_nav_dialog);
       
       if (gdisp->nav_popup)
-	nav_window_popup_preview_resized (&gdisp->nav_popup);
+	{
+	  nav_dialog_free (NULL, gdisp->nav_popup);
+	  gdisp->nav_popup = NULL;
+	}
     }
 }
 
@@ -2427,35 +2495,14 @@ gdisplays_selection_visibility (GimpImage        *gimage,
 {
   GDisplay *gdisp;
   GSList   *list;
-  gint      count = 0;
 
   /*  traverse the linked list of displays, handling each one  */
   for (list = display_list; list; list = g_slist_next (list))
     {
       gdisp = (GDisplay *) list->data;
 
-      if (gdisp->gimage == gimage && gdisp->select)
-	{
-	  switch (function)
-	    {
-	    case SelectionOff:
-	      selection_invis (gdisp->select);
-	      break;
-	    case SelectionLayerOff:
-	      selection_layer_invis (gdisp->select);
-	      break;
-	    case SelectionOn:
-	      selection_start (gdisp->select, TRUE);
-	      break;
-	    case SelectionPause:
-	      selection_pause (gdisp->select);
-	      break;
-	    case SelectionResume:
-	      selection_resume (gdisp->select);
-	      break;
-	    }
-	  count++;
-	}
+      if (gdisp->gimage == gimage)
+	gdisplay_selection_visibility (gdisp, function);
     }
 }
 

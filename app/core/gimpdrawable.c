@@ -312,7 +312,7 @@ gimp_drawable_invalidate_preview (GimpViewable *viewable)
   gimage = gimp_drawable_gimage (drawable);
 
   if (gimage)
-    gimage->comp_preview_valid = FALSE;
+    gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
 }
 
 void

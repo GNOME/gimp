@@ -193,24 +193,26 @@ scroll_display (GDisplay *gdisp,
       if (x_offset || y_offset)
 	gdisplays_flush ();
 
-      nav_window_update_window_marker(gdisp->window_nav_dialog); 
+      nav_dialog_update_window_marker (gdisp->window_nav_dialog); 
+
+      if (gdisp->nav_popup)
+	nav_dialog_update_window_marker (gdisp->nav_popup);
 
       /* Make sure graphics expose events are processed before scrolling
-       * again */
-      
-      while ((event = gdk_event_get_graphics_expose (gdisp->canvas->window)) 
-           != NULL)
-      {
-        gtk_widget_event (gdisp->canvas, event);
+       * again
+       */
+      while ((event = gdk_event_get_graphics_expose (gdisp->canvas->window)))
+	{
+	  gtk_widget_event (gdisp->canvas, event);
 
-        if (event->expose.count == 0)
-          {
-            gdk_event_free (event);
-            break;
-          }
+	  if (event->expose.count == 0)
+	    {
+	      gdk_event_free (event);
+	      break;
+	    }
 
-        gdk_event_free (event);
-      }
+	  gdk_event_free (event);
+	}
 
       return TRUE;
     }

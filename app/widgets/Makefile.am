@@ -62,6 +62,8 @@ libappwidgets_a_SOURCES = @STRIP_BEGIN@ \
 	gimplistitem.h			\
 	gimpmenuitem.c			\
 	gimpmenuitem.h			\
+	gimpnavigationpreview.c		\
+	gimpnavigationpreview.h		\
 	gimppalettepreview.c		\
 	gimppalettepreview.h		\
 	gimppatternpreview.c		\

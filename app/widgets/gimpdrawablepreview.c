@@ -106,24 +106,30 @@ gimp_drawable_preview_get_size (GimpPreview *preview,
   gboolean      scaling_up;
 
   drawable = GIMP_DRAWABLE (preview->viewable);
-  gimage   = drawable->gimage;
+  gimage   = gimp_drawable_gimage (drawable);
 
   if (gimage)
     {
-      gimp_preview_calc_size (gimage->width,
+      gimp_preview_calc_size (preview,
+			      gimage->width,
 			      gimage->height,
 			      size,
 			      size,
+			      gimage->xresolution,
+			      gimage->yresolution,
 			      width,
 			      height,
 			      &scaling_up);
     }
   else
     {
-      gimp_preview_calc_size (drawable->width,
+      gimp_preview_calc_size (preview,
+			      drawable->width,
 			      drawable->height,
 			      size,
 			      size,
+			      1.0,
+			      1.0,
 			      width,
 			      height,
 			      &scaling_up);
@@ -143,7 +149,7 @@ gimp_drawable_preview_render (GimpPreview *preview)
   TempBuf      *render_buf;
 
   drawable = GIMP_DRAWABLE (preview->viewable);
-  gimage   = drawable->gimage;
+  gimage   = gimp_drawable_gimage (drawable);
 
   width  = preview->width;
   height = preview->height;
@@ -155,20 +161,26 @@ gimp_drawable_preview_render (GimpPreview *preview)
       height = MAX (1, ROUND ((((gdouble) height / (gdouble) gimage->height) *
 			      (gdouble) drawable->height)));
 
-      gimp_preview_calc_size (drawable->width,
+      gimp_preview_calc_size (preview,
+			      drawable->width,
 			      drawable->height,
 			      width,
 			      height,
+			      gimage->xresolution,
+			      gimage->yresolution,
 			      &preview_width,
 			      &preview_height,
 			      &scaling_up);
     }
   else
     {
-      gimp_preview_calc_size (drawable->width,
+      gimp_preview_calc_size (preview,
+			      drawable->width,
 			      drawable->height,
 			      width,
 			      height,
+			      gimage ? gimage->xresolution : 1.0,
+			      gimage ? gimage->yresolution : 1.0,
 			      &preview_width,
 			      &preview_height,
 			      &scaling_up);
@@ -252,16 +264,21 @@ static GtkWidget *
 gimp_drawable_preview_create_popup (GimpPreview *preview)
 {
   GimpDrawable *drawable;
+  GimpImage    *gimage;
   gint          popup_width;
   gint          popup_height;
   gboolean      scaling_up;
 
   drawable = GIMP_DRAWABLE (preview->viewable);
+  gimage   = gimp_drawable_gimage (drawable);
 
-  gimp_preview_calc_size (drawable->width,
+  gimp_preview_calc_size (preview,
+			  drawable->width,
 			  drawable->height,
 			  MIN (preview->width  * 2, 256),
 			  MIN (preview->height * 2, 256),
+			  gimage ? gimage->xresolution : 1.0,
+			  gimage ? gimage->yresolution : 1.0,
 			  &popup_width,
 			  &popup_height,
 			  &scaling_up);

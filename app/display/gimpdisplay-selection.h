@@ -42,10 +42,10 @@ struct _Selection
   gint         index_layer;      /*  index of current stipple pattern  */
   gint         state;            /*  internal drawing state            */
   gint         paused;           /*  count of pause requests           */
-  gint         recalc;           /*  flag to recalculate the selection */
+  gboolean     recalc;           /*  flag to recalculate the selection */
   gint         speed;            /*  speed of marching ants            */
-  gint         hidden;           /*  is the selection hidden?          */
-  gint         timer;            /*  timer for successive draws        */
+  gboolean     hidden;           /*  is the selection hidden?          */
+  guint        timeout_id;       /*  timer for successive draws        */
   gint         cycle;            /*  color cycling turned on           */
   GdkPixmap   *cycle_pix;        /*  cycling pixmap                    */
 
@@ -57,22 +57,22 @@ struct _Selection
 };
 
 
-/*  Function declarations  */
+Selection * selection_create          (GdkWindow *window,
+				       GDisplay  *gdisp,
+				       gint       size,
+				       gint       width,
+				       gint       speed);
+void        selection_free            (Selection *select);
 
-Selection *  selection_create          (GdkWindow *win,
-					GDisplay  *disp,
-					gint       size,
-					gint       width,
-					gint       speed);
-void         selection_pause           (Selection *select);
-void         selection_resume          (Selection *select);
-void         selection_start           (Selection *select,
-					gint       recalc);
-void         selection_invis           (Selection *select);
-void         selection_layer_invis     (Selection *select);
-void         selection_hide            (Selection *select,
-					GDisplay  *gdisp);
-void         selection_free            (Selection *select);
+void        selection_pause           (Selection *select);
+void        selection_resume          (Selection *select);
+
+void        selection_start           (Selection *select,
+				       gboolean   recalc);
+void        selection_invis           (Selection *select);
+void        selection_layer_invis     (Selection *select);
+
+void        selection_toggle          (Selection *select);
 
 
 #endif  /*  __SELECTION_H__  */

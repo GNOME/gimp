@@ -26,11 +26,11 @@
 
 typedef enum
 {
-  SelectionOff,
-  SelectionLayerOff,
-  SelectionOn,
-  SelectionPause,
-  SelectionResume
+  SELECTION_OFF,
+  SELECTION_LAYER_OFF,
+  SELECTION_ON,
+  SELECTION_PAUSE,
+  SELECTION_RESUME
 } SelectionControl;
 
 
@@ -87,7 +87,6 @@ struct _IdleRenderStruct
   gint      basex;
   gint      basey;
   guint     idleid;
-  /*guint handlerid;*/
   gboolean  active;
   GSList   *update_areas;   /*  flushed update areas */
 };
@@ -101,7 +100,8 @@ struct _GDisplay
 
   GtkWidget  *shell;              /*  shell widget for this gdisplay          */
   GtkWidget  *canvas;             /*  canvas widget for this gdisplay         */
-  GtkWidget  *hsb, *vsb;          /*  widgets for scroll bars                 */
+  GtkWidget  *hsb;                /*  widgets for scroll bars                 */
+  GtkWidget  *vsb;
   GtkWidget  *qmaskoff;           /*  widgets for qmask buttons               */
   GtkWidget  *qmaskon;
   GtkWidget  *hrule;              /*  widgets for rulers                      */
@@ -119,9 +119,10 @@ struct _GDisplay
   GtkWidget  *cancelbutton;       /*  widget for cancel button                */
   guint       progressid;         /*  id of statusbar message for progress    */
 
-  InfoDialog *window_info_dialog; /*  dialog box for image information        */
-  InfoDialog *window_nav_dialog;  /*  dialog box for image navigation         */
-  GtkWidget  *nav_popup;          /*  widget for the popup navigation window  */
+  InfoDialog       *window_info_dialog; /*  dialog box for image information  */
+  NavigationDialog *window_nav_dialog;  /*  dialog box for image navigation   */
+  NavigationDialog *nav_popup;          /*  the popup navigation window       */
+  GtkWidget  *warning_dialog;     /* "Changes were made to %s. Close anyway?" */
 
   GtkAdjustment *hsbdata;         /*  horizontal data information             */
   GtkAdjustment *vsbdata;         /*  vertical data information               */
@@ -129,9 +130,9 @@ struct _GDisplay
   GdkPixmap *icon;		  /*  Pixmap for the icon                     */
   GdkBitmap *iconmask;		  /*  Bitmap for the icon mask                */
   guint      iconsize;            /*  The size of the icon pixmap             */
-  guint      icon_needs_update;   /*  Do we need to render a new icon?        */
-  gint       icon_timeout_id;     /*  The ID of the timeout-function          */
-  gint       icon_idle_id;        /*  The ID of the idle-function             */
+  gboolean   icon_needs_update;   /*  Do we need to render a new icon?        */
+  guint      icon_timeout_id;     /*  The ID of the timeout-function          */
+  guint      icon_idle_id;        /*  The ID of the idle-function             */
 
   GimpImage *gimage;	          /*  pointer to the associated gimage struct */
   gint       instance;            /*  the instance # of this gdisplay as      */
@@ -175,8 +176,6 @@ struct _GDisplay
   GList     *cd_list;             /* color display conversion stuff           */
   GtkWidget *cd_ui;		  /* color display filter dialog              */
 #endif /* DISPLAY_FILTERS */
-
-  GtkWidget *warning_dialog;      /* "Changes were made to %s. Close anyway?" */
 };
 
 
@@ -245,6 +244,8 @@ void       gdisplay_expose_area              (GDisplay           *gdisp,
 void       gdisplay_expose_guide             (GDisplay           *gdisp,
 					      GimpGuide          *guide);
 void       gdisplay_expose_full              (GDisplay           *gdisp);
+void       gdisplay_selection_visibility     (GDisplay           *gdisp,
+					      SelectionControl    function);
 void       gdisplay_flush                    (GDisplay           *gdisp);
 void       gdisplay_flush_now                (GDisplay           *gdisp);
 void       gdisplay_update_icon              (GDisplay           *gdisp);

@@ -101,7 +101,7 @@ info_window_image_rename_callback (GimpImage *gimage,
 
   gdisp = (GDisplay *) iwd->gdisp;
 
-  title = info_window_title(gdisp);
+  title = info_window_title (gdisp);
   gtk_window_set_title (GTK_WINDOW (id->shell), title);
   g_free (title);
 }
@@ -120,7 +120,7 @@ info_window_page_switch (GtkWidget       *widget,
 {
   InfoDialog  *info_win;
   InfoWinData *iwd;
-  
+
   info_win = (InfoDialog *) gtk_object_get_user_data (GTK_OBJECT (widget));
   iwd = (InfoWinData *) info_win->user_data;
 
@@ -317,18 +317,15 @@ info_window_create (GDisplay *gdisp)
   InfoDialog  *info_win;
   InfoWinData *iwd;
   gchar       *title;
-  gchar       *title_buf;
   gint         type;
 
-  title = g_basename (gimp_image_filename (gdisp->gimage));
   type = gimp_image_base_type (gdisp->gimage);
 
-  /*  create the info dialog  */
-  title_buf = info_window_title (gdisp);
-  info_win = info_dialog_notebook_new (title_buf,
+  title = info_window_title (gdisp);
+  info_win = info_dialog_notebook_new (title,
 				       gimp_standard_help_func,
 				       "dialogs/info_window.html");
-  g_free (title_buf);
+  g_free (title);
 
   /*  create the action area  */
   gimp_dialog_create_action_area (GTK_DIALOG (info_win->shell),
@@ -377,24 +374,23 @@ static InfoDialog *info_window_auto = NULL;
 static gchar *
 info_window_title (GDisplay *gdisp)
 {
+  gchar *basename;
   gchar *title;
-  gchar *title_buf;
-  
-  title = g_basename (gimp_image_filename (gdisp->gimage));
-  
-  /*  create the info dialog  */
-  title_buf = g_strdup_printf (_("Info: %s-%d.%d"), 
-			       title,
-			       gimp_image_get_ID (gdisp->gimage),
-			       gdisp->instance);
 
-  return title_buf;
+  basename = g_basename (gimp_image_filename (gdisp->gimage));
+  
+  title = g_strdup_printf (_("Info: %s-%d.%d"), 
+			   basename,
+			   gimp_image_get_ID (gdisp->gimage),
+			   gdisp->instance);
+
+  return title;
 }
 
 static void
-info_window_change_display (GimpContext *context, /* NOT USED */
+info_window_change_display (GimpContext *context,
 			    GDisplay    *newdisp,
-			    gpointer     data /* Not used */)
+			    gpointer     data)
 {
   GDisplay    *gdisp = newdisp;
   GDisplay    *old_gdisp;
@@ -420,29 +416,28 @@ info_window_change_display (GimpContext *context, /* NOT USED */
 void
 info_window_follow_auto (void)
 {
-  GDisplay * gdisp;
+  GimpContext *context;
+  GDisplay    *gdisp;
 
-  gdisp = gdisplay_active (); 
-  
-  if (!gdisp) 
+  context = gimp_context_get_user ();
+
+  gdisp = gimp_context_get_display (context);
+
+  if (! gdisp)
     return;
 
-  if(!info_window_auto)
+  if (! info_window_auto)
     {
-      info_window_auto = info_window_create ((void *) gdisp);
-      gtk_signal_connect (GTK_OBJECT (gimp_context_get_user ()), 
-			  "display_changed",
+      info_window_auto = info_window_create (gdisp);
+
+      gtk_signal_connect (GTK_OBJECT (context), "display_changed",
 			  GTK_SIGNAL_FUNC (info_window_change_display), 
 			  NULL);
-      info_window_update (gdisp); /* Update to include the info */
+
+      info_window_update (gdisp);
     }
 
   info_dialog_popup (info_window_auto);
-  /*
-  iwd = (NavWinData *)nav_window_auto->user_data;
-  gtk_widget_set_sensitive(nav_window_auto->vbox,TRUE);
-  iwd->frozen = FALSE;
-  */
 }
 
  
@@ -464,10 +459,10 @@ info_window_update_extended (GDisplay *gdisp,
   gboolean       force_update = FALSE;
   gint           i;
  
-  if (!info_win && info_window_auto != NULL)
+  if (! info_win && info_window_auto != NULL)
     info_win = info_window_auto;
 
-  if (!info_win)
+  if (! info_win)
     return;
 
   iwd = (InfoWinData *) info_win->user_data;
@@ -482,17 +477,18 @@ info_window_update_extended (GDisplay *gdisp,
       gchar *title;
 
       info_window_update (gdisp);
+
       title = info_window_title (gdisp);
       gtk_window_set_title (GTK_WINDOW (info_window_auto->shell), title);
       g_free (title);
     }
 
-  if (!iwd || !iwd->showing_extended)
+  if (! iwd || ! iwd->showing_extended)
     return;
 
   /* fill in position information */
 
-  if ( tx <  0.0 && ty < 0.0 )
+  if (tx < 0.0 && ty < 0.0)
     {
       iwd->unit_str = NULL;
       for (i = 0; i < 4; i++)
@@ -506,9 +502,10 @@ info_window_update_extended (GDisplay *gdisp,
       unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
       unit_digits = gimp_unit_get_digits (gdisp->gimage->unit);
 
-      if (iwd->unit_str != gimp_unit_get_plural (gdisp->gimage->unit))
+      if (iwd->unit_str != gimp_unit_get_abbreviation (gdisp->gimage->unit))
         {
-          iwd->unit_str = gimp_unit_get_plural (gdisp->gimage->unit);
+          iwd->unit_str = gimp_unit_get_abbreviation (gdisp->gimage->unit);
+
           gtk_label_set_text (GTK_LABEL (iwd->unit_labels[0]), iwd->unit_str);
           gtk_label_set_text (GTK_LABEL (iwd->unit_labels[1]), iwd->unit_str);
         }
@@ -533,9 +530,8 @@ info_window_update_extended (GDisplay *gdisp,
     }
 
   /* fill in color information */
-  /* gimp_image_active_drawable (gdisp->gimage) */
-  if (!(color = gimp_image_get_color_at (gdisp->gimage, tx, ty))
-      || (tx <  0.0 && ty < 0.0))
+  if (! (color = gimp_image_get_color_at (gdisp->gimage, tx, ty))
+      || (tx < 0.0 && ty < 0.0))
     {
       for (i = 0; i < 4; i++)
         gtk_label_set_text (GTK_LABEL (iwd->color_labels[i]), _("N/A"));
@@ -544,7 +540,7 @@ info_window_update_extended (GDisplay *gdisp,
     {
       sample_type = gimp_image_composite_type (gdisp->gimage);
 
-      for (i = RED_PIX; 
+      for (i = RED_PIX;
            i <= (GIMP_IMAGE_TYPE_HAS_ALPHA (sample_type) ? 
                  ALPHA_PIX : BLUE_PIX); 
            i++)
@@ -555,8 +551,8 @@ info_window_update_extended (GDisplay *gdisp,
       
       if (i == ALPHA_PIX)
 	gtk_label_set_text (GTK_LABEL (iwd->color_labels[i]), _("N/A"));
-                            
-      g_free(color);
+
+      g_free (color);
     }
 }
 
@@ -565,13 +561,13 @@ info_window_free (InfoDialog *info_win)
 {
   InfoWinData *iwd;
 
-  if (!info_win && info_window_auto)
+  if (! info_win && info_window_auto)
     {
       gtk_widget_set_sensitive (info_window_auto->vbox, FALSE);
       return;
     }
 
-  if (!info_win)
+  if (! info_win)
     return;
 
   iwd = (InfoWinData *) info_win->user_data;
@@ -592,28 +588,27 @@ info_window_update (GDisplay *gdisp)
   gchar        format_buf[32];
   InfoDialog  *info_win = gdisp->window_info_dialog;
 
-  if (!info_win && info_window_auto != NULL)
+  if (! info_win && info_window_auto != NULL)
     info_win = info_window_auto;
 
-  if (!info_win)
+  if (! info_win)
     return;
 
   iwd = (InfoWinData *) info_win->user_data;
 
-  /* Make it sensitive... */
   if (info_window_auto)
     gtk_widget_set_sensitive (info_window_auto->vbox, TRUE);
 
   /* If doing info_window_auto then return if this display
    * is not the one we are showing.
    */
-
   if (info_window_auto && iwd->gdisp != gdisp)
     return;
 
   /*  width and height  */
   unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
   unit_digits = gimp_unit_get_digits (gdisp->gimage->unit);
+
   g_snprintf (iwd->dimensions_str, MAX_BUF,
 	      _("%d x %d pixels"),
 	      (int) gdisp->gimage->width,
@@ -633,7 +628,7 @@ info_window_update (GDisplay *gdisp)
 
   /*  user zoom ratio  */
   g_snprintf (iwd->scale_str, MAX_BUF, "%d:%d",
-	   SCALEDEST (gdisp), SCALESRC (gdisp));
+	      SCALEDEST (gdisp), SCALESRC (gdisp));
 
   type = gimp_image_base_type (gdisp->gimage);
 
@@ -647,11 +642,12 @@ info_window_update (GDisplay *gdisp)
 		_("Indexed Color"), gdisp->gimage->num_cols, _("colors"));
 
   /*  visual class  */
-  if (type == RGB ||
-      type == INDEXED)
-    g_snprintf (iwd->visual_class_str, MAX_BUF, "%s", gettext (visual_classes[g_visual->type]));
+  if (type == RGB || type == INDEXED)
+    g_snprintf (iwd->visual_class_str, MAX_BUF, "%s",
+		gettext (visual_classes[g_visual->type]));
   else if (type == GRAY)
-    g_snprintf (iwd->visual_class_str, MAX_BUF, "%s", gettext (visual_classes[g_visual->type]));
+    g_snprintf (iwd->visual_class_str, MAX_BUF, "%s",
+		gettext (visual_classes[g_visual->type]));
 
   /*  visual depth  */
   g_snprintf (iwd->visual_depth_str, MAX_BUF, "%d", g_visual->depth);

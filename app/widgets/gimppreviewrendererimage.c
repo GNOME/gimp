@@ -104,10 +104,13 @@ gimp_image_preview_get_size (GimpPreview *preview,
 
   gimage = GIMP_IMAGE (preview->viewable);
 
-  gimp_preview_calc_size (gimage->width,
+  gimp_preview_calc_size (preview,
+			  gimage->width,
 			  gimage->height,
 			  size,
 			  size,
+			  gimage->xresolution,
+			  gimage->yresolution,
 			  width,
 			  height,
 			  &scaling_up);
@@ -129,10 +132,13 @@ gimp_image_preview_render (GimpPreview *preview)
   width  = preview->width;
   height = preview->height;
 
-  gimp_preview_calc_size (gimage->width,
+  gimp_preview_calc_size (preview,
+			  gimage->width,
 			  gimage->height,
 			  width,
 			  height,
+			  gimage->xresolution,
+			  gimage->yresolution,
 			  &preview_width,
 			  &preview_height,
 			  &scaling_up);
@@ -203,10 +209,13 @@ gimp_image_preview_create_popup (GimpPreview *preview)
 
   gimage = GIMP_IMAGE (preview->viewable);
 
-  gimp_preview_calc_size (gimage->width,
+  gimp_preview_calc_size (preview,
+			  gimage->width,
 			  gimage->height,
 			  MIN (preview->width  * 2, 256),
 			  MIN (preview->height * 2, 256),
+			  gimage->xresolution,
+			  gimage->yresolution,
 			  &popup_width,
 			  &popup_height,
 			  &scaling_up);

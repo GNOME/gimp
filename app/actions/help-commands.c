@@ -592,7 +592,7 @@ view_info_window_cmd_callback (GtkWidget *widget,
   if (! gimprc.info_window_follows_mouse) 
     {
       if (! gdisp->window_info_dialog)
-	gdisp->window_info_dialog = info_window_create ((void *) gdisp);
+	gdisp->window_info_dialog = info_window_create (gdisp);
 
       info_window_update (gdisp);
       info_dialog_popup (gdisp->window_info_dialog);
@@ -613,13 +613,13 @@ view_nav_window_cmd_callback (GtkWidget *widget,
   if (gimprc.nav_window_per_display) 
     {
       if (! gdisp->window_nav_dialog)
-	gdisp->window_nav_dialog = nav_window_create ((void *) gdisp);
+	gdisp->window_nav_dialog = nav_dialog_create (gdisp);
 
       nav_dialog_popup (gdisp->window_nav_dialog);
     }
   else
     {
-      nav_window_follow_auto ();
+      nav_dialog_follow_auto ();
     }
 }
 
@@ -637,7 +637,8 @@ view_toggle_selection_cmd_callback (GtkWidget *widget,
   /*  hidden == TRUE corresponds to the menu toggle being FALSE  */
   if (new_val == gdisp->select->hidden)
     {
-      selection_hide (gdisp->select, (void *) gdisp);
+      selection_toggle (gdisp->select);
+
       gdisplays_flush ();
     }
 }

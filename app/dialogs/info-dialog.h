@@ -36,10 +36,10 @@ struct _InfoField
   InfoFieldType  field_type;
 
   GtkObject     *obj;
-  void          *value_ptr;
+  gpointer       value_ptr;
 
   GtkSignalFunc  callback;
-  gpointer       client_data;
+  gpointer       callback_data;
 };
 
 struct _InfoDialog

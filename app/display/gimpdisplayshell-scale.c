@@ -277,5 +277,8 @@ setup_scale (GDisplay *gdisp)
   gtk_widget_queue_draw (GTK_WIDGET (hruler));
   gtk_widget_queue_draw (GTK_WIDGET (vruler));
 
-  nav_window_update_window_marker (gdisp->window_nav_dialog);
+  nav_dialog_update_window_marker (gdisp->window_nav_dialog);
+
+  if (gdisp->nav_popup)
+    nav_dialog_update_window_marker (gdisp->nav_popup);
 }

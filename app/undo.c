@@ -487,7 +487,7 @@ pop_stack (GimpImage  *gimage,
 	  /*  If the size_changed flag was set  */
 	  if (size_changed)
 	    {
-	      gimp_image_size_changed (gimage);
+	      gimp_viewable_size_changed (GIMP_VIEWABLE (gimage));
 
 	      size_changed = FALSE;
 	    }

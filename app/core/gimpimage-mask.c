@@ -143,7 +143,7 @@ gimage_mask_invalidate (GimpImage *gimage)
   GimpChannel *mask;
 
   /*  Turn the current selection off  */
-  gdisplays_selection_visibility (gimage, SelectionOff);
+  gdisplays_selection_visibility (gimage, SELECTION_OFF);
 
   mask = gimp_image_get_mask (gimage);
   mask->boundary_known = FALSE;

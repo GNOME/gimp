@@ -21,20 +21,19 @@
 #define __NAV_WINDOW_H__
 
 
-InfoDialog * nav_window_create                (GDisplay       *gdisp);
-void         nav_window_free                  (GDisplay       *gdisp,
-					       InfoDialog     *idialog);
-void         nav_window_update_window_marker  (InfoDialog     *idialog);
-void         nav_dialog_popup                 (InfoDialog     *idialog);
-void         nav_window_preview_resized       (InfoDialog     *idialog);
-void         nav_window_popup_preview_resized (GtkWidget     **widget);
-void         nav_window_follow_auto           (void);
+NavigationDialog * nav_dialog_create          (GDisplay         *gdisp);
+void               nav_dialog_free            (GDisplay         *gdisp,
+					       NavigationDialog *nav_dialog);
 
-/* popup functions */
-void         nav_popup_click_handler          (GtkWidget      *widget,
-					       GdkEventButton *event,
-					       gpointer        data);
-void         nav_popup_free                   (GtkWidget      *widget);
+void         nav_dialog_popup                 (NavigationDialog *nav_dialog);
+void         nav_dialog_follow_auto           (void);
+
+void         nav_dialog_update_window_marker  (NavigationDialog *nav_dialog);
+void         nav_dialog_preview_resized       (NavigationDialog *nav_dialog);
+
+void         nav_popup_click_handler          (GtkWidget        *widget,
+					       GdkEventButton   *event,
+					       gpointer          data);
 
 
 #endif /*  __NAV_WINDOW_H__  */

@@ -34,6 +34,7 @@
 enum
 {
   INVALIDATE_PREVIEW,
+  SIZE_CHANGED,
   GET_PREVIEW,
   GET_NEW_PREVIEW,
   LAST_SIGNAL
@@ -94,6 +95,15 @@ gimp_viewable_class_init (GimpViewableClass *klass)
 		    gtk_signal_default_marshaller,
 		    GTK_TYPE_NONE, 0);
 
+  viewable_signals[SIZE_CHANGED] =
+    gtk_signal_new ("size_changed",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpViewableClass,
+				       size_changed),
+                    gtk_signal_default_marshaller,
+                    GTK_TYPE_NONE, 0);
+
   viewable_signals[GET_PREVIEW] =
     gtk_signal_new ("get_preview",
 		    GTK_RUN_LAST,
@@ -121,6 +131,7 @@ gimp_viewable_class_init (GimpViewableClass *klass)
   gtk_object_class_add_signals (object_class, viewable_signals, LAST_SIGNAL);
 
   klass->invalidate_preview = gimp_viewable_real_invalidate_preview;
+  klass->size_changed       = NULL;
   klass->get_preview        = NULL;
   klass->get_new_preview    = NULL;
 }
@@ -137,6 +148,15 @@ gimp_viewable_invalidate_preview (GimpViewable *viewable)
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
 
   gtk_signal_emit (GTK_OBJECT (viewable), viewable_signals[INVALIDATE_PREVIEW]);
+}
+
+void
+gimp_viewable_size_changed (GimpViewable *viewable)
+{
+  g_return_if_fail (viewable);
+  g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
+
+  gtk_signal_emit (GTK_OBJECT (viewable), viewable_signals[SIZE_CHANGED]);
 }
 
 static void

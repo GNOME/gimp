@@ -47,6 +47,8 @@ typedef struct _ImageMap            ImageMap;
 
 typedef struct _InfoDialog          InfoDialog;
 
+typedef struct _NavigationDialog    NavigationDialog;
+
 typedef struct _Path                Path;
 typedef struct _PathPoint           PathPoint;
 typedef struct _PathList            PathList;

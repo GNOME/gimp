@@ -900,12 +900,11 @@ prefs_cancel_callback (GtkWidget *widget,
       gimprc.transparency_size = old_transparency_size;
 
       render_setup (gimprc.transparency_type, gimprc.transparency_size);
+
       gimp_container_foreach (image_context,
 			      (GFunc) gimp_image_invalidate_layer_previews,
 			      NULL);
-      gimp_container_foreach (image_context,
-			      (GFunc) gimp_viewable_invalidate_preview,
-			      NULL);
+
       gdisplays_expose_full ();
       gdisplays_flush ();
     }

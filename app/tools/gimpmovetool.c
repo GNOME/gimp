@@ -31,7 +31,6 @@
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
-#include "selection.h"
 #include "undo.h"
 
 #include "gimpeditselectiontool.h"
@@ -368,7 +367,7 @@ move_tool_button_release (GimpTool       *tool,
 	  move_tool_motion (tool, NULL, gdisp);
 	}
 
-      selection_resume (gdisp->select);
+      gdisplay_selection_visibility (gdisp, SELECTION_RESUME);
       gdisplays_flush ();
 
       if (move->guide)
@@ -558,7 +557,7 @@ gimp_move_tool_start_hguide (GimpTool *tool,
 
   move = GIMP_MOVE_TOOL (tool);
 
-  selection_pause (gdisp->select);
+  gdisplay_selection_visibility (gdisp, SELECTION_PAUSE);
 
   tool->gdisp       = gdisp;
   tool->scroll_lock = TRUE;
@@ -582,7 +581,7 @@ gimp_move_tool_start_vguide (GimpTool *tool,
 
   move = GIMP_MOVE_TOOL (tool);
 
-  selection_pause (gdisp->select);
+  gdisplay_selection_visibility (gdisp, SELECTION_PAUSE);
 
   tool->gdisp       = gdisp;
   tool->scroll_lock = TRUE;

@@ -23,20 +23,22 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "core/core-types.h"
+#include "widgets/widgets-types.h"
 
 #include "base/temp-buf.h"
 
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimplist.h"
+
+#include "widgets/gimpnavigationpreview.h"
 
 #include "app_procs.h"
 #include "dialog_handler.h"
-#include "gui/info-dialog.h"
-#include "gui/info-window.h"
 #include "gdisplay.h"
 #include "nav_window.h"
 
@@ -51,8 +53,6 @@
 #include "pixmaps/zoom_out.xpm"
 
 
-#define MAX_BUF 256
-
 #define PREVIEW_MASK   GDK_EXPOSURE_MASK        | \
                        GDK_BUTTON_PRESS_MASK    | \
                        GDK_KEY_PRESS_MASK       | \
@@ -65,7 +65,7 @@
 #define NAV_PREVIEW_HEIGHT 112
 #define BORDER_PEN_WIDTH   3
 
-#define MAX_SCALE_BUF 20
+#define MAX_SCALE_BUF      20
 
 typedef enum
 {
@@ -73,19 +73,16 @@ typedef enum
   NAV_POPUP
 } NavWinType;
 
-/* Timeout before preview is updated */
-#define PREVIEW_UPDATE_TIMEOUT  1100
 
-typedef struct _NavWinData NavWinData;
-
-struct _NavWinData
+struct _NavigationDialog
 {
   NavWinType  ptype;
-  gboolean    showingPreview;
-  gboolean    installedDirtyTimer;
-  InfoDialog *info_win;
-  GtkWidget  *previewBox;
-  GtkWidget  *previewAlign;
+
+  GtkWidget  *shell;
+
+  GtkWidget  *new_preview;
+
+  GtkWidget  *preview_frame;
   GtkWidget  *zoom_label;
   GtkObject  *zoom_adjustment;
   GtkWidget  *preview;
@@ -95,71 +92,534 @@ struct _NavWinData
   gint        dispy;        /* y pos of top left corner of display area */
   gint        dispwidth;    /* width of display area */
   gint        dispheight;   /* height of display area */
-  gint        sig_hand_id;
+
   gboolean    sq_grabbed;   /* In the process of moving the preview square */
   gint        motion_offsetx;
   gint        motion_offsety;
+
   gint        pwidth;       /* real preview width */
   gint        pheight;      /* real preview height */
   gint        imagewidth;   /* width of the real image */
   gint        imageheight;  /* height of real image */
   gdouble     ratio;
-  gboolean    block_window_marker; /* Block redraws of window marker */
   gint        nav_preview_width;
   gint        nav_preview_height;
   gboolean    block_adj_sig; 
   gboolean    frozen;       /* Has the dialog been frozen ? */
-  guint       timer_id;
+  guint       idle_id;
 };
 
 
-static gint nav_window_preview_events       (GtkWidget  *widget, 
-					     GdkEvent   *event, 
-					     gpointer    data);
-static gint nav_window_expose_events        (GtkWidget  *widget, 
-					     GdkEvent   *event, 
-					     gpointer    data);
-static void nav_window_update_preview       (NavWinData *iwd);
-static void nav_window_update_preview_blank (NavWinData *iwd);
-static void destroy_preview_widget          (NavWinData *iwd);
-static void create_preview_widget           (NavWinData *iwd);
-static void nav_window_draw_sqr             (NavWinData *iwd, 
-					     gboolean    undraw,
-					     gint        x,
-					     gint        y,
-					     gint        w,
-					     gint        h);
-static void set_size_data                   (NavWinData *iwd);
-static gint nav_preview_update_do_timer     (NavWinData *iwd);
+static NavigationDialog * nav_dialog_new      (GDisplay         *gdisp,
+					       NavWinType        ptype);
+static gchar * nav_dialog_title               (GDisplay         *gdisp);
+
+static GtkWidget * nav_create_button_area     (NavigationDialog *nav_dialog);
+static void   nav_dialog_close_callback       (GtkWidget        *widget,
+					       gpointer          data);
+static void   nav_dialog_disp_area            (NavigationDialog *nav_dialog,
+					       GDisplay         *gdisp);
+static void   nav_dialog_draw_sqr             (NavigationDialog *nav_dialog,
+					       gboolean          undraw,
+					       gint              x,
+					       gint              y,
+					       gint              w,
+					       gint              h);
+static gboolean   nav_dialog_preview_events   (GtkWidget        *widget, 
+					       GdkEvent         *event, 
+					       gpointer          data);
+static gboolean   nav_dialog_expose_event     (GtkWidget        *widget, 
+					       GdkEvent         *event, 
+					       gpointer          data);
+
+static void   nav_dialog_idle_update_preview  (NavigationDialog *nav_dialog);
+static void   nav_dialog_update_preview       (NavigationDialog *nav_dialog);
+static void   nav_dialog_update_preview_blank (NavigationDialog *nav_dialog);
+
+static void   create_preview_widget           (NavigationDialog *nav_dialog);
+static void   set_size_data                   (NavigationDialog *nav_dialog);
+static void   nav_image_need_update           (GimpImage        *gimage,
+					       gpointer          data);
+
+static void   nav_dialog_display_changed      (GimpContext      *context,
+					       GDisplay         *gdisp,
+					       gpointer          data);
+
+static GDisplay * nav_dialog_get_gdisp        (void);
+
+static void   nav_dialog_grab_pointer         (NavigationDialog *nav_dialog,
+					       GtkWidget        *widget);
+static void   update_zoom_label               (NavigationDialog *nav_dialog);
+static void   update_zoom_adjustment          (NavigationDialog *nav_dialog);
 
 
-static void 
-nav_window_destroy_callback (GtkWidget *widget,
-			     gpointer   client_data)
+static NavigationDialog *nav_window_auto = NULL;
+
+
+/*  public functions  */
+
+static void
+nav_dialog_marker_changed (GimpNavigationPreview *nav_preview,
+			   gint                   x,
+			   gint                   y,
+			   NavigationDialog      *nav_dialog)
 {
-  InfoDialog *info_win;
+  GDisplay *gdisp;
+  gdouble   xratio;
+  gdouble   yratio;
+  gint      xoffset;
+  gint      yoffset;
+
+  gdisp = nav_dialog->gdisp;
+
+  xratio = SCALEFACTOR_X (gdisp);
+  yratio = SCALEFACTOR_Y (gdisp);
+
+  xoffset = x * xratio - gdisp->offset_x;
+  yoffset = y * yratio - gdisp->offset_y;
+
+  scroll_display (gdisp, xoffset, yoffset);
+}
+
+NavigationDialog *
+nav_dialog_create (GDisplay *gdisp)
+{
+  NavigationDialog *nav_dialog;
+  GtkWidget        *button_area;
+  GtkWidget        *abox;
+  gchar            *title;
+
+  title = nav_dialog_title (gdisp);
+
+  nav_dialog = nav_dialog_new (gdisp, NAV_WINDOW);
+
+  nav_dialog->shell = gimp_dialog_new (title, "navigation_dialog",
+				       gimp_standard_help_func,
+				       "dialogs/navigation_window.html",
+				       GTK_WIN_POS_MOUSE,
+				       FALSE, TRUE, TRUE,
+
+				       "_delete_event_", nav_dialog_close_callback,
+				       nav_dialog, NULL, NULL, TRUE, TRUE,
+
+				       NULL);
+
+  g_free (title);
+
+  gtk_widget_hide (GTK_WIDGET (g_list_nth_data (gtk_container_children (GTK_CONTAINER (GTK_BIN (nav_dialog->shell)->child)), 0)));
+
+  gtk_widget_hide (GTK_DIALOG (nav_dialog->shell)->action_area);
+
+  dialog_register (nav_dialog->shell);
+
+  gtk_signal_connect (GTK_OBJECT (nav_dialog->shell), "destroy",
+		      GTK_SIGNAL_FUNC (dialog_unregister),
+		      nav_dialog);
+  gtk_signal_connect_object (GTK_OBJECT (nav_dialog->shell), "destroy",
+			     GTK_SIGNAL_FUNC (g_free),
+			     (GtkObject *) nav_dialog);
+
+  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (nav_dialog->shell)->vbox), abox,
+		      TRUE, TRUE, 0);
+  gtk_widget_show (abox);
+
+  nav_dialog->preview_frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (nav_dialog->preview_frame),
+			     GTK_SHADOW_IN);
+  gtk_container_add (GTK_CONTAINER (abox), nav_dialog->preview_frame);
+  gtk_widget_show (nav_dialog->preview_frame);
+
+  create_preview_widget (nav_dialog);
+
+  {
+    GtkWidget *frame;
+    GtkWidget *preview;
+
+    abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+    gtk_box_pack_start (GTK_BOX (GTK_DIALOG (nav_dialog->shell)->vbox), abox,
+			TRUE, TRUE, 0);
+    gtk_widget_show (abox);
+
+    frame = gtk_frame_new (NULL);
+    gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+    gtk_container_add (GTK_CONTAINER (abox), frame);
+    gtk_widget_show (frame);
+
+    preview = gimp_navigation_preview_new (gdisp->gimage,
+					   gimprc.nav_preview_size);
+    gtk_container_add (GTK_CONTAINER (frame), preview);
+    gtk_widget_show (preview);
+
+    gtk_signal_connect (GTK_OBJECT (preview), "marker_changed",
+			GTK_SIGNAL_FUNC (nav_dialog_marker_changed),
+			nav_dialog);
+
+    nav_dialog->new_preview = preview;
+  }
+
+  button_area = nav_create_button_area (nav_dialog);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (nav_dialog->shell)->vbox),
+		      button_area, FALSE, FALSE, 0);
+  gtk_widget_show (button_area);
+
+  if (! gtk_object_get_data (GTK_OBJECT (gdisp->gimage), 
+			     "nav_handlers_installed"))
+    {
+      gtk_signal_connect_after (GTK_OBJECT (gdisp->gimage), "dirty",
+				GTK_SIGNAL_FUNC (nav_image_need_update),
+				nav_dialog);
+      gtk_signal_connect_after (GTK_OBJECT (gdisp->gimage), "clean",
+				GTK_SIGNAL_FUNC (nav_image_need_update),
+				nav_dialog);
+
+      gtk_object_set_data (GTK_OBJECT (gdisp->gimage), 
+			   "nav_handlers_installed",
+			   nav_dialog);
+    }
   
-  info_win = (InfoDialog *)client_data;
-  dialog_unregister(info_win->shell);
+  return nav_dialog;
+}
+
+void
+nav_dialog_free (GDisplay         *del_gdisp,
+		 NavigationDialog *nav_dialog)
+{
+  /* So this functions works both ways..
+   * it will come in here with nav_dialog == null
+   * if the auto mode is on...
+   */
+
+  if (! nav_dialog)
+    {
+      if (nav_window_auto != NULL)
+	{
+	  GDisplay *gdisp;
+
+	  nav_dialog = nav_window_auto;
+
+	  /* Only freeze if we are displaying the image we have deleted */
+	  if (nav_dialog->gdisp != del_gdisp)
+	    return;
+
+	  if (nav_dialog->idle_id)
+	    {
+	      g_source_remove (nav_dialog->idle_id);
+	      nav_dialog->idle_id = 0;
+	    }
+
+	  gdisp = nav_dialog_get_gdisp ();
+
+	  if (gdisp)
+	    {
+	      nav_dialog_display_changed (NULL, gdisp, nav_window_auto);
+	    }
+	  else
+	    {
+	      /* Clear window and freeze */
+	      nav_dialog->frozen = TRUE;
+	      nav_dialog_update_preview_blank (nav_window_auto); 
+	      gtk_window_set_title (GTK_WINDOW (nav_window_auto->shell), 
+				    _("Navigation: No Image"));
+
+	      gtk_widget_set_sensitive (nav_window_auto->shell, FALSE);
+	      nav_window_auto->gdisp = NULL;
+	      gtk_widget_hide (GTK_WIDGET (nav_window_auto->shell));
+	    }
+	}
+
+      return;
+    }
+
+  if (nav_dialog->idle_id)
+    {
+      g_source_remove (nav_dialog->idle_id);
+      nav_dialog->idle_id = 0;
+    }
+
+  gtk_widget_destroy (nav_dialog->shell);
+}
+
+void
+nav_dialog_popup (NavigationDialog *nav_dialog)
+{
+  if (! nav_dialog)
+    return;
+
+  if (! GTK_WIDGET_VISIBLE (nav_dialog->shell))
+    {
+      gtk_widget_show (nav_dialog->shell);
+
+      nav_dialog_idle_update_preview (nav_dialog);
+    }
+
+  gdk_window_raise (nav_dialog->shell->window);
+}
+
+void
+nav_dialog_follow_auto (void)
+{
+  GimpContext *context;
+  GDisplay    *gdisp;
+
+  context = gimp_context_get_user ();
+
+  gdisp = gimp_context_get_display (context);
+
+  if (! gdisp)
+    return;
+
+  if (! nav_window_auto)
+    {
+      nav_window_auto = nav_dialog_create (gdisp);
+
+      gtk_signal_connect (GTK_OBJECT (context), "display_changed",
+			  GTK_SIGNAL_FUNC (nav_dialog_display_changed),
+			  nav_window_auto);
+    }
+
+  nav_dialog_popup (nav_window_auto);
+
+  gtk_widget_set_sensitive (nav_window_auto->shell, TRUE);
+
+  nav_window_auto->frozen = FALSE;
+}
+
+void
+nav_dialog_update_window_marker (NavigationDialog *nav_dialog)
+{
+  /* So this functions works both ways..
+   * it will come in here with info_win == null
+   * if the auto mode is on...
+   */
+
+  if (! nav_dialog && nav_window_auto)
+    {
+      nav_dialog = nav_window_auto;
+
+      if (nav_dialog->frozen)
+	return;
+
+      nav_dialog_update_window_marker (nav_window_auto);
+
+      return;
+    }
+  else if (! nav_dialog)
+    {
+      return;
+    }
+
+  if (! GTK_WIDGET_VISIBLE (nav_dialog->shell))
+    return;
+
+  update_zoom_label (nav_dialog);
+  update_zoom_adjustment (nav_dialog);
+
+  /* Undraw old size */
+  nav_dialog_draw_sqr (nav_dialog,
+		       FALSE,
+		       nav_dialog->dispx, nav_dialog->dispy,
+		       nav_dialog->dispwidth, nav_dialog->dispheight);
+
+  /* Update to new size */
+  nav_dialog_disp_area (nav_dialog, nav_dialog->gdisp);
+
+  /* and redraw */
+  nav_dialog_draw_sqr (nav_dialog,
+		       FALSE,
+		       nav_dialog->dispx, nav_dialog->dispy,
+		       nav_dialog->dispwidth, nav_dialog->dispheight);
+}
+
+void 
+nav_dialog_preview_resized (NavigationDialog *nav_dialog)
+{
+  if (! nav_dialog)
+    return;
+
+  /* force regeneration of the widgets
+   * bit of a fiddle... could cause if the image really is 1x1
+   * but the preview would not really matter in that case.
+   */
+  nav_dialog->imagewidth = 1;
+  nav_dialog->imageheight = 1;
+
+  nav_dialog->nav_preview_width = 
+    (gimprc.nav_preview_size < 0 || gimprc.nav_preview_size > 256) ? 
+    NAV_PREVIEW_WIDTH : gimprc.nav_preview_size;
+
+  nav_dialog->nav_preview_height = 
+    (gimprc.nav_preview_size < 0 || gimprc.nav_preview_size > 256) ? 
+    NAV_PREVIEW_HEIGHT : gimprc.nav_preview_size;
+
+  nav_dialog_update_window_marker (nav_dialog);
+}
+
+void 
+nav_popup_click_handler (GtkWidget      *widget, 
+			 GdkEventButton *event, 
+			 gpointer        data)
+{
+  GdkEventButton   *bevent;
+  GDisplay         *gdisp = data;
+  NavigationDialog *nav_dialog;
+  gint              x, y;
+  gint              x_org, y_org;
+  gint              scr_w, scr_h;
+
+  bevent = (GdkEventButton *) event;
+
+  if (! gdisp->nav_popup)
+    {
+      GtkWidget *frame;
+
+      gdisp->nav_popup = nav_dialog = nav_dialog_new (gdisp, NAV_POPUP);
+
+      nav_dialog->shell = gtk_window_new (GTK_WINDOW_POPUP);
+      gtk_widget_set_events (nav_dialog->shell, PREVIEW_MASK);
+
+      gtk_signal_connect_object (GTK_OBJECT (nav_dialog->shell), "destroy",
+				 GTK_SIGNAL_FUNC (g_free),
+				 (GtkObject *) nav_dialog);
+
+      frame = gtk_frame_new (NULL);
+      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
+      gtk_container_add (GTK_CONTAINER (nav_dialog->shell), frame);
+      gtk_widget_show (frame);
+
+      nav_dialog->preview_frame = gtk_frame_new (NULL);
+      gtk_frame_set_shadow_type (GTK_FRAME (nav_dialog->preview_frame),
+				 GTK_SHADOW_IN);
+      gtk_container_add (GTK_CONTAINER (frame), nav_dialog->preview_frame);
+      gtk_widget_show (nav_dialog->preview_frame);
+
+      create_preview_widget (nav_dialog);
+
+      gtk_widget_set_extension_events (nav_dialog->preview,
+				       GDK_EXTENSION_EVENTS_ALL);
+
+      nav_dialog_disp_area (nav_dialog, nav_dialog->gdisp);
+    }
+  else
+    {
+      nav_dialog = gdisp->nav_popup;
+
+      gtk_widget_hide (nav_dialog->shell);
+
+      nav_dialog_disp_area (nav_dialog, nav_dialog->gdisp);
+      nav_dialog_update_preview (nav_dialog); 
+    }
+
+  /* decide where to put the popup */
+  gdk_window_get_origin (widget->window, &x_org, &y_org);
+
+  scr_w = gdk_screen_width ();
+  scr_h = gdk_screen_height ();
+
+  x = x_org + bevent->x - nav_dialog->dispx - 
+    ((nav_dialog->dispwidth - BORDER_PEN_WIDTH + 1) * 0.5) - 2;
+  y = y_org + bevent->y - nav_dialog->dispy - 
+    ((nav_dialog->dispheight - BORDER_PEN_WIDTH + 1)* 0.5) - 2;
+
+  /* If the popup doesn't fit into the screen, we have a problem.
+   * We move the popup onscreen and risk that the pointer is not
+   * in the square representing the viewable area anymore. Moving
+   * the pointer will make the image scroll by a large amount,
+   * but then it works as usual. Probably better than a popup that
+   * is completely unusable in the lower right of the screen.
+   *
+   * Warping the pointer would be another solution ... 
+   */
+  x = (x < 0) ? 0 : x;
+  y = (y < 0) ? 0 : y;
+  x = (x + nav_dialog->pwidth  > scr_w) ? scr_w - nav_dialog->pwidth  - 2: x;
+  y = (y + nav_dialog->pheight > scr_h) ? scr_h - nav_dialog->pheight - 2: y;
+
+  gtk_widget_popup (nav_dialog->shell, x, y);
+  gdk_flush();
+
+  /* fill in then set up handlers for mouse motion etc */
+  nav_dialog->motion_offsetx =
+    (nav_dialog->dispwidth  - BORDER_PEN_WIDTH + 1) * 0.5;
+
+  nav_dialog->motion_offsety =
+    (nav_dialog->dispheight - BORDER_PEN_WIDTH + 1) * 0.5;
+
+  if (GTK_WIDGET_VISIBLE (nav_dialog->preview))
+    nav_dialog_grab_pointer (nav_dialog, nav_dialog->preview);
+}
+
+
+/*  private functions  */
+
+static NavigationDialog *
+nav_dialog_new (GDisplay   *gdisp,
+		NavWinType  ptype)
+{
+  NavigationDialog *nav_dialog;
+
+  nav_dialog = g_new0 (NavigationDialog, 1);
+
+  nav_dialog->ptype               = ptype;
+  nav_dialog->shell               = NULL;
+  nav_dialog->preview             = NULL;
+  nav_dialog->zoom_label          = NULL;
+  nav_dialog->zoom_adjustment     = NULL;
+  nav_dialog->gdisp               = gdisp;
+  nav_dialog->dispx               = -1;
+  nav_dialog->dispy               = -1;
+  nav_dialog->dispwidth           = -1;
+  nav_dialog->dispheight          = -1;
+  nav_dialog->imagewidth          = -1;
+  nav_dialog->imageheight         = -1;
+  nav_dialog->sq_grabbed          = FALSE;
+  nav_dialog->ratio               = 1.0;
+
+  nav_dialog->nav_preview_width   = 
+    (gimprc.nav_preview_size < 0 || gimprc.nav_preview_size > 256) ? 
+    NAV_PREVIEW_WIDTH : gimprc.nav_preview_size;
+
+  nav_dialog->nav_preview_height  = 
+    (gimprc.nav_preview_size < 0 || gimprc.nav_preview_size > 256) ? 
+    NAV_PREVIEW_HEIGHT : gimprc.nav_preview_size;
+
+  nav_dialog->block_adj_sig       = FALSE;
+  nav_dialog->frozen              = FALSE;
+  nav_dialog->idle_id             = 0;
+
+  return nav_dialog;
+}
+
+static gchar *
+nav_dialog_title (GDisplay *gdisp)
+{
+  gchar *basename;
+  gchar *title;
+
+  basename = g_basename (gimp_image_filename (gdisp->gimage));
+
+  title = g_strdup_printf (_("Navigation: %s-%d.%d"), 
+			   basename,
+			   gimp_image_get_ID (gdisp->gimage),
+			   gdisp->instance);
+
+  return title;
 }
 
 static void
-nav_window_close_callback (GtkWidget *widget,
-			   gpointer   client_data)
+nav_dialog_close_callback (GtkWidget *widget,
+			   gpointer   data)
 {
-  InfoDialog *info_win;
-  NavWinData *iwd;
-  
-  info_win = (InfoDialog *)client_data;
-  iwd = (NavWinData *)info_win->user_data;
+  NavigationDialog *nav_dialog;
 
-  iwd->showingPreview = FALSE;
-  info_dialog_popdown ((InfoDialog *) client_data);
+  nav_dialog = (NavigationDialog *) data;
+
+  gtk_widget_hide (nav_dialog->shell);
 }
 
 static void
-nav_window_disp_area (NavWinData *iwd,
-		      GDisplay   *gdisp)
+nav_dialog_disp_area (NavigationDialog *nav_dialog,
+		      GDisplay         *gdisp)
 {
   GimpImage *gimage;
   gint       newwidth;
@@ -174,265 +634,243 @@ nav_window_disp_area (NavWinData *iwd,
   xratio = SCALEFACTOR_X (gdisp);
   yratio = SCALEFACTOR_Y (gdisp);
 
-  iwd->dispx = gdisp->offset_x * iwd->ratio / xratio + 0.5;
-  iwd->dispy = gdisp->offset_y * iwd->ratio/yratio + 0.5;
-  iwd->dispwidth  = (gdisp->disp_width * iwd->ratio) / xratio + 0.5;
-  iwd->dispheight = (gdisp->disp_height * iwd->ratio) / yratio + 0.5;
+  if (nav_dialog->new_preview)
+    {
+      if (GIMP_PREVIEW (nav_dialog->new_preview)->dot_for_dot !=
+	  gdisp->dot_for_dot)
+	gimp_preview_set_dot_for_dot (GIMP_PREVIEW (nav_dialog->new_preview),
+				      gdisp->dot_for_dot);
+
+      gimp_navigation_preview_set_marker
+	(GIMP_NAVIGATION_PREVIEW (nav_dialog->new_preview),
+	 RINT (gdisp->offset_x    / xratio),
+	 RINT (gdisp->offset_y    / yratio),
+	 RINT (gdisp->disp_width  / xratio),
+	 RINT (gdisp->disp_height / yratio));
+    }
+
+  nav_dialog->dispx = gdisp->offset_x * nav_dialog->ratio / xratio + 0.5;
+  nav_dialog->dispy = gdisp->offset_y * nav_dialog->ratio/yratio + 0.5;
+
+  nav_dialog->dispwidth  = (gdisp->disp_width  * nav_dialog->ratio) / xratio + 0.5;
+  nav_dialog->dispheight = (gdisp->disp_height * nav_dialog->ratio) / yratio + 0.5;
 
   newwidth  = gimage->width;
   newheight = gimage->height;
 
-  if (!gdisp->dot_for_dot)
+  if (! gdisp->dot_for_dot)
     {
-      newwidth = (newwidth * 
-		  gdisp->gimage->yresolution) / gdisp->gimage->xresolution;
-      iwd->dispx = ((gdisp->offset_x * 
-		     gdisp->gimage->yresolution * iwd->ratio) / 
-		    (gdisp->gimage->xresolution *  xratio)) + 0.5;     /*here*/
-      iwd->dispwidth = ((gdisp->disp_width * 
-			 gdisp->gimage->yresolution * iwd->ratio) / 
-			(gdisp->gimage->xresolution *  xratio)) + 0.5; /*here*/
+      newwidth =
+	(newwidth * gdisp->gimage->yresolution) / gdisp->gimage->xresolution;
+
+      nav_dialog->dispx =
+	((gdisp->offset_x * 
+	  gdisp->gimage->yresolution * nav_dialog->ratio) / 
+	 (gdisp->gimage->xresolution *  xratio)) + 0.5;     /*here*/
+
+      nav_dialog->dispwidth =
+	((gdisp->disp_width * 
+	  gdisp->gimage->yresolution * nav_dialog->ratio) / 
+	 (gdisp->gimage->xresolution *  xratio)) + 0.5; /*here*/
     }
 
-  if ((iwd->imagewidth > 0 && newwidth != iwd->imagewidth) ||
-      (iwd->imageheight > 0 && newheight != iwd->imageheight))
+  if ((nav_dialog->imagewidth  > 0 && newwidth  != nav_dialog->imagewidth) ||
+      (nav_dialog->imageheight > 0 && newheight != nav_dialog->imageheight))
     {
       /* Must change the preview size */
-      if (iwd->ptype != NAV_POPUP)
+
+      if (nav_dialog->ptype != NAV_POPUP)
 	{
-	  gtk_window_set_focus (GTK_WINDOW (iwd->info_win->shell), NULL);  
+	  gtk_window_set_focus (GTK_WINDOW (nav_dialog->shell), NULL);  
 	}
-      destroy_preview_widget (iwd);
-      create_preview_widget (iwd);
+
+      gtk_widget_destroy (nav_dialog->preview);
+      create_preview_widget (nav_dialog);
+
       need_update = TRUE;
     }
 
-  iwd->imagewidth  = newwidth;
-  iwd->imageheight = newheight;
+  nav_dialog->imagewidth  = newwidth;
+  nav_dialog->imageheight = newheight;
 
   /* Normalise */
-  iwd->dispwidth  = MAX (iwd->dispwidth, 2);
-  iwd->dispheight = MAX (iwd->dispheight, 2);
+  nav_dialog->dispwidth  = MAX (nav_dialog->dispwidth,  2);
+  nav_dialog->dispheight = MAX (nav_dialog->dispheight, 2);
 
-  iwd->dispwidth = MIN (iwd->dispwidth, iwd->pwidth /* - BORDER_PEN_WIDTH */);
-  iwd->dispheight = MIN (iwd->dispheight, iwd->pheight /* - BORDER_PEN_WIDTH */);
+  nav_dialog->dispwidth  = MIN (nav_dialog->dispwidth,  nav_dialog->pwidth);
+  nav_dialog->dispheight = MIN (nav_dialog->dispheight, nav_dialog->pheight);
 
   if (need_update)
     {
-      gtk_widget_hide (iwd->previewAlign);
-      nav_window_update_preview_blank (iwd); 
-      gtk_widget_show (iwd->preview);
-      gtk_widget_draw (iwd->preview, NULL); 
-      gtk_widget_show (iwd->previewAlign);
-      nav_window_draw_sqr (iwd, FALSE,
-			   iwd->dispx, iwd->dispy,
-			   iwd->dispwidth, iwd->dispheight);
-      if (iwd->ptype != NAV_POPUP)
+      if (nav_dialog->ptype != NAV_POPUP)
 	{
-	  gtk_window_set_focus (GTK_WINDOW (iwd->info_win->shell),
-				iwd->preview);  
-	  iwd->timer_id = 
-	    gtk_timeout_add (PREVIEW_UPDATE_TIMEOUT,
-			     (GtkFunction) nav_preview_update_do_timer,
-			     (gpointer) iwd); 
+	  gtk_window_set_focus (GTK_WINDOW (nav_dialog->shell),
+				nav_dialog->preview);
+
+	  nav_dialog_idle_update_preview (nav_dialog);
 	}
       else
 	{
-	  nav_window_update_preview (iwd);
-	  gtk_widget_draw (iwd->preview, NULL); 
+	  nav_dialog_update_preview (nav_dialog);
+
+	  gtk_widget_draw (nav_dialog->preview, NULL); 
 	}
     }
 }
 
 static void
-nav_window_draw_sqr (NavWinData *iwd,
-		     gboolean    undraw,
-		     gint        x,
-		     gint        y,
-		     gint        w,
-		     gint        h)
+nav_dialog_draw_sqr (NavigationDialog *nav_dialog,
+		     gboolean          undraw,
+		     gint              x,
+		     gint              y,
+		     gint              w,
+		     gint              h)
 {
-  gdk_gc_set_function (iwd->gc, GDK_INVERT);
+  if (! nav_dialog->gc)
+    {
+      if (! GTK_WIDGET_REALIZED (nav_dialog->shell))
+	gtk_widget_realize (nav_dialog->shell);
+
+      nav_dialog->gc = gdk_gc_new (nav_dialog->shell->window);
+
+      gdk_gc_set_function (nav_dialog->gc, GDK_INVERT);
+      gdk_gc_set_line_attributes (nav_dialog->gc, BORDER_PEN_WIDTH, 
+				  GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_ROUND);
+    }
 
   if (undraw)
     {
-      if (iwd->dispx != 0 || iwd->dispy != 0 ||
-	  iwd->pwidth != iwd->dispwidth || iwd->pheight != iwd->dispheight)
+      if (nav_dialog->dispx != 0 ||
+	  nav_dialog->dispy != 0 ||
+	  nav_dialog->pwidth  != nav_dialog->dispwidth ||
+	  nav_dialog->pheight != nav_dialog->dispheight)
 	{
 	  /* first undraw from last co-ords */
-	  gdk_draw_rectangle (iwd->preview->window, iwd->gc, FALSE, 
-			      iwd->dispx, iwd->dispy, 
-			      iwd->dispwidth - BORDER_PEN_WIDTH + 1, 
-			      iwd->dispheight - BORDER_PEN_WIDTH + 1);
+	  gdk_draw_rectangle (nav_dialog->preview->window, nav_dialog->gc,
+			      FALSE, 
+			      nav_dialog->dispx,
+			      nav_dialog->dispy, 
+			      nav_dialog->dispwidth  - BORDER_PEN_WIDTH + 1, 
+			      nav_dialog->dispheight - BORDER_PEN_WIDTH + 1);
 	}
     }
 
   if (x != 0 || y != 0 ||
-      w != iwd->pwidth || h != iwd->pheight)
+      w != nav_dialog->pwidth || h != nav_dialog->pheight)
     {
-      gdk_draw_rectangle (iwd->preview->window, iwd->gc, FALSE, 
+      gdk_draw_rectangle (nav_dialog->preview->window, nav_dialog->gc,
+			  FALSE, 
 			  x, y, 
 			  w - BORDER_PEN_WIDTH + 1,
 			  h - BORDER_PEN_WIDTH + 1);
     }
 
-  iwd->dispx      = x;
-  iwd->dispy      = y;
-  iwd->dispwidth  = w;
-  iwd->dispheight = h;
-}
-
-static void 
-destroy_preview_widget (NavWinData *iwd)
-{
-  if(!iwd->preview)
-    return;
-
-  gtk_widget_hide(iwd->previewBox);
-  gtk_widget_destroy(iwd->previewBox);
-  iwd->previewBox = NULL;
-  iwd->preview = NULL;
+  nav_dialog->dispx      = x;
+  nav_dialog->dispy      = y;
+  nav_dialog->dispwidth  = w;
+  nav_dialog->dispheight = h;
 }
 
 static void
-set_size_data (NavWinData *iwd)
+set_size_data (NavigationDialog *nav_dialog)
 {
-  gint sel_width;
-  gint sel_height;
-  gint pwidth;
-  gint pheight;
   GDisplay  *gdisp;
   GimpImage *gimage;
+  gint       sel_width;
+  gint       sel_height;
+  gint       pwidth;
+  gint       pheight;
 
-  gdisp  = iwd->gdisp;
+  gdisp  = nav_dialog->gdisp;
   gimage = gdisp->gimage;
 
-  sel_width = gimage->width;
+  sel_width  = gimage->width;
   sel_height = gimage->height;
 
-  if (!gdisp->dot_for_dot)
+  if (! gdisp->dot_for_dot)
     sel_width = 
       (sel_width * gdisp->gimage->yresolution) / gdisp->gimage->xresolution;
 
   if (sel_width > sel_height) 
     {
-      pwidth  = iwd->nav_preview_width;
-      /*     pheight  = sel_height * pwidth / sel_width; */
-      /*iwd->ratio = MIN (1.0, (gdouble) pwidth / (gdouble) sel_width);*/
-      iwd->ratio = (gdouble) pwidth / (gdouble) sel_width;
+      pwidth  = nav_dialog->nav_preview_width;
+
+      nav_dialog->ratio = (gdouble) pwidth / (gdouble) sel_width;
     } 
   else 
     {
-      pheight = iwd->nav_preview_height;
-      /*     pwidth  = sel_width * pheight / sel_height; */
-      /*iwd->ratio = MIN (1.0, (gdouble) pheight / (gdouble) sel_height);*/
-      iwd->ratio = (gdouble) pheight / (gdouble) sel_height;
+      pheight = nav_dialog->nav_preview_height;
+
+      nav_dialog->ratio = (gdouble) pheight / (gdouble) sel_height;
     }
 
-  pwidth  = sel_width  * iwd->ratio + 0.5;
-  pheight = sel_height * iwd->ratio + 0.5;
+  pwidth  = sel_width  * nav_dialog->ratio + 0.5;
+  pheight = sel_height * nav_dialog->ratio + 0.5;
 
-  iwd->pwidth  = pwidth;
-  iwd->pheight = pheight;
+  nav_dialog->pwidth  = pwidth;
+  nav_dialog->pheight = pheight;
 }
 
 static void 
-create_preview_widget (NavWinData *iwd)
+create_preview_widget (NavigationDialog *nav_dialog)
 {
-  GtkWidget *hbox;  
-  GtkWidget *image;
-  GtkWidget *frame;
+  GtkWidget *preview;
 
-  hbox = gtk_hbox_new (FALSE,0);
-  iwd->previewBox = hbox;
-  gtk_widget_show (hbox);
-  gtk_container_add (GTK_CONTAINER (iwd->previewAlign), hbox);
+  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_widget_set_events (GTK_WIDGET (preview), PREVIEW_MASK);
+  GTK_WIDGET_SET_FLAGS (preview, GTK_CAN_FOCUS);
+  gtk_preview_set_dither (GTK_PREVIEW (preview), GDK_RGB_DITHER_MAX);
+  gtk_container_add (GTK_CONTAINER (nav_dialog->preview_frame), preview);
+  gtk_widget_show (preview);
 
-  image = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_widget_set_events (GTK_WIDGET(image), PREVIEW_MASK);
-  iwd->preview = image;
-  gtk_widget_show (image);
+  nav_dialog->preview = preview;
 
-  gtk_preview_set_dither (GTK_PREVIEW (image), GDK_RGB_DITHER_MAX);
+  set_size_data (nav_dialog);
 
-  set_size_data (iwd);
+  gtk_preview_size (GTK_PREVIEW (nav_dialog->preview),
+		    nav_dialog->pwidth,
+		    nav_dialog->pheight);
 
-  gtk_preview_size (GTK_PREVIEW (iwd->preview),
-		    iwd->pwidth,
-		    iwd->pheight);
+  gtk_signal_connect (GTK_OBJECT (preview), "event",
+		      GTK_SIGNAL_FUNC (nav_dialog_preview_events),
+		      nav_dialog);
 
-  gtk_widget_set_usize (iwd->preview,  
-			iwd->pwidth, 
-			iwd->pheight); 
+  gtk_signal_connect_after (GTK_OBJECT (preview), "expose_event",
+			    GTK_SIGNAL_FUNC (nav_dialog_expose_event),
+			    nav_dialog);
+}
 
-  frame = gtk_frame_new(NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME(frame), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (iwd->previewBox), frame);
-  gtk_container_add (GTK_CONTAINER (frame), iwd->preview);
-  gtk_widget_show (frame);
+static gboolean
+nav_dialog_update_preview_idle_func (NavigationDialog *nav_dialog)
+{
+  nav_dialog->idle_id = 0;
 
-  iwd->sig_hand_id = 
-    gtk_signal_connect_after (GTK_OBJECT (image), "expose_event",
-			      (GtkSignalFunc) nav_window_expose_events,
-			      iwd);
+  /* If the gdisp has gone then don't do anything in this timer */
+  if (! nav_dialog->gdisp)
+    return FALSE;
 
-  gtk_signal_connect (GTK_OBJECT (image), "event",
-		      (GtkSignalFunc) nav_window_preview_events,
-		      iwd);
+  nav_dialog_update_preview (nav_dialog);
+  nav_dialog_disp_area (nav_dialog, nav_dialog->gdisp);
+  gtk_widget_queue_draw (nav_dialog->preview); 
 
-/*   gtk_signal_connect (GTK_OBJECT (image), "size_allocate", */
-/* 		      (GtkSignalFunc) nav_window_preview_resized, */
-/* 		      iwd); */
-
-  GTK_WIDGET_SET_FLAGS (image, GTK_CAN_FOCUS);
+  return FALSE;
 }
 
 static void
-update_real_view (NavWinData *iwd,
-		  gint        tx,
-		  gint        ty)
+nav_dialog_idle_update_preview (NavigationDialog *nav_dialog)
 {
-  GDisplay *gdisp;
-  gdouble   xratio;
-  gdouble   yratio;
-  gint xoffset;
-  gint yoffset;
-  gint xpnt;
-  gint ypnt;
+  if (nav_dialog->idle_id)
+    return;
 
-  gdisp = iwd->gdisp;
-
-  xratio = SCALEFACTOR_X (gdisp);
-  yratio = SCALEFACTOR_Y (gdisp);
-
-  if ((tx + iwd->dispwidth) >= iwd->pwidth)
-    {
-      tx = iwd->pwidth; /* Actually should be less... 
-			 * but bound check will save us.
-			 */
-    }
-
-  xpnt = (gint) (((gdouble) (tx) * xratio) / iwd->ratio + 0.5);
-
-  if ((ty + iwd->dispheight) >= iwd->pheight)
-    ty = iwd->pheight; /* Same comment as for xpnt above. */
-
-  ypnt = (gint) (((gdouble) (ty) * yratio) / iwd->ratio + 0.5);
-
-  if (!gdisp->dot_for_dot) /* here */
-      xpnt = ((gdouble) xpnt * 
-	      gdisp->gimage->xresolution) / gdisp->gimage->yresolution + 0.5;
-
-  xoffset = xpnt - gdisp->offset_x;
-  yoffset = ypnt - gdisp->offset_y;
-  
-  iwd->block_window_marker = TRUE;
-  scroll_display (iwd->gdisp, xoffset, yoffset);
-  iwd->block_window_marker = FALSE;
+  nav_dialog->idle_id =
+    g_idle_add_full (G_PRIORITY_LOW,
+		     (GSourceFunc) nav_dialog_update_preview_idle_func,
+		     nav_dialog,
+		     NULL);
 }
 
-static void 
-nav_window_update_preview (NavWinData *iwd)
+static void
+nav_dialog_update_preview (NavigationDialog *nav_dialog)
 {
   GDisplay  *gdisp;
   TempBuf   *preview_buf;
@@ -448,33 +886,33 @@ nav_window_update_preview (NavWinData *iwd)
 
   gimp_set_busy (); 
 
-  gdisp  = iwd->gdisp;
+  gdisp  = nav_dialog->gdisp;
   gimage = gdisp->gimage;
 
   /* Min size is 2 */
-  pwidth  = iwd->pwidth;
-  pheight = iwd->pheight;
+  pwidth  = nav_dialog->pwidth;
+  pheight = nav_dialog->pheight;
 
   /* we need a large normal preview which we will cut down later.
    *  gimp_image_construct_composite_preview() can't cope with 
    *  dot_for_dot not been set.
    */
-  if (!gdisp->dot_for_dot) /* ALT */ 
+  if (! gdisp->dot_for_dot)
     {
       gint    sel_width  = gimage->width;
       gint    sel_height = gimage->height;
       gdouble tratio;
-      
-      if (sel_width > sel_height) 
-	tratio = (gdouble) iwd->nav_preview_width / ((gdouble) sel_width);
+
+      if (sel_width > sel_height)
+	tratio = (gdouble) nav_dialog->nav_preview_width  / ((gdouble) sel_width);
       else
-	tratio = (gdouble) iwd->nav_preview_height / ((gdouble) sel_height);
+	tratio = (gdouble) nav_dialog->nav_preview_height / ((gdouble) sel_height);
 
       pwidth  = sel_width  * tratio + 0.5;
       pheight = sel_height * tratio + 0.5;
     }
 
-  if (iwd->ratio > 1.0)    /*  Preview is scaling up!  */
+  if (nav_dialog->ratio > 1.0)    /*  Preview is scaling up!  */
     {
       TempBuf *tmp;
 
@@ -485,36 +923,38 @@ nav_window_update_preview (NavWinData *iwd)
 				    pwidth, 
 				    pheight);
       temp_buf_free (tmp);
-    } 
-  else 
+    }
+  else
     {
       preview_buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (gimage),
 						   MAX (pwidth, 2),
 						   MAX (pheight, 2));
     }
 
-  /* reset & get new preview */
-  /*  FIXME: should use gimp_preview_scale()  */
-  if (!gdisp->dot_for_dot)
+  /* reset & get new preview
+   *
+   * FIXME: should use gimp_preview_scale()
+   */
+  if (! gdisp->dot_for_dot)
     {
       gint     loop1, loop2;
       gdouble  x_ratio, y_ratio;
       guchar  *src_data;
       guchar  *dest_data;
 
-      preview_buf_notdot = temp_buf_new (iwd->pwidth,
-					 iwd->pheight,
+      preview_buf_notdot = temp_buf_new (nav_dialog->pwidth,
+					 nav_dialog->pheight,
 					 preview_buf->bytes, 
 					 0, 0, NULL);
 
-      x_ratio = (gdouble) pwidth  / (gdouble) iwd->pwidth;
-      y_ratio = (gdouble) pheight / (gdouble) iwd->pheight;
+      x_ratio = (gdouble) pwidth  / (gdouble) nav_dialog->pwidth;
+      y_ratio = (gdouble) pheight / (gdouble) nav_dialog->pheight;
 
       src_data  = temp_buf_data (preview_buf);
       dest_data = temp_buf_data (preview_buf_notdot);
 
-      for (loop1 = 0 ; loop1 < iwd->pheight ; loop1++)
-	for (loop2 = 0 ; loop2 < iwd->pwidth ; loop2++)
+      for (loop1 = 0 ; loop1 < nav_dialog->pheight ; loop1++)
+	for (loop2 = 0 ; loop2 < nav_dialog->pwidth ; loop2++)
 	  {
 	    gint    i;
 	    guchar *src_pixel;
@@ -523,15 +963,16 @@ nav_window_update_preview (NavWinData *iwd)
 	    src_pixel = src_data +
 	      ((gint) (loop2 * x_ratio)) * preview_buf->bytes +
 	      ((gint) (loop1 * y_ratio)) * pwidth * preview_buf->bytes;
+
 	    dest_pixel = dest_data +
-	      (loop2 + loop1 * iwd->pwidth) * preview_buf->bytes;
+	      (loop2 + loop1 * nav_dialog->pwidth) * preview_buf->bytes;
 
 	    for (i = 0 ; i < preview_buf->bytes; i++)
 	      *dest_pixel++ = *src_pixel++;
 	  }
 
-      pwidth  = iwd->pwidth;
-      pheight = iwd->pheight;
+      pwidth  = nav_dialog->pwidth;
+      pheight = nav_dialog->pheight;
 
       src = temp_buf_data (preview_buf_notdot);
       preview_buf_ptr = preview_buf_notdot;
@@ -576,11 +1017,11 @@ nav_window_update_preview (NavWinData *iwd)
 	  break;
 
 	default:
-	  g_warning ("UNKNOWN TempBuf bpp in nav_window_update_preview()");
+	  g_warning ("nav_dialog_update_preview(): UNKNOWN TempBuf bpp");
 	}
       
-      gtk_preview_draw_row (GTK_PREVIEW (iwd->preview),
-			    (guchar *) buf, 
+      gtk_preview_draw_row (GTK_PREVIEW (nav_dialog->preview),
+			    buf, 
 			    xoff, yoff + y, 
 			    preview_buf_ptr->width);
     }
@@ -588,6 +1029,7 @@ nav_window_update_preview (NavWinData *iwd)
   g_free (buf);
 
   temp_buf_free (preview_buf);
+
   if (preview_buf_notdot)
     temp_buf_free (preview_buf_notdot);
 
@@ -595,92 +1037,67 @@ nav_window_update_preview (NavWinData *iwd)
 }
 
 static void 
-nav_window_update_preview_blank (NavWinData *iwd)
+nav_dialog_update_preview_blank (NavigationDialog *nav_dialog)
 {
-
   guchar  *buf;
   guchar  *dest;
   gint     x, y;
   gdouble  chk;
 
-#if 0 
-  GimpImage *gimage;
-  GDisplay  *gdisp;
+  buf = g_new (gchar,  nav_dialog->pwidth * 3);
 
-  gdisp  = iwd->gdisp;
-  gimage = gdisp->gimage;
-
-#endif /* 0 */
-  
-  buf = g_new (gchar,  iwd->pwidth * 3);
-
-  for (y = 0; y < iwd->pheight ; y++)
+  for (y = 0; y < nav_dialog->pheight ; y++)
     {
       dest = buf;
-      for (x = 0; x < iwd->pwidth; x++)
+
+      for (x = 0; x < nav_dialog->pwidth; x++)
 	{
-	  chk = ((gdouble) ((( (x^y) & 4 ) << 4) | 128))/255.0;
+	  chk = ((gdouble) ((( (x^y) & 4 ) << 4) | 128)) / 255.0;
 	  chk *= 128.0;
+
 	  *(dest++) = (guchar) chk;
 	  *(dest++) = (guchar) chk;
 	  *(dest++) = (guchar) chk;
 	}
       
-      gtk_preview_draw_row (GTK_PREVIEW (iwd->preview),
-			    (guchar *) buf, 
-			    0, y, iwd->pwidth);
+      gtk_preview_draw_row (GTK_PREVIEW (nav_dialog->preview),
+			    buf, 
+			    0, y, nav_dialog->pwidth);
     }
 
   g_free (buf);
-
-  gdk_flush ();
-}
-
-static gint
-inside_preview_square (NavWinData *iwd,
-		       gint        x,
-		       gint        y)
-{
-  if (x > iwd->dispx &&
-      x < (iwd->dispx + iwd->dispwidth) &&
-      y > iwd->dispy &&
-      y < iwd->dispy + iwd->dispheight)
-    return TRUE;
-
-  return FALSE;
 }
 
 static void
-update_zoom_label (NavWinData *iwd)
+update_zoom_label (NavigationDialog *nav_dialog)
 {
   gchar scale_str[MAX_SCALE_BUF];
 
-  if(!iwd->zoom_label)
+  if (! nav_dialog->zoom_label)
     return;
 
   /* Update the zoom scale string */
   g_snprintf (scale_str, MAX_SCALE_BUF, "%d:%d",
-	      SCALEDEST (iwd->gdisp), 
-	      SCALESRC (iwd->gdisp));
+	      SCALEDEST (nav_dialog->gdisp), 
+	      SCALESRC (nav_dialog->gdisp));
 
-  gtk_label_set_text (GTK_LABEL (iwd->zoom_label), scale_str);
+  gtk_label_set_text (GTK_LABEL (nav_dialog->zoom_label), scale_str);
 }
 
 static void 
-update_zoom_adjustment (NavWinData *iwd)
+update_zoom_adjustment (NavigationDialog *nav_dialog)
 {
   GtkAdjustment *adj;
-  gdouble f;
-  gdouble val;
+  gdouble        f;
+  gdouble        val;
 
-  if (! iwd->zoom_adjustment)
+  if (! nav_dialog->zoom_adjustment)
     return;
 
-  adj = GTK_ADJUSTMENT (iwd->zoom_adjustment);
+  adj = GTK_ADJUSTMENT (nav_dialog->zoom_adjustment);
 
-  f = 
-    ((gdouble) SCALEDEST (iwd->gdisp)) / 
-    ((gdouble) SCALESRC (iwd->gdisp));
+  f = (((gdouble) SCALEDEST (nav_dialog->gdisp)) / 
+       ((gdouble) SCALESRC (nav_dialog->gdisp)));
   
   if (f < 1.0)
     {
@@ -691,54 +1108,94 @@ update_zoom_adjustment (NavWinData *iwd)
       val = f;
     }
 
-  if (abs ((gint) adj->value) != (gint)(val - 1) && iwd->block_adj_sig != TRUE)
+  if (abs ((gint) adj->value) != (gint) (val - 1) &&
+      ! nav_dialog->block_adj_sig)
     {
       adj->value = val;
-      gtk_signal_emit_by_name (GTK_OBJECT (iwd->zoom_adjustment), "changed");
+
+      gtk_adjustment_changed (GTK_ADJUSTMENT (nav_dialog->zoom_adjustment));
     }
 }
 
 static void
-move_to_point (NavWinData *iwd,
-	       gint        tx,
-	       gint        ty)
+nav_dialog_update_real_view (NavigationDialog *nav_dialog,
+			     gint              tx,
+			     gint              ty)
 {
-  tx = CLAMP (tx, 0, iwd->pwidth);
-  ty = CLAMP (ty, 0, iwd->pheight);
-  
-  if ((tx + iwd->dispwidth) >= iwd->pwidth)
+  GDisplay *gdisp;
+  gdouble   xratio;
+  gdouble   yratio;
+  gint      xoffset;
+  gint      yoffset;
+  gint      xpnt;
+  gint      ypnt;
+
+  gdisp = nav_dialog->gdisp;
+
+  xratio = SCALEFACTOR_X (gdisp);
+  yratio = SCALEFACTOR_Y (gdisp);
+
+  if ((tx + nav_dialog->dispwidth) >= nav_dialog->pwidth)
     {
-      tx = iwd->pwidth - iwd->dispwidth;
+      tx = nav_dialog->pwidth; /* Actually should be less... 
+				* but bound check will save us.
+				*/
+    }
+
+  xpnt = (gint) (((gdouble) (tx) * xratio) / nav_dialog->ratio + 0.5);
+
+  if ((ty + nav_dialog->dispheight) >= nav_dialog->pheight)
+    {
+      ty = nav_dialog->pheight; /* Same comment as for xpnt above. */
+    }
+
+  ypnt = (gint) (((gdouble) (ty) * yratio) / nav_dialog->ratio + 0.5);
+
+  if (! gdisp->dot_for_dot) /* here */
+    xpnt = ((gdouble) xpnt * 
+	    gdisp->gimage->xresolution) / gdisp->gimage->yresolution + 0.5;
+
+  xoffset = xpnt - gdisp->offset_x;
+  yoffset = ypnt - gdisp->offset_y;
+
+  scroll_display (nav_dialog->gdisp, xoffset, yoffset);
+}
+
+static void
+nav_dialog_move_to_point (NavigationDialog *nav_dialog,
+			  gint              tx,
+			  gint              ty)
+{
+  tx = CLAMP (tx, 0, nav_dialog->pwidth);
+  ty = CLAMP (ty, 0, nav_dialog->pheight);
+  
+  if ((tx + nav_dialog->dispwidth) >= nav_dialog->pwidth)
+    {
+      tx = nav_dialog->pwidth - nav_dialog->dispwidth;
     }
   
-  if ((ty + iwd->dispheight) >= iwd->pheight)
+  if ((ty + nav_dialog->dispheight) >= nav_dialog->pheight)
     {
-      ty = iwd->pheight - iwd->dispheight;
+      ty = nav_dialog->pheight - nav_dialog->dispheight;
     }
-  
-  if (iwd->dispx == tx && iwd->dispy == ty)
+
+  if (nav_dialog->dispx == tx && nav_dialog->dispy == ty)
     return;
 
-  /* Update the real display */
-  update_real_view (iwd, tx, ty);
-  
-  nav_window_draw_sqr (iwd,
-		       TRUE,
-		       tx, ty,
-		       iwd->dispwidth, iwd->dispheight);
-  
+  nav_dialog_update_real_view (nav_dialog, tx, ty);
 }
 
 static void
-nav_window_grab_pointer (NavWinData *iwd,
-			 GtkWidget  *widget)
+nav_dialog_grab_pointer (NavigationDialog *nav_dialog,
+			 GtkWidget        *widget)
 {
   GdkCursor *cursor;
 
-  iwd->sq_grabbed = TRUE;
+  nav_dialog->sq_grabbed = TRUE;
+
   gtk_grab_add (widget);
 
-  cursor = gdk_cursor_new (GDK_CROSSHAIR); 
+  cursor = gdk_cursor_new (GDK_CROSSHAIR);
 
   gdk_pointer_grab (widget->window, TRUE,
 		    GDK_BUTTON_RELEASE_MASK |
@@ -746,33 +1203,47 @@ nav_window_grab_pointer (NavWinData *iwd,
 		    GDK_BUTTON_MOTION_MASK |
 		    GDK_EXTENSION_EVENTS_ALL,
 		    widget->window, cursor, 0);
-  
+
   gdk_cursor_destroy (cursor); 
 }
 
-static gint
-nav_window_preview_events (GtkWidget *widget,
+static gboolean
+nav_dialog_inside_preview_square (NavigationDialog *nav_dialog,
+				  gint              x,
+				  gint              y)
+{
+  if (x > nav_dialog->dispx &&
+      x < (nav_dialog->dispx + nav_dialog->dispwidth) &&
+      y > nav_dialog->dispy &&
+      y < nav_dialog->dispy + nav_dialog->dispheight)
+    return TRUE;
+
+  return FALSE;
+}
+
+static gboolean
+nav_dialog_preview_events (GtkWidget *widget,
 			   GdkEvent  *event,
 			   gpointer   data)
 {
-  NavWinData      *iwd;
-  GDisplay        *gdisp;
-  GdkEventButton  *bevent;
-  GdkEventMotion  *mevent;
-  GdkEventKey     *kevent;
-  GdkModifierType  mask;
-  gint     tx = 0;
-  gint     ty = 0;
-  gint     mx;
-  gint     my;
-  gboolean arrowKey = FALSE;
+  NavigationDialog *nav_dialog;
+  GDisplay         *gdisp;
+  GdkEventButton   *bevent;
+  GdkEventMotion   *mevent;
+  GdkEventKey      *kevent;
+  GdkModifierType   mask;
+  gint              tx = 0;
+  gint              ty = 0;
+  gint              mx;
+  gint              my;
+  gboolean          arrow_key = FALSE;
 
-  iwd = (NavWinData *)data;
+  nav_dialog = (NavigationDialog *) data;
 
-  if(!iwd || iwd->frozen == TRUE)
+  if (! nav_dialog || nav_dialog->frozen)
     return FALSE;
 
-  gdisp = iwd->gdisp;
+  gdisp = nav_dialog->gdisp;
 
   switch (event->type)
     {
@@ -780,19 +1251,16 @@ nav_window_preview_events (GtkWidget *widget,
       break;
 
     case GDK_MAP:
-      if (iwd->ptype == NAV_POPUP)
+      if (nav_dialog->ptype == NAV_POPUP)
 	{
-	  nav_window_update_preview (iwd);
+	  nav_dialog_update_preview (nav_dialog);
+
 	  /* First time displayed.... get the pointer! */
-	  nav_window_grab_pointer (iwd, iwd->preview);
+	  nav_dialog_grab_pointer (nav_dialog, nav_dialog->preview);
 	}
       else
 	{
-	  nav_window_update_preview_blank (iwd); 
-	  iwd->timer_id = 
-	    gtk_timeout_add (PREVIEW_UPDATE_TIMEOUT,
-			     (GtkFunction) nav_preview_update_do_timer,
-			     (gpointer) iwd); 
+	  nav_dialog_idle_update_preview (nav_dialog); 
 	}
       break;
 
@@ -805,42 +1273,26 @@ nav_window_preview_events (GtkWidget *widget,
       switch (bevent->button)
 	{
 	case 1:
-	  if (! inside_preview_square (iwd, tx, ty))
+	  if (! nav_dialog_inside_preview_square (nav_dialog, tx, ty))
 	    {
-	      /* Direct scroll to the location */
-	      /* view scrolled to the center or nearest possible point */
-	      
-	      tx -= iwd->dispwidth / 2;
-	      ty -= iwd->dispheight / 2;
+	      /* Direct scroll to the location
+	       * view scrolled to the center or nearest possible point
+	       */
+	      tx -= nav_dialog->dispwidth  / 2;
+	      ty -= nav_dialog->dispheight / 2;
 
-	      if(tx < 0)
-		tx = 0;
+	      nav_dialog_move_to_point (nav_dialog, tx, ty);
 
-	      if((tx + iwd->dispwidth) > iwd->pwidth)
-		tx = iwd->pwidth - iwd->dispwidth;
-
-	      if(ty < 0)
-		ty = 0;
-
-	      if((ty + iwd->dispheight) > iwd->pheight)
-		ty = iwd->pheight - iwd->dispheight;
-
-	      update_real_view(iwd,tx,ty);
-
-	      nav_window_draw_sqr (iwd,
-				   TRUE,
-				   tx, ty,
-				   iwd->dispwidth, iwd->dispheight);
-	      iwd->motion_offsetx = iwd->dispwidth / 2;
-	      iwd->motion_offsety = iwd->dispheight / 2;
+	      nav_dialog->motion_offsetx = nav_dialog->dispwidth  / 2;
+	      nav_dialog->motion_offsety = nav_dialog->dispheight / 2;
 	    }
 	  else
 	    {
-	      iwd->motion_offsetx = tx - iwd->dispx;
-	      iwd->motion_offsety = ty - iwd->dispy;
+	      nav_dialog->motion_offsetx = tx - nav_dialog->dispx;
+	      nav_dialog->motion_offsety = ty - nav_dialog->dispy;
 	    }
-	  
-	  nav_window_grab_pointer (iwd, widget);
+
+	  nav_dialog_grab_pointer (nav_dialog, widget);
 
 	  break;
 
@@ -892,12 +1344,12 @@ nav_window_preview_events (GtkWidget *widget,
       switch (bevent->button)
 	{
 	case 1:
-	  iwd->sq_grabbed = FALSE;
+	  nav_dialog->sq_grabbed = FALSE;
 	  gtk_grab_remove (widget);
 	  gdk_pointer_ungrab (0);
-	  if(iwd->ptype == NAV_POPUP)
+	  if (nav_dialog->ptype == NAV_POPUP)
 	    {
-	      gtk_widget_hide (gdisp->nav_popup);
+	      gtk_widget_hide (nav_dialog->shell);
 	    }
 	  gdk_flush ();
 	  break;
@@ -909,31 +1361,31 @@ nav_window_preview_events (GtkWidget *widget,
     case GDK_KEY_PRESS:
       /* hack for the update preview... needs to be fixed */
       kevent = (GdkEventKey *) event;
-      
+
       switch (kevent->keyval)
 	{
 	case GDK_space:
-	  gdk_window_raise(gdisp->shell->window);
+	  gdk_window_raise (gdisp->shell->window);
 	  break;
 	case GDK_Up:
-	  arrowKey = TRUE;
-	  tx = iwd->dispx;
-	  ty = iwd->dispy - 1;
+	  arrow_key = TRUE;
+	  tx = nav_dialog->dispx;
+	  ty = nav_dialog->dispy - 1;
 	  break;
 	case GDK_Left:
-	  arrowKey = TRUE;
-	  tx = iwd->dispx - 1;
-	  ty = iwd->dispy;
+	  arrow_key = TRUE;
+	  tx = nav_dialog->dispx - 1;
+	  ty = nav_dialog->dispy;
 	  break;
 	case GDK_Right:
-	  arrowKey = TRUE;
-	  tx = iwd->dispx + 1;
-	  ty = iwd->dispy;
+	  arrow_key = TRUE;
+	  tx = nav_dialog->dispx + 1;
+	  ty = nav_dialog->dispy;
 	  break;
 	case GDK_Down:
-	  arrowKey = TRUE;
-	  tx = iwd->dispx;
-	  ty = iwd->dispy + 1;
+	  arrow_key = TRUE;
+	  tx = nav_dialog->dispx;
+	  ty = nav_dialog->dispy + 1;
 	  break;
 	case GDK_equal:
 	  change_scale (gdisp, GIMP_ZOOM_IN);
@@ -945,9 +1397,9 @@ nav_window_preview_events (GtkWidget *widget,
 	  break;
 	}
 
-      if (arrowKey)
+      if (arrow_key)
 	{
-	  move_to_point (iwd, tx, ty);
+	  nav_dialog_move_to_point (nav_dialog, tx, ty);
 	  return TRUE;
 	}
       break;
@@ -955,17 +1407,17 @@ nav_window_preview_events (GtkWidget *widget,
     case GDK_MOTION_NOTIFY:
       mevent = (GdkEventMotion *) event;
 
-      if (!iwd->sq_grabbed)
+      if (! nav_dialog->sq_grabbed)
 	break;
 
       gdk_window_get_pointer (widget->window, &mx, &my, &mask);
       tx = mx;
       ty = my;
 
-      tx = tx - iwd->motion_offsetx;
-      ty = ty - iwd->motion_offsety;
+      tx = tx - nav_dialog->motion_offsetx;
+      ty = ty - nav_dialog->motion_offsety;
 
-      move_to_point (iwd, tx, ty);
+      nav_dialog_move_to_point (nav_dialog, tx, ty);
      break;
 
     default:
@@ -975,34 +1427,44 @@ nav_window_preview_events (GtkWidget *widget,
   return FALSE;
 }
 
-static gint
-nav_window_expose_events (GtkWidget *widget,
-			  GdkEvent  *event,
-			  gpointer   data)
+static gboolean
+nav_dialog_expose_event (GtkWidget *widget,
+			 GdkEvent  *event,
+			 gpointer   data)
 {
-  NavWinData *iwd;
-  GDisplay   *gdisp;
+  NavigationDialog *nav_dialog;
+  GDisplay         *gdisp;
 
-  iwd = (NavWinData *) data;
+  nav_dialog = (NavigationDialog *) data;
 
-  if(!iwd || iwd->frozen == TRUE)
+  if (! nav_dialog || nav_dialog->frozen)
     return FALSE;
 
-  gdisp = iwd->gdisp;
+  gdisp = nav_dialog->gdisp;
 
   switch (event->type)
     {
     case GDK_EXPOSE:
-      /* we must have the grab if in nav_popup*/
-      gtk_signal_handler_block (GTK_OBJECT(widget), iwd->sig_hand_id); 
-      gtk_widget_draw (iwd->preview, NULL); 
-      gtk_signal_handler_unblock (GTK_OBJECT(widget), iwd->sig_hand_id); 
-      
-      nav_window_draw_sqr (iwd,FALSE,
-			   iwd->dispx, iwd->dispy,
-			   iwd->dispwidth, iwd->dispheight);
-      if (! gtk_grab_get_current() && iwd->ptype == NAV_POPUP)
-	nav_window_grab_pointer (iwd, iwd->preview);
+      /* we must have the grab if in nav_popup */
+
+      gtk_signal_handler_block_by_func
+	(GTK_OBJECT (widget),
+	 GTK_SIGNAL_FUNC (nav_dialog_expose_event),
+	 data);
+
+      gtk_widget_draw (nav_dialog->preview, NULL); 
+
+      gtk_signal_handler_unblock_by_func
+	(GTK_OBJECT (widget),
+	 GTK_SIGNAL_FUNC (nav_dialog_expose_event),
+	 data);
+
+      nav_dialog_draw_sqr (nav_dialog, FALSE,
+			   nav_dialog->dispx, nav_dialog->dispy,
+			   nav_dialog->dispwidth, nav_dialog->dispheight);
+
+      if (! gtk_grab_get_current () && nav_dialog->ptype == NAV_POPUP)
+	nav_dialog_grab_pointer (nav_dialog, nav_dialog->preview);
       break;
 
     default:
@@ -1012,94 +1474,61 @@ nav_window_expose_events (GtkWidget *widget,
   return FALSE;
 }
 
-static gint 
-nav_preview_update_do (NavWinData *iwd)
-{
-  /* If the gdisp has gone then don't do anything in this timer */
-  if (!iwd->gdisp)
-    return FALSE;
-
-  nav_window_update_preview (iwd);
-  nav_window_disp_area (iwd, iwd->gdisp);
-  gtk_widget_queue_draw (iwd->preview); 
-
-  iwd->installedDirtyTimer = FALSE;
-
-  return FALSE;
-}
-
-static gint 
-nav_preview_update_do_timer (NavWinData *iwd)
-{
-  iwd->timer_id = 0;
-  gtk_idle_add ((GtkFunction) nav_preview_update_do, (gpointer) iwd);
-
-  return FALSE;
-}
-
 static void
-nav_image_need_update (GtkObject *obj,
-		       gpointer   client_data)
+nav_image_need_update (GimpImage *gimage,
+		       gpointer   data)
 {
-  NavWinData *iwd;
+  NavigationDialog *nav_dialog;
 
-  iwd = (NavWinData *)client_data;
+  nav_dialog = (NavigationDialog *) data;
 
-  if(!iwd || 
-     !iwd->showingPreview || 
-     iwd->installedDirtyTimer == TRUE ||
-     iwd->frozen == TRUE)
+  if (! nav_dialog                             ||
+      ! GTK_WIDGET_VISIBLE (nav_dialog->shell) ||
+      nav_dialog->frozen)
     return;
 
-  iwd->installedDirtyTimer = TRUE;
-
-  /* Update preview at a less busy time */
-  nav_window_update_preview_blank (iwd); 
-  gtk_widget_draw (iwd->preview, NULL); 
-  iwd->timer_id = gtk_timeout_add (PREVIEW_UPDATE_TIMEOUT, 
-				   (GtkFunction) nav_preview_update_do_timer,
-				   (gpointer) iwd); 
+  nav_dialog_idle_update_preview (nav_dialog); 
 }
 
 static void
 navwindow_zoomin (GtkWidget *widget,
 		  gpointer   data)
 {
-  NavWinData *iwd;
+  NavigationDialog *nav_dialog;
 
-  iwd = (NavWinData *) data;
+  nav_dialog = (NavigationDialog *) data;
 
-  if(!iwd || iwd->frozen == TRUE)
+  if(! nav_dialog || nav_dialog->frozen)
     return;
 
-  change_scale (iwd->gdisp, GIMP_ZOOM_IN);
+  change_scale (nav_dialog->gdisp, GIMP_ZOOM_IN);
 }
 
 static void
 navwindow_zoomout (GtkWidget *widget,
 		   gpointer   data)
 {
-  NavWinData *iwd;
+  NavigationDialog *nav_dialog;
 
-  iwd = (NavWinData *)data;
+  nav_dialog = (NavigationDialog *)data;
 
-  if (!iwd || iwd->frozen == TRUE)
+  if (! nav_dialog || nav_dialog->frozen)
     return;
 
-  change_scale (iwd->gdisp, GIMP_ZOOM_OUT);
+  change_scale (nav_dialog->gdisp, GIMP_ZOOM_OUT);
 }
 
 static void
 zoom_adj_changed (GtkAdjustment *adj, 
 		  gpointer       data)
 {
-  NavWinData *iwd;
-  gint scalesrc;
-  gint scaledest;
+  NavigationDialog *nav_dialog;
+  gint              scalesrc;
+  gint              scaledest;
 
-  iwd = (NavWinData *)data;
+  nav_dialog = (NavigationDialog *)data;
 
-  if (!iwd || iwd->frozen == TRUE)
+  if (! nav_dialog || nav_dialog->frozen)
     return;
   
   if (adj->value < 0.0)
@@ -1113,639 +1542,148 @@ zoom_adj_changed (GtkAdjustment *adj,
       scalesrc = 1;
     }
 
-  iwd->block_adj_sig = TRUE;
-  change_scale (iwd->gdisp, (scaledest * 100) + scalesrc);
-  iwd->block_adj_sig = FALSE;
+  nav_dialog->block_adj_sig = TRUE;
+  change_scale (nav_dialog->gdisp, (scaledest * 100) + scalesrc);
+  nav_dialog->block_adj_sig = FALSE;
 }
 
 static GtkWidget *
-nav_create_button_area (InfoDialog *info_win)
+nav_create_button_area (NavigationDialog *nav_dialog)
 {
-  GtkWidget  *hbox1;  
-  GtkWidget  *vbox1;
+  GtkWidget  *hbox;  
+  GtkWidget  *vbox;
   GtkWidget  *button;
-  GtkWidget  *hscale1;
-  GtkWidget  *label1;
-  GtkObject  *adjustment;
-  NavWinData *iwd;
+  GtkWidget  *hscale;
   gchar       scale_str[MAX_SCALE_BUF];
 
-  iwd = (NavWinData *) info_win->user_data;
+  vbox = gtk_vbox_new (FALSE, 0);
 
-  hbox1 = gtk_hbox_new (FALSE, 0);
-  gtk_widget_show (hbox1);
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
   button = gimp_pixmap_button_new (zoom_out_xpm, NULL);
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked", 
-		      GTK_SIGNAL_FUNC (navwindow_zoomout),
-		      (gpointer) info_win->user_data);
-  gtk_box_pack_start (GTK_BOX (hbox1), button, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  vbox1 = gtk_vbox_new (FALSE, 0);
-  gtk_widget_show (vbox1);
-  gtk_box_pack_start (GTK_BOX (vbox1), hbox1, TRUE, TRUE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked", 
+		      GTK_SIGNAL_FUNC (navwindow_zoomout),
+		      nav_dialog);
 
   /*  user zoom ratio  */
   g_snprintf (scale_str, MAX_SCALE_BUF, "%d:%d",
-	      SCALEDEST (iwd->gdisp), 
-	      SCALESRC (iwd->gdisp));
+	      SCALEDEST (nav_dialog->gdisp), 
+	      SCALESRC (nav_dialog->gdisp));
   
-  label1 = gtk_label_new (scale_str);
-  gtk_widget_show (label1);
-  iwd->zoom_label = label1;
-  gtk_box_pack_start (GTK_BOX (hbox1), label1, TRUE, TRUE, 0);
-
-  adjustment = gtk_adjustment_new (0.0, -15.0, 16.0, 1.0, 1.0, 1.0);
-  hscale1 = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
-  gtk_scale_set_digits (GTK_SCALE (hscale1), 0);
-  iwd->zoom_adjustment = adjustment;
-  gtk_widget_show (hscale1);
-
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (zoom_adj_changed),
-		      iwd);
-
-  gtk_box_pack_start (GTK_BOX (vbox1), hscale1, TRUE, TRUE, 0);
-  gtk_scale_set_draw_value (GTK_SCALE (hscale1), FALSE);
+  nav_dialog->zoom_label = gtk_label_new (scale_str);
+  gtk_box_pack_start (GTK_BOX (hbox), nav_dialog->zoom_label, TRUE, TRUE, 0);
+  gtk_widget_show (nav_dialog->zoom_label);
 
   button = gimp_pixmap_button_new (zoom_in_xpm, NULL);
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked", 
-		      GTK_SIGNAL_FUNC (navwindow_zoomin),
-		      (gpointer) info_win->user_data); 
-  gtk_box_pack_start (GTK_BOX (hbox1), button, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  return vbox1;
-}
+  gtk_signal_connect (GTK_OBJECT (button), "clicked", 
+		      GTK_SIGNAL_FUNC (navwindow_zoomin),
+		      nav_dialog);
 
-static GtkWidget *
-create_preview_containers (NavWinData *iwd,
-			   GtkWidget  *shell)
-{
-  GtkWidget *hbox1;
-  GtkWidget *vbox1;
-  GtkWidget *alignment;
+  nav_dialog->zoom_adjustment =
+    gtk_adjustment_new (0.0, -15.0, 16.0, 1.0, 1.0, 1.0);
 
-  hbox1 = gtk_hbox_new (FALSE, 0);
-  gtk_widget_show (hbox1);
+  gtk_signal_connect (GTK_OBJECT (nav_dialog->zoom_adjustment), "value_changed",
+		      GTK_SIGNAL_FUNC (zoom_adj_changed),
+		      nav_dialog);
 
-  vbox1 = gtk_vbox_new (FALSE, 0);
-  gtk_widget_show (vbox1);
+  hscale = gtk_hscale_new (GTK_ADJUSTMENT (nav_dialog->zoom_adjustment));
+  gtk_scale_set_draw_value (GTK_SCALE (hscale), FALSE);
+  gtk_scale_set_digits (GTK_SCALE (hscale), 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hscale, TRUE, TRUE, 0);
+  gtk_widget_show (hscale);
 
-  gtk_widget_realize (shell);
-
-  /* need gc to draw the preview sqr with */
-  iwd->gc = gdk_gc_new (shell->window);
-  gdk_gc_set_function (iwd->gc, GDK_INVERT);
-  gdk_gc_set_line_attributes (iwd->gc, BORDER_PEN_WIDTH, 
-			      GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_ROUND);
-
-  alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  iwd->previewAlign = alignment;
-  gtk_widget_show (alignment);
-  
-  /* Create the preview in which to draw the thumbnail image */
-
-  create_preview_widget (iwd);
-
-  gtk_box_pack_start (GTK_BOX (hbox1), alignment, TRUE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox1), hbox1, TRUE, TRUE, 0);
-
-  return vbox1;
-}
-
-static GtkWidget *
-info_window_image_preview_new (InfoDialog *info_win)
-{
-  GtkWidget *button_area;
-  GtkWidget *vbox1;
-
-  NavWinData *iwd;
-
-  iwd = (NavWinData *) info_win->user_data;
-
-  vbox1 = create_preview_containers (iwd, info_win->shell);
-
-  /* This one has (may) have the buttons in */
-  button_area = nav_create_button_area (info_win);
-  gtk_box_pack_start (GTK_BOX (vbox1), button_area, TRUE, TRUE, 0);
-
-  return vbox1;
-}
-
-NavWinData *
-create_dummy_iwd (GDisplay   *gdisp,
-		  NavWinType  ptype)
-{
-  NavWinData *iwd;
-
-  iwd = g_new (NavWinData, 1);
-  iwd->ptype               = ptype;
-  iwd->info_win            = NULL;
-  iwd->showingPreview      = TRUE;
-  iwd->installedDirtyTimer = FALSE;
-  iwd->preview             = NULL;
-  iwd->zoom_label          = NULL;
-  iwd->zoom_adjustment     = NULL;
-  iwd->gdisp               = gdisp;
-  iwd->dispx               = -1;
-  iwd->dispy               = -1;
-  iwd->dispwidth           = -1;
-  iwd->dispheight          = -1;
-  iwd->imagewidth          = -1;
-  iwd->imageheight         = -1;
-  iwd->sq_grabbed          = FALSE;
-  iwd->ratio               = 1.0;
-  iwd->block_window_marker = FALSE;
-  iwd->nav_preview_width   = 
-    (gimprc.nav_preview_size < 0 || gimprc.nav_preview_size > 256) ? 
-    NAV_PREVIEW_WIDTH : gimprc.nav_preview_size;
-  iwd->nav_preview_height  = 
-    (gimprc.nav_preview_size < 0 || gimprc.nav_preview_size > 256) ? 
-    NAV_PREVIEW_HEIGHT : gimprc.nav_preview_size;
-  iwd->block_adj_sig       = FALSE;
-  iwd->frozen              = FALSE;
-  iwd->timer_id            = 0;
-  
-  return(iwd);
-}
-
-/* Create a version of the nav window that follows the active
- * image.
- */
-
-static InfoDialog *nav_window_auto = NULL;
-
-static gchar *
-nav_window_title (GDisplay *gdisp)
-{
-  gchar *title;
-  gchar *title_buf;
-
-  title = g_basename (gimp_image_filename (gdisp->gimage));
-
-  /*  create the info dialog  */
-  title_buf = g_strdup_printf (_("Navigation: %s-%d.%d"), 
-			       title,
-			       gimp_image_get_ID (gdisp->gimage),
-			       gdisp->instance);
-
-  return title_buf;
+  return vbox;
 }
 
 static void
-nav_window_change_display (GimpContext *context, /* NOT USED */
-			   GDisplay    *newdisp,
-			   gpointer     data /* Not used */)
+nav_dialog_display_changed (GimpContext *context,
+			    GDisplay    *gdisp,
+			    gpointer     data)
 {
-  GDisplay   *gdisp = newdisp;
-  GDisplay   *old_gdisp;
-  GimpImage  *gimage;
-  NavWinData *iwd;
-  gchar      *title_buf;
+  GDisplay         *old_gdisp;
+  GimpImage        *gimage;
+  NavigationDialog *nav_dialog;
+  gchar            *title;
 
-  iwd       = (NavWinData *) nav_window_auto->user_data;
-  old_gdisp = iwd->gdisp;
+  nav_dialog = (NavigationDialog *) data;
 
-  if (!nav_window_auto || gdisp == old_gdisp || !gdisp)
-    {
-      return;
-    }
+  old_gdisp  = nav_dialog->gdisp;
 
-  gtk_widget_set_sensitive (nav_window_auto->vbox, TRUE);
-  iwd->frozen = FALSE;
+  if (! nav_dialog || gdisp == old_gdisp || ! gdisp)
+    return;
 
-  title_buf = nav_window_title (gdisp);
+  gtk_widget_set_sensitive (nav_window_auto->shell, TRUE);
 
-  gtk_window_set_title (GTK_WINDOW (nav_window_auto->shell), title_buf);
+  nav_dialog->frozen = FALSE;
 
-  g_free (title_buf);
+  title = nav_dialog_title (gdisp);
+
+  gtk_window_set_title (GTK_WINDOW (nav_dialog->shell), title);
+
+  g_free (title);
 
   gimage = gdisp->gimage;
 
   if (gimage && gimp_container_have (image_context, GIMP_OBJECT (gimage)))
     {
-      iwd->gdisp = gdisp;
+      nav_dialog->gdisp = gdisp;
 
       /* Update preview to new display */
-      nav_window_preview_resized (nav_window_auto);
+      nav_dialog_preview_resized (nav_dialog);
 
-      /* Tie into the dirty signal so we can update the preview */
-      /* provided we haven't already */
-      if (!gtk_object_get_data (GTK_OBJECT (gdisp->gimage),
-				"nav_handlers_installed"))
+      if (nav_dialog->new_preview)
+	gimp_preview_set_viewable (GIMP_PREVIEW (nav_dialog->new_preview),
+				   GIMP_VIEWABLE (gdisp->gimage));
+
+      /* Tie into the dirty signal so we can update the preview
+       * provided we haven't already
+       */
+      if (! gtk_object_get_data (GTK_OBJECT (gimage),
+				 "nav_handlers_installed"))
 	{
-	  gtk_signal_connect_after (GTK_OBJECT (gdisp->gimage), "dirty",
+	  gtk_signal_connect_after (GTK_OBJECT (gimage), "dirty",
 				    GTK_SIGNAL_FUNC (nav_image_need_update),
-				    iwd);
-	  
-	  /* Also clean signal so undos get caught as well..*/
-	  gtk_signal_connect_after (GTK_OBJECT (gdisp->gimage), "clean",
+				    nav_dialog);
+	  gtk_signal_connect_after (GTK_OBJECT (gimage), "clean",
 				    GTK_SIGNAL_FUNC (nav_image_need_update),
-				    iwd);
-	  gtk_object_set_data (GTK_OBJECT (gdisp->gimage),
-			       "nav_handlers_installed",iwd);
+				    nav_dialog);
+
+	  gtk_object_set_data (GTK_OBJECT (gimage),
+			       "nav_handlers_installed",
+			       nav_dialog);
 	}
     }
-}
-
-void
-nav_window_follow_auto (void)
-{
-  GDisplay   *gdisp;
-  NavWinData *iwd;
-
-  gdisp = gdisplay_active (); 
-  
-  if (!gdisp) 
-    return;
-
-  if (!nav_window_auto)
-    {
-      nav_window_auto = nav_window_create (gdisp);
-
-      gtk_signal_connect (GTK_OBJECT (gimp_context_get_user ()), 
-			  "display_changed",
-			  GTK_SIGNAL_FUNC (nav_window_change_display), 
-			  NULL);
-    }
-
-  nav_dialog_popup (nav_window_auto);
-
-  iwd = (NavWinData *) nav_window_auto->user_data;
-  gtk_widget_set_sensitive (nav_window_auto->vbox, TRUE);
-  iwd->frozen = FALSE;
-}
-
-
-InfoDialog *
-nav_window_create (GDisplay *gdisp)
-{
-  InfoDialog *info_win;
-  NavWinData *iwd;
-  GtkWidget  *container;
-  gchar      *title_buf;
-  GimpImageBaseType type;
-
-  type = gimp_image_base_type (gdisp->gimage);
-
-  title_buf = nav_window_title (gdisp);
-
-  info_win = info_dialog_new (title_buf,
-			      gimp_standard_help_func,
-			      "dialogs/navigation_window.html");
-  g_free (title_buf);
-
-  dialog_register (info_win->shell);
-
-  /*  create the action area  */
-  gimp_dialog_create_action_area (GTK_DIALOG (info_win->shell),
-
-				  _("Close"), nav_window_close_callback,
-				  info_win, NULL, NULL, TRUE, FALSE,
-
-				  NULL);
-
-  gtk_signal_connect (GTK_OBJECT (info_win->shell), "destroy",
-		      (GtkSignalFunc) nav_window_destroy_callback,
-		      info_win);
-
-  iwd = create_dummy_iwd (gdisp, NAV_WINDOW);
-  info_win->user_data = iwd;
-  iwd->info_win = info_win;
-
-  /* Add preview */
-  container = info_window_image_preview_new (info_win);
-  gtk_table_attach_defaults (GTK_TABLE (info_win->info_table), container, 
- 			     0, 2, 0, 1); 
-
-  /* Tie into the dirty signal so we can update the preview */
-  gtk_signal_connect_after (GTK_OBJECT (gdisp->gimage), "dirty",
-			    GTK_SIGNAL_FUNC(nav_image_need_update),iwd);
-
-  /* Also clean signal so undos get caught as well..*/
-  gtk_signal_connect_after (GTK_OBJECT (gdisp->gimage), "clean",
-			    GTK_SIGNAL_FUNC(nav_image_need_update),iwd);
-
-
-  /* Mark the image as having the handlers installed...
-   */
-  gtk_object_set_data (GTK_OBJECT (gdisp->gimage), 
-		       "nav_handlers_installed", iwd);
-  
-  return info_win;
-}
-
-void
-nav_window_update_window_marker (InfoDialog *info_win)
-{
-  NavWinData *iwd;
-
-  /* So this functions works both ways..
-   * it will come in here with info_win == null
-   * if the auto mode is on...
-   */
-
-  if (!info_win && nav_window_auto)
-    {
-      iwd = (NavWinData *) nav_window_auto->user_data;
-      if(iwd->frozen)
-	return;
-
-      nav_window_update_window_marker (nav_window_auto);
-
-      return;
-    }
-
-  if (!info_win)
-    return;
-
-  iwd = (NavWinData *) info_win->user_data;
-
-  if (!iwd || 
-      iwd->showingPreview == FALSE || 
-      iwd->block_window_marker == TRUE)
-    return;
-
-  update_zoom_label (iwd);
-  update_zoom_adjustment (iwd);
-
-  /* Undraw old size */
-  nav_window_draw_sqr (iwd,
-		       FALSE,
-		       iwd->dispx, iwd->dispy,
-		       iwd->dispwidth, iwd->dispheight);
-
-  /* Update to new size */
-  nav_window_disp_area (iwd, iwd->gdisp);
-
-  /* and redraw */
-  nav_window_draw_sqr (iwd,
-		       FALSE,
-		       iwd->dispx, iwd->dispy,
-		       iwd->dispwidth, iwd->dispheight);
-}
-
-void
-nav_dialog_popup (InfoDialog *idialog)
-{
-  NavWinData *iwd;
-
-  if (!idialog)
-    return;
-
-  iwd = (NavWinData *) idialog->user_data;
-  iwd->showingPreview = TRUE;
-
-  if (! GTK_WIDGET_VISIBLE (idialog->shell))
-    {
-      gtk_widget_show (idialog->shell);
-      nav_window_update_preview_blank (iwd); 
-      nav_window_update_window_marker (idialog);
-      iwd->timer_id = 
-	gtk_timeout_add (PREVIEW_UPDATE_TIMEOUT,
-			 (GtkFunction) nav_preview_update_do_timer,
-			 (gpointer) iwd); 
-    }
-
-  gdk_window_raise (GTK_WIDGET (idialog->shell)->window);
-}
-
-/* Chose the first image.. */
-static void
-gimlist_cb (gpointer im, 
-	    gpointer data)
-{
-  GSList **list_ptr;
-
-  list_ptr = (GSList **) data;
-  *list_ptr = g_slist_prepend (*list_ptr, im);
 }
 
 static GDisplay *
-nav_window_get_gdisp (void)
+nav_dialog_get_gdisp (void)
 {
-  GSList    *list    = NULL;
-  GSList    *listPtr = NULL;
-  GDisplay  *gdisp   = NULL;
-  GimpImage *gimage;
+  GList *list;
 
-  gimp_container_foreach (image_context, gimlist_cb, &list);
-
-  if (!list)
-    return NULL;
-  
-  /* Find first valid image */
-  for (listPtr = list; listPtr; listPtr = g_slist_next (listPtr))
+  for (list = GIMP_LIST (image_context)->list;
+       list;
+       list = g_list_next (list))
     {
-      gimage = GIMP_IMAGE (listPtr->data);
+      GimpImage *gimage;
+      GDisplay  *gdisp;
+
+      gimage = GIMP_IMAGE (list->data);
+
       gdisp = gdisplays_check_valid (NULL, gimage);
+
       if (gdisp)
-	break;
-    }
-  
-  g_slist_free (list);
-
-  return gdisp;
-}
-
-
-void
-nav_window_free (GDisplay   *del_gdisp,
-		 InfoDialog *info_win)
-{
-  NavWinData *iwd;
-
-  /* So this functions works both ways..
-   * it will come in here with info_win == null
-   * if the auto mode is on...
-   */
-
-  if (!info_win)
-    {
-      if (nav_window_auto != NULL)
-	{
-	  GDisplay *gdisp;
-
-	  iwd = (NavWinData *) nav_window_auto->user_data;
-
-	  /* Only freeze if we are displaying the image we have deleted */
-	  if (iwd->gdisp != del_gdisp)
-	    return;
-
-	  if (iwd->timer_id)
-	    gtk_timeout_remove (iwd->timer_id);
-
-	  iwd->timer_id = 0;
-
-	  gdisp = nav_window_get_gdisp ();
-
-	  if (gdisp)
-	    {
-	      nav_window_change_display (NULL, gdisp, NULL);
-	    }
-	  else
-	    {
-	      /* Clear window and freeze */
-	      iwd->frozen = TRUE;
-	      nav_window_update_preview_blank (iwd); 
-	      gtk_window_set_title (GTK_WINDOW (nav_window_auto->shell), 
-				    _("Navigation: No Image"));
-
-	      gtk_widget_set_sensitive (nav_window_auto->vbox, FALSE);
-	      iwd->gdisp = NULL;
-	      gtk_widget_hide (GTK_WIDGET (nav_window_auto->shell));
-	    }
-	}
-      return;
+	return gdisp;
     }
 
-  /* We are actually freeing a window here so remove any timers left. */
-  iwd = (NavWinData *)info_win->user_data;
-  if (iwd->timer_id)
-    gtk_timeout_remove (iwd->timer_id);
-
-  g_free (info_win->user_data);
-  info_dialog_free (info_win);
-}
-
-
-/* nav popup ...
- * should share code with the nav_window dialog since they are 
- * essentially the same.
- */
-
-void 
-nav_popup_click_handler (GtkWidget      *widget, 
-			 GdkEventButton *event, 
-			 gpointer        data)
-{
-  GdkEventButton *bevent;
-  GDisplay       *gdisp = data;
-  NavWinData     *iwp;  /* dummy shorter version for the popups */
-  gint x, y;
-  gint x_org, y_org;
-  gint scr_w, scr_h;
-
-  bevent = (GdkEventButton *)event;
-
-  if (! gdisp->nav_popup)
-    {
-      /* popup a simplfied window with the nav box in it */
-      GtkWidget *frame;
-      GtkWidget *vbox;
-
-      iwp = create_dummy_iwd (gdisp, NAV_POPUP); 
-      gdisp->nav_popup = gtk_window_new (GTK_WINDOW_POPUP);
-      gtk_widget_set_events (gdisp->nav_popup, PREVIEW_MASK);
-
-      gtk_window_set_policy (GTK_WINDOW (gdisp->nav_popup),
-			     FALSE, FALSE, TRUE);
-      frame = gtk_frame_new (NULL);
-      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-      gtk_container_add (GTK_CONTAINER (gdisp->nav_popup), frame);
-      gtk_widget_show (frame);
-
-      vbox = create_preview_containers (iwp,gdisp->nav_popup);
-      gtk_widget_set_extension_events (iwp->preview, GDK_EXTENSION_EVENTS_ALL);
-
-      gtk_container_add (GTK_CONTAINER (frame), vbox);
-      gtk_object_set_data (GTK_OBJECT (gdisp->nav_popup),"navpop_prt",
-			   (gpointer) iwp);
-      nav_window_disp_area (iwp, iwp->gdisp);
-    }
-  else
-    {
-      gtk_widget_hide (gdisp->nav_popup);
-      iwp = (NavWinData *) gtk_object_get_data (GTK_OBJECT (gdisp->nav_popup), 
-						"navpop_prt");
-      nav_window_disp_area (iwp, iwp->gdisp);
-      nav_window_update_preview (iwp); 
-    }
-
-  /* decide where to put the popup */
-  gdk_window_get_origin (widget->window, &x_org, &y_org);
-
-  scr_w = gdk_screen_width ();
-  scr_h = gdk_screen_height ();
-
-  x = x_org + bevent->x - iwp->dispx - 
-    ((iwp->dispwidth - BORDER_PEN_WIDTH + 1) * 0.5) - 2;
-  y = y_org + bevent->y - iwp->dispy - 
-    ((iwp->dispheight - BORDER_PEN_WIDTH + 1)* 0.5) - 2;
-
-  /* If the popup doesn't fit into the screen, we have a problem.
-   * We move the popup onscreen and risk that the pointer is not
-   * in the square representing the viewable area anymore. Moving
-   * the pointer will make the image scroll by a large amount,
-   * but then it works as usual. Probably better than a popup that
-   * is completely unusable in the lower right of the screen.
-   *
-   * Warping the pointer would be another solution ... 
-   */
-  x = (x < 0) ? 0 : x;
-  y = (y < 0) ? 0 : y;
-  x = (x + iwp->pwidth > scr_w) ? scr_w - iwp->pwidth - 2: x;
-  y = (y + iwp->pheight > scr_h) ? scr_h - iwp->pheight - 2: y;
-
-  gtk_widget_popup (gdisp->nav_popup, x, y);
-  gdk_flush();
-
-  /* fill in then set up handlers for mouse motion etc */
-  iwp->motion_offsetx = (iwp->dispwidth  - BORDER_PEN_WIDTH + 1) * 0.5;
-  iwp->motion_offsety = (iwp->dispheight - BORDER_PEN_WIDTH + 1) * 0.5;
-
-  if(GTK_WIDGET_VISIBLE(iwp->preview))
-    nav_window_grab_pointer (iwp, iwp->preview);
-}
-
-void
-nav_popup_free (GtkWidget *nav_popup)
-{
-  gtk_widget_destroy (nav_popup);
-}
-
-void 
-nav_window_preview_resized (InfoDialog *idialog)
-{
-  NavWinData *iwd;
-
-  if (!idialog)
-    return;
-
-  iwd = (NavWinData *)idialog->user_data;
-
-  /* force regeneration of the widgets */
-  /* bit of a fiddle... could cause if the image really is 1x1
-   * but the preview would not really matter in that case.
-   */
-  iwd->imagewidth = 1;
-  iwd->imageheight = 1;
-
-  iwd->nav_preview_width = 
-    (gimprc.nav_preview_size < 0 || gimprc.nav_preview_size > 256) ? 
-    NAV_PREVIEW_WIDTH : gimprc.nav_preview_size;
-  iwd->nav_preview_height = 
-    (gimprc.nav_preview_size < 0 || gimprc.nav_preview_size > 256) ? 
-    NAV_PREVIEW_HEIGHT : gimprc.nav_preview_size;
-
-  nav_window_update_window_marker (idialog); 
-}
-
-void 
-nav_window_popup_preview_resized (GtkWidget **widget)
-{
-  NavWinData *iwp;  /* dummy shorter version for the popups */
-
-  iwp = (NavWinData *) gtk_object_get_data (GTK_OBJECT (*widget), 
-					    "navpop_prt");
-
-  g_free (iwp);
-
-  gtk_widget_destroy (*widget);
-
-  *widget = NULL;
+  return NULL;
 }

@@ -45,6 +45,8 @@ struct _GimpViewableClass
   GimpObjectClass  parent_class;
 
   void      (* invalidate_preview) (GimpViewable *viewable);
+  void      (* size_changed)       (GimpViewable *viewable);
+
   TempBuf * (* get_preview)        (GimpViewable *viewable,
 				    gint          width,
 				    gint          height);
@@ -57,6 +59,8 @@ struct _GimpViewableClass
 GtkType   gimp_viewable_get_type           (void);
 
 void      gimp_viewable_invalidate_preview (GimpViewable *viewable);
+void      gimp_viewable_size_changed       (GimpViewable *viewable);
+
 TempBuf * gimp_viewable_get_preview        (GimpViewable *viewable,
 					    gint          width,
 					    gint          height);

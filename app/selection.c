@@ -46,29 +46,302 @@
 #define INITIAL_DELAY     15  /* in milleseconds */
 
 
-/* static function prototypes */
+/*  local function prototypes  */
+
 static GdkPixmap * create_cycled_ants_pixmap (GdkWindow  *window,
 					      gint        depth);
-static void        cycle_ant_colors          (Selection  *);
-
-static void        selection_draw            (Selection  *);
-static void        selection_transform_segs  (Selection  *,
-					      BoundSeg   *,
-					      GdkSegment *,
-					      gint        );
-static void        selection_generate_segs   (Selection  *);
-static void        selection_free_segs       (Selection  *);
-static gint        selection_march_ants      (gpointer    );
-static gint        selection_start_marching  (gpointer    );
+static void        cycle_ant_colors          (Selection  *select);
+static void        selection_add_point       (GdkPoint   *points[8],
+					      gint        max_npoints[8],
+					      gint        npoints[8],
+					      gint        x,
+					      gint        y);
+static void        selection_render_points   (Selection  *select);
+static void        selection_draw            (Selection  *select);
+static void        selection_transform_segs  (Selection  *select,
+					      BoundSeg   *src_segs,
+					      GdkSegment *dest_segs,
+					      gint        num_segs);
+static void        selection_generate_segs   (Selection  *select);
+static void        selection_free_segs       (Selection  *select);
+static gboolean    selection_start_marching  (gpointer    data);
+static gboolean    selection_march_ants      (gpointer    data);
 
 
 GdkPixmap * marching_ants[9]  = { NULL };
 GdkPixmap * cycled_ants_pixmap = NULL;
 
 
-/*********************************/
-/*  Local function definitions   */
-/*********************************/
+/*  public functions  */
+
+Selection *
+selection_create (GdkWindow *win,
+		  GDisplay  *gdisp,
+		  gint       size,
+		  gint       width,
+		  gint       speed)
+{
+  GdkColor   fg, bg;
+  Selection *new;
+  gint       base_type;
+  gint       i;
+
+  new = g_new (Selection, 1);
+  base_type = gimp_image_base_type (gdisp->gimage);
+
+  if (gimprc.cycled_marching_ants)
+    {
+      new->cycle = TRUE;
+      if (!cycled_ants_pixmap)
+	cycled_ants_pixmap = create_cycled_ants_pixmap (win, g_visual->depth);
+
+      new->cycle_pix = cycled_ants_pixmap;
+    }
+  else
+    {
+      new->cycle = FALSE;
+      if (!marching_ants[0])
+	for (i = 0; i < 8; i++)
+	  marching_ants[i] = gdk_bitmap_create_from_data (win, (char*) ant_data[i], 8, 8);
+    }
+
+  new->win            = win;
+  new->gdisp          = gdisp;
+  new->segs_in        = NULL;
+  new->segs_out       = NULL;
+  new->segs_layer     = NULL;
+  new->num_segs_in    = 0;
+  new->num_segs_out   = 0;
+  new->num_segs_layer = 0;
+  new->index_in       = 0;
+  new->index_out      = 0;
+  new->index_layer    = 0;
+  new->state          = INVISIBLE;
+  new->paused         = 0;
+  new->recalc         = TRUE;
+  new->speed          = speed;
+  new->hidden         = FALSE;
+
+  for (i = 0; i < 8; i++)
+    new->points_in[i] = NULL;
+
+  /*  create a new graphics context  */
+  new->gc_in = gdk_gc_new (new->win);
+
+  if (new->cycle)
+    {
+      gdk_gc_set_fill (new->gc_in, GDK_TILED);
+      gdk_gc_set_tile (new->gc_in, new->cycle_pix);
+      gdk_gc_set_line_attributes (new->gc_in, 1, GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
+    }
+  else
+    {
+      /*  get black and white pixels for this gdisplay  */
+      fg.pixel = gdisplay_black_pixel (gdisp);
+      bg.pixel = gdisplay_white_pixel (gdisp);
+
+      gdk_gc_set_foreground (new->gc_in, &fg);
+      gdk_gc_set_background (new->gc_in, &bg);
+      gdk_gc_set_fill (new->gc_in, GDK_OPAQUE_STIPPLED);
+      gdk_gc_set_line_attributes (new->gc_in, 1, GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
+    }
+
+#ifdef USE_XDRAWPOINTS
+  new->gc_white = gdk_gc_new (new->win);
+  gdk_gc_set_foreground (new->gc_white, &bg);
+
+  new->gc_black = gdk_gc_new (new->win);
+  gdk_gc_set_foreground (new->gc_black, &fg);
+#endif
+
+  /*  Setup 2nd & 3rd GCs  */
+  fg.pixel = gdisplay_white_pixel (gdisp);
+  bg.pixel = gdisplay_gray_pixel (gdisp);
+
+  /*  create a new graphics context  */
+  new->gc_out = gdk_gc_new (new->win);
+  gdk_gc_set_foreground (new->gc_out, &fg);
+  gdk_gc_set_background (new->gc_out, &bg);
+  gdk_gc_set_fill (new->gc_out, GDK_OPAQUE_STIPPLED);
+  gdk_gc_set_line_attributes (new->gc_out, 1, GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
+
+  /*  get black and color pixels for this gdisplay  */
+  fg.pixel = gdisplay_black_pixel (gdisp);
+  bg.pixel = gdisplay_color_pixel (gdisp);
+
+  /*  create a new graphics context  */
+  new->gc_layer = gdk_gc_new (new->win);
+  gdk_gc_set_foreground (new->gc_layer, &fg);
+  gdk_gc_set_background (new->gc_layer, &bg);
+  gdk_gc_set_fill (new->gc_layer, GDK_OPAQUE_STIPPLED);
+  gdk_gc_set_line_attributes (new->gc_layer, 1, GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
+
+  return new;
+}
+
+
+void
+selection_free (Selection *select)
+{
+  if (select->state != INVISIBLE)
+    g_source_remove (select->timeout_id);
+
+  if (select->gc_in)
+    gdk_gc_destroy (select->gc_in);
+  if (select->gc_out)
+    gdk_gc_destroy (select->gc_out);
+  if (select->gc_layer)
+    gdk_gc_destroy (select->gc_layer);
+#ifdef USE_XDRAWPOINTS
+  if (select->gc_white)
+    gdk_gc_destroy (select->gc_white);
+  if (select->gc_black)
+    gdk_gc_destroy (select->gc_black);
+#endif
+  selection_free_segs (select);
+
+  g_free (select);
+}
+
+
+void
+selection_pause (Selection *select)
+{
+  if (select->state != INVISIBLE)
+    {
+      g_source_remove (select->timeout_id);
+      select->timeout_id = 0;
+    }
+
+  select->paused ++;
+}
+
+
+void
+selection_resume (Selection *select)
+{
+  if (select->paused == 1)
+    {
+      select->state      = INTRO;
+      select->timeout_id = g_timeout_add (INITIAL_DELAY,
+					  selection_start_marching,
+					  select);
+    }
+
+  select->paused--;
+}
+
+
+void
+selection_start (Selection *select,
+		 gboolean   recalc)
+{
+  /*  A call to selection_start with recalc == TRUE means that
+   *  we want to recalculate the selection boundary--usually
+   *  after scaling or panning the display, or modifying the
+   *  selection in some way.  If recalc == FALSE, the already
+   *  calculated boundary is simply redrawn.
+   */
+  if (recalc)
+    select->recalc = TRUE;
+
+  /*  If this selection is paused, do not start it  */
+  if (select->paused > 0)
+    return;
+
+  if (select->state != INVISIBLE)
+    g_source_remove (select->timeout_id);
+
+  select->state      = INTRO;  /*  The state before the first draw  */
+  select->timeout_id = g_timeout_add (INITIAL_DELAY,
+				      selection_start_marching,
+				      select);
+}
+
+
+void
+selection_invis (Selection *select)
+{
+  GDisplay * gdisp;
+  int x1, y1, x2, y2;
+
+  if (select->state != INVISIBLE)
+    {
+      g_source_remove (select->timeout_id);
+      select->timeout_id = 0;
+
+      select->state = INVISIBLE;
+    }
+
+  gdisp = (GDisplay *) select->gdisp;
+
+  /*  Find the bounds of the selection  */
+  if (gdisplay_mask_bounds (gdisp, &x1, &y1, &x2, &y2))
+    {
+      gdisplay_expose_area (gdisp, x1, y1, (x2 - x1), (y2 - y1));
+    }
+  else
+    {
+      selection_start (select, TRUE);
+    }
+}
+
+
+void
+selection_layer_invis (Selection *select)
+{
+  gint x1, y1;
+  gint x2, y2;
+  gint x3, y3;
+  gint x4, y4;
+
+  if (select->state != INVISIBLE)
+    {
+      g_source_remove (select->timeout_id);
+      select->timeout_id = 0;
+
+      select->state = INVISIBLE;
+    }
+
+  if (select->segs_layer != NULL && select->num_segs_layer == 4)
+    {
+      GDisplay *gdisp;
+
+      gdisp = select->gdisp;
+
+      x1 = select->segs_layer[0].x1 - 1;
+      y1 = select->segs_layer[0].y1 - 1;
+      x2 = select->segs_layer[3].x2 + 1;
+      y2 = select->segs_layer[3].y2 + 1;
+
+      x3 = select->segs_layer[0].x1 + 1;
+      y3 = select->segs_layer[0].y1 + 1;
+      x4 = select->segs_layer[3].x2 - 1;
+      y4 = select->segs_layer[3].y2 - 1;
+
+      /*  expose the region  */
+      gdisplay_expose_area (gdisp, x1, y1, (x2 - x1) + 1, (y3 - y1) + 1);
+      gdisplay_expose_area (gdisp, x1, y3, (x3 - x1) + 1, (y4 - y3) + 1);
+      gdisplay_expose_area (gdisp, x1, y4, (x2 - x1) + 1, (y2 - y4) + 1);
+      gdisplay_expose_area (gdisp, x4, y3, (x2 - x4) + 1, (y4 - y3) + 1);
+    }
+}
+
+
+void
+selection_toggle (Selection *select)
+{
+  selection_invis (select);
+  selection_layer_invis (select);
+
+  /*  toggle the visibility  */
+  select->hidden = select->hidden ? FALSE : TRUE;
+
+  selection_start (select, TRUE);
+}
+
+
+/*  private functions  */
 
 static GdkPixmap *
 create_cycled_ants_pixmap (GdkWindow *window,
@@ -111,6 +384,7 @@ cycle_ant_colors (Selection *select)
 	marching_ants_pixels[i] = get_color (255, 255, 255);
     }
 }
+
 
 #define MAX_POINTS_INC 2048
 
@@ -228,6 +502,7 @@ selection_render_points (Selection *select)
     }
 }
 
+
 static void
 selection_draw (Selection *select)
 {
@@ -290,11 +565,11 @@ static void
 selection_transform_segs (Selection  *select,
 			  BoundSeg   *src_segs,
 			  GdkSegment *dest_segs,
-			  int         num_segs)
+			  gint        num_segs)
 {
-  GDisplay * gdisp;
-  int x, y;
-  int i;
+  GDisplay *gdisp;
+  gint      x, y;
+  gint      i;
 
   gdisp = (GDisplay *) select->gdisp;
 
@@ -338,7 +613,7 @@ selection_transform_segs (Selection  *select,
 static void
 selection_generate_segs (Selection *select)
 {
-  GDisplay * gdisp;
+  GDisplay *gdisp;
   BoundSeg *segs_in;
   BoundSeg *segs_out;
   BoundSeg *segs_layer;
@@ -399,6 +674,7 @@ static void
 selection_free_segs (Selection *select)
 {
   gint j;
+
   if (select->segs_in)
     g_free (select->segs_in);
   if (select->segs_out)
@@ -410,7 +686,8 @@ selection_free_segs (Selection *select)
     {
       if (select->points_in[j])
 	g_free (select->points_in[j]);
-      select->points_in[j] = NULL;
+
+      select->points_in[j]     = NULL;
       select->num_points_in[j] = 0;
     }
 
@@ -423,10 +700,10 @@ selection_free_segs (Selection *select)
 }
 
 
-static gint
+static gboolean
 selection_start_marching (gpointer data)
 {
-  Selection * select;
+  Selection *select;
 
   select = (Selection *) data;
 
@@ -435,12 +712,13 @@ selection_start_marching (gpointer data)
     {
       selection_free_segs (select);
       selection_generate_segs (select);
+
       /* Toggle the RECALC flag */
       select->recalc = FALSE;
     }
 
-  select->index_in = 0;
-  select->index_out = 0;
+  select->index_in    = 0;
+  select->index_out   = 0;
   select->index_layer = 0;
 
   /*  Make sure the state is set to marching  */
@@ -459,22 +737,24 @@ selection_start_marching (gpointer data)
   selection_draw (select);
 
   /*  Reset the timer  */
-  select->timer = gtk_timeout_add (select->speed,
-				   selection_march_ants,
-				   (gpointer) select);
+  select->timeout_id = g_timeout_add (select->speed,
+				      selection_march_ants,
+				      select);
 
   return FALSE;
 }
 
-static gint
+
+static gboolean
 selection_march_ants (gpointer data)
 {
-  Selection * select;
+  Selection *select;
 
   select = (Selection *) data;
 
   /*  increment stipple index  */
   select->index_in++;
+
 #ifndef USE_XDRAWPOINTS
   if (select->index_in > 7)
     select->index_in = 0;
@@ -499,261 +779,4 @@ selection_march_ants (gpointer data)
     }
 
   return TRUE;
-}
-
-/*********************************/
-/*  Public function definitions  */
-/*********************************/
-
-Selection *
-selection_create (GdkWindow *win,
-		  GDisplay  *gdisp,
-		  gint       size,
-		  gint       width,
-		  gint       speed)
-{
-  GdkColor   fg, bg;
-  Selection *new;
-  gint       base_type;
-  gint       i;
-
-  new = g_new (Selection, 1);
-  base_type = gimp_image_base_type (gdisp->gimage);
-
-  if (gimprc.cycled_marching_ants)
-    {
-      new->cycle = TRUE;
-      if (!cycled_ants_pixmap)
-	cycled_ants_pixmap = create_cycled_ants_pixmap (win, g_visual->depth);
-
-      new->cycle_pix = cycled_ants_pixmap;
-    }
-  else
-    {
-      new->cycle = FALSE;
-      if (!marching_ants[0])
-	for (i = 0; i < 8; i++)
-	  marching_ants[i] = gdk_bitmap_create_from_data (win, (char*) ant_data[i], 8, 8);
-    }
-
-  new->win            = win;
-  new->gdisp          = gdisp;
-  new->segs_in        = NULL;
-  new->segs_out       = NULL;
-  new->segs_layer     = NULL;
-  new->num_segs_in    = 0;
-  new->num_segs_out   = 0;
-  new->num_segs_layer = 0;
-  new->index_in       = 0;
-  new->index_out      = 0;
-  new->index_layer    = 0;
-  new->state          = INVISIBLE;
-  new->paused         = 0;
-  new->recalc         = TRUE;
-  new->speed          = speed;
-  new->hidden         = FALSE;
-
-  for (i = 0; i < 8; i++)
-    new->points_in[i] = NULL;
-
-  /*  create a new graphics context  */
-  new->gc_in = gdk_gc_new (new->win);
-
-  if (new->cycle)
-    {
-      gdk_gc_set_fill (new->gc_in, GDK_TILED);
-      gdk_gc_set_tile (new->gc_in, new->cycle_pix);
-      gdk_gc_set_line_attributes (new->gc_in, 1, GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
-    }
-  else
-    {
-      /*  get black and white pixels for this gdisplay  */
-      fg.pixel = gdisplay_black_pixel (gdisp);
-      bg.pixel = gdisplay_white_pixel (gdisp);
-
-      gdk_gc_set_foreground (new->gc_in, &fg);
-      gdk_gc_set_background (new->gc_in, &bg);
-      gdk_gc_set_fill (new->gc_in, GDK_OPAQUE_STIPPLED);
-      gdk_gc_set_line_attributes (new->gc_in, 1, GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
-    }
-
-#ifdef USE_XDRAWPOINTS
-  new->gc_white = gdk_gc_new (new->win);
-  gdk_gc_set_foreground (new->gc_white, &bg);
-
-  new->gc_black = gdk_gc_new (new->win);
-  gdk_gc_set_foreground (new->gc_black, &fg);
-#endif
-
-  /*  Setup 2nd & 3rd GCs  */
-  fg.pixel = gdisplay_white_pixel (gdisp);
-  bg.pixel = gdisplay_gray_pixel (gdisp);
-
-  /*  create a new graphics context  */
-  new->gc_out = gdk_gc_new (new->win);
-  gdk_gc_set_foreground (new->gc_out, &fg);
-  gdk_gc_set_background (new->gc_out, &bg);
-  gdk_gc_set_fill (new->gc_out, GDK_OPAQUE_STIPPLED);
-  gdk_gc_set_line_attributes (new->gc_out, 1, GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
-
-  /*  get black and color pixels for this gdisplay  */
-  fg.pixel = gdisplay_black_pixel (gdisp);
-  bg.pixel = gdisplay_color_pixel (gdisp);
-
-  /*  create a new graphics context  */
-  new->gc_layer = gdk_gc_new (new->win);
-  gdk_gc_set_foreground (new->gc_layer, &fg);
-  gdk_gc_set_background (new->gc_layer, &bg);
-  gdk_gc_set_fill (new->gc_layer, GDK_OPAQUE_STIPPLED);
-  gdk_gc_set_line_attributes (new->gc_layer, 1, GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
-
-  return new;
-}
-
-
-void
-selection_pause (Selection *select)
-{
-  if (select->state != INVISIBLE)
-    gtk_timeout_remove (select->timer);
-
-  select->paused ++;
-}
-
-
-void
-selection_resume (Selection *select)
-{
-  if (select->paused == 1)
-    {
-      select->state = INTRO;
-      select->timer = gtk_timeout_add (INITIAL_DELAY, selection_start_marching,
-				       (gpointer) select);
-    }
-
-  select->paused--;
-}
-
-
-void
-selection_start (Selection *select,
-		 int        recalc)
-{
-  /*  A call to selection_start with recalc == TRUE means that
-   *  we want to recalculate the selection boundary--usually
-   *  after scaling or panning the display, or modifying the
-   *  selection in some way.  If recalc == FALSE, the already
-   *  calculated boundary is simply redrawn.
-   */
-  if (recalc)
-    select->recalc = TRUE;
-
-  /*  If this selection is paused, do not start it  */
-  if (select->paused > 0)
-    return;
-
-  if (select->state != INVISIBLE)
-    gtk_timeout_remove (select->timer);
-
-  select->state = INTRO;  /*  The state before the first draw  */
-  select->timer = gtk_timeout_add (INITIAL_DELAY, selection_start_marching,
-				   (gpointer) select);
-}
-
-
-void
-selection_invis (Selection *select)
-{
-  GDisplay * gdisp;
-  int x1, y1, x2, y2;
-
-  if (select->state != INVISIBLE)
-    {
-      gtk_timeout_remove (select->timer);
-      select->state = INVISIBLE;
-    }
-
-  gdisp = (GDisplay *) select->gdisp;
-
-  /*  Find the bounds of the selection  */
-  if (gdisplay_mask_bounds (gdisp, &x1, &y1, &x2, &y2))
-    {
-      gdisplay_expose_area (gdisp, x1, y1, (x2 - x1), (y2 - y1));
-    }
-  else
-    {
-      selection_start (select, TRUE);
-    }
-}
-
-
-void
-selection_layer_invis (Selection *select)
-{
-  GDisplay * gdisp;
-  int x1, y1, x2, y2;
-  int x3, y3, x4, y4;
-
-  if (select->state != INVISIBLE)
-    {
-      gtk_timeout_remove (select->timer);
-      select->state = INVISIBLE;
-    }
-  gdisp = (GDisplay *) select->gdisp;
-
-  if (select->segs_layer != NULL && select->num_segs_layer == 4)
-    {
-      x1 = select->segs_layer[0].x1 - 1;
-      y1 = select->segs_layer[0].y1 - 1;
-      x2 = select->segs_layer[3].x2 + 1;
-      y2 = select->segs_layer[3].y2 + 1;
-
-      x3 = select->segs_layer[0].x1 + 1;
-      y3 = select->segs_layer[0].y1 + 1;
-      x4 = select->segs_layer[3].x2 - 1;
-      y4 = select->segs_layer[3].y2 - 1;
-
-      /*  expose the region  */
-      gdisplay_expose_area (gdisp, x1, y1, (x2 - x1) + 1, (y3 - y1) + 1);
-      gdisplay_expose_area (gdisp, x1, y3, (x3 - x1) + 1, (y4 - y3) + 1);
-      gdisplay_expose_area (gdisp, x1, y4, (x2 - x1) + 1, (y2 - y4) + 1);
-      gdisplay_expose_area (gdisp, x4, y3, (x2 - x4) + 1, (y4 - y3) + 1);
-    }
-}
-
-
-void
-selection_hide (Selection *select,
-		GDisplay  *gdisp)
-{
-  selection_invis (select);
-  selection_layer_invis (select);
-
-  /*  toggle the visibility  */
-  select->hidden = select->hidden ? FALSE : TRUE;
-
-  selection_start (select, TRUE);
-}
-
-
-void
-selection_free (Selection *select)
-{
-  if (select->state != INVISIBLE)
-    gtk_timeout_remove (select->timer);
-
-  if (select->gc_in)
-    gdk_gc_destroy (select->gc_in);
-  if (select->gc_out)
-    gdk_gc_destroy (select->gc_out);
-  if (select->gc_layer)
-    gdk_gc_destroy (select->gc_layer);
-#ifdef USE_XDRAWPOINTS
-  if (select->gc_white)
-    gdk_gc_destroy (select->gc_white);
-  if (select->gc_black)
-    gdk_gc_destroy (select->gc_black);
-#endif
-  selection_free_segs (select);
-  g_free (select);
 }

@@ -1,3 +1,73 @@
+2001-06-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/nav_window.[ch]: major cleanup. After being finished, I
+	decided that it needs to be factored out to a widget (see below),
+	so like 90% of this file will go away soon.
+
+	* app/apptypes.h: added opaque NavigationDialog typedef.
+
+	* app/gdisplay.[ch]: Added gdisplay_selection_visibility() which
+	is called from gdisplays_selection_visibility(). Capitalized the
+	SelectionControl enum values. Cleaned up the GDisplay struct and
+	it's initialisation while i was on it.
+
+	* app/gimage.c: gimage_size_changed_handler(): removed stuff which
+	is now done by GimpImage itself.
+
+	* app/scale.c
+	* app/scroll.c: also update the navigation popup, not only the
+	dialog.
+
+	* app/selection.[ch]: major indentation & cleanup attack. Maybe
+	found the "Selection vanishes" bug (the timeout id was assinged to
+	a gint, not a _guint_).
+
+	* app/undo.c: s/gimp_image_size_changed/gimp_viweable_size_changed/
+
+	* app/core/gimpdrawable.c: invalidate the image's preview from our
+	"invalidate_preview" implementation. This means that the image's
+	preview is invalidated way too often currently, which cries for
+	some general freeze/thaw mechanism on the GimpViewable level.
+	(Note that previews are rendered in the idle loop, so this is not
+	really a major performance impact, it's just ugly).
+
+	* app/core/gimpimage.[ch]: removed the "size_changed" signal...
+
+	* app/core/gimpviewable.[ch]: ...and added it here.
+
+	* app/core/gimplayer.c: invalidate_preview(): always chain up,
+	also if it's a floating selection.
+
+	* app/gui/info-dialog.[ch]
+	* app/gui/info-window.c: minor cleanups.
+
+	* app/gui/preferences-dialog.c: no need to invalidate the image
+	after we have invalidated all it's layers.
+
+	* app/core/gimpimage-mask.c
+	* app/gui/commands.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimppainttool.c: capitalized the SelectionCommand enum
+	values.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpnavigationpreview.[ch]: new widget.
+
+	* app/widgets/gimppreview.[ch]: added a non-working
+	non-dot-for-dot mode. Added xres/yres params to the
+	gimp_preview_calc_size() helper function.
+
+	Cache the "size" value which was passed to the simple function
+	variants (gimp_preview_new() and gimp_preview_set_size()) so we
+	can re-calculate the preview's extents on the underlying
+	viewable's "size_changed" signal and on gimp_preview_set_viewable().
+
+	* app/widgets/gimpdrawablepreview.c
+	* app/widgets/gimpimagepreview.c: changed accordingly.
+
 2001-06-18  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/gfig/gfig.c

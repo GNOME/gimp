@@ -74,6 +74,7 @@ static void     gimp_image_init                  (GimpImage      *gimage);
 static void     gimp_image_destroy               (GtkObject      *object);
 static void     gimp_image_name_changed          (GimpObject     *object);
 static void     gimp_image_invalidate_preview    (GimpViewable   *viewable);
+static void     gimp_image_size_changed          (GimpViewable   *viewable);
 static void     gimp_image_real_colormap_changed (GimpImage      *gimage,
 						  gint            ncol);
 static TempBuf *gimp_image_get_preview           (GimpViewable   *gimage,
@@ -160,7 +161,6 @@ enum
 {
   MODE_CHANGED,
   ALPHA_CHANGED,
-  SIZE_CHANGED,
   FLOATING_SELECTION_CHANGED,
   ACTIVE_LAYER_CHANGED,
   ACTIVE_CHANNEL_CHANGED,
@@ -239,15 +239,6 @@ gimp_image_class_init (GimpImageClass *klass)
                     object_class->type,
                     GTK_SIGNAL_OFFSET (GimpImageClass,
 				       alpha_changed),
-                    gtk_signal_default_marshaller,
-                    GTK_TYPE_NONE, 0);
-
-  gimp_image_signals[SIZE_CHANGED] =
-    gtk_signal_new ("size_changed",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpImageClass,
-				       size_changed),
                     gtk_signal_default_marshaller,
                     GTK_TYPE_NONE, 0);
 
@@ -365,12 +356,12 @@ gimp_image_class_init (GimpImageClass *klass)
   gimp_object_class->name_changed     = gimp_image_name_changed;
 
   viewable_class->invalidate_preview  = gimp_image_invalidate_preview;
+  viewable_class->size_changed        = gimp_image_size_changed;
   viewable_class->get_preview         = gimp_image_get_preview;
   viewable_class->get_new_preview     = gimp_image_get_new_preview;
 
   klass->mode_changed                 = NULL;
   klass->alpha_changed                = NULL;
-  klass->size_changed                 = NULL;
   klass->floating_selection_changed   = NULL;
   klass->active_layer_changed         = NULL;
   klass->active_channel_changed       = NULL;
@@ -525,18 +516,27 @@ static void
 gimp_image_invalidate_preview (GimpViewable *viewable)
 {
   GimpImage *gimage;
-  GimpLayer *layer;
 
   if (GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview)
     GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview (viewable);
 
   gimage = GIMP_IMAGE (viewable);
 
-  /*  Invalidate the floating sel if it exists  */
-  if ((layer = gimp_image_floating_sel (gimage)))
-    floating_sel_invalidate (layer);
-
   gimage->comp_preview_valid = FALSE;
+}
+
+static void
+gimp_image_size_changed (GimpViewable *viewable)
+{
+  GimpImage *gimage;
+
+  if (GIMP_VIEWABLE_CLASS (parent_class)->size_changed)
+    GIMP_VIEWABLE_CLASS (parent_class)->size_changed (viewable);
+
+  gimage = GIMP_IMAGE (viewable);
+
+  gimp_image_invalidate_layer_previews (gimage);
+  gimp_image_invalidate_channel_previews (gimage);
 }
 
 static void 
@@ -841,7 +841,7 @@ gimp_image_resize (GimpImage *gimage,
 
   undo_push_group_end (gimage);
 
-  gimp_image_size_changed (gimage);
+  gimp_viewable_size_changed (GIMP_VIEWABLE (gimage));
 
   gimp_unset_busy ();
 }
@@ -969,7 +969,7 @@ gimp_image_scale (GimpImage *gimage,
 
   undo_push_group_end (gimage);
 
-  gimp_image_size_changed (gimage);
+  gimp_viewable_size_changed (GIMP_VIEWABLE (gimage));
 
   gimp_unset_busy ();
 }
@@ -1724,14 +1724,6 @@ gimp_image_alpha_changed (GimpImage *gimage)
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   gtk_signal_emit (GTK_OBJECT (gimage), gimp_image_signals[ALPHA_CHANGED]);
-}
-
-void
-gimp_image_size_changed (GimpImage *gimage)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  gtk_signal_emit (GTK_OBJECT (gimage), gimp_image_signals[SIZE_CHANGED]);
 }
 
 void

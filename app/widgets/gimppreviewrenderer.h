@@ -49,6 +49,7 @@ struct _GimpPreview
   gint          width;
   gint          height;
   gint          border_width;
+  gboolean      dot_for_dot;
 
   GimpRGB       border_color;
 
@@ -57,6 +58,7 @@ struct _GimpPreview
   gboolean      show_popup;
 
   /*< private >*/
+  gint          size;
   gboolean      in_button;
   guint         press_state;
   guint         idle_id;
@@ -108,6 +110,9 @@ void         gimp_preview_set_size_full    (GimpPreview   *preview,
 					    gint           height,
 					    gint           border_width);
 
+void         gimp_preview_set_dot_for_dot  (GimpPreview   *preview,
+					    gboolean       dot_for_dot);
+
 void         gimp_preview_set_border_color (GimpPreview   *preview,
 					    const GimpRGB *border_color);
 
@@ -116,10 +121,13 @@ void         gimp_preview_render           (GimpPreview   *preview);
 
 /*  protected  */
 
-void         gimp_preview_calc_size        (gint           aspect_width,
+void         gimp_preview_calc_size        (GimpPreview   *preview,
+					    gint           aspect_width,
 					    gint           aspect_height,
 					    gint           width,
 					    gint           height,
+					    gdouble        xresolution,
+					    gdouble        yresolution,
 					    gint          *return_width,
 					    gint          *return_height,
 					    gboolean      *scaling_up);

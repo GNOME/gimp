@@ -137,7 +137,6 @@ struct _GimpImageClass
 
   void (* mode_changed)                 (GimpImage   *gimage);
   void (* alpha_changed)                (GimpImage   *gimage);
-  void (* size_changed)                 (GimpImage   *gimage);
   void (* floating_selection_changed)   (GimpImage   *gimage);
   void (* active_layer_changed)         (GimpImage   *gimage);
   void (* active_channel_changed)       (GimpImage   *gimage);
@@ -280,7 +279,6 @@ void		gimp_image_colormap_changed  (GimpImage          *gimage,
 
 void            gimp_image_mode_changed      (GimpImage          *gimage);
 void            gimp_image_alpha_changed     (GimpImage          *gimage);
-void            gimp_image_size_changed      (GimpImage          *gimage);
 void            gimp_image_floating_selection_changed (GimpImage *gimage);
 void            gimp_image_mask_changed          (GimpImage      *gimage);
 

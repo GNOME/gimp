@@ -42,7 +42,7 @@ static void info_field_new              (InfoDialog    *idialog,
 					 GtkObject     *object,
 					 gpointer       value_ptr,
 					 GtkSignalFunc  callback,
-					 gpointer       client_data);
+					 gpointer       callback_data);
 static void update_field                (InfoField     *info_field);
 static gint info_dialog_delete_callback (GtkWidget     *widget,
 					 GdkEvent      *event,
@@ -55,9 +55,9 @@ info_field_new (InfoDialog    *idialog,
 		gchar         *title,
 		GtkWidget     *widget,
 		GtkObject     *obj,
-		void          *value_ptr,
+		gpointer       value_ptr,
 		GtkSignalFunc  callback,
-		gpointer       client_data)
+		gpointer       callback_data)
 {
   GtkWidget *label;
   InfoField *field;
@@ -83,16 +83,17 @@ info_field_new (InfoDialog    *idialog,
   gtk_table_set_row_spacings (GTK_TABLE (idialog->info_table), 2);
 
   field->field_type = field_type;
+
   if (obj == NULL)
     field->obj = GTK_OBJECT (widget);
   else
     field->obj = obj;
-  field->value_ptr = value_ptr;
-  field->callback = callback;
-  field->client_data = client_data;
 
-  idialog->field_list =
-    g_slist_prepend (idialog->field_list, (void *) field);
+  field->value_ptr     = value_ptr;
+  field->callback      = callback;
+  field->callback_data = callback_data;
+
+  idialog->field_list = g_slist_prepend (idialog->field_list, field);
   idialog->nfields++;
 }
 
@@ -107,8 +108,9 @@ update_field (InfoField *field)
     return;
 
   if (field->field_type != INFO_LABEL)
-    gtk_signal_handler_block_by_data (GTK_OBJECT (field->obj),
-				      field->client_data);
+    gtk_signal_handler_block_by_func (GTK_OBJECT (field->obj),
+				      field->callback,
+				      field->callback_data);
 
   switch (field->field_type)
     {
@@ -143,8 +145,9 @@ update_field (InfoField *field)
     }
 
   if (field->field_type != INFO_LABEL)
-    gtk_signal_handler_unblock_by_data (GTK_OBJECT (field->obj),
-					field->client_data);
+    gtk_signal_handler_unblock_by_func (GTK_OBJECT (field->obj),
+					field->callback,
+					field->callback_data);
 }
 
 static gint
