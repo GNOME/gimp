@@ -20,45 +20,50 @@
 #define __GIMP_TRANSFORM_UTILS_H__
 
 
-void   gimp_transform_matrix_flip          (GimpOrientationType  flip_type,
-                                            gdouble              axis,
-                                            GimpMatrix3         *result);
-void   gimp_transform_matrix_flip_free     (gint                 x,
+void   gimp_transform_matrix_flip          (GimpMatrix3         *matrix,
+                                            GimpOrientationType  flip_type,
+                                            gdouble              axis);
+void   gimp_transform_matrix_flip_free     (GimpMatrix3         *matrix,
+                                            gint                 x,
                                             gint                 y,
                                             gint                 width,
                                             gint                 height,
                                             gdouble              x1,
                                             gdouble              y1,
                                             gdouble              x2,
-                                            gdouble              y2,
-                                            GimpMatrix3         *result);
-void   gimp_transform_matrix_rotate        (gint                 x,
+                                            gdouble              y2);
+void   gimp_transform_matrix_rotate        (GimpMatrix3         *matrix,
+                                            GimpRotationType     rotate_type,
+                                            gdouble              center_x,
+                                            gdouble              center_y);
+void   gimp_transform_matrix_rotate_rect   (GimpMatrix3         *matrix,
+                                            gint                 x,
                                             gint                 y,
                                             gint                 width,
                                             gint                 height,
-                                            gdouble              angle,
-                                            GimpMatrix3         *result);
-void   gimp_transform_matrix_rotate_center (gdouble              center_x,
+                                            gdouble              angle);
+void   gimp_transform_matrix_rotate_center (GimpMatrix3         *matrix,
+                                            gdouble              center_x,
                                             gdouble              center_y,
-                                            gdouble              angle,
-                                            GimpMatrix3         *result);
-void   gimp_transform_matrix_scale         (gint                 x,
+                                            gdouble              angle);
+void   gimp_transform_matrix_scale         (GimpMatrix3         *matrix,
+                                            gint                 x,
                                             gint                 y,
                                             gint                 width,
                                             gint                 height,
                                             gdouble              t_x,
                                             gdouble              t_y,
                                             gdouble              t_width,
-                                            gdouble              t_height,
-                                            GimpMatrix3         *result);
-void   gimp_transform_matrix_shear         (gint                 x,
+                                            gdouble              t_height);
+void   gimp_transform_matrix_shear         (GimpMatrix3         *matrix,
+                                            gint                 x,
                                             gint                 y,
                                             gint                 width,
                                             gint                 height,
                                             GimpOrientationType  orientation,
-                                            gdouble              amount,
-                                            GimpMatrix3         *result);
-void   gimp_transform_matrix_perspective   (gint                 x,
+                                            gdouble              amount);
+void   gimp_transform_matrix_perspective   (GimpMatrix3         *matrix,
+                                            gint                 x,
                                             gint                 y,
                                             gint                 width,
                                             gint                 height,
@@ -69,8 +74,7 @@ void   gimp_transform_matrix_perspective   (gint                 x,
                                             gdouble              t_x3,
                                             gdouble              t_y3,
                                             gdouble              t_x4,
-                                            gdouble              t_y4,
-                                            GimpMatrix3         *result);
+                                            gdouble              t_y4);
 
 
 #endif  /*  __GIMP_TRANSFORM_UTILS_H__  */

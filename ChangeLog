@@ -1,5 +1,23 @@
 2005-03-21  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimp-transform-utils.[ch]: changed all transform
+	utilities to modify the passed transform matrix instead of
+	creating a new one.
+
+	* app/text/gimptextlayer-transform.c
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpsheartool.c
+	* app/vectors/gimpvectors.c
+	* tools/pdbgen/pdb/drawable_transform.pdb
+	* tools/pdbgen/pdb/transform_tools.pdb: changed accordingly.
+
+	* app/pdb/drawable_transform_cmds.c
+	* app/pdb/transform_tools_cmds.c: regenerated.
+
+2005-03-21  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/winicon/icosave.c (ico_create_palette): fixed parameter
 	check, NULL is valid for an empty palette. Fixes bug #170812.
 

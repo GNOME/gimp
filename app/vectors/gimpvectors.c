@@ -24,6 +24,7 @@
 #include <glib-object.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpmath/gimpmath.h"
 
 #include "vectors-types.h"
 
@@ -442,7 +443,8 @@ gimp_vectors_flip (GimpItem            *item,
   GList       *list;
   GimpMatrix3  matrix;
 
-  gimp_transform_matrix_flip (flip_type, axis, &matrix);
+  gimp_matrix3_identity (&matrix);
+  gimp_transform_matrix_flip (&matrix, flip_type, axis);
 
   gimp_vectors_freeze (vectors);
 
@@ -471,22 +473,9 @@ gimp_vectors_rotate (GimpItem         *item,
   GimpVectors *vectors = GIMP_VECTORS (item);
   GList       *list;
   GimpMatrix3  matrix;
-  gdouble      angle = 0.0;
 
-  switch (rotate_type)
-    {
-    case GIMP_ROTATE_90:
-      angle = G_PI_2;
-      break;
-    case GIMP_ROTATE_180:
-      angle = G_PI;
-      break;
-    case GIMP_ROTATE_270:
-      angle = - G_PI_2;
-      break;
-    }
-
-  gimp_transform_matrix_rotate_center (center_x, center_y, angle, &matrix);
+  gimp_matrix3_identity (&matrix);
+  gimp_transform_matrix_rotate (&matrix, rotate_type, center_x, center_y);
 
   gimp_vectors_freeze (vectors);
 

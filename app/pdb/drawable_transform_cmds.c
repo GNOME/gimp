@@ -241,9 +241,9 @@ drawable_transform_flip_invoker (Gimp         *gimp,
           GimpMatrix3 matrix;
 
           /* Assemble the transformation matrix */
-          gimp_transform_matrix_flip_free (x, y, width, height,
-                                           x0, y0, x1, y1,
-                                           &matrix);
+          gimp_matrix3_identity (&matrix);
+          gimp_transform_matrix_flip_free (&matrix,
+                                           x, y, width, height, x0, y0, x1, y1);
 
           if (progress)
             gimp_progress_start (progress, _("Flip..."), FALSE);
@@ -393,9 +393,9 @@ drawable_transform_flip_default_invoker (Gimp         *gimp,
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
 
           /* Assemble the transformation matrix */
-          gimp_transform_matrix_flip_free (x, y, width, height,
-                                           x0, y0, x1, y1,
-                                           &matrix);
+          gimp_matrix3_identity (&matrix);
+          gimp_transform_matrix_flip_free (&matrix,
+                                           x, y, width, height, x0, y0, x1, y1);
 
           if (interpolate)
             interpolation_type = gimp->config->interpolation_type;
@@ -552,12 +552,13 @@ drawable_transform_perspective_invoker (Gimp         *gimp,
           GimpMatrix3 matrix;
 
           /* Assemble the transformation matrix */
-          gimp_transform_matrix_perspective (x, y, width, height,
+          gimp_matrix3_identity (&matrix);
+          gimp_transform_matrix_perspective (&matrix,
+                                             x, y, width, height,
                                              trans_info[X0], trans_info[Y0],
                                              trans_info[X1], trans_info[Y1],
                                              trans_info[X2], trans_info[Y2],
-                                             trans_info[X3], trans_info[Y3],
-                                             &matrix);
+                                             trans_info[X3], trans_info[Y3]);
 
           if (progress)
             gimp_progress_start (progress, _("Perspective..."), FALSE);
@@ -732,12 +733,13 @@ drawable_transform_perspective_default_invoker (Gimp         *gimp,
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
 
           /* Assemble the transformation matrix */
-          gimp_transform_matrix_perspective (x, y, width, height,
+          gimp_matrix3_identity (&matrix);
+          gimp_transform_matrix_perspective (&matrix,
+                                             x, y, width, height,
                                              trans_info[X0], trans_info[Y0],
                                              trans_info[X1], trans_info[Y1],
                                              trans_info[X2], trans_info[Y2],
-                                             trans_info[X3], trans_info[Y3],
-                                             &matrix);
+                                             trans_info[X3], trans_info[Y3]);
 
           if (interpolate)
             interpolation_type = gimp->config->interpolation_type;
@@ -1024,12 +1026,12 @@ drawable_transform_rotate_invoker (Gimp         *gimp,
           GimpMatrix3 matrix;
 
           /* Assemble the transformation matrix */
+          gimp_matrix3_identity (&matrix);
           if (auto_center)
-            gimp_transform_matrix_rotate (x, y, width, height, angle,
-                                          &matrix);
+            gimp_transform_matrix_rotate_rect (&matrix, x, y, width, height, angle);
           else
-            gimp_transform_matrix_rotate_center (center_x, center_y, angle,
-                                                 &matrix);
+            gimp_transform_matrix_rotate_center (&matrix,
+                                                 center_x, center_y, angle);
 
           if (progress)
             gimp_progress_start (progress, _("Rotating..."), FALSE);
@@ -1179,12 +1181,12 @@ drawable_transform_rotate_default_invoker (Gimp         *gimp,
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
 
           /* Assemble the transformation matrix */
+          gimp_matrix3_identity (&matrix);
           if (auto_center)
-            gimp_transform_matrix_rotate (x, y, width, height, angle,
-                                          &matrix);
+            gimp_transform_matrix_rotate_rect (&matrix, x, y, width, height, angle);
           else
-            gimp_transform_matrix_rotate_center (center_x, center_y, angle,
-                                                 &matrix);
+            gimp_transform_matrix_rotate_center (&matrix,
+                                                 center_x, center_y, angle);
 
           if (interpolate)
             interpolation_type = gimp->config->interpolation_type;
@@ -1335,12 +1337,13 @@ drawable_transform_scale_invoker (Gimp         *gimp,
           GimpMatrix3 matrix;
 
           /* Assemble the transformation matrix */
-          gimp_transform_matrix_scale (x, y, width, height,
+          gimp_matrix3_identity (&matrix);
+          gimp_transform_matrix_scale (&matrix,
+                                       x, y, width, height,
                                        trans_info[X0],
                                        trans_info[Y0],
                                        trans_info[X1] - trans_info[X0],
-                                       trans_info[Y1] - trans_info[Y0],
-                                       &matrix);
+                                       trans_info[Y1] - trans_info[Y0]);
 
           if (progress)
             gimp_progress_start (progress, _("Scaling..."), FALSE);
@@ -1489,12 +1492,13 @@ drawable_transform_scale_default_invoker (Gimp         *gimp,
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
 
           /* Assemble the transformation matrix */
-          gimp_transform_matrix_scale (x, y, width, height,
+          gimp_matrix3_identity (&matrix);
+          gimp_transform_matrix_scale (&matrix,
+                                       x, y, width, height,
                                        trans_info[X0],
                                        trans_info[Y0],
                                        trans_info[X1] - trans_info[X0],
-                                       trans_info[Y1] - trans_info[Y0],
-                                       &matrix);
+                                       trans_info[Y1] - trans_info[Y0]);
 
           if (interpolate)
             interpolation_type = gimp->config->interpolation_type;
@@ -1642,9 +1646,10 @@ drawable_transform_shear_invoker (Gimp         *gimp,
           GimpMatrix3 matrix;
 
           /* Assemble the transformation matrix */
-          gimp_transform_matrix_shear (x, y, width, height,
-                                       shear_type, magnitude,
-                                       &matrix);
+          gimp_matrix3_identity (&matrix);
+          gimp_transform_matrix_shear (&matrix,
+                                       x, y, width, height,
+                                       shear_type, magnitude);
 
           if (progress)
             gimp_progress_start (progress, _("Shearing..."), FALSE);
@@ -1780,9 +1785,10 @@ drawable_transform_shear_default_invoker (Gimp         *gimp,
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
 
           /* Assemble the transformation matrix */
-          gimp_transform_matrix_shear (x, y, width, height,
-                                       shear_type, magnitude,
-                                       &matrix);
+          gimp_matrix3_identity (&matrix);
+          gimp_transform_matrix_shear (&matrix,
+                                       x, y, width, height,
+                                       shear_type, magnitude);
 
           if (interpolate)
             interpolation_type = gimp->config->interpolation_type;

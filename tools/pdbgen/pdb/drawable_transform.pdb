@@ -245,9 +245,9 @@ HELP
     @outargs = ( &drawable_out_arg('flipped') );
 
     transform_invoke ("Flip...", <<CODE);
-      gimp_transform_matrix_flip_free (x, y, width, height,
-                                       x0, y0, x1, y1,
-                                       &matrix);
+      gimp_matrix3_identity (&matrix);
+      gimp_transform_matrix_flip_free (&matrix,
+                                       x, y, width, height, x0, y0, x1, y1);
 CODE
 }
 
@@ -281,9 +281,9 @@ HELP
     @outargs = ( &drawable_out_arg('flipped') );
 
     transform_default_invoke ("Flip...", <<CODE);
-      gimp_transform_matrix_flip_free (x, y, width, height,
-                                       x0, y0, x1, y1,
-                                       &matrix);
+      gimp_matrix3_identity (&matrix);
+      gimp_transform_matrix_flip_free (&matrix,
+                                       x, y, width, height, x0, y0, x1, y1);
 CODE
 }
 
@@ -335,12 +335,13 @@ HELP
     @outargs = ( &drawable_out_arg('newly mapped') );
 
     transform_invoke ("Perspective...", <<CODE, [ 'gdouble trans_info[8]' ]);
-      gimp_transform_matrix_perspective (x, y, width, height,
+      gimp_matrix3_identity (&matrix);
+      gimp_transform_matrix_perspective (&matrix,
+                                         x, y, width, height,
                                          trans_info[X0], trans_info[Y0],
                                          trans_info[X1], trans_info[Y1],
                                          trans_info[X2], trans_info[Y2],
-                                         trans_info[X3], trans_info[Y3],
-                                         &matrix);
+                                         trans_info[X3], trans_info[Y3]);
 CODE
 }
 
@@ -380,12 +381,13 @@ HELP
     @outargs = ( &drawable_out_arg('newly mapped') );
 
     transform_default_invoke ("Perspective...", <<CODE, [ 'gdouble trans_info[8]' ]);
-      gimp_transform_matrix_perspective (x, y, width, height,
+      gimp_matrix3_identity (&matrix);
+      gimp_transform_matrix_perspective (&matrix,
+                                         x, y, width, height,
                                          trans_info[X0], trans_info[Y0],
                                          trans_info[X1], trans_info[Y1],
                                          trans_info[X2], trans_info[Y2],
-                                         trans_info[X3], trans_info[Y3],
-                                         &matrix);
+                                         trans_info[X3], trans_info[Y3]);
 CODE
 }
 
@@ -476,12 +478,12 @@ HELP
     @outargs = ( &drawable_out_arg('rotated') );
 
     transform_invoke ("Rotating...", <<CODE);
+      gimp_matrix3_identity (&matrix);
       if (auto_center)
-        gimp_transform_matrix_rotate (x, y, width, height, angle,
-                                      &matrix);
+        gimp_transform_matrix_rotate_rect (&matrix, x, y, width, height, angle);
       else
-        gimp_transform_matrix_rotate_center (center_x, center_y, angle,
-                                             &matrix);
+        gimp_transform_matrix_rotate_center (&matrix,
+                                             center_x, center_y, angle);
 CODE
 }
 
@@ -515,12 +517,12 @@ HELP
     @outargs = ( &drawable_out_arg('rotated') );
 
     transform_default_invoke ("Rotating...", <<CODE);
+      gimp_matrix3_identity (&matrix);
       if (auto_center)
-        gimp_transform_matrix_rotate (x, y, width, height, angle,
-                                      &matrix);
+        gimp_transform_matrix_rotate_rect (&matrix, x, y, width, height, angle);
       else
-        gimp_transform_matrix_rotate_center (center_x, center_y, angle,
-                                             &matrix);
+        gimp_transform_matrix_rotate_center (&matrix,
+                                             center_x, center_y, angle);
 CODE
 }
 
@@ -563,12 +565,13 @@ HELP
     @outargs = ( &drawable_out_arg('scaled') );
 
     transform_invoke ("Scaling...", <<CODE, [ 'gdouble trans_info[4]' ], <<CODE2);
-      gimp_transform_matrix_scale (x, y, width, height,
+      gimp_matrix3_identity (&matrix);
+      gimp_transform_matrix_scale (&matrix,
+                                   x, y, width, height,
                                    trans_info[X0],
                                    trans_info[Y0],
                                    trans_info[X1] - trans_info[X0],
-                                   trans_info[Y1] - trans_info[Y0],
-                                   &matrix);
+                                   trans_info[Y1] - trans_info[Y0]);
 CODE
              trans_info[X0] < trans_info[X1] &&
              trans_info[Y0] < trans_info[Y1]);
@@ -610,12 +613,13 @@ HELP
     @outargs = ( &drawable_out_arg('scaled') );
 
     transform_default_invoke ("Scaling...", <<CODE, [ 'gdouble trans_info[4]' ], <<CODE2);
-      gimp_transform_matrix_scale (x, y, width, height,
+      gimp_matrix3_identity (&matrix);
+      gimp_transform_matrix_scale (&matrix,
+                                   x, y, width, height,
                                    trans_info[X0],
                                    trans_info[Y0],
                                    trans_info[X1] - trans_info[X0],
-                                   trans_info[Y1] - trans_info[Y0],
-                                   &matrix);
+                                   trans_info[Y1] - trans_info[Y0]);
 CODE
              trans_info[X0] < trans_info[X1] &&
              trans_info[Y0] < trans_info[Y1]);
@@ -655,9 +659,10 @@ HELP
     @outargs = ( &drawable_out_arg('sheared') );
 
     transform_invoke ("Shearing...", <<CODE);
-      gimp_transform_matrix_shear (x, y, width, height,
-                                   shear_type, magnitude,
-                                   &matrix);
+      gimp_matrix3_identity (&matrix);
+      gimp_transform_matrix_shear (&matrix,
+                                   x, y, width, height,
+                                   shear_type, magnitude);
 CODE
 }
 
@@ -687,9 +692,10 @@ HELP
     @outargs = ( &drawable_out_arg('sheared') );
 
     transform_default_invoke ("Shearing...", <<CODE);
-      gimp_transform_matrix_shear (x, y, width, height,
-                                   shear_type, magnitude,
-                                   &matrix);
+      gimp_matrix3_identity (&matrix);
+      gimp_transform_matrix_shear (&matrix,
+                                   x, y, width, height,
+                                   shear_type, magnitude);
 CODE
 }
 

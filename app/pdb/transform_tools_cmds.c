@@ -183,12 +183,13 @@ perspective_invoker (Gimp         *gimp,
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
 
           /* Assemble the transformation matrix */
-          gimp_transform_matrix_perspective (x, y, width, height,
+          gimp_matrix3_identity (&matrix);
+          gimp_transform_matrix_perspective (&matrix,
+                                             x, y, width, height,
                                              trans_info[X0], trans_info[Y0],
                                              trans_info[X1], trans_info[Y1],
                                              trans_info[X2], trans_info[Y2],
-                                             trans_info[X3], trans_info[Y3],
-                                             &matrix);
+                                             trans_info[X3], trans_info[Y3]);
 
           if (interpolation)
             interpolation_type = gimp->config->interpolation_type;
@@ -329,8 +330,9 @@ rotate_invoker (Gimp         *gimp,
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
 
           /* Assemble the transformation matrix */
-          gimp_transform_matrix_rotate (x, y, width, height,
-                                        angle, &matrix);
+          gimp_matrix3_identity (&matrix);
+          gimp_transform_matrix_rotate_rect (&matrix,
+                                             x, y, width, height, angle);
 
           if (interpolation)
             interpolation_type = gimp->config->interpolation_type;
@@ -444,12 +446,13 @@ scale_invoker (Gimp         *gimp,
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
 
           /* Assemble the transformation matrix */
-          gimp_transform_matrix_scale (x, y, width, height,
+          gimp_matrix3_identity (&matrix);
+          gimp_transform_matrix_scale (&matrix,
+                                       x, y, width, height,
                                        trans_info[X0],
                                        trans_info[Y0],
                                        trans_info[X1] - trans_info[X0],
-                                       trans_info[Y1] - trans_info[Y0],
-                                       &matrix);
+                                       trans_info[Y1] - trans_info[Y0]);
 
           if (interpolation)
             interpolation_type = gimp->config->interpolation_type;
@@ -575,9 +578,10 @@ shear_invoker (Gimp         *gimp,
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
 
           /* Assemble the transformation matrix */
-          gimp_transform_matrix_shear (x, y, width, height,
-                                       shear_type, magnitude,
-                                       &matrix);
+          gimp_matrix3_identity (&matrix);
+          gimp_transform_matrix_shear (&matrix,
+                                       x, y, width, height,
+                                       shear_type, magnitude);
 
           if (interpolation)
             interpolation_type = gimp->config->interpolation_type;

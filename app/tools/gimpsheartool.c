@@ -292,13 +292,14 @@ gimp_shear_tool_recalc (GimpTransformTool *tr_tool,
   else
     amount = tr_tool->trans_info[YSHEAR];
 
-  gimp_transform_matrix_shear (tr_tool->x1,
+  gimp_matrix3_identity (&tr_tool->transform);
+  gimp_transform_matrix_shear (&tr_tool->transform,
+                               tr_tool->x1,
                                tr_tool->y1,
                                tr_tool->x2 - tr_tool->x1,
                                tr_tool->y2 - tr_tool->y1,
                                tr_tool->trans_info[HORZ_OR_VERT],
-                               amount,
-                               &tr_tool->transform);
+                               amount);
 }
 
 static void

@@ -339,10 +339,11 @@ gimp_rotate_tool_recalc (GimpTransformTool *tr_tool,
   tr_tool->cx = tr_tool->trans_info[CENTER_X];
   tr_tool->cy = tr_tool->trans_info[CENTER_Y];
 
-  gimp_transform_matrix_rotate_center (tr_tool->cx,
+  gimp_matrix3_identity (&tr_tool->transform);
+  gimp_transform_matrix_rotate_center (&tr_tool->transform,
+                                       tr_tool->cx,
                                        tr_tool->cy,
-                                       tr_tool->trans_info[ANGLE],
-                                       &tr_tool->transform);
+                                       tr_tool->trans_info[ANGLE]);
 }
 
 static void

@@ -63,7 +63,7 @@ gimp_text_layer_transform_flip (GimpTextLayer       *layer,
   if (! gimp_text_layer_get_transformation (layer, &matrix))
     return FALSE;
 
-  gimp_transform_matrix_flip (flip_type, axis, &matrix);
+  gimp_transform_matrix_flip (&matrix, flip_type, axis);
 
   return gimp_text_layer_set_transformation (layer, &matrix);
 }
@@ -99,25 +99,11 @@ gimp_text_layer_transform_rotate (GimpTextLayer    *layer,
                                   gdouble           center_y)
 {
   GimpMatrix3  matrix;
-  gdouble      angle = 0.0;
 
   if (! gimp_text_layer_get_transformation (layer, &matrix))
     return FALSE;
 
-  switch (rotate_type)
-    {
-    case GIMP_ROTATE_90:
-      angle = G_PI_2;
-      break;
-    case GIMP_ROTATE_180:
-      angle = G_PI;
-      break;
-    case GIMP_ROTATE_270:
-      angle = - G_PI_2;
-      break;
-    }
-
-  gimp_transform_matrix_rotate_center (center_x, center_y, angle, &matrix);
+  gimp_transform_matrix_rotate (&matrix, rotate_type, center_x, center_y);
 
   return gimp_text_layer_set_transformation (layer, &matrix);
 }
