@@ -539,6 +539,7 @@ crop_motion (Tool           *tool,
     }
   
   draw_core_resume (crop->core, tool);
+  crop_info_update (tool);
 }
 
 static void
@@ -763,8 +764,6 @@ crop_draw (Tool *tool)
 
 #undef SRW
 #undef SRH
-
-  crop_info_update (tool);
 }
 
 Tool *
@@ -1139,6 +1138,9 @@ crop_info_update (Tool *tool)
 {
   Crop     *crop;
   GDisplay *gdisp;
+
+  if (tool->state != ACTIVE)
+    return;
 
   crop = (Crop *) tool->private;
   gdisp = (GDisplay *) tool->gdisp_ptr;

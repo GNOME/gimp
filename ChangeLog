@@ -1,3 +1,14 @@
+2001-06-18  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/newsprint.c: applied patch found in bug-report
+	#52981 that fixes wrong handling of GRAYA drawables in the 
+	Newsprint GUI.
+
+	* app/crop.c: do not update info_window on redraw but only on motion.
+	This is a very lame but simple fix for bug #38737. A correct fix
+	would be to change the Crop tool not to abuse the info_window, but
+	I consider this too much change for 1.2.
+	
 2001-06-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/selection.h: Selection->timer must be a guint, not a gint.

@@ -1784,7 +1784,7 @@ newsprint (GimpDrawable *drawable)
   has_alpha  = gimp_drawable_has_alpha (drawable->id);
   colour_bpp = has_alpha ? bpp-1 : bpp;
   colourspace= pvals.colourspace;
-  if (bpp == 1)
+  if (colour_bpp == 1)
     {
       colourspace = CS_GREY;
     }
@@ -1815,7 +1815,7 @@ do {								\
 } while(0)
 
   /* calculate the RGB / CMYK rotations and threshold matrices */
-  if (bpp == 1 || colourspace == CS_INTENSITY)
+  if (colour_bpp == 1 || colourspace == CS_INTENSITY)
     {
       rot[0]    = DEG2RAD (pvals.gry_ang);	
       thresh[0] = spot2thresh (pvals.gry_spotfn, width);
