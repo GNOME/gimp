@@ -440,8 +440,8 @@ app_init ()
     {
       sprintf (filename, "%s/gtkrc", gimp_dir);
 
-      if (be_verbose == TRUE)
-      g_print ("parsing \"%s\"\n", filename);
+      if ((be_verbose == TRUE) || (no_splash == TRUE))
+	g_print ("parsing \"%s\"\n", filename);
       app_init_update_status("Resource configuration", filename, -1);
 
       gtk_rc_parse (filename);

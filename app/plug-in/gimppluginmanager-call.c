@@ -253,7 +253,8 @@ plug_in_init ()
       if (plug_in_def->query)
 	{
 	  write_pluginrc = TRUE;
-	  g_print ("query plug-in: \"%s\"\n", plug_in_def->prog);
+	  if ((be_verbose == TRUE) || (no_splash == TRUE))
+	    g_print ("query plug-in: \"%s\"\n", plug_in_def->prog);
 	  plug_in_query (plug_in_def->prog, plug_in_def);
 	}
       app_init_update_status(NULL, plug_in_def->prog, nth/nplugins);
@@ -289,7 +290,8 @@ plug_in_init ()
   /* write the pluginrc file if necessary */
   if (write_pluginrc)
     {
-      g_print ("writing \"%s\"\n", filename);
+      if ((be_verbose == TRUE) || (no_splash == TRUE))
+	g_print ("writing \"%s\"\n", filename);
       plug_in_write_rc (filename);
     }
 
@@ -301,7 +303,8 @@ plug_in_init ()
 
   /* run the available extensions */
   tmp = proc_defs;
-  g_print ("Starting extensions: ");
+  if ((be_verbose == TRUE) || (no_splash == TRUE))
+    g_print ("Starting extensions: ");
   app_init_update_status("Extensions", "", 0);
   nplugins = g_slist_length(tmp); nth = 0;
 
@@ -314,15 +317,16 @@ plug_in_init ()
 	  (proc_def->db_info.num_args == 0) &&
 	  (proc_def->db_info.proc_type == PDB_EXTENSION))
 	{
-
-	  g_print ("%s ", proc_def->db_info.name);
+	  if ((be_verbose == TRUE) || (no_splash == TRUE))
+	    g_print ("%s ", proc_def->db_info.name);
 	  app_init_update_status(NULL, proc_def->db_info.name,
 				 nth/nplugins);
 
 	  plug_in_run (&proc_def->db_info, NULL, FALSE, TRUE);
 	}
     }
-  g_print ("\n");
+  if ((be_verbose == TRUE) || (no_splash == TRUE))
+    g_print ("\n");
 
   /* free up stuff */
   tmp = plug_in_defs;

@@ -323,7 +323,7 @@ parse_gimprc_file (char *filename)
   if (!parse_info.fp)
     return;
 
-  if (be_verbose == TRUE)
+  if ((be_verbose == TRUE) || (no_splash == TRUE))
     g_print ("parsing \"%s\"\n", filename);
 
   cur_token = -1;
