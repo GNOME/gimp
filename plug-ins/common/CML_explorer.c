@@ -452,10 +452,10 @@ query (void)
 {
   static GimpParamDef args [] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
-    { GIMP_PDB_IMAGE, "image", "Input image (not used)"},
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_STRING, "parameter_file_name", "The name of parameter file. CML_explorer makes an image with its settings." }
+    { GIMP_PDB_INT32,    "run_mode",            "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",               "Input image (not used)" },
+    { GIMP_PDB_DRAWABLE, "drawable",            "Input drawable"  },
+    { GIMP_PDB_STRING,   "parameter_file_name", "The name of parameter file. CML_explorer makes an image with its settings." }
   };
 
   gimp_install_procedure (PLUG_IN_NAME,
@@ -470,11 +470,14 @@ query (void)
 			  "http://www.inetq.or.jp/~narazaki/TheGIMP/",
 			  "Shuji Narazaki",
 			  "1997",
-			  N_("<Image>/Filters/Render/Pattern/CML _Explorer..."),
+			  N_("CML _Explorer..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register (PLUG_IN_NAME,
+                             N_("<Image>/Filters/Render/Pattern"));
 }
 
 static void

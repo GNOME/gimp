@@ -163,13 +163,13 @@ query (void)
 {
   static GimpParamDef	args[] =
   {
-    { GIMP_PDB_INT32,	"run_mode",	"Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,	"image",	"Input image" },
-    { GIMP_PDB_DRAWABLE,	"drawable",	"Input drawable" },
-    { GIMP_PDB_INT32,	"radius",	"Filter box radius (default = 3)" },
-    { GIMP_PDB_INT32,	"type",		"Filter type (0 = median, 1 = adaptive, 2 = recursive-median, 3 = recursive-adaptive)" },
-    { GIMP_PDB_INT32,	"black",	"Black level (-1 to 255)" },
-    { GIMP_PDB_INT32,	"white",	"White level (0 to 256)" }
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32,    "radius",   "Filter box radius (default = 3)" },
+    { GIMP_PDB_INT32,    "type",     "Filter type (0 = median, 1 = adaptive, 2 = recursive-median, 3 = recursive-adaptive)" },
+    { GIMP_PDB_INT32,    "black",    "Black level (-1 to 255)" },
+    { GIMP_PDB_INT32,    "white",    "White level (0 to 256)" }
   };
 
   gimp_install_procedure (PLUG_IN_NAME,
@@ -180,11 +180,14 @@ query (void)
 			  "Michael Sweet <mike@easysw.com>",
 			  "Copyright 1997-1998 by Michael Sweet",
 			  PLUG_IN_VERSION,
-			  N_("<Image>/Filters/Enhance/Des_peckle..."),
+			  N_("Des_peckle..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register (PLUG_IN_NAME,
+                             N_("<Image>/Filters/Enhance"));
 }
 
 

@@ -333,10 +333,10 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_INT32, "dummy", "dummy" }
+    { GIMP_PDB_INT32,    "dummy",    "dummy" }
   };
 
   gimp_install_procedure ("plug_in_gfig",
@@ -345,11 +345,14 @@ query (void)
                           "Andy Thomas",
                           "Andy Thomas",
                           "1997",
-                          N_("<Image>/Filters/Render/_Gfig..."),
+                          N_("_Gfig..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_gfig",
+                             N_("<Image>/Filters/Render"));
 }
 
 static void

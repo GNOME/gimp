@@ -86,11 +86,8 @@
 #define PLUG_IN_VERSION     "v0.5 (03/31/1999)"
 
 #ifdef _DEBUG
-#define PLUG_IN_D_NAME        "twain-acquire-dump"
-#define PLUG_IN_D_MENU_PATH   "<Toolbox>/File/Acquire/TWAIN (Dump)..."
-
-#define PLUG_IN_R_NAME        "twain-acquire-read"
-#define PLUG_IN_R_MENU_PATH   "<Toolbox>/File/Acquire/TWAIN (Read)..."
+#define PLUG_IN_D_NAME      "twain-acquire-dump"
+#define PLUG_IN_R_NAME      "twain-acquire-read"
 #endif /* _DEBUG */
 
 /*
@@ -490,52 +487,66 @@ query (void)
 
 #ifdef _DEBUG
   if (twain_run_mode == RUN_DUMP)
-    /* the installation of the plugin */
-    gimp_install_procedure(PLUG_IN_D_NAME,
-			   PLUG_IN_DESCRIPTION,
-			   PLUG_IN_HELP,
-			   PLUG_IN_AUTHOR,
-			   PLUG_IN_COPYRIGHT,
-			   PLUG_IN_VERSION,
-			   PLUG_IN_D_MENU_PATH,
-			   NULL,
-			   GIMP_PLUGIN,
-			   NUMBER_IN_ARGS,
-			   NUMBER_OUT_ARGS,
-			   args,
-			   return_vals);
+    {
+      /* the installation of the plugin */
+      gimp_install_procedure(PLUG_IN_D_NAME,
+                             PLUG_IN_DESCRIPTION,
+                             PLUG_IN_HELP,
+                             PLUG_IN_AUTHOR,
+                             PLUG_IN_COPYRIGHT,
+                             PLUG_IN_VERSION,
+                             N_("TWAIN (Dump)..."),
+                             NULL,
+                             GIMP_PLUGIN,
+                             NUMBER_IN_ARGS,
+                             NUMBER_OUT_ARGS,
+                             args,
+                             return_vals);
 
+      gimp_plugin_menu_register (PLUG_IN_D_NAME,
+                                 N_("<Toolbox>/File/Acquire"));
+    }
   else if (twain_run_mode == RUN_READDUMP)
-    /* the installation of the plugin */
-    gimp_install_procedure(PLUG_IN_R_NAME,
-			   PLUG_IN_DESCRIPTION,
-			   PLUG_IN_HELP,
-			   PLUG_IN_AUTHOR,
-			   PLUG_IN_COPYRIGHT,
-			   PLUG_IN_VERSION,
-			   PLUG_IN_R_MENU_PATH,
-			   NULL,
-			   GIMP_PLUGIN,
-			   NUMBER_IN_ARGS,
-			   NUMBER_OUT_ARGS,
-			   args,
-			   return_vals);
+    {
+      /* the installation of the plugin */
+      gimp_install_procedure(PLUG_IN_R_NAME,
+                             PLUG_IN_DESCRIPTION,
+                             PLUG_IN_HELP,
+                             PLUG_IN_AUTHOR,
+                             PLUG_IN_COPYRIGHT,
+                             PLUG_IN_VERSION,
+                             N_("TWAIN (Read)..."),
+                             NULL,
+                             GIMP_PLUGIN,
+                             NUMBER_IN_ARGS,
+                             NUMBER_OUT_ARGS,
+                             args,
+                             return_vals);
+
+      gimp_plugin_menu_register (PLUG_IN_R_NAME,
+                                 N_("<Toolbox>/File/Acquire"));
+    }
   else
 #endif /* _DEBUG */
-    /* the installation of the plugin */
-    gimp_install_procedure(PLUG_IN_NAME,
-			   PLUG_IN_DESCRIPTION,
-			   PLUG_IN_HELP,
-			   PLUG_IN_AUTHOR,
-			   PLUG_IN_COPYRIGHT,
-			   PLUG_IN_VERSION,
-			   N_("<Toolbox>/File/Acquire/_TWAIN..."),
-			   NULL,
-			   GIMP_PLUGIN,
-			   NUMBER_IN_ARGS,
-			   NUMBER_OUT_ARGS,
-			   args,
-			   return_vals);
+    {
+      /* the installation of the plugin */
+      gimp_install_procedure(PLUG_IN_NAME,
+                             PLUG_IN_DESCRIPTION,
+                             PLUG_IN_HELP,
+                             PLUG_IN_AUTHOR,
+                             PLUG_IN_COPYRIGHT,
+                             PLUG_IN_VERSION,
+                             N_("_TWAIN..."),
+                             NULL,
+                             GIMP_PLUGIN,
+                             NUMBER_IN_ARGS,
+                             NUMBER_OUT_ARGS,
+                             args,
+                             return_vals);
+
+      gimp_plugin_menu_register (PLUG_IN_NAME,
+                                 N_("<Toolbox>/File/Acquire"));
+    }
 }
 
 

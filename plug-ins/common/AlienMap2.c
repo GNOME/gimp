@@ -205,11 +205,14 @@ query (void)
                           "Martin Weber (martweb@gmx.net)",
                           "Martin Weber (martweb@gmx.net",
                           "24th April 1998",
-                          N_("<Image>/Filters/Colors/Map/Alien Map _2..."),
+                          N_("Alien Map _2..."),
                           "RGB*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_alienmap2",
+                             N_("<Image>/Filters/Colors/Map"));
 }
 
 static void

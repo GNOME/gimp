@@ -479,7 +479,7 @@ build_dialog (GimpImageBaseType  basetype,
 
   gimp_ui_init ("animationplay", TRUE);
 
-  windowname = g_strconcat (_("Animation Playback: "), imagename, NULL);
+  windowname = g_strconcat (_("Animation Playback:"), " ", imagename, NULL);
 
   dlg = gimp_dialog_new (windowname, "animationplay",
                          NULL, 0,
@@ -498,7 +498,7 @@ build_dialog (GimpImageBaseType  basetype,
   {
     /* The 'playback' half of the dialog */
     if (total_frames > 1)
-      windowname = g_strconcat (_("Playback: "), imagename, NULL);
+      windowname = g_strconcat (_("Playback:"), " ",imagename, NULL);
     else
       windowname = g_strdup (imagename);
     frame = gtk_frame_new (windowname);

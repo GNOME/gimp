@@ -115,19 +115,25 @@ script_fu_query (void)
 
   gimp_install_procedure ("plug_in_script_fu_console",
 			  "Provides a console mode for script-fu development",
-			  "Provides an interface which allows interactive scheme development.",
+			  "Provides an interface which allows interactive "
+                          "scheme development.",
 			  "Spencer Kimball & Peter Mattis",
 			  "Spencer Kimball & Peter Mattis",
 			  "1997",
-			  N_("<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"),
+			  N_("Script-Fu _Console"),
 			  NULL,
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (console_args), 0,
 			  console_args, NULL);
 
+  gimp_plugin_menu_register ("plug_in_script_fu_console",
+                             N_("<Toolbox>/Xtns/Script-Fu"));
+
   gimp_install_procedure ("plug_in_script_fu_text_console",
-                          "Provides a text console mode for script-fu development",
-                          "Provides an interface which allows interactive scheme development.",
+                          "Provides a text console mode for script-fu "
+                          "development",
+                          "Provides an interface which allows interactive "
+                          "scheme development.",
                           "Spencer Kimball & Peter Mattis",
                           "Spencer Kimball & Peter Mattis",
                           "1997",
@@ -144,16 +150,20 @@ script_fu_query (void)
 			  "Spencer Kimball & Peter Mattis",
 			  "Spencer Kimball & Peter Mattis",
 			  "1997",
-			  N_("<Toolbox>/Xtns/Script-Fu/_Start Server..."),
+			  N_("_Start Server..."),
 			  NULL,
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (server_args), 0,
 			  server_args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_script_fu_server",
+                             N_("<Toolbox>/Xtns/Script-Fu"));
 #endif
 
   gimp_install_procedure ("plug_in_script_fu_eval",
 			  "Evaluate scheme code",
-			  "Evaluate the code under the scheme interpeter (primarily for batch mode)",
+			  "Evaluate the code under the scheme interpeter "
+                          "(primarily for batch mode)",
 			  "Manish Singh",
 			  "Manish Singh",
 			  "1998",

@@ -1,5 +1,17 @@
 2004-05-07  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/AlienMap2.c
+	* plug-ins/common/CML_explorer.c
+	* plug-ins/common/animationplay.c
+	* plug-ins/common/despeckle.c
+	* plug-ins/fp/fp.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/script-fu/script-fu.c
+	* plug-ins/twain/twain.c: forgot some gimp_plugin_menu_register().
+
+2004-05-07  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/FractalExplorer/FractalExplorer.c
 	* plug-ins/Lighting/lighting_main.c
 	* plug-ins/MapObject/mapobject_main.c
