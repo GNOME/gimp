@@ -14,6 +14,7 @@ SUBDIRS = 			\
 	@TIFF@			\
 	@WEBBROWSER@		\
 	@XD@			\
+	@XJT@			\
 	@XPM@			\
 	AlienMap		\
 	CEL			\

@@ -219,7 +219,8 @@ dnl Test for libjpeg
     AC_CHECK_LIB(jpeg, jpeg_destroy_decompress,
       jpeg_ok=yes,
       jpeg_ok=no
-      AC_MSG_WARN(*** JPEG plug-in will not be built (JPEG library not found) ***))
+      AC_MSG_WARN(*** JPEG plug-in will not be built (JPEG library not found) ***)
+      AC_MSG_WARN(*** XJT plug-in will not be built (JPEG library not found) ***))
     if test "$jpeg_ok" = yes; then
       AC_MSG_CHECKING([for jpeglib.h])
       AC_TRY_CPP(
@@ -231,12 +232,13 @@ dnl Test for libjpeg
 	jpeg_ok=no)
       AC_MSG_RESULT($jpeg_ok)
       if test "$jpeg_ok" = yes; then
-	JPEG='jpeg'; LIBJPEG_LIB='-ljpeg'
+	JPEG='jpeg'; XJT='xjt'; LIBJPEG_LIB='-ljpeg'
 	AC_CHECK_LIB(jpeg, jpeg_simple_progression,	
 	  AC_DEFINE(HAVE_PROGRESSIVE_JPEG),
 	  AC_MSG_WARN(JPEG library does not support progressive saving.))
       else
 	AC_MSG_WARN(*** JPEG plug-in will not be built (JPEG header file not found) ***)
+        AC_MSG_WARN(*** XJT plug-in will not be built (JPEG header file not found) ***)
       fi
     fi
   fi
@@ -600,7 +602,7 @@ fi
 GIMPDOCS=
 if test -n "$DISTMAKE"; then
   WEBBROWSER=webbrowser TIFF=tiff JPEG=jpeg PNG=png AA=aa MPEG=mpeg
-  XD=xd XPM=xpm GIMPDOCS=docs
+  XD=xd XJT=xjt XPM=xpm GIMPDOCS=docs
 fi
 
 AM_CONDITIONAL(STATICLIBS, test x$enable_static = xyes)
@@ -631,6 +633,7 @@ AC_SUBST(LIBXMU_LIB)
 AC_SUBST(TIFF)
 AC_SUBST(LIBTIFF_LIB)
 AC_SUBST(JPEG)
+AC_SUBST(XJT)
 AC_SUBST(LIBJPEG_LIB)
 AC_SUBST(PNG)
 AC_SUBST(LIBPNG_LIB)
@@ -677,6 +680,7 @@ plug-ins/png/Makefile
 plug-ins/tiff/Makefile
 plug-ins/webbrowser/Makefile
 plug-ins/xd/Makefile
+plug-ins/xjt/Makefile
 plug-ins/xpm/Makefile
 plug-ins/AlienMap/Makefile
 plug-ins/CEL/Makefile

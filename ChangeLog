@@ -1,3 +1,9 @@
+Tue Mar 23 12:59:20 MET 1999 Sven Neumann <sven@gimp.org>
+
+	* configure.in
+	* plug-ins/Makefile
+	* plug-ins/xjt: added xjt plug-in created by Wolfgang Hofer.
+
 Tue Mar 23 12:01:48 MET 1999 Sven Neumann <sven@gimp.org>
 
 	* configure.in
