@@ -29,6 +29,8 @@
 #include "core/gimpdatafactory.h"
 #include "core/gimpmarshal.h"
 
+#include "config/gimpconfig-params.h"
+
 #include "gimpdeviceinfo.h"
 
 
@@ -41,13 +43,29 @@ enum
   LAST_SIGNAL
 };
 
+enum
+{
+  PROP_0,
+  PROP_MODE,
+  PROP_AXES,
+  PROP_KEYS
+};
+
 
 /*  local function prototypes  */
 
-static void   gimp_device_info_class_init (GimpDeviceInfoClass *klass);
-static void   gimp_device_info_init       (GimpDeviceInfo      *device_info);
+static void   gimp_device_info_class_init   (GimpDeviceInfoClass *klass);
+static void   gimp_device_info_init         (GimpDeviceInfo      *device_info);
 
-static void   gimp_device_info_finalize   (GObject           *object);
+static void   gimp_device_info_finalize     (GObject             *object);
+static void   gimp_device_info_set_property (GObject             *object,
+                                             guint                property_id,
+                                             const GValue        *value,
+                                             GParamSpec          *pspec);
+static void   gimp_device_info_get_property (GObject             *object,
+                                             guint                property_id,
+                                             GValue              *value,
+                                             GParamSpec          *pspec);
 
 
 static GimpContextClass *parent_class = NULL;
@@ -87,6 +105,7 @@ static void
 gimp_device_info_class_init (GimpDeviceInfoClass *klass)
 {
   GObjectClass *object_class;
+  GParamSpec   *array_spec;
 
   object_class = G_OBJECT_CLASS (klass);
 
@@ -101,7 +120,34 @@ gimp_device_info_class_init (GimpDeviceInfoClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
-  object_class->finalize = gimp_device_info_finalize;
+  object_class->finalize     = gimp_device_info_finalize;
+  object_class->set_property = gimp_device_info_set_property;
+  object_class->get_property = gimp_device_info_get_property;
+
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_MODE, "mode",
+                                 GDK_TYPE_INPUT_MODE,
+                                 GDK_MODE_DISABLED);
+
+  array_spec = g_param_spec_value_array ("axes",
+                                         NULL, NULL,
+                                         g_param_spec_enum ("axis",
+                                                            NULL, NULL,
+                                                            GDK_TYPE_AXIS_USE,
+                                                            GDK_AXIS_IGNORE,
+                                                            G_PARAM_READWRITE),
+                                         GIMP_CONFIG_PARAM_FLAGS);
+
+  g_object_class_install_property (object_class, PROP_AXES, array_spec);
+
+  array_spec = g_param_spec_value_array ("keys",
+                                         NULL, NULL,
+                                         g_param_spec_string ("key",
+                                                              NULL, NULL,
+                                                              NULL,
+                                                              G_PARAM_READWRITE),
+                                         GIMP_CONFIG_PARAM_FLAGS);
+
+  g_object_class_install_property (object_class, PROP_KEYS, array_spec);
 }
 
 static void
@@ -129,6 +175,223 @@ gimp_device_info_finalize (GObject *object)
     g_free (device_info->keys);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_device_info_set_property (GObject      *object,
+                               guint         property_id,
+                               const GValue *value,
+                               GParamSpec   *pspec)
+{
+  GimpDeviceInfo *device_info;
+  GdkDevice      *device;
+
+  device_info = GIMP_DEVICE_INFO (object);
+
+  device = device_info->device;
+
+  switch (property_id)
+    {
+    case PROP_MODE:
+      if (device_info->device)
+        gdk_device_set_mode (device_info->device, g_value_get_enum (value));
+      else
+        device_info->mode = g_value_get_enum (value);
+      break;
+
+    case PROP_AXES:
+      {
+        GValueArray *array;
+
+        array = g_value_get_boxed (value);
+
+        if (array)
+          {
+            gint i;
+            gint n_device_values;
+
+            if (device)
+              {
+                n_device_values = MIN (array->n_values, device->num_axes);
+              }
+            else
+              {
+                n_device_values = array->n_values;
+
+                device_info->num_axes = n_device_values;
+                device_info->axes     = g_new0 (GdkAxisUse, n_device_values);
+              }
+
+            for (i = 0; i < n_device_values; i++)
+              {
+                GdkAxisUse axis_use;
+
+                axis_use = g_value_get_enum (g_value_array_get_nth (array, i));
+
+                if (device)
+                  gdk_device_set_axis_use (device, i, axis_use);
+                else
+                  device_info->axes[i] = axis_use;
+              }
+          }
+      }
+      break;
+
+    case PROP_KEYS:
+      {
+        GValueArray *array;
+
+        array = g_value_get_boxed (value);
+
+        if (array)
+          {
+            gint i;
+            gint n_device_values;
+
+            if (device)
+              {
+                n_device_values = MIN (array->n_values, device->num_keys);
+              }
+            else
+              {
+                n_device_values = array->n_values;
+
+                device_info->num_keys = n_device_values;
+                device_info->keys     = g_new0 (GdkDeviceKey, n_device_values);
+              }
+
+            for (i = 0; i < n_device_values; i++)
+              {
+                const gchar     *accel;
+                guint            keyval;
+                GdkModifierType  modifiers;
+
+                accel = g_value_get_string (g_value_array_get_nth (array, i));
+
+                gtk_accelerator_parse (accel, &keyval, &modifiers);
+
+                if (device)
+                  {
+                    gdk_device_set_key (device, i, keyval, modifiers);
+                  }
+                else
+                  {
+                    device_info->keys[i].keyval    = keyval;
+                    device_info->keys[i].modifiers = modifiers;
+                  }
+              }
+          }
+      }
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_device_info_get_property (GObject    *object,
+                               guint       property_id,
+                               GValue     *value,
+                               GParamSpec *pspec)
+{
+  GimpDeviceInfo *device_info;
+  GdkDevice      *device;
+
+  device_info = GIMP_DEVICE_INFO (object);
+
+  device = device_info->device;
+
+  switch (property_id)
+    {
+    case PROP_MODE:
+      if (device)
+        g_value_set_enum (value, device->mode);
+      else
+        g_value_set_enum (value, device_info->mode);
+      break;
+
+    case PROP_AXES:
+      {
+        GValueArray *array;
+        GValue       enum_value = { 0, };
+        gint         i;
+
+        array = g_value_array_new (6);
+        g_value_init (&enum_value, GDK_TYPE_AXIS_USE);
+
+        for (i = 0; i < (device ? device->num_axes : device_info->num_axes); i++)
+          {
+            g_value_set_enum (&enum_value,
+                              device ?
+                              device->axes[i].use : device_info->axes[i]);
+            g_value_array_append (array, &enum_value);
+          }
+
+        g_value_unset (&enum_value);
+
+        g_value_set_boxed_take_ownership (value, array);
+      }
+      break;
+
+    case PROP_KEYS:
+      {
+        GValueArray *array;
+        GValue       string_value = { 0, };
+        gint         i;
+
+        array = g_value_array_new (32);
+        g_value_init (&string_value, G_TYPE_STRING);
+
+        for (i = 0; i < (device ? device->num_keys : device_info->num_keys); i++)
+          {
+            GdkModifierType modifiers = (device ? device->keys[i].modifiers :
+                                         device_info->keys[i].modifiers);
+            guint           keyval    = (device ? device->keys[i].keyval :
+                                         device_info->keys[i].keyval);
+
+            if (keyval)
+              {
+                /* FIXME: integrate this back with menus_install_accelerator */
+                gchar  accel[64];
+                gchar  t2[2];
+                gchar *escaped;
+
+                accel[0] = '\0';
+                if (modifiers & GDK_CONTROL_MASK)
+                  strcat (accel, "<control>");
+                if (modifiers & GDK_SHIFT_MASK)
+                  strcat (accel, "<shift>");
+                if (modifiers & GDK_MOD1_MASK)
+                  strcat (accel, "<alt>");
+
+                t2[0] = keyval;
+                t2[1] = '\0';
+                strcat (accel, t2);
+
+                escaped = g_strescape (accel, NULL);
+                g_value_set_string (&string_value, escaped);
+                g_free (escaped);
+              }
+            else
+              {
+                g_value_set_string (&string_value, "");
+              }
+ 
+            g_value_array_append (array, &string_value);
+          }
+
+        g_value_unset (&string_value);
+
+        g_value_set_boxed_take_ownership (value, array);
+      }
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 GimpDeviceInfo *

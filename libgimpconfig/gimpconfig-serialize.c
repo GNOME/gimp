@@ -300,13 +300,46 @@ gimp_config_serialize_value (const GValue *value,
   if (GIMP_VALUE_HOLDS_COLOR (value))
     {
       GimpRGB *color;
+      gchar    buf[4][G_ASCII_DTOSTR_BUF_SIZE];
 
       color = g_value_get_boxed (value);
-      g_string_append_printf (str, "(color-rgba %f %f %f %f)",
-                              color->r,
-                              color->g,
-                              color->b,
-                              color->a);
+
+      g_ascii_formatd (buf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", color->r);
+      g_ascii_formatd (buf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f", color->g);
+      g_ascii_formatd (buf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f", color->b);
+      g_ascii_formatd (buf[3], G_ASCII_DTOSTR_BUF_SIZE, "%f", color->a);
+
+      g_string_append_printf (str, "(color-rgba %s %s %s %s)",
+                              buf[0], buf[1], buf[2], buf[3]);
+      return TRUE;
+    }
+
+  if (G_VALUE_TYPE (value) == G_TYPE_VALUE_ARRAY)
+    {
+      GValueArray *array;
+
+      array = g_value_get_boxed (value);
+
+      if (array)
+        {
+          gint i;
+
+          g_string_append_printf (str, "%d", array->n_values);
+
+          for (i = 0; i < array->n_values; i++)
+            {
+              g_string_append (str, " ");
+
+              if (! gimp_config_serialize_value (g_value_array_get_nth (array, i),
+                                                 str, escaped))
+                return FALSE;
+            }
+        }
+      else
+        {
+          g_string_append (str, "NULL");
+        }
+
       return TRUE;
     }
 

@@ -1,8 +1,20 @@
+2002-05-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/config/gimpconfig.c (gimp_config_string_indent): fixed assertion
+	which did not check for indent_level >= 0 but > 0.
+
+	* app/config/gimpconfig-serialize.c (gimp_config_serialize_value):
+	serialize floats with g_ascii_formatd() to be locale independed,
+	added serialization of GValueArrays.
+
+	* app/widgets/gimpdeviceinfo.c: added properties for "mode",
+	"axes" and "keys". Their set_property() implementations are
+	untested.
+
 2002-05-24  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/hot.c: let the hot filter also act on the current 
-	selection (fixes #82480).
-	* Adds mnemonics to dialog.
+	selection (fixes #82480). Adds mnemonics to dialog.
 
 2002-05-24  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
