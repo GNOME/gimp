@@ -1,3 +1,11 @@
+2003-11-16  Henrik Brix Andersen  <brix@gimp.org>
+
+	* app/config/gimpguiconfig.c (DEFAULT_WEB_BROWSER): changed
+	DEFAULT_WEB_BROWSER to "mozilla %s"
+
+	* plug-ins/common/webbrowser.c (browser_open_url): quote the url
+	here instead
+
 2003-11-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/main.c (main): call units_init() before gimp_config_dump().

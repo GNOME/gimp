@@ -127,6 +127,7 @@ browser_open_url (const gchar *url)
 
   GError    *error = NULL;
   gchar     *browser;
+  gchar     *argument;
   gchar     *cmd;
   gchar    **argv;
   gboolean   retval;
@@ -143,11 +144,16 @@ browser_open_url (const gchar *url)
       return FALSE;
     }
 
+  /* quote the url since it might contains special chars */
+  argument = g_shell_quote (url);
+
   /* replace %s with URL */
   if (strstr (browser, "%s"))
-    cmd = strreplace (browser, "%s", url);
+    cmd = strreplace (browser, "%s", argument);
   else
-    cmd = g_strconcat (browser, " ", url, NULL);
+    cmd = g_strconcat (browser, " ", argument, NULL);
+
+  g_free (argument);
 
   /* parse the cmd line */
   if (! g_shell_parse_argv (cmd, NULL, &argv, &error))
