@@ -29,7 +29,7 @@
 #include "undo.h"
 
 #include "libgimp/gimpmath.h"
-#include "libgimp/parasite.h"
+#include "libgimp/gimpparasite.h"
 
 #include "libgimp/gimpintl.h"
 

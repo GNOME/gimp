@@ -6,23 +6,23 @@ CPPFLAGS = \
 	-DMODULE_COMPILATION
 
 INCLUDES = \
-        -I$(top_srcdir)                 \
-        -I$(top_srcdir)/intl            \
-        $(GTK_CFLAGS)                   \
+        -I$(top_srcdir)		\
+        -I$(top_srcdir)/intl	\
+        $(GTK_CFLAGS)		\
         -I$(includedir)
 
 EXTRA_DIST = \
 	makefile.cygwin		\
 	makefile.msc		\
 	module.def		\
-	modregister.c		\
-	modregister.h
+	gimpmodregister.c	\
+	gimpmodregister.h
 
 libexec_LTLIBRARIES = \
-	libcolorsel_gtk.la 	\
-	libcolorsel_triangle.la	\
-	libcolorsel_water.la	\
-	libcdisplay_gamma.la	\
+	libcolorsel_gtk.la		\
+	libcolorsel_triangle.la		\
+	libcolorsel_water.la		\
+	libcdisplay_gamma.la		\
 	libcdisplay_highcontrast.la
 
 libcolorsel_gtk_la_SOURCES = colorsel_gtk.c

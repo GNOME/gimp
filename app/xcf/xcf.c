@@ -54,8 +54,7 @@
 
 #include <libgimp/gimpunit.h>
 #include <libgimp/gimplimits.h>
-#include <libgimp/parasiteP.h>
-#include <libgimp/parasite.h>
+#include <libgimp/gimpparasite.h>
 
 #include "libgimp/gimpintl.h"
 

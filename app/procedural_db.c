@@ -25,7 +25,7 @@
 #include "plug_in.h"
 #include "procedural_db.h"
 
-#include "libgimp/parasite.h"
+#include "libgimp/gimpparasite.h"
 
 #include "libgimp/gimpintl.h"
 

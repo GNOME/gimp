@@ -27,13 +27,14 @@
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 
-#include <libgimp/color_selector.h>
+#include "gimpmodregister.h"
+
+#include <libgimp/gimpcolorselector.h>
 #include <libgimp/gimpmodule.h>
 #include <libgimp/gimpmath.h>
 
-#include "modregister.h"
+#include "libgimp/gimpintl.h"
 
-#include <libgimp/gimpintl.h>
 
 /* prototypes */
 static GtkWidget * colorsel_triangle_new         (int, int, int,

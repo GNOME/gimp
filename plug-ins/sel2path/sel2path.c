@@ -36,15 +36,20 @@
 #include <string.h>
 #include <math.h>
 
-#include "gtk/gtk.h"
-#include "libgimp/gimp.h"
-#include "libgimp/stdplugins-intl.h"
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
 #include "global.h"
 #include "types.h"
 #include "pxl-outline.h"
 #include "fit.h"
 #include "spline.h"
 #include "sel2path.h"
+
+#include "libgimp/stdplugins-intl.h"
+
 
 #define MID_POINT 127
 

@@ -41,7 +41,7 @@
 
 #include "libgimp/gimpcolorspace.h"
 #include "libgimp/gimplimits.h"
-#include "libgimp/parasite.h"
+#include "libgimp/gimpparasite.h"
 
 #include "libgimp/gimpintl.h"
 

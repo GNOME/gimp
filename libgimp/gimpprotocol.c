@@ -18,11 +18,12 @@
  */                                                                             
 #include <stdio.h>
 
+#include <glib.h>
+
 #include "gimpenums.h"
+#include "gimpparasite.h"
 #include "gimpprotocol.h"
 #include "gimpwire.h"
-#include "parasite.h"
-#include "parasiteP.h"
 
 
 static void _gp_quit_read                (GIOChannel   *channel,

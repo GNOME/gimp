@@ -40,12 +40,13 @@
 #include "tile.h"			/* ick. */
 
 #include "libgimp/gimpmath.h"
-#include "libgimp/parasite.h"
+#include "libgimp/gimpparasite.h"
 
 #include "libgimp/gimpintl.h"
 
 
-enum {
+enum
+{
   REMOVED,
   LAST_SIGNAL
 };

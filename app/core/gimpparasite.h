@@ -17,7 +17,7 @@
 #ifndef __APP_GIMP_PARASITE_H__
 #define __APP_GIMP_PARASITE_H__
 
-#include "libgimp/parasiteF.h"
+#include "libgimp/gimpparasite.h"
 
 void            gimp_init_parasites  (void);
 

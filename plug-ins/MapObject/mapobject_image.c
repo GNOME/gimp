@@ -5,6 +5,8 @@
 /* mapobject_preview.c and mapobject_apply.c             */
 /*********************************************************/
 
+#include <sys/types.h>
+
 #include <gck/gck.h>
 
 #include <libgimp/gimp.h>

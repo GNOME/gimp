@@ -19,11 +19,8 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
-
 #include "config.h"
 
-#include "parasiteP.h"
-#include "parasite.h"
 #include <stdio.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -34,6 +31,9 @@
 #ifdef G_OS_WIN32
 #include <process.h>		/* For _getpid() */
 #endif
+
+#include "gimpparasite.h"
+
 
 #ifdef DEBUG
 static void 

@@ -25,12 +25,13 @@
 #include "drawable.h"
 #include "channel.h"
 #include "layer.h"
-#include <libgimp/parasiteF.h>
-#include <libgimp/gimpunit.h>
 #include "plug_in.h"
 #include "temp_buf.h"
 #include "tile_manager.h"
 #include "path.h"
+
+#include "libgimp/gimpparasite.h"
+#include "libgimp/gimpunit.h"
 
 
 #define GIMP_TYPE_IMAGE    gimp_image_get_type()

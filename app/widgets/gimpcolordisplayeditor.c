@@ -27,7 +27,7 @@
 #include "gimpimageP.h"
 #include "gimpui.h"
 
-#include "libgimp/parasite.h"
+#include "libgimp/gimpparasite.h"
 
 #include "libgimp/gimpintl.h"
 

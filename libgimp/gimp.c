@@ -53,7 +53,6 @@
 #include <signal.h>
 #endif
 
-#include "parasiteP.h"
 #include "gimpenv.h"
 
 #ifdef HAVE_IPC_H

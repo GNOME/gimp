@@ -23,7 +23,7 @@
 #include "parasitelistF.h"
 #include "gimpobject.h"
 
-#include "libgimp/parasiteF.h"
+#include "libgimp/gimpparasite.h"
 
 
 #define GIMP_TYPE_PARASITE_LIST    (parasite_list_get_type ())

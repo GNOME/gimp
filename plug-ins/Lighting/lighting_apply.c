@@ -2,6 +2,8 @@
 /* Apply mapping and shading on the whole input image */
 /******************************************************/
 
+#include <sys/types.h>
+
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>

@@ -21,15 +21,15 @@
 
 #include <gtk/gtk.h>
 
-#include <libgimp/color_display.h>
-#include <libgimp/gimpmodule.h>
-#include <libgimp/parasite.h>
-#include <libgimp/gimpui.h>
-#include <libgimp/gimpmath.h>
-
 #include "app/dialog_handler.h"
 
-#include "modregister.h"
+#include "gimpmodregister.h"
+
+#include <libgimp/gimpcolordisplay.h>
+#include <libgimp/gimpmodule.h>
+#include <libgimp/gimpparasite.h>
+#include <libgimp/gimpui.h>
+#include <libgimp/gimpmath.h>
 
 #include "libgimp/gimpintl.h"
 

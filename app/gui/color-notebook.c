@@ -27,12 +27,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-/*#include "appenv.h"*/
 #include "color_notebook.h"
 #include "gimpui.h"
 
-#include "libgimp/color_selector.h"
+#include "libgimp/gimpcolorselector.h"
+
 #include "libgimp/gimpintl.h"
+
 
 static void color_notebook_ok_callback     (GtkWidget *widget,
 					    gpointer   data);

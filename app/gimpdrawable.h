@@ -25,7 +25,8 @@
 #include "temp_buf.h"
 #include "gimpimageF.h"
 
-#include <libgimp/parasiteF.h>
+#include "libgimp/gimpparasite.h"
+
 
 #define GIMP_TYPE_DRAWABLE     (gimp_drawable_get_type ())
 #define GIMP_DRAWABLE(obj)     (GTK_CHECK_CAST ((obj), GIMP_TYPE_DRAWABLE, GimpDrawable))

@@ -25,11 +25,11 @@
 
 #include <gtk/gtk.h>
 
-#include <libgimp/color_selector.h>
+#include <libgimp/gimpcolorselector.h>
 #include <libgimp/gimpmodule.h>
 #include <libgimp/gimpmath.h>
 
-#include "modregister.h"
+#include "gimpmodregister.h"
 
 #include <libgimp/gimpintl.h>
 

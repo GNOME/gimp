@@ -28,8 +28,9 @@
 #include "gimpparasite.h"
 #include "gimprc.h"
 
-#include "libgimp/parasite.h"
+#include "libgimp/gimpparasite.h"
 #include "libgimp/gimpenv.h"
+
 
 static ParasiteList *parasites = NULL;
 

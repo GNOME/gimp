@@ -48,7 +48,7 @@
 
 #include "libgimp/gimpenv.h"
 #include "libgimp/gimputils.h"
-#include "libgimp/parasite.h"
+#include "libgimp/gimpparasite.h"
 
 #include "libgimp/gimpintl.h"
 

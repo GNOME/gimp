@@ -45,7 +45,7 @@
 #include "tile_manager_pvt.h"
 #include "tile.h"			/* ick. */
 
-#include "libgimp/parasite.h"
+#include "libgimp/gimpparasite.h"
 
 #include "libgimp/gimpintl.h"
 

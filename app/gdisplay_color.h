@@ -18,8 +18,10 @@
 #ifndef __GDISPLAY_COLOR_H__
 #define __GDISPLAY_COLOR_H__
 
-#include "libgimp/color_display.h"
 #include "gdisplayF.h"
+
+#include "libgimp/gimpcolordisplay.h"
+
 
 typedef struct _ColorDisplayNode ColorDisplayNode;
 

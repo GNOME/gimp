@@ -22,19 +22,18 @@
 
 #include <glib.h>
 
-#include "libgimp/gimpenums.h"
-#include "libgimp/gimpcolorspace.h"
-#include "libgimp/gimpfeatures.h"
-#include "libgimp/gimpenv.h"
-#include "libgimp/gimplimits.h"
-#include "libgimp/gimpmath.h"
-#include "libgimp/gimpparasite.h"
-#include "libgimp/gimpparasiteP.h"
-#include "libgimp/gimpunit.h"
-#include "libgimp/gimputils.h"
-#include "libgimp/gimpvector.h"
+#include <libgimp/gimpenums.h>
+#include <libgimp/gimpcolorspace.h>
+#include <libgimp/gimpfeatures.h>
+#include <libgimp/gimpenv.h>
+#include <libgimp/gimplimits.h>
+#include <libgimp/gimpmath.h>
+#include <libgimp/gimpparasite.h>
+#include <libgimp/gimpunit.h>
+#include <libgimp/gimputils.h>
+#include <libgimp/gimpvector.h>
 
-#include "libgimp/gimpcompat.h"	/* to be removed in 1.3 */
+#include <libgimp/gimpcompat.h>  /* to be removed in 1.3 */
 
 #ifdef G_OS_WIN32
 #  include <stdlib.h>		/* For _-argc and __argv */
@@ -95,47 +94,47 @@ struct _GPlugInInfo
 
 struct _GTile
 {
-  guint ewidth;        /* the effective width of the tile */
-  guint eheight;       /* the effective height of the tile */
-  guint bpp;           /* the bytes per pixel (1, 2, 3 or 4 ) */
-  guint tile_num;      /* the number of this tile within the drawable */
-  guint16 ref_count;   /* reference count for the tile */
-  guint dirty : 1;     /* is the tile dirty? has it been modified? */
-  guint shadow: 1;     /* is this a shadow tile */
-  guchar *data;        /* the pixel data for the tile */
+  guint    ewidth;     /* the effective width of the tile */
+  guint    eheight;    /* the effective height of the tile */
+  guint    bpp;        /* the bytes per pixel (1, 2, 3 or 4 ) */
+  guint    tile_num;   /* the number of this tile within the drawable */
+  guint16  ref_count;  /* reference count for the tile */
+  guint    dirty : 1;  /* is the tile dirty? has it been modified? */
+  guint    shadow: 1;  /* is this a shadow tile */
+  guchar  *data;       /* the pixel data for the tile */
   GDrawable *drawable; /* the drawable this tile came from */
 };
 
 struct _GDrawable
 {
-  gint32 id;            /* drawable ID */
-  guint width;          /* width of drawble */
-  guint height;         /* height of drawble */
-  guint bpp;            /* bytes per pixel of drawable */
-  guint ntile_rows;     /* # of tile rows */
-  guint ntile_cols;     /* # of tile columns */
-  GTile *tiles;         /* the normal tiles */
-  GTile *shadow_tiles;  /* the shadow tiles */
+  gint32  id;            /* drawable ID */
+  guint   width;         /* width of drawble */
+  guint   height;        /* height of drawble */
+  guint   bpp;           /* bytes per pixel of drawable */
+  guint   ntile_rows;    /* # of tile rows */
+  guint   ntile_cols;    /* # of tile columns */
+  GTile  *tiles;         /* the normal tiles */
+  GTile  *shadow_tiles;  /* the shadow tiles */
 };
 
 struct _GPixelRgn
 {
-  guchar *data;         /* pointer to region data */
-  GDrawable *drawable;  /* pointer to drawable */
-  guint bpp;            /* bytes per pixel */
-  guint rowstride;      /* bytes per pixel row */
-  guint x, y;           /* origin */
-  guint w, h;           /* width and height of region */
-  guint dirty : 1;      /* will this region be dirtied? */
-  guint shadow : 1;     /* will this region use the shadow or normal tiles */
-  guint process_count;  /* used internally */
+  guchar    *data;          /* pointer to region data */
+  GDrawable *drawable;      /* pointer to drawable */
+  guint      bpp;           /* bytes per pixel */
+  guint      rowstride;     /* bytes per pixel row */
+  guint      x, y;          /* origin */
+  guint      w, h;          /* width and height of region */
+  guint      dirty : 1;     /* will this region be dirtied? */
+  guint      shadow : 1;    /* will this region use the shadow or normal tiles */
+  guint      process_count; /* used internally */
 };
 
 struct _GParamDef
 {
-  GParamType type;
-  gchar *name;
-  gchar *description;
+  GParamType  type;
+  gchar      *name;
+  gchar      *description;
 };
 
 struct _GParamColor

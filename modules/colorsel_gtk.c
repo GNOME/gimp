@@ -20,11 +20,16 @@
 #include "config.h"
 
 #include <stdio.h>
+
 #include <gtk/gtk.h>
-#include <libgimp/color_selector.h>
-#include <libgimp/gimpintl.h>
-#include <libgimp/gimpmodule.h>
-#include "modregister.h"
+
+#include "gimpmodregister.h"
+
+#include "libgimp/gimpcolorselector.h"
+#include "libgimp/gimpmodule.h"
+
+#include "libgimp/gimpintl.h"
+
 
 /* prototypes */
 static GtkWidget * colorsel_gtk_new (int, int, int,

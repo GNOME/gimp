@@ -63,8 +63,6 @@ libgimpi_a_SOURCES = \
 	gimpwire.h		\
 	gimpparasite.c		\
 	gimpparasite.h		\
-	gimpparasiteF.h		\
-	gimpparasiteP.h		\
 	gimpparasiteio.c	\
 	gimpparasiteio.h
 
@@ -94,6 +92,10 @@ libgimp_la_SOURCES = \
 	gimpmatrix.h		\
 	gimppalette_pdb.c	\
 	gimpparasite_pdb.c	\
+	gimpparasite.c		\
+	gimpparasite.h		\
+	gimpparasiteio.c	\
+	gimpparasiteio.h	\
 	gimppixelrgn.c		\
 	gimpprotocol.c		\
 	gimpprotocol.h		\
@@ -108,12 +110,6 @@ libgimp_la_SOURCES = \
 	gimpvector.h		\
 	gimpwire.c		\
 	gimpwire.h		\
-	parasite.c		\
-	parasite.h		\
-	parasiteF.h		\
-	parasiteP.h		\
-	parasiteio.c		\
-	parasiteio.h		\
 	stdplugins-intl.h	\
 	libgimp-intl.h
 
@@ -137,11 +133,11 @@ libgimpui_la_SOURCES = \
 	gimpwidgets.c
 
 gimpinclude_HEADERS = \
-	color_display.h		\
-	color_selector.h	\
 	gimp.h			\
 	gimpchainbutton.h	\
 	gimpcolorbutton.h	\
+	gimpcolordisplay.h	\
+	gimpcolorselector.h	\
 	gimpcolorspace.h	\
         gimpcompat.h		\
 	gimpdialog.h		\
@@ -156,6 +152,8 @@ gimpinclude_HEADERS = \
 	gimpmatrix.h		\
 	gimpmenu.h		\
 	gimpmodule.h		\
+	gimpparasite.h		\
+	gimpparasiteio.h	\
 	gimppatheditor.h	\
 	gimppixmap.h		\
 	gimpquerybox.h		\
@@ -167,11 +165,7 @@ gimpinclude_HEADERS = \
 	gimputils.h             \
 	gimpvector.h		\
 	gimpwidgets.h		\
-	gimpintl.h		\
-	parasite.h		\
-	parasiteF.h		\
-	parasiteP.h		\
-	parasiteio.h
+	gimpintl.h
 
 libgimp_la_LDFLAGS = \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \

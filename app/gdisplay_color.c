@@ -26,14 +26,15 @@
 #include "gimpimageP.h"
 #include "gimpui.h"
 
-#include "libgimp/parasite.h"
+#include "libgimp/gimpparasite.h"
 
 #include <gtk/gtk.h>
 
 typedef struct _ColorDisplayInfo ColorDisplayInfo;
 
-struct _ColorDisplayInfo {
-  char                    *name;
+struct _ColorDisplayInfo
+ {
+  gchar                   *name;
   GimpColorDisplayMethods  methods;
   GSList                  *refs;
 };
@@ -47,7 +48,7 @@ static void       gdisplay_color_detach_real (GDisplay         *gdisp,
 					      ColorDisplayNode *node,
 					      gboolean          unref);
 static gint       node_name_compare          (ColorDisplayNode *node,
-					      const char       *name);
+					      const gchar      *name);
 
 void
 color_display_init (void)
@@ -55,7 +56,7 @@ color_display_init (void)
 }
 
 G_MODULE_EXPORT gboolean
-gimp_color_display_register (const char              *name,
+gimp_color_display_register (const gchar             *name,
     			     GimpColorDisplayMethods *methods)
 {
   ColorDisplayInfo *info;
@@ -81,7 +82,7 @@ gimp_color_display_register (const char              *name,
 }
 
 G_MODULE_EXPORT gboolean
-gimp_color_display_unregister (const char *name)
+gimp_color_display_unregister (const gchar *name)
 {
   ColorDisplayInfo *info;
   GDisplay *gdisp;
@@ -147,8 +148,8 @@ color_display_foreach_real (gpointer key,
 }
 
 ColorDisplayNode *
-gdisplay_color_attach (GDisplay   *gdisp,
-		       const char *name)
+gdisplay_color_attach (GDisplay    *gdisp,
+		       const gchar *name)
 {
   ColorDisplayInfo *info;
   ColorDisplayNode *node;

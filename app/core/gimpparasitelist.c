@@ -21,8 +21,7 @@
 #include "gimpsignal.h"
 #include "parasitelistP.h"
 
-#include "libgimp/parasite.h"
-#include "libgimp/parasiteP.h"
+#include "libgimp/gimpparasite.h"
 
 
 enum

@@ -34,7 +34,7 @@
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
-#include <libgimp/parasiteio.h>
+#include <libgimp/gimpparasiteio.h>
 
 #include "app/brush_header.h"
 #include "app/pattern_header.h"

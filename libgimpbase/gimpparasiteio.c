@@ -33,7 +33,7 @@
 
 #include <glib.h>
 
-#include "parasiteio.h"
+#include "gimpparasiteio.h"
 
 
 void

@@ -1,3 +1,69 @@
+2000-05-27  Michael Natterer  <mitch@gimp.org>
+
+	Libgimp cleanup part II (with a little help from Yosh
+	who moved the CVS files).
+
+	* libgimp/Makefile.am
+	* libgimp/gimpchannel_pdb.c
+	* libgimp/gimpdisplay_pdb.c
+	* libgimp/gimpdrawable_pdb.c
+	* libgimp/gimpgradient_pdb.c
+	* libgimp/gimphelp_pdb.c
+	* libgimp/gimpimage_pdb.c
+	* libgimp/gimplayer_pdb.c
+	* libgimp/gimppalette_pdb.c
+	* libgimp/gimpparasite_pdb.c
+	* libgimp/gimpselection_pdb.c
+	* libgimp/gimpunit_pdb.c: new names of all files which contain
+	PDB wrappers.
+
+	* modules/Makefile.am
+	* libgimp/gimpcolordisplay.h
+	* libgimp/gimpcolorselector.h
+	* modules/gimpmodregister.[ch]: renamed.
+
+	* libgimp/gimpparasiteF.h
+	* libgimp/gimpparasiteP.h: removed because gimp.h had to include
+	the private header anyway.
+
+	* app/color_notebook.c
+	* app/color_select.c
+	* app/gdisplay_color.[ch]
+	* app/gdisplay_color_ui.c
+	* app/gimpbrushpipe.c
+	* app/gimpdrawable.[ch]
+	* app/gimpimage.c
+	* app/gimpimage.h
+	* app/gimpparasite.[ch]
+	* app/gimprc.c
+	* app/image_new.c
+	* app/layer.c
+	* app/parasite_cmds.c
+	* app/parasitelist.[ch]
+	* app/plug_in.c
+	* app/procedural_db.c
+	* app/undo.c
+	* app/xcf.c
+	* libgimp/gimp.[ch]
+	* libgimp/gimpcolordisplay.h
+	* libgimp/gimpparasite.[ch]
+	* modules/cdisplay_gamma.c
+	* modules/cdisplay_highcontrast.c
+	* modules/colorsel_gtk.c
+	* modules/colorsel_triangle.c
+	* modules/colorsel_water.c
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/FractalExplorer/Events.c
+	* plug-ins/Lighting/lighting_apply.c
+	* plug-ins/Lighting/lighting_shade.c
+	* plug-ins/MapObject/mapobject_image.c
+	* plug-ins/common/gpb.c
+	* plug-ins/common/psp.c
+	* plug-ins/sel2path/sel2path.c
+	* po-libgimp/POTFILES.in
+	* tools/pdbgen/pdb.pl
+	* tools/pdbgen/pdb/parasite.pdb: changed includes accordingly.
+
 Fri May 26 23:14:14 BST 2000 Andy Thomas <alt@gimp.org>
 
 	* plug-ins/common/illusion.c

@@ -94,8 +94,7 @@
 #include "libgimp/gimpenv.h"
 #include "libgimp/gimpprotocol.h"
 #include "libgimp/gimpwire.h"
-#include "libgimp/parasite.h"
-#include "libgimp/parasiteP.h" /* ick */
+#include "libgimp/gimpparasite.h"
 
 #include "libgimp/gimpintl.h"
 

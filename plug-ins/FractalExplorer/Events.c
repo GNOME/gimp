@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #include "FractalExplorer.h"
 #include "Events.h"
 #include "Dialogs.h"

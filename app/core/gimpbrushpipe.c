@@ -36,9 +36,10 @@
 #include "gimprc.h"
 
 #include "libgimp/gimpmath.h"
-#include "libgimp/parasiteio.h"
+#include "libgimp/gimpparasiteio.h"
 
 #include "libgimp/gimpintl.h"
+
 
 static GimpBrushClass       *gimp_brush_class;
 static GimpBrushPixmapClass *gimp_brush_pixmap_class;

@@ -27,10 +27,12 @@
 #include "gimpcontext.h"
 #include "gimage.h"
 
+#include "libgimp/gimpparasite.h"
+
 #include "libgimp/gimpintl.h"
-#include "libgimp/parasite.h"
 
 #include "pixmaps/wilber2.xpm"
+
 
 static GList              *image_base_type_names = NULL;
 static GList              *fill_type_names = NULL;
@@ -43,8 +45,9 @@ static void
 image_new_init (void)
 {
   static gboolean image_new_inited = FALSE;
+
   GimpImageBaseTypeName *new_type;
-  GimpFillTypeName *new_fill_type;
+  GimpFillTypeName      *new_fill_type;
 
   if (image_new_inited)
     return;
@@ -94,7 +97,7 @@ image_new_init (void)
   last_values.fill_type = BACKGROUND_FILL;
 }
 
-GList*
+GList *
 image_new_get_image_base_type_names (void)
 {
   image_new_init ();
@@ -102,7 +105,7 @@ image_new_get_image_base_type_names (void)
   return image_base_type_names;
 }
 
-GList*
+GList *
 image_new_get_fill_type_names (void)
 {
   image_new_init ();

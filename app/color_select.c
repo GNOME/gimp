@@ -31,7 +31,7 @@
 #include "session.h"
 #include "color_area.h" /* for color_area_draw_rect */
 
-#include "libgimp/color_selector.h"
+#include "libgimp/gimpcolorselector.h"
 
 #include "libgimp/gimpintl.h"
 

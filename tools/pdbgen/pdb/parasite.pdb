@@ -168,7 +168,7 @@ sub parasite_list {
     %invoke = ( code => 'parasites = gimp_parasite_list (&num_parasites);' );
 }
 
-@headers = qw("libgimp/parasite.h" "gimpparasite.h" "gimpdrawable.h"
+@headers = qw("gimpparasite.h" "gimpdrawable.h"
 	      "gimpimage.h");
 
 $extra{lib}->{protos} = <<'CODE';
