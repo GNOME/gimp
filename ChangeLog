@@ -1,5 +1,19 @@
 2004-08-11  Michael Natterer  <mitch@gimp.org>
 
+	Restored sane sorting order for menus which are created
+	entirely by plug-ins (like Xtns/Script-Fu/...).
+
+	* app/menus/plug-in-menus.c (plug_in_menus_build_path): made it
+	return the built path. For each sub-menu created, add a "Menus"
+	placeholder and a separator. Make sure all sub-menus end up in the
+	"Menus" placeholder. More readable because we can use the path
+	returned by the recursive invocation now.
+
+	(plug_in_menus_add_proc): simplified by using the path
+	plug_in_menus_build_path() returns.
+
+2004-08-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpprogress.[ch]: added virtual function
 	gboolean GimpProgressInterface::is_active().
 

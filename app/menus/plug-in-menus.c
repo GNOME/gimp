@@ -50,13 +50,14 @@ struct _PlugInMenuEntry
 
 /*  local function prototypes  */
 
-static gboolean plug_in_menus_tree_traverse (gpointer         key,
-                                             PlugInMenuEntry *entry,
-                                             GimpUIManager   *manager);
-static gboolean plug_in_menus_build_path    (GimpUIManager   *manager,
-                                             const gchar     *ui_path,
-                                             guint            merge_id,
-                                             const gchar     *menu_path);
+static gboolean   plug_in_menus_tree_traverse (gpointer         key,
+                                               PlugInMenuEntry *entry,
+                                               GimpUIManager   *manager);
+static gchar    * plug_in_menus_build_path    (GimpUIManager   *manager,
+                                               const gchar     *ui_path,
+                                               guint            merge_id,
+                                               const gchar     *menu_path,
+                                               gboolean         for_menu);
 
 
 /*  public functions  */
@@ -250,19 +251,13 @@ plug_in_menus_add_proc (GimpUIManager *manager,
 
   g_free (merge_key);
 
-  if (strchr (path, '/'))
-    {
-      if (! plug_in_menus_build_path (manager, ui_path, merge_id, path))
-        {
-          g_free (path);
-          return;
-        }
+  action_path = plug_in_menus_build_path (manager, ui_path, merge_id,
+                                          path, FALSE);
 
-      action_path = g_strdup_printf ("%s%s", ui_path, strchr (path, '/'));
-    }
-  else
+  if (! action_path)
     {
-      action_path = g_strdup (ui_path);
+      g_free (path);
+      return;
     }
 
 #if 0
@@ -315,58 +310,93 @@ plug_in_menus_tree_traverse (gpointer         key,
   return FALSE;
 }
 
-static gboolean
+static gchar *
 plug_in_menus_build_path (GimpUIManager *manager,
                           const gchar   *ui_path,
                           guint          merge_id,
-                          const gchar   *menu_path)
+                          const gchar   *menu_path,
+                          gboolean       for_menu)
 {
-  gchar    *action_path;
-  gboolean  retval = TRUE;
+  gchar *action_path;
 
   if (! strchr (menu_path, '/'))
-    return TRUE;
+    {
+      action_path = g_strdup (ui_path);
+      goto make_placeholder;
+    }
 
   action_path = g_strdup_printf ("%s%s", ui_path, strchr (menu_path, '/'));
 
   if (! gtk_ui_manager_get_widget (GTK_UI_MANAGER (manager), action_path))
     {
       gchar *parent_menu_path = g_strdup (menu_path);
-      gchar *p;
+      gchar *menu_item_name;
+      gchar *parent_action_path;
 
-      p = strrchr (parent_menu_path, '/');
-      *p = '\0';
+      menu_item_name = strrchr (parent_menu_path, '/');
+      *menu_item_name++ = '\0';
 
-      if (plug_in_menus_build_path (manager, ui_path, merge_id,
-                                    parent_menu_path))
+      parent_action_path = plug_in_menus_build_path (manager, ui_path, merge_id,
+                                                     parent_menu_path, TRUE);
+
+      if (parent_action_path)
         {
-          gchar *parent_action_path = action_path; /* no strdup() needed */
-          gchar *menu_item_name;
+          g_free (action_path);
+          action_path = g_strdup_printf ("%s/%s",
+                                         parent_action_path, menu_item_name);
 
-          p = strrchr (parent_action_path, '/');
-          *p = '\0';
-
-          menu_item_name = strrchr (menu_path, '/') + 1;
-
+          if (! gtk_ui_manager_get_widget (GTK_UI_MANAGER (manager),
+                                           action_path))
+            {
 #if 0
-          g_print ("adding menu '%s' at path '%s' for action '%s'\n",
-                   menu_item_name, action_path, menu_path);
+              g_print ("adding menu '%s' at path '%s' for action '%s'\n",
+                       menu_item_name, action_path, menu_path);
 #endif
 
-          gtk_ui_manager_add_ui (GTK_UI_MANAGER (manager), merge_id,
-                                 parent_action_path, menu_item_name, menu_path,
-                                 GTK_UI_MANAGER_MENU,
-                                 FALSE);
+              gtk_ui_manager_add_ui (GTK_UI_MANAGER (manager), merge_id,
+                                     parent_action_path, menu_item_name,
+                                     menu_path,
+                                     GTK_UI_MANAGER_MENU,
+                                     FALSE);
+
+              gtk_ui_manager_add_ui (GTK_UI_MANAGER (manager), merge_id,
+                                     action_path, "Menus", NULL,
+                                     GTK_UI_MANAGER_PLACEHOLDER,
+                                     FALSE);
+              gtk_ui_manager_add_ui (GTK_UI_MANAGER (manager), merge_id,
+                                     action_path, "Separator", NULL,
+                                     GTK_UI_MANAGER_SEPARATOR,
+                                     FALSE);
+            }
+
+          g_free (parent_action_path);
         }
       else
         {
-          retval = FALSE;
+          g_free (action_path);
+          action_path = NULL;
         }
 
       g_free (parent_menu_path);
     }
 
-  g_free (action_path);
+ make_placeholder:
 
-  return retval;
+  if (action_path && for_menu)
+    {
+      gchar *placeholder_path = g_strdup_printf ("%s/%s",
+                                                 action_path, "Menus");
+
+      if (gtk_ui_manager_get_widget (GTK_UI_MANAGER (manager),
+                                     placeholder_path))
+        {
+          g_free (action_path);
+
+          return placeholder_path;
+        }
+
+      g_free (placeholder_path);
+    }
+
+  return action_path;
 }
