@@ -1,3 +1,12 @@
+2001-01-17  Daniel Egger  <egger@suse.de>
+
+	* PLUGIN_MAINTAINERS: Entered Jens Christian Restemeier as maintainer
+	as wished.
+
+	* plug-ins/common/gqbist.c: Applied a patch by Jens Christian Restemeier
+	<jrestemeier@currantbun.com> which fixes a calculus bug, adds antialiasing
+	and beatifies the code quite a bit.
+
 2001-01-17  Sven Neumann  <sven@gimp.org>
 
 	* INSTALL: adjusted version numbers, updated, added warning

@@ -406,7 +406,7 @@ COMMENT    :
 -----------
 NAME       : gqbist
 AUTHOR     : Jörn Loviscach, Jens Ch. Restemeier
-MAINTAINER : 
+MAINTAINER : Jens Christian Restemeier <jrestemeier@currantbun.com> 
 SIZE       :  18.2 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------

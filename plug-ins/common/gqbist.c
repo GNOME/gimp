@@ -1,5 +1,5 @@
 /*
- * Written 1997 Jens Ch. Restemeier <jchrr@hrz.uni-bielefeld.de>
+ * Written 1997 Jens Ch. Restemeier <jrestemeier@currantbun.com>
  * This program is based on an algorithm / article by
  * Jörn Loviscach.
  *
@@ -33,15 +33,22 @@
  * 1.2 now handles RGB*
  * 1.5 fixed a small bug
  * 1.6 fixed a bug that was added by v1.5 :-(
- * 1.7 added patch from Art Haas to make it compile with HP-UX, a small clean-up
+ * 1.7 added patch from Art Haas to make it compile with HP-UX, a small 
+ *     clean-up
  * 1.8 Dscho added transform file load/save, bug-fixes 
  * 1.9 rewrote renderloop.
  * 1.9a fixed a bug.
  * 1.9b fixed MAIN()
  * 1.10 added optimizer
+ * 1.11 uses tile iterator, antialiasing thanks to Simon Thum, compiles 
+ *      outside GIMP-tree
+ * 1.12 small fix to behave more like the original, button to control 
+ *      antialaising, remeber last used filename, bugfixes+cleanups
  */
-                 
+
+#ifdef HAVE_CONFIG_H
 #include "config.h"
+#endif
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -55,7 +62,6 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-
 /** qbist renderer ***********************************************************/
 
 #define MAX_TRANSFORMS	36
@@ -63,20 +69,30 @@
 #define NUM_REGISTERS	6
 
 #define PLUG_IN_NAME "plug_in_qbist"
-#define PLUG_IN_VERSION "March 1998, 1.10"
+#define PLUG_IN_VERSION "January 2001, 1.12"
 #define PREVIEW_SIZE 64
 
 /** types *******************************************************************/
 
+/* experiment with this */
 typedef gfloat vreg[3];
 
-typedef struct _info
-{
-  gint transformSequence	[MAX_TRANSFORMS];
-  gint source		[MAX_TRANSFORMS];
-  gint control		[MAX_TRANSFORMS];
-  gint dest		[MAX_TRANSFORMS];
-} s_info;
+typedef struct
+  {
+    gint transformSequence[MAX_TRANSFORMS];
+    gint source[MAX_TRANSFORMS];
+    gint control[MAX_TRANSFORMS];
+    gint dest[MAX_TRANSFORMS];
+  }
+EXP_INFO;
+
+typedef struct
+  {
+    EXP_INFO info;
+    gint oversampling;
+    char path[PATH_MAX];
+  }
+QBIST_INFO;
 
 #define PROJECTION	0
 #define SHIFT		1
@@ -91,53 +107,60 @@ typedef struct _info
 /** prototypes **************************************************************/
 
 static void query (void);
-static void run   (gchar   *name,
-		   gint     nparams,
-		   GimpParam  *param,
-		   gint    *nreturn_vals,
-		   GimpParam **return_vals);
+static void run (gchar * name,
+		 gint nparams,
+		 GimpParam * param,
+		 gint * nreturn_vals,
+		 GimpParam ** return_vals);
 
-static gint dialog_create          (void);
-static void dialog_new_variations  (GtkWidget *widget,
-				    gpointer   data);
-static void dialog_update_previews (GtkWidget *widget,
-				    gpointer   data);
-static void dialog_select_preview  (GtkWidget *widget,
-				    s_info    *n_info);
+static gint dialog_create (void);
+static void dialog_new_variations (GtkWidget * widget,
+				   gpointer data);
+static void dialog_update_previews (GtkWidget * widget,
+				    gpointer data);
+static void dialog_select_preview (GtkWidget * widget,
+				   EXP_INFO * n_info);
 
-static s_info qbist_info;
+static QBIST_INFO qbist_info;
 
 /** qbist functions *********************************************************/
 
 static void
-create_info (s_info *info)
+create_info (EXP_INFO * info)
 {
   int k;
-  for (k=0; k<MAX_TRANSFORMS; k++)
+  for (k = 0; k < MAX_TRANSFORMS; k++)
     {
-      info->transformSequence[k]=rand() % NUM_TRANSFORMS;
-      info->source[k]=rand() % NUM_REGISTERS;
-      info->control[k]=rand() % NUM_REGISTERS;
-      info->dest[k]=rand() % NUM_REGISTERS;
+      info->transformSequence[k] = rand () % NUM_TRANSFORMS;
+      info->source[k] = rand () % NUM_REGISTERS;
+      info->control[k] = rand () % NUM_REGISTERS;
+      info->dest[k] = rand () % NUM_REGISTERS;
     }
-  info->dest[rand() % MAX_TRANSFORMS]=0;
 }
 
 static void
-modify_info (s_info *o_info,
-	     s_info *n_info)
+modify_info (EXP_INFO * o_info,
+	     EXP_INFO * n_info)
 {
-  int k, n; 
-  memcpy(n_info, o_info, sizeof(s_info)); 
-  n=rand() % MAX_TRANSFORMS;
-  for (k=0;k<n; k++)
+  int k, n;
+  memcpy (n_info, o_info, sizeof (EXP_INFO));
+  n = rand () % MAX_TRANSFORMS;
+  for (k = 0; k < n; k++)
     {
-      switch (rand() % 4)
+      switch (rand () % 4)
 	{
-	case 0: n_info->transformSequence[rand() % MAX_TRANSFORMS] = rand() % NUM_TRANSFORMS; break;
-	case 1: n_info->source[rand() % MAX_TRANSFORMS]            = rand() % NUM_REGISTERS; break;
-	case 2: n_info->control[rand() % MAX_TRANSFORMS]           = rand() % NUM_REGISTERS; break;
-	case 3: n_info->dest[rand() % MAX_TRANSFORMS]              = rand() % NUM_REGISTERS; break;
+	case 0:
+	  n_info->transformSequence[rand () % MAX_TRANSFORMS] = rand () % NUM_TRANSFORMS;
+	  break;
+	case 1:
+	  n_info->source[rand () % MAX_TRANSFORMS] = rand () % NUM_REGISTERS;
+	  break;
+	case 2:
+	  n_info->control[rand () % MAX_TRANSFORMS] = rand () % NUM_REGISTERS;
+	  break;
+	case 3:
+	  n_info->dest[rand () % MAX_TRANSFORMS] = rand () % NUM_REGISTERS;
+	  break;
 	}
     }
 }
@@ -149,160 +172,185 @@ static gint used_trans_flag[MAX_TRANSFORMS];
 static gint used_reg_flag[NUM_REGISTERS];
 
 static void
-check_last_modified (s_info info,
-		     int    p,
-		     int    n)
+check_last_modified (EXP_INFO info,
+		     int p,
+		     int n)
 {
   p--;
-  while ((p>=0) && (info.dest[p]!=n)) p--;
-  if (p<0) 
-    used_reg_flag[n]=1;
+  while ((p >= 0) && (info.dest[p] != n))
+    p--;
+  if (p < 0)
+    used_reg_flag[n] = 1;
   else
     {
-      used_trans_flag[p]=1;
-      check_last_modified(info, p, info.source[p]);
-      check_last_modified(info, p, info.control[p]);
+      used_trans_flag[p] = 1;
+      check_last_modified (info, p, info.source[p]);
+      check_last_modified (info, p, info.control[p]);
     }
 }
 
 static void
-optimize (s_info info)
+optimize (EXP_INFO info)
 {
   int i;
   /* double-arg fix: */
-  for (i=0; i<MAX_TRANSFORMS; i++)
+  for (i = 0; i < MAX_TRANSFORMS; i++)
     {
-      used_trans_flag[i]=0;
-      if (i<NUM_REGISTERS)
-	used_reg_flag[i]=0;
+      used_trans_flag[i] = 0;
+      if (i < NUM_REGISTERS)
+	used_reg_flag[i] = 0;
       /* double-arg fix: */
       switch (info.transformSequence[i])
 	{
-	case ROTATE: 
-	case ROTATE2: 
-	case COMPLEMENT: 
-	  info.control[i]=info.dest[i];
+	case ROTATE:
+	case ROTATE2:
+	case COMPLEMENT:
+	  info.control[i] = info.dest[i];
 	  break;
 	}
     }
   /* check for last modified item */
-  check_last_modified(info, MAX_TRANSFORMS, 0);
+  check_last_modified (info, MAX_TRANSFORMS, 0);
 }
 
 static void
-qbist (s_info  info,
-       gchar  *buffer,
-       int     xp,
-       int     yp,
-       int     num,
-       int     width,
-       int     height,
-       int     bpp)
+qbist (EXP_INFO info,
+       gchar * buffer,
+       int xp,
+       int yp,
+       int num,
+       int width,
+       int height,
+       int bpp,
+       int oversampling)
 {
-  gushort gx;
-  vreg reg [NUM_REGISTERS];
-  int i;
-  gushort sr, cr, dr;
+  gint gx;
+  vreg reg[NUM_REGISTERS];
 
-  if (num<=0) return;
-
-  for(gx=0; gx<num; gx ++)
+  for (gx = 0; gx < num; gx++)
     {
-      for(i=0; i<NUM_REGISTERS; i++)
-	{
-	  if (used_reg_flag[i])
-	    {
-	      reg[i][0] = ((float)gx+xp) / ((float)(width));
-	      reg[i][1] = ((float)yp) / ((float)(height));
-	      reg[i][2] = ((float)i) / ((float)NUM_REGISTERS);
-	    }
-	}
-      for(i=0;i<MAX_TRANSFORMS; i++)
-	{
-	  sr=info.source[i];cr=info.control[i];dr=info.dest[i];
+      gint accum[3], yy, i;
 
-	  if (used_trans_flag[i]) switch (info.transformSequence[i])
+      for (i = 0; i < 3; i++)
+	{
+	  accum[i] = 0;
+	}
+      for (yy = 0; yy < oversampling; yy++)
+	{
+	  int xx;
+
+	  for (xx = 0; xx < oversampling; xx++)
 	    {
-	    case PROJECTION:
-	      {
-		gfloat scalarProd;
-		scalarProd = (reg[sr][0]*reg[cr][0])+(reg[sr][1]*reg[cr][1])+(reg[sr][2]*reg[cr][2]);
-		reg[dr][0] = scalarProd*reg[sr][0];
-		reg[dr][1] = scalarProd*reg[sr][1];
-		reg[dr][2] = scalarProd*reg[sr][2];
-		break;
-	      }
-	    case SHIFT: 
-	      reg[dr][0] = reg[sr][0]+reg[cr][0];
-	      if (reg[dr][0] >= 1.0) reg[dr][0] -= 1.0;
-	      reg[dr][1] = reg[sr][1]+reg[cr][1];
-	      if (reg[dr][1] >= 1.0) reg[dr][1] -= 1.0;
-	      reg[dr][2] = reg[sr][2]+reg[cr][2];
-	      if (reg[dr][2] >= 1.0) reg[dr][2] -= 1.0;
-	      break;
-	    case SHIFTBACK: 
-	      reg[dr][0] = reg[sr][0]-reg[cr][0];
-	      if (reg[dr][0] <= 0.0) reg[dr][0] += 1.0;
-	      reg[dr][1] = reg[sr][1]-reg[cr][1];
-	      if (reg[dr][1] <= 0.0) reg[dr][1] += 1.0;
-	      reg[dr][2] = reg[sr][2]-reg[cr][2];
-	      if (reg[dr][2] <= 0.0) reg[dr][2] += 1.0;
-	      break;
-	    case ROTATE: 
-	      reg[dr][0] = reg[sr][1];
-	      reg[dr][1] = reg[sr][2];
-	      reg[dr][2] = reg[sr][0];
-	      break;
-	    case ROTATE2: 
-	      reg[dr][0] = reg[sr][2];
-	      reg[dr][1] = reg[sr][0];
-	      reg[dr][2] = reg[sr][1];
-	      break;
-	    case MULTIPLY: 
-	      reg[dr][0] = reg[sr][0]*reg[cr][0];
-	      reg[dr][1] = reg[sr][1]*reg[cr][1];
-	      reg[dr][2] = reg[sr][2]*reg[cr][2];
-	      break;
-	    case SINE: 
-	      reg[dr][0] = 0.5+(0.5*sin(20.0*reg[sr][0]*reg[cr][0]));
-	      reg[dr][1] = 0.5+(0.5*sin(20.0*reg[sr][1]*reg[cr][1]));
-	      reg[dr][2] = 0.5+(0.5*sin(20.0*reg[sr][2]*reg[cr][2]));
-	      break;
-	    case CONDITIONAL: 
-	      if ((reg[cr][0]+reg[cr][1]+reg[cr][2]) > 0.5)
+	      for (i = 0; i < NUM_REGISTERS; i++)
 		{
-		  reg[dr][0] = reg[sr][0];
-		  reg[dr][1] = reg[sr][1];
-		  reg[dr][2] = reg[sr][2];
+		  if (used_reg_flag[i])
+		    {
+		      reg[i][0] = ((gfloat) ((gx + xp) * oversampling + xx)) / ((gfloat) (width * oversampling));
+		      reg[i][1] = ((gfloat) (yp * oversampling + yy)) / ((gfloat) (height * oversampling));
+		      reg[i][2] = ((gfloat) i) / ((gfloat) NUM_REGISTERS);
+		    }
 		}
-	      else
+	      for (i = 0; i < MAX_TRANSFORMS; i++)
 		{
-		  reg[dr][0] = reg[cr][0];
-		  reg[dr][1] = reg[cr][1];
-		  reg[dr][2] = reg[cr][2];
+		  gushort sr, cr, dr;
+
+		  sr = info.source[i];
+		  cr = info.control[i];
+		  dr = info.dest[i];
+
+		  if (used_trans_flag[i])
+		    switch (info.transformSequence[i])
+		      {
+		      case PROJECTION:
+			{
+			  gfloat scalarProd;
+			  scalarProd = (reg[sr][0] * reg[cr][0]) + (reg[sr][1] * reg[cr][1]) + (reg[sr][2] * reg[cr][2]);
+			  reg[dr][0] = scalarProd * reg[sr][0];
+			  reg[dr][1] = scalarProd * reg[sr][1];
+			  reg[dr][2] = scalarProd * reg[sr][2];
+			  break;
+			}
+		      case SHIFT:
+			reg[dr][0] = reg[sr][0] + reg[cr][0];
+			if (reg[dr][0] >= 1.0)
+			  reg[dr][0] -= 1.0;
+			reg[dr][1] = reg[sr][1] + reg[cr][1];
+			if (reg[dr][1] >= 1.0)
+			  reg[dr][1] -= 1.0;
+			reg[dr][2] = reg[sr][2] + reg[cr][2];
+			if (reg[dr][2] >= 1.0)
+			  reg[dr][2] -= 1.0;
+			break;
+		      case SHIFTBACK:
+			reg[dr][0] = reg[sr][0] - reg[cr][0];
+			if (reg[dr][0] <= 0.0)
+			  reg[dr][0] += 1.0;
+			reg[dr][1] = reg[sr][1] - reg[cr][1];
+			if (reg[dr][1] <= 0.0)
+			  reg[dr][1] += 1.0;
+			reg[dr][2] = reg[sr][2] - reg[cr][2];
+			if (reg[dr][2] <= 0.0)
+			  reg[dr][2] += 1.0;
+			break;
+		      case ROTATE:
+			reg[dr][0] = reg[sr][1];
+			reg[dr][1] = reg[sr][2];
+			reg[dr][2] = reg[sr][0];
+			break;
+		      case ROTATE2:
+			reg[dr][0] = reg[sr][2];
+			reg[dr][1] = reg[sr][0];
+			reg[dr][2] = reg[sr][1];
+			break;
+		      case MULTIPLY:
+			reg[dr][0] = reg[sr][0] * reg[cr][0];
+			reg[dr][1] = reg[sr][1] * reg[cr][1];
+			reg[dr][2] = reg[sr][2] * reg[cr][2];
+			break;
+		      case SINE:
+			reg[dr][0] = 0.5 + (0.5 * sin (20.0 * reg[sr][0] * reg[cr][0]));
+			reg[dr][1] = 0.5 + (0.5 * sin (20.0 * reg[sr][1] * reg[cr][1]));
+			reg[dr][2] = 0.5 + (0.5 * sin (20.0 * reg[sr][2] * reg[cr][2]));
+			break;
+		      case CONDITIONAL:
+			if ((reg[cr][0] + reg[cr][1] + reg[cr][2]) > 0.5)
+			  {
+			    reg[dr][0] = reg[sr][0];
+			    reg[dr][1] = reg[sr][1];
+			    reg[dr][2] = reg[sr][2];
+			  }
+			else
+			  {
+			    reg[dr][0] = reg[cr][0];
+			    reg[dr][1] = reg[cr][1];
+			    reg[dr][2] = reg[cr][2];
+			  }
+			break;
+		      case COMPLEMENT:
+			reg[dr][0] = 1.0 - reg[sr][0];
+			reg[dr][1] = 1.0 - reg[sr][1];
+			reg[dr][2] = 1.0 - reg[sr][2];
+			break;
+		      }
 		}
-	      break;
-	    case COMPLEMENT: 
-	      reg[dr][0] = 1.0-reg[sr][0];
-	      reg[dr][1] = 1.0-reg[sr][1];
-	      reg[dr][2] = 1.0-reg[sr][2];
-	      break;
+	      for (i = 0; i < 3; i++)
+		{
+		  accum[i] += (unsigned char) (reg[0][i] * 255.0 + 0.5);
+		}
 	    }
 	}
-      for (i=0; i<bpp; i++)
+      for (i = 0; i < bpp; i++)
 	{
-	  if (i<3)
-	    { 
-	      int a;
-	      a=255.0 * reg[0][i];
-	      buffer[i]=(a<0) ? 0 : ((a>255) ? 255 : a); 
+	  if (i < 3)
+	    {
+	      buffer[i] = (guint8) (((gfloat) accum[i] / (gfloat) (oversampling * oversampling)) + 0.5);
 	    }
 	  else
 	    {
-	      buffer[i]=255;
+	      buffer[i] = 255;
 	    }
 	}
-      buffer+=bpp;
+      buffer += bpp;
     }
 }
 
@@ -310,22 +358,30 @@ qbist (s_info  info,
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
-  NULL,	 /* init_proc  */
-  NULL,	 /* quit_proc  */
-  query, /* query_proc */
-  run	 /* run_proc   */
+  NULL,				/* init_proc  */
+  NULL,				/* quit_proc  */
+  query,			/* query_proc */
+  run				/* run_proc   */
 };
 
 MAIN ()
 
-static void
-query (void)
+     static void
+       query (void)
 {
   GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
+    {
+      GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"
+    }
+    ,
+    {
+      GIMP_PDB_IMAGE, "image", "Input image (unused)"
+    }
+    ,
+    {
+      GIMP_PDB_DRAWABLE, "drawable", "Input drawable"
+    }
   };
   gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -335,7 +391,7 @@ query (void)
 			  "Jörn Loviscach, Jens Ch. Restemeier",
 			  "Jörn Loviscach, Jens Ch. Restemeier",
 			  PLUG_IN_VERSION,
-			  N_("<Image>/Filters/Render/Pattern/Qbist..."),
+			  N_ ("<Image>/Filters/Render/Pattern/Qbist..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
 			  nargs, 0,
@@ -343,127 +399,129 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
-     GimpParam  *param,
-     gint    *nreturn_vals,
-     GimpParam **return_vals)
+run (gchar * name,
+     gint nparams,
+     GimpParam * param,
+     gint * nreturn_vals,
+     GimpParam ** return_vals)
 {
   static GimpParam values[1];
   gint sel_x1, sel_y1, sel_x2, sel_y2;
   gint img_height, img_width, img_bpp, img_has_alpha;
 
-  GimpDrawable 	*drawable;
-  GimpRunModeType	run_mode;
-  GimpPDBStatusType	status;
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status;
 
   *nreturn_vals = 1;
-  *return_vals  = values;
+  *return_vals = values;
 
   status = GIMP_PDB_SUCCESS;
 
-  if (param[0].type!=GIMP_PDB_INT32)
-    status=GIMP_PDB_CALLING_ERROR;
+  if (param[0].type != GIMP_PDB_INT32)
+    status = GIMP_PDB_CALLING_ERROR;
   run_mode = param[0].data.d_int32;
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-      INIT_I18N_UI();
+      INIT_I18N_UI ();
     }
   else
     {
-      INIT_I18N();
+      INIT_I18N ();
     }
 
-  if (param[2].type!=GIMP_PDB_DRAWABLE)
-    status=GIMP_PDB_CALLING_ERROR;
-  drawable = gimp_drawable_get(param[2].data.d_drawable);
+  if (param[2].type != GIMP_PDB_DRAWABLE)
+    status = GIMP_PDB_CALLING_ERROR;
+  drawable = gimp_drawable_get (param[2].data.d_drawable);
 
-  img_width     = gimp_drawable_width(drawable->id);
-  img_height    = gimp_drawable_height(drawable->id);
-  img_bpp       = gimp_drawable_bpp(drawable->id);
-  img_has_alpha = gimp_drawable_has_alpha(drawable->id);
+  img_width = gimp_drawable_width (drawable->id);
+  img_height = gimp_drawable_height (drawable->id);
+  img_bpp = gimp_drawable_bpp (drawable->id);
+  img_has_alpha = gimp_drawable_has_alpha (drawable->id);
   gimp_drawable_mask_bounds (drawable->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
-  if (!gimp_drawable_is_rgb(drawable->id))
-    status=GIMP_PDB_CALLING_ERROR;
-		
-  if (status==GIMP_PDB_SUCCESS)
+  if (!gimp_drawable_is_rgb (drawable->id))
+    status = GIMP_PDB_CALLING_ERROR;
+
+  if (status == GIMP_PDB_SUCCESS)
     {
-      create_info(&qbist_info);
+      memset (&qbist_info, 0, sizeof (qbist_info));
+      create_info (&qbist_info.info);
+      qbist_info.oversampling = 4;
       switch (run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:
 	  /* Possibly retrieve data */
-	  gimp_get_data(PLUG_IN_NAME, &qbist_info);
+	  gimp_get_data (PLUG_IN_NAME, &qbist_info);
 
-          /* Get information from the dialog */
-	  if (dialog_create())
+	  /* Get information from the dialog */
+	  if (dialog_create ())
 	    {
-	      status=GIMP_PDB_SUCCESS;
-	      gimp_set_data(PLUG_IN_NAME, &qbist_info, sizeof(s_info));
+	      status = GIMP_PDB_SUCCESS;
+	      gimp_set_data (PLUG_IN_NAME, &qbist_info, sizeof (QBIST_INFO));
 	    }
 	  else
-	    status=GIMP_PDB_EXECUTION_ERROR;
+	    status = GIMP_PDB_EXECUTION_ERROR;
 	  break;
 
 	case GIMP_RUN_NONINTERACTIVE:
-	  status=GIMP_PDB_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	  break;
 
 	case GIMP_RUN_WITH_LAST_VALS:
 	  /* Possibly retrieve data */
-	  gimp_get_data(PLUG_IN_NAME, &qbist_info);
-	  status=GIMP_PDB_SUCCESS;
+	  gimp_get_data (PLUG_IN_NAME, &qbist_info);
+	  status = GIMP_PDB_SUCCESS;
 	  break;
 	default:
-	  status=GIMP_PDB_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	  break;
-	} 
+	}
       if (status == GIMP_PDB_SUCCESS)
 	{
 	  GimpPixelRgn imagePR;
-	  guchar *row_data;
-	  gint row;
+	  gpointer pr;
 
-	  gimp_tile_cache_ntiles((drawable->width + gimp_tile_width() - 1) / gimp_tile_width());
-	  gimp_pixel_rgn_init (&imagePR, drawable, 0,0, img_width, img_height, TRUE, TRUE);
-	  row_data=(guchar *)malloc((sel_x2-sel_x1)*img_bpp);
+	  gimp_tile_cache_ntiles ((drawable->width + gimp_tile_width () - 1) / gimp_tile_width ());
+	  gimp_pixel_rgn_init (&imagePR, drawable, 0, 0, img_width, img_height, TRUE, TRUE);
 
-	  optimize(qbist_info);
+	  optimize (qbist_info.info);
 
-	  gimp_progress_init ( _("Qbist..."));
-	  for (row=sel_y1; row<sel_y2; row++)
+	  gimp_progress_init (_ ("Qbist ..."));
+
+	  for (pr = gimp_pixel_rgns_register (1, &imagePR); pr != NULL; pr = gimp_pixel_rgns_process (pr))
 	    {
-	      qbist(qbist_info, (gchar *)row_data, 0, row, sel_x2-sel_x1, sel_x2-sel_x1, sel_y2-sel_y1, img_bpp);
-	      gimp_pixel_rgn_set_row(&imagePR, row_data, sel_x1, row, (sel_x2-sel_x1));
-	      if ((row % 5) == 0) 
-		gimp_progress_update((gfloat)(row-sel_y1)/(gfloat)(sel_y2-sel_y1));
+	      gint row;
+	      for (row = 0; row < imagePR.h; row++)
+		{
+		  qbist (qbist_info.info, imagePR.data + row * imagePR.rowstride, imagePR.x, imagePR.y + row, imagePR.w, sel_x2 - sel_x1, sel_y2 - sel_y1, imagePR.bpp, qbist_info.oversampling);
+		}
+	      gimp_progress_update ((gfloat) (imagePR.y - sel_y1) / (gfloat) (sel_y2 - sel_y1));
 	    }
 
-	  free(row_data);
 	  gimp_drawable_flush (drawable);
 	  gimp_drawable_merge_shadow (drawable->id, TRUE);
 	  gimp_drawable_update (drawable->id, sel_x1, sel_y1, (sel_x2 - sel_x1), (sel_y2 - sel_y1));
 
-	  gimp_displays_flush();
-	} 
+	  gimp_displays_flush ();
+	}
     }
 
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
-  gimp_drawable_detach(drawable);
+  gimp_drawable_detach (drawable);
 }
 
 /** User interface ***********************************************************/
 
 static GtkWidget *preview[9];
-static s_info     info[9];
-static gint       result = FALSE;
+static EXP_INFO info[9];
+static gint result = FALSE;
 
 static void
-dialog_ok (GtkWidget *widget,
-	   gpointer   data)
+dialog_ok (GtkWidget * widget,
+	   gpointer data)
 {
   result = TRUE;
 
@@ -471,7 +529,7 @@ dialog_ok (GtkWidget *widget,
 }
 
 static void
-dialog_new_variations (GtkWidget *widget,
+dialog_new_variations (GtkWidget * widget,
 		       gpointer data)
 {
   gint i;
@@ -481,19 +539,19 @@ dialog_new_variations (GtkWidget *widget,
 }
 
 static void
-dialog_update_previews (GtkWidget *widget,
-			gpointer   data)
+dialog_update_previews (GtkWidget * widget,
+			gpointer data)
 {
   gint i, j;
   guchar buf[PREVIEW_SIZE * 3];
 
-  for (j=0;j<9;j++)
+  for (j = 0; j < 9; j++)
     {
-      optimize (info[(j+5) % 9]);
+      optimize (info[(j + 5) % 9]);
       for (i = 0; i < PREVIEW_SIZE; i++)
 	{
-	  qbist (info[(j+5) % 9], (gchar *)buf,
-		 0, i, PREVIEW_SIZE, PREVIEW_SIZE, PREVIEW_SIZE, 3);
+	  qbist (info[(j + 5) % 9], (gchar *) buf,
+		 0, i, PREVIEW_SIZE, PREVIEW_SIZE, PREVIEW_SIZE, 3, 1);
 	  gtk_preview_draw_row (GTK_PREVIEW (preview[j]), buf,
 				0, i, PREVIEW_SIZE);
 	}
@@ -502,87 +560,122 @@ dialog_update_previews (GtkWidget *widget,
 }
 
 static void
-dialog_select_preview (GtkWidget *widget,
-		       s_info    *n_info)
+dialog_select_preview (GtkWidget * widget,
+		       EXP_INFO * n_info)
 {
-  memcpy (&(info[0]), n_info, sizeof (s_info));
+  memcpy (&(info[0]), n_info, sizeof (EXP_INFO));
   dialog_new_variations (widget, NULL);
   dialog_update_previews (widget, NULL);
 }
 
 /* File I/O stuff */
 
-#define LOBITE(x) ((x)&0xff)
-#define HIBITE(x) ((x)>>8)
-#define MACBITES(x) (HIBITE(x)+LOBITE(x)<<8)
-#define GETMACUSHORT(f) ((fgetc(f)<<8)+(fgetc(f)))
-#define PUTMACUSHORT(u, f) fprintf(f, "%c%c", HIBITE(u), LOBITE(u));
+static guint16
+get_be16 (guint8 * buf)
+{
+  return (guint16) buf[0] << 8 | buf[1];
+}
+
+static void
+set_be16 (guint8 * buf, guint16 val)
+{
+  buf[0] = val >> 8;
+  buf[1] = val & 0xFF;
+}
 
 static gint
-load_data (gchar *name)
+load_data (gchar * name)
 {
   int i;
   FILE *f;
+  guint8 buf[288];
 
-  f = fopen (name, "rb"); 
-  if (f==NULL) return 0;
+  f = fopen (name, "rb");
+  if (f == NULL)
+    {
+      return 0;
+    }
+  if (fread (buf, 1, sizeof (buf), f) != sizeof (buf))
+    {
+      fclose (f);
+      return 0;
+    }
+  fclose (f);
 
-  for (i=0;i<MAX_TRANSFORMS;i++) info[0].transformSequence[i]=GETMACUSHORT(f);
-  for (i=0;i<MAX_TRANSFORMS;i++) info[0].source[i]=GETMACUSHORT(f);
-  for (i=0;i<MAX_TRANSFORMS;i++) info[0].control[i]=GETMACUSHORT(f);
-  for( i=0;i<MAX_TRANSFORMS;i++) info[0].dest[i]=GETMACUSHORT(f);
+  for (i = 0; i < MAX_TRANSFORMS; i++)
+    info[0].transformSequence[i] = get_be16 (buf + i * 2 + MAX_TRANSFORMS * 2 * 0);
+  for (i = 0; i < MAX_TRANSFORMS; i++)
+    info[0].source[i] = get_be16 (buf + i * 2 + MAX_TRANSFORMS * 2 * 1);
+  for (i = 0; i < MAX_TRANSFORMS; i++)
+    info[0].control[i] = get_be16 (buf + i * 2 + MAX_TRANSFORMS * 2 * 2);
+  for (i = 0; i < MAX_TRANSFORMS; i++)
+    info[0].dest[i] = get_be16 (buf + i * 2 + MAX_TRANSFORMS * 2 * 3);
 
+  return 1;
+}
+
+static gint
+save_data (gchar * name)
+{
+  int i = 0;
+  FILE *f;
+  guint8 buf[288];
+
+  f = fopen (name, "wb");
+  if (f == NULL)
+    {
+      return 0;
+    }
+
+  for (i = 0; i < MAX_TRANSFORMS; i++)
+    set_be16 (buf + i * 2 + MAX_TRANSFORMS * 2 * 0, info[0].transformSequence[i]);
+  for (i = 0; i < MAX_TRANSFORMS; i++)
+    set_be16 (buf + i * 2 + MAX_TRANSFORMS * 2 * 1, info[0].source[i]);
+  for (i = 0; i < MAX_TRANSFORMS; i++)
+    set_be16 (buf + i * 2 + MAX_TRANSFORMS * 2 * 2, info[0].control[i]);
+  for (i = 0; i < MAX_TRANSFORMS; i++)
+    set_be16 (buf + i * 2 + MAX_TRANSFORMS * 2 * 3, info[0].dest[i]);
+
+  fwrite (buf, 1, sizeof (buf), f);
   fclose (f);
 
   return 1;
 }
 
 static void
-save_data (gchar *name)
+file_selection_save (GtkWidget * widget,
+		     GtkWidget * file_select)
 {
-  int i=0;
-  FILE *f;
+  strcpy (qbist_info.path, gtk_file_selection_get_filename (GTK_FILE_SELECTION (file_select)));
+  save_data (qbist_info.path);
 
-  f = fopen (name, "wb");
-
-  for (i=0;i<MAX_TRANSFORMS;i++) PUTMACUSHORT(info[0].transformSequence[i], f);
-  for (i=0;i<MAX_TRANSFORMS;i++) PUTMACUSHORT(info[0].source[i], f);
-  for (i=0;i<MAX_TRANSFORMS;i++) PUTMACUSHORT(info[0].control[i], f);
-  for (i=0;i<MAX_TRANSFORMS;i++) PUTMACUSHORT(info[0].dest[i], f);
-
-  fclose (f);
-}
-
-static void
-file_selection_save (GtkWidget *widget,
-		     GtkWidget *file_select)
-{
-  save_data (gtk_file_selection_get_filename (GTK_FILE_SELECTION (file_select)));
   gtk_widget_destroy (file_select);
 }
 
 static void
-file_selection_load (GtkWidget *widget,
-		     GtkWidget *file_select)
+file_selection_load (GtkWidget * widget,
+		     GtkWidget * file_select)
 {
-  load_data (gtk_file_selection_get_filename (GTK_FILE_SELECTION (file_select)));
+  strcpy (qbist_info.path, gtk_file_selection_get_filename (GTK_FILE_SELECTION (file_select)));
+  load_data (qbist_info.path);
   gtk_widget_destroy (file_select);
   dialog_new_variations (widget, NULL);
   dialog_update_previews (widget, NULL);
 }
 
 static void
-dialog_load (GtkWidget *widget,
-	     gpointer   data)
+dialog_load (GtkWidget * widget,
+	     gpointer data)
 {
   GtkWidget *file_select;
 
-  file_select = gtk_file_selection_new (_("Load QBE file..."));
+  file_select = gtk_file_selection_new (_ ("Load QBE file..."));
 
   gimp_help_connect_help_accel (file_select, gimp_standard_help_func,
 				"filters/gqbist.html");
 
-  gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (file_select)->ok_button), 
+  gtk_file_selection_set_filename (GTK_FILE_SELECTION (file_select), qbist_info.path);
+  gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (file_select)->ok_button),
 		      "clicked",
 		      GTK_SIGNAL_FUNC (file_selection_load),
 		      (gpointer) file_select);
@@ -595,27 +688,35 @@ dialog_load (GtkWidget *widget,
 }
 
 static void
-dialog_save (GtkWidget *widget,
-	     gpointer   data)
+dialog_save (GtkWidget * widget,
+	     gpointer data)
 {
   GtkWidget *file_select;
 
   file_select =
-    gtk_file_selection_new (_("Save (middle transform) as QBE file..."));
+    gtk_file_selection_new (_ ("Save (middle transform) as QBE file..."));
 
   gimp_help_connect_help_accel (file_select, gimp_standard_help_func,
 				"filters/gqbist.html");
 
+  gtk_file_selection_set_filename (GTK_FILE_SELECTION (file_select), qbist_info.path);
   gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (file_select)->ok_button),
 		      "clicked",
 		      GTK_SIGNAL_FUNC (file_selection_save),
-		      (gpointer)file_select);
-  gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (file_select)->cancel_button), 
+		      (gpointer) file_select);
+  gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (file_select)->cancel_button),
 			     "clicked",
 			     GTK_SIGNAL_FUNC (gtk_widget_destroy),
 			     GTK_OBJECT (file_select));
 
   gtk_widget_show (file_select);
+}
+
+static void
+dialog_toggle_antialaising (GtkWidget * widget,
+			    gpointer data)
+{
+  qbist_info.oversampling = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)) ? 4 : 1;
 }
 
 static gint
@@ -626,25 +727,25 @@ dialog_create (void)
   GtkWidget *bbox;
   GtkWidget *button;
   GtkWidget *table;
-  gint  i;
+  gint i;
 
   srand (time (NULL));
 
   gimp_ui_init ("gqbist", TRUE);
 
-  dialog = gimp_dialog_new (_("G-Qbist 1.10"), "gqbist",
+  dialog = gimp_dialog_new (_ ("G-Qbist 1.12"), "gqbist",
 			    gimp_standard_help_func, "filters/gqbist.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 
-			    _("OK"), dialog_ok,
+			    _ ("OK"), dialog_ok,
 			    NULL, NULL, NULL, TRUE, FALSE,
-			    _("Cancel"), gtk_widget_destroy,
+			    _ ("Cancel"), gtk_widget_destroy,
 			    NULL, 1, NULL, FALSE, TRUE,
 
 			    NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dialog), "destroy", 
+  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
 		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
@@ -660,16 +761,16 @@ dialog_create (void)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  memcpy ((char *) &(info[0]), (char *) &qbist_info, sizeof (s_info));
+  memcpy ((char *) &(info[0]), (char *) &qbist_info, sizeof (EXP_INFO));
   dialog_new_variations (NULL, NULL);
 
   for (i = 0; i < 9; i++)
     {
       button = gtk_button_new ();
-      gtk_signal_connect (GTK_OBJECT (button), "clicked", 
+      gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			  GTK_SIGNAL_FUNC (dialog_select_preview),
-			  (gpointer) &(info[(i+5)%9]));
-      gtk_table_attach (GTK_TABLE (table), button, i%3, (i%3)+1, i/3, (i/3)+1, 
+			  (gpointer) & (info[(i + 5) % 9]));
+      gtk_table_attach (GTK_TABLE (table), button, i % 3, (i % 3) + 1, i / 3, (i / 3) + 1,
 			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (button);
 
@@ -679,11 +780,19 @@ dialog_create (void)
       gtk_widget_show (preview[i]);
     }
 
+  button = gtk_check_button_new_with_label (_ ("Antialaising"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), qbist_info.oversampling > 1);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      GTK_SIGNAL_FUNC (dialog_toggle_antialaising),
+		      NULL);
+  gtk_widget_show (button);
+
   bbox = gtk_hbutton_box_new ();
   gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, FALSE, 0);
   gtk_widget_show (bbox);
 
-  button = gtk_button_new_with_label (_("Load"));
+  button = gtk_button_new_with_label (_ ("Load"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
@@ -691,7 +800,7 @@ dialog_create (void)
 		      NULL);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label (_("Save"));
+  button = gtk_button_new_with_label (_ ("Save"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
@@ -706,7 +815,7 @@ dialog_create (void)
   gdk_flush ();
 
   if (result)
-    memcpy ((char *) &qbist_info, (char *) &(info[0]), sizeof (s_info));
+    memcpy ((char *) &qbist_info.info, (char *) &(info[0]), sizeof (EXP_INFO));
 
   return result;
 }
