@@ -28,6 +28,10 @@ extern "C" {
 /* For information look at the html documentation */
 
 
+#define GIMP_COLOR_SELECTOR_SIZE     150
+#define GIMP_COLOR_SELECTOR_BAR_SIZE 15
+
+
 typedef enum
 {
   GIMP_COLOR_SELECTOR_HUE,

@@ -42,15 +42,13 @@
 #include "libgimp/gimpintl.h"
 
 
-#define XY_DEF_WIDTH       200
-#define XY_DEF_HEIGHT      200
-#define Z_DEF_WIDTH        15
-#define Z_DEF_HEIGHT       200
-#define COLOR_AREA_WIDTH   74
-#define COLOR_AREA_HEIGHT  20
+#define XY_DEF_WIDTH     GIMP_COLOR_SELECTOR_SIZE
+#define XY_DEF_HEIGHT    GIMP_COLOR_SELECTOR_SIZE
+#define Z_DEF_WIDTH      GIMP_COLOR_SELECTOR_BAR_SIZE
+#define Z_DEF_HEIGHT     GIMP_COLOR_SELECTOR_SIZE
 
-#define COLOR_AREA_MASK (GDK_EXPOSURE_MASK | \
-                         GDK_BUTTON_PRESS_MASK | \
+#define COLOR_AREA_MASK (GDK_EXPOSURE_MASK       | \
+                         GDK_BUTTON_PRESS_MASK   | \
                          GDK_BUTTON_RELEASE_MASK | \
 			 GDK_BUTTON1_MOTION_MASK | \
                          GDK_ENTER_NOTIFY_MASK)
@@ -243,20 +241,19 @@ color_select_widget_new (ColorSelect   *csp,
   GtkWidget *z_frame;
 			
   main_vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 2);
 
   main_hbox = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (main_vbox), main_hbox, TRUE, FALSE, 0);
   gtk_widget_show (main_hbox);
 
-  hbox = gtk_hbox_new (FALSE, 2);
+  hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (main_hbox), hbox, TRUE, FALSE, 0);
   gtk_widget_show (hbox);
 
   /*  The x/y component preview  */
   xy_frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (xy_frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (hbox), xy_frame, FALSE, FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (hbox), xy_frame, FALSE, FALSE, 0);
   gtk_widget_show (xy_frame);
 
   csp->xy_color = gtk_preview_new (GTK_PREVIEW_COLOR);
@@ -284,7 +281,7 @@ color_select_widget_new (ColorSelect   *csp,
   /*  The z component preview  */
   z_frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (z_frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (hbox), z_frame, FALSE, FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (hbox), z_frame, FALSE, FALSE, 0);
   gtk_widget_show (z_frame);
 
   csp->z_color = gtk_preview_new (GTK_PREVIEW_COLOR);

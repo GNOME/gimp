@@ -1,3 +1,32 @@
+2001-05-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/base/Makefile.am
+	* app/core/Makefile.am
+	* app/gui/Makefile.am
+	* app/paint-funcs/Makefile.am: added makefile.msc to EXTRA_DIST.
+
+	* app/core/gimpimage.c: don't try to create previews with width or
+	height < 1.
+
+	* app/gui/color-notebook.c: Major (??) dialog repacking. Don't
+	show an action_area for the main color selection (it's now about
+	half the size of the 1.2 one).
+
+	* libgimp/gimpcolorselector.h: define some gui size constants
+	here.
+
+	* app/gui/color-select.c
+	* modules/colorsel_triangle.c
+	* modules/colorsel_water.c: use the constants and removed the
+	spacing around the main container.
+
+	* libgimpwidgets/gimpcolorarea.[ch]: rendering in the idle loop
+	fixes a race condition when accessing widget->window during widget
+	resizing.
+
+	* modules/Makefile.am: disabled the "GTK" color notebook page (we
+	will put the GtkHSV widget of gtk+ 2.0 here).
+
 2001-05-29  Simon Budig  <simon@gimp.org>
 
 	* po/POTFILES.in: Added app/tools/gimpposterizetool.c

@@ -38,15 +38,6 @@
 
 static const GtkTargetEntry targets[] = { { "application/x-color", 0 } };
 
-
-struct _GimpColorArea
-{
-  GtkPreview         preview;
-
-  GimpColorAreaType  type;
-  GimpRGB            color;
-};
-
 enum
 {
   COLOR_CHANGED,
@@ -57,10 +48,17 @@ static guint           gimp_color_area_signals[LAST_SIGNAL] = { 0 };
 static GtkWidgetClass *parent_class = NULL;
 
 
-static void  gimp_color_area_class_init (GimpColorAreaClass *klass);
-static void  gimp_color_area_init       (GimpColorArea      *gca);
-static void  gimp_color_area_destroy    (GtkObject          *object);
-static void  gimp_color_area_update     (GimpColorArea      *gca);
+static void  gimp_color_area_class_init    (GimpColorAreaClass *klass);
+static void  gimp_color_area_init          (GimpColorArea      *gca);
+
+static void  gimp_color_area_destroy       (GtkObject          *object);
+
+static void  gimp_color_area_realize       (GtkWidget          *widget);
+static void  gimp_color_area_size_allocate (GtkWidget          *widget,
+					    GtkAllocation      *allocation);
+
+static void       gimp_color_area_update        (GimpColorArea    *gca);
+static gboolean   gimp_color_area_idle_update   (gpointer          data);
 
 static void  gimp_color_area_drag_begin         (GtkWidget        *widget,
 						 GdkDragContext   *context);
@@ -132,6 +130,9 @@ gimp_color_area_class_init (GimpColorAreaClass *klass)
 
   object_class->destroy = gimp_color_area_destroy;
 
+  widget_class->realize            = gimp_color_area_realize;
+  widget_class->size_allocate      = gimp_color_area_size_allocate;
+
   widget_class->drag_begin         = gimp_color_area_drag_begin;
   widget_class->drag_end           = gimp_color_area_drag_end;
   widget_class->drag_data_received = gimp_color_area_drag_data_received;
@@ -142,19 +143,14 @@ static void
 gimp_color_area_init (GimpColorArea *gca)
 {
   gimp_rgba_set (&gca->color, 0.0, 0.0, 0.0, 1.0);
-  gca->type = GIMP_COLOR_AREA_FLAT;
+
+  gca->type    = GIMP_COLOR_AREA_FLAT;
+  gca->idle_id = 0;
 
   GTK_PREVIEW (gca)->type   = GTK_PREVIEW_COLOR;
   GTK_PREVIEW (gca)->bpp    = 3;
   GTK_PREVIEW (gca)->dither = GDK_RGB_DITHER_NORMAL;
   GTK_PREVIEW (gca)->expand = TRUE;
-
-  gtk_signal_connect_after (GTK_OBJECT (gca), "realize", 
-			    GTK_SIGNAL_FUNC (gimp_color_area_update),
-			    NULL);
-  gtk_signal_connect (GTK_OBJECT (gca), "size_allocate", 
-		      GTK_SIGNAL_FUNC (gimp_color_area_update),
-		      NULL);
 }
 
 static void
@@ -167,8 +163,33 @@ gimp_color_area_destroy (GtkObject *object)
   
   gca = GIMP_COLOR_AREA (object);
 
+  if (gca->idle_id)
+    {
+      g_source_remove (gca->idle_id);
+      gca->idle_id = 0;
+    }
+
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static void
+gimp_color_area_realize (GtkWidget *widget)
+{
+  if (GTK_WIDGET_CLASS (parent_class)->realize)
+    GTK_WIDGET_CLASS (parent_class)->realize (widget);
+
+  gimp_color_area_update (GIMP_COLOR_AREA (widget));
+}
+
+static void
+gimp_color_area_size_allocate (GtkWidget     *widget,
+			       GtkAllocation *allocation)
+{
+  if (GTK_WIDGET_CLASS (parent_class)->size_allocate)
+    GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
+
+  gimp_color_area_update (GIMP_COLOR_AREA (widget));
 }
 
 /**
@@ -276,28 +297,47 @@ gimp_color_area_set_type (GimpColorArea     *gca,
 static void
 gimp_color_area_update (GimpColorArea *gca)
 {
-  gint     window_width, window_height;
-  guint    width, height;
-  guint    x, y;
-  guint    check_size = 0;
-  guchar   light[3];
-  guchar   dark[3];
-  guchar   opaque[3];
-  guchar  *p;
-  guchar  *buf;
-  gdouble  frac;
-
   g_return_if_fail (gca != NULL);
   g_return_if_fail (GIMP_IS_COLOR_AREA (gca));
 
+  if (gca->idle_id)
+    {
+      g_source_remove (gca->idle_id);
+    }
+
+  gca->idle_id =
+    g_idle_add_full (G_PRIORITY_LOW,
+		     (GSourceFunc) gimp_color_area_idle_update, gca,
+		     NULL);
+}
+
+static gboolean
+gimp_color_area_idle_update (gpointer data)
+{
+  GimpColorArea *gca;
+  gint           window_width, window_height;
+  guint          width, height;
+  guint          x, y;
+  guint          check_size = 0;
+  guchar         light[3];
+  guchar         dark[3];
+  guchar         opaque[3];
+  guchar        *p;
+  guchar        *buf;
+  gdouble        frac;
+
+  gca = GIMP_COLOR_AREA (data);
+
+  gca->idle_id = 0;
+
   if (! GTK_WIDGET_REALIZED (GTK_WIDGET (gca)))
-    return;
+    return FALSE;
 
   gdk_window_get_size (GTK_WIDGET (gca)->window, 
 		       &window_width, &window_height);
 
   if (window_width < 1 || window_height < 1)
-    return;
+    return FALSE;
 
   width  = window_width;
   height = window_height;
@@ -413,6 +453,8 @@ gimp_color_area_update (GimpColorArea *gca)
   g_free (buf);
 
   gtk_widget_queue_draw (GTK_WIDGET (gca));
+
+  return FALSE;
 }
 
 static void

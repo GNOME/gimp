@@ -4091,6 +4091,7 @@ gimp_image_get_new_preview (GimpViewable *viewable,
   temp_buf_data_clear (comp);
 
   floating_sel = NULL;
+
   for (list = GIMP_LIST (gimage->layers)->list; 
        list; 
        list = g_list_next (list))
@@ -4101,16 +4102,19 @@ gimp_image_get_new_preview (GimpViewable *viewable,
       if (gimp_drawable_get_visible (GIMP_DRAWABLE (layer)))
 	{
 	  /*  floating selections are added right above the layer 
-	      they are attached to  */
+	   *  they are attached to
+	   */
 	  if (gimp_layer_is_floating_sel (layer))
 	    {
 	      floating_sel = layer;
 	    }
 	  else
 	    {
-	      if (floating_sel && 
+	      if (floating_sel &&
 		  floating_sel->fs.drawable == GIMP_DRAWABLE (layer))
-		reverse_list = g_slist_prepend (reverse_list, floating_sel);
+		{
+		  reverse_list = g_slist_prepend (reverse_list, floating_sel);
+		}
 
 	      reverse_list = g_slist_prepend (reverse_list, layer);
 	    }
@@ -4119,16 +4123,19 @@ gimp_image_get_new_preview (GimpViewable *viewable,
 
   construct_flag = FALSE;
 
-  while (reverse_list)
+  for (; reverse_list; reverse_list = g_slist_next (reverse_list))
     {
       layer = (GimpLayer *) reverse_list->data;
 
       gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 
       x = (gint) RINT (ratio * off_x);
-      y = (gint) RINT (ratio * off_y); 
-      w = (gint) RINT (ratio * gimp_drawable_width (GIMP_DRAWABLE (layer))); 
-      h = (gint) RINT (ratio * gimp_drawable_height (GIMP_DRAWABLE (layer))); 
+      y = (gint) RINT (ratio * off_y);
+      w = (gint) RINT (ratio * gimp_drawable_width (GIMP_DRAWABLE (layer)));
+      h = (gint) RINT (ratio * gimp_drawable_height (GIMP_DRAWABLE (layer)));
+
+      if (w < 1 || h < 1)
+	continue;
 
       x1 = CLAMP (x, 0, width);
       y1 = CLAMP (y, 0, height);
@@ -4207,8 +4214,6 @@ gimp_image_get_new_preview (GimpViewable *viewable,
 	}
 
       construct_flag = TRUE;
-
-      reverse_list = g_slist_next (reverse_list);
     }
 
   g_slist_free (reverse_list);

@@ -82,6 +82,9 @@ libappcore_la_SOURCES = \
 	gimpviewable.c			\
 	gimpviewable.h
 
+EXTRS_DIST = \
+	makefile.msc
+
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-Core\"
 

@@ -87,9 +87,9 @@ static const GtkTargetEntry targets[] =
 };
 
 
-#define COLORWHEELRADIUS 100
-#define COLORTRIANGLERADIUS 80
-#define PREVIEWSIZE (2 * COLORWHEELRADIUS + 1)
+#define COLORWHEELRADIUS    (GIMP_COLOR_SELECTOR_SIZE / 2)
+#define COLORTRIANGLERADIUS (COLORWHEELRADIUS - GIMP_COLOR_SELECTOR_BAR_SIZE)
+#define PREVIEWSIZE         (2 * COLORWHEELRADIUS + 1)
 
 #define BGCOLOR 180
 
@@ -208,18 +208,17 @@ colorsel_triangle_new (const GimpHSV             *hsv,
   *selector_data = coldata;
 
   vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
 
   hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, FALSE, 0);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER (frame), preview);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, FALSE, 0); 
+  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, FALSE, 0); 
   gtk_widget_show_all (vbox);
 
-  return hbox;
+  return vbox;
 }
 
 static void

@@ -37,6 +37,9 @@ libappbase_la_SOURCES = \
 	tile-swap.c		\
 	tile-swap.h
 
+EXTRA_DIST = \
+	makefile.msc
+
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-Base\"
 

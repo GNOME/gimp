@@ -53,6 +53,16 @@ typedef enum
 
 typedef struct _GimpColorAreaClass  GimpColorAreaClass;
 
+struct _GimpColorArea
+{
+  GtkPreview         preview;
+
+  /*< private >*/
+  GimpColorAreaType  type;
+  GimpRGB            color;
+  guint              idle_id;
+};
+
 struct _GimpColorAreaClass
 {
   GtkPreviewClass parent_class;

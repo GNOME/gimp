@@ -14,6 +14,10 @@ libapppaint_funcs_la_SOURCES = \
 	paint-funcs.h	\
 	$(mmx_sources)
 
+EXTRA_DIST = \
+	makefile.msc		\
+	paint-funcs-simd.S
+
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-Paint-Funcs\"
 

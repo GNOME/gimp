@@ -84,6 +84,9 @@ libappgui_la_SOURCES = \
 	toolbox.c			\
 	toolbox.h
 
+EXTRA_DIST = \
+	makefile.msc
+
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-GUI\"
 

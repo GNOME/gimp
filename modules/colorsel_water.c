@@ -40,7 +40,7 @@
 
 /* definitions and variables */
 
-#define IMAGE_SIZE   200
+#define IMAGE_SIZE   GIMP_COLOR_SELECTOR_SIZE
 
 typedef struct
 {
@@ -398,6 +398,7 @@ colorsel_water_new (const GimpHSV             *hsv,
   GtkWidget     *frame;
   GtkWidget     *vbox;
   GtkWidget     *hbox;
+  GtkWidget     *hbox2;
   GtkObject     *adj;
   GtkWidget     *scale;
 
@@ -411,15 +412,17 @@ colorsel_water_new (const GimpHSV             *hsv,
   *selector_data = coldata;
 
   vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
 
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, FALSE, 0);
-  
+
+  hbox2 = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (hbox), hbox2, TRUE, FALSE, 0);
+
   /* the event box */
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0); 
+  gtk_box_pack_start (GTK_BOX (hbox2), frame, FALSE, FALSE, 0); 
 
   event_box = gtk_event_box_new ();
   gtk_container_add (GTK_CONTAINER (frame), event_box);
@@ -467,7 +470,7 @@ colorsel_water_new (const GimpHSV             *hsv,
   gtk_scale_set_digits (GTK_SCALE (scale), 0);
   gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
   gimp_help_set_help_data (scale, _("Pressure"), NULL);
-  gtk_box_pack_start (GTK_BOX (hbox), scale, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox2), scale, FALSE, FALSE, 0);
 
   gtk_widget_show_all (vbox);
 

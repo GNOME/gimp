@@ -20,13 +20,12 @@ EXTRA_DIST = \
 	gimpmodregister.h
 
 libexec_LTLIBRARIES = \
-	libcolorsel_gtk.la		\
 	libcolorsel_triangle.la		\
 	libcolorsel_water.la
 
-libcolorsel_gtk_la_SOURCES = colorsel_gtk.c
-libcolorsel_gtk_la_LDFLAGS = -avoid-version -module
-libcolorsel_gtk_la_LIBADD = $(GTK_LIBS)
+## libcolorsel_gtk_la_SOURCES = colorsel_gtk.c
+## libcolorsel_gtk_la_LDFLAGS = -avoid-version -module
+## libcolorsel_gtk_la_LIBADD = $(GTK_LIBS)
 
 libcolorsel_triangle_la_SOURCES = colorsel_triangle.c
 libcolorsel_triangle_la_LDFLAGS = -avoid-version -module

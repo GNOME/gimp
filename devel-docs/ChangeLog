@@ -1,3 +1,7 @@
+2001-05-30  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpmath/libgimpmath-docs.sgml: s/libgimpcolor/libgimpmath/.
+
 2001-05-25  Michael Natterer  <mitch@gimp.org>
 
 	* Makefile.am
