@@ -25,7 +25,7 @@
 #endif
 #include "gui/gui-types.h"
 
-#include "gimpselectiontool.h"
+#include "gimprectangletool.h"
 
 
 #define GIMP_TYPE_NEW_RECT_SELECT_TOOL            (gimp_new_rect_select_tool_get_type ())
@@ -41,51 +41,12 @@ typedef struct _GimpNewRectSelectToolClass GimpNewRectSelectToolClass;
 
 struct _GimpNewRectSelectTool
 {
-  GimpSelectionTool  parent_instance;
-
-  gint          startx;     /*  starting x coord            */
-  gint          starty;     /*  starting y coord            */
-
-  gint          lastx;      /*  previous x coord            */
-  gint          lasty;      /*  previous y coord            */
-
-  gint          x1, y1;     /*  upper left hand coordinate  */
-  gint          x2, y2;     /*  lower right hand coords     */
-
-  guint         function;   /*  moving or resizing          */
-
-  gint          dx1, dy1;   /*  display coords              */
-  gint          dx2, dy2;   /*                              */
-
-  gint          dcw, dch;   /*  width and height of corners */
-
-  /* the dialog */
-  InfoDialog   *rect_select_info;
-
-  gdouble       orig_vals[2];
-  gdouble       size_vals[2];
-  gdouble	aspect_ratio;
-  gboolean	change_aspect_ratio; /* Boolean for the new_rect_select_info_update function */
-  				     /* aspect_ratio should not be chaget whith   */
-  				     /* new_rect_select_info_update when is called from      */
-				     /* new_rect_select_aspect_changed, due to the innacurate*/
-  				     /* decimal precision                         */
-
-  GtkWidget    *origin_sizeentry;
-  GtkWidget    *size_sizeentry;
+  GimpRectangleTool  parent_instance;
 };
 
 struct _GimpNewRectSelectToolClass
 {
-  GimpSelectionToolClass parent_class;
-
-  /*  virtual function  */
-
-  void (* rect_select) (GimpNewRectSelectTool *rect_tool,
-                        gint                x,
-                        gint                y,
-                        gint                w,
-                        gint                h);
+  GimpRectangleToolClass parent_class;
 };
 
 

@@ -60,8 +60,6 @@ enum
   PROP_FIXED_WIDTH,
   PROP_FIXED_HEIGHT,
   PROP_FIXED_UNIT,
-  PROP_ADJUSTABLE,
-  PROP_SHOW_DIALOG,
   PROP_INTERACTIVE
 };
 
@@ -193,17 +191,6 @@ gimp_selection_options_class_init (GimpSelectionOptionsClass *klass)
                                  TRUE, TRUE, GIMP_UNIT_PIXEL,
                                  0);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ADJUSTABLE,
-                                    "adjustable",
-                                    N_("Adjustable"),
-                                    FALSE,
-                                    0);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_DIALOG,
-                                    "show-dialog",
-                                    N_("Show dialog"),
-                                    FALSE,
-                                    0);
-
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INTERACTIVE,
                                     "interactive", NULL,
                                     FALSE,
@@ -261,13 +248,6 @@ gimp_selection_options_set_property (GObject      *object,
       break;
     case PROP_FIXED_UNIT:
       options->fixed_unit = g_value_get_int (value);
-      break;
-
-    case PROP_ADJUSTABLE:
-      options->adjustable = g_value_get_boolean (value);
-      break;
-    case PROP_SHOW_DIALOG:
-      options->show_dialog = g_value_get_boolean (value);
       break;
 
     case PROP_INTERACTIVE:
@@ -331,13 +311,6 @@ gimp_selection_options_get_property (GObject    *object,
       break;
     case PROP_FIXED_UNIT:
       g_value_set_int (value, options->fixed_unit);
-      break;
-
-    case PROP_ADJUSTABLE:
-      g_value_set_boolean (value, options->adjustable);
-      break;
-    case PROP_SHOW_DIALOG:
-      g_value_set_boolean (value, options->show_dialog);
       break;
 
     case PROP_INTERACTIVE:
@@ -575,29 +548,6 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
                          height_spinbutton);
 
       gtk_widget_show (table);
-    }
-
-  if (tool_options->tool_info->tool_type == GIMP_TYPE_NEW_RECT_SELECT_TOOL)
-    {
-      GtkWidget *frame;
-
-      frame = gimp_frame_new (NULL);
-      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-      gtk_widget_show (frame);
-
-      button = gimp_prop_check_button_new (config, "adjustable",
-                                           _("Adjustable"));
-      gtk_frame_set_label_widget (GTK_FRAME (frame), button);
-      gtk_widget_show (button);
-
-      frame = gimp_frame_new (NULL);
-      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-      gtk_widget_show (frame);
-
-      button = gimp_prop_check_button_new (config, "show-dialog",
-                                           _("Show dialog"));
-      gtk_frame_set_label_widget (GTK_FRAME (frame), button);
-      gtk_widget_show (button);
     }
 
   return vbox;

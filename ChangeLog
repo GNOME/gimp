@@ -1,6 +1,24 @@
 2005-03-02  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
-	* gimp/app/widgets/gimpgradienteditor.c: allow dnd of colors
+	* app/tools/gimprectangletool.c
+	* app/tools/gimprectangletool.h
+	* app/tools/gimprectangleoptions.c
+	* app/tools/gimprectangleoptions.h: new code for base
+	class for rectangle tools.
+
+	* app/tools/gimpnewrectselecttool.[ch]: modified to
+	derive from GimpRectangleTool.
+
+	* app/tools/Makefile.am: modified accordingly
+
+	* app/tools/gimpselectionoptions.[ch]: remove stuff
+	no longer needed by new rect select tool.
+
+	This is work in progress.
+	
+2005-03-02  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/widgets/gimpgradienteditor.c: allow dnd of colors
 	into preview and control areas, as described in
 	bug #119470.
 
