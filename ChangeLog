@@ -1,3 +1,7 @@
+Wed Apr 29 04:05:34 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* configure.in: tightened png header check
+
 Wed Apr 29 03:46:44 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/animationplay/animationplay.c

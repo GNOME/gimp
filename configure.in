@@ -164,7 +164,7 @@ dnl Test for libpng
     if test "$png_ok" = yes; then
       AC_MSG_CHECKING([for png_structp in png.h])
       AC_TRY_COMPILE([#include <png.h>],
-        [png_structp pp; png_infop info; png_colorp cmap;],
+        [png_structp pp; png_infop info; png_colorp cmap; png_create_read_struct;],
         png_ok=yes,
         png_ok=no)
       AC_MSG_RESULT($png_ok)
@@ -285,6 +285,7 @@ if test $gimp_ok = no; then
 fi
 
 dnl Check for random number functions
+LIBUCB_LIB=""
 AC_CHECK_FUNC(random, [
   AC_DEFINE(RAND_FUNC, random)
   AC_DEFINE(SRAND_FUNC, srandom)],
