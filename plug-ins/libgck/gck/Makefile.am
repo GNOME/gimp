@@ -32,7 +32,7 @@ INCLUDES = \
 	$(GTK_CFLAGS)		\
 	-I$(includedir)
 
-LIBADD = \
+libgck_la_LIBADD = \
 	$(GTK_LIBS)
 
 .PHONY: files
