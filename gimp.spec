@@ -11,12 +11,13 @@ URL: http://www.gimp.org/
 Source: ftp://ftp.gimp.org/pub/gimp/v0.99/v%{PACKAGE_VERSION}/gimp-%{PACKAGE_VERSION}.tar.gz
 BuildRoot: /tmp/gimp-root
 Obsoletes: gimp-data-min
-Requires: gtk+ >= 0.99.10 , glibc >= 2.0.7
+Requires: gtk+ >= 0.99.10 
 
 
 %changelog
 * Mon Apr 20 1998 Marc Ewing <marc@redhat.com>
 - include *.xpm and .wmconfig in CVS source
+- removed explicit glibc require
 
 * Thu Apr 16 1998 Marc Ewing <marc@redhat.com>
 - Handle builds using autogen.sh
