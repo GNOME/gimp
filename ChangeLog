@@ -1,3 +1,7 @@
+2004-01-03  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimp.def: updated. Patch from Michael Schumacher.
+
 2004-01-02  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/animationplay.c (build_dialog): NULL-terminate

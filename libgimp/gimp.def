@@ -310,10 +310,10 @@ EXPORTS
 	gimp_perspective
 	gimp_pixel_fetcher_destroy
 	gimp_pixel_fetcher_get_pixel
-	gimp_pixel_fetcher_get_pixel2
 	gimp_pixel_fetcher_new
 	gimp_pixel_fetcher_put_pixel
 	gimp_pixel_fetcher_set_bg_color
+	gimp_pixel_fetcher_set_edge_mode
 	gimp_pixel_fetcher_set_shadow
 	gimp_pixel_rgn_get_col
 	gimp_pixel_rgn_get_pixel
@@ -339,6 +339,7 @@ EXPORTS
 	gimp_procedural_db_proc_val
 	gimp_procedural_db_query
 	gimp_procedural_db_set_data
+	gimp_procedural_db_temp_name
 	gimp_progress_init
 	gimp_progress_update
 	gimp_quit
@@ -382,7 +383,6 @@ EXPORTS
 	gimp_smudge
 	gimp_smudge_default
 	gimp_temp_name
-	gimp_temp_PDB_name
 	gimp_text
 	gimp_text_fontname
 	gimp_text_get_extents
@@ -401,4 +401,3 @@ EXPORTS
 	gimp_version
 	gimp_wm_class
 	gimp_wm_name
-
