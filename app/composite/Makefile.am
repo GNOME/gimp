@@ -4,6 +4,7 @@ libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-Composite\"	\
+	$(ALTIVEC_EXTRA_CFLAGS)			\
 	@GTHREAD_CFLAGS@
 
 AM_CCASFLAGS = \

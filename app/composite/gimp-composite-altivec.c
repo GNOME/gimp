@@ -32,7 +32,10 @@
 #include "gimp-composite-altivec.h"
 
 #ifdef COMPILE_ALTIVEC_IS_OKAY
+
+#ifdef HAVE_ALTIVEC_H
 #include <altivec.h>
+#endif
 
 const vector unsigned char alphamask={0,0,0,0xff,0,0,0,0xff,0,0,0,0xff,0,0,0,0xff};
 

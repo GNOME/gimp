@@ -361,7 +361,31 @@ arch_accel (void)
 #endif /* ARCH_X86 && USE_MMX && __GNUC__ */
 
 
-#if defined (ARCH_PPC) && defined (USE_ALTIVEC) && defined(__GNUC__)
+#if defined(ARCH_PPC) && defined (USE_ALTIVEC)
+
+#if defined(HAVE_ALTIVEC_SYSCTL)
+
+#include <sys/sysctl.h>
+
+#define HAVE_ACCEL 1
+
+static guint32
+arch_accel (void)
+{
+  gint     sels[2] = { CTL_HW, HW_VECTORUNIT };
+  gboolean has_vu  = FALSE;
+  gsize    length  = sizeof(has_vu);
+  gint     err;
+
+  err = sysctl (sels, 2, &has_vu, &length, NULL, 0);
+
+  if (err == 0 && has_vu)
+    return CPU_ACCEL_PPC_ALTIVEC;
+
+  return 0;
+}
+
+#elif defined(__GNUC__)
 
 #define HAVE_ACCEL 1
 
@@ -403,8 +427,9 @@ arch_accel (void)
 
   return CPU_ACCEL_PPC_ALTIVEC;
 }
+#endif /* __GNUC__ */
 
-#endif /* ARCH_PPC && USE_ALTIVEC && __GNUC__ */
+#endif /* ARCH_PPC && USE_ALTIVEC */
 
 
 guint32

@@ -1,3 +1,17 @@
+2003-03-06  Manish Singh  <yosh@gimp.org>
+
+	* configure.in: revised tests for AltiVec. Define ALTIVEC_EXTRA_CFLAGS
+	for the extra compiler options needed. Also, support runtime checking
+	for AltiVec through the sysctl on Mac OS X, instead of SIGILL assembly
+	instruction checking, which needs GNU as.
+
+	* app/base/cpu_accel.c: use the sysctl if available.
+
+	* app/composite/Makefile.am: use ALTIVEC_EXTRA_CFLAGS.
+
+	* app/composite/gimp-composite-altivec.c: conditionally #include
+	altivec.h
+
 2005-03-05  Helvetix Victorinox  <helvetix@gimp.org>
 
 	* app/composite/gimp-composite-altivec.[ch]
