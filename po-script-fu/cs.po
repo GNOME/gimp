@@ -1,12 +1,12 @@
-# Czech translation of GIMP script-fu 1.1.22.
+# Czech translation of GIMP script-fu 1.1.23.
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Stanislav Brabec <utx@k332.feld.cvut.cz>, 2000.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu 1.1.22\n"
-"POT-Creation-Date: 2000-05-21 20:20+0200\n"
-"PO-Revision-Date: 2000-05-21 21:27+02:00\n"
+"Project-Id-Version: gimp-script-fu 1.1.23\n"
+"POT-Creation-Date: 2000-06-09 11:03+0200\n"
+"PO-Revision-Date: 2000-06-09 11:35+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -210,6 +210,90 @@ msgstr "<Image>/Skript-fu/Alchymie/Maskovat rozostøení..."
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "<Image>/Script-Fu/Alchemy/Weave..."
 msgstr "<Image>/Skript-fu/Alchymie/Protkat..."
+
+#: plug-ins/script-fu/scripts/3d-outline.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/3D Outline..."
+msgstr "<Image>/Skript-fu/Alfa do loga/3D obrys..."
+
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Alien Glow..."
+msgstr "<Image>/Skript-fu/Alfa do loga/Cizí ¾ár..."
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Alien Neon..."
+msgstr "<Image>/Skript-fu/Alfa do loga/Cizí neon..."
+
+#: plug-ins/script-fu/scripts/basic1-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Basic I..."
+msgstr "<Image>/Skript-fu/Alfa do loga/Základní I..."
+
+#: plug-ins/script-fu/scripts/basic2-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Basic II..."
+msgstr "<Image>/Skript-fu/Alfa do loga/Základní II..."
+
+#: plug-ins/script-fu/scripts/blended-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Blended..."
+msgstr "<Image>/Skript-fu/Alfa do loga/Smíchání..."
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Bovination..."
+msgstr "<Image>/Skript-fu/Alfa do loga/Fleky..."
+
+#: plug-ins/script-fu/scripts/chalk.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Chalk..."
+msgstr "<Image>/Skript-fu/Alfa do loga/Køída..."
+
+#: plug-ins/script-fu/scripts/chip-away.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Chip Away..."
+msgstr "<Image>/Skript-fu/Alfa do loga/Od¹típnutí..."
+
+#: plug-ins/script-fu/scripts/chrome-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Chrome..."
+msgstr "<Image>/Skript-fu/Alfa do loga/Barvy..."
+
+#: plug-ins/script-fu/scripts/comic-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Comic Book..."
+msgstr "<Image>/Skript-fu/Alfa do loga/Komická kniha..."
+
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Cool Metal..."
+msgstr "<Image>/Skript-fu/Alfa do loga/Zchladlý kov..."
+
+#: plug-ins/script-fu/scripts/frosty-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Frosty..."
+msgstr "<Image>/Skript-fu/Alfa do loga/Mrazivo..."
+
+#: plug-ins/script-fu/scripts/glossy.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Glossy..."
+msgstr "<Image>/Skript-fu/Alfa do loga/Lesk..."
+
+#: plug-ins/script-fu/scripts/glowing-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Glowing Hot..."
+msgstr "<Image>/Skript-fu/Alfa do loga/Sálavý ¾ár..."
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Bevel..."
+msgstr "<Image>/Skript-fu/Alfa do loga/©ikmý pøechod..."
+
+#: plug-ins/script-fu/scripts/neon-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Neon..."
+msgstr "<Image>/Skript-fu/Alfa do loga/Neon..."
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Particle Trace..."
+msgstr "<Image>/Skript-fu/Alfa do loga/Rozmáznutí......"
+
+#: plug-ins/script-fu/scripts/starburst-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Starburst..."
+msgstr "<Image>/Skript-fu/Alfa do loga/Pronikání hvìzd..."
+
+#: plug-ins/script-fu/scripts/starscape-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Starscape..."
+msgstr "<Image>/Skript-fu/Alfa do loga/Popraskáný povrch..."
+
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Textured..."
+msgstr "<Image>/Skript-fu/Alfa do loga/Texturovat..."
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
 msgid "<Image>/Script-Fu/Animators/Blend..."
@@ -744,10 +828,6 @@ msgstr "Krytí pozadí"
 msgid "Background Color"
 msgstr "Parva pozadí"
 
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-msgid "Background Gradient"
-msgstr "Pøechod pozadí"
-
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
 msgid "Background Image"
@@ -839,6 +919,12 @@ msgstr "Rozostøení Y"
 #: plug-ins/script-fu/scripts/addborder.scm:0
 msgid "Border Color"
 msgstr "Barva okraje"
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Border Size (pixels)"
+msgstr "Velikost okraje (pixely)"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
@@ -953,6 +1039,10 @@ msgstr "Vytvoøit nový obrázek"
 msgid "Create Shadow"
 msgstr "Vytvoøit stín"
 
+#: plug-ins/script-fu/scripts/blended-logo.scm:0
+msgid "Custom Gradient"
+msgstr "Vlastní pøechod"
+
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 msgid "Dark Color"
 msgstr "Tmavá barva"
@@ -1051,6 +1141,27 @@ msgstr "Polomìr hran"
 msgid "Edge Width"
 msgstr "©íøka hran"
 
+#: plug-ins/script-fu/scripts/glowing-logo.scm:0
+msgid "Effect Size (pixels * 3)"
+msgstr "Velikost efektu (pixely * 3)"
+
+#: plug-ins/script-fu/scripts/starburst-logo.scm:0
+msgid "Effect Size (pixels * 30)"
+msgstr "Velikost efektu (pixely * 30)"
+
+#: plug-ins/script-fu/scripts/starscape-logo.scm:0
+msgid "Effect Size (pixels * 4)"
+msgstr "Velikost efektu (pixely * 4)"
+
+#: plug-ins/script-fu/scripts/neon-logo.scm:0
+msgid "Effect Size (pixels * 5)"
+msgstr "Velikost efektu (pixely * 5)"
+
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
+#: plug-ins/script-fu/scripts/frosty-logo.scm:0
+msgid "Effect Size (pixels)"
+msgstr "Velikost efektu (pixely)"
+
 #: plug-ins/script-fu/scripts/clothify.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Elevation"
@@ -1091,6 +1202,18 @@ msgstr "Sudé"
 msgid "Even/Odd"
 msgstr "Sudé/Liché"
 
+#: plug-ins/script-fu/scripts/blended-logo.scm:0
+msgid "FG-BG-HSV"
+msgstr "Popøedí-pozadí-HSV"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm:0
+msgid "FG-BG-RGB"
+msgstr "Popøedí-pozadí-RGB"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm:0
+msgid "FG-Transparent"
+msgstr "Prùhledné popøedí"
+
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 msgid "Fade Away"
 msgstr "Pohasínání"
@@ -1130,7 +1253,6 @@ msgstr "Vyplnit barvou pozadí"
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 #: plug-ins/script-fu/scripts/camo.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Flatten Image"
 msgstr "Slouèit obraz"
 
@@ -1259,6 +1381,11 @@ msgstr "Barva ¾áru"
 msgid "Glow Radius"
 msgstr "Polomìr ¾áru"
 
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
+msgid "Glow Size (pixels * 4)"
+msgstr "Velikost ¾áru (pixely * 4)"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm:0
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0 plug-ins/script-fu/scripts/lava.scm:0
@@ -1503,6 +1630,10 @@ msgstr "Poèet"
 msgid "Odd"
 msgstr "Liché"
 
+#: plug-ins/script-fu/scripts/blended-logo.scm:0
+msgid "Offset (pixels)"
+msgstr "Posun (pixely)"
+
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 msgid "Offset Radius"
 msgstr "Polomìr posunu"
@@ -1516,6 +1647,10 @@ msgstr "Posun X"
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Offset Y"
 msgstr "Posun Y"
+
+#: plug-ins/script-fu/scripts/chrome-logo.scm:0
+msgid "Offsets (pixels * 2)"
+msgstr "Posuny (pixely * 2)"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 msgid "Oilify Mask Size"
@@ -1596,6 +1731,7 @@ msgstr "Vzorek (text)"
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
 #: plug-ins/script-fu/scripts/chip-away.scm:0
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Pattern"
 msgstr "Vzorek"
 
@@ -1801,6 +1937,14 @@ msgstr "Rozestup"
 #: plug-ins/script-fu/scripts/sphere.scm:0
 msgid "Sphere Color"
 msgstr "Barva koule"
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
+msgid "Spots density X"
+msgstr "X hustota teèek"
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
+msgid "Spots density Y"
+msgstr "Y hustota teèek"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Spread"
