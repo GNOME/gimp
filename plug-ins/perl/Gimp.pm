@@ -51,6 +51,7 @@ $VERSION = 1.092;
         'PARASITE_UNDOABLE',		'PARASITE_PARENT_UNDOABLE',	'PARASITE_GRANDPARENT_UNDOABLE',
 	'TRACE_NONE',	'TRACE_CALL',	'TRACE_TYPE',	'TRACE_NAME',	'TRACE_DESC',	'TRACE_ALL',
 	'COMPRESSION_NONE',		'COMPRESSION_LZW',		'COMPRESSION_PACKBITS',
+        'WRAP',				'SMEAR',			'BLACK',
 );
 
 @_procs = ('main','xlfd_size');
@@ -115,7 +116,7 @@ sub import($;@) {
       if ($_ eq ":auto") {
          push(@export,@_consts,@_procs);
          *{"$up\::AUTOLOAD"} = sub {
-            croak "cannot autoload '$AUTOLOAD' at this time" unless initialized();
+            croak "Cannot call '$AUTOLOAD' at this time" unless initialized();
             my ($class,$name) = $AUTOLOAD =~ /^(.*)::(.*?)$/;
             *{$AUTOLOAD} = sub { Gimp->$name(@_) };
             goto &$AUTOLOAD;
@@ -431,7 +432,7 @@ sub AUTOLOAD {
          my $ref = \&{"Gimp::Util::$sub"};
          *{$AUTOLOAD} = sub {
             shift unless ref $_[0];
-#               goto &$ref # does not always work, PERLBUG! #FIXME
+            #goto &$ref; # does not always work, PERLBUG! #FIXME
             my @r = eval { &$ref };
             _croak $@ if $@;
             wantarray ? @r : $r[0];
@@ -441,7 +442,7 @@ sub AUTOLOAD {
          my $ref = \&{"$interface_pkg\::$sub"};
          *{$AUTOLOAD} = sub {
             shift unless ref $_[0];
-#               goto &$ref;	# does not always work, PERLBUG! #FIXME
+            #goto &$ref;	# does not always work, PERLBUG! #FIXME
             my @r = eval { &$ref };
             _croak $@ if $@;
             wantarray ? @r : $r[0];
@@ -450,8 +451,9 @@ sub AUTOLOAD {
       } elsif (_gimp_procedure_available ($sub)) {
          *{$AUTOLOAD} = sub {
             shift unless ref $_[0];
-#               goto gimp_call_procedure # does not always work, PERLBUG! #FIXME
-            my @r=eval { gimp_call_procedure ($sub,@_) };
+            unshift @_,$sub;
+            #goto &gimp_call_procedure; # does not always work, PERLBUG! #FIXME
+            my @r=eval { gimp_call_procedure (@_) };
             _croak $@ if $@;
             wantarray ? @r : $r[0];
          };

@@ -599,6 +599,28 @@ convert_array2paramdef (AV *av, GParamDef **res)
   return count;
 }
 
+SV *
+newSV_paramdefs (GParamDef *p, int n)
+{
+   int i;
+   AV *av = newAV ();
+
+   av_extend (av, n-1);
+   for (i=0; i<n; i++)
+     {
+       AV *a = newAV ();
+       av_extend (a, 3-1);
+       av_store (a, 0, newSViv (p->type));
+       av_store (a, 1, newSVpv (p->name,0));
+       av_store (a, 2, newSVpv (p->description,0));
+       p++;
+
+       av_store (av, i, newRV_noinc ((SV*)a));
+     }
+
+   return newRV_noinc ((SV*)av);
+}
+
 static HV *
 param_stash (GParamType type)
 {
@@ -1408,6 +1430,40 @@ _gimp_procedure_available(proc_name)
 	}
 	OUTPUT:
 	RETVAL
+
+# checks wether a gimp procedure exists
+void
+gimp_query_procedure(proc_name)
+	char * proc_name
+	PPCODE:
+	{
+		char *proc_blurb;	
+		char *proc_help;
+		char *proc_author;
+		char *proc_copyright;
+		char *proc_date;
+		int proc_type;
+		int nparams;
+		int nreturn_vals;
+                int n;
+		GParamDef *params;
+		GParamDef *return_vals;
+		
+		if (gimp_query_procedure (proc_name, &proc_blurb, &proc_help, &proc_author,
+		    &proc_copyright, &proc_date, &proc_type, &nparams, &nreturn_vals,
+		    &params, &return_vals) == TRUE)
+		  {
+                    EXTEND (sp,8);
+                    PUSHs (newSVpv (proc_blurb,0));	g_free (proc_blurb);
+		    PUSHs (newSVpv (proc_help,0));	g_free (proc_help);
+		    PUSHs (newSVpv (proc_author,0));	g_free (proc_author);
+		    PUSHs (newSVpv (proc_copyright,0));	g_free (proc_copyright);
+		    PUSHs (newSVpv (proc_date,0));	g_free (proc_date);
+		    PUSHs (newSViv (proc_type));
+                    PUSHs (newSV_paramdefs (params, nparams));		destroy_paramdefs (params, nparams);
+		    PUSHs (newSV_paramdefs (return_vals, nreturn_vals));destroy_paramdefs (return_vals, nreturn_vals);
+		  }
+	}
 
 void
 gimp_call_procedure (proc_name, ...)

@@ -326,7 +326,8 @@ sub gimp_layer_get_position {
    my $layer = shift;
    my @layers = $layer->image->get_layers;
    for (0..$#layers) {
-      return $_ if ${$layers[$_]} == $$layer;
+      # the my is necessary for broken perl (return $_ => undef)
+      return (my $index=$_) if ${$layers[$_]} == $$layer;
    }
    ();
 }

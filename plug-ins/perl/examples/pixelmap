@@ -29,7 +29,7 @@ register "pixelmap",
    $expr =~ /\$y/   and $init.='$y = sequence(byte,$src->h); $y+=$src->y;';
    $expr =~ /\$bpp/ and $init.='$bpp = $src->bpp;';
 
-   $expr = "sub{$init\n#line 1\n$expr;\n$p}";
+   $expr = "sub{$init\n#line 1\n$expr;\n\$p}";
 
    my @bounds = $drawable->mask;
    {

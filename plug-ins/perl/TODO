@@ -10,6 +10,7 @@ make test TEST_VERBOSE=1
 
 bugs
 
+  * Document spawn_options in Gimp::Net.
   * Selection => To Brush.
 [DONE]  * --enable-perl=/tmp/leckmich
   * Kommandozeilenmodus(!).
@@ -34,11 +35,13 @@ bugs
 important issues
 
   * gimp_progress_done
+  * gimp_progress_close
+  * maybe implement --enable-perl=runtime-only?
+  * --ui and --noui for Gimp::Fu
   * pdb_proc_renameto
 [DONE]  * gimp_progress_init (1 & 2 args)
   * gimp_default_display (...) for libgimp
   * Gimp::Module for modules (!)
-  * gimp_progress_close
   * PerlCC configurable options for Perl-Server startup, Gipm_host etc.
   * implement CALLBACKS via the Perl-Server
   * PF_COORDS (just as Light Effects/FlareFX)
@@ -50,7 +53,6 @@ important issues
   * register dummy function to calm gimp down (really??)
   * gimp->object_id, drawable_object_id remove!
   * vamp up homepage
-  * --ui and --noui for Gimp::Fu
   * Gimp::ping
   * allow plug-ins to register with only a drawable argument(!)
   * gradient button

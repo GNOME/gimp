@@ -1,5 +1,6 @@
 Revision history for Gimp-Perl extension.
 
+	- possible workaround for Gimp::Util::gimp_layer_get_position.
 	- WRAP, SMEAR and BLACK were not being exported.
 	- fixed small bug in pixelmap.
 	- implemented gimp_query_procedure in XS.
