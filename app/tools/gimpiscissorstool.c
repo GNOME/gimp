@@ -558,7 +558,7 @@ iscissors_convert (GimpIscissorsTool *iscissors,
 	  points[i].y = packed >> 16;
 	}
 
-      gimp_scan_convert_add_points (sc, n_points, points);
+      gimp_scan_convert_add_points (sc, n_points, points, FALSE);
       g_free (points);
     }
 
