@@ -1,8 +1,14 @@
+2003-03-15  Sven Neumann  <sven@gimp.org>
+
+	* structure.xml: added short notes about all the top-level
+	directories.
+
 2003-03-14  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt
-	* tmpl/gimpcolorarea.sgml: updated.
-
+	* libgimpwidgets/tmpl/gimpstock.sgml
+	* ibgimpwidgets/tmpl/gimpcolorarea.sgml: updated.
+	
 2003-03-06  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/Makefile.am
@@ -12,8 +18,8 @@
 2003-03-02  Manish Singh  <yosh@gimp.org>
 
 	* libgimpwidgets/tmpl/gimpcolordisplay.sgml
-	* libgimpwidgets/tmpl/gimpcolorselector.sgml: fix typo. "definitiions"
-	should be "definitions"
+	* libgimpwidgets/tmpl/gimpcolorselector.sgml: fix typo.
+	"definitiions" should be "definitions"
 
 2003-03-02  Sven Neumann  <sven@gimp.org>
 
