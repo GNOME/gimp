@@ -8174,9 +8174,8 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:489
-#, fuzzy
 msgid "Anim Preview"
-msgstr "Esikatselu"
+msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:496
 msgid ""
@@ -8281,23 +8280,20 @@ msgid "Exact Object on frames"
 msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:802
-#, fuzzy
 msgid "Anim Preview Mode"
-msgstr "Tosiaikainen esikatselu"
+msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:810
-#, fuzzy
 msgid "Scale Preview"
-msgstr "Tosiaikainen esikatselu"
+msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:811
 msgid "Scale down size of the generated animated preview (in %)"
 msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:819
-#, fuzzy
 msgid "Framerate"
-msgstr "Parametreja"
+msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:820
 msgid "Framerate to use in the animated preview in frames/sec"
@@ -8314,14 +8310,12 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:840
-#, fuzzy
 msgid "Move Path Animated Preview"
-msgstr "Tosiaikainen esikatselu"
+msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:886
-#, fuzzy
 msgid "Generate Animated Preview failed\n"
-msgstr "Tosiaikainen esikatselu"
+msgstr ""
 
 #. filesel is already open
 #: plug-ins/gap/gap_mov_dialog.c:1098
@@ -8654,9 +8648,8 @@ msgid "Copying Layers into Frames..."
 msgstr ""
 
 #: plug-ins/gap/gap_mov_exec.c:352
-#, fuzzy
 msgid "Generating Animated Preview..."
-msgstr "Tosiaikainen esikatselu"
+msgstr ""
 
 #: plug-ins/gap/gap_mpege.c:111
 msgid "Conditions to run mpeg_encode 1.5:"
