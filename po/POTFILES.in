@@ -17,6 +17,7 @@ app/config/gimpscanner.c
 app/core/core-enums.c
 app/core/gimp-edit.c
 app/core/gimp-gradients.c
+app/core/gimp-grid.c
 app/core/gimp-modules.c
 app/core/gimp-units.c
 app/core/gimp.c

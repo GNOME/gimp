@@ -1,3 +1,7 @@
+2003-10-15  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added app/core/gimpgrid.c.
+
 2003-10-14  Dmitry G. Mastrukov  <dmitry@taurussoft.org>
 
 	* ru.po: Updated Russian translation
