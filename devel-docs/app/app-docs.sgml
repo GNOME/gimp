@@ -778,7 +778,6 @@
     <chapter id="app-widgets-cell-renderers">
       <title>Cell Renderers for GtkTreeView</title>
       <xi:include href="xml/gimpcellrendereraccel.xml" />
-      <xi:include href="xml/gimpcellrenderertoggle.xml" />
       <xi:include href="xml/gimpcellrendererviewable.xml" />
     </chapter>
 

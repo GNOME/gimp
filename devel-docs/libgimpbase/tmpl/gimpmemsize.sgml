@@ -42,6 +42,13 @@ gimpmemsize
 @Returns: 
 
 
+<!-- ##### MACRO GIMP_TYPE_MEMSIZE ##### -->
+<para>
+#GIMP_TYPE_MEMSIZE is a #GType derived from #G_TYPE_UINT64.
+</para>
+
+
+
 <!-- ##### MACRO GIMP_VALUE_HOLDS_MEMSIZE ##### -->
 <para>
 

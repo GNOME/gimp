@@ -22,30 +22,24 @@ GIMP_PARAM_CONFIRM
 GIMP_PARAM_DEFAULTS
 GIMP_PARAM_IGNORE
 GIMP_CONFIG_PARAM_FLAGS
-GIMP_TYPE_PARAM_COLOR
-GIMP_IS_PARAM_SPEC_COLOR
-gimp_param_color_get_type
-gimp_param_spec_color
 GIMP_TYPE_PARAM_MATRIX2
 GIMP_IS_PARAM_SPEC_MATRIX2
-gimp_param_matrix2_get_type
 gimp_param_spec_matrix2
 GIMP_TYPE_PARAM_MEMSIZE
 GIMP_IS_PARAM_SPEC_MEMSIZE
-gimp_param_memsize_get_type
 gimp_param_spec_memsize
 GimpParamPathType
 GIMP_TYPE_PARAM_PATH
 GIMP_IS_PARAM_SPEC_PATH
-gimp_param_path_get_type
 gimp_param_spec_path
 gimp_param_spec_path_type
+GIMP_TYPE_PARAM_RGB
+GIMP_IS_PARAM_SPEC_RGB
+gimp_param_spec_rgb
 GIMP_TYPE_PARAM_UNIT
 GIMP_IS_PARAM_SPEC_UNIT
-gimp_param_unit_get_type
 gimp_param_spec_unit
 GIMP_CONFIG_INSTALL_PROP_BOOLEAN
-GIMP_CONFIG_INSTALL_PROP_COLOR
 GIMP_CONFIG_INSTALL_PROP_DOUBLE
 GIMP_CONFIG_INSTALL_PROP_ENUM
 GIMP_CONFIG_INSTALL_PROP_INT
@@ -53,12 +47,18 @@ GIMP_CONFIG_INSTALL_PROP_MATRIX2
 GIMP_CONFIG_INSTALL_PROP_MEMSIZE
 GIMP_CONFIG_INSTALL_PROP_PATH
 GIMP_CONFIG_INSTALL_PROP_RESOLUTION
+GIMP_CONFIG_INSTALL_PROP_RGB
 GIMP_CONFIG_INSTALL_PROP_STRING
 GIMP_CONFIG_INSTALL_PROP_UINT
 GIMP_CONFIG_INSTALL_PROP_UNIT
 GIMP_CONFIG_INSTALL_PROP_OBJECT
 GIMP_CONFIG_INSTALL_PROP_POINTER
 <SUBSECTION Standard>
+gimp_param_matrix2_get_type
+gimp_param_memsize_get_type
+gimp_param_path_get_type
+gimp_param_rgb_get_type
+gimp_param_unit_get_type
 </SECTION>
 
 <SECTION>
@@ -729,6 +729,7 @@ GIMP_ENVIRON_TABLE_GET_CLASS
 <SECTION>
 <FILE>gimpgradient</FILE>
 GIMP_GRADIENT_FILE_EXTENSION
+GIMP_GRADIENT_SVG_FILE_EXTENSION
 GIMP_GRADIENT_DEFAULT_SAMPLE_SIZE
 GimpGradientSegment
 <TITLE>GimpGradient</TITLE>
@@ -784,6 +785,7 @@ GIMP_GRADIENT_GET_CLASS
 <FILE>gimpgradient-load</FILE>
 <TITLE>GimpGradient-load</TITLE>
 gimp_gradient_load
+gimp_gradient_load_svg
 </SECTION>
 
 <SECTION>
@@ -3126,6 +3128,7 @@ GIMP_SELECTION_OPTIONS_GET_CLASS
 <TITLE>GimpSelectionTool</TITLE>
 GimpSelectionTool
 GimpSelectionToolClass
+gimp_selection_tool_start_edit
 <SUBSECTION Standard>
 GIMP_SELECTION_TOOL
 GIMP_IS_SELECTION_TOOL
@@ -3725,23 +3728,6 @@ gimp_cell_renderer_accel_get_type
 GIMP_CELL_RENDERER_ACCEL_CLASS
 GIMP_IS_CELL_RENDERER_ACCEL_CLASS
 GIMP_CELL_RENDERER_ACCEL_GET_CLASS
-</SECTION>
-
-<SECTION>
-<FILE>gimpcellrenderertoggle</FILE>
-<TITLE>GimpCellRendererToggle</TITLE>
-GimpCellRendererToggle
-gimp_cell_renderer_toggle_new
-gimp_cell_renderer_toggle_clicked
-<SUBSECTION Standard>
-GimpCellRendererToggleClass
-GIMP_CELL_RENDERER_TOGGLE
-GIMP_IS_CELL_RENDERER_TOGGLE
-GIMP_TYPE_CELL_RENDERER_TOGGLE
-gimp_cell_renderer_toggle_get_type
-GIMP_CELL_RENDERER_TOGGLE_CLASS
-GIMP_IS_CELL_RENDERER_TOGGLE_CLASS
-GIMP_CELL_RENDERER_TOGGLE_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -5937,22 +5923,13 @@ gimp_config_serialize_value
 <SECTION>
 <FILE>gimpconfig-types</FILE>
 <TITLE>GimpConfig-types</TITLE>
-GIMP_TYPE_COLOR
-GIMP_VALUE_HOLDS_COLOR
-gimp_color_get_type
 GIMP_TYPE_MATRIX2
 GIMP_VALUE_HOLDS_MATRIX2
-gimp_matrix2_get_type
-GIMP_TYPE_MEMSIZE
-GIMP_VALUE_HOLDS_MEMSIZE
-gimp_memsize_get_type
-gimp_memsize_set_from_string
 GIMP_TYPE_PATH
 GIMP_VALUE_HOLDS_PATH
+<SUBSECTION Standard>
 gimp_path_get_type
-GIMP_TYPE_UNIT
-GIMP_VALUE_HOLDS_UNIT
-gimp_unit_get_type
+gimp_matrix2_get_type
 </SECTION>
 
 <SECTION>
@@ -6160,7 +6137,6 @@ GIMP_COORDS_MAX_WHEEL
 GIMP_COORDS_DEFAULT_WHEEL
 GimpTattoo
 GimpInitStatusFunc
-GimpDataObjectLoaderFunc
 GimpObjectFilterFunc
 GimpUndoPopFunc
 GimpUndoFreeFunc
@@ -6856,6 +6832,7 @@ resolution_calibrate_dialog
 <SECTION>
 <FILE>session</FILE>
 session_init
+session_exit
 session_restore
 session_save
 session_clear
@@ -7034,6 +7011,7 @@ procedural_db_return_args
 procedural_db_destroy_args
 procedural_db_set_data
 procedural_db_get_data
+procedural_db_free_data
 pdb_type_name
 </SECTION>
 
@@ -7191,9 +7169,9 @@ gimp_text_outline_get_type
 <SECTION>
 <FILE>gimpeditselectiontool</FILE>
 <TITLE>GimpEditSelectionTool</TITLE>
-EditType
-init_edit_selection
+GimpTranslateMode
 gimp_edit_selection_tool_key_press
+gimp_edit_selection_tool_start
 </SECTION>
 
 <SECTION>
@@ -8049,6 +8027,7 @@ palettes_merge_palettes_cmd_callback
 <FILE>plug-in-commands</FILE>
 plug_in_run_cmd_callback
 plug_in_repeat_cmd_callback
+plug_in_reset_all_cmd_callback
 </SECTION>
 
 <SECTION>

@@ -145,6 +145,13 @@ user-defined units.
 @Returns: 
 
 
+<!-- ##### MACRO GIMP_TYPE_UNIT ##### -->
+<para>
+#GIMP_TYPE_UNIT is a #GType derived from #G_TYPE_INT.
+</para>
+
+
+
 <!-- ##### MACRO GIMP_VALUE_HOLDS_UNIT ##### -->
 <para>
 

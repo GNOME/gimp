@@ -334,11 +334,16 @@ coefficients taken from the NTSC analog television standard.
 
 
 
+<!-- ##### MACRO GIMP_TYPE_RGB ##### -->
+<para>
+#GIMP_TYPE_RGB is a #GType derived from #G_TYPE_BOXED.
+</para>
+
+
+
 <!-- ##### MACRO GIMP_VALUE_HOLDS_RGB ##### -->
 <para>
 
 </para>
 
 @value: 
-
-

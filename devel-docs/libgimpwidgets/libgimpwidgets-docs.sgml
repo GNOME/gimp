@@ -20,8 +20,6 @@
     </chapter>    
 
     <xi:include href="xml/gimpbutton.xml" />
-    <xi:include href="xml/gimpcellrenderercolor.xml" />
-    <xi:include href="xml/gimpcellrenderertoggle.xml" />
     <xi:include href="xml/gimpchainbutton.xml" />
     <xi:include href="xml/gimpcolorarea.xml" />
     <xi:include href="xml/gimpcolorbutton.xml" />
@@ -41,6 +39,12 @@
     <xi:include href="xml/gimpunitmenu.xml" />
   </part>
   
+    <chapter id="libgimpwidgets-cell-renderers">
+      <title>Cell Renderers for GtkTreeView</title>
+      <xi:include href="xml/gimpcellrenderercolor.xml" />
+      <xi:include href="xml/gimpcellrenderertoggle.xml" />
+    </chapter>
+
   <part id="libgimpwidgets-colordisplay">
     <title>GIMP Display Filters</title>
     <xi:include href="xml/gimpcolordisplay.xml" />

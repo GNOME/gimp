@@ -1,5 +1,20 @@
 2004-07-27  Sven Neumann  <sven@gimp.org>
 
+	* app/app-docs.sgml
+	* app/app-sections.txt
+	* app/app.types: updated.
+
+	* libgimpbase/libgimpbase-sections.txt
+	* libgimpbase/tmpl/gimpmemsize.sgml
+	* libgimpbase/tmpl/gimpunit.sgml
+	* libgimpcolor/libgimpcolor-sections.txt
+	* libgimpcolor/tmpl/gimprgb.sgml: minor improvements.
+
+	* libgimpwidgets/libgimpwidgets-docs.sgml: moved cell renderers to
+	a separate chapter.
+
+2004-07-27  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/libgimpbase-docs.sgml
 	* libgimpbase/libgimpbase-sections.txt
 	* libgimpbase/tmpl/gimpmemsize.sgml
