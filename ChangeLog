@@ -1,3 +1,7 @@
+2002-02-17  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/zealouscrop.c: use g_message() (bug #71795).
+
 2002-02-15  Tor Lillqvist  <tml@iki.fi>
 
 	* gimprc.win32: Remove (again!). The same gimprc as on Unix is used.

@@ -216,7 +216,7 @@ do_zcrop (GimpDrawable *drawable,
   if (((livingcols==0) || (livingrows==0)) ||
       ((livingcols==width) && (livingrows==height)))
     {
-      printf("ZealousCrop(tm): Nothing to be done.\n");
+      g_message (_("ZealousCrop(tm): Nothing to crop."));
       return;
     }
 
@@ -253,8 +253,6 @@ do_zcrop (GimpDrawable *drawable,
       if (x % 20)
 	gimp_progress_update ((double) area / (double) total_area);
     }
-
-/*  printf("dc: %d, lc: %d  - - - dr: %d, lr: %d\n",destcol, livingcols, destrow, livingrows);*/
 
     g_free(buffer);
 
