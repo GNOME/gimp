@@ -1471,14 +1471,24 @@ respin_cmap (png_structp pp,
              GimpDrawable * drawable)
 {
   static const guchar trans[] = { 0 };
-  gint colors;
-  guchar *before;
-  gint transparent;
-  gint cols, rows;
-  GimpPixelRgn pixel_rgn;
-  guchar *pixels;
+
+  gint          colors;
+  guchar       *before;
+  gint          transparent;
+  gint          cols, rows;
+  GimpPixelRgn  pixel_rgn;
+  guchar       *pixels;
 
   before = gimp_image_get_cmap (image_ID, &colors);
+
+  /*
+   * Make sure there is something in the colormap.
+   */
+  if (colors == 0)
+    {
+      before = g_new0 (guchar, 3);
+      colors = 1;
+    }
 
   cols = drawable->width;
   rows = drawable->height;
