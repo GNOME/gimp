@@ -20,42 +20,48 @@
 #define __GIMP_DISPLAY_SHELL_DND_H__
 
 
-void   gimp_display_shell_drop_drawable (GtkWidget     *widget,
-                                         gint           x,
-                                         gint           y,
-                                         GimpViewable  *viewable,
-                                         gpointer       data);
-void   gimp_display_shell_drop_vectors  (GtkWidget     *widget,
-                                         gint           x,
-                                         gint           y,
-                                         GimpViewable  *viewable,
-                                         gpointer       data);
-void   gimp_display_shell_drop_svg      (GtkWidget     *widget,
-                                         gint           x,
-                                         gint           y,
-                                         const guchar  *svg_data,
-                                         gsize          svg_data_length,
-                                         gpointer       data);
-void   gimp_display_shell_drop_pattern  (GtkWidget     *widget,
-                                         gint           x,
-                                         gint           y,
-                                         GimpViewable  *viewable,
-                                         gpointer       data);
-void   gimp_display_shell_drop_color    (GtkWidget     *widget,
-                                         gint           x,
-                                         gint           y,
-                                         const GimpRGB *color,
-                                         gpointer       data);
-void   gimp_display_shell_drop_buffer   (GtkWidget     *widget,
-                                         gint           x,
-                                         gint           y,
-                                         GimpViewable  *viewable,
-                                         gpointer       data);
-void   gimp_display_shell_drop_uri_list (GtkWidget     *widget,
-                                         gint           x,
-                                         gint           y,
-                                         GList         *uri_list,
-                                         gpointer       data);
+void   gimp_display_shell_drop_drawable  (GtkWidget       *widget,
+                                          gint             x,
+                                          gint             y,
+                                          GimpViewable    *viewable,
+                                          gpointer         data);
+void   gimp_display_shell_drop_vectors   (GtkWidget       *widget,
+                                          gint             x,
+                                          gint             y,
+                                          GimpViewable    *viewable,
+                                          gpointer         data);
+void   gimp_display_shell_drop_svg       (GtkWidget       *widget,
+                                          gint             x,
+                                          gint             y,
+                                          const guchar    *svg_data,
+                                          gsize            svg_data_length,
+                                          gpointer         data);
+void   gimp_display_shell_drop_pattern   (GtkWidget       *widget,
+                                          gint             x,
+                                          gint             y,
+                                          GimpViewable    *viewable,
+                                          gpointer         data);
+void   gimp_display_shell_drop_color     (GtkWidget       *widget,
+                                          gint             x,
+                                          gint             y,
+                                          const GimpRGB   *color,
+                                          gpointer         data);
+void   gimp_display_shell_drop_buffer    (GtkWidget       *widget,
+                                          gint             x,
+                                          gint             y,
+                                          GimpViewable    *viewable,
+                                          gpointer         data);
+void   gimp_display_shell_drop_uri_list  (GtkWidget       *widget,
+                                          gint             x,
+                                          gint             y,
+                                          GList           *uri_list,
+                                          gpointer         data);
+void   gimp_display_shell_drop_component (GtkWidget       *widget,
+                                          gint             x,
+                                          gint             y,
+                                          GimpImage       *image,
+                                          GimpChannelType  component,
+                                          gpointer         data);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_DND_H__ */

@@ -1,5 +1,12 @@
 2005-01-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell.c
+	* app/display/gimpdisplayshell-dnd.[ch]
+	* app/widgets/gimptoolbox-dnd.c: enabled dropping of components
+	to the display and the toolbox. Addresses bug #158483.
+
+2005-01-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpchannel.c (gimp_channel_new*): don't require a
 	non-NULL color parameter (just leave the default color untouched
 	if NULL is passed).

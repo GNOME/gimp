@@ -22,14 +22,16 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "display-types.h"
 
 #include "core/gimp.h"
 #include "core/gimp-edit.h"
 #include "core/gimpbuffer.h"
+#include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
-#include "core/gimpdrawable.h"
 #include "core/gimpdrawable-bucket-fill.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-merge.h"
@@ -356,4 +358,66 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
   gimp_image_flush (gimage);
 
   gimp_context_set_display (context, shell->gdisp);
+}
+
+void
+gimp_display_shell_drop_component (GtkWidget       *widget,
+                                   gint             x,
+                                   gint             y,
+                                   GimpImage       *image,
+                                   GimpChannelType  component,
+                                   gpointer         data)
+{
+  GimpDisplayShell *shell      = GIMP_DISPLAY_SHELL (data);
+  GimpImage        *dest_image = shell->gdisp->gimage;
+  GimpChannel      *channel;
+  GimpItem         *new_item;
+  const gchar      *desc;
+  gchar            *name;
+
+  D (g_print ("drop component on canvas\n"));
+
+  if (dest_image->gimp->busy)
+    return;
+
+  channel = gimp_channel_new_from_component (image, component, NULL, NULL);
+
+  new_item = gimp_item_convert (GIMP_ITEM (channel), dest_image,
+                                GIMP_TYPE_LAYER, TRUE);
+
+  g_object_unref (channel);
+
+  if (new_item)
+    {
+      GimpLayer *new_layer = GIMP_LAYER (new_item);
+      gint       x, y, width, height;
+      gint       off_x, off_y;
+
+      gimp_enum_get_value (GIMP_TYPE_CHANNEL_TYPE, component,
+                           NULL, NULL, &desc, NULL);
+      name = g_strdup_printf (_("%s Channel Copy"), desc);
+      gimp_object_set_name (GIMP_OBJECT (new_layer), name);
+      g_free (name);
+
+      gimp_image_undo_group_start (dest_image, GIMP_UNDO_GROUP_EDIT_PASTE,
+                                   _("Drop New Layer"));
+
+      gimp_display_shell_untransform_viewport (shell, &x, &y, &width, &height);
+
+      gimp_item_offsets (new_item, &off_x, &off_y);
+
+      off_x = x + (width  - gimp_item_width  (new_item)) / 2 - off_x;
+      off_y = y + (height - gimp_item_height (new_item)) / 2 - off_y;
+
+      gimp_item_translate (new_item, off_x, off_y, FALSE);
+
+      gimp_image_add_layer (dest_image, new_layer, -1);
+
+      gimp_image_undo_group_end (dest_image);
+
+      gimp_image_flush (dest_image);
+
+      gimp_context_set_display (gimp_get_user_context (dest_image->gimp),
+                                shell->gdisp);
+    }
 }
