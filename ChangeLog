@@ -63,7 +63,7 @@
 
 	* tools/pdbgen/pdb/gradients.pdb: applied (slightly modified)
 	patch from Shlomi Fish which adds PDB wrappers to create, delete,
-	duplicate and rename gradients.
+	duplicate and rename gradients. Fixes bug #143528.
 
 	* app/pdb/gradients_cmds.c
 	* app/pdb/internal_procs.c
