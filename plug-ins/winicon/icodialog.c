@@ -44,14 +44,8 @@
 static GtkWidget *ico_preview_new             (gint32     layer);
 static void       ico_fill_preview_with_thumb (GtkWidget *widget,
                                                gint32     drawable_ID);
-static void       on_1bpp_menu_selected       (GtkWidget *item,
-                                               GtkWidget *icon_hbox);
-static void       on_4bpp_menu_selected       (GtkWidget *item,
-                                               GtkWidget *icon_hbox);
-static void       on_8bpp_menu_selected       (GtkWidget *item,
-                                               GtkWidget *icon_hbox);
-static void       on_32bpp_menu_selected      (GtkWidget *item,
-                                               GtkWidget *icon_hbox);
+static void       combo_bpp_changed           (GtkWidget *combo,
+                                               GObject   *hbox);
 
 
 static GtkWidget *
@@ -176,9 +170,7 @@ ico_create_icon_hbox (GtkWidget *icon_preview,
                       gint       layer_num)
 {
   GtkWidget *hbox;
-  GtkWidget *optionmenu;
-  GtkWidget *optionmenu_menu;
-  GtkWidget *menuitem;
+  GtkWidget *combo;
 
   hbox = gtk_hbox_new (FALSE, 0);
 
@@ -194,47 +186,25 @@ ico_create_icon_hbox (GtkWidget *icon_preview,
   gtk_widget_show (icon_preview);
   gtk_box_pack_start (GTK_BOX (hbox), icon_preview, TRUE, TRUE, 0);
 
-  optionmenu = gtk_option_menu_new ();
-  g_object_set_data (G_OBJECT (hbox), "icon_optionmenu", optionmenu);
-  gtk_widget_show (optionmenu);
-  gtk_box_pack_start (GTK_BOX (hbox), optionmenu, FALSE, FALSE, 0);
-  optionmenu_menu = gtk_menu_new ();
+  combo = gtk_combo_box_new ();
+  g_object_set_data (G_OBJECT (hbox), "icon_menu", combo);
+  gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
+  gtk_widget_show (combo);
 
-  menuitem =
-    gtk_menu_item_new_with_label (_("1 bpp, 1-bit alpha, 2-slot palette"));
-  g_signal_connect (menuitem, "activate",
-                    G_CALLBACK (on_1bpp_menu_selected),
+  gtk_combo_box_append_text (GTK_COMBO_BOX (combo),
+                             _("1 bpp, 1-bit alpha, 2-slot palette"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (combo),
+                             _("4 bpp, 1-bit alpha, 16-slot palette"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (combo),
+                             _("8 bpp, 1-bit alpha, 256-slot palette"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (combo),
+                             _("32 bpp, 8-bit alpha, no palette"));
+
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (combo_bpp_changed),
                     hbox);
-  gtk_widget_show (menuitem);
-  gtk_menu_shell_append (GTK_MENU_SHELL (optionmenu_menu), menuitem);
 
-  menuitem =
-    gtk_menu_item_new_with_label (_("4 bpp, 1-bit alpha, 16-slot palette"));
-  g_signal_connect (menuitem, "activate",
-                    G_CALLBACK (on_4bpp_menu_selected),
-                    hbox);
-  gtk_widget_show (menuitem);
-  gtk_menu_shell_append (GTK_MENU_SHELL (optionmenu_menu), menuitem);
-
-  menuitem =
-    gtk_menu_item_new_with_label (_("8 bpp, 1-bit alpha, 256-slot palette"));
-  g_signal_connect (menuitem, "activate",
-                    G_CALLBACK (on_8bpp_menu_selected),
-                    hbox);
-  gtk_widget_show (menuitem);
-  gtk_menu_shell_append (GTK_MENU_SHELL (optionmenu_menu), menuitem);
-
-  menuitem =
-    gtk_menu_item_new_with_label (_("32 bpp, 8-bit alpha, no palette"));
-  g_signal_connect (menuitem, "activate",
-                    G_CALLBACK (on_32bpp_menu_selected),
-                    hbox);
-  gtk_widget_show (menuitem);
-  gtk_menu_shell_append (GTK_MENU_SHELL (optionmenu_menu), menuitem);
-
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu),
-                            optionmenu_menu);
-  gtk_option_menu_set_history (GTK_OPTION_MENU (optionmenu), 3);
+  gtk_combo_box_set_active (GTK_COMBO_BOX (combo), 3);
 
   return hbox;
 }
@@ -400,65 +370,38 @@ ico_specs_dialog_update_icon_preview (GtkWidget *dialog,
   g_free (buffer);
 }
 
-
-/* meta-callback for color depth changes in an icon */
 static void
-on_bpp_change (GtkWidget *icon_hbox,
-               gint       bpp)
+combo_bpp_changed (GtkWidget *combo,
+                   GObject   *hbox)
 {
-  GtkWidget *dialog;
+  GtkWidget *dialog = gtk_widget_get_toplevel (combo);
   gint32     layer;
   gint       layer_num;
+  gint       bpp;
   gint      *icon_depths;
 
-  dialog = gtk_widget_get_toplevel (icon_hbox);
-
-  layer       = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (icon_hbox),
-                                                    "icon_layer"));
-  layer_num   = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (icon_hbox),
-                                                    "icon_layer_num"));
-  icon_depths = g_object_get_data (G_OBJECT (dialog), "icon_depths");
-
-  if (! icon_depths)
+  switch (gtk_combo_box_get_active (GTK_COMBO_BOX (combo)))
     {
-      D(("Something's wrong -- can't get icon_depths array from dialog ...\n"));
+    case 0: bpp = 1;   break;
+    case 1: bpp = 4;   break;
+    case 2: bpp = 8;   break;
+    case 3: bpp = 32;  break;
+    default:
       return;
     }
+
+  icon_depths = g_object_get_data (G_OBJECT (dialog), "icon_depths");
+  if (! icon_depths)
+    {
+      D(("Something's wrong -- can't get icon_depths array from dialog\n"));
+      return;
+    }
+
+  layer     = GPOINTER_TO_INT (g_object_get_data (hbox, "icon_layer"));
+  layer_num = GPOINTER_TO_INT (g_object_get_data (hbox, "icon_layer_num"));
 
   /* Update vector entry for later when we're actually saving,
      and update the preview right away ... */
   icon_depths[layer_num] = bpp;
   ico_specs_dialog_update_icon_preview (dialog, layer, bpp);
-}
-
-static void
-on_1bpp_menu_selected (GtkWidget *item,
-                       GtkWidget *icon_hbox)
-{
-  on_bpp_change (icon_hbox, 1);
-  item = NULL;
-}
-
-static void
-on_4bpp_menu_selected (GtkWidget *item,
-                       GtkWidget *icon_hbox)
-{
-  on_bpp_change (icon_hbox, 4);
-  item = NULL;
-}
-
-static void
-on_8bpp_menu_selected (GtkWidget *item,
-                       GtkWidget *icon_hbox)
-{
-  on_bpp_change (icon_hbox, 8);
-  item = NULL;
-}
-
-static void
-on_32bpp_menu_selected (GtkWidget *item,
-                        GtkWidget *icon_hbox)
-{
-  on_bpp_change (icon_hbox, 32);
-  item = NULL;
 }

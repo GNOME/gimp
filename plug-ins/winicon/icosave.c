@@ -122,7 +122,7 @@ ico_show_icon_dialog (gint32  image_ID,
                       gint   *num_icons)
 {
   GtkWidget *dialog, *hbox;
-  GtkWidget *icon_optionmenu;
+  GtkWidget *icon_menu;
   gint      *layers, *icon_depths = NULL;
   gint       num_layers, i, num_colors;
   gboolean   uses_alpha_values;
@@ -158,7 +158,7 @@ ico_show_icon_dialog (gint32  image_ID,
 
       g_snprintf (key, MAXLEN, "layer_%i_hbox", layers[i]);
       hbox = g_object_get_data (G_OBJECT (dialog), key);
-      icon_optionmenu = g_object_get_data (G_OBJECT(hbox), "icon_optionmenu");
+      icon_menu = g_object_get_data (G_OBJECT (hbox), "icon_menu");
 
       if (!uses_alpha_values)
 	{
@@ -168,7 +168,7 @@ ico_show_icon_dialog (gint32  image_ID,
 	      icon_depths[i] = 1;
 	      icon_depths[num_layers + i] = 1;
 	      ico_specs_dialog_update_icon_preview (dialog, layers[i], 2);
-	      gtk_option_menu_set_history (GTK_OPTION_MENU (icon_optionmenu), 0);
+	      gtk_combo_box_set_active (GTK_COMBO_BOX (icon_menu), 0);
 	    }
 	  else if (num_colors <= 16)
 	    {
@@ -176,7 +176,7 @@ ico_show_icon_dialog (gint32  image_ID,
 	      icon_depths[i] = 4;
 	      icon_depths[num_layers + i] = 4;
 	      ico_specs_dialog_update_icon_preview (dialog, layers[i], 4);
-	      gtk_option_menu_set_history (GTK_OPTION_MENU (icon_optionmenu), 1);
+	      gtk_combo_box_set_active (GTK_COMBO_BOX (icon_menu), 1);
 	    }
 	  else if (num_colors <= 256)
 	    {
@@ -184,7 +184,7 @@ ico_show_icon_dialog (gint32  image_ID,
 	      icon_depths[i] = 8;
 	      icon_depths[num_layers + i] = 8;
 	      ico_specs_dialog_update_icon_preview (dialog, layers[i], 8);
-	      gtk_option_menu_set_history (GTK_OPTION_MENU (icon_optionmenu), 2);
+	      gtk_combo_box_set_active (GTK_COMBO_BOX (icon_menu), 2);
 	    }
 	}
 
