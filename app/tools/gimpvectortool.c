@@ -181,9 +181,14 @@ gimp_vector_tool_init (GimpVectorTool *vector_tool)
 
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
   
-  vector_tool->vectors = NULL;
+  vector_tool->function       = VECTORS_CREATING;
+  vector_tool->last_x         = 0;
+  vector_tool->last_y         = 0;
+
+  vector_tool->cur_anchor     = NULL;
+  vector_tool->cur_stroke     = NULL;
+  vector_tool->vectors        = NULL;
   vector_tool->active_anchors = NULL;
-  vector_tool->function = VECTORS_CREATING;
 }
 
 static void
@@ -197,13 +202,10 @@ gimp_vector_tool_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-
-
-
 static void
 gimp_vector_tool_control (GimpTool       *tool,
-                           GimpToolAction  action,
-                           GimpDisplay    *gdisp)
+                          GimpToolAction  action,
+                          GimpDisplay    *gdisp)
 {
   GimpVectorTool *vector_tool;
 
@@ -280,14 +282,14 @@ gimp_vector_tool_button_press (GimpTool        *tool,
           anchor = gimp_vectors_anchor_get (vector_tool->vectors,
                                             coords, &stroke);
 
-          vector_tool->function = VECTORS_MOVING;
+          vector_tool->function   = VECTORS_MOVING;
           vector_tool->cur_stroke = stroke;
           vector_tool->cur_anchor = anchor;
 
           gimp_draw_tool_resume (GIMP_DRAW_TOOL (vector_tool));
         }
     }
-  
+
   if (vector_tool->function == VECTORS_CREATING)
     {
       if (gimp_tool_control_is_active (tool->control))
@@ -295,6 +297,18 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 	  /* reset everything */
 	  gimp_draw_tool_stop (GIMP_DRAW_TOOL (vector_tool));
 	}
+
+      if (! vector_tool->vectors)
+        {
+          GimpVectors *vectors;
+
+          vectors = g_object_new (GIMP_TYPE_VECTORS, NULL);
+
+          gimp_image_add_vectors (gdisp->gimage, vectors, -1);
+          gimp_object_set_name (GIMP_OBJECT (vectors), _("Unnamed"));
+
+          vector_tool->vectors = g_object_ref (vectors);
+        }
 
       stroke = gimp_bezier_stroke_new (coords);
       anchor = gimp_stroke_anchor_get (stroke, coords);

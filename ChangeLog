@@ -1,3 +1,8 @@
+2003-01-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpvectortool.c (gimp_vector_tool_button_press):
+	create a new GimpVectors object if the tool has none. Cleanup.
+
 2003-01-10  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpstock.[ch]: prefixed ALL, NONE, GROW and
@@ -103,7 +108,7 @@
 
 2003-01-08  Sven Neumann  <sven@gimp.org>
 
-	*  plug-ins/gfig/images/stock-*.png: a new set of icons drawn by
+	* plug-ins/gfig/images/stock-*.png: a new set of icons drawn by
 	Jimmac; fixes bug #92473.
 
 2003-01-08  Sven Neumann  <sven@gimp.org>
