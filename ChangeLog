@@ -1,3 +1,13 @@
+2004-10-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdnd.c (gimp_dnd_data_drag_begin): remember for
+	which GdkDragContext the icon_widget was made.
+
+	(gimp_dnd_data_drag_end): destroy the icon_widget only if it was
+	created for this GdkDragContext. Fixes broken DND icon_widgets
+	when dragging the same source again while the old icon_widget is
+	still floating back from an unsuccessful drop. Fixes bug #139337.
+
 2004-10-05  Manish Singh  <yosh@gimp.org>
 
 	* tools/pdbgen/lib.pl: Slight cleanup of doc generating code.

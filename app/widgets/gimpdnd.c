@@ -607,6 +607,9 @@ gimp_dnd_data_drag_begin (GtkWidget      *widget,
 
       gtk_drag_set_icon_widget (context, window,
                                 DRAG_ICON_OFFSET, DRAG_ICON_OFFSET);
+
+      /*  remember for which drag context the widget was made  */
+      g_object_set_data (G_OBJECT (window), "gimp-gdk-drag-context", context);
     }
 }
 
@@ -614,7 +617,22 @@ static void
 gimp_dnd_data_drag_end (GtkWidget      *widget,
                         GdkDragContext *context)
 {
-  g_object_set_data (G_OBJECT (widget), "gimp-dnd-data-widget", NULL);
+  GtkWidget *icon_widget;
+
+  icon_widget = g_object_get_data (G_OBJECT (widget), "gimp-dnd-data-widget");
+
+  if (icon_widget)
+    {
+      /*  destroy the icon_widget only if it was made for this drag
+       *  context. See bug #139337.
+       */
+      if (g_object_get_data (G_OBJECT (icon_widget),
+                             "gimp-gdk-drag-context") ==
+          (gpointer) context)
+        {
+          g_object_set_data (G_OBJECT (widget), "gimp-dnd-data-widget", NULL);
+        }
+    }
 }
 
 static void
