@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-23 19:31-0400\n"
-"PO-Revision-Date: 2004-10-23 14:29-0400\n"
+"POT-Creation-Date: 2004-10-25 13:18-0400\n"
+"PO-Revision-Date: 2004-10-25 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -614,21 +614,35 @@ msgstr "Colourmap Menu"
 msgid "_Edit Color..."
 msgstr "_Edit Colour..."
 
-#: app/actions/colormap-editor-actions.c:55
+#: app/actions/colormap-editor-actions.c:48
+#: app/actions/palette-editor-actions.c:48
+msgid "Edit color"
+msgstr "Edit colour"
+
+#: app/actions/colormap-editor-actions.c:56
 msgid "_Add Color from FG"
 msgstr "_Add Colour from FG"
 
-#: app/actions/colormap-editor-actions.c:56
+#: app/actions/colormap-editor-actions.c:57
 msgid "Add color from FG"
 msgstr "Add colour from FG"
 
-#: app/actions/colormap-editor-actions.c:61
+#: app/actions/colormap-editor-actions.c:62
 msgid "_Add Color from BG"
 msgstr "_Add Colour from BG"
 
-#: app/actions/colormap-editor-actions.c:62
+#: app/actions/colormap-editor-actions.c:63
 msgid "Add color from BG"
 msgstr "Add colour from BG"
+
+#: app/actions/colormap-editor-commands.c:70
+#, c-format
+msgid "Edit colormap entry #%d"
+msgstr "Edit colourmap entry #%d"
+
+#: app/actions/colormap-editor-commands.c:76
+msgid "Edit Colormap Entry"
+msgstr "Edit Colourmap Entry"
 
 #: app/actions/context-actions.c:46
 msgid "_Context"
@@ -1212,13 +1226,42 @@ msgstr "Error Console Menu"
 msgid "_Clear Errors"
 msgstr "_Clear Errors"
 
-#: app/actions/error-console-actions.c:49
+#: app/actions/error-console-actions.c:45
+msgid "Clear errors"
+msgstr "Clear errors"
+
+#: app/actions/error-console-actions.c:53
 msgid "Save _All Errors to File..."
 msgstr "Save _All Errors to File..."
 
 #: app/actions/error-console-actions.c:54
+msgid "Save all errors"
+msgstr "Save all errors"
+
+#: app/actions/error-console-actions.c:59
 msgid "Save _Selection to File..."
 msgstr "Save _Selection to File..."
+
+#: app/actions/error-console-actions.c:60
+msgid "Save selection"
+msgstr "Save selection"
+
+#: app/actions/error-console-commands.c:69
+msgid "Cannot save. Nothing is selected."
+msgstr "Cannot save. Nothing is selected."
+
+#: app/actions/error-console-commands.c:80
+msgid "Save Error Log to File"
+msgstr "Save Error Log to File"
+
+#: app/actions/error-console-commands.c:132
+#, c-format
+msgid ""
+"Error writing file '%s':\n"
+"%s"
+msgstr ""
+"Error writing file '%s':\n"
+"%s"
 
 #: app/actions/file-actions.c:61
 msgid "_File"
@@ -1450,75 +1493,104 @@ msgstr "HSV (_counter-clockwise hue)"
 msgid "HSV (clockwise _hue)"
 msgstr "HSV (clockwise _hue)"
 
-#: app/actions/gradient-editor-actions.c:476
+#: app/actions/gradient-editor-actions.c:301
+msgid "Zoom In"
+msgstr "Zoom In"
+
+#: app/actions/gradient-editor-actions.c:302
+#: app/actions/palette-editor-actions.c:78 app/actions/view-actions.c:216
+#: app/widgets/widgets-enums.c:224
+msgid "Zoom in"
+msgstr "Zoom in"
+
+#: app/actions/gradient-editor-actions.c:307
+msgid "Zoom Out"
+msgstr "Zoom Out"
+
+#: app/actions/gradient-editor-actions.c:308
+#: app/actions/palette-editor-actions.c:84 app/actions/view-actions.c:210
+#: app/widgets/widgets-enums.c:225
+msgid "Zoom out"
+msgstr "Zoom out"
+
+#: app/actions/gradient-editor-actions.c:313
+msgid "Zoom All"
+msgstr "Zoom All"
+
+#: app/actions/gradient-editor-actions.c:314
+#: app/actions/palette-editor-actions.c:90
+msgid "Zoom all"
+msgstr "Zoom all"
+
+#: app/actions/gradient-editor-actions.c:582
 msgid "_Blending Function for Segment"
 msgstr "_Blending Function for Segment"
 
-#: app/actions/gradient-editor-actions.c:478
+#: app/actions/gradient-editor-actions.c:584
 msgid "Coloring _Type for Segment"
 msgstr "Colouring _Type for Segment"
 
-#: app/actions/gradient-editor-actions.c:481
+#: app/actions/gradient-editor-actions.c:587
 msgid "_Flip Segment"
 msgstr "_Flip Segment"
 
-#: app/actions/gradient-editor-actions.c:483
+#: app/actions/gradient-editor-actions.c:589
 msgid "_Replicate Segment..."
 msgstr "_Replicate Segment..."
 
-#: app/actions/gradient-editor-actions.c:485
+#: app/actions/gradient-editor-actions.c:591
 msgid "Split Segment at _Midpoint"
 msgstr "Split Segment at _Midpoint"
 
-#: app/actions/gradient-editor-actions.c:487
+#: app/actions/gradient-editor-actions.c:593
 msgid "Split Segment _Uniformly..."
 msgstr "Split Segment _Uniformly..."
 
-#: app/actions/gradient-editor-actions.c:489
+#: app/actions/gradient-editor-actions.c:595
 msgid "_Delete Segment"
 msgstr "_Delete Segment"
 
-#: app/actions/gradient-editor-actions.c:491
+#: app/actions/gradient-editor-actions.c:597
 msgid "Re-_center Segment's Midpoint"
 msgstr "Re-_centre Segment's Midpoint"
 
-#: app/actions/gradient-editor-actions.c:493
+#: app/actions/gradient-editor-actions.c:599
 msgid "Re-distribute _Handles in Segment"
 msgstr "Re-distribute _Handles in Segment"
 
-#: app/actions/gradient-editor-actions.c:498
+#: app/actions/gradient-editor-actions.c:604
 msgid "_Blending Function for Selection"
 msgstr "_Blending Function for Selection"
 
-#: app/actions/gradient-editor-actions.c:500
+#: app/actions/gradient-editor-actions.c:606
 msgid "Coloring _Type for Selection"
 msgstr "Colouring _Type for Selection"
 
-#: app/actions/gradient-editor-actions.c:503
+#: app/actions/gradient-editor-actions.c:609
 msgid "_Flip Selection"
 msgstr "_Flip Selection"
 
-#: app/actions/gradient-editor-actions.c:505
+#: app/actions/gradient-editor-actions.c:611
 msgid "_Replicate Selection..."
 msgstr "_Replicate Selection..."
 
-#: app/actions/gradient-editor-actions.c:507
+#: app/actions/gradient-editor-actions.c:613
 msgid "Split Segments at _Midpoints"
 msgstr "Split Segments at _Midpoints"
 
-#: app/actions/gradient-editor-actions.c:509
+#: app/actions/gradient-editor-actions.c:615
 msgid "Split Segments _Uniformly..."
 msgstr "Split Segments _Uniformly..."
 
-#: app/actions/gradient-editor-actions.c:511
+#: app/actions/gradient-editor-actions.c:617
 msgid "_Delete Selection"
 msgstr "_Delete Selection"
 
-#: app/actions/gradient-editor-actions.c:513
+#: app/actions/gradient-editor-actions.c:619
 msgid "Re-_center Midpoints in Selection"
 msgstr "Re-_centre Midpoints in Selection"
 
-#: app/actions/gradient-editor-actions.c:515
+#: app/actions/gradient-editor-actions.c:621
 msgid "Re-distribute _Handles in Selection"
 msgstr "Re-distribute _Handles in Selection"
 
@@ -1538,27 +1610,27 @@ msgstr "Right Endpoint Colour"
 msgid "Gradient Segment's Right Endpoint Color"
 msgstr "Gradient Segment's Right Endpoint Colour"
 
-#: app/actions/gradient-editor-commands.c:345
+#: app/actions/gradient-editor-commands.c:353
 msgid "Replicate Segment"
 msgstr "Replicate Segment"
 
-#: app/actions/gradient-editor-commands.c:346
+#: app/actions/gradient-editor-commands.c:354
 msgid "Replicate Gradient Segment"
 msgstr "Replicate Gradient Segment"
 
-#: app/actions/gradient-editor-commands.c:350
+#: app/actions/gradient-editor-commands.c:358
 msgid "Replicate Selection"
 msgstr "Replicate Selection"
 
-#: app/actions/gradient-editor-commands.c:351
+#: app/actions/gradient-editor-commands.c:359
 msgid "Replicate Gradient Selection"
 msgstr "Replicate Gradient Selection"
 
-#: app/actions/gradient-editor-commands.c:363
+#: app/actions/gradient-editor-commands.c:371
 msgid "Replicate"
 msgstr "Replicate"
 
-#: app/actions/gradient-editor-commands.c:378
+#: app/actions/gradient-editor-commands.c:386
 msgid ""
 "Select the number of times\n"
 "to replicate the selected segment."
@@ -1566,7 +1638,7 @@ msgstr ""
 "Select the number of times\n"
 "to replicate the selected segment."
 
-#: app/actions/gradient-editor-commands.c:381
+#: app/actions/gradient-editor-commands.c:389
 msgid ""
 "Select the number of times\n"
 "to replicate the selection."
@@ -1574,27 +1646,27 @@ msgstr ""
 "Select the number of times\n"
 "to replicate the selection."
 
-#: app/actions/gradient-editor-commands.c:436
+#: app/actions/gradient-editor-commands.c:444
 msgid "Split Segment Uniformly"
 msgstr "Split Segment Uniformly"
 
-#: app/actions/gradient-editor-commands.c:437
+#: app/actions/gradient-editor-commands.c:445
 msgid "Split Gradient Segment Uniformly"
 msgstr "Split Gradient Segment Uniformly"
 
-#: app/actions/gradient-editor-commands.c:441
+#: app/actions/gradient-editor-commands.c:449
 msgid "Split Segments Uniformly"
 msgstr "Split Segments Uniformly"
 
-#: app/actions/gradient-editor-commands.c:442
+#: app/actions/gradient-editor-commands.c:450
 msgid "Split Gradient Segments Uniformly"
 msgstr "Split Gradient Segments Uniformly"
 
-#: app/actions/gradient-editor-commands.c:454
+#: app/actions/gradient-editor-commands.c:462
 msgid "Split"
 msgstr "Split"
 
-#: app/actions/gradient-editor-commands.c:470
+#: app/actions/gradient-editor-commands.c:478
 msgid ""
 "Select the number of uniform parts\n"
 "in which to split the selected segment."
@@ -1602,7 +1674,7 @@ msgstr ""
 "Select the number of uniform parts\n"
 "in which to split the selected segment."
 
-#: app/actions/gradient-editor-commands.c:473
+#: app/actions/gradient-editor-commands.c:481
 msgid ""
 "Select the number of uniform parts\n"
 "in which to split the segments in the selection."
@@ -2094,29 +2166,49 @@ msgstr "Invalid width or height. Both must be positive."
 msgid "Palette Editor Menu"
 msgstr "Palette Editor Menu"
 
-#: app/actions/palette-editor-actions.c:52
-msgid "New Color from _FG"
-msgstr "New Colour from _FG"
-
-#: app/actions/palette-editor-actions.c:57
-msgid "New Color from _BG"
-msgstr "New Colour from _BG"
-
-#: app/actions/palette-editor-actions.c:62
+#: app/actions/palette-editor-actions.c:53
 msgid "_Delete Color"
 msgstr "_Delete Colour"
 
-#: app/actions/palette-editor-actions.c:67 app/actions/view-actions.c:209
-msgid "Zoom _Out"
-msgstr "Zoom _Out"
+#: app/actions/palette-editor-actions.c:54
+msgid "Delete color"
+msgstr "Delete colour"
 
-#: app/actions/palette-editor-actions.c:72 app/actions/view-actions.c:215
+#: app/actions/palette-editor-actions.c:62
+msgid "New Color from _FG"
+msgstr "New Colour from _FG"
+
+#: app/actions/palette-editor-actions.c:63
+msgid "New color from FG"
+msgstr "New colour from FG"
+
+#: app/actions/palette-editor-actions.c:68
+msgid "New Color from _BG"
+msgstr "New Colour from _BG"
+
+#: app/actions/palette-editor-actions.c:69
+msgid "New color from BG"
+msgstr "New colour from BG"
+
+#: app/actions/palette-editor-actions.c:77 app/actions/view-actions.c:215
 msgid "Zoom _In"
 msgstr "Zoom _In"
 
-#: app/actions/palette-editor-actions.c:77
+#: app/actions/palette-editor-actions.c:83 app/actions/view-actions.c:209
+msgid "Zoom _Out"
+msgstr "Zoom _Out"
+
+#: app/actions/palette-editor-actions.c:89
 msgid "Zoom _All"
 msgstr "Zoom _All"
+
+#: app/actions/palette-editor-commands.c:68
+msgid "Edit Palette Color"
+msgstr "Edit Palette Colour"
+
+#: app/actions/palette-editor-commands.c:70
+msgid "Edit Color Palette Entry"
+msgstr "Edit Colour Palette Entry"
 
 #: app/actions/palettes-actions.c:44
 msgid "Palettes Menu"
@@ -2803,7 +2895,7 @@ msgstr "E_xport Path..."
 msgid "Path to Sele_ction"
 msgstr "Path to Sele_ction"
 
-#: app/actions/vectors-actions.c:163 app/tools/gimpvectortool.c:1883
+#: app/actions/vectors-actions.c:163 app/tools/gimpvectortool.c:1893
 msgid "Path to selection"
 msgstr "Path to selection"
 
@@ -2852,7 +2944,7 @@ msgstr "New Path Options"
 msgid "Path to Selection"
 msgstr "Path to Selection"
 
-#: app/actions/vectors-commands.c:370 app/tools/gimpvectortool.c:1913
+#: app/actions/vectors-commands.c:370 app/tools/gimpvectortool.c:1923
 #: app/vectors/gimpvectors.c:239
 msgid "Stroke Path"
 msgstr "Stroke Path"
@@ -2960,16 +3052,6 @@ msgstr "Show S_tatusbar"
 #: app/actions/view-actions.c:185
 msgid "Fullscr_een"
 msgstr "Fullscr_een"
-
-#: app/actions/view-actions.c:210 app/widgets/gimppaletteeditor.c:325
-#: app/widgets/widgets-enums.c:225
-msgid "Zoom out"
-msgstr "Zoom out"
-
-#: app/actions/view-actions.c:216 app/widgets/gimppaletteeditor.c:333
-#: app/widgets/widgets-enums.c:224
-msgid "Zoom in"
-msgstr "Zoom in"
 
 #: app/actions/view-actions.c:234
 msgid "16:1  (1600%)"
@@ -5028,8 +5110,8 @@ msgid "Special File"
 msgstr "Special File"
 
 #: app/core/gimpimagefile.c:584
-msgid "No preview available"
-msgstr "No preview available"
+msgid "Click to create preview"
+msgstr "Click to create preview"
 
 #: app/core/gimpimagefile.c:588
 msgid "Loading preview ..."
@@ -9194,75 +9276,75 @@ msgstr "Delete Anchor"
 msgid "Delete Segment"
 msgstr "Delete Segment"
 
-#: app/tools/gimpvectortool.c:829
+#: app/tools/gimpvectortool.c:831
 msgid "Move Anchors"
 msgstr "Move Anchors"
 
-#: app/tools/gimpvectortool.c:1186
+#: app/tools/gimpvectortool.c:1196
 msgid "Click to pick path to edit."
 msgstr "Click to pick path to edit."
 
-#: app/tools/gimpvectortool.c:1189
+#: app/tools/gimpvectortool.c:1199
 msgid "Click to create a new path."
 msgstr "Click to create a new path."
 
-#: app/tools/gimpvectortool.c:1192
+#: app/tools/gimpvectortool.c:1202
 msgid "Click to create a new component of the path."
 msgstr "Click to create a new component of the path."
 
-#: app/tools/gimpvectortool.c:1195
+#: app/tools/gimpvectortool.c:1205
 msgid "Click to create a new anchor. (try SHIFT)"
 msgstr "Click to create a new anchor. (try SHIFT)"
 
-#: app/tools/gimpvectortool.c:1198
+#: app/tools/gimpvectortool.c:1208
 msgid "Click-Drag to move the anchor around."
 msgstr "Click-Drag to move the anchor around."
 
-#: app/tools/gimpvectortool.c:1201
+#: app/tools/gimpvectortool.c:1211
 msgid "Click-Drag to move the anchors around."
 msgstr "Click-Drag to move the anchors around."
 
-#: app/tools/gimpvectortool.c:1204
+#: app/tools/gimpvectortool.c:1214
 msgid "Click-Drag to move the handle around. (try SHIFT)"
 msgstr "Click-Drag to move the handle around. (try SHIFT)"
 
-#: app/tools/gimpvectortool.c:1207
+#: app/tools/gimpvectortool.c:1217
 msgid "Click-Drag to change the shape of the curve. (SHIFT: symmetrical)"
 msgstr "Click-Drag to change the shape of the curve. (SHIFT: symmetrical)"
 
-#: app/tools/gimpvectortool.c:1211
+#: app/tools/gimpvectortool.c:1221
 msgid "Click-Drag to move the component around. (try SHIFT)"
 msgstr "Click-Drag to move the component around. (try SHIFT)"
 
-#: app/tools/gimpvectortool.c:1215
+#: app/tools/gimpvectortool.c:1225
 msgid "Click-Drag to move the path around."
 msgstr "Click-Drag to move the path around."
 
-#: app/tools/gimpvectortool.c:1218
+#: app/tools/gimpvectortool.c:1228
 msgid "Click to insert an anchor on the path. (try SHIFT)"
 msgstr "Click to insert an anchor on the path. (try SHIFT)"
 
-#: app/tools/gimpvectortool.c:1221
+#: app/tools/gimpvectortool.c:1231
 msgid "Click to delete this anchor."
 msgstr "Click to delete this anchor."
 
-#: app/tools/gimpvectortool.c:1224
+#: app/tools/gimpvectortool.c:1234
 msgid "Click to connect this anchor with the selected endpoint."
 msgstr "Click to connect this anchor with the selected endpoint."
 
-#: app/tools/gimpvectortool.c:1228
+#: app/tools/gimpvectortool.c:1238
 msgid "Click to open up the path."
 msgstr "Click to open up the path."
 
-#: app/tools/gimpvectortool.c:1231
+#: app/tools/gimpvectortool.c:1241
 msgid "Click to make this node angular."
 msgstr "Click to make this node angular."
 
-#: app/tools/gimpvectortool.c:1741
+#: app/tools/gimpvectortool.c:1751
 msgid "Delete Anchors"
 msgstr "Delete Anchors"
 
-#: app/tools/gimpvectortool.c:1908
+#: app/tools/gimpvectortool.c:1918
 msgid "There is no active layer or channel to stroke to"
 msgstr "There is no active layer or channel to stroke to"
 
@@ -9508,26 +9590,13 @@ msgstr "Black:"
 msgid "Alpha:"
 msgstr "Alpha:"
 
-#: app/widgets/gimpcolormapeditor.c:253
+#: app/widgets/gimpcolormapeditor.c:247
 msgid "Color index:"
 msgstr "Colour index:"
 
-#: app/widgets/gimpcolormapeditor.c:264
+#: app/widgets/gimpcolormapeditor.c:258
 msgid "HTML notation:"
 msgstr "HTML notation:"
-
-#: app/widgets/gimpcolormapeditor.c:289 app/widgets/gimppaletteeditor.c:298
-msgid "Edit color"
-msgstr "Edit colour"
-
-#: app/widgets/gimpcolormapeditor.c:885
-#, c-format
-msgid "Edit colormap entry #%d"
-msgstr "Edit colourmap entry #%d"
-
-#: app/widgets/gimpcolormapeditor.c:895
-msgid "Edit Colormap Entry"
-msgstr "Edit Colourmap Entry"
 
 #: app/widgets/gimpcontainerpopup.c:502
 msgid "Smaller Previews"
@@ -9809,11 +9878,11 @@ msgstr "Mouse Wheel"
 msgid "Main Mouse Wheel"
 msgstr "Main Mouse Wheel"
 
-#: app/widgets/gimpdataeditor.c:180
+#: app/widgets/gimpdataeditor.c:205
 msgid "Save"
 msgstr "Save"
 
-#: app/widgets/gimpdataeditor.c:188
+#: app/widgets/gimpdataeditor.c:213
 msgid "Revert"
 msgstr "Revert"
 
@@ -9839,40 +9908,10 @@ msgstr "You can drop dockable dialogues here."
 msgid "Close this Tab"
 msgstr "Close this Tab"
 
-#: app/widgets/gimperrorconsole.c:175
-msgid "Clear errors"
-msgstr "Clear errors"
-
-#: app/widgets/gimperrorconsole.c:181
-#, c-format
-msgid ""
-"Save all errors\n"
-"%s  Save selection"
-msgstr ""
-"Save all errors\n"
-"%s  Save selection"
-
-#: app/widgets/gimperrorconsole.c:269 app/widgets/gimperrordialog.c:252
+#: app/widgets/gimperrorconsole.c:235 app/widgets/gimperrordialog.c:252
 #, c-format
 msgid "%s Message"
 msgstr "%s Message"
-
-#: app/widgets/gimperrorconsole.c:339
-msgid "Cannot save. Nothing is selected."
-msgstr "Cannot save. Nothing is selected."
-
-#: app/widgets/gimperrorconsole.c:350
-msgid "Save Error Log to File"
-msgstr "Save Error Log to File"
-
-#: app/widgets/gimperrorconsole.c:397
-#, c-format
-msgid ""
-"Error writing file '%s':\n"
-"%s"
-msgstr ""
-"Error writing file '%s':\n"
-"%s"
 
 #: app/widgets/gimperrordialog.c:229
 msgid "Too many error messages!"
@@ -9907,99 +9946,87 @@ msgstr "File Type"
 msgid "Extensions"
 msgstr "Extensions"
 
-#: app/widgets/gimpgradienteditor.c:356
-msgid "Zoom Out"
-msgstr "Zoom Out"
-
 #: app/widgets/gimpgradienteditor.c:362
-msgid "Zoom In"
-msgstr "Zoom In"
-
-#: app/widgets/gimpgradienteditor.c:368
-msgid "Zoom All"
-msgstr "Zoom All"
-
-#: app/widgets/gimpgradienteditor.c:381
 msgid "Instant update"
 msgstr "Instant update"
 
-#: app/widgets/gimpgradienteditor.c:557
+#: app/widgets/gimpgradienteditor.c:619
 #, c-format
 msgid "Zoom factor: %d:1"
 msgstr "Zoom factor: %d:1"
 
-#: app/widgets/gimpgradienteditor.c:560
+#: app/widgets/gimpgradienteditor.c:622
 #, c-format
 msgid "Displaying [%0.6f, %0.6f]"
 msgstr "Displaying [%0.6f, %0.6f]"
 
-#: app/widgets/gimpgradienteditor.c:832
+#: app/widgets/gimpgradienteditor.c:814
 #, c-format
 msgid "Position: %0.6f"
 msgstr "Position: %0.6f"
 
-#: app/widgets/gimpgradienteditor.c:834
+#: app/widgets/gimpgradienteditor.c:816
 #, c-format
 msgid "RGB (%0.3f, %0.3f, %0.3f)"
 msgstr "RGB (%0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpgradienteditor.c:837
+#: app/widgets/gimpgradienteditor.c:819
 #, c-format
 msgid "HSV (%0.3f, %0.3f, %0.3f)"
 msgstr "HSV (%0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpgradienteditor.c:839
+#: app/widgets/gimpgradienteditor.c:821
 #, c-format
 msgid "Intensity: %0.3f    Opacity: %0.3f"
 msgstr "Intensity: %0.3f    Opacity: %0.3f"
 
-#: app/widgets/gimpgradienteditor.c:872 app/widgets/gimpgradienteditor.c:907
+#: app/widgets/gimpgradienteditor.c:854 app/widgets/gimpgradienteditor.c:889
 #, c-format
 msgid "RGB (%d, %d, %d)"
 msgstr "RGB (%d, %d, %d)"
 
-#: app/widgets/gimpgradienteditor.c:880
+#: app/widgets/gimpgradienteditor.c:862
 msgid "Foreground color set to:"
 msgstr "Foreground colour set to:"
 
-#: app/widgets/gimpgradienteditor.c:912
+#: app/widgets/gimpgradienteditor.c:894
 #, c-format
 msgid "(%0.3f, %0.3f, %0.3f)"
 msgstr "(%0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpgradienteditor.c:916
+#: app/widgets/gimpgradienteditor.c:898
 msgid "Background color set to:"
 msgstr "Background colour set to:"
 
-#: app/widgets/gimpgradienteditor.c:1119 app/widgets/gimpgradienteditor.c:1185
+#: app/widgets/gimpgradienteditor.c:1101 app/widgets/gimpgradienteditor.c:1167
 #, c-format
 msgid "%s%sDrag: move & compress"
 msgstr "%s%sDrag: move & compress"
 
-#: app/widgets/gimpgradienteditor.c:1125
+#: app/widgets/gimpgradienteditor.c:1107
 msgid "Drag: move"
 msgstr "Drag: move"
 
-#: app/widgets/gimpgradienteditor.c:1132 app/widgets/gimpgradienteditor.c:1146
-#: app/widgets/gimpgradienteditor.c:1160 app/widgets/gimpgradienteditor.c:1182
+#: app/widgets/gimpgradienteditor.c:1114 app/widgets/gimpgradienteditor.c:1128
+#: app/widgets/gimpgradienteditor.c:1142 app/widgets/gimpgradienteditor.c:1164
 #, c-format
 msgid "%s%sClick: extend selection"
 msgstr "%s%sClick: extend selection"
 
-#: app/widgets/gimpgradienteditor.c:1138 app/widgets/gimpgradienteditor.c:1152
+#: app/widgets/gimpgradienteditor.c:1120 app/widgets/gimpgradienteditor.c:1134
 msgid "Click: select"
 msgstr "Click: select"
 
-#: app/widgets/gimpgradienteditor.c:1166 app/widgets/gimpgradienteditor.c:1190
+#: app/widgets/gimpgradienteditor.c:1148 app/widgets/gimpgradienteditor.c:1172
 msgid "Click: select    Drag: move"
 msgstr "Click: select    Drag: move"
 
-#: app/widgets/gimpgradienteditor.c:1412 app/widgets/gimpgradienteditor.c:1420
+#: app/widgets/gimpgradienteditor.c:1394 app/widgets/gimpgradienteditor.c:1402
 #, c-format
 msgid "Handle position: %0.6f"
 msgstr "Handle position: %0.6f"
 
-#: app/widgets/gimpgradienteditor.c:1437
+#: app/widgets/gimpgradienteditor.c:1419
 #, c-format
 msgid "Distance: %0.6f"
 msgstr "Distance: %0.6f"
@@ -10125,38 +10152,13 @@ msgstr "Message repeated %d times."
 msgid "Message repeated once."
 msgstr "Message repeated once."
 
-#: app/widgets/gimppaletteeditor.c:275 app/widgets/gimppaletteeditor.c:971
+#: app/widgets/gimppaletteeditor.c:258 app/widgets/gimppaletteeditor.c:999
 msgid "Undefined"
 msgstr "Undefined"
 
-#: app/widgets/gimppaletteeditor.c:283
+#: app/widgets/gimppaletteeditor.c:266
 msgid "Columns:"
 msgstr "Columns:"
-
-#: app/widgets/gimppaletteeditor.c:304
-#, c-format
-msgid ""
-"New color from FG\n"
-"%s  from BG"
-msgstr ""
-"New colour from FG\n"
-"%s  from BG"
-
-#: app/widgets/gimppaletteeditor.c:317
-msgid "Delete color"
-msgstr "Delete colour"
-
-#: app/widgets/gimppaletteeditor.c:341
-msgid "Zoom all"
-msgstr "Zoom all"
-
-#: app/widgets/gimppaletteeditor.c:1045
-msgid "Edit Palette Color"
-msgstr "Edit Palette Colour"
-
-#: app/widgets/gimppaletteeditor.c:1047
-msgid "Edit Color Palette Entry"
-msgstr "Edit Colour Palette Entry"
 
 #: app/widgets/gimppropwidgets.c:1487
 #, c-format
@@ -10498,7 +10500,7 @@ msgstr "Saturation"
 #. The format string which is used to display modifier names
 #. *  <Shift>, <Ctrl> and <Alt>
 #.
-#: app/widgets/gimpwidgets-utils.c:377
+#: app/widgets/gimpwidgets-utils.c:390
 #, c-format
 msgid "<%s>"
 msgstr "<%s>"
