@@ -217,10 +217,10 @@ check :: test
 MY_FIXIN = \$(PERL) -I\$(PERL_ARCHLIB) -I\$(PERL_LIB) -MExtUtils::MakeMaker -e 'MY->fixin(\@ARGV)'
 
 all ::
-	$dont_embed || (cd embed && \$(MAKE) all)
+	$main::dont_embed || (cd embed && \$(MAKE) all)
 
 clean ::
-	$dont_embed || (cd embed && \$(MAKE) clean)
+	$main::dont_embed || (cd embed && \$(MAKE) clean)
 	test -f Makefile || mv -f Makefile.old Makefile
 	\$(RM_RF) inst-temp
 
@@ -275,11 +275,10 @@ $GIMP_INC_NOUI = "-I../../ $GIMP_INC_NOUI" if $IN_GIMP;
 if ($IN_GIMP) {
    $dont_embed = "false";
    push(@DIRS,'nolib');
+   system("cd embed && perl Makefile.PL");
 } else {
    $dont_embed = "true";
 }
-
-system("cd embed && perl Makefile.PL");
 
 WriteMakefile(
     'dist'	=> {

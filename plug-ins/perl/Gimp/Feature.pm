@@ -42,7 +42,7 @@ sub import {
 
    local $Gimp::in_query=1;
    while(@_) {
-      $_=shift;
+      local $_=shift;
       s/^://;
       need($_);
    }
@@ -57,7 +57,7 @@ sub Gimp::Feature::list {
 }
 
 sub present {
-   $_ = shift;
+   local $_ = shift;
 
    if ($_ eq "gtk") {
       _check_gtk; $gtk;

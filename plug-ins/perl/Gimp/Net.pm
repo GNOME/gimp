@@ -173,7 +173,7 @@ sub start_server {
 }
 
 sub try_connect {
-   $_=$_[0];
+   local $_=$_[0];
    my $fh;
    $auth = s/^(.*)\@// ? $1 : "";	# get authorization
    if ($_ ne "") {
