@@ -1,3 +1,10 @@
+2001-11-14  Abel Cheung  <maddog@linux.org.hk>
+
+	* zh_TW.Big5.po -> zh_TW.po: Replace traditional Chinese translation
+	  with the one from stable branch, renamed to avoid encoding naming
+	  problem, converted to UTF8, and trying to resolve the resulting
+	  CVS conflict by mistake.
+
 2001-11-13  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.in.in: temporarily remove script in gap plug-in
