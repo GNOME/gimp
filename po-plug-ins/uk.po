@@ -4869,12 +4869,12 @@ msgstr "Подробиц╕ >>"
 #: plug-ins/common/plugindetails.c:316
 #, c-format
 msgid "Number of Plugin Interfaces: %d"
-msgstr ""
+msgstr "К╕льк╕сть ╕нтерфейс╕в доповнення: %d"
 
 #. menu path
 #: plug-ins/common/plugindetails.c:334
 msgid "Menu Path:"
-msgstr ""
+msgstr "Шлях меню:"
 
 #. show the name
 #: plug-ins/common/plugindetails.c:355
@@ -4920,11 +4920,11 @@ msgstr "Назва"
 
 #: plug-ins/common/plugindetails.c:1039 plug-ins/common/plugindetails.c:1067
 msgid "Ins Date"
-msgstr ""
+msgstr "Дата встановлення"
 
 #: plug-ins/common/plugindetails.c:1040
 msgid "Menu Path"
-msgstr ""
+msgstr "Шлях меню"
 
 #: plug-ins/common/plugindetails.c:1041 plug-ins/common/plugindetails.c:1068
 msgid "Image Types"
@@ -4937,7 +4937,7 @@ msgstr "Перегляд списком"
 #. notebook->ctree
 #: plug-ins/common/plugindetails.c:1066
 msgid "Menu Path/Name"
-msgstr ""
+msgstr "Шлях/назва меню"
 
 #: plug-ins/common/plugindetails.c:1083
 msgid "Tree View"
@@ -4947,7 +4947,7 @@ msgstr "Перегляд деревом"
 #: plug-ins/dbbrowser/dbbrowser_utils.c:225
 #: plug-ins/gap/gap_dbbrowser_utils.c:137
 msgid "Search:"
-msgstr ""
+msgstr "Пошук:"
 
 #: plug-ins/common/png.c:403
 #, c-format
@@ -5112,7 +5112,7 @@ msgstr ""
 
 #: plug-ins/common/polar.c:1017
 msgid "To Polar"
-msgstr ""
+msgstr "В порлярне"
 
 #: plug-ins/common/polar.c:1025
 msgid ""
@@ -5157,15 +5157,15 @@ msgstr "Завантажити PostScript"
 #. Rendering
 #: plug-ins/common/ps.c:2555 plug-ins/flame/flame.c:994
 msgid "Rendering"
-msgstr ""
+msgstr "В╕зуал╕зац╕я"
 
 #: plug-ins/common/ps.c:2573 plug-ins/print/gimp_main_window.c:403
 msgid "Resolution:"
-msgstr ""
+msgstr "Розд╕льн╕сть:"
 
 #: plug-ins/common/ps.c:2601
 msgid "Pages:"
-msgstr ""
+msgstr "Стор╕нки:"
 
 #: plug-ins/common/ps.c:2607
 msgid "Try Bounding Box"
