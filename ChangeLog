@@ -1,3 +1,10 @@
+Fri Jun 30 22:09:11 BST 2000 Andy Thomas <alt@gimp.org>
+
+	* plug-ins/common/iwarp.c
+
+	Applied patch by Daniel Egger that fixes a problem when
+	applying iwarp in animation mode. 
+
 2000-06-30  Nick Lamb  <njl195@zepler.org.uk>
 
 	* plug-ins/common/png.c: More options, offsets preserved on load
