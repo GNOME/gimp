@@ -302,6 +302,8 @@ menus_last_opened_add (GimpItemFactory *item_factory)
       if (i < 9)
         last_opened_entries[i].entry.accelerator =
           g_strdup_printf ("<control>%d", i + 1);
+      else if (i == 9)
+        last_opened_entries[i].entry.accelerator = "<control>0";
       else
         last_opened_entries[i].entry.accelerator = "";
 
