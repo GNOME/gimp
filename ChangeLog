@@ -1,3 +1,8 @@
+2004-07-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/actions.c (action_groups): register the
+	GIMP_STOCK_VISIBLE icon with the "view" action group.
+
 2004-07-28  Shlomi Fish <shlomif@iglu.org.il>
 
 	* plug-ins/gimpressionist/brush.c: removed a redundant parameter

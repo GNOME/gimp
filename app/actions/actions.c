@@ -178,7 +178,7 @@ static GimpActionFactoryEntry action_groups[] =
   { "vectors", N_("Paths"), GIMP_STOCK_PATH,
     vectors_actions_setup,
     vectors_actions_update },
-  { "view", N_("View"), NULL,
+  { "view", N_("View"), GIMP_STOCK_VISIBLE,
     view_actions_setup,
     view_actions_update }
 };
