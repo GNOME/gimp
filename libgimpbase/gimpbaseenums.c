@@ -544,6 +544,35 @@ gimp_repeat_mode_get_type (void)
 }
 
 GType
+gimp_size_type_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_PIXELS, "GIMP_PIXELS", "pixels" },
+    { GIMP_POINTS, "GIMP_POINTS", "points" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_PIXELS, N_("Pixels"), NULL },
+    { GIMP_POINTS, N_("Points"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpSizeType", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_transfer_mode_get_type (void)
 {
   static const GEnumValue values[] =

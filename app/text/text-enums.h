@@ -67,13 +67,4 @@ typedef enum /*< pdb-skip >*/
 } GimpTextOutline;
 
 
-/*  backward compatibility enums  */
-
-typedef enum /*< skip >*/
-{
-  GIMP_PIXELS,
-  GIMP_POINTS
-} GimpSizeType;
-
-
 #endif /* __TEXT_ENUMS_H__ */

@@ -259,17 +259,6 @@ typedef enum
 } GimpRunMode;
 
 
-#define GIMP_TYPE_SIZE_TYPE (gimp_size_type_get_type ())
-
-GType gimp_size_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_PIXELS,
-  GIMP_POINTS
-} GimpSizeType;
-
-
 void           _gimp_enums_init          (void);
 
 const gchar ** gimp_enums_get_type_names (gint *n_type_names);

@@ -238,6 +238,17 @@ typedef enum
 } GimpRepeatMode;
 
 
+#define GIMP_TYPE_SIZE_TYPE (gimp_size_type_get_type ())
+
+GType gimp_size_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_PIXELS,  /*< desc="Pixels" >*/
+  GIMP_POINTS   /*< desc="Points" >*/
+} GimpSizeType;
+
+
 #define GIMP_TYPE_TRANSFER_MODE (gimp_transfer_mode_get_type ())
 
 GType gimp_transfer_mode_get_type (void) G_GNUC_CONST;

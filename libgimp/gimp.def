@@ -526,7 +526,6 @@ EXPORTS
 	gimp_shm_addr
 	gimp_show_help_button
 	gimp_show_tool_tips
-	gimp_size_type_get_type
 	gimp_smudge
 	gimp_smudge_default
 	gimp_temp_name

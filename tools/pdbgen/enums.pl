@@ -171,6 +171,13 @@ package Gimp::CodeGen::enums;
 		       GIMP_REPEAT_SAWTOOTH => '1',
 		       GIMP_REPEAT_TRIANGULAR => '2' }
 	},
+    GimpSizeType =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_PIXELS GIMP_POINTS) ],
+	  mapping => { GIMP_PIXELS => '0',
+		       GIMP_POINTS => '1' }
+	},
     GimpTransferMode =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
@@ -456,13 +463,6 @@ package Gimp::CodeGen::enums;
 	  symbols => [ qw(GIMP_OFFSET_BACKGROUND GIMP_OFFSET_TRANSPARENT) ],
 	  mapping => { GIMP_OFFSET_BACKGROUND => '0',
 		       GIMP_OFFSET_TRANSPARENT => '1' }
-	},
-    GimpSizeType =>
-	{ contig => 1,
-	  header => 'text/text-enums.h',
-	  symbols => [ qw(GIMP_PIXELS GIMP_POINTS) ],
-	  mapping => { GIMP_PIXELS => '0',
-		       GIMP_POINTS => '1' }
 	},
     GimpConvolveType =>
 	{ contig => 1,
