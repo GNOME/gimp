@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-25 00:02+0200\n"
-"PO-Revision-Date: 2004-07-14 20:44+0900\n"
+"POT-Creation-Date: 2004-10-08 17:21+0900\n"
+"PO-Revision-Date: 2004-10-08 17:22+0900\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1232,7 +1232,7 @@ msgstr "Fel vid läsning av BMP-filhuvud från \"%s\""
 
 #: plug-ins/bmp/bmpread.c:435
 msgid "Unrecognized or invalid BMP compression format."
-msgstr ""
+msgstr "Okänt eller ogiltigt BMP-kompressionsformat"
 
 #.
 #. * Create the "background" layer to hold the image...
