@@ -701,9 +701,8 @@ intersect_box (GimpVector3        scale,
   if (intersect_rect(scale.x,scale.y,-scale.z/2.0,viewp,dir,&face_intersect[i])==TRUE)
     {
       face_intersect[i].face = 1;
-      gimp_vector3_set(&face_intersect[i++].n, 0.0,0.0,-1.0);
       face_intersect[i].u = 1.0 - face_intersect[i].u;
-      face_intersect[i].v = 1.0 - face_intersect[i].v;
+      gimp_vector3_set(&face_intersect[i++].n, 0.0,0.0,-1.0);
       result = TRUE;
     }
 
@@ -1009,45 +1008,6 @@ intersect_circle (GimpVector3        vp,
   return(result);  
 }
 
-static gdouble
-compute_angle (gdouble x,
-	       gdouble y)
-{
-  gdouble a = 0;
-
-  /* Check which quadrant we're in and correct angle */
-  /* =============================================== */
- 
-  if (y==0.0)
-    {
-      if (x<0)
-        a = 0;
-      else
-        a = G_PI;
-    }
-  else
-    {
-      if (x!=0.0)
-        a = atan(y/x);
-      else
-        {
-          if (y>0.0)
-            a = G_PI/2.0;
-          else
-            a = 1.5 * G_PI;
-        }
-        
-      if (y<0.0 && x>0.0)      /* 4th quad, a is negative */
-        a = 2.0*G_PI + a;
-      else if (y<0.0 && x<0.0) /* 3rd quad, a is positive */
-        a = G_PI + a;
-      else if (y>0.0 && x<0.0) /* 2nd quad, a is negative */
-        a = G_PI + a;
-    }
-  
-  return(a);
-}
-
 static gboolean
 intersect_cylinder (GimpVector3        vp,
 		    GimpVector3        dir,
@@ -1095,7 +1055,7 @@ intersect_cylinder (GimpVector3        vp,
 
               l = mapvals.cylinder_length/2.0;
 
-              face_intersect[i].u = compute_angle(face_intersect[i].s.x,face_intersect[i].s.z)/(2.0*G_PI);
+              face_intersect[i].u = (atan2(face_intersect[i].s.x,face_intersect[i].s.z)+G_PI)/(2.0*G_PI);
               face_intersect[i].v = (face_intersect[i].s.y+l)/mapvals.cylinder_length;
 
               /* Mark hitpoint as on the cylinder hull */
@@ -1117,7 +1077,8 @@ intersect_cylinder (GimpVector3        vp,
                         result = FALSE;
                       else
                         {
-                          face_intersect[i].face = 1;
+                          face_intersect[i].face = 2;
+                          face_intersect[i].v = 1 - face_intersect[i].v;
                           gimp_vector3_set(&face_intersect[i].n, 0.0, 1.0, 0.0);
                         }
                     }
@@ -1127,7 +1088,7 @@ intersect_cylinder (GimpVector3        vp,
                         result = FALSE;
                       else
                         {
-                          face_intersect[i].face = 2;
+                          face_intersect[i].face = 1;
                           gimp_vector3_set(&face_intersect[i].n, 0.0, -1.0, 0.0);
                         }
                     }

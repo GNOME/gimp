@@ -561,7 +561,7 @@ install_dialog_create (InstallCallback callback)
   /*  B/Colored Style for the page title  */
   title_style = gtk_style_copy (page_style);
 
-  if (gdk_color_parse ("sienna1", &title_color) &&
+  if (gdk_color_parse ("dark orange", &title_color) &&
       gdk_colormap_alloc_color (colormap, &title_color, FALSE, TRUE))
     {
       title_style->bg[GTK_STATE_NORMAL] = title_color;
