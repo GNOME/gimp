@@ -1,3 +1,8 @@
+2003-08-28  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/tmpl/gimphelp.sgml
+	* libgimp/tmpl/gimpplugin.sgml: regenerated.
+
 2003-08-26  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/tmpl/gimpenums.sgml: updated GimpGradientType.

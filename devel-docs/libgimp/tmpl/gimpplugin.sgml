@@ -56,7 +56,10 @@ Functions useful for plugins, e.g. registration and progress indicators.
 
 </para>
 
-@help_path: 
+@domain_name: 
+@domain_uri: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@help_path: 
 
 
