@@ -19,10 +19,11 @@
 
 	* app/tools/color_balance.h
 	* app/tools/curves.h
-	* app/tools/gimptool.c
 	* app/tools/histogram_tool.h
 	* app/tools/hue_saturation.h
 	* app/tools/threshold.h: changed here too.
+
+	* app/tools/gimptool.c: removed old by_color_select stuff.
 
 	* libgimpbase/gimpbasetypes.h: /*< skip >*/ GIMP_UNIT_PERCENT as
 	it's a UI convenience thing and no unit.
