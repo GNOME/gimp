@@ -10,7 +10,7 @@ msgstr ""
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 msgid "expected perl-server at other end of socket, got @r\n"
@@ -23,53 +23,53 @@ msgid "<Image>/Filters/Logulator/Transparent Logo..."
 msgstr "<Image>/Filtros/Logoladores/Logo Transparente..."
 
 msgid "$s: not an integer\n"
-msgstr "$s: n„o È um inteiro\n"
+msgstr "$s: n√£o √© um inteiro\n"
 
 msgid "<Image>/Select/Round Rectangular Selection..."
-msgstr "<Imagem>/Seleccionar/SelecÁ„o Rectangular Redonda..."
+msgstr "<Imagem>/Seleccionar/Selec√ß√£o Rectangular Redonda..."
 
 msgid "<Image>/Guides/To Selection..."
-msgstr "<Image>/Guias/Para SelecÁ„o..."
+msgstr "<Image>/Guias/Para Selec√ß√£o..."
 
 msgid "Help for "
 msgstr "Ajuda para "
 
 msgid "illegal parasite specification, expected three array members"
-msgstr "especificaÁ„o parasita ilegal, esperava trÍs membros de matriz"
+msgstr "especifica√ß√£o parasita ilegal, esperava tr√™s membros de matriz"
 
 msgid "Last Modified"
-msgstr "⁄ltima ModificaÁ„o"
+msgstr "√öltima Modifica√ß√£o"
 
 msgid "unable to read '$fn': $!"
 msgstr "incapaz de ler '$fn': $!"
 
 msgid "<Image>/Filters/Map/Image Tile..."
-msgstr "<Image>/Filtros/Mapa/TÌtulo Imagem..."
+msgstr "<Image>/Filtros/Mapa/T√≠tulo Imagem..."
 
 msgid "<Image>/Filters/Logulator/Crystal"
 msgstr "<Image>/Filtros/Logolador/Cristal"
 
 msgid "Unable to read temporary image tile $tmp: $!"
-msgstr "Incapaz de ler mosaico tempor·rio de imagem $tmp: $!"
+msgstr "Incapaz de ler mosaico tempor√°rio de imagem $tmp: $!"
 
 msgid "run_mode must be INTERACTIVE, NONINTERACTIVE or RUN_WITH_LAST_VALS\n"
 msgstr ""
 "run_mode tem de ser INTERACTIVE, NONINTERACTIVE ou RUN_WITH_LAST_VALS\n"
 
 msgid "Font Selection Dialog ($desc)"
-msgstr "Di·logo de SelecÁ„o Fontes ($desc)"
+msgstr "Di√°logo de Selec√ß√£o Fontes ($desc)"
 
 msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
 msgstr "xlfd_unpack: XLFD sem par '$fontname'\n"
 
 msgid "<Image>/Filters/Noise/Xach Vision..."
-msgstr "<Image>/Filtros/Ruido/Vis„o Xach..."
+msgstr "<Image>/Filtros/Ruido/Vis√£o Xach..."
 
 msgid ""
 "$function: function name contains unusual characters, good style is to use "
 "only 0-9, a-z and _"
 msgstr ""
-"$function: nome de funÁ„o contÈm caracteres n„o normais, bom estilo È "
+"$function: nome de fun√ß√£o cont√©m caracteres n√£o normais, bom estilo √© "
 "utilizar apenas 0-9, a-z e _"
 
 msgid "Help"
@@ -94,7 +94,7 @@ msgid "/Filters/Logulator"
 msgstr "/Filtros/Logolador"
 
 msgid "dunno how to return param type %d"
-msgstr "desconhece-se como devolver tipo de par‚metro %d"
+msgstr "desconhece-se como devolver tipo de par√¢metro %d"
 
 msgid "<Image>/Image/Alpha/Alpha2Color..."
 msgstr "<Image>/Imagem/Alfa/AlfaParaCor..."
@@ -108,7 +108,7 @@ msgstr "<Image>/Filtros/Renderizar/Estampilhar..."
 msgid "could not connect to the gimp server (make sure Perl-Server is running)"
 msgstr ""
 "incapaz de se ligar ao servidor gimp (certifique-se de que o Perl-Server "
-"est· a correr)"
+"est√° a correr)"
 
 msgid "<Toolbox>/Xtns/Render/Stamps..."
 msgstr "<Toolbox>/Exten/Renderizar/Estampilhas..."
@@ -120,16 +120,16 @@ msgid "<Toolbox>/Xtns/Render/Logos/Firetext..."
 msgstr "<Toolbox>/Exten/Renderizar/Logos/Texto em Chama..."
 
 msgid "interface=... tag is no longer supported\n"
-msgstr "etiqueta interface=... j· n„o È suportada\n"
+msgstr "etiqueta interface=... j√° n√£o √© suportada\n"
 
 msgid "Text"
 msgstr "Texto"
 
 msgid "<Image>/Filters/Render/Random Blends..."
-msgstr "<Image>/Filtros/Renderizar/Misturas AleatÛrias..."
+msgstr "<Image>/Filtros/Renderizar/Misturas Aleat√≥rias..."
 
 msgid "Synopsis"
-msgstr "SinÛpsis"
+msgstr "Sin√≥psis"
 
 msgid "Plug-In Path"
 msgstr "Caminho Plug-In"
@@ -138,10 +138,10 @@ msgid "Restore values to the previous ones"
 msgstr "Repor valores nos anteriores"
 
 msgid "Illegal default font description for $function: $val\n"
-msgstr "DescriÁ„o ilegal da fonte de defeito para $function: $val\n"
+msgstr "Descri√ß√£o ilegal da fonte de defeito para $function: $val\n"
 
 msgid "parameter '$entry->[1]' is not optional\n"
-msgstr "par‚metro '$entry->[1]' n„o È opcional\n"
+msgstr "par√¢metro '$entry->[1]' n√£o √© opcional\n"
 
 msgid "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
 msgstr "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
@@ -156,7 +156,7 @@ msgid "register called with too many or wrong arguments\n"
 msgstr "registo chamado com demasiados argumentos ou argumentos incorrectos\n"
 
 msgid "<Image>/Filters/Animation/Animate Cells..."
-msgstr "<Image>/Filtros/AnimaÁ„o/Animar CÈlulas..."
+msgstr "<Image>/Filtros/Anima√ß√£o/Animar C√©lulas..."
 
 msgid "Spin Layer SRC (250ms)"
 msgstr "Rodar Camada SRC (250ms)"
@@ -165,7 +165,7 @@ msgid ""
 "malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or "
 "PARAM_TYPE"
 msgstr ""
-"def par‚metro mal-formada, era esperado [TIPO_PARAM,\"NOME\",\"DESCRI«√O\"] "
+"def par√¢metro mal-formada, era esperado [TIPO_PARAM,\"NOME\",\"DESCRI√á√ÉO\"] "
 "ou TIPO_PARAM"
 
 msgid ""
@@ -177,7 +177,7 @@ msgstr ""
 
 msgid "last argument to gimp_pattern_select_widget must be scalar ref"
 msgstr ""
-"˙ltimo argumento para gimp_pattern_select_widget tem de ser um scalar ref"
+"√∫ltimo argumento para gimp_pattern_select_widget tem de ser um scalar ref"
 
 msgid ""
 "\n"
@@ -187,7 +187,7 @@ msgid ""
 msgstr ""
 "\n"
 "\n"
-"DOCUMENTA«√O POD EMBEBIDA:\n"
+"DOCUMENTA√á√ÉO POD EMBEBIDA:\n"
 "\n"
 
 msgid "Fileselector for $name"
@@ -200,13 +200,13 @@ msgid "unable to convert Gimp::Drawable into Gimp::GimpDrawable (id %d)"
 msgstr "incapaz de converter Gimp::Drawable em Gimp::GimpDrawable (id %d)"
 
 msgid "<Image>/Filters/Distorts/MirrorSplit..."
-msgstr "<Image>/Filtros/DistorÁıes/Divis„o Espelho..."
+msgstr "<Image>/Filtros/Distor√ß√µes/Divis√£o Espelho..."
 
 msgid "<Image>/Filters/Noise/Feedback..."
 msgstr "<Image>/Filtros/Ruido/Retorno..."
 
 msgid "<Toolbox>/Xtns/Animation/Billboard..."
-msgstr "<Toolbox>/Exten/AnimaÁ„o/Placard..."
+msgstr "<Toolbox>/Exten/Anima√ß√£o/Placard..."
 
 msgid "unable to create listening unix socket: $!\n"
 msgstr "incapaz de criar socket unix de escuta: $!\n"
@@ -215,10 +215,10 @@ msgid ", %d bytes data]"
 msgstr ", %d bytes dados]"
 
 msgid "server requests authorization, but no authorization available\n"
-msgstr "servidor requer autorizaÁ„o, mas nenhuma autorizaÁ„o disponÌvel\n"
+msgstr "servidor requer autoriza√ß√£o, mas nenhuma autoriza√ß√£o dispon√≠vel\n"
 
 msgid "pdl height != region height"
-msgstr "altura pdl != altura regi„o"
+msgstr "altura pdl != altura regi√£o"
 
 msgid "<Image>/Guides/Center Guide..."
 msgstr "<Image>/Guias/Guia Central..."
@@ -230,54 +230,54 @@ msgid "unable to open $rgb_db_path"
 msgstr "incapaz de abrir $rgb_db_path"
 
 msgid "You can't run this script with an INDEXED image!!"
-msgstr "N„o pode executar este script com uma imagem INDEXADA!!"
+msgstr "N√£o pode executar este script com uma imagem INDEXADA!!"
 
 msgid ""
 "An even number of frames is needed for spin back.\n"
 "Adjusted frames up to $frames"
 msgstr ""
-"… necess·rio um n˙mero par de frames para uma reviravolta.\n"
+"√â necess√°rio um n√∫mero par de frames para uma reviravolta.\n"
 "Frames ajustadas para $frames"
 
 msgid "<Image>/Filters/Render/Add Glow"
 msgstr "<Image>/Filtros/Renderizar/Adicionar Brilho"
 
 msgid "function name contains dashes instead of underscores"
-msgstr "nome de funÁ„o contÈm barras em vez de underscores (_)"
+msgstr "nome de fun√ß√£o cont√©m barras em vez de underscores (_)"
 
 msgid "required callback 'run' not found\n"
-msgstr "callback 'run' requerido n„o encontrado\n"
+msgstr "callback 'run' requerido n√£o encontrado\n"
 
 msgid ""
 "$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-"
 "z and _ allowed"
 msgstr ""
-"$function: nome de argumento '$p->[1]' contÈm caracteres ilegais, apenas "
+"$function: nome de argumento '$p->[1]' cont√©m caracteres ilegais, apenas "
 "permitidos 0-9, a-z e _"
 
 msgid "required callback 'query' not found\n"
-msgstr "'query' de callback requerida n„o encontrada\n"
+msgstr "'query' de callback requerida n√£o encontrada\n"
 
 msgid ""
 "Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a "
 "string"
 msgstr ""
 "Esperado um INT32 mas obtido '%s'. Adicionar '*1' se deseja mesmo passar uma "
-"express„o"
+"express√£o"
 
 msgid "wrong authorization, aborting connection"
-msgstr "autorizaÁ„o incorrecta, a abortar ligaÁ„o"
+msgstr "autoriza√ß√£o incorrecta, a abortar liga√ß√£o"
 
 msgid ""
 "invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
 msgstr ""
-"GIMP_HOST inv·lido: 'spawn' no È um mÈtodo de ligaÁ„o v·lido para o servidor"
+"GIMP_HOST inv√°lido: 'spawn' no √© um m√©todo de liga√ß√£o v√°lido para o servidor"
 
 msgid "WARNING"
 msgstr "AVISO"
 
 msgid "Brush Selection Dialog"
-msgstr "Di·logo de SelecÁ„o Pincel"
+msgstr "Di√°logo de Selec√ß√£o Pincel"
 
 msgid "(none)"
 msgstr "(nenhum)"
@@ -290,7 +290,7 @@ msgstr ""
 "esquecido de 'use strict'"
 
 msgid "authorization required for tcp connections"
-msgstr "requerida autorizaÁ„o para ligaÁıes tcp"
+msgstr "requerida autoriza√ß√£o para liga√ß√µes tcp"
 
 msgid "[undefined]"
 msgstr "[indefenido]"
@@ -299,13 +299,13 @@ msgid "<Image>/Guides/Remove Guides"
 msgstr "<Image>/Guias/Remover Guias"
 
 msgid "unable to open Gimp::Net communications socket: $!\n"
-msgstr "incapaz de abrir socket de comunicaÁıes Gimp::Net: $!\n"
+msgstr "incapaz de abrir socket de comunica√ß√µes Gimp::Net: $!\n"
 
 msgid "You can't run this script without an ALPHA CHANNEL!!"
-msgstr "N„o pode executar este script sem um ALPHA CHANNEL!!"
+msgstr "N√£o pode executar este script sem um ALPHA CHANNEL!!"
 
 msgid "WARNING: shared locking requested but not implemented"
-msgstr "AVISO: pedida exclusividade partilhada mas tal ainda n„o implementado"
+msgstr "AVISO: pedida exclusividade partilhada mas tal ainda n√£o implementado"
 
 msgid "<Toolbox>/Xtns/Render/Yin-Yang..."
 msgstr "<Toolbox>/Exten/Renderizar/Yin-Yang..."
@@ -314,33 +314,33 @@ msgid "<Image>/Filters/Logulator/SOTA Chrome"
 msgstr "<Image>/Filtros/Logulador/Croma SOTA"
 
 msgid "%s: procedural database execution failed"
-msgstr "%s: execuÁ„o de procedimento de base de dados falhou"
+msgstr "%s: execu√ß√£o de procedimento de base de dados falhou"
 
 msgid "<Image>/Video/VCR Console..."
 msgstr "<Image>/Video/Consola VCR..."
 
 msgid ", authorization required"
-msgstr ", requerida autorizaÁ„o"
+msgstr ", requerida autoriza√ß√£o"
 
 msgid "<Toolbox>/Xtns/Render/Golden Mean..."
-msgstr "<Toolbox>/Exten/Renderizar/MÈdia Dourada..."
+msgstr "<Toolbox>/Exten/Renderizar/M√©dia Dourada..."
 
 msgid "unable to create socketpair for gimp communications: $!"
-msgstr "incapaz de criar socketpair para comunicaÁıes gimp: $!"
+msgstr "incapaz de criar socketpair para comunica√ß√µes gimp: $!"
 
 msgid "<Image>/View/3D Surface..."
-msgstr "<Image>/Ver/SuperfÌcie 3D..."
+msgstr "<Image>/Ver/Superf√≠cie 3D..."
 
 msgid "trying to start gimp with options \"$opt\"\n"
-msgstr "a tentar iniciar o gimp com as opÁıes \"$opt\"\n"
+msgstr "a tentar iniciar o gimp com as op√ß√µes \"$opt\"\n"
 
 msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel..."
-msgstr "<Toolbox>/Exten/Renderizar/Logos/Depress„o Interna..."
+msgstr "<Toolbox>/Exten/Renderizar/Logos/Depress√£o Interna..."
 
 msgid ""
 "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
 msgstr ""
-"caminho de menu tem de comeÁar por <Image>, <Toolbox>, <Load>, <Save> ou "
+"caminho de menu tem de come√ßar por <Image>, <Toolbox>, <Load>, <Save> ou "
 "<None>!"
 
 msgid "<Image>/Filters/Misc/Magick..."
@@ -353,7 +353,7 @@ msgid "<Image>/Edit/Repeat & Duplicate..."
 msgstr "<Image>/Editar/Repetir & Duplicar..."
 
 msgid "accepted unix connection"
-msgstr "ligaÁ„o unix aceite"
+msgstr "liga√ß√£o unix aceite"
 
 msgid "<Image>/Filters/Colors/Map To Gradient..."
 msgstr "<Image>/Filtros/Cores/Mapa de Gradientes..."
@@ -362,7 +362,7 @@ msgid "<Image>/Filters/Logulator/Imigre-26"
 msgstr "<Image>/Filtros/Logulador/Imigre-26"
 
 msgid "gimp_tile_get_data is not yet implemented\n"
-msgstr "gimp_tile_get_data ainda n„o est· implementado\n"
+msgstr "gimp_tile_get_data ainda n√£o est√° implementado\n"
 
 msgid "dunno how to pass arg type %d"
 msgstr "desconhece-se como passar argumento do tipo %d"
@@ -406,37 +406,37 @@ msgid "OK"
 msgstr "OK"
 
 msgid "gimp_tile_set_data is not yet implemented\n"
-msgstr "gimp_tile_set_data ainda n„o est· implementado\n"
+msgstr "gimp_tile_set_data ainda n√£o est√° implementado\n"
 
 msgid "argument incompatible with type IMAGE"
-msgstr "argumento incompatÌvel com o tipo IMAGE"
+msgstr "argumento incompat√≠vel com o tipo IMAGE"
 
 msgid "accepting connections on port $port"
-msgstr "a aceitar ligaÁıes no porto $port"
+msgstr "a aceitar liga√ß√µes no porto $port"
 
 msgid "<Image>/Filters/Text/Terral Text..."
 msgstr "<Image>/Filtros/Texto/Texto Terral..."
 
 msgid "Description"
-msgstr "DescriÁ„o"
+msgstr "Descri√ß√£o"
 
 msgid "params and return_vals must be array refs (even if empty)!"
-msgstr "params e return_vals tÍm de ser array refs (mesmo que vazios)!"
+msgstr "params e return_vals t√™m de ser array refs (mesmo que vazios)!"
 
 msgid "<Image>/Filters/Logulator/Newsprint text"
 msgstr "<Image>/Filtros/Logulador/Texto tipo jornal"
 
 msgid "<Image>/Filters/Animation/BlowInOut..."
-msgstr "<Image>/Filtros/AnimaÁ„o/SoprarInspirar..."
+msgstr "<Image>/Filtros/Anima√ß√£o/SoprarInspirar..."
 
 msgid "$_: illegal switch, try $0 --help\n"
 msgstr "$_: switch ilegal, tente $0 --help\n"
 
 msgid "Unable to convert a reference to type '%s'"
-msgstr "Incapaz de converter uma referÍncia para tipo '%s'"
+msgstr "Incapaz de converter uma refer√™ncia para tipo '%s'"
 
 msgid "<Image>/Filters/Text/TeX String..."
-msgstr "<Image>/Filtros/Texto/Express„o TeX..."
+msgstr "<Image>/Filtros/Texto/Express√£o TeX..."
 
 msgid "<Image>/Guides/Guide Grid..."
 msgstr "<Image>/Guias/Grelha Guia..."
@@ -445,13 +445,13 @@ msgid "<Toolbox>/Xtns/PDB Explorer..."
 msgstr "<Toolbox>/Exten/Navegador PDB..."
 
 msgid "<Image>/Filters/Distorts/Windify..."
-msgstr "<Image>/Filtros/DistorÁıes/Ventar..."
+msgstr "<Image>/Filtros/Distor√ß√µes/Ventar..."
 
 msgid "<Image>/Filters/Apply Perl Expression..."
-msgstr "<Image>/Filtros/Aplicar Express„o Perl..."
+msgstr "<Image>/Filtros/Aplicar Express√£o Perl..."
 
 msgid "gimp procedure '%s' not found"
-msgstr "procedimento gimp '%s' n„o encontrado"
+msgstr "procedimento gimp '%s' n√£o encontrado"
 
 msgid "Visual Scriptor"
 msgstr "Scriptor Visual"
@@ -463,13 +463,13 @@ msgid "server going down..."
 msgstr "servidor a desligar..."
 
 msgid "unable to read temporary file $tmp: $!"
-msgstr "incapaz de ler ficheiro tempor·rio $tmp: $!"
+msgstr "incapaz de ler ficheiro tempor√°rio $tmp: $!"
 
 msgid "Saving '$filename' as COLORHTML..."
 msgstr "A gravar '$filename' como COLORHTML..."
 
 msgid "being called as '%s', but '%s' not registered in the pdb"
-msgstr "a ser chamado como '%s', mas '%s' n„o est· registado no pdb"
+msgstr "a ser chamado como '%s', mas '%s' n√£o est√° registado no pdb"
 
 msgid "Shortcuts"
 msgstr "Atalhos"
@@ -487,12 +487,12 @@ msgid "9x15bold"
 msgstr "9x15negrito"
 
 msgid "unauthorized command received, aborting connection"
-msgstr "recebido comando n„o autorizado, a abortar ligaÁ„o"
+msgstr "recebido comando n√£o autorizado, a abortar liga√ß√£o"
 
 msgid "%s: procedural database execution failed on invalid input arguments"
 msgstr ""
-"%s: procedimento de base de dados falhou devido a par‚metros de entrada "
-"inv·lidos"
+"%s: procedimento de base de dados falhou devido a par√¢metros de entrada "
+"inv√°lidos"
 
 msgid "<Toolbox>/Xtns/Visual Scriptor..."
 msgstr "<Toolbox>/Exten/Scriptor Visual..."
@@ -501,19 +501,19 @@ msgid "NAME"
 msgstr "NOME"
 
 msgid "WARNING: $function returned something that is not an image: \"$img\"\n"
-msgstr "AVISO: $function devolveu algo que n„o È uma imagem: \"$img\"\n"
+msgstr "AVISO: $function devolveu algo que n√£o √© uma imagem: \"$img\"\n"
 
 msgid "<Image>/Filters/Colors/Fire..."
 msgstr "<Image>/Filtros/Cores/Fogo..."
 
 msgid "<Image>/Filters/Logulator/Web title header"
-msgstr "<Image>/Filtros/Logulador/CabeÁalho Web"
+msgstr "<Image>/Filtros/Logulador/Cabe√ßalho Web"
 
 msgid "FATAL: canonicalize_colour did not return a value!"
-msgstr "FATAL: canonicalize_colour n„o devolveu um valor!"
+msgstr "FATAL: canonicalize_colour n√£o devolveu um valor!"
 
 msgid "export failed"
-msgstr "exportaÁ„o falhou"
+msgstr "exporta√ß√£o falhou"
 
 msgid ""
 "       interface-arguments are\n"
@@ -521,12 +521,12 @@ msgid ""
 "           -i | --interact            let the user edit the values first\n"
 "       script-arguments are\n"
 msgstr ""
-"       argumentos-interface s„o\n"
-"           -o | --output <filespec>   escrever imagem para disco, n„o "
+"       argumentos-interface s√£o\n"
+"           -o | --output <filespec>   escrever imagem para disco, n√£o "
 "mostrar\n"
 "           -i | --interact            permitir que o utilizador edite os "
 "valores primeiro\n"
-"       argumentos-script s„o\n"
+"       argumentos-script s√£o\n"
 
 msgid "<Image>/Filters/Edge-Detect/2x2 Edge Detect"
 msgstr "<Image>/Filtros/Detectar-Limite/Detectar Limite 2x2"
@@ -535,20 +535,20 @@ msgid "<Image>/Layers/Center Layer"
 msgstr "<Image>/Camadas/Camada Central"
 
 msgid "closing connection %d (%d requests in %g seconds)"
-msgstr "a fechar ligaÁ„o %d (%d pedidos em %g segundos)"
+msgstr "a fechar liga√ß√£o %d (%d pedidos em %g segundos)"
 
 msgid "Reset all values to their default"
 msgstr "Reiniciar todos os valores para os seus defeitos"
 
 msgid "<Image>/Filters/Misc/Border Average..."
-msgstr "<Image>/Filtros/Misc/MÈdia Margem..."
+msgstr "<Image>/Filtros/Misc/M√©dia Margem..."
 
 msgid ""
 "conversion from string to type $pf_type2string{$type} is not yet "
 "implemented\n"
 msgstr ""
-"convers„o de express„o para o tipo $pf_type2string{$type} ainda n„o "
-"est· implementada\n"
+"convers√£o de express√£o para o tipo $pf_type2string{$type} ainda n√£o "
+"est√° implementada\n"
 
 msgid ""
 "Usage: $0 [gimp-args..] [interface-args..] [script-args..]\n"
@@ -560,8 +560,8 @@ msgid ""
 "PORT)\n"
 "                                      (for more info, see Gimp::Net(3))\n"
 msgstr ""
-"UtilizaÁ„o: $0 [args-gimp..] [args-interface..] [args-script..]\n"
-"       argumentos-gimp s„o\n"
+"Utiliza√ß√£o: $0 [args-gimp..] [args-interface..] [args-script..]\n"
+"       argumentos-gimp s√£o\n"
 "           -gimp <qualquer-coisa>     utilizado apenas internamente\n"
 "           -h | -help | --help | -?   imprime alguma ajuda\n"
 "           -v | --verbose             ser mais descritivo no que faz\n"
@@ -575,45 +575,45 @@ msgstr "demasiados argumentos"
 msgid ""
 "dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
 msgstr ""
-"falha de dimensıes, pdl tem dimensıes %d mas as dimensıes m·ximas permitidas "
-"s„o %d"
+"falha de dimens√µes, pdl tem dimens√µes %d mas as dimens√µes m√°ximas permitidas "
+"s√£o %d"
 
 msgid "Load"
 msgstr "Ler"
 
 msgid "unable to grok colour specification"
-msgstr "incapaz de fazer grok ‡ especificaÁ„o de cor"
+msgstr "incapaz de fazer grok √† especifica√ß√£o de cor"
 
 msgid "no additional information available, use --help\n"
-msgstr "nenhuma informaÁ„o adicional disponÌvel, utilize --help\n"
+msgstr "nenhuma informa√ß√£o adicional dispon√≠vel, utilize --help\n"
 
 msgid ""
 "the gtk perl module is required to open a dialog\n"
 "window, running with default values"
 msgstr ""
-"o mÛdulo perl gtk È requerido para abrir uma janela\n"
-"de di·logo, a executar com valores de defeito"
+"o m√≥dulo perl gtk √© requerido para abrir uma janela\n"
+"de di√°logo, a executar com valores de defeito"
 
 msgid "Gradient Selection Dialog"
-msgstr "Di·logo de SelecÁ„o de Gradiente"
+msgstr "Di√°logo de Selec√ß√£o de Gradiente"
 
 msgid " matching functions"
-msgstr " funÁıes equivalentes"
+msgstr " fun√ß√µes equivalentes"
 
 msgid "authorization ok, but: $r[1]\n"
-msgstr "autorizaÁ„o ok, mas: $r[1]\n"
+msgstr "autoriza√ß√£o ok, mas: $r[1]\n"
 
 msgid "Cannot call '$AUTOLOAD' at this time"
 msgstr "De momento incapaz de invocar '$AUTOLOAD'"
 
 msgid "function/macro \"$name\" not found in $class"
-msgstr "function/macro \"$name\" n„o encontrada em $class"
+msgstr "function/macro \"$name\" n√£o encontrada em $class"
 
 msgid "arguments to main not yet supported!"
-msgstr "argumentos para main ainda n„o suportados!"
+msgstr "argumentos para main ainda n√£o suportados!"
 
 msgid "accepting connections in $host"
-msgstr "a aceitar ligaÁıes no $host"
+msgstr "a aceitar liga√ß√µes no $host"
 
 msgid " (press Tab to complete)"
 msgstr " (prima Tab para completar)"
@@ -622,16 +622,16 @@ msgid "Save $name"
 msgstr "Gravar $name"
 
 msgid "<Image>/Filters/Enhance/Warp Sharp..."
-msgstr "<Image>/Filtros/Melhorar/CrÌspido Warp..."
+msgstr "<Image>/Filtros/Melhorar/Cr√≠spido Warp..."
 
 msgid "<Image>/Filters/Web/Prepare for GIF..."
 msgstr "<Image>/Filtros/Web/Preparar para GIF..."
 
 msgid "illegal type for colour specification"
-msgstr "tipo ilegal para especificaÁ„o de cor"
+msgstr "tipo ilegal para especifica√ß√£o de cor"
 
 msgid "<Image> plug-in called without both image and drawable arguments!\n"
-msgstr "plug-in <Image> chamado sem ambos os argumentos imagem e desenh·vel!\n"
+msgstr "plug-in <Image> chamado sem ambos os argumentos imagem e desenh√°vel!\n"
 
 msgid "Seth Spin..."
 msgstr "Espiral Seth..."
@@ -646,7 +646,7 @@ msgid "No horizontal or vertical guides found. Aborted."
 msgstr "Nenhumas guias horizontais ou verticais encontradas. Abortado."
 
 msgid "accepting connections on port $Gimp::Net::default_tcp_port"
-msgstr "a aceitar ligaÁıes no porto $Gimp::Net::default_tcp_port"
+msgstr "a aceitar liga√ß√µes no porto $Gimp::Net::default_tcp_port"
 
 msgid "Menu Path"
 msgstr "Caminho Menu"
@@ -664,22 +664,22 @@ msgid "<Image>/Filters/Blur/2x2 Blur"
 msgstr "<Image>/Filtros/Esborratar/Esborratar 2x2"
 
 msgid "interface '$interface_type' unsupported."
-msgstr "interface '$interface_type' n„o suportado."
+msgstr "interface '$interface_type' n√£o suportado."
 
 msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
 msgstr "<Image>/Filtros/Melhorar/Melhorar Contraste 2x2"
 
 msgid "<Load> plug-in called without the 3 standard arguments!\n"
-msgstr "plug-in <Load> chamado sem os 3 par‚metros standard!\n"
+msgstr "plug-in <Load> chamado sem os 3 par√¢metros standard!\n"
 
 msgid "Unable to grok '%s' as colour specifier"
 msgstr "Incapaz de grok '%s' como especificador de cor"
 
 msgid "gimp-perl-pixel functions require the PDL::Core module"
-msgstr "funÁıes gimp-perl-pixel requerem o mÛdulo PDL::Core"
+msgstr "fun√ß√µes gimp-perl-pixel requerem o m√≥dulo PDL::Core"
 
 msgid "a color must have three components (array elements)"
-msgstr "uma cor tem de ter trÍs componentes (elementos de matriz)"
+msgstr "uma cor tem de ter tr√™s componentes (elementos de matriz)"
 
 msgid "Defaults"
 msgstr "Defeitos"
@@ -688,10 +688,10 @@ msgid "Copyright"
 msgstr "Copyright"
 
 msgid "<Image>/Select/Triangle..."
-msgstr "<Image>/Seleccionar/Tri‚ngulo..."
+msgstr "<Image>/Seleccionar/Tri√¢ngulo..."
 
 msgid "<Image>/Filters/Render/Burst..."
-msgstr "<Image>/Filtros/Renderizar/Explos„o..."
+msgstr "<Image>/Filtros/Renderizar/Explos√£o..."
 
 msgid "WARNING: client disconnected while holding an active lock\n"
 msgstr "AVISO: cliente desligou-se mantendo uma exclusividade activa\n"
@@ -703,36 +703,36 @@ msgid "/Xtns/Render/Logos"
 msgstr "/Exten/Renderizar/Logos"
 
 msgid "argument is not of type %s"
-msgstr "argumento n„o È do tipo %s"
+msgstr "argumento n√£o √© do tipo %s"
 
 msgid "server version $Gimp::VERSION started"
-msgstr "servidor da vers„o $Gimp::VERSION iniciado"
+msgstr "servidor da vers√£o $Gimp::VERSION iniciado"
 
 msgid "Background"
 msgstr "Fundo"
 
 msgid "%s arguments for function '%s'"
-msgstr "%s argumentos para funÁ„o '%s'"
+msgstr "%s argumentos para fun√ß√£o '%s'"
 
 msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
-msgstr "<Toolbox>/Exten/Renderizar/Logos/AÁo Brilhante"
+msgstr "<Toolbox>/Exten/Renderizar/Logos/A√ßo Brilhante"
 
 msgid "only blessed scalars accepted here"
 msgstr "apenas aceites aqui escalares 'blessed'"
 
 msgid "expected protocol version $Gimp::_PROT_VERSION, but server uses $r[0]\n"
 msgstr ""
-"esperada vers„o de protocolo $Gimp::_PROT_VERSION, mas servidor utiliza $r"
+"esperada vers√£o de protocolo $Gimp::_PROT_VERSION, mas servidor utiliza $r"
 "[0]\n"
 
 msgid "illegal parasite specification, arrayref expected"
-msgstr "especificaÁ„o parasita ilegal, esperado arrayref"
+msgstr "especifica√ß√£o parasita ilegal, esperado arrayref"
 
 msgid ""
 "dimension mismatch, pdl has dimension %d but at least %d dimensions required"
 msgstr ""
-"falha de dimens„o, pdl tem dimens„o %d mas s„o requeridas pelo menos %d "
-"dimensıes"
+"falha de dimens√£o, pdl tem dimens√£o %d mas s√£o requeridas pelo menos %d "
+"dimens√µes"
 
 msgid "Save"
 msgstr "Gravar"
@@ -741,7 +741,7 @@ msgid "<Image>/Filters/Logulator/Carved"
 msgstr "<Image>/Filtros/Logulador/Gravado"
 
 msgid "Function Info"
-msgstr "Info FunÁ„o"
+msgstr "Info Fun√ß√£o"
 
 msgid "no font specified, using default"
 msgstr "nenhuma fonte especificada, a utilizar defeito"
@@ -750,11 +750,11 @@ msgid ""
 "the gtk perl module is required to run\n"
 "this plug-in in interactive mode\n"
 msgstr ""
-"o mÛdulo gtk perl È requerido para executar\n"
+"o m√≥dulo gtk perl √© requerido para executar\n"
 "este plug-in em modo interactivo\n"
 
 msgid "authorization failed: $r[1]\n"
-msgstr "autorizaÁ„o falhou: $r[1]\n"
+msgstr "autoriza√ß√£o falhou: $r[1]\n"
 
 msgid "Previous"
 msgstr "Anterior"
@@ -766,14 +766,14 @@ msgid ""
 "$function: calling $AUTOLOAD without specifying the :auto import tag is "
 "deprecated!\n"
 msgstr ""
-"$function: chamada a $AUTOLOAD sem especificar a etiqueta de importaÁ„o :"
-"auto est· obsoleta!\n"
+"$function: chamada a $AUTOLOAD sem especificar a etiqueta de importa√ß√£o :"
+"auto est√° obsoleta!\n"
 
 msgid "<Toolbox>/Xtns/Render/Bricks..."
 msgstr "<Toolbox>/Exten/Renderizar/Tijolos..."
 
 msgid "DESCRIPTION"
-msgstr "DESCRI«√O"
+msgstr "DESCRI√á√ÉO"
 
 msgid "Accelerator"
 msgstr "Acelerador"
@@ -785,7 +785,7 @@ msgid "<Image>/Filters/Map/Xach Shadows..."
 msgstr "<Image>/Filtros/Mapa/Sombras Xach..."
 
 msgid "argument type %s expected (not %s)"
-msgstr "esperado tipo de argumento %s (n„o %s)"
+msgstr "esperado tipo de argumento %s (n√£o %s)"
 
 msgid "BG"
 msgstr "FD"
@@ -793,14 +793,14 @@ msgstr "FD"
 msgid ""
 "pixel size mismatch, pdl has %d channel pixels but %d channels are required"
 msgstr ""
-"falha de tamanho de pixel, pdl tem %d canais de pixeis mas s„o requeridos %d "
+"falha de tamanho de pixel, pdl tem %d canais de pixeis mas s√£o requeridos %d "
 "canais"
 
 msgid "<Image>/Filters/Render/Highlight Edges..."
 msgstr "<Image>/Filtros/Renderizar/Sobresair Margens..."
 
 msgid "This module was built without support for PDL."
-msgstr "Este mÛdulo foi compilado sem suporte para PDL."
+msgstr "Este m√≥dulo foi compilado sem suporte para PDL."
 
 msgid "[unfinished]\n"
 msgstr "[por terminar]\n"
@@ -812,16 +812,16 @@ msgid "Bumpmap"
 msgstr "Bumpmap"
 
 msgid "Date/Version"
-msgstr "Data/Vers„o"
+msgstr "Data/Vers√£o"
 
 msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
 msgstr "$function: argumento/tipo retorno '$p->[1]' tem tipo ilegal '$p->[0]'"
 
 msgid "required callback 'net' not found\n"
-msgstr "callback 'net' requerido n„o encontrado\n"
+msgstr "callback 'net' requerido n√£o encontrado\n"
 
 msgid "function '$exe' not found in this script (must be one of "
-msgstr "funÁ„o '$exe' n„o encontrada neste script (tem de ser uma de "
+msgstr "fun√ß√£o '$exe' n√£o encontrada neste script (tem de ser uma de "
 
 msgid "<Image>/Filters/Colors/Colour To Alpha..."
 msgstr "<Image>/Filtros/Cores/Cores Para Alfa..."
@@ -830,10 +830,10 @@ msgid "/Xtns/Perl"
 msgstr "/Exten/Perl"
 
 msgid "<Toolbox>/Xtns/Render/Random Art #1..."
-msgstr "<Toolbox>/Exten/Renderizar/Arte AleatÛria #1..."
+msgstr "<Toolbox>/Exten/Renderizar/Arte Aleat√≥ria #1..."
 
 msgid "accepted tcp connection from "
-msgstr "aceite ligaÁ„o tcp de "
+msgstr "aceite liga√ß√£o tcp de "
 
 msgid "Status"
 msgstr "Estado"
@@ -845,19 +845,19 @@ msgid "<Save> plug-in called without the 5 standard arguments!\n"
 msgstr "plug-in <Save> chamado sem os 5 argumentos standard!\n"
 
 msgid "unable to accept unix connection: $!\n"
-msgstr "incapaz de aceitar ligaÁ„o unix: $!\n"
+msgstr "incapaz de aceitar liga√ß√£o unix: $!\n"
 
 msgid "<Toolbox>/Xtns/Perl Example Plug-in"
 msgstr "<Toolbox>/Exten/Plug-in Exemplo Perl"
 
 msgid "<Toolbox>/Xtns/Render/Povray/Preferences..."
-msgstr "<Toolbox>/Exten/Renderizar/Povray/PreferÍncias..."
+msgstr "<Toolbox>/Exten/Renderizar/Povray/Prefer√™ncias..."
 
 msgid "unable to accept tcp connection: $!\n"
-msgstr "incapaz de aceitar ligaÁ„o tcp: $!\n"
+msgstr "incapaz de aceitar liga√ß√£o tcp: $!\n"
 
 msgid "(UNINITIALIZED)"
-msgstr "(N√O INICIALIZADO)"
+msgstr "(N√ÉO INICIALIZADO)"
 
 msgid "<Image>/Filters/Render/Brushed Metal..."
 msgstr "<Image>/Filtros/Renderizar/Metal Polido..."
@@ -872,7 +872,7 @@ msgid "Unable to open '$filename' for writing: $!\n"
 msgstr "Incapaz de abrir '$filename' para escrita: $!\n"
 
 msgid "Unsupported argumenttype $type"
-msgstr "Tipo de argumento $type n„o suportado"
+msgstr "Tipo de argumento $type n√£o suportado"
 
 msgid "/Xtns/Render/Povray"
 msgstr "/Exten/Renderizar/Povray"
@@ -881,10 +881,10 @@ msgid "Color"
 msgstr "Cor"
 
 msgid "authorization unnecessary"
-msgstr "autorizaÁ„o desnecess·ria"
+msgstr "autoriza√ß√£o desnecess√°ria"
 
 msgid "illegal parasite specification, reference expected"
-msgstr "especificaÁ„o parasita ilegal, esperada referncia"
+msgstr "especifica√ß√£o parasita ilegal, esperada referncia"
 
 msgid "too many arguments, use --help\n"
 msgstr "demasiados argumentos, utilize --help\n"
@@ -902,13 +902,13 @@ msgid "Saving '$filename' as DATAURL..."
 msgstr "A gravar '$filename' como DATAURL..."
 
 msgid "text string is empty"
-msgstr "express„o de texto est· vazia"
+msgstr "express√£o de texto est√° vazia"
 
 msgid "<Image>/Filters/Distorts/Scratches..."
-msgstr "<Image>/Filtros/DistorÁıes/Arranhıes..."
+msgstr "<Image>/Filtros/Distor√ß√µes/Arranh√µes..."
 
 msgid "$_: unknown/illegal file-save option"
-msgstr "$_: opÁ„o de gravaÁ„o de ficheiro desconhecida/ilegal"
+msgstr "$_: op√ß√£o de grava√ß√£o de ficheiro desconhecida/ilegal"
 
 msgid "/Xtns/Render"
 msgstr "/Exten/Renderizar"
@@ -917,28 +917,28 @@ msgid " = [argument error]\n"
 msgstr " = [erro argumento]\n"
 
 msgid "<Image>/Select/Round..."
-msgstr "<Image>/Seleccionar/CÌrculo..."
+msgstr "<Image>/Seleccionar/C√≠rculo..."
 
 msgid "plug-in returned %d more values than expected"
 msgstr "plug-in devolveu %d mais valores do que os esperados"
 
 msgid "$_ is not a valid import tag for package $pkg"
-msgstr "$_ n„o È uma etiqueta de importaÁ„o v·lida para o pacote $pkg"
+msgstr "$_ n√£o √© uma etiqueta de importa√ß√£o v√°lida para o pacote $pkg"
 
 msgid "url size is too large ($max > 1024)\n"
-msgstr "tamanho do url È demasiado grande ($max > 1024)\n"
+msgstr "tamanho do url √© demasiado grande ($max > 1024)\n"
 
 msgid "illegal command received, aborting connection"
-msgstr "recebido comando ilegal, a abortar ligaÁ„o"
+msgstr "recebido comando ilegal, a abortar liga√ß√£o"
 
 msgid "<Image>/Filters/Noise/Ditherize..."
 msgstr "<Image>/Filtros/Ruido/Diterizar..."
 
 msgid "<Toolbox>/Xtns/Animation/Seth Spin..."
-msgstr "<Toolbox>/Exten/AnimaÁ„o/Espiral Seth..."
+msgstr "<Toolbox>/Exten/Anima√ß√£o/Espiral Seth..."
 
 msgid "Pattern Selection Dialog"
-msgstr "Di·logo SelecÁ„o Padr„o"
+msgstr "Di√°logo Selec√ß√£o Padr√£o"
 
 msgid "get current foreground colour from the gimp"
 msgstr "obter cor de primeiro plano actual do gimp"
@@ -950,7 +950,7 @@ msgid "not enough"
 msgstr "insuficientes"
 
 msgid "PDB Explorer - the olof edition (yet still an alpha version)"
-msgstr "Explorador PDB - a ediÁ„o olof (ainda assim uma vers„o alfa)"
+msgstr "Explorador PDB - a edi√ß√£o olof (ainda assim uma vers√£o alfa)"
 
 msgid "<Image>/Filters/Web/Perl-o-tine..."
 msgstr "<Image>/Filtros/Web/Perl-o-tizar..."
@@ -959,7 +959,7 @@ msgid "<Image>/Layers/Stack/Reorder Layers..."
 msgstr "<Image>/Camadas/Pilha/Reordenar Camadas..."
 
 msgid "accepting connections on $unix_path"
-msgstr "a aceitar ligaÁıes no $unix_path"
+msgstr "a aceitar liga√ß√µes no $unix_path"
 
 #~ msgid "<Toolbox>/Xtns/Homepage-Logo"
-#~ msgstr "<Toolbox>/Exten/P·gina-Logo"
+#~ msgstr "<Toolbox>/Exten/P√°gina-Logo"
