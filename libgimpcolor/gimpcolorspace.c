@@ -421,9 +421,9 @@ gimp_rgb_to_hsv_int (gint *red,
 	h -= 255;
     }
 
-  *red   = h;
-  *green = s;
-  *blue  = v;
+  *red   = ROUND (h);
+  *green = ROUND (s);
+  *blue  = ROUND (v);
 }
 
 void
@@ -446,12 +446,12 @@ gimp_hsv_to_rgb_int (gint *hue,
       s = *saturation / 255.0;
       v = *value      / 255.0;
 
-      f = h - (gint) h;
+      f = h - ROUND (h);
       p = v * (1.0 - s);
       q = v * (1.0 - (s * f));
       t = v * (1.0 - (s * (1.0 - f)));
 
-      switch ((gint) h)
+      switch (ROUND (h))
 	{
 	case 0:
 	  *hue        = ROUND (v * 255.0);
@@ -484,6 +484,7 @@ gimp_hsv_to_rgb_int (gint *hue,
 	  break;
 
 	case 5:
+	case 6:
 	  *hue        = ROUND (v * 255.0);
 	  *saturation = ROUND (p * 255.0);
 	  *value      = ROUND (q * 255.0);
@@ -548,9 +549,9 @@ gimp_rgb_to_hls_int (gint *red,
 	h -= 255;
     }
 
-  *red   = h;
-  *green = l;
-  *blue  = s;
+  *red   = ROUND (h);
+  *green = ROUND (l);
+  *blue  = ROUND (s);
 }
 
 gint
@@ -571,7 +572,7 @@ gimp_rgb_to_l_int (gint red,
       min = MIN (red,   blue);
     }
 
-  return (max + min) / 2.0;
+  return ROUND ((max + min) / 2.0);
 }
 
 static gint
@@ -595,7 +596,7 @@ gimp_hls_value (gdouble n1,
   else
     value = n1;
 
-  return (gint) (value * 254.999 + 0.5);
+  return ROUND (value * 255.0);
 }
 
 void
