@@ -80,8 +80,16 @@ file_load_invoker (Gimp     *gimp,
 {
   PlugInProcDef *file_proc;
   ProcRecord *proc;
+  gchar *uri;
 
-  file_proc = file_utils_find_proc (gimp->load_procs, (gchar *) args[2].value.pdb_pointer);
+  uri = file_utils_filename_to_uri (gimp->load_procs, (gchar *) args[1].value.pdb_pointer, NULL);
+
+  if (! uri)
+    return procedural_db_return_args (&file_load_proc, FALSE);
+
+  file_proc = file_utils_find_proc (gimp->load_procs, uri);
+
+  g_free (uri);
 
   if (! file_proc)
     return procedural_db_return_args (&file_load_proc, FALSE);
@@ -143,9 +151,17 @@ file_save_invoker (Gimp     *gimp,
   Argument *return_vals;
   PlugInProcDef *file_proc;
   ProcRecord *proc;
+  gchar *uri;
   gint i;
 
-  file_proc = file_utils_find_proc (gimp->save_procs, (gchar *) args[4].value.pdb_pointer);
+  uri = file_utils_filename_to_uri (gimp->load_procs, (gchar *) args[3].value.pdb_pointer, NULL);
+
+  if (! uri)
+    return procedural_db_return_args (&file_save_proc, FALSE);
+
+  file_proc = file_utils_find_proc (gimp->save_procs, uri);
+
+  g_free (uri);
 
   if (! file_proc) 
     return procedural_db_return_args (&file_save_proc, FALSE);

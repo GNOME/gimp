@@ -1,3 +1,10 @@
+2003-05-22  Manish Singh  <yosh@gimp.org>
+
+	* tools/pdbgen/pdb/fileops.pdb: convert filename to a uri for
+	find_utils_find_proc.
+
+	* app/pdb/fileops_cmds.c: regenerated
+
 2003-05-22  Raphael Quinet  <quinet@gamers.org>
 
 	* plug-ins/imagemap/Makefile.am (EXTRA_DIST): added missing lex
