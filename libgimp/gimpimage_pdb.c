@@ -1497,7 +1497,7 @@ gimp_image_floating_sel_attached_to (gint32 image_ID)
  * Get a thumbnail of an image.
  *
  * This function gets data from which a thumbnail of an image preview
- * can be created. Maximum x or y dimension is 128 pixels. The pixels
+ * can be created. Maximum x or y dimension is 1024 pixels. The pixels
  * are returned in the RGB[A] format. The bpp return value gives the
  * number of bits per pixel in the image. If the image has an alpha
  * channel, it is also returned.

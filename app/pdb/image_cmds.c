@@ -47,6 +47,7 @@
 #include "core/gimplayermask.h"
 #include "core/gimplist.h"
 #include "core/gimpunit.h"
+#include "core/gimpviewable.h"
 #include "gimp-intl.h"
 
 #include "libgimpbase/gimpbase.h"
@@ -2660,11 +2661,11 @@ image_thumbnail_invoker (Gimp     *gimp,
     success = FALSE;
 
   req_width = args[1].value.pdb_int;
-  if (req_width <= 0)
+  if (req_width <= 0 || req_width > 1024)
     success = FALSE;
 
   req_height = args[2].value.pdb_int;
-  if (req_height <= 0)
+  if (req_height <= 0 || req_height > 1024)
     success = FALSE;
 
   if (success)
@@ -2672,29 +2673,28 @@ image_thumbnail_invoker (Gimp     *gimp,
       TempBuf * buf;
       gint dwidth, dheight;
     
-      if (req_width <= 128 && req_height <= 128)
-	{        
-	  /* Adjust the width/height ratio */
-	  dwidth  = gimage->width;
-	  dheight = gimage->height;
+      g_assert (GIMP_VIEWABLE_MAX_PREVIEW_SIZE >= 1024);
     
-	  if (dwidth > dheight)
-	    req_height = MAX (1, (req_width * dheight) / dwidth);
-	  else
-	    req_width  = MAX (1, (req_height * dwidth) / dheight);
+      /* Adjust the width/height ratio */
+      dwidth  = gimage->width;
+      dheight = gimage->height;
     
-	  buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (gimage),
-					       req_width, req_height);
+      if (dwidth > dheight)
+	req_height = MAX (1, (req_width * dheight) / dwidth);
+      else
+	req_width  = MAX (1, (req_height * dwidth) / dheight);
     
-	  if (buf)
-	    {
-	      num_bytes = buf->height * buf->width * buf->bytes;
-	      thumbnail_data = g_memdup (temp_buf_data (buf), num_bytes);
-	      width = buf->width;        
-	      height = buf->height;
-	      bpp = buf->bytes;
-	      temp_buf_free (buf);
-	    }
+      buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (gimage),
+					   req_width, req_height);
+    
+      if (buf)
+	{
+	  num_bytes = buf->height * buf->width * buf->bytes;
+	  thumbnail_data = g_memdup (temp_buf_data (buf), num_bytes);
+	  width = buf->width;        
+	  height = buf->height;
+	  bpp = buf->bytes;
+	  temp_buf_free (buf);
 	}
     }
 
@@ -2764,7 +2764,7 @@ static ProcRecord image_thumbnail_proc =
 {
   "gimp_image_thumbnail",
   "Get a thumbnail of an image.",
-  "This function gets data from which a thumbnail of an image preview can be created. Maximum x or y dimension is 128 pixels. The pixels are returned in the RGB[A] format. The bpp return value gives the number of bits per pixel in the image. If the image has an alpha channel, it is also returned.",
+  "This function gets data from which a thumbnail of an image preview can be created. Maximum x or y dimension is 1024 pixels. The pixels are returned in the RGB[A] format. The bpp return value gives the number of bits per pixel in the image. If the image has an alpha channel, it is also returned.",
   "Andy Thomas",
   "Andy Thomas",
   "1999",

@@ -1,3 +1,13 @@
+2003-06-24  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/image.pdb: changed the maximum preview
+	dimensions in gimp_image_get_thumbnail() to the limit implied by
+	the core preview system (GIMP_VIEWABLE_MAX_PREVIEW_SIZE). Fixes
+	bug #115464.
+	
+	* libgimp/gimpimage_pdb.c
+	* app/pdb/image_cmds.c: regenerated.
+
 2003-06-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage-undo-push.c (undo_pop_image_grid)
