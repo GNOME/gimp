@@ -55,12 +55,12 @@ msgstr ""
 #. initialize  the global parasite table
 #: app/app_procs.c:538 app/internal_procs.c:71 app/preferences_dialog.c:2333
 msgid "Brushes"
-msgstr ""
+msgstr "Пензл╕"
 
 #. initialize the list of gimp brushes
 #: app/app_procs.c:540 app/internal_procs.c:143 app/preferences_dialog.c:2341
 msgid "Patterns"
-msgstr ""
+msgstr "Узори"
 
 #. initialize the list of gimp patterns
 #: app/app_procs.c:542 app/preferences_dialog.c:2345
@@ -219,7 +219,7 @@ msgstr ""
 
 #: app/blend.c:420 app/bucket_fill.c:130 app/fuzzy_select.c:641
 msgid "Threshold:"
-msgstr ""
+msgstr "Пор╕г:"
 
 #: app/blend.c:447
 msgid "Blend: Invalid for indexed images."
@@ -247,7 +247,7 @@ msgstr "Параметри яскравост╕-контрасту"
 
 #: app/brightness_contrast.c:162
 msgid "Brightness-Contrast does not operate on indexed drawables."
-msgstr "Яскрав╕сть-контраст не вплива╓ на ╕ндексован╕ зображення."
+msgstr "Яскрав╕сть-контраст не д╕╓ на ╕ндексованих зображеннях."
 
 #: app/brightness_contrast.c:208 app/tools.c:599
 msgid "Brightness-Contrast"
@@ -292,7 +292,7 @@ msgstr ""
 
 #: app/brush_edit.c:209
 msgid "Brush Editor"
-msgstr ""
+msgstr "Редактор пензл╕в"
 
 #. The close button
 #: app/brush_edit.c:215 app/brush_select.c:279 app/by_color_select.c:591
@@ -328,7 +328,7 @@ msgstr "Кут:"
 #. The shell
 #: app/brush_select.c:270
 msgid "Brush Selection"
-msgstr ""
+msgstr "Виб╕р пензля"
 
 #: app/brush_select.c:277 app/gradient.c:798 app/module_db.c:320
 #: app/palette.c:2115 app/pattern_select.c:169
@@ -337,7 +337,7 @@ msgstr "Оновити"
 
 #: app/brush_select.c:405
 msgid "No Brushes available"
-msgstr ""
+msgstr "Нема╓ доступних пензл╕в"
 
 #: app/brush_select.c:446 app/layers_dialog.c:393 app/tool_options.c:607
 msgid "Opacity:"
@@ -386,7 +386,7 @@ msgstr ""
 
 #: app/bucket_fill.c:109
 msgid "Pattern Fill"
-msgstr ""
+msgstr "Заповнення узором"
 
 #: app/bucket_fill.c:150 app/color_picker.c:156 app/tool_options.c:375
 msgid "Sample Merged"
@@ -2970,6 +2970,8 @@ msgid ""
 "  --no-data                Do not load patterns, gradients, palettes, "
 "brushes.\n"
 msgstr ""
+"  --no-data                Не завантажувати узор╕в, град╕╓нт╕в, пал╕тр, "
+"пенз╕в.\n"
 
 #: app/main.c:314
 msgid "  --verbose                Show startup messages.\n"
@@ -3076,7 +3078,7 @@ msgstr ""
 
 #: app/menus.c:92
 msgid "/Xtns/Script-Fu/Patterns"
-msgstr ""
+msgstr "/Розширення/Script-Fu/Узори"
 
 #: app/menus.c:93
 msgid "/Xtns/Script-Fu/Web Page Themes"
@@ -3206,11 +3208,11 @@ msgstr "/Файли/Д╕алоги/Параметри ╕нструменту..."
 
 #: app/menus.c:162
 msgid "/File/Dialogs/Brushes..."
-msgstr ""
+msgstr "/Файл/Д╕алоги/Пензл╕..."
 
 #: app/menus.c:164
 msgid "/File/Dialogs/Patterns..."
-msgstr ""
+msgstr "/Файл/Д╕алоги/Узори..."
 
 #: app/menus.c:166
 msgid "/File/Dialogs/Gradients..."
@@ -3684,11 +3686,11 @@ msgstr ""
 
 #: app/menus.c:560
 msgid "/Dialogs/Brushes..."
-msgstr ""
+msgstr "/Д╕алоги/Пензл╕..."
 
 #: app/menus.c:562
 msgid "/Dialogs/Patterns..."
-msgstr ""
+msgstr "/Д╕алоги/Узори..."
 
 #: app/menus.c:564
 msgid "/Dialogs/Gradients..."
@@ -4376,11 +4378,11 @@ msgstr ""
 #. The shell
 #: app/pattern_select.c:162
 msgid "Pattern Selection"
-msgstr ""
+msgstr "Виб╕р узору"
 
 #: app/pattern_select.c:226
 msgid "No Patterns available"
-msgstr ""
+msgstr "Нема╓ доступних узор╕в"
 
 #: app/patterns.c:188
 #, c-format
@@ -4389,15 +4391,15 @@ msgstr "Нев╕дома верс╕я GIMP -- #%d, в \"%s\"\n"
 
 #: app/patterns.c:205
 msgid "Error in GIMP pattern file...aborting."
-msgstr ""
+msgstr "Помилка в файл╕ узору GIMP...переривання."
 
 #: app/patterns.c:219
 msgid "GIMP pattern file appears to be truncated."
-msgstr ""
+msgstr "Файл узор╕в GIMP напевно об╕рваний."
 
 #: app/patterns.c:283
 msgid "Pattern load failed"
-msgstr ""
+msgstr "Завантаження узору не вдалось"
 
 #: app/perspective_tool.c:58
 msgid "Perspective Transform Information"
@@ -4440,15 +4442,15 @@ msgstr ""
 
 #: app/posterize.c:146
 msgid "Posterize does not operate on indexed drawables."
-msgstr ""
+msgstr "Постеризац╕я не д╕╓ на ╕ндексованих зображеннях."
 
 #: app/posterize.c:191 app/tools.c:631
 msgid "Posterize"
-msgstr ""
+msgstr "Постеризац╕я"
 
 #: app/posterize.c:213
 msgid "Posterize Levels:"
-msgstr ""
+msgstr "Р╕вн╕в постеризац╕╖:"
 
 #: app/preferences_dialog.c:229
 msgid "Error: Levels of undo must be zero or greater."
@@ -4492,9 +4494,8 @@ msgid "Error: Image title format must not be NULL."
 msgstr ""
 
 #: app/preferences_dialog.c:356
-#, fuzzy
 msgid "Save Preferences ?"
-msgstr "Установки"
+msgstr "Зберегти установки ?"
 
 #: app/preferences_dialog.c:372
 msgid ""
@@ -4949,11 +4950,11 @@ msgstr "Вибер╕ть каталог своп╕нгу"
 
 #: app/preferences_dialog.c:2333
 msgid "Brushes Directories"
-msgstr ""
+msgstr "Каталог пензл╕в"
 
 #: app/preferences_dialog.c:2335
 msgid "Select Brushes Dir"
-msgstr ""
+msgstr "Вибер╕ть каталог пензл╕в"
 
 #: app/preferences_dialog.c:2337
 msgid "Generated Brushes"
@@ -5208,19 +5209,19 @@ msgstr "Текстовий шар"
 
 #: app/threshold.c:170
 msgid "Threshold Options"
-msgstr ""
+msgstr "Параметри порогу"
 
 #: app/threshold.c:206
 msgid "Threshold does not operate on indexed drawables."
-msgstr ""
+msgstr "Пор╕г не д╕╓ на ╕ндексованих зображеннях."
 
 #: app/threshold.c:265 app/tools.c:647
 msgid "Threshold"
-msgstr ""
+msgstr "Пор╕г"
 
 #: app/threshold.c:287
 msgid "Threshold Range:"
-msgstr ""
+msgstr "Д╕апазон порогу:"
 
 #: app/tips_dialog.c:78
 msgid "gimp_tips.txt"
@@ -5307,7 +5308,7 @@ msgstr ""
 
 #: app/tool_options.c:558
 msgid "Eraser Options"
-msgstr ""
+msgstr "Параметри гумки"
 
 #: app/tool_options.c:560
 msgid "Airbrush Options"
@@ -5561,15 +5562,15 @@ msgstr ""
 
 #: app/tools.c:405
 msgid "Eraser"
-msgstr ""
+msgstr "Гумка"
 
 #: app/tools.c:406
 msgid "/Tools/Eraser"
-msgstr ""
+msgstr "/╤нструменти/Гумка"
 
 #: app/tools.c:409
 msgid "Erase to background or transparency"
-msgstr ""
+msgstr "Витирання до тла чи прозорост╕"
 
 #: app/tools.c:421
 msgid "Airbrush"
@@ -5713,15 +5714,15 @@ msgstr ""
 
 #: app/tools.c:635
 msgid "Reduce image to a fixed numer of colors"
-msgstr ""
+msgstr "Звести зображення до ф╕ксовано╖ к╕лькост╕ кольор╕в"
 
 #: app/tools.c:648
 msgid "/Image/Colors/Threshold..."
-msgstr ""
+msgstr "/Зображення/Кольори/Пор╕г..."
 
 #: app/tools.c:651
 msgid "Reduce image to two colors using a threshold"
-msgstr ""
+msgstr "Звести зображення до двох кольор╕в використовуючи пор╕г"
 
 #: app/tools.c:664
 msgid "/Image/Colors/Curves..."
