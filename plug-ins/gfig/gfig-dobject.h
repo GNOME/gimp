@@ -30,15 +30,12 @@
 
 typedef void     (*DobjFunc)       (Dobject *);
 typedef Dobject *(*DobjGenFunc)    (Dobject *);
-typedef Dobject *(*DobjLoadFunc)   (FILE *);
-typedef void     (*DobjSaveFunc)   (Dobject *, GString *);
-typedef Dobject *(*DobjCreateFunc) (gint, gint);
 
 typedef struct DobjPoints
 {
   struct DobjPoints *next;
   GdkPoint           pnt;
-  gint               found_me;
+  gboolean           found_me;
 } DobjPoints;
 
 typedef struct
@@ -69,7 +66,7 @@ struct _Dobject
 #define GFIG_READONLY 0x2
 
 extern Dobject *obj_creating;
-extern Dobject      *tmp_line;
+extern Dobject *tmp_line;
 
 
 void        d_pnt_add_line           (Dobject    *obj,

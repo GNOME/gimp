@@ -1,3 +1,11 @@
+2004-11-14  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/gfig/gfig-dialog.c
+	* plug-ins/gfig/gfig-dobject.c
+	* plug-ins/gfig/gfig-dobject.h: fixed a crash (the one triggered by
+	this sequence: draw a line, delete it, redraw something), and
+	corected some ui spacing.
+
 2004-11-14  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimppalette-import.c: applied a (slightly modified)

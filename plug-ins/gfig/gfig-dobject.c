@@ -569,6 +569,14 @@ remove_obj_from_list (GFigObj *obj,
 
       free_one_obj (del_obj);
 
+      if (obj->obj_list)
+        {
+          Dobject *new_current = obj->obj_list->data;
+          gfig_style_set_context_from_style (&new_current->style);
+        }
+      else
+        gfig_style_set_context_from_style (&gfig_context->default_style);
+
       if (obj_show_single != -1)
         {
           /* We've just deleted the only visible one */

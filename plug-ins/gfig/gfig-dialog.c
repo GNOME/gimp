@@ -344,7 +344,7 @@ gfig_dialog (void)
 
   gtk_widget_show (gfig_context->preview);
 
-  right_vbox = gtk_vbox_new (FALSE, 6);
+  right_vbox = gtk_vbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (main_hbox), right_vbox, FALSE, FALSE, 0);
   gtk_widget_show (right_vbox);
 
@@ -369,7 +369,7 @@ gfig_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
-  vbox = gtk_vbox_new (FALSE, 3);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
@@ -408,7 +408,7 @@ gfig_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
-  vbox = gtk_vbox_new (FALSE, 3);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
@@ -472,11 +472,15 @@ gfig_dialog (void)
                             gfig_context->gradient_select, NULL);
 
 
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (right_vbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
   /* "show image" checkbutton at bottom of style frame */
   toggle = gtk_check_button_new_with_label (_("Show image"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 gfig_context->show_background);
-  gtk_box_pack_end (GTK_BOX (right_vbox), toggle, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &gfig_context->show_background);
@@ -487,7 +491,7 @@ gfig_dialog (void)
 
   /* "snap to grid" checkbutton at bottom of style frame */
   toggle = gtk_check_button_new_with_label (_("Snap to grid"));
-  gtk_box_pack_end (GTK_BOX (right_vbox), toggle, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &selvals.opts.snap2grid);
@@ -496,7 +500,7 @@ gfig_dialog (void)
 
   /* "show grid" checkbutton at bottom of style frame */
   toggle = gtk_check_button_new_with_label (_("Show grid"));
-  gtk_box_pack_end (GTK_BOX (right_vbox), toggle, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &selvals.opts.drawgrid);
