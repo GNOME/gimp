@@ -529,7 +529,7 @@ load_image (char   *filename,
        }
     
        if (delay > 0)
-         layername = g_strdup_printf("Frame %d (%dms)"),
+         layername = g_strdup_printf("Frame %d (%dms)",
                  framenumber, delay);
        else
          layername = g_strdup_printf("Frame %d",
