@@ -165,11 +165,11 @@ create_paint_options (void)
   /* this is a little unintuitive, probabaly put the slider */
   /* in a frame later with a checkbutton for "use gradients" */
   /* and default the gradient length to 10 or something */
-
+#if 0
   //  hbox = gtk_hbox_new (FALSE, 1);
   //gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   //gtk_widget_show(hbox);
-
+#endif
   
 
   label = gtk_label_new (_("Gradient Length"));

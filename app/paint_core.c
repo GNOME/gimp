@@ -528,7 +528,7 @@ paint_core_get_color_from_gradient (PaintCore *paint_core, double gradient_lengt
   /* stolen from the fade effect in paintbrush */
 
   /* model this on a gaussian curve */
-  // position = exp (- y * y * 0.5);
+  /* position = exp (- y * y * 0.5); */
   position = y/gradient_length;
   grad_get_color_at(position,r,g,b,a);
   /* set opacity to zero if this isnt a repeater call */

@@ -1,3 +1,8 @@
+Sat Apr  3 20:42:48 1999  ape@spacetec.no  (Asbjorn Pettersen)
+
+	* app/paintbrush.c:  Skip //  comments.
+	* app/paint_core.c : Use /* */ intead of //.  IRIX ver. fails
+
 1999-04-03  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/shear_tool.c: forgot this file. Should compile again now,
