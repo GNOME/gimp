@@ -73,6 +73,8 @@ static void   gimp_selection_editor_all_clicked    (GtkWidget           *widget,
                                                     GimpSelectionEditor *editor);
 static void   gimp_selection_editor_none_clicked   (GtkWidget           *widget,
                                                     GimpSelectionEditor *editor);
+static void   gimp_selection_editor_save_clicked   (GtkWidget           *widget,
+                                                    GimpSelectionEditor *editor);
 
 static gboolean gimp_selection_preview_button_press(GtkWidget           *widget,
                                                     GdkEventButton      *bevent,
@@ -192,7 +194,7 @@ gimp_selection_editor_init (GimpSelectionEditor *selection_editor)
 
   selection_editor->all_button =
     gimp_editor_add_button (GIMP_EDITOR (selection_editor),
-                            GTK_STOCK_ADD,
+                            GIMP_STOCK_ALL,
                             _("Select All"), NULL,
                             G_CALLBACK (gimp_selection_editor_all_clicked),
                             NULL,
@@ -200,9 +202,17 @@ gimp_selection_editor_init (GimpSelectionEditor *selection_editor)
 
   selection_editor->none_button =
     gimp_editor_add_button (GIMP_EDITOR (selection_editor),
-                            GTK_STOCK_REMOVE,
+                            GIMP_STOCK_NONE,
                             _("Select None"), NULL,
                             G_CALLBACK (gimp_selection_editor_none_clicked),
+                            NULL,
+                            selection_editor);
+
+  selection_editor->save_button =
+    gimp_editor_add_button (GIMP_EDITOR (selection_editor),
+                            GIMP_STOCK_SELECTION_TO_CHANNEL,
+                            _("Save Selection to Channel"), NULL,
+                            G_CALLBACK (gimp_selection_editor_save_clicked),
                             NULL,
                             selection_editor);
 
@@ -364,6 +374,16 @@ gimp_selection_editor_none_clicked (GtkWidget           *widget,
     {
       gimp_image_mask_clear (editor->gimage);
       gimp_image_flush (editor->gimage);
+    }
+}
+
+static void
+gimp_selection_editor_save_clicked (GtkWidget           *widget,
+                                    GimpSelectionEditor *editor)
+{
+  if (editor->gimage)
+    {
+      gimp_image_mask_save (editor->gimage);
     }
 }
 

@@ -48,11 +48,6 @@ style "gimp-icons"
       { "images/stock-info-24.png", *, *, "gtk-button" },
       { "images/stock-info-24.png", *, *, *            },
     }
-  stock["gimp-invert"] =
-    {
-      { "images/stock-invert-16.png", *, *, "gtk-button" },
-      { "images/stock-invert-24.png", *, *, *            },
-    }
   stock["gimp-linked"] =
     {
       { "images/stock-linked-16.png", *, *, "gtk-button" },
@@ -139,6 +134,31 @@ style "gimp-icons"
     {
       { "images/stock-convert-indexed-16.png", *, *, "gtk-menu" },
       { "images/stock-convert-indexed-16.png", *, *, * }
+    }
+  stock["gimp-invert"] =
+    {
+      { "images/stock-invert-16.png", *, *, "gtk-button" },
+      { "images/stock-invert-16.png", *, *, *            },
+    }
+  stock["gimp-all"] =
+    {
+      { "images/stock-all-16.png", *, *, "gtk-button" },
+      { "images/stock-all-16.png", *, *, *            },
+    }
+  stock["gimp-none"] =
+    {
+      { "images/stock-none-16.png", *, *, "gtk-button" },
+      { "images/stock-none-16.png", *, *, *            },
+    }
+  stock["gimp-grow"] =
+    {
+      { "images/stock-grow-16.png", *, *, "gtk-button" },
+      { "images/stock-grow-16.png", *, *, *            },
+    }
+  stock["gimp-shrink"] =
+    {
+      { "images/stock-shrink-16.png", *, *, "gtk-button" },
+      { "images/stock-shrink-16.png", *, *, *            },
     }
   stock["gimp-merge-down"] =
     {

@@ -46,6 +46,7 @@ struct _GimpSelectionEditor
   GtkWidget  *invert_button;
   GtkWidget  *all_button;
   GtkWidget  *none_button;
+  GtkWidget  *save_button;
 
   guint       idle_render_id;    
 };

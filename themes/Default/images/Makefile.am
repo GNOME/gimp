@@ -67,6 +67,10 @@ STOCK_MENU_IMAGES = \
 	stock-convert-indexed-16.png		\
 	stock-convert-rgb-16.png		\
 	stock-invert-16.png			\
+	stock-all-16.png			\
+	stock-none-16.png			\
+	stock-grow-16.png			\
+	stock-shrink-16.png			\
 	stock-merge-down-16.png			\
 	stock-layer-to-imagesize-16.png		\
 	stock-plugin-16.png			\

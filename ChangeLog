@@ -1,3 +1,19 @@
+2002-08-22  Michael Natterer  <mitch@gimp.org>
+
+	* themes/Default/images/stock-all-16.png
+	* themes/Default/images/stock-none-16.png
+	* themes/Default/images/stock-grow-16.png
+	* themes/Default/images/stock-shrink-16.png: new icons from Jimmac.
+
+	* themes/Default/images/Makefile.am
+	* themes/Default/imagerc
+	* libgimpwidgets/gimpstock.[ch]: added them to the stock system.
+
+	* app/gui/menus.c: use them.
+
+	* app/widgets/gimpselectioneditor.[ch]: use the icons and added
+	a "Save to Channel" button.
+
 2002-08-22  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/gimprc.pdb
