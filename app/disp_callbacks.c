@@ -343,7 +343,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
       bevent = (GdkEventButton *) event;
       state = bevent->state;
 
-      /*  ugly side consition: all operations which set busy cursors are
+      /*  ugly side condition: all operations which set busy cursors are
        *  invoked on BUTTON_RELEASE, thus no new BUTTON_PRESS events are
        *  accepted while Gimp is busy, thus it should be safe to block
        *  BUTTON_RELEASE.  --Mitch
@@ -595,7 +595,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
       break;
     }
 
-  /*  if re reached this point in gimp_busy mode, return now  */
+  /*  if we reached this point in gimp_busy mode, return now  */
   if (gimp_busy)
     return TRUE;
 
