@@ -51,7 +51,7 @@ GPlugInInfo PLUG_IN_INFO =
   run,     /* run_proc */
 };
 
-static gint DeinterlaceValue = 1;
+static gint DeinterlaceValue = 1; 
 
 MAIN ()
 
@@ -108,10 +108,11 @@ run (char    *name,
       break;
 
     case RUN_NONINTERACTIVE:
-      if (nparams != 1)
+      if (nparams != 4)
 	status = STATUS_CALLING_ERROR;
       if (status == STATUS_SUCCESS)
 	DeinterlaceValue = param[3].data.d_int32;
+      
       break;
       
     case RUN_WITH_LAST_VALS:

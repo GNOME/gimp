@@ -1,3 +1,10 @@
+Thu Jan 29 19:25:52 EST 1998 Adrian Likins <adrian@gimp.org>
+
+	* fixed the non-iteractive modes for plugins:
+		exchange, holes, grid, deinterlace
+	(mainly expecting wrong number of arguments or just ingome
+	non-interactive mood entirely)
+
 Thu Jan 29 01:05:10 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* updated refract and warp plugins

@@ -148,7 +148,7 @@ static void run(char *name, int n_params, GParam * param, int *nreturn_vals,
 	run_mode = param[0].data.d_int32;
 
 	if (run_mode == RUN_NONINTERACTIVE) {
-		if (n_params != 8) {
+		if (n_params != 7) {
 			status = STATUS_CALLING_ERROR;
 		} else {
 			params.density = param[3].data.d_float;

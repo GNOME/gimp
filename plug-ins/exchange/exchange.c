@@ -150,8 +150,20 @@ void	run(char *name, int nparams, GParam *param, int *nreturn_vals, GParam **ret
 				gimp_palette_get_foreground(&xargs.fromred, &xargs.fromgreen, &xargs.fromblue);
 				break;
 		case RUN_NONINTERACTIVE:
-				status = STATUS_EXECUTION_ERROR;
-				return;
+		  if(nparams != 10)
+		    status = STATUS_EXECUTION_ERROR;
+		  if (status == STATUS_SUCCESS)
+		    {
+		      xargs.fromred = param[3].data.d_int8;
+		      xargs.fromgreen = param[4].data.d_int8;
+		      xargs.fromblue = param[5].data.d_int8;
+		      xargs.tored = param[6].data.d_int8;
+		      xargs.togreen = param[7].data.d_int8;
+		      xargs.toblue = param[8].data.d_int8;
+		      xargs.threshold = param[9].data.d_int32;
+		    }
+		  break;
+			
 		default:	
 				break;
 	}
