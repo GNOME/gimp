@@ -1,13 +1,14 @@
 # Hungarian translation of the GIMP plug-ins
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Andras Timar <timar@gnome.hu>
+# Emese Kovacs <emese@gnome.hu>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
 "POT-Creation-Date: 2003-06-26 22:14+0200\n"
-"PO-Revision-Date: 2001-09-17 09:53+0200\n"
-"Last-Translator: Emese Kovacs <emese@gnome.hu>\n"
+"PO-Revision-Date: 2003-07-11 12:55+0200\n"
+"Last-Translator: Andras Timar <timar@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -5366,7 +5367,7 @@ msgstr "Kijelölés"
 
 #: plug-ins/common/papertile.c:400
 msgid "Background Color"
-msgstr "Háttér színe"
+msgstr "Háttérszín"
 
 #: plug-ins/common/papertile.c:551
 #, fuzzy
@@ -7062,7 +7063,7 @@ msgstr ""
 
 #: plug-ins/common/uniteditor.c:83
 msgid "ID"
-msgstr "ID"
+msgstr "Azonosító"
 
 #: plug-ins/common/uniteditor.c:83
 msgid ""
@@ -7132,39 +7133,32 @@ msgid "New Unit"
 msgstr "Új mértékegység"
 
 #: plug-ins/common/uniteditor.c:210
-#, fuzzy
 msgid "_ID:"
-msgstr "ID:"
+msgstr "_Azonosító:"
 
 #: plug-ins/common/uniteditor.c:221
-#, fuzzy
 msgid "_Factor:"
-msgstr "Szorzó:"
+msgstr "_Szorzó:"
 
 #: plug-ins/common/uniteditor.c:231
-#, fuzzy
 msgid "_Digits:"
-msgstr "Számjegyek:"
+msgstr "S_zámjegyek:"
 
 #: plug-ins/common/uniteditor.c:243
-#, fuzzy
 msgid "_Symbol:"
-msgstr "Jel:"
+msgstr "_Jel:"
 
 #: plug-ins/common/uniteditor.c:255
-#, fuzzy
 msgid "_Abbreviation:"
-msgstr "Rövidítés:"
+msgstr "_Rövidítés:"
 
 #: plug-ins/common/uniteditor.c:267
-#, fuzzy
 msgid "Si_ngular:"
-msgstr "Egyesszám:"
+msgstr "_Egyesszám:"
 
 #: plug-ins/common/uniteditor.c:279
-#, fuzzy
 msgid "_Plural:"
-msgstr "Többesszám:"
+msgstr "_Többesszám:"
 
 #: plug-ins/common/uniteditor.c:316
 msgid "Unit factor must not be 0."
@@ -7219,23 +7213,20 @@ msgid "Lo_ng-staggered"
 msgstr ""
 
 #: plug-ins/common/video.c:54
-#, fuzzy
 msgid "_3x3"
-msgstr "3x3"
+msgstr "_3x3"
 
 #: plug-ins/common/video.c:55
 msgid "Larg_e 3x3"
 msgstr ""
 
 #: plug-ins/common/video.c:56
-#, fuzzy
 msgid "_Hex"
-msgstr "Hexa"
+msgstr "_Hexa"
 
 #: plug-ins/common/video.c:57
-#, fuzzy
 msgid "_Dots"
-msgstr "Pontok"
+msgstr "_Pontok"
 
 #: plug-ins/common/video.c:1840
 msgid "<Image>/Filters/Distorts/Video..."
@@ -7255,14 +7246,12 @@ msgid "RGB Pattern Type"
 msgstr "RGB minta típusa"
 
 #: plug-ins/common/video.c:2190
-#, fuzzy
 msgid "_Additive"
-msgstr "Additív"
+msgstr "_Additív"
 
 #: plug-ins/common/video.c:2200
-#, fuzzy
 msgid "_Rotated"
-msgstr "Elforgatott"
+msgstr "_Elforgatott"
 
 #: plug-ins/common/vinvert.c:85
 msgid "<Image>/Filters/Colors/Value Invert"
@@ -7521,9 +7510,8 @@ msgid "_Amplitude:"
 msgstr "Amplitúdó:"
 
 #: plug-ins/common/waves.c:380
-#, fuzzy
 msgid "_Phase:"
-msgstr "Fázis:"
+msgstr "_Fázis:"
 
 #: plug-ins/common/waves.c:389
 #, fuzzy
@@ -8222,7 +8210,7 @@ msgstr ""
 
 #: plug-ins/fp/fp_gtk.c:447
 msgid "Show"
-msgstr "Mutatás"
+msgstr "Megjelenítés"
 
 #: plug-ins/fp/fp_gtk.c:455
 msgid "Entire Image"
@@ -10761,11 +10749,11 @@ msgstr "Beállítások"
 
 #: plug-ins/imagemap/imap_toolbar.c:112
 msgid "Undo"
-msgstr "Vissza"
+msgstr "Visszavonás"
 
 #: plug-ins/imagemap/imap_toolbar.c:116
 msgid "Redo"
-msgstr ""
+msgstr "Újra"
 
 #: plug-ins/imagemap/imap_toolbar.c:137
 msgid "Zoom in"
@@ -11243,7 +11231,7 @@ msgstr ""
 
 #: plug-ins/print/gimp_main_window.c:747
 msgid "Browse"
-msgstr "Tallóz"
+msgstr "Tallózás"
 
 #: plug-ins/print/gimp_main_window.c:753
 msgid "Choose the correct PPD filename for your printer"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu/gnome-cvs\n"
 "POT-Creation-Date: 2003-06-26 22:18+0200\n"
-"PO-Revision-Date: 2001-01-29 15:39+01:00\n"
+"PO-Revision-Date: 2003-07-11 12:56+0200\n"
 "Last-Translator: Andras TIMAR <timar@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
 "MIME-Version: 1.0\n"
@@ -74,7 +74,7 @@ msgstr "Szkriptargumentumok"
 #: plug-ins/script-fu/script-fu-scripts.c:1193
 #, c-format
 msgid "%s:"
-msgstr "%s"
+msgstr "%s:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1239
 msgid "Script-Fu Color Selection"
@@ -85,9 +85,8 @@ msgid "Script-Fu File Selection"
 msgstr "Script-Fu Fájlválasztó"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1324
-#, fuzzy
 msgid "Script-Fu Folder Selection"
-msgstr "Script-Fu Fájlválasztó"
+msgstr "Script-Fu Mappaválasztó"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1341
 msgid "Script-Fu Font Selection"
@@ -620,7 +619,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:14
 #: plug-ins/script-fu/scripts/speed-text.scm.h:8
 msgid "Text Color"
-msgstr "Szöveg színe"
+msgstr "Szövegszín"
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Alien Glow..."
