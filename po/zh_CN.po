@@ -251,9 +251,8 @@ msgid "Dialogs"
 msgstr "对话框"
 
 #: app/actions/actions.c:114
-#, fuzzy
 msgid "Dockable"
-msgstr "可绘"
+msgstr "可停靠"
 
 #: app/actions/actions.c:117 app/dialogs/dialogs.c:152
 msgid "Document History"
@@ -1140,9 +1139,8 @@ msgstr "复制(_C)"
 
 #. GIMP_STOCK_COPY_VISIBLE,
 #: app/actions/edit-actions.c:93
-#, fuzzy
 msgid "Copy _Visible"
-msgstr "可见(_V)"
+msgstr "复制可见(_V)"
 
 #: app/actions/edit-actions.c:98
 msgid "_Paste"
@@ -3688,6 +3686,10 @@ msgid ""
 "swap file is created on a directory that is mounted over NFS.  For these "
 "reasons, it may be desirable to put your swap file in \"/tmp\"."
 msgstr ""
+"设置交换文件的位置。GIMP 使用基于平铺的内存分配机制。交换文件用作方便快捷地用平铺片交换到磁"
+"盘中然后回收。需要注意的是当 GIMP 处理大的图像时能很快地使交换文件变得很大，而且当交换文件"
+"所在的目录是通过 NFS 加载时会使程序变得极为缓慢。由于这些原因，也许最好是将您地交换文件放到"
+"\"/tmp\"目录。"
 
 #: app/config/gimprc-blurbs.h:340
 msgid "When enabled, menus can be torn off."
@@ -3739,6 +3741,9 @@ msgid ""
 "swap space, but will also cause the GIMP to use more memory. Conversely, a "
 "smaller cache size causes the GIMP to use more swap space and less memory."
 msgstr ""
+"平铺缓存用作保证 GIMP 不会在内存和磁盘间频繁地读入数据。设置一个高值会导致 GIMP 使用较少"
+"的交换空间，但也使得 GIMP 使用更多内存。相反的，一个低的缓存值会使 GIMP 使用更多的交换空"
+"间和较少的内存。"
 
 #: app/config/gimprc-blurbs.h:384
 msgid ""
@@ -4214,7 +4219,6 @@ msgid "Guide"
 msgstr "参考线"
 
 #: app/core/core-enums.c:1041 app/core/core-enums.c:1071
-#, fuzzy
 msgid "Drawable mod"
 msgstr "可绘对象 mod"
 
@@ -4384,9 +4388,8 @@ msgid "Delete vectors"
 msgstr "删除向量"
 
 #: app/core/core-enums.c:1093
-#, fuzzy
 msgid "Vectors mod"
-msgstr "向量 Mod"
+msgstr "向量 mod"
 
 #: app/core/core-enums.c:1094
 msgid "Reposition vectors"
@@ -4486,19 +4489,19 @@ msgid "Could not read %d bytes from '%s': %s"
 msgstr "无法从“%2$s”中读取 %1$d 字节：%3$s"
 
 #: app/core/gimpbrush.c:554
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file '%s': Width = 0."
-msgstr "画笔文件“%s”出现严重解析错误：未知深度 %d。"
+msgstr "画笔文件“%s”出现严重解析错误：宽度 = 0。"
 
 #: app/core/gimpbrush.c:563
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file '%s': Height = 0."
-msgstr "画笔文件“%s”出现严重解析错误：文件已损坏。"
+msgstr "画笔文件“%s”出现严重解析错误：高度 = 0。"
 
 #: app/core/gimpbrush.c:572
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file '%s': Bytes = 0."
-msgstr "画笔文件“%s”出现严重解析错误：文件已损坏。"
+msgstr "画笔文件“%s”出现严重解析错误：字节数 = 0。"
 
 #: app/core/gimpbrush.c:596
 #, c-format
@@ -4795,12 +4798,12 @@ msgstr "渐变文件“%s”出现严重解析错误：文件已损坏。"
 #: app/core/gimpgradient-load.c:172
 #, c-format
 msgid "Corrupt segment %d in gradient file '%s'."
-msgstr "渐变文件“%2$s”中含有损坏的段 %1$d。"
+msgstr "渐变文件“%s”中含有损坏的段 %d。"
 
 #: app/core/gimpgradient-load.c:183 app/core/gimpgradient-load.c:197
 #, c-format
 msgid "Gradient file '%s' is corrupt: Segments do not span the range 0-1."
-msgstr ""
+msgstr "渐变文件 “%s” 损坏：段的范围不在 0-1 间。"
 
 #: app/core/gimpgradient-load.c:281
 #, c-format
@@ -5462,7 +5465,8 @@ msgstr "翻译者"
 msgid "translator-credits"
 msgstr ""
 "Yuheng Xie\n"
-"Funda Wang"
+"Funda Wang\n"
+"Cai Qian"
 
 #: app/dialogs/about-dialog.c:59
 msgid "Contributions by"
@@ -6055,11 +6059,11 @@ msgid "Configure Keyboard Shortcuts"
 msgstr "配置快捷键"
 
 #: app/dialogs/preferences-dialog.c:551
-#, fuzzy
 msgid ""
 "To edit a shortcut key, click on the corresponding row and type a new "
 "accelerator, or press backspace to clear."
-msgstr "请按新的加速键，或按 Backspace 清除"
+msgstr""
+ "要编辑一个快捷键请选择相应的行并输入一个新的加速键，或按 Backspace 清除"
 
 #: app/dialogs/preferences-dialog.c:595
 msgid ""
@@ -6720,7 +6724,6 @@ msgid "There are %d images with unsaved changes:"
 msgstr "有 %d 幅图像修改后还没保存："
 
 #: app/dialogs/quit-dialog.c:183
-#, fuzzy
 msgid "_Discard Changes"
 msgstr "放弃修改(_D)"
 
@@ -7359,9 +7362,8 @@ msgid "%d layers"
 msgstr "%d 个图层"
 
 #: app/display/gimpstatusbar.c:142
-#, fuzzy
 msgid "Shadow type"
-msgstr "阴暗"
+msgstr "阴影类型"
 
 #: app/display/gimpstatusbar.c:143
 msgid "Style of bevel around the statusbar text"
@@ -8889,9 +8891,8 @@ msgid "Center X:"
 msgstr "中心 X："
 
 #: app/tools/gimprotatetool.c:190
-#, fuzzy
 msgid "Center Y:"
-msgstr "中心 X："
+msgstr "中心 Y："
 
 #: app/tools/gimpscaletool.c:91
 msgid "Scale"
@@ -9727,15 +9728,13 @@ msgid "Keyboard"
 msgstr "键盘"
 
 #: app/widgets/gimpcontrollerkeyboard.c:230
-#, fuzzy
 msgid "Keyboard Events"
-msgstr "键盘"
+msgstr "键盘事件"
 
 #: app/widgets/gimpcontrollerkeyboard.c:231
 #: app/widgets/gimpcontrollerwheel.c:230
-#, fuzzy
 msgid "Ready"
-msgstr "红色"
+msgstr "就位"
 
 #: app/widgets/gimpcontrollerwheel.c:68
 msgid "Scroll Up (Shift + Control + Alt)"
@@ -9870,9 +9869,9 @@ msgid "Mouse Wheel"
 msgstr "鼠标滚轮"
 
 #: app/widgets/gimpcontrollerwheel.c:229
-#, fuzzy
 msgid "Mouse Wheel Events"
-msgstr "鼠标滚轮"
+msgstr "鼠标滚轮事件"
+
 
 #: app/widgets/gimpdataeditor.c:205
 msgid "Save"
@@ -9897,14 +9896,12 @@ msgid "Background: %d, %d, %d"
 msgstr "背景：%d, %d, %d"
 
 #: app/widgets/gimpdock.c:348 app/widgets/gimpdock.c:359
-#, fuzzy
 msgid "Close all tabs?"
-msgstr "关闭页签(_C)"
+msgstr "关闭全部页签？"
 
 #: app/widgets/gimpdock.c:354
-#, fuzzy
 msgid "Close all Tabs"
-msgstr "关闭页签(_C)"
+msgstr "关闭全部页签"
 
 #: app/widgets/gimpdock.c:361
 #, c-format
@@ -9912,6 +9909,7 @@ msgid ""
 "This window has %d tabs open. Closing the window will also close all its "
 "tabs."
 msgstr ""
+"该窗口打开了 %d 页签，关闭该窗口也将关闭所有的页签。"
 
 #: app/widgets/gimpdock.c:474
 msgid "You can drop dockable dialogs here."

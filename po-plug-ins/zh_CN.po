@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp-std-plugins\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-01-09 22:36+0100\n"
-"PO-Revision-Date: 2004-11-24 19:30+0800\n"
+"PO-Revision-Date: 2005-01-09 19:30+0800\n"
 "Last-Translator: Yuheng Xie <elephant@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -689,9 +689,8 @@ msgid "Light source Z direction in XYZ space"
 msgstr "光源在 XYZ 空间的 Z 方向"
 
 #: plug-ins/Lighting/lighting_ui.c:502
-#, fuzzy
 msgid "I_solate"
-msgstr "删除"
+msgstr "独立(_S)"
 
 #: plug-ins/Lighting/lighting_ui.c:512
 msgid "Lighting preset:"
@@ -2199,9 +2198,8 @@ msgid "c_astretch: cmap was NULL!  Quitting...\n"
 msgstr "c_astretch：cmap 为空！退出...\n"
 
 #: plug-ins/common/cartoon.c:147
-#, fuzzy
 msgid "Ca_rtoon..."
-msgstr "卡通"
+msgstr "卡通(_R)"
 
 #: plug-ins/common/cartoon.c:229 plug-ins/common/dog.c:247
 #: plug-ins/common/gauss.c:431 plug-ins/common/neon.c:221
@@ -4666,12 +4664,10 @@ msgid "Effect Operator"
 msgstr "效果操作"
 
 #: plug-ins/common/lic.c:682
-#, fuzzy
 msgid "_Derivative"
 msgstr "派生(_D)"
 
 #: plug-ins/common/lic.c:683
-#, fuzzy
 msgid "_Gradient"
 msgstr "渐变(_G)"
 
@@ -5583,14 +5579,12 @@ msgid "PNM image"
 msgstr "PNM 图像"
 
 #: plug-ins/common/pnm.c:260
-#, fuzzy
 msgid "PGM image"
-msgstr "PNM 图像"
+msgstr "PGM 图像"
 
 #: plug-ins/common/pnm.c:272
-#, fuzzy
 msgid "PPM image"
-msgstr "PNM 图像"
+msgstr "PPM 图像"
 
 #: plug-ins/common/pnm.c:465 plug-ins/common/pnm.c:486
 #: plug-ins/common/pnm.c:493 plug-ins/common/pnm.c:502
@@ -8461,17 +8455,14 @@ msgid "First Gfig"
 msgstr "第一个几何图形"
 
 #: plug-ins/gfig/gfig-dialog.c:859
-#, fuzzy
 msgid "_Undo"
 msgstr "撤销"
 
 #: plug-ins/gfig/gfig-dialog.c:863
-#, fuzzy
 msgid "_Clear"
 msgstr "清除"
 
 #: plug-ins/gfig/gfig-dialog.c:867
-#, fuzzy
 msgid "_Grid"
 msgstr "网格"
 
@@ -11034,7 +11025,6 @@ msgid "Media size:"
 msgstr "介质尺寸："
 
 #: plug-ins/print/gimp_main_window.c:989
-#, fuzzy
 msgid "Dimensions:"
 msgstr "尺寸"
 
