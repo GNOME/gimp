@@ -84,19 +84,21 @@ gimp_file_selection_get_type (void)
 
   if (!gfs_type)
     {
-      GtkTypeInfo gfs_info =
+      static const GTypeInfo gfs_info =
       {
-	"GimpFileSelection",
+        sizeof (GimpFileSelectionClass),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_file_selection_class_init,
+	NULL,		/* class_finalize */
+	NULL,		/* class_data     */
 	sizeof (GimpFileSelection),
-	sizeof (GimpFileSelectionClass),
-	(GtkClassInitFunc) gimp_file_selection_class_init,
-	(GtkObjectInitFunc) gimp_file_selection_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_file_selection_init,
       };
 
-      gfs_type = gtk_type_unique (gtk_hbox_get_type (), &gfs_info);
+      gfs_type = g_type_register_static (GTK_TYPE_HBOX, "GimpFileSelection", 
+                                         &gfs_info, 0);
     }
   
   return gfs_type;

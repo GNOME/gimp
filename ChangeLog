@@ -1,3 +1,12 @@
+2001-08-10  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpwidgetstypes.h
+	* libgimpwidgets/gimpfontselection.[ch]: added a rudimentary font
+	selection widget, mostly copied from GtkFontSelection.
+
+	* libgimpwidgets/gimpfileselection.c: more GObject porting.
+
 2001-08-10  Michael Natterer  <mitch@convergence.de>
 
 	* app/nav_window.c: fix compiler warning.
