@@ -27,7 +27,7 @@
  */
 
 /* set to the level of debugging output you want, 0 for none */
-#define PSP_DEBUG 0
+#define PSP_DEBUG 3
 
 /* the max number of layers that this plugin should try to load */
 #define MAX_LAYERS 64
@@ -651,9 +651,8 @@ read_general_image_attribute_block (FILE *f,
       fclose (f);
       return -1;
     }
-  ia->height = GUINT32_FROM_LE (ia->height);
   ia->width = GUINT32_FROM_LE (ia->width);
-  ia->depth = GUINT16_FROM_LE (ia->depth);
+  ia->height = GUINT32_FROM_LE (ia->height);
 
 #ifdef G_HAVE_GINT64
   res[0] = GUINT64_FROM_LE (res[0]);
@@ -689,6 +688,15 @@ read_general_image_attribute_block (FILE *f,
       fclose (f);
       return -1;
     }
+
+  ia->depth = GUINT16_FROM_LE (ia->depth);
+  if (ia->depth != 24)
+    {
+      gimp_message_printf (("PSP: Unsupported bit depth %d", ia->depth));
+      fclose (f);
+      return -1;
+    }
+
   ia->active_layer = GUINT32_FROM_LE (ia->active_layer);
   ia->layer_count = GUINT16_FROM_LE (ia->layer_count);
 
@@ -834,8 +842,13 @@ read_creator_block (FILE *f,
       g_string_append (comment, "\n");
     }
   if (comment->len > 0)
-    comment_parasite = parasite_new("gimp-comment", PARASITE_PERSISTENT,
-				    strlen (comment->str) + 1, comment->str);
+    {
+      comment_parasite = parasite_new("gimp-comment", PARASITE_PERSISTENT,
+				      strlen (comment->str) + 1, comment->str);
+      gimp_image_attach_parasite(image_ID, comment_parasite);
+      parasite_free (comment_parasite);
+    }
+
   g_string_free (comment, FALSE);
 }
 
@@ -1299,6 +1312,9 @@ read_layer_block (FILE *f,
 	}
 
       g_free (name);
+
+      gimp_image_add_layer (image_ID, layer_ID, -1);
+
       if (saved_image_rect[0] != 0 || saved_image_rect[1] != 0)
 	gimp_layer_set_offsets (layer_ID,
 				saved_image_rect[0], saved_image_rect[1]);
@@ -1307,8 +1323,6 @@ read_layer_block (FILE *f,
 	gimp_layer_set_visible (layer_ID, FALSE);
       
       gimp_layer_set_preserve_transparency (layer_ID, transparency_protected);
-
-      gimp_image_add_layer (image_ID, layer_ID, -1);
 
       if (major < 4)
 	if (try_fseek (f, sub_block_start + sub_init_len, SEEK_SET) < 0)
@@ -1444,6 +1458,75 @@ read_layer_block (FILE *f,
     }
 
   return layer_ID;
+}
+
+static int
+read_tube_block (FILE *f,
+		 gint image_ID,
+		 guint total_len,
+		 PSPimage *ia)
+{
+  guint16 version;
+  guchar name[514];
+  guint32 step_size, column_count, row_count, cell_count;
+  guint32 placement_mode, selection_mode;
+  gint i;
+  Parasite *hose_parasite;
+  gchar *parasite_text;
+
+  if (fread (&version, 2, 1, f) < 1
+      || fread (name, 513, 1, f) < 1
+      || fread (&step_size, 4, 1, f) < 1
+      || fread (&column_count, 4, 1, f) < 1
+      || fread (&row_count, 4, 1, f) < 1
+      || fread (&cell_count, 4, 1, f) < 1
+      || fread (&placement_mode, 4, 1, f) < 1
+      || fread (&selection_mode, 4, 1, f) < 1)
+    {
+      gimp_message ("PSP: Error reading tube data chunk");
+      fclose (f);
+      gimp_image_delete (image_ID);
+      return -1;
+    }
+  name[513] = 0;
+  version = GUINT16_FROM_LE (version);
+  step_size = GUINT32_FROM_LE (step_size);
+  column_count = GUINT32_FROM_LE (column_count);
+  row_count = GUINT32_FROM_LE (row_count);
+  cell_count = GUINT32_FROM_LE (cell_count);
+  placement_mode = GUINT32_FROM_LE (placement_mode);
+  selection_mode = GUINT32_FROM_LE (selection_mode);
+
+  for (i = 1; i < column_count; i++)
+    gimp_image_add_vguide (image_ID, (ia->width * i)/column_count);
+  for (i = 1; i < row_count; i++)
+    gimp_image_add_hguide (image_ID, (ia->height * i)/row_count);
+
+  /* We use a parasite to pass in the tube (hose) parameters in
+   * case we will have any use of those (for instance in some
+   * yet to be written code that saves a GIMP image hose format
+   * file.
+   */
+  parasite_text =
+    g_strdup_printf ("step:%d cols:%d rows:%d "
+		     "placement:%s selection:%s",
+		     step_size, column_count, row_count,
+		     (placement_mode == tpmRandom ? "random" :
+		      (placement_mode == tpmConstant ? "constant" :
+		       "default")),
+		     (selection_mode == tsmRandom ? "random" :
+		      (selection_mode == tsmIncremental ? "incremental" :
+		       (selection_mode == tsmAngular ? "angular" :
+			(selection_mode == tsmPressure ? "pressure" :
+			 (selection_mode == tsmVelocity ? "velocity" :
+			  "default"))))));
+  gimp_message (parasite_text);
+
+  hose_parasite = parasite_new("gimp-image-hose-parameters", PARASITE_PERSISTENT,
+			       strlen (parasite_text) + 1, parasite_text);
+  gimp_image_attach_parasite(image_ID, hose_parasite);
+  parasite_free (hose_parasite);
+  g_free (parasite_text);
 }
 
 static char *
@@ -1582,22 +1665,31 @@ load_image (char *filename)
 	      if (read_creator_block (f, image_ID, block_total_len, &ia) == -1)
 		return -1;
 	      break;
+
 	    case PSP_COLOR_BLOCK:
 	      break;		/* Not yet implemented */
+
 	    case PSP_LAYER_START_BLOCK:
 	      if (read_layer_block (f, image_ID, block_total_len, &ia) == -1)
 		return -1;
 	      break;
+
 	    case PSP_SELECTION_BLOCK:
 	      break;		/* Not yet implemented */
+
 	    case PSP_ALPHA_BANK_BLOCK:
 	      break;		/* Not yet implemented */
+
 	    case PSP_THUMBNAIL_BLOCK:
-	      break;		/* Not yet implemented */
+	      break;		/* No use for it */
+
 	    case PSP_EXTENDED_DATA_BLOCK:
 	      break;		/* Not yet implemented */
+
 	    case PSP_TUBE_BLOCK:
-	      break;		/* Not yet implemented */
+	      if (read_tube_block (f, image_ID, block_total_len, &ia) == -1)
+		return -1;
+	      break;
 
 	    case PSP_LAYER_BLOCK:
 	    case PSP_CHANNEL_BLOCK:

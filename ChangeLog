@@ -10,6 +10,15 @@
 	* app/preferences_dialog.h: Export gimp_spin_button_new. Not the
 	most logical place for it, though.
 
+	* plug-ins/common/psp.c: Handle the tube block, too. Save tube
+	(image hose) parameters in a parasite. Yet-to-be-written code
+	that creates a .gih file (or something better) can get them
+	from there.
+
+	Actually attach the comment parasite.
+
+	Must set layer offset after adding it to the image.
+
 Sat Aug 21 17:34:53 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* configure.in: version number bump
