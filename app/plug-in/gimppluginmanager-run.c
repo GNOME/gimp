@@ -101,7 +101,12 @@ plug_in_run (Gimp         *gimp,
         }
 
       if (progress)
-        plug_in->progress = g_object_ref (progress);
+        {
+          plug_in->progress = progress;
+
+          g_object_add_weak_pointer (G_OBJECT (plug_in->progress),
+                                     (gpointer *) &plug_in->progress);
+        }
 
       config.version        = GIMP_PROTOCOL_VERSION;
       config.tile_width     = TILE_WIDTH;

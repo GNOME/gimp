@@ -1,3 +1,12 @@
+2004-08-17  Sven Neumann  <sven@gimp.org>
+
+	* app/plug-in/plug-in-progress.c
+	* app/plug-in/plug-in-run.c
+	* app/plug-in/plug-in.c: don't keep a strong reference to the
+	GimpProgress object, instead use a weak reference and deal with
+	the progress being destroyed while the plug-in is running.
+	Fixes bug #150194.
+
 2004-08-16  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcolorframe.c (gimp_color_frame_update): fixed

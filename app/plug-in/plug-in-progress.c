@@ -54,7 +54,12 @@ plug_in_progress_start (PlugIn      *plug_in,
       plug_in->progress = gimp_new_progress (plug_in->gimp, display_ID);
 
       if (plug_in->progress)
-        plug_in->progress_created = TRUE;
+        {
+          plug_in->progress_created = TRUE;
+
+          g_object_add_weak_pointer (G_OBJECT (plug_in->progress),
+                                     (gpointer *) &plug_in->progress);
+        }
     }
 
   if (plug_in->progress)

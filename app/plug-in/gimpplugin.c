@@ -318,7 +318,8 @@ plug_in_unref (PlugIn *plug_in)
         plug_in_progress_end (plug_in);
 
       if (plug_in->progress)
-        g_object_unref (plug_in->progress);
+        g_object_remove_weak_pointer (G_OBJECT (plug_in->progress),
+                                      (gpointer *) &plug_in->progress);
 
       g_object_unref (plug_in->context);
 
@@ -615,7 +616,8 @@ plug_in_close (PlugIn   *plug_in,
 
   if (plug_in->progress)
     {
-      g_object_unref (plug_in->progress);
+      g_object_remove_weak_pointer (G_OBJECT (plug_in->progress),
+                                    (gpointer *) &plug_in->progress);
       plug_in->progress = NULL;
     }
 
