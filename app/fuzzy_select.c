@@ -445,6 +445,19 @@ fuzzy_select_button_release (Tool           *tool,
   /*  First take care of the case where the user "cancels" the action  */
   if (! (bevent->state & GDK_BUTTON3_MASK))
     {
+      if (fuzzy_sel->op == SELECTION_ANCHOR)
+	{
+	  /*  If there is a floating selection, anchor it  */
+	  if (gimage_floating_sel (gdisp->gimage))
+	    floating_sel_anchor (gimage_floating_sel (gdisp->gimage));
+	  /*  Otherwise, clear the selection mask  */
+	  else
+	    gimage_mask_clear (gdisp->gimage);
+
+	  gdisplays_flush ();
+	  return;
+	}
+
       drawable = (fuzzy_options->sample_merged ?
 		  NULL : gimage_active_drawable (gdisp->gimage));
 
