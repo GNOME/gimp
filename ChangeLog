@@ -1,3 +1,8 @@
+2003-03-06  Tor Lillqvist  <tml@iki.fi>
+
+	* app/fileops.c (file_save_as_callback): Yet one more UTF-8 hack
+	for Windows.
+
 2003-03-04  Sven Neumann  <sven@gimp.org>
 
 	* app/plug_in.c (plug_in_handle_proc_install): refuse to install

@@ -587,10 +587,23 @@ file_save_as_callback (GtkWidget *widget,
       gtk_window_set_title (GTK_WINDOW (filesave), _("Save Image"));
     }
 
+#ifdef GDK_USE_UTF8_MBS
+  {
+    gchar *tmp = g_filename_from_utf8 (gdisplay->gimage->has_filename
+				       ? gimage_filename(gdisplay->gimage)
+				       : "." G_DIR_SEPARATOR_S,
+				       -1, NULL, NULL, NULL);
+    gtk_file_selection_set_filename (GTK_FILE_SELECTION(filesave), tmp);
+
+    g_free (tmp);
+  }
+#else
   gtk_file_selection_set_filename (GTK_FILE_SELECTION(filesave),
                                    gdisplay->gimage->has_filename
                                    ? gimage_filename(gdisplay->gimage)
                                    : "." G_DIR_SEPARATOR_S);
+#endif
+
   if (!save_options)
     {
       GtkWidget *frame;
