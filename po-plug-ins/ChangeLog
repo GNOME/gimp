@@ -1,3 +1,9 @@
+2004-03-05  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added missing file (bug #136303).
+
+	* de.po: minor updates.
+
 2004-02-28  Christophe Merlet  <redfox@redfoxcenter.org>
 
 	* fr.po: Updated French translation from

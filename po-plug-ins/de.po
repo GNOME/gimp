@@ -1,5 +1,5 @@
 # This is the German catalog for the standard GIMP Plugins.
-# Copyright (C) 1999-2000 Free Software Foundation, Inc.
+# Copyright (C) 1999-2004 Free Software Foundation, Inc.
 # Felix Natter <fnatter@gmx.net>,
 # Daniel Egger <Daniel.Egger@rz.fh-muenchen.de>,
 # Sven Neumann <sven@gimp.org>,
@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-04 00:14+0100\n"
-"PO-Revision-Date: 2003-12-03 13:51+0100\n"
+"POT-Creation-Date: 2004-03-05 18:28+0100\n"
+"PO-Revision-Date: 2004-03-05 18:34+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -71,8 +71,10 @@ msgstr "Info"
 #: plug-ins/flame/flame.c:920 plug-ins/gflare/gflare.c:2325
 #: plug-ins/gflare/gflare.c:3243 plug-ins/gimpressionist/orientmap.c:504
 #: plug-ins/gimpressionist/preview.c:111 plug-ins/gimpressionist/sizemap.c:458
-#: plug-ins/ifscompose/ifscompose.c:927 plug-ins/print/gimp_main_window.c:413
-#: plug-ins/rcm/rcm_dialog.c:117 plug-ins/rcm/rcm_dialog.c:661
+#: plug-ins/ifscompose/ifscompose.c:927
+#: plug-ins/libgimpoldpreview/gimpoldpreview.c:51
+#: plug-ins/print/gimp_main_window.c:413 plug-ins/rcm/rcm_dialog.c:117
+#: plug-ins/rcm/rcm_dialog.c:661
 msgid "Preview"
 msgstr "Vorschau"
 
@@ -1505,9 +1507,9 @@ msgid "Can't create a new image"
 msgstr "Kann kein neues Bild erzeugen"
 
 #: plug-ins/common/CEL.c:438
-#, fuzzy, c-format
+#, c-format
 msgid "Unsupported bit depth (%d)!"
-msgstr "Anzahl der Farben nicht unterstützt (%d)"
+msgstr "Farbtiefe nicht unterstützt (%d)!"
 
 #: plug-ins/common/CML_explorer.c:133
 msgid "Keep image's values"
@@ -2912,16 +2914,12 @@ msgid "<Image>/Filters/Distorts/_Curve Bend..."
 msgstr "<Image>/Filter/Verzerren/_Kurve..."
 
 #: plug-ins/common/curve_bend.c:709
-#, fuzzy
 msgid "Can operate on layers only (but was called on channel or mask)."
-msgstr ""
-"Kurve operiert nur auf Ebenen (wurde aber auf einem Kanal oder einer Maske  "
-"verwendet"
+msgstr "Kurve operiert nur auf Ebenen (wurde aber auf einem Kanal oder einer Maske verwendet)."
 
 #: plug-ins/common/curve_bend.c:734
-#, fuzzy
 msgid "Cannot operate on empty selections."
-msgstr "Kann nicht mit unbekanntem Bildtyp arbeiten."
+msgstr "Kann nicht auf einer leeren Auswahl arbeiten."
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
@@ -3850,9 +3848,8 @@ msgid "Unnamed"
 msgstr "Unbenannt"
 
 #: plug-ins/common/gbr.c:573
-#, fuzzy
 msgid "GIMP brushes are either GRAYSCALE or RGBA"
-msgstr "GIMP Pinsel sind entweder Graustufen oder RGBA Bilder\n"
+msgstr "GIMP Pinsel sind entweder Graustufen oder RGBA Bilder"
 
 #: plug-ins/common/gbr.c:658
 msgid "Save as Brush"
@@ -5606,14 +5603,12 @@ msgid "Save as PNG"
 msgstr "Als PNG speichern"
 
 #: plug-ins/common/png.c:1557
-#, fuzzy
 msgid "_Load Defaults"
-msgstr "_Fabrikeinstellungen"
+msgstr "Einstellungen _Laden"
 
 #: plug-ins/common/png.c:1558
-#, fuzzy
 msgid "_Save Defaults"
-msgstr "_Fabrikeinstellungen"
+msgstr "Einstellungen _Speichern"
 
 #. parameter settings
 #: plug-ins/common/png.c:1571 plug-ins/common/sample_colorize.c:1377
@@ -5633,7 +5628,6 @@ msgid "Save _Gamma"
 msgstr "_Gamma-Faktor speichern"
 
 #: plug-ins/common/png.c:1612
-#, fuzzy
 msgid "Save Layer O_ffset"
 msgstr "_Ebenenversatz speichern"
 
@@ -5658,9 +5652,8 @@ msgid "Co_mpression Level:"
 msgstr "_Kompressionsgrad:"
 
 #: plug-ins/common/png.c:1786
-#, fuzzy
 msgid "Could not load PNG defaults"
-msgstr "Konnte Hilfe nicht lokalisieren"
+msgstr "Konnte PNG Einstellungen nicht laden"
 
 #: plug-ins/common/pnm.c:427 plug-ins/common/pnm.c:448
 #: plug-ins/common/pnm.c:455 plug-ins/common/pnm.c:464
@@ -6893,12 +6886,12 @@ msgid "Merge Imported Paths"
 msgstr ""
 
 #: plug-ins/common/tga.c:426
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot read footer from '%s'"
 msgstr "Kann Footer von '%s' nicht lesen"
 
 #: plug-ins/common/tga.c:442
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot read extension from '%s'"
 msgstr "Kann Erweiterung von '%s' nicht lesen"
 
@@ -9885,11 +9878,13 @@ msgstr ""
 "sorgfältig, bevor Sie einen Bug-Report schicken."
 
 #: plug-ins/helpbrowser/domain.c:113
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Failed to open help files:\n"
 "%s"
-msgstr "Fehler beim Öffnen von GFlare Datei '%s': %s"
+msgstr ""
+"Fehler beim Öffnen der Hilfe-Dateien:\n"
+"%s"
 
 #: plug-ins/helpbrowser/domain.c:115
 #, c-format
@@ -11752,7 +11747,7 @@ msgstr "Als XJT speichern"
 #: plug-ins/xjt/xjt.c:876
 #, fuzzy
 msgid "Clear Transparent"
-msgstr "Mehr Transparenz"
+msgstr "Transparenz"
 
 #: plug-ins/xjt/xjt.c:1702 plug-ins/xjt/xjt.c:3332
 #, c-format

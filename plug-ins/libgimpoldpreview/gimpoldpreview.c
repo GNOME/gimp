@@ -3,7 +3,7 @@
  *
  * gimpoldpreview.c
  * This file contains the implementation of the gimpoldpreview widget
- * witch is used a a few plug-ins.  This shouldn't be used by any 
+ * witch is used a a few plug-ins.  This shouldn't be used by any
  * foreign plug-in, because it uses some deprecated stuff.  We only
  * used it there since we do not a better preview widget for now.
  *
@@ -34,9 +34,10 @@
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
+
 #include "gimpoldpreview.h"
 
-#include <libgimp/libgimp-intl.h>
+#include "libgimp/stdplugins-intl.h"
 
 
 #define PREVIEW_SIZE    128
