@@ -9,6 +9,10 @@
 #define NEED_newCONSTSUB
 #include "gppport.h"
 
+/* dirty is used in gimp.h AND in perl < 5.005 or with PERL_POLLUTE.  */
+#ifdef dirty
+# undef dirty
+#endif
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 #ifdef GIMP_HAVE_EXPORT

@@ -7,8 +7,6 @@ use Gimp ('__');
 use Gimp::Fu;
 use Gtk;
 
-Gtk->init;
-
 $VERSION=0.91;
 
 #Gimp::set_trace(TRACE_ALL);

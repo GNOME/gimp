@@ -10,8 +10,6 @@ use Gtk::Gdk;
 use Gimp::UI (); # for the logo
 use POSIX 'strftime';
 
-Gtk->init;
-
 #Gimp::set_trace(TRACE_ALL);
 
 my $ex;		# average font width for default font
