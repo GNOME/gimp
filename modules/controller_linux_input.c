@@ -400,15 +400,52 @@ linux_input_read_event (GIOChannel   *io,
                         GIOCondition  cond,
                         gpointer      data)
 {
-  struct input_event  ev;
-  gsize               n_bytes;
-  gint                i;
+  ControllerLinuxInput *input = CONTROLLER_LINUX_INPUT (data);
+  GIOStatus             status;
+  GError               *error = NULL;
+  struct input_event    ev;
+  gsize                 n_bytes;
+  gint                  i;
 
-  if (g_io_channel_read_chars (io,
-                               (gchar *) &ev,
-                               sizeof (struct input_event), &n_bytes,
-                               NULL) == G_IO_STATUS_NORMAL &&
-      n_bytes == sizeof (struct input_event))
+  status = g_io_channel_read_chars (io,
+                                    (gchar *) &ev,
+                                    sizeof (struct input_event), &n_bytes,
+                                    &error);
+
+  switch (status)
+    {
+    case G_IO_STATUS_ERROR:
+    case G_IO_STATUS_EOF:
+      g_source_remove (input->io_id);
+      input->io_id = 0;
+
+      g_io_channel_unref (input->io);
+      input->io = NULL;
+
+      if (error)
+        {
+          gchar *name = g_strdup_printf (_("Device not available: %s"),
+                                         error->message);
+          g_object_set (input, "name", name, NULL);
+          g_free (name);
+
+          g_free (error);
+        }
+      else
+        {
+          g_object_set (input, "name", _("End of file"), NULL);
+        }
+      return FALSE;
+      break;
+
+    case G_IO_STATUS_AGAIN:
+      return TRUE;
+
+    default:
+      break;
+    }
+
+  if (n_bytes == sizeof (struct input_event))
     {
       switch (ev.type)
         {

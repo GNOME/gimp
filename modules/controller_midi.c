@@ -391,7 +391,8 @@ midi_set_device (ControllerMidi *midi,
           g_io_channel_set_encoding (midi->io, NULL, NULL);
 
           midi->io_id = g_io_add_watch (midi->io,
-                                        G_IO_IN,
+                                        G_IO_IN  | G_IO_ERR |
+                                        G_IO_HUP | G_IO_NVAL,
                                         midi_read_event,
                                         midi);
           return TRUE;
@@ -446,223 +447,256 @@ midi_read_event (GIOChannel   *io,
                  gpointer      data)
 {
   ControllerMidi *midi = CONTROLLER_MIDI (data);
+  GIOStatus       status;
+  GError         *error = NULL;
   guchar          buf[0xf];
   gsize           size;
+  gint            pos = 0;
 
-  if (g_io_channel_read_chars (io,
-                               (gchar *) buf,
-                               sizeof (buf), &size,
-                               NULL) == G_IO_STATUS_NORMAL)
+  status = g_io_channel_read_chars (io,
+                                    (gchar *) buf,
+                                    sizeof (buf), &size,
+                                    &error);
+
+  switch (status)
     {
-      gint pos = 0;
+    case G_IO_STATUS_ERROR:
+    case G_IO_STATUS_EOF:
+      g_source_remove (midi->io_id);
+      midi->io_id = 0;
 
-      while (pos < size)
+      g_io_channel_unref (midi->io);
+      midi->io = NULL;
+
+      if (error)
         {
+          gchar *name = g_strdup_printf (_("Device not available: %s"),
+                                         error->message);
+          g_object_set (midi, "name", name, NULL);
+          g_free (name);
+
+          g_free (error);
+        }
+      else
+        {
+          g_object_set (midi, "name", _("End of file"), NULL);
+        }
+      return FALSE;
+      break;
+
+    case G_IO_STATUS_AGAIN:
+      return TRUE;
+
+    default:
+      break;
+    }
+
+  while (pos < size)
+    {
 #if 0
-          gint i;
+      gint i;
 
-          g_print ("MIDI IN (%d bytes), command 0x%02x: ", size, midi->command);
+      g_print ("MIDI IN (%d bytes), command 0x%02x: ", size, midi->command);
 
-          for (i = 0; i < size; i++)
-            g_print ("%02x ", buf[i]);
-          g_print ("\n");
+      for (i = 0; i < size; i++)
+        g_print ("%02x ", buf[i]);
+      g_print ("\n");
 #endif
 
-          if (buf[pos] & 0x80)  /* status byte */
+      if (buf[pos] & 0x80)  /* status byte */
+        {
+          if (buf[pos] >= 0xf8)  /* realtime messages */
             {
-              if (buf[pos] >= 0xf8)  /* realtime messages */
+              switch (buf[pos])
+                {
+                case 0xf8:  /* timing clock   */
+                case 0xf9:  /* (undefined)    */
+                case 0xfa:  /* start          */
+                case 0xfb:  /* continue       */
+                case 0xfc:  /* stop           */
+                case 0xfd:  /* (undefined)    */
+                case 0xfe:  /* active sensing */
+                case 0xff:  /* system reset   */
+                  /* nop */
+#if 0
+                  g_print ("MIDI: realtime message (%02x)\n", buf[pos]);
+#endif
+                  break;
+                }
+            }
+          else
+            {
+              midi->swallow = FALSE;  /* any status bytes ends swallowing */
+
+              if (buf[pos] >= 0xf0)  /* system messages */
                 {
                   switch (buf[pos])
                     {
-                    case 0xf8:  /* timing clock   */
-                    case 0xf9:  /* (undefined)    */
-                    case 0xfa:  /* start          */
-                    case 0xfb:  /* continue       */
-                    case 0xfc:  /* stop           */
-                    case 0xfd:  /* (undefined)    */
-                    case 0xfe:  /* active sensing */
-                    case 0xff:  /* system reset   */
-                      /* nop */
-#if 0
-                      g_print ("MIDI: realtime message (%02x)\n", buf[pos]);
-#endif
+                    case 0xf0:  /* sysex start */
+                      midi->swallow = TRUE;
+
+                      D (g_print ("MIDI: sysex start\n"));
+                      break;
+
+                    case 0xf1:              /* time code   */
+                      midi->swallow = TRUE; /* type + data */
+
+                      D (g_print ("MIDI: time code\n"));
+                      break;
+
+                    case 0xf2:              /* song position */
+                      midi->swallow = TRUE; /* lsb + msb     */
+
+                      D (g_print ("MIDI: song position\n"));
+                      break;
+
+                    case 0xf3:              /* song select */
+                      midi->swallow = TRUE; /* song number */
+
+                      D (g_print ("MIDI: song select\n"));
+                      break;
+
+                    case 0xf4:  /* (undefined) */
+                    case 0xf5:  /* (undefined) */
+                      D (g_print ("MIDI: undefined system message\n"));
+                      break;
+
+                    case 0xf6:  /* tune request */
+                      D (g_print ("MIDI: tune request\n"));
+                      break;
+
+                    case 0xf7:  /* sysex end */
+                      D (g_print ("MIDI: sysex end\n"));
                       break;
                     }
                 }
-              else
+              else  /* channel messages */
                 {
-                  midi->swallow = FALSE;  /* any status bytes ends swallowing */
+                  midi->command = buf[pos] >> 4;
+                  midi->channel = buf[pos] & 0xf;
 
-                  if (buf[pos] >= 0xf0)  /* system messages */
-                    {
-                      switch (buf[pos])
-                        {
-                        case 0xf0:  /* sysex start */
-                          midi->swallow = TRUE;
-
-                          D (g_print ("MIDI: sysex start\n"));
-                          break;
-
-                        case 0xf1:              /* time code   */
-                          midi->swallow = TRUE; /* type + data */
-
-                          D (g_print ("MIDI: time code\n"));
-                          break;
-
-                        case 0xf2:              /* song position */
-                          midi->swallow = TRUE; /* lsb + msb     */
-
-                          D (g_print ("MIDI: song position\n"));
-                          break;
-
-                        case 0xf3:              /* song select */
-                          midi->swallow = TRUE; /* song number */
-
-                          D (g_print ("MIDI: song select\n"));
-                          break;
-
-                        case 0xf4:  /* (undefined) */
-                        case 0xf5:  /* (undefined) */
-                          D (g_print ("MIDI: undefined system message\n"));
-                          break;
-
-                        case 0xf6:  /* tune request */
-                          D (g_print ("MIDI: tune request\n"));
-                          break;
-
-                        case 0xf7:  /* sysex end */
-                          D (g_print ("MIDI: sysex end\n"));
-                          break;
-                        }
-                    }
-                  else  /* channel messages */
-                    {
-                      midi->command = buf[pos] >> 4;
-                      midi->channel = buf[pos] & 0xf;
-
-                      /* reset running status */
-                      midi->key      = -1;
-                      midi->velocity = -1;
-                      midi->msb      = -1;
-                      midi->lsb      = -1;
-                    }
+                  /* reset running status */
+                  midi->key      = -1;
+                  midi->velocity = -1;
+                  midi->msb      = -1;
+                  midi->lsb      = -1;
                 }
+            }
 
-              pos++;  /* status byte consumed */
+          pos++;  /* status byte consumed */
+          continue;
+        }
+
+      if (midi->swallow)
+        {
+          pos++;  /* consume any data byte */
+          continue;
+        }
+
+      switch (midi->command)
+        {
+        case 0x8:  /* note off   */
+        case 0x9:  /* note on    */
+        case 0xa:  /* aftertouch */
+
+          if (midi->key == -1)
+            {
+              midi->key = buf[pos++];  /* key byte consumed */
               continue;
             }
 
-          if (midi->swallow)
+          if (midi->velocity == -1)
+            midi->velocity = buf[pos++];  /* velocity byte consumed */
+
+          /* note on with velocity = 0 means note off */
+          if (midi->command == 0x9 && midi->velocity == 0x0)
+            midi->command = 0x8;
+
+          if (midi->command == 0x9)
             {
-              pos++;  /* consume any data byte */
-              continue;
+              D (g_print ("MIDI (ch %02d): note on  (%02x vel %02x)\n",
+                          midi->channel,
+                          midi->key, midi->velocity));
+
+              midi_event (midi, midi->channel, midi->key,
+                          (gdouble) midi->velocity / 127.0);
             }
-
-          switch (midi->command)
+          else if (midi->command == 0x8)
             {
-            case 0x8:  /* note off   */
-            case 0x9:  /* note on    */
-            case 0xa:  /* aftertouch */
-
-              if (midi->key == -1)
-                {
-                  midi->key = buf[pos++];  /* key byte consumed */
-                  continue;
-                }
-
-              if (midi->velocity == -1)
-                midi->velocity = buf[pos++];  /* velocity byte consumed */
-
-              /* note on with velocity = 0 means note off */
-              if (midi->command == 0x9 && midi->velocity == 0x0)
-                midi->command = 0x8;
-
-              if (midi->command == 0x9)
-                {
-                  D (g_print ("MIDI (ch %02d): note on  (%02x vel %02x)\n",
-                              midi->channel,
-                              midi->key, midi->velocity));
-
-                  midi_event (midi, midi->channel, midi->key,
-                              (gdouble) midi->velocity / 127.0);
-                }
-              else if (midi->command == 0x8)
-                {
-                  D (g_print ("MIDI (ch %02d): note off (%02x vel %02x)\n",
-                              midi->channel, midi->key, midi->velocity));
-
-                  midi_event (midi, midi->channel, midi->key + 128,
-                              (gdouble) midi->velocity / 127.0);
-                }
-              else
-                {
-                  D (g_print ("MIDI (ch %02d): polyphonic aftertouch (%02x pressure %02x)\n",
-                              midi->channel, midi->key, midi->velocity));
-                }
-
-              midi->key      = -1;
-              midi->velocity = -1;
-              break;
-
-            case 0xb:  /* controllers, sustain */
-
-              if (midi->key == -1)
-                {
-                  midi->key = buf[pos++];
-                  continue;
-                }
-
-              if (midi->velocity == -1)
-                midi->velocity = buf[pos++];
-
-              D (g_print ("MIDI (ch %02d): controller %d (value %d)\n",
+              D (g_print ("MIDI (ch %02d): note off (%02x vel %02x)\n",
                           midi->channel, midi->key, midi->velocity));
 
-              midi_event (midi, midi->channel, midi->key + 128 + 128,
+              midi_event (midi, midi->channel, midi->key + 128,
                           (gdouble) midi->velocity / 127.0);
-
-              midi->key      = -1;
-              midi->velocity = -1;
-              break;
-
-            case 0xc:  /* program change */
-              midi->key = buf[pos++];
-
-              D (g_print ("MIDI (ch %02d): program change (%d)\n",
-                          midi->channel, midi->key));
-
-              midi->key = -1;
-              break;
-
-            case 0xd:  /* channel key pressure */
-              midi->velocity = buf[pos++];
-
-              D (g_print ("MIDI (ch %02d): channel aftertouch (%d)\n",
-                          midi->channel, midi->velocity));
-
-              midi->velocity = -1;
-              break;
-
-            case 0xe:  /* pitch bend */
-              if (midi->lsb == -1)
-                {
-                  midi->lsb = buf[pos++];
-                  continue;
-                }
-
-              if (midi->msb == -1)
-                midi->msb = buf[pos++];
-
-              midi->velocity = midi->lsb | (midi->msb << 7);
-
-              D (g_print ("MIDI (ch %02d): pitch (%d)\n",
-                          midi->channel, midi->velocity));
-
-              midi->msb      = -1;
-              midi->lsb      = -1;
-              midi->velocity = -1;
-              break;
             }
+          else
+            {
+              D (g_print ("MIDI (ch %02d): polyphonic aftertouch (%02x pressure %02x)\n",
+                          midi->channel, midi->key, midi->velocity));
+            }
+
+          midi->key      = -1;
+          midi->velocity = -1;
+          break;
+
+        case 0xb:  /* controllers, sustain */
+
+          if (midi->key == -1)
+            {
+              midi->key = buf[pos++];
+              continue;
+            }
+
+          if (midi->velocity == -1)
+            midi->velocity = buf[pos++];
+
+          D (g_print ("MIDI (ch %02d): controller %d (value %d)\n",
+                      midi->channel, midi->key, midi->velocity));
+
+          midi_event (midi, midi->channel, midi->key + 128 + 128,
+                      (gdouble) midi->velocity / 127.0);
+
+          midi->key      = -1;
+          midi->velocity = -1;
+          break;
+
+        case 0xc:  /* program change */
+          midi->key = buf[pos++];
+
+          D (g_print ("MIDI (ch %02d): program change (%d)\n",
+                      midi->channel, midi->key));
+
+          midi->key = -1;
+          break;
+
+        case 0xd:  /* channel key pressure */
+          midi->velocity = buf[pos++];
+
+          D (g_print ("MIDI (ch %02d): channel aftertouch (%d)\n",
+                      midi->channel, midi->velocity));
+
+          midi->velocity = -1;
+          break;
+
+        case 0xe:  /* pitch bend */
+          if (midi->lsb == -1)
+            {
+              midi->lsb = buf[pos++];
+              continue;
+            }
+
+          if (midi->msb == -1)
+            midi->msb = buf[pos++];
+
+          midi->velocity = midi->lsb | (midi->msb << 7);
+
+          D (g_print ("MIDI (ch %02d): pitch (%d)\n",
+                      midi->channel, midi->velocity));
+
+          midi->msb      = -1;
+          midi->lsb      = -1;
+          midi->velocity = -1;
+          break;
         }
     }
 

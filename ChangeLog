@@ -1,5 +1,12 @@
 2004-10-26  Michael Natterer  <mitch@gimp.org>
 
+	* modules/controller_linux_input.c
+	* modules/controller_midi.c: don't enter an infinite blocking loop
+	when the user selects an input file that can be opened, but not
+	read (like a directory).
+
+2004-10-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpactionview.[ch] (gimp_action_view_new): added
 	parameter "const gchar *select_action" and preselect the passed
 	action if non-NULL. Made the column enum public to users of this
