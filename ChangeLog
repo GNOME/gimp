@@ -1,3 +1,10 @@
+2004-09-03  Simon Budig  <simon@gimp.org>
+
+	* app/gui/info-window.c: Applied modified patch by Kevin Cozens
+	that implements a "Comments" tab in the image info dialog.
+
+	Fixes bug #151719.
+
 2004-09-03  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimppreviewarea.c (CHECK_COLOR): swapped light

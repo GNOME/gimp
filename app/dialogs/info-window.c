@@ -66,9 +66,11 @@ struct _InfoWinData
   gchar        visual_class_str[MAX_BUF];
   gchar        visual_depth_str[MAX_BUF];
   gchar        resolution_str[MAX_BUF];
+  gchar        comment_str[MAX_BUF];
 
   GtkWidget   *pixel_labels[2];
   GtkWidget   *unit_labels[2];
+  GtkWidget   *comment_label;
 
   GtkWidget   *frame1;
   GtkWidget   *frame2;
@@ -99,8 +101,8 @@ info_window_response (GtkWidget  *widget,
 
 static void
 info_window_page_switch (GtkWidget       *widget,
-			 GtkNotebookPage *page,
-			 gint             page_num,
+                         GtkNotebookPage *page,
+                         gint             page_num,
                          InfoDialog      *info_win)
 {
   InfoWinData *iwd = (InfoWinData *) info_win->user_data;
@@ -129,7 +131,7 @@ info_window_create_extended (InfoDialog *info_win,
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_notebook_append_page (GTK_NOTEBOOK (info_win->info_notebook),
-			    vbox, gtk_label_new (_("Extended")));
+                            vbox, gtk_label_new (_("Extended")));
   gtk_widget_show (vbox);
 
 
@@ -203,12 +205,51 @@ info_window_create_extended (InfoDialog *info_win,
   gtk_widget_show (iwd->frame2);
 
 
-  /* Set back to first page */
-  gtk_notebook_set_current_page (GTK_NOTEBOOK (info_win->info_notebook), 0);
-
   g_signal_connect (info_win->info_notebook, "switch_page",
-		    G_CALLBACK (info_window_page_switch),
-		    info_win);
+                    G_CALLBACK (info_window_page_switch),
+                    info_win);
+}
+
+
+/*  displays gimp-comment parasite
+ */
+
+static void
+info_window_create_comment (InfoDialog  *info_win,
+                            GimpDisplay *gdisp)
+{
+  InfoWinData  *iwd = (InfoWinData *) info_win->user_data;
+  GtkWidget    *label;
+  GtkWidget    *vbox;
+  GtkWidget    *vbox2;
+  GimpParasite *comment;
+
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  gtk_notebook_append_page (GTK_NOTEBOOK (info_win->info_notebook),
+                            vbox, gtk_label_new (_("Comment")));
+  gtk_widget_show (vbox);
+
+  /*  add the information field  */
+  vbox2 = gtk_vbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), vbox2, TRUE, TRUE, 0);
+  gtk_widget_show (vbox2);
+
+  /*  image comment  */
+  comment = gimp_image_parasite_find (gdisp->gimage, "gimp-comment");
+  if (comment == NULL)
+    g_snprintf (iwd->comment_str, MAX_BUF, "%s", _("(none)"));
+  else
+    g_snprintf (iwd->comment_str, MAX_BUF, "%s",
+                gimp_any_to_utf8 (comment->data, comment->size, NULL));
+
+  label = gtk_label_new (iwd->comment_str);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+  gtk_label_set_selectable (GTK_LABEL (label), TRUE);
+  gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+  iwd->comment_label = label;
 }
 
 
@@ -226,8 +267,8 @@ info_window_create (GimpDisplay *gdisp)
                                        GIMP_STOCK_INFO,
                                        _("Image Information"),
                                        gdisp->shell,
-				       gimp_standard_help_func,
-				       GIMP_HELP_INFO_DIALOG);
+                                       gimp_standard_help_func,
+                                       GIMP_HELP_INFO_DIALOG);
 
   gtk_dialog_add_button (GTK_DIALOG (info_win->shell),
                          GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
@@ -242,26 +283,30 @@ info_window_create (GimpDisplay *gdisp)
 
   /*  add the information fields  */
   info_dialog_add_label (info_win, _("Pixel dimensions:"),
-			 iwd->dimensions_str);
+                         iwd->dimensions_str);
   info_dialog_add_label (info_win, _("Print size:"),
-			 iwd->real_dimensions_str);
+                         iwd->real_dimensions_str);
   info_dialog_add_label (info_win, _("Resolution:"),
-			iwd->resolution_str);
+                        iwd->resolution_str);
   info_dialog_add_label (info_win, _("Scale ratio:"),
-			 iwd->scale_str);
+                         iwd->scale_str);
   info_dialog_add_label (info_win, _("Number of layers:"),
-			 iwd->num_layers_str);
+                         iwd->num_layers_str);
   info_dialog_add_label (info_win, _("Size in memory:"),
-			 iwd->memsize_str);
+                         iwd->memsize_str);
   info_dialog_add_label (info_win, _("Display type:"),
-			 iwd->color_type_str);
+                         iwd->color_type_str);
   info_dialog_add_label (info_win, _("Visual class:"),
-			 iwd->visual_class_str);
+                         iwd->visual_class_str);
   info_dialog_add_label (info_win, _("Visual depth:"),
-			 iwd->visual_depth_str);
+                         iwd->visual_depth_str);
 
   /*  Add extra tabs  */
   info_window_create_extended (info_win, gdisp->gimage->gimp);
+  info_window_create_comment (info_win, gdisp);
+
+  /* Set back to first page */
+  gtk_notebook_set_current_page (GTK_NOTEBOOK (info_win->info_notebook), 0);
 
   return info_win;
 }
@@ -270,8 +315,8 @@ static InfoDialog *info_window_auto = NULL;
 
 static void
 info_window_change_display (GimpContext *context,
-			    GimpDisplay *newdisp,
-			    gpointer     data)
+                            GimpDisplay *newdisp,
+                            gpointer     data)
 {
   GimpDisplay *gdisp = newdisp;
   GimpDisplay *old_gdisp;
@@ -288,7 +333,7 @@ info_window_change_display (GimpContext *context,
   gimage = gdisp->gimage;
 
   if (gimage && gimp_container_have (context->gimp->images,
-				     GIMP_OBJECT (gimage)))
+                                     GIMP_OBJECT (gimage)))
     {
       iwd->gdisp = gdisp;
       info_window_update (gdisp);
@@ -315,8 +360,8 @@ info_window_follow_auto (Gimp *gimp)
       info_window_auto = info_window_create (gdisp);
 
       g_signal_connect (context, "display_changed",
-			G_CALLBACK (info_window_change_display),
-			NULL);
+                        G_CALLBACK (info_window_change_display),
+                        NULL);
 
       info_window_update (gdisp);
     }
@@ -359,6 +404,8 @@ info_window_update_extended (GimpDisplay *gdisp,
       info_window_update (gdisp);
     }
 
+  gtk_label_set_text (GTK_LABEL (iwd->comment_label), iwd->comment_str);
+
   if (! iwd || ! iwd->showing_extended)
     return;
 
@@ -389,14 +436,14 @@ info_window_update_extended (GimpDisplay *gdisp,
       gtk_label_set_text (GTK_LABEL (iwd->pixel_labels[1]), buf);
 
       g_snprintf (format_buf, sizeof (format_buf),
-		  "%%.%df %s", unit_digits, unit_str);
+                  "%%.%df %s", unit_digits, unit_str);
 
       g_snprintf (buf, sizeof (buf), format_buf,
-		  tx * unit_factor / image->xresolution);
+                  tx * unit_factor / image->xresolution);
       gtk_label_set_text (GTK_LABEL (iwd->unit_labels[0]), buf);
 
       g_snprintf (buf, sizeof (buf), format_buf,
-		  ty * unit_factor / image->yresolution);
+                  ty * unit_factor / image->yresolution);
       gtk_label_set_text (GTK_LABEL (iwd->unit_labels[1]), buf);
 
     }
@@ -494,13 +541,13 @@ info_window_update (GimpDisplay *gdisp)
 
   /*  width and height  */
   g_snprintf (iwd->dimensions_str, MAX_BUF, _("%d x %d pixels"),
-	      image->width, image->height);
+              image->width, image->height);
   g_snprintf (format_buf, sizeof (format_buf), "%%.%df x %%.%df %s",
-	      unit_digits + 1, unit_digits + 1,
+              unit_digits + 1, unit_digits + 1,
               _gimp_unit_get_plural (image->gimp, unit));
   g_snprintf (iwd->real_dimensions_str, MAX_BUF, format_buf,
-	      image->width  * unit_factor / image->xresolution,
-	      image->height * unit_factor / image->yresolution);
+              image->width  * unit_factor / image->xresolution,
+              image->height * unit_factor / image->yresolution);
 
   /*  image resolution  */
   res_unit = image->gimp->config->default_image->resolution_unit;
@@ -509,8 +556,8 @@ info_window_update (GimpDisplay *gdisp)
   g_snprintf (format_buf, sizeof (format_buf), _("pixels/%s"),
               _gimp_unit_get_abbreviation (image->gimp, res_unit));
   g_snprintf (iwd->resolution_str, MAX_BUF, _("%g x %g %s"),
-	      image->xresolution / res_unit_factor,
-	      image->yresolution / res_unit_factor,
+              image->xresolution / res_unit_factor,
+              image->yresolution / res_unit_factor,
               res_unit == GIMP_UNIT_INCH ? _("dpi") : format_buf);
 
   /*  user zoom ratio  */
@@ -548,6 +595,18 @@ info_window_update (GimpDisplay *gdisp)
                   _("Indexed Color"), image->num_cols, _("colors"));
       break;
     }
+
+  /*  image comment  */
+  {
+    GimpParasite *comment;
+
+    comment = gimp_image_parasite_find (gdisp->gimage, "gimp-comment");
+    if (comment == NULL)
+      g_snprintf (iwd->comment_str, MAX_BUF, "%s", _("(none)"));
+    else
+      g_snprintf (iwd->comment_str, MAX_BUF, "%s",
+                  gimp_any_to_utf8 (comment->data, comment->size, NULL));
+  }
 
   {
     GdkScreen *screen = gtk_widget_get_screen (GTK_WIDGET (shell));
