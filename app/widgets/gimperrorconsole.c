@@ -230,7 +230,7 @@ gimp_error_console_new (Gimp            *gimp,
 
   console = g_object_new (GIMP_TYPE_ERROR_CONSOLE,
                           "menu-factory",   menu_factory,
-                          "menu-dentifier", "<ErrorConsole>",
+                          "menu-identifier", "<ErrorConsole>",
                           "ui-path",        "/error-console-popup",
                           NULL);
 
