@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <glib.h>
 #include <unistd.h>
-#include "p_output.h"
+#include "output.h"
 
 GHashTable* decl_hash;
 GHashTable* def_hash;
