@@ -1,4 +1,4 @@
-/* curve_bend plugin for the GIMP (tested with GIMP 1.0.4 upto GIMP 1.1.4, requires gtk+ 1.2) */
+/* curve_bend plugin for the GIMP (tested with GIMP 1.1.9, requires gtk+ 1.2) */
 
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
@@ -19,6 +19,7 @@
  */
 
 /* Revision history
+ *  (1999/09/13)  v1.01  hof: PDB-calls updated for gimp 1.1.9
  *  (1999/05/10)  v1.0   hof: first public release
  *  (1999/04/23)  v0.0   hof: coding started,
  *                            splines and dialog parts are similar to curves.c
@@ -48,7 +49,7 @@
 /* Defines */
 #define PLUG_IN_NAME        "plug_in_curve_bend"
 #define PLUG_IN_PRINT_NAME  "CurveBend"
-#define PLUG_IN_VERSION     "v1.0 (1999/05/08)"
+#define PLUG_IN_VERSION     "v1.01 (1999/09/13)"
 #define PLUG_IN_MENU_PATH   "<Image>/Filters/Distorts/CurveBend"
 #define PLUG_IN_IMAGE_TYPES "RGB*, GRAY*"
 #define PLUG_IN_AUTHOR      "Wolfgang Hofer (hof@hotbot.com)"
@@ -481,8 +482,6 @@ gint p_gimp_rotate(gint32 image_id, gint32 drawable_id, gint32 interpolation, gd
    l_nparams = p_pdb_procedure_available(l_rotate_proc);
    if (l_nparams >= 0)
    {
-     if (l_nparams == 3)
-     {
          /* use the new Interface (Gimp 1.1 style)
           * (1.1 knows the image_id where the drawable belongs to)
           */
@@ -492,18 +491,6 @@ gint p_gimp_rotate(gint32 image_id, gint32 drawable_id, gint32 interpolation, gd
 			                  PARAM_INT32, interpolation,
 			                  PARAM_FLOAT, l_angle_rad,
                                           PARAM_END);
-     }
-     else
-     {
-         /* use the old Interface (Gimp 1.0.2 style) */
-        return_vals = gimp_run_procedure (l_rotate_proc,
-                                          &nreturn_vals,
-			                  PARAM_IMAGE, image_id,
-                                          PARAM_DRAWABLE, drawable_id,
-			                  PARAM_INT32, interpolation,
-			                  PARAM_FLOAT, l_angle_rad,
-                                          PARAM_END);
-     }
      if (return_vals[0].data.d_status == STATUS_SUCCESS)
      {
         l_rc = 0;
@@ -539,7 +526,6 @@ gint32  p_gimp_edit_copy(gint32 image_id, gint32 drawable_id)
    {
       return_vals = gimp_run_procedure (l_procname,
                                     &nreturn_vals,
-                                    PARAM_IMAGE,     image_id,
                                     PARAM_DRAWABLE,  drawable_id,
                                     PARAM_END);
                                     
@@ -571,7 +557,6 @@ gint32  p_gimp_edit_paste(gint32 image_id, gint32 drawable_id, gint32 paste_into
    {
       return_vals = gimp_run_procedure (l_procname,
                                     &nreturn_vals,
-                                    PARAM_IMAGE,     image_id,
                                     PARAM_DRAWABLE,  drawable_id,
                                     PARAM_INT32,     paste_into,
                                     PARAM_END);

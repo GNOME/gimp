@@ -917,7 +917,7 @@ display_brush (BrushSelectP bsp,
   ystart = BOUNDS (offset_y, 0, bsp->preview->allocation.height);
   yend = BOUNDS (offset_y + height, 0, bsp->preview->allocation.height);
 
-  mask = temp_buf_data (mask_buf) + (ystart - offset_y) * mask_buf->width * 3;
+  mask = temp_buf_data (mask_buf) + (ystart - offset_y) * mask_buf->width;
   buf = g_new (guchar, 3 * bsp->cell_width);
 
   if (GIMP_IS_BRUSH_PIXMAP (brush)) 
