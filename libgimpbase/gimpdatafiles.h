@@ -23,6 +23,7 @@
 #ifndef _DATAFILES_H_
 #define _DATAFILES_H_
 
+#include <time.h>
 
 #define INCLUDE_TEMP_DIR 0x1
 #define MODE_EXECUTABLE  0x2

@@ -1,3 +1,7 @@
+Thu Oct 28 11:45:29 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
+
+	* app/datafiles.h: include <time.h>  for time_t.
+
 Thu Oct 28 00:52:57 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/transform_core.c: remember the drawable we were working on
