@@ -29,16 +29,17 @@
 #include <glib-object.h>
 
 #ifdef G_OS_WIN32
-#include <process.h>		/* For _getpid() */
-#include <io.h> /* for _unlink() */
+#include <process.h>	/*  for _getpid()  */
+#include <io.h>         /*  for _unlink()  */
 #endif
- 
+
 #include "base-types.h"
 
 #include "config/gimpbaseconfig.h"
 #include "config/gimpconfig-path.h"
 
 #include "paint-funcs/paint-funcs.h"
+#include "composite/gimp-composite.h"
 
 #include "base.h"
 #include "cpu-accel.h"
@@ -88,7 +89,7 @@ base_init (GimpBaseConfig *config,
 #endif
 #ifdef ARCH_PPC
       g_printerr ("  altivec : %s\n",
-		  (cpu_accel() & CPU_ACCEL_PPC_ALTIVEC) ? "yes" : "no");      
+		  (cpu_accel() & CPU_ACCEL_PPC_ALTIVEC) ? "yes" : "no");
 #endif
       g_printerr ("\n");
     }
@@ -118,7 +119,7 @@ base_init (GimpBaseConfig *config,
   g_free (path);
 
   paint_funcs_setup (use_mmx);
-      gimp_composite_init();
+  gimp_composite_init ();
 }
 
 void

@@ -37,7 +37,6 @@
 #include "paint-funcs.h"
 #include "paint-funcs-generic.h"
 #include "gimp-composite.h"
-int gimp_composite_use_old = 1;
 
 #define RANDOM_SEED        314159265
 #define EPSILON            0.0001
@@ -60,7 +59,7 @@ struct _LayerMode
   guchar   decrease_opacity : 1; /*  layer mode can decrease opacity */
 };
 
-static const LayerMode layer_modes[] =	
+static const LayerMode layer_modes[] =
                                /* This must obviously be in the same
 			        * order as the corresponding values
 		         	* in the GimpLayerModeEffects enumeration.
@@ -125,6 +124,10 @@ static LayerModeFunc layer_mode_funcs[] =
   layer_anti_erase_mode
 };
 
+
+static gboolean gimp_composite_use_old = TRUE;
+
+
 /*  Local function prototypes  */
 
 static gint *   make_curve               (gdouble  sigma,
@@ -145,12 +148,12 @@ static void     apply_layer_mode_replace (guchar   *src1,
 					  guint     bytes1,
 					  guint     bytes2,
 					  gboolean *affect);
-static void     rotate_pointers          (gpointer *p, 
+static void     rotate_pointers          (gpointer *p,
 					  guint32   n);
 
 
 
-void
+static void
 update_tile_rowhints (Tile *tile,
 		      gint  ymin,
 		      gint  ymax)
@@ -251,7 +254,7 @@ update_tile_rowhints (Tile *tile,
 	next_row4:
 	  ptr += 4 * ewidth;
 	}
-      
+
       return;
     }
 
@@ -328,7 +331,7 @@ update_tile_rowhints (Tile *tile,
 	next_row2:
 	  ptr += 2 * ewidth;
 	}
-      
+
       return;
     }
 
@@ -443,10 +446,10 @@ paint_funcs_setup (gboolean use_mmx)
     random_table[i] = g_rand_int (gr);
 
   for (i = 0; i < 256; i++)
-    add_lut[i] = i; 
-   
+    add_lut[i] = i;
+
   for (i = 256; i <= 510; i++)
-    add_lut[i] = 255; 
+    add_lut[i] = 255;
 
   g_rand_free (gr);
 }
@@ -477,12 +480,12 @@ combine_indexed_and_indexed_pixels (const guchar   *src1,
       while (length --)
 	{
 	  new_alpha = INT_MULT(*m , opacity, tmp);
-	  
+
 	  for (b = 0; b < bytes; b++)
 	    dest[b] = (affect[b] && new_alpha > 127) ? src2[b] : src1[b];
-	  
+
 	  m++;
-	  
+
 	  src1 += bytes;
 	  src2 += bytes;
 	  dest += bytes;
@@ -493,10 +496,10 @@ combine_indexed_and_indexed_pixels (const guchar   *src1,
       while (length --)
 	{
 	  new_alpha = opacity;
-	  
+
 	  for (b = 0; b < bytes; b++)
 	    dest[b] = (affect[b] && new_alpha > 127) ? src2[b] : src1[b];
-	  
+
 	  src1 += bytes;
 	  src2 += bytes;
 	  dest += bytes;
@@ -578,7 +581,7 @@ combine_indexed_a_and_indexed_a_pixels (const guchar   *src1,
   if (mask)
     {
       m = mask;
-   
+
       while (length --)
 	{
 	  new_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
@@ -586,7 +589,7 @@ combine_indexed_a_and_indexed_a_pixels (const guchar   *src1,
 	  for (b = 0; b < alpha; b++)
 	    dest[b] = (affect[b] && new_alpha > 127) ? src2[b] : src1[b];
 
-	  dest[alpha] = (affect[alpha] && new_alpha > 127) ? 
+	  dest[alpha] = (affect[alpha] && new_alpha > 127) ?
 	    OPAQUE_OPACITY : src1[alpha];
 
 	  m++;
@@ -605,7 +608,7 @@ combine_indexed_a_and_indexed_a_pixels (const guchar   *src1,
 	  for (b = 0; b < alpha; b++)
 	    dest[b] = (affect[b] && new_alpha > 127) ? src2[b] : src1[b];
 
-	  dest[alpha] = (affect[alpha] && new_alpha > 127) ? 
+	  dest[alpha] = (affect[alpha] && new_alpha > 127) ?
 	    OPAQUE_OPACITY : src1[alpha];
 
 	  src1 += bytes;
@@ -639,7 +642,7 @@ combine_inten_a_and_indexed_a_pixels (const guchar *src1,
   if (mask)
     {
       m = mask;
- 
+
       while (length --)
 	{
 	  new_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
@@ -649,7 +652,7 @@ combine_inten_a_and_indexed_a_pixels (const guchar *src1,
 	  for (b = 0; b < bytes-1; b++)
 	    dest[b] = (new_alpha > 127) ? cmap[index + b] : src1[b];
 
-	  dest[b] = (new_alpha > 127) ? OPAQUE_OPACITY : src1[b];  
+	  dest[b] = (new_alpha > 127) ? OPAQUE_OPACITY : src1[b];
 	  /*  alpha channel is opaque  */
 
 	  m++;
@@ -670,7 +673,7 @@ combine_inten_a_and_indexed_a_pixels (const guchar *src1,
 	  for (b = 0; b < bytes-1; b++)
 	    dest[b] = (new_alpha > 127) ? cmap[index + b] : src1[b];
 
-	  dest[b] = (new_alpha > 127) ? OPAQUE_OPACITY : src1[b];  
+	  dest[b] = (new_alpha > 127) ? OPAQUE_OPACITY : src1[b];
 	  /*  alpha channel is opaque  */
 
 	  /* m++; /Per */
@@ -872,7 +875,7 @@ combine_inten_and_inten_a_pixels (const guchar   *src1,
 	        (guchar) (src2[2] * ratio + src1[2] * compl_ratio + EPSILON) : src1[2];  \
 	    }                                                                                   \
 	  }*/
-	
+
 void
 combine_inten_a_and_inten_pixels (const guchar   *src1,
 				  const guchar   *src2,
@@ -906,7 +909,7 @@ combine_inten_a_and_inten_pixels (const guchar   *src1,
 	      new_alpha = src1[alpha] +
 		INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
 	      alphify (src2_alpha, new_alpha);
-	      
+
 	      if (mode_affect)
 		{
 		  dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
@@ -916,7 +919,7 @@ combine_inten_a_and_inten_pixels (const guchar   *src1,
 		  dest[alpha] = (src1[alpha]) ? src1[alpha] :
 		    (affect[alpha] ? new_alpha : src1[alpha]);
 		}
-		
+
 	      m++;
 	      src1 += bytes;
 	      src2 += src2_bytes;
@@ -931,7 +934,7 @@ combine_inten_a_and_inten_pixels (const guchar   *src1,
 	      new_alpha = src1[alpha] +
 		INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
 	      alphify (src2_alpha, new_alpha);
-	      
+
 	      if (mode_affect)
 		{
 		  dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
@@ -941,7 +944,7 @@ combine_inten_a_and_inten_pixels (const guchar   *src1,
 		  dest[alpha] = (src1[alpha]) ? src1[alpha] :
 		    (affect[alpha] ? new_alpha : src1[alpha]);
 		}
-		
+
 	      m++;
 	      src1 += bytes;
 	      src2 += src2_bytes;
@@ -957,7 +960,7 @@ combine_inten_a_and_inten_pixels (const guchar   *src1,
 	  new_alpha = src1[alpha] +
 	    INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
 	  alphify (src2_alpha, new_alpha);
-	  
+
 	  if (mode_affect)
 	    dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
 	  else
@@ -1012,9 +1015,9 @@ combine_inten_a_and_inten_a_pixels (const guchar   *src1,
 		      src2_alpha = INT_MULT(src2[alpha], *m, tmp);
 		      new_alpha = src1[alpha] +
 			INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
-		  
+
 		      alphify (src2_alpha, new_alpha);
-		  
+
 		      if (mode_affect)
 			{
 			  dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
@@ -1022,13 +1025,13 @@ combine_inten_a_and_inten_a_pixels (const guchar   *src1,
 		      else
 			{
 			  dest[alpha] = (src1[alpha]) ? src1[alpha] :
-			    (affect[alpha] ? new_alpha : src1[alpha]);      
+			    (affect[alpha] ? new_alpha : src1[alpha]);
 			}
-		  
+
 		      m++;
 		      src1 += bytes;
 		      src2 += bytes;
-		      dest += bytes;	
+		      dest += bytes;
 		      /* GUTS END */
 		    }
 		}
@@ -1049,127 +1052,9 @@ combine_inten_a_and_inten_a_pixels (const guchar   *src1,
 			  src2_alpha = INT_MULT(src2[alpha], *m, tmp);
 			  new_alpha = src1[alpha] +
 			    INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
-		  
+
 			  alphify (src2_alpha, new_alpha);
-		  
-			  if (mode_affect)
-			    {
-			      dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
-			    }
-			  else
-			    {
-			      dest[alpha] = (src1[alpha]) ? src1[alpha] :
-				(affect[alpha] ? new_alpha : src1[alpha]);      
-			    }
 
-			  m++;
-			  src1 += bytes;
-			  src2 += bytes;
-			  dest += bytes;
-			  /* GUTS END */
-			}
-		    }
-		  else
-		    {
-		      j = bytes * sizeof(int);
-		      src2 += j;
-		      while (j--)
-			{
-			  *(dest++) = *(src1++);
-			}
-		    }
-		  mask_ip++;
-		}
-
-	      m = (const guchar*)mask_ip;
-	    }
-
-	  /* TAIL */
-	  while (length--)
-	    {
-	      /* GUTS */
-	      src2_alpha = INT_MULT(src2[alpha], *m, tmp);
-	      new_alpha = src1[alpha] +
-		INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
-		  
-	      alphify (src2_alpha, new_alpha);
-		  
-	      if (mode_affect)
-		{
-		  dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
-		}
-	      else
-		{
-		  dest[alpha] = (src1[alpha]) ? src1[alpha] :
-		    (affect[alpha] ? new_alpha : src1[alpha]);      
-		}
-		  
-	      m++;
-	      src1 += bytes;
-	      src2 += bytes;
-	      dest += bytes;	
-	      /* GUTS END */
-	    }
-	}
-      else /* HAS MASK, SEMI-OPACITY */
-	{
-	  const gint* mask_ip;
-	  gint i,j;
-
-	  if (length >= sizeof(int))
-	    {
-	      /* HEAD */
-	      i = (GPOINTER_TO_INT(m) & (sizeof(int)-1));
-	      if (i != 0)
-		{
-		  i = sizeof(int) - i;
-		  length -= i;
-		  while (i--)
-		    {
-		      /* GUTS */
-		      src2_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
-		      new_alpha = src1[alpha] +
-			INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
-		  
-		      alphify (src2_alpha, new_alpha);
-		  
-		      if (mode_affect)
-			{
-			  dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
-			}
-		      else
-			{
-			  dest[alpha] = (src1[alpha]) ? src1[alpha] :
-			    (affect[alpha] ? new_alpha : src1[alpha]);
-			}
-		  
-		      m++;
-		      src1 += bytes;
-		      src2 += bytes;
-		      dest += bytes;
-		      /* GUTS END */
-		    }
-		}
-	  
-	      /* BODY */
-	      mask_ip = (int*)m;
-	      i = length / sizeof(int);
-	      length %= sizeof(int);
-	      while (i--)
-		{
-		  if (*mask_ip)
-		    {
-		      m = (const guchar*)mask_ip;
-		      j = sizeof(int);
-		      while (j--)
-			{
-			  /* GUTS */
-			  src2_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
-			  new_alpha = src1[alpha] +
-			    INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
-		      
-			  alphify (src2_alpha, new_alpha);
-		      
 			  if (mode_affect)
 			    {
 			      dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
@@ -1201,17 +1086,17 @@ combine_inten_a_and_inten_a_pixels (const guchar   *src1,
 
 	      m = (const guchar*)mask_ip;
 	    }
-	
+
 	  /* TAIL */
 	  while (length--)
 	    {
 	      /* GUTS */
-	      src2_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
+	      src2_alpha = INT_MULT(src2[alpha], *m, tmp);
 	      new_alpha = src1[alpha] +
 		INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
-	      
+
 	      alphify (src2_alpha, new_alpha);
-	      
+
 	      if (mode_affect)
 		{
 		  dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
@@ -1221,7 +1106,125 @@ combine_inten_a_and_inten_a_pixels (const guchar   *src1,
 		  dest[alpha] = (src1[alpha]) ? src1[alpha] :
 		    (affect[alpha] ? new_alpha : src1[alpha]);
 		}
-	      
+
+	      m++;
+	      src1 += bytes;
+	      src2 += bytes;
+	      dest += bytes;
+	      /* GUTS END */
+	    }
+	}
+      else /* HAS MASK, SEMI-OPACITY */
+	{
+	  const gint* mask_ip;
+	  gint i,j;
+
+	  if (length >= sizeof(int))
+	    {
+	      /* HEAD */
+	      i = (GPOINTER_TO_INT(m) & (sizeof(int)-1));
+	      if (i != 0)
+		{
+		  i = sizeof(int) - i;
+		  length -= i;
+		  while (i--)
+		    {
+		      /* GUTS */
+		      src2_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
+		      new_alpha = src1[alpha] +
+			INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
+
+		      alphify (src2_alpha, new_alpha);
+
+		      if (mode_affect)
+			{
+			  dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
+			}
+		      else
+			{
+			  dest[alpha] = (src1[alpha]) ? src1[alpha] :
+			    (affect[alpha] ? new_alpha : src1[alpha]);
+			}
+
+		      m++;
+		      src1 += bytes;
+		      src2 += bytes;
+		      dest += bytes;
+		      /* GUTS END */
+		    }
+		}
+
+	      /* BODY */
+	      mask_ip = (int*)m;
+	      i = length / sizeof(int);
+	      length %= sizeof(int);
+	      while (i--)
+		{
+		  if (*mask_ip)
+		    {
+		      m = (const guchar*)mask_ip;
+		      j = sizeof(int);
+		      while (j--)
+			{
+			  /* GUTS */
+			  src2_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
+			  new_alpha = src1[alpha] +
+			    INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
+
+			  alphify (src2_alpha, new_alpha);
+
+			  if (mode_affect)
+			    {
+			      dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
+			    }
+			  else
+			    {
+			      dest[alpha] = (src1[alpha]) ? src1[alpha] :
+				(affect[alpha] ? new_alpha : src1[alpha]);
+			    }
+
+			  m++;
+			  src1 += bytes;
+			  src2 += bytes;
+			  dest += bytes;
+			  /* GUTS END */
+			}
+		    }
+		  else
+		    {
+		      j = bytes * sizeof(int);
+		      src2 += j;
+		      while (j--)
+			{
+			  *(dest++) = *(src1++);
+			}
+		    }
+		  mask_ip++;
+		}
+
+	      m = (const guchar*)mask_ip;
+	    }
+
+	  /* TAIL */
+	  while (length--)
+	    {
+	      /* GUTS */
+	      src2_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
+	      new_alpha = src1[alpha] +
+		INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
+
+	      alphify (src2_alpha, new_alpha);
+
+	      if (mode_affect)
+		{
+		  dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
+		}
+	      else
+		{
+		  dest[alpha] = (src1[alpha]) ? src1[alpha] :
+		    (affect[alpha] ? new_alpha : src1[alpha]);
+		}
+
 	      m++;
 	      src1 += bytes;
 	      src2 += bytes;
@@ -1239,9 +1242,9 @@ combine_inten_a_and_inten_a_pixels (const guchar   *src1,
 	      src2_alpha = src2[alpha];
 	      new_alpha = src1[alpha] +
 		INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
-	      
+
 	      alphify (src2_alpha, new_alpha);
-	      
+
 	      if (mode_affect)
 		{
 		  dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
@@ -1251,7 +1254,7 @@ combine_inten_a_and_inten_a_pixels (const guchar   *src1,
 		  dest[alpha] = (src1[alpha]) ? src1[alpha] :
 		    (affect[alpha] ? new_alpha : src1[alpha]);
 		}
-		
+
 	      src1 += bytes;
 	      src2 += bytes;
 	      dest += bytes;
@@ -1264,9 +1267,9 @@ combine_inten_a_and_inten_a_pixels (const guchar   *src1,
 	      src2_alpha = INT_MULT(src2[alpha], opacity, tmp);
 	      new_alpha = src1[alpha] +
 		INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
-	      
+
 	      alphify (src2_alpha, new_alpha);
-	      
+
 	      if (mode_affect)
 		{
 		  dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
@@ -1276,10 +1279,10 @@ combine_inten_a_and_inten_a_pixels (const guchar   *src1,
 		  dest[alpha] = (src1[alpha]) ? src1[alpha] :
 		    (affect[alpha] ? new_alpha : src1[alpha]);
 		}
-		
+
 	      src1 += bytes;
 	      src2 += bytes;
-	      dest += bytes;	  
+	      dest += bytes;
 	    }
 	}
     }
@@ -1512,7 +1515,7 @@ replace_inten_pixels (const guchar   *src1,
       while (length --)
         {
 	  mask_alpha = INT_MULT(*m, opacity, tmp);
-	  
+
 	  for (b = 0; b < bytes; b++)
 	    dest[b] = (affect[b]) ?
 	      INT_BLEND(src2[b], src1[b], mask_alpha, tmp) :
@@ -1618,7 +1621,7 @@ erase_inten_pixels (const guchar   *src1,
   if (mask)
     {
       const guchar *m = mask;
- 
+
       while (length --)
         {
 	  for (b = 0; b < alpha; b++)
@@ -1779,7 +1782,7 @@ color_erase_helper (GimpRGB       *src,
                     const GimpRGB *color)
 {
   GimpRGB alpha;
-  
+
   alpha.a = src->a;
 
   if (color->r < 0.0001)
@@ -1825,7 +1828,7 @@ color_erase_helper (GimpRGB       *src,
     {
       src->a = alpha.b;
     }
-  
+
   src->a = (1.0 - color->a) + (src->a * color->a);
 
   if (src->a < 0.0001)
@@ -1865,13 +1868,13 @@ color_erase_inten_pixels (const guchar   *src1,
     {
       src2_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
 
-      gimp_rgba_set_uchar (&color, 
+      gimp_rgba_set_uchar (&color,
                            src1 [0],
                            src1 [1],
                            src1 [2],
                            src1 [3]);
 
-      gimp_rgba_set_uchar (&bgcolor, 
+      gimp_rgba_set_uchar (&bgcolor,
                            src2 [0],
                            src2 [1],
                            src2 [2],
@@ -1879,7 +1882,7 @@ color_erase_inten_pixels (const guchar   *src1,
 
       color_erase_helper (&color, &bgcolor);
 
-      gimp_rgba_get_uchar (&color, 
+      gimp_rgba_get_uchar (&color,
                            &(dest[0]),
                            &(dest[1]),
                            &(dest[2]),
@@ -2135,17 +2138,17 @@ copy_region (PixelRegion *src,
 	  src->curtile && dest->curtile &&
 	  src->offx == 0 && dest->offx == 0 &&
 	  src->offy == 0 && dest->offy == 0 &&
-	  src->w  == tile_ewidth (src->curtile)  && 
+	  src->w  == tile_ewidth (src->curtile)  &&
 	  dest->w == tile_ewidth (dest->curtile) &&
-	  src->h  == tile_eheight (src->curtile) && 
-	  dest->h == tile_eheight (dest->curtile)) 
+	  src->h  == tile_eheight (src->curtile) &&
+	  dest->h == tile_eheight (dest->curtile))
 	{
 #ifdef COWSHOW
 	  fputc('!',stderr);
 #endif
 	  tile_manager_map_over_tile (dest->tiles, dest->curtile, src->curtile);
 	}
-      else 
+      else
 	{
 #ifdef COWSHOW
 	  fputc ('.',stderr);
@@ -2154,7 +2157,7 @@ copy_region (PixelRegion *src,
 	  s = src->data;
 	  d = dest->data;
 	  h = src->h;
-	  
+
 	  while (h --)
 	    {
 	      memcpy (d, s, pixelwidth);
@@ -2655,7 +2658,7 @@ gaussian_blur_region (PixelRegion *srcR,
 
 	      dp[col * bytes] = val;
 	    }
-      
+
 	  pixel_region_set_row (srcR, srcR->x, row + srcR->y, width, dest);
 	}
 
@@ -2706,7 +2709,7 @@ scale_region_no_resample (PixelRegion *srcPR,
 
   for (y = 0; y < height; y++)
     y_src_offsets [y] = (y * orig_height + orig_height / 2) / height;
-  
+
   /*  do the scaling  */
   row_bytes = width * bytes;
   last_src_y = -1;
@@ -3017,7 +3020,7 @@ scale_region (PixelRegion           *srcPR,
   accum = g_new (gdouble, width * bytes);
 
   /*  Scale the selected region  */
-  
+
   for (y = 0; y < height; y++)
     {
       if (height < orig_height)
@@ -3372,7 +3375,7 @@ shapeburst_region (PixelRegion *srcPR,
 
   length = distPR->w + 1;
   memory = g_new (gfloat, length * 2);
-  distp_prev = memory; 
+  distp_prev = memory;
   for (i = 0; i < length; i++)
     distp_prev[i] = 0.0;
 
@@ -3400,10 +3403,10 @@ shapeburst_region (PixelRegion *srcPR,
 
 	      while (y >= end)
 		{
-		  tile = tile_manager_get_tile (srcPR->tiles, 
+		  tile = tile_manager_get_tile (srcPR->tiles,
 						x, y, TRUE, FALSE);
-		  tile_data = tile_data_pointer (tile, 
-						 x % TILE_WIDTH, 
+		  tile_data = tile_data_pointer (tile,
+						 x % TILE_WIDTH,
 						 y % TILE_HEIGHT);
 		  boundary = MIN ((y % TILE_HEIGHT),
 				  (tile_ewidth (tile) - (x % TILE_WIDTH) - 1));
@@ -3466,7 +3469,7 @@ shapeburst_region (PixelRegion *srcPR,
 }
 
 static void
-rotate_pointers (gpointer *p, 
+rotate_pointers (gpointer *p,
 		 guint32   n)
 {
   guint32  i;
@@ -3481,8 +3484,8 @@ rotate_pointers (gpointer *p,
 }
 
 static void
-compute_border (gint16  *circ, 
-		guint16  xradius, 
+compute_border (gint16  *circ,
+		guint16  xradius,
 		guint16  yradius)
 {
   gint32 i;
@@ -3540,7 +3543,7 @@ fatten_region (PixelRegion *src,
         max[i] = &buffer[(yradius + 1) * (i - xradius)];
       else
         max[i] = &buffer[(yradius + 1) * (src->w + xradius - 1)];
-      
+
       for (j = 0; j < xradius + 1; j++)
         max[i][j] = 0;
     }
@@ -3704,7 +3707,7 @@ thin_region (PixelRegion *src,
   circ = g_new (gint16, 2 * xradius + 1);
   compute_border(circ, xradius, yradius);
 
- /* offset the circ pointer by xradius so the range of the array 
+ /* offset the circ pointer by xradius so the range of the array
     is [-xradius] to [xradius] */
   circ += xradius;
 
@@ -3935,7 +3938,7 @@ border_region (PixelRegion *src,
   out = g_new (guchar, src->w);
   density = g_new (guchar *, 2 * xradius + 1);
   density += xradius;
-  
+
   for (x = 0; x < (xradius + 1); x++) /* allocate density[][] */
     {
       density[ x]  = g_new (guchar, 2 * yradius + 1);
@@ -4010,7 +4013,7 @@ border_region (PixelRegion *src,
         }
       else
         memcpy (transition[yradius], transition[yradius - 1], src->w);
-      
+
       for (x = 0; x < src->w; x++) /* update max array */
         {
           if (max[x] < 1)
@@ -4083,7 +4086,7 @@ border_region (PixelRegion *src,
       pixel_region_set_row (src, src->x, src->y + y, src->w, out);
     }
   g_free (out);
-  
+
   for (i = 0; i < 3; i++)
     g_free (buf[i]);
 
@@ -4144,7 +4147,7 @@ apply_mask_to_sub_region (gint        *opacityp,
   guchar *s;
   guchar *m;
   gint    opacity = *opacityp;
-  
+
   s = src->data;
   m = mask->data;
   h = src->h;
@@ -4176,7 +4179,7 @@ combine_mask_and_sub_region (gint        *opacityp,
   guchar *s;
   guchar *m;
   gint    opacity = *opacityp;
-  
+
   s = src->data;
   m = mask->data;
   h = src->h;
@@ -4251,7 +4254,7 @@ copy_component (PixelRegion *src,
           d += dest->rowstride;
         }
     }
-}  
+}
 
 struct initial_regions_struct
 {
@@ -4263,7 +4266,7 @@ struct initial_regions_struct
 };
 
 void
-initial_sub_region (struct initial_regions_struct *st, 
+initial_sub_region (struct initial_regions_struct *st,
 		    PixelRegion                   *src,
 		    PixelRegion                   *dest,
 		    PixelRegion                   *mask)
@@ -4299,15 +4302,15 @@ initial_sub_region (struct initial_regions_struct *st,
         case INITIAL_CHANNEL_SELECTION:
           initial_channel_pixels (s, d, src->w, dest->bytes);
           break;
-          
+
         case INITIAL_INDEXED:
           initial_indexed_pixels (s, d, data, src->w);
           break;
-          
+
         case INITIAL_INDEXED_ALPHA:
           initial_indexed_a_pixels (s, d, m, data, opacity, src->w);
           break;
-          
+
         case INITIAL_INTENSITY:
           if (mode == GIMP_DISSOLVE_MODE)
             {
@@ -4321,7 +4324,7 @@ initial_sub_region (struct initial_regions_struct *st,
           else
             initial_inten_pixels (s, d, m, opacity, affect, src->w, src->bytes);
           break;
-          
+
         case INITIAL_INTENSITY_ALPHA:
           if (mode == GIMP_DISSOLVE_MODE)
             {
@@ -4336,7 +4339,7 @@ initial_sub_region (struct initial_regions_struct *st,
             initial_inten_a_pixels (s, d, m, opacity, affect, src->w, src->bytes);
           break;
         }
-      
+
       s += src->rowstride;
       d += dest->rowstride;
       if (mask)
@@ -4361,7 +4364,7 @@ initial_region (PixelRegion	     *src,
   st.affect  = affect;
   st.type    = type;
   st.data    = data;
-  
+
   pixel_regions_process_parallel ((p_func)initial_sub_region, &st, 3,
 				    src, dest, mask);
 }
@@ -4507,7 +4510,7 @@ combine_sub_region (struct combine_regions_struct *st,
 	      hint = tile_get_rowhint (src2->curtile, (src2->offy + h));
 	    }
 	}
-      
+
       s = buf;
 
       /*  apply the paint mode based on the combination type & mode  */
@@ -4546,47 +4549,50 @@ combine_sub_region (struct combine_regions_struct *st,
 	    alms.bytes1  = src1->bytes;
 	    alms.bytes2  = src2->bytes;
 
-     if (gimp_composite_use_old) {
-	    /*  Determine whether the alpha channel of the destination can be
-	     *  affected by the specified mode--This keeps consistency with
-	     *  varying opacities
-	     */
-	    mode_affect = layer_modes[mode].affect_alpha;
+            if (gimp_composite_use_old)
+              {
+                /*  Determine whether the alpha channel of the destination
+                 *  can be affected by the specified mode. -- This keeps
+                 *  consistency with varying opacities.
+                 */
+                mode_affect = layer_modes[mode].affect_alpha;
 
-	    layer_mode_funcs[mode] (&alms);
+                layer_mode_funcs[mode] (&alms);
 
-	    combine = (alms.combine == NO_COMBINATION) ? type : alms.combine;
-     } else {
-       GimpCompositeContext ctx;
+                combine = (alms.combine == NO_COMBINATION ?
+                           type : alms.combine);
+              }
+            else
+              {
+                GimpCompositeContext ctx;
 
-       ctx.A = s1;
-       ctx.pixelformat_A = (src1->bytes == 1 ? GIMP_PIXELFORMAT_V8
-                            : src1->bytes == 2 ? GIMP_PIXELFORMAT_VA8
-                            : src1->bytes == 3 ? GIMP_PIXELFORMAT_RGB8
-                            : src1->bytes == 4 ? GIMP_PIXELFORMAT_RGBA8
-                            : GIMP_PIXELFORMAT_ANY);
-       ctx.B = s2;
-       ctx.pixelformat_B = (src2->bytes == 1 ? GIMP_PIXELFORMAT_V8
-                            : src2->bytes == 2 ? GIMP_PIXELFORMAT_VA8
-                            : src2->bytes == 3 ? GIMP_PIXELFORMAT_RGB8
-                            : src2->bytes == 4 ? GIMP_PIXELFORMAT_RGBA8
-                            : GIMP_PIXELFORMAT_ANY);
-       ctx.D = s;
-       ctx.pixelformat_D = gimp_composite_pixel_alpha[ctx.pixelformat_B];
-       ctx.n_pixels = src1->w;
-       ctx.combine = combine;
-       ctx.op = mode;
-       ctx.dissolve.x = src1->x;
-       ctx.dissolve.y = src1->y + h;
-       ctx.dissolve.opacity = opacity;
+                ctx.A = s1;
+                ctx.pixelformat_A = (src1->bytes   == 1 ? GIMP_PIXELFORMAT_V8
+                                     : src1->bytes == 2 ? GIMP_PIXELFORMAT_VA8
+                                     : src1->bytes == 3 ? GIMP_PIXELFORMAT_RGB8
+                                     : src1->bytes == 4 ? GIMP_PIXELFORMAT_RGBA8
+                                     : GIMP_PIXELFORMAT_ANY);
+                ctx.B = s2;
+                ctx.pixelformat_B = (src2->bytes   == 1 ? GIMP_PIXELFORMAT_V8
+                                     : src2->bytes == 2 ? GIMP_PIXELFORMAT_VA8
+                                     : src2->bytes == 3 ? GIMP_PIXELFORMAT_RGB8
+                                     : src2->bytes == 4 ? GIMP_PIXELFORMAT_RGBA8
+                                     : GIMP_PIXELFORMAT_ANY);
+                ctx.D = s;
+                ctx.pixelformat_D = gimp_composite_pixel_alpha[ctx.pixelformat_B];
+                ctx.n_pixels = src1->w;
+                ctx.combine = combine;
+                ctx.op = mode;
+                ctx.dissolve.x = src1->x;
+                ctx.dissolve.y = src1->y + h;
+                ctx.dissolve.opacity = opacity;
 
-       mode_affect = gimp_composite_operation_effects[mode].affect_opacity;
-       gimp_composite_dispatch(&ctx);
-       s = ctx.D;
-       combine = (ctx.combine == NO_COMBINATION) ? type : ctx.combine;
-     }
-
-	    break;
+                mode_affect = gimp_composite_operation_effects[mode].affect_opacity;
+                gimp_composite_dispatch(&ctx);
+                s = ctx.D;
+                combine = (ctx.combine == NO_COMBINATION) ? type : ctx.combine;
+              }
+            break;
 	  }
 
 	default:
@@ -4602,19 +4608,19 @@ combine_sub_region (struct combine_regions_struct *st,
 					      affect, src1->w,
 					      src1->bytes);
 	  break;
-	    
+
 	case COMBINE_INDEXED_INDEXED_A:
 	  combine_indexed_and_indexed_a_pixels (s1, s2, d, m, opacity,
 						affect, src1->w,
 						src1->bytes);
 	  break;
-	    
+
 	case COMBINE_INDEXED_A_INDEXED_A:
 	  combine_indexed_a_and_indexed_a_pixels (s1, s2, d, m, opacity,
 						  affect, src1->w,
 						  src1->bytes);
 	  break;
-	    
+
 	case COMBINE_INTEN_A_INDEXED_A:
 	  /*  assume the data passed to this procedure is the
 	   *  indexed layer's colormap
@@ -4622,7 +4628,7 @@ combine_sub_region (struct combine_regions_struct *st,
 	  combine_inten_a_and_indexed_a_pixels (s1, s2, d, m, data, opacity,
 						src1->w, dest->bytes);
 	  break;
-	    
+
 	case COMBINE_INTEN_A_CHANNEL_MASK:
 	  /*  assume the data passed to this procedure is the
 	   *  indexed layer's colormap
@@ -4630,14 +4636,14 @@ combine_sub_region (struct combine_regions_struct *st,
 	  combine_inten_a_and_channel_mask_pixels (s1, s2, d, data, opacity,
 						   src1->w, dest->bytes);
 	  break;
-	    
+
 	case COMBINE_INTEN_A_CHANNEL_SELECTION:
 	  combine_inten_a_and_channel_selection_pixels (s1, s2, d, data,
 							opacity,
 							src1->w,
 							src1->bytes);
 	  break;
-	    
+
 	case COMBINE_INTEN_INTEN:
 	  if ((hint == TILEROWHINT_OPAQUE) &&
 	      opacity_quickskip_possible)
@@ -4648,18 +4654,18 @@ combine_sub_region (struct combine_regions_struct *st,
 	    combine_inten_and_inten_pixels (s1, s, d, m, opacity,
 					    affect, src1->w, src1->bytes);
 	  break;
-	    
+
 	case COMBINE_INTEN_INTEN_A:
 	  combine_inten_and_inten_a_pixels (s1, s, d, m, opacity,
 					    affect, src1->w, src1->bytes);
 	  break;
-	    
+
 	case COMBINE_INTEN_A_INTEN:
 	  combine_inten_a_and_inten_pixels (s1, s, d, m, opacity,
 					    affect, mode_affect, src1->w,
 					    src1->bytes);
 	  break;
-	    
+
 	case COMBINE_INTEN_A_INTEN_A:
 	  if ((hint == TILEROWHINT_OPAQUE) &&
 	      opacity_quickskip_possible)
@@ -4671,65 +4677,65 @@ combine_sub_region (struct combine_regions_struct *st,
 						affect, mode_affect,
 						src1->w, src1->bytes);
 	  break;
-	    
+
 	case BEHIND_INTEN:
 	  behind_inten_pixels (s1, s, d, m, opacity,
 			       affect, src1->w, src1->bytes,
 			       src2->bytes);
 	  break;
-	    
+
 	case BEHIND_INDEXED:
 	  behind_indexed_pixels (s1, s, d, m, opacity,
 				 affect, src1->w, src1->bytes,
 				 src2->bytes);
 	  break;
-	    
+
 	case REPLACE_INTEN:
 	  replace_inten_pixels (s1, s, d, m, opacity,
 				affect, src1->w, src1->bytes,
 				src2->bytes);
 	  break;
-	    
+
 	case REPLACE_INDEXED:
 	  replace_indexed_pixels (s1, s, d, m, opacity,
 				  affect, src1->w, src1->bytes,
 				  src2->bytes);
 	  break;
-	    
+
 	case ERASE_INTEN:
 	  erase_inten_pixels (s1, s, d, m, opacity,
 			      affect, src1->w, src1->bytes);
 	  break;
-	    
+
 	case ERASE_INDEXED:
 	  erase_indexed_pixels (s1, s, d, m, opacity,
 				affect, src1->w, src1->bytes);
 	  break;
-	    
+
 	case ANTI_ERASE_INTEN:
 	  anti_erase_inten_pixels (s1, s, d, m, opacity,
 				   affect, src1->w, src1->bytes);
 	  break;
-	    
+
 	case ANTI_ERASE_INDEXED:
 	  anti_erase_indexed_pixels (s1, s, d, m, opacity,
 				     affect, src1->w, src1->bytes);
 	  break;
-	    
+
 	case COLOR_ERASE_INTEN:
 	  color_erase_inten_pixels (s1, s, d, m, opacity,
 				    affect, src1->w, src1->bytes);
 	  break;
-	    
+
 	case NO_COMBINATION:
 	  g_warning("NO_COMBINATION");
 	  break;
-	    
+
 	default:
 	  g_warning("UNKNOWN COMBINATION: %d", combine);
 	  break;
 	}
-    
+
     next_row:
       s1 += src1->rowstride;
       s2 += src2->rowstride;
@@ -4798,7 +4804,7 @@ combine_regions (PixelRegion	      *src1,
      has a mask, or non-full opacity, or the layer mode dictates
      that we might gain transparency.
   */
-  st.opacity_quickskip_possible = ((!mask)                               && 
+  st.opacity_quickskip_possible = ((!mask)                               &&
 				   (opacity == 255)                      &&
 				   (!layer_modes[mode].decrease_opacity) &&
 				   (layer_modes[mode].affect_alpha       &&
