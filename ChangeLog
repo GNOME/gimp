@@ -1,3 +1,10 @@
+2005-01-19  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* app/display/gimpscalecombobox.c (gimp_scale_combo_box_set_scale):
+	don't use == to compare floating point values.
+
 2005-01-18  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/jpeg.c: applied (a slightly modified version of)
