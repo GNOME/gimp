@@ -239,6 +239,16 @@ color_notebook_set_viewable (ColorNotebook *cnb,
                                        viewable);
 }
 
+void
+color_notebook_set_title (ColorNotebook *cnb,
+                          const gchar   *title)
+{
+  g_return_if_fail (cnb != NULL);
+  g_return_if_fail (title != NULL);
+
+  gtk_window_set_title (GTK_WINDOW (cnb->shell), title);
+}
+
 static ColorNotebook *
 color_notebook_new_internal (GimpViewable          *viewable,
                              const gchar           *title,
@@ -656,13 +666,14 @@ color_notebook_new_internal (GimpViewable          *viewable,
   gtk_box_pack_end (GTK_BOX (right_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  cnp->hex_entry = gtk_entry_new ();
-  gtk_entry_set_max_length (GTK_ENTRY (cnp->hex_entry), 7);
   gimp_rgb_get_uchar (&cnp->rgb, &r, &g, &b);
   g_snprintf (buffer, sizeof (buffer), "#%.2x%.2x%.2x", r, g, b);
+
+  cnp->hex_entry = gtk_entry_new ();
+  gtk_entry_set_width_chars (GTK_ENTRY (cnp->hex_entry), 7);
+  gtk_entry_set_max_length (GTK_ENTRY (cnp->hex_entry), 7);
   gtk_entry_set_text (GTK_ENTRY (cnp->hex_entry), buffer);
-  gtk_widget_set_size_request (GTK_WIDGET (cnp->hex_entry), 60, -1);
-  gtk_box_pack_end (GTK_BOX (hbox), cnp->hex_entry, TRUE, TRUE, 0);
+  gtk_box_pack_end (GTK_BOX (hbox), cnp->hex_entry, FALSE, FALSE, 0);
   gtk_widget_show (cnp->hex_entry);
 
   g_signal_connect (G_OBJECT (cnp->hex_entry), "focus_out_event",
@@ -672,7 +683,7 @@ color_notebook_new_internal (GimpViewable          *viewable,
 		    G_CALLBACK (color_notebook_hex_entry_events),
 		    cnp);
 
-  label = gtk_label_new (_("Hex Triplet:"));
+  label = gtk_label_new_with_mnemonic (_("He_x Triplet:"));
   gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 

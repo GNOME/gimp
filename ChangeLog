@@ -1,3 +1,13 @@
+2002-09-08  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/color-notebook.[ch]: set the hex entry to 7 chars instead
+	the whole width of the vbox. Added color_notebook_set_title().
+
+	* app/widgets/gimptoolbox-color-area.c: use the new function to
+	set the color selection's title to either "Change Foreground
+	Color" or "Change Background Color" instead of just "Color
+	Selection".
+
 2002-09-07  Michael Natterer  <mitch@gimp.org>
 
 	Histogram cleanup:

@@ -388,9 +388,13 @@ color_area_edit (GimpContext *context)
 
   edit_color = active_color;
 
+#define FG_TITLE _("Change Foreground Color")
+#define BG_TITLE _("Change Background Color")
+
   if (! color_notebook)
     {
-      color_notebook = color_notebook_new (_("Color Selection"),
+      color_notebook = color_notebook_new (active_color == FOREGROUND ?
+                                           FG_TITLE : BG_TITLE,
 					   (const GimpRGB *) &color,
 					   color_area_select_callback,
 					   context, TRUE, FALSE);
@@ -398,6 +402,11 @@ color_area_edit (GimpContext *context)
     }
   else
     {
+      color_notebook_set_title (color_notebook,
+                                active_color == FOREGROUND ?
+                                FG_TITLE : BG_TITLE);
+      color_notebook_set_color (color_notebook, &color);
+
       if (! color_notebook_active)
 	{
 	  color_notebook_show (color_notebook);
@@ -407,9 +416,10 @@ color_area_edit (GimpContext *context)
 	{
 	  color_notebook_show (color_notebook);
 	}
-
-      color_notebook_set_color (color_notebook, &color);
     }
+
+#undef FG_TITLE
+#undef BG_TITLE
 }
 
 static gint
