@@ -36,11 +36,16 @@
 
 
 static void  gimp_drawable_preview_class_init    (GimpDrawablePreviewClass *klass);
-static void  gimp_drawable_preview_init          (GimpDrawablePreview      *preview);
+static void  gimp_drawable_preview_init          (GimpDrawablePreview *preview);
 
-static void  gimp_drawable_preview_style_set     (GtkWidget   *widget,
-                                                  GtkStyle    *prev_style);
-static void  gimp_drawable_preview_draw_original (GimpPreview *preview);
+static void  gimp_drawable_preview_style_set     (GtkWidget           *widget,
+                                                  GtkStyle            *prev_style);
+
+static void  gimp_drawable_preview_draw_original (GimpPreview         *preview);
+static void  gimp_drawable_preview_draw_thumb    (GimpPreview         *preview,
+                                                  GimpPreviewArea     *area,
+                                                  gint                 width,
+                                                  gint                 height);
 
 
 static GimpPreviewClass *parent_class = NULL;
@@ -82,9 +87,10 @@ gimp_drawable_preview_class_init (GimpDrawablePreviewClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  widget_class->style_set = gimp_drawable_preview_style_set;
+  widget_class->style_set   = gimp_drawable_preview_style_set;
 
-  preview_class->draw     = gimp_drawable_preview_draw_original;
+  preview_class->draw       = gimp_drawable_preview_draw_original;
+  preview_class->draw_thumb = gimp_drawable_preview_draw_thumb;
 }
 
 static void
@@ -153,6 +159,48 @@ gimp_drawable_preview_draw_original (GimpPreview *preview)
                           buffer,
                           rowstride);
   g_free (buffer);
+}
+
+static void
+gimp_drawable_preview_draw_thumb (GimpPreview     *preview,
+                                  GimpPreviewArea *area,
+                                  gint             width,
+                                  gint             height)
+{
+  GimpDrawablePreview *drawable_preview = GIMP_DRAWABLE_PREVIEW (preview);
+  GimpDrawable        *drawable         = drawable_preview->drawable;
+  guchar              *buffer;
+  gint                 bpp;
+
+  if (! drawable)
+    return;
+
+  buffer = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
+                                             &width, &height, &bpp);
+
+  if (buffer)
+    {
+      gtk_widget_set_size_request (GTK_WIDGET (area), width, height);
+      gtk_widget_show (GTK_WIDGET (area));
+      gtk_widget_realize (GTK_WIDGET (area));
+
+      switch (bpp)
+        {
+        case 3:
+          gimp_preview_area_draw (area,
+                                  0, 0, width, height,
+                                  GIMP_RGB_IMAGE, buffer, 3 * width);
+          break;
+
+        case 4:
+          gimp_preview_area_draw (area,
+                                  0, 0, width, height,
+                                  GIMP_RGBA_IMAGE, buffer, 4 * width);
+          break;
+        }
+
+      g_free (buffer);
+    }
 }
 
 static void

@@ -1,3 +1,9 @@
+2004-09-09  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpdrawablepreview.c
+	* libgimpwidgets/gimppreview.[ch]: added a navigation popup
+	similar to the one in the image window. Needs some more work.
+
 2004-09-09  DindinX  <david@dindinx.org>
 
 	* libgimpwidgets/gimppreviewarea.c: added a utility function

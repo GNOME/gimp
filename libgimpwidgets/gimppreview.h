@@ -51,9 +51,12 @@ struct _GimpPreview
   GtkWidget    *frame;
   GtkWidget    *hscr;
   GtkWidget    *vscr;
+  GtkWidget    *nav_icon;
+  GtkWidget    *nav_popup;
   GtkWidget    *toggle;
   GdkCursor    *cursor_move;
   GdkCursor    *cursor_busy;
+  GdkGC        *nav_gc;
 
   /*< private >*/
   gint          xoff, yoff;
@@ -70,10 +73,14 @@ struct _GimpPreviewClass
   GtkVBoxClass  parent_class;
 
   /* virtuals */
-  void (* draw)        (GimpPreview *preview);
+  void   (* draw)        (GimpPreview     *preview);
+  void   (* draw_thumb)  (GimpPreview     *preview,
+                          GimpPreviewArea *area,
+                          gint             width,
+                          gint             height);
 
   /* signal */
-  void (* invalidated) (GimpPreview *preview);
+  void   (* invalidated) (GimpPreview   *preview);
 };
 
 
@@ -103,4 +110,3 @@ void      gimp_preview_invalidate   (GimpPreview *preview);
 G_END_DECLS
 
 #endif /* __GIMP_PREVIEW_H__ */
-
