@@ -1,3 +1,9 @@
+2003-11-11  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpcolornotebook.c
+	* libgimpwidgets/gimpcolorselection.c
+	* libgimpwidgets/gimpdialog.c: minor cleanup, API docs.
+
 2003-11-11  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/script-fu-scripts.c: set color buttons to
@@ -43,7 +49,7 @@
 	can show the color selectors which are implemented in modules:
 
 	* libgimpwidgets/gimpwidgets-private.[ch]: added
-	GimpEnsureModlesFunc which can be called by modules users.
+	GimpEnsureModulesFunc which can be called by modules users.
 
 	* app/gui/gui.c (gui_libs_init): pass NULL as
 	GimpEnsureModulesFunc since the core loads the modules itself.

@@ -356,7 +356,7 @@ gimp_color_selection_set_color (GimpColorSelection *selection,
  * @selection: A #GimpColorSelection widget.
  * @color:     Return location for the @selection's current @color.
  *
- * Returns the #GimpColorSelection's current color.
+ * This function returns the #GimpColorSelection's current color.
  **/
 void
 gimp_color_selection_get_color (GimpColorSelection *selection,
@@ -390,7 +390,7 @@ gimp_color_selection_set_old_color (GimpColorSelection *selection,
  * @selection: A #GimpColorSelection widget.
  * @color:     Return location for the @selection's old @color.
  *
- * Returns the #GimpColorSelection's old color.
+ * This function returns the #GimpColorSelection's old color.
  **/
 void
 gimp_color_selection_get_old_color (GimpColorSelection *selection,
@@ -418,7 +418,6 @@ gimp_color_selection_reset (GimpColorSelection *selection)
   gimp_color_area_get_color (GIMP_COLOR_AREA (selection->old_color), &color);
   gimp_color_selection_set_color (selection, &color);
 }
-
 
 /**
  * gimp_color_selection_color_changed:

@@ -342,29 +342,18 @@ gimp_dialog_run (GimpDialog *dialog)
 
   gtk_window_present (GTK_WINDOW (dialog));
 
-  response_handler =
-    g_signal_connect (dialog,
-                      "response",
-                      G_CALLBACK (run_response_handler),
-                      &ri);
-
-  unmap_handler =
-    g_signal_connect (dialog,
-                      "unmap",
-                      G_CALLBACK (run_unmap_handler),
-                      &ri);
-
-  delete_handler =
-    g_signal_connect (dialog,
-                      "delete_event",
-                      G_CALLBACK (run_delete_handler),
-                      &ri);
-
-  destroy_handler =
-    g_signal_connect (dialog,
-                      "destroy",
-                      G_CALLBACK (run_destroy_handler),
-                      &ri);
+  response_handler = g_signal_connect (dialog, "response",
+                                       G_CALLBACK (run_response_handler),
+                                       &ri);
+  unmap_handler    = g_signal_connect (dialog, "unmap",
+                                       G_CALLBACK (run_unmap_handler),
+                                       &ri);
+  delete_handler   = g_signal_connect (dialog, "delete_event",
+                                       G_CALLBACK (run_delete_handler),
+                                       &ri);
+  destroy_handler  = g_signal_connect (dialog, "destroy",
+                                       G_CALLBACK (run_destroy_handler),
+                                       &ri);
 
   ri.loop = g_main_loop_new (NULL, FALSE);
 
@@ -374,7 +363,7 @@ gimp_dialog_run (GimpDialog *dialog)
 
   g_main_loop_unref (ri.loop);
 
-  ri.loop = NULL;
+  ri.loop      = NULL;
   ri.destroyed = FALSE;
 
   if (!ri.destroyed)
