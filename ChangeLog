@@ -1,3 +1,8 @@
+2000-12-07  Vidar Madsen  <vidar@gimp.org>
+
+	* plug-ins/gimpressionist/Brushes/{Makefile.in,snow1.pgm}: Added a
+	brush contributed by Nevit <nevilo@yahoo.com>.
+
 2000-12-07  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/MapObject/mapobject_image.c: set the background using 

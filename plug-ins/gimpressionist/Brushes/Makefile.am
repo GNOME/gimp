@@ -47,6 +47,7 @@ brushdata_DATA = \
 	shape02.pgm		\
 	shape03.pgm		\
 	shape04.pgm		\
+	snow1.pgm		\
 	sphere.ppm		\
 	splat1.pgm		\
 	splat2.pgm		\
