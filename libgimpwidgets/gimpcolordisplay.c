@@ -33,6 +33,7 @@
 enum
 {
   CHANGED,
+  ENABLED_CHANGED,
   LAST_SIGNAL
 };
 
@@ -88,6 +89,15 @@ gimp_color_display_class_init (GimpColorDisplayClass *klass)
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
+  display_signals[ENABLED_CHANGED] =
+    g_signal_new ("enabled_changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpColorDisplayClass, enabled_changed),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
   klass->name            = "Unnamed";
   klass->help_id         = NULL;
 
@@ -137,28 +147,6 @@ gimp_color_display_clone (GimpColorDisplay *display)
     }
 
   return NULL;
-}
-
-void
-gimp_color_display_set_enabled (GimpColorDisplay *display,
-                                gboolean          enabled)
-{
-  g_return_if_fail (GIMP_IS_COLOR_DISPLAY (display));
-
-  if (enabled != display->enabled)
-    {
-      display->enabled = enabled ? TRUE : FALSE;
-
-      gimp_color_display_changed (display);
-    }
-}
-
-gboolean
-gimp_color_display_get_enabled (GimpColorDisplay *display)
-{
-  g_return_val_if_fail (GIMP_IS_COLOR_DISPLAY (display), FALSE);
-
-  return display->enabled;
 }
 
 void
@@ -226,3 +214,34 @@ gimp_color_display_changed (GimpColorDisplay *display)
 
   g_signal_emit (display, display_signals[CHANGED], 0);
 }
+
+void
+gimp_color_display_enabled_changed (GimpColorDisplay *display)
+{
+  g_return_if_fail (GIMP_IS_COLOR_DISPLAY (display));
+
+  g_signal_emit (display, display_signals[ENABLED_CHANGED], 0);
+}
+
+void
+gimp_color_display_set_enabled (GimpColorDisplay *display,
+                                gboolean          enabled)
+{
+  g_return_if_fail (GIMP_IS_COLOR_DISPLAY (display));
+
+  if (enabled != display->enabled)
+    {
+      display->enabled = enabled ? TRUE : FALSE;
+
+      gimp_color_display_enabled_changed (display);
+    }
+}
+
+gboolean
+gimp_color_display_get_enabled (GimpColorDisplay *display)
+{
+  g_return_val_if_fail (GIMP_IS_COLOR_DISPLAY (display), FALSE);
+
+  return display->enabled;
+}
+

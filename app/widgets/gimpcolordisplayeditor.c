@@ -85,7 +85,7 @@ static void   gimp_color_display_editor_reordered      (GimpColorDisplayStack  *
                                                         gint                    position,
                                                         GimpColorDisplayEditor *editor);
 
-static void   gimp_color_display_editor_changed        (GimpColorDisplay       *display,
+static void   gimp_color_display_editor_enabled        (GimpColorDisplay       *display,
                                                         GimpColorDisplayEditor *editor);
 static void   gimp_color_display_editor_enable_toggled (GtkCellRendererToggle  *toggle,
                                                         const gchar            *path,
@@ -399,8 +399,8 @@ gimp_color_display_editor_new (GimpColorDisplayStack *stack)
                           DEST_COLUMN_FILTER,  display,
                           -1);
 
-      g_signal_connect_object (display, "changed",
-                               G_CALLBACK (gimp_color_display_editor_changed),
+      g_signal_connect_object (display, "enabled_changed",
+                               G_CALLBACK (gimp_color_display_editor_enabled),
                                G_OBJECT (editor), 0);
     }
 
@@ -590,8 +590,8 @@ gimp_color_display_editor_added (GimpColorDisplayStack  *stack,
                       DEST_COLUMN_FILTER,  display,
                       -1);
 
-  g_signal_connect_object (display, "changed",
-                           G_CALLBACK (gimp_color_display_editor_changed),
+  g_signal_connect_object (display, "enabled_changed",
+                           G_CALLBACK (gimp_color_display_editor_enabled),
                            G_OBJECT (editor), 0);
 
   gimp_color_display_editor_update_buttons (editor);
@@ -622,7 +622,7 @@ gimp_color_display_editor_removed (GimpColorDisplayStack  *stack,
       if (display == display2)
         {
           g_signal_handlers_disconnect_by_func (display,
-                                                gimp_color_display_editor_changed,
+                                                gimp_color_display_editor_enabled,
                                                 editor);
 
           gtk_list_store_remove (editor->dest, &iter);
@@ -699,7 +699,7 @@ gimp_color_display_editor_reordered (GimpColorDisplayStack  *stack,
 }
 
 static void
-gimp_color_display_editor_changed (GimpColorDisplay       *display,
+gimp_color_display_editor_enabled (GimpColorDisplay       *display,
                                    GimpColorDisplayEditor *editor)
 {
   GtkTreeIter iter;
@@ -712,21 +712,22 @@ gimp_color_display_editor_changed (GimpColorDisplay       *display,
                                               &iter))
     {
       GimpColorDisplay *display2;
-      gboolean          enabled;
 
       gtk_tree_model_get (GTK_TREE_MODEL (editor->dest), &iter,
                           DEST_COLUMN_FILTER,  &display2,
-                          DEST_COLUMN_ENABLED, &enabled,
                           -1);
 
       g_object_unref (display2);
 
       if (display == display2)
         {
-          if (enabled != gimp_color_display_get_enabled (display))
-            gtk_list_store_set (editor->dest, &iter,
-                                DEST_COLUMN_ENABLED, ! enabled,
-                                -1);
+          gboolean enabled;
+
+          enabled = gimp_color_display_get_enabled (display);
+
+          gtk_list_store_set (editor->dest, &iter,
+                              DEST_COLUMN_ENABLED, enabled,
+                              -1);
 
           break;
         }

@@ -1,4 +1,15 @@
-2003-11-23  Michael Natterer  <mitch@convergence.de>
+2003-11-23  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpcolordisplay.[ch]: added new signal
+	"enabled_changed"...
+
+	* libgimpwidgets/gimpcolordisplaystack.c: ...which enables optimizing
+	away "changed" signals of disabled filters.
+
+	* app/widgets/gimpcolordisplayeditor.c: connect to "enabled_changed"
+	instead of "changed" to update the toggle column.
+
+2003-11-23  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpcolordisplay.c (gimp_color_display_clone):
 	also clone the "enabled" property.
