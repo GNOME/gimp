@@ -103,7 +103,14 @@ changequote(,)dnl
 
 dnl Evil stuff to extract GLIB stuff from gtk-config output
 dnl (we want to make sure it matches with the gtk we're using)
-GLIB_CFLAGS=`echo $GTK_CFLAGS | sed 's/^.*\(-I[^ ]*glib[^ ]*  *-I[^ ]*\).*$/\1/'`
+GTK_TEMP_CFLAGS=`echo $GTK_CFLAGS | sed 's/^\(-I[^ ]*\).*$/\1/'`
+if echo $GTK_TEMP_CFLAGS | grep 'glib/include$' > /dev/null; then
+  GTK_TEMP_CFLAGS=$GTK_CFLAGS
+else
+  GTK_TEMP_CFLAGS=`echo $GTK_CFLAGS | sed 's/^-I[^ ]* \(.*\)$/\1/'`
+fi
+GLIB_CFLAGS=`echo $GTK_TEMP_CFLAGS | sed 's/^\(-I[^ ]*glib[^ ]*  *-I[^ ]*\).*/\1/'`
+
 GLIB_LDFLAGS=`echo $GTK_LIBS | sed -e 's/^.*-lgdk[^ ]* *\(-L[^ ]*\).*$/\1/' -e 's/^.* -lgdk[^ ]* .*$//'`
 if test -z "$GLIB_LDFLAGS" ; then
   GLIB_LDFLAGS=`echo $GTK_LIBS | sed 's/^ *\(-L[^ ]*\) .*$/\1/'`
