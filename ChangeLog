@@ -1,12 +1,16 @@
 2002-05-31  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
-	* plug-ins/common/checkerboard.c: applied patch from Jeroen Lamain 
-	<roccodevinger@yahoo.com> to fix #81014 (Use size entry widget in Checkerboard plugin).
+	* plug-ins/common/checkerboard.c: applied patch from Jeroen Lamain
+	<roccodevinger@yahoo.com> to fix #81014 (Use size entry widget in
+	Checkerboard plugin).
 
 2002-05-30  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/displace.c (displace_dialog)
-	* plug-ins/common/illusion.c (dialog): enable mnemonics
+	* plug-ins/common/illusion.c (dialog)
+	* plug-ins/common/plasma.c
+	* plug-ins-common/snoise.c
+	* plug-ins/gflare/gflare.c: enable mnemonics
 
 2002-05-30  Sven Neumann  <sven@gimp.org>
 
