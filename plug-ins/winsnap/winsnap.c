@@ -894,7 +894,7 @@ snap_dialog(void)
   /* Main Dialog */
   dialog = gtk_dialog_new ();
   gtk_window_set_title(GTK_WINDOW(dialog), PLUG_IN_PRINT_NAME);
-  gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
+  gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
   gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
 		     (GtkSignalFunc) snap_close_callback,
 		     NULL);

@@ -27,10 +27,14 @@ AM_CPPFLAGS = \
         -DLOCALEDIR=\""$(localedir)"\"
 
 LDADD = \
+	winsnap-win32res.o			\
 	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
+
+winsnap-win32res.o: winsnap.rc select.cur small.ico winsnap.ico
+	$(top_srcdir)/build/win32/compile-resource winsnap.rc winsnap-win32res.o
 
 .PHONY: files
 
