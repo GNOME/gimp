@@ -644,7 +644,6 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
   GimpTool             *tool;
   GimpTransformTool    *tr_tool;
   GimpTransformOptions *options;
-  gint                  i, k, gci;
 
   tr_tool = GIMP_TRANSFORM_TOOL (draw_tool);
 
@@ -674,12 +673,18 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
 
   /*  Draw the grid */
 
-  if ((tr_tool->grid_coords != NULL) && (tr_tool->tgrid_coords != NULL))
+  if (tr_tool->grid_coords                   &&
+      tr_tool->tgrid_coords                  &&
+      tr_tool->transform.coeff[0][0] >=  0.0 &&
+      tr_tool->transform.coeff[1][1] >=  0.0 &&
+      tr_tool->transform.coeff[1][0] >= -1.0 &&
+      tr_tool->transform.coeff[0][1] >= -1.0)
     {
-      gci = 0;
+      gint gci, i, k;
+
       k = tr_tool->ngx + tr_tool->ngy;
 
-      for (i = 0; i < k; i++)
+      for (i = 0, gci = 0; i < k; i++, gci += 4)
 	{
           gimp_draw_tool_draw_line (draw_tool,
                                     tr_tool->tgrid_coords[gci],
@@ -687,7 +692,6 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
                                     tr_tool->tgrid_coords[gci + 2],
                                     tr_tool->tgrid_coords[gci + 3],
                                     FALSE);
-	  gci += 4;
 	}
     }
 
@@ -734,7 +738,7 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
       if (options->direction == GIMP_TRANSFORM_BACKWARD)
 	{
           GimpMatrix3  inv_matrix = tr_tool->transform;
-	  
+
           gimp_matrix3_invert (&inv_matrix);
           path_transform_draw_current (tool->gdisp,
                                        draw_tool, inv_matrix);
