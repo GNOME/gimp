@@ -1,3 +1,7 @@
+Thu Apr 22 16:05:10 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
+
+	* plug-ins/sharpen/sharpen.c: Use MAIN() macro.
+
 Thu Apr 22 08:47:50 1999  ape@.spacetec.no  (Asbjorn Pettersen)
 
 	* libgimp/gimpfileselection.c: Add #include <sys/types.h> for OS/2 v.
