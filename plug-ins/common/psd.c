@@ -9,7 +9,7 @@
  *     about the image you tried to load.  Please don't send big PSD
  *     files to me without asking first.
  *
- *          Copyright (C) 1997-2000 Adam D. Moss
+ *          Copyright (C) 1997-2003 Adam D. Moss
  *          Copyright (C) 1996      Torsten Martinsen
  *
  * This program is free software; you can redistribute it and/or modify
