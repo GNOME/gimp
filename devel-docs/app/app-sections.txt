@@ -653,6 +653,7 @@ gimp_drawable_mask_bounds
 gimp_drawable_has_alpha
 gimp_drawable_type
 gimp_drawable_type_with_alpha
+gimp_drawable_type_without_alpha
 gimp_drawable_is_rgb
 gimp_drawable_is_gray
 gimp_drawable_is_indexed
@@ -660,6 +661,7 @@ gimp_drawable_data
 gimp_drawable_shadow
 gimp_drawable_bytes
 gimp_drawable_bytes_with_alpha
+gimp_drawable_bytes_without_alpha
 gimp_drawable_cmap
 gimp_drawable_get_color_at
 gimp_drawable_stroke_boundary
@@ -752,6 +754,7 @@ GIMP_IMAGE_TYPE_IS_GRAY
 GIMP_IMAGE_TYPE_IS_INDEXED
 GIMP_IMAGE_TYPE_HAS_ALPHA
 GIMP_IMAGE_TYPE_WITH_ALPHA
+GIMP_IMAGE_TYPE_WITHOUT_ALPHA
 GIMP_IMAGE_TYPE_BYTES
 GIMP_IMAGE_TYPE_BASE_TYPE
 GIMP_IMAGE_TYPE_FROM_BASE_TYPE
@@ -1672,6 +1675,7 @@ gimp_display_shell_transform_xy
 gimp_display_shell_untransform_xy
 gimp_display_shell_transform_xy_f
 gimp_display_shell_untransform_xy_f
+gimp_display_shell_untransform_viewport
 </SECTION>
 
 <SECTION>
@@ -3019,6 +3023,7 @@ GIMP_TEXT_OPTIONS_GET_CLASS
 <TITLE>GimpTextTool</TITLE>
 GimpTextTool
 gimp_text_tool_register
+gimp_text_tool_set_layer
 <SUBSECTION Standard>
 GimpTextToolClass
 GIMP_TEXT_TOOL
@@ -4880,7 +4885,7 @@ gimp_histogram_get_median
 gimp_histogram_get_std_dev
 gimp_histogram_get_value
 gimp_histogram_get_channel
-gimp_histogram_nchannels
+gimp_histogram_n_channels
 </SECTION>
 
 <SECTION>
@@ -6080,7 +6085,6 @@ edit_redo_cmd_callback
 edit_cut_cmd_callback
 edit_copy_cmd_callback
 edit_paste_cmd_callback
-edit_paste_into_cmd_callback
 edit_paste_as_new_cmd_callback
 edit_named_cut_cmd_callback
 edit_named_copy_cmd_callback
@@ -6362,7 +6366,9 @@ layers_alpha_add_cmd_callback
 layers_alpha_to_selection_cmd_callback
 layers_merge_layers_cmd_callback
 layers_flatten_image_cmd_callback
+layers_text_tool_cmd_callback
 layers_edit_attributes_cmd_callback
+layers_text_tool
 layers_new_layer_query
 layers_edit_layer_query
 </SECTION>
@@ -7195,7 +7201,7 @@ gimp_get_mod_separator
 gimp_get_screen_resolution
 gimp_rgb_get_gdk_color
 gimp_rgb_set_gdk_color
-gimp_window_type_hint_to_gdk_hint
+gimp_window_set_hint
 </SECTION>
 
 <SECTION>
@@ -7212,8 +7218,8 @@ GIMP_TYPE_TAB_STYLE
 GimpTabStyle
 GIMP_TYPE_VIEW_TYPE
 GimpViewType
-GIMP_TYPE_WINDOW_TYPE_HINT
-GimpWindowTypeHint
+GIMP_TYPE_WINDOW_HINT
+GimpWindowHint
 GIMP_TYPE_ZOOM_TYPE
 GimpZoomType
 GimpPreviewBG
@@ -7229,7 +7235,7 @@ gimp_help_browser_type_get_type
 gimp_histogram_scale_get_type
 gimp_tab_style_get_type
 gimp_view_type_get_type
-gimp_window_type_hint_get_type
+gimp_window_hint_get_type
 gimp_zoom_type_get_type
 </SECTION>
 
