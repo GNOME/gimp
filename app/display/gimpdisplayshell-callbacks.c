@@ -770,33 +770,27 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           case 1:
             state &= ~GDK_BUTTON1_MASK;
 
+            if (! shell->space_pressed && ! shell->space_release_pending)
+              gdk_display_keyboard_ungrab (gdk_display, time);
+
+            gdk_display_pointer_ungrab (gdk_display, time);
+
             if (active_tool &&
                 (! gimp_image_is_empty (gimage) ||
                  gimp_tool_control_handles_empty_image (active_tool->control)))
               {
                 if (gimp_tool_control_is_active (active_tool->control))
                   {
+                    gtk_grab_add (GTK_WIDGET (canvas));
+
                     tool_manager_button_release_active (gimp,
                                                         &image_coords,
                                                         time, state,
                                                         gdisp);
+
+                    gtk_grab_remove (GTK_WIDGET (canvas));
                   }
               }
-
-            /*  update the tool's modifier state because it didn't get
-             *  key events while BUTTON1 was down
-             */
-            tool_manager_focus_display_active (gimp, gdisp);
-            tool_manager_modifier_state_active (gimp, state, gdisp);
-
-            tool_manager_oper_update_active (gimp,
-                                             &image_coords, state,
-                                             gdisp);
-
-            if (! shell->space_pressed && ! shell->space_release_pending)
-              gdk_display_keyboard_ungrab (gdk_display, time);
-
-            gdk_display_pointer_ungrab (gdk_display, time);
 
             if (shell->space_release_pending)
               {
