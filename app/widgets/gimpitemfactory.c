@@ -53,6 +53,7 @@
 #include "documents-commands.h"
 #include "edit-commands.h"
 #include "file-commands.h"
+#include "gradient-editor-commands.h"
 #include "gradients-commands.h"
 #include "image-commands.h"
 #include "layers-commands.h"
@@ -1446,6 +1447,324 @@ static GimpItemFactoryEntry patterns_entries[] =
 };
 
 
+/*****  <GradientEditor>  *****/
+
+static GimpItemFactoryEntry gradient_editor_entries[] =
+{
+  { { N_("/Left Endpoint's Color..."), NULL,
+      gradient_editor_left_color_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+
+  { { N_("/Load Left Color From/Left Neighbor's Right Endpoint"), NULL,
+      gradient_editor_load_left_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+  { { N_("/Load Left Color From/Right Endpoint"), NULL,
+      gradient_editor_load_left_cmd_callback, 1 },
+    NULL,
+    NULL, NULL },
+  { { N_("/Load Left Color From/FG Color"), NULL,
+      gradient_editor_load_left_cmd_callback, 2 },
+    NULL,
+    NULL, NULL },
+  { { N_("/Load Left Color From/BG Color"), NULL,
+      gradient_editor_load_left_cmd_callback, 3 },
+    NULL,
+    NULL, NULL },
+
+  SEPARATOR ("/Load Left Color From/---"),
+
+  { { "/Load Left Color From/01", NULL,
+      gradient_editor_load_left_cmd_callback, 4 },
+    NULL,
+    NULL, NULL },
+  { { "/Load Left Color From/02", NULL,
+      gradient_editor_load_left_cmd_callback, 5 },
+    NULL,
+    NULL, NULL },
+  { { "/Load Left Color From/03", NULL,
+      gradient_editor_load_left_cmd_callback, 6 },
+    NULL,
+    NULL, NULL },
+  { { "/Load Left Color From/04", NULL,
+      gradient_editor_load_left_cmd_callback, 7 },
+    NULL,
+    NULL, NULL },
+  { { "/Load Left Color From/05", NULL,
+      gradient_editor_load_left_cmd_callback, 8 },
+    NULL,
+    NULL, NULL },
+  { { "/Load Left Color From/06", NULL,
+      gradient_editor_load_left_cmd_callback, 9 },
+    NULL,
+    NULL, NULL },
+  { { "/Load Left Color From/07", NULL,
+      gradient_editor_load_left_cmd_callback, 10 },
+    NULL,
+    NULL, NULL },
+  { { "/Load Left Color From/08", NULL,
+      gradient_editor_load_left_cmd_callback, 11 },
+    NULL,
+    NULL, NULL },
+  { { "/Load Left Color From/09", NULL,
+      gradient_editor_load_left_cmd_callback, 12 },
+    NULL,
+    NULL, NULL },
+  { { "/Load Left Color From/10", NULL,
+      gradient_editor_load_left_cmd_callback, 13 },
+    NULL,
+    NULL, NULL },
+
+  BRANCH (N_("/Save Left Color To")),
+
+  { { "/Save Left Color To/01", NULL,
+      gradient_editor_save_left_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+  { { "/Save Left Color To/02", NULL,
+      gradient_editor_save_left_cmd_callback, 1 },
+    NULL,
+    NULL, NULL },
+  { { "/Save Left Color To/03", NULL,
+      gradient_editor_save_left_cmd_callback, 2 },
+    NULL,
+    NULL, NULL },
+  { { "/Save Left Color To/04", NULL,
+      gradient_editor_save_left_cmd_callback, 3 },
+    NULL,
+    NULL, NULL },
+  { { "/Save Left Color To/05", NULL,
+      gradient_editor_save_left_cmd_callback, 4 },
+    NULL,
+    NULL, NULL },
+  { { "/Save Left Color To/06", NULL,
+      gradient_editor_save_left_cmd_callback, 5 },
+    NULL,
+    NULL, NULL },
+  { { "/Save Left Color To/07", NULL,
+      gradient_editor_save_left_cmd_callback, 6 },
+    NULL,
+    NULL, NULL },
+  { { "/Save Left Color To/08", NULL,
+      gradient_editor_save_left_cmd_callback, 7 },
+    NULL,
+    NULL, NULL },
+  { { "/Save Left Color To/09", NULL,
+      gradient_editor_save_left_cmd_callback, 8 },
+    NULL,
+    NULL, NULL },
+  { { "/Save Left Color To/10", NULL,
+      gradient_editor_save_left_cmd_callback, 9 },
+    NULL,
+    NULL, NULL },
+
+  SEPARATOR ("/---"),
+
+  { { N_("/Right Endpoint's Color..."), NULL,
+      gradient_editor_right_color_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+
+  { { N_("/Load Right Color From/Right Neighbor's Left Endpoint"), NULL,
+      gradient_editor_load_right_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+  { { N_("/Load Right Color From/Left Endpoint"), NULL,
+      gradient_editor_load_right_cmd_callback, 1 },
+    NULL,
+    NULL, NULL },
+  { { N_("/Load Right Color From/FG Color"), NULL,
+      gradient_editor_load_right_cmd_callback, 2 },
+    NULL,
+    NULL, NULL },
+  { { N_("/Load Right Color From/BG Color"), NULL,
+      gradient_editor_load_right_cmd_callback, 3 },
+    NULL,
+    NULL, NULL },
+
+  SEPARATOR ("/Load Right Color From/---"),
+
+  { { "/Load Right Color From/01", NULL,
+      gradient_editor_load_right_cmd_callback, 4 },
+    NULL,
+    NULL, NULL },
+  { { "/Load Right Color From/02", NULL,
+      gradient_editor_load_right_cmd_callback, 5 },
+    NULL,
+    NULL, NULL },
+  { { "/Load Right Color From/03", NULL,
+      gradient_editor_load_right_cmd_callback, 6 },
+    NULL,
+    NULL, NULL },
+  { { "/Load Right Color From/04", NULL,
+      gradient_editor_load_right_cmd_callback, 7 },
+    NULL,
+    NULL, NULL },
+  { { "/Load Right Color From/05", NULL,
+      gradient_editor_load_right_cmd_callback, 8 },
+    NULL,
+    NULL, NULL },
+  { { "/Load Right Color From/06", NULL,
+      gradient_editor_load_right_cmd_callback, 9 },
+    NULL,
+    NULL, NULL },
+  { { "/Load Right Color From/07", NULL,
+      gradient_editor_load_right_cmd_callback, 10 },
+    NULL,
+    NULL, NULL },
+  { { "/Load Right Color From/08", NULL,
+      gradient_editor_load_right_cmd_callback, 11 },
+    NULL,
+    NULL, NULL },
+  { { "/Load Right Color From/09", NULL,
+      gradient_editor_load_right_cmd_callback, 12 },
+    NULL,
+    NULL, NULL },
+  { { "/Load Right Color From/10", NULL,
+      gradient_editor_load_right_cmd_callback, 13 },
+    NULL,
+    NULL, NULL },
+
+  BRANCH (N_("/Save Right Color To")),
+
+  { { "/Save Right Color To/01", NULL,
+      gradient_editor_save_right_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+  { { "/Save Right Color To/02", NULL,
+      gradient_editor_save_right_cmd_callback, 1 },
+    NULL,
+    NULL, NULL },
+  { { "/Save Right Color To/03", NULL,
+      gradient_editor_save_right_cmd_callback, 2 },
+    NULL,
+    NULL, NULL },
+  { { "/Save Right Color To/04", NULL,
+      gradient_editor_save_right_cmd_callback, 3 },
+    NULL,
+    NULL, NULL },
+  { { "/Save Right Color To/05", NULL,
+      gradient_editor_save_right_cmd_callback, 4 },
+    NULL,
+    NULL, NULL },
+  { { "/Save Right Color To/06", NULL,
+      gradient_editor_save_right_cmd_callback, 5 },
+    NULL,
+    NULL, NULL },
+  { { "/Save Right Color To/07", NULL,
+      gradient_editor_save_right_cmd_callback, 6 },
+    NULL,
+    NULL, NULL },
+  { { "/Save Right Color To/08", NULL,
+      gradient_editor_save_right_cmd_callback, 7 },
+    NULL,
+    NULL, NULL },
+  { { "/Save Right Color To/09", NULL,
+      gradient_editor_save_right_cmd_callback, 8 },
+    NULL,
+    NULL, NULL },
+  { { "/Save Right Color To/10", NULL,
+      gradient_editor_save_right_cmd_callback, 9 },
+    NULL,
+    NULL, NULL },
+
+  SEPARATOR ("/---"),
+
+  { { N_("/blendingfunction/Linear"), NULL,
+      gradient_editor_blending_func_cmd_callback,
+      GRAD_LINEAR, "<RadioItem>" },
+    NULL,
+    NULL, NULL },
+  { { N_("/blendingfunction/Curved"), NULL,
+      gradient_editor_blending_func_cmd_callback,
+      GRAD_CURVED, "/blendingfunction/Linear" },
+    NULL,
+    NULL, NULL },
+  { { N_("/blendingfunction/Sinusodial"), NULL,
+      gradient_editor_blending_func_cmd_callback,
+      GRAD_SINE, "/blendingfunction/Linear" },
+    NULL,
+    NULL, NULL },
+  { { N_("/blendingfunction/Spherical (increasing)"), NULL,
+      gradient_editor_blending_func_cmd_callback,
+      GRAD_SPHERE_INCREASING, "/blendingfunction/Linear" },
+    NULL,
+    NULL, NULL },
+  { { N_("/blendingfunction/Spherical (decreasing)"), NULL,
+      gradient_editor_blending_func_cmd_callback,
+      GRAD_SPHERE_DECREASING, "/blendingfunction/Linear" },
+    NULL,
+    NULL, NULL },
+  { { N_("/blendingfunction/(Varies)"), NULL, NULL,
+      0, "/blendingfunction/Linear" },
+    NULL,
+    NULL, NULL },
+
+  { { N_("/coloringtype/RGB"), NULL,
+      gradient_editor_coloring_type_cmd_callback,
+      GRAD_RGB, "<RadioItem>" },
+    NULL,
+    NULL, NULL },
+  { { N_("/coloringtype/HSV (counter-clockwise hue)"), NULL,
+      gradient_editor_coloring_type_cmd_callback,
+      GRAD_HSV_CCW, "/coloringtype/RGB" },
+    NULL,
+    NULL, NULL },
+  { { N_("/coloringtype/HSV (clockwise hue)"), NULL,
+      gradient_editor_coloring_type_cmd_callback,
+      GRAD_HSV_CW, "/coloringtype/RGB" },
+    NULL,
+    NULL, NULL },
+  { { N_("/coloringtype/(Varies)"), NULL, NULL,
+      0, "/coloringtype/RGB" },
+    NULL,
+    NULL, NULL },
+
+  SEPARATOR ("/---"),
+
+  { { "/flip", "F",
+      gradient_editor_flip_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+  { { "/replicate", "R",
+      gradient_editor_replicate_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+  { { "/splitmidpoint", "S",
+      gradient_editor_split_midpoint_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+  { { "/splituniformly", "U",
+      gradient_editor_split_uniformly_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+  { { "/delete", "D",
+      gradient_editor_delete_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+  { { "/recenter", "C",
+      gradient_editor_recenter_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+  { { "/redistribute", "<control>C",
+      gradient_editor_redistribute_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+
+  SEPARATOR ("/---"),
+
+  { { N_("/Blend Endpoints' Colors"), "B",
+      gradient_editor_blend_color_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+  { { N_("/Blend Endpoints' Opacity"), "<control>B",
+      gradient_editor_blend_opacity_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+};
+
+
 /*****  <Gradients>  *****/
 
 static GimpItemFactoryEntry gradients_entries[] =
@@ -1601,20 +1920,21 @@ static GimpItemFactoryEntry documents_entries[] =
 static gboolean menus_initialized = FALSE;
 
 
-static GtkItemFactory *toolbox_factory   = NULL;
-static GtkItemFactory *image_factory     = NULL;
-static GtkItemFactory *load_factory      = NULL;
-static GtkItemFactory *save_factory      = NULL;
-static GtkItemFactory *layers_factory    = NULL;
-static GtkItemFactory *channels_factory  = NULL;
-static GtkItemFactory *paths_factory     = NULL;
-static GtkItemFactory *dialogs_factory   = NULL;
-static GtkItemFactory *brushes_factory   = NULL;
-static GtkItemFactory *patterns_factory  = NULL;
-static GtkItemFactory *gradients_factory = NULL;
-static GtkItemFactory *palettes_factory  = NULL;
-static GtkItemFactory *buffers_factory   = NULL;
-static GtkItemFactory *documents_factory = NULL;
+static GtkItemFactory *toolbox_factory         = NULL;
+static GtkItemFactory *image_factory           = NULL;
+static GtkItemFactory *load_factory            = NULL;
+static GtkItemFactory *save_factory            = NULL;
+static GtkItemFactory *layers_factory          = NULL;
+static GtkItemFactory *channels_factory        = NULL;
+static GtkItemFactory *paths_factory           = NULL;
+static GtkItemFactory *dialogs_factory         = NULL;
+static GtkItemFactory *brushes_factory         = NULL;
+static GtkItemFactory *patterns_factory        = NULL;
+static GtkItemFactory *gradient_editor_factory = NULL;
+static GtkItemFactory *gradients_factory       = NULL;
+static GtkItemFactory *palettes_factory        = NULL;
+static GtkItemFactory *buffers_factory         = NULL;
+static GtkItemFactory *documents_factory       = NULL;
 
 
 /*  public functions  */
@@ -1759,6 +2079,13 @@ menus_init (Gimp *gimp)
                                              patterns_entries,
                                              gimp,
                                              FALSE);
+
+  gradient_editor_factory = menus_item_factory_new (GTK_TYPE_MENU,
+                                                    "<GradientEditor>", "gradient_editor",
+                                                    G_N_ELEMENTS (gradient_editor_entries),
+                                                    gradient_editor_entries,
+                                                    gimp,
+                                                    FALSE);
 
   gradients_factory = menus_item_factory_new (GTK_TYPE_MENU,
                                               "<Gradients>", "gradients",
@@ -1929,6 +2256,12 @@ menus_exit (Gimp *gimp)
     {
       g_object_unref (G_OBJECT (patterns_factory));
       patterns_factory = NULL;
+    }
+
+  if (gradient_editor_factory)
+    {
+      g_object_unref (G_OBJECT (gradient_editor_factory));
+      gradient_editor_factory = NULL;
     }
 
   if (gradients_factory)
@@ -2206,6 +2539,12 @@ menus_get_patterns_factory (void)
 }
 
 GtkItemFactory *
+menus_get_gradient_editor_factory (void)
+{
+  return gradient_editor_factory;
+}
+
+GtkItemFactory *
 menus_get_gradients_factory (void)
 {
   return gradients_factory;
@@ -2265,6 +2604,222 @@ menus_create_item_from_full_path (GimpItemFactoryEntry *entry,
 }
 
 void
+menus_set_active (gchar    *path,
+                  gboolean  active)
+{
+  GtkItemFactory *ifactory;
+  GtkWidget      *widget = NULL;
+
+  g_return_if_fail (path != NULL);
+  g_return_if_fail (menus_initialized);
+
+  ifactory = gtk_item_factory_from_path (path);
+
+  if (ifactory)
+    {
+      widget = gtk_item_factory_get_widget (ifactory, path);
+
+      if (widget && GTK_IS_CHECK_MENU_ITEM (widget))
+	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (widget), active);
+      else
+	widget = NULL;
+    }
+
+  if ((!ifactory || !widget) && ! strstr (path, "Script-Fu"))
+    g_warning ("Unable to set \"active\" for menu which doesn't exist:\n%s",
+	       path);
+}
+
+void
+menus_set_color (gchar         *path,
+                 const GimpRGB *color,
+                 gboolean       set_label)
+{
+  GtkItemFactory *ifactory;
+  GtkWidget      *widget;
+  GtkWidget      *preview = NULL;
+  GtkWidget      *label   = NULL;
+
+  g_return_if_fail (path != NULL);
+  g_return_if_fail (color != NULL);
+  g_return_if_fail (menus_initialized);
+
+  ifactory = gtk_item_factory_from_path (path);
+
+#define COLOR_BOX_WIDTH  24
+#define COLOR_BOX_HEIGHT 16
+
+  if (! ifactory)
+    return;
+
+  widget = gtk_item_factory_get_widget (ifactory, path);
+
+  if (! widget)
+    return;
+
+  if (GTK_IS_HBOX (GTK_BIN (widget)->child))
+    {
+      preview = g_object_get_data (G_OBJECT (GTK_BIN (widget)->child),
+                                   "preview");
+      label = g_object_get_data (G_OBJECT (GTK_BIN (widget)->child),
+                                 "label");
+    }
+  else if (GTK_IS_LABEL (GTK_BIN (widget)->child))
+    {
+      GtkWidget *hbox;
+
+      label = GTK_BIN (widget)->child;
+
+      g_object_ref (G_OBJECT (label));
+
+      gtk_container_remove (GTK_CONTAINER (widget), label);
+
+      hbox = gtk_hbox_new (FALSE, 4);
+      gtk_container_add (GTK_CONTAINER (widget), hbox);
+      gtk_widget_show (hbox);
+
+      preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+      gtk_preview_size (GTK_PREVIEW (preview),
+                        COLOR_BOX_WIDTH, COLOR_BOX_HEIGHT);
+      gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
+      gtk_widget_show (preview);
+
+      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+      gtk_widget_show (label);
+
+      g_object_unref (G_OBJECT (label));
+
+      g_object_set_data (G_OBJECT (hbox), "preview", preview);
+      g_object_set_data (G_OBJECT (hbox), "label",   label);
+    }
+
+  if (preview)
+    {
+      guchar  rows[3][COLOR_BOX_WIDTH * 3];
+      gint    x, y;
+      gint    r0, g0, b0;
+      gint    r1, g1, b1;
+      guchar *p0, *p1, *p2;
+
+      /* Fill rows */
+
+      r0 = (GIMP_CHECK_DARK + (color->r - GIMP_CHECK_DARK) * color->a) * 255.0;
+      r1 = (GIMP_CHECK_LIGHT + (color->r - GIMP_CHECK_LIGHT) * color->a) * 255.0;
+
+      g0 = (GIMP_CHECK_DARK + (color->g - GIMP_CHECK_DARK) * color->a) * 255.0;
+      g1 = (GIMP_CHECK_LIGHT + (color->g - GIMP_CHECK_LIGHT) * color->a) * 255.0;
+
+      b0 = (GIMP_CHECK_DARK + (color->b - GIMP_CHECK_DARK) * color->a) * 255.0;
+      b1 = (GIMP_CHECK_LIGHT + (color->b - GIMP_CHECK_LIGHT) * color->a) * 255.0;
+
+      p0 = rows[0];
+      p1 = rows[1];
+      p2 = rows[2];
+
+      for (x = 0; x < COLOR_BOX_WIDTH; x++)
+        {
+          if ((x == 0) || (x == (COLOR_BOX_WIDTH - 1)))
+            {
+              *p0++ = 0;
+              *p0++ = 0;
+              *p0++ = 0;
+
+              *p1++ = 0;
+              *p1++ = 0;
+              *p1++ = 0;
+            }
+          else if ((x / GIMP_CHECK_SIZE) & 1)
+            {
+              *p0++ = r1;
+              *p0++ = g1;
+              *p0++ = b1;
+
+              *p1++ = r0;
+              *p1++ = g0;
+              *p1++ = b0;
+            }
+          else
+            {
+              *p0++ = r0;
+              *p0++ = g0;
+              *p0++ = b0;
+
+              *p1++ = r1;
+              *p1++ = g1;
+              *p1++ = b1;
+            }
+
+          *p2++ = 0;
+          *p2++ = 0;
+          *p2++ = 0;
+        }
+
+      /* Fill preview */
+
+      gtk_preview_draw_row (GTK_PREVIEW (preview), rows[2],
+                            0, 0, COLOR_BOX_WIDTH);
+
+      for (y = 1; y < (COLOR_BOX_HEIGHT - 1); y++)
+        if ((y / GIMP_CHECK_SIZE) & 1)
+          gtk_preview_draw_row (GTK_PREVIEW (preview), rows[1],
+                                0, y, COLOR_BOX_WIDTH);
+        else
+          gtk_preview_draw_row (GTK_PREVIEW (preview), rows[0],
+                                0, y, COLOR_BOX_WIDTH);
+
+      gtk_preview_draw_row (GTK_PREVIEW (preview), rows[2],
+                            0, y, COLOR_BOX_WIDTH);
+    }
+
+  if (label && set_label)
+    {
+      gchar *str;
+
+      str = g_strdup_printf (_("RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"),
+                             color->r, color->g, color->b, color->a);
+
+      gtk_label_set_text (GTK_LABEL (label), str);
+
+      g_free (str);
+    }
+
+#undef COLOR_BOX_WIDTH
+#undef COLOR_BOX_HEIGHT
+}
+
+void
+menus_set_label (gchar       *path,
+                 const gchar *label)
+{
+  GtkItemFactory *ifactory;
+  GtkWidget      *widget = NULL;
+
+  g_return_if_fail (path != NULL);
+  g_return_if_fail (label != NULL);
+  g_return_if_fail (menus_initialized);
+
+  ifactory = gtk_item_factory_from_path (path);
+
+  if (ifactory)
+    {
+      widget = gtk_item_factory_get_widget (ifactory, path);
+
+      if (widget)
+        {
+          if (GTK_IS_MENU (widget))
+            {
+              widget = gtk_menu_get_attach_widget (GTK_MENU (widget));
+            }
+
+          if (GTK_IS_LABEL (GTK_BIN (widget)->child))
+            {
+              gtk_label_set_text (GTK_LABEL (GTK_BIN (widget)->child), label);
+            }
+        }
+    }
+}
+
+void
 menus_set_sensitive (gchar    *path,
 		     gboolean  sensitive)
 {
@@ -2290,11 +2845,11 @@ menus_set_sensitive (gchar    *path,
 }
 
 void
-menus_set_state (gchar    *path,
-		 gboolean  state)
+menus_set_visible (gchar    *path,
+                   gboolean  visible)
 {
   GtkItemFactory *ifactory;
-  GtkWidget      *widget = NULL;
+  GtkWidget      *widget;
 
   g_return_if_fail (path != NULL);
   g_return_if_fail (menus_initialized);
@@ -2305,15 +2860,14 @@ menus_set_state (gchar    *path,
     {
       widget = gtk_item_factory_get_widget (ifactory, path);
 
-      if (widget && GTK_IS_CHECK_MENU_ITEM (widget))
-	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (widget), state);
-      else
-	widget = NULL;
+      if (widget)
+        {
+          if (visible)
+            gtk_widget_show (widget);
+          else
+            gtk_widget_hide (widget);
+        }
     }
-
-  if ((!ifactory || !widget) && ! strstr (path, "Script-Fu"))
-    g_warning ("Unable to set state for menu which doesn't exist:\n%s",
-	       path);
 }
 
 void

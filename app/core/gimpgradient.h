@@ -28,23 +28,6 @@
 #define GIMP_GRADIENT_DEFAULT_SAMPLE_SIZE 40
 
 
-typedef enum
-{
-  GRAD_LINEAR = 0,
-  GRAD_CURVED,
-  GRAD_SINE,
-  GRAD_SPHERE_INCREASING,
-  GRAD_SPHERE_DECREASING
-} GimpGradientSegmentType;
-
-typedef enum
-{
-  GRAD_RGB = 0,  /* normal RGB */
-  GRAD_HSV_CCW,  /* counterclockwise hue */
-  GRAD_HSV_CW    /* clockwise hue */
-} GimpGradientSegmentColor;
-
-
 typedef struct _GimpGradientSegment GimpGradientSegment;
 
 struct _GimpGradientSegment
@@ -101,11 +84,32 @@ GimpGradientSegment * gimp_gradient_get_segment_at   (GimpGradient  *grad,
 
 /*  gradient segment functions  */
 
-GimpGradientSegment * gimp_gradient_segment_new      (void);
-GimpGradientSegment * gimp_gradient_segment_get_last (GimpGradientSegment *seg);
+GimpGradientSegment * gimp_gradient_segment_new       (void);
+GimpGradientSegment * gimp_gradient_segment_get_last  (GimpGradientSegment *seg);
+GimpGradientSegment * gimp_gradient_segment_get_first (GimpGradientSegment *seg);
 
 void                  gimp_gradient_segment_free     (GimpGradientSegment *seg);
 void                  gimp_gradient_segments_free    (GimpGradientSegment *seg);
 
+void   gimp_gradient_segment_split_midpoint   (GimpGradient         *gradient,
+                                               GimpGradientSegment  *lseg,
+                                               GimpGradientSegment **newl,
+                                               GimpGradientSegment **newr);
+void   gimp_gradient_segment_split_uniform    (GimpGradient         *gradient,
+                                               GimpGradientSegment  *lseg,
+                                               gint                  parts,
+                                               GimpGradientSegment **newl,
+                                               GimpGradientSegment **newr);
+
+void   gimp_gradient_segments_compress_range  (GimpGradientSegment  *range_l,
+                                               GimpGradientSegment  *range_r,
+                                               gdouble               new_l,
+                                               gdouble               new_r);
+void   gimp_gradient_segments_blend_endpoints (GimpGradientSegment  *lseg,
+                                               GimpGradientSegment  *rseg,
+                                               GimpRGB              *rgb1,
+                                               GimpRGB              *rgb2,
+                                               gboolean              blend_colors,
+                                               gboolean              blend_opacity);
 
 #endif /* __GIMP_GRADIENT_H__ */

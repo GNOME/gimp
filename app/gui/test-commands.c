@@ -23,9 +23,7 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "core/core-types.h"
-#include "tools/tools-types.h"
-#include "widgets/widgets-types.h"
+#include "gui-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
@@ -50,7 +48,6 @@
 #include "tools/tool_manager.h"
 
 #include "dialogs.h"
-#include "gradient-editor.h"
 
 #include "gimprc.h"
 

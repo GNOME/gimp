@@ -185,6 +185,9 @@ gimp_dock_style_set (GtkWidget *widget,
   GList *list;
   gint   separator_height;
 
+  if (GTK_WIDGET_CLASS (parent_class)->style_set)
+    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+
   gtk_widget_style_get (widget,
                         "separator_height", &separator_height,
                         NULL);

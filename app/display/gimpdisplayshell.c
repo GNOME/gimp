@@ -953,8 +953,8 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell)
 
 #define SET_SENSITIVE(menu,condition) \
         menus_set_sensitive ("<Image>/" menu, (condition) != 0)
-#define SET_STATE(menu,condition) \
-        menus_set_state ("<Image>/" menu, (condition) != 0)
+#define SET_ACTIVE(menu,condition) \
+        menus_set_active ("<Image>/" menu, (condition) != 0)
 
   SET_SENSITIVE ("File/Save", gdisp && drawable);
   SET_SENSITIVE ("File/Save as...", gdisp && drawable);
@@ -998,15 +998,15 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell)
   SET_SENSITIVE ("View/Zoom", gdisp);
   if (gdisp)
     {
-      SET_STATE ("View/Toggle Selection", ! shell->select->hidden);
-      SET_STATE ("View/Toggle Layer Boundary", ! shell->select->layer_hidden);
-      SET_STATE ("View/Toggle Rulers",
-                 GTK_WIDGET_VISIBLE (shell->origin) ? 1 : 0);
-      SET_STATE ("View/Toggle Guides", gdisp->draw_guides);
-      SET_STATE ("View/Snap to Guides", gdisp->snap_to_guides);
-      SET_STATE ("View/Toggle Statusbar",
-		 GTK_WIDGET_VISIBLE (shell->statusarea) ? 1 : 0);
-      SET_STATE ("View/Dot for Dot", gdisp->dot_for_dot);
+      SET_ACTIVE ("View/Toggle Selection", ! shell->select->hidden);
+      SET_ACTIVE ("View/Toggle Layer Boundary", ! shell->select->layer_hidden);
+      SET_ACTIVE ("View/Toggle Rulers",
+                  GTK_WIDGET_VISIBLE (shell->origin) ? 1 : 0);
+      SET_ACTIVE ("View/Toggle Guides", gdisp->draw_guides);
+      SET_ACTIVE ("View/Snap to Guides", gdisp->snap_to_guides);
+      SET_ACTIVE ("View/Toggle Statusbar",
+                  GTK_WIDGET_VISIBLE (shell->statusarea) ? 1 : 0);
+      SET_ACTIVE ("View/Dot for Dot", gdisp->dot_for_dot);
     }
 
   SET_SENSITIVE ("Image", gdisp);
@@ -1073,7 +1073,7 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell)
 
   SET_SENSITIVE ("Script-Fu", gdisp && lp);
 
-#undef SET_STATE
+#undef SET_ACTIVE
 #undef SET_SENSITIVE
 
   plug_in_set_menu_sensitivity (type);

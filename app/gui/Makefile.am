@@ -54,6 +54,8 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	file-save-dialog.h		\
 	gradient-editor.c		\
 	gradient-editor.h		\
+	gradient-editor-commands.c	\
+	gradient-editor-commands.h	\
 	gradient-select.h		\
 	gradient-select.c		\
 	gradients-commands.c		\

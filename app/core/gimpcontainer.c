@@ -205,22 +205,11 @@ gimp_container_class_init (GimpContainerClass *klass)
   klass->get_child_by_index  = NULL;
   klass->get_child_index     = NULL;
 
-  /*  spit out a warning once GType becomes a gpointer  */
-  {
-    guint32 *foo = NULL;
-    GType   *bar;
-
-    bar = foo;
-  }
-
   g_object_class_install_property (object_class,
 				   PROP_CHILDREN_TYPE,
-				   g_param_spec_uint ("children_type",
-                                                      NULL, NULL,
-                                                      GIMP_TYPE_OBJECT,
-                                                      G_MAXINT,
-                                                      GIMP_TYPE_OBJECT,
-                                                      G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+				   g_param_spec_pointer ("children_type",
+                                                         NULL, NULL,
+                                                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class,
 				   PROP_POLICY,
@@ -278,7 +267,7 @@ gimp_container_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_CHILDREN_TYPE:
-      container->children_type = (GType) g_value_get_uint (value);
+      container->children_type = (GType) g_value_get_pointer (value);
       g_type_class_ref (container->children_type);
       break;
     case PROP_POLICY:
@@ -303,7 +292,7 @@ gimp_container_get_property (GObject    *object,
   switch (property_id)
     {
     case PROP_CHILDREN_TYPE:
-      g_value_set_uint (value, (guint) container->children_type);
+      g_value_set_pointer (value, (gpointer) container->children_type);
       break;
     case PROP_POLICY:
       g_value_set_enum (value, container->policy);

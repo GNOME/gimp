@@ -811,3 +811,242 @@ gimp_gradient_segment_get_last (GimpGradientSegment *seg)
 
   return seg;
 }
+
+GimpGradientSegment *
+gimp_gradient_segment_get_first (GimpGradientSegment *seg)
+{
+  if (!seg)
+    return NULL;
+
+  while (seg->prev)
+    seg = seg->prev;
+
+  return seg;
+}
+
+void
+gimp_gradient_segment_split_midpoint (GimpGradient         *gradient,
+                                      GimpGradientSegment  *lseg,
+                                      GimpGradientSegment **newl,
+                                      GimpGradientSegment **newr)
+{
+  GimpRGB              color;
+  GimpGradientSegment *newseg;
+
+  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
+  g_return_if_fail (lseg != NULL);
+  g_return_if_fail (newl != NULL);
+  g_return_if_fail (newr != NULL);
+
+  /* Get color at original segment's midpoint */
+  gimp_gradient_get_color_at (gradient, lseg->middle, &color);
+
+  /* Create a new segment and insert it in the list */
+
+  newseg = gimp_gradient_segment_new ();
+
+  newseg->prev = lseg;
+  newseg->next = lseg->next;
+
+  lseg->next = newseg;
+
+  if (newseg->next)
+    newseg->next->prev = newseg;
+
+  /* Set coordinates of new segment */
+
+  newseg->left   = lseg->middle;
+  newseg->right  = lseg->right;
+  newseg->middle = (newseg->left + newseg->right) / 2.0;
+
+  /* Set coordinates of original segment */
+
+  lseg->right  = newseg->left;
+  lseg->middle = (lseg->left + lseg->right) / 2.0;
+
+  /* Set colors of both segments */
+
+  newseg->right_color = lseg->right_color;
+
+  lseg->right_color.r = newseg->left_color.r = color.r;
+  lseg->right_color.g = newseg->left_color.g = color.g;
+  lseg->right_color.b = newseg->left_color.b = color.b;
+  lseg->right_color.a = newseg->left_color.a = color.a;
+
+  /* Set parameters of new segment */
+
+  newseg->type  = lseg->type;
+  newseg->color = lseg->color;
+
+  /* Done */
+
+  *newl = lseg;
+  *newr = newseg;
+}
+
+void
+gimp_gradient_segment_split_uniform (GimpGradient         *gradient,
+                                     GimpGradientSegment  *lseg,
+                                     gint                  parts,
+                                     GimpGradientSegment **newl,
+                                     GimpGradientSegment **newr)
+{
+  GimpGradientSegment *seg, *prev, *tmp;
+  gdouble              seg_len;
+  gint                 i;
+
+  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
+  g_return_if_fail (lseg != NULL);
+  g_return_if_fail (newl != NULL);
+  g_return_if_fail (newr != NULL);
+
+  seg_len = (lseg->right - lseg->left) / parts; /* Length of divisions */
+
+  seg  = NULL;
+  prev = NULL;
+  tmp  = NULL;
+
+  for (i = 0; i < parts; i++)
+    {
+      seg = gimp_gradient_segment_new ();
+
+      if (i == 0)
+	tmp = seg; /* Remember first segment */
+
+      seg->left   = lseg->left + i * seg_len;
+      seg->right  = lseg->left + (i + 1) * seg_len;
+      seg->middle = (seg->left + seg->right) / 2.0;
+
+      gimp_gradient_get_color_at (gradient, seg->left,  &seg->left_color);
+      gimp_gradient_get_color_at (gradient, seg->right, &seg->right_color);
+
+      seg->type  = lseg->type;
+      seg->color = lseg->color;
+
+      seg->prev = prev;
+      seg->next = NULL;
+
+      if (prev)
+	prev->next = seg;
+
+      prev = seg;
+    }
+
+  /* Fix edges */
+
+  tmp->left_color = lseg->left_color;
+
+  seg->right_color = lseg->right_color;
+
+  tmp->left  = lseg->left;
+  seg->right = lseg->right; /* To squish accumulative error */
+
+  /* Link in list */
+
+  tmp->prev = lseg->prev;
+  seg->next = lseg->next;
+
+  if (lseg->prev)
+    lseg->prev->next = tmp;
+  else
+    gradient->segments = tmp; /* We are on leftmost segment */
+
+  if (lseg->next)
+    lseg->next->prev = seg;
+
+  gradient->last_visited = NULL; /* Force re-search */
+
+  /* Done */
+
+  *newl = tmp;
+  *newr = seg;
+
+  /* Delete old segment */
+
+  gimp_gradient_segment_free (lseg);
+}
+
+void
+gimp_gradient_segments_compress_range (GimpGradientSegment *range_l,
+                                       GimpGradientSegment *range_r,
+                                       gdouble              new_l,
+                                       gdouble              new_r)
+{
+  gdouble              orig_l, orig_r;
+  gdouble              scale;
+  GimpGradientSegment *seg, *aseg;
+
+  g_return_if_fail (range_l != NULL);
+  g_return_if_fail (range_r != NULL);
+
+  orig_l = range_l->left;
+  orig_r = range_r->right;
+
+  scale = (new_r - new_l) / (orig_r - orig_l);
+
+  seg = range_l;
+
+  do
+    {
+      seg->left   = new_l + (seg->left - orig_l) * scale;
+      seg->middle = new_l + (seg->middle - orig_l) * scale;
+      seg->right  = new_l + (seg->right - orig_l) * scale;
+
+      /* Next */
+
+      aseg = seg;
+      seg  = seg->next;
+    }
+  while (aseg != range_r);
+}
+
+void
+gimp_gradient_segments_blend_endpoints (GimpGradientSegment *lseg,
+                                        GimpGradientSegment *rseg,
+                                        GimpRGB             *rgb1,
+                                        GimpRGB             *rgb2,
+                                        gboolean             blend_colors,
+                                        gboolean             blend_opacity)
+{
+  GimpRGB              d;
+  gdouble              left, len;
+  GimpGradientSegment *seg;
+  GimpGradientSegment *aseg;
+
+  g_return_if_fail (lseg != NULL);
+  g_return_if_fail (rseg != NULL);
+
+  d.r = rgb2->r - rgb1->r;
+  d.g = rgb2->g - rgb1->g;
+  d.b = rgb2->b - rgb1->b;
+  d.a = rgb2->a - rgb1->a;
+
+  left  = lseg->left;
+  len   = rseg->right - left;
+
+  seg = lseg;
+
+  do
+    {
+      if (blend_colors)
+	{
+	  seg->left_color.r  = rgb1->r + (seg->left - left) / len * d.r;
+	  seg->left_color.g  = rgb1->g + (seg->left - left) / len * d.g;
+	  seg->left_color.b  = rgb1->b + (seg->left - left) / len * d.b;
+
+	  seg->right_color.r = rgb1->r + (seg->right - left) / len * d.r;
+	  seg->right_color.g = rgb1->g + (seg->right - left) / len * d.g;
+	  seg->right_color.b = rgb1->b + (seg->right - left) / len * d.b;
+	}
+
+      if (blend_opacity)
+	{
+	  seg->left_color.a  = rgb1->a + (seg->left - left) / len * d.a;
+	  seg->right_color.a = rgb1->a + (seg->right - left) / len * d.a;
+	}
+
+      aseg = seg;
+      seg = seg->next;
+    }
+  while (aseg != rseg);
+}

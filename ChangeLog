@@ -1,3 +1,40 @@
+2001-11-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpcontainer.c: GType is a pointer now, not a guint.
+
+	* app/widgets/gimpdock.c: chain up in widget_class->style_set().
+
+	Gradient Editor chopping plus merging of bex' proofreading:
+	(fixes #62278).
+
+	* app/core/core-types.h: moved the gradient related enums here.
+
+	* app/core/gimpgradient.[ch]: removed the enums, added gradient
+	segment utility functions from the gradient_editor.
+
+	* app/gui/gui-types.h: added the GradientEditor typedef here.
+
+	* app/gui/Makefile.am
+	* app/gui/gradient-editor-commands.[ch]: new files implementing
+	callbacks and menu_update stuff for the new gradient_editor
+	item factory.
+
+	* app/gui/gradient-editor.[ch]: removed tons of code, namespace
+	cleanup, stuff...
+
+	* app/gui/menus.[ch]: added the gradient_editor menu stuff here.
+	Added menus_set_color() which creates & updates a color menu item
+	(will soon be used in other places too). Renamed menus_set_state()
+	to menus_set_active().
+
+	The editor's menu code is ugly as before, only different and evil
+	the same way as the rest of the menu stuff, so it's at least
+	consistent :)
+
+	* app/display/gimpdisplayshell.c: changed accordingly.
+
+	* app/gui/test-commands.c: don't include "gradient-editor.h".
+
 2001-11-27  Sven Neumann  <sven@gimp.org>
 
 	* configure.in
@@ -63,7 +100,6 @@
 	* app/gui/file-open-dialog.c
 	* app/gui/file-save-dialog.c: More of my extensive proofing.
 	Someone needs to check bex comments and do some hacking.
-
 
 2001-11-26  Michael Natterer  <mitch@gimp.org>
 

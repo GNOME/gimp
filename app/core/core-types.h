@@ -176,6 +176,22 @@ typedef enum
   SPIRAL_ANTICLOCKWISE
 } GradientType;
 
+typedef enum /*< skip >*/
+{
+  GRAD_LINEAR = 0,
+  GRAD_CURVED,
+  GRAD_SINE,
+  GRAD_SPHERE_INCREASING,
+  GRAD_SPHERE_DECREASING
+} GimpGradientSegmentType;
+
+typedef enum /*< skip >*/
+{
+  GRAD_RGB = 0,  /* normal RGB */
+  GRAD_HSV_CCW,  /* counterclockwise hue */
+  GRAD_HSV_CW    /* clockwise hue */
+} GimpGradientSegmentColor;
+
 typedef enum  /*< chop=_MODE >*/
 {
   FG_BG_RGB_MODE,
