@@ -33,29 +33,35 @@
 #include "gimpdockbook.h"
 
 
-static void      gimp_dock_class_init       (GimpDockClass  *klass);
-static void      gimp_dock_init             (GimpDock       *dock);
+static void        gimp_dock_class_init               (GimpDockClass  *klass);
+static void        gimp_dock_init                     (GimpDock       *dock);
 
-static void      gimp_dock_destroy          (GtkObject      *object);
+static GtkWidget * gimp_dock_separator_new            (GimpDock       *dock);
+
+static void        gimp_dock_destroy                  (GtkObject      *object);
+
+static gboolean    gimp_dock_separator_button_press   (GtkWidget      *widget,
+						       GdkEventButton *bevent,
+						       gpointer        data);
+static gboolean    gimp_dock_separator_button_release (GtkWidget      *widget,
+						       GdkEventButton *bevent,
+						       gpointer        data);
 
 /*
-static gboolean  gimp_dock_tab_button_press (GtkWidget      *widget,
-					     GdkEventButton *bevent,
-					     gpointer        data);
-static void      gimp_dock_tab_drag_begin   (GtkWidget      *widget,
-					     GdkDragContext *context,
-					     gpointer        data);
-static void      gimp_dock_tab_drag_end     (GtkWidget      *widget,
-					     GdkDragContext *context,
-					     gpointer        data);
+static void        gimp_dock_separator_drag_begin     (GtkWidget      *widget,
+			  			       GdkDragContext *context,
+						       gpointer        data);
+static void        gimp_dock_separator_drag_end       (GtkWidget      *widget,
+						       GdkDragContext *context,
+						       gpointer        data);
 */
 
-static gboolean  gimp_dock_separator_drag_drop (GtkWidget      *widget,
-						GdkDragContext *context,
-						gint            x,
-						gint            y,
-						guint           time,
-						gpointer        data);
+static gboolean    gimp_dock_separator_drag_drop      (GtkWidget      *widget,
+						       GdkDragContext *context,
+						       gint            x,
+						       gint            y,
+						       guint           time,
+						       gpointer        data);
 
 
 static GtkWindowClass *parent_class = NULL;
@@ -105,31 +111,6 @@ gimp_dock_class_init (GimpDockClass *klass)
   object_class->destroy = gimp_dock_destroy;
 }
 
-static GtkWidget *
-gimp_dock_separator_new (GimpDock *dock)
-{
-  GtkWidget *event_box;
-  GtkWidget *frame;
-
-  event_box = gtk_event_box_new ();
-  gtk_widget_set_usize (event_box, -1, 8);
-
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-  gtk_container_add (GTK_CONTAINER (event_box), frame);
-  gtk_widget_show (frame);
-
-  gtk_drag_dest_set (GTK_WIDGET (event_box),
-                     GTK_DEST_DEFAULT_ALL,
-                     dialog_target_table, n_dialog_targets,
-                     GDK_ACTION_MOVE);
-  gtk_signal_connect (GTK_OBJECT (event_box), "drag_drop",
-		      GTK_SIGNAL_FUNC (gimp_dock_separator_drag_drop),
-		      dock);
-
-  return event_box;
-}
-
 static void
 gimp_dock_init (GimpDock *dock)
 {
@@ -163,6 +144,38 @@ GtkWidget *
 gimp_dock_new (void)
 {
   return GTK_WIDGET (gtk_type_new (GIMP_TYPE_DOCK));
+}
+
+static GtkWidget *
+gimp_dock_separator_new (GimpDock *dock)
+{
+  GtkWidget *event_box;
+  GtkWidget *frame;
+
+  event_box = gtk_event_box_new ();
+  gtk_widget_set_usize (event_box, -1, 8);
+
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
+  gtk_container_add (GTK_CONTAINER (event_box), frame);
+  gtk_widget_show (frame);
+
+  gtk_drag_dest_set (GTK_WIDGET (event_box),
+                     GTK_DEST_DEFAULT_ALL,
+                     dialog_target_table, n_dialog_targets,
+                     GDK_ACTION_MOVE);
+  gtk_signal_connect (GTK_OBJECT (event_box), "drag_drop",
+		      GTK_SIGNAL_FUNC (gimp_dock_separator_drag_drop),
+		      dock);
+
+  gtk_signal_connect (GTK_OBJECT (event_box), "button_press_event",
+		      GTK_SIGNAL_FUNC (gimp_dock_separator_button_press),
+		      dock);
+  gtk_signal_connect (GTK_OBJECT (event_box), "button_release_event",
+		      GTK_SIGNAL_FUNC (gimp_dock_separator_button_release),
+		      dock);
+
+  return event_box;
 }
 
 void
@@ -291,36 +304,36 @@ gimp_dock_remove_book (GimpDock     *dock,
     }
 }
 
-/*
 static gboolean
-gimp_dock_tab_button_press (GtkWidget      *widget,
-			    GdkEventButton *bevent,
-			    gpointer        data)
+gimp_dock_separator_button_press (GtkWidget      *widget,
+				  GdkEventButton *bevent,
+				  gpointer        data)
 {
-  GimpDockable *dockable;
-  gint          page_num;
-
-  dockable = GIMP_DOCKABLE (data);
-
-  switch (bevent->button)
+  if (bevent->type == GDK_BUTTON_PRESS)
     {
-    case 3:
-      gtk_menu_popup (GTK_MENU (GTK_NOTEBOOK (dockable->dock->notebook)->menu),
-		      NULL, NULL,
-		      NULL, NULL, 3, bevent->time);
-      break;
-
-    default:
-      page_num = gtk_notebook_page_num (GTK_NOTEBOOK (dockable->dock->notebook),
-					GTK_WIDGET (dockable));
-
-      gtk_notebook_set_page (GTK_NOTEBOOK (dockable->dock->notebook), page_num);
-      break;
+      if (bevent->button == 1)
+        {
+          gtk_grab_add (widget);
+        }
     }
 
-  return FALSE;
+  return TRUE;
 }
 
+static gboolean
+gimp_dock_separator_button_release (GtkWidget      *widget,
+				    GdkEventButton *bevent,
+				    gpointer        data)
+{
+  if (bevent->button == 1)
+    {
+      gtk_grab_remove (widget);
+    }
+
+  return TRUE;
+}
+
+/*
 static void
 gimp_dock_tab_drag_begin (GtkWidget      *widget,
 			  GdkDragContext *context,

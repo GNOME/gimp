@@ -1,3 +1,11 @@
+2001-04-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimpdock.c: started to add some more separator event handling.
+
+	* app/gimppalettepreview.c: we don't want a popup if n_colors == 0.
+
+	* app/test_commands.c: cleanup.
+
 2001-04-10  Sven Neumann  <sven@gimp.org>
 
         * app/tools/posterize.c

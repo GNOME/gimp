@@ -25,6 +25,8 @@
 
 #include "apptypes.h"
 
+#include "tools/tool_manager.h"
+
 #include "context_manager.h"
 #include "gradient_editor.h"
 #include "gimpchannel.h"
@@ -685,8 +687,8 @@ test_palette_tab_func (GimpDockable *dockable,
 }
 
 void
-test_list_dock_cmd_callback (GtkWidget *widget,
-			     gpointer   client_data)
+test_dock_new (GimpViewType  view_type,
+	       GimpContext  *context)
 {
   GtkWidget *dock;
   GtkWidget *dockbook;
@@ -701,10 +703,10 @@ test_list_dock_cmd_callback (GtkWidget *widget,
 
   dockable = gimp_dockable_new ("Brush List", "Brushes",
 				test_brush_tab_func);
-  view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
+  view = gimp_data_factory_view_new (view_type,
 				     global_brush_factory,
 				     NULL,
-				     gimp_context_get_user (),
+				     context,
 				     32,
 				     5, 3);
   gtk_container_add (GTK_CONTAINER (dockable), view);
@@ -714,10 +716,10 @@ test_list_dock_cmd_callback (GtkWidget *widget,
 
   dockable = gimp_dockable_new ("Pattern List", "Patterns",
 				test_pattern_tab_func);
-  view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
+  view = gimp_data_factory_view_new (view_type,
 				     global_pattern_factory,
 				     NULL,
-				     gimp_context_get_user (),
+				     context,
 				     32,
 				     5, 3);
   gtk_container_add (GTK_CONTAINER (dockable), view);
@@ -727,10 +729,10 @@ test_list_dock_cmd_callback (GtkWidget *widget,
 
   dockable = gimp_dockable_new ("Gradient List", "Gradients",
 				test_gradient_tab_func);
-  view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
+  view = gimp_data_factory_view_new (view_type,
 				     global_gradient_factory,
 				     NULL,
-				     gimp_context_get_user (),
+				     context,
 				     32,
 				     5, 3);
   gtk_container_add (GTK_CONTAINER (dockable), view);
@@ -740,12 +742,41 @@ test_list_dock_cmd_callback (GtkWidget *widget,
 
   dockable = gimp_dockable_new ("Palette List", "Palettes",
 				test_palette_tab_func);
-  view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
+  view = gimp_data_factory_view_new (view_type,
 				     global_palette_factory,
 				     NULL,
-				     gimp_context_get_user (),
+				     context,
 				     32,
 				     5, 3);
+  gtk_container_add (GTK_CONTAINER (dockable), view);
+  gtk_widget_show (view);
+
+  gimp_dock_add (GIMP_DOCK (dock), GIMP_DOCKABLE (dockable), -1, -1);
+
+  switch (view_type)
+    {
+    case GIMP_VIEW_TYPE_LIST:
+      dockable = gimp_dockable_new ("Tool List", "Tools",
+				    NULL);
+      view = gimp_container_list_view_new (global_tool_info_list,
+					   context,
+					   22,
+					   5, 3);
+      break;
+
+    case GIMP_VIEW_TYPE_GRID:
+      dockable = gimp_dockable_new ("Tool Grid", "Tools",
+				    NULL);
+      view = gimp_container_grid_view_new (global_tool_info_list,
+					   context,
+					   22,
+					   5, 3);
+      break;
+
+    default:
+      g_assert_not_reached ();
+    }
+
   gtk_container_add (GTK_CONTAINER (dockable), view);
   gtk_widget_show (view);
 
@@ -755,71 +786,17 @@ test_list_dock_cmd_callback (GtkWidget *widget,
 }
 
 void
+test_list_dock_cmd_callback (GtkWidget *widget,
+			     gpointer   client_data)
+{
+  test_dock_new (GIMP_VIEW_TYPE_LIST,
+		 gimp_context_get_user ());
+}
+
+void
 test_grid_dock_cmd_callback (GtkWidget *widget,
 			     gpointer   client_data)
 {
-  GtkWidget *dock;
-  GtkWidget *dockbook;
-  GtkWidget *dockable;
-  GtkWidget *view;
-
-  dock = gimp_dock_new ();
-
-  dockbook = gimp_dockbook_new ();
-
-  gimp_dock_add_book (GIMP_DOCK (dock), GIMP_DOCKBOOK (dockbook), 0);
-
-  dockable = gimp_dockable_new ("Brush Grid", "Brushes",
-				test_brush_tab_func);
-  view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
-				     global_brush_factory,
-				     NULL,
-				     gimp_context_get_user (),
-				     32,
-				     5, 3);
-  gtk_container_add (GTK_CONTAINER (dockable), view);
-  gtk_widget_show (view);
-
-  gimp_dock_add (GIMP_DOCK (dock), GIMP_DOCKABLE (dockable), -1, -1);
-
-  dockable = gimp_dockable_new ("Pattern Grid", "Patterns",
-				test_pattern_tab_func);
-  view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
-				     global_pattern_factory,
-				     NULL,
-				     gimp_context_get_user (),
-				     32,
-				     5, 3);
-  gtk_container_add (GTK_CONTAINER (dockable), view);
-  gtk_widget_show (view);
-
-  gimp_dock_add (GIMP_DOCK (dock), GIMP_DOCKABLE (dockable), -1, -1);
-
-  dockable = gimp_dockable_new ("Gradient Grid", "Gradients",
-				test_gradient_tab_func);
-  view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
-				     global_gradient_factory,
-				     NULL,
-				     gimp_context_get_user (),
-				     32,
-				     5, 3);
-  gtk_container_add (GTK_CONTAINER (dockable), view);
-  gtk_widget_show (view);
-
-  gimp_dock_add (GIMP_DOCK (dock), GIMP_DOCKABLE (dockable), -1, -1);
-
-  dockable = gimp_dockable_new ("Palette Grid", "Palettes",
-				test_palette_tab_func);
-  view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
-				     global_palette_factory,
-				     NULL,
-				     gimp_context_get_user (),
-				     32,
-				     5, 3);
-  gtk_container_add (GTK_CONTAINER (dockable), view);
-  gtk_widget_show (view);
-
-  gimp_dock_add (GIMP_DOCK (dock), GIMP_DOCKABLE (dockable), -1, -1);
-
-  gtk_widget_show (dock);
+  test_dock_new (GIMP_VIEW_TYPE_GRID,
+		 gimp_context_get_user ());
 }

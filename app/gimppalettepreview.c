@@ -157,6 +157,9 @@ gimp_palette_preview_needs_popup (GimpPreview *preview)
 
   palette = GIMP_PALETTE (preview->viewable);
 
+  if (! palette->n_colors)
+    return FALSE;
+
   if (palette->n_columns)
     popup_width = palette->n_columns;
   else
