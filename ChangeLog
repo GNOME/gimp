@@ -1,8 +1,8 @@
 2002-04-24  Sven Neumann  <sven@gimp.org>
 
-	* plug-ins/gfig/gfig.c
-	* plug-ins/imagemap/imap_preview.c: don't use GDK_MOTION_NOTIFY in 
-	as an event mask.
+	* plug-ins/gfig/gfig.c 
+	* plug-ins/imagemap/imap_preview.c: don't use GDK_MOTION_NOTIFY as an 
+	event mask.
 
 2002-04-23  Nathan Summers  <rock@gimp.org>
 
