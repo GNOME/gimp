@@ -274,7 +274,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (button);
 
   auto_button = gimp_prop_check_button_new (config, "autohint",
-					    _("Force use of auto-hinter"));
+					    _("Force Auto-Hinter"));
   gtk_table_attach (GTK_TABLE (table), auto_button, 1, 3, 4, 5,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (auto_button);

@@ -38,6 +38,8 @@
    contain all characters found in the alphabet. */
 #define GIMP_TEXT_PANGRAM N_("Pack my box with\nfive dozen liquor jugs.")
 
+#define GIMP_FONT_POPUP_SIZE  (PANGO_SCALE * 32)
+
 
 enum
 {
@@ -233,10 +235,7 @@ gimp_font_get_popup_size (GimpViewable *viewable,
   if (!font_desc)
     return FALSE;
 
-  height = CLAMP (height, 12, GIMP_VIEWABLE_MAX_POPUP_SIZE / 4);
-
-  pango_font_description_set_size (font_desc,
-                                   PANGO_SCALE * height * 2.0 / 3.0);
+  pango_font_description_set_size (font_desc, GIMP_FONT_POPUP_SIZE);
 
   if (font->popup_layout)
     g_object_unref (font->popup_layout);
@@ -248,8 +247,11 @@ gimp_font_get_popup_size (GimpViewable *viewable,
   pango_layout_set_text (font->popup_layout, gettext (GIMP_TEXT_PANGRAM), -1);
   pango_layout_get_pixel_extents (font->popup_layout, NULL, &logical);
 
-  *popup_width  = logical.width  + 6;
-  *popup_height = logical.height + 6;
+#ifdef __GNUC__
+#warning FIXME #need to use GIMP_PREVIEW_MAX_SIZE here
+#endif
+  *popup_width  = MIN (logical.width  + 6, 1024);
+  *popup_height = MIN (logical.height + 6, 1024);
 
   font->popup_width  = *popup_width;
   font->popup_height = *popup_height;

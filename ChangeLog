@@ -1,7 +1,7 @@
 2003-04-01  Sven Neumann  <sven@gimp.org>
 
-	* app/text/gimpfont.c: use a fixed size for the popup and added a
-	maximum size (should actually use GIMP_PREVIEW_MAX_SIZE here).
+	* app/text/gimpfont.c: use a fixed size for the popup and clamp to
+	a maximum size (should actually use GIMP_PREVIEW_MAX_SIZE here).
 
 	* app/text/gimptext.c
 	* app/tools/gimptextoptions.c: minor string changes.

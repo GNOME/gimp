@@ -155,11 +155,15 @@ gimp_text_class_init (GimpTextClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_HINTING,
                                     "hinting",
                                     N_("Hinting alters the font outline to "
-                                       "produce a crisp bitmap at small sizes"),
+                                       "produce a crisp bitmap at small "
+                                       "sizes"),
                                     TRUE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_AUTOHINT,
-                                    "autohint", NULL,
+                                    "autohint",
+                                    N_("If available, hints from the font are "
+                                       "used but you may prefer to always use "
+                                       "the automatic hinter"),
                                     FALSE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,

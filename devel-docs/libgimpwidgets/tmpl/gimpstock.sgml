@@ -348,6 +348,20 @@ size).
 
 
 
+<!-- ##### MACRO GIMP_STOCK_TEXT_DIR_LTR ##### -->
+<para>
+<inlinegraphic fileref="stock-text-dir-ltr-24.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TEXT_DIR_RTL ##### -->
+<para>
+<inlinegraphic fileref="stock-text-dir-rtl-24.png" format="png"></inlinegraphic>
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_TOOL_OPTIONS ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-options-16.png" format="png"></inlinegraphic>
