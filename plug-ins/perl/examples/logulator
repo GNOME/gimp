@@ -3,6 +3,7 @@
 use Gimp qw(:auto);
 use Gimp::Fu;
 use Gimp::Util;
+use strict;
 
 #Gimp::set_trace(TRACE_CALL);
 
@@ -78,24 +79,55 @@ sub gimp_text_get_extents {
    die "gimp_text_get_extents not yet supported\n";
 }
 
+# just return the width/height of the drawable instead
 sub gimp_text_get_extents_fontname {
    my($text,$size,$size_type,$fontname)=@_;
    ($global_drawable->width,$global_drawable->height,$global_drawable->height,0);
 }
 
+# instead of the text layer, just return a copy of the drawable
 sub gimp_text_fontname {
    my($image,$layer,$x,$y,$text,$border,$antialias,$height,$size_type,$fontname)=@_;
    $global_drawable->image->selection_all;
    $global_drawable->edit_copy;
    my $newlay;
    if ($layer == -1) {
-      $newlay=$image->add_new_layer(0,TRANS_IMAGE_FILL);
+      $newlay=$image->layer_new($global_drawable->width,$global_drawable->height,
+                                $image->layertype(1), $text, 100, NORMAL_MODE);
+      $newlay->drawable_fill(TRANS_IMAGE_FILL);
+      $newlay->add_layer(0);
       $newlay->edit_paste(0)->floating_sel_anchor;
    } else {
       $newlay = $layer->edit_paste(0);
    }
    $newlay;
 }
+
+# script-fu convinience fucntions
+
+sub cdr {
+   my(@x)=@{$_[0]};
+   shift(@x);
+   @x >1 ? [@x] : $x[0];
+}
+
+sub number2string {
+   sprintf "%$_[1]d",$_[0];
+}
+
+sub nth {
+   $_[1]->[$_[0]];
+}
+
+sub min {
+   $_[0] < $_[1] ? $_[0] : $_[1];
+}
+
+sub max {
+   $_[0] > $_[1] ? $_[0] : $_[1];
+}
+
+# converted scripts start here
 
 sub script_fu_3d_outline_logo {
    my ($text_pattern, $text, $size, $font, $outline_blur_radius, $shadow_blur_radius, $bump_map_blur_radius, $noninteractive, $s_offset_x, $s_offset_y) = @_;
@@ -118,20 +150,20 @@ sub script_fu_3d_outline_logo {
       gimp_layer_set_preserve_trans ($text_layer, 0);
       plug_in_gauss_iir ($img, $text_layer, $outline_blur_radius, 1, 1);
       gimp_layer_set_visible ($pattern, 0);
-      $layer2 = gimp_image_merge_visible_layers ($img, 1);
+      my $layer2 = gimp_image_merge_visible_layers ($img, 1);
       plug_in_edge ($img, $layer2, 2, 1);
-      $layer3 = gimp_layer_copy ($layer2, 1);
+      my $layer3 = gimp_layer_copy ($layer2, 1);
       gimp_image_add_layer ($img, $layer3, 2);
       plug_in_gauss_iir ($img, $layer2, $bump_map_blur_radius, 1, 1);
       gimp_selection_all ($img);
       gimp_patterns_set_pattern ($text_pattern);
       gimp_bucket_fill ($pattern, PATTERN_BUCKET_FILL, NORMAL_MODE, 100, 0, 0, 0, 0);
       plug_in_bump_map ($img, $pattern, $layer2, 110.0, 45.0, 4, 0, 0, 0, 0, 1, 0, 0);
-      $pattern_mask = gimp_layer_create_mask ($pattern, ADD_ALPHA_MASK);
+      my $pattern_mask = gimp_layer_create_mask ($pattern, ADD_ALPHA_MASK);
       gimp_image_add_layer_mask ($img, $pattern, $pattern_mask);
       gimp_selection_all ($img);
       gimp_edit_copy ($layer3);
-      $floating_sel = gimp_edit_paste ($pattern_mask, 0);
+      my $floating_sel = gimp_edit_paste ($pattern_mask, 0);
       gimp_floating_sel_anchor ($floating_sel);
       gimp_image_remove_layer_mask ($img, $pattern, APPLY);
       gimp_invert ($layer3);
@@ -139,7 +171,7 @@ sub script_fu_3d_outline_logo {
       gimp_channel_ops_offset ($layer3, 0, 1, $s_offset_x, $s_offset_y);
       gimp_layer_set_visible ($layer2, 0);
       gimp_layer_set_visible ($pattern, 1);
-      $final = gimp_image_flatten ($img);
+      my $final = gimp_image_flatten ($img);
       gimp_palette_set_background ($old_bg);
       gimp_palette_set_foreground ($old_fg);
       gimp_image_enable_undo ($img);
@@ -168,6 +200,7 @@ register "perl_fu_3d_outline_logo",
       [PF_VALUE,     'shadow_y_offset',  "Shadow Y offset", "0"],
    ],
    \&script_fu_3d_outline_logo;
+
 sub script_fu_alien_glow_logo {
    my ($text, $size, $font, $glow_color) = @_;
    do {
@@ -223,6 +256,7 @@ register "perl_fu_alien_glow_logo",
       [PF_COLOUR,    'glow_color',       "Glow Color", [63, 252, 0]],
    ],
    \&script_fu_alien_glow_logo;
+
 sub script_fu_basic1_logo {
    my ($text, $size, $font, $bg_color, $text_color) = @_;
    do {
@@ -277,6 +311,7 @@ register "perl_fu_basic1_logo",
       [PF_COLOUR,    'text_color',       "Text Color", [6, 6, 206]],
    ],
    \&script_fu_basic1_logo;
+
 sub color_highlight {
    my ($color) = @_;
    do {
@@ -352,6 +387,7 @@ register "perl_fu_basic2_logo",
       [PF_COLOUR,    'text_color',       "Text Color", [206, 6, 50]],
    ],
    \&script_fu_basic2_logo;
+
 sub multi_raise_layer {
    my ($image, $layer, $times) = @_;
    
@@ -521,6 +557,7 @@ register "perl_fu_carved_logo",
       [PF_TOGGLE,    'carve_raised_text',"Carve Raised Text", 0],
    ],
    \&script_fu_carved_logo;
+
 sub script_fu_chalk_logo {
    my ($text, $size, $font, $bg_color, $chalk_color) = @_;
    do {
@@ -540,7 +577,7 @@ sub script_fu_chalk_logo {
       gimp_edit_fill ($bg_layer);
       gimp_edit_clear ($text_layer);
       gimp_palette_set_foreground ($chalk_color);
-      $float_layer = gimp_text_fontname ($img, $text_layer, 0, 0, $text, $border, 1, $size, PIXELS, $font);
+      my $float_layer = gimp_text_fontname ($img, $text_layer, 0, 0, $text, $border, 1, $size, PIXELS, $font);
       gimp_floating_sel_anchor ($float_layer);
       plug_in_gauss_rle ($img, $text_layer, 2.0, 1, 1);
       plug_in_spread ($img, $text_layer, 5.0, 5.0);
@@ -576,6 +613,7 @@ register "perl_fu_chalk_logo",
       [PF_COLOUR,    'chalk_color',      "Chalk Color", [255, 255, 255]],
    ],
    \&script_fu_chalk_logo;
+
 sub script_fu_logo_chip_away {
    my ($text, $font, $font_size, $spread_amount, $blur_amount, $invert, $drop_shadow, $keep_bump, $bg_fill, $keep_back, $pattern) = @_;
    do {
@@ -668,6 +706,7 @@ register "perl_fu_logo_chip_away",
       [PF_PATTERN,   'pattern',          "Pattern", "Burlwood"],
    ],
    \&script_fu_logo_chip_away;
+
 sub script_fu_chrome_logo {
    my ($text, $size, $font, $bg_color) = @_;
    do {
@@ -754,6 +793,7 @@ register "perl_fu_chrome_logo",
       [PF_COLOUR,    'background_color', "Background Color", [191, 191, 191]],
    ],
    \&script_fu_chrome_logo;
+
 sub script_fu_comic_logo {
    my ($text, $size, $font, $gradient, $ol_width) = @_;
    do {
@@ -829,6 +869,7 @@ register "perl_fu_comic_logo",
       [PF_VALUE,     'outline_width',    "Outline width", "5"],
    ],
    \&script_fu_comic_logo;
+
 sub script_fu_cool_metal_logo {
    my ($text, $size, $font, $bg_color, $seascape) = @_;
    do {
@@ -932,6 +973,7 @@ register "perl_fu_cool_metal_logo",
       [PF_TOGGLE,    'seascape',         "Seascape", 0],
    ],
    \&script_fu_cool_metal_logo;
+
 sub set_pt {
    my ($a, $index, $x, $y) = @_;
    do {
@@ -1153,14 +1195,6 @@ register "perl_fu_crystal_logo",
       [PF_FILE,      'environment_map',  "Environment Map", "".'/usr/local/share/gimp'."/scripts/beavis.jpg"],
    ],
    \&script_fu_crystal_logo;
-sub min {
-   my ($a, $b) = @_;
-   if ($a < $b) {
-      $a;
-   } else {
-      $b;
-   }
-}
 
 sub script_fu_frosty_logo {
    my ($text, $size, $font, $bg_color) = @_;
@@ -1253,6 +1287,7 @@ register "perl_fu_frosty_logo",
       [PF_COLOUR,    'background_color', "Background Color", [255, 255, 255]],
    ],
    \&script_fu_frosty_logo;
+
 sub script_fu_glossy_logo {
    my ($text, $size, $font, $blend_gradient_text, $blend_gradient_outline, $grow_size, $bg_color, $use_pattern_text, $pattern_text, $use_pattern_outline, $pattern_outline, $use_pattern_overlay, $pattern_overlay, $noninteractive, $shadow_toggle, $s_offset_x, $s_offset_y, $flatten_toggle) = @_;
    do {
@@ -1322,16 +1357,14 @@ sub script_fu_glossy_logo {
       if ($shadow_toggle) {
          do {
             gimp_selection_layer_alpha ($text_layer);
-            $dont_drop_me = "script-fu-drop-shadow"->(RUN_NONINTERACTIVE, $img, $text_layer, $s_offset_x, $s_offset_y, 15, [0, 0, 0], 80, 1);
+            "script-fu-drop-shadow"->(RUN_NONINTERACTIVE, $img, $text_layer, $s_offset_x, $s_offset_y, 15, [0, 0, 0], 80, 1);
             $width = gimp_image_width ($img);
             $height = gimp_image_height ($img);
             gimp_selection_none ($img);
          };
       }
       if ($flatten_toggle) {
-         do {
-            $final = gimp_image_flatten ($img);
-         };
+         gimp_image_flatten ($img);
       }
       gimp_gradients_set_active ($old_gradient);
       gimp_palette_set_background ($old_bg);
@@ -1370,6 +1403,7 @@ register "perl_fu_glossy_logo",
       [PF_TOGGLE,    'flatten_image',    "Flatten image?", 0],
    ],
    \&script_fu_glossy_logo;
+
 sub script_fu_glowing_logo {
    my ($text, $size, $font, $bg_color) = @_;
    do {
@@ -1438,6 +1472,7 @@ register "perl_fu_glowing_logo",
       [PF_COLOUR,    'background_color', "Background Color", [7, 0, 20]],
    ],
    \&script_fu_glowing_logo;
+
 sub script_fu_gradient_bevel_logo {
    my ($text, $size, $font, $bevel_height, $bevel_width) = @_;
    do {
@@ -1507,6 +1542,7 @@ register "perl_fu_gradient_bevel_logo",
       [PF_VALUE,     'bevel_width',      "Bevel Width", "2.5"],
    ],
    \&script_fu_gradient_bevel_logo;
+
 sub script_fu_i26_gunya2 {
    my ($text, $text_color, $frame_color, $font, $font_size, $frame_size) = @_;
    do {
@@ -1586,13 +1622,6 @@ register "perl_fu_i26_gunya2",
       [PF_VALUE,     'frame_size',       "Frame Size", "2"],
    ],
    \&script_fu_i26_gunya2;
-sub set_pt {
-   my ($a, $index, $x, $y) = @_;
-   do {
-      $a->[$index * 2] = $x;
-      $a->[($index * 2 + 1)] = $y;
-   };
-}
 
 sub neon_spline1 {
    
@@ -1633,6 +1662,7 @@ sub neon_spline3 {
 sub find_hue_offset {
    my ($color) = @_;
    do {
+      my $max;
       my $R = @{$color}[0];
       my $G = @{$color}[1];
       my $B = @{$color}[2];
@@ -1784,6 +1814,7 @@ register "perl_fu_neon_logo",
       [PF_TOGGLE,    'create_shadow',    "Create Shadow?", 0],
    ],
    \&script_fu_neon_logo;
+
 sub script_fu_newsprint_text {
    my ($string, $font, $font_size, $cell_size, $density) = @_;
    do {
@@ -1832,6 +1863,7 @@ register "perl_fu_newsprint_text",
       [PF_ADJUSTMENT,'density',          "Density (%)", [60, 0, 100, 1, 10, 0, 0]],
    ],
    \&script_fu_newsprint_text;
+
 sub set_pt {
    my ($a, $index, $x, $y) = @_;
    do {
@@ -2056,6 +2088,7 @@ register "perl_fu_sota_chrome_logo",
       [PF_COLOUR,    'chrome_balance',   "Chrome Balance", [0, 0, 0]],
    ],
    \&script_fu_sota_chrome_logo;
+
 sub script_fu_speed_text {
    my ($string, $font, $font_size, $density) = @_;
    do {
@@ -2079,8 +2112,8 @@ sub script_fu_speed_text {
       gimp_edit_clear ($text_layer);
       gimp_floating_sel_anchor (gimp_text_fontname ($img, $text_layer, 10, 10, $string, 0, 1, $font_size, PIXELS, $font));
       gimp_selection_layer_alpha ($text_layer);
-      $saved_sel = gimp_selection_save ($img);
-      $text_mask = gimp_layer_create_mask ($text_layer, ADD_ALPHA_MASK);
+      my $saved_sel = gimp_selection_save ($img);
+      my $text_mask = gimp_layer_create_mask ($text_layer, ADD_ALPHA_MASK);
       gimp_image_add_layer_mask ($img, $text_layer, $text_mask);
       gimp_layer_set_edit_mask ($text_layer, 0);
       gimp_selection_grow ($img, 10);
@@ -2118,6 +2151,7 @@ register "perl_fu_speed_text",
       [PF_ADJUSTMENT,'density',          "Density (%)", [80, 0, 100, 1, 10, 0, 0]],
    ],
    \&script_fu_speed_text;
+
 sub script_fu_starburst_logo {
    my ($text, $size, $fontname, $burst_color, $bg_color) = @_;
    do {
@@ -2195,6 +2229,7 @@ register "perl_fu_starburst_logo",
       [PF_COLOUR,    'bg_color',         "BG Color", [255, 255, 255]],
    ],
    \&script_fu_starburst_logo;
+
 sub find_blend_coords {
    my ($w, $h) = @_;
    do {
@@ -2221,15 +2256,14 @@ sub find_nova_x_coord {
       my $limit = 100;
       my $clearance = 0;
       
-      
       while (($clearance == 0 and $limit > 0)) {
          $x = (rand ($range) + $x1);
-         $val = @{[gimp_drawable_get_pixel ($drawable, $x, $y)]}[1];
-         $val_left = @{[gimp_drawable_get_pixel ($drawable, ($x - $min_clearance), $y)]}[1];
-         $val_right = @{[gimp_drawable_get_pixel ($drawable, ($x + $min_clearance), $y)]}[1];
-         $val_top = @{[gimp_drawable_get_pixel ($drawable, $x, ($y - $min_clearance))]}[1];
-         $val_bottom = @{[gimp_drawable_get_pixel ($drawable, $x, ($y + $min_clearance))]}[1];
-         if (($val->[$alpha] == 0 and $val_left->[$alpha] == 0 and $val_right->[$alpha] == 0 and $val_top->[$alpha] == 0 and $val_bottom->[$alpha] == 0)) {
+         $val = [gimp_drawable_get_pixel ($drawable, $x, $y)];
+         $val_left = [gimp_drawable_get_pixel ($drawable, ($x - $min_clearance), $y)];
+         $val_right = [gimp_drawable_get_pixel ($drawable, ($x + $min_clearance), $y)];
+         $val_top = [gimp_drawable_get_pixel ($drawable, $x, ($y - $min_clearance))];
+         $val_bottom = [gimp_drawable_get_pixel ($drawable, $x, ($y + $min_clearance))];
+         if ($val->[$alpha] == 0 and $val_left->[$alpha] == 0 and $val_right->[$alpha] == 0 and $val_top->[$alpha] == 0 and $val_bottom->[$alpha] == 0) {
             $clearance = 1;
          } else {
             $limit = ($limit - 1);
@@ -2325,6 +2359,7 @@ register "perl_fu_starscape_logo",
       [PF_COLOUR,    'glow_color',       "Glow Color", [28, 65, 188]],
    ],
    \&script_fu_starscape_logo;
+
 sub script_fu_t_o_p_logo {
    my ($text, $size, $fontname, $hit_rate, $edge_size, $edge_only, $base_color, $bg_color) = @_;
    do {
@@ -2358,7 +2393,7 @@ sub script_fu_t_o_p_logo {
       gimp_selection_layer_alpha ($text_layer);
       $selection = gimp_selection_save ($img);
       gimp_selection_grow ($img, $edge_size);
-      [$plug_in_noisify, 1, $img, $sparkle_layer, 0, 0.1 * $hit_rate, 0.1 * $hit_rate, 0.1 * $hit_rate, 0.0];
+      plug_in_noisify ($img, $sparkle_layer, 0, 0.1 * $hit_rate, 0.1 * $hit_rate, 0.1 * $hit_rate, 0.0);
       gimp_selection_border ($img, $edge_size);
       plug_in_noisify ($img, $sparkle_layer, 0, $hit_rate, $hit_rate, $hit_rate, 0.0);
       gimp_selection_none ($img);
@@ -2425,6 +2460,7 @@ register "perl_fu_t_o_p_logo",
       [PF_COLOUR,    'background_color', "Background Color", [255, 255, 255]],
    ],
    \&script_fu_t_o_p_logo;
+
 sub scale {
    my ($size, $percent) = @_;
    $size * $percent;
@@ -2523,26 +2559,166 @@ register "perl_fu_textured_logo",
    ],
    \&script_fu_textured_logo;
 
-sub cdr {
-   my(@x)=@{$_[0]};
-   shift(@x);
-   @x >1 ? [@x] : $x[0];
+sub script_fu_bovinated_logo {
+   my ($text, $size, $font) = @_;
+   do {
+      my $img = gimp_image_new (256, 256, RGB_IMAGE);
+      my $border = $size / 4;
+      my $text_layer = gimp_text_fontname ($img, -1, 0, 0, $text, $border, 1, $size, PIXELS, $font);
+      my $width = gimp_drawable_width ($text_layer);
+      my $height = gimp_drawable_height ($text_layer);
+      my $bg_layer = gimp_layer_new ($img, $width, $height, RGBA_IMAGE, "Background", 100, NORMAL_MODE);
+      my $blur_layer = gimp_layer_new ($img, $width, $height, RGBA_IMAGE, "Blur", 100, NORMAL_MODE);
+      my $old_fg = gimp_palette_get_foreground ();
+      my $old_bg = gimp_palette_get_background ();
+      
+      gimp_image_disable_undo ($img);
+      gimp_image_resize ($img, $width, $height, 0, 0);
+      gimp_image_add_layer ($img, $bg_layer, 1);
+      gimp_image_add_layer ($img, $blur_layer, 1);
+      gimp_selection_all ($img);
+      gimp_edit_fill ($bg_layer);
+      gimp_selection_none ($img);
+      gimp_layer_set_preserve_trans ($blur_layer, 1);
+      gimp_palette_set_background ([255, 255, 255]);
+      gimp_selection_all ($img);
+      gimp_edit_fill ($blur_layer);
+      gimp_edit_clear ($blur_layer);
+      gimp_palette_set_background ([191, 191, 191]);
+      gimp_selection_none ($img);
+      gimp_layer_set_preserve_trans ($blur_layer, 0);
+      gimp_selection_layer_alpha ($text_layer);
+      gimp_edit_fill ($blur_layer);
+      plug_in_gauss_rle ($img, $blur_layer, 5.0, 1, 1);
+      gimp_selection_none ($img);
+      gimp_layer_set_preserve_trans ($text_layer, 1);
+      gimp_selection_all ($img);
+      plug_in_solid_noise ($img, $text_layer, 0, 0, 23, 1, 16.0, 4.0);
+      gimp_brightness_contrast ($text_layer, 0, 127);
+      gimp_selection_none ($img);
+      gimp_layer_set_preserve_trans ($text_layer, 0);
+      gimp_layer_set_name ($text_layer, $text);
+      plug_in_bump_map ($img, $text_layer, $blur_layer, 135, 50, 10, 0, 0, 0, 30, 1, 0, 0);
+      gimp_layer_set_offsets ($blur_layer, 5, 5);
+      gimp_invert ($blur_layer);
+      gimp_layer_set_opacity ($blur_layer, 50.0);
+      gimp_image_set_active_layer ($img, $text_layer);
+      gimp_palette_set_background ($old_bg);
+      gimp_palette_set_foreground ($old_fg);
+      gimp_image_enable_undo ($img);
+      gimp_display_new ($img);
+   };
 }
 
-sub number2string {
-   sprintf "%$_[1]d",$_[0];
+register "perl_fu_bovinated_logo",
+   "Makes Cow-spotted logos",
+   "Makes Cow-spotted logos",
+   "Brian McFee <keebler\@wco.com>",
+   "Brian McFee",
+   "April 1998",
+   "<Toolbox>/Xtns/Perl-Fu/Logos/Bovination",
+   "",
+   [
+      [PF_STRING,    'text_string',      "Text String", "Fear the Cow"],
+      [PF_ADJUSTMENT,'font_size_pixels', "Font Size (pixels)", [80, 2, 1000, 1, 10, 0, 1]],
+      [PF_FONT,      'font',             "Font", "-*-roostheavy-*-r-*-*-24-*-*-*-p-*-*-*"],
+   ],
+   \&script_fu_bovinated_logo;
+
+sub scale {
+   my ($size, $percent) = @_;
+   $size * $percent;
 }
 
-sub min {
-   $_[0] < $_[1] ? $_[0] : $_[1];
+sub script_fu_blended_logo {
+   my ($blend_mode, $text, $size, $font, $bg_color, $text_color, $blend_fg, $blend_bg) = @_;
+   do {
+      my $img = gimp_image_new (256, 256, RGB_IMAGE);
+      my $b_size = scale ($size, 0.1);
+      my $b_size_2 = scale ($size, 0.05);
+      my $f_size = scale ($size, 0.075);
+      my $ds_size = scale ($size, 0.05);
+      my $ts_size = ($b_size_2 - 3);
+      my $text_layer = gimp_text_fontname ($img, -1, 0, 0, $text, $b_size, 1, $size, PIXELS, $font);
+      my $width = gimp_drawable_width ($text_layer);
+      my $height = gimp_drawable_height ($text_layer);
+      my $blend_layer = gimp_layer_new ($img, $width, $height, RGBA_IMAGE, "Blend", 100, NORMAL_MODE);
+      my $shadow_layer = gimp_layer_new ($img, $width, $height, RGBA_IMAGE, "Shadow", 100, NORMAL_MODE);
+      my $text_shadow_layer = gimp_layer_new ($img, $width, $height, RGBA_IMAGE, "Text Shadow", 100, MULTIPLY_MODE);
+      my $tsl_layer_mask = gimp_layer_create_mask ($text_shadow_layer, ADD_BLACK_MASK);
+      my $drop_shadow_layer = gimp_layer_new ($img, $width, $height, RGBA_IMAGE, "Drop Shadow", 100, MULTIPLY_MODE);
+      my $dsl_layer_mask = gimp_layer_create_mask ($drop_shadow_layer, ADD_BLACK_MASK);
+      my $old_fg = gimp_palette_get_foreground ();
+      my $old_bg = gimp_palette_get_background ();
+      
+      gimp_image_disable_undo ($img);
+      gimp_image_resize ($img, $width, $height, 0, 0);
+      gimp_image_add_layer ($img, $shadow_layer, 1);
+      gimp_image_add_layer ($img, $blend_layer, 1);
+      gimp_image_add_layer ($img, $drop_shadow_layer, 1);
+      gimp_image_add_layer ($img, $text_shadow_layer, 0);
+      gimp_selection_none ($img);
+      gimp_edit_clear ($text_shadow_layer);
+      gimp_edit_clear ($drop_shadow_layer);
+      gimp_palette_set_background ($text_color);
+      gimp_layer_set_preserve_trans ($text_layer, 1);
+      gimp_edit_fill ($text_layer);
+      gimp_palette_set_background ($bg_color);
+      gimp_drawable_fill ($shadow_layer, BG_IMAGE_FILL);
+      gimp_rect_select ($img, $b_size_2, $b_size_2, ($width - $b_size), ($height - $b_size), SELECTION_REPLACE, 1, $b_size_2);
+      gimp_palette_set_background ([0, 0, 0]);
+      gimp_edit_fill ($shadow_layer);
+      gimp_selection_layer_alpha ($text_layer);
+      gimp_image_add_layer_mask ($img, $text_shadow_layer, $tsl_layer_mask);
+      gimp_palette_set_background ([255, 255, 255]);
+      gimp_edit_fill ($tsl_layer_mask);
+      gimp_selection_feather ($img, $f_size);
+      gimp_palette_set_background ([63, 63, 63]);
+      gimp_edit_fill ($drop_shadow_layer);
+      gimp_palette_set_background ([0, 0, 0]);
+      gimp_edit_fill ($text_shadow_layer);
+      gimp_palette_set_foreground ([255, 255, 255]);
+      gimp_blend ($text_shadow_layer, FG_BG_RGB, NORMAL_MODE, SHAPEBURST_ANGULAR, 100, 0, REPEAT_NONE, 0, 0, 0, 0, 0, 1, 1);
+      gimp_selection_none ($img);
+      gimp_palette_set_foreground ($blend_fg);
+      gimp_palette_set_background ($blend_bg);
+      gimp_blend ($blend_layer, eval $blend_mode, NORMAL_MODE, LINEAR, 100, 0, REPEAT_NONE, 0, 0, 0, 0, 0, $width, 0);
+      gimp_layer_translate ($text_layer, -($b_size_2), -($b_size_2));
+      gimp_layer_translate ($blend_layer, -($b_size), -($b_size));
+      gimp_layer_translate ($text_shadow_layer, -($ts_size), -($ts_size));
+      gimp_layer_translate ($drop_shadow_layer, $ds_size, $ds_size);
+      gimp_selection_layer_alpha ($blend_layer);
+      gimp_image_add_layer_mask ($img, $drop_shadow_layer, $dsl_layer_mask);
+      gimp_palette_set_background ([255, 255, 255]);
+      gimp_edit_fill ($dsl_layer_mask);
+      gimp_image_remove_layer_mask ($img, $drop_shadow_layer, APPLY);
+      gimp_selection_none ($img);
+      gimp_layer_set_name ($text_layer, $text);
+      gimp_palette_set_foreground ($old_fg);
+      gimp_palette_set_background ($old_bg);
+      gimp_image_enable_undo ($img);
+      gimp_display_new ($img);
+   };
 }
 
-sub nth {
-   $_[1]->[$_[0]];
-}
-
-sub max {
-   $_[0] > $_[1] ? $_[0] : $_[1];
-}
+register "perl_fu_blended_logo",
+   "Creates logos with blended backgrounds, highlights, and shadows",
+   "Creates logos with blended backgrounds, highlights, and shadows",
+   "Spencer Kimball",
+   "Spencer Kimball",
+   "1996",
+   "<Toolbox>/Xtns/Perl-Fu/Logos/Blended",
+   "",
+   [
+      [PF_VALUE,     'blend_mode',       "Blend Mode", "FG_BG_HSV"],
+      [PF_STRING,    'text_string',      "Text String", "The GIMP"],
+      [PF_ADJUSTMENT,'font_size_pixels', "Font Size (pixels)", [150, 2, 1000, 1, 10, 0, 1]],
+      [PF_FONT,      'font',             "Font", "-*-Crillee-*-r-*-*-24-*-*-*-p-*-*-*"],
+      [PF_COLOUR,    'background_color', "Background Color", [255, 255, 255]],
+      [PF_COLOUR,    'text_color',       "Text Color", [124, 174, 255]],
+      [PF_COLOUR,    'starting_blend',   "Starting Blend", [22, 9, 129]],
+      [PF_COLOUR,    'ending_blend',     "Ending Blend", [129, 9, 82]],
+   ],
+   \&script_fu_blended_logo;
 
 exit main;

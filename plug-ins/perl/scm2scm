@@ -2,6 +2,8 @@
 
 use 5.005;
 
+$VERSION = 1.0;
+
 # Copyright Marc Lehmann <pcg@goof.com>
 #
 # This is distributed under the GPL (see COPYING.GNU for details).
@@ -70,6 +72,14 @@ sub drop_1st {
   ($a,$f,new token($t1->[0],$t2->[1],$t2->[2]),@t);
 }
 
+# "nicify" plug-in constants
+sub plug_in_constant {
+  my($a,$f,$t1,$t2,@t)=@_;
+  my $n = $t2->[1];
+  $n==0 and $n = "RUN_NONINTERACTIVE";
+  ($a,$f,new token($t1->[0],$n,$t2->[2]),@t);
+}
+
 # every hash value consists of an array of specifications, each
 # one has the form ["regexp", codref_to_call], or a string (another translation
 # name)
@@ -88,8 +98,9 @@ sub drop_1st {
         "gimp-selection-load|gimp-shear|gimp-threshold)\$",
         \&drop_1st
       ]],
-   '1.1' => ['api1'],
-   '1.2' => ['api1'],
+   '1.1' => ['nice','api1'],
+   '1.2' => ['nice','api1'],
+   'nice'=> [],#["^(plug-in-|file-|gimp-file-)", \&plug_in_constant]],
 );
 
 $gen_diff=0;
@@ -195,6 +206,36 @@ sub tree2scheme {
    join ("",map isa($_,token) ? @$_ : tree2scheme(@$_),@_);
 }
 
+sub scheme2perl {
+   for(@_) {
+      local $_ = shift;
+      print scalar@_,">\n";
+      local *_ = \$_[0];
+      print "$_=\n";
+      if (isa($_,token)) {
+         my $t = $_->[1];
+         $_->[0] =~ s/^(\s*);/$1#/mg;
+         $_->[1] =~ s/^(\s*);/$1#/mg;
+         if ($t eq "define") {
+            $_->[1] = "sub";
+            splice @{$_[$i+1]},2,-1,new token "","{","";
+            $_[$i+2]
+         } elsif ($t =~ /[()]/) {
+            $_->[1] = "";
+         } else {
+            $_[0] = [
+                     new token ("[",$_->[0],"<"),
+                     new token ("",$_->[1],">"),
+                     new token ("",$_->[2],"]"),
+                 ];
+         }
+      } else {
+         scheme2perl(@$_);
+      }
+      shift; print scalar@_,"<\n";
+   }
+}
+
 # translate functions, sorry folks, this function is write-only!
 sub translate {
    my $v=shift;
@@ -238,6 +279,7 @@ sub dofile {
    }
    
    open OUT,"$out" or die "unable to open '$out' for writing: $!";
+   #scheme2perl(@prog);
    print OUT tree2scheme(@prog);
    close OUT;
 }
