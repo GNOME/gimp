@@ -425,7 +425,6 @@ gimp_drawable_get_color_at (GimpDrawable *drawable,
   g_return_val_if_fail (drawable != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_drawable_gimage (drawable), NULL);
-  g_return_val_if_fail (!gimp_drawable_is_indexed (drawable), NULL);
   g_return_val_if_fail (x >= 0 && x < drawable->width && 
 			y >= 0 && y < drawable->height, NULL);
 

@@ -1,5 +1,12 @@
 2000-03-01  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimpdrawable.c: gimp_drawable_get_color_at(): don't
+	g_return_val_if_fail(!indexed, NULL) because the function seems to
+	work fine for all kinds of drawables. Fixes #6756. Or is this
+	check needed for some obscure special case?
+
+2000-03-01  Michael Natterer  <mitch@gimp.org>
+
 	* cursors/selection.xbm
 	* cursors/selection_subtract.xbm: made the selection rectangles
 	look the same (avoids flickering on Ctrl/Shift).
