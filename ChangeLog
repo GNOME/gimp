@@ -1,3 +1,12 @@
+2003-12-31  Simon Budig  <simon@gimp.org>
+
+	* app/tools/gimpvectortool.[ch]: Fixed missing undo step when
+	moving (components of) the path. Don't add an undo step when
+	nothing changes.
+
+	Also rephrased the help strings in the statusbar to be shorter
+	and encourage the user to try shift. Fixes bug #124025.
+
 2003-12-31  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimptextoptions.c (gimp_text_options_gui): fixed

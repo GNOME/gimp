@@ -71,6 +71,7 @@ struct _GimpVectorTool
   GdkModifierType       saved_state;    /* modifier state at button_press    */
   gdouble               last_x;         /* last x coordinate                 */
   gdouble               last_y;         /* last y coordinate                 */
+  gboolean              undo_motion;    /* we need a motion to have an undo  */
   gboolean              have_undo;      /* did we push an undo at            */
                                         /* ..._button_press?                 */
 

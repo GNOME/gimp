@@ -233,6 +233,7 @@ gimp_vector_tool_init (GimpVectorTool *vector_tool)
   vector_tool->modifier_lock  = FALSE;
   vector_tool->last_x         = 0.0;
   vector_tool->last_y         = 0.0;
+  vector_tool->undo_motion    = FALSE;
   vector_tool->have_undo      = FALSE;
 
   vector_tool->cur_anchor     = NULL;
@@ -297,6 +298,8 @@ gimp_vector_tool_button_press (GimpTool        *tool,
                     vector_tool->function == VECTORS_SELECT_VECTOR ||
                     vector_tool->function == VECTORS_CREATE_VECTOR);
 
+  vector_tool->undo_motion = FALSE;
+
   /* Save the current modifier state */
 
   vector_tool->saved_state = state;
@@ -334,6 +337,8 @@ gimp_vector_tool_button_press (GimpTool        *tool,
       /* Undo step gets added implicitely */
       vector_tool->have_undo = TRUE;
 
+      vector_tool->undo_motion = TRUE;
+
       gimp_image_add_vectors (gdisp->gimage, vectors, -1);
       gimp_image_flush (gdisp->gimage);
 
@@ -356,6 +361,8 @@ gimp_vector_tool_button_press (GimpTool        *tool,
       vector_tool->cur_stroke = gimp_bezier_stroke_new ();
       gimp_vectors_stroke_add (vector_tool->vectors, vector_tool->cur_stroke);
 
+      vector_tool->undo_motion = TRUE;
+
       vector_tool->sel_stroke = vector_tool->cur_stroke;
       vector_tool->cur_anchor = NULL;
       vector_tool->sel_anchor = NULL;
@@ -368,6 +375,8 @@ gimp_vector_tool_button_press (GimpTool        *tool,
   if (vector_tool->function == VECTORS_ADD_ANCHOR)
     {
       gimp_vector_tool_undo_push (vector_tool, _("Add Anchor"));
+
+      vector_tool->undo_motion = TRUE;
 
       vector_tool->cur_anchor =
                      gimp_bezier_stroke_extend (vector_tool->sel_stroke, coords,
@@ -389,6 +398,8 @@ gimp_vector_tool_button_press (GimpTool        *tool,
   if (vector_tool->function == VECTORS_INSERT_ANCHOR)
     {
       gimp_vector_tool_undo_push (vector_tool, _("Insert Anchor"));
+
+      vector_tool->undo_motion = TRUE;
 
       vector_tool->cur_anchor =
                          gimp_stroke_anchor_insert (vector_tool->cur_stroke,
@@ -419,10 +430,14 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 
       if (vector_tool->cur_anchor->type == GIMP_ANCHOR_ANCHOR)
         {
-          gimp_vectors_anchor_select (vector_tool->vectors,
-                                      vector_tool->cur_stroke,
-                                      vector_tool->cur_anchor,
-                                      TRUE, TRUE);
+          if (!vector_tool->cur_anchor->selected)
+            {
+              gimp_vectors_anchor_select (vector_tool->vectors,
+                                          vector_tool->cur_stroke,
+                                          vector_tool->cur_anchor,
+                                          TRUE, TRUE);
+              vector_tool->undo_motion = TRUE;
+            }
           
           gimp_draw_tool_on_vectors_handle (GIMP_DRAW_TOOL (tool), gdisp,
                                             vector_tool->vectors, coords,
@@ -442,10 +457,14 @@ gimp_vector_tool_button_press (GimpTool        *tool,
     {
       gimp_vector_tool_undo_push (vector_tool, _("Drag Anchor"));
 
-      gimp_vectors_anchor_select (vector_tool->vectors,
-                                  vector_tool->cur_stroke,
-                                  vector_tool->cur_anchor,
-                                  TRUE, TRUE);
+      if (!vector_tool->cur_anchor->selected)
+        {
+          gimp_vectors_anchor_select (vector_tool->vectors,
+                                      vector_tool->cur_stroke,
+                                      vector_tool->cur_anchor,
+                                      TRUE, TRUE);
+          vector_tool->undo_motion = TRUE;
+        }
     }
 
 
@@ -462,6 +481,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
                                       vector_tool->cur_anchor,
                                       !vector_tool->cur_anchor->selected,
                                       FALSE);
+          vector_tool->undo_motion = TRUE;
           if (vector_tool->cur_anchor->selected == FALSE)
             vector_tool->function = VECTORS_FINISHED;
         }
@@ -477,15 +497,21 @@ gimp_vector_tool_button_press (GimpTool        *tool,
       /* the magic numbers are taken from the "feel good" parameter
        * from gimp_bezier_stroke_point_move_relative in gimpbezierstroke.c. */
       if (vector_tool->cur_position < 5.0 / 6.0)
-        gimp_vectors_anchor_select (vector_tool->vectors,
-                                    vector_tool->cur_stroke,
-                                    vector_tool->cur_anchor, TRUE, TRUE);
+        {
+          gimp_vectors_anchor_select (vector_tool->vectors,
+                                      vector_tool->cur_stroke,
+                                      vector_tool->cur_anchor, TRUE, TRUE);
+          vector_tool->undo_motion = TRUE;
+        }
         
       if (vector_tool->cur_position > 1.0 / 6.0)
-        gimp_vectors_anchor_select (vector_tool->vectors,
-                                    vector_tool->cur_stroke,
-                                    vector_tool->cur_anchor2, TRUE,
-                                    (vector_tool->cur_position >= 5.0 / 6.0));
+        {
+          gimp_vectors_anchor_select (vector_tool->vectors,
+                                      vector_tool->cur_stroke,
+                                      vector_tool->cur_anchor2, TRUE,
+                                      (vector_tool->cur_position >= 5.0 / 6.0));
+          vector_tool->undo_motion = TRUE;
+        }
         
     }
 
@@ -500,6 +526,8 @@ gimp_vector_tool_button_press (GimpTool        *tool,
                                   vector_tool->sel_anchor,
                                   vector_tool->cur_stroke,
                                   vector_tool->cur_anchor);
+      vector_tool->undo_motion = TRUE;
+
       if (vector_tool->cur_stroke != vector_tool->sel_stroke &&
           gimp_stroke_is_empty (vector_tool->cur_stroke))
         {
@@ -522,6 +550,8 @@ gimp_vector_tool_button_press (GimpTool        *tool,
   if (vector_tool->function == VECTORS_MOVE_STROKE ||
       vector_tool->function == VECTORS_MOVE_VECTORS)
     {
+      gimp_vector_tool_undo_push (vector_tool, _("Drag Path"));
+
       /* Work is being done in gimp_vector_tool_motion ()... */
     }
 
@@ -535,6 +565,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
       gimp_stroke_anchor_convert (vector_tool->cur_stroke,
                                   vector_tool->cur_anchor,
                                   GIMP_ANCHOR_FEATURE_EDGE);
+      vector_tool->undo_motion = TRUE;
 
       if (vector_tool->cur_anchor->type == GIMP_ANCHOR_ANCHOR)
         {
@@ -563,6 +594,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 
       gimp_stroke_anchor_delete (vector_tool->cur_stroke,
                                  vector_tool->cur_anchor);
+      vector_tool->undo_motion = TRUE;
 
       if (gimp_stroke_is_empty (vector_tool->cur_stroke))
         gimp_vectors_stroke_remove (vector_tool->vectors,
@@ -587,6 +619,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
       if (new_stroke)
         gimp_vectors_stroke_add (vector_tool->vectors, new_stroke);
 
+      vector_tool->undo_motion = TRUE;
       vector_tool->cur_stroke = NULL;
       vector_tool->cur_anchor = NULL;
       vector_tool->function = VECTORS_FINISHED;
@@ -616,16 +649,11 @@ gimp_vector_tool_button_release (GimpTool        *tool,
 
   vector_tool->function = VECTORS_FINISHED;
 
-  if (state & GDK_BUTTON3_MASK &&
-      vector_tool->have_undo)
+  if (!vector_tool->undo_motion ||
+      (state & GDK_BUTTON3_MASK && vector_tool->have_undo))
     {
       GimpUndo            *undo;
       GimpUndoAccumulator  accum = { 0, };
-
-      /* Ok, Apparently this is not the right thing to do, but it
-       * is pretty close...
-       * For some reason the Undo step e.g. does not disappear
-       * from the Undo History */
 
       undo = gimp_undo_stack_pop_undo (gdisp->gimage->undo_stack,
                                        GIMP_UNDO_MODE_UNDO, &accum);
@@ -636,6 +664,7 @@ gimp_vector_tool_button_release (GimpTool        *tool,
     }
 
   vector_tool->have_undo = FALSE;
+  vector_tool->undo_motion = FALSE;
 
   gimp_tool_control_halt (tool->control);
   gimp_image_flush (gdisp->gimage);
@@ -682,9 +711,12 @@ gimp_vector_tool_motion (GimpTool        *tool,
       anchor = vector_tool->cur_anchor;
 
       if (anchor)
-        gimp_stroke_anchor_move_absolute (vector_tool->cur_stroke,
-                                          vector_tool->cur_anchor,
-                                          coords, vector_tool->restriction);
+        {
+          gimp_stroke_anchor_move_absolute (vector_tool->cur_stroke,
+                                            vector_tool->cur_anchor,
+                                            coords, vector_tool->restriction);
+          vector_tool->undo_motion = TRUE;
+        }
       break;
 
     case VECTORS_MOVE_CURVE:
@@ -693,6 +725,7 @@ gimp_vector_tool_motion (GimpTool        *tool,
           gimp_vector_tool_move_selected_anchors (vector_tool,
                                                coords->x - vector_tool->last_x,
                                                coords->y - vector_tool->last_y);
+          vector_tool->undo_motion = TRUE;
         }
       else
         {
@@ -700,6 +733,7 @@ gimp_vector_tool_motion (GimpTool        *tool,
                                            vector_tool->cur_anchor,
                                            vector_tool->cur_position,
                                            coords, vector_tool->restriction);
+          vector_tool->undo_motion = TRUE;
         }
       break;
 
@@ -707,6 +741,7 @@ gimp_vector_tool_motion (GimpTool        *tool,
       gimp_vector_tool_move_selected_anchors (vector_tool,
                                               coords->x - vector_tool->last_x,
                                               coords->y - vector_tool->last_y);
+      vector_tool->undo_motion = TRUE;
       break;
 
     case VECTORS_MOVE_STROKE:
@@ -715,12 +750,14 @@ gimp_vector_tool_motion (GimpTool        *tool,
           gimp_stroke_translate (vector_tool->cur_stroke,
                                  coords->x - vector_tool->last_x,
                                  coords->y - vector_tool->last_y);
+          vector_tool->undo_motion = TRUE;
         }
       else if (vector_tool->sel_stroke)
         {
           gimp_stroke_translate (vector_tool->sel_stroke,
                                  coords->x - vector_tool->last_x,
                                  coords->y - vector_tool->last_y);
+          vector_tool->undo_motion = TRUE;
         }
       break;
 
@@ -728,6 +765,7 @@ gimp_vector_tool_motion (GimpTool        *tool,
       gimp_item_translate (GIMP_ITEM (vector_tool->vectors),
                            coords->x - vector_tool->last_x,
                            coords->y - vector_tool->last_y, FALSE);
+      vector_tool->undo_motion = TRUE;
       break;
 
     default:
@@ -1113,43 +1151,39 @@ gimp_vector_tool_status_update (GimpTool    *tool,
       switch (vector_tool->function)
       {
         case VECTORS_SELECT_VECTOR:
-          new_status = _("Click to pick Path to edit");
+          new_status = _("Click to pick path to edit.");
           break;
         case VECTORS_CREATE_VECTOR:
-          new_status = _("Click to create a new Path");
+          new_status = _("Click to create a new path.");
           break;
         case VECTORS_CREATE_STROKE:
-          new_status = _("Click to create a new component of the path");
+          new_status = _("Click to create a new component of the path.");
           break;
         case VECTORS_ADD_ANCHOR:
-          new_status = _("Click to create a new anchor, "
-                          "use SHIFT to create a new component.");
+          new_status = _("Click to create a new anchor. (try SHIFT)");
           break;
         case VECTORS_MOVE_ANCHOR:
-          new_status = _("Click-Drag to move the anchor around");
+          new_status = _("Click-Drag to move the anchor around.");
           break;
         case VECTORS_MOVE_ANCHORSET:
-          new_status = _("Click-Drag to move the anchors around");
+          new_status = _("Click-Drag to move the anchors around.");
           break;
         case VECTORS_MOVE_HANDLE:
-          new_status = _("Click-Drag to move the handle around. "
-                          "SHIFT moves the opposite handle symmetrically.");
+          new_status = _("Click-Drag to move the handle around. (try SHIFT)");
           break;
         case VECTORS_MOVE_CURVE:
           new_status = _("Click-Drag to change the shape of the curve. "
-                          "SHIFT moves the opposite handles of the "
-                          "endpoints symmetrically.");
+                         "(SHIFT: symmetrical)");
           break;
         case VECTORS_MOVE_STROKE:
           new_status = _("Click-Drag to move the component around. "
-                          "SHIFT moves the complete path around.");
+                         "(try SHIFT)");
           break;
         case VECTORS_MOVE_VECTORS:
-          new_status = _("Click-Drag to move the component around. "
-                          "SHIFT moves the complete path around.");
+          new_status = _("Click-Drag to move the path around.");
           break;
         case VECTORS_INSERT_ANCHOR:
-          new_status = _("Click to insert an anchor on the path.");
+          new_status = _("Click to insert an anchor on the path. (try SHIFT)");
           break;
         case VECTORS_DELETE_ANCHOR:
           new_status = _("Click to delete this anchor.");
