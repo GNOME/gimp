@@ -1,15 +1,16 @@
-# Lithuanian translation of GIMP.
+# Lithuanian translation of gimp-script-fu.
 # Copyright (C) 2004-2005 Free Software Foundation, Inc.
-# Žygimantas Beručka <uid0@akl.lt>, 2004-2005.
-# Giedrius Naudžiūnas <gimp@projektas.lt>, 2004-2005.
+# Žygimantas Beručka <uid0@akl.lt>, 2004.
+# Giedrius NaudŽiūnas <gimpng@gmail.com>, 2005.
+# 
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-08 02:10+0100\n"
-"PO-Revision-Date: 2005-01-18 21:03+0200\n"
-"Last-Translator: Giedrius Naudžiūnas <gimp@projektas.lt>\n"
+"POT-Creation-Date: 2005-02-02 22:22+0200\n"
+"PO-Revision-Date: 2005-02-02 22:22+0200\n"
+"Last-Translator: Giedrius Naudžiūnas <gimpng@gmail.com>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1632,7 +1633,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/guides-from-selection.scm.h:2
 msgid "New Guides from _Selection"
-msgstr ""
+msgstr "Naujos pagalbinės linijos nuo žymėjimo"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm.h:1
 #: plug-ins/script-fu/scripts/guides-new.scm.h:1
@@ -1646,7 +1647,7 @@ msgstr "Horizontaliai"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm.h:3
 msgid "New Guide (by _Percent)..."
-msgstr ""
+msgstr "Nauja pagalbinė linija (pagal procentus)..."
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm.h:5
 #, no-c-format
@@ -1660,11 +1661,11 @@ msgstr "Vertikaliai"
 
 #: plug-ins/script-fu/scripts/guides-new.scm.h:3
 msgid "New _Guide..."
-msgstr ""
+msgstr "Nauja pagalbinė linija..."
 
 #: plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
 msgid "_Remove all Guides"
-msgstr ""
+msgstr "_Naikinti visas pagalbines linijas"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
 #: plug-ins/script-fu/scripts/image-structure.scm.h:1
