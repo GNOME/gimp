@@ -81,7 +81,7 @@ text_fontname_invoker (Gimp     *gimp,
   y = args[3].value.pdb_float;
 
   text = (gchar *) args[4].value.pdb_pointer;
-  if (text == NULL)
+  if (text == NULL && !g_utf8_validate (text, -1, NULL))
     success = FALSE;
 
   border = args[5].value.pdb_int;
@@ -172,7 +172,7 @@ static ProcArg text_fontname_inargs[] =
   {
     GIMP_PDB_STRING,
     "fontname",
-    "The fontname (conforming to the X Logical Font Description Conventions)"
+    "The name of the font"
   }
 };
 
@@ -218,7 +218,7 @@ text_get_extents_fontname_invoker (Gimp     *gimp,
   gchar *real_fontname;
 
   text = (gchar *) args[0].value.pdb_pointer;
-  if (text == NULL)
+  if (text == NULL && !g_utf8_validate (text, -1, NULL))
     success = FALSE;
 
   size = args[1].value.pdb_float;
@@ -277,7 +277,7 @@ static ProcArg text_get_extents_fontname_inargs[] =
   {
     GIMP_PDB_STRING,
     "fontname",
-    "The fontname (conforming to the X Logical Font Description Conventions)"
+    "The name of the font"
   }
 };
 
@@ -358,7 +358,7 @@ text_invoker (Gimp     *gimp,
   y = args[3].value.pdb_float;
 
   text = (gchar *) args[4].value.pdb_pointer;
-  if (text == NULL)
+  if (text == NULL && !g_utf8_validate (text, -1, NULL))
     success = FALSE;
 
   border = args[5].value.pdb_int;
@@ -477,42 +477,42 @@ static ProcArg text_inargs[] =
   {
     GIMP_PDB_STRING,
     "foundry",
-    "The font foundry, \"*\" for any"
+    "The font foundry"
   },
   {
     GIMP_PDB_STRING,
     "family",
-    "The font family, \"*\" for any"
+    "The font family"
   },
   {
     GIMP_PDB_STRING,
     "weight",
-    "The font weight, \"*\" for any"
+    "The font weight"
   },
   {
     GIMP_PDB_STRING,
     "slant",
-    "The font slant, \"*\" for any"
+    "The font slant"
   },
   {
     GIMP_PDB_STRING,
     "set_width",
-    "The font set-width, \"*\" for any"
+    "The font set-width"
   },
   {
     GIMP_PDB_STRING,
     "spacing",
-    "The font spacing, \"*\" for any"
+    "The font spacing"
   },
   {
     GIMP_PDB_STRING,
     "registry",
-    "The font registry, \"*\" for any"
+    "The font registry"
   },
   {
     GIMP_PDB_STRING,
     "encoding",
-    "The font encoding, \"*\" for any"
+    "The font encoding"
   }
 };
 
@@ -566,7 +566,7 @@ text_get_extents_invoker (Gimp     *gimp,
   gchar *real_fontname;
 
   text = (gchar *) args[0].value.pdb_pointer;
-  if (text == NULL)
+  if (text == NULL && !g_utf8_validate (text, -1, NULL))
     success = FALSE;
 
   size = args[1].value.pdb_float;
@@ -653,42 +653,42 @@ static ProcArg text_get_extents_inargs[] =
   {
     GIMP_PDB_STRING,
     "foundry",
-    "The font foundry, \"*\" for any"
+    "The font foundry"
   },
   {
     GIMP_PDB_STRING,
     "family",
-    "The font family, \"*\" for any"
+    "The font family"
   },
   {
     GIMP_PDB_STRING,
     "weight",
-    "The font weight, \"*\" for any"
+    "The font weight"
   },
   {
     GIMP_PDB_STRING,
     "slant",
-    "The font slant, \"*\" for any"
+    "The font slant"
   },
   {
     GIMP_PDB_STRING,
     "set_width",
-    "The font set-width, \"*\" for any"
+    "The font set-width"
   },
   {
     GIMP_PDB_STRING,
     "spacing",
-    "The font spacing, \"*\" for any"
+    "The font spacing"
   },
   {
     GIMP_PDB_STRING,
     "registry",
-    "The font registry, \"*\" for any"
+    "The font registry"
   },
   {
     GIMP_PDB_STRING,
     "encoding",
-    "The font encoding, \"*\" for any"
+    "The font encoding"
   }
 };
 

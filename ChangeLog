@@ -1,3 +1,16 @@
+2003-07-29  Manish Singh  <yosh@gimp.org>
+
+	* tools/pdbgen/app.pl: added a utf8 option for string input
+	parameters, and validate them.
+
+	* tools/pdbgen/pdb/text_tool.pdb: make the text parameter use it.
+	Partially addresses #79897. Also remove references to XLFD in the
+	doc text.
+
+	* app/pdb/text_tool_cmds.c: regenerated
+
+	* configure.in: Really bump the version number
+
 2003-07-29  Dave Neary  <bolsh@gimp.org>
 
 	* plug-ins/common/edge.c: Added several new edge detection 

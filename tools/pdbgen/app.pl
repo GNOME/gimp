@@ -253,7 +253,23 @@ sub marshal_inargs {
 	    $result .= ' ? TRUE : FALSE' if $pdbtype eq 'boolean';
 	    $result .= ";\n";
 
-	    if ($pdbtype eq 'string' || $pdbtype eq 'parasite') {
+	    if ($pdbtype eq 'string') {
+		my ($reverse, $test);
+
+		if ($_->{utf8}) {
+		    $reverse = sub { ${$_[0]} =~ s/!//;
+				     ${$_[0]} =~ s/==/!=/ };
+		    $test = "$var == NULL && " .
+                            "!g_utf8_validate ($var, -1, NULL)"
+		}
+		else {
+		    $reverse = sub { ${$_[0]} =~ s/==/!=/ };
+		    $test = "$var == NULL";
+		}
+
+		$result .= &make_arg_test($_, $reverse, $test);
+	    }
+	    elsif ($pdbtype eq 'parasite') {
 		$result .= &make_arg_test($_, sub { ${$_[0]} =~ s/==/!=/ },
 					  "$var == NULL");
 	    }
