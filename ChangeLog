@@ -1,5 +1,10 @@
 2004-11-06  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpbrusheditor.c: allow a smaller brush radius to
+	be set in the brush editor. Fixes bug #157508.
+
+2004-11-06  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/scale-dialog.c (scale_dialog_reset): same fix here.
 
 2004-11-06  Sven Neumann  <sven@gimp.org>

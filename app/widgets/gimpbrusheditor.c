@@ -151,7 +151,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
     GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (editor->options_table),
                                           0, row++,
                                           _("Radius:"), -1, 5,
-                                          0.0, 1.0, 1000.0, 0.1, 1.0, 1,
+                                          0.0, 0.1, 1000.0, 0.1, 1.0, 1,
                                           TRUE, 0.0, 0.0,
                                           NULL, NULL));
 
