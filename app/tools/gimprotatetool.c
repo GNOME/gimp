@@ -165,17 +165,21 @@ gimp_rotate_tool_transform (GimpTransformTool *transform_tool,
       center_vals[0] = transform_tool->cx;
       center_vals[1] = transform_tool->cy;
 
-      if (! transform_info)
+      if (! transform_tool->info_dialog)
 	{
           GtkWidget *widget;
           GtkWidget *spinbutton2;
 
-	  transform_info = info_dialog_new (_("Rotation Information"),
-					    gimp_standard_help_func,
-					    "tools/transform_rotate.html");
+	  transform_tool->info_dialog =
+            info_dialog_new (_("Rotation Information"),
+                             gimp_standard_help_func,
+                             "tools/transform_rotate.html");
+
+          gimp_transform_tool_info_dialog_connect (transform_tool,
+                                                   _("Rotate"));
 
 	  widget =
-	    info_dialog_add_spinbutton (transform_info, _("Angle:"),
+	    info_dialog_add_spinbutton (transform_tool->info_dialog, _("Angle:"),
 					&angle_val,
 					-180, 180, 1, 15, 1, 1, 2,
 					G_CALLBACK (rotate_angle_changed),
@@ -183,17 +187,20 @@ gimp_rotate_tool_transform (GimpTransformTool *transform_tool,
 	  gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (widget), TRUE);
 
 	  /*  this looks strange (-180, 181), but it works  */
-	  widget = info_dialog_add_scale (transform_info, "", &angle_val,
+	  widget = info_dialog_add_scale (transform_tool->info_dialog, "",
+                                          &angle_val,
 					  -180, 181, 0.01, 0.1, 1, -1,
 					  G_CALLBACK (rotate_angle_changed),
 					  transform_tool);
 	  gtk_widget_set_usize (widget, 180, 0);
 
 	  spinbutton2 =
-	    info_dialog_add_spinbutton (transform_info, _("Center X:"), NULL,
+	    info_dialog_add_spinbutton (transform_tool->info_dialog,
+                                        _("Center X:"),
+                                        NULL,
 					-1, 1, 1, 10, 1, 1, 2, NULL, NULL);
 	  sizeentry =
-	    info_dialog_add_sizeentry (transform_info, _("Y:"),
+	    info_dialog_add_sizeentry (transform_tool->info_dialog, _("Y:"),
 				       center_vals, 1,
 				       gdisp->gimage->unit, "%a",
 				       TRUE, TRUE, FALSE,
@@ -204,9 +211,9 @@ gimp_rotate_tool_transform (GimpTransformTool *transform_tool,
 	  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (sizeentry),
 				     GTK_SPIN_BUTTON (spinbutton2), NULL);
 
-	  gtk_table_set_row_spacing (GTK_TABLE (transform_info->info_table),
+	  gtk_table_set_row_spacing (GTK_TABLE (transform_tool->info_dialog->info_table),
 				     1, 6);
-	  gtk_table_set_row_spacing (GTK_TABLE (transform_info->info_table),
+	  gtk_table_set_row_spacing (GTK_TABLE (transform_tool->info_dialog->info_table),
 				     2, 0);
 	}
 
@@ -245,7 +252,7 @@ gimp_rotate_tool_transform (GimpTransformTool *transform_tool,
                                          rotate_center_changed,
                                          transform_tool);
 
-      gtk_widget_set_sensitive (transform_info->shell, TRUE);
+      gtk_widget_set_sensitive (transform_tool->info_dialog->shell, TRUE);
 
       transform_tool->trans_info[ANGLE]      = angle_val;
       transform_tool->trans_info[REAL_ANGLE] = angle_val;
@@ -278,8 +285,8 @@ rotate_info_update (GimpTransformTool *transform_tool)
   center_vals[0] = transform_tool->trans_info[CENTER_X];
   center_vals[1] = transform_tool->trans_info[CENTER_Y];
 
-  info_dialog_update (transform_info);
-  info_dialog_popup (transform_info);
+  info_dialog_update (transform_tool->info_dialog);
+  info_dialog_popup (transform_tool->info_dialog);
 }
 
 static void

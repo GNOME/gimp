@@ -123,7 +123,8 @@ info_window_page_switch (GtkWidget       *widget,
   InfoDialog  *info_win;
   InfoWinData *iwd;
 
-  info_win = (InfoDialog *) g_object_get_data (G_OBJECT (widget), "user_data");
+  info_win = (InfoDialog *) g_object_get_data (G_OBJECT (widget),
+                                               "gimp-info-window");
   iwd = (InfoWinData *) info_win->user_data;
 
   /* Only deal with the second page */
@@ -297,7 +298,7 @@ info_window_create_extended (InfoDialog  *info_win,
   /* Set back to first page */
   gtk_notebook_set_current_page (GTK_NOTEBOOK (info_win->info_notebook), 0);
 
-  g_object_set_data (G_OBJECT (info_win->info_notebook), "user_data",
+  g_object_set_data (G_OBJECT (info_win->info_notebook), "gimp-info-window",
 		     info_win);
 
   g_signal_connect (G_OBJECT (info_win->info_notebook), "switch_page",

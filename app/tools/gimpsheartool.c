@@ -156,20 +156,24 @@ gimp_shear_tool_transform (GimpTransformTool *transform_tool,
   switch (state)
     {
     case TRANSFORM_INIT:
-      if (! transform_info)
+      if (! transform_tool->info_dialog)
 	{
-	  transform_info = info_dialog_new (_("Shear Information"),
-					    gimp_standard_help_func,
-					    "tools/transform_shear.html");
+	  transform_tool->info_dialog =
+            info_dialog_new (_("Shear Information"),
+                             gimp_standard_help_func,
+                             "tools/transform_shear.html");
 
-	  info_dialog_add_spinbutton (transform_info,
+          gimp_transform_tool_info_dialog_connect (transform_tool,
+                                                   _("Shear"));
+
+	  info_dialog_add_spinbutton (transform_tool->info_dialog,
 				      _("Shear Magnitude X:"),
 				      &xshear_val,
 				      -65536, 65536, 1, 15, 1, 1, 0,
 				      G_CALLBACK (shear_x_mag_changed),
 				      transform_tool);
 
-	  info_dialog_add_spinbutton (transform_info,
+	  info_dialog_add_spinbutton (transform_tool->info_dialog,
 				      _("Y:"),
 				      &yshear_val,
 				      -65536, 65536, 1, 15, 1, 1, 0,
@@ -177,7 +181,8 @@ gimp_shear_tool_transform (GimpTransformTool *transform_tool,
 				      transform_tool);
 	}
 
-      gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), TRUE);
+      gtk_widget_set_sensitive (GTK_WIDGET (transform_tool->info_dialog->shell),
+                                TRUE);
 
       transform_tool->trans_info[HORZ_OR_VERT] = ORIENTATION_UNKNOWN;
       transform_tool->trans_info[XSHEAR]       = 0.0;
@@ -208,8 +213,8 @@ shear_info_update (GimpTransformTool *transform_tool)
   xshear_val = transform_tool->trans_info[XSHEAR];
   yshear_val = transform_tool->trans_info[YSHEAR];
 
-  info_dialog_update (transform_info);
-  info_dialog_popup (transform_info);
+  info_dialog_update (transform_tool->info_dialog);
+  info_dialog_popup (transform_tool->info_dialog);
 }
 
 static void

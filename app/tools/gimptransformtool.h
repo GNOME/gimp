@@ -49,44 +49,48 @@ struct _GimpTransformTool
 {
   GimpDrawTool    parent_instance;
 
-  gint            startx;       /*  starting x coord            */
-  gint            starty;       /*  starting y coord            */
+  gint            startx;         /*  starting x coord                 */
+  gint            starty;         /*  starting y coord                 */
 
-  gint            curx;         /*  current x coord             */
-  gint            cury;         /*  current y coord             */
+  gint            curx;           /*  current x coord                  */
+  gint            cury;           /*  current y coord                  */
 
-  gint            lastx;        /*  last x coord                */
-  gint            lasty;        /*  last y coord                */
+  gint            lastx;          /*  last x coord                     */
+  gint            lasty;          /*  last y coord                     */
 
-  gint            state;        /*  state of buttons and keys   */
+  gint            state;          /*  state of buttons and keys        */
 
-  gint            x1, y1;       /*  upper left hand coordinate  */
-  gint            x2, y2;       /*  lower right hand coords     */
-  gint		  cx, cy;	/*  center point (for rotation) */
+  gint            x1, y1;         /*  upper left hand coordinate       */
+  gint            x2, y2;         /*  lower right hand coords          */
+  gint		  cx, cy;	  /*  center point (for rotation)      */
 
-  gdouble         tx1, ty1;     /*  transformed coords          */
-  gdouble         tx2, ty2;     /*                              */
-  gdouble         tx3, ty3;     /*                              */
-  gdouble         tx4, ty4;     /*                              */
-  gdouble	  tcx, tcy;	/*                              */
+  gdouble         tx1, ty1;       /*  transformed coords               */
+  gdouble         tx2, ty2;
+  gdouble         tx3, ty3;
+  gdouble         tx4, ty4;
+  gdouble	  tcx, tcy;
 
-  GimpMatrix3     transform;    /*  transformation matrix       */
-  TransInfo       trans_info;   /*  transformation info         */
+  GimpMatrix3     transform;      /*  transformation matrix            */
+  TransInfo       trans_info;     /*  transformation info              */
 
-  TileManager    *original;     /*  pointer to original tiles   */
+  TransInfo       old_trans_info; /*  for cancelling a drag operation  */
 
-  TransformAction function;     /*  current tool activity       */
+  TileManager    *original;       /*  pointer to original tiles        */
 
-  gboolean        use_grid;     /*  does the tool use the grid  */
+  TransformAction function;       /*  current tool activity            */
 
-  gint		  ngx, ngy;	/*  number of grid lines in original
-				 *  x and y directions
-				 */
-  gdouble	 *grid_coords;	/*  x and y coordinates of the grid
-				 *  endpoints (a total of (ngx+ngy)*2
-				 *  coordinate pairs)
-				 */
-  gdouble	 *tgrid_coords; /*  transformed grid_coords     */
+  gboolean        use_grid;       /*  does the tool use the grid       */
+
+  gint		  ngx, ngy;	  /*  number of grid lines in original
+                                   *  x and y directions
+                                   */
+  gdouble	 *grid_coords;	  /*  x and y coordinates of the grid
+                                   *  endpoints (a total of (ngx+ngy)*2
+                                   *  coordinate pairs)
+                                   */
+  gdouble	 *tgrid_coords;   /*  transformed grid_coords          */
+
+  InfoDialog     *info_dialog;    /*  transform info dialog            */
 };
 
 struct _GimpTransformToolClass
@@ -101,8 +105,6 @@ struct _GimpTransformToolClass
 
 };
 
-
-/*  Special undo type  */
 typedef struct _TransformUndo TransformUndo;
 
 struct _TransformUndo
@@ -116,16 +118,14 @@ struct _TransformUndo
 };
 
 
-/*  make this variable available to all  */
-/*  Do we still need to do this?  -- rock */
-extern InfoDialog * transform_info;
-
-
 GType   gimp_transform_tool_get_type               (void);
 
 TileManager * gimp_transform_tool_transform_tiles  (GimpTransformTool *tr_tool,
                                                     const gchar       *progress_text);
 void    gimp_transform_tool_transform_bounding_box (GimpTransformTool *tr_tool);
+
+void    gimp_transform_tool_info_dialog_connect    (GimpTransformTool *tr_tool,
+                                                    const gchar       *ok_button);
 
 void	gimp_transform_tool_grid_density_changed   (GimpTransformTool *tr_tool);
 void	gimp_transform_tool_show_path_changed      (GimpTransformTool *tr_tool,

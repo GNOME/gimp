@@ -42,9 +42,7 @@
 #include <libgimpwidgets/gimpunitmenu.h>
 
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -57,8 +55,8 @@ GtkWidget * gimp_option_menu_new   (gboolean            menu_only,
 				    /* specify menu items as va_list:
 				     *  gchar          *label,
 				     *  GCallback       callback,
-				     *  gpointer        data,
-				     *  gpointer        user_data,
+				     *  gpointer        callback_data,
+				     *  gpointer        item_data,
 				     *  GtkWidget     **widget_ptr,
 				     *  gboolean        active
 				     */
@@ -67,19 +65,19 @@ GtkWidget * gimp_option_menu_new   (gboolean            menu_only,
 
 GtkWidget * gimp_option_menu_new2  (gboolean            menu_only,
 				    GCallback           menu_item_callback,
-				    gpointer            data,
-				    gpointer            initial, /* user_data */
+				    gpointer            menu_item_callback_data,
+				    gpointer            initial, /* item_data */
 
 				    /* specify menu items as va_list:
 				     *  gchar          *label,
-				     *  gpointer        user_data,
+				     *  gpointer        item_data,
 				     *  GtkWidget     **widget_ptr,
 				     */
 
 				    ...);
 
 void  gimp_option_menu_set_history (GtkOptionMenu      *option_menu,
-				    gpointer            user_data);
+				    gpointer            item_data);
 
 GtkWidget * gimp_radio_group_new   (gboolean            in_frame,
 				    const gchar        *frame_title,
@@ -87,8 +85,8 @@ GtkWidget * gimp_radio_group_new   (gboolean            in_frame,
 				    /* specify radio buttons as va_list:
 				     *  const gchar    *label,
 				     *  GCallback       callback,
-				     *  gpointer        data,
-				     *  gpointer        user_data,
+				     *  gpointer        callback_data,
+				     *  gpointer        item_data,
 				     *  GtkWidget     **widget_ptr,
 				     *  gboolean        active,
 				     */
@@ -98,16 +96,19 @@ GtkWidget * gimp_radio_group_new   (gboolean            in_frame,
 GtkWidget * gimp_radio_group_new2  (gboolean            in_frame,
 				    const gchar        *frame_title,
 				    GCallback           radio_button_callback,
-				    gpointer            data,
-				    gpointer            initial, /* user_data */
+				    gpointer            radio_button_callback_data,
+				    gpointer            initial, /* item_data */
 
 				    /* specify radio buttons as va_list:
 				     *  const gchar    *label,
-				     *  gpointer        user_data,
+				     *  gpointer        item_data,
 				     *  GtkWidget     **widget_ptr,
 				     */
 
 				    ...);
+
+void   gimp_radio_group_set_active (GtkRadioButton     *radio_button,
+                                    gpointer            item_data);
 
 GtkWidget * gimp_spin_button_new   (/* return value: */
 				    GtkObject         **adjustment,
@@ -122,19 +123,19 @@ GtkWidget * gimp_spin_button_new   (/* return value: */
 				    guint               digits);
 
 #define GIMP_SCALE_ENTRY_LABEL(adj) \
-        GTK_LABEL (gtk_object_get_data (GTK_OBJECT(adj), "label"))
+        GTK_LABEL (g_object_get_data (G_OBJECT (adj), "label"))
 
 #define GIMP_SCALE_ENTRY_SCALE(adj) \
-        GTK_HSCALE (gtk_object_get_data (GTK_OBJECT(adj), "scale"))
+        GTK_HSCALE (g_object_get_data (G_OBJECT (adj), "scale"))
 #define GIMP_SCALE_ENTRY_SCALE_ADJ(adj) \
         gtk_range_get_adjustment \
-        (GTK_RANGE (gtk_object_get_data (GTK_OBJECT (adj), "scale")))
+        (GTK_RANGE (g_object_get_data (G_OBJECT (adj), "scale")))
 
 #define GIMP_SCALE_ENTRY_SPINBUTTON(adj) \
-        GTK_SPIN_BUTTON (gtk_object_get_data (GTK_OBJECT (adj), "spinbutton"))
+        GTK_SPIN_BUTTON (g_object_get_data (G_OBJECT (adj), "spinbutton"))
 #define GIMP_SCALE_ENTRY_SPINBUTTON_ADJ(adj) \
         gtk_spin_button_get_adjustment \
-        (GTK_SPIN_BUTTON (gtk_object_get_data (GTK_OBJECT (adj), "spinbutton")))
+        (GTK_SPIN_BUTTON (g_object_get_data (G_OBJECT (adj), "spinbutton")))
 
 GtkObject * gimp_scale_entry_new   (GtkTable           *table,
 				    gint                column,
@@ -155,14 +156,13 @@ GtkObject * gimp_scale_entry_new   (GtkTable           *table,
 				    const gchar        *help_data);
 
 #define GIMP_RANDOM_SEED_SPINBUTTON(hbox) \
-        GTK_SPIN_BUTTON (gtk_object_get_data (GTK_OBJECT( hbox), "spinbutton"))
+        GTK_SPIN_BUTTON (g_object_get_data (G_OBJECT (hbox), "spinbutton"))
 #define GIMP_RANDOM_SEED_SPINBUTTON_ADJ(hbox) \
         gtk_spin_button_get_adjustment \
-        (GTK_SPIN_BUTTON (gtk_object_get_data (GTK_OBJECT (hbox), "spinbutton")))
+        (GTK_SPIN_BUTTON (g_object_get_data (G_OBJECT (hbox), "spinbutton")))
 
 #define GIMP_RANDOM_SEED_TOGGLEBUTTON(hbox) \
-        GTK_TOGGLE_BUTTON (gtk_object_get_data (GTK_OBJECT (hbox), \
-                                                "togglebutton"))
+        GTK_TOGGLE_BUTTON (g_object_get_data (G_OBJECT (hbox), "togglebutton"))
 
 GtkWidget * gimp_random_seed_new   (gint               *seed,
 				    gint               *use_time,
@@ -200,15 +200,12 @@ GtkWidget * gimp_coordinates_new   (GimpUnit            unit,
 				    gdouble             ysize_100  /* % */);
 
 #define GIMP_MEM_SIZE_ENTRY_SPINBUTTON(memsize) \
-        GTK_SPIN_BUTTON (gtk_object_get_data (GTK_OBJECT (memsize), \
-                                              "spinbutton"))
+        GTK_SPIN_BUTTON (g_object_get_data (G_OBJECT (memsize), "spinbutton"))
 #define GIMP_MEM_SIZE_ENTRY_SPINBUTTON_ADJ(memsize) \
         gtk_spin_button_get_adjustment \
-        (GTK_SPIN_BUTTON (gtk_object_get_data (GTK_OBJECT (memsize), \
-                                               "spinbutton")))
+        (GTK_SPIN_BUTTON (g_object_get_data (G_OBJECT (memsize), "spinbutton")))
 #define GIMP_MEM_SIZE_ENTRY_OPTIONMENU(memsize) \
-        GTK_OPTION_MENU (gtk_object_get_data (GTK_OBJECT (memsize), \
-                                              "optionmenu"))
+        GTK_OPTION_MENU (g_object_get_data (G_OBJECT (memsize), "optionmenu"))
 
 GtkWidget * gimp_mem_size_entry_new (GtkAdjustment      *adjustment);
   
@@ -262,8 +259,6 @@ void gimp_table_attach_aligned     (GtkTable           *table,
 				    gboolean            left_align);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_WIDGETS_H__ */

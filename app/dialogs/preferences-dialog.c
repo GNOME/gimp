@@ -1036,7 +1036,7 @@ prefs_toggle_callback (GtkWidget *widget,
 	   data == &gimprc.cursor_mode)
     {
       *val = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
-			      "user_data"));
+			      "gimp-item-data"));
     }
 
   /*  values which need some magic  */
@@ -1044,7 +1044,7 @@ prefs_toggle_callback (GtkWidget *widget,
 	   (data == &gimprc.transparency_size))
     {
       *val = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
-			      "user_data"));
+			      "gimp-item-data"));
 
       render_setup (gimprc.transparency_type, gimprc.transparency_size);
       gimp_container_foreach (gimp->images,
@@ -1078,7 +1078,8 @@ prefs_preview_size_callback (GtkWidget *widget,
 #warning FIXME: update preview size
 #endif
 #if 0
-  lc_dialog_rebuild ((long) g_object_get_data (G_OBJECT (widget), "user_data"));
+  lc_dialog_rebuild ((long) g_object_get_data (G_OBJECT (widget),
+                                               "gimp-item-data"));
 #endif
 }
 
@@ -1087,7 +1088,7 @@ prefs_nav_preview_size_callback (GtkWidget *widget,
 				 gpointer   data)
 {
   gimprc.nav_preview_size =
-    GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget), "user_data"));
+    GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget), "gimp-item-data"));
 
   gdisplays_nav_preview_resized ();
 }

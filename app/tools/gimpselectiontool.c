@@ -21,6 +21,8 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "tools-types.h"
 
 #include "core/gimpimage.h"
@@ -118,12 +120,13 @@ gimp_selection_tool_modifier_key (GimpTool        *tool,
 {
   GimpSelectionTool *selection_tool;
   SelectionOptions  *sel_options;
-  gint               eek[4]       = { 1, 2, 0, 3 };
-  gint               press_button = -1;
+  SelectOps          button_op;
 
   selection_tool = GIMP_SELECTION_TOOL (tool);
 
   sel_options = (SelectionOptions *) tool->tool_info->tool_options;
+
+  button_op = sel_options->op;
 
   if (key == GDK_SHIFT_MASK || key == GDK_CONTROL_MASK)
     {
@@ -138,27 +141,27 @@ gimp_selection_tool_modifier_key (GimpTool        *tool,
         {
           if (! state) /*  last modifier released  */
             {
-              press_button = eek[selection_tool->saved_op];
+              button_op = selection_tool->saved_op;
             }
         }
 
       if ((state & GDK_CONTROL_MASK) && (state & GDK_SHIFT_MASK))
         {
-          press_button = eek[SELECTION_INTERSECT];
+          button_op = SELECTION_INTERSECT;
         }
       else if (state & GDK_SHIFT_MASK)
         {
-          press_button = eek[SELECTION_ADD];
+          button_op = SELECTION_ADD;
         }
       else if (state & GDK_CONTROL_MASK)
         {
-          press_button = eek[SELECTION_SUB];
+          button_op = SELECTION_SUB;
         }
 
-      if (press_button != -1)
+      if (button_op != sel_options->op)
         {
-          gtk_toggle_button_set_active
-            (GTK_TOGGLE_BUTTON (sel_options->op_w[press_button]), TRUE);
+          gimp_radio_group_set_active (GTK_RADIO_BUTTON (sel_options->op_w[0]),
+                                       GINT_TO_POINTER (button_op));
         }
     }
 }

@@ -1,3 +1,44 @@
+2001-11-22  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpwidgets.[ch]: use "gimp-item-data" instead of
+	"user_data" as data key when attaching values to radio buttons or
+	menu items. (For backward compat, attach "user_data" additionally,
+	but don't use it to _get_data()).
+	Added gimp_radio_group_set_active() which works like
+	gimp_options_menu_set_history() and sets the active item by
+	attached "gimp-item-data" value.
+
+	* app/gui/brush-select.c
+	* app/gui/file-new-dialog.c
+	* app/gui/info-window.c
+	* app/gui/preferences-dialog.c
+	* app/gui/resolution-calibrate-dialog.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpselectiontool.c
+	* app/tools/paint_options.c
+	* app/tools/selection_options.c
+	* app/widgets/gimplayerlistview.c: removed all kinds of
+	"user_data" stuff and evil hacks to find a radio button by the
+	value it represents (simply call gimp_radio_group_set_active()).
+
+	* app/tools/gimpdrawtool.c: added a g_return_if_fail().
+
+	* app/tools/gimpfliptool.c: don't set draw_tool_class->draw to NULL,
+
+	* app/tools/gimptransformtool.[ch]: fixed some stuff i broke when
+	removing the old "interactive" boolean (there is no
+	non-interactive transform tool any more).  Put the info_dialog
+	pointer and the old_trans_info array into the GimpTransformTool
+	instance. Added gimp_transform_tool_info_dialog_connect(). Don't
+	include any subclasses any more.
+
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpsheartool.c: use
+	gimp_transform_tool_info_dialog_connect() to create and connect
+	the info dialogs' action_area.
+
 2001-11-21  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/splash.c: sink the GtkPreview created for the splash.

@@ -44,10 +44,6 @@
 #include "libgimp/gimpintl.h"
 
 
-/*  FIXME: Lame - 1 hacks abound since the code assumes certain values for
- *  the ORIENTATION_FOO constants.
- */
-
 typedef struct _FlipOptions FlipOptions;
 
 struct _FlipOptions
@@ -139,19 +135,15 @@ static void
 gimp_flip_tool_class_init (GimpFlipToolClass *klass)
 {
   GimpToolClass          *tool_class;
-  GimpDrawToolClass      *draw_class;
   GimpTransformToolClass *trans_class;
 
   tool_class   = GIMP_TOOL_CLASS (klass);
-  draw_class   = GIMP_DRAW_TOOL_CLASS (klass);
   trans_class  = GIMP_TRANSFORM_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
   tool_class->modifier_key  = gimp_flip_tool_modifier_key;
   tool_class->cursor_update = gimp_flip_tool_cursor_update;
-
-  draw_class->draw          = NULL;
 
   trans_class->transform    = gimp_flip_tool_transform;
 }
@@ -189,14 +181,12 @@ gimp_flip_tool_modifier_key (GimpTool        *tool,
       switch (options->type)
         {
         case ORIENTATION_HORIZONTAL:
-	  gtk_toggle_button_set_active
-	    (GTK_TOGGLE_BUTTON (options->type_w[ORIENTATION_VERTICAL - 1]),
-             TRUE);
+          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
+                                       GINT_TO_POINTER (ORIENTATION_VERTICAL));
           break;
         case ORIENTATION_VERTICAL:
-	  gtk_toggle_button_set_active
-	    (GTK_TOGGLE_BUTTON (options->type_w[ORIENTATION_HORIZONTAL - 1]),
-             TRUE);
+          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
+                                       GINT_TO_POINTER (ORIENTATION_HORIZONTAL));
           break;
         default:
           break;
@@ -266,7 +256,6 @@ gimp_flip_tool_transform (GimpTransformTool *trans_tool,
   switch (state)
     {
     case TRANSFORM_INIT:
-      transform_info = NULL;
       break;
 
     case TRANSFORM_MOTION:
@@ -335,6 +324,6 @@ flip_options_reset (GimpToolOptions *tool_options)
 
   options = (FlipOptions *) tool_options;
 
-  gtk_toggle_button_set_active
-    (GTK_TOGGLE_BUTTON (options->type_w[options->type_d - 1]), TRUE); 
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
+                               GINT_TO_POINTER (options->type_d));
 }

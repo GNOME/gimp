@@ -371,7 +371,7 @@ file_new_dialog_create (Gimp      *gimp,
       button = gtk_radio_button_new_with_label (group, name_info->name);
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (radio_box), button, FALSE, TRUE, 0);
-      g_object_set_data (G_OBJECT (button), "user_data",
+      g_object_set_data (G_OBJECT (button), "gimp-item-data",
 			 (gpointer) name_info->type);
       gtk_widget_show (button);
 
@@ -412,7 +412,7 @@ file_new_dialog_create (Gimp      *gimp,
 	gtk_radio_button_new_with_label (group, name_info->name);
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
-      g_object_set_data (G_OBJECT (button), "user_data",
+      g_object_set_data (G_OBJECT (button), "gimp-item-data",
 			 (gpointer) name_info->type);
       gtk_widget_show (button);
 
@@ -513,10 +513,12 @@ file_new_reset_callback (GtkWidget *widget,
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (info->size_se),
 			    info->gimp->config->default_units);
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (info->type_w[info->gimp->config->default_type]),
-				TRUE);
-  gtk_toggle_button_set_active
-    (GTK_TOGGLE_BUTTON (info->fill_type_w[BACKGROUND_FILL]), TRUE);
+  gimp_radio_group_set_active
+    (GTK_RADIO_BUTTON (info->type_w[0]),
+     GINT_TO_POINTER (info->gimp->config->default_type));
+
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (info->fill_type_w[0]),
+                               GINT_TO_POINTER (BACKGROUND_FILL));
 }
 
 static void

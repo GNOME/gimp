@@ -216,6 +216,8 @@ gimp_draw_tool_stop (GimpDrawTool *draw_tool)
 void
 gimp_draw_tool_pause (GimpDrawTool *draw_tool)
 {
+  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+
   if (draw_tool->paused_count == 0)
     {
       draw_tool->draw_state = GIMP_DRAW_TOOL_STATE_INVISIBLE;

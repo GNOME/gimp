@@ -386,7 +386,8 @@ gimp_layer_list_view_paint_mode_menu_callback (GtkWidget         *widget,
       LayerModeEffects mode;
 
       mode = (LayerModeEffects)
-	GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget), "user_data"));
+	GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
+                                            "gimp-item-data"));
 
       if (gimp_layer_get_mode (layer) != mode)
 	{

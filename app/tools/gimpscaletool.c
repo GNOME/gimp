@@ -163,24 +163,32 @@ gimp_scale_tool_transform (GimpTransformTool *transform_tool,
       size_vals[0] = transform_tool->x2 - transform_tool->x1;
       size_vals[1] = transform_tool->y2 - transform_tool->y1;
 
-      if (! transform_info)
+      if (! transform_tool->info_dialog)
 	{
           GtkWidget *spinbutton;
 
-	  transform_info = info_dialog_new (_("Scaling Information"),
-					    gimp_standard_help_func,
-					    "tools/transform_scale.html");
+	  transform_tool->info_dialog =
+            info_dialog_new (_("Scaling Information"),
+                             gimp_standard_help_func,
+                             "tools/transform_scale.html");
 
-	  info_dialog_add_label (transform_info, _("Original Width:"),
+          gimp_transform_tool_info_dialog_connect (transform_tool,
+                                                   _("Scale"));
+
+	  info_dialog_add_label (transform_tool->info_dialog,
+                                 _("Original Width:"),
 				 orig_width_buf);
-	  info_dialog_add_label (transform_info, _("Height:"),
+	  info_dialog_add_label (transform_tool->info_dialog,
+                                 _("Height:"),
 				 orig_height_buf);
 
 	  spinbutton =
-	    info_dialog_add_spinbutton (transform_info, _("Current Width:"),
+	    info_dialog_add_spinbutton (transform_tool->info_dialog,
+                                        _("Current Width:"),
 					NULL, -1, 1, 1, 10, 1, 1, 2, NULL, NULL);
 	  sizeentry =
-	    info_dialog_add_sizeentry (transform_info, _("Height:"),
+	    info_dialog_add_sizeentry (transform_tool->info_dialog,
+                                       _("Height:"),
 				       size_vals, 1,
 				       gdisp->gimage->unit, "%a",
 				       TRUE, TRUE, FALSE,
@@ -194,15 +202,17 @@ gimp_scale_tool_transform (GimpTransformTool *transform_tool,
 	  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (sizeentry),
 				     GTK_SPIN_BUTTON (spinbutton), NULL);
 
-	  info_dialog_add_label (transform_info, _("Scale Ratio X:"),
+	  info_dialog_add_label (transform_tool->info_dialog, 
+                                 _("Scale Ratio X:"),
 				 x_ratio_buf);
-	  info_dialog_add_label (transform_info, _("Y:"),
+	  info_dialog_add_label (transform_tool->info_dialog,
+                                 _("Y:"),
 				 y_ratio_buf);
 
-	  gtk_table_set_row_spacing (GTK_TABLE (transform_info->info_table),
-				     1, 4);
-	  gtk_table_set_row_spacing (GTK_TABLE (transform_info->info_table),
-				     2, 0);
+	  gtk_table_set_row_spacing
+            (GTK_TABLE (transform_tool->info_dialog->info_table), 1, 4);
+	  gtk_table_set_row_spacing
+            (GTK_TABLE (transform_tool->info_dialog->info_table), 2, 0);
 	}
 
       g_signal_handlers_block_by_func (G_OBJECT (sizeentry), 
@@ -246,7 +256,8 @@ gimp_scale_tool_transform (GimpTransformTool *transform_tool,
                                          gimp_scale_tool_unit_changed,
                                          transform_tool);
 
-      gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), TRUE);
+      gtk_widget_set_sensitive (GTK_WIDGET (transform_tool->info_dialog->shell),
+                                TRUE);
 
       transform_tool->trans_info[X0] = (gdouble) transform_tool->x1;
       transform_tool->trans_info[Y0] = (gdouble) transform_tool->y1;
@@ -334,8 +345,8 @@ gimp_scale_tool_info_update (GimpTransformTool *transform_tool)
   g_snprintf (x_ratio_buf, sizeof (x_ratio_buf), "%0.2f", ratio_x);
   g_snprintf (y_ratio_buf, sizeof (y_ratio_buf), "%0.2f", ratio_y);
 
-  info_dialog_update (transform_info);
-  info_dialog_popup (transform_info);
+  info_dialog_update (transform_tool->info_dialog);
+  info_dialog_popup (transform_tool->info_dialog);
 }
 
 static void

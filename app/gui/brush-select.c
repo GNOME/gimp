@@ -523,7 +523,7 @@ paint_mode_menu_callback (GtkWidget *widget,
   bsp = (BrushSelect *) data;
 
   paint_mode = (LayerModeEffects)
-    GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget), "user_data"));
+    GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget), "gimp-item-data"));
 
   gimp_context_set_paint_mode (bsp->context, paint_mode);
 }

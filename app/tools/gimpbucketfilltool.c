@@ -284,12 +284,14 @@ gimp_bucket_fill_tool_modifier_key (GimpTool        *tool,
       switch (options->fill_mode)
         {
         case FG_BUCKET_FILL:
-	  gtk_toggle_button_set_active
-            (GTK_TOGGLE_BUTTON (options->fill_mode_w[BG_BUCKET_FILL]), TRUE);
+          gimp_radio_group_set_active
+            (GTK_RADIO_BUTTON (options->fill_mode_w[0]),
+             GINT_TO_POINTER (BG_BUCKET_FILL));
           break;
         case BG_BUCKET_FILL:
-	  gtk_toggle_button_set_active
-            (GTK_TOGGLE_BUTTON (options->fill_mode_w[FG_BUCKET_FILL]), TRUE);
+          gimp_radio_group_set_active
+            (GTK_RADIO_BUTTON (options->fill_mode_w[0]),
+             GINT_TO_POINTER (FG_BUCKET_FILL));
           break;
         default:
           break;
@@ -446,7 +448,10 @@ bucket_options_reset (GimpToolOptions *tool_options)
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
 				options->sample_merged_d);
+
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->threshold_w),
 			    gimprc.default_threshold);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->fill_mode_w[options->fill_mode_d]), TRUE);
+
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->fill_mode_w[0]),
+                               GINT_TO_POINTER (options->fill_mode_d));
 }

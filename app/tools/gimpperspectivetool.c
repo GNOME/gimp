@@ -139,29 +139,35 @@ gimp_perspective_tool_transform (GimpTransformTool  *transform_tool,
   switch (state)
     {
     case TRANSFORM_INIT:
-      if (! transform_info)
+      if (! transform_tool->info_dialog)
 	{
-	  transform_info =
+	  transform_tool->info_dialog =
 	    info_dialog_new (_("Perspective Transform Information"),
 			     gimp_standard_help_func,
 			     "tools/transform_perspective.html");
 
-	  info_dialog_add_label (transform_info, _("Matrix:"),
+          gimp_transform_tool_info_dialog_connect (transform_tool,
+                                                   _("Transform"));
+
+	  info_dialog_add_label (transform_tool->info_dialog, _("Matrix:"),
 				 matrix_row_buf[0]);
-	  info_dialog_add_label (transform_info, "", matrix_row_buf[1]);
-	  info_dialog_add_label (transform_info, "", matrix_row_buf[2]);
+	  info_dialog_add_label (transform_tool->info_dialog, "",
+                                 matrix_row_buf[1]);
+	  info_dialog_add_label (transform_tool->info_dialog, "",
+                                 matrix_row_buf[2]);
 	}
 
-      gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), TRUE);
+      gtk_widget_set_sensitive (GTK_WIDGET (transform_tool->info_dialog->shell),
+                                TRUE);
 
-      transform_tool->trans_info [X0] = (gdouble) transform_tool->x1;
-      transform_tool->trans_info [Y0] = (gdouble) transform_tool->y1;
-      transform_tool->trans_info [X1] = (gdouble) transform_tool->x2;
-      transform_tool->trans_info [Y1] = (gdouble) transform_tool->y1;
-      transform_tool->trans_info [X2] = (gdouble) transform_tool->x1;
-      transform_tool->trans_info [Y2] = (gdouble) transform_tool->y2;
-      transform_tool->trans_info [X3] = (gdouble) transform_tool->x2;
-      transform_tool->trans_info [Y3] = (gdouble) transform_tool->y2;
+      transform_tool->trans_info[X0] = (gdouble) transform_tool->x1;
+      transform_tool->trans_info[Y0] = (gdouble) transform_tool->y1;
+      transform_tool->trans_info[X1] = (gdouble) transform_tool->x2;
+      transform_tool->trans_info[Y1] = (gdouble) transform_tool->y1;
+      transform_tool->trans_info[X2] = (gdouble) transform_tool->x1;
+      transform_tool->trans_info[Y2] = (gdouble) transform_tool->y2;
+      transform_tool->trans_info[X3] = (gdouble) transform_tool->x2;
+      transform_tool->trans_info[Y3] = (gdouble) transform_tool->y2;
       break;
 
     case TRANSFORM_MOTION:
@@ -199,8 +205,8 @@ perspective_info_update (GimpTransformTool *transform_tool)
 	}
     }
 
-  info_dialog_update (transform_info);
-  info_dialog_popup (transform_info);
+  info_dialog_update (transform_tool->info_dialog);
+  info_dialog_popup (transform_tool->info_dialog);
 }
 
 static void

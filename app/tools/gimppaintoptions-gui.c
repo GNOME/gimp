@@ -777,7 +777,7 @@ paint_options_paint_mode_update (GtkWidget *widget,
   PaintOptions     *options;
 
   paint_mode = 
-    (LayerModeEffects) g_object_get_data (G_OBJECT (widget), "user_data");
+    (LayerModeEffects) g_object_get_data (G_OBJECT (widget), "gimp-item-data");
 
   options = (PaintOptions *) data;
 

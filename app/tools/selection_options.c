@@ -125,8 +125,7 @@ selection_options_init (SelectionOptions *options,
       {
         options->op_w[i] = gtk_radio_button_new (group);
         group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (options->op_w[i]));
-        gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (options->op_w[i]),
-                                    FALSE);
+        gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (options->op_w[i]), FALSE);
         gtk_box_pack_start (GTK_BOX (hbox), options->op_w[i], FALSE, FALSE, 0);
         gtk_widget_show (options->op_w[i]);
 
@@ -141,7 +140,7 @@ selection_options_init (SelectionOptions *options,
                                           TRUE);
           }
 
-        g_object_set_data (G_OBJECT (options->op_w[i]), "user_data",
+        g_object_set_data (G_OBJECT (options->op_w[i]), "gimp-item-data",
                            GINT_TO_POINTER (select_op_entries[i].op));
         g_signal_connect (G_OBJECT (options->op_w[i]), "toggled",
                           G_CALLBACK (gimp_radio_button_update),
@@ -431,6 +430,12 @@ selection_options_reset (GimpToolOptions *tool_options)
   SelectionOptions *options;
 
   options = (SelectionOptions *) tool_options;
+
+  if (options->op_w[0])
+    {
+      gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->op_w[0]),
+                                   GINT_TO_POINTER (options->op_d));
+    }
 
   if (options->feather_w)
     {

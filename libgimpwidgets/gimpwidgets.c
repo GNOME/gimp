@@ -59,7 +59,7 @@ gimp_option_menu_new (gboolean            menu_only,
 		       *  const gchar    *label,
 		       *  GCallback       callback,
 		       *  gpointer        callback_data,
-		       *  gpointer        user_data,
+		       *  gpointer        item_data,
 		       *  GtkWidget     **widget_ptr,
 		       *  gboolean        active
 		       */
@@ -73,7 +73,7 @@ gimp_option_menu_new (gboolean            menu_only,
   const gchar    *label;
   GCallback       callback;
   gpointer        callback_data;
-  gpointer        user_data;
+  gpointer        item_data;
   GtkWidget     **widget_ptr;
   gboolean        active;
 
@@ -93,7 +93,7 @@ gimp_option_menu_new (gboolean            menu_only,
     {
       callback      = va_arg (args, GCallback);
       callback_data = va_arg (args, gpointer);
-      user_data     = va_arg (args, gpointer);
+      item_data     = va_arg (args, gpointer);
       widget_ptr    = va_arg (args, GtkWidget **);
       active        = va_arg (args, gboolean);
 
@@ -105,8 +105,14 @@ gimp_option_menu_new (gboolean            menu_only,
 			    callback,
 			    callback_data);
 
-	  if (user_data)
-	    g_object_set_data (G_OBJECT (menuitem), "user_data", user_data);
+	  if (item_data)
+            {
+              g_object_set_data (G_OBJECT (menuitem), "gimp-item-data",
+                                 item_data);
+
+              /*  backward compat  */
+              g_object_set_data (G_OBJECT (menuitem), "user_data", item_data);
+            }
 	}
       else
 	{
@@ -152,7 +158,7 @@ gimp_option_menu_new (gboolean            menu_only,
  * @menu_item_callback: The callback each menu item's "activate" signal will
  *                      be connected with.
  * @callback_data:      The data which will be passed to g_signal_connect().
- * @initial:            The @user_data of the initially selected menu item.
+ * @initial:            The @item_data of the initially selected menu item.
  * @...:                A #NULL terminated @va_list describing the menu items.
  *
  * Returns: A #GtkOptionMenu or a #GtkMenu (depending on @menu_only).
@@ -161,11 +167,11 @@ GtkWidget *
 gimp_option_menu_new2 (gboolean         menu_only,
 		       GCallback        menu_item_callback,
 		       gpointer         callback_data,
-		       gpointer         initial, /* user_data */
+		       gpointer         initial, /* item_data */
 
 		       /* specify menu items as va_list:
 			*  const gchar *label,
-			*  gpointer     user_data,
+			*  gpointer     item_data,
 			*  GtkWidget  **widget_ptr,
 			*/
 
@@ -176,7 +182,7 @@ gimp_option_menu_new2 (gboolean         menu_only,
 
   /*  menu item variables  */
   const gchar  *label;
-  gpointer      user_data;
+  gpointer      item_data;
   GtkWidget   **widget_ptr;
 
   va_list args;
@@ -193,7 +199,7 @@ gimp_option_menu_new2 (gboolean         menu_only,
 
   for (i = 0; label; i++)
     {
-      user_data  = va_arg (args, gpointer);
+      item_data  = va_arg (args, gpointer);
       widget_ptr = va_arg (args, GtkWidget **);
 
       if (strcmp (label, "---"))
@@ -204,8 +210,14 @@ gimp_option_menu_new2 (gboolean         menu_only,
 			    menu_item_callback,
 			    callback_data);
 
-	  if (user_data)
-	    g_object_set_data (G_OBJECT (menuitem), "user_data", user_data);
+	  if (item_data)
+            {
+              g_object_set_data (G_OBJECT (menuitem), "gimp-item-data",
+                                 item_data);
+
+              /*  backward compat  */
+              g_object_set_data (G_OBJECT (menuitem), "user_data", item_data);
+            }
 	}
       else
 	{
@@ -222,7 +234,7 @@ gimp_option_menu_new2 (gboolean         menu_only,
       gtk_widget_show (menuitem);
 
       /*  remember the initial menu item  */
-      if (user_data == initial)
+      if (item_data == initial)
 	initial_index = i;
 
       label = va_arg (args, const gchar *);
@@ -249,17 +261,16 @@ gimp_option_menu_new2 (gboolean         menu_only,
  * gimp_option_menu_set_history:
  * @option_menu: A #GtkOptionMenu as returned by gimp_option_menu_new() or
  *               gimp_option_menu_new2().
- * @user_data:   The @user_data of the menu item you want to select.
+ * @item_data:   The @item_data of the menu item you want to select.
  **/
 void
 gimp_option_menu_set_history (GtkOptionMenu *option_menu,
-			      gpointer       user_data)
+			      gpointer       item_data)
 {
   GtkWidget *menu_item;
   GList     *list;
   gint       history = 0;
 
-  g_return_if_fail (option_menu);
   g_return_if_fail (GTK_IS_OPTION_MENU (option_menu));
 
   for (list = GTK_MENU_SHELL (option_menu->menu)->children;
@@ -269,7 +280,8 @@ gimp_option_menu_set_history (GtkOptionMenu *option_menu,
       menu_item = GTK_WIDGET (list->data);
 
       if (GTK_IS_LABEL (GTK_BIN (menu_item)->child) &&
-	  g_object_get_data (G_OBJECT (menu_item), "user_data") == user_data)
+	  g_object_get_data (G_OBJECT (menu_item),
+                             "gimp-item-data") == item_data)
 	{
 	  break;
 	}
@@ -297,7 +309,7 @@ gimp_radio_group_new (gboolean            in_frame,
 		       *  const gchar    *label,
 		       *  GCallback       callback,
 		       *  gpointer        callback_data,
-		       *  gpointer        user_data,
+		       *  gpointer        item_data,
 		       *  GtkWidget     **widget_ptr,
 		       *  gboolean        active,
 		       */
@@ -312,7 +324,7 @@ gimp_radio_group_new (gboolean            in_frame,
   const gchar  *label;
   GCallback     callback;
   gpointer      callback_data;
-  gpointer      user_data;
+  gpointer      item_data;
   GtkWidget   **widget_ptr;
   gboolean      active;
 
@@ -329,7 +341,7 @@ gimp_radio_group_new (gboolean            in_frame,
     {
       callback      = va_arg (args, GCallback);
       callback_data = va_arg (args, gpointer);
-      user_data     = va_arg (args, gpointer);
+      item_data     = va_arg (args, gpointer);
       widget_ptr    = va_arg (args, GtkWidget **);
       active        = va_arg (args, gboolean);
 
@@ -341,8 +353,13 @@ gimp_radio_group_new (gboolean            in_frame,
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
-      if (user_data)
-	g_object_set_data (G_OBJECT (button), "user_data", user_data);
+      if (item_data)
+        {
+          g_object_set_data (G_OBJECT (button), "gimp-item-data", item_data);
+
+          /*  backward compatibility  */
+          g_object_set_data (G_OBJECT (button), "user_data", item_data);
+        }
 
       if (widget_ptr)
 	*widget_ptr = button;
@@ -386,7 +403,7 @@ gimp_radio_group_new (gboolean            in_frame,
  *                         be connected with.
  * @callback_data:         The data which will be passed to
  *                         g_signal_connect().
- * @initial:               The @user_data of the initially pressed radio button.
+ * @initial:               The @item_data of the initially pressed radio button.
  * @...:                   A #NULL terminated @va_list describing
  *                         the radio buttons.
  *
@@ -397,11 +414,11 @@ gimp_radio_group_new2 (gboolean         in_frame,
 		       const gchar     *frame_title,
 		       GCallback        radio_button_callback,
 		       gpointer         callback_data,
-		       gpointer         initial, /* user_data */
+		       gpointer         initial, /* item_data */
 
 		       /* specify radio buttons as va_list:
 			*  const gchar *label,
-			*  gpointer     user_data,
+			*  gpointer     item_data,
 			*  GtkWidget  **widget_ptr,
 			*/
 
@@ -413,7 +430,7 @@ gimp_radio_group_new2 (gboolean         in_frame,
 
   /*  radio button variables  */
   const gchar *label;
-  gpointer     user_data;
+  gpointer     item_data;
   GtkWidget  **widget_ptr;
 
   va_list args;
@@ -428,7 +445,7 @@ gimp_radio_group_new2 (gboolean         in_frame,
 
   while (label)
     {
-      user_data  = va_arg (args, gpointer);
+      item_data  = va_arg (args, gpointer);
       widget_ptr = va_arg (args, GtkWidget **);
 
       if (label != (gpointer) 1)
@@ -439,13 +456,18 @@ gimp_radio_group_new2 (gboolean         in_frame,
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
-      if (user_data)
-	g_object_set_data (G_OBJECT (button), "user_data", user_data);
+      if (item_data)
+        {
+          g_object_set_data (G_OBJECT (button), "gimp-item-data", item_data);
+
+          /*  backward compatibility  */
+          g_object_set_data (G_OBJECT (button), "user_data", item_data);
+        }
 
       if (widget_ptr)
 	*widget_ptr = button;
 
-      if (initial == user_data)
+      if (initial == item_data)
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
       g_signal_connect (G_OBJECT (button), "toggled",
@@ -472,6 +494,29 @@ gimp_radio_group_new2 (gboolean         in_frame,
     }
 
   return vbox;
+}
+
+void
+gimp_radio_group_set_active (GtkRadioButton *radio_button,
+                             gpointer        item_data)
+{
+  GtkWidget *button;
+  GSList    *group;
+
+  g_return_if_fail (GTK_IS_RADIO_BUTTON (radio_button));
+
+  for (group = gtk_radio_button_get_group (radio_button);
+       group;
+       group = g_slist_next (group))
+    {
+      button = GTK_WIDGET (group->data);
+
+      if (g_object_get_data (G_OBJECT (button), "gimp-item-data") == item_data)
+        {
+          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+          return;
+        }
+    }
 }
 
 /**
@@ -992,8 +1037,8 @@ gimp_mem_size_unit_callback (GtkWidget *widget,
 
   gmsed = (GimpMemSizeEntryData *)data;
 
-  new_unit =
-    GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (widget), "user_data"));
+  new_unit = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (widget),
+                                                  "gimp-item-data"));
 
   if (new_unit && new_unit != gmsed->mem_size_unit)
     {
@@ -1198,7 +1243,7 @@ gimp_toggle_button_update (GtkWidget *widget,
  * gimp_radio_button_update:
  * @widget: A #GtkRadioButton.
  * @data:   A pointer to a #gint variable which will store the value of
- *          GPOINTER_TO_INT (g_object_get_user_data(object, "user_data")).
+ *          GPOINTER_TO_INT (g_object_get_user_data(@widget, "gimp-item-data")).
  *
  * Note that this function calls gimp_toggle_button_sensitive_update().
  **/
@@ -1213,7 +1258,7 @@ gimp_radio_button_update (GtkWidget *widget,
       toggle_val = (gint *) data;
 
       *toggle_val = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
-							"user_data"));
+							"gimp-item-data"));
     }
 
   gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (widget));
@@ -1223,7 +1268,7 @@ gimp_radio_button_update (GtkWidget *widget,
  * gimp_menu_item_update:
  * @widget: A #GtkMenuItem.
  * @data:   A pointer to a #gint variable which will store the value of
- *          GPOINTER_TO_INT (g_object_get_data(object, "user_data")).
+ *          GPOINTER_TO_INT (g_object_get_data(@widget, "gimp-item-data")).
  **/
 void
 gimp_menu_item_update (GtkWidget *widget,
@@ -1234,7 +1279,7 @@ gimp_menu_item_update (GtkWidget *widget,
   item_val = (gint *) data;
 
   *item_val = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
-						  "user_data"));
+						  "gimp-item-data"));
 }
 
 /**
