@@ -346,7 +346,6 @@ Tue Jun 13 19:55:30 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
 	* Makefile.am: bumped dependency to gtk+-1.2.8 and included
 	new cursor files
 
->>>>>>> 1.2757
 2000-06-10  Sven Neumann  <sven@gimp.org>
 
 	* AUTHORS: applied gimp-cornwell-000507-0

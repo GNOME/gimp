@@ -579,10 +579,11 @@ color_pixels (unsigned char *dest,
      }
      break;
    default:
-   {
      while (w--)
-       memcpy (dest,color,bytes);
-   }
+       {
+         memcpy (dest, color, bytes);
+         dest += bytes;
+       }
   }
 }
 
