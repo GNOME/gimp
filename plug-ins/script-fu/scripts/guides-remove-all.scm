@@ -14,7 +14,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-guides-remove"
-		    _"<Image>/Image/Guides/_Remove all Guides"
+		    _"_Remove all Guides"
 		    "Removes all horizontal and vertical guides."
 		    "Alan Horkan"
 		    "Alan Horkan, 2004. Public Domain."
@@ -22,3 +22,6 @@
 		    ""
 		    SF-IMAGE    "Image"    0
 		    SF-DRAWABLE "Drawable" 0)
+
+(script-fu-menu-register "script-fu-guides-remove"
+			 "<Image>/Image/Guides")

@@ -116,21 +116,24 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-alien-neon-logo-alpha"
-		    _"<Image>/Script-Fu/Alpha to Logo/Alien _Neon..."
+		    _"Alien _Neon..."
 		    "Creates a psychedelic effect with outlines of the specified color around the letters"
 		    "Raphael Quinet (quinet@gamers.org)"
 		    "Raphael Quinet"
 		    "1999-2000"
 		    "RGBA"
-                    SF-IMAGE      "Image" 0
-                    SF-DRAWABLE   "Drawable" 0
-		    SF-COLOR      _"Glow color" '(0 255 0)
+                    SF-IMAGE      "Image"             0
+                    SF-DRAWABLE   "Drawable"          0
+		    SF-COLOR      _"Glow color"       '(0 255 0)
 		    SF-COLOR      _"Background color" '(0 0 0)
-                    SF-ADJUSTMENT _"Width of bands" '(2 1 60 1 10 0 0)
-                    SF-ADJUSTMENT _"Width of gaps" '(2 1 60 1 10 0 0)
-                    SF-ADJUSTMENT _"Number of bands" '(7 1 100 1 10 0 1)
-		    SF-TOGGLE     _"Fade away" TRUE
-		    )
+                    SF-ADJUSTMENT _"Width of bands"   '(2 1 60 1 10 0 0)
+                    SF-ADJUSTMENT _"Width of gaps"    '(2 1 60 1 10 0 0)
+                    SF-ADJUSTMENT _"Number of bands"  '(7 1 100 1 10 0 1)
+		    SF-TOGGLE     _"Fade away"        TRUE)
+
+(script-fu-menu-register "script-fu-alien-neon-logo-alpha"
+			 _"<Image>/Script-Fu/Alpha to Logo")
+
 
 (define (script-fu-alien-neon-logo text 
 				   size 
@@ -152,22 +155,21 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-alien-neon-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/Alien _Neon..."
+		    _"Alien _Neon..."
 		    "Creates a psychedelic effect with outlines of the specified color around the letters"
 		    "Raphael Quinet (quinet@gamers.org)"
 		    "Raphael Quinet"
 		    "1999-2000"
 		    ""
-		    SF-STRING     _"Text" "The GIMP"
+		    SF-STRING     _"Text"               "The GIMP"
 		    SF-ADJUSTMENT _"Font size (pixels)" '(150 2 1000 1 10 0 1)
-		    SF-FONT       _"Font" "Blippo"
-		    SF-COLOR      _"Glow color" '(0 255 0)
-		    SF-COLOR      _"Background color" '(0 0 0)
-                    SF-ADJUSTMENT _"Width of bands" '(2 1 60 1 10 0 0)
-                    SF-ADJUSTMENT _"Width of gaps" '(2 1 60 1 10 0 0)
-                    SF-ADJUSTMENT _"Number of bands" '(7 1 100 1 10 0 1)
-		    SF-TOGGLE     _"Fade away" TRUE
-		    )
+		    SF-FONT       _"Font"               "Blippo"
+		    SF-COLOR      _"Glow color"         '(0 255 0)
+		    SF-COLOR      _"Background color"   '(0 0 0)
+                    SF-ADJUSTMENT _"Width of bands"     '(2 1 60 1 10 0 0)
+                    SF-ADJUSTMENT _"Width of gaps"      '(2 1 60 1 10 0 0)
+                    SF-ADJUSTMENT _"Number of bands"    '(7 1 100 1 10 0 1)
+		    SF-TOGGLE     _"Fade away"          TRUE)
 
-; end
-
+(script-fu-menu-register "script-fu-alien-neon-logo"
+			 _"<Toolbox>/Xtns/Script-Fu/Logos")

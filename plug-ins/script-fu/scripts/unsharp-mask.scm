@@ -66,8 +66,9 @@
     (gimp-image-undo-enable new-image)
     (gimp-displays-flush)))
 
+
 (script-fu-register "script-fu-unsharp-mask"
-		    _"<Image>/Script-Fu/Alchemy/_Unsharp Mask..."
+		    _"_Unsharp Mask..."
 		    "Make a sharp image of IMAGE's DRAWABLE by applying unsharp mask method"
 		    "Shuji Narazaki <narazaki@gimp.org>"
 		    "Shuji Narazaki"
@@ -77,3 +78,6 @@
 		    SF-DRAWABLE    "Drawable to apply" 0
 		    SF-ADJUSTMENT _"Mask size"         '(5 1 100 1 1 0 1)
 		    SF-ADJUSTMENT _"Mask opacity"      '(50 0 100 1 1 0 1))
+
+(script-fu-menu-register "script-fu-unsharp-mask"
+			 _"<Image>/Script-Fu/Alchemy")

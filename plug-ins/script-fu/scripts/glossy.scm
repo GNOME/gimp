@@ -173,7 +173,7 @@
 
 
 (script-fu-register "script-fu-glossy-logo-alpha"
-                    _"<Image>/Script-Fu/Alpha to Logo/Glo_ssy..."
+                    _"Glo_ssy..."
                     "Creates anything you can create with it :)"
                     "Hrvoje Horvat (hhorvat@open.hr)"
                     "Hrvoje Horvat"
@@ -197,6 +197,9 @@
 		    SF-TOGGLE     _"Shadow"                   TRUE
 		    SF-ADJUSTMENT _"Shadow X offset"          '(8 0 100 1 10 0 1)
                     SF-ADJUSTMENT _"Shadow Y offset"          '(8 0 100 1 10 0 1))
+
+(script-fu-menu-register "script-fu-glossy-logo-alpha"
+			 _"<Image>/Script-Fu/Alpha to Logo")
 
 
 (define (script-fu-glossy-logo text
@@ -237,7 +240,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-glossy-logo"
-                    _"<Toolbox>/Xtns/Script-Fu/Logos/Glo_ssy..."
+                    _"Glo_ssy..."
                     "Creates anything you can create with it :)"
                     "Hrvoje Horvat (hhorvat@open.hr)"
                     "Hrvoje Horvat"
@@ -262,3 +265,6 @@
 		    SF-TOGGLE     _"Shadow"                   TRUE
 		    SF-ADJUSTMENT _"Shadow X offset"          '(8 0 100 1 10 0 1)
                     SF-ADJUSTMENT _"Shadow Y offset"          '(8 0 100 1 10 0 1))
+
+(script-fu-menu-register "script-fu-glossy-logo"
+			 _"<Toolbox>/Xtns/Script-Fu/Logos")

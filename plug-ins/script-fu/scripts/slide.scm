@@ -229,16 +229,19 @@
     (gimp-context-pop)))
 
 (script-fu-register "script-fu-slide"
-		    _"<Image>/Script-Fu/Decor/_Slide..."
+		    _"_Slide..."
 		    "Gives the image the look of a slide"
 		    "Sven Neumann <sven@gimp.org>"
 		    "Sven Neumann"
 		    "2004/03/28"
 		    "RGB GRAY"
-		    SF-IMAGE    "Image"          0
-		    SF-DRAWABLE "Drawable"       0
-		    SF-STRING   _"Text"          "The GIMP"
-		    SF-STRING   _"Number"        "32"
-		    SF-FONT     _"Font"          "Serif"
-		    SF-COLOR    _"Font color"    '(255 180 0)
-		    SF-TOGGLE   _"Work on copy"  TRUE)
+		    SF-IMAGE    "Image"         0
+		    SF-DRAWABLE "Drawable"      0
+		    SF-STRING   _"Text"         "The GIMP"
+		    SF-STRING   _"Number"       "32"
+		    SF-FONT     _"Font"         "Serif"
+		    SF-COLOR    _"Font color"   '(255 180 0)
+		    SF-TOGGLE   _"Work on copy" TRUE)
+
+(script-fu-menu-register "script-fu-slide"
+			 _"<Image>/Script-Fu/Decor")

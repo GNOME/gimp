@@ -70,12 +70,15 @@
 
 
 (script-fu-register "script-fu-beveled-pattern-hrule"
-		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Hrule..."
+		    _"_Hrule..."
 		    "Beveled pattern hrule"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"
 		    "July 1997"
 		    ""
-                    SF-ADJUSTMENT _"Width" '(480 5 1500 1 10 0 1)
-                    SF-ADJUSTMENT _"Height" '(16 1 100 1 10 0 1)
+                    SF-ADJUSTMENT _"Width"   '(480 5 1500 1 10 0 1)
+                    SF-ADJUSTMENT _"Height"  '(16 1 100 1 10 0 1)
 		    SF-PATTERN    _"Pattern" "Wood")
+
+(script-fu-menu-register "script-fu-beveled-pattern-hrule"
+			 _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern")

@@ -144,24 +144,23 @@
           (gimp-selection-none inImage)
 )
 
-; Register the function with the GIMP:
+(script-fu-register "script-fu-fuzzy-border"
+		    _"_Fuzzy Border..."
+		    "Fade border to chosen color"
+		    "Chris Gutteridge"
+		    "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
+		    "3rd April 1998"
+		    "RGB* GRAY*"
+		    SF-IMAGE       "The image"              0
+		    SF-DRAWABLE    "The layer"              0
+		    SF-COLOR      _"Color"                  '(255 255 255)
+		    SF-ADJUSTMENT _"Border size"            '(16 1 300 1 10 0 1)
+		    SF-TOGGLE     _"Blur border"            TRUE
+		    SF-ADJUSTMENT _"Granularity (1 is Low)" '(4 1 16 0.25 5 2 0)
+		    SF-TOGGLE     _"Add shadow"             FALSE
+		    SF-ADJUSTMENT _"Shadow weight (%)"      '(100 0 100 1 10 0 0)
+		    SF-TOGGLE     _"Work on copy"           TRUE
+		    SF-TOGGLE     _"Flatten image"          TRUE)
 
-(script-fu-register
-    "script-fu-fuzzy-border"
-    _"<Image>/Script-Fu/Decor/_Fuzzy Border..."
-    "Fade border to chosen color"
-    "Chris Gutteridge"
-    "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
-    "3rd April 1998"
-    "RGB* GRAY*"
-    SF-IMAGE "The image" 0
-    SF-DRAWABLE "The layer" 0
-    SF-COLOR  _"Color"      '(255 255 255)
-    SF-ADJUSTMENT  _"Border size" '(16 1 300 1 10 0 1)
-    SF-TOGGLE _"Blur border" TRUE
-    SF-ADJUSTMENT _"Granularity (1 is Low)" '(4 1 16 0.25 5 2 0)
-    SF-TOGGLE _"Add shadow" FALSE
-    SF-ADJUSTMENT _"Shadow weight (%)" '(100 0 100 1 10 0 0)
-    SF-TOGGLE _"Work on copy" TRUE
-    SF-TOGGLE _"Flatten image" TRUE
-)
+(script-fu-menu-register "script-fu-fuzzy-border"
+			 _"<Image>/Script-Fu/Decor")

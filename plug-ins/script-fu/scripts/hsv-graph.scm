@@ -330,24 +330,23 @@
 
     (gimp-context-pop)))
 
-(script-fu-register
- "script-fu-hsv-graph"
- _"<Image>/Script-Fu/Utils/Draw _HSV Graph..."
- "Draph the graph of H/S/V values on the drawable"
- "Shuji Narazaki <narazaki@InetQ.or.jp>"
- "Shuji Narazaki"
- "1997"
- "RGB*"
- SF-IMAGE "Image to analyze" 0
- SF-DRAWABLE "Drawable to analyze" 0
- SF-ADJUSTMENT _"Graph scale" (cons script-fu-hsv-graph-scale '(0.1 5 0.1 1 1 1))
- SF-ADJUSTMENT _"BG opacity" (cons script-fu-hsv-graph-opacity '(0 100 1 10 0 1))
- SF-TOGGLE _"Use selection bounds instead of belows" script-fu-hsv-graph-bounds?
- SF-TOGGLE _"From top-left to bottom-right" script-fu-hsv-graph-left2right?
- SF-ADJUSTMENT _"Start X" (cons script-fu-hsv-graph-beg-x '(0 5000 1 10 0 1))
- SF-ADJUSTMENT _"Start Y" (cons script-fu-hsv-graph-beg-y '(0 5000 1 10 0 1))
- SF-ADJUSTMENT _"End X" (cons script-fu-hsv-graph-end-x '(0 5000 1 10 0 1))
- SF-ADJUSTMENT _"End Y" (cons script-fu-hsv-graph-end-y '(0 5000 1 10 0 1))
-)
+(script-fu-register "script-fu-hsv-graph"
+		    _"Draw _HSV Graph..."
+		    "Draph the graph of H/S/V values on the drawable"
+		    "Shuji Narazaki <narazaki@InetQ.or.jp>"
+		    "Shuji Narazaki"
+		    "1997"
+		    "RGB*"
+		    SF-IMAGE       "Image to analyze"    0
+		    SF-DRAWABLE    "Drawable to analyze" 0
+		    SF-ADJUSTMENT _"Graph scale" (cons script-fu-hsv-graph-scale '(0.1 5 0.1 1 1 1))
+		    SF-ADJUSTMENT _"BG opacity"  (cons script-fu-hsv-graph-opacity '(0 100 1 10 0 1))
+		    SF-TOGGLE     _"Use selection bounds instead of belows" script-fu-hsv-graph-bounds?
+		    SF-TOGGLE     _"From top-left to bottom-right" script-fu-hsv-graph-left2right?
+		    SF-ADJUSTMENT _"Start X" (cons script-fu-hsv-graph-beg-x '(0 5000 1 10 0 1))
+		    SF-ADJUSTMENT _"Start Y" (cons script-fu-hsv-graph-beg-y '(0 5000 1 10 0 1))
+		    SF-ADJUSTMENT _"End X" (cons script-fu-hsv-graph-end-x '(0 5000 1 10 0 1))
+		    SF-ADJUSTMENT _"End Y" (cons script-fu-hsv-graph-end-y '(0 5000 1 10 0 1)))
 
-;;; hsv-graph.scm ends here
+(script-fu-menu-register "script-fu-hsv-graph"
+			 _"<Image>/Script-Fu/Utils")

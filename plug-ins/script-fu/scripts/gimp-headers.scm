@@ -132,41 +132,46 @@
 
 
 (script-fu-register "script-fu-big-header-gimp-org"
-		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
+		    _"_Big Header..."
 		    "Big Gimp.org Header"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "1997"
 		    ""
-		    SF-STRING _"Text" "gimp.org"
-		    SF-FONT   _"Font" "Serif"
+		    SF-STRING     _"Text"               "gimp.org"
+		    SF-FONT       _"Font"               "Serif"
 		    SF-ADJUSTMENT _"Font size (pixels)" '(50 2 1000 1 10 0 1)
-		    SF-COLOR  _"Text color" '(82 108 159)
-		    SF-COLOR  _"Highlight color" '(190 220 250)
-		    SF-COLOR  _"Dark color" '(46 74 92)
-		    SF-COLOR  _"Shadow color" '(0 0 0)
-		    SF-TOGGLE _"Autocrop" TRUE
-		    SF-TOGGLE _"Remove background" TRUE
-		    SF-TOGGLE _"Index image" TRUE
-		    SF-ADJUSTMENT _"Number of colors" '(15 2 255 1 10 0 1))
+		    SF-COLOR      _"Text color"         '(82 108 159)
+		    SF-COLOR      _"Highlight color"    '(190 220 250)
+		    SF-COLOR      _"Dark color"         '(46 74 92)
+		    SF-COLOR      _"Shadow color"       '(0 0 0)
+		    SF-TOGGLE     _"Autocrop"           TRUE
+		    SF-TOGGLE     _"Remove background"  TRUE
+		    SF-TOGGLE     _"Index image"        TRUE
+		    SF-ADJUSTMENT _"Number of colors"   '(15 2 255 1 10 0 1))
+
+(script-fu-menu-register "script-fu-big-header-gimp-org"
+			 _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org")
 
 (script-fu-register "script-fu-small-header-gimp-org"
-		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
+		    _"_Small Header..."
 		    "Small Gimp.org Header"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "1997"
 		    ""
-		    SF-STRING _"Text" "gimp.org"
-		    SF-FONT   _"Font" "Sans"
+		    SF-STRING     _"Text"               "gimp.org"
+		    SF-FONT       _"Font"               "Sans"
 		    SF-ADJUSTMENT _"Font size (pixels)" '(24 2 1000 1 10 0 1)
-		    SF-COLOR  _"Text color" '(135 220 220)
-		    SF-COLOR  _"Highlight color" '(210 240 245)
-		    SF-COLOR  _"Dark color" '(46 74 92)
-		    SF-COLOR  _"Shadow color" '(0 0 0)
-		    SF-TOGGLE _"Autocrop" TRUE
-		    SF-TOGGLE _"Remove background" TRUE
-		    SF-TOGGLE _"Index image" TRUE
-		    SF-ADJUSTMENT _"Number of colors" '(15 2 255 1 10 0 1)
+		    SF-COLOR      _"Text color"         '(135 220 220)
+		    SF-COLOR      _"Highlight color"    '(210 240 245)
+		    SF-COLOR      _"Dark color"         '(46 74 92)
+		    SF-COLOR      _"Shadow color"       '(0 0 0)
+		    SF-TOGGLE     _"Autocrop"           TRUE
+		    SF-TOGGLE     _"Remove background"  TRUE
+		    SF-TOGGLE     _"Index image"        TRUE
+		    SF-ADJUSTMENT _"Number of colors"   '(15 2 255 1 10 0 1)
 		    SF-ADJUSTMENT _"Select-by-color threshold" '(1 1 256 1 10 0 1))
 
+(script-fu-menu-register "script-fu-small-header-gimp-org"
+			 _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org")

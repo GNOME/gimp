@@ -69,19 +69,19 @@
     (gimp-image-undo-group-end img)
     (gimp-displays-flush)))
 
-(script-fu-register
- "script-fu-line-nova"
- _"<Image>/Script-Fu/Render/Line _Nova..."
- "Line Nova. Draw lines with Foreground color from the center of image to the edges. 1st undo cancels bucket-fill. 2nd undo gets orignal selection."
- "Shuji Narazaki <narazaki@gimp.org>"
- "Shuji Narazaki"
- "1997,1998"
- ""
- SF-IMAGE "Image" 0
- SF-DRAWABLE "Drawable" 0
- SF-ADJUSTMENT _"Number of lines" '(200 40 1000 1 1 0 1)
- SF-ADJUSTMENT _"Sharpness (degrees)" '(1.0 0.0 10.0 0.1 1 1 1)
- SF-ADJUSTMENT _"Offset radius" '(100 0 2000 1 1 0 1)
- SF-ADJUSTMENT _"Randomness" '(30 0 2000 1 1 0 1)
-)
-;;; line-nova.scm ends here
+(script-fu-register "script-fu-line-nova"
+		    _"Line _Nova..."
+		    "Line Nova. Draw lines with Foreground color from the center of image to the edges. 1st undo cancels bucket-fill. 2nd undo gets orignal selection."
+		    "Shuji Narazaki <narazaki@gimp.org>"
+		    "Shuji Narazaki"
+		    "1997,1998"
+		    ""
+		    SF-IMAGE       "Image"               0
+		    SF-DRAWABLE    "Drawable"            0
+		    SF-ADJUSTMENT _"Number of lines"     '(200 40 1000 1 1 0 1)
+		    SF-ADJUSTMENT _"Sharpness (degrees)" '(1.0 0.0 10.0 0.1 1 1 1)
+		    SF-ADJUSTMENT _"Offset radius"       '(100 0 2000 1 1 0 1)
+		    SF-ADJUSTMENT _"Randomness"          '(30 0 2000 1 1 0 1))
+
+(script-fu-menu-register "script-fu-line-nova"
+			 _"<Image>/Script-Fu/Render")

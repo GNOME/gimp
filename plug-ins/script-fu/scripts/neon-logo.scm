@@ -176,19 +176,22 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-neon-logo-alpha"
-		    _"<Image>/Script-Fu/Alpha to Logo/N_eon..."
+		    _"N_eon..."
 		    "Neon logos"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1997"
 		    "RGBA"
-                    SF-IMAGE      "Image" 0
-                    SF-DRAWABLE   "Drawable" 0
+                    SF-IMAGE      "Image"             0
+                    SF-DRAWABLE   "Drawable"          0
 		    SF-ADJUSTMENT _"Effect size (pixels * 5)" '(150 2 1000 1 10 0 1)
 		    SF-COLOR      _"Background color" '(0 0 0)
-		    SF-COLOR      _"Glow color" '(38 211 255)
-		    SF-TOGGLE     _"Create shadow" FALSE
-		    )
+		    SF-COLOR      _"Glow color"       '(38 211 255)
+		    SF-TOGGLE     _"Create shadow"    FALSE)
+
+(script-fu-menu-register "script-fu-neon-logo-alpha"
+			 _"<Image>/Script-Fu/Alpha to Logo")
+
 
 (define (script-fu-neon-logo text
 			     size
@@ -206,16 +209,18 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-neon-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/N_eon..."
+		    _"N_eon..."
 		    "Neon logos"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1997"
 		    ""
-		    SF-STRING     _"Text" "NEON"
+		    SF-STRING     _"Text"               "NEON"
 		    SF-ADJUSTMENT _"Font size (pixels)" '(150 2 1000 1 10 0 1)
-		    SF-FONT       _"Font" "Blippo"
-		    SF-COLOR      _"Background color" '(0 0 0)
-		    SF-COLOR      _"Glow color" '(38 211 255)
-		    SF-TOGGLE     _"Create shadow" FALSE
-		    )
+		    SF-FONT       _"Font"               "Blippo"
+		    SF-COLOR      _"Background color"   '(0 0 0)
+		    SF-COLOR      _"Glow color"         '(38 211 255)
+		    SF-TOGGLE     _"Create shadow"      FALSE)
+
+(script-fu-menu-register "script-fu-neon-logo"
+			 _"<Toolbox>/Xtns/Script-Fu/Logos")

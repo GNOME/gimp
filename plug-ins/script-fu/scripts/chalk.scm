@@ -66,15 +66,18 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-chalk-logo-alpha"
-                    _"<Image>/Script-Fu/Alpha to Logo/_Chalk..."
+                    _"_Chalk..."
                     "Chalk scribbled logos"
                     "Manish Singh <msingh@uclink4.berkeley.edu>"
                     "Manish Singh"
                     "October 1997"
                     "RGBA"
-                    SF-IMAGE      "Image" 0
-                    SF-DRAWABLE   "Drawable" 0
-                    SF-COLOR      _"Background color" '(0 0 0))
+                    SF-IMAGE     "Image"            0
+                    SF-DRAWABLE  "Drawable"         0
+                    SF-COLOR    _"Background color" '(0 0 0))
+
+(script-fu-menu-register "script-fu-chalk-logo-alpha"
+			 _"<Image>/Script-Fu/Alpha to Logo")
 
 
 (define (script-fu-chalk-logo text
@@ -100,14 +103,17 @@
     (gimp-context-pop)))
 
 (script-fu-register "script-fu-chalk-logo"
-                    _"<Toolbox>/Xtns/Script-Fu/Logos/_Chalk..."
+                    _"_Chalk..."
                     "Chalk scribbled logos"
                     "Manish Singh <msingh@uclink4.berkeley.edu>"
                     "Manish Singh"
                     "October 1997"
                     ""
-                    SF-STRING     _"Text" "CHALK"
+                    SF-STRING     _"Text"               "CHALK"
                     SF-ADJUSTMENT _"Font size (pixels)" '(150 2 1000 1 10 0 1)
-                    SF-FONT       _"Font" "Cooper"
-                    SF-COLOR      _"Background color" '(0 0 0)
-                    SF-COLOR      _"Chalk color" '(255 255 255))
+                    SF-FONT       _"Font"               "Cooper"
+                    SF-COLOR      _"Background color"   '(0 0 0)
+                    SF-COLOR      _"Chalk color"        '(255 255 255))
+
+(script-fu-menu-register "script-fu-chalk-logo"
+			 _"<Toolbox>/Xtns/Script-Fu/Logos")

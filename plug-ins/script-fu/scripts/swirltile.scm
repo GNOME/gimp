@@ -44,18 +44,21 @@
     (gimp-context-pop)))
 
 (script-fu-register "script-fu-swirl-tile"
-		    _"<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-_Tile..."
+		    _"Swirl-_Tile..."
 		    "Create an interesting swirled tile"
 		    "Adrian Likins <aklikins@eos.ncsu.edu>"
 		    "Adrian Likins"
 		    "1997"
 		    ""
-		    SF-ADJUSTMENT _"Depth" '(10 0 64 1 1 0 0)
-		    SF-ADJUSTMENT _"Azimuth" '(135 0 360 1 10 0 0)
-		    SF-ADJUSTMENT _"Elevation" '(45 0 90 1 10 0 0)
-		    SF-ADJUSTMENT _"Blur radius" '(3 0 128 1 10 0 0)
-		    SF-ADJUSTMENT _"Height" '(256 0 1024 1 10 0 1)
-		    SF-ADJUSTMENT _"Width" '(256 0 1024 1 10 0 1)
-		    SF-ADJUSTMENT _"Whirl amount" '(320 0 360 1 10 0 0)
-		    SF-ADJUSTMENT _"Roughness" '(.5 0 1 .1 .01 2 1)
+		    SF-ADJUSTMENT _"Depth"            '(10 0 64 1 1 0 0)
+		    SF-ADJUSTMENT _"Azimuth"          '(135 0 360 1 10 0 0)
+		    SF-ADJUSTMENT _"Elevation"        '(45 0 90 1 10 0 0)
+		    SF-ADJUSTMENT _"Blur radius"      '(3 0 128 1 10 0 0)
+		    SF-ADJUSTMENT _"Height"           '(256 0 1024 1 10 0 1)
+		    SF-ADJUSTMENT _"Width"            '(256 0 1024 1 10 0 1)
+		    SF-ADJUSTMENT _"Whirl amount"     '(320 0 360 1 10 0 0)
+		    SF-ADJUSTMENT _"Roughness"        '(.5 0 1 .1 .01 2 1)
 		    SF-COLOR      _"Background color" '(255 255 255))
+
+(script-fu-menu-register "script-fu-swirl-tile"
+			 _"<Toolbox>/Xtns/Script-Fu/Patterns")

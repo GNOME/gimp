@@ -98,18 +98,21 @@
     (gimp-context-pop)))
 
 (script-fu-register "script-fu-lava"
-		    _"<Image>/Script-Fu/Render/_Lava..."
+		    _"_Lava..."
 		    "Fills the current selection with lava."
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins"
 		    "10/12/97"
 		    "RGB* GRAY*"
-		    SF-IMAGE "Image" 0
-		    SF-DRAWABLE "Drawable" 0
-		    SF-ADJUSTMENT _"Seed" '(10 1 30000 1 10 0 1)
-		    SF-ADJUSTMENT _"Size" '(10 0 100 1 10 0 1)
-		    SF-ADJUSTMENT _"Roughness" '(7 3 50 1 10 0 0)
-		    SF-GRADIENT _"Gradient" "German flag smooth"
-		    SF-TOGGLE   _"Keep selection" TRUE
-		    SF-TOGGLE   _"Separate layer" TRUE
-		    SF-TOGGLE   _"Use current gradient" FALSE)
+		    SF-IMAGE       "Image"                0
+		    SF-DRAWABLE    "Drawable"             0
+		    SF-ADJUSTMENT _"Seed"                 '(10 1 30000 1 10 0 1)
+		    SF-ADJUSTMENT _"Size"                 '(10 0 100 1 10 0 1)
+		    SF-ADJUSTMENT _"Roughness"            '(7 3 50 1 10 0 0)
+		    SF-GRADIENT   _"Gradient"             "German flag smooth"
+		    SF-TOGGLE     _"Keep selection"       TRUE
+		    SF-TOGGLE     _"Separate layer"       TRUE
+		    SF-TOGGLE     _"Use current gradient" FALSE)
+
+(script-fu-menu-register "script-fu-lava"
+			 _"<Image>/Script-Fu/Render")

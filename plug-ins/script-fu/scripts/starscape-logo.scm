@@ -122,7 +122,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-starscape-logo-alpha"
-		    _"<Image>/Script-Fu/Alpha to Logo/Sta_rscape..."
+		    _"Sta_rscape..."
 		    "Starscape using the Nova plug-in"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
@@ -132,6 +132,9 @@
                     SF-DRAWABLE   "Drawable"                  0
 		    SF-ADJUSTMENT _"Effect size (pixels * 4)" '(150 1 1000 1 10 0 1)
 		    SF-COLOR      _"Glow color"               '(28 65 188))
+
+(script-fu-menu-register "script-fu-starscape-logo-alpha"
+			 _"<Image>/Script-Fu/Alpha to Logo")
 
 
 (define (script-fu-starscape-logo text
@@ -149,7 +152,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-starscape-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/Sta_rscape..."
+		    _"Sta_rscape..."
 		    "Starscape using the Nova plug-in"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
@@ -159,3 +162,6 @@
 		    SF-ADJUSTMENT _"Font size (pixels)" '(150 1 1000 1 10 0 1)
 		    SF-FONT       _"Font"               "Engraver"
 		    SF-COLOR      _"Glow color"         '(28 65 188))
+
+(script-fu-menu-register "script-fu-starscape-logo"
+			 _"<Toolbox>/Xtns/Script-Fu/Logos")

@@ -165,7 +165,7 @@
     (gimp-context-pop)))
 
 (script-fu-register "script-fu-addborder"
-		    _"<Image>/Script-Fu/Decor/Add _Border..."
+		    _"Add _Border..."
 		    "Add a border around an image"
 		    "Andy Thomas <alt@picnic.demon.co.uk>"
 		    "Andy Thomas"
@@ -177,3 +177,6 @@
 		    SF-ADJUSTMENT _"Border Y size"        '(12 1 250 1 10 0 1)
 		    SF-COLOR      _"Border color"         '(38 31 207)
 		    SF-ADJUSTMENT _"Delta value on color" '(25 1 255 1 10 0 1))
+
+(script-fu-menu-register "script-fu-addborder"
+			 _"<Image>/Script-Fu/Decor")

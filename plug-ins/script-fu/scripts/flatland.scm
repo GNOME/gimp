@@ -57,15 +57,18 @@
 ))
 
 (script-fu-register "script-fu-flatland"
-		    _"<Toolbox>/Xtns/Script-Fu/Patterns/_Flatland..."
+		    _"_Flatland..."
 		    "A Land Pattern"
 		    "Adrian Likins <aklikins@eos.ncsu.edu>"
 		    "Adrian Likins"
 		    "1997"
 		    ""
-		    SF-ADJUSTMENT _"Image width" '(256 10 2000 1 10 0 1)
+		    SF-ADJUSTMENT _"Image width"  '(256 10 2000 1 10 0 1)
 		    SF-ADJUSTMENT _"Image height" '(256 10 2000 1 10 0 1)
-		    SF-ADJUSTMENT _"Random seed" '(80 1 2000000 1 10 0 1)
+		    SF-ADJUSTMENT _"Random seed"  '(80 1 2000000 1 10 0 1)
 		    SF-ADJUSTMENT _"Detail level" '(3 1 15 1 10 1 0)
-		    SF-ADJUSTMENT _"Scale X" '(4 0.1 16 0.1 2 1 1)
-		    SF-ADJUSTMENT _"Scale Y" '(4 0.1 16 0.1 2 1 1))
+		    SF-ADJUSTMENT _"Scale X"      '(4 0.1 16 0.1 2 1 1)
+		    SF-ADJUSTMENT _"Scale Y"      '(4 0.1 16 0.1 2 1 1))
+
+(script-fu-menu-register "script-fu-flatland"
+			 _"<Toolbox>/Xtns/Script-Fu/Patterns")

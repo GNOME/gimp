@@ -153,22 +153,21 @@
     (gimp-context-pop)))
 
 
-; Register the function with the GIMP:
-; ------------------------------------
+(script-fu-register "script-fu-fade-outline"
+		    _"_Fade Outline..."
+		    "Blend the Layers outline border from one alpha value (opaque) to another (transparent) by generating a Layermask"
+		    "Wolfgang Hofer <hof@hotbot.com>"
+		    "Wolfgang Hofer"
+		    "10 Nov 1999"
+		    "RGB* GRAY*"
+		    SF-IMAGE       "The image"   0
+		    SF-DRAWABLE    "The layer"   0
+		    SF-ADJUSTMENT _"Border size" '(10 1 300 1 10 0 1)
+		    SF-ADJUSTMENT _"Fade from %" '(100 0 100 1 10 0 0)
+		    SF-ADJUSTMENT _"Fade to   %" '(0 0 100 1 10 0 0)
+		    SF-TOGGLE     _"Use growing selection"     FALSE
+		    SF-TOGGLE     _"Apply generated layermask" FALSE
+		    SF-TOGGLE     _"Clear unselected maskarea" TRUE)
 
-(script-fu-register
-    "script-fu-fade-outline"
-    _"<Image>/Script-Fu/Selection/_Fade Outline..."
-    "Blend the Layers outline border from one alpha value (opaque) to another (transparent) by generating a Layermask"
-    "Wolfgang Hofer <hof@hotbot.com>"
-    "Wolfgang Hofer"
-    "10 Nov 1999"
-    "RGB* GRAY*"
-    SF-IMAGE "The image" 0
-    SF-DRAWABLE "The layer" 0
-    SF-ADJUSTMENT _"Border size" '(10 1 300 1 10 0 1)
-    SF-ADJUSTMENT _"Fade from %" '(100 0 100 1 10 0 0)
-    SF-ADJUSTMENT _"Fade to   %" '(0 0 100 1 10 0 0)
-    SF-TOGGLE _"Use growing selection" FALSE
-    SF-TOGGLE _"Apply generated layermask" FALSE
-    SF-TOGGLE _"Clear unselected maskarea" TRUE)
+(script-fu-menu-register "script-fu-fade-outline"
+			 _"<Image>/Script-Fu/Selection")

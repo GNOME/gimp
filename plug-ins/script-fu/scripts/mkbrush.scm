@@ -57,7 +57,7 @@
     (gimp-context-set-brush name)))
 
 (script-fu-register "script-fu-make-brush-rectangular"
-		    _"<Toolbox>/Xtns/Script-Fu/Make Brush/_Rectangular..."
+		    _"_Rectangular..."
 		    "Create size of brush"
 		    "Seth Burgess <sjburges@ou.edu>"
 		    "Seth Burgess"
@@ -67,6 +67,9 @@
 		    SF-ADJUSTMENT _"Width"   '(20 1 200 1 10 0 1)
 		    SF-ADJUSTMENT _"Height"  '(20 1 200 1 10 0 1)
 		    SF-ADJUSTMENT _"Spacing" '(25 1 100 1 10 1 0))
+
+(script-fu-menu-register "script-fu-make-brush-rectangular"
+			 _"<Toolbox>/Xtns/Script-Fu/Make Brush")
 
 
 (define (script-fu-make-brush-rectangular-feathered name width height
@@ -114,17 +117,20 @@
     (gimp-context-set-brush name)))
 
 (script-fu-register "script-fu-make-brush-rectangular-feathered"
-            _"<Toolbox>/Xtns/Script-Fu/Make Brush/Re_ctangular, Feathered..."
-            "Create size of brush"
-            "Seth Burgess <sjburges@ou.edu>"
-            "Seth Burgess"
-            "1997"
-            ""
-            SF-STRING     _"Name"       "Rectangle"
-            SF-ADJUSTMENT _"Width"      '(20 1 200 1 10 0 1)
-            SF-ADJUSTMENT _"Height"     '(20 1 200 1 10 0 1)
-            SF-ADJUSTMENT _"Feathering" '(4 1 100 1 10 0 1)
-            SF-ADJUSTMENT _"Spacing"    '(25 1 100 1 10 1 0))
+		    _"Re_ctangular, Feathered..."
+		    "Create size of brush"
+		    "Seth Burgess <sjburges@ou.edu>"
+		    "Seth Burgess"
+		    "1997"
+		    ""
+		    SF-STRING     _"Name"       "Rectangle"
+		    SF-ADJUSTMENT _"Width"      '(20 1 200 1 10 0 1)
+		    SF-ADJUSTMENT _"Height"     '(20 1 200 1 10 0 1)
+		    SF-ADJUSTMENT _"Feathering" '(4 1 100 1 10 0 1)
+		    SF-ADJUSTMENT _"Spacing"    '(25 1 100 1 10 1 0))
+
+(script-fu-menu-register "script-fu-make-brush-rectangular-feathered"
+			 _"<Toolbox>/Xtns/Script-Fu/Make Brush")
 
 
 (define (script-fu-make-brush-elliptical name width height spacing)
@@ -161,7 +167,7 @@
     (gimp-context-set-brush name)))
 
 (script-fu-register "script-fu-make-brush-elliptical"
-		    _"<Toolbox>/Xtns/Script-Fu/Make Brush/_Elliptical..."
+		    _"_Elliptical..."
 		    "Create size of brush"
 		    "Seth Burgess <sjburges@ou.edu>"
 		    "Seth Burgess"
@@ -171,6 +177,9 @@
 		    SF-ADJUSTMENT _"Width"   '(20 1 200 1 10 0 1)
 		    SF-ADJUSTMENT _"Height"  '(20 1 200 1 10 0 1)
 		    SF-ADJUSTMENT _"Spacing" '(25 1 100 1 10 1 0))
+
+(script-fu-menu-register "script-fu-make-brush-elliptical"
+			 _"<Toolbox>/Xtns/Script-Fu/Make Brush")
 
 
 (define (script-fu-make-brush-elliptical-feathered name width height
@@ -220,7 +229,7 @@
     (gimp-context-set-brush name)))
 
 (script-fu-register "script-fu-make-brush-elliptical-feathered"
-		    _"<Toolbox>/Xtns/Script-Fu/Make Brush/Elli_ptical, Feathered..."
+		    _"Elli_ptical, Feathered..."
 		    "Makes a feathered elliptical brush of specified size"
 		    "Seth Burgess <sjburges@ou.edu>"
 		    "Seth Burgess"
@@ -231,3 +240,6 @@
 		    SF-ADJUSTMENT _"Height"     '(20 1 200 1 10 0 1)
 		    SF-ADJUSTMENT _"Feathering" '(4 1 100 1 10 0 1)
 		    SF-ADJUSTMENT _"Spacing"    '(25 1 100 1 10 1 0))
+
+(script-fu-menu-register "script-fu-make-brush-elliptical-feathered"
+			 _"<Toolbox>/Xtns/Script-Fu/Make Brush")

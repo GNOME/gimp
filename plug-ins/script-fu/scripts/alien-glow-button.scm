@@ -137,7 +137,7 @@
     (gimp-context-pop)))
 
 (script-fu-register "script-fu-alien-glow-button"
-		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/B_utton..."
+		    _"B_utton..."
 		    "Button with an eerie glow"
 		    "Adrian Likins"
 		    "Adrian Likins"
@@ -152,3 +152,6 @@
 		    SF-ADJUSTMENT _"Padding"            '(6 1 100 1 10 0 1)
 		    SF-ADJUSTMENT _"Glow radius"        '(10 1 200 1 10 0 1)
 		    SF-TOGGLE     _"Flatten image"      TRUE)
+
+(script-fu-menu-register "script-fu-alien-glow-button"
+			 _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow")

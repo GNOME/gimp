@@ -111,24 +111,24 @@
 
 
 (script-fu-register "script-fu-xach-effect"
-		    _"<Image>/Script-Fu/Shadow/_Xach-Effect..."
+		    _"_Xach-Effect..."
 		    "Add a subtle translucent 3-d effect to the current selection or alpha channel"
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins"
 		    "9/28/97"
 		    "RGB* GRAY*"
-		    SF-IMAGE "Image" 0
-		    SF-DRAWABLE "Drawable" 0
-		    SF-ADJUSTMENT _"Highlight X offset" '(-1 -100 100 1 10 0 1)
-		    SF-ADJUSTMENT _"Highlight Y offset" '(-1 -100 100 1 10 0 1)
-		    SF-COLOR      _"Highlight color" '(255 255 255)
-		    SF-ADJUSTMENT _"Highlight opacity" '(66 0 255 1 10 0 0)
-		    SF-COLOR      _"Drop shadow color" '(0 0 0)
-		    SF-ADJUSTMENT _"Drop shadow opacity" '(100 0 100 1 10 0 0)
+		    SF-IMAGE       "Image"                0
+		    SF-DRAWABLE    "Drawable"             0
+		    SF-ADJUSTMENT _"Highlight X offset"   '(-1 -100 100 1 10 0 1)
+		    SF-ADJUSTMENT _"Highlight Y offset"   '(-1 -100 100 1 10 0 1)
+		    SF-COLOR      _"Highlight color"      '(255 255 255)
+		    SF-ADJUSTMENT _"Highlight opacity"    '(66 0 255 1 10 0 0)
+		    SF-COLOR      _"Drop shadow color"    '(0 0 0)
+		    SF-ADJUSTMENT _"Drop shadow opacity"  '(100 0 100 1 10 0 0)
 		    SF-ADJUSTMENT _"Drop shadow blur radius" '(12 0 255 1 10 0 1)
 		    SF-ADJUSTMENT _"Drop shadow X offset" '(5 0 255 1 10 0 1)
 		    SF-ADJUSTMENT _"Drop shadow Y offset" '(5 0 255 1 10 0 1)
-		    SF-TOGGLE     _"Keep selection" TRUE)
+		    SF-TOGGLE     _"Keep selection"       TRUE)
 
-
-
+(script-fu-menu-register "script-fu-xach-effect"
+			 _"<Image>/Script-Fu/Shadow")

@@ -384,19 +384,23 @@
 
     (gimp-context-pop)))
 
+
 (script-fu-register "script-fu-weave"
-		    _"<Image>/Script-Fu/Alchemy/_Weave..."
+		    _"_Weave..."
 		    "Weave effect like Alien Skin"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"
 		    "June 1997"
 		    "RGB* GRAY*"
-		    SF-IMAGE      "Image to Weave"    0
-		    SF-DRAWABLE   "Drawable to Weave" 0
-		    SF-ADJUSTMENT _"Ribbon width"     '(30  0 256 1 10 1 1)
-		    SF-ADJUSTMENT _"Ribbon spacing"   '(10  0 256 1 10 1 1)
-		    SF-ADJUSTMENT _"Shadow darkness"  '(75  0 100 1 10 1 1)
-		    SF-ADJUSTMENT _"Shadow depth"     '(75  0 100 1 10 1 1)
-		    SF-ADJUSTMENT _"Thread length"    '(200 0 256 1 10 1 1)
-		    SF-ADJUSTMENT _"Thread density"   '(50  0 100 1 10 1 1)
-		    SF-ADJUSTMENT _"Thread intensity" '(100 0 512 1 10 1 1))
+		    SF-IMAGE       "Image to Weave"    0
+		    SF-DRAWABLE    "Drawable to Weave" 0
+		    SF-ADJUSTMENT _"Ribbon width"      '(30  0 256 1 10 1 1)
+		    SF-ADJUSTMENT _"Ribbon spacing"    '(10  0 256 1 10 1 1)
+		    SF-ADJUSTMENT _"Shadow darkness"   '(75  0 100 1 10 1 1)
+		    SF-ADJUSTMENT _"Shadow depth"      '(75  0 100 1 10 1 1)
+		    SF-ADJUSTMENT _"Thread length"     '(200 0 256 1 10 1 1)
+		    SF-ADJUSTMENT _"Thread density"    '(50  0 100 1 10 1 1)
+		    SF-ADJUSTMENT _"Thread intensity"  '(100 0 512 1 10 1 1))
+
+(script-fu-menu-register "script-fu-weave"
+			 _"<Image>/Script-Fu/Alchemy")

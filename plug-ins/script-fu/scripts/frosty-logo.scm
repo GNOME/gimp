@@ -81,17 +81,19 @@
 
 
 (script-fu-register "script-fu-frosty-logo-alpha"
-		    _"<Image>/Script-Fu/Alpha to Logo/_Frosty..."
+		    _"_Frosty..."
 		    "Frozen logos with drop shadows"
 		    "Spencer Kimball & Ed Mackey"
 		    "Spencer Kimball & Ed Mackey"
 		    "1997"
 		    "RGBA"
-                    SF-IMAGE      "Image" 0
-                    SF-DRAWABLE   "Drawable" 0
+                    SF-IMAGE      "Image"                 0
+                    SF-DRAWABLE   "Drawable"              0
 		    SF-ADJUSTMENT _"Effect size (pixels)" '(100 2 1000 1 10 0 1)
-		    SF-COLOR  _"Background color" '(255 255 255)
-		    )
+		    SF-COLOR      _"Background color"     '(255 255 255))
+
+(script-fu-menu-register "script-fu-frosty-logo-alpha"
+			 _"<Image>/Script-Fu/Alpha to Logo")
 
 (define (script-fu-frosty-logo text
 			       size
@@ -107,14 +109,16 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-frosty-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/_Frosty..."
+		    _"_Frosty..."
 		    "Frozen logos with drop shadows"
 		    "Spencer Kimball & Ed Mackey"
 		    "Spencer Kimball & Ed Mackey"
 		    "1997"
 		    ""
-		    SF-STRING _"Text" "The GIMP"
+		    SF-STRING     _"Text"               "The GIMP"
 		    SF-ADJUSTMENT _"Font size (pixels)" '(100 2 1000 1 10 0 1)
-		    SF-FONT   _"Font" "Becker"
-		    SF-COLOR  _"Background color" '(255 255 255)
-		    )
+		    SF-FONT       _"Font"               "Becker"
+		    SF-COLOR      _"Background color"   '(255 255 255))
+
+(script-fu-menu-register "script-fu-frosty-logo"
+			 _"<Toolbox>/Xtns/Script-Fu/Logos")

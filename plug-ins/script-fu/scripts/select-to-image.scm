@@ -66,11 +66,14 @@
     (gimp-context-pop)))
 
 (script-fu-register "script-fu-selection-to-image"
-		    _"<Image>/Script-Fu/Selection/To _Image"
+		    _"To _Image"
 		    "Convert a selection to an image"
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins"
 		    "10/07/97"
 		    "RGB* GRAY*"
-		    SF-IMAGE "Image" 0
+		    SF-IMAGE    "Image"    0
 		    SF-DRAWABLE "Drawable" 0)
+
+(script-fu-menu-register "script-fu-selection-to-image"
+			 _"<Image>/Script-Fu/Selection")

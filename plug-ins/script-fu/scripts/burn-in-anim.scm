@@ -183,19 +183,22 @@
 
 
 (script-fu-register "script-fu-burn-in-anim"
-		    _"<Image>/Script-Fu/Animators/B_urn-In..."
-		    _"Burn-in like effect on a fg (text) layer and a bg layer; V2.1"
+		    _"B_urn-In..."
+		    "Burn-in like effect on a fg (text) layer and a bg layer; V2.1"
 		    "Roland Berger roland@fuchur.leute.server.de"
 		    "Roland Berger"
 		    "January 2001"
 		    "RGBA GRAYA INDEXEDA"
-		    SF-IMAGE "The image"              0
-		    SF-DRAWABLE "Layer to animate"    0
-		    SF-COLOR  _"Glow color"           '(255 255 255)
-		    SF-TOGGLE _"Fadeout"              FALSE
-		    SF-VALUE  _"Fadeout width"        "100"
-		    SF-VALUE  _"Corona width"         "7"
-		    SF-VALUE  _"After glow"           "50"
-		    SF-TOGGLE _"Add glowing"          TRUE
-		    SF-TOGGLE _"Prepare for GIF"      FALSE
-		    SF-VALUE  _"Speed (pixels/frame)" "50")
+		    SF-IMAGE     "The image"            0
+		    SF-DRAWABLE  "Layer to animate"     0
+		    SF-COLOR    _"Glow color"           '(255 255 255)
+		    SF-TOGGLE   _"Fadeout"              FALSE
+		    SF-VALUE    _"Fadeout width"        "100"
+		    SF-VALUE    _"Corona width"         "7"
+		    SF-VALUE    _"After glow"           "50"
+		    SF-TOGGLE   _"Add glowing"          TRUE
+		    SF-TOGGLE   _"Prepare for GIF"      FALSE
+		    SF-VALUE    _"Speed (pixels/frame)" "50")
+
+(script-fu-menu-register "script-fu-burn-in-anim"
+			 _"<Image>/Script-Fu/Animators")

@@ -136,7 +136,7 @@
     (gimp-context-pop)))
 
 (script-fu-register "script-fu-button00"
-		    _"<Toolbox>/Xtns/Script-Fu/Buttons/Simple _Beveled Button..."
+		    _"Simple _Beveled Button..."
 		    "Simple beveled button"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"
@@ -151,3 +151,6 @@
 		    SF-ADJUSTMENT _"Padding"            '(2 1 100 1 10 0 1)
 		    SF-ADJUSTMENT _"Bevel width"        '(4 1 100 1 10 0 1)
 		    SF-TOGGLE     _"Pressed"            FALSE)
+
+(script-fu-menu-register "script-fu-button00"
+			 _"<Toolbox>/Xtns/Script-Fu/Buttons")

@@ -80,24 +80,23 @@
   (gimp-displays-flush theImage)
   )
 
-; Register the function with the GIMP:
+(script-fu-register "script-fu-old-photo"
+		    _"_Old Photo..."
+		    "Makes the image look like an old photo. A border size of 0 means no border."
+		    "Chris Gutteridge"
+		    "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
+		    "16th April 1998"
+		    "RGB* GRAY*"
+		    SF-IMAGE      "The image"     0
+		    SF-DRAWABLE   "The layer"     0
+		    SF-TOGGLE     _"Defocus"      TRUE
+		    SF-ADJUSTMENT _"Border size"  '(20 0 300 1 10 0 1)
+		    ; since this plug-in uses the fuzzy-border plug-in, I used the
+		    ; values of the latter, with the exception of the initial value
+		    ; and the 'minimum' value.
+		    SF-TOGGLE     _"Sepia"        TRUE
+		    SF-TOGGLE     _"Mottle"       FALSE
+		    SF-TOGGLE     _"Work on copy" TRUE)
 
-(script-fu-register
-    "script-fu-old-photo"
-    _"<Image>/Script-Fu/Decor/_Old Photo..."
-    "Makes the image look like an old photo. A border size of 0 means no border."
-    "Chris Gutteridge"
-    "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
-    "16th April 1998"
-    "RGB* GRAY*"
-    SF-IMAGE      "The image"     0
-    SF-DRAWABLE   "The layer"     0
-    SF-TOGGLE     _"Defocus"      TRUE
-    SF-ADJUSTMENT _"Border size"  '(20 0 300 1 10 0 1)
-       ; since this plug-in uses the fuzzy-border plug-in, I used the
-       ; values of the latter, with the exception of the initial value
-       ; and the 'minimum' value.
-    SF-TOGGLE     _"Sepia"        TRUE
-    SF-TOGGLE     _"Mottle"       FALSE
-    SF-TOGGLE     _"Work on copy" TRUE
-    )
+(script-fu-menu-register "script-fu-old-photo"
+			 _"<Image>/Script-Fu/Decor")

@@ -217,15 +217,18 @@
   (gimp-message "Blend Animation needs at least three source layers"))))
 
 (script-fu-register "script-fu-blend-anim"
-		    _"<Image>/Script-Fu/Animators/_Blend..."
+		    _"_Blend..."
 		    "Blend two or more layers over a background, so that an 
                      animation can be saved"
 		    "Sven Neumann <sven@gimp.org>"
 		    "Sven Neumann"
 		    "1999/12/21"
 		    "RGB* GRAY*"
-		    SF-IMAGE "Image" 0
-		    SF-DRAWABLE "Drawable" 0
+		    SF-IMAGE       "Image"               0
+		    SF-DRAWABLE    "Drawable"            0
 		    SF-ADJUSTMENT _"Intermediate frames" '(3 1 1024 1 10 0 1)
-		    SF-ADJUSTMENT _"Max. blur radius" '(0 0 1024 1 10 0 1)
-		    SF-TOGGLE     _"Looped" TRUE)
+		    SF-ADJUSTMENT _"Max. blur radius"    '(0 0 1024 1 10 0 1)
+		    SF-TOGGLE     _"Looped"              TRUE)
+
+(script-fu-menu-register "script-fu-blend-anim"
+			 _"<Image>/Script-Fu/Animators")

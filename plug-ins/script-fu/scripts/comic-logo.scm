@@ -106,19 +106,22 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-comic-logo-alpha"
-		    _"<Image>/Script-Fu/Alpha to Logo/Comic Boo_k..."
+		    _"Comic Boo_k..."
 		    "Comic-book Style Logos"
 		    "Brian McFee <keebler@wco.com>"
 		    "Brian McFee"
 		    "April 1998"
 		    "RGBA"
-                    SF-IMAGE      "Image"             0
-                    SF-DRAWABLE   "Drawable"          0
+                    SF-IMAGE       "Image"            0
+                    SF-DRAWABLE    "Drawable"         0
 		    SF-GRADIENT   _"Gradient"         "Incandescent"
 		    SF-TOGGLE     _"Gradient reverse" FALSE
 		    SF-ADJUSTMENT _"Outline size"     '(5 1 100 1 10 0 1)
 		    SF-COLOR      _"Outline color"    '(255 255 255)
 		    SF-COLOR      _"Background color" '(255 255 255))
+
+(script-fu-menu-register "script-fu-comic-logo-alpha"
+			 _"<Image>/Script-Fu/Alpha to Logo")
 
 
 (define (script-fu-comic-logo text
@@ -141,7 +144,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-comic-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/Comic Boo_k..."
+		    _"Comic Boo_k..."
 		    "Comic-book Style Logos"
 		    "Brian McFee <keebler@wco.com>"
 		    "Brian McFee"
@@ -155,3 +158,6 @@
 		    SF-ADJUSTMENT _"Outline size"       '(5 1 100 1 10 0 1)
 		    SF-COLOR      _"Outline color"      '(255 255 255)
 		    SF-COLOR      _"Background color"   '(255 255 255))
+
+(script-fu-menu-register "script-fu-comic-logo"
+			 _"<Toolbox>/Xtns/Script-Fu/Logos")

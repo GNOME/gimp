@@ -75,17 +75,20 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-chrome-logo-alpha"
-		    _"<Image>/Script-Fu/Alpha to Logo/C_hrome..."
+		    _"C_hrome..."
 		    "Somewhat simplistic, but cool chromed logos"
 		    "Spencer Kimball"
 		    "Spencer Kimball & Peter Mattis"
 		    "1997"
 		    "RGBA"
-                    SF-IMAGE      "Image" 0
-                    SF-DRAWABLE   "Drawable" 0
+                    SF-IMAGE       "Image"                0
+                    SF-DRAWABLE    "Drawable"             0
 		    SF-ADJUSTMENT _"Offsets (pixels * 2)" '(10 2 100 1 10 0 1)
-		    SF-COLOR      _"Background Color" '(191 191 191)
-		    )
+		    SF-COLOR      _"Background Color"     '(191 191 191))
+
+(script-fu-menu-register "script-fu-chrome-logo-alpha"
+			 _"<Image>/Script-Fu/Alpha to Logo")
+
 
 (define (script-fu-chrome-logo text
 			       size
@@ -101,14 +104,16 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-chrome-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/C_hrome..."
+		    _"C_hrome..."
 		    "Somewhat simplistic, but cool chromed logos"
 		    "Spencer Kimball"
 		    "Spencer Kimball & Peter Mattis"
 		    "1997"
 		    ""
-		    SF-STRING     _"Text" "The GIMP"
+		    SF-STRING     _"Text"               "The GIMP"
 		    SF-ADJUSTMENT _"Font size (pixels)" '(100 2 1000 1 10 0 1)
-		    SF-FONT       _"Font" "Bodoni"
-		    SF-COLOR      _"Background color" '(191 191 191)
-		    )
+		    SF-FONT       _"Font"               "Bodoni"
+		    SF-COLOR      _"Background color"   '(191 191 191))
+
+(script-fu-menu-register "script-fu-chrome-logo"
+			 _"<Toolbox>/Xtns/Script-Fu/Logos")

@@ -104,21 +104,20 @@
   )
 )
 
-; Register the function with the GIMP:
+(script-fu-register "script-fu-spinning-globe"
+		    _"_Spinning Globe..."
+		    "Maps the image on an animated spinning globe"
+		    "Chris Gutteridge"
+		    "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
+		    "16th April 1998"
+		    "RGB* GRAY*"
+		    SF-IMAGE       "The Image"               0
+		    SF-DRAWABLE    "The Layer"               0
+		    SF-ADJUSTMENT _"Frames"                  '(10 1 360 1 10 0 1)
+		    SF-TOGGLE     _"Turn from left to right" FALSE
+		    SF-TOGGLE     _"Transparent background"  TRUE
+		    SF-ADJUSTMENT _"Index to n colors (0 = remain RGB)" '(63 0 256 1 10 0 1)
+		    SF-TOGGLE     _"Work on copy"            TRUE)
 
-(script-fu-register
-    "script-fu-spinning-globe"
-    _"<Image>/Script-Fu/Animators/_Spinning Globe..."
-    "Maps the image on an animated spinning globe"
-    "Chris Gutteridge"
-    "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
-    "16th April 1998"
-    "RGB* GRAY*"
-    SF-IMAGE    "The Image" 0
-    SF-DRAWABLE "The Layer" 0
-    SF-ADJUSTMENT _"Frames" '(10 1 360 1 10 0 1)
-    SF-TOGGLE     _"Turn from left to right" FALSE
-    SF-TOGGLE     _"Transparent background" TRUE
-    SF-ADJUSTMENT _"Index to n colors (0 = remain RGB)" '(63 0 256 1 10 0 1)
-    SF-TOGGLE     _"Work on copy" TRUE
-)
+(script-fu-menu-register "script-fu-spinning-globe"
+			 _"<Image>/Script-Fu/Animators")

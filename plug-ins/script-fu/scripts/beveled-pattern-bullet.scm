@@ -77,7 +77,7 @@
 
 
 (script-fu-register "script-fu-beveled-pattern-bullet"
-		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Bullet..."
+		    _"_Bullet..."
 		    "Beveled pattern bullet"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"
@@ -86,3 +86,6 @@
 		    SF-ADJUSTMENT _"Diameter"               '(16 1 150 1 10 0 1)
 		    SF-PATTERN    _"Pattern"                "Wood"
 		    SF-TOGGLE     _"Transparent background" FALSE)
+
+(script-fu-menu-register "script-fu-beveled-pattern-bullet"
+			 _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern")

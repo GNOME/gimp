@@ -158,7 +158,7 @@
     (gimp-context-pop)))
 
 (script-fu-register "script-fu-title-header"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
+		    _"Web Title Header..."
 		    "Web title header"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"
@@ -168,3 +168,6 @@
 		    SF-ADJUSTMENT _"Font size (pixels)" '(32 2 256 1 10 0 0)
 		    SF-FONT       _"Font"               "Sans"
 		    SF-TOGGLE     _"Gradient reverse"   FALSE)
+
+(script-fu-menu-register "script-fu-title-header"
+			 _"<Toolbox>/Xtns/Script-Fu/Logos")

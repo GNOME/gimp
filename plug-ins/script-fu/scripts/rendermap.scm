@@ -73,7 +73,7 @@
   (gimp-context-pop)))
 
 (script-fu-register "script-fu-render-map"
-		    _"<Toolbox>/Xtns/Script-Fu/Patterns/Render _Map..."
+		    _"Render _Map..."
 		    "Another pattern which resembles a map"
 		    "Chris Gutteridge: cjg@ecs.soton.ac.uk"
 		    "28th April 1998"
@@ -84,4 +84,7 @@
 		    SF-GRADIENT   _"Gradient"         "Land and Sea"
 		    SF-TOGGLE     _"Gradient reverse" FALSE
 		    SF-OPTION     _"Behaviour"        '(_"Tile"
-							 _"Detail in Middle"))
+							_"Detail in Middle"))
+
+(script-fu-menu-register "script-fu-render-map"
+			 _"<Toolbox>/Xtns/Script-Fu/Patterns")

@@ -72,7 +72,7 @@
   (gimp-displays-flush))
 
 (script-fu-register "script-fu-selection-to-pattern"
-		    _"<Image>/Script-Fu/Selection/To _Pattern..."
+		    _"To _Pattern..."
 		    "Convert a selection to a pattern"
 		    "Cameron Gregory <cameron@bloke.com>"
 		    "Cameron Gregory"
@@ -82,3 +82,6 @@
 		    SF-DRAWABLE "Drawable"      0
 		    SF-STRING   _"Pattern name" "My Pattern"
 		    SF-STRING   _"Filename"     "mypattern")
+
+(script-fu-menu-register "script-fu-selection-to-pattern"
+			 _"<Image>/Script-Fu/Selection")

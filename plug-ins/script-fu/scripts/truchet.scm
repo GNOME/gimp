@@ -147,18 +147,20 @@
 
     (gimp-context-pop)))
 
+
 (script-fu-register "script-fu-truchet"
-		    _"<Toolbox>/Xtns/Script-Fu/Patterns/T_ruchet..."
+		    _"T_ruchet..."
 		    "Create a Truchet pattern \n\nWorks best with even sized thicknesses"
 		    "Adrian Likins <aklikins@eos.ncsu.edu>"
 		    "Adrian Likins"
 		    "1997"
 		    ""
-
-		    SF-ADJUSTMENT _"Block size" '(32 2 512 1 10 1 1)
-		    SF-ADJUSTMENT _"Thickness" '(2 1 512 1 10 1 1)
-		    SF-COLOR      _"Background color" '(255 255 255)
-		    SF-COLOR      _"Foreground color" '(0 0 0)
+		    SF-ADJUSTMENT _"Block size"        '(32 2 512 1 10 1 1)
+		    SF-ADJUSTMENT _"Thickness"         '(2 1 512 1 10 1 1)
+		    SF-COLOR      _"Background color"  '(255 255 255)
+		    SF-COLOR      _"Foreground color"  '(0 0 0)
 		    SF-ADJUSTMENT _"Number of X tiles" '(5 1 512 1 10 1 1)
-		    SF-ADJUSTMENT _"Number of Y tiles" '(5 1 512 1 10 1 1)
-		    )
+		    SF-ADJUSTMENT _"Number of Y tiles" '(5 1 512 1 10 1 1))
+
+(script-fu-menu-register "script-fu-truchet"
+			 _"<Toolbox>/Xtns/Script-Fu/Patterns")

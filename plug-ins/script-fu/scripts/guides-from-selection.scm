@@ -24,7 +24,7 @@
 	  (gimp-displays-flush)))))
 
 (script-fu-register "script-fu-guides-from-selection" 
-		    _"<Image>/Image/Guides/New Guides from _Selection"
+		    _"New Guides from _Selection"
 		    _"Creates four Guides around the bounding box of the current selection."
 		    "Alan Horkan"
 		    "Alan Horkan, 2004.  Public Domain."
@@ -32,3 +32,6 @@
 		    ""
 		    SF-IMAGE    "Image"    0 
 		    SF-DRAWABLE "Drawable" 0)
+
+(script-fu-menu-register "script-fu-guides-from-selection" 
+			 "<Image>/Image/Guides")

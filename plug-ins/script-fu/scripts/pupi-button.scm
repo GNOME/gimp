@@ -180,7 +180,7 @@
     (gimp-context-pop)))
 
 (script-fu-register "script-fu-round-button"
-		    _"<Toolbox>/Xtns/Script-Fu/Buttons/_Round Button..."
+		    _"_Round Button..."
 		    "Round button"
 		    "Arturo Espinosa (stolen from quartic's beveled button)"
 		    "Arturo Espinosa & Federico Mena Quintero"
@@ -202,3 +202,6 @@
 		    SF-TOGGLE     _"Not pressed"          TRUE
 		    SF-TOGGLE     _"Not pressed (active)" TRUE
 		    SF-TOGGLE     _"Pressed"              TRUE)
+
+(script-fu-menu-register "script-fu-round-button"
+			 _"<Toolbox>/Xtns/Script-Fu/Buttons")

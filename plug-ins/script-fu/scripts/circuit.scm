@@ -126,17 +126,20 @@
     (gimp-context-pop)))
 
 (script-fu-register "script-fu-circuit"
-		    _"<Image>/Script-Fu/Render/_Circuit..."
+		    _"_Circuit..."
 		    "Fills the current selection with something that looks 
                      vaguely like a circuit board."
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins"
 		    "10/17/97"
 		    "RGB* GRAY*"
-		    SF-IMAGE "Image" 0
-		    SF-DRAWABLE "Drawable" 0
+		    SF-IMAGE       "Image"            0
+		    SF-DRAWABLE    "Drawable"         0
 		    SF-ADJUSTMENT _"Oilify mask size" '(17 3 50 1 10 0 1)
-		    SF-ADJUSTMENT _"Circuit seed" '(3 1 3000000 1 10 0 1)
-		    SF-TOGGLE _"No background (only for separate layer)" FALSE
-		    SF-TOGGLE _"Keep selection" TRUE
-		    SF-TOGGLE _"Separate layer" TRUE)
+		    SF-ADJUSTMENT _"Circuit seed"     '(3 1 3000000 1 10 0 1)
+		    SF-TOGGLE     _"No background (only for separate layer)" FALSE
+		    SF-TOGGLE     _"Keep selection"   TRUE
+		    SF-TOGGLE     _"Separate layer"   TRUE)
+
+(script-fu-menu-register "script-fu-circuit"
+			 _"<Image>/Script-Fu/Render")

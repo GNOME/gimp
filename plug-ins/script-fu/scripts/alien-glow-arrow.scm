@@ -144,7 +144,7 @@
     (gimp-context-pop)))
 
 (script-fu-register "script-fu-alien-glow-right-arrow"
-                    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Arrow..."
+                    _"_Arrow..."
                     "Create an X-file deal"
                     "Adrian Likins"
                     "Adrian Likins"
@@ -158,3 +158,6 @@
                     SF-COLOR      _"Glow color"       '(63 252 0)
                     SF-COLOR      _"Background color" '(0 0 0)
                     SF-TOGGLE     _"Flatten image"    TRUE)
+
+(script-fu-menu-register "script-fu-alien-glow-right-arrow"
+			 _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow")

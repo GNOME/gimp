@@ -28,26 +28,38 @@
 (define (gimp-online-plug-in-web-site)
   (plug-in-web-browser "http://registry.gimp.org"))
 
+
 (script-fu-register "gimp-online-main-web-site"
-                    _"<Toolbox>/Help/The GIMP Online/_Main Web Site"
+                    _"_Main Web Site"
                     "Link to http://www.gimp.org"
 		    "Henrik Brix Andersen <brix@gimp.org>"
 		    "Henrik Brix Andersen <brix@gimp.org>"
 		    "2003"
 		    "")
+
+(script-fu-menu-register "gimp-online-main-web-site"
+			 _"<Toolbox>/Help/The GIMP Online")
+
 
 (script-fu-register "gimp-online-developer-web-site"
-                    _"<Toolbox>/Help/The GIMP Online/_Developer Web Site"
-                    "Link to http://www.gimp.org"
+                    _"_Developer Web Site"
+                    "Link to http://developer.gimp.org"
 		    "Henrik Brix Andersen <brix@gimp.org>"
 		    "Henrik Brix Andersen <brix@gimp.org>"
 		    "2003"
 		    "")
 
+(script-fu-menu-register "gimp-online-developer-web-site"
+			 _"<Toolbox>/Help/The GIMP Online")
+
+
 (script-fu-register "gimp-online-plug-in-web-site"
-                    _"<Toolbox>/Help/The GIMP Online/Plug-in _Registry"
-                    "Link to http://www.gimp.org"
+                    _"Plug-in _Registry"
+                    "Link to http://registry.gimp.org"
 		    "Henrik Brix Andersen <brix@gimp.org>"
 		    "Henrik Brix Andersen <brix@gimp.org>"
 		    "2003"
 		    "")
+
+(script-fu-menu-register "gimp-online-plug-in-web-site"
+			 _"<Toolbox>/Help/The GIMP Online")

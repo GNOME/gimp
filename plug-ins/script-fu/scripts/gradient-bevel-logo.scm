@@ -88,7 +88,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-gradient-bevel-logo-alpha"
-		    _"<Image>/Script-Fu/Alpha to Logo/Gradient Beve_l..."
+		    _"Gradient Beve_l..."
 		    "Makes Shiny Bevelly text"
 		    "Brian McFee <keebler@wco.com>"
 		    "Brian McFee"
@@ -100,6 +100,10 @@
 		    SF-ADJUSTMENT _"Bevel height (Sharpness)" '(40 1 250 1 10 0 1)
 		    SF-ADJUSTMENT _"Bevel width"              '(2.5 1 200 1 10 1 1)
 		    SF-COLOR      _"Background color"         '(255 255 255))
+
+(script-fu-menu-register "script-fu-gradient-bevel-logo-alpha"
+			 _"<Image>/Script-Fu/Alpha to Logo")
+
 
 (define (script-fu-gradient-bevel-logo text
 				       size
@@ -119,7 +123,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-gradient-bevel-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/Gradient Beve_l..."
+		    _"Gradient Beve_l..."
 		    "Makes Shiny Bevelly text"
 		    "Brian McFee <keebler@wco.com>"
 		    "Brian McFee"
@@ -131,3 +135,6 @@
 		    SF-ADJUSTMENT _"Bevel height (sharpness)" '(40 1 250 1 10 0 1)
 		    SF-ADJUSTMENT _"Bevel width"              '(2.5 1 200 1 10 1 1)
 		    SF-COLOR      _"Background color"         '(255 255 255))
+
+(script-fu-menu-register "script-fu-gradient-bevel-logo"
+			 _"<Toolbox>/Xtns/Script-Fu/Logos")

@@ -82,7 +82,7 @@
 
 
 (script-fu-register "script-fu-alien-glow-horizontal-ruler"
-		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Hrule..."
+		    _"_Hrule..."
 		    "Create an Hrule with the Alien Glow look"
 		    "Adrian Likins"
 		    "Adrian Likins"
@@ -93,3 +93,6 @@
 		    SF-COLOR      _"Glow color"       '(63 252 0)
 		    SF-COLOR      _"Background color" '(0 0 0)
 		    SF-TOGGLE     _"Flatten image"    TRUE)
+
+(script-fu-menu-register "script-fu-alien-glow-horizontal-ruler"
+			 _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow")

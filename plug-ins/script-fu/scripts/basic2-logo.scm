@@ -68,7 +68,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-basic2-logo-alpha"
-		    _"<Image>/Script-Fu/Alpha to Logo/B_asic II..."
+		    _"B_asic II..."
 		    "Creates a simple logo with a shadow and a highlight"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
@@ -78,6 +78,10 @@
                     SF-DRAWABLE   "Drawable" 0
        		    SF-COLOR      _"Background color" '(255 255 255)
 		    SF-COLOR      _"Text color" '(206 6 50))
+
+(script-fu-menu-register "script-fu-basic2-logo-alpha"
+			 _"<Image>/Script-Fu/Alpha to Logo")
+
 
 (define (script-fu-basic2-logo text
 			       size
@@ -94,7 +98,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-basic2-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/B_asic II..."
+		    _"B_asic II..."
 		    "Creates a simple logo with a shadow and a highlight"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
@@ -105,3 +109,6 @@
 		    SF-FONT       _"Font"               "Sans Bold"
 		    SF-COLOR      _"Background color"   '(255 255 255)
 		    SF-COLOR      _"Text color"         '(206 6 50))
+
+(script-fu-menu-register "script-fu-basic2-logo"
+			 _"<Toolbox>/Xtns/Script-Fu/Logos")

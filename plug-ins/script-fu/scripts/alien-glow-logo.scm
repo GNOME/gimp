@@ -55,7 +55,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-alien-glow-logo-alpha"
-		    _"<Image>/Script-Fu/Alpha to Logo/Alien _Glow..."
+		    _"Alien _Glow..."
 		    "Create an X-Files-esque logo with the specified glow color"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
@@ -65,6 +65,10 @@
                     SF-DRAWABLE   "Drawable"                0
 		    SF-ADJUSTMENT _"Glow size (pixels * 4)" '(150 2 1000 1 10 0 1)
 		    SF-COLOR      _"Glow color"             '(63 252 0))
+
+(script-fu-menu-register "script-fu-alien-glow-logo-alpha"
+			 _"<Image>/Script-Fu/Alpha to Logo")
+
 
 (define (script-fu-alien-glow-logo text
 				   size
@@ -87,7 +91,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-alien-glow-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/Alien _Glow..."
+		    _"Alien _Glow..."
 		    "Create an X-Files-esque logo with the specified glow color"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
@@ -97,3 +101,6 @@
 		    SF-ADJUSTMENT _"Font size (pixels)" '(150 2 1000 1 10 0 1)
 		    SF-FONT       _"Font"               "Sans Bold"
 		    SF-COLOR      _"Glow color"         '(63 252 0))
+
+(script-fu-menu-register "script-fu-alien-glow-logo"
+			 _"<Toolbox>/Xtns/Script-Fu/Logos")

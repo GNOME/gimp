@@ -77,12 +77,15 @@
     (gimp-context-pop)))
 
 (script-fu-register "script-fu-swirly-pattern"
-		    _"<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly..."
+		    _"_Swirly..."
 		    "Create a swirly pattern"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"
 		    "June 1997"
 		    ""
-		    SF-ADJUSTMENT _"Quarter size" '(20 0 2048 1 10 0 1)
-		    SF-ADJUSTMENT _"Whirl angle" '(90 0 360 1 1 0 0)
+		    SF-ADJUSTMENT _"Quarter size"             '(20 0 2048 1 10 0 1)
+		    SF-ADJUSTMENT _"Whirl angle"              '(90 0 360 1 1 0 0)
 		    SF-ADJUSTMENT _"Number of times to whirl" '(4 0 128 1 1 0 1))
+
+(script-fu-menu-register "script-fu-swirly-pattern"
+			 _"<Toolbox>/Xtns/Script-Fu/Patterns")

@@ -100,14 +100,17 @@
 
 
 (script-fu-register "script-fu-beveled-pattern-heading"
-		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/H_eading..."
+		    _"H_eading..."
 		    "Beveled pattern heading"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"
 		    "July 1997"
 		    ""
-		    SF-STRING     _"Text"               "Hello world!"
-		    SF-ADJUSTMENT _"Font size (pixels)" '(72 2 200 1 1 0 1)
-		    SF-FONT       _"Font" "Sans"
-		    SF-PATTERN    _"Pattern"            "Wood"
+		    SF-STRING     _"Text"                   "Hello world!"
+		    SF-ADJUSTMENT _"Font size (pixels)"     '(72 2 200 1 1 0 1)
+		    SF-FONT       _"Font"                   "Sans"
+		    SF-PATTERN    _"Pattern"                "Wood"
 		    SF-TOGGLE     _"Transparent background" FALSE)
+
+(script-fu-menu-register "script-fu-beveled-pattern-heading"
+			 _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern")

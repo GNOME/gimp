@@ -85,16 +85,20 @@
   (gimp-image-undo-enable image)
   (gimp-display-new image)))
 
+
 (script-fu-register "script-fu-waves-anim"
-		    _"<Image>/Script-Fu/Animators/_Waves..."
+		    _"_Waves..."
 		    "Animate an image like a stone's been thrown into it"
 		    "Sven Neumann <sven@gimp.org>"
 		    "Sven Neumann"
 		    "1997/13/12"
 		    "RGB* GRAY*"
-		    SF-IMAGE "Image" 0
-		    SF-DRAWABLE "Drawable" 0
+		    SF-IMAGE       "Image"            0
+		    SF-DRAWABLE    "Drawable"         0
 		    SF-ADJUSTMENT _"Amplitude"        '(10  1  101 1 10 1 0)
 		    SF-ADJUSTMENT _"Wavelength"       '(10 .10 100 1 10 1 0)
 		    SF-ADJUSTMENT _"Number of frames" '(6  1   512 1 10 0 1)
 		    SF-TOGGLE     _"Invert direction" FALSE)
+
+(script-fu-menu-register "script-fu-waves-anim"
+			 _"<Image>/Script-Fu/Animators")

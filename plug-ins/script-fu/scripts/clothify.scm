@@ -45,16 +45,19 @@
 
 
 (script-fu-register "script-fu-clothify"
-		    _"<Image>/Script-Fu/Alchemy/_Clothify..."
+		    _"_Clothify..."
 		    "Gives the current layer a cloth-like texture"
 		    "Tim Newsome <drz@froody.bloke.com>"
 		    "Tim Newsome"
 		    "4/11/97"
 		    "RGB* GRAY*"
-		    SF-IMAGE "Input image" 0
-		    SF-DRAWABLE "Input drawable" 0
-		    SF-ADJUSTMENT _"Blur X" '(9 3 100 1 10 0 1)
-		    SF-ADJUSTMENT _"Blur Y" '(9 3 100 1 10 0 1)
-		    SF-ADJUSTMENT _"Azimuth" '(135 0 360 1 10 1 0)
-		    SF-ADJUSTMENT _"Elevation" '(45 0 90 1 10 1 0)
-		    SF-ADJUSTMENT _"Depth" '(3 1 50 1 10 0 1))
+		    SF-IMAGE       "Input image"    0
+		    SF-DRAWABLE    "Input drawable" 0
+		    SF-ADJUSTMENT _"Blur X"         '(9 3 100 1 10 0 1)
+		    SF-ADJUSTMENT _"Blur Y"         '(9 3 100 1 10 0 1)
+		    SF-ADJUSTMENT _"Azimuth"        '(135 0 360 1 10 1 0)
+		    SF-ADJUSTMENT _"Elevation"      '(45 0 90 1 10 1 0)
+		    SF-ADJUSTMENT _"Depth"          '(3 1 50 1 10 0 1))
+
+(script-fu-menu-register "script-fu-clothify"
+			 _"<Image>/Script-Fu/Alchemy")

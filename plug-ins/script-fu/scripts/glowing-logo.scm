@@ -67,17 +67,20 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-glowing-logo-alpha"
-		    _"<Image>/Script-Fu/Alpha to Logo/Glo_wing Hot..."
+		    _"Glo_wing Hot..."
 		    "Glowing hot logos"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1997"
 		    "RGBA"
-                    SF-IMAGE      "Image" 0
-                    SF-DRAWABLE   "Drawable" 0
+                    SF-IMAGE      "Image"                     0
+                    SF-DRAWABLE   "Drawable"                  0
 		    SF-ADJUSTMENT _"Effect size (pixels * 3)" '(150 2 1000 1 10 0 1)
-		    SF-COLOR      _"Background color" '(7 0 20)
-		    )
+		    SF-COLOR      _"Background color"         '(7 0 20))
+
+(script-fu-menu-register "script-fu-glowing-logo-alpha"
+			 _"<Image>/Script-Fu/Alpha to Logo")
+
 
 (define (script-fu-glowing-logo text
 				size
@@ -92,14 +95,16 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-glowing-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/Glo_wing Hot..."
+		    _"Glo_wing Hot..."
 		    "Glowing hot logos"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1997"
 		    ""
-		    SF-STRING     _"Text" "GLOWING"
+		    SF-STRING     _"Text"               "GLOWING"
 		    SF-ADJUSTMENT _"Font size (pixels)" '(150 2 1000 1 10 0 1)
-		    SF-FONT       _"Font" "Slogan"
-		    SF-COLOR      _"Background color" '(7 0 20)
-		    )
+		    SF-FONT       _"Font"               "Slogan"
+		    SF-COLOR      _"Background color"   '(7 0 20))
+
+(script-fu-menu-register "script-fu-glowing-logo"
+			 _"<Toolbox>/Xtns/Script-Fu/Logos")

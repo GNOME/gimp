@@ -212,7 +212,7 @@
     (gimp-context-pop)))
 
 (script-fu-register "script-fu-3dtruchet"
-		    _"<Toolbox>/Xtns/Script-Fu/Patterns/3_D Truchet..."
+		    _"3_D Truchet..."
 		    "3D Truchet pattern"
 		    "Adrian Likins <aklikins@eos.ncsu.edu>"
 		    "Adrian Likins"
@@ -226,3 +226,6 @@
 		    SF-TOGGLE     _"Supersample"       TRUE
 		    SF-ADJUSTMENT _"Number of X tiles" '(5 1 1000 1 10 0 1)
 		    SF-ADJUSTMENT _"Number of Y tiles" '(5 1 1000 1 10 0 1))
+
+(script-fu-menu-register "script-fu-3dtruchet"
+			 _"<Toolbox>/Xtns/Script-Fu/Patterns")

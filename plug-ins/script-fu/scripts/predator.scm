@@ -107,7 +107,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-predator"
-		    _"<Image>/Script-Fu/Alchemy/_Predator..."
+		    _"_Predator..."
 		    "Looks like images from the movie Predator"
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins"
@@ -120,3 +120,6 @@
 		    SF-ADJUSTMENT _"Pixel amount"   '(3 1 16 1 1 0 0)
 		    SF-TOGGLE     _"Keep selection" TRUE
 		    SF-TOGGLE     _"Separate layer" TRUE)
+
+(script-fu-menu-register "script-fu-predator"
+			 _"<Image>/Script-Fu/Alchemy")

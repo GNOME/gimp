@@ -55,22 +55,20 @@
    )
 )
 
-; Register the function with the GIMP:
 
-(script-fu-register
-    "script-fu-tile-blur"
-    _"<Image>/Filters/Blur/_Tileable Blur..."
-    "Blurs image edges so that the final result tiles seamlessly"
-    "Chris Gutteridge"
-    "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
-    "25th April 1998"
-    "RGB*"
-    SF-IMAGE "The Image" 0
-    SF-DRAWABLE "The Layer" 0
-    SF-ADJUSTMENT _"Radius" '(5 0 128 1 1 0 0)
-    SF-TOGGLE     _"Blur vertically" TRUE
-    SF-TOGGLE     _"Blur horizontally" TRUE
-    SF-OPTION     _"Blur type" '(_"IIR" _"RLE")
-)
+(script-fu-register "script-fu-tile-blur"
+		    _"_Tileable Blur..."
+		    "Blurs image edges so that the final result tiles seamlessly"
+		    "Chris Gutteridge"
+		    "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
+		    "25th April 1998"
+		    "RGB*"
+		    SF-IMAGE       "The Image"         0
+		    SF-DRAWABLE    "The Layer"         0
+		    SF-ADJUSTMENT _"Radius"            '(5 0 128 1 1 0 0)
+		    SF-TOGGLE     _"Blur vertically"   TRUE
+		    SF-TOGGLE     _"Blur horizontally" TRUE
+		    SF-OPTION     _"Blur type"         '(_"IIR" _"RLE"))
 
-
+(script-fu-menu-register "script-fu-tile-blur"
+			 "<Image>/Filters/Blur")

@@ -279,12 +279,15 @@ script_fu_auxillary_init (void)
 			  "Spencer Kimball & Peter Mattis",
 			  "Spencer Kimball & Peter Mattis",
 			  "1997",
-			  N_("<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"),
+			  N_("_Refresh Scripts"),
 			  NULL,
 			  GIMP_TEMPORARY,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL,
 			  script_fu_refresh_proc);
+
+  gimp_plugin_menu_register ("script_fu_refresh",
+                             N_("<Toolbox>/Xtns/Script-Fu"));
 }
 
 static void

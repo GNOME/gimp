@@ -83,17 +83,21 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-bovinated-logo-alpha"
-		    _"<Image>/Script-Fu/Alpha to Logo/Bo_vination..."
+		    _"Bo_vination..."
 		    "Makes Cow-spotted logos"
 		    "Brian McFee <keebler@wco.com>"
 		    "Brian McFee"
 		    "April 1998"
 		    "RGBA"
-                    SF-IMAGE      "Image" 0
-                    SF-DRAWABLE   "Drawable" 0
-		    SF-ADJUSTMENT _"Spots density X" '(16 1 16 1 10 0 1)
-		    SF-ADJUSTMENT _"Spots density Y" '(4 1 16 1 10 0 1)
+                    SF-IMAGE       "Image"            0
+                    SF-DRAWABLE    "Drawable"         0
+		    SF-ADJUSTMENT _"Spots density X"  '(16 1 16 1 10 0 1)
+		    SF-ADJUSTMENT _"Spots density Y"  '(4 1 16 1 10 0 1)
 		    SF-COLOR      _"Background Color" '(255 255 255))
+
+(script-fu-menu-register "script-fu-bovinated-logo-alpha"
+			 _"<Image>/Script-Fu/Alpha to Logo")
+
 
 (define (script-fu-bovinated-logo text
 				  size
@@ -111,16 +115,18 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-bovinated-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/Bo_vination..."
+		    _"Bo_vination..."
 		    "Makes Cow-spotted logos"
 		    "Brian McFee <keebler@wco.com>"
 		    "Brian McFee"
 		    "April 1998"
 		    ""
-		    SF-STRING     _"Text" "Fear the Cow"
+		    SF-STRING     _"Text"               "Fear the Cow"
 		    SF-ADJUSTMENT _"Font size (pixels)" '(80 2 1000 1 10 0 1)
-		    SF-FONT       _"Font" "RoostHeavy"
-		    SF-ADJUSTMENT _"Spots density X" '(16 1 16 1 10 0 1)
-		    SF-ADJUSTMENT _"Spots density Y" '(4 1 16 1 10 0 1)
-		    SF-COLOR      _"Background color" '(255 255 255))
+		    SF-FONT       _"Font"               "RoostHeavy"
+		    SF-ADJUSTMENT _"Spots density X"    '(16 1 16 1 10 0 1)
+		    SF-ADJUSTMENT _"Spots density Y"    '(4 1 16 1 10 0 1)
+		    SF-COLOR      _"Background color"   '(255 255 255))
 
+(script-fu-menu-register "script-fu-bovinated-logo"
+			 _"<Toolbox>/Xtns/Script-Fu/Logos")

@@ -115,7 +115,7 @@
 
 
 (script-fu-register "script-fu-blended-logo-alpha"
-		    _"<Image>/Script-Fu/Alpha to Logo/Blen_ded..."
+		    _"Blen_ded..."
 		    "Creates logos with blended backgrounds, highlights, and shadows"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
@@ -133,6 +133,10 @@
 		    SF-COLOR      _"End blend"        '(129 9 82)
 		    SF-GRADIENT   _"Gradient"         "Golden"
 		    SF-TOGGLE     _"Gradient reverse" FALSE)
+
+(script-fu-menu-register "script-fu-blended-logo-alpha"
+			 _"<Image>/Script-Fu/Alpha to Logo")
+
 
 (define (script-fu-blended-logo text
 				size
@@ -165,7 +169,7 @@
     (gimp-context-pop)))
 
 (script-fu-register "script-fu-blended-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/Blen_ded..."
+		    _"Blen_ded..."
 		    "Creates logos with blended backgrounds, highlights, and shadows"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
@@ -184,3 +188,6 @@
 		    SF-COLOR      _"End blend"          '(129 9 82)
 		    SF-GRADIENT   _"Gradient"           "Golden"
 		    SF-TOGGLE     _"Gradient reverse"   FALSE)
+
+(script-fu-menu-register "script-fu-blended-logo"
+			 _"<Toolbox>/Xtns/Script-Fu/Logos")

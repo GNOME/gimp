@@ -93,7 +93,7 @@
     (gimp-context-pop)))
 
 (script-fu-register "script-fu-alien-glow-bullet"
-		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Bullet..."
+		    _"_Bullet..."
 		    "Create a Bullet with an Alien Glow theme for web pages"
 		    "Adrian Likins"
 		    "Adrian Likins"
@@ -103,3 +103,6 @@
 		    SF-COLOR      _"Glow color"       '(63 252 0)
 		    SF-COLOR      _"Background color" '(0 0 0)
 		    SF-TOGGLE     _"Flatten image"    TRUE)
+
+(script-fu-menu-register "script-fu-alien-glow-bullet"
+			 _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow")

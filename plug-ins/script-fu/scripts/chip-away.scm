@@ -127,23 +127,25 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-chip-away-logo-alpha"
-		    _"<Image>/Script-Fu/Alpha to Logo/Chip Awa_y..."
+		    _"Chip Awa_y..."
 		    "Chip away effect"
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins <adrian@gimp.org>"
 		    "1997"
 		    "RGBA"
-                    SF-IMAGE      "Image" 0
-                    SF-DRAWABLE   "Drawable" 0
-		    SF-ADJUSTMENT _"Chip amount" '(30 0 250 1 10 0 1)
-		    SF-ADJUSTMENT _"Blur amount" '(3 1 100 1 10 1 0)
-		    SF-TOGGLE     _"Invert" FALSE
-		    SF-TOGGLE     _"Drop shadow" TRUE
-		    SF-TOGGLE     _"Keep bump layer" FALSE
+                    SF-IMAGE      "Image"                 0
+                    SF-DRAWABLE   "Drawable"              0
+		    SF-ADJUSTMENT _"Chip amount"          '(30 0 250 1 10 0 1)
+		    SF-ADJUSTMENT _"Blur amount"          '(3 1 100 1 10 1 0)
+		    SF-TOGGLE     _"Invert"               FALSE
+		    SF-TOGGLE     _"Drop shadow"          TRUE
+		    SF-TOGGLE     _"Keep bump layer"      FALSE
 		    SF-TOGGLE     _"Fill BG with pattern" TRUE
-		    SF-TOGGLE     _"Keep background" TRUE
-		    SF-PATTERN    _"Pattern" "Burlwood"
-		    )
+		    SF-TOGGLE     _"Keep background"      TRUE
+		    SF-PATTERN    _"Pattern"              "Burlwood")
+
+(script-fu-menu-register "script-fu-chip-away-logo-alpha"
+			 _"<Image>/Script-Fu/Alpha to Logo")
 
 
 (define (script-fu-chip-away-logo text
@@ -169,22 +171,23 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-chip-away-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/Chip Awa_y..."
+		    _"Chip Awa_y..."
 		    "Chip away effect"
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins <adrian@gimp.org>"
 		    "1997"
 		    ""
-		    SF-STRING _"Text" "Sloth"
-		    SF-FONT   _"Font" "RoostHeavy"
-		    SF-ADJUSTMENT _"Font size (pixels)" '(200 2 1000 1 10 0 1)
-		    SF-ADJUSTMENT _"Chip amount" '(30 0 250 1 10 0 1)
-		    SF-ADJUSTMENT _"Blur amount" '(3 1 100 1 10 1 0)
-		    SF-TOGGLE     _"Invert" FALSE
-		    SF-TOGGLE     _"Drop shadow" TRUE
-		    SF-TOGGLE     _"Keep bump layer" FALSE
+		    SF-STRING     _"Text"                 "Sloth"
+		    SF-FONT       _"Font"                 "RoostHeavy"
+		    SF-ADJUSTMENT _"Font size (pixels)"   '(200 2 1000 1 10 0 1)
+		    SF-ADJUSTMENT _"Chip amount"          '(30 0 250 1 10 0 1)
+		    SF-ADJUSTMENT _"Blur amount"          '(3 1 100 1 10 1 0)
+		    SF-TOGGLE     _"Invert"               FALSE
+		    SF-TOGGLE     _"Drop shadow"          TRUE
+		    SF-TOGGLE     _"Keep bump layer"      FALSE
 		    SF-TOGGLE     _"Fill BG with pattern" TRUE
-		    SF-TOGGLE     _"Keep background" TRUE
-		    SF-PATTERN    _"Pattern" "Burlwood"
-		    )
+		    SF-TOGGLE     _"Keep background"      TRUE
+		    SF-PATTERN    _"Pattern"              "Burlwood")
 
+(script-fu-menu-register "script-fu-chip-away-logo"
+			 _"<Toolbox>/Xtns/Script-Fu/Logos")

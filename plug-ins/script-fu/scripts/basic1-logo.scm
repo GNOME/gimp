@@ -49,7 +49,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-basic1-logo-alpha"
-		    _"<Image>/Script-Fu/Alpha to Logo/_Basic I..."
+		    _"_Basic I..."
 		    "Creates a simple logo with a drop shadow"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
@@ -59,6 +59,10 @@
                     SF-DRAWABLE   "Drawable"          0
 		    SF-COLOR      _"Background color" '(255 255 255)
 		    SF-COLOR      _"Text color"       '(6 6 206))
+
+(script-fu-menu-register "script-fu-basic1-logo-alpha"
+			 _"<Image>/Script-Fu/Alpha to Logo")
+
 
 (define (script-fu-basic1-logo text
 			       size
@@ -75,7 +79,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-basic1-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/_Basic I..."
+		    _"_Basic I..."
 		    "Creates a simple logo with a drop shadow"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
@@ -86,3 +90,6 @@
 		    SF-FONT       _"Font"               "Dragonwick"
 		    SF-COLOR      _"Background color"   '(255 255 255)
 		    SF-COLOR      _"Text color"         '(6 6 206))
+
+(script-fu-menu-register "script-fu-basic1-logo"
+			 _"<Toolbox>/Xtns/Script-Fu/Logos")

@@ -147,7 +147,7 @@
 
 
 (script-fu-register "script-fu-selection-rounded-rectangle"
-		    _"<Image>/Select/Rounded R_ectangle..."  
+		    _"Rounded R_ectangle..."  
 		    "Converts the current selection, to a rectangular selection with rounded edges. The radius is a percentage of half the selection width or height, whichever is smaller. Select 'Concave' if you want the round edges will to be indented. Round Edges works by subtracting and adding circles to the selection.  "
 		    "Alan Horkan, Sven Neumann" ; authors
 		    "Sven Neumann"              ; copyright
@@ -155,9 +155,12 @@
 		    "*"
 		    SF-IMAGE       "Image"      0
 		    SF-DRAWABLE    "Drawable"   0
-		    
 		    SF-ADJUSTMENT _"Radius (%)" '(50 0 100 1 10 0 0)
 		    SF-TOGGLE     _"Concave"    FALSE)
+
+(script-fu-menu-register "script-fu-selection-rounded-rectangle"
+			 "<Image>/Select")
+
 
 (script-fu-register "script-fu-selection-round"
 		    ""
@@ -166,7 +169,6 @@
 		    "Sven Neumann"              ; copyright
 		    "1998/02/06"
 		    "*"
-		    SF-IMAGE       "Image"      0
-		    SF-DRAWABLE    "Drawable"   0
-		    
-		    SF-ADJUSTMENT  "Relative radius" '(1 0 128 .1 1 1 1))
+		    SF-IMAGE      "Image"           0
+		    SF-DRAWABLE   "Drawable"        0
+		    SF-ADJUSTMENT "Relative radius" '(1 0 128 .1 1 1 1))

@@ -65,7 +65,7 @@
     (gimp-context-pop)))
 
 (script-fu-register "script-fu-sphere"
-		    _"<Toolbox>/Xtns/Script-Fu/Misc/_Sphere..."
+		    _"_Sphere..."
 		    "Simple sphere with a drop shadow"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
@@ -76,3 +76,6 @@
 		    SF-TOGGLE     _"Shadow"             TRUE
 		    SF-COLOR      _"Background color"   '(255 255 255)
 		    SF-COLOR      _"Sphere color"       '(255 0 0))
+
+(script-fu-menu-register "script-fu-sphere"
+			 _"<Toolbox>/Xtns/Script-Fu/Misc")

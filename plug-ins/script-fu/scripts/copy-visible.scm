@@ -66,7 +66,7 @@
     (gimp-image-delete image)))
 
 (script-fu-register "script-fu-copy-visible"
-		    _"<Image>/Edit/Copy/Copy _Visible"
+		    _"Copy _Visible"
 		    "Copy the visible selection"
 		    "Sven Neumann <sven@gimp.org>, Adrian Likins <adrian@gimp.org>, Raphael Quinet <raphael@gimp.org>"
 		    "Sven Neumann, Adrian Likins, Raphael Quinet"
@@ -74,3 +74,6 @@
 		    "RGB* INDEXED* GRAY*"
 		    SF-IMAGE    "Image"    0
 		    SF-DRAWABLE "Drawable" 0)
+
+(script-fu-menu-register "script-fu-copy-visible"
+			 "<Image>/Edit/Copy")

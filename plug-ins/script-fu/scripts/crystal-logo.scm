@@ -186,21 +186,24 @@
 
 
 (script-fu-register "script-fu-crystal-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
+		    _"Crystal..."
 		    "Crystal/Gel effect which displaces the image underneath"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1997"
 		    ""
-		    SF-ADJUSTMENT  _"Chrome factor" '(1.0 0.2 4 0.1 1 1 0)
-		    SF-STRING _"Text" "Crystal"
-		    SF-ADJUSTMENT _"Font size (pixels)" '(150 2 1000 1 10 0 1)
-		    SF-FONT   _"Font" "Engraver"
-		    SF-FILENAME _"Background image"
-		                (string-append ""
-					       gimp-data-directory
-					       "/scripts/images/texture1.jpg")
-		    SF-FILENAME _"Environment map"
-		                (string-append ""
-					       gimp-data-directory
-					       "/scripts/images/beavis.jpg"))
+		    SF-ADJUSTMENT  _"Chrome factor"      '(1.0 0.2 4 0.1 1 1 0)
+		    SF-STRING      _"Text"               "Crystal"
+		    SF-ADJUSTMENT  _"Font size (pixels)" '(150 2 1000 1 10 0 1)
+		    SF-FONT        _"Font"               "Engraver"
+		    SF-FILENAME    _"Background image"
+		                    (string-append ""
+						   gimp-data-directory
+						   "/scripts/images/texture1.jpg")
+		    SF-FILENAME    _"Environment map"
+		                    (string-append ""
+						   gimp-data-directory
+						   "/scripts/images/beavis.jpg"))
+
+(script-fu-menu-register "script-fu-crystal-logo"
+			 _"<Toolbox>/Xtns/Script-Fu/Logos")

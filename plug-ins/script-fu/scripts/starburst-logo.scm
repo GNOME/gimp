@@ -73,18 +73,20 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-starburst-logo-alpha"
-		    _"<Image>/Script-Fu/Alpha to Logo/Starb_urst..."
+		    _"Starb_urst..."
 		    "Starburst as inspired by GIMP News"
 		    "Spencer Kimball & Xach Beane"
 		    "Spencer Kimball & Xach Beane"
 		    "1997"
 		    "RGBA"
-                    SF-IMAGE      "Image" 0
-                    SF-DRAWABLE   "Drawable" 0
+                    SF-IMAGE       "Image"            0
+                    SF-DRAWABLE    "Drawable"         0
 		    SF-ADJUSTMENT _"Effect size (pixels * 30)" '(150 0 512 1 10 0 1)
-		    SF-COLOR      _"Burst color" '(60 196 33)
-		    SF-COLOR      _"Background color" '(255 255 255)
-		    )
+		    SF-COLOR      _"Burst color"      '(60 196 33)
+		    SF-COLOR      _"Background color" '(255 255 255))
+
+(script-fu-menu-register "script-fu-starburst-logo-alpha"
+			 _"<Image>/Script-Fu/Alpha to Logo")
 
 
 (define (script-fu-starburst-logo text size fontname burst-color bg-color)
@@ -100,15 +102,17 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-starburst-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/Starb_urst..."
+		    _"Starb_urst..."
 		    "Starburst as inspired by GIMP News"
 		    "Spencer Kimball & Xach Beane"
 		    "Spencer Kimball & Xach Beane"
 		    "1997"
 		    ""
-		    SF-STRING     _"Text" "GIMP"
+		    SF-STRING     _"Text"               "GIMP"
 		    SF-ADJUSTMENT _"Font size (pixels)" '(150 0 512 1 10 0 1)
-		    SF-FONT       _"Font" "Blippo"
-		    SF-COLOR      _"Burst color" '(60 196 33)
-		    SF-COLOR      _"Background color" '(255 255 255)
-		    )
+		    SF-FONT       _"Font"               "Blippo"
+		    SF-COLOR      _"Burst color"        '(60 196 33)
+		    SF-COLOR      _"Background color"   '(255 255 255))
+
+(script-fu-menu-register "script-fu-starburst-logo"
+			 _"<Toolbox>/Xtns/Script-Fu/Logos")

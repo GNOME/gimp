@@ -178,21 +178,24 @@
     (gimp-context-pop)))
 
 (script-fu-register "script-fu-sota-chrome-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
+		    _"SOTA Chrome..."
 		    "State of the art chromed logos"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1997"
 		    ""
-		    SF-ADJUSTMENT _"Chrome saturation" '(-80 -100 100 1 10 0 0)
-		    SF-ADJUSTMENT _"Chrome lightness" '(-47 -100 100 1 10 0 0)
-		    SF-ADJUSTMENT _"Chrome factor" '(.75 0 1 .1 .01 2 0)
-		    SF-STRING     _"Text" "The GIMP"
+		    SF-ADJUSTMENT _"Chrome saturation"  '(-80 -100 100 1 10 0 0)
+		    SF-ADJUSTMENT _"Chrome lightness"   '(-47 -100 100 1 10 0 0)
+		    SF-ADJUSTMENT _"Chrome factor"      '(.75 0 1 .1 .01 2 0)
+		    SF-STRING     _"Text"               "The GIMP"
 		    SF-ADJUSTMENT _"Font size (pixels)" '(150 2 1000 1 10 0 1)
 		    SF-FONT       _"Font" "RoostHeavy"
 		    SF-FILENAME   _"Environment map"
 		                  (string-append ""
 						 gimp-data-directory
 						 "/scripts/images/beavis.jpg")
-		    SF-COLOR      _"Highlight balance" '(211 95 0)
-		    SF-COLOR      _"Chrome balance" '(0 0 0))
+		    SF-COLOR      _"Highlight balance"  '(211 95 0)
+		    SF-COLOR      _"Chrome balance"     '(0 0 0))
+
+(script-fu-menu-register "script-fu-sota-chrome-logo"
+			 _"<Toolbox>/Xtns/Script-Fu/Logos")

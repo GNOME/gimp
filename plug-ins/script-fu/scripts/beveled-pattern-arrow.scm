@@ -140,15 +140,18 @@
 
 
 (script-fu-register "script-fu-beveled-pattern-arrow"
-                    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Arrow..."
+                    _"_Arrow..."
                     "Beveled pattern arrow"
                     "Federico Mena Quintero"
                     "Federico Mena Quintero"
                     "July 1997"
                     ""
-                    SF-ADJUSTMENT _"Size"     '(32 5 150 1 10 0 1)
+                    SF-ADJUSTMENT _"Size"        '(32 5 150 1 10 0 1)
                     SF-OPTION     _"Orientation" '(_"Right"
-                                                   _"Left"
-                                                   _"Up"
-                                                   _"Down")
+						   _"Left"
+						   _"Up"
+						   _"Down")
                     SF-PATTERN    _"Pattern"     "Wood")
+
+(script-fu-menu-register "script-fu-beveled-pattern-arrow"
+			 _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern")

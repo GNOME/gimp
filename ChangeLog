@@ -1,3 +1,16 @@
+2004-11-18  Michael Natterer  <mitch@gimp.org>
+
+	Script-Fu string cleanup/simplification: apply the same fix for
+	menu path translation that was done for plug-ins a while ago.
+
+	* plug-ins/script-fu/script-fu.c (script_fu_auxillary_init): use
+	gimp_plugin_menu_register() on the "Refresh" temp_proc.
+
+	* plug-ins/script-fu/scripts/*.scm: ported all scripts to use
+	script-fu-menu-register and pass just the menu label in
+	script-fu-register. Cleaned up all register calls to share a
+	somewhat similar formatting.
+
 2004-11-18  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/postscript.c: changed the default to load only

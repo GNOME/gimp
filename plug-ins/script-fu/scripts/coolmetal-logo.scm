@@ -122,18 +122,21 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-cool-metal-logo-alpha"
-		    _"<Image>/Script-Fu/Alpha to Logo/Cool _Metal..."
+		    _"Cool _Metal..."
 		    "Metallic logos with reflections and perspective shadows"
 		    "Spencer Kimball & Rob Malda"
 		    "Spencer Kimball & Rob Malda"
 		    "1997"
 		    "RGBA"
-                    SF-IMAGE      "Image"                 0
-                    SF-DRAWABLE   "Drawable"              0
+                    SF-IMAGE       "Image"                0
+                    SF-DRAWABLE    "Drawable"             0
 		    SF-ADJUSTMENT _"Effect size (pixels)" '(100 2 1000 1 10 0 1)
 		    SF-COLOR      _"Background color"     '(255 255 255)
 		    SF-GRADIENT   _"Gradient"             "Horizon 1"
 		    SF-TOGGLE     _"Gradient reverse"     FALSE)
+
+(script-fu-menu-register "script-fu-cool-metal-logo-alpha"
+			 _"<Image>/Script-Fu/Alpha to Logo")
 
 
 (define (script-fu-cool-metal-logo text
@@ -153,7 +156,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-cool-metal-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/Cool _Metal..."
+		    _"Cool _Metal..."
 		    "Metallic logos with reflections and perspective shadows"
 		    "Spencer Kimball & Rob Malda"
 		    "Spencer Kimball & Rob Malda"
@@ -165,3 +168,6 @@
 		    SF-COLOR      _"Background color"   '(255 255 255)
 		    SF-GRADIENT   _"Gradient"           "Horizon 1"
 		    SF-TOGGLE     _"Gradient reverse"   FALSE)
+
+(script-fu-menu-register "script-fu-cool-metal-logo"
+			 _"<Toolbox>/Xtns/Script-Fu/Logos")
