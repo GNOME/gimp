@@ -119,6 +119,14 @@
  * using the "volatile" keyword.   Here endeth the lesson.
  */
 
+/*
+ * 4-SEP-01 - remove the use of GtkText
+ * - DindinX <David@dindinx.org>
+ *
+ * The new version of GTK+ does not support GtkText anymore.
+ * I've just replaced the one used for the image comment by
+ * a GtkTextView/GtkTextBuffer couple;
+ */
 
 #include "config.h"   /* configure cares about HAVE_PROGRESSIVE_JPEG */
 
@@ -142,10 +150,6 @@
 #include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
-
-/* FIXME: remove usage of the 'broken' GtkText */
-#define GTK_ENABLE_BROKEN
-#include <gtk/gtktext.h>
 
 #define SCALE_WIDTH         125
 
@@ -1543,33 +1547,33 @@ destroy_preview (void)
 static gboolean
 save_dialog (void)
 {
-  GtkWidget *dlg;
-  GtkWidget *vbox;
-  GtkWidget *main_vbox;
-  GtkWidget *label;
-  GtkWidget *scale;
-  GtkWidget *frame;
-  GtkWidget *table;
-  GtkWidget *toggle;
-  GtkWidget *abox;
-  GtkObject *scale_data;
+  GtkWidget     *dlg;
+  GtkWidget     *vbox;
+  GtkWidget     *main_vbox;
+  GtkWidget     *label;
+  GtkWidget     *scale;
+  GtkWidget     *frame;
+  GtkWidget     *table;
+  GtkWidget     *toggle;
+  GtkWidget     *abox;
+  GtkObject     *scale_data;
 
-  GtkWidget *progressive;
-  GtkWidget *baseline;
-  GtkWidget *restart;
+  GtkWidget     *progressive;
+  GtkWidget     *baseline;
+  GtkWidget     *restart;
 
-  GtkWidget *preview;
+  GtkWidget     *preview;
   /* GtkWidget *preview_size; -- global */
 
-  GtkWidget *menu;
+  GtkWidget     *menu;
   
-  GtkWidget *text;
-  GtkWidget *com_frame;
-  GtkWidget *com_table;
-  GtkWidget *vscrollbar;
-  
-  GtkWidget *prv_frame;
-  GimpImageType dtype;
+  GtkWidget     *text_view;
+  GtkTextBuffer *text_buffer;
+  GtkWidget     *com_frame;
+  GtkWidget     *scrolled_window;
+
+  GtkWidget     *prv_frame;
+  GimpImageType  dtype;
 
   dlg = gimp_dialog_new (_("Save as JPEG"), "jpeg",
 			 gimp_standard_help_func, "filters/jpeg.html",
@@ -1800,38 +1804,38 @@ save_dialog (void)
   gtk_frame_set_shadow_type (GTK_FRAME (com_frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (main_vbox), com_frame, TRUE, TRUE, 0);
 
-  com_table = gtk_table_new (1, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (com_table), 4);
-  gtk_container_add (GTK_CONTAINER (com_frame), com_table);
+  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+                                  GTK_POLICY_AUTOMATIC,
+                                  GTK_POLICY_AUTOMATIC);
+  gtk_container_set_border_width (GTK_CONTAINER (scrolled_window), 4);
+  gtk_container_add (GTK_CONTAINER (com_frame), scrolled_window);
+  gtk_widget_show (scrolled_window);
 
-  text = gtk_text_new (NULL, NULL);
-  gtk_text_set_editable (GTK_TEXT (text), TRUE);
-  gtk_widget_set_usize (text, -1, 3); /* HB: restrict to 3 line height 
-				       * to allow 800x600 mode */
-  if (image_comment) 
-    gtk_text_insert (GTK_TEXT (text), NULL, NULL, NULL, image_comment, -1);
-  gtk_table_attach (GTK_TABLE (com_table), text, 0, 1, 0, 1,
-                    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
-                    GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
-  
-  /* Add a vertical scrollbar to the GtkText widget */
-  vscrollbar = gtk_vscrollbar_new (GTK_TEXT (text)->vadj);
-  gtk_table_attach (GTK_TABLE (com_table), vscrollbar, 1, 2, 0, 1,
-                    GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (vscrollbar);
+  text_buffer = gtk_text_buffer_new (NULL);
+  if (image_comment)
+    gtk_text_buffer_set_text (text_buffer, image_comment, -1);
+
+  text_view = gtk_text_view_new_with_buffer (text_buffer);
+  gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD);
+
+  gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
+  gtk_widget_show (text_view);
+
+  g_object_unref (G_OBJECT (text_buffer));
 
   /* pw - mild hack here.  I didn't like redoing the comment string
    * each time a character was typed, so I associated the text area
    * with the dialog.  That way, just before the dialog destroys
    * itself (once the ok button is hit) it can save whatever was in
    * the comment text area to the comment string.  See the
-   * save-ok-callback for more details.  */
+   * save-ok-callback for more details.  
+   * [DindinX 2001-09-04]: this comment is still true with the text_buffer...
+   */
   
-  gtk_object_set_data (GTK_OBJECT (dlg), "text", text); 
+  gtk_object_set_data (GTK_OBJECT (dlg), "text_buffer", text_buffer); 
   
-  gtk_widget_show (text);
   gtk_widget_show (com_frame);
-  gtk_widget_show (com_table);
 
   gtk_widget_show (frame);
   gtk_widget_show (table);
@@ -1858,22 +1862,20 @@ static void
 save_ok_callback (GtkWidget *widget,
 		  gpointer   data)
 {
-  GtkWidget *text;
+  GtkTextBuffer *text_buffer;
+  GtkTextIter    start_iter;
+  GtkTextIter    end_iter;
 
   jsint.run = TRUE;
 
-  /* pw - get the comment text object and grab it's data */
-  text = gtk_object_get_data (GTK_OBJECT (data), "text");
-  
-  /* pw - gtk_editable_get_chars allocates a copy of the string, so
-   * don't worry about the gtk_widget_destroy killing it.  */
+  /* pw - get the comment text_buffer object and grab it's data */
+  text_buffer = gtk_object_get_data (GTK_OBJECT (data), "text_buffer");
 
-  g_free (image_comment);
-  image_comment = NULL;
+  gtk_text_buffer_get_bounds (text_buffer, &start_iter, &end_iter);
+  gtk_text_iter_backward_char (&end_iter);
 
-  if (text)
-    image_comment = gtk_editable_get_chars (GTK_EDITABLE (text), 0, -1);
-
+  image_comment = gtk_text_buffer_get_text (text_buffer, &start_iter, &end_iter, FALSE);
+        
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 

@@ -1,3 +1,12 @@
+2001-09-04  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/jpeg.c: JPEG is back!
+	Thanks to David Odin <dindinx@wanadoo.fr> for the patch.
+
+	* plug-ins/common/.cvsignore
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/plugin-defs.pl: build it again.
+
 2001-09-03  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/about-dialog.c

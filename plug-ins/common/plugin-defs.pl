@@ -61,7 +61,7 @@
     'illusion' => { libdep => 'gtk', ui => 1 },
     'iwarp' => { libdep => 'gtk', ui => 1 },
     'jigsaw' => { libdep => 'gtk', ui => 1 },
-#   'jpeg' => { libdep => 'gtk', ui => 1, optional => 1 },
+    'jpeg' => { libdep => 'gtk', ui => 1, optional => 1 },
     'laplace' => { libdep => 'glib', ui => 1 },
     'lic' => { libdep => 'gtk', ui => 1 },
 #   'mail' => { libdep => 'gtk', ui => 1 },

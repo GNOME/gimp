@@ -82,6 +82,7 @@ libexec_PROGRAMS = @STRIP_BEGIN@ \
 	illusion \
 	iwarp \
 	jigsaw \
+	$(JPEG) \
 	laplace \
 	lic \
 	mapcolor \
@@ -148,6 +149,7 @@ libexec_PROGRAMS = @STRIP_BEGIN@ \
 
 EXTRA_PROGRAMS = \
 	aa \
+	jpeg \
 	mpeg \
 	png \
 	psp \
@@ -997,6 +999,21 @@ jigsaw_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	$(GTK_LIBS)							\
+	$(INTLLIBS)							\
+@STRIP_END@
+
+jpeg_SOURCES = @STRIP_BEGIN@ \
+	jpeg.c	\
+@STRIP_END@
+
+jpeg_LDADD = @STRIP_BEGIN@ \
+	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
+	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
+	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	$(LIBJPEG)							\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)							\
 @STRIP_END@
