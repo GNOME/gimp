@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
 "POT-Creation-Date: 2000-12-23 11:40-0800\n"
-"PO-Revision-Date: 2001-01-19 19:34+01:00\n"
+"PO-Revision-Date: 2001-02-27 19:34+01:00\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish/Dansk <sslug-locale@sslug.dk>\n"
 "MIME-Version: 1.0\n"
@@ -12760,7 +12760,7 @@ msgstr "Ovenfra ned"
 
 #: plug-ins/print/gimp_main_window.c:464
 msgid "Seascape"
-msgstr "Havskab"
+msgstr "Panorama"
 
 #.
 #. *  Printer settings frame...
