@@ -10,6 +10,8 @@ make test TEST_VERBOSE=1
 
 bugs
 
+  * auto-edit shebang
+  * only install plug-ins that really work
 [DONE]  * gimptool 1.0 doesn't support -n or --noui
   * perl_fu_webify in homepage-logo.pl
 [????]  * save_image should be called for non-null return values

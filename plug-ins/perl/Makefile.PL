@@ -25,9 +25,9 @@ gimp-1.1 ;)
 If you decide to run these tests (please!), I'd be glad to hear
 success stories (and of course any bug-reports ;)
 
-Do you want me to make these tests [n]? ";
+Do you want me to make these tests [y]? ";
       
-      $EXTENSIVE_TESTS = (<STDIN> =~ /^[yYjJ]/) ? 1 : 0;
+      $EXTENSIVE_TESTS = (<STDIN> !~ /^[nN]/) ? 1 : 0;
    }
    
    print "\n";
@@ -41,7 +41,6 @@ Do you want me to make these tests [n]? ";
    $ENV{IN_GIMP}=0;
    exit system("./etc/configure",@ARGV)>>8;
 } else {
-   shift @ARGV;
    do './config.pl';
 }
 
@@ -53,19 +52,19 @@ $] >= 5.005 or print <<EOF;
 
 WARNING: you are using a version of perl older than 5.005. While this
          extension should run on older versions (and I try to keep source
-         compatibility), some people get spurious errors that go away after
-         upgrading to 5.005. Since 5.005 is much better and has many many
-         bugs fixed, an upgrade wpuld come in handy...
+         compatibility), some people get spurious errors that go away
+         after upgrading to 5.005. Since 5.005 is much better and has many
+         many bugs fixed, an upgrade wpuld come in handy...
 
 EOF
 
 $GTK or print <<EOF;
 
 WARNING: unable to use the Perl-Gtk interface.  Some features (like
-         Gimp::Fu) rely on this extension.  You can try to build without it,
-         but it's better to install it (version 0.3 or higher is required,
-         you can get it from ftp://ftp.gimp.org/pub/gtk/perl/ or any
-         CPAN mirror.
+         Gimp::Fu) rely on this extension.  You can try to build without
+         it, but it's better to install it (version 0.3 or higher is
+         required, you can get it from ftp://ftp.gimp.org/pub/gtk/perl/ or
+         any CPAN mirror.
 
 EOF
 
@@ -74,8 +73,9 @@ $PDL or print <<EOF;
 WARNING: unable to use PDL (the perl data language).  This means that
          Gimp::PDL is non-functional.  Unless you plan to use Tile/PixelRgn
          functions together with PDL, this is harmless.  Gimp::PDL will be
-         installed, just in case you later install PDL.  You can get PDL
-         from any CPAN mirror.
+         installed, just in case you later install PDL.  The plug-ins using
+         PDL, however, will NOT BE INSTALLED.  You can get PDL from any CPAN
+         mirror.
 
 EOF
 
@@ -104,8 +104,8 @@ unless ($major > 0
         || ($major == 0 && $minor == 3 && $patch >= -1)) {
    print <<EOF;
 
-WARNING: version 0.3 of Gtk is _required_ for this module to build
-         properly.  You can get the newest version from
+WARNING: version 0.3 of Gtk is _required_ for this module to
+         build properly.  You can get the newest version from
          ftp://ftp.gimp.org/pub/gtk/perl/ or any CPAN mirror.  Older
          versions may work, but I have warned you!
 
@@ -116,10 +116,13 @@ sub MY::postamble {
    (my $GIMPTOOL2 = $GIMPTOOL) =~ s/^\.\./..\/../;
    <<"EOF";
 
+objclean :: clean
 maintainer-clean :: realclean
-objclean :: realclean
 distclean :: realclean
 check :: test
+
+clean ::
+	test -f Makefile || mv -f Makefile.old Makefile
 
 install :: install-plugins
 
@@ -131,14 +134,12 @@ install-plugins:
 	-cd examples && $GIMPTOOL2 --install-admin-bin PDB
 	-cd examples && $GIMPTOOL2 --install-admin-bin alpha2color.pl
 	-cd examples && $GIMPTOOL2 --install-admin-bin tex-to-float
-	-cd examples && $GIMPTOOL2 --install-admin-bin ditherize
+	-cd examples && $GIMPTOOL2 --install-admin-bin ditherize.pl
 	-cd examples && $GIMPTOOL2 --install-admin-bin border.pl
 	-cd examples && $GIMPTOOL2 --install-admin-bin view3d.pl
 EOF
 }
 
-# See lib/ExtUtils/MakeMaker.pm for details of how to influence
-# the contents of the Makefile that is written.
 WriteMakefile(
     'dist'	=> {
                     'PREOP'     => 'chmod -R u=rwX,go=rX . ;',
@@ -166,14 +167,14 @@ WriteMakefile(
     'INC'	=> "$CPPFLAGS $CFLAGS $GIMP_INC_NOUI $DEFS",
     'DEFINE'	=> ($IN_GIMP ? " -DIN_GIMP" : ""),
     'realclean'	=> { FILES => "config.status config.cache config.log config.pl config.h" },
-    'clean'	=> { FILES => "Makefile.old config.pl" },
+    'clean'	=> { FILES => "Makefile.old stamp-h" },
 );
 
 $IN_GIMP or print <<EOF;
 
 
-Hopefully, Gimp is now correctly configured. you can now enter "make", "make
-test" and "make install".
+Hopefully, Gimp is now correctly configured. you can now enter "make",
+"make test" and "make install".
 
 EOF
 

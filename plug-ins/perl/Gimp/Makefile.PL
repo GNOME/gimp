@@ -15,6 +15,13 @@ sub MY::const_loadlibs {
    $self->SUPER::const_loadlibs(@_);
 }
 
+sub MY::postamble {
+   <<"EOF";
+clean ::
+	test -f Makefile || mv -f Makefile.old Makefile
+EOF
+}
+
 WriteMakefile(
     'NAME'	=> 'Gimp::Lib',
     'VERSION_FROM' => '../Gimp.pm',

@@ -22,6 +22,7 @@ etc/configure.in
 etc/aclocal.m4
 etc/config.h.in
 etc/config.pl.in
+etc/configure.frag
 Gimp/Makefile.PL
 Gimp/Lib.xs
 Gimp/Lib.pm

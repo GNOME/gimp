@@ -2,8 +2,11 @@ Revision history for Gimp-Perl extension.
 
 	- moved the xlfd_size function from Gimp::Fu into Gimp
           (and maybe later into Gimp::Util?)
-	- Functions in Gimp::Util are now treated in the same way
+	- functions in Gimp::Util are now treated in the same way
           as PDB functions (when the module is loaded)
+        - improved handling of "make clean" to make it less perl-ish
+          and more gnu-ish
+        - enabled full testsuite (keep your fingers crossed)
 
 1.051 Tue Jan 19 21:10:20 CET 1999
 	- corrected a minor typoe found by Stefan Traby <stefan@sime.com>
