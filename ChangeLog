@@ -1,3 +1,16 @@
+2004-04-19  Sven Neumann  <sven@gimp.org>
+
+	* menus/Makefile.am
+	* menus/gtkuimanager.dtd: added a DTD (basically copied from the
+	GTK+ API docs). Added a "validate" rule that allows to easily
+	validate the XML files.
+
+	* menus/*.xml: added a DOCTYPE declaration that refers to the
+	newly added DTD.
+
+	* app/widgets/gimpenumstore.[ch]: 
+	* app/widgets/gimpenumcombobox.c: documented the new API.
+
 2004-04-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/Makefile.am
