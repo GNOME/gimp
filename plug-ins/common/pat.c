@@ -121,7 +121,7 @@ query (void)
                           "Tim Newsome",
                           "1997",
                           "<Save>/PAT",
-                          "RGB, GRAY",
+                          "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
@@ -187,7 +187,8 @@ run (gchar      *name,
 	  gimp_ui_init ("pat", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "PAT", 
 				      GIMP_EXPORT_CAN_HANDLE_GRAY |
-                                      GIMP_EXPORT_CAN_HANDLE_RGB);
+				      GIMP_EXPORT_CAN_HANDLE_RGB |
+                                      GIMP_EXPORT_CAN_HANDLE_ALPHA);
 	  if (export == GIMP_EXPORT_CANCEL)
 	    {
 	      values[0].data.d_status = GIMP_PDB_CANCEL;
@@ -316,9 +317,6 @@ load_image (gchar *filename)
     case 2:
       base_type = GIMP_GRAY;
       image_type = GIMP_GRAYA_IMAGE;
-      g_message ("Your pattern has an aplha channel,\n"
-		 "please flatten and save it again to fix this.\n"
-		 "Loading it anyway...");
       break;
     case 3:
       base_type = GIMP_RGB;
@@ -327,9 +325,6 @@ load_image (gchar *filename)
     case 4:
       base_type = GIMP_RGB;
       image_type = GIMP_RGBA_IMAGE;
-      g_message ("Your pattern has an aplha channel,\n"
-		 "please flatten and save it again to fix this.\n"
-		 "Loading it anyway...");
       break;
     default:
       g_message ("Unsupported pattern depth: %d\n"

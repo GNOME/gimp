@@ -374,6 +374,7 @@ gimp_pattern_load (const gchar  *filename,
     }
   
   /*  Check for supported bit depths  */
+  /*
   if (header.bytes != 1 && header.bytes != 3)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
@@ -383,6 +384,7 @@ gimp_pattern_load (const gchar  *filename,
                    header.bytes, filename);
       goto error;
     }
+  */
 
   /*  Read in the pattern name  */
   if ((bn_size = (header.header_size - sizeof (header))))

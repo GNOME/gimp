@@ -1,3 +1,22 @@
+2003-06-28  Dave Neary  <bolsh@gimp.org>
+
+	* plug-ins/common/pat.c: Save patterns with alpha
+	channels, and remove warning while loading patterns
+	with an alpha channel.
+
+	* app/core/gimppattern.c
+	* app/core/gimpdrawable-bucket-fill.c
+	* app/paint/gimpclone.c: Make cloning from a pattern
+	source, and bucket filling with a pattern, work when
+	there's an alpha channel present in the pattern.
+
+	I'm not particularly happy with this, because the only
+	way to tell whether there's an alpha channel or not is 
+	by the number of bytes in the TempBuf the clone and 
+	bucketfill routines get passed, which is rather 
+	restrictive. It would be nice if a TempBuf had a 
+	_has_alpha () method.
+
 2003-06-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpcontext.h: removed enum GimpContextPropType and

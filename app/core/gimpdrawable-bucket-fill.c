@@ -180,17 +180,25 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
       /*  If the pattern doesn't match the image in terms of color type,
        *  transform it.  (ie  pattern is RGB, image is indexed)
        */
-      if (((pattern->mask->bytes == 3) && ! gimp_drawable_is_rgb  (drawable)) ||
-	  ((pattern->mask->bytes == 1) && ! gimp_drawable_is_gray (drawable)))
+      if (((pattern->mask->bytes == 3 || pattern->mask->bytes == 4 ) && ! gimp_drawable_is_rgb  (drawable)) ||
+	  ((pattern->mask->bytes == 1 || pattern->mask->bytes == 2 ) && ! gimp_drawable_is_gray (drawable)))
 	{
           guchar *d1, *d2;
-	  gint    size;
+	  gint    size, in_bytes, out_bytes;
 
-	  if ((pattern->mask->bytes == 1) && gimp_drawable_is_rgb (drawable))
+	  if ((pattern->mask->bytes == 2) && gimp_drawable_is_rgb (drawable))
+	    pat_buf = temp_buf_new (pattern->mask->width,
+                                    pattern->mask->height,
+				    4, 0, 0, NULL);
+	  else if ((pattern->mask->bytes == 1) && gimp_drawable_is_rgb (drawable))
 	    pat_buf = temp_buf_new (pattern->mask->width,
                                     pattern->mask->height,
 				    3, 0, 0, NULL);
-	  else
+	  else if ((pattern->mask->bytes == 4) && gimp_drawable_is_gray (drawable))
+	    pat_buf = temp_buf_new (pattern->mask->width,
+                                    pattern->mask->height,
+				    2, 0, 0, NULL);
+          else
 	    pat_buf = temp_buf_new (pattern->mask->width,
                                     pattern->mask->height,
 				    1, 0, 0, NULL);
@@ -199,13 +207,21 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
 	  d2 = temp_buf_data (pat_buf);
 
 	  size = pattern->mask->width * pattern->mask->height;
+          in_bytes = pattern->mask->bytes;
+          out_bytes = pat_buf->bytes;
 	  while (size--)
 	    {
 	      gimp_image_transform_color (gimage, drawable, d1, d2,
-					  (pattern->mask->bytes == 3) ? 
+					  (in_bytes == 3 || 
+                                           in_bytes == 4) ? 
                                           GIMP_RGB : GIMP_GRAY);
-	      d1 += pattern->mask->bytes;
-	      d2 += pat_buf->bytes;
+              /* Handle alpha */
+              if (in_bytes == 4 || 
+                  in_bytes == 2 )
+                d2[out_bytes - 1] = d1[in_bytes - 1];
+
+	      d1 += in_bytes;
+	      d2 += out_bytes;
 	    }
 
 	  new_buf = TRUE;
@@ -438,6 +454,20 @@ gimp_drawable_bucket_fill_line_pattern (guchar   *buf,
     (y % pattern->height) * pattern->width * pattern->bytes;
 
   alpha = (has_alpha) ? bytes - 1 : bytes;
+  /*
+   * image data = pattern data for all but alpha
+   * 
+   * If (image has alpha)
+   *   if (there's a mask)
+   *     image data = mask for alpha;
+   *   else
+   *     image data = opaque for alpha.
+   *
+   *   if (pattern has alpha)
+   *     multiply existing alpha channel by pattern alpha 
+   *     (normalised to (0..1))
+   */
+
   for (i = 0; i < width; i++)
     {
       p = pat + ((i + x) % pattern->width) * pattern->bytes;
@@ -447,10 +477,17 @@ gimp_drawable_bucket_fill_line_pattern (guchar   *buf,
 
       if (has_alpha)
 	{
-	  if (mask)
+          if (mask)
 	    buf[alpha] = *mask++;
-	  else
+          else
 	    buf[alpha] = OPAQUE_OPACITY;
+
+          if (pattern->bytes == 2 || pattern->bytes == 4)
+            {
+	      buf[alpha] = 
+                (guchar)(buf[alpha] * 
+                          (p[alpha]/(gdouble)OPAQUE_OPACITY));
+            }
 	}
 
       buf += bytes;

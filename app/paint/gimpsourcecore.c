@@ -514,7 +514,8 @@ gimp_clone_line_pattern (GimpImage    *dest,
   pat = temp_buf_data (pattern->mask) +
     (y % pattern->mask->height) * pattern->mask->width * pattern->mask->bytes;
 
-  color_type = (pattern->mask->bytes == 3) ? GIMP_RGB : GIMP_GRAY;
+  color_type = (pattern->mask->bytes == 3 || 
+                pattern->mask->bytes == 4) ? GIMP_RGB : GIMP_GRAY;
 
   alpha = bytes - 1;
 
@@ -524,7 +525,10 @@ gimp_clone_line_pattern (GimpImage    *dest,
 
       gimp_image_transform_color (dest, drawable, p, d, color_type);
 
-      d[alpha] = OPAQUE_OPACITY;
+      if (pattern->mask->bytes == 2 || pattern->mask->bytes == 4)
+        d[alpha] = p[alpha];
+      else
+        d[alpha] = OPAQUE_OPACITY;
 
       d += bytes;
     }
