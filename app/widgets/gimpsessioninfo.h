@@ -73,6 +73,10 @@ struct _GimpSessionInfoAux
 void       gimp_session_info_free          (GimpSessionInfo         *info);
 void       gimp_session_info_book_free     (GimpSessionInfoBook     *book);
 void       gimp_session_info_dockable_free (GimpSessionInfoDockable *dockable);
+
+GimpSessionInfoAux *
+           gimp_session_info_aux_new       (const gchar             *name,
+                                            const gchar             *value);
 void       gimp_session_info_aux_free      (GimpSessionInfoAux      *aux);
 
 void       gimp_session_info_save          (GimpSessionInfo         *info,

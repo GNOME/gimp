@@ -328,16 +328,14 @@ gimp_image_dock_get_aux_info (GimpDock *dock)
   GList              *aux_info   = NULL;
   GimpSessionInfoAux *aux;
 
-  aux = g_new0 (GimpSessionInfoAux, 1);
-  aux->name  = g_strdup ("show-image-menu");
-  aux->value = g_strdup (image_dock->show_image_menu ? "true" : "false");
-
+  aux = gimp_session_info_aux_new ("show-image-menu",
+                                   image_dock->show_image_menu ?
+                                   "true" : "false");
   aux_info = g_list_append (aux_info, aux);
 
-  aux = g_new0 (GimpSessionInfoAux, 1);
-  aux->name  = g_strdup ("follow-auctive-image");
-  aux->value = g_strdup (image_dock->auto_follow_active ? "true" : "false");
-
+  aux = gimp_session_info_aux_new ("follow-auctive-image",
+                                   image_dock->auto_follow_active ?
+                                   "true" : "false");
   aux_info = g_list_append (aux_info, aux);
 
   return aux_info;

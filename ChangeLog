@@ -1,5 +1,14 @@
 2003-10-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpsessioninfo.[ch]: added utility function
+	gimp_session_info_aux_new().
+
+	* app/widgets/gimpcoloreditor.c
+	* app/widgets/gimpdataeditor.c
+	* app/widgets/gimpimagedock.c (get_aux_info): use it.
+
+2003-10-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/widgets-types.h
 	* app/widgets/gimpsessioninfo.[ch]: added new struct
 	GimpSessionInfoAux which contains "gchar *name" and "gchar *value".

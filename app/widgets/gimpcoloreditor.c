@@ -353,10 +353,8 @@ gimp_color_editor_get_aux_info (GimpDocked *docked)
     {
       GimpSessionInfoAux *aux;
 
-      aux = g_new0 (GimpSessionInfoAux, 1);
-      aux->name  = g_strdup ("current-page");
-      aux->value = g_strdup (G_OBJECT_TYPE_NAME (notebook->cur_page));
-
+      aux = gimp_session_info_aux_new ("current-page",
+                                       G_OBJECT_TYPE_NAME (notebook->cur_page));
       aux_info = g_list_append (aux_info, aux);
     }
 

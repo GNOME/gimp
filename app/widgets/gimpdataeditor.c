@@ -203,11 +203,11 @@ gimp_data_editor_get_aux_info (GimpDocked *docked)
   if (editor->data)
     {
       GimpSessionInfoAux *aux;
+      const gchar        *value;
 
-      aux = g_new0 (GimpSessionInfoAux, 1);
-      aux->name  = g_strdup ("current-data");
-      aux->value = g_strdup (gimp_object_get_name (GIMP_OBJECT (editor->data)));
+      value = gimp_object_get_name (GIMP_OBJECT (editor->data));
 
+      aux = gimp_session_info_aux_new ("current-data", value);
       aux_info = g_list_append (aux_info, aux);
     }
 

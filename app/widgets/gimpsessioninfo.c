@@ -128,6 +128,23 @@ gimp_session_info_dockable_free (GimpSessionInfoDockable *dockable)
   g_free (dockable);
 }
 
+GimpSessionInfoAux *
+gimp_session_info_aux_new (const gchar *name,
+                           const gchar *value)
+{
+  GimpSessionInfoAux *aux;
+
+  g_return_val_if_fail (name != NULL, NULL);
+  g_return_val_if_fail (value != NULL, NULL);
+
+  aux = g_new0 (GimpSessionInfoAux, 1);
+
+  aux->name  = g_strdup (name);
+  aux->value = g_strdup (value);
+
+  return aux;
+}
+
 void
 gimp_session_info_aux_free (GimpSessionInfoAux *aux)
 {
