@@ -39,6 +39,10 @@
 #include "gimpdisplayshell-preview.h"
 #include "gimpdisplayshell-transform.h"
 
+
+#define MAX_SUB_COLS 6     /* number of columns and  */
+#define MAX_SUB_ROWS 6     /* rows to use in perspective preview subdivision */
+
 /*  local function prototypes  */
 
 static void    gimp_display_shell_draw_quad          (GimpDrawable *texture,
@@ -129,9 +133,15 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell)
           gint         mask_x1, mask_y1;
           gint         mask_x2, mask_y2;
           gint         mask_offx, mask_offy;
+
           gint         columns, rows;
-          gint         col, row;
+          gint         j, k, sub;
+
           gfloat       du, dv, dx, dy;
+          gint         x [MAX_SUB_COLS * MAX_SUB_ROWS][4],
+                       y [MAX_SUB_COLS * MAX_SUB_ROWS][4];
+          gfloat       u [MAX_SUB_COLS * MAX_SUB_ROWS][4],
+                       v [MAX_SUB_COLS * MAX_SUB_ROWS][4];
 
           mask = NULL;
           mask_offx = mask_offy = 0;
@@ -152,8 +162,8 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell)
                *
                * increase number of columns/rows to increase precision
                */
-              columns = 5;
-              rows    = 5;
+              columns = MAX_SUB_COLS;
+              rows    = MAX_SUB_ROWS;
             }
           else
             {
@@ -165,60 +175,99 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell)
 
           dx = (tr_tool->x2 - tr_tool->x1) / ((gfloat) columns);
           dy = (tr_tool->y2 - tr_tool->y1) / ((gfloat) rows);
+
           du = (mask_x2 - mask_x1) / ((gfloat) columns);
           dv = (mask_y2 - mask_y1) / ((gfloat) rows);
 
-          for (row = 0; row < rows; row++)
+#define CALC_VERTEX(col, row, sub, index) \
+          { \
+            gdouble tx1, ty1; \
+            gdouble tx2, ty2; \
+\
+            u [sub][index] = tr_tool->x1 + (dx * (col + (index & 1))); \
+            v [sub][index] = tr_tool->y1 + (dy * (row + (index >> 1))); \
+\
+            gimp_matrix3_transform_point (&tr_tool->transform, \
+                                          u[sub][index], v[sub][index], \
+                                          &tx1, &ty1); \
+\
+            gimp_display_shell_transform_xy_f (shell, \
+                                               tx1, ty1, \
+                                               &tx2, &ty2, \
+                                               FALSE); \
+            x [sub][index] = (gint) tx2; \
+            y [sub][index] = (gint) ty2; \
+\
+            u [sub][index] = mask_x1 + (du * (col + (index & 1))); \
+            v [sub][index] = mask_y1 + (dv * (row + (index >> 1))); \
+          }
+
+#define COPY_VERTEX(subdest, idest, subsrc, isrc) \
+          x [subdest][idest] = x [subsrc][isrc]; \
+          y [subdest][idest] = y [subsrc][isrc]; \
+          u [subdest][idest] = u [subsrc][isrc]; \
+          v [subdest][idest] = v [subsrc][isrc];
+
+          /*
+           * upper left corner subdivision: calculate all vertices
+           */
+
+          for (j = 0; j < 4; j++)
             {
-              for (col = 0; col < columns; col++)
+              CALC_VERTEX (0, 0, 0, j);
+            }
+
+          /*
+           * top row subdivisions: calculate only right side vertices
+           */
+
+          for (j = 1; j < columns; j++)
+            {
+              COPY_VERTEX (j, 0, j - 1, 1);
+              CALC_VERTEX (j, 0, j, 1);
+              COPY_VERTEX (j, 2, j - 1, 3);
+              CALC_VERTEX (j, 0, j, 3);
+            }
+
+          /*
+           * left column subdivisions: calculate only bottom side vertices
+           */
+
+          for (j = 1, sub = columns; j < rows; j++, sub += columns)
+            {
+              COPY_VERTEX (sub, 0, sub - columns, 2);
+              COPY_VERTEX (sub, 1, sub - columns, 3);
+              CALC_VERTEX (0, j, sub, 2);
+              CALC_VERTEX (0, j, sub, 3);
+            }
+
+          /*
+           * the rest: calculate only the bottom-right vertex
+           */
+
+          for (j = 1, sub = columns; j < rows; j++)
+            {
+              sub++;
+
+              for (k = 1; k < columns; k++, sub++)
                 {
-                  gint     x [4], y [4];
-                  gfloat   u [4], v [4];
-                  gint     i, j;
-
-                  /*  calculate source coordinates for corners of (sub)rectangle
-                   */
-                  for (j = 0; j < 2; j++)
-                    for (i = 0; i < 2; i++)
-                      {
-                        u [j*2+i] = tr_tool->x1 + (dx * (col + j));
-                        v [j*2+i] = tr_tool->y1 + (dy * (row + i));
-                      }
-
-                  /*  transform source coordinates to display coordinates
-                   *  through tool and display_shell transforms
-                   */
-                  for (i = 0; i < 4; i++)
-                    {
-                      gdouble tx1, ty1;
-                      gdouble tx2, ty2;
-
-                      gimp_matrix3_transform_point (&tr_tool->transform,
-                                                    u[i], v[i],
-                                                    &tx1, &ty1);
-
-                      gimp_display_shell_transform_xy_f (shell,
-                                                         tx1, ty1,
-                                                         &tx2, &ty2,
-                                                         FALSE);
-                      x [i] = (gint) tx2;
-                      y [i] = (gint) ty2;
-
-                    }
-
-                  for (j = 0; j < 2; j++)
-                    for (i = 0; i < 2; i++)
-                      {
-                        u [j*2+i] = mask_x1 + (du * (col + j));
-                        v [j*2+i] = mask_y1 + (dv * (row + i));
-                      }
-
-                  gimp_display_shell_draw_quad (tool->drawable,
-                                    GDK_DRAWABLE (GTK_WIDGET (shell->canvas)->window),
-                                    mask, mask_offx, mask_offy,
-                                    x, y, u, v);
+                  COPY_VERTEX (sub, 0, sub - 1, 1);
+                  COPY_VERTEX (sub, 1, sub - columns, 3);
+                  COPY_VERTEX (sub, 2, sub - 1, 3);
+                  CALC_VERTEX (k, j, sub, 3);
                 }
             }
+
+#undef CALC_VERTEX
+#undef COPY_VERTEX
+
+          k = columns * rows;
+          for (j = 0; j < k; j++)
+            gimp_display_shell_draw_quad (tool->drawable,
+                            GDK_DRAWABLE (GTK_WIDGET (shell->canvas)->window),
+                            mask, mask_offx, mask_offy,
+                            x [j], y [j], u [j], v [j]);
+
         }
     }
 }

@@ -1,3 +1,9 @@
+2004-11-15  Philip Lafleur  <plafleur@cvs.gnome.org>
+
+	* app/display/gimpdisplayshell-preview.c: Further optimization of
+	perspective tool preview - never calculate the same vertex more
+	than once.
+
 2004-11-15  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpfileprocview.c (gimp_file_proc_view_get_proc)
@@ -107,7 +113,7 @@
 
 2004-11-14  Philip Lafleur  <plafleur@cvs.gnome.org>
 
-	* app/display/gimpdisplayshell-preview.c: Eliminated about 96
+	* app/display/gimpdisplayshell-preview.c: Eliminated about 396
 	floating-point divides per frame in the persective preview.
 
 2004-11-13  Manish Singh  <yosh@gimp.org>
