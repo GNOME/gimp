@@ -41,10 +41,9 @@ sub import {
    my $feature;
 
    local $Gimp::in_query=1;
-   while(@_) {
-      local $_=shift;
-      s/^://;
-      need($_);
+   while(defined (my $feature = shift)) {
+      $feature=~s/^://;
+      need($feature);
    }
 }
 
