@@ -14,7 +14,7 @@ ou de filtres tels que l'image soit une combinaison du contenu des
 différents calques.
 
 Vous pouvez effectuer beaucoup d'opérations sur les calques en
-pressant avec le bouton droit sur le nom d'un calque dans la
+cliquant avec le bouton droit sur le nom d'un calque dans la
 boîte de dialogue répertoriant les calques
 (Dialogues -> Calques, canaux & chemins).
 
@@ -29,13 +29,13 @@ Vous pouvez renommer un calque en double-cliquant sur son nom
 dans la boîte de dialogue (Dialogues -> Calques, canaux & chemins).
 
 # Fond ou Background?
-Le calque appellé "Fond" est spécial. Vous ne pouvez lui ajouter
-de transparence ou de masque de calque. Pour ajouter de la
+Le calque appellé "Arrière-plan" est spécial. Vous ne pouvez lui
+ajouter ni de transparence ni de masque de calque. Pour ajouter de la
 transparence, vous devez d'abord lui ajouter un canal alpha
 (click droit dans Calques, canaux & chemin -> Ajouter un canal alpha).
 
 Lors de l'utilisation d'un outil de dessin (Pinceau, Aérographe
-ou Crayon), Shift+Click tracera une ligne droite depuis le dernier
+ou Crayon), Shift+Clic tracera une ligne droite depuis le dernier
 point de tracé jusqu'à la position du pointeur (souris).
 
 La plupart des appendices opèrent sur le calque courant
@@ -44,7 +44,7 @@ fusionner tous les calques (Calques -> Aplatir l'image) si vous
 voulez que le module opère sur l'image entière.
 
 La plupart des formats de fichiers ne gèrent pas les calques et
-pour cette raison seul le calque actif est sauvé. Utilisez XCF,
+pour cette raison seul le calque actif est enregistré. Utilisez XCF,
 le format natif de GIMP, pour sauvegarder les calques, les
 canaux et les guides avec votre image.
 
@@ -56,13 +56,13 @@ lui ajouter un canal alpha ou l'aplatir pour utiliser cet effet.
 # Conseils pour utilisateurs intermédiaires
 
 Dans la boîte de sélection de fichiers, presser TAB complète
-le nom de fichier que vous avez commencé à taper, comme dans
+le nom de fichier que vous avez commencé à saisir, comme dans
 le shell. Pratique !
 
-Vous pouvez réattribuer des raccourcis clavier à toute option
+Vous pouvez réattribuer des raccourcis-clavier à toute option
 de menu en sélectionnant cette option dans le menu, puis en
-pressant le nouveau raccourci. Ces réglages personnalisés
-seront sauvés lorsque vous quitterez GIMP.
+cliquant le nouveau raccourci. Ces réglages personnalisés
+seront enregistrés lorsque vous quitterez GIMP.
 
 Les anciennes opérations de canaux ont été remplacées par les
 opérations de Calques et de Modes de Calques, plus puissantes
@@ -98,14 +98,14 @@ de départ.
 Vous pouvez ajuster l'intervalle de sélection pour la sélection
 floue en cliquant et en tirant à gauche et à droite.
 
-Shift+Click sur l'icône «oeil» dans "Calques, canaux & chemins"
-pour cacher tous les calques sauf celui-ci. Shift+Click de
+Shift+Clic sur l'icone «oeil» dans "Calques, canaux & chemins"
+pour cacher tous les calques sauf celui-ci. Shift+Clic de
 nouveau pour voir tous les calques.
 
-Control+Click sur la prévisualisation du masque de calque dans
+Control+Clic sur la prévisualisation du masque de calque dans
 "Calques, canaux & chemins" (dés)active l'effet de ce masque.
 
-Alt+Click sur la prévisualisation du masque de calque dans
+Alt+Clic sur la prévisualisation du masque de calque dans
 "Calques, canaux & chemins" (dés)active la visualisation directe
 du masque.
 
@@ -113,8 +113,8 @@ Alt+Tab pour voir à tour de rôle tous les calques d'une image
 (si votre gestionnaire de fenêtrage ne récupère pas déjà
 cette combinaison de touches).
 
-Shift+Click avec l'outil Remplissage lui fait utiliser la
-couleur d'arrière plan au lieu de celle d'avant-plan.
+Shift+Clic avec l'outil Remplissage lui fait utiliser la
+couleur d'arrière-plan au lieu de celle de premier plan.
 
 Control-tirer avec l'outil Transformation en mode Rotation
 le contraint à des angles multiples de 15°.
@@ -138,7 +138,7 @@ votre répertoire ~/.gimp
 Édition->Coup de pinceau vous permet de tracer des carrés ou des
 cercles simples en peignant autour de la sélection courante avec
 la brosse active. Des formes plus complexes peuvent être tracées
-avec Filters->Render->Gfig
+avec Filtres->Rendu->Gfig
 
 Pour créer un cercle parfait, pressez Shift lors d'une sélection
 elliptique. Pour le placer précisément, tirez des guides horizontaux

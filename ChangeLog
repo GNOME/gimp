@@ -1,3 +1,8 @@
+2001-02-03  Christophe Merlet  <redfox@eikonex.org>
+
+	* tips/gimp_conseils.fr.txt: Updated with suggestions from
+	Gérard Delafond <g.delafond@medsyn.fr>
+
 2001-01-30  Kjartan Maraas  <kmaraas@gnome.org>
 
 	* configure.in: Added "nn" to ALL_LINGUAS.

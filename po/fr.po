@@ -1,17 +1,15 @@
 # gimp fr.po
-#
 # Copyright (C) 1998-2001 Free Software Foundation, Inc.
 # Vincent Renardias <vincent@ldsol.com>, 1998-2000.
 # David Monniaux <monniaux@brick.ens.fr>, 1999-2000.
 # Daniel Egger <Daniel.Egger@rz.fh-muenchen.de>, 1999.
 # Christophe Merlet (RedFox) <redfox@eikonex.org>, 2000-2001.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.0\n"
-"POT-Creation-Date: 2001-01-21 19:10-0800\n"
-"PO-Revision-Date: 2001-01-04 16:36+0100\n"
+"POT-Creation-Date: 2001-02-03 18:30+0100\n"
+"PO-Revision-Date: 2001-02-03 18:36+0100\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@eikonex.org>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -277,7 +275,7 @@ msgstr "Luminosité-Contraste"
 
 #: app/brightness_contrast.c:175
 msgid "Brightness-Contrast does not operate on indexed drawables."
-msgstr "Luminosité-Contraste ne peux opérer sur des images indexées."
+msgstr "Luminosité-Contraste ne peut opérer sur des images indexées."
 
 #: app/brightness_contrast.c:226 app/channel_ops.c:97
 #: app/channels_dialog.c:2539 app/channels_dialog.c:2702
@@ -285,7 +283,7 @@ msgstr "Luminosité-Contraste ne peux opérer sur des images indexées."
 #: app/curves.c:567 app/file_new_dialog.c:212 app/file_new_dialog.c:358
 #: app/gimpui.c:126 app/hue_saturation.c:379 app/layers_dialog.c:3559
 #: app/layers_dialog.c:3743 app/layers_dialog.c:3838 app/layers_dialog.c:4099
-#: app/levels.c:346 app/module_db.c:319 app/posterize.c:208
+#: app/levels.c:346 app/module_db.c:315 app/posterize.c:208
 #: app/preferences_dialog.c:1481 app/qmask.c:280 app/resize.c:219
 #: app/resize.c:1398 app/resolution_calibrate.c:114 app/threshold.c:281
 msgid "OK"
@@ -355,7 +353,7 @@ msgstr "Angle :"
 msgid "Brush Selection"
 msgstr "Sélection du pinceau"
 
-#: app/brush_select.c:285 app/gradient.c:916 app/module_db.c:359
+#: app/brush_select.c:285 app/gradient.c:916 app/module_db.c:355
 #: app/palette.c:2056 app/pattern_select.c:176
 msgid "Refresh"
 msgstr "Rafraîchir"
@@ -829,7 +827,7 @@ msgstr "Épaisseur du bord à sélectionner :"
 #: app/commands.c:1335
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr ""
-"Erreur de redimensionnement: Les hauteurs et largeurs doivent être "
+"Erreur de redimensionnement : les hauteur et largeur doivent être "
 "supérieures à zéro."
 
 #: app/convert.c:509
@@ -1019,7 +1017,7 @@ msgstr "Régulariser"
 msgid "Free"
 msgstr "Libre"
 
-#: app/curves.c:708 app/levels.c:607 app/module_db.c:878
+#: app/curves.c:708 app/levels.c:607 app/module_db.c:874
 msgid "Load"
 msgstr "Charger"
 
@@ -1030,15 +1028,15 @@ msgstr "Enregistrer"
 
 #: app/curves.c:1315
 msgid "Load Curves"
-msgstr "Charger courbes"
+msgstr "Charger les courbes"
 
 #: app/curves.c:1330
 msgid "Save Curves"
-msgstr "Enregistrer courbes"
+msgstr "Enregistrer les courbes"
 
 #: app/curves.c:1621
 msgid "Load/Save Curves"
-msgstr "Charger/Enregistrer courbes"
+msgstr "Charger/Enregistrer les courbes"
 
 #: app/curves.c:1666 app/curves.c:1684 app/levels.c:1477 app/levels.c:1495
 #: app/paths_dialog.c:1908
@@ -1124,7 +1122,7 @@ msgstr "Déplacement :"
 
 #: app/equalize.c:42
 msgid "Equalize does not operate on indexed drawables."
-msgstr "L'égalisation ne peux opérer sur des images indexées."
+msgstr "L'égalisation ne peut opérer sur des images indexées."
 
 #. the hard toggle
 #: app/eraser.c:112
@@ -1134,7 +1132,7 @@ msgstr "Contour dur"
 #. the anti_erase toggle
 #: app/eraser.c:122 app/paint_funcs.c:106
 msgid "Anti Erase"
-msgstr "Anti-Effacement"
+msgstr "Anti-effacement"
 
 #: app/errorconsole.c:173
 #, c-format
@@ -1143,7 +1141,7 @@ msgstr "Erreur lors de l'ouverture du fichier %s : %s"
 
 #: app/errorconsole.c:190
 msgid "Can't save, nothing selected!"
-msgstr "Rien de sélectionné; impossible d'enregistrer !"
+msgstr "Rien de sélectionné ; impossible d'enregistrer !"
 
 #: app/errorconsole.c:194
 msgid "Save error log to file..."
@@ -1257,7 +1255,7 @@ msgstr ""
 
 #: app/fileops.c:489 app/fileops.c:521
 msgid "Save Image"
-msgstr "Enregistrer image"
+msgstr "Enregistrer l'image"
 
 #: app/fileops.c:538
 msgid "Save Options"
@@ -1526,7 +1524,7 @@ msgstr "Format de pinceau inconnu #%d dans \"%s\"."
 #: app/gimpbrush.c:314
 #, c-format
 msgid "Error in GIMP brush file \"%s\"."
-msgstr "Erreur dans le fichier de pinceau GIMP \"%s\"."
+msgstr "Erreur dans le fichier de pinceaux de GIMP \"%s\"."
 
 #: app/gimpbrush.c:321 app/patterns.c:235
 msgid "Unnamed"
@@ -1535,12 +1533,12 @@ msgstr "SansNom"
 #: app/gimpbrush.c:334 app/gimpbrush.c:379
 #, c-format
 msgid "GIMP brush file appears to be truncated: \"%s\"."
-msgstr "Le fichier de pinceau GIMP semble avoir été tronqué : \"%s\"."
+msgstr "Le fichier de pinceaux GIMP semble avoir été tronqué : \"%s\"."
 
 #: app/gimpbrush.c:359
 #, c-format
 msgid "GIMP brush file appears to be corrupted: \"%s\"."
-msgstr "Le fichier de pinceau GIMP semble avoir été corrompu : \"%s\"."
+msgstr "Le fichier de pinceaux GIMP semble avoir été corrompu : \"%s\"."
 
 #: app/gimpbrushlist.c:200 app/gimpbrushlist.c:209
 #, c-format
@@ -1588,7 +1586,7 @@ msgstr "attacher un parasite à la feuille"
 
 #: app/gimpdrawable.c:544
 msgid "detach parasite from drawable"
-msgstr "détacher parasite de la feuille"
+msgstr "détacher le parasite de la feuille"
 
 #: app/gimpdrawable.c:752
 msgid "unnamed"
@@ -1601,9 +1599,9 @@ msgstr "Type de calque %d non supporté."
 
 #: app/gimphelp.c:191
 msgid "Could not find GIMP Help Browser"
-msgstr "Ne peut trouver le navigateur d'aide de GIMP"
+msgstr "Impossible de trouver le navigateur d'aide de GIMP"
 
-# Est-ce exact?
+# Est-ce exact ?
 # Je me demande si on ne devrait pas rendre le
 # réglage "navigateur externe" automatique.
 #: app/gimphelp.c:193
@@ -1687,16 +1685,16 @@ msgstr ""
 #: app/gimpimage.c:3094
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
-"Impossible d'ajouter un masque de calque de dimensions différente que le "
-"calque spécifié."
+"Impossible d'ajouter un masque de calque de dimensions différente du calque "
+"spécifié."
 
 #: app/gimpimage.c:3202
 msgid "Channel cannot be raised any further"
-msgstr "Le canal ne peux pas être plus remonté"
+msgstr "Le canal ne peut pas être remonté davantage"
 
 #: app/gimpimage.c:3253
 msgid "Channel cannot be lowered any further"
-msgstr "Le canal ne peux pas être abaissé plus"
+msgstr "Le canal ne peut pas être abaissé davantage"
 
 #: app/gimpimage.c:3474 app/palette.c:358 app/palette.c:936 app/palette.c:1072
 #: app/palette.c:2014 app/palette.c:2740 app/palette.c:2872
@@ -1733,12 +1731,12 @@ msgstr "erreur d'analyse dans pluginrc"
 #: app/gimprc.c:2927
 #, c-format
 msgid "Can't open %s; %s"
-msgstr "Je ne puis ouvrir %s; %s"
+msgstr "Je ne puis ouvrir %s ; %s"
 
 #: app/gimprc.c:2946
 #, c-format
 msgid "Can't rename %s to %s.old; %s"
-msgstr "Je ne puis renommer %s en %s.old; %s"
+msgstr "Je ne puis renommer %s en %s.old ; %s"
 
 #: app/gimprc.c:2952
 #, c-format
@@ -1748,7 +1746,7 @@ msgstr "Je ne peux réouvrir %s\n"
 #: app/gimprc.c:2964
 #, c-format
 msgid "Can't write to %s; %s"
-msgstr "Je ne puis écrire dans %s; %s"
+msgstr "Je ne puis écrire dans %s ; %s"
 
 #: app/gimpui.c:87
 #, c-format
@@ -1846,7 +1844,7 @@ msgstr "Couper (nommé)"
 
 #: app/global_edit.c:873 app/global_edit.c:905
 msgid "Enter a name for this buffer"
-msgstr "Entrez un nom pour ce tampon"
+msgstr "Saisissez un nom pour ce tampon"
 
 #: app/global_edit.c:902
 msgid "Copy Named"
@@ -1874,15 +1872,15 @@ msgstr "RVB ordinaire"
 
 #: app/gradient.c:653
 msgid "HSV (counter-clockwise hue)"
-msgstr "TLS (teintes : sens trigonométrique)"
+msgstr "TSL (teintes : sens trigonométrique)"
 
 #: app/gradient.c:654
 msgid "HSV (clockwise hue)"
-msgstr "TLS (teintes : sens des aiguilles d'une montr)"
+msgstr "TSL (teintes : sens des aiguilles d'une montre)"
 
 #: app/gradient.c:910
 msgid "Gradient Editor"
-msgstr "Editeur de Dégradé"
+msgstr "Éditeur de dégradé"
 
 #: app/gradient.c:941 app/gradient_select.c:215 app/paintbrush.c:270
 #: app/palette.c:3167
@@ -1906,15 +1904,15 @@ msgstr "Nouveau dégradé"
 
 #: app/gradient.c:1003
 msgid "Copy Gradient"
-msgstr "Copier dégradé"
+msgstr "Copier le dégradé"
 
 #: app/gradient.c:1011 app/gradient.c:1879
 msgid "Delete Gradient"
-msgstr "Effacer dégradé"
+msgstr "Effacer le dégradé"
 
 #: app/gradient.c:1019
 msgid "Rename Gradient"
-msgstr "Renommer dégradé"
+msgstr "Renommer le dégradé"
 
 #: app/gradient.c:1027 app/gradient.c:1940
 msgid "Save as POV-Ray"
@@ -1939,7 +1937,7 @@ msgstr "Nouveau dégradé"
 
 #: app/gradient.c:1667
 msgid "Enter a name for the new gradient"
-msgstr "Entrez un nom pour le nouveau gradient"
+msgstr "Saisissez un nom pour le nouveau dégradé"
 
 #: app/gradient.c:1668
 msgid "untitled"
@@ -1947,19 +1945,19 @@ msgstr "sans-titre"
 
 #: app/gradient.c:1725
 msgid "Copy gradient"
-msgstr "Copier dégradé"
+msgstr "Copier le dégradé"
 
 #: app/gradient.c:1728
 msgid "Enter a name for the copied gradient"
-msgstr "Entrez un nom pour le dégradé copié"
+msgstr "Saisissez un nom pour le dégradé copié"
 
 #: app/gradient.c:1811
 msgid "Rename gradient"
-msgstr "Renommer dégradé"
+msgstr "Renommer le dégradé"
 
 #: app/gradient.c:1814
 msgid "Enter a new name for the gradient"
-msgstr "Entrez un nom pour le dégradé"
+msgstr "Saisissez un nom pour le dégradé"
 
 #: app/gradient.c:1874 app/palette.c:1816
 #, c-format
@@ -2115,7 +2113,7 @@ msgstr "Couper les segments uniformément"
 
 #: app/gradient.c:3860
 msgid "Delete selection"
-msgstr "Effacer sélection"
+msgstr "Effacer la sélection"
 
 #: app/gradient.c:3862
 msgid "Re-center midpoints in selection"
@@ -2191,7 +2189,7 @@ msgstr "en lesquels dupliquer la sélection"
 #. The shell
 #: app/gradient_select.c:152
 msgid "Gradient Selection"
-msgstr "Sélection de Dégradé"
+msgstr "Sélection de dégradé"
 
 #. The shell and main vbox
 #: app/histogram_tool.c:171 app/histogram_tool.c:275 app/tools.c:1222
@@ -2289,7 +2287,7 @@ msgstr "Niveaux de gris"
 
 #: app/image_new.c:75 app/layers_dialog.c:3662
 msgid "Foreground"
-msgstr "Avant-Plan"
+msgstr "Premier plan"
 
 #: app/image_new.c:85 app/layers_dialog.c:3664
 msgid "White"
@@ -2873,7 +2871,7 @@ msgstr ""
 
 #: app/main.c:305
 msgid "GIMP version"
-msgstr "Version GIMP"
+msgstr "GIMP version"
 
 #: app/main.c:309
 #, c-format
@@ -2899,15 +2897,15 @@ msgid ""
 "  -c, --console-messages   Display warnings to console instead of a dialog "
 "box.\n"
 msgstr ""
-"  -c, --console-messages   Affiche les avertissements dans la console à la "
-"place d'une boîte de dialogue.\n"
+"  -c, --console-messages   Afficher les avertissements dans la console à la\n"
+"                           place d'une boîte de dialogue.\n"
 
 #: app/main.c:313
 msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
 msgstr ""
-"  -d, --no-data            Ne charge pas les motifs, dégradés, palettes, "
+"  -d, --no-data            Ne pas charger les motifs, dégradés, palettes et "
 "brosses.\n"
 
 #: app/main.c:314
@@ -2920,16 +2918,16 @@ msgstr "  -g, --gimprc <gimprc>    Utiliser un autre fichier gimprc.\n"
 
 #: app/main.c:316
 msgid "  -h, --help               Output this help.\n"
-msgstr "  -h, --help               Affiche cette aide.\n"
+msgstr "  -h, --help               Afficher cette aide.\n"
 
 #: app/main.c:317
 msgid "  -r, --restore-session    Try to restore saved session.\n"
 msgstr ""
-"  -r, --restore-session    Tente de restorer une session enregistrée.\n"
+"  -r, --restore-session    Tenter de restorer une session enregistrée.\n"
 
 #: app/main.c:318
 msgid "  -s, --no-splash          Do not show the startup window.\n"
-msgstr "  -s, --no-splash          N'affiche pas l'écran de démarrage.\n"
+msgstr "  -s, --no-splash          Ne pas afficher l'écran de démarrage.\n"
 
 #: app/main.c:319
 msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
@@ -2939,19 +2937,19 @@ msgstr ""
 
 #: app/main.c:320
 msgid "  -v, --version            Output version information.\n"
-msgstr "  -v, --version            Affiche la version.\n"
+msgstr "  -v, --version            Afficher la version.\n"
 
 #: app/main.c:321
 msgid "  --verbose                Show startup messages.\n"
-msgstr "  --verbose                Affiche les messages de démarrage.\n"
+msgstr "  --verbose                Afficher les messages de démarrage.\n"
 
 #: app/main.c:322
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
 msgstr ""
-"  --no-shm           Ne pas utiliser la mémoire partagée entre GIMP et ses "
-"greffons.\n"
+"  --no-shm                 Ne pas utiliser la mémoire partagée entre GIMP et "
+"ses greffons.\n"
 
 #: app/main.c:323
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
@@ -2962,16 +2960,17 @@ msgstr ""
 msgid ""
 "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
-"  --debug-handlers         Active le déboguage des gestionnaires de signaux "
-"pour les signaux non fatals.\n"
+"  --debug-handlers         Activer le déboguage des gestionnaires de "
+"signaux\n"
+"                           pour les signaux non fatals.\n"
 
 #: app/main.c:325
 msgid "  --display <display>      Use the designated X display.\n"
-msgstr "  --display <affichage>    Utilise l'affichage X spécifié.\n"
+msgstr "  --display <affichage>    Utiliser l'affichage X spécifié.\n"
 
 #: app/main.c:326
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
-msgstr "  --system-gimprc <gimprc> Utilise un autre fichier système gimprc.\n"
+msgstr "  --system-gimprc <gimprc> Utiliser un autre fichier système gimprc.\n"
 
 #: app/main.c:328
 msgid ""
@@ -3386,11 +3385,11 @@ msgstr "/Calques/Pile/Calque suivant"
 
 #: app/menus.c:433
 msgid "/Layers/Stack/Raise Layer"
-msgstr "/Calques/Pile/Remonter calque"
+msgstr "/Calques/Pile/Remonter le calque"
 
 #: app/menus.c:435
 msgid "/Layers/Stack/Lower Layer"
-msgstr "/Calques/Pile/Descendre calque"
+msgstr "/Calques/Pile/Descendre le calque"
 
 #: app/menus.c:437
 msgid "/Layers/Stack/Layer to Top"
@@ -3663,19 +3662,19 @@ msgstr "/Éditer les attributs du calque"
 
 #: app/menus.c:685
 msgid "/New Channel..."
-msgstr "/Nouveau Canal..."
+msgstr "/Nouveau canal..."
 
 #: app/menus.c:687
 msgid "/Raise Channel"
-msgstr "/Remonter Canal"
+msgstr "/Remonter le canal"
 
 #: app/menus.c:689
 msgid "/Lower Channel"
-msgstr "/Descendre Canal"
+msgstr "/Descendre le canal"
 
 #: app/menus.c:691
 msgid "/Duplicate Channel"
-msgstr "/Dupliquer Canal"
+msgstr "/Dupliquer le canal"
 
 #: app/menus.c:696
 msgid "/Channel to Selection"
@@ -3752,7 +3751,7 @@ msgstr "Erreur lors de l'ouverture du fichier : %s\n"
 
 #: app/module_db.c:66
 msgid "Module error"
-msgstr "Module de module"
+msgstr "Erreur de module"
 
 #: app/module_db.c:67
 msgid "Loaded OK"
@@ -3770,74 +3769,74 @@ msgstr "Déchargement demandé"
 msgid "Unloaded OK"
 msgstr "Déchargement OK"
 
-#: app/module_db.c:313
+#: app/module_db.c:309
 msgid "Module DB"
 msgstr "Module BDD"
 
-#: app/module_db.c:606
+#: app/module_db.c:602
 #, c-format
 msgid "load module: \"%s\"\n"
-msgstr "charger module : \"%s\"\n"
+msgstr "charger le module : \"%s\"\n"
 
-#: app/module_db.c:613
+#: app/module_db.c:609
 #, c-format
 msgid "skipping module: \"%s\"\n"
 msgstr "module ignoré : \"%s\"\n"
 
-#: app/module_db.c:639
+#: app/module_db.c:635
 #, c-format
 msgid "module load error: %s: %s"
 msgstr "erreur de chargement du module : %s: %s"
 
-#: app/module_db.c:826
+#: app/module_db.c:822
 msgid "<No modules>"
 msgstr "<Aucun module>"
 
-#: app/module_db.c:839 app/module_db.c:848
+#: app/module_db.c:835 app/module_db.c:844
 msgid "on disk"
 msgstr "sur le disque"
 
-#: app/module_db.c:839
+#: app/module_db.c:835
 msgid "only in memory"
 msgstr "seulement en mémoire"
 
-#: app/module_db.c:848
+#: app/module_db.c:844
 msgid "nowhere (click 'refresh')"
-msgstr "nulle part (cliquer 'raffraichir')"
+msgstr "nulle part (cliquer \"raffraichir\")"
 
-#: app/module_db.c:887
+#: app/module_db.c:883
 msgid "Unload"
 msgstr "Décharger"
 
-#: app/module_db.c:903
+#: app/module_db.c:899
 msgid "Purpose:"
 msgstr "But :"
 
-#: app/module_db.c:904
+#: app/module_db.c:900
 msgid "Author:"
 msgstr "Auteur :"
 
-#: app/module_db.c:905
+#: app/module_db.c:901
 msgid "Version:"
 msgstr "Version :"
 
-#: app/module_db.c:906
+#: app/module_db.c:902
 msgid "Copyright:"
 msgstr "Copyright :"
 
-#: app/module_db.c:907
+#: app/module_db.c:903
 msgid "Date:"
 msgstr "Date :"
 
-#: app/module_db.c:908
+#: app/module_db.c:904
 msgid "Location:"
 msgstr "Emplacement :"
 
-#: app/module_db.c:909
+#: app/module_db.c:905
 msgid "State:"
 msgstr "État :"
 
-#: app/module_db.c:928
+#: app/module_db.c:924
 msgid "Autoload during startup"
 msgstr "Charger automatiquement durant le démarrage"
 
@@ -3890,11 +3889,11 @@ msgstr "1 fois en Arrière"
 
 #: app/paintbrush.c:319
 msgid "Loop Sawtooth"
-msgstr "Boucle Dents de scie"
+msgstr "Dents de scie en boucle"
 
 #: app/paintbrush.c:320
 msgid "Loop Triangle"
-msgstr "Boucle Triangle"
+msgstr "Triangle en boucle"
 
 #: app/palette.c:408
 #, c-format
@@ -3982,7 +3981,7 @@ msgstr "Nouvelle palette"
 
 #: app/palette.c:1766
 msgid "Enter a name for new palette"
-msgstr "Entrez un nom pour cette nouvelle palette"
+msgstr "Saisissez un nom pour cette nouvelle palette"
 
 #: app/palette.c:1820
 msgid "Delete Palette"
@@ -3994,7 +3993,7 @@ msgstr "Fusionner la palette"
 
 #: app/palette.c:1902
 msgid "Enter a name for merged palette"
-msgstr "Entrez un nom pour la palette fusionnée"
+msgstr "Saisissez un nom pour la palette fusionnée"
 
 #: app/palette.c:2048
 msgid "Color Palette Edit"
@@ -4027,7 +4026,7 @@ msgstr "Fusionner"
 
 #: app/palette.c:3103
 msgid "Import Palette"
-msgstr "Importer Palette"
+msgstr "Importer une palette"
 
 #. The source's name
 #: app/palette.c:3139
@@ -4072,11 +4071,11 @@ msgstr "Duplique le chemin"
 
 #: app/paths_dialog.c:175
 msgid "Path to Selection"
-msgstr "Chemin vers sélection"
+msgstr "Chemin vers Sélection"
 
 #: app/paths_dialog.c:179
 msgid "Selection to Path"
-msgstr "Sélection vers chemin"
+msgstr "Sélection vers Chemin"
 
 #: app/paths_dialog.c:183
 msgid "Stroke Path"
@@ -4113,7 +4112,7 @@ msgstr "Édition des attributs du chemin"
 
 #: app/paths_dialog.c:992
 msgid "Enter a new name for the path"
-msgstr "Entrez un nouveau nom pour le chemin"
+msgstr "Saisissez un nouveau nom pour le chemin"
 
 #: app/paths_dialog.c:1923
 #, c-format
@@ -4270,7 +4269,7 @@ msgstr "Erreur : L'unité par défaut doit être au moins un."
 
 #: app/preferences_dialog.c:299
 msgid "Error: Default resolution must not be zero."
-msgstr "Erreur : la résolution par défaut ne peux pas être zéro."
+msgstr "Erreur : la résolution par défaut ne peut pas être zéro."
 
 #: app/preferences_dialog.c:307
 msgid "Error: Default resolution unit must be within unit range."
@@ -4278,7 +4277,7 @@ msgstr "Erreur : L'unité de résolution par défaut doit être au moins un."
 
 #: app/preferences_dialog.c:314
 msgid "Error: Monitor resolution must not be zero."
-msgstr "Erreur : la résolution du moniteur ne peux pas être zéro."
+msgstr "Erreur : la résolution du moniteur ne peut pas être zéro."
 
 #: app/preferences_dialog.c:321
 msgid "Error: Image title format must not be NULL."
@@ -4480,7 +4479,7 @@ msgstr "Fenêtre de navigation par affichage"
 
 #: app/preferences_dialog.c:1899
 msgid "Info Window Follows Mouse"
-msgstr "La fenêtre d'information suit la souris"
+msgstr "La fenêtre d'informations suit la souris"
 
 #: app/preferences_dialog.c:1910 app/preferences_dialog.c:1912
 msgid "Help System"
@@ -4608,7 +4607,7 @@ msgstr "Appliquer les options de dessin globales"
 
 #: app/preferences_dialog.c:2138
 msgid "Finding Contiguous Regions"
-msgstr "Recherche de régions continues"
+msgstr "Recherche de régions contiguës"
 
 #: app/preferences_dialog.c:2157
 msgid "Default Threshold:"
@@ -4893,7 +4892,7 @@ msgstr "Sélection : "
 
 #: app/resize.c:182
 msgid "Scale Layer"
-msgstr "Mettre calque à l'échelle"
+msgstr "Mettre le calque à l'échelle"
 
 #: app/resize.c:184 app/resize.c:209 app/tool_options.c:801
 msgid "Size"
@@ -4901,7 +4900,7 @@ msgstr "Taille"
 
 #: app/resize.c:188
 msgid "Scale Image"
-msgstr "Mettre image à l'échelle"
+msgstr "Mettre l'image à l'échelle"
 
 #: app/resize.c:190
 msgid "Pixel Dimensions"
@@ -4941,7 +4940,7 @@ msgstr "Afficher la taille & afficher l'unité"
 #: app/resize.c:1310
 msgid "Scale Error: Both width and height must be greater than zero."
 msgstr ""
-"Erreur de redimensionnement: Les hauteurs et largeurs doivent être "
+"Erreur de redimensionnement : Les hauteur et largeur doivent être "
 "supérieures à zéro."
 
 #: app/resize.c:1391
@@ -5053,7 +5052,7 @@ msgstr ""
 
 #: app/text_tool.c:751
 msgid "Text Layer"
-msgstr "Calque Texte"
+msgstr "Calque texte"
 
 #: app/threshold.c:175 app/threshold.c:276 app/tools.c:1138
 msgid "Threshold"
@@ -5061,7 +5060,7 @@ msgstr "Seuil"
 
 #: app/threshold.c:217
 msgid "Threshold does not operate on indexed drawables."
-msgstr "Le Seuil ne fonctionne pas sur les images indexées."
+msgstr "Le seuil ne fonctionne pas sur les images indexées."
 
 #: app/threshold.c:298
 msgid "Threshold Range:"
@@ -5096,7 +5095,7 @@ msgid ""
 msgstr ""
 "Votre fichier de conseils GIMP manque !\n"
 "Il devrait y avoir un fichier nommé gimp_conseils.fr.txt\n"
-"dans le sous-répertoire 'tips' du répertoire de données\n"
+"dans le sous-répertoire \"tips\" du répertoire de données\n"
 "de GIMP.\n"
 "Vérifiez votre installation."
 
@@ -5344,7 +5343,7 @@ msgstr "/Outils/Texte"
 
 #: app/tools.c:551
 msgid "Add text to the image"
-msgstr "Ajouter du texte à l'image"
+msgstr "Ajoute du texte à l'image"
 
 #: app/tools.c:574
 msgid "/Tools/Color Picker"
@@ -5759,7 +5758,7 @@ msgstr "appliquer un masque de calque"
 #. ok
 #: app/undo.c:2937
 msgid "layer merge"
-msgstr "fusionner calques"
+msgstr "fusionner les calques"
 
 #: app/undo.c:2938
 msgid "FS anchor"
@@ -5831,15 +5830,15 @@ msgid ""
 "User installation was skipped because the '--nointerface' flag was "
 "encountered\n"
 msgstr ""
-"Installation personnelle non effectuée car le paramètre '--nointerface'a été "
-"détecté\n"
+"Installation personnelle non effectuée car le paramètre \"--nointerface\" a "
+"été détecté\n"
 
 #: app/user_install.c:106
 msgid ""
 "To perform user installation, run the GIMP without the '--nointerface' flag\n"
 msgstr ""
 "Pour effectuer l'installation, lancer GIMP avec le paramètre "
-"'--nointerface'\n"
+"\"--nointerface\"\n"
 
 #: app/user_install.c:155
 msgid ""
@@ -6163,7 +6162,7 @@ msgstr ""
 
 #: app/user_install.c:690
 msgid "Click \"Continue\" to enter the GIMP user installation."
-msgstr "Cliquer \"Continuer\" pour entrer dans l'installation de GIMP."
+msgstr "Cliquez \"Continuer\" pour entrer dans l'installation de GIMP."
 
 #: app/user_install.c:694
 msgid ""
@@ -6182,9 +6181,9 @@ msgid ""
 "the Free Software Foundation; either version 2 of the License, or\n"
 "(at your option) any later version."
 msgstr ""
-"Ce logiciel est un logiciel libre; vous pouvez le diffuser et/ou le\n"
+"Ce logiciel est un logiciel libre ; vous pouvez le diffuser et/ou le\n"
 "modifier suivant les termes de la Licence Publique Générale GNU telle\n"
-"que publiée par la Free Software Foundation; soit la version 2 de cette\n"
+"que publiée par la Free Software Foundation ; soit la version 2 de cette\n"
 "licence, soit (à votre convenance) une version ultérieure."
 
 #: app/user_install.c:708
@@ -6195,7 +6194,7 @@ msgid ""
 "See the GNU General Public License for more details."
 msgstr ""
 "Ce programme est diffusé dans l'espoir qu'il sera utile, mais\n"
-"SANS AUCUNE GARANTIE; sans même une garantie implicite de\n"
+"SANS AUCUNE GARANTIE ; sans même une garantie implicite de\n"
 "COMMERCIALISABILITÉ ou d'ADÉQUATION À UN USAGE PARTICULIER.\n"
 "Voyez la Licence Publique Générale GNU pour plus de détails."
 
@@ -6207,7 +6206,7 @@ msgid ""
 "MA 02111-1307, USA."
 msgstr ""
 "Vous devriez avoir reçu une copie de la Licence Publique Générale GNU\n"
-"avec ce programme; sinon, veuillez écrire à la Free Software\n"
+"avec ce programme ; sinon, veuillez écrire à la Free Software\n"
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
 "MA 02111-1307, États-Unis."
 
@@ -6325,7 +6324,7 @@ msgid ""
 "the amount of memory used by other running processes."
 msgstr ""
 "GIMP utilise une quantité de mémoire limitée pour stocker les données\n"
-"d'une image; cette zone est nommée \"Cache d'images\". Vous devrez\n"
+"d'une image ; cette zone est nommée \"Cache d'images\". Vous devrez\n"
 "ajuster cette taille pour correspondre avec votre quantité de mémoire.\n"
 "Considérez la quantité de mémoire utilisée par les autres processus\n"
 "en cours."
@@ -6379,7 +6378,7 @@ msgid ""
 "You can also press the \"Calibrate\" button to open a window\n"
 "which lets you determine your monitor resolution interactively."
 msgstr ""
-"Vous pouvez aussi presser le bouton \"Calibrer\" pour ouvrir\n"
+"Vous pouvez aussi cliquez le bouton \"Calibrer\" pour ouvrir\n"
 "une fenêtre qui vous laissera déterminer la résolution de votre\n"
 "moniteur interactivement."
 
@@ -6503,13 +6502,13 @@ msgstr "Historique des couleurs"
 #~ msgstr "/Outils/Agrandir"
 
 #~ msgid "This file cannot be moved up."
-#~ msgstr "Ce fichier ne peux pas être remonté."
+#~ msgstr "Ce fichier ne peut pas être remonté."
 
 #~ msgid "There's no selection to move up."
 #~ msgstr "Il n'y a pas de sélection à remonter."
 
 #~ msgid "This file cannot be moved down."
-#~ msgstr "Ce fichier ne peux pas être descendu."
+#~ msgstr "Ce fichier ne peut pas être descendu."
 
 #~ msgid "There's no selection to move down."
 #~ msgstr "Il n'y a pas de sélection à descendre."
@@ -7140,7 +7139,7 @@ msgstr "Historique des couleurs"
 #~ "# sessions d'utilisation afin de pouvoir reprendre le travail\n"
 #~ "# en cours. Vous n'êtes pas censé l'éditer à la main, mais le\n"
 #~ "# pouvez bien entendu si vous y tenez. Ce fichier est écrasé\n"
-#~ "# à chaque fois que vous quittez Gimp; s'il est absent, des\n"
+#~ "# à chaque fois que vous quittez GIMP ; s'il est absent, des\n"
 #~ "# valeurs par défaut sont utilisées.\n"
 #~ "\n"
 

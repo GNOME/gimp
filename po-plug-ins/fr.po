@@ -1,21 +1,19 @@
 # gimp-std-plugins fr.po
-#
 # Copyright (C) 1998-2001 Free Software Foundation, Inc.
 # Vincent Renardias <vincent@ldsol.com>, 1998-1999.
 # David Monniaux <monniaux@ens.fr>, 1999-2000.
 # Joaquim Fellmann <joaquim@hrnet.fr>, 2000.
 # Christophe Merlet (RedFox) <redfox@eikonex.org>, 2000-2001.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.2.0\n"
-"POT-Creation-Date: 2001-01-15 14:06-0800\n"
-"PO-Revision-Date: 2001-01-04 16:52+0100\n"
+"POT-Creation-Date: 2001-02-03 18:50+0100\n"
+"PO-Revision-Date: 2001-02-03 16:52+0100\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@eikonex.org>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:282
@@ -8431,7 +8429,7 @@ msgid ""
 "[####] is replaced by frame number\n"
 "(is used on function rename only)"
 msgstr ""
-"Nouveau nom pour chacun des calques concernés;\n"
+"Nouveau nom pour chacun des calques concernés ;\n"
 "« [####] » est remplacé par le numéro de l'image.\n"
 "N'est utilisé que par la fonction « renommer »."
 
@@ -10722,7 +10720,7 @@ msgid ""
 "Continue with exiting?"
 msgstr ""
 "%d objet Gfig non enregistrés.\n"
-"Voulez vous vraiment quitter ?"
+"Voulez-vous vraiment quitter ?"
 
 #: plug-ins/gfig/gfig.c:4420
 msgid "Enter Gfig Entry Name"
@@ -13847,7 +13845,7 @@ msgstr "Erreur : le fichier de propriétés XJT %s est vide"
 #~ "Faire une image de Coupled-Map Lattice (CML). Un CML est une sorte "
 #~ "d'automate cellulaire sur un domaine de valeurs continues. En mode non "
 #~ "interactif, le nom d'un fichier de paramètres est passé en quatrième "
-#~ "argument; CML_explorer peut être contrôlé via ce fichier."
+#~ "argument ; CML_explorer peut être contrôlé via ce fichier."
 
 #~ msgid "Antialias"
 #~ msgstr "Anticrénelage"
@@ -14697,7 +14695,7 @@ msgstr "Erreur : le fichier de propriétés XJT %s est vide"
 #~ "Ce greffon réalise presque la même opération que le greffon 'Auto-extension "
 #~ "de contraste', sauf qu'il normalise les canaux de couleur indépendemment les "
 #~ "uns des autres. C'est en fait ce que la plupart des gens veulent faire au "
-#~ "lieu de 'Auto-extension de contraste'; n'utilisez cette dernière opération "
+#~ "lieu de 'Auto-extension de contraste' ; n'utilisez cette dernière opération "
 #~ "que si vous voulez ôter une couleur indésirable d'une image source qui n'est "
 #~ "censée contenir que du blanc et du noir purs."
 
@@ -15661,7 +15659,7 @@ msgstr "Erreur : le fichier de propriétés XJT %s est vide"
 #~ msgstr "GIF: n'est pas un fichier GIF\n"
 
 #~ msgid "GIF: bad version number, not '87a' or '89a'\n"
-#~ msgstr "GIF: mauvais numéro de version; pas '87a' ou '89a'\n"
+#~ msgstr "GIF: mauvais numéro de version ; pas '87a' ou '89a'\n"
 
 #~ msgid "GIF: failed to read screen descriptor\n"
 #~ msgstr "GIF: impossible de lire le descripteur d'écran\n"
@@ -15790,26 +15788,27 @@ msgstr "Erreur : le fichier de propriétés XJT %s est vide"
 #~ "Error: Plugin %s has changed Nr. of layers from %d to %d\n"
 #~ "could not restore Layer visibilty.\n"
 #~ msgstr ""
-#~ "Erreur: l'extension %s a fait passer le nombre de calques de %d à %d;\n"
+#~ "Erreur: l'extension %s a fait passer le nombre de calques de %d à %d ;\n"
 #~ "je ne peux remettre la visibilité des calques.\n"
 
 #~ msgid "Warning: cant get layers (maybe the image was closed)\n"
 #~ msgstr ""
-#~ "Avertissement: je ne peux récupérer les calques (peut-être l'image a-t-elle "
+#~ "Avertissement : je ne peux récupérer les calques (peut-être l'image a-t-elle "
 #~ "été fermée)\n"
 
 #~ msgid ""
 #~ "Error: Plugin %s has changed Nr. of layers from %d to %d\n"
 #~ "Anim Filter apply stopped.\n"
 #~ msgstr ""
-#~ "Erreur: l'extension %s a fait passer le nombre de calques de %d à %d;\n"
+#~ "Erreur : l'extension %s a fait passer le nombre de calques de %d à %d ;\n"
 #~ "l'application du filtre animé s'est arrêtée.\n"
 
 #~ msgid "ERROR: Plugin not available or wrong type %s\n"
-#~ msgstr "ERREUR: Greffon chargeable non disponible ou d'un mauvais type %s\n"
+#~ msgstr ""
+#~ "ERREUR : Greffon chargeable non disponible ou d'un mauvais type %s\n"
 
 #~ msgid "ERROR: need at 1 Layers to apply plugin !\n"
-#~ msgstr "ERREUR: il faut au moins 1 calque pour appliquer l'extension !\n"
+#~ msgstr "ERREUR : il faut au moins 1 calque pour appliquer l'extension !\n"
 
 #~ msgid "ERROR: fork failed !\n"
 #~ msgstr "ERREUR: échec de fork() !\n"
