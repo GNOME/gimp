@@ -131,8 +131,10 @@ gdisplay_close_window (GDisplay *gdisp,
 void
 gdisplay_shrink_wrap (GDisplay *gdisp)
 {
-  /* FIXME: There's something wrong here - ..set_usize() seems to not
-     be doing the right thing when it could... GTK problem? */
+  /* FIXME: Still not perfect - have to hide and show the window to 
+   * get it to work.  Adding a queue_resize to the shell doesn't 
+   * seem to help. Anyone have any good ideas here? 
+   */
   gint x, y;
   gint disp_width, disp_height;
   gint width, height;
@@ -169,16 +171,17 @@ gdisplay_shrink_wrap (GDisplay *gdisp)
       width = ((width + border_x) < s_width) ? width : max_auto_width;
       height = ((height + border_y) < s_height) ? height : max_auto_height;
 
-      gtk_widget_set_usize (gdisp->canvas,
-			    width, height);
+      /* I don't know why, but if I don't hide the window, it doesn't work */
+      gtk_widget_hide(gdisp->shell); 
+      gtk_drawing_area_size(GTK_DRAWING_AREA(gdisp->canvas),
+	                    width, height);
+      gtk_widget_show(gdisp->shell); 
 
       /*printf("1w:%d/%d d:%d/%d s:%d/%d b:%d/%d\n",
 	     width, height,
 	     disp_width, disp_height,
 	     shell_width, shell_height,
 	     border_x, border_y);fflush(stdout);*/
-
-      gtk_widget_show (gdisp->canvas);
 
       gdk_window_get_origin (gdisp->shell->window, &shell_x, &shell_y);
 
@@ -204,16 +207,17 @@ gdisplay_shrink_wrap (GDisplay *gdisp)
       max_auto_width = MINIMUM (max_auto_width, width);
       max_auto_height = MINIMUM (max_auto_height, height);
       
-      gtk_widget_set_usize (gdisp->canvas,
-			    max_auto_width, max_auto_height);
+      /* I don't know why, but if I don't hide the window, it doesn't work */
+      gtk_widget_hide(gdisp->shell); 
+      gtk_drawing_area_size(GTK_DRAWING_AREA(gdisp->canvas),
+	                    width, height);
+      gtk_widget_show(gdisp->shell); 
 
       /*printf("2w:%d/%d d:%d/%d s:%d/%d b:%d/%d\n",
 	     width, height,
 	     disp_width, disp_height,
 	     shell_width, shell_height,
 	     border_x, border_y);fflush(stdout);*/
-
-      gtk_widget_show (gdisp->canvas);
 
       gdk_window_get_origin (gdisp->shell->window, &shell_x, &shell_y);
 
