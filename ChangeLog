@@ -1,3 +1,13 @@
+2004-12-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/tool-options-actions.c
+	(tool_options_actions_update_presets): don't forget to initialize
+	the "value_variable" boolean of GimpEnumActionEntry. Fixes myriads
+	of warnings about wrong values for boolean properties.
+
+	* app/actions/file-actions.c (file_actions_setup): same
+	here. Fixes nothing but is cleaner.
+
 2004-12-02  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpvectors.c: Fixed stupid typo that caused

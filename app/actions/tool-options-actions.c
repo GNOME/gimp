@@ -185,13 +185,14 @@ tool_options_actions_update_presets (GimpActionGroup *group,
     {
       GimpEnumActionEntry entry;
 
-      entry.name        = NULL;
-      entry.stock_id    = stock_id;
-      entry.label       = NULL;
-      entry.accelerator = "";
-      entry.tooltip     = NULL;
-      entry.value       = 0;
-      entry.help_id     = help_id;
+      entry.name           = NULL;
+      entry.stock_id       = stock_id;
+      entry.label          = NULL;
+      entry.accelerator    = "";
+      entry.tooltip        = NULL;
+      entry.value          = 0;
+      entry.value_variable = FALSE;
+      entry.help_id        = help_id;
 
       for (list = GIMP_LIST (presets)->list, i = 0;
            list;

@@ -142,12 +142,14 @@ file_actions_setup (GimpActionGroup *group)
 
   for (i = 0; i < n_entries; i++)
     {
-      entries[i].name     = g_strdup_printf ("file-open-recent-%02d", i + 1);
-      entries[i].stock_id = GTK_STOCK_OPEN;
-      entries[i].label    = NULL;
-      entries[i].tooltip  = NULL;
-      entries[i].value    = i;
-      entries[i].help_id  = GIMP_HELP_FILE_OPEN_RECENT;
+      entries[i].name           = g_strdup_printf ("file-open-recent-%02d",
+                                                   i + 1);
+      entries[i].stock_id       = GTK_STOCK_OPEN;
+      entries[i].label          = NULL;
+      entries[i].tooltip        = NULL;
+      entries[i].value          = i;
+      entries[i].value_variable = FALSE;
+      entries[i].help_id        = GIMP_HELP_FILE_OPEN_RECENT;
 
       if (i < 9)
         entries[i].accelerator = g_strdup_printf ("<control>%d", i + 1);
