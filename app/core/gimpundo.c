@@ -409,3 +409,19 @@ gimp_undo_create_preview_private (GimpUndo *undo)
 
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (undo));
 }
+
+void
+gimp_undo_refresh_preview (GimpUndo *undo)
+{
+  g_return_if_fail (GIMP_IS_UNDO (undo));
+
+  if (undo->preview_idle_id)
+    return;
+
+  if (undo->preview)
+    {
+      temp_buf_free (undo->preview);
+      undo->preview = NULL;
+      gimp_undo_create_preview (undo, FALSE);
+    }
+}

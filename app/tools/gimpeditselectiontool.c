@@ -1239,6 +1239,7 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
 
   undo = gimp_undo_stack_peek (gdisp->gimage->undo_stack);
 
+  /* compress undo */
   if (! gimp_undo_stack_peek (gdisp->gimage->redo_stack) &&
       GIMP_IS_UNDO_STACK (undo) && undo->undo_type == undo_type)
     {
@@ -1314,6 +1315,8 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
 
   if (push_undo)
     gimp_image_undo_group_end (gdisp->gimage);
+  else
+    gimp_undo_refresh_preview (undo);
 
   gimp_image_flush (gdisp->gimage);
 }

@@ -820,6 +820,9 @@ gimp_layer_tree_view_paint_mode_menu_callback (GtkWidget         *widget,
 	  UNBLOCK();
 
 	  gimp_image_flush (gimage);
+
+          if (!push_undo)
+            gimp_undo_refresh_preview (undo);
 	}
     }
 }
@@ -886,6 +889,9 @@ gimp_layer_tree_view_opacity_scale_changed (GtkAdjustment     *adjustment,
 	  UNBLOCK();
 
 	  gimp_image_flush (gimage);
+
+          if (!push_undo)
+            gimp_undo_refresh_preview (undo);
 	}
     }
 }

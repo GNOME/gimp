@@ -93,6 +93,8 @@ void       gimp_undo_free           (GimpUndo            *undo,
 
 void       gimp_undo_create_preview (GimpUndo            *undo,
                                      gboolean             create_now);
+void       gimp_undo_refresh_preview (GimpUndo           *undo);
+
 
 
 #endif /* __GIMP_UNDO_H__ */

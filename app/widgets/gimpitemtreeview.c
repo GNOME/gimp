@@ -1493,6 +1493,10 @@ gimp_item_tree_view_toggle_clicked (GtkCellRendererToggle *toggle,
 
                   gimp_image_undo_group_end (gimage);
                 }
+              else
+                {
+                  gimp_undo_refresh_preview (undo);
+                }
             }
 
           setter (item, TRUE, FALSE);
@@ -1526,6 +1530,9 @@ gimp_item_tree_view_toggle_clicked (GtkCellRendererToggle *toggle,
             push_undo = FALSE;
 
           setter (item, ! active, push_undo);
+
+          if (!push_undo)
+            gimp_undo_refresh_preview (undo);
         }
 
       gimp_image_flush (gimage);
