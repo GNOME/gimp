@@ -40,27 +40,40 @@ struct _GimpImageMapTool
   GimpDrawable  *drawable;
   GimpImageMap  *image_map;
 
-  /* the dialog */
+  /* dialog */
   const gchar   *shell_desc;
-
   GtkWidget     *shell;
   GtkWidget     *main_vbox;
+
+  /* settings file dialog */
+  GtkWidget     *settings_dialog;
 };
 
 struct _GimpImageMapToolClass
 {
   GimpColorToolClass  parent_class;
 
+  const gchar        *settings_name;
+
   /* virtual functions */
-  void (* map)    (GimpImageMapTool *image_map_tool);
-  void (* dialog) (GimpImageMapTool *image_map_tool);
-  void (* reset)  (GimpImageMapTool *image_map_tool);
+  void     (* map)           (GimpImageMapTool *image_map_tool);
+  void     (* dialog)        (GimpImageMapTool *image_map_tool);
+  void     (* reset)         (GimpImageMapTool *image_map_tool);
+
+  gboolean (* settings_load) (GimpImageMapTool *image_map_tool,
+                              gpointer          file);
+  gboolean (* settings_save) (GimpImageMapTool *image_map_tool,
+                              gpointer          file);
 };
 
 
-GType   gimp_image_map_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_image_map_tool_get_type        (void) G_GNUC_CONST;
 
-void    gimp_image_map_tool_preview  (GimpImageMapTool *image_map_tool);
+void    gimp_image_map_tool_preview         (GimpImageMapTool *image_map_tool);
+
+void    gimp_image_map_tool_settings_dialog (GimpImageMapTool *image_map_tool,
+                                             const gchar      *title,
+                                             gboolean          save);
 
 
 #endif  /*  __GIMP_IMAGE_MAP_TOOL_H__  */

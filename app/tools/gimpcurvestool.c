@@ -21,7 +21,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <errno.h>
 
 #include <gtk/gtk.h>
 
@@ -92,6 +91,10 @@ static void     gimp_curves_tool_color_picked   (GimpColorTool    *color_tool,
 static void     gimp_curves_tool_map            (GimpImageMapTool *image_map_tool);
 static void     gimp_curves_tool_dialog         (GimpImageMapTool *image_map_tool);
 static void     gimp_curves_tool_reset          (GimpImageMapTool *image_map_tool);
+static gboolean gimp_curves_tool_settings_load  (GimpImageMapTool *tool,
+                                                 gpointer          file);
+static gboolean gimp_curves_tool_settings_save  (GimpImageMapTool *tool,
+                                                 gpointer          file);
 
 static void     curves_add_point                (GimpCurvesTool   *tool,
                                                  gint              x,
@@ -121,14 +124,9 @@ static gboolean curves_graph_expose             (GtkWidget        *widget,
                                                  GdkEventExpose   *eevent,
                                                  GimpCurvesTool   *tool);
 
-static void     file_dialog_create              (GimpCurvesTool   *tool);
-static void     file_dialog_response            (GtkWidget        *dialog,
-                                                 gint              response_id,
-                                                 GimpCurvesTool   *tool);
-
 static gboolean curves_read_from_file           (GimpCurvesTool   *tool,
                                                  FILE             *file);
-static void     curves_write_to_file            (GimpCurvesTool   *tool,
+static gboolean curves_write_to_file            (GimpCurvesTool   *tool,
                                                  FILE             *file);
 
 
@@ -200,16 +198,21 @@ gimp_curves_tool_class_init (GimpCurvesToolClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize       = gimp_curves_tool_finalize;
+  object_class->finalize     = gimp_curves_tool_finalize;
 
-  tool_class->initialize       = gimp_curves_tool_initialize;
-  tool_class->button_release   = gimp_curves_tool_button_release;
+  tool_class->initialize     = gimp_curves_tool_initialize;
+  tool_class->button_release = gimp_curves_tool_button_release;
 
-  color_tool_class->picked     = gimp_curves_tool_color_picked;
+  color_tool_class->picked   = gimp_curves_tool_color_picked;
 
-  image_map_tool_class->map    = gimp_curves_tool_map;
-  image_map_tool_class->dialog = gimp_curves_tool_dialog;
-  image_map_tool_class->reset  = gimp_curves_tool_reset;
+  image_map_tool_class->settings_name = "curves";
+
+  image_map_tool_class->map           = gimp_curves_tool_map;
+  image_map_tool_class->dialog        = gimp_curves_tool_dialog;
+  image_map_tool_class->reset         = gimp_curves_tool_reset;
+
+  image_map_tool_class->settings_load = gimp_curves_tool_settings_load;
+  image_map_tool_class->settings_save = gimp_curves_tool_settings_save;
 }
 
 static void
@@ -231,6 +234,8 @@ gimp_curves_tool_init (GimpCurvesTool *tool)
 
   tool->cursor_x = -1;
   tool->cursor_y = -1;
+
+  tool->filename = NULL;
 }
 
 static void
@@ -262,6 +267,11 @@ gimp_curves_tool_finalize (GObject *object)
     {
       g_object_unref (tool->xpos_layout);
       tool->xpos_layout = NULL;
+    }
+  if (tool->filename)
+    {
+      g_free (tool->filename);
+      tool->filename = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -658,6 +668,19 @@ gimp_curves_tool_reset (GimpImageMapTool *image_map_tool)
   curves_update (tool, XRANGE | GRAPH);
 }
 
+static gboolean
+gimp_curves_tool_settings_load (GimpImageMapTool *tool,
+                                gpointer          file)
+{
+  return curves_read_from_file (GIMP_CURVES_TOOL (tool), (FILE *) file);
+}
+
+static gboolean
+gimp_curves_tool_settings_save (GimpImageMapTool *tool,
+                                gpointer          file)
+{
+  return curves_write_to_file (GIMP_CURVES_TOOL (tool), (FILE *) file);
+}
 
 /* TODO: preview alpha channel stuff correctly.  -- austin, 20/May/99 */
 static void
@@ -1171,114 +1194,16 @@ static void
 curves_load_callback (GtkWidget      *widget,
 		      GimpCurvesTool *tool)
 {
-  if (! tool->file_dialog)
-    file_dialog_create (tool);
-
-  if (GTK_WIDGET_VISIBLE (tool->file_dialog))
-    {
-      gtk_window_present (GTK_WINDOW (tool->file_dialog));
-      return;
-    }
-
-  tool->is_save = FALSE;
-
-  gtk_window_set_title (GTK_WINDOW (tool->file_dialog), _("Load Curves"));
-  gtk_widget_show (tool->file_dialog);
+  gimp_image_map_tool_settings_dialog (GIMP_IMAGE_MAP_TOOL (tool),
+                                       _("Load Curves"), FALSE);
 }
 
 static void
 curves_save_callback (GtkWidget      *widget,
 		      GimpCurvesTool *tool)
 {
-  if (! tool->file_dialog)
-    file_dialog_create (tool);
-
-  if (GTK_WIDGET_VISIBLE (tool->file_dialog))
-    {
-      gtk_window_present (GTK_WINDOW (tool->file_dialog));
-      return;
-    }
-
-  tool->is_save = TRUE;
-
-  gtk_window_set_title (GTK_WINDOW (tool->file_dialog), _("Save Curves"));
-  gtk_widget_show (tool->file_dialog);
-}
-
-static void
-file_dialog_create (GimpCurvesTool *tool)
-{
-  GtkFileSelection *file_dlg;
-  gchar            *temp;
-
-  tool->file_dialog = gtk_file_selection_new ("");
-
-  file_dlg = GTK_FILE_SELECTION (tool->file_dialog);
-
-  gtk_window_set_role (GTK_WINDOW (file_dlg), "gimp-load-save-curves");
-  gtk_window_set_position (GTK_WINDOW (file_dlg), GTK_WIN_POS_MOUSE);
-
-  gtk_container_set_border_width (GTK_CONTAINER (file_dlg), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (file_dlg->button_area), 4);
-
-  g_object_add_weak_pointer (G_OBJECT (file_dlg),
-                             (gpointer) &tool->file_dialog);
-
-  gtk_window_set_transient_for (GTK_WINDOW (file_dlg),
-                                GTK_WINDOW (GIMP_IMAGE_MAP_TOOL (tool)->shell));
-  gtk_window_set_destroy_with_parent (GTK_WINDOW (file_dlg), TRUE);
-
-  g_signal_connect (file_dlg, "response",
-                    G_CALLBACK (file_dialog_response),
-                    tool);
-
-  temp = g_build_filename (gimp_directory (), "curves", 
-      G_DIR_SEPARATOR_S, NULL);
-  gtk_file_selection_set_filename (file_dlg, temp);
-  g_free (temp);
-
-  gimp_help_connect (tool->file_dialog, gimp_standard_help_func,
-                     GIMP_TOOL (tool)->tool_info->help_id, NULL);
-}
-
-static void
-file_dialog_response (GtkWidget      *dialog,
-                      gint            response_id,
-                      GimpCurvesTool *tool)
-{
-  if (response_id == GTK_RESPONSE_OK)
-    {
-      const gchar *filename;
-      FILE        *file;
-
-      filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (dialog));
-
-      file = fopen (filename, tool->is_save ? "wt" : "rt");
-
-      if (! file)
-        {
-          g_message (tool->is_save ?
-                     _("Could not open '%s' for writing: %s") :
-                     _("Could not open '%s' for reading: %s"),
-                     gimp_filename_to_utf8 (filename),
-		     g_strerror (errno));
-          return;
-        }
-
-      if (tool->is_save)
-        {
-          curves_write_to_file (tool, file);
-        }
-      else if (! curves_read_from_file (tool, file))
-        {
-          g_message ("Error in reading file '%s'.",
-		     gimp_filename_to_utf8 (filename));
-        }
-
-      fclose (file);
-    }
-
-  gtk_widget_hide (dialog);
+  gimp_image_map_tool_settings_dialog (GIMP_IMAGE_MAP_TOOL (tool),
+                                       _("Save Curves"), TRUE);
 }
 
 static gboolean
@@ -1291,7 +1216,7 @@ curves_read_from_file (GimpCurvesTool *tool,
   gint  index[5][17];
   gint  value[5][17];
 
-  if (! fgets (buf, 50, file))
+  if (! fgets (buf, sizeof (buf), file))
     return FALSE;
 
   if (strcmp (buf, "# GIMP Curves File\n") != 0)
@@ -1334,7 +1259,7 @@ curves_read_from_file (GimpCurvesTool *tool,
   return TRUE;
 }
 
-static void
+static gboolean
 curves_write_to_file (GimpCurvesTool *tool,
                       FILE           *file)
 {
@@ -1365,4 +1290,6 @@ curves_write_to_file (GimpCurvesTool *tool,
 
       fprintf (file, "\n");
     }
+
+  return TRUE;
 }

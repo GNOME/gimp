@@ -66,6 +66,7 @@ struct _GimpCurvesTool
   PangoRectangle        cursor_rect;
 
   GtkWidget            *file_dialog;
+  gchar                *filename;
   gboolean              is_save;
 };
 

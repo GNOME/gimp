@@ -38,6 +38,7 @@ struct _GimpImageMapOptions
   GimpToolOptions  parent_instance;
 
   gboolean         preview;
+  gchar           *settings;
 };
 
 
