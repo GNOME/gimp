@@ -1,3 +1,9 @@
+2004-02-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpviewable.c (gimp_viewable_calc_preview_size): argh,
+	take the resolution into account if "dot_for_dot" is FALSE, not
+	TRUE.
+
 2004-02-17  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimage-scale.c (gimp_image_scale_check): exclude the

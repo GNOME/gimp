@@ -381,7 +381,7 @@ gimp_viewable_calc_preview_size (gint       aspect_width,
       xratio = yratio = (gdouble) height / (gdouble) aspect_height;
     }
 
-  if (dot_for_dot && xresolution != yresolution)
+  if (! dot_for_dot && xresolution != yresolution)
     {
       yratio *= xresolution / yresolution;
     }
