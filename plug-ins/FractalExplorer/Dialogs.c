@@ -71,16 +71,18 @@ static explorer_vals_t standardvals =
  FORWARD DECLARATIONS
  *********************************************************************/
 
-static void load_file_selection_ok     (GtkWidget          *widget,
-					GtkFileSelection   *fs);
-static void file_selection_ok          (GtkWidget          *widget,
-					GtkFileSelection   *fs);
-static void create_load_file_selection (GtkWidget          *widget,
-                                        GtkWidget          *dialog);
-static void create_file_selection      (GtkWidget          *widget,
-                                        GtkWidget          *dialog);
+static void load_file_selection_response (GtkFileSelection *fs,
+                                          gint              response_id,
+                                          gpointer          data);
+static void file_selection_response      (GtkFileSelection *fs,
+                                          gint              response_id,
+                                          gpointer          data);
+static void create_load_file_selection   (GtkWidget        *widget,
+                                          GtkWidget        *dialog);
+static void create_file_selection        (GtkWidget        *widget,
+                                          GtkWidget        *dialog);
 
-static void explorer_logo_dialog       (GtkWidget          *parent);
+static void explorer_logo_dialog         (GtkWidget        *parent);
 
 /**********************************************************************
  CALLBACKS
@@ -1821,49 +1823,58 @@ save_callback (void)
 }
 
 static void
-file_selection_ok (GtkWidget        *w,
-		   GtkFileSelection *fs)
+file_selection_response (GtkFileSelection *fs,
+                         gint              response_id,
+                         gpointer          data)
 {
-  const gchar *filenamebuf;
-
-  filenamebuf = gtk_file_selection_get_filename (GTK_FILE_SELECTION(fs));
-
-  /* Get the name */
-  if (!filenamebuf || strlen (filenamebuf) == 0)
+  if (response_id == GTK_RESPONSE_OK)
     {
-      g_message (_("Save: No filename given"));
-      return;
+      const gchar *filenamebuf;
+
+      filenamebuf = gtk_file_selection_get_filename (fs);
+
+      /* Get the name */
+      if (!filenamebuf || strlen (filenamebuf) == 0)
+        {
+          g_message (_("Save: No filename given"));
+          return;
+        }
+
+      if (g_file_test (filenamebuf, G_FILE_TEST_IS_DIR))
+        {
+          /* Can't save to directory */
+          g_message (_("Cannot save to a folder."));
+          return;
+        }
+
+      filename = g_strdup (filenamebuf);
+      save_callback ();
     }
 
-  if (g_file_test (filenamebuf, G_FILE_TEST_IS_DIR))
-    {
-      /* Can't save to directory */
-      g_message (_("Cannot save to a folder."));
-      return;
-    }
-
-  filename = g_strdup (filenamebuf);
-  save_callback ();
   gtk_widget_destroy (GTK_WIDGET (fs));
 }
 
 static void
-load_file_selection_ok (GtkWidget        *w,
-			GtkFileSelection *fs)
+load_file_selection_response (GtkFileSelection *fs,
+                              gint              response_id,
+                              gpointer          data)
 {
-  filename =
-    g_strdup (gtk_file_selection_get_filename (GTK_FILE_SELECTION (fs)));
-
-  if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
+  if (response_id == GTK_RESPONSE_OK)
     {
-      explorer_load ();
+      filename = g_strdup (gtk_file_selection_get_filename (fs));
+
+      if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
+        {
+          explorer_load ();
+        }
+
+      gtk_widget_show (maindlg);
+      dialog_change_scale ();
+      set_cmap_preview ();
+      dialog_update_preview ();
     }
 
   gtk_widget_destroy (GTK_WIDGET (fs));
-  gtk_widget_show (maindlg);
-  dialog_change_scale ();
-  set_cmap_preview ();
-  dialog_update_preview ();
 }
 
 static void
@@ -1882,18 +1893,12 @@ create_load_file_selection (GtkWidget *widget,
       g_signal_connect (window, "destroy",
                         G_CALLBACK (gtk_widget_destroyed),
                         &window);
-
-      g_signal_connect (GTK_FILE_SELECTION (window)->ok_button, "clicked",
-                        G_CALLBACK (load_file_selection_ok),
+      g_signal_connect (window, "response",
+                        G_CALLBACK (load_file_selection_response),
                         window);
-
-      g_signal_connect_swapped (GTK_FILE_SELECTION (window)->cancel_button,
-                                "clicked",
-                                G_CALLBACK (gtk_widget_destroy),
-                                window);
     }
 
-  gtk_widget_show (window);
+  gtk_window_present (GTK_WINDOW (window));
 }
 
 static void
@@ -1912,15 +1917,9 @@ create_file_selection (GtkWidget *widget,
       g_signal_connect (window, "destroy",
                         G_CALLBACK (gtk_widget_destroyed),
                         &window);
-
-      g_signal_connect (GTK_FILE_SELECTION (window)->ok_button, "clicked",
-                        G_CALLBACK (file_selection_ok),
+      g_signal_connect (window, "response",
+                        G_CALLBACK (file_selection_response),
                         window);
-
-      g_signal_connect_swapped (GTK_FILE_SELECTION(window)->cancel_button,
-                                "clicked",
-                                G_CALLBACK (gtk_widget_destroy),
-                                window);
     }
 
   if (tpath)
@@ -1949,7 +1948,7 @@ create_file_selection (GtkWidget *widget,
       gtk_file_selection_set_filename (GTK_FILE_SELECTION (window), "/tmp");
     }
 
-  gtk_widget_show (window);
+  gtk_window_present (GTK_WINDOW (window));
 }
 
 gchar*

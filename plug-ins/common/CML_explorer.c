@@ -368,25 +368,27 @@ static void    CML_copy_parameters_callback        (GtkWidget *widget,
 						    gpointer   data);
 static void    CML_initial_value_sensitives_update (void);
 
-static void    CML_save_to_file_callback   (GtkWidget   *widget,
-                                            gpointer     data);
-static void    CML_execute_save_to_file    (GtkWidget   *widget,
-                                            gpointer     data);
-static gint    force_overwrite             (const gchar *filename,
-                                            GtkWidget   *parent);
+static void    CML_save_to_file_callback   (GtkWidget        *widget,
+                                            gpointer          data);
+static void    CML_save_to_file_response   (GtkFileSelection *fs,
+                                            gint              response_id,
+                                            gpointer          data);
+static gint    force_overwrite             (const gchar      *filename,
+                                            GtkWidget        *parent);
 
-static void    CML_preview_update_callback (GtkWidget   *widget,
-					    gpointer     data);
-static void    CML_load_from_file_callback (GtkWidget   *widget,
-					    gpointer     data);
-static gboolean CML_load_parameter_file     (const gchar *filename,
-					     gboolean     interactive_mode);
-static void    CML_execute_load_from_file  (GtkWidget   *widget,
-					    gpointer     data);
-static gint    parse_line_to_gint          (FILE        *file,
-					    gboolean    *flag);
-static gdouble parse_line_to_gdouble       (FILE        *file,
-					    gboolean    *flag);
+static void    CML_preview_update_callback (GtkWidget        *widget,
+					    gpointer          data);
+static void    CML_load_from_file_callback (GtkWidget        *widget,
+					    gpointer          data);
+static gboolean CML_load_parameter_file     (const gchar     *filename,
+					     gboolean         interactive_mode);
+static void    CML_load_from_file_response (GtkFileSelection *fs,
+                                            gint              response_id,
+                                            gpointer          data);
+static gint    parse_line_to_gint          (FILE             *file,
+					    gboolean         *flag);
+static gdouble parse_line_to_gdouble       (FILE             *file,
+					    gboolean         *flag);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -2054,22 +2056,16 @@ CML_save_to_file_callback (GtkWidget *widget,
       gtk_window_set_transient_for (GTK_WINDOW (filesel),
                                     GTK_WINDOW (gtk_widget_get_toplevel (widget)));
 
-      g_signal_connect (GTK_FILE_SELECTION (filesel)->ok_button,
-			"clicked",
-			G_CALLBACK (CML_execute_save_to_file),
-			filesel);
-
-      g_signal_connect_swapped (filesel, "delete_event",
-				G_CALLBACK (gtk_widget_hide),
-				filesel);
-
-      g_signal_connect_swapped (GTK_FILE_SELECTION (filesel)->cancel_button,
-				"clicked",
-				G_CALLBACK (gtk_widget_hide),
-				filesel);
-
       gimp_help_connect (filesel, gimp_standard_help_func,
 			 "filters/cml_explorer.html", NULL);
+
+      g_signal_connect (filesel, "response",
+			G_CALLBACK (CML_save_to_file_response),
+			NULL);
+      g_signal_connect (filesel, "delete_event",
+                        G_CALLBACK (gtk_true),
+                        NULL);
+
     }
 
   if (strlen (VALS.last_file_name) > 0)
@@ -2080,8 +2076,9 @@ CML_save_to_file_callback (GtkWidget *widget,
 }
 
 static void
-CML_execute_save_to_file (GtkWidget *widget,
-			  gpointer   data)
+CML_save_to_file_response (GtkFileSelection *fs,
+                           gint              response_id,
+                           gpointer          data)
 {
   const gchar *filename;
   struct stat  buf;
@@ -2089,7 +2086,13 @@ CML_execute_save_to_file (GtkWidget *widget,
   gint         channel_id;
   gint         err;
 
-  filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (data));
+  if (response_id != GTK_RESPONSE_OK)
+    {
+      gtk_widget_hide (GTK_WIDGET (fs));
+      return;
+    }
+
+  filename = gtk_file_selection_get_filename (fs);
   if (! filename)
     return;
 
@@ -2106,24 +2109,16 @@ CML_execute_save_to_file (GtkWidget *widget,
 
 	  if (filename[strlen (filename) - 1] != '/')
 	    g_string_append_c (s, '/');
-	  gtk_file_selection_set_filename (GTK_FILE_SELECTION (data),
-					   s->str);
+	  gtk_file_selection_set_filename (fs, s->str);
 	  g_string_free (s, TRUE);
 	  return;
 	}
       else if (buf.st_mode & S_IFREG) /* already exists */
 	{
-	  gtk_widget_set_sensitive (GTK_WIDGET (data), FALSE);
+	  if (! force_overwrite (filename, GTK_WIDGET (fs)))
+            return;
 
-	  if (! force_overwrite (filename, gtk_widget_get_toplevel (widget)))
-	    {
-	      gtk_widget_set_sensitive (GTK_WIDGET (data), TRUE);
-	      return;
-	    }
-	  else
-	    {
-	      file = fopen (filename, "w");
-	    }
+          file = fopen (filename, "w");
 	}
     }
 
@@ -2133,62 +2128,62 @@ CML_execute_save_to_file (GtkWidget *widget,
                  filename, g_strerror (errno));
       return;
     }
-  else
+
+  fprintf (file, "; This is a parameter file for CML_explorer\n");
+  fprintf (file, "; File format version: %1.1f\n", PARAM_FILE_FORMAT_VERSION);
+  fprintf (file, ";\n");
+
+  for (channel_id = 0; channel_id < 3; channel_id++)
     {
-      fprintf (file, "; This is a parameter file for CML_explorer\n");
-      fprintf (file, "; File format version: %1.1f\n", PARAM_FILE_FORMAT_VERSION);
-      fprintf (file, ";\n");
-      for (channel_id = 0; channel_id < 3; channel_id++)
-	{
-          gchar buf[G_ASCII_DTOSTR_BUF_SIZE];
+      gchar buf[G_ASCII_DTOSTR_BUF_SIZE];
 
-	  CML_PARAM param = *(CML_PARAM *)(channel_params[channel_id]);
+      CML_PARAM param = *(CML_PARAM *)(channel_params[channel_id]);
 
-	  fprintf (file, "\t%s\n", channel_names[channel_id]);
-	  fprintf (file, "Function_type    : %d (%s)\n",
-		   param.function, function_names[param.function]);
-	  fprintf (file, "Compostion_type  : %d (%s)\n",
-		   param.composition, composition_names[param.composition]);
-	  fprintf (file, "Arrange          : %d (%s)\n",
-		   param.arrange, arrange_names[param.arrange]);
-	  fprintf (file, "Cyclic_range     : %d (%s)\n",
-		   param.cyclic_range, (param.cyclic_range ? "TRUE" : "FALSE"));
-	  fprintf (file, "Mod. rate        : %s\n",
-                   g_ascii_dtostr (buf, sizeof (buf), param.mod_rate));
-	  fprintf (file, "Env_sensitivtiy  : %s\n",
-                   g_ascii_dtostr (buf, sizeof (buf), param.env_sensitivity));
-	  fprintf (file, "Diffusion dist.  : %d\n", param.diffusion_dist);
-	  fprintf (file, "Ch. sensitivity  : %s\n",
-                   g_ascii_dtostr (buf, sizeof (buf), param.ch_sensitivity));
-	  fprintf (file, "Num. of Subranges: %d\n", param.range_num);
-	  fprintf (file, "Power_factor     : %s\n",
-                   g_ascii_dtostr (buf, sizeof (buf), param.power));
-	  fprintf (file, "Parameter_k      : %s\n",
-                   g_ascii_dtostr (buf, sizeof (buf), param.parameter_k));
-	  fprintf (file, "Range_low        : %s\n",
-                   g_ascii_dtostr (buf, sizeof (buf), param.range_l));
-	  fprintf (file, "Range_high       : %s\n",
-                   g_ascii_dtostr (buf, sizeof (buf), param.range_h));
-	  fprintf (file, "Mutation_rate    : %s\n",
-                   g_ascii_dtostr (buf, sizeof (buf), param.mutation_rate));
-	  fprintf (file, "Mutation_distance: %s\n",
-                   g_ascii_dtostr (buf, sizeof (buf), param.mutation_dist));
-	}
-      fprintf (file, "\n");
-      fprintf (file, "Initial value  : %d (%s)\n",
-	       VALS.initial_value, initial_value_names[VALS.initial_value]);
-      fprintf (file, "Zoom scale     : %d\n", VALS.scale);
-      fprintf (file, "Start offset   : %d\n", VALS.start_offset);
-      fprintf (file, "Random seed    : %d\n", VALS.seed);
-      fclose(file);
-
-      g_message (_("Parameters were Saved to '%s'"), filename);
-
-      strncpy (VALS.last_file_name, filename,
-               sizeof (VALS.last_file_name) - 1);
+      fprintf (file, "\t%s\n", channel_names[channel_id]);
+      fprintf (file, "Function_type    : %d (%s)\n",
+               param.function, function_names[param.function]);
+      fprintf (file, "Compostion_type  : %d (%s)\n",
+               param.composition, composition_names[param.composition]);
+      fprintf (file, "Arrange          : %d (%s)\n",
+               param.arrange, arrange_names[param.arrange]);
+      fprintf (file, "Cyclic_range     : %d (%s)\n",
+               param.cyclic_range, (param.cyclic_range ? "TRUE" : "FALSE"));
+      fprintf (file, "Mod. rate        : %s\n",
+               g_ascii_dtostr (buf, sizeof (buf), param.mod_rate));
+      fprintf (file, "Env_sensitivtiy  : %s\n",
+               g_ascii_dtostr (buf, sizeof (buf), param.env_sensitivity));
+      fprintf (file, "Diffusion dist.  : %d\n", param.diffusion_dist);
+      fprintf (file, "Ch. sensitivity  : %s\n",
+               g_ascii_dtostr (buf, sizeof (buf), param.ch_sensitivity));
+      fprintf (file, "Num. of Subranges: %d\n", param.range_num);
+      fprintf (file, "Power_factor     : %s\n",
+               g_ascii_dtostr (buf, sizeof (buf), param.power));
+      fprintf (file, "Parameter_k      : %s\n",
+               g_ascii_dtostr (buf, sizeof (buf), param.parameter_k));
+      fprintf (file, "Range_low        : %s\n",
+               g_ascii_dtostr (buf, sizeof (buf), param.range_l));
+      fprintf (file, "Range_high       : %s\n",
+               g_ascii_dtostr (buf, sizeof (buf), param.range_h));
+      fprintf (file, "Mutation_rate    : %s\n",
+               g_ascii_dtostr (buf, sizeof (buf), param.mutation_rate));
+      fprintf (file, "Mutation_distance: %s\n",
+               g_ascii_dtostr (buf, sizeof (buf), param.mutation_dist));
     }
 
-  gtk_widget_hide (GTK_WIDGET (data));
+  fprintf (file, "\n");
+  fprintf (file, "Initial value  : %d (%s)\n",
+           VALS.initial_value, initial_value_names[VALS.initial_value]);
+  fprintf (file, "Zoom scale     : %d\n", VALS.scale);
+  fprintf (file, "Start offset   : %d\n", VALS.start_offset);
+  fprintf (file, "Random seed    : %d\n", VALS.seed);
+  fclose(file);
+
+  g_message (_("Parameters were Saved to '%s'"), filename);
+
+  strncpy (VALS.last_file_name, filename,
+           sizeof (VALS.last_file_name) - 1);
+
+  gtk_widget_hide (GTK_WIDGET (fs));
 }
 
 static gint
@@ -2202,7 +2197,7 @@ force_overwrite (const gchar *filename,
   gboolean   overwrite;
 
   dlg = gimp_dialog_new (_("CML File Operation Warning"), "cml_explorer",
-                         parent, 0,
+                         parent, GTK_DIALOG_MODAL,
 			 gimp_standard_help_func, "filters/cml_explorer.html",
 
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
@@ -2246,22 +2241,12 @@ CML_load_from_file_callback (GtkWidget *widget,
       gtk_window_set_transient_for (GTK_WINDOW (filesel),
                                     GTK_WINDOW (gtk_widget_get_toplevel (widget)));
 
-      g_signal_connect (GTK_FILE_SELECTION (filesel)->ok_button,
-			"clicked",
-			G_CALLBACK (CML_execute_load_from_file),
-			filesel);
-
-      g_signal_connect_swapped (filesel, "delete_event",
-				G_CALLBACK (gtk_widget_hide),
-				filesel);
-
-      g_signal_connect_swapped (GTK_FILE_SELECTION (filesel)->cancel_button,
-				"clicked",
-				G_CALLBACK (gtk_widget_hide),
-				filesel);
-
       gimp_help_connect (filesel, gimp_standard_help_func,
 			 "filters/cml_explorer.html", NULL);
+
+      g_signal_connect (filesel, "response",
+			G_CALLBACK (CML_load_from_file_response),
+			NULL);
     }
 
   if ((selective_load_source == 0) || (selective_load_destination == 0))
@@ -2273,52 +2258,52 @@ CML_load_from_file_callback (GtkWidget *widget,
     gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesel),
 				     VALS.last_file_name);
 
-  if (GTK_WIDGET_VISIBLE (filesel))
-    gdk_window_raise (filesel->window);
-  else
-    gtk_widget_show (filesel);
+  gtk_window_present (GTK_WINDOW (filesel));
 }
 
 static void
-CML_execute_load_from_file (GtkWidget *widget,
-			    gpointer   data)
+CML_load_from_file_response (GtkFileSelection *fs,
+                             gint              response_id,
+                             gpointer          data)
 {
-  const gchar *filename;
-  gint         channel_id;
-  gint         flag = TRUE;
-
-  filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (data));
-
-  gtk_widget_set_sensitive (GTK_WIDGET (data), FALSE);
-  flag = CML_load_parameter_file (filename, TRUE);
-  gtk_widget_destroy (GTK_WIDGET(data));
-
-  if (flag)
+  if (response_id == GTK_RESPONSE_OK)
     {
-      gint index;
-      WidgetEntry *widgets;
+      const gchar *filename;
+      gint         channel_id;
+      gint         flag = TRUE;
 
-      CML_preview_defer = TRUE;
+      filename = gtk_file_selection_get_filename (fs);
 
-      for (channel_id = 0; channel_id < 3; channel_id++)
-	{
-	  widgets = widget_pointers[channel_id];
-	  for (index = 0; index < CML_PARAM_NUM; index++)
-	    if (widgets[index].widget && widgets[index].updater)
-	      (widgets[index].updater) (widgets + index);
-	}
-      /* channel independent parameters */
-      widgets = widget_pointers[3];
-      for (index = 0; index < 4; index++)
-	if (widgets[index].widget && widgets[index].updater)
-	  (widgets[index].updater) (widgets + index);
+      gtk_widget_set_sensitive (GTK_WIDGET (fs), FALSE);
+      flag = CML_load_parameter_file (filename, TRUE);
 
-      gdk_flush ();
+      if (flag)
+        {
+          gint index;
+          WidgetEntry *widgets;
 
-      CML_preview_defer = FALSE;
+          CML_preview_defer = TRUE;
 
-      preview_update ();
+          for (channel_id = 0; channel_id < 3; channel_id++)
+            {
+              widgets = widget_pointers[channel_id];
+              for (index = 0; index < CML_PARAM_NUM; index++)
+                if (widgets[index].widget && widgets[index].updater)
+                  (widgets[index].updater) (widgets + index);
+            }
+          /* channel independent parameters */
+          widgets = widget_pointers[3];
+          for (index = 0; index < 4; index++)
+            if (widgets[index].widget && widgets[index].updater)
+              (widgets[index].updater) (widgets + index);
+
+          CML_preview_defer = FALSE;
+
+          preview_update ();
+        }
     }
+
+  gtk_widget_destroy (GTK_WIDGET (fs));
 }
 
 static gint

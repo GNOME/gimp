@@ -35,33 +35,46 @@
 
 
 static void
-open_cb(GtkWidget *widget, gpointer data)
+open_cb (GtkFileSelection *fs,
+         gint              response_id,
+         gpointer          data)
 {
-   const gchar *filename;
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      const gchar *filename;
 
-   filename = gtk_file_selection_get_filename(GTK_FILE_SELECTION(data));
-   if (g_file_test(filename, G_FILE_TEST_IS_REGULAR)) {
-      gtk_widget_hide((GtkWidget*) data);
-      load(filename);
-   } else {
-      do_file_error_dialog(_("Error opening file"), filename);
-   }
+      filename = gtk_file_selection_get_filename (fs);
+
+      if (! g_file_test (filename, G_FILE_TEST_IS_REGULAR))
+        {
+          do_file_error_dialog (_("Error opening file"), filename);
+          return;
+        }
+
+      load (filename);
+    }
+
+  gtk_widget_hide (GTK_WIDGET (fs));
 }
 
 void
-do_file_open_dialog(void)
+do_file_open_dialog (void)
 {
    static GtkWidget *dialog;
-   if (!dialog) {
-      dialog = gtk_file_selection_new(_("Load Imagemap"));
-      g_signal_connect_swapped(GTK_FILE_SELECTION(dialog)->cancel_button,
-                               "clicked", G_CALLBACK(gtk_widget_hide), dialog);
-      g_signal_connect(GTK_FILE_SELECTION(dialog)->ok_button,
-                       "clicked", G_CALLBACK(open_cb), dialog);
-      g_signal_connect(dialog, "delete_event",
-		       G_CALLBACK(gtk_widget_hide), NULL);
-   }
-   gtk_widget_show(dialog);
+
+   if (! dialog)
+     {
+       dialog = gtk_file_selection_new (_("Load Imagemap"));
+
+       g_signal_connect (dialog, "delete_event",
+                         G_CALLBACK (gtk_true),
+                         NULL);
+       g_signal_connect (dialog, "response",
+                         G_CALLBACK (open_cb),
+                         NULL);
+     }
+
+   gtk_window_present (GTK_WINDOW (dialog));
 }
 
 static void
@@ -89,33 +102,46 @@ do_file_exists_dialog(gpointer data)
 }
 
 static void
-save_cb(GtkWidget *widget, gpointer data)
+save_cb (GtkFileSelection *fs,
+         gint              response_id,
+         gpointer          data)
 {
-   const gchar *filename;
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      const gchar *filename;
 
-   filename = gtk_file_selection_get_filename(GTK_FILE_SELECTION(data));
-   if (g_file_test(filename, G_FILE_TEST_IS_REGULAR)) {
-     do_file_exists_dialog(data);
-   } else {
-     gtk_widget_hide((GtkWidget*) data);
-     save_as(filename);
-   }
+      filename = gtk_file_selection_get_filename (fs);
+
+      if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
+        {
+          do_file_exists_dialog (fs);
+          return;
+        }
+
+      save_as (filename);
+    }
+
+  gtk_widget_hide (GTK_WIDGET (fs));
 }
 
 void
-do_file_save_as_dialog(void)
+do_file_save_as_dialog (void)
 {
    static GtkWidget *dialog;
-   if (!dialog) {
-      dialog = gtk_file_selection_new(_("Save Imagemap"));
-      g_signal_connect_swapped(GTK_FILE_SELECTION(dialog)->cancel_button,
-                               "clicked", G_CALLBACK(gtk_widget_hide), dialog);
-      g_signal_connect(GTK_FILE_SELECTION(dialog)->ok_button,
-                       "clicked", G_CALLBACK(save_cb), dialog);
-      g_signal_connect(dialog, "delete_event",
-		       G_CALLBACK(gtk_widget_hide), NULL);
-   }
-   gtk_widget_show(dialog);
+
+   if (! dialog)
+     {
+       dialog = gtk_file_selection_new (_("Save Imagemap"));
+
+       g_signal_connect (dialog, "delete_event",
+                         G_CALLBACK (gtk_true),
+                         NULL);
+       g_signal_connect (dialog, "response",
+                         G_CALLBACK (save_cb),
+                         NULL);
+     }
+
+   gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void

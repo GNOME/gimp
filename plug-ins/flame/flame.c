@@ -371,87 +371,80 @@ doit (GimpDrawable *drawable)
   gimp_drawable_update (drawable->drawable_id, 0, 0, width, height);
 }
 
-static gboolean
-file_cancel_callback (GtkWidget *widget,
-		      gpointer   data)
+static void
+file_response_callback (GtkFileSelection *fs,
+                        gint              response_id,
+                        gpointer          data)
 {
-  gtk_widget_hide (widget);
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      const gchar *filename;
+
+      filename = gtk_file_selection_get_filename (fs);
+
+      if (load_save)
+        {
+          FILE  *f;
+          gint   i, c;
+          gchar *ss;
+
+          if (!g_file_test (filename, G_FILE_TEST_IS_REGULAR))
+            {
+              g_message (_("'%s' is not a regular file"), filename);
+              return;
+            }
+
+          f = fopen (filename, "r");
+
+          if (f == NULL)
+            {
+              g_message (_("Could not open '%s' for reading: %s"),
+                         filename, g_strerror (errno));
+              return;
+            }
+
+          i = 0;
+          ss = buffer;
+          do
+            {
+              c = getc (f);
+              if (EOF == c)
+                break;
+              ss[i++] = c;
+            }
+          while (i < BUFFER_SIZE && ';' != c);
+          parse_control_point (&ss, &config.cp);
+          fclose (f);
+          /* i want to update the existing dialogue, but it's
+             too painful */
+          gimp_set_data ("plug_in_flame", &config, sizeof (config));
+          /* gtk_widget_destroy(dlg); */
+          set_flame_preview ();
+          set_edit_preview ();
+        }
+      else
+        {
+          FILE *f = fopen (filename, "w");
+
+          if (NULL == f)
+            {
+              g_message (_("Could not open '%s' for writing: %s"),
+                         filename, g_strerror (errno));
+              return;
+            }
+
+          print_control_point (f, &config.cp, 0);
+          fclose (f);
+        }
+    }
+
+  gtk_widget_hide (GTK_WIDGET (fs));
 
   if (! GTK_WIDGET_SENSITIVE (load_button))
     gtk_widget_set_sensitive (load_button, TRUE);
 
   if (! GTK_WIDGET_SENSITIVE (save_button))
     gtk_widget_set_sensitive (save_button, TRUE);
-
-  return TRUE;
-}
-
-static void
-file_ok_callback (GtkWidget *widget,
-		  gpointer   data)
-{
-  GtkFileSelection *fs;
-  const gchar      *filename;
-
-  fs = GTK_FILE_SELECTION (data);
-  filename = gtk_file_selection_get_filename (fs);
-
-  if (load_save)
-    {
-      FILE  *f;
-      gint   i, c;
-      gchar *ss;
-
-      if (!g_file_test (filename, G_FILE_TEST_IS_REGULAR))
-	{
-	  g_message (_("'%s' is not a regular file"), filename);
-	  return;
-	}
-
-      f = fopen (filename, "r");
-
-      if (f == NULL)
-	{
-	  g_message (_("Could not open '%s' for reading: %s"),
-                     filename, g_strerror (errno));
-	  return;
-	}
-
-      i = 0;
-      ss = buffer;
-      do
-	{
-	  c = getc (f);
-	  if (EOF == c)
-	    break;
-	  ss[i++] = c;
-	}
-      while (i < BUFFER_SIZE && ';' != c);
-      parse_control_point (&ss, &config.cp);
-      fclose (f);
-      /* i want to update the existing dialogue, but it's
-	 too painful */
-      gimp_set_data ("plug_in_flame", &config, sizeof (config));
-      /* gtk_widget_destroy(dlg); */
-      set_flame_preview ();
-      set_edit_preview ();
-    }
-  else
-    {
-      FILE *f = fopen (filename, "w");
-
-      if (NULL == f)
-	{
-	  g_message (_("Could not open '%s' for writing: %s"),
-                     filename, g_strerror (errno));
-	  return;
-	}
-
-      print_control_point (f, &config.cp, 0);
-      fclose (f);
-    }
-
-  file_cancel_callback (GTK_WIDGET (data), NULL);
 }
 
 static void
@@ -463,16 +456,13 @@ make_file_dlg (GtkWidget *parent)
   gtk_window_set_destroy_with_parent (GTK_WINDOW (file_dlg), TRUE);
 
   gtk_window_set_position (GTK_WINDOW (file_dlg), GTK_WIN_POS_MOUSE);
-  g_signal_connect_swapped (file_dlg, "delete_event",
-                            G_CALLBACK (file_cancel_callback),
-                            file_dlg);
-  g_signal_connect (GTK_FILE_SELECTION (file_dlg)->ok_button, "clicked",
-                    G_CALLBACK (file_ok_callback),
-                    file_dlg);
-  g_signal_connect_swapped (GTK_FILE_SELECTION (file_dlg)->cancel_button,
-                            "clicked",
-                            G_CALLBACK (file_cancel_callback),
-                            file_dlg);
+
+  g_signal_connect (file_dlg, "delete_event",
+                    G_CALLBACK (gtk_true),
+                    NULL);
+  g_signal_connect (file_dlg, "response",
+                    G_CALLBACK (file_response_callback),
+                    NULL);
 
   gimp_help_connect (file_dlg, gimp_standard_help_func,
                      "filters/flame.html", NULL);

@@ -1073,38 +1073,39 @@ gfig_save_callbk (void)
 }
 
 static void
-file_selection_ok (GtkWidget        *w,
-		   GtkFileSelection *fs,
-		   gpointer data)
+file_selection_response (GtkFileSelection *fs,
+                         gint              response_id,
+                         GFigObj          *obj)
 {
-  const gchar *filenamebuf;
-  GFigObj     *obj = g_object_get_data (G_OBJECT (fs), "user_data");
-  GFigObj     *real_current;
-
-  filenamebuf = gtk_file_selection_get_filename (GTK_FILE_SELECTION (fs));
-
-  /* Get the name */
-  if (strlen (filenamebuf) == 0)
+  if (response_id == GTK_RESPONSE_OK)
     {
-      g_message ("Save: No filename given");
-      return;
+      const gchar *filenamebuf;
+      GFigObj     *real_current;
+
+      filenamebuf = gtk_file_selection_get_filename (fs);
+
+      /* Get the name */
+      if (strlen (filenamebuf) == 0)
+        {
+          g_message ("Save: No filename given");
+          return;
+        }
+
+      if (g_file_test (filenamebuf, G_FILE_TEST_IS_DIR))
+        {
+          g_message (_("Cannot save to a folder."));
+          return;
+        }
+
+      obj->filename = g_strdup (filenamebuf);
+
+      real_current = current_obj;
+      current_obj = obj;
+      gfig_save_callbk ();
+      current_obj = current_obj;
     }
-
-  if (g_file_test (filenamebuf, G_FILE_TEST_IS_DIR))
-    {
-      g_message (_("Cannot save to a folder."));
-      return;
-    }
-
-  obj->filename = g_strdup (filenamebuf);
-
-  real_current = current_obj;
-  current_obj = obj;
-  gfig_save_callbk ();
-  current_obj = current_obj;
 
   gtk_widget_destroy (GTK_WIDGET (fs));
-
 }
 
 static void
@@ -1124,15 +1125,9 @@ create_file_selection (GFigObj   *obj,
       g_signal_connect (window, "destroy",
                         G_CALLBACK (gtk_widget_destroyed),
                         &window);
-
-      g_object_set_data (G_OBJECT (window), "user_data", obj);
-      g_signal_connect (GTK_FILE_SELECTION (window)->ok_button, "clicked",
-                        G_CALLBACK (file_selection_ok),
-                        window);
-      g_signal_connect_swapped (GTK_FILE_SELECTION (window)->cancel_button,
-                                "clicked",
-                                G_CALLBACK (gtk_widget_destroy),
-                                window);
+      g_signal_connect (window, "response",
+                        G_CALLBACK (file_selection_response),
+                        obj);
     }
 
   if (tpath)
@@ -3365,35 +3360,38 @@ list_button_update (GFigObj *obj)
 
 
 static void
-gfig_load_file_selection_ok (GtkWidget        *widget,
-		             GtkFileSelection *fs,
-		             gpointer          data)
+gfig_load_file_selection_response (GtkFileSelection *fs,
+                                   gint              response_id,
+                                   gpointer          data)
 {
-  const gchar *filename;
-  GFigObj     *gfig;
-  GFigObj     *current_saved;
-
-  filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (fs));
-
-  if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
+  if (response_id == GTK_RESPONSE_OK)
     {
-      /* Hack - current object MUST be NULL to prevent setup_undo ()
-       * from kicking in.
-       */
-      current_saved = current_obj;
-      current_obj = NULL;
-      gfig = gfig_load (filename, filename);
-      current_obj = current_saved;
+      const gchar *filename;
+      GFigObj     *gfig;
+      GFigObj     *current_saved;
 
-      if (gfig)
-	{
-	  /* Read only ?*/
-	  if (access (filename, W_OK))
-	    gfig->obj_status |= GFIG_READONLY;
+      filename = gtk_file_selection_get_filename (fs);
 
-	  gfig_list_add (gfig);
-	  new_obj_2edit (gfig);
-	}
+      if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
+        {
+          /* Hack - current object MUST be NULL to prevent setup_undo ()
+           * from kicking in.
+           */
+          current_saved = current_obj;
+          current_obj = NULL;
+          gfig = gfig_load (filename, filename);
+          current_obj = current_saved;
+
+          if (gfig)
+            {
+              /* Read only ?*/
+              if (access (filename, W_OK))
+                gfig->obj_status |= GFIG_READONLY;
+
+              gfig_list_add (gfig);
+              new_obj_2edit (gfig);
+            }
+        }
     }
 
   gtk_widget_destroy (GTK_WIDGET (fs));
@@ -3415,15 +3413,10 @@ load_button_callback (GtkWidget *widget,
   g_signal_connect (window, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),
                     &window);
-
-  g_signal_connect (GTK_FILE_SELECTION (window)->ok_button, "clicked",
-                    G_CALLBACK (gfig_load_file_selection_ok),
+  g_signal_connect (window, "response",
+                    G_CALLBACK (gfig_load_file_selection_response),
                     window);
 
-  g_signal_connect_swapped (GTK_FILE_SELECTION (window)->cancel_button,
-                            "clicked",
-                            G_CALLBACK (gtk_widget_destroy),
-                            window);
   gtk_widget_show (window);
 }
 

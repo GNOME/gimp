@@ -268,8 +268,10 @@ static void            bender_antialias_callback      (GtkWidget *, gpointer);
 static void            bender_work_on_copy_callback   (GtkWidget *, gpointer);
 static void            bender_preview_update          (GtkWidget *, gpointer);
 static void            bender_preview_update_once     (GtkWidget *, gpointer);
-static void            bender_load_callback           (GtkWidget *, gpointer);
-static void            bender_save_callback           (GtkWidget *, gpointer);
+static void            bender_load_callback           (GtkWidget *,
+                                                       BenderDialog *);
+static void            bender_save_callback           (GtkWidget *,
+                                                       BenderDialog *);
 static gint            bender_pv_widget_events        (GtkWidget *, GdkEvent *,
 						       BenderDialog *);
 static gint            bender_graph_events            (GtkWidget *, GdkEvent *,
@@ -1964,113 +1966,95 @@ bender_preview_update_once (GtkWidget *widget,
 }
 
 static void
-p_filesel_close_cb (GtkWidget *widget,
-		    gpointer   data)
+p_points_save_to_file_response (GtkFileSelection *fs,
+                                gint              response_id,
+                                BenderDialog     *cd)
 {
-  BenderDialog *cd = (BenderDialog*) data;
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      const gchar *filename;
 
-  gtk_widget_destroy (GTK_WIDGET (cd->filesel));
-  cd->filesel = NULL;   /* now filesel is closed */
+      filename = gtk_file_selection_get_filename (fs);
+      p_save_pointfile (cd, filename);
+    }
+
+  gtk_widget_destroy (GTK_WIDGET (fs));
 }
 
 static void
-p_points_save_to_file (GtkWidget *widget,
-		       gpointer	 data)
+p_points_load_from_file_response (GtkFileSelection *fs,
+                                  gint              response_id,
+                                  BenderDialog     *cd)
 {
-  BenderDialog *cd = (BenderDialog*) data;
-  const char   *filename;
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      const gchar *filename;
 
-  filename = gtk_file_selection_get_filename(GTK_FILE_SELECTION (cd->filesel));
-  p_save_pointfile(cd, filename);
-  gtk_widget_destroy(GTK_WIDGET(cd->filesel));
-  cd->filesel = NULL;
+      filename = gtk_file_selection_get_filename (fs);
+      p_load_pointfile (cd, filename);
+      bender_update (cd, UP_ALL);
+    }
+
+  gtk_widget_destroy (GTK_WIDGET (fs));
 }
 
 static void
-p_points_load_from_file (GtkWidget *widget,
-			 gpointer   data)
+bender_load_callback (GtkWidget    *w,
+                      BenderDialog *cd)
 {
-  BenderDialog *cd = (BenderDialog*) data;
-  const char   *filename;
-
-  filename = gtk_file_selection_get_filename(GTK_FILE_SELECTION (cd->filesel));
-  p_load_pointfile(cd, filename);
-  gtk_widget_destroy(GTK_WIDGET(cd->filesel));
-  cd->filesel = NULL;
-  bender_update (cd, UP_ALL);
-}
-
-static void
-bender_load_callback (GtkWidget *w,
-		      gpointer   data)
-{
-  BenderDialog *cd;
-  GtkWidget *filesel;
-
-  cd = (BenderDialog *) data;
   if (cd->filesel)
-     return;   /* filesel is already open */
+    {
+      gtk_window_present (GTK_WINDOW (cd->filesel));
+      return;
+    }
 
-  filesel = gtk_file_selection_new ( _("Load Curve Points from file"));
-  cd->filesel = filesel;
+  cd->filesel = gtk_file_selection_new (_("Load Curve Points from file"));
 
-  gtk_window_set_transient_for (GTK_WINDOW (filesel),
+  gtk_window_set_transient_for (GTK_WINDOW (cd->filesel),
                                 GTK_WINDOW (gtk_widget_get_toplevel (w)));
 
-  g_signal_connect (GTK_FILE_SELECTION (filesel)->ok_button,
-                    "clicked",
-                    G_CALLBACK (p_points_load_from_file),
+  g_signal_connect (cd->filesel, "response",
+                    G_CALLBACK (p_points_load_from_file_response),
                     cd);
-  g_signal_connect (GTK_FILE_SELECTION (filesel)->cancel_button,
-                    "clicked",
-                    G_CALLBACK (p_filesel_close_cb),
-                    cd);
-  g_signal_connect (filesel, "destroy",
-                    G_CALLBACK (p_filesel_close_cb),
-                    cd);
+  g_signal_connect (cd->filesel, "destroy",
+                    G_CALLBACK (gtk_widget_destroyed),
+                    &cd->filesel);
 
-  gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesel),
+  gtk_file_selection_set_filename (GTK_FILE_SELECTION (cd->filesel),
 				   "curve_bend.points");
-  gtk_widget_show (filesel);
+  gtk_widget_show (cd->filesel);
 }
 
 static void
-bender_save_callback (GtkWidget *w,
-		      gpointer   data)
+bender_save_callback (GtkWidget    *w,
+                      BenderDialog *cd)
 {
-  BenderDialog *cd;
-  GtkWidget *filesel;
+  if (cd->filesel)
+    {
+      gtk_window_present (GTK_WINDOW (cd->filesel));
+      return;
+    }
 
-  cd = (BenderDialog *) data;
-  if(cd->filesel != NULL)
-     return;   /* filesel is already open */
+  cd->filesel = gtk_file_selection_new (_("Save Curve Points to file"));
 
-  filesel = gtk_file_selection_new ( _("Save Curve Points to file"));
-  cd->filesel = filesel;
-
-  gtk_window_set_transient_for (GTK_WINDOW (filesel),
+  gtk_window_set_transient_for (GTK_WINDOW (cd->filesel),
                                 GTK_WINDOW (gtk_widget_get_toplevel (w)));
 
-  g_signal_connect (GTK_FILE_SELECTION (filesel)->ok_button,
-                    "clicked",
-                    G_CALLBACK (p_points_save_to_file),
+  g_signal_connect (cd->filesel, "response",
+                    G_CALLBACK (p_points_save_to_file_response),
                     cd);
-  g_signal_connect (GTK_FILE_SELECTION (filesel)->cancel_button,
-                    "clicked",
-                    G_CALLBACK (p_filesel_close_cb),
-                    cd);
-  g_signal_connect (filesel, "destroy",
-		    G_CALLBACK (p_filesel_close_cb),
-                    cd);
+  g_signal_connect (cd->filesel, "destroy",
+                    G_CALLBACK (gtk_widget_destroyed),
+                    &cd->filesel);
 
-  gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesel),
+  gtk_file_selection_set_filename (GTK_FILE_SELECTION (cd->filesel),
 				   "curve_bend.points");
-  gtk_widget_show (filesel);
+  gtk_widget_show (cd->filesel);
 }
 
 static void
 bender_smoothing_callback (GtkWidget *w,
-		       gpointer   data)
+                           gpointer   data)
 {
   BenderDialog *cd = (BenderDialog*) data;
 

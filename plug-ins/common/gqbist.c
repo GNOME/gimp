@@ -703,26 +703,34 @@ save_data (gchar *name)
 }
 
 static void
-file_selection_save (GtkWidget *widget,
-		     GtkWidget *file_select)
+file_selection_save_response (GtkFileSelection *fs,
+                              gint              response_id,
+                              gpointer          data)
 {
-  strcpy (qbist_info.path,
-          gtk_file_selection_get_filename (GTK_FILE_SELECTION (file_select)));
-  save_data (qbist_info.path);
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      strcpy (qbist_info.path, gtk_file_selection_get_filename (fs));
+      save_data (qbist_info.path);
+    }
 
-  gtk_widget_destroy (file_select);
+  gtk_widget_destroy (GTK_WIDGET (fs));
 }
 
 static void
-file_selection_load (GtkWidget *widget,
-		     GtkWidget *file_select)
+file_selection_load_response (GtkFileSelection *fs,
+                              gint              response_id,
+                              gpointer          data)
 {
-  strcpy (qbist_info.path,
-	  gtk_file_selection_get_filename (GTK_FILE_SELECTION (file_select)));
-  load_data (qbist_info.path);
-  gtk_widget_destroy (file_select);
-  dialog_new_variations (widget, NULL);
-  dialog_update_previews (widget, NULL);
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      strcpy (qbist_info.path, gtk_file_selection_get_filename (fs));
+      load_data (qbist_info.path);
+
+      dialog_new_variations (NULL, NULL);
+      dialog_update_previews (NULL, NULL);
+    }
+
+  gtk_widget_destroy (GTK_WIDGET (fs));
 }
 
 static void
@@ -742,14 +750,9 @@ dialog_load (GtkWidget *widget,
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (file_select),
                                    qbist_info.path);
 
-  g_signal_connect (GTK_FILE_SELECTION (file_select)->ok_button,
-                    "clicked",
-                    G_CALLBACK (file_selection_load),
-                    file_select);
-  g_signal_connect_swapped (GTK_FILE_SELECTION (file_select)->cancel_button,
-                            "clicked",
-                            G_CALLBACK (gtk_widget_destroy),
-                            file_select);
+  g_signal_connect (file_select, "response",
+                    G_CALLBACK (file_selection_load_response),
+                    NULL);
 
   gtk_widget_show (file_select);
 }
@@ -772,14 +775,9 @@ dialog_save (GtkWidget *widget,
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (file_select),
 				   qbist_info.path);
 
-  g_signal_connect (GTK_FILE_SELECTION (file_select)->ok_button,
-                    "clicked",
-                    G_CALLBACK (file_selection_save),
-                    file_select);
-  g_signal_connect_swapped (GTK_FILE_SELECTION (file_select)->cancel_button,
-                            "clicked",
-                            G_CALLBACK (gtk_widget_destroy),
-                            file_select);
+  g_signal_connect (file_select, "response",
+                    G_CALLBACK (file_selection_save_response),
+                    NULL);
 
   gtk_widget_show (file_select);
 }

@@ -583,18 +583,6 @@ save_image (const gchar *file,
 }
 
 static void
-palette_ok (GtkWidget  *widget,
-	    GtkWidget **fs)
-{
-  g_free (palette_file);
-  palette_file =
-    g_strdup (gtk_file_selection_get_filename (GTK_FILE_SELECTION (fs)));
-  data_length = strlen (palette_file) + 1;
-
-  gtk_widget_destroy (GTK_WIDGET (fs));
-}
-
-static void
 palette_dialog (const gchar *title)
 {
   GtkWidget *dialog;
@@ -605,24 +593,18 @@ palette_dialog (const gchar *title)
   gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (dialog), palette_file);
 
-  g_signal_connect
-    (GTK_FILE_SELECTION (dialog)->ok_button, "clicked",
-     G_CALLBACK (palette_ok),
-     dialog);
-  g_signal_connect_swapped
-    (GTK_FILE_SELECTION (dialog)->cancel_button, "clicked",
-     G_CALLBACK (gtk_widget_destroy),
-     dialog);
-
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
-
   gimp_help_connect (dialog, gimp_standard_help_func,
 		     "filters/cel.html", NULL);
 
   gtk_widget_show (dialog);
 
-  gtk_main ();
-  gdk_flush ();
+  if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK)
+    {
+      g_free (palette_file);
+      palette_file =
+        g_strdup (gtk_file_selection_get_filename (GTK_FILE_SELECTION (dialog)));
+      data_length = strlen (palette_file) + 1;
+    }
+
+  gtk_widget_destroy (dialog);
 }

@@ -32,44 +32,51 @@ static GtkTargetEntry target_table[] = {
 };
 
 static void
-select_cb(GtkWidget *widget, gpointer data)
+select_cb (GtkWidget      *dialog,
+           gint            response_id,
+           BrowseWidget_t *browse)
 {
-   BrowseWidget_t *browse = (BrowseWidget_t*) data;
-   gchar *p;
-   const gchar *file;
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      gchar       *p;
+      const gchar *file;
 
-   file = gtk_file_selection_get_filename(
-      GTK_FILE_SELECTION(browse->file_selection));
+      file = gtk_file_selection_get_filename (GTK_FILE_SELECTION (dialog));
 
-   p = (browse->filter) ? browse->filter(file, browse->filter_data) : (gchar *) file;
+      p = (browse->filter) ? browse->filter (file, browse->filter_data) : (gchar *) file;
 
-   gtk_entry_set_text(GTK_ENTRY(browse->file), p);
+      gtk_entry_set_text (GTK_ENTRY (browse->file), p);
 
-   if (browse->filter)
-     g_free (p);
+      if (browse->filter)
+        g_free (p);
+    }
 
-   gtk_widget_hide(browse->file_selection);
-   gtk_widget_grab_focus(browse->file);
+  gtk_widget_hide (dialog);
+  gtk_widget_grab_focus (browse->file);
 }
 
 static void
-browse_cb(GtkWidget *widget, gpointer data)
+browse_cb (GtkWidget      *widget,
+           BrowseWidget_t *browse)
 {
-   BrowseWidget_t *browse = (BrowseWidget_t*) data;
+   if (! browse->file_selection)
+     {
+       GtkWidget *dialog;
 
-   if (!browse->file_selection) {
-      GtkWidget *dialog;
-      dialog = browse->file_selection = gtk_file_selection_new(browse->name);
+       dialog = browse->file_selection = gtk_file_selection_new (browse->name);
 
-      gtk_window_set_transient_for (GTK_WINDOW (dialog),
-                                    GTK_WINDOW (gtk_widget_get_toplevel (widget)));
+       gtk_window_set_transient_for (GTK_WINDOW (dialog),
+                                     GTK_WINDOW (gtk_widget_get_toplevel (widget)));
 
-      g_signal_connect_swapped(GTK_FILE_SELECTION(dialog)->cancel_button,
-			       "clicked", G_CALLBACK(gtk_widget_hide), dialog);
-      g_signal_connect(GTK_FILE_SELECTION(dialog)->ok_button,
-		       "clicked", G_CALLBACK(select_cb), data);
-   }
-   gtk_widget_show(browse->file_selection);
+       g_signal_connect (dialog, "delete_event",
+                         G_CALLBACK (gtk_true),
+                         NULL);
+       g_signal_connect (dialog, "response",
+                         G_CALLBACK (select_cb),
+                         browse);
+     }
+
+   gtk_window_present (GTK_WINDOW (browse->file_selection));
 }
 
 static void 

@@ -2572,32 +2572,37 @@ ifscompose_message_dialog (GtkMessageType  type,
 
 /* save an ifs file */
 static void
-ifsfile_save (GtkWidget *widget,
-	      GtkWidget *file_select)
+ifsfile_save_response (GtkFileSelection *file_select,
+                       gint              response_id,
+                       gpointer          data)
 {
-  const gchar *filename;
-  gchar       *str;
-  FILE        *fh;
-
-  filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (file_select));
-
-  str = ifsvals_stringify (&ifsvals, elements);
-
-  fh = fopen (filename, "w");
-  if (fh)
+  if (response_id == GTK_RESPONSE_OK)
     {
+      const gchar *filename;
+      gchar       *str;
+      FILE        *fh;
+
+      filename = gtk_file_selection_get_filename (file_select);
+
+      str = ifsvals_stringify (&ifsvals, elements);
+
+      fh = fopen (filename, "w");
+      if (! fh)
+        {
+          gchar *message =
+            g_strdup_printf (_("Could not open '%s' for writing: %s"),
+                             filename, g_strerror (errno));
+          ifscompose_message_dialog (GTK_MESSAGE_ERROR, GTK_WINDOW (file_select),
+                                     "Save failed", message);
+          g_free (message);
+          return;
+        }
+
       fputs (str, fh);
       fclose (fh);
-      gtk_widget_hide (file_select);
     }
-  else
-    {
-      gchar *message = g_strdup_printf (_("Could not open '%s' for writing: %s"),
-                                        filename, g_strerror (errno));
-      ifscompose_message_dialog (GTK_MESSAGE_ERROR, GTK_WINDOW (file_select),
-				 "Save failed", message);
-      g_free (message);
-    }
+
+  gtk_widget_destroy (GTK_WIDGET (file_select));
 }
 
 /* replace ifsvals and elements with specified new values
@@ -2648,55 +2653,59 @@ ifsfile_replace_ifsvals (IfsComposeVals *new_ifsvals,
 
 /* load an ifs file */
 static void
-ifsfile_load (GtkWidget *widget,
-	      GtkWidget *file_select)
+ifsfile_load_response (GtkFileSelection *file_select,
+                       gint              response_id,
+                       gpointer          data)
 {
-  const gchar     *filename;
-  gchar           *buffer;
-  AffElement     **new_elements;
-  IfsComposeVals   new_ifsvals;
-  GError          *error = NULL;
-
-  filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (file_select));
-
-  if (g_file_get_contents (filename, &buffer, NULL, &error))
+  if (response_id == GTK_RESPONSE_OK)
     {
-      if (ifsvals_parse_string (buffer, &new_ifsvals, &new_elements))
-	{
-	  guint i;
+      const gchar     *filename;
+      gchar           *buffer;
+      AffElement     **new_elements;
+      IfsComposeVals   new_ifsvals;
+      GError          *error = NULL;
+      guint            i;
 
-	  undo_begin ();
-	  for (i = 0; i < ifsvals.num_elements; i++)
-	    undo_update (i);
+      filename = gtk_file_selection_get_filename (file_select);
 
-	  ifsfile_replace_ifsvals (&new_ifsvals, new_elements);
+      if (! g_file_get_contents (filename, &buffer, NULL, &error))
+        {
+          ifscompose_message_dialog (GTK_MESSAGE_ERROR,
+                                     GTK_WINDOW (file_select),
+                                     _("Open failed"), error->message);
+          g_error_free (error);
+          return;
+        }
 
-	  if (ifsD->auto_preview)
-	    ifs_compose_preview ();
+      if (! ifsvals_parse_string (buffer, &new_ifsvals, &new_elements))
+        {
+          gchar *message = g_strdup_printf (_("File '%s' doesn't seem to be "
+                                              "an IFS Compose file."),
+                                            filename);
+          ifscompose_message_dialog (GTK_MESSAGE_ERROR,
+                                     GTK_WINDOW (file_select),
+                                     _("Open failed"), message);
+          g_free (message);
+          g_free (buffer);
 
-	  gtk_widget_hide (file_select);
-	  design_area_redraw ();
-	}
-      else
-	{
-	  gchar *message = g_strdup_printf (_("File '%s' doesn't seem to be "
-					      "an IFS Compose file."),
-					    filename);
-	  ifscompose_message_dialog (GTK_MESSAGE_ERROR,
-				     GTK_WINDOW (file_select),
-				     _("Load failed"), message);
-	  g_free (message);
-	}
+          return;
+        }
 
       g_free (buffer);
+
+      undo_begin ();
+      for (i = 0; i < ifsvals.num_elements; i++)
+        undo_update (i);
+
+      ifsfile_replace_ifsvals (&new_ifsvals, new_elements);
+
+      if (ifsD->auto_preview)
+        ifs_compose_preview ();
+
+      design_area_redraw ();
     }
-  else
-    {
-      ifscompose_message_dialog (GTK_MESSAGE_ERROR,
-				 GTK_WINDOW (file_select),
-				 _("Load failed"), error->message);
-      g_error_free (error);
-    }
+
+  gtk_widget_destroy (GTK_WIDGET (file_select));
 }
 
 static void
@@ -2704,7 +2713,7 @@ ifs_compose_save (GtkWidget *parent)
 {
   static GtkWidget *file_select = NULL;
 
-  if (!file_select)
+  if (! file_select)
     {
       file_select = gtk_file_selection_new (_("Save as IFS file"));
 
@@ -2714,16 +2723,15 @@ ifs_compose_save (GtkWidget *parent)
       gimp_help_connect (file_select, gimp_standard_help_func,
 			 "filters/ifscompose.html", NULL);
 
-      g_signal_connect (GTK_FILE_SELECTION (file_select)->ok_button, "clicked",
-			G_CALLBACK (ifsfile_save),
-			file_select);
-      g_signal_connect_swapped (GTK_FILE_SELECTION (file_select)->cancel_button,
-				"clicked",
-				G_CALLBACK (gtk_widget_hide),
-				file_select);
+      g_signal_connect (file_select, "destroy",
+			G_CALLBACK (gtk_widget_destroyed),
+			&file_select);
+      g_signal_connect (file_select, "response",
+			G_CALLBACK (ifsfile_save_response),
+			NULL);
     }
 
-   gtk_window_present (GTK_WINDOW (file_select));
+  gtk_window_present (GTK_WINDOW (file_select));
 }
 
 static void
@@ -2731,9 +2739,9 @@ ifs_compose_load (GtkWidget *parent)
 {
   static GtkWidget *file_select = NULL;
 
-  if (!file_select)
+  if (! file_select)
     {
-      file_select = gtk_file_selection_new (_("Load IFS file"));
+      file_select = gtk_file_selection_new (_("Open IFS file"));
 
       gtk_window_set_transient_for (GTK_WINDOW (file_select),
                                     GTK_WINDOW (parent));
@@ -2741,13 +2749,12 @@ ifs_compose_load (GtkWidget *parent)
       gimp_help_connect (file_select, gimp_standard_help_func,
 			 "filters/ifscompose.html", NULL);
 
-      g_signal_connect (GTK_FILE_SELECTION (file_select)->ok_button, "clicked",
-			G_CALLBACK (ifsfile_load),
-			file_select);
-      g_signal_connect_swapped (GTK_FILE_SELECTION (file_select)->cancel_button,
-				"clicked",
-				G_CALLBACK (gtk_widget_hide),
-				file_select);
+      g_signal_connect (file_select, "destroy",
+			G_CALLBACK (gtk_widget_destroyed),
+			&file_select);
+      g_signal_connect (file_select, "response",
+			G_CALLBACK (ifsfile_load_response),
+			NULL);
     }
 
   gtk_window_present (GTK_WINDOW (file_select));

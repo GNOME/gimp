@@ -158,40 +158,45 @@ void dummybrushdmenuselect(GtkWidget *w, gpointer data)
   updatebrushprev(NULL);
 }
 
-static void destroy_window (GtkWidget *widget, GtkWidget **window)
-{
-  *window = NULL;
-}
-
 static void brushlistrefresh(void)
 {
   gtk_list_store_clear (brushstore);
   readdirintolist("Brushes", brushlist, NULL);
 }
 
-void savebrush_ok(GtkWidget *w, GtkFileSelection *fs, gpointer data)
+void
+savebrush_response (GtkFileSelection *fs,
+                    gint              response_id,
+                    gpointer          data)
 {
-  const gchar *fn;
-  fn = gtk_file_selection_get_filename (GTK_FILE_SELECTION(fs));
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      const gchar *fn;
 
-  saveppm(&brushppm, fn);
+      fn = gtk_file_selection_get_filename (fs);
 
-  gtk_widget_destroy(GTK_WIDGET(fs));
-  brushlistrefresh();
+      saveppm (&brushppm, fn);
+      brushlistrefresh ();
+    }
+
+  gtk_widget_destroy (GTK_WIDGET (fs));
 }
 
-void savebrush(GtkWidget *wg, gpointer data)
+void
+savebrush (GtkWidget *wg,
+           gpointer   data)
 {
-  static GtkWidget *window = NULL;
-  GList *thispath = parsepath();
-  char path[200];
+  static GtkWidget *window   = NULL;
+  GList            *thispath = parsepath ();
+  gchar             path[200];
 
-  if(!brushppm.col) {
-    g_message( _("Can only save drawables!"));
-    return;
-  }
+  if(! brushppm.col)
+    {
+      g_message( _("Can only save drawables!"));
+      return;
+    }
 
-  sprintf(path, "%s/Brushes/", (char *)thispath->data);
+  sprintf (path, "%s/Brushes/", (char *)thispath->data);
 
   window = gtk_file_selection_new (_("Save Brush"));
 
@@ -202,18 +207,13 @@ void savebrush(GtkWidget *wg, gpointer data)
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (window), path);
 
   g_signal_connect (window, "destroy",
-                    G_CALLBACK (destroy_window), &window);
+                    G_CALLBACK (gtk_widget_destroyed),
+                    &window);
+  g_signal_connect (window, "response",
+                    G_CALLBACK (savebrush_response),
+                    NULL);
 
-  g_signal_connect (GTK_FILE_SELECTION (window)->ok_button, "clicked",
-                    G_CALLBACK (savebrush_ok), window);
-
-  g_signal_connect_swapped (GTK_FILE_SELECTION (window)->cancel_button,
-                            "clicked",
-                            G_CALLBACK (gtk_widget_destroy),
-			    window);
-  gtk_widget_show(window);
-
-  return;
+  gtk_widget_show (window);
 }
 
 static gboolean validdrawable(gint32 imageid, gint32 drawableid, gpointer data)

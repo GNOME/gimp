@@ -2052,16 +2052,21 @@ loadit (const gchar * fn)
 }
 
 static void
-loadpreset_ok (GtkWidget        *widget,
-               GtkFileSelection *fs)
+loadpreset_response (GtkFileSelection *fs,
+                     gint              response_id,
+                     gpointer          data)
 {
-  const gchar *fn = gtk_file_selection_get_filename (GTK_FILE_SELECTION (fs));
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      const gchar *fn = gtk_file_selection_get_filename (fs);
+
+      gtk_list_store_clear (GTK_LIST_STORE (gtk_tree_view_get_model (texturelist)));
+      loadit (fn);
+      rebuildlist ();
+      restartrender ();
+    }
 
   gtk_widget_hide (GTK_WIDGET (fs));
-  gtk_list_store_clear (GTK_LIST_STORE (gtk_tree_view_get_model (texturelist)));
-  loadit (fn);
-  rebuildlist ();
-  restartrender ();
 }
 
 static void
@@ -2115,12 +2120,18 @@ saveit (const gchar *fn)
 }
 
 static void
-savepreset_ok (GtkWidget        *widget,
-               GtkFileSelection *fs)
+savepreset_response (GtkFileSelection *fs,
+                     gint              response_id,
+                     gpointer          data)
 {
-  const char *fn = gtk_file_selection_get_filename (GTK_FILE_SELECTION (fs));
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      const char *fn = gtk_file_selection_get_filename (fs);
+
+      saveit (fn);
+    }
+
   gtk_widget_hide (GTK_WIDGET (fs));
-  saveit (fn);
 }
 
 static void
@@ -2143,8 +2154,8 @@ fileselect (gint       action,
 {
   static GtkWidget *windows[2] = { NULL, NULL };
 
-  gchar *titles[]  = { N_("Open File"), N_("Save File") };
-  void *handlers[] = { loadpreset_ok,   savepreset_ok   };
+  gchar *titles[]   = { N_("Open File"), N_("Save File") };
+  void  *handlers[] = { loadpreset_response,   savepreset_response };
 
   if (!windows[action])
     {
@@ -2153,23 +2164,21 @@ fileselect (gint       action,
       gtk_window_set_transient_for (GTK_WINDOW (windows[action]),
                                     GTK_WINDOW (parent));
 
-      g_signal_connect (windows[action], "destroy",
-			G_CALLBACK (gtk_widget_destroy), &windows[action]);
-      g_signal_connect (windows[action], "delete_event",
-			G_CALLBACK (gtk_widget_hide), &windows[action]);
-
-      g_signal_connect (GTK_FILE_SELECTION (windows[action])->ok_button,
-			"clicked",
-			G_CALLBACK (handlers[action]), windows[action]);
-      g_signal_connect_swapped (GTK_FILE_SELECTION (windows[action])->
-				cancel_button, "clicked",
-				G_CALLBACK (gtk_widget_hide),
-				windows[action]);
-
       gimp_help_connect (windows[action], gimp_standard_help_func,
 			 "filters/spheredesigner.html", NULL);
+
+      g_signal_connect (windows[action], "destroy",
+			G_CALLBACK (gtk_widget_destroyed),
+                        &windows[action]);
+      g_signal_connect (windows[action], "delete_event",
+			G_CALLBACK (gtk_true),
+                        NULL);
+      g_signal_connect (windows[action], "response",
+			G_CALLBACK (handlers[action]),
+                        NULL);
     }
-  gtk_widget_show (windows[action]);
+
+  gtk_window_present (GTK_WINDOW (windows[action]));
 }
 
 static void
