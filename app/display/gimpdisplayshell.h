@@ -99,6 +99,7 @@ struct _GimpDisplayShell
   GtkAdjustment    *vsbdata;
 
   GtkWidget        *canvas;            /*  GimpCanvas widget                  */
+  GdkGC            *grid_gc;           /*  GC for grid drawing                */
 
   GtkWidget        *hsb;               /*  scroll bars                        */
   GtkWidget        *vsb;

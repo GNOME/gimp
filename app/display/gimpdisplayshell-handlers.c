@@ -266,6 +266,12 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
       shell->icon_idle_id = 0;
     }
 
+  if (shell->grid_gc)
+    {
+      g_object_unref (shell->grid_gc);
+      shell->grid_gc = NULL;
+    }
+
   g_signal_handlers_disconnect_by_func (gimage->gimp->config,
                                         gimp_display_shell_ants_speed_notify_handler,
                                         shell);
@@ -361,6 +367,12 @@ gimp_display_shell_grid_notify_handler (GimpGrid         *grid,
                                         GParamSpec       *pspec,
                                         GimpDisplayShell *shell)
 {
+  if (shell->grid_gc)
+    {
+      g_object_unref (shell->grid_gc);
+      shell->grid_gc = NULL;
+    }
+
   gimp_display_shell_expose_full (shell);
 
   /* update item factory */

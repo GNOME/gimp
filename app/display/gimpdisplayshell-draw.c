@@ -44,8 +44,8 @@
 
 /*  local function prototypes  */
 
-static GdkGC * gimp_display_shell_grid_gc_new (GtkWidget *widget,
-                                               GimpGrid  *grid);
+static GdkGC * gimp_display_shell_get_grid_gc (GimpDisplayShell *shell,
+                                               GimpGrid         *grid);
 
 
 /*  public functions  */
@@ -132,10 +132,9 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell)
     {
       GimpGrid   *grid;
       GimpCanvas *canvas;
-      GdkGC      *gc;
+      gdouble     x, y;
       gint        x1, x2;
       gint        y1, y2;
-      gint        x, y;
       gint        x_real, y_real;
       gint        width, height;
       const gint  length = 2;
@@ -156,9 +155,8 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell)
 
       canvas = GIMP_CANVAS (shell->canvas);
 
-      gc = gimp_display_shell_grid_gc_new (shell->canvas, grid);
-      gimp_canvas_set_custom_gc (canvas, gc);
-      g_object_unref (gc);
+      gimp_canvas_set_custom_gc (canvas,
+                                 gimp_display_shell_get_grid_gc (shell, grid));
 
       switch (grid->style)
         {
@@ -386,12 +384,14 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
 /*  private functions  */
 
 static GdkGC *
-gimp_display_shell_grid_gc_new (GtkWidget *widget,
-                                GimpGrid  *grid)
+gimp_display_shell_get_grid_gc (GimpDisplayShell *shell,
+                                GimpGrid         *grid)
 {
-  GdkGC       *gc;
   GdkGCValues  values;
   GdkColor     fg, bg;
+
+  if (shell->grid_gc)
+    return shell->grid_gc;
 
   switch (grid->style)
     {
@@ -412,14 +412,15 @@ gimp_display_shell_grid_gc_new (GtkWidget *widget,
 
   values.join_style = GDK_JOIN_MITER;
 
-  gc = gdk_gc_new_with_values (widget->window,
-                               &values, GDK_GC_LINE_STYLE | GDK_GC_JOIN_STYLE);
+  shell->grid_gc = gdk_gc_new_with_values (shell->canvas->window,
+                                           &values, (GDK_GC_LINE_STYLE |
+                                                     GDK_GC_JOIN_STYLE));
 
   gimp_rgb_get_gdk_color (&grid->fgcolor, &fg);
   gimp_rgb_get_gdk_color (&grid->bgcolor, &bg);
 
-  gdk_gc_set_rgb_fg_color (gc, &fg);
-  gdk_gc_set_rgb_bg_color (gc, &bg);
+  gdk_gc_set_rgb_fg_color (shell->grid_gc, &fg);
+  gdk_gc_set_rgb_bg_color (shell->grid_gc, &bg);
 
-  return gc;
+  return shell->grid_gc;
 }

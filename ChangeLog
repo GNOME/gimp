@@ -1,5 +1,20 @@
 2004-04-04  Sven Neumann  <sven@gimp.org>
 
+	Cache the GC for drawing the grid as suggested in bug #138081:
+
+	* app/display/gimpdisplayshell.[ch]: added a grid_gc member to
+	GimpDisplayShell.
+
+	* app/display/gimpdisplayshell-handlers.c
+	(gimp_display_shell_grid_notify_handler)
+	(gimp_display_shell_disconnect): invalidate the grid GC.
+
+	* app/display/gimpdisplayshell-draw.c (gimp_display_shell_draw_grid):
+	use the cached grid_gc. Also applied the fix that Pedro Gimeno did
+	for bug #138606.
+
+2004-04-04  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpundo.c (gimp_undo_type_to_name): added a missing
 	call to gettext(). Fixes bug #139000.
 

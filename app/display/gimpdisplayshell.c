@@ -232,6 +232,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->vsbdata               = NULL;
 
   shell->canvas                = NULL;
+  shell->grid_gc               = NULL;
 
   shell->hsb                   = NULL;
   shell->vsb                   = NULL;
