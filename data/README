@@ -1,0 +1,24 @@
+
+This is the archive of data files for the Gimp.
+
+Contains the latest brushes, gradients, palettes and patterns
+by various authors around the internet.
+
+Special thanks to Adrian Likins and #gimp on GimpNet for 
+helping me get off my butt and put this stuff together.
+GimpNet is a great place to chat about the Gimp, learn new
+tricks, etc.  irc.mint.net and irc.canweb.net on port 6666
+
+-- Matt
+matt@blitzen.canberra.edu.au
+
+==========================================================
+
+As of sometime between .11 and .12, gimp-data was split into
+gimp-data for essential stuff, and gimp-extras for cool stuff.
+
+
+Adrian Likins
+adrian@gimp.org
+9/22/97
+

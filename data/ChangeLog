@@ -1,0 +1,35 @@
+Mon Sep 22 17:34:53 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* Made 0.99.11 release.
+
+Tue Sep 23 20:25:49 EDT 1997 Adrian Likins <adrian@gimp.org>
+
+	* Split gimp-data into gimp-data and gimp-extra, which gimp-data
+	  being the essentials adn gimp-extras being all the cool stuff.
+
+Wed Oct 22 18:12:52 CDT 1997 Adrian Likins <adrian@gimp.org>
+
+	* Move a few patterns needed for scripts from extras to min
+
+Thu Nov  6 10:16:28 EST 1997  Adrian Likins <adrian@gimp.org>
+
+	* made data-* versionless	
+
+Tue Dec 16 14:57:34 EST 1997 Adrian Likins <adrian@gimp.org>
+
+	* added some gradients from Marcelo Malheiros 
+
+	* added a few brushes from Daniel Dunbar
+	
+Wed Jan 14 15:01:09 EST 1998 Adrian Likins <adrian@gimp.org>
+
+	* added a few nice brushes from Tuomas Kuosmanen
+
+	* new verison of paper.pat that actually tiles
+
+
+Sat Feb 28 22:41:01 EST 1998 Adrian Likins <adrian@gimp.org>
+
+	* added some palettes
+
+

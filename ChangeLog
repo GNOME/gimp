@@ -1,3 +1,8 @@
+Sat Feb 28 23:38:30 EST 1998 Adrian Likins <adrian@gimp.org>
+
+	* at yosh's suggestion, merged gimp-data-min
+	  back into the main gimp tree under gimp/data
+
 Sat Feb 28 16:57:49 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* Makefile.am: don't do docs generation by default
