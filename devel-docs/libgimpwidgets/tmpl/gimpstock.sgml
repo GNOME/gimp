@@ -309,6 +309,16 @@ the ones in dialog size).
 
 
 
+<!-- ##### MACRO GIMP_STOCK_LAYER_MASK ##### -->
+<para>
+<inlinegraphic fileref="stock-layer-mask-48.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-layer-mask-32.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-layer-mask-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-layer-mask-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_CHANNEL ##### -->
 <para>
 <inlinegraphic fileref="stock-channel-48.png" format="png"></inlinegraphic>
@@ -355,6 +365,16 @@ the ones in dialog size).
 <inlinegraphic fileref="stock-channel-gray-32.png" format="png"></inlinegraphic>
 <inlinegraphic fileref="stock-channel-gray-24.png" format="png"></inlinegraphic>
 <inlinegraphic fileref="stock-channel-gray-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_CHANNEL_INDEXED ##### -->
+<para>
+<inlinegraphic fileref="stock-channel-indexed-48.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-channel-indexed-32.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-channel-indexed-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-channel-indexed-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -518,6 +538,13 @@ the ones in dialog size).
 <!-- ##### MACRO GIMP_STOCK_SELECTION_SHRINK ##### -->
 <para>
 <inlinegraphic fileref="stock-selection-shrink-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_SELECTION_BORDER ##### -->
+<para>
+<inlinegraphic fileref="stock-selection-border-16.png" format="png"></inlinegraphic>
 </para>
 
 
