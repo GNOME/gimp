@@ -29,8 +29,6 @@
 #include "libgimp/gimpenv.h"
 
 #include "about_dialog.h"
-#include "interface.h"
-
 
 #define ANIMATION_STEPS 16
 #define ANIMATION_SIZE 2

@@ -1,5 +1,8 @@
 1999-05-15  Scott Goehring  <scott@poverty.bloomington.in.us>
 
+	* app/about_dialog.c: Removed unnecessarly #include of
+	interface.h.
+	
 	* app/crop.c (crop_image): Fixed a potential linked list race
 	condition (i.e. accessing freed memory) when cropping deletes a
 	layer.  May fix a bug reported by Sven.
