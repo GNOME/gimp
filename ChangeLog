@@ -1,3 +1,9 @@
+Thu Feb  3 21:45:45 GMT 2000 Andy Thomas <alt@gimp.org>
+
+	* plug-ins/xjt/xjt.c
+
+	Included patch supplied by wolfgang hofer.
+	
 2000-02-03  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimpwidgets.[ch] gimp_coordinates_new():

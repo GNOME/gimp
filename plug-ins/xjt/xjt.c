@@ -863,9 +863,16 @@ p_float_to_str(gdouble  flt_val)
    l_idx = strlen(l_str) -1;
    while(l_idx > 0)
    {
-     if((l_str[l_idx] == '0') || (l_str[l_idx] == '.')) l_str[l_idx] = '\0';
-     else break;
+     if(l_str[l_idx] != '0')
+     {
+       break;
+     }
+     l_str[l_idx] = '\0';
      l_idx--;
+   }
+   if(l_str[l_idx] == '.')
+   {
+     l_str[l_idx] = '\0';
    }
    return(l_str);
 }
