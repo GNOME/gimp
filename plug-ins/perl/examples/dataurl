@@ -11,55 +11,53 @@ use Fcntl;
 
 sub encode_base64 ($;$)
 {
-    my $res = "";
-    my $eol = $_[1];
-    $eol = "\n" unless defined $eol;
-    pos($_[0]) = 0;                          # ensure start at the beginning
-    while ($_[0] =~ /(.{1,45})/gs) {
-        $res .= substr(pack('u', $1), 1);
-        chop($res);
-    }
-    $res =~ tr|` -_|AA-Za-z0-9+/|;               # `# help emacs
-    # fix padding at the end
+    my $res = substr pack ("u", $_[0]), 1;
+    $res =~ s/\n.//mg;
+    $res =~ tr|` -_|AA-Za-z0-9+/|; #` # syntax-hiliting in emacs kanns nicht
     my $padding = (3 - length($_[0]) % 3) % 3;
     $res =~ s/.{$padding}$/'=' x $padding/e if $padding;
-    # break encoded string into lines of no more than 76 characters each
-    if (length $eol) {
-        $res =~ s/(.{1,76})/$1$eol/g;
-    }
     $res;
 }
 
-
-register "file_dataurl",
-         "saves the image as many small tiles using data:-urls",
-         "Uses data:-urls to save a html table with embedded image data",
+register "file_dataurl_save",
+         __"saves the image as many small tiles using data:-urls",
+         "=pod",
          "Marc Lehmann",
          "Marc Lehmann <pcg\@goof.com>",
          "1999-11-20",
          "<Save>/DATAURL",
          "*",
          [
-          [PF_SPINNER,	"tile_x",	"tile width",	32, [0, 128, 1, 1]],
-          [PF_SPINNER,	"tile_y",	"tile height",	32, [0, 128, 1, 1]],
+          [PF_SPINNER,	"tile_x",	"tile width",	32, [0, 8192, 1, 10]],
+          [PF_SPINNER,	"tile_y",	"tile height",	32, [0, 8192, 1, 10]],
+          [PF_RADIO,	"filetype",	"underlying file type", 0,
+                        [GIF => 0, JFIF => 1, PNG => 2]],
          ],
          sub {
-   my($img,$drawable,$filename,$filename2,$tx,$ty) = @_;
+   my($img,$drawable,$filename,$filename2,$tx,$ty,$type) = @_;
    my($new_img,$new_drawable);
    my $max;
    my $export = Gimp::UI::export_image ($new_img=$img, $new_drawable=$drawable, "DATAURL",
-                                        CAN_HANDLE_INDEXED|CAN_HANDLE_ALPHA);
-   die "export failed" if $export == EXPORT_CANCEL;
+                                        $type==0 ? CAN_HANDLE_INDEXED|CAN_HANDLE_ALPHA
+                                      : $type==1 ? CAN_HANDLE_RGB|CAN_HANDLE_GRAY
+                                      : $type==2 ? CAN_HANDLE_RGB|CAN_HANDLE_GRAY|CAN_HANDLE_INDEXED
+                                      :            0 );
+   die __"export failed" if $export == EXPORT_CANCEL;
 
    my ($w,$h) = ($new_drawable->width, $new_drawable->height);
 
-   my $tmp = Gimp->temp_name(".gif");
+   my $tmp = Gimp->temp_name(".img~");
 
-   sysopen FILE,$filename,O_CREAT|O_TRUNC|O_WRONLY or die "Unable to open '$filename' for writing: $!\n";
+   sysopen FILE,$filename,O_CREAT|O_TRUNC|O_WRONLY or die __"Unable to open '$filename' for writing: $!\n";
 
    print FILE "<html><body>\n";
 
-   init Progress "Saving '$filename' as DATAURL...";
+   init Progress __"Saving '$filename' as DATAURL...";
+
+   my $media = $type==0 ? "gif"
+             : $type==1 ? "jpeg"
+             : $type==2 ? "png"
+             :            "";
 
    print FILE "<table width=$w cellspacing=0 cellpadding=0 border=0>";
    for(my $y=0; $y<$h; $y+=$ty) {
@@ -70,19 +68,19 @@ register "file_dataurl",
 
          my $img = $new_img->channel_ops_duplicate;
          $img->crop($wx,$wy,$x,$y);
-         ($img->get_layers)[0]->file_gif_save(($tmp)x2, 0, 0, 0, 0);
-         #($img->get_layers)[0]->file_png_save(($tmp)x2, 0, 1, 9);
-         #($img->get_layers)[0]->file_jpeg_save(($tmp)x2, 0.5, 0, 1, 0, "", 0, 1, 0, 0);
+         ($img->get_layers)[0]->file_gif_save  (($tmp)x2, 0, 0, 0, 0)                   if $type==0;
+         ($img->get_layers)[0]->file_jpeg_save (($tmp)x2, 0.7, 0, 1, 0, "", 0, 1, 0, 0) if $type==1;
+         ($img->get_layers)[0]->file_png_save  (($tmp)x2, 0, 1, 9)                      if $type==2;
          $img->delete;
 
          my $data = do {
             local(*TEMP,$/);
-            open TEMP, "<$tmp" or die "Unable to read temporary image tile $tmp: $!";
+            open TEMP, "<$tmp" or die __"Unable to read temporary image tile $tmp: $!";
             <TEMP>;
          };
          unlink $tmp;
 
-         $url = "data:image/gif;base64,".(encode_base64 $data, "");
+         $url = "data:image/$media;base64,".(encode_base64 $data);
          $max = length($url) if length($url) > $max;
 
          print FILE "<td><img src=\"", $url, "\">";
@@ -95,7 +93,7 @@ register "file_dataurl",
    print FILE "</html>\n";
    close FILE;
 
-   warn "url size is too large ($max > 1024)\n" if $max > 1024;
+   warn __"url size is too large ($max > 1024)\n" if $max > 1024;
 
    $new_img->delete if $export == EXPORT_EXPORT;
    ();
@@ -106,4 +104,19 @@ Gimp::on_query {
 };
 
 exit main;
+
+=head1 DATAURL FILE FORMAT
+
+After reading rfc2397, which describes the C<data:> url scheme, I got the
+idea of embedding a normal image into a html document, without resorting
+to external files.
+
+This is acomplished by embedding small tiles of the image directly
+into data:-urls. Since attribute values are by default limited to 1024
+bytes this limits the size of a tile to approximately 34x34 pixels (gif
+compression).
+
+However, since the only browser I know of that supports this (rfc2397 is only a
+proposed standard), you might want to use much larger tile sizes (upto the image
+size), since netscape obviously does not have problems with it large urls.
 

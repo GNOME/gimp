@@ -1953,6 +1953,18 @@ gimp_tile_drawable(tile)
 	RETVAL
 
 SV *
+gimp_pixel_rgn_get_row2(pr, x, y, width)
+	GPixelRgn *	pr
+	int	x
+	int	y
+	int	width
+	CODE:
+        RETVAL = newSVn (width * pr->bpp);
+	gimp_pixel_rgn_get_row (pr, SvPV_nolen(RETVAL), x, y, width);
+	OUTPUT:
+	RETVAL
+
+SV *
 gimp_pixel_rgn_get_rect2(pr, x, y, width, height)
 	GPixelRgn *	pr
 	int	x

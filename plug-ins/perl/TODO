@@ -33,6 +33,8 @@ olof
 
 bugs
 
+  * rate-limiting for gimp_message BEFORE 1.2
+  * on-query => remove gimp::fu parasite(?)
   * bricks requires disable for pattern(?)
   * better default argument-handlign via a "massage_args" callback from Gimp/UI/interact?
   * update frosty-logo.scm  t-o-p-logo.scm starscape-logo.scm starburst-logo.scm

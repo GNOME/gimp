@@ -1,0 +1,135 @@
+#!/usr/bin/perl
+# pcg@goof.com
+
+use Gimp;
+use Gimp::Fu;
+use Gimp::UI;
+use Fcntl;
+
+# Gimp::set_trace(TRACE_ALL);
+
+my %replace = (
+   "&" => "&amp;",
+   "<" => "&lt;",
+   ">" => "&gt;",
+);
+
+# read some file, make text out of it
+sub read_text {
+   my $fh = shift;
+   local $/;
+   my $data = <$fh>;
+   $data;
+}
+
+register "file_colorhtml_save",
+         __"Saves the image as coloured html text",
+         "=pod",
+         "Marc Lehmann",
+         "Marc Lehmann <pcg\@goof.com>",
+         "1999-11-21",
+         "<Save>/COLORHTML",
+         "*",
+         [
+          [PF_RADIO,	"character_source", "where to take the characters from", 0,
+          		[sourcecode => 0, textfile => 1, filename => 2]],
+          [PF_FILE,	"characters",     "the filename to read or the characters to use", ""],
+          [PF_STRING,   "font_size",      "the html font size (1..7 or -7 .. +7)", 2],
+          [PF_BOOL,	"compatible",     "html-4.0 compliancy?", 1],
+          [PF_BOOL,	"closetag",       "add closing tag?", 1],
+         ],
+         sub {
+   my($img,$drawable,$filename,$filename2,$source,$text,$size,$html40,$closetag) = @_;
+   print " @_\n";
+   my($new_img,$new_drawable);
+   my $max;
+   my $export = Gimp::UI::export_image ($new_img=$img, $new_drawable=$drawable, "COLORHTML",
+                                        CAN_HANDLE_RGB);
+   die __"export failed" if $export == EXPORT_CANCEL;
+
+   my ($w,$h) = ($new_drawable->width, $new_drawable->height);
+   Gimp->tile_cache_ntiles($w / Gimp->tile_width + 1);
+
+   sysopen FILE,$filename,O_CREAT|O_TRUNC|O_WRONLY or die __"Unable to open '$filename' for writing: $!\n";
+
+   my $data;
+   if ($source == 0) {
+      seek DATA, 0, 0;
+      $data = read_text *DATA;
+   } elsif ($source == 1) {
+      local *FILE;
+      open FILE, "<$text" or die "$text: $!\n";
+      $data = read_text *FILE;
+   } elsif ($source == 2) {
+      $data = $text;
+   }
+
+   my @data;
+   $data =~ y/\x21-\x7f//cd;
+   @data = split //, $data;
+   for (@data) {
+      s/([&<>])/$replace{$1}/e;
+   }
+   @data = ("X") x 80 unless @data;
+   my @chars;
+
+   my $region = $new_drawable->pixel_rgn (0, 0, $w, $h, 0, 0);
+
+   init Progress __"Saving '$filename' as COLORHTML...";
+
+   $closetag = $closetag ? "<font>" : "";
+
+   print FILE "<html><body bgcolor=black>\n<font size=\"$size\"><pre>\n";
+   for (my $y = 0; $y < $h; $y++) {
+      my $pel = $region->get_row2 (0, $y, $w);
+      push @chars,@data while @chars < $w;
+      if ($html40) {
+         $pel =~ s{(...)}{
+            "<font color=\"#".unpack("H*",$1)."\">".shift(@chars).$clostag;
+         }ges;
+      } else {
+         $pel =~ s{(...)}{
+            "<font color=".unpack("H*",$1).">".shift(@chars).$closetag;
+         }ges;
+      }
+      
+      print FILE $pel,"\n";
+
+      update Progress $y/$h;
+   }
+   print FILE "</pre>\n</html>\n";
+
+   $new_img->delete if $export == EXPORT_EXPORT;
+   ();
+};
+
+Gimp::on_query {
+   Gimp->register_save_handler("file_colorhtml_save", "colorhtml", "");
+};
+
+exit main;
+
+=head1 COLORHTML FILE FORMAT
+
+This file save filter writes a large regular grid filled with coloured
+characters. The characters can be stored in file and don't have anything to do
+with the image. The colour of each character, though, is taken from the image
+to save.
+
+This creates some kind of mosaic effect with characters.
+
+The pictures should be limited to about 120x120 pixels, since most
+browsers do not view larger images. The aspect ratio depends on the
+fixed-width font the browser is using, and is usually around 10:6 (so you
+should squash your image accordingly).
+
+The FONT tags can be saved either HTML-4.0 compliant (C<font color="#rrggbb">)
+or in a proprietary format most browsers support (C<font color=rrggbb>).
+To save even more space you can leave out the closing tag (C</font>),
+but this will potentially leave thousands of font elements open in the browser,
+and will disturb the current font colour.
+
+=cut
+
+__END__
+

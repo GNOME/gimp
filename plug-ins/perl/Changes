@@ -4,6 +4,7 @@ Revision history for Gimp-Perl extension.
 	- removed sethspin.pl & billboard, they are no longer maintained :(
         - *sigh* removed some debugging code.
         - new save-filter "dataurl" (more a joke, but it does work).
+        - implemented gimp_pixel_rgn_get_row2 (others still unimplemented).
 
 1.15  Fri Nov 19 19:12:16 CET 1999
 	- added italian translations by Daniele Medri (madrid@kjws.com).
