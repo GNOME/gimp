@@ -263,6 +263,7 @@ color_picker_button_press (Tool           *tool,
   if (! color_picker_info)
     {
       GtkWidget *hbox;
+      GimpRGB    color;
 
       color_picker_info = info_dialog_new (_("Color Picker"),
 					   tools_help_func, NULL);
@@ -304,7 +305,9 @@ color_picker_button_press (Tool           *tool,
 
       gtk_widget_reparent (color_picker_info->info_table, hbox);
 
-      color_panel = color_panel_new (0, 0, 0, 0,
+      gimp_rgba_set (&color, 0.0, 0.0, 0.0, 0.0);
+
+      color_panel = color_panel_new (&color,
 				     gimp_drawable_has_alpha (tool->drawable),
 				     48, 64);
       gtk_box_pack_start (GTK_BOX (hbox), color_panel->color_panel_widget,
@@ -491,12 +494,12 @@ pick_color_do (GimpImage    *gimage,
 	       gboolean      update_active,
 	       gint          final)
 {
-  guchar *color;
-  gint offx, offy;
-  gint has_alpha;
-  gint is_indexed;
-  GetColorFunc get_color_func;
-  GtkObject *get_color_obj;
+  guchar       *color;
+  gint          offx, offy;
+  gint          has_alpha;
+  gint          is_indexed;
+  GetColorFunc  get_color_func;
+  GtkObject    *get_color_obj;
 
 
   if (!drawable && !sample_merged) 
@@ -653,10 +656,11 @@ color_picker_info_update (Tool     *tool,
     }
   else
     {
-      guchar r = 0;
-      guchar g = 0;
-      guchar b = 0;
-      guchar a = 0;
+      GimpRGB  color;
+      guchar   r = 0;
+      guchar   g = 0;
+      guchar   b = 0;
+      guchar   a = 0;
 
       if (! GTK_WIDGET_IS_SENSITIVE (color_panel->color_panel_widget))
 	gtk_widget_set_sensitive (color_panel->color_panel_widget, TRUE);
@@ -724,7 +728,9 @@ color_picker_info_update (Tool     *tool,
 	  break;
 	}
 
-      color_panel_set_color (color_panel, r, g, b, a);
+      gimp_rgba_set_uchar (&color, r, g, b, a);
+
+      color_panel_set_color (color_panel, &color);
     }
 
   info_dialog_update (color_picker_info);

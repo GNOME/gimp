@@ -1031,10 +1031,12 @@ gimp_image_get_foreground (const GimpImage    *gimage,
 			   const GimpDrawable *drawable, 
 			   guchar             *fg)
 {
-  guchar pfg[3];
+  GimpRGB  color;
+  guchar   pfg[3];
 
-  /*  Get the palette color  */
-  gimp_context_get_foreground (NULL, &pfg[0], &pfg[1], &pfg[2]);
+  gimp_context_get_foreground (NULL, &color);
+
+  gimp_rgb_get_uchar (&color, &pfg[0], &pfg[1], &pfg[2]);
 
   gimp_image_transform_color (gimage, drawable, pfg, fg, RGB);
 }
@@ -1044,10 +1046,13 @@ gimp_image_get_background (const GimpImage    *gimage,
 			   const GimpDrawable *drawable, 
 			   guchar             *bg)
 {
-  guchar pbg[3];
+  GimpRGB  color;
+  guchar   pbg[3];
 
   /*  Get the palette color  */
-  gimp_context_get_background (NULL, &pbg[0], &pbg[1], &pbg[2]);
+  gimp_context_get_background (NULL, &color);
+
+  gimp_rgb_get_uchar (&color, &pbg[0], &pbg[1], &pbg[2]);
 
   gimp_image_transform_color (gimage, drawable, pbg, bg, RGB);
 }

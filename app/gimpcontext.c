@@ -76,17 +76,13 @@ static void gimp_context_copy_tool           (GimpContext      *src,
 
 /*  foreground  */
 static void gimp_context_real_set_foreground (GimpContext      *context,
-					      gint              r,
-					      gint              g,
-					      gint              b);
+					      GimpRGB          *color);
 static void gimp_context_copy_foreground     (GimpContext      *src,
 					      GimpContext      *dest);
 
 /*  background  */
 static void gimp_context_real_set_background (GimpContext      *context,
-					      gint              r,
-					      gint              g,
-					      gint              b);
+					      GimpRGB          *color);
 static void gimp_context_copy_background     (GimpContext      *src,
 					      GimpContext      *dest);
 
@@ -253,16 +249,10 @@ gimp_context_set_arg (GtkObject *object,
       gimp_context_set_tool (context, GTK_VALUE_INT (*arg));
       break;
     case ARG_FOREGROUND:
-      {
-	guchar *col = GTK_VALUE_POINTER (*arg);
-	gimp_context_set_foreground (context, col[0], col[1], col[2]);
-      }
+      gimp_context_set_foreground (context, GTK_VALUE_POINTER (*arg));
       break;
     case ARG_BACKGROUND:
-      {
-	guchar *col = GTK_VALUE_POINTER (*arg);
-	gimp_context_set_background (context, col[0], col[1], col[2]);
-      }
+      gimp_context_set_background (context, GTK_VALUE_POINTER (*arg));
       break;
     case ARG_OPACITY:
       gimp_context_set_opacity (context, GTK_VALUE_DOUBLE (*arg));
@@ -305,16 +295,10 @@ gimp_context_get_arg (GtkObject *object,
       GTK_VALUE_INT (*arg) = gimp_context_get_tool (context);
       break;
     case ARG_FOREGROUND:
-      {
-	guchar *col = GTK_VALUE_POINTER (*arg);
-	gimp_context_get_foreground (context, &col[0], &col[1], &col[2]);
-      }
+      gimp_context_get_foreground (context, GTK_VALUE_POINTER (*arg));
       break;
     case ARG_BACKGROUND:
-      {
-	guchar *col = GTK_VALUE_POINTER (*arg);
-	gimp_context_get_background (context, &col[0], &col[1], &col[2]);
-      }
+      gimp_context_get_background (context, GTK_VALUE_POINTER (*arg));
       break;
     case ARG_OPACITY:
       GTK_VALUE_DOUBLE (*arg) = gimp_context_get_opacity (context);
@@ -450,11 +434,9 @@ gimp_context_class_init (GimpContextClass *klass)
 		    object_class->type,
 		    GTK_SIGNAL_OFFSET (GimpContextClass,
 				       foreground_changed),
-		    gimp_marshal_NONE__INT_INT_INT,
-		    GTK_TYPE_NONE, 3,
-		    GTK_TYPE_INT,
-		    GTK_TYPE_INT,
-		    GTK_TYPE_INT);
+		    gtk_marshal_NONE__POINTER,
+		    GTK_TYPE_NONE, 1,
+		    GTK_TYPE_POINTER);
 
   gimp_context_signals[BACKGROUND_CHANGED] =
     gtk_signal_new (gimp_context_signal_names[BACKGROUND_CHANGED],
@@ -462,11 +444,9 @@ gimp_context_class_init (GimpContextClass *klass)
 		    object_class->type,
 		    GTK_SIGNAL_OFFSET (GimpContextClass,
 				       background_changed),
-		    gimp_marshal_NONE__INT_INT_INT,
-		    GTK_TYPE_NONE, 3,
-		    GTK_TYPE_INT,
-		    GTK_TYPE_INT,
-		    GTK_TYPE_INT);
+		    gtk_marshal_NONE__POINTER,
+		    GTK_TYPE_NONE, 1,
+		    GTK_TYPE_POINTER);
 
   gimp_context_signals[OPACITY_CHANGED] =
     gtk_signal_new (gimp_context_signal_names[OPACITY_CHANGED],
@@ -549,13 +529,8 @@ gimp_context_init (GimpContext *context)
 
   context->tool = RECT_SELECT;
 
-  context->foreground[0] = 0;
-  context->foreground[1] = 0;
-  context->foreground[2] = 0;
-
-  context->background[0] = 255;
-  context->background[1] = 255;
-  context->background[2] = 255;
+  gimp_rgba_set (&context->foreground, 0.0, 0.0, 0.0, 1.0);
+  gimp_rgba_set (&context->background, 1.0, 1.0, 1.0, 1.0);
 
   context->opacity    = 1.0;
   context->paint_mode = NORMAL_MODE;
@@ -1060,29 +1035,27 @@ gimp_context_copy_tool (GimpContext *src,
 
 void
 gimp_context_get_foreground (GimpContext *context,
-			     guchar      *r,
-			     guchar      *g,
-			     guchar      *b)
+			     GimpRGB     *color)
 {
   context_check_current (context);
   context_return_if_fail (context);
 
-  *r = context->foreground[0];
-  *g = context->foreground[1];
-  *b = context->foreground[2];
+  g_return_if_fail (color != NULL);
+
+  *color = context->foreground;
 }
 
 void
 gimp_context_set_foreground (GimpContext *context,
-			     gint         r,
-			     gint         g,
-			     gint         b)
+			     GimpRGB     *color)
 {
   context_check_current (context);
   context_return_if_fail (context);
   context_find_defined (context, GIMP_CONTEXT_FOREGROUND_MASK);
 
-  gimp_context_real_set_foreground (context, r, g, b);
+  g_return_if_fail (color != NULL);
+
+  gimp_context_real_set_foreground (context, color);
 }
 
 void
@@ -1093,25 +1066,17 @@ gimp_context_foreground_changed (GimpContext *context)
 
   gtk_signal_emit (GTK_OBJECT (context),
 		   gimp_context_signals[FOREGROUND_CHANGED],
-		   context->foreground[0],
-		   context->foreground[1],
-		   context->foreground[2]);
+		   &context->foreground);
 }
 
 static void
 gimp_context_real_set_foreground (GimpContext *context,
-				  gint         r,
-				  gint         g,
-				  gint         b)
+				  GimpRGB     *color)
 {
-  if (context->foreground[0] == r &&
-      context->foreground[1] == g &&
-      context->foreground[2] == b)
+  if (gimp_rgba_distance (&context->foreground, color) < 0.0001)
     return;
 
-  context->foreground[0] = r;
-  context->foreground[1] = g;
-  context->foreground[2] = b;
+  context->foreground = *color;
 
   gimp_context_foreground_changed (context);
 }
@@ -1120,10 +1085,7 @@ static void
 gimp_context_copy_foreground (GimpContext *src,
 			      GimpContext *dest)
 {
-  gimp_context_real_set_foreground (dest,
-				    src->foreground[0],
-				    src->foreground[1],
-				    src->foreground[2]);
+  gimp_context_real_set_foreground (dest, &src->foreground);
 }
 
 /*****************************************************************************/
@@ -1131,29 +1093,27 @@ gimp_context_copy_foreground (GimpContext *src,
 
 void
 gimp_context_get_background (GimpContext *context,
-			     guchar      *r,
-			     guchar      *g,
-			     guchar      *b)
+			     GimpRGB     *color)
 {
   context_check_current (context);
   context_return_if_fail (context);
 
-  *r = context->background[0];
-  *g = context->background[1];
-  *b = context->background[2];
+  g_return_if_fail (color != NULL);
+
+  *color = context->background;
 }
 
 void
 gimp_context_set_background (GimpContext *context,
-			     gint         r,
-			     gint         g,
-			     gint         b)
+			     GimpRGB     *color)
 {
   context_check_current (context);
   context_return_if_fail (context);
   context_find_defined (context, GIMP_CONTEXT_BACKGROUND_MASK);
 
-  gimp_context_real_set_background (context, r, g, b);
+  g_return_if_fail (color != NULL);
+
+  gimp_context_real_set_background (context, color);
 }
 
 void
@@ -1164,25 +1124,17 @@ gimp_context_background_changed (GimpContext *context)
 
   gtk_signal_emit (GTK_OBJECT (context),
 		   gimp_context_signals[BACKGROUND_CHANGED],
-		   context->background[0],
-		   context->background[1],
-		   context->background[2]);
+		   &context->background);
 }
 
 static void
 gimp_context_real_set_background (GimpContext *context,
-				  gint         r,
-				  gint         g,
-				  gint         b)
+				  GimpRGB     *color)
 {
-  if (context->background[0] == r &&
-      context->background[1] == g &&
-      context->background[2] == b)
+  if (gimp_rgba_distance (&context->background, color) < 0.0001)
     return;
 
-  context->background[0] = r;
-  context->background[1] = g;
-  context->background[2] = b;
+  context->background = *color;
 
   gimp_context_background_changed (context);
 }
@@ -1191,10 +1143,7 @@ static void
 gimp_context_copy_background (GimpContext *src,
 			      GimpContext *dest)
 {
-  gimp_context_real_set_background (dest,
-				    src->background[0],
-				    src->background[1],
-				    src->background[2]);
+  gimp_context_real_set_background (dest, &src->background);
 }
 
 /*****************************************************************************/
@@ -1204,6 +1153,8 @@ void
 gimp_context_set_default_colors (GimpContext *context)
 {
   GimpContext *bg_context;
+  GimpRGB      fg;
+  GimpRGB      bg;
 
   bg_context = context;
 
@@ -1212,16 +1163,19 @@ gimp_context_set_default_colors (GimpContext *context)
   context_find_defined (context, GIMP_CONTEXT_FOREGROUND_MASK);
   context_find_defined (bg_context, GIMP_CONTEXT_BACKGROUND_MASK);
 
-  gimp_context_real_set_foreground (context, 0, 0, 0);
-  gimp_context_real_set_background (bg_context, 255, 255, 255);
+  gimp_rgba_set (&fg, 0.0, 0.0, 0.0, 1.0);
+  gimp_rgba_set (&bg, 1.0, 1.0, 1.0, 1.0);
+
+  gimp_context_real_set_foreground (context, &fg);
+  gimp_context_real_set_background (bg_context, &bg);
 }
 
 void
 gimp_context_swap_colors (GimpContext *context)
 {
   GimpContext *bg_context;
-  guchar f_r, f_g, f_b;
-  guchar b_r, b_g, b_b;
+  GimpRGB      fg;
+  GimpRGB      bg;
 
   bg_context = context;
 
@@ -1230,11 +1184,11 @@ gimp_context_swap_colors (GimpContext *context)
   context_find_defined (context, GIMP_CONTEXT_FOREGROUND_MASK);
   context_find_defined (bg_context, GIMP_CONTEXT_BACKGROUND_MASK);
 
-  gimp_context_get_foreground (context, &f_r, &f_g, &f_b);
-  gimp_context_get_background (bg_context, &b_r, &b_g, &b_b);
+  gimp_context_get_foreground (context, &fg);
+  gimp_context_get_background (bg_context, &bg);
 
-  gimp_context_real_set_foreground (context, b_r, b_g, b_b);
-  gimp_context_real_set_background (bg_context, f_r, f_g, f_b);
+  gimp_context_real_set_foreground (context, &bg);
+  gimp_context_real_set_background (bg_context, &fg);
 }
 
 /*****************************************************************************/
@@ -1764,12 +1718,17 @@ gimp_context_update_gradients (gradient_t *gradient)
 {
   g_slist_foreach (context_list, (GFunc) gimp_context_update_gradient, gradient);
 }
+
 void
 gimp_palette_get_foreground (guchar *r,
 			     guchar *g,
 			     guchar *b)
 {
-  gimp_context_get_foreground (NULL, r, g, b);
+  GimpRGB color;
+
+  gimp_context_get_foreground (NULL, &color);
+
+  gimp_rgb_get_uchar (&color, r, g, b);
 }
 
 void
@@ -1777,7 +1736,11 @@ gimp_palette_set_foreground (guchar r,
 			     guchar g,
 			     guchar b)
 {
-  gimp_context_set_foreground (NULL, r, g, b);
+  GimpRGB color;
+
+  gimp_rgba_set_uchar (&color, r, g, b, 255);
+
+  gimp_context_set_foreground (NULL, &color);
 }
 
 void
@@ -1785,7 +1748,11 @@ gimp_palette_get_background (guchar *r,
 			     guchar *g,
 			     guchar *b)
 {
-  gimp_context_get_background (NULL, r, g, b);
+  GimpRGB color;
+
+  gimp_context_get_background (NULL, &color);
+
+  gimp_rgb_get_uchar (&color, r, g, b);
 }
 
 void
@@ -1793,6 +1760,10 @@ gimp_palette_set_background (guchar r,
 			     guchar g,
 			     guchar b)
 {
-  gimp_context_set_background (NULL, r, g, b);
+  GimpRGB color;
+
+  gimp_rgba_set_uchar (&color, r, g, b, 255);
+
+  gimp_context_set_background (NULL, &color);
 }
 

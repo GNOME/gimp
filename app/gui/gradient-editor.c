@@ -1332,13 +1332,13 @@ ed_fetch_foreground (gdouble *fg_r,
 		     gdouble *fg_b,
 		     gdouble *fg_a)
 {
-  guchar r, g, b;
-	
-  gimp_context_get_foreground (gimp_context_get_user (), &r, &g, &b);
- 	
-  *fg_r = (gdouble) r / 255.0;
-  *fg_g = (gdouble) g / 255.0;
-  *fg_b = (gdouble) b / 255.0;
+  GimpRGB color;
+
+  gimp_context_get_foreground (gimp_context_get_user (), &color);
+
+  *fg_r = color.r;
+  *fg_g = color.g;
+  *fg_b = color.b;
   *fg_a = 1.0;                 /* opacity 100 % */
 }
 
@@ -2370,22 +2370,22 @@ preview_set_hint (gint x)
 static void
 preview_set_foreground (gint x)
 {
+  GimpRGB  color;
   gdouble  xpos;
-  gdouble  r, g, b, a;
   gchar   *str;
 
   xpos = control_calc_g_pos (x);
-  gradient_get_color_at (curr_gradient, xpos, &r, &g, &b, &a);
+  gradient_get_color_at (curr_gradient, xpos,
+			 &color.r, &color.g, &color.b, &color.a);
 
-  gimp_context_set_foreground (gimp_context_get_user (),
-			       r * 255.0, g * 255.0, b * 255.0);
+  gimp_context_set_foreground (gimp_context_get_user (), &color);
 
   str = g_strdup_printf (_("Foreground color set to RGB (%d, %d, %d) <-> "
 			   "(%0.3f, %0.3f, %0.3f)"),
-			 (gint) (r * 255.0),
-			 (gint) (g * 255.0),
-			 (gint) (b * 255.0),
-			 r, g, b);
+			 (gint) (color.r * 255.0),
+			 (gint) (color.g * 255.0),
+			 (gint) (color.b * 255.0),
+			 color.r, color.g, color.b);
 
   ed_set_hint (str);
   g_free (str);
@@ -2394,22 +2394,22 @@ preview_set_foreground (gint x)
 static void
 preview_set_background (gint x)
 {
-  gdouble xpos;
-  gdouble r, g, b, a;
+  GimpRGB  color;
+  gdouble  xpos;
   gchar   *str;
 
   xpos = control_calc_g_pos (x);
-  gradient_get_color_at (curr_gradient, xpos, &r, &g, &b, &a);
+  gradient_get_color_at (curr_gradient, xpos,
+			 &color.r, &color.g, &color.b, &color.a);
 
-  gimp_context_set_background (gimp_context_get_user (),
-			       r * 255.0, g * 255.0, b * 255.0);
+  gimp_context_set_background (gimp_context_get_user (), &color);
 
   str = g_strdup_printf (_("Background color to RGB (%d, %d, %d) <-> "
 			   "(%0.3f, %0.3f, %0.3f)"),
-			 (gint) (r * 255.0),
-			 (gint) (g * 255.0),
-			 (gint) (b * 255.0),
-			 r, g, b);
+			 (gint) (color.r * 255.0),
+			 (gint) (color.g * 255.0),
+			 (gint) (color.b * 255.0),
+			 color.r, color.g, color.b);
 
   ed_set_hint (str);
   g_free (str);

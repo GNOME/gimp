@@ -28,26 +28,20 @@ struct _ColorPanel
   GtkWidget *color_panel_widget;
 
   /*  The actual color  */
-  guchar     color [4];
+  GimpRGB    color;
 
   /*  Don't touch this :)  */
   gpointer   private_part;
 };
 
 
-ColorPanel * color_panel_new       (guchar      r,
-				    guchar      g,
-				    guchar      b,
-				    guchar      a,
+ColorPanel * color_panel_new       (GimpRGB    *color,
 				    gboolean    show_alpha,
 				    gint        width,
 				    gint        height);
 
 void         color_panel_set_color (ColorPanel *color_panel,
-				    guchar      r,
-				    guchar      g,
-				    guchar      b,
-				    guchar      a);
+				    GimpRGB    *color);
 
 
 #endif  /*  __COLOR_PANEL_H__  */

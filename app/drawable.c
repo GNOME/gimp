@@ -32,7 +32,8 @@ void
 drawable_fill (GimpDrawable *drawable,
 	       GimpFillType  fill_type)
 {
-  guchar r, g, b, a;
+  GimpRGB color;
+  guchar  r, g, b, a;
 
   g_return_if_fail (drawable != NULL);
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
@@ -42,11 +43,13 @@ drawable_fill (GimpDrawable *drawable,
   switch (fill_type)
     {
     case FOREGROUND_FILL:
-      gimp_context_get_foreground (NULL, &r, &g, &b);
+      gimp_context_get_foreground (NULL, &color);
+      gimp_rgb_get_uchar (&color, &r, &g, &b);
       break;
 
     case BACKGROUND_FILL:
-      gimp_context_get_background (NULL, &r, &g, &b);
+      gimp_context_get_background (NULL, &color);
+      gimp_rgb_get_uchar (&color, &r, &g, &b);
       break;
 
     case WHITE_FILL:

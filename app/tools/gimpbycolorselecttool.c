@@ -99,10 +99,7 @@ static guint n_by_color_select_targets = (sizeof (by_color_select_targets) /
 
 
 static void   by_color_select_color_drop      (GtkWidget      *widget,
-					       guchar          r,
-					       guchar          g,
-					       guchar          b,
-					       guchar          a,
+					       GimpRGB        *color,
 					       gpointer        data);
 
 /*  by_color select action functions  */
@@ -1233,11 +1230,8 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
 
 static void
 by_color_select_color_drop (GtkWidget *widget,
-                            guchar      r,
-                            guchar      g,
-                            guchar      b,
-			    guchar      a,
-                            gpointer    data)
+                            GimpRGB   *color,
+                            gpointer   data)
 
 {
   GimpDrawable  *drawable;
@@ -1246,10 +1240,8 @@ by_color_select_color_drop (GtkWidget *widget,
 
   bcd = (ByColorDialog*) data;
   drawable = gimp_image_active_drawable (bcd->gimage);
-  
-  col[0] = r;
-  col[1] = g;
-  col[2] = b;
+
+  gimp_rgb_get_uchar (color, &col[0], &col[1], &col[2]);
 
   by_color_select (bcd->gimage, 
                    drawable, 

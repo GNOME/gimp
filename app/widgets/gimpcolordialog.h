@@ -27,19 +27,13 @@ typedef enum
   COLOR_NOTEBOOK_UPDATE
 } ColorNotebookState;
 
-typedef void (* ColorNotebookCallback) (gint               red,
-					gint               green,
-					gint               blue,
-					gint               alpha,
-					ColorNotebookState state,
-					gpointer           data);
+typedef void (* ColorNotebookCallback) (GimpRGB            *color,
+					ColorNotebookState  state,
+					gpointer            data);
 
 typedef struct _ColorSelectorInstance ColorSelectorInstance;
 
-ColorNotebook * color_notebook_new       (gint                  red,
-					  gint                  green,
-					  gint                  blue,
-					  gint                  alpha,
+ColorNotebook * color_notebook_new       (GimpRGB              *color,
 					  ColorNotebookCallback callback,
 					  gpointer              data,
 				          gboolean              wants_update,
@@ -50,10 +44,7 @@ void            color_notebook_hide      (ColorNotebook        *cnb);
 void            color_notebook_free      (ColorNotebook        *cnb);
 
 void            color_notebook_set_color (ColorNotebook        *cnb,
-					  gint                  red,
-					  gint                  green,
-					  gint                  blue,
-					  gint                  alpha);
+					  GimpRGB              *color);
 
 
 #endif /* __COLOR_NOTEBOOK_H__ */

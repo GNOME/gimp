@@ -34,14 +34,17 @@ sub color_arg {
 sub invoke_get {
     %invoke = (
 	headers => [ qw("gimpimage.h" "gimpcontext.h") ],
-	vars => [ 'guchar r, g, b' ],
+	vars => [ 'GimpRGB color' ],
 	code => <<CODE
 {
-  gimp_context_get_@{[shift]}ground (NULL, &r, &g, &b);
+  gimp_context_get_@{[shift]}ground (NULL, &color);
+
   col = (guchar *) g_new (guchar, 3);
-  col[RED_PIX] = r;
-  col[GREEN_PIX] = g;
-  col[BLUE_PIX] = b;
+
+  gimp_rgb_get_uchar (&color,
+                      &col[RED_PIX],
+                      &col[GREEN_PIX],
+                      &col[BLUE_PIX]);
 }
 CODE
     );
@@ -50,8 +53,17 @@ CODE
 sub invoke_set {
     %invoke = (
 	headers => [ qw("gimpimage.h") ],
+	vars => [ 'GimpRGB color' ],
 	code => <<CODE
-gimp_context_set_@{[shift]}ground (NULL, col[RED_PIX], col[GREEN_PIX], col[BLUE_PIX]);
+{
+  gimp_rgba_set_uchar (&color,
+                       col[RED_PIX],
+		       col[GREEN_PIX],
+		       col[BLUE_PIX],
+		       255);
+
+  gimp_context_set_@{[shift]}ground (NULL, &color);
+}
 CODE
     );
 }

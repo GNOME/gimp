@@ -55,13 +55,16 @@ palette_get_foreground_invoker (Argument *args)
 {
   Argument *return_args;
   guchar *col;
-  guchar r, g, b;
+  GimpRGB color;
 
-  gimp_context_get_foreground (NULL, &r, &g, &b);
+  gimp_context_get_foreground (NULL, &color);
+
   col = (guchar *) g_new (guchar, 3);
-  col[RED_PIX] = r;
-  col[GREEN_PIX] = g;
-  col[BLUE_PIX] = b;
+
+  gimp_rgb_get_uchar (&color,
+		      &col[RED_PIX],
+		      &col[GREEN_PIX],
+		      &col[BLUE_PIX]);
 
   return_args = procedural_db_return_args (&palette_get_foreground_proc, TRUE);
   return_args[1].value.pdb_pointer = col;
@@ -99,13 +102,16 @@ palette_get_background_invoker (Argument *args)
 {
   Argument *return_args;
   guchar *col;
-  guchar r, g, b;
+  GimpRGB color;
 
-  gimp_context_get_background (NULL, &r, &g, &b);
+  gimp_context_get_background (NULL, &color);
+
   col = (guchar *) g_new (guchar, 3);
-  col[RED_PIX] = r;
-  col[GREEN_PIX] = g;
-  col[BLUE_PIX] = b;
+
+  gimp_rgb_get_uchar (&color,
+		      &col[RED_PIX],
+		      &col[GREEN_PIX],
+		      &col[BLUE_PIX]);
 
   return_args = procedural_db_return_args (&palette_get_background_proc, TRUE);
   return_args[1].value.pdb_pointer = col;
@@ -142,10 +148,17 @@ static Argument *
 palette_set_foreground_invoker (Argument *args)
 {
   guchar *col;
+  GimpRGB color;
 
   col = (guchar *) args[0].value.pdb_pointer;
 
-  gimp_context_set_foreground (NULL, col[RED_PIX], col[GREEN_PIX], col[BLUE_PIX]);
+  gimp_rgba_set_uchar (&color,
+		       col[RED_PIX],
+		       col[GREEN_PIX],
+		       col[BLUE_PIX],
+		       255);
+
+  gimp_context_set_foreground (NULL, &color);
 
   return procedural_db_return_args (&palette_set_foreground_proc, TRUE);
 }
@@ -179,10 +192,17 @@ static Argument *
 palette_set_background_invoker (Argument *args)
 {
   guchar *col;
+  GimpRGB color;
 
   col = (guchar *) args[0].value.pdb_pointer;
 
-  gimp_context_set_background (NULL, col[RED_PIX], col[GREEN_PIX], col[BLUE_PIX]);
+  gimp_rgba_set_uchar (&color,
+		       col[RED_PIX],
+		       col[GREEN_PIX],
+		       col[BLUE_PIX],
+		       255);
+
+  gimp_context_set_background (NULL, &color);
 
   return procedural_db_return_args (&palette_set_background_proc, TRUE);
 }

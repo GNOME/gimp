@@ -255,7 +255,7 @@ edit_qmask_channel_query (GDisplay * gdisp)
   GtkWidget *label;
   GtkWidget *opacity_scale;
   GtkObject *opacity_scale_data;
-  guchar     r, g, b, a;
+  GimpRGB    color;
 
   /* channel = gimp_image_get_channel_by_name (gdisp->gimage, "Qmask"); */
   /*  the new options structure  */
@@ -263,12 +263,13 @@ edit_qmask_channel_query (GDisplay * gdisp)
   options->gimage  = gdisp->gimage;
   options->opacity = (gdouble) options->gimage->qmask_opacity;
 
-  r = options->gimage->qmask_color[0];
-  g = options->gimage->qmask_color[1];
-  b = options->gimage->qmask_color[2];
-  a = 255;
+  gimp_rgba_set_uchar (&color,
+		       options->gimage->qmask_color[0],
+		       options->gimage->qmask_color[1],
+		       options->gimage->qmask_color[2],
+		       255);
 
-  options->color_panel = color_panel_new (r, g, b, a, FALSE, 48, 64);
+  options->color_panel = color_panel_new (&color, FALSE, 48, 64);
 
   /*  The dialog  */
   options->query_box =
@@ -332,47 +333,55 @@ edit_qmask_query_ok_callback (GtkWidget *widget,
 			      gpointer   client_data) 
 {
   EditQmaskOptions *options;
-  Channel      *channel;
-  const guchar *tmpcolp;
-  guchar        tmpcol[3];
-  gboolean      update = FALSE;
-  gint          opacity;
-  gint          i;
-  
+  Channel          *channel;
+  const guchar     *channel_color;
+  GimpRGB           color;
+  gboolean          update = FALSE;
+  gint              opacity;
+
   options = (EditQmaskOptions *) client_data;
   channel = gimp_image_get_channel_by_name (options->gimage, "Qmask");
-  opacity = (gint) (255 * options->opacity/100);
+  opacity = (gint) (255 * options->opacity / 100);
 
   if (options->gimage && channel)
     {     /* don't update if opacity hasn't changed */
-      if (channel_get_opacity(channel) != opacity)
+      if (channel_get_opacity (channel) != opacity)
         {
           update = TRUE;
         }
-      tmpcolp = channel_get_color (channel);
-      for (i = 0; i < 3; i++)
-	{  /* don't update if color hasn't changed */
-	  tmpcol[i] = tmpcolp[i]; /* initialize to same values */
-	  if (options->color_panel->color[i] != tmpcolp[i])
-	    {
-	      tmpcol[i] = options->color_panel->color[i];
-	      update = TRUE;
-	    }
-        }
+
+      channel_color = channel_get_color (channel);
+
+      gimp_rgb_set_uchar (&color,
+			  channel_color[0],
+			  channel_color[1],
+			  channel_color[2]);
+
+      if (gimp_rgb_distance (&color, &options->color_panel->color) > 0.0001)
+	update = TRUE;
       
       if (update)
-	{ 
-	  channel_set_opacity(channel, 100*opacity/255);
-	  channel_set_color(channel,tmpcol);
+	{
+	  guchar col[0];
+
+	  gimp_rgb_get_uchar (&options->color_panel->color,
+			      &col[0],
+			      &col[1],
+			      &col[2]);
+
+	  channel_set_opacity (channel, 100 * opacity / 255);
+	  channel_set_color (channel, col);
 	  channel_update (channel);
 	}
     }
+
   /* update the qmask color no matter what */
-  for (i = 0; i < 3; i++)
-    { /* TODO: should really have accessor functions for gimage private stuff */
-      options->gimage->qmask_color[i] = options->color_panel->color[i];
-      options->gimage->qmask_opacity = (gint) 100*opacity/255;
-    }
+  gimp_rgb_get_uchar (&options->color_panel->color,
+		      &options->gimage->qmask_color[0],
+		      &options->gimage->qmask_color[1],
+		      &options->gimage->qmask_color[2]);
+
+  options->gimage->qmask_opacity = (gint) 100 * opacity / 255;
 
   gtk_widget_destroy (options->query_box);
   g_free (options);

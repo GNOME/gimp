@@ -88,8 +88,8 @@ struct _GimpContext
 
   ToolType          tool;
 
-  guchar            foreground[3];
-  guchar            background[3];
+  GimpRGB           foreground;
+  GimpRGB           background;
 
   gdouble	    opacity;
   LayerModeEffects  paint_mode;
@@ -117,13 +117,9 @@ struct _GimpContextClass
 			       ToolType          tool);
 
   void (* foreground_changed) (GimpContext      *context,
-			       gint              r,
-			       gint              g,
-			       gint              b);
+			       GimpRGB          *color);
   void (* background_changed) (GimpContext      *context,
-			       gint              r,
-			       gint              g,
-			       gint              b);
+			       GimpRGB          *color);
   void (* opacity_changed)    (GimpContext      *context,
 			       gdouble           opacity);
   void (* paint_mode_changed) (GimpContext      *context,
@@ -221,32 +217,25 @@ void               gimp_context_tool_changed       (GimpContext     *context);
 
 /*  foreground color  */
 void               gimp_context_get_foreground     (GimpContext     *context,
-						    guchar          *r,
-						    guchar          *g,
-						    guchar          *b);
+						    GimpRGB         *color);
+
 /*  FIXME: this let's the core link against gimp_color_button  */
 void               gimp_palette_get_foreground     (guchar          *r,
 						    guchar          *g,
 						    guchar          *b);
 void               gimp_context_set_foreground     (GimpContext     *context,
-						    gint             r,
-						    gint             g,
-						    gint             b);
+						    GimpRGB         *color);
 void               gimp_context_foreground_changed (GimpContext     *context);
 
 /*  background color  */
 void               gimp_context_get_background     (GimpContext     *context,
-						    guchar          *r,
-						    guchar          *g,
-						    guchar          *b);
+						    GimpRGB         *color);
 /*  FIXME: this let's the core link against gimp_color_button  */
 void               gimp_palette_get_background     (guchar          *r,
 						    guchar          *g,
 						    guchar          *b);
 void               gimp_context_set_background     (GimpContext     *context,
-						    gint             r,
-						    gint             g,
-						    gint             b);
+						    GimpRGB         *color);
 void               gimp_context_background_changed (GimpContext     *context);
 
 /*  color utility functions  */

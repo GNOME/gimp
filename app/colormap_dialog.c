@@ -87,10 +87,7 @@ static void   ipal_edit_callback         (GtkWidget          *widget,
 					  gpointer            data);
 static void   ipal_close_callback        (GtkWidget          *widget,
 					  gpointer            data);
-static void   ipal_select_callback       (gint                r,
-					  gint                g,
-					  gint                b,
-					  gint                a,
+static void   ipal_select_callback       (GimpRGB            *color,
 					  ColorNotebookState  state,
 					  gpointer            data);
 
@@ -128,16 +125,10 @@ static void   image_cmap_change_cb       (GimpImage          *img,
 					  GimpColormapDialog *ipal);
 
 static void   palette_drag_color         (GtkWidget          *widget,
-					  guchar             *r,
-					  guchar             *g,
-					  guchar             *b,
-					  guchar             *a,
+					  GimpRGB            *color,
 					  gpointer            data);
 static void   palette_drop_color         (GtkWidget          *widget,
-					  guchar              r,
-					  guchar              g,
-					  guchar              b,
-					  guchar              a,
+					  GimpRGB            *color,
 					  gpointer            data);
 
 
@@ -280,7 +271,7 @@ gimp_colormap_dialog_create (GimpSet *context)
   ipal->vbox = vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (ipal)->vbox), vbox);
-  
+
   /*  The hbox to hold the command menu and image option menu box  */
   util_box = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (vbox), util_box, FALSE, FALSE, 0);
@@ -421,10 +412,7 @@ gimp_colormap_dialog_selected (GimpColormapDialog *colormap_dialog)
 
 static void
 palette_drag_color (GtkWidget *widget,
-		    guchar    *r,
-		    guchar    *g,
-		    guchar    *b,
-		    guchar    *a,
+		    GimpRGB   *color,
 		    gpointer   data)
 {
   GimpColormapDialog *ipal = (GimpColormapDialog *) data;
@@ -433,18 +421,16 @@ palette_drag_color (GtkWidget *widget,
 
   gimage = ipal->image;
 
-  *r = gimage->cmap[col * 3 + 0];
-  *g = gimage->cmap[col * 3 + 1];
-  *b = gimage->cmap[col * 3 + 2];
-  *a = 255;
+  gimp_rgba_set_uchar (color,
+		       gimage->cmap[col * 3 + 0],
+		       gimage->cmap[col * 3 + 1],
+		       gimage->cmap[col * 3 + 2],
+		       255);
 }
 
 static void
 palette_drop_color (GtkWidget *widget,
-		    guchar     r,
-		    guchar     g,
-		    guchar     b,
-		    guchar     a,
+		    GimpRGB   *color,
 		    gpointer   data)
 {
   GimpColormapDialog *ipal = (GimpColormapDialog *) data;
@@ -453,9 +439,11 @@ palette_drop_color (GtkWidget *widget,
       !(ipal->image->num_cols < 256))
     return;
 
-  ipal->image->cmap[ipal->image->num_cols * 3 + 0] = r;
-  ipal->image->cmap[ipal->image->num_cols * 3 + 1] = g;
-  ipal->image->cmap[ipal->image->num_cols * 3 + 2] = b;
+  gimp_rgb_get_uchar (color,
+		      &ipal->image->cmap[ipal->image->num_cols * 3],
+		      &ipal->image->cmap[ipal->image->num_cols * 3 + 1],
+		      &ipal->image->cmap[ipal->image->num_cols * 3 + 2]);
+
   ipal->image->num_cols++;
   gimp_image_colormap_changed (ipal->image, -1);
 }
@@ -600,15 +588,6 @@ ipal_draw (GimpColormapDialog* ipal)
   
   gtk_preview_size (ipal->palette, width, height);
 
-  /*gtk_container_resize_children(GTK_WIDGET(parent)->parent);*/
-
-  /*  req.width = width + parent->border_width;
-  req.height = height + parent->border_width;
-  gtk_widget_size_request(palette->parent, &req);*/
-  /*gtk_widget_queue_resize (GTK_WIDGET(ipal));*/
-  /*gtk_container_check_resize (GTK_WIDGET(parent)->parent);*/
-  
-  
   row = g_new (guchar, xn * cellsize * 3);
   col = 0;
   for (i = 0; i < yn; i++)
@@ -641,16 +620,16 @@ static void
 ipal_draw_cell (GimpColormapDialog *ipal,
 		gint                col)
 {
-  guchar *row;
-  gint cellsize, x, y, k;
-  GdkRectangle rec;
+  guchar       *row;
+  gint          cellsize, x, y, k;
+  GdkRectangle  rec;
   
   g_assert (ipal);
   g_assert (ipal->image);
   g_assert (col < ipal->image->num_cols);
   
   cellsize = ipal->cellsize;
-  row = g_new(guchar, cellsize * 3);
+  row = g_new (guchar, cellsize * 3);
   x = (col % ipal->xn) * cellsize;
   y = (col / ipal->xn) * cellsize;
 
@@ -703,10 +682,10 @@ ipal_draw_cell (GimpColormapDialog *ipal,
 static void
 ipal_clear (GimpColormapDialog* ipal)
 {
-  gint i, j;
-  gint offset;
-  gint width, height;
-  guchar *row = NULL;
+  gint       i, j;
+  gint       offset;
+  gint       width, height;
+  guchar    *row = NULL;
   GtkWidget *palette;
 
   g_return_if_fail (ipal);
@@ -772,6 +751,7 @@ ipal_set_index (GimpColormapDialog *ipal,
   if (i != ipal->col_index)
     {
       gint old = ipal->col_index;
+
       ipal->col_index     = i;
       ipal->dnd_col_index = i;
       ipal_draw_cell (ipal, old);
@@ -937,25 +917,27 @@ static void
 ipal_edit_callback (GtkWidget *widget,
 		    gpointer   data)
 {
-  GimpColormapDialog* ipal = data;
-  guchar r, g, b;
+  GimpColormapDialog *ipal = data;
+  GimpRGB             color;
 
   g_return_if_fail (ipal);
 
-  r = ipal->image->cmap[ipal->col_index*3];
-  g = ipal->image->cmap[ipal->col_index*3+1];
-  b = ipal->image->cmap[ipal->col_index*3+2];
+  gimp_rgba_set_uchar (&color,
+		       ipal->image->cmap[ipal->col_index * 3],
+		       ipal->image->cmap[ipal->col_index * 3 + 1],
+		       ipal->image->cmap[ipal->col_index * 3 + 2],
+		       255);
 
   if (! ipal->color_notebook)
     {
       ipal->color_notebook
-	= color_notebook_new (r, g, b, 255,
+	= color_notebook_new (&color,
 			      ipal_select_callback, ipal, FALSE, FALSE);
     }
   else
     {
       color_notebook_show (ipal->color_notebook);
-      color_notebook_set_color (ipal->color_notebook, r, g, b, 255);
+      color_notebook_set_color (ipal->color_notebook, &color);
     }
 }
 
@@ -971,10 +953,7 @@ ipal_close_callback (GtkWidget *widget,
 }
 
 static void
-ipal_select_callback (gint                r,
-		      gint                g,
-		      gint                b,
-		      gint                a,
+ipal_select_callback (GimpRGB            *color,
 		      ColorNotebookState  state,
 		      gpointer            data)
 {
@@ -992,9 +971,11 @@ ipal_select_callback (gint                r,
     case COLOR_NOTEBOOK_UPDATE:
       break;
     case COLOR_NOTEBOOK_OK:
-      gimage->cmap[ipal->col_index * 3 + 0] = r;
-      gimage->cmap[ipal->col_index * 3 + 1] = g;
-      gimage->cmap[ipal->col_index * 3 + 2] = b;
+      gimp_rgb_get_uchar (color,
+			  &gimage->cmap[ipal->col_index * 3 + 0],
+			  &gimage->cmap[ipal->col_index * 3 + 1],
+			  &gimage->cmap[ipal->col_index * 3 + 2]);
+
       gimp_image_colormap_changed (gimage, ipal->col_index);
       /* Fall through */
     case COLOR_NOTEBOOK_CANCEL:

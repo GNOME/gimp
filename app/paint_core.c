@@ -171,25 +171,26 @@ paint_core_sample_color (GimpDrawable *drawable,
 			 gint          y, 
 			 gint          state)
 {
-  guchar *color;
+  GimpRGB  color;
+  guchar  *col;
 
   if( x >= 0 && x < gimp_drawable_width (drawable) && 
       y >= 0 && y < gimp_drawable_height (drawable))
     {
-      if ((color = gimp_drawable_get_color_at (drawable, x, y)))
+      if ((col = gimp_drawable_get_color_at (drawable, x, y)))
 	{
-	  if ((state & GDK_CONTROL_MASK))
-	    gimp_context_set_foreground (gimp_context_get_user (),
-					 color[RED_PIX],
-					 color[GREEN_PIX],
-					 color[BLUE_PIX]);
-	  else
-	    gimp_context_set_background (gimp_context_get_user (),
-					 color[RED_PIX],
-					 color[GREEN_PIX],
-					 color[BLUE_PIX]);
+	  gimp_rgba_set_uchar (&color,
+			       col[RED_PIX],
+			       col[GREEN_PIX],
+			       col[BLUE_PIX],
+			       255);
 
-	  g_free (color);
+	  if ((state & GDK_CONTROL_MASK))
+	    gimp_context_set_foreground (gimp_context_get_user (), &color);
+	  else
+	    gimp_context_set_background (gimp_context_get_user (), &color);
+
+	  g_free (col);
 	}
     }
 }

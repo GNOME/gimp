@@ -131,10 +131,7 @@ static GtkWidget * color_select_widget_new   (ColorSelect    *,
 					      gint            );
 
 static void   color_select_drop_color (GtkWidget *widget,
-				       guchar     r,
-				       guchar     g,
-				       guchar     b,
-				       guchar     a,
+				       GimpRGB   *color,
 				       gpointer   data);
 static void   color_select_update            (ColorSelect    *,
 					      ColorSelectUpdateType);
@@ -329,15 +326,15 @@ color_select_widget_new (ColorSelect *csp,
 
 static void
 color_select_drop_color (GtkWidget *widget,
-			 guchar     r,
-			 guchar     g,
-			 guchar     b,
-			 guchar     a,
+			 GimpRGB   *color,
 			 gpointer   data)
 {
   ColorSelect *csp;
+  guchar       r, g, b, a;
 
   csp = (ColorSelect *) data;
+
+  gimp_rgba_get_uchar (color, &r, &g, &b, &a);
 
   csp->values[COLOR_SELECT_RED]   = (gint) r;
   csp->values[COLOR_SELECT_GREEN] = (gint) g;

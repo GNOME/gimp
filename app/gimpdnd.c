@@ -162,8 +162,8 @@ static void        gimp_dnd_set_gradient_data (GtkWidget     *widget,
 					       gint           format,
 					       gint           length);
 static void        gimp_dnd_set_palette_data  (GtkWidget     *widget,
-					       GtkSignalFunc  set_gradient_func,
-					       gpointer       set_gradient_data,
+					       GtkSignalFunc  set_palette_func,
+					       gpointer       set_palette_data,
 					       guchar        *vals,
 					       gint           format,
 					       gint           length);
@@ -494,16 +494,9 @@ gimp_dnd_get_color_icon (GtkWidget     *widget,
 {
   GtkWidget *color_area;
   GimpRGB    color;
-  guchar     r, g, b, a;
 
-  (* (GimpDndDragColorFunc) get_color_func) (widget, &r, &g, &b, &a,
+  (* (GimpDndDragColorFunc) get_color_func) (widget, &color,
 					     get_color_data);
-
-  gimp_rgba_set (&color,
-		 (gdouble) r / 255.0, 
-		 (gdouble) g / 255.0, 
-		 (gdouble) b / 255.0,
-		 (gdouble) a / 255.0);
 
   color_area = gimp_color_area_new (&color, TRUE, 0);
   gtk_widget_set_usize (color_area, DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE);
@@ -519,12 +512,15 @@ gimp_dnd_get_color_data (GtkWidget     *widget,
 			 gint          *length)
 {
   guint16 *vals;
+  GimpRGB  color;
   guchar   r, g, b, a;
 
-  (* (GimpDndDragColorFunc) get_color_func) (widget, &r, &g, &b, &a,
+  (* (GimpDndDragColorFunc) get_color_func) (widget, &color,
 					     get_color_data);
 
   vals = g_new (guint16, 4);
+
+  gimp_rgba_get_uchar (&color, &r, &g, &b, &a);
 
   vals[0] = r + (r << 8);
   vals[1] = g + (g << 8);
@@ -546,7 +542,7 @@ gimp_dnd_set_color_data (GtkWidget     *widget,
 			 gint           length)
 {
   guint16 *color_vals;
-  guchar   r, g, b, a;
+  GimpRGB  color;
 
   if ((format != 16) || (length != 8))
     {
@@ -556,12 +552,13 @@ gimp_dnd_set_color_data (GtkWidget     *widget,
 
   color_vals = (guint16 *) vals;
 
-  r = color_vals[0] >> 8;
-  g = color_vals[1] >> 8;
-  b = color_vals[2] >> 8;
-  a = color_vals[3] >> 8;
+  gimp_rgba_set_uchar (&color,
+		       (guchar) (color_vals[0] >> 8),
+		       (guchar) (color_vals[1] >> 8),
+		       (guchar) (color_vals[2] >> 8),
+		       (guchar) (color_vals[3] >> 8));
 
-  (* (GimpDndDropColorFunc) set_color_func) (widget, r, g, b, a,
+  (* (GimpDndDropColorFunc) set_color_func) (widget, &color,
 					     set_color_data);
 }
 
@@ -894,16 +891,16 @@ gimp_dnd_gradient_dest_set (GtkWidget               *widget,
 
 static GtkWidget *
 gimp_dnd_get_palette_icon (GtkWidget     *widget,
-			   GtkSignalFunc  get_gradient_func,
-			   gpointer       get_gradient_data)
+			   GtkSignalFunc  get_palette_func,
+			   gpointer       get_palette_data)
 {
   return NULL;
 }
 
 static guchar *
 gimp_dnd_get_palette_data (GtkWidget     *widget,
-			   GtkSignalFunc  get_gradient_func,
-			   gpointer       get_gradient_data,
+			   GtkSignalFunc  get_palette_func,
+			   gpointer       get_palette_data,
 			   gint          *format,
 			   gint          *length)
 {
@@ -912,8 +909,8 @@ gimp_dnd_get_palette_data (GtkWidget     *widget,
 
 static void
 gimp_dnd_set_palette_data (GtkWidget     *widget,
-			   GtkSignalFunc  set_gradient_func,
-			   gpointer       set_gradient_data,
+			   GtkSignalFunc  set_palette_func,
+			   gpointer       set_palette_data,
 			   guchar        *vals,
 			   gint           format,
 			   gint           length)
@@ -952,8 +949,7 @@ gimp_dnd_get_tool_icon (GtkWidget     *widget,
   GtkWidget *tool_icon;
   ToolType   tool_type;
 
-  tool_type =
-    (* (GimpDndDragToolFunc) get_tool_func) (widget, get_tool_data);
+  tool_type = (* (GimpDndDragToolFunc) get_tool_func) (widget, get_tool_data);
 
   if (((gint) tool_type < 0) || ((gint) tool_type >= num_tools))
     return NULL;
@@ -974,8 +970,7 @@ gimp_dnd_get_tool_data (GtkWidget     *widget,
   ToolType  tool_type;
   guint16  *val;
 
-  tool_type =
-    (* (GimpDndDragToolFunc) get_tool_func) (widget, get_tool_data);
+  tool_type = (* (GimpDndDragToolFunc) get_tool_func) (widget, get_tool_data);
 
   if (((gint) tool_type < 0) || ((gint) tool_type >= num_tools))
     return NULL;

@@ -2018,23 +2018,23 @@ parse_device (gpointer val1p,
 	      gpointer val2p)
 {
   DeviceValues values = 0;
-  gint i;
-  gint token;
+  gint         i;
+  gint         token;
   
   /* The initialized values here are meaningless */
-  gchar *name        = NULL;
-  GdkInputMode mode  = GDK_MODE_DISABLED;
-  gint num_axes      = 0;
-  GdkAxisUse *axes   = NULL;
-  gint num_keys      = 0;
-  GdkDeviceKey *keys = NULL;
+  gchar        *name     = NULL;
+  GdkInputMode  mode     = GDK_MODE_DISABLED;
+  gint          num_axes = 0;
+  GdkAxisUse   *axes     = NULL;
+  gint          num_keys = 0;
+  GdkDeviceKey *keys     = NULL;
 
-  ToolType tool        = RECT_SELECT;
-  guchar foreground[3] = { 0, 0, 0 };
-  guchar background[3] = { 0, 0, 0 };
-  gchar *brush_name    = NULL;
-  gchar *pattern_name  = NULL;
-  gchar *gradient_name = NULL;
+  ToolType tool          = RECT_SELECT;
+  GimpRGB  foreground    = { 1.0, 1.0, 1.0, 1.0 };
+  GimpRGB  background    = { 0.0, 0.0, 0.0, 1.0 };
+  gchar   *brush_name    = NULL;
+  gchar   *pattern_name  = NULL;
+  gchar   *gradient_name = NULL;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_STRING))
@@ -2153,6 +2153,8 @@ parse_device (gpointer val1p,
 	}
       else if (!strcmp ("foreground", token_sym))
 	{
+	  guchar color[3] = { 0, 0, 0 };
+
 	  values |= DEVICE_FOREGROUND;
 
 	  for (i = 0; i < 3; i++)
@@ -2162,11 +2164,16 @@ parse_device (gpointer val1p,
 		goto error;
 	      token = get_next_token ();
 
-	      foreground[i] = token_int;
+	      color[i] = token_int;
 	    }
+
+	  gimp_rgb_set_uchar (&foreground,
+			      color[0], color[1], color[2]);
 	}
       else if (!strcmp ("background", token_sym))
 	{
+	  guchar color[3] = { 0, 0, 0 };
+
 	  values |= DEVICE_BACKGROUND;
 
 	  for (i = 0; i < 3; i++)
@@ -2176,8 +2183,11 @@ parse_device (gpointer val1p,
 		goto error;
 	      token = get_next_token ();
 
-	      background[i] = token_int;
+	      color[i] = token_int;
 	    }
+
+	  gimp_rgb_set_uchar (&foreground,
+			      color[0], color[1], color[2]);
 	}
       else if (!strcmp ("brush", token_sym))
 	{
@@ -2227,8 +2237,8 @@ parse_device (gpointer val1p,
 
   devices_rc_update (name, values, mode, num_axes, axes, num_keys, keys,
 		     tool,
-		     foreground,
-		     background,
+		     &foreground,
+		     &background,
 		     brush_name,
 		     pattern_name,
 		     gradient_name);

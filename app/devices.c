@@ -124,16 +124,10 @@ static void     device_status_drop_tool        (GtkWidget   *widget,
 						ToolType     tool,
 						gpointer     data);
 static void     device_status_drag_color       (GtkWidget   *widget,
-						guchar      *r,
-						guchar      *g,
-						guchar      *b,
-						guchar      *a,
+						GimpRGB     *color,
 						gpointer     data);
 static void     device_status_drop_color       (GtkWidget   *widget,
-						guchar       r,
-						guchar       g,
-						guchar       b,
-						guchar       a,
+						GimpRGB     *color,
 						gpointer     data);
 static void     device_status_drop_brush       (GtkWidget   *widget,
 						GimpBrush   *brush,
@@ -145,11 +139,6 @@ static void     device_status_drop_gradient    (GtkWidget   *widget,
 						gradient_t  *gradient,
 						gpointer     data);
 
-static void     device_status_color_changed    (GimpContext *context,
-						gint         r,
-						gint         g,
-						gint         b,
-						gpointer     data);
 static void     device_status_data_changed     (GimpContext *context,
 						gpointer     dummy,
 						gpointer     data);
@@ -353,9 +342,9 @@ devices_init (void)
 void
 devices_restore (void)
 {
-  DeviceInfo *device_info;
+  DeviceInfo  *device_info;
   GimpContext *context;
-  gchar *filename;
+  gchar       *filename;
 
   /* Augment with information from rc file */
   filename = gimp_personal_rc_file ("devicerc");
@@ -371,7 +360,7 @@ devices_restore (void)
 
   gimp_context_copy_args (device_info->context, context, DEVICE_CONTEXT_MASK);
   gimp_context_set_parent (device_info->context, context);
-  
+
   suppress_update = FALSE;
 }
 
@@ -384,8 +373,8 @@ devices_rc_update (gchar        *name,
 		   gint          num_keys, 
 		   GdkDeviceKey *keys,
 		   ToolType      tool,
-		   guchar        foreground[], 
-		   guchar        background[],
+		   GimpRGB      *foreground,
+		   GimpRGB      *background,
 		   gchar        *brush_name, 
 		   gchar        *pattern_name,
 		   gchar        *gradient_name)
@@ -473,18 +462,12 @@ devices_rc_update (gchar        *name,
 
   if (values & DEVICE_FOREGROUND)
     {
-      gimp_context_set_foreground (device_info->context,
-				   foreground[0],
-				   foreground[1],
-				   foreground[2]);
+      gimp_context_set_foreground (device_info->context, foreground);
     }
 
   if (values & DEVICE_BACKGROUND)
     {
-      gimp_context_set_background (device_info->context,
-				   background[0],
-				   background[1],
-				   background[2]);
+      gimp_context_set_background (device_info->context, background);
     }
 
   if (values & DEVICE_BRUSH)
@@ -685,7 +668,7 @@ devices_write_rc_device (DeviceInfo *device_info,
 	    strcat (accel, "<shift>");
 	  if (modifiers & GDK_MOD1_MASK)
 	    strcat (accel, "<alt>");
-	  
+
 	  t2[0] = keyval;
 	  t2[1] = '\0';
 	  strcat (accel, t2);
@@ -705,8 +688,12 @@ devices_write_rc_device (DeviceInfo *device_info,
     }
 
   {
-    guchar r, g, b;
-    gimp_context_get_foreground (device_info->context, &r, &g, &b);
+    GimpRGB color;
+    guchar  r, g, b;
+
+    gimp_context_get_foreground (device_info->context, &color);
+    gimp_rgb_get_uchar (&color, &r, &g, &b);
+
     fprintf (fp, "\n        (foreground %d %d %d)", r, g, b);
   }
 
@@ -735,8 +722,8 @@ static void
 devices_write_rc (void)
 {
   DeviceInfo *device_info;
-  gchar *filename;
-  FILE *fp;
+  gchar      *filename;
+  FILE       *fp;
 
   device_info = device_info_get_by_id (current_device);
 
@@ -756,9 +743,9 @@ void
 device_status_create (void)
 {
   DeviceInfo *device_info;
-  GtkWidget *label;
-  GList *list;
-  gint i;
+  GtkWidget  *label;
+  GList      *list;
+  gint        i;
   
   if (deviceD == NULL)
     {
@@ -1005,9 +992,10 @@ device_status_update (guint32 deviceid)
 {
   GdkDeviceInfo *gdk_info;
   DeviceInfo    *device_info;
-  guchar buffer[CELL_SIZE*3];
-  gchar  ttbuf[20]; /* [xxx,xxx,xxx] + null */
-  gint   i, j;
+  GimpRGB        color;
+  guchar         buffer[CELL_SIZE * 3];
+  gchar          ttbuf[20]; /* [xxx,xxx,xxx] + null */
+  gint           i, j;
 
   if (!deviceD || suppress_update)
     return;
@@ -1052,12 +1040,14 @@ device_status_update (guint32 deviceid)
 			       tool_info[(gint) gimp_context_get_tool (device_info->context)].tool_desc,
 			       tool_info[(gint) gimp_context_get_tool (device_info->context)].private_tip);
 
+      gimp_context_get_foreground (device_info->context, &color);
+
       for (j = 0; j < CELL_SIZE * 3; j += 3)
 	{
-	  gimp_context_get_foreground (device_info->context,
-				       &buffer[j],
-				       &buffer[j+1],
-				       &buffer[j+2]);
+	  gimp_rgb_get_uchar (&color,
+			      &buffer[j],
+			      &buffer[j + 1],
+			      &buffer[j + 2]);
 	}
 
       for (j = 0; j < CELL_SIZE; j++)
@@ -1068,9 +1058,9 @@ device_status_update (guint32 deviceid)
 
       /*  Set the tip to be the RGB value  */
       g_snprintf (ttbuf, sizeof (ttbuf), "[%3d,%3d,%3d]",
-		  buffer[j],
-		  buffer[j+1],
-		  buffer[j+2]);
+		  buffer[0],
+		  buffer[1],
+		  buffer[2]);
 
       gimp_help_set_help_data (deviceD->colors[i], ttbuf, NULL);
 
@@ -1137,10 +1127,7 @@ device_status_drop_tool (GtkWidget *widget,
 
 static void
 device_status_drag_color (GtkWidget *widget,
-			  guchar    *r,
-			  guchar    *g,
-			  guchar    *b,
-			  guchar    *a,
+			  GimpRGB   *color,
 			  gpointer   data)
 {
   DeviceInfo *device_info;
@@ -1149,21 +1136,17 @@ device_status_drag_color (GtkWidget *widget,
 
   if (device_info)
     {
-      *a = 255;
-      gimp_context_get_foreground (device_info->context, r, g, b);
+      gimp_context_get_foreground (device_info->context, color);
     }
   else
     {
-      *r = *g = *b = 0;
+      gimp_rgba_set (color, 0.0, 0.0, 0.0, 0.0);
     }
 }
 
 static void
 device_status_drop_color (GtkWidget *widget,
-			  guchar     r,
-			  guchar     g,
-			  guchar     b,
-			  guchar     a,
+			  GimpRGB   *color,
 			  gpointer   data)
 {
   DeviceInfo *device_info;
@@ -1172,7 +1155,7 @@ device_status_drop_color (GtkWidget *widget,
 
   if (device_info && device_info->is_present)
     {
-      gimp_context_set_foreground (device_info->context, r, g, b);
+      gimp_context_set_foreground (device_info->context, color);
     }
 }
 
@@ -1224,20 +1207,6 @@ device_status_drop_gradient (GtkWidget  *widget,
 /*  context callbacks  */
 
 static void
-device_status_color_changed (GimpContext *context,
-			     gint         r,
-			     gint         g,
-			     gint         b,
-			     gpointer     data)
-{
-  DeviceInfo *device_info;
-
-  device_info = device_info_get_by_id (GPOINTER_TO_UINT (data));
-
-  device_status_update (device_info->device);
-}
-
-static void
 device_status_data_changed (GimpContext *context,
 			    gpointer     dummy,
 			    gpointer     data)
@@ -1254,7 +1223,7 @@ device_status_context_connect  (GimpContext *context,
 				guint32      deviceid)
 {
   gtk_signal_connect (GTK_OBJECT (context), "foreground_changed",
-		      GTK_SIGNAL_FUNC (device_status_color_changed),
+		      GTK_SIGNAL_FUNC (device_status_data_changed),
 		      (gpointer) deviceid);
   gtk_signal_connect (GTK_OBJECT (context), "tool_changed",
 		      GTK_SIGNAL_FUNC (device_status_data_changed),

@@ -933,6 +933,8 @@ palette_set_active_color (gint r,
 			  gint b,
 			  gint state)
 {
+  GimpRGB color;
+
   if (top_level_edit_palette && top_level_edit_palette->entries) 
     {
       switch (state) 
@@ -956,11 +958,17 @@ palette_set_active_color (gint r,
  	  break; 
  	} 
     } 
-  
+
+  gimp_rgba_set_uchar (&color,
+		       (guchar) r,
+		       (guchar) g,
+		       (guchar) b,
+		       255);
+
   if (active_color == FOREGROUND)
-    gimp_context_set_foreground (gimp_context_get_user (), r, g, b);
+    gimp_context_set_foreground (gimp_context_get_user (), &color);
   else if (active_color == BACKGROUND)
-    gimp_context_set_background (gimp_context_get_user (), r, g, b);
+    gimp_context_set_background (gimp_context_get_user (), &color);
 }
 
 /*  called from palette_select.c  ********************************************/
@@ -1007,10 +1015,7 @@ palette_create_edit (PaletteEntries *entries)
 }
 
 static void
-palette_select_callback (gint                r,
-			 gint                g,
-			 gint                b,
-			 gint                a,
+palette_select_callback (GimpRGB            *callback_color,
 			 ColorNotebookState  state,
 			 void               *data)
 {
@@ -1031,15 +1036,16 @@ palette_select_callback (gint                r,
 	    {
 	      color = palette->color->color;
 
-	      color[0] = r;
-	      color[1] = g;
-	      color[2] = b;
+	      gimp_rgb_get_uchar (callback_color,
+				  &color[0], &color[1], &color[2]);
 
 	      /*  Update either foreground or background colors  */
 	      if (active_color == FOREGROUND)
-		gimp_context_set_foreground (gimp_context_get_user (), r, g, b);
+		gimp_context_set_foreground (gimp_context_get_user (),
+					     callback_color);
 	      else if (active_color == BACKGROUND)
-		gimp_context_set_background (gimp_context_get_user (), r, g, b);
+		gimp_context_set_background (gimp_context_get_user (),
+					     callback_color);
 
 	      palette_draw_all (palette->entries, palette->color);
 	    }
@@ -1067,18 +1073,19 @@ palette_dialog_new_entry_callback (GtkWidget *widget,
 
   if (palette && palette->entries)
     {
-      guchar col[3];
+      GimpRGB  color;
+      guchar   r, g, b;
 
       if (active_color == FOREGROUND)
-	gimp_context_get_foreground (gimp_context_get_user (),
-				     &col[0], &col[1], &col[2]);
+	gimp_context_get_foreground (gimp_context_get_user (), &color);
       else if (active_color == BACKGROUND)
-	gimp_context_get_background (gimp_context_get_user (),
-				     &col[0], &col[1], &col[2]);
+	gimp_context_get_background (gimp_context_get_user (), &color);
+
+      gimp_rgb_get_uchar (&color, &r, &g, &b);
 
       palette->color = palette_entries_add_entry (palette->entries,
 						  _("Untitled"),
-						  col[0], col[1], col[2]);
+						  r, g, b);
 
       palette_update_all (palette->entries);
     }
@@ -1089,17 +1096,20 @@ palette_dialog_edit_entry_callback (GtkWidget *widget,
 				    gpointer   data)
 {
   PaletteDialog *palette;
-  guchar        *color;
+  GimpRGB        color;
+  guchar        *col;
 
   palette = data;
   if (palette && palette->entries && palette->color)
     {
-      color = palette->color->color;
+      col = palette->color->color;
+
+      gimp_rgba_set_uchar (&color, col[0], col[1], col[2], 255);
 
       if (!palette->color_notebook)
 	{
 	  palette->color_notebook =
-	    color_notebook_new (color[0], color[1], color[2], 255,
+	    color_notebook_new (&color,
 				palette_select_callback, palette,
 				FALSE, FALSE);
 	  palette->color_notebook_active = TRUE;
@@ -1112,8 +1122,7 @@ palette_dialog_edit_entry_callback (GtkWidget *widget,
 	      palette->color_notebook_active = TRUE;
 	    }
 
-	  color_notebook_set_color (palette->color_notebook,
-				    color[0], color[1], color[2], 255);
+	  color_notebook_set_color (palette->color_notebook, &color);
 	}
     }
 }
@@ -1235,12 +1244,12 @@ palette_dialog_color_area_events (GtkWidget     *widget,
 				  PaletteDialog *palette)
 {
   GdkEventButton *bevent;
-  GSList *tmp_link;
-  gint r, g, b;
-  gint entry_width;
-  gint entry_height;
-  gint row, col;
-  gint pos;
+  GSList         *tmp_link;
+  GimpRGB         color;
+  gint            entry_width;
+  gint            entry_height;
+  gint            row, col;
+  gint            pos;
 
   switch (event->type)
     {
@@ -1276,26 +1285,29 @@ palette_dialog_color_area_events (GtkWidget     *widget,
 	      palette->color = tmp_link->data;
 
 	      /*  Update either foreground or background colors  */
-	      r = palette->color->color[0];
-	      g = palette->color->color[1];
-	      b = palette->color->color[2];
+	      gimp_rgba_set_uchar (&color,
+				   palette->color->color[0],
+				   palette->color->color[1],
+				   palette->color->color[2],
+				   255);
+
 	      if (active_color == FOREGROUND)
 		{
 		  if (bevent->state & GDK_CONTROL_MASK)
 		    gimp_context_set_background (gimp_context_get_user (),
-						 r, g, b);
+						 &color);
 		  else
 		    gimp_context_set_foreground (gimp_context_get_user (),
-						 r, g, b);
+						 &color);
 		}
 	      else if (active_color == BACKGROUND)
 		{
 		  if (bevent->state & GDK_CONTROL_MASK)
 		    gimp_context_set_foreground (gimp_context_get_user (),
-						 r, g, b);
+						 &color);
 		  else
 		    gimp_context_set_background (gimp_context_get_user (),
-						 r, g, b);
+						 &color);
 		}
 
 	      palette_dialog_draw_entries (palette, row, col);
@@ -1353,14 +1365,14 @@ palette_dialog_draw_color_row (guchar        **colors,
 			       guchar         *buffer,
 			       PaletteDialog  *palette)
 {
-  guchar *p;
-  guchar bcolor;
-  gint width, height;
-  gint entry_width;
-  gint entry_height;
-  gint vsize;
-  gint vspacing;
-  gint i, j;
+  guchar    *p;
+  guchar     bcolor;
+  gint       width, height;
+  gint       entry_width;
+  gint       entry_height;
+  gint       vsize;
+  gint       vspacing;
+  gint       i, j;
   GtkWidget *preview;
 
   if (! palette)
@@ -1370,9 +1382,9 @@ palette_dialog_draw_color_row (guchar        **colors,
 
   bcolor = 0;
 
-  width = preview->requisition.width;
+  width  = preview->requisition.width;
   height = preview->requisition.height;
-  entry_width = palette->col_width;
+  entry_width  = palette->col_width;
   entry_height = (ENTRY_HEIGHT * palette->zoom_factor);
 
   if ((y >= 0) && ((y + SPACING) < height))
@@ -1505,14 +1517,14 @@ palette_dialog_draw_entries (PaletteDialog *palette,
 			     gint           row_start,
 			     gint           column_highlight)
 {
-  PaletteEntry *entry;
-  guchar *buffer;
-  guchar **colors;
-  GSList *tmp_link;
-  gint width, height;
-  gint entry_width;
-  gint entry_height;
-  gint index, y;
+  PaletteEntry  *entry;
+  guchar        *buffer;
+  guchar       **colors;
+  GSList        *tmp_link;
+  gint           width, height;
+  gint           entry_width;
+  gint           entry_height;
+  gint           index, y;
 
   if (palette && palette->entries)
     {
@@ -1606,11 +1618,11 @@ static void
 palette_dialog_redraw (PaletteDialog *palette)
 {
   GtkWidget *parent;
-  gint vsize;
-  gint nrows;
-  gint n_entries;
-  gint preview_width;
-  guint width;
+  gint       vsize;
+  gint       nrows;
+  gint       n_entries;
+  gint       preview_width;
+  guint      width;
 
   if (!palette->entries)
     return;
@@ -1984,10 +1996,7 @@ palette_dialog_close_callback (GtkWidget *widget,
 
 static void
 palette_dialog_drag_color (GtkWidget *widget,
-			   guchar    *r,
-			   guchar    *g,
-			   guchar    *b,
-			   guchar    *a,
+			   GimpRGB   *color,
 			   gpointer   data)
 {
   PaletteDialog *palette;
@@ -1996,31 +2005,32 @@ palette_dialog_drag_color (GtkWidget *widget,
 
   if (palette && palette->entries && palette->dnd_color)
     {
-      *r = (guchar) palette->dnd_color->color[0];
-      *g = (guchar) palette->dnd_color->color[1];
-      *b = (guchar) palette->dnd_color->color[2];
-      *a = (guchar) 255;
+      gimp_rgba_set_uchar (color,
+			   (guchar) palette->dnd_color->color[0],
+			   (guchar) palette->dnd_color->color[1],
+			   (guchar) palette->dnd_color->color[2],
+			   (guchar) 255);
     }
   else
     {
-      *r = *g = *b = 0;
+      gimp_rgba_set_uchar (color, 0.0, 0.0, 0.0, 255.0);
     }
 }
 
 static void
 palette_dialog_drop_color (GtkWidget *widget,
-			   guchar      r,
-			   guchar      g,
-			   guchar      b,
-			   guchar      a,
-			   gpointer    data)
+			   GimpRGB   *color,
+			   gpointer   data)
 {
   PaletteDialog *palette;
+  guchar         r, g, b;
 
   palette = (PaletteDialog *) data;
 
   if (palette && palette->entries)
     {
+      gimp_rgb_get_uchar (color, &r, &g, &b);
+
       palette->color =
 	palette_entries_add_entry (palette->entries, _("Untitled"), r, g, b);
 
@@ -2034,17 +2044,17 @@ PaletteDialog *
 palette_dialog_new (gboolean editor)
 {
   PaletteDialog *palette;
-  GtkWidget *hbox;
-  GtkWidget *hbox2;
-  GtkWidget *vbox;
-  GtkWidget *scrolledwindow;
-  GtkWidget *palette_region;
-  GtkWidget *entry;
-  GtkWidget *eventbox;
-  GtkWidget *alignment;
-  GtkWidget *frame;
-  GtkWidget *button;
-  gchar     *titles[3];
+  GtkWidget     *hbox;
+  GtkWidget     *hbox2;
+  GtkWidget     *vbox;
+  GtkWidget     *scrolledwindow;
+  GtkWidget     *palette_region;
+  GtkWidget     *entry;
+  GtkWidget     *eventbox;
+  GtkWidget     *alignment;
+  GtkWidget     *frame;
+  GtkWidget     *button;
+  gchar         *titles[3];
 
   palette = g_new0 (PaletteDialog, 1);
   palette->entries               = default_palette_entries;

@@ -1188,17 +1188,23 @@ static void
 dialogs_indexed_palette_select_callback (GimpColormapDialog *dialog,
 					 gpointer            data)
 {
-  guchar    *color;
-  GimpImage *image = gimp_colormap_dialog_image (dialog);
+  GimpImage *image;
+  GimpRGB    color;
+  gint       index;
 
-  color = &image->cmap[gimp_colormap_dialog_col_index (dialog) * 3];
+  image = gimp_colormap_dialog_image (dialog);
+  index = gimp_colormap_dialog_col_index (dialog);
+
+  gimp_rgba_set_uchar (&color,
+		       image->cmap[index * 3],
+		       image->cmap[index * 3 + 1],
+		       image->cmap[index * 3 + 2],
+		       255);
 
   if (active_color == FOREGROUND)
-    gimp_context_set_foreground (gimp_context_get_user (),
-				 color[0], color[1], color[2]);
+    gimp_context_set_foreground (gimp_context_get_user (), &color);
   else if (active_color == BACKGROUND)
-    gimp_context_set_background (gimp_context_get_user (),
-				 color[0], color[1], color[2]);
+    gimp_context_set_background (gimp_context_get_user (), &color);
 }
 
 void

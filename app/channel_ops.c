@@ -223,14 +223,14 @@ offset (GimpImage         *gimage,
 	gint               offset_x,
 	gint               offset_y)
 {
-  PixelRegion srcPR, destPR;
+  PixelRegion  srcPR, destPR;
   TileManager *new_tiles;
-  int width, height;
-  int src_x, src_y;
-  int dest_x, dest_y;
-  unsigned char fill[MAX_CHANNELS] = { 0 };
+  gint         width, height;
+  gint         src_x, src_y;
+  gint         dest_x, dest_y;
+  guchar       fill[MAX_CHANNELS] = { 0 };
 
-  if (!drawable) 
+  if (! drawable) 
     return;
 
   width  = gimp_drawable_width (drawable);
@@ -401,7 +401,12 @@ offset (GimpImage         *gimage,
     {
       if (fill_type == OFFSET_BACKGROUND)
 	{
-	  gimp_context_get_background (NULL, &fill[0], &fill[1], &fill[2]);
+	  GimpRGB color;
+
+	  gimp_context_get_background (NULL, &color);
+
+	  gimp_rgb_get_uchar (&color, &fill[0], &fill[1], &fill[2]);
+
 	  if (gimp_drawable_has_alpha (drawable))
 	    fill[gimp_drawable_bytes (drawable) - 1] = OPAQUE_OPACITY;
 	}

@@ -992,18 +992,16 @@ gdisplay_bucket_fill (GtkWidget      *widget,
 
 void
 gdisplay_drop_color (GtkWidget *widget,
-		     guchar     r,
-		     guchar     g,
-		     guchar     b,
-		     guchar     a,
+		     GimpRGB   *drop_color,
 		     gpointer   data)
 {
   guchar color[4];
 
-  color[0] = r;
-  color[1] = g;
-  color[2] = b;
-  color[3] = a;
+  gimp_rgba_get_uchar (drop_color,
+		       &color[0],
+		       &color[1],
+		       &color[2],
+		       &color[3]);
 
   gdisplay_bucket_fill (widget, FG_BUCKET_FILL, color, NULL, data);
 }

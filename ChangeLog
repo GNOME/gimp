@@ -1,3 +1,32 @@
+2001-01-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/color_notebook.[ch]
+	* app/color_panel.[ch]
+	* app/gimpcontext.[ch]
+	* app/gimpdnd.[ch]: use GimpRGB instead of a random selection out of
+	guchar, gint, guchar[], blah...
+
+	* app/blend.c
+	* app/by_color_select.c
+	* app/channel_ops.c
+	* app/channels_dialog.c
+	* app/color_area.c
+	* app/color_picker.c
+	* app/color_select.c
+	* app/colormap_dialog.c
+	* app/commands.c
+	* app/devices.[ch]
+	* app/disp_callbacks.[ch]
+	* app/drawable.c
+	* app/gimpimage.c
+	* app/gimprc.c
+	* app/gradient.c
+	* app/paint_core.c
+	* app/palette.c
+	* app/palette_cmds.c
+	* app/qmask.c
+	* tools/pdbgen/pdb/palette.pdb: changed accordingly.
+
 2001-01-15  Simon Budig  <simon@gimp.org>
 
 	* app/apptypes.h

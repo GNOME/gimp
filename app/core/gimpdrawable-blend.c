@@ -1457,7 +1457,6 @@ gradient_fill_region (GImage           *gimage,
 {
   RenderBlendData  rbd;
   PutPixelData     ppd;
-  guchar           r, g, b;
   gint             x, y;
   gint             endx, endy;
   gpointer        *pr;
@@ -1466,19 +1465,13 @@ gradient_fill_region (GImage           *gimage,
 
   /* Get foreground and background colors, normalized */
 
-  gimp_context_get_foreground (NULL, &r, &g, &b);
+  gimp_context_get_foreground (NULL, &rbd.fg);
 
-  rbd.fg.r = r / 255.0;
-  rbd.fg.g = g / 255.0;
-  rbd.fg.b = b / 255.0;
-  rbd.fg.a = 1.0;  /* Foreground is always opaque */
+  /* rbd.fg.a = 1.0; */ /* Foreground is always opaque */
 
-  gimp_context_get_background (NULL, &r, &g, &b);
+  gimp_context_get_background (NULL, &rbd.bg);
 
-  rbd.bg.r = r / 255.0;
-  rbd.bg.g = g / 255.0;
-  rbd.bg.b = b / 255.0;
-  rbd.bg.a = 1.0; /* opaque, for now */
+  /* rbd.bg.a = 1.0; */ /* opaque, for now */
 
   switch (blend_mode)
     {
