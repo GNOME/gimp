@@ -1,3 +1,9 @@
+2003-05-23  Raphael Quinet  <quinet@gamers.org>
+
+	* plug-ins/imagemap/Makefile.am: added rules for rebuilding the
+	source .c files from the .l (lex/flex) and .y (yacc/bison) files.
+	Fixes a non-critical part of bug #113445.
+
 2003-05-23  Michael Natterer  <mitch@gimp.org>
 
 	* modules/Makefile.am: Always provide interlibrary

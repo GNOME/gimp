@@ -143,3 +143,37 @@ LDADD = \
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
+
+## The following rules are not necessary for most users.  They are
+## only used by the maintainers who modify the symbols and grammar
+## that are used for parsing the map files.  These rules are very
+## specific and a test for flex and bison in configure.in would not be
+## appropriate in most cases, so the Makefile rules are included here.
+## In addition, the default rules provided by automake would not be
+## sufficient because the source and target files have different base
+## names and because of the non-standard prefix used in the output
+## code (cern_, csim_, ncsa_).
+
+## Require flex because the standard lex does not support the -P option.
+LEX=flex
+YACC=bison -y
+
+imap_cern_lex.c: imap_cern.l
+	@$(RM) $@
+	$(LEX) $(LFLAGS) -Pcern_ -t $< > $@
+imap_csim_lex.c: imap_csim.l
+	@$(RM) $@
+	$(LEX) $(LFLAGS) -Pcsim_ -t $< > $@
+imap_ncsa_lex.c: imap_ncsa.l
+	@$(RM) $@
+	$(LEX) $(LFLAGS) -Pncsa_ -t $< > $@
+
+imap_cern_parse.c: imap_cern.y
+	$(YACC) $(YFLAGS) -p cern_ $<
+	mv -f y.tab.c $@
+imap_csim_parse.c: imap_csim.y
+	$(YACC) $(YFLAGS) -p csim_ $<
+	mv -f y.tab.c $@
+imap_ncsa_parse.c: imap_ncsa.y
+	$(YACC) $(YFLAGS) -p ncsa_ $<
+	mv -f y.tab.c $@
