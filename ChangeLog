@@ -1,3 +1,9 @@
+2003-08-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/helpbrowser/helpbrowser.c: some cleanup and fixes before
+	porting to the new help ID based system. Definitely broken at the
+	moment.
+
 2003-08-26  Sven Neumann  <sven@gimp.org>
 
 	* app/core/core-enums.h: use GIMP_GRADIENT as prefix for the

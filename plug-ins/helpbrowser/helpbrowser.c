@@ -73,6 +73,13 @@ typedef struct
   gint         count;
 } HistoryItem;
 
+typedef struct
+{
+  gchar *help_path;
+  gchar *locale;
+  gchar *help_id;
+} IdleHelp;
+
 
 static const gchar *eek_png_tag = "<h1>Eeek!</h1>";
 
@@ -111,17 +118,21 @@ GimpPlugInInfo PLUG_IN_INFO =
 };
 
 
-/*  forward declaration  */
+/*  forward declarations  */
 
-static void     load_page   (const gchar  *ref,
-                             gboolean      add_to_queue);
-static void     request_url (HtmlDocument *doc,
-                             const gchar  *url,
-                             HtmlStream   *stream,
-                             gpointer      data);
-static gboolean io_handler  (GIOChannel   *io,
-                             GIOCondition  condition,
-                             gpointer      data);
+static void       load_help      (const gchar  *help_path,
+                                  const gchar  *locale,
+                                  const gchar  *help_id);
+static gboolean   idle_load_help (gpointer      data);
+static void       load_page      (const gchar  *ref,
+                                  gboolean      add_to_queue);
+static void     request_url      (HtmlDocument *doc,
+                                  const gchar  *url,
+                                  HtmlStream   *stream,
+                                  gpointer      data);
+static gboolean io_handler       (GIOChannel   *io,
+                                  GIOCondition  condition,
+                                  gpointer      data);
 
 
 /* Taken from glib/gconvert.c:
@@ -331,6 +342,38 @@ title_changed (HtmlDocument *doc,
 }
 
 static void
+load_help (const gchar *help_path,
+           const gchar *locale,
+           const gchar *help_id)
+{
+  gchar *path;
+
+  if (! current_ref)
+    current_ref = g_strconcat ("file://", help_path, "/", locale, "/", NULL);
+
+  path = g_strconcat ("file://", help_path, "/", locale, "/", help_id, NULL);
+
+  load_page (help_id, TRUE);
+}
+
+static gboolean
+idle_load_help (gpointer data)
+{
+  IdleHelp *idle_help = data;
+
+  load_help (idle_help->help_path,
+             idle_help->locale,
+             idle_help->help_id);
+
+  g_free (idle_help->help_path);
+  g_free (idle_help->locale);
+  g_free (idle_help->help_id);
+  g_free (idle_help);
+
+  return FALSE;
+}
+
+static void
 load_remote_page (const gchar *ref)
 {
   GimpParam *return_vals;
@@ -456,7 +499,7 @@ request_url (HtmlDocument *doc,
              "</html>",
              _("Document Not Found"),
              eek_png_tag,
-             _("Could not locate help documentation"),
+             _("Could not locate help document"),
              name,
              _("The requested document could not be found in your GIMP help "
                "path as shown above. This means that the topic has not yet "
@@ -562,9 +605,7 @@ drag_data_get (GtkWidget        *widget,
 }
 
 static void
-open_browser_dialog (const gchar *help_path,
-		     const gchar *locale,
-		     const gchar *help_file)
+open_browser_dialog (void)
 {
   GtkWidget *window;
   GtkWidget *vbox;
@@ -708,21 +749,6 @@ open_browser_dialog (const gchar *help_path,
                     NULL);
 
   gtk_widget_show (window);
-
-  current_ref = g_strconcat ("file://", help_path, "/", locale, "/", NULL);
-
-  load_page (help_file, TRUE);
-}
-
-static gboolean
-idle_load_page (gpointer data)
-{
-  gchar *path = data;
-
-  load_page (path, TRUE);
-  g_free (path);
-
-  return FALSE;
 }
 
 static void
@@ -732,47 +758,38 @@ run_temp_proc (const gchar      *name,
 	       gint             *nreturn_vals,
 	       GimpParam       **return_vals)
 {
-  static GimpParam  values[1];
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  gchar *help_path;
-  gchar *locale;
-  gchar *help_file;
-  gchar *path;
+  static GimpParam   values[1];
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  IdleHelp          *idle_help;
+
+  idle_help = g_new0 (IdleHelp, 1);
 
   /*  set default values  */
-  help_path = g_strdup (gimp_help_root);
-  locale    = g_strdup ("C");
-  help_file = g_strdup ("introduction.html");
+  idle_help->help_path = g_strdup (gimp_help_root);
+  idle_help->locale    = g_strdup ("C");
+  idle_help->help_id   = g_strdup ("gimp-main");
 
   /*  Make sure all the arguments are there!  */
   if (nparams == 3)
     {
       if (param[0].data.d_string && strlen (param[0].data.d_string))
 	{
-	  g_free (help_path);
-	  help_path = g_strdup (param[0].data.d_string);
-	  g_strdelimit (help_path, "/", G_DIR_SEPARATOR);
+	  g_free (idle_help->help_path);
+	  idle_help->help_path = g_strdup (param[0].data.d_string);
 	}
       if (param[1].data.d_string && strlen (param[1].data.d_string))
 	{
-	  g_free (locale);
-	  locale    = g_strdup (param[1].data.d_string);
+	  g_free (idle_help->locale);
+	  idle_help->locale = g_strdup (param[1].data.d_string);
 	}
       if (param[2].data.d_string && strlen (param[2].data.d_string))
 	{
-	  g_free (help_file);
-	  help_file = g_strdup (param[2].data.d_string);
-	  g_strdelimit (help_file, "/", G_DIR_SEPARATOR);
+	  g_free (idle_help->help_id);
+	  idle_help->help_id = g_strdup (param[2].data.d_string);
 	}
     }
 
-  path = g_build_filename (help_path, locale, help_file, NULL);
-
-  g_free (help_path);
-  g_free (locale);
-  g_free (help_file);
-
-  g_idle_add (idle_load_page, path);  /* frees path */
+  g_idle_add (idle_load_help, idle_help);  /* frees idle_help */
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -786,10 +803,9 @@ install_temp_proc (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_STRING, "help_path", "" },
-    { GIMP_PDB_STRING, "locale",    "Language to use" },
-    { GIMP_PDB_STRING, "help_file", "Path of a local document to open. "
-                                    "Can be relative to GIMP_HELP_PATH." }
+    { GIMP_PDB_STRING, "help_path", ""                 },
+    { GIMP_PDB_STRING, "locale",    "Language to use"  },
+    { GIMP_PDB_STRING, "help_id",   "Help ID to open." }
   };
 
   gimp_install_temp_proc (GIMP_HELP_TEMP_EXT_NAME,
@@ -798,7 +814,7 @@ install_temp_proc (void)
 			  "Sven Neumann <sven@gimp.org>, "
 			  "Michael Natterer <mitch@gimp.org>",
 			  "Sven Neumann & Michael Natterer",
-			  "1999-2002",
+			  "1999-2003",
 			  NULL,
 			  "",
 			  GIMP_TEMPORARY,
@@ -814,11 +830,10 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,  "run_mode",  "Interactive" },
-    { GIMP_PDB_STRING, "help_path", "" },
-    { GIMP_PDB_STRING, "locale",    "Language to use" },
-    { GIMP_PDB_STRING, "help_file", "Path of a local document to open. "
-                                    "Can be relative to GIMP_HELP_PATH." }
+    { GIMP_PDB_INT32,  "run_mode",  "Interactive"      },
+    { GIMP_PDB_STRING, "help_path", ""                 },
+    { GIMP_PDB_STRING, "locale",    "Language to use"  },
+    { GIMP_PDB_STRING, "help_id",   "Help ID to open." }
   };
 
   gimp_install_procedure (GIMP_HELP_EXT_NAME,
@@ -828,7 +843,7 @@ query (void)
                           "Sven Neumann <sven@gimp.org>, "
 			  "Michael Natterer <mitch@gimp.org>",
 			  "Sven Neumann & Michael Natterer",
-                          "1999-2002",
+                          "1999-2003",
                           NULL,
                           "",
                           GIMP_EXTENSION,
@@ -843,21 +858,21 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam  values[1];
-  GimpRunMode       run_mode;
-  GimpPDBStatusType status  = GIMP_PDB_SUCCESS;
-  const gchar *env_root_dir = NULL;
-  gchar       *help_path    = NULL;
-  gchar       *locale       = NULL;
-  gchar       *help_file    = NULL;
+  static GimpParam   values[1];
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status       = GIMP_PDB_SUCCESS;
+  const gchar       *env_root_dir = NULL;
+  gchar             *help_path    = NULL;
+  gchar             *locale       = NULL;
+  gchar             *help_id      = NULL;
 
   run_mode = param[0].data.d_int32;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
   INIT_I18N ();
 
@@ -893,7 +908,7 @@ run (const gchar      *name,
 
 	  help_path = g_strdup (gimp_help_root);
 	  locale    = g_strdup ("C");
-	  help_file = g_strdup ("introduction.html");
+	  help_id   = g_strdup ("gimp-main");
 
 	  /*  Make sure all the arguments are there!  */
 	  if (nparams == 4)
@@ -910,8 +925,8 @@ run (const gchar      *name,
 		}
 	      if (param[3].data.d_string && strlen (param[3].data.d_string))
 		{
-		  g_free (help_file);
-		  help_file = g_strdup (param[3].data.d_string);
+		  g_free (help_id);
+		  help_id = g_strdup (param[3].data.d_string);
 		}
 	    }
           break;
@@ -923,7 +938,8 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          open_browser_dialog (help_path, locale, help_file);
+          open_browser_dialog ();
+          load_help (help_path, locale, help_id);
 
           install_temp_proc ();
 
@@ -937,7 +953,7 @@ run (const gchar      *name,
 
 	  g_free (help_path);
 	  g_free (locale);
-	  g_free (help_file);
+	  g_free (help_id);
         }
 
       values[0].data.d_status = status;
