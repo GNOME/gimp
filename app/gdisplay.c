@@ -1564,8 +1564,12 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
       type = drawable_type (drawable);
     }
 
-  menus_set_sensitive (_("<Image>/Layers/Raise Layer"), !fs && !aux && lp && alpha);
-  menus_set_sensitive (_("<Image>/Layers/Lower Layer"), !fs && !aux && lp && alpha);
+  menus_set_sensitive (_("<Image>/Layers/Stack/Previous Layer"), !fs && !aux && lp);
+  menus_set_sensitive (_("<Image>/Layers/Stack/Next Layer"), !fs && !aux && lp);
+  menus_set_sensitive (_("<Image>/Layers/Stack/Raise Layer"), !fs && !aux && lp && alpha);
+  menus_set_sensitive (_("<Image>/Layers/Stack/Lower Layer"), !fs && !aux && lp && alpha);
+  menus_set_sensitive (_("<Image>/Layers/Stack/Raise to Top"), !fs && !aux && lp && alpha);
+  menus_set_sensitive (_("<Image>/Layers/Stack/Lower to Bottom"), !fs && !aux && lp && alpha);
   menus_set_sensitive (_("<Image>/Layers/Anchor Layer"), fs && !aux && lp);
   menus_set_sensitive (_("<Image>/Layers/Merge Visible Layers"), !fs && !aux && lp);
   menus_set_sensitive (_("<Image>/Layers/Flatten Image"), !fs && !aux && lp);

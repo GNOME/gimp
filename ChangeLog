@@ -1,3 +1,15 @@
+1999-06-01  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/commands.[ch]
+	* app/gdisplay.c
+	* app/menus.c: for the pleasure of all: a deeper nested	submenu ;)
+
+	New <Image>/Layers/Stack submenu. Used the same top/bottom
+	shortcuts as in the layers dialog. Bind them to PageUp/Down and
+	you will never touch your mouse again to do this.
+	I'm thinking of dropping the current <ctrl>+[FBTU] in favour of
+	some <modifier>+PageUp/Down combinations. Test it, Tig !)
+
 Tue Jun  1 12:07:57 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/xwd/xwd.c: hackaround for buggy window managers (like
@@ -6,7 +18,7 @@ Tue Jun  1 12:07:57 PDT 1999 Manish Singh <yosh@gimp.org>
 1999-06-01  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/app_procs.c
-	* app/gimprc.c: renamed init_parse_buffers() to
+	* app/gimprc.[ch]: renamed init_parse_buffers() to
 	parse_buffers_init().
 
 	* app/gimprc.[ch] (parse_gimprc_file): return a boolean indicating

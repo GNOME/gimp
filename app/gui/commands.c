@@ -829,6 +829,58 @@ image_scale_cmd_callback (GtkWidget *widget,
 }
 
 void
+layers_previous_cmd_callback (GtkWidget *widget,
+			      gpointer   client_data)
+{
+  GDisplay * gdisp;
+  int current_layer;
+  Layer *new_layer;
+
+  gdisp = gdisplay_active ();
+
+  current_layer =
+    gimage_get_layer_index (gdisp->gimage, gdisp->gimage->active_layer);
+
+  /*  FIXME: don't use internal knowledge about layer lists
+   *  TODO : implement gimage_get_layer_by_index()
+   */
+  new_layer =
+    (Layer *) g_slist_nth_data (gdisp->gimage->layers, current_layer - 1);
+
+  if (new_layer)
+    {
+      gimage_set_active_layer (gdisp->gimage, new_layer);
+      gdisplays_flush ();
+    }
+}
+
+void
+layers_next_cmd_callback (GtkWidget *widget,
+			  gpointer   client_data)
+{
+  GDisplay * gdisp;
+  int current_layer;
+  Layer *new_layer;
+
+  gdisp = gdisplay_active ();
+
+  current_layer =
+    gimage_get_layer_index (gdisp->gimage, gdisp->gimage->active_layer);
+
+  /*  FIXME: don't use internal knowledge about layer lists
+   *  TODO : implement gimage_get_layer_by_index()
+   */
+  new_layer =
+    (Layer *) g_slist_nth_data (gdisp->gimage->layers, current_layer + 1);
+
+  if (new_layer)
+    {
+      gimage_set_active_layer (gdisp->gimage, new_layer);
+      gdisplays_flush ();
+    }
+}
+
+void
 layers_raise_cmd_callback (GtkWidget *widget,
 			   gpointer   client_data)
 {
@@ -849,6 +901,30 @@ layers_lower_cmd_callback (GtkWidget *widget,
   gdisp = gdisplay_active ();
 
   gimage_lower_layer (gdisp->gimage, gdisp->gimage->active_layer);
+  gdisplays_flush ();
+}
+
+void
+layers_raise_to_top_cmd_callback (GtkWidget *widget,
+				  gpointer   client_data)
+{
+  GDisplay * gdisp;
+
+  gdisp = gdisplay_active ();
+
+  gimage_raise_layer_to_top (gdisp->gimage, gdisp->gimage->active_layer);
+  gdisplays_flush ();
+}
+
+void
+layers_lower_to_bottom_cmd_callback (GtkWidget *widget,
+				     gpointer   client_data)
+{
+  GDisplay * gdisp;
+
+  gdisp = gdisplay_active ();
+
+  gimage_lower_layer_to_bottom (gdisp->gimage, gdisp->gimage->active_layer);
   gdisplays_flush ();
 }
 
