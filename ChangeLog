@@ -1,3 +1,13 @@
+Tue Mar 23 12:01:48 MET 1999 Sven Neumann <sven@gimp.org>
+
+	* configure.in
+	* plug-ins/gap/Makefile.am
+	* plug-ins/gap/.../Makefile.am (all subdirs)
+	Cleaned up the mess I left when adding the gap plug-in. Sorry!
+
+	* plug-ins/gap/gap_filter_foreach.c: Use g_getenv, g_malloc 
+	and g_free.
+
 Sun Mar 21 23:11:31 EST 1999  Adrian Likins <adrian@gimp.org>
 
 	* app/paintbrush.c: oops, forgot to make fade work

@@ -133,7 +133,7 @@ static gint p_pitstop(GRunModeType run_mode, char *plugin_name, gint text_flag,
    /* optional dialog between both calls (to see the effect of 1.call) */
    if(run_mode == RUN_INTERACTIVE)
    {
-      l_env = getenv("GAP_FILTER_PITSTOP");
+      l_env = g_getenv("GAP_FILTER_PITSTOP");
       if(l_env != NULL)
       {
          if((*l_env == 'N') || (*l_env == 'n'))
@@ -277,7 +277,7 @@ int p_foreach_multilayer(GRunModeType run_mode, gint32 image_id,
     else
     {
       /* allocate a table to store the visibility attributes for each layer */
-      l_visible_tab = (gint*) malloc((l_nlayers +1) * sizeof (gint));
+      l_visible_tab = (gint*) g_malloc((l_nlayers +1) * sizeof (gint));
       if(l_visible_tab == NULL)
          return -1;
 
@@ -354,7 +354,7 @@ int p_foreach_multilayer(GRunModeType run_mode, gint32 image_id,
               if(gap_debug) fprintf(stderr, "TERMINATED: by pitstop dialog\n");
               /* restore the visibility of all layers */         
               p_visibilty_restore(image_id, l_nlayers, l_visible_tab, plugin_name);
-              free(l_visible_tab);
+              g_free(l_visible_tab);
               return -1;
           }
           else
@@ -508,7 +508,7 @@ int p_foreach_multilayer(GRunModeType run_mode, gint32 image_id,
 
       /* restore the visibility of all layers */         
       p_visibilty_restore(image_id, l_nlayers, l_visible_tab, plugin_name);
-      free(l_visible_tab);
+      g_free(l_visible_tab);
     
     }
     
