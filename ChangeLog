@@ -1,3 +1,30 @@
+2004-09-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/layers-actions.c
+	* app/actions/layers-commands.[ch]: added actions and callbacks
+	"layers-preserve-transparency" and
+	"layers-paint-mode-first,last,previous,next". Update the "active"
+	state of the recently added layer mask property actions in
+	layers_actions_update().
+
+	* app/actions/drawable-actions.c
+	* app/actions/drawable-commands.[ch]: added actions and callbacks
+	for "drawable-visible" and "drawable-linked". Fixes bug #152597.
+
+	* app/actions/vectors-actions.c
+	* app/actions/vectors-commands.[ch]: same here ("vectors-visible"
+	and "vectors-linked").
+
+	* app/widgets/gimplayertreeview.c
+	(gimp_layer_tree_view_preserve_button_toggled): flush the image
+	so the new actions are updated. Compress preserve_trans undos.
+
+	* menus/image-menu.xml.in: added the layer mask property actions
+	to the Layers/Mask submenu.
+
+	* menus/layers-menu.xml: reordered the mask property actions
+	to have the same order as in the image menu.
+
 2004-09-15  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcontainertreeview.c

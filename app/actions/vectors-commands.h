@@ -60,6 +60,11 @@ void   vectors_import_cmd_callback               (GtkAction   *action,
 void   vectors_export_cmd_callback               (GtkAction   *action,
                                                   gpointer     data);
 
+void   vectors_visible_cmd_callback              (GtkAction   *action,
+                                                  gpointer     data);
+void   vectors_linked_cmd_callback               (GtkAction   *action,
+                                                  gpointer     data);
+
 void   vectors_vectors_tool                      (GimpVectors *vectors,
                                                   GimpContext *context,
                                                   GtkWidget   *parent);

@@ -33,6 +33,8 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-merge.h"
+#include "core/gimpimage-undo.h"
+#include "core/gimpitemundo.h"
 #include "core/gimpprogress.h"
 #include "core/gimptoolinfo.h"
 
@@ -113,18 +115,6 @@ vectors_new_cmd_callback (GtkAction *action,
 }
 
 void
-vectors_raise_to_top_cmd_callback (GtkAction *action,
-                                   gpointer   data)
-{
-  GimpImage   *gimage;
-  GimpVectors *vectors;
-  return_if_no_vectors (gimage, vectors, data);
-
-  gimp_image_raise_vectors_to_top (gimage, vectors);
-  gimp_image_flush (gimage);
-}
-
-void
 vectors_raise_cmd_callback (GtkAction *action,
                             gpointer   data)
 {
@@ -133,6 +123,18 @@ vectors_raise_cmd_callback (GtkAction *action,
   return_if_no_vectors (gimage, vectors, data);
 
   gimp_image_raise_vectors (gimage, vectors);
+  gimp_image_flush (gimage);
+}
+
+void
+vectors_raise_to_top_cmd_callback (GtkAction *action,
+                                   gpointer   data)
+{
+  GimpImage   *gimage;
+  GimpVectors *vectors;
+  return_if_no_vectors (gimage, vectors, data);
+
+  gimp_image_raise_vectors_to_top (gimage, vectors);
   gimp_image_flush (gimage);
 }
 
@@ -169,9 +171,10 @@ vectors_duplicate_cmd_callback (GtkAction *action,
   GimpVectors *new_vectors;
   return_if_no_vectors (gimage, vectors, data);
 
-  new_vectors =GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (vectors),
-                                                  G_TYPE_FROM_INSTANCE (vectors),
-                                                  TRUE));
+  new_vectors =
+    GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (vectors),
+                                       G_TYPE_FROM_INSTANCE (vectors),
+                                       TRUE));
   gimp_image_add_vectors (gimage, new_vectors, -1);
   gimp_image_flush (gimage);
 }
@@ -338,6 +341,60 @@ vectors_export_cmd_callback (GtkAction *action,
   return_if_no_widget (widget, data);
 
   vectors_export_query (gimage, vectors, widget);
+}
+
+void
+vectors_visible_cmd_callback (GtkAction *action,
+                              gpointer   data)
+{
+  GimpImage   *gimage;
+  GimpVectors *vectors;
+  gboolean     visible;
+  return_if_no_vectors (gimage, vectors, data);
+
+  visible = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  if (visible != gimp_item_get_visible (GIMP_ITEM (vectors)))
+    {
+      GimpUndo *undo;
+      gboolean  push_undo = TRUE;
+
+      undo = gimp_image_undo_can_compress (gimage, GIMP_TYPE_ITEM_UNDO,
+                                           GIMP_UNDO_ITEM_VISIBILITY);
+
+      if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (vectors))
+        push_undo = FALSE;
+
+      gimp_item_set_visible (GIMP_ITEM (vectors), visible, push_undo);
+      gimp_image_flush (gimage);
+    }
+}
+
+void
+vectors_linked_cmd_callback (GtkAction *action,
+                             gpointer   data)
+{
+  GimpImage   *gimage;
+  GimpVectors *vectors;
+  gboolean     linked;
+  return_if_no_vectors (gimage, vectors, data);
+
+  linked = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  if (linked != gimp_item_get_linked (GIMP_ITEM (vectors)))
+    {
+      GimpUndo *undo;
+      gboolean  push_undo = TRUE;
+
+      undo = gimp_image_undo_can_compress (gimage, GIMP_TYPE_ITEM_UNDO,
+                                           GIMP_UNDO_ITEM_LINKED);
+
+      if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (vectors))
+        push_undo = FALSE;
+
+      gimp_item_set_visible (GIMP_ITEM (vectors), linked, push_undo);
+      gimp_image_flush (gimage);
+    }
 }
 
 void

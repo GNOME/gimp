@@ -63,6 +63,21 @@ static GimpActionEntry drawable_actions[] =
     GIMP_HELP_LAYER_OFFSET }
 };
 
+static GimpToggleActionEntry drawable_toggle_actions[] =
+{
+  { "drawable-visible", GIMP_STOCK_VISIBLE,
+    N_("_Visible"), NULL, NULL,
+    G_CALLBACK (drawable_visible_cmd_callback),
+    FALSE,
+    NULL },
+
+  { "drawable-linked", GIMP_STOCK_LINKED,
+    N_("_Linked"), NULL, NULL,
+    G_CALLBACK (drawable_linked_cmd_callback),
+    FALSE,
+    NULL }
+};
+
 static GimpEnumActionEntry drawable_flip_actions[] =
 {
   { "drawable-flip-horizontal", GIMP_STOCK_FLIP_HORIZONTAL,
@@ -102,6 +117,10 @@ drawable_actions_setup (GimpActionGroup *group)
                                  drawable_actions,
                                  G_N_ELEMENTS (drawable_actions));
 
+  gimp_action_group_add_toggle_actions (group,
+                                        drawable_toggle_actions,
+                                        G_N_ELEMENTS (drawable_toggle_actions));
+
   gimp_action_group_add_enum_actions (group,
                                       drawable_flip_actions,
                                       G_N_ELEMENTS (drawable_flip_actions),
@@ -122,6 +141,8 @@ drawable_actions_update (GimpActionGroup *group,
   gboolean      is_rgb     = FALSE;
   gboolean      is_gray    = FALSE;
   gboolean      is_indexed = FALSE;
+  gboolean      visible    = FALSE;
+  gboolean      linked     = FALSE;
 
   gimage = action_data_get_image (data);
 
@@ -131,21 +152,33 @@ drawable_actions_update (GimpActionGroup *group,
 
       if (drawable)
         {
-          GimpImageType drawable_type = gimp_drawable_type (drawable);
+          GimpItem      *item          = GIMP_ITEM (drawable);
+          GimpImageType  drawable_type = gimp_drawable_type (drawable);
 
-          is_rgb     = GIMP_IMAGE_TYPE_IS_RGB (drawable_type);
-          is_gray    = GIMP_IMAGE_TYPE_IS_GRAY (drawable_type);
+          is_rgb     = GIMP_IMAGE_TYPE_IS_RGB     (drawable_type);
+          is_gray    = GIMP_IMAGE_TYPE_IS_GRAY    (drawable_type);
           is_indexed = GIMP_IMAGE_TYPE_IS_INDEXED (drawable_type);
+
+          visible = gimp_item_get_visible (item);
+          linked  = gimp_item_get_linked  (item);
         }
     }
 
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
+#define SET_ACTIVE(action,condition) \
+        gimp_action_group_set_action_active (group, action, (condition) != 0)
 
   SET_SENSITIVE ("drawable-desaturate", drawable &&   is_rgb);
   SET_SENSITIVE ("drawable-invert",     drawable && ! is_indexed);
   SET_SENSITIVE ("drawable-equalize",   drawable && ! is_indexed);
   SET_SENSITIVE ("drawable-offset",     drawable);
+
+  SET_SENSITIVE ("drawable-visible", drawable);
+  SET_SENSITIVE ("drawable-linked",  drawable);
+
+  SET_ACTIVE ("drawable-visible", visible);
+  SET_ACTIVE ("drawable-linked",  linked);
 
   SET_SENSITIVE ("drawable-flip-horizontal", drawable);
   SET_SENSITIVE ("drawable-flip-vertical",   drawable);
@@ -155,4 +188,5 @@ drawable_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("drawable-rotate-270", drawable);
 
 #undef SET_SENSITIVE
+#undef SET_ACTIVE
 }

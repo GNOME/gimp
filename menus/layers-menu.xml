@@ -24,11 +24,12 @@
     <menuitem action="layers-scale" />
     <separator />
     <menuitem action="layers-mask-add" />
+    <menuitem action="layers-mask-apply" />
+    <menuitem action="layers-mask-delete" />
+    <separator />
     <menuitem action="layers-mask-show" />
     <menuitem action="layers-mask-edit" />
     <menuitem action="layers-mask-disable" />
-    <menuitem action="layers-mask-apply" />
-    <menuitem action="layers-mask-delete" />
     <menuitem action="layers-mask-selection-replace" />
     <separator />
     <menuitem action="layers-alpha-add" />

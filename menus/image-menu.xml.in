@@ -347,6 +347,12 @@
           <menuitem action="layers-mask-delete" />
         </placeholder>
 	<separator />
+        <placeholder name="Properties">
+          <menuitem action="layers-mask-show" />
+          <menuitem action="layers-mask-edit" />
+          <menuitem action="layers-mask-disable" />
+        </placeholder>
+	<separator />
         <placeholder name="Selection">
           <menuitem action="layers-mask-selection-replace" />
           <menuitem action="layers-mask-selection-add" />
@@ -394,6 +400,14 @@
       <placeholder name="Crop">
         <menuitem action="layers-crop" />
       </placeholder>
+      <separator />
+<!--
+      <placeholder name="Properties">
+        <menuitem action="drawable-visible" />
+        <menuitem action="drawable-linked" />
+	<menuitem action="layers-preserve-transparency" />
+      </placeholder>
+-->
       <separator />
     </menu>
 

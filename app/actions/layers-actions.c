@@ -26,6 +26,7 @@
 
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
+#include "core/gimplayermask.h"
 #include "core/gimplist.h"
 
 #include "text/gimptextlayer.h"
@@ -156,15 +157,21 @@ static GimpActionEntry layers_actions[] =
     GIMP_HELP_LAYER_ALPHA_ADD }
 };
 
-static GimpToggleActionEntry layers_mask_toggle_actions[] =
+static GimpToggleActionEntry layers_toggle_actions[] =
 {
-  { "layers-mask-edit", NULL,
+  { "layers-preserve-transparency", GIMP_STOCK_TRANSPARENCY,
+    N_("Preserve Transparency"), NULL, NULL,
+    G_CALLBACK (layers_preserve_trans_cmd_callback),
+    FALSE,
+    NULL },
+
+  { "layers-mask-edit", GIMP_STOCK_EDIT,
     N_("Edit Layer Mask"), NULL, NULL,
     G_CALLBACK (layers_mask_edit_cmd_callback),
     FALSE,
     NULL },
 
-  { "layers-mask-show", NULL,
+  { "layers-mask-show", GIMP_STOCK_VISIBLE,
     N_("Show Layer Mask"), NULL, NULL,
     G_CALLBACK (layers_mask_show_cmd_callback),
     FALSE,
@@ -291,6 +298,26 @@ static GimpEnumActionEntry layers_opacity_actions[] =
     NULL }
 };
 
+static GimpEnumActionEntry layers_paint_mode_actions[] =
+{
+  { "layers-paint-mode-first", GIMP_STOCK_TOOL_PENCIL,
+    "First Paint Mode", NULL, NULL,
+    GIMP_ACTION_SELECT_FIRST,
+    NULL },
+  { "layers-paint-mode-last", GIMP_STOCK_TOOL_PENCIL,
+    "Last Paint Mode", NULL, NULL,
+    GIMP_ACTION_SELECT_LAST,
+    NULL },
+  { "layers-paint-mode-previous", GIMP_STOCK_TOOL_PENCIL,
+    "Previous Paint Mode", NULL, NULL,
+    GIMP_ACTION_SELECT_PREVIOUS,
+    NULL },
+  { "layers-paint-mode-next", GIMP_STOCK_TOOL_PENCIL,
+    "Next Paint Mode", NULL, NULL,
+    GIMP_ACTION_SELECT_NEXT,
+    NULL }
+};
+
 
 void
 layers_actions_setup (GimpActionGroup *group)
@@ -299,14 +326,14 @@ layers_actions_setup (GimpActionGroup *group)
                                  layers_actions,
                                  G_N_ELEMENTS (layers_actions));
 
+  gimp_action_group_add_toggle_actions (group,
+                                        layers_toggle_actions,
+                                        G_N_ELEMENTS (layers_toggle_actions));
+
   gimp_action_group_add_enum_actions (group,
                                       layers_mask_apply_actions,
                                       G_N_ELEMENTS (layers_mask_apply_actions),
                                       G_CALLBACK (layers_mask_apply_cmd_callback));
-
-  gimp_action_group_add_toggle_actions (group,
-                                        layers_mask_toggle_actions,
-                                        G_N_ELEMENTS (layers_mask_toggle_actions));
 
   gimp_action_group_add_enum_actions (group,
                                       layers_mask_to_selection_actions,
@@ -322,27 +349,34 @@ layers_actions_setup (GimpActionGroup *group)
                                       layers_select_actions,
                                       G_N_ELEMENTS (layers_select_actions),
                                       G_CALLBACK (layers_select_cmd_callback));
+
   gimp_action_group_add_enum_actions (group,
                                       layers_opacity_actions,
                                       G_N_ELEMENTS (layers_opacity_actions),
                                       G_CALLBACK (layers_opacity_cmd_callback));
+
+  gimp_action_group_add_enum_actions (group,
+                                      layers_paint_mode_actions,
+                                      G_N_ELEMENTS (layers_paint_mode_actions),
+                                      G_CALLBACK (layers_paint_mode_cmd_callback));
 }
 
 void
 layers_actions_update (GimpActionGroup *group,
                        gpointer         data)
 {
-  GimpImage *gimage;
-  GimpLayer *layer      = NULL;
-  gboolean   fs         = FALSE;    /*  floating sel           */
-  gboolean   ac         = FALSE;    /*  active channel         */
-  gboolean   lm         = FALSE;    /*  layer mask             */
-  gboolean   alpha      = FALSE;    /*  alpha channel present  */
-  gboolean   indexed    = FALSE;    /*  is indexed             */
-  gboolean   next_alpha = FALSE;
-  gboolean   text_layer = FALSE;
-  GList     *next       = NULL;
-  GList     *prev       = NULL;
+  GimpImage     *gimage;
+  GimpLayer     *layer      = NULL;
+  GimpLayerMask *mask       = FALSE;    /*  layer mask             */
+  gboolean       fs         = FALSE;    /*  floating sel           */
+  gboolean       ac         = FALSE;    /*  active channel         */
+  gboolean       alpha      = FALSE;    /*  alpha channel present  */
+  gboolean       indexed    = FALSE;    /*  is indexed             */
+  gboolean       preserve   = FALSE;
+  gboolean       next_alpha = FALSE;
+  gboolean       text_layer = FALSE;
+  GList         *next       = NULL;
+  GList         *prev       = NULL;
 
   gimage = action_data_get_image (data);
 
@@ -353,7 +387,11 @@ layers_actions_update (GimpActionGroup *group,
       layer = gimp_image_get_active_layer (gimage);
 
       if (layer)
-        lm = (gimp_layer_get_mask (layer)) ? TRUE : FALSE;
+        {
+          mask = gimp_layer_get_mask (layer);
+
+          preserve = gimp_layer_get_preserve_trans (layer);
+        }
 
       fs = (gimp_image_floating_sel (gimage) != NULL);
       ac = (gimp_image_get_active_channel (gimage) != NULL);
@@ -387,6 +425,8 @@ layers_actions_update (GimpActionGroup *group,
         gimp_action_group_set_action_visible (group, action, (condition) != 0)
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
+#define SET_ACTIVE(action,condition) \
+        gimp_action_group_set_action_active (group, action, (condition) != 0)
 
   SET_VISIBLE   ("layers-text-tool",       text_layer && !ac);
   SET_SENSITIVE ("layers-edit-attributes", layer && !fs && !ac);
@@ -415,18 +455,27 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-resize-to-image", layer && !ac);
   SET_SENSITIVE ("layers-scale",           layer && !ac);
 
-  SET_SENSITIVE ("layers-mask-add",      layer && !fs && !ac && !lm && alpha);
-  SET_SENSITIVE ("layers-mask-edit",     layer && !fs && !ac &&  lm);
-  SET_SENSITIVE ("layers-mask-show",     layer && !fs && !ac &&  lm);
-  SET_SENSITIVE ("layers-mask-disable",  layer && !fs && !ac &&  lm);
-  SET_SENSITIVE ("layers-mask-apply",    layer && !fs && !ac &&  lm);
-  SET_SENSITIVE ("layers-mask-delete",   layer && !fs && !ac &&  lm);
-  SET_SENSITIVE ("layers-alpha-add",     layer && !fs && !alpha);
+  SET_SENSITIVE ("layers-alpha-add", layer && !fs && !alpha);
 
-  SET_SENSITIVE ("layers-mask-selection-replace",   layer && !fs && !ac && lm);
-  SET_SENSITIVE ("layers-mask-selection-add",       layer && !fs && !ac && lm);
-  SET_SENSITIVE ("layers-mask-selection-subtract",  layer && !fs && !ac && lm);
-  SET_SENSITIVE ("layers-mask-selection-intersect", layer && !fs && !ac && lm);
+  SET_SENSITIVE ("layers-preserve-transparency", layer);
+  SET_ACTIVE    ("layers-preserve-transparency", preserve);
+
+  SET_SENSITIVE ("layers-mask-add",    layer && !fs && !ac && !mask && alpha);
+  SET_SENSITIVE ("layers-mask-apply",  layer && !fs && !ac &&  mask);
+  SET_SENSITIVE ("layers-mask-delete", layer && !fs && !ac &&  mask);
+
+  SET_SENSITIVE ("layers-mask-edit",    layer && !fs && !ac &&  mask);
+  SET_SENSITIVE ("layers-mask-show",    layer && !fs && !ac &&  mask);
+  SET_SENSITIVE ("layers-mask-disable", layer && !fs && !ac &&  mask);
+
+  SET_ACTIVE ("layers-mask-edit",    mask && gimp_layer_mask_get_edit (mask));
+  SET_ACTIVE ("layers-mask-show",    mask && gimp_layer_mask_get_show (mask));
+  SET_ACTIVE ("layers-mask-disable", mask && !gimp_layer_mask_get_apply (mask));
+
+  SET_SENSITIVE ("layers-mask-selection-replace",   layer && !fs && !ac && mask);
+  SET_SENSITIVE ("layers-mask-selection-add",       layer && !fs && !ac && mask);
+  SET_SENSITIVE ("layers-mask-selection-subtract",  layer && !fs && !ac && mask);
+  SET_SENSITIVE ("layers-mask-selection-intersect", layer && !fs && !ac && mask);
 
   SET_SENSITIVE ("layers-alpha-selection-replace",   layer && !fs && !ac);
   SET_SENSITIVE ("layers-alpha-selection-add",       layer && !fs && !ac);
@@ -435,4 +484,5 @@ layers_actions_update (GimpActionGroup *group,
 
 #undef SET_VISIBLE
 #undef SET_SENSITIVE
+#undef SET_ACTIVE
 }

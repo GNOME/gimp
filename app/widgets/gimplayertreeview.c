@@ -984,9 +984,21 @@ gimp_layer_tree_view_preserve_button_toggled (GtkWidget         *widget,
 
       if (gimp_layer_get_preserve_trans (layer) != preserve_trans)
         {
+          GimpUndo *undo;
+          gboolean  push_undo = TRUE;
+
+          /*  compress opacity undos  */
+          undo = gimp_image_undo_can_compress (gimage, GIMP_TYPE_ITEM_UNDO,
+                                               GIMP_UNDO_LAYER_PRESERVE_TRANS);
+
+          if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))
+            push_undo = FALSE;
+
           BLOCK();
-          gimp_layer_set_preserve_trans (layer, preserve_trans, TRUE);
+          gimp_layer_set_preserve_trans (layer, preserve_trans, push_undo);
           UNBLOCK();
+
+          gimp_image_flush (gimage);
         }
     }
 }

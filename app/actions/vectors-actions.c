@@ -120,6 +120,21 @@ static GimpActionEntry vectors_actions[] =
     GIMP_HELP_PATH_EXPORT }
 };
 
+static GimpToggleActionEntry vectors_toggle_actions[] =
+{
+  { "vectors-visible", GIMP_STOCK_VISIBLE,
+    N_("_Visible"), NULL, NULL,
+    G_CALLBACK (vectors_visible_cmd_callback),
+    FALSE,
+    NULL },
+
+  { "vectors-linked", GIMP_STOCK_LINKED,
+    N_("_Linked"), NULL, NULL,
+    G_CALLBACK (vectors_linked_cmd_callback),
+    FALSE,
+    NULL }
+};
+
 static GimpEnumActionEntry vectors_to_selection_actions[] =
 {
   { "vectors-selection-replace", GIMP_STOCK_SELECTION_REPLACE,
@@ -174,6 +189,10 @@ vectors_actions_setup (GimpActionGroup *group)
                                  vectors_actions,
                                  G_N_ELEMENTS (vectors_actions));
 
+  gimp_action_group_add_toggle_actions (group,
+                                        vectors_toggle_actions,
+                                        G_N_ELEMENTS (vectors_toggle_actions));
+
   gimp_action_group_add_enum_actions (group,
                                       vectors_to_selection_actions,
                                       G_N_ELEMENTS (vectors_to_selection_actions),
@@ -194,6 +213,8 @@ vectors_actions_update (GimpActionGroup *group,
   gint         n_vectors  = 0;
   gboolean     mask_empty = TRUE;
   gboolean     global_buf = FALSE;
+  gboolean     visible    = FALSE;
+  gboolean     linked     = FALSE;
   GList       *next       = NULL;
   GList       *prev       = NULL;
 
@@ -211,6 +232,14 @@ vectors_actions_update (GimpActionGroup *group,
 
       global_buf = FALSE;
 
+      if (vectors)
+        {
+          GimpItem *item = GIMP_ITEM (vectors);
+
+          visible = gimp_item_get_visible (item);
+          linked  = gimp_item_get_linked  (item);
+        }
+
       for (list = GIMP_LIST (gimage->vectors)->list;
            list;
            list = g_list_next (list))
@@ -226,6 +255,8 @@ vectors_actions_update (GimpActionGroup *group,
 
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
+#define SET_ACTIVE(action,condition) \
+        gimp_action_group_set_action_active (group, action, (condition) != 0)
 
   SET_SENSITIVE ("vectors-path-tool",       vectors);
   SET_SENSITIVE ("vectors-edit-attributes", vectors);
@@ -240,15 +271,21 @@ vectors_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("vectors-lower",           vectors && next);
   SET_SENSITIVE ("vectors-lower-to-bottom", vectors && next);
 
-  SET_SENSITIVE ("vectors-selection-to-vectors",          ! mask_empty);
-  SET_SENSITIVE ("vectors-selection-to-vectors-short",    ! mask_empty);
-  SET_SENSITIVE ("vectors-selection-to-vectors-advanced", ! mask_empty);
-  SET_SENSITIVE ("vectors-stroke",                        vectors);
-
   SET_SENSITIVE ("vectors-copy",   vectors);
   SET_SENSITIVE ("vectors-paste",  global_buf);
   SET_SENSITIVE ("vectors-import", gimage);
   SET_SENSITIVE ("vectors-export", vectors);
+
+  SET_SENSITIVE ("vectors-visible", vectors);
+  SET_SENSITIVE ("vectors-linked",  vectors);
+
+  SET_ACTIVE ("vectors-visible", visible);
+  SET_ACTIVE ("vectors-linked",  linked);
+
+  SET_SENSITIVE ("vectors-selection-to-vectors",          ! mask_empty);
+  SET_SENSITIVE ("vectors-selection-to-vectors-short",    ! mask_empty);
+  SET_SENSITIVE ("vectors-selection-to-vectors-advanced", ! mask_empty);
+  SET_SENSITIVE ("vectors-stroke",                        vectors);
 
   SET_SENSITIVE ("vectors-selection-replace",      vectors);
   SET_SENSITIVE ("vectors-selection-from-vectors", vectors);
@@ -257,4 +294,5 @@ vectors_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("vectors-selection-intersect",    vectors);
 
 #undef SET_SENSITIVE
+#undef SET_ACTIVE
 }

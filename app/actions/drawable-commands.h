@@ -26,6 +26,10 @@ void   drawable_invert_cmd_callback     (GtkAction *action,
                                          gpointer   data);
 void   drawable_equalize_cmd_callback   (GtkAction *action,
                                          gpointer   data);
+void   drawable_visible_cmd_callback    (GtkAction *action,
+                                         gpointer   data);
+void   drawable_linked_cmd_callback     (GtkAction *action,
+                                         gpointer   data);
 void   drawable_flip_cmd_callback       (GtkAction *action,
                                          gint       value,
                                          gpointer   data);

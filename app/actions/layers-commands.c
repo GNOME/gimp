@@ -69,19 +69,46 @@
 #include "gimp-intl.h"
 
 
+static const GimpLayerModeEffects paint_modes[] =
+{
+  GIMP_NORMAL_MODE,
+  GIMP_DISSOLVE_MODE,
+  GIMP_MULTIPLY_MODE,
+  GIMP_DIVIDE_MODE,
+  GIMP_SCREEN_MODE,
+  GIMP_OVERLAY_MODE,
+  GIMP_DODGE_MODE,
+  GIMP_BURN_MODE,
+  GIMP_HARDLIGHT_MODE,
+  GIMP_SOFTLIGHT_MODE,
+  GIMP_GRAIN_EXTRACT_MODE,
+  GIMP_GRAIN_MERGE_MODE,
+  GIMP_DIFFERENCE_MODE,
+  GIMP_ADDITION_MODE,
+  GIMP_SUBTRACT_MODE,
+  GIMP_DARKEN_ONLY_MODE,
+  GIMP_LIGHTEN_ONLY_MODE,
+  GIMP_HUE_MODE,
+  GIMP_SATURATION_MODE,
+  GIMP_COLOR_MODE,
+  GIMP_VALUE_MODE
+};
+
+
 /*  local function prototypes  */
 
-static void   layers_add_mask_query     (GimpLayer   *layer,
-                                         GtkWidget   *parent);
-static void   layers_scale_layer_query  (GimpDisplay *gdisp,
-                                         GimpImage   *gimage,
-                                         GimpLayer   *layer,
-                                         GtkWidget   *parent);
-static void   layers_resize_layer_query (GimpDisplay *gdisp,
-                                         GimpImage   *gimage,
-                                         GimpLayer   *layer,
-                                         GimpContext *context,
-                                         GtkWidget   *parent);
+static void   layers_add_mask_query     (GimpLayer            *layer,
+                                         GtkWidget            *parent);
+static void   layers_scale_layer_query  (GimpDisplay          *gdisp,
+                                         GimpImage            *gimage,
+                                         GimpLayer            *layer,
+                                         GtkWidget            *parent);
+static void   layers_resize_layer_query (GimpDisplay          *gdisp,
+                                         GimpImage            *gimage,
+                                         GimpLayer            *layer,
+                                         GimpContext          *context,
+                                         GtkWidget            *parent);
+static gint   layers_paint_mode_index   (GimpLayerModeEffects  paint_mode);
 
 
 /*  public functions  */
@@ -161,18 +188,6 @@ layers_raise_cmd_callback (GtkAction *action,
 }
 
 void
-layers_lower_cmd_callback (GtkAction *action,
-			   gpointer   data)
-{
-  GimpImage *gimage;
-  GimpLayer *layer;
-  return_if_no_layer (gimage, layer, data);
-
-  gimp_image_lower_layer (gimage, layer);
-  gimp_image_flush (gimage);
-}
-
-void
 layers_raise_to_top_cmd_callback (GtkAction *action,
 				  gpointer   data)
 {
@@ -181,6 +196,18 @@ layers_raise_to_top_cmd_callback (GtkAction *action,
   return_if_no_layer (gimage, layer, data);
 
   gimp_image_raise_layer_to_top (gimage, layer);
+  gimp_image_flush (gimage);
+}
+
+void
+layers_lower_cmd_callback (GtkAction *action,
+			   gpointer   data)
+{
+  GimpImage *gimage;
+  GimpLayer *layer;
+  return_if_no_layer (gimage, layer, data);
+
+  gimp_image_lower_layer (gimage, layer);
   gimp_image_flush (gimage);
 }
 
@@ -386,6 +413,7 @@ layers_mask_edit_cmd_callback (GtkAction *action,
   return_if_no_layer (gimage, layer, data);
 
   mask = gimp_layer_get_mask (layer);
+
   if (mask)
     {
       gboolean active;
@@ -522,13 +550,68 @@ layers_opacity_cmd_callback (GtkAction *action,
   if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))
     push_undo = FALSE;
 
-  opacity = gimp_layer_get_opacity (layer);
   opacity = action_select_value ((GimpActionSelectType) value,
-                                 opacity,
+                                 gimp_layer_get_opacity (layer),
                                  0.0, 1.0,
                                  0.01, 0.1, FALSE);
   gimp_layer_set_opacity (layer, opacity, push_undo);
   gimp_image_flush (gimage);
+}
+
+void
+layers_paint_mode_cmd_callback (GtkAction *action,
+                                gint       value,
+                                gpointer   data)
+{
+  GimpImage            *gimage;
+  GimpLayer            *layer;
+  GimpLayerModeEffects  paint_mode;
+  gint                  index;
+  GimpUndo             *undo;
+  gboolean              push_undo = TRUE;
+  return_if_no_layer (gimage, layer, data);
+
+  undo = gimp_image_undo_can_compress (gimage, GIMP_TYPE_ITEM_UNDO,
+                                       GIMP_UNDO_LAYER_OPACITY);
+
+  if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))
+    push_undo = FALSE;
+
+  paint_mode = gimp_layer_get_mode (layer);
+
+  index = action_select_value ((GimpActionSelectType) value,
+                               layers_paint_mode_index (paint_mode),
+                               0, G_N_ELEMENTS (paint_modes) - 1,
+                               1.0, 1.0, FALSE);
+  gimp_layer_set_mode (layer, paint_modes[index], push_undo);
+  gimp_image_flush (gimage);
+}
+
+void
+layers_preserve_trans_cmd_callback (GtkAction *action,
+                                    gpointer   data)
+{
+  GimpImage *gimage;
+  GimpLayer *layer;
+  gboolean   preserve;
+  return_if_no_layer (gimage, layer, data);
+
+  preserve = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  if (preserve != gimp_layer_get_preserve_trans (layer))
+    {
+      GimpUndo *undo;
+      gboolean  push_undo = TRUE;
+
+      undo = gimp_image_undo_can_compress (gimage, GIMP_TYPE_ITEM_UNDO,
+                                           GIMP_UNDO_LAYER_PRESERVE_TRANS);
+
+      if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))
+        push_undo = FALSE;
+
+      gimp_layer_set_preserve_trans (layer, preserve, push_undo);
+      gimp_image_flush (gimage);
+    }
 }
 
 void
@@ -1285,4 +1368,15 @@ layers_resize_layer_query (GimpDisplay *gdisp,
 		     options);
 
   gtk_widget_show (options->dialog->shell);
+}
+
+static gint
+layers_paint_mode_index (GimpLayerModeEffects paint_mode)
+{
+  gint i = 0;
+
+  while (i < (G_N_ELEMENTS (paint_modes) - 1) && paint_modes[i] != paint_mode)
+    i++;
+
+  return i;
 }

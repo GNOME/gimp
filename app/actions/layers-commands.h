@@ -33,9 +33,9 @@ void   layers_select_cmd_callback             (GtkAction   *action,
 
 void   layers_raise_cmd_callback              (GtkAction   *action,
                                                gpointer     data);
-void   layers_lower_cmd_callback              (GtkAction   *action,
-                                               gpointer     data);
 void   layers_raise_to_top_cmd_callback       (GtkAction   *action,
+                                               gpointer     data);
+void   layers_lower_cmd_callback              (GtkAction   *action,
                                                gpointer     data);
 void   layers_lower_to_bottom_cmd_callback    (GtkAction   *action,
                                                gpointer     data);
@@ -83,6 +83,12 @@ void   layers_alpha_to_selection_cmd_callback (GtkAction   *action,
 
 void   layers_opacity_cmd_callback            (GtkAction   *action,
                                                gint         value,
+                                               gpointer     data);
+void   layers_paint_mode_cmd_callback         (GtkAction   *action,
+                                               gint         value,
+                                               gpointer     data);
+
+void   layers_preserve_trans_cmd_callback     (GtkAction   *action,
                                                gpointer     data);
 
 void   layers_text_tool                       (GimpLayer   *layer,
