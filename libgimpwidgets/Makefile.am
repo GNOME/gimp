@@ -148,11 +148,14 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpwidgets.h		\
 	gimpwidgetstypes.h	\
 	gimpbutton.h		\
+	gimpcellrenderercolor.h	\
+	gimpcellrenderertoggle.h\
 	gimpchainbutton.h	\
 	gimpcolorarea.h		\
 	gimpcolorbutton.h	\
 	gimpcolordisplay.h	\
 	gimpcolordisplaystack.h	\
+	gimpcolorhexentry.h	\
 	gimpcolornotebook.h	\
 	gimpcolorscale.h	\
 	gimpcolorscales.h	\

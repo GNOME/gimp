@@ -1,5 +1,10 @@
 2004-07-26  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/Makefile.am (libgimpwidgetsinclude_HEADERS):
+	added new files.
+
+2004-07-26  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/Makefile.am
 	* app/widgets/gimpcellrenderertoggle.[ch]: moved to libgimpwidgets.
 
