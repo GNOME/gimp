@@ -543,7 +543,8 @@ gimp_template_editor_new (GimpTemplate *template,
           g_object_unref (object);
 
           if (strcmp (list->data, stock_id) == 0)
-            gimp_context_set_template (editor->stock_id_context, object);
+            gimp_context_set_template (editor->stock_id_context,
+                                       GIMP_TEMPLATE (object));
         }
 
       g_slist_foreach (stock_list, (GFunc) g_free, NULL);

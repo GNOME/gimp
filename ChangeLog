@@ -1,3 +1,8 @@
+2003-10-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimptemplateeditor.c (gimp_template_editor_new): 
+	fixed warning (missing GIMP_TEMPLATE() cast).
+
 2003-10-14  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimptemplate.c (gimp_template_class_init): added blurbs
