@@ -861,8 +861,7 @@ gimp_layer_add_alpha (GimpLayer *layer)
   GIMP_DRAWABLE (layer)->has_alpha     = GIMP_IMAGE_TYPE_HAS_ALPHA (type);
   GIMP_DRAWABLE (layer)->preview_valid = FALSE;
 
-  gtk_signal_emit_by_name
-    (GTK_OBJECT (gimp_drawable_gimage (GIMP_DRAWABLE (layer))), "restructure");
+  gimp_image_alpha_changed (gimp_drawable_gimage (GIMP_DRAWABLE (layer)));
 }
 
 static void

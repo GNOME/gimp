@@ -149,6 +149,7 @@ struct _GimpImageClass
   GimpViewableClass  parent_class;
 
   void (* mode_changed)                 (GimpImage   *gimage);
+  void (* alpha_changed)                (GimpImage   *gimage);
   void (* size_changed)                 (GimpImage   *gimage);
   void (* active_layer_changed)         (GimpImage   *gimage);
   void (* active_channel_changed)       (GimpImage   *gimage);
@@ -164,7 +165,6 @@ struct _GimpImageClass
 					 gint         y1,
 					 gint         x2,
 					 gint         y2);
-  void (* restructure)                  (GimpImage   *gimage);
   void (* colormap_changed)             (GimpImage   *gimage,
 					 gint         color_index);
   void (* undo_event)                   (GimpImage   *gimage,
@@ -299,15 +299,16 @@ void            gimp_image_set_paths         (GimpImage          *gimage,
 PathList      * gimp_image_get_paths         (const GimpImage    *gimage);
 
 /* Temporary hack till colormap manipulation is encapsulated in functions.
-   Call this whenever you modify an image's colormap. The ncol argument
-   specifies which color has changed, or negative if there's a bigger change.
-   Currently, use this also when the image's base type is changed to/from
-   indexed.  */
-
+ * Call this whenever you modify an image's colormap. The col argument
+ * specifies which color has changed, or negative if there's a bigger change.
+ * Currently, use this also when the image's base type is changed to/from
+ * indexed.
+ */
 void		gimp_image_colormap_changed  (GimpImage          *gimage,
 					      gint                col);
 
 void            gimp_image_mode_changed      (GimpImage          *gimage);
+void            gimp_image_alpha_changed     (GimpImage          *gimage);
 void            gimp_image_size_changed      (GimpImage          *gimage);
 
 

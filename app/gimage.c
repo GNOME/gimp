@@ -47,19 +47,19 @@
  * layers_dialog, gdisplay, tools, etc..
  */
 
-static void gimage_dirty_handler        (GimpImage *gimage);
-static void gimage_destroy_handler      (GimpImage *gimage);
-static void gimage_cmap_change_handler  (GimpImage *gimage,
-					 gint       ncol,
-					 gpointer   user_data);
-static void gimage_rename_handler       (GimpImage *gimage);
-static void gimage_size_changed_handler (GimpImage *gimage);
-static void gimage_restructure_handler  (GimpImage *gimage);
-static void gimage_repaint_handler      (GimpImage *gimage,
-					 gint       x,
-					 gint       y,
-					 gint       w,
-					 gint       h);
+static void gimage_dirty_handler         (GimpImage *gimage);
+static void gimage_destroy_handler       (GimpImage *gimage);
+static void gimage_cmap_change_handler   (GimpImage *gimage,
+					  gint       ncol,
+					  gpointer   user_data);
+static void gimage_rename_handler        (GimpImage *gimage);
+static void gimage_size_changed_handler  (GimpImage *gimage);
+static void gimage_alpha_changed_handler (GimpImage *gimage);
+static void gimage_repaint_handler       (GimpImage *gimage,
+					  gint       x,
+					  gint       y,
+					  gint       w,
+					  gint       h);
 
 
 GimpImage *
@@ -81,8 +81,8 @@ gimage_new (gint              width,
   gtk_signal_connect (GTK_OBJECT (gimage), "size_changed",
 		      GTK_SIGNAL_FUNC (gimage_size_changed_handler),
 		      NULL);
-  gtk_signal_connect (GTK_OBJECT (gimage), "restructure",
-		      GTK_SIGNAL_FUNC (gimage_restructure_handler),
+  gtk_signal_connect (GTK_OBJECT (gimage), "alpha_changed",
+		      GTK_SIGNAL_FUNC (gimage_alpha_changed_handler),
 		      NULL);
   gtk_signal_connect (GTK_OBJECT (gimage), "repaint",
 		      GTK_SIGNAL_FUNC (gimage_repaint_handler),
@@ -171,7 +171,7 @@ gimage_size_changed_handler (GimpImage *gimage)
 }
 
 static void
-gimage_restructure_handler (GimpImage *gimage)
+gimage_alpha_changed_handler (GimpImage *gimage)
 {
   gdisplays_update_title (gimage);
 }

@@ -1,5 +1,16 @@
 2001-05-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimpimage.[ch]: renamed "restructure" to "alpha_changed" and
+	only emit it in flatten(), not in merge_layers().
+
+	* app/gimage.c
+	* app/gimplayer.c: changed accordingly.
+
+	* app/widgets/gimpcontainerlistview.c: set both scrollbar policies
+	to automatic.
+
+2001-05-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/gimpimage.[ch]: renamed the "resize" signal to "size_changed".
 
 	* app/gimage.c: changed accordingly.

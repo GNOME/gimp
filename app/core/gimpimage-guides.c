@@ -156,15 +156,16 @@ guint32 next_guide_id = 1;  /* For generating guide_ID handles for PDB stuff */
 enum
 {
   MODE_CHANGED,
+  ALPHA_CHANGED,
   SIZE_CHANGED,
   ACTIVE_LAYER_CHANGED,
   ACTIVE_CHANNEL_CHANGED,
   COMPONENT_VISIBILITY_CHANGED,
   COMPONENT_ACTIVE_CHANGED,
+
   CLEAN,
   DIRTY,
   REPAINT,
-  RESTRUCTURE,
   COLORMAP_CHANGED,
   UNDO_EVENT,
   LAST_SIGNAL
@@ -222,6 +223,15 @@ gimp_image_class_init (GimpImageClass *klass)
                     object_class->type,
                     GTK_SIGNAL_OFFSET (GimpImageClass,
 				       mode_changed),
+                    gtk_signal_default_marshaller,
+                    GTK_TYPE_NONE, 0);
+
+  gimp_image_signals[ALPHA_CHANGED] =
+    gtk_signal_new ("alpha_changed",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpImageClass,
+				       alpha_changed),
                     gtk_signal_default_marshaller,
                     GTK_TYPE_NONE, 0);
 
@@ -303,15 +313,6 @@ gimp_image_class_init (GimpImageClass *klass)
 		    GTK_TYPE_INT,
 		    GTK_TYPE_INT);
 
-  gimp_image_signals[RESTRUCTURE] =
-    gtk_signal_new ("restructure",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpImageClass,
-				       restructure),
-                    gtk_signal_default_marshaller,
-                    GTK_TYPE_NONE, 0);
-
   gimp_image_signals[COLORMAP_CHANGED] =
     gtk_signal_new ("colormap_changed",
                     GTK_RUN_FIRST,
@@ -343,6 +344,7 @@ gimp_image_class_init (GimpImageClass *klass)
   viewable_class->get_new_preview     = gimp_image_get_new_preview;
 
   klass->mode_changed                 = NULL;
+  klass->alpha_changed                = NULL;
   klass->size_changed                 = NULL;
   klass->active_layer_changed         = NULL;
   klass->active_channel_changed       = NULL;
@@ -352,7 +354,6 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->clean                        = NULL;
   klass->dirty                        = NULL;
   klass->repaint                      = NULL;
-  klass->restructure                  = NULL;
   klass->colormap_changed             = NULL;
   klass->undo_event                   = NULL;
   klass->undo                         = gimp_image_undo;
@@ -1616,7 +1617,7 @@ gimp_image_get_paths (const GimpImage *gimage)
 
   return gimage->paths;
 }
-	
+
 void
 gimp_image_colormap_changed (GimpImage *gimage, 
 			     gint       col)
@@ -1635,6 +1636,14 @@ gimp_image_mode_changed (GimpImage *gimage)
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   gtk_signal_emit (GTK_OBJECT (gimage), gimp_image_signals[MODE_CHANGED]);
+}
+
+void
+gimp_image_alpha_changed (GimpImage *gimage)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  gtk_signal_emit (GTK_OBJECT (gimage), gimp_image_signals[ALPHA_CHANGED]);
 }
 
 void
@@ -2962,6 +2971,8 @@ gimp_image_flatten (GimpImage *gimage)
   layer = gimp_image_merge_layers (gimage, merge_list, FLATTEN_IMAGE);
   g_slist_free (merge_list);
 
+  gimp_image_alpha_changed (gimage);
+
   gimp_remove_busy_cursors (NULL);
 
   return layer;
@@ -3026,7 +3037,7 @@ gimp_image_merge_layers (GimpImage *gimage,
   PixelRegion      *mask;
   GimpLayer        *merge_layer;
   GimpLayer        *layer;
-  GimpLayer        *bottom;
+  GimpLayer        *bottom_layer;
   LayerModeEffects  bottom_mode;
   guchar            bg[4] = {0, 0, 0, 0};
   GimpImageType     type;
@@ -3041,11 +3052,12 @@ gimp_image_merge_layers (GimpImage *gimage,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
-  layer = NULL;
-  type  = RGBA_GIMAGE;
-  x1 = y1 = x2 = y2 = 0;
-  bottom = NULL;
-  bottom_mode = NORMAL_MODE;
+  layer        = NULL;
+  type         = RGBA_GIMAGE;
+  x1 = y1      = 0;
+  x2 = y2      = 0;
+  bottom_layer = NULL;
+  bottom_mode  = NORMAL_MODE;
 
   /*  Get the layer extents  */
   count = 0;
@@ -3203,15 +3215,15 @@ gimp_image_merge_layers (GimpImage *gimage,
        *  Keep a pointer to it so that we can set the mode right after it's
        *  been merged so that undo works correctly.
        */
-      bottom = layer;
-      bottom_mode = bottom->mode;
+      bottom_layer = layer;
+      bottom_mode  = bottom_layer->mode;
 
       /* DISSOLVE_MODE is special since it is the only mode that does not
        *  work on the projection with the lower layer, but only locally on
        *  the layers alpha channel. 
        */
-      if (bottom->mode != DISSOLVE_MODE)
-	gimp_layer_set_mode (bottom, NORMAL_MODE);
+      if (bottom_layer->mode != DISSOLVE_MODE)
+	gimp_layer_set_mode (bottom_layer, NORMAL_MODE);
     }
 
   /* Copy the tattoo and parasites of the bottom layer to the new layer */
@@ -3275,8 +3287,8 @@ gimp_image_merge_layers (GimpImage *gimage,
     }
 
   /* Save old mode in undo */
-  if (bottom)
-    gimp_layer_set_mode (bottom, bottom_mode);
+  if (bottom_layer)
+    gimp_layer_set_mode (bottom_layer, bottom_mode);
 
   g_slist_free (reverse_list);
 
@@ -3310,10 +3322,7 @@ gimp_image_merge_layers (GimpImage *gimage,
   /*  End the merge undo group  */
   undo_push_group_end (gimage);
 
-  /*  Update the gimage  */
   gimp_drawable_set_visible (GIMP_DRAWABLE (merge_layer), TRUE);
-
-  gtk_signal_emit (GTK_OBJECT (gimage), gimp_image_signals[RESTRUCTURE]);
 
   drawable_update (GIMP_DRAWABLE (merge_layer), 
 		   0, 0, 

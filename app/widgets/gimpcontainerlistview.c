@@ -121,7 +121,7 @@ gimp_container_list_view_init (GimpContainerListView *list_view)
   list_view->scrolled_win = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (list_view->scrolled_win), 
                                   GTK_POLICY_AUTOMATIC,
-				  GTK_POLICY_ALWAYS);
+				  GTK_POLICY_AUTOMATIC);
   gtk_box_pack_start (GTK_BOX (list_view), list_view->scrolled_win,
 		      TRUE, TRUE, 0);
 
