@@ -28,12 +28,12 @@ SUBDIRS = \
 scriptdata =
 
 if ENABLE_GIMP_CONSOLE
-bin_PROGRAMS = gimp-2.0 gimp-console-2.0
+bin_PROGRAMS = gimp-2.1 gimp-console-2.1
 else
-bin_PROGRAMS = gimp-2.0
+bin_PROGRAMS = gimp-2.1
 endif
 
-gimp_2_0_SOURCES = \
+gimp_2_1_SOURCES = \
 	app_procs.c	\
 	app_procs.h	\
 	main.c		\
@@ -74,13 +74,13 @@ INCLUDES = \
 	$(PANGOFT2_CFLAGS) \
 	-I$(includedir)
 
-gimp_2_0_LDFLAGS = \
+gimp_2_1_LDFLAGS = \
 	$(mwindows)				\
 	-u $(SYMPREFIX)gimp_container_filter	\
 	-u $(SYMPREFIX)gimp_xml_parser_new	\
 	-u $(SYMPREFIX)gimp_drawable_stroke_vectors
 
-gimp_2_0_LDADD = \
+gimp_2_1_LDADD = \
 	config/libappconfig.a		\
 	gui/libappgui.a			\
 	display/libappdisplay.a		\
@@ -115,10 +115,10 @@ gimp_2_0_LDADD = \
 	$(REGEXREPL)
 
 if ENABLE_GIMP_CONSOLE
-gimp_console_2_0_SOURCES = $(gimp_2_0_SOURCES)
-gimp_console_2_0_LDFLAGS = $(gimp_2_0_LDFLAGS)
+gimp_console_2_1_SOURCES = $(gimp_2_1_SOURCES)
+gimp_console_2_1_LDFLAGS = $(gimp_2_1_LDFLAGS)
 
-gimp_console_2_0_LDADD = \
+gimp_console_2_1_LDADD = \
 	config/libappconfig.a		\
 	pdb/libapppdb.a			\
 	core/libappcore.a		\

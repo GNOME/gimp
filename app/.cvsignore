@@ -3,4 +3,4 @@ Makefile.in
 makefile.mingw
 .deps
 .libs
-gimp-2.0
+gimp-2.1

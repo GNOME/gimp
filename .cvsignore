@@ -12,7 +12,7 @@ config.guess
 config.sub
 ltmain.sh
 gimp.spec
-gimptool-2.0
+gimptool-2.1
 gimptool-win32.c
 gimp-2.0.pc
 gimpthumb-2.0.pc
