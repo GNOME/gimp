@@ -1,5 +1,10 @@
 2004-11-04  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/ifscompose/ifscompose.c: some undeprecation and
+	cleanup. Still uses GtkItemFactory.
+
+2004-11-04  Michael Natterer  <mitch@gimp.org>
+
 	Don't use deprecated GtkToolbar API in GimpTextEditor:
 
 	* app/actions/Makefile.am

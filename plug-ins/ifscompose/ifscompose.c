@@ -217,10 +217,9 @@ static void      run    (const gchar      *name,
 
 /*  user interface functions  */
 static gint       ifs_compose_dialog     (GimpDrawable *drawable);
-static void       ifs_options_dialog     (void);
+static void       ifs_options_dialog     (GtkWidget    *parent);
 static GtkWidget *ifs_compose_trans_page (void);
 static GtkWidget *ifs_compose_color_page (void);
-static void       design_op_menu_popup   (gint button, guint32 activate_time);
 static void       design_op_menu_create  (GtkWidget *window);
 static void       design_area_create     (GtkWidget *window, gint design_width,
                                           gint design_height);
@@ -674,7 +673,7 @@ ifs_compose_color_page (void)
   ifsD->simple_button = gtk_radio_button_new_with_label (group, _("Simple"));
   gtk_table_attach (GTK_TABLE (table), ifsD->simple_button, 0, 1, 0, 2,
                     GTK_FILL, GTK_FILL, 0, 0);
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (ifsD->simple_button));
+  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (ifsD->simple_button));
   g_signal_connect (ifsD->simple_button, "toggled",
                     G_CALLBACK (simple_color_toggled),
                     NULL);
@@ -721,7 +720,7 @@ ifs_compose_color_page (void)
   ifsD->full_button = gtk_radio_button_new_with_label (group, _("Full"));
   gtk_table_attach (GTK_TABLE (table), ifsD->full_button, 0, 1, 2, 3,
                     GTK_FILL, GTK_FILL, 0, 0);
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (ifsD->full_button));
+  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (ifsD->full_button));
   gtk_widget_show (ifsD->full_button);
 
   gimp_rgb_set (&color, 1.0, 0.0, 0.0);
@@ -758,7 +757,7 @@ ifs_compose_color_page (void)
 static gint
 ifs_compose_dialog (GimpDrawable *drawable)
 {
-  GtkWidget *dlg;
+  GtkWidget *dialog;
   GtkWidget *label;
   GtkWidget *button;
   GtkWidget *check_button;
@@ -810,31 +809,31 @@ ifs_compose_dialog (GimpDrawable *drawable)
 
   gimp_ui_init ("ifscompose", TRUE);
 
-  dlg = gimp_dialog_new (_("IfsCompose"), "ifscompose",
-                         NULL, 0,
-                         gimp_standard_help_func, HELP_ID,
+  dialog = gimp_dialog_new (_("IfsCompose"), "ifscompose",
+                            NULL, 0,
+                            gimp_standard_help_func, HELP_ID,
 
-                         GIMP_STOCK_RESET, RESPONSE_RESET,
-                         GTK_STOCK_OPEN,   RESPONSE_OPEN,
-                         GTK_STOCK_SAVE,   RESPONSE_SAVE,
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GIMP_STOCK_RESET, RESPONSE_RESET,
+                            GTK_STOCK_OPEN,   RESPONSE_OPEN,
+                            GTK_STOCK_SAVE,   RESPONSE_SAVE,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                         NULL);
+                            NULL);
 
-  g_object_add_weak_pointer (G_OBJECT (dlg), (gpointer) &dlg);
+  g_object_add_weak_pointer (G_OBJECT (dialog), (gpointer) &dialog);
 
-  g_signal_connect (dlg, "response",
+  g_signal_connect (dialog, "response",
                     G_CALLBACK (ifs_compose_response),
                     NULL);
-  g_signal_connect (dlg, "destroy",
+  g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
   /*  The main vbox */
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox,
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_vbox,
                       TRUE, TRUE, 0);
 
   /*  The design area */
@@ -849,7 +848,7 @@ ifs_compose_dialog (GimpDrawable *drawable)
   gtk_frame_set_shadow_type (GTK_FRAME (aspect_frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (hbox), aspect_frame, TRUE, TRUE, 0);
 
-  design_area_create (dlg, design_width, design_height);
+  design_area_create (dialog, design_width, design_height);
   gtk_container_add (GTK_CONTAINER (aspect_frame), ifsDesign->area);
 
   gtk_widget_show (ifsDesign->area);
@@ -925,9 +924,9 @@ ifs_compose_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (alignment), util_hbox);
 
   button = gtk_button_new_with_label (_("Render options"));
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (ifs_options_dialog),
-                    NULL);
+  g_signal_connect_swapped (button, "clicked",
+                            G_CALLBACK (ifs_options_dialog),
+                            dialog);
   gtk_box_pack_start (GTK_BOX (util_hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
@@ -1127,15 +1126,17 @@ ifs_compose_dialog (GimpDrawable *drawable)
       ifsD->selected_orig = g_new (AffElement, ifsvals.num_elements);
     }
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
+
   if (ifsD->auto_preview)
     ifs_compose_preview ();
+
   gtk_main ();
 
   g_object_unref (ifsDesign->op_menu);
 
-  if (dlg)
-    gtk_widget_destroy (dlg);
+  if (dialog)
+    gtk_widget_destroy (dialog);
 
   if (ifsOptD)
     gtk_widget_destroy (ifsOptD->dialog);
@@ -1245,16 +1246,7 @@ design_op_menu_create (GtkWidget *window)
 }
 
 static void
-design_op_menu_popup (gint    button,
-                      guint32 activate_time)
-{
-  gtk_menu_popup (GTK_MENU (ifsDesign->op_menu),
-                  NULL, NULL, NULL, NULL,
-                  button, activate_time);
-}
-
-static void
-ifs_options_dialog (void)
+ifs_options_dialog (GtkWidget *parent)
 {
   GtkWidget *table;
   GtkWidget *label;
@@ -1265,7 +1257,7 @@ ifs_options_dialog (void)
 
       ifsOptD->dialog =
         gimp_dialog_new (_("IfsCompose Options"), "ifscompose",
-                         NULL, 0,
+                         parent, 0,
                          gimp_standard_help_func, HELP_ID,
 
                          GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
@@ -1279,6 +1271,7 @@ ifs_options_dialog (void)
       /* Table of options */
 
       table = gtk_table_new (4, 3, FALSE);
+      gtk_container_set_border_width (GTK_CONTAINER (table), 12);
       gtk_table_set_row_spacings (GTK_TABLE (table), 6);
       gtk_table_set_col_spacings (GTK_TABLE (table), 6);
       gtk_box_pack_start (GTK_BOX (GTK_DIALOG (ifsOptD->dialog)->vbox), table,
@@ -1677,7 +1670,9 @@ design_area_button_press (GtkWidget      *widget,
       (ifsDesign->button_state & GDK_BUTTON1_MASK))
     {
       if (event->button == 3)
-          design_op_menu_popup (event->button, event->time);
+        gtk_menu_popup (GTK_MENU (ifsDesign->op_menu),
+                        NULL, NULL, NULL, NULL,
+                        event->button, event->time);
       return FALSE;
     }
 
@@ -2525,16 +2520,16 @@ ifscompose_message_dialog (GtkMessageType  type,
                            const gchar    *title,
                            const gchar    *message)
 {
-  GtkWidget *dlg;
+  GtkWidget *dialog;
 
-  dlg = gtk_message_dialog_new (parent, 0, type, GTK_BUTTONS_OK, message);
+  dialog = gtk_message_dialog_new (parent, 0, type, GTK_BUTTONS_OK, message);
 
   if (title)
-    gtk_window_set_title (GTK_WINDOW (dlg), title);
+    gtk_window_set_title (GTK_WINDOW (dialog), title);
 
-  gtk_window_set_role (GTK_WINDOW (dlg), "ifscompose-message");
-  gtk_dialog_run (GTK_DIALOG (dlg));
-  gtk_widget_destroy (dlg);
+  gtk_window_set_role (GTK_WINDOW (dialog), "ifscompose-message");
+  gtk_dialog_run (GTK_DIALOG (dialog));
+  gtk_widget_destroy (dialog);
 }
 
 /* save an ifs file */
