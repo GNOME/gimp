@@ -40,18 +40,20 @@
 #define PROGRESS_UPDATE_NUM 100
 #define SCALE_WIDTH         120
 
-static void query (void);
-static void run   (gchar      *name,
-		   gint        nparams,
-		   GimpParam  *param,
-		   gint       *nreturn_vals,
-		   GimpParam **return_vals);
+
+static void              query (void);
+static void              run   (gchar      *name,
+                                gint        nparams,
+                                GimpParam  *param,
+                                gint       *nreturn_vals,
+                                GimpParam **return_vals);
 
 static GimpPDBStatusType threshold_alpha             (gint32     drawable_id);
 
 static gint              threshold_alpha_dialog      (void);
 static void              threshold_alpha_ok_callback (GtkWidget *widget,
 						      gpointer   data);
+
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -93,7 +95,6 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable" },
     { GIMP_PDB_INT32,    "threshold", "Threshold" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure (PLUG_IN_NAME,
 			  "",
@@ -101,10 +102,10 @@ query (void)
 			  "Shuji Narazaki (narazaki@InetQ.or.jp)",
 			  "Shuji Narazaki",
 			  "1997",
-			  N_("<Image>/Image/Alpha/Threshold Alpha..."),
+			  N_("<Image>/Layer/Alpha/Threshold Alpha..."),
 			  "RGBA,GRAYA",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

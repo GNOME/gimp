@@ -1011,63 +1011,79 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell)
     }
 
   SET_SENSITIVE ("Image", gdisp);
+
   SET_SENSITIVE ("Image/Mode", gdisp);
-  SET_SENSITIVE ("Image/Colors", gdisp);
-  SET_SENSITIVE ("Image/Colors/Auto", gdisp);
-  SET_SENSITIVE ("Image/Alpha", gdisp);
-  SET_SENSITIVE ("Image/Transforms", gdisp);
-  SET_SENSITIVE ("Image/Transforms/Rotate", gdisp);
   if (gdisp)
     {
       SET_SENSITIVE ("Image/Mode/RGB", (base_type != RGB));
       SET_SENSITIVE ("Image/Mode/Grayscale", (base_type != GRAY));
       SET_SENSITIVE ("Image/Mode/Indexed...", (base_type != INDEXED));
-
-      SET_SENSITIVE ("Image/Histogram...", lp);
-
-      SET_SENSITIVE ("Image/Colors", lp);
-      SET_SENSITIVE ("Image/Colors/Color Balance...", (base_type == RGB));
-      SET_SENSITIVE ("Image/Colors/Hue-Saturation...", (base_type == RGB));
-      SET_SENSITIVE ("Image/Colors/Brightness-Contrast...", (base_type != INDEXED));
-      SET_SENSITIVE ("Image/Colors/Threshold...", (base_type != INDEXED));
-      SET_SENSITIVE ("Image/Colors/Levels...", (base_type != INDEXED));
-      SET_SENSITIVE ("Image/Colors/Curves...", (base_type != INDEXED));
-      SET_SENSITIVE ("Image/Colors/Desaturate", (base_type == RGB));
-      SET_SENSITIVE ("Image/Colors/Posterize...", (base_type != INDEXED));
-      SET_SENSITIVE ("Image/Colors/Invert", (base_type != INDEXED));
-      SET_SENSITIVE ("Image/Colors/Auto/Equalize", (base_type != INDEXED));
-
-      SET_SENSITIVE ("Image/Alpha/Add Alpha Channel",
-		     !fs && !aux && lp && !lm && !alpha);
-
-      SET_SENSITIVE ("Image/Transforms/Offset...", lp);
     }
 
-  SET_SENSITIVE ("Layers/Stack", gdisp);
+  SET_SENSITIVE ("Layer/Stack", gdisp);
   if (gdisp)
     {
-      SET_SENSITIVE ("Layers/Stack/Previous Layer",
+      SET_SENSITIVE ("Layer/Stack/Previous Layer",
 		     !fs && !aux && lp && lind > 0);
-      SET_SENSITIVE ("Layers/Stack/Next Layer",
+      SET_SENSITIVE ("Layer/Stack/Next Layer",
 		     !fs && !aux && lp && lind < (lnum - 1));
-      SET_SENSITIVE ("Layers/Stack/Raise Layer",
+      SET_SENSITIVE ("Layer/Stack/Raise Layer",
 		     !fs && !aux && lp && alpha && lind > 0);
-      SET_SENSITIVE ("Layers/Stack/Lower Layer",
+      SET_SENSITIVE ("Layer/Stack/Lower Layer",
 		     !fs && !aux && lp && alpha && lind < (lnum - 1));
-      SET_SENSITIVE ("Layers/Stack/Layer to Top",
+      SET_SENSITIVE ("Layer/Stack/Layer to Top",
 		     !fs && !aux && lp && alpha && lind > 0);
-      SET_SENSITIVE ("Layers/Stack/Layer to Bottom",
+      SET_SENSITIVE ("Layer/Stack/Layer to Bottom",
 		     !fs && !aux && lp && alpha && lind < (lnum - 1));
     }
-  SET_SENSITIVE ("Layers/Rotate", gdisp && !aux && !lm & lp);
-  SET_SENSITIVE ("Layers/Layer to Imagesize", gdisp && !aux && lp);
 
-  SET_SENSITIVE ("Layers/Anchor Layer", gdisp && fs && !aux && lp);
-  SET_SENSITIVE ("Layers/Merge Visible Layers...", gdisp && !fs && !aux && lp);
-  SET_SENSITIVE ("Layers/Flatten Image", gdisp && !fs && !aux && lp);
-  SET_SENSITIVE ("Layers/Alpha to Selection", gdisp && !aux && lp && alpha);
-  SET_SENSITIVE ("Layers/Mask to Selection", gdisp && !aux && lm && lp);
-  SET_SENSITIVE ("Layers/Add Alpha Channel",
+  SET_SENSITIVE ("Layer/New Layer...", gdisp);
+  SET_SENSITIVE ("Layer/Duplicate Layer", gdisp && !fs && !aux && lp);
+  SET_SENSITIVE ("Layer/Anchor Layer", gdisp && fs && !aux && lp);
+  SET_SENSITIVE ("Layer/Delete Layer", gdisp && !aux && lp);
+
+  SET_SENSITIVE ("Layer/Layer Boundary Size...", gdisp && !aux && lp);
+  SET_SENSITIVE ("Layer/Layer to Imagesize", gdisp && !aux && lp);
+  SET_SENSITIVE ("Layer/Scale Layer...", gdisp && !aux && lp);
+
+  SET_SENSITIVE ("Layer/Transform/Offset...", lp);
+
+  SET_SENSITIVE ("Layer/Merge Visible Layers...", gdisp && !fs && !aux && lp);
+  SET_SENSITIVE ("Layer/Merge Down", gdisp && !fs && !aux && lp);
+  SET_SENSITIVE ("Layer/Flatten Image", gdisp && !fs && !aux && lp);
+
+  SET_SENSITIVE ("Layer/Colors", gdisp);
+  SET_SENSITIVE ("Layer/Colors/Auto", gdisp);
+
+  if (gdisp)
+    {
+      SET_SENSITIVE ("Layer/Colors", lp);
+      SET_SENSITIVE ("Layer/Colors/Color Balance...", (base_type == RGB));
+      SET_SENSITIVE ("Layer/Colors/Hue-Saturation...", (base_type == RGB));
+      SET_SENSITIVE ("Layer/Colors/Brightness-Contrast...", (base_type != INDEXED));
+      SET_SENSITIVE ("Layer/Colors/Threshold...", (base_type != INDEXED));
+      SET_SENSITIVE ("Layer/Colors/Levels...", (base_type != INDEXED));
+      SET_SENSITIVE ("Layer/Colors/Curves...", (base_type != INDEXED));
+      SET_SENSITIVE ("Layer/Colors/Desaturate", (base_type == RGB));
+      SET_SENSITIVE ("Layer/Colors/Posterize...", (base_type != INDEXED));
+      SET_SENSITIVE ("Layer/Colors/Invert", (base_type != INDEXED));
+      SET_SENSITIVE ("Layer/Colors/Auto/Equalize", (base_type != INDEXED));
+
+      SET_SENSITIVE ("Layer/Colors/Histogram...", lp);
+    }
+
+  SET_SENSITIVE ("Layer/Mask/Add Layer Mask...", 
+		 gdisp && !aux && !lm && lp && alpha && (base_type != INDEXED));
+  SET_SENSITIVE ("Layer/Mask/Apply Layer Mask",
+                 gdisp && !aux && lm && lp);
+  SET_SENSITIVE ("Layer/Mask/Delete Layer Mask",
+                 gdisp && !aux && lm && lp);
+  SET_SENSITIVE ("Layer/Mask/Mask to Selection",
+                 gdisp && !aux && lm && lp);
+
+  SET_SENSITIVE ("Layer/Alpha/Alpha to Selection",
+                 gdisp && !aux && lp && alpha);
+  SET_SENSITIVE ("Layer/Alpha/Add Alpha Channel",
 		 gdisp && !fs && !aux && lp && !lm && !alpha);
 
   SET_SENSITIVE ("Filters", gdisp && lp);

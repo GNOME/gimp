@@ -128,7 +128,7 @@ gimp_hue_saturation_tool_register (Gimp                     *gimp,
                 "gimp:hue_saturation_tool",
                 _("Hue-Saturation"),
                 _("Adjust hue and saturation"),
-                N_("/Image/Colors/Hue-Saturation..."), NULL,
+                N_("/Layer/Colors/Hue-Saturation..."), NULL,
                 NULL, "tools/hue_saturation.html",
                 GIMP_STOCK_TOOL_HUE_SATURATION);
 }

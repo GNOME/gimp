@@ -26,14 +26,6 @@ void   image_convert_grayscale_cmd_callback (GtkWidget *widget,
 					     gpointer   data);
 void   image_convert_indexed_cmd_callback   (GtkWidget *widget,
 					     gpointer   data);
-void   image_desaturate_cmd_callback        (GtkWidget *widget,
-					     gpointer   data);
-void   image_invert_cmd_callback            (GtkWidget *widget,
-					     gpointer   data);
-void   image_equalize_cmd_callback          (GtkWidget *widget,
-					     gpointer   data);
-void   image_offset_cmd_callback            (GtkWidget *widget,
-					     gpointer   data);
 void   image_resize_cmd_callback            (GtkWidget *widget,
 					     gpointer   data);
 void   image_scale_cmd_callback             (GtkWidget *widget,

@@ -82,7 +82,6 @@ query (void)
     { GIMP_PDB_IMAGE, "image", "Input image (used for indexed images)" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
   };
-  gint nargs = sizeof (args) / sizeof (args[0]);
   
   gimp_install_procedure ("plug_in_filter_pack",
 			  "Allows the user to change H, S, or C with many previews",
@@ -90,10 +89,10 @@ query (void)
 			  "Pavel Grinfeld (pavel@ml.com)",
 			  "Pavel Grinfeld (pavel@ml.com)",
 			  "27th March 1997",
-			  N_("<Image>/Image/Colors/Filter Pack..."),
+			  N_("<Image>/Layer/Colors/Filter Pack..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

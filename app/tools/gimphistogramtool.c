@@ -121,7 +121,7 @@ gimp_histogram_tool_register (Gimp                     *gimp,
                 "gimp:histogram_tool",
                 _("Histogram"),
                 _("View image histogram"),
-                N_("/Image/Histogram..."), NULL,
+                N_("/Layer/Colors/Histogram..."), NULL,
                 NULL, "tools/histogram.html",
                 GIMP_STOCK_TOOL_HISTOGRAM);
 }

@@ -123,7 +123,7 @@ gimp_brightness_contrast_tool_register (Gimp                     *gimp,
                 "gimp:brightness_contrast_tool",
                 _("Brightness-Contrast"),
                 _("Adjust brightness and contrast"),
-                N_("/Image/Colors/Brightness-Contrast..."), NULL,
+                N_("/Layer/Colors/Brightness-Contrast..."), NULL,
                 NULL, "tools/brightness_contrast.html",
                 GIMP_STOCK_TOOL_BRIGHTNESS_CONTRAST);
 }

@@ -990,11 +990,15 @@ prefs_toggle_callback (GtkWidget *widget,
   Gimp      *gimp;
   gint      *val;
 
-  dialog = gtk_widget_get_toplevel (widget);
-
-  if (GTK_IS_MENU_SHELL (dialog))
-    dialog =
-      gtk_widget_get_toplevel (gtk_menu_get_attach_widget (GTK_MENU (dialog)));
+  if (GTK_IS_MENU_ITEM (widget))
+    {
+      dialog =
+        gtk_widget_get_toplevel (gtk_menu_get_attach_widget (GTK_MENU (widget->parent)));
+    }
+  else
+    {
+      dialog = gtk_widget_get_toplevel (widget);
+    }
 
   gimp = GIMP (g_object_get_data (G_OBJECT (dialog), "gimp"));
 

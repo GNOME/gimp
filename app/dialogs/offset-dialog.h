@@ -20,7 +20,7 @@
 #define __OFFSET_DIALOG_H__
 
 
-void   offset_dialog_create (GimpImage *gimage);
+void   offset_dialog_create (GimpDrawable *drawable);
 
 
 #endif  /*  __OFFSET_DIALOG_H__  */

@@ -49,7 +49,6 @@
 #include "gimpclonetool.h"
 #include "gimpconvolvetool.h"
 
-#include "app_procs.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
@@ -278,7 +277,7 @@ paint_options_reset (GimpToolOptions *tool_options)
 
   options = (PaintOptions *) tool_options;
 
-  default_context = gimp_get_default_context (the_gimp);
+  default_context = gimp_get_default_context (tool_options->tool_info->gimp);
 
   if (options->opacity_w)
     {

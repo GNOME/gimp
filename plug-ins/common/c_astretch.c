@@ -39,15 +39,15 @@
 
 /* Declare local functions.
  */
-static void      query  (void);
-static void      run    (gchar     *name,
-			 gint       nparams,
-			 GimpParam    *param,
-			 gint      *nreturn_vals,
-			 GimpParam   **return_vals);
+static void   query              (void);
+static void   run                (gchar        *name,
+                                  gint          nparams,
+                                  GimpParam    *param,
+                                  gint         *nreturn_vals,
+                                  GimpParam   **return_vals);
 
-static void      c_astretch (GimpDrawable * drawable);
-static void      indexed_c_astretch (gint32 image_ID);
+static void   c_astretch         (GimpDrawable *drawable);
+static void   indexed_c_astretch (gint32        image_ID);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -70,7 +70,6 @@ query (void)
     { GIMP_PDB_IMAGE, "image", "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_c_astretch",
 			  "Automatically stretch the contrast of the "
@@ -85,24 +84,24 @@ query (void)
 			  "Federico Mena Quintero",
 			  "Federico Mena Quintero",
 			  "1996",
-			  N_("<Image>/Image/Colors/Auto/Stretch Contrast"),
+			  N_("<Image>/Layer/Colors/Auto/Stretch Contrast"),
 			  "RGB*, GRAY*, INDEXED*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  GimpRunModeType run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  GimpRunModeType    run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   gint32 image_ID;
 
@@ -149,7 +148,7 @@ run (gchar   *name,
 
 
 static void
-indexed_c_astretch(gint32 image_ID)  /* a.d.m. */
+indexed_c_astretch (gint32 image_ID)  /* a.d.m. */
 {
   guchar *cmap;
   gint ncols,i;

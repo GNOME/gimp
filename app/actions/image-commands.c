@@ -26,21 +26,15 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpdrawable-desaturate.h"
-#include "core/gimpdrawable-equalize.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-duplicate.h"
 #include "core/gimpimage-resize.h"
 #include "core/gimpimage-scale.h"
 
-#include "pdb/procedural_db.h"
-
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 
 #include "convert-dialog.h"
-#include "offset-dialog.h"
 #include "resize-dialog.h"
 
 #include "gimpprogress.h"
@@ -110,91 +104,6 @@ image_convert_indexed_cmd_callback (GtkWidget *widget,
   return_if_no_image (gimage, data);
 
   convert_to_indexed (gimage);
-}
-
-void
-image_desaturate_cmd_callback (GtkWidget *widget,
-			       gpointer   data)
-{
-  GimpImage    *gimage;
-  GimpDrawable *drawable;
-  return_if_no_image (gimage, data);
-
-  drawable = gimp_image_active_drawable (gimage);
-
-  if (! gimp_drawable_is_rgb (drawable))
-    {
-      g_message (_("Desaturate operates only on RGB color drawables."));
-      return;
-    }
-
-  gimp_drawable_desaturate (drawable);
-
-  gdisplays_flush ();
-}
-
-void
-image_invert_cmd_callback (GtkWidget *widget,
-			   gpointer   data)
-{
-  GimpImage    *gimage;
-  GimpDrawable *drawable;
-  Argument     *return_vals;
-  gint          nreturn_vals;
-  return_if_no_image (gimage, data);
-
-  drawable = gimp_image_active_drawable (gimage);
-
-  if (gimp_drawable_is_indexed (drawable))
-    {
-      g_message (_("Invert does not operate on indexed drawables."));
-      return;
-    }
-
-  return_vals =
-    procedural_db_run_proc (gimage->gimp,
-			    "gimp_invert",
-			    &nreturn_vals,
-			    GIMP_PDB_DRAWABLE, gimp_drawable_get_ID (drawable),
-			    GIMP_PDB_END);
-
-  if (!return_vals || return_vals[0].value.pdb_int != GIMP_PDB_SUCCESS)
-    g_message (_("Invert operation failed."));
-
-  procedural_db_destroy_args (return_vals, nreturn_vals);
-
-  gdisplays_flush ();
-}
-
-void
-image_equalize_cmd_callback (GtkWidget *widget,
-			     gpointer   data)
-{
-  GimpImage    *gimage;
-  GimpDrawable *drawable;
-  return_if_no_image (gimage, data);
-
-  drawable = gimp_image_active_drawable (gimage);
-
-  if (gimp_drawable_is_indexed (drawable))
-    {
-      g_message (_("Equalize does not operate on indexed drawables."));
-      return;
-    }
-
-  gimp_drawable_equalize (drawable, TRUE);
-
-  gdisplays_flush ();
-}
-
-void
-image_offset_cmd_callback (GtkWidget *widget,
-			   gpointer   data)
-{
-  GimpImage *gimage;
-  return_if_no_image (gimage, data);
-
-  offset_dialog_create (gimage);
 }
 
 void

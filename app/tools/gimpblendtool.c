@@ -44,7 +44,6 @@
 #include "gimpblendtool.h"
 #include "paint_options.h"
 
-#include "app_procs.h"
 #include "gimpprogress.h"
 
 #include "libgimp/gimpintl.h"
@@ -764,12 +763,16 @@ blend_options_drop_gradient (GtkWidget    *widget,
 			     GimpViewable *viewable,
 			     gpointer      data)
 {
-  BlendOptions *options;
+  BlendOptions    *options;
+  GimpToolOptions *tool_options;
+  GimpContext     *context;
 
-  options = (BlendOptions *) data;
+  options      = (BlendOptions *) data;
+  tool_options = (GimpToolOptions *) data;
 
-  gimp_context_set_gradient (gimp_get_user_context (the_gimp),
-			     GIMP_GRADIENT (viewable));
+  context = gimp_get_user_context (tool_options->tool_info->gimp);
+
+  gimp_context_set_gradient (context, GIMP_GRADIENT (viewable));
 
   gtk_option_menu_set_history (GTK_OPTION_MENU (options->blend_mode_w), 
 			       CUSTOM_MODE);
@@ -781,6 +784,12 @@ blend_options_drop_tool (GtkWidget    *widget,
 			 GimpViewable *viewable,
 			 gpointer      data)
 {
-  gimp_context_set_tool (gimp_get_user_context (the_gimp),
-			 GIMP_TOOL_INFO (viewable));
+  GimpToolOptions *tool_options;
+  GimpContext     *context;
+
+  tool_options = (GimpToolOptions *) data;
+
+  context = gimp_get_user_context (tool_options->tool_info->gimp);
+
+  gimp_context_set_tool (context, GIMP_TOOL_INFO (viewable));
 }

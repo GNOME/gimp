@@ -42,15 +42,16 @@
 
 /* Declare local functions.
  */
-static void      query  (void);
-static void      run    (gchar     *name,
-			 gint        nparams,
-			 GimpParam    *param,
-			 gint       *nreturn_vals,
-			 GimpParam   **return_vals);
+static void   query                 (void);
+static void   run                   (gchar        *name,
+                                     gint          nparams,
+                                     GimpParam    *param,
+                                     gint         *nreturn_vals,
+                                     GimpParam   **return_vals);
 
-static void      Color_Enhance (GimpDrawable * drawable);
-static void      indexed_Color_Enhance (gint32 image_ID);
+static void   Color_Enhance         (GimpDrawable *drawable);
+static void   indexed_Color_Enhance (gint32        image_ID);
+
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -72,7 +73,6 @@ query (void)
     { GIMP_PDB_IMAGE, "image", "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_color_enhance",
 			  "Automatically stretch the saturation of the "
@@ -88,24 +88,24 @@ query (void)
 			  "Martin Weber",
 		 	  "Martin Weber", 
 		  	  "1997", 	 	 
-			  N_("<Image>/Image/Colors/Auto/Color Enhance"),
+			  N_("<Image>/Layer/Colors/Auto/Color Enhance"),
 	   	  	  "RGB*, INDEXED*",
  			  GIMP_PLUGIN,
-	 	  	  nargs, 0,
+	 	  	  G_N_ELEMENTS (args), 0,
  			  args, NULL);
 }
 
 static void
-run (gchar   *name,
-     gint      nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint     *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  GimpRunModeType run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  GimpRunModeType    run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   gint32 image_ID;
 

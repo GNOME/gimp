@@ -226,34 +226,34 @@ temp_buf_new_check (gint width,
  
   switch (check_type)
     {
-      case LIGHT_CHECKS:
-        fg_color = 204;
-        bg_color = 255;
-	break;
-      case GRAY_CHECKS:
-        fg_color = 102;
-        bg_color = 153;
-	break;
-      case DARK_CHECKS:
-        fg_color = 0;
-        bg_color = 51;
-	break;
-      case WHITE_ONLY:
-        fg_color = 255;
-        bg_color = 255;
-	break;
-      case GRAY_ONLY:
-        fg_color = 127;
-        bg_color = 127;
-	break;
-      case BLACK_ONLY:
-        fg_color = 0;
-        bg_color = 0;
+    case LIGHT_CHECKS:
+      fg_color = 204;
+      bg_color = 255;
+      break;
+    case GRAY_CHECKS:
+      fg_color = 102;
+      bg_color = 153;
+      break;
+    case DARK_CHECKS:
+      fg_color = 0;
+      bg_color = 51;
+      break;
+    case WHITE_ONLY:
+      fg_color = 255;
+      bg_color = 255;
+      break;
+    case GRAY_ONLY:
+      fg_color = 127;
+      bg_color = 127;
+      break;
+    case BLACK_ONLY:
+      fg_color = 0;
+      bg_color = 0;
     }
  
   newbuf = temp_buf_new (width, height, 3, 0, 0, NULL);
   data = temp_buf_data (newbuf);
-  
+
   for (i = 0, j = 1; i <= height; j++)
     {
       for (i = 1; i <= width; i++)
@@ -262,7 +262,7 @@ temp_buf_new_check (gint width,
 	                    ? fg_color : bg_color;
 	}	  
     } 
- 
+
   return newbuf;
 }
 
@@ -329,13 +329,13 @@ temp_buf_resize (TempBuf *buf,
   else
     {
       if (size != (buf->width * buf->height * buf->bytes))
-      {
-	/*  Make sure the temp buf is unswapped  */
-	temp_buf_unswap (buf);
+        {
+          /*  Make sure the temp buf is unswapped  */
+          temp_buf_unswap (buf);
 
-	/*  Reallocate the data for it  */
-	buf->data = g_realloc (buf->data, size);
-      }
+          /*  Reallocate the data for it  */
+          buf->data = g_realloc (buf->data, size);
+        }
 
       /*  Make sure the temp buf fields are valid  */
       buf->x      = x;

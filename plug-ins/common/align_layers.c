@@ -70,16 +70,16 @@ enum
 };
 
 static void	query	(void);
-static void	run	(gchar   *name,
-			 gint     nparams,
+static void	run	(gchar      *name,
+			 gint        nparams,
 			 GimpParam  *param,
-			 gint    *nreturn_vals,
+			 gint       *nreturn_vals,
 			 GimpParam **return_vals);
 
 static GimpPDBStatusType align_layers                   (gint32  image_id);
-static void        align_layers_get_align_offsets (gint32  drawable_id,
-						   gint	  *x,
-						   gint	  *y);
+static void              align_layers_get_align_offsets (gint32  drawable_id,
+                                                         gint	  *x,
+                                                         gint	  *y);
 
 static gint align_layers_dialog      (void);
 static void align_layers_ok_callback (GtkWidget *widget,
@@ -141,7 +141,6 @@ query (void)
     { GIMP_PDB_INT32, "link-afteer-alignment", "Link the visible layers after alignment"},
     { GIMP_PDB_INT32, "use-bottom", "use the bottom layer as the base of alignment"}
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure (PLUG_IN_NAME,
 			  "Align visible layers",
@@ -149,24 +148,24 @@ query (void)
 			  "Shuji Narazaki <narazaki@InetQ.or.jp>",
 			  "Shuji Narazaki",
 			  "1997",
-			  N_("<Image>/Layers/Align Visible Layers..."),
+			  N_("<Image>/Layer/Align Visible Layers..."),
 			  "RGB*,GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam	values[1];
-  GimpPDBStatusType	status = GIMP_PDB_EXECUTION_ERROR;
-  GimpRunModeType	run_mode;
-  gint		image_id, layer_num;
+  static GimpParam values[1];
+  GimpPDBStatusType status = GIMP_PDB_EXECUTION_ERROR;
+  GimpRunModeType   run_mode;
+  gint              image_id, layer_num;
   
   run_mode = param[0].data.d_int32;
   image_id = param[1].data.d_int32;

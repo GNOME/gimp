@@ -113,7 +113,7 @@ gimp_threshold_tool_register (Gimp                     *gimp,
                 "gimp:threshold_tool",
                 _("Threshold"),
                 _("Reduce image to two colors using a threshold"),
-                N_("/Image/Colors/Threshold..."), NULL,
+                N_("/Layer/Colors/Threshold..."), NULL,
                 NULL, "tools/threshold.html",
                 GIMP_STOCK_TOOL_THRESHOLD);
 }

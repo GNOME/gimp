@@ -102,24 +102,19 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
   };
 
-  GimpParamDef *return_vals = NULL;
-  int nargs = sizeof (args) / sizeof (args[0]);
-  int nreturn_vals = 0;
-
-  INIT_I18N();
   gimp_install_procedure ("plug-in-rotate-colormap",
 			  "Colormap rotation as in xv",
 			  "Exchanges two color ranges. "
-			    "Based on code from Pavel Grinfeld (pavel@ml.com). "
-			    "This version written by Sven Anders (anderss@fmi.uni-passau.de).",
+                          "Based on code from Pavel Grinfeld (pavel@ml.com). "
+                          "This version written by Sven Anders (anderss@fmi.uni-passau.de).",
 			  "Sven Anders (anderss@fmi.uni-passau.de) and Pavel Grinfeld (pavel@ml.com)",
 			  "Sven Anders (anderss@fmi.uni-passau.de)",
 			  "04th April 1999",
-			  N_("<Image>/Image/Colors/Colormap Rotation..."),
+			  N_("<Image>/Layer/Colors/Colormap Rotation..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  G_N_ELEMENTS (args), 0,
+			  args, NULL);
 }
 
 /*-----------------------------------------------------------------------------------*/

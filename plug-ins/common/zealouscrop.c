@@ -28,10 +28,10 @@ static void        run           (gchar         *name,
 				  GimpParam     *param,
 				  gint          *nreturn_vals,
 				  GimpParam    **return_vals);
+
 static inline gint colours_equal (guchar        *col1,
 				  guchar        *col2,
 				  gint           bytes);
-
 static void        do_zcrop      (GimpDrawable  *drawable,
 				  gint32         image_id);
 
@@ -58,7 +58,6 @@ query (void)
     { GIMP_PDB_IMAGE,    "image",    "Input image"                  },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"               }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_zealouscrop",
 			  "Automagically crops unused space from the edges "
@@ -67,10 +66,10 @@ query (void)
 			  "Adam D. Moss",
 			  "Adam D. Moss",
 			  "1997",
-			  N_("<Image>/Image/Transforms/Zealous Crop"),
+			  N_("<Image>/Layer/Transform/Zealous Crop"),
 			  "RGB*, GRAY*, INDEXED*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

@@ -316,6 +316,9 @@ static GimpItemFactoryEntry image_entries[] =
       "<StockItem>", GTK_STOCK_OPEN },
     NULL,
     "file/dialogs/file_open.html", NULL },
+
+  SEPARATOR ("/File/---"),
+
   { { N_("/File/Save"), "<control>S",
       file_save_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_SAVE },
@@ -631,45 +634,11 @@ static GimpItemFactoryEntry image_entries[] =
 
   SEPARATOR ("/Image/Mode/---"),
 
-  /*  <Image>/Image/Colors  */
+  /*  <Image>/Image/Transform  */
 
-  { { N_("/Image/Colors/Desaturate"), NULL,
-      image_desaturate_cmd_callback, 0 },
-    NULL,
-    "image/colors/desaturate.html", NULL },
-  { { N_("/Image/Colors/Invert"), NULL,
-      image_invert_cmd_callback, 0 },
-    NULL,
-    "image/colors/invert.html", NULL },
+  BRANCH (N_("/Image/Transform")),
 
-  SEPARATOR ("/Image/Colors/---"),
-
-  /*  <Image>/Image/Colors/Auto  */
-
-  { { N_("/Image/Colors/Auto/Equalize"), NULL,
-      image_equalize_cmd_callback, 0 },
-    NULL,
-    "image/colors/auto/equalize.html", NULL },
-
-  SEPARATOR ("/Image/Colors/---"),
-
-  /*  <Image>/Image/Alpha  */
-
-  { { N_("/Image/Alpha/Add Alpha Channel"), NULL,
-      layers_add_alpha_channel_cmd_callback, 0 },
-    NULL,
-    "layers/add_alpha_channel.html", NULL },
-
-  /*  <Image>/Image/Transforms  */
-
-  { { N_("/Image/Transforms/Offset..."), "<control><shift>O",
-      image_offset_cmd_callback, 0 },
-    NULL,
-    "image/transforms/dialogs/offset.html", NULL },
-
-  BRANCH (N_("/Image/Transforms/Rotate")),
-
-  SEPARATOR ("/Image/Transforms/---"),
+  SEPARATOR ("/Image/Transform/---"),
 
   SEPARATOR ("/Image/---"),
 
@@ -690,101 +659,159 @@ static GimpItemFactoryEntry image_entries[] =
 
   SEPARATOR ("/Image/---"),
 
-  /*  <Image>/Layers  */
+  /*  <Image>/Layer  */
 
-  { { N_("/Layers/Layers, Channels & Paths..."), "<control>L",
-      dialogs_create_lc_cmd_callback, 0 },
-    NULL,
-    "dialogs/layers_and_channels.html", NULL },
+  /*  <Image>/Layer/Stack  */
 
-  SEPARATOR ("/Layers/---"),
-
-  /*  <Image>/Layers/Stack  */
-
-  { { N_("/Layers/Stack/Previous Layer"), "Prior",
+  { { N_("/Layer/Stack/Previous Layer"), "Prior",
       layers_previous_cmd_callback, 0 },
     NULL,
     "layers/stack/stack.html#previous_layer", NULL },
-  { { N_("/Layers/Stack/Next Layer"), "Next",
+  { { N_("/Layer/Stack/Next Layer"), "Next",
       layers_next_cmd_callback, 0 },
     NULL,
     "layers/stack/stack.html#next_layer", NULL },
-  { { N_("/Layers/Stack/Raise Layer"), "<shift>Prior",
+  { { N_("/Layer/Stack/Raise Layer"), "<shift>Prior",
       layers_raise_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_RAISE },
     NULL,
     "layers/stack/stack.html#raise_layer", NULL },
-  { { N_("/Layers/Stack/Lower Layer"), "<shift>Next",
+  { { N_("/Layer/Stack/Lower Layer"), "<shift>Next",
       layers_lower_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_LOWER },
     NULL,
     "layers/stack/stack.html#lower_layer", NULL },
-  { { N_("/Layers/Stack/Layer to Top"), "<control>Prior",
+  { { N_("/Layer/Stack/Layer to Top"), "<control>Prior",
       layers_raise_to_top_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_RAISE },
     NULL,
     "layers/stack/stack.html#layer_to_top", NULL },
-  { { N_("/Layers/Stack/Layer to Bottom"), "<control>Next",
+  { { N_("/Layer/Stack/Layer to Bottom"), "<control>Next",
       layers_lower_to_bottom_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_LOWER },
     NULL,
     "layers/stack/stack.html#layer_to_bottom", NULL },
 
-  SEPARATOR ("/Layers/Stack/---"),
+  SEPARATOR ("/Layer/Stack/---"),
 
-  /*  <Image>/Layers/Rotate  */
-
-  BRANCH (N_("/Layers/Rotate")),
-
-  SEPARATOR ("/Layers/---"),
-
-  { { N_("/Layers/Anchor Layer"), "<control>H",
+  { { N_("/Layer/New Layer..."), NULL,
+      layers_new_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_NEW },
+    NULL,
+    "layers/dialogs/new_layer.html", NULL },
+  { { N_("/Layer/Duplicate Layer"), NULL,
+      layers_duplicate_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_DUPLICATE },
+    NULL,
+    "layers/duplicate_layer.html", NULL },
+  { { N_("/Layer/Anchor Layer"), "<control>H",
       layers_anchor_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_ANCHOR },
     NULL,
     "layers/anchor_layer.html", NULL },
+  { { N_("/Layer/Delete Layer"), NULL,
+      layers_delete_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_DELETE },
+    NULL,
+    "layers/delete_layer.html", NULL },
 
-  SEPARATOR ("/Layers/---"),
+  SEPARATOR ("/Layer/---"),
 
-  { { N_("/Layers/Layer to Imagesize"), NULL,
+  { { N_("/Layer/Layer Boundary Size..."), NULL,
+      layers_resize_cmd_callback, 0 },
+    NULL,
+    "layers/dialogs/layer_boundary_size.html", NULL },
+  { { N_("/Layer/Scale Layer..."), NULL,
+      layers_scale_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_TOOL_SCALE },
+    NULL,
+    "layers/dialogs/scale_layer.html", NULL },
+  { { N_("/Layer/Layer to Imagesize"), NULL,
       layers_resize_to_image_cmd_callback, 0 },
     NULL,
     "layers/layer_to_image_size.html", NULL },
 
-  SEPARATOR ("/Layers/---"),
+  /*  <Image>/Layer/Transform  */
 
-  { { N_("/Layers/Merge Visible Layers..."), "<control>M",
+  SEPARATOR ("/Layer/Transform/---"),
+
+  { { N_("/Layer/Transform/Offset..."), "<control><shift>O",
+      layers_offset_cmd_callback, 0 },
+    NULL,
+    "layers/dialogs/offset.html", NULL },
+
+  SEPARATOR ("/Layer/---"),
+
+  { { N_("/Layer/Merge Visible Layers..."), "<control>M",
       layers_merge_layers_cmd_callback, 0 },
     NULL,
     "layers/dialogs/merge_visible_layers.html", NULL },
-  { { N_("/Layers/Merge Down"), "<control><shift>M",
+  { { N_("/Layer/Merge Down"), "<control><shift>M",
       layers_merge_down_cmd_callback, 0 },
     NULL,
     "layers/merge_visible_layers.html", NULL },
-  { { N_("/Layers/Flatten Image"), NULL,
+  { { N_("/Layer/Flatten Image"), NULL,
       layers_flatten_image_cmd_callback, 0 },
     NULL,
     "layers/flatten_image.html", NULL },
 
-  SEPARATOR ("/Layers/---"),
+  SEPARATOR ("/Layer/---"),
 
-  { { N_("/Layers/Mask to Selection"), NULL,
+  /*  <Image>/Layer/Colors  */
+
+  { { N_("/Layer/Colors/Desaturate"), NULL,
+      layers_desaturate_cmd_callback, 0 },
+    NULL,
+    "layers/colors/desaturate.html", NULL },
+  { { N_("/Layer/Colors/Invert"), NULL,
+      layers_invert_cmd_callback, 0 },
+    NULL,
+    "layers/colors/invert.html", NULL },
+
+  SEPARATOR ("/Layer/Colors/---"),
+
+  /*  <Image>/Layer/Colors/Auto  */
+
+  { { N_("/Layer/Colors/Auto/Equalize"), NULL,
+      layers_equalize_cmd_callback, 0 },
+    NULL,
+    "layers/colors/auto/equalize.html", NULL },
+
+  SEPARATOR ("/Layer/Colors/---"),
+
+  /*  <Image>/Layer/Mask  */
+
+  { { N_("/Layer/Mask/Add Layer Mask..."), NULL,
+      layers_add_layer_mask_cmd_callback, 0 },
+    NULL,
+    "layers/dialogs/add_layer_mask.html", NULL },
+  { { N_("/Layer/Mask/Apply Layer Mask"), NULL,
+      layers_apply_layer_mask_cmd_callback, 0 },
+    NULL,
+    "layers/apply_mask.html", NULL },
+  { { N_("/Layer/Mask/Delete Layer Mask"), NULL,
+      layers_delete_layer_mask_cmd_callback, 0 },
+    NULL,
+    "layers/delete_mask.html", NULL },
+  { { N_("/Layer/Mask/Mask to Selection"), NULL,
       layers_mask_select_cmd_callback, 0 },
     NULL,
     "layers/mask_to_selection.html", NULL },
 
-  SEPARATOR ("/Layers/---"),
+  /*  <Image>/Layer/Alpha  */
 
-  { { N_("/Layers/Add Alpha Channel"), NULL,
+  { { N_("/Layer/Alpha/Add Alpha Channel"), NULL,
       layers_add_alpha_channel_cmd_callback, 0 },
     NULL,
     "layers/add_alpha_channel.html", NULL },
-  { { N_("/Layers/Alpha to Selection"), NULL,
+  { { N_("/Layer/Alpha/Alpha to Selection"), NULL,
       layers_alpha_select_cmd_callback, 0 },
     NULL,
     "layers/alpha_to_selection.html", NULL },
 
-  SEPARATOR ("/Layers/---"),
+  SEPARATOR ("/Layer/Alpha/---"),
+
+  SEPARATOR ("/Layer/---"),
 
   /*  <Image>/Tools  */
 
@@ -856,7 +883,7 @@ static GimpItemFactoryEntry image_entries[] =
     NULL, NULL },
   { { N_("/Dialogs/Images..."), NULL,
       dialogs_create_dockable_cmd_callback, 0 },
-    "gimp:buffer-list",
+    "gimp:image-list",
     NULL, NULL },
 
   SEPARATOR ("/Dialogs/---"),
@@ -973,24 +1000,22 @@ static GimpItemFactoryEntry layers_entries[] =
     NULL,
     "dialogs/new_layer.html", NULL },
 
-  /*  <Layers>/Stack  */
-
-  { { N_("/Stack/Raise Layer"), "<control>F",
+  { { N_("/Raise Layer"), "<control>F",
       layers_raise_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_RAISE },
     NULL,
     "stack/stack.html#raise_layer", NULL },
-  { { N_("/Stack/Lower Layer"), "<control>B",
-      layers_lower_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_LOWER },
-    NULL,
-    "stack/stack.html#lower_layer", NULL },
-  { { N_("/Stack/Layer to Top"), "<control><shift>F",
+  { { N_("/Layer to Top"), "<control><shift>F",
       layers_raise_to_top_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_RAISE },
     NULL,
     "stack/stack.html#later_to_top", NULL },
-  { { N_("/Stack/Layer to Bottom"), "<control><shift>B",
+  { { N_("/Lower Layer"), "<control>B",
+      layers_lower_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_LOWER },
+    NULL,
+    "stack/stack.html#lower_layer", NULL },
+  { { N_("/Layer to Bottom"), "<control><shift>B",
       layers_lower_to_bottom_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_LOWER },
     NULL,
@@ -1018,15 +1043,15 @@ static GimpItemFactoryEntry layers_entries[] =
       layers_resize_cmd_callback, 0 },
     NULL,
     "dialogs/layer_boundary_size.html", NULL },
-  { { N_("/Layer to Imagesize"), NULL,
-      layers_resize_to_image_cmd_callback, 0 },
-    NULL,
-    "layer_to_image_size.html", NULL },
   { { N_("/Scale Layer..."), "<control>S",
       layers_scale_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_TOOL_SCALE },
     NULL,
     "dialogs/scale_layer.html", NULL },
+  { { N_("/Layer to Imagesize"), NULL,
+      layers_resize_to_image_cmd_callback, 0 },
+    NULL,
+    "layer_to_image_size.html", NULL },
 
   SEPARATOR ("/---"),
 
@@ -2176,9 +2201,9 @@ menus_exit (Gimp *gimp)
 void
 menus_restore (Gimp *gimp)
 {
-  static gchar *rotate_plugins[]      = { "90 degrees",
-                                          "180 degrees",
-                                          "270 degrees" };
+  static gchar *rotate_plugins[]      = { "Rotate 90 degrees",
+                                          "Rotate 180 degrees",
+                                          "Rotate 270 degrees" };
   static gchar *image_file_entries[]  = { "---moved",
                                           "Close",
                                           "Quit" };
@@ -2249,10 +2274,10 @@ menus_restore (Gimp *gimp)
     }
 
   /*  Reorder Rotate plugin menu entries */
-  pos = 2;
+  pos = 1;
   for (i = 0; i < G_N_ELEMENTS (rotate_plugins); i++)
     {
-      path = g_strconcat ("/Image/Transforms/Rotate/", rotate_plugins[i], NULL);
+      path = g_strconcat ("/Image/Transform/", rotate_plugins[i], NULL);
       menu_item = gtk_item_factory_get_widget (image_factory, path);
       g_free (path);
 
@@ -2263,10 +2288,10 @@ menus_restore (Gimp *gimp)
         }
     }
 
-  pos = 2;
+  pos = 1;
   for (i = 0; i < G_N_ELEMENTS (rotate_plugins); i++)
     {
-      path = g_strconcat ("/Layers/Rotate/", rotate_plugins[i], NULL);
+      path = g_strconcat ("/Layer/Transform/", rotate_plugins[i], NULL);
       menu_item = gtk_item_factory_get_widget (image_factory, path);
       g_free (path);
 
@@ -2285,7 +2310,7 @@ menus_restore (Gimp *gimp)
       g_free (path);
 
       if (menu_item && menu_item->parent)
-	gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, -1);
+        gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, -1);
     }
 
   /*  Reorder menus where plugins registered submenus  */

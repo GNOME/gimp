@@ -33,7 +33,6 @@
 #include "transform_options.h"
 #include "tool_manager.h"
 
-#include "app_procs.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
@@ -144,7 +143,7 @@ transform_options_init (TransformOptions *options,
   
   g_signal_connect (G_OBJECT (options->show_grid_w), "toggled",
                     G_CALLBACK (gimp_transform_tool_show_grid_update),
-                    &options->show_grid);
+                    options);
 
   /*  the grid density entry  */
   hbox = gtk_hbox_new (FALSE, 6);
@@ -181,7 +180,7 @@ transform_options_init (TransformOptions *options,
 
   g_signal_connect (G_OBJECT (options->show_path_w), "toggled",
                     G_CALLBACK (gimp_transform_tool_show_path_update),
-                    &options->show_path);
+                    options);
 
   if (tool_info->tool_type == GIMP_TYPE_ROTATE_TOOL ||
       tool_info->tool_type == GIMP_TYPE_SCALE_TOOL)
@@ -286,14 +285,16 @@ gimp_transform_tool_grid_density_update (GtkWidget *widget,
                                          gpointer   data)
 {
   TransformOptions *options;
+  GimpToolOptions  *tool_options;
   GimpTool         *active_tool;
 
-  options = (TransformOptions *) data;
+  options      = (TransformOptions *) data;
+  tool_options = (GimpToolOptions *) data;
 
   options->grid_size =
     (gint) (pow (2.0, 7.0 - GTK_ADJUSTMENT (widget)->value) + 0.5);
 
-  active_tool = tool_manager_get_active (the_gimp);
+  active_tool = tool_manager_get_active (tool_options->tool_info->gimp);
 
   if (GIMP_IS_TRANSFORM_TOOL (active_tool))
     gimp_transform_tool_grid_density_changed (GIMP_TRANSFORM_TOOL (active_tool));
@@ -303,9 +304,11 @@ static void
 gimp_transform_tool_show_grid_update (GtkWidget *widget,
         	 		      gpointer   data)
 {
-  static gboolean first_call = TRUE;  /* eek, this hack avoids a segfault */
+  TransformOptions *options;
+  GimpToolOptions  *tool_options;
+  GimpTool         *active_tool;
 
-  GimpTool *active_tool;
+  static gboolean first_call = TRUE;  /* eek, this hack avoids a segfault */
 
   if (first_call)
     {
@@ -313,9 +316,12 @@ gimp_transform_tool_show_grid_update (GtkWidget *widget,
       return;
     }
 
-  gimp_toggle_button_update (widget, data);
+  options      = (TransformOptions *) data;
+  tool_options = (GimpToolOptions *) data;
 
-  active_tool = tool_manager_get_active (the_gimp);
+  gimp_toggle_button_update (widget, &options->show_grid);
+
+  active_tool = tool_manager_get_active (tool_options->tool_info->gimp);
 
   if (GIMP_IS_TRANSFORM_TOOL (active_tool))
     gimp_transform_tool_grid_density_changed (GIMP_TRANSFORM_TOOL (active_tool));
@@ -325,10 +331,11 @@ static void
 gimp_transform_tool_show_path_update (GtkWidget *widget,
 				      gpointer   data)
 {
-  static gboolean first_call = TRUE;  /* eek, this hack avoids a segfault */
-
+  TransformOptions  *options;
+  GimpToolOptions   *tool_options;
   GimpTool          *active_tool;
-  GimpTransformTool *transform_tool = NULL;
+
+  static gboolean first_call = TRUE;  /* eek, this hack avoids a segfault */
 
   if (first_call)
     {
@@ -336,16 +343,25 @@ gimp_transform_tool_show_path_update (GtkWidget *widget,
       return;
     }
 
-  active_tool = tool_manager_get_active (the_gimp);
+  options      = (TransformOptions *) data;
+  tool_options = (GimpToolOptions *) data;
+
+  active_tool = tool_manager_get_active (tool_options->tool_info->gimp);
 
   if (GIMP_IS_TRANSFORM_TOOL (active_tool))
-    transform_tool = GIMP_TRANSFORM_TOOL (active_tool);
+    {
+      GimpTransformTool *transform_tool;
 
-  if (transform_tool)
-    gimp_transform_tool_show_path_changed (transform_tool, 1); /* pause */
+      transform_tool = GIMP_TRANSFORM_TOOL (active_tool);
 
-  gimp_toggle_button_update (widget, data);
+      gimp_transform_tool_show_path_changed (transform_tool, 1); /* pause */
 
-  if (transform_tool)
-    gimp_transform_tool_show_path_changed (transform_tool, 0); /* resume */
+      gimp_toggle_button_update (widget, &options->show_path);
+
+      gimp_transform_tool_show_path_changed (transform_tool, 0); /* resume */
+    }
+  else
+    {
+      gimp_toggle_button_update (widget, &options->show_path);
+    }
 }

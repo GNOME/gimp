@@ -208,7 +208,7 @@ gimp_curves_tool_register (Gimp                     *gimp,
                 "gimp:curves_tool",
                 _("Curves"),
                 _("Adjust color curves"),
-                N_("/Image/Colors/Curves..."), NULL,
+                N_("/Layer/Colors/Curves..."), NULL,
                 NULL, "tools/curves.html",
                 GIMP_STOCK_TOOL_CURVES);
 }

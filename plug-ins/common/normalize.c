@@ -39,15 +39,15 @@
 
 /* Declare local functions.
  */
-static void      query  (void);
-static void      run    (gchar   *name,
-			 gint     nparams,
-			 GimpParam  *param,
-			 gint    *nreturn_vals,
-			 GimpParam **return_vals);
+static void   query             (void);
+static void   run               (gchar         *name,
+                                 gint           nparams,
+                                 GimpParam     *param,
+                                 gint          *nreturn_vals,
+                                 GimpParam    **return_vals);
 
-static void      norma         (GimpDrawable *drawable);
-static void      indexed_norma (gint32     image_ID);
+static void   normalize         (GimpDrawable  *drawable);
+static void   indexed_normalize (gint32         image_ID);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -70,7 +70,6 @@ query (void)
     { GIMP_PDB_IMAGE, "image", "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_normalize",
 			  "Normalize the contrast of the specified drawable to "
@@ -86,24 +85,24 @@ query (void)
 			  "Adam D. Moss, Federico Mena Quintero",
 			  "Adam D. Moss, Federico Mena Quintero",
 			  "1997",
-			  N_("<Image>/Image/Colors/Auto/Normalize"),
+			  N_("<Image>/Layer/Colors/Auto/Normalize"),
 			  "RGB*, GRAY*, INDEXED*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  GimpRunModeType run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  GimpRunModeType    run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   gint32 image_ID;
 
@@ -120,14 +119,14 @@ run (gchar   *name,
     {
       gimp_progress_init (_("Normalizing..."));
       gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
-      norma (drawable);
+      normalize (drawable);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush ();
     }
   else if (gimp_drawable_is_indexed (drawable->drawable_id))
     {
-      indexed_norma (image_ID);
+      indexed_normalize (image_ID);
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush ();
     }
@@ -148,7 +147,7 @@ run (gchar   *name,
 
 
 static void
-indexed_norma (gint32 image_ID)  /* a.d.m. */
+indexed_normalize (gint32 image_ID)  /* a.d.m. */
 {
   guchar *cmap;
   gint ncols,i;
@@ -185,7 +184,7 @@ indexed_norma (gint32 image_ID)  /* a.d.m. */
 
 
 static void
-norma (GimpDrawable *drawable)
+normalize (GimpDrawable *drawable)
 {
   GimpPixelRgn src_rgn, dest_rgn;
   guchar *src, *s;

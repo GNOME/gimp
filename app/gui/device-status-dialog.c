@@ -41,7 +41,6 @@
 #include "widgets/gimpdnd.h"
 #include "widgets/gimppreview.h"
 
-#include "app_procs.h"
 #include "devices.h"
 #include "gimprc.h"
 
@@ -376,12 +375,12 @@ devices_rc_update (Gimp         *gimp,
       else
 	device_info->mode = GDK_MODE_DISABLED;
 
-      device_info->context = gimp_create_context (the_gimp,
+      device_info->context = gimp_create_context (gimp,
 						  device_info->name, NULL);
       gimp_context_define_properties (device_info->context,
 				      DEVICE_CONTEXT_MASK,
 				      FALSE);
-      gimp_context_copy_properties (gimp_get_user_context (the_gimp),
+      gimp_context_copy_properties (gimp_get_user_context (gimp),
 				    device_info->context,
 				    DEVICE_CONTEXT_MASK);
       device_status_context_connect (device_info->context,
@@ -437,7 +436,7 @@ devices_rc_update (Gimp         *gimp,
       GimpToolInfo *tool_info;
 
       tool_info = (GimpToolInfo *)
-	gimp_container_get_child_by_name (the_gimp->tool_info_list,
+	gimp_container_get_child_by_name (gimp->tool_info_list,
 					  tool_name);
 
       if (tool_info)
@@ -466,14 +465,14 @@ devices_rc_update (Gimp         *gimp,
       GimpBrush *brush;
 
       brush = (GimpBrush *)
-	gimp_container_get_child_by_name (the_gimp->brush_factory->container,
+	gimp_container_get_child_by_name (gimp->brush_factory->container,
 					  brush_name);
 
       if (brush)
 	{
 	  gimp_context_set_brush (device_info->context, brush);
 	}
-      else if (the_gimp->no_data)
+      else if (gimp->no_data)
 	{
 	  g_free (device_info->context->brush_name);
 	  device_info->context->brush_name = g_strdup (brush_name);
@@ -485,14 +484,14 @@ devices_rc_update (Gimp         *gimp,
       GimpPattern *pattern;
 
       pattern = (GimpPattern *)
-	gimp_container_get_child_by_name (the_gimp->pattern_factory->container,
+	gimp_container_get_child_by_name (gimp->pattern_factory->container,
 					  pattern_name);
 
       if (pattern)
 	{
 	  gimp_context_set_pattern (device_info->context, pattern);
 	}
-      else if (the_gimp->no_data)
+      else if (gimp->no_data)
 	{
 	  g_free (device_info->context->pattern_name);
 	  device_info->context->pattern_name = g_strdup (pattern_name);
@@ -504,14 +503,14 @@ devices_rc_update (Gimp         *gimp,
       GimpGradient *gradient;
 
       gradient = (GimpGradient *)
-	gimp_container_get_child_by_name (the_gimp->gradient_factory->container,
+	gimp_container_get_child_by_name (gimp->gradient_factory->container,
 					  gradient_name);
 
       if (gradient)
 	{
 	  gimp_context_set_gradient (device_info->context, gradient);
 	}
-      else if (the_gimp->no_data)
+      else if (gimp->no_data)
 	{
 	  g_free (device_info->context->gradient_name);
 	  device_info->context->gradient_name = g_strdup (gradient_name);
@@ -539,7 +538,7 @@ select_device (Gimp      *gimp,
 
   current_device = new_device;
 
-  context = gimp_get_user_context (the_gimp);
+  context = gimp_get_user_context (gimp);
 
   gimp_context_copy_properties (device_info->context, context,
 				DEVICE_CONTEXT_MASK);

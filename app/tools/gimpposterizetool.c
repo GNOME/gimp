@@ -106,7 +106,7 @@ gimp_posterize_tool_register (Gimp                     *gimp,
                 "gimp:posterize_tool",
                 _("Posterize"),
                 _("Reduce image to a fixed numer of colors"),
-                N_("/Image/Colors/Posterize..."), NULL,
+                N_("/Layer/Colors/Posterize..."), NULL,
                 NULL, "tools/posterize.html",
                 GIMP_STOCK_TOOL_POSTERIZE);
 }

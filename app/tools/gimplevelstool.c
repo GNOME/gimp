@@ -206,7 +206,7 @@ gimp_levels_tool_register (Gimp                     *gimp,
                 "gimp:levels_tool",
                 _("Levels"),
                 _("Adjust color levels"),
-                N_("/Image/Colors/Levels..."), NULL,
+                N_("/Layer/Colors/Levels..."), NULL,
                 NULL, "tools/levels.html",
                 GIMP_STOCK_TOOL_LEVELS);
 }

@@ -105,7 +105,7 @@ gimp_color_balance_tool_register (Gimp                     *gimp,
                 "gimp:color_balance_tool",
                 _("Color Balance"),
                 _("Adjust color balance"),
-                N_("/Image/Colors/Color Balance..."), NULL,
+                N_("/Layer/Colors/Color Balance..."), NULL,
                 NULL, "tools/color_balance.html",
                 GIMP_STOCK_TOOL_COLOR_BALANCE);
 }

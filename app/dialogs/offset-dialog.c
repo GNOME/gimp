@@ -31,6 +31,8 @@
 
 #include "display/gimpdisplay-foreach.h"
 
+#include "offset-dialog.h"
+
 #include "libgimp/gimpintl.h"
 
 
