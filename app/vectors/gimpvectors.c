@@ -381,7 +381,8 @@ gimp_vectors_scale (GimpItem              *item,
 
   gimp_vectors_freeze (vectors);
 
-  gimp_image_undo_push_vectors_mod (image, NULL, vectors);
+  if (gimp_item_is_attached (item))
+    gimp_image_undo_push_vectors_mod (image, NULL, vectors);
 
   for (list = vectors->strokes; list; list = g_list_next (list))
     {
@@ -413,7 +414,8 @@ gimp_vectors_resize (GimpItem    *item,
 
   gimp_vectors_freeze (vectors);
 
-  gimp_image_undo_push_vectors_mod (image, NULL, vectors);
+  if (gimp_item_is_attached (item))
+    gimp_image_undo_push_vectors_mod (image, NULL, vectors);
 
   for (list = vectors->strokes; list; list = g_list_next (list))
     {

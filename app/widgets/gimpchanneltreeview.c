@@ -23,6 +23,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -53,6 +54,11 @@ static void   gimp_channel_tree_view_docked_iface_init (GimpDockedInterface *doc
 static GObject * gimp_channel_tree_view_constructor   (GType              type,
                                                        guint              n_params,
                                                        GObjectConstructParam *params);
+static void   gimp_channel_tree_view_drop_component   (GimpContainerTreeView *tree_view,
+                                                       GimpImage         *gimage,
+                                                       GimpChannelType    component,
+                                                       GimpViewable      *dest_viewable,
+                                                       GtkTreeViewDropPosition drop_pos);
 static void   gimp_channel_tree_view_set_image        (GimpItemTreeView  *item_view,
                                                        GimpImage         *gimage);
 static GimpItem * gimp_channel_tree_view_item_new     (GimpImage         *image);
@@ -117,12 +123,19 @@ gimp_channel_tree_view_get_type (void)
 static void
 gimp_channel_tree_view_class_init (GimpChannelTreeViewClass *klass)
 {
-  GObjectClass          *object_class    = G_OBJECT_CLASS (klass);
-  GimpItemTreeViewClass *item_view_class = GIMP_ITEM_TREE_VIEW_CLASS (klass);
+  GObjectClass               *object_class;
+  GimpContainerTreeViewClass *view_class;
+  GimpItemTreeViewClass      *item_view_class;
+
+  object_class    = G_OBJECT_CLASS (klass);
+  view_class      = GIMP_CONTAINER_TREE_VIEW_CLASS (klass);
+  item_view_class = GIMP_ITEM_TREE_VIEW_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor        = gimp_channel_tree_view_constructor;
+
+  view_class->drop_component       = gimp_channel_tree_view_drop_component;
 
   item_view_class->set_image       = gimp_channel_tree_view_set_image;
 
@@ -177,14 +190,19 @@ gimp_channel_tree_view_constructor (GType                  type,
                                     guint                  n_params,
                                     GObjectConstructParam *params)
 {
-  GObject             *object;
-  GimpEditor          *editor;
-  GimpChannelTreeView *view;
+  GObject               *object;
+  GimpEditor            *editor;
+  GimpChannelTreeView   *view;
+  GimpContainerTreeView *tree_view;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
-  editor = GIMP_EDITOR (object);
-  view   = GIMP_CHANNEL_TREE_VIEW (object);
+  editor    = GIMP_EDITOR (object);
+  view      = GIMP_CHANNEL_TREE_VIEW (object);
+  tree_view = GIMP_CONTAINER_TREE_VIEW (object);
+
+  gimp_dnd_component_dest_add (GTK_WIDGET (tree_view->view),
+                               NULL, tree_view);
 
   view->toselection_button =
     gimp_editor_add_action_button (GIMP_EDITOR (view), "channels",
@@ -203,6 +221,62 @@ gimp_channel_tree_view_constructor (GType                  type,
 			 view->toselection_button, 5);
 
   return object;
+}
+
+
+/*  GimpContainerTreeView methods  */
+
+static void
+gimp_channel_tree_view_drop_component (GimpContainerTreeView   *tree_view,
+                                       GimpImage               *src_image,
+                                       GimpChannelType          component,
+                                       GimpViewable            *dest_viewable,
+                                       GtkTreeViewDropPosition  drop_pos)
+{
+  GimpItemTreeView *view       = GIMP_ITEM_TREE_VIEW (tree_view);
+  GimpImage        *dest_image = view->gimage;
+  GimpChannel      *new_channel;
+  gint              index;
+  const gchar      *desc;
+  gchar            *name;
+
+  index = gimp_image_get_channel_index (dest_image,
+                                        GIMP_CHANNEL (dest_viewable));
+
+  if (drop_pos == GTK_TREE_VIEW_DROP_AFTER)
+    index++;
+
+  gimp_enum_get_value (GIMP_TYPE_CHANNEL_TYPE, component,
+                       NULL, NULL, &desc, NULL);
+  name = g_strdup_printf (_("%s Channel Copy"), desc);
+
+  new_channel = gimp_channel_new_from_component (src_image, component,
+                                                 name, NULL);
+
+  /*  copied components are invisible by default so subsequent copies
+   *  of components don't affect each other
+   */
+  gimp_item_set_visible (GIMP_ITEM (new_channel), FALSE, FALSE);
+
+  g_free (name);
+
+  if (src_image != dest_image)
+    {
+      GimpItem *item   = GIMP_ITEM (new_channel);
+      gint      width  = gimp_image_get_width  (dest_image);
+      gint      height = gimp_image_get_height (dest_image);
+
+      GIMP_ITEM_GET_CLASS (new_channel)->convert (item, dest_image);
+
+      if (gimp_item_width  (item) != width ||
+          gimp_item_height (item) != height)
+        {
+          gimp_item_resize (item, view->context, width, height, 0, 0);
+        }
+    }
+
+  gimp_image_add_channel (dest_image, new_channel, index);
+  gimp_image_flush (dest_image);
 }
 
 

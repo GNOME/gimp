@@ -858,7 +858,7 @@ gimp_layer_tree_view_drop_component (GimpContainerTreeView   *tree_view,
   gimp_object_set_name (GIMP_OBJECT (layer), name);
   g_free (name);
 
-  gimp_image_add_layer (dest_image, layer, drop_pos);
+  gimp_image_add_layer (dest_image, layer, index);
   gimp_image_flush (dest_image);
 }
 

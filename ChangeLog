@@ -1,5 +1,18 @@
 2005-01-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpitem.c
+	* app/core/gimpdrawable.c
+	* app/vectors/gimpvectors.c: made GimpItem::scale() and ::resize()
+	work on unattached items.
+
+	* app/widgets/gimplayertreeview.c
+	(gimp_layer_tree_view_drop_component): fix drop index.
+
+	* app/widgets/gimpchanneltreeview.c: implement dropping of
+	components as new channels. Fixes bug #158483.
+
+2005-01-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontainertreeview.[ch]: added virtual function
 	GimpContainerTreeView::drop_component(). Added EEKy "dnd_gimp"
 	needed for gimp_selection_data_get_component().

@@ -702,7 +702,6 @@ gimp_item_scale (GimpItem              *item,
   GimpImage     *gimage;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
-  g_return_if_fail (gimp_item_is_attached (item));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
   if (new_width < 1 || new_height < 1)
@@ -711,13 +710,15 @@ gimp_item_scale (GimpItem              *item,
   item_class = GIMP_ITEM_GET_CLASS (item);
   gimage     = gimp_item_get_image (item);
 
-  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_SCALE,
-                               item_class->scale_desc);
+  if (gimp_item_is_attached (item))
+    gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_SCALE,
+                                 item_class->scale_desc);
 
   item_class->scale (item, new_width, new_height, new_offset_x, new_offset_y,
                      interpolation, progress);
 
-  gimp_image_undo_group_end (gimage);
+  if (gimp_item_is_attached (item))
+    gimp_image_undo_group_end (gimage);
 }
 
 /**
@@ -761,7 +762,6 @@ gimp_item_scale_by_factors (GimpItem              *item,
   gint new_offset_x, new_offset_y;
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
-  g_return_val_if_fail (gimp_item_is_attached (item), FALSE);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
 
   if (w_factor == 0.0 || h_factor == 0.0)
@@ -826,7 +826,6 @@ gimp_item_scale_by_origin (GimpItem              *item,
   gint new_offset_x, new_offset_y;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
-  g_return_if_fail (gimp_item_is_attached (item));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
   if (new_width == 0 || new_height == 0)
@@ -869,7 +868,6 @@ gimp_item_resize (GimpItem    *item,
   GimpImage     *gimage;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
-  g_return_if_fail (gimp_item_is_attached (item));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   if (new_width < 1 || new_height < 1)
@@ -878,12 +876,14 @@ gimp_item_resize (GimpItem    *item,
   item_class = GIMP_ITEM_GET_CLASS (item);
   gimage     = gimp_item_get_image (item);
 
-  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_RESIZE,
-                               item_class->resize_desc);
+  if (gimp_item_is_attached (item))
+    gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_RESIZE,
+                                 item_class->resize_desc);
 
   item_class->resize (item, context, new_width, new_height, offset_x, offset_y);
 
-  gimp_image_undo_group_end (gimage);
+  if (gimp_item_is_attached (item))
+    gimp_image_undo_group_end (gimage);
 }
 
 void

@@ -428,7 +428,7 @@ gimp_drawable_scale (GimpItem              *item,
                 progress ? gimp_progress_update_and_flush : NULL,
                 progress);
 
-  gimp_drawable_set_tiles_full (drawable,  TRUE, NULL,
+  gimp_drawable_set_tiles_full (drawable, gimp_item_is_attached (item), NULL,
                                 new_tiles, gimp_drawable_type (drawable),
                                 new_offset_x, new_offset_y);
   tile_manager_unref (new_tiles);
@@ -503,7 +503,7 @@ gimp_drawable_resize (GimpItem    *item,
       copy_region (&srcPR, &destPR);
     }
 
-  gimp_drawable_set_tiles_full (drawable, TRUE, NULL,
+  gimp_drawable_set_tiles_full (drawable, gimp_item_is_attached (item), NULL,
                                 new_tiles, gimp_drawable_type (drawable),
                                 new_offset_x, new_offset_y);
   tile_manager_unref (new_tiles);
