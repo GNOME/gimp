@@ -1,3 +1,12 @@
+1999-04-19  Tuomas Kuosmanen  <tigert@gimp.org>
+
+	* pixmaps/penstroke.xpm: Punched a hole inside the icon - it 
+	shouldnt be filled I guess..
+
+	* pixmaps/yes.xpm, pixmaps/no.xpm: Changed the icons (X and V) 
+	to the ones that are also used in gnome - we can look more
+	consistent this way  :)
+
 1999-04-19  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* plug-ins/png/png.c: applied gimp-ruth-990413-0.patch. Modified
