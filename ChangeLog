@@ -1,5 +1,19 @@
 2003-09-11  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpdrawable-transform-utils.[ch]: added new function
+	gimp_drawable_transform_matrix_flip().
+
+	* app/vectors/gimpstroke.[ch]
+	* app/vectors/gimpvectors.c: don't push the complex GimpItem
+	transformation API down to GimpStroke. Instead setup the matrices
+	in GimpVectors and use a simpler API for GimpStroke.
+
+	* app/vectors/gimpvectors-import.c: changed accordingly.
+
+	* app/vectors/gimpvectors-export.c: close the <path> element.
+
+2003-09-11  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: link the screenshot plug-in explicitely against X11
 	(bug #121942).
 
