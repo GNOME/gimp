@@ -1,5 +1,10 @@
 2003-08-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/text/gimptextlayer.c: removed trailing whitespace.
+	(gimp_text_layer_render): fixed warning by adding a cast.
+
+2003-08-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpvectortool.c (gimp_vector_tool_button_press): call
 	gimp_image_update() after calling gimp_image_add_vectors() so the
 	menus get updated correctly. Fixes bug #119412.

@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpText
+ * GimpTextLayer
  * Copyright (C) 2002-2003  Sven Neumann <sven@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -222,7 +222,7 @@ gimp_text_layer_rename (GimpItem    *item,
                         const gchar *undo_desc)
 {
   GIMP_TEXT_LAYER (item)->auto_rename = FALSE;
-  
+
   GIMP_ITEM_CLASS (parent_class)->rename (item, new_name, undo_desc);
 }
 
@@ -261,7 +261,7 @@ gimp_text_layer_new (GimpImage *image,
  * gimp_text_layer_from_layer:
  * @layer: a #GimpLayer object
  * @text: a #GimpText object
- * 
+ *
  * Converts a standard #GimpLayer and a #GimpText object into a
  * #GimpTextLayer. The new text layer takes ownership of the @text and
  * @layer objects.  The @layer object is rendered unusable by this
@@ -270,7 +270,7 @@ gimp_text_layer_new (GimpImage *image,
  * This is a gross hack that is needed in order to load text layers
  * from XCF files in a backwards-compatible way. Please don't use it
  * for anything else!
- * 
+ *
  * Return value: a newly allocated #GimpTextLayer object
  **/
 GimpLayer *
@@ -349,7 +349,7 @@ GimpText *
 gimp_text_layer_get_text (GimpTextLayer *layer)
 {
   g_return_val_if_fail (GIMP_IS_TEXT_LAYER (layer), NULL);
-  
+
   return layer->text;
 }
 
@@ -400,16 +400,16 @@ gimp_text_layer_render (GimpTextLayer *layer)
                                 0, 0,
                                 gimp_item_width (item),
                                 gimp_item_height (item));
-          
+
           /*  Make sure we're not caching any old selection info  */
-          gimp_layer_invalidate_boundary (layer);
+          gimp_layer_invalidate_boundary (GIMP_LAYER (layer));
 
           GIMP_ITEM (drawable)->width  = width;
           GIMP_ITEM (drawable)->height = height;
-          
+
           if (drawable->tiles)
             tile_manager_unref (drawable->tiles);
-          
+
           drawable->tiles = tile_manager_new (width, height, drawable->bytes);
 
           gimp_viewable_size_changed (GIMP_VIEWABLE (layer));
@@ -474,7 +474,7 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
 		     0, 0, bitmap.width, bitmap.rows, FALSE);
 
   apply_mask_to_region (&textPR, &maskPR, OPAQUE_OPACITY);
-  
+
   tile_manager_unref (mask);
 
   gimp_drawable_update (drawable, 0, 0, bitmap.width, bitmap.rows);
