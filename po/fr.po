@@ -1,7 +1,10 @@
 # gimp fr.po
+#
+# French translation for The Gimp
+#
 # Copyright (C) 1998-2000 Free Software Foundation, Inc.
 # Vincent Renardias <vincent@ldsol.com>, 1998, 1999, 2000.
-# David Monniaux <monniaux@brick.ens.fr>, 1999.
+# David Monniaux <monniaux@brick.ens.fr>, 1999, 2000.
 # Daniel Egger <Daniel.Egger@rz.fh-muenchen.de>, 1999.
 #
 msgid ""
@@ -20,7 +23,6 @@ msgid "About the GIMP"
 msgstr "À Propos de GIMP"
 
 #: app/about_dialog.c:244
-#, fuzzy
 msgid "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 msgstr "-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-iso8859-1,*"
 
@@ -42,7 +44,6 @@ msgid "Pressure:"
 msgstr "Pression :"
 
 #: app/app_procs.c:266
-#, fuzzy
 msgid "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
 msgstr "-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-iso8859-1,*"
 
@@ -51,14 +52,12 @@ msgid "The GIMP"
 msgstr "The GIMP"
 
 #: app/app_procs.c:275
-#, fuzzy
 msgid "-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*,*"
 msgstr "-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-iso8859-1,*"
 
 #: app/app_procs.c:285 app/app_procs.c:287
-#, fuzzy
 msgid "brought to you by"
-msgstr "Version %s présentée par"
+msgstr "présenté par"
 
 #: app/app_procs.c:355
 msgid "GIMP Startup"
@@ -359,7 +358,7 @@ msgstr "Rafraîchir"
 
 #: app/brush_select.c:406
 msgid "No Brushes available"
-msgstr "Aucune brosse disponible"
+msgstr "Aucun pinceau disponible."
 
 #: app/brush_select.c:447 app/layers_dialog.c:394 app/tool_options.c:479
 msgid "Opacity:"
@@ -747,7 +746,6 @@ msgid "Feather Selection"
 msgstr "Adoucir"
 
 #: app/commands.c:339
-#, fuzzy
 msgid "Feather Selection by:"
 msgstr "Largeur de la zone adoucie :"
 
@@ -756,7 +754,6 @@ msgid "Shrink Selection"
 msgstr "Rapetisser"
 
 #: app/commands.c:375
-#, fuzzy
 msgid "Shrink Selection by:"
 msgstr "Rapetisser la sélection de :"
 
@@ -769,7 +766,6 @@ msgid "Grow Selection"
 msgstr "Agrandir"
 
 #: app/commands.c:409
-#, fuzzy
 msgid "Grow Selection by:"
 msgstr "Agrandir la sélection de :"
 
@@ -778,7 +774,6 @@ msgid "Border Selection"
 msgstr "Sélection du bord"
 
 #: app/commands.c:432
-#, fuzzy
 msgid "Border Selection by:"
 msgstr "Épaisseur du bord à sélectionner :"
 
@@ -1328,9 +1323,8 @@ msgid "No"
 msgstr "Non"
 
 #: app/flip_tool.c:82
-#, fuzzy
 msgid "Flip Tool"
-msgstr "Options de l'outil Symétrie"
+msgstr "Outil Symétrie"
 
 #: app/flip_tool.c:95 app/preferences_dialog.c:1591
 #: app/preferences_dialog.c:2354
@@ -1441,7 +1435,7 @@ msgstr ""
 
 #: app/gimage_mask.c:555
 msgid "No selection to stroke!"
-msgstr "Aucune sélection à entourer d'un coup de brosse !"
+msgstr "Aucune sélection à entourer d'un coup de pinceau !"
 
 #: app/gimpbrush.c:263
 msgid "Error in GIMP brush file...aborting."
@@ -1453,27 +1447,28 @@ msgstr "SansNom"
 
 #: app/gimpbrush.c:288
 msgid "GIMP brush file appears to be truncated."
-msgstr "Le fichier de brosses GIMP semble avoir été tronqué."
+msgstr "Le fichier de pinceaux GIMP semble avoir été tronqué."
 
 #: app/gimpbrush.c:291
 #, c-format
 msgid "Unknown brush format version #%d in \"%s\"\n"
-msgstr "Format de brosse inconnu #%d dans \"%s\"\n"
+msgstr "Format de pinceau inconnu #%d dans \"%s\"\n"
 
 #: app/gimpbrushpipe.c:300
 msgid "Brush pipes should have at least one brush."
-msgstr ""
+msgstr "Les pinceaux animés doivent contenir au moins un pinceau."
 
 #: app/gimpbrushpipe.c:396
 msgid ""
 "Failed to load one of the\n"
 "brushes in the brush pipe."
 msgstr ""
+"Je n'ai pu charger un des pinceaux\n"
+"formant le pinceau animé."
 
 #: app/gimpbrushpipe.c:457
-#, fuzzy
 msgid "Failed to load pixmap brush."
-msgstr "Échec de la lecture du chemin à partir de %s"
+msgstr "Échec de la lecture du pinceau pixmap."
 
 #: app/gimpdrawable.c:168
 msgid "Can't fill unknown image type."
@@ -1496,12 +1491,22 @@ msgstr "sansnom"
 msgid "Layer type %d not supported."
 msgstr "Type de calque %d non supporté."
 
+# Est-ce exact?
+# Je me demande si on ne devrait pas rendre le
+# réglage "navigateur externe" automatique.
 #: app/gimphelp.c:126
 msgid ""
 "Could not find the GIMP Help Browser procedure.\n"
 "It probably was not compiled because\n"
 "you don't have GtkXmHTML installed."
 msgstr ""
+"Je n'ai pu trouver la procédure d'aide Gimp.\n"
+"Elle n'a probablement pas été compilée car\n"
+"GtkXmHTML n'est pas installé.\n"
+"\n"
+"Vous devez donc utiliser un navigateur externe\n"
+"pour accéder à l'aide. Réglez cela dans les\n"
+"préférences."
 
 #: app/gimpimage.c:1135
 msgid "attach parasite to image"
@@ -1606,7 +1611,7 @@ msgstr "Avancement"
 
 #: app/gimpprogress.c:123 app/gimpprogress.c:170
 msgid "Please wait..."
-msgstr ""
+msgstr "Veuillez patienter..."
 
 #: app/gimprc.c:399 app/plug_in.c:304
 msgid "Resource configuration"
@@ -1654,11 +1659,11 @@ msgstr "Je ne puis écrire dans %s; %s"
 #: app/gimpui.c:83
 #, c-format
 msgid "Message repeated %d times"
-msgstr ""
+msgstr "Message répété %d fois."
 
 #: app/gimpui.c:96
 msgid "Message repeated once"
-msgstr ""
+msgstr "Message répété une fois."
 
 #: app/gimpui.c:110
 msgid ""
@@ -1666,6 +1671,9 @@ msgid ""
 "Too many open message dialogs.\n"
 "Messages are redirected to stderr.\n"
 msgstr ""
+"AVERTISSEMENT :\n"
+"Trop de boîtes de messages à l'écran.\n"
+"Messages redirigés vers la sortie d'erreur texte.\n"
 
 #: app/gimpui.c:117
 msgid "GIMP Message"
@@ -2329,9 +2337,9 @@ msgid "Info: %s-%d.%d"
 msgstr "Info: %s-%d.%d"
 
 #: app/info_window.c:512
-#, fuzzy, c-format
+#, c-format
 msgid "%d x %d pixels"
-msgstr "pixels"
+msgstr "%d × %d pixels"
 
 #: app/info_window.c:536
 msgid "RGB Color"
@@ -2342,9 +2350,8 @@ msgid "Indexed Color"
 msgstr "Couleur Indexée"
 
 #: app/info_window.c:541
-#, fuzzy
 msgid "colors"
-msgstr "Couleur"
+msgstr "couleurs"
 
 #. size slider
 #: app/ink.c:296
@@ -2734,7 +2741,6 @@ msgid "-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*,*"
 msgstr "-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-iso8859-1,*"
 
 #: app/install.c:295
-#, fuzzy
 msgid "-*-helvetica-medium-o-normal-*-*-100-*-*-*-*-*-*"
 msgstr "-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-iso8859-1,*"
 
@@ -3188,7 +3194,6 @@ msgid "Load/Save Levels"
 msgstr "Charger/Enregistrer niveaux"
 
 #: app/magnify.c:99
-#, fuzzy
 msgid "Magnify Tool"
 msgstr "Agrandir"
 
@@ -3922,19 +3927,16 @@ msgid "/Tools/Swap Colors"
 msgstr "/Outils/Échanger les Couleurs"
 
 #: app/menus.c:544
-#, fuzzy
 msgid "/Tools/Select Tools"
-msgstr "/Outils/Sélection rectangulaire"
+msgstr "/Outils/Sélectionner"
 
 #: app/menus.c:546
-#, fuzzy
 msgid "/Tools/Transform Tools"
 msgstr "/Outils/Transformer"
 
 #: app/menus.c:548
-#, fuzzy
 msgid "/Tools/Paint Tools"
-msgstr "/Outils/Pinceau"
+msgstr "/Outils/Dessiner"
 
 #. <Image>/Dialogs
 #: app/menus.c:553
@@ -4161,9 +4163,8 @@ msgid "/Alpha to Selection"
 msgstr "/Alpha vers Sélection"
 
 #: app/menus.c:750
-#, fuzzy
 msgid "/Edit Layer Attributes..."
-msgstr "Éditer les Attributs du Calque"
+msgstr "/Éditer les Attributs du Calque"
 
 #: app/menus.c:761
 msgid "/New Channel..."
@@ -5600,20 +5601,18 @@ msgid "Clone Tool"
 msgstr "Options de l'Outil Duplication"
 
 #: app/tool_options.c:436
-#, fuzzy
 msgid "Convolver"
 msgstr "Convolution"
 
 #: app/tool_options.c:438
 msgid "Ink Tool"
-msgstr ""
+msgstr "Dessin à l'encre"
 
 #: app/tool_options.c:440 app/tools.c:513 app/tools.c:518
 msgid "Dodge or Burn"
 msgstr "Multiplier ou diviser"
 
 #: app/tool_options.c:442
-#, fuzzy
 msgid "Smudge Tool"
 msgstr "Barbouiller"
 
@@ -5646,9 +5645,8 @@ msgid "Rect Select"
 msgstr "Sélection Rectangulaire"
 
 #: app/tools.c:89
-#, fuzzy
 msgid "/Tools/Select Tools/Rect Select"
-msgstr "/Outils/Sélection rectangulaire"
+msgstr "/Outils/Sélectionner/Rectangle"
 
 #: app/tools.c:93
 msgid "Select rectangular regions"
@@ -5659,22 +5657,20 @@ msgid "Ellipse Select"
 msgstr "Sélection elliptique"
 
 #: app/tools.c:106
-#, fuzzy
 msgid "/Tools/Select Tools/Ellipse Select"
-msgstr "/Outils/Sélection elliptique"
+msgstr "/Outils/Sélectionner/Ellipse & cercle"
 
 #: app/tools.c:110
 msgid "Select elliptical regions"
-msgstr "Sélection des régions elliptique"
+msgstr "Sélection de régions elliptique ou circulaire"
 
 #: app/tools.c:122
 msgid "Free Select"
 msgstr "Sélection à main levée"
 
 #: app/tools.c:123
-#, fuzzy
 msgid "/Tools/Select Tools/Free Select"
-msgstr "/Outils/Sélection à main levée"
+msgstr "/Outils/Sélectionner/À main levée"
 
 #: app/tools.c:127
 msgid "Select hand-drawn regions"
@@ -5685,9 +5681,8 @@ msgid "Fuzzy Select"
 msgstr "Sélection floue"
 
 #: app/tools.c:140
-#, fuzzy
 msgid "/Tools/Select Tools/Fuzzy Select"
-msgstr "/Outils/Sélection floue"
+msgstr "/Outils/Sélectionner/Floue"
 
 #: app/tools.c:144
 msgid "Select contiguous regions"
@@ -5698,18 +5693,16 @@ msgid "Bezier Select"
 msgstr "Sélection Bézier"
 
 #: app/tools.c:157
-#, fuzzy
 msgid "/Tools/Select Tools/Bezier Select"
-msgstr "/Outils/Sélection Bézier"
+msgstr "/Outils/Sélectionner/Courbe de Bézier"
 
 #: app/tools.c:161
 msgid "Select regions using Bezier curves"
 msgstr "Sélectionne des régions par des courbes de Bézier"
 
 #: app/tools.c:174
-#, fuzzy
 msgid "/Tools/Select Tools/Intelligent Scissors"
-msgstr "/Outils/Ciseaux Intelligents"
+msgstr "/Outils/Sélectionner/Ciseaux Intelligents"
 
 #: app/tools.c:178
 msgid "Select shapes from image"
@@ -5720,9 +5713,8 @@ msgid "Move"
 msgstr "Déplacer"
 
 #: app/tools.c:191
-#, fuzzy
 msgid "/Tools/Transform Tools/Move"
-msgstr "/Outils/Transformer"
+msgstr "/Outils/Transformer/Déplacer"
 
 #: app/tools.c:195
 msgid "Move layers & selections"
@@ -5733,18 +5725,16 @@ msgid "Magnify"
 msgstr "Agrandir"
 
 #: app/tools.c:208
-#, fuzzy
 msgid "/Tools/Transform Tools/Magnify"
-msgstr "/Outils/Transformer"
+msgstr "/Outils/Transformer/Agrandir"
 
 #: app/tools.c:212
 msgid "Zoom in & out"
 msgstr "Zoom avant & arrière"
 
 #: app/tools.c:225
-#, fuzzy
 msgid "/Tools/Transform Tools/Crop & Resize"
-msgstr "/Outils/Rogner & Redimensionner"
+msgstr "/Outils/Transformer/Rogner & redimensionner"
 
 #: app/tools.c:229
 msgid "Crop or resize the image"
@@ -5757,9 +5747,8 @@ msgid "Transform"
 msgstr "Transformer"
 
 #: app/tools.c:242
-#, fuzzy
 msgid "/Tools/Transform Tools/Transform"
-msgstr "/Outils/Transformer"
+msgstr "/Outils/Transformer/Transformations"
 
 #: app/tools.c:246 app/tools.c:263 app/tools.c:280 app/tools.c:297
 msgid "Rotation, scaling, shearing, perspective."
@@ -5770,9 +5759,8 @@ msgid "Flip"
 msgstr "Retourner"
 
 #: app/tools.c:310
-#, fuzzy
 msgid "/Tools/Transform Tools/Flip"
-msgstr "/Outils/Transformer"
+msgstr "/Outils/Transformer/Retourner"
 
 #: app/tools.c:314
 msgid "Flip the layer or selection"
