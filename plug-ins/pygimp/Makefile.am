@@ -10,6 +10,10 @@ libgimpprocbrowser = $(top_builddir)/plug-ins/dbbrowser/libgimpprocbrowser.la
 
 SUBDIRS = doc plug-ins
 
+if PLATFORM_WIN32
+no_undefined = -no-undefined
+endif
+
 AM_CFLAGS = $(PYGIMP_EXTRA_CFLAGS)
 
 INCLUDES = -I$(top_srcdir) $(PYTHON_INCLUDES) $(PYGTK_CFLAGS) $(GTK_CFLAGS)
@@ -28,7 +32,7 @@ gimpmodule_la_SOURCES = \
 	pygimp-pdb.c		\
 	pygimp.h
 
-gimpmodule_la_LDFLAGS = -module -avoid-version \
+gimpmodule_la_LDFLAGS = -module -avoid-version $(no_undefined) \
 	-export-symbols-regex 'initgimp|PLUG_IN_INFO'
 
 gimpmodule_la_LIBADD = \
@@ -41,7 +45,8 @@ gimpmodule_la_LIBADD = \
 gimpprocbrowsermodule_la_SOURCES = \
 	procbrowser.c
 
-gimpprocbrowsermodule_la_LDFLAGS = -module -avoid-version
+gimpprocbrowsermodule_la_LDFLAGS = -module -avoid-version $(no_undefined) \
+	-export-symbols-regex initgimpprocbrowser
 
 gimpprocbrowsermodule_la_LIBADD = \
 	$(libgimpprocbrowser)	\

@@ -1,3 +1,7 @@
+2005-02-20  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/Makefile.am: attempt to support Win32 (untested).
+
 2005-02-19  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/plug-ins/gtkcons.py
