@@ -57,28 +57,12 @@ static void   tool_options_rename_callback (GtkWidget   *widget,
 /*  public functions  */
 
 void
-tool_options_save_to_cmd_callback (GtkAction *action,
-                                   gpointer   data)
-{
-  GimpToolOptions *options = GIMP_TOOL_OPTIONS (data);
-  gchar           *name;
-
-  name = g_strdup (gimp_object_get_name (GIMP_OBJECT (options)));
-
-  gimp_config_sync (GIMP_CONFIG (options->tool_info->tool_options),
-                    GIMP_CONFIG (options), 0);
-  gimp_object_set_name (GIMP_OBJECT (options), name);
-
-  g_free (name);
-}
-
-void
 tool_options_save_new_cmd_callback (GtkAction *action,
                                     gpointer   data)
 {
-  GimpEditor   *editor = GIMP_EDITOR (data);
-  GimpContext  *context;
-  GimpToolInfo *tool_info;
+  GimpEditor   *editor    = GIMP_EDITOR (data);
+  GimpContext  *context   = gimp_get_user_context (editor->ui_manager->gimp);
+  GimpToolInfo *tool_info = gimp_context_get_tool (context);
   GtkWidget    *qbox;
 
   context   = gimp_get_user_context (editor->ui_manager->gimp);
@@ -96,41 +80,94 @@ tool_options_save_new_cmd_callback (GtkAction *action,
 }
 
 void
+tool_options_save_to_cmd_callback (GtkAction *action,
+                                   gint       value,
+                                   gpointer   data)
+{
+  GimpEditor      *editor    = GIMP_EDITOR (data);
+  GimpContext     *context   = gimp_get_user_context (editor->ui_manager->gimp);
+  GimpToolInfo    *tool_info = gimp_context_get_tool (context);
+  GimpToolOptions *options;
+
+  options = (GimpToolOptions *)
+    gimp_container_get_child_by_index (tool_info->options_presets, value);
+
+  if (options)
+    {
+      gchar *name;
+
+      name = g_strdup (gimp_object_get_name (GIMP_OBJECT (options)));
+
+      gimp_config_sync (GIMP_CONFIG (tool_info->tool_options),
+                        GIMP_CONFIG (options), 0);
+      gimp_object_set_name (GIMP_OBJECT (options), name);
+
+      g_free (name);
+    }
+}
+
+void
 tool_options_restore_from_cmd_callback (GtkAction *action,
+                                        gint       value,
                                         gpointer   data)
 {
-  GimpToolOptions *options = GIMP_TOOL_OPTIONS (data);
+  GimpEditor      *editor    = GIMP_EDITOR (data);
+  GimpContext     *context   = gimp_get_user_context (editor->ui_manager->gimp);
+  GimpToolInfo    *tool_info = gimp_context_get_tool (context);
+  GimpToolOptions *options;
 
-  gimp_config_sync (GIMP_CONFIG (options),
-                    GIMP_CONFIG (options->tool_info->tool_options), 0);
+  options = (GimpToolOptions *)
+    gimp_container_get_child_by_index (tool_info->options_presets, value);
+
+  if (options)
+    gimp_config_sync (GIMP_CONFIG (options),
+                      GIMP_CONFIG (tool_info->tool_options), 0);
 }
 
 void
 tool_options_rename_saved_cmd_callback (GtkAction *action,
+                                        gint       value,
                                         gpointer   data)
 {
-  GimpToolOptions *options = GIMP_TOOL_OPTIONS (data);
-  GtkWidget       *qbox;
+  GimpEditor      *editor    = GIMP_EDITOR (data);
+  GimpContext     *context   = gimp_get_user_context (editor->ui_manager->gimp);
+  GimpToolInfo    *tool_info = gimp_context_get_tool (context);
+  GimpToolOptions *options;
 
-  qbox = gimp_query_string_box (_("Rename Saved Tool Options"),
-                                NULL /* FIXME */,
-				gimp_standard_help_func,
-				GIMP_HELP_TOOL_OPTIONS_DIALOG,
-				_("Enter a new name for the saved options"),
-				GIMP_OBJECT (options)->name,
-				NULL, NULL,
-				tool_options_rename_callback, options);
-  gtk_widget_show (qbox);
+  options = (GimpToolOptions *)
+    gimp_container_get_child_by_index (tool_info->options_presets, value);
+
+  if (options)
+    {
+      GtkWidget *qbox;
+
+      qbox = gimp_query_string_box (_("Rename Saved Tool Options"),
+                                    NULL /* FIXME */,
+                                    gimp_standard_help_func,
+                                    GIMP_HELP_TOOL_OPTIONS_DIALOG,
+                                    _("Enter a new name for the saved options"),
+                                    GIMP_OBJECT (options)->name,
+                                    NULL, NULL,
+                                    tool_options_rename_callback, options);
+      gtk_widget_show (qbox);
+    }
 }
 
 void
 tool_options_delete_saved_cmd_callback (GtkAction *action,
+                                        gint       value,
                                         gpointer   data)
 {
-  GimpToolOptions *options = GIMP_TOOL_OPTIONS (data);
+  GimpEditor      *editor    = GIMP_EDITOR (data);
+  GimpContext     *context   = gimp_get_user_context (editor->ui_manager->gimp);
+  GimpToolInfo    *tool_info = gimp_context_get_tool (context);
+  GimpToolOptions *options;
 
-  gimp_container_remove (options->tool_info->options_presets,
-                         GIMP_OBJECT (options));
+  options = (GimpToolOptions *)
+    gimp_container_get_child_by_index (tool_info->options_presets, value);
+
+  if (options)
+    gimp_container_remove (tool_info->options_presets, GIMP_OBJECT (options));
 }
 
 void

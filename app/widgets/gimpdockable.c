@@ -937,25 +937,34 @@ gimp_dockable_show_menu (GimpDockable *dockable)
   if (! dockbook_ui_manager)
     return FALSE;
 
+  gimp_ui_manager_ui_get (dockbook_ui_manager, "/dockable-popup");
+
   dialog_ui_manager = gimp_dockable_get_menu (dockable,
                                               &dialog_ui_path,
                                               &dialog_popup_data);
 
   if (dialog_ui_manager)
     {
-      GtkAction   *parent_menu_action;
+      GtkWidget   *child_menu_widget;
       GtkAction   *child_menu_action;
       GtkWidget   *parent_menu_widget;
-      GtkWidget   *child_menu_widget;
+      GtkAction   *parent_menu_action;
       const gchar *label;
 
-      parent_menu_action =
-        gtk_ui_manager_get_action (GTK_UI_MANAGER (dockbook_ui_manager),
-                                   "/dockable-popup/dockable-menu");
+      child_menu_widget =
+        gimp_ui_manager_ui_get (dialog_ui_manager, dialog_ui_path);
 
       child_menu_action =
         gtk_ui_manager_get_action (GTK_UI_MANAGER (dialog_ui_manager),
                                    dialog_ui_path);
+
+      parent_menu_widget =
+        gtk_ui_manager_get_widget (GTK_UI_MANAGER (dockbook_ui_manager),
+                                   "/dockable-popup/dockable-menu");
+
+      parent_menu_action =
+        gtk_ui_manager_get_action (GTK_UI_MANAGER (dockbook_ui_manager),
+                                   "/dockable-popup/dockable-menu");
 
       g_object_get (child_menu_action,
                     "label", &label,
@@ -966,13 +975,6 @@ gimp_dockable_show_menu (GimpDockable *dockable)
                     "stock-id", dockable->stock_id,
                     "visible",  TRUE,
                     NULL);
-
-      parent_menu_widget =
-        gtk_ui_manager_get_widget (GTK_UI_MANAGER (dockbook_ui_manager),
-                                   "/dockable-popup/dockable-menu");
-
-      child_menu_widget =
-        gimp_ui_manager_ui_get (dialog_ui_manager, dialog_ui_path);
 
       if (! GTK_IS_MENU (child_menu_widget))
         {

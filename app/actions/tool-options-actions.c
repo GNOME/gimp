@@ -41,8 +41,7 @@
 /*  local function prototypes  */
 
 static void tool_options_actions_update_presets (GimpActionGroup *group,
-                                                 const gchar     *menu,
-                                                 gint             keep_n,
+                                                 const gchar     *action_prefix,
                                                  GCallback        callback,
                                                  const gchar     *stock_id,
                                                  const gchar     *help_id,
@@ -81,8 +80,6 @@ static GimpActionEntry tool_options_actions[] =
 
 #define SET_VISIBLE(action,condition) \
         gimp_action_group_set_action_visible (group, action, (condition) != 0)
-#define SET_SENSITIVE(action,condition) \
-        gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 #define SET_IMPORTANT(action,condition) \
         gimp_action_group_set_action_important (group, action, (condition) != 0)
 
@@ -113,28 +110,25 @@ tool_options_actions_update (GimpActionGroup *group,
   SET_VISIBLE ("tool-options-rename-menu",  tool_info->options_presets);
   SET_VISIBLE ("tool-options-delete-menu",  tool_info->options_presets);
 
-  if (! tool_info->options_presets)
-    return;
-
-  tool_options_actions_update_presets (group, "tool-options-save-menu", 2,
+  tool_options_actions_update_presets (group, "tool-options-save-",
                                        G_CALLBACK (tool_options_save_to_cmd_callback),
                                        GTK_STOCK_SAVE,
                                        GIMP_HELP_TOOL_OPTIONS_SAVE,
                                        tool_info->options_presets);
 
-  tool_options_actions_update_presets (group, "tool-options-restore-menu", 1,
+  tool_options_actions_update_presets (group, "tool-options-restore-",
                                        G_CALLBACK (tool_options_restore_from_cmd_callback),
                                        GTK_STOCK_REVERT_TO_SAVED,
                                        GIMP_HELP_TOOL_OPTIONS_RESTORE,
                                        tool_info->options_presets);
 
-  tool_options_actions_update_presets (group, "tool-options-rename-menu", 1,
+  tool_options_actions_update_presets (group, "tool-options-rename-",
                                        G_CALLBACK (tool_options_rename_saved_cmd_callback),
                                        GIMP_STOCK_EDIT,
                                        GIMP_HELP_TOOL_OPTIONS_RENAME,
                                        tool_info->options_presets);
 
-  tool_options_actions_update_presets (group, "tool-options-delete-menu", 1,
+  tool_options_actions_update_presets (group, "tool-options-delete-",
                                        G_CALLBACK (tool_options_delete_saved_cmd_callback),
                                        GTK_STOCK_DELETE,
                                        GIMP_HELP_TOOL_OPTIONS_DELETE,
@@ -146,61 +140,63 @@ tool_options_actions_update (GimpActionGroup *group,
 
 static void
 tool_options_actions_update_presets (GimpActionGroup *group,
-                                     const gchar     *menu,
-                                     gint             keep_n,
+                                     const gchar     *action_prefix,
                                      GCallback        callback,
                                      const gchar     *stock_id,
                                      const gchar     *help_id,
                                      GimpContainer   *presets)
 {
-#if 0
-  GtkWidget *menu;
+  GList *list;
+  gint   n_children = 0;
+  gint   i;
 
-  menu = gtk_item_factory_get_widget (factory, menu);
-
-  if (menu)
+  for (i = 0; ; i++)
     {
-      GList *list;
-      gint   num_children;
+      gchar     *action_name;
+      GtkAction *action;
 
-      list = g_list_nth (GTK_MENU_SHELL (menu)->children, keep_n - 1);
-      while (g_list_next (list))
-        gtk_widget_destroy (g_list_next (list)->data);
+      action_name = g_strdup_printf ("%s%03d", action_prefix, i);
+      action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
+                                            action_name);
+      g_free (action_name);
 
-      num_children = gimp_container_num_children (presets);
+      if (! action)
+        break;
 
-      if (num_children > 0)
+      gtk_action_group_remove_action (GTK_ACTION_GROUP (group), action);
+    }
+
+  if (presets)
+    n_children = gimp_container_num_children (presets);
+
+  if (n_children > 0)
+    {
+      GimpEnumActionEntry entry;
+
+      entry.name        = NULL;
+      entry.stock_id    = stock_id;
+      entry.label       = NULL;
+      entry.accelerator = "";
+      entry.tooltip     = NULL;
+      entry.value       = 0;
+      entry.help_id     = help_id;
+
+      for (list = GIMP_LIST (presets)->list, i = 0;
+           list;
+           list = g_list_next (list), i++)
         {
-          GimpItemFactoryEntry entry;
+          GimpToolOptions *options = list->data;
 
-          entry.entry.path            = NULL;
-          entry.entry.accelerator     = "";
-          entry.entry.callback        = callback;
-          entry.entry.callback_action = 0;
-          entry.entry.item_type       = stock_id ? "<StockItem>" : "<Item>";
-          entry.entry.extra_data      = stock_id;
-          entry.quark_string          = NULL;
-          entry.help_id               = help_id;
-          entry.description           = NULL;
+          entry.name  = g_strdup_printf ("%s%03d", action_prefix, i);
+          entry.label = gimp_object_get_name (GIMP_OBJECT (options));
+          entry.value = i;
 
-          for (list = GIMP_LIST (presets)->list;
-               list;
-               list = g_list_next (list))
-            {
-              GimpToolOptions *options = list->data;
+          gimp_action_group_add_enum_actions (group, &entry, 1, callback);
 
-              entry.entry.path = g_strdup_printf ("%s/%s",
-                                                  menu_path,
-                                                  GIMP_OBJECT (options)->name);
-              gimp_item_factory_create_item (GIMP_ITEM_FACTORY (factory),
-                                             &entry, NULL,
-                                             options, 2, FALSE);
-              g_free (entry.entry.path);
-            }
+          g_free ((gchar *) entry.name);
         }
     }
-#endif
 }
 
-#undef SET_SENSITIVE
 #undef SET_VISIBLE
+#undef SET_IMPORTANT

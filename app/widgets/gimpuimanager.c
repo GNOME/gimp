@@ -30,6 +30,7 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpmarshal.h"
 
 #include "gimpactiongroup.h"
 #include "gimpuimanager.h"
@@ -40,6 +41,12 @@ enum
   PROP_0,
   PROP_NAME,
   PROP_GIMP
+};
+
+enum
+{
+  UPDATE,
+  LAST_SIGNAL
 };
 
 
@@ -59,7 +66,11 @@ static void   gimp_ui_manager_get_property   (GObject               *object,
                                               guint                  prop_id,
                                               GValue                *value,
                                               GParamSpec            *pspec);
+static void   gimp_ui_manager_real_update    (GimpUIManager         *manager,
+                                              gpointer               update_data);
 
+
+static guint manager_signals[LAST_SIGNAL] = { 0 };
 
 static GtkUIManagerClass *parent_class = NULL;
 
@@ -104,6 +115,18 @@ gimp_ui_manager_class_init (GimpUIManagerClass *klass)
   object_class->finalize     = gimp_ui_manager_finalize;
   object_class->set_property = gimp_ui_manager_set_property;
   object_class->get_property = gimp_ui_manager_get_property;
+
+  klass->update              = gimp_ui_manager_real_update;
+
+  manager_signals[UPDATE] =
+    g_signal_new ("update",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_LAST,
+		  G_STRUCT_OFFSET (GimpUIManagerClass, update),
+		  NULL, NULL,
+		  gimp_marshal_VOID__POINTER,
+		  G_TYPE_NONE, 1,
+                  G_TYPE_POINTER);
 
   g_object_class_install_property (object_class, PROP_NAME,
                                    g_param_spec_string ("name",
@@ -264,6 +287,20 @@ gimp_ui_manager_get_property (GObject    *object,
     }
 }
 
+static void
+gimp_ui_manager_real_update (GimpUIManager *manager,
+                             gpointer       update_data)
+{
+  GList *list;
+
+  for (list = gtk_ui_manager_get_action_groups (GTK_UI_MANAGER (manager));
+       list;
+       list = g_list_next (list))
+    {
+      gimp_action_group_update (list->data, update_data);
+    }
+}
+
 /**
  * gimp_ui_manager_new:
  * @gimp: the @Gimp instance this ui manager belongs to
@@ -309,16 +346,9 @@ void
 gimp_ui_manager_update (GimpUIManager *manager,
                         gpointer       update_data)
 {
-  GList *list;
-
   g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
 
-  for (list = gtk_ui_manager_get_action_groups (GTK_UI_MANAGER (manager));
-       list;
-       list = g_list_next (list))
-    {
-      gimp_action_group_update (list->data, update_data);
-    }
+  g_signal_emit (manager, manager_signals[UPDATE], 0, update_data);
 }
 
 GimpActionGroup *
@@ -409,6 +439,8 @@ gimp_ui_manager_ui_get (GimpUIManager *manager,
 
           if (! entry->widget)
             {
+              gtk_ui_manager_ensure_update (GTK_UI_MANAGER (manager));
+
               entry->widget =
                 gtk_ui_manager_get_widget (GTK_UI_MANAGER (manager),
                                            entry->ui_path);

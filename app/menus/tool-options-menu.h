@@ -20,14 +20,8 @@
 #define __TOOL_OPTIONS_MENU_H__
 
 
-extern GimpItemFactoryEntry tool_options_menu_entries[];
-extern gint                 n_tool_options_menu_entries;
-
-
-void   tool_options_menu_setup  (GimpItemFactory *factory,
-                                 gpointer         callback_data);
-void   tool_options_menu_update (GtkItemFactory  *factory,
-                                 gpointer         update_data);
+void   tool_options_menu_setup (GimpUIManager *manager,
+                                const gchar   *ui_path);
 
 
 #endif /* __TOOL_OPTIONS_MENU_H__ */

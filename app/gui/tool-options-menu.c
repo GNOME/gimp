@@ -30,222 +30,135 @@
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpitemfactory.h"
+#include "widgets/gimpuimanager.h"
 
-#include "actions/tool-options-commands.h"
-
-#include "menus.h"
 #include "tool-options-menu.h"
-
-#include "gimp-intl.h"
-
-
-#define MENU_BRANCH(path) \
-        { { (path), NULL, NULL, 0, "<Branch>" }, NULL, NULL, NULL }
 
 
 /*  local function prototypes  */
 
-static void tool_options_menu_update_presets (GtkItemFactory         *factory,
-                                              const gchar            *menu_path,
-                                              gint                    keep_n,
-                                              gboolean                has_none,
-                                              GtkItemFactoryCallback  callback,
-                                              const gchar            *stock_id,
-                                              const gchar            *help_id,
-                                              GimpContainer          *presets);
-
-
-/*  global variables  */
-
-GimpItemFactoryEntry tool_options_menu_entries[] =
-{
-  MENU_BRANCH (N_("/_Save Options to")),
-
-  { { N_("/Save Options to/_New Entry..."), "",
-      tool_options_save_new_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_NEW },
-    NULL,
-    GIMP_HELP_TOOL_OPTIONS_SAVE, NULL },
-  { { "/Save Options to/new-separator", "",
-      NULL, 0,
-      "<Separator>", NULL },
-    NULL,
-    NULL, NULL },
-
-  MENU_BRANCH (N_("/_Restore Options from")),
-
-  { { N_("/Restore Options from/(None)"), "",
-      NULL, 0,
-      "<Item>", NULL },
-    NULL,
-    NULL, NULL },
-
-  MENU_BRANCH (N_("/Re_name Saved Options")),
-
-  { { N_("/Rename Saved Options/(None)"), "",
-      NULL, 0,
-      "<Item>", NULL },
-    NULL,
-    NULL, NULL },
-
-  MENU_BRANCH (N_("/_Delete Saved Options")),
-
-  { { N_("/Delete Saved Options/(None)"), "",
-      NULL, 0,
-      "<Item>", NULL },
-    NULL,
-    NULL, NULL },
-
-  { { "/reset-separator", NULL, NULL, 0, "<Separator>", NULL },
-    NULL, NULL, NULL },
-
-  { { N_("/R_eset Tool Options"), "",
-      tool_options_reset_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_RESET },
-    NULL,
-    GIMP_HELP_TOOL_OPTIONS_RESET, NULL },
-  { { N_("/Reset _all Tool Options..."), "",
-      tool_options_reset_all_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_RESET },
-    NULL,
-    GIMP_HELP_TOOL_OPTIONS_RESET, NULL }
-};
-
-gint n_tool_options_menu_entries = G_N_ELEMENTS (tool_options_menu_entries);
+static void   tool_options_menu_update         (GimpUIManager *manager,
+                                                gpointer       update_data,
+                                                const gchar   *ui_path);
+static void   tool_options_menu_update_after   (GimpUIManager *manager,
+                                                gpointer       update_data,
+                                                const gchar   *ui_path);
+static void   tool_options_menu_update_presets (GimpUIManager *manager,
+                                                guint          merge_id,
+                                                const gchar   *ui_path,
+                                                const gchar   *menu_path,
+                                                const gchar   *action_prefix,
+                                                GimpContainer *presets);
 
 
 /*  public functions  */
 
 void
-tool_options_menu_setup (GimpItemFactory *factory,
-                         gpointer         callback_data)
+tool_options_menu_setup (GimpUIManager *manager,
+                         const gchar   *ui_path)
 {
-  gimp_item_factory_set_sensitive (GTK_ITEM_FACTORY (factory),
-                                   "/Restore Options from/(None)", FALSE);
-  gimp_item_factory_set_sensitive (GTK_ITEM_FACTORY (factory),
-                                   "/Rename Saved Options/(None)", FALSE);
-  gimp_item_factory_set_sensitive (GTK_ITEM_FACTORY (factory),
-                                   "/Delete Saved Options/(None)", FALSE);
+  g_signal_connect (manager, "update",
+                    G_CALLBACK (tool_options_menu_update),
+                    ui_path);
+  g_signal_connect_after (manager, "update",
+                          G_CALLBACK (tool_options_menu_update_after),
+                          ui_path);
 }
 
-#define SET_VISIBLE(menu,condition) \
-        gimp_item_factory_set_visible (factory, menu, (condition) != 0)
 
-void
-tool_options_menu_update (GtkItemFactory *factory,
-                          gpointer        data)
+/*  private functions  */
+
+static void
+tool_options_menu_update (GimpUIManager *manager,
+                          gpointer       update_data,
+                          const gchar   *ui_path)
+{
+  guint merge_id;
+
+  merge_id = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (manager),
+                                                  "tool-options-merge-id"));
+
+  if (merge_id)
+    {
+      gtk_ui_manager_remove_ui (GTK_UI_MANAGER (manager), merge_id);
+
+      g_object_set_data (G_OBJECT (manager), "tool-options-merge-id",
+                         GINT_TO_POINTER (0));
+
+      gtk_ui_manager_ensure_update (GTK_UI_MANAGER (manager));
+    }
+}
+
+static void
+tool_options_menu_update_after (GimpUIManager *manager,
+                                gpointer       update_data,
+                                const gchar   *ui_path)
 {
   GimpContext  *context;
   GimpToolInfo *tool_info;
+  guint         merge_id;
 
-  context   = gimp_get_user_context (GIMP_ITEM_FACTORY (factory)->gimp);
+  context   = gimp_get_user_context (manager->gimp);
   tool_info = gimp_context_get_tool (context);
-
-  SET_VISIBLE ("/Save Options to",      tool_info->options_presets);
-  SET_VISIBLE ("/Restore Options from", tool_info->options_presets);
-  SET_VISIBLE ("/Rename Saved Options", tool_info->options_presets);
-  SET_VISIBLE ("/Delete Saved Options", tool_info->options_presets);
-  SET_VISIBLE ("/reset-separator",      tool_info->options_presets);
 
   if (! tool_info->options_presets)
     return;
 
-  SET_VISIBLE ("/Save Options to/new-separator",
-               gimp_container_num_children (tool_info->options_presets) > 0);
+  merge_id = gtk_ui_manager_new_merge_id (GTK_UI_MANAGER (manager));
 
-  tool_options_menu_update_presets (factory, "/Save Options to", 2, FALSE,
-                                    tool_options_save_to_cmd_callback,
-                                    GTK_STOCK_SAVE,
-                                    GIMP_HELP_TOOL_OPTIONS_SAVE,
+  g_object_set_data (G_OBJECT (manager), "tool-options-merge-id",
+                     GUINT_TO_POINTER (merge_id));
+
+  tool_options_menu_update_presets (manager, merge_id, ui_path,
+                                    "tool-options-save-menu",
+                                    "tool-options-save-",
                                     tool_info->options_presets);
 
-  tool_options_menu_update_presets (factory, "/Restore Options from", 1, TRUE,
-                                    tool_options_restore_from_cmd_callback,
-                                    GTK_STOCK_REVERT_TO_SAVED,
-                                    GIMP_HELP_TOOL_OPTIONS_RESTORE,
+  tool_options_menu_update_presets (manager, merge_id, ui_path,
+                                    "tool-options-restore-menu",
+                                    "tool-options-restore-",
                                     tool_info->options_presets);
 
-  tool_options_menu_update_presets (factory, "/Rename Saved Options", 1, TRUE,
-                                    tool_options_rename_saved_cmd_callback,
-                                    GIMP_STOCK_EDIT,
-                                    GIMP_HELP_TOOL_OPTIONS_RENAME,
+  tool_options_menu_update_presets (manager, merge_id, ui_path,
+                                    "tool-options-rename-menu",
+                                    "tool-options-rename-",
                                     tool_info->options_presets);
 
-  tool_options_menu_update_presets (factory, "/Delete Saved Options", 1, TRUE,
-                                    tool_options_delete_saved_cmd_callback,
-                                    GTK_STOCK_DELETE,
-                                    GIMP_HELP_TOOL_OPTIONS_DELETE,
+  tool_options_menu_update_presets (manager, merge_id, ui_path,
+                                    "tool-options-delete-menu",
+                                    "tool-options-delete-",
                                     tool_info->options_presets);
+
+  gtk_ui_manager_ensure_update (GTK_UI_MANAGER (manager));
 }
-
-
-/*  privat function  */
 
 static void
-tool_options_menu_update_presets (GtkItemFactory         *factory,
-                                  const gchar            *menu_path,
-                                  gint                    keep_n,
-                                  gboolean                has_none,
-                                  GtkItemFactoryCallback  callback,
-                                  const gchar            *stock_id,
-                                  const gchar            *help_id,
-                                  GimpContainer          *presets)
+tool_options_menu_update_presets (GimpUIManager *manager,
+                                  guint          merge_id,
+                                  const gchar   *ui_path,
+                                  const gchar   *menu_path,
+                                  const gchar   *action_prefix,
+                                  GimpContainer *presets)
 {
-  GtkWidget *menu;
+  gint  n_children;
+  gint  i;
 
-  menu = gtk_item_factory_get_widget (factory, menu_path);
+  n_children = gimp_container_num_children (presets);
 
-  if (menu)
+  for (i = 0; i < n_children; i++)
     {
-      GList *list;
-      gint   num_children;
+      gchar *action_name;
+      gchar *path;
 
-      list = g_list_nth (GTK_MENU_SHELL (menu)->children, keep_n - 1);
-      while (g_list_next (list))
-        gtk_widget_destroy (g_list_next (list)->data);
+      path        = g_strdup_printf ("%s/%s", ui_path, menu_path);
+      action_name = g_strdup_printf ("%s%03d", action_prefix, i);
 
-      num_children = gimp_container_num_children (presets);
+      gtk_ui_manager_add_ui (GTK_UI_MANAGER (manager), merge_id,
+                             path, action_name, action_name,
+                             GTK_UI_MANAGER_MENUITEM,
+                             FALSE);
 
-      if (has_none)
-        {
-          gchar *none;
-
-          none = g_strdup_printf ("%s/(None)", menu_path);
-          SET_VISIBLE (none, num_children == 0);
-          g_free (none);
-        }
-
-      if (num_children > 0)
-        {
-          GimpItemFactoryEntry entry;
-
-          entry.entry.path            = NULL;
-          entry.entry.accelerator     = "";
-          entry.entry.callback        = callback;
-          entry.entry.callback_action = 0;
-          entry.entry.item_type       = stock_id ? "<StockItem>" : "<Item>";
-          entry.entry.extra_data      = stock_id;
-          entry.quark_string          = NULL;
-          entry.help_id               = help_id;
-          entry.description           = NULL;
-
-          for (list = GIMP_LIST (presets)->list;
-               list;
-               list = g_list_next (list))
-            {
-              GimpToolOptions *options = list->data;
-
-              entry.entry.path = g_strdup_printf ("%s/%s",
-                                                  menu_path,
-                                                  GIMP_OBJECT (options)->name);
-              gimp_item_factory_create_item (GIMP_ITEM_FACTORY (factory),
-                                             &entry, NULL,
-                                             options, 2, FALSE);
-              g_free (entry.entry.path);
-            }
-        }
+      g_free (action_name);
+      g_free (path);
     }
 }
-
-#undef SET_VISIBLE

@@ -126,9 +126,7 @@ gimp_tool_options_editor_get_type (void)
 static void
 gimp_tool_options_editor_class_init (GimpToolOptionsEditorClass *klass)
 {
-  GtkObjectClass *object_class;
-
-  object_class = GTK_OBJECT_CLASS (klass);
+  GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -318,29 +316,22 @@ gimp_tool_options_editor_menu_popup (GimpToolOptionsEditor *editor,
                                      const gchar           *path)
 {
   GimpEditor *gimp_editor = GIMP_EDITOR (editor);
-  GtkWidget  *menu;
+  GtkWidget  *menu_item;
 
-  gimp_ui_manager_update (gimp_editor->ui_manager,
-                          gimp_editor->popup_data);
-  gimp_ui_manager_ui_popup (gimp_editor->ui_manager,
-                            gimp_editor->ui_path,
-                            gimp_editor->popup_data,
-                            GTK_WIDGET (button),
-                            NULL, NULL, NULL);
+  gimp_ui_manager_ui_get (gimp_editor->ui_manager, gimp_editor->ui_path);
+  gimp_ui_manager_update (gimp_editor->ui_manager, gimp_editor->popup_data);
 
-#if 0
-  gimp_item_factory_update (gimp_editor->item_factory,
-                            gimp_editor->popup_data);
+  menu_item =
+    gtk_ui_manager_get_widget (GTK_UI_MANAGER (gimp_editor->ui_manager), path);
 
-  menu =
-    gtk_item_factory_get_widget (GTK_ITEM_FACTORY (gimp_editor->item_factory),
-                                 path);
+  if (GTK_IS_MENU_ITEM (menu_item))
+    {
+      GtkWidget *menu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (menu_item));
 
-  if (menu)
-    gtk_menu_popup (GTK_MENU (menu), NULL, NULL,
-                    gimp_tool_options_editor_menu_pos, button,
-                    0, GDK_CURRENT_TIME);
-#endif
+      gtk_menu_popup (GTK_MENU (menu), NULL, NULL,
+                      gimp_tool_options_editor_menu_pos, button,
+                      0, GDK_CURRENT_TIME);
+    }
 }
 
 static void
@@ -349,7 +340,9 @@ gimp_tool_options_editor_save_clicked (GtkWidget             *widget,
 {
   if (GTK_WIDGET_SENSITIVE (editor->restore_button) /* evil but correct */)
     {
-      gimp_tool_options_editor_menu_popup (editor, widget, "/Save Options to");
+      gimp_tool_options_editor_menu_popup (editor, widget,
+                                           "/tool-options-popup"
+                                           "/tool-options-save-menu");
     }
   else
     {
@@ -372,14 +365,18 @@ static void
 gimp_tool_options_editor_restore_clicked (GtkWidget             *widget,
                                           GimpToolOptionsEditor *editor)
 {
-  gimp_tool_options_editor_menu_popup (editor, widget, "/Restore Options from");
+  gimp_tool_options_editor_menu_popup (editor, widget,
+                                       "/tool-options-popup"
+                                       "/tool-options-restore-menu");
 }
 
 static void
 gimp_tool_options_editor_delete_clicked (GtkWidget             *widget,
                                          GimpToolOptionsEditor *editor)
 {
-  gimp_tool_options_editor_menu_popup (editor, widget, "/Delete Saved Options");
+  gimp_tool_options_editor_menu_popup (editor, widget,
+                                       "/tool-options-popup"
+                                       "/tool-options-delete-menu");
 }
 
 static void

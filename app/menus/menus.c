@@ -361,14 +361,14 @@ menus_init (Gimp *gimp)
   gimp_menu_factory_menu_register (global_menu_factory, "<ToolOptions>",
                                    _("Tool Options Menu"),
                                    GIMP_HELP_TOOL_OPTIONS_DIALOG,
-                                   tool_options_menu_setup,
-                                   tool_options_menu_update, TRUE,
+                                   NULL, NULL, TRUE,
                                    0, NULL);
   gimp_menu_factory_manager_register (global_menu_factory, "<ToolOptions>",
                                       "tool-options",
                                       NULL,
                                       "/tool-options-popup",
-                                      "tool-options-menu.xml", NULL,
+                                      "tool-options-menu.xml",
+                                      tool_options_menu_setup,
                                       NULL);
 }
 

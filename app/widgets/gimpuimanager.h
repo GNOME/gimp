@@ -61,6 +61,9 @@ struct _GimpUIManagerClass
   GtkUIManagerClass  parent_class;
 
   GHashTable        *managers;
+
+  void (* update) (GimpUIManager *manager,
+                   gpointer       update_data);
 };
 
 

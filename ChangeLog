@@ -1,3 +1,33 @@
+2004-04-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpuimanager.[ch]: added signal "update" which
+	is G_SIGNAL_RUN_LAST, so handlers can hook in before and after
+	the default implementation. Update the action groups
+	in the default implementations.
+
+	(gimp_ui_manager_ui_get): make sure we always return a widget
+	by calling gtk_ui_manager_ensure_update().
+
+	* app/widgets/gimpdockable.c (gimp_dockable_show_menu): make
+	sure the dockable menu is loaded before trying to access its
+	widgets/actions.
+
+	Resurrected the dynamic tool options menus:
+
+	* app/actions/tool-options-actions.c: dynamically destroy/create
+	actions for the tool options' presets.
+
+	* app/actions/tool-options-commands.[ch]: all callbacks are
+	GimpEnumAction::selected() callbacks now.
+
+	* app/gui/tool-options-menu.[ch]: connect and connect_after to
+	GimpUIManager::update(). Remove the old preset menu items
+	in the former callback, create the new ones in the latter.
+	Removed the last item factory entries.
+
+	* app/gui/menus.c
+	* app/widgets/gimptooloptionseditor.c: changed accordingly.
+
 2004-04-29  Simon Budig  <simon@gimp.org>
 
 	* app/main.c: when glibc is used, call mallopt, so that memory
