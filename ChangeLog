@@ -1,3 +1,7 @@
+2001-11-16  Tor Lillqvist  <tml@iki.fi>
+
+	* gimptool-win32.c.in: Implement the --prefix and --*dir options.
+
 2001-11-15  Abel Cheung  <maddog@linux.org.hk>
 
 	* plug-ins/gimpressionist/size.c (create_sizepage): Fixed a tooltip
@@ -16,6 +20,8 @@
 	Windows.
 
 	* gimp-zip.in: Add gimptool.exe and manual pages.
+
+	* gimprc.win32: Remove, as we use the same gimprc as on Unix now.
 
 	* libgimp/gimpenv.h
 	* libgimp/gimpenv.c (gimp_path_runtime_fix): New function, code

@@ -25,6 +25,8 @@
  *  - Check CC environment variable and autoconf variable.
  *  - MSVC support: Use cl instead of gcc, pass --msvc-syntax to pkg-config.
  *
+ * Yes, this program leaks g_strconcat'ed strings without
+ * hesitation. So what, it runs for a couple of milliseconds.
  */
 
 #include <stdlib.h>
@@ -38,6 +40,7 @@
 static gboolean silent = FALSE;
 static gboolean dry_run = FALSE;
 static gchar *prefix;
+static gchar *exec_prefix;
 
 static gchar *env_cflags;
 static gchar *env_ldflags;
@@ -70,6 +73,42 @@ static gchar *env_libs;
 #define COPY "cp"
 #define REMOVE "rm -f"
 #endif
+
+static struct {
+  gchar *option;
+  gchar *value;
+} dirs[] = {
+  { "prefix", "@prefix@" },
+  { "exec-prefix", "@exec_prefix@" },
+  { "bindir", "@bindir@" },
+  { "sbindir", "@sbindir@" },
+  { "libexecdir", "@libexecdir@" },
+  { "datadir", "@datadir@" },
+  { "sysconfdir", "@sysconfdir@" },
+  { "sharedstatedir", "@sharedstatedir@" },
+  { "localstatedir", "@localstatedir@" },
+  { "libdir", "@libdir@" },
+  { "infodir", "@infodir@" },
+  { "mandir", "@mandir@" },
+  { "includedir", "@includedir@" },
+  { "gimpplugindir", "@gimpplugindir@" },
+  { "gimpdatadir", "@gimpdatadir@" }
+};
+
+static gboolean
+starts_with (gchar *string,
+	     gchar *test)
+{
+  return strncmp (string, test, strlen (test)) == 0;
+}
+
+static gboolean
+starts_with_dir (gchar *string,
+		 gchar *test)
+{
+  return starts_with (string, g_strconcat (test, "/", NULL)) ||
+    strcmp (string, test) == 0;
+}
 
 static gchar *
 get_prefix (gchar slash)
@@ -129,6 +168,19 @@ get_prefix (gchar slash)
 #endif
 }
 
+static gchar *
+expand_and_munge (gchar *value)
+{
+  if (starts_with_dir (value, "${prefix}"))
+    value = g_strconcat ("@prefix@", value + strlen ("${prefix}"), NULL);
+  else if (starts_with_dir (value, "${exec_prefix}"))
+    value = g_strconcat ("@exec_prefix@", value + strlen ("${exec_prefix}"), NULL);
+  if (starts_with_dir (value, "@prefix@"))
+    value = g_strconcat (get_prefix ('/'), value + strlen ("@prefix@"), NULL);
+
+  return value;
+}
+
 static void
 find_out_env_flags (void)
 {
@@ -173,6 +225,11 @@ Developer options:\n\
   --exec-prefix=PREFIX    use PREFIX instead of the installation exec prefix\n\
                           that GIMP was built when computing the output for\n\
                           --cflags and --libs\n\
+\n\
+Installation directory options:\n\
+  --prefix --exec-prefix --bindir --sbindir --libexecdir --datadir --sysconfdir\n\
+  --sharedstatedir --localstatedir --libdir --infodir --mandir --includedir\n\
+  --gimpplugindir --gimpdatadir\n\
 \n\
 The --cflags and --libs options can be appended with -noui to get appropriate\n\
 settings for plug-ins which do not use GTK+.\n\
@@ -575,15 +632,20 @@ int
 main (int    argc,
       char **argv)
 {
-  int argi = 0;
+  gint argi = 0;
+  gint i;
 
   if (argc == 1)
     usage (0);
 
   while (++argi < argc)
     {
-      if (strcmp (argv[argi], "--help") == 0)
-	
+      for (i = 0; i < G_N_ELEMENTS (dirs); i++)
+	if (strcmp (argv[argi], g_strconcat ("--", dirs[i].option, NULL)) == 0)
+	  break;
+      if (i < G_N_ELEMENTS (dirs))
+	printf ("%s\n", expand_and_munge (dirs[i].value));
+      else if (strcmp (argv[argi], "--help") == 0)
 	usage (0);
       else if (strcmp (argv[argi], "--quiet") == 0 ||
 	       strcmp (argv[argi], "--silent") == 0)
@@ -608,8 +670,10 @@ main (int    argc,
 	do_libs ();
       else if (strcmp (argv[argi], "--libs-noui") == 0)
 	do_libs_noui ();
-      else if (strcmp (argv[argi], "--prefix") == 0)
-	prefix = argv[++argi];
+      else if (starts_with (argv[argi], "--prefix="))
+	prefix = argv[argi] + strlen ("--prefix=");
+      else if (starts_with (argv[argi], "--exec-prefix="))
+	exec_prefix = argv[argi] + strlen ("--exec_prefix=");
       else if (strcmp (argv[argi], "--build") == 0)
 	do_build (argv[++argi]);
       else if (strcmp (argv[argi], "--build-noui") == 0)
@@ -652,3 +716,8 @@ main (int    argc,
     }
   exit (0);
 }
+/*
+ * Local Variables:
+ * mode: c
+ * End:
+ */
