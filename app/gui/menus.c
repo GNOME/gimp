@@ -2544,7 +2544,9 @@ menus_last_opened_add (GimpItemFactory *item_factory,
   for (i = 0; i < gimprc.last_opened_size; i++)
     {
       g_free (last_opened_entries[i].entry.path);
-      g_free (last_opened_entries[i].entry.accelerator);
+
+      if (i < 9)
+        g_free (last_opened_entries[i].entry.accelerator);
     }
 
   g_free (last_opened_entries);

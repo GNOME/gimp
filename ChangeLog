@@ -1,5 +1,10 @@
 2002-08-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/menus.c (menus_last_opened_add): don't g_free() static
+	strings (happened if gimprc.last_opened_size > 9, fixes #85795).
+
+2002-08-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage-mask-select.c: call gimp_image_mask_changed()
 	after performing the selection op.
 
