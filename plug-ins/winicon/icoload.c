@@ -36,21 +36,15 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#if (G_BYTE_ORDER == G_BIG_ENDIAN)
-
-#define A_VAL(p) ((guchar *)(p))[0]
-#define R_VAL(p) ((guchar *)(p))[1]
-#define G_VAL(p) ((guchar *)(p))[2]
-#define B_VAL(p) ((guchar *)(p))[3]
-
-#elif (G_BYTE_ORDER == G_LITTLE_ENDIAN)
-
 #define A_VAL(p) ((guchar *)(p))[3]
 #define R_VAL(p) ((guchar *)(p))[2]
 #define G_VAL(p) ((guchar *)(p))[1]
 #define B_VAL(p) ((guchar *)(p))[0]
 
-#endif
+#define A_VAL_GIMP(p) ((guchar *)(p))[3]
+#define R_VAL_GIMP(p) ((guchar *)(p))[0]
+#define G_VAL_GIMP(p) ((guchar *)(p))[1]
+#define B_VAL_GIMP(p) ((guchar *)(p))[2]
 
 
 static gint       ico_read_int8  (FILE *fp, guint8 *data, gint count);
@@ -233,7 +227,7 @@ ico_read_data (MsIcon *ico,
 	 data->used_clrs, data->bpp));
 
       data->palette = g_new0 (guint32, data->used_clrs);
-      ico->cp += ico_read_int32 (ico->fp, data->palette, data->used_clrs);
+      ico->cp += ico_read_int8 (ico->fp, data->palette, data->used_clrs * 4);
     }
 
   data->xor_map = ico_alloc_map (entry->width, entry->height,
@@ -407,14 +401,14 @@ ico_to_gimp (MsIcon *ico)
                                                                w, y * w + x)];
 		guint32 *dest = &(dest_vec[(h-1-y) * w + x]);
 
-		B_VAL (dest) = R_VAL (&color);
-		G_VAL (dest) = G_VAL (&color);
-		R_VAL (dest) = B_VAL (&color);
+		R_VAL_GIMP (dest) = R_VAL (&color);
+		G_VAL_GIMP (dest) = G_VAL (&color);
+		B_VAL_GIMP (dest) = B_VAL (&color);
 
 		if (ico_get_bit_from_data (and_map, w, y*w + x))
-		  A_VAL (dest) = 0;
+		  A_VAL_GIMP (dest) = 0;
 		else
-		  A_VAL (dest) = 255;
+		  A_VAL_GIMP (dest) = 255;
 	      }
 	  break;
 
@@ -426,14 +420,14 @@ ico_to_gimp (MsIcon *ico)
                                                                   w, y * w + x)];
 		guint32 *dest = &(dest_vec[(h-1-y) * w + x]);
 
-		B_VAL (dest) = R_VAL (&color);
-		G_VAL (dest) = G_VAL (&color);
-		R_VAL (dest) = B_VAL (&color);
+		R_VAL_GIMP (dest) = R_VAL (&color);
+		G_VAL_GIMP (dest) = G_VAL (&color);
+		B_VAL_GIMP (dest) = B_VAL (&color);
 
 		if (ico_get_bit_from_data (and_map, w, y*w + x))
-		  A_VAL (dest) = 0;
+		  A_VAL_GIMP (dest) = 0;
 		else
-		  A_VAL (dest) = 255;
+		  A_VAL_GIMP (dest) = 255;
 	      }
 	  break;
 
@@ -445,14 +439,14 @@ ico_to_gimp (MsIcon *ico)
                                                                 w, y * w + x)];
 		guint32 *dest = &(dest_vec[(h-1-y) * w + x]);
 
-		B_VAL (dest) = R_VAL (&color);
-		G_VAL (dest) = G_VAL (&color);
-		R_VAL (dest) = B_VAL (&color);
+		R_VAL_GIMP (dest) = R_VAL (&color);
+		G_VAL_GIMP (dest) = G_VAL (&color);
+		B_VAL_GIMP (dest) = B_VAL (&color);
 
 		if (ico_get_bit_from_data (and_map, w, y*w + x))
-		  A_VAL (dest) = 0;
+		  A_VAL_GIMP (dest) = 0;
 		else
-		  A_VAL (dest) = 255;
+		  A_VAL_GIMP (dest) = 255;
 	      }
 	  break;
 
@@ -465,20 +459,20 @@ ico_to_gimp (MsIcon *ico)
 		{
 		  guint32 *dest = &(dest_vec[(h-1-y) * w + x]);
 
-		  R_VAL(dest) = xor_map[(y * w + x) * bytespp];
-		  G_VAL(dest) = xor_map[(y * w + x) * bytespp + 1];
-		  B_VAL(dest) = xor_map[(y * w + x) * bytespp + 2];
+		  B_VAL_GIMP(dest) = xor_map[(y * w + x) * bytespp];
+		  G_VAL_GIMP(dest) = xor_map[(y * w + x) * bytespp + 1];
+		  R_VAL_GIMP(dest) = xor_map[(y * w + x) * bytespp + 2];
 
 		  if (idata->bpp < 32)
 		    {
 		      if (ico_get_bit_from_data (and_map, w, y*w + x))
-			A_VAL (dest) = 0;
+			A_VAL_GIMP (dest) = 0;
 		      else
-			A_VAL (dest) = 255;
+			A_VAL_GIMP (dest) = 255;
 		    }
 		  else
 		    {
-		      A_VAL (dest) = xor_map[(y * w + x) * bytespp + 3];
+		      A_VAL_GIMP (dest) = xor_map[(y * w + x) * bytespp + 3];
 		    }
 		}
 	  }

@@ -60,15 +60,25 @@ ico_write_int32 (FILE     *fp,
 		 guint32  *data,
 		 gint      count)
 {
-  gint i, total;
+  gint total;
 
   total = count;
   if (count > 0)
     {
+#if (G_BYTE_ORDER == G_BIG_ENDIAN)
+      gint i;
+
       for (i = 0; i < count; i++)
-	data[i] = GUINT32_FROM_LE (data[i]);
+        data[i] = GUINT32_FROM_LE (data[i]);
+#endif
 
       ico_write_int8 (fp, (guint8*) data, count * 4);
+
+#if (G_BYTE_ORDER == G_BIG_ENDIAN)
+      /* Put it back like we found it */
+      for (i = 0; i < count; i++)
+        data[i] = GUINT32_FROM_LE (data[i]);
+#endif
     }
 
   return total * 4;
@@ -80,15 +90,25 @@ ico_write_int16 (FILE     *fp,
 		 guint16  *data,
 		 gint      count)
 {
-  gint i, total;
+  gint total;
 
   total = count;
   if (count > 0)
     {
+#if (G_BYTE_ORDER == G_BIG_ENDIAN)
+      gint i;
+
       for (i = 0; i < count; i++)
-	data[i] = GUINT16_FROM_LE (data[i]);
+        data[i] = GUINT16_FROM_LE (data[i]);
+#endif
 
       ico_write_int8 (fp, (guint8*) data, count * 2);
+
+#if (G_BYTE_ORDER == G_BIG_ENDIAN)
+      /* Put it back like we found it */
+      for (i = 0; i < count; i++)
+        data[i] = GUINT16_FROM_LE (data[i]);
+#endif
     }
 
   return total * 2;
@@ -222,7 +242,7 @@ ico_init (const gchar *filename,
 
   ico->filename      = filename;
   ico->reserved      = 0;
-  ico->resource_type = GUINT16_FROM_LE (1);
+  ico->resource_type = 1;
   ico->icon_count    = num_icons;
   ico->icon_dir      = g_new0 (MsIconEntry, num_icons);
   ico->icon_data     = g_new0 (MsIconData, num_icons);
@@ -580,7 +600,7 @@ ico_init_data (MsIcon *ico,
 	    pixel = (guint8*) &buffer32[y * entry->width + x];
 
 	    ((guint32*) data->xor_map)[(entry->height-y-1) * entry->width + x] =
-	      ((pixel[0] << 16) | (pixel[1] << 8) | pixel[2] | (pixel[3] << 24));
+	      GUINT32_TO_LE((pixel[0] << 16) | (pixel[1] << 8) | pixel[2] | (pixel[3] << 24));
 	  }
     }
 
@@ -679,8 +699,8 @@ ico_save (MsIcon *ico)
       ico->cp += ico_write_int32 (ico->fp, &data->compression, 6);
 
       if (data->palette)
-	ico->cp += ico_write_int32 (ico->fp,
-                                    data->palette, data->palette_len / 4);
+        ico->cp += ico_write_int8 (ico->fp,
+                                    data->palette, data->palette_len);
 
       ico->cp += ico_write_int8 (ico->fp, data->xor_map, data->xor_len);
       ico->cp += ico_write_int8 (ico->fp, data->and_map, data->and_len);
