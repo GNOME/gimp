@@ -64,10 +64,6 @@ struct _GimpCurvesTool
   PangoLayout          *xpos_layout;
   PangoLayout          *cursor_layout;
   PangoRectangle        cursor_rect;
-
-  GtkWidget            *file_dialog;
-  gchar                *filename;
-  gboolean              is_save;
 };
 
 struct _GimpCurvesToolClass

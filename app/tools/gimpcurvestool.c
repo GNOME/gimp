@@ -233,8 +233,6 @@ gimp_curves_tool_init (GimpCurvesTool *tool)
 
   tool->cursor_x = -1;
   tool->cursor_y = -1;
-
-  tool->filename = NULL;
 }
 
 static void
@@ -266,11 +264,6 @@ gimp_curves_tool_finalize (GObject *object)
     {
       g_object_unref (tool->xpos_layout);
       tool->xpos_layout = NULL;
-    }
-  if (tool->filename)
-    {
-      g_free (tool->filename);
-      tool->filename = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);

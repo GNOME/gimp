@@ -62,10 +62,6 @@ struct _GimpLevelsTool
   GtkWidget            *output_area;
   GtkWidget            *output_bar;
   GtkWidget            *channel_menu;
-
-  GtkWidget            *file_dialog;
-  gchar                *filename;
-  gboolean              is_save;
 };
 
 struct _GimpLevelsToolClass
