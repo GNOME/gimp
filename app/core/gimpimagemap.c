@@ -232,7 +232,7 @@ gimp_image_map_get_color_at (GimpPickable *pickable,
 
       read_pixel_data_1 (image_map->undo_tiles, x, y, src);
 
-      gimp_image_get_color (gimp_item_get_image  (GIMP_ITEM (image_map->drawable)),
+      gimp_image_get_color (gimp_item_get_image (GIMP_ITEM (image_map->drawable)),
                             gimp_drawable_type (image_map->drawable),
                             src, dest);
 
@@ -357,7 +357,8 @@ gimp_image_map_apply (GimpImageMap          *image_map,
       image_map->undo_offset_x = x;
       image_map->undo_offset_y = y;
     }
-  else /* image_map->undo_tiles exist AND drawable dimensions have not changed... */
+  else /* image_map->undo_tiles exist AND drawable dimensions have not changed
+        */
     {
       /* Reset to initial drawable conditions.            */
       /* Copy from the backup undo tiles to the drawable  */
@@ -386,8 +387,7 @@ gimp_image_map_apply (GimpImageMap          *image_map,
                                            &image_map->destPR);
 
   /*  Start the intermittant work procedure  */
-  image_map->idle_id = g_idle_add ((GSourceFunc) gimp_image_map_do,
-                                   image_map);
+  image_map->idle_id = g_idle_add ((GSourceFunc) gimp_image_map_do, image_map);
 }
 
 void
@@ -451,7 +451,7 @@ gimp_image_map_clear (GimpImageMap *image_map)
     }
 
   /*  Make sure the drawable is still valid  */
-  gimage =  gimp_item_get_image (GIMP_ITEM (image_map->drawable));
+  gimage = gimp_item_get_image (GIMP_ITEM (image_map->drawable));
 
   if (! gimage)
     return;
@@ -491,8 +491,7 @@ gimp_image_map_clear (GimpImageMap *image_map)
 
       /*  Update the area  */
       gimp_drawable_update (image_map->drawable,
-                            offset_x, offset_y,
-                            width, height);
+                            offset_x, offset_y, width, height);
 
       /*  Free the undo_tiles tile manager  */
       tile_manager_unref (image_map->undo_tiles);
@@ -548,6 +547,7 @@ gimp_image_map_do (GimpImageMap *image_map)
 
   /*  apply the results  */
   pixel_region_init (&shadowPR, gimage->shadow, x, y, w, h, FALSE);
+
   gimp_drawable_apply_region (image_map->drawable, &shadowPR,
                               FALSE, NULL,
                               GIMP_OPACITY_OPAQUE, GIMP_REPLACE_MODE,
