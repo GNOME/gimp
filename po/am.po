@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "POT-Creation-Date: 2002-10-31 05:33+0100\n"
-"PO-Revision-Date: 2002-12-21 22:37+EDT\n"
+"PO-Revision-Date: 2002-12-27 22:19+EDT\n"
 "Last-Translator: Ge'ez Frontier Foundation <locales@geez.org>\n"
 "Language-Team: Amharic <locales@geez.org>\n"
 "MIME-Version: 1.0\n"
@@ -196,7 +196,7 @@ msgstr "ምስሉን እንደገና መጠን ለውጥ"
 
 #: app/undo.c:3601
 msgid "Convert Image"
-msgstr ""
+msgstr "ምስንልን ለዋጭ"
 
 #: app/undo.c:3602
 msgid "Crop Image"
@@ -216,7 +216,7 @@ msgstr ""
 
 #: app/undo.c:3606
 msgid "Layer Properties"
-msgstr ""
+msgstr "የደረጃ ምርጫዎች"
 
 #: app/undo.c:3607 app/gui/resize-dialog.c:192
 msgid "Scale Layer"
@@ -224,11 +224,11 @@ msgstr ""
 
 #: app/undo.c:3608
 msgid "Resize Layer"
-msgstr ""
+msgstr "ደረጃውን እንደገና መጠን ለውጥ"
 
 #: app/undo.c:3609
 msgid "Move Layer"
-msgstr ""
+msgstr "ደረጃን አንቀሳቅስ"
 
 #: app/undo.c:3610
 msgid "Apply Layer Mask"
@@ -264,7 +264,7 @@ msgstr ""
 
 #: app/undo.c:3618 app/undo.c:3651
 msgid "Paint"
-msgstr ""
+msgstr "አቅልም"
 
 #: app/undo.c:3619 app/undo.c:3652
 msgid "Attach Parasite"
@@ -313,7 +313,7 @@ msgstr "አዲስ ደረጃ"
 
 #: app/undo.c:3633
 msgid "Delete Layer"
-msgstr "ደረጃ ሰረዝ"
+msgstr "ደረጃ አጥፉ"
 
 #: app/undo.c:3634
 msgid "Layer Mod"
@@ -333,16 +333,16 @@ msgstr ""
 
 #: app/undo.c:3638
 msgid "Layer Move"
-msgstr ""
+msgstr "ደረጃን አንቀሳቅስ"
 
 #: app/undo.c:3639 app/gui/channels-commands.c:314
 #: app/gui/channels-commands.c:351
 msgid "New Channel"
-msgstr ""
+msgstr "አዲስ ጣቢያ"
 
 #: app/undo.c:3640
 msgid "Delete Channel"
-msgstr ""
+msgstr "ጣቢያን አጥፉ"
 
 #: app/undo.c:3641
 msgid "Channel Mod"
@@ -451,7 +451,7 @@ msgstr "ጥቁር ብቻ"
 #: app/base/base-enums.c:113 app/widgets/gimpwidgets-constructors.c:68
 #: app/widgets/gimpwidgets-constructors.c:98
 msgid "Value"
-msgstr ""
+msgstr "ዕሴት"
 
 #: app/base/base-enums.c:114 app/tools/gimpcolorbalancetool.c:306
 #: app/widgets/gimpcomponentlistitem.c:481
@@ -470,7 +470,7 @@ msgstr "ሰማያዊ"
 
 #: app/base/base-enums.c:117 app/widgets/gimpcomponentlistitem.c:486
 msgid "Alpha"
-msgstr ""
+msgstr "አልፋ"
 
 #: app/base/base-enums.c:135
 msgid "Shadows"
@@ -2145,7 +2145,7 @@ msgstr ""
 
 #: app/gui/gradient-editor-commands.c:1115
 msgid "Delete Selection"
-msgstr ""
+msgstr "ምርጫ አጥፉ"
 
 #: app/gui/gradient-editor-commands.c:1116
 msgid "Re-center Midpoints in Selection"
@@ -2836,138 +2836,138 @@ msgid "/Image/Undo History..."
 msgstr ""
 
 #. <Image>/Layer
-#. <Image>/Layer/Stack
+#. <Image>/ደረጃ/Stack
 #: app/gui/menus.c:703
-msgid "/Layer/Stack/Previous Layer"
-msgstr ""
+msgid "/ደረጃ/Stack/Previous Layer"
+msgstr "/ደረጃ/Stack/Previous Layer"
 
 #: app/gui/menus.c:707
-msgid "/Layer/Stack/Next Layer"
-msgstr ""
+msgid "/ደረጃ/Stack/Next Layer"
+msgstr "/ደረጃ/Stack/Next Layer"
 
 #: app/gui/menus.c:711
-msgid "/Layer/Stack/Raise Layer"
-msgstr ""
+msgid "/ደረጃ/Stack/Raise Layer"
+msgstr "/ደረጃ/Stack/Raise Layer"
 
 #: app/gui/menus.c:716
-msgid "/Layer/Stack/Lower Layer"
-msgstr ""
+msgid "/ደረጃ/Stack/Lower Layer"
+msgstr "/ደረጃ/Stack/Lower Layer"
 
 #: app/gui/menus.c:721
 msgid "/Layer/Stack/Layer to Top"
-msgstr ""
+msgstr "/ደረጃ/Stack/Layer to Top"
 
 #: app/gui/menus.c:726
 msgid "/Layer/Stack/Layer to Bottom"
-msgstr ""
+msgstr "/ደረጃ/Stack/Layer to Bottom"
 
 #: app/gui/menus.c:734
 msgid "/Layer/New Layer..."
-msgstr ""
+msgstr "/ደረጃ/አዲስ ደረጃ..."
 
 #: app/gui/menus.c:739
 msgid "/Layer/Duplicate Layer"
-msgstr ""
+msgstr "/ደረጃ/ደረጃን አባዙ"
 
 #: app/gui/menus.c:744
 msgid "/Layer/Anchor Layer"
-msgstr ""
+msgstr "/ደረጃ/Anchor Layer"
 
 #: app/gui/menus.c:749
 msgid "/Layer/Merge Down"
-msgstr ""
+msgstr "/ደረጃ/Merge Down"
 
 #: app/gui/menus.c:754
 msgid "/Layer/Delete Layer"
-msgstr ""
+msgstr "/ደረጃ/ደረጃን አጥፉ"
 
 #: app/gui/menus.c:762
 msgid "/Layer/Layer Boundary Size..."
-msgstr ""
+msgstr "/ደረጃ/Layer Boundary Size..."
 
 #: app/gui/menus.c:767
 msgid "/Layer/Layer to Imagesize"
-msgstr ""
+msgstr "/ደረጃ/Layer to Imagesize"
 
 #: app/gui/menus.c:772
 msgid "/Layer/Scale Layer..."
-msgstr ""
+msgstr "/ደረጃ/Scale Layer..."
 
 #: app/gui/menus.c:777
 msgid "/Layer/Crop Layer"
-msgstr ""
+msgstr "/ደረጃ/Crop Layer"
 
 #: app/gui/menus.c:787
 msgid "/Layer/Transform/Offset..."
-msgstr ""
+msgstr "/ደረጃ/Transform/Offset..."
 
 #: app/gui/menus.c:798
 msgid "/Layer/Colors/Desaturate"
-msgstr ""
+msgstr "/ደረጃ/ቀለሞች/Desaturate"
 
 #: app/gui/menus.c:803
 msgid "/Layer/Colors/Invert"
-msgstr ""
+msgstr "/ደረጃ/ቀለሞች/Invert"
 
 #. <Image>/Layer/Colors/Auto
 #: app/gui/menus.c:813
 msgid "/Layer/Colors/Auto/Equalize"
-msgstr ""
+msgstr "/ደረጃ/ቀለሞች/Auto/Equalize"
 
 #. <Image>/Layer/Mask
 #: app/gui/menus.c:822
 msgid "/Layer/Mask/Add Layer Mask..."
-msgstr ""
+msgstr "/ደረጃ/Mask/Add Layer Mask..."
 
 #: app/gui/menus.c:826
 msgid "/Layer/Mask/Apply Layer Mask"
-msgstr ""
+msgstr "/ደረጃ/Mask/Apply Layer Mask"
 
 #: app/gui/menus.c:830
 msgid "/Layer/Mask/Delete Layer Mask"
-msgstr ""
+msgstr "/ደረጃ/Mask/Delete Layer Mask"
 
 #: app/gui/menus.c:835
 msgid "/Layer/Mask/Mask to Selection"
-msgstr ""
+msgstr "/ደረጃ/Mask/Mask to Selection"
 
 #. <Image>/Layer/Alpha
 #: app/gui/menus.c:843
 msgid "/Layer/Alpha/Add Alpha Channel"
-msgstr ""
+msgstr "/ደረጃ/አልፋ/Add Alpha Channel"
 
 #: app/gui/menus.c:847
 msgid "/Layer/Alpha/Alpha to Selection"
-msgstr ""
+msgstr "/ደረጃ/አልፋ/Alpha to Selection"
 
 #. <Image>/Tools
 #: app/gui/menus.c:859
 msgid "/Tools/Toolbox"
-msgstr ""
+msgstr "/መሣሪያዎች/Toolbox"
 
 #: app/gui/menus.c:863
 msgid "/Tools/Default Colors"
-msgstr ""
+msgstr "/መሣሪያዎች/የነበረው ቀለሞች"
 
 #: app/gui/menus.c:868
 msgid "/Tools/Swap Colors"
-msgstr ""
+msgstr "/መሣሪያዎች/Swap Colors"
 
 #: app/gui/menus.c:873
 msgid "/Tools/Swap Contexts"
-msgstr ""
+msgstr "/መሣሪያዎች/Swap Contexts"
 
 #: app/gui/menus.c:880
 msgid "/Tools/Selection Tools"
-msgstr ""
+msgstr "/መሣሪያዎች/Selection Tools"
 
 #: app/gui/menus.c:881
 msgid "/Tools/Paint Tools"
-msgstr ""
+msgstr "/መሣሪያዎች/Paint Tools"
 
 #: app/gui/menus.c:882
 msgid "/Tools/Transform Tools"
-msgstr ""
+msgstr "/መሣሪያዎች/Transform Tools"
 
 #. <Image>/Dialogs
 #: app/gui/menus.c:886
@@ -5414,7 +5414,7 @@ msgid "Adjust brightness and contrast"
 msgstr ""
 
 #: app/tools/gimpbrightnesscontrasttool.c:85
-msgid "/Layer/Colors/Brightness-Contrast..."
+msgid "/ደረጃ/Colors/Brightness-Contrast..."
 msgstr ""
 
 #: app/tools/gimpbrightnesscontrasttool.c:148
@@ -5515,7 +5515,7 @@ msgid "Adjust color balance"
 msgstr ""
 
 #: app/tools/gimpcolorbalancetool.c:97
-msgid "/Layer/Colors/Color Balance..."
+msgid "/ደረጃ/Colors/Color Balance..."
 msgstr ""
 
 #: app/tools/gimpcolorbalancetool.c:160
@@ -5694,7 +5694,7 @@ msgid "Adjust color curves"
 msgstr ""
 
 #: app/tools/gimpcurvestool.c:175
-msgid "/Layer/Colors/Curves..."
+msgid "/ደረጃ/Colors/Curves..."
 msgstr ""
 
 #: app/tools/gimpcurvestool.c:246
@@ -5857,7 +5857,7 @@ msgid "View image histogram"
 msgstr ""
 
 #: app/tools/gimphistogramtool.c:122
-msgid "/Layer/Colors/Histogram..."
+msgid "/ደረጃ/Colors/Histogram..."
 msgstr ""
 
 #: app/tools/gimphistogramtool.c:183
@@ -5909,7 +5909,7 @@ msgid "Adjust hue and saturation"
 msgstr ""
 
 #: app/tools/gimphuesaturationtool.c:110
-msgid "/Layer/Colors/Hue-Saturation..."
+msgid "/ደረጃ/Colors/Hue-Saturation..."
 msgstr ""
 
 #: app/tools/gimphuesaturationtool.c:176
@@ -6046,7 +6046,7 @@ msgid "Adjust color levels"
 msgstr ""
 
 #: app/tools/gimplevelstool.c:158
-msgid "/Layer/Colors/Levels..."
+msgid "/ደረጃ/Colors/Levels..."
 msgstr ""
 
 #: app/tools/gimplevelstool.c:225
@@ -6076,7 +6076,7 @@ msgstr ""
 
 #: app/tools/gimplevelstool.c:527
 msgid "Gamma"
-msgstr ""
+msgstr "ጋማ"
 
 #: app/tools/gimplevelstool.c:544
 msgid "Pick White Point"
@@ -6085,7 +6085,7 @@ msgstr ""
 #. Output levels frame
 #: app/tools/gimplevelstool.c:568
 msgid "Output Levels"
-msgstr ""
+msgstr "የውጤት ደረጃዎች"
 
 #: app/tools/gimplevelstool.c:658
 msgid "_Auto"
@@ -6262,7 +6262,7 @@ msgid "Reduce image to a fixed number of colors"
 msgstr ""
 
 #: app/tools/gimpposterizetool.c:78
-msgid "/Layer/Colors/Posterize..."
+msgid "/ደረጃ/Colors/Posterize..."
 msgstr ""
 
 #: app/tools/gimpposterizetool.c:141
@@ -6468,7 +6468,7 @@ msgid "Reduce image to two colors using a threshold"
 msgstr ""
 
 #: app/tools/gimpthresholdtool.c:87
-msgid "/Layer/Colors/Threshold..."
+msgid "/ደረጃ/Colors/Threshold..."
 msgstr ""
 
 #: app/tools/gimpthresholdtool.c:153
@@ -6680,7 +6680,7 @@ msgstr ""
 #: app/widgets/gimpbufferview.c:171 app/widgets/gimpdatafactoryview.c:219
 #: app/widgets/gimpitemlistview.c:231
 msgid "Delete"
-msgstr "መሰረዣ"
+msgstr "አጥፉ"
 
 #: app/widgets/gimpchannellistview.c:163
 msgid ""
@@ -6892,7 +6892,7 @@ msgstr ""
 
 #: app/widgets/gimpimageview.c:161
 msgid "Delete this image"
-msgstr ""
+msgstr "ይህ ምስልን አጥፉ"
 
 #: app/widgets/gimpitemfactory.c:543
 #, c-format
