@@ -284,11 +284,16 @@ void
 gui_restore (Gimp     *gimp,
              gboolean  restore_session)
 {
+  GimpGuiConfig *gui_config;
+
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  gui_config = GIMP_GUI_CONFIG (gimp->config);
 
   gimp->message_handler = GIMP_MESSAGE_BOX;
 
-  menus_restore (gimp);
+  if (gui_config->restore_accels)
+    menus_restore (gimp);
 
   toolbox_item_factory = gimp_menu_factory_menu_new (global_menu_factory,
                                                      "<Toolbox>",
@@ -304,7 +309,7 @@ gui_restore (Gimp     *gimp,
 
   gimp_devices_restore (gimp);
 
-  if (GIMP_GUI_CONFIG (gimp->config)->restore_session || restore_session)
+  if (gui_config->restore_session || restore_session)
     session_restore (gimp);
 
   dialogs_show_toolbox ();
@@ -526,6 +531,8 @@ static gboolean
 gui_exit_callback (Gimp     *gimp,
                    gboolean  kill_it)
 {
+  GimpGuiConfig  *gui_config;
+
   if (! kill_it && gimp_displays_dirty (gimp))
     {
       GtkWidget *dialog;
@@ -551,10 +558,15 @@ gui_exit_callback (Gimp     *gimp,
 
   gimp->message_handler = GIMP_CONSOLE;
 
-  session_save (gimp);
-  menus_save (gimp);
+  gui_config = GIMP_GUI_CONFIG (gimp->config);
 
-  if (GIMP_GUI_CONFIG (gimp->config)->save_device_status)
+  if (gui_config->save_session_info)
+    session_save (gimp);
+
+  if (gui_config->save_accels)
+    menus_save (gimp);
+
+  if (gui_config->save_device_status)
     gimp_devices_save (gimp);
 
   gimp_displays_delete (gimp);

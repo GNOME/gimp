@@ -251,31 +251,25 @@ menus_exit (Gimp *gimp)
 void
 menus_restore (Gimp *gimp)
 {
+  gchar *filename;
+
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  if (GIMP_GUI_CONFIG (gimp->config)->restore_accels)
-    {
-      gchar *filename;
-
-      filename = gimp_personal_rc_file ("menurc");
-      gtk_accel_map_load (filename);
-      g_free (filename);
-    }
+  filename = gimp_personal_rc_file ("menurc");
+  gtk_accel_map_load (filename);
+  g_free (filename);
 }
 
 void
 menus_save (Gimp *gimp)
 {
+  gchar *filename;
+
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  if (GIMP_GUI_CONFIG (gimp->config)->save_accels)
-    {
-      gchar *filename;
-
-      filename = gimp_personal_rc_file ("menurc");
-      gtk_accel_map_save (filename);
-      g_free (filename);
-    }
+  filename = gimp_personal_rc_file ("menurc");
+  gtk_accel_map_save (filename);
+  g_free (filename);
 }
 
 void

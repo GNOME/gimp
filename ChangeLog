@@ -1,5 +1,13 @@
 2003-09-22  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/menus.c (menus_restore) (menus_save): removed gimprc
+	checks; let the functions always do what they are supposed to do.
+	
+	* app/gui/gui.c: check gimprc settings here and decide what to
+	restore on startup and save on exit. Fixes bug #122930.
+
+2003-09-22  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpviewable.c (gimp_viewable_get_popup_size):
 	constrain popup size to GIMP_VIEWABLE_MAX_POPUP_SIZE but keep the
 	aspect ratio intact. Fixes bug #122923.
