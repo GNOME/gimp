@@ -1,5 +1,5 @@
 /*
- * PSD Plugin version 2.0.6
+ * PSD Plugin version 3.0.7
  * This GIMP plug-in is designed to load Adobe Photoshop(tm) files (.PSD)
  *
  * Adam D. Moss <adam@gimp.org> <adam@foxbox.org>
@@ -9,7 +9,7 @@
  *     about the image you tried to load.  Please don't send big PSD
  *     files to me without asking first.
  *
- *          Copyright (C) 1997-2000 Adam D. Moss
+ *          Copyright (C) 1997-2003 Adam D. Moss
  *          Copyright (C) 1996      Torsten Martinsen
  *
  * This program is free software; you can redistribute it and/or modify
@@ -34,6 +34,11 @@
 
 /*
  * Revision history:
+ *
+ *  2003.06.16 / v3.0.7 / Adam D. Moss
+ *       Avoid memory corruption when things get shot to hell in the
+ *       image unpacking phase.  Major version bumped to distinguish
+ *       GIMP 1.3 development thread.
  *
  *  2000.08.23 / v2.0.6 / Adam D. Moss
  *       Eliminate more debugging output (don't people have more
@@ -2263,8 +2268,8 @@ unpack_pb_channel(FILE *fd, guchar *dst, gint32 unpackedlen, guint32 *offset)
 
     while (upremain > 0)
       {
-	(*offset)++;
 	n = (int) getguchar(fd, "packbits1");
+	(*offset)++;
 
 	if (n >= 128)
 	  n -= 256;
@@ -2279,8 +2284,10 @@ unpack_pb_channel(FILE *fd, guchar *dst, gint32 unpackedlen, guint32 *offset)
 	    (*offset)++;
 	    for (; n > 0; --n)
 	      {
-		*dst = b;
-		dst ++;
+		if (upremain >= 0) {
+		  *dst = b;
+		  dst ++;
+		}
 		upremain--;
 	      }
 	  }
@@ -2288,9 +2295,12 @@ unpack_pb_channel(FILE *fd, guchar *dst, gint32 unpackedlen, guint32 *offset)
 	  {		/* copy next n+1 guchars literally */
 	    for (b = ++n; b > 0; --b)
 	      {
-		*dst = getguchar(fd, "packbits3");
+		const guchar c = getguchar(fd, "packbits3");;
+		if (upremain >= 0) {
+		  *dst = c;
+		  dst ++;
+		}
 		(*offset)++;
-		dst ++;
 		upremain--;
 	      }
 	    /*	    upremain -= n;*/

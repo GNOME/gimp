@@ -1,3 +1,8 @@
+2003-06-16  Adam D. Moss  <adam@gimp.org>
+
+	* plug-ins/common/psd.c: Avoid memory corruption when things
+	get shot to hell in the image unpacking phase.
+
 2003-06-16  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/file-open-dialog.c (file_open_dialog_set_type): don't
