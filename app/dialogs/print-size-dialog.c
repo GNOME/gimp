@@ -113,9 +113,7 @@ print_size_dialog_new (GimpImage              *image,
 
   private = g_new0 (PrintSizeDialog, 1);
 
-  g_signal_connect_swapped (dialog, "destroy",
-                            G_CALLBACK (g_free),
-                            private);
+  g_object_weak_ref (G_OBJECT (dialog), (GWeakNotify) g_free, private);
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (print_size_dialog_response),
