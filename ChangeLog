@@ -14,7 +14,7 @@
 	* app/core/gimpimage-scale.c
 	* app/core/gimplayer.c
 	* app/core/gimpselection.c
-	* app/gui/layers-commands.c97999
+	* app/gui/layers-commands.c
 	* app/paint-funcs/paint-funcs.[ch]
 	* app/vectors/gimpvectors.c
 	* tools/pdbgen/pdb/layer.pdb: changed accordingly. Fixes bug #97999.
