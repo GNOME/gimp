@@ -1,0 +1,16 @@
+Makefile
+Makefile.in
+deprecated
+libgimpconfig.args
+libgimpconfig-decl.txt
+libgimpconfig-decl-list.txt
+libgimpconfig.hierarchy
+libgimpconfig.interfaces
+libgimpconfig.prerequisites
+libgimpconfig.signals
+libgimpconfig-unused.txt
+libgimpconfig-undocumented.txt
+html
+xml
+version
+*.stamp
