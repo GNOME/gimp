@@ -32,12 +32,11 @@
 #include "core/gimpcontext.h"
 #include "core/gimpmarshal.h"
 
-#include "gimpdialogfactory.h"
 #include "gimpdnd.h"
+#include "gimpdock.h"
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
 #include "gimphelp-ids.h"
-#include "gimpimagedock.h"
 #include "gimpitemfactory.h"
 #include "gimpmenufactory.h"
 #include "gimppreview.h"
@@ -736,44 +735,8 @@ gimp_dockbook_tab_drag_end (GtkWidget      *widget,
    */
   if (drag_widget)
     {
-      GimpDock  *src_dock;
-      GtkWidget *dock;
-      GtkWidget *dockbook;
-
       g_object_set_data (G_OBJECT (dockable), "gimp-dock-drag-widget", NULL);
-
-      src_dock = dockable->dockbook->dock;
-
-      dock = gimp_dialog_factory_dock_new (src_dock->dialog_factory);
-
-      if (GIMP_IS_IMAGE_DOCK (dock) && GIMP_IS_IMAGE_DOCK (src_dock))
-        {
-          gboolean auto_follow_active;
-          gboolean show_image_menu;
-
-          auto_follow_active = GIMP_IMAGE_DOCK (src_dock)->auto_follow_active;
-          show_image_menu    = GIMP_IMAGE_DOCK (src_dock)->show_image_menu;
-
-          gimp_image_dock_set_auto_follow_active (GIMP_IMAGE_DOCK (dock),
-                                                  auto_follow_active);
-          gimp_image_dock_set_show_image_menu (GIMP_IMAGE_DOCK (dock),
-                                               show_image_menu);
-        }
-
-      gtk_window_set_position (GTK_WINDOW (dock), GTK_WIN_POS_MOUSE);
-
-      dockbook = gimp_dockbook_new (src_dock->dialog_factory->menu_factory);
-
-      gimp_dock_add_book (GIMP_DOCK (dock), GIMP_DOCKBOOK (dockbook), 0);
-
-      g_object_ref (dockable);
-
-      gimp_dockbook_remove (dockable->dockbook, dockable);
-      gimp_dockbook_add (GIMP_DOCKBOOK (dockbook), dockable, 0);
-
-      g_object_unref (dockable);
-
-      gtk_widget_show (dock);
+      gimp_dockable_detach (dockable);
     }
 }
 

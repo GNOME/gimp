@@ -29,9 +29,11 @@
 
 #include "core/gimpcontext.h"
 
+#include "gimpdialogfactory.h"
 #include "gimpdnd.h"
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
+#include "gimpimagedock.h"
 #include "gimpitemfactory.h"
 #include "gimpwidgets-utils.h"
 
@@ -669,6 +671,50 @@ gimp_dockable_get_menu (GimpDockable *dockable,
                                                        item_factory_data);
 }
 
+void
+gimp_dockable_detach (GimpDockable *dockable)
+{
+  GimpDock  *src_dock;
+  GtkWidget *dock;
+  GtkWidget *dockbook;
+
+  g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
+  g_return_if_fail (GIMP_IS_DOCKBOOK (dockable->dockbook));
+
+  src_dock = dockable->dockbook->dock;
+
+  dock = gimp_dialog_factory_dock_new (src_dock->dialog_factory);
+
+  if (GIMP_IS_IMAGE_DOCK (dock) && GIMP_IS_IMAGE_DOCK (src_dock))
+    {
+      gboolean auto_follow_active;
+      gboolean show_image_menu;
+
+      auto_follow_active = GIMP_IMAGE_DOCK (src_dock)->auto_follow_active;
+      show_image_menu    = GIMP_IMAGE_DOCK (src_dock)->show_image_menu;
+
+      gimp_image_dock_set_auto_follow_active (GIMP_IMAGE_DOCK (dock),
+                                              auto_follow_active);
+      gimp_image_dock_set_show_image_menu (GIMP_IMAGE_DOCK (dock),
+                                           show_image_menu);
+    }
+
+  gtk_window_set_position (GTK_WINDOW (dock), GTK_WIN_POS_MOUSE);
+
+  dockbook = gimp_dockbook_new (GIMP_DOCK (dock)->dialog_factory->menu_factory);
+
+  gimp_dock_add_book (GIMP_DOCK (dock), GIMP_DOCKBOOK (dockbook), 0);
+
+  g_object_ref (dockable);
+
+  gimp_dockbook_remove (dockable->dockbook, dockable);
+  gimp_dockbook_add (GIMP_DOCKBOOK (dockbook), dockable, 0);
+
+  g_object_unref (dockable);
+
+  gtk_widget_show (dock);
+}
+
 static void
 gimp_dockable_get_title_area (GimpDockable *dockable,
                               GdkRectangle *area)
@@ -817,6 +863,8 @@ gimp_dockable_menu_position (GtkMenu  *menu,
   gimp_button_menu_position (dockable->menu_button, menu, GTK_POS_LEFT, x, y);
 }
 
+#define GIMP_DOCKABLE_DETACH_REF_KEY "gimp-dockable-detach-ref"
+
 static void
 gimp_dockable_menu_end (GimpDockable *dockable)
 {
@@ -829,7 +877,8 @@ gimp_dockable_menu_end (GimpDockable *dockable)
   if (dialog_item_factory)
     gtk_menu_detach (GTK_MENU (GTK_ITEM_FACTORY (dialog_item_factory)->widget));
 
-  /*  release gimp_dockable_show_menu()'s reference  */
+  /*  release gimp_dockable_show_menu()'s references  */
+  g_object_set_data (G_OBJECT (dockable), GIMP_DOCKABLE_DETACH_REF_KEY, NULL);
   g_object_unref (dockable);
 }
 
@@ -884,10 +933,13 @@ gimp_dockable_show_menu (GimpDockable *dockable)
   gimp_item_factory_set_visible (GTK_ITEM_FACTORY (dockbook_item_factory),
                                  "/Select Tab", FALSE);
 
-  /*  an item factory callback may destroy the dockable, so reference
-   *  if for gimp_dockable_menu_end()
+  /*  an item factory callback may destroy both dockable and dockbook,
+   *  so reference them for gimp_dockable_menu_end()
    */
   g_object_ref (dockable);
+  g_object_set_data_full (G_OBJECT (dockable), GIMP_DOCKABLE_DETACH_REF_KEY,
+                          g_object_ref (dockable->dockbook),
+                          g_object_unref);
 
   gimp_item_factory_popup_with_data (dockbook_item_factory,
                                      dockable,

@@ -1,3 +1,15 @@
+2003-10-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdockable.[ch] (gimp_dockable_detach): new
+	function.  Need to include ugly stuff for proper GimpImageDock
+	setup.
+
+	* app/widgets/gimpdockbook.c (gimp_dockbook_menu_end): use
+	gimp_dockable_detach() and removed the evil includes.
+
+	* app/gui/dialogs-commands.c (dialogs_detach_tab_cmd_callback):
+	implement it using gimp_dockable_detach().
+
 2003-10-07 Simon Budig  <simon@gimp.org>
 
 	* docs/Wilber.svg: Debugged winding rule issue,

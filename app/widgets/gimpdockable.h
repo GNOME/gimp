@@ -106,5 +106,7 @@ void              gimp_dockable_set_context    (GimpDockable   *dockable,
 GimpItemFactory * gimp_dockable_get_menu       (GimpDockable   *dockable,
                                                 gpointer       *item_factory_data);
 
+void              gimp_dockable_detach         (GimpDockable   *dockable);
+
 
 #endif /* __GIMP_DOCKABLE_H__ */

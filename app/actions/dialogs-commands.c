@@ -173,9 +173,7 @@ dialogs_detach_tab_cmd_callback (GtkWidget *widget,
     gtk_notebook_get_nth_page (GTK_NOTEBOOK (dockbook), page_num);
 
   if (dockable)
-    {
-      /* TODO */
-    }
+    gimp_dockable_detach (dockable);
 }
 
 void
