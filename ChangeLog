@@ -1,5 +1,19 @@
 2004-05-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/widgets-enums.[ch]: added enum GimpActiveColor which
+	can be one of { FOREGROUND, BACKGROUND },
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimpfgbgeditor.[ch]: new widget implementing the
+	FG/BG/Swap/Default color area known from the toolbox.
+
+	* app/widgets/gimptoolbox-color-area.c: use the new widget.
+
+	* app/widgets/gimpcoloreditor.[ch]: replaced the FG/BG buttons and
+	the color area by a GimpFgBgEditor.
+
+2004-05-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdocumentview.c (gimp_document_view_new):
 	gimp_editor_add_action_button() takes a va_list, terminate
 	it with NULL. Fixes bug #143258.

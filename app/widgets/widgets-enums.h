@@ -24,6 +24,17 @@
  * these enums that are registered with the type system
  */
 
+#define GIMP_TYPE_ACTIVE_COLOR (gimp_active_color_get_type ())
+
+GType gimp_active_color_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_ACTIVE_COLOR_FOREGROUND, /*< desc="Foreground" >*/
+  GIMP_ACTIVE_COLOR_BACKGROUND  /*< desc="Background" >*/
+} GimpActiveColor;
+
+
 #define GIMP_TYPE_ASPECT_TYPE (gimp_aspect_type_get_type ())
 
 GType gimp_aspect_type_get_type (void) G_GNUC_CONST;

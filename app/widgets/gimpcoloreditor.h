@@ -45,7 +45,7 @@ struct _GimpColorEditor
 
   GtkWidget   *hbox;
   GtkWidget   *notebook;
-  GtkWidget   *color_area;
+  GtkWidget   *fg_bg;
 };
 
 struct _GimpColorEditorClass

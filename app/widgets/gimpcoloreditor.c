@@ -35,6 +35,7 @@
 
 #include "gimpcoloreditor.h"
 #include "gimpdocked.h"
+#include "gimpfgbgeditor.h"
 #include "gimpsessioninfo.h"
 
 #include "gimp-intl.h"
@@ -66,11 +67,10 @@ static void   gimp_color_editor_color_changed   (GimpColorSelector *selector,
                                                  const GimpRGB     *rgb,
                                                  const GimpHSV     *hsv,
                                                  GimpColorEditor   *editor);
-static void   gimp_color_editor_area_changed    (GimpColorArea     *color_area,
-                                                 GimpColorEditor   *editor);
 static void   gimp_color_editor_tab_toggled     (GtkWidget         *widget,
                                                  GimpColorEditor   *editor);
-static void   gimp_color_editor_fg_bg_toggled   (GtkWidget         *widget,
+static void   gimp_color_editor_fg_bg_notify    (GtkWidget         *widget,
+                                                 GParamSpec        *pspec,
                                                  GimpColorEditor   *editor);
 static void   gimp_color_editor_color_picked    (GtkWidget         *widget,
                                                  const GimpRGB     *rgb,
@@ -90,14 +90,14 @@ gimp_color_editor_get_type (void)
       static const GTypeInfo editor_info =
       {
         sizeof (GimpColorEditorClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_color_editor_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpColorEditor),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_color_editor_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_color_editor_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpColorEditor),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_color_editor_init,
       };
       static const GInterfaceInfo docked_iface_info =
       {
@@ -120,11 +120,8 @@ gimp_color_editor_get_type (void)
 static void
 gimp_color_editor_class_init (GimpColorEditorClass* klass)
 {
-  GtkObjectClass *object_class;
-  GtkWidgetClass *widget_class;
-
-  object_class = GTK_OBJECT_CLASS (klass);
-  widget_class = GTK_WIDGET_CLASS (klass);
+  GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -231,71 +228,15 @@ gimp_color_editor_init (GimpColorEditor *editor)
                       editor);
   }
 
-  /*  FG/BG toggles  */
-  {
-    GtkWidget *hbox;
-    GtkWidget *vbox;
-    GtkWidget *frame;
-    gint       i;
+  /*  FG/BG editor  */
+  editor->fg_bg = gimp_fg_bg_editor_new (NULL);
+  gtk_widget_set_size_request (editor->fg_bg, -1, 48);
+  gtk_box_pack_start (GTK_BOX (editor), editor->fg_bg, FALSE, FALSE, 0);
+  gtk_widget_show (editor->fg_bg);
 
-    static const gchar *labels[] =
-    {
-      N_("FG"), N_("BG")
-    };
-    static const gchar *tips[] =
-    {
-      N_("Edit Foreground Color"), N_("Edit Background Color")
-    };
-
-    hbox = gtk_hbox_new (FALSE, button_spacing);
-    gtk_box_pack_start (GTK_BOX (editor), hbox, FALSE, FALSE, 0);
-    gtk_widget_show (hbox);
-
-    vbox = gtk_vbox_new (FALSE, button_spacing);
-    gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
-    gtk_widget_show (vbox);
-
-    group = NULL;
-
-    for (i = 0; i < G_N_ELEMENTS (labels); i++)
-      {
-        GtkWidget *button;
-
-        button = gtk_radio_button_new_with_mnemonic (group,
-                                                     gettext (labels[i]));
-        group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
-        gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
-        gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-        gtk_widget_show (button);
-
-        gimp_help_set_help_data (button, gettext (tips[i]), NULL);
-
-        g_object_set_data (G_OBJECT (button), "edit_bg",
-                           GINT_TO_POINTER (i == 1));
-
-        if ((i == 1) == editor->edit_bg)
-          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-
-        g_signal_connect (button, "toggled",
-                          G_CALLBACK (gimp_color_editor_fg_bg_toggled),
-                          editor);
-      }
-
-    frame = gtk_frame_new (NULL);
-    gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-    gtk_box_pack_end (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
-    gtk_widget_show (frame);
-
-    editor->color_area = gimp_color_area_new (&rgb, GIMP_COLOR_AREA_FLAT,
-                                              GDK_BUTTON1_MASK |
-                                              GDK_BUTTON2_MASK);
-    gtk_container_add (GTK_CONTAINER (frame), editor->color_area);
-    gtk_widget_show (editor->color_area);
-
-    g_signal_connect (editor->color_area, "color_changed",
-                      G_CALLBACK (gimp_color_editor_area_changed),
-                      editor);
-  }
+  g_signal_connect (editor->fg_bg, "notify::active-color",
+                    G_CALLBACK (gimp_color_editor_fg_bg_notify),
+                    editor);
 }
 
 static void
@@ -413,6 +354,8 @@ gimp_color_editor_set_context (GimpDocked  *docked,
           gimp_color_editor_fg_changed (editor->context, &rgb, editor);
         }
     }
+
+  gimp_fg_bg_editor_set_context (GIMP_FG_BG_EDITOR (editor->fg_bg), context);
 }
 
 static void
@@ -474,19 +417,12 @@ gimp_color_editor_fg_changed (GimpContext     *context,
       g_signal_handlers_block_by_func (editor->notebook,
                                        gimp_color_editor_color_changed,
                                        editor);
-      g_signal_handlers_block_by_func (editor->color_area,
-                                       gimp_color_editor_area_changed,
-                                       editor);
 
       gimp_color_selector_set_color (GIMP_COLOR_SELECTOR (editor->notebook),
                                      rgb, &hsv);
-      gimp_color_area_set_color (GIMP_COLOR_AREA (editor->color_area), rgb);
 
       g_signal_handlers_unblock_by_func (editor->notebook,
                                          gimp_color_editor_color_changed,
-                                         editor);
-      g_signal_handlers_unblock_by_func (editor->color_area,
-                                         gimp_color_editor_area_changed,
                                          editor);
     }
 }
@@ -505,19 +441,12 @@ gimp_color_editor_bg_changed (GimpContext     *context,
       g_signal_handlers_block_by_func (editor->notebook,
                                        gimp_color_editor_color_changed,
                                        editor);
-      g_signal_handlers_block_by_func (editor->color_area,
-                                       gimp_color_editor_area_changed,
-                                       editor);
 
       gimp_color_selector_set_color (GIMP_COLOR_SELECTOR (editor->notebook),
                                      rgb, &hsv);
-      gimp_color_area_set_color (GIMP_COLOR_AREA (editor->color_area), rgb);
 
       g_signal_handlers_unblock_by_func (editor->notebook,
                                          gimp_color_editor_color_changed,
-                                         editor);
-      g_signal_handlers_unblock_by_func (editor->color_area,
-                                         gimp_color_editor_area_changed,
                                          editor);
     }
 }
@@ -555,30 +484,6 @@ gimp_color_editor_color_changed (GimpColorSelector *selector,
                                              editor);
         }
     }
-
-  g_signal_handlers_block_by_func (editor->color_area,
-                                   gimp_color_editor_area_changed,
-                                   editor);
-
-  gimp_color_area_set_color (GIMP_COLOR_AREA (editor->color_area), rgb);
-
-  g_signal_handlers_unblock_by_func (editor->color_area,
-                                     gimp_color_editor_area_changed,
-                                     editor);
-}
-
-static void
-gimp_color_editor_area_changed (GimpColorArea   *color_area,
-                                GimpColorEditor *editor)
-{
-  GimpRGB rgb;
-  GimpHSV hsv;
-
-  gimp_color_area_get_color (color_area, &rgb);
-  gimp_rgb_to_hsv (&rgb, &hsv);
-
-  gimp_color_selector_set_color (GIMP_COLOR_SELECTOR (editor->notebook),
-                                 &rgb, &hsv);
 }
 
 static void
@@ -607,34 +512,32 @@ gimp_color_editor_tab_toggled (GtkWidget       *widget,
 }
 
 static void
-gimp_color_editor_fg_bg_toggled (GtkWidget       *widget,
-                                 GimpColorEditor *editor)
+gimp_color_editor_fg_bg_notify (GtkWidget       *widget,
+                                GParamSpec      *pspec,
+                                GimpColorEditor *editor)
 {
-  if (GTK_TOGGLE_BUTTON (widget)->active)
+  gboolean edit_bg;
+
+  edit_bg = (GIMP_FG_BG_EDITOR (widget)->active_color ==
+             GIMP_ACTIVE_COLOR_BACKGROUND);
+
+  if (edit_bg != editor->edit_bg)
     {
-      gboolean edit_bg;
+      editor->edit_bg = edit_bg;
 
-      edit_bg = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
-                                                    "edit_bg"));
-
-      if (edit_bg != editor->edit_bg)
+      if (editor->context)
         {
-          editor->edit_bg = edit_bg;
+          GimpRGB rgb;
 
-          if (editor->context)
+          if (edit_bg)
             {
-              GimpRGB rgb;
-
-              if (edit_bg)
-                {
-                  gimp_context_get_background (editor->context, &rgb);
-                  gimp_color_editor_bg_changed (editor->context, &rgb, editor);
-                }
-              else
-                {
-                  gimp_context_get_foreground (editor->context, &rgb);
-                  gimp_color_editor_fg_changed (editor->context, &rgb, editor);
-                }
+              gimp_context_get_background (editor->context, &rgb);
+              gimp_color_editor_bg_changed (editor->context, &rgb, editor);
+            }
+          else
+            {
+              gimp_context_get_foreground (editor->context, &rgb);
+              gimp_color_editor_fg_changed (editor->context, &rgb, editor);
             }
         }
     }
@@ -645,5 +548,11 @@ gimp_color_editor_color_picked (GtkWidget       *widget,
                                 const GimpRGB   *rgb,
                                 GimpColorEditor *editor)
 {
-  gimp_color_area_set_color (GIMP_COLOR_AREA (editor->color_area), rgb);
+  if (editor->context)
+    {
+      if (editor->edit_bg)
+        gimp_context_set_background (editor->context, rgb);
+      else
+        gimp_context_set_foreground (editor->context, rgb);
+    }
 }

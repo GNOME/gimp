@@ -8,6 +8,25 @@
 
 /* enumerations from "./widgets-enums.h" */
 
+static const GEnumValue gimp_active_color_enum_values[] =
+{
+  { GIMP_ACTIVE_COLOR_FOREGROUND, N_("Foreground"), "foreground" },
+  { GIMP_ACTIVE_COLOR_BACKGROUND, N_("Background"), "background" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_active_color_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpActiveColor", gimp_active_color_enum_values);
+
+  return enum_type;
+}
+
+
 static const GEnumValue gimp_aspect_type_enum_values[] =
 {
   { GIMP_ASPECT_SQUARE, "GIMP_ASPECT_SQUARE", "square" },
