@@ -340,6 +340,9 @@ gdisplay_hruler_button_press (GtkWidget      *widget,
 {
   GDisplay *gdisp;
 
+  if (!active_tool)
+    active_tool_control (RECREATE, gdisp);
+
   if (event->button == 1)
     {
       gdisp = data;
@@ -357,6 +360,9 @@ gdisplay_vruler_button_press (GtkWidget      *widget,
 			      gpointer        data)
 {
   GDisplay *gdisp;
+
+  if (!active_tool)
+    active_tool_control (RECREATE, gdisp);
 
   if (event->button == 1)
     {

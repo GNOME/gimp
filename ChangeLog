@@ -1,3 +1,8 @@
+Wed Mar 11 18:03:38 CST 1998 Larry Ewing  <lewing@gimp.org>
+
+	* app/disp_callbacks.c: added checks to recreate the active tool
+	if need be.
+ 
 Wed Mar 11 02:49:14 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* app/fileops.c: no need to hide the help button for fileops,
