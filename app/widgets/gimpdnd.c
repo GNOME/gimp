@@ -753,25 +753,25 @@ gimp_dnd_data_dest_remove (GimpDndType  data_type,
 /************************/
 
 static void
-gimp_dnd_set_file_data (GtkWidget     *widget,
-			GCallback      set_file_func,
-			gpointer       set_file_data,
-			guchar        *vals,
-			gint           format,
-			gint           length)
+gimp_dnd_set_file_data (GtkWidget *widget,
+			GCallback  set_file_func,
+			gpointer   set_file_data,
+			guchar    *vals,
+			gint       format,
+			gint       length)
 {
   GList *files = NULL;
   gchar *buffer;
 
   if (format != 8)
     {
-      g_warning ("Received invalid file data\n");
+      g_warning ("Received invalid file data!");
       return;
     }
 
   buffer = (gchar *) vals;
 
-  g_print ("%s: raw buffer >>%s<<\n", G_GNUC_FUNCTION, buffer);
+  g_print ("gimp_dnd_set_file_data: raw buffer >>%s<<\n", buffer);
 
   {
     gchar name_buffer[1024];
@@ -781,7 +781,7 @@ gimp_dnd_set_file_data (GtkWidget     *widget,
 	gchar *name = name_buffer;
 	gint   len  = 0;
 
-	while ((*buffer != 0) && (*buffer != '\n') && len < 1024)
+	while (len < sizeof (name_buffer) && *buffer && *buffer != '\n')
 	  {
 	    *name++ = *buffer++;
 	    len++;
@@ -790,14 +790,10 @@ gimp_dnd_set_file_data (GtkWidget     *widget,
 	  break;
 
 	if (*(name - 1) == 0xd)   /* gmc uses RETURN+NEWLINE as delimiter */
-	  *(name - 1) = '\0';
-	else
-	  *name = '\0';
+	  len--;
 
-	name = name_buffer;
-
-	if (name && strlen (name) > 2)
-	  files = g_list_append (files, g_strdup (name));
+	if (len > 2)
+	  files = g_list_append (files, g_strndup (name_buffer, len));
 
 	if (*buffer)
 	  buffer++;
@@ -806,8 +802,7 @@ gimp_dnd_set_file_data (GtkWidget     *widget,
 
   if (files)
     {
-      (* (GimpDndDropFileFunc) set_file_func) (widget, files,
-					       set_file_data);
+      (* (GimpDndDropFileFunc) set_file_func) (widget, files, set_file_data);
 
       g_list_foreach (files, (GFunc) g_free, NULL);
       g_list_free (files);
@@ -929,13 +924,14 @@ gimp_dnd_open_files (GtkWidget *widget,
 
   for (list = files; list; list = g_list_next (list))
     {
-      const gchar *dnd_crap;
+      const gchar *dnd_crap = list->data;
       gchar       *filename;
       gchar       *uri = NULL;
 
-      dnd_crap = (const gchar *) list->data;
+      if (!dnd_crap)
+        continue;
 
-      g_print ("%s: trying to convert \"%s\" to an uri...\n", G_GNUC_FUNCTION,
+      g_print ("gimp_dnd_open_files: trying to convert \"%s\" to an uri...\n",
                dnd_crap);
 
       filename = g_filename_from_uri (dnd_crap, NULL, NULL);
@@ -948,31 +944,30 @@ gimp_dnd_open_files (GtkWidget *widget,
         }
       else  /*  else to evil things...  */
         {
-          filename = (gchar *) dnd_crap;
+          const gchar *start = dnd_crap;
 
           if (! strncmp (dnd_crap, "file://", strlen ("file://")))
             {
-              filename += strlen ("file://");
+              start += strlen ("file://");
             }
           else if (! strncmp (dnd_crap, "file:", strlen ("file:")))
             {
-              filename += strlen ("file:");
+              start += strlen ("file:");
             }
 
-          if (filename != (gchar *) dnd_crap)
+          if (start != dnd_crap)
             {
               /*  try if we got a "file:" uri in the local filename encoding  */
-
               gchar *unescaped_filename;
 
               if (strstr (filename, "%"))
                 {
-                  unescaped_filename = gimp_unescape_uri_string (filename, -1,
+                  unescaped_filename = gimp_unescape_uri_string (start, -1,
                                                                  "/", FALSE);
                 }
               else
                 {
-                  unescaped_filename = g_strdup (filename);
+                  unescaped_filename = g_strdup (start);
                 }
 
               uri = g_filename_to_uri (unescaped_filename, NULL, NULL);
@@ -988,27 +983,24 @@ gimp_dnd_open_files (GtkWidget *widget,
             }
         }
 
-      g_print ("%s: ...trying to open resulting uri \"%s\"\n",
-               G_GNUC_FUNCTION, uri);
+      g_print ("gimp_dnd_open_files: ...trying to open resulting uri \"%s\"\n",
+               uri);
 
       {
         GimpImage         *gimage;
         GimpPDBStatusType  status;
         GError            *error = NULL;
 
-        gimage = file_open_with_display (the_gimp, uri,
-                                         &status, &error);
+        gimage = file_open_with_display (the_gimp, uri, &status, &error);
 
         if (! gimage && status != GIMP_PDB_CANCEL)
           {
-            gchar *filename;
-
-            filename = file_utils_uri_to_utf8_filename (uri);
+            gchar *filename = file_utils_uri_to_utf8_filename (uri);
 
             g_message (_("Opening '%s' failed:\n\n%s"),
                        filename, error->message);
-            g_clear_error (&error);
 
+            g_clear_error (&error);
             g_free (filename);
           }
       }
@@ -1081,7 +1073,7 @@ gimp_dnd_set_color_data (GtkWidget *widget,
 
   if ((format != 16) || (length != 8))
     {
-      g_warning ("Received invalid color data\n");
+      g_warning ("Received invalid color data!");
       return;
     }
 
@@ -1413,12 +1405,11 @@ gimp_dnd_set_image_data (GtkWidget *widget,
 
   if ((format != 8) || (length < 1))
     {
-      g_warning ("%s(): received invalid image ID data", G_GNUC_FUNCTION);
+      g_warning ("Received invalid image ID data!");
       return;
     }
 
   id = (gchar *) vals;
-
   ID = atoi (id);
 
   if (! ID)
@@ -1475,7 +1466,7 @@ gimp_dnd_set_item_data (GtkWidget *widget,
 
   if ((format != 8) || (length < 1))
     {
-      g_warning ("Received invalid item ID data");
+      g_warning ("Received invalid item ID data!");
       return;
     }
 
@@ -1544,7 +1535,7 @@ gimp_dnd_set_brush_data (GtkWidget *widget,
 
   if ((format != 8) || (length < 1))
     {
-      g_warning ("Received invalid brush data\n");
+      g_warning ("Received invalid brush data!");
       return;
     }
 
@@ -1583,7 +1574,7 @@ gimp_dnd_set_pattern_data (GtkWidget *widget,
 
   if ((format != 8) || (length < 1))
     {
-      g_warning ("Received invalid pattern data\n");
+      g_warning ("Received invalid pattern data!");
       return;
     }
 
@@ -1620,7 +1611,7 @@ gimp_dnd_set_gradient_data (GtkWidget *widget,
 
   if ((format != 8) || (length < 1))
     {
-      g_warning ("Received invalid gradient data\n");
+      g_warning ("Received invalid gradient data!");
       return;
     }
 
@@ -1657,7 +1648,7 @@ gimp_dnd_set_palette_data (GtkWidget *widget,
 
   if ((format != 8) || (length < 1))
     {
-      g_warning ("Received invalid palette data\n");
+      g_warning ("Received invalid palette data!");
       return;
     }
 
@@ -1694,7 +1685,7 @@ gimp_dnd_set_font_data (GtkWidget *widget,
 
   if ((format != 8) || (length < 1))
     {
-      g_warning ("Received invalid font data\n");
+      g_warning ("Received invalid font data!");
       return;
     }
 
@@ -1730,7 +1721,7 @@ gimp_dnd_set_buffer_data (GtkWidget *widget,
 
   if ((format != 8) || (length < 1))
     {
-      g_warning ("Received invalid buffer data\n");
+      g_warning ("Received invalid buffer data!");
       return;
     }
 
@@ -1763,7 +1754,7 @@ gimp_dnd_set_imagefile_data (GtkWidget *widget,
 
   if ((format != 8) || (length < 1))
     {
-      g_warning ("Received invalid buffer data\n");
+      g_warning ("Received invalid buffer data!");
       return;
     }
 
@@ -1796,7 +1787,7 @@ gimp_dnd_set_template_data (GtkWidget *widget,
 
   if ((format != 8) || (length < 1))
     {
-      g_warning ("Received invalid buffer data\n");
+      g_warning ("Received invalid buffer data!");
       return;
     }
 
@@ -1829,7 +1820,7 @@ gimp_dnd_set_tool_data (GtkWidget *widget,
 
   if ((format != 8) || (length < 1))
     {
-      g_warning ("Received invalid tool data\n");
+      g_warning ("Received invalid tool data!");
       return;
     }
 

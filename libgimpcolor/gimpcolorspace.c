@@ -46,9 +46,9 @@
  * gimp_rgb_to_hsv:
  * @rgb: A color value in the RGB colorspace
  * @hsv: The value converted to the HSV colorspace
- * 
- * Does a conversion from RGB to HSV (Hue, Saturation, 
- * Value) colorspace. 
+ *
+ * Does a conversion from RGB to HSV (Hue, Saturation,
+ * Value) colorspace.
  **/
 void
 gimp_rgb_to_hsv (const GimpRGB *rgb,
@@ -102,7 +102,7 @@ gimp_rgb_to_hsv (const GimpRGB *rgb,
  * gimp_hsv_to_rgb:
  * @hsv: A color value in the HSV colorspace
  * @rgb: The returned RGB value.
- * 
+ *
  * Converts a color value from HSV to RGB colorspace
  **/
 void
@@ -181,8 +181,8 @@ gimp_hsv_to_rgb (const GimpHSV *hsv,
  * gimp_rgb_to_hsl:
  * @rgb: A color value in the RGB colorspace
  * @hsl: The value converted to HSL
- * 
- * Convert an RGB color value to a HSL (Hue, Saturation, Lightness) color 
+ *
+ * Convert an RGB color value to a HSL (Hue, Saturation, Lightness) color
  * value.
  **/
 void
@@ -265,9 +265,9 @@ gimp_hsl_value (gdouble n1,
 
 /**
  * gimp_hsl_to_rgb:
- * @hsl: A color value in the HSL colorspace 
+ * @hsl: A color value in the HSL colorspace
  * @rgb: The value converted to a value in the RGB colorspace
- * 
+ *
  * Convert a HSL color value to an RGB color value.
  **/
 void
@@ -306,10 +306,11 @@ gimp_hsl_to_rgb (const GimpHSL *hsl,
 
 /**
  * gimp_rgb_to_cmyk:
- * @rgb: A value in the RGB colorspace 
- * @pullout: A scaling value (0-1) indicating how much black should be pulled out
- * @cmyk: The input value naively converted to the CMYK colorspace 
- * 
+ * @rgb: A value in the RGB colorspace
+ * @pullout: A scaling value (0-1) indicating how much black should be
+ *           pulled out
+ * @cmyk: The input value naively converted to the CMYK colorspace
+ *
  * Does a naive conversion from RGB to CMYK colorspace. A simple
  * formula that doesn't take any color-profiles into account is used.
  * The amount of black pullout how can be controlled via the @pullout
@@ -358,9 +359,9 @@ gimp_rgb_to_cmyk (const GimpRGB  *rgb,
  * gimp_cmyk_to_rgb:
  * @cmyk: A color value in the CMYK colorspace
  * @rgb: The value converted to the RGB colorspace
- * 
- * Does a simple transformation from the CMYK colorspace to the RGB 
- * colorspace, without taking color profiles into account. 
+ *
+ * Does a simple transformation from the CMYK colorspace to the RGB
+ * colorspace, without taking color profiles into account.
  **/
 void
 gimp_cmyk_to_rgb (const GimpCMYK *cmyk,
@@ -395,11 +396,11 @@ gimp_cmyk_to_rgb (const GimpCMYK *cmyk,
 
 #define GIMP_RETURN_RGB(x, y, z) { rgb->r = x; rgb->g = y; rgb->b = z; return; }
 
-/*****************************************************************************
+/****************************************************************************
  * Theoretically, hue 0 (pure red) is identical to hue 6 in these transforms.
  * Pure red always maps to 6 in this implementation. Therefore UNDEFINED can
  * be defined as 0 in situations where only unsigned numbers are desired.
- *****************************************************************************/
+ ****************************************************************************/
 
 /**
  * gimp_rgb_to_hwb:
@@ -407,13 +408,13 @@ gimp_cmyk_to_rgb (const GimpCMYK *cmyk,
  * @hue: The hue value of the above color, in the range 0 to 6
  * @whiteness: The whiteness value of the above color, in the range 0 to 1
  * @blackness: The blackness value of the above color, in the range 0 to 1
- * 
+ *
  * Theoretically, hue 0 (pure red) is identical to hue 6 in these transforms.
  * Pure red always maps to 6 in this implementation. Therefore UNDEFINED can
  * be defined as 0 in situations where only unsigned numbers are desired.
- * 
- * RGB are each on [0, 1]. Whiteness and Blackness are returned in the 
- * range [0, 1] and H is returned in the range [0, 6]. If W == 1 - B, H is 
+ *
+ * RGB are each on [0, 1]. Whiteness and Blackness are returned in the
+ * range [0, 1] and H is returned in the range [0, 6]. If W == 1 - B, H is
  * undefined.
  **/
 void
@@ -456,9 +457,9 @@ gimp_rgb_to_hwb (const GimpRGB *rgb,
  * @whiteness: A whiteness value, in the range 0 to 1
  * @blackness: A blackness value, in the range 0 to 1
  * @rgb: The above color converted to the RGB colorspace
- * 
- * H is defined in the range [0, 6] or UNDEFINED, B and W are both in the 
- * range [0, 1]. The returned RGB values are all in the range [0, 1]. 
+ *
+ * H is defined in the range [0, 6] or UNDEFINED, B and W are both in the
+ * range [0, 1]. The returned RGB values are all in the range [0, 1].
  **/
 void
 gimp_hwb_to_rgb (gdouble  hue,
@@ -518,15 +519,16 @@ gimp_hwb_to_rgb (gdouble  hue,
 
 /**
  * gimp_rgb_to_hsv_int:
- * @red: The red channel value, returns the Hue channel 
+ * @red: The red channel value, returns the Hue channel
  * @green: The green channel value, returns the Saturation channel
  * @blue: The blue channel value, returns the Value channel
- * 
- * The arguments are pointers to int representing channel values in the 
- * RGB colorspace, and the values pointed to are all in the range [0, 255].
  *
- * The function changes the arguments to point to the HSV value corresponding,
- * with the returned values in the following 
+ * The arguments are pointers to int representing channel values in
+ * the RGB colorspace, and the values pointed to are all in the range
+ * [0, 255].
+ *
+ * The function changes the arguments to point to the HSV value
+ * corresponding, with the returned values in the following
  * ranges: H [0, 360], S [0, 255], V [0, 255].
  **/
 void
@@ -553,7 +555,7 @@ gimp_rgb_to_hsv_int (gint *red,
       v = MAX (g, b);
       min = MIN (r, b);
     }
-  
+
   delta = v - min;
 
   if (v == 0.0)
@@ -585,14 +587,14 @@ gimp_rgb_to_hsv_int (gint *red,
 
 /**
  * gimp_hsv_to_rgb_int:
- * @hue: The hue channel, returns the red channel 
+ * @hue: The hue channel, returns the red channel
  * @saturation: The saturation channel, returns the green channel
  * @value: The value channel, returns the blue channel
- * 
- * The arguments are pointers to int, with the values pointed to in the 
+ *
+ * The arguments are pointers to int, with the values pointed to in the
  * following ranges:  H [0, 360], S [0, 255], V [0, 255].
  *
- * The function changes the arguments to point to the RGB value 
+ * The function changes the arguments to point to the RGB value
  * corresponding, with the returned values all in the range [0, 255].
  **/
 void
@@ -615,7 +617,7 @@ gimp_hsv_to_rgb_int (gint *hue,
       h = *hue;
       s = *saturation / 255.0;
       v = *value      / 255.0;
-      
+
       if (h == 360)
          h_temp = 0;
       else
@@ -671,14 +673,14 @@ gimp_hsv_to_rgb_int (gint *hue,
 
 /**
  * gimp_rgb_to_hsl_int:
- * @red: Red channel, returns Hue channel 
+ * @red: Red channel, returns Hue channel
  * @green: Green channel, returns Lightness channel
  * @blue: Blue channel, returns Saturation channel
- * 
- * The arguments are pointers to int representing channel values in the 
+ *
+ * The arguments are pointers to int representing channel values in the
  * RGB colorspace, and the values pointed to are all in the range [0, 255].
  *
- * The function changes the arguments to point to the corresponding HLS 
+ * The function changes the arguments to point to the corresponding HLS
  * value with the values pointed to in the following ranges:  H [0, 360],
  * L [0, 255], S [0, 255].
  **/
@@ -748,10 +750,10 @@ gimp_rgb_to_hsl_int (gint *red,
  * @red: Red channel
  * @green: Green channel
  * @blue: Blue channel
- * 
- * Calculates the lightness value of an RGB triplet with the formula 
+ *
+ * Calculates the lightness value of an RGB triplet with the formula
  * L = (max(R, G, B) + min (R, G, B)) / 2
- * 
+ *
  * Return value: Luminance vaue corresponding to the input RGB value
  **/
 gint
@@ -804,11 +806,11 @@ gimp_hsl_value_int (gdouble n1,
  * @hue: Hue channel, returns Red channel
  * @saturation: Saturation channel, returns Green channel
  * @lightness: Lightness channel, returns Blue channel
- * 
- * The arguments are pointers to int, with the values pointed to in the 
+ *
+ * The arguments are pointers to int, with the values pointed to in the
  * following ranges:  H [0, 360], L [0, 255], S [0, 255].
  *
- * The function changes the arguments to point to the RGB value 
+ * The function changes the arguments to point to the RGB value
  * corresponding, with the returned values all in the range [0, 255].
  **/
 void
@@ -842,8 +844,8 @@ gimp_hsl_to_rgb_int (gint *hue,
 
       /*  chromatic case  */
       *hue        = gimp_hsl_value_int (m1, m2, h + 85);
-      *saturation  = gimp_hsl_value_int (m1, m2, h);
-      *lightness = gimp_hsl_value_int (m1, m2, h - 85);
+      *saturation = gimp_hsl_value_int (m1, m2, h);
+      *lightness  = gimp_hsl_value_int (m1, m2, h - 85);
     }
 }
 
