@@ -518,25 +518,15 @@ load_image (gchar *filename)
           }
         break;
       case TGA_TYPE_COLOR:
-        if (info.alphaBits == 0 && info.bpp == 32)
-          {
-            g_message ("TGA: Possibly incorrect alpha in \"%s\"\n", filename);
-            info.alphaBits = 8;
-          }
-        if (info.bpp != 16 && info.bpp != 24
-                     && (info.alphaBits != 8 || info.bpp != 32))
+        if (info.bpp != 15 && info.bpp != 16 && info.bpp != 24
+                     && info.bpp != 32)
           {
             g_message ("TGA: Unhandled sub-format in \"%s\"\n", filename);
             return -1;
           }
         break;
       case TGA_TYPE_GRAY:
-        if (info.alphaBits == 0 && info.bpp == 16)
-          {
-            g_message ("TGA: Possibly incorrect alpha in \"%s\"\n", filename);
-            info.alphaBits = 8;
-          }
-        if (info.bpp != 8 && (info.alphaBits != 8 || info.bpp != 16))
+        if (info.bpp != 8 && (info.alphaBits != 8 || (info.bpp != 16 || info.bpp != 15)))
           {
             g_message ("TGA: Unhandled sub-format in \"%s\"\n", filename);
             return -1;
@@ -549,7 +539,7 @@ load_image (gchar *filename)
     }
 
   /* Plausible but unhandled formats */
-  if (info.bytes * 8 != info.bpp)
+  if (info.bytes * 8 != info.bpp && !(info.bytes == 2 && info.bpp == 15))
     {
       g_message ("TGA: No support yet for TGA with these parameters\n");
       return -1;
@@ -825,7 +815,7 @@ read_line (FILE         *fp,
 
   if (info->imageType == TGA_TYPE_COLOR)
     {
-      if (info->bpp == 16)
+      if (info->bpp == 16 || info->bpp == 15)
 	{
 	  upsample (row, buffer, info->width, info->bytes);
 	}
@@ -902,7 +892,7 @@ ReadImage (FILE     *fp,
             bgr2rgb(gimp_cmap, tga_cmap, info->colorMapLength, cmap_bytes, 1);
           else if (info->colorMapSize == 24)
             bgr2rgb(gimp_cmap, tga_cmap, info->colorMapLength, cmap_bytes, 0);
-          else if (info->colorMapSize == 16)
+          else if (info->colorMapSize == 16 || info->colorMapSize == 15)
             upsample(gimp_cmap, tga_cmap, info->colorMapLength, cmap_bytes);
 
         }
