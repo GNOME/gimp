@@ -315,14 +315,17 @@ gimp_text_editor_set_direction (GimpTextEditor    *editor,
                                      G_CALLBACK (gimp_text_editor_dir_changed),
                                      editor);
 
-  switch (editor->base_dir)
+  if (editor->view)
     {
-    case GIMP_TEXT_DIRECTION_LTR:
-      gtk_widget_set_direction (editor->view, GTK_TEXT_DIR_LTR);
-      break;
-    case GIMP_TEXT_DIRECTION_RTL:
-      gtk_widget_set_direction (editor->view, GTK_TEXT_DIR_RTL);
-      break;
+      switch (editor->base_dir)
+        {
+        case GIMP_TEXT_DIRECTION_LTR:
+          gtk_widget_set_direction (editor->view, GTK_TEXT_DIR_LTR);
+          break;
+        case GIMP_TEXT_DIRECTION_RTL:
+          gtk_widget_set_direction (editor->view, GTK_TEXT_DIR_RTL);
+          break;
+        }
     }
 
   g_signal_emit (editor, text_editor_signals[DIR_CHANGED], 0);
