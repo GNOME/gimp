@@ -17,7 +17,7 @@ sub encode_base64($) {
 }
 
 register "file_dataurl_save",
-         __"saves the image as many small tiles using data:-urls",
+         "Saves the image as many small tiles using data:-urls",
          "=pod",
          "Marc Lehmann",
          "Marc Lehmann <pcg\@goof.com>",
@@ -113,7 +113,14 @@ into data:-urls. Since attribute values are by default limited to 1024
 bytes this limits the size of a tile to approximately 34x34 pixels (gif
 compression).
 
-However, since the only browser I know of that supports this (rfc2397 is only a
-proposed standard), you might want to use much larger tile sizes (upto the image
-size), since netscape obviously does not have problems with it large urls.
+However, since rfc2397 is only a proposed standard, you might want to
+use much larger tile sizes (upto the image size), since most browsers
+generally do not care for the url length.
+
+Browser compatibility list (send more results to pcg@goof.com ;)
+
+  Netscape 4.x	works in any setting
+  Lynx 		displays the base64 code as text :(
+  MSIE 4	thousands of error messages in dialog boxes ;->
+  MSIE 5	shows broken image icon
 

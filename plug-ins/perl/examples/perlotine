@@ -134,7 +134,7 @@ register "perlotine",
  "Seth Burgess",
  "Seth Burgess <sjburges\@gimp.org>",
  "1999-03-19",
- "<Image>/Guides/Perl-o-tine",
+ __"<Image>/Guides/Perl-o-tine",
  "*",
  [
   [PF_STRING, "save_path", "The path to export the HTML to",$ENV{HOME}],
@@ -152,7 +152,7 @@ register "perlotine",
     @horz = get_hguides($img);
 
     if (!(scalar(@vert) || scalar(@horz))) {
-        die ("No horizontal or vertical guides found. Aborted.");
+        die __"No horizontal or vertical guides found. Aborted.";
         }
 
    # 

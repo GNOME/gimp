@@ -185,7 +185,7 @@ register "perl_fu_3d_outline_logo",
    "Hrvoje Horvat (hhorvat\@open.hr)",
    "Hrvoje Horvat",
    "07 April, 1998",
-   "<Toolbox>/Xtns/Perl-Fu/Logos/3D Outline",
+   __"<Toolbox>/Xtns/Perl-Fu/Logos/3D Outline",
    "",
    [
       [PF_PATTERN,   'pattern',          "Pattern", "Parque #1"],

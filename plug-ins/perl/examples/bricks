@@ -124,7 +124,7 @@ register
         "Tels", 
         "http://bloodgate.com", 
         "10/26/1999a",
-        "<Toolbox>/Xtns/Render/Bricks", 
+        __"<Toolbox>/Xtns/Render/Bricks", 
         "*",
         [ 
          [PF_PATTERN,  "background", "Brick pattern", "Leather"],

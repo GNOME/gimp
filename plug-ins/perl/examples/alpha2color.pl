@@ -103,7 +103,7 @@ register
 	"Seth Burgess",
 	"Seth Burgess<sjburges\@gimp.org>",
 	"2-15-98",
-	"<Image>/Image/Colors/Alpha2Color",
+	__"<Image>/Image/Colors/Alpha2Color",
 	"RGBA",
 	[
 	 [PF_COLOR, "color", "Color for current alpha", [127,127,127]]

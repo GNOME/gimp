@@ -31,7 +31,7 @@ register "xach_shadows",
          "Seth Burgess",
          "Seth Burgess <sjburges\@gimp.org>",
          "2-15-98",
-         "<Image>/Filters/Map/Xach Shadows",
+         __"<Image>/Filters/Map/Xach Shadows",
          "RGB*, GRAY*",
          [
           [PF_SLIDER,	"block_size",	"The size of the blocks...", 10, [0, 255, 1]],

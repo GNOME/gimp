@@ -23,7 +23,7 @@ sub read_text {
 }
 
 register "file_colorhtml_save",
-         __"Saves the image as coloured html text",
+         "Saves the image as coloured html text",
          "=pod",
          "Marc Lehmann",
          "Marc Lehmann <pcg\@goof.com>",

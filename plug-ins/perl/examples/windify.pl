@@ -51,7 +51,7 @@ register
 	"Seth Burgess",
 	"Seth Burgess <sjburges\@gimp.org>",
 	"1998-09-14",
-	"<Image>/Filters/Distorts/Windify",
+	__"<Image>/Filters/Distorts/Windify",
 	"*",
 	[
 	 [PF_INT32, "angle", "Wind Angle, 0 is left", 120],

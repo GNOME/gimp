@@ -20,7 +20,7 @@ register "random_blends",
          "Seth Burgess", 
          "Seth Burgess <sjburges\@gimp.org>", 
          "1999-03-18",
-         "<Image>/Filters/Render/Random Blends", 
+         __"<Image>/Filters/Render/Random Blends", 
          "RGB*, GRAY*", 
          [ 
            [PF_SPINNER, "number", "How many gradients to apply", 7, [1,255,1]], 
