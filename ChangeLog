@@ -1,5 +1,11 @@
 2003-08-31  Sven Neumann  <sven@gimp.org>
 
+	* libgimpcolor/gimpcolorspace.c: applied a patch from S. Mukund
+	that fixes the gimp_hsv_to_rgb_int() and gimp_rgb_to_hsv_int()
+	functions (bug #115626).
+
+2003-08-31  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb/color.pdb: applied a patch from Shawn Willden
 	that adds the new PDB function levels_auto.
 
