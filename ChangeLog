@@ -1,3 +1,14 @@
+Mon Jul 20 20:13:58 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* app/rect_selectP.h
+	* app/rect_select.h
+	* app/rect_select.c: The new "Fixed Size" option now works with
+	ellipse_select too. Made the entries use spinbuttons. Minor change
+	to the selection_size indicator in the status-bar.
+
+	*plug-ins/png/png.c: made fopen() use "rb" and "wb" instead if "r"
+	and "w" since the OS/2 port needs it
+
 Mon Jul 20 11:07:32 EDT 1998  Matthew Wilson  <msw@gimp.org>
 
 	* app/app_procs.c

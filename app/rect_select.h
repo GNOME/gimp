@@ -30,8 +30,8 @@ struct _SelectionOptions
   double feather_radius;
   int sample_merged;
   int fixed_size;
-  int fixed_height;
   int fixed_width;
+  int fixed_height;
 };
 
 SelectionOptions *create_selection_options  (ToolType);

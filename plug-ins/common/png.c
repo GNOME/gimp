@@ -37,6 +37,17 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.9  1998/07/20 18:19:20  neo
+ *   The new "Fixed Size" option now works with
+ *   ellipse_select too. Made the entries use spinbuttons. Minor change
+ *   to the selection_size indicator in the status-bar.
+ *
+ *   Made fopen() use "rb" and "wb" instead if "r" and "w" since the OS/2
+ *   port needs it.
+ *
+ *
+ *   --Sven
+ *
  *   Revision 1.8  1998/06/06 23:22:17  yosh
  *   * adding Lighting plugin
  *
@@ -394,7 +405,7 @@ load_image(char *filename)	/* I - File to load */
   * Open the file and initialize the PNG read "engine"...
   */
 
-  fp = fopen(filename, "r");
+  fp = fopen(filename, "rb");
   if (fp == NULL)
     return (-1);
 
@@ -618,7 +629,7 @@ save_image(char   *filename,	/* I - File to save to */
   * Open the file and initialize the PNG write "engine"...
   */
 
-  fp = fopen(filename, "w");
+  fp = fopen(filename, "wb");
   if (fp == NULL)
     return (0);
 
