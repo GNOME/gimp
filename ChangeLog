@@ -1,5 +1,14 @@
 2002-10-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/Makefile.am
+	* app/gui/color-history.[ch]: new files implementing the color
+	history which used to live in color-notebook.*
+
+	* app/gui/color-notebook.[ch]
+	* app/gui/session.c: changed accordingly.
+
+2002-10-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpimagedock.c: removed #warning and inclusion of
 	"display/*" stuff because we use GimpDisplays as GimpObjects in
 	this file.

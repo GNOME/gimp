@@ -36,7 +36,7 @@
 
 #include "widgets/gimpdialogfactory.h"
 
-#include "color-notebook.h"
+#include "color-history.h"
 #include "session.h"
 
 #include "gimprc.h"
@@ -138,7 +138,7 @@ session_init (Gimp *gimp)
                   if (! gimp_scanner_parse_color (scanner, &color))
                     goto error;
 
-                  color_history_add_color_from_rc (&color);
+                  color_history_add_from_rc (&color);
                 }
             }
           else if (scanner->value.v_symbol == GINT_TO_POINTER (LAST_TIP_SHOWN))

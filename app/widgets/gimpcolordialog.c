@@ -34,13 +34,14 @@
 
 #include "widgets/gimpviewabledialog.h"
 
+#include "color-history.h"
 #include "color-notebook.h"
 
 #include "libgimp/gimpintl.h"
 
 
-#define COLOR_AREA_SIZE    20
-#define COLOR_HISTORY_SIZE 16
+#define COLOR_AREA_SIZE  20
+
 
 typedef enum
 {
@@ -135,7 +136,6 @@ static gint       color_notebook_hex_entry_events (GtkWidget        *widget,
 						   GdkEvent         *event,
 						   gpointer          data);
 
-static void       color_history_init              (void);
 static void       color_history_color_clicked     (GtkWidget        *widget,
 						   gpointer          data);
 static void       color_history_color_changed     (GtkWidget        *widget,
@@ -144,10 +144,7 @@ static void       color_history_add_clicked       (GtkWidget        *widget,
 						   gpointer          data);
 
 
-static GList    *color_notebooks = NULL;
-
-static GimpRGB   color_history[COLOR_HISTORY_SIZE];
-static gboolean  color_history_initialized = FALSE;
+static GList *color_notebooks = NULL;
 
 
 ColorNotebook *
@@ -275,9 +272,6 @@ color_notebook_new_internal (GimpViewable          *viewable,
   static gdouble  slider_incs[]         = {  30,  10,  10,  16,  16,  16,  10 };
 
   g_return_val_if_fail (color != NULL, NULL);
-
-  if (! color_history_initialized)
-    color_history_init ();
 
   cnp = g_new0 (ColorNotebook, 1);
 
@@ -589,6 +583,10 @@ color_notebook_new_internal (GimpViewable          *viewable,
 
   for (i = 0; i < COLOR_HISTORY_SIZE; i++)
     {
+      GimpRGB history_color;
+
+      color_history_get (i, &history_color);
+
       button = gtk_button_new ();
       gtk_widget_set_size_request (button, COLOR_AREA_SIZE, COLOR_AREA_SIZE);
       gtk_table_attach_defaults (GTK_TABLE (table), button,
@@ -597,7 +595,7 @@ color_notebook_new_internal (GimpViewable          *viewable,
 				 i > 7 ? 1 : 0,
 				 i > 7 ? 2 : 1);
 
-      cnp->history[i] = gimp_color_area_new (&color_history[i], 
+      cnp->history[i] = gimp_color_area_new (&history_color,
 					     GIMP_COLOR_AREA_SMALL_CHECKS,
 					     GDK_BUTTON2_MASK);
       gtk_container_add (GTK_CONTAINER (button), cnp->history[i]);
@@ -610,7 +608,7 @@ color_notebook_new_internal (GimpViewable          *viewable,
 
       g_signal_connect (G_OBJECT (cnp->history[i]), "color_changed",
 			G_CALLBACK (color_history_color_changed),
-			&color_history[i]);
+			GINT_TO_POINTER (i));
     }
 
   /* The hex triplet entry */
@@ -1166,58 +1164,6 @@ color_notebook_hex_entry_events (GtkWidget *widget,
   return FALSE;
 }
 
-void
-color_history_add_color_from_rc (GimpRGB *color)
-{
-  static gint index = 0;
-
-  if (! color_history_initialized)
-    color_history_init ();
-
-  if (color && index < COLOR_HISTORY_SIZE)
-    {
-      color_history[index++] = *color;
-    }
-}
-
-void
-color_history_write (FILE *fp)
-{
-  gint i;
-
-  fprintf (fp, "(color-history");
-
-  for (i = 0; i < COLOR_HISTORY_SIZE; i++)
-    {
-      gchar buf[4][G_ASCII_DTOSTR_BUF_SIZE];
-
-      g_ascii_formatd (buf[0],  
-                       G_ASCII_DTOSTR_BUF_SIZE, "%f", color_history[i].r);
-      g_ascii_formatd (buf[1],  
-                       G_ASCII_DTOSTR_BUF_SIZE, "%f", color_history[i].g);
-      g_ascii_formatd (buf[2],  
-                       G_ASCII_DTOSTR_BUF_SIZE, "%f", color_history[i].b);
-      g_ascii_formatd (buf[3],  
-                       G_ASCII_DTOSTR_BUF_SIZE, "%f", color_history[i].a);
-
-      fprintf (fp, "\n    (color-rgba %s %s %s %s)", 
-               buf[0], buf[1], buf[2], buf[3]);
-    }
-
-  fprintf (fp, ")\n\n");
-}
-
-static void
-color_history_init (void)
-{
-  gint i;
-
-  for (i = 0; i < COLOR_HISTORY_SIZE; i++)
-    gimp_rgba_set (&color_history[i], 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
-
-  color_history_initialized = TRUE;
-}
-
 static void
 color_history_color_clicked (GtkWidget *widget,
 			     gpointer   data)
@@ -1245,42 +1191,34 @@ static void
 color_history_color_changed (GtkWidget *widget,
 			     gpointer   data)
 {
-  GimpRGB *color;
-  GimpRGB  changed_color;
-  gint     i;
+  GimpRGB        changed_color;
+  gint           color_index;
+  GList         *list;
+  ColorNotebook *notebook;
 
-  color = (GimpRGB *) data;
+  color_index = GPOINTER_TO_INT (data);
 
   gimp_color_area_get_color (GIMP_COLOR_AREA (widget), &changed_color);
 
-  for (i = 0; i < COLOR_HISTORY_SIZE; i++)
+  color_history_set (color_index, &changed_color);
+
+  for (list = color_notebooks; list; list = g_list_next (list))
     {
-      if (color == &color_history[i])
-	{
-	  GList         *list;
-	  ColorNotebook *notebook;
+      notebook = (ColorNotebook *) list->data;
 
-	  color_history[i] = changed_color;
+      if (notebook->history[color_index] == widget)
+        continue;
 
-	  for (list = color_notebooks; list; list = g_list_next (list))
-	    {
-	      notebook = (ColorNotebook *) list->data;
+      g_signal_handlers_block_by_func (G_OBJECT (notebook->history[color_index]),
+                                       color_history_color_changed,
+                                       data);
 
-	      if (notebook->history[i] == widget)
-		continue;
+      gimp_color_area_set_color
+        (GIMP_COLOR_AREA (notebook->history[color_index]), &changed_color);
 
-	      g_signal_handlers_block_by_func (G_OBJECT (notebook->history[i]),
-					       color_history_color_changed,
-					       data);
-
-	      gimp_color_area_set_color
-		(GIMP_COLOR_AREA (notebook->history[i]), &changed_color);
-
-	      g_signal_handlers_unblock_by_func (G_OBJECT (notebook->history[i]),
-						 color_history_color_changed,
-						 data);
-	    }
-	}
+      g_signal_handlers_unblock_by_func (G_OBJECT (notebook->history[color_index]),
+                                         color_history_color_changed,
+                                         data);
     }
 }
 
@@ -1289,55 +1227,19 @@ color_history_add_clicked (GtkWidget *widget,
 			   gpointer   data)
 {
   ColorNotebook *cnp;
-  gint           shift_begin = -1;
-  gint           i, j;
+  gint           shift_begin;
+  gint           i;
 
   cnp = (ColorNotebook *) data;
 
-  /*  is the added color already there?  */
-  for (i = 0; i < COLOR_HISTORY_SIZE; i++)
+  shift_begin = color_history_add (&cnp->rgb);
+
+  for (i = shift_begin; i >= 0; i--)
     {
-      if (gimp_rgba_distance (&color_history[i], &cnp->rgb) < 0.0001)
-	{
-	  shift_begin = i;
+      GimpRGB color;
 
-	  goto doit;
-	}
+      color_history_get (i, &color);
+
+      gimp_color_area_set_color (GIMP_COLOR_AREA (cnp->history[i]), &color);
     }
-
-  /*  if not, are there two equal colors?  */
-  if (shift_begin == -1)
-    {
-      for (i = 0; i < COLOR_HISTORY_SIZE; i++)
-	{
-	  for (j = i + 1; j < COLOR_HISTORY_SIZE; j++)
-	    {
-	      if (gimp_rgba_distance (&color_history[i],
-				      &color_history[j]) < 0.0001)
-		{
-		  shift_begin = i;
-
-		  goto doit;
-		}
-	      
-	    }
-	}
-    }
-
-  /*  if not, shift them all  */
-  if (shift_begin == -1)
-    {
-      shift_begin = COLOR_HISTORY_SIZE - 1;
-    }
-
- doit:
-
-  for (i = shift_begin; i > 0; i--)
-    {
-      gimp_color_area_set_color (GIMP_COLOR_AREA (cnp->history[i]),
-				 &color_history[i - 1]);
-    }
-
-  gimp_color_area_set_color (GIMP_COLOR_AREA (cnp->history[0]),
-			     &cnp->rgb);
 }

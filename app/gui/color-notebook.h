@@ -20,9 +20,6 @@
 #define __COLOR_NOTEBOOK_H__
 
 
-#include <stdio.h> /* for FILE */
-
-
 typedef enum
 {
   COLOR_NOTEBOOK_OK,
@@ -67,12 +64,6 @@ void            color_notebook_set_color    (ColorNotebook         *cnb,
                                              const GimpRGB         *color);
 void            color_notebook_get_color    (ColorNotebook         *cnb,
                                              GimpRGB               *color);
-
-
-/*  color history functions  */
-
-void   color_history_add_color_from_rc (GimpRGB *color);
-void   color_history_write             (FILE    *fp);
 
 
 #endif /* __COLOR_NOTEBOOK_H__ */

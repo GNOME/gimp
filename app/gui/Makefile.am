@@ -14,6 +14,8 @@ libappgui_a_SOURCES = \
 	buffers-commands.h		\
 	channels-commands.c		\
 	channels-commands.h		\
+	color-history.c			\
+	color-history.h			\
 	color-notebook.c		\
 	color-notebook.h		\
 	colormap-editor-commands.c	\
