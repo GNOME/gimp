@@ -237,9 +237,8 @@ static void
 gimp_frame_style_set (GtkWidget *widget,
                       GtkStyle  *previous)
 {
-  /*  for "label_spacing"  */
+  /*  font changes invalidate the indentation  */
   g_object_set_data (G_OBJECT (widget), GIMP_FRAME_INDENT_KEY, NULL);
-  gtk_widget_queue_resize (widget);
 
   /*  for "label_bold"  */
   gimp_frame_label_widget_notify (GTK_FRAME (widget));

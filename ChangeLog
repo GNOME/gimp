@@ -1,5 +1,10 @@
 2004-05-10  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpframe.c (gimp_frame_style_set): removed a
+	redundant call to gtk_widget_queue_resize().
+
+2004-05-10  Sven Neumann  <sven@gimp.org>
+
 	* app/xcf/xcf-save.c (xcf_save_prop): fixed size of colormap
 	property. Patch by Daniel Kobras, fixes bug #142149.
 
