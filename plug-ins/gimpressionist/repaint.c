@@ -123,7 +123,6 @@ int bestbrush(struct ppm *p, struct ppm *a, int tx, int ty,
       }
     }
     dev /= thissum;
-    /* dev += rand() / (float)RAND_MAX * 0.05; */
 
     if((best == -1) || (dev < bestdev)) {
       g_list_free(brlist);
@@ -143,7 +142,7 @@ int bestbrush(struct ppm *p, struct ppm *a, int tx, int ty,
     return 0;
   }
 
-  i = rand() % g_list_length(brlist);
+  i = RAND_FUNC() % g_list_length(brlist);
   best = (long)((g_list_nth(brlist,i))->data);
   g_list_free(brlist);
 
@@ -283,7 +282,7 @@ void repaint(struct ppm *p, struct ppm *a)
       return;
     }
 
-  srand(time(NULL) + getpid());
+  SRAND_FUNC(time(NULL));
 
   numbrush = runningvals.orientnum * runningvals.sizenum;
   startangle = runningvals.orientfirst;
@@ -465,7 +464,7 @@ void repaint(struct ppm *p, struct ppm *a)
     for(y = 0; y < dirmap.height; y++) {
       guchar *dstrow = &dirmap.col[y*dirmap.width*3];
       for(x = 0; x < dirmap.width; x++) {
-	dstrow[x*3] = (M_PI + atan2(cy-y, cx-x)) * 255.0 / (M_PI*2);
+	dstrow[x*3] = (G_PI + atan2(cy-y, cx-x)) * 255.0 / (G_PI*2);
       }
     }
   } else if(runningvals.orienttype == 4) { /* Flowing */
@@ -526,7 +525,7 @@ void repaint(struct ppm *p, struct ppm *a)
     for(y = 0; y < sizmap.height; y++) {
       guchar *dstrow = &sizmap.col[y*sizmap.width*3];
       for(x = 0; x < sizmap.width; x++) {
-	dstrow[x*3] = (M_PI + atan2(cy-y, cx-x)) * 255.0 / (M_PI*2);
+	dstrow[x*3] = (G_PI + atan2(cy-y, cx-x)) * 255.0 / (G_PI*2);
       }
     }
   } else if(runningvals.sizetype == 4) { /* Flowing */
@@ -593,7 +592,7 @@ void repaint(struct ppm *p, struct ppm *a)
     }
     for(j = 0; j < i; j++) {
       int a, b;
-      a = rand()%i;
+      a = RAND_FUNC() % i;
       b = xpos[j]; xpos[j] = xpos[a]; xpos[a] = b;
       b = ypos[j]; ypos[j] = ypos[a]; ypos[a] = b;
     }
@@ -621,14 +620,14 @@ void repaint(struct ppm *p, struct ppm *a)
     }
 
     if(runningvals.placetype == 0) {
-      tx = rand() % (tmp.width - maxbrushwidth) + maxbrushwidth/2;
-      ty = rand() % (tmp.height - maxbrushheight) + maxbrushheight/2;
+      tx = RAND_FUNC() % (tmp.width - maxbrushwidth) + maxbrushwidth/2;
+      ty = RAND_FUNC() % (tmp.height - maxbrushheight) + maxbrushheight/2;
     } else if(runningvals.placetype == 1) {
       tx = xpos[i-1];
       ty = ypos[i-1];
     }
     if(runningvals.placecenter) {
-      double z = rand()*0.75 / RAND_MAX;
+      double z = RAND_FUNC() * 0.75 / RAND_MAX;
       tx = tx * (1.0-z) + tmp.width/2 * z;
       ty = ty * (1.0-z) + tmp.height/2 * z;
     }
@@ -651,7 +650,7 @@ void repaint(struct ppm *p, struct ppm *a)
 
     switch(runningvals.orienttype) {
     case 2: /* Random */
-      on = rand() % runningvals.orientnum;
+      on = RAND_FUNC() % runningvals.orientnum;
       break;
     case 0: /* Value */
     case 1: /* Radius */
@@ -671,7 +670,7 @@ void repaint(struct ppm *p, struct ppm *a)
 
     switch(runningvals.sizetype) {
     case 2: /* Random */
-      sn = rand() % runningvals.sizenum;
+      sn = RAND_FUNC() % runningvals.sizenum;
       break;
     case 0: /* Value */
     case 1: /* Radius */
@@ -746,9 +745,9 @@ void repaint(struct ppm *p, struct ppm *a)
     }
     if(runningvals.colornoise > 0.0) {
       double v = runningvals.colornoise;
-      r = r + rand() / (float)RAND_MAX * v - v/2;
-      g = g + rand() / (float)RAND_MAX * v - v/2;
-      b = b + rand() / (float)RAND_MAX * v - v/2;
+      r = r + RAND_FUNC() / (float)RAND_MAX * v - v/2;
+      g = g + RAND_FUNC() / (float)RAND_MAX * v - v/2;
+      b = b + RAND_FUNC() / (float)RAND_MAX * v - v/2;
       if(r < 0) r = 0; else if(r > 255) r = 255;
       if(g < 0) g = 0; else if(g > 255) g = 255;
       if(b < 0) b = 0; else if(b > 255) b = 255;

@@ -1,3 +1,7 @@
+Fri Sep 10 00:28:34 CEST 1999  vidar@prosalg.no  (Vidar Madsen)
+
+	* plug-ins/gimpressionist/*.[ch]: switched to G_PIs and RAND_FUNC()s
+
 Thu Sep  9 15:12:36 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/imagemap/imap_polygon.c: fix gccism

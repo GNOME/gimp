@@ -1,3 +1,14 @@
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
+#ifndef SRAND_FUNC
+#define SRAND_FUNC srand
+#endif
+#ifndef RAND_FUNC
+#define RAND_FUNC rand
+#endif
+
 #include <gtk/gtk.h>
 
 #define PLUG_IN_NAME "plug_in_gimpressionist"
@@ -11,13 +22,13 @@
 #define MAXORIENTVECT 50
 #define MAXSIZEVECT 50
 
-#ifndef M_PI
-#define M_PI    3.14159265358979323846
-#endif /* M_PI */
+#ifndef G_PI
+#define G_PI    3.14159265358979323846
+#endif
 
-#ifndef M_PI_2
-#define M_PI_2  (M_PI / 2.0)
-#endif /* M_PI_2 */
+#ifndef G_PI_2
+#define G_PI_2  (G_PI / 2.0)
+#endif
 
 /* Type declaration and definitions */
 
