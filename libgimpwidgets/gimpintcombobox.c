@@ -169,15 +169,10 @@ gimp_int_combo_box_constructor (GType                  type,
                                 GObjectConstructParam *params)
 {
   GObject                *object;
-  GtkListStore           *store;
   GtkCellRenderer        *cell;
   GimpIntComboBoxPrivate *priv;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  store = gimp_int_store_new ();
-  gtk_combo_box_set_model (GTK_COMBO_BOX (object), GTK_TREE_MODEL (store));
-  g_object_unref (store);
 
   cell = gtk_cell_renderer_pixbuf_new ();
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (object), cell, FALSE);
@@ -207,8 +202,13 @@ static void
 gimp_int_combo_box_init (GimpIntComboBox *combo_box)
 {
   GimpIntComboBoxPrivate *priv = GIMP_INT_COMBO_BOX_GET_PRIVATE (combo_box);
+  GtkListStore           *store;
 
   priv->ellipsize = PANGO_ELLIPSIZE_NONE;
+
+  store = gimp_int_store_new ();
+  gtk_combo_box_set_model (GTK_COMBO_BOX (combo_box), GTK_TREE_MODEL (store));
+  g_object_unref (store);
 }
 
 
