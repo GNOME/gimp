@@ -97,7 +97,6 @@ EXPORTS
 	gimp_enum_combo_box_get_type
 	gimp_enum_combo_box_new
 	gimp_enum_combo_box_set_stock_prefix
-	gimp_enum_combo_box_set_visible
 	gimp_enum_store_get_type
 	gimp_enum_store_new_with_range
 	gimp_enum_store_new
@@ -133,6 +132,7 @@ EXPORTS
 	gimp_int_combo_box_new_valist
 	gimp_int_combo_box_prepend
 	gimp_int_combo_box_set_active
+	gimp_int_combo_box_set_sensitivity
 	gimp_int_option_menu_new
 	gimp_int_option_menu_set_history
 	gimp_int_option_menu_set_sensitive

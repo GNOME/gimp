@@ -38,49 +38,59 @@ G_BEGIN_DECLS
 
 typedef struct _GimpIntComboBoxClass  GimpIntComboBoxClass;
 
-struct _GimpIntComboBoxClass
-{
-  GtkComboBoxClass  parent_instance;
-};
-
 struct _GimpIntComboBox
 {
   GtkComboBox       parent_instance;
 
-  /* Padding for future expansion */
+  /* Padding for future expansion (should have gone to the class) */
   void (* _gimp_reserved1) (void);
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
 };
 
+struct _GimpIntComboBoxClass
+{
+  GtkComboBoxClass  parent_instance;
+};
 
-GType       gimp_int_combo_box_get_type   (void) G_GNUC_CONST;
 
-GtkWidget * gimp_int_combo_box_new        (const gchar     *first_label,
-                                           gint             first_value,
-                                           ...);
-GtkWidget * gimp_int_combo_box_new_valist (const gchar     *first_label,
-                                           gint             first_value,
-                                           va_list          values);
+typedef  gboolean (* GimpIntSensitivityFunc) (gint      value,
+                                              gpointer  data);
 
-GtkWidget * gimp_int_combo_box_new_array  (gint             n_values,
-                                           const gchar     *labels[]);
 
-void        gimp_int_combo_box_prepend    (GimpIntComboBox *combo_box,
-                                           ...);
-void        gimp_int_combo_box_append     (GimpIntComboBox *combo_box,
-                                           ...);
 
-gboolean    gimp_int_combo_box_set_active (GimpIntComboBox *combo_box,
-                                           gint             value);
-gboolean    gimp_int_combo_box_get_active (GimpIntComboBox *combo_box,
-                                           gint            *value);
+GType       gimp_int_combo_box_get_type        (void) G_GNUC_CONST;
 
-gulong      gimp_int_combo_box_connect    (GimpIntComboBox *combo_box,
-                                           gint             value,
-                                           GCallback        callback,
-                                           gpointer         data);
+GtkWidget * gimp_int_combo_box_new             (const gchar     *first_label,
+                                                gint             first_value,
+                                                ...);
+GtkWidget * gimp_int_combo_box_new_valist      (const gchar     *first_label,
+                                                gint             first_value,
+                                                va_list          values);
+
+GtkWidget * gimp_int_combo_box_new_array       (gint             n_values,
+                                                const gchar     *labels[]);
+
+void        gimp_int_combo_box_prepend         (GimpIntComboBox *combo_box,
+                                                ...);
+void        gimp_int_combo_box_append          (GimpIntComboBox *combo_box,
+                                                ...);
+
+gboolean    gimp_int_combo_box_set_active      (GimpIntComboBox *combo_box,
+                                                gint             value);
+gboolean    gimp_int_combo_box_get_active      (GimpIntComboBox *combo_box,
+                                                gint            *value);
+
+gulong      gimp_int_combo_box_connect         (GimpIntComboBox *combo_box,
+                                                gint             value,
+                                                GCallback        callback,
+                                                gpointer         data);
+
+void        gimp_int_combo_box_set_sensitivity (GimpIntComboBox        *combo_box,
+                                                GimpIntSensitivityFunc  func,
+                                                gpointer                data,
+                                                GDestroyNotify          destroy);
 
 
 G_END_DECLS

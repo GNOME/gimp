@@ -104,9 +104,10 @@ static void     levels_channel_callback              (GtkWidget      *widget,
                                                       GimpLevelsTool *tool);
 static void     levels_channel_reset_callback        (GtkWidget      *widget,
                                                       GimpLevelsTool *tool);
-static gboolean levels_menu_visible_func             (GtkTreeModel   *model,
-                                                      GtkTreeIter    *iter,
+
+static gboolean levels_menu_sensitivity              (gint            value,
                                                       gpointer        data);
+
 static void     levels_stretch_callback              (GtkWidget      *widget,
                                                       GimpLevelsTool *tool);
 static void     levels_low_input_adjustment_update   (GtkAdjustment  *adjustment,
@@ -295,8 +296,8 @@ gimp_levels_tool_initialize (GimpTool    *tool,
 
   GIMP_TOOL_CLASS (parent_class)->initialize (tool, gdisp);
 
-  gimp_enum_combo_box_set_visible (GIMP_ENUM_COMBO_BOX (l_tool->channel_menu),
-                                   levels_menu_visible_func, l_tool);
+  gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (l_tool->channel_menu),
+                                      levels_menu_sensitivity, l_tool, NULL);
 
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (l_tool->channel_menu),
                                  l_tool->channel);
@@ -378,6 +379,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
 {
   GimpLevelsTool  *tool = GIMP_LEVELS_TOOL (image_map_tool);
   GimpToolOptions *tool_options;
+  GtkListStore    *store;
   GtkWidget       *vbox;
   GtkWidget       *vbox2;
   GtkWidget       *vbox3;
@@ -406,7 +408,14 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  menu = gimp_enum_combo_box_new (GIMP_TYPE_HISTOGRAM_CHANNEL);
+  store = gimp_enum_store_new_with_range (GIMP_TYPE_HISTOGRAM_CHANNEL,
+                                          GIMP_HISTOGRAM_VALUE,
+                                          GIMP_HISTOGRAM_ALPHA);
+  menu = g_object_new (GIMP_TYPE_ENUM_COMBO_BOX,
+                       "model", store,
+                       NULL);
+  g_object_unref (store);
+
   g_signal_connect (menu, "changed",
                     G_CALLBACK (levels_channel_callback),
                     tool);
@@ -915,16 +924,11 @@ levels_channel_reset_callback (GtkWidget      *widget,
 }
 
 static gboolean
-levels_menu_visible_func (GtkTreeModel *model,
-                          GtkTreeIter  *iter,
-                          gpointer      data)
+levels_menu_sensitivity (gint      value,
+                         gpointer  data)
 {
-  GimpLevelsTool       *tool = GIMP_LEVELS_TOOL (data);
-  GimpHistogramChannel  channel;
-
-  gtk_tree_model_get (model, iter,
-                      GIMP_INT_STORE_VALUE, &channel,
-                      -1);
+  GimpLevelsTool       *tool    = GIMP_LEVELS_TOOL (data);
+  GimpHistogramChannel  channel = value;
 
   switch (channel)
     {

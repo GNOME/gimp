@@ -20,6 +20,21 @@ A widget providing a popup menu of integer values (e.g. enums).
 </para>
 
 
+<!-- ##### ARG GimpIntComboBox:ellipsize ##### -->
+<para>
+
+</para>
+
+<!-- ##### USER_FUNCTION GimpIntSensitivityFunc ##### -->
+<para>
+
+</para>
+
+@value: 
+@data: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_int_combo_box_new ##### -->
 <para>
 
@@ -100,5 +115,16 @@ A widget providing a popup menu of integer values (e.g. enums).
 @callback: 
 @data: 
 @Returns: 
+
+
+<!-- ##### FUNCTION gimp_int_combo_box_set_sensitivity ##### -->
+<para>
+
+</para>
+
+@combo_box: 
+@func: 
+@data: 
+@destroy: 
 
 

@@ -36,16 +36,21 @@
 
 typedef struct _GimpEnumStoreClass  GimpEnumStoreClass;
 
-struct _GimpEnumStoreClass
-{
-  GimpIntStoreClass  parent_instance;
-};
-
 struct _GimpEnumStore
 {
   GimpIntStore       parent_instance;
 
   GEnumClass        *enum_class;
+};
+
+struct _GimpEnumStoreClass
+{
+  GimpIntStoreClass  parent_instance;
+
+  void (* _gimp_reserved1) (void);
+  void (* _gimp_reserved2) (void);
+  void (* _gimp_reserved3) (void);
+  void (* _gimp_reserved4) (void);
 };
 
 

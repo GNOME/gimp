@@ -57,9 +57,8 @@ static void  gimp_histogram_editor_layer_changed  (GimpImage           *gimage,
 static void  gimp_histogram_editor_update         (GimpHistogramEditor *editor);
 
 static gboolean gimp_histogram_editor_idle_update (GimpHistogramEditor *editor);
-static gboolean gimp_histogram_editor_item_visible (GtkTreeModel       *model,
-                                                    GtkTreeIter        *iter,
-                                                    gpointer            data);
+static gboolean gimp_histogram_menu_sensitivity   (gint                 value,
+                                                   gpointer             data);
 static void  gimp_histogram_editor_menu_update    (GimpHistogramEditor *editor);
 static void  gimp_histogram_editor_info_update    (GimpHistogramEditor *editor);
 
@@ -162,9 +161,9 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
                                                       0, 0);
   gimp_enum_combo_box_set_stock_prefix (GIMP_ENUM_COMBO_BOX (menu),
                                         "gimp-channel");
-  gimp_enum_combo_box_set_visible (GIMP_ENUM_COMBO_BOX (editor->menu),
-                                   gimp_histogram_editor_item_visible,
-                                   editor);
+  gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (editor->menu),
+                                      gimp_histogram_menu_sensitivity,
+                                      editor, NULL);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (editor->menu),
                                  view->channel);
   gtk_box_pack_start (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
@@ -391,20 +390,14 @@ gimp_histogram_editor_idle_update (GimpHistogramEditor *editor)
 }
 
 static gboolean
-gimp_histogram_editor_item_visible (GtkTreeModel *model,
-                                    GtkTreeIter  *iter,
-                                    gpointer      data)
+gimp_histogram_menu_sensitivity (gint      value,
+                                 gpointer  data)
 {
-  GimpHistogramEditor *editor = GIMP_HISTOGRAM_EDITOR (data);
+  GimpHistogramEditor  *editor  = GIMP_HISTOGRAM_EDITOR (data);
+  GimpHistogramChannel  channel = value;
 
   if (editor->drawable)
     {
-      GimpHistogramChannel  channel;
-
-      gtk_tree_model_get (model, iter,
-                          GIMP_INT_STORE_VALUE, &channel,
-                          -1);
-
       switch (channel)
         {
         case GIMP_HISTOGRAM_VALUE:
@@ -419,22 +412,15 @@ gimp_histogram_editor_item_visible (GtkTreeModel *model,
         case GIMP_HISTOGRAM_ALPHA:
           return gimp_drawable_has_alpha (editor->drawable);
         }
+    }
 
-      return FALSE;
-    }
-  else
-    {
-      /*  allow all channels, the menu is insensitive anyway  */
-      return TRUE;
-    }
+  return FALSE;
 }
 
 static void
 gimp_histogram_editor_menu_update (GimpHistogramEditor *editor)
 {
-  GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (editor->menu));
-
-  gtk_tree_model_filter_refilter (GTK_TREE_MODEL_FILTER (model));
+  gtk_widget_queue_draw (editor->menu);
 }
 
 static void

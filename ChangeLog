@@ -1,3 +1,19 @@
+2005-03-01  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpenumcombobox.[ch]: removed 
+	gimp_enum_combo_box_set_visible().
+
+	* libgimpwidgets/gimpintcombobox.[ch]: added
+	gimp_int_combo_box_set_sensitivity() instead.
+
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimplevelstool.c
+	* app/widgets/gimphistogrameditor.c: changed accordingly.
+
+	* libgimpwidgets/gimpenumstore.h: added padding for future expansion.
+
+	* libgimpwidgets/gimpwidgets.def: updated.
+
 2005-02-28  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpdrawable-blend.c: major speedup for dithering code

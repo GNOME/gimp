@@ -36,14 +36,20 @@
 
 typedef struct _GimpEnumComboBoxClass  GimpEnumComboBoxClass;
 
-struct _GimpEnumComboBoxClass
-{
-  GimpIntComboBoxClass  parent_instance;
-};
-
 struct _GimpEnumComboBox
 {
   GimpIntComboBox       parent_instance;
+};
+
+struct _GimpEnumComboBoxClass
+{
+  GimpIntComboBoxClass  parent_instance;
+
+  /* Padding for future expansion */
+  void (* _gimp_reserved1) (void);
+  void (* _gimp_reserved2) (void);
+  void (* _gimp_reserved3) (void);
+  void (* _gimp_reserved4) (void);
 };
 
 
@@ -53,9 +59,6 @@ GtkWidget * gimp_enum_combo_box_new              (GType             enum_type);
 
 void        gimp_enum_combo_box_set_stock_prefix (GimpEnumComboBox *combo_box,
                                                   const gchar      *stock_prefix);
-void        gimp_enum_combo_box_set_visible      (GimpEnumComboBox *combo_box,
-                                                  GtkTreeModelFilterVisibleFunc func,
-                                                  gpointer          data);
 
 
 #endif  /* __GIMP_ENUM_COMBO_BOX_H__ */

@@ -106,9 +106,9 @@ static void     curves_channel_callback         (GtkWidget        *widget,
 static void     curves_channel_reset_callback   (GtkWidget        *widget,
                                                  GimpCurvesTool   *tool);
 
-static gboolean curves_menu_visible_func        (GtkTreeModel     *model,
-                                                 GtkTreeIter      *iter,
+static gboolean curves_menu_sensitivity         (gint              value,
                                                  gpointer          data);
+
 static void     curves_curve_type_callback      (GtkWidget        *widget,
                                                  GimpCurvesTool   *tool);
 static gboolean curves_graph_events             (GtkWidget        *widget,
@@ -297,8 +297,8 @@ gimp_curves_tool_initialize (GimpTool    *tool,
   gimp_color_tool_enable (GIMP_COLOR_TOOL (tool),
                           GIMP_COLOR_OPTIONS (tool->tool_info->tool_options));
 
-  gimp_enum_combo_box_set_visible (GIMP_ENUM_COMBO_BOX (c_tool->channel_menu),
-                                   curves_menu_visible_func, c_tool);
+  gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (c_tool->channel_menu),
+                                      curves_menu_sensitivity, c_tool, NULL);
 
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (c_tool->channel_menu),
                                  c_tool->channel);
@@ -445,6 +445,7 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
 {
   GimpCurvesTool  *tool = GIMP_CURVES_TOOL (image_map_tool);
   GimpToolOptions *tool_options;
+  GtkListStore    *store;
   GtkWidget       *vbox;
   GtkWidget       *vbox2;
   GtkWidget       *hbox;
@@ -471,7 +472,14 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  menu = gimp_enum_combo_box_new (GIMP_TYPE_HISTOGRAM_CHANNEL);
+  store = gimp_enum_store_new_with_range (GIMP_TYPE_HISTOGRAM_CHANNEL,
+                                          GIMP_HISTOGRAM_VALUE,
+                                          GIMP_HISTOGRAM_ALPHA);
+  menu = g_object_new (GIMP_TYPE_ENUM_COMBO_BOX,
+                       "model", store,
+                       NULL);
+  g_object_unref (store);
+
   g_signal_connect (menu, "changed",
                     G_CALLBACK (curves_channel_callback),
                     tool);
@@ -816,16 +824,11 @@ curves_channel_reset_callback (GtkWidget      *widget,
 }
 
 static gboolean
-curves_menu_visible_func (GtkTreeModel *model,
-                          GtkTreeIter  *iter,
-                          gpointer      data)
+curves_menu_sensitivity (gint      value,
+                         gpointer  data)
 {
-  GimpCurvesTool       *tool = GIMP_CURVES_TOOL (data);
-  GimpHistogramChannel  channel;
-
-  gtk_tree_model_get (model, iter,
-                      GIMP_INT_STORE_VALUE, &channel,
-                      -1);
+  GimpCurvesTool       *tool    = GIMP_CURVES_TOOL (data);
+  GimpHistogramChannel  channel = value;
 
   switch (channel)
     {

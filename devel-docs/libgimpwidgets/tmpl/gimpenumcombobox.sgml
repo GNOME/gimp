@@ -38,13 +38,3 @@ GimpEnumComboBox
 @stock_prefix: 
 
 
-<!-- ##### FUNCTION gimp_enum_combo_box_set_visible ##### -->
-<para>
-
-</para>
-
-@combo_box: 
-@func: 
-@data: 
-
-
