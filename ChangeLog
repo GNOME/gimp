@@ -1,3 +1,7 @@
+2004-12-30  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: bumped version to 2.2.2.
+
 2004-12-29  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/file-save-dialog.c (file_save_dialog_response):

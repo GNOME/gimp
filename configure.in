@@ -5,18 +5,14 @@ AC_PREREQ(2.54)
 # Making releases:
 #   GIMP_MICRO_VERSION += 1;
 #   GIMP_INTERFACE_AGE += 1;
-#   GIMP_BINARY_AGE += 1;
-# if any functions have been added, set GIMP_INTERFACE_AGE to 0.
-# if backwards compatibility has been broken,
-# set GIMP_BINARY_AGE and GIMP_INTERFACE_AGE to 0.
 
 m4_define([gimp_major_version], [2])
 m4_define([gimp_minor_version], [2])
-m4_define([gimp_micro_version], [1])
+m4_define([gimp_micro_version], [2])
 m4_define([gimp_real_version],
           [gimp_major_version.gimp_minor_version.gimp_micro_version])
 m4_define([gimp_version], [gimp_real_version])
-m4_define([gimp_interface_age], [1])
+m4_define([gimp_interface_age], [2])
 m4_define([gimp_binary_age],
           [m4_eval(100 * gimp_minor_version + gimp_micro_version)])
 
