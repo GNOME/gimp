@@ -248,6 +248,7 @@ edit_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("edit-paste-into", gimage && group->gimp->global_buffer);
 
   SET_SENSITIVE ("edit-named-cut",   drawable);
+  SET_SENSITIVE ("edit-named-copy",  drawable);
   SET_SENSITIVE ("edit-named-paste", drawable);
 
   SET_SENSITIVE ("edit-clear",        drawable);
