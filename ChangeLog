@@ -1,7 +1,15 @@
 2003-04-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcontainergridview.[ch]: added a "selected_item"
+	pointer to the GimpContainerGridView struct so we don't need to
+	remember it using g_object_[set|get]_data(). Also make sure that
+	the selected item doesn't get out of sight when resizing the view
+	and that it is always visible initially.
+
+2003-04-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/plug-ins.c (plug_ins_init): make sure all progress
-	bars and at 1.0. Build the list of extension procedures to start
+	bars end at 1.0. Build the list of extension procedures to start
 	before starting them (and don't start them while iterating the
 	list of procedures because the list changes if we start an
 	extension).

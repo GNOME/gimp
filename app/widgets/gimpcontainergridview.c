@@ -190,9 +190,10 @@ gimp_container_grid_view_init (GimpContainerGridView *grid_view)
 
   view = GIMP_CONTAINER_VIEW (grid_view);
 
-  grid_view->rows         = 1;
-  grid_view->columns      = 1;
-  grid_view->visible_rows = 0;
+  grid_view->rows          = 1;
+  grid_view->columns       = 1;
+  grid_view->visible_rows  = 0;
+  grid_view->selected_item = NULL;
 
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (view->scrolled_win),
                                   GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
@@ -261,17 +262,16 @@ gimp_container_grid_view_move_by (GimpContainerGridView *view,
 {
   GimpContainer *container;
   GimpViewable  *item;
-  GimpPreview   *preview;
   gint           index;
 
-  preview = g_object_get_data (G_OBJECT (view), "last_selected_item");
-  if (!preview)
+  if (! view->selected_item)
     return FALSE;
 
   container = GIMP_CONTAINER_VIEW (view)->container;
 
-  index = gimp_container_get_child_index (container,
-                                          GIMP_OBJECT (preview->viewable));
+  item = view->selected_item->viewable;
+
+  index = gimp_container_get_child_index (container, GIMP_OBJECT (item));
 
   index += x;
   index = CLAMP (index, 0, container->num_children - 1);
@@ -410,8 +410,8 @@ gimp_container_grid_view_remove_item (GimpContainerView *view,
 
   if (preview)
     {
-      if (g_object_get_data (G_OBJECT (view), "last_selected_item") == preview)
-        g_object_set_data (G_OBJECT (view), "last_selected_item", NULL);
+      if (preview == (GtkWidget *) grid_view->selected_item)
+        grid_view->selected_item = NULL;
 
       gtk_container_remove (GTK_CONTAINER (grid_view->wrap_box), preview);
     }
@@ -448,7 +448,7 @@ gimp_container_grid_view_clear_items (GimpContainerView *view)
 
   grid_view = GIMP_CONTAINER_GRID_VIEW (view);
 
-  g_object_set_data (G_OBJECT (view), "last_selected_item", NULL);
+  grid_view->selected_item = NULL;
 
   while (GTK_WRAP_BOX (grid_view->wrap_box)->children)
     gtk_container_remove (GTK_CONTAINER (grid_view->wrap_box),
@@ -515,35 +515,35 @@ gimp_container_grid_view_highlight_item (GimpContainerView *view,
 					 gpointer           insert_data)
 {
   GimpContainerGridView *grid_view;
-  GimpPreview           *preview;
+  GimpPreview           *preview = NULL;
 
   grid_view = GIMP_CONTAINER_GRID_VIEW (view);
 
-  preview = g_object_get_data (G_OBJECT (view), "last_selected_item");
-
-  if (preview)
-    {
-      gimp_preview_renderer_set_border_color (preview->renderer, &white_color);
-      gimp_preview_renderer_update (preview->renderer);
-    }
-
   if (insert_data)
     preview = GIMP_PREVIEW (insert_data);
-  else
-    preview = NULL;
+
+  if (grid_view->selected_item && grid_view->selected_item != preview)
+    {
+      gimp_preview_renderer_set_border_color (grid_view->selected_item->renderer,
+                                              &white_color);
+      gimp_preview_renderer_update (grid_view->selected_item->renderer);
+    }
 
   if (preview)
     {
-      GtkAdjustment *adj;
-      gint           item_height;
-      gint           index;
-      gint           row;
-      gchar         *name;
+      GtkRequisition  preview_requisition;
+      GtkAdjustment  *adj;
+      gint            item_height;
+      gint            index;
+      gint            row;
+      gchar          *name;
 
       adj = gtk_scrolled_window_get_vadjustment
 	(GTK_SCROLLED_WINDOW (view->scrolled_win));
 
-      item_height = GTK_WIDGET (preview)->requisition.height;
+      gtk_widget_size_request (GTK_WIDGET (preview), &preview_requisition);
+
+      item_height = preview_requisition.height;
 
       index = gimp_container_get_child_index (view->container,
                                               GIMP_OBJECT (viewable));
@@ -572,7 +572,7 @@ gimp_container_grid_view_highlight_item (GimpContainerView *view,
       gtk_label_set_text (GTK_LABEL (grid_view->name_label), _("(None)"));
     }
 
-  g_object_set_data (G_OBJECT (view), "last_selected_item", preview);
+  grid_view->selected_item = preview;
 }
 
 static void
@@ -624,9 +624,23 @@ gimp_container_grid_view_vieport_resized (GtkWidget             *widget,
           grid_view->visible_rows = (allocation->height /
                                      preview_requisition.height);
         }
+
+      if (grid_view->selected_item)
+        {
+          GimpPreview *preview;
+
+          preview = grid_view->selected_item;
+
+          gimp_container_grid_view_highlight_item (view,
+                                                   preview->viewable,
+                                                   preview);
+        }
     }
 }
 
+#ifdef __GNUC__
+#warning FIXME: remove realize callback once #110737 is fixed
+#endif
 static void
 gimp_container_grid_view_vieport_realize (GtkWidget             *widget,
                                           GimpContainerGridView *grid_view)
@@ -635,16 +649,14 @@ gimp_container_grid_view_vieport_realize (GtkWidget             *widget,
 
   view = GIMP_CONTAINER_VIEW (grid_view);
 
-  if (view->container)
+  if (view->container && grid_view->selected_item)
     {
       GimpPreview *preview;
 
-      preview = g_object_get_data (G_OBJECT (view),
-                                   "last_selected_item");
+      preview = grid_view->selected_item;
 
-      if (preview)
-        gimp_container_grid_view_highlight_item (view,
-                                                 preview->viewable,
-                                                 preview);
+      gimp_container_grid_view_highlight_item (view,
+                                               preview->viewable,
+                                               preview);
     }
 }

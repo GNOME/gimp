@@ -46,6 +46,8 @@ struct _GimpContainerGridView
   gint               rows;
   gint               columns;
   gint               visible_rows;
+
+  GimpPreview       *selected_item;
 };
 
 struct _GimpContainerGridViewClass
