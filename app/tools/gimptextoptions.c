@@ -38,6 +38,7 @@
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdock.h"
+#include "widgets/gimpmenufactory.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimptexteditor.h"
 #include "widgets/gimpviewablebox.h"
@@ -510,21 +511,14 @@ gimp_text_options_notify_dir (GimpTextOptions *options,
 
 GtkWidget *
 gimp_text_options_editor_new (GimpTextOptions *options,
+                              GimpMenuFactory *menu_factory,
                               const gchar     *title)
 {
-  GimpMenuFactory *menu_factory;
-  GtkWidget       *vbox;
-  GtkWidget       *toplevel;
-  GtkWidget       *editor;
+  GtkWidget *editor;
 
   g_return_val_if_fail (GIMP_IS_TEXT_OPTIONS (options), NULL);
+  g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
   g_return_val_if_fail (title != NULL, NULL);
-
-  vbox = g_object_get_data (G_OBJECT (options), "tool-options-vbox");
-
-  toplevel = gtk_widget_get_toplevel (vbox);
-
-  menu_factory = GIMP_DOCK (toplevel)->dialog_factory->menu_factory;
 
   editor = gimp_text_editor_new (title, menu_factory);
 

@@ -714,7 +714,8 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
 static void
 gimp_text_tool_editor (GimpTextTool *text_tool)
 {
-  GimpTextOptions *options;
+  GimpTextOptions   *options;
+  GimpDialogFactory *dialog_factory;
 
   if (text_tool->editor)
     {
@@ -724,13 +725,16 @@ gimp_text_tool_editor (GimpTextTool *text_tool)
 
   options = GIMP_TEXT_OPTIONS (GIMP_TOOL (text_tool)->tool_info->tool_options);
 
+  dialog_factory = gimp_dialog_factory_from_name ("toplevel");
+
   text_tool->editor = gimp_text_options_editor_new (options,
+                                                    dialog_factory->menu_factory,
                                                     _("GIMP Text Editor"));
 
   g_object_add_weak_pointer (G_OBJECT (text_tool->editor),
 			     (gpointer *) &text_tool->editor);
 
-  gimp_dialog_factory_add_foreign (gimp_dialog_factory_from_name ("toplevel"),
+  gimp_dialog_factory_add_foreign (dialog_factory,
                                    "gimp-text-tool-dialog",
                                    text_tool->editor);
 

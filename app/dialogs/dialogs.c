@@ -225,7 +225,7 @@ dialogs_init (Gimp            *gimp,
 
   global_dialog_factory = gimp_dialog_factory_new ("toplevel",
 						   gimp_get_user_context (gimp),
-						   NULL,
+						   menu_factory,
 						   NULL);
 
   global_toolbox_factory = gimp_dialog_factory_new ("toolbox",

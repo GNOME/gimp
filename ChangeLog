@@ -1,5 +1,19 @@
 2004-11-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimptextoptions.[ch] (gimp_text_options_editor_new):
+	added a "menu_factory" parameter instead of trying to get it from
+	the toplevel GimpDock (which does not exists if the tool options
+	dialog does not exist). Fixes bug #159071.
+
+	* app/tools/gimptexttool.c (gimp_text_tool_editor): pass the
+	menu_factory.
+
+	* app/dialogs/dialogs.c (dialogs_init): pass the global menu
+	factory also when constructing the "toplevel" dialog factory so
+	the above works.
+
+2004-11-22  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpbase/gimputils.c (gimp_any_to_utf8): use g_strndup()
 	instead of g_strdup() if a length was passed.
 
