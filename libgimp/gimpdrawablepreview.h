@@ -59,7 +59,7 @@ GtkWidget * gimp_drawable_preview_new      (GimpDrawable        *drawable,
                                             gboolean            *toggle);
 
 void        gimp_drawable_preview_draw     (GimpDrawablePreview *preview,
-                                            guchar              *buf);
+                                            const guchar        *buf);
 
 
 G_END_DECLS

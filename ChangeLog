@@ -1,3 +1,20 @@
+2004-09-07  DindinX  <david@dindinx.org>
+
+	* libgimpwidgets/gimppreviewarea.c
+	* libgimpwidgets/gimppreviewarea.h: added two functions:
+	gimp_preview_area_blend() to draw the blending of two buffers with
+	an opacity parameter, and gimp_preview_area_mask() to draw the
+	blending of two buffers, with a mask buffer. The code still needs some
+	polish, though.
+
+	* libgimp/gimpdrawablepreview.c
+	* libgimp/gimpdrawablepreview.h: use gimp_preview_area_mask() in
+	gimp_drawable_preview_draw(), so the previews are now much more
+	accurate (respecting the selection, if any).
+
+	Also made the buf parameter of gimp_drawable_preview_draw() a pointer
+	to constants.
+
 2004-09-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-draw.c

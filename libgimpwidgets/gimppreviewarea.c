@@ -545,6 +545,1077 @@ gimp_preview_area_draw (GimpPreviewArea *area,
 }
 
 /**
+ * gimp_preview_area_blend:
+ * @area:       a #GimpPreviewArea widget.
+ * @x:          x offset in preview
+ * @y:          y offset in preview
+ * @width:      buffer width
+ * @height:     buffer height
+ * @type:       the #GimpImageType of @buf1 and @buf2
+ * @buf1:       a #guchar buffer that contains the pixel data for
+ *              the first (on bottom) layer
+ * @rowstride1: rowstride of @buf1
+ * @buf2:       a #guchar buffer that contains the pixel data for
+ *              the second (on top) layer
+ * @rowstride2: rowstride of @buf2
+ * @opacity:    The opacity of the first layer.
+ *
+ * Blend @buf1 on top of @buf2 with the given @opacity on the @area
+ * and queues a redraw on the rectangle that changed.
+ *
+ * Since GIMP 2.2
+ **/
+void
+gimp_preview_area_blend (GimpPreviewArea *area,
+                         gint             x,
+                         gint             y,
+                         gint             width,
+                         gint             height,
+                         GimpImageType    type,
+                         const guchar    *buf1,
+                         gint             rowstride1,
+                         const guchar    *buf2,
+                         gint             rowstride2,
+                         guchar           opacity)
+{
+  const guchar    *src1;
+  const guchar    *src2;
+  guchar          *dest;
+  guint            size;
+  guchar           light;
+  guchar           dark;
+  gint             row;
+  gint             col;
+  gint             i;
+
+  g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
+  g_return_if_fail (width > 0 && height > 0);
+  g_return_if_fail (buf1 != NULL);
+  g_return_if_fail (buf2 != NULL);
+  g_return_if_fail (rowstride1 > 0);
+  g_return_if_fail (rowstride2 > 0);
+
+  if (x + width < 0 || x >= area->width)
+    return;
+
+  if (y + height < 0 || y >= area->height)
+    return;
+
+  if (x < 0)
+    {
+      gint  bpp;
+
+      switch (type)
+        {
+        case GIMP_GRAY_IMAGE:
+        case GIMP_INDEXED_IMAGE:
+          bpp = 1;
+          break;
+        case GIMP_GRAYA_IMAGE:
+        case GIMP_INDEXEDA_IMAGE:
+          bpp = 2;
+          break;
+        case GIMP_RGB_IMAGE:
+          bpp = 3;
+          break;
+        case GIMP_RGBA_IMAGE:
+          bpp = 4;
+          break;
+        default:
+          g_return_if_reached ();
+          break;
+        }
+
+      buf1 += x * bpp;
+      buf2 += x * bpp;
+      width -= x;
+      x = 0;
+    }
+
+  if (x + width > area->width)
+    width = area->width - x;
+
+  if (y < 0)
+    {
+      buf1 += y * rowstride1;
+      buf2 += y * rowstride2;
+      height -= y;
+      y = 0;
+    }
+
+  if (y + height > area->height)
+    height = area->height - y;
+
+  if (! area->buf)
+    {
+      area->rowstride = ((area->width * 3) + 3) & ~3;
+      area->buf = g_new (guchar, area->rowstride * area->height);
+    }
+
+  size = 1 << (2 + area->check_size);
+  gimp_checks_get_shades (area->check_type, &light, &dark);
+
+#define CHECK_COLOR(area, row, col)        \
+  (((((area)->offset_y + (row)) & size) ^  \
+    (((area)->offset_x + (col)) & size)) ? dark : light)
+
+  src1     = buf1;
+  src2     = buf2;
+  dest = area->buf + x * 3 + y * area->rowstride;
+
+  switch (type)
+    {
+    case GIMP_RGB_IMAGE:
+      for (row = 0; row < height; row++)
+        {
+          const guchar *s1 = src1;
+          const guchar *s2 = src2;
+          guchar       *d  = dest;
+
+          for (col = x; col < x + width; col++, s1 += 3, s2 += 3, d+= 3)
+            {
+               d[0] = ((s1[0] << 8) + (s2[0] - s1[0]) * opacity) >> 8;
+               d[1] = ((s1[1] << 8) + (s2[1] - s1[1]) * opacity) >> 8;
+               d[2] = ((s1[2] << 8) + (s2[2] - s1[2]) * opacity) >> 8;
+            }
+          src1 += rowstride1;
+          src2 += rowstride2;
+          dest += area->rowstride;
+        }
+      break;
+
+    case GIMP_RGBA_IMAGE:
+       for (row = y; row < y + height; row++)
+        {
+          const guchar *s1 = src1;
+          const guchar *s2 = src2;
+          guchar       *d  = dest;
+
+          for (col = x; col < x + width; col++, s1 += 4, s2 += 4, d+= 3)
+            {
+              switch (opacity)
+                {
+                case 0:
+                  switch (s1[3])
+                    {
+                    case 0:
+                      d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                      break;
+
+                    case 255:
+                      d[0] = s1[0];
+                      d[1] = s1[1];
+                      d[2] = s1[2];
+                      break;
+
+                    default:
+                      {
+                        register guint alpha = s1[3] + 1;
+                        register guint check = CHECK_COLOR (area, row, col);
+
+                        d[0] = ((check << 8) + (s1[0] - check) * alpha) >> 8;
+                        d[1] = ((check << 8) + (s1[1] - check) * alpha) >> 8;
+                        d[2] = ((check << 8) + (s1[2] - check) * alpha) >> 8;
+                      }
+                      break;
+                    }
+                  break;
+
+                case 255:
+                  switch (s2[3])
+                    {
+                    case 0:
+                      d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                      break;
+
+                    case 255:
+                      d[0] = s2[0];
+                      d[1] = s2[1];
+                      d[2] = s2[2];
+                      break;
+
+                    default:
+                      {
+                        register guint alpha = s2[3] + 1;
+                        register guint check = CHECK_COLOR (area, row, col);
+
+                        d[0] = ((check << 8) + (s2[0] - check) * alpha) >> 8;
+                        d[1] = ((check << 8) + (s2[1] - check) * alpha) >> 8;
+                        d[2] = ((check << 8) + (s2[2] - check) * alpha) >> 8;
+                      }
+                      break;
+                    }
+                  break;
+
+                default:
+                  {
+                    guchar inter[4];
+
+                    inter[3] = ((s1[3] << 8) + (s2[3] - s1[3]) * opacity) >> 8;
+
+                    if (inter[3])
+                      {
+                        for (i=0 ; i<3 ; i++)
+                          {
+                            gushort a = s1[i] * s1[3];
+                            gushort b = s2[i] * s2[3];
+
+                            inter[i] = (((a << 8) + (b  - a) * opacity) >> 8) / inter[3];
+                          }
+                      }
+                   else
+                     inter[0] = inter[1] = inter[2] = 0;
+
+                  switch (inter[3])
+                    {
+                    case 0:
+                      d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                      break;
+
+                    case 255:
+                      d[0] = inter[0];
+                      d[1] = inter[1];
+                      d[2] = inter[2];
+                      break;
+
+                    default:
+                      {
+                        register guint alpha = inter[3] + 1;
+                        register guint check = CHECK_COLOR (area, row, col);
+
+                        d[0] = ((check << 8) + (inter[0] - check) * alpha) >> 8;
+                        d[1] = ((check << 8) + (inter[1] - check) * alpha) >> 8;
+                        d[2] = ((check << 8) + (inter[2] - check) * alpha) >> 8;
+                      }
+                      break;
+                    }
+                  }
+                  break;
+                }
+            }
+
+          src1     += rowstride1;
+          src2     += rowstride2;
+          dest += area->rowstride;
+        }
+       break;
+
+    case GIMP_GRAY_IMAGE:
+      for (row = 0; row < height; row++)
+        {
+          const guchar *s1 = src1;
+          const guchar *s2 = src2;
+          guchar       *d  = dest;
+
+          for (col = 0; col < width; col++, s1++, s2++, d += 3)
+            {
+              d[0] = d[1] = d[2] = ((s1[0] << 8) + (s2[0] - s1[0]) * opacity) >> 8;
+            }
+
+          src1 += rowstride1;
+          src2 += rowstride2;
+          dest += area->rowstride;
+        }
+      break;
+
+    case GIMP_GRAYA_IMAGE:
+       for (row = y; row < y + height; row++)
+        {
+          const guchar *s1 = src1;
+          const guchar *s2 = src2;
+          guchar       *d  = dest;
+
+          for (col = x; col < x + width; col++, s1 += 2, s2 += 2, d+= 3)
+            {
+              switch (opacity)
+                {
+                case 0:
+                  switch (s1[1])
+                    {
+                    case 0:
+                      d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                      break;
+
+                    case 255:
+                      d[0] = d[1] = d[2] = s1[0];
+                      break;
+
+                    default:
+                      {
+                        register guint alpha = s1[1] + 1;
+                        register guint check = CHECK_COLOR (area, row, col);
+
+                        d[0] = d[1] = d[2] =
+                          ((check << 8) + (s1[0] - check) * alpha) >> 8;
+                      }
+                      break;
+                    }
+                  break;
+
+                case 255:
+                  switch (s2[1])
+                    {
+                    case 0:
+                      d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                      break;
+
+                    case 255:
+                      d[0] = d[1] = d[2] = s2[0];
+                      break;
+
+                    default:
+                      {
+                        register guint alpha = s2[1] + 1;
+                        register guint check = CHECK_COLOR (area, row, col);
+
+                        d[0] = d[1] = d[2] =
+                          ((check << 8) + (s2[0] - check) * alpha) >> 8;
+                      }
+                      break;
+                    }
+                  break;
+
+                default:
+                  {
+                    guchar inter[1];
+
+                    inter[1] = ((s1[1] << 8) + (s2[1] - s1[1]) * opacity) >> 8;
+
+                    if (inter[1])
+                      {
+                        gushort a = s1[0] * s1[1];
+                        gushort b = s2[0] * s2[1];
+
+                        inter[0] = (((a << 8) + (b  - a) * opacity) >> 8) / inter[1];
+                      }
+                   else
+                     inter[0] = 0;
+
+                  switch (inter[1])
+                    {
+                    case 0:
+                      d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                      break;
+
+                    case 255:
+                      d[0] = d[1] = d[2] = inter[0];
+                      break;
+
+                    default:
+                      {
+                        register guint alpha = inter[1] + 1;
+                        register guint check = CHECK_COLOR (area, row, col);
+
+                        d[0] = d[1] = d[2] = ((check << 8) + (inter[0] - check) * alpha) >> 8;
+                      }
+                      break;
+                    }
+                  }
+                  break;
+                }
+            }
+
+          src1 += rowstride1;
+          src2 += rowstride2;
+          dest += area->rowstride;
+        }
+      break;
+
+    case GIMP_INDEXED_IMAGE:
+      g_return_if_fail (area->cmap != NULL);
+      for (row = 0; row < height; row++)
+        {
+          const guchar *s1 = src1;
+          const guchar *s2 = src2;
+          guchar       *d  = dest;
+
+          for (col = 0; col < width; col++, s1++, s2++, d += 3)
+            {
+              const guchar *cmap1 = area->cmap + 3 * s1[0];
+              const guchar *cmap2 = area->cmap + 3 * s2[0];
+
+              d[0] = ((cmap1[0] << 8) + (cmap2[0] - cmap1[0]) * opacity) >> 8;
+              d[1] = ((cmap1[1] << 8) + (cmap2[1] - cmap1[1]) * opacity) >> 8;
+              d[2] = ((cmap1[2] << 8) + (cmap2[2] - cmap1[2]) * opacity) >> 8;
+            }
+
+          src1 += rowstride1;
+          src2 += rowstride2;
+          dest += area->rowstride;
+        }
+      break;
+
+    case GIMP_INDEXEDA_IMAGE:
+      g_return_if_fail (area->cmap != NULL);
+      for (row = y; row < y + height; row++)
+        {
+          const guchar *s1 = src1;
+          const guchar *s2 = src2;
+          guchar       *d  = dest;
+
+          for (col = x; col < x + width; col++, s1 += 2, s2 += 2, d += 3)
+            {
+              const guchar *cmap1  = area->cmap + 3 * s1[0];
+              const guchar *cmap2  = area->cmap + 3 * s2[0];
+
+              switch (opacity)
+                {
+                case 0:
+                  switch (s1[1])
+                    {
+                    case 0:
+                      d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                      break;
+
+                    case 255:
+                      d[0] = cmap1[0];
+                      d[1] = cmap1[1];
+                      d[2] = cmap1[2];
+                      break;
+
+                    default:
+                      {
+                        register guint alpha = s1[1] + 1;
+                        register guint check = CHECK_COLOR (area, row, col);
+
+                        d[0] = ((check << 8) + (cmap1[0] - check) * alpha) >> 8;
+                        d[1] = ((check << 8) + (cmap1[1] - check) * alpha) >> 8;
+                        d[2] = ((check << 8) + (cmap1[2] - check) * alpha) >> 8;
+                      }
+                      break;
+                    }
+                  break;
+
+                case 255:
+                  switch (s2[1])
+                    {
+                    case 0:
+                      d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                      break;
+
+                    case 255:
+                      d[0] = cmap2[0];
+                      d[1] = cmap2[1];
+                      d[2] = cmap2[2];
+                      break;
+
+                    default:
+                      {
+                        register guint alpha = s2[1] + 1;
+                        register guint check = CHECK_COLOR (area, row, col);
+
+                        d[0] = ((check << 8) + (cmap2[0] - check) * alpha) >> 8;
+                        d[1] = ((check << 8) + (cmap2[1] - check) * alpha) >> 8;
+                        d[2] = ((check << 8) + (cmap2[2] - check) * alpha) >> 8;
+                      }
+                      break;
+                    }
+                  break;
+
+                default:
+                  {
+                    guchar inter[4];
+
+                    inter[3] = ((s1[1] << 8) + (s2[1] - s1[1]) * opacity) >> 8;
+
+                    if (inter[3])
+                      {
+                        for (i = 0 ; i < 3 ; i++)
+                          {
+                            gushort a = cmap1[i] * s1[1];
+                            gushort b = cmap2[i] * s2[1];
+
+                            inter[i] = (((a << 8) + (b  - a) * opacity) >> 8) / inter[3];
+                          }
+                      }
+                   else
+                     inter[0] = inter[1] = inter[2] = 0;
+
+                  switch (inter[3])
+                    {
+                    case 0:
+                      d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                      break;
+
+                    case 255:
+                      d[0] = inter[0];
+                      d[1] = inter[1];
+                      d[2] = inter[2];
+                      break;
+
+                    default:
+                      {
+                        register guint alpha = inter[3] + 1;
+                        register guint check = CHECK_COLOR (area, row, col);
+
+                        d[0] = ((check << 8) + (inter[0] - check) * alpha) >> 8;
+                        d[1] = ((check << 8) + (inter[1] - check) * alpha) >> 8;
+                        d[2] = ((check << 8) + (inter[2] - check) * alpha) >> 8;
+                      }
+                      break;
+                    }
+                  }
+                  break;
+                }
+            }
+
+          src1 += rowstride1;
+          src2 += rowstride2;
+          dest += area->rowstride;
+        }
+      break;
+    }
+
+  gtk_widget_queue_draw_area (GTK_WIDGET (area), x, y, width, height);
+}
+
+/**
+ * gimp_preview_area_mask:
+ * @area:           a #GimpPreviewArea widget.
+ * @x:              x offset in preview
+ * @y:              y offset in preview
+ * @width:          buffer width
+ * @height:         buffer height
+ * @type:           the #GimpImageType of @buf1 and @buf2
+ * @buf1:           a #guchar buffer that contains the pixel data for
+ *                  the first (on bottom) layer
+ * @rowstride1:     rowstride of @buf1
+ * @buf2:           a #guchar buffer that contains the pixel data for
+ *                  the second (on top) layer
+ * @rowstride2:     rowstride of @buf2
+ * @mask:           a #guchar buffer representing the mask of the second
+ *                  layer.
+ * @rowstride_mask: rowstride for the mask.
+ *
+ * Blend @buf1 on top of @buf2 with the given @mask on the @area
+ * and queues a redraw on the rectangle that changed.
+ *
+ * Since GIMP 2.2
+ **/
+void
+gimp_preview_area_mask (GimpPreviewArea *area,
+                        gint             x,
+                        gint             y,
+                        gint             width,
+                        gint             height,
+                        GimpImageType    type,
+                        const guchar    *buf1,
+                        gint             rowstride1,
+                        const guchar    *buf2,
+                        gint             rowstride2,
+                        guchar          *mask,
+                        gint             rowstride_mask)
+{
+  const guchar    *src1;
+  const guchar    *src2;
+  const guchar    *src_mask;
+  guchar          *dest;
+  guint            size;
+  guchar           light;
+  guchar           dark;
+  gint             row;
+  gint             col;
+  gint             i;
+
+  g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
+  g_return_if_fail (width > 0 && height > 0);
+  g_return_if_fail (buf1 != NULL);
+  g_return_if_fail (buf2 != NULL);
+  g_return_if_fail (mask != NULL);
+  g_return_if_fail (rowstride1 > 0);
+  g_return_if_fail (rowstride2 > 0);
+  g_return_if_fail (rowstride_mask > 0);
+
+  if (x + width < 0 || x >= area->width)
+    return;
+
+  if (y + height < 0 || y >= area->height)
+    return;
+
+  if (x < 0)
+    {
+      gint  bpp;
+
+      switch (type)
+        {
+        case GIMP_GRAY_IMAGE:
+        case GIMP_INDEXED_IMAGE:
+          bpp = 1;
+          break;
+        case GIMP_GRAYA_IMAGE:
+        case GIMP_INDEXEDA_IMAGE:
+          bpp = 2;
+          break;
+        case GIMP_RGB_IMAGE:
+          bpp = 3;
+          break;
+        case GIMP_RGBA_IMAGE:
+          bpp = 4;
+          break;
+        default:
+          g_return_if_reached ();
+          break;
+        }
+
+      buf1 += x * bpp;
+      buf2 += x * bpp;
+      mask += x;
+      width -= x;
+      x = 0;
+    }
+
+  if (x + width > area->width)
+    width = area->width - x;
+
+  if (y < 0)
+    {
+      buf1 += y * rowstride1;
+      buf2 += y * rowstride2;
+      mask += y * rowstride_mask;
+      height -= y;
+      y = 0;
+    }
+
+  if (y + height > area->height)
+    height = area->height - y;
+
+  if (! area->buf)
+    {
+      area->rowstride = ((area->width * 3) + 3) & ~3;
+      area->buf = g_new (guchar, area->rowstride * area->height);
+    }
+
+  size = 1 << (2 + area->check_size);
+  gimp_checks_get_shades (area->check_type, &light, &dark);
+
+#define CHECK_COLOR(area, row, col)        \
+  (((((area)->offset_y + (row)) & size) ^  \
+    (((area)->offset_x + (col)) & size)) ? dark : light)
+
+  src1     = buf1;
+  src2     = buf2;
+  src_mask = mask;
+  dest = area->buf + x * 3 + y * area->rowstride;
+
+  switch (type)
+    {
+    case GIMP_RGB_IMAGE:
+      for (row = 0; row < height; row++)
+        {
+          const guchar *s1 = src1;
+          const guchar *s2 = src2;
+          const guchar *m  = src_mask;
+          guchar       *d  = dest;
+
+          for (col = x; col < x + width; col++, s1 += 3, s2 += 3, m++, d+= 3)
+            {
+               d[0] = ((s1[0] << 8) + (s2[0] - s1[0]) * m[0]) >> 8;
+               d[1] = ((s1[1] << 8) + (s2[1] - s1[1]) * m[0]) >> 8;
+               d[2] = ((s1[2] << 8) + (s2[2] - s1[2]) * m[0]) >> 8;
+            }
+          src1     += rowstride1;
+          src2     += rowstride2;
+          src_mask += rowstride_mask;
+          dest += area->rowstride;
+        }
+      break;
+
+    case GIMP_RGBA_IMAGE:
+       for (row = y; row < y + height; row++)
+        {
+          const guchar *s1 = src1;
+          const guchar *s2 = src2;
+          const guchar *m  = src_mask;
+          guchar       *d  = dest;
+
+          for (col = x; col < x + width; col++, s1 += 4, s2 += 4, m++, d+= 3)
+            {
+              switch (m[0])
+                {
+                case 0:
+                  switch (s1[3])
+                    {
+                    case 0:
+                      d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                      break;
+
+                    case 255:
+                      d[0] = s1[0];
+                      d[1] = s1[1];
+                      d[2] = s1[2];
+                      break;
+
+                    default:
+                      {
+                        register guint alpha = s1[3] + 1;
+                        register guint check = CHECK_COLOR (area, row, col);
+
+                        d[0] = ((check << 8) + (s1[0] - check) * alpha) >> 8;
+                        d[1] = ((check << 8) + (s1[1] - check) * alpha) >> 8;
+                        d[2] = ((check << 8) + (s1[2] - check) * alpha) >> 8;
+                      }
+                      break;
+                    }
+                  break;
+
+                case 255:
+                  switch (s2[3])
+                    {
+                    case 0:
+                      d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                      break;
+
+                    case 255:
+                      d[0] = s2[0];
+                      d[1] = s2[1];
+                      d[2] = s2[2];
+                      break;
+
+                    default:
+                      {
+                        register guint alpha = s2[3] + 1;
+                        register guint check = CHECK_COLOR (area, row, col);
+
+                        d[0] = ((check << 8) + (s2[0] - check) * alpha) >> 8;
+                        d[1] = ((check << 8) + (s2[1] - check) * alpha) >> 8;
+                        d[2] = ((check << 8) + (s2[2] - check) * alpha) >> 8;
+                      }
+                      break;
+                    }
+                  break;
+
+                default:
+                  {
+                    guchar inter[4];
+
+                    inter[3] = ((s1[3] << 8) + (s2[3] - s1[3]) * m[0]) >> 8;
+
+                    if (inter[3])
+                      {
+                        for (i=0 ; i<3 ; i++)
+                          {
+                            gushort a = s1[i] * s1[3];
+                            gushort b = s2[i] * s2[3];
+
+                            inter[i] = (((a << 8) + (b  - a) * m[0]) >> 8) / inter[3];
+                          }
+                      }
+                   else
+                     inter[0] = inter[1] = inter[2] = 0;
+
+                  switch (inter[3])
+                    {
+                    case 0:
+                      d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                      break;
+
+                    case 255:
+                      d[0] = inter[0];
+                      d[1] = inter[1];
+                      d[2] = inter[2];
+                      break;
+
+                    default:
+                      {
+                        register guint alpha = inter[3] + 1;
+                        register guint check = CHECK_COLOR (area, row, col);
+
+                        d[0] = ((check << 8) + (inter[0] - check) * alpha) >> 8;
+                        d[1] = ((check << 8) + (inter[1] - check) * alpha) >> 8;
+                        d[2] = ((check << 8) + (inter[2] - check) * alpha) >> 8;
+                      }
+                      break;
+                    }
+                  }
+                  break;
+                }
+            }
+
+          src1     += rowstride1;
+          src2     += rowstride2;
+          src_mask += rowstride_mask;
+          dest += area->rowstride;
+        }
+       break;
+
+    case GIMP_GRAY_IMAGE:
+      for (row = 0; row < height; row++)
+        {
+          const guchar *s1 = src1;
+          const guchar *s2 = src2;
+          const guchar *m  = src_mask;
+          guchar       *d  = dest;
+
+          for (col = 0; col < width; col++, s1++, s2++, m++, d += 3)
+            {
+              d[0] = d[1] = d[2] = ((s1[0] << 8) + (s2[0] - s1[0]) * m[0]) >> 8;
+            }
+
+          src1     += rowstride1;
+          src2     += rowstride2;
+          src_mask += rowstride_mask;
+          dest += area->rowstride;
+        }
+      break;
+
+    case GIMP_GRAYA_IMAGE:
+       for (row = y; row < y + height; row++)
+        {
+          const guchar *s1 = src1;
+          const guchar *s2 = src2;
+          const guchar *m  = src_mask;
+          guchar       *d  = dest;
+
+          for (col = x; col < x + width; col++, s1 += 2, s2 += 2, m++, d+= 3)
+            {
+              switch (m[0])
+                {
+                case 0:
+                  switch (s1[1])
+                    {
+                    case 0:
+                      d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                      break;
+
+                    case 255:
+                      d[0] = d[1] = d[2] = s1[0];
+                      break;
+
+                    default:
+                      {
+                        register guint alpha = s1[1] + 1;
+                        register guint check = CHECK_COLOR (area, row, col);
+
+                        d[0] = d[1] = d[2] =
+                          ((check << 8) + (s1[0] - check) * alpha) >> 8;
+                      }
+                      break;
+                    }
+                  break;
+
+                case 255:
+                  switch (s2[1])
+                    {
+                    case 0:
+                      d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                      break;
+
+                    case 255:
+                      d[0] = d[1] = d[2] = s2[0];
+                      break;
+
+                    default:
+                      {
+                        register guint alpha = s2[1] + 1;
+                        register guint check = CHECK_COLOR (area, row, col);
+
+                        d[0] = d[1] = d[2] =
+                          ((check << 8) + (s2[0] - check) * alpha) >> 8;
+                      }
+                      break;
+                    }
+                  break;
+
+                default:
+                  {
+                    guchar inter[1];
+
+                    inter[1] = ((s1[1] << 8) + (s2[1] - s1[1]) * m[0]) >> 8;
+
+                    if (inter[1])
+                      {
+                        gushort a = s1[0] * s1[1];
+                        gushort b = s2[0] * s2[1];
+
+                        inter[0] = (((a << 8) + (b  - a) * m[0]) >> 8) / inter[1];
+                      }
+                   else
+                     inter[0] = 0;
+
+                  switch (inter[1])
+                    {
+                    case 0:
+                      d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                      break;
+
+                    case 255:
+                      d[0] = d[1] = d[2] = inter[0];
+                      break;
+
+                    default:
+                      {
+                        register guint alpha = inter[1] + 1;
+                        register guint check = CHECK_COLOR (area, row, col);
+
+                        d[0] = d[1] = d[2] = ((check << 8) + (inter[0] - check) * alpha) >> 8;
+                      }
+                      break;
+                    }
+                  }
+                  break;
+                }
+            }
+
+          src1     += rowstride1;
+          src2     += rowstride2;
+          src_mask += rowstride_mask;
+          dest += area->rowstride;
+        }
+      break;
+
+    case GIMP_INDEXED_IMAGE:
+      g_return_if_fail (area->cmap != NULL);
+      for (row = 0; row < height; row++)
+        {
+          const guchar *s1 = src1;
+          const guchar *s2 = src2;
+          const guchar *m  = src_mask;
+          guchar       *d  = dest;
+
+          for (col = 0; col < width; col++, s1++, s2++, m++, d += 3)
+            {
+              const guchar *cmap1 = area->cmap + 3 * s1[0];
+              const guchar *cmap2 = area->cmap + 3 * s2[0];
+
+              d[0] = ((cmap1[0] << 8) + (cmap2[0] - cmap1[0]) * m[0]) >> 8;
+              d[1] = ((cmap1[1] << 8) + (cmap2[1] - cmap1[1]) * m[0]) >> 8;
+              d[2] = ((cmap1[2] << 8) + (cmap2[2] - cmap1[2]) * m[0]) >> 8;
+            }
+
+          src1     += rowstride1;
+          src2     += rowstride2;
+          src_mask += rowstride_mask;
+          dest += area->rowstride;
+        }
+      break;
+
+    case GIMP_INDEXEDA_IMAGE:
+      g_return_if_fail (area->cmap != NULL);
+      for (row = y; row < y + height; row++)
+        {
+          const guchar *s1 = src1;
+          const guchar *s2 = src2;
+          const guchar *m  = src_mask;
+          guchar       *d  = dest;
+
+          for (col = x; col < x + width; col++, s1 += 2, s2 += 2, m++, d += 3)
+            {
+              const guchar *cmap1  = area->cmap + 3 * s1[0];
+              const guchar *cmap2  = area->cmap + 3 * s2[0];
+
+              switch (m[0])
+                {
+                case 0:
+                  switch (s1[1])
+                    {
+                    case 0:
+                      d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                      break;
+
+                    case 255:
+                      d[0] = cmap1[0];
+                      d[1] = cmap1[1];
+                      d[2] = cmap1[2];
+                      break;
+
+                    default:
+                      {
+                        register guint alpha = s1[1] + 1;
+                        register guint check = CHECK_COLOR (area, row, col);
+
+                        d[0] = ((check << 8) + (cmap1[0] - check) * alpha) >> 8;
+                        d[1] = ((check << 8) + (cmap1[1] - check) * alpha) >> 8;
+                        d[2] = ((check << 8) + (cmap1[2] - check) * alpha) >> 8;
+                      }
+                      break;
+                    }
+                  break;
+
+                case 255:
+                  switch (s2[1])
+                    {
+                    case 0:
+                      d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                      break;
+
+                    case 255:
+                      d[0] = cmap2[0];
+                      d[1] = cmap2[1];
+                      d[2] = cmap2[2];
+                      break;
+
+                    default:
+                      {
+                        register guint alpha = s2[1] + 1;
+                        register guint check = CHECK_COLOR (area, row, col);
+
+                        d[0] = ((check << 8) + (cmap2[0] - check) * alpha) >> 8;
+                        d[1] = ((check << 8) + (cmap2[1] - check) * alpha) >> 8;
+                        d[2] = ((check << 8) + (cmap2[2] - check) * alpha) >> 8;
+                      }
+                      break;
+                    }
+                  break;
+
+                default:
+                  {
+                    guchar inter[4];
+
+                    inter[3] = ((s1[1] << 8) + (s2[1] - s1[1]) * m[0]) >> 8;
+
+                    if (inter[3])
+                      {
+                        for (i = 0 ; i < 3 ; i++)
+                          {
+                            gushort a = cmap1[i] * s1[1];
+                            gushort b = cmap2[i] * s2[1];
+
+                            inter[i] = (((a << 8) + (b  - a) * m[0]) >> 8) / inter[3];
+                          }
+                      }
+                   else
+                     inter[0] = inter[1] = inter[2] = 0;
+
+                  switch (inter[3])
+                    {
+                    case 0:
+                      d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                      break;
+
+                    case 255:
+                      d[0] = inter[0];
+                      d[1] = inter[1];
+                      d[2] = inter[2];
+                      break;
+
+                    default:
+                      {
+                        register guint alpha = inter[3] + 1;
+                        register guint check = CHECK_COLOR (area, row, col);
+
+                        d[0] = ((check << 8) + (inter[0] - check) * alpha) >> 8;
+                        d[1] = ((check << 8) + (inter[1] - check) * alpha) >> 8;
+                        d[2] = ((check << 8) + (inter[2] - check) * alpha) >> 8;
+                      }
+                      break;
+                    }
+                  }
+                  break;
+                }
+            }
+
+          src1     += rowstride1;
+          src2     += rowstride2;
+          src_mask += rowstride_mask;
+          dest += area->rowstride;
+        }
+      break;
+    }
+
+  gtk_widget_queue_draw_area (GTK_WIDGET (area), x, y, width, height);
+}
+
+/**
  * gimp_preview_area_fill:
  * @area:   a #GimpPreviewArea widget.
  * @x:      x offset in preview
