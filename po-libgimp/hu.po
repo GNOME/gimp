@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp /gnome-cvs\n"
-"POT-Creation-Date: 2002-05-29 12:29+0200\n"
-"PO-Revision-Date: 2000-12-22 13:29+0100\n"
+"POT-Creation-Date: 2002-08-16 22:55+0200\n"
+"PO-Revision-Date: 2002-08-16 23:01+0200\n"
 "Last-Translator: Andras TIMAR <timar@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
 "MIME-Version: 1.0\n"
@@ -22,9 +22,8 @@ msgid "Merge Visible Layers"
 msgstr "Látható rétegek összefésülése"
 
 #: libgimp/gimpexport.c:179
-#, fuzzy
 msgid "can't handle layer offsets, size or opacity"
-msgstr "rétegeket nem kezeli"
+msgstr "nem kezeli a rétegeltolásokat, méretet és átlátszóságot"
 
 #: libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
 msgid "can only handle layers as animation frames"
@@ -97,15 +96,15 @@ msgstr "Alfa csatorna hozzáadása"
 #. the dialog
 #: libgimp/gimpexport.c:356
 msgid "Confirm Save"
-msgstr ""
+msgstr "Mentés megerősítése"
 
 #: libgimp/gimpexport.c:360
 msgid "Confirm"
-msgstr ""
+msgstr "Megerősítés"
 
 #: libgimp/gimpexport.c:362
 msgid "Cancel"
-msgstr "Mégse"
+msgstr "Mégsem"
 
 #: libgimp/gimpexport.c:376
 #, c-format
@@ -113,6 +112,8 @@ msgid ""
 "You are about to save %s as %s.\n"
 "This will not save the visible layers."
 msgstr ""
+"Arra készülsz, hogy %s-t %s-ként mentsd.\n"
+"Ez nem fogja menteni a látható rétegeket."
 
 #.
 #. *  Plug-ins must have called gtk_init () before calling gimp_export ().
@@ -145,97 +146,92 @@ msgstr ""
 
 #: libgimp/gimpexport.c:571
 msgid "a layer mask"
-msgstr ""
+msgstr "egy rétegmaszk"
 
 #: libgimp/gimpexport.c:573
 msgid "a channel (saved selection)"
-msgstr ""
+msgstr "egy csatorna (mentett kijelölés)"
 
 #: libgimp/gimpmenu.c:163 libgimp/gimpmenu.c:283 libgimp/gimpmenu.c:398
 #: libgimp/gimpmenu.c:580
 msgid "None"
-msgstr ""
+msgstr "Nincs"
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
 msgstr "százalék"
 
 #: libgimpwidgets/gimpcolorbutton.c:85
-#, fuzzy
 msgid "/Foreground Color"
-msgstr "/Előtérszín használata"
+msgstr "/Előtérszín"
 
 #: libgimpwidgets/gimpcolorbutton.c:87
-#, fuzzy
 msgid "/Background Color"
-msgstr "/Háttérszín használata"
+msgstr "/Háttérszín"
 
 #: libgimpwidgets/gimpcolorbutton.c:90
 msgid "/Black"
-msgstr ""
+msgstr "/Fekete"
 
 #: libgimpwidgets/gimpcolorbutton.c:92
 msgid "/White"
-msgstr ""
+msgstr "/Fehér"
 
 #: libgimpwidgets/gimpfileselection.c:352
-#, fuzzy
 msgid "Select Folder"
-msgstr "Fájl kijelölése"
+msgstr "Mappa kiválasztása"
 
 #: libgimpwidgets/gimpfileselection.c:366
 msgid "Select File"
-msgstr "Fájl kijelölése"
+msgstr "Fájl kiválasztása"
 
 #: libgimpwidgets/gimpstock.c:88
-#, fuzzy
 msgid "Anchor"
-msgstr "hüvelyk"
+msgstr "Horgony"
 
 #: libgimpwidgets/gimpstock.c:89
-#, fuzzy
 msgid "Duplicate"
-msgstr "pica"
+msgstr "Kettőzés"
 
 #: libgimpwidgets/gimpstock.c:90
 msgid "Edit"
-msgstr ""
+msgstr "Szerkesztés"
 
 #: libgimpwidgets/gimpstock.c:91
 msgid "Linked"
-msgstr ""
+msgstr "Kapcsolva"
 
 #: libgimpwidgets/gimpstock.c:92
 msgid "Paste as New"
-msgstr ""
+msgstr "Beillesztés újként"
 
 #: libgimpwidgets/gimpstock.c:93
 msgid "Paste Into"
-msgstr ""
+msgstr "Beillesztés a képbe"
 
 #: libgimpwidgets/gimpstock.c:94
 msgid "_Reset"
-msgstr ""
+msgstr "_Alapértékek"
 
 #: libgimpwidgets/gimpstock.c:95
 msgid "Visible"
-msgstr ""
-
-#: libgimpwidgets/gimpstock.c:160
-msgid "Transform"
-msgstr ""
+msgstr "Látható"
 
 #: libgimpwidgets/gimpstock.c:163
+msgid "Transform"
+msgstr "Átalakítás"
+
+#: libgimpwidgets/gimpstock.c:166
 msgid "Rotate"
-msgstr ""
+msgstr "Forgatás"
 
-#: libgimpwidgets/gimpstock.c:164
+#: libgimpwidgets/gimpstock.c:167
 msgid "Scale"
-msgstr ""
+msgstr "Átméretezés"
 
-#: libgimpwidgets/gimpstock.c:165
+#: libgimpwidgets/gimpstock.c:168
 msgid "Shear"
-msgstr ""
+msgstr "Nyírás"
 
 #: libgimpwidgets/gimpunitmenu.c:265
 msgid "More..."
@@ -263,9 +259,8 @@ msgstr ""
 "megismételhető."
 
 #: libgimpwidgets/gimpwidgets.c:850
-#, fuzzy
 msgid "_Time"
-msgstr "Idő"
+msgstr "_Idő"
 
 #: libgimpwidgets/gimpwidgets.c:859
 msgid ""
@@ -288,9 +283,8 @@ msgid "MegaBytes"
 msgstr "megabájt"
 
 #: libgimpwidgets/gimpwidgets.c:1178
-#, fuzzy
 msgid "GigaBytes"
-msgstr "megabájt"
+msgstr "gigabájt"
 
 #~ msgid "pixel"
 #~ msgstr "képpont"
