@@ -13,7 +13,8 @@
 	* libgimpwidgets/gimpcolorbutton.c
 	* plug-ins/common/edge.c: removed trailing commas from enums.
 
-	* plug-ins/common/snoise.c
+	* plug-ins/common/snoise.c: renamed defines to avoid collision
+	with system headers.
 
 	* plug-ins/imagemap/imap_cmd_move.c: no C++ style comments.
 
