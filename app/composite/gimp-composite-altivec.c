@@ -54,6 +54,10 @@ static const vector unsigned short ox0080 = (const vector unsigned short)
   INIT_VECTOR(0x80,0x80,0x80,0x80,0x80,0x80,0x80,0x80);
 static const vector unsigned short ox0008 = (const vector unsigned short)
   INIT_VECTOR(0x8,0x8,0x8,0x8,0x8,0x8,0x8,0x8);
+static const vector signed short ox00ff = (const vector signed short)
+  INIT_VECTOR(0x00ff,0x00ff,0x00ff,0x00ff,0x00ff,0x00ff,0x00ff,0x00ff);
+static const vector signed short oxff80 = (const vector signed short)
+  INIT_VECTOR(0xff80,0xff80,0xff80,0xff80,0xff80,0xff80,0xff80,0xff80);
 
 /* Load a vector from an unaligned location in memory */
 static inline vector unsigned char
@@ -177,7 +181,7 @@ gimp_composite_addition_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
   d=vec_adds(a,b);
 
   StoreUnalignedLess(d, D, length);
-};
+}
 
 void
 gimp_composite_subtract_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
@@ -224,7 +228,7 @@ gimp_composite_subtract_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
   d=vec_subs(a,b);
 
   StoreUnalignedLess(d, D, length);
-};
+}
 
 void
 gimp_composite_swap_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
@@ -250,7 +254,7 @@ gimp_composite_swap_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
   b=LoadUnalignedLess(B, length);
   StoreUnalignedLess(a, B, length);
   StoreUnalignedLess(b, A, length);
-};
+}
 
 void
 gimp_composite_difference_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
@@ -301,7 +305,7 @@ gimp_composite_difference_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
   d=vec_add(d,e);
  
   StoreUnalignedLess(d, D, length);
-};
+}
 
 void
 gimp_composite_darken_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
@@ -334,7 +338,7 @@ gimp_composite_darken_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
   d=vec_min(a, b);
  
   StoreUnalignedLess(d, D, length);
-};
+}
 
 void 
 gimp_composite_lighten_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
@@ -370,7 +374,7 @@ gimp_composite_lighten_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
   length = length*4;
   a=LoadUnalignedLess(A, length);
   b=LoadUnalignedLess(B, length);
- 
+
   alpha_a=vec_and(a,alphamask);
   alpha_b=vec_and(b,alphamask);
   d=vec_min(alpha_a,alpha_b);
@@ -381,7 +385,7 @@ gimp_composite_lighten_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
   d=vec_max(a, b);
 
   StoreUnalignedLess(d, D, length);
-};
+}
 
 void
 gimp_composite_multiply_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
@@ -424,7 +428,7 @@ gimp_composite_multiply_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
   length = length*4;
   a=LoadUnalignedLess(A, length);
   b=LoadUnalignedLess(B, length);
-    
+
   al=vec_mule(a,b);
   al=vec_add(al,ox0080);
   ah=vec_mulo(a,b);
@@ -441,7 +445,7 @@ gimp_composite_multiply_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
   d=vec_or(d, alpha);
 
   StoreUnalignedLess(d, D, length);
-};
+}
 
 void
 gimp_composite_blend_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
@@ -475,13 +479,13 @@ gimp_composite_blend_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
        * to divide by 255 we use ((n+1)+(n+1)>>8)>>8 
        * It works for all value but 0xffff
        * happily blending formula can't give this value */
-      
+
       al=vec_mule(a,vblendc);
       ah=vec_mulo(a,vblendc);
 
       bl=vec_mule(b,vblend.v);
       bh=vec_mulo(b,vblend.v);
-      
+
       al=vec_add(al,bl);
       al=vec_add(al,one);
       al=vec_add(al,vec_sr(al,ox0008));
@@ -521,7 +525,441 @@ gimp_composite_blend_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
   d=vec_perm((vector unsigned char)al,(vector unsigned char)ah,combine_high_bytes);
 
   StoreUnalignedLess(d, D, length);
-};
+}
+
+void
+gimp_composite_screen_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
+{
+  const guchar *A = ctx->A;
+  const guchar *B = ctx->B;
+  guchar *D = ctx->D;
+  guint length = ctx->n_pixels;
+  vector unsigned char a,b,d,alpha_a,alpha_b,alpha;
+  vector unsigned short ah,al;
+
+  while (length >= 4)
+    {
+      a=LoadUnaligned(A);
+      b=LoadUnaligned(B);
+
+      alpha_a=vec_and(a, alphamask);
+      alpha_b=vec_and(b, alphamask);
+      alpha=vec_min(alpha_a, alpha_b);
+
+      a=vec_nor(a,a);
+      b=vec_nor(b,b);
+      al=vec_mule(a,b);
+      al=vec_add(al,ox0080);
+      ah=vec_mulo(a,b);
+      ah=vec_add(ah,ox0080);
+
+      al=vec_add(al,vec_sr(al,ox0008));
+      ah=vec_add(ah,vec_sr(ah,ox0008));
+
+      d=vec_perm((vector unsigned char)al,(vector unsigned char)ah,combine_high_bytes);
+
+      d=vec_nor(d,d);
+      d=vec_andc(d, alphamask);
+      d=vec_or(d, alpha);
+
+      StoreUnaligned(d, D);
+
+      A+=16;
+      B+=16;
+      D+=16;
+      length-=4;
+    }
+  /* process last pixels */
+  length = length*4;
+  a=LoadUnalignedLess(A, length);
+  b=LoadUnalignedLess(B, length);
+
+  alpha_a=vec_and(a, alphamask);
+  alpha_b=vec_and(b, alphamask);
+  alpha=vec_min(alpha_a, alpha_b);
+
+  a=vec_nor(a,a);
+  b=vec_nor(b,b);
+  al=vec_mule(a,b);
+  al=vec_add(al,ox0080);
+  ah=vec_mulo(a,b);
+  ah=vec_add(ah,ox0080);
+
+  al=vec_add(al,vec_sr(al,ox0008));
+  ah=vec_add(ah,vec_sr(ah,ox0008));
+
+  d=vec_perm((vector unsigned char)al,(vector unsigned char)ah,combine_high_bytes);
+  d=vec_nor(d,d);
+
+  d=vec_andc(d, alphamask);
+  d=vec_or(d, alpha);
+
+  StoreUnalignedLess(d, D, length);
+}
+
+void
+gimp_composite_grain_merge_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
+{
+  const guchar *A = ctx->A;
+  const guchar *B = ctx->B;
+  guchar *D = ctx->D;
+  guint length = ctx->n_pixels;
+  vector unsigned char a,b,d,alpha_a,alpha_b,alpha;
+  vector signed short ah,al,bh,bl;
+
+  while (length >= 4)
+    {
+      a=LoadUnaligned(A);
+      b=LoadUnaligned(B);
+
+      alpha_a=vec_and(a, alphamask);
+      alpha_b=vec_and(b, alphamask);
+      alpha=vec_min(alpha_a, alpha_b);
+
+      ah=vec_unpackh((vector signed char)a);
+      ah=vec_and(ah,ox00ff);
+      al=vec_unpackl((vector signed char)a);
+      al=vec_and(al,ox00ff);
+      bh=vec_unpackh((vector signed char)b);
+      bh=vec_and(bh,ox00ff);
+      bl=vec_unpackl((vector signed char)b);
+      bl=vec_and(bl,ox00ff);
+
+      ah=vec_add(ah,bh);
+      al=vec_add(al,bl);
+      ah=vec_add(ah,oxff80);
+      al=vec_add(al,oxff80);
+
+      d=vec_packsu(ah,al);
+
+      d=vec_andc(d, alphamask);
+      d=vec_or(d, alpha);
+
+      StoreUnaligned(d, D);
+
+      A+=16;
+      B+=16;
+      D+=16;
+      length-=4;
+    }
+  /* process last pixels */
+  length = length*4;
+  a=LoadUnalignedLess(A, length);
+  b=LoadUnalignedLess(B, length);
+
+  alpha_a=vec_and(a, alphamask);
+  alpha_b=vec_and(b, alphamask);
+  alpha=vec_min(alpha_a, alpha_b);
+
+  ah=vec_unpackh((vector signed char)a);
+  ah=vec_and(ah,ox00ff);
+  al=vec_unpackl((vector signed char)a);
+  al=vec_and(al,ox00ff);
+  bh=vec_unpackh((vector signed char)b);
+  bh=vec_and(bh,ox00ff);
+  bl=vec_unpackl((vector signed char)b);
+  bl=vec_and(bl,ox00ff);
+
+  ah=vec_add(ah,bh);
+  al=vec_add(al,bl);
+  ah=vec_add(ah,oxff80);
+  al=vec_add(al,oxff80);
+
+  d=vec_packsu(ah,al);
+
+  d=vec_andc(d, alphamask);
+  d=vec_or(d, alpha);
+
+  StoreUnalignedLess(d, D, length);
+}
+
+void
+gimp_composite_grain_extract_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
+{
+  const guchar *A = ctx->A;
+  const guchar *B = ctx->B;
+  guchar *D = ctx->D;
+  guint length = ctx->n_pixels;
+  vector unsigned char a,b,d,alpha_a,alpha_b,alpha;
+  vector signed short ah,al,bh,bl;
+
+  while (length >= 4)
+    {
+      a=LoadUnaligned(A);
+      b=LoadUnaligned(B);
+
+      alpha_a=vec_and(a, alphamask);
+      alpha_b=vec_and(b, alphamask);
+      alpha=vec_min(alpha_a, alpha_b);
+
+      ah=vec_unpackh((vector signed char)a);
+      ah=vec_and(ah,ox00ff);
+      al=vec_unpackl((vector signed char)a);
+      al=vec_and(al,ox00ff);
+      bh=vec_unpackh((vector signed char)b);
+      bh=vec_and(bh,ox00ff);
+      bl=vec_unpackl((vector signed char)b);
+      bl=vec_and(bl,ox00ff);
+
+      ah=vec_sub(ah,bh);
+      al=vec_sub(al,bl);
+      ah=vec_sub(ah,oxff80);
+      al=vec_sub(al,oxff80);
+
+      d=vec_packsu(ah,al);
+
+      d=vec_andc(d, alphamask);
+      d=vec_or(d, alpha);
+
+      StoreUnaligned(d, D);
+
+      A+=16;
+      B+=16;
+      D+=16;
+      length-=4;
+    }
+  /* process last pixels */
+  length = length*4;
+  a=LoadUnalignedLess(A, length);
+  b=LoadUnalignedLess(B, length);
+
+  alpha_a=vec_and(a, alphamask);
+  alpha_b=vec_and(b, alphamask);
+  alpha=vec_min(alpha_a, alpha_b);
+
+  ah=vec_unpackh((vector signed char)a);
+  ah=vec_and(ah,ox00ff);
+  al=vec_unpackl((vector signed char)a);
+  al=vec_and(al,ox00ff);
+  bh=vec_unpackh((vector signed char)b);
+  bh=vec_and(bh,ox00ff);
+  bl=vec_unpackl((vector signed char)b);
+  bl=vec_and(bl,ox00ff);
+
+  ah=vec_sub(ah,bh);
+  al=vec_sub(al,bl);
+  ah=vec_sub(ah,oxff80);
+  al=vec_sub(al,oxff80);
+
+  d=vec_packsu(ah,al);
+
+  d=vec_andc(d, alphamask);
+  d=vec_or(d, alpha);
+
+  StoreUnalignedLess(d, D, length);
+}
+
+void
+gimp_composite_divide_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
+{
+  const guchar *A = ctx->A;
+  const guchar *B = ctx->B;
+  guchar *D = ctx->D;
+  guint length = ctx->n_pixels;
+  vector unsigned char a,b,d;
+  vector unsigned char alpha_a,alpha_b,alpha;
+  vector signed short ox0001=vec_splat_s16(1);
+  union
+    {
+      vector signed short v;
+      vector unsigned short vu;
+      gushort u16[8];
+    } ah,al,bh,bl;
+
+  while (length >= 4)
+    {
+      a=LoadUnaligned(A);
+      b=LoadUnaligned(B);
+
+      alpha_a=vec_and(a, alphamask);
+      alpha_b=vec_and(b, alphamask);
+      alpha=vec_min(alpha_a, alpha_b);
+
+      ah.v=vec_unpackh((vector signed char)a);
+      ah.v=vec_sl(ah.v,ox0008);
+      al.v=vec_unpackl((vector signed char)a);
+      al.v=vec_sl(al.v,ox0008);
+
+      bh.v=vec_unpackh((vector signed char)b);
+      bh.v=vec_and(bh.v,ox00ff);
+      bh.v=vec_add(bh.v,ox0001);
+      bl.v=vec_unpackl((vector signed char)b);
+      bl.v=vec_and(bl.v,ox00ff);
+      bl.v=vec_add(bl.v,ox0001);
+
+      ah.u16[0]=ah.u16[0]/bh.u16[0];
+      ah.u16[1]=ah.u16[1]/bh.u16[1];
+      ah.u16[2]=ah.u16[2]/bh.u16[2];
+      ah.u16[4]=ah.u16[4]/bh.u16[4];
+      ah.u16[5]=ah.u16[5]/bh.u16[5];
+      ah.u16[6]=ah.u16[6]/bh.u16[6];
+
+      al.u16[0]=al.u16[0]/bl.u16[0];
+      al.u16[1]=al.u16[1]/bl.u16[1];
+      al.u16[2]=al.u16[2]/bl.u16[2];
+      al.u16[4]=al.u16[4]/bl.u16[4];
+      al.u16[5]=al.u16[5]/bl.u16[5];
+      al.u16[6]=al.u16[6]/bl.u16[6];
+
+      d=vec_packs(ah.vu,al.vu);
+
+      d=vec_andc(d, alphamask);
+      d=vec_or(d, alpha);
+
+      StoreUnaligned(d, D);
+      A+=16;
+      B+=16;
+      D+=16;
+      length-=4;
+    }
+  length = length*4;
+  a=LoadUnalignedLess(A, length);
+  b=LoadUnalignedLess(B, length);
+
+  alpha_a=vec_and(a, alphamask);
+  alpha_b=vec_and(b, alphamask);
+  alpha=vec_min(alpha_a, alpha_b);
+
+  ah.v=vec_unpackh((vector signed char)a);
+  ah.v=vec_sl(ah.v,ox0008);
+  al.v=vec_unpackl((vector signed char)a);
+  al.v=vec_sl(al.v,ox0008);
+
+  bh.v=vec_unpackh((vector signed char)b);
+  bh.v=vec_and(bh.v,ox00ff);
+  bh.v=vec_add(bh.v,ox0001);
+  bl.v=vec_unpackl((vector signed char)b);
+  bl.v=vec_and(bl.v,ox00ff);
+  bl.v=vec_add(bl.v,ox0001);
+
+  ah.u16[0]=ah.u16[0]/bh.u16[0];
+  ah.u16[1]=ah.u16[1]/bh.u16[1];
+  ah.u16[2]=ah.u16[2]/bh.u16[2];
+  ah.u16[4]=ah.u16[4]/bh.u16[4];
+  ah.u16[5]=ah.u16[5]/bh.u16[5];
+  ah.u16[6]=ah.u16[6]/bh.u16[6];
+
+  al.u16[0]=al.u16[0]/bl.u16[0];
+  al.u16[1]=al.u16[1]/bl.u16[1];
+  al.u16[2]=al.u16[2]/bl.u16[2];
+  al.u16[4]=al.u16[4]/bl.u16[4];
+  al.u16[5]=al.u16[5]/bl.u16[5];
+  al.u16[6]=al.u16[6]/bl.u16[6];
+
+  d=vec_packs(ah.vu,al.vu);
+
+  d=vec_andc(d, alphamask);
+  d=vec_or(d, alpha);
+
+  StoreUnalignedLess(d, D, length);
+}
+
+void
+gimp_composite_dodge_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
+{
+  const guchar *A = ctx->A;
+  const guchar *B = ctx->B;
+  guchar *D = ctx->D;
+  guint length = ctx->n_pixels;
+  vector unsigned char a,b,d;
+  vector unsigned char alpha_a,alpha_b,alpha;
+  vector signed short ox0001=vec_splat_s16(1);
+  union
+    {
+      vector signed short v;
+      vector unsigned short vu;
+      gushort u16[8];
+    } ah,al,bh,bl;
+
+  while (length >= 4)
+    {
+      a=LoadUnaligned(A);
+      b=LoadUnaligned(B);
+
+      alpha_a=vec_and(a, alphamask);
+      alpha_b=vec_and(b, alphamask);
+      alpha=vec_min(alpha_a, alpha_b);
+
+      ah.v=vec_unpackh((vector signed char)a);
+      ah.v=vec_sl(ah.v,ox0008);
+      al.v=vec_unpackl((vector signed char)a);
+      al.v=vec_sl(al.v,ox0008);
+
+      b=vec_nor(b,b);
+      bh.v=vec_unpackh((vector signed char)b);
+      bh.v=vec_and(bh.v,ox00ff);
+      bh.v=vec_add(bh.v,ox0001);
+      bl.v=vec_unpackl((vector signed char)b);
+      bl.v=vec_and(bl.v,ox00ff);
+      bl.v=vec_add(bl.v,ox0001);
+
+      ah.u16[0]=ah.u16[0]/bh.u16[0];
+      ah.u16[1]=ah.u16[1]/bh.u16[1];
+      ah.u16[2]=ah.u16[2]/bh.u16[2];
+      ah.u16[4]=ah.u16[4]/bh.u16[4];
+      ah.u16[5]=ah.u16[5]/bh.u16[5];
+      ah.u16[6]=ah.u16[6]/bh.u16[6];
+
+      al.u16[0]=al.u16[0]/bl.u16[0];
+      al.u16[1]=al.u16[1]/bl.u16[1];
+      al.u16[2]=al.u16[2]/bl.u16[2];
+      al.u16[4]=al.u16[4]/bl.u16[4];
+      al.u16[5]=al.u16[5]/bl.u16[5];
+      al.u16[6]=al.u16[6]/bl.u16[6];
+
+      d=vec_packs(ah.vu,al.vu);
+
+      d=vec_andc(d, alphamask);
+      d=vec_or(d, alpha);
+
+      StoreUnaligned(d, D);
+      A+=16;
+      B+=16;
+      D+=16;
+      length-=4;
+    }
+  length = length*4;
+  a=LoadUnalignedLess(A, length);
+  b=LoadUnalignedLess(B, length);
+
+  alpha_a=vec_and(a, alphamask);
+  alpha_b=vec_and(b, alphamask);
+  alpha=vec_min(alpha_a, alpha_b);
+
+  ah.v=vec_unpackh((vector signed char)a);
+  ah.v=vec_sl(ah.v,ox0008);
+  al.v=vec_unpackl((vector signed char)a);
+  al.v=vec_sl(al.v,ox0008);
+
+  b=vec_nor(b,b);
+  bh.v=vec_unpackh((vector signed char)b);
+  bh.v=vec_and(bh.v,ox00ff);
+  bh.v=vec_add(bh.v,ox0001);
+  bl.v=vec_unpackl((vector signed char)b);
+  bl.v=vec_and(bl.v,ox00ff);
+  bl.v=vec_add(bl.v,ox0001);
+
+  ah.u16[0]=ah.u16[0]/bh.u16[0];
+  ah.u16[1]=ah.u16[1]/bh.u16[1];
+  ah.u16[2]=ah.u16[2]/bh.u16[2];
+  ah.u16[4]=ah.u16[4]/bh.u16[4];
+  ah.u16[5]=ah.u16[5]/bh.u16[5];
+  ah.u16[6]=ah.u16[6]/bh.u16[6];
+
+  al.u16[0]=al.u16[0]/bl.u16[0];
+  al.u16[1]=al.u16[1]/bl.u16[1];
+  al.u16[2]=al.u16[2]/bl.u16[2];
+  al.u16[4]=al.u16[4]/bl.u16[4];
+  al.u16[5]=al.u16[5]/bl.u16[5];
+  al.u16[6]=al.u16[6]/bl.u16[6];
+
+  d=vec_packs(ah.vu,al.vu);
+
+  d=vec_andc(d, alphamask);
+  d=vec_or(d, alpha);
+
+  StoreUnalignedLess(d, D, length);
+}
 
 #endif /* COMPILE_IS_OKAY */
 
