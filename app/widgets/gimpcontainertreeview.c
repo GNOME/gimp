@@ -766,6 +766,12 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
             {
               gboolean success = TRUE;
 
+#ifdef __GNUC__
+#warning FIXME: remove this hack as soon as #108956 is fixed.
+#endif
+              if (tree_view->main_column->editable_widget)
+                gtk_cell_editable_remove_widget (tree_view->main_column->editable_widget);
+
               /*  don't select item if a toggle was clicked */
               if (! toggled_cell)
                 success = gimp_container_view_item_selected (container_view,

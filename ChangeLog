@@ -1,3 +1,10 @@
+2003-05-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainertreeview.c
+	(gimp_container_tree_view_button_press): remove
+	main_column->editable_widget on each button_press_event. Should
+	fix more (if not all) stale editing widgets.
+
 2003-05-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-callbacks.c
