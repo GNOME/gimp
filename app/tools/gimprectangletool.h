@@ -54,6 +54,9 @@ struct _GimpRectangleTool
 {
   GimpSelectionTool  parent_instance;
 
+  GtkWidget    *controls;
+  GtkWidget    *dimensions_entry;
+
   gint          startx;     /*  starting x coord            */
   gint          starty;     /*  starting y coord            */
 

@@ -39,6 +39,23 @@ struct _GimpRectangleOptions
   GimpSelectionOptions     parent_instance;
 
   gboolean                 highlight;
+
+  gdouble                  x1;
+  gdouble                  y1;
+  gdouble                  x2;
+  gdouble                  y2;
+
+  gdouble                  xresolution;
+  gdouble                  yresolution;
+
+  gint                     image_width;
+  gint                     image_height;
+
+  GimpUnit                 unit;
+
+  gdouble                  width;
+  gdouble                  height;
+  gdouble                  aspect;
 };
 
 

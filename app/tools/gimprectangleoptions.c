@@ -42,7 +42,11 @@
 enum
 {
   PROP_0,
-  PROP_HIGHLIGHT
+  PROP_HIGHLIGHT,
+  PROP_CONSTRAINT,
+  PROP_WIDTH,
+  PROP_HEIGHT,
+  PROP_ASPECT,
 };
 
 
@@ -104,6 +108,19 @@ gimp_rectangle_options_class_init (GimpRectangleOptionsClass *klass)
                                     N_("Highlight rectangle"),
                                     TRUE,
                                     0);
+
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_WIDTH,
+                                   "width", N_("Width"),
+                                   0.0, GIMP_MAX_IMAGE_SIZE, 1.0,
+                                   0);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_HEIGHT,
+                                   "height", N_("Height"),
+                                   0.0, GIMP_MAX_IMAGE_SIZE, 1.0,
+                                   0);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_ASPECT,
+                                   "aspect", N_("Aspect"),
+                                   0.0, GIMP_MAX_IMAGE_SIZE, 1.0,
+                                   0);
 }
 
 static void
@@ -118,6 +135,18 @@ gimp_rectangle_options_set_property (GObject      *object,
     {
     case PROP_HIGHLIGHT:
       options->highlight = g_value_get_boolean (value);
+      break;
+
+    case PROP_WIDTH:
+      options->width = g_value_get_double (value);
+      break;
+
+    case PROP_HEIGHT:
+      options->height = g_value_get_double (value);
+      break;
+
+    case PROP_ASPECT:
+      options->aspect = g_value_get_double (value);
       break;
 
     default:
@@ -140,6 +169,18 @@ gimp_rectangle_options_get_property (GObject    *object,
       g_value_set_boolean (value, options->highlight);
       break;
 
+    case PROP_WIDTH:
+      g_value_set_double (value, options->width);
+      break;
+
+    case PROP_HEIGHT:
+      g_value_set_double (value, options->height);
+      break;
+
+    case PROP_ASPECT:
+      g_value_set_double (value, options->aspect);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -149,9 +190,10 @@ gimp_rectangle_options_get_property (GObject    *object,
 GtkWidget *
 gimp_rectangle_options_gui (GimpToolOptions *tool_options)
 {
-  GObject              *config  = G_OBJECT (tool_options);
-  GtkWidget            *vbox;
-  GtkWidget            *button;
+  GObject     *config  = G_OBJECT (tool_options);
+  GtkWidget   *vbox;
+  GtkWidget   *button;
+  GtkWidget   *controls_container;
 
   vbox = gimp_selection_options_gui (tool_options);
 
@@ -160,6 +202,12 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                                        _("Highlight"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
+
+  controls_container = gtk_vbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), controls_container, FALSE, FALSE, 0);
+  gtk_widget_show (controls_container);
+  g_object_set_data (G_OBJECT (tool_options),
+                     "controls-container", controls_container);
 
   return vbox;
 }
