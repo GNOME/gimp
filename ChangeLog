@@ -1,6 +1,6 @@
 2004-03-29  Michael Natterer  <mitch@gimp.org>
 
-	* app/core/core-enums.h (enum GimpUndoType): added new group
+	* app/core/core-enums.[ch] (enum GimpUndoType): added new group
 	GIMP_UNDO_GROUP_FS_REMOVE.
 
 	* app/core/gimplayer-floating-sel.c (floating_sel_remove): push an
