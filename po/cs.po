@@ -1,12 +1,12 @@
-# Czech translation of GIMP 1.1.23.
+# Czech translation of GIMP 1.1.24.
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Stanislav Brabec <utx@k332.feld.cvut.cz>, 2000.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.23\n"
-"POT-Creation-Date: 2000-06-18 19:40-0700\n"
-"PO-Revision-Date: 2000-06-19 01:11+02:00\n"
+"Project-Id-Version: GIMP 1.1.24\n"
+"POT-Creation-Date: 2000-07-10 14:40+0200\n"
+"PO-Revision-Date: 2000-07-10 17:42+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -124,7 +124,7 @@ msgstr "Konec"
 #: app/layers_dialog.c:3484 app/layers_dialog.c:3666 app/layers_dialog.c:3761
 #: app/layers_dialog.c:4021 app/levels.c:341 app/palette.c:1826
 #: app/posterize.c:202 app/preferences_dialog.c:1465 app/qmask.c:278
-#: app/resize.c:194 app/resize.c:1326 app/threshold.c:275
+#: app/resize.c:194 app/resize.c:1324 app/threshold.c:275
 #: app/user_install.c:548 app/user_install.c:1191 modules/cdisplay_gamma.c:332
 #: modules/cdisplay_highcontrast.c:325
 msgid "Cancel"
@@ -283,7 +283,7 @@ msgstr "Jas-kontrast nefunguje na indexovaných obrazovkách."
 #: app/layers_dialog.c:3482 app/layers_dialog.c:3664 app/layers_dialog.c:3759
 #: app/layers_dialog.c:4019 app/levels.c:337 app/module_db.c:314
 #: app/posterize.c:198 app/preferences_dialog.c:1461 app/qmask.c:276
-#: app/resize.c:192 app/resize.c:1326 app/threshold.c:271
+#: app/resize.c:192 app/resize.c:1324 app/threshold.c:271
 #: app/user_install.c:1189 modules/cdisplay_gamma.c:330
 #: modules/cdisplay_highcontrast.c:323
 msgid "OK"
@@ -856,15 +856,15 @@ msgstr "Odstranit z koneèné palety nepou¾ité barvy"
 
 #: app/convert.c:597
 msgid "Use Custom Palette:"
-msgstr "Pou¾ít vlastní palety:"
+msgstr "Pou¾ít vlastní paletu:"
 
 #: app/convert.c:631
 msgid "Use WWW-Optimized Palette"
-msgstr "Pou¾ít WWW-optimalizované palety"
+msgstr "Pou¾ít WWW-optimalizovanou paletu"
 
 #: app/convert.c:647
 msgid "Use Black/White (1-Bit) Palette"
-msgstr "Pou¾ít èernobílé (1bitové) palety"
+msgstr "Pou¾ít èernobílou (1bitovou) paletu"
 
 #: app/convert.c:658
 msgid "Dither Options"
@@ -1037,7 +1037,7 @@ msgstr "Zapsat køivky"
 msgid "Load/Save Curves"
 msgstr "Naèíst/Zapsat køivky"
 
-#: app/curves.c:1624 app/curves.c:1642 app/levels.c:1441 app/levels.c:1459
+#: app/curves.c:1624 app/curves.c:1642 app/levels.c:1452 app/levels.c:1470
 #: app/paths_dialog.c:1905
 #, c-format
 msgid "Unable to open file %s"
@@ -1604,7 +1604,7 @@ msgstr "beze jména"
 msgid "Layer type %d not supported."
 msgstr "Typ vrstvy %d není podporován."
 
-#: app/gimphelp.c:166
+#: app/gimphelp.c:169
 msgid ""
 "Could not find the GIMP Help Browser procedure.\n"
 "It probably was not compiled because\n"
@@ -2829,15 +2829,15 @@ msgstr "Vstupní úrovnì:"
 msgid "Output Levels:"
 msgstr "Výstupní úrovnì:"
 
-#: app/levels.c:1052
+#: app/levels.c:1063
 msgid "Load Levels"
 msgstr "Naèíst úrovnì"
 
-#: app/levels.c:1067
+#: app/levels.c:1078
 msgid "Save Levels"
 msgstr "Zapsat úrovnì"
 
-#: app/levels.c:1396
+#: app/levels.c:1407
 msgid "Load/Save Levels"
 msgstr "Naèíst/Zapsat úrovnì"
 
@@ -2955,7 +2955,7 @@ msgstr "Mìøidlo"
 
 #: app/measure.c:130
 msgid "Use Info Window"
-msgstr "Pou¾ít informaèního okna"
+msgstr "Pou¾ít informaèní okno"
 
 #: app/measure.c:316
 msgid "Distance:"
@@ -3603,7 +3603,7 @@ msgstr "/Pøidat masku vrstvy..."
 
 #: app/menus.c:643
 msgid "/Apply Layer Mask"
-msgstr "/Pou¾ít masky vrstvy"
+msgstr "/Pou¾ít masku vrstvy"
 
 #: app/menus.c:645
 msgid "/Delete Layer Mask"
@@ -4899,15 +4899,15 @@ msgstr "X:"
 msgid "Print Size & Display Unit"
 msgstr "Tisková velikost a jednotky zobrazování"
 
-#: app/resize.c:1238
+#: app/resize.c:1236
 msgid "Scale Error: Both width and height must be greater than zero."
 msgstr "Chyba velikosti: Jak ¹íøka tak vý¹ka musí být vìt¹í ne¾ nula."
 
-#: app/resize.c:1319
+#: app/resize.c:1317
 msgid "Layer Too Small"
 msgstr "Vrstva je pøíli¹ malá"
 
-#: app/resize.c:1323
+#: app/resize.c:1321
 msgid ""
 "The chosen image size will shrink\n"
 "some layers completely away.\n"
@@ -4972,7 +4972,7 @@ msgstr "Obvod:"
 
 #: app/text_tool.c:202
 msgid "Use Dynamic Text"
-msgstr "Pou¾ít dynamického textu"
+msgstr "Pou¾ít dynamický text"
 
 #: app/text_tool.c:609
 #, c-format
@@ -5032,12 +5032,14 @@ msgstr "Dal¹í tip"
 #: app/tips_dialog.c:285
 msgid ""
 "Your GIMP tips file appears to be missing!\n"
-"There should be a file called gimp_tips.txt in the\n"
-"GIMP data directory.  Please check your installation."
+"There should be a file called gimp_tips.txt in\n"
+"the tips subdirectory of the GIMP data directory.\n"
+"Please check your installation."
 msgstr ""
 "Soubor s tipy programu GIMP zøejmì chybí!\n"
-"Mìl by to být soubor se jménem gimp_tips.cs.txt v datovém\n"
-"adresáøi programu GIMP. Prosím zkontrolujte instalaci."
+"Mìl by to být soubor se jménem gimp_tips.cs.txt\n"
+"v podadresáøi tipù datového adresáøe programu GIMP.\n"
+"Prosím zkontrolujte instalaci."
 
 #: app/tool_options.c:121
 msgid "This tool has no options."
@@ -6255,13 +6257,10 @@ msgid ""
 "with enough free space (several hundred MB). On a UNIX system, you\n"
 "may want to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
 msgstr ""
-"V¹echna data, která se nevejdou do vyrovnávací pamìti dla¾dic budou "
-"zapisována\n"
-"do odkládacího souboru. Tento soubor by se mìl nacházet na místním systému "
-"souborù\n"
-"s dostateèným volným prostorem (nìkolik set MB). Na systémech UNIX bývá "
-"bì¾né\n"
-"pou¾ívat systémového doèasného adresáøe (\"/tmp\" nebo \"/var/tmp\")."
+"V¹echna data, která se nevejdou do vyrovnávací pamìti dla¾dic budou zapisována\n"
+"do odkládacího souboru. Tento soubor by se mìl nacházet na místním systému souborù\n"
+"s dostateèným volným prostorem (nìkolik set MB). Na systémech UNIX bývá bì¾né\n"
+"pou¾ívat systémový doèasný adresáø (\"/tmp\" nebo \"/var/tmp\")."
 
 #: app/user_install.c:1130
 msgid "Swap Directory:"
@@ -6285,16 +6284,16 @@ msgstr "Svisle:"
 
 #: app/user_install.c:1352
 msgid ""
-"GIMP can obtain this information from your X-server.\n"
-"However, most X-servers do not return useful values."
+"GIMP can obtain this information from the windowing system.\n"
+"However, usually this does not give useful values."
 msgstr ""
-"GIMP mù¾e získat tyto informace z X serveru.\n"
-"Ov¹em vìt¹ina X serverù nevrací pou¾itelné hodnoty."
+"GIMP mù¾e získat tyto informace z okenního systému.\n"
+"Ov¹em ten obvykle nevrací pou¾itelné hodnoty."
 
 #: app/user_install.c:1359
 #, c-format
-msgid "Get Resolution from X-server (Currently %d x %d dpi)"
-msgstr "Získat rozli¹ení monitoru z X serveru (nyní %d × %d dpi)"
+msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
+msgstr "Získat rozli¹ení monitoru z okenního systému (nyní %d × %d dpi)"
 
 #: app/user_install.c:1373
 msgid "Alternatively, you can set the monitor resolution manually."

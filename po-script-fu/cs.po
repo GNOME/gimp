@@ -1,12 +1,12 @@
-# Czech translation of GIMP script-fu 1.1.23.
+# Czech translation of GIMP script-fu 1.1.24.
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Stanislav Brabec <utx@k332.feld.cvut.cz>, 2000.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.1.23\n"
-"POT-Creation-Date: 2000-06-06 12:41-0700\n"
-"PO-Revision-Date: 2000-06-09 11:35+02:00\n"
+"POT-Creation-Date: 2000-06-09 11:03+0200\n"
+"PO-Revision-Date: 2000-07-10 17:43+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2103,15 +2103,15 @@ msgstr "Levá horní barva"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Use Brush"
-msgstr "Pou¾ít stopy"
+msgstr "Pou¾ít stopu"
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 msgid "Use Current Gradient"
-msgstr "Pou¾ít aktuálního pøechodu"
+msgstr "Pou¾ít aktuální pøechod"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "Use Growing Selection"
-msgstr "Pou¾ít rostoucího výbìru"
+msgstr "Pou¾ít rostoucí výbìr"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Use Pattern Overlay"
@@ -2127,7 +2127,7 @@ msgstr "Pou¾ít na text vzorku místo pøechodu"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "Use Selection Bounds Instead of Belows"
-msgstr "Pou¾ít hranic výbìru místo ní¾e uvedeného"
+msgstr "Pou¾ít hranice výbìru místo ní¾e uvedeného"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 msgid "Wavelength"

@@ -1,12 +1,12 @@
-# Czech translation of GIMP plugins 1.1.21.
+# Czech translation of GIMP plugins 1.1.24.
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Stanislav Brabec <utx@k332.feld.cvut.cz>, 2000.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-std-plugins 1.1.21\n"
-"POT-Creation-Date: 2000-06-06 12:41-0700\n"
-"PO-Revision-Date: 2000-05-09 00:07+02:00\n"
+"Project-Id-Version: gimp-std-plugins 1.1.24\n"
+"POT-Creation-Date: 2000-07-10 14:40+0200\n"
+"PO-Revision-Date: 2000-07-10 17:39+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -15,14 +15,14 @@ msgstr ""
 
 #: libgimp/gimpcolorbutton.c:118
 msgid "/Use Foreground Color"
-msgstr "/Pou¾ít barvy popøedí"
+msgstr "/Pou¾ít barvu popøedí"
 
 #: libgimp/gimpcolorbutton.c:119
 msgid "/Use Background Color"
-msgstr "/Pou¾ít barvy pozadí"
+msgstr "/Pou¾ít barvu pozadí"
 
-#: libgimp/gimpexport.c:158
-msgid "can't Handle Layers"
+#: libgimp/gimpexport.c:158 libgimp/gimpexport.c:185
+msgid "can't handle layers"
 msgstr "neumí zpracovat vrstvy"
 
 #: libgimp/gimpexport.c:159 libgimp/gimpexport.c:168
@@ -30,66 +30,66 @@ msgid "Merge Visible Layers"
 msgstr "Slouèit viditelné vrstvy"
 
 #: libgimp/gimpexport.c:167 libgimp/gimpexport.c:176
-msgid "can only Handle Layers as Animation Frames"
+msgid "can only handle layers as animation frames"
 msgstr "umí zpracovat vrstvy pouze jako políèka animace"
 
 #: libgimp/gimpexport.c:168 libgimp/gimpexport.c:177
 msgid "Save as Animation"
 msgstr "Zapsat jako animaci"
 
-#: libgimp/gimpexport.c:177 libgimp/gimpexport.c:186
+#: libgimp/gimpexport.c:177 libgimp/gimpexport.c:186 libgimp/gimpexport.c:195
 msgid "Flatten Image"
 msgstr "Slouèit obraz"
 
-#: libgimp/gimpexport.c:185
-msgid "can't Handle Transparency"
+#: libgimp/gimpexport.c:194
+msgid "can't handle transparency"
 msgstr "neumí zpracovat prùhlednost"
 
-#: libgimp/gimpexport.c:194
-msgid "can only Handle RGB Images"
+#: libgimp/gimpexport.c:203
+msgid "can only handle RGB images"
 msgstr "umí zpracovat pouze RGB obrázky"
 
-#: libgimp/gimpexport.c:195 libgimp/gimpexport.c:223 libgimp/gimpexport.c:232
+#: libgimp/gimpexport.c:204 libgimp/gimpexport.c:232 libgimp/gimpexport.c:241
 msgid "Convert to RGB"
 msgstr "Pøevést do RGB"
 
-#: libgimp/gimpexport.c:203
-msgid "can only Handle Grayscale Images"
+#: libgimp/gimpexport.c:212
+msgid "can only handle grayscale images"
 msgstr "umí zpracovat pouze obrázky v ¹edích"
 
-#: libgimp/gimpexport.c:204 libgimp/gimpexport.c:223 libgimp/gimpexport.c:244
+#: libgimp/gimpexport.c:213 libgimp/gimpexport.c:232 libgimp/gimpexport.c:253
 msgid "Convert to Grayscale"
 msgstr "Pøevést do ¹edí"
 
-#: libgimp/gimpexport.c:212
-msgid "can only Handle Indexed Images"
+#: libgimp/gimpexport.c:221
+msgid "can only handle indexed images"
 msgstr "umí zpracovat pouze indexované obrázky"
 
-#: libgimp/gimpexport.c:213 libgimp/gimpexport.c:232 libgimp/gimpexport.c:242
+#: libgimp/gimpexport.c:222 libgimp/gimpexport.c:241 libgimp/gimpexport.c:251
 msgid ""
-"Convert to indexed using default settings\n"
+"Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
 "Konverze do indexovaného pou¾ije implicitní nastavení\n"
 "(Ruèním provedením lze doladit výsledek)"
 
-#: libgimp/gimpexport.c:222
-msgid "can only Handle RGB or Grayscale Images"
+#: libgimp/gimpexport.c:231
+msgid "can only handle RGB or grayscale images"
 msgstr "umí zpracovat pouze RGB obrázky nebo obrázky v ¹edích"
 
-#: libgimp/gimpexport.c:231
-msgid "can only Handle RGB or Indexed Images"
+#: libgimp/gimpexport.c:240
+msgid "can only handle RGB or indexed images"
 msgstr "umí zpracovat pouze RGB nebo indexované obrázky"
 
-#: libgimp/gimpexport.c:241
-msgid "can only Handle Grayscale or Indexed Images"
+#: libgimp/gimpexport.c:250
+msgid "can only handle grayscale or indexed images"
 msgstr "umí zpracovat pouze obrázky v ¹edích nebo indexované"
 
-#: libgimp/gimpexport.c:252
-msgid "needs an Alpha Channel"
+#: libgimp/gimpexport.c:261
+msgid "needs an alpha channel"
 msgstr "vy¾aduje alfa kanál"
 
-#: libgimp/gimpexport.c:253
+#: libgimp/gimpexport.c:262
 msgid "Add Alpha Channel"
 msgstr "Pøidat alfa kanál"
 
@@ -98,32 +98,32 @@ msgstr "Pøidat alfa kanál"
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:322
+#: libgimp/gimpexport.c:331
 msgid "Export File"
 msgstr "Exportovat soubor"
 
-#: libgimp/gimpexport.c:327
+#: libgimp/gimpexport.c:336
 msgid "Export"
 msgstr "Exportovat"
 
-#: libgimp/gimpexport.c:329
+#: libgimp/gimpexport.c:338
 msgid "Ignore"
 msgstr "Ignorovat"
 
-#: libgimp/gimpexport.c:331 libgimp/gimpquerybox.c:183
+#: libgimp/gimpexport.c:340 libgimp/gimpquerybox.c:183
 #: libgimp/gimpquerybox.c:237 libgimp/gimpquerybox.c:293
 #: libgimp/gimpquerybox.c:356 libgimp/gimpunitmenu.c:501
 msgid "Cancel"
 msgstr "Zru¹it"
 
-#: libgimp/gimpexport.c:346
+#: libgimp/gimpexport.c:355
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
 msgstr "Pøed zápisem je tøeba obrázek exportovat z následujících dùvodù:"
 
 #. the footline
-#: libgimp/gimpexport.c:409
+#: libgimp/gimpexport.c:418
 msgid "The export conversion won't modify your original image."
 msgstr "Exportní konverze by nemìla zmìnit pùvodní obrázek."
 
@@ -230,6 +230,3 @@ msgstr "kilobajtù"
 #: libgimp/gimpwidgets.c:1037
 msgid "MegaBytes"
 msgstr "megabajtù"
-
-#~ msgid "Flatten"
-#~ msgstr "Slouèit"
