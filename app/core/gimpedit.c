@@ -22,6 +22,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "core/core-types.h"
@@ -49,6 +50,8 @@
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "gimage.h"
+#include "gimpparasite.h"
+#include "gimprc.h"
 #include "global_edit.h"
 #include "image_new.h"
 #include "undo.h"
@@ -246,9 +249,10 @@ GimpImage *
 gimp_edit_paste_as_new (GimpImage   *invoke,
 			TileManager *paste)
 {
-  GimpImage *gimage;
-  GimpLayer *layer;
-  GDisplay  *gdisp;
+  GimpImage    *gimage;
+  GimpLayer    *layer;
+  GimpParasite *comment_parasite;
+  GDisplay     *gdisp;
 
   if (! global_buffer)
     return FALSE;
@@ -264,6 +268,16 @@ gimp_edit_paste_as_new (GimpImage   *invoke,
       gimp_image_set_resolution (gimage,
 				 invoke->xresolution, invoke->yresolution);
       gimp_image_set_unit (gimage, invoke->unit);
+    }
+
+  if (gimprc.default_comment)
+    {
+      comment_parasite = gimp_parasite_new ("gimp-comment",
+                                            GIMP_PARASITE_PERSISTENT,
+                                            strlen (gimprc.default_comment)+1,
+                                            (gpointer) gimprc.default_comment);
+      gimp_image_parasite_attach (gimage, comment_parasite);
+      gimp_parasite_free (comment_parasite);
     }
 
   layer = gimp_layer_new_from_tiles (gimage,

@@ -1,3 +1,13 @@
+2001-07-03  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/xwd.c: applied patch from Peter Kirchgessner 
+	<peter@kirchgessner.net> that fixes bug #56830.
+
+	* app/global_edit.c: attach default comment to image created by
+	gimp_edit_paste_as_new().
+
+	Both changes merged from stable branch.
+
 2001-07-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/global_edit.c: allow a NULL gimage argument for
