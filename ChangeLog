@@ -1,3 +1,8 @@
+Sun Dec 14 20:57:46 1997  Ray Lehtiniemi  <rayl@localhost>
+
+	* app/blend.c fixed cores when using custom gradients with
+	  offset of 100
+
 Sun Dec 14 16:56:33 PST 1997 Manish Singh <yosh@gimp.org>
 
 	* backed out of the tools fix, cause problems with
