@@ -137,7 +137,8 @@ typedef AutoCropType   (*ColorsEqualFunc) (guchar *, guchar *, int);
 
 static void   crop_selection_callback    (GtkWidget *, gpointer);
 static void   crop_automatic_callback    (GtkWidget *, gpointer);
-static AutoCropType crop_guess_bgcolor (GtkObject *, GetColorFunc, int, int, int, int, guchar *);
+static AutoCropType crop_guess_bgcolor   (GtkObject *, GetColorFunc, 
+					  int, int, guchar *, int, int, int, int);
 static int   crop_colors_equal           (guchar *, guchar *, int);
 static int   crop_colors_alpha           (guchar *, guchar *, int);
 
@@ -1085,7 +1086,7 @@ crop_info_create (Tool *tool)
 		     (GtkSignalFunc) crop_selection_callback, NULL);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label (_("Automatic"));
+  button = gtk_button_new_with_label (_("Auto Shrink"));
   gtk_container_add(GTK_CONTAINER (bbox), button);
   gtk_signal_connect(GTK_OBJECT (button) , "clicked",
 		     (GtkSignalFunc) crop_automatic_callback, NULL);
@@ -1221,8 +1222,8 @@ crop_automatic_callback (GtkWidget *w,
   guchar bgcolor[4] = {0, 0, 0, 0};
   gint has_alpha = FALSE;
   PixelRegion PR;
-  guchar *buffer;
-  gint width, height, bytes;
+  guchar *buffer = NULL;
+  gint offset_x, offset_y, width, height, bytes;
   gint x, y, abort;
   gint x1, y1, x2, y2;
   
@@ -1233,35 +1234,42 @@ crop_automatic_callback (GtkWidget *w,
   draw_core_pause (crop->core, tool);
   gimp_add_busy_cursors ();
  
+  /* You should always keep in mind that crop->tx2 and crop->ty2 are the NOT the
+     coordinates of the bottomright corner of the area to be cropped. They point 
+     at the pixel located one to the right and one to the bottom.  
+   */
+
   if (crop_options->layer_only)
     {
       if (!(active_drawable =  gimage_active_drawable (gdisp->gimage)))
 	return;
-      width  = drawable_width  (GIMP_DRAWABLE (active_drawable));
+      width  = drawable_width  (GIMP_DRAWABLE (active_drawable)); 
       height = drawable_height (GIMP_DRAWABLE (active_drawable));
       bytes  = drawable_bytes  (GIMP_DRAWABLE (active_drawable));
       if (drawable_has_alpha (GIMP_DRAWABLE (active_drawable)))
 	has_alpha = TRUE;
       get_color_obj = GTK_OBJECT (active_drawable);
       get_color_func = (GetColorFunc) gimp_drawable_get_color_at;
-      drawable_offsets (GIMP_DRAWABLE (active_drawable), &crop->tx1, &crop->ty1);
-      crop->tx2 = width + crop->tx1;
-      crop->ty2 = height + crop->ty1;
+      drawable_offsets (GIMP_DRAWABLE (active_drawable), &offset_x, &offset_y);
     }
   else
     {
       width  = gdisp->gimage->width;
       height = gdisp->gimage->height;
+      has_alpha = TRUE; 
+      bytes  = gimp_image_composite_bytes (gdisp->gimage);
       get_color_obj = GTK_OBJECT (gdisp->gimage);
       get_color_func = (GetColorFunc) gimp_image_get_color_at;
-      bytes  = gimp_image_composite_bytes (gdisp->gimage);
-      has_alpha = TRUE; 
-      crop->tx1 = crop->ty1 = 0;
-      crop->tx2 = width;
-      crop->ty2 = height;
-    }
+      offset_x = offset_y = 0;
+   }
 
-  switch (crop_guess_bgcolor (get_color_obj, get_color_func, width, height, bytes, has_alpha, bgcolor))
+  x1 = crop->tx1 - offset_x  > 0      ? crop->tx1 - offset_x : 0;
+  x2 = crop->tx2 - offset_x  < width  ? crop->tx2 - offset_x : width;
+  y1 = crop->ty1 - offset_y  > 0      ? crop->ty1 - offset_y : 0;
+  y2 = crop->ty2 - offset_y  < height ? crop->ty2 - offset_y : height;
+      
+  switch (crop_guess_bgcolor (get_color_obj, get_color_func, bytes, has_alpha, 
+			      bgcolor, x1, x2-1, y1, y2-1))
     {
     case AUTO_CROP_ALPHA:
       colors_equal_func = (ColorsEqualFunc) crop_colors_alpha;
@@ -1273,68 +1281,76 @@ crop_automatic_callback (GtkWidget *w,
       goto FINISH;
     }
 
+  width  = x2 - x1;
+  height = y2 - y1;
+
   if (crop_options->layer_only)
-    pixel_region_init (&PR, drawable_data (active_drawable), 0, 0, width, height, FALSE);
+    pixel_region_init (&PR, drawable_data (active_drawable), 
+		       x1, y1, width, height, FALSE);
   else
-    pixel_region_init (&PR, gimp_image_composite (gdisp->gimage), 0, 0, width, height, FALSE);
+    pixel_region_init (&PR, gimp_image_composite (gdisp->gimage), 
+		       x1, y1, width, height, FALSE);
 
-  buffer = g_malloc((width > height ? width : height) * bytes);
+  /* The following could be optimized further by processing the smaller side first
+     instead of defaulting to width    --Sven                                      
+   */
 
-  x1 = x2 = y1 = y2 = 0;
+  buffer = g_malloc ((width > height ? width : height) * bytes);
 
  /* Check how many of the top lines are uniform/transparent. */
   abort = FALSE;
-  for (y = 0; y < height && !abort; y++)
+  for (y = y1; y < y2 && !abort; y++)
     {
-      pixel_region_get_row (&PR, 0, y, width, buffer, 1);
+      pixel_region_get_row (&PR, x1, y, width, buffer, 1);
       for (x = 0; x < width && !abort; x++)
 	abort = !(colors_equal_func) (bgcolor, buffer + x * bytes, bytes);
     }
-  if (y == height && !abort) {
-    g_free (buffer);
+  if (y == y2 && !abort) 
     goto FINISH;
-  }
   y1 = y - 1;
 
   /* Check how many of the bottom lines are uniform/transparent. */
   abort = FALSE;
-  for (y = height - 1; y >= y1 && !abort; y--)
+  for (y = y2; y > y1 && !abort; y--)
     {
-      pixel_region_get_row (&PR, 0, y, width, buffer, 1);
+      pixel_region_get_row (&PR, x1, y-1 , width, buffer, 1);
       for (x = 0; x < width && !abort; x++)
 	abort = !(colors_equal_func) (bgcolor, buffer + x * bytes, bytes);
     }
   y2 = y + 1;
 
+  /* compute a new height for the next operations */
+  height = y2 - y1;
+
   /* Check how many of the left lines are uniform/transparent. */
   abort = FALSE;
-  for (x = 0; x < width && !abort; x++)
+  for (x = x1; x < x2 && !abort; x++)
     {
-      pixel_region_get_col (&PR, x, y1, y2 - y1 + 1, buffer, 1);
-      for (y = 0; y <= (y2 - y1) && !abort; y++)
+      pixel_region_get_col (&PR, x, y1, height, buffer, 1);
+      for (y = 0; y < height && !abort; y++)
 	abort = !(colors_equal_func) (bgcolor, buffer + y * bytes, bytes);
     }
   x1 = x - 1;
  
  /* Check how many of the right lines are uniform/transparent. */
   abort = FALSE;
-  for (x = width - 1; x >= x1 && !abort; x--)
+  for (x = x2; x > x1 && !abort; x--)
     {
-      pixel_region_get_col (&PR, x, y1, y2 - y1 + 1, buffer, 1);
-      for (y = 0; y <= (y2 - y1) && !abort; y++)
+      pixel_region_get_col (&PR, x-1, y1, height, buffer, 1);
+      for (y = 0; y < height && !abort; y++)
 	abort = !(colors_equal_func) (bgcolor, buffer + y * bytes, bytes);
     }
   x2 = x + 1;
 
-  g_free (buffer);
+  crop->tx1 = offset_x + x1;
+  crop->tx2 = offset_x + x2;
+  crop->ty1 = offset_y + y1;
+  crop->ty2 = offset_y + y2;
 
-  crop->tx2 = crop->tx1 + x2 + 1;
-  crop->ty2 = crop->ty1 + y2 + 1;
-  crop->tx1 += x1;
-  crop->ty1 += y1;
+  crop_recalc (tool, crop);
 
  FINISH:
-  crop_recalc (tool, crop);
+  g_free (buffer);
   gimp_remove_busy_cursors (NULL);
   draw_core_resume (crop->core, tool);
 
@@ -1344,11 +1360,13 @@ crop_automatic_callback (GtkWidget *w,
 static AutoCropType
 crop_guess_bgcolor (GtkObject    *get_color_obj,
 		    GetColorFunc  get_color_func,
-		    int           width,
-		    int           height,
 		    int           bytes,
 		    int           has_alpha,
-		    guchar       *color) 
+		    guchar       *color,
+		    int           x1, 
+		    int           x2, 
+		    int           y1, 
+		    int           y2) 
 {
   guchar *tl = NULL;
   guchar *tr = NULL;
@@ -1356,20 +1374,20 @@ crop_guess_bgcolor (GtkObject    *get_color_obj,
   guchar *br = NULL;
   gint i, alpha;
 
-  for (i=0; i< bytes; i++)
+  for (i = 0; i < bytes; i++)
     color[i] = 0; 
 
   /* First check if there's transparency to crop. If not, guess the 
    * background-color to see if at least 2 corners are equal.
    */
 
-  if (!(tl = (*get_color_func) (get_color_obj, 0, 0))) 
+  if (!(tl = (*get_color_func) (get_color_obj, x1, y1))) 
     goto ERROR;
-  if (!(tr = (*get_color_func) (get_color_obj, width - 1, 0))) 
+  if (!(tr = (*get_color_func) (get_color_obj, x1, y2))) 
     goto ERROR;
-  if (!(bl = (*get_color_func) (get_color_obj, 0, height - 1))) 
+  if (!(bl = (*get_color_func) (get_color_obj, x2, y1))) 
     goto ERROR;  
-  if (!(br = (*get_color_func) (get_color_obj, width - 1, height - 1))) 
+  if (!(br = (*get_color_func) (get_color_obj, x2, y2))) 
     goto ERROR;
 
   if (has_alpha)

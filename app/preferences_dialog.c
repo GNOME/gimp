@@ -963,7 +963,7 @@ gimp_dialog_delete_callback (GtkWidget *widget,
 }
 
 /*
-#include "/home/mitschel/wilber3.xpm"
+#include "/home/mitschel/gimpfiles/wilber.xpm"
 
 static void
 gimp_dialog_realize_callback (GtkWidget *widget,
@@ -980,7 +980,7 @@ gimp_dialog_realize_callback (GtkWidget *widget,
       gdk_pixmap_create_from_xpm_d (widget->window,
 				    &wilber_mask,
 				    &style->bg[GTK_STATE_NORMAL],
-				    wilber3_xpm);
+				    wilber_xpm);
 
   gdk_window_set_icon (widget->window, NULL,
 		       wilber_pixmap, wilber_mask);
@@ -1100,8 +1100,8 @@ gimp_dialog_new (const gchar       *title,
   gtk_signal_connect (GTK_OBJECT (dialog), "realize",
 		      (GtkSignalFunc) gimp_dialog_realize_callback,
 		      NULL);
-  */
   
+  */
   return dialog;
 }
 

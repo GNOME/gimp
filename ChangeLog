@@ -1,3 +1,12 @@
+1999-06-30  Sven Neumann  <sven@gimp.org>
+	
+	* app/crop.c (crop_automatic_callback): Crop now does
+	AutoShrink -- the algorithm starts with the interactively
+	selected crop area and tries to shrink that instead of 
+	always starting from the corners.
+
+	* plug-ins/helpbrowser/helpbrowser.c: cosmetic changes
+	
 1999-06-28  Tor Lillqvist  <tml@iki.fi>
 
 	* */makefile.msc: Use the DEBUG nmake variable to determine

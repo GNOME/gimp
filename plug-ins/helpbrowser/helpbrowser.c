@@ -85,6 +85,7 @@ static char *doc_not_found_format_string =
 "<html><head><title>Document not found</title></head>"
 "<body bgcolor=\"#ffffff\">"
 "<center>"
+"<p>"
 "%s"
 "<h2>Couldn't find document</h2>"
 "%s"
@@ -96,6 +97,7 @@ static char *dir_not_found_format_string =
 "<html><head><title>Directory not found</title></head>"
 "<body bgcolor=\"#ffffff\">"
 "<center>"
+"<p>"
 "%s"
 "<h2>Couldn't change to directory</h2>"
 "%s"
@@ -143,7 +145,7 @@ static GtkWidget *forward_button;
 static GtkWidget *notebook;
 static GtkWidget *combo;
 
-static gchar     *eek_png_tag = "<h1>Eeek!</h1>\n";
+static gchar     *eek_png_tag = "<h1>Eeek!</h1>";
 
 /*  GIMP plugin stuff  */
 
@@ -662,14 +664,15 @@ open_browser_dialog (gchar *path)
 
   if (chdir (root_dir) == -1)
     {
-      g_warning ("Couldn't find my root html directory.");
+      gimp_message ("GIMP Help Browser Error.\n\n"
+		    "Couldn't find my root html directory.");
       return FALSE;
     }
 
   eek_png_path = g_strconcat (root_dir, G_DIR_SEPARATOR_S,
 			      "eek.png", NULL);
   if (access (eek_png_path, R_OK) == 0)
-    eek_png_tag = g_strdup_printf ("<img src=\"%s\">\n", eek_png_path);
+    eek_png_tag = g_strdup_printf ("<img src=\"%s\">", eek_png_path);
 
   g_free (eek_png_path);
   g_free (root_dir);
