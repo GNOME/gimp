@@ -1,3 +1,7 @@
+2003-12-16  Sven Neumann  <sven@gimp.org>
+
+	* libgimpthumb/gimpthumbnail.c: added API documentation.
+
 2003-12-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimphistogramview.[ch]: draw the selection in

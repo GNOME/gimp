@@ -1,3 +1,13 @@
+2003-12-16  Sven Neumann  <sven@gimp.org>
+
+	* libgimpthumb/libgimpthumb-docs.sgml
+	* libgimpthumb/libgimpthumb-sections.txt
+	* libgimpthumb/tmpl/gimpthumb-enums.sgml
+	* libgimpthumb/tmpl/gimpthumb-error.sgml
+	* libgimpthumb/tmpl/gimpthumb-utils.sgml
+	* libgimpthumb/tmpl/gimpthumbnail.sgml: completed API docs for
+	libgimpthumb.
+
 2003-12-14  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/Makefile.am (IGNORE_HFILES): removed gimpmiscui.h.
@@ -187,11 +197,11 @@
 
 2003-11-15  Henrik Brix Andersen  <brix@gimp.org>
 
-	* devel-docs/libgimpmath/tmpl/gimpmatrix.sgml
-	* devel-docs/libgimpmath/tmpl/gimpvector.sgml
-	* devel-docs/libgimpmath/tmpl/gimpmath.sgml: added descriptions
+	* libgimpmath/tmpl/gimpmatrix.sgml
+	* libgimpmath/tmpl/gimpvector.sgml
+	* libgimpmath/tmpl/gimpmath.sgml: added descriptions
 
-	* devel-docs/libgimpmath/libgimpmath-sections.txt: reordered functions
+	* libgimpmath/libgimpmath-sections.txt: reordered functions
 
 2003-11-15  Sven Neumann  <sven@gimp.org>
 
@@ -373,8 +383,8 @@
 
 2003-10-11  Helvetix Victorinox  <helvetix@gimp.org>
 
-	* devel-docs/libgimpcolor/tmpl/gimpcolorspace.sgml: Fixed typo
-	"convert" instead of "concert"
+	* libgimpcolor/tmpl/gimpcolorspace.sgml: Fixed typo: "convert"
+	instead of "concert"
 
 2003-10-11  Sven Neumann  <sven@gimp.org>
 

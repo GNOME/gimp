@@ -136,56 +136,56 @@ gimp_thumbnail_class_init (GimpThumbnailClass *klass)
   g_object_class_install_property (object_class,
 				   PROP_IMAGE_STATE,
 				   g_param_spec_enum ("image-state", NULL,
-                                                      NULL,
+                                                      "State of the image associated to the thumbnail object",
                                                       GIMP_TYPE_THUMB_STATE,
                                                       GIMP_THUMB_STATE_UNKNOWN,
                                                       G_PARAM_READWRITE));
   g_object_class_install_property (object_class,
 				   PROP_IMAGE_URI,
 				   g_param_spec_string ("image-uri", NULL,
-                                                        NULL,
+                                                       "URI of the image file",
 							NULL,
 							G_PARAM_READWRITE));
   g_object_class_install_property (object_class,
 				   PROP_IMAGE_MTIME,
 				   g_param_spec_int64 ("image-mtime", NULL,
-                                                       NULL,
+                                                       "Modification time of the image file in seconds since the Epoch",
                                                        0, G_MAXINT64, 0,
                                                        G_PARAM_READWRITE));
   g_object_class_install_property (object_class,
 				   PROP_IMAGE_FILESIZE,
 				   g_param_spec_int64 ("image-filesize", NULL,
-                                                       NULL,
+                                                       "Size of the image file in bytes",
                                                        0, G_MAXINT64, 0,
                                                        G_PARAM_READWRITE));
   g_object_class_install_property (object_class,
 				   PROP_IMAGE_WIDTH,
 				   g_param_spec_int ("image-width", NULL,
-                                                     NULL,
+                                                     "Width of the image in pixels",
                                                      0, G_MAXINT, 0,
                                                      G_PARAM_READWRITE));
   g_object_class_install_property (object_class,
 				   PROP_IMAGE_HEIGHT,
 				   g_param_spec_int ("image-height", NULL,
-                                                     NULL,
+                                                     "Height of the image in pixels",
                                                      0, G_MAXINT, 0,
                                                      G_PARAM_READWRITE));
   g_object_class_install_property (object_class,
                                    PROP_IMAGE_TYPE,
                                    g_param_spec_string ("image-type", NULL,
-                                                        NULL,
+                                                        "String describing the type of the image format",
                                                         NULL,
                                                         G_PARAM_READWRITE));
   g_object_class_install_property (object_class,
                                    PROP_IMAGE_NUM_LAYERS,
                                    g_param_spec_int ("image-num-layers", NULL,
-                                                     NULL,
+                                                     "The number of layers in the image",
                                                      0, G_MAXINT, 0,
                                                      G_PARAM_READWRITE));
   g_object_class_install_property (object_class,
 				   PROP_THUMB_STATE,
 				   g_param_spec_enum ("thumb-state", NULL,
-                                                      NULL,
+                                                      "State of the thumbnail file",
                                                       GIMP_TYPE_THUMB_STATE,
                                                       GIMP_THUMB_STATE_UNKNOWN,
                                                       G_PARAM_READWRITE));
@@ -340,23 +340,28 @@ gimp_thumbnail_get_property (GObject    *object,
     }
 }
 
-static void
-gimp_thumbnail_reset_info (GimpThumbnail *thumbnail)
-{
-  g_object_set (thumbnail,
-                "image-width",      0,
-                "image-height",     0,
-                "image-type",       NULL,
-                "image-num-layers", 0,
-                NULL);
-}
-
+/**
+ * gimp_thumbnail_new:
+ *
+ * Creates a new #GimpThumbnail object.
+ *
+ * Return value: a newly allocated GimpThumbnail object
+ **/
 GimpThumbnail *
 gimp_thumbnail_new (void)
 {
   return g_object_new (GIMP_TYPE_THUMBNAIL, NULL);
 }
 
+/**
+ * gimp_thumbnail_set_uri:
+ * @thumbnail: a #GimpThumbnail object
+ * @uri: an escaped URI in UTF-8 encoding
+ *
+ * Sets the location of the image file associated with the #thumbnail.
+ *
+ * All informations stored in the #GimpThumbnail are reset.
+ **/
 void
 gimp_thumbnail_set_uri (GimpThumbnail *thumbnail,
                         const gchar   *uri)
@@ -387,6 +392,46 @@ gimp_thumbnail_set_uri (GimpThumbnail *thumbnail,
   gimp_thumbnail_invalidate_thumb (thumbnail);
 }
 
+/**
+ * gimp_thumbnail_set_filename:
+ * @thumbnail: a #GimpThumbnail object
+ * @filename: a local filename in the encoding of the filesystem
+ * @error: return location for possible errors
+ *
+ * Sets the location of the image file associated with the #thumbnail.
+ *
+ * Return value: %TRUE if the filename was successfully set,
+ *               %FALSE otherwise
+ **/
+gboolean
+gimp_thumbnail_set_filename (GimpThumbnail  *thumbnail,
+                             const gchar    *filename,
+                             GError        **error)
+{
+  gchar *uri = NULL;
+
+  g_return_val_if_fail (GIMP_IS_THUMBNAIL (thumbnail), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  if (filename)
+    uri = g_filename_to_uri (filename, NULL, error);
+
+  gimp_thumbnail_set_uri (thumbnail, uri);
+
+  g_free (uri);
+
+  return (!filename || uri);
+}
+
+/**
+ * gimp_thumbnail_peek_image:
+ * @thumbnail: a #GimpThumbnail object
+ *
+ * Checks the image file associated with the @thumbnail and updates
+ * information such as state, filesize and modification time.
+ *
+ * Return value: the image's #GimpThumbState after the update
+ **/
 GimpThumbState
 gimp_thumbnail_peek_image (GimpThumbnail *thumbnail)
 {
@@ -402,6 +447,18 @@ gimp_thumbnail_peek_image (GimpThumbnail *thumbnail)
   return thumbnail->image_state;
 }
 
+/**
+ * gimp_thumbnail_peek_thumb:
+ * @thumbnail: a #GimpThumbnail object
+ * @size: the preferred size of the thumbnail image
+ *
+ * Checks if a thumbnail file for the @thumbnail exists. It doesn't
+ * load the thumbnail image and thus cannot check if the thumbnail is
+ * valid and uptodate for the image file asosciated with the
+ * @thumbnail.
+ *
+ * Return value: the thumbnail's #GimpThumbState after the update
+ **/
 GimpThumbState
 gimp_thumbnail_peek_thumb (GimpThumbnail *thumbnail,
                            GimpThumbSize  size)
@@ -417,26 +474,6 @@ gimp_thumbnail_peek_thumb (GimpThumbnail *thumbnail,
   g_object_thaw_notify (G_OBJECT (thumbnail));
 
   return thumbnail->thumb_state;
-}
-
-static void
-gimp_thumbnail_invalidate_thumb (GimpThumbnail *thumbnail)
-{
-  if (thumbnail->thumb_filename)
-    {
-      g_free (thumbnail->thumb_filename);
-      thumbnail->thumb_filename = NULL;
-    }
-
-  thumbnail->thumb_filesize = 0;
-  thumbnail->thumb_mtime    = 0;
-
-  if (thumbnail->thumb_state != GIMP_THUMB_STATE_UNKNOWN)
-    {
-      g_object_set (thumbnail,
-                    "thumb-state", GIMP_THUMB_STATE_UNKNOWN,
-                    NULL);
-    }
 }
 
 static void
@@ -551,22 +588,35 @@ gimp_thumbnail_update_thumb (GimpThumbnail *thumbnail,
     g_object_set (thumbnail, "thumb-state", state, NULL);
 }
 
-gboolean
-gimp_thumbnail_set_filename (GimpThumbnail  *thumbnail,
-                             const gchar    *filename,
-                             GError        **error)
+static void
+gimp_thumbnail_invalidate_thumb (GimpThumbnail *thumbnail)
 {
-  gchar *uri = NULL;
+  if (thumbnail->thumb_filename)
+    {
+      g_free (thumbnail->thumb_filename);
+      thumbnail->thumb_filename = NULL;
+    }
 
-  g_return_val_if_fail (GIMP_IS_THUMBNAIL (thumbnail), FALSE);
-  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+  thumbnail->thumb_filesize = 0;
+  thumbnail->thumb_mtime    = 0;
 
-  if (filename)
-    uri = g_filename_to_uri (filename, NULL, error);
+  if (thumbnail->thumb_state != GIMP_THUMB_STATE_UNKNOWN)
+    {
+      g_object_set (thumbnail,
+                    "thumb-state", GIMP_THUMB_STATE_UNKNOWN,
+                    NULL);
+    }
+}
 
-  gimp_thumbnail_set_uri (thumbnail, uri);
-
-  return (!filename || uri);
+static void
+gimp_thumbnail_reset_info (GimpThumbnail *thumbnail)
+{
+  g_object_set (thumbnail,
+                "image-width",      0,
+                "image-height",     0,
+                "image-type",       NULL,
+                "image-num-layers", 0,
+                NULL);
 }
 
 static void
@@ -598,6 +648,27 @@ gimp_thumbnail_set_info_from_pixbuf (GimpThumbnail *thumbnail,
   g_object_thaw_notify (G_OBJECT (thumbnail));
 }
 
+/**
+ * gimp_thumbnail_load_thumb:
+ * @thumbnail: a #GimpThumbnail object
+ * @size: the preferred #GimpThumbSize for the preview
+ * @error: return location for possible errors
+ *
+ * Attempts to load a thumbnail preview for the image associated with
+ * @thumbnail. Before you use this function you need need to set an
+ * image location using gimp_thumbnail_set_uri() or
+ * gimp_thumbnail_set_filename(). You can also peek at the thumb
+ * before loading it using gimp_thumbnail_peek_thumb.
+ *
+ * This function will return the best matching pixbuf for the
+ * specified @size. It returns the pixbuf as loaded from disk. It is
+ * left to the caller to scale it to the desired size. The returned
+ * pixbuf may also represent an outdated preview of the image file.
+ * In order to verify if the preview is uptodate, you should check the
+ * "thumb_state" property after calling this function.
+ *
+ * Return value: a preview pixbuf or %NULL if no thumbnail was found
+ **/
 GdkPixbuf *
 gimp_thumbnail_load_thumb (GimpThumbnail  *thumbnail,
                            GimpThumbSize   size,
@@ -609,6 +680,8 @@ gimp_thumbnail_load_thumb (GimpThumbnail  *thumbnail,
   const gchar    *option;
   gint64          image_mtime;
   gint64          image_size;
+
+  /*  FIXME: this function needs review, it is broken!!  */
 
   g_return_val_if_fail (GIMP_IS_THUMBNAIL (thumbnail), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
@@ -630,7 +703,6 @@ gimp_thumbnail_load_thumb (GimpThumbnail  *thumbnail,
     goto cleanup;
 
   /* URI and mtime from the thumbnail need to match our file */
-
   option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_URI);
   if (!option || strcmp (option, thumbnail->image_uri))
     goto cleanup;
@@ -674,6 +746,28 @@ gimp_thumbnail_load_thumb (GimpThumbnail  *thumbnail,
   return pixbuf;
 }
 
+/**
+ * gimp_thumbnail_save_thumb:
+ * @thumbnail: a #GimpThumbnail object
+ * @pixbuf: a #GdkPixbuf representing the preview thumbnail
+ * @software: a string describing the software saving the thumbnail
+ * @error: return location for possible errors
+ *
+ * Saves a preview thumbnail for the image associated with @thumbnail.
+ *
+ * The caller is responsible for setting the image file location, it's
+ * filesize, modification time. One way to set this info is to is to
+ * call gimp_thumbnail_set_uri() followed by gimp_thumbnail_peek_image().
+ * Since this won't work for remote images, it is left to the user of
+ * gimp_thumbnail_save_thumb() to do this or to set the information
+ * using the @thumbnail object properties.
+ *
+ * The image format type and the number of layers can optionally be
+ * set in order to be stored with the preview image.
+ *
+ * Return value: %TRUE if a thumbnail was successfully written,
+ *               %FALSE otherwise
+ **/
 gboolean
 gimp_thumbnail_save_thumb (GimpThumbnail  *thumbnail,
                            GdkPixbuf      *pixbuf,
@@ -758,6 +852,20 @@ gimp_thumbnail_save_thumb (GimpThumbnail  *thumbnail,
   return success;
 }
 
+/**
+ * gimp_thumbnail_save_failure:
+ * @thumbnail: a #GimpThumbnail object
+ * @software: a string describing the software saving the thumbnail
+ * @error: return location for possible errors
+ *
+ * Saves a failure thumbnail for the image associated with
+ * @thumbnail. This is an empty pixbuf that indicates that an attempt
+ * to create a preview for the image file failed. It should be used to
+ * prevent the software from further attempts to create this thumbnail.
+ *
+ * Return value: %TRUE if a failure thumbnail was successfully written,
+ *               %FALSE otherwise
+ **/
 gboolean
 gimp_thumbnail_save_failure (GimpThumbnail  *thumbnail,
                              const gchar    *software,

@@ -13,10 +13,10 @@
 
   <part id="libgimpthumb">
     <title>GIMP Thumbnail Library</title>
+    <xi:include href="xml/gimpthumbnail.xml" />
+    <xi:include href="xml/gimpthumb-utils.xml" />
     <xi:include href="xml/gimpthumb-enums.xml" />
     <xi:include href="xml/gimpthumb-error.xml" />
-    <xi:include href="xml/gimpthumb-utils.xml" />
-    <xi:include href="xml/gimpthumbnail.xml" />
   </part>
 
 </book>

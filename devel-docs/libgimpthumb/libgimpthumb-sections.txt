@@ -33,12 +33,13 @@ gimp_thumb_get_thumb_dir
 
 <SECTION>
 <FILE>gimpthumb-enums</FILE>
+GimpThumbSize
+GimpThumbState
+<SUBSECTION Standard>
 GIMP_TYPE_THUMB_SIZE
 gimp_thumb_size_get_type
-GimpThumbSize
 GIMP_TYPE_THUMB_STATE
 gimp_thumb_state_get_type
-GimpThumbState
 </SECTION>
 
 <SECTION>

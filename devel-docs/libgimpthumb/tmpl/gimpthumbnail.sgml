@@ -2,7 +2,7 @@
 GimpThumbnail
 
 <!-- ##### SECTION Short_Description ##### -->
-
+The GimpThumbnail object
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
@@ -16,7 +16,8 @@ GimpThumbnail
 
 <!-- ##### STRUCT GimpThumbnail ##### -->
 <para>
-
+All members of #GimpThumbnail are private and should only be accessed
+using object properties.
 </para>
 
 
