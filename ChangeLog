@@ -1,3 +1,8 @@
+Thu Mar 11 19:42:12 CET 1999 Marc Lehmann <pcg@goof.com>
+
+        * configure.in, config.h.in: added test for _exit (mirrors the
+        change in plug-ins/perl/etc/configure.frag)
+
 1999-03-10  Jay Cox  <jaycox@earthlink.net>
 
 	* plug-ins/wind/wind.c, plug-ins/bumpmap/bumpmap.c: Set

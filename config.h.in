@@ -75,12 +75,15 @@
 #undef HAVE_NDIR_H
 #undef HAVE_PROGRESSIVE_JPEG
 #undef HAVE_PUTENV
+#undef HAVE_RINT
 #undef HAVE_SHM_H
 #undef HAVE_STPCPY
 #undef HAVE_SYS_DIR_H
 #undef HAVE_SYS_NDIR_H
+#undef HAVE_SYS_PARAM_H
 #undef HAVE_SYS_SELECT_H
 #undef HAVE_SYS_TIME_H
+#undef HAVE_SYS_TIMES_H
 #undef HAVE_UNISTD_H
 #undef HAVE_VPRINTF
 #undef HAVE_VSNPRINTF
@@ -104,6 +107,9 @@
 
 /* Define if you have the __argz_stringify function.  */
 #undef HAVE___ARGZ_STRINGIFY
+
+/* Define if you have the _exit function.  */
+#undef HAVE__EXIT
 
 /* Define if you have the dcgettext function.  */
 #undef HAVE_DCGETTEXT
@@ -179,7 +185,3 @@
 
 /* Define if you have the i library (-li).  */
 #undef HAVE_LIBI
-
-/* define if compiled symbols have a leading underscore */
-#undef WITH_SYMBOL_UNDERSCORE
-

@@ -582,6 +582,7 @@ if eval "test x$enable_perl != xno"; then
       AC_SUBST(GIMPTOOL)
       AC_SUBST(GIMP_CFLAGS)
       AC_SUBST(GIMP_LIBS)
+      AC_CHECK_FUNCS(_exit)
 
       dnl we ignore prefix
       cat >plug-ins/perl/config.status <<EOF
