@@ -10,13 +10,10 @@ gchar *						T_PV
 gint *						T_PTROBJ
 guchar *					T_PV
 
-GLayerMode					T_IV
-GDrawableType					T_IV
-GImageType					T_IV
-
 GDrawable *					T_GDRAWABLE
 GTile *						T_TILE
 GPixelRgn *					T_PIXELRGN
+GPixelRgn_PDL *					T_PIXELRGN_PDL
 
 GtkWidget *					T_IV
 
@@ -46,6 +43,9 @@ T_TILE
 
 T_PIXELRGN
 	$var = old_pixelrgn ($arg)
+
+T_PIXELRGN_PDL
+	$var = old_pixelrgn_pdl ($arg)
 
 OUTPUT
 

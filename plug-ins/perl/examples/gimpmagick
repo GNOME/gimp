@@ -6,7 +6,7 @@ use Gimp::Fu;
 use Gtk;
 BEGIN { eval "use Image::Magick 1.45"; $@ and Gimp::Feature::missing ("Image::Magick version 1.45 or higher") };
 
-$VERSION = '0.1';
+$VERSION = '0.2';
 
 $preview_size = 160; # max. size for image preview
 
@@ -115,7 +115,7 @@ sub read_pixels {
    open TEMP,">$temp\0" or die "unable to open temporary file '$temp' for writing\n";
    my ($empty,$x1,$y1,$x2,$y2) = $drawable->mask_bounds;
    $x2-=$x1; $y2-=$y1;
-   my $region = $drawable->get->pixel_rgn ($x1, $y1, $x2, $y2, 0, 0);
+   my $region = $drawable->pixel_rgn ($x1, $y1, $x2, $y2, 0, 0);
 
    Gimp->progress_init ("transferring image data");
    for(my $y=0; $y<$y2; $y+=$th) {

@@ -185,6 +185,7 @@ sub GTK_OBJECT_INIT {
    $button = new Gtk::Button "Cancel";
    signal_connect $button "clicked", sub {hide $w};
    $w->action_area->pack_start($button,1,1,0);
+   can_default $button 1;
    show $button;
    
    $self->signal_connect("clicked",sub {show $w});
@@ -223,12 +224,12 @@ sub set_preview {
    hide $cp;
    hide $gp;
    my $p = $bpp == 1 ? $gp : $cp;
-   show $p;
    $p->size ($w, $h);
-   while(--$h) {
-     $p->draw_row (substr ($mask, $w*$bpp*$h), 0, $h, $w);
+   for(0..$h-1) {
+      $p->draw_row (substr ($mask, $w*$bpp*$_), 0, $_, $w);
    }
    $p->draw(undef);
+   show $p;
    
    $name;
 }
@@ -267,8 +268,8 @@ sub set_preview {
    hide $p;
    my $l=length($mask);
    $p->size ($w, $h);
-   while(--$h) {
-     $p->draw_row (substr ($mask, $w*$h) ^ $xor, 0, $h, $w);
+   for(0..$h-1) {
+     $p->draw_row (substr ($mask, $w*$_) ^ $xor, 0, $_, $w);
    }
    $p->draw(undef);
    show $p;

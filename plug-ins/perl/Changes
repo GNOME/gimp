@@ -6,8 +6,18 @@ Revision history for Gimp-Perl extension.
         - preliminary <Load> and <Save> support (arguments are automatically
           supplied).
         - enabled limited pixel access functions even when PDL was not found.
-        - added examples/miff (a save filter for miff images).
+        - implemented and added examples/miff (a save filter for miff images).
         - close DATA in Gimp unconditionally, saves one open filehandle.
+        - fixed the longstanding preview bug in Gimp::UI by reversing the
+          order of calls to draw_row. => something in gtk+ is really broken.
+        - fixed a longstanding (but never seen ;) bug in old_pdl: pdls that
+          were not sever'ed created garbage.
+        - allow dummy dimension in grayscale pdls, i.e. pdl(1,width,height)
+          instead of pdl(width,height).
+        - improved gimpdoc.
+        - removed debugging code from gouge. ouch!
+        - bug fixed: PDL::Core was not automatically required when not
+          already loaded.
 
 1.0981 Wed Jul 28 00:09:50 CEST 1999
 	- improved gouge ;) In a sense, it's actually pretty code now!

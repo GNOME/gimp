@@ -26,12 +26,13 @@ register "file_miff_save",
          "Saves images in the miff (Magick Interchange File Format) format used by the ImageMagick package",
          "Marc Lehmann",
          "Marc Lehmann <pcg\@goof.com>",
-         "1999-07-27",
+         "1999-07-29",
          "<Save>/MIFF",
          "RGB, RGBA, GRAY, INDEXED-NOT-YET",	# weird, but no matte for !DirectColour
          [],
          sub {
    my($img,$drawable,$filename) =@_;
+   my @layers = $img->get_layers;
    sysopen FILE,$filename,O_CREAT|O_TRUNC|O_WRONLY or die "Unable to open '$filename' for writing: $!\n";
    my $hdr = eval { $img->find_parasite("gimp-comment")->data };
    $hdr = "   COMMENT: $hdr\n" if $hdr;
@@ -41,14 +42,16 @@ id=ImageMagick
    CREATOR: file_miff_save gimp plug-in, see http://www.gimp.org/
 $hdr}
 EOF
+   init Progress "Saving '$filename' as MIFF...";
    my $scene = 0;
-   for ($img->get_layers) {
+   for (@layers) {
       print FILE $hdr,
             "scene=$scene\n",
             "class=", $_->color ? "DirectClass" : "PseudoClass", "\n";
             #"gamma=", Gimp->gamma, "\n";
       write_layer(*FILE,$_);
       $scene++;
+      update Progress $scene/@layers;
    }
    close FILE;
    ();

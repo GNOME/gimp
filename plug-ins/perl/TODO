@@ -16,6 +16,9 @@ script-fu 4.9 vs. 3.3
 
 bugs
 
+  * perl_require_pv with _59?
+  * scroll behaviour, use clist instead of list?
+[DONE]  * can_Default for oter OK-buttons
   * document Gimp::PDL and rect2, ...2 functions!
 [DONE]  * MJH: glib-config(!!!)
 [KILL]  * empty desfiption -> no display in PDB?`

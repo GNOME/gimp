@@ -21,8 +21,8 @@ sub iterate {
    $bounds[2]-- if $bounds[0]+$bounds[2] >= ($drawable->offsets)[0]+$drawable->width;
    $bounds[3]-- if $bounds[1]+$bounds[3] >= ($drawable->offsets)[1]+$drawable->height;
    {
-      my $src = new PixelRgn ($drawable->get,@bounds[0,1],$bounds[2]+1,$bounds[3]+1,0,0);
-      my $dst = new PixelRgn ($drawable->get,@bounds,1,1);
+      my $src = new PixelRgn ($drawable,@bounds[0,1],$bounds[2]+1,$bounds[3]+1,0,0);
+      my $dst = new PixelRgn ($drawable,@bounds,1,1);
 
       my $bpp = $src->bpp > 1 ? ":," : "";
 
@@ -30,15 +30,12 @@ sub iterate {
       my $area = $bounds[2]*$bounds[3];
       my $progress = 0;
 
-      use Time::HiRes 'time';
-      $s=time;
       do {
          my ($x,$y,$w,$h)=($dst->x,$dst->y,$dst->w,$dst->h);
          $dst->data($kernel->($bpp,$src->get_rect($x,$y,$w+1,$h+1)->convert(short)));
          $progress += $w*$h/$area;
          Gimp->progress_update ($progress);
       } while (Gimp->pixel_rgns_process ($iter));
-      print time-$s;
    }
    Gimp->progress_update (1);
 

@@ -14,7 +14,7 @@ register "border_average",
          "calulcates the average border colour",
          "Marc Lehmann",
          "Marc Lehmann",
-         "0.2.1",
+         "0.2.2",
          "<Image>/Filters/Misc/Border Average",
          "RGB",
          [
@@ -58,13 +58,13 @@ register "border_average",
    };
 
    Gimp->progress_init("Border Average", 0);
-   add_new_colour ($drawable->get->pixel_rgn ($bounds[0]           ,$bounds[1]           , $thickness,$height, 0, 0)
+   add_new_colour ($drawable->pixel_rgn ($bounds[0]           ,$bounds[1]           , $thickness,$height, 0, 0)
                             ->get_rect(0,0, $thickness,$height));
-   add_new_colour ($drawable->get->pixel_rgn ($bounds[2]-$thickness,$bounds[1]           , $thickness,$height, 0, 0)
+   add_new_colour ($drawable->pixel_rgn ($bounds[2]-$thickness,$bounds[1]           , $thickness,$height, 0, 0)
                             ->get_rect(0,0, $thickness,$height));
-   add_new_colour ($drawable->get->pixel_rgn ($bounds[0]           ,$bounds[1]           , $width ,$thickness, 0, 0)
+   add_new_colour ($drawable->pixel_rgn ($bounds[0]           ,$bounds[1]           , $width ,$thickness, 0, 0)
                             ->get_rect(0,0, $width, $thickness));
-   add_new_colour ($drawable->get->pixel_rgn ($bounds[0]           ,$bounds[3]-$thickness, $width ,$thickness, 0, 0)
+   add_new_colour ($drawable->pixel_rgn ($bounds[0]           ,$bounds[3]-$thickness, $width ,$thickness, 0, 0)
                             ->get_rect(0,0, $width, $thickness));
 
    # now find the colour

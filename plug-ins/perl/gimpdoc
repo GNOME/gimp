@@ -85,29 +85,122 @@ lw20 lw20 lw60.
 TYPE	NAME	DESCRIPTION
 EOF
 
+sub gen_va(\@\@) {
+   my @vals = @{+shift};
+   my @args = @{+shift};
+   my($vals,$args);
+
+   if (@vals == 0) {
+      $vals = "";
+   } elsif (@vals == 1) {
+      $vals = "$vals[0][1]\\ =\\ ";
+   } else {
+      $vals = "(".join(",",map $_->[1],@vals).")\\ =\\ ";
+   }
+
+   if (@args == 0) {
+      $args = "";
+   } else {
+      $args = "\\ (".join(",",map $_->[1],@args).")";
+   }
+
+   ($vals,$args);
+}
+
+sub isarray {
+   return 1 if $_[0] == &PARAM_INT8ARRAY;
+   return 1 if $_[0] == &PARAM_INT16ARRAY;
+   return 1 if $_[0] == &PARAM_INT32ARRAY;
+   return 1 if $_[0] == &PARAM_FLOATARRAY;
+   return 1 if $_[0] == &PARAM_STRINGARRAY;
+   return 0;
+}
+
+sub killcounts(\@) {
+   my $a = shift;
+   my $roa=0;
+   for(local $_=0; $_<$#$a; $_++) {
+      if (isarray ($a->[$_+1][0]) && $a->[$_][0] == &PARAM_INT32) {
+         splice @$a, $_, 1;
+         $roa=1;
+      }
+   }
+   $roa;
+}
+
+sub weight {
+   my ($v,$n,$a)=@$_;
+   my $w = $#$v + $#$a;
+   $w-- if $n =~ s/^\$\w+//;
+   $w += 1-1/(1+length $n);
+   if ($n =~ / ([A-Z][a-z]+)$/) {
+      $w += 1 unless $1 eq ucfirst $a->[0][1];
+   }
+   $w;
+}
+    
+sub gen_alternatives(\@$\@) {
+   my @new = [@_];
+   my @res;
+   do {
+      my @prev = @new;
+      @new = ();
+      for my $alt (@prev) {
+         my @vals = @{$alt->[0]};
+         my $name = $alt->[1];
+         my @args = @{$alt->[2]};
+         # try to get rid of array counts
+         push @new, [\@vals,$name,\@args] if killcounts(@vals) | killcounts(@args);
+         unless ($name =~ /[$ ]/) {
+            for my $class (qw(
+                  Gimp Layer Image Drawable Selection Channel Display
+                  Palette Plugin Gradients Edit Progress Region Tile
+                  PixelRgn GDrawable Patterns Parasite
+               )) {
+               my @pre = @{$class."::PREFIXES"};
+               for (@pre) {
+                  my $n2 = $name;
+                  if ($_ && $n2 =~ s/^$_//) {
+                     if ($class eq "Drawable" && @args && $args[0][0] == &PARAM_DRAWABLE) {
+                        push @new, [\@vals,"\$drawable->$n2",[@args[1..$#args]]];
+                     } elsif ($class eq "Layer" && @args && $args[0][0] == &PARAM_LAYER) {
+                        push @new, [\@vals,"\$layer->$n2",[@args[1..$#args]]];
+                     } elsif ($class eq "Channel" && @args && $args[0][0] == &PARAM_CHANNEL) {
+                        push @new, [\@vals,"\$channel->$n2",[@args[1..$#args]]];
+                     } elsif ($class eq "Image" && @args && $args[0][0] == &PARAM_IMAGE) {
+                        push @new, [\@vals,"\$image->$n2",[@args[1..$#args]]];
+                     } else {
+                        push @new, [\@vals,"$n2\\ $class",\@args];
+                     }
+                  }
+               }
+            }
+         }
+         if (@args && $args[0][0] == &PARAM_INT32 && $args[0][1] eq "run_mode") {
+            push @new, [\@vals,,$name,[@args[1..$#args]]];
+         }
+         if (@args>1 && $args[0][0] == &PARAM_IMAGE && $args[1][0] == &PARAM_DRAWABLE) {
+            push @new, [\@vals,,$name,[@args[1..$#args]]];
+         }
+      }
+      push @res, @new;
+   } while @new;
+   map {
+      my($vals,$args)=gen_va(@{$_->[0]},@{$_->[2]});
+      "$vals\\fB$_->[1]\\fR$args";
+   } map $_->[1], sort {
+      $a->[0] <=> $b->[0]
+   } map [weight($_),$_], @res;
+}
+
 for $name (@matches) {
     my ($blurb, $help, $author, $copyright, $date, $type, $nargs, $nvals) =
        Gimp->procedural_db_proc_info ($name);
     my @args = map [Gimp->procedural_db_proc_arg ($name, $_)],0..($nargs-1);
     my @vals = map [Gimp->procedural_db_proc_val ($name, $_)],0..($nvals-1);
     
-    my $args;
-    my $vals;
+    my($vals,$args)=gen_va(@vals,@args);
 
-    if ($nvals == 0) {
-       $vals = "";
-    } elsif ($nvals == 1) {
-       $vals = "$vals[0][1]\\ =\\ ";
-    } else {
-       $vals = "(".join(",",map $_->[1],@vals).")\\ =\\ ";
-    }
-
-    if ($nargs == 0) {
-       $args = "";
-    } else {
-       $args = "\\ (".join(",",map $_->[1],@args).")";
-    }
-    
     print PAGER <<EOF;
 .TH "$name" "gimpdoc" "$date" "$version"
 .SH NAME
@@ -131,6 +224,11 @@ EOF
           print PAGER join("	",type2str($_->[0])." ",$_->[1]." ","T{\n".$_->[2]."\nT}"),"\n"; 
        }
        print PAGER ".TE\n";
+    }
+    my @alts = gen_alternatives @vals,$name,@args;
+    if (@alts) {
+       @alts = @alts[0..5] if @alts > 6;
+       print PAGER ".SH SOME SYNTAX ALTERNATIVES\n", join("\n.br\n", @alts), "\n";
     }
     print PAGER <<EOF;
 .SH AUTHOR

@@ -328,15 +328,15 @@ unless ($no_SIG) {
          die_msg $_[0];
          initialized() ? &quiet_die : exit quiet_main();
       } else {
-        die $_[0];
+         die $_[0];
       }
    };
 
    $SIG{__WARN__} = sub {
       unless ($in_quit) {
-        warn $_[0];
+         warn $_[0];
       } else {
-        logger(message => substr($_[0],0,-1), fatal => 0, function => 'WARNING');
+         logger(message => substr($_[0],0,-1), fatal => 0, function => 'WARNING');
       }
    };
 }
@@ -465,7 +465,7 @@ sub AUTOLOAD {
          my $ref = \&{"Gimp::Util::$sub"};
          *{$AUTOLOAD} = sub {
             shift unless ref $_[0];
-            goto &$ref; # does not always work, PERLBUG! #FIXME
+            #goto &$ref; # does not always work, PERLBUG! #FIXME
             my @r = eval { &$ref };
             _croak $@ if $@;
             wantarray ? @r : $r[0];
@@ -475,7 +475,7 @@ sub AUTOLOAD {
          my $ref = \&{"$interface_pkg\::$sub"};
          *{$AUTOLOAD} = sub {
             shift unless ref $_[0];
-            goto &$ref;	# does not always work, PERLBUG! #FIXME
+            #goto &$ref;	# does not always work, PERLBUG! #FIXME
             my @r = eval { &$ref };
             _croak $@ if $@;
             wantarray ? @r : $r[0];

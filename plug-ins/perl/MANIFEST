@@ -15,12 +15,15 @@ Gimp.xs
 scm2perl
 scm2scm
 gimpdoc
-t/load.t
-t/loadlib.t
-t/run.t
+xcftopnm
+embedxpm
+logo.xpm
 extradefs.h
 gppport.h
 Perl-Server
+t/load.t
+t/loadlib.t
+t/run.t
 etc/configure
 etc/configure.in
 etc/aclocal.m4
@@ -100,8 +103,6 @@ examples/oneliners
 examples/randomart1
 examples/colourtoalpha
 examples/pixelmap
-embedxpm
-logo.xpm
 examples/frame_reshuffle
 examples/frame_filter
 examples/gouge

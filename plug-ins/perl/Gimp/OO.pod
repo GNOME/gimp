@@ -176,18 +176,6 @@ that are checked are shown as well (the null prefix "" is implicit).
 
  gimp_brushes_
 
-=item Edit
-
- gimp_edit_
-
-=item Gradients
-
- gimp_gradients_
-
-=item Selection
-
- gimp_selection_
-
 =item Patterns
 
  gimp_patterns_

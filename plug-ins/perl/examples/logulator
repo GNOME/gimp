@@ -93,7 +93,7 @@ sub gimp_text_fontname {
    my $newlay;
    if ($layer == -1) {
       $newlay=$image->layer_new($global_drawable->width,$global_drawable->height,
-                                $image->layertype(1), $text, 100, NORMAL_MODE);
+                                $image->layertype(1), $text || "--text--", 100, NORMAL_MODE);
       $newlay->drawable_fill(TRANS_IMAGE_FILL);
       $newlay->add_layer(0);
       $newlay->edit_paste(0)->floating_sel_anchor;

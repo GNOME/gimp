@@ -1,0 +1,62 @@
+#!/usr/bin/perl
+
+use Gimp;
+
+=head1 NAME
+
+xcftopnm - convert xcf files to pnm files
+
+=head1 SYNOPSIS
+
+ xcftopnm [-layer N] [xcffile]
+
+=head1 DESCRIPTION
+
+This is a rough and slow implementation of a xcf2pnm filter, to be used
+by other programs that want to be able to read xcf images. If ussage
+increases this program will doubtlessly be sped up as well.
+
+=head2 OPTIONS
+
+=over 4
+
+=item C<-layer N>
+
+Select the C<N>th layer, instead of flattening the whole image.
+
+=back
+
+=cut
+
+$layer=(shift,shift) if $ARGV[0] =~ /^-(l|-?layer)$/;
+
+if (@ARGV>1) {
+   print "Usage: xcftopnm [-layer N] [xcffile]\n";
+   exit(1);
+}
+
+$tmpfile = "xcftopnm$$~";
+END { unlink $tmpfile }
+
+if (@ARGV==0) {
+   my $buff;
+   open TMP,">$tmpfile" or die "Unable to open temporary file '$tmpfile' for writing: $!\n";
+   binmode STDIN; binmode TMP;
+   print TMP $buff while sysread STDIN,$buff,16384;
+   close TMP;
+   @ARGV = $tmpfile;
+}
+
+Gimp::init("spawn/no-data");
+
+$image = Gimp->xcf_load(0,($ARGV[0])x2);
+$layer = defined $layer ? ($image->get_layers)[$layer] : $image->flatten;
+$layer->file_pnm_save(($tmpfile)x2,1);
+
+Gimp::deinit;
+
+open TMP,"<$tmpfile" or die "Unable to open temporary file '$tmpfile' for reading: $!\n";
+binmode STDOUT; binmode TMP;
+print STDOUT $buff while sysread TMP,$buff,16384;
+close TMP;
+

@@ -12,7 +12,7 @@ register "colour_to_alpha",
          ."amount of alpha, then readjusts the colour accordingly.",
          "Marc Lehmann",
          "Marc Lehmann <pcg\@goof.com>",
-         "19990517",
+         "19990729",
          "<Image>/Filters/Colors/Colour To Alpha",
          "RGB*",	
          [
@@ -30,8 +30,8 @@ register "colour_to_alpha",
    {
       # $src and $dst must either be scoped or explicitly undef'ed
       # before merge_shadow.
-      my $src = new PixelRgn ($drawable->get,@bounds,0,0);
-      my $dst = new PixelRgn ($drawable->get,@bounds,1,1);
+      my $src = new PixelRgn $drawable,@bounds,0,0;
+      my $dst = new PixelRgn $drawable,@bounds,1,1;
 
       $iter = Gimp->pixel_rgns_register ($src, $dst);
 
