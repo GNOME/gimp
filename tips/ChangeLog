@@ -1,3 +1,7 @@
+2004-02-16  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am (tips_POFILES): added ms.po (Malay).
+
 2004-02-16  Artur Flinta  <aflinta@cvs.gnome.org>
 
 	* pl.po: Updated Polish translation by GNOME PL Team.
