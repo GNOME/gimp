@@ -85,7 +85,6 @@ static void     gimp_show_version            (void) G_GNUC_NORETURN;
 
 #ifndef G_OS_WIN32
 static void     gimp_sigfatal_handler        (gint sig_num) G_GNUC_NORETURN;
-static void     gimp_sigchld_handler         (gint sig_num);
 #endif
 
 
@@ -402,8 +401,8 @@ gimp_init_signal_handlers (void)
   /* Ignore SIGPIPE because plug_in.c handles broken pipes */
   gimp_signal_private (SIGPIPE, SIG_IGN, 0);
 
-  /* Collect dead children */
-  gimp_signal_private (SIGCHLD, gimp_sigchld_handler, SA_RESTART);
+  /* Restart syscalls on SIGCHLD */
+  gimp_signal_private (SIGCHLD, SIG_DFL, SA_RESTART);
 
 #endif /* G_OS_WIN32 */
 }
@@ -546,23 +545,6 @@ gimp_sigfatal_handler (gint sig_num)
     default:
       gimp_fatal_error (g_strsignal (sig_num));
       break;
-    }
-}
-
-/* gimp core signal handler for death-of-child signals */
-
-static void
-gimp_sigchld_handler (gint sig_num)
-{
-  gint pid;
-  gint status;
-
-  while (TRUE)
-    {
-      pid = waitpid (WAIT_ANY, &status, WNOHANG);
-
-      if (pid <= 0)
-	break;
     }
 }
 

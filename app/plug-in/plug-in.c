@@ -521,71 +521,74 @@ plug_in_close (PlugIn   *plug_in,
 
   plug_in->open = FALSE;
 
-  /*  Ask the filter to exit gracefully  */
-  if (kill_it && plug_in->pid)
-    {
-      gp_quit_write (plug_in->my_write, plug_in);
-
-      /*  give the plug-in some time (10 ms)  */
-#ifndef G_OS_WIN32
-      tv.tv_sec  = 0;
-      tv.tv_usec = 10 * 1000;
-      select (0, NULL, NULL, NULL, &tv);
-#else
-      Sleep (10);
-#endif
-    }
-
-  /* If necessary, kill the filter. */
-#ifndef G_OS_WIN32
-  if (kill_it && plug_in->pid)
-    {
-      if (gimp->be_verbose)
-        g_print (_("Terminating plug-in: '%s'\n"),
-                 gimp_filename_to_utf8 (plug_in->prog));
-
-      status = kill (plug_in->pid, SIGKILL);
-    }
-
-  /* Wait for the process to exit. This will happen
-   *  immediately if it was just killed.
-   */
   if (plug_in->pid)
-    waitpid (plug_in->pid, &status, 0);
-#else
-  if (kill_it && plug_in->pid)
     {
-      /* Trying to avoid TerminateProcess (does mostly work).
-       * Otherwise some of our needed DLLs may get into an unstable state
-       * (see Win32 API docs).
-       */
-      DWORD dwExitCode = STILL_ACTIVE;
-      DWORD dwTries  = 10;
-      while ((STILL_ACTIVE == dwExitCode)
-	     && GetExitCodeProcess ((HANDLE) plug_in->pid, &dwExitCode)
-	     && (dwTries > 0))
-	{
-	  Sleep(10);
-	  dwTries--;
-	}
-      if (STILL_ACTIVE == dwExitCode)
-	{
+      /*  Ask the filter to exit gracefully  */
+      if (kill_it)
+        {
+          gp_quit_write (plug_in->my_write, plug_in);
+
+          /*  give the plug-in some time (10 ms)  */
+#ifndef G_OS_WIN32
+          tv.tv_sec  = 0;
+          tv.tv_usec = 10 * 1000;
+          select (0, NULL, NULL, NULL, &tv);
+#else
+          Sleep (10);
+#endif
+        }
+
+      /* If necessary, kill the filter. */
+#ifndef G_OS_WIN32
+
+      if (kill_it)
+        {
           if (gimp->be_verbose)
             g_print (_("Terminating plug-in: '%s'\n"),
                      gimp_filename_to_utf8 (plug_in->prog));
 
-	  TerminateProcess ((HANDLE) plug_in->pid, 0);
-	}
+          status = kill (plug_in->pid, SIGKILL);
+        }
+
+      /* Wait for the process to exit. This will happen
+       *  immediately if it was just killed.
+       */
+      waitpid (plug_in->pid, &status, 0);
+
+#else /* G_OS_WIN32 */
+
+      if (kill_it)
+        {
+          /* Trying to avoid TerminateProcess (does mostly work).
+           * Otherwise some of our needed DLLs may get into an
+           * unstable state (see Win32 API docs).
+           */
+          DWORD dwExitCode = STILL_ACTIVE;
+          DWORD dwTries    = 10;
+
+          while (dwExitCode == dwExitCode &&
+                 GetExitCodeProcess ((HANDLE) plug_in->pid, &dwExitCode) &&
+                 (dwTries > 0))
+            {
+              Sleep (10);
+              dwTries--;
+            }
+
+          if (dwExitCode == STILL_ACTIVE)
+            {
+              if (gimp->be_verbose)
+                g_print (_("Terminating plug-in: '%s'\n"),
+                         gimp_filename_to_utf8 (plug_in->prog));
+
+              TerminateProcess ((HANDLE) plug_in->pid, 0);
+            }
+        }
+
+#endif /* G_OS_WIN32 */
+
+      g_spawn_close_pid (plug_in->pid);
+      plug_in->pid = 0;
     }
-
-  /* FIXME: Wait for it like on Unix? */
-
-  /* Close handle which is no longer needed */
-  if (plug_in->pid)
-    CloseHandle ((HANDLE) plug_in->pid);
-#endif
-
-  plug_in->pid = 0;
 
   /* Remove the input handler. */
   if (plug_in->input_id)

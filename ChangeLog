@@ -1,5 +1,18 @@
 2005-02-08  Michael Natterer  <mitch@gimp.org>
 
+	* app/main.c: removed SIGCHLD handler which used to call
+	waitpid(-1,...) because this breaks all waitpid(pid,...) calls
+	in a non-deterministic way. Apparently it is possible to use both
+	SIG_DFL *and* SA_RESTART (SA_RESTART being the original reason
+	why the call to sigaction() was introduced).
+
+	* app/plug-in/plug-in.c (plug_in_close): don't have a million
+	subsequent if(plug_in->pid) blocks. Put everything into one big
+	if(plug_in->pid) block instead. Call g_spawn_close_pid() on all
+	platforms instead of using the Win32 CloseHandle().
+
+2005-02-08  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/file-actions.c
 	* app/actions/image-actions.c
 	* app/actions/qmask-actions.c
