@@ -59,10 +59,10 @@ tool_options_menu_setup (GimpUIManager *manager,
 {
   g_signal_connect (manager, "update",
                     G_CALLBACK (tool_options_menu_update),
-                    ui_path);
+                    (gpointer) ui_path);
   g_signal_connect_after (manager, "update",
                           G_CALLBACK (tool_options_menu_update_after),
-                          ui_path);
+                          (gpointer) ui_path);
 }
 
 

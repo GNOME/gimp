@@ -1,3 +1,7 @@
+2004-04-30  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/tool-options-menu.c: added casts to please the compiler.
+
 2004-04-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpuimanager.[ch]: added signal "update" which
