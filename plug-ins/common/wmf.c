@@ -25,10 +25,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 
-#include "gtk/gtk.h"
-#include "libgimp/gimp.h"
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 typedef guchar BYTE;
 typedef guint16 WORD;
@@ -890,14 +891,6 @@ static GRunModeType l_run_mode;
 static int pixs_per_in;
 
 static void
-load_close_callback (GtkWidget *widget,
-                     gpointer   data)
-
-{
-  gtk_main_quit ();
-}
-
-static void
 load_ok_callback (GtkWidget *widget,
                   gpointer   data)
 
@@ -916,9 +909,7 @@ load_dialog (char *file_name)
 {
   LoadDialogVals *vals;
   GtkWidget *frame;
-  GtkWidget *button;
   GtkWidget *vbox;
-  GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *table;
   GtkWidget *slider;
@@ -926,67 +917,51 @@ load_dialog (char *file_name)
   gchar **argv;
   gint argc;
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("load");
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
+  argv[0] = g_strdup ("wmf");
 
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 
-  vals = g_malloc (sizeof (LoadDialogVals));
-  
-  vals->dialog = gtk_dialog_new ();
+  vals = g_new (LoadDialogVals, 1);
 
-  gtk_window_set_title (GTK_WINDOW (vals->dialog), "Load Windows Metafile");
-  gtk_window_position (GTK_WINDOW (vals->dialog), GTK_WIN_POS_MOUSE);
+  vals->dialog = gimp_dialog_new ("Load Windows Metafile", "wmf",
+				  gimp_plugin_help_func, "filters/wmf.html",
+				  GTK_WIN_POS_MOUSE,
+				  FALSE, TRUE, FALSE,
+
+				  "OK", load_ok_callback,
+				  vals, NULL, NULL, TRUE, FALSE,
+				  "Cancel", gtk_widget_destroy,
+				  NULL, 1, NULL, FALSE, TRUE,
+
+				  NULL);
+
   gtk_signal_connect (GTK_OBJECT (vals->dialog), "destroy",
-                      (GtkSignalFunc) load_close_callback,
+                      GTK_SIGNAL_FUNC (gtk_main_quit),
                       NULL);
-
-  /*  Action area  */
-  button = gtk_button_new_with_label ("OK");
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) load_ok_callback,
-                      vals);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (vals->dialog)->action_area), button,
-                      TRUE, TRUE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label ("Cancel");
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-                             (GtkSignalFunc) gtk_widget_destroy,
-                             GTK_OBJECT (vals->dialog));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (vals->dialog)->action_area), button,
-                      TRUE, TRUE, 0);
-  gtk_widget_show (button);
-
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_container_border_width (GTK_CONTAINER (hbox), 0);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (vals->dialog)->vbox), hbox,
-                      TRUE, TRUE, 0);
-  gtk_widget_show (hbox);
 
   /* Rendering */
   frame = gtk_frame_new (g_strdup_printf ("Rendering %s", file_name));
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
-  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
-  vbox = gtk_vbox_new (FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 5);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (vals->dialog)->vbox), frame,
+		      TRUE, TRUE, 0);
+
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   /* Scale label */
   table = gtk_table_new (1, 2, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 5);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 5);
-  gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  label = gtk_label_new ("Scale (log 2)");
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  label = gtk_label_new ("Scale (log 2):");
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);

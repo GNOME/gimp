@@ -27,12 +27,15 @@
    In other word, pixel itself is not a neighbor of it.
 */
 
-#include "libgimp/gimp.h"
-#include "gtk/gtk.h"
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+#include <libgimp/gimpmath.h>
 
 #define	PLUG_IN_NAME	"plug_in_vpropagate"
 #define SHORT_NAME	"vpropagate"
@@ -70,15 +73,10 @@ static void         gtkW_gint_update           (GtkWidget     *widget,
 						gpointer       data);
 static void         gtkW_scale_update          (GtkAdjustment *adjustment,
 						double        *data);
-static void         gtkW_close_callback        (GtkWidget     *widget,
-						gpointer       data);
 static void         vpropagate_ok_callback     (GtkWidget     *widget,
 						gpointer       data);
 static void         gtkW_toggle_update         (GtkWidget     *widget,
 						gpointer       data);
-static GtkWidget *  gtkW_dialog_new            (char          *name,
-						GtkSignalFunc  ok_callback,
-						GtkSignalFunc  close_callback);
 static GtkWidget *  gtkW_table_add_toggle      (GtkWidget     *table,
 						gchar	      *name,
 						gint	       x1,
@@ -940,25 +938,39 @@ propagate_transparent (GImageType  image_type,
 static int
 vpropagate_dialog (GImageType image_type)
 {
-  GtkWidget	*dlg;
-  GtkWidget	*hbox;
-  GtkWidget	*frame;
-  GtkWidget	*table;
+  GtkWidget *dlg;
+  GtkWidget *hbox;
+  GtkWidget *frame;
+  GtkWidget *table;
   GtkWidget *sep;
   gchar	**argv;
-  gint	argc;
-  static gchar	buffer[3][10];
+  gint	  argc;
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
+  static gchar buffer[3][10];
+
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
   argv[0] = g_strdup (SHORT_NAME);
+
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
   
-  dlg = gtkW_dialog_new (PLUG_IN_NAME,
-			 (GtkSignalFunc) vpropagate_ok_callback,
-			 (GtkSignalFunc) gtkW_close_callback);
-  
+  dlg = gimp_dialog_new ("Value Propagate", "vpropagate",
+			 gimp_plugin_help_func, "filters/vpropagate.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
+
+			 "OK", vpropagate_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 "Cancel", gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
+
+			 NULL);
+
+  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
+		      NULL);
+
   hbox = gtkW_hbox_new((GTK_DIALOG (dlg)->vbox));
 
   /* Propagate Mode */
@@ -1064,13 +1076,6 @@ gtkW_scale_update (GtkAdjustment *adjustment,
 }
 
 static void
-gtkW_close_callback (GtkWidget *widget,
-		     gpointer   data)
-{
-  gtk_main_quit ();
-}
-
-static void
 vpropagate_ok_callback (GtkWidget *widget,
 			gpointer   data)
 {
@@ -1106,42 +1111,6 @@ gtkW_toggle_update (GtkWidget *widget,
     *toggle_val = TRUE;
   else
     *toggle_val = FALSE;
-}
-
-/* gtkW is the abbreviation of gtk Wrapper */
-static GtkWidget *
-gtkW_dialog_new (char          *name,
-		 GtkSignalFunc  ok_callback,
-		 GtkSignalFunc  close_callback)
-{
-  GtkWidget *dlg, *button;
-  
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), name);
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) gtkW_close_callback, NULL);
-
-  /* Action Area */
-  button = gtk_button_new_with_label ("OK");
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) ok_callback, dlg);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button,
-		      TRUE, TRUE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label ("Cancel");
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT(dlg));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button,
-		      TRUE, TRUE, 0);
-  gtk_widget_show (button);
-
-  return dlg;
 }
 
 GtkWidget *

@@ -212,8 +212,6 @@ glass_dialog (void)
 {
   GtkWidget *dlg;
   GtkWidget *label;
-  GtkWidget *hbbox;
-  GtkWidget *button;
   GtkWidget *scale;
   GtkWidget *frame;
   GtkWidget *table;
@@ -247,16 +245,20 @@ glass_dialog (void)
   /*  Parameter settings  */
   frame = gtk_frame_new (_("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
+  gtk_container_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-  table = gtk_table_new (2, 2, FALSE); /* table height, width */
-  gtk_container_border_width (GTK_CONTAINER (table), 10);
+
+  table = gtk_table_new (2, 2, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_container_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   /* Horizontal scale - Width */
-  label = gtk_label_new (_("Tile Width"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL, 0, 5, 0);
+  label = gtk_label_new (_("Tile Width:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
+		    GTK_FILL, GTK_FILL, 0, 0);
   /* xStart, xEnd, yStart, yEnd */
 
   adjustment = gtk_adjustment_new (gtvals.xblock, 10, 50, 1, 1, 0);
@@ -274,9 +276,10 @@ glass_dialog (void)
   gtk_widget_show (scale);
 
   /* Horizontal scale - Height */
-  label = gtk_label_new (_("Tile Height"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_FILL, 0, 5, 0);
+  label = gtk_label_new (_("Tile Height:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
+		    GTK_FILL, GTK_FILL, 0, 0);
 
   adjustment = gtk_adjustment_new (gtvals.yblock, 10, 50, 1, 1, 0);
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",

@@ -30,8 +30,11 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include <libgimp/gimp.h>
 #include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
 #include <plug-ins/megawidget/megawidget.h>
 
 struct Grgb {
@@ -57,23 +60,24 @@ struct piArgs {
 
 struct mwPreview *mwp;
 
-static void query(void);
-static void run(char *name, int nparam, GParam *param,
-                int *nretvals, GParam **retvals);
+static void query (void);
+static void run   (char *name, int nparam, GParam *param,
+		   int *nretvals, GParam **retvals);
 
-int pluginCore(struct piArgs *argp, gint32 drawable);
-int pluginCoreIA(struct piArgs *argp, gint32 drawable);
+int pluginCore   (struct piArgs *argp, gint32 drawable);
+int pluginCoreIA (struct piArgs *argp, gint32 drawable);
 
 static mw_preview_t waves_do_preview;
 
-static void wave(guchar *src, guchar *dest, gint width, gint height, gint bypp,
-                 gdouble amplitude, gdouble wavelength, gdouble phase,
-                 gint smear, gint reflective, gint verbose);
+static void wave (guchar *src, guchar *dest, gint width, gint height, gint bypp,
+		  gdouble amplitude, gdouble wavelength, gdouble phase,
+		  gint smear, gint reflective, gint verbose);
 
-static guchar bilinear(gdouble x, gdouble y, guchar *v);
+static guchar bilinear (gdouble x, gdouble y, guchar *v);
 #define WITHIN(a, b, c) ((((a) <= (b)) && ((b) <= (c))) ? 1 : 0)
 
-GPlugInInfo PLUG_IN_INFO = {
+GPlugInInfo PLUG_IN_INFO =
+{
   NULL, /* init */
   NULL, /* quit */
   query, /* query */
@@ -83,8 +87,10 @@ GPlugInInfo PLUG_IN_INFO = {
 MAIN()
 
 static void
-query(void){
-  static GParamDef args[] = {
+query (void)
+{
+  static GParamDef args[] =
+  {
     { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
     { PARAM_IMAGE, "image", "The Image" },
     { PARAM_DRAWABLE, "drawable", "The Drawable" },
@@ -99,22 +105,26 @@ query(void){
   static GParamDef *rets = NULL;
   static int nrets = 0;
 
-  gimp_install_procedure("plug_in_waves",
-                         "Distort the image with waves",
-                         "none yet",
-                         "Eric L. Hernes, Stephen Norris",
-                         "Stephen Norris",
-                         "1997",
-                         "<Image>/Filters/Distorts/Waves...",
-                         "RGB*, GRAY*",
-                         PROC_PLUG_IN,
-                         nargs, nrets,
-                         args, rets);
+  gimp_install_procedure ("plug_in_waves",
+			  "Distort the image with waves",
+			  "none yet",
+			  "Eric L. Hernes, Stephen Norris",
+			  "Stephen Norris",
+			  "1997",
+			  "<Image>/Filters/Distorts/Waves...",
+			  "RGB*, GRAY*",
+			  PROC_PLUG_IN,
+			  nargs, nrets,
+			  args, rets);
 }
 
 static void
-run(char *name, int nparam, GParam *param,
-    int *nretvals, GParam **retvals){
+run (char    *name,
+     int      nparam,
+     GParam  *param,
+     int     *nretvals,
+     GParam **retvals)
+{
   static GParam rvals[1];
 
   struct piArgs args;
@@ -122,102 +132,124 @@ run(char *name, int nparam, GParam *param,
   *nretvals = 1;
   *retvals = rvals;
 
-  memset(&args,(int)0,sizeof(struct piArgs));
+  memset (&args, (int)0, sizeof (struct piArgs));
   args.type=-1;
-  gimp_get_data("plug_in_waves", &args);
+  gimp_get_data ("plug_in_waves", &args);
 
   rvals[0].type = PARAM_STATUS;
   rvals[0].data.d_status = STATUS_SUCCESS;
-  switch (param[0].data.d_int32) {
-     GDrawable *drw;
+  switch (param[0].data.d_int32)
+    {
+      GDrawable *drw;
+
     case RUN_INTERACTIVE:
       /* XXX: add code here for interactive running */
-      if(args.type == -1) {
-        args.amplitude = 10.0;
-        args.wavelength = 10;
-        args.phase = 0.0;
-        args.type = 0;
-        args.reflective = 0;
-      }
+      if (args.type == -1)
+	{
+	  args.amplitude = 10.0;
+	  args.wavelength = 10;
+	  args.phase = 0.0;
+	  args.type = 0;
+	  args.reflective = 0;
+	}
 
-      drw = gimp_drawable_get(param[2].data.d_drawable);
-      mwp=mw_preview_build(drw);
+      drw = gimp_drawable_get (param[2].data.d_drawable);
+      mwp=mw_preview_build (drw);
 
-      if (pluginCoreIA(&args, param[2].data.d_drawable)==-1) {
-        rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
-      } else {
-        gimp_set_data("plug_in_waves", &args, sizeof(struct piArgs));
-      }
+      if (pluginCoreIA(&args, param[2].data.d_drawable)==-1)
+	{
+	  rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
+	}
+      else
+	{
+	  gimp_set_data ("plug_in_waves", &args, sizeof (struct piArgs));
+	}
 
     break;
 
     case RUN_NONINTERACTIVE:
       /* XXX: add code here for non-interactive running */
-      if (nparam != 8) {
-        rvals[0].data.d_status = STATUS_CALLING_ERROR;
-        break;
-      }
+      if (nparam != 8)
+	{
+	  rvals[0].data.d_status = STATUS_CALLING_ERROR;
+	  break;
+	}
       args.amplitude = param[3].data.d_float;
       args.phase = param[4].data.d_float;
       args.wavelength = param[5].data.d_float;
       args.type = param[6].data.d_int32;
       args.reflective = param[7].data.d_int32;
 
-      if (pluginCore(&args, param[2].data.d_drawable)==-1) {
-        rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
-        break;
-      }
+      if (pluginCore(&args, param[2].data.d_drawable)==-1)
+	{
+	  rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
+	  break;
+	}
     break;
 
     case RUN_WITH_LAST_VALS:
       /* XXX: add code here for last-values running */
-      if (pluginCore(&args, param[2].data.d_drawable)==-1) {
-        rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
-      }
-    break;
-
-  }
-
+      if (pluginCore(&args, param[2].data.d_drawable)==-1)
+	{
+	  rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
+	}
+      break;
+    }
 }
 
 gint
-pluginCore(struct piArgs *argp, gint32 drawable) {
+pluginCore (struct piArgs *argp,
+	    gint32         drawable)
+{
   gint retval=0;
   GDrawable *drw;
   GPixelRgn srcPr, dstPr;
   guchar *src, *dst;
   guint width, height, Bpp;
 
-  drw = gimp_drawable_get(drawable);
+  drw = gimp_drawable_get (drawable);
 
   width = drw->width;
   height = drw->height;
   Bpp = drw->bpp;
 
-  src = (guchar*)malloc(width*height*Bpp);
-  dst = (guchar*)malloc(width*height*Bpp);
+  src = g_new (guchar, width * height * Bpp);
+  dst = g_new (guchar, width * height * Bpp);
   gimp_pixel_rgn_init (&srcPr, drw, 0, 0, width, height, FALSE, FALSE);
   gimp_pixel_rgn_init (&dstPr, drw, 0, 0, width, height, TRUE, TRUE);
-  gimp_pixel_rgn_get_rect(&srcPr, src, 0, 0, width, height);
+  gimp_pixel_rgn_get_rect (&srcPr, src, 0, 0, width, height);
 
-  wave(src, dst, width, height, Bpp, argp->amplitude, argp->wavelength,
+  wave (src, dst, width, height, Bpp, argp->amplitude, argp->wavelength,
         argp->phase, argp->type==0, argp->reflective, 1);
-  gimp_pixel_rgn_set_rect(&dstPr, dst, 0, 0, width, height);
+  gimp_pixel_rgn_set_rect (&dstPr, dst, 0, 0, width, height);
 
-  free(src);
-  free(dst);
+  g_free (src);
+  g_free (dst);
 
-  gimp_drawable_flush(drw);
+  gimp_drawable_flush (drw);
   gimp_drawable_merge_shadow (drw->id, TRUE);
-  gimp_drawable_update(drw->id, 0, 0, width, height);
+  gimp_drawable_update (drw->id, 0, 0, width, height);
 
-  gimp_displays_flush();
+  gimp_displays_flush ();
 
   return retval;
 }
 
+static gboolean run_flag = FALSE;
+
+static void
+waves_ok_callback (GtkWidget *widget,
+		   gpointer   data)
+{
+  run_flag = TRUE;
+
+  gtk_widget_destroy (GTK_WIDGET (data));
+}
+
 gint
-pluginCoreIA(struct piArgs *argp, gint32 drawable) {
+pluginCoreIA (struct piArgs *argp,
+	      gint32         drawable)
+{
   gint r=-1; /* default to error return */
   GtkWidget *dlg;
   GtkWidget *frame;
@@ -225,124 +257,155 @@ pluginCoreIA(struct piArgs *argp, gint32 drawable) {
   GtkWidget *vbox;
   GtkWidget *table;
   GtkWidget *preview;
-  gint runp;
+  gchar **argv;
+  gint    argc;
+
   static struct mwRadioGroup mode[] = {
     { "Smear", 1 },
     { "Blacken", 0 },
     { NULL, 0 },
   };
-  gchar **argv;
-  gint argc;
 
   /* Set args */
-  argc = 1;
-  argv = g_new(gchar *, 1);
-  argv[0] = g_strdup("waves");
-  gtk_init(&argc, &argv);
-  gtk_rc_parse(gimp_gtkrc());
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
+  argv[0] = g_strdup ("waves");
+
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
   
-  dlg = mw_app_new("plug_in_waves", "Waves", &runp);
+  dlg = gimp_dialog_new ("Waves", "waves",
+			 gimp_plugin_help_func, "filters/waves.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
 
-  hbox = gtk_hbox_new(FALSE, 5);
-  gtk_container_border_width(GTK_CONTAINER(hbox), 5);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->vbox), hbox, TRUE, TRUE, 0);
-  gtk_widget_show(hbox);
+			 "OK", waves_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 "Cancel", gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
 
-  vbox = gtk_vbox_new(FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(hbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show(vbox);
+			 NULL);
 
-  preview = mw_preview_new(vbox, mwp, &waves_do_preview);
-  gtk_object_set_data(GTK_OBJECT(preview), "piArgs", argp);
-  gtk_object_set_data(GTK_OBJECT(preview), "mwRadioGroup", mode);
-  waves_do_preview(preview);
+  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
+		      NULL);
 
-  mw_toggle_button_new(vbox, NULL, "Reflective", &argp->reflective);
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_container_border_width (GTK_CONTAINER (hbox), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, TRUE, TRUE, 0);
+  gtk_widget_show (hbox);
 
-  vbox = gtk_vbox_new(FALSE, 5);
-  gtk_box_pack_start(GTK_BOX(hbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show(vbox);
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
 
-  frame = gtk_frame_new("Parameters");
-  gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
-  gtk_box_pack_start(GTK_BOX(vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show(frame);
+  preview = mw_preview_new (vbox, mwp, &waves_do_preview);
+  gtk_object_set_data (GTK_OBJECT (preview), "piArgs", argp);
+  gtk_object_set_data (GTK_OBJECT (preview), "mwRadioGroup", mode);
+  waves_do_preview (preview);
 
-  table = gtk_table_new(4, 2, FALSE);
-  gtk_container_border_width(GTK_CONTAINER (table), 5);
-  gtk_container_add(GTK_CONTAINER(frame), table);
+  mw_toggle_button_new (vbox, NULL, "Reflective", &argp->reflective);
 
-  mw_fscale_entry_new(table, "Amplitude", 0.0, 101.0, 1.0, 5.0, 0.0,
-                      0, 1, 1, 2, &argp->amplitude);
-  mw_fscale_entry_new(table, "Phase", 0.0, 360.0, 2.0, 5.0, 0.0,
-                      0, 1, 2, 3, &argp->phase);
-  mw_fscale_entry_new(table, "Wavelength", 0.1, 50.0, 1.0, 5.0, 0.0,
-                      0, 1, 3, 4, &argp->wavelength);
-  gtk_widget_show(table);
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
 
-  mw_radio_group_new(vbox, "Mode", mode);
+  frame = gtk_frame_new ("Parameters");
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-  gtk_widget_show(table);
-  gtk_widget_show(dlg);
-  gtk_main();
-  gdk_flush();
+  table = gtk_table_new (4, 2, FALSE);
+  gtk_container_border_width (GTK_CONTAINER (table), 4);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+
+  mw_fscale_entry_new (table, "Amplitude:", 0.0, 101.0, 1.0, 5.0, 0.0,
+		       0, 1, 1, 2, &argp->amplitude);
+  mw_fscale_entry_new (table, "Phase:", 0.0, 360.0, 2.0, 5.0, 0.0,
+		       0, 1, 2, 3, &argp->phase);
+  mw_fscale_entry_new (table, "Wavelength:", 0.1, 50.0, 1.0, 5.0, 0.0,
+		       0, 1, 3, 4, &argp->wavelength);
+  gtk_widget_show (table);
+
+  mw_radio_group_new (vbox, "Mode", mode);
+
+  gtk_widget_show (table);
+  gtk_widget_show (dlg);
+
+  gtk_main ();
+  gdk_flush ();
 
   argp->type = mw_radio_result(mode);
 
-  if(runp){
+  if (run_flag)
+    {
 #if 0
-    fprintf(stderr, "running:\n");
-    /*fprintf(stderr, "\t(image %d)\n", argp->image);*/
-    fprintf(stderr, "\t(drawable %d)\n", argp->drawable);
-    fprintf(stderr, "\t(amplitude %f)\n", argp->amplitude);
-    fprintf(stderr, "\t(phase %f)\n", argp->phase);
-    fprintf(stderr, "\t(wavelength %f)\n", argp->wavelength);
-    fprintf(stderr, "\t(type %d)\n", argp->type);
-    fprintf(stderr, "\t(reflective %d)\n", argp->reflective);
+      fprintf(stderr, "running:\n");
+      /*fprintf(stderr, "\t(image %d)\n", argp->image);*/
+      fprintf(stderr, "\t(drawable %d)\n", argp->drawable);
+      fprintf(stderr, "\t(amplitude %f)\n", argp->amplitude);
+      fprintf(stderr, "\t(phase %f)\n", argp->phase);
+      fprintf(stderr, "\t(wavelength %f)\n", argp->wavelength);
+      fprintf(stderr, "\t(type %d)\n", argp->type);
+      fprintf(stderr, "\t(reflective %d)\n", argp->reflective);
 #endif
-    return pluginCore(argp, drawable);
-  } else {
-    return r;
-  }
+      return pluginCore (argp, drawable);
+    }
+  else
+    {
+      return r;
+    }
 }
 
 static void
-waves_do_preview(GtkWidget *w) {
+waves_do_preview (GtkWidget *w)
+{
   static GtkWidget *theWidget = NULL;
   struct piArgs *argp;
   struct mwRadioGroup *rgp;
   guchar *dst;
   gint y;
 
-  if(theWidget==NULL){
-    theWidget=w;
-  }
+  if (theWidget==NULL)
+    {
+      theWidget=w;
+    }
 
   argp = gtk_object_get_data(GTK_OBJECT(theWidget), "piArgs");
   rgp = gtk_object_get_data(GTK_OBJECT(theWidget), "mwRadioGroup");
   argp->type = mw_radio_result(rgp);
-  dst = (guchar*)malloc(mwp->width*mwp->height*mwp->bpp);
+  dst = g_new (guchar, mwp->width * mwp->height * mwp->bpp);
 
-  wave(mwp->bits, dst, mwp->width, mwp->height,
-       mwp->bpp, (argp->amplitude/mwp->scale), (argp->wavelength/mwp->scale),
-       argp->phase, argp->type==0, argp->reflective, 0);
+  wave (mwp->bits, dst, mwp->width, mwp->height,
+	mwp->bpp, (argp->amplitude/mwp->scale), (argp->wavelength/mwp->scale),
+	argp->phase, argp->type==0, argp->reflective, 0);
 
-  for(y=0;y<mwp->height; y++){
-    gtk_preview_draw_row(GTK_PREVIEW(theWidget),
-                         dst+(y*mwp->width*mwp->bpp), 0, y,
-                         mwp->width);
-  }
+  for (y = 0; y < mwp->height; y++)
+    {
+      gtk_preview_draw_row (GTK_PREVIEW (theWidget),
+			    dst+(y*mwp->width*mwp->bpp), 0, y,
+			    mwp->width);
+    }
 
-  gtk_widget_draw(theWidget, NULL);
-  gdk_flush();
-  free(dst);
+  gtk_widget_draw (theWidget, NULL);
+  gdk_flush ();
+  g_free (dst);
 }
 
 
 static void
-wave(guchar *src, guchar *dst, gint width, gint height, gint bypp,
-     gdouble amplitude, gdouble wavelength, gdouble phase, gint smear,
-     gint reflective, gint verbose) {
+wave (guchar  *src,
+      guchar  *dst,
+      gint     width,
+      gint     height,
+      gint     bypp,
+      gdouble  amplitude,
+      gdouble  wavelength,
+      gdouble  phase,
+      gint     smear,
+      gint     reflective,
+      gint     verbose)
+{
   long   rowsiz;
   guchar *p;
   guchar *dest;
@@ -369,11 +432,11 @@ wave(guchar *src, guchar *dst, gint width, gint height, gint bypp,
   phase = phase*G_PI/180;
   rowsiz   = width * bypp;
 
-  if (verbose) {
-    gimp_progress_init("Waves");
-    prog_interval=height/10;
-  }
-
+  if (verbose)
+    {
+      gimp_progress_init ("Waves");
+      prog_interval=height/10;
+    }
 
   x1=y1=0;
   x2=width;
@@ -396,28 +459,31 @@ wave(guchar *src, guchar *dst, gint width, gint height, gint bypp,
    */
 
   /* Center of selection */
-
   cen_x = (double) (x2 - 1 + x1) / 2.0;
   cen_y = (double) (y2 - 1 + y1) / 2.0;
 
   /* Compute wave radii (semiaxes) */
-
   xhsiz = (double) (x2 - x1) / 2.0;
   yhsiz = (double) (y2 - y1) / 2.0;
 
   /* These are the necessary scaling factors to turn the wave
      ellipse into a large circle */
 
-  if (xhsiz < yhsiz) {
-    xscale = yhsiz / xhsiz;
-    yscale = 1.0;
-  } else if (xhsiz > yhsiz) {
-    xscale = 1.0;
-    yscale = xhsiz / yhsiz;
-  } else {
-    xscale = 1.0;
-    yscale = 1.0;
-  } /* else */
+  if (xhsiz < yhsiz)
+    {
+      xscale = yhsiz / xhsiz;
+      yscale = 1.0;
+    }
+  else if (xhsiz > yhsiz)
+    {
+      xscale = 1.0;
+      yscale = xhsiz / yhsiz;
+    }
+  else
+    {
+      xscale = 1.0;
+      yscale = 1.0;
+    }
 
   radius  = MAX(xhsiz, yhsiz);
   radius2 = radius * radius;
@@ -428,112 +494,130 @@ wave(guchar *src, guchar *dst, gint width, gint height, gint bypp,
 
   wavelength = (wavelength * 2);
 
-  for (y = y1; y < y2; y++) {
-    dest = dst;
+  for (y = y1; y < y2; y++)
+    {
+      dest = dst;
 
-    if (verbose && (y % prog_interval == 0))
-      gimp_progress_update((double)y/(double)height);
+      if (verbose && (y % prog_interval == 0))
+	gimp_progress_update((double)y/(double)height);
 
-    for (x = x1; x < x2; x++) {
-      /* Distance from current point to wave center, scaled */
+      for (x = x1; x < x2; x++)
+	{
+	  /* Distance from current point to wave center, scaled */
+	  dx = (x - cen_x) * xscale;
+	  dy = (y - cen_y) * yscale;
 
-      dx = (x - cen_x) * xscale;
-      dy = (y - cen_y) * yscale;
+	  /* Distance^2 to center of *circle* (our scaled ellipse) */
+	  d = sqrt(dx * dx + dy * dy);
 
-      /* Distance^2 to center of *circle* (our scaled ellipse) */
+	  /* Use the formula described above. */
 
-      d = sqrt(dx * dx + dy * dy);
+	  /* Calculate waved point and scale again to ellipsify */
 
-      /* Use the formula described above. */
+	  /*
+	   * Reflective waves are strange - the effect is much
+	   * more like a mirror which is in the shape of
+	   * the wave than anything else.
+	   */
 
-      /* Calculate waved point and scale again to ellipsify */
+	  if (reflective)
+	    {
+	      amnt = amplitude * fabs (sin (((d / wavelength)
+					     * (2.0 * G_PI) + phase)));
 
-      /*
-       * Reflective waves are strange - the effect is much
-       * more like a mirror which is in the shape of
-       * the wave than anything else.
-       */
+	      needx = (amnt * dx) / xscale + cen_x;
+	      needy = (amnt * dy) / yscale + cen_y;
+	    }
+	  else
+	    {
+	      amnt = amplitude * sin (((d / wavelength)
+				       * (2.0 * G_PI) + phase));
 
-      if (reflective){
-        amnt = amplitude * fabs(sin(((d / wavelength)
-                                     * (2.0 * G_PI) + phase)));
+	      needx = (amnt + dx) / xscale + cen_x;
+	      needy = (amnt + dy) / yscale + cen_y;
+	    }
 
-        needx = (amnt * dx) / xscale + cen_x;
-        needy = (amnt * dy) / yscale + cen_y;
-      } else {
-        amnt = amplitude * sin(((d / wavelength)
-                                * (2.0 * G_PI) + phase));
+	  /* Calculations complete; now copy the proper pixel */
 
-        needx = (amnt + dx) / xscale + cen_x;
-        needy = (amnt + dy) / yscale + cen_y;
-      }
+	  xi = needx;
+	  yi = needy;
 
-      /* Calculations complete; now copy the proper pixel */
+	  if (smear)
+	    {
+	      if (xi > width - 2)
+		{
+		  xi = width - 2;
+		}
+	      else if (xi < 0)
+		{
+		  xi = 0;
+		}
+	      if (yi > height - 2)
+		{
+		  yi = height - 2;
+		}
+	      else if (yi < 0)
+		{
+		  yi = 0;
+		}
+	    }
 
-      xi = needx;
-      yi = needy;
+	  p = src + rowsiz * yi + xi * bypp;
 
-      if (smear){
-        if (xi > width - 2){
-          xi = width - 2;
-        } else if (xi < 0){
-          xi = 0;
-        }
-        if (yi > height - 2){
-          yi = height - 2;
-        } else if (yi < 0){
-          yi = 0;
-        }
-      }
+	  x1_in = WITHIN (0, xi, width - 1);
+	  y1_in = WITHIN (0, yi, height - 1);
+	  x2_in = WITHIN (0, xi + 1, width - 1);
+	  y2_in = WITHIN (0, yi + 1, height - 1);
 
-      p = src + rowsiz * yi + xi * bypp;
+	  for (k = 0; k < bypp; k++)
+	    {
+	      if (x1_in && y1_in)
+		values[0] = *(p + k);
+	      else
+		values[0] = 0;
 
-      x1_in = WITHIN(0, xi, width - 1);
-      y1_in = WITHIN(0, yi, height - 1);
-      x2_in = WITHIN(0, xi + 1, width - 1);
-      y2_in = WITHIN(0, yi + 1, height - 1);
+	      if (x2_in && y1_in)
+		values[1] = *(p + bypp + k);
+	      else
+		values[1] = 0;
 
-      for (k = 0; k < bypp; k++) {
-        if (x1_in && y1_in)
-          values[0] = *(p + k);
-        else
-          values[0] = 0;
+	      if (x1_in && y2_in)
+		values[2] = *(p + rowsiz + k);
+	      else
+		values[2] = 0;
 
-        if (x2_in && y1_in)
-          values[1] = *(p + bypp + k);
-        else
-          values[1] = 0;
+	      if (x2_in)
+		{
+		  if (y2_in)
+		    values[3] = *(p + bypp + k + rowsiz);
+		  else
+		    values[3] = 0;
+		}
+	      else
+		values[3] = 0;
 
-        if (x1_in && y2_in)
-          values[2] = *(p + rowsiz + k);
-        else
-          values[2] = 0;
+	      val = bilinear (needx, needy, values);
 
-        if (x2_in) {
-          if (y2_in)
-            values[3] = *(p + bypp + k + rowsiz);
-          else
-            values[3] = 0;
-        } else
-          values[3] = 0;
+	      *dest++ = val;
+	    }
+	}
 
-        val = bilinear(needx, needy, values);
+      dst += rowsiz;
+    }
 
-        *dest++ = val;
-      } /* for */
-    } /* for */
+  if (verbose)
+    gimp_progress_update (1.0);
 
-    dst += rowsiz;
-  } /* for */
-  if (verbose) gimp_progress_update(1.0);
-
-} /* wave */
+}
 
 static guchar
-bilinear(gdouble x, gdouble y, guchar *v) {
+bilinear (gdouble  x,
+	  gdouble  y,
+	  guchar  *v)
+{
   double m0, m1;
-  x = fmod(x, 1.0);
-  y = fmod(y, 1.0);
+  x = fmod (x, 1.0);
+  y = fmod (y, 1.0);
 
   if (x < 0)
     x += 1.0;
@@ -544,15 +628,4 @@ bilinear(gdouble x, gdouble y, guchar *v) {
   m1 = (1.0 - x) * v[2] + x * v[3];
 
   return (guchar) ((1.0 - y) * m0 + y * m1);
-} /* bilinear */
-
-/*
- * Local Variables:
- * c-file-style: GNU
- * mode: C
- * c-auto-newline: t
- *
- * End:
- */
-
-/* end of file waves/waves.c */
+}

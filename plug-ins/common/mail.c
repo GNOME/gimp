@@ -120,8 +120,8 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -460,10 +460,10 @@ save_dialog (void)
   GtkWidget *vscrollbar;
   GSList *group;
 
-  gint argc;
+  gint    argc;
   gchar **argv;
-  gchar buffer[32];
-  gint nreturn_vals;
+  gchar   buffer[32];
+  gint    nreturn_vals;
   GParam *return_vals;
   
   argc = 1;
@@ -513,7 +513,7 @@ save_dialog (void)
 
   /*  To:  Label */
   label = gtk_label_new ("To:");
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label,
 		    0, 1, 0, 1,
 		    GTK_SHRINK | GTK_FILL,
@@ -538,7 +538,7 @@ save_dialog (void)
 
   /*  From Label */
   label = gtk_label_new ("From:");
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label,
 		    0, 1, 1, 2,
 		    GTK_SHRINK | GTK_FILL,
@@ -564,7 +564,7 @@ save_dialog (void)
 
   /* Subject Label */
   label = gtk_label_new ("Subject:");
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label,
 		    0, 1, 2, 3,
 		    GTK_SHRINK | GTK_FILL,
@@ -589,7 +589,7 @@ save_dialog (void)
 
   /* Comment label  */
   label = gtk_label_new ("Comment:");
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 
 		    0, 1, 3, 4, 
 		    GTK_SHRINK | GTK_FILL,
@@ -614,7 +614,7 @@ save_dialog (void)
 
   /* Filename label  */
   label = gtk_label_new (_("Filename:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 
 		    0, 1, 4, 5, 
 		    GTK_SHRINK | GTK_FILL,
@@ -669,7 +669,7 @@ save_dialog (void)
 
   /* Encapsulation label */
   label = gtk_label_new (_("Encapsulation:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach( GTK_TABLE (table), label ,
 		    0, 1, 6, 7,
 		    GTK_SHRINK | GTK_FILL,

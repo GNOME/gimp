@@ -292,6 +292,7 @@ color_enhance_SOURCES = \
 	color_enhance.c
 
 color_enhance_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -580,6 +581,7 @@ gradmap_SOURCES = \
 	gradmap.c
 
 gradmap_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GLIB_LIBS)				\
 	$(INTLLIBS)
@@ -687,6 +689,7 @@ laplace_SOURCES = \
 	laplace.c
 
 laplace_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GLIB_LIBS)				\
 	$(INTLLIBS)
@@ -1082,6 +1085,7 @@ threshold_alpha_SOURCES = \
 	threshold_alpha.c
 
 threshold_alpha_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -1100,6 +1104,7 @@ tile_SOURCES = \
 	tile.c
 
 tile_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -1108,6 +1113,7 @@ tileit_SOURCES = \
 	tileit.c
 
 tileit_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -1132,6 +1138,7 @@ video_SOURCES = \
 	video.c
 
 video_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -1148,6 +1155,7 @@ vpropagate_SOURCES = \
 	vpropagate.c
 
 vpropagate_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -1166,6 +1174,7 @@ waves_SOURCES = \
 
 waves_LDADD = \
 	$(top_builddir)/plug-ins/megawidget/libmegawidget.a	\
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -1174,6 +1183,7 @@ whirlpinch_SOURCES = \
 	whirlpinch.c
 
 whirlpinch_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -1182,6 +1192,7 @@ wind_SOURCES = \
 	wind.c
 
 wind_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -1190,6 +1201,7 @@ wmf_SOURCES = \
 	wmf.c
 
 wmf_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)

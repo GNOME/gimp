@@ -22,8 +22,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "gtk/gtk.h"
-#include "libgimp/gimp.h"
+
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #define ENTRY_WIDTH     60
 #define ENTRY_HEIGHT    25
@@ -59,8 +62,6 @@ static gint32    tile   (gint32     image_id,
 static gint      tile_dialog          (gint       width,
 				       gint       height);
 
-static void      tile_close_callback  (GtkWidget *widget,
-				       gpointer   data);
 static void      tile_ok_callback     (GtkWidget *widget,
 				       gpointer   data);
 static void      tile_toggle_update   (GtkWidget *widget,
@@ -361,17 +362,15 @@ tile_dialog (gint width, gint height)
 {
   GtkWidget *dlg;
   GtkWidget *label;
-  GtkWidget *hbbox;  
-  GtkWidget *button;
   GtkWidget *toggle;
   GtkWidget *frame;
   GtkWidget *table;
-  char buffer[12];
+  gchar   buffer[12];
   gchar **argv;
-  gint argc;
+  gint    argc;
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
   argv[0] = g_strdup ("tile");
 
   gtk_init (&argc, &argv);
@@ -382,59 +381,43 @@ tile_dialog (gint width, gint height)
   tvals.new_width = width;
   tvals.new_height = height;
 
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Tile");
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
+  dlg = gimp_dialog_new ("Tile", "tile",
+			 gimp_plugin_help_func, "filters/tile.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
+
+			 "OK", tile_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 "Cancel", gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
+
+			 NULL);
+
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) tile_close_callback,
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label ("OK");
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) tile_ok_callback,
-		      dlg);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label ("Cancel");
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
   /*  parameter settings  */
-  frame = gtk_frame_new ("Tile to New Size:");
+  frame = gtk_frame_new ("Tile to New Size");
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
   table = gtk_table_new (4, 2, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 10);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 5);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 1, 5);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 5);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
 
-  label = gtk_label_new ("Width: ");
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
+  label = gtk_label_new ("Width:");
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   tint.width_entry = gtk_entry_new ();
   gtk_widget_set_usize (tint.width_entry, ENTRY_WIDTH, ENTRY_HEIGHT);
-  sprintf (buffer, "%d", width);
+  g_snprintf (buffer, sizeof (buffer), "%d", width);
   gtk_entry_set_text (GTK_ENTRY (tint.width_entry), buffer);
   gtk_table_attach (GTK_TABLE (table), tint.width_entry,
 		    1, 2, 0, 1, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
@@ -443,14 +426,15 @@ tile_dialog (gint width, gint height)
 		      &tvals.new_width);
   gtk_widget_show (tint.width_entry);
 
-  label = gtk_label_new ("Height: ");
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
+  label = gtk_label_new ("Height:");
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   tint.height_entry = gtk_entry_new ();
   gtk_widget_set_usize (tint.height_entry, ENTRY_WIDTH, ENTRY_HEIGHT);
-  sprintf (buffer, "%d", height);
+  g_snprintf (buffer, sizeof (buffer), "%d", height);
   gtk_entry_set_text (GTK_ENTRY (tint.height_entry), buffer);
   gtk_table_attach (GTK_TABLE (table), tint.height_entry,
 		    1, 2, 1, 2, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
@@ -460,8 +444,8 @@ tile_dialog (gint width, gint height)
   gtk_widget_show (tint.height_entry);
 
   toggle = gtk_check_button_new_with_label ("Constrain Ratio");
-  gtk_table_attach (GTK_TABLE (table), toggle,
-		    0, 2, 2, 3, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 2, 3,
+		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) tile_toggle_update,
 		      &tvals.constrain);
@@ -469,8 +453,8 @@ tile_dialog (gint width, gint height)
   gtk_widget_show (toggle);
 
   toggle = gtk_check_button_new_with_label ("New Image");
-  gtk_table_attach (GTK_TABLE (table), toggle,
-		    0, 2, 3, 4, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 3, 4,
+		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) tile_toggle_update,
 		      &tvals.new_image);
@@ -489,13 +473,6 @@ tile_dialog (gint width, gint height)
 
 
 /*  Tile interface functions  */
-
-static void
-tile_close_callback (GtkWidget *widget,
-		     gpointer   data)
-{
-  gtk_main_quit ();
-}
 
 static void
 tile_ok_callback (GtkWidget *widget,

@@ -296,8 +296,6 @@ flare_dialog (GDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *frame;
-  GtkWidget *hbbox;
-  GtkWidget *button;
   guchar  *color_cube;
   gchar  **argv;
   gint     argc;
@@ -343,7 +341,7 @@ flare_dialog (GDrawable *drawable)
   /*  parameter settings  */
   frame = flare_center_create (drawable);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 10);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
   gtk_widget_show (frame);
@@ -730,18 +728,18 @@ flare_center_create (GDrawable *drawable)
 		     (GtkSignalFunc) flare_center_destroy,
 		     center );
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 10);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
 
   table = gtk_table_new (2, 4, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 10);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
+  gtk_container_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 3);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 5);
 
-  label = gtk_label_new (_("X: "));
+  label = gtk_label_new (_("X:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5 );
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+		    GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   center->xentry = entry = gtk_entry_new ();
@@ -754,10 +752,10 @@ flare_center_create (GDrawable *drawable)
 		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (entry);
 
-  label = gtk_label_new (_("Y: "));
+  label = gtk_label_new (_("Y:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5 );
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
-		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+		    GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   center->yentry = entry = gtk_entry_new ();

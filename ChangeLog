@@ -1,3 +1,29 @@
+2000-01-08  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/engrave.c
+	* plug-ins/common/flarefx.c
+	* plug-ins/common/gbr.c
+	* plug-ins/common/gicon.c
+	* plug-ins/common/glasstile.c
+	* plug-ins/common/mail.c
+	* plug-ins/common/psd.c
+	* plug-ins/common/smooth_palette.c
+	* plug-ins/common/tga.c
+	* plug-ins/common/threshold_alpha.c
+	* plug-ins/common/tiff.c
+	* plug-ins/common/tile.c
+	* plug-ins/common/tileit.c
+	* plug-ins/common/video.c
+	* plug-ins/common/vpropagate.c
+	* plug-ins/common/warp.c
+	* plug-ins/common/waves.c
+	* plug-ins/common/whirlpinch.c
+	* plug-ins/common/wind.c
+	* plug-ins/common/wmf.c: more plugin tuning... and this time I
+	added the needed libs in plugin-defs.pl instead of Makefile.am :-)
+
 2000-01-08  Asbjorn Pettersen  <asbjornP@dualog.no>
 
 	* modules/modregister.h: add types for GimpColorDisplayxxxxx

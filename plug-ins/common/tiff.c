@@ -34,8 +34,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <tiffio.h>
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 typedef struct
 {
@@ -99,8 +100,6 @@ static gint   save_image (char   *filename,
 static void   init_gtk ();
 static gint   save_dialog ();
 
-static void   save_close_callback  (GtkWidget *widget,
-				    gpointer   data);
 static void   save_ok_callback     (GtkWidget *widget,
 				    gpointer   data);
 static void   save_toggle_update   (GtkWidget *widget,
@@ -1368,7 +1367,7 @@ static gint save_image (char   *filename,
 }
 
 static void 
-init_gtk ()
+init_gtk (void)
 {
   gchar **argv;
   gint argc;
@@ -1382,11 +1381,9 @@ init_gtk ()
 }
 
 static gint
-save_dialog ()
+save_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *hbbox;
-  GtkWidget *button;
   GtkWidget *toggle;
   GtkWidget *frame;
   GtkWidget *toggle_vbox;
@@ -1394,52 +1391,38 @@ save_dialog ()
   GtkWidget *label;
   GtkWidget *entry;
   GSList *group;
-  gint use_none = (tsvals.compression == COMPRESSION_NONE);
-  gint use_lzw = (tsvals.compression == COMPRESSION_LZW);
+
+  gint use_none     = (tsvals.compression == COMPRESSION_NONE);
+  gint use_lzw      = (tsvals.compression == COMPRESSION_LZW);
   gint use_packbits = (tsvals.compression == COMPRESSION_PACKBITS);
 
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Save as Tiff");
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
+  dlg = gimp_dialog_new ("Save as TIFF", "tiff",
+			 gimp_plugin_help_func, "filters/tiff.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
+
+			 "OK", save_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 "Cancel", gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
+
+			 NULL);
+
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) save_close_callback,
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label ("OK");
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) save_ok_callback,
-		      dlg);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label ("Cancel");
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
   /* hbox for compression and fillorder settings */
-  hbox = gtk_hbox_new (FALSE, 5);
+  hbox = gtk_hbox_new (FALSE, 6);
 
   /*  compression  */
   frame = gtk_frame_new ("Compression");
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, FALSE, 0);
-  toggle_vbox = gtk_vbox_new (FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (toggle_vbox), 5);
+
+  toggle_vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (toggle_vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
 
   group = NULL;
@@ -1476,17 +1459,20 @@ save_dialog ()
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, FALSE, TRUE, 0);
   gtk_widget_show (hbox);
 
-
   /* comment entry */
-  frame = gtk_frame_new(NULL);
+  frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_NONE);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 4);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, FALSE, TRUE, 0);
 
-  hbox = gtk_hbox_new (FALSE, 5);
-  label = gtk_label_new ("Comment: ");
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new ("Comment:");
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, TRUE, 0);
+
   entry = gtk_entry_new ();
   gtk_widget_show (entry);
   gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
@@ -1495,8 +1481,6 @@ save_dialog ()
                       (GtkSignalFunc) comment_entry_callback,
                       NULL);
 
-  gtk_container_add (GTK_CONTAINER (frame), hbox);
-  gtk_widget_show (hbox);
   gtk_widget_show (frame);
 
   gtk_widget_show (dlg);
@@ -1516,13 +1500,6 @@ save_dialog ()
 
 
 /*  Save interface functions  */
-
-static void
-save_close_callback (GtkWidget *widget,
-		     gpointer   data)
-{
-  gtk_main_quit ();
-}
 
 static void
 save_ok_callback (GtkWidget *widget,

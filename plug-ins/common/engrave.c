@@ -217,8 +217,6 @@ engrave_dialog (void)
   GtkWidget *dlg;
   GtkWidget *frame;
   GtkWidget *table;
-  GtkWidget *hbbox;
-  GtkWidget *button;
   GtkWidget *toggle;
   gchar **argv;
   gint argc;
@@ -249,21 +247,24 @@ engrave_dialog (void)
   /*  parameter settings  */
   frame = gtk_frame_new (_("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 10);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
   table = gtk_table_new (2, 3, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER(table), 10);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   toggle = gtk_check_button_new_with_label (_("Limit line width"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 0, 1, GTK_FILL, 0, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 0, 1, GTK_FILL, 0, 0, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      GTK_SIGNAL_FUNC (engrave_toggle_update),
 		      &pvals.limit);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pvals.limit);
   gtk_widget_show (toggle);
 
-  dialog_create_value (_("Height"), GTK_TABLE (table), 1,
+  dialog_create_value (_("Height:"), GTK_TABLE (table), 1,
 		       &pvals.height, 2.0, 16.0);
 
   gtk_widget_show (frame);
@@ -558,47 +559,53 @@ engrave_toggle_update (GtkWidget *widget,
  * Thanks to Quartic for these.
  */
 static void
-dialog_create_value(char *title, GtkTable *table, int row, gint *value, int left, int right)
+dialog_create_value (char     *title,
+		     GtkTable *table,
+		     int       row,
+		     gint     *value,
+		     int       left,
+		     int right)
 {
-    GtkWidget *label;
-    GtkWidget *scale;
-    GtkWidget *entry;
-    GtkObject *scale_data;
-    char       buf[256];
+  GtkWidget *label;
+  GtkWidget *scale;
+  GtkWidget *entry;
+  GtkObject *scale_data;
+  gchar      buf[256];
     
-    label = gtk_label_new(title);
-    gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
-    gtk_table_attach(table, label, 0, 1, row, row + 1, GTK_FILL, GTK_FILL, 4, 0);
-    gtk_widget_show(label);
+  label = gtk_label_new (title);
+  gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
+  gtk_table_attach(table, label, 0, 1, row, row + 1, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show(label);
     
-    scale_data = gtk_adjustment_new(*value, left, right,
-				    1.0,
-				    1.0,
-				    0.0);
+  scale_data = gtk_adjustment_new(*value, left, right,
+				  1.0,
+				  1.0,
+				  0.0);
     
-    gtk_signal_connect(GTK_OBJECT(scale_data), "value_changed",
-		       (GtkSignalFunc) engrave_scale_update,
-		       value);
+  gtk_signal_connect(GTK_OBJECT(scale_data), "value_changed",
+		     (GtkSignalFunc) engrave_scale_update,
+		     value);
     
-    scale = gtk_hscale_new(GTK_ADJUSTMENT(scale_data));
-    gtk_widget_set_usize(scale, SCALE_WIDTH, 0);
-    gtk_table_attach(table, scale, 1, 2, row, row + 1, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-    gtk_scale_set_draw_value(GTK_SCALE(scale), FALSE);
-    gtk_scale_set_digits(GTK_SCALE(scale), 0);
-    gtk_range_set_update_policy(GTK_RANGE(scale), GTK_UPDATE_CONTINUOUS);
-    gtk_widget_show(scale);
+  scale = gtk_hscale_new(GTK_ADJUSTMENT(scale_data));
+  gtk_widget_set_usize(scale, SCALE_WIDTH, 0);
+  gtk_table_attach(table, scale, 1, 2, row, row + 1,
+		   GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+  gtk_scale_set_draw_value(GTK_SCALE(scale), FALSE);
+  gtk_range_set_update_policy(GTK_RANGE(scale), GTK_UPDATE_CONTINUOUS);
+  gtk_widget_show(scale);
     
-    entry = gtk_entry_new();
-    gtk_object_set_user_data(GTK_OBJECT(entry), scale_data);
-    gtk_object_set_user_data(scale_data, entry);
-    gtk_widget_set_usize(entry, ENTRY_WIDTH, 0);
-    sprintf(buf, "%d", *value);
-    gtk_entry_set_text(GTK_ENTRY(entry), buf);
-    gtk_signal_connect(GTK_OBJECT(entry), "changed",
-		       (GtkSignalFunc) engrave_entry_update,
-		       value);
-    gtk_table_attach(GTK_TABLE(table), entry, 2, 3, row, row + 1, GTK_FILL, GTK_FILL, 4, 0);
-    gtk_widget_show(entry);
+  entry = gtk_entry_new();
+  gtk_object_set_user_data(GTK_OBJECT(entry), scale_data);
+  gtk_object_set_user_data(scale_data, entry);
+  gtk_widget_set_usize(entry, ENTRY_WIDTH, 0);
+  g_snprintf (buf, sizeof (buf), "%d", *value);
+  gtk_entry_set_text(GTK_ENTRY(entry), buf);
+  gtk_signal_connect(GTK_OBJECT(entry), "changed",
+		     (GtkSignalFunc) engrave_entry_update,
+		     value);
+  gtk_table_attach (GTK_TABLE (table), entry, 2, 3, row, row + 1,
+		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (entry);
 }
 
 static void

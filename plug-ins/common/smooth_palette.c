@@ -395,7 +395,7 @@ callback (GtkWidget *widget,
     }
   else
     {
-      g_print (stderr, "bad data in callback: %x\n", (int) data);
+      fprintf (stderr, "bad data in callback: %x\n", (int) data);
     }
 }
 

@@ -63,18 +63,21 @@
  * Version 0.3   10/20/97  Initial release for Gimp 0.99.xx
  */
 
+#include "config.h"
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 #include <unistd.h>
 #include <signal.h>
 #include <time.h>                  /* time(NULL) for random # seed */
-#include "gtk/gtk.h"
-#include "config.h"
+
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+#include <libgimp/gimpmath.h>
+
 #include "libgimp/stdplugins-intl.h"
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
 
 /* Some useful macros */
 
@@ -189,8 +192,6 @@ static void      warp_map_mag_callback (gint32     id,
 static void      warp_map_grad_callback (gint32     id,
 					    gpointer   data);
 static void      warp_map_vector_callback (gint32     id,
-					    gpointer   data);
-static void      warp_close_callback   (GtkWidget *widget,
 					    gpointer   data);
 static void      warp_ok_callback      (GtkWidget *widget,
 					    gpointer   data);
@@ -421,23 +422,19 @@ run (gchar  *name,
   }
   */
 
-
   gimp_drawable_detach (map_x);
   gimp_drawable_detach (map_y);
 
-
   if (run_mode != RUN_NONINTERACTIVE)
       gimp_displays_flush ();
-
 }
 
 static int
 warp_dialog (GDrawable *drawable)
 {
   GtkWidget *dlg;
+  GtkWidget *vbox;
   GtkWidget *label;
-  GtkWidget *hbbox;
-  GtkWidget *button;
   GtkWidget *toggle;
   GtkWidget *toggle_hbox;
   GtkWidget *frame;
@@ -452,133 +449,101 @@ warp_dialog (GDrawable *drawable)
   GtkWidget *magmenu;
   GtkWidget *gradmenu;
   GtkWidget *vectormenu;
-  GtkTooltips *tooltips;
-  GdkColor tips_fg, tips_bg;
 
-  GSList *group = NULL;
-  GSList *groupmag = NULL;
-  gchar **argv;
-  gchar buffer[32];
-  gint argc;
-  gint use_wrap = (dvals.wrap_type == WRAP);
-  gint use_smear = (dvals.wrap_type == SMEAR);
-  gint use_black = (dvals.wrap_type == BLACK);
-  gint use_color = (dvals.wrap_type == COLOR);
+  GSList  *group = NULL;
+  GSList  *groupmag = NULL;
+  gchar  **argv;
+  gchar    buffer[32];
+  gint     argc;
+
+  gint use_wrap    = (dvals.wrap_type == WRAP);
+  gint use_smear   = (dvals.wrap_type == SMEAR);
+  gint use_black   = (dvals.wrap_type == BLACK);
+  gint use_color   = (dvals.wrap_type == COLOR);
   gint mag_use_yes = (dvals.mag_use == TRUE);
-  gint mag_use_no = (dvals.mag_use == FALSE);
+  gint mag_use_no  = (dvals.mag_use == FALSE);
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
   argv[0] = g_strdup ("Warp");
 
   gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
 
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), _("Warp"));
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
+  dlg = gimp_dialog_new (_("Warp"), "warp",
+			 gimp_plugin_help_func, "filters/warp.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
+
+			 _("OK"), warp_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
+
+			 NULL);
+
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) warp_close_callback,
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
-  /* use black as foreground: */
-  tooltips = gtk_tooltips_new ();   /* obtain a tooltips widget */
-  tips_fg.red   = 0;
-  tips_fg.green = 0;
-  tips_fg.blue  = 0;
-  /* postit yellow (khaki) as background: */
-  gdk_color_alloc (gtk_widget_get_colormap (dlg), &tips_fg);
-  tips_bg.red   = 61669;
-  tips_bg.green = 59113;
-  tips_bg.blue  = 35979;
-  gdk_color_alloc (gtk_widget_get_colormap (dlg), &tips_bg);
-  gtk_tooltips_set_colors (tooltips,&tips_bg,&tips_fg);
-/*  gtk_tooltips_set_delay  (tooltips, 0);*/ /* any longer and the tooltip will persist and
-                      obscure the popup menu if mouse button clicked before 1 second */
+  gimp_help_init ();
 
-  /*
-       This call does not seem to work. leaves tooltip 100% black, no color 
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
 
-       gtk_tooltips_set_colors (tooltips, &yellow_color, &grey_color);
-       void gtk_tooltips_set_colors (GtkTooltips *tooltips,
-                                     GdkColor    *background,
-                                     GdkColor    *foreground);
-   */
-
-
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label (_("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) warp_ok_callback,
-		      dlg);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  /*  The main table  */
-  frame = gtk_frame_new ( _("Main Options"));
+  frame = gtk_frame_new (_("Main Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 1);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
-      /* table params: rows, columns */
-  table = gtk_table_new (4, 3, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 1);
+  table = gtk_table_new (3, 3, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  gtk_table_set_row_spacings (GTK_TABLE (table), 1);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 1);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
 
   /*  on_x, on_y  */
-  label = gtk_label_new ( _("Step Size"));
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
+  label = gtk_label_new ( _("Step Size:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  label = gtk_label_new ( _("Iterations"));
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
+  label = gtk_label_new ( _("Iterations:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   /*  amount, angle, iter */
   dint.amount = entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 0, 1,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  sprintf (buffer, "%3.3f", dvals.amount);
+  g_snprintf (buffer, sizeof (buffer), "%3.3f", dvals.amount);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      (GtkSignalFunc) warp_entry_callback,
 		      &dvals.amount);
   gtk_widget_show (entry);
 
-
   dint.iter = entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 1, 2,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  sprintf (buffer, "%d", dvals.iter);
+  g_snprintf (buffer, sizeof (buffer), "%d", dvals.iter);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      (GtkSignalFunc) warp_entry_int_callback,
 		      &dvals.iter);
   gtk_widget_show (entry);
 
-
   /*  Displacement map menu  */
   label = gtk_label_new ( _("Displacement Map:"));
-  gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   dint.warp_map = option_menu = gtk_option_menu_new ();
@@ -589,15 +554,14 @@ warp_dialog (GDrawable *drawable)
   gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
   gtk_widget_show (option_menu);
 
-
-  /* ================================================================================== */
+  /* ======================================================================= */
 
   /*  Displacement Type  */
-  toggle_hbox = gtk_hbox_new (FALSE, 10);
-  gtk_container_border_width (GTK_CONTAINER (toggle_hbox), 1);
-  gtk_table_attach (GTK_TABLE (table), toggle_hbox, 0, 3, 3, 4, GTK_FILL, GTK_FILL, 0, 0);
+  toggle_hbox = gtk_hbox_new (FALSE, 4);
+  gtk_table_attach (GTK_TABLE (table), toggle_hbox, 0, 3, 2, 3,
+		    GTK_FILL, GTK_FILL, 0, 0);
 
-  label = gtk_label_new ( _("On Edges: "));
+  label = gtk_label_new ( _("On Edges:"));
   gtk_box_pack_start (GTK_BOX (toggle_hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -645,67 +609,72 @@ warp_dialog (GDrawable *drawable)
   /* -------------------------------------------------------------------- */
   /* ---------    The secondary table         --------------------------  */
 
-  frame = gtk_frame_new ( _("Secondary Options"));
+  frame = gtk_frame_new (_("Secondary Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 1);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
-      /* table params: rows, columns */
   table = gtk_table_new (3, 3, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 1);
+  gtk_container_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  gtk_table_set_row_spacings (GTK_TABLE (table), 1);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 1);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
 
-  label = gtk_label_new ( _("Dither Size"));
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
+  label = gtk_label_new ( _("Dither Size:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   dint.dither = entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 0, 1,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  sprintf (buffer, "%3.3f", dvals.dither);
+  g_snprintf (buffer, sizeof (buffer), "%3.3f", dvals.dither);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      (GtkSignalFunc) warp_entry_callback,
 		      &dvals.dither);
   gtk_widget_show (entry);
 
-  label = gtk_label_new ( _("Substeps"));
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
+  label = gtk_label_new ( _("Substeps:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   dint.substeps = entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 2, 3,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  sprintf (buffer, "%d", dvals.substeps);
+  g_snprintf (buffer, sizeof (buffer), "%d", dvals.substeps);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      (GtkSignalFunc) warp_entry_int_callback,
 		      &dvals.substeps);
   gtk_widget_show (entry);
 
-  /* -------------------------------------------------------- */
   label = gtk_label_new ( _("Rotation Angle"));
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-
   dint.angle = entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 1, 2,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  sprintf (buffer, "%3.1f", dvals.angle);
+  g_snprintf (buffer, sizeof (buffer), "%3.1f", dvals.angle);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      (GtkSignalFunc) warp_entry_callback,
 		      &dvals.angle);
   gtk_widget_show (entry);
 
-
   /*  Magnitude map menu  */
   label = gtk_label_new ( _("Magnitude Map:"));
-  gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   dint.mag_map = option_menu_mag = gtk_option_menu_new ();
@@ -716,14 +685,14 @@ warp_dialog (GDrawable *drawable)
   gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu_mag), magmenu);
   gtk_widget_show (option_menu_mag);
 
-
   /* ----------------------------------------------------------------------- */
   /*  Magnitude Usage  */
-  toggle_hbox = gtk_hbox_new (FALSE, 10);
+  toggle_hbox = gtk_hbox_new (FALSE, 4);
   gtk_container_border_width (GTK_CONTAINER (toggle_hbox), 1);
-  gtk_table_attach (GTK_TABLE (table), toggle_hbox, 2, 3, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), toggle_hbox, 2, 3, 2, 3,
+		    GTK_FILL, GTK_FILL, 0, 0);
 
-  label = gtk_label_new ( _("Use Mag Map: "));
+  label = gtk_label_new ( _("Use Mag Map:"));
   gtk_box_pack_start (GTK_BOX (toggle_hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -753,27 +722,29 @@ warp_dialog (GDrawable *drawable)
   /* -------------------------------------------------------------------- */
   /* ---------    The "other" table         --------------------------  */
 
-  frame = gtk_frame_new ( _("Other Options"));
+  frame = gtk_frame_new (_("Other Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 1);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
       /* table params: rows, columns */
   otable = gtk_table_new (3, 3, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (otable), 1);
+  gtk_container_set_border_width (GTK_CONTAINER (otable), 4);
   gtk_container_add (GTK_CONTAINER (frame), otable);
 
-  gtk_table_set_row_spacings (GTK_TABLE (otable), 1);
-  gtk_table_set_col_spacings (GTK_TABLE (otable), 1);
+  gtk_table_set_row_spacings (GTK_TABLE (otable), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (otable), 4);
 
-  label = gtk_label_new ( _("Gradient Scale"));
-  gtk_table_attach (GTK_TABLE (otable), label, 0, 1, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
+  label = gtk_label_new ( _("Gradient Scale:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (otable), label, 0, 1, 0, 1,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   dint.grad_scale = entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (otable), entry, 1, 2, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach (GTK_TABLE (otable), entry, 1, 2, 0, 1,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  sprintf (buffer, "%3.3f", dvals.grad_scale);
+  g_snprintf (buffer, sizeof (buffer), "%3.3f", dvals.grad_scale);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      (GtkSignalFunc) warp_entry_callback,
@@ -788,23 +759,24 @@ warp_dialog (GDrawable *drawable)
   gradmenu = gimp_drawable_menu_new (warp_map_constrain, warp_map_grad_callback,
 				 drawable, dvals.grad_map);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu_grad), gradmenu);
-  gtk_tooltips_set_tip (tooltips, option_menu_grad, _("Gradient map selection menu"), NULL);
+  gimp_help_set_help_data (option_menu_grad,
+			   _("Gradient map selection menu"), NULL);
 
   gtk_widget_show (option_menu_grad);
 
-
-
   /* ---------------------------------------------- */
 
-
-  label = gtk_label_new ( _("Vector Mag"));
-  gtk_table_attach (GTK_TABLE (otable), label, 0, 1, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
+  label = gtk_label_new ( _("Vector Mag:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (otable), label, 0, 1, 1, 2,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   dint.vector_scale = entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (otable), entry, 1, 2, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach (GTK_TABLE (otable), entry, 1, 2, 1, 2,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  sprintf (buffer, "%3.3f", dvals.vector_scale);
+  g_snprintf (buffer, sizeof (buffer), "%3.3f", dvals.vector_scale);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      (GtkSignalFunc) warp_entry_callback,
@@ -812,14 +784,18 @@ warp_dialog (GDrawable *drawable)
   gtk_widget_show (entry);
 
   /* -------------------------------------------------------- */
-  label = gtk_label_new ( _("Angle"));
-  gtk_table_attach (GTK_TABLE (otable), label, 0, 1, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
+
+  label = gtk_label_new ( _("Angle:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (otable), label, 0, 1, 2, 3,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   dint.vector_angle = entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (otable), entry, 1, 2, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach (GTK_TABLE (otable), entry, 1, 2, 2, 3,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  sprintf (buffer, "%3.1f", dvals.vector_angle);
+  g_snprintf (buffer, sizeof (buffer), "%3.1f", dvals.vector_angle);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      (GtkSignalFunc) warp_entry_callback,
@@ -830,23 +806,23 @@ warp_dialog (GDrawable *drawable)
   dint.vector_map = option_menu_vector = gtk_option_menu_new ();
   gtk_table_attach (GTK_TABLE (otable), option_menu_vector, 2, 3, 1, 2,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  vectormenu = gimp_drawable_menu_new (warp_map_constrain, warp_map_vector_callback,
-				 drawable, dvals.vector_map);
+  vectormenu = gimp_drawable_menu_new (warp_map_constrain,
+				       warp_map_vector_callback,
+				       drawable, dvals.vector_map);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu_vector), vectormenu);
-  gtk_tooltips_set_tip (tooltips, option_menu_vector, _("Fixed-direction-vector map selection menu"), NULL);
+  gimp_help_set_help_data (option_menu_vector,
+			   _("Fixed-direction-vector map selection menu"),
+			   NULL);
 
   gtk_widget_show (option_menu_vector);
 
-  /* -------------------------------------------------------- */
-
   gtk_widget_show (otable);
   gtk_widget_show (frame);
-  /* --------------------------------------------------------------- */
 
   gtk_widget_show (dlg);
 
   gtk_main ();
-  gtk_object_unref (GTK_OBJECT (tooltips));
+  gimp_help_free ();
   gdk_flush ();
 
   /*  determine wrap type  */
@@ -998,14 +974,15 @@ diff_prepare_row (GPixelRgn *pixel_rgn,
     }
 }
 
-/* --------------------------------------------------------------------------------------------- */
-/*  'diff' combines the input drawables to prepare the two 16-bit (X,Y) vector displacement maps */
-/* --------------------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*  'diff' combines the input drawables to prepare the two                    */
+/*  16-bit (X,Y) vector displacement maps                                     */
+/* -------------------------------------------------------------------------- */
 
 static void
 diff (GDrawable *drawable, 
-         gint32 *xl_id, 
-         gint32 *yl_id    )
+      gint32    *xl_id, 
+      gint32    *yl_id)
 {
   GDrawable *draw_xd, *draw_yd;  /* vector disp. drawables */
   GDrawable *mdraw, *vdraw, *gdraw;
@@ -1047,7 +1024,7 @@ diff (GDrawable *drawable,
   gdouble scale_vec_x, scale_vec_y;   /* fixed vector X,Y component scaling factors */
   gint has_alpha, ind;
   
-  /* -------------------------------------------------------------------------------------------------- */
+  /* ----------------------------------------------------------------------- */
 
   if (dvals.grad_scale != 0.0)
       do_gradmap = TRUE;    /* add in gradient of gradmap if scale != 0.000 */
@@ -1270,7 +1247,7 @@ diff (GDrawable *drawable,
              *dy++ = (guchar) (dvaly % 256);
 	     dy += dest_bytes_inc;
 
-	  } /* ------------------------------- for (col...) ---------------------------  */
+	  } /* ------------------------------- for (col...) ----------------  */
 
       /*  store the dest  */
       gimp_pixel_rgn_set_row (&destxPR, destx, x1, row, (x2 - x1));
@@ -1331,9 +1308,9 @@ diff (GDrawable *drawable,
 
 } /* end diff() */
 
-/* -------------------------------------------------------------------------------- */
-/*                  The Warp displacement is done here.                             */
-/* -------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*            The Warp displacement is done here.                             */
+/* -------------------------------------------------------------------------- */
 
 static void      
 warp        (GDrawable *orig_draw,
@@ -1358,7 +1335,7 @@ warp        (GDrawable *orig_draw,
   gint32 xdlayer = -1;
   gint32 ydlayer = -1;
 
-  gint warp_iter;           /* index var. over all "warp" Displacement iterations */
+  gint warp_iter;      /* index var. over all "warp" Displacement iterations */
 
 
   disp_map = gimp_drawable_get(dvals.warp_map);
@@ -1368,7 +1345,7 @@ warp        (GDrawable *orig_draw,
 
   gimp_progress_init ( _("Finding XY gradient..."));
 
-  diff(disp_map, &xdlayer, &ydlayer);              /* generate x,y differential images (arrays) */
+  diff(disp_map, &xdlayer, &ydlayer);    /* generate x,y differential images (arrays) */
  
   /* Get selection area */
    gimp_drawable_mask_bounds (orig_draw->id, &x1, &y1, &x2, &y2);
@@ -1412,7 +1389,7 @@ warp        (GDrawable *orig_draw,
 
 } /* Warp */
 
-/* -------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
 
 static void
 warp_one(GDrawable *draw, 
@@ -1482,7 +1459,7 @@ warp_one(GDrawable *draw,
 
   srand(time(NULL));                   /* seed random # generator */
 
-  /* ================ Outer Loop calculation =================================== */
+  /* ================ Outer Loop calculation ================================ */
 
   /* Get selection area */
 
@@ -1690,10 +1667,12 @@ warp_one(GDrawable *draw,
   
 } /* warp_one */
 
-/* -------------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------- */
 
 static gdouble
-warp_map_mag_give_value(guchar *pt, gint alpha, gint bytes)
+warp_map_mag_give_value (guchar *pt,
+			 gint    alpha,
+			 gint    bytes)
 {
   gdouble ret, val_alpha;
   
@@ -1714,18 +1693,18 @@ warp_map_mag_give_value(guchar *pt, gint alpha, gint bytes)
 
 static GTile *
 warp_pixel (GDrawable * drawable,
-		GTile *     tile,
-		gint        width,
-		gint        height,
-		gint        x1,
-		gint        y1,
-		gint        x2,
-		gint        y2,
-		gint        x,
-		gint        y,
-		gint *      row,
-		gint *      col,
-		guchar *    pixel)
+	    GTile *     tile,
+	    gint        width,
+	    gint        height,
+	    gint        x1,
+	    gint        y1,
+	    gint        x2,
+	    gint        y2,
+	    gint        x,
+	    gint        y,
+	    gint *      row,
+	    gint *      col,
+	    guchar *    pixel)
 {
   static guchar empty_pixel[4] = {0, 0, 0, 0};
   guchar *data;
@@ -1786,9 +1765,10 @@ warp_pixel (GDrawable * drawable,
   return tile;
 }
 
-
 static guchar
-bilinear (gdouble x, gdouble y, guchar *v)
+bilinear (gdouble  x,
+	  gdouble  y,
+	  guchar  *v)
 {
   gdouble m0, m1;
 
@@ -1807,7 +1787,9 @@ bilinear (gdouble x, gdouble y, guchar *v)
 } /* bilinear */
 
 static gint
-bilinear16 (gdouble x, gdouble y, gint *v)
+bilinear16 (gdouble  x,
+	    gdouble  y,
+	    gint    *v)
 {
   gdouble m0, m1;
 
@@ -1830,8 +1812,8 @@ bilinear16 (gdouble x, gdouble y, gint *v)
 
 static gint
 warp_map_constrain (gint32     image_id,
-			gint32     drawable_id,
-			gpointer   data)
+		    gint32     drawable_id,
+		    gpointer   data)
 {
   GDrawable *drawable;
 
@@ -1849,43 +1831,35 @@ warp_map_constrain (gint32     image_id,
 
 static void
 warp_map_callback (gint32     id,
-			 gpointer   data)
+		   gpointer   data)
 {
   dvals.warp_map = id;
 }
 
 static void
 warp_map_mag_callback (gint32     id,
-			 gpointer   data)
+		       gpointer   data)
 {
   dvals.mag_map = id;
 }
 
 static void
 warp_map_grad_callback (gint32     id,
-			 gpointer   data)
+			gpointer   data)
 {
   dvals.grad_map = id;
 }
 
 static void
 warp_map_vector_callback (gint32     id,
-			 gpointer   data)
+			  gpointer   data)
 {
   dvals.vector_map = id;
 }
 
-
-static void
-warp_close_callback (GtkWidget *widget,
-			 gpointer   data)
-{
-  gtk_main_quit ();
-}
-
 static void
 warp_ok_callback (GtkWidget *widget,
-		      gpointer   data)
+		  gpointer   data)
 {
   dint.run = TRUE;
   gtk_widget_destroy (GTK_WIDGET (data));
@@ -1893,7 +1867,7 @@ warp_ok_callback (GtkWidget *widget,
 
 static void
 warp_toggle_update (GtkWidget *widget,
-			gpointer   data)
+		    gpointer   data)
 {
   int *toggle_val;
 
@@ -1907,7 +1881,7 @@ warp_toggle_update (GtkWidget *widget,
 
 static void
 warp_entry_callback (GtkWidget *widget,
-			 gpointer   data)
+		     gpointer   data)
 {
   gdouble *text_val;
 

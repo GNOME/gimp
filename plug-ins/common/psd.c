@@ -1628,7 +1628,6 @@ load_image(char *name)
   gboolean want_aux;
   char *name_buf;
   guchar *cmykbuf;
-  static int number = 1;
   guchar *dest, *temp;
   long channels, nguchars;
   psd_imagetype imagetype;
@@ -1640,9 +1639,7 @@ load_image(char *name)
   gint32 iter;
   fpos_t tmpfpos;
 
-    
   IFDBG printf("------- %s ---------------------------------\n",name);
-
 
   name_buf = g_strdup_printf( _("Loading %s:"), name);
 
@@ -1654,16 +1651,7 @@ load_image(char *name)
     return(-1);
   }
 
-
-
-
-
   read_whole_file(fd);
-
-
-
-
-
 
   if (psd_image.num_layers > 0) /* PS3-style */
     {
@@ -1925,7 +1913,6 @@ load_image(char *name)
     {
       want_aux = FALSE;
     }
-
 
 
   if (want_aux || (psd_image.num_layers==0)) /* Photoshop2-style: NO LAYERS. */

@@ -20,11 +20,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-
 #include <stdio.h>
 #include <stdlib.h>
-#include "gtk/gtk.h"
-#include "libgimp/gimp.h"
+
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #define MAX_PATTERNS 9
 
@@ -1780,8 +1782,6 @@ static void      video            (GDrawable  *drawable);
 
 static gint      video_dialog (void);
 
-static void      video_close_callback  (GtkWidget *widget,
-					gpointer   data);
 static void      video_ok_callback     (GtkWidget *widget,
 					gpointer   data);
 
@@ -2157,25 +2157,23 @@ static gint
 video_dialog ()
 {
   GtkWidget *dlg;
-  GtkWidget *hbbox;
-  GtkWidget *button;
   GtkWidget *frame;
   GtkWidget *radioframe;
   GtkWidget *previewframe;
   GtkWidget *vbox;
   GtkWidget *box;
   GtkWidget *toggle;
-  GSList *group = NULL;
-  guchar *color_cube;
-  gchar **argv;
-  gint argc;
-  gint y;
+  GSList  *group = NULL;
+  guchar  *color_cube;
+  gchar  **argv;
+  gint     argc;
+  gint     y;
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
   argv[0] = g_strdup ("video");
 
-  for (y=0;y<MAX_PATTERNS;y++)
+  for (y = 0; y < MAX_PATTERNS; y++)
     {
       radio_pressed[y] = (vvals.pattern_number == y);
     }
@@ -2193,76 +2191,43 @@ video_dialog ()
   gtk_widget_set_default_visual (gtk_preview_get_visual ());
   gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Video");
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
+  dlg = gimp_dialog_new ("Video", "video",
+			 gimp_plugin_help_func, "filters/video.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
+
+			 "OK", video_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 "Cancel", gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
+
+			 NULL);
+
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) video_close_callback,
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
-
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label ("OK");
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) video_ok_callback,
-		      dlg);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label ("Cancel");
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
 
   /*  main parameter frame  */
   frame = gtk_frame_new ("Parameter Settings");
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
-
-
-
-  /*  table = gtk_table_new (4, 8, FALSE);*/
-  box = gtk_hbox_new (FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (box), 10);
+  box = gtk_hbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (box), 4);
   gtk_container_add (GTK_CONTAINER (frame), box);
-
-
 
   /* frame for the radio buttons */
   radioframe = gtk_frame_new ("RGB Pattern Type");
   gtk_frame_set_shadow_type (GTK_FRAME (radioframe), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (radioframe), 1);
-  gtk_box_pack_start (GTK_BOX (box), radioframe, TRUE, TRUE, 0);
-
-
-
+  gtk_box_pack_start (GTK_BOX (box), radioframe, FALSE, FALSE, 0);
 
   /* vbox for toggle&preview */
-  vbox = gtk_vbox_new (FALSE, 10);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 1);
-
-  /* put the vbox in the hbox */
-  gtk_box_pack_start (GTK_BOX (box), vbox, TRUE, TRUE, 0);
-
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (box), vbox, FALSE, FALSE, 0);
 
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (preview), PREVIEW_WIDTH, PREVIEW_HEIGHT);
-
-
 
   toggle = gtk_check_button_new_with_label ("Additive");
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
@@ -2280,137 +2245,52 @@ video_dialog ()
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), vvals.rotated);
   gtk_widget_show (toggle);
 
-
   previewframe = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (previewframe), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (vbox), previewframe, FALSE, FALSE, 0);
 
   gtk_container_add (GTK_CONTAINER (previewframe), preview);
 
-
   gtk_widget_show (preview);
   gtk_widget_show (previewframe);
-
 
   gtk_widget_show (radioframe);
 
   gtk_widget_show (vbox);
 
-
   /* vbox for RGB pattern typees */
   vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 10);
-
-  /* put the vbox in the radioframe */
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
   gtk_container_add (GTK_CONTAINER (radioframe), vbox);
 
-
   /* radio buttons */
-
-  for (y=0;y<MAX_PATTERNS;y++)
+  for (y = 0; y < MAX_PATTERNS; y++)
     {
-      toggle = gtk_radio_button_new_with_label (group,pattern_name[y]);
+      toggle = gtk_radio_button_new_with_label (group, pattern_name[y]);
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-      gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
+      gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 			  (GtkSignalFunc) video_toggle_update,
 			  &radio_pressed[y]);
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), radio_pressed[y]);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				    radio_pressed[y]);
       gtk_widget_show (toggle);
     }
 
-      /*  toggle = gtk_radio_button_new_with_label (group,"Staggered");
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) video_toggle_update,
-		      &radio_pressed[0]);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), radio_pressed[0]);
-  gtk_widget_show (toggle);
-
-  toggle = gtk_radio_button_new_with_label (group,"Large staggered");
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) video_toggle_update,
-		      &radio_pressed[1]);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), radio_pressed[1]);
-  gtk_widget_show (toggle);
-
-  toggle = gtk_radio_button_new_with_label (group,"Striped");
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) video_toggle_update,
-		      &radio_pressed[2]);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), radio_pressed[2]);
-  gtk_widget_show (toggle);
-
-  toggle = gtk_radio_button_new_with_label (group,"Wide-striped");
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) video_toggle_update,
-		      &radio_pressed[3]);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), radio_pressed[3]);
-  gtk_widget_show (toggle);
-
-  toggle = gtk_radio_button_new_with_label (group,"Long-staggered");
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) video_toggle_update,
-		      &radio_pressed[4]);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), radio_pressed[4]);
-  gtk_widget_show (toggle);
-
-  toggle = gtk_radio_button_new_with_label (group,"3x3");
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) video_toggle_update,
-		      &radio_pressed[5]);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), radio_pressed[5]);
-  gtk_widget_show (toggle);
-
-  toggle = gtk_radio_button_new_with_label (group,"Large 3x3");
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) video_toggle_update,
-		      &radio_pressed[6]);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), radio_pressed[6]);
-  gtk_widget_show (toggle);
-
-  toggle = gtk_radio_button_new_with_label (group,"Hex");
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) video_toggle_update,
-		      &radio_pressed[7]);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), radio_pressed[7]);
-  gtk_widget_show (toggle);*/
-
-
-  video_render_preview(FALSE);
-
+  video_render_preview (FALSE);
 
   gtk_widget_show (vbox);
   gtk_widget_show (box);
   gtk_widget_show (frame);
   gtk_widget_show (dlg);
 
-  /*  video_render_preview(FALSE);*/
-
-
   in_main_loop = TRUE;
   gtk_main ();
   in_main_loop = FALSE;
   gdk_flush ();
 
-
-  vvals.pattern_number=0;
-  for (y=0;y<MAX_PATTERNS;y++)
+  vvals.pattern_number = 0;
+  for (y = 0; y < MAX_PATTERNS; y++)
     {
       if (radio_pressed[y]==TRUE)
 	{
@@ -2424,13 +2304,6 @@ video_dialog ()
 
 
 /*  Video interface functions  */
-
-static void
-video_close_callback (GtkWidget *widget,
-		      gpointer   data)
-{
-  gtk_main_quit ();
-}
 
 static void
 video_ok_callback (GtkWidget *widget,

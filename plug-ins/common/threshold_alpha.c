@@ -22,14 +22,18 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#include <math.h>
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "gtk/gtk.h"
-#include "config.h"
-#include "libgimp/gimp.h"
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+#include <libgimp/gimpmath.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 /* Replace them with the right ones */
@@ -52,9 +56,7 @@ static void	run	(char	*name,
 static GStatusType	MAIN_FUNCTION ();
 static gint	DIALOG ();
 static void	ERROR_DIALOG (gint gtk_was_not_initialized, gchar *message);
-
-static void
-OK_CALLBACK (GtkWidget *widget, gpointer   data);
+static void     OK_CALLBACK (GtkWidget *widget, gpointer   data);
 
 /* gtkWrapper functions */ 
 #define PROGRESS_UPDATE_NUM	100
@@ -66,8 +68,6 @@ gtkW_gint_update (GtkWidget *widget, gpointer   data);
 static void
 gtkW_scale_update (GtkAdjustment *adjustment, double   *data);
 */
-static void
-gtkW_close_callback (GtkWidget *widget, gpointer   data);
 /*
 static void
 gtkW_toggle_update (GtkWidget *widget, gpointer   data);
@@ -78,12 +78,6 @@ gtkW_iscale_update (GtkAdjustment *adjustment,
 static void
 gtkW_ientry_update (GtkWidget *widget,
 		    gpointer   data);
-static GtkWidget *
-gtkW_dialog_new (char *name,
-		 GtkSignalFunc ok_callback,
-		 GtkSignalFunc close_callback);
-static GtkWidget *
-gtkW_error_dialog_new (char * name);
 /*
 static void
 gtkW_table_add_toggle (GtkWidget	*table,
@@ -332,26 +326,37 @@ static int
 DIALOG ()
 {
   GtkWidget	*dlg;
-  GtkWidget	*hbox;
   GtkWidget	*frame;
   GtkWidget	*table;
   gchar	**argv;
-  gint	argc;
+  gint	  argc;
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup (PLUG_IN_NAME);
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
+  argv[0] = g_strdup ("threshold_alpha");
+
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
   
-  dlg = gtkW_dialog_new (PLUG_IN_NAME,
-			 (GtkSignalFunc) OK_CALLBACK,
-			 (GtkSignalFunc) gtkW_close_callback);
-  
-  hbox = gtkW_hbox_new ((GTK_DIALOG (dlg)->vbox));
-  frame = gtkW_frame_new (hbox, _("Parameter Settings"));
-  table = gtkW_table_new (frame, 2, 2);
-  gtkW_table_add_iscale_entry (table, _("Threshold"), 0, 0,
+  dlg = gimp_dialog_new (_("Threshold Alpha"), "threshold_alpha",
+			 gimp_plugin_help_func, "filters/threshold_alpha.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
+
+			 _("OK"), OK_CALLBACK,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
+
+			 NULL);
+
+  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
+		      NULL);
+
+  frame = gtkW_frame_new (GTK_DIALOG (dlg)->vbox, _("Parameter Settings"));
+  table = gtkW_table_new (frame, 1, 2);
+  gtkW_table_add_iscale_entry (table, _("Threshold:"), 0, 0,
 			       (GtkSignalFunc) gtkW_iscale_update,
 			       (GtkSignalFunc) gtkW_ientry_update,
 			       &VALS.threshold,
@@ -382,10 +387,18 @@ ERROR_DIALOG (gint gtk_was_not_initialized, gchar *message)
       gtk_rc_parse (gimp_gtkrc ());
     }
   
-  dlg = gtkW_error_dialog_new (PLUG_IN_NAME);
-  
+  dlg = gimp_dialog_new (_("Threshold Aplha"), "threshold_alpha",
+			 gimp_plugin_help_func, "filters/threshold_alpha.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
+
+			 _("OK"), gtk_main_quit,
+			 NULL, NULL, NULL, TRUE, TRUE,
+
+			 NULL);
+
   table = gtk_table_new (1,1, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 10);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
 
   label = gtk_label_new (message);
@@ -426,13 +439,6 @@ gtkW_scale_update (GtkAdjustment *adjustment,
 }
 */
 
-static void
-gtkW_close_callback (GtkWidget *widget,
-		     gpointer   data)
-{
-  gtk_main_quit ();
-}
-
 /*
 static void
 gtkW_toggle_update (GtkWidget *widget,
@@ -449,79 +455,14 @@ gtkW_toggle_update (GtkWidget *widget,
 }
 */
 
-/* gtkW is the abbreviation of gtk Wrapper */
-static GtkWidget *
-gtkW_dialog_new (char * name,
-		 GtkSignalFunc ok_callback,
-		 GtkSignalFunc close_callback)
-{
-  GtkWidget *dlg, *button, *hbbox;
-  
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), name);
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) close_callback, NULL);
-
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label (_("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) ok_callback,
-		      dlg);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  return dlg;
-}
-
-static GtkWidget *
-gtkW_error_dialog_new (char * name)
-{
-  GtkWidget *dlg, *button;
-  
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), name);
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) gtkW_close_callback, NULL);
-
-  /* Action Area */
-  button = gtk_button_new_with_label (_("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) gtkW_close_callback, dlg);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button,
-		      TRUE, TRUE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  return dlg;
-}
-
 GtkWidget *
 gtkW_table_new (GtkWidget *parent, gint col, gint row)
 {
   GtkWidget	*table;
   
   table = gtk_table_new (col,row, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 10);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (parent), table);
   gtk_widget_show (table);
   
@@ -531,10 +472,10 @@ gtkW_table_new (GtkWidget *parent, gint col, gint row)
 GtkWidget *
 gtkW_hbox_new (GtkWidget *parent)
 {
-  GtkWidget	*hbox;
-  
-  hbox = gtk_hbox_new (FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (hbox), 5);
+  GtkWidget *hbox;
+
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 5);
   gtk_box_pack_start (GTK_BOX (parent), hbox, FALSE, TRUE, 0);
   gtk_widget_show (hbox);
 
@@ -581,7 +522,7 @@ gtkW_frame_new (GtkWidget *parent,
   
   frame = gtk_frame_new (name);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 5);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX(parent), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
   return frame;
@@ -715,12 +656,12 @@ gtkW_table_add_iscale_entry (GtkWidget	*table,
   GtkWidget *label, *hbox, *scale, *entry;
   
   label = gtk_label_new (name);
-  gtk_misc_set_alignment (GTK_MISC(label), 0.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC(label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE(table), label, x, x+1, y, y+1,
-		    GTK_FILL|GTK_EXPAND, GTK_FILL, 5, 0);
+		    GTK_FILL|GTK_EXPAND, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  hbox = gtk_hbox_new (FALSE, 5);
+  hbox = gtk_hbox_new (FALSE, 4);
   gtk_table_attach (GTK_TABLE (table), hbox, x+1, x+2, y, y+1,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
@@ -730,9 +671,7 @@ gtkW_table_add_iscale_entry (GtkWidget	*table,
   scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
   gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
   gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_digits (GTK_SCALE (scale), 0);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
 		      (GtkSignalFunc) scale_update, value);
 
