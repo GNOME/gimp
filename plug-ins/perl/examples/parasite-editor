@@ -111,7 +111,7 @@ sub refresh_names {
    $data->set_text ("");
    $clist->freeze;
    $clist->clear;
-   my @list = &$list_func($current);
+   my @list = sort &$list_func($current);
    for (@list) {
       $clist->append($_);
    }
@@ -285,7 +285,7 @@ register "extension_parasite_editor",
          ['gimp-1.1'],
          sub {
 
-   Gimp::init_gtk;
+   Gimp::gtk_init;
    create_main;
    main Gtk;
 
@@ -299,7 +299,7 @@ use base Gtk::Dialog;
 
 my $init;
 
-Gtk::Dialog->register_subtype(ParasiteEditor);
+init_add Gtk sub { Gtk::Dialog->register_subtype(ParasiteEditor) };
 
 sub GTK_CLASS_INIT { };
 

@@ -8,6 +8,10 @@ gimp ~/pix/ka001.jpg -b "(extension-perl-server 0 0 0)"
 file:///usr/app/lib/perl5/site_perl/i686-linux/PDL/HtmlDocs/PDL/
 make test TEST_VERBOSE=1
 
+put under LGPL:
+
+gimpenv.c, gimpmodule.h, color_selector.h, color_display.h
+
 API generalization
    guide ->
    gimp_desaturate -> drawable

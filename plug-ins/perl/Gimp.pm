@@ -144,7 +144,7 @@ sub import($;@) {
          *{"$up\::AUTOLOAD"} = sub {
             croak "Cannot call '$AUTOLOAD' at this time" unless initialized();
             my ($class,$name) = $AUTOLOAD =~ /^(.*)::(.*?)$/;
-            *{$AUTOLOAD} = sub { unshift @_, 'Gimp'; goto &$name };
+            *{$AUTOLOAD} = sub { unshift @_, 'Gimp'; $AUTOLOAD = "Gimp::$name"; goto &AUTOLOAD };
             #*{$AUTOLOAD} = sub { Gimp->$name(@_) }; # old version
             goto &$AUTOLOAD;
          };
@@ -154,7 +154,7 @@ sub import($;@) {
             warn __"$function: calling $AUTOLOAD without specifying the :auto import tag is deprecated!\n";
             croak __"Cannot call '$AUTOLOAD' at this time" unless initialized();
             my ($class,$name) = $AUTOLOAD =~ /^(.*)::(.*?)$/;
-            *{$AUTOLOAD} = sub { unshift @_, 'Gimp'; goto &$name };
+            *{$AUTOLOAD} = sub { unshift @_, 'Gimp'; $AUTOLOAD = "Gimp::$name"; goto &AUTOLOAD };
             #*{$AUTOLOAD} = sub { Gimp->$name(@_) }; # old version
             goto &$AUTOLOAD;
          };
@@ -187,7 +187,9 @@ sub xlfd_size($) {
         : ($pt,&Gimp::POINTS);
 }
 
-sub init_gtk {
+my @init_functions;
+
+sub gtk_init() {
    require Gtk;
 
    Gtk->init;
@@ -198,6 +200,12 @@ sub init_gtk {
    Gtk::Preview->set_color_cube (Gimp->color_cube);
    Gtk::Widget->set_default_visual (Gtk::Preview->get_visual);
    Gtk::Widget->set_default_colormap (Gtk::Preview->get_cmap);
+
+   &{shift @init_functions} while @init_functions;
+}
+
+sub gtk_init_hook(&) {
+   push @init_functions, @_;
 }
 
 # internal utility function for Gimp::Fu and others
@@ -823,11 +831,20 @@ size (no joke ;). Example:
 
  $drawable->text_fontname (50, 50, "The quick", 5, 1, xlfd_size $font, $font;
 
-=item Gimp::init_gtk()
+=item Gimp::gtk_init()
 
 Initialize Gtk in a similar way the Gimp itself did it. This automatically
 parses gimp's gtkrc and sets a variety of default settings (visual,
 colormap, gamma, shared memory...).
+
+=item Gimp::gtk_init_add { init statements ... };
+
+Add a callback function that should be called when gtk is being
+initialized (i.e. when Gimp::gtk_init is called, which should therefore be
+done even in Gnome applications).
+
+This is different to Gtk->init_add, which only gets called in Gtk->main,
+which is too late for registering types.
 
 =item Gimp::init([connection-argument]), Gimp::end()
 

@@ -14,6 +14,8 @@ Revision history for Gimp-Perl extension.
 	- only install pdl plug-ins when pdl is available.
         - gimp_directory is 1.1-only.
         - more warnings on people insisting on using broken perls.
+        - renamed init_gtk to gtk_init, asdded gtk_init_hook function to
+          work around the horrible initialization problems in Gtk.
 
 1.14  Mon Oct 11 03:23:13 CEST 1999
 	- set the version of all modules explicitly (for the benefit of CPAN).

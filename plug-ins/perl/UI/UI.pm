@@ -93,23 +93,19 @@ sub new($$$$) {
    $menu;
 }
 
+Gimp::gtk_init_hook {
+   register_subtype Gtk::Button 'Gimp::UI::PreviewSelect';
+   register_subtype Gtk::Button 'Gimp::UI::PatternSelect';
+   register_subtype Gtk::Button 'Gimp::UI::BrushSelect';
+   register_subtype Gtk::Button 'Gimp::UI::GradientSelect';
+   register_subtype Gtk::Button 'Gimp::UI::ColorSelectButton';
+};
+
 package Gimp::UI::PreviewSelect;
 
 use Gtk;
 use Gimp '__';
 use base 'Gtk::Button';
-
-# this is an utter HACK for the braindamanged gtk (NOT Gtk!)
-sub register_types {
-   unless ($once) {
-      $once=1;
-      Gtk::Button->register_subtype(Gimp::UI::PreviewSelect);
-      Gtk::Button->register_subtype(Gimp::UI::PatternSelect);
-      Gtk::Button->register_subtype(Gimp::UI::BrushSelect);
-      Gtk::Button->register_subtype(Gimp::UI::GradientSelect);
-      Gtk::Button->register_subtype(Gimp::UI::ColorSelectButton);
-   }
-}
 
 sub GTK_CLASS_INIT {
    my $class = shift;
@@ -243,7 +239,6 @@ sub set_preview {
 }
 
 sub new {
-   Gimp::UI::PreviewSelect::register_types;
    new Gtk::Widget @_;
 }
 
@@ -287,7 +282,6 @@ sub set_preview {
 }
 
 sub new {
-   Gimp::UI::PreviewSelect::register_types;
    new Gtk::Widget @_;
 }
 
@@ -312,7 +306,6 @@ sub set_preview {
 }
 
 sub new {
-   Gimp::UI::PreviewSelect::register_types;
    unless (defined %gradients) {
       undef @gradients{Gimp->gradients_get_list};
    }
@@ -435,8 +428,7 @@ sub cb_color_button {
 
 sub new {
     my $pkg = shift;
-   Gimp::UI::PreviewSelect::register_types;
-    return new Gtk::Widget $pkg, @_;
+    new Gtk::Widget $pkg, @_;
 }
 
 1;
@@ -488,10 +480,6 @@ sub logo_xpm {
       ',,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,::::,,,,,,,::::::,,::::,,,::::,,,,,,,,,,,,,,,,,,,,,%$*,,,,$%&,@,,,,@+@,,,,',
       ',,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,+@%#,,,,,,,,,,,,,@@#,,,,',
       ',,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,o$&,,,,,,,,,,,,,,,,,,,,,'
-      
-      
-      
-      
       #%XPM%
    ))
 }
@@ -553,7 +541,6 @@ sub help_window(\$$$) {
 
    $$helpwin->show_all();
 }
-
 sub interact($$$$@) {
    local $^W=0;
    my($function)=shift;
@@ -564,16 +551,17 @@ sub interact($$$$@) {
    my($button,$box,$bot,$g);
    my($helpwin);
    my $res=0;
+   my @res;
 
-   Gimp::init_gtk;
+   Gimp::gtk_init;
 
    my $gimp_10 = Gimp->major_version==1 && Gimp->minor_version==0;
    
-   for(;;) {
-     my $t = new Gtk::Tooltips;
-     my $w = new Gtk::Dialog;
-     my $accel = new Gtk::AccelGroup;
+   my $t = new Gtk::Tooltips;
+   my $w = new Gtk::Dialog;
+   my $accel = new Gtk::AccelGroup;
 
+   for(;;) {
      $accel->attach($w);
 
      set_title $w $Gimp::function;
@@ -923,7 +911,7 @@ sub interact($$$$@) {
      $v->add($button);
      set_tip $t $button,__"Restore values to the previous ones";
      
-     signal_connect $w "destroy", sub {main_quit Gtk};
+     signal_connect $w "destroy", sub { main_quit Gtk };
 
      $button = new Gtk::Button __"OK";
      signal_connect $button "clicked", sub {$res = 1; hide $w; main_quit Gtk};
@@ -942,14 +930,25 @@ sub interact($$$$@) {
      
      show_all $w;
      main Gtk;
-     #$w->destroy; # buggy in gtk-1.1 (?)
      
-     return undef if $res == 0;
+     if ($res == 0) {
+        @res = ();
+        last;
+     }
      @_ = map {&$_} @getvals;
-     return (1,@_) if $res == 1;
+     if ($res == 1) {
+        @res = (1,@_);
+        last;
+     }
 #     Gimp->file_load(&Gimp::RUN_INTERACTIVE,"","");
    }
+   @getvals=
+   @setvals=
+   @lastvals=();
+   @res;
 }
+
+1;
 
 =head1 AUTHOR
 

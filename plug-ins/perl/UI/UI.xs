@@ -19,6 +19,10 @@
 #include <libgimp/gimpexport.h>
 #endif
 
+/* libgimo requires a rather broken interface. this must be here because..
+ * well, nobody knows why... ARGH! */
+GPlugInInfo PLUG_IN_INFO = { 0, 0, 0, 0 };
+
 static void gimp_pattern_select_widget_callback (gchar *name, gint width,
 	gint height, gint bpp, gchar *mask, gint closing, gpointer nameref)
 {

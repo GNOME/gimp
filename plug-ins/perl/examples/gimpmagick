@@ -196,7 +196,7 @@ sub update_preview {
 sub gimp_magick {
    my ($drawable)=@_;
 
-   Gimp::init_gtk;
+   Gimp::gtk_init;
 
    # generate main window
    my $im = new Image::Magick;

@@ -697,7 +697,7 @@ sub register($$$$$$$$$;@) {
          my $fudata = $Gimp::Data{"$function/_fu_data"};
 
          if ($run_mode == &Gimp::RUN_WITH_LAST_VALS && $fudata) {
-            @_ = @{$fudata};
+            @_ = @$fudata;
          } else {
             if (@_) {
                # prevent the standard arguments from showing up in interact

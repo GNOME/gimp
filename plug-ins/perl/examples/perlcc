@@ -98,7 +98,7 @@ sub extension_perl_control_center {
       my($w,$b);
       my($l,$s);
 
-      Gimp::init_gtk;
+      Gimp::gtk_init;
 
       $w = new Gtk::Dialog;
       $w->set_title ('Perl Control Center');

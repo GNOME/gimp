@@ -1088,11 +1088,20 @@ get_data_size (gchar *id)
 
 static void simple_perl_call (char *function, char *arg1)
 {
-   char *argv[2];
-   argv[0] = arg1;
-   argv[1] = 0;
+   dSP;
 
-   perl_call_argv (function, G_DISCARD|G_EVAL, argv);
+   ENTER;
+   SAVETMPS;
+
+   PUSHMARK (SP);
+   XPUSHs (sv_2mortal (newSVpv (arg1, 0)));
+
+   PUTBACK;
+   perl_call_pv (function, G_VOID);
+   SPAGAIN;
+
+   FREETMPS;
+   LEAVE;
 }
 
 #define gimp_die_msg(msg) simple_perl_call ("Gimp::die_msg" , (msg))
@@ -1137,10 +1146,7 @@ static void pii_run(char *name, int nparams, GParam *param, int *xnreturn_vals, 
       g_free (proc_author);
       g_free (proc_copyright);
       g_free (proc_date);
-      g_free (params);
-      
-      ENTER;
-      SAVETMPS;
+      destroy_paramdefs (params, _nparams);
       
       PUSHMARK(SP);
 
@@ -1166,28 +1172,22 @@ static void pii_run(char *name, int nparams, GParam *param, int *xnreturn_vals, 
 	PUTBACK;
       
       count = perl_call_pv ("Gimp::callback", G_EVAL
-	                    | (nreturn_vals == 0 ? G_VOID|G_DISCARD : nreturn_vals == 1 ? G_SCALAR : G_ARRAY));
+	                    | (nreturn_vals == 0 ? G_VOID : nreturn_vals == 1 ? G_SCALAR : G_ARRAY));
       SPAGAIN;
-      
-      if (count == 1 && !SvOK (TOPs))
-	{
-	  (void) POPs;
-	  count = 0;
-	}
       
       if (SvTRUE (ERRSV))
 	{
-	   if (strEQ ("IGNORE THIS MESSAGE\n", SvPV_nolen (ERRSV)))
-	     {
-	       nreturn_vals = 0;
-	       return_vals = g_new (GParam, 1);
-	       return_vals->type = PARAM_STATUS;
-	       return_vals->data.d_status = STATUS_SUCCESS;
-	       *xnreturn_vals = nreturn_vals+1;
-	       *xreturn_vals = return_vals;
-	     }
-	   else
-	     err_msg = g_strdup (SvPV_nolen (ERRSV));
+          if (strEQ ("IGNORE THIS MESSAGE\n", SvPV_nolen (ERRSV)))
+            {
+              nreturn_vals = 0;
+              return_vals = g_new (GParam, 1);
+              return_vals->type = PARAM_STATUS;
+              return_vals->data.d_status = STATUS_SUCCESS;
+              *xnreturn_vals = nreturn_vals+1;
+              *xreturn_vals = return_vals;
+            }
+          else
+            err_msg = g_strdup (SvPV_nolen (ERRSV));
 	}
       else
 	{
@@ -1222,14 +1222,9 @@ static void pii_run(char *name, int nparams, GParam *param, int *xnreturn_vals, 
 	    err_msg = g_strdup_printf (__("plug-in returned %d more values than expected"), count);
 	}
       
-      while (count--)
-	(void) POPs;
-      
       destroy_paramdefs (return_defs, nreturn_vals);
       
       PUTBACK;
-      FREETMPS;
-      LEAVE;
     }
   else
     err_msg = g_strdup_printf (__("being called as '%s', but '%s' not registered in the pdb"), name, name);

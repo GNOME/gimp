@@ -16,7 +16,6 @@ sub do_bricks {
     my ($pattern,$pattern2,$bp,$clr,$bw,$brickx,$bricky,$imgw,$imgh,$skew) = @_;
     my ($image, $layer, $state, $layerpat);
   
-    $state = get_state(); # get fgcolor, etc
     $imgw = abs($imgw); $imgw = 256 if (($imgw < 32) || ($imgw > 4096));
     $imgh = abs($imgh); $imgh = 256 if (($imgh < 32) || ($imgh > 4096));
     #print "Creating texture $imgw"."x$imgh\n";
@@ -115,7 +114,6 @@ sub do_bricks {
     gimp_image_remove_layer_mask ($image,$layerb,0);
     gimp_channel_ops_offset ($layerpat,1,0,-1,-1);
     gimp_channel_ops_offset ($layerb,1,0,-1,-1);
-    set_state($state); # restore color etc 
     $image;
 }
 
