@@ -281,13 +281,14 @@ gimp_display_shell_drop_files (GtkWidget *widget,
 
   for (list = files; list; list = g_list_next (list))
     {
+      const gchar       *uri   = list->data;
       GimpImage         *new_image;
-      const gchar       *uri = list->data;
       GimpPDBStatusType  status;
+      GError            *error = NULL;
 
       new_image = file_open_image (gimage->gimp, context, uri, uri,
                                    NULL, GIMP_RUN_NONINTERACTIVE,
-                                   &status, NULL, NULL);
+                                   &status, NULL, &error);
 
       if (new_image)
         {
@@ -342,6 +343,16 @@ gimp_display_shell_drop_files (GtkWidget *widget,
             }
 
           g_object_unref (new_image);
+        }
+      else if (status != GIMP_PDB_CANCEL)
+        {
+          gchar *filename = file_utils_uri_to_utf8_filename (uri);
+
+          g_message (_("Opening '%s' failed:\n\n%s"),
+                     filename, error->message);
+
+          g_clear_error (&error);
+          g_free (filename);
         }
     }
 

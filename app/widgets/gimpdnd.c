@@ -50,9 +50,6 @@
 
 #include "vectors/gimpvectors.h"
 
-#include "file/file-open.h"
-#include "file/file-utils.h"
-
 #include "gimpdnd.h"
 #include "gimppreview.h"
 
@@ -1285,42 +1282,6 @@ gimp_dnd_file_dest_remove (GtkWidget *widget)
   gimp_dnd_data_dest_remove (GIMP_DND_TYPE_URI_LIST, widget);
   gimp_dnd_data_dest_remove (GIMP_DND_TYPE_TEXT_PLAIN, widget);
   gimp_dnd_data_dest_remove (GIMP_DND_TYPE_NETSCAPE_URL, widget);
-}
-
-void
-gimp_dnd_open_files (GtkWidget *widget,
-		     GList     *files,
-		     gpointer   data)
-{
-  GList *list;
-
-  for (list = files; list; list = g_list_next (list))
-    {
-      const gchar       *uri   = list->data;
-      GimpImage         *gimage;
-      GimpPDBStatusType  status;
-      GError            *error = NULL;
-
-      D (g_print ("%s: ...trying to open resulting uri \"%s\"\n",
-                  G_STRFUNC, uri));
-
-      gimage = file_open_with_display (the_dnd_gimp,
-                                       gimp_get_user_context (the_dnd_gimp),
-                                       uri, &status, &error);
-
-      if (! gimage && status != GIMP_PDB_CANCEL)
-        {
-          gchar *filename;
-
-          filename = file_utils_uri_to_utf8_filename (uri);
-
-          g_message (_("Opening '%s' failed:\n\n%s"),
-                     filename, error->message);
-
-          g_clear_error (&error);
-          g_free (filename);
-        }
-    }
 }
 
 

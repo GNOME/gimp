@@ -110,11 +110,6 @@ void  gimp_dnd_file_dest_add      (GtkWidget           *widget,
                                    gpointer             data);
 void  gimp_dnd_file_dest_remove   (GtkWidget           *widget);
 
-/*  standard callback  */
-void  gimp_dnd_open_files         (GtkWidget           *widget,
-                                   GList               *files,
-                                   gpointer             data);
-
 
 /*  color dnd functions  */
 

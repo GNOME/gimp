@@ -34,13 +34,21 @@
 #include "core/gimplayermask.h"
 #include "core/gimptoolinfo.h"
 
+#include "file/file-open.h"
+#include "file/file-utils.h"
+
 #include "gimpdnd.h"
 #include "gimptoolbox.h"
 #include "gimptoolbox-dnd.h"
 
+#include "gimp-intl.h"
+
 
 /*  local function prototypes  */
 
+static void   gimp_toolbox_drop_files    (GtkWidget    *widget,
+                                          GList        *files,
+                                          gpointer      data);
 static void   gimp_toolbox_drop_drawable (GtkWidget    *widget,
                                           GimpViewable *viewable,
                                           gpointer      data);
@@ -63,9 +71,12 @@ gimp_toolbox_dnd_init (GimpToolbox *toolbox)
 
   dock = GIMP_DOCK (toolbox);
 
-  gimp_dnd_file_dest_add (GTK_WIDGET (toolbox), gimp_dnd_open_files, NULL);
-
-  gimp_dnd_file_dest_add (toolbox->tool_wbox, gimp_dnd_open_files, NULL);
+  gimp_dnd_file_dest_add (GTK_WIDGET (toolbox),
+                          gimp_toolbox_drop_files,
+                          dock->context);
+  gimp_dnd_file_dest_add (toolbox->tool_wbox,
+                          gimp_toolbox_drop_files,
+                          dock->context);
 
   gimp_dnd_viewable_dest_add (toolbox->tool_wbox, GIMP_TYPE_LAYER,
 			      gimp_toolbox_drop_drawable,
@@ -86,6 +97,37 @@ gimp_toolbox_dnd_init (GimpToolbox *toolbox)
 
 
 /*  private functions  */
+
+static void
+gimp_toolbox_drop_files (GtkWidget *widget,
+                         GList     *files,
+                         gpointer   data)
+{
+  GimpContext *context = GIMP_CONTEXT (data);
+  GList       *list;
+
+  for (list = files; list; list = g_list_next (list))
+    {
+      const gchar       *uri   = list->data;
+      GimpImage         *gimage;
+      GimpPDBStatusType  status;
+      GError            *error = NULL;
+
+      gimage = file_open_with_display (context->gimp, context,
+                                       uri, &status, &error);
+
+      if (! gimage && status != GIMP_PDB_CANCEL)
+        {
+          gchar *filename = file_utils_uri_to_utf8_filename (uri);
+
+          g_message (_("Opening '%s' failed:\n\n%s"),
+                     filename, error->message);
+
+          g_clear_error (&error);
+          g_free (filename);
+        }
+    }
+}
 
 static void
 gimp_toolbox_drop_drawable (GtkWidget    *widget,
