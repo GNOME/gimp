@@ -48,6 +48,27 @@ sub pattern_outargs {
 
 # The defs
 
+sub patterns_refresh {
+    $blurb = 'Refresh current patterns.';
+
+    $help = <<'HELP';
+This procedure retrieves all patterns currently in the user's pattern path
+and updates the pattern dialogs accordingly.
+HELP
+
+    $author = $copyright = 'Michael Natterer';
+    $date = '2002';
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_data_factory_data_save (gimp->pattern_factory);
+  gimp_data_factory_data_init (gimp->pattern_factory, FALSE);
+}
+CODE
+    );
+}
+
 sub patterns_get_pattern {
     $blurb = 'Retrieve information about the currently active pattern.';
 
@@ -223,9 +244,9 @@ CODE
 @headers = qw("core/gimp.h" "core/gimpcontext.h" "core/gimpdatafactory.h"
               "core/gimplist.h" "core/gimppattern.h" "base/temp-buf.h");
 
-@procs = qw(patterns_get_pattern patterns_set_pattern patterns_list
-	    patterns_get_pattern_data);
-%exports = (app => [@procs], lib => [$procs[3]]);
+@procs = qw(patterns_refresh patterns_get_pattern patterns_set_pattern
+            patterns_list patterns_get_pattern_data);
+%exports = (app => [@procs], lib => [$procs[4]]);
 
 $desc = 'Patterns';
 

@@ -196,7 +196,7 @@ CODE
 }
 
 sub palette_list {
-	$blurb = 'Retrieves a list of all of the available patterns';
+	$blurb = 'Retrieves a list of all of the available palettes';
 
 	    $help = <<'HELP';
 This procedure returns a complete listing of available palettes. Each name

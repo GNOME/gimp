@@ -26,6 +26,34 @@
 #include "gimp.h"
 
 /**
+ * gimp_gradients_refresh:
+ *
+ * Refresh current gradients.
+ *
+ * This procedure retrieves all gradients currently in the user's
+ * gradient path and updates the gradient dialogs accordingly.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_gradients_refresh (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_gradients_refresh",
+				    &nreturn_vals,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_gradients_get_list:
  * @num_gradients: The number of loaded gradients.
  *

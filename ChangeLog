@@ -1,7 +1,23 @@
 2002-02-21  Michael Natterer  <mitch@gimp.org>
 
+	Implemented #66921 (needs gimp-*-refresh in PDB)
+
+	* tools/pdbgen/pdb/gradients.pdb
+	* tools/pdbgen/pdb/patterns.pdb: added gimp_*_refresh() procedures.
+
+	* tools/pdbgen/pdb/palette.pdb: typo: s/patterns/palettes/
+
+	* app/pdb/gradients_cmds.c
+	* app/pdb/internal_procs.c
+	* app/pdb/palette_cmds.c
+	* app/pdb/patterns_cmds.c
+	* libgimp/gimpgradients_pdb.[ch]
+	* libgimp/gimppalette_pdb.c: regenerated.
+
+2002-02-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpdrawtool.c: return the corrent value in
-	g_retuen_val_if_fail().
+	g_return_val_if_fail().
 
 	* app/tools/gimppainttool.c: removed some more painting logic...
 

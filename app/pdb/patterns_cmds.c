@@ -36,6 +36,7 @@
 #include "core/gimplist.h"
 #include "core/gimppattern.h"
 
+static ProcRecord patterns_refresh_proc;
 static ProcRecord patterns_get_pattern_proc;
 static ProcRecord patterns_set_pattern_proc;
 static ProcRecord patterns_list_proc;
@@ -44,11 +45,37 @@ static ProcRecord patterns_get_pattern_data_proc;
 void
 register_patterns_procs (Gimp *gimp)
 {
+  procedural_db_register (gimp, &patterns_refresh_proc);
   procedural_db_register (gimp, &patterns_get_pattern_proc);
   procedural_db_register (gimp, &patterns_set_pattern_proc);
   procedural_db_register (gimp, &patterns_list_proc);
   procedural_db_register (gimp, &patterns_get_pattern_data_proc);
 }
+
+static Argument *
+patterns_refresh_invoker (Gimp     *gimp,
+                          Argument *args)
+{
+  gimp_data_factory_data_save (gimp->pattern_factory);
+  gimp_data_factory_data_init (gimp->pattern_factory, FALSE);
+  return procedural_db_return_args (&patterns_refresh_proc, TRUE);
+}
+
+static ProcRecord patterns_refresh_proc =
+{
+  "gimp_patterns_refresh",
+  "Refresh current patterns.",
+  "This procedure retrieves all patterns currently in the user's pattern path and updates the pattern dialogs accordingly.",
+  "Michael Natterer",
+  "Michael Natterer",
+  "2002",
+  GIMP_INTERNAL,
+  0,
+  NULL,
+  0,
+  NULL,
+  { { patterns_refresh_invoker } }
+};
 
 static Argument *
 patterns_get_pattern_invoker (Gimp     *gimp,

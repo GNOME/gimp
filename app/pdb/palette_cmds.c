@@ -353,7 +353,7 @@ static ProcArg palette_list_outargs[] =
 static ProcRecord palette_list_proc =
 {
   "gimp_palette_list",
-  "Retrieves a list of all of the available patterns",
+  "Retrieves a list of all of the available palettes",
   "This procedure returns a complete listing of available palettes. Each name returned can be used as input to the command 'gimp_palette_set_palette'.",
   "Nathan Summers <rock@gimp.org>",
   "Nathan Summers",

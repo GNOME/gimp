@@ -29,6 +29,7 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+gboolean gimp_gradients_refresh           (void);
 gchar**  gimp_gradients_get_list          (gint     *num_gradients);
 gchar*   gimp_gradients_get_active        (void);
 gboolean gimp_gradients_set_active        (gchar    *name);

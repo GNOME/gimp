@@ -36,6 +36,7 @@
 #include "core/gimpgradient.h"
 #include "core/gimplist.h"
 
+static ProcRecord gradients_refresh_proc;
 static ProcRecord gradients_get_list_proc;
 static ProcRecord gradients_get_active_proc;
 static ProcRecord gradients_set_active_proc;
@@ -46,6 +47,7 @@ static ProcRecord gradients_get_gradient_data_proc;
 void
 register_gradients_procs (Gimp *gimp)
 {
+  procedural_db_register (gimp, &gradients_refresh_proc);
   procedural_db_register (gimp, &gradients_get_list_proc);
   procedural_db_register (gimp, &gradients_get_active_proc);
   procedural_db_register (gimp, &gradients_set_active_proc);
@@ -53,6 +55,31 @@ register_gradients_procs (Gimp *gimp)
   procedural_db_register (gimp, &gradients_sample_custom_proc);
   procedural_db_register (gimp, &gradients_get_gradient_data_proc);
 }
+
+static Argument *
+gradients_refresh_invoker (Gimp     *gimp,
+                           Argument *args)
+{
+  gimp_data_factory_data_save (gimp->gradient_factory);
+  gimp_data_factory_data_init (gimp->gradient_factory, FALSE);
+  return procedural_db_return_args (&gradients_refresh_proc, TRUE);
+}
+
+static ProcRecord gradients_refresh_proc =
+{
+  "gimp_gradients_refresh",
+  "Refresh current gradients.",
+  "This procedure retrieves all gradients currently in the user's gradient path and updates the gradient dialogs accordingly.",
+  "Michael Natterer",
+  "Michael Natterer",
+  "2002",
+  GIMP_INTERNAL,
+  0,
+  NULL,
+  0,
+  NULL,
+  { { gradients_refresh_invoker } }
+};
 
 static Argument *
 gradients_get_list_invoker (Gimp     *gimp,

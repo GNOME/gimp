@@ -242,7 +242,7 @@ gimp_palette_refresh (void)
  * gimp_palette_list:
  * @num_palettes: The number of palettes in the list.
  *
- * Retrieves a list of all of the available patterns
+ * Retrieves a list of all of the available palettes
  *
  * This procedure returns a complete listing of available palettes.
  * Each name returned can be used as input to the command

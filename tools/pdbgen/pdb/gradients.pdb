@@ -22,6 +22,29 @@ sub pdb_misc {
     $date = '1997';
 }
 
+# The defs
+
+sub gradients_refresh {
+    $blurb = 'Refresh current gradients.';
+
+    $help = <<'HELP';
+This procedure retrieves all gradients currently in the user's gradient path
+and updates the gradient dialogs accordingly.
+HELP
+
+    $author = $copyright = 'Michael Natterer';
+    $date = '2002';
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_data_factory_data_save (gimp->gradient_factory);
+  gimp_data_factory_data_init (gimp->gradient_factory, FALSE);
+}
+CODE
+    );
+}
+
 sub gradients_get_list {
     $blurb = 'Retrieve the list of loaded gradients.';
 
@@ -328,7 +351,8 @@ CODE
               "core/gimpcontainer.h" "core/gimpdatafactory.h"
               "core/gimplist.h" "core/gimpgradient.h");
 
-@procs = qw(gradients_get_list gradients_get_active gradients_set_active
+@procs = qw(gradients_refresh gradients_get_list
+            gradients_get_active gradients_set_active
 	    gradients_sample_uniform gradients_sample_custom
             gradients_get_gradient_data);
 %exports = (app => [@procs], lib => [@procs]);
