@@ -423,12 +423,12 @@ gradient_editor_flip_cmd_callback (GtkWidget *widget,
 
       switch (oseg->type)
 	{
-	case GRAD_SPHERE_INCREASING:
-	  seg->type = GRAD_SPHERE_DECREASING;
+	case GIMP_GRAD_SPHERE_INCREASING:
+	  seg->type = GIMP_GRAD_SPHERE_DECREASING;
 	  break;
 
-	case GRAD_SPHERE_DECREASING:
-	  seg->type = GRAD_SPHERE_INCREASING;
+	case GIMP_GRAD_SPHERE_DECREASING:
+	  seg->type = GIMP_GRAD_SPHERE_INCREASING;
 	  break;
 
 	default:
@@ -437,12 +437,12 @@ gradient_editor_flip_cmd_callback (GtkWidget *widget,
 
       switch (oseg->color)
 	{
-	case GRAD_HSV_CCW:
-	  seg->color = GRAD_HSV_CW;
+	case GIMP_GRAD_HSV_CCW:
+	  seg->color = GIMP_GRAD_HSV_CW;
 	  break;
 
-	case GRAD_HSV_CW:
-	  seg->color = GRAD_HSV_CCW;
+	case GIMP_GRAD_HSV_CW:
+	  seg->color = GIMP_GRAD_HSV_CCW;
 	  break;
 
 	default:
@@ -1075,19 +1075,19 @@ gradient_editor_menu_update (GtkItemFactory *factory,
 
       switch (editor->control_sel_l->type)
         {
-        case GRAD_LINEAR:
+        case GIMP_GRAD_LINEAR:
           SET_ACTIVE ("/blendingfunction/Linear", TRUE);
           break;
-        case GRAD_CURVED:
+        case GIMP_GRAD_CURVED:
           SET_ACTIVE ("/blendingfunction/Curved", TRUE);
           break;
-        case GRAD_SINE:
+        case GIMP_GRAD_SINE:
           SET_ACTIVE ("/blendingfunction/Sinusodial", TRUE);
           break;
-        case GRAD_SPHERE_INCREASING:
+        case GIMP_GRAD_SPHERE_INCREASING:
           SET_ACTIVE ("/blendingfunction/Spherical (increasing)", TRUE);
           break;
-        case GRAD_SPHERE_DECREASING:
+        case GIMP_GRAD_SPHERE_DECREASING:
           SET_ACTIVE ("/blendingfunction/Spherical (decreasing)", TRUE);
           break;
         }
@@ -1104,13 +1104,13 @@ gradient_editor_menu_update (GtkItemFactory *factory,
 
       switch (editor->control_sel_l->color)
         {
-        case GRAD_RGB:
+        case GIMP_GRAD_RGB:
           SET_ACTIVE ("/coloringtype/RGB", TRUE);
           break;
-        case GRAD_HSV_CCW:
+        case GIMP_GRAD_HSV_CCW:
           SET_ACTIVE ("/coloringtype/HSV (counter-clockwise hue)", TRUE);
           break;
-        case GRAD_HSV_CW:
+        case GIMP_GRAD_HSV_CW:
           SET_ACTIVE ("/coloringtype/HSV (clockwise hue)", TRUE);
           break;
         }

@@ -552,23 +552,23 @@ gimp_gradient_get_color_at (GimpGradient *gradient,
 
   switch (seg->type)
     {
-    case GRAD_LINEAR:
+    case GIMP_GRAD_LINEAR:
       factor = gimp_gradient_calc_linear_factor (middle, pos);
       break;
 
-    case GRAD_CURVED:
+    case GIMP_GRAD_CURVED:
       factor = gimp_gradient_calc_curved_factor (middle, pos);
       break;
 
-    case GRAD_SINE:
+    case GIMP_GRAD_SINE:
       factor = gimp_gradient_calc_sine_factor (middle, pos);
       break;
 
-    case GRAD_SPHERE_INCREASING:
+    case GIMP_GRAD_SPHERE_INCREASING:
       factor = gimp_gradient_calc_sphere_increasing_factor (middle, pos);
       break;
 
-    case GRAD_SPHERE_DECREASING:
+    case GIMP_GRAD_SPHERE_DECREASING:
       factor = gimp_gradient_calc_sphere_decreasing_factor (middle, pos);
       break;
 
@@ -580,12 +580,13 @@ gimp_gradient_get_color_at (GimpGradient *gradient,
 
   /* Calculate color components */
 
-  rgb.a = seg->left_color.a + (seg->right_color.a - seg->left_color.a) * factor;
+  rgb.a = 
+    seg->left_color.a + (seg->right_color.a - seg->left_color.a) * factor;
 
-  if (seg->color == GRAD_RGB)
+  if (seg->color == GIMP_GRAD_RGB)
     {
-      rgb.r 
-	= seg->left_color.r + (seg->right_color.r - seg->left_color.r) * factor;
+      rgb.r = 
+        seg->left_color.r + (seg->right_color.r - seg->left_color.r) * factor;
 
       rgb.g =
 	seg->left_color.g + (seg->right_color.g - seg->left_color.g) * factor;
@@ -606,7 +607,7 @@ gimp_gradient_get_color_at (GimpGradient *gradient,
 
       switch (seg->color)
 	{
-	case GRAD_HSV_CCW:
+	case GIMP_GRAD_HSV_CCW:
 	  if (left_hsv.h < right_hsv.h)
 	    {
 	      left_hsv.h += (right_hsv.h - left_hsv.h) * factor;
@@ -620,7 +621,7 @@ gimp_gradient_get_color_at (GimpGradient *gradient,
 	    }
 	  break;
 
-	case GRAD_HSV_CW:
+	case GIMP_GRAD_HSV_CW:
 	  if (right_hsv.h < left_hsv.h)
 	    {
 	      left_hsv.h -= (left_hsv.h - right_hsv.h) * factor;
@@ -766,8 +767,8 @@ gimp_gradient_segment_new (void)
   gimp_rgba_set (&seg->left_color,  0.0, 0.0, 0.0, 1.0);
   gimp_rgba_set (&seg->right_color, 1.0, 1.0, 1.0, 1.0);
 
-  seg->type  = GRAD_LINEAR;
-  seg->color = GRAD_RGB;
+  seg->type  = GIMP_GRAD_LINEAR;
+  seg->color = GIMP_GRAD_RGB;
 
   seg->prev = seg->next = NULL;
 

@@ -290,47 +290,6 @@ package Gimp::CodeGen::enums;
 		       BG_BUCKET_FILL => '1',
 		       PATTERN_BUCKET_FILL => '2' }
 	},
-    GradientType =>
-	{ contig => 1,
-	  header => 'core/core-types.h',
-	  symbols => [ qw(LINEAR BILINEAR RADIAL SQUARE CONICAL_SYMMETRIC
-			  CONICAL_ASYMMETRIC SHAPEBURST_ANGULAR
-			  SHAPEBURST_SPHERICAL SHAPEBURST_DIMPLED
-			  SPIRAL_CLOCKWISE SPIRAL_ANTICLOCKWISE) ],
-	  mapping => { LINEAR => '0',
-		       BILINEAR => '1',
-		       RADIAL => '2',
-		       SQUARE => '3',
-		       CONICAL_SYMMETRIC => '4',
-		       CONICAL_ASYMMETRIC => '5',
-		       SHAPEBURST_ANGULAR => '6',
-		       SHAPEBURST_SPHERICAL => '7',
-		       SHAPEBURST_DIMPLED => '8',
-		       SPIRAL_CLOCKWISE => '9',
-		       SPIRAL_ANTICLOCKWISE => '10' }
-	},
-    BlendMode =>
-	{ contig => 1,
-	  header => 'core/core-types.h',
-	  symbols => [ qw(FG_BG_RGB_MODE FG_BG_HSV_MODE FG_TRANS_MODE
-			  CUSTOM_MODE) ],
-	  mapping => { FG_BG_RGB_MODE => '0',
-		       FG_BG_HSV_MODE => '1',
-		       FG_TRANS_MODE => '2',
-		       CUSTOM_MODE => '3' },
-	  nicks   => { FG_BG_RGB_MODE => 'FG_BG_RGB',
-		       FG_BG_HSV_MODE => 'FG_BG_HSV',
-		       FG_TRANS_MODE => 'FG_TRANS',
-		       CUSTOM_MODE => 'CUSTOM' }
-	},
-    RepeatMode =>
-	{ contig => 1,
-	  header => 'core/core-types.h',
-	  symbols => [ qw(REPEAT_NONE REPEAT_SAWTOOTH REPEAT_TRIANGULAR) ],
-	  mapping => { REPEAT_NONE => '0',
-		       REPEAT_SAWTOOTH => '1',
-		       REPEAT_TRIANGULAR => '2' }
-	},
     GimpImageBaseType =>
 	{ contig => 1,
 	  header => 'core/core-enums.h',
@@ -338,6 +297,49 @@ package Gimp::CodeGen::enums;
 	  mapping => { GIMP_RGB => '0',
 		       GIMP_GRAY => '1',
 		       GIMP_INDEXED => '2' }
+	},
+    GimpGradientType =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_LINEAR GIMP_BILINEAR GIMP_RADIAL GIMP_SQUARE
+			  GIMP_CONICAL_SYMMETRIC GIMP_CONICAL_ASYMMETRIC
+			  GIMP_SHAPEBURST_ANGULAR GIMP_SHAPEBURST_SPHERICAL
+			  GIMP_SHAPEBURST_DIMPLED GIMP_SPIRAL_CLOCKWISE
+			  GIMP_SPIRAL_ANTICLOCKWISE) ],
+	  mapping => { GIMP_LINEAR => '0',
+		       GIMP_BILINEAR => '1',
+		       GIMP_RADIAL => '2',
+		       GIMP_SQUARE => '3',
+		       GIMP_CONICAL_SYMMETRIC => '4',
+		       GIMP_CONICAL_ASYMMETRIC => '5',
+		       GIMP_SHAPEBURST_ANGULAR => '6',
+		       GIMP_SHAPEBURST_SPHERICAL => '7',
+		       GIMP_SHAPEBURST_DIMPLED => '8',
+		       GIMP_SPIRAL_CLOCKWISE => '9',
+		       GIMP_SPIRAL_ANTICLOCKWISE => '10' }
+	},
+    GimpBlendMode =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_FG_BG_RGB_MODE GIMP_FG_BG_HSV_MODE
+			  GIMP_FG_TRANS_MODE GIMP_CUSTOM_MODE) ],
+	  mapping => { GIMP_FG_BG_RGB_MODE => '0',
+		       GIMP_FG_BG_HSV_MODE => '1',
+		       GIMP_FG_TRANS_MODE => '2',
+		       GIMP_CUSTOM_MODE => '3' },
+	  nicks   => { GIMP_FG_BG_RGB_MODE => 'GIMP_FG_BG_RGB',
+		       GIMP_FG_BG_HSV_MODE => 'GIMP_FG_BG_HSV',
+		       GIMP_FG_TRANS_MODE => 'GIMP_FG_TRANS',
+		       GIMP_CUSTOM_MODE => 'GIMP_CUSTOM' }
+	},
+    GimpRepeatMode =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_REPEAT_NONE GIMP_REPEAT_SAWTOOTH
+			  GIMP_REPEAT_TRIANGULAR) ],
+	  mapping => { GIMP_REPEAT_NONE => '0',
+		       GIMP_REPEAT_SAWTOOTH => '1',
+		       GIMP_REPEAT_TRIANGULAR => '2' }
 	},
     GimpImageType =>
 	{ contig => 1,

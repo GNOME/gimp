@@ -21,12 +21,12 @@
 
 
 void   gimp_drawable_blend (GimpDrawable     *drawable,
-                            BlendMode         blend_mode,
+                            GimpBlendMode     blend_mode,
                             gint              paint_mode,
-                            GradientType      gradient_type,
+                            GimpGradientType  gradient_type,
                             gdouble           opacity,
                             gdouble           offset,
-                            RepeatMode        repeat,
+                            GimpRepeatMode    repeat,
                             gint              supersample,
                             gint              max_depth,
                             gdouble           threshold,

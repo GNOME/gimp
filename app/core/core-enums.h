@@ -73,6 +73,52 @@ typedef enum  /*< pdb-skip >*/
 
 typedef enum  /*< skip >*/
 {
+  GIMP_LINEAR,
+  GIMP_BILINEAR,
+  GIMP_RADIAL,
+  GIMP_SQUARE,
+  GIMP_CONICAL_SYMMETRIC,
+  GIMP_CONICAL_ASYMMETRIC,
+  GIMP_SHAPEBURST_ANGULAR,
+  GIMP_SHAPEBURST_SPHERICAL,
+  GIMP_SHAPEBURST_DIMPLED,
+  GIMP_SPIRAL_CLOCKWISE,
+  GIMP_SPIRAL_ANTICLOCKWISE
+} GimpGradientType;
+
+typedef enum  /*< pdb-skip >*/ /*< skip >*/
+{
+  GIMP_GRAD_LINEAR = 0,
+  GIMP_GRAD_CURVED,
+  GIMP_GRAD_SINE,
+  GIMP_GRAD_SPHERE_INCREASING,
+  GIMP_GRAD_SPHERE_DECREASING
+} GimpGradientSegmentType;
+
+typedef enum  /*< pdb-skip >*/ /*< skip >*/
+{
+  GIMP_GRAD_RGB = 0,  /* normal RGB */
+  GIMP_GRAD_HSV_CCW,  /* counterclockwise hue */
+  GIMP_GRAD_HSV_CW    /* clockwise hue */
+} GimpGradientSegmentColor;
+
+typedef enum  /*< chop=_MODE >*/ /*< skip >*/
+{
+  GIMP_FG_BG_RGB_MODE,
+  GIMP_FG_BG_HSV_MODE,
+  GIMP_FG_TRANS_MODE,
+  GIMP_CUSTOM_MODE
+} GimpBlendMode;
+
+typedef enum  /*< skip >*/
+{
+  GIMP_REPEAT_NONE,
+  GIMP_REPEAT_SAWTOOTH,
+  GIMP_REPEAT_TRIANGULAR
+} GimpRepeatMode;
+
+typedef enum  /*< skip >*/
+{
   GIMP_RGB_IMAGE,
   GIMP_RGBA_IMAGE,
   GIMP_GRAY_IMAGE,

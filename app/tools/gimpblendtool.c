@@ -59,35 +59,35 @@ typedef struct _BlendOptions BlendOptions;
 
 struct _BlendOptions
 {
-  PaintOptions  paint_options;
+  PaintOptions      paint_options;
 
-  gdouble       offset;
-  gdouble       offset_d;
-  GtkObject    *offset_w;
+  gdouble           offset;
+  gdouble           offset_d;
+  GtkObject        *offset_w;
 
-  BlendMode     blend_mode;
-  BlendMode     blend_mode_d;
-  GtkWidget    *blend_mode_w;
+  GimpBlendMode     blend_mode;
+  GimpBlendMode     blend_mode_d;
+  GtkWidget        *blend_mode_w;
 
-  GradientType  gradient_type;
-  GradientType  gradient_type_d;
-  GtkWidget    *gradient_type_w;
+  GimpGradientType  gradient_type;
+  GimpGradientType  gradient_type_d;
+  GtkWidget        *gradient_type_w;
 
-  RepeatMode    repeat;
-  RepeatMode    repeat_d;
-  GtkWidget    *repeat_w;
+  GimpRepeatMode    repeat;
+  GimpRepeatMode    repeat_d;
+  GtkWidget        *repeat_w;
+   
+  gint              supersample;
+  gint              supersample_d;
+  GtkWidget        *supersample_w;
 
-  gint          supersample;
-  gint          supersample_d;
-  GtkWidget    *supersample_w;
+  gint              max_depth;
+  gint              max_depth_d;
+  GtkObject        *max_depth_w;
 
-  gint          max_depth;
-  gint          max_depth_d;
-  GtkObject    *max_depth_w;
-
-  gdouble       threshold;
-  gdouble       threshold_d;
-  GtkObject    *threshold_w;
+  gdouble           threshold;
+  gdouble           threshold_d;
+  GtkObject        *threshold_w;
 };
 
 
@@ -536,9 +536,9 @@ blend_options_new (GimpToolInfo *tool_info)
   ((GimpToolOptions *) options)->reset_func = blend_options_reset;
 
   options->offset  	 = options->offset_d  	    = 0.0;
-  options->blend_mode 	 = options->blend_mode_d    = FG_BG_RGB_MODE;
-  options->gradient_type = options->gradient_type_d = LINEAR;
-  options->repeat        = options->repeat_d        = REPEAT_NONE;
+  options->blend_mode 	 = options->blend_mode_d    = GIMP_FG_BG_RGB_MODE;
+  options->gradient_type = options->gradient_type_d = GIMP_LINEAR;
+  options->repeat        = options->repeat_d        = GIMP_REPEAT_NONE;
   options->supersample   = options->supersample_d   = FALSE;
   options->max_depth     = options->max_depth_d     = 3;
   options->threshold     = options->threshold_d     = 0.2;
@@ -589,10 +589,10 @@ blend_options_new (GimpToolInfo *tool_info)
      &options->blend_mode,
      GINT_TO_POINTER (options->blend_mode_d),
 
-     _("FG to BG (RGB)"),    GINT_TO_POINTER (FG_BG_RGB_MODE), NULL,
-     _("FG to BG (HSV)"),    GINT_TO_POINTER (FG_BG_HSV_MODE), NULL,
-     _("FG to Transparent"), GINT_TO_POINTER (FG_TRANS_MODE), NULL,
-     _("Custom Gradient"),   GINT_TO_POINTER (CUSTOM_MODE), NULL,
+     _("FG to BG (RGB)"),    GINT_TO_POINTER (GIMP_FG_BG_RGB_MODE), NULL,
+     _("FG to BG (HSV)"),    GINT_TO_POINTER (GIMP_FG_BG_HSV_MODE), NULL,
+     _("FG to Transparent"), GINT_TO_POINTER (GIMP_FG_TRANS_MODE), NULL,
+     _("Custom Gradient"),   GINT_TO_POINTER (GIMP_CUSTOM_MODE), NULL,
 
      NULL);
 
@@ -607,17 +607,17 @@ blend_options_new (GimpToolInfo *tool_info)
      options,
      GINT_TO_POINTER (options->gradient_type_d),
 
-     _("Linear"),                 GINT_TO_POINTER (LINEAR), NULL,
-     _("Bi-Linear"),              GINT_TO_POINTER (BILINEAR), NULL,
-     _("Radial"),                 GINT_TO_POINTER (RADIAL), NULL,
-     _("Square"),                 GINT_TO_POINTER (SQUARE), NULL,
-     _("Conical (symmetric)"),    GINT_TO_POINTER (CONICAL_SYMMETRIC), NULL,
-     _("Conical (asymmetric)"),   GINT_TO_POINTER (CONICAL_ASYMMETRIC), NULL,
-     _("Shapeburst (angular)"),   GINT_TO_POINTER (SHAPEBURST_ANGULAR), NULL,
-     _("Shapeburst (spherical)"), GINT_TO_POINTER (SHAPEBURST_SPHERICAL), NULL,
-     _("Shapeburst (dimpled)"),   GINT_TO_POINTER (SHAPEBURST_DIMPLED), NULL,
-     _("Spiral (clockwise)"),     GINT_TO_POINTER (SPIRAL_CLOCKWISE), NULL,
-     _("Spiral (anticlockwise)"), GINT_TO_POINTER (SPIRAL_ANTICLOCKWISE), NULL,
+     _("Linear"),                 GINT_TO_POINTER (GIMP_LINEAR), NULL,
+     _("Bi-Linear"),              GINT_TO_POINTER (GIMP_BILINEAR), NULL,
+     _("Radial"),                 GINT_TO_POINTER (GIMP_RADIAL), NULL,
+     _("Square"),                 GINT_TO_POINTER (GIMP_SQUARE), NULL,
+     _("Conical (symmetric)"),    GINT_TO_POINTER (GIMP_CONICAL_SYMMETRIC), NULL,
+     _("Conical (asymmetric)"),   GINT_TO_POINTER (GIMP_CONICAL_ASYMMETRIC), NULL,
+     _("Shapeburst (angular)"),   GINT_TO_POINTER (GIMP_SHAPEBURST_ANGULAR), NULL,
+     _("Shapeburst (spherical)"), GINT_TO_POINTER (GIMP_SHAPEBURST_SPHERICAL), NULL,
+     _("Shapeburst (dimpled)"),   GINT_TO_POINTER (GIMP_SHAPEBURST_DIMPLED), NULL,
+     _("Spiral (clockwise)"),     GINT_TO_POINTER (GIMP_SPIRAL_CLOCKWISE), NULL,
+     _("Spiral (anticlockwise)"), GINT_TO_POINTER (GIMP_SPIRAL_ANTICLOCKWISE), NULL,
 
      NULL);
 
@@ -632,9 +632,9 @@ blend_options_new (GimpToolInfo *tool_info)
      &options->repeat,
      GINT_TO_POINTER (options->repeat_d),
 
-     _("None"),            GINT_TO_POINTER (REPEAT_NONE), NULL,
-     _("Sawtooth Wave"),   GINT_TO_POINTER (REPEAT_SAWTOOTH), NULL,
-     _("Triangular Wave"), GINT_TO_POINTER (REPEAT_TRIANGULAR), NULL,
+     _("None"),            GINT_TO_POINTER (GIMP_REPEAT_NONE), NULL,
+     _("Sawtooth Wave"),   GINT_TO_POINTER (GIMP_REPEAT_SAWTOOTH), NULL,
+     _("Triangular Wave"), GINT_TO_POINTER (GIMP_REPEAT_TRIANGULAR), NULL,
 
      NULL);
 
@@ -775,8 +775,8 @@ blend_options_drop_gradient (GtkWidget    *widget,
   gimp_context_set_gradient (context, GIMP_GRADIENT (viewable));
 
   gtk_option_menu_set_history (GTK_OPTION_MENU (options->blend_mode_w), 
-			       CUSTOM_MODE);
-  options->blend_mode = CUSTOM_MODE;
+			       GIMP_CUSTOM_MODE);
+  options->blend_mode = GIMP_CUSTOM_MODE;
 }
 
 static void

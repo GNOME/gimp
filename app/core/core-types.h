@@ -131,52 +131,6 @@ typedef enum
   PATTERN_BUCKET_FILL
 } BucketFillMode;
 
-typedef enum
-{
-  LINEAR,
-  BILINEAR,
-  RADIAL,
-  SQUARE,
-  CONICAL_SYMMETRIC,
-  CONICAL_ASYMMETRIC,
-  SHAPEBURST_ANGULAR,
-  SHAPEBURST_SPHERICAL,
-  SHAPEBURST_DIMPLED,
-  SPIRAL_CLOCKWISE,
-  SPIRAL_ANTICLOCKWISE
-} GradientType;
-
-typedef enum /*< pdb-skip >*/
-{
-  GRAD_LINEAR = 0,
-  GRAD_CURVED,
-  GRAD_SINE,
-  GRAD_SPHERE_INCREASING,
-  GRAD_SPHERE_DECREASING
-} GimpGradientSegmentType;
-
-typedef enum /*< pdb-skip >*/
-{
-  GRAD_RGB = 0,  /* normal RGB */
-  GRAD_HSV_CCW,  /* counterclockwise hue */
-  GRAD_HSV_CW    /* clockwise hue */
-} GimpGradientSegmentColor;
-
-typedef enum  /*< chop=_MODE >*/
-{
-  FG_BG_RGB_MODE,
-  FG_BG_HSV_MODE,
-  FG_TRANS_MODE,
-  CUSTOM_MODE
-} BlendMode;
-
-typedef enum
-{
-  REPEAT_NONE,
-  REPEAT_SAWTOOTH,
-  REPEAT_TRIANGULAR
-} RepeatMode;
-
 
 /*  base objects  */
 

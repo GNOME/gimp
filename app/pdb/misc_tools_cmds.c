@@ -31,6 +31,7 @@
 
 #include "base/base-enums.h"
 #include "base/tile-manager.h"
+#include "core/core-enums.h"
 #include "core/core-types.h"
 #include "core/gimpdrawable-blend.h"
 #include "core/gimpdrawable-bucket-fill.h"
@@ -78,7 +79,7 @@ blend_invoker (Gimp     *gimp,
     success = FALSE;
 
   blend_mode = args[1].value.pdb_int;
-  if (blend_mode < FG_BG_RGB_MODE || blend_mode > CUSTOM_MODE)
+  if (blend_mode < GIMP_FG_BG_RGB_MODE || blend_mode > GIMP_CUSTOM_MODE)
     success = FALSE;
 
   paint_mode = args[2].value.pdb_int;
@@ -86,7 +87,7 @@ blend_invoker (Gimp     *gimp,
     success = FALSE;
 
   gradient_type = args[3].value.pdb_int;
-  if (gradient_type < LINEAR || gradient_type > SPIRAL_ANTICLOCKWISE)
+  if (gradient_type < GIMP_LINEAR || gradient_type > GIMP_SPIRAL_ANTICLOCKWISE)
     success = FALSE;
 
   opacity = args[4].value.pdb_float;
@@ -98,7 +99,7 @@ blend_invoker (Gimp     *gimp,
     success = FALSE;
 
   repeat = args[6].value.pdb_int;
-  if (repeat < REPEAT_NONE || repeat > REPEAT_TRIANGULAR)
+  if (repeat < GIMP_REPEAT_NONE || repeat > GIMP_REPEAT_TRIANGULAR)
     success = FALSE;
 
   supersample = args[7].value.pdb_int ? TRUE : FALSE;
@@ -153,7 +154,7 @@ static ProcArg blend_inargs[] =
   {
     GIMP_PDB_INT32,
     "blend_mode",
-    "The type of blend: { FG_BG_RGB (0), FG_BG_HSV (1), FG_TRANS (2), CUSTOM (3) }"
+    "The type of blend: { GIMP_FG_BG_RGB (0), GIMP_FG_BG_HSV (1), GIMP_FG_TRANS (2), GIMP_CUSTOM (3) }"
   },
   {
     GIMP_PDB_INT32,
@@ -163,7 +164,7 @@ static ProcArg blend_inargs[] =
   {
     GIMP_PDB_INT32,
     "gradient_type",
-    "The type of gradient: { LINEAR (0), BILINEAR (1), RADIAL (2), SQUARE (3), CONICAL_SYMMETRIC (4), CONICAL_ASYMMETRIC (5), SHAPEBURST_ANGULAR (6), SHAPEBURST_SPHERICAL (7), SHAPEBURST_DIMPLED (8), SPIRAL_CLOCKWISE (9), SPIRAL_ANTICLOCKWISE (10) }"
+    "The type of gradient: { GIMP_LINEAR (0), GIMP_BILINEAR (1), GIMP_RADIAL (2), GIMP_SQUARE (3), GIMP_CONICAL_SYMMETRIC (4), GIMP_CONICAL_ASYMMETRIC (5), GIMP_SHAPEBURST_ANGULAR (6), GIMP_SHAPEBURST_SPHERICAL (7), GIMP_SHAPEBURST_DIMPLED (8), GIMP_SPIRAL_CLOCKWISE (9), GIMP_SPIRAL_ANTICLOCKWISE (10) }"
   },
   {
     GIMP_PDB_FLOAT,
@@ -178,7 +179,7 @@ static ProcArg blend_inargs[] =
   {
     GIMP_PDB_INT32,
     "repeat",
-    "Repeat mode: { REPEAT_NONE (0), REPEAT_SAWTOOTH (1), REPEAT_TRIANGULAR (2) }"
+    "Repeat mode: { GIMP_REPEAT_NONE (0), GIMP_REPEAT_SAWTOOTH (1), GIMP_REPEAT_TRIANGULAR (2) }"
   },
   {
     GIMP_PDB_INT32,

@@ -35,14 +35,6 @@ typedef enum
 
 typedef enum
 {
-  GIMP_FG_BG_RGB,
-  GIMP_FG_BG_HSV,
-  GIMP_FG_TRANS,
-  GIMP_CUSTOM
-} GimpBlendMode;
-
-typedef enum
-{
   GIMP_HARD,
   GIMP_SOFT,
   GIMP_PRESSURE
@@ -112,6 +104,14 @@ typedef enum
 
 typedef enum
 {
+  GIMP_FG_BG_RGB,
+  GIMP_FG_BG_HSV,
+  GIMP_FG_TRANS,
+  GIMP_CUSTOM
+} GimpBlendMode;
+
+typedef enum
+{
   GIMP_VALUE_LUT,
   GIMP_RED_LUT,
   GIMP_GREEN_LUT,
@@ -134,6 +134,21 @@ typedef enum
   GIMP_TRANS_IMAGE_FILL,
   GIMP_NO_IMAGE_FILL
 } GimpFillType;
+
+typedef enum
+{
+  GIMP_LINEAR,
+  GIMP_BILINEAR,
+  GIMP_RADIAL,
+  GIMP_SQUARE,
+  GIMP_CONICAL_SYMMETRIC,
+  GIMP_CONICAL_ASYMMETRIC,
+  GIMP_SHAPEBURST_ANGULAR,
+  GIMP_SHAPEBURST_SPHERICAL,
+  GIMP_SHAPEBURST_DIMPLED,
+  GIMP_SPIRAL_CLOCKWISE,
+  GIMP_SPIRAL_ANTICLOCKWISE
+} GimpGradientType;
 
 typedef enum
 {
@@ -191,6 +206,13 @@ typedef enum
 
 typedef enum
 {
+  GIMP_REPEAT_NONE,
+  GIMP_REPEAT_SAWTOOTH,
+  GIMP_REPEAT_TRIANGULAR
+} GimpRepeatMode;
+
+typedef enum
+{
   GIMP_SHADOWS,
   GIMP_MIDTONES,
   GIMP_HIGHLIGHTS
@@ -204,21 +226,6 @@ typedef enum
   GIMP_LOOP_TRIANGLE,
   GIMP_ONCE_END_COLOR
 } GimpGradientPaintMode;
-
-typedef enum
-{
-  GIMP_LINEAR,
-  GIMP_BILINEAR,
-  GIMP_RADIAL,
-  GIMP_SQUARE,
-  GIMP_CONICAL_SYMMETRIC,
-  GIMP_CONICAL_ASYMMETRIC,
-  GIMP_SHAPEBURST_ANGULAR,
-  GIMP_SHAPEBURST_SPHERICAL,
-  GIMP_SHAPEBURST_DIMPLED,
-  GIMP_SPIRAL_CLOCKWISE,
-  GIMP_SPIRAL_ANTICLOCKWISE
-} GimpGradientType;
 
 typedef enum
 {
@@ -257,13 +264,6 @@ typedef enum
   GIMP_CONTINUOUS,
   GIMP_INCREMENTAL
 } GimpPaintApplicationMode;
-
-typedef enum
-{
-  GIMP_REPEAT_NONE,
-  GIMP_REPEAT_SAWTOOTH,
-  GIMP_REPEAT_TRIANGULAR
-} GimpRepeatMode;
 
 typedef enum
 {

@@ -41,20 +41,20 @@
 #include "gimpimage-mask.h"
 
 
-typedef gdouble (* RepeatFunc) (gdouble);
+typedef gdouble (* BlendRepeatFunc) (gdouble);
 
 
 typedef struct
 {
-  GimpGradient *gradient;
-  gdouble       offset;
-  gdouble       sx, sy;
-  BlendMode     blend_mode;
-  GradientType  gradient_type;
-  GimpRGB       fg, bg;
-  gdouble       dist;
-  gdouble       vec[2];
-  RepeatFunc    repeat_func;
+  GimpGradient     *gradient;
+  gdouble           offset;
+  gdouble           sx, sy;
+  GimpBlendMode     blend_mode;
+  GimpGradientType  gradient_type;
+  GimpRGB           fg, bg;
+  gdouble           dist;
+  gdouble           vec[2];
+  BlendRepeatFunc    repeat_func;
 } RenderBlendData;
 
 typedef struct
@@ -128,24 +128,24 @@ static void    gradient_put_pixel                (gint          x,
 						  GimpRGB      *color,
 						  gpointer      put_pixel_data);
 
-static void    gradient_fill_region              (GimpImage    *gimage,
-						  GimpDrawable *drawable,
-						  PixelRegion  *PR,
-						  gint          width,
-						  gint          height,
-						  BlendMode     blend_mode,
-						  GradientType  gradient_type,
-						  gdouble       offset,
-						  RepeatMode    repeat,
-						  gint          supersample,
-						  gint          max_depth,
-						  gdouble       threshold,
-						  gdouble       sx,
-						  gdouble       sy,
-						  gdouble       ex,
-						  gdouble       ey,
-						  GimpProgressFunc progress_callback,
-						  gpointer      progress_data);
+static void    gradient_fill_region          (GimpImage        *gimage,
+                                              GimpDrawable     *drawable,
+                                              PixelRegion      *PR,
+                                              gint              width,
+                                              gint              height,
+                                              GimpBlendMode     blend_mode,
+                                              GimpGradientType  gradient_type,
+                                              gdouble           offset,
+                                              GimpRepeatMode    repeat,
+                                              gint              supersample,
+                                              gint              max_depth,
+                                              gdouble           threshold,
+                                              gdouble           sx,
+                                              gdouble           sy,
+                                              gdouble           ex,
+                                              gdouble           ey,
+                                              GimpProgressFunc  progress_callback,
+                                              gpointer          progress_data);
 
 
 /*  variables for the shapeburst algs  */
@@ -166,12 +166,12 @@ static PixelRegion distR =
 
 void
 gimp_drawable_blend (GimpDrawable     *drawable,
-                     BlendMode         blend_mode,
+                     GimpBlendMode     blend_mode,
                      int               paint_mode,
-                     GradientType      gradient_type,
+                     GimpGradientType  gradient_type,
                      gdouble           opacity,
                      gdouble           offset,
-                     RepeatMode        repeat,
+                     GimpRepeatMode    repeat,
                      gint              supersample,
                      gint              max_depth,
                      gdouble           threshold,
@@ -191,10 +191,6 @@ gimp_drawable_blend (GimpDrawable     *drawable,
   gint         x1, y1, x2, y2;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (gradient_type >= LINEAR &&
-                    gradient_type <= SPIRAL_ANTICLOCKWISE);
-  g_return_if_fail (blend_mode >= FG_BG_RGB_MODE && blend_mode <= CUSTOM_MODE);
-  g_return_if_fail (repeat >= REPEAT_NONE && repeat <= REPEAT_TRIANGULAR);
 
   gimage = gimp_drawable_gimage (drawable);
 
@@ -694,54 +690,54 @@ gradient_render_pixel (double    x,
 
   switch (rbd->gradient_type)
     {
-    case LINEAR:
+    case GIMP_LINEAR:
       factor = gradient_calc_linear_factor (rbd->dist, rbd->vec, rbd->offset,
 					    x - rbd->sx, y - rbd->sy);
       break;
 
-    case BILINEAR:
+    case GIMP_BILINEAR:
       factor = gradient_calc_bilinear_factor (rbd->dist, rbd->vec, rbd->offset,
 					      x - rbd->sx, y - rbd->sy);
       break;
 
-    case RADIAL:
+    case GIMP_RADIAL:
       factor = gradient_calc_radial_factor (rbd->dist, rbd->offset,
 					    x - rbd->sx, y - rbd->sy);
       break;
 
-    case SQUARE:
+    case GIMP_SQUARE:
       factor = gradient_calc_square_factor (rbd->dist, rbd->offset,
 					    x - rbd->sx, y - rbd->sy);
       break;
 
-    case CONICAL_SYMMETRIC:
+    case GIMP_CONICAL_SYMMETRIC:
       factor = gradient_calc_conical_sym_factor (rbd->dist, rbd->vec, rbd->offset,
 						 x - rbd->sx, y - rbd->sy);
       break;
 
-    case CONICAL_ASYMMETRIC:
+    case GIMP_CONICAL_ASYMMETRIC:
       factor = gradient_calc_conical_asym_factor (rbd->dist, rbd->vec, rbd->offset,
 						  x - rbd->sx, y - rbd->sy);
       break;
 
-    case SHAPEBURST_ANGULAR:
+    case GIMP_SHAPEBURST_ANGULAR:
       factor = gradient_calc_shapeburst_angular_factor (x, y);
       break;
 
-    case SHAPEBURST_SPHERICAL:
+    case GIMP_SHAPEBURST_SPHERICAL:
       factor = gradient_calc_shapeburst_spherical_factor (x, y);
       break;
 
-    case SHAPEBURST_DIMPLED:
+    case GIMP_SHAPEBURST_DIMPLED:
       factor = gradient_calc_shapeburst_dimpled_factor (x, y);
       break;
 
-    case SPIRAL_CLOCKWISE:
+    case GIMP_SPIRAL_CLOCKWISE:
       factor = gradient_calc_spiral_factor (rbd->dist, rbd->vec, rbd->offset,
 					    x - rbd->sx, y - rbd->sy,TRUE);
       break;
 
-    case SPIRAL_ANTICLOCKWISE:
+    case GIMP_SPIRAL_ANTICLOCKWISE:
       factor = gradient_calc_spiral_factor (rbd->dist, rbd->vec, rbd->offset,
 					    x - rbd->sx, y - rbd->sy,FALSE);
       break;
@@ -757,7 +753,7 @@ gradient_render_pixel (double    x,
 
   /* Blend the colors */
 
-  if (rbd->blend_mode == CUSTOM_MODE)
+  if (rbd->blend_mode == GIMP_CUSTOM_MODE)
     {
       gimp_gradient_get_color_at (rbd->gradient, factor, color);
     }
@@ -770,7 +766,7 @@ gradient_render_pixel (double    x,
       color->b = rbd->fg.b + (rbd->bg.b - rbd->fg.b) * factor;
       color->a = rbd->fg.a + (rbd->bg.a - rbd->fg.a) * factor;
 
-      if (rbd->blend_mode == FG_BG_HSV_MODE)
+      if (rbd->blend_mode == GIMP_FG_BG_HSV_MODE)
 	gimp_hsv_to_rgb_double (&color->r, &color->g, &color->b);
     }
 }
@@ -817,10 +813,10 @@ gradient_fill_region (GimpImage        *gimage,
 		      PixelRegion      *PR,
 		      gint              width,
 		      gint              height,
-		      BlendMode         blend_mode,
-		      GradientType      gradient_type,
+		      GimpBlendMode     blend_mode,
+		      GimpGradientType  gradient_type,
 		      gdouble           offset,
-		      RepeatMode        repeat,
+		      GimpRepeatMode    repeat,
 		      gint              supersample,
 		      gint              max_depth,
 		      gdouble           threshold,
@@ -856,10 +852,10 @@ gradient_fill_region (GimpImage        *gimage,
 
   switch (blend_mode)
     {
-    case FG_BG_RGB_MODE:
+    case GIMP_FG_BG_RGB_MODE:
       break;
 
-    case FG_BG_HSV_MODE:
+    case GIMP_FG_BG_HSV_MODE:
       /* Convert to HSV */
 
       gimp_rgb_to_hsv_double (&rbd.fg.r, &rbd.fg.g, &rbd.fg.b);
@@ -867,7 +863,7 @@ gradient_fill_region (GimpImage        *gimage,
 
       break;
 
-    case FG_TRANS_MODE:
+    case GIMP_FG_TRANS_MODE:
       /* Color does not change, just the opacity */
 
       rbd.bg   = rbd.fg;
@@ -875,7 +871,7 @@ gradient_fill_region (GimpImage        *gimage,
 
       break;
 
-    case CUSTOM_MODE:
+    case GIMP_CUSTOM_MODE:
       break;
 
     default:
@@ -887,20 +883,20 @@ gradient_fill_region (GimpImage        *gimage,
 
   switch (gradient_type)
     {
-    case RADIAL:
+    case GIMP_RADIAL:
       rbd.dist = sqrt(SQR(ex - sx) + SQR(ey - sy));
       break;
 
-    case SQUARE:
+    case GIMP_SQUARE:
       rbd.dist = MAX (fabs (ex - sx), fabs (ey - sy));
       break;
 
-    case CONICAL_SYMMETRIC:
-    case CONICAL_ASYMMETRIC:
-    case SPIRAL_CLOCKWISE:
-    case SPIRAL_ANTICLOCKWISE:
-    case LINEAR:
-    case BILINEAR:
+    case GIMP_CONICAL_SYMMETRIC:
+    case GIMP_CONICAL_ASYMMETRIC:
+    case GIMP_SPIRAL_CLOCKWISE:
+    case GIMP_SPIRAL_ANTICLOCKWISE:
+    case GIMP_LINEAR:
+    case GIMP_BILINEAR:
       rbd.dist = sqrt (SQR (ex - sx) + SQR (ey - sy));
 
       if (rbd.dist > 0.0)
@@ -911,9 +907,9 @@ gradient_fill_region (GimpImage        *gimage,
 
       break;
 
-    case SHAPEBURST_ANGULAR:
-    case SHAPEBURST_SPHERICAL:
-    case SHAPEBURST_DIMPLED:
+    case GIMP_SHAPEBURST_ANGULAR:
+    case GIMP_SHAPEBURST_SPHERICAL:
+    case GIMP_SHAPEBURST_DIMPLED:
       rbd.dist = sqrt (SQR (ex - sx) + SQR (ey - sy));
       gradient_precalc_shapeburst (gimage, drawable, PR, rbd.dist);
       break;
@@ -927,15 +923,15 @@ gradient_fill_region (GimpImage        *gimage,
 
   switch (repeat)
     {
-    case REPEAT_NONE:
+    case GIMP_REPEAT_NONE:
       rbd.repeat_func = gradient_repeat_none;
       break;
 
-    case REPEAT_SAWTOOTH:
+    case GIMP_REPEAT_SAWTOOTH:
       rbd.repeat_func = gradient_repeat_sawtooth;
       break;
 
-    case REPEAT_TRIANGULAR:
+    case GIMP_REPEAT_TRIANGULAR:
       rbd.repeat_func = gradient_repeat_triangular;
       break;
 
