@@ -1,3 +1,10 @@
+2003-08-31  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/gz.c: applied a patch from Raphael Quinet that
+	adds '-n' to the gzip command-line (bug #72791). Did some minor
+	code cleanup and fixed a problem introduced by the latest change
+	that caused a crash when loading remote gzipped files.
+
 2003-08-31  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/helpbrowser/dialog.c (io_handler): g_io_channel_read_chars

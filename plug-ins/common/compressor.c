@@ -116,8 +116,9 @@ static GimpPDBStatusType   save_image  (const gchar *filename,
                                         gint32       drawable_ID,
                                         gint32       run_mode);
 
-static gboolean   valid_file     (const gchar       *filename);
-static gchar    * find_extension (const gchar       *filename);
+static gboolean      valid_file     (const gchar    *filename);
+static const gchar * find_extension (const gchar    *filename);
+
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -178,7 +179,7 @@ query (void)
                           save_args, NULL);
 
   gimp_register_magic_load_handler ("file_gz_load",
-				    "xcf.gz,gz,xcfgz", 
+				    "xcf.gz,gz,xcfgz",
 				    "",
 				    "0,string,\037\213");
   gimp_register_save_handler       ("file_gz_save",
@@ -264,7 +265,7 @@ spawn_gzip (gchar *filename,
 {
   FILE *f;
   gint tfd;
-  
+
   if (!(f = fopen (filename,"w")))
     {
       g_message ("fopen() failed: %s", g_strerror (errno));
@@ -301,15 +302,16 @@ save_image (const gchar *filename,
 	    gint32       drawable_ID,
 	    gint32       run_mode)
 {
-  gchar *ext;
-  gchar *tmpname;
+  const gchar *ext;
+  gchar       *tmpname;
 #ifndef G_OS_WIN32
-  FILE  *f;
-  gint   pid;
-  gint   wpid;
-  gint   process_status;
+  FILE        *f;
+  gint         pid;
+  gint         wpid;
+  gint         process_status;
 #else
-  FILE  *in, *out;
+  FILE        *in;
+  FILE        *out;
   STARTUPINFO         startupinfo;
   PROCESS_INFORMATION processinfo;
 #endif
@@ -327,7 +329,7 @@ save_image (const gchar *filename,
   if (! (gimp_file_save (run_mode,
 			 image_ID,
 			 drawable_ID,
-			 tmpname, 
+			 tmpname,
 			 tmpname) && valid_file (tmpname)) )
     {
       unlink (tmpname);
@@ -337,7 +339,7 @@ save_image (const gchar *filename,
 
 #ifndef G_OS_WIN32
 #ifdef __EMX__
-   if (spawn_gzip (filename, tmpname, "-cf", &pid) == -1)  
+   if (spawn_gzip (filename, tmpname, "-cfn", &pid) == -1)
     {
       g_free (tmpname);
       return GIMP_PDB_EXECUTION_ERROR;
@@ -366,7 +368,7 @@ save_image (const gchar *filename,
 	g_message ("dup2() failed: %s", g_strerror (errno));
 
       /* and gzip into it */
-      execlp ("gzip", "gzip", "-cf", tmpname, NULL);
+      execlp ("gzip", "gzip", "-cfn", tmpname, NULL);
       g_message ("exec failed: gzip: %s", g_strerror (errno));
       g_free (tmpname);
       _exit(127);
@@ -425,15 +427,15 @@ load_image (const gchar       *filename,
 	    gint32             run_mode,
 	    GimpPDBStatusType *status /* return value */)
 {
-  gint32  image_ID;
-  gchar  *ext;
-  gchar  *tmpname;
+  gint32       image_ID;
+  const gchar *ext;
+  gchar       *tmpname;
 #ifndef G_OS_WIN32
-  gint    pid;
-  gint    wpid;
-  gint    process_status;
+  gint         pid;
+  gint         wpid;
+  gint         process_status;
 #else
-  FILE   *in, *out;
+  FILE        *in, *out;
   SECURITY_ATTRIBUTES secattr;
   STARTUPINFO         startupinfo;
   PROCESS_INFORMATION processinfo;
@@ -441,13 +443,15 @@ load_image (const gchar       *filename,
 
   if (NULL == (ext = find_extension (filename)))
     {
-      g_message (_("No sensible extension, attempting to load with file magic"));
+      g_message (_("No sensible extension, "
+                   "attempting to load with file magic"));
+      ext = ".foo";
     }
 
   /* find a temp name */
   tmpname = gimp_temp_name (ext + 1);
 
-#ifndef G_OS_WIN32  
+#ifndef G_OS_WIN32
 #ifdef __EMX__
    if (spawn_gzip (tmpname, filename, "-cfd", &pid) == -1)
      {
@@ -565,7 +569,7 @@ valid_file (const gchar *filename)
     return FALSE;
 }
 
-static gchar *
+static const gchar *
 find_extension (const gchar *filename)
 {
   gchar *filename_copy;
