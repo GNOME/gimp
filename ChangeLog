@@ -20,6 +20,8 @@
 	* modules/Makefile.am
 	* libgimp/gimpcolordisplay.h
 	* libgimp/gimpcolorselector.h
+	* libgimp/gimpparasite.[ch]
+	* libgimp/gimpparasiteio.[ch]
 	* modules/gimpmodregister.[ch]: renamed.
 
 	* libgimp/gimpparasiteF.h
