@@ -714,6 +714,9 @@ create_display_shell (GDisplay* gdisp,
   gdisp->cursor_label = gtk_label_new (" ");
   gtk_container_add (GTK_CONTAINER (frame), gdisp->cursor_label);
 
+  /* we need to realize the cursor_label widget here, so the size gets
+     computed correctly */
+  gtk_widget_realize (gdisp->cursor_label);
   gdisplay_resize_cursor_label (gdisp);
 
   gdisp->statusbar = gtk_statusbar_new ();

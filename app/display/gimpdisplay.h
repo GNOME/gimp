@@ -174,6 +174,7 @@ void       gdisplay_resize_cursor_label    (GDisplay *);
 GDisplay * gdisplay_active                 (void);
 GDisplay * gdisplay_get_ID                 (int);
 void       gdisplays_update_title          (GimpImage*);
+void       gdisplays_resize_cursor_label   (GimpImage*);
 void       gdisplays_update_area           (GimpImage*, int, int, int, int);
 void       gdisplays_expose_guides         (GimpImage*);
 void       gdisplays_expose_guide          (GimpImage*, Guide *);

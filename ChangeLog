@@ -1,3 +1,11 @@
+Sun Dec 13 19:48:50 MET 1998 Sven Neumann <sven@gimp.org>
+
+	* app/gdisplay.[ch]
+	* app/gimage.c
+	* app/interface.c: I guess finally we have the coordinates 
+	display working with all font sizes and even after scaling the
+	image
+
 Sat Dec 12 17:36:51 GMT 1998  Austin Donnelly  <austin@greenend.org.uk>
 
 	* app/interface.c

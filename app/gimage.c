@@ -126,6 +126,7 @@ gimage_resize_handler (GimpImage* gimage)
   channel_invalidate_previews (gimage);
   layer_invalidate_previews (gimage);
   gimp_image_invalidate_preview (gimage);
+  gdisplays_resize_cursor_label (gimage);
   gdisplays_update_full (gimage);
   gdisplays_shrink_wrap (gimage);
 }

@@ -132,7 +132,7 @@ gdisplay_new (GimpImage       *gimage,
   /*  create the shell for the image  */
   create_display_shell (gdisp, gimage->width, gimage->height,
 			title, gimage_base_type (gimage));
-
+  
   /*  set the gdisplay colormap type and install the appropriate colormap  */
   gdisp->color_type = (gimage_base_type (gimage) == GRAY) ? GRAY : RGB;
 
@@ -932,7 +932,7 @@ gdisplay_resize_cursor_label (GDisplay *gdisp)
   char buffer[CURSOR_STR_LENGTH];
   int cursor_label_width;
  
-  g_snprintf (buffer, sizeof(buffer), " %d,%d ", gdisp->gimage->width, gdisp->gimage->height);
+  g_snprintf (buffer, sizeof(buffer),"%d, %d", gdisp->gimage->width, gdisp->gimage->height);
   cursor_label_width = 
     gdk_string_width ( gtk_widget_get_style(gdisp->cursor_label)->font, buffer );
   gtk_widget_set_usize (gdisp->cursor_label, cursor_label_width, -1);
@@ -1531,6 +1531,24 @@ gdisplays_update_title (GimpImage *gimage)
     }
 }
 
+void
+gdisplays_resize_cursor_label (GimpImage *gimage)
+{
+  GDisplay *gdisp;
+  GSList *list = display_list;
+
+  /*  traverse the linked list of displays, handling each one  */
+  while (list)
+    {
+      gdisp = (GDisplay *) list->data;
+      if (gdisp->gimage == gimage)
+	{
+	  gdisplay_resize_cursor_label(gdisp);
+	}
+
+      list = g_slist_next (list);
+    }
+}
 
 void
 gdisplays_update_area (GimpImage* gimage,
