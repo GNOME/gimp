@@ -32,6 +32,7 @@
 
 #include "file/file-utils.h"
 
+#include "gimpcontainerview-utils.h"
 #include "gimppreview.h"
 #include "gimpviewabledialog.h"
 
@@ -221,12 +222,12 @@ gimp_viewable_dialog_set_viewable (GimpViewableDialog *dialog,
                                G_OBJECT (dialog),
                                0);
 
-      gimp_viewable_dialog_name_changed (GIMP_OBJECT (viewable), dialog);
-
       dialog->preview = gimp_preview_new (viewable, 32, 1, TRUE);
       gtk_box_pack_end (GTK_BOX (dialog->icon->parent), dialog->preview,
                         FALSE, FALSE, 2);
       gtk_widget_show (dialog->preview);
+
+      gimp_viewable_dialog_name_changed (GIMP_OBJECT (viewable), dialog);
     }
 }
 
@@ -237,35 +238,39 @@ static void
 gimp_viewable_dialog_name_changed (GimpObject         *object,
                                    GimpViewableDialog *dialog)
 {
-  const gchar *name;
-  gchar       *str;
+  GimpItemGetNameFunc  get_name_func;
+  gchar               *name;
 
-  name = gimp_object_get_name (object);
+  get_name_func = gimp_container_view_get_built_in_name_func (G_TYPE_FROM_INSTANCE (object));
+
+  if (get_name_func && dialog->preview)
+    {
+      name = get_name_func (dialog->preview, NULL);
+    }
+  else
+    {
+      name = g_strdup (gimp_object_get_name (object));
+    }
 
   if (GIMP_IS_ITEM (object))
     {
       const gchar *uri;
       gchar       *basename;
+      gchar       *tmp;
 
       uri = gimp_image_get_uri (gimp_item_get_image (GIMP_ITEM (object)));
+      tmp = name;
 
       basename = file_utils_uri_to_utf8_basename (uri);
-      str = g_strdup_printf ("%s (%s)", name, basename);
+      name = g_strdup_printf ("%s-%d (%s)",
+                              tmp,
+                              gimp_item_get_ID (GIMP_ITEM (object)),
+                              basename);
+
       g_free (basename);
-    }
-  else if (GIMP_IS_IMAGE (object))
-    {
-      const gchar *uri;
-
-      uri = gimp_image_get_uri (GIMP_IMAGE (object));
-
-      str = file_utils_uri_to_utf8_basename (uri);
-    }
-  else
-    {
-      str = g_strdup (name);
+      g_free (tmp);
     }
 
-  gtk_label_set_text (GTK_LABEL (dialog->viewable_label), str);
-  g_free (str);
+  gtk_label_set_text (GTK_LABEL (dialog->viewable_label), name);
+  g_free (name);
 }

@@ -1,5 +1,12 @@
 2002-09-02  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpviewabledialog.c: use GimpContainerView's
+	get_name_func utility stuff instead of reinventing the wheel.
+	(They should probably be renamed because they are not at all
+	GimpContainerView related).
+
+2002-09-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/info-window.c: don't display Alpha twice, more cleanup.
 
 2002-09-02  Michael Natterer  <mitch@gimp.org>
