@@ -99,22 +99,23 @@ libapptools_la_SOURCES = \
 	path_tool.c		\
 	path_toolP.h
 
-##	brightness_contrast.c	\
-##	brightness_contrast.h	\
-##	color_balance.c		\
-##	color_balance.h		\
-##	curves.c		\
-##	curves.h		\
-##	histogram_tool.c	\
-##	histogram_tool.h	\
-##	hue_saturation.c	\
-##	hue_saturation.h	\
-##	levels.c		\
-##	levels.h		\
-##	posterize.c		\
-##	posterize.h		\
-##	threshold.c		\
-##	threshold.h
+EXTRA_DIST = \
+	brightness_contrast.c	\
+	brightness_contrast.h	\
+	color_balance.c		\
+	color_balance.h		\
+	curves.c		\
+	curves.h		\
+	histogram_tool.c	\
+	histogram_tool.h	\
+	hue_saturation.c	\
+	hue_saturation.h	\
+	levels.c		\
+	levels.h		\
+	posterize.c		\
+	posterize.h		\
+	threshold.c		\
+	threshold.h
 
 
 AM_CPPFLAGS = \

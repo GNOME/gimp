@@ -55,6 +55,12 @@ static ProcRecord layer_get_visible_proc;
 static ProcRecord layer_set_visible_proc;
 static ProcRecord layer_get_preserve_trans_proc;
 static ProcRecord layer_set_preserve_trans_proc;
+static ProcRecord layer_get_apply_mask_proc;
+static ProcRecord layer_set_apply_mask_proc;
+static ProcRecord layer_get_show_mask_proc;
+static ProcRecord layer_set_show_mask_proc;
+static ProcRecord layer_get_edit_mask_proc;
+static ProcRecord layer_set_edit_mask_proc;
 static ProcRecord layer_get_opacity_proc;
 static ProcRecord layer_set_opacity_proc;
 static ProcRecord layer_get_mode_proc;
@@ -84,6 +90,12 @@ register_layer_procs (void)
   procedural_db_register (&layer_set_visible_proc);
   procedural_db_register (&layer_get_preserve_trans_proc);
   procedural_db_register (&layer_set_preserve_trans_proc);
+  procedural_db_register (&layer_get_apply_mask_proc);
+  procedural_db_register (&layer_set_apply_mask_proc);
+  procedural_db_register (&layer_get_show_mask_proc);
+  procedural_db_register (&layer_set_show_mask_proc);
+  procedural_db_register (&layer_get_edit_mask_proc);
+  procedural_db_register (&layer_set_edit_mask_proc);
   procedural_db_register (&layer_get_opacity_proc);
   procedural_db_register (&layer_set_opacity_proc);
   procedural_db_register (&layer_get_mode_proc);
@@ -1208,6 +1220,312 @@ static ProcRecord layer_set_preserve_trans_proc =
   0,
   NULL,
   { { layer_set_preserve_trans_invoker } }
+};
+
+static Argument *
+layer_get_apply_mask_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpLayer *layer;
+
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  if (layer == NULL)
+    success = FALSE;
+
+  return_args = procedural_db_return_args (&layer_get_apply_mask_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = gimp_layer_get_apply_mask (layer);
+
+  return return_args;
+}
+
+static ProcArg layer_get_apply_mask_inargs[] =
+{
+  {
+    PDB_LAYER,
+    "layer",
+    "The layer"
+  }
+};
+
+static ProcArg layer_get_apply_mask_outargs[] =
+{
+  {
+    PDB_INT32,
+    "apply_mask",
+    "The layer apply mask"
+  }
+};
+
+static ProcRecord layer_get_apply_mask_proc =
+{
+  "gimp_layer_get_apply_mask",
+  "Get the apply mask of the specified layer.",
+  "This procedure returns the specified layer's apply mask. If the value is non-zero, then the layer mask for this layer is currently being composited with the layer's alpha channel.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  PDB_INTERNAL,
+  1,
+  layer_get_apply_mask_inargs,
+  1,
+  layer_get_apply_mask_outargs,
+  { { layer_get_apply_mask_invoker } }
+};
+
+static Argument *
+layer_set_apply_mask_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  GimpLayer *layer;
+  gboolean apply_mask;
+
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  if (layer == NULL)
+    success = FALSE;
+
+  apply_mask = args[1].value.pdb_int ? TRUE : FALSE;
+
+  if (success)
+    gimp_layer_set_apply_mask (layer, apply_mask);
+
+  return procedural_db_return_args (&layer_set_apply_mask_proc, success);
+}
+
+static ProcArg layer_set_apply_mask_inargs[] =
+{
+  {
+    PDB_LAYER,
+    "layer",
+    "The layer"
+  },
+  {
+    PDB_INT32,
+    "apply_mask",
+    "The new layer apply mask"
+  }
+};
+
+static ProcRecord layer_set_apply_mask_proc =
+{
+  "gimp_layer_set_apply_mask",
+  "Set the apply mask of the specified layer.",
+  "This procedure sets the specified layer's apply mask. This controls whether the layer's mask is currently affecting the alpha channel. If there is no layer mask, this function will return an error.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  PDB_INTERNAL,
+  2,
+  layer_set_apply_mask_inargs,
+  0,
+  NULL,
+  { { layer_set_apply_mask_invoker } }
+};
+
+static Argument *
+layer_get_show_mask_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpLayer *layer;
+
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  if (layer == NULL)
+    success = FALSE;
+
+  return_args = procedural_db_return_args (&layer_get_show_mask_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = gimp_layer_get_show_mask (layer);
+
+  return return_args;
+}
+
+static ProcArg layer_get_show_mask_inargs[] =
+{
+  {
+    PDB_LAYER,
+    "layer",
+    "The layer"
+  }
+};
+
+static ProcArg layer_get_show_mask_outargs[] =
+{
+  {
+    PDB_INT32,
+    "show_mask",
+    "The layer show mask"
+  }
+};
+
+static ProcRecord layer_get_show_mask_proc =
+{
+  "gimp_layer_get_show_mask",
+  "Get the show mask of the specified layer.",
+  "This procedure returns the specified layer's show mask. If the value is non-zero, then the layer mask for this layer is currently being shown instead of the layer.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  PDB_INTERNAL,
+  1,
+  layer_get_show_mask_inargs,
+  1,
+  layer_get_show_mask_outargs,
+  { { layer_get_show_mask_invoker } }
+};
+
+static Argument *
+layer_set_show_mask_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  GimpLayer *layer;
+  gboolean show_mask;
+
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  if (layer == NULL)
+    success = FALSE;
+
+  show_mask = args[1].value.pdb_int ? TRUE : FALSE;
+
+  if (success)
+    gimp_layer_set_show_mask (layer, show_mask);
+
+  return procedural_db_return_args (&layer_set_show_mask_proc, success);
+}
+
+static ProcArg layer_set_show_mask_inargs[] =
+{
+  {
+    PDB_LAYER,
+    "layer",
+    "The layer"
+  },
+  {
+    PDB_INT32,
+    "show_mask",
+    "The new layer show mask"
+  }
+};
+
+static ProcRecord layer_set_show_mask_proc =
+{
+  "gimp_layer_set_show_mask",
+  "Set the show mask of the specified layer.",
+  "This procedure sets the specified layer's show mask. This controls whether the layer or it's mask is visible. Non-zero values indicate that the mask should be visible. If the layer has no mask, then this function returns an error.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  PDB_INTERNAL,
+  2,
+  layer_set_show_mask_inargs,
+  0,
+  NULL,
+  { { layer_set_show_mask_invoker } }
+};
+
+static Argument *
+layer_get_edit_mask_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpLayer *layer;
+
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  if (layer == NULL)
+    success = FALSE;
+
+  return_args = procedural_db_return_args (&layer_get_edit_mask_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = gimp_layer_get_edit_mask (layer);
+
+  return return_args;
+}
+
+static ProcArg layer_get_edit_mask_inargs[] =
+{
+  {
+    PDB_LAYER,
+    "layer",
+    "The layer"
+  }
+};
+
+static ProcArg layer_get_edit_mask_outargs[] =
+{
+  {
+    PDB_INT32,
+    "edit_mask",
+    "The layer show mask"
+  }
+};
+
+static ProcRecord layer_get_edit_mask_proc =
+{
+  "gimp_layer_get_edit_mask",
+  "Get the show mask of the specified layer.",
+  "This procedure returns the specified layer's show mask. If the value is non-zero, then the layer mask for this layer is currently active, and not the layer.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  PDB_INTERNAL,
+  1,
+  layer_get_edit_mask_inargs,
+  1,
+  layer_get_edit_mask_outargs,
+  { { layer_get_edit_mask_invoker } }
+};
+
+static Argument *
+layer_set_edit_mask_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  GimpLayer *layer;
+  gboolean edit_mask;
+
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  if (layer == NULL)
+    success = FALSE;
+
+  edit_mask = args[1].value.pdb_int ? TRUE : FALSE;
+
+  if (success)
+    gimp_layer_set_edit_mask (layer, edit_mask);
+
+  return procedural_db_return_args (&layer_set_edit_mask_proc, success);
+}
+
+static ProcArg layer_set_edit_mask_inargs[] =
+{
+  {
+    PDB_LAYER,
+    "layer",
+    "The layer"
+  },
+  {
+    PDB_INT32,
+    "edit_mask",
+    "The new layer show mask"
+  }
+};
+
+static ProcRecord layer_set_edit_mask_proc =
+{
+  "gimp_layer_set_edit_mask",
+  "Set the show mask of the specified layer.",
+  "This procedure sets the specified layer's show mask. This controls whether the layer or it's mask is currently active for editing. If the specified layer has no layer mask, then this procedure will return an error.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  PDB_INTERNAL,
+  2,
+  layer_set_edit_mask_inargs,
+  0,
+  NULL,
+  { { layer_set_edit_mask_invoker } }
 };
 
 static Argument *

@@ -3,21 +3,18 @@
 EXTRA_DIST = \
 	anchor.xpm	\
 	chain.xpm	\
-	channel.xbm	\
 	default.xpm	\
 	delete.xpm	\
 	duplicate.xpm	\
 	edit.xpm	\
 	eek.xpm		\
-	eye.xbm		\
+	eye.xpm		\
 	first.xpm	\
 	folder.xpm	\
 	last.xpm	\
-	layer.xbm	\
-	linked.xbm	\
+	linked.xpm	\
 	locked.xbm	\
 	lower.xpm	\
-	mask.xbm	\
 	navbutton.xpm	\
 	next.xpm	\
 	new.xpm		\

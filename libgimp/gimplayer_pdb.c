@@ -637,6 +637,206 @@ gimp_layer_set_preserve_trans (gint32   layer_ID,
 }
 
 /**
+ * gimp_layer_get_apply_mask:
+ * @layer_ID: The layer.
+ *
+ * Get the apply mask of the specified layer.
+ *
+ * This procedure returns the specified layer's apply mask. If the
+ * value is non-zero, then the layer mask for this layer is currently
+ * being composited with the layer's alpha channel.
+ *
+ * Returns: The layer apply mask.
+ */
+gboolean
+gimp_layer_get_apply_mask (gint32 layer_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean apply_mask = FALSE;
+
+  return_vals = gimp_run_procedure ("gimp_layer_get_apply_mask",
+				    &nreturn_vals,
+				    GIMP_PDB_LAYER, layer_ID,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    apply_mask = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return apply_mask;
+}
+
+/**
+ * gimp_layer_set_apply_mask:
+ * @layer_ID: The layer.
+ * @apply_mask: The new layer apply mask.
+ *
+ * Set the apply mask of the specified layer.
+ *
+ * This procedure sets the specified layer's apply mask. This controls
+ * whether the layer's mask is currently affecting the alpha channel.
+ * If there is no layer mask, this function will return an error.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_layer_set_apply_mask (gint32   layer_ID,
+			   gboolean apply_mask)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_layer_set_apply_mask",
+				    &nreturn_vals,
+				    GIMP_PDB_LAYER, layer_ID,
+				    GIMP_PDB_INT32, apply_mask,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_layer_get_show_mask:
+ * @layer_ID: The layer.
+ *
+ * Get the show mask of the specified layer.
+ *
+ * This procedure returns the specified layer's show mask. If the value
+ * is non-zero, then the layer mask for this layer is currently being
+ * shown instead of the layer.
+ *
+ * Returns: The layer show mask.
+ */
+gboolean
+gimp_layer_get_show_mask (gint32 layer_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean show_mask = FALSE;
+
+  return_vals = gimp_run_procedure ("gimp_layer_get_show_mask",
+				    &nreturn_vals,
+				    GIMP_PDB_LAYER, layer_ID,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    show_mask = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return show_mask;
+}
+
+/**
+ * gimp_layer_set_show_mask:
+ * @layer_ID: The layer.
+ * @show_mask: The new layer show mask.
+ *
+ * Set the show mask of the specified layer.
+ *
+ * This procedure sets the specified layer's show mask. This controls
+ * whether the layer or it's mask is visible. Non-zero values indicate
+ * that the mask should be visible. If the layer has no mask, then this
+ * function returns an error.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_layer_set_show_mask (gint32   layer_ID,
+			  gboolean show_mask)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_layer_set_show_mask",
+				    &nreturn_vals,
+				    GIMP_PDB_LAYER, layer_ID,
+				    GIMP_PDB_INT32, show_mask,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_layer_get_edit_mask:
+ * @layer_ID: The layer.
+ *
+ * Get the show mask of the specified layer.
+ *
+ * This procedure returns the specified layer's show mask. If the value
+ * is non-zero, then the layer mask for this layer is currently active,
+ * and not the layer.
+ *
+ * Returns: The layer show mask.
+ */
+gboolean
+gimp_layer_get_edit_mask (gint32 layer_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean edit_mask = FALSE;
+
+  return_vals = gimp_run_procedure ("gimp_layer_get_edit_mask",
+				    &nreturn_vals,
+				    GIMP_PDB_LAYER, layer_ID,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    edit_mask = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return edit_mask;
+}
+
+/**
+ * gimp_layer_set_edit_mask:
+ * @layer_ID: The layer.
+ * @edit_mask: The new layer show mask.
+ *
+ * Set the show mask of the specified layer.
+ *
+ * This procedure sets the specified layer's show mask. This controls
+ * whether the layer or it's mask is currently active for editing. If
+ * the specified layer has no layer mask, then this procedure will
+ * return an error.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_layer_set_edit_mask (gint32   layer_ID,
+			  gboolean edit_mask)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_layer_set_edit_mask",
+				    &nreturn_vals,
+				    GIMP_PDB_LAYER, layer_ID,
+				    GIMP_PDB_INT32, edit_mask,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_layer_get_opacity:
  * @layer_ID: The layer.
  *

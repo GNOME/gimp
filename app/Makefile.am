@@ -170,8 +170,10 @@ EXTRA_DIST = \
 	gimp.sym			\
 	wilber.ico			\
 	arch/i386/mmx/detect_mmx.S	\
-	arch/i386/mmx/paint_funcs_mmx.S
-
+	arch/i386/mmx/paint_funcs_mmx.S	\
+	detect_mmx.S			\
+	regexrepl.c 			\
+	regexrepl.h
 
 gimp_LDFLAGS = -export-dynamic -export-symbols $(srcdir)/gimp.sym
 

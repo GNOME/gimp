@@ -1,3 +1,39 @@
+2001-05-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* plug-ins/script-fu/Makefile.am: put the regex and MMX sources to
+	EXTRA_DIST so they get distributed unconditionally.
+
+	* tools/pdbgen/pdb/layer.pdb: re-enabled the layer_mask procs but
+	let them use accessors (which don't exist)...
+
+	* app/pdb/pdb_glue.h: ... #define the accessors as macros here.
+
+	Yes, this is ugly, but I simply don't fully understand pdbgen
+	yoshcode.
+
+	* app/pdb/internal_procs.c
+	* app/pdb/layer_cmds.c
+	* libgimp/gimplayer_pdb.[ch]: regenerated with the layer_mask
+	accessors.
+
+	* app/tools/Makefile.am: add the files which are not built to
+	EXTRA_DIST.
+
+	* pixmaps/Makefile.am
+	* pixmaps/channel.xbm
+	* pixmaps/eye.xbm
+	* pixmaps/layer.xbm
+	* pixmaps/linked.xbm
+	* pixmaps/mask.xbm: removed.
+
+	* plug-ins/Makefile.am: build XJT again because the layer_mask
+	stuff is back. Perl also seems to build again.
+
+	* plug-ins/common/aa.c: explicit casting fixes some warnings.
+
+	* plug-ins/script-fu/interp_regex.c: #include "config.h".
+
 2001-05-19  Sven Neumann  <sven@gimp.org>
 
 	* app/main.c: s/USE_GCC_INTEL_MMX/HAVE_ASM_MMX/
@@ -8,7 +44,7 @@
 	* app/base/temp-buf.[ch]: added a warning not to use the data field
 	from the TempBuf struct directly.
 
-2001-05-18  Michael Natterer  <mitch@gimp.org>rm 
+2001-05-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/menus.c: use the correct callback for opening L&C.
 

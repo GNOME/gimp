@@ -32,6 +32,10 @@ script_fu_SOURCES = \
 	siodp.h			\
 	$(regex_sources)
 
+EXTRA_DIST = \
+	regexrepl.c		\
+	regexrepl.h
+
 INCLUDES = \
 	-I$(top_srcdir)			\
 	$(GTK_CFLAGS)			\

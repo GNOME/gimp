@@ -107,7 +107,7 @@ static int
 get_type_from_string (gchar *string)
 {
   gint type = 0;
-  aa_format **p = aa_formats;
+  aa_format **p = (aa_format **) aa_formats;
 
   while (*p && strcmp ((*p)->formatname, string))
     {
@@ -364,7 +364,7 @@ type_dialog (int selected)
   
   group = NULL;
   {
-    aa_format **p = aa_formats;
+    aa_format **p = (aa_format **) aa_formats;
     gint current = 0;
 
     while (*p != NULL) 
@@ -374,7 +374,7 @@ type_dialog (int selected)
 	gtk_box_pack_start (GTK_BOX  (toggle_vbox), toggle, FALSE, FALSE, 0);
 	gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 			    GTK_SIGNAL_FUNC (type_dialog_toggle_update),
-			    (*p)->formatname);
+			    (gpointer) (*p)->formatname);
 	if (current == selected)
 	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), TRUE);
 	
