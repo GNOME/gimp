@@ -1,3 +1,8 @@
+2003-04-30  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* app/widgets/gimpgradienteditor.c (control_compress_range): Don't
+	try to compress the left and right ends. Fixes bug #89274.
+
 2003-04-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/xcf/xcf-load.c (xcf_load_image_props): skip guides with

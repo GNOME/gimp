@@ -1138,7 +1138,7 @@ control_button_press (GimpGradientEditor *editor,
   GimpGradient           *gradient;
   GimpGradientSegment    *seg;
   GradientEditorDragMode  handle;
-  double                  xpos;
+  gdouble                 xpos;
   gboolean                in_handle;
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
@@ -1498,9 +1498,13 @@ control_compress_range (GimpGradientSegment *range_l,
 
   do
     {
-      seg->left   = new_l + (seg->left - orig_l) * scale;
+      if (seg->prev)
+        seg->left = new_l + (seg->left - orig_l) * scale;
+
       seg->middle = new_l + (seg->middle - orig_l) * scale;
-      seg->right  = new_l + (seg->right - orig_l) * scale;
+
+      if (seg->next)
+        seg->right = new_l + (seg->right - orig_l) * scale;
 
       /* Next */
 
