@@ -1,5 +1,9 @@
 2002-12-19  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpmodule/gimpmodule.c: use g_message/g_print consistently.
+
+2002-12-19  Michael Natterer  <mitch@gimp.org>
+
 	* libgimp/gimpdrawable.c (gimp_drawable_attch_new_parasite):
 	s/drawable/drawable_ID/ to match the header.
 

@@ -289,8 +289,8 @@ gimp_module_query_module (GimpModule *module)
                                   "Missing gimp_module_query() symbol");
 
       if (module->verbose)
-	g_print (_("Module '%s' load error:\n%s"),
-                 module->filename, module->last_module_error);
+	g_message (_("Module '%s' load error:\n%s"),
+                   module->filename, module->last_module_error);
 
       gimp_module_close (module);
 
@@ -314,7 +314,7 @@ gimp_module_query_module (GimpModule *module)
 
       if (module->verbose)
 	g_message (_("Module '%s' load error:\n%s"),
-		   module->filename, module->last_module_error);
+                   module->filename, module->last_module_error);
 
       gimp_module_close (module);
 
