@@ -448,15 +448,12 @@ run (gchar      *name,
 			  xsvals.prefix,
 			  xsvals.comment,
 			  FALSE,
-			  image_ID, drawable_ID) &&
-
-	      xsvals.write_mask &&
-
-	      save_image (mask_filename,
-			  mask_prefix,
-			  xsvals.comment,
-			  TRUE,
-			  image_ID, drawable_ID))
+			  image_ID, drawable_ID) 
+              && (!xsvals.write_mask || save_image (mask_filename,
+                                                    mask_prefix,
+                                                    xsvals.comment,
+                                                    TRUE,
+                                                    image_ID, drawable_ID)))
 	    {
 	      /*  Store xsvals data  */
 	      gimp_set_data ("file_xbm_save", &xsvals, sizeof (xsvals));

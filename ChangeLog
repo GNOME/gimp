@@ -1,3 +1,7 @@
+2002-01-07  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/xbm.c: merged fix from stable branch.
+
 2002-01-03  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/sinus.c
