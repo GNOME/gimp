@@ -12,7 +12,7 @@ Sat Dec 18 20:40:44 CET 1999  Sven Neumann <sven@gimp.org>
 	* plug-ins/imagemap/imap_rectangle.c
 	* plug-ins/imagemap/imap_selection.c
 	* plug-ins/imagemap/imap_table.c
-	* po-plug-ins/POTFILES.in: applied a patch to the ImageMap plug-ins 
+	* po-plug-ins/POTFILES.in: applied a patch to the ImageMap plug-in 
 	provided by its author Maurits Rijk <lpeek.mrijk@consunet.nl>.
 
 	Contains some internationalization fixes, compliance to the standard 
