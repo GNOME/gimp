@@ -39,6 +39,16 @@ struct _ColorPickerOptions
   int        sample_merged;
   int        sample_merged_d;
   GtkWidget *sample_merged_w;
+  
+  int        sample_average;
+  int        sample_average_d;
+  GtkWidget *sample_average_w;
+  
+  GtkWidget *average_radius_box;
+  
+  double     average_radius;
+  double     average_radius_d;
+  GtkObject *average_radius_w;
 };
 
 /*  the color picker tool options  */
@@ -67,7 +77,7 @@ static void  color_picker_cursor_update    (Tool *, GdkEventMotion *, gpointer);
 static void  color_picker_control          (Tool *, int, void *);
 static void  color_picker_info_window_close_callback  (GtkWidget *, gpointer);
 
-static int   get_color                     (GImage *, GimpDrawable *, int, int, int, int);
+static int   get_color                     (GimpImage *, GimpDrawable *, int, int, gboolean, gboolean, double, int);
 static void  color_picker_info_update      (Tool *, int);
 
 static Argument *color_picker_invoker (Argument *);
@@ -79,7 +89,8 @@ static void
 color_picker_toggle_update (GtkWidget *w,
 			    gpointer   data)
 {
-  int *toggle_val;
+  GtkWidget *set_sensitive;
+  int       *toggle_val;
 
   toggle_val = (int *) data;
 
@@ -87,6 +98,29 @@ color_picker_toggle_update (GtkWidget *w,
     *toggle_val = TRUE;
   else
     *toggle_val = FALSE;
+
+  set_sensitive =
+    (GtkWidget*) gtk_object_get_data (GTK_OBJECT (w), "set_sensitive");
+    
+  if (set_sensitive)
+    {
+      gtk_widget_set_sensitive (set_sensitive, *toggle_val);
+		  
+      if (GTK_IS_SCALE (set_sensitive))
+	{
+	  set_sensitive =
+	    gtk_object_get_data (GTK_OBJECT (set_sensitive), "scale_label");
+	  if (set_sensitive)
+	    gtk_widget_set_sensitive (set_sensitive, *toggle_val);
+	}
+    }
+}
+
+static void
+color_picker_scale_update (GtkAdjustment *adjustment,
+			   double        *scale_val)
+{
+  *scale_val = adjustment->value;
 }
 
 static void
@@ -96,6 +130,8 @@ reset_color_picker_options (void)
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
 				options->sample_merged_d);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_average_w),
+				options->sample_average_d);
 }
 
 static ColorPickerOptions *
@@ -103,13 +139,19 @@ create_color_picker_options (void)
 {
   ColorPickerOptions *options;
   GtkWidget          *vbox;
+  GtkWidget          *abox;
+  GtkWidget          *table;
+  GtkWidget          *label;
+  GtkWidget          *scale;
 
   /*  the new options structure  */
   options = (ColorPickerOptions *) g_malloc (sizeof (ColorPickerOptions));
   options->sample_merged = options->sample_merged_d = FALSE;
+  options->sample_average = options->sample_average_d = FALSE;
+  options->average_radius = options->average_radius_d = 1.0;
 
   /*  the main vbox  */
-  vbox = gtk_vbox_new (FALSE, 1);
+  vbox = gtk_vbox_new (FALSE, 2);
 
   /*  the sample merged toggle button  */
   options->sample_merged_w =
@@ -121,6 +163,51 @@ create_color_picker_options (void)
 		      (GtkSignalFunc) color_picker_toggle_update,
 		      &options->sample_merged);
   gtk_widget_show (options->sample_merged_w);
+
+  /*  the sample average options  */
+  table = gtk_table_new (2, 2, FALSE);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+
+  options->sample_average_w =
+    gtk_check_button_new_with_label (_("Sample Average"));
+  gtk_table_attach (GTK_TABLE (table), options->sample_average_w, 0, 1, 0, 1,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_average_w),
+				options->sample_average_d);
+  gtk_signal_connect (GTK_OBJECT (options->sample_average_w), "toggled",
+		      (GtkSignalFunc) color_picker_toggle_update,
+		      &options->sample_average);
+  gtk_widget_show (options->sample_average_w);
+
+  label = gtk_label_new (_("Radius:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
+  /*  the feather radius scale  */
+  abox = gtk_alignment_new (0.5, 1.0, 1.0, 0.0);
+  gtk_table_attach (GTK_TABLE (table), abox, 1, 2, 0, 2,
+		    GTK_EXPAND | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (abox);
+
+  options->average_radius_w =
+    gtk_adjustment_new (options->average_radius_d, 1.0, 15.0, 2.0, 2.0, 0.0);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (options->average_radius_w));
+  gtk_container_add (GTK_CONTAINER (abox), scale);
+  gtk_widget_set_sensitive (scale, options->sample_average_d);
+  gtk_object_set_data (GTK_OBJECT (options->sample_average_w), "set_sensitive",
+		       scale);
+  gtk_object_set_data (GTK_OBJECT (scale), "scale_label",
+		       label);
+  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
+  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  gtk_signal_connect (GTK_OBJECT (options->average_radius_w), "value_changed",
+		      (GtkSignalFunc) color_picker_scale_update,
+		      &options->average_radius);
+  gtk_widget_show (scale);
+  gtk_widget_show (table);
 
   /*  Register this selection options widget with the main tools options dialog
    */
@@ -212,6 +299,8 @@ color_picker_button_press (Tool           *tool,
     {
       color_picker_info_update (tool, get_color (gdisp->gimage, active_drawable, x, y,
 						 color_picker_options->sample_merged,
+						 color_picker_options->sample_average,
+						 color_picker_options->average_radius,
 						 COLOR_NEW));
       update_type = COLOR_UPDATE_NEW;
     }
@@ -219,6 +308,8 @@ color_picker_button_press (Tool           *tool,
     {
       color_picker_info_update (tool, get_color (gdisp->gimage, active_drawable, x, y,
 						 color_picker_options->sample_merged,
+						 color_picker_options->sample_average,
+						 color_picker_options->average_radius,
 						 COLOR_UPDATE));
       update_type = COLOR_UPDATE;
     }
@@ -243,6 +334,8 @@ color_picker_button_release (Tool           *tool,
 
   color_picker_info_update (tool, get_color (gdisp->gimage, active_drawable, x, y,
 					     color_picker_options->sample_merged,
+					     color_picker_options->sample_average,
+					     color_picker_options->average_radius,
 					     update_type));
 }
 
@@ -261,6 +354,8 @@ color_picker_motion (Tool           *tool,
 
   color_picker_info_update (tool, get_color (gdisp->gimage, active_drawable, x, y,
 					     color_picker_options->sample_merged,
+					     color_picker_options->sample_average,
+					     color_picker_options->average_radius,
 					     update_type));
 }
 
@@ -288,50 +383,94 @@ color_picker_control (Tool     *tool,
 {
 }
 
+typedef guchar * (*GetColorFunc) (GtkObject *, int, int);
+
 static int
-get_color (GImage *gimage,
+get_color (GimpImage *gimage,
 	   GimpDrawable *drawable,
-	   int     x,
-	   int     y,
-	   int     sample_merged,
-	   int     final)
+	   int      x,
+	   int      y,
+	   gboolean sample_merged,
+	   gboolean sample_average,
+	   double   average_radius,
+	   int      final)
 {
-  unsigned char *color;
+  guchar *color;
   int offx, offy;
   int has_alpha;
   int is_indexed;
+  GetColorFunc get_color_func;
+  GtkObject *get_color_obj;
+
   if (!drawable && !sample_merged) 
     return FALSE;
 
-  if (! sample_merged)
+  if (!sample_merged)
     {
       drawable_offsets (drawable, &offx, &offy);
       x -= offx;
       y -= offy;
-      if (!(color = gimp_drawable_get_color_at(drawable, x, y)))
-	return FALSE;
-      sample_type = gimp_drawable_type(drawable);
+      
+      sample_type = gimp_drawable_type (drawable);
       is_indexed = gimp_drawable_indexed (drawable);
+      
+      get_color_func = (GetColorFunc) gimp_drawable_get_color_at;
+      get_color_obj = GTK_OBJECT (drawable);
     }
   else
     {
-      if (!(color = gimp_image_get_color_at(gimage, x, y)))
-	return FALSE;
-      sample_type = gimp_image_composite_type(gimage);
+      sample_type = gimp_image_composite_type (gimage);
       is_indexed = FALSE;
+
+      get_color_func = (GetColorFunc) gimp_image_get_color_at;
+      get_color_obj = GTK_OBJECT (gimage);
     }
 
-  has_alpha = TYPE_HAS_ALPHA(sample_type);
+  has_alpha = TYPE_HAS_ALPHA (sample_type);
+
+  if (!(color = (*get_color_func) (get_color_obj, x, y)))
+    return FALSE;
+
+  if (sample_average)
+    {
+      int i, j;
+      int count = 0;
+      int color_avg[4] = { 0, 0, 0, 0 };
+      guchar *tmp_color;
+      int radius = (int) average_radius;
+
+      for (i = x - radius; i <= x + radius; i++)
+	for (j = y - radius; j <= y + radius; j++)
+	  if ((tmp_color = (*get_color_func) (get_color_obj, i, j)))
+	    {
+	      count++;
+
+	      color_avg[RED_PIX] += tmp_color[RED_PIX];
+	      color_avg[GREEN_PIX] += tmp_color[GREEN_PIX];
+	      color_avg[BLUE_PIX] += tmp_color[BLUE_PIX];
+	      if (has_alpha)
+		color_avg[ALPHA_PIX] += tmp_color[3];
+
+	      g_free(tmp_color);
+	    }
+
+      color[RED_PIX] = (guchar) (color_avg[RED_PIX] / count);
+      color[GREEN_PIX] = (guchar) (color_avg[GREEN_PIX] / count);
+      color[BLUE_PIX] = (guchar) (color_avg[BLUE_PIX] / count);
+      if (has_alpha)
+	color[ALPHA_PIX] = (guchar) (color_avg[3] / count);
+      
+      is_indexed = FALSE;
+    }
 
   col_value[RED_PIX] = color[RED_PIX];
   col_value[GREEN_PIX] = color[GREEN_PIX];
   col_value[BLUE_PIX] = color[BLUE_PIX];
   if (has_alpha)
-    {
-      col_value [ALPHA_PIX] = color[3];
-    }
+    col_value[ALPHA_PIX] = color[3];
   if (is_indexed)
-    col_value [4] = color[4];
+    col_value[4] = color[4];
+
   palette_set_active_color (col_value [RED_PIX], col_value [GREEN_PIX],
 			    col_value [BLUE_PIX], final);
   g_free(color);
@@ -551,7 +690,7 @@ color_picker_invoker (Argument *args)
 
   /*  call the color_picker procedure  */
   if (success)
-    success = get_color (gimage, drawable, (int) x, (int) y, sample_merged, save_color);
+    success = get_color (gimage, drawable, (int) x, (int) y, sample_merged, FALSE, 1.0, save_color);
 
   return_args = procedural_db_return_args (&color_picker_proc, success);
 

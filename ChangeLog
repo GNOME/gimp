@@ -1,3 +1,9 @@
+Sat Apr 10 23:33:26 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/color_picker.c: added a sample average feature (requested
+	by Xach) that picks a color from the average of all the pixels
+	from the source point within a given radius
+
 1999-04-11  Tuomas Kuosmanen  <tigert@gimp.org>
 
 	* pixmaps/delete.xpm: I put the delete icon from gnome here,
