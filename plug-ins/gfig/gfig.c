@@ -481,7 +481,7 @@ gfig_load (const gchar *filename,
 
   /* Check count ? */
 
-  chk_count = gfig_obj_counts (gfig->obj_list);
+  chk_count = g_list_length (gfig->obj_list);
 
   if (chk_count != load_count)
     {
@@ -658,8 +658,8 @@ load_options (GFigObj *gfig,
 GString *
 gfig_save_as_string (void)
 {
-  DAllObjs *objs;
-  gint      count = 0;
+  GList    *objs;
+  gint      count;
   gchar     buf[G_ASCII_DTOSTR_BUF_SIZE];
   gchar     conv_buf[MAX_LOAD_LINE * 3 + 1];
   GString  *string;
@@ -673,7 +673,7 @@ gfig_save_as_string (void)
                                            gfig_context->current_obj->version));
   objs = gfig_context->current_obj->obj_list;
 
-  count = gfig_obj_counts (objs);
+  count = g_list_length (objs);
 
   g_string_append_printf (string, "ObjCount: %d\n", count);
 
@@ -681,16 +681,20 @@ gfig_save_as_string (void)
 
   gfig_save_styles (string);
 
-  for (objs = gfig_context->current_obj->obj_list; objs; objs = objs->next)
+  for (objs = gfig_context->current_obj->obj_list;
+       objs;
+       objs = g_list_next (objs))
     {
-      gfig_save_obj_start (objs->obj, string);
+      Dobject *object = objs->data;
 
-      gfig_save_style (&objs->obj->style, string);
+      gfig_save_obj_start (object, string);
 
-      if (objs->obj->points)
-        d_save_object (objs->obj, string);
+      gfig_save_style (&object->style, string);
 
-      gfig_save_obj_end (objs->obj, string);
+      if (object->points)
+        d_save_object (object, string);
+
+      gfig_save_obj_end (object, string);
     }
 
   return string;

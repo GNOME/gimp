@@ -101,7 +101,7 @@ struct _GFigObj
   gchar     *draw_name;   /* Name of the drawing */
   gfloat     version;     /* Version number of data file */
   GfigOpts   opts;        /* Options enforced when fig saved */
-  DAllObjs  *obj_list;    /* Objects that make up this list */
+  GList     *obj_list;    /* Objects that make up this list */
   gint       obj_status;  /* See above for possible values */
   GtkWidget *list_item;
   GtkWidget *label_widget;
@@ -188,7 +188,7 @@ GtkWidget *num_sides_widget     (gchar *d_title,
 void    setup_undo              (void);
 void    draw_grid_clear         (void);
 void    prepend_to_all_obj      (GFigObj *fobj,
-                                 DAllObjs *nobj);
+                                 GList   *nobj);
 
 void    gfig_draw_arc           (gint x,
                                  gint y,
@@ -223,7 +223,7 @@ void   save_options             (GString *string);
 GString   *gfig_save_as_string     (void);
 gboolean   gfig_save_as_parasite   (void);
 GFigObj   *gfig_load_from_parasite (void);
-GFigObj  * gfig_new                (void);
+GFigObj   *gfig_new                (void);
 void       gfig_save_callbk        (void);
 void       paint_layer_fill        (void);
 

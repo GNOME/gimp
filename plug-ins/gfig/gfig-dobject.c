@@ -321,16 +321,16 @@ get_nearest_objs (GFigObj  *obj,
                   GdkPoint *pnt)
 {
   /* Nearest object to given point or NULL */
-  DAllObjs *all;
-  Dobject  *test_obj;
-  gint count = 0;
+  GList   *all;
+  Dobject *test_obj;
+  gint     count = 0;
 
   if (!obj)
     return NULL;
 
-  for (all = obj->obj_list; all; all = all->next)
+  for (all = obj->obj_list; all; all = g_list_next (all))
     {
-      test_obj = all->obj;
+      test_obj = all->data;
 
       if (count == obj_show_single || obj_show_single == -1)
         if (scan_obj_points (test_obj->points, pnt))
@@ -558,41 +558,26 @@ remove_obj_from_list (GFigObj *obj,
                       Dobject *del_obj)
 {
   /* Nearest object to given point or NULL */
-  DAllObjs *entry;
-  DAllObjs *prev_entry = NULL;
 
   g_assert (del_obj != NULL);
 
-  entry = obj->obj_list;
-
-  while (entry)
+  if (g_list_find (obj->obj_list, del_obj))
     {
-      if (entry->obj == del_obj)
+      del_obj->class->drawfunc (del_obj);
+
+      obj->obj_list = g_list_remove (obj->obj_list, del_obj);
+
+      free_one_obj (del_obj);
+
+      if (obj_show_single != -1)
         {
-          /* Found the one to delete */
-          if (prev_entry)
-            prev_entry->next = entry->next;
-          else
-            obj->obj_list = entry->next;
-
-          /* Draw obj (which will actually undraw it! */
-          del_obj->class->drawfunc (del_obj);
-
-          free_one_obj (del_obj);
-          g_free (entry);
-
-          if (obj_show_single != -1)
-            {
-              /* We've just deleted the only visible one */
-              draw_grid_clear ();
-              obj_show_single = -1; /* Show entry again */
-            }
-          return;
+          /* We've just deleted the only visible one */
+          draw_grid_clear ();
+          obj_show_single = -1; /* Show entry again */
         }
-      prev_entry = entry;
-      entry = entry->next;
     }
-  g_warning (_("Hey where has the object gone ?"));
+  else
+    g_warning (_("Hey where has the object gone ?"));
 }
 
 static void
@@ -605,11 +590,11 @@ do_move_all_obj (GdkPoint *to_pnt)
 
   if (xdiff || ydiff)
     {
-      DAllObjs *all;
+      GList *all;
 
       for (all = gfig_context->current_obj->obj_list; all; all = all->next)
         {
-          Dobject *obj = all->obj;
+          Dobject *obj = all->data;
 
           /* undraw ! */
           draw_one_obj (obj);
@@ -685,33 +670,22 @@ do_move_obj_pnt (Dobject  *obj,
 }
 
 /* copy objs */
-DAllObjs *
-copy_all_objs (DAllObjs *objs)
+GList *
+copy_all_objs (GList *objs)
 {
-  DAllObjs *nobj;
-  DAllObjs *new_all_objs = NULL;
-  DAllObjs *ret = NULL;
+  GList *new_all_objs = NULL;
 
   while (objs)
     {
-      nobj = g_new0 (DAllObjs, 1);
+      Dobject *object = objs->data;
+      Dobject *new_object = (Dobject *) object->class->copyfunc (object);
 
-     if (!ret)
-        {
-          ret = new_all_objs = nobj;
-        }
-      else
-        {
-          new_all_objs->next = nobj;
-          new_all_objs = nobj;
-        }
-
-      nobj->obj = (Dobject *) objs->obj->class->copyfunc (objs->obj);
+      new_all_objs = g_list_append (new_all_objs, new_object);
 
       objs = objs->next;
     }
 
-  return ret;
+  return new_all_objs;
 }
 
 /* Screen refresh */
@@ -722,8 +696,8 @@ draw_one_obj (Dobject * obj)
 }
 
 void
-draw_objects (DAllObjs *objs,
-              gint      show_single)
+draw_objects (GList    *objs,
+              gboolean  show_single)
 {
   /* Show_single - only one object to draw Unless shift
    * is down in which case show all.
@@ -734,35 +708,20 @@ draw_objects (DAllObjs *objs,
   while (objs)
     {
       if (!show_single || count == obj_show_single || obj_show_single == -1)
-        draw_one_obj (objs->obj);
+        draw_one_obj (objs->data);
 
-      objs = objs->next;
+      objs = g_list_next (objs);
       count++;
     }
 }
 
 void
-prepend_to_all_obj (GFigObj  *fobj,
-                    DAllObjs *nobj)
+prepend_to_all_obj (GFigObj *fobj,
+                    GList   *nobj)
 {
-  DAllObjs *cobj;
-
   setup_undo (); /* Remember ME */
 
-  if (!fobj->obj_list)
-    {
-      fobj->obj_list = nobj;
-      return;
-    }
-
-  cobj = fobj->obj_list;
-
-  while (cobj->next)
-    {
-      cobj = cobj->next;
-    }
-
-  cobj->next = nobj;
+  fobj->obj_list = g_list_concat (fobj->obj_list, nobj);
 }
 
 static void
@@ -782,11 +741,9 @@ void
 add_to_all_obj (GFigObj *fobj,
                 Dobject *obj)
 {
-  DAllObjs *nobj;
+  GList *nobj = NULL;
 
-  nobj = g_new0 (DAllObjs, 1);
-
-  nobj->obj = obj;
+  nobj = g_list_append (nobj, obj);
 
   if (need_to_scale)
     scale_obj_points (obj->points, scale_x_factor, scale_y_factor);
@@ -981,18 +938,10 @@ free_one_obj (Dobject *obj)
 }
 
 void
-free_all_objs (DAllObjs * objs)
+free_all_objs (GList * objs)
 {
-  /* Free all objects */
-  DAllObjs * next;
-
-  while (objs)
-    {
-      free_one_obj (objs->obj);
-      next = objs->next;
-      g_free (objs);
-      objs = next;
-    }
+  g_list_foreach (objs, (GFunc)free_one_obj, NULL);
+  g_list_free (objs);
 }
 
 gchar *
@@ -1070,7 +1019,7 @@ setup_undo (void)
       int loop;
       /* the little one in the bed said "roll over".. */
       if (undo_table[0])
-        free_one_obj (undo_table[0]->obj);
+        free_one_obj (undo_table[0]->data);
       for (loop = 0; loop < undo_water_mark; loop++)
         {
           undo_table[loop] = undo_table[loop + 1];
@@ -1123,16 +1072,5 @@ new_obj_2edit (GFigObj *obj)
       gtk_dialog_set_response_sensitive (GTK_DIALOG (top_level_dlg),
                                          RESPONSE_SAVE, TRUE);
     }
-}
-
-gint
-gfig_obj_counts (DAllObjs *objs)
-{
-  gint count = 0;
-
-  for (; objs; objs = objs->next)
-    count++;
-
-  return count;
 }
 

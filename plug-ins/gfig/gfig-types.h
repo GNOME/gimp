@@ -109,7 +109,6 @@ typedef enum
 } DobjType;
 
 typedef struct _GFigObj  GFigObj;
-typedef struct _DAllObjs DAllObjs;
 typedef struct _Dobject  Dobject;
 typedef struct _Style    Style;
 

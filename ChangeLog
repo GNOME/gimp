@@ -1,3 +1,14 @@
+2004-11-14  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/gfig/gfig-dialog.c
+	* plug-ins/gfig/gfig-dialog.h
+	* plug-ins/gfig/gfig-dobject.c
+	* plug-ins/gfig/gfig-dobject.h
+	* plug-ins/gfig/gfig-types.h
+	* plug-ins/gfig/gfig.c
+	* plug-ins/gfig/gfig.h: replace the crappy DAllObjs struct by a GList.
+	Makes the code cleaner and less error prone.
+
 2004-11-14  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/pagecurl/pagecurl.c: applied a patch from Karine Proot

@@ -939,41 +939,24 @@ static void
 raise_selected_obj_to_top (GtkWidget *widget,
                            gpointer   data)
 {
-  DAllObjs *entry;
-  DAllObjs *prev_entry  = NULL;
-  DAllObjs *found_entry = NULL;
-
   if (!gfig_context->selected_obj)
     return;
 
-  entry = gfig_context->current_obj->obj_list;
-
-  while (entry)
+  if (g_list_find (gfig_context->current_obj->obj_list,
+                   gfig_context->selected_obj))
     {
-      if (entry->obj == gfig_context->selected_obj)
-        {
-          /* Found the entry to raise, remove it from list */
-          found_entry = entry;
-
-          if (prev_entry)
-            prev_entry->next = entry->next;
-          else
-            gfig_context->current_obj->obj_list = entry->next;
-        }
-
-      prev_entry = entry;
-      entry = entry->next;
+      gfig_context->current_obj->obj_list =
+        g_list_remove (gfig_context->current_obj->obj_list,
+                       gfig_context->selected_obj);
+      gfig_context->current_obj->obj_list =
+        g_list_append (gfig_context->current_obj->obj_list,
+                       gfig_context->selected_obj);
     }
-
-  if (!found_entry)
+  else
     {
       g_message ("Trying to raise object that does not exist.");
       return;
     }
-
-  /* tack found entry onto end of list */
-  prev_entry->next = found_entry;
-  found_entry->next = NULL;
 
   gfig_paint_callback ();
 }
@@ -982,45 +965,24 @@ static void
 lower_selected_obj_to_bottom (GtkWidget *widget,
                               gpointer   data)
 {
-  DAllObjs *entry;
-  DAllObjs *prev_entry  = NULL;
-  DAllObjs *found_entry = NULL;
-
   if (!gfig_context->selected_obj)
     return;
 
-  entry = gfig_context->current_obj->obj_list;
-
-  while (entry)
+  if (g_list_find (gfig_context->current_obj->obj_list,
+                   gfig_context->selected_obj))
     {
-      if (entry->obj == gfig_context->selected_obj)
-        {
-          /* Found the entry to lower, remove it from list */
-          found_entry = entry;
-
-          if (prev_entry)
-            {
-              prev_entry->next = found_entry->next;
-              break;
-            }
-          else
-            /* it's already at the bottom */
-            return;
-        }
-
-      prev_entry = entry;
-      entry = entry->next;
+      gfig_context->current_obj->obj_list =
+        g_list_remove (gfig_context->current_obj->obj_list,
+                       gfig_context->selected_obj);
+      gfig_context->current_obj->obj_list =
+        g_list_prepend (gfig_context->current_obj->obj_list,
+                        gfig_context->selected_obj);
     }
-
-  if (!found_entry)
+  else
     {
-      g_message ("Trying to raise object that does not exist.");
+      g_message ("Trying to lower object that does not exist.");
       return;
     }
-
-  /* stick found entry into beginning of list */
-  found_entry->next = gfig_context->current_obj->obj_list;
-  gfig_context->current_obj->obj_list = found_entry;
 
   gfig_paint_callback ();
 }
@@ -1029,46 +991,25 @@ static void
 raise_selected_obj (GtkWidget *widget,
                     gpointer   data)
 {
-  DAllObjs *entry;
-  DAllObjs *prev_entry      = NULL;
-  DAllObjs *following_entry = NULL;
-  DAllObjs *found_entry     = NULL;
-
   if (!gfig_context->selected_obj)
     return;
 
-  entry = gfig_context->current_obj->obj_list;
-
-  while (entry)
+  if (g_list_find (gfig_context->current_obj->obj_list,
+                   gfig_context->selected_obj))
     {
-      if (entry->obj == gfig_context->selected_obj)
-        {
-          /* Found the entry to raise, remove it from list */
-          found_entry = entry;
+      int position;
 
-          following_entry = found_entry->next;
-
-          /* see if already on top */
-          if (!following_entry)
-            return;
-
-          if (prev_entry)
-            prev_entry->next = following_entry;
-          else
-            gfig_context->current_obj->obj_list = following_entry;
-
-          found_entry->next = following_entry->next;
-
-          following_entry->next = found_entry;
-
-          break;
-        }
-
-      prev_entry = entry;
-      entry = entry->next;
+      position = g_list_index (gfig_context->current_obj->obj_list,
+                               gfig_context->selected_obj);
+      gfig_context->current_obj->obj_list =
+        g_list_remove (gfig_context->current_obj->obj_list,
+                       gfig_context->selected_obj);
+      gfig_context->current_obj->obj_list =
+        g_list_insert (gfig_context->current_obj->obj_list,
+                       gfig_context->selected_obj,
+                       position + 1);
     }
-
-  if (!found_entry)
+  else
     {
       g_message ("Trying to raise object that does not exist.");
       return;
@@ -1082,49 +1023,27 @@ static void
 lower_selected_obj (GtkWidget *widget,
                     gpointer   data)
 {
-  DAllObjs *entry;
-  DAllObjs *prev_prev_entry = NULL;
-  DAllObjs *prev_entry      = NULL;
-  DAllObjs *following_entry = NULL;
-  DAllObjs *found_entry     = NULL;
-
   if (!gfig_context->selected_obj)
     return;
 
-  entry = gfig_context->current_obj->obj_list;
-
-  while (entry)
+  if (g_list_find (gfig_context->current_obj->obj_list,
+                   gfig_context->selected_obj))
     {
-      if (entry->obj == gfig_context->selected_obj)
-        {
-          /* Found the entry to lower, remove it from list */
-          found_entry = entry;
+      int position;
 
-          following_entry = found_entry->next;
-
-          /* see if already on bottom */
-          if (!prev_entry)
-            return;
-
-          prev_entry->next  = following_entry;
-          found_entry->next = prev_entry;
-
-          if (prev_prev_entry)
-            prev_prev_entry->next = found_entry;
-          else
-            gfig_context->current_obj->obj_list = found_entry;
-
-          break;
-        }
-
-      prev_prev_entry = prev_entry;
-      prev_entry = entry;
-      entry = entry->next;
+      position = g_list_index (gfig_context->current_obj->obj_list,
+                               gfig_context->selected_obj);
+      gfig_context->current_obj->obj_list =
+        g_list_remove (gfig_context->current_obj->obj_list,
+                       gfig_context->selected_obj);
+      gfig_context->current_obj->obj_list =
+        g_list_insert (gfig_context->current_obj->obj_list,
+                       gfig_context->selected_obj,
+                       MAX (0, position - 1));
     }
-
-  if (!found_entry)
+  else
     {
-      g_message ("Trying to raise object that does not exist.");
+      g_message ("Trying to lower object that does not exist.");
       return;
     }
 
@@ -1466,39 +1385,37 @@ save_file_chooser_response (GtkFileChooser *chooser,
 static Dobject *
 gfig_select_obj_by_number (gint count)
 {
-  DAllObjs *objs = gfig_context->current_obj->obj_list;
-  gint      k = 0;
+  GList   *objs;
+  Dobject *object = NULL;
+  gint     k;
 
   gfig_context->selected_obj = NULL;
 
-  while (objs)
+  for (objs = gfig_context->current_obj->obj_list, k = 0;
+       objs;
+       objs = g_list_next (objs), k++)
     {
       if (k == obj_show_single)
         {
-          gfig_context->selected_obj = objs->obj;
-          gfig_context->current_style = &objs->obj->style;
-          gfig_style_set_context_from_style (&objs->obj->style);
+          object = objs->data;
+          gfig_context->selected_obj = object;
+          gfig_context->current_style = &object->style;
+          gfig_style_set_context_from_style (&object->style);
           break;
         }
-
-      objs = objs->next;
-
-      k++;
     }
 
-  return objs->obj;
+  return object;
 }
 
 static void
 select_button_clicked (gint type)
 {
-  gint      count = 0;
-  DAllObjs *objs;
+  gint   count = 0;
 
   if (gfig_context->current_obj)
     {
-      for (objs = gfig_context->current_obj->obj_list; objs; objs = objs->next)
-        count++;
+      count = g_list_length (gfig_context->current_obj->obj_list);
     }
 
   switch (type)
@@ -1522,8 +1439,6 @@ select_button_clicked (gint type)
     default:
       break;
     }
-
-  objs = gfig_context->current_obj->obj_list;
 
   if (obj_show_single >= 0)
     gfig_select_obj_by_number (obj_show_single);
@@ -1777,19 +1692,20 @@ paint_layer_fill (void)
 void
 gfig_paint_callback (void)
 {
-  DAllObjs  *objs;
-  gint       layer_count = 0;
-  gchar      buf[128];
-  gint       count;
-  gint       ccount = 0;
-  Style     *style0;
+  GList   *objs;
+  gint     layer_count = 0;
+  gchar    buf[128];
+  gint     count;
+  gint     ccount = 0;
+  Style   *style0;
+  Dobject *object;
 
   if (!gfig_context->enable_repaint || !gfig_context->current_obj)
     return;
 
   objs = gfig_context->current_obj->obj_list;
 
-  count = gfig_obj_counts (objs);
+  count = g_list_length (objs);
 
   gimp_drawable_fill (gfig_context->drawable_id, GIMP_TRANSPARENT_FILL);
 
@@ -1800,17 +1716,18 @@ gfig_paint_callback (void)
     {
       if (ccount == obj_show_single || obj_show_single == -1)
         {
+          object = objs->data;
           sprintf (buf, _("Gfig layer %d"), layer_count++);
 
-          gfig_style_apply (&objs->obj->style);
+          gfig_style_apply (&object->style);
 
-          objs->obj->class->paintfunc (objs->obj);
+          object->class->paintfunc (object);
 
           gimp_selection_none (gfig_context->image_id);
 
         }
 
-      objs = objs->next;
+      objs = g_list_next (objs);
 
       ccount++;
     }

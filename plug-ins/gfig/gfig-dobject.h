@@ -63,12 +63,6 @@ struct _Dobject
   gint          style_no;   /* style index of this specific object */
 };
 
-struct _DAllObjs
-{
-  DAllObjs *next;
-  Dobject  *obj; /* Object on list */
-};
-
 /* States of the object */
 #define GFIG_OK       0x0
 #define GFIG_MODIFIED 0x1
@@ -77,41 +71,42 @@ struct _DAllObjs
 extern Dobject *obj_creating;
 extern Dobject      *tmp_line;
 
-void d_pnt_add_line (Dobject *obj,
-                     gint     x,
-                     gint     y,
-                     gint     pos);
 
-DobjPoints     *new_dobjpoint           (gint x, gint y);
-void            do_save_obj             (Dobject *obj,
-                                         GString *to);
+void        d_pnt_add_line           (Dobject    *obj,
+                                      gint        x,
+                                      gint        y,
+                                      gint        pos);
 
-DobjPoints     *d_copy_dobjpoints       (DobjPoints * pnts);
-void            free_one_obj            (Dobject *obj);
-void            d_delete_dobjpoints     (DobjPoints * pnts);
-void            object_update           (GdkPoint *pnt);
-DAllObjs       *copy_all_objs           (DAllObjs *objs);
-void            draw_objects            (DAllObjs *objs, gint show_single);
+DobjPoints *new_dobjpoint            (gint        x,
+                                      gint        y);
+void        do_save_obj              (Dobject    *obj,
+                                      GString    *to);
 
-Dobject *d_load_object            (gchar      *desc,
-                                   FILE       *fp);
+DobjPoints *d_copy_dobjpoints        (DobjPoints *pnts);
+void        free_one_obj             (Dobject    *obj);
+void        d_delete_dobjpoints      (DobjPoints *pnts);
+void        object_update            (GdkPoint   *pnt);
+GList      *copy_all_objs            (GList      *objs);
+void        draw_objects             (GList      *objs,
+                                      gboolean    show_single);
 
-Dobject *d_new_object             (DobjType    type,
-                                   gint        x,
-                                   gint        y);
+Dobject    *d_load_object            (gchar      *desc,
+                                      FILE       *fp);
 
-void     d_save_object            (Dobject    *obj,
-                                   GString    *string);
+Dobject    *d_new_object             (DobjType    type,
+                                      gint        x,
+                                      gint        y);
 
-void     free_all_objs            (DAllObjs   *objs);
+void        d_save_object            (Dobject    *obj,
+                                      GString    *string);
 
-void     clear_undo               (void);
+void        free_all_objs            (GList      *objs);
 
-void     new_obj_2edit            (GFigObj    *obj);
+void        clear_undo               (void);
 
-gint     gfig_obj_counts          (DAllObjs   *objs);
+void        new_obj_2edit            (GFigObj    *obj);
 
-void     gfig_init_object_classes (void);
+void        gfig_init_object_classes (void);
 
 #endif /* __GFIG_DOBJECT_H__ */
 

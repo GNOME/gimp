@@ -31,13 +31,13 @@
 #define RESPONSE_SAVE    3
 #define RESPONSE_PAINT   4
 
-gint      undo_water_mark;  /* Last slot filled in -1 = no undo */
-DAllObjs *undo_table[MAX_UNDO];
+gint   undo_water_mark;  /* Last slot filled in -1 = no undo */
+GList *undo_table[MAX_UNDO];
 
-gint      gfig_dialog             (void);
-void      update_options          (GFigObj *old_obj);
+gint   gfig_dialog             (void);
+void   update_options          (GFigObj *old_obj);
 
-void      tool_option_page_update (GtkWidget *button,
-                                   GtkWidget *notebook);
+void   tool_option_page_update (GtkWidget *button,
+                                GtkWidget *notebook);
 
 #endif /* __GFIG_DIALOG_H__ */
