@@ -642,6 +642,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                 (! gimp_image_is_empty (gimage) ||
                  gimp_tool_control_handles_empty_image (active_tool->control)))
               {
+                gboolean initialized = TRUE;
+
                 if (gimp_tool_control_auto_snap_to (active_tool->control))
                   {
                     gint x, y, width, height;
@@ -661,7 +663,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                  */
                 if (! active_tool->drawable)
                   {
-                    tool_manager_initialize_active (gimp, gdisp);
+                    initialized = tool_manager_initialize_active (gimp, gdisp);
                   }
                 else if ((active_tool->drawable !=
                           gimp_image_active_drawable (gimage)) &&
@@ -671,12 +673,13 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                      */
                     gimp_context_tool_changed (gimp_get_user_context (gimp));
 
-                    tool_manager_initialize_active (gimp, gdisp);
+                    initialized = tool_manager_initialize_active (gimp, gdisp);
                   }
 
-                tool_manager_button_press_active (gimp,
-                                                  &image_coords, time, state,
-                                                  gdisp);
+                if (initialized)
+                  tool_manager_button_press_active (gimp,
+                                                    &image_coords, time, state,
+                                                    gdisp);
               }
             break;
 

@@ -54,29 +54,29 @@
 static void   gimp_color_balance_tool_class_init (GimpColorBalanceToolClass *klass);
 static void   gimp_color_balance_tool_init       (GimpColorBalanceTool      *cb_tool);
 
-static void   gimp_color_balance_tool_finalize   (GObject          *object);
+static void     gimp_color_balance_tool_finalize   (GObject          *object);
 
-static void   gimp_color_balance_tool_initialize (GimpTool         *tool,
-						  GimpDisplay      *gdisp);
+static gboolean gimp_color_balance_tool_initialize (GimpTool         *tool,
+                                                    GimpDisplay      *gdisp);
 
-static void   gimp_color_balance_tool_map        (GimpImageMapTool *image_map_tool);
-static void   gimp_color_balance_tool_dialog     (GimpImageMapTool *image_map_tool);
-static void   gimp_color_balance_tool_reset      (GimpImageMapTool *image_map_tool);
+static void     gimp_color_balance_tool_map        (GimpImageMapTool *image_map_tool);
+static void     gimp_color_balance_tool_dialog     (GimpImageMapTool *image_map_tool);
+static void     gimp_color_balance_tool_reset      (GimpImageMapTool *image_map_tool);
 
-static void   color_balance_update               (GimpColorBalanceTool *cb_tool,
-						  gint                  update);
-static void   color_balance_range_callback       (GtkWidget            *widget,
-						  GimpColorBalanceTool *cb_tool);
-static void   color_balance_range_reset_callback (GtkWidget            *widget,
-						  GimpColorBalanceTool *cb_tool);
-static void   color_balance_preserve_update      (GtkWidget            *widget,
-						  GimpColorBalanceTool *cb_tool);
-static void   color_balance_cr_adjustment_update (GtkAdjustment        *adj,
-						  GimpColorBalanceTool *cb_tool);
-static void   color_balance_mg_adjustment_update (GtkAdjustment        *adj,
-						  GimpColorBalanceTool *cb_tool);
-static void   color_balance_yb_adjustment_update (GtkAdjustment        *adj,
-						  GimpColorBalanceTool *cb_tool);
+static void     color_balance_update               (GimpColorBalanceTool *cb_tool,
+                                                    gint                  update);
+static void     color_balance_range_callback       (GtkWidget            *widget,
+                                                    GimpColorBalanceTool *cb_tool);
+static void     color_balance_range_reset_callback (GtkWidget            *widget,
+                                                    GimpColorBalanceTool *cb_tool);
+static void     color_balance_preserve_update      (GtkWidget            *widget,
+                                                    GimpColorBalanceTool *cb_tool);
+static void     color_balance_cr_adjustment_update (GtkAdjustment        *adj,
+                                                    GimpColorBalanceTool *cb_tool);
+static void     color_balance_mg_adjustment_update (GtkAdjustment        *adj,
+                                                    GimpColorBalanceTool *cb_tool);
+static void     color_balance_yb_adjustment_update (GtkAdjustment        *adj,
+                                                    GimpColorBalanceTool *cb_tool);
 
 
 static GimpImageMapToolClass *parent_class = NULL;
@@ -177,7 +177,7 @@ gimp_color_balance_tool_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-static void
+static gboolean
 gimp_color_balance_tool_initialize (GimpTool    *tool,
 				    GimpDisplay *gdisp)
 {
@@ -187,12 +187,12 @@ gimp_color_balance_tool_initialize (GimpTool    *tool,
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
   if (! drawable)
-    return;
+    return FALSE;
 
   if (! gimp_drawable_is_rgb (drawable))
     {
       g_message (_("Color balance operates only on RGB color layers."));
-      return;
+      return FALSE;
     }
 
   color_balance_init (cb_tool->color_balance);
@@ -202,6 +202,8 @@ gimp_color_balance_tool_initialize (GimpTool    *tool,
   GIMP_TOOL_CLASS (parent_class)->initialize (tool, gdisp);
 
   color_balance_update (cb_tool, ALL);
+
+  return TRUE;
 }
 
 static void

@@ -48,24 +48,24 @@
 #define ALL        (BRIGHTNESS | CONTRAST)
 
 
-static void   gimp_brightness_contrast_tool_class_init (GimpBrightnessContrastToolClass *klass);
-static void   gimp_brightness_contrast_tool_init       (GimpBrightnessContrastTool      *bc_tool);
+static void     gimp_brightness_contrast_tool_class_init (GimpBrightnessContrastToolClass *klass);
+static void     gimp_brightness_contrast_tool_init       (GimpBrightnessContrastTool      *bc_tool);
 
-static void   gimp_brightness_contrast_tool_finalize   (GObject          *object);
+static void     gimp_brightness_contrast_tool_finalize   (GObject          *object);
 
-static void   gimp_brightness_contrast_tool_initialize (GimpTool         *tool,
-							GimpDisplay      *gdisp);
+static gboolean gimp_brightness_contrast_tool_initialize (GimpTool         *tool,
+                                                          GimpDisplay      *gdisp);
 
-static void   gimp_brightness_contrast_tool_map        (GimpImageMapTool *image_map_tool);
-static void   gimp_brightness_contrast_tool_dialog     (GimpImageMapTool *image_map_tool);
-static void   gimp_brightness_contrast_tool_reset      (GimpImageMapTool *image_map_tool);
+static void     gimp_brightness_contrast_tool_map        (GimpImageMapTool *image_map_tool);
+static void     gimp_brightness_contrast_tool_dialog     (GimpImageMapTool *image_map_tool);
+static void     gimp_brightness_contrast_tool_reset      (GimpImageMapTool *image_map_tool);
 
-static void   brightness_contrast_update          (GimpBrightnessContrastTool *bc_tool,
-						   gint                        update);
-static void   brightness_contrast_brightness_adjustment_update (GtkAdjustment *adj,
-								gpointer       data);
-static void   brightness_contrast_contrast_adjustment_update   (GtkAdjustment *adj,
-								gpointer      data);
+static void     brightness_contrast_update     (GimpBrightnessContrastTool *bc_tool,
+                                                gint                        update);
+static void     brightness_contrast_brightness_adjustment_update (GtkAdjustment *adj,
+                                                                  gpointer       data);
+static void     brightness_contrast_contrast_adjustment_update   (GtkAdjustment *adj,
+                                                                  gpointer      data);
 
 
 static GimpImageMapToolClass *parent_class = NULL;
@@ -165,7 +165,7 @@ gimp_brightness_contrast_tool_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-static void
+static gboolean
 gimp_brightness_contrast_tool_initialize (GimpTool    *tool,
 					  GimpDisplay *gdisp)
 {
@@ -175,12 +175,12 @@ gimp_brightness_contrast_tool_initialize (GimpTool    *tool,
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
   if (! drawable)
-    return;
+    return FALSE;
 
   if (gimp_drawable_is_indexed (drawable))
     {
       g_message (_("Brightness-Contrast does not operate on indexed layers."));
-      return;
+      return FALSE;
     }
 
   bc_tool->brightness = 0.0;
@@ -189,6 +189,8 @@ gimp_brightness_contrast_tool_initialize (GimpTool    *tool,
   GIMP_TOOL_CLASS (parent_class)->initialize (tool, gdisp);
 
   brightness_contrast_update (bc_tool, ALL);
+
+  return TRUE;
 }
 
 static void

@@ -1,3 +1,33 @@
+2004-01-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimptool.[ch]: added boolean return value to
+	GimpTool::initialize(). Returning FALSE means the tool could not
+	be initialized and doesn't want to receive button events.
+	Return TRUE from the default implementation.
+
+	* app/tools/tool_manager.[ch]: added boolean return value to
+	tool_manager_initialize_active(). Don't set the tool's display or
+	drawable if initialize() returns FALSE.
+
+	* app/display/gimpdisplayshell-callbacks.c: don't send button
+	events to the tool if initialize() returns FALSE.
+
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorizetool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimpthresholdtool.c: return FALSE for NULL and indexed
+	drawables.
+
+	* app/tools/gimpimagemaptool.c: always return TRUE because our
+	subclasses already checked if the active drawable is OK.
+
+	* app/tools/gimptransformtool.c: return FALSE for layers with
+	masks. Fixes bug #132089. Some random cleanups.
+
 2004-01-21  DindinX  <david@dindinx.org>
 
 	* plug-ins/common/plugindetails.c: correctly resize both panels of the

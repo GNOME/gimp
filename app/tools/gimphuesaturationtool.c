@@ -55,30 +55,30 @@
 
 /*  local function prototypes  */
 
-static void   gimp_hue_saturation_tool_class_init (GimpHueSaturationToolClass *klass);
-static void   gimp_hue_saturation_tool_init       (GimpHueSaturationTool      *tool);
+static void     gimp_hue_saturation_tool_class_init (GimpHueSaturationToolClass *klass);
+static void     gimp_hue_saturation_tool_init       (GimpHueSaturationTool      *tool);
 
-static void   gimp_hue_saturation_tool_finalize   (GObject          *object);
+static void     gimp_hue_saturation_tool_finalize   (GObject          *object);
 
-static void   gimp_hue_saturation_tool_initialize (GimpTool         *tool,
-                                                   GimpDisplay      *gdisp);
+static gboolean gimp_hue_saturation_tool_initialize (GimpTool         *tool,
+                                                     GimpDisplay      *gdisp);
 
-static void   gimp_hue_saturation_tool_map        (GimpImageMapTool *image_map_tool);
-static void   gimp_hue_saturation_tool_dialog     (GimpImageMapTool *image_map_tool);
-static void   gimp_hue_saturation_tool_reset      (GimpImageMapTool *image_map_tool);
+static void     gimp_hue_saturation_tool_map        (GimpImageMapTool *image_map_tool);
+static void     gimp_hue_saturation_tool_dialog     (GimpImageMapTool *image_map_tool);
+static void     gimp_hue_saturation_tool_reset      (GimpImageMapTool *image_map_tool);
 
-static void   hue_saturation_update               (GimpHueSaturationTool *hs_tool,
-                                                   gint                   update);
-static void   hue_saturation_partition_callback           (GtkWidget     *widget,
-                                                           gpointer       data);
-static void   hue_saturation_partition_reset_callback     (GtkWidget     *widget,
-                                                           gpointer       data);
-static void   hue_saturation_hue_adjustment_update        (GtkAdjustment *adj,
-							   gpointer       data);
-static void   hue_saturation_lightness_adjustment_update  (GtkAdjustment *adj,
-							   gpointer       data);
-static void   hue_saturation_saturation_adjustment_update (GtkAdjustment *adj,
-							   gpointer       data);
+static void     hue_saturation_update               (GimpHueSaturationTool *hs_tool,
+                                                     gint                   update);
+static void     hue_saturation_partition_callback           (GtkWidget     *widget,
+                                                             gpointer       data);
+static void     hue_saturation_partition_reset_callback     (GtkWidget     *widget,
+                                                             gpointer       data);
+static void     hue_saturation_hue_adjustment_update        (GtkAdjustment *adj,
+                                                             gpointer       data);
+static void     hue_saturation_lightness_adjustment_update  (GtkAdjustment *adj,
+                                                             gpointer       data);
+static void     hue_saturation_saturation_adjustment_update (GtkAdjustment *adj,
+                                                             gpointer       data);
 
 
 /*  private variables  */
@@ -194,7 +194,7 @@ gimp_hue_saturation_tool_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-static void
+static gboolean
 gimp_hue_saturation_tool_initialize (GimpTool    *tool,
 				     GimpDisplay *gdisp)
 {
@@ -204,12 +204,12 @@ gimp_hue_saturation_tool_initialize (GimpTool    *tool,
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
   if (! drawable)
-    return;
+    return FALSE;
 
   if (! gimp_drawable_is_rgb (drawable))
     {
       g_message (_("Hue-Saturation operates only on RGB color layers."));
-      return;
+      return FALSE;
     }
 
   hue_saturation_init (hs_tool->hue_saturation);
@@ -217,6 +217,8 @@ gimp_hue_saturation_tool_initialize (GimpTool    *tool,
   GIMP_TOOL_CLASS (parent_class)->initialize (tool, gdisp);
 
   hue_saturation_update (hs_tool, ALL);
+
+  return TRUE;
 }
 
 static void

@@ -74,69 +74,69 @@ static void   gimp_transform_tool_class_init  (GimpTransformToolClass *tool);
 static GObject * gimp_transform_tool_constructor   (GType              type,
                                                     guint              n_params,
                                                     GObjectConstructParam *params);
-static void   gimp_transform_tool_finalize         (GObject           *object);
+static void     gimp_transform_tool_finalize       (GObject           *object);
 
-static void   gimp_transform_tool_initialize       (GimpTool          *tool,
+static gboolean gimp_transform_tool_initialize     (GimpTool          *tool,
                                                     GimpDisplay       *gdisp);
-static void   gimp_transform_tool_control          (GimpTool          *tool,
+static void     gimp_transform_tool_control        (GimpTool          *tool,
                                                     GimpToolAction     action,
                                                     GimpDisplay       *gdisp);
-static void   gimp_transform_tool_button_press     (GimpTool          *tool,
+static void     gimp_transform_tool_button_press   (GimpTool          *tool,
                                                     GimpCoords        *coords,
                                                     guint32            time,
                                                     GdkModifierType    state,
                                                     GimpDisplay       *gdisp);
-static void   gimp_transform_tool_button_release   (GimpTool          *tool,
+static void     gimp_transform_tool_button_release (GimpTool          *tool,
                                                     GimpCoords        *coords,
                                                     guint32            time,
                                                     GdkModifierType    state,
                                                     GimpDisplay       *gdisp);
-static void   gimp_transform_tool_motion           (GimpTool          *tool,
+static void     gimp_transform_tool_motion         (GimpTool          *tool,
                                                     GimpCoords        *coords,
                                                     guint32            time,
                                                     GdkModifierType    state,
                                                     GimpDisplay       *gdisp);
-static void   gimp_transform_tool_modifier_key     (GimpTool          *tool,
+static void     gimp_transform_tool_modifier_key   (GimpTool          *tool,
                                                     GdkModifierType    key,
                                                     gboolean           press,
                                                     GdkModifierType    state,
                                                     GimpDisplay       *gdisp);
-static void   gimp_transform_tool_oper_update      (GimpTool          *tool,
+static void     gimp_transform_tool_oper_update    (GimpTool          *tool,
                                                     GimpCoords        *coords,
                                                     GdkModifierType    state,
                                                     GimpDisplay       *gdisp);
-static void   gimp_transform_tool_cursor_update    (GimpTool          *tool,
+static void     gimp_transform_tool_cursor_update  (GimpTool          *tool,
                                                     GimpCoords        *coords,
                                                     GdkModifierType    state,
                                                     GimpDisplay       *gdisp);
 
-static void   gimp_transform_tool_draw             (GimpDrawTool      *draw_tool);
+static void     gimp_transform_tool_draw           (GimpDrawTool      *draw_tool);
 
 static TileManager *
-              gimp_transform_tool_real_transform   (GimpTransformTool *tr_tool,
+                gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                                     GimpItem          *item,
                                                     GimpDisplay       *gdisp);
 
-static void   gimp_transform_tool_halt             (GimpTransformTool *tr_tool);
-static void   gimp_transform_tool_bounds           (GimpTransformTool *tr_tool,
+static void     gimp_transform_tool_halt           (GimpTransformTool *tr_tool);
+static void     gimp_transform_tool_bounds         (GimpTransformTool *tr_tool,
                                                     GimpDisplay       *gdisp);
-static void   gimp_transform_tool_dialog           (GimpTransformTool *tr_tool);
-static void   gimp_transform_tool_prepare          (GimpTransformTool *tr_tool,
+static void     gimp_transform_tool_dialog         (GimpTransformTool *tr_tool);
+static void     gimp_transform_tool_prepare        (GimpTransformTool *tr_tool,
                                                     GimpDisplay       *gdisp);
-static void   gimp_transform_tool_recalc           (GimpTransformTool *tr_tool,
+static void     gimp_transform_tool_recalc         (GimpTransformTool *tr_tool,
                                                     GimpDisplay       *gdisp);
-static void   gimp_transform_tool_doit             (GimpTransformTool *tr_tool,
+static void     gimp_transform_tool_doit           (GimpTransformTool *tr_tool,
                                                     GimpDisplay       *gdisp);
-static void   gimp_transform_tool_grid_recalc      (GimpTransformTool *tr_tool);
+static void     gimp_transform_tool_grid_recalc    (GimpTransformTool *tr_tool);
 
-static void   transform_response                   (GtkWidget         *widget,
+static void     gimp_transform_tool_response       (GtkWidget         *widget,
                                                     gint               response_id,
                                                     GimpTransformTool *tr_tool);
 
-static void   gimp_transform_tool_notify_type   (GimpTransformOptions *options,
+static void     gimp_transform_tool_notify_type (GimpTransformOptions *options,
                                                  GParamSpec           *pspec,
                                                  GimpTransformTool    *tr_tool);
-static void   gimp_transform_tool_notify_grid   (GimpTransformOptions *options,
+static void     gimp_transform_tool_notify_grid (GimpTransformOptions *options,
                                                  GParamSpec           *pspec,
                                                  GimpTransformTool    *tr_tool);
 
@@ -290,9 +290,7 @@ gimp_transform_tool_constructor (GType                  type,
 static void
 gimp_transform_tool_finalize (GObject *object)
 {
-  GimpTransformTool *tr_tool;
-
-  tr_tool = GIMP_TRANSFORM_TOOL (object);
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (object);
 
   if (tr_tool->original)
     {
@@ -321,7 +319,7 @@ gimp_transform_tool_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-static void
+static gboolean
 gimp_transform_tool_initialize (GimpTool    *tool,
 				GimpDisplay *gdisp)
 {
@@ -337,7 +335,7 @@ gimp_transform_tool_initialize (GimpTool    *tool,
         {
           g_message (_("Transformations do not work on "
                        "layers that contain layer masks."));
-          return;
+          return FALSE;
         }
 
       /*  Set the pointer to the active display  */
@@ -368,6 +366,8 @@ gimp_transform_tool_initialize (GimpTool    *tool,
       for (i = 0; i < TRAN_INFO_SIZE; i++)
 	tr_tool->old_trans_info[i] = tr_tool->trans_info[i];
     }
+
+  return TRUE;
 }
 
 static void
@@ -375,9 +375,7 @@ gimp_transform_tool_control (GimpTool       *tool,
 			     GimpToolAction  action,
 			     GimpDisplay    *gdisp)
 {
-  GimpTransformTool *tr_tool;
-
-  tr_tool = GIMP_TRANSFORM_TOOL (tool);
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
 
   switch (action)
     {
@@ -407,9 +405,7 @@ gimp_transform_tool_button_press (GimpTool        *tool,
                                   GdkModifierType  state,
 			          GimpDisplay     *gdisp)
 {
-  GimpTransformTool *tr_tool;
-
-  tr_tool = GIMP_TRANSFORM_TOOL (tool);
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
 
   if (tr_tool->function == TRANSFORM_CREATING && tr_tool->use_grid)
     gimp_transform_tool_oper_update (tool, coords, state, gdisp);
@@ -427,10 +423,8 @@ gimp_transform_tool_button_release (GimpTool        *tool,
 			            GdkModifierType  state,
 			            GimpDisplay     *gdisp)
 {
-  GimpTransformTool *tr_tool;
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
   gint               i;
-
-  tr_tool = GIMP_TRANSFORM_TOOL (tool);
 
   /*  if we are creating, there is nothing to be done...exit  */
   if (tr_tool->function == TRANSFORM_CREATING && tr_tool->use_grid)
@@ -469,10 +463,8 @@ gimp_transform_tool_motion (GimpTool        *tool,
 		            GdkModifierType  state,
 		            GimpDisplay     *gdisp)
 {
+  GimpTransformTool      *tr_tool = GIMP_TRANSFORM_TOOL (tool);
   GimpTransformToolClass *tr_tool_class;
-  GimpTransformTool      *tr_tool;
-
-  tr_tool = GIMP_TRANSFORM_TOOL (tool);
 
   /*  if we are creating, there is nothing to be done so exit.  */
   if (tr_tool->function == TRANSFORM_CREATING || ! tr_tool->use_grid)
@@ -532,11 +524,8 @@ gimp_transform_tool_oper_update (GimpTool        *tool,
                                  GdkModifierType  state,
                                  GimpDisplay     *gdisp)
 {
-  GimpTransformTool *tr_tool;
-  GimpDrawTool      *draw_tool;
-
-  tr_tool   = GIMP_TRANSFORM_TOOL (tool);
-  draw_tool = GIMP_DRAW_TOOL (tool);
+  GimpTransformTool *tr_tool   = GIMP_TRANSFORM_TOOL (tool);
+  GimpDrawTool      *draw_tool = GIMP_DRAW_TOOL (tool);
 
   if (! tr_tool->use_grid)
     return;
@@ -597,10 +586,9 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
 			           GdkModifierType  state,
 			           GimpDisplay     *gdisp)
 {
-  GimpTransformTool    *tr_tool;
+  GimpTransformTool    *tr_tool = GIMP_TRANSFORM_TOOL (tool);
   GimpTransformOptions *options;
 
-  tr_tool = GIMP_TRANSFORM_TOOL (tool);
   options = GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options);
 
   if (tr_tool->use_grid)
@@ -613,9 +601,7 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
         {
         case GIMP_TRANSFORM_TYPE_LAYER:
           {
-            GimpDrawable *drawable;
-
-            drawable = gimp_image_active_drawable (gdisp->gimage);
+            GimpDrawable *drawable = gimp_image_active_drawable (gdisp->gimage);
 
             if (drawable)
               {
@@ -667,18 +653,14 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
 static void
 gimp_transform_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpTool             *tool;
-  GimpTransformTool    *tr_tool;
+  GimpTool             *tool    = GIMP_TOOL (draw_tool);
+  GimpTransformTool    *tr_tool = GIMP_TRANSFORM_TOOL (draw_tool);
   GimpTransformOptions *options;
-  gdouble z1, z2, z3, z4;
-
-
-  tr_tool = GIMP_TRANSFORM_TOOL (draw_tool);
+  gdouble               z1, z2, z3, z4;
 
   if (! tr_tool->use_grid)
     return;
 
-  tool    = GIMP_TOOL (draw_tool);
   options = GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options);
 
   /*  draw the bounding box  */
@@ -823,12 +805,11 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                     GimpItem          *active_item,
                                     GimpDisplay       *gdisp)
 {
-  GimpTool             *tool;
+  GimpTool             *tool = GIMP_TOOL (tr_tool);
   GimpTransformOptions *options;
   GimpProgress         *progress;
-  TileManager          *ret = NULL;
+  TileManager          *ret  = NULL;
 
-  tool    = GIMP_TOOL (tr_tool);
   options = GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options);
 
   if (tr_tool->info_dialog)
@@ -896,13 +877,12 @@ static void
 gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
 		          GimpDisplay        *gdisp)
 {
-  GimpTool             *tool;
+  GimpTool             *tool        = GIMP_TOOL (tr_tool);
   GimpTransformOptions *options;
   GimpItem             *active_item = NULL;
   TileManager          *new_tiles;
   gboolean              new_layer;
 
-  tool    = GIMP_TOOL (tr_tool);
   options = GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options);
 
   switch (options->type)
@@ -1128,10 +1108,9 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
         {
         case GIMP_TRANSFORM_TYPE_LAYER:
           {
-            GimpDrawable *drawable;
-            gint          offset_x, offset_y;
-
-            drawable = gimp_image_active_drawable (gdisp->gimage);
+            GimpDrawable *drawable = gimp_image_active_drawable (gdisp->gimage);
+            gint          offset_x;
+            gint          offset_y;
 
             gimp_item_offsets (GIMP_ITEM (drawable), &offset_x, &offset_y);
 
@@ -1288,7 +1267,7 @@ gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
                           NULL);
 
   g_signal_connect (tr_tool->info_dialog->shell, "response",
-                    G_CALLBACK (transform_response),
+                    G_CALLBACK (gimp_transform_tool_response),
                     tr_tool);
 
   GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->dialog (tr_tool);
@@ -1329,9 +1308,9 @@ gimp_transform_tool_recalc (GimpTransformTool *tr_tool,
 }
 
 static void
-transform_response (GtkWidget         *widget,
-                    gint               response_id,
-                    GimpTransformTool *tr_tool)
+gimp_transform_tool_response (GtkWidget         *widget,
+                              gint               response_id,
+                              GimpTransformTool *tr_tool)
 {
   switch (response_id)
     {

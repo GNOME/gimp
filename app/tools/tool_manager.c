@@ -209,15 +209,15 @@ tool_manager_pop_tool (Gimp *gimp)
     }
 }
 
-void
+gboolean
 tool_manager_initialize_active (Gimp        *gimp,
                                 GimpDisplay *gdisp)
 {
   GimpToolManager *tool_manager;
   GimpTool        *tool;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (GIMP_IS_DISPLAY (gdisp), FALSE);
 
   tool_manager = tool_manager_get (gimp);
 
@@ -225,10 +225,15 @@ tool_manager_initialize_active (Gimp        *gimp,
     {
       tool = tool_manager->active_tool;
 
-      gimp_tool_initialize (tool, gdisp);
+      if (gimp_tool_initialize (tool, gdisp))
+        {
+          tool->drawable = gimp_image_active_drawable (gdisp->gimage);
 
-      tool->drawable = gimp_image_active_drawable (gdisp->gimage);
+          return TRUE;
+        }
     }
+
+  return FALSE;
 }
 
 void
@@ -546,9 +551,8 @@ tool_manager_image_dirty (GimpImage       *gimage,
               if (gimp_image_active_drawable (gdisp->gimage) ||
                   gimp_tool_control_handles_empty_image (tool->control))
                 {
-                  tool_manager_initialize_active (gimage->gimp, gdisp);
-
-                  tool->gdisp = gdisp;
+                  if (tool_manager_initialize_active (gimage->gimp, gdisp))
+                    tool->gdisp = gdisp;
                 }
             }
 	}

@@ -45,20 +45,20 @@
 #define SLIDER_WIDTH 200
 
 
-static void   gimp_posterize_tool_class_init (GimpPosterizeToolClass *klass);
-static void   gimp_posterize_tool_init       (GimpPosterizeTool      *bc_tool);
+static void     gimp_posterize_tool_class_init (GimpPosterizeToolClass *klass);
+static void     gimp_posterize_tool_init       (GimpPosterizeTool      *bc_tool);
 
-static void   gimp_posterize_tool_finalize   (GObject          *object);
+static void     gimp_posterize_tool_finalize   (GObject          *object);
 
-static void   gimp_posterize_tool_initialize (GimpTool         *tool,
-					      GimpDisplay      *gdisp);
+static gboolean gimp_posterize_tool_initialize (GimpTool         *tool,
+                                                GimpDisplay      *gdisp);
 
-static void   gimp_posterize_tool_map        (GimpImageMapTool *image_map_tool);
-static void   gimp_posterize_tool_dialog     (GimpImageMapTool *image_map_tool);
-static void   gimp_posterize_tool_reset      (GimpImageMapTool *image_map_tool);
+static void     gimp_posterize_tool_map        (GimpImageMapTool *image_map_tool);
+static void     gimp_posterize_tool_dialog     (GimpImageMapTool *image_map_tool);
+static void     gimp_posterize_tool_reset      (GimpImageMapTool *image_map_tool);
 
-static void   posterize_levels_adjustment_update (GtkAdjustment     *adjustment,
-						  GimpPosterizeTool *posterize_tool);
+static void     posterize_levels_adjustment_update (GtkAdjustment     *adjustment,
+                                                    GimpPosterizeTool *posterize_tool);
 
 
 static GimpImageMapToolClass *parent_class = NULL;
@@ -157,7 +157,7 @@ gimp_posterize_tool_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-static void
+static gboolean
 gimp_posterize_tool_initialize (GimpTool    *tool,
 				GimpDisplay *gdisp)
 {
@@ -167,12 +167,12 @@ gimp_posterize_tool_initialize (GimpTool    *tool,
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
   if (! drawable)
-    return;
+    return FALSE;
 
   if (gimp_drawable_is_indexed (drawable))
     {
       g_message (_("Posterize does not operate on indexed layers."));
-      return;
+      return FALSE;
     }
 
   posterize_tool->levels = POSTERIZE_DEFAULT_LEVELS;
@@ -183,6 +183,8 @@ gimp_posterize_tool_initialize (GimpTool    *tool,
                             posterize_tool->levels);
 
   gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (posterize_tool));
+
+  return TRUE;
 }
 
 static void
