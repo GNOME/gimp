@@ -124,7 +124,8 @@ Resolution support
    plug-ins that make use of this.
 
 GimpPerl
-   The GIMP-Perl extension is now part of GIMP-1.1.
+   The GIMP-Perl extension and several Perl-Fu scripts are now part of
+   GIMP 1.1.
 
 Monitor resolution
    The image can now be displayed in float scale factors. If GIMP
@@ -173,6 +174,25 @@ Better feedback
    gradients, etc.) now display a progress bar and cursor change to
    inform the user about what's going on.
 
+Unit representation 
+   You can now work directly in inches, centimeters, millimeters, and
+   other units without having to do pixel math to figure things out.
+
+Paths dialog
+   Manipulating paths is much easier, and the Paths dialog is
+   integrated into the Layers & Channels dialog.
+
+Thumbnails
+   The Open dialog now displays a thumbnail if it exists, and gives
+   the option to generate one if it doesn't.
+
+Indexed images
+   Converting images from RGB to Indexed color has been improved.
+
+Win32 merging
+   The patches required for compiling under Win32 are being integrated
+   into the main GIMP source.
+
 Miscellaneous
    - The painting functions (brush, pencil, airbrush, etc.) have been
      optimized.
@@ -181,6 +201,9 @@ Miscellaneous
    - The font selector has been redesigned.
    - The new, slightly incomplete MAINTAINERS file should help track
      responsibility and expertise for various GIMP parts.
+   - There's now a man page for the gimprc file.
+   - The titlebar layout can be customized to display information in
+     various ways.
 
 Copyright 1998 by Sven Neumann
 Modified by Zach Beane

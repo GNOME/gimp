@@ -1,3 +1,9 @@
+Mon Mar  8 16:45:06 PST 1999 Manish Singh <yosh@gimp.org>
+
+	* Made 1.1.3 release
+
+	* gimprc.5.in: use @GIMP_VERSION@
+
 Mon Mar  8 16:27:25 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* app/hue_saturation.c: comment out Raph's saturation changes,

@@ -4,7 +4,7 @@ AC_INIT(gimprc.in)
 dnl Initialize automake stuff
 GIMP_MAJOR_VERSION=1
 GIMP_MINOR_VERSION=1
-GIMP_MICRO_VERSION=2
+GIMP_MICRO_VERSION=3
 GIMP_INTERFACE_AGE=0
 GIMP_BINARY_AGE=0
 GIMP_VERSION=$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION.$GIMP_MICRO_VERSION
@@ -100,7 +100,7 @@ ALL_LINGUAS="fr sv ja it fi ko de hu nl pl ru"
 AM_GNU_GETTEXT
 
 dnl Check for GTK+
-AM_PATH_GTK(1.1.13,,
+AM_PATH_GTK(1.2.0,,
   AC_MSG_ERROR(Test for GTK failed. See the file 'INSTALL' for help.))
 
 changequote(,)dnl

@@ -31,7 +31,7 @@
 .\" Wed Mar  3 13:09:52 MET 1999 Sven Neumann <sven@gimp.org>
 .\"   * reflect the changes that were made to the resolution stuff
 .\"
-.TH GIMPRC 5 "3 Wed 1999" "Version 1.1.2"
+.TH GIMPRC 5 "3 Wed 1999" "Version @GIMP_VERSION@"
 .SH NAME
 gimprc \- gimp configuration file
 .SH DESCRIPTION
