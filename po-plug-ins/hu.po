@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
 "POT-Creation-Date: 2001-08-07 17:00+0200\n"
-"PO-Revision-Date: 2001-08-07 17:55+0200\n"
+"PO-Revision-Date: 2001-09-17 09:53+0200\n"
 "Last-Translator: Emese Kovacs <emese@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
 "MIME-Version: 1.0\n"
@@ -3958,11 +3958,11 @@ msgstr "Cserép magassága:"
 
 #: plug-ins/common/gqbist.c:338
 msgid "<Image>/Filters/Render/Pattern/Qbist..."
-msgstr "<Image>/Szûrõk/Megjelenítés/Minta/Kubista..."
+msgstr "<Image>/Szûrõk/Megjelenítés/Minta/Qbist..."
 
 #: plug-ins/common/gqbist.c:435
 msgid "Qbist..."
-msgstr "Kubista..."
+msgstr "Qbist..."
 
 #: plug-ins/common/gqbist.c:580
 msgid "Load QBE file..."
