@@ -2,11 +2,13 @@
 # Copyright (C) 2000 Francisco Xosé Vázquez Grandal.
 # Francisco Xosé Vázquez Grandal <grandal@mundivia.es>, 2000.
 #
+#  O teu SO en Galego ¿en que se non?.      ¡¡MOITO TRASNO!!
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.1.24\n"
-"POT-Creation-Date: 2000-10-04 16:01-0700\n"
-"PO-Revision-Date: 2000-09-06 20:30+0200\n"
+"Project-Id-Version: Gimp CVS\n"
+"POT-Creation-Date: 2000-10-03 10:45+0200\n"
+"PO-Revision-Date: 2000-10-15 19:35+0200\n"
 "Last-Translator: Francisco Xosé Vázquez Grandal <grandal@mundivia.es>\n"
 "Language-Team: Galician <trasno@ceu.fi.udc.es>\n"
 "MIME-Version: 1.0\n"
@@ -116,7 +118,7 @@ msgstr "Sair"
 #. the cancel button
 #: app/app_procs.c:754 app/brightness_contrast.c:224 app/channel_ops.c:93
 #: app/channels_dialog.c:2502 app/channels_dialog.c:2665
-#: app/color_balance.c:280 app/color_notebook.c:126 app/convert.c:513
+#: app/color_balance.c:280 app/color_notebook.c:126 app/convert.c:508
 #: app/curves.c:567 app/file_new_dialog.c:207 app/file_new_dialog.c:357
 #: app/gdisplay_color_ui.c:135 app/gdisplay_ops.c:305 app/gimphelp.c:196
 #: app/gimpprogress.c:112 app/global_edit.c:772 app/gradient.c:1768
@@ -277,7 +279,7 @@ msgstr "Brillo-contraste non opera en debuxos indexados."
 
 #: app/brightness_contrast.c:220 app/channel_ops.c:91
 #: app/channels_dialog.c:2500 app/channels_dialog.c:2663
-#: app/color_balance.c:276 app/color_notebook.c:123 app/convert.c:511
+#: app/color_balance.c:276 app/color_notebook.c:123 app/convert.c:506
 #: app/curves.c:563 app/file_new_dialog.c:207 app/file_new_dialog.c:353
 #: app/gdisplay_color_ui.c:133 app/gimpui.c:122 app/hue_saturation.c:375
 #: app/layers_dialog.c:3482 app/layers_dialog.c:3664 app/layers_dialog.c:3759
@@ -829,72 +831,72 @@ msgstr "Seleccionar beira por"
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr "Erro no redimensionado: O ancho e o longo deben ser meirandes ca cero."
 
-#: app/convert.c:505
+#: app/convert.c:500
 msgid "Indexed Color Conversion"
 msgstr "Conversión a cor indexado"
 
-#: app/convert.c:524
+#: app/convert.c:519
 msgid "General Palette Options"
 msgstr "Opcións xerais de paleta"
 
-#: app/convert.c:537
+#: app/convert.c:532
 msgid "Generate Optimal Palette:"
 msgstr "Xerar paleta optima:"
 
-#: app/convert.c:570
+#: app/convert.c:565
 msgid "# of Colors:"
 msgstr "# de Cores:"
 
 #. create the custom_frame here, it'll be added later
-#: app/convert.c:586
+#: app/convert.c:581
 msgid "Custom Palette Options"
 msgstr "Opcións de paleta persoalizada"
 
-#: app/convert.c:592
+#: app/convert.c:587
 msgid "Remove Unused Colors from Final Palette"
 msgstr "Eliminar cores non usadas da paleta final"
 
-#: app/convert.c:604
+#: app/convert.c:599
 msgid "Use Custom Palette:"
 msgstr "Usar paleta persoalizada:"
 
-#: app/convert.c:638
+#: app/convert.c:633
 msgid "Use WWW-Optimized Palette"
 msgstr "Usar paleta optimizada para a WWW"
 
-#: app/convert.c:654
+#: app/convert.c:649
 msgid "Use Black/White (1-Bit) Palette"
 msgstr "Usar pateta de Branco e Negro (1 bit)"
 
-#: app/convert.c:665
+#: app/convert.c:660
 msgid "Dither Options"
 msgstr "Opcións de Tramado"
 
-#: app/convert.c:678
+#: app/convert.c:673
 msgid "No Color Dithering"
 msgstr "Sen tramado de cor"
 
-#: app/convert.c:692
+#: app/convert.c:687
 msgid "Positioned Color Dithering"
 msgstr "Tramado de cores por posición"
 
-#: app/convert.c:706
+#: app/convert.c:701
 msgid "Floyd-Steinberg Color Dithering (Reduced Color Bleeding)"
 msgstr "Tramado de cor Floyd-Steinberg (Reducción de cor sangrante)"
 
-#: app/convert.c:719
+#: app/convert.c:714
 msgid "Floyd-Steinberg Color Dithering (Normal)"
 msgstr "Tramado de cor Floyd-Steinberg (Normal)"
 
-#: app/convert.c:733
+#: app/convert.c:728
 msgid "Enable Dithering of Transparency"
 msgstr "Habilitar tramado de transparencia"
 
-#: app/convert.c:762
+#: app/convert.c:757
 msgid "[ Warning ]"
 msgstr "[ Atención ]"
 
-#: app/convert.c:772
+#: app/convert.c:767
 msgid ""
 "You are attempting to convert an image with alpha/layers from RGB/GRAY to "
 "INDEXED.\n"
@@ -905,7 +907,7 @@ msgstr ""
 "Non debe xerar unha paleta de máis de 255 cores se tenta crear un gif "
 "transparente ou animado con esta imaxe."
 
-#: app/convert.c:983
+#: app/convert.c:978
 msgid "Select Custom Palette"
 msgstr "Seleccionar paleta persoalizada"
 
@@ -1037,7 +1039,7 @@ msgid "Load/Save Curves"
 msgstr "Cargar/Gardar Curvas"
 
 #: app/curves.c:1629 app/curves.c:1647 app/levels.c:1457 app/levels.c:1475
-#: app/paths_dialog.c:1904
+#: app/paths_dialog.c:1905
 #, c-format
 msgid "Unable to open file %s"
 msgstr "Incapaz de abrir ficheiro %s"
@@ -1568,12 +1570,9 @@ msgstr ""
 msgid "Brush pipes should have at least one brush."
 msgstr "O cano dos pinceis debe conter ó menos un pincel."
 
-#: app/gimpbrushpipe.c:416 app/gimpbrushpipe.c:424
-#, fuzzy
+#: app/gimpbrushpipe.c:416 app/gimpbrushpipe.c:42
 msgid "Failed to load one of the brushes in the brush pipe."
-msgstr ""
-"Fallo ó cargar un dos\n"
-"pinceis do cano dos pinceis."
+msgstr "Fallo ó cargar un dos pinceis no cano dos pinceis."
 
 #: app/gimpbrushpipe.c:484 app/gimpbrushpipe.c:492
 msgid "Failed to load pixmap brush."
@@ -1730,9 +1729,9 @@ msgid "Can't open %s; %s"
 msgstr "Imposible abrir %s; %s"
 
 #: app/gimprc.c:2936
-#, fuzzy, c-format
+#, c-format
 msgid "Can't rename %s to %s.old; %s"
-msgstr "Imposible renomear %s.old; %s"
+msgstr "Imposible renomear %s a %s.old; %s"
 
 #: app/gimprc.c:2942
 #, c-format
@@ -4156,24 +4155,24 @@ msgid "No Patterns available"
 msgstr "Non hai patróns dispoñibles"
 
 #: app/patterns.c:187
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown GIMP pattern version #%d in \"%s\"\n"
-msgstr "Versión do GIMP descoñecida #%d en \"%s\"\n"
+msgstr "Versión de patrons do GIMP descoñecida #%d en \"%s\"\n"
 
 #: app/patterns.c:204
-#, fuzzy, c-format
+#, c-format
 msgid "Error in GIMP pattern file \"%s\""
-msgstr "Erro en ficheiro de patrón GIMP...abortando."
+msgstr "Erro en ficheiro de patrón \"%s\" do GIMP"
 
 #: app/patterns.c:219
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP pattern file \"%s\" appears to be truncated."
-msgstr "O ficheiro de patrón GIMP parece estar mutilado."
+msgstr "O ficheiro de patrón \"%s\" do GIMP parece estar mutilado."
 
 #: app/patterns.c:278
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading pattern \"%s\""
-msgstr "Erro abrindo ficheiro: %s\n"
+msgstr "Erro cartgando patrón \"%s\""
 
 #: app/perspective_tool.c:59
 msgid "Perspective Transform Information"
@@ -6352,9 +6351,9 @@ msgstr ""
 "que lle deixa determina-la resolución do seu monitor interactivamente."
 
 #: app/xcf.c:382
-#, fuzzy, c-format
+#, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
-msgstr "Erro de XCF: version de ficheiro XCF non soportado, atopado"
+msgstr "Erro de XCF: atopouse un ficheiro XCF versión %d non soportado"
 
 #: app/xcf.c:1814
 msgid ""
