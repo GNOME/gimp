@@ -1,3 +1,9 @@
+Sun Aug  1 19:27:49 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* Made 1.1.8 release
+
+	* configure.in: version number bump
+
 Mon Aug  2 03:42:03 CEST 1999  Marc Lehmann <pcg@goof.com>
 
         * app/app_procs.c: Improve the gimp_quit dialog to use "Quit" and

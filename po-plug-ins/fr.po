@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
-"POT-Creation-Date: 1999-07-21 12:51+0200\n"
+"POT-Creation-Date: 1999-07-24 12:04-0700\n"
 "PO-Revision-Date: 1999-03-18 19:00+0100\n"
 "Last-Translator: Vincent Renardias <vincent@ldsol.com>\n"
 "Language-Team: Vincent Renardias <vincent@ldsol.com>\n"
@@ -1985,7 +1985,8 @@ msgid "GIF: EOF / read error on image data\n"
 msgstr "GIF: EOF / erreur de lecture sur les données de l'image\n"
 
 #: plug-ins/common/gifload.c:364
-msgid "GIF: OF / read error on extension function code\n"
+#, fuzzy
+msgid "GIF: EOF / read error on extension function code\n"
 msgstr "GIF : OF / erreur de lecture d'un code de fonction étendue\n"
 
 #. Not a valid start character

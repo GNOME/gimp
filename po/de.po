@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.7\n"
-"POT-Creation-Date: 1999-07-28 16:30+0200\n"
+"POT-Creation-Date: 1999-08-01 20:03-0700\n"
 "PO-Revision-Date: 1999-07-28 18:25+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
@@ -50,64 +50,75 @@ msgstr "Druck:"
 msgid "killing stray timer, please report to lewing@gimp.org"
 msgstr "entferne Eimertimer, bitte melden an lewing@gimp.org"
 
-#: app/app_procs.c:358
+#: app/app_procs.c:359
 msgid "GIMP Startup"
 msgstr "GIMP Start"
 
-#: app/app_procs.c:471 app/gimprc.c:394
+#: app/app_procs.c:472 app/gimprc.c:394
 #, c-format
 msgid "parsing \"%s\"\n"
 msgstr "bearbeite \"%s\"\n"
 
 #. initialize the xcf file format routines
-#: app/app_procs.c:526
+#: app/app_procs.c:529
 msgid "Looking for data files"
 msgstr "Suche nach Arbeitsdaten"
 
-#: app/app_procs.c:526
+#: app/app_procs.c:529
 #, fuzzy
 msgid "Parasites"
 msgstr "Parasiten"
 
 #. initialize  the global parasite table
-#: app/app_procs.c:528 app/internal_procs.c:70 app/preferences_dialog.c:2395
+#: app/app_procs.c:531 app/internal_procs.c:70 app/preferences_dialog.c:2395
 msgid "Brushes"
 msgstr "Pinsel"
 
 #. initialize the list of gimp brushes
-#: app/app_procs.c:530 app/internal_procs.c:139 app/preferences_dialog.c:2397
+#: app/app_procs.c:533 app/internal_procs.c:139 app/preferences_dialog.c:2397
 msgid "Patterns"
 msgstr "Muster"
 
 #. initialize the list of gimp patterns
-#: app/app_procs.c:532 app/preferences_dialog.c:2399
+#: app/app_procs.c:535 app/preferences_dialog.c:2399
 msgid "Palettes"
 msgstr "Farbpaletten"
 
 #. initialize the list of gimp palettes
-#: app/app_procs.c:534 app/gradient_select.c:557 app/internal_procs.c:109
+#: app/app_procs.c:537 app/gradient_select.c:557 app/internal_procs.c:109
 #: app/preferences_dialog.c:2401
 msgid "Gradients"
 msgstr "Farbverläufe"
 
-#: app/app_procs.c:702 app/app_procs.c:703 app/app_procs.c:728
-#: app/app_procs.c:729 app/menus.c:82 app/menus.c:97
+#: app/app_procs.c:705 app/app_procs.c:706 app/app_procs.c:731
+#: app/app_procs.c:732 app/menus.c:82 app/menus.c:97
 msgid "/File/Quit"
 msgstr "/Datei/Beenden"
 
-#: app/app_procs.c:733
+#: app/app_procs.c:736
 msgid "Really Quit?"
 msgstr "Wirklich Beenden?"
 
-#: app/app_procs.c:741 app/fileops.c:1576
-msgid "Yes"
-msgstr "Ja"
+#: app/app_procs.c:744 app/install.c:107 app/install.c:392
+msgid "Quit"
+msgstr "Beenden"
 
-#: app/app_procs.c:750 app/fileops.c:1577
-msgid "No"
-msgstr "Nein"
+#: app/app_procs.c:753 app/brightness_contrast.c:214 app/channel_ops.c:83
+#: app/channels_dialog.c:1841 app/channels_dialog.c:2030
+#: app/color_balance.c:274 app/color_notebook.c:50 app/color_notebook.c:193
+#: app/color_select.c:156 app/color_select.c:211 app/convert.c:294
+#: app/curves.c:518 app/file_new_dialog.c:294 app/file_new_dialog.c:484
+#: app/gdisplay_ops.c:352 app/gimpprogress.c:135 app/global_edit.c:712
+#: app/gradient.c:1557 app/gradient.c:4603 app/gradient.c:5182
+#: app/hue_saturation.c:362 app/interface.c:917 app/interface.c:1014
+#: app/layers_dialog.c:3053 app/layers_dialog.c:3282 app/layers_dialog.c:3417
+#: app/layers_dialog.c:3554 app/layers_dialog.c:3870 app/levels.c:336
+#: app/posterize.c:200 app/preferences_dialog.c:1473 app/resize.c:116
+#: app/threshold.c:279
+msgid "Cancel"
+msgstr "Abbrechen"
 
-#: app/app_procs.c:776
+#: app/app_procs.c:779
 msgid ""
 "Some files unsaved.\n"
 "\n"
@@ -374,21 +385,6 @@ msgstr "Helligkeit-Kontrast funktioniert nicht bei indizierten Bildern."
 msgid "OK"
 msgstr "OK"
 
-#: app/brightness_contrast.c:214 app/channel_ops.c:83
-#: app/channels_dialog.c:1841 app/channels_dialog.c:2030
-#: app/color_balance.c:274 app/color_notebook.c:50 app/color_notebook.c:193
-#: app/color_select.c:156 app/color_select.c:211 app/convert.c:294
-#: app/curves.c:518 app/file_new_dialog.c:294 app/file_new_dialog.c:484
-#: app/gdisplay_ops.c:352 app/gimpprogress.c:135 app/global_edit.c:712
-#: app/gradient.c:1557 app/gradient.c:4603 app/gradient.c:5182
-#: app/hue_saturation.c:362 app/interface.c:917 app/interface.c:1014
-#: app/layers_dialog.c:3053 app/layers_dialog.c:3282 app/layers_dialog.c:3417
-#: app/layers_dialog.c:3554 app/layers_dialog.c:3870 app/levels.c:336
-#: app/posterize.c:200 app/preferences_dialog.c:1473 app/resize.c:116
-#: app/threshold.c:279
-msgid "Cancel"
-msgstr "Abbrechen"
-
 #: app/brightness_contrast.c:225 app/tools.c:517
 msgid "Brightness-Contrast"
 msgstr "Helligkeit-Kontrast"
@@ -411,7 +407,7 @@ msgid "Preview"
 msgstr "Vorschau"
 
 #. The close push button
-#: app/brush_edit.c:37 app/brush_select.c:135 app/by_color_select.c:664
+#: app/brush_edit.c:37 app/brush_select.c:136 app/by_color_select.c:664
 #: app/color_notebook.c:187 app/color_picker.c:206 app/color_select.c:205
 #: app/colormap_dialog.i.c:94 app/colormap_dialog.i.c:103 app/crop.c:1027
 #: app/devices.c:124 app/docindexif.c:100 app/errorconsole.c:260
@@ -447,46 +443,46 @@ msgstr "Seitenverhältnis:"
 msgid "Angle:"
 msgstr "Winkel:"
 
-#: app/brush_select.c:134 app/gradient.c:678 app/module_db.c:307
+#: app/brush_select.c:135 app/gradient.c:678 app/module_db.c:307
 #: app/palette.c:1989 app/pattern_select.c:86
 msgid "Refresh"
 msgstr "Auffrischen"
 
-#: app/brush_select.c:155
+#: app/brush_select.c:156
 msgid "Brush Selection"
 msgstr "Pinselauswahl"
 
-#: app/brush_select.c:244 app/pattern_select.c:144
+#: app/brush_select.c:245 app/pattern_select.c:144
 msgid "Active"
 msgstr "Aktiv"
 
 #. Create the opacity scale widget
-#: app/brush_select.c:274 app/layers_dialog.c:370 app/tool_options.c:593
+#: app/brush_select.c:275 app/layers_dialog.c:370 app/tool_options.c:593
 msgid "Opacity:"
 msgstr "Deckkraft:"
 
 #. Create the paint mode option menu
-#: app/brush_select.c:292 app/layers_dialog.c:344 app/tool_options.c:623
+#: app/brush_select.c:293 app/layers_dialog.c:344 app/tool_options.c:623
 msgid "Mode:"
 msgstr "Modus:"
 
-#: app/brush_select.c:315
+#: app/brush_select.c:316
 msgid "Edit Brush"
 msgstr "Verändere Pinsel"
 
-#: app/brush_select.c:321
+#: app/brush_select.c:322
 msgid "New Brush"
 msgstr "Neuer Pinsel"
 
-#: app/brush_select.c:343
+#: app/brush_select.c:344
 msgid "Spacing:"
 msgstr "Zwischenraum:"
 
-#: app/brush_select.c:536
+#: app/brush_select.c:537
 msgid "failed to run brush callback function"
 msgstr ""
 
-#: app/brush_select.c:1213
+#: app/brush_select.c:1104
 msgid ""
 "We are all fresh out of brush editors today,\n"
 "please write your own or try back tomorrow\n"
@@ -884,7 +880,7 @@ msgstr "Bild:"
 msgid "Operations"
 msgstr "Funktionen"
 
-#: app/colormap_dialog.i.c:833 app/lc_dialog.c:614
+#: app/colormap_dialog.i.c:833 app/lc_dialog.c:613
 msgid "none"
 msgstr "Kein"
 
@@ -1386,6 +1382,14 @@ msgstr "/Datei/Sichern"
 #: app/fileops.c:1549 app/fileops.c:1565 app/gdisplay.c:1587 app/menus.c:91
 msgid "/File/Save as"
 msgstr "/Datei/Sichern unter..."
+
+#: app/fileops.c:1576
+msgid "Yes"
+msgstr "Ja"
+
+#: app/fileops.c:1577
+msgid "No"
+msgstr "Nein"
 
 #: app/fileops.c:1586
 #, c-format
@@ -2634,10 +2638,6 @@ msgstr "Installieren"
 #: app/install.c:106
 msgid "Ignore"
 msgstr "Ignorieren"
-
-#: app/install.c:107 app/install.c:392
-msgid "Quit"
-msgstr "Beenden"
 
 #: app/install.c:120
 msgid ""
@@ -4065,11 +4065,11 @@ msgstr "Automatisch beim Start laden"
 msgid "Move Tool Options"
 msgstr "Verschiebewerkzeug Einstellungen"
 
-#: app/paint_core.c:586
+#: app/paint_core.c:587
 msgid "No brushes available for use with this tool."
 msgstr "Keine Pinsel für dieses Werkzeug vorhanden."
 
-#: app/paint_core.c:1573
+#: app/paint_core.c:1574
 msgid "set_undo_tiles: undo_tiles is null"
 msgstr ""
 

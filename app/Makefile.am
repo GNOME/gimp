@@ -402,7 +402,6 @@ gimp_SOURCES = \
 EXTRA_DIST = \
 	makefile.cygwin		\
 	makefile.msc		\
-	gimp.def		\
 	gimp.rc			\
 	gimp.sym		\
 	wilber.ico

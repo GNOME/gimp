@@ -5,6 +5,7 @@ SUBDIRS = tools po po-plug-ins intl libgimp app $(GIMP_PLUGINS) $(GIMP_MODULES) 
 bin_SCRIPTS = gimptool
 
 EXTRA_DIST = \
+	cursors/bad		\
 	cursors/bigcirc		\
 	cursors/bigcircmsk	\
 	cursors/dropper		\

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.1\n"
-"POT-Creation-Date: 1999-07-31 02:45+0200\n"
+"POT-Creation-Date: 1999-08-01 20:03-0700\n"
 "PO-Revision-Date: 1999-07-31 03:05+02:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@online.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -98,13 +98,24 @@ msgstr "/Fil/Avslutt"
 msgid "Really Quit?"
 msgstr "Virkelig avslutte?"
 
-#: app/app_procs.c:744 app/fileops.c:1576
-msgid "Yes"
-msgstr "Ja"
+#: app/app_procs.c:744 app/install.c:107 app/install.c:392
+msgid "Quit"
+msgstr ""
 
-#: app/app_procs.c:753 app/fileops.c:1577
-msgid "No"
-msgstr "Nei"
+#: app/app_procs.c:753 app/brightness_contrast.c:214 app/channel_ops.c:83
+#: app/channels_dialog.c:1841 app/channels_dialog.c:2030
+#: app/color_balance.c:274 app/color_notebook.c:50 app/color_notebook.c:193
+#: app/color_select.c:156 app/color_select.c:211 app/convert.c:294
+#: app/curves.c:518 app/file_new_dialog.c:294 app/file_new_dialog.c:484
+#: app/gdisplay_ops.c:352 app/gimpprogress.c:135 app/global_edit.c:712
+#: app/gradient.c:1557 app/gradient.c:4603 app/gradient.c:5182
+#: app/hue_saturation.c:362 app/interface.c:917 app/interface.c:1014
+#: app/layers_dialog.c:3053 app/layers_dialog.c:3282 app/layers_dialog.c:3417
+#: app/layers_dialog.c:3554 app/layers_dialog.c:3870 app/levels.c:336
+#: app/posterize.c:200 app/preferences_dialog.c:1473 app/resize.c:116
+#: app/threshold.c:279
+msgid "Cancel"
+msgstr "Avbryt"
 
 #: app/app_procs.c:779
 msgid ""
@@ -165,7 +176,9 @@ msgstr "Korrupt kurve"
 msgid ""
 "bezier_select_button_press(): Tried to edit on open bezier curve in edit "
 "selection"
-msgstr "bezier_select_button_press(): Prøvde å redigere en åpen bezier kurve i redigeringsutvalget"
+msgstr ""
+"bezier_select_button_press(): Prøvde å redigere en åpen bezier kurve i "
+"redigeringsutvalget"
 
 #: app/bezier_select.c:1288
 msgid "bezier_select_motion(): Encountered orphaned bezier control point"
@@ -372,21 +385,6 @@ msgstr "Lysstyrke-kontrast opererer ikke på indekserte tegneobjekter."
 #: app/threshold.c:278
 msgid "OK"
 msgstr "OK"
-
-#: app/brightness_contrast.c:214 app/channel_ops.c:83
-#: app/channels_dialog.c:1841 app/channels_dialog.c:2030
-#: app/color_balance.c:274 app/color_notebook.c:50 app/color_notebook.c:193
-#: app/color_select.c:156 app/color_select.c:211 app/convert.c:294
-#: app/curves.c:518 app/file_new_dialog.c:294 app/file_new_dialog.c:484
-#: app/gdisplay_ops.c:352 app/gimpprogress.c:135 app/global_edit.c:712
-#: app/gradient.c:1557 app/gradient.c:4603 app/gradient.c:5182
-#: app/hue_saturation.c:362 app/interface.c:917 app/interface.c:1014
-#: app/layers_dialog.c:3053 app/layers_dialog.c:3282 app/layers_dialog.c:3417
-#: app/layers_dialog.c:3554 app/layers_dialog.c:3870 app/levels.c:336
-#: app/posterize.c:200 app/preferences_dialog.c:1473 app/resize.c:116
-#: app/threshold.c:279
-msgid "Cancel"
-msgstr "Avbryt"
 
 #: app/brightness_contrast.c:225 app/tools.c:517
 msgid "Brightness-Contrast"
@@ -1373,6 +1371,14 @@ msgstr ""
 #: app/fileops.c:1549 app/fileops.c:1565 app/gdisplay.c:1587 app/menus.c:91
 msgid "/File/Save as"
 msgstr ""
+
+#: app/fileops.c:1576
+msgid "Yes"
+msgstr "Ja"
+
+#: app/fileops.c:1577
+msgid "No"
+msgstr "Nei"
 
 #: app/fileops.c:1586
 #, c-format
@@ -2589,10 +2595,6 @@ msgstr ""
 
 #: app/install.c:106
 msgid "Ignore"
-msgstr ""
-
-#: app/install.c:107 app/install.c:392
-msgid "Quit"
 msgstr ""
 
 #: app/install.c:120
@@ -4006,11 +4008,11 @@ msgstr "Autolasting under oppstart"
 msgid "Move Tool Options"
 msgstr "Alternativer for flytteverktøy"
 
-#: app/paint_core.c:586
+#: app/paint_core.c:587
 msgid "No brushes available for use with this tool."
 msgstr "Ingen børster tilgjengelig for bruk med dette verktøyet."
 
-#: app/paint_core.c:1573
+#: app/paint_core.c:1574
 msgid "set_undo_tiles: undo_tiles is null"
 msgstr "set_undo_tiles: undo_tiles er null"
 

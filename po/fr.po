@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
-"POT-Creation-Date: 1999-07-27 18:32+0200\n"
+"POT-Creation-Date: 1999-08-01 20:03-0700\n"
 "PO-Revision-Date: 1999-03-18 19:00+0100\n"
 "Last-Translator: Vincent Renardias <vincent@ldsol.com>\n"
 "Language-Team: Vincent Renardias <vincent@ldsol.com>\n"
@@ -52,63 +52,74 @@ msgid "killing stray timer, please report to lewing@gimp.org"
 msgstr ""
 "Erreur Interne. Veuillez signaler \"killing stray timer\" à lewing@gimp.org."
 
-#: app/app_procs.c:358
+#: app/app_procs.c:359
 msgid "GIMP Startup"
 msgstr "Lancement de GIMP"
 
-#: app/app_procs.c:471 app/gimprc.c:394
+#: app/app_procs.c:472 app/gimprc.c:394
 #, c-format
 msgid "parsing \"%s\"\n"
 msgstr "lecture de \"%s\"\n"
 
 #. initialize the xcf file format routines
-#: app/app_procs.c:526
+#: app/app_procs.c:529
 msgid "Looking for data files"
 msgstr "Recherche des fichiers de données"
 
-#: app/app_procs.c:526
+#: app/app_procs.c:529
 msgid "Parasites"
 msgstr "Parasites"
 
 #. initialize  the global parasite table
-#: app/app_procs.c:528 app/internal_procs.c:70 app/preferences_dialog.c:2395
+#: app/app_procs.c:531 app/internal_procs.c:70 app/preferences_dialog.c:2395
 msgid "Brushes"
 msgstr "Brosses"
 
 #. initialize the list of gimp brushes
-#: app/app_procs.c:530 app/internal_procs.c:139 app/preferences_dialog.c:2397
+#: app/app_procs.c:533 app/internal_procs.c:139 app/preferences_dialog.c:2397
 msgid "Patterns"
 msgstr "Motifs"
 
 #. initialize the list of gimp patterns
-#: app/app_procs.c:532 app/preferences_dialog.c:2399
+#: app/app_procs.c:535 app/preferences_dialog.c:2399
 msgid "Palettes"
 msgstr "Palettes"
 
 #. initialize the list of gimp palettes
-#: app/app_procs.c:534 app/gradient_select.c:557 app/internal_procs.c:109
+#: app/app_procs.c:537 app/gradient_select.c:557 app/internal_procs.c:109
 #: app/preferences_dialog.c:2401
 msgid "Gradients"
 msgstr "Dégradés"
 
-#: app/app_procs.c:702 app/app_procs.c:703 app/app_procs.c:728
-#: app/app_procs.c:729 app/menus.c:82 app/menus.c:97
+#: app/app_procs.c:705 app/app_procs.c:706 app/app_procs.c:731
+#: app/app_procs.c:732 app/menus.c:82 app/menus.c:97
 msgid "/File/Quit"
 msgstr "/Fichier/Quitter"
 
-#: app/app_procs.c:733
+#: app/app_procs.c:736
 msgid "Really Quit?"
 msgstr "Vraiment Quitter?"
 
-#: app/app_procs.c:741 app/fileops.c:1576
-msgid "Yes"
-msgstr "Oui"
+#: app/app_procs.c:744 app/install.c:107 app/install.c:392
+msgid "Quit"
+msgstr "Quitter"
 
-#: app/app_procs.c:750 app/fileops.c:1577
-msgid "No"
-msgstr "Non"
+#: app/app_procs.c:753 app/brightness_contrast.c:214 app/channel_ops.c:83
+#: app/channels_dialog.c:1841 app/channels_dialog.c:2030
+#: app/color_balance.c:274 app/color_notebook.c:50 app/color_notebook.c:193
+#: app/color_select.c:156 app/color_select.c:211 app/convert.c:294
+#: app/curves.c:518 app/file_new_dialog.c:294 app/file_new_dialog.c:484
+#: app/gdisplay_ops.c:352 app/gimpprogress.c:135 app/global_edit.c:712
+#: app/gradient.c:1557 app/gradient.c:4603 app/gradient.c:5182
+#: app/hue_saturation.c:362 app/interface.c:917 app/interface.c:1014
+#: app/layers_dialog.c:3053 app/layers_dialog.c:3282 app/layers_dialog.c:3417
+#: app/layers_dialog.c:3554 app/layers_dialog.c:3870 app/levels.c:336
+#: app/posterize.c:200 app/preferences_dialog.c:1473 app/resize.c:116
+#: app/threshold.c:279
+msgid "Cancel"
+msgstr "Annuler"
 
-#: app/app_procs.c:776
+#: app/app_procs.c:779
 msgid ""
 "Some files unsaved.\n"
 "\n"
@@ -167,8 +178,8 @@ msgid ""
 "bezier_select_button_press(): Tried to edit on open bezier curve in edit "
 "selection"
 msgstr ""
-"bezier_select_button_press(): tentative d'édition sur une courbe de Bézier ouverte dans la sélection "
-"d'édition"
+"bezier_select_button_press(): tentative d'édition sur une courbe de Bézier "
+"ouverte dans la sélection d'édition"
 
 #: app/bezier_select.c:1288
 msgid "bezier_select_motion(): Encountered orphaned bezier control point"
@@ -346,12 +357,10 @@ msgid "gradient_fill_region(): Unknown repeat mode %d"
 msgstr "gradient_fill_region(): %d est un mode de répétition inconnu"
 
 #: app/boundary.c:202
-#, fuzzy
 msgid "make_seg(): Unable to reallocate segments array for mask boundary."
 msgstr ""
 
 #: app/boundary.c:244
-#, fuzzy
 msgid ""
 "allocate_empty_segs(): Unable to reallocate empty segments array for mask "
 "boundary."
@@ -371,27 +380,12 @@ msgstr "Luminosité-Contraste ne peux opérer sur des images indexées."
 #: app/color_select.c:155 app/color_select.c:210 app/convert.c:293
 #: app/curves.c:517 app/file_new_dialog.c:292 app/file_new_dialog.c:482
 #: app/hue_saturation.c:361 app/interface.c:1013 app/interface.c:1391
-#: app/layers_dialog.c:3059 app/layers_dialog.c:3289 app/layers_dialog.c:3425
-#: app/layers_dialog.c:3882 app/levels.c:335 app/module_db.c:263
+#: app/layers_dialog.c:3052 app/layers_dialog.c:3281 app/layers_dialog.c:3416
+#: app/layers_dialog.c:3869 app/levels.c:335 app/module_db.c:263
 #: app/posterize.c:199 app/preferences_dialog.c:1469 app/resize.c:115
 #: app/threshold.c:278
 msgid "OK"
 msgstr "OK"
-
-#: app/brightness_contrast.c:214 app/channel_ops.c:83
-#: app/channels_dialog.c:1841 app/channels_dialog.c:2030
-#: app/color_balance.c:274 app/color_notebook.c:50 app/color_notebook.c:193
-#: app/color_select.c:156 app/color_select.c:211 app/convert.c:294
-#: app/curves.c:518 app/file_new_dialog.c:294 app/file_new_dialog.c:484
-#: app/gdisplay_ops.c:348 app/gimpprogress.c:135 app/global_edit.c:712
-#: app/gradient.c:1557 app/gradient.c:4603 app/gradient.c:5182
-#: app/hue_saturation.c:362 app/interface.c:917 app/interface.c:1014
-#: app/layers_dialog.c:3060 app/layers_dialog.c:3290 app/layers_dialog.c:3426
-#: app/layers_dialog.c:3564 app/layers_dialog.c:3883 app/levels.c:336
-#: app/posterize.c:200 app/preferences_dialog.c:1473 app/resize.c:116
-#: app/threshold.c:279
-msgid "Cancel"
-msgstr "Annuler"
 
 #: app/brightness_contrast.c:225 app/tools.c:517
 msgid "Brightness-Contrast"
@@ -415,11 +409,11 @@ msgid "Preview"
 msgstr "Prévisualisation"
 
 #. The close push button
-#: app/brush_edit.c:37 app/brush_select.c:135 app/by_color_select.c:664
+#: app/brush_edit.c:37 app/brush_select.c:136 app/by_color_select.c:664
 #: app/color_notebook.c:187 app/color_picker.c:206 app/color_select.c:205
 #: app/colormap_dialog.i.c:94 app/colormap_dialog.i.c:103 app/crop.c:1027
 #: app/devices.c:124 app/docindexif.c:100 app/errorconsole.c:260
-#: app/gdisplay_ops.c:347 app/gradient.c:679 app/gradient_select.c:76
+#: app/gdisplay_ops.c:351 app/gradient.c:679 app/gradient_select.c:76
 #: app/histogram_tool.c:262 app/info_window.c:120 app/lc_dialog.c:196
 #: app/palette.c:1984 app/palette.c:1990 app/palette.c:2725
 #: app/palette_select.c:55 app/pattern_select.c:87 app/tips_dialog.c:146
@@ -451,46 +445,46 @@ msgstr "Rapport hauteur/largeur:"
 msgid "Angle:"
 msgstr "Angle:"
 
-#: app/brush_select.c:134 app/gradient.c:678 app/module_db.c:307
+#: app/brush_select.c:135 app/gradient.c:678 app/module_db.c:307
 #: app/palette.c:1989 app/pattern_select.c:86
 msgid "Refresh"
 msgstr "Rafraîchir"
 
-#: app/brush_select.c:155
+#: app/brush_select.c:156
 msgid "Brush Selection"
 msgstr "Sélection de la brosse"
 
-#: app/brush_select.c:244 app/pattern_select.c:144
+#: app/brush_select.c:245 app/pattern_select.c:144
 msgid "Active"
 msgstr "Active"
 
 #. Create the opacity scale widget
-#: app/brush_select.c:274 app/layers_dialog.c:351 app/tool_options.c:593
+#: app/brush_select.c:275 app/layers_dialog.c:370 app/tool_options.c:593
 msgid "Opacity:"
 msgstr "Opacité:"
 
 #. Create the paint mode option menu
-#: app/brush_select.c:292 app/layers_dialog.c:325 app/tool_options.c:623
+#: app/brush_select.c:293 app/layers_dialog.c:344 app/tool_options.c:623
 msgid "Mode:"
 msgstr "Mode:"
 
-#: app/brush_select.c:315
+#: app/brush_select.c:316
 msgid "Edit Brush"
 msgstr "Édition de Brosse"
 
-#: app/brush_select.c:321
+#: app/brush_select.c:322
 msgid "New Brush"
 msgstr "Nouvelle brosse"
 
-#: app/brush_select.c:343
+#: app/brush_select.c:344
 msgid "Spacing:"
 msgstr "Espacement:"
 
-#: app/brush_select.c:536
+#: app/brush_select.c:537
 msgid "failed to run brush callback function"
 msgstr "échec de l'appel de la fonction de rappel de brosse"
 
-#: app/brush_select.c:1213
+#: app/brush_select.c:1104
 msgid ""
 "We are all fresh out of brush editors today,\n"
 "please write your own or try back tomorrow\n"
@@ -533,7 +527,7 @@ msgstr "Remplacer"
 msgid "Add"
 msgstr "Ajouter"
 
-#: app/by_color_select.c:544 app/layers_dialog.c:232 app/tool_options.c:784
+#: app/by_color_select.c:544 app/layers_dialog.c:235 app/tool_options.c:784
 msgid "Subtract"
 msgstr "Soustraction"
 
@@ -605,11 +599,11 @@ msgid "Fill Options"
 msgstr "Options du remplissage"
 
 #: app/channel_ops.c:180 app/file_new_dialog.c:135 app/file_new_dialog.c:497
-#: app/layers_dialog.c:3065
+#: app/layers_dialog.c:3058
 msgid "Background"
 msgstr "Fond"
 
-#: app/channel_ops.c:192 app/file_new_dialog.c:499 app/layers_dialog.c:3067
+#: app/channel_ops.c:192 app/file_new_dialog.c:499 app/layers_dialog.c:3060
 msgid "Transparent"
 msgstr "Transparent"
 
@@ -888,7 +882,7 @@ msgstr "Image:"
 msgid "Operations"
 msgstr "Opérations"
 
-#: app/colormap_dialog.i.c:833 app/lc_dialog.c:614
+#: app/colormap_dialog.i.c:833 app/lc_dialog.c:613
 msgid "none"
 msgstr "aucun"
 
@@ -1043,7 +1037,7 @@ msgid "Width:"
 msgstr "Largeur:"
 
 #: app/crop.c:1055 app/file_new_dialog.c:620 app/file_new_dialog.c:638
-#: app/layers_dialog.c:3120 app/resize.c:246 app/resize.c:271 app/resize.c:515
+#: app/layers_dialog.c:3113 app/resize.c:246 app/resize.c:271 app/resize.c:515
 #: app/scale_tool.c:78 app/scale_tool.c:85 app/tool_options.c:427
 msgid "Height:"
 msgstr "Hauteur:"
@@ -1060,7 +1054,7 @@ msgstr "Réduction automatique"
 msgid "Curves Options"
 msgstr "Options de courbure"
 
-#: app/curves.c:404 app/histogram_tool.c:278 app/layers_dialog.c:244
+#: app/curves.c:404 app/histogram_tool.c:278 app/layers_dialog.c:247
 #: app/levels.c:230 app/paint_funcs.c:97 app/tool_options.c:790
 msgid "Value"
 msgstr "Valeur"
@@ -1310,11 +1304,11 @@ msgstr "RVB"
 msgid "Grayscale"
 msgstr "Niveaux de gris"
 
-#: app/file_new_dialog.c:496 app/layers_dialog.c:3064
+#: app/file_new_dialog.c:496 app/layers_dialog.c:3057
 msgid "Foreground"
 msgstr "Avant-Plan"
 
-#: app/file_new_dialog.c:498 app/layers_dialog.c:3066
+#: app/file_new_dialog.c:498 app/layers_dialog.c:3059
 msgid "White"
 msgstr "Blanc"
 
@@ -1397,6 +1391,14 @@ msgstr "/Fichier/Enregistrer"
 msgid "/File/Save as"
 msgstr "/Fichier/Enregistrer sous"
 
+#: app/fileops.c:1576
+msgid "Yes"
+msgstr "Oui"
+
+#: app/fileops.c:1577
+msgid "No"
+msgstr "Non"
+
 #: app/fileops.c:1586
 #, c-format
 msgid "%s exists, overwrite?"
@@ -1471,8 +1473,8 @@ msgstr "indexé"
 msgid "/File/Revert"
 msgstr "/Fichier/Revenir au fichier"
 
-#: app/gdisplay.c:1589 app/gdisplay_ops.c:304 app/gdisplay_ops.c:319
-#: app/gdisplay_ops.c:329 app/gdisplay_ops.c:365 app/menus.c:96
+#: app/gdisplay.c:1589 app/gdisplay_ops.c:303 app/gdisplay_ops.c:318
+#: app/gdisplay_ops.c:365 app/menus.c:96
 msgid "/File/Close"
 msgstr "/Fichier/Fermer"
 
@@ -1705,8 +1707,10 @@ msgid "gdisplays_flush() called recursively."
 msgstr "gdisplays_flush() appelé récursivement."
 
 #: app/gdisplay_ops.c:388
-#, c-format
-msgid "Changes were made to %s. Close anyway?"
+#, fuzzy, c-format
+msgid ""
+"Changes were made to %s.\n"
+"Close anyway?"
 msgstr "Changements effectués sur %s. Fermer quand même?"
 
 #: app/gimage_mask.c:213
@@ -2136,7 +2140,8 @@ msgstr "Effacer dégradé"
 msgid ""
 "Are you sure you want to delete\n"
 "\"%s\" from the list and from disk?"
-msgstr "Voulez-vous vraiment effacer\n"
+msgstr ""
+"Voulez-vous vraiment effacer\n"
 "\"%s\" de la liste et du disque?"
 
 #: app/gradient.c:1633
@@ -2493,7 +2498,7 @@ msgid "Hue / Lightness / Saturation Adjustments"
 msgstr "Teinte / Luminosité / Ajustements de la Saturation"
 
 #. Create the hue scale widget
-#: app/hue_saturation.c:466 app/layers_dialog.c:238 app/paint_funcs.c:94
+#: app/hue_saturation.c:466 app/layers_dialog.c:241 app/paint_funcs.c:94
 #: app/tool_options.c:787
 msgid "Hue"
 msgstr "Teinte"
@@ -2504,7 +2509,7 @@ msgid "Lightness"
 msgstr "Luminosité"
 
 #. Create the saturation scale widget
-#: app/hue_saturation.c:534 app/layers_dialog.c:240 app/paint_funcs.c:95
+#: app/hue_saturation.c:534 app/layers_dialog.c:243 app/paint_funcs.c:95
 #: app/tool_options.c:788
 msgid "Saturation"
 msgstr "Saturation"
@@ -2655,10 +2660,6 @@ msgstr "Installer"
 #: app/install.c:106
 msgid "Ignore"
 msgstr "Ignorer"
-
-#: app/install.c:107 app/install.c:392
-msgid "Quit"
-msgstr "Quitter"
 
 #: app/install.c:120
 msgid ""
@@ -3078,7 +3079,7 @@ msgstr "Canal"
 msgid "Channel Ops"
 msgstr "Opérations de canaux"
 
-#: app/internal_procs.c:79 app/layers_dialog.c:242 app/paint_funcs.c:96
+#: app/internal_procs.c:79 app/layers_dialog.c:245 app/paint_funcs.c:96
 #: app/tool_options.c:789
 msgid "Color"
 msgstr "Couleur"
@@ -3243,51 +3244,51 @@ msgstr "masque %s"
 msgid "Layer Select"
 msgstr "Sélection de Calque"
 
-#: app/layers_dialog.c:216 app/paint_funcs.c:83 app/tool_options.c:775
+#: app/layers_dialog.c:219 app/paint_funcs.c:83 app/tool_options.c:775
 msgid "Normal"
 msgstr "Normal"
 
-#: app/layers_dialog.c:218 app/paint_funcs.c:84 app/tool_options.c:776
+#: app/layers_dialog.c:221 app/paint_funcs.c:84 app/tool_options.c:776
 msgid "Dissolve"
 msgstr "Dissoudre"
 
-#: app/layers_dialog.c:220 app/paint_funcs.c:86 app/tool_options.c:778
+#: app/layers_dialog.c:223 app/paint_funcs.c:86 app/tool_options.c:778
 msgid "Multiply (Burn)"
 msgstr "Multiplier (Brûler)"
 
-#: app/layers_dialog.c:222 app/paint_funcs.c:98 app/tool_options.c:779
+#: app/layers_dialog.c:225 app/paint_funcs.c:98 app/tool_options.c:779
 msgid "Divide (Dodge)"
 msgstr "Diviser"
 
-#: app/layers_dialog.c:224 app/paint_funcs.c:87 app/tool_options.c:780
+#: app/layers_dialog.c:227 app/paint_funcs.c:87 app/tool_options.c:780
 msgid "Screen"
 msgstr "Écran"
 
-#: app/layers_dialog.c:226 app/paint_funcs.c:88 app/tool_options.c:781
+#: app/layers_dialog.c:229 app/paint_funcs.c:88 app/tool_options.c:781
 msgid "Overlay"
 msgstr "Superposer"
 
-#: app/layers_dialog.c:228 app/paint_funcs.c:89 app/tool_options.c:782
+#: app/layers_dialog.c:231 app/paint_funcs.c:89 app/tool_options.c:782
 msgid "Difference"
 msgstr "Différence"
 
-#: app/layers_dialog.c:230 app/paint_funcs.c:90 app/tool_options.c:783
+#: app/layers_dialog.c:233 app/paint_funcs.c:90 app/tool_options.c:783
 msgid "Addition"
 msgstr "Addition"
 
-#: app/layers_dialog.c:234 app/paint_funcs.c:92 app/tool_options.c:785
+#: app/layers_dialog.c:237 app/paint_funcs.c:92 app/tool_options.c:785
 msgid "Darken Only"
 msgstr "Noircir seulement"
 
-#: app/layers_dialog.c:236 app/paint_funcs.c:93 app/tool_options.c:786
+#: app/layers_dialog.c:239 app/paint_funcs.c:93 app/tool_options.c:786
 msgid "Lighten Only"
 msgstr "Éclaircir seulement"
 
-#: app/layers_dialog.c:263 app/layers_dialog.c:3110
+#: app/layers_dialog.c:266 app/layers_dialog.c:3103
 msgid "New Layer"
 msgstr "Nouveau Calque"
 
-#: app/layers_dialog.c:265
+#: app/layers_dialog.c:268
 msgid ""
 "Raise Layer    \n"
 "<Shift> To Top"
@@ -3295,7 +3296,7 @@ msgstr ""
 "Remonter Calque\n"
 "<Shift> vers le dessus"
 
-#: app/layers_dialog.c:268
+#: app/layers_dialog.c:271
 msgid ""
 "Lower Layer       \n"
 "<Shift> To Bottom"
@@ -3303,209 +3304,216 @@ msgstr ""
 "Descendre calque\n"
 "<Shift> vers le bas"
 
-#: app/layers_dialog.c:271
+#: app/layers_dialog.c:274
 msgid "Duplicate Layer"
 msgstr "Dupliquer Calque"
 
-#: app/layers_dialog.c:273
+#: app/layers_dialog.c:276
 msgid "Anchor Layer"
 msgstr "Ancrer calque"
 
-#: app/layers_dialog.c:275
+#: app/layers_dialog.c:278
 msgid "Delete Layer"
 msgstr "Effacer Calque"
 
-#: app/layers_dialog.c:338
+#: app/layers_dialog.c:357
 msgid "Keep Trans."
 msgstr "Garder trans."
 
-#: app/layers_dialog.c:965 app/menus.c:246
+#: app/layers_dialog.c:507
+msgid "layers_dialog_update(): layersD->layer_widgets not empty!"
+msgstr ""
+
+#: app/layers_dialog.c:964 app/menus.c:246
 msgid "/Stack/Previous Layer"
 msgstr "/Pile/Calque précédent"
 
-#: app/layers_dialog.c:966 app/menus.c:247
+#: app/layers_dialog.c:965 app/menus.c:247
 msgid "/Stack/Next Layer"
 msgstr "/Pile/Calque suivant"
 
-#: app/layers_dialog.c:968 app/menus.c:248
+#: app/layers_dialog.c:967 app/menus.c:248
 msgid "/Stack/Raise Layer"
 msgstr "/Pile/Remonter calque"
 
-#: app/layers_dialog.c:972 app/menus.c:249
+#: app/layers_dialog.c:971 app/menus.c:249
 msgid "/Stack/Lower Layer"
 msgstr "/Pile/Descendre calque"
 
-#: app/layers_dialog.c:976 app/menus.c:250
+#: app/layers_dialog.c:975 app/menus.c:250
 msgid "/Stack/Layer to Top"
 msgstr "/Pile/Calque vers le sommet"
 
-#: app/layers_dialog.c:978 app/menus.c:251
+#: app/layers_dialog.c:977 app/menus.c:251
 msgid "/Stack/Layer to Bottom"
 msgstr "/Pile/Calque vers le fond"
 
-#: app/layers_dialog.c:981 app/menus.c:245
+#: app/layers_dialog.c:980 app/menus.c:245
 msgid "/New Layer"
 msgstr "/Nouveau Calque"
 
-#: app/layers_dialog.c:984 app/menus.c:252
+#: app/layers_dialog.c:983 app/menus.c:252
 msgid "/Duplicate Layer"
 msgstr "/Dupliquer Calque"
 
-#: app/layers_dialog.c:987 app/menus.c:253
+#: app/layers_dialog.c:986 app/menus.c:253
 msgid "/Anchor Layer"
 msgstr "/Ancrer calque"
 
-#: app/layers_dialog.c:990 app/menus.c:254
+#: app/layers_dialog.c:989 app/menus.c:254
 msgid "/Delete Layer"
 msgstr "/Effacer Calque"
 
-#: app/layers_dialog.c:993 app/menus.c:256
+#: app/layers_dialog.c:992 app/menus.c:256
 msgid "/Scale Layer"
 msgstr "/Mettre calque à l'échelle"
 
-#: app/layers_dialog.c:994 app/menus.c:257
+#: app/layers_dialog.c:993 app/menus.c:257
 msgid "/Resize Layer"
 msgstr "/Redimensionner calque"
 
-#: app/layers_dialog.c:996 app/menus.c:259
+#: app/layers_dialog.c:995 app/menus.c:259
 msgid "/Merge Visible Layers"
 msgstr "/Fusionner les calques visibles"
 
-#: app/layers_dialog.c:997 app/menus.c:260
+#: app/layers_dialog.c:996 app/menus.c:260
 msgid "/Merge Down"
 msgstr "/Fusionner vers le bas"
 
-#: app/layers_dialog.c:998 app/menus.c:261
+#: app/layers_dialog.c:997 app/menus.c:261
 msgid "/Flatten Image"
 msgstr "/Aplatir l'image"
 
-#: app/layers_dialog.c:1000 app/menus.c:263
+#: app/layers_dialog.c:999 app/menus.c:263
 msgid "/Add Layer Mask"
 msgstr "/Ajouter un masque de calque"
 
-#: app/layers_dialog.c:1001 app/menus.c:264
+#: app/layers_dialog.c:1000 app/menus.c:264
 msgid "/Apply Layer Mask"
 msgstr "/Appliquer le masque de calque"
 
-#: app/layers_dialog.c:1002 app/menus.c:265
+#: app/layers_dialog.c:1001 app/menus.c:265
 msgid "/Alpha to Selection"
 msgstr "/Alpha vers Sélection"
 
-#: app/layers_dialog.c:1003 app/menus.c:266
+#: app/layers_dialog.c:1002 app/menus.c:266
 msgid "/Mask to Selection"
 msgstr "/Masque vers Sélection"
 
-#: app/layers_dialog.c:1004 app/menus.c:267
+#: app/layers_dialog.c:1003 app/menus.c:267
 msgid "/Add Alpha Channel"
 msgstr "/Ajouter Canal Alpha"
 
-#: app/layers_dialog.c:1192
+#: app/layers_dialog.c:1193
 msgid "Unknown layer mode"
 msgstr "Mode de calque inconnu"
 
-#: app/layers_dialog.c:2023 app/layers_dialog.c:2875 app/layers_dialog.c:3329
+#: app/layers_dialog.c:1819 app/layers_dialog.c:2870 app/layers_dialog.c:3321
 msgid "Floating Selection"
 msgstr "Sélection Flottante"
 
-#: app/layers_dialog.c:2998
+#: app/layers_dialog.c:2992
 msgid ""
 "new_layer_query_ok_callback():\n"
 "could not allocate new layer"
-msgstr "new_layer_query_ok_callback():\nje n'ai pu allouer de nouveau calque"
+msgstr ""
+"new_layer_query_ok_callback():\n"
+"je n'ai pu allouer de nouveau calque"
 
-#: app/layers_dialog.c:3080
+#: app/layers_dialog.c:3073
 msgid "New Layer Options"
 msgstr "Options de Nouveau Calque"
 
 #. The name label and entry
-#: app/layers_dialog.c:3100
+#: app/layers_dialog.c:3093
 msgid "Layer Name:"
 msgstr "Nom du calque: "
 
 #. The size labels
-#: app/layers_dialog.c:3114
+#: app/layers_dialog.c:3107
 msgid "Layer Width:"
 msgstr "Largeur du Calque: "
 
 #. The radio frame and box
-#: app/layers_dialog.c:3173
+#: app/layers_dialog.c:3166
 msgid "Layer Fill Type"
 msgstr "Type de Remplissage de Calque"
 
-#: app/layers_dialog.c:3303
+#: app/layers_dialog.c:3295
 msgid "Edit Layer Attributes"
 msgstr "Éditer les Attributs du Calque"
 
-#: app/layers_dialog.c:3321
+#: app/layers_dialog.c:3313
 msgid "Layer name:"
 msgstr "Nom du calque :"
 
-#: app/layers_dialog.c:3430
+#: app/layers_dialog.c:3421
 msgid "White (Full Opacity)"
 msgstr "Blanc (Opacité Complète)"
 
-#: app/layers_dialog.c:3431
+#: app/layers_dialog.c:3422
 msgid "Black (Full Transparency)"
 msgstr "Noir (Transparence Totale)"
 
-#: app/layers_dialog.c:3432
+#: app/layers_dialog.c:3423
 msgid "Layer's Alpha Channel"
 msgstr "Canal Alpha du Calque"
 
-#: app/layers_dialog.c:3444
+#: app/layers_dialog.c:3435
 msgid "Add Mask Options"
 msgstr "Options d'Ajout de masque"
 
 #. The radio frame and box
-#: app/layers_dialog.c:3459
+#: app/layers_dialog.c:3450
 msgid "Initialize Layer Mask to:"
 msgstr "Initialiser le masque de calque à :"
 
-#: app/layers_dialog.c:3562
+#: app/layers_dialog.c:3552
 msgid "Apply"
 msgstr "Appliquer"
 
-#: app/layers_dialog.c:3563
+#: app/layers_dialog.c:3553
 msgid "Discard"
 msgstr "Jeter"
 
-#: app/layers_dialog.c:3574
+#: app/layers_dialog.c:3564
 msgid "Layer Mask Options"
 msgstr "Options de Masque de Calque"
 
 #. The name entry hbox, label and entry
-#: app/layers_dialog.c:3589
+#: app/layers_dialog.c:3579
 msgid "Apply layer mask?"
 msgstr "Appliquer le masque de calque ?"
 
-#: app/layers_dialog.c:3649 app/layers_dialog.c:3749
+#: app/layers_dialog.c:3638 app/layers_dialog.c:3737
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
-msgstr "Hauteur ou largeur non valide.\n"
+msgstr ""
+"Hauteur ou largeur non valide.\n"
 "Les deux doivent être positives."
 
-#: app/layers_dialog.c:3887
+#: app/layers_dialog.c:3874
 msgid "Expanded as necessary"
 msgstr "Étendu autant que nécessaire"
 
-#: app/layers_dialog.c:3888
+#: app/layers_dialog.c:3875
 msgid "Clipped to image"
 msgstr "Rogné à la taille de l'image"
 
-#: app/layers_dialog.c:3889
+#: app/layers_dialog.c:3876
 msgid "Clipped to bottom layer"
 msgstr "Rogné à la taille du calque le plus bas"
 
-#: app/layers_dialog.c:3902
+#: app/layers_dialog.c:3889
 msgid "Layer Merge Options"
 msgstr "Options de Fusion de Calques"
 
-#: app/layers_dialog.c:3918
+#: app/layers_dialog.c:3905
 msgid "Final, Merged Layer should be:"
 msgstr "Le calque final, fusionné, devra être :"
 
-#: app/layers_dialog.c:3920
+#: app/layers_dialog.c:3907
 msgid "Final, Anchored Layer should be:"
 msgstr "Le calque final, ancré, devra être :"
 
@@ -4186,11 +4194,11 @@ msgstr "Charger automatiquement durant le démarrage"
 msgid "Move Tool Options"
 msgstr "Options de l'Outil Déplacement"
 
-#: app/paint_core.c:586
+#: app/paint_core.c:587
 msgid "No brushes available for use with this tool."
 msgstr "Pas de brosse disponible pour être utilisée avec cet outil."
 
-#: app/paint_core.c:1573
+#: app/paint_core.c:1574
 msgid "set_undo_tiles: undo_tiles is null"
 msgstr "set_undo_tiles: undo_tiles est nul"
 

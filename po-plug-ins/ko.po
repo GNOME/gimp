@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 1999-07-17 11:11-0700\n"
+"POT-Creation-Date: 1999-07-24 12:04-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1909,7 +1909,7 @@ msgid "GIF: EOF / read error on image data\n"
 msgstr ""
 
 #: plug-ins/common/gifload.c:364
-msgid "GIF: OF / read error on extension function code\n"
+msgid "GIF: EOF / read error on extension function code\n"
 msgstr ""
 
 #. Not a valid start character
