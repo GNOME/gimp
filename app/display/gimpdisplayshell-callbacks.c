@@ -306,7 +306,8 @@ gimp_display_shell_canvas_configure (GtkWidget         *widget,
       shell->disp_width  = shell->canvas->allocation.width;
       shell->disp_height = shell->canvas->allocation.height;
 
-      gimp_display_shell_scale_resize (shell, FALSE, FALSE);
+      gimp_display_shell_scroll_clamp_offsets (shell);
+      gimp_display_shell_scale_setup (shell);
     }
 
   return TRUE;

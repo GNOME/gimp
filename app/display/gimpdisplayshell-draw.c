@@ -1720,19 +1720,13 @@ gimp_display_shell_draw_guides (GimpDisplayShell *shell)
 void
 gimp_display_shell_shrink_wrap (GimpDisplayShell *shell)
 {
-  /* 
-   * I'm pretty sure this assumes that the current size is < display size
-   * Is this a valid assumption? 
-   */
-  GtkAllocation allocation;
-  gint          disp_width, disp_height;
-  gint          width, height;
-  gint          shell_x, shell_y;
-  gint          shell_width, shell_height;
-  gint          max_auto_width, max_auto_height;
-  gint          border_x, border_y;
-  gint          s_width, s_height;
-  gboolean      resize = FALSE;
+  gint     disp_width, disp_height;
+  gint     width, height;
+  gint     shell_width, shell_height;
+  gint     max_auto_width, max_auto_height;
+  gint     border_x, border_y;
+  gint     s_width, s_height;
+  gboolean resize = FALSE;
 
   s_width  = gdk_screen_width ();
   s_height = gdk_screen_height ();
@@ -1752,9 +1746,6 @@ gimp_display_shell_shrink_wrap (GimpDisplayShell *shell)
   max_auto_width  = (s_width  - border_x) * 0.75;
   max_auto_height = (s_height - border_y) * 0.75;
 
-  allocation.x = 0;
-  allocation.y = 0;
-
   /* If one of the display dimensions has changed and one of the
    * dimensions fits inside the screen
    */
@@ -1772,7 +1763,7 @@ gimp_display_shell_shrink_wrap (GimpDisplayShell *shell)
   else if ((width > disp_width || height > disp_height) &&
 	   (disp_width < max_auto_width || disp_height < max_auto_height))
     {
-      width  = MIN (max_auto_width, width);
+      width  = MIN (max_auto_width,  width);
       height = MIN (max_auto_height, height);
 
       resize = TRUE;
@@ -1781,70 +1772,11 @@ gimp_display_shell_shrink_wrap (GimpDisplayShell *shell)
   if (resize)
     {
       if (width < shell->statusbar->requisition.width) 
-        { 
-          width = shell->statusbar->requisition.width; 
-        }
+        width = shell->statusbar->requisition.width; 
 
-#undef RESIZE_DEBUG
-#ifdef RESIZE_DEBUG
-      g_print ("1w:%d/%d d:%d/%d s:%d/%d b:%d/%d\n",
-	       width, height,
-	       disp_width, disp_height,
-	       shell_width, shell_height,
-	       border_x, border_y);
-#endif /* RESIZE_DEBUG */
-
-      shell->disp_width  = width;
-      shell->disp_height = height;
-
-      allocation.width  = width  + border_x;
-      allocation.height = height + border_y;
-
-      /*  block the resulting expose event on any of the following
-       *  changes because our caller has to do a full display update anyway
-       */
-      g_signal_handlers_block_by_func (shell->canvas,
-                                       gimp_display_shell_canvas_expose,
-                                       shell);
-
-      gtk_widget_size_allocate (GTK_WIDGET (shell), &allocation);
-
-      gdk_window_resize (GTK_WIDGET (shell)->window,
-			 allocation.width,
-			 allocation.height);
-
-      /*  let Gtk/X/WM position the window  */
-      while (gtk_events_pending ())
-	gtk_main_iteration ();
-
-      gdk_window_get_origin (GTK_WIDGET (shell)->window, &shell_x, &shell_y);
-
-      /*  if the window is offscreen, center it...  */
-      if (shell_x > s_width                 ||
-          shell_y > s_height                ||
-	  (shell_x + width +  border_x) < 0 ||
-          (shell_y + height + border_y) < 0)
-	{
-	  shell_x = (s_width  - width  - border_x) / 2;
-	  shell_y = (s_height - height - border_y) / 2;
-
-	  gdk_window_move (GTK_WIDGET (shell)->window,
-                           MAX (0, shell_x), MAX (0, shell_y));
-	}
-
-      g_signal_handlers_unblock_by_func (shell->canvas,
-                                         gimp_display_shell_canvas_expose,
-                                         shell);
-    }
-
-  /*  If the width or height of the display has changed, recalculate
-   *  the display offsets...
-   */
-  if (disp_width  != shell->disp_width ||
-      disp_height != shell->disp_height)
-    {
-      shell->offset_x += (disp_width  - shell->disp_width)  / 2;
-      shell->offset_y += (disp_height - shell->disp_height) / 2;
+      gtk_window_resize (GTK_WINDOW (shell),
+                         width  + border_x,
+                         height + border_y);
     }
 }
 

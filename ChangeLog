@@ -1,5 +1,19 @@
 2003-01-07  Michael Natterer  <mitch@gimp.org>
 
+	Fixed bug #13296:
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_shrink_wrap):
+	don't do evil stuff but simply call gtk_window_resize(). Gtk+ will
+	automatically place the window onscreen if it would be invisible
+	after resizing.
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_configure): don't call
+	gimp_dislpay_shell_scale_resize() to avoid recursion but do the
+	two needed calls manually.
+
+2003-01-07  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimphelpui.[ch]: removed gimp_help_init() and
 	gimp_help_free(). Added _gimp_help_init() instead.
 
