@@ -63,22 +63,22 @@ insert_into_sorted_list (GSList *list,
 			 gint    x)
 {
   GSList *orig = list;
-  GSList *rest;
+  GSList *next;
 
   if (!list)
     return g_slist_prepend (list, GINT_TO_POINTER (x));
 
   while (list)
     {
-      rest = g_slist_next (list);
+      next = g_slist_next (list);
       if (x < GPOINTER_TO_INT (list->data))
 	{
-	  rest = g_slist_prepend (rest, list->data);
-	  list->next = rest;
+	  next = g_slist_prepend (next, list->data);
+	  list->next = next;
 	  list->data = GINT_TO_POINTER (x);
 	  return orig;
 	}
-      else if (!rest)
+      else if (!next)
 	{
 	  g_slist_append (list, GINT_TO_POINTER (x));
 	  return orig;
@@ -97,45 +97,45 @@ convert_segment (GimpScanConvert *sc,
 		 gint             x2,
 		 gint             y2)
 {
-  gint     ydiff, y, tmp;
+  gint     ydiff, y;
   gint     width;
   gint     height;
   GSList **scanlines;
-  gfloat   xinc, xstart;
+  gfloat   xinc, x;
 
   /* pre-calculate invariant commonly used values */
-  width     = sc->width * sc->antialias;
+  width     = sc->width  * sc->antialias;
   height    = sc->height * sc->antialias;
   scanlines = sc->scanlines;    
 
-  x1 = CLAMP (x1, 0, width - 1);
-  y1 = CLAMP (y1, 0, height - 1);
-  x2 = CLAMP (x2, 0, width - 1);
-  y2 = CLAMP (y2, 0, height - 1);
-
-  if (y1 > y2)
-    {
-      tmp = y2; y2 = y1; y1 = tmp;
-      tmp = x2; x2 = x1; x1 = tmp;
-    }
-
-  ydiff = (y2 - y1);
+  ydiff = y2 - y1;
 
   if (ydiff)
     {
+      if (ydiff < 0)
+        {
+          gint tmp;
+          
+          tmp = y2; y2 = y1; y1 = tmp;
+          tmp = x2; x2 = x1; x1 = tmp;
+          
+          ydiff = - ydiff;
+        }
+
+      /* FIXME: using Bresenham here would probably be more appropriate */
+      
       xinc = (float) (x2 - x1) / (float) ydiff;
-      xstart = x1 + 0.5 * xinc;
+      x = x1 + 0.5 * xinc;
+      
       for (y = y1 ; y < y2; y++)
-	{
-	  scanlines[y] = insert_into_sorted_list (scanlines[y], ROUND (xstart));
-	  xstart += xinc;
-	}
-    }
-  else
-    {
-      /* horizontal line */
-      scanlines[y1] = insert_into_sorted_list (scanlines[y1], ROUND (x1));
-      scanlines[y1] = insert_into_sorted_list (scanlines[y1], ROUND (x2));
+        {
+          if (y >= 0 && y < height)
+            scanlines[y] = insert_into_sorted_list (scanlines[y],
+                                                    CLAMP (ROUND (x),
+                                                           0, width));
+          
+          x += xinc;
+        }
     }
 }
 
@@ -166,6 +166,11 @@ gimp_scan_convert_new (guint width,
 void
 gimp_scan_convert_free (GimpScanConvert *sc)
 {
+  gint i;
+
+  for (i = 0; i < sc->height * sc->antialias; i++)
+    g_slist_free (sc->scanlines[i]);
+
   g_free (sc->scanlines);
   g_free (sc);
 }
