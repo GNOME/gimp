@@ -1,5 +1,16 @@
 2003-07-24  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimphelp.c (gimp_help_internal): added a static
+	boolean "busy" variable to make sure we handle only one help
+	request at a time. Together with the now synchronous
+	GIMP_EXTENSION starting this keeps us from showing multiple help
+	browsers.
+
+	Pass the help_locale around instead oh hardcoding it to "C" at the
+	bottom (now it's hardcoded a few functions above ;)
+
+2003-07-24  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontainertreeview.c: removed some old #if 0'ed
 	code.
 

@@ -57,6 +57,7 @@ struct _GimpIdleHelp
 {
   Gimp  *gimp;
   gchar *help_path;
+  gchar *help_locale;
   gchar *help_data;
 };
 
@@ -94,6 +95,8 @@ gimp_help (Gimp        *gimp,
       if (help_path && strlen (help_path))
 	idle_help->help_path = g_strdup (help_path);
 
+      idle_help->help_locale = g_strdup ("C");
+
       if (help_data && strlen (help_data))
 	idle_help->help_data = g_strdup (help_data);
 
@@ -109,7 +112,6 @@ gimp_idle_help (gpointer data)
 {
   GimpIdleHelp        *idle_help;
   GimpHelpBrowserType  browser;
-  static gchar        *current_locale = "C";
 
   idle_help = (GimpIdleHelp *) data;
 
@@ -134,14 +136,14 @@ gimp_idle_help (gpointer data)
     case GIMP_HELP_BROWSER_GIMP:
       if (gimp_help_internal (idle_help->gimp,
                               idle_help->help_path,
-			      current_locale,
+			      idle_help->help_locale,
 			      idle_help->help_data))
 	break;
 
     case GIMP_HELP_BROWSER_NETSCAPE:
       gimp_help_netscape (idle_help->gimp,
                           idle_help->help_path,
-			  current_locale,
+			  idle_help->help_locale,
 			  idle_help->help_data);
       break;
 
@@ -149,10 +151,9 @@ gimp_idle_help (gpointer data)
       break;
     }
 
-  if (idle_help->help_path)
-    g_free (idle_help->help_path);
-  if (idle_help->help_data)
-    g_free (idle_help->help_data);
+  g_free (idle_help->help_path);
+  g_free (idle_help->help_locale);
+  g_free (idle_help->help_data);
   g_free (idle_help);
 
   return FALSE;
@@ -181,6 +182,13 @@ gimp_help_internal (Gimp        *gimp,
 {
   ProcRecord *proc_rec;
 
+  static gboolean busy = FALSE;
+
+  if (busy)
+    return TRUE;
+
+  busy = TRUE;
+
   /*  Check if a help browser is already running  */
   proc_rec = procedural_db_lookup (gimp, "extension_gimp_help_browser_temp");
 
@@ -205,6 +213,8 @@ gimp_help_internal (Gimp        *gimp,
 				    gimp);
 	  gtk_widget_show (not_found);
 	  gtk_main ();
+
+          busy = FALSE;
 
 	  return (GIMP_GUI_CONFIG (gimp->config)->help_browser
 		  != GIMP_HELP_BROWSER_NETSCAPE);
@@ -240,6 +250,8 @@ gimp_help_internal (Gimp        *gimp,
 
       procedural_db_destroy_args (return_vals, nreturn_vals);
     }
+
+  busy = FALSE;
 
   return TRUE;
 }
