@@ -1,3 +1,9 @@
+Mon Dec 27 15:11:53 CET 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/flame/flame.c: worked on the dialog layout
+	
+	* plug-ins/pagecurl/pagecurl.c: register with the correct image type
+
 Mon Dec 27 12:57:52 CET 1999  Sven Neumann <sven@gimp.org>
 
 	* libgimp/gimp.h
