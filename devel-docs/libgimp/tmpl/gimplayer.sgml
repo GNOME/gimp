@@ -114,6 +114,15 @@ Operations on a single layer.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_layer_from_mask ##### -->
+<para>
+
+</para>
+
+@mask_ID: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_layer_get_mask ##### -->
 <para>
 

@@ -556,6 +556,7 @@ gimp_layer_translate
 gimp_layer_add_alpha
 gimp_layer_set_offsets
 gimp_layer_create_mask
+gimp_layer_from_mask
 gimp_layer_get_mask
 gimp_layer_add_mask
 gimp_layer_remove_mask
