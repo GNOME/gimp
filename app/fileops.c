@@ -466,13 +466,13 @@ file_save_as_callback (GtkWidget *widget,
       if (GTK_WIDGET_VISIBLE (filesave))
 	return;
 
-      gtk_file_selection_set_filename (GTK_FILE_SELECTION(filesave),
-                                       gdisplay->gimage->has_filename
-                                       ? gimage_filename(gdisplay->gimage)
-                                       : "." G_DIR_SEPARATOR_S);
       gtk_window_set_title (GTK_WINDOW (filesave), _("Save Image"));
     }
 
+  gtk_file_selection_set_filename (GTK_FILE_SELECTION(filesave),
+                                   gdisplay->gimage->has_filename
+                                   ? gimage_filename(gdisplay->gimage)
+                                   : "." G_DIR_SEPARATOR_S);
   if (!save_options)
     {
       GtkWidget *frame;
