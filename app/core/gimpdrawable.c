@@ -44,10 +44,10 @@
 #include "gimpimage-mask.h"
 #include "gimplayer.h"
 #include "gimplist.h"
+#include "gimpparasite.h"
+#include "gimpparasitelist.h"
 #include "gimppreviewcache.h"
 
-#include "gimpparasite.h"
-#include "parasitelist.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"

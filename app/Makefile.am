@@ -79,15 +79,9 @@ gimp_SOURCES = @STRIP_BEGIN@ \
 ##
 ## stuff for core/
 ##
-	datafiles.c		\
-	datafiles.h		\
 	floating_sel.c		\
 	floating_sel.h		\
-	gimpparasite.c		\
-	gimpparasite.h		\
 	gimpunit.c		\
-	parasitelist.c		\
-	parasitelist.h		\
 	unitrc.h		\
 ##
 ## config stuff

@@ -36,13 +36,14 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-#include "floating_sel.h"
-#include "gdisplay.h"
 #include "gimpdrawable-invert.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
-#include "parasitelist.h"
+#include "gimpparasitelist.h"
+
+#include "floating_sel.h"
+#include "gdisplay.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"

@@ -25,13 +25,12 @@
 
 #include "core-types.h"
 
-#include "gimpdata.h"
-#include "gimpdatalist.h"
-#include "gimpdatafactory.h"
 #include "gimpcontext.h"
+#include "gimpdata.h"
+#include "gimpdatafactory.h"
+#include "gimpdatafiles.h"
+#include "gimpdatalist.h"
 #include "gimpmarshal.h"
-
-#include "datafiles.h"
 
 #include "libgimp/gimpintl.h"
 

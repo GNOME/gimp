@@ -47,9 +47,9 @@
 
 #include "libgimpbase/gimpbase.h"
 
-#include "core/core-types.h"
+#include "core-types.h"
 
-#include "datafiles.h"
+#include "gimpdatafiles.h"
 
 
 static gboolean    filestat_valid = FALSE;

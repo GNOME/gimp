@@ -43,8 +43,8 @@
 #include "gimpimage-mask.h"
 #include "gimpchannel.h"
 #include "gimplayer.h"
+#include "gimpparasitelist.h"
 
-#include "parasitelist.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"

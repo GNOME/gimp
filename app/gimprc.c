@@ -44,6 +44,7 @@
 #include "base/base-config.c"
 
 #include "core/gimpcoreconfig.h"
+#include "core/gimpparasite.h"
 #include "core/gimptoolinfo.h"
 
 #include "tools/gimptool.h"
@@ -59,7 +60,6 @@
 #include "errors.h"
 #include "general.h"
 #include "gimphelp.h"
-#include "gimpparasite.h"
 #include "gimprc.h"
 #include "plug_in.h"
 

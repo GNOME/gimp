@@ -90,6 +90,7 @@
 #include "base/tile-manager.h"
 
 #include "core/gimpcoreconfig.h"
+#include "core/gimpdatafiles.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
@@ -101,7 +102,6 @@
 
 #include "app_procs.h"
 #include "appenv.h"
-#include "datafiles.h"
 #include "errors.h"
 #include "gimpprogress.h"
 #include "gimprc.h"

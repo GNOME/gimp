@@ -40,6 +40,7 @@
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
+#include "core/gimpparasitelist.h"
 
 #include "xcf-private.h"
 #include "xcf-load.h"
@@ -47,7 +48,6 @@
 #include "xcf-seek.h"
 
 #include "floating_sel.h"
-#include "parasitelist.h"
 #include "path.h"
 #include "pathP.h"
 

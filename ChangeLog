@@ -1,3 +1,31 @@
+2001-07-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/datafiles.[ch]
+	* app/gimpparasite.[ch]
+	* app/parasitelist.[ch]: removed...
+
+	* app/core/Makefile.am
+	* app/core/gimpdatafiles.[ch]
+	* app/core/gimpparasite.[ch]
+	* app/core/gimpparasitelist.[ch]: ...and added here.
+
+	* app/gimprc.c
+	* app/module_db.c
+	* app/plug_in.c
+	* app/undo.c
+	* app/core/gimp.c
+	* app/core/gimpchannel.c
+	* app/core/gimpdatafactory.c
+	* app/core/gimpdrawable.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage.c
+	* app/core/gimplayer.c
+	* app/xcf/xcf-load.c
+	* app/xcf/xcf-save.c
+	* tools/pdbgen/pdb/parasite.pdb
+	* app/pdb/parasite_cmds.c: changed #include's accordingly.
+
 2001-07-09  Dave Neary  <dneary@eircom.net>
 
 	* app/plug_in.c: One-line fix which is needed, but never showed 

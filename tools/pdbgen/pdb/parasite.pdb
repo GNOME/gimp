@@ -137,7 +137,7 @@ sub parasite_list {
     %invoke = ( code => 'parasites = gimp_parasite_list (gimp, &num_parasites);' );
 }
 
-@headers = qw("gimpparasite.h" "core/gimpdrawable.h");
+@headers = qw("core/gimpparasite.h" "core/gimpdrawable.h");
 
 @procs = qw(parasite_find parasite_attach parasite_detach parasite_list);
 

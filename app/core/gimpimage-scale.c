@@ -50,12 +50,12 @@
 #include "gimplist.h"
 #include "gimpmarshal.h"
 #include "gimpparasite.h"
+#include "gimpparasitelist.h"
 #include "gimpundostack.h"
 
 #include "app_procs.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
-#include "parasitelist.h"
 #include "path.h"
 #include "undo.h"
 

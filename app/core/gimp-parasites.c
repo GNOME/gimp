@@ -26,13 +26,12 @@
 
 #include "libgimpbase/gimpbase.h"
 
-#include "core/core-types.h"
+#include "core-types.h"
 
-#include "core/gimp.h"
-
-#include "app_procs.h"
-#include "parasitelist.h"
+#include "gimp.h"
 #include "gimpparasite.h"
+#include "gimpparasitelist.h"
+
 #include "gimprc.h"
 
 

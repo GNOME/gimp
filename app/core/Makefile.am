@@ -27,6 +27,8 @@ libappcore_a_SOURCES = @STRIP_BEGIN@ \
 	gimpdata.h			\
 	gimpdatafactory.c		\
 	gimpdatafactory.h		\
+	gimpdatafiles.c			\
+	gimpdatafiles.h			\
 	gimpdatalist.c			\
 	gimpdatalist.h			\
 	gimpdrawable.c			\
@@ -81,6 +83,10 @@ libappcore_a_SOURCES = @STRIP_BEGIN@ \
 	gimppalette.h			\
 	gimppalette-import.c		\
 	gimppalette-import.h		\
+	gimpparasite.c			\
+	gimpparasite.h			\
+	gimpparasitelist.c		\
+	gimpparasitelist.h		\
 	gimppreviewcache.c		\
 	gimppreviewcache.h		\
 	gimpscanconvert.c		\

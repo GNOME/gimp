@@ -42,11 +42,11 @@
 #include "gimplist.h"
 #include "gimppalette.h"
 #include "gimppattern.h"
+#include "gimpparasite.h"
 #include "gimptoolinfo.h"
 
 #include "appenv.h"
 #include "app_procs.h"
-#include "gimpparasite.h"
 
 #include "libgimp/gimpintl.h"
 

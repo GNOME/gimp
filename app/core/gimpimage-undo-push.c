@@ -41,6 +41,8 @@
 #include "core/gimpimage-mask.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
+#include "core/gimpparasite.h"
+#include "core/gimpparasitelist.h"
 
 #include "tools/gimpbycolorselecttool.h"
 #include "tools/gimptool.h"
@@ -53,8 +55,6 @@
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
-#include "gimpparasite.h"
-#include "parasitelist.h"
 #include "path_transform.h"
 #include "undo.h"
 

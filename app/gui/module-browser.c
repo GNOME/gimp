@@ -39,11 +39,11 @@
 #include "core/core-types.h"
 
 #include "core/gimpcoreconfig.h"
+#include "core/gimpdatafiles.h"
 #include "core/gimplist.h"
 
 #include "appenv.h"
 #include "module_db.h"
-#include "datafiles.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpmodule.h"

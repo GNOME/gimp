@@ -42,11 +42,11 @@
 #include "gimpimage-new.h"
 #include "gimplayer.h"
 #include "gimplist.h"
+#include "gimpparasitelist.h"
 
 #include "app_procs.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
-#include "parasitelist.h"
 #include "path.h"
 
 #include "libgimp/gimpintl.h"

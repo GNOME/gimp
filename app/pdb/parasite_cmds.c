@@ -30,7 +30,7 @@
 
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
-#include "gimpparasite.h"
+#include "core/gimpparasite.h"
 
 #include "libgimpbase/gimpparasite.h"
 
