@@ -41,6 +41,7 @@
 
 #include "gimpconfig.h"
 #include "gimpconfig-serialize.h"
+#include "gimpconfig-utils.h"
 #include "gimpconfigwriter.h"
 
 #include "libgimp/gimpintl.h"
@@ -194,26 +195,16 @@ gimp_config_writer_printf (GimpConfigWriter *writer,
 }
 
 void
-gimp_config_writer_string (GimpConfigWriter  *writer,
-                           const gchar       *string)
+gimp_config_writer_string (GimpConfigWriter *writer,
+                           const gchar      *string)
 {
   g_return_if_fail (writer != NULL);
 
   if (writer->error)
     return;
 
-  if (string)
-    {
-      gchar *escaped = g_strescape (string, NULL);
-  
-      g_string_append_printf (writer->buffer, " \"%s\"", escaped);
-
-      g_free (escaped);
-    }
-  else
-    {
-      g_string_append_len (writer->buffer, " \"\"", 3);
-    }
+  g_string_append_c (writer->buffer, ' ');
+  gimp_config_string_append_escaped (writer->buffer, string);
 }
 
 void

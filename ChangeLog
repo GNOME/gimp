@@ -1,5 +1,15 @@
 2003-03-17  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpconfig-utils.[ch]: added the new function
+	gimp_config_string_append_escaped(), see inline docs.
+
+	* app/config/gimpconfig-serialize.c
+	* app/config/gimpconfigwriter.c
+	* app/core/gimpcontainer.c: use the new function instead of
+	g_strescape().
+
+2003-03-17  Sven Neumann  <sven@gimp.org>
+
 	Applied patches from David Necas <yeti@physics.muni.cz> that fix
 	incorrect RGBA resampling in a number of plug-ins:
 

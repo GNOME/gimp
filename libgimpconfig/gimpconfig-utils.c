@@ -265,6 +265,92 @@ gimp_config_reset_properties (GObject *object)
 
 
 /*
+ * GimpConfig string utilities
+ */
+
+/**
+ * gimp_config_string_append_escaped:
+ * @string: pointer to a #GString
+ * @val: a string to append or %NULL
+ * 
+ * Escapes and quotes @val and appends it to @string. The escape
+ * algorithm is different from the one used by g_strescape() since it
+ * leaves non-ASCII characters intact and thus preserves UTF-8
+ * strings. Only control characters and quotes are being escaped.
+ **/
+void
+gimp_config_string_append_escaped (GString     *string,
+                                   const gchar *val)
+{
+  g_return_if_fail (string != NULL);
+
+  if (val)
+    {
+      const guchar *p;
+      gchar         buf[4] = { '\\', 0, 0, 0 };
+      gint          len;
+
+      g_string_append_c (string, '\"');
+
+      for (p = val, len = 0; *p; p++)
+        {
+          if (*p < ' ' || *p == '\\' || *p == '\"')
+            {
+              g_string_append_len (string, val, len);
+
+              len = 2;
+              switch (*p)
+                {
+                case '\b':
+                  buf[1] = 'b';
+                  break;
+                case '\f':
+                  buf[1] = 'f';
+                  break;
+                case '\n':
+                  buf[1] = 'n';
+                  break;
+                case '\r':
+                  buf[1] = 'r';
+                  break;
+                case '\t':
+                  buf[1] = 't';
+                  break;
+                case '\\':
+                case '"':
+                  buf[1] = *p;
+                  break;
+              
+                default:
+                  len = 4;
+                  buf[1] = '0' + (((*p) >> 6) & 07);
+                  buf[2] = '0' + (((*p) >> 3) & 07);
+                  buf[3] = '0' + ((*p) & 07);
+                  break;
+                }
+
+              g_string_append_len (string, buf, len);
+              
+              val = p + 1;
+              len = 0;
+            }
+          else
+            {
+              len++;
+            }
+        }
+
+      g_string_append_len (string, val, len);
+      g_string_append_c   (string, '\"');
+    }
+  else
+    {
+      g_string_append_len (string, "\"\"", 2);
+    }
+}
+
+
+/*
  * GimpConfig path utilities
  */
 

@@ -410,17 +410,9 @@ gimp_container_serialize_foreach (GObject       *object,
   name = gimp_object_get_name (GIMP_OBJECT (object));
 
   if (name)
-    {
-      gchar *escaped;
-
-      escaped = g_strescape (name, NULL);
-      gimp_config_writer_printf (serialize_data->writer, "\"%s\"", escaped);
-      g_free (escaped);
-    }
+    gimp_config_writer_string (serialize_data->writer, name);
   else
-    {
-      gimp_config_writer_print (serialize_data->writer, "NULL", 4);
-    }
+    gimp_config_writer_print (serialize_data->writer, "NULL", 4);
 
   serialize_data->success = config_iface->serialize (object,
                                                      serialize_data->writer,

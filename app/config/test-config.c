@@ -216,7 +216,8 @@ output_unknown_token (const gchar *key,
       *header = NULL;
     }
 
-  g_print ("   %s \"%s\"\n", key, value);
+  g_print ("   %s \"%s\"\n", key, escaped);
+
   g_free (escaped);
 }
 
