@@ -1,3 +1,40 @@
+Jun 25 2000
+  * MADE 1.5.0 RELEASE
+  * Requires gimp 1.1.24+.
+  * Updated parasites support for gimp-1.1.24.
+  * Plugged back compatibility load function.
+  * Fixed a bug with the point based font size rendering: it was erroneously
+    divided by 10 so the resulting font was smaller! This bug affected even
+    previous releases of gDynText (1.4.3, 1.4.4 and probably older ones).
+  * Now gDynText restores the setting of the last call.
+Jun 04 2000
+  * MADE 1.5.0-RC3 RELEASE
+  * User interface restyled and updated.
+  * Added layer alignment control.
+May 31 2000
+  * MADE 1.5.0-RC2 RELEASE
+  * Requires GIMP 1.1.20+ and will not work anymore with 1.0.x series.
+  * Updated the PDB interface.
+  * The font_selection widget is finally well integrated with the
+    gtk_font_selection one.
+  * Updated gimp_edit_clear and gimp_rotate PDB calls.
+  * Replaced the gimp_text and gimp_text_get_extents PDB calls with
+    gimp_text_fontname and gimp_text_get_extents_fontname.
+  * Removed any compatibilty code with previous releases of gDynText
+    (temporally, I hope to bring back them in the final version).
+May 27 2000
+  * MADE 1.5.0-RC1 RELEASE
+  * Finally gDynText uses internally the standard gtk_font_selection widget.
+    Now it should behave as (I hope better than) the standard Text Tool.
+  * Support for different font encodings.
+  * Some code was merged from the gdyntext shipped with gimp-1.1.22.
+Dec 29 1999
+  * MADE 1.4.4 RELEASE
+  * Some code was merged from the gdyntext shipped with gimp-1.1.14.
+  * The message window reporting that "Current layer isn't a GDynText layer"
+    was disabled, however the message is still printed to stdout.
+  * Fixed an undo bug. The gtd layer changes and the related parasites now are
+    undoable together in one step.
 Mar 02 1999
   * MADE 1.4.3 RELEASE
   * Fixed the "run with last val" behaviour with the Apply button.

@@ -1,6 +1,6 @@
 /*
  * GIMP Dynamic Text -- This is a plug-in for The GIMP 1.0
- * Copyright (C) 1998,1999 Marco Lamberto <lm@geocities.com>
+ * Copyright (C) 1998,1999,2000 Marco Lamberto <lm@geocities.com>
  * Web page: http://www.geocities.com/Tokyo/1474/gimp/
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,15 +19,12 @@
  *
  * $Id$
  */
-#include "config.h"
 
 #include <stdio.h>
-
 #include <gtk/gtk.h>
-
+#include "libgimp/stdplugins-intl.h"
 #include "message_window.h"
 
-#include "libgimp/stdplugins-intl.h"
 
 static void message_window_class_init(MessageWindowClass *class);
 static void message_window_init(MessageWindow *mw);

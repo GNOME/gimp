@@ -10,6 +10,16 @@ EXTRA_DIST = \
 	graphics/font_preview_clear.xpm		\
 	graphics/font_preview_default.xpm	\
 	graphics/gdyntext_logo.xpm		\
+	graphics/layer_align_0.xpm		\
+	graphics/layer_align_1.xpm		\
+	graphics/layer_align_2.xpm		\
+	graphics/layer_align_3.xpm		\
+	graphics/layer_align_4.xpm		\
+	graphics/layer_align_5.xpm		\
+	graphics/layer_align_6.xpm		\
+	graphics/layer_align_7.xpm		\
+	graphics/layer_align_8.xpm		\
+	graphics/layer_align_9.xpm		\
 	graphics/new_layer.xpm			\
 	graphics/text_load.xpm			\
 	ChangeLog				\
@@ -29,6 +39,10 @@ gdyntext_SOURCES = \
 	font_selection.h	\
 	gdyntext.c		\
 	gdyntext.h		\
+	gdyntextcompat.c       	\
+	gdyntextcompat.h       	\
+	gdyntextutil.c		\
+	gdyntextutil.h		\
 	gdyntext_ui.c		\
 	gdyntext_ui.h		\
 	message_window.c	\

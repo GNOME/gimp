@@ -20,49 +20,12 @@
  * $Id$
  */
 
-#ifndef _CHARMAP_WINDOW_H_
-#define _CHARMAP_WINDOW_H_
+#ifndef _GDYNTEXTUTIL_H_
+#define _GDYNTEXTUTIL_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+gchar *strunescape(const gchar *text);
+gchar *strescape(const gchar *text);
 
-#include "charmap.h"
-
-
-#define CHARMAP_WINDOW(obj)					GTK_CHECK_CAST(obj, charmap_window_get_type(), CharMapWindow)
-#define CHARMAP_WINDOW_CLASS(klass)	GTK_CHECK_CLASS_CAST(klass, charmap_window_get_type(), CharMapWindowClass)
-#define IS_CHARMAP_WINDOW(obj)			GTK_CHECK_TYPE(obj, charmap_window_get_type())
-
-
-typedef struct _CharMapWindow				CharMapWindow;
-typedef struct _CharMapWindowClass	CharMapWindowClass;
-
-
-struct _CharMapWindow
-{
-	GtkWindow window;
-
-	GtkWidget *charmap;
-	GtkWidget *scrolledwindow;
-	GtkWidget *label;
-	GtkWidget *insert_button;
-	GtkWidget *close_button;
-};
-
-struct _CharMapWindowClass
-{
-	GtkWindowClass parent_class;
-};
-
-
-guint				charmap_window_get_type(void);
-GtkWidget*	charmap_window_new(const gchar *title);
-
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
-
-#endif /* _CHARMAP_WINDOW_H_ */
+#endif /* _GDYNTEXTUTIL_H_ */
 
 /* vim: set ts=2 sw=2 tw=79 ai nowrap: */

@@ -1,9 +1,6 @@
 The GIMP Dynamic Text plug-in "todo"-list:
 ==========================================
 
-* an apply button
-* layer alignment when text alignment changes
-
 * fix the problem with the ascent value while rendering text
 * allow only valid sizes for non scalable fonts (use gtkfontselection)
 * add customizable tab expansion
@@ -13,7 +10,6 @@ The GIMP Dynamic Text plug-in "todo"-list:
 * behave more like an editor with font, color and justifcation applied on a
   selected area only
 * a list of customizable pre-sets (useful for logos)
-* internal text rendering routine
 * transformation window: text path, perspective, color gradients, 3d
 * special effects, like customizable shadow or auto-call of scripts after the
   text rendered

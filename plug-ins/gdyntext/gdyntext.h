@@ -1,6 +1,6 @@
 /*
  * GIMP Dynamic Text -- This is a plug-in for The GIMP 1.0
- * Copyright (C) 1998,1999 Marco Lamberto <lm@geocities.com>
+ * Copyright (C) 1998,1999,2000 Marco Lamberto <lm@geocities.com>
  * Web page: http://www.geocities.com/Tokyo/1474/gimp/
  *
  * This program is free software; you can redistribute it and/or modify
@@ -23,26 +23,21 @@
 #ifndef _GDYNTEXT_H_
 #define _GDYNTEXT_H_
 
-#define GDYNTEXT_VERSION				"1.4.3"
-#define GDYNTEXT_MAGIC					"GDT09"
+#include <libgimp/gimp.h>
+#include "libgimp/stdplugins-intl.h"
+
+
+#define GDYNTEXT_VERSION				"1.5.0"
+#define GDYNTEXT_MAGIC					"GDT10"
 #define GDYNTEXT_WEB_PAGE				"http://www.geocities.com/Tokyo/1474/gimp/"
-#define MAX_TEXT_SIZE						(64 * 1024)
+#define MAX_TEXT_SIZE						(1024 << 6)
 
-#define GDYNTEXT_PARASITE							"gdyntext-parasite"
+#define GDYNTEXT_PARASITE							"plug_in_gdyntext/data"
 
-/* parasites for compatibility with GDynText 1.3.0 */
-#define GDYNTEXT_PARASITE_PFX					"gdyntext_parasite"
-#define GDYNTEXT_PARASITE_MAGIC				GDYNTEXT_PARASITE_PFX"_magic"
-#define GDYNTEXT_PARASITE_TEXT				GDYNTEXT_PARASITE_PFX"_text"
-#define GDYNTEXT_PARASITE_FONT_FAMILY	GDYNTEXT_PARASITE_PFX"_font_family"
-#define GDYNTEXT_PARASITE_FONT_STYLE	GDYNTEXT_PARASITE_PFX"_font_style"
-#define GDYNTEXT_PARASITE_FONT_SIZE		GDYNTEXT_PARASITE_PFX"_font_size"
-#define GDYNTEXT_PARASITE_FONT_METRIC	GDYNTEXT_PARASITE_PFX"_font_metric"
-#define GDYNTEXT_PARASITE_FONT_COLOR	GDYNTEXT_PARASITE_PFX"_font_color"
-#define GDYNTEXT_PARASITE_ANTIALIAS		GDYNTEXT_PARASITE_PFX"_antialias"
-#define GDYNTEXT_PARASITE_ALIGNMENT		GDYNTEXT_PARASITE_PFX"_alignment"
-#define GDYNTEXT_PARASITE_ROTATION		GDYNTEXT_PARASITE_PFX"_rotation"
-#define GDYNTEXT_PARASITE_PREVIEW			GDYNTEXT_PARASITE_PFX"_preview"
+
+/* version detection macros */
+#define GDT_MAGIC_REV(lname)	(atoi(lname + 3))
+#define GDT_REV()							((int)(atof(GDYNTEXT_VERSION) * 10))
 
 
 typedef enum
@@ -51,6 +46,51 @@ typedef enum
 	CENTER	= 1,
 	RIGHT		= 2
 } GdtAlign;
+
+typedef enum
+{
+	TEXT						= 0,
+	ANTIALIAS				= 1,
+	ALIGNMENT				= 2,
+	ROTATION				= 3,
+	LINE_SPACING		= 4,
+	COLOR						= 5,
+	LAYER_ALIGNMENT	= 6,
+	XLFD						= 7,
+} GDTBlock;
+
+typedef enum
+{
+	XLFD_NONE						= 0,
+	XLFD_FOUNDRY				= 1,
+	XLFD_FAMILY					= 2,
+	XLFD_WEIGHT					= 3,
+	XLFD_SLANT					= 4,
+	XLFD_SET_WIDTH			= 5,
+	XLFD_ADD_STYLE			= 6,
+	XLFD_PIXEL_SIZE			= 7,
+	XLFD_POINT_SIZE			= 8,
+	XLFD_RES_X					= 9,
+	XLFD_RES_Y					= 10,
+	XLFD_SPACING				= 11,
+	XLFD_AVERAGE_WIDTH	= 12,
+	XLFD_REGISTRY				= 13,
+	XLFD_ENCODING				= 14
+} XLFDBlock;
+
+typedef enum
+{
+	LA_NONE						= 0,
+	LA_BOTTOM_LEFT		= 1,
+	LA_BOTTOM_CENTER	= 2,
+	LA_BOTTOM_RIGHT		= 3,
+	LA_MIDDLE_LEFT		= 4,
+	LA_CENTER					= 5,
+	LA_MIDDLE_RIGHT		= 6,
+	LA_TOP_LEFT				= 7,
+	LA_TOP_CENTER			= 8,
+	LA_TOP_RIGHT			= 9,
+} LayerAlignments;
 
 
 typedef struct {
@@ -62,26 +102,27 @@ typedef struct {
 	gint32		layer_id;
 	gint32		drawable_id;
 	gchar			text[MAX_TEXT_SIZE];
-	gchar			font_family[1024];
-	gchar			font_style[1024];
-	gint32		font_size;
-	gint			font_metric;
-	gint32		font_color;
+	gchar			xlfd[1024];
+	gint32		color;
 	gboolean	antialias;
 	GdtAlign	alignment;
 	gint			rotation;
-	gint			spacing;
-#ifdef GIMP_HAVE_PARASITES
+	gint			line_spacing;
+	gint			layer_alignment;
 	gboolean	change_layer_name;	/* if TRUE force parasites use + label change */
-#endif
 /* GUI stuff */
-	GList			*messages;
+	GList			*messages;			/* FIXME: replace this stuff through a status bar */
 	gboolean	preview;
 } GdtVals;
 
 
-void gdt_get_values(GdtVals *data);
-void gdt_set_values(GdtVals *data);
+#include "gdyntext_ui.h"
+#include "gdyntextutil.h"
+#include "gdyntextcompat.h"
+
+
+void gdt_load(GdtVals *data);
+void gdt_save(GdtVals *data);
 void gdt_render_text(GdtVals *data);
 void gdt_render_text_p(GdtVals *data, gboolean show_progress);
 

@@ -1,8 +1,8 @@
 GIMP Dynamic Text -- image filter plug-in for The GIMP program
 ==============================================================
 
-GDynText  1.4.3 
-Copyright (C) 1998,1999 Marco Lamberto
+GDynText  1.5.0 #define GDT_REV()							((int)(atof(GDYNTEXT_VERSION) * 10)) 
+Copyright (C) 1998,1999,2000 Marco Lamberto
 E-mail:   lm@geocities.com
 Web page: http://www.geocities.com/Tokyo/1474/gimp/
 
@@ -19,8 +19,8 @@ ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with
-this program (see "COPYING" file); if not, write to the Free Software Foundation
-Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+this program (see "COPYING" file); if not, write to the Free Software
+Foundation Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 Intro
 =====
@@ -31,34 +31,24 @@ as you want (text/font/font size/color/...).
 However I hope that a feature like this will be available on GIMP 1.2 as a
 standard tool.
 
-GIMP version required:    1.0.4 or 1.1 (see compiling for GIMP 1.1 below)
-Plug-in menu path:        <Image>/Filters/Render/Dynamic Text
-PDB function:             plug-in-dynamic-text
+GIMP version required:    1.1.24+ or 1.2
+Plug-in menu path:        <Image>/Filters/Render/Dynamic Text...
 Suggested hotkey:         Alt+T
+PDB function:             plug_in_dynamic_text
+Parasite:                 plug_in_gdyntext/data
 
-This is my second plug-in, the first was an xvpict loader now embedded into
+This is my second plug-in, the first one was an xvpict loader now embedded into
 the Guash plug-in of Shuji Narazaki.
 It's rather far from being a complete work and I've just starded in playing
 with GTK+ ... it's a really powerful but also a complex toolkit for a
 programmer that had used only Java AWT for opening windows on X11!
 
-Compiling for GIMP 1.0
-======================
+Compiling
+=========
 
-Simply run 'make install'. Optionally if something goes wrong you could edit
-the shipped Makefile.
-
-NOTE:
-  Since GDynText 1.4.3 the gtk+ 1.0 and glib 1.0 compatibility was probably
-  broken, now gimp >= 1.0.4 with gtk+ 1.2 and glib 1.2 are required for running
-  GDynText.
-
-Compiling for GIMP 1.1
-======================
-
-You must edit the Makefile and change GIMP11BIN in order to reflect the path
-where the GIMP 1.1 binary and gimptool are installed then you could run
-'make install11'.
+You must edit the Makefile and change GIMPBIN in order to reflect the path
+where the GIMP binary and gimptool are installed then you could run
+'make install'.
 
 Thanks
 ======

@@ -1,6 +1,6 @@
 /*
  * GIMP Dynamic Text -- This is a plug-in for The GIMP 1.0
- * Copyright (C) 1998,1999 Marco Lamberto <lm@geocities.com>
+ * Copyright (C) 1998,1999,2000 Marco Lamberto <lm@geocities.com>
  * Web page: http://www.geocities.com/Tokyo/1474/gimp/
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,15 +19,11 @@
  *
  * $Id$
  */
-#include "config.h"
 
 #include <stdio.h>
-
 #include <gtk/gtk.h>
-
-#include "charmap.h"
-
 #include "libgimp/stdplugins-intl.h"
+#include "charmap.h"
 
 
 static void charmap_class_init(CharMapClass *class);
@@ -107,8 +103,9 @@ static void charmap_init(CharMap *cm)
 	clabel[1] = 0;
 	for (y = 0, i = 0; y < cm->height; y++)
 		for (x = 0; x < cm->width; x++, i++) {
-			clabel[0] = i < 32 ? ' ' : i;				/* skips control chars 0 < c < 32 */
+			clabel[0] = i;
 		  button = cm->buttons[x + y * cm->width] = gtk_toggle_button_new_with_label(clabel);
+			gtk_button_set_relief(&GTK_TOGGLE_BUTTON(button)->button, GTK_RELIEF_HALF);
 			if (i == 32)
 				gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button), TRUE);
 		  gtk_table_attach(GTK_TABLE(table), button, x, x + 1, y, y + 1,
@@ -117,9 +114,9 @@ static void charmap_init(CharMap *cm)
 			gtk_signal_connect_after(GTK_OBJECT(button), "toggled",
 				GTK_SIGNAL_FUNC(on_charmap_char_toggled), cm);
 		  gtk_widget_show(button);
-			tip = g_strdup_printf (_("Char: %c, %d, 0x%02x"), i < 32 ? ' ' : i, i, i);
+			tip = g_strdup_printf(_("Char: %c, %d, 0x%02x"), i < 32 ? ' ' : i, i, i);
 			gtk_tooltips_set_tip(tooltips, button, tip, NULL);
-			g_free (tip);
+			g_free(tip);
 		}
 }
 

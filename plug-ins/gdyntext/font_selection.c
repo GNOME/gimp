@@ -1,6 +1,6 @@
 /*
  * GIMP Dynamic Text -- This is a plug-in for The GIMP 1.0
- * Copyright (C) 1998,1999 Marco Lamberto <lm@geocities.com>
+ * Copyright (C) 1998,1999,2000 Marco Lamberto <lm@geocities.com>
  * Web page: http://www.geocities.com/Tokyo/1474/gimp/
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,29 +19,29 @@
  *
  * $Id$
  */
-#include "config.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-
-#include <gtk/gtk.h>
-#if GTK_CHECK_VERSION(1,3,0)
-#include <gdk/gdkprivate.h>
-#else
+#include <X11/Xlib.h>
+#include <gdk/gdkkeysyms.h>
 #include <gdk/gdkx.h>
-#endif
-
+#include <gtk/gtk.h>
+#include "libgimp/stdplugins-intl.h"
 #include "font_selection.h"
 
-#include "libgimp/stdplugins-intl.h"
 
 static void font_selection_class_init(FontSelectionClass *class);
 static void font_selection_init(FontSelection *fs);
 void on_font_selection_family_changed(GtkWidget *widget, gpointer data);
 void on_font_selection_value_changed(GtkWidget *widget, gpointer data);
-
-
-#define MAX_FONTS		32767
+gboolean hash_entry_free(gpointer key, gpointer val, gpointer user_data);
+void on_fs_family_changed(GtkWidget *widget, gint row, gint column,
+	GdkEvent *event, gpointer data);
+void on_fs_style_changed(GtkWidget *widget, gint row, gint column,
+	GdkEvent *event, gpointer data);
+void on_fs_size_changed(GtkWidget *widget, gpointer data);
+void build_font_style_list(FontSelection *fs);
 
 
 enum {
@@ -96,91 +96,45 @@ static void font_selection_class_init(FontSelectionClass *klass)
 static void font_selection_init(FontSelection *fs)
 {
 	GtkObject *font_size_adj;
-  GList *font_metric_items = NULL;
-	GList *l = NULL;
-	GList *plist = NULL;
-	gchar **xfontnames, **font_info, font_style[1024];
-	gint num_fonts, i;
+	GList *list = NULL;
+	gint pos;
+	gchar *txt;
 
-	fs->font = GTK_WIDGET(fs)->style->font;
+	fs->font_selection = gtk_font_selection_new();
+#ifdef DEBUG_FONT_SELECTION
+	/* FIXME: allow using the gtk_font_slector through a popup system! */
+	gtk_box_pack_start(GTK_BOX(fs), fs->font_selection, TRUE, TRUE, 2);
+  gtk_widget_show(fs->font_selection);
+#endif
 
-	/* get X font list and setup font names and styles */
-#ifndef DEBUG_SPAM
-/*
-	// FIXME: non '-*' fonts, disabled because GIMP can't use them!!!
-	xfontnames = XListFonts(GDK_DISPLAY(), "*", MAX_FONTS, &num_fonts);
-*/
-#if GTK_CHECK_VERSION(1,3,0)
-	/* Have gdk_font_list_new() and gdk_font_list_free() */
-	xfontnames = gdk_font_list_new ("-*", &num_fonts);
-#else
-	xfontnames = XListFonts(GDK_DISPLAY(), "-*", MAX_FONTS, &num_fonts);
+	fs->skip_fs_events = TRUE;
+	gtk_signal_connect_after(
+		GTK_OBJECT(GTK_FONT_SELECTION(fs->font_selection)->font_clist),
+		"select_row", GTK_SIGNAL_FUNC(on_fs_family_changed), fs);
+	gtk_signal_connect_after(
+		GTK_OBJECT(GTK_FONT_SELECTION(fs->font_selection)->font_style_clist),
+		"select_row", GTK_SIGNAL_FUNC(on_fs_style_changed), fs);
+	gtk_signal_connect_after(
+		GTK_OBJECT(GTK_FONT_SELECTION(fs->font_selection)->size_entry),
+		"changed", GTK_SIGNAL_FUNC(on_fs_size_changed), fs);
+
+	list = NULL;
+	pos = GTK_CLIST(GTK_FONT_SELECTION(fs->font_selection)->font_clist)->rows;
+	fs->font_names_hash = g_hash_table_new(g_str_hash, g_str_equal);
+	while (pos-- > 0) {
+		gtk_clist_get_text(GTK_CLIST(GTK_FONT_SELECTION(fs->font_selection)->font_clist), pos, 0, &txt);
+		list = g_list_prepend(list, g_strdup(txt));
+		g_hash_table_insert(fs->font_names_hash, g_strdup(txt), g_memdup(&pos, sizeof(gint)));
+#ifdef DEBUG_FONT_SELECTION
+		/*
+		printf("FONT[%4d]: '%s'\n", pos, txt);
+		*/
 #endif
-#else
-	{
-		FILE *f;
-		xfontnames = g_new(char *, MAX_FONTS);
-		f = fopen("spam_font.list", "r");
-		if (f == NULL) {
-			puts("Error opening font list");
-			exit(1);
-		}
-		for (num_fonts = 0; !feof(f); num_fonts++) {
-			xfontnames[num_fonts] = g_new0(char, 400);
-			fscanf(f, "%[^\n]\n", xfontnames[num_fonts]);
-			/*sprintf(xfontnames[num_fonts], "-*-%05d-*-*-*-*-*-*-*-*-*-*-*-*", num_fonts);*/
-		}
-		fclose(f);
-		printf("NF: %d\n", num_fonts);
 	}
-#endif
-	
-#ifdef DEBUG_SPAM
-	puts("FontSelection: START");
-#endif
-	if (num_fonts == MAX_FONTS)
-		g_warning(_("MAX_FONTS exceeded. Some fonts may be missing."));
-	fs->font_properties = g_hash_table_new(g_str_hash, g_str_equal);
-	for (i = 0; i < num_fonts; i++) {
-/*
-		// FIXME: non '-*' fonts, disabled because GIMP can't use them!!!
-		if (xfontnames[i][0] == '-') {
-*/
-			font_info = g_strsplit(xfontnames[i], "-", 20);
-			if (g_hash_table_lookup(fs->font_properties, font_info[2]) == NULL)
-				fs->font_names = g_list_insert_sorted(g_list_first(fs->font_names), g_strdup(font_info[2]), (GCompareFunc)strcmp);
-			g_snprintf(font_style, sizeof(font_style), "%s-%s-%s", font_info[3], font_info[4], font_info[5]);
-			l = NULL;
-			if ((plist = (GList *)g_hash_table_lookup(fs->font_properties, font_info[2]))) {
-				for (l = g_list_first(plist); l; l = g_list_next(l))
-					if (g_str_equal((char *)l->data, font_style))
-						break;
-			}
-			if (!l) {
-				plist = g_list_insert_sorted(plist, g_strdup(font_style), (GCompareFunc)strcmp);
-				g_hash_table_insert(fs->font_properties, g_strdup(font_info[2]), g_list_first(plist));
-			}
-			g_strfreev(font_info);
-/*
-		// FIXME: non '-*' fonts, disabled because GIMP can't use them!!!
-		} else if (g_hash_table_lookup(fs->font_properties, xfontnames[i]) == NULL) {
-			fs->font_names = g_list_insert_sorted(g_list_first(fs->font_names), g_strdup(xfontnames[i]), (GCompareFunc)strcmp);
-			plist = g_list_insert_sorted(NULL, "", (GCompareFunc)strcmp);
-			g_hash_table_insert(fs->font_properties, g_strdup(xfontnames[i]), g_list_first(plist));
-		}
-*/
-	}
-#if GTK_CHECK_VERSION(1,3,0)
-	gdk_font_list_free (xfontnames);
-#else
-	XFreeFontNames(xfontnames);
-#endif
-#ifdef DEBUG_SPAM
-	puts("FontSelection: DONE");
-#endif
 
   fs->font_family = gtk_combo_new();
-	gtk_combo_set_popdown_strings(GTK_COMBO(fs->font_family), g_list_first(fs->font_names));
+	gtk_combo_set_popdown_strings(GTK_COMBO(fs->font_family), g_list_first(list));
+	g_list_free(list);
 	gtk_entry_set_editable(GTK_ENTRY(GTK_COMBO(fs->font_family)->entry), FALSE);
 	gtk_combo_set_value_in_list(GTK_COMBO(fs->font_family), 0, FALSE);
 	gtk_signal_connect(GTK_OBJECT(GTK_COMBO(fs->font_family)->entry),
@@ -189,9 +143,6 @@ static void font_selection_init(FontSelection *fs)
   gtk_widget_show(fs->font_family);
 
   fs->font_style = gtk_combo_new();
-	gtk_combo_set_popdown_strings(GTK_COMBO(fs->font_style),
-		(GList *)g_hash_table_lookup(fs->font_properties, 
-		gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(fs->font_family)->entry))));
 	gtk_entry_set_editable(GTK_ENTRY(GTK_COMBO(fs->font_style)->entry), FALSE);
 	gtk_widget_set_usize(GTK_COMBO(fs->font_style)->entry, 120, -1);
 	gtk_combo_set_value_in_list(GTK_COMBO(fs->font_family), 0, FALSE);
@@ -200,21 +151,21 @@ static void font_selection_init(FontSelection *fs)
   gtk_box_pack_start(GTK_BOX(fs), fs->font_style, TRUE, TRUE, 2);
   gtk_widget_show(fs->font_style);
 
-  font_size_adj = gtk_adjustment_new(50, 1, 1000, 1, 10, 10);
+  font_size_adj = gtk_adjustment_new(14, 1, 1000, 1, 10, 10);
   fs->font_size = gtk_spin_button_new(GTK_ADJUSTMENT(font_size_adj), 1, 0);
   gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(fs->font_size), TRUE);
   gtk_spin_button_set_update_policy(GTK_SPIN_BUTTON(fs->font_size), GTK_UPDATE_ALWAYS);
-	gtk_spin_button_set_value(GTK_SPIN_BUTTON(fs->font_size), 50);
 	gtk_signal_connect(GTK_OBJECT(fs->font_size), "changed",
 		GTK_SIGNAL_FUNC(on_font_selection_value_changed), fs);
   gtk_box_pack_start(GTK_BOX(fs), fs->font_size, TRUE, TRUE, 2);
   gtk_widget_show(fs->font_size);
 
   fs->font_metric = gtk_combo_new();
-  font_metric_items = g_list_append(font_metric_items, _("pixels"));
-  font_metric_items = g_list_append(font_metric_items, _("points"));
-  gtk_combo_set_popdown_strings(GTK_COMBO(fs->font_metric), font_metric_items);
-  g_list_free(font_metric_items);
+	list = NULL;
+  list = g_list_append(list, _("pixels"));
+  list = g_list_append(list, _("points"));
+  gtk_combo_set_popdown_strings(GTK_COMBO(fs->font_metric), list);
+  g_list_free(list);
 	gtk_entry_set_editable(GTK_ENTRY(GTK_COMBO(fs->font_metric)->entry), FALSE);
 	gtk_widget_set_usize(GTK_COMBO(fs->font_metric)->entry, 40, -1);
 	gtk_combo_set_value_in_list(GTK_COMBO(fs->font_metric), 0, FALSE);
@@ -224,8 +175,57 @@ static void font_selection_init(FontSelection *fs)
   gtk_widget_show(fs->font_metric);
 
 	on_font_selection_family_changed(NULL, fs);
+	on_font_selection_value_changed(NULL, fs);
 }
 
+void on_fs_family_changed(GtkWidget *widget, gint row, gint column,
+	GdkEvent *event, gpointer data)
+{
+	FontSelection *fs;
+
+	fs = FONT_SELECTION(data);
+
+	if (fs->skip_fs_events)
+		return;
+	
+#ifdef DEBUG_FONT_SELECTION
+	printf("SELECT_FAMILY: %d\n", row);
+#endif
+	gtk_list_select_item(GTK_LIST(GTK_COMBO(fs->font_family)->list), row);
+}
+
+void on_fs_style_changed(GtkWidget *widget, gint row, gint column,
+	GdkEvent *event, gpointer data)
+{
+	FontSelection *fs;
+
+	fs = FONT_SELECTION(data);
+
+	if (fs->skip_fs_events)
+		return;
+
+#ifdef DEBUG_FONT_SELECTION
+	printf("SELECT_STYLE: %d\n", row);
+#endif
+	build_font_style_list(fs);
+	gtk_list_select_item(GTK_LIST(GTK_COMBO(fs->font_style)->list), row);
+}
+
+void on_fs_size_changed(GtkWidget *widget, gpointer data)
+{
+	FontSelection *fs;
+
+	fs = FONT_SELECTION(data);
+
+	if (fs->skip_fs_events)
+		return;
+
+#ifdef DEBUG_FONT_SELECTION
+	printf("SELECT_SIZE: '%s'\n", gtk_entry_get_text(GTK_ENTRY(widget)));
+#endif
+  gtk_spin_button_set_value(GTK_SPIN_BUTTON(fs->font_size),
+		atof(gtk_entry_get_text(GTK_ENTRY(widget))));
+}
 
 GtkWidget* font_selection_new(void)
 {
@@ -235,149 +235,184 @@ GtkWidget* font_selection_new(void)
 
 void on_font_selection_family_changed(GtkWidget *widget, gpointer data)
 {
-	FontSelection *fs;
+	FontSelection *fs = NULL;
+	gint *pos = NULL;
 
-	fs = (FontSelection *)data;
-	gtk_combo_set_popdown_strings(GTK_COMBO(fs->font_style),
-		(GList *)g_hash_table_lookup(fs->font_properties, 
-		gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(fs->font_family)->entry))));
+	fs = FONT_SELECTION(data);
+	
+	if (!fs->skip_fs_events)
+		return;
+
+	pos = g_hash_table_lookup(fs->font_names_hash,
+		gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(fs->font_family)->entry)));
+	if (pos == NULL) {
+		printf("ERR_on_font_selection_family_changed '%s'\n",
+			gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(fs->font_family)->entry)));
+		return;
+	}
+
+	gtk_clist_select_row(
+		GTK_CLIST(GTK_FONT_SELECTION(fs->font_selection)->font_clist), *pos, 0);
+	build_font_style_list(fs);
+}
+
+void build_font_style_list(FontSelection *fs)
+{
+	gint row, i;
+	gchar *txt = NULL;
+	gchar *pfx = NULL;
+	GList *list = NULL;
+
+	if (fs->font_styles_hash != NULL) {
+		g_hash_table_foreach_remove(fs->font_styles_hash, hash_entry_free, NULL);
+		g_hash_table_destroy(fs->font_styles_hash);
+	}
+	fs->font_styles_hash = g_hash_table_new(g_str_hash, g_str_equal);
+
+	row = GTK_CLIST(GTK_FONT_SELECTION(
+		fs->font_selection)->font_style_clist)->rows;
+	for (i = 0; i < row; i++) {
+		gtk_clist_get_text(GTK_CLIST(GTK_FONT_SELECTION(fs->font_selection)->font_style_clist), i, 0, &txt);
+		if (strchr(txt, '-') != NULL) {
+			pfx = txt;
+		} else {
+			if (pfx != NULL)
+				txt = g_strdup_printf("%s (%s)", txt, pfx);
+
+			g_hash_table_insert(fs->font_styles_hash, txt,
+				g_memdup(&i, sizeof(gint)));
+			list = g_list_append(list, txt);
+#ifdef DEBUG_FONT_SELECTION
+			/*
+			printf("\t'%s'\n", txt);
+			*/
+#endif
+		}
+	}
+
+	gtk_combo_set_popdown_strings(GTK_COMBO(fs->font_style), list);
+	g_list_free(list);
 }
 
 
 void on_font_selection_value_changed(GtkWidget *widget, gpointer data)
 {
-	GdkFont *font;
 	FontSelection *fs;
-	gchar fontname[8192];
 
-	fs = (FontSelection *)data;
+	fs = FONT_SELECTION(data);
 
-	if (strcmp(gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(fs->font_style)->entry)), "") == 0) {
-		/* isn't a '-*' font */
-		gtk_widget_set_sensitive(fs->font_style, FALSE);
-		gtk_widget_set_sensitive(fs->font_size, FALSE);
-		gtk_widget_set_sensitive(fs->font_metric, FALSE);
-		g_snprintf(fontname, sizeof(fontname), "%s",
-			gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(fs->font_family)->entry)));
+	if (!fs->skip_fs_events)
+		return;
+
+	if (strcmp(gtk_entry_get_text(
+		GTK_ENTRY(GTK_COMBO(fs->font_metric)->entry)), _("pixels")) == 0) {
+		gtk_button_clicked(
+			GTK_BUTTON(GTK_FONT_SELECTION(fs->font_selection)->pixels_button));
 	} else {
-		/* is a '-*' font */
-		gtk_widget_set_sensitive(fs->font_style, TRUE);
-		gtk_widget_set_sensitive(fs->font_size, TRUE);
-		gtk_widget_set_sensitive(fs->font_metric, TRUE);
-		/* "-*-(fn)-(wg)-(sl)-(sp)-*-(px)-(po * 10)-*-*-*-*-*-*" */
-		if (strcmp(gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(fs->font_metric)->entry)), _("pixels")) == 0) {
-			/* pixel size */
-			g_snprintf(fontname, sizeof(fontname), "-*-%s-%s-*-%d-*-*-*-*-*-*-*",
-				gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(fs->font_family)->entry)),
-				gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(fs->font_style)->entry)),
-				gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(fs->font_size)));
-		} else {
-			/* point size */
-			g_snprintf(fontname, sizeof(fontname), "-*-%s-%s-*-*-%d-*-*-*-*-*-*",
-				gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(fs->font_family)->entry)),
-				gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(fs->font_style)->entry)),
-				gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(fs->font_size)) * 10);
-		}
+		gtk_button_clicked(
+			GTK_BUTTON(GTK_FONT_SELECTION(fs->font_selection)->points_button));
 	}
+
+	gtk_entry_set_text(
+		GTK_ENTRY(GTK_FONT_SELECTION(fs->font_selection)->size_entry),
+		gtk_entry_get_text(GTK_ENTRY(fs->font_size)));
+
+	/* force update the gtk_font_selection font_size */
+	{
+		GdkEvent *event;
+
+		event = g_new0(GdkEvent, 1);
+		event->type = GDK_KEY_PRESS;
+		event->key.keyval = GDK_Return;
+		gtk_widget_event(GTK_FONT_SELECTION(fs->font_selection)->size_entry,
+			event);
+		g_free(event);
+	}
+
+	if (fs->font_styles_hash != NULL) {
+		gint *pos;
+	
+		pos = g_hash_table_lookup(fs->font_styles_hash,
+			gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(fs->font_style)->entry)));
+		gtk_clist_select_row(
+			GTK_CLIST(GTK_FONT_SELECTION(fs->font_selection)->font_style_clist),
+			*pos, 0);
+	}
+
+#ifdef DEBUG_FONT_SELECTION
+	printf("Loading font: %s\n",
+		gtk_font_selection_get_font_name(GTK_FONT_SELECTION(fs->font_selection)));
+#endif
+
 	gtk_entry_set_position(GTK_ENTRY(GTK_COMBO(fs->font_family)->entry), 0);
 	gtk_entry_set_position(GTK_ENTRY(GTK_COMBO(fs->font_style)->entry), 0);
-	/* If we do this for the font_size then it's difficult/ annoying to
-	   erase characters from that entry widget, which IMHO is a bug
 	gtk_entry_set_position(GTK_ENTRY(&GTK_SPIN_BUTTON(fs->font_size)->entry), 0);
-	*/
 	gtk_entry_set_position(GTK_ENTRY(GTK_COMBO(fs->font_metric)->entry), 0);
-
-	gdk_error_warnings = 0;
-	gdk_error_code = 0;
-	font = gdk_font_load(fontname);
-	if (!font || (gdk_error_code == -1)) {
-#ifdef DEBUG
-		printf("ERROR Loading font: %s\n", fontname);
-#endif
-		return;
-	}
-	fs->font = font;
-#ifdef DEBUG
-	printf("Loading font: %s\n", fontname);
-#endif
 
 	/* signal emit "font_changed" */
 	gtk_signal_emit(GTK_OBJECT(data), font_selection_signals[FONT_CHANGED]);
 }
 
-
-void font_selection_set_font_family(FontSelection *fs, gchar *family)
+GdkFont* font_selection_get_font(FontSelection *fs)
 {
-	if (family == NULL || strlen(family) == 0)
-		return;
-
-	if (g_hash_table_lookup(fs->font_properties, family) == NULL) {
-		printf(_("Unknown font family \"%s\".\n"), family);
-		return;
-	}
-	gtk_entry_set_text(GTK_ENTRY(GTK_COMBO(fs->font_family)->entry), family);
+	return gtk_font_selection_get_font(GTK_FONT_SELECTION(fs->font_selection));
 }
 
-
-void font_selection_set_font_style(FontSelection *fs, const gchar *style)
+gchar* font_selection_get_font_name(FontSelection *fs)
 {
-	GList *l;
-	gboolean exists = FALSE;
-	gchar *family;
-
-	if (style == NULL || strlen(style) == 0)
-		return;
-
-	family = gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(fs->font_family)->entry));
-	l = g_hash_table_lookup(fs->font_properties, family);
-	while (l && !exists) {
-		if (strcmp((char *)l->data, style) == 0)
-			exists = TRUE;
-		l = l->next;
-	}
-	if (!exists) {
-		printf(_("Unknown font style \"%s\" for family \"%s\".\n"), style, family);
-		return;
-	}
-	gtk_entry_set_text(GTK_ENTRY(GTK_COMBO(fs->font_style)->entry), style);
+	return gtk_font_selection_get_font_name(
+		GTK_FONT_SELECTION(fs->font_selection));
 }
 
-
-void font_selection_set_font_size(FontSelection *fs, const gint size)
+gboolean font_selection_set_font_name(FontSelection *fs,
+	const gchar *fontname)
 {
-	gtk_spin_button_set_value(GTK_SPIN_BUTTON(fs->font_size), size);
+	gboolean rval;
+
+#ifdef DEBUG_FONT_SELECTION
+	printf("Req. font: '%s'\n", fontname);
+#endif
+	fs->skip_fs_events = FALSE;
+	rval = gtk_font_selection_set_font_name(
+		GTK_FONT_SELECTION(fs->font_selection), fontname);
+	fs->skip_fs_events = TRUE;
+
+	/* signal emit "font_changed" */
+	gtk_signal_emit(GTK_OBJECT(fs), font_selection_signals[FONT_CHANGED]);
+
+	return rval;
 }
 
-
-void font_selection_set_font_metric(FontSelection *fs, FontMetricType fm)
+gboolean hash_entry_free(gpointer key, gpointer val, gpointer user_data)
 {
-	gtk_entry_set_text(GTK_ENTRY(GTK_COMBO(fs->font_metric)->entry),
-		fm == FONT_METRIC_PIXELS ? _("pixels") : _("points"));
+	g_free(val);
+	return TRUE;
 }
 
-
-gchar *font_selection_get_font_family(FontSelection *fs)
+#ifdef DEBUG_FONT_SELECTION
+int main(void)
 {
-	return gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(fs->font_family)->entry));
+	GtkWidget *window, *fs;
+
+	gtk_init(NULL, NULL);
+		
+  window = gtk_window_new(GTK_WINDOW_DIALOG);
+  gtk_container_border_width(GTK_CONTAINER(window), 4);
+	gtk_signal_connect(GTK_OBJECT(window), "destroy",
+		GTK_SIGNAL_FUNC(gtk_main_quit), NULL);
+	gtk_widget_show(window);
+
+	fs = font_selection_new();
+	gtk_widget_show(fs);
+  gtk_container_add(GTK_CONTAINER(window), fs);
+
+	font_selection_set_font_name(FONT_SELECTION(fs),
+		"-unknown-helvetica-black-r-normal--24-*-75-75-p-74-adobe-fontspecific");
+
+  gtk_main();
+
+	return FALSE;
 }
-
-
-gchar * font_selection_get_font_style(FontSelection *fs)
-{
-	return gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(fs->font_style)->entry));
-}
-
-
-gint font_selection_get_font_size(FontSelection *fs)
-{
-	return gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(fs->font_size));
-}
-
-
-FontMetricType font_selection_get_font_metric(FontSelection *fs)
-{
-	return strcmp(gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(fs->font_metric)->entry)), _("pixels")) == 0 ?
-		FONT_METRIC_PIXELS : FONT_METRIC_POINTS;
-}
+#endif
 
 /* vim: set ts=2 sw=2 tw=79 ai nowrap: */

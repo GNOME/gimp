@@ -1,3 +1,22 @@
+2000-07-30  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/gdyntext/graphics/layer_align_[0-9].xpm
+	* plug-ins/gdyntext/gdyntextcompat.[ch]
+	* plug-ins/gdyntext/gdyntextutil.[ch]: new files
+	
+	* plug-ins/gdyntext/ChangeLog
+	* plug-ins/gdyntext/Makefile.am
+	* plug-ins/gdyntext/README
+	* plug-ins/gdyntext/TODO
+	* plug-ins/gdyntext/charmap.[ch]
+	* plug-ins/gdyntext/charmap_window.[ch]
+	* plug-ins/gdyntext/font_selection.[ch]
+	* plug-ins/gdyntext/gdyntext.[ch]
+	* plug-ins/gdyntext/gdyntext_ui.[ch]
+	* plug-ins/gdyntext/message_window.[ch]: updated to version 1.5.0 
+	of the GDynText plug-in. This seems to fix a number of problems 
+	with the Dynamic Text tool including bugs #2355 and #16485.
+
 2000-07-30  Tuomas Kuosmanen  <tigert@gimp.org>
 
 	* gimp_splash.ppm: oops, mitch thought that I thought that he thought

@@ -1,6 +1,6 @@
 /*
  * GIMP Dynamic Text -- This is a plug-in for The GIMP 1.0
- * Copyright (C) 1998,1999 Marco Lamberto <lm@geocities.com>
+ * Copyright (C) 1998,1999,2000 Marco Lamberto <lm@geocities.com>
  * Web page: http://www.geocities.com/Tokyo/1474/gimp/
  *
  * This program is free software; you can redistribute it and/or modify
@@ -47,14 +47,17 @@ struct _FontSelection
 {
 	GtkVBox hbox;
 
+	GtkWidget *font_selection;
+
 	GtkWidget *font_family;
 	GtkWidget *font_style;
 	GtkWidget *font_size;
 	GtkWidget *font_metric;
 
-	GdkFont *font;
-	GList *font_names;
-	GHashTable *font_properties;
+	GHashTable *font_names_hash;
+	GHashTable *font_styles_hash;
+
+	gboolean skip_fs_events;
 };
 
 struct _FontSelectionClass
@@ -67,14 +70,9 @@ struct _FontSelectionClass
 
 guint						font_selection_get_type(void);
 GtkWidget*			font_selection_new(void);
-void						font_selection_set_font_family(FontSelection *fs, gchar *family);
-void						font_selection_set_font_style(FontSelection *fs, const gchar *style);
-void						font_selection_set_font_size(FontSelection *fs, const gint size);
-void						font_selection_set_font_metric(FontSelection *fs, FontMetricType fm);
-gchar*					font_selection_get_font_family(FontSelection *fs);
-gchar*					font_selection_get_font_style(FontSelection *fs);
-gint						font_selection_get_font_size(FontSelection *fs);
-FontMetricType	font_selection_get_font_metric(FontSelection *fs);
+gboolean				font_selection_set_font_name(FontSelection *fs, const gchar *fontname);
+GdkFont*				font_selection_get_font(FontSelection *fs);
+gchar*					font_selection_get_font_name(FontSelection *fs);
 
 #ifdef __cplusplus
 }

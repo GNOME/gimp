@@ -1,6 +1,6 @@
 /*
  * GIMP Dynamic Text -- This is a plug-in for The GIMP 1.0
- * Copyright (C) 1998,1999 Marco Lamberto <lm@geocities.com>
+ * Copyright (C) 1998,1999,2000 Marco Lamberto <lm@geocities.com>
  * Web page: http://www.geocities.com/Tokyo/1474/gimp/
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,16 +19,13 @@
  *
  * $Id$
  */
-#include "config.h"
 
 #include <stdio.h>
-
 #include <gtk/gtk.h>
-
+#include "libgimp/stdplugins-intl.h"
 #include "charmap.h"
 #include "charmap_window.h"
 
-#include "libgimp/stdplugins-intl.h"
 
 static void charmap_window_class_init(CharMapWindowClass *class);
 static void charmap_window_init(CharMapWindow *mw);
@@ -76,7 +73,6 @@ static void charmap_window_init(CharMapWindow *cmw)
 	GtkWidget *hbox1;
 	GtkWidget *hbox2;
 	GtkWidget *hbbox1;
-	GtkWidget *hseparator;
 	GtkWidget *frame;
 	GtkWidget *label;
 	GtkTooltips *tooltips;
@@ -102,10 +98,6 @@ static void charmap_window_init(CharMapWindow *cmw)
 	gtk_signal_connect(GTK_OBJECT(cmw->charmap), "char_selected",
 		GTK_SIGNAL_FUNC(on_charmap_char_selected), cmw);
   gtk_widget_show(cmw->charmap);
-
-  hseparator = gtk_hseparator_new();
-  gtk_box_pack_start(GTK_BOX(vbox), hseparator, FALSE, TRUE, 0);
-  gtk_widget_show(hseparator);
 
   hbox1 = gtk_hbox_new(FALSE, 5);
   gtk_box_pack_start(GTK_BOX(vbox), hbox1, FALSE, TRUE, 0);

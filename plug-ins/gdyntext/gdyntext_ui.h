@@ -1,6 +1,6 @@
 /*
  * GIMP Dynamic Text -- This is a plug-in for The GIMP 1.0
- * Copyright (C) 1998,1999 Marco Lamberto <lm@geocities.com>
+ * Copyright (C) 1998,1999,2000 Marco Lamberto <lm@geocities.com>
  * Web page: http://www.geocities.com/Tokyo/1474/gimp/
  *
  * This program is free software; you can redistribute it and/or modify
@@ -22,14 +22,6 @@
 
 #ifndef _GDYNTEXT_UI_H_
 #define _GDYNTEXT_UI_H_
-
-#include <gtk/gtk.h>
-#include "gdyntext.h"
-#include "font_selection.h"
-#include "charmap.h"
-#include "charmap_window.h"
-#include "message_window.h"
-
 
 gboolean gdt_create_ui(GdtVals *data);
 
