@@ -1,8 +1,9 @@
 2004-10-28  Øyvind Kolås  <pippin@gimp.org>
 
-	* app/display/gimpdisplayshell-preview.c: Made the transform preview
-	approximate the perspective transform by subdividision, currently
-	subdividing into a 5x5 grid, increase resolution to increase accuracy.
+	* app/display/gimpdisplayshell-preview.c: Improve preview accuracy of
+	perspective transform, by subdiving into a 5x5 grid.
+
+	Fixes bug #152222.
 
 2004-10-27  Philip Lafleur  <plafleur@cvs.gnome.org>
 
