@@ -1,5 +1,14 @@
 2004-07-15  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
+	* app/display/gimpcanvas.c:
+	* app/display/gimpdisplayshell-transform.c: added gtk-doc
+	comments for all public functions that lack them.
+	
+	* app/display/gimpdisplayshell.c: added a couple of
+	gtk-doc comments.
+	
+2004-07-15  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
 	* app/core/gimpdata.c: added gtk-doc comments for
 	public functions.
 

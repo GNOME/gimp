@@ -134,14 +134,14 @@ gimp_canvas_get_type (void)
       static const GTypeInfo canvas_info =
       {
         sizeof (GimpCanvasClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_canvas_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpCanvas),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_canvas_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_canvas_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpCanvas),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_canvas_init,
       };
 
       canvas_type = g_type_register_static (GTK_TYPE_DRAWING_AREA,
@@ -377,6 +377,15 @@ gimp_canvas_new (void)
                        NULL);
 }
 
+/**
+ * gimp_canvas_draw_cursor:
+ * @canvas: the #GimpCanvas widget to draw on.
+ * @x:      
+ * @y:
+ *
+ * Draws a plus-shaped black and white cursor, centered at 
+ * the point @x, @y.
+ **/
 void
 gimp_canvas_draw_cursor (GimpCanvas *canvas,
                          gint        x,
@@ -402,6 +411,16 @@ gimp_canvas_draw_cursor (GimpCanvas *canvas,
                  x + 1, y - 7, x + 1, y + 7);
 }
 
+/**
+ * gimp_canvas_draw_point: 
+ * @canvas: a #GimpCanvas widget
+ * @style:  one of the enumerated #GimpCanvasStyle's.
+ * @x:      x coordinate
+ * @y:      y coordinate
+ *
+ * Draw a single pixel at the specified location in the 
+ * specified style.  Uses gdk_draw_point().
+ **/
 void
 gimp_canvas_draw_point (GimpCanvas      *canvas,
                         GimpCanvasStyle  style,
@@ -415,6 +434,17 @@ gimp_canvas_draw_point (GimpCanvas      *canvas,
                   x, y);
 }
 
+/**
+ * gimp_canvas_draw_points: 
+ * @canvas:     a #GimpCanvas widget
+ * @style:      one of the enumerated #GimpCanvasStyle's.
+ * @points:     an array of GdkPoint x-y pairs.
+ * @num_points: the number of points in the array
+ *
+ * Draws a set of one-pixel points at the locations given
+ * in the @points argument, in the specified style.
+ * Uses gdk_draw_points().
+ **/
 void
 gimp_canvas_draw_points (GimpCanvas      *canvas,
                          GimpCanvasStyle  style,
@@ -428,6 +458,18 @@ gimp_canvas_draw_points (GimpCanvas      *canvas,
                    points, num_points);
 }
 
+/**
+ * gimp_canvas_draw_line: 
+ * @canvas: a #GimpCanvas widget
+ * @style:  one of the enumerated #GimpCanvasStyle's.
+ * @x1:     X coordinate of the first point
+ * @y1:     Y coordinate of the first point
+ * @x2:     X coordinate of the second point
+ * @y2:     Y coordinate of the second point
+ *
+ * Draw a line connecting the specified points, using the
+ * specified style.  Uses gdk_draw_line().
+ **/
 void
 gimp_canvas_draw_line (GimpCanvas      *canvas,
                        GimpCanvasStyle  style,
@@ -443,6 +485,16 @@ gimp_canvas_draw_line (GimpCanvas      *canvas,
                  x1, y1, x2, y2);
 }
 
+/**
+ * gimp_canvas_draw_lines: 
+ * @canvas:     a #GimpCanvas widget
+ * @style:      one of the enumerated #GimpCanvasStyle's.
+ * @points:     a #GdkPoint array.
+ * @num_points: the number of points in the array.
+ *
+ * Draws a set of lines connecting the specified points, in the
+ * specified style.  Uses gdk_draw_lines().
+ **/
 void
 gimp_canvas_draw_lines (GimpCanvas      *canvas,
                         GimpCanvasStyle  style,
@@ -456,6 +508,18 @@ gimp_canvas_draw_lines (GimpCanvas      *canvas,
                   points, num_points);
 }
 
+/**
+ * gimp_canvas_draw_rectangle:
+ * @canvas: a #GimpCanvas widget
+ * @style:  one of the enumerated #GimpCanvasStyle's.
+ * @filled: %TRUE if the rectangle is to be filled.
+ * @x:      X coordinate of the upper left corner.
+ * @y:      Y coordinate of the upper left corner.
+ * @width:  width of the rectangle.
+ * @height: height of the rectangle.
+ *
+ * Draws a rectangle in the specified style.  Uses gdk_draw_rectangle().
+ **/
 void
 gimp_canvas_draw_rectangle (GimpCanvas      *canvas,
                             GimpCanvasStyle  style,
@@ -472,6 +536,20 @@ gimp_canvas_draw_rectangle (GimpCanvas      *canvas,
                       filled, x, y, width, height);
 }
 
+/**
+ * gimp_canvas_draw_arc:
+ * @canvas: a #GimpCanvas widget
+ * @style:  one of the enumerated #GimpCanvasStyle's.
+ * @filled: %TRUE if the arc is to be filled, producing a 'pie slice'.
+ * @x:      X coordinate of the left edge of the bounding rectangle.
+ * @y:      Y coordinate of the top edge of the bounding rectangle.
+ * @width:  width of the bounding rectangle.
+ * @height: height of the bounding rectangle.
+ * @angle1: the start angle of the arc.
+ * @angle2: the end angle of the arc.
+ *
+ * Draws an arc or pie slice, in the specified style.  Uses gdk_draw_arc(). 
+ **/
 void
 gimp_canvas_draw_arc (GimpCanvas      *canvas,
                       GimpCanvasStyle  style,
@@ -490,6 +568,17 @@ gimp_canvas_draw_arc (GimpCanvas      *canvas,
                 filled, x, y, width, height, angle1, angle2);
 }
 
+/**
+ * gimp_canvas_draw_polygon: 
+ * @canvas:     a #GimpCanvas widget
+ * @style:      one of the enumerated #GimpCanvasStyle's.
+ * @filled:     if %TRUE, fill the polygon.
+ * @points:     a #GdkPoint array.
+ * @num_points: the number of points in the array.
+ *
+ * Draws a polygon connecting the specified points, in the
+ * specified style.  Uses gdk_draw_polygon().
+ **/
 void
 gimp_canvas_draw_polygon (GimpCanvas      *canvas,
                           GimpCanvasStyle  style,
@@ -504,6 +593,16 @@ gimp_canvas_draw_polygon (GimpCanvas      *canvas,
                     filled, points, num_points);
 }
 
+/**
+ * gimp_canvas_draw_segments: 
+ * @canvas:     a #GimpCanvas widget
+ * @style:      one of the enumerated #GimpCanvasStyle's.
+ * @segments:   a #GdkSegment array.
+ * @num_points: the number of segments in the array.
+ *
+ * Draws a set of line segments in the specified style.  
+ * Uses gdk_draw_segments().
+ **/
 void
 gimp_canvas_draw_segments (GimpCanvas      *canvas,
                            GimpCanvasStyle  style,
@@ -524,6 +623,22 @@ gimp_canvas_draw_segments (GimpCanvas      *canvas,
                      segments, num_segments);
 }
 
+/**
+ * gimp_canvas_draw_rgb:
+ * @canvas:    a #GimpCanvas widget
+ * @style:     one of the enumerated #GimpCanvasStyle's.
+ * @x:         X coordinate of the upper left corner.
+ * @y:         Y coordinate of the upper left corner.
+ * @width:     width of the rectangle to be drawn.
+ * @height:    height of the rectangle to be drawn.
+ * @rgb_buf:   pixel data for the image to be drawn.
+ * @rowstride: the rowstride in @rgb_buf.
+ * @xdith:     x offset for dither alignment.
+ * @ydith:     y offset for dither alignment.
+ *
+ * Draws an image on the canvas in the specified style.  
+ * Uses gdk_draw_rgb_image_dithalign().
+ **/
 void
 gimp_canvas_draw_rgb (GimpCanvas      *canvas,
                       GimpCanvasStyle  style,
@@ -545,6 +660,16 @@ gimp_canvas_draw_rgb (GimpCanvas      *canvas,
                                 rgb_buf, rowstride, xdith, ydith);
 }
 
+/**
+ * gimp_canvas_set_clip_rect:
+ * @canvas:    a #GimpCanvas widget
+ * @style:     one of the enumerated #GimpCanvasStyle's.
+ * @rect:      a #GdkRectangle to set the bounds of the clipping 
+ *             area.
+ *
+ * Sets a rectangular clipping area for the specified style.
+ * Uses gdk_gc_set_clip_rectangle().
+ **/
 void
 gimp_canvas_set_clip_rect (GimpCanvas      *canvas,
                            GimpCanvasStyle  style,
@@ -561,6 +686,16 @@ gimp_canvas_set_clip_rect (GimpCanvas      *canvas,
   gdk_gc_set_clip_rectangle (canvas->gc[style], rect);
 }
 
+/**
+ * gimp_canvas_set_clip_region:
+ * @canvas:    a #GimpCanvas widget
+ * @style:     one of the enumerated #GimpCanvasStyle's.
+ * @region:    a #GdkRegion to set the bounds of the clipping 
+ *             area.
+ *
+ * Sets a clipping region for the specified style.
+ * Uses gdk_gc_set_clip_region().
+ **/
 void
 gimp_canvas_set_clip_region (GimpCanvas      *canvas,
                              GimpCanvasStyle  style,
@@ -589,7 +724,7 @@ gimp_canvas_set_clip_region (GimpCanvas      *canvas,
  * implement a marching ants effect. An older implementation used to
  * use this feature and so it is included since it might be useful in
  * the future. All stipple bitmaps but the default one are created on
- * the fly.
+ * the fly.  Uses gdk_gc_set_stipple().
  */
 void
 gimp_canvas_set_stipple_index (GimpCanvas      *canvas,
@@ -637,6 +772,14 @@ gimp_canvas_set_custom_gc (GimpCanvas *canvas,
     g_object_ref (gc);
 }
 
+/**
+ * gimp_canvas_set_bg_color:
+ * @canvas:   a #GimpCanvas widget
+ * @color:    a color in #GimpRGB format
+ *
+ * Sets the background color of the canvas's window.  This
+ * is the color the canvas is set to if it is cleared.
+ **/
 void
 gimp_canvas_set_bg_color (GimpCanvas *canvas,
                           GimpRGB    *color)
