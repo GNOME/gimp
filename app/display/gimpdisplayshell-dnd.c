@@ -35,6 +35,8 @@
 #include "core/gimppattern.h"
 #include "core/gimptoolinfo.h"
 
+#include "vectors/gimpvectors.h"
+
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-dnd.h"
@@ -70,6 +72,36 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
   gimp_item_translate (GIMP_ITEM (new_layer), off_x, off_y, FALSE);
 
   gimp_image_add_layer (gdisp->gimage, new_layer, -1);
+
+  gimp_image_undo_group_end (gdisp->gimage);
+
+  gimp_image_flush (gdisp->gimage);
+
+  gimp_context_set_display (gimp_get_user_context (gdisp->gimage->gimp), gdisp);
+}
+
+void
+gimp_display_shell_drop_vectors (GtkWidget    *widget,
+                                 GimpViewable *viewable,
+                                 gpointer      data)
+{
+  GimpVectors *vectors;
+  GimpDisplay *gdisp;
+  GimpVectors *new_vectors;
+
+  gdisp = GIMP_DISPLAY_SHELL (data)->gdisp;
+
+  if (gdisp->gimage->gimp->busy)
+    return;
+
+  vectors = GIMP_VECTORS (viewable);
+
+  gimp_image_undo_group_start (gdisp->gimage, GIMP_UNDO_GROUP_EDIT_PASTE,
+                               _("Drop New Path"));
+
+  new_vectors = gimp_vectors_convert (vectors, gdisp->gimage);
+
+  gimp_image_add_vectors (gdisp->gimage, new_vectors, -1);
 
   gimp_image_undo_group_end (gdisp->gimage);
 

@@ -1,5 +1,11 @@
 2003-05-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell-dnd.[ch]
+	* app/display/gimpdisplayshell.c: enabled dropping of vectors to
+	the display to copy them between images.
+
+2003-05-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpmarshal.list: added BOOLEAN: OBJECT, POINTER.
 
 	* app/widgets/gimpcontainerview.[ch]: added a boolean return

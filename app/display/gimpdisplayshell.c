@@ -46,6 +46,8 @@
 
 #include "file/file-utils.h"
 
+#include "vectors/gimpvectors.h"
+
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpdnd.h"
 #include "widgets/gimpitemfactory.h"
@@ -306,6 +308,9 @@ gimp_display_shell_init (GimpDisplayShell *shell)
                               shell);
   gimp_dnd_viewable_dest_add (GTK_WIDGET (shell), GIMP_TYPE_CHANNEL,
 			      gimp_display_shell_drop_drawable,
+                              shell);
+  gimp_dnd_viewable_dest_add (GTK_WIDGET (shell), GIMP_TYPE_VECTORS,
+			      gimp_display_shell_drop_vectors,
                               shell);
   gimp_dnd_viewable_dest_add (GTK_WIDGET (shell), GIMP_TYPE_PATTERN,
 			      gimp_display_shell_drop_pattern,
