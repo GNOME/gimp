@@ -37,12 +37,12 @@ pdb_sources = \
 EXTRA_DIST = \
 	README		\
 	app.pl		\
+	enumcode.pl	\
 	enumgen.pl	\
 	groups.pl	\
 	lib.pl		\
 	pdb.pl		\
 	pdbgen.pl	\
-	script-fu.pl	\
 	stddefs.pdb	\
 	util.pl		\
 	$(pdb_sources)
@@ -112,12 +112,12 @@ stamp-app: $(srcdir)/app.pl $(pdb_scripts) $(pdb_sources)
 	   $(PERL) pdbgen.pl app \
 	&& echo timestamp > $$rootme/stamp-app
 
-stamp-script-fu: $(srcdir)/script-fu.pl enums.pl util.pl
+stamp-enum-code: $(srcdir)/enumcode.pl enums.pl util.pl
 	rootme=`pwd`; \
-	destdir=`cd $(top_srcdir)/plug-ins/script-fu && pwd`; export destdir; \
+	destdir=`cd $(top_srcdir) && pwd`; export destdir; \
 	cd $(srcdir) && \
 	  PDBGEN_BACKUP=$(PDBGEN_BACKUP) \
-	  $(PERL) script-fu.pl \
-	 && echo timestamp > $$rootme/stamp-script-fu
+	  $(PERL) enumcode.pl \
+	 && echo timestamp > $$rootme/stamp-enum-code
 
-all-local: stamp-app stamp-script-fu
+all-local: stamp-app stamp-enum-code
