@@ -64,7 +64,7 @@
       <menuitem action="select-invert" />
       <menuitem action="select-from-vectors" />
       <menuitem action="select-float" />
-      <menuitem action="select-by-color" />
+      <menuitem action="tools-by-color-select-short" />
       <separator />
       <menuitem action="select-feather" />
       <menuitem action="select-sharpen" />
@@ -209,6 +209,7 @@
         <menuitem action="drawable-rotate-90" />
         <menuitem action="drawable-rotate-270" />
         <menuitem action="drawable-rotate-180" />
+        <menuitem action="tools-rotate-arbitrary" />
 	<separator />
         <menuitem action="drawable-offset" />
       </menu>

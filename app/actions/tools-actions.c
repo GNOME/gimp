@@ -58,15 +58,42 @@ static GimpActionEntry tools_actions[] =
     GIMP_HELP_TOOLBOX_SWAP_COLORS }
 };
 
+static GimpStringActionEntry tools_alternative_actions[] =
+{
+  { "tools-by-color-select-short", GIMP_STOCK_TOOL_BY_COLOR_SELECT,
+    N_("_By Color"), NULL, NULL,
+    "gimp-by-color-select-tool",
+    GIMP_HELP_TOOL_BY_COLOR_SELECT },
+
+  { "tools-rotate-arbitrary", GIMP_STOCK_TOOL_ROTATE,
+    N_("_Arbitrary Rotation..."), NULL, NULL,
+    "gimp-rotate-tool",
+    GIMP_HELP_TOOL_ROTATE }
+};
+
 
 void
 tools_actions_setup (GimpActionGroup *group)
 {
-  GList *list;
+  GtkAction *action;
+  GList     *list;
 
   gimp_action_group_add_actions (group,
                                  tools_actions,
                                  G_N_ELEMENTS (tools_actions));
+
+  gimp_action_group_add_string_actions (group,
+                                        tools_alternative_actions,
+                                        G_N_ELEMENTS (tools_alternative_actions),
+                                        G_CALLBACK (tools_select_cmd_callback));
+
+  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
+                                        "tools-by-color-select-short");
+  gtk_action_set_accel_path (action, "<Actions>/tools/tools-by-color-select");
+
+  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
+                                        "tools-rotate-arbitrary");
+  gtk_action_set_accel_path (action, "<Actions>/tools/tools-rotate");
 
   for (list = GIMP_LIST (group->gimp->tool_info_list)->list;
        list;

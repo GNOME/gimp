@@ -1,3 +1,18 @@
+2004-05-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/select-actions.c: removed action "select-by-color".
+
+	* app/tools/gimpbycolorselecttool.c: add the shortcut here.
+
+	* app/actions/tools-actions.c: added alternative tool actions for
+	"by-color-select" and "rotate" which are identical to the ones
+	generated from the GimpToolInfo except for their label. Make sure
+	they have the same accelerators as the generated ones.
+
+	* menus/image-menu.xml.in: use the alternative actions for
+	"<Image>/Select/By Color" and
+	"<Layer>/Transform/Arbitrary Rotation...".
+
 2004-05-05  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimphelpui.c: documentation.

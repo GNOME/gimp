@@ -34,7 +34,6 @@
 #include "actions.h"
 #include "select-actions.h"
 #include "select-commands.h"
-#include "tools-commands.h"
 #include "vectors-commands.h"
 
 #include "gimp-intl.h"
@@ -106,14 +105,6 @@ static GimpActionEntry select_actions[] =
     GIMP_HELP_SELECTION_TO_PATH }
 };
 
-static GimpStringActionEntry select_tool_actions[] =
-{
-  { "select-by-color", GIMP_STOCK_TOOL_BY_COLOR_SELECT,
-    N_("_By Color"), "<shift>O", NULL,
-    "gimp-by-color-select-tool",
-    GIMP_HELP_TOOL_BY_COLOR_SELECT }
-};
-
 
 void
 select_actions_setup (GimpActionGroup *group)
@@ -121,11 +112,6 @@ select_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_actions (group,
                                  select_actions,
                                  G_N_ELEMENTS (select_actions));
-
-  gimp_action_group_add_string_actions (group,
-                                        select_tool_actions,
-                                        G_N_ELEMENTS (select_tool_actions),
-                                        G_CALLBACK (tools_select_cmd_callback));
 }
 
 void
@@ -157,8 +143,6 @@ select_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("select-invert",       lp && sel);
   SET_SENSITIVE ("select-from-vectors", lp && vectors);
   SET_SENSITIVE ("select-float",        lp && sel);
-
-  SET_SENSITIVE ("select-by-color",     lp);
 
   SET_SENSITIVE ("select-feather",      lp && sel);
   SET_SENSITIVE ("select-sharpen",      lp && sel);
