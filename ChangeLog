@@ -1,3 +1,9 @@
+Thu Feb 25 11:40:36 1999  Raph Levien  <raph@gimp.org>
+
+	* app/hue_saturation.c (hue_saturation_calculate_transfers):
+	Made increasing the saturation more subtle - which is what
+	you want for enhancing the color in photos.
+
 Thu Feb 25 12:19:50 MET 1999 Sven Neumann <sven@gimp.org>
 
 	* app/file_new_dialog.c

@@ -164,10 +164,24 @@ hue_saturation_calculate_transfers (HueSaturationDialog *hsd)
 	/*  Saturation  */
 	value = (hsd->saturation[0] + hsd->saturation[hue + 1]) * 255.0 / 100.0;
 	value = BOUNDS (value, -255, 255);
+
+	/* This change affects the way saturation is computed. With the
+	   old code (different code for value < 0), increasing the
+	   saturation affected muted colors very much, and bright colors
+	   less. With the new code, it affects muted colors and bright
+	   colors more or less evenly. For enhancing the color in photos,
+	   the new behavior is exactly what you want. It's hard for me
+	   to imagine a case in which the old behavior is better.
+	*/
+#define RAPH
+#ifdef RAPH
+	saturation_transfer[hue][i] = BOUNDS((i * (255 + value)) / 255, 0, 255);
+#else
 	if (value < 0)
 	  saturation_transfer[hue][i] = (unsigned char) ((i * (255 + value)) / 255);
 	else
 	  saturation_transfer[hue][i] = (unsigned char) (i + ((255 - i) * value) / 255);
+#endif
       }
 }
 
