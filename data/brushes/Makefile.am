@@ -45,10 +45,12 @@ FILES = \
 	callig3.gbr		\
 	callig4.gbr		\
 	confetti.gbr		\
+	confetti.gih		\
 	dunes.gbr		\
 	galaxy.gbr		\
 	galaxy_big.gbr		\
 	galaxy_small.gbr	\
+	hsparks.gih		\
 	pepper.gbr		\
 	pixel.gbr		\
 	thegimp.gbr		\
