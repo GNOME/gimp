@@ -38,6 +38,13 @@ sub _gen_gradient_search_for_segment_code
 {
     my $action_on_success = shift;
 
+    chomp $action_on_success;
+
+    $action_on_success =~ /^(\s*)/;
+    my $indent = $1;
+
+    $action_on_success =~ s/^$indent/' ' x 10/meg;
+
     return <<"CODE";
 {
 $_get_gradient_from_name_code
@@ -54,7 +61,7 @@ $_get_gradient_from_name_code
 
       if (success)
         {
-          $action_on_success
+$action_on_success
         }
     }
 }
@@ -141,7 +148,7 @@ HELP
     @outargs = (
         { name => 'color', type => 'color',
           desc => "The return color", void_ret => 1, init => 1 },
-        { name => "opacity", type => 'float',
+        { name => "opacity", type => 'float', init => 1,
           desc => "The opacity of the endpoint" }
     );
 
@@ -234,7 +241,8 @@ HELP
     %invoke = (
         vars => [ 'GimpGradient *gradient = NULL' ],
         code => &_gen_gradient_search_for_segment_code(<<"CODE"),
-final_pos = gimp_gradient_segment_set_${side}_pos (gradient, seg, pos);
+final_pos =
+  gimp_gradient_segment_set_${side}_pos (gradient, seg, pos);
 CODE
     );
 }
@@ -311,7 +319,8 @@ HELP
     %invoke = (
         vars => [ 'GimpGradient *gradient = NULL' ],
         code => &_gen_gradient_search_for_segment_code(<<"CODE"),
-blend_func = gimp_gradient_segment_get_blending_function (gradient, seg);
+blend_func =
+  gimp_gradient_segment_get_blending_function (gradient, seg);
 CODE
     );
 }
@@ -338,7 +347,8 @@ HELP
     %invoke = (
         vars => [ 'GimpGradient *gradient = NULL' ],
         code => &_gen_gradient_search_for_segment_code(<<"CODE"),
-coloring_type = gimp_gradient_segment_get_coloring_type (gradient, seg);
+coloring_type =
+  gimp_gradient_segment_get_coloring_type (gradient, seg);
 CODE
     );
 }
@@ -365,6 +375,14 @@ sub _gen_gradient_operate_on_segments_range
 
     @outargs = @{$args{outargs}};
 
+    my $action_on_success = $args{action_on_success};
+    chomp $action_on_success;
+
+    $action_on_success =~ /^(\s*)/;
+    my $indent = $1;
+
+    $action_on_success =~ s/^$indent/' ' x 14/meg;
+
     %invoke = (
         vars => [ 'GimpGradient *gradient = NULL' ],
         code => <<"CODE",
@@ -373,7 +391,8 @@ $_get_gradient_from_name_code
   if (gradient)
     {
       GimpGradientSegment *start_seg, *end_seg;
-      start_seg = gimp_gradient_segment_get_nth (gradient->segments, start_segment);
+      start_seg = gimp_gradient_segment_get_nth (gradient->segments,
+                                                 start_segment);
       if (start_seg)
         {
           if ((end_segment < start_segment) && (end_segment >= 0))
@@ -390,11 +409,12 @@ $_get_gradient_from_name_code
               else
                 {
                   end_seg = gimp_gradient_segment_get_nth (start_seg,
-                                                           end_segment - start_segment);
+                                                           end_segment -
+                                                           start_segment);
                 }
 
               /* Success */
-              $args{action_on_success}
+$action_on_success
             }
         }
       else
@@ -583,7 +603,8 @@ HELP
         'inargs' => [],
         'outargs' => [],
         'action_on_success' => <<'CODE',
-gimp_gradient_segment_range_blend (gradient, start_seg, end_seg,
+gimp_gradient_segment_range_blend (gradient,
+                                   start_seg, end_seg,
                                    &start_seg->left_color,
                                    &end_seg->right_color,
                                    TRUE, FALSE);
@@ -603,7 +624,8 @@ HELP
         'inargs' => [],
         'outargs' => [],
         'action_on_success' => <<'CODE',
-gimp_gradient_segment_range_blend (gradient, start_seg, end_seg,
+gimp_gradient_segment_range_blend (gradient,
+                                   start_seg, end_seg,
                                    &start_seg->left_color,
                                    &end_seg->right_color,
                                    FALSE, TRUE);
@@ -627,7 +649,7 @@ HELP
               'desc' => "Whether or not to compress the neighboring segments" }
         ],
         'outargs' => [
-            { 'name' => "final_delta", 'type' => "float",
+            { 'name' => "final_delta", 'type' => "float", init => 1,
               'desc' => "The final delta by which the range moved" }
         ],
         'action_on_success' => <<'CODE',

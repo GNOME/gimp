@@ -1,5 +1,13 @@
 2004-06-13  Manish Singh  <yosh@gimp.org>
 
+	* tools/pdbgen/pdb/gradient_edit.pdb: cleans ups so generated
+	output doesn't warn about uninitialize variable use, and whitespace
+	cosmetic cleanups.
+
+	* app/pdb/gradient_edit_cmds.c: regenerated.
+
+2004-06-13  Manish Singh  <yosh@gimp.org>
+
 	* app/base/cpu-accel.c: Reorged, to address bug #142907 and
 	bug #143069. Accel implementations #define HAVE_ACCEL, and cpu_accel()
 	keys on that. Both PPC and X86 implementations check for __GNUC__.

@@ -100,7 +100,7 @@ gradient_segment_get_left_color_invoker (Gimp        *gimp,
   gchar *name;
   gint32 segment;
   GimpRGB color;
-  gdouble opacity;
+  gdouble opacity = 0;
   GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
@@ -137,8 +137,7 @@ gradient_segment_get_left_color_invoker (Gimp        *gimp,
           if (success)
             {
               gimp_gradient_segment_get_left_color (gradient, seg, &color);
-    opacity = color.a * 100.0;
-
+              opacity = color.a * 100.0;
             }
         }
     }
@@ -250,8 +249,7 @@ gradient_segment_set_left_color_invoker (Gimp        *gimp,
           if (success)
             {
               color.a = opacity / 100.0;
-    gimp_gradient_segment_set_left_color (gradient, seg, &color);
-
+              gimp_gradient_segment_set_left_color (gradient, seg, &color);
             }
         }
     }
@@ -309,7 +307,7 @@ gradient_segment_get_right_color_invoker (Gimp        *gimp,
   gchar *name;
   gint32 segment;
   GimpRGB color;
-  gdouble opacity;
+  gdouble opacity = 0;
   GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
@@ -346,8 +344,7 @@ gradient_segment_get_right_color_invoker (Gimp        *gimp,
           if (success)
             {
               gimp_gradient_segment_get_right_color (gradient, seg, &color);
-    opacity = color.a * 100.0;
-
+              opacity = color.a * 100.0;
             }
         }
     }
@@ -459,8 +456,7 @@ gradient_segment_set_right_color_invoker (Gimp        *gimp,
           if (success)
             {
               color.a = opacity / 100.0;
-    gimp_gradient_segment_set_right_color (gradient, seg, &color);
-
+              gimp_gradient_segment_set_right_color (gradient, seg, &color);
             }
         }
     }
@@ -554,7 +550,6 @@ gradient_segment_get_left_pos_invoker (Gimp        *gimp,
           if (success)
             {
               pos = gimp_gradient_segment_get_left_pos (gradient, seg);
-
             }
         }
     }
@@ -656,8 +651,8 @@ gradient_segment_set_left_pos_invoker (Gimp        *gimp,
 
           if (success)
             {
-              final_pos = gimp_gradient_segment_set_left_pos (gradient, seg, pos);
-
+              final_pos =
+                gimp_gradient_segment_set_left_pos (gradient, seg, pos);
             }
         }
     }
@@ -760,7 +755,6 @@ gradient_segment_get_middle_pos_invoker (Gimp        *gimp,
           if (success)
             {
               pos = gimp_gradient_segment_get_middle_pos (gradient, seg);
-
             }
         }
     }
@@ -862,8 +856,8 @@ gradient_segment_set_middle_pos_invoker (Gimp        *gimp,
 
           if (success)
             {
-              final_pos = gimp_gradient_segment_set_middle_pos (gradient, seg, pos);
-
+              final_pos =
+                gimp_gradient_segment_set_middle_pos (gradient, seg, pos);
             }
         }
     }
@@ -966,7 +960,6 @@ gradient_segment_get_right_pos_invoker (Gimp        *gimp,
           if (success)
             {
               pos = gimp_gradient_segment_get_right_pos (gradient, seg);
-
             }
         }
     }
@@ -1068,8 +1061,8 @@ gradient_segment_set_right_pos_invoker (Gimp        *gimp,
 
           if (success)
             {
-              final_pos = gimp_gradient_segment_set_right_pos (gradient, seg, pos);
-
+              final_pos =
+                gimp_gradient_segment_set_right_pos (gradient, seg, pos);
             }
         }
     }
@@ -1171,8 +1164,8 @@ gradient_segment_get_blending_function_invoker (Gimp        *gimp,
 
           if (success)
             {
-              blend_func = gimp_gradient_segment_get_blending_function (gradient, seg);
-
+              blend_func =
+                gimp_gradient_segment_get_blending_function (gradient, seg);
             }
         }
     }
@@ -1269,8 +1262,8 @@ gradient_segment_get_coloring_type_invoker (Gimp        *gimp,
 
           if (success)
             {
-              coloring_type = gimp_gradient_segment_get_coloring_type (gradient, seg);
-
+              coloring_type =
+                gimp_gradient_segment_get_coloring_type (gradient, seg);
             }
         }
     }
@@ -1364,7 +1357,8 @@ gradient_segment_range_set_blending_function_invoker (Gimp        *gimp,
       if (gradient)
         {
           GimpGradientSegment *start_seg, *end_seg;
-          start_seg = gimp_gradient_segment_get_nth (gradient->segments, start_segment);
+          start_seg = gimp_gradient_segment_get_nth (gradient->segments,
+                                                     start_segment);
           if (start_seg)
             {
               if ((end_segment < start_segment) && (end_segment >= 0))
@@ -1381,15 +1375,15 @@ gradient_segment_range_set_blending_function_invoker (Gimp        *gimp,
                   else
                     {
                       end_seg = gimp_gradient_segment_get_nth (start_seg,
-                                                               end_segment - start_segment);
+                                                               end_segment -
+                                                               start_segment);
                     }
 
                   /* Success */
                   gimp_gradient_segment_range_set_blending_function (gradient,
-                                                       start_seg,
-                                                       end_seg,
-                                                       blending_function);
-
+                                                                     start_seg,
+                                                                     end_seg,
+                                                                     blending_function);
                 }
             }
           else
@@ -1484,7 +1478,8 @@ gradient_segment_range_set_coloring_type_invoker (Gimp        *gimp,
       if (gradient)
         {
           GimpGradientSegment *start_seg, *end_seg;
-          start_seg = gimp_gradient_segment_get_nth (gradient->segments, start_segment);
+          start_seg = gimp_gradient_segment_get_nth (gradient->segments,
+                                                     start_segment);
           if (start_seg)
             {
               if ((end_segment < start_segment) && (end_segment >= 0))
@@ -1501,15 +1496,15 @@ gradient_segment_range_set_coloring_type_invoker (Gimp        *gimp,
                   else
                     {
                       end_seg = gimp_gradient_segment_get_nth (start_seg,
-                                                               end_segment - start_segment);
+                                                               end_segment -
+                                                               start_segment);
                     }
 
                   /* Success */
                   gimp_gradient_segment_range_set_coloring_type (gradient,
-                                                   start_seg,
-                                                   end_seg,
-                                                   coloring_type);
-
+                                                                 start_seg,
+                                                                 end_seg,
+                                                                 coloring_type);
                 }
             }
           else
@@ -1599,7 +1594,8 @@ gradient_segment_range_flip_invoker (Gimp        *gimp,
       if (gradient)
         {
           GimpGradientSegment *start_seg, *end_seg;
-          start_seg = gimp_gradient_segment_get_nth (gradient->segments, start_segment);
+          start_seg = gimp_gradient_segment_get_nth (gradient->segments,
+                                                     start_segment);
           if (start_seg)
             {
               if ((end_segment < start_segment) && (end_segment >= 0))
@@ -1616,15 +1612,15 @@ gradient_segment_range_flip_invoker (Gimp        *gimp,
                   else
                     {
                       end_seg = gimp_gradient_segment_get_nth (start_seg,
-                                                               end_segment - start_segment);
+                                                               end_segment -
+                                                               start_segment);
                     }
 
                   /* Success */
                   gimp_gradient_segment_range_flip (gradient,
-                                      start_seg,
-                                      end_seg,
-                                      NULL, NULL);
-
+                                                    start_seg,
+                                                    end_seg,
+                                                    NULL, NULL);
                 }
             }
           else
@@ -1714,7 +1710,8 @@ gradient_segment_range_replicate_invoker (Gimp        *gimp,
       if (gradient)
         {
           GimpGradientSegment *start_seg, *end_seg;
-          start_seg = gimp_gradient_segment_get_nth (gradient->segments, start_segment);
+          start_seg = gimp_gradient_segment_get_nth (gradient->segments,
+                                                     start_segment);
           if (start_seg)
             {
               if ((end_segment < start_segment) && (end_segment >= 0))
@@ -1731,16 +1728,16 @@ gradient_segment_range_replicate_invoker (Gimp        *gimp,
                   else
                     {
                       end_seg = gimp_gradient_segment_get_nth (start_seg,
-                                                               end_segment - start_segment);
+                                                               end_segment -
+                                                               start_segment);
                     }
 
                   /* Success */
                   gimp_gradient_segment_range_replicate (gradient,
-                                           start_seg,
-                                           end_seg,
-                                           replicate_times,
-                                           NULL, NULL);
-
+                                                         start_seg,
+                                                         end_seg,
+                                                         replicate_times,
+                                                         NULL, NULL);
                 }
             }
           else
@@ -1830,7 +1827,8 @@ gradient_segment_range_split_midpoint_invoker (Gimp        *gimp,
       if (gradient)
         {
           GimpGradientSegment *start_seg, *end_seg;
-          start_seg = gimp_gradient_segment_get_nth (gradient->segments, start_segment);
+          start_seg = gimp_gradient_segment_get_nth (gradient->segments,
+                                                     start_segment);
           if (start_seg)
             {
               if ((end_segment < start_segment) && (end_segment >= 0))
@@ -1847,15 +1845,15 @@ gradient_segment_range_split_midpoint_invoker (Gimp        *gimp,
                   else
                     {
                       end_seg = gimp_gradient_segment_get_nth (start_seg,
-                                                               end_segment - start_segment);
+                                                               end_segment -
+                                                               start_segment);
                     }
 
                   /* Success */
                   gimp_gradient_segment_range_split_midpoint (gradient,
-                                                start_seg,
-                                                end_seg,
-                                                NULL, NULL);
-
+                                                              start_seg,
+                                                              end_seg,
+                                                              NULL, NULL);
                 }
             }
           else
@@ -1945,7 +1943,8 @@ gradient_segment_range_split_uniform_invoker (Gimp        *gimp,
       if (gradient)
         {
           GimpGradientSegment *start_seg, *end_seg;
-          start_seg = gimp_gradient_segment_get_nth (gradient->segments, start_segment);
+          start_seg = gimp_gradient_segment_get_nth (gradient->segments,
+                                                     start_segment);
           if (start_seg)
             {
               if ((end_segment < start_segment) && (end_segment >= 0))
@@ -1962,16 +1961,16 @@ gradient_segment_range_split_uniform_invoker (Gimp        *gimp,
                   else
                     {
                       end_seg = gimp_gradient_segment_get_nth (start_seg,
-                                                               end_segment - start_segment);
+                                                               end_segment -
+                                                               start_segment);
                     }
 
                   /* Success */
                   gimp_gradient_segment_range_split_uniform (gradient,
-                                               start_seg,
-                                               end_seg,
-                                               split_parts,
-                                               NULL, NULL);
-
+                                                             start_seg,
+                                                             end_seg,
+                                                             split_parts,
+                                                             NULL, NULL);
                 }
             }
           else
@@ -2061,7 +2060,8 @@ gradient_segment_range_delete_invoker (Gimp        *gimp,
       if (gradient)
         {
           GimpGradientSegment *start_seg, *end_seg;
-          start_seg = gimp_gradient_segment_get_nth (gradient->segments, start_segment);
+          start_seg = gimp_gradient_segment_get_nth (gradient->segments,
+                                                     start_segment);
           if (start_seg)
             {
               if ((end_segment < start_segment) && (end_segment >= 0))
@@ -2078,15 +2078,15 @@ gradient_segment_range_delete_invoker (Gimp        *gimp,
                   else
                     {
                       end_seg = gimp_gradient_segment_get_nth (start_seg,
-                                                               end_segment - start_segment);
+                                                               end_segment -
+                                                               start_segment);
                     }
 
                   /* Success */
                   gimp_gradient_segment_range_delete (gradient,
-                                        start_seg,
-                                        end_seg,
-                                        NULL, NULL);
-
+                                                      start_seg,
+                                                      end_seg,
+                                                      NULL, NULL);
                 }
             }
           else
@@ -2171,7 +2171,8 @@ gradient_segment_range_redistribute_handles_invoker (Gimp        *gimp,
       if (gradient)
         {
           GimpGradientSegment *start_seg, *end_seg;
-          start_seg = gimp_gradient_segment_get_nth (gradient->segments, start_segment);
+          start_seg = gimp_gradient_segment_get_nth (gradient->segments,
+                                                     start_segment);
           if (start_seg)
             {
               if ((end_segment < start_segment) && (end_segment >= 0))
@@ -2188,14 +2189,14 @@ gradient_segment_range_redistribute_handles_invoker (Gimp        *gimp,
                   else
                     {
                       end_seg = gimp_gradient_segment_get_nth (start_seg,
-                                                               end_segment - start_segment);
+                                                               end_segment -
+                                                               start_segment);
                     }
 
                   /* Success */
                   gimp_gradient_segment_range_redistribute_handles (gradient,
-                                                      start_seg,
-                                                      end_seg);
-
+                                                                    start_seg,
+                                                                    end_seg);
                 }
             }
           else
@@ -2280,7 +2281,8 @@ gradient_segment_range_blend_colors_invoker (Gimp        *gimp,
       if (gradient)
         {
           GimpGradientSegment *start_seg, *end_seg;
-          start_seg = gimp_gradient_segment_get_nth (gradient->segments, start_segment);
+          start_seg = gimp_gradient_segment_get_nth (gradient->segments,
+                                                     start_segment);
           if (start_seg)
             {
               if ((end_segment < start_segment) && (end_segment >= 0))
@@ -2297,15 +2299,16 @@ gradient_segment_range_blend_colors_invoker (Gimp        *gimp,
                   else
                     {
                       end_seg = gimp_gradient_segment_get_nth (start_seg,
-                                                               end_segment - start_segment);
+                                                               end_segment -
+                                                               start_segment);
                     }
 
                   /* Success */
-                  gimp_gradient_segment_range_blend (gradient, start_seg, end_seg,
-                                       &start_seg->left_color,
-                                       &end_seg->right_color,
-                                       TRUE, FALSE);
-
+                  gimp_gradient_segment_range_blend (gradient,
+                                                     start_seg, end_seg,
+                                                     &start_seg->left_color,
+                                                     &end_seg->right_color,
+                                                     TRUE, FALSE);
                 }
             }
           else
@@ -2390,7 +2393,8 @@ gradient_segment_range_blend_opacity_invoker (Gimp        *gimp,
       if (gradient)
         {
           GimpGradientSegment *start_seg, *end_seg;
-          start_seg = gimp_gradient_segment_get_nth (gradient->segments, start_segment);
+          start_seg = gimp_gradient_segment_get_nth (gradient->segments,
+                                                     start_segment);
           if (start_seg)
             {
               if ((end_segment < start_segment) && (end_segment >= 0))
@@ -2407,15 +2411,16 @@ gradient_segment_range_blend_opacity_invoker (Gimp        *gimp,
                   else
                     {
                       end_seg = gimp_gradient_segment_get_nth (start_seg,
-                                                               end_segment - start_segment);
+                                                               end_segment -
+                                                               start_segment);
                     }
 
                   /* Success */
-                  gimp_gradient_segment_range_blend (gradient, start_seg, end_seg,
-                                       &start_seg->left_color,
-                                       &end_seg->right_color,
-                                       FALSE, TRUE);
-
+                  gimp_gradient_segment_range_blend (gradient,
+                                                     start_seg, end_seg,
+                                                     &start_seg->left_color,
+                                                     &end_seg->right_color,
+                                                     FALSE, TRUE);
                 }
             }
           else
@@ -2475,7 +2480,7 @@ gradient_segment_range_move_invoker (Gimp        *gimp,
   gint32 end_segment;
   gdouble delta;
   gboolean control_compress;
-  gdouble final_delta;
+  gdouble final_delta = 0;
   GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
@@ -2510,7 +2515,8 @@ gradient_segment_range_move_invoker (Gimp        *gimp,
       if (gradient)
         {
           GimpGradientSegment *start_seg, *end_seg;
-          start_seg = gimp_gradient_segment_get_nth (gradient->segments, start_segment);
+          start_seg = gimp_gradient_segment_get_nth (gradient->segments,
+                                                     start_segment);
           if (start_seg)
             {
               if ((end_segment < start_segment) && (end_segment >= 0))
@@ -2527,15 +2533,16 @@ gradient_segment_range_move_invoker (Gimp        *gimp,
                   else
                     {
                       end_seg = gimp_gradient_segment_get_nth (start_seg,
-                                                               end_segment - start_segment);
+                                                               end_segment -
+                                                               start_segment);
                     }
 
                   /* Success */
                   final_delta = gimp_gradient_segment_range_move (gradient,
-                                                    start_seg,
-                                                    end_seg,
-                                                    delta,
-                                                    control_compress);
+                                                                  start_seg,
+                                                                  end_seg,
+                                                                  delta,
+                                                                  control_compress);
 
                 }
             }
