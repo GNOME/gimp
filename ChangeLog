@@ -1,3 +1,95 @@
+1999-03-07  Tor Lillqvist  <tml@iki.fi>
+
+	Second batch of Win32 merging. This time also some Unix code is
+	affected, but the semantics should stay the same. Plug-in
+	communication now uses GIOChannels, not plain file descriptors
+	(this change only affects a few files).
+	
+	* libgimp/gimpenv.[ch]: New files. gimpenv contains functions that
+	handle directory and file names specific to the GIMP installation
+	and runtime environment.
+
+	* libgimp/gimp.h: Include gimpenv.h. Declare variables with
+	__declspec on Win32. MAIN() defines also WinMain() on Win32.
+	gimp_gtkrc() declaration moved to gimpenv.h.
+	
+	* libgimp/{gimp.c,gimpmenu.c,gimpprotocol.[ch],
+	gimptile.c,gimpwire.[ch]}: Use GIOChannels instead of file
+	descriptors.
+
+	* libgimp/gimp.c: (gimp_extension_process): Calculate microsecond
+	value in timeval correctly from millisecond parameter.
+	
+	* libgimp/{gimpmatrix.c,gserialize.c}: Include <string.h>.
+
+	* libgimp/gimpmenu.c: (gimp_setup_callbacks): Call
+	gimp_request_wakeups().
+
+	* libgimp/gimpmodule.h: Don't declare module_init and
+	module_unload when compiling the module itself, because of clashes
+	with the G_MODULE_EXPORT.
+
+	* libgimp/gimpwire.c: Use g_warning instead of g_print. No
+	terminating newlines necessary in g_error calls.
+	
+	* libgimp/Makefile.am: Add gimpenv.[ch].
+	(CPPFLAGS): Define DATADIR.
+
+	* libgimp/{makefile.msc,gimpfeatures.h.win32,gimp.def,
+	gimpi.def,gimpui.def}: New files.
+	
+	* modules/Makefile.am (CPPFLAGS): Define MODULE_COMPILATION.
+
+	* app/{about_dialog.c,app_procs.c,gimprc.c,install.c,
+	tips_dialog.c}: Use gimp_data_directory() instead of DATADIR.
+
+	* app/app_procs.c (app_init): Use gimp_gtkrc() and g_get_tmp_dir().
+
+	* app/batch.c: Need <io.h> with MSC. (batch_init): Fix brace bug.
+
+	* app/{color_notebook.c,docindexif.c,ink.c}: Include <string.h>.
+
+	* app/{devices.c,docindex.c,gimprc.c,menus.c,plug_in.c,session.c}:
+	Use gimp_personal_rc_file().
+
+	* app/docindexif.h: IDEAPATH unneeded.
+
+	* app/errors.c: Use g_error() on Win32, at least. Don't use
+	g_on_error_query() on Win32.
+
+	* app/general.c (get_token): Handle \r, \n and \z (control-Z).
+
+	* app/gimprc.c (open_backup_file): Redone. Now you can pass in the
+	name of a secondary file to use if the primary one doesn't exist.
+
+	* app/gimprc.[ch]: gimp_directory() removed, is now in
+	libgimp/gimpenv.[ch].
+
+	* app/install.c (install_run): Add Win32 code. We cannot use popen
+	as in Unix, because the Microsoft runtime library's _popen doesn't
+	work in GUI applications. So just run the bat file in a console
+	window and let the user spot any errors...
+
+	* app/interface.c: Include dialog_handler.h.
+
+	* app/layer.c: Include libgimp/parasite.h.
+
+	* app/plug_in.c: No terminating newline necessary in g_message()
+	calls.
+
+	* app/{plug_in.c,session.c}: Open settings files that *are* text
+	in text mode, not binary.
+	
+	* app/plug_in.c: Add Win32 code. (plug_in_write_rc_string): Escape
+	problematic characters (\r, \n and control-Z). Use
+	plug_in_write_rc_string() to write program name, too (contains
+	backslashes on Win32...).
+
+	* app/text_tool.c: Shouldn't use gdk_colormap_alloc_color() to
+	allocate black and white on Win32 after all.
+
+	* app/tile_swap.c: Include <stdio.h>
+
 1999-03-07  Jay Cox  <jaycox@earthlink.net>
 
 	* app/brush_select.c: pop up the brush-edit dialog whenever the
@@ -346,7 +438,7 @@ Sat Feb 20 16:12:33 CST 1999 Shawn T. Amundson <amundson@gimp.org>
 
 	First batch of changes to merge the Win32 version. This will be
 	done in pieces, don't expect to be able to compile on Win32 from
-	these sources yet.  Ans of course, the official version of GTk+
+	these sources yet.  And of course, the official version of GTk+
 	doesn't include the Win32 stuff yet.
  	
 	* configure.in acconfig.h: Check for <sys/param.h> and
