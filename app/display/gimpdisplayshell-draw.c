@@ -716,7 +716,8 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
                     G_CALLBACK (gimp_display_shell_origin_button_press),
                     shell);
 
-  gimp_help_set_help_data (shell->origin, NULL, "#origin_button");
+  gimp_help_set_help_data (shell->origin, NULL,
+                           GIMP_HELP_IMAGE_WINDOW_ORIGIN_BUTTON);
 
   shell->canvas = gimp_canvas_new ();
 
@@ -734,7 +735,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 		    G_CALLBACK (gimp_display_shell_hruler_button_press),
 		    shell);
 
-  gimp_help_set_help_data (shell->hrule, NULL, "#ruler");
+  gimp_help_set_help_data (shell->hrule, NULL, GIMP_HELP_IMAGE_WINDOW_RULER);
 
   /*  the vertical ruler  */
   shell->vrule = gtk_vruler_new ();
@@ -748,7 +749,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 		    G_CALLBACK (gimp_display_shell_vruler_button_press),
 		    shell);
 
-  gimp_help_set_help_data (shell->vrule, NULL, "#ruler");
+  gimp_help_set_help_data (shell->vrule, NULL, GIMP_HELP_IMAGE_WINDOW_RULER);
 
   /*  the canvas  */
   gtk_widget_set_size_request (shell->canvas, n_width, n_height);
@@ -785,7 +786,8 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
                                 gimp_get_user_context (gdisp->gimage->gimp));
 
   gimp_help_set_help_data (shell->padding_button,
-                           _("Set canvas padding color"), "#padding_button");
+                           _("Set canvas padding color"),
+                           GIMP_HELP_IMAGE_WINDOW_PADDING_BUTTON);
 
   g_signal_connect (shell->padding_button, "button_press_event",
                     G_CALLBACK (gimp_display_shell_color_button_press),
@@ -842,7 +844,8 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
   gtk_widget_show (image);
 
   gimp_help_set_help_data (shell->qmask,
-                           _("Toggle QuickMask"), "#qmask_button");
+                           _("Toggle QuickMask"),
+                           GIMP_HELP_IMAGE_WINDOW_QMASK_BUTTON);
 
   g_signal_connect (shell->qmask, "toggled",
 		    G_CALLBACK (gimp_display_shell_qmask_toggled),
@@ -862,14 +865,16 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 		    G_CALLBACK (gimp_display_shell_nav_button_press),
 		    shell);
 
-  gimp_help_set_help_data (shell->nav_ebox, NULL, "#nav_window_button");
+  gimp_help_set_help_data (shell->nav_ebox, NULL,
+                           GIMP_HELP_IMAGE_WINDOW_NAV_BUTTON);
 
   /*  create the contents of the status area *********************************/
 
   /*  the statusbar  */
   shell->statusbar = gimp_statusbar_new (shell);
   gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (shell->statusbar), FALSE);
-  gimp_help_set_help_data (shell->statusbar, NULL, "#status_area");
+  gimp_help_set_help_data (shell->statusbar, NULL,
+                           GIMP_HELP_IMAGE_WINDOW_STATUS_BAR);
 
   /*  pack all the widgets  **************************************************/
 

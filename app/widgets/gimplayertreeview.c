@@ -278,8 +278,8 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
   gtk_box_pack_start (GTK_BOX (hbox), view->paint_mode_menu, TRUE, TRUE, 0);
   gtk_widget_show (view->paint_mode_menu);
 
-  gimp_help_set_help_data (view->paint_mode_menu,
-                           NULL, "#paint_mode_menu");
+  gimp_help_set_help_data (view->paint_mode_menu, NULL,
+                           GIMP_HELP_LAYER_DIALOG_PAINT_MODE_MENU);
 
   /*  Preserve transparency toggle  */
 
@@ -291,8 +291,8 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
 		    G_CALLBACK (gimp_layer_tree_view_preserve_button_toggled),
 		    view);
 
-  gimp_help_set_help_data (toggle,
-			   _("Keep Transparency"), "#keep_trans_button");
+  gimp_help_set_help_data (toggle, _("Keep Transparency"),
+                           GIMP_HELP_LAYER_DIALOG_KEEP_TRANS_BUTTON);
 
   gtk_widget_style_get (GTK_WIDGET (view),
                         "button_icon_size", &icon_size,
@@ -313,7 +313,8 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
 					  _("Opacity:"), -1, -1,
 					  100.0, 0.0, 100.0, 1.0, 10.0, 1,
 					  TRUE, 0.0, 0.0,
-					  NULL, "#opacity_sacle"));
+					  NULL,
+                                          GIMP_HELP_LAYER_DIALOG_OPACITY_SCALE));
 
   g_signal_connect (view->opacity_adjustment, "value_changed",
 		    G_CALLBACK (gimp_layer_tree_view_opacity_scale_changed),

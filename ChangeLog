@@ -1,5 +1,12 @@
 2003-11-12  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimphelp-ids.h: replaced the last few html help
+	links in app/ by help IDs.
+
+2003-11-12  Michael Natterer  <mitch@gimp.org>
+
 	Use the correct GTK+ APIs for setting and changing the theme:
 
 	* app/gui/themes.c (themes_apply_theme): don't call gtk_rc_parse()

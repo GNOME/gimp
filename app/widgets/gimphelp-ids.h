@@ -92,6 +92,14 @@
 #define GIMP_HELP_VIEW_CHANGE_SCREEN              "gimp-view-change-screen"
 
 #define GIMP_HELP_IMAGE_WINDOW                    "gimp-image-window"
+#define GIMP_HELP_IMAGE_WINDOW_ORIGIN_BUTTON      "gimp-image-window-origin-button"
+#define GIMP_HELP_IMAGE_WINDOW_PADDING_BUTTON     "gimp-image-window-padding-button"
+#define GIMP_HELP_IMAGE_WINDOW_QMASK_BUTTON       "gimp-image-window-qmask-button"
+#define GIMP_HELP_IMAGE_WINDOW_NAV_BUTTON         "gimp-image-window-nav-button"
+#define GIMP_HELP_IMAGE_WINDOW_RULER              "gimp-image-window-ruler"
+#define GIMP_HELP_IMAGE_WINDOW_STATUS_BAR         "gimp-image-window-status-bar"
+
+
 #define GIMP_HELP_IMAGE_DIALOG                    "gimp-image-dialog"
 #define GIMP_HELP_IMAGE_CONVERT_RGB               "gimp-image-convert-rgb"
 #define GIMP_HELP_IMAGE_CONVERT_GRAYSCALE         "gimp-image-convert-grayscale"
@@ -111,6 +119,10 @@
 #define GIMP_HELP_IMAGE_GRID                      "gimp-image-grid"
 
 #define GIMP_HELP_LAYER_DIALOG                    "gimp-layer-dialog"
+#define GIMP_HELP_LAYER_DIALOG_PAINT_MODE_MENU    "gimp-layer-dialog-paint-mode-menu"
+#define GIMP_HELP_LAYER_DIALOG_KEEP_TRANS_BUTTON  "gimp-layer-dialog-keep-trans-button"
+#define GIMP_HELP_LAYER_DIALOG_OPACITY_SCALE      "gimp-layer-dialog-opacity-scale"
+
 #define GIMP_HELP_LAYER_NEW                       "gimp-layer-new"
 #define GIMP_HELP_LAYER_DUPLICATE                 "gimp-layer-duplicate"
 #define GIMP_HELP_LAYER_ANCHOR                    "gimp-layer-anchor"
