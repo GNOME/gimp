@@ -32,6 +32,8 @@ libappdisplay_a_sources = \
 	gimpdisplayshell-appearance.h		\
 	gimpdisplayshell-callbacks.c		\
 	gimpdisplayshell-callbacks.h		\
+	gimpdisplayshell-close.c		\
+	gimpdisplayshell-close.h		\
 	gimpdisplayshell-cursor.c		\
 	gimpdisplayshell-cursor.h		\
 	gimpdisplayshell-dnd.c			\

@@ -35,6 +35,7 @@
 #include "display/gimpdisplayoptions.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-appearance.h"
+#include "display/gimpdisplayshell-close.h"
 #include "display/gimpdisplayshell-filter-dialog.h"
 #include "display/gimpdisplayshell-scale.h"
 

@@ -71,6 +71,7 @@
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-callbacks.h"
+#include "gimpdisplayshell-close.h"
 #include "gimpdisplayshell-cursor.h"
 #include "gimpdisplayshell-dnd.h"
 #include "gimpdisplayshell-draw.h"
@@ -107,28 +108,23 @@ enum
 static void      gimp_display_shell_class_init    (GimpDisplayShellClass *klass);
 static void      gimp_display_shell_init          (GimpDisplayShell      *shell);
 
-static void      gimp_display_shell_finalize           (GObject          *object);
-static void      gimp_display_shell_destroy            (GtkObject        *object);
-static void      gimp_display_shell_set_property       (GObject          *object,
-                                                        guint             property_id,
-                                                        const GValue     *value,
-                                                        GParamSpec       *pspec);
-static void      gimp_display_shell_get_property       (GObject          *object,
-                                                        guint             property_id,
-                                                        GValue           *value,
-                                                        GParamSpec       *pspec);
-static void      gimp_display_shell_screen_changed     (GtkWidget        *widget,
-                                                        GdkScreen        *previous);
-static gboolean  gimp_display_shell_delete_event       (GtkWidget        *widget,
-							GdkEventAny      *aevent);
+static void      gimp_display_shell_finalize       (GObject          *object);
+static void      gimp_display_shell_set_property   (GObject          *object,
+                                                    guint             property_id,
+                                                    const GValue     *value,
+                                                    GParamSpec       *pspec);
+static void      gimp_display_shell_get_property   (GObject          *object,
+                                                    guint             property_id,
+                                                    GValue           *value,
+                                                    GParamSpec       *pspec);
 
-static void      gimp_display_shell_real_scaled        (GimpDisplayShell *shell);
+static void      gimp_display_shell_destroy        (GtkObject        *object);
+static void      gimp_display_shell_screen_changed (GtkWidget        *widget,
+                                                    GdkScreen        *previous);
+static gboolean  gimp_display_shell_delete_event   (GtkWidget        *widget,
+                                                    GdkEventAny      *aevent);
 
-static void  gimp_display_shell_close_warning_dialog   (GimpDisplayShell *shell,
-                                                        GimpImage        *gimage);
-static void  gimp_display_shell_close_warning_response (GtkWidget        *widget,
-                                                        gboolean          close,
-                                                        GimpDisplayShell *shell);
+static void      gimp_display_shell_real_scaled    (GimpDisplayShell *shell);
 
 
 static guint  display_shell_signals[LAST_SIGNAL] = { 0 };
@@ -984,35 +980,6 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 }
 
 void
-gimp_display_shell_close (GimpDisplayShell *shell,
-                          gboolean          kill_it)
-{
-  GimpImage *gimage = shell->gdisp->gimage;
-
-  /*  FIXME: gimp_busy HACK not really appropriate here because we only
-   *  want to prevent the busy image and display to be closed.  --Mitch
-   */
-  if (gimage->gimp->busy)
-    return;
-
-  /*  If the image has been modified, give the user a chance to save
-   *  it before nuking it--this only applies if its the last view
-   *  to an image canvas.  (a gimage with disp_count = 1)
-   */
-  if (! kill_it               &&
-      gimage->disp_count == 1 &&
-      gimage->dirty           &&
-      GIMP_DISPLAY_CONFIG (gimage->gimp->config)->confirm_on_close)
-    {
-      gimp_display_shell_close_warning_dialog (shell, gimage);
-    }
-  else
-    {
-      gimp_display_delete (shell->gdisp);
-    }
-}
-
-void
 gimp_display_shell_reconnect (GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
@@ -1338,13 +1305,10 @@ gimp_display_shell_update_icon (GimpDisplayShell *shell)
       width  = MAX (shell->icon_size, 1);
     }
 
-  pixbuf = gimp_viewable_get_new_pixbuf (GIMP_VIEWABLE (shell->gdisp->gimage),
-                                         width, height);
+  pixbuf = gimp_viewable_get_pixbuf (GIMP_VIEWABLE (shell->gdisp->gimage),
+                                     width, height);
 
   gtk_window_set_icon (GTK_WINDOW (shell), pixbuf);
-
-  if (pixbuf)
-    g_object_unref (pixbuf);
 }
 
 void
@@ -1443,100 +1407,3 @@ gimp_display_shell_selection_visibility (GimpDisplayShell     *shell,
 	}
     }
 }
-
-
-/*  private functions  */
-
-static void
-gimp_display_shell_close_warning_dialog (GimpDisplayShell *shell,
-                                         GimpImage        *gimage)
-{
-  GtkWidget *dialog;
-  GtkWidget *hbox;
-  GtkWidget *vbox;
-  GtkWidget *image;
-  GtkWidget *label;
-  gchar     *name;
-  gchar     *title;
-  gchar     *message;
-
-  if (shell->warning_dialog)
-    {
-      gtk_window_present (GTK_WINDOW (shell->warning_dialog));
-      return;
-    }
-
-  name = file_utils_uri_to_utf8_basename (gimp_image_get_uri (gimage));
-
-  title = g_strdup_printf (_("Close %s?"), name);
-
-  shell->warning_dialog =
-    dialog = gimp_dialog_new (title,
-                              "gimp-display-shell-close",
-                              GTK_WIDGET (shell), 0,
-                              gimp_standard_help_func,
-                              GIMP_HELP_FILE_CLOSE_CONFIRM,
-
-                              GTK_STOCK_CANCEL,      GTK_RESPONSE_CANCEL,
-                              _("_Discard changes"), GTK_RESPONSE_OK,
-
-                              NULL);
-
-  g_free (title);
-
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (gtk_widget_destroyed),
-                    &shell->warning_dialog);
-
-  g_signal_connect (dialog, "response",
-                    G_CALLBACK (gimp_display_shell_close_warning_response),
-                    shell);
-
-  hbox = gtk_hbox_new (FALSE, 10);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 10);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), hbox);
-  gtk_widget_show (hbox);
-
-  image = gtk_image_new_from_stock (GIMP_STOCK_WARNING, GTK_ICON_SIZE_DIALOG);
-  gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
-  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-  gtk_widget_show (image);
-
-  vbox = gtk_vbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
-
-  message = g_strdup_printf (_("Changes were made to '%s'."), name);
-
-  label = gtk_label_new (message);
-
-  g_free (message);
-  g_free (name);
-
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gimp_label_set_attributes (GTK_LABEL (label),
-                             PANGO_ATTR_SCALE,  PANGO_SCALE_LARGE,
-                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
-                             -1);
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  label = gtk_label_new (_("Unsaved changes will be lost."));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  gtk_widget_show (dialog);
-}
-
-static void
-gimp_display_shell_close_warning_response (GtkWidget        *widget,
-                                           gint              response_id,
-                                           GimpDisplayShell *shell)
-{
-  gtk_widget_destroy (GTK_WIDGET (shell->warning_dialog));
-
-  if (response_id == GTK_RESPONSE_OK)
-    gimp_display_delete (shell->gdisp);
-}
-

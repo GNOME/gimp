@@ -1,3 +1,14 @@
+2004-07-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/Makefile.am
+	* app/display/gimpdisplayshell-close.[ch]: new files for
+	gimp_display_shell_close() and its dialog & callback.
+
+	* app/display/gimpdisplayshell.[ch]: removed from here.
+
+	* app/actions/view-actions.c (view_close_view_cmd_callback):
+	changed accordingly.
+
 2004-07-14  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/pagecurl/pagecurl.c: code cleanup. Use enums instead of

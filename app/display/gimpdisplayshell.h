@@ -185,9 +185,6 @@ GtkWidget * gimp_display_shell_new                   (GimpDisplay      *gdisp,
                                                       GimpMenuFactory  *menu_factory,
                                                       GimpUIManager    *popup_manager);
 
-void        gimp_display_shell_close                 (GimpDisplayShell *shell,
-                                                      gboolean          kill_it);
-
 void        gimp_display_shell_reconnect             (GimpDisplayShell *shell);
 
 void        gimp_display_shell_scaled                (GimpDisplayShell *shell);
