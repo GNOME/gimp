@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpcontainerview.c
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2003 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,6 +44,13 @@
 
 enum
 {
+  PROP_0,
+  PROP_CONTAINER,
+  PROP_CONTEXT
+};
+
+enum
+{
   SELECT_ITEM,
   ACTIVATE_ITEM,
   CONTEXT_ITEM,
@@ -56,7 +63,16 @@ static void   gimp_container_view_init              (GimpContainerView      *vie
                                                      GimpContainerViewClass *klass);
 static void   gimp_container_view_docked_iface_init (GimpDockedInterface    *docked_iface);
 
-static void   gimp_container_view_destroy           (GtkObject              *object);
+static void   gimp_container_view_set_property      (GObject          *object,
+                                                     guint             property_id,
+                                                     const GValue     *value,
+                                                     GParamSpec       *pspec);
+static void   gimp_container_view_get_property      (GObject          *object,
+                                                     guint             property_id,
+                                                     GValue           *value,
+                                                     GParamSpec       *pspec);
+
+static void   gimp_container_view_destroy           (GtkObject        *object);
 
 static void   gimp_container_view_real_set_container (GimpContainerView *view,
 						      GimpContainer     *container);
@@ -145,9 +161,11 @@ gimp_container_view_get_type (void)
 static void
 gimp_container_view_class_init (GimpContainerViewClass *klass)
 {
-  GtkObjectClass *object_class;
+  GObjectClass   *object_class;
+  GtkObjectClass *gtk_object_class;
 
-  object_class = GTK_OBJECT_CLASS (klass);
+  object_class     = G_OBJECT_CLASS (klass);
+  gtk_object_class = GTK_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -184,20 +202,33 @@ gimp_container_view_class_init (GimpContainerViewClass *klass)
 		  GIMP_TYPE_OBJECT,
 		  G_TYPE_POINTER);
 
-  object_class->destroy   = gimp_container_view_destroy;
+  object_class->set_property = gimp_container_view_set_property;
+  object_class->get_property = gimp_container_view_get_property;
 
-  klass->select_item      = NULL;
-  klass->activate_item    = NULL;
-  klass->context_item     = NULL;
+  gtk_object_class->destroy  = gimp_container_view_destroy;
 
-  klass->set_container    = gimp_container_view_real_set_container;
-  klass->insert_item      = NULL;
-  klass->remove_item      = NULL;
-  klass->reorder_item     = NULL;
-  klass->clear_items      = gimp_container_view_real_clear_items;
-  klass->set_preview_size = NULL;
+  klass->select_item         = NULL;
+  klass->activate_item       = NULL;
+  klass->context_item        = NULL;
+
+  klass->set_container       = gimp_container_view_real_set_container;
+  klass->insert_item         = NULL;
+  klass->remove_item         = NULL;
+  klass->reorder_item        = NULL;
+  klass->clear_items         = gimp_container_view_real_clear_items;
+  klass->set_preview_size    = NULL;
 
   klass->insert_data_free = NULL;
+
+  g_object_class_install_property (object_class, PROP_CONTAINER,
+                                   g_param_spec_object ("container", NULL, NULL,
+                                                        GIMP_TYPE_CONTAINER,
+                                                        G_PARAM_READWRITE));
+  g_object_class_install_property (object_class, PROP_CONTEXT,
+                                   g_param_spec_object ("context", NULL, NULL,
+                                                        GIMP_TYPE_CONTEXT,
+                                                        G_PARAM_READWRITE));
+
 }
 
 static void
@@ -225,11 +256,53 @@ gimp_container_view_init (GimpContainerView      *view,
 }
 
 static void
+gimp_container_view_set_property (GObject      *object,
+                                  guint         property_id,
+                                  const GValue *value,
+                                  GParamSpec   *pspec)
+{
+  GimpContainerView *view = GIMP_CONTAINER_VIEW (object);
+
+  switch (property_id)
+    {
+    case PROP_CONTAINER:
+      gimp_container_view_set_container (view, g_value_get_object (value));
+      break;
+    case PROP_CONTEXT:
+      gimp_container_view_set_context (view, g_value_get_object (value));
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_container_view_get_property (GObject    *object,
+                                  guint       property_id,
+                                  GValue     *value,
+                                  GParamSpec *pspec)
+{
+  GimpContainerView *view = GIMP_CONTAINER_VIEW (object);
+
+  switch (property_id)
+    {
+    case PROP_CONTAINER:
+      g_value_set_object (value, view->container);
+      break;
+    case PROP_CONTEXT:
+      g_value_set_object (value, view->context);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
 gimp_container_view_destroy (GtkObject *object)
 {
-  GimpContainerView *view;
-
-  view = GIMP_CONTAINER_VIEW (object);
+  GimpContainerView *view = GIMP_CONTAINER_VIEW (object);
 
   if (view->container)
     gimp_container_view_set_container (view, NULL);
@@ -261,7 +334,11 @@ gimp_container_view_set_container (GimpContainerView *view,
   g_return_if_fail (container == NULL || GIMP_IS_CONTAINER (container));
 
   if (container != view->container)
-    GIMP_CONTAINER_VIEW_GET_CLASS (view)->set_container (view, container);
+    {
+      GIMP_CONTAINER_VIEW_GET_CLASS (view)->set_container (view, container);
+
+      g_object_notify (G_OBJECT (view), "container");
+    }
 }
 
 static void
@@ -458,6 +535,8 @@ gimp_container_view_set_context (GimpContainerView *view,
                                         view);
         }
     }
+
+  g_object_notify (G_OBJECT (view), "context");
 }
 
 void
@@ -513,7 +592,7 @@ gimp_container_view_set_size_request (GimpContainerView *view,
   sw_class = GTK_SCROLLED_WINDOW_GET_CLASS (view->scrolled_win);
 
   if (sw_class->scrollbar_spacing >= 0)
-    width = sw_class->scrollbar_spacing;
+    scrollbar_width = sw_class->scrollbar_spacing;
   else
     gtk_widget_style_get (GTK_WIDGET (view->scrolled_win),
                           "scrollbar_spacing", &scrollbar_width,

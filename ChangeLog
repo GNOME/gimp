@@ -1,5 +1,14 @@
 2003-12-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcontainerview.c: this was starting to bit-rot on
+	my disk: added "container" and "context" properties.
+
+	(gimp_container_view_set_size_request): fixed scrollbar_width
+	calculation for deprecated uses of the widget (should never happen
+	but the code should be correct anyway).
+
+2003-12-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpdrawable-stroke.c (gimp_drawable_stroke_boundary):
 	fixed cut'n'paste bug: always use offset_x, not offset_y for x
 	coordinates (spotted by Olivier Gondouin).
