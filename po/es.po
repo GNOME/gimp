@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.29\n"
-"POT-Creation-Date: 2000-12-24 12:22-0800\n"
-"PO-Revision-Date: 2000-10-23 18:38+02:00\n"
+"POT-Creation-Date: 2000-12-27 16:17+0100\n"
+"PO-Revision-Date: 2000-12-27 16:27+01:00\n"
 "Last-Translator: Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -123,15 +123,14 @@ msgstr "Salir"
 #: app/channels_dialog.c:2541 app/channels_dialog.c:2704
 #: app/color_balance.c:286 app/color_notebook.c:128 app/convert.c:517
 #: app/curves.c:571 app/file_new_dialog.c:212 app/file_new_dialog.c:362
-#: app/gdisplay_color_ui.c:160 app/gdisplay_ops.c:310 app/gimphelp.c:196
-#: app/gimpprogress.c:120 app/global_edit.c:779 app/gradient.c:1881
-#: app/gradient.c:4941 app/gradient.c:5502 app/hue_saturation.c:383
-#: app/interface.c:1047 app/layers_dialog.c:3555 app/layers_dialog.c:3739
-#: app/layers_dialog.c:3834 app/layers_dialog.c:4095 app/levels.c:350
-#: app/palette.c:1824 app/posterize.c:212 app/preferences_dialog.c:1485
-#: app/qmask.c:282 app/resize.c:225 app/resize.c:1398
-#: app/resolution_calibrate.c:116 app/threshold.c:285 app/user_install.c:552
-#: modules/cdisplay_gamma.c:332 modules/cdisplay_highcontrast.c:325
+#: app/gdisplay_ops.c:310 app/gimphelp.c:196 app/gimpprogress.c:120
+#: app/global_edit.c:779 app/gradient.c:1881 app/gradient.c:4941
+#: app/gradient.c:5502 app/hue_saturation.c:383 app/interface.c:1047
+#: app/layers_dialog.c:3555 app/layers_dialog.c:3739 app/layers_dialog.c:3834
+#: app/layers_dialog.c:4095 app/levels.c:350 app/palette.c:1824
+#: app/posterize.c:212 app/preferences_dialog.c:1485 app/qmask.c:282
+#: app/resize.c:225 app/resize.c:1398 app/resolution_calibrate.c:116
+#: app/threshold.c:285 app/user_install.c:552
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -141,7 +140,7 @@ msgstr "El camino Bézier ya está cerrado"
 
 #: app/bezier_select.c:502
 msgid "Corrupt curve"
-msgstr "Curva dañada"
+msgstr "Curva defectuosa"
 
 #: app/bezier_select.c:3000
 msgid "Curve not closed!"
@@ -285,13 +284,11 @@ msgstr "Brillo-Contraste no funciona con imágeness de color indexado"
 #: app/channels_dialog.c:2539 app/channels_dialog.c:2702
 #: app/color_balance.c:282 app/color_notebook.c:125 app/convert.c:515
 #: app/curves.c:567 app/file_new_dialog.c:212 app/file_new_dialog.c:358
-#: app/gdisplay_color_ui.c:158 app/gimpui.c:126 app/hue_saturation.c:379
-#: app/layers_dialog.c:3553 app/layers_dialog.c:3737 app/layers_dialog.c:3832
-#: app/layers_dialog.c:4093 app/levels.c:346 app/module_db.c:319
-#: app/posterize.c:208 app/preferences_dialog.c:1481 app/qmask.c:280
-#: app/resize.c:219 app/resize.c:1398 app/resolution_calibrate.c:114
-#: app/threshold.c:281 modules/cdisplay_gamma.c:330
-#: modules/cdisplay_highcontrast.c:323
+#: app/gimpui.c:126 app/hue_saturation.c:379 app/layers_dialog.c:3553
+#: app/layers_dialog.c:3737 app/layers_dialog.c:3832 app/layers_dialog.c:4093
+#: app/levels.c:346 app/module_db.c:319 app/posterize.c:208
+#: app/preferences_dialog.c:1481 app/qmask.c:280 app/resize.c:219
+#: app/resize.c:1398 app/resolution_calibrate.c:114 app/threshold.c:281
 msgid "OK"
 msgstr "Aceptar"
 
@@ -453,7 +450,6 @@ msgid "Replace"
 msgstr "Reemplazar"
 
 #: app/by_color_select.c:791 app/colormap_dialog.i.c:130
-#: app/gdisplay_color_ui.c:145
 msgid "Add"
 msgstr "Añadir"
 
@@ -1288,11 +1284,16 @@ msgid ""
 "(You will loose all your changes\n"
 "including all undo information)"
 msgstr ""
+"Revirtiendo %s a\n"
+"%s\n"
+"\n"
+"(Perderá todos sus cambios\n"
+"incluyendo información de\n"
+"Deshacer)"
 
 #: app/fileops.c:628
-#, fuzzy
 msgid "Revert Image?"
-msgstr "Guardar imagen"
+msgstr "¿Revertir imagen?"
 
 #: app/fileops.c:633 app/fileops.c:1902
 msgid "Yes"
@@ -1475,34 +1476,6 @@ msgstr "Indexado-vacío"
 msgid "indexed"
 msgstr "Indexado"
 
-#: app/gdisplay_color_ui.c:146
-msgid "Remove"
-msgstr "Quitar"
-
-#: app/gdisplay_color_ui.c:147
-msgid "Up"
-msgstr "Arriba"
-
-#: app/gdisplay_color_ui.c:148
-msgid "Down"
-msgstr "Abajo"
-
-#: app/gdisplay_color_ui.c:149
-msgid "Configure"
-msgstr "Configurar"
-
-#: app/gdisplay_color_ui.c:152
-msgid "Color Display Filters"
-msgstr "Filtros de pantalla a color"
-
-#: app/gdisplay_color_ui.c:178
-msgid "Available Filters"
-msgstr "Filtros disponibles"
-
-#: app/gdisplay_color_ui.c:204
-msgid "Active Filters"
-msgstr "Filtros activos"
-
 #: app/gdisplay_ops.c:302
 #, c-format
 msgid ""
@@ -1549,28 +1522,28 @@ msgid "No selection to stroke!"
 msgstr "¡No hay selección que trazar!"
 
 #: app/gimpbrush.c:294
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown brush format version #%d in \"%s\"."
-msgstr "Formato de brocha versión #%d en %s es desconocida\n"
+msgstr "Formato de brocha versión #%d en \"%s\" es desconocido."
 
 #: app/gimpbrush.c:314
-#, fuzzy, c-format
+#, c-format
 msgid "Error in GIMP brush file \"%s\"."
-msgstr "Error en fichero de patrones GIMP... abortando."
+msgstr "Error en fichero de brochas GIMP \"%s\"."
 
 #: app/gimpbrush.c:321 app/patterns.c:232
 msgid "Unnamed"
 msgstr "Sin nombre"
 
 #: app/gimpbrush.c:334 app/gimpbrush.c:379
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP brush file appears to be truncated: \"%s\"."
-msgstr "Parece que el fichero de brocha de GIMP es defectuoso. "
+msgstr "Fichero de brocha de GIMP que parece truncado: \"%s\"."
 
 #: app/gimpbrush.c:359
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP brush file appears to be corrupted: \"%s\"."
-msgstr "Parece que el fichero de brocha de GIMP es defectuoso. "
+msgstr "\"Fichero de brocha de GIMP que parece defectuoso: \"%s\"."
 
 #: app/gimpbrushlist.c:200 app/gimpbrushlist.c:209
 #, c-format
@@ -1582,29 +1555,31 @@ msgstr ""
 "\"%s\""
 
 #: app/gimpbrushlist.c:218
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: Failed to load brush pipe\n"
 "\"%s\""
 msgstr ""
-"Aviso: Fallo al cargar brocha\n"
+"Aviso: Fallo al cargar tubo de brochas \n"
 "\"%s\""
 
 #: app/gimpbrushpipe.c:292
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Brush pipes should have at least one brush:\n"
 "\"%s\""
-msgstr "Los tubos de brochas deberían tener al menos una brocha."
+msgstr ""
+"Los tubos de brochas deberían tener al menos una brocha:\n"
+"\"%s\""
 
 #: app/gimpbrushpipe.c:383
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Failed to load one of the brushes in the brush pipe\n"
 "\"%s\""
 msgstr ""
-"Fallo al cargar una de las \n"
-"brochas en el tubo de brochas."
+"Fallo al cargar una de las brochas en el tubo de brochas\n"
+"\"%s\""
 
 #: app/gimpdrawable.c:176
 msgid "Can't fill unknown image type."
@@ -2308,7 +2283,7 @@ msgstr ""
 #: app/image_new.c:69 app/info_window.c:71 app/info_window.c:540
 #: app/preferences_dialog.c:1654
 msgid "Grayscale"
-msgstr "Escala de grises"
+msgstr "Tonos de gris"
 
 #: app/image_new.c:75 app/layers_dialog.c:3656
 msgid "Foreground"
@@ -3142,7 +3117,6 @@ msgid "/File/Save As..."
 msgstr "/Fichero/Guardar como..."
 
 #: app/menus.c:219
-#, fuzzy
 msgid "/File/Revert..."
 msgstr "/Fichero/Revertir"
 
@@ -3345,7 +3319,7 @@ msgstr "/Imagen/Modo/RGB"
 
 #: app/menus.c:366
 msgid "/Image/Mode/Grayscale"
-msgstr "/Imagen/Modo/Escala de grises"
+msgstr "/Imagen/Modo/Tonos de gris"
 
 #: app/menus.c:368
 msgid "/Image/Mode/Indexed..."
@@ -4190,19 +4164,19 @@ msgid "No Patterns available"
 msgstr "No hay patrones disponibles"
 
 #: app/patterns.c:206
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown pattern format version #%d in \"%s\"."
-msgstr "Formato de brocha versión #%d en %s es desconocida\n"
+msgstr "Formato de brocha versión #%d en \"%s\" es desconocido."
 
 #: app/patterns.c:225
-#, fuzzy, c-format
+#, c-format
 msgid "Error in GIMP pattern file \"%s\"."
-msgstr "Error en fichero de patrones GIMP... abortando."
+msgstr "Error en fichero de patrones GIMP \"%s\"."
 
 #: app/patterns.c:241
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP pattern file appears to be truncated: \"%s\"."
-msgstr "Parece que el fichero de patrones GIMP es defectuoso."
+msgstr "Fichero de patrones GIMP que parece truncado: \"%s\"."
 
 #: app/perspective_tool.c:65
 msgid "Perspective Transform Information"
@@ -5805,7 +5779,7 @@ msgstr "recortar"
 
 #: app/undo.c:2941
 msgid "layer scale"
-msgstr "escalar capa"
+msgstr "redimensionar capa"
 
 #: app/undo.c:2942
 msgid "layer resize"
@@ -5829,7 +5803,7 @@ msgstr "cambio de resolución"
 
 #: app/undo.c:2947
 msgid "image scale"
-msgstr "escalado de imagen"
+msgstr "redimensionado de imagen"
 
 #: app/undo.c:2948
 msgid "image resize"
@@ -6329,7 +6303,6 @@ msgid "Installation failed.  Contact system administrator."
 msgstr "La instalación falló. Contacte con el administrador del sistema."
 
 #: app/user_install.c:1097
-#, fuzzy
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
 "\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
@@ -6402,30 +6375,6 @@ msgstr ""
 "XCF no guardaba mapas de colores indexados \n"
 "correctamente. Sustituyendo mapa de grises."
 
-#: modules/cdisplay_gamma.c:96
-msgid "Gamma color display filter"
-msgstr "Filtro de pantalla a color Gamma"
-
-#: modules/cdisplay_gamma.c:325
-msgid "Gamma"
-msgstr "Gamma"
-
-#: modules/cdisplay_gamma.c:344
-msgid "Gamma:"
-msgstr "Gamma:"
-
-#: modules/cdisplay_highcontrast.c:96
-msgid "High Contrast color display filter"
-msgstr "Filtro de pantalla de color de alto contraste"
-
-#: modules/cdisplay_highcontrast.c:318
-msgid "High Contrast"
-msgstr "Alto contraste"
-
-#: modules/cdisplay_highcontrast.c:337
-msgid "Contrast Cycles:"
-msgstr "Ciclos de Contraste:"
-
 #: modules/colorsel_gtk.c:53
 msgid "GTK color selector as a pluggable color selector"
 msgstr "Selector de color de GTK como un selector de color añadible."
@@ -6450,6 +6399,27 @@ msgstr "Acuarela"
 msgid "Color History"
 msgstr "Histórico de color"
 
+#~ msgid "Remove"
+#~ msgstr "Quitar"
+
+#~ msgid "Up"
+#~ msgstr "Arriba"
+
+#~ msgid "Down"
+#~ msgstr "Abajo"
+
+#~ msgid "Configure"
+#~ msgstr "Configurar"
+
+#~ msgid "Color Display Filters"
+#~ msgstr "Filtros de pantalla a color"
+
+#~ msgid "Available Filters"
+#~ msgstr "Filtros disponibles"
+
+#~ msgid "Active Filters"
+#~ msgstr "Filtros activos"
+
 #~ msgid "Error in GIMP brush file...aborting."
 #~ msgstr "Error en el fichero de brochas de GIMP... abortando"
 
@@ -6471,13 +6441,26 @@ msgstr "Histórico de color"
 #~ msgid "Failed to load pixmap brush."
 #~ msgstr "Fallo al cargar brocha píxmap"
 
-#, fuzzy
 #~ msgid "Unknown GIMP pattern version #%d in \"%s\"\n"
-#~ msgstr "Versión desconocida de GIMP #%d en \"%s\"\n"
+#~ msgstr "Se desconoce patrón GIMP versión #%d en \"%s\"\n"
 
-#, fuzzy
 #~ msgid "Error loading pattern \"%s\""
-#~ msgstr "Error al abrir fichero: %s\n"
+#~ msgstr "Error al abrir patrón \"%s\""
 
-#~ msgid "Pattern load failed"
-#~ msgstr "Falló la carga de patrón"
+#~ msgid "Gamma color display filter"
+#~ msgstr "Filtro de pantalla a color Gamma"
+
+#~ msgid "Gamma"
+#~ msgstr "Gamma"
+
+#~ msgid "Gamma:"
+#~ msgstr "Gamma:"
+
+#~ msgid "High Contrast color display filter"
+#~ msgstr "Filtro de pantalla de color de alto contraste"
+
+#~ msgid "High Contrast"
+#~ msgstr "Alto contraste"
+
+#~ msgid "Contrast Cycles:"
+#~ msgstr "Ciclos de Contraste:"

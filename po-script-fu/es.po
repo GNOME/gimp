@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.29\n"
-"POT-Creation-Date: 2000-12-18 23:30-0800\n"
-"PO-Revision-Date: 2000-10-23 18:59+02:00\n"
+"POT-Creation-Date: 2000-12-27 16:42+0100\n"
+"PO-Revision-Date: 2000-12-27 16:46+01:00\n"
 "Last-Translator: Óscar Cebellán Ramos <cebaman@bigfoot.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -152,12 +152,15 @@ msgid "Script-Fu Font Selection"
 msgstr "Selección de Fuente de Script-Fu"
 
 #: plug-ins/script-fu/script-fu-scripts.c:2256
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Script-Fu Error while executing\n"
 " %s\n"
 "%s"
-msgstr "Selección de Ficheros de Script-Fu"
+msgstr ""
+"Error de Script-Fu mientras se ejecutaba\n"
+" %s\n"
+"%s"
 
 #: plug-ins/script-fu/script-fu-server.c:539
 msgid "Script-Fu Server Options"
@@ -252,7 +255,7 @@ msgstr "<Image>/Script-Fu/Alfa a Logo/Tiza..."
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Chip Away..."
-msgstr ""
+msgstr "<Image>/Script-Fu/Alfa a Logo/Desmenuzar..."
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Chrome..."
@@ -397,9 +400,10 @@ msgstr "<Image>/Script-Fu/Sombra/Perspectiva..."
 # /O: Otra vez!!!, palabras raras, una traducción libre intentando 
 # describir el efecto de forma corta, alguna solución mejor... seguro!!!
 # //R Podemos dejar esto hasta que se nos ocurra algo mejor
+# //R Parece que es el nombre del autor
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "<Image>/Script-Fu/Shadow/Xach-Effect..."
-msgstr "<Image>/Script-Fu/Sombra/Sacar de Imagen..."
+msgstr "<Image>/Script-Fu/Sombra/Efecto de Xach..."
 
 #: plug-ins/script-fu/scripts/carve-it.scm:0
 msgid "<Image>/Script-Fu/Stencil Ops/Carve-It..."
@@ -465,11 +469,9 @@ msgstr "<Toolbox>/Exts/Script-Fu/Logotipos/Esculpido..."
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chalk..."
 msgstr "<Toolbox>/Exts/Script-Fu/Logotipos/Tiza..."
 
-# //O Para un futuro aclarar si desconchar o quebrado
 #: plug-ins/script-fu/scripts/chip-away.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Away..."
-msgstr "<Toolbox>/Exts/Script-Fu/Logos/Quebrado..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Desmenuzar..."
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chrome..."
@@ -1014,9 +1016,8 @@ msgstr "Color de Tiza"
 # en la batidora-picadora y... (yo siempre pensando en comida...) X-DD
 # //R Como quieeeerasss :)
 #: plug-ins/script-fu/scripts/chip-away.scm:0
-#, fuzzy
 msgid "Chip Amount"
-msgstr "Grado de Quebrado"
+msgstr "Grado de desmenuzado"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
@@ -1238,11 +1239,12 @@ msgstr "Borrar antes de Dibujar"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Erase"
-msgstr ""
+msgstr "Borrar"
 
+# //R COMPROBAR
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Erase/Fill"
-msgstr ""
+msgstr "Borrar/Rellenar"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Even"
@@ -1298,9 +1300,8 @@ msgid "Fill with BG Color"
 msgstr "Rellenar con Color de Fondo"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
-#, fuzzy
 msgid "Fill with BG"
-msgstr "Rellenar con Color de Fondo"
+msgstr "Rellenar con Fondo"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
