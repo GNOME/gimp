@@ -1,5 +1,10 @@
 2004-03-15  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/preferences-dialog.c: don't show a web-browser setting
+	on win32, it's not used there (see bug #137173).
+
+2004-03-15  Sven Neumann  <sven@gimp.org>
+
 	* data/images/gimp_splash.png: splash image for GIMP 2.0 by Jimmac.
 
 	* app/gui/splash.[ch]: draw the text on the splash image, not

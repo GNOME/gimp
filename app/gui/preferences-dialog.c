@@ -1364,7 +1364,8 @@ prefs_dialog_new (Gimp       *gimp,
                               _("Help _Browser to Use:"),
                               GTK_TABLE (table), 0);
 
-  /*  Web Browser  */
+  /*  Web Browser  (unused on win32)  */
+#ifndef G_OS_WIN32
   vbox2 = prefs_frame_new (_("Web Browser"), GTK_CONTAINER (vbox), FALSE);
   table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
 
@@ -1375,7 +1376,7 @@ prefs_dialog_new (Gimp       *gimp,
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Web Browser to Use:"), 1.0, 0.5,
                              fileselection, 1, TRUE);
-
+#endif
 
   /******************************/
   /*  Interface / Tool Options  */
