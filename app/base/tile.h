@@ -2,8 +2,12 @@
 #define __TILE_H__
 
 
+/* We make one big assumptions about the tilesize at several places
+   in the code: All tiles are squares!				    */
+
 #define TILE_WIDTH   64
 #define TILE_HEIGHT  64
+#define TILE_SHIFT   6  /* This has to be the lg(TILE_WIDTH) to the base of 2 */
 
 /* Uncomment for verbose debugging on copy-on-write logic
 #define TILE_DEBUG
