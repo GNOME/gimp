@@ -95,7 +95,7 @@ static void updatesmvectorprev(void)
   static int ok = 0;
   gint i, x, y;
   gdouble val;
-  static gdouble lastval = 0.0;
+  static gdouble last_val = 0.0;
   guchar gray[3] = {120,120,120};
   guchar red[3] = {255,0,0};
   guchar white[3] = {255,255,255};
@@ -105,7 +105,7 @@ static void updatesmvectorprev(void)
   else
     val = 0.5;
 
-  if(!ok || (val != lastval))
+  if(!ok || (val != last_val))
     {
 #if 0
       if(!infile.col)

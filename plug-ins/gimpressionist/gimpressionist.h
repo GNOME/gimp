@@ -67,7 +67,7 @@ typedef struct
   double     orientstrexp;
   int        general_tileable;
   int        paper_overlay;
-  int        orientvoronoi;
+  int        orient_voronoi;
   int        colorbrushes;
   int        general_drop_shadow;
   double     generalshadowdarkness;
@@ -153,7 +153,7 @@ void brush_reload (const gchar *fn, struct ppm *p);
 
 void create_orientmap_dialog (void);
 void update_orientmap_dialog (void);
-double getdir (double x, double y, int from);
+double get_direction (double x, double y, int from);
 
 void create_sizemap_dialog (void);
 double getsiz_proto (double x, double y, int n, smvector_t *vec,

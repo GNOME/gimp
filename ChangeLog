@@ -1,3 +1,11 @@
+2004-07-20  Shlomi Fish  <shlomif@iglu.org.il>
+
+	* plug-ins/gimpressionist/presets.c: fixed the incorrect strings
+	for input and output of the preset's fields. (a relic of an
+	irresponsible search-and-replace script).
+	* plug-ins/gimpressionist/: normalized the identifiers of 
+	orientmap.c.
+
 2004-07-20  Helvetix Victorinox  <helvetix@gimp.org>
 
 	* app/composite/Makefile.am (regenerate): Updated make-installer.py

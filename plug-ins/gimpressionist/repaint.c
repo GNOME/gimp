@@ -519,7 +519,7 @@ void repaint(ppm_t *p, ppm_t *a)
       guchar *dstrow = &dirmap.col[y*dirmap.width*3];
       double tmpy = y / (double)dirmap.height;
       for(x = 0; x < dirmap.width; x++) {
-        dstrow[x*3] = get_pixel_value(90-getdir(x / (double)dirmap.width, tmpy, 1));
+        dstrow[x*3] = get_pixel_value(90-get_direction(x / (double)dirmap.width, tmpy, 1));
       }
     }
     edgepad(&dirmap, maxbrushwidth, maxbrushwidth, maxbrushheight, maxbrushheight);
