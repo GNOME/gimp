@@ -547,7 +547,7 @@ layers_dialog_update (GimpImage* gimage)
     }
 
   if (layersD->layer_widgets)
-    g_warning (_("layers_dialog_update(): layersD->layer_widgets not empty!"));
+    g_warning ("layers_dialog_update(): layersD->layer_widgets not empty!");
   layersD->layer_widgets = NULL;
 
   /*  Find the preview extents  */
@@ -999,7 +999,7 @@ layers_dialog_set_menu_sensitivity ()
     next_alpha = FALSE;
 
 #define SET_SENSITIVE(menu,condition) \
-        menus_set_sensitive_locale ("<Layers>", (menu), (condition) != 0)
+        menus_set_sensitive_glue ("<Layers>", (menu), (condition) != 0)
 #define SET_OPS_SENSITIVE(button,condition) \
         gtk_widget_set_sensitive (layers_ops_buttons[(button)].widget, \
                                  (condition) != 0)
@@ -1241,7 +1241,7 @@ paint_mode_menu_get_position (gint mode)
     if (mode == (gint) (option_items[i].user_data))
       return i;
 
-  g_message (_("Unknown layer mode"));
+  g_message ("Unknown layer mode");
   return 0;
 }
 
@@ -1781,8 +1781,8 @@ layers_dialog_drag_new_layer_callback (GtkWidget      *widget,
 	    } 
 	  else
 	    {
-	      g_message (_("layers_dialog_drop_new_layer_callback():\n"
-			   "could not allocate new layer"));
+	      g_message ("layers_dialog_drop_new_layer_callback():\n"
+			   "could not allocate new layer");
 	    }
 
 	  return_val = TRUE;
@@ -3235,8 +3235,8 @@ new_layer_query_ok_callback (GtkWidget *widget,
 	} 
       else 
 	{
-	  g_message (_("new_layer_query_ok_callback():\n"
-		       "could not allocate new layer"));
+	  g_message ("new_layer_query_ok_callback():\n"
+		     "could not allocate new layer");
 	}
     }
 

@@ -1625,9 +1625,9 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
     }
 
 #define SET_SENSITIVE(menu,condition) \
-        menus_set_sensitive_locale ("<Image>", (menu), (condition) != 0)
+        menus_set_sensitive_glue ("<Image>", (menu), (condition) != 0)
 #define SET_STATE(menu,condition) \
-        menus_set_state_locale ("<Image>", (menu), (condition) != 0)
+        menus_set_state_glue ("<Image>", (menu), (condition) != 0)
 
   SET_SENSITIVE (N_("/File/Save"), gdisp);
   SET_SENSITIVE (N_("/File/Save as"), gdisp);
@@ -2165,7 +2165,7 @@ gdisplays_flush_whenever (gboolean now)
   /*  this prevents multiple recursive calls to this procedure  */
   if (flushing == TRUE)
     {
-      g_warning (_("gdisplays_flush() called recursively."));
+      g_warning ("gdisplays_flush() called recursively.");
       return;
     }
 

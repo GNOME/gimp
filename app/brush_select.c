@@ -277,7 +277,7 @@ brush_select_new (gchar   *title,
 
   bsp->brush_name = gtk_label_new (_("Active"));
   gtk_box_pack_start (GTK_BOX (util_box), bsp->brush_name, FALSE, FALSE, 4);
-  bsp->brush_size = gtk_label_new ("(0 X 0)");
+  bsp->brush_size = gtk_label_new (_("(0 X 0)"));
   gtk_box_pack_start (GTK_BOX (util_box), bsp->brush_size, FALSE, FALSE, 2);
 
   gtk_widget_show (bsp->brush_name);
@@ -594,7 +594,7 @@ brush_change_callbacks (BrushSelectP bsp,
 					    PDB_END);
  
       if (!return_vals || return_vals[0].value.pdb_int != PDB_SUCCESS)
-	g_message (_("failed to run brush callback function"));
+	g_message ("failed to run brush callback function");
       
       procedural_db_destroy_args (return_vals, nreturn_vals);
     }
@@ -1207,7 +1207,7 @@ update_active_brush_field (BrushSelectP bsp)
   gtk_label_set_text (GTK_LABEL (bsp->brush_name), brush->name);
 
   /*  Set brush size  */
-  g_snprintf (buf, sizeof (buf), "(%d X %d)",
+  g_snprintf (buf, sizeof (buf), _("(%d X %d)"),
 	      brush->mask->width, brush->mask->height);
   gtk_label_set_text (GTK_LABEL (bsp->brush_size), buf);
 
@@ -1264,7 +1264,7 @@ delete_active_brush(BrushSelectP  bsp)
     select_brush (brush);
   }
   else
-    g_message ("Wilber says: \"I don\'t know how to delete that brush.\"");
+    g_message (_("Wilber says: \"I don\'t know how to delete that brush.\""));
 }
 
 static gint

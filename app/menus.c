@@ -518,9 +518,9 @@ menus_set_sensitive (gchar *path,
    we don't need to have our menuentries twice in our catalog */ 
 
 void
-menus_set_sensitive_locale (gchar *prepath,
-			    gchar *path,
-			    gint   sensitive)
+menus_set_sensitive_glue (gchar *prepath,
+			  gchar *path,
+			  gint   sensitive)
 {
   gchar *menupath;
 
@@ -555,9 +555,9 @@ menus_set_state (gchar *path,
 }
 
 void
-menus_set_state_locale (gchar *prepath,
-			gchar *path,
-			gint   state)
+menus_set_state_glue (gchar *prepath,
+		      gchar *path,
+		      gint   state)
 {
   gchar *menupath;
 

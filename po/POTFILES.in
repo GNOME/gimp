@@ -118,13 +118,11 @@ app/tool_options.c
 app/tools.c
 app/transform_core.c
 app/transform_tool.c
+app/undo_history.c
 app/xcf.c
 libgimp/gimpintl.h
 libgimp/gimpunit.c
 libgimp/gimpfileselection.c
 libgimp/gimpenv.c
 libgimp/gimpunitmenu.c
-
-# Originally marked by the authors (GNU people)
-app/regex.c
 

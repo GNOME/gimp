@@ -359,7 +359,7 @@ file_open_callback (GtkWidget *w,
 		    }
 		    gtk_widget_show(GTK_WIDGET (open_options_preview));
 		    
-		    open_options_genbuttonlabel = gtk_label_new("generate\npreview");
+		    open_options_genbuttonlabel = gtk_label_new(_("generate\npreview"));
 		    {
 		      gtk_box_pack_start (GTK_BOX (abox),
 					  GTK_WIDGET (open_options_genbuttonlabel),
@@ -394,7 +394,7 @@ file_open_callback (GtkWidget *w,
     }
 
   gtk_frame_set_label (GTK_FRAME(open_options_frame), _("Preview"));
-  gtk_label_set_text (GTK_LABEL(open_options_label), "No selection.");
+  gtk_label_set_text (GTK_LABEL(open_options_label), _("No selection."));
 
   gtk_widget_show (GTK_WIDGET(open_options_genbuttonlabel));
   gtk_widget_hide (GTK_WIDGET(open_options_preview));
@@ -1200,8 +1200,8 @@ set_preview (const gchar* fullfname, guchar* RGB_source, gint RGB_w, gint RGB_h)
 	{
 	  gtk_label_set_text (GTK_LABEL(open_options_label),
 			      thumb_may_be_outdated ?
-			      "(this thumbnail may be out of date)" :
-			      (imginfo ? imginfo : "(no information)"));
+			      _("(this thumbnail may be out of date)") :
+			      (imginfo ? imginfo : _("(no information)")));
 	}
       else
 	{
@@ -1209,15 +1209,15 @@ set_preview (const gchar* fullfname, guchar* RGB_source, gint RGB_w, gint RGB_h)
 	    {
 	    case 0:
 	      gtk_label_set_text (GTK_LABEL(open_options_label),
-				  "(thumbnail saving is disabled)");
+				  _("(thumbnail saving is disabled)"));
 	      break;
 	    case 1:
 	      gtk_label_set_text (GTK_LABEL(open_options_label),
-				  "(could not write thumbnail file)");
+				  _("(could not write thumbnail file)"));
 	      break;
 	    default:
 	      gtk_label_set_text (GTK_LABEL(open_options_label),
-				  "(thumbnail file not written)");
+				  _("(thumbnail file not written)"));
 	    }
 	}
       gtk_widget_show (GTK_WIDGET(open_options_preview));
@@ -1234,7 +1234,7 @@ set_preview (const gchar* fullfname, guchar* RGB_source, gint RGB_w, gint RGB_h)
       
       gtk_widget_hide (GTK_WIDGET(open_options_preview));
       gtk_label_set_text (GTK_LABEL(open_options_label),
-			  "no preview available");
+			  _("no preview available"));
     }
 
   if (show_generate_label)
@@ -1307,7 +1307,7 @@ genbutton_callback (GtkWidget *w,
   else
     {
       gtk_label_set_text (GTK_LABEL(open_options_label),
-			  "(could not make preview)");
+			  _("(could not make preview)"));
     }
 
   gtk_widget_set_sensitive (GTK_WIDGET (fileload), TRUE);
@@ -1545,10 +1545,10 @@ file_save_ok_callback (GtkWidget *w,
 static void
 file_dialog_show (GtkWidget *filesel)
 {
-  menus_set_sensitive_locale ("<Toolbox>", N_("/File/Open"), FALSE);
-  menus_set_sensitive_locale ("<Image>", N_("/File/Open"), FALSE);
-  menus_set_sensitive_locale ("<Image>", N_("/File/Save"), FALSE);
-  menus_set_sensitive_locale ("<Image>", N_("/File/Save as"), FALSE);
+  menus_set_sensitive_glue ("<Toolbox>", N_("/File/Open"), FALSE);
+  menus_set_sensitive_glue ("<Image>", N_("/File/Open"), FALSE);
+  menus_set_sensitive_glue ("<Image>", N_("/File/Save"), FALSE);
+  menus_set_sensitive_glue ("<Image>", N_("/File/Save as"), FALSE);
 
   gtk_widget_show (filesel);
 }
@@ -1558,13 +1558,13 @@ file_dialog_hide (GtkWidget *filesel)
 {
   gtk_widget_hide (filesel);
 
-  menus_set_sensitive_locale ("<Toolbox>", N_("/File/Open"), TRUE);
-  menus_set_sensitive_locale ("<Image>", N_("/File/Open"), TRUE);
+  menus_set_sensitive_glue ("<Toolbox>", N_("/File/Open"), TRUE);
+  menus_set_sensitive_glue ("<Image>", N_("/File/Open"), TRUE);
 
   if (gdisplay_active ())
     {
-      menus_set_sensitive_locale ("<Image>", N_("/File/Save"), TRUE);
-      menus_set_sensitive_locale ("<Image>", N_("/File/Save as"), TRUE);
+      menus_set_sensitive_glue ("<Image>", N_("/File/Save"), TRUE);
+      menus_set_sensitive_glue ("<Image>", N_("/File/Save as"), TRUE);
     }
 
   return TRUE;

@@ -1,3 +1,36 @@
+Thu Sep 23 13:31:41 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	applied internationalization patch from Daniel Egger
+
+	* app/about_dialog.c
+	* app/app_procs.c
+	* app/batch.c
+	* app/bezier_select.c
+	* app/blend.c
+	* app/boundary.c
+	* app/brush_select.c
+	* app/channels_dialog.c
+	* app/fileops.c
+	* app/gdisplay_ops.c
+	* app/gdisplay.c
+	* app/gimpimage.c
+	* app/install.c
+	* app/layers_dialog.c
+	* app/main.c
+	* app/menus.c
+	* app/menus.h
+	* app/paths_dialog.c
+	* app/plug_in.c: 
+	Debugging messages shouldn't be marked for translation. 
+	gimp_menu_set_sensitivity_locale () renamed to 
+	gimp_menu_set_sensitivity_glue ()
+	
+	* libgimp/gimpintl.h
+	* libgimp/stdplugins-intl.h: moved the internationalization stuff
+	into a macro similar to that the gnome folks use.
+	
+	* po/POTFILES.in: undo_history.c was missing here.
+
 Wed Sep 22 23:51:24 CDT 1999 James Mitchell <mitchell@gimp.org>
 
 	* tips/gimp_tips.it.txt: Translations from Daniele Medri

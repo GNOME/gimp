@@ -204,13 +204,13 @@ plug_in_init_shm (void)
   shm_ID = shmget (IPC_PRIVATE, TILE_WIDTH * TILE_HEIGHT * 4, IPC_CREAT | 0777);
   
   if (shm_ID == -1)
-    g_message (_("shmget failed...disabling shared memory tile transport"));
+    g_message ("shmget failed...disabling shared memory tile transport");
   else
     {
       shm_addr = (guchar*) shmat (shm_ID, 0, 0);
       if (shm_addr == (guchar*) -1)
 	{
-	  g_message (_("shmat failed...disabling shared memory tile transport"));
+	  g_message ("shmat failed...disabling shared memory tile transport");
 	  shm_ID = -1;
 	}
       
@@ -690,7 +690,7 @@ plug_in_def_add (PlugInDef *plug_in_def)
     }
 
   write_pluginrc = TRUE;
-  g_print (_("\"%s\" executable not found\n"), plug_in_def->prog);
+  g_print ("\"%s\" executable not found\n", plug_in_def->prog);
   g_free (plug_in_def->prog);
   g_free (plug_in_def);
 }
@@ -825,7 +825,7 @@ plug_in_open (PlugIn *plug_in)
        */
       if ((pipe (my_read) == -1) || (pipe (my_write) == -1))
 	{
-	  g_message (_("unable to open pipe"));
+	  g_message ("unable to open pipe");
 	  return 0;
 	}
 
@@ -914,7 +914,7 @@ plug_in_open (PlugIn *plug_in)
       else if (plug_in->pid == -1)
 #endif
 	{
-          g_message (_("unable to run plug-in: %s"), plug_in->args[0]);
+          g_message ("unable to run plug-in: %s", plug_in->args[0]);
           plug_in_destroy (plug_in);
           return 0;
 	}
@@ -1282,8 +1282,8 @@ plug_in_set_menu_sensitivity (GimpImageType type)
 	  menus_set_sensitive (proc_def->menu_path, sensitive);
           if (last_plug_in && (last_plug_in == &(proc_def->db_info)))
 	    {
-	      menus_set_sensitive_locale ("<Image>", N_("/Filters/Repeat last"), sensitive);
-	      menus_set_sensitive_locale ("<Image>", N_("/Filters/Re-show last"), sensitive);
+	      menus_set_sensitive_glue ("<Image>", N_("/Filters/Repeat last"), sensitive);
+	      menus_set_sensitive_glue ("<Image>", N_("/Filters/Re-show last"), sensitive);
 	    }
 	}
     }
@@ -1645,8 +1645,8 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 	  if ((proc_install->nparams < 1) ||
 	      (proc_install->params[0].type != PDB_INT32))
 	    {
-	      g_message (_("plug-in \"%s\" attempted to install procedure \"%s\" which "
-			 "does not take the standard plug-in args"),
+	      g_message ("plug-in \"%s\" attempted to install procedure \"%s\" which "
+			 "does not take the standard plug-in args",
 			 current_plug_in->args[0], proc_install->name);
 	      return;
 	    }
@@ -1658,8 +1658,8 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 	      (proc_install->params[1].type != PDB_IMAGE) ||
 	      (proc_install->params[2].type != PDB_DRAWABLE))
 	    {
-	      g_message (_("plug-in \"%s\" attempted to install procedure \"%s\" which "
-			 "does not take the standard plug-in args"),
+	      g_message ("plug-in \"%s\" attempted to install procedure \"%s\" which "
+			 "does not take the standard plug-in args",
 			 current_plug_in->args[0], proc_install->name);
 	      return;
 	    }
@@ -1671,8 +1671,8 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 	      (proc_install->params[1].type != PDB_STRING) ||
 	      (proc_install->params[2].type != PDB_STRING))
 	    {
-	      g_message (_("plug-in \"%s\" attempted to install procedure \"%s\" which "
-			 "does not take the standard plug-in args"),
+	      g_message ("plug-in \"%s\" attempted to install procedure \"%s\" which "
+			 "does not take the standard plug-in args",
 			 current_plug_in->args[0], proc_install->name);
 	      return;
 	    }
@@ -1686,17 +1686,17 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 	      (proc_install->params[3].type != PDB_STRING) ||
 	      (proc_install->params[4].type != PDB_STRING))
 	    {
-	      g_message (_("plug-in \"%s\" attempted to install procedure \"%s\" which "
-			 "does not take the standard plug-in args"),
+	      g_message ("plug-in \"%s\" attempted to install procedure \"%s\" which "
+			 "does not take the standard plug-in args",
 			 current_plug_in->args[0], proc_install->name);
 	      return;
 	    }
 	}
       else
 	{
-	  g_message (_("plug-in \"%s\" attempted to install procedure \"%s\" in "
+	  g_message ("plug-in \"%s\" attempted to install procedure \"%s\" in "
 		     "an invalid menu location.  Use either \"<Toolbox>\", \"<Image>\", "
-		     "\"<Load>\", or \"<Save>\"."),
+		     "\"<Load>\", or \"<Save>\".",
 		     current_plug_in->args[0], proc_install->name);
 	  return;
 	}
@@ -1714,9 +1714,9 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 	   proc_install->params[i].type == PDB_STRINGARRAY) &&
 	  proc_install->params[i-1].type != PDB_INT32) 
 	{
-	  g_message (_("plug_in \"%s\" attempted to install procedure \"%s\" "
+	  g_message ("plug_in \"%s\" attempted to install procedure \"%s\" "
 		     "which fails to comply with the array parameter "
-		     "passing standard.  Argument %d is noncompliant."), 
+		     "passing standard.  Argument %d is noncompliant.", 
 		     current_plug_in->args[0], proc_install->name, i);
 	  return;
 	}
@@ -2146,7 +2146,7 @@ plug_in_init_file (char *filename)
 
       if (g_strcasecmp (name, plug_in_name) == 0)
 	{
-	  g_print (_("duplicate plug-in: \"%s\" (skipping)\n"), filename);
+	  g_print ("duplicate plug-in: \"%s\" (skipping)\n"), filename;
 	  return;
 	}
 
@@ -2354,7 +2354,7 @@ plug_in_callback (GtkWidget *widget,
       break;
 
     default:
-      g_error (_("Unknown procedure type."));
+      g_error ("Unknown procedure type.");
       g_free (args);
       return;
     }
@@ -2435,7 +2435,7 @@ plug_in_proc_def_dead (void *freed_proc_def)
   PlugInDef *plug_in_def;
   PlugInProcDef *proc_def = freed_proc_def;
 
-  g_warning (_("removing duplicate PDB procedure \"%s\""),
+  g_warning ("removing duplicate PDB procedure \"%s\"",
 	     proc_def->db_info.name);
 
   /* search the plugin list to see if any plugins had references to 
@@ -2691,7 +2691,7 @@ plug_in_params_to_args (GPParam *params,
 	  colorarray[2] = params[i].data.d_color.blue;
 	  break;
 	case PDB_REGION:
-	  g_message (_("the \"region\" arg type is not currently supported"));
+	  g_message ("the \"region\" arg type is not currently supported");
 	  break;
 	case PDB_DISPLAY:
 	  args[i].value.pdb_int = params[i].data.d_display;
@@ -2856,7 +2856,7 @@ plug_in_args_to_params (Argument *args,
 	    }
 	  break;
 	case PDB_REGION:
-	  g_message (_("the \"region\" arg type is not currently supported"));
+	  g_message ("the \"region\" arg type is not currently supported");
 	  break;
 	case PDB_DISPLAY:
 	  params[i].data.d_display = args[i].value.pdb_int;
@@ -2973,7 +2973,7 @@ plug_in_params_destroy (GPParam *params,
 	case PDB_COLOR:
 	  break;
 	case PDB_REGION:
-	  g_message (_("the \"region\" arg type is not currently supported"));
+	  g_message ("the \"region\" arg type is not currently supported");
 	  break;
 	case PDB_DISPLAY:
 	case PDB_IMAGE:
@@ -3058,7 +3058,7 @@ plug_in_args_destroy (Argument *args,
 	  g_free (args[i].value.pdb_pointer);
 	  break;
 	case PDB_REGION:
-	  g_message (_("the \"region\" arg type is not currently supported"));
+	  g_message ("the \"region\" arg type is not currently supported");
 	  break;
 	case PDB_DISPLAY:
 	case PDB_IMAGE:

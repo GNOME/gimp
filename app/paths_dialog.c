@@ -200,33 +200,33 @@ paths_ops_button_set_sensitive (gint     but,
   switch(but)
     {
     case NEW_PATH_BUTTON:
-      menus_set_sensitive_locale ("<Paths>", N_("/New Path"), sensitive);
+      menus_set_sensitive_glue ("<Paths>", N_("/New Path"), sensitive);
       gtk_widget_set_sensitive(paths_ops_buttons[0].widget,sensitive);
       break;
     case DUP_PATH_BUTTON:
-      menus_set_sensitive_locale ("<Paths>", N_("/Duplicate Path"), sensitive);
+      menus_set_sensitive_glue ("<Paths>", N_("/Duplicate Path"), sensitive);
       gtk_widget_set_sensitive(paths_ops_buttons[1].widget,sensitive);
       break;
     case PATH_TO_SEL_BUTTON:
-      menus_set_sensitive_locale ("<Paths>", N_("/Path to Selection"), sensitive);
+      menus_set_sensitive_glue ("<Paths>", N_("/Path to Selection"), sensitive);
       gtk_widget_set_sensitive(paths_ops_buttons[2].widget,sensitive);
       break;
     case STROKE_PATH_BUTTON:
-      menus_set_sensitive_locale ("<Paths>", N_("/Stroke Path"), sensitive);
+      menus_set_sensitive_glue ("<Paths>", N_("/Stroke Path"), sensitive);
       gtk_widget_set_sensitive(paths_ops_buttons[4].widget,sensitive);
       break;
     case DEL_PATH_BUTTON:
-      menus_set_sensitive_locale ("<Paths>", N_("/Delete Path"), sensitive);
+      menus_set_sensitive_glue ("<Paths>", N_("/Delete Path"), sensitive);
       gtk_widget_set_sensitive(paths_ops_buttons[5].widget,sensitive);
       break;
     case COPY_PATH_BUTTON:
-      menus_set_sensitive_locale ("<Paths>", N_("/Copy Path"), sensitive);
+      menus_set_sensitive_glue ("<Paths>", N_("/Copy Path"), sensitive);
       break;
     case PASTE_PATH_BUTTON:
-      menus_set_sensitive_locale ("<Paths>", N_("/Paste Path"), sensitive);
+      menus_set_sensitive_glue ("<Paths>", N_("/Paste Path"), sensitive);
       break;
     default:
-      g_warning(_("paths_ops_button_set_sensitive:: invalid button specified"));
+      g_warning("paths_ops_button_set_sensitive:: invalid button specified");
       break;
     }
 }
@@ -249,7 +249,7 @@ point_ops_button_set_sensitive(gint but,gboolean sensitive)
       gtk_widget_set_sensitive(point_ops_buttons[3].widget,sensitive);
       break;
     default:
-      g_warning(_("point_ops_button_set_sensitive:: invalid button specified"));
+      g_warning("point_ops_button_set_sensitive:: invalid button specified");
       break;
     }
 }
@@ -1119,7 +1119,7 @@ paths_dialog_update (GimpImage* gimage)
 
   if(gimage != new_path_list->gimage)
     {
-      g_warning(_("paths list: internal list error"));
+      g_warning("paths list: internal list error");
     }
 
   plist = new_path_list->bz_paths;
@@ -1541,7 +1541,7 @@ static void paths_dialog_advanced_to_path_callback (GtkWidget *widget,
   /*  find the sel2path PDB record  */
   if ((proc_rec = procedural_db_lookup ("plug_in_sel2path_advanced")) == NULL)
     {
-      g_message (_("Selection to path (advanced) procedure lookup failed"));
+      g_message ("paths_dialog_adavanced_to_path_callback(): selection to path (advanced) procedure lookup failed");
       return;
     }
 
@@ -1579,7 +1579,7 @@ paths_dialog_sel_to_path_callback (GtkWidget * widget, gpointer udata)
   /*  find the sel2path PDB record  */
   if ((proc_rec = procedural_db_lookup ("plug_in_sel2path")) == NULL)
     {
-      g_message (_("Selection to path procedure lookup failed"));
+      g_message ("paths_dialog_sel_to_path_callback(): selection to path procedure lookup failed");
       return;
     }
 
@@ -2241,14 +2241,14 @@ static void file_ok_callback(GtkWidget * widget, gpointer client_data)
 		case BEZIER_MOVE:
 		  if(this_path_count < 6)
 		    {
-		      g_warning(_("Invalid single point in path\n"));
+		      g_warning("Invalid single point in path\n");
 		      gtk_widget_hide (file_dlg);  
 		      return;
 		    }
 		  this_path_count = 0;
 		  break;
 		default:
-		  g_warning(_("Invalid point type passed\n"));
+		  g_warning("Invalid point type passed\n");
 		  gtk_widget_hide (file_dlg);  
 		  return;
 		}
@@ -2734,7 +2734,7 @@ paths_set_path_points(GimpImage * gimage,
      (pclosed && ((num_pnts/3) % 3)) ||
      (!pclosed && ((num_pnts/3) % 3) != 2))
     {
-      g_warning(_("wrong number of points\n"));
+      g_warning("wrong number of points\n");
       return FALSE;
     }
 
@@ -2771,13 +2771,13 @@ paths_set_path_points(GimpImage * gimage,
 	case BEZIER_MOVE:
 	  if(this_path_count < 6)
 	    {
-	      g_warning(_("Invalid single point in path\n"));
+	      g_warning("Invalid single point in path\n");
 	      return FALSE;
 	    }
 	  this_path_count = 0;
 	  break;
 	default:
-	  g_warning(_("Invalid point type passed\n"));
+	  g_warning("Invalid point type passed\n");
 	  return FALSE;
 	}
 
@@ -2896,7 +2896,7 @@ paths_get_tattoo(PATHP p)
 {
   if(!p)
     {
-      g_warning(_("paths_get_tattoo: invalid path"));
+      g_warning("paths_get_tattoo: invalid path");
       return 0;
     }
 
@@ -2944,7 +2944,7 @@ paths_delete_path(GimpImage *gimage,
 
   if(!pname || !gimage)
     {
-      g_warning(_("paths_delete_path: invalid path"));
+      g_warning("paths_delete_path: invalid path");
       return 0;
     }
 

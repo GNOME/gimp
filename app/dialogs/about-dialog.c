@@ -203,7 +203,7 @@ about_dialog_create (gint timeout)
 
       style = gtk_style_new ();
       gdk_font_unref (style->font);
-      style->font = gdk_font_load (_("-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*"));
+      style->font = gdk_font_load ("-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*");
       gtk_widget_push_style (style);
 
       label_text = g_strdup_printf("%s%s%s", _("Version "), GIMP_VERSION,
@@ -213,7 +213,7 @@ about_dialog_create (gint timeout)
       gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, TRUE, 0);
       gtk_widget_show (label);
 
-      label = gtk_label_new (_("Spencer Kimball & Peter Mattis"));
+      label = gtk_label_new ("Spencer Kimball & Peter Mattis");
       gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, TRUE, 0);
       gtk_widget_show (label);
 

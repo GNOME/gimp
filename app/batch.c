@@ -62,7 +62,7 @@ batch_init ()
       
       if (!eval_proc)
         {
-          g_message (_("script-fu not available: batch mode disabled\n"));
+          g_message ("script-fu not available: batch mode disabled\n");
           return;
         }
 
@@ -71,7 +71,7 @@ batch_init ()
 	  if (!read_from_stdin)
 	    {
 #ifndef NATIVE_WIN32 /* for now */
-	      g_print (_("reading batch commands from stdin\n"));
+	      g_print ("reading batch commands from stdin\n");
 	      gdk_input_add (STDIN_FILENO, GDK_INPUT_READ, batch_read, NULL);
 	      read_from_stdin = TRUE;
 #else
@@ -111,13 +111,13 @@ batch_run_cmd (char *cmd)
   switch (vals[0].value.pdb_int)
     {
     case PDB_EXECUTION_ERROR:
-      g_print (_("batch command: experienced an execution error.\n"));
+      g_print ("batch command: experienced an execution error.\n");
       break;
     case PDB_CALLING_ERROR:
-      g_print (_("batch command: experienced a calling error.\n"));
+      g_print ("batch command: experienced a calling error.\n");
       break;
     case PDB_SUCCESS:
-      g_print (_("batch command: executed successfully.\n"));
+      g_print ("batch command: executed successfully.\n");
       break;
     default:
       break;
@@ -201,7 +201,7 @@ batch_pserver  (int                run_mode,
 
   if (!pserver_proc)
     {
-      g_message (_("extension_perl_server not available: unable to start the perl server\n"));
+      g_message ("extension_perl_server not available: unable to start the perl server\n");
       return;
     }
 
@@ -217,13 +217,13 @@ batch_pserver  (int                run_mode,
   switch (vals[0].value.pdb_int)
     {
     case PDB_EXECUTION_ERROR:
-      g_print (_("perl server: experienced an execution error.\n"));
+      g_print ("perl server: experienced an execution error.\n");
       break;
     case PDB_CALLING_ERROR:
-      g_print (_("perl server: experienced a calling error.\n"));
+      g_print ("perl server: experienced a calling error.\n");
       break;
     case PDB_SUCCESS:
-      g_print (_("perl server: executed successfully.\n"));
+      g_print ("perl server: executed successfully.\n");
       break;
     default:
       break;

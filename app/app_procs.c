@@ -96,8 +96,8 @@
 
 #define LOGO_WIDTH_MIN 300
 #define LOGO_HEIGHT_MIN 110
-#define NAME "The GIMP"
-#define BROUGHT "brought to you by"
+#define NAME _("The GIMP")
+#define BROUGHT _("brought to you by")
 #define AUTHORS "Spencer Kimball and Peter Mattis"
 
 #define SHOW_NEVER 0
@@ -705,8 +705,8 @@ static void
 really_quit_cancel_callback (GtkWidget *widget,
 			     GtkWidget *dialog)
 {
-  menus_set_sensitive_locale ("<Toolbox>", N_("/File/Quit"), TRUE);
-  menus_set_sensitive_locale ("<Image>", N_("/File/Quit"), TRUE);
+  menus_set_sensitive_glue ("<Toolbox>", N_("/File/Quit"), TRUE);
+  menus_set_sensitive_glue ("<Image>", N_("/File/Quit"), TRUE);
   gtk_widget_destroy (dialog);
 }
 
@@ -731,8 +731,8 @@ really_quit_dialog (void)
   GtkStyle  *style;
   GtkWidget *label;
 
-  menus_set_sensitive_locale ("<Toolbox>", N_("/File/Quit"), FALSE);
-  menus_set_sensitive_locale ("<Image>", N_("/File/Quit"), FALSE);
+  menus_set_sensitive_glue ("<Toolbox>", N_("/File/Quit"), FALSE);
+  menus_set_sensitive_glue ("<Image>", N_("/File/Quit"), FALSE);
 
   dialog = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (dialog), "really_quit", "Gimp");

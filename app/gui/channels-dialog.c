@@ -617,7 +617,7 @@ channels_dialog_set_menu_sensitivity ()
     aux_sens = FALSE;
 
 #define SET_SENSITIVE(menu,condition) \
-        menus_set_sensitive_locale ("<Channels>", (menu), (condition) != 0)
+        menus_set_sensitive_glue ("<Channels>", (menu), (condition) != 0)
 #define SET_OPS_SENSITIVE(button,condition) \
         gtk_widget_set_sensitive (channels_ops_buttons[(button)].widget, \
                                  (condition) != 0)
@@ -692,7 +692,7 @@ channels_dialog_set_channel (ChannelWidget *channel_widget)
 	      gtk_list_select_item (GTK_LIST (channelsD->channel_list), 2);
 	      break;
 	    case AUXILLARY_CHANNEL:
-	      g_error (_("error in %s at %d: this shouldn't happen."),
+	      g_error ("error in %s at %d: this shouldn't happen.",
 		       __FILE__, __LINE__);
 	      break;
 	    }
@@ -746,7 +746,7 @@ channels_dialog_unset_channel (ChannelWidget *channel_widget)
 	      gtk_list_unselect_item (GTK_LIST (channelsD->channel_list), 2);
 	      break;
 	    case AUXILLARY_CHANNEL:
-	      g_error (_("error in %s at %d: this shouldn't happen."),
+	      g_error ("error in %s at %d: this shouldn't happen.",
 		       __FILE__, __LINE__);
 	      break;
 	    }
@@ -1139,8 +1139,8 @@ channels_dialog_drag_new_channel_callback (GtkWidget      *widget,
             } 
           else
             {
-              g_message (_("channels_dialog_drop_new_channel_callback():\n"
-                           "could not allocate new channel"));
+              g_message ("channels_dialog_drop_new_channel_callback():\n"
+                           "could not allocate new channel");
             }
 
           return_val = TRUE;

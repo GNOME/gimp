@@ -43,12 +43,12 @@ void menus_quit                (void);
 
 void menus_set_sensitive       (gchar *path,
 				gint   sensitive);
-void menus_set_sensitive_locale(gchar *prepath,
+void menus_set_sensitive_glue  (gchar *prepath,
 				gchar *path,
 				gint   sensitive);
 void menus_set_state           (gchar *path,
 				gint   state);
-void menus_set_state_locale    (gchar *prepath,
+void menus_set_state_glue      (gchar *prepath,
 				gchar *path,
 				gint   state);
 

@@ -1,7 +1,16 @@
 #ifndef __GIMPINTL_H__
 #define __GIMPINTL_H__
 
-/* Copied from gnome-i18n.h by Tom Tromey <tromey@creche.cygnus.com> */
+/* Copied from gnome-i18n.h by Tom Tromey <tromey@creche.cygnus.com> *
+ * Heavily modified by Daniel Egger <Daniel.Egger@t-online.de>       *
+ * So be sure to hit me instead of him if something is wrong here    */ 
+
+#ifndef LOCALEDIR
+#define LOCALEDIR g_strconcat (gimp_data_directory (), \
+			       G_DIR_SEPARATOR_S, \
+			       "locale", \
+			       NULL)
+#endif
 
 #ifdef ENABLE_NLS
 #    include <libintl.h>
@@ -11,6 +20,13 @@
 #    else
 #        define N_(String) (String)
 #    endif
+
+#define INIT_LOCALE( domain )			\
+	gtk_set_locale ();			\
+	setlocale (LC_NUMERIC, "C");		\
+	bindtextdomain (domain, LOCALEDIR);	\
+	textdomain (domain);								
+	
 #else
 /* Stubs that do something close enough.  */
 #    define textdomain(String) (String)

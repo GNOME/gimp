@@ -1347,7 +1347,7 @@ gradient_render_pixel (double   x,
       break;
 
     default:
-      gimp_fatal_error(_("gradient_render_pixel(): Unknown gradient type %d"),
+      gimp_fatal_error("gradient_render_pixel(): Unknown gradient type %d",
 		       (int) rbd->gradient_type);
       return;
     }
@@ -1485,7 +1485,7 @@ gradient_fill_region (GImage          *gimage,
       break;
 
     default:
-      gimp_fatal_error(_("gradient_fill_region(): Unknown blend mode %d"),
+      gimp_fatal_error("gradient_fill_region(): Unknown blend mode %d",
 		       (int) blend_mode);
       break;
     }
@@ -1526,7 +1526,7 @@ gradient_fill_region (GImage          *gimage,
       break;
 
     default:
-      gimp_fatal_error(_("gradient_fill_region(): Unknown gradient type %d"),
+      gimp_fatal_error("gradient_fill_region(): Unknown gradient type %d",
 		       (int) gradient_type);
       break;
     }
@@ -1548,7 +1548,7 @@ gradient_fill_region (GImage          *gimage,
       break;
 
     default:
-      gimp_fatal_error(_("gradient_fill_region(): Unknown repeat mode %d"),
+      gimp_fatal_error("gradient_fill_region(): Unknown repeat mode %d",
 		       (int) repeat);
       break;
     }

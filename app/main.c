@@ -118,24 +118,9 @@ main (int argc, char **argv)
   /* Initialize variables */
   prog_name = argv[0];
 
-  /* Initialize Gtk toolkit */
-  gtk_set_locale ();
-  setlocale(LC_NUMERIC, "C");  /* must use dot, not comma, as decimal separator */
-
   /* Initialize i18n support */
-#ifdef HAVE_LC_MESSAGES
-  setlocale(LC_MESSAGES, "");
-#endif
-#ifdef LOCALEDIR
-  bindtextdomain("gimp", LOCALEDIR);
-  bindtextdomain("gimp-std-plugins", LOCALEDIR);
-#else
-  bindtextdomain("gimp", g_strconcat (gimp_data_directory (),
-				      G_DIR_SEPARATOR_S,
-				      "locale",
-				      NULL));
-#endif
-  textdomain("gimp");
+
+  INIT_LOCALE("gimp");
 
   gtk_init (&argc, &argv);
 

@@ -666,7 +666,7 @@ gimp_image_apply_image (GimpImage	 *gimage,
   operation = valid_combinations [drawable_type (drawable)][src2PR->bytes];
   if (operation == -1)
     {
-      g_message (_("gimp_image_apply_image sent illegal parameters"));
+      g_message ("gimp_image_apply_image sent illegal parameters");
       return;
     }
 
@@ -762,7 +762,7 @@ gimp_image_replace_image (GimpImage    *gimage,
   operation = valid_combinations [drawable_type (drawable)][src2PR->bytes];
   if (operation == -1)
     {
-      g_message (_("gimp_image_apply_image sent illegal parameters"));
+      g_message ("gimp_image_apply_image sent illegal parameters");
       return;
     }
 
@@ -1195,7 +1195,7 @@ project_indexed (GimpImage   *gimage,
     initial_region (src, dest, NULL, gimage->cmap, layer->opacity,
 		    layer->mode, gimage->visible, INITIAL_INDEXED);
   else
-    g_message (_("Unable to project indexed image."));
+    g_message ("Unable to project indexed image.");
 }
 
 static void
@@ -2666,7 +2666,7 @@ gimp_image_merge_layers (GimpImage *gimage,
 			       OPAQUE_OPACITY, NORMAL_MODE);
       if (!merge_layer)
 	{
-	  g_message (_("gimp_image_merge_layers: could not allocate merge layer"));
+	  g_message ("gimp_image_merge_layers: could not allocate merge layer");
 	  return NULL;
 	}
 
@@ -2697,7 +2697,7 @@ gimp_image_merge_layers (GimpImage *gimage,
 			       OPAQUE_OPACITY, NORMAL_MODE);
       if (!merge_layer)
 	{
-	  g_message (_("gimp_image_merge_layers: could not allocate merge layer"));
+	  g_message ("gimp_image_merge_layers: could not allocate merge layer");
 	  return NULL;
 	}
 
@@ -2736,7 +2736,7 @@ gimp_image_merge_layers (GimpImage *gimage,
       operation = valid_combinations [drawable_type (GIMP_DRAWABLE(merge_layer))][drawable_bytes (GIMP_DRAWABLE(layer))];
       if (operation == -1)
 	{
-	  g_message (_("gimp_image_merge_layers attempting to merge incompatible layers\n"));
+	  g_message ("gimp_image_merge_layers attempting to merge incompatible layers\n");
 	  return NULL;
 	}
 
@@ -2819,14 +2819,14 @@ gimp_image_add_layer (GimpImage *gimage,
   if (GIMP_DRAWABLE (float_layer)->gimage != NULL && 
       GIMP_DRAWABLE (float_layer)->gimage != gimage) 
     {
-      g_message (_("gimp_image_add_layer: attempt to add layer to wrong image"));
+      g_message ("gimp_image_add_layer: attempt to add layer to wrong image");
       return NULL;
     }
 
   for (ll = gimage->layers; ll; ll = g_slist_next (ll)) 
     if (ll->data == float_layer) 
       {
-	g_message (_("gimp_image_add_layer: trying to add layer to image twice"));
+	g_message ("gimp_image_add_layer: trying to add layer to image twice");
 	return NULL;
       }
 
@@ -3201,14 +3201,14 @@ gimp_image_add_channel (GimpImage *gimage,
   if (GIMP_DRAWABLE(channel)->gimage != NULL &&
       GIMP_DRAWABLE(channel)->gimage != gimage)
     {
-      g_message (_("gimp_image_add_channel: attempt to add channel to wrong image"));
+      g_message ("gimp_image_add_channel: attempt to add channel to wrong image");
       return NULL;
     }
 
   for (cc = gimage->channels; cc; cc = g_slist_next (cc))
     if (cc->data == channel) 
       {
-	g_message (_("gimp_image_add_channel: trying to add channel to image twice"));
+	g_message ("gimp_image_add_channel: trying to add channel to image twice");
 	return NULL;
       }
 

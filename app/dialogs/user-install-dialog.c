@@ -118,7 +118,7 @@ install_help (InstallCallback callback)
     char   *text;
   } help_lines[] = {
     { 2, N_("The GIMP - GNU Image Manipulation Program\n\n") },
-    { 1, N_("Copyright (C) 1995 Spencer Kimball and Peter Mattis\n") },
+    { 1, "Copyright (C) 1995 Spencer Kimball and Peter Mattis\n" },
     { 0, "\n" },
 
     { 0,
@@ -492,10 +492,10 @@ install_run (InstallCallback callback)
       g_free (quoted_user_dir);
 
       gtk_text_insert (GTK_TEXT (text), font_strong, NULL, NULL,
-		       "Did you notice any error messages\n"
-		       "in the console window? If not, installation\n"
-		       "was successful! Otherwise, quit and investigate\n"
-		       "the possible reason...\n", -1);
+		       _("Did you notice any error messages\n"
+		         "in the console window? If not, installation\n"
+		         "was successful! Otherwise, quit and investigate\n"
+		         "the possible reason...\n"), -1);
 #else
 #ifndef __EMX__
       g_snprintf (buffer, sizeof(buffer), "%s" G_DIR_SEPARATOR_S USER_INSTALL " %s %s",
