@@ -27,28 +27,38 @@
 #include "gimpmodregister.h"
 
 #include "libgimp/gimpcolorselector.h"
+#include "libgimp/gimpcolor.h"
+#include "libgimp/gimpcolorspace.h"
 #include "libgimp/gimpmodule.h"
 
 #include "libgimp/gimpintl.h"
 
 
 /* prototypes */
-static GtkWidget * colorsel_gtk_new      (gint                       r,
-					  gint                       g,
-					  gint                       b,
-					  gint                       a,
-					  gboolean                   show_alpha,
-					  GimpColorSelectorCallback  callback,
-					  gpointer                   data,
-					  gpointer                  *selector_data);
-static void        colorsel_gtk_free     (gpointer                   data);
-static void        colorsel_gtk_setcolor (gpointer                   data,
-					  gint                       r,
-					  gint                       g,
-					  gint                       b,
-					  gint                       a);
-static void        colorsel_gtk_update   (GtkWidget                 *widget,
-					  gpointer                   data);
+static GtkWidget * colorsel_gtk_new         (gint                       h,
+					     gint                       s,
+					     gint                       v,
+					     gint                       r,
+					     gint                       g,
+					     gint                       b,
+					     gint                       a,
+					     gboolean                   show_alpha,
+					     GimpColorSelectorCallback  callback,
+					     gpointer                   data,
+					     gpointer                  *selector_data);
+static void        colorsel_gtk_free        (gpointer                   data);
+static void        colorsel_gtk_set_color   (gpointer                   data,
+					     gint                       h,
+					     gint                       s,
+					     gint                       v,
+					     gint                       r,
+					     gint                       g,
+					     gint                       b,
+					     gint                       a);
+static void        colorsel_gtk_set_channel (gpointer                   data,
+					     GimpColorSelectorChannelType  channel);
+static void        colorsel_gtk_update      (GtkWidget                 *widget,
+					     gpointer                   data);
 
 /* EEK */
 static gboolean    colorsel_gtk_widget_idle_hide (gpointer           data);
@@ -61,7 +71,8 @@ static GimpColorSelectorMethods methods =
 {
   colorsel_gtk_new,
   colorsel_gtk_free,
-  colorsel_gtk_setcolor
+  colorsel_gtk_set_color,
+  colorsel_gtk_set_channel
 };
 
 static GimpModuleInfo info =
@@ -125,7 +136,10 @@ typedef struct
 
 
 static GtkWidget *
-colorsel_gtk_new (gint                       r,
+colorsel_gtk_new (gint                       h,
+		  gint                       s,
+		  gint                       v,
+		  gint                       r,
 		  gint                       g,
 		  gint                       b,
 		  gint                       a,
@@ -148,11 +162,9 @@ colorsel_gtk_new (gint                       r,
   gtk_color_selection_set_opacity (GTK_COLOR_SELECTION (p->selector),
 				   show_alpha);
 
-  /*
-  gtk_widget_hide (GTK_COLOR_SELECTION (p->selector)->sample_area->parent);
-  */
+  gtk_widget_hide (GTK_COLOR_SELECTION (p->selector)->scales[0]->parent);
 
-  colorsel_gtk_setcolor (p, r, g, b, a);
+  colorsel_gtk_set_color (p, h, s, v, r, g, b, a);
 
   /* EEK: to be removed */
   gtk_signal_connect_object_after
@@ -190,11 +202,14 @@ colorsel_gtk_free (gpointer data)
 }
 
 static void
-colorsel_gtk_setcolor (gpointer  data,
-		       gint      r,
-		       gint      g,
-		       gint      b,
-		       gint      a)
+colorsel_gtk_set_color (gpointer  data,
+			gint      h,
+			gint      s,
+			gint      v,
+			gint      r,
+			gint      g,
+			gint      b,
+			gint      a)
 {
   ColorselGtk *p = data;
 
@@ -209,10 +224,19 @@ colorsel_gtk_setcolor (gpointer  data,
 }
 
 static void
+colorsel_gtk_set_channel (gpointer                      data,
+			  GimpColorSelectorChannelType  channel)
+{
+}
+
+static void
 colorsel_gtk_update (GtkWidget *widget,
 		     gpointer   data)
 {
   ColorselGtk *p = data;
+  gint         h;
+  gint         s;
+  gint         v;
   gint         r;
   gint         g;
   gint         b;
@@ -226,7 +250,13 @@ colorsel_gtk_update (GtkWidget *widget,
   b = (gint) (color[2] * 255.999);
   a = (gint) (color[3] * 255.999);
 
-  p->callback (p->client_data, r, g, b, a);
+  gimp_rgb_to_hsv_double (&color[0], &color[1], &color[2]);
+
+  h = (gint) (color[0] * 360.999);
+  s = (gint) (color[1] * 255.999);
+  v = (gint) (color[2] * 255.999);
+
+  p->callback (p->client_data, h, v, s, r, g, b, a);
 }
 
 /* EEK */

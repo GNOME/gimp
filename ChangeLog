@@ -1,3 +1,21 @@
+2001-01-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/color_notebook.[ch]
+	* app/color_select.c: moved the scales and the toggle butttons out
+	of the notebook. Added an "Aplha" scale (the opacity is not yet
+	shown in the color area). Removed the ColorNotebook structure from
+	the header.
+
+	* app/color_area.c: the ColorNotebook struct is no longer public.
+
+	* libgimp/gimpcolorselector.h
+	* modules/colorsel_gtk.c
+	* modules/colorsel_triangle.c
+	* modules/colorsel_water.c: changed the ColorSelector module
+	interface again: Pass H, S, V, R, G, B and A in all functions
+	and callbacks. Added a "set_channel" method because the channel
+	toggles are outside the notebook now. This needs more work...
+
 2001-01-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/color_notebook.[ch]

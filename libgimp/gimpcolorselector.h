@@ -28,13 +28,31 @@ extern "C" {
 /* For information look at the html documentation */
 
 
+typedef enum
+{
+  GIMP_COLOR_SELECTOR_HUE,
+  GIMP_COLOR_SELECTOR_SATURATION,
+  GIMP_COLOR_SELECTOR_VALUE,
+  GIMP_COLOR_SELECTOR_RED,
+  GIMP_COLOR_SELECTOR_GREEN,
+  GIMP_COLOR_SELECTOR_BLUE,
+  GIMP_COLOR_SELECTOR_ALPHA
+} GimpColorSelectorChannelType;
+
+
 typedef void        (* GimpColorSelectorCallback) (gpointer   data,
+						   gint       h,
+						   gint       s,
+						   gint       v,
 						   gint       r,
 						   gint       g,
 						   gint       b,
 						   gint       a);
 
-typedef GtkWidget *  (* GimpColorSelectorNewFunc) (gint       r,
+typedef GtkWidget *  (* GimpColorSelectorNewFunc) (gint       h,
+						   gint       s,
+						   gint       v,
+						   gint       r,
 						   gint       g,
 						   gint       b,
 						   gint       a,
@@ -47,10 +65,16 @@ typedef void        (* GimpColorSelectorFreeFunc) (gpointer   selector_data);
 
 
 typedef void    (* GimpColorSelectorSetColorFunc) (gpointer   selector_data,
+						   gint       h,
+						   gint       s,
+						   gint       v,
 						   gint       r,
 						   gint       g,
 						   gint       b,
 						   gint       a);
+
+typedef void  (* GimpColorSelectorSetChannelFunc) (gpointer   selector_data,
+						   GimpColorSelectorChannelType  type);
 
 typedef void      (* GimpColorSelectorFinishedCB) (gpointer   finished_data);
 
@@ -59,9 +83,11 @@ typedef struct _GimpColorSelectorMethods GimpColorSelectorMethods;
 
 struct _GimpColorSelectorMethods
 {
-  GimpColorSelectorNewFunc      new;
-  GimpColorSelectorFreeFunc     free;
-  GimpColorSelectorSetColorFunc setcolor;
+  GimpColorSelectorNewFunc        new;
+  GimpColorSelectorFreeFunc       free;
+
+  GimpColorSelectorSetColorFunc   set_color;
+  GimpColorSelectorSetChannelFunc set_channel;
 };
 
 typedef gpointer GimpColorSelectorID;

@@ -37,7 +37,10 @@
 
 
 /* prototypes */
-static GtkWidget * colorsel_triangle_new  (gint              red,
+static GtkWidget * colorsel_triangle_new  (gint              hue,
+					   gint              saturation,
+					   gint              value,
+					   gint              red,
 					   gint              green,
 					   gint              blue,
 					   gint              alpha,
@@ -48,11 +51,16 @@ static GtkWidget * colorsel_triangle_new  (gint              red,
 
 static void colorsel_triangle_free        (gpointer          selector_data);
 
-static void colorsel_triangle_setcolor    (gpointer          selector_data,
+static void colorsel_triangle_set_color   (gpointer          selector_data,
+					   gint              hue,
+					   gint              saturation,
+					   gint              value,
 					   gint              red,
 	         			   gint              green,
 	         			   gint              blue,
 					   gint              alpha);
+static void colorsel_triangle_set_channel (gpointer          selector_data,
+					   GimpColorSelectorChannelType  channel);
 
 
 /* local methods */
@@ -60,7 +68,8 @@ static GimpColorSelectorMethods methods =
 {
   colorsel_triangle_new,
   colorsel_triangle_free,
-  colorsel_triangle_setcolor
+  colorsel_triangle_set_color,
+  colorsel_triangle_set_channel
 };
 
 
@@ -123,7 +132,9 @@ static void        color_select_update_rgb_values (ColorSelect *coldata);
 static void        update_previews                (ColorSelect *coldata,
 						   gboolean     hue_changed);
 
+/*
 static void        color_select_update_hsv_values (ColorSelect *coldata);
+*/
 
 
 /*************************************************************/
@@ -168,7 +179,10 @@ module_unload (gpointer                     shutdown_data,
 /* methods */
 
 static GtkWidget *
-colorsel_triangle_new (gint                       red,
+colorsel_triangle_new (gint                       hue,
+		       gint                       saturation,
+		       gint                       value,
+		       gint                       red,
 		       gint                       green,
 		       gint                       blue,
 		       gint                       alpha,
@@ -185,12 +199,13 @@ colorsel_triangle_new (gint                       red,
   GtkWidget   *vbox;
 
   coldata = g_new (ColorSelect, 1);
-  coldata->values[RED]   = red;
-  coldata->values[GREEN] = green;
-  coldata->values[BLUE]  = blue;
-  coldata->values[ALPHA] = alpha;
-
-  color_select_update_hsv_values (coldata);
+  coldata->values[HUE]        = hue;
+  coldata->values[SATURATION] = saturation;
+  coldata->values[VALUE]      = value;
+  coldata->values[RED]        = red;
+  coldata->values[GREEN]      = green;
+  coldata->values[BLUE]       = blue;
+  coldata->values[ALPHA]      = alpha;
 
   coldata->oldsat = 0;
   coldata->oldval = 0;
@@ -227,24 +242,34 @@ colorsel_triangle_free (gpointer selector_data)
 }
 
 static void
-colorsel_triangle_setcolor (gpointer  selector_data, 
-			    gint      red,
-			    gint      green,
-			    gint      blue,
-			    gint      alpha)
+colorsel_triangle_set_color (gpointer  selector_data,
+			     gint      hue,
+			     gint      saturation,
+			     gint      value,
+			     gint      red,
+			     gint      green,
+			     gint      blue,
+			     gint      alpha)
 {
   ColorSelect *coldata;
 
   coldata = selector_data;
 
-  coldata->values[RED]   = red;
-  coldata->values[GREEN] = green;
-  coldata->values[BLUE]  = blue;
-  coldata->values[ALPHA] = alpha;
-
-  color_select_update_hsv_values (coldata);
+  coldata->values[HUE]        = hue;
+  coldata->values[SATURATION] = saturation;
+  coldata->values[VALUE]      = value;
+  coldata->values[RED]        = red;
+  coldata->values[GREEN]      = green;
+  coldata->values[BLUE]       = blue;
+  coldata->values[ALPHA]      = alpha;
 
   update_previews (coldata, TRUE);
+}
+
+static void
+colorsel_triangle_set_channel (gpointer                      selector_data, 
+			       GimpColorSelectorChannelType  channel)
+{
 }
 
 /*************************************************************/
@@ -262,14 +287,15 @@ color_select_update_rgb_values (ColorSelect *csp)
 		       &(csp->values[BLUE]));
 }
 
+/*
 static void
 color_select_update_hsv_values (ColorSelect *csp)
 {
   gdouble hue, sat, val;
 
-  hue = (gdouble) csp->values[RED] / 255;
+  hue = (gdouble) csp->values[RED]   / 255;
   sat = (gdouble) csp->values[GREEN] / 255;
-  val = (gdouble) csp->values[BLUE] / 255;
+  val = (gdouble) csp->values[BLUE]  / 255;
   
   gimp_rgb_to_hsv_double (&hue, &sat, &val);
 
@@ -277,7 +303,7 @@ color_select_update_hsv_values (ColorSelect *csp)
   csp->values[SATURATION] = RINT (sat * 100);
   csp->values[VALUE]      = RINT (val * 100);
 }
-
+*/
 
 static void 
 update_previews (ColorSelect *coldata,
@@ -492,11 +518,14 @@ color_selection_callback (GtkWidget *widget,
       gtk_grab_remove (widget);
 
       /* callback the user */
-      (*coldata->callback) (coldata->data,
-			    coldata->values[RED],
-			    coldata->values[GREEN],
-			    coldata->values[BLUE],
-			    coldata->values[ALPHA]);
+      (* coldata->callback) (coldata->data,
+			     coldata->values[HUE],
+			     coldata->values[SATURATION],
+			     coldata->values[VALUE],
+			     coldata->values[RED],
+			     coldata->values[GREEN],
+			     coldata->values[BLUE],
+			     coldata->values[ALPHA]);
       
       return FALSE;
       break;
@@ -580,11 +609,14 @@ color_selection_callback (GtkWidget *widget,
   }
 
   /* callback the user */
-  (*coldata->callback) (coldata->data,
-			coldata->values[RED],
-			coldata->values[GREEN],
-			coldata->values[BLUE],
-			coldata->values[ALPHA]);
+  (* coldata->callback) (coldata->data,
+			 coldata->values[HUE],
+			 coldata->values[SATURATION],
+			 coldata->values[VALUE],
+			 coldata->values[RED],
+			 coldata->values[GREEN],
+			 coldata->values[BLUE],
+			 coldata->values[ALPHA]);
 
   return FALSE;
 }

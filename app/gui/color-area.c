@@ -313,7 +313,7 @@ static void
 color_area_edit (void)
 {
   GimpContext *user_context;
-  guchar r, g, b;
+  guchar       r, g, b;
 
   user_context = gimp_context_get_user ();
 
@@ -346,8 +346,10 @@ color_area_edit (void)
 	  color_notebook_show (color_notebook);
 	  color_notebook_active = TRUE;
 	}
-      else 
-	gdk_window_raise (color_notebook->shell->window);
+      else
+	{
+	  color_notebook_show (color_notebook);
+	}
 
       color_notebook_set_color (color_notebook, r, g, b, 255);
     }

@@ -36,28 +36,6 @@ typedef void (* ColorNotebookCallback) (gint               red,
 
 typedef struct _ColorSelectorInstance ColorSelectorInstance;
 
-struct _ColorNotebook
-{
-  GtkWidget             *shell;
-  GtkWidget             *notebook;
-
-  GtkWidget             *new_color;
-  GtkWidget             *orig_color;
-
-  GdkGC                 *gc;
-
-  gint                   values[4];
-  gint                   orig_values[4];
-
-  ColorNotebookCallback  callback;
-  gpointer               client_data;
-
-  gint                   wants_updates;
-
-  ColorSelectorInstance *selectors;
-  ColorSelectorInstance *cur_page;
-};
-
 ColorNotebook * color_notebook_new       (gint                  red,
 					  gint                  green,
 					  gint                  blue,
