@@ -1,3 +1,14 @@
+2003-08-19  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpvectors.h
+	* app/vectors/gimpstroke.[ch]: removed temp_anchor stuff. I don't
+	think that this is needed. Added virtual function to determine the
+	closest point on the curve to a given target point.
+
+	* app/vectors/gimpbezierstroke.c: implemented
+	gimp_bezier_stroke_nearest_point_get () - up to now untested and
+	unused.
+
 2003-08-19  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimppickbutton.c: fixed color picking from other

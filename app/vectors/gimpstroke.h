@@ -40,7 +40,6 @@ struct _GimpStroke
                
   GList      *anchors;
                
-  GimpAnchor *temp_anchor;
   gboolean    closed;
 };
 
@@ -54,6 +53,12 @@ struct _GimpStrokeClass
 
   GimpAnchor  * (* anchor_get)           (const GimpStroke      *stroke,
                                           const GimpCoords      *coord);
+  gdouble       (* nearest_point_get)    (const GimpStroke      *stroke,
+                                          const GimpCoords      *coord,
+                                          const gdouble          precision,
+                                          GimpCoords            *ret_point,
+                                          GimpAnchor           **ret_segment_start,
+                                          gdouble               *ret_pos);
   GimpAnchor  * (* anchor_get_next)      (const GimpStroke      *stroke,
                                           const GimpAnchor      *prev);
   void          (* anchor_select)        (GimpStroke            *stroke,
@@ -88,11 +93,6 @@ struct _GimpStrokeClass
   GArray      * (* interpolate)          (const GimpStroke      *stroke,
                                           const gdouble          precision,
                                           gboolean              *ret_closed);
-
-  GimpAnchor  * (* temp_anchor_get)      (const GimpStroke      *stroke);
-  GimpAnchor  * (* temp_anchor_set)      (GimpStroke            *stroke,
-                                          const GimpCoords      *coord);
-  gboolean      (* temp_anchor_fix)      (GimpStroke            *stroke);
 
   GimpStroke  * (* duplicate)            (const GimpStroke      *stroke);
   GimpStroke  * (* make_bezier)          (const GimpStroke      *stroke);
@@ -146,6 +146,14 @@ GType        gimp_stroke_get_type             (void) G_GNUC_CONST;
 GimpAnchor * gimp_stroke_anchor_get           (const GimpStroke      *stroke,
                                                const GimpCoords      *coord);
 
+gdouble      gimp_stroke_nearest_point_get    (const GimpStroke      *stroke,
+                                               const GimpCoords      *coord,
+                                               const gdouble          precision,
+                                               GimpCoords            *ret_point,
+                                               GimpAnchor           **ret_segment_start,
+                                               gdouble               *ret_pos);
+                                               
+
 /* prev == NULL: "first" anchor */                                  
 GimpAnchor * gimp_stroke_anchor_get_next      (const GimpStroke      *stroke,
                                                const GimpAnchor      *prev);
@@ -195,14 +203,6 @@ gdouble      gimp_stroke_get_distance         (const GimpStroke      *stroke,
 GArray     * gimp_stroke_interpolate          (const GimpStroke      *stroke,
                                                gdouble                precision,
                                                gboolean              *closed);
-
-
-/* Allow a singular temorary anchor (marking the "working point")? */
-
-GimpAnchor * gimp_stroke_temp_anchor_get      (const GimpStroke      *stroke);
-GimpAnchor * gimp_stroke_temp_anchor_set      (GimpStroke            *stroke,
-                                               const GimpCoords      *coord);
-gboolean     gimp_stroke_temp_anchor_fix      (GimpStroke            *stroke);
 
 GimpStroke * gimp_stroke_duplicate            (const GimpStroke      *stroke);
 

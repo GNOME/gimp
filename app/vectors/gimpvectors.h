@@ -154,17 +154,6 @@ gint            gimp_vectors_interpolate        (const GimpVectors  *vectors,
                                                  gint                max_points,
                                                  GimpCoords         *ret_coords);
 
-
-/* Allow a singular temorary anchor (marking the "working point")? */
-
-GimpAnchor    * gimp_vectors_temp_anchor_get    (const GimpVectors  *vectors);
-                                                                    
-GimpAnchor    * gimp_vectors_temp_anchor_set    (GimpVectors        *vectors,
-                                                 const GimpCoords   *coord);
-                                                                    
-gboolean        gimp_vectors_temp_anchor_fix    (GimpVectors        *vectors);
-
-
 /* usually overloaded */
 
 /* creates a bezier approximation. */

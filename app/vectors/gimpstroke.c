@@ -76,10 +76,6 @@ static gdouble      gimp_stroke_real_get_distance    (const GimpStroke *stroke,
 static GArray *     gimp_stroke_real_interpolate     (const GimpStroke *stroke,
                                                       gdouble           precision,
                                                       gboolean         *closed);
-static GimpAnchor * gimp_stroke_real_temp_anchor_get (const GimpStroke *stroke);
-static GimpAnchor * gimp_stroke_real_temp_anchor_set (GimpStroke       *stroke,
-                                                      const GimpCoords *coord);
-static gboolean     gimp_stroke_real_temp_anchor_fix (GimpStroke       *stroke);
 static GimpStroke * gimp_stroke_real_duplicate       (const GimpStroke *stroke);
 static GimpStroke * gimp_stroke_real_make_bezier     (const GimpStroke *stroke);
 
@@ -176,10 +172,6 @@ gimp_stroke_class_init (GimpStrokeClass *klass)
   klass->get_distance            = gimp_stroke_real_get_distance;
   klass->interpolate             = gimp_stroke_real_interpolate;
 
-  klass->temp_anchor_get         = gimp_stroke_real_temp_anchor_get;
-  klass->temp_anchor_set         = gimp_stroke_real_temp_anchor_set;
-  klass->temp_anchor_fix         = gimp_stroke_real_temp_anchor_fix;
-
   klass->duplicate               = gimp_stroke_real_duplicate;
   klass->make_bezier             = gimp_stroke_real_make_bezier;
 
@@ -199,7 +191,6 @@ static void
 gimp_stroke_init (GimpStroke *stroke)
 {
   stroke->anchors     = NULL;
-  stroke->temp_anchor = NULL;
   stroke->closed      = FALSE;
 }
 
@@ -213,9 +204,6 @@ gimp_stroke_finalize (GObject *object)
 
   for (list = stroke->anchors; list; list = list->next)
     gimp_anchor_free ((GimpAnchor *) list->data);
-
-  if (stroke->temp_anchor)
-    gimp_anchor_free (stroke->temp_anchor);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -242,6 +230,26 @@ gimp_stroke_anchor_get (const GimpStroke *stroke,
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
 
   return GIMP_STROKE_GET_CLASS (stroke)->anchor_get (stroke, coord);
+}
+
+
+gdouble
+gimp_stroke_nearest_point_get    (const GimpStroke *stroke,
+                                  const GimpCoords *coord,
+                                  const gdouble     precision,
+                                  GimpCoords       *ret_point,
+                                  GimpAnchor      **ret_segment_start,                              
+                                  gdouble          *ret_pos)
+{
+  g_return_val_if_fail (GIMP_IS_STROKE (stroke), FALSE);
+  g_return_val_if_fail (coord != NULL, FALSE);
+
+  return GIMP_STROKE_GET_CLASS (stroke)->nearest_point_get (stroke,
+                                                            coord,
+                                                            precision,
+                                                            ret_point,
+                                                            ret_segment_start,
+                                                            ret_pos);
 }
 
 static GimpAnchor *
@@ -548,60 +556,6 @@ gimp_stroke_real_interpolate (const GimpStroke  *stroke,
   return NULL;
 }
 
-
-GimpAnchor *
-gimp_stroke_temp_anchor_get (const GimpStroke *stroke)
-{
-  g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
-
-  return GIMP_STROKE_GET_CLASS (stroke)->temp_anchor_get (stroke);
-}
-
-static GimpAnchor *
-gimp_stroke_real_temp_anchor_get (const GimpStroke *stroke)
-{
-  g_printerr ("gimp_stroke_temp_anchor_get: default implementation\n");
-
-  return NULL;
-}
-
-
-GimpAnchor *
-gimp_stroke_temp_anchor_set (GimpStroke       *stroke,
-                             const GimpCoords *coord)
-{
-  g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
-
-  return GIMP_STROKE_GET_CLASS (stroke)->temp_anchor_set (stroke, coord);
-}
-
-static GimpAnchor *
-gimp_stroke_real_temp_anchor_set (GimpStroke       *stroke,
-                                  const GimpCoords *coord)
-{
-  g_printerr ("gimp_stroke_temp_anchor_set: default implementation\n");
-
-  return NULL;
-}
-
-
-gboolean
-gimp_stroke_temp_anchor_fix (GimpStroke *stroke)
-{
-  g_return_val_if_fail (GIMP_IS_STROKE (stroke), FALSE);
-
-  return GIMP_STROKE_GET_CLASS (stroke)->temp_anchor_fix (stroke);
-}
-
-static gboolean
-gimp_stroke_real_temp_anchor_fix (GimpStroke *stroke)
-{
-  g_printerr ("gimp_stroke_temp_anchor_fix: default implementation\n");
-
-  return FALSE;
-}
-
-
 GimpStroke *
 gimp_stroke_duplicate (const GimpStroke *stroke)
 {
@@ -625,11 +579,6 @@ gimp_stroke_real_duplicate (const GimpStroke *stroke)
   for (list = new_stroke->anchors; list; list = g_list_next (list))
     {
       list->data = gimp_anchor_duplicate ((GimpAnchor *) list->data);
-    }
-
-  if (stroke->temp_anchor)
-    {
-      new_stroke->temp_anchor = gimp_anchor_duplicate (stroke->temp_anchor);
     }
 
   return new_stroke;
