@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-31 23:17+0100\n"
-"PO-Revision-Date: 2004-10-27 13:42+0200\n"
+"POT-Creation-Date: 2004-11-09 11:08+0100\n"
+"PO-Revision-Date: 2004-11-09 14:54+0100\n"
 "Last-Translator: Miloslav Trmač <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -199,9 +199,8 @@ msgid "(Empty)"
 msgstr "(Prázdné)"
 
 #: libgimp/gimppalettemenu.c:91
-#, fuzzy
 msgid "Palette Selection"
-msgstr "Výběr vzorku"
+msgstr "Výběr palety"
 
 #: libgimp/gimppatternmenu.c:113
 msgid "Pattern Selection"
@@ -376,21 +375,21 @@ msgstr "Nemohu vytvořit adresář miniatur '%s'."
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Nemohu vytvořit miniaturu %s: %s"
 
-#: libgimpwidgets/gimpcolorbutton.c:93
-msgid "/_Foreground Color"
-msgstr "/Barva po_předí"
+#: libgimpwidgets/gimpcolorbutton.c:99
+msgid "_Foreground Color"
+msgstr "Barva po_předí"
 
-#: libgimpwidgets/gimpcolorbutton.c:95
-msgid "/_Background Color"
-msgstr "/Barva po_zadí"
+#: libgimpwidgets/gimpcolorbutton.c:103
+msgid "_Background Color"
+msgstr "Barva po_zadí"
 
-#: libgimpwidgets/gimpcolorbutton.c:98
-msgid "/Blac_k"
-msgstr "/_Černá"
+#: libgimpwidgets/gimpcolorbutton.c:107
+msgid "Blac_k"
+msgstr "_Černá"
 
-#: libgimpwidgets/gimpcolorbutton.c:100
-msgid "/_White"
-msgstr "/_Bílá"
+#: libgimpwidgets/gimpcolorbutton.c:111
+msgid "_White"
+msgstr "_Bílá"
 
 #: libgimpwidgets/gimpcolorscales.c:133
 msgid "Scales"
@@ -478,19 +477,16 @@ msgid "Select File"
 msgstr "Výběr souboru"
 
 #: libgimpwidgets/gimpmemsizeentry.c:232
-#, fuzzy
 msgid "Kilobytes"
-msgstr "kilobajtů"
+msgstr "Kilobajtů"
 
 #: libgimpwidgets/gimpmemsizeentry.c:233
-#, fuzzy
 msgid "Megabytes"
-msgstr "megabajtů"
+msgstr "Megabajtů"
 
 #: libgimpwidgets/gimpmemsizeentry.c:234
-#, fuzzy
 msgid "Gigabytes"
-msgstr "gigabajtů"
+msgstr "Gigabajtů"
 
 #: libgimpwidgets/gimppatheditor.c:243
 msgid "Writable"
