@@ -153,6 +153,4 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
     }
 
   g_free (uri);
-
-  gimp_dnd_xds_source_set (context, NULL);
 }
