@@ -80,51 +80,63 @@ static char presetdesc[4096] = "";
 static char *factory_defaults = "<Factory defaults>";
 
 static gchar *
-get_object_name(gchar *dir, gchar *filename, void *context)
+get_early_line_from_preset (gchar *full_path, const gchar *prefix)
 {
-  gchar *ret = NULL;
-  gchar *full_path = NULL;
   FILE *f;
-  char line[1024] = "";
-  int line_idx;
+  gchar line[4096];
+  gint prefix_len, line_idx;
+
+  prefix_len = strlen (prefix);
+  f = fopen (full_path, "rt");
+  if (f)
+    {
+      /* Skip the preset magic. */
+      fgets (line, 10, f);
+      if (!strncmp (line, PRESETMAGIC, 4))
+        {
+          for (line_idx = 0; line_idx<5; line_idx++)
+            {
+              if (!fgets (line, sizeof(line), f))
+                break;
+              g_strchomp (line);
+              if (!strncmp (line, prefix, prefix_len))
+                {
+                  fclose(f);
+                  return g_strdup (line+prefix_len);
+                }
+            }
+        }
+      fclose (f);
+    }
+  return NULL;
+}
+
+static gchar *
+get_object_name (gchar *dir, gchar *filename, void *context)
+{
+  gchar *ret = NULL, *unprocessed_line = NULL;
+  gchar *full_path = NULL;
 
   /* First try to extract the object's name (= user-friendly description)
    * from the preset file
    * */
 
   full_path = g_build_filename (dir, filename, NULL);
-  f = fopen (full_path, "rt");
-  if (f)
+  unprocessed_line = get_early_line_from_preset (full_path, "name=");
+  g_free (full_path);
+  if (unprocessed_line)
     {
-      /* Skip the preset magic. */
-      fgets (line, 10, f);
-      if (!strncmp(line, PRESETMAGIC, 4))
-        {
-          for (line_idx = 0; line_idx<5; line_idx++)
-            {
-              if (!fgets(line, sizeof(line), f))
-                break;
-              g_strchomp (line);
-              if (!strncmp (line, "name=", 5))
-                {
-                  ret = g_strcompress (line+5);
-                  break;
-                }
-            }
-        }
-      fclose (f);
+      ret = g_strcompress (unprocessed_line);
+      g_free(unprocessed_line);
     }
-
-  /* The object name defaults to a filename-derived description */
-  if (! ret)
+  else
     {
+      /* The object name defaults to a filename-derived description */
       ret = g_filename_to_utf8 (filename, -1, NULL, NULL, NULL);
     }
-
-  g_free (full_path);
-
   return ret;
 }
+
 
 static void
 preset_read_dir_into_list (void)
@@ -794,7 +806,7 @@ static void read_description(const char *fn)
 {
   char *rel_fname;
   char *fname;
-  FILE *f;
+  gchar *unprocessed_line;
 
   rel_fname = g_build_filename ("Presets", fn, NULL);
   fname   = findfile (rel_fname);
@@ -817,27 +829,20 @@ static void read_description(const char *fn)
   /* Don't delete global presets - bug # 147483 */
   gtk_widget_set_sensitive (delete_button, can_delete_preset (fname));
 
-  f = fopen(fname, "rt");
+  unprocessed_line = get_early_line_from_preset (fname, "desc=");
   g_free(fname);
-  if (f)
-    {
-      char line[4096];
-      char tmplabel[4096];
-      while(!feof(f))
-        {
-          fgets(line, 4095, f);
-          if (!strncmp (line, "desc=", 5))
-            {
-              parse_desc (line + 5, tmplabel, sizeof (tmplabel));
-              set_preset_description_text (tmplabel);
-              fclose (f);
-              return;
-            }
-        }
-      fclose (f);
-    }
 
-  set_preset_description_text ("");
+  if (unprocessed_line)
+    {
+      char tmplabel[4096];
+      parse_desc (unprocessed_line, tmplabel, sizeof (tmplabel));
+      g_free (unprocessed_line);
+      set_preset_description_text (tmplabel);
+    }
+  else
+    {
+      set_preset_description_text ("");
+    }
 }
 
 static void presets_list_select_preset (GtkTreeSelection *selection,
