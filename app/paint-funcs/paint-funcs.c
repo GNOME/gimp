@@ -832,7 +832,12 @@ combine_inten_and_inten_a_pixels (const guchar   *src1,
           }*/
 
 #define alphify(src2_alpha,new_alpha) \
-        if (src2_alpha != 0 && new_alpha != 0)                                                        \
+        if (! affect[alpha]) \
+          { \
+            b = alpha; \
+            do { b--; dest[b] = src2[b]; } while(b); \
+          } \
+        else if (src2_alpha != 0 && new_alpha != 0)                                                        \
           {                                                                                        \
             b = alpha; \
             if (src2_alpha == new_alpha){                                                        \
@@ -966,6 +971,24 @@ combine_inten_a_and_inten_pixels (const guchar   *src1,
     }
 }
 
+#define copy_bytes1() \
+                      j = bytes * sizeof(int); \
+                      if (affect[alpha]) \
+                        { \
+                          src2 += j; \
+                          while (j--) \
+                            { \
+                              *(dest++) = *(src1++); \
+                            } \
+                        } \
+                      else \
+                        { \
+                          src1 += j; \
+                          while (j--) \
+                            { \
+                              *(dest++) = *(src2++); \
+                            }                        \
+                        }
 
 void
 combine_inten_a_and_inten_a_pixels (const guchar   *src1,
@@ -1067,12 +1090,7 @@ combine_inten_a_and_inten_a_pixels (const guchar   *src1,
                     }
                   else
                     {
-                      j = bytes * sizeof(int);
-                      src2 += j;
-                      while (j--)
-                        {
-                          *(dest++) = *(src1++);
-                        }
+                      copy_bytes1();
                     }
                   mask_ip++;
                 }
@@ -1185,12 +1203,7 @@ combine_inten_a_and_inten_a_pixels (const guchar   *src1,
                     }
                   else
                     {
-                      j = bytes * sizeof(int);
-                      src2 += j;
-                      while (j--)
-                        {
-                          *(dest++) = *(src1++);
-                        }
+                      copy_bytes1();
                     }
                   mask_ip++;
                 }
@@ -1280,6 +1293,7 @@ combine_inten_a_and_inten_a_pixels (const guchar   *src1,
         }
     }
 }
+#undef copy_bytes1
 #undef alphify
 
 void
