@@ -1,5 +1,15 @@
 Revision history for Gimp-Perl extension.
 
+        - this version will only compile with 1.1. versions of the
+          Gimp. If you need to compile gimp-perl with gimp-1.0 please use
+          version 1.201 from CPAN.
+        - first round of mega-api-change.
+        - dropped a few prefixes (PROC_ from RUN_INTERACTIVE etc.. where
+          the new names would have a GIMP_ prefix).
+        - updated to new commandline options.
+
+1.201 Thu Aug 24 23:44:43 CEST 2000
+	** LAST VERSION THAT WORKS WITH 1.0 **
 	- s/gimp_plugin_domain_add/gimp_plugin_domain_register/
 	- really moved sethspin into <Image>/Filters (neo) 
 	- moved sethspin back to Filters/Animation (sjb)
@@ -16,7 +26,6 @@ Revision history for Gimp-Perl extension.
           buggy perl version that causes pxgettext to not work!
         - do yet another compile/link flags rotation.
         - replaced find -path by grep 'Cause -path seems to be a gnu extension.
-        - add -DGIMP_ENABLE_COMPAT_CRUFT to build with latest source (Yosh)
 
 1.2   Thu May 11 18:55:13 CEST 2000
 	- image types updated to reflect gimp's reality.
