@@ -1,3 +1,12 @@
+2000-10-14  Austin Donnelly  <austin@gimp.org>
+
+	* plug-ins/common/nlfilt.c: applied patch by David Hodson
+	    <hodsond@ozemail.com.au> to fix Bugs:
+	      #12299 NL Filter: shift by one pixel
+	      #25968 NL Filter gives strange effects when using alpha > 0.5
+	    Slightly changed from original patch to merge in Sven's
+	    changes to nlfilt and correct a memory trampling bug.
+
 2000-10-12  Kevin Turner  <acapnotic@users.sourceforge.net>
 
 	(applying patch from maru)

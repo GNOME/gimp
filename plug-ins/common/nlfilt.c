@@ -26,6 +26,10 @@
  * $Id$
  */
 
+/*
+ * Algorithm fixes, V2.0 compatibility by David Hodson  hodsond@ozemail.com.au
+ */
+
 /* add any necessary includes  */
 
 #ifdef HAVE_CONFIG_H
@@ -94,16 +98,16 @@ static struct mwPreview *thePreview;
 
 static GtkWidget        * mw_preview_new   (GtkWidget        *parent,
                                             struct mwPreview *mwp);
-static struct mwPreview * mw_preview_build (GimpDrawable        *drw);
+static struct mwPreview * mw_preview_build (GimpDrawable     *drw);
 
 
 /* function protos */
 
 static void query (void);
-static void run   (gchar   *name,
-		   gint     nparam,
+static void run   (gchar      *name,
+		   gint        nparam,
 		   GimpParam  *param,
-		   gint    *nretvals,
+		   gint       *nretvals,
 		   GimpParam **retvals);
 
 static gint pluginCore        (struct piArgs *argp);
@@ -114,7 +118,9 @@ static void nlfilt_do_preview (GtkWidget  *preview);
 static inline gint nlfiltInit (gdouble     alpha,
 			       gdouble     radius,
 			       FilterType  filter);
-static inline void nlfiltRow  (guchar     *src,
+static inline void nlfiltRow  (guchar     *srclast,
+                               guchar     *srcthis,
+                               guchar     *srcnext,
 			       guchar     *dst,
 			       gint        width,
 			       gint        Bpp,
@@ -158,10 +164,10 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparam,
+run (gchar      *name,
+     gint        nparam,
      GimpParam  *param,
-     gint    *nretvals,
+     gint       *nretvals,
      GimpParam **retvals)
 {
   static GimpParam rvals[1];
@@ -242,8 +248,9 @@ pluginCore (struct piArgs *argp)
   GimpDrawable *drw;
   GimpPixelRgn srcPr, dstPr;
   guchar *srcbuf, *dstbuf;
+  guchar *lastrow, *thisrow, *nextrow, *temprow;
   guint width, height, Bpp;
-  gint filtno, y, rowsize, p_update;
+  gint filtno, y, rowsize, exrowsize, p_update;
 
   drw = gimp_drawable_get (argp->drw);
 
@@ -251,38 +258,48 @@ pluginCore (struct piArgs *argp)
   height = drw->height;
   Bpp = drw->bpp;
   rowsize = width * Bpp;
+  exrowsize = (width + 2) * Bpp;
   p_update = width / 20 + 1;
 
   gimp_pixel_rgn_init (&srcPr, drw, 0, 0, width, height, FALSE, FALSE);
   gimp_pixel_rgn_init (&dstPr, drw, 0, 0, width, height, TRUE, TRUE);
 
-  srcbuf = g_new0 (guchar, width * Bpp * 3);
-  dstbuf = g_new0 (guchar, width * Bpp);
+  /* source buffer gives one pixel buffer around current row */
+  srcbuf = g_new0 (guchar, exrowsize * 3);
+  dstbuf = g_new0 (guchar, rowsize);
+
+  /* pointers to second pixel in each source row */
+  lastrow = srcbuf + Bpp;
+  thisrow = lastrow + exrowsize;
+  nextrow = thisrow + exrowsize;
 
   filtno = nlfiltInit (argp->alpha, argp->radius, argp->filter);
   gimp_progress_init (_("NL Filter"));
 
   /* first row */
-  gimp_pixel_rgn_get_rect (&srcPr, srcbuf, 0, 0, width, 3);
-  memcpy (srcbuf, srcbuf + width * Bpp, rowsize);
-  nlfiltRow (srcbuf, dstbuf, width, Bpp, filtno);
-  gimp_pixel_rgn_set_row (&dstPr, dstbuf, 0, 0, width);
+  gimp_pixel_rgn_get_row (&srcPr, thisrow, 0, 0, width);
+  memcpy (thisrow - Bpp, thisrow, Bpp);
+  memcpy (thisrow + rowsize, thisrow + rowsize - Bpp, Bpp);
+  memcpy (lastrow, thisrow, exrowsize);
 
-  /* last row */
-  gimp_pixel_rgn_get_rect (&srcPr, srcbuf, 0, height - 3, width, 3);
-  memcpy (srcbuf + rowsize * 2, srcbuf + rowsize, rowsize);
-  nlfiltRow (srcbuf, dstbuf, width, Bpp, filtno);
-  gimp_pixel_rgn_set_row (&dstPr, dstbuf, 0, height - 1, width);
-
-  for (y = 0; y < height - 2; y++)
+  for (y = 0; y < height - 1; y++)
     {
-      if (y % p_update == 0)
+      if ((y % p_update) == 0)
 	gimp_progress_update ((gdouble) y / (gdouble) height);
 
-      gimp_pixel_rgn_get_rect (&srcPr, srcbuf, 0, y, width, 3);
-      nlfiltRow (srcbuf, dstbuf, width, Bpp, filtno);
+      gimp_pixel_rgn_get_row (&srcPr, nextrow, 0, y + 1, width);
+      memcpy (nextrow - Bpp, nextrow, Bpp);
+      memcpy (nextrow + rowsize, nextrow + rowsize - Bpp, Bpp);
+      nlfiltRow (lastrow, thisrow, nextrow, dstbuf, width, Bpp, filtno);
       gimp_pixel_rgn_set_row (&dstPr, dstbuf, 0, y, width);
+      temprow = lastrow; lastrow = thisrow;
+      thisrow = nextrow; nextrow = temprow;
     }
+
+  /* last row */
+  memcpy (nextrow - Bpp, thisrow - Bpp, exrowsize);
+  nlfiltRow (lastrow, thisrow, nextrow, dstbuf, width, Bpp, filtno);
+  gimp_pixel_rgn_set_row (&dstPr, dstbuf, 0, height - 1, width);
 
   g_free (srcbuf);
   g_free (dstbuf);
@@ -444,7 +461,7 @@ nlfilt_do_preview (GtkWidget *w)
 {
   static GtkWidget *theWidget = NULL;
   struct piArgs *ap;
-  guchar *dst, *c;
+  guchar *dst, *src0, *src1, *src2;
   gint y, rowsize, filtno;
   
   if (theWidget == NULL)
@@ -455,29 +472,21 @@ nlfilt_do_preview (GtkWidget *w)
   ap = gtk_object_get_data (GTK_OBJECT (theWidget), "piArgs");
 
   rowsize = thePreview->width * thePreview->bpp;
-  dst = g_malloc (rowsize);
-  c   = g_malloc (rowsize * 3);
-  memcpy (c, thePreview->bits, rowsize);
-  memcpy (c + rowsize, thePreview->bits, rowsize * 2);
   filtno =  nlfiltInit (ap->alpha, ap->radius, ap->filter);
-  nlfiltRow (c, dst, thePreview->width, thePreview->bpp, filtno);
-  gtk_preview_draw_row (GTK_PREVIEW (theWidget),
-			dst, 0, 0, thePreview->width);
 
-  memcpy (c,
-	  thePreview->bits + ((thePreview->height - 2) * rowsize),
-	  rowsize * 2);
-  memcpy (c + (rowsize * 2),
-	  thePreview->bits + ((thePreview->height - 1) * rowsize),
-	  rowsize);
-  gtk_preview_draw_row (GTK_PREVIEW( theWidget),
-			dst, 0, thePreview->height - 1, thePreview->width);
-  g_free (c);
-  for (y = 0, c = thePreview->bits; y<thePreview->height - 2; y++, c += rowsize)
+  src0 = thePreview->bits + thePreview->bpp;
+  src1 = src0 + rowsize;
+  src2 = src1 + rowsize;
+  dst = g_malloc (rowsize);
+
+  /* for preview, don't worry about edge effects */
+  for (y = 1; y < thePreview->height - 1; y++)
     {
-      nlfiltRow (c, dst, thePreview->width, thePreview->bpp, filtno);
+      nlfiltRow (src0, src1, src2, dst + thePreview->bpp,
+                 thePreview->width - 2, thePreview->bpp, filtno);
       gtk_preview_draw_row (GTK_PREVIEW (theWidget),
-			    dst, 0, y, thePreview->width);
+			    dst + thePreview->bpp, 1, y, thePreview->width - 2);
+      src0 = src1; src1 = src2; src2 += rowsize;
     }
 
   gtk_widget_draw (theWidget, NULL);
@@ -705,28 +714,27 @@ gint noisevariance;      /* global so that pixel processing code can get at it q
 #define UNSCALE(x) ((x) >> SCALEB)
 
 static void
-nlfiltRow(guchar *src, guchar *dst, gint width, gint Bpp, gint filtno) {
-   gint x, po, no;
-   gint pf[9];
-   guchar *r0, *r1, *r2;
-   guchar *ip0, *ip1, *ip2, *or;
+nlfiltRow(guchar *srclast, guchar *srcthis, guchar *srcnext, guchar *dst,
+          gint width, gint Bpp, gint filtno) {
 
-   r0=src;
-   r1=src+(width*Bpp);
-   r2=src+(width*Bpp*2);
-   or=dst;
-   for (x=(width-1)*Bpp, ip0=r0, ip1=r1, ip2=r2, po=x>0?1:0, no=0;
-        x>0;
-        x--, ip0++, ip1++, ip2++, or++, po=(x!=0), no|=1) {
+   gint pf[9];
+   guchar *ip0, *ip1, *ip2, *or, *orend;
+
+   or = dst;
+   orend = dst + width * Bpp;
+   ip0 = srclast;
+   ip1 = srcthis;
+   ip2 = srcnext;
+   for (or = dst; or < orend; ip0++, ip1++, ip2++, or++) {
       pf[0] = *ip1;
-      pf[1] = *(ip1-no);
-      pf[2] = *(ip2-no);
+      pf[1] = *(ip1 - Bpp);
+      pf[2] = *(ip2 - Bpp);
       pf[3] = *(ip2);
-      pf[4] = *(ip2+po);
-      pf[5] = *(ip1+po);
-      pf[6] = *(ip0+po);
+      pf[4] = *(ip2 + Bpp);
+      pf[5] = *(ip1 + Bpp);
+      pf[6] = *(ip0 + Bpp);
       pf[7] = *(ip0);
-      pf[8] = *(ip0-no);
+      pf[8] = *(ip0 - Bpp);
       *or=(atfuncs[filtno])(pf);
    }
 }
@@ -768,6 +776,8 @@ nlfiltInit(gdouble alpha, gdouble radius, FilterType filter) {
    switch (filter) {
        case filter_alpha_trim: {
           gdouble noinmean;
+          /* alpha only makes sense in range 0.0 - 0.5 */
+          alpha /= 2.0;
               /* number of elements (out of a possible 7) used in the mean */
           noinmean = ((0.5 - alpha) * 12.0) + 1.0;
           mmeanscale = meanscale = 1.0/noinmean;
