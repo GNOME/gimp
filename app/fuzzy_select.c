@@ -249,7 +249,6 @@ find_contiguous_region_helper (PixelRegion *mask,
 
   Tile *tile;
 
-  if (threshold == 0) threshold = 1;
   if (x < 0 || x >= src->w) return;
   if (y < 0 || y >= src->h) return;
 
