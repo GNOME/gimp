@@ -46,7 +46,8 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps2.h"
+#define WANT_SMUDGE_BITS
+#include "icons.h"
 
 
 /* default defines */

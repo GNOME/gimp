@@ -41,7 +41,9 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps2.h"
+#define WANT_PERSPECTIVE_BITS
+#include "icons.h"
+
 
 /*  forward function declarations  */
 static void          gimp_perspective_tool_class_init  (GimpPerspectiveToolClass *klass);

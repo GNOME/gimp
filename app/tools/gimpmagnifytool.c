@@ -39,7 +39,8 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps2.h"
+#define WANT_MAGNIFY_BITS
+#include "icons.h"
 
 
 typedef struct _MagnifyOptions MagnifyOptions;

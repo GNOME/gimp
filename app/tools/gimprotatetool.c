@@ -48,7 +48,8 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps2.h"
+#define WANT_ROTATE_BITS
+#include "icons.h"
 
 
 /*  index into trans_info array  */

@@ -1,9 +1,11 @@
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: airbrush  */
+/*  Tools icons in the GIMP icon image format  */
 
+/*  
+ *  Include this file and define #WANT_TOOL_BITS, replacing
+ *  TOOL with the tools name, e.g. #define WANT_AIRBRUSH_BITS
+ */
 
-#define airbrush_width 22
-#define airbrush_height 22
+#ifdef WANT_AIRBRUSH_BITS
 static char *airbrush_bits [] =
 {
   "......................",
@@ -29,13 +31,10 @@ static char *airbrush_bits [] =
   "......................",
   "......................"
 };
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: bezier  */
+#endif
 
-
-#define bezier_width 22
-#define bezier_height 22
-static char *bezier_bits [] =
+#ifdef WANT_BEZIER_SELECT_BITS
+static char *bezier_select_bits [] =
 {
   "......................",
   "......................",
@@ -60,12 +59,9 @@ static char *bezier_bits [] =
   "..............eeeee...",
   "......................"
 };
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: blur  */
+#endif
 
-
-#define blur_width 22
-#define blur_height 22
+#ifdef WANT_BLUR_BITS
 static char *blur_bits [] =
 {
   "......................",
@@ -91,13 +87,10 @@ static char *blur_bits [] =
   "......................",
   "......................"
 };
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: circ  */
+#endif
 
-
-#define circ_width 22
-#define circ_height 22
-static char *circ_bits [] =
+#ifdef WANT_ELLIPSE_SELECT_BITS
+static char *ellipse_select_bits [] =
 {
   "......................",
   "......................",
@@ -122,12 +115,9 @@ static char *circ_bits [] =
   "......................",
   "......................"
 };
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: clone  */
+#endif
 
-
-#define clone_width 22
-#define clone_height 22
+#ifdef WANT_CLONE_BITS
 static char *clone_bits [] =
 {
   "......................",
@@ -153,13 +143,10 @@ static char *clone_bits [] =
   "......................",
   "......................"
 };
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: colorpicker  */
+#endif
 
-
-#define colorpicker_width 22
-#define colorpicker_height 22
-static char *colorpicker_bits [] =
+#ifdef WANT_COLOR_PICKER_BITS
+static char *color_picker_bits [] =
 {
   "......................",
   "......................",
@@ -184,12 +171,9 @@ static char *colorpicker_bits [] =
   "......................",
   "......................"
 };
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: crop  */
+#endif
 
-
-#define crop_width 22
-#define crop_height 22
+#ifdef WANT_CROP_BITS
 static char *crop_bits [] =
 {
   "......................",
@@ -215,13 +199,10 @@ static char *crop_bits [] =
   "......................",
   "......................"
 };
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: erase  */
+#endif
 
-
-#define erase_width 22
-#define erase_height 22
-static char *erase_bits [] =
+#ifdef WANT_ERASER_BITS
+static char *eraser_bits [] =
 {
   "......................",
   "......................",
@@ -246,13 +227,10 @@ static char *erase_bits [] =
   "......................",
   "......................"
 };
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: fill  */
+#endif
 
-
-#define fill_width 22
-#define fill_height 22
-static char *fill_bits [] =
+#ifdef WANT_BUCKET_FILL_BITS
+static char *bucket_fill_bits [] =
 {
   "......................",
   "......................",
@@ -277,13 +255,10 @@ static char *fill_bits [] =
   "......................",
   "......................"
 };
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: free  */
+#endif
 
-
-#define free_width 22
-#define free_height 22
-static char *free_bits [] =
+#ifdef WANT_FREE_SELECT_BITS
+static char *free_select_bits [] =
 {
   "......................",
   "......................",
@@ -308,13 +283,10 @@ static char *free_bits [] =
   "......................",
   "......................"
 };
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: fuzzy  */
+#endif
 
-
-#define fuzzy_width 22
-#define fuzzy_height 22
-static char *fuzzy_bits [] =
+#ifdef WANT_FUZZY_SELECT_BITS
+static char *fuzzy_select_bits [] =
 {
   "......................",
   "......................",
@@ -339,13 +311,10 @@ static char *fuzzy_bits [] =
   "......................",
   "......................"
 };
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: gradient  */
+#endif
 
-
-#define gradient_width 22
-#define gradient_height 22
-static char *gradient_bits [] =
+#ifdef WANT_BLEND_BITS
+static char *blend_bits [] =
 {
   "......................",
   "......................",
@@ -370,12 +339,9 @@ static char *gradient_bits [] =
   "......................",
   "......................"
 };
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: horizflip  */
+#endif
 
-
-#define flip_width 22
-#define flip_height 22
+#ifdef WANT_FLIP_BITS
 static char *flip_bits [] =
 {
   "......................",
@@ -401,12 +367,9 @@ static char *flip_bits [] =
   "......................",
   "......................"
 };
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: iscissors  */
+#endif
 
-
-#define iscissors_width 22
-#define iscissors_height 22
+#ifdef WANT_ISCISSORS_BITS
 static char *iscissors_bits [] =
 {
   "......................",
@@ -432,12 +395,9 @@ static char *iscissors_bits [] =
   "...........ee.........",
   "......................"
 };
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: magnify  */
+#endif
 
-
-#define magnify_width 22
-#define magnify_height 22
+#ifdef WANT_MAGNIFY_BITS
 static char *magnify_bits [] =
 {
   "......................",
@@ -463,12 +423,9 @@ static char *magnify_bits [] =
   "......................",
   "......................"
 };
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: move  */
+#endif
 
-
-#define move_width 22
-#define move_height 22
+#ifdef WANT_MOVE_BITS
 static char *move_bits [] =
 {
   "......................",
@@ -494,79 +451,10 @@ static char *move_bits [] =
   "......................",
   "......................"
 };
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: new  */
+#endif
 
-
-/*
-#define new_width 22
-#define new_height 22
-static char *new_bits [] =
-{
-  "......................",
-  "......................",
-  "......................",
-  ".....aaaaaaaaa........",
-  ".....ahhhhhhhaa.......",
-  ".....ahhhhhhhaga......",
-  ".....ahhhhhhhagga.....",
-  ".....ahhhhhhhaaaae....",
-  ".....ahhhhhhhhggae....",
-  ".....ahhhhhhhhhhae....",
-  ".....ahhhhhhhhhhae....",
-  ".....ahhhhhhhhhhae....",
-  ".....ahhhhhhhhhhae....",
-  ".....ahhhhhhhhhhae....",
-  ".....ahhhhhhhhhhae....",
-  ".....ahhhhhhhhhhae....",
-  ".....ahhhhhhhhhhae....",
-  ".....aaaaaaaaaaaae....",
-  "......eeeeeeeeeeee....",
-  "......................",
-  "......................",
-  "......................"
-};
-*/
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: open  */
-
-
-/*
-#define open_width 22
-#define open_height 22
-static char *open_bits [] =
-{
-  "......................",
-  "......................",
-  "......................",
-  "......................",
-  "....eaaaae............",
-  "...eaggggae...........",
-  "...aggggggaaaaaaaae...",
-  "...agggggggggggggga...",
-  ".aaaaaaaaaaaaaagggae..",
-  ".aegegegegegegagggae..",
-  "..aegegegegegegaggae..",
-  "..agegegegegegeaggae..",
-  "...agegegegegegeagae..",
-  "...aegegegegegegagae..",
-  "...agegegegegegeagae..",
-  "....agegegegegegeaae..",
-  "....aegegegegegegaae..",
-  ".....aaaaaaaaaaaaaae..",
-  "......eeeeeeeeeeeeee..",
-  "......................",
-  "......................",
-  "......................"
-};
-*/
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: paint  */
-
-
-#define paint_width 22
-#define paint_height 22
-static char *paint_bits [] =
+#ifdef WANT_PAINT_BRUSH_BITS
+static char *paint_brush_bits [] =
 {
   "......................",
   "......................",
@@ -591,12 +479,9 @@ static char *paint_bits [] =
   "......................",
   "......................"
 };
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: pencil  */
+#endif
 
-
-#define pencil_width 22
-#define pencil_height 22
+#ifdef WANT_PENCIL_BITS
 static char *pencil_bits [] =
 {
   "......................",
@@ -622,12 +507,9 @@ static char *pencil_bits [] =
   "......................",
   "......................"
 };
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: perspective  */
+#endif
 
-
-#define perspective_width 22
-#define perspective_height 22
+#ifdef WANT_PERSPECTIVE_BITS
 static char *perspective_bits [] =
 {
   "......................",
@@ -653,13 +535,10 @@ static char *perspective_bits [] =
   "......................",
   "......................"
 };
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: rect  */
+#endif
 
-
-#define rect_width 22
-#define rect_height 22
-static char *rect_bits [] =
+#ifdef WANT_RECT_SELECT_BITS
+static char *rect_select_bits [] =
 {
   "......................",
   "......................",
@@ -684,12 +563,9 @@ static char *rect_bits [] =
   "......................",
   "......................"
 };
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: rotate  */
+#endif
 
-
-#define rotate_width 22
-#define rotate_height 22
+#ifdef WANT_ROTATE_BITS
 static char *rotate_bits [] =
 {
   "......................",
@@ -715,12 +591,9 @@ static char *rotate_bits [] =
   "....aaa....eaee.......",
   "............ee........"
 };
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: scale  */
+#endif
 
-
-#define scale_width 22
-#define scale_height 22
+#ifdef WANT_SCALE_BITS
 static char *scale_bits [] =
 {
   "......................",
@@ -746,13 +619,9 @@ static char *scale_bits [] =
   "......................",
   "......................"
 };
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: sharpen  */
+#endif
 
-
-/*
-#define sharpen_width 22
-#define sharpen_height 22
+#ifdef WANT_SHARPEN_BITS
 static char *sharpen_bits [] =
 {
   "......................",
@@ -778,13 +647,9 @@ static char *sharpen_bits [] =
   "......................",
   "......................"
 };
-*/
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: skew  */
+#endif
 
-
-#define shear_width 22
-#define shear_height 22
+#ifdef WANT_SHEAR_BITS
 static char *shear_bits [] =
 {
   "......................",
@@ -810,14 +675,9 @@ static char *shear_bits [] =
   "......................",
   "......................"
 };
+#endif
 
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: text  */
-
-/* FIXME name clash in text_tool.c
-#define text_width 22
-#define text_height 22
-*/
+#ifdef WANT_TEXT_BITS
 static char *text_bits [] =
 {
   "......................",
@@ -843,12 +703,9 @@ static char *text_bits [] =
   "......................",
   "......................"
 };
+#endif
 
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: ink  */
-
-#define ink_width 22
-#define ink_height 22
+#ifdef WANT_INK_BITS
 static char *ink_bits [] =
 {
   "......................",
@@ -874,13 +731,9 @@ static char *ink_bits [] =
   "..ee..................",
   "......................"
 };
+#endif
 
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: dodge  */
-
-
-#define dodge_width 22
-#define dodge_height 22
+#ifdef WANT_DODGE_BITS
 static char *dodge_bits [] = 
 {
   "......................",
@@ -906,13 +759,9 @@ static char *dodge_bits [] =
   "......................",
   "......................"
 };
+#endif
 
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: smudge  */
-
-
-#define smudge_width 22
-#define smudge_height 22
+#ifdef WANT_SMUDGE_BITS
 static char *smudge_bits [] = 
 {
   "......................",
@@ -938,13 +787,9 @@ static char *smudge_bits [] =
   ".....eee..............",
   "......................"
 };
+#endif
 
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: measure  */
-
-
-#define measure_width 22
-#define measure_height 22
+#ifdef WANT_MEASURE_BITS
 static char *measure_bits [] = 
 {
   "......................",
@@ -970,13 +815,9 @@ static char *measure_bits [] =
   ".....e............e...",
   "......................"
 };
+#endif
 
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: xinput_airbrush  */
-
-/*
-#define xinput_airbrush_width 22
-#define xinput_airbrush_height 22
+#ifdef WANT_XINPUT_AIRBRUSH_BITS
 static char *xinput_airbrush_bits [] =
 {
   "......................",
@@ -1002,13 +843,9 @@ static char *xinput_airbrush_bits [] =
   "...aaccegggaggeccaa...",
   "......................"
 };               
-*/
+#endif
 
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: path_tool  */
-
-#define path_tool_width 22
-#define path_tool_height 22
+#ifdef WANT_PATH_TOOL_BITS
 static char *path_tool_bits [] = 
 {
   "......................",
@@ -1034,13 +871,9 @@ static char *path_tool_bits [] =
   "..a...................",
   "......................"
 };
+#endif
 
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: by_color_select  */
-
-
-#define by_color_select_width 22
-#define by_color_select_height 22
+#ifdef WANT_BY_COLOR_SELECT_BITS
 static char *by_color_select_bits [] = 
 {
   "......................",
@@ -1066,13 +899,9 @@ static char *by_color_select_bits [] =
   ".......ahhhhga........",
   "......................"
 };
+#endif
 
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: adjustment  */
-
-
-#define adjustment_width 22
-#define adjustment_height 22
+#ifdef WANT_ADJUSTMENT_BITS
 static char *adjustment_bits [] = 
 {
   "......................",
@@ -1098,13 +927,9 @@ static char *adjustment_bits [] =
   ".......ahhhhga........",
   "......................"
 };
+#endif
 
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: curves  */
-
-
-#define curves_width 22
-#define curves_height 22
+#ifdef WANT_CURVES_BITS
 static char *curves_bits [] = 
 {
   "......................",
@@ -1130,13 +955,9 @@ static char *curves_bits [] =
   ".......ahhhhga....a...",
   "......................"
 };
+#endif
 
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: levels  */
-
-
-#define levels_width 22
-#define levels_height 22
+#ifdef WANT_LEVELS_BITS
 static char *levels_bits [] = 
 {
   "......................",
@@ -1162,13 +983,9 @@ static char *levels_bits [] =
   ".......ahhhhga........",
   "......................"
 };
+#endif
 
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: histogram  */
-
-
-#define histogram_width 22
-#define histogram_height 22
+#ifdef WANT_HISTOGRAM_BITS
 static char *histogram_bits [] = 
 {
   "......................",
@@ -1194,39 +1011,4 @@ static char *histogram_bits [] =
   "......................",
   "......................"
 };
-
-
-/* FIXME dialog is basically a temporary pixmap so the device status
- * window doesn't have problems showing the dialog devices, it doesn't
- * really represent anything and really should be changed
- */
-
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: dialog  */
-#define dialog_width 22
-#define dialog_height 22
-static char *dialog_bits [] =
-{
-  "......................",
-  "......................",
-  "......................",
-  "......................",
-  "........aaaaa.........",
-  "......aagggggaa.......",
-  ".....aaggh.gggaa......",
-  ".....agggh.eggga......",
-  "....aggggh.egggga.....",
-  "....aghhhh.ehhhga.....",
-  "....ag.........ga.....",
-  "....aggeee.eeeega.....",
-  "....aggggh.egggga.....",
-  ".....agggh.eggga......",
-  ".....aaggg.eggaa......",
-  "......aagggggaa.......",
-  "........aaaaa.........",
-  "......................",
-  "......................",
-  "......................",
-  "......................",
-  "......................"
-};
+#endif

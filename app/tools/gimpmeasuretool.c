@@ -44,7 +44,8 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps2.h"
+#define WANT_MEASURE_BITS
+#include "icons.h"
 
 
 /*  definitions  */

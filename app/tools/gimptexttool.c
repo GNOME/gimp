@@ -65,7 +65,8 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps2.h"
+#define WANT_TEXT_BITS
+#include "icons.h"
 
 
 #define FOUNDRY      0

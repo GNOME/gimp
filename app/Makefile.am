@@ -189,9 +189,7 @@ gimp_SOURCES = \
 	xcf.c			\
 	xcf.h			\
 	$(regex_sources)	\
-	$(mmx_sources)		\
-	\
-	pixmaps2.h
+	$(mmx_sources)
 
 EXTRA_DIST = \
 	makefile.mingw			\

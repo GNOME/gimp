@@ -121,18 +121,18 @@ extern GHashTable *procedural_ht;
 /*  Functions  */
 void          procedural_db_init         (void);
 void          procedural_db_free         (void);
-void          procedural_db_register     (ProcRecord *procedure);
-void          procedural_db_unregister   (gchar      *name);
-ProcRecord  * procedural_db_lookup       (gchar      *name);
-Argument    * procedural_db_execute      (gchar      *name,
-					  Argument   *args);
-Argument    * procedural_db_run_proc     (gchar      *name,
-					  gint       *nreturn_vals,
+void          procedural_db_register     (ProcRecord  *procedure);
+void          procedural_db_unregister   (const gchar *name);
+ProcRecord  * procedural_db_lookup       (const gchar *name);
+Argument    * procedural_db_execute      (const gchar *name,
+					  Argument    *args);
+Argument    * procedural_db_run_proc     (const gchar *name,
+					  gint        *nreturn_vals,
 					  ...);
-Argument    * procedural_db_return_args  (ProcRecord *procedure,
-					  gboolean    success);
-void          procedural_db_destroy_args (Argument   *args,
-					  gint        nargs);
+Argument    * procedural_db_return_args  (ProcRecord  *procedure,
+					  gboolean     success);
+void          procedural_db_destroy_args (Argument    *args,
+					  gint         nargs);
 
 /* "type" should really be a PDBArgType, but we can cope with
  *  out-of-range values.

@@ -1,3 +1,15 @@
+2001-05-14  Sven Neumann  <sven@gimp.org>
+
+	* app/Makefile.am
+	* app/pixmaps2.h: removed this file ...
+
+	* app/tools/Makefile.am
+	* app/tools/icons.h: ... and readded it here with some changes.
+
+	* app/tools/*.c: include the new icons.h file
+
+	* app/pdb/procedural_db.[ch]: declare name as const
+
 2001-05-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am

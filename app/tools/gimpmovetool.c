@@ -41,7 +41,8 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps2.h"
+#define WANT_MOVE_BITS
+#include "icons.h"
 
 
 static void   gimp_move_tool_class_init (GimpMoveToolClass *klass);

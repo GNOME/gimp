@@ -52,7 +52,8 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps2.h"
+#define WANT_INK_BITS
+#include "icons.h"
 
 
 #define SUBSAMPLE 8

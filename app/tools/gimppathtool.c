@@ -38,7 +38,9 @@
 #include "libgimp/gimpintl.h"
 
 #include "path_tool.h"
-#include "pixmaps2.h"
+
+#define WANT_PATH_TOOL_BITS
+#include "icons.h"
 
 
 /*  definitions  */
@@ -800,7 +802,6 @@ gimp_path_tool_cursor_update (GimpTool       *tool,
 			      GdkEventMotion *mevent,
 			      GDisplay       *gdisp)
 {
-  GimpPathTool *path_tool = GIMP_PATH_TOOL (tool);
 #if 0
   gint     x, y, halfwidth, dummy, cursor_location;
   

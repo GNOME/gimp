@@ -90,7 +90,7 @@ procedural_db_register (ProcRecord *procedure)
 }
 
 void
-procedural_db_unregister (gchar *name)
+procedural_db_unregister (const gchar *name)
 {
   GList *list;
 
@@ -110,7 +110,7 @@ procedural_db_unregister (gchar *name)
 }
 
 ProcRecord *
-procedural_db_lookup (gchar *name)
+procedural_db_lookup (const gchar *name)
 {
   GList *list;
   ProcRecord *procedure;
@@ -125,8 +125,8 @@ procedural_db_lookup (gchar *name)
 }
 
 Argument *
-procedural_db_execute (gchar    *name,
-		       Argument *args)
+procedural_db_execute (const gchar *name,
+		       Argument    *args)
 {
   ProcRecord *procedure;
   Argument   *return_args;
@@ -218,8 +218,8 @@ procedural_db_execute (gchar    *name,
 }
 
 Argument *
-procedural_db_run_proc (gchar *name,
-			gint  *nreturn_vals,
+procedural_db_run_proc (const gchar *name,
+			gint        *nreturn_vals,
 			...)
 {
   ProcRecord *proc;

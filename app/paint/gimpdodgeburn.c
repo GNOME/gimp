@@ -44,9 +44,10 @@
 #include "gimptool.h"
 #include "tool_manager.h"
 
-#include "pixmaps2.h"
-
 #include "libgimp/gimpintl.h"
+
+#define WANT_DODGE_BITS
+#include "icons.h"
 
 
 /*  Default values  */

@@ -67,7 +67,8 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps2.h"
+#define WANT_ISCISSORS_BITS
+#include "icons.h"
 
 
 struct _ICurve

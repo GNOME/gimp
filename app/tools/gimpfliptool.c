@@ -49,7 +49,8 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps2.h"
+#define WANT_FLIP_BITS
+#include "icons.h"
 
 
 /*  FIXME: Lame - 1 hacks abound since the code assumes certain values for

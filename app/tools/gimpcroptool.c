@@ -49,9 +49,10 @@
 #include "pixel_region.h"
 #include "undo.h"
 
-#include "pixmaps2.h"
-
 #include "libgimp/gimpintl.h"
+
+#define WANT_CROP_BITS
+#include "icons.h"
 
 
 #define STATUSBAR_SIZE 128

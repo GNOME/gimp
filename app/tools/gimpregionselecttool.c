@@ -48,7 +48,8 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps2.h"
+#define WANT_FUZZY_SELECT_BITS
+#include "icons.h"
 
 
 static void   gimp_fuzzy_select_tool_class_init (GimpFuzzySelectToolClass *klass);
@@ -95,7 +96,7 @@ gimp_fuzzy_select_tool_register (void)
                               _("Select contiguous regions"),
                               _("/Tools/Selection Tools/Fuzzy Select"), "Z",
                               NULL, "tools/fuzzy_select.html",
-                              (const gchar **) fuzzy_bits);
+                              (const gchar **) fuzzy_select_bits);
 }
 
 GtkType

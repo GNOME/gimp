@@ -44,7 +44,8 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps2.h"
+#define WANT_BLUR_BITS
+#include "icons.h"
 
 
 #define FIELD_COLS    4

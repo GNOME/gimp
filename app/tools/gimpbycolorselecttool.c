@@ -55,7 +55,8 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps2.h"
+#define WANT_BY_COLOR_SELECT_BITS
+#include "icons.h"
 
 
 #define PREVIEW_WIDTH       256

@@ -44,7 +44,8 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps2.h"
+#define WANT_SCALE_BITS
+#include "icons.h"
 
 
 /*  forward function declarations  */

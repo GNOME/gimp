@@ -58,7 +58,8 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps2.h"
+#define WANT_BLEND_BITS
+#include "icons.h"
 
 
 /*  target size  */
@@ -280,7 +281,7 @@ gimp_blend_tool_register (void)
 			      _("Fill with a color gradient"),
 			      N_("/Tools/Paint Tools/Blend"), "L",
 			      NULL, "tools/blend.html",
-			      (const gchar **) gradient_bits);
+			      (const gchar **) blend_bits);
 }
 
 GtkType

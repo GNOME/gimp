@@ -38,7 +38,8 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps2.h"
+#define WANT_ELLIPSE_SELECT_BITS
+#include "icons.h"
 
 
 static void   gimp_ellipse_select_tool_class_init (GimpEllipseSelectToolClass *klass);
@@ -70,7 +71,7 @@ gimp_ellipse_select_tool_register (void)
                               _("Select elliptical regions"),
                               _("/Tools/Selection Tools/Ellipse Select"), "E",
                               NULL, "tools/ellipse_select.html",
-                              (const gchar **) circ_bits);
+                              (const gchar **) ellipse_select_bits);
 }
 
 GtkType

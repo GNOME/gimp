@@ -44,7 +44,8 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps2.h"
+#define WANT_FREE_SELECT_BITS
+#include "icons.h"
 
 
 #define DEFAULT_MAX_INC  1024
@@ -96,7 +97,7 @@ gimp_free_select_tool_register (void)
                               _("Select hand-drawn regions"),
                               _("/Tools/Selection Tools/Free Select"), "F",
                               NULL, "tools/free_select.html",
-                              (const gchar **) free_bits);
+                              (const gchar **) free_select_bits);
 }
 
 GtkType

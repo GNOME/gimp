@@ -51,7 +51,8 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps2.h"
+#define WANT_CLONE_BITS
+#include "icons.h"
 
 
 #define TARGET_HEIGHT  15

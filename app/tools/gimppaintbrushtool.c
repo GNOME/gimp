@@ -44,7 +44,8 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps2.h"
+#define WANT_PAINT_BRUSH_BITS
+#include "icons.h"
 
 
 #define PAINT_LEFT_THRESHOLD           0.05
@@ -88,7 +89,7 @@ gimp_paintbrush_tool_register (void)
   			      _("Paint fuzzy brush strokes"),
       			      N_("/Tools/Paint Tools/Paintbrush"), "P",
   			      NULL, "tools/paintbrush.html",
-			      (const gchar **) paint_bits);
+			      (const gchar **) paint_brush_bits);
 }
 
 GtkType
@@ -255,7 +256,6 @@ gimp_paintbrush_tool_motion (GimpPaintTool        *paint_tool,
   GimpImage            *gimage;
   TempBuf              *area;
   gdouble               x, paint_left;
-  gdouble               position    = 0.0;
   guchar                local_blend = OPAQUE_OPACITY;
   guchar                temp_blend  = OPAQUE_OPACITY;
   guchar                col[MAX_CHANNELS];

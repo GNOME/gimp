@@ -91,6 +91,7 @@ libapptools_la_SOURCES = \
 	tool_options_dialog.c	\
 	tool_options_dialog.h	\
 	\
+	icons.h			\
 	tool_manager.c		\
 	tool_manager.h		\
 	tools.c			\

@@ -44,7 +44,8 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps2.h"
+#define WANT_PENCIL_BITS
+#include "icons.h"
 
 
 #define PENCIL_INCREMENTAL_DEFAULT FALSE

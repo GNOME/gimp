@@ -43,10 +43,13 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps2.h"
+#define WANT_COLOR_PICKER_BITS
+#include "icons.h"
+
 
 /*  maximum information buffer size  */
 #define MAX_INFO_BUF 8
+
 
 /*  the color picker structures  */
 
@@ -158,7 +161,7 @@ gimp_color_picker_tool_register (void)
 			      _("Pick colors from the image"),
 			      N_("/Tools/Color Picker"), "<shift>O",
 			      NULL, "tools/color_picker.html",
-			      (const gchar **) colorpicker_bits);
+			      (const gchar **) color_picker_bits);
 }
 
 GtkType

@@ -45,7 +45,8 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps2.h"
+#define WANT_AIRBRUSH_BITS
+#include "icons.h"
 
 
 /*  The maximum amount of pressure that can be exerted  */
