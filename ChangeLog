@@ -1,5 +1,11 @@
 2004-05-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpundoeditor.c: removed code duplication by adding
+	utility function gimp_undo_editor_update_buttons(), some general
+	cleanups.
+
+2004-05-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage.c (gimp_image_undo_freeze,thaw): emit the
 	"undo-freeze" and "undo-thaw" signals only on the first freeze and
 	last thaw, not on any of them.

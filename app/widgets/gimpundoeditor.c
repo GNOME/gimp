@@ -45,38 +45,41 @@ enum
   PROP_PREVIEW_SIZE
 };
 
+
 static void      gimp_undo_editor_class_init   (GimpUndoEditorClass   *klass);
 static void      gimp_undo_editor_init         (GimpUndoEditor        *undo_editor);
-static GObject * gimp_undo_editor_constructor  (GType                  type,
-                                                guint                  n_params,
-                                                GObjectConstructParam *params);
-static void      gimp_undo_editor_set_property (GObject               *object,
-                                                guint                  property_id,
-                                                const GValue          *value,
-                                                GParamSpec            *pspec);
+static GObject * gimp_undo_editor_constructor    (GType              type,
+                                                  guint              n_params,
+                                                  GObjectConstructParam *params);
+static void      gimp_undo_editor_set_property   (GObject           *object,
+                                                  guint              property_id,
+                                                  const GValue      *value,
+                                                  GParamSpec        *pspec);
 
-static void      gimp_undo_editor_set_image    (GimpImageEditor       *editor,
-                                                GimpImage             *gimage);
+static void      gimp_undo_editor_set_image      (GimpImageEditor   *editor,
+                                                  GimpImage         *gimage);
 
-static void      gimp_undo_editor_fill         (GimpUndoEditor        *editor);
-static void      gimp_undo_editor_clear        (GimpUndoEditor        *editor);
+static void      gimp_undo_editor_fill           (GimpUndoEditor    *editor);
+static void      gimp_undo_editor_clear          (GimpUndoEditor    *editor);
 
-static void      gimp_undo_editor_undo_clicked (GtkWidget             *widget,
-                                                GimpImageEditor       *editor);
-static void      gimp_undo_editor_redo_clicked (GtkWidget             *widget,
-                                                GimpImageEditor       *editor);
-static void     gimp_undo_editor_clear_clicked (GtkWidget             *widget,
-                                                GimpImageEditor       *editor);
+static void      gimp_undo_editor_undo_clicked   (GtkWidget         *widget,
+                                                  GimpImageEditor   *editor);
+static void      gimp_undo_editor_redo_clicked   (GtkWidget         *widget,
+                                                  GimpImageEditor   *editor);
+static void      gimp_undo_editor_clear_clicked  (GtkWidget         *widget,
+                                                  GimpImageEditor   *editor);
 
-static void      gimp_undo_editor_undo_event   (GimpImage             *gimage,
-                                                GimpUndoEvent          event,
-                                                GimpUndo              *undo,
-                                                GimpUndoEditor        *editor);
+static void      gimp_undo_editor_undo_event     (GimpImage         *gimage,
+                                                  GimpUndoEvent      event,
+                                                  GimpUndo          *undo,
+                                                  GimpUndoEditor    *editor);
 
-static void      gimp_undo_editor_select_item  (GimpContainerView     *view,
-                                                GimpUndo              *undo,
-                                                gpointer               insert_data,
-                                                GimpUndoEditor        *editor);
+static void      gimp_undo_editor_select_item    (GimpContainerView *view,
+                                                  GimpUndo          *undo,
+                                                  gpointer           insert_data,
+                                                  GimpUndoEditor    *editor);
+
+static void      gimp_undo_editor_update_buttons (GimpUndoEditor    *editor);
 
 
 static GimpImageEditorClass *parent_class = NULL;
@@ -92,14 +95,14 @@ gimp_undo_editor_get_type (void)
       static const GTypeInfo editor_info =
       {
         sizeof (GimpUndoEditorClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_undo_editor_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpUndoEditor),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_undo_editor_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_undo_editor_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpUndoEditor),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_undo_editor_init,
       };
 
       editor_type = g_type_register_static (GIMP_TYPE_IMAGE_EDITOR,
@@ -113,11 +116,8 @@ gimp_undo_editor_get_type (void)
 static void
 gimp_undo_editor_class_init (GimpUndoEditorClass *klass)
 {
-  GObjectClass         *object_class;
-  GimpImageEditorClass *image_editor_class;
-
-  object_class       = G_OBJECT_CLASS (klass);
-  image_editor_class = GIMP_IMAGE_EDITOR_CLASS (klass);
+  GObjectClass         *object_class       = G_OBJECT_CLASS (klass);
+  GimpImageEditorClass *image_editor_class = GIMP_IMAGE_EDITOR_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -127,8 +127,8 @@ gimp_undo_editor_class_init (GimpUndoEditorClass *klass)
   image_editor_class->set_image = gimp_undo_editor_set_image;
 
   g_object_class_install_property (object_class,
-				   PROP_PREVIEW_SIZE,
-				   g_param_spec_enum ("preview-size",
+                                   PROP_PREVIEW_SIZE,
+                                   g_param_spec_enum ("preview-size",
                                                       NULL, NULL,
                                                       GIMP_TYPE_PREVIEW_SIZE,
                                                       GIMP_PREVIEW_SIZE_LARGE,
@@ -258,7 +258,6 @@ gimp_undo_editor_fill (GimpUndoEditor *editor)
 {
   GimpImage *gimage;
   GimpUndo  *top_undo_item;
-  GimpUndo  *top_redo_item;
   GList     *list;
 
   gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
@@ -306,14 +305,7 @@ gimp_undo_editor_fill (GimpUndoEditor *editor)
   gimp_container_view_set_container (GIMP_CONTAINER_VIEW (editor->view),
                                      editor->container);
 
-  /*  get the top item of both stacks  */
   top_undo_item = gimp_undo_stack_peek (gimage->undo_stack);
-  top_redo_item = gimp_undo_stack_peek (gimage->redo_stack);
-
-  gtk_widget_set_sensitive (editor->undo_button, top_undo_item != NULL);
-  gtk_widget_set_sensitive (editor->redo_button, top_redo_item != NULL);
-  gtk_widget_set_sensitive (editor->clear_button,
-                            top_undo_item || top_redo_item);
 
   g_signal_handlers_block_by_func (editor->view,
                                    gimp_undo_editor_select_item,
@@ -336,6 +328,8 @@ gimp_undo_editor_fill (GimpUndoEditor *editor)
   g_signal_handlers_unblock_by_func (editor->view,
                                      gimp_undo_editor_select_item,
                                      editor);
+
+  gimp_undo_editor_update_buttons (editor);
 }
 
 static void
@@ -423,11 +417,8 @@ gimp_undo_editor_undo_event (GimpImage      *gimage,
                              GimpUndoEditor *editor)
 {
   GimpUndo *top_undo_item;
-  GimpUndo *top_redo_item;
-  gboolean  enabled;
 
   top_undo_item = gimp_undo_stack_peek (gimage->undo_stack);
-  top_redo_item = gimp_undo_stack_peek (gimage->redo_stack);
 
   switch (event)
     {
@@ -489,14 +480,7 @@ gimp_undo_editor_undo_event (GimpImage      *gimage,
       break;
     }
 
-  top_undo_item = gimp_undo_stack_peek (gimage->undo_stack);
-  top_redo_item = gimp_undo_stack_peek (gimage->redo_stack);
-  enabled       = gimp_image_undo_is_enabled (gimage);
-
-  gtk_widget_set_sensitive (editor->undo_button,  enabled && top_undo_item);
-  gtk_widget_set_sensitive (editor->redo_button,  enabled && top_redo_item);
-  gtk_widget_set_sensitive (editor->clear_button, enabled && (top_undo_item ||
-                                                              top_redo_item));
+  gimp_undo_editor_update_buttons (editor);
 }
 
 static void
@@ -507,7 +491,6 @@ gimp_undo_editor_select_item (GimpContainerView *view,
 {
   GimpImage *gimage;
   GimpUndo  *top_undo_item;
-  GimpUndo  *top_redo_item;
 
   if (! undo)
     return;
@@ -554,10 +537,19 @@ gimp_undo_editor_select_item (GimpContainerView *view,
 
   gimp_image_flush (gimage);
 
-  top_redo_item = gimp_undo_stack_peek (gimage->redo_stack);
+  gimp_undo_editor_update_buttons (editor);
+}
 
-  gtk_widget_set_sensitive (editor->undo_button,   top_undo_item != NULL);
-  gtk_widget_set_sensitive (editor->redo_button,   top_redo_item != NULL);
-  gtk_widget_set_sensitive (editor->clear_button, (top_undo_item != NULL ||
-                                                   top_redo_item != NULL));
+static void
+gimp_undo_editor_update_buttons (GimpUndoEditor *editor)
+{
+  GimpImage *gimage        = GIMP_IMAGE_EDITOR (editor)->gimage;
+  GimpUndo  *top_undo_item = gimp_undo_stack_peek (gimage->undo_stack);
+  GimpUndo  *top_redo_item = gimp_undo_stack_peek (gimage->redo_stack);
+  gboolean   enabled       = gimp_image_undo_is_enabled (gimage);
+
+  gtk_widget_set_sensitive (editor->undo_button,  enabled && top_undo_item);
+  gtk_widget_set_sensitive (editor->redo_button,  enabled && top_redo_item);
+  gtk_widget_set_sensitive (editor->clear_button, enabled && (top_undo_item ||
+                                                              top_redo_item));
 }
