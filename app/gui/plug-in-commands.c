@@ -26,6 +26,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
+#include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
 
@@ -38,6 +39,7 @@
 #include "display/gimpdisplay.h"
 
 #include "plug-in-commands.h"
+#include "plug-in-menus.h"
 
 
 #define return_if_no_display(gdisp,data) \
@@ -64,7 +66,8 @@ plug_in_run_cmd_callback (GtkWidget *widget,
   Argument       *args;
   gint            gdisp_ID = -1;
   gint            i;
-  gint            argc     = 0; /* calm down a gcc warning.  */
+  gint            argc;
+  GimpImageType   drawable_type = GIMP_RGB_IMAGE;
 
   item_factory = gtk_item_factory_from_widget (widget);
 
@@ -113,6 +116,8 @@ plug_in_run_cmd_callback (GtkWidget *widget,
 
                   if (drawable)
                     {
+                      drawable_type = gimp_drawable_type (drawable);
+
                       args[2].value.pdb_int =
                         gimp_item_get_ID (GIMP_ITEM (drawable));
                       argc++;
@@ -144,6 +149,7 @@ plug_in_run_cmd_callback (GtkWidget *widget,
       proc_rec->args[2].arg_type == GIMP_PDB_DRAWABLE)
     {
       gimp->last_plug_in = proc_rec;
+      plug_in_menus_update (GIMP_ITEM_FACTORY (item_factory), drawable_type);
     }
 
   g_free (args);

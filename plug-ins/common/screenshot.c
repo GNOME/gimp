@@ -346,6 +346,7 @@ create_image (const GdkPixbuf *pixbuf)
   height = gdk_pixbuf_get_height (pixbuf);
 
   image = gimp_image_new (width, height, GIMP_RGB);
+  gimp_image_undo_disable (image);
   layer = gimp_layer_new (image, _("Screen Shot"),
                           width, height,
                           GIMP_RGB_IMAGE, 100, GIMP_NORMAL_MODE);

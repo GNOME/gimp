@@ -249,6 +249,7 @@ doit (GimpDrawable *drawable,
   gr = g_rand_new ();
 
   new_image_id = gimp_image_new (config.width, config.height, GIMP_RGB);
+  gimp_image_undo_disable (new_image_id);
   *layer_id = gimp_layer_new (new_image_id, _("Background"),
 			      config.width, config.height,
 			      gimp_drawable_type (drawable->drawable_id),

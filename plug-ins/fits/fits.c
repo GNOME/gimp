@@ -504,6 +504,7 @@ create_new_image (const gchar        *filename,
   else
     gimp_image_set_filename (image_ID, filename);
 
+  gimp_image_undo_disable (image_ID);
   *layer_ID = gimp_layer_new (image_ID, _("Background"), width, height,
 			      dtype, 100, GIMP_NORMAL_MODE);
   gimp_image_add_layer (image_ID, *layer_ID, 0);

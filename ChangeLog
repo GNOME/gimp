@@ -1,3 +1,22 @@
+2004-03-16  Simon Budig  <simon@gimp.org>
+
+	* app/gui/plug-in-commands.c: Update the Plugin Menu immediately
+	after setting the last invoked plugin. Fixes inconsistencies
+	between name shown and plugin invoked.
+
+	Fixes #136909, #137242 and #81479 (again, the fix in
+	lightening_main.c only probably was bogus, since this must not
+	rely on correctly written plugins).
+
+	* plug-ins/common/compose.c
+	* plug-ins/common/decompose.c
+	* plug-ins/common/film.c
+	* plug-ins/common/screenshot.c
+	* plug-ins/common/smooth_palette.c
+	* plug-ins/common/tile.c
+	* plug-ins/fits/fits.c: Ensure that each gimp_image_undo_enable()
+	had a gimp_image_undo_disable() first...
+
 2004-03-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage-undo-push.c: removed unused #includes.

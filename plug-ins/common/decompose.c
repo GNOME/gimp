@@ -540,6 +540,7 @@ create_new_image (const gchar        *filename,
   gint32 image_ID;
 
   image_ID = gimp_image_new (width, height, type);
+  gimp_image_undo_disable (image_ID);
   gimp_image_set_filename (image_ID, filename);
 
   *layer_ID = create_new_layer (image_ID,
