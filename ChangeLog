@@ -1,3 +1,20 @@
+2002-04-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimagefile.[ch]: save the number of layers in the
+	thumbnail and show it in the description.
+
+	* app/gui/file-dialog-utils.[ch]: added file_dialog_new() which
+	contains a lot of factored out code from file-open and file-save.
+
+	* app/gui/file-open-dialog.c
+	* app/gui/file-save-dialog.c: use file_dialog_new(), reduce use of
+	global variables, added utility functions to reduce code
+	duplication, cleanup.
+
+	* app/gui/file-open-dialog.c: use a temporary imagefile to create
+	previews so the dialog's preview can show the progress when
+	creating many thumbnails.
+
 2002-04-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/file/file-save.c: shouldn't free the filename before using it :)

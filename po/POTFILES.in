@@ -69,6 +69,7 @@ app/gui/drawable-commands.c
 app/gui/edit-commands.c
 app/gui/error-console-dialog.c
 app/gui/file-commands.c
+app/gui/file-dialog-utils.c
 app/gui/file-new-dialog.c
 app/gui/file-open-dialog.c
 app/gui/file-save-dialog.c

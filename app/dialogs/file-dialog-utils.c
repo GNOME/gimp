@@ -23,7 +23,11 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "gui-types.h"
+
+#include "core/gimp.h"
 
 #include "plug-in/plug-in-proc.h"
 
@@ -31,6 +35,77 @@
 
 #include "file-dialog-utils.h"
 
+#include "libgimp/gimpintl.h"
+
+
+GtkWidget *
+file_dialog_new (Gimp            *gimp,
+                 GimpItemFactory *item_factory,
+                 const gchar     *title,
+                 const gchar     *wmclass_name,
+                 const gchar     *help_data,
+                 GCallback        ok_callback)
+{
+  GtkWidget        *filesel;
+  GtkFileSelection *fs;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_ITEM_FACTORY (item_factory), NULL);
+  g_return_val_if_fail (title != NULL, NULL);
+  g_return_val_if_fail (wmclass_name != NULL, NULL);
+  g_return_val_if_fail (help_data != NULL, NULL);
+  g_return_val_if_fail (ok_callback != NULL, NULL);
+
+  filesel = gtk_file_selection_new (title);
+
+  fs = GTK_FILE_SELECTION (filesel);
+
+  g_object_set_data (G_OBJECT (filesel), "gimp", gimp);
+
+  gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
+  gtk_window_set_wmclass (GTK_WINDOW (filesel), wmclass_name, "Gimp");
+
+  gimp_help_connect (filesel, gimp_standard_help_func, help_data);
+
+  gtk_container_set_border_width (GTK_CONTAINER (fs->button_area), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (filesel), 2);
+
+  g_signal_connect_swapped (G_OBJECT (fs->cancel_button), "clicked",
+			    G_CALLBACK (file_dialog_hide),
+			    filesel);
+  g_signal_connect (G_OBJECT (filesel), "delete_event",
+		    G_CALLBACK (file_dialog_hide),
+		    NULL);
+
+  g_signal_connect (G_OBJECT (fs->ok_button), "clicked",
+		    G_CALLBACK (ok_callback),
+		    filesel);
+
+  /*  The file type menu  */
+  {
+    GtkWidget *hbox;
+    GtkWidget *option_menu;
+    GtkWidget *label;
+
+    hbox = gtk_hbox_new (FALSE, 4);
+
+    option_menu = gtk_option_menu_new ();
+    gtk_box_pack_end (GTK_BOX (hbox), option_menu, FALSE, FALSE, 0);
+    gtk_widget_show (option_menu);
+
+    gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu),
+                              GTK_ITEM_FACTORY (item_factory)->widget);
+
+    gtk_box_pack_end (GTK_BOX (fs->main_vbox), hbox, FALSE, FALSE, 0);
+    gtk_widget_show (hbox);
+
+    label = gtk_label_new (_("Determine File Type:"));
+    gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+    gtk_widget_show (label);
+  }
+
+  return filesel;
+}
 
 void
 file_dialog_show (GtkWidget *filesel)

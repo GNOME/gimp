@@ -20,13 +20,20 @@
 #define __FILE_DIALOG_UTILS_H__
 
 
-void       file_dialog_show         (GtkWidget        *filesel);
-gboolean   file_dialog_hide         (GtkWidget        *filesel);
+GtkWidget * file_dialog_new          (Gimp             *gimp,
+                                      GimpItemFactory  *item_factory,
+                                      const gchar      *title,
+                                      const gchar      *wmclass_name,
+                                      const gchar      *help_data,
+                                      GCallback         ok_callback);
 
-void       file_dialog_update_name  (PlugInProcDef    *proc,
-				     GtkFileSelection *filesel);
-void       file_dialog_update_menus (GSList           *procs,
-				     GimpImageType     image_type);
+void        file_dialog_show         (GtkWidget        *filesel);
+gboolean    file_dialog_hide         (GtkWidget        *filesel);
+
+void        file_dialog_update_name  (PlugInProcDef    *proc,
+                                      GtkFileSelection *filesel);
+void        file_dialog_update_menus (GSList           *procs,
+                                      GimpImageType     image_type);
 
 
 #endif /* __FILE_DIALOG_UTILS_H__ */

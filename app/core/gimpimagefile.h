@@ -54,6 +54,7 @@ struct _GimpImagefile
   gint                height;
   gssize              size;
   GimpImageType       type;
+  gint                n_layers;
 
   GimpImagefileState  image_state;
   time_t              image_mtime;

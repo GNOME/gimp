@@ -55,37 +55,32 @@
 #include "libgimp/gimpintl.h"
 
 
-typedef struct _OverwriteData OverwriteData;
+/*  local function prototypes  */
 
-struct _OverwriteData
-{
-  gchar *uri;
-  gchar *raw_filename;
-};
-
-
-static void    file_save_dialog_create      (void);
-
-static void    file_overwrite               (const gchar   *uri,
-					     const gchar   *raw_filename);
-static void    file_overwrite_callback      (GtkWidget     *widget,
-					     gboolean       overwrite,
-					     gpointer       data);
-
-static void    file_save_ok_callback        (GtkWidget     *widget,
-					     gpointer       data);
-
-static void    file_save_type_callback      (GtkWidget     *widget,
-					     gpointer       data);
+static GtkWidget * file_save_dialog_create      (Gimp          *gimp);
+static void        file_save_type_callback      (GtkWidget     *widget,
+                                                 gpointer       data);
+static void        file_save_ok_callback        (GtkWidget     *widget,
+                                                 GtkWidget     *save_dialog);
+static void        file_save_overwrite          (GtkWidget     *save_dialog,
+                                                 const gchar   *uri,
+                                                 const gchar   *raw_filename);
+static void        file_save_overwrite_callback (GtkWidget     *widget,
+                                                 gboolean       overwrite,
+                                                 gpointer       data);
+static void        file_save_dialog_save_image  (GtkWidget     *save_dialog,
+                                                 GimpImage     *gimage,
+                                                 const gchar   *uri,
+                                                 const gchar   *raw_filename,
+                                                 PlugInProcDef *save_proc,
+                                                 gboolean       set_uri);
 
 
-static GtkWidget  *filesave     = NULL;
-static GtkWidget  *save_options = NULL;
+static GtkWidget     *filesave       = NULL;
 
 static PlugInProcDef *save_file_proc = NULL;
-
-static GimpImage *the_gimage   = NULL;
-static gboolean   set_uri      = TRUE;
+static GimpImage     *the_gimage     = NULL;
+static gboolean       set_uri        = TRUE;
 
 
 /*  public functions  */
@@ -160,8 +155,7 @@ file_save_dialog_show (GimpImage *gimage)
     return;
 
   the_gimage = gimage;
-
-  set_uri = TRUE;
+  set_uri    = TRUE;
 
   uri = gimp_object_get_name (GIMP_OBJECT (gimage));
 
@@ -169,7 +163,7 @@ file_save_dialog_show (GimpImage *gimage)
     filename = g_filename_from_uri (uri, NULL, NULL);
 
   if (! filesave)
-    file_save_dialog_create ();
+    filesave = file_save_dialog_create (gimage->gimp);
 
   gtk_widget_set_sensitive (GTK_WIDGET (filesave), TRUE);
   if (GTK_WIDGET_VISIBLE (filesave))
@@ -200,8 +194,7 @@ file_save_a_copy_dialog_show (GimpImage *gimage)
     return;
 
   the_gimage = gimage;
-
-  set_uri = FALSE;
+  set_uri    = FALSE;
 
   uri = gimp_object_get_name (GIMP_OBJECT (gimage));
 
@@ -209,7 +202,7 @@ file_save_a_copy_dialog_show (GimpImage *gimage)
     filename = g_filename_from_uri (uri, NULL, NULL);
 
   if (! filesave)
-    file_save_dialog_create ();
+    filesave = file_save_dialog_create (gimage->gimp);
 
   gtk_widget_set_sensitive (GTK_WIDGET (filesave), TRUE);
   if (GTK_WIDGET_VISIBLE (filesave))
@@ -231,74 +224,14 @@ file_save_a_copy_dialog_show (GimpImage *gimage)
 
 /*  private functions  */
 
-static void
-file_save_dialog_create (void)
+static GtkWidget *
+file_save_dialog_create (Gimp *gimp)
 {
-  GtkFileSelection *file_sel;
-
-  filesave = gtk_file_selection_new (_("Save Image"));
-  gtk_window_set_wmclass (GTK_WINDOW (filesave), "save_image", "Gimp");
-  gtk_window_set_position (GTK_WINDOW (filesave), GTK_WIN_POS_MOUSE);
-
-  file_sel = GTK_FILE_SELECTION (filesave);
-
-  gtk_container_set_border_width (GTK_CONTAINER (filesave), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (file_sel->button_area), 2);
-
-  g_signal_connect_swapped (G_OBJECT (file_sel->cancel_button), "clicked",
-			    G_CALLBACK (file_dialog_hide),
-			    filesave);
-  g_signal_connect (G_OBJECT (filesave), "delete_event",
-		    G_CALLBACK (file_dialog_hide),
-		    NULL);
-
-  g_signal_connect (G_OBJECT (file_sel->ok_button), "clicked",
-		    G_CALLBACK (file_save_ok_callback),
-		    filesave);
-
-  /*  Connect the "F1" help key  */
-  gimp_help_connect (filesave,
-		     gimp_standard_help_func,
-		     "save/dialogs/file_save.html");
-
-  {
-    GimpItemFactory *item_factory;
-    GtkWidget       *frame;
-    GtkWidget       *hbox;
-    GtkWidget       *label;
-    GtkWidget       *option_menu;
-
-    save_options = gtk_hbox_new (TRUE, 1);
-
-    frame = gtk_frame_new (_("Save Options"));
-    gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-    gtk_box_pack_start (GTK_BOX (save_options), frame, TRUE, TRUE, 4);
-
-    hbox = gtk_hbox_new (FALSE, 4);
-    gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
-    gtk_container_add (GTK_CONTAINER (frame), hbox);
-    gtk_widget_show (hbox);
-
-    label = gtk_label_new (_("Determine File Type:"));
-    gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-    gtk_widget_show (label);
-
-    option_menu = gtk_option_menu_new ();
-    gtk_box_pack_start (GTK_BOX (hbox), option_menu, TRUE, TRUE, 0);
-    gtk_widget_show (option_menu);
-
-    item_factory = gimp_item_factory_from_path ("<Save>");
-    gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu),
-                              GTK_ITEM_FACTORY (item_factory)->widget);
-
-    gtk_widget_show (frame);
-
-    /* pack the containing save_options hbox into the save-dialog */
-    gtk_box_pack_end (GTK_BOX (GTK_FILE_SELECTION (filesave)->main_vbox),
-		      save_options, FALSE, FALSE, 0);
-  }
-
-  gtk_widget_show (save_options);
+  return file_dialog_new (gimp,
+                          gimp_item_factory_from_path ("<Save>"),
+                          _("Save Image"), "save_image",
+                          "save/dialogs/file_save.html",
+                          G_CALLBACK (file_save_ok_callback));
 }
 
 static void
@@ -314,18 +247,14 @@ file_save_type_callback (GtkWidget *widget,
 
 static void
 file_save_ok_callback (GtkWidget *widget,
-		       gpointer   data)
+		       GtkWidget *save_dialog)
 {
   GtkFileSelection *fs;
   const gchar      *filename;
   const gchar      *raw_filename;
   gchar            *uri;
-  gchar            *dot;
-  gint              x;
-  struct stat       buf;
-  gint              err;
 
-  fs = GTK_FILE_SELECTION (data);
+  fs = GTK_FILE_SELECTION (save_dialog);
 
   filename     = gtk_file_selection_get_filename (fs);
   raw_filename = gtk_entry_get_text (GTK_ENTRY (fs->selection_entry));
@@ -334,48 +263,53 @@ file_save_ok_callback (GtkWidget *widget,
 
   uri = g_filename_to_uri (filename, NULL, NULL);
 
-  for (dot = strrchr (filename, '.'), x = 0; dot && *(++dot);)
+  {
+    gchar *dot;
+    gint   x;
+
+    for (dot = strrchr (filename, '.'), x = 0; dot && *(++dot);)
+      {
+        if (*dot != 'e' || ++x < 0)
+          {
+            break;
+          }
+        else if (x > 3 && !strcmp (dot + 1, "k"))
+          { 
+            ProcRecord   *proc_rec;
+            Argument     *args;
+            GimpDrawable *drawable;
+
+            file_dialog_hide (save_dialog);
+
+            drawable = gimp_image_active_drawable (the_gimage);
+            if (! drawable)
+              return;
+
+            proc_rec = procedural_db_lookup (the_gimage->gimp,
+                                             "plug_in_the_slimy_egg");
+            if (! proc_rec)
+              return;
+
+            args = g_new (Argument, 3);
+            args[0].arg_type      = GIMP_PDB_INT32;
+            args[0].value.pdb_int = GIMP_RUN_INTERACTIVE;
+            args[1].arg_type      = GIMP_PDB_IMAGE;
+            args[1].value.pdb_int = gimp_image_get_ID (the_gimage);
+            args[2].arg_type      = GIMP_PDB_DRAWABLE;
+            args[2].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (drawable));
+
+            plug_in_run (the_gimage->gimp, proc_rec, args, 3, FALSE, TRUE, 0);
+
+            g_free (args);
+
+            return;
+          }
+      }
+  }
+
+  if (g_file_test (filename, G_FILE_TEST_EXISTS))
     {
-      if (*dot != 'e' || ++x < 0)
-	break;
-      else if (x > 3 && !strcmp (dot + 1, "k"))
-	{ 
-	  ProcRecord   *proc_rec;
-	  Argument     *args;
-	  GimpDrawable *the_drawable;
-
-	  the_drawable = gimp_image_active_drawable (the_gimage);
-	  if (!the_drawable)
-	    return;
-
-	  proc_rec = procedural_db_lookup (the_gimage->gimp,
-                                           "plug_in_the_slimy_egg");
-	  if (!proc_rec)
-	    break;
-
-	  file_dialog_hide (filesave);
-
-	  args = g_new (Argument, 3);
-	  args[0].arg_type      = GIMP_PDB_INT32;
-	  args[0].value.pdb_int = GIMP_RUN_INTERACTIVE;
-	  args[1].arg_type      = GIMP_PDB_IMAGE;
-	  args[1].value.pdb_int = gimp_image_get_ID (the_gimage);
-	  args[2].arg_type      = GIMP_PDB_DRAWABLE;
-	  args[2].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (the_drawable));
-
-	  plug_in_run (the_gimage->gimp, proc_rec, args, 3, FALSE, TRUE, 0);
-
-	  g_free (args);
-	  
-	  return;
-	}
-   }
-
-  err = stat (filename, &buf);
-
-  if (err == 0)
-    {
-      if (buf.st_mode & S_IFDIR)
+      if (g_file_test (filename, G_FILE_TEST_IS_DIR))
 	{
 	  if (filename[strlen (filename) - 1] != G_DIR_SEPARATOR)
 	    {
@@ -390,41 +324,37 @@ file_save_ok_callback (GtkWidget *widget,
 	}
       else
 	{
-	  gtk_widget_set_sensitive (GTK_WIDGET (fs), FALSE);
-	  file_overwrite (uri, raw_filename);
+	  file_save_overwrite (save_dialog, uri, raw_filename);
 	}
     }
   else
     {
-      GimpPDBStatusType status;
-
       gtk_widget_set_sensitive (GTK_WIDGET (fs), FALSE);
 
-      status = file_save (the_gimage,
-                          uri,
-                          raw_filename,
-                          save_file_proc,
-                          GIMP_RUN_INTERACTIVE,
-                          set_uri);
-
-      if (status != GIMP_PDB_SUCCESS &&
-          status != GIMP_PDB_CANCEL)
-	{
-	  /* Please add error. (: %s) --bex */
-          g_message (_("Saving %s failed."), uri);
-	}
-      else
-        {
-	  file_dialog_hide (GTK_WIDGET (fs));
-        }
+      file_save_dialog_save_image (save_dialog,
+                                   the_gimage,
+                                   uri,
+                                   raw_filename,
+                                   save_file_proc,
+                                   set_uri);
 
       gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
     }
 }
 
+typedef struct _OverwriteData OverwriteData;
+
+struct _OverwriteData
+{
+  GtkWidget *save_dialog;
+  gchar     *uri;
+  gchar     *raw_filename;
+};
+
 static void
-file_overwrite (const gchar *uri,
-		const gchar *raw_filename)
+file_save_overwrite (GtkWidget   *save_dialog,
+                     const gchar *uri,
+                     const gchar *raw_filename)
 {
   OverwriteData *overwrite_data;
   GtkWidget     *query_box;
@@ -432,6 +362,7 @@ file_overwrite (const gchar *uri,
 
   overwrite_data = g_new0 (OverwriteData, 1);
 
+  overwrite_data->save_dialog  = save_dialog;
   overwrite_data->uri          = g_strdup (uri);
   overwrite_data->raw_filename = g_strdup (raw_filename);
 
@@ -445,18 +376,20 @@ file_overwrite (const gchar *uri,
 				      overwrite_text,
 				      GTK_STOCK_YES, GTK_STOCK_NO,
 				      NULL, NULL,
-				      file_overwrite_callback,
+				      file_save_overwrite_callback,
 				      overwrite_data);
 
   g_free (overwrite_text);
 
   gtk_widget_show (query_box);
+
+  gtk_widget_set_sensitive (save_dialog, FALSE);
 }
 
 static void
-file_overwrite_callback (GtkWidget *widget,
-			 gboolean   overwrite,
-			 gpointer   data)
+file_save_overwrite_callback (GtkWidget *widget,
+                              gboolean   overwrite,
+                              gpointer   data)
 {
   OverwriteData *overwrite_data;
 
@@ -464,31 +397,46 @@ file_overwrite_callback (GtkWidget *widget,
 
   if (overwrite)
     {
-      GimpPDBStatusType status;
-
-      status = file_save (the_gimage,
-                          overwrite_data->uri,
-                          overwrite_data->raw_filename,
-                          save_file_proc,
-                          GIMP_RUN_INTERACTIVE,
-                          set_uri);
-
-      if (status != GIMP_PDB_SUCCESS &&
-          status != GIMP_PDB_CANCEL)
-        {
-	  /* Another error required. --bex */
-          g_message (_("Saving '%s' failed."), overwrite_data->uri);
-        }
-      else
-	{
-	  file_dialog_hide (GTK_WIDGET (filesave));
-	}
+      file_save_dialog_save_image (overwrite_data->save_dialog,
+                                   the_gimage,
+                                   overwrite_data->uri,
+                                   overwrite_data->raw_filename,
+                                   save_file_proc,
+                                   set_uri);
     }
 
-  /* always make file save dialog sensitive */
-  gtk_widget_set_sensitive (GTK_WIDGET (filesave), TRUE);
+  gtk_widget_set_sensitive (overwrite_data->save_dialog, TRUE);
 
   g_free (overwrite_data->uri);
   g_free (overwrite_data->raw_filename);
   g_free (overwrite_data);
+}
+
+static void
+file_save_dialog_save_image (GtkWidget     *save_dialog,
+                             GimpImage     *gimage,
+                             const gchar   *uri,
+                             const gchar   *raw_filename,
+                             PlugInProcDef *save_proc,
+                             gboolean       set_uri)
+{
+  GimpPDBStatusType status;
+
+  status = file_save (gimage,
+                      uri,
+                      raw_filename,
+                      save_proc,
+                      GIMP_RUN_INTERACTIVE,
+                      set_uri);
+
+  if (status != GIMP_PDB_SUCCESS &&
+      status != GIMP_PDB_CANCEL)
+    {
+      /* Another error required. --bex */
+      g_message (_("Saving '%s' failed."), uri);
+    }
+  else
+    {
+      file_dialog_hide (save_dialog);
+    }
 }

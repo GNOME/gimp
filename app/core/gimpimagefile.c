@@ -63,6 +63,7 @@
 #define TAG_THUMB_IMAGE_WIDTH  "tEXt::Thumb::Image::Width"
 #define TAG_THUMB_IMAGE_HEIGHT "tEXt::Thumb::Image::Height"
 #define TAG_THUMB_GIMP_TYPE    "tEXt::Thumb::X-GIMP::Type"
+#define TAG_THUMB_GIMP_LAYERS  "tEXt::Thumb::X-GIMP::Layers"
 
 
 enum
@@ -93,7 +94,8 @@ static void          gimp_imagefile_set_info        (GimpImagefile  *imagefile,
                                                      gint            width,
                                                      gint            height,
                                                      gint            size,
-                                                     GimpImageType   type);
+                                                     GimpImageType   type,
+                                                     gint            n_layers);
 static TempBuf     * gimp_imagefile_get_new_preview (GimpViewable   *viewable,
                                                      gint            width,
                                                      gint            height);
@@ -188,6 +190,7 @@ gimp_imagefile_init (GimpImagefile *imagefile)
   imagefile->height      = -1;
   imagefile->size        = -1;
   imagefile->type        = -1;
+  imagefile->n_layers    = -1;
   imagefile->description = NULL;
   imagefile->image_state = GIMP_IMAGEFILE_STATE_UNKNOWN;
   imagefile->image_mtime = 0;
@@ -372,6 +375,7 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile)
             gchar         *w_str;
             gchar         *h_str;
             gchar         *s_str;
+            gchar         *l_str;
             GError        *error = NULL;
 
             type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (gimp_image_base_type (gimage));
@@ -387,6 +391,7 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile)
             w_str = g_strdup_printf ("%d",  gimage->width);
             h_str = g_strdup_printf ("%d",  gimage->height);
             s_str = g_strdup_printf ("%ld", size);
+            l_str = g_strdup_printf ("%d",  gimage->layers->num_children);
 
             if (! gdk_pixbuf_save (pixbuf, thumb_name, "png", &error,
                                    TAG_DESCRIPTION,        desc,
@@ -397,6 +402,7 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile)
                                    TAG_THUMB_IMAGE_WIDTH,  w_str,
                                    TAG_THUMB_IMAGE_HEIGHT, h_str,
                                    TAG_THUMB_GIMP_TYPE,    type_str,
+                                   TAG_THUMB_GIMP_LAYERS,  l_str,
                                    NULL))
               {
                 g_message (_("Couldn't write thumbnail for '%s'\nas '%s'.\n%s"), 
@@ -409,6 +415,7 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile)
             g_free (w_str);
             g_free (h_str);
             g_free (s_str);
+            g_free (l_str);
           }
 
           g_object_unref (G_OBJECT (pixbuf));
@@ -438,7 +445,7 @@ gimp_imagefile_name_changed (GimpObject *object)
   imagefile->thumb_state = GIMP_IMAGEFILE_STATE_UNKNOWN;
   imagefile->thumb_mtime = 0;
 
-  gimp_imagefile_set_info (imagefile, TRUE, -1, -1, -1, -1);
+  gimp_imagefile_set_info (imagefile, TRUE, -1, -1, -1, -1, -1);
 }
 
 static void
@@ -447,19 +454,22 @@ gimp_imagefile_set_info (GimpImagefile *imagefile,
                          gint           width,
                          gint           height,
                          gint           size,
-                         GimpImageType  type)
+                         GimpImageType  type,
+                         gint           n_layers)
 {
   gboolean changed;
 
-  changed = (imagefile->width  != width  ||
-             imagefile->height != height ||
-             imagefile->size   != size   ||
-             imagefile->type   != type);
+  changed = (imagefile->width    != width  ||
+             imagefile->height   != height ||
+             imagefile->size     != size   ||
+             imagefile->type     != type   ||
+             imagefile->n_layers != n_layers);
 
-  imagefile->width  = width;
-  imagefile->height = height;
-  imagefile->size   = size;
-  imagefile->type   = type;
+  imagefile->width    = width;
+  imagefile->height   = height;
+  imagefile->size     = size;
+  imagefile->type     = type;
+  imagefile->n_layers = n_layers;
 
   if (imagefile->description)
     {
@@ -482,6 +492,7 @@ gimp_imagefile_set_info_from_pixbuf (GimpImagefile *imagefile,
   gint          img_height = -1;
   gint          img_size   = -1;
   GimpImageType img_type   = -1;
+  gint          img_layers = -1;
 
   option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_IMAGE_WIDTH);
   if (!option || sscanf (option, "%d", &img_width) != 1)
@@ -508,8 +519,13 @@ gimp_imagefile_set_info_from_pixbuf (GimpImagefile *imagefile,
         img_type = enum_value->value;
     }
 
+  option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_GIMP_LAYERS);
+  if (!option || sscanf (option, "%d", &img_layers) != 1)
+    img_size = -1;
+
   gimp_imagefile_set_info (imagefile, FALSE,
-                           img_width, img_height, img_size, img_type);
+                           img_width, img_height, img_size,
+                           img_type, img_layers);
 }
 
 static TempBuf *
@@ -593,6 +609,27 @@ gimp_imagefile_get_description (GimpImagefile *imagefile)
 
               g_string_append (str, size);
               g_free (size);
+            }
+
+          if (imagefile->n_layers > -1)
+            {
+              gchar *n_layers;
+
+              if (imagefile->n_layers == 1)
+                n_layers = g_strdup_printf (_("%d Layer"), imagefile->n_layers);
+              else
+                n_layers = g_strdup_printf (_("%d Layers"), imagefile->n_layers);
+
+              if (str->len)
+                {
+                  if (imagefile->size > -1)
+                    g_string_append_len (str, ", ", 2);
+                  else
+                    g_string_append_len (str, "\n", 1);
+               }
+
+              g_string_append (str, n_layers);
+              g_free (n_layers);
             }
 
           imagefile->static_desc = FALSE;
@@ -900,7 +937,7 @@ gimp_imagefile_read_xv_thumb (GimpImagefile *imagefile)
           img_height = 0;
         }
       gimp_imagefile_set_info (imagefile, FALSE,
-                               img_width, img_height, -1, -1);
+                               img_width, img_height, -1, -1, -1);
 
       g_free (image_info);
     }
