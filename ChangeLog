@@ -1,3 +1,9 @@
+2004-05-15  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpcurvestool.c: fixed position of vertical line
+	indicating the picked color. Patch from William Skaggs and
+	Søren Wedel Nielsen, merged from HEAD branch. Fixes bug #142506.
+
 2004-05-11  Sven Neumann  <sven@gimp.org>
 
 	* docs/gimptool.1.in: fixed spelling, merge from HEAD.
