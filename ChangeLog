@@ -1,3 +1,11 @@
+2000-05-12  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimp.c (gimp_plugin_io_error_handler): fixed a
+	compiler warning about a missing return.
+
+	Slightly changed the messages that gimp<->plugin use different
+	protocol versions and a s/sprintf/g_snprintf/.
+
 2000-05-12  Sven Neumann  <sven@gimp.org>
 
 	* INSTALL: mention that gtk+ version 1.2.7 or higher is mandatory

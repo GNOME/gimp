@@ -1232,6 +1232,9 @@ gimp_plugin_io_error_handler (GIOChannel   *channel,
 {
   g_print ("%s: fatal error: GIMP crashed\n", progname);
   gimp_quit ();
+
+  /* never reached */
+  return TRUE;
 }
 
 static int
@@ -1352,14 +1355,14 @@ gimp_config (GPConfig *config)
 
   if (config->version < GP_VERSION)
     {
-      g_message ("%s: the gimp is using an older version of the "
-		 "plug-in protocol than this plug-in\n", progname);
+      g_message ("%s:\nThe GIMP is using an older version of the "
+		 "plug-in protocol than this plug-in.", progname);
       gimp_quit ();
     }
   else if (config->version > GP_VERSION)
     {
-      g_message ("%s: the gimp is using a newer version of the "
-		 "plug-in protocol than this plug-in\n", progname);
+      g_message ("%s:\nThe GIMP is using a newer version of the "
+		 "plug-in protocol than this plug-in.", progname);
       gimp_quit ();
     }
 
@@ -1385,9 +1388,9 @@ gimp_config (GPConfig *config)
        */
       gchar fileMapName[128];
       gint tileByteSize = _gimp_tile_width * _gimp_tile_height * 4;
-      
+
       /* From the id, derive the file map name */
-      sprintf(fileMapName, "GIMP%d.SHM", _shm_ID);
+      g_snprintf (fileMapName, sizeof (fileMapName), "GIMP%d.SHM", _shm_ID);
 
       /* Open the file mapping */
       shm_handle = OpenFileMapping (FILE_MAP_ALL_ACCESS,
