@@ -14,3 +14,4 @@ EXPORTS
 	gimp_tool_motion
 	gimp_tool_oper_update
 	gimp_tool_set_cursor
+	gimp_transform_grid_type_get_type

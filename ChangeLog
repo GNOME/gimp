@@ -1,3 +1,12 @@
+2003-02-19  Tor Lillqvist  <tml@iki.fi>
+
+	* libgimpbase/gimpbase.def: Add gimp_utf8_strtrim. Sort. Remove
+	commented-out entries.
+
+	* libgimpproxy/Makefile.am: On Win32, add libgimpbase to LIBADD.
+
+	* libgimptool/gimptool.def: Add gimp_transform_grid_type_get_type.
+
 2003-02-19  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimppropwidgets.[ch]: added a new widget constructor

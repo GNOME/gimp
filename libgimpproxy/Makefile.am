@@ -2,6 +2,7 @@
 
 if PLATFORM_WIN32
 no_undefined = -no-undefined
+conditional_libgimpbase_la = ../libgimpbase/libgimpbase-1.3.la
 endif
 
 if OS_WIN32
@@ -67,7 +68,7 @@ libgimpproxy_1_3_la_LDFLAGS = \
 	$(no_undefined) \
 	$(libgimpproxy_export_symbols)
 
-libgimpproxy_1_3_la_LIBADD = $(GLIB_LIBS) 
+libgimpproxy_1_3_la_LIBADD = $(conditional_libgimpbase_la) $(GLIB_LIBS) 
 
 libgimpproxy_1_3_la_DEPENDENCIES = $(gimpproxy_def)
 
