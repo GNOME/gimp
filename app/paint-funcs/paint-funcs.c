@@ -477,9 +477,9 @@ paint_funcs_setup ()
     }
 
 /*   for (j = 0; j < 255; j++) */
-/*     {    //rows */
+/*     {    rows */
 /*       for (k = 0; k < 255; k++) */
-/* 	{   //column */
+/* 	{   column */
 /* 	  printf ("%d",add_lut[j][k]); */
 /* 	  printf(" "); */
 /* 	} */
@@ -539,44 +539,74 @@ color_pixels (unsigned char *dest,
      Is this safe to assume?  Lets find out.
      This is 4-7X as fast as the simple version.
      */
-  register unsigned char c0, c1, c2;
+  register unsigned char c0, c1, c2, c3;
+
+#if !defined(sparc) && !defined(__sparc__)
   register guint32 *longd, longc;
   register guint16 *shortd, shortc;
-
+#endif /* !sparc && !__sparc__ */
+  
   switch (bytes)
   {
    case 1:
      memset(dest, *color, w);
      break;
+
    case 2:
+#if defined(sparc) || defined(__sparc__)
+     c0 = color[0];
+     c1 = color[1];
+     while (w--)
+       {
+	 dest[0] = c0;
+	 dest[1] = c1;
+	 dest += 2;
+       }
+#else
      shortc = ((guint16 *)color)[0];
      shortd = (guint16 *)dest;
      while (w--)
-     {
-       *shortd = shortc;
-       shortd++;
-     }
+       {
+	 *shortd = shortc;
+	 shortd++;
+       }
+#endif /* sparc || __sparc__ */
      break;
    case 3:
      c0 = color[0];
      c1 = color[1];
      c2 = color[2];
      while (w--)
-     {
-       dest[0] = c0;
-       dest[1] = c1;
-       dest[2] = c2;
-       dest += 3;
-     }
+       {
+	 dest[0] = c0;
+	 dest[1] = c1;
+	 dest[2] = c2;
+	 dest += 3;
+       }
      break;
    case 4:
+#if defined(sparc) || defined(__sparc__)
+     c0 = color[0];
+     c1 = color[1];
+     c2 = color[2];
+     c3 = color[3];
+     while (w--)
+       {
+	 dest[0] = c0;
+	 dest[1] = c1;
+	 dest[2] = c2;
+	 dest[3] = c3;
+	 dest += 4;
+       }
+#else
      longc = ((guint32 *)color)[0];
      longd = (guint32 *)dest;
      while (w--)
-     {
-       *longd = longc;
-       longd++;
-     }
+       {
+	 *longd = longc;
+	 longd++;
+       }
+#endif /* sparc || __sparc__ */
      break;
    default:
      while (w--)
