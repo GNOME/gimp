@@ -38,7 +38,7 @@
 
 #include "config/gimprc.h"
 
-#include "core/gimpunits.h"
+#include "widgets/gimppropwidgets.h"
 
 #include "gui.h"
 #include "resolution-calibrate-dialog.h"
@@ -81,9 +81,7 @@ static void     user_install_cancel_callback   (GtkWidget *widget,
 
 static gboolean user_install_run               (void);
 static void     user_install_tuning            (GimpRc    *gimprc);
-static void     user_install_tuning_done       (GimpRc    *gimprc);
 static void     user_install_resolution        (GimpRc    *gimprc);
-static void     user_install_resolution_done   (GimpRc    *gimprc);
 
 
 /*  private stuff  */
@@ -276,7 +274,8 @@ tree_items[] =
        "installation when searching for data.") 
   }  
 };
-static gint num_tree_items = sizeof (tree_items) / sizeof (tree_items[0]);
+static gint num_tree_items = G_N_ELEMENTS (tree_items);
+
 
 static void
 user_install_notebook_set_page (GtkNotebook *notebook,
@@ -352,13 +351,10 @@ user_install_continue_callback (GtkWidget *widget,
       break;
 
     case 3:
-      user_install_tuning_done (gimprc);
       user_install_resolution (gimprc);
       break;
 
     case 4:
-      user_install_resolution_done (gimprc);
-
       gimp_rc_save (gimprc);
       
       g_object_unref (G_OBJECT (title_style));
@@ -391,7 +387,7 @@ user_install_cancel_callback (GtkWidget *widget,
 
   gtk_widget_destroy (continue_button);
   user_install_notebook_set_page (GTK_NOTEBOOK (notebook), EEK_PAGE);
-  timeout = gtk_timeout_add (1024, (GtkFunction) exit, NULL);
+  timeout = g_timeout_add (1024, (GSourceFunc) exit, NULL);
 }
 
 static gboolean
@@ -904,44 +900,44 @@ user_install_dialog_create (const gchar *alternate_system_gimprc,
 
 #ifdef G_OS_WIN32
 
-static char *
-quote_spaces (char *string)
+static gchar *
+quote_spaces (const gchar *string)
 {
-  int nspaces = 0;
-  char *p = string, *q, *new;
-
-  while (*p)
+  const gchar *p;
+  gchar       *q;
+  gchar       *new;
+  gint         nspaces;
+  
+  for (p = string, nspaces = 0; *p; p++)
     {
       if (*p == ' ')
 	nspaces++;
-      p++;
     }
 
   if (nspaces == 0)
     return g_strdup (string);
 
-  new = g_malloc (strlen (string) + nspaces*2 + 1);
+  new = g_new (gchar, strlen (string) + nspaces * 2 + 1);
 
-  p = string;
-  q = new;
-  while (*p)
-    {
-      if (*p == ' ')
-	{
-	  *q++ = '"';
-	  *q++ = ' ';
-	  *q++ = '"';
-	}
-      else
+  for (p = string, q = new; *p; p++)
+    if (*p == ' ')
+      {
+	*q++ = '"';
+	*q++ = ' ';
+	*q++ = '"';
+      }
+    else
+      {	  
 	*q++ = *p;
-      p++;
-    }
+      }
+
   *q = '\0';
 
   return new;
 }
 
 #endif
+
 
 static gboolean
 user_install_run (void)
@@ -1106,25 +1102,19 @@ user_install_run (void)
   else
     {
       add_label (GTK_BOX (log_page),
-		 _("Installation failed.  Contact system administrator."));
+		 _("Installation failed.  Contact your system administrator."));
     }
 
   return executable;
 }
 
-static GtkObject *tile_cache_adj    = NULL;
-static GtkWidget *swap_path_filesel = NULL;
-static GtkWidget *xserver_toggle    = NULL;
-static GtkWidget *resolution_entry  = NULL;
-
 static void
 user_install_tuning (GimpRc *gimprc)
 {
-  GimpBaseConfig *config = GIMP_BASE_CONFIG (gimprc);
-  GtkWidget      *hbox;
-  GtkWidget      *sep;
-  GtkWidget      *label;
-  GtkWidget      *memsize;
+  GtkWidget *hbox;
+  GtkWidget *sep;
+  GtkWidget *label;
+  GtkWidget *entry;
 
   /*  tile cache size  */
   add_label (GTK_BOX (tuning_page),
@@ -1136,11 +1126,9 @@ user_install_tuning (GimpRc *gimprc)
   gtk_box_pack_start (GTK_BOX (tuning_page), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
   
-  tile_cache_adj = gtk_adjustment_new (config->tile_cache_size, 
-				       0, G_MAXULONG, 1.0, 1.0, 0.0);
-  memsize = gimp_memsize_entry_new (GTK_ADJUSTMENT (tile_cache_adj));
-  gtk_box_pack_end (GTK_BOX (hbox), memsize, FALSE, FALSE, 0);
-  gtk_widget_show (memsize);
+  entry = gimp_prop_memsize_entry_new (G_OBJECT (gimprc), "tile-cache-size");
+  gtk_box_pack_end (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
+  gtk_widget_show (entry);
 
   label = gtk_label_new (_("Tile Cache Size:"));
   PAGE_STYLE (label);
@@ -1162,34 +1150,16 @@ user_install_tuning (GimpRc *gimprc)
   gtk_box_pack_start (GTK_BOX (tuning_page), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
   
-  swap_path_filesel = gimp_file_selection_new (_("Select Swap Dir"),
-					       config->swap_path,
-					       TRUE, TRUE);
-  gtk_box_pack_end (GTK_BOX (hbox), swap_path_filesel, FALSE, FALSE, 0);
-  gtk_widget_show (swap_path_filesel);
+  entry = gimp_prop_file_entry_new (G_OBJECT (gimprc), "swap-path",
+				    _("Select Swap Dir"),
+				    TRUE, TRUE);
+  gtk_box_pack_end (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
+  gtk_widget_show (entry);
 
   label = gtk_label_new (_("Swap Folder:"));
   PAGE_STYLE (label);
   gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
-}
-
-static void
-user_install_tuning_done (GimpRc *gimprc)
-{
-  gulong    tile_cache_size;
-  gchar    *swap_path;
-
-  tile_cache_size = GTK_ADJUSTMENT (tile_cache_adj)->value;
-  swap_path = gimp_file_selection_get_filename (GIMP_FILE_SELECTION (swap_path_filesel));
-
-  g_object_set (G_OBJECT (gimprc),
-		"tile-cache-size", tile_cache_size,
-		"swap-path",       swap_path,
-		NULL);
-  
-  g_free (swap_path);
-
 }
 
 static void
@@ -1205,11 +1175,12 @@ user_install_resolution_calibrate (GtkWidget *button,
   pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
   g_free (filename);
 
-  resolution_calibrate_dialog (resolution_entry, 
+  resolution_calibrate_dialog (GTK_WIDGET (data), 
                                pixbuf,
 			       title_style,
 			       page_style,
 			       G_CALLBACK (user_install_corner_expose));
+
   if (pixbuf)
     g_object_unref (pixbuf);
 }
@@ -1219,12 +1190,14 @@ user_install_resolution (GimpRc *gimprc)
 {
   GimpDisplayConfig *config = GIMP_DISPLAY_CONFIG (gimprc);
   GtkWidget         *hbox;
+  GtkWidget         *entry;
   GtkWidget         *sep;
   GimpChainButton   *chain;
+  GtkWidget         *toggle;
   GtkWidget         *button;
   GList             *list; 
-  gchar             *pixels_per_unit;
   gdouble            xres, yres;
+  gchar             *pixels_per_unit;
   gchar             *str;
 
   gui_get_screen_resolution (&xres, &yres);
@@ -1237,14 +1210,19 @@ user_install_resolution (GimpRc *gimprc)
   gtk_box_pack_start (GTK_BOX (resolution_page), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  str = g_strdup_printf (_("Get Resolution from windowing system (Currently %d x %d dpi)"),
-			 ROUND (xres), ROUND (yres));
-  xserver_toggle = gtk_check_button_new_with_label (str);
+  str = g_strdup_printf
+    (_("Get Resolution from windowing system (Currently %d x %d dpi)"),
+     ROUND (xres), ROUND (yres));
+
+  toggle = 
+    gimp_prop_check_button_new (G_OBJECT (gimprc),
+				"monitor-resolution-from-windowing-system",
+				str);
   g_free (str);
 
-  PAGE_STYLE (GTK_BIN (xserver_toggle)->child);
-  gtk_box_pack_end (GTK_BOX (hbox), xserver_toggle, FALSE, FALSE, 0);
-  gtk_widget_show (xserver_toggle);
+  PAGE_STYLE (GTK_BIN (toggle)->child);
+  gtk_box_pack_end (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
+  gtk_widget_show (toggle);
 
   sep = gtk_hseparator_new ();
   gtk_box_pack_start (GTK_BOX (resolution_page), sep, FALSE, FALSE, 2);
@@ -1258,35 +1236,29 @@ user_install_resolution (GimpRc *gimprc)
   gtk_widget_show (hbox);
   
   pixels_per_unit = g_strconcat (_("Pixels"), "/%s", NULL);
-  resolution_entry =
-    gimp_coordinates_new (GIMP_UNIT_INCH, pixels_per_unit,
-			  FALSE, FALSE, 10,
-			  GIMP_SIZE_ENTRY_UPDATE_RESOLUTION,
-			  abs (config->monitor_xres - 
-			       config->monitor_yres) < GIMP_MIN_RESOLUTION,
-			  FALSE,
-			  _("Monitor Resolution X:"),
-			  config->monitor_xres,
-			  1.0,
-			  GIMP_MIN_RESOLUTION,
-			  GIMP_MAX_RESOLUTION,
-			  0, 0,
-			  _("Y:"),
-			  config->monitor_yres,
-			  1.0,
-			  GIMP_MIN_RESOLUTION,
-			  GIMP_MAX_RESOLUTION,
-			  0, 0);
-  g_free (pixels_per_unit);
+  
+  entry = gimp_prop_coordinates_new (G_OBJECT (gimprc),
+				     "monitor-xresolution",
+				     "monitor-yresolution",
+				     NULL,
+				     pixels_per_unit,
+				     GIMP_SIZE_ENTRY_UPDATE_RESOLUTION,
+				     0.0, 0.0, TRUE);
 
-  chain = GIMP_COORDINATES_CHAINBUTTON (resolution_entry);
+  g_free (pixels_per_unit);
+  
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
+				_("Horizontal"), 0, 1, 0.0);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
+				_("Vertical"),   0, 2, 0.0);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
+				_("dpi"),        1, 4, 0.0);
+
+  chain = GIMP_COORDINATES_CHAINBUTTON (entry);
   PAGE_STYLE (GTK_WIDGET (chain->line1));
   PAGE_STYLE (GTK_WIDGET (chain->line2));
-  g_object_set_data (G_OBJECT (resolution_entry), "chain_button", chain);
 
-  for (list = GTK_TABLE (resolution_entry)->children;
-       list;
-       list = g_list_next (list))
+  for (list = GTK_TABLE (entry)->children; list; list = g_list_next (list))
     {
       GtkTableChild *child = (GtkTableChild *) list->data;
 
@@ -1294,8 +1266,9 @@ user_install_resolution (GimpRc *gimprc)
 	PAGE_STYLE (GTK_WIDGET (child->widget));
     }
 
-  gtk_box_pack_end (GTK_BOX (hbox), resolution_entry, FALSE, FALSE, 0);
-  gtk_widget_show (resolution_entry);
+  gtk_box_pack_end (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
+  gtk_widget_show (entry);
+  gtk_widget_set_sensitive (entry, !config->monitor_res_from_gdk);
 
   sep = gtk_hseparator_new ();
   gtk_box_pack_start (GTK_BOX (resolution_page), sep, FALSE, FALSE, 2);
@@ -1312,42 +1285,18 @@ user_install_resolution (GimpRc *gimprc)
   button = gtk_button_new_with_label (_("Calibrate"));
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 4, 0);
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  g_signal_connect (G_OBJECT (button), "clicked",
-                    G_CALLBACK (user_install_resolution_calibrate),
-                    NULL);
+  gtk_widget_set_sensitive (button, !config->monitor_res_from_gdk);
   gtk_widget_show (button);
   
-  g_object_set_data (G_OBJECT (xserver_toggle), "inverse_sensitive",
-                     resolution_entry);
-  g_object_set_data (G_OBJECT (resolution_entry), "inverse_sensitive",
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (user_install_resolution_calibrate),
+                    entry);
+
+  g_object_set_data (G_OBJECT (toggle), "inverse_sensitive",
+                     entry);
+  g_object_set_data (G_OBJECT (entry), "inverse_sensitive",
                      button);
-  g_signal_connect (G_OBJECT (xserver_toggle), "toggled",
+  g_signal_connect (G_OBJECT (toggle), "toggled",
                     G_CALLBACK (gimp_toggle_button_sensitive_update),
                     NULL);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (xserver_toggle),
-				config->monitor_res_from_gdk);
-}
-
-static void
-user_install_resolution_done (GimpRc *gimprc)
-{
-  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (xserver_toggle)))
-    {
-      g_object_set (G_OBJECT (gimprc),
-                    "monitor-resolution-from-windowing-system", TRUE,
-                    NULL);
-    }
-  else
-    {
-      gdouble xres, yres;
-
-      xres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY(resolution_entry), 0);
-      yres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY(resolution_entry), 1);
-
-      g_object_set (G_OBJECT (gimprc),
-                    "monitor-xresolution",                      xres,
-                    "monitor-yresolution",                      yres,
-                    "monitor-resolution-from-windowing-system", FALSE,
-                    NULL);
-    }
 }

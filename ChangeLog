@@ -1,3 +1,11 @@
+2002-11-21  Sven Neumann  <neo@wintermute>
+
+	* app/gui/preferences-dialog.c (prefs_dialog_new): don't set the
+	default resolution from the monitor resolution entry.
+
+	* app/gui/user-install-dialog.c: use the new GimpPropWidgets. The
+	monitor resolution setup may need some more tweaking ...
+
 2002-11-20  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/whirlpinch.c
