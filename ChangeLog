@@ -1,5 +1,28 @@
 2001-02-19  Michael Natterer  <mitch@gimp.org>
 
+	* app/commands.[ch]
+	* app/menus.c: first version of the new layers and channels dialogs.
+
+	* app/gimpcontainergridview.c
+	* app/gimpcontainerlistview.c: allow creation with a NULL container.
+
+	* app/gimpdnd.[ch]: added generic DND functions for all drawable
+	types (not just setting the DND icon). Started to remove code
+	duplication.
+
+	* app/gimpdrawablepreview.c: with some magic calculations and ugly
+	assumptions the drawable previews now look exactly like in the old
+	L&C dialog.
+
+	* app/gimpimagepreview.c: no need to say "return" at the end of a
+	void function.
+
+	* app/gimppreview.[ch]: added the "is_popup" boolean also to the
+	default constructor. Call gimp_preview_set_viewable() before
+	calculating the preview size.
+
+2001-02-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am
 	* app/gimppalette-import.[ch]: new files. The import functions
 	stripped from all UI crap.

@@ -140,6 +140,39 @@ void  gimp_dnd_viewable_dest_unset     (GtkWidget               *widget,
 					GtkType                  type);
 
 
+/*  drawable dnd functions  */
+
+typedef void           (* GimpDndDropDrawableFunc) (GtkWidget    *widget,
+						    GimpDrawable *drawable,
+						    gpointer      data);
+typedef GimpDrawable * (* GimpDndDragDrawableFunc) (GtkWidget    *widget,
+						    gpointer      data);
+
+void  gimp_dnd_layer_source_set      (GtkWidget               *widget,
+				      GimpDndDragDrawableFunc  get_drawable_func,
+				      gpointer                 data);
+void  gimp_dnd_layer_dest_set        (GtkWidget               *widget,
+				      GimpDndDropDrawableFunc  set_drawable_func,
+				      gpointer                 data);
+void  gimp_dnd_layer_dest_unset      (GtkWidget               *widget);
+
+void  gimp_dnd_channel_source_set    (GtkWidget               *widget,
+				      GimpDndDragDrawableFunc  get_drawable_func,
+				      gpointer                 data);
+void  gimp_dnd_channel_dest_set      (GtkWidget               *widget,
+				      GimpDndDropDrawableFunc  set_drawable_func,
+				      gpointer                 data);
+void  gimp_dnd_channel_dest_unset    (GtkWidget               *widget);
+
+void  gimp_dnd_layer_mask_source_set (GtkWidget               *widget,
+				      GimpDndDragDrawableFunc  get_drawable_func,
+				      gpointer                 data);
+void  gimp_dnd_layer_mask_dest_set   (GtkWidget               *widget,
+				      GimpDndDropDrawableFunc  set_drawable_func,
+				      gpointer                 data);
+void  gimp_dnd_layer_mask_dest_unset (GtkWidget               *widget);
+
+
 /*  brush dnd functions  */
 
 typedef void        (* GimpDndDropBrushFunc) (GtkWidget *widget,

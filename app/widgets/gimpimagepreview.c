@@ -171,8 +171,6 @@ gimp_image_preview_render (GimpPreview *preview)
 				 -1);
 
   temp_buf_free (render_buf);
-
-  return;
 }
 
 static GtkWidget *

@@ -142,8 +142,13 @@ void dialogs_test_pattern_container_grid_view_cmd_callback  (GtkWidget *, gpoint
 void dialogs_test_gradient_container_grid_view_cmd_callback (GtkWidget *, gpointer);
 void dialogs_test_palette_container_grid_view_cmd_callback  (GtkWidget *, gpointer);
 
-void dialogs_test_multi_container_list_view_cmd_callback (GtkWidget *, gpointer);
-void dialogs_test_multi_container_grid_view_cmd_callback   (GtkWidget *, gpointer);
+void dialogs_test_multi_container_list_view_cmd_callback    (GtkWidget *, gpointer);
+void dialogs_test_multi_container_grid_view_cmd_callback    (GtkWidget *, gpointer);
+
+void dialogs_test_layer_list_cmd_callback                   (GtkWidget *, gpointer);
+void dialogs_test_layer_grid_cmd_callback                   (GtkWidget *, gpointer);
+void dialogs_test_channel_list_cmd_callback                 (GtkWidget *, gpointer);
+void dialogs_test_channel_grid_cmd_callback                 (GtkWidget *, gpointer);
 
 void help_help_cmd_callback         (GtkWidget *, gpointer);
 void help_context_help_cmd_callback (GtkWidget *, gpointer);

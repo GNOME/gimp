@@ -177,8 +177,7 @@ gimp_container_grid_view_new (GimpContainer *container,
   GimpContainerView     *view;
   gint                   window_border;
 
-  g_return_val_if_fail (container != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
+  g_return_val_if_fail (! container || GIMP_IS_CONTAINER (container), NULL);
   g_return_val_if_fail (! context || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (preview_size  > 0 && preview_size  <= 64, NULL);
   g_return_val_if_fail (min_items_x > 0 && min_items_x <= 64, NULL);
@@ -199,7 +198,8 @@ gimp_container_grid_view_new (GimpContainer *container,
 			(preview_size + 2) * min_items_x + window_border,
 			(preview_size + 2) * min_items_y + window_border);
 
-  gimp_container_view_set_container (view, container);
+  if (container)
+    gimp_container_view_set_container (view, container);
 
   gimp_container_view_set_context (view, context);
 

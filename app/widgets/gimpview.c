@@ -275,7 +275,8 @@ gimp_preview_destroy (GtkObject *object)
 GtkWidget *
 gimp_preview_new (GimpViewable *viewable,
 		  gint          size,
-		  gint          border_width)
+		  gint          border_width,
+		  gboolean      is_popup)
 {
   GimpPreview *preview;
   gint         width, height;
@@ -314,13 +315,15 @@ gimp_preview_new (GimpViewable *viewable,
       preview = gtk_type_new (GIMP_TYPE_PREVIEW);
     }
 
+  preview->is_popup     = is_popup;
+  preview->border_width = border_width;
+
+  gimp_preview_set_viewable (preview, viewable);
+
   gimp_preview_get_size (preview, size, &width, &height);
 
   preview->width        = width;
   preview->height       = height;
-  preview->border_width = border_width;
-
-  gimp_preview_set_viewable (preview, viewable);
 
   gtk_preview_size (GTK_PREVIEW (preview),
 		    width  + 2 * border_width,

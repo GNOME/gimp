@@ -938,8 +938,8 @@ layers_previous_cmd_callback (GtkWidget *widget,
   current_layer =
     gimp_image_get_layer_index (gdisp->gimage, gdisp->gimage->active_layer);
 
-  new_layer = gimp_container_get_child_by_index (gdisp->gimage->layers, 
-						 current_layer - 1);
+  new_layer = (GimpLayer *) gimp_container_get_child_by_index (gdisp->gimage->layers, 
+							       current_layer - 1);
 
   if (new_layer)
     {
@@ -962,8 +962,8 @@ layers_next_cmd_callback (GtkWidget *widget,
   current_layer =
     gimp_image_get_layer_index (gdisp->gimage, gdisp->gimage->active_layer);
 
-  new_layer = gimp_container_get_child_by_index (gdisp->gimage->layers, 
-						 current_layer + 1);
+  new_layer = (GimpLayer *) gimp_container_get_child_by_index (gdisp->gimage->layers, 
+							       current_layer + 1);
 
   if (new_layer)
     {
@@ -1777,6 +1777,124 @@ dialogs_test_multi_container_grid_view_cmd_callback (GtkWidget *widget,
 			    global_brush_factory->container,
 			    gimp_context_get_user (),
 			    32);
+}
+
+static void
+layers_view_image_changed (GimpContext       *context,
+			   GimpImage         *gimage,
+			   GimpContainerView *view)
+{
+  gimp_container_view_set_container (view, gimage ? gimage->layers : NULL);
+}
+
+static void
+channels_view_image_changed (GimpContext       *context,
+			     GimpImage         *gimage,
+			     GimpContainerView *view)
+{
+  gimp_container_view_set_container (view, gimage ? gimage->channels : NULL);
+}
+
+static void
+drawable_view_new (GimpViewType   view_type,
+		   gchar         *title,
+		   gboolean       channels,
+		   GimpContext   *context)
+{
+  GimpImage *gimage;
+  GtkWidget *dialog;
+  GtkWidget *view;
+
+  if (view_type == GIMP_VIEW_TYPE_LIST)
+    {
+      view = gimp_container_list_view_new (NULL,
+					   NULL,
+					   preview_size,
+					   5, 5);
+    }
+  else
+    {
+      view = gimp_container_grid_view_new (NULL,
+					   NULL,
+					   preview_size,
+					   5, 5);
+    }
+
+  gimage = gimp_context_get_image (context);
+
+  if (channels)
+    {
+      if (gimage)
+	gimp_container_view_set_container (GIMP_CONTAINER_VIEW (view),
+					   gimage->channels);
+
+      gtk_signal_connect (GTK_OBJECT (context), "image_changed",
+			  GTK_SIGNAL_FUNC (channels_view_image_changed),
+			  view);
+    }
+  else
+    {
+      if (gimage)
+	gimp_container_view_set_container (GIMP_CONTAINER_VIEW (view),
+					   gimage->layers);
+
+      gtk_signal_connect (GTK_OBJECT (context), "image_changed",
+			  GTK_SIGNAL_FUNC (layers_view_image_changed),
+			  view);
+    }
+
+  dialog = gimp_dialog_new (title, "test",
+			    gimp_standard_help_func,
+			    NULL,
+			    GTK_WIN_POS_MOUSE,
+			    FALSE, TRUE, TRUE,
+
+			    "_delete_event_", gtk_widget_destroy,
+			    NULL, 1, NULL, TRUE, TRUE,
+
+			    NULL);
+
+  gtk_widget_hide (GTK_DIALOG (dialog)->action_area);
+  /*
+    gtk_widget_hide (GTK_WIDGET (g_list_nth_data (gtk_container_children (GTK_CONTAINER (GTK_BIN (dialog)->child)), 1)));
+  */
+
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), view);
+  gtk_widget_show (view);
+
+  gtk_widget_show (dialog);
+}
+
+void
+dialogs_test_layer_list_cmd_callback (GtkWidget *widget,
+				      gpointer   client_data)
+{
+  drawable_view_new (GIMP_VIEW_TYPE_LIST, "Layer List", FALSE,
+		     gimp_context_get_user ());
+}
+
+void
+dialogs_test_layer_grid_cmd_callback (GtkWidget *widget,
+				      gpointer   client_data)
+{
+  drawable_view_new (GIMP_VIEW_TYPE_GRID, "Layer Grid", FALSE,
+		     gimp_context_get_user ());
+}
+
+void
+dialogs_test_channel_list_cmd_callback (GtkWidget *widget,
+					gpointer   client_data)
+{
+  drawable_view_new (GIMP_VIEW_TYPE_LIST, "Channel List", TRUE,
+		     gimp_context_get_user ());
+}
+
+void
+dialogs_test_channel_grid_cmd_callback (GtkWidget *widget,
+					gpointer   client_data)
+{
+  drawable_view_new (GIMP_VIEW_TYPE_GRID, "Channel Grid", TRUE,
+		     gimp_context_get_user ());
 }
 
 /*****  Help  *****/

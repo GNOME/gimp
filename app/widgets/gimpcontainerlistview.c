@@ -174,8 +174,7 @@ gimp_container_list_view_new (GimpContainer *container,
   GimpContainerView     *view;
   gint                   window_border;
 
-  g_return_val_if_fail (container != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
+  g_return_val_if_fail (! container || GIMP_IS_CONTAINER (container), NULL);
   g_return_val_if_fail (! context || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (preview_size > 0 && preview_size <= 64, NULL);
   g_return_val_if_fail (min_items_x > 0 && min_items_x <= 64, NULL);
@@ -196,7 +195,8 @@ gimp_container_list_view_new (GimpContainer *container,
 			(preview_size + 2) * min_items_x + window_border,
 			(preview_size + 6) * min_items_y + window_border);
 
-  gimp_container_view_set_container (view, container);
+  if (container)
+    gimp_container_view_set_container (view, container);
 
   gimp_container_view_set_context (view, context);
 
@@ -224,7 +224,7 @@ gimp_container_list_view_insert_item (GimpContainerView *view,
   gtk_container_add (GTK_CONTAINER (list_item), hbox);
   gtk_widget_show (hbox);
 
-  preview = gimp_preview_new (viewable, view->preview_size, 1);
+  preview = gimp_preview_new (viewable, view->preview_size, 1, FALSE);
   gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
   gtk_widget_show (preview);
 

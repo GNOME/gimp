@@ -84,7 +84,8 @@ GtkType      gimp_preview_get_type         (void);
 
 GtkWidget *  gimp_preview_new              (GimpViewable  *viewable,
 					    gint           size,
-					    gint           border_width);
+					    gint           border_width,
+					    gboolean       is_popup);
 GtkWidget *  gimp_preview_new_full         (GimpViewable  *viewable,
 					    gint           width,
 					    gint           height,

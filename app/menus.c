@@ -154,33 +154,45 @@ static GimpItemFactoryEntry toolbox_entries[] =
     "file/dialogs/display_filters/display_filters.html", NULL },
 #endif /* DISPLAY_FILTERS */
 
-  { { "/File/Test Dialogs/List of all Images...", NULL, dialogs_test_image_container_list_view_cmd_callback, 0 },
+  { { N_("/File/Test Dialogs/Layer List..."), NULL, dialogs_test_layer_list_cmd_callback, 1 },
     NULL, NULL },
-  { { "/File/Test Dialogs/Grid of all Images...", NULL, dialogs_test_image_container_grid_view_cmd_callback, 0 },
+  { { N_("/File/Test Dialogs/Layer Grid..."), NULL, dialogs_test_layer_grid_cmd_callback, 1 },
     NULL, NULL },
-
-  { { "/File/Test Dialogs/---", NULL, NULL, 0, "<Separator>" },
+  { { N_("/File/Test Dialogs/Channel List..."), NULL, dialogs_test_channel_list_cmd_callback, 1 },
     NULL, NULL },
-
-  { { "/File/Test Dialogs/List of all Brushes...", NULL, dialogs_test_brush_container_list_view_cmd_callback, 0 },
-    NULL, NULL },
-  { { "/File/Test Dialogs/List of all Patterns...", NULL, dialogs_test_pattern_container_list_view_cmd_callback, 0 },
-    NULL, NULL },
-  { { "/File/Test Dialogs/List of all Gradients...", NULL, dialogs_test_gradient_container_list_view_cmd_callback, 0 },
-    NULL, NULL },
-  { { "/File/Test Dialogs/List of all Palettes...", NULL, dialogs_test_palette_container_list_view_cmd_callback, 0 },
+  { { N_("/File/Test Dialogs/Channel Grid..."), NULL, dialogs_test_channel_grid_cmd_callback, 1 },
     NULL, NULL },
 
   { { "/File/Test Dialogs/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
 
-  { { "/File/Test Dialogs/Grid of all Brushes...", NULL, dialogs_test_brush_container_grid_view_cmd_callback, 0 },
+  { { "/File/Test Dialogs/Images List...", NULL, dialogs_test_image_container_list_view_cmd_callback, 0 },
     NULL, NULL },
-  { { "/File/Test Dialogs/Grid of all Patterns...", NULL, dialogs_test_pattern_container_grid_view_cmd_callback, 0 },
+  { { "/File/Test Dialogs/Images Grid...", NULL, dialogs_test_image_container_grid_view_cmd_callback, 0 },
     NULL, NULL },
-  { { "/File/Test Dialogs/Grid of all Gradients...", NULL, dialogs_test_gradient_container_grid_view_cmd_callback, 0 },
+
+  { { "/File/Test Dialogs/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
-  { { "/File/Test Dialogs/Grid of all Palettes...", NULL, dialogs_test_palette_container_grid_view_cmd_callback, 0 },
+
+  { { "/File/Test Dialogs/Brushe List...", NULL, dialogs_test_brush_container_list_view_cmd_callback, 0 },
+    NULL, NULL },
+  { { "/File/Test Dialogs/Pattern List...", NULL, dialogs_test_pattern_container_list_view_cmd_callback, 0 },
+    NULL, NULL },
+  { { "/File/Test Dialogs/Gradient List...", NULL, dialogs_test_gradient_container_list_view_cmd_callback, 0 },
+    NULL, NULL },
+  { { "/File/Test Dialogs/Palette List...", NULL, dialogs_test_palette_container_list_view_cmd_callback, 0 },
+    NULL, NULL },
+
+  { { "/File/Test Dialogs/---", NULL, NULL, 0, "<Separator>" },
+    NULL, NULL },
+
+  { { "/File/Test Dialogs/Brushe Grid...", NULL, dialogs_test_brush_container_grid_view_cmd_callback, 0 },
+    NULL, NULL },
+  { { "/File/Test Dialogs/Pattern Grid...", NULL, dialogs_test_pattern_container_grid_view_cmd_callback, 0 },
+    NULL, NULL },
+  { { "/File/Test Dialogs/Gradient Grid...", NULL, dialogs_test_gradient_container_grid_view_cmd_callback, 0 },
+    NULL, NULL },
+  { { "/File/Test Dialogs/Palette Grid...", NULL, dialogs_test_palette_container_grid_view_cmd_callback, 0 },
     NULL, NULL },
 
   { { "/File/Test Dialogs/---", NULL, NULL, 0, "<Separator>" },
