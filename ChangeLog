@@ -1,5 +1,10 @@
 2003-07-24  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/gimpressionist/sizemap.c: commented out unused function
+	update_sizemap_dialog().
+
+2003-07-24  Sven Neumann  <sven@gimp.org>
+
 	* app/composite/Makefile.am: fixed build rules. There must not be
 	a dependency that causes gimp-composite-dispatch.[ch] to be
 	regenerated since we don't want to depend on Python for our build.

@@ -142,9 +142,9 @@ void updatesmvectorprev(void)
   guchar red[3] = {255,0,0};
   guchar white[3] = {255,255,255};
 
-  if (smvectprevbrightadjust) 
+  if (smvectprevbrightadjust)
     val = 1.0 - GTK_ADJUSTMENT(smvectprevbrightadjust)->value / 100.0;
-  else 
+  else
     val = 0.5;
 
   if(!ok || (val != lastval)) {
@@ -175,10 +175,10 @@ void updatesmvectorprev(void)
     gtk_preview_draw_row(GTK_PREVIEW(smvectorprev), &sbuffer.col[y*sbuffer.width*3], 0, y, OMWIDTH);
   gtk_widget_draw(smvectorprev,NULL);
 
-  gtk_widget_set_sensitive (prev_button, (numsmvect > 1));  
-  gtk_widget_set_sensitive (next_button, (numsmvect > 1));  
+  gtk_widget_set_sensitive (prev_button, (numsmvect > 1));
+  gtk_widget_set_sensitive (next_button, (numsmvect > 1));
   gtk_widget_set_sensitive (add_button, (numsmvect < MAXORIENTVECT));
-  gtk_widget_set_sensitive (kill_button, (numsmvect > 1));  
+  gtk_widget_set_sensitive (kill_button, (numsmvect > 1));
 }
 
 static gboolean smadjignore = FALSE;
@@ -226,7 +226,7 @@ static void smdeleteclick(GtkWidget *w, gpointer data)
 {
   int i;
 
-  for (i = selectedsmvector; i < numsmvect-1; i++) 
+  for (i = selectedsmvector; i < numsmvect-1; i++)
     {
       smvector[i] = smvector[i+1];
     }
@@ -298,7 +298,7 @@ static void smstrexpsmadjmove(GtkWidget *w, gpointer data)
 static void smapplyclick(GtkWidget *w, GtkWidget *win)
 {
   int i;
-  for (i = 0; i < numsmvect; i++) 
+  for (i = 0; i < numsmvect; i++)
     {
       pcvals.sizevector[i] = smvector[i];
     }
@@ -315,17 +315,17 @@ static void smokclick(GtkWidget *w, GtkWidget *win)
 
 void initsmvectors(void)
 {
-  if (pcvals.numsizevector) 
+  if (pcvals.numsizevector)
     {
       int i;
 
       numsmvect = pcvals.numsizevector;
-      for(i = 0; i < numsmvect; i++) 
+      for(i = 0; i < numsmvect; i++)
 	{
 	  smvector[i] = pcvals.sizevector[i];
 	}
-    } 
-  else 
+    }
+  else
     {
       /* Shouldn't happen */
       numsmvect = 1;
@@ -338,21 +338,23 @@ void initsmvectors(void)
     selectedsmvector = numsmvect-1;
 }
 
+#if 0
 static void update_sizemap_dialog(void)
 {
   if (smwindow)
     {
       initsmvectors();
 
-      gtk_adjustment_set_value(GTK_ADJUSTMENT(smstrexpadjust), 
+      gtk_adjustment_set_value(GTK_ADJUSTMENT(smstrexpadjust),
 			       pcvals.sizestrexp);
-      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(sizevoronoi), 
+      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(sizevoronoi),
 				   pcvals.sizevoronoi);
 
       updatesmvectorprev();
       updatesmpreviewprev();
     }
 }
+#endif
 
 void create_sizemap_dialog(void)
 {
@@ -372,7 +374,7 @@ void create_sizemap_dialog(void)
     return;
   }
 
-  smwindow = 
+  smwindow =
     gimp_dialog_new (_("Size Map Editor"), "gimpressionist",
 		     gimp_standard_help_func, "filters/gimpressionst.html",
 		     GTK_WIN_POS_MOUSE,
@@ -380,7 +382,7 @@ void create_sizemap_dialog(void)
 
 		     GTK_STOCK_APPLY, smapplyclick,
 		     NULL, NULL, NULL, FALSE, FALSE,
-		     
+
 		     GTK_STOCK_CANCEL, gtk_widget_hide,
 		     NULL, 1, NULL, FALSE, FALSE,
 
@@ -451,7 +453,7 @@ void create_sizemap_dialog(void)
   gtk_widget_show(tmpw);
   g_signal_connect (tmpw, "clicked",
                     G_CALLBACK (smprevclick), NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw,
 		       _("Select previous smvector"), NULL);
 
   next_button = tmpw = gtk_button_new_with_mnemonic("_>>");
@@ -459,7 +461,7 @@ void create_sizemap_dialog(void)
   gtk_widget_show(tmpw);
   g_signal_connect (tmpw, "clicked",
 		    G_CALLBACK(smnextclick), NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw,
 		       _("Select next smvector"), NULL);
 
   add_button = tmpw = gtk_button_new_with_mnemonic( _("A_dd"));
@@ -467,15 +469,15 @@ void create_sizemap_dialog(void)
   gtk_widget_show(tmpw);
   g_signal_connect (tmpw, "clicked",
 		    G_CALLBACK(smaddclick), NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw,
 		       _("Add new smvector"), NULL);
 
   kill_button = tmpw = gtk_button_new_with_mnemonic( _("_Kill"));
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show(tmpw);
-  g_signal_connect (tmpw, "clicked", 
+  g_signal_connect (tmpw, "clicked",
 		    G_CALLBACK(smdeleteclick), NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw,
 		       _("Delete selected smvector"), NULL);
 
   table2 = gtk_table_new(3, 4, FALSE);
@@ -483,37 +485,37 @@ void create_sizemap_dialog(void)
   gtk_table_attach_defaults(GTK_TABLE(table1), table2, 0, 2, 2, 3);
   gtk_widget_show(table2);
 
-  sizadjust = 
-    gimp_scale_entry_new (GTK_TABLE(table2), 0, 0, 
+  sizadjust =
+    gimp_scale_entry_new (GTK_TABLE(table2), 0, 0,
 			  _("_Size:"),
-			  150, 6, 50.0, 
-			  0.0, 100.0, 1.0, 10.0, 1, 
+			  150, 6, 50.0,
+			  0.0, 100.0, 1.0, 10.0, 1,
 			  TRUE, 0, 0,
 			  _("Change the angle of the selected smvector"),
 			  NULL);
-  g_signal_connect (sizadjust, "value_changed", G_CALLBACK(angsmadjmove), 
+  g_signal_connect (sizadjust, "value_changed", G_CALLBACK(angsmadjmove),
 		    NULL);
 
-  smstradjust = 
-    gimp_scale_entry_new (GTK_TABLE(table2), 0, 1, 
+  smstradjust =
+    gimp_scale_entry_new (GTK_TABLE(table2), 0, 1,
 			  _("S_trength:"),
-			  150, 6, 1.0, 
-			  0.1, 5.0, 0.1, 0.5, 1, 
+			  150, 6, 1.0,
+			  0.1, 5.0, 0.1, 0.5, 1,
 			  TRUE, 0, 0,
 			  _("Change the strength of the selected smvector"),
 			  NULL);
-  g_signal_connect (smstradjust, "value_changed", G_CALLBACK(strsmadjmove), 
+  g_signal_connect (smstradjust, "value_changed", G_CALLBACK(strsmadjmove),
 		    NULL);
 
-  smstrexpadjust = 
-    gimp_scale_entry_new (GTK_TABLE(table2), 0, 2, 
+  smstrexpadjust =
+    gimp_scale_entry_new (GTK_TABLE(table2), 0, 2,
 			  _("St_rength exp.:"),
-			  150, 6, 1.0, 
-			  0.1, 10.9, 0.1, 0.5, 1, 
+			  150, 6, 1.0,
+			  0.1, 10.9, 0.1, 0.5, 1,
 			  TRUE, 0, 0,
 			  _("Change the exponent of the strength"),
 			  NULL);
-  g_signal_connect (smstrexpadjust, "value_changed", 
+  g_signal_connect (smstrexpadjust, "value_changed",
 		    G_CALLBACK(smstrexpsmadjmove), NULL);
 
   sizevoronoi = tmpw = gtk_check_button_new_with_mnemonic( _("_Voronoi"));
@@ -524,7 +526,7 @@ void create_sizemap_dialog(void)
   g_signal_connect(tmpw, "clicked",
 		   G_CALLBACK(smstrexpsmadjmove), NULL);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Voronoi-mode makes only the smvector closest to the given point have any influence"), NULL);
-  
+
   gtk_widget_show(smwindow);
 
   updatesmvectorprev();
