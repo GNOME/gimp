@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.10\n"
-"POT-Creation-Date: 2002-12-29 23:00+0100\n"
+"POT-Creation-Date: 2003-01-05 14:59+0100\n"
 "PO-Revision-Date: 2002-12-19 18:47+0100\n"
 "Last-Translator: Christian Neumair <christian-neumair@web.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -168,8 +168,8 @@ msgid "Loading module: '%s'\n"
 msgstr "Lade Modul: '%s'\n"
 
 #: libgimpmodule/gimpmodule.c:189 libgimpmodule/gimpmodule.c:206
-#: libgimpmodule/gimpmodule.c:292 libgimpmodule/gimpmodule.c:316
-#: libgimpmodule/gimpmodule.c:386
+#: libgimpmodule/gimpmodule.c:312 libgimpmodule/gimpmodule.c:339
+#: libgimpmodule/gimpmodule.c:432
 #, c-format
 msgid ""
 "Module '%s' load error:\n"
@@ -178,24 +178,24 @@ msgstr ""
 "Fehler beim Laden von Modul '%s':\n"
 "%s"
 
-#: libgimpmodule/gimpmodule.c:260
+#: libgimpmodule/gimpmodule.c:270
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr "Ignoriere Modul: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:363
+#: libgimpmodule/gimpmodule.c:409
 msgid "Module error"
 msgstr "Modul Fehler"
 
-#: libgimpmodule/gimpmodule.c:364
+#: libgimpmodule/gimpmodule.c:410
 msgid "Loaded"
 msgstr "Geladen"
 
-#: libgimpmodule/gimpmodule.c:365
+#: libgimpmodule/gimpmodule.c:411
 msgid "Load failed"
 msgstr "Laden fehlgeschlagen"
 
-#: libgimpmodule/gimpmodule.c:366
+#: libgimpmodule/gimpmodule.c:412
 msgid "Not loaded"
 msgstr "Nicht geladen"
 
@@ -290,6 +290,18 @@ msgstr "Verzeichnis auswählen"
 #: libgimpwidgets/gimpfileselection.c:366
 msgid "Select File"
 msgstr "Datei auswählen"
+
+#: libgimpwidgets/gimpmemsizeentry.c:186
+msgid "KiloBytes"
+msgstr "KiloByte"
+
+#: libgimpwidgets/gimpmemsizeentry.c:187
+msgid "MegaBytes"
+msgstr "MegaByte"
+
+#: libgimpwidgets/gimpmemsizeentry.c:188
+msgid "GigaBytes"
+msgstr "GigaByte"
 
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
@@ -395,86 +407,70 @@ msgstr "_Würfeln"
 msgid "Seed random number generator with a generated random number"
 msgstr "Initialisiere den Zufallsgenerator mit einer Zufallszahl"
 
-#: libgimpwidgets/gimpwidgets.c:1289
-msgid "Bytes"
-msgstr "Byte"
-
-#: libgimpwidgets/gimpwidgets.c:1290
-msgid "KiloBytes"
-msgstr "KiloByte"
-
-#: libgimpwidgets/gimpwidgets.c:1291
-msgid "MegaBytes"
-msgstr "MegaByte"
-
-#: libgimpwidgets/gimpwidgets.c:1292
-msgid "GigaBytes"
-msgstr "GigaByte"
-
-#: modules/cdisplay_colorblind.c:100
+#: modules/cdisplay_colorblind.c:101
 msgid "Colorblind display filter"
 msgstr "Farbenblindheit Anzeigenfarbfilter"
 
-#: modules/cdisplay_colorblind.c:166
+#: modules/cdisplay_colorblind.c:167
 msgid "Color Deficient Vision"
 msgstr "Farbenblindheit"
 
-#: modules/cdisplay_colorblind.c:326
+#: modules/cdisplay_colorblind.c:327
 msgid "Color Deficiency Type:"
 msgstr "Art der Sehschwäche:"
 
-#: modules/cdisplay_colorblind.c:336
+#: modules/cdisplay_colorblind.c:337
 msgid "Protonopia (insensitivity to red)"
 msgstr "Protonopia (Rotschwäche)"
 
-#: modules/cdisplay_colorblind.c:340
+#: modules/cdisplay_colorblind.c:341
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "Deuteranopia (Grünschwäche)"
 
-#: modules/cdisplay_colorblind.c:344
+#: modules/cdisplay_colorblind.c:345
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Tritanopia (Blauschwäche)"
 
-#: modules/cdisplay_gamma.c:89
+#: modules/cdisplay_gamma.c:90
 msgid "Gamma color display filter"
 msgstr "Gamma Anzeigenfarbfilter"
 
-#: modules/cdisplay_gamma.c:155
+#: modules/cdisplay_gamma.c:156
 msgid "Gamma"
 msgstr "Gamma"
 
-#: modules/cdisplay_gamma.c:316
+#: modules/cdisplay_gamma.c:317
 msgid "Gamma:"
 msgstr "Gamma:"
 
-#: modules/cdisplay_highcontrast.c:89
+#: modules/cdisplay_highcontrast.c:90
 msgid "High Contrast color display filter"
 msgstr "Hochkontrast Anzeigenfarbfilter"
 
-#: modules/cdisplay_highcontrast.c:155
+#: modules/cdisplay_highcontrast.c:156
 msgid "Contrast"
 msgstr "Kontrast"
 
-#: modules/cdisplay_highcontrast.c:314
+#: modules/cdisplay_highcontrast.c:315
 msgid "Contrast Cycles:"
 msgstr "Kontrastverstärkung:"
 
-#: modules/colorsel_triangle.c:107
+#: modules/colorsel_triangle.c:108
 msgid "Painter-style triangle color selector"
 msgstr "Dreiecks-Farbauswahl im Stil von Painter"
 
-#: modules/colorsel_triangle.c:179
+#: modules/colorsel_triangle.c:180
 msgid "_Triangle"
 msgstr "_Dreieck"
 
-#: modules/colorsel_water.c:103
+#: modules/colorsel_water.c:104
 msgid "Watercolor style color selector"
 msgstr "Wasserfarben Farbmischer"
 
-#: modules/colorsel_water.c:175
+#: modules/colorsel_water.c:176
 msgid "_Watercolor"
 msgstr "_Wasserfarbe"
 
-#: modules/colorsel_water.c:250
+#: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Druck"

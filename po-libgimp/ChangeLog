@@ -1,3 +1,7 @@
+2003-01-05  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added libgimpwidgets/gimpmemsizeentry.c.
+
 2003-01-04  Kjartan Maraas  <kmaraas@gnome.org>
 
 	* no.po: Updated Norwegian (bokmal) translation.
