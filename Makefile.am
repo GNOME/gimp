@@ -19,6 +19,8 @@ SUBDIRS = \
 	libgimpcolor		\
 	libgimpmath		\
 	libgimpwidgets		\
+	libgimpproxy            \
+	libgimptool		\
 	libgimp			\
 	app			\
 	$(GIMP_MODULES)		\

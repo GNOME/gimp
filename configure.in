@@ -863,6 +863,10 @@ dnl a tuned version of glib-mkenums
 GIMP_MKENUMS="\$(top_srcdir)/tools/gimp-mkenums"
 AC_SUBST(GIMP_MKENUMS)
 
+dnl autogenerator for proxy objects
+GIMP_MKPROXY="\$(top_srcdir)/tools/gimp-mkproxy"
+AC_SUBST(GIMP_MKPROXY)
+
 dnl Output the Makefiles
 
 dnl plug-ins/perl/config.pl
