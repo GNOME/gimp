@@ -1,5 +1,11 @@
 2004-06-14  Philip Lafleur  <plafleur@cvs.gnome.org>
 
+	* app/tools/gimptransformtool.c (gimp_transform_tool_doit): Preview
+	wasn't being turned off before performing a transformation. Also
+	converted tabs to spaces.
+
+2004-06-14  Philip Lafleur  <plafleur@cvs.gnome.org>
+
 	* app/display/gimpdisplayshell-preview.c: Transformation previews now
 	use the selection mask if it is present.
 
