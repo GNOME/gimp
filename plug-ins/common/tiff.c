@@ -1,5 +1,7 @@
 /* tiff loading and saving for the GIMP
  *  -Peter Mattis
+ * various fixes along the route to GIMP 1.0
+ *  -Nick Lamb and others (list yourselves here people)
  *
  * The code for this filter is based on "tifftopnm" and "pnmtotiff",
  *  2 programs that are a part of the netpbm package.
@@ -309,6 +311,8 @@ load_image (char *filename)
     alpha = 1;
   else
     alpha = 0;
+
+  if (spp > 3) alpha = 1; /* Kludge - like all the rest of this -- njl195 */
 
   TIFFGetField (tif, TIFFTAG_IMAGEWIDTH, &cols);
   TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &rows);

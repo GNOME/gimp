@@ -325,6 +325,15 @@ paint_funcs_setup ()
   srand (RANDOM_SEED);
   for (i = 0; i < RANDOM_TABLE_SIZE; i++)
     random_table[i] = rand ();
+
+  for (i = 0; i < RANDOM_TABLE_SIZE; i++)
+    {
+      int tmp;
+      int swap = i + rand () % (RANDOM_TABLE_SIZE - i);
+      tmp = random_table[i];
+      random_table[i] = random_table[swap];
+      random_table[swap] = tmp;
+    }
 }
 
 

@@ -70,7 +70,7 @@ sure that it really is portable (we think we did it right) as well as
 robust. It also will probably change sometime in (near) the future to
 implement some form of compression for the tiles.
 
-The GIMP's new home page is at 
+The GIMP's home page is at 
 
 	http://www.gimp.org
 
@@ -79,7 +79,7 @@ tutorials, news, etc.  All things GIMP-ish are available from there.
 
 The automated plug-in registry is located at
 
-	http://gimp.foebud.org/registry
+	http://registry.gimp.org
 
 There you can get the latest versions of plug-ins using a convenient
 forms-based interface.
@@ -97,7 +97,6 @@ substituting <list-name> for "gimp-user" or "gimp-developer" (without
 the quotes, of course) depending on the list you want to subscribe
 to.  The mailing list archives can be found at
 
-	http://www.levien.com/~gimp-dev/current/
         http://www.findmail.com/listsaver/gimp-developer/
 
 Gimp-user is a mailing list dedicated to user problems, hints and
@@ -124,9 +123,9 @@ You can find them in the ps-menurc file.  To use them, copy this file to
 ~/.gimp/menurc
 
 We sincerely hope you enjoy the program.  Please report problems to
-gimp-developer@scam.xcf.berkeley.edu.  Before reporting a problem, you
-may want to see if someone else has already did (check the mailing
-list archives for this).
+bugs@gimp.org.  Before reporting a problem, you may want to see if someone
+else has already did (check the http://www.wilberworks.com/bugs.cgi for
+this).
 
 Have fun,
 
