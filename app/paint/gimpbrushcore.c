@@ -909,13 +909,16 @@ gimp_brush_core_subsample_mask (GimpBrushCore *core,
   gint        r, s;
   gulong     *accum[KERNEL_HEIGHT];
   gint        offs;
-  gint        kernel_sum;
 
-  while (x < 0) x += mask->width;
+  while (x < 0)
+    x += mask->width;
+
   left = x - floor (x);
   index1 = (gint) (left * (gdouble) (KERNEL_SUBSAMPLE + 1));
 
-  while (y < 0) y += mask->height;
+  while (y < 0)
+    y += mask->height;
+
   left = y - floor (y);
   index2 = (gint) (left * (gdouble) (KERNEL_SUBSAMPLE + 1));
 
@@ -971,15 +974,6 @@ gimp_brush_core_subsample_mask (GimpBrushCore *core,
   for (i = 0; i < KERNEL_HEIGHT ; i++)
     accum[i] = g_new0 (gulong, dest->width + 1);
 
-  /* Investigate modifiying kernelgen to make the sum the same
-   *  for all kernels. That way kernal_sum becomes a constant
-   */
-  kernel_sum = 0;
-  for (i = 0; i < KERNEL_HEIGHT * KERNEL_WIDTH; i++)
-    {
-      kernel_sum += kernel[i];
-    }
-
   core->kernel_brushes[index2][index1] = dest;
 
   m = mask_buf_data (mask);
@@ -993,9 +987,7 @@ gimp_brush_core_subsample_mask (GimpBrushCore *core,
               offs = j + dest_offset_x;
               s = KERNEL_WIDTH;
               while (s--)
-                {
-                  accum[r][offs++] += *m * *k++;
-                }
+                accum[r][offs++] += *m * *k++;
             }
           m++;
         }
@@ -1003,7 +995,7 @@ gimp_brush_core_subsample_mask (GimpBrushCore *core,
       /* store the accum buffer into the destination mask */
       d = mask_buf_data (dest) + (i + dest_offset_y) * dest->width;
       for (j = 0; j < dest->width; j++)
-        *d++ = (accum[0][j] + 127) / kernel_sum;
+        *d++ = (accum[0][j] + 127) / KERNEL_SUM;
 
       rotate_pointers (accum, KERNEL_HEIGHT);
 
@@ -1015,7 +1007,7 @@ gimp_brush_core_subsample_mask (GimpBrushCore *core,
     {
       d = mask_buf_data (dest) + (i + dest_offset_y) * dest->width;
       for (j = 0; j < dest->width; j++)
-        *d++ = (accum[0][j] + (kernel_sum / 2)) / kernel_sum;
+        *d++ = (accum[0][j] + (KERNEL_SUM / 2)) / KERNEL_SUM;
 
       rotate_pointers (accum, KERNEL_HEIGHT);
       i++;
@@ -1113,7 +1105,7 @@ gimp_brush_core_pressurize_mask (GimpBrushCore *core,
 
     j = pressure + pressure;
     k = 0;
-    
+
     for (i = 0; i < 256; i++)
       {
         if (k > 255)
@@ -1134,9 +1126,7 @@ gimp_brush_core_pressurize_mask (GimpBrushCore *core,
 
   i = subsample_mask->width * subsample_mask->height;
   while (i--)
-    {
-      *dest++ = mapi[(*source++)];
-    }
+    *dest++ = mapi[(*source++)];
 
   return core->pressure_brush;
 }
@@ -1156,7 +1146,8 @@ gimp_brush_core_solidify_mask (GimpBrushCore *core,
 
   if ((brush_mask->width % 2) == 0)
     {
-      while (x < 0) x += brush_mask->width;
+      while (x < 0)
+        x += brush_mask->width;
 
       if ((x - floor (x)) >= 0.5)
         dest_offset_x++;
@@ -1164,7 +1155,8 @@ gimp_brush_core_solidify_mask (GimpBrushCore *core,
 
   if ((brush_mask->height % 2) == 0)
     {
-      while (y < 0) y += brush_mask->height;
+      while (y < 0)
+        y += brush_mask->height;
 
       if ((y - floor (y)) >= 0.5)
         dest_offset_y++;
@@ -1203,9 +1195,7 @@ gimp_brush_core_solidify_mask (GimpBrushCore *core,
   for (i = 0; i < brush_mask->height; i++)
     {
       for (j = 0; j < brush_mask->width; j++)
-        {
-          *d++ = (*m++) ? OPAQUE_OPACITY : TRANSPARENT_OPACITY;
-        }
+        *d++ = (*m++) ? OPAQUE_OPACITY : TRANSPARENT_OPACITY;
 
       d += 2;
     }
@@ -1478,7 +1468,6 @@ paint_line_pixmap_mask (GimpImage                *dest,
             for (byte_loop = 0; byte_loop < bytes - 1; byte_loop++)
               d[byte_loop] *= alpha;
 
-	  /* printf("i: %i d->r: %i d->g: %i d->b: %i d->a: %i\n",i,(int)d[0], (int)d[1], (int)d[2], (int)d[3]); */
           gimp_image_transform_color (dest, drawable, d, GIMP_RGB, p);
           d += bytes;
         }

@@ -1,5 +1,18 @@
 2004-12-31  Sven Neumann  <sven@gimp.org>
 
+	Merged from HEAD branch:
+
+	* tools/kernelgen.c: fixed rounding so that all brush kernels are
+	created with a constant sum of 256.
+
+	* app/paint/gimpbrushcore-kernels.h: regenerated.
+
+	* app/paint/gimpbrushcore.c (gimp_brush_core_subsample_mask): use
+	the constant defined in app/paint/gimpbrushcore-kernels.h. Should
+	give a tiny speedup.
+
+2004-12-31  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/imagemap/imap_preview.c (render_rgb_image): use the proper
 	image type and rowstride. Fixes bug #162592.
 
