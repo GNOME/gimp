@@ -32,18 +32,14 @@
 #include "gimp-composite.h"
 #include "gimp-composite-vis.h"
 
-#if defined(USE_VIS)
-#if defined(ARCH_SPARC)
-#if __GNUC__ >= 3
+#ifdef COMPILE_VIS_IS_OKAY
 
-#endif /* __GNUC__ > 3 */
-#endif /* defined(ARCH_SPARC) */
-#endif /* defined(USE_VIS) */
+#endif
 
 gboolean
 gimp_composite_vis_init (void)
 {
-#ifdef ARCH_SPARC
+#ifdef COMPILE_VIS_IS_OKAY
   return (TRUE);
 #else
   return (FALSE);

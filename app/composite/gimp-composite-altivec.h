@@ -9,4 +9,10 @@ extern gboolean gimp_composite_altivec_init (void);
  */
 extern gboolean gimp_composite_altivec_install (void);
 
+#ifdef ARCH_PPC
+#if __GNUC__ >= 3
+#define COMPILE_ALTIVEC_IS_OKAY (1)
+#endif /* __GNUC__ > 3 */
+#endif  /* ARCH_PPC */
+
 #endif

@@ -30,16 +30,14 @@
 #include "gimp-composite.h"
 #include "gimp-composite-altivec.h"
 
-#ifdef ARCH_PPC
-#if __GNUC__ >= 3
+#ifdef COMPILE_ALTIVEC_IS_OKAY
 
-#endif /* __GNUC__ > 3 */
-#endif  /* ARCH_PPC */
+#endif
 
 gboolean
 gimp_composite_altivec_init (void)
 {
-#ifdef ARCH_PPC
+#ifdef COMPILE_ALTIVEC_IS_OKAY
   if (cpu_accel () & CPU_ACCEL_PPC_ALTIVEC)
     {
       return (TRUE);

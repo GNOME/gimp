@@ -471,7 +471,7 @@ op.add_option('-f', '--file', action='store',       type='string', dest='file', 
               help='the input object file')
 op.add_option('-t', '--test', action='store_true',                 dest='test',       default=False,
               help='generate regression testing code')
-op.add_option('-i', '--iterations', action='store', type='int',    dest='iterations', default=1,
+op.add_option('-i', '--iterations', action='store', type='int',    dest='iterations', default=10,
               help='number of iterations in regression tests')
 op.add_option('-n', '--n-pixels', action='store',   type="int",    dest='n_pixels',   default=128*8192+16+1,
               help='number of pixels in each regression test iteration')

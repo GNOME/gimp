@@ -19,7 +19,7 @@
 int
 gimp_composite_vis_test (int iterations, int n_pixels)
 {
-#if (__GNUC__ >= 3) && defined(USE_VIS) && defined(ARCH_SPARC)
+#if defined(COMPILE_VIS_IS_OKAY)
   GimpCompositeContext generic_ctx;
   GimpCompositeContext special_ctx;
   double ft0;
@@ -78,7 +78,7 @@ main (int argc, char *argv[])
 
   putenv ("GIMP_COMPOSITE=0x1");
 
-  iterations = 1;
+  iterations = 10;
   n_pixels = 1048593;
 
   argv++, argc--;

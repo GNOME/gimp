@@ -1,9 +1,36 @@
+/* -*- mode: c tab-width: 2; c-basic-indent: 2; indent-tabs-mode: nil -*-
+ *
+ * The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
 #if __GNUC__ >= 3
 
+/*
+ * Convert the low 8bit byte of the src to 16bit words in dst.
+ */
 #define mmx_low_bytes_to_words(src,dst,zero) \
          "\tmovq      %%"#src", %%"#dst"; " \
          "\tpunpcklbw %%"#zero", %%"#dst"\n"
 
+/*
+ * Convert the high 8bit byte of the src to 16bit words in dst.
+ */
 #define mmx_high_bytes_to_words(src,dst,zero) \
          "\tmovq      %%"#src", %%"#dst"; " \
          "\tpunpckhbw %%"#zero", %%"#dst"\n"
@@ -56,6 +83,7 @@
 /*
  * Quadword divide.  No adjustment for subsequent unsigned packing
  * (high-order bit of each word is left alone)
+ * clobber list must include: "%eax", "%ecx", "%edx", divisor quotient
  */
 #define pdivwqX(dividend,divisor,quotient) "movd   %%" #dividend ",%%eax; " \
                                           "movd   %%" #divisor  ",%%ecx; " \
@@ -81,6 +109,7 @@
                                           "movd   %%eax,%%" #divisor ";"   \
                                           "psllq  $32,%%" #divisor ";"     \
                                           "por    %%" #divisor ",%%" #quotient ";"
+#define pdivwqX_clobber "%eax", "%ecx", "%edx"
    
 /*
  * Quadword divide.  Adjusted for subsequent unsigned packing
@@ -94,6 +123,7 @@
                                           "movd   %%eax,%%" #divisor ";"    \
                                             "psllq  $32,%%" #divisor ";"    \
                                             "por    %%" #divisor ",%%" #quotient ";"
+#define pdivwuqX_clobber pdivwqX_clobber
 
 #define xmm_pdivwqX(dividend,divisor,quotient,scratch) "movd   %%" #dividend ",%%eax; " \
                                                        "movd   %%" #divisor  ",%%ecx; " \
@@ -204,5 +234,20 @@
                   "\tpsrlw     $8,        %%"#opr2"; " \
                   "\tpaddw     %%"#opr1", %%"#opr2"; " \
                   "\tpsrlw     $8,        %%"#opr2"\n"
- 
-#endif
+
+typedef unsigned long long uint64;
+
+extern const guint32 rgba8_alpha_mask_64[2];
+extern const guint32 rgba8_b1_64[2];
+extern const guint32 rgba8_b255_64[2];
+extern const guint32 rgba8_w1_64[2];
+extern const guint32 rgba8_w2_64[2];
+extern const guint32 rgba8_w128_64[2];
+extern const guint32 rgba8_w256_64[2];
+extern const guint32 rgba8_w255_64[2];
+
+extern const guint32 va8_alpha_mask[2];
+extern const guint32 va8_b255[2];
+extern const guint32 va8_w1[2];
+extern const guint32 va8_w255[2];
+#endif /* __GNUC__ >= 3 */

@@ -19,7 +19,7 @@
 int
 gimp_composite_3dnow_test (int iterations, int n_pixels)
 {
-#if (__GNUC__ >= 3) && defined(USE_3DNOW) && defined(ARCH_X86) && (defined(ARCH_X86_64) || !defined(PIC))
+#if defined(COMPILE_3DNOW_IS_OKAY)
   GimpCompositeContext generic_ctx;
   GimpCompositeContext special_ctx;
   double ft0;
@@ -78,7 +78,7 @@ main (int argc, char *argv[])
 
   putenv ("GIMP_COMPOSITE=0x1");
 
-  iterations = 1;
+  iterations = 10;
   n_pixels = 1048593;
 
   argv++, argc--;

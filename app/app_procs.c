@@ -203,7 +203,8 @@ app_run (const gchar         *full_prog_name,
   gimp_load_config (gimp, alternate_system_gimprc, alternate_gimprc);
 
   /*  initialize lowlevel stuff  */
-  swap_is_ok = base_init (GIMP_BASE_CONFIG (gimp->config), use_cpu_accel);
+  swap_is_ok = base_init (GIMP_BASE_CONFIG (gimp->config),
+                          be_verbose, use_cpu_accel);
 
   if (! no_interface)
     update_status_func = gui_init (gimp, no_splash);

@@ -1,3 +1,30 @@
+2004-08-05  Sven Neumann  <sven@gimp.org>
+
+	* app/app_procs.c
+	* app/base/base.[ch]
+	* app/composite/Makefile.am
+	* app/composite/gimp-composite-3dnow-test.c
+	* app/composite/gimp-composite-3dnow.[ch]
+	* app/composite/gimp-composite-altivec-test.c
+	* app/composite/gimp-composite-altivec.[ch]
+	* app/composite/gimp-composite-mmx-installer.c
+	* app/composite/gimp-composite-mmx-test.c
+	* app/composite/gimp-composite-mmx.[ch]
+	* app/composite/gimp-composite-sse-installer.c
+	* app/composite/gimp-composite-sse-test.c
+	* app/composite/gimp-composite-sse.[ch]
+	* app/composite/gimp-composite-sse2-installer.c
+	* app/composite/gimp-composite-sse2-test.c
+	* app/composite/gimp-composite-sse2.[ch]
+	* app/composite/gimp-composite-vis-test.c
+	* app/composite/gimp-composite-vis.[ch]
+	* app/composite/gimp-composite-x86.h
+	* app/composite/gimp-composite.[ch]
+
+	* app/composite/make-installer.py: backported changes to composite
+	code from HEAD branch. Fixes bug #149429 and works around problems
+	with the Intel compiler (bug #147013).
+
 2004-08-05  Michael Natterer  <mitch@gimp.org>
 
 	Merged from HEAD:

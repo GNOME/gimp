@@ -54,14 +54,13 @@ libappcomposite_a_SOURCES = \
 	$(libappcomposite_a_sources)
 
 regenerate: gimp-composite-generic.o gimp-composite-mmx.o gimp-composite-sse.o gimp-composite-sse2.o gimp-composite-3dnow.o gimp-composite-altivec.o gimp-composite-vis.o
-	$(srcdir)/make-installer.py                                                                        -f gimp-composite-generic.o
-	$(srcdir)/make-installer.py -t -r '(__GNUC__ >= 3) && defined(USE_MMX) && defined(ARCH_X86) && (defined(ARCH_X86_64) || !defined(PIC))' -f gimp-composite-mmx.o
-	$(srcdir)/make-installer.py -t -r '(__GNUC__ >= 3) && defined(USE_SSE) && defined(ARCH_X86) && (defined(ARCH_X86_64) || !defined(PIC))' -f gimp-composite-sse.o
-	$(srcdir)/make-installer.py -t -r '(__GNUC__ >= 3) && defined(USE_SSE) && defined(ARCH_X86) && (defined(ARCH_X86_64) || !defined(PIC))' -f gimp-composite-sse2.o
-	$(srcdir)/make-installer.py -t -r '(__GNUC__ >= 3) && defined(USE_3DNOW) && defined(ARCH_X86) && (defined(ARCH_X86_64) || !defined(PIC))' -f gimp-composite-3dnow.o
-	$(srcdir)/make-installer.py -t -r '(__GNUC__ >= 3) && defined(USE_ALTIVEC) && defined(ARCH_PPC)' -f gimp-composite-altivec.o
-	$(srcdir)/make-installer.py -t -r '(__GNUC__ >= 3) && defined(USE_VIS) && defined(ARCH_SPARC)' -f gimp-composite-vis.o
-
+	$(srcdir)/make-installer.py                                          -f gimp-composite-generic.o
+	$(srcdir)/make-installer.py -t -r 'defined(COMPILE_MMX_IS_OKAY)'     -f gimp-composite-mmx.o
+	$(srcdir)/make-installer.py -t -r 'defined(COMPILE_SSE_IS_OKAY)'     -f gimp-composite-sse.o
+	$(srcdir)/make-installer.py -t -r 'defined(COMPILE_SSE2_IS_OKAY)'    -f gimp-composite-sse2.o
+	$(srcdir)/make-installer.py -t -r 'defined(COMPILE_3DNOW_IS_OKAY)'   -f gimp-composite-3dnow.o
+	$(srcdir)/make-installer.py -t -r 'defined(COMPILE_ALTIVEC_IS_OKAY)' -f gimp-composite-altivec.o
+	$(srcdir)/make-installer.py -t -r 'defined(COMPILE_VIS_IS_OKAY)'     -f gimp-composite-vis.o
 
 EXTRA_DIST = \
 	make-installer.py	\
