@@ -1730,7 +1730,7 @@ save_dialog (void)
 
   make_preview ();
 
-  table = gimp_parameter_settings_new (main_vbox, 10, 3);
+  table = gimp_parameter_settings_new (main_vbox, 9, 3);
 
   label = gtk_label_new (_("Quality:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);

@@ -1,5 +1,9 @@
 2003-09-23  Dave Neary  <bolsh@gimp.org>
 
+	* plug-ins/common/jpeg.c: Fixed minor mistake in last commit.
+
+2003-09-23  Dave Neary  <bolsh@gimp.org>
+
 	* plug-ins/common/jpeg.c: Allow discarding of exif data if 
 	HAVE_EXIF is enabled and the user doesn't want to keep it. 
 	Closes bug #118384.
