@@ -68,8 +68,9 @@
 #define OK         2
 
 
-#define DEFAULT_IMAGE_TITLE_FORMAT "%f-%p.%i (%t)"
-#define DEFAULT_COMMENT            "Created with The GIMP"
+#define DEFAULT_IMAGE_TITLE_FORMAT  "%f-%p.%i (%t)"
+#define DEFAULT_IMAGE_STATUS_FORMAT DEFAULT_IMAGE_TITLE_FORMAT
+#define DEFAULT_COMMENT             "Created with The GIMP"
 
 
 typedef enum
@@ -213,6 +214,7 @@ GimpRc gimprc =
   /* monitor_yres              */  72.0,
   /* using_xserver_resolution  */  FALSE,
   /* image_title_format        */  NULL,
+  /* image_status_format       */  NULL,
   /* global_paint_options      */  FALSE,
   /* show_indicators           */  TRUE,
   /* max_new_image_size        */  33554432,  /* 32 MB */
@@ -272,6 +274,7 @@ static ParseFunc funcs[] =
   { "monitor-xresolution",           TT_DOUBLE,        &gimprc.monitor_xres, NULL              },
   { "monitor-yresolution",           TT_DOUBLE,        &gimprc.monitor_yres, NULL              },
   { "image-title-format",            TT_STRING,        &gimprc.image_title_format, NULL        },
+  { "image-status-format",           TT_STRING,        &gimprc.image_status_format, NULL       },
   { "global-paint-options",          TT_BOOLEAN,       &gimprc.global_paint_options, NULL      },
   { "show-indicators",               TT_BOOLEAN,       &gimprc.show_indicators, NULL           },
   { "dont-show-indicators",          TT_BOOLEAN,       NULL, &gimprc.show_indicators           },
@@ -472,6 +475,10 @@ gimprc_parse (Gimp        *gimp,
  
   if (! gimprc.image_title_format)
     gimprc.image_title_format = g_strdup (DEFAULT_IMAGE_TITLE_FORMAT);
+
+  if (! gimprc.image_status_format)
+    gimprc.image_status_format = g_strdup (DEFAULT_IMAGE_STATUS_FORMAT);
+
   if (! gimp->config->default_comment)
     gimp->config->default_comment = g_strdup (DEFAULT_COMMENT);
 }

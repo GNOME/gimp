@@ -49,6 +49,7 @@ struct _GimpDisplayConfig
   GimpCursorMode       cursor_mode;
   gboolean             cursor_updating;
   gchar               *image_title_format;
+  gchar               *image_status_format;
   gboolean             show_rulers;
   gboolean             show_statusbar;
   gboolean             confirm_on_close;

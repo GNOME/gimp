@@ -159,6 +159,7 @@ static gdouble            old_monitor_yres;
 static gboolean           old_using_xserver_resolution;
 static gint               old_num_processors;
 static gchar            * old_image_title_format;
+static gchar            * old_image_status_format;
 static gboolean           old_global_paint_options;
 static guint              old_max_new_image_size;
 static gboolean           old_write_thumbnails;
@@ -340,6 +341,12 @@ prefs_check_settings (Gimp *gimp)
     {
       g_message (_("Error: Image title format must not be NULL."));
       gimprc.image_title_format = old_image_title_format;
+      return PREFS_CORRUPT;
+    }
+  if (gimprc.image_status_format == NULL)
+    {
+      g_message (_("Error: Image status format must not be NULL."));
+      gimprc.image_status_format = old_image_status_format;
       return PREFS_CORRUPT;
     }
 
@@ -705,6 +712,10 @@ prefs_save_callback (GtkWidget *widget,
     {
       update = g_list_append (update, "image-title-format");
     }
+  if (prefs_strcmp (gimprc.image_status_format, old_image_status_format))
+    {
+      update = g_list_append (update, "image-status-format");
+    }
   if (gimprc.global_paint_options != old_global_paint_options)
     {
       update = g_list_append (update, "global-paint-options");
@@ -969,6 +980,7 @@ prefs_cancel_callback (GtkWidget *widget,
     }
 
   prefs_strset (&gimprc.image_title_format,     old_image_title_format);
+  prefs_strset (&gimprc.image_status_format,    old_image_status_format);
   prefs_strset (&gimp->config->default_comment, old_default_comment);
 
   tool_manager_set_global_paint_options (gimp, old_global_paint_options);
@@ -1580,8 +1592,9 @@ preferences_dialog_create (Gimp *gimp)
   old_cursor_mode              = gimprc.cursor_mode;
   old_default_threshold        = gimprc.default_threshold;
 
-  prefs_strset (&old_image_title_format, gimprc.image_title_format);	
-  prefs_strset (&old_default_comment,    gimp->config->default_comment);	
+  prefs_strset (&old_image_title_format,  gimprc.image_title_format);	
+  prefs_strset (&old_image_status_format, gimprc.image_status_format);	
+  prefs_strset (&old_default_comment,     gimp->config->default_comment);	
 
   /*  values which will need a restart  */
   old_stingy_memory_use         = edit_stingy_memory_use;
@@ -2243,7 +2256,7 @@ preferences_dialog_create (Gimp *gimp)
 		    G_CALLBACK (prefs_toggle_callback),
 		    &gimprc.show_statusbar);
 
-  table = gtk_table_new (2, 2, FALSE);
+  table = gtk_table_new (3, 2, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
@@ -2260,7 +2273,7 @@ preferences_dialog_create (Gimp *gimp)
 		    G_CALLBACK (gimp_int_adjustment_update),
 		    &gimprc.marching_speed);
 
-  /* The title format string */
+  /* The title and status format strings */
   {
     GtkWidget *combo;
     GtkWidget *comboitem;
@@ -2309,6 +2322,29 @@ preferences_dialog_create (Gimp *gimp)
     g_signal_connect (G_OBJECT (GTK_COMBO (combo)->entry), "changed",
                       G_CALLBACK (prefs_string_callback), 
                       &gimprc.image_title_format);
+
+    format_strings[0] = gimprc.image_status_format;
+
+    combo = gtk_combo_new ();
+    gtk_combo_set_use_arrows (GTK_COMBO (combo), FALSE);
+    gtk_combo_set_value_in_list (GTK_COMBO (combo), FALSE, FALSE);
+
+    for (i = 0; i < G_N_ELEMENTS (combo_strings); i++)
+      {
+        comboitem = gtk_list_item_new_with_label (gettext (combo_strings[i]));
+        gtk_combo_set_item_string (GTK_COMBO (combo), GTK_ITEM (comboitem),
+                                   format_strings[i]);
+        gtk_container_add (GTK_CONTAINER (GTK_COMBO (combo)->list), comboitem);
+        gtk_widget_show (comboitem);
+      }
+
+    gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
+                               _("Image Status Format:"), 1.0, 0.5,
+                               combo, 1, FALSE);
+
+    g_signal_connect (G_OBJECT (GTK_COMBO (combo)->entry), "changed",
+                      G_CALLBACK (prefs_string_callback), 
+                      &gimprc.image_status_format);
   }
 
   vbox2 = prefs_frame_new (_("Pointer Movement Feedback"), GTK_BOX (vbox));

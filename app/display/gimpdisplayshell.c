@@ -103,7 +103,8 @@ static void	  gimp_display_shell_draw_cursor       (GimpDisplayShell *shell);
 
 static void       gimp_display_shell_format_title      (GimpDisplayShell *gdisp,
                                                         gchar            *title,
-                                                        gint              title_len);
+                                                        gint              title_len,
+                                                        const gchar      *format);
 
 static void       gimp_display_shell_update_icon       (GimpDisplayShell *gdisp);
 static gboolean gimp_display_shell_update_icon_invoker (gpointer          data);
@@ -1475,8 +1476,16 @@ gimp_display_shell_update_title (GimpDisplayShell *shell)
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   /* format the title */
-  gimp_display_shell_format_title (shell, title, MAX_TITLE_BUF);
+  gimp_display_shell_format_title (shell, title, sizeof (title),
+                                   gimprc.image_title_format);
   gdk_window_set_title (GTK_WIDGET (shell)->window, title);
+
+  /* format the statusbar */
+  if (strcmp (gimprc.image_title_format, gimprc.image_status_format))
+    {
+      gimp_display_shell_format_title (shell, title, sizeof (title),
+                                       gimprc.image_status_format);
+    }
 
   gimp_statusbar_pop (GIMP_STATUSBAR (shell->statusbar), "title");
   gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar), "title", title);
@@ -2089,13 +2098,14 @@ print (gchar       *buf,
 static void
 gimp_display_shell_format_title (GimpDisplayShell *shell,
                                  gchar            *title,
-                                 gint              title_len)
+                                 gint              title_len,
+                                 const gchar      *format)
 {
   GimpImage *gimage;
   gchar     *image_type_str = NULL;
   gboolean   empty;
   gint       i;
-  gchar     *format;
+  gchar      unit_format[8];
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -2120,7 +2130,6 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
     }
 
   i = 0;
-  format = gimprc.image_title_format;
 
   while (i < title_len && *format)
     {
@@ -2192,6 +2201,18 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 	      format++;
 	      break;
 
+	    case 'C': /* clean flag */
+	      if (format[1] == 0)
+		{
+		  g_warning ("image-title-format string ended within "
+                             "%%C-sequence");
+		  break;
+		}
+	      if (! gimage->dirty)
+		title[i++] = format[1];
+	      format++;
+	      break;
+
             case 'm': /* memory used by image */
               {
                 gsize  memsize;
@@ -2207,9 +2228,66 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
               }
               break;
 
+            case 'l': /* number of layers */
+              i += print (title, title_len, i, "%d",
+                          gimp_container_num_children (gimage->layers));
+              break;
+
+            case 'L': /* active drawable name */
+              {
+                GimpDrawable *drawable;
+
+                drawable = gimp_image_active_drawable (gimage);
+
+                if (drawable)
+                  i += print (title, title_len, i, "%s",
+                              gimp_object_get_name (GIMP_OBJECT (drawable)));
+                else
+                  i += print (title, title_len, i, "%s", "(none)");
+              }
+              break;
+
+	    case 'w': /* width in pixels */
+	      i += print (title, title_len, i, "%d", gimage->width);
+	      break;
+
+	    case 'W': /* width in real-world units */
+              g_snprintf (unit_format, sizeof (unit_format), "%%.%df",
+                          gimp_unit_get_digits (gimage->unit) + 1);
+              i += print (title, title_len, i, unit_format,
+                          (gimage->width *
+                           gimp_unit_get_factor (gimage->unit) /
+                           gimage->xresolution));
+              break;
+
+	    case 'h': /* height in pixels */
+	      i += print (title, title_len, i, "%d", gimage->height);
+	      break;
+
+	    case 'H': /* height in real-world units */
+              g_snprintf (unit_format, sizeof (unit_format), "%%.%df",
+                          gimp_unit_get_digits (gimage->unit) + 1);
+              i += print (title, title_len, i, unit_format,
+                          (gimage->height *
+                           gimp_unit_get_factor (gimage->unit) /
+                           gimage->yresolution));
+              break;
+
+	    case 'u': /* unit symbol */
+	      i += print (title, title_len, i, "%s",
+			  gimp_unit_get_symbol (gimage->unit));
+	      break;
+
+	    case 'U': /* unit abbreviation */
+	      i += print (title, title_len, i, "%s",
+			  gimp_unit_get_abbreviation (gimage->unit));
+	      break;
+
 	      /* Other cool things to be added:
-	       * some kind of resolution / image size thing
-	       * people seem to want to know the active layer name
+	       * %r = xresolution
+               * %R = yresolution
+               * %ø = image's fractal dimension
+               * %þ = the answer to everything
 	       */
 
 	    default:

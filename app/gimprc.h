@@ -55,6 +55,7 @@ struct _GimpRc
   gdouble            monitor_yres;
   gboolean           using_xserver_resolution;
   gchar             *image_title_format;
+  gchar             *image_status_format;
   gboolean           global_paint_options;
   gboolean           show_indicators;
   guint              max_new_image_size;

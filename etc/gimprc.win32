@@ -290,9 +290,22 @@
 #   %s  source scale factor
 #   %d  destination scale factor
 #   %Dx expands to x if the image is dirty
+#   %Cx expands to x if the image is clean
 #   %m  memory used by the image
+#   %l  the number of layers
+#   %L  the name of the active layer/channel
+#   %w  image width in pixels
+#   %W  image width in real-world units
+#   %h  image height in pixels
+#   %H  image height in real-world units
+#   %u  unit symbol
+#   %U  unit abbreviation
 # See gimprc(5) for further details.
 (image-title-format "%D*%f-%p.%i (%t) %z%%")
+
+# This string sets how image window status bars are formatted.
+# See image-title-format for the list of performed percent expansions.
+(image-status-format "%D*%f-%p.%i (%t) %z%%")
 
 # Global paint options
 #  By default options for the paint tools are local, e.g. all paint tools

@@ -43,6 +43,10 @@ static void  gimp_display_config_get_property (GObject      *object,
                                                GValue       *value,
                                                GParamSpec   *pspec);
 
+
+#define DEFAULT_IMAGE_TITLE_FORMAT  "%f-%p.%i (%t)"
+#define DEFAULT_IMAGE_STATUS_FORMAT DEFAULT_IMAGE_TITLE_FORMAT
+
 enum
 {
   PROP_0,
@@ -54,6 +58,7 @@ enum
   PROP_CURSOR_MODE,
   PROP_CURSOR_UPDATING,
   PROP_IMAGE_TITLE_FORMAT,
+  PROP_IMAGE_STATUS_FORMAT,
   PROP_SHOW_RULERS,
   PROP_SHOW_STATUSBAR,
   PROP_CONFIRM_ON_CLOSE,
@@ -129,7 +134,10 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                                     TRUE);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_IMAGE_TITLE_FORMAT,
                                    "image-title-format",
-                                   "%f-%p.%i (%t)");
+                                   DEFAULT_IMAGE_TITLE_FORMAT);
+  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_IMAGE_STATUS_FORMAT,
+                                   "image-status-format",
+                                   DEFAULT_IMAGE_STATUS_FORMAT);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_RULERS,
                                     "show-rulers",
                                     TRUE);
@@ -158,6 +166,7 @@ gimp_display_config_finalize (GObject *object)
   display_config = GIMP_DISPLAY_CONFIG (object);
   
   g_free (display_config->image_title_format);
+  g_free (display_config->image_status_format);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -198,6 +207,10 @@ gimp_display_config_set_property (GObject      *object,
     case PROP_IMAGE_TITLE_FORMAT:
       g_free (display_config->image_title_format);
       display_config->image_title_format = g_value_dup_string (value);
+      break;
+    case PROP_IMAGE_STATUS_FORMAT:
+      g_free (display_config->image_status_format);
+      display_config->image_status_format = g_value_dup_string (value);
       break;
     case PROP_SHOW_RULERS:
       display_config->show_rulers = g_value_get_boolean (value);
@@ -259,6 +272,9 @@ gimp_display_config_get_property (GObject    *object,
       break;
     case PROP_IMAGE_TITLE_FORMAT:
       g_value_set_string (value, display_config->image_title_format);
+      break;
+    case PROP_IMAGE_STATUS_FORMAT:
+      g_value_set_string (value, display_config->image_status_format);
       break;
     case PROP_SHOW_RULERS:
       g_value_set_boolean (value, display_config->show_rulers);

@@ -1,3 +1,23 @@
+2002-02-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimprc.[ch]
+	* app/config/gimpdisplayconfig.[ch]
+	* app/gui/preferences-dialog.c: made the string which appears in
+	the display's statusbar configurable separately from the title
+	string. They still both have the same default value.
+
+	* app/display/gimpdisplayshell.c: changed accordingly.
+
+	Also added lots of new % expansions which implement all stuff
+	mentioned in #5843. Didn't apply the original patch because it is
+	overly complicated (the same can be acheived using %D and %C).
+	Instead, applied a changed version of gimp-quinet-000618-0.patch.
+	Added %Cx, which expands to 'x' if the image is clean.
+
+	* docs/gimprc-1.3.5.in
+	* etc/gimprc.in
+	* etc/gimprc.win32: added documentation for the new stuff.
+
 2002-02-11  Nathan Summers  <rock@gimp.org>
 
 	* gui/preferences-dialog.c: s/directory/folder/ and other
