@@ -550,8 +550,8 @@ pluginCore (struct piArgs *argp)
   else
     {
       gimp_drawable_flush (drw);
-      gimp_drawable_merge_shadow (drw->id, TRUE);
-      gimp_drawable_update (drw->id, 0, 0, width, height);
+      gimp_drawable_merge_shadow (drw->drawable_id, TRUE);
+      gimp_drawable_update (drw->drawable_id, 0, 0, width, height);
     }
 
   gimp_displays_flush ();

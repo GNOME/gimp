@@ -206,7 +206,7 @@ rcm (GimpDrawable *drawable)
   gint row;
   gint x1, y1, x2, y2;
   
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   width = drawable->width;
   height = drawable->height;
@@ -233,8 +233,8 @@ rcm (GimpDrawable *drawable)
   /*  update the processed region  */
 
   gimp_drawable_flush(drawable);
-  gimp_drawable_merge_shadow(drawable->id, TRUE);
-  gimp_drawable_update(drawable->id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_merge_shadow(drawable->drawable_id, TRUE);
+  gimp_drawable_update(drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
   
   free (src_row);
   free (dest_row);
@@ -265,8 +265,8 @@ run (char    *name,
 
   /* works not on INDEXED images */     
 
-  if (gimp_drawable_is_indexed (Current.drawable->id) ||
-      gimp_drawable_is_gray (Current.drawable->id) )
+  if (gimp_drawable_is_indexed (Current.drawable->drawable_id) ||
+      gimp_drawable_is_gray (Current.drawable->drawable_id) )
   {
     status = GIMP_PDB_EXECUTION_ERROR;
   }
@@ -276,7 +276,7 @@ run (char    *name,
 
     INIT_I18N_UI(); 
 
-    if (gimp_drawable_is_rgb(Current.drawable->id) && rcm_dialog())
+    if (gimp_drawable_is_rgb(Current.drawable->drawable_id) && rcm_dialog())
     {
       gimp_progress_init(_("Rotating the colormap..."));
 

@@ -316,8 +316,8 @@ compute_image (void)
   /* ================= */
 
   gimp_drawable_flush (output_drawable);
-  gimp_drawable_merge_shadow (output_drawable->id, TRUE);
-  gimp_drawable_update (output_drawable->id, 0, 0, width, height);
+  gimp_drawable_merge_shadow (output_drawable->drawable_id, TRUE);
+  gimp_drawable_update (output_drawable->drawable_id, 0, 0, width, height);
 
   if (new_image_id != -1)
     {

@@ -30,7 +30,7 @@ extern "C" {
 typedef gint (* GimpConstraintFunc)   (gint32    image_id,
 				       gint32    drawable_id,
 				       gpointer  data);
-typedef void (* GimpMenuCallback)     (gint32    id,
+typedef void (* GimpMenuCallback)     (gint32    any_id,
 				       gpointer  data);
 
 

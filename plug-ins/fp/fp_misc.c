@@ -49,7 +49,7 @@ ReducedImage *Reduce_The_Image(GimpDrawable *drawable,
   gint NoSelectionMade=TRUE;
   hsv *tempHSV, H, S, V;
 
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
   width  = x2-x1;
   height = y2-y1;
 

@@ -168,7 +168,7 @@ run (gchar   *name,
   if (status == GIMP_PDB_SUCCESS)
     {
       drawable = gimp_drawable_get (param[2].data.d_drawable);
-      if (gimp_drawable_is_rgb (drawable->id))
+      if (gimp_drawable_is_rgb (drawable->drawable_id))
 	{
 	  gimp_progress_init (_("Deriving smooth palette..."));
 	  gimp_tile_cache_ntiles (2 * (drawable->width + 1) /
@@ -240,7 +240,7 @@ doit (GimpDrawable *drawable,
   new_image_id = gimp_image_new (config.width, config.height, GIMP_RGB);
   *layer_id = gimp_layer_new (new_image_id, _("Background"),
 			      config.width, config.height,
-			      gimp_drawable_type (drawable->id),
+			      gimp_drawable_type (drawable->drawable_id),
 			      100, GIMP_NORMAL_MODE);
   gimp_image_add_layer (new_image_id, *layer_id, 0);
   new_layer = gimp_drawable_get (*layer_id);
@@ -367,8 +367,8 @@ doit (GimpDrawable *drawable,
   g_free (pal);
 
   gimp_drawable_flush (new_layer);
-  gimp_drawable_merge_shadow (new_layer->id, TRUE);
-  gimp_drawable_update(new_layer->id, 0, 0,
+  gimp_drawable_merge_shadow (new_layer->drawable_id, TRUE);
+  gimp_drawable_update(new_layer->drawable_id, 0, 0,
 		       config.width, config.height);
 
   return new_image_id;

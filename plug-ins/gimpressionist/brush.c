@@ -69,10 +69,10 @@ void brushdmenuselect(gint32 id, gpointer data)
 
   drawable = gimp_drawable_get(id);
 
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
   
-  bpp = gimp_drawable_bpp (drawable->id);
-  has_alpha = gimp_drawable_has_alpha (drawable->id);
+  bpp = gimp_drawable_bpp (drawable->drawable_id);
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
   alpha = (has_alpha) ? bpp - 1 : bpp;
 
   if(brushppm.col)

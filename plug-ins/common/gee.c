@@ -635,7 +635,7 @@ init_preview_misc (void)
   gint i;
   gboolean has_alpha;
 
-  has_alpha = gimp_drawable_has_alpha(drawable->id);
+  has_alpha = gimp_drawable_has_alpha(drawable->drawable_id);
 
   env = g_malloc (4 * IWIDTH * IHEIGHT * 2);
   disp = g_malloc ((IWIDTH + 2 + IWIDTH * IHEIGHT) * 4);
@@ -677,7 +677,7 @@ init_preview_misc (void)
 					       ) * 256
 					      )) *
 					   gimp_drawable_bpp
-					   (drawable->id)
+					   (drawable->drawable_id)
 				       ],
 				       drawable->width>256?
 				       (drawable->width/2-128):0,

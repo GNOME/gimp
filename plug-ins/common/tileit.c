@@ -268,7 +268,8 @@ run (gchar    *name,
   tile_width  = gimp_tile_width ();
   tile_height = gimp_tile_height ();
 
-  gimp_drawable_mask_bounds (drawable->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id,
+			     &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
   sel_width  = sel_x2 - sel_x1;
   sel_height = sel_y2 - sel_y1;
@@ -322,8 +323,8 @@ run (gchar    *name,
       break;
     }
 
-  if (gimp_drawable_is_rgb (drawable->id) ||
-      gimp_drawable_is_gray (drawable->id))
+  if (gimp_drawable_is_rgb (drawable->drawable_id) ||
+      gimp_drawable_is_gray (drawable->drawable_id))
     {
       /* Set the tile cache size */
 
@@ -932,19 +933,19 @@ cache_preview (void)
   src_rows = g_new (guchar, sel_width * 4); 
   p = tint.pv_cache = g_new (guchar, preview_width * preview_height * 4);
 
-  img_width  = gimp_drawable_width (tileitdrawable->id);
-  img_height = gimp_drawable_height (tileitdrawable->id);
+  img_width  = gimp_drawable_width (tileitdrawable->drawable_id);
+  img_height = gimp_drawable_height (tileitdrawable->drawable_id);
 
-  tint.img_bpp = gimp_drawable_bpp (tileitdrawable->id);   
+  tint.img_bpp = gimp_drawable_bpp (tileitdrawable->drawable_id);   
 
-  has_alpha = gimp_drawable_has_alpha (tileitdrawable->id);
+  has_alpha = gimp_drawable_has_alpha (tileitdrawable->drawable_id);
 
   if (tint.img_bpp < 3)
     {
       tint.img_bpp = 3 + has_alpha;
     }
 
-  switch (gimp_drawable_type (tileitdrawable->id))
+  switch (gimp_drawable_type (tileitdrawable->drawable_id))
     {
     case GIMP_GRAYA_IMAGE:
     case GIMP_GRAY_IMAGE:
@@ -1046,7 +1047,7 @@ do_tiles(void)
   progress     = 0;
   max_progress = sel_width * sel_height;
   
-  img_bpp = gimp_drawable_bpp(tileitdrawable->id);
+  img_bpp = gimp_drawable_bpp(tileitdrawable->drawable_id);
   
   for (pr = gimp_pixel_rgns_register(1, &dest_rgn);
        pr != NULL; pr = gimp_pixel_rgns_process(pr)) {
@@ -1088,8 +1089,9 @@ do_tiles(void)
   }
   
   gimp_drawable_flush(tileitdrawable);
-  gimp_drawable_merge_shadow(tileitdrawable->id, TRUE);
-  gimp_drawable_update(tileitdrawable->id, sel_x1, sel_y1, sel_width, sel_height);
+  gimp_drawable_merge_shadow(tileitdrawable->drawable_id, TRUE);
+  gimp_drawable_update(tileitdrawable->drawable_id,
+		       sel_x1, sel_y1, sel_width, sel_height);
 } 
 
 

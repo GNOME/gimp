@@ -2040,26 +2040,18 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
       SET_SENSITIVE ("Image/Mode/RGB", (base_type != RGB));
       SET_SENSITIVE ("Image/Mode/Grayscale", (base_type != GRAY));
       SET_SENSITIVE ("Image/Mode/Indexed...", (base_type != INDEXED));
-#ifdef __GNUC__
-#warning FIXME (set_menu_sensitivity)
-#endif
-#if 0
+
       SET_SENSITIVE ("Image/Histogram...", lp);
-#endif
 
       SET_SENSITIVE ("Image/Colors", lp);
-#if 0
       SET_SENSITIVE ("Image/Colors/Color Balance...", (base_type == RGB));
       SET_SENSITIVE ("Image/Colors/Hue-Saturation...", (base_type == RGB));
       SET_SENSITIVE ("Image/Colors/Brightness-Contrast...", (base_type != INDEXED));
       SET_SENSITIVE ("Image/Colors/Threshold...", (base_type != INDEXED));
       SET_SENSITIVE ("Image/Colors/Levels...", (base_type != INDEXED));
       SET_SENSITIVE ("Image/Colors/Curves...", (base_type != INDEXED));
-#endif
       SET_SENSITIVE ("Image/Colors/Desaturate", (base_type == RGB));
-#if 0
       SET_SENSITIVE ("Image/Colors/Posterize...", (base_type != INDEXED));
-#endif
       SET_SENSITIVE ("Image/Colors/Invert", (base_type != INDEXED));
       SET_SENSITIVE ("Image/Colors/Auto/Equalize", (base_type != INDEXED));
 

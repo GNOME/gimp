@@ -141,11 +141,11 @@ render_indexed_image(GtkWidget *preview, GimpPixelRgn *srcrgn)
    }
    bpp = srcrgn->bpp;
    alpha = bpp;
-   has_alpha = gimp_drawable_has_alpha(srcrgn->drawable->id);
+   has_alpha = gimp_drawable_has_alpha(srcrgn->drawable->drawable_id);
    if (has_alpha)
       alpha--;
 
-   cmap = gimp_image_get_cmap(gimp_drawable_image_id(srcrgn->drawable->id),
+   cmap = gimp_image_get_cmap(gimp_drawable_image_id(srcrgn->drawable->drawable_id),
 			      &ncols);
 
    src_row = g_new(guchar, dwidth * bpp);
@@ -204,7 +204,7 @@ render_rgb_image(GtkWidget *preview, GimpPixelRgn *srcrgn)
    }
    bpp = srcrgn->bpp;
    alpha = bpp;
-   has_alpha = gimp_drawable_has_alpha(srcrgn->drawable->id);
+   has_alpha = gimp_drawable_has_alpha(srcrgn->drawable->drawable_id);
    if (has_alpha)
       alpha--;
 
@@ -262,7 +262,7 @@ render_rgb_image(GtkWidget *preview, GimpPixelRgn *srcrgn)
 static void
 render_preview(GtkWidget *preview, GimpPixelRgn *srcrgn)
 {
-   switch (gimp_drawable_type(srcrgn->drawable->id)) {
+   switch (gimp_drawable_type(srcrgn->drawable->drawable_id)) {
    case GIMP_RGB_IMAGE:
    case GIMP_RGBA_IMAGE:
       render_rgb_image(preview, srcrgn);
@@ -414,8 +414,8 @@ make_preview(GimpDrawable *drawable)
    gtk_signal_connect(GTK_OBJECT(preview), "drag_data_received",
 		      GTK_SIGNAL_FUNC(handle_drop), NULL);
 
-   data->width  = gimp_drawable_width(drawable->id);
-   data->height = gimp_drawable_height(drawable->id);
+   data->width  = gimp_drawable_width(drawable->drawable_id);
+   data->height = gimp_drawable_height(drawable->drawable_id);
    gtk_preview_size(GTK_PREVIEW(preview), data->width, data->height);
 
    data->window = window = gtk_scrolled_window_new(NULL, NULL);

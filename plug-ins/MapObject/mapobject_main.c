@@ -115,12 +115,12 @@ check_drawables (GimpDrawable *drawable)
   for (i = 0; i < 6; i++)
     {
       if (mapvals.boxmap_id[i] == -1)
-        mapvals.boxmap_id[i] = drawable->id;
+        mapvals.boxmap_id[i] = drawable->drawable_id;
       else if (mapvals.boxmap_id[i] != -1 &&
 	       gimp_drawable_image_id (mapvals.boxmap_id[i]) == -1)
-        mapvals.boxmap_id[i] = drawable->id;
+        mapvals.boxmap_id[i] = drawable->drawable_id;
       else if (gimp_drawable_is_gray (mapvals.boxmap_id[i]))
-        mapvals.boxmap_id[i] = drawable->id;
+        mapvals.boxmap_id[i] = drawable->drawable_id;
     }
 
   /* Check that cylindermap images are valid */
@@ -129,12 +129,12 @@ check_drawables (GimpDrawable *drawable)
   for (i = 0; i < 2; i++)
     {
       if (mapvals.cylindermap_id[i] == -1)
-        mapvals.cylindermap_id[i] = drawable->id;
+        mapvals.cylindermap_id[i] = drawable->drawable_id;
       else if (mapvals.cylindermap_id[i]!=-1 && 
                gimp_drawable_image_id (mapvals.cylindermap_id[i]) == -1)
-        mapvals.cylindermap_id[i] = drawable->id;
+        mapvals.cylindermap_id[i] = drawable->drawable_id;
       else if (gimp_drawable_is_gray (mapvals.cylindermap_id[i]))
-        mapvals.cylindermap_id[i] = drawable->id;
+        mapvals.cylindermap_id[i] = drawable->drawable_id;
     }
 }
 
@@ -322,11 +322,11 @@ run (gchar      *name,
 
             for (i = 0; i < 6; i++)
               mapvals.boxmap_id[i] =
-		gimp_drawable_get (param[41+i].data.d_drawable)->id;
+		gimp_drawable_get (param[41+i].data.d_drawable)->drawable_id;
 
             for (i = 0; i < 2; i++)
               mapvals.cylindermap_id[i] =
-		gimp_drawable_get (param[47+i].data.d_drawable)->id;
+		gimp_drawable_get (param[47+i].data.d_drawable)->drawable_id;
 
             check_drawables (drawable);
             image_setup (drawable, FALSE);

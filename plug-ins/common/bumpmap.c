@@ -415,12 +415,13 @@ run (gchar   *name,
   /* Get drawable information */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
-  gimp_drawable_mask_bounds (drawable->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id,
+			     &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
   sel_width     = sel_x2 - sel_x1;
   sel_height    = sel_y2 - sel_y1;
-  img_bpp       = gimp_drawable_bpp (drawable->id);
-  img_has_alpha = gimp_drawable_has_alpha (drawable->id);
+  img_bpp       = gimp_drawable_bpp (drawable->drawable_id);
+  img_has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
   /* See how we will run */
   switch (run_mode)
@@ -472,8 +473,8 @@ run (gchar   *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if ((gimp_drawable_is_rgb(drawable->id) ||
-	   gimp_drawable_is_gray(drawable->id)))
+      if ((gimp_drawable_is_rgb(drawable->drawable_id) ||
+	   gimp_drawable_is_gray(drawable->drawable_id)))
 	{
 	  /* Run! */
 	  bumpmap ();
@@ -527,10 +528,10 @@ bumpmap (void)
     return;
 
   /* Get image information */
-  bm_width     = gimp_drawable_width (bm_drawable->id);
-  bm_height    = gimp_drawable_height (bm_drawable->id);
-  bm_bpp       = gimp_drawable_bpp (bm_drawable->id);
-  bm_has_alpha = gimp_drawable_has_alpha (bm_drawable->id);
+  bm_width     = gimp_drawable_width (bm_drawable->drawable_id);
+  bm_height    = gimp_drawable_height (bm_drawable->drawable_id);
+  bm_bpp       = gimp_drawable_bpp (bm_drawable->drawable_id);
+  bm_has_alpha = gimp_drawable_has_alpha (bm_drawable->drawable_id);
 
   /* Set the tile cache size */
   /* Compute number of tiles needed for one row of the drawable */
@@ -623,8 +624,8 @@ bumpmap (void)
     gimp_drawable_detach (bm_drawable);
 
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, sel_x1, sel_y1, sel_width, sel_height);
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, sel_x1, sel_y1, sel_width, sel_height);
 }
 
 static void
@@ -1306,15 +1307,17 @@ dialog_new_bumpmap (gboolean init_offsets)
     return;
 
   /* Get sizes */
-  bmint.bm_width     = gimp_drawable_width (bmint.bm_drawable->id);
-  bmint.bm_height    = gimp_drawable_height (bmint.bm_drawable->id);
-  bmint.bm_bpp       = gimp_drawable_bpp (bmint.bm_drawable->id);
-  bmint.bm_has_alpha = gimp_drawable_has_alpha (bmint.bm_drawable->id);
+  bmint.bm_width     = gimp_drawable_width (bmint.bm_drawable->drawable_id);
+  bmint.bm_height    = gimp_drawable_height (bmint.bm_drawable->drawable_id);
+  bmint.bm_bpp       = gimp_drawable_bpp (bmint.bm_drawable->drawable_id);
+  bmint.bm_has_alpha = gimp_drawable_has_alpha (bmint.bm_drawable->drawable_id);
 
   if (init_offsets)
     {      
-      gimp_drawable_offsets (bmint.bm_drawable->id, &bump_offset_x, &bump_offset_y);
-      gimp_drawable_offsets (drawable->id, &draw_offset_x, &draw_offset_y);
+      gimp_drawable_offsets (bmint.bm_drawable->drawable_id,
+			     &bump_offset_x, &bump_offset_y);
+      gimp_drawable_offsets (drawable->drawable_id,
+			     &draw_offset_x, &draw_offset_y);
       
       bmvals.xofs = draw_offset_x - bump_offset_x;
       bmvals.yofs = draw_offset_y - bump_offset_y;

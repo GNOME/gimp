@@ -169,7 +169,8 @@ run (gchar      *name,
 
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
-  gimp_drawable_mask_bounds (drawable->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id,
+			     &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
   sel_width = sel_x2 - sel_x1;
   sel_height = sel_y2 - sel_y1;
@@ -238,7 +239,7 @@ colorify (GimpDrawable *drawable)
       final_blue_lookup[i]  = i * cvals.color.b;
     }
 
-  bpp = gimp_drawable_bpp (drawable->id);
+  bpp = gimp_drawable_bpp (drawable->drawable_id);
   row = g_new (guchar, sel_width * bpp);
 
   gimp_tile_cache_ntiles (2 * (sel_width / gimp_tile_width()) + 1);
@@ -261,8 +262,9 @@ colorify (GimpDrawable *drawable)
   g_free (row);
 
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE); 
-  gimp_drawable_update (drawable->id, sel_x1, sel_y1, sel_width, sel_height);
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE); 
+  gimp_drawable_update (drawable->drawable_id,
+			sel_x1, sel_y1, sel_width, sel_height);
 }
 
 static void

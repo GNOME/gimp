@@ -209,8 +209,8 @@ run (gchar   *name,
   if (status == GIMP_PDB_SUCCESS)
     {
       /*  Make sure that the drawable is gray or RGB color  */
-      if (gimp_drawable_is_rgb (drawable->id) ||
-	  gimp_drawable_is_gray (drawable->id))
+      if (gimp_drawable_is_rgb (drawable->drawable_id) ||
+	  gimp_drawable_is_gray (drawable->drawable_id))
 	{
 	  gimp_progress_init ( _("Glass Tile..."));
 	  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
@@ -356,7 +356,7 @@ preview_widget (GimpDrawable *drawable)
   GtkWidget *preview;
 
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  fill_preview_with_thumb (preview, drawable->id);
+  fill_preview_with_thumb (preview, drawable->drawable_id);
   size = GTK_PREVIEW (preview)->rowstride * GTK_PREVIEW (preview)->buffer_height;
   preview_bits = g_malloc (size);
   memcpy (preview_bits, GTK_PREVIEW (preview)->buffer, size);
@@ -572,7 +572,7 @@ glasstile (GimpDrawable *drawable,
     } 
   else 
     {
-      gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
       width  = drawable->width;
       height = drawable->height;
       bytes  = drawable->bpp;
@@ -704,8 +704,8 @@ glasstile (GimpDrawable *drawable,
   else
     {
       gimp_drawable_flush (drawable);
-      gimp_drawable_merge_shadow (drawable->id, TRUE);
-      gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
+      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+      gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
     }
 
   g_free (cur_row);

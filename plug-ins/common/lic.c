@@ -202,7 +202,7 @@ image_setup (GimpDrawable *drawable,
   input_drawable = drawable;
   output_drawable = drawable;
 
-  gimp_drawable_mask_bounds (drawable->id,
+  gimp_drawable_mask_bounds (drawable->drawable_id,
 			     &border_x1, &border_y1, &border_x2, &border_y2);
 
   width = input_drawable->width;
@@ -217,7 +217,7 @@ image_setup (GimpDrawable *drawable,
   /* =================== */
 
   in_channels = 3;
-  if (gimp_drawable_has_alpha (input_drawable->id))
+  if (gimp_drawable_has_alpha (input_drawable->drawable_id))
     in_channels++;
 
   if (interactive)
@@ -678,7 +678,7 @@ rgb_to_hue (GimpDrawable  *image,
   h = image->height;
   maxc = (glong) w * (glong) h;
 
-  /* gimp_drawable_mask_bounds (drawable->id,
+  /* gimp_drawable_mask_bounds (drawable->drawable_id,
      &border_x1, &border_y1, &border_x2, &border_y2); */
 
   gimp_pixel_rgn_init (&region, image,  0, 0, w, h, FALSE, FALSE);
@@ -719,7 +719,7 @@ rgb_to_saturation (GimpDrawable  *image,
   h = image->height;
   maxc = (glong) w * (glong) h;
 
-  /* gimp_drawable_mask_bounds (drawable->id,
+  /* gimp_drawable_mask_bounds (drawable->drawable_id,
      &border_x1, &border_y1, &border_x2, &border_y2); */
 
   gimp_pixel_rgn_init (&region, image,  0, 0, w, h, FALSE, FALSE);
@@ -760,7 +760,7 @@ rgb_to_brightness (GimpDrawable  *image,
   h = image->height;
   maxc = (glong) w * (glong) h;
 
-  /* gimp_drawable_mask_bounds (drawable->id,
+  /* gimp_drawable_mask_bounds (drawable->drawable_id,
      &border_x1, &border_y1, &border_x2, &border_y2); */
 
   gimp_pixel_rgn_init (&region, image,  0, 0, w, h, FALSE, FALSE);
@@ -954,8 +954,8 @@ compute_image (void)
   /* ============ */
 
   gimp_drawable_flush (output_drawable);
-  gimp_drawable_merge_shadow (output_drawable->id, TRUE);
-  gimp_drawable_update (output_drawable->id, 0, 0, width, height);
+  gimp_drawable_merge_shadow (output_drawable->drawable_id, TRUE);
+  gimp_drawable_update (output_drawable->drawable_id, 0, 0, width, height);
 
   if (new_image_id != -1)
     {
@@ -1273,7 +1273,7 @@ run (gchar   *name,
       /* Make sure that the drawable is RGBA or RGB color */
       /* ================================================ */
 
-      if (gimp_drawable_is_rgb (drawable->id))
+      if (gimp_drawable_is_rgb (drawable->drawable_id))
 	{
 	  /* Set the tile cache size */
           /* ======================= */

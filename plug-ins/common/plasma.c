@@ -262,7 +262,8 @@ run (gchar   *name,
   if (status == GIMP_PDB_SUCCESS)
     {
       /*  Make sure that the drawable is gray or RGB color  */
-      if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
+      if (gimp_drawable_is_rgb (drawable->drawable_id) ||
+	  gimp_drawable_is_gray (drawable->drawable_id))
 	{
 	  gimp_progress_init (_("Plasma..."));
 	  gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
@@ -473,9 +474,9 @@ init_plasma (GimpDrawable *drawable,
     } 
   else 
     {
-      gimp_drawable_mask_bounds (drawable->id, &ix1, &iy1, &ix2, &iy2);
+      gimp_drawable_mask_bounds (drawable->drawable_id, &ix1, &iy1, &ix2, &iy2);
       bpp = drawable->bpp;
-      has_alpha = gimp_drawable_has_alpha (drawable->id);
+      has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
       if (has_alpha)
 	alpha = bpp-1;
       else
@@ -527,8 +528,9 @@ end_plasma (GimpDrawable *drawable,
       tile = NULL;
 
       gimp_drawable_flush (drawable);
-      gimp_drawable_merge_shadow (drawable->id, TRUE);
-      gimp_drawable_update (drawable->id, ix1, iy1, (ix2 - ix1), (iy2 - iy1));
+      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+      gimp_drawable_update (drawable->drawable_id,
+			    ix1, iy1, (ix2 - ix1), (iy2 - iy1));
     }
 }
 

@@ -660,8 +660,8 @@ run (gchar   *name,
   if (status == GIMP_PDB_SUCCESS)
     {
       /*  Make sure that the drawable is gray or RGB color  */
-      if (gimp_drawable_is_rgb (drawable->id) ||
-	  gimp_drawable_is_gray (drawable->id))
+      if (gimp_drawable_is_rgb (drawable->drawable_id) ||
+	  gimp_drawable_is_gray (drawable->drawable_id))
 	{
 	  gimp_progress_init (_("Newsprintifing..."));
 
@@ -1189,8 +1189,8 @@ newsprint_dialog (GimpDrawable *drawable)
 
   /* need to know the bpp, so we can tell if we're doing 
    * RGB/CMYK or grey style of dialog box */
-  bpp = gimp_drawable_bpp (drawable->id);
-  if (gimp_drawable_has_alpha (drawable->id))
+  bpp = gimp_drawable_bpp (drawable->drawable_id);
+  if (gimp_drawable_has_alpha (drawable->drawable_id))
     bpp--;
 
   /* force greyscale if it's the only thing we can do */
@@ -1237,7 +1237,7 @@ newsprint_dialog (GimpDrawable *drawable)
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  gimp_image_get_resolution (gimp_drawable_image_id( drawable->id),
+  gimp_image_get_resolution (gimp_drawable_image_id( drawable->drawable_id),
 			     &xres, &yres);
   /* XXX hack: should really note both resolutions, and use
    * rectangular cells, not square cells.  But I'm being lazy,
@@ -1774,10 +1774,10 @@ newsprint (GimpDrawable *drawable)
 
   tile_width = gimp_tile_width ();
 
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
-  bpp        = gimp_drawable_bpp (drawable->id);
-  has_alpha  = gimp_drawable_has_alpha (drawable->id);
+  bpp        = gimp_drawable_bpp (drawable->drawable_id);
+  has_alpha  = gimp_drawable_has_alpha (drawable->drawable_id);
   colour_bpp = has_alpha ? bpp-1 : bpp;
   colourspace= pvals.colourspace;
   if (bpp == 1)
@@ -2023,6 +2023,6 @@ do {								\
 
   /* update the affected region */
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 }

@@ -401,7 +401,7 @@ run (gchar      *name,
       /*  Possibly retrieve data; first look for a parasite -
        *  if not found, fall back to global values
        */
-      parasite = gimp_drawable_parasite_find (active_drawable->id,
+      parasite = gimp_drawable_parasite_find (active_drawable->drawable_id,
 					      IFSCOMPOSE_PARASITE);
       found_parasite = FALSE;
       if (parasite)
@@ -465,8 +465,8 @@ run (gchar      *name,
 
   /*  Render the fractal  */
   if ((status == GIMP_PDB_SUCCESS) &&
-      (gimp_drawable_is_rgb (active_drawable->id) ||
-       gimp_drawable_is_gray (active_drawable->id)))
+      (gimp_drawable_is_rgb (active_drawable->drawable_id) ||
+       gimp_drawable_is_gray (active_drawable->drawable_id)))
     {
       /*  set the tile cache size so that the operation works well  */
       gimp_tile_cache_ntiles (2 * (MAX (active_drawable->width, active_drawable->height) /
@@ -492,7 +492,7 @@ run (gchar      *name,
 					GIMP_PARASITE_PERSISTENT |
 					GIMP_PARASITE_UNDOABLE,
 					strlen(str)+1, str);
-	  gimp_drawable_parasite_attach (active_drawable->id, parasite);
+	  gimp_drawable_parasite_attach (active_drawable->drawable_id, parasite);
 	  gimp_parasite_free (parasite);
 
 	  g_free (str);
@@ -1326,7 +1326,7 @@ ifs_options_dialog (void)
 static void
 ifs_compose (GimpDrawable *drawable)
 {
-  GimpImageType type = gimp_drawable_type (drawable->id);
+  GimpImageType type = gimp_drawable_type (drawable->drawable_id);
   gchar   *buffer;
   gint     width  = drawable->width;
   gint     height = drawable->height;
@@ -1479,8 +1479,8 @@ ifs_compose (GimpDrawable *drawable)
   g_free(nhits);
 
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id,0,0,width,height);
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id,0,0,width,height);
 }
 
 static void

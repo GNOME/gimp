@@ -229,8 +229,8 @@ run (gchar      *name,
 
   /*  Render the cubism effect  */
   if ((status == GIMP_PDB_SUCCESS) &&
-      (gimp_drawable_is_rgb (active_drawable->id) ||
-       gimp_drawable_is_gray (active_drawable->id)))
+      (gimp_drawable_is_rgb (active_drawable->drawable_id) ||
+       gimp_drawable_is_gray (active_drawable->drawable_id)))
     {
       /*  set cache size  */
       gimp_tile_cache_ntiles (SQR (4 * cvals.tile_size * cvals.tile_saturation) / SQR (gimp_tile_width ()));
@@ -263,7 +263,7 @@ cubism (GimpDrawable *drawable)
   gint    x1, y1, x2, y2;
 
   /*  find the drawable mask bounds  */
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   /*  determine the background color  */
   if (cvals.bg_color == BLACK)
@@ -273,7 +273,7 @@ cubism (GimpDrawable *drawable)
   else
     {
       gimp_palette_get_background (&background);
-      switch (gimp_drawable_type (drawable->id))
+      switch (gimp_drawable_type (drawable->drawable_id))
 	{
 	case GIMP_RGBA_IMAGE:
 	  bg_col[3] = 0;
@@ -298,8 +298,8 @@ cubism (GimpDrawable *drawable)
 
   /*  merge the shadow, update the drawable  */
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 }
 
 static gint
@@ -412,9 +412,9 @@ render_cubism (GimpDrawable *drawable)
   gint *random_indices;
   gpointer pr;
 
-  has_alpha = gimp_drawable_has_alpha (drawable->id);
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
   bytes = drawable->bpp;
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
   img_area = (x2 - x1) * (y2 - y1);
   tile_area = SQR (cvals.tile_size);
 
@@ -558,7 +558,7 @@ fill_poly_color (Polygon   *poly,
   else
     one_over_dist = 0.0;
 
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
   bytes = drawable->bpp;
 
   polygon_extents (poly, &dmin_x, &dmin_y, &dmax_x, &dmax_y);

@@ -160,7 +160,7 @@ run (gchar      *name,
   if (status == GIMP_PDB_SUCCESS)
     {
       /*  Make sure that the drawable is RGB color  */
-      if (gimp_drawable_is_rgb (drawable->id))
+      if (gimp_drawable_is_rgb (drawable->drawable_id))
 	{
 	  gimp_progress_init ( _("Border Average..."));
 	  borderaverage (drawable, &result_color);
@@ -235,7 +235,7 @@ borderaverage (GimpDrawable *drawable,
    *  need to be done for correct operation. (It simply makes it go
    *  faster, since fewer pixels need to be operated on).
    */
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   /*  Get the size of the input image. (This will/must be the same
    *  as the size of the output image.

@@ -408,8 +408,8 @@ run (gchar      *name,
 
   /*  Create the mosaic  */
   if ((status == GIMP_PDB_SUCCESS) &&
-      (gimp_drawable_is_rgb (active_drawable->id) ||
-       gimp_drawable_is_gray (active_drawable->id)))
+      (gimp_drawable_is_rgb (active_drawable->drawable_id) ||
+       gimp_drawable_is_gray (active_drawable->drawable_id)))
     {
       /*  set the tile cache size so that the gaussian blur works well  */
       gimp_tile_cache_ntiles (2 * (MAX (active_drawable->width,
@@ -447,7 +447,7 @@ mosaic (GimpDrawable *drawable)
   GimpRGB  background;
 
   /*  Find the mask bounds  */
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   /*  progress bar for gradient finding  */
   gimp_progress_init ( _("Finding Edges..."));
@@ -483,7 +483,7 @@ mosaic (GimpDrawable *drawable)
     case FG_BG:
       gimp_palette_get_foreground (&foreground);
       gimp_palette_get_background (&background);
-      switch (gimp_drawable_type (drawable->id))
+      switch (gimp_drawable_type (drawable->drawable_id))
 	{
 	case GIMP_RGB_IMAGE:
 	case GIMP_RGBA_IMAGE:
@@ -502,7 +502,7 @@ mosaic (GimpDrawable *drawable)
     }
 
   alpha = drawable->bpp - 1;
-  if (gimp_drawable_has_alpha (drawable->id))
+  if (gimp_drawable_has_alpha (drawable->drawable_id))
     {
       fore[alpha] = OPAQUE;
       back[alpha] = OPAQUE;
@@ -521,8 +521,8 @@ mosaic (GimpDrawable *drawable)
 
   /*  merge the shadow, update the drawable  */
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 }
 
 static gint
@@ -775,7 +775,7 @@ find_gradients (GimpDrawable *drawable,
   gint x1, y1, x2, y2;
 
   /*  find the mask bounds  */
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
   width = (x2 - x1);
   height = (y2 - y1);
   bytes = drawable->bpp;
@@ -931,7 +931,7 @@ gaussian_deriv (GimpPixelRgn *src_rgn,
   gint x1, y1, x2, y2;
 
   /*  get the mask bounds  */
-  gimp_drawable_mask_bounds (src_rgn->drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (src_rgn->drawable->drawable_id, &x1, &y1, &x2, &y2);
   bytes = src_rgn->bpp;
 
   /*  allocate buffers for get/set pixel region rows/cols  */
@@ -1453,7 +1453,7 @@ grid_render (GimpDrawable *drawable)
   Polygon poly;
   gpointer pr;
 
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
   bytes = drawable->bpp;
 
   /*  Fill the image with the background color  */
@@ -1639,7 +1639,7 @@ process_poly (Polygon      *poly,
   gint x1, y1, x2, y2;
 
   /*  find mask bounds  */
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   /*  determine the variation of tile color based on tile number  */
   color_vary = (vary) ? fp_rand (mvals.color_variation) : 0;
@@ -1965,7 +1965,7 @@ find_poly_color (Polygon      *poly,
 
   count = 0;
 
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
   bytes = drawable->bpp;
 
   polygon_extents (poly, &dmin_x, &dmin_y, &dmax_x, &dmax_y);
@@ -2088,7 +2088,7 @@ fill_poly_color (Polygon      *poly,
       supersample = supersample2 = 1;
     }
 
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
   bytes = drawable->bpp;
 
   /* begin loop */
@@ -2266,7 +2266,7 @@ fill_poly_image (Polygon      *poly,
       supersample = supersample2 = 1;
     }
 
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
   bytes = drawable->bpp;
   for (i = 0; i < poly->npts; i++)
     {

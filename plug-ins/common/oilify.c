@@ -188,13 +188,13 @@ run (gchar   *name,
 
   /*  Make sure that the drawable is gray or RGB color  */
   if ((status == GIMP_PDB_SUCCESS) &&
-      (gimp_drawable_is_rgb (drawable->id) ||
-       gimp_drawable_is_gray (drawable->id)))
+      (gimp_drawable_is_rgb (drawable->drawable_id) ||
+       gimp_drawable_is_gray (drawable->drawable_id)))
     {
       gimp_progress_init (_("Oil Painting..."));
       gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
 
-      if (gimp_drawable_is_rgb (drawable->id) && (ovals.mode == MODE_INTEN))
+      if (gimp_drawable_is_rgb (drawable->drawable_id) && (ovals.mode == MODE_INTEN))
         oilify_intensity (drawable);
       else
         oilify_rgb (drawable);
@@ -242,7 +242,7 @@ oilify_rgb (GimpDrawable *drawable)
   guchar *guc_tmp1;
 
   /*  get the selection bounds  */
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
   progress = 0;
   max_progress = (x2 - x1) * (y2 - y1);
 
@@ -325,8 +325,8 @@ oilify_rgb (GimpDrawable *drawable)
   
   /*  update the oil-painted region  */
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 }
 
 /*
@@ -354,7 +354,7 @@ oilify_intensity (GimpDrawable *drawable)
   guchar *guc_tmp1;
 
   /*  get the selection bounds  */
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
   progress = 0;
   max_progress = (x2 - x1) * (y2 - y1);
   
@@ -435,8 +435,8 @@ oilify_intensity (GimpDrawable *drawable)
   
   /*  update the oil-painted region  */
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 }
 
 static gint

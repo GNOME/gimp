@@ -186,12 +186,12 @@ run (gchar      *name,
     {
       gimp_undo_push_group_start (image_ID);
       /*  Add alpha if not present */
-      gimp_layer_add_alpha (drawable->id);
-      drawable = gimp_drawable_get (drawable->id);
+      gimp_layer_add_alpha (drawable->drawable_id);
+      drawable = gimp_drawable_get (drawable->drawable_id);
 
       /*  Make sure that the drawable is RGB color  */
-      if (gimp_drawable_is_rgb (drawable->id) && 
-	  gimp_drawable_is_layer (drawable->id))  
+      if (gimp_drawable_is_rgb (drawable->drawable_id) && 
+	  gimp_drawable_is_layer (drawable->drawable_id))  
 	{
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    gimp_progress_init (_("Removing color..."));
@@ -367,7 +367,7 @@ toalpha (GimpDrawable *drawable)
    *  need to be done for correct operation. (It simply makes it go
    *  faster, since fewer pixels need to be operated on).
    */
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   total_area    = (x2 - x1) * (y2 - y1);
   area_so_far   = 0;
@@ -398,8 +398,8 @@ toalpha (GimpDrawable *drawable)
 
   /*  update the processed region  */
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 }
 
 static gboolean

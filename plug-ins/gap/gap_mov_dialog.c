@@ -1798,10 +1798,10 @@ mov_path_prevw_create ( GimpDrawable *drawable, t_mov_path_preview *path_ptr)
   gint           row;
 
   path_ptr->drawable = drawable;
-  path_ptr->dwidth   = gimp_drawable_width(drawable->id );
-  path_ptr->dheight  = gimp_drawable_height(drawable->id );
-  path_ptr->bpp	   = gimp_drawable_bpp(drawable->id);
-  if ( gimp_drawable_has_alpha(drawable->id) )
+  path_ptr->dwidth   = gimp_drawable_width(drawable->drawable_id );
+  path_ptr->dheight  = gimp_drawable_height(drawable->drawable_id );
+  path_ptr->bpp	   = gimp_drawable_bpp(drawable->drawable_id);
+  if ( gimp_drawable_has_alpha(drawable->drawable_id) )
     path_ptr->bpp--;
   path_ptr->cursor = FALSE;
   path_ptr->curx = 0;
@@ -2297,7 +2297,7 @@ render_preview ( GtkWidget *preview, GimpPixelRgn *srcrgn )
 
   bpp = srcrgn->bpp;
   alpha = bpp;
-  has_alpha = gimp_drawable_has_alpha( srcrgn->drawable->id );
+  has_alpha = gimp_drawable_has_alpha( srcrgn->drawable->drawable_id );
   if( has_alpha ) alpha--;
   /*  printf("render_preview: %d %d %d", bpp, alpha, has_alpha);
       printf(" (%d %d %d %d)\n", dwidth, dheight, pwidth, pheight); */

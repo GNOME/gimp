@@ -38,7 +38,7 @@ gimp_drawable_get (gint32 drawable_ID)
   GimpDrawable *drawable;
 
   drawable = g_new (GimpDrawable, 1);
-  drawable->id           = drawable_ID;
+  drawable->drawable_id  = drawable_ID;
   drawable->width        = gimp_drawable_width  (drawable_ID);
   drawable->height       = gimp_drawable_height (drawable_ID);
   drawable->bpp          = gimp_drawable_bpp    (drawable_ID);
@@ -100,10 +100,10 @@ gimp_drawable_delete (GimpDrawable *drawable)
 {
   if (drawable)
     {
-      if (gimp_drawable_is_layer (drawable->id))
-	gimp_layer_delete (drawable->id);
+      if (gimp_drawable_is_layer (drawable->drawable_id))
+	gimp_layer_delete (drawable->drawable_id);
       else
-	gimp_channel_delete (drawable->id);
+	gimp_channel_delete (drawable->drawable_id);
     }
 }
 

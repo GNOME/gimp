@@ -686,7 +686,7 @@ init_preview_misc (void)
   else
     rgb_mode = FALSE;
 
-  has_alpha = gimp_drawable_has_alpha(drawable->id);
+  has_alpha = gimp_drawable_has_alpha(drawable->drawable_id);
 
   seed_data = g_malloc(width*height*4);
   preview_data1 = g_malloc(width*height*(rgb_mode?3:1));
@@ -724,7 +724,7 @@ init_preview_misc (void)
 						   ) * 256
 						  )) *
 						 gimp_drawable_bpp
-						 (drawable->id)
+						 (drawable->drawable_id)
 				       ],
 				       drawable->width>256?
 				       (drawable->width/2-128):0,

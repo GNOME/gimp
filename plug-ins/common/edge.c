@@ -230,8 +230,8 @@ run (gchar  *name,
     }
 
   /* make sure the drawable exist and is not indexed */
-  if (gimp_drawable_is_rgb (drawable->id) ||
-      gimp_drawable_is_gray (drawable->id))
+  if (gimp_drawable_is_rgb (drawable->drawable_id) ||
+      gimp_drawable_is_gray (drawable->drawable_id))
     {
       gimp_progress_init (_("Edge Detection..."));
 
@@ -273,15 +273,15 @@ init_tile_buf (TileBuf   *buf,
   buf->tile = NULL;
   buf->col = 0;
   buf->row = 0;
-  if (gimp_drawable_is_rgb (drawable->id))
+  if (gimp_drawable_is_rgb (drawable->drawable_id))
     buf->bpp = 3;
   else
     buf->bpp = 1;
   buf->tile_width = gimp_tile_width();
   buf->tile_height = gimp_tile_height();
   buf->drawable = drawable;
-  buf->drawable_width = gimp_drawable_width(drawable->id);
-  buf->drawable_height = gimp_drawable_height(drawable->id);
+  buf->drawable_width = gimp_drawable_width(drawable->drawable_id);
+  buf->drawable_height = gimp_drawable_height(drawable->drawable_id);
 }
 
 static void
@@ -489,12 +489,12 @@ edge (GimpDrawable *drawable)
 
   init_tile_buf (&buf, drawable);
 
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
-  width = gimp_drawable_width (drawable->id);
-  height = gimp_drawable_height (drawable->id);
-  alpha = gimp_drawable_bpp (drawable->id);
-  has_alpha = gimp_drawable_has_alpha (drawable->id);
+  width = gimp_drawable_width (drawable->drawable_id);
+  height = gimp_drawable_height (drawable->drawable_id);
+  alpha = gimp_drawable_bpp (drawable->drawable_id);
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
   if (has_alpha)
     alpha--;
 
@@ -608,8 +608,8 @@ edge (GimpDrawable *drawable)
 
   end_tile_buf (&buf);
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 }
 
 /*******************************************************/

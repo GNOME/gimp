@@ -90,7 +90,7 @@ peek_box_image (gint image,
 
   if (box_drawables[image]->bpp == 4)
     {
-      if (gimp_drawable_has_alpha (box_drawables[image]->id))
+      if (gimp_drawable_has_alpha (box_drawables[image]->drawable_id))
         color.a = (gdouble) (data[3]) / 255.0;
       else
         color.a = 1.0;
@@ -120,7 +120,7 @@ peek_cylinder_image (gint image,
 
   if (cylinder_drawables[image]->bpp == 4)
     {
-      if (gimp_drawable_has_alpha (cylinder_drawables[image]->id))
+      if (gimp_drawable_has_alpha (cylinder_drawables[image]->drawable_id))
         color.a = (gdouble) (data[3]) / 255.0;
       else
         color.a = 1.0;
@@ -360,7 +360,7 @@ image_setup (GimpDrawable *drawable,
   input_drawable  = drawable;
   output_drawable = drawable;
 
-  gimp_drawable_mask_bounds (drawable->id,
+  gimp_drawable_mask_bounds (drawable->drawable_id,
 			     &border_x1, &border_y1, &border_x2, &border_y2);
 
   width  = input_drawable->width;
@@ -385,7 +385,7 @@ image_setup (GimpDrawable *drawable,
   /* =================== */
 
   in_channels = 3;
-  if (gimp_drawable_has_alpha (input_drawable->id) == TRUE)
+  if (gimp_drawable_has_alpha (input_drawable->drawable_id) == TRUE)
     in_channels++;
 
   if (interactive == TRUE)

@@ -465,13 +465,14 @@ run (gchar      *name,
 
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
-  img_width = gimp_drawable_width (drawable->id);
-  img_height = gimp_drawable_height (drawable->id);
-  img_bpp = gimp_drawable_bpp (drawable->id);
-  img_has_alpha = gimp_drawable_has_alpha (drawable->id);
-  gimp_drawable_mask_bounds (drawable->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
+  img_width = gimp_drawable_width (drawable->drawable_id);
+  img_height = gimp_drawable_height (drawable->drawable_id);
+  img_bpp = gimp_drawable_bpp (drawable->drawable_id);
+  img_has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
+  gimp_drawable_mask_bounds (drawable->drawable_id,
+			     &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
-  if (!gimp_drawable_is_rgb (drawable->id))
+  if (!gimp_drawable_is_rgb (drawable->drawable_id))
     status = GIMP_PDB_CALLING_ERROR;
 
   if (status == GIMP_PDB_SUCCESS)
@@ -549,8 +550,8 @@ run (gchar      *name,
 	    }
 
 	  gimp_drawable_flush (drawable);
-	  gimp_drawable_merge_shadow (drawable->id, TRUE);
-	  gimp_drawable_update (drawable->id, 
+	  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+	  gimp_drawable_update (drawable->drawable_id, 
 				sel_x1, sel_y1, 
 				(sel_x2 - sel_x1), (sel_y2 - sel_y1));
 

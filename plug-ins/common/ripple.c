@@ -230,8 +230,8 @@ run (gchar  *name,
   if (status == GIMP_PDB_SUCCESS)
     {
       /*  Make sure that the drawable is gray or RGB color  */
-      if (gimp_drawable_is_rgb (drawable->id) ||
-	  gimp_drawable_is_gray (drawable->id))
+      if (gimp_drawable_is_rgb (drawable->drawable_id) ||
+	  gimp_drawable_is_gray (drawable->drawable_id))
 	{
 	  gimp_progress_init ( _("Rippling..."));
 
@@ -289,7 +289,7 @@ ripple (GimpDrawable *drawable)
 
   /* Get selection area */
 
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   width  = drawable->width;
   height = drawable->height;
@@ -555,8 +555,8 @@ ripple (GimpDrawable *drawable)
 
   /*  update the region  */
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 } /* ripple */
 
 static gint

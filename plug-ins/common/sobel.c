@@ -208,8 +208,8 @@ run (gchar   *name,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   /*  Make sure that the drawable is gray or RGB color  */
-  if (gimp_drawable_is_rgb (drawable->id) ||
-      gimp_drawable_is_gray (drawable->id))
+  if (gimp_drawable_is_rgb (drawable->drawable_id) ||
+      gimp_drawable_is_gray (drawable->drawable_id))
     {
       gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
       sobel (drawable, bvals.horizontal, bvals.vertical, bvals.keep_sign);
@@ -357,7 +357,7 @@ sobel (GimpDrawable *drawable,
    *  faster, since fewer pixels need to be operated on).
    */
 
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
   gimp_progress_init (_("Sobel Edge Detecting..."));
 
   /* Get the size of the input image. (This will/must be the same
@@ -366,7 +366,7 @@ sobel (GimpDrawable *drawable,
   width  = drawable->width;
   height = drawable->height;
   bytes  = drawable->bpp;
-  alpha  = gimp_drawable_has_alpha (drawable -> id);
+  alpha  = gimp_drawable_has_alpha (drawable->drawable_id);
 
   /*  allocate row buffers  */
   prev_row = g_new (guchar, (x2 - x1 + 2) * bytes);
@@ -433,8 +433,8 @@ sobel (GimpDrawable *drawable,
 
   /*  update the sobeled region  */
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 
   g_free (prev_row);
   g_free (cur_row);

@@ -59,7 +59,7 @@ get_colors (GimpDrawable *drawable,
   fg[0] = fg[1] = fg[2] = fg[3] = 255;
   bg[0] = bg[1] = bg[2] = bg[3] = 255;
 
-  switch ( gimp_drawable_type (drawable->id) )
+  switch ( gimp_drawable_type (drawable->drawable_id) )
     {
     case GIMP_RGB_IMAGE:
     case GIMP_RGBA_IMAGE:

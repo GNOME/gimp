@@ -546,8 +546,8 @@ jigsaw (gboolean preview_mode)
     {
       gimp_pixel_rgn_set_rect (&dest_pr, buffer, 0, 0, width, height);
       gimp_drawable_flush (drawable);
-      gimp_drawable_merge_shadow (drawable->id, TRUE);
-      gimp_drawable_update (drawable->id, 0, 0, width, height);
+      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+      gimp_drawable_update (drawable->drawable_id, 0, 0, width, height);
     }
 
   g_free(buffer);
@@ -2703,7 +2703,7 @@ preview_widget (GimpDrawable *drawable)
   GtkWidget *preview;
 
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  fill_preview_with_thumb (preview, drawable->id);
+  fill_preview_with_thumb (preview, drawable->drawable_id);
   size = GTK_PREVIEW (preview)->rowstride * GTK_PREVIEW (preview)->buffer_height;
   preview_bits = g_malloc (size);
   memcpy (preview_bits, GTK_PREVIEW (preview)->buffer, size);

@@ -199,7 +199,7 @@ rcm_reduce_image (GimpDrawable *drawable,
 
   /* get bounds of image or selection */
 
-  gimp_drawable_mask_bounds(drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds(drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   if ( ((x2-x1) != drawable->width) && ((y2-y1) != drawable->height)) 
     NoSelectionMade = FALSE;

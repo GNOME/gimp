@@ -214,7 +214,7 @@ run (gchar      *name,
 
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
-  mapvals.drawable_id = drawable->id;
+  mapvals.drawable_id = drawable->drawable_id;
 
   check_drawables ();
 
@@ -223,7 +223,7 @@ run (gchar      *name,
       /* Make sure that the drawable is RGBA or RGB color */
       /* ================================================ */
 
-      if (gimp_drawable_is_rgb (drawable->id))
+      if (gimp_drawable_is_rgb (drawable->drawable_id))
 	{
 	  /* Set the tile cache size */
           /* ======================= */

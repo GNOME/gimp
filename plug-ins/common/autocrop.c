@@ -111,9 +111,9 @@ run (gchar   *name,
   image_id = param[1].data.d_image;
 
   /*  Make sure that the drawable is gray or RGB color  */
-  if (gimp_drawable_is_rgb (drawable->id) ||
-      gimp_drawable_is_gray (drawable->id)  ||
-      gimp_drawable_is_indexed (drawable->id)) 
+  if (gimp_drawable_is_rgb (drawable->drawable_id) ||
+      gimp_drawable_is_gray (drawable->drawable_id)  ||
+      gimp_drawable_is_indexed (drawable->drawable_id)) 
   {
     if (interactive)
       gimp_progress_init (_("Cropping..."));

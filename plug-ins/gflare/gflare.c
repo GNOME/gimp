@@ -858,9 +858,9 @@ plugin_run (gchar      *name,
 
   image_ID = param[1].data.d_image;
   drawable = gimp_drawable_get (param[2].data.d_drawable);
-  dinfo.is_color  = gimp_drawable_is_rgb (drawable->id);
-  dinfo.has_alpha = gimp_drawable_has_alpha (drawable->id);
-  gimp_drawable_mask_bounds (drawable->id, &dinfo.x1, &dinfo.y1,
+  dinfo.is_color  = gimp_drawable_is_rgb (drawable->drawable_id);
+  dinfo.has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &dinfo.x1, &dinfo.y1,
 			     &dinfo.x2, &dinfo.y2);
   dinfo.tile_width = gimp_tile_width ();
   dinfo.tile_height = gimp_tile_height ();
@@ -938,8 +938,8 @@ plugin_run (gchar      *name,
   if (status == GIMP_PDB_SUCCESS)
     {
       /*  Make sure that the drawable is gray or RGB color  */
-      if (gimp_drawable_is_rgb (drawable->id) ||
-	  gimp_drawable_is_gray (drawable->id))
+      if (gimp_drawable_is_rgb (drawable->drawable_id) ||
+	  gimp_drawable_is_gray (drawable->drawable_id))
 	{
 	  gimp_progress_init (_("Gradient Flare..."));
 	  plugin_do ();
@@ -1055,8 +1055,8 @@ plugin_do (void)
   /* Clean up */
   calc_deinit ();
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, dinfo.x1, dinfo.y1,
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, dinfo.x1, dinfo.y1,
 			(dinfo.x2 - dinfo.x1), (dinfo.y2 - dinfo.y1));
 }
 
@@ -2877,11 +2877,11 @@ dlg_make_page_settings (GFlareDialog *dlg,
 
 			  _("X:"), pvals.xcenter, xres,
 			  -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
-			  0, gimp_drawable_width (drawable->id),
+			  0, gimp_drawable_width (drawable->drawable_id),
 
 			  _("Y:"), pvals.ycenter, yres,
 			  -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
-			  0, gimp_drawable_height (drawable->id));
+			  0, gimp_drawable_height (drawable->drawable_id));
 
   chain = GTK_WIDGET (GIMP_COORDINATES_CHAINBUTTON (center));
 

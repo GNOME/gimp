@@ -1088,12 +1088,12 @@ gint32 p_save_named_image(gint32 image_id, char *sav_name, GimpRunModeType run_m
 			       &l_retvals,
 			       GIMP_PDB_INT32,    run_mode,
 			       GIMP_PDB_IMAGE,    image_id,
-			       GIMP_PDB_DRAWABLE, l_drawable->id,
+			       GIMP_PDB_DRAWABLE, l_drawable->drawable_id,
 			       GIMP_PDB_STRING, sav_name,
 			       GIMP_PDB_STRING, sav_name, /* raw name ? */
 			       GIMP_PDB_END);
 
-  if(gap_debug) fprintf(stderr, "DEBUG: after    p_save_named_image: '%s' nlayers=%d image=%d drw=%d run_mode=%d\n", sav_name, (int)l_nlayers, (int)image_id, (int)l_drawable->id, (int)run_mode);
+  if(gap_debug) fprintf(stderr, "DEBUG: after    p_save_named_image: '%s' nlayers=%d image=%d drw=%d run_mode=%d\n", sav_name, (int)l_nlayers, (int)image_id, (int)l_drawable->drawable_id, (int)run_mode);
 
   p_gimp_file_save_thumbnail(image_id, sav_name);
 

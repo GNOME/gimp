@@ -252,9 +252,9 @@ run (gchar      *name,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
   image_id = param[1].data.d_image;
 
-  if ((gimp_drawable_is_rgb (drawable->id)
-       || gimp_drawable_is_gray (drawable->id))
-      && gimp_drawable_has_alpha (drawable->id))
+  if ((gimp_drawable_is_rgb (drawable->drawable_id)
+       || gimp_drawable_is_gray (drawable->drawable_id))
+      && gimp_drawable_has_alpha (drawable->drawable_id))
     {
       switch (run_mode)
 	{
@@ -735,7 +735,7 @@ init_calculation (void)
   gint32       nlayers;
   GimpRGB      color;
 
-  gimp_layer_add_alpha (drawable->id);
+  gimp_layer_add_alpha (drawable->drawable_id);
 
   /* Image parameters */
 
@@ -744,7 +744,7 @@ init_calculation (void)
   image_layers = gimp_image_get_layers (image_id, &nlayers);
   drawable_position = 0;
   while (drawable_position < nlayers &&
-	 image_layers[drawable_position] != drawable->id)
+	 image_layers[drawable_position] != drawable->drawable_id)
     drawable_position++;
   if (drawable_position >= nlayers)
     {
@@ -752,7 +752,8 @@ init_calculation (void)
       drawable_position = 0;
    }
   /* Get the bounds of the active selection */
-  gimp_drawable_mask_bounds (drawable->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id,
+			     &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
   true_sel_width = sel_x2 - sel_x1;
   true_sel_height = sel_y2 - sel_y1;
@@ -822,7 +823,7 @@ do_curl_effect (void)
   gpointer      pr;
   guchar       *grad_samples = NULL;
 
-  color_image = gimp_drawable_is_rgb (drawable->id);
+  color_image = gimp_drawable_is_rgb (drawable->drawable_id);
   curl_layer =
     gimp_drawable_get (gimp_layer_new (image_id,
 				       _("Curl Layer"),
@@ -830,11 +831,11 @@ do_curl_effect (void)
 				       true_sel_height,
 				       color_image ? GIMP_RGBA_IMAGE : GIMP_GRAYA_IMAGE,
 				       100, GIMP_NORMAL_MODE));
-  gimp_image_add_layer (image_id, curl_layer->id, drawable_position);
-  curl_layer_ID = curl_layer->id;
+  gimp_image_add_layer (image_id, curl_layer->drawable_id, drawable_position);
+  curl_layer_ID = curl_layer->drawable_id;
 
-  gimp_drawable_offsets (drawable->id, &x1, &y1);
-  gimp_layer_set_offsets (curl_layer->id, sel_x1 + x1, sel_y1 + y1);
+  gimp_drawable_offsets (drawable->drawable_id, &x1, &y1);
+  gimp_layer_set_offsets (curl_layer->drawable_id, sel_x1 + x1, sel_y1 + y1);
   gimp_tile_cache_ntiles (2 * (curl_layer->width / gimp_tile_width () + 1));
 
   /* Clear the newly created layer */
@@ -859,7 +860,7 @@ do_curl_effect (void)
     }
 
   gimp_drawable_flush (curl_layer);
-  gimp_drawable_update (curl_layer->id,
+  gimp_drawable_update (curl_layer->drawable_id,
 			0, 0, curl_layer->width, curl_layer->height);
 
   gimp_pixel_rgn_init (&dest_rgn, curl_layer,
@@ -985,8 +986,8 @@ do_curl_effect (void)
     }
 
   gimp_drawable_flush (curl_layer);
-  gimp_drawable_merge_shadow (curl_layer->id, FALSE);
-  gimp_drawable_update (curl_layer->id,
+  gimp_drawable_merge_shadow (curl_layer->drawable_id, FALSE);
+  gimp_drawable_update (curl_layer->drawable_id,
 			0, 0, curl_layer->width, curl_layer->height);
   gimp_drawable_detach (curl_layer);
 
@@ -1066,8 +1067,9 @@ clear_curled_region (void)
       gimp_progress_update ((double) progress / (double) max_progress);
     }
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, sel_x1, sel_y1, true_sel_width, true_sel_height);
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id,
+			sel_x1, sel_y1, true_sel_width, true_sel_height);
   gimp_drawable_detach (drawable);
 }
 
@@ -1084,7 +1086,7 @@ page_curl (void)
 
 /*
   Returns NGRADSAMPLES samples of active gradient.
-  Each sample has (gimp_drawable_bpp (drawable->id)) bytes.
+  Each sample has (gimp_drawable_bpp (drawable->drawable_id)) bytes.
   "ripped" from gradmap.c.
  */
 static guchar *
@@ -1097,9 +1099,9 @@ get_samples (GimpDrawable *drawable)
 
   f_samples = gimp_gradients_sample_uniform (NGRADSAMPLES);
 
-  bpp       = gimp_drawable_bpp (drawable->id);
-  color     = gimp_drawable_is_rgb (drawable->id);
-  has_alpha = gimp_drawable_has_alpha (drawable->id);
+  bpp       = gimp_drawable_bpp (drawable->drawable_id);
+  color     = gimp_drawable_is_rgb (drawable->drawable_id);
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
   alpha     = (has_alpha ? bpp - 1 : bpp);
 
   b_samples = g_new (guchar, NGRADSAMPLES * bpp);

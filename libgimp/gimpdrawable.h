@@ -34,7 +34,7 @@ extern "C" {
 
 struct _GimpDrawable
 {
-  gint32    id;            /* drawable ID */
+  gint32    drawable_id;   /* drawable ID */
   guint     width;         /* width of drawble */
   guint     height;        /* height of drawble */
   guint     bpp;           /* bytes per pixel of drawable */

@@ -2155,7 +2155,7 @@ load_image(char *name)
 	}
       else
 	{
-	  channels = gimp_drawable_bpp(drawable->id);
+	  channels = gimp_drawable_bpp(drawable->drawable_id);
 	}
 
 

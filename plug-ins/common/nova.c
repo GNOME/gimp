@@ -303,8 +303,8 @@ run (gchar       *name,
   if (status == GIMP_PDB_SUCCESS)
     {
       /*  Make sure that the drawable is gray or RGB color  */
-      if (gimp_drawable_is_rgb (drawable->id) ||
-	  gimp_drawable_is_gray (drawable->id))
+      if (gimp_drawable_is_rgb (drawable->drawable_id) ||
+	  gimp_drawable_is_gray (drawable->drawable_id))
         {
           gimp_progress_init (_("Rendering SuperNova..."));
           gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
@@ -338,7 +338,7 @@ preview_widget (GimpDrawable *drawable)
   GtkWidget *preview;
 
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  fill_preview_with_thumb (preview, drawable->id);
+  fill_preview_with_thumb (preview, drawable->drawable_id);
 
   size = GTK_PREVIEW (preview)->rowstride * 
     GTK_PREVIEW (preview)->buffer_height;
@@ -600,11 +600,11 @@ nova_center_create (GimpDrawable *drawable)
 
   center = g_new (NovaCenter, 1);
   center->drawable = drawable;
-  center->dwidth   = gimp_drawable_width (drawable->id);
-  center->dheight  = gimp_drawable_height (drawable->id);
-  center->bpp      = gimp_drawable_bpp (drawable->id);
+  center->dwidth   = gimp_drawable_width (drawable->drawable_id);
+  center->dheight  = gimp_drawable_height (drawable->drawable_id);
+  center->bpp      = gimp_drawable_bpp (drawable->drawable_id);
 
-  if (gimp_drawable_has_alpha (drawable->id))
+  if (gimp_drawable_has_alpha (drawable->drawable_id))
     center->bpp--;
 
   center->cursor   = FALSE;
@@ -935,7 +935,7 @@ nova (GimpDrawable *drawable,
    gint      i;
   
    /* initialize */
-   has_alpha = gimp_drawable_has_alpha (drawable->id);
+   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
  
    srand (time (NULL));
    spoke = g_new (gdouble, pvals.nspoke);
@@ -972,8 +972,8 @@ nova (GimpDrawable *drawable,
      } 
    else 
      {
-       gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
-       bpp = gimp_drawable_bpp (drawable->id);
+       gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+       bpp = gimp_drawable_bpp (drawable->drawable_id);
        alpha = (has_alpha) ? bpp - 1 : bpp;
        xc = pvals.xcenter;
        yc = pvals.ycenter;
@@ -1156,8 +1156,9 @@ nova (GimpDrawable *drawable,
 	 }
 
        gimp_drawable_flush (drawable);
-       gimp_drawable_merge_shadow (drawable->id, TRUE);
-       gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
+       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+       gimp_drawable_update (drawable->drawable_id,
+			     x1, y1, (x2 - x1), (y2 - y1));
 #else
        gimp_message ("Sorry, the SuperNova effect\n"
 		     "is broken at the moment and\n"

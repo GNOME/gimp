@@ -1319,7 +1319,7 @@ bender_new_dialog (GimpDrawable *drawable)
   cd->rotation = 0.0;       /* vertical bend */
 
   cd->drawable = drawable;
-  cd->color = gimp_drawable_is_rgb (cd->drawable->id);
+  cd->color = gimp_drawable_is_rgb (cd->drawable->drawable_id);
 
   cd->run = FALSE;
   cd->bval_from = NULL;
@@ -2735,7 +2735,7 @@ p_end_gdrw (t_GDRW *gdrw)
 {
   if(gb_debug)  
     printf ("\np_end_gdrw: drawable %x  ID: %d\n", 
-	    (int)gdrw->drawable, (int)gdrw->drawable->id);
+	    (int)gdrw->drawable, (int)gdrw->drawable->drawable_id);
 
   if(gdrw->tile)
   {
@@ -2760,7 +2760,7 @@ p_init_gdrw (t_GDRW    *gdrw,
   gint32 l_sel_channel_id;
   gint    l_offsetx, l_offsety;
 
-  if(gb_debug)  printf("\np_init_gdrw: drawable %x  ID: %d\n", (int)drawable, (int)drawable->id);
+  if(gb_debug)  printf("\np_init_gdrw: drawable %x  ID: %d\n", (int)drawable, (int)drawable->drawable_id);
 
   gdrw->drawable = drawable;
   gdrw->tile = NULL;
@@ -2771,9 +2771,9 @@ p_init_gdrw (t_GDRW    *gdrw,
   gdrw->tile_swapcount = 0;
   gdrw->seldeltax = 0;
   gdrw->seldeltay = 0;
-  gimp_drawable_offsets (drawable->id, &l_offsetx, &l_offsety);  /* get offsets within the image */
+  gimp_drawable_offsets (drawable->drawable_id, &l_offsetx, &l_offsety);  /* get offsets within the image */
   
-  gimp_drawable_mask_bounds (drawable->id, &gdrw->x1, &gdrw->y1, &gdrw->x2, &gdrw->y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &gdrw->x1, &gdrw->y1, &gdrw->x2, &gdrw->y2);
 
 /*
  *   gimp_pixel_rgn_init (&gdrw->pr, drawable,
@@ -2783,7 +2783,7 @@ p_init_gdrw (t_GDRW    *gdrw,
 
 
   gdrw->bpp = drawable->bpp;
-  if (gimp_drawable_has_alpha(drawable->id))
+  if (gimp_drawable_has_alpha(drawable->drawable_id))
   {
      /* index of the alpha channelbyte {1|3} */
      gdrw->index_alpha = gdrw->bpp -1;
@@ -2795,7 +2795,7 @@ p_init_gdrw (t_GDRW    *gdrw,
   
   if(gb_debug)  printf("\np_init_gdrw: bpp %d  index_alpha: %d\n", (int)gdrw->bpp, (int)gdrw->index_alpha);
   
-  l_image_id = gimp_layer_get_image_id(drawable->id);
+  l_image_id = gimp_layer_get_image_id(drawable->drawable_id);
 
   /* check and see if we have a selection mask */
   l_sel_channel_id  = gimp_image_get_selection(l_image_id);     
@@ -3041,10 +3041,10 @@ p_create_pv_image (GimpDrawable *src_drawable,
   t_GDRW  l_dst_gdrw;
 
   l_new_image_id = gimp_image_new(PREVIEW_SIZE_X, PREVIEW_SIZE_Y, 
-                   gimp_image_base_type(gimp_layer_get_image_id(src_drawable->id)));
+                   gimp_image_base_type(gimp_layer_get_image_id(src_drawable->drawable_id)));
   gimp_image_undo_disable (l_new_image_id);
 
-  l_type = gimp_drawable_type(src_drawable->id);  
+  l_type = gimp_drawable_type(src_drawable->drawable_id);  
   if(src_drawable->height > src_drawable->width)
   {
     l_new_height = PV_IMG_HEIGHT;
@@ -3113,28 +3113,28 @@ p_add_layer (gint       width,
   gint       stack_position;
 
 
-  image_id = gimp_layer_get_image_id(src_drawable->id);
+  image_id = gimp_layer_get_image_id(src_drawable->drawable_id);
   stack_position = 0;                                  /* TODO:  should be same as src_layer */
   
   /* copy type, name, opacity and mode from src_drawable */ 
-  l_type     = gimp_drawable_type(src_drawable->id);
-  l_visible  = gimp_layer_get_visible(src_drawable->id);
+  l_type     = gimp_drawable_type(src_drawable->drawable_id);
+  l_visible  = gimp_layer_get_visible(src_drawable->drawable_id);
 
   if (TRUE != TRUE)
   {
-    l_name = gimp_layer_get_name(src_drawable->id);
+    l_name = gimp_layer_get_name(src_drawable->drawable_id);
   }
   else
   {
-    l_name2 = gimp_layer_get_name(src_drawable->id);
+    l_name2 = gimp_layer_get_name(src_drawable->drawable_id);
     l_name  = g_malloc(strlen(l_name2) + 10);
     if(l_name == NULL) 
        return (NULL);
     sprintf(l_name, "%s_b", l_name2);
     g_free(l_name2);
   }
-  l_mode = gimp_layer_get_mode(src_drawable->id);
-  l_opacity = gimp_layer_get_opacity(src_drawable->id);  /* full opacity */
+  l_mode = gimp_layer_get_mode(src_drawable->drawable_id);
+  l_opacity = gimp_layer_get_opacity(src_drawable->drawable_id);  /* full opacity */
   
   l_new_layer_id = gimp_layer_new(image_id, l_name,
                                   width, height,
@@ -3437,7 +3437,7 @@ p_vertical_bend (BenderDialog *cd,
 	       if(l_alias_dir != 0)
 	       {
 	           l_alpha_lo = 20;
-                   if (gimp_drawable_has_alpha(src_gdrw->drawable->id))
+                   if (gimp_drawable_has_alpha(src_gdrw->drawable->drawable_id))
                    {
                      l_alpha_lo = MIN(20, mixcolor[src_gdrw->index_alpha]);
                    }
@@ -3565,14 +3565,14 @@ p_main_bend (BenderDialog *cd,
    gint32    xmax, ymax;
   
    l_interpolation = cd->smoothing;
-   l_image_id = gimp_layer_get_image_id(original_drawable->id);
-   gimp_drawable_offsets(original_drawable->id, &l_offset_x, &l_offset_y);
+   l_image_id = gimp_layer_get_image_id(original_drawable->drawable_id);
+   gimp_drawable_offsets(original_drawable->drawable_id, &l_offset_x, &l_offset_y);
 
-   l_center_x = l_offset_x + (gimp_drawable_width  (original_drawable->id) / 2 );
-   l_center_y = l_offset_y + (gimp_drawable_height (original_drawable->id) / 2 );
+   l_center_x = l_offset_x + (gimp_drawable_width  (original_drawable->drawable_id) / 2 );
+   l_center_y = l_offset_y + (gimp_drawable_height (original_drawable->drawable_id) / 2 );
    
    /* always copy original_drawable to a tmp src_layer */  
-   l_tmp_layer_id = gimp_layer_copy(original_drawable->id);
+   l_tmp_layer_id = gimp_layer_copy(original_drawable->drawable_id);
    /* set layer invisible and dummyname and 
     * add at top of the image while working
     * (for the case of undo the gimp must know,
@@ -3612,17 +3612,17 @@ p_main_bend (BenderDialog *cd,
    else
    {
      /* work on the original */
-     gimp_layer_resize(original_drawable->id, 
+     gimp_layer_resize(original_drawable->drawable_id, 
                        src_drawable->width,
 		       l_dst_height,
 		       l_offset_x, l_offset_y);
      if(gb_debug) printf("p_main_bend: DONE layer resize\n");   
-     if(!gimp_drawable_has_alpha(original_drawable->id))
+     if(!gimp_drawable_has_alpha(original_drawable->drawable_id))
      {
        /* always add alpha channel */
-       gimp_layer_add_alpha(original_drawable->id);
+       gimp_layer_add_alpha(original_drawable->drawable_id);
      }
-     dst_drawable = gimp_drawable_get (original_drawable->id);
+     dst_drawable = gimp_drawable_get (original_drawable->drawable_id);
    }
    p_clear_drawable(dst_drawable);
 
@@ -3638,7 +3638,7 @@ p_main_bend (BenderDialog *cd,
 
    if(cd->rotation != 0.0)
    {
-      p_gimp_rotate(l_image_id, dst_drawable->id, l_interpolation, (gdouble)(360.0 - cd->rotation));
+      p_gimp_rotate(l_image_id, dst_drawable->drawable_id, l_interpolation, (gdouble)(360.0 - cd->rotation));
       
       /* TODO: here we should crop dst_drawable to cut off full transparent borderpixels */
       
@@ -3647,9 +3647,9 @@ p_main_bend (BenderDialog *cd,
    /* set offsets of the resulting new layer 
     *(center == center of original_drawable)
     */
-   l_offset_x = l_center_x - (gimp_drawable_width  (dst_drawable->id) / 2 );
-   l_offset_y = l_center_y - (gimp_drawable_height  (dst_drawable->id) / 2 );
-   gimp_layer_set_offsets (dst_drawable->id, l_offset_x, l_offset_y);
+   l_offset_x = l_center_x - (gimp_drawable_width  (dst_drawable->drawable_id) / 2 );
+   l_offset_y = l_center_y - (gimp_drawable_height  (dst_drawable->drawable_id) / 2 );
+   gimp_layer_set_offsets (dst_drawable->drawable_id, l_offset_x, l_offset_y);
 
    /* delete the temp layer */
    gimp_image_remove_layer(l_image_id, l_tmp_layer_id);
@@ -3659,5 +3659,5 @@ p_main_bend (BenderDialog *cd,
 
    if(gb_debug) printf("p_main_bend: DONE bend main\n");   
 
-   return dst_drawable->id;
+   return dst_drawable->drawable_id;
 }	/* end p_main_bend */

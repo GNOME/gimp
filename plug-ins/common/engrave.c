@@ -314,9 +314,9 @@ engrave_large (GimpDrawable *drawable,
   gint progress, max_progress;
   gpointer pr;
 
-  gimp_drawable_mask_bounds(drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds(drawable->drawable_id, &x1, &y1, &x2, &y2);
 
-  if (gimp_drawable_is_rgb(drawable->id))
+  if (gimp_drawable_is_rgb(drawable->drawable_id))
     bpp = 3;
   else
     bpp = 1;
@@ -403,8 +403,8 @@ engrave_large (GimpDrawable *drawable,
 
   /*  update the engraved region  */
   gimp_drawable_flush(drawable);
-  gimp_drawable_merge_shadow(drawable->id, TRUE);
-  gimp_drawable_update(drawable->id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_merge_shadow(drawable->drawable_id, TRUE);
+  gimp_drawable_update(drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 }
 
 typedef struct
@@ -435,7 +435,7 @@ engrave_small (GimpDrawable *drawable,
     x1%height != 0 etc.), operates on the remainder pixels.
   */
 
-  gimp_drawable_mask_bounds(drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds(drawable->drawable_id, &x1, &y1, &x2, &y2);
   gimp_pixel_rgn_init(&src_rgn, drawable,
 		      x1, y1, x2 - x1, y2 - y1, FALSE, FALSE);
   gimp_pixel_rgn_init(&dest_rgn, drawable,
@@ -446,7 +446,7 @@ engrave_small (GimpDrawable *drawable,
   max_progress = (x2 - x1) * (y2 - y1);
 
   bpp = drawable->bpp;
-  if (gimp_drawable_is_rgb(drawable->id))
+  if (gimp_drawable_is_rgb(drawable->drawable_id))
     color_n = 3;
   else
     color_n = 1;
@@ -477,8 +477,8 @@ engrave_small (GimpDrawable *drawable,
 
   /*  update the engraved region  */
   gimp_drawable_flush(drawable);
-  gimp_drawable_merge_shadow(drawable->id, TRUE);
-  gimp_drawable_update(drawable->id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_merge_shadow(drawable->drawable_id, TRUE);
+  gimp_drawable_update(drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 }
 
 static void

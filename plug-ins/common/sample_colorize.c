@@ -359,8 +359,8 @@ run (gchar   *name,
   p_clear_tables();
   
   /*  Make sure that the dst_drawable is gray or RGB color	*/
-  if (gimp_drawable_is_rgb (dst_drawable->id) ||
-      gimp_drawable_is_gray (dst_drawable->id))
+  if (gimp_drawable_is_rgb (dst_drawable->drawable_id) ||
+      gimp_drawable_is_gray (dst_drawable->drawable_id))
   {
       gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
       
@@ -2577,7 +2577,7 @@ p_end_gdrw(t_GDRW *gdrw)
 {
   t_GDRW  *l_sel_gdrw;
 
-  if(g_Sdebug)  printf("\np_end_gdrw: drawable %x  ID: %d\n", (int)gdrw->drawable, (int)gdrw->drawable->id);
+  if(g_Sdebug)  printf("\np_end_gdrw: drawable %x  ID: %d\n", (int)gdrw->drawable, (int)gdrw->drawable->drawable_id);
 
   if(gdrw->tile)
   {
@@ -2615,7 +2615,7 @@ p_init_gdrw(t_GDRW *gdrw, GimpDrawable *drawable, gint dirty, gint shadow)
   t_GDRW  *l_sel_gdrw;
   gint32   non_empty;
 
-  if(g_Sdebug)  printf("\np_init_gdrw: drawable %x  ID: %d\n", (int)drawable, (int)drawable->id);
+  if(g_Sdebug)  printf("\np_init_gdrw: drawable %x  ID: %d\n", (int)drawable, (int)drawable->drawable_id);
 
   gdrw->drawable = drawable;
   gdrw->tile = NULL;
@@ -2626,9 +2626,9 @@ p_init_gdrw(t_GDRW *gdrw, GimpDrawable *drawable, gint dirty, gint shadow)
   gdrw->tile_swapcount = 0;
   gdrw->seldeltax = 0;
   gdrw->seldeltay = 0;
-  gimp_drawable_offsets (drawable->id, &l_offsetx, &l_offsety);  /* get offsets within the image */
+  gimp_drawable_offsets (drawable->drawable_id, &l_offsetx, &l_offsety);  /* get offsets within the image */
   
-  gimp_drawable_mask_bounds (drawable->id, &gdrw->x1, &gdrw->y1, &gdrw->x2, &gdrw->y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &gdrw->x1, &gdrw->y1, &gdrw->x2, &gdrw->y2);
 
 /*
  *   gimp_pixel_rgn_init (&gdrw->pr, drawable,
@@ -2638,7 +2638,7 @@ p_init_gdrw(t_GDRW *gdrw, GimpDrawable *drawable, gint dirty, gint shadow)
 
 
   gdrw->bpp = drawable->bpp;
-  if (gimp_drawable_has_alpha(drawable->id))
+  if (gimp_drawable_has_alpha(drawable->drawable_id))
   {
      /* index of the alpha channelbyte {1|3} */
      gdrw->index_alpha = gdrw->bpp -1;
@@ -2649,7 +2649,7 @@ p_init_gdrw(t_GDRW *gdrw, GimpDrawable *drawable, gint dirty, gint shadow)
   }
   
   
-  l_image_id = gimp_layer_get_image_id(drawable->id);
+  l_image_id = gimp_layer_get_image_id(drawable->drawable_id);
 
   /* check and see if we have a selection mask */
   l_sel_channel_id  = gimp_image_get_selection(l_image_id);     
@@ -3084,7 +3084,7 @@ p_colorize_drawable(gint32 drawable_id)
    drawable = gimp_drawable_get (drawable_id);
    if(drawable == NULL) return;
 
-   gimp_drawable_mask_bounds (drawable->id, &l_x1, &l_y1, &l_x2, &l_y2);
+   gimp_drawable_mask_bounds (drawable->drawable_id, &l_x1, &l_y1, &l_x2, &l_y2);
    gimp_pixel_rgn_init (&pixel_rgn, drawable,
 			     l_x1, l_y1, l_x2 - l_x1, l_y2 - l_y1,
 			     FALSE,  /* dirty */
@@ -3102,7 +3102,7 @@ p_colorize_drawable(gint32 drawable_id)
 
    l_bpp2 = pixel_rgn.bpp;
    l_idx_alpha = pixel_rgn.bpp -1;
-   l_has_alpha = gimp_drawable_has_alpha(drawable->id);
+   l_has_alpha = gimp_drawable_has_alpha(drawable->drawable_id);
    if(l_has_alpha)
    {
      l_bpp2--;    /* do not remap the alpha channel bytes */
@@ -3143,8 +3143,8 @@ p_colorize_drawable(gint32 drawable_id)
      gimp_progress_update (0.0);
 
    gimp_drawable_flush (drawable);
-   gimp_drawable_merge_shadow (drawable->id, TRUE);
-   gimp_drawable_update (drawable->id, l_x1, l_y1, l_x2 - l_x1, l_y2 - l_y1);
+   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+   gimp_drawable_update (drawable->drawable_id, l_x1, l_y1, l_x2 - l_x1, l_y2 - l_y1);
 
 }	/* end p_colorize_drawable */
 
@@ -3199,7 +3199,7 @@ p_main_colorize(gint mc_flags)
            gimp_convert_rgb(gimp_layer_get_image_id(g_values.dst_id));
          }
       }
-      p_colorize_drawable(dst_drawable->id);
+      p_colorize_drawable(dst_drawable->drawable_id);
    }
    
    if(sample_drawable)

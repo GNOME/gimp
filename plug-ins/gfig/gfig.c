@@ -712,7 +712,8 @@ run (gchar    *name,
   /* TMP Hack - clear any selections */
   gimp_selection_clear (gfig_image);
 
-  gimp_drawable_mask_bounds (drawable->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id,
+			     &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
   sel_width  = sel_x2 - sel_x1;
   sel_height = sel_y2 - sel_y1;
@@ -762,8 +763,8 @@ run (gchar    *name,
       break;
     }
 
-  if (gimp_drawable_is_rgb (drawable->id) ||
-      gimp_drawable_is_gray (drawable->id))
+  if (gimp_drawable_is_rgb (drawable->drawable_id) ||
+      gimp_drawable_is_gray (drawable->drawable_id))
     {
       /* Set the tile cache size */
       gimp_tile_cache_ntiles ((drawable->width + gimp_tile_width () - 1) /
@@ -1637,9 +1638,9 @@ cache_preview (void)
   src_rows = g_new (guchar , sel_width * 4); 
   p = pv_cache = g_new (guchar , preview_width * preview_height * 4);
 
-  real_img_bpp = gimp_drawable_bpp (gfig_select_drawable->id);
+  real_img_bpp = gimp_drawable_bpp (gfig_select_drawable->drawable_id);
 
-  has_alpha = gimp_drawable_has_alpha (gfig_select_drawable->id);
+  has_alpha = gimp_drawable_has_alpha (gfig_select_drawable->drawable_id);
 
   if (real_img_bpp < 3)
     {
@@ -1650,7 +1651,7 @@ cache_preview (void)
       img_bpp = real_img_bpp;
     }
 
-  switch (gimp_drawable_type (gfig_select_drawable->id))
+  switch (gimp_drawable_type (gfig_select_drawable->drawable_id))
     {
     case GIMP_GRAYA_IMAGE:
     case GIMP_GRAY_IMAGE:
@@ -3917,8 +3918,8 @@ gfig_dialog (void)
 
   /*cache_preview (); Get the preview image and store it also set has_alpha */
 
-  img_width  = gimp_drawable_width (gfig_select_drawable->id);
-  img_height = gimp_drawable_height (gfig_select_drawable->id);
+  img_width  = gimp_drawable_width (gfig_select_drawable->drawable_id);
+  img_height = gimp_drawable_height (gfig_select_drawable->drawable_id);
 
   /* Start buildng the dialog up */
   top_level_dlg = gimp_dialog_new (_("GFig"), "gfig",
@@ -4643,7 +4644,7 @@ paint_layer_new (gchar *new_name)
   gint32 fill_type;
   int isgrey = 0;
 
-  switch (gimp_drawable_type (gfig_select_drawable->id))
+  switch (gimp_drawable_type (gfig_select_drawable->drawable_id))
     {
     case GIMP_GRAYA_IMAGE:
     case GIMP_GRAY_IMAGE:

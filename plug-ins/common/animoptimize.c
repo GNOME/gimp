@@ -328,20 +328,20 @@ compose_row(int frame_num,
       total_alpha (dest, dest_width, pixelstep);
     }
 
-  gimp_drawable_offsets (drawable->id,
+  gimp_drawable_offsets (drawable->drawable_id,
 			 &rawx,
 			 &rawy);
 
-  rawheight = gimp_drawable_height (drawable->id);
+  rawheight = gimp_drawable_height (drawable->drawable_id);
 
   /* this frame has nothing to give us for this row; return */
   if (row_num >= rawheight + rawy ||
       row_num < rawy)
     return;
 
-  rawbpp = gimp_drawable_bpp (drawable->id);
-  rawwidth = gimp_drawable_width (drawable->id);
-  has_alpha = gimp_drawable_has_alpha (drawable->id);
+  rawbpp = gimp_drawable_bpp (drawable->drawable_id);
+  rawwidth = gimp_drawable_width (drawable->drawable_id);
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
   if (line_buf)
     {
@@ -685,7 +685,7 @@ g_warning("stat fun");
 
 	  /* Image has been closed/etc since we got the layer list? */
 	  /* FIXME - How do we tell if a gimp_drawable_get() fails? */
-	  if (gimp_drawable_width (drawable->id) == 0)
+	  if (gimp_drawable_width (drawable->drawable_id) == 0)
 	    {
 	      gimp_quit ();
 	    }

@@ -155,7 +155,7 @@ gimp_tile_get (GimpTile *tile)
   GPTileData *tile_data;
   WireMessage msg;
 
-  tile_req.drawable_ID = tile->drawable->id;
+  tile_req.drawable_ID = tile->drawable->drawable_id;
   tile_req.tile_num = tile->tile_num;
   tile_req.shadow = tile->shadow;
   if (!gp_tile_req_write (_writechannel, &tile_req))
@@ -164,7 +164,7 @@ gimp_tile_get (GimpTile *tile)
   gimp_read_expect_msg(&msg,GP_TILE_DATA);
 
   tile_data = msg.data;
-  if ((tile_data->drawable_ID != tile->drawable->id) ||
+  if ((tile_data->drawable_ID != tile->drawable->drawable_id) ||
       (tile_data->tile_num != tile->tile_num) ||
       (tile_data->shadow != tile->shadow) ||
       (tile_data->width != tile->ewidth) ||
@@ -213,7 +213,7 @@ gimp_tile_put (GimpTile *tile)
 
   tile_info = msg.data;
 
-  tile_data.drawable_ID = tile->drawable->id;
+  tile_data.drawable_ID = tile->drawable->drawable_id;
   tile_data.tile_num = tile->tile_num;
   tile_data.shadow = tile->shadow;
   tile_data.bpp = tile->bpp;

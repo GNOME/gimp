@@ -111,9 +111,9 @@ run (gchar   *name,
       image_id = param[1].data.d_image;
 
       /*  Make sure that the drawable is gray or RGB or indexed  */
-      if (gimp_drawable_is_rgb (drawable->id) ||
-	  gimp_drawable_is_gray (drawable->id) ||
-	  gimp_drawable_is_indexed (drawable->id))
+      if (gimp_drawable_is_rgb (drawable->drawable_id) ||
+	  gimp_drawable_is_gray (drawable->drawable_id) ||
+	  gimp_drawable_is_indexed (drawable->drawable_id))
 	{
 	  gimp_progress_init (_("ZealousCropping(tm)..."));
 
@@ -264,7 +264,7 @@ do_zcrop (GimpDrawable *drawable,
     gimp_progress_update(1.00);
     gimp_undo_push_group_start (image_id);
     gimp_drawable_flush (drawable);
-    gimp_drawable_merge_shadow (drawable->id, TRUE);
+    gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
     gimp_crop (image_id, livingcols, livingrows, 0, 0);
     gimp_undo_push_group_end (image_id);
 }

@@ -122,13 +122,13 @@ run (gchar   *name,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
   mask = gimp_drawable_get (gimp_image_get_selection (param[1].data.d_image));
 
-  if (gimp_drawable_is_indexed (drawable->id) ||
-      gimp_drawable_is_gray (drawable->id) )
+  if (gimp_drawable_is_indexed (drawable->drawable_id) ||
+      gimp_drawable_is_gray (drawable->drawable_id) )
     {
       gimp_message (_("Convert the image to RGB first!"));
       status = GIMP_PDB_EXECUTION_ERROR;
     }
-  else if (gimp_drawable_is_rgb (drawable->id) && fp_dialog())
+  else if (gimp_drawable_is_rgb (drawable->drawable_id) && fp_dialog())
     {
       gimp_progress_init (_("Applying the Filter Pack...")); 
       gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
@@ -230,7 +230,7 @@ void fp (GimpDrawable *drawable)
   gint row;
   gint x1, y1, x2, y2;
   
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   width = drawable->width;
   height = drawable->height;
@@ -263,8 +263,8 @@ void fp (GimpDrawable *drawable)
   /*  update the processed region  */
 
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
   
   free (src_row);
   free (dest_row);

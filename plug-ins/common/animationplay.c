@@ -977,11 +977,11 @@ render_frame (gint32 whichframe)
 
   /* Image has been closed/etc since we got the layer list? */
   /* FIXME - How do we tell if a gimp_drawable_get() fails? */
-  if (gimp_drawable_width(drawable->id)==0)
+  if (gimp_drawable_width(drawable->drawable_id)==0)
     window_close_callback (NULL, NULL);
 
   if (((dispose==DISPOSE_REPLACE)||(whichframe==0)) &&
-      gimp_drawable_has_alpha(drawable->id))
+      gimp_drawable_has_alpha(drawable->drawable_id))
     {
       total_alpha_preview(preview_data);
     }
@@ -992,19 +992,19 @@ render_frame (gint32 whichframe)
 
   if ((rawwidth*rawheight*rawbpp)
       !=
-      ((gimp_drawable_width(drawable->id)*
-	gimp_drawable_height(drawable->id)*
-	gimp_drawable_bpp(drawable->id))))
+      ((gimp_drawable_width(drawable->drawable_id)*
+	gimp_drawable_height(drawable->drawable_id)*
+	gimp_drawable_bpp(drawable->drawable_id))))
     {
       if (rawframe != NULL) g_free(rawframe);
-      rawframe = g_malloc((gimp_drawable_width(drawable->id)) *
-			  (gimp_drawable_height(drawable->id)) *
-			  (gimp_drawable_bpp(drawable->id)));
+      rawframe = g_malloc((gimp_drawable_width(drawable->drawable_id)) *
+			  (gimp_drawable_height(drawable->drawable_id)) *
+			  (gimp_drawable_bpp(drawable->drawable_id)));
     }
 	
-  rawwidth = gimp_drawable_width(drawable->id);
-  rawheight = gimp_drawable_height(drawable->id);
-  rawbpp = gimp_drawable_bpp(drawable->id);
+  rawwidth = gimp_drawable_width(drawable->drawable_id);
+  rawheight = gimp_drawable_height(drawable->drawable_id);
+  rawbpp = gimp_drawable_bpp(drawable->drawable_id);
 
 
   /* Initialise and fetch the whole raw new frame */
@@ -1021,7 +1021,7 @@ render_frame (gint32 whichframe)
 			   drawable->width, drawable->height);
   /*  gimp_pixel_rgns_register (1, &pixel_rgn);*/
 
-  gimp_drawable_offsets (drawable->id,
+  gimp_drawable_offsets (drawable->drawable_id,
 			 &rawx,
 			 &rawy);
 
@@ -1040,7 +1040,7 @@ render_frame (gint32 whichframe)
 	  /* --- which this frame is the same size and position --- */
 	  /* --- as the preview buffer itself                   --- */
 	  
-	  if (gimp_drawable_has_alpha (drawable->id))
+	  if (gimp_drawable_has_alpha (drawable->drawable_id))
 	    { /* alpha */
 	      destptr = preview_data;
 	      srcptr  = rawframe;
@@ -1138,7 +1138,7 @@ render_frame (gint32 whichframe)
 	  /* --- this frame is bigger/smaller than the preview  --- */
 	  /* --- buffer, and/or offset within it.               --- */
 	  
-	  if (gimp_drawable_has_alpha (drawable->id))
+	  if (gimp_drawable_has_alpha (drawable->drawable_id))
 	    { /* alpha */
 	      
 	      srcptr = rawframe;
@@ -1313,7 +1313,7 @@ render_frame (gint32 whichframe)
 	  /* --- which this frame is the same size and position --- */
 	  /* --- as the preview buffer itself                   --- */
 	  
-	  if (gimp_drawable_has_alpha (drawable->id))
+	  if (gimp_drawable_has_alpha (drawable->drawable_id))
 	    { /* alpha */
 	      destptr = preview_data;
 	      srcptr  = rawframe;
@@ -1417,7 +1417,7 @@ render_frame (gint32 whichframe)
 	  /* --- this frame is bigger/smaller than the preview  --- */
 	  /* --- buffer, and/or offset within it.               --- */
 	  
-	  if (gimp_drawable_has_alpha (drawable->id))
+	  if (gimp_drawable_has_alpha (drawable->drawable_id))
 	    { /* alpha */
 	      
 	      srcptr = rawframe;

@@ -277,8 +277,8 @@ run (gchar   *name,
   imageID = param[1].data.d_int32;
 
   /*  Make sure that the drawable is gray or RGB color  */
-  if (gimp_drawable_is_rgb (drawable->id) ||
-      gimp_drawable_is_gray (drawable->id))
+  if (gimp_drawable_is_rgb (drawable->drawable_id) ||
+      gimp_drawable_is_gray (drawable->drawable_id))
     {
       switch (run_mode)
 	{
@@ -704,8 +704,8 @@ iwarp_frame (void)
     }
 
   gimp_drawable_flush (destdrawable);
-  gimp_drawable_merge_shadow (destdrawable->id, TRUE);
-  gimp_drawable_update (destdrawable->id, xl, yl, (xh - xl), (yh - yl));
+  gimp_drawable_merge_shadow (destdrawable->drawable_id, TRUE);
+  gimp_drawable_update (destdrawable->drawable_id, xl, yl, (xh - xl), (yh - yl));
 }
 
 static void
@@ -841,14 +841,14 @@ iwarp_init (void)
   guchar    *linebuffer = NULL;
   gdouble    dx, dy;
  
-  gimp_drawable_mask_bounds (drawable->id, &xl, &yl, &xh, &yh);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &xl, &yl, &xh, &yh);
   sel_width = xh - xl;
   sel_height = yh - yl;
   
-  image_bpp = gimp_drawable_bpp (drawable->id);
+  image_bpp = gimp_drawable_bpp (drawable->drawable_id);
   
-  if (gimp_drawable_is_layer (drawable->id))
-    preserve_trans = (gimp_layer_get_preserve_transparency (drawable->id));
+  if (gimp_drawable_is_layer (drawable->drawable_id))
+    preserve_trans = (gimp_layer_get_preserve_transparency (drawable->drawable_id));
   else
     preserve_trans = FALSE;
   

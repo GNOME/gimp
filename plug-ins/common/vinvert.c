@@ -123,7 +123,7 @@ run (char    *name,
   if (status == GIMP_PDB_SUCCESS)
     {
       /*  Make sure that the drawable is indexed or RGB color  */
-      if (gimp_drawable_is_rgb (drawable->id))
+      if (gimp_drawable_is_rgb (drawable->drawable_id))
 	{
 	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    {
@@ -136,7 +136,7 @@ run (char    *name,
 	    gimp_displays_flush ();
 	}
       else
-	if (gimp_drawable_is_indexed (drawable->id))
+	if (gimp_drawable_is_indexed (drawable->drawable_id))
 	  {
 	    indexed_vinvert (image_ID);
             if (run_mode != GIMP_RUN_NONINTERACTIVE)
@@ -248,7 +248,7 @@ vinvert (GimpDrawable *drawable)
    *  need to be done for correct operation. (It simply makes it go
    *  faster, since fewer pixels need to be operated on).
    */
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   total_area = (x2 - x1) * (y2 - y1);
   area_so_far = 0;
@@ -276,6 +276,6 @@ vinvert (GimpDrawable *drawable)
 
   /*  update the processed region  */
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 }

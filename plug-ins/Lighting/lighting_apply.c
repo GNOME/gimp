@@ -66,7 +66,7 @@ compute_image (void)
   
   if (mapvals.create_new_image == TRUE ||
       (mapvals.transparent_background == TRUE &&
-       ! gimp_drawable_has_alpha (input_drawable->id)))
+       ! gimp_drawable_has_alpha (input_drawable->drawable_id)))
     {
       /* Create a new image */
       /* ================== */
@@ -124,8 +124,8 @@ compute_image (void)
   gimp_pixel_rgn_init (&dest_region, output_drawable,
 		       0, 0, width, height, TRUE, TRUE);
 
-  obpp = gimp_drawable_bpp (output_drawable->id);
-  has_alpha = gimp_drawable_has_alpha (output_drawable->id);
+  obpp = gimp_drawable_bpp (output_drawable->drawable_id);
+  has_alpha = gimp_drawable_has_alpha (output_drawable->drawable_id);
 
   row = g_new (guchar, obpp * width);
 
@@ -172,8 +172,8 @@ compute_image (void)
   /* ============ */
 
   gimp_drawable_flush (output_drawable);
-  gimp_drawable_merge_shadow (output_drawable->id, TRUE);
-  gimp_drawable_update (output_drawable->id, 0, 0, width, height);
+  gimp_drawable_merge_shadow (output_drawable->drawable_id, TRUE);
+  gimp_drawable_update (output_drawable->drawable_id, 0, 0, width, height);
 
   if (new_image_id!=-1)
     {

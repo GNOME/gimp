@@ -115,8 +115,8 @@ run (gchar   *name,
   image_ID = param[1].data.d_image;
 
   /*  Make sure that the drawable is gray or RGB color  */
-  if (gimp_drawable_is_rgb (drawable->id) ||
-      gimp_drawable_is_gray (drawable->id))
+  if (gimp_drawable_is_rgb (drawable->drawable_id) ||
+      gimp_drawable_is_gray (drawable->drawable_id))
     {
       gimp_progress_init (_("Auto-Stretching Contrast..."));
       gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
@@ -125,7 +125,7 @@ run (gchar   *name,
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush ();
     }
-  else if (gimp_drawable_is_indexed (drawable->id))
+  else if (gimp_drawable_is_indexed (drawable->drawable_id))
     {
       indexed_c_astretch (image_ID);
 
@@ -203,8 +203,8 @@ c_astretch (GimpDrawable *drawable)
   gpointer pr;
 
   /* Get selection area */
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
-  has_alpha = gimp_drawable_has_alpha (drawable->id);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
   alpha = (has_alpha) ? drawable->bpp - 1 : drawable->bpp;
 
   /* Initialize progress */
@@ -307,6 +307,6 @@ c_astretch (GimpDrawable *drawable)
 
   /*  update the region  */
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 }

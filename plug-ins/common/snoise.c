@@ -259,8 +259,9 @@ run (gchar   *name,
     }
   
   /*  Create texture  */
-  if ((status == GIMP_PDB_SUCCESS) && (gimp_drawable_is_rgb (drawable->id) ||
-				     gimp_drawable_is_gray (drawable->id)))
+  if ((status == GIMP_PDB_SUCCESS) &&
+      (gimp_drawable_is_rgb (drawable->drawable_id) ||
+       gimp_drawable_is_gray (drawable->drawable_id)))
     {
       /*  Set the tile cache size  */
       gimp_tile_cache_ntiles ((drawable->width + gimp_tile_width () - 1) /
@@ -303,7 +304,8 @@ solid_noise (GimpDrawable *drawable)
   guchar    val;
 
   /*  Get selection area  */
-  gimp_drawable_mask_bounds (drawable->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id,
+			     &sel_x1, &sel_y1, &sel_x2, &sel_y2);
   sel_width = sel_x2 - sel_x1;
   sel_height = sel_y2 - sel_y1;
 
@@ -312,9 +314,9 @@ solid_noise (GimpDrawable *drawable)
   gimp_progress_init ( _("Solid Noise..."));
   progress = 0;
   max_progress = sel_width * sel_height;
-  chns = gimp_drawable_bpp (drawable->id);
+  chns = gimp_drawable_bpp (drawable->drawable_id);
   has_alpha = 0;
-  if (gimp_drawable_has_alpha (drawable->id))
+  if (gimp_drawable_has_alpha (drawable->drawable_id))
     {
       chns--;
       has_alpha = 1;
@@ -351,8 +353,9 @@ solid_noise (GimpDrawable *drawable)
 
   /*  Update the drawable  */
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, sel_x1, sel_y1, sel_width, sel_height);
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id,
+			sel_x1, sel_y1, sel_width, sel_height);
 }
 
 

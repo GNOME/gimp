@@ -1,3 +1,18 @@
+2001-06-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/gdisplay.c: fixed a FIXME: set the sensitivity of the
+	color tools' menu entries again.
+
+	* libgimp/gimpcolorselector.h
+	* libgimp/gimpdrawable.h
+	* libgimp/gimpmenu.h: removed the usage of "id" from the public
+	interface because it's a reserved keyword of Objective C.
+
+	* libgimp/gimpdrawable.c
+	* libgimp/gimptile.c
+
+	* plug-ins/[lotsa plugins].c: changed accordingly.
+
 2001-06-14  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpmeasuretool.c: fixed typo, closes bug #56200.

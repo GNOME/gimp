@@ -286,7 +286,7 @@ unsharp_mask (GimpDrawable *drawable,
   gint  x1, y1, x2, y2;
 
   /* Get the input */
-  gimp_drawable_mask_bounds(drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds(drawable->drawable_id, &x1, &y1, &x2, &y2);
   gimp_progress_init(_("Blurring..."));
 
   width = drawable->width;
@@ -301,8 +301,8 @@ unsharp_mask (GimpDrawable *drawable,
 		  x1, x2, y1, y2);
 
   gimp_drawable_flush(drawable);
-  gimp_drawable_merge_shadow(drawable->id, TRUE);
-  gimp_drawable_update(drawable->id, x1, y1, (x2-x1), (y2-y1));
+  gimp_drawable_merge_shadow(drawable->drawable_id, TRUE);
+  gimp_drawable_update(drawable->drawable_id, x1, y1, (x2-x1), (y2-y1));
 }
 
 /* perform an unsharp mask on the region, given a source region, dest.

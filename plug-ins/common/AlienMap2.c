@@ -1064,11 +1064,12 @@ run (char       *name,
   tile_width  = gimp_tile_width();
   tile_height = gimp_tile_height();
 
-  img_width  = gimp_drawable_width(drawable->id);
-  img_height = gimp_drawable_height(drawable->id);
-  img_bpp    = gimp_drawable_bpp(drawable->id);
+  img_width  = gimp_drawable_width(drawable->drawable_id);
+  img_height = gimp_drawable_height(drawable->drawable_id);
+  img_bpp    = gimp_drawable_bpp(drawable->drawable_id);
 
-  gimp_drawable_mask_bounds(drawable->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
+  gimp_drawable_mask_bounds(drawable->drawable_id,
+			    &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
   sel_width  = sel_x2 - sel_x1;
   sel_height = sel_y2 - sel_y1;
@@ -1156,7 +1157,7 @@ run (char       *name,
   if (status == GIMP_PDB_SUCCESS)
     {
       /*  Make sure that the drawable is indexed or RGB_MODEL color  */
-      if (gimp_drawable_is_rgb (drawable->id))
+      if (gimp_drawable_is_rgb (drawable->drawable_id))
         {
           gimp_progress_init (_("AlienMap2: Transforming..."));
 
@@ -1277,7 +1278,7 @@ alienmap2 (GimpDrawable *drawable)
    *  need to be done for correct operation. (It simply makes it go
    *  faster, since fewer pixels need to be operated on).
    */
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   /* Get the size of the input image. (This will/must be the same
    *  as the size of the output image.
@@ -1313,8 +1314,8 @@ alienmap2 (GimpDrawable *drawable)
 
   /*  update the processed region  */
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 
   free (src_row);
   free (dest_row);

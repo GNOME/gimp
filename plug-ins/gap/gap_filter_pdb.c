@@ -151,7 +151,7 @@ gint p_call_plugin(char *plugin_name, gint32 image_id, gint32 layer_id, GimpRunM
   /* init the standard parameters, that should be common to all plugins */
   l_argv[0].data.d_int32     = run_mode;
   l_argv[1].data.d_image     = image_id;
-  l_argv[2].data.d_drawable  = l_drawable->id;
+  l_argv[2].data.d_drawable  = l_drawable->drawable_id;
 
   /* run the plug-in procedure */
   l_ret_params = gimp_run_procedure2 (plugin_name, &l_retvals, l_nparams, l_argv);

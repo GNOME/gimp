@@ -169,7 +169,7 @@ run(char *name, int n_params, GimpParam *param, int *nreturn_vals,
    _image_width = gimp_image_width(param[1].data.d_image);
    _image_height = gimp_image_height(param[1].data.d_image);
 
-   _map_info.color = gimp_drawable_is_rgb(drawable->id);
+   _map_info.color = gimp_drawable_is_rgb(drawable->drawable_id);
 
    run_mode = (GimpRunModeType) param[0].data.d_int32;
    

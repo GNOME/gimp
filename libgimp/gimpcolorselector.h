@@ -92,7 +92,7 @@ gimp_color_selector_register   (const gchar                 *name,
 
 G_MODULE_EXPORT
 gboolean
-gimp_color_selector_unregister (GimpColorSelectorID          id,
+gimp_color_selector_unregister (GimpColorSelectorID          selector_id,
 				GimpColorSelectorFinishedCB  finished_cb,
 				gpointer                     finished_data);
 

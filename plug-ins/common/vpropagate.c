@@ -340,7 +340,7 @@ value_propagate_body (gint drawable_id)
   dtype = gimp_drawable_type (drawable_id);
 
   /* Here I use the algorithm of blur.c . */
-  gimp_drawable_mask_bounds (drawable->id, &begx, &begy, &endx, &endy);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &begx, &begy, &endx, &endy);
 
   width = drawable->width;
   height = drawable->height;
@@ -408,8 +408,8 @@ value_propagate_body (gint drawable_id)
   /*  update the region  */
   gimp_progress_update(1.0);
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, begx, begy, endx-begx, endy-begy);
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, begx, begy, endx-begx, endy-begy);
 }
 
 static void

@@ -220,7 +220,7 @@ run (gchar    *name,
   blindsdrawable = drawable = 
     gimp_drawable_get (param[2].data.d_drawable);
 
-  gimp_drawable_mask_bounds (drawable->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
   sel_width  = sel_x2 - sel_x1;
   sel_height = sel_y2 - sel_y1;
@@ -272,8 +272,8 @@ run (gchar    *name,
       break;
     }
 
-  if (gimp_drawable_is_rgb (drawable->id) ||
-      gimp_drawable_is_gray (drawable->id))
+  if (gimp_drawable_is_rgb (drawable->drawable_id) ||
+      gimp_drawable_is_gray (drawable->drawable_id))
     {
       gimp_progress_init ( _("Adding Blinds..."));
 
@@ -498,16 +498,16 @@ cache_preview (void)
   src_rows = g_new (guchar, sel_width * 4); 
   p = bint.pv_cache = g_new (guchar, preview_width * preview_height * 4);
 
-  bint.img_bpp = gimp_drawable_bpp (blindsdrawable->id);   
+  bint.img_bpp = gimp_drawable_bpp (blindsdrawable->drawable_id);   
 
-  has_alpha = gimp_drawable_has_alpha (blindsdrawable->id);
+  has_alpha = gimp_drawable_has_alpha (blindsdrawable->drawable_id);
 
   if (bint.img_bpp < 3)
     {
       bint.img_bpp = 3 + has_alpha;
     }
 
-  switch (gimp_drawable_type (blindsdrawable->id))
+  switch (gimp_drawable_type (blindsdrawable->drawable_id))
     {
     case GIMP_GRAYA_IMAGE:
     case GIMP_GRAY_IMAGE:
@@ -654,7 +654,7 @@ blinds_get_bg (guchar *bg)
 
   gimp_palette_get_background (&background);
 
-  switch (gimp_drawable_type (blindsdrawable->id))
+  switch (gimp_drawable_type (blindsdrawable->drawable_id))
     {
     case GIMP_RGB_IMAGE :
       gimp_rgb_get_uchar (&background, &bg[0], &bg[1], &bg[2]);
@@ -999,8 +999,8 @@ apply_blinds (void)
   g_free (des_rows);
 
   gimp_drawable_flush (blindsdrawable);
-  gimp_drawable_merge_shadow (blindsdrawable->id, TRUE);
-  gimp_drawable_update (blindsdrawable->id,
+  gimp_drawable_merge_shadow (blindsdrawable->drawable_id, TRUE);
+  gimp_drawable_update (blindsdrawable->drawable_id,
 			sel_x1, sel_y1, sel_width, sel_height);  
   
 }

@@ -290,8 +290,8 @@ run (gchar   *name,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   /*  Make sure that the drawable is gray or RGB color  */
-  if (gimp_drawable_is_rgb (drawable->id) ||
-      gimp_drawable_is_gray (drawable->id))
+  if (gimp_drawable_is_rgb (drawable->drawable_id) ||
+      gimp_drawable_is_gray (drawable->drawable_id))
     {
       gimp_progress_init (_("Sparkling..."));
       gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
@@ -301,7 +301,7 @@ run (gchar   *name,
           threshold = compute_lum_threshold (drawable, svals.lum_threshold);
       else
         {
-          gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+          gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
           num_sparkles = 2 * (x2 - x1 + y2 - y1);
           threshold = 255;
          }
@@ -606,9 +606,9 @@ compute_lum_threshold (GimpDrawable *drawable,
 
   memset (values, 0, sizeof (gint) * 256);
 
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
-  gray = gimp_drawable_is_gray (drawable->id);
-  has_alpha = gimp_drawable_has_alpha (drawable->id);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  gray = gimp_drawable_is_gray (drawable->drawable_id);
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
   gimp_pixel_rgn_init (&src_rgn, drawable,
 		       x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
@@ -659,9 +659,9 @@ sparkle (GimpDrawable *drawable,
   guchar   *tmp1;
   gint      tile_width, tile_height;
 
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
-  gray = gimp_drawable_is_gray (drawable->id);
-  has_alpha = gimp_drawable_has_alpha (drawable->id);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  gray = gimp_drawable_is_gray (drawable->drawable_id);
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
   alpha = (has_alpha) ? drawable->bpp - 1 : drawable->bpp;
   tile_width  = gimp_tile_width();
   tile_height = gimp_tile_height();
@@ -773,8 +773,8 @@ sparkle (GimpDrawable *drawable,
 
   /*  update the blurred region  */
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 }
 
 static inline GimpTile *

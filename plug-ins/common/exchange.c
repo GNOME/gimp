@@ -164,7 +164,8 @@ run (gchar   *name,
   drw = gimp_drawable_get (xargs.drawable);
 
   /* initialize misc. things */
-  gimp_drawable_mask_bounds (drw->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
+  gimp_drawable_mask_bounds (drw->drawable_id,
+			     &sel_x1, &sel_y1, &sel_x2, &sel_y2);
   sel_width = sel_x2 - sel_x1;
   sel_height = sel_y2 - sel_y1;
 
@@ -178,7 +179,7 @@ run (gchar   *name,
   else
     prev_height = sel_height;
 
-  has_alpha = gimp_drawable_has_alpha (drw->id);
+  has_alpha = gimp_drawable_has_alpha (drw->drawable_id);
 
   switch (runmode)
     {
@@ -233,7 +234,7 @@ run (gchar   *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (gimp_drawable_is_rgb (drw->id))
+      if (gimp_drawable_is_rgb (drw->drawable_id))
 	{
 	  gimp_progress_init (_("Color Exchange..."));
 	  gimp_tile_cache_ntiles (2 * (drw->width / gimp_tile_width () + 1));
@@ -760,7 +761,7 @@ real_exchange (gint     x1,
     {
       /* update the processed region */
       gimp_drawable_flush (drw);
-      gimp_drawable_merge_shadow (drw->id, TRUE);
-      gimp_drawable_update (drw->id, x1, y1, width, height);
+      gimp_drawable_merge_shadow (drw->drawable_id, TRUE);
+      gimp_drawable_update (drw->drawable_id, x1, y1, width, height);
     }
 }

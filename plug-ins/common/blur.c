@@ -255,8 +255,8 @@ run (gchar   *name,
   /*
    *  Make sure the drawable type is appropriate.
    */
-  if (gimp_drawable_is_rgb (drawable->id) ||
-      gimp_drawable_is_gray (drawable->id))
+  if (gimp_drawable_is_rgb (drawable->drawable_id) ||
+      gimp_drawable_is_gray (drawable->drawable_id))
     {
       switch (run_mode)
 	{
@@ -438,7 +438,7 @@ blur (GimpDrawable *drawable)
    *  need to be done for correct operation. (It simply makes it go
    *  faster, since fewer pixels need to be operated on).
    */
-  gimp_drawable_mask_bounds(drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds(drawable->drawable_id, &x1, &y1, &x2, &y2);
   /*
    *  Get the size of the input image. (This will/must be the same
    *  as the size of the output image.  Also get alpha info.
@@ -446,7 +446,7 @@ blur (GimpDrawable *drawable)
   width = drawable->width;
   height = drawable->height;
   bytes = drawable->bpp;
-  has_alpha = gimp_drawable_has_alpha(drawable->id);
+  has_alpha = gimp_drawable_has_alpha(drawable->drawable_id);
   /*
    *  allocate row buffers
    */
@@ -579,8 +579,8 @@ blur (GimpDrawable *drawable)
    *  update the blurred region
    */
   gimp_drawable_flush(drawable);
-  gimp_drawable_merge_shadow(drawable->id, TRUE);
-  gimp_drawable_update(drawable->id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_merge_shadow(drawable->drawable_id, TRUE);
+  gimp_drawable_update(drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
   /*
    *  clean up after ourselves.
    */

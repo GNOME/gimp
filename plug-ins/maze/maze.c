@@ -201,7 +201,7 @@ run    (gchar    *name,
       gimp_get_data ("plug_in_maze", &mvals);
       
       /* The interface needs to know the dimensions of the image... */
-      gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
       sel_w=x2-x1; sel_h=y2-y1;
 
       /* Acquire info with a dialog */
@@ -237,19 +237,23 @@ run    (gchar    *name,
   }
   
   /* color, gray, or indexed... hmm, miss anything?  ;)  */
-  if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id) || gimp_drawable_is_indexed (drawable->id)) {
-
+  if (gimp_drawable_is_rgb (drawable->drawable_id) ||
+      gimp_drawable_is_gray (drawable->drawable_id) ||
+      gimp_drawable_is_indexed (drawable->drawable_id))
+    {
       maze (drawable);
-      
+
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	  gimp_displays_flush ();
-      
+	gimp_displays_flush ();
+
       if (run_mode == GIMP_RUN_INTERACTIVE || 
 	  (mvals.timeseed && run_mode == GIMP_RUN_WITH_LAST_VALS))
-	  gimp_set_data ("plug_in_maze", &mvals, sizeof (MazeValues));
-  } else {
+	gimp_set_data ("plug_in_maze", &mvals, sizeof (MazeValues));
+    }
+  else
+    {
       status = GIMP_PDB_EXECUTION_ERROR;
-  }
+    }
 
   values[0].data.d_status = status;
 
@@ -302,7 +306,8 @@ maze( GimpDrawable * drawable)
   guint pos;
 
   /* Gets the input area... */
-  active_selection = gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  active_selection = gimp_drawable_mask_bounds (drawable->drawable_id,
+						&x1, &y1, &x2, &y2);
 
   /***************** Maze Stuff Happens Here ***************/
 
@@ -356,7 +361,7 @@ maze( GimpDrawable * drawable)
   } else { /* not tileable */
        if (active_selection) { /* Mask and draw mazes until there's no 
 				* more room left. */
-	    mask_maze(drawable->id,
+	    mask_maze(drawable->drawable_id,
 		      maz, mw, mh, x1, x2, y1, y2, deadx, deady);
 	    for(maz_yy=mw; maz_yy < (mh*mw); maz_yy += 2*mw) {
 		 for(maz_xx=1; maz_xx < mw; maz_xx += 2) {
@@ -451,8 +456,8 @@ maze( GimpDrawable * drawable)
 	  /* Indicate progress in drawing. */
       }
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 }
 
 /* Shaped mazes: */

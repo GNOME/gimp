@@ -246,7 +246,7 @@ find_projected_pos (gfloat  a,
 static void
 drawlens (GimpDrawable *drawable)
 {
-  GimpImageType drawtype = gimp_drawable_type (drawable->id);
+  GimpImageType drawtype = gimp_drawable_type (drawable->drawable_id);
   GimpPixelRgn  srcPR, destPR;
   gint     width, height;
   gint     bytes;
@@ -265,7 +265,7 @@ drawlens (GimpDrawable *drawable)
   gimp_rgb_get_uchar (&background, 
 		      &bgr_red, &bgr_green, &bgr_blue);
 
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
   regionwidth = x2 - x1;
   a = regionwidth / 2;
   regionheight = y2 - y1;
@@ -356,8 +356,8 @@ drawlens (GimpDrawable *drawable)
   g_free (dest);
 
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 }
 
 static void
@@ -384,7 +384,7 @@ lens_dialog (GimpDrawable *drawable)
   GSList *group = NULL;
   GimpImageType drawtype;
 
-  drawtype = gimp_drawable_type (drawable->id);
+  drawtype = gimp_drawable_type (drawable->drawable_id);
 
   gimp_ui_init ("apply_lens", FALSE);
 

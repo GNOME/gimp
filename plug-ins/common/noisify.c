@@ -211,8 +211,8 @@ run (gchar   *name,
     }
 
   /*  Make sure that the drawable is gray or RGB color  */
-  if (gimp_drawable_is_rgb (drawable->id) ||
-      gimp_drawable_is_gray (drawable->id))
+  if (gimp_drawable_is_rgb (drawable->drawable_id) ||
+      gimp_drawable_is_gray (drawable->drawable_id))
     {
       gimp_progress_init (_("Adding Noise..."));
       gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
@@ -346,7 +346,7 @@ noisify (GimpDrawable *drawable,
     } 
   else 
     {
-      gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
       gimp_pixel_rgn_init (&src_rgn, drawable,
 			   x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
       gimp_pixel_rgn_init (&dest_rgn, drawable,
@@ -459,8 +459,8 @@ noisify (GimpDrawable *drawable,
  
       /*  update the blurred region  */
       gimp_drawable_flush (drawable);
-      gimp_drawable_merge_shadow (drawable->id, TRUE);
-      gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
+      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+      gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 
     } /* endif normal mode */
 }
@@ -770,7 +770,7 @@ fill_preview (GtkWidget *widget,
   guchar    *src;
   guchar    *even, *odd;
   
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   if (x2 - x1 > PREVIEW_SIZE)
     x2 = x1 + PREVIEW_SIZE;
@@ -780,7 +780,7 @@ fill_preview (GtkWidget *widget,
   
   width  = x2 - x1;
   height = y2 - y1;
-  bpp    = gimp_drawable_bpp (drawable->id);
+  bpp    = gimp_drawable_bpp (drawable->drawable_id);
   
   if (width < 1 || height < 1)
     return;

@@ -384,7 +384,7 @@ run (gchar  *name,
 
   values[0].data.d_status = status;
 
-  image_ID = gimp_layer_get_image_id (map_x->id);
+  image_ID = gimp_layer_get_image_id (map_x->drawable_id);
 
   gimp_drawable_detach (map_x);
   gimp_drawable_detach (map_y);
@@ -733,7 +733,7 @@ blur16 (GimpDrawable *drawable)
 
   /* --------------------------------------- */
 
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   width = drawable->width;     /* size of input drawable*/
   height = drawable->height;
@@ -802,8 +802,8 @@ blur16 (GimpDrawable *drawable)
 
   /*  update the region  */
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 
   free (prev_row);  /* row buffers allocated at top of fn. */
   free (cur_row);
@@ -904,7 +904,7 @@ diff (GimpDrawable *drawable,
    *  need to be done for correct operation. (It simply makes it go
    *  faster, since fewer pixels need to be operated on).
    */
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   /* Get the size of the input image. (This will/must be the same
    *  as the size of the output image.
@@ -912,14 +912,14 @@ diff (GimpDrawable *drawable,
   width = drawable->width;
   height = drawable->height;
   src_bytes = drawable->bpp;                /* bytes per pixel in SOURCE drawable */
-  has_alpha = gimp_drawable_has_alpha(drawable->id);
+  has_alpha = gimp_drawable_has_alpha(drawable->drawable_id);
 
   /* -- Add two layers: X and Y Displacement vectors -- */
   /* -- I'm using a RGB  drawable and using the first two bytes for a 
         16-bit pixel value. This is either clever, or a kluge, 
         depending on your point of view.  */
 
-  image_id = gimp_layer_get_image_id(drawable->id);
+  image_id = gimp_layer_get_image_id(drawable->drawable_id);
   layer_active = gimp_image_get_active_layer(image_id);
 
   new_image_id = gimp_image_new(width, height, GIMP_RGB); /* create new image for X,Y diff */
@@ -1141,8 +1141,8 @@ diff (GimpDrawable *drawable,
   gimp_drawable_flush (draw_xd);
   gimp_drawable_flush (draw_yd);
 
-  gimp_drawable_update (draw_xd->id, x1, y1, (x2 - x1), (y2 - y1));
-  gimp_drawable_update (draw_yd->id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_update (draw_xd->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_update (draw_yd->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 
   /*
   if (display_diff_map) {
@@ -1214,17 +1214,17 @@ warp (GimpDrawable  *orig_draw,
   diff(disp_map, &xdlayer, &ydlayer);    /* generate x,y differential images (arrays) */
  
   /* Get selection area */
-   gimp_drawable_mask_bounds (orig_draw->id, &x1, &y1, &x2, &y2);
+   gimp_drawable_mask_bounds (orig_draw->drawable_id, &x1, &y1, &x2, &y2);
 
    width  = orig_draw->width;
    height = orig_draw->height;
    bytes  = orig_draw->bpp;
-   image_type = gimp_drawable_type(orig_draw->id);
+   image_type = gimp_drawable_type(orig_draw->drawable_id);
 
    *map_x = gimp_drawable_get(xdlayer);
    *map_y = gimp_drawable_get(ydlayer);
 
-   orig_image_id = gimp_layer_get_image_id(orig_draw->id);
+   orig_image_id = gimp_layer_get_image_id(orig_draw->drawable_id);
 
    /*   gimp_image_lower_layer(orig_image_id, new_layer_id); */ /* hide it! */
 
@@ -1241,7 +1241,7 @@ warp (GimpDrawable  *orig_draw,
      }
      warp_one(orig_draw, orig_draw, *map_x, *map_y, mag_draw, first_time, warp_iter);
 
-     gimp_drawable_update (orig_draw->id, x1, y1, (x2 - x1), (y2 - y1));
+     gimp_drawable_update (orig_draw->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 
      if (run_mode != GIMP_RUN_NONINTERACTIVE)
        gimp_displays_flush();
@@ -1329,7 +1329,7 @@ warp_one (GimpDrawable *draw,
 
   /* Get selection area */
 
-   gimp_drawable_mask_bounds (draw->id, &x1, &y1, &x2, &y2);
+   gimp_drawable_mask_bounds (draw->drawable_id, &x1, &y1, &x2, &y2);
    width  = draw->width;
    height = draw->height;
    dest_bytes  = draw->bpp;
@@ -1352,21 +1352,21 @@ warp_one (GimpDrawable *draw,
 
 
    gimp_pixel_rgn_init (&map_x_rgn, map_x, x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
-   if (gimp_drawable_has_alpha(map_x->id))
+   if (gimp_drawable_has_alpha(map_x->drawable_id))
 	xm_alpha = 1;
-   xm_bytes = gimp_drawable_bpp(map_x->id);
+   xm_bytes = gimp_drawable_bpp(map_x->drawable_id);
 
    gimp_pixel_rgn_init (&map_y_rgn, map_y, x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
-   if (gimp_drawable_has_alpha(map_y->id))
+   if (gimp_drawable_has_alpha(map_y->drawable_id))
 	ym_alpha = 1;
-   ym_bytes = gimp_drawable_bpp(map_y->id);
+   ym_bytes = gimp_drawable_bpp(map_y->drawable_id);
 
 
    if (dvals.mag_use == TRUE) {
      gimp_pixel_rgn_init (&mag_rgn, mag_draw, x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
-     if (gimp_drawable_has_alpha(mag_draw->id))
+     if (gimp_drawable_has_alpha(mag_draw->drawable_id))
        mmag_alpha = 1;
-     mmag_bytes = gimp_drawable_bpp(mag_draw->id);
+     mmag_bytes = gimp_drawable_bpp(mag_draw->drawable_id);
 
      pr = gimp_pixel_rgns_register (5, &src_rgn, &dest_rgn, &map_x_rgn, &map_y_rgn, &mag_rgn);
    } else {
@@ -1529,7 +1529,7 @@ warp_one (GimpDrawable *draw,
      /*  update the region  */
    gimp_drawable_flush (new);
 
-   gimp_drawable_merge_shadow(draw->id, (first_time == TRUE));
+   gimp_drawable_merge_shadow(draw->drawable_id, (first_time == TRUE));
   
 } /* warp_one */
 

@@ -415,7 +415,7 @@ render_blast (GimpDrawable   *drawable,
   else 
     {
       gimp_progress_init( _("Rendering Blast..."));
-      gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
       width = x2 - x1;
       height = y2 - y1;
@@ -501,8 +501,8 @@ render_blast (GimpDrawable   *drawable,
   else 
     {
       gimp_drawable_flush (drawable);
-      gimp_drawable_merge_shadow (drawable->id, TRUE);
-      gimp_drawable_update (drawable->id, x1, y1, x2 - x1, y2 - y1);
+      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+      gimp_drawable_update (drawable->drawable_id, x1, y1, x2 - x1, y2 - y1);
     }
 
   return;
@@ -546,7 +546,7 @@ render_wind (GimpDrawable   *drawable,
   else 
     {
       gimp_progress_init( _("Rendering Wind..."));
-      gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
       bytes = drawable->bpp;
       width = x2 - x1;
@@ -605,8 +605,8 @@ render_wind (GimpDrawable   *drawable,
   else 
     {
       gimp_drawable_flush (drawable);
-      gimp_drawable_merge_shadow (drawable->id, TRUE);
-      gimp_drawable_update (drawable->id, x1, y1, x2 - x1, y2 - y1);
+      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+      gimp_drawable_update (drawable->drawable_id, x1, y1, x2 - x1, y2 - y1);
     }
 
   return;
@@ -1199,7 +1199,7 @@ fill_preview (GtkWidget *widget,
   guchar    *src;
   guchar    *even, *odd;
   
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   if (x2 - x1 > PREVIEW_SIZE)
     x2 = x1 + PREVIEW_SIZE;
@@ -1209,7 +1209,7 @@ fill_preview (GtkWidget *widget,
   
   width  = x2 - x1;
   height = y2 - y1;
-  bpp    = gimp_drawable_bpp (drawable->id);
+  bpp    = gimp_drawable_bpp (drawable->drawable_id);
   
   if (width < 1 || height < 1)
     return;

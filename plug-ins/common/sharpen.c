@@ -203,11 +203,12 @@ run (gchar   *name,
 
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
-  gimp_drawable_mask_bounds (drawable->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id,
+			     &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
   sel_width     = sel_x2 - sel_x1;
   sel_height    = sel_y2 - sel_y1;
-  img_bpp       = gimp_drawable_bpp (drawable->id);
+  img_bpp       = gimp_drawable_bpp (drawable->drawable_id);
 
   /*
    * See how we will run
@@ -259,8 +260,8 @@ run (gchar   *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if ((gimp_drawable_is_rgb (drawable->id) ||
-	   gimp_drawable_is_gray (drawable->id)))
+      if ((gimp_drawable_is_rgb (drawable->drawable_id) ||
+	   gimp_drawable_is_gray (drawable->drawable_id)))
 	{
 	  /*
 	   * Set the tile cache size...
@@ -491,8 +492,9 @@ sharpen (void)
    */
 
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, sel_x1, sel_y1, sel_width, sel_height);
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id,
+			sel_x1, sel_y1, sel_width, sel_height);
 }
 
 

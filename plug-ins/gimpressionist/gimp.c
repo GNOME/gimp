@@ -140,12 +140,13 @@ run(char *name, int nparams, GimpParam *param, int *nreturn_vals, GimpParam **re
 
   drawable = gimp_drawable_get(param[2].data.d_drawable);
   
-  img_width     = gimp_drawable_width(drawable->id);
-  img_height    = gimp_drawable_height(drawable->id);
-  img_bpp       = gimp_drawable_bpp(drawable->id);
-  img_has_alpha = gimp_drawable_has_alpha(drawable->id);
+  img_width     = gimp_drawable_width(drawable->drawable_id);
+  img_height    = gimp_drawable_height(drawable->drawable_id);
+  img_bpp       = gimp_drawable_bpp(drawable->drawable_id);
+  img_has_alpha = gimp_drawable_has_alpha(drawable->drawable_id);
 
-  gimp_drawable_mask_bounds(drawable->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
+  gimp_drawable_mask_bounds(drawable->drawable_id,
+			    &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
   switch (run_mode) {
   case GIMP_RUN_INTERACTIVE:
@@ -168,7 +169,7 @@ run(char *name, int nparams, GimpParam *param, int *nreturn_vals, GimpParam **re
     status = GIMP_PDB_EXECUTION_ERROR;
     break;
   }
-  if((status == GIMP_PDB_SUCCESS) && (gimp_drawable_is_rgb(drawable->id) || gimp_drawable_is_gray(drawable->id))) {
+  if((status == GIMP_PDB_SUCCESS) && (gimp_drawable_is_rgb(drawable->drawable_id) || gimp_drawable_is_gray(drawable->drawable_id))) {
     gimpressionist_main();
     gimp_displays_flush ();
     
@@ -200,10 +201,10 @@ void grabarea(void)
     return;
   }
 
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
-  bpp = gimp_drawable_bpp (drawable->id);
-  has_alpha = gimp_drawable_has_alpha (drawable->id);
+  bpp = gimp_drawable_bpp (drawable->drawable_id);
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
   alpha = (has_alpha) ? bpp - 1 : bpp;
   
   newppm(&infile, x2-x1, y2-y1);
@@ -283,10 +284,10 @@ void gimpressionist_main(void)
   gint row, col;
   int rowstride;
 
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
-  bpp = gimp_drawable_bpp (drawable->id);
-  has_alpha = gimp_drawable_has_alpha (drawable->id);
+  bpp = gimp_drawable_bpp (drawable->drawable_id);
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
   alpha = (has_alpha) ? bpp - 1 : bpp;
 
   dest_row = g_new (guchar, (x2 - x1) * bpp);
@@ -373,6 +374,6 @@ void gimpressionist_main(void)
   g_free (dest_row);
 
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 }

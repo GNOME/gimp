@@ -173,11 +173,11 @@ run (gchar   *name,
   status   = GIMP_PDB_SUCCESS;
 
   drawable     = gimp_drawable_get (args[2].data.d_drawable);
-  image.width  = gimp_drawable_width( drawable->id);
-  image.height = gimp_drawable_height (drawable->id);
-  image.bpp    = gimp_drawable_bpp (drawable->id);
-  image.alpha  = gimp_drawable_has_alpha (drawable->id);
-  gimp_drawable_mask_bounds (drawable->id, &selection.x1, &selection.y1,
+  image.width  = gimp_drawable_width( drawable->drawable_id);
+  image.height = gimp_drawable_height (drawable->drawable_id);
+  image.bpp    = gimp_drawable_bpp (drawable->drawable_id);
+  image.alpha  = gimp_drawable_has_alpha (drawable->drawable_id);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &selection.x1, &selection.y1,
 			     &selection.x2, &selection.y2);
   selection.width    = selection.x2 - selection.y1;
   selection.height   = selection.y2 - selection.y1;
@@ -186,8 +186,8 @@ run (gchar   *name,
 
   pixels_init (drawable);
 
-  if (!gimp_drawable_is_rgb(drawable->id) && 
-      !gimp_drawable_is_gray(drawable->id))
+  if (!gimp_drawable_is_rgb(drawable->drawable_id) && 
+      !gimp_drawable_is_gray(drawable->drawable_id))
     {
       status = GIMP_PDB_EXECUTION_ERROR;
     }
@@ -499,8 +499,8 @@ filter (GimpDrawable *drawable)
   pixels_store ();
 
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id,
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id,
 			selection.x1, selection.y1,
 			selection.width, selection.height);
 }

@@ -445,8 +445,8 @@ pluginCore (struct piArgs *argp)
   g_free (dstbuf);
 
   gimp_drawable_flush (drw);
-  gimp_drawable_merge_shadow (drw->id, TRUE);
-  gimp_drawable_update (drw->id, x1, y1, width, height);
+  gimp_drawable_merge_shadow (drw->drawable_id, TRUE);
+  gimp_drawable_update (drw->drawable_id, x1, y1, width, height);
   gimp_displays_flush ();
 
   return 0;

@@ -410,7 +410,7 @@ run (gchar      *name,
 
       /* Make sure the drawable is RGB color */
       drawable = gimp_drawable_get (param[2].data.d_drawable);
-      if (!gimp_drawable_is_rgb (drawable->id))
+      if (!gimp_drawable_is_rgb (drawable->drawable_id))
 	{
 	  g_message (_("Color Mapping / Adjust FG/BG:\nCannot operate on gray/indexed images"));
 	  status = GIMP_PDB_EXECUTION_ERROR;
@@ -743,13 +743,13 @@ color_mapping (GimpDrawable *drawable)
   if (gimp_rgb_distance (&plvals.colors[0], &plvals.colors[1]) < 0.0001)
     return;
 
-  if (!gimp_drawable_is_rgb (drawable->id))
+  if (!gimp_drawable_is_rgb (drawable->drawable_id))
     {
       g_message (_("Color Mapping / Adjust FG/BG:\nCannot operate on gray/indexed images"));
       return;
     }
   
-  gimp_drawable_mask_bounds (drawable->id, &xmin, &ymin, &xmax, &ymax);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &xmin, &ymin, &xmax, &ymax);
   if ((ymin == ymax) || (xmin == xmax)) return;
   total = (xmax - xmin) * (ymax - ymin);
 
@@ -801,7 +801,7 @@ color_mapping (GimpDrawable *drawable)
     gimp_progress_update (1.0);
 
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, 
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, 
 			xmin, ymin, (xmax - xmin), (ymax - ymin));
 }

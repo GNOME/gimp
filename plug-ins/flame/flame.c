@@ -220,7 +220,7 @@ run (gchar   *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (gimp_drawable_is_rgb (drawable->id))
+      if (gimp_drawable_is_rgb (drawable->drawable_id))
 	{
 	  gimp_progress_init (_("Drawing Flame..."));
 	  gimp_tile_cache_ntiles (2 * (drawable->width /
@@ -365,8 +365,8 @@ doit (GimpDrawable *drawable)
 
   g_free (tmp);
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, 0, 0, width, height);
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, 0, 0, width, height);
 }
 
 

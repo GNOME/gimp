@@ -492,7 +492,7 @@ displace (GimpDrawable *drawable)
   myrow = NULL;
   
   /* Get selection area */
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   width  = drawable->width;
   height = drawable->height;
@@ -512,9 +512,9 @@ displace (GimpDrawable *drawable)
       map_x = gimp_drawable_get (dvals.displace_map_x);
       gimp_pixel_rgn_init (&map_x_rgn, map_x,
 			   x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
-      if (gimp_drawable_has_alpha(map_x->id))
+      if (gimp_drawable_has_alpha(map_x->drawable_id))
 	xm_alpha = 1;
-      xm_bytes = gimp_drawable_bpp(map_x->id);
+      xm_bytes = gimp_drawable_bpp(map_x->drawable_id);
     }
   else
     map_x = NULL;
@@ -524,9 +524,9 @@ displace (GimpDrawable *drawable)
       map_y = gimp_drawable_get (dvals.displace_map_y);
       gimp_pixel_rgn_init (&map_y_rgn, map_y,
 			   x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
-      if (gimp_drawable_has_alpha(map_y->id))
+      if (gimp_drawable_has_alpha(map_y->drawable_id))
 	ym_alpha = 1;
-      ym_bytes = gimp_drawable_bpp(map_y->id);
+      ym_bytes = gimp_drawable_bpp(map_y->drawable_id);
     }
   else
     map_y = NULL;
@@ -638,8 +638,8 @@ displace (GimpDrawable *drawable)
 
   /*  update the region  */
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 } /* displace */
 
 

@@ -98,8 +98,8 @@ run (gchar   *name,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   /*  Make sure that the drawable is gray or RGB color  */
-  if (gimp_drawable_is_rgb (drawable->id) ||
-      gimp_drawable_is_gray (drawable->id))
+  if (gimp_drawable_is_rgb (drawable->drawable_id) ||
+      gimp_drawable_is_gray (drawable->drawable_id))
     {
       gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
       tile(drawable);
@@ -181,7 +181,7 @@ tile (GimpDrawable *drawable)
 
   /* Get the input */
 
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
   gimp_progress_init (_("Tiler..."));
   
   width  = drawable->width;
@@ -257,6 +257,6 @@ tile (GimpDrawable *drawable)
     }
 
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, x1, y1, (x2-x1), (y2-y1));
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2-x1), (y2-y1));
 }

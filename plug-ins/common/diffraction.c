@@ -269,7 +269,7 @@ run (gchar   *name,
   active_drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   /* Create the diffraction pattern */
-  if ((status == GIMP_PDB_SUCCESS) && gimp_drawable_is_rgb(active_drawable->id))
+  if ((status == GIMP_PDB_SUCCESS) && gimp_drawable_is_rgb(active_drawable->drawable_id))
     {
       /* Set the tile cache size */
       gimp_tile_cache_ntiles ((active_drawable->width + gimp_tile_width() - 1) /
@@ -314,12 +314,12 @@ diffraction (GimpDrawable *drawable)
 
   /* Get the mask bounds and image size */
 
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   width  = x2 - x1;
   height = y2 - y1;
 
-  has_alpha = gimp_drawable_has_alpha (drawable->id);
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
   /* Initialize pixel regions */
 
@@ -379,8 +379,8 @@ diffraction (GimpDrawable *drawable)
     }
 
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, x1, y1, width, height);
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
 }
 
 static void

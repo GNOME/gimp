@@ -605,7 +605,7 @@ convert_to_rgb (GimpDrawable *srcdrawable,
  register guchar *cmap, *colour;
  gint ncols;
 
- switch (gimp_drawable_type (srcdrawable->id))
+ switch (gimp_drawable_type (srcdrawable->drawable_id))
    {
    case GIMP_RGB_IMAGE:
      memcpy ((char *)dst, (char *)src, numpix*3);
@@ -647,7 +647,7 @@ convert_to_rgb (GimpDrawable *srcdrawable,
 
    case GIMP_INDEXED_IMAGE:
    case GIMP_INDEXEDA_IMAGE:
-     cmap = gimp_image_get_cmap (gimp_drawable_image_id (srcdrawable->id),
+     cmap = gimp_image_get_cmap (gimp_drawable_image_id (srcdrawable->drawable_id),
                                  &ncols);
      if (cmap)
        {
@@ -849,7 +849,7 @@ draw_hole_rgb (GimpDrawable *drw,
   GimpPixelRgn rgn;
   guchar *data;
   gint tile_height = gimp_tile_height ();
-  gint i, j, scan_lines, d_width = gimp_drawable_width (drw->id);
+  gint i, j, scan_lines, d_width = gimp_drawable_width (drw->drawable_id);
   gint length;
 
   if ((width <= 0) || (height <= 0))

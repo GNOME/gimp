@@ -296,8 +296,8 @@ run (gchar      *name,
   if (status == GIMP_PDB_SUCCESS)
     {
       /*  Make sure that the drawable is gray or RGB color  */
-      if (gimp_drawable_is_rgb (drawable->id) ||
-          gimp_drawable_is_gray (drawable->id))
+      if (gimp_drawable_is_rgb (drawable->drawable_id) ||
+          gimp_drawable_is_gray (drawable->drawable_id))
         {
           gimp_progress_init ( _("RLE Gaussian Blur"));
 
@@ -576,12 +576,12 @@ gauss_rle (GimpDrawable *drawable,
   if (horz < 1.0 && vert < 1.0)
     return;
 
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   width = (x2 - x1);
   height = (y2 - y1);
   bytes = drawable->bpp;
-  has_alpha = gimp_drawable_has_alpha(drawable->id);
+  has_alpha = gimp_drawable_has_alpha(drawable->drawable_id);
 
   buf = g_new (gint, MAX (width, height) * 2);
 
@@ -755,8 +755,8 @@ gauss_rle (GimpDrawable *drawable,
 
   /*  merge the shadow, update the drawable  */
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 
   /*  free buffers  */
   g_free (buf);

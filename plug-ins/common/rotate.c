@@ -389,10 +389,10 @@ rotate_drawable (GimpDrawable *drawable)
   height = drawable->height;
   bytes = drawable->bpp;
 
-  if (gimp_layer_get_preserve_transparency (drawable->id))
+  if (gimp_layer_get_preserve_transparency (drawable->drawable_id))
     {
 	was_preserve_transparency = TRUE;
-	gimp_layer_set_preserve_transparency (drawable->id, FALSE);
+	gimp_layer_set_preserve_transparency (drawable->drawable_id, FALSE);
     }
 
   if (rotvals.angle == 2)  /* we're rotating by 180° */
@@ -427,16 +427,16 @@ rotate_drawable (GimpDrawable *drawable)
       g_free (dest_row);
  
       gimp_drawable_flush (drawable); 
-      gimp_drawable_merge_shadow (drawable->id, TRUE); 
-      gimp_drawable_update (drawable->id, 0, 0, width, height); 
+      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE); 
+      gimp_drawable_update (drawable->drawable_id, 0, 0, width, height); 
 
     }
   else                     /* we're rotating by 90° or 270° */
     {  
       (width > height) ? (longside = width) : (longside = height);
 
-      gimp_layer_resize (drawable->id, longside, longside, 0, 0);
-      drawable = gimp_drawable_get (drawable->id);
+      gimp_layer_resize (drawable->drawable_id, longside, longside, 0, 0);
+      drawable = gimp_drawable_get (drawable->drawable_id);
       gimp_drawable_flush (drawable);
       
       gimp_tile_cache_ntiles ( (longside / gimp_tile_width () + 1) + 
@@ -479,24 +479,24 @@ rotate_drawable (GimpDrawable *drawable)
       gimp_progress_update ( 1.0 );
 
       gimp_drawable_flush (drawable); 
-      gimp_drawable_merge_shadow (drawable->id, TRUE);
-      gimp_drawable_update (drawable->id, 0, 0, height, width); 
+      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+      gimp_drawable_update (drawable->drawable_id, 0, 0, height, width); 
 
-      gimp_layer_resize (drawable->id, height, width, 0, 0);
-      drawable = gimp_drawable_get (drawable->id);
+      gimp_layer_resize (drawable->drawable_id, height, width, 0, 0);
+      drawable = gimp_drawable_get (drawable->drawable_id);
       gimp_drawable_flush (drawable);
-      gimp_drawable_update (drawable->id, 0, 0, height, width);
+      gimp_drawable_update (drawable->drawable_id, 0, 0, height, width);
     }
 
-  gimp_drawable_offsets (drawable->id, &offsetx, &offsety);
+  gimp_drawable_offsets (drawable->drawable_id, &offsetx, &offsety);
   rotate_compute_offsets (&offsetx, &offsety, 
 			  gimp_image_width (image_ID),
 			  gimp_image_height (image_ID), 
 			  width, height); 
-  gimp_layer_set_offsets (drawable->id, offsetx, offsety);
+  gimp_layer_set_offsets (drawable->drawable_id, offsetx, offsety);
 
   if (was_preserve_transparency)
-    gimp_layer_set_preserve_transparency ( drawable->id, TRUE );
+    gimp_layer_set_preserve_transparency ( drawable->drawable_id, TRUE );
 
   return;
 }
@@ -527,7 +527,7 @@ rotate (void)
 	  gimp_drawable_detach (active_drawable);
 	  return;
 	}
-      if ( gimp_layer_is_floating_selection (active_drawable->id) ) 
+      if ( gimp_layer_is_floating_selection (active_drawable->drawable_id) ) 
 	{
 	  gimp_message (_("You can not rotate the whole image if there's a floating selection."));
 	  gimp_drawable_detach (active_drawable);
@@ -537,7 +537,7 @@ rotate (void)
   else
     /* if we are trying to rotate a chennel or a mask, create an error message and exit */
     {
-      if ( !gimp_drawable_is_layer (active_drawable->id) )
+      if ( !gimp_drawable_is_layer (active_drawable->drawable_id) )
 	{
 	  gimp_message (_("Sorry, channels and masks can not be rotated."));
 	  gimp_drawable_detach (active_drawable);
@@ -635,10 +635,10 @@ rotate (void)
 
       /* check for active selection and float it */
       if ( !gimp_selection_is_empty (image_ID) &&
-	   !gimp_layer_is_floating_selection (active_drawable->id) )
+	   !gimp_layer_is_floating_selection (active_drawable->drawable_id) )
 	active_drawable = 
 	  gimp_drawable_get (gimp_selection_float (image_ID, 
-						   active_drawable->id,  
+						   active_drawable->drawable_id,  
 						   0, 0));
 			    
       rotate_drawable (active_drawable);

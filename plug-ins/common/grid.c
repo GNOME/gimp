@@ -402,10 +402,10 @@ doit (gint32        image_ID,
       /* Get the input area. This is the bounding box of the selection in
        *  the image (or the entire image if there is no selection). 
        */
-      gimp_drawable_mask_bounds (drawable->id, &sx1, &sy1, &sx2, &sy2);
-      width  = gimp_drawable_width (drawable->id);
-      height = gimp_drawable_height (drawable->id);
-      alpha  = gimp_drawable_has_alpha (drawable->id);
+      gimp_drawable_mask_bounds (drawable->drawable_id, &sx1, &sy1, &sx2, &sy2);
+      width  = gimp_drawable_width (drawable->drawable_id);
+      height = gimp_drawable_height (drawable->drawable_id);
+      alpha  = gimp_drawable_has_alpha (drawable->drawable_id);
       bytes  = drawable->bpp;
       
       /*  initialize the pixel regions  */
@@ -502,8 +502,8 @@ doit (gint32        image_ID,
   else 
     {
       gimp_drawable_flush (drawable);
-      gimp_drawable_merge_shadow (drawable->id, TRUE);
-      gimp_drawable_update (drawable->id, sx1, sy1, sx2 - sx1, sy2 - sy1);
+      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+      gimp_drawable_update (drawable->drawable_id, sx1, sy1, sx2 - sx1, sy2 - sy1);
     }
 }
 
@@ -1008,7 +1008,7 @@ fill_preview (GtkWidget    *widget,
   guchar       *p0, *p1;
   guchar       *even, *odd;
   
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   if (x2 - x1 > PREVIEW_SIZE)
     x2 = x1 + PREVIEW_SIZE;
@@ -1018,7 +1018,7 @@ fill_preview (GtkWidget    *widget,
   
   width  = x2 - x1;
   height = y2 - y1;
-  bpp    = gimp_drawable_bpp (drawable->id);
+  bpp    = gimp_drawable_bpp (drawable->drawable_id);
   
   if (width < 1 || height < 1)
     return;

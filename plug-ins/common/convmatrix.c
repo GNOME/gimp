@@ -286,8 +286,8 @@ run (gchar      *name,
   if (status == GIMP_PDB_SUCCESS)
     {
       /*  Make sure that the drawable is gray or RGB color  */
-      if (gimp_drawable_is_rgb(drawable->id) ||
-	  gimp_drawable_is_gray(drawable->id))
+      if (gimp_drawable_is_rgb(drawable->drawable_id) ||
+	  gimp_drawable_is_gray(drawable->drawable_id))
 	{
 	  gimp_progress_init (_("Applying convolution"));
 	  gimp_tile_cache_ntiles (2 * (drawable->width /
@@ -517,7 +517,7 @@ doit (void)
    *  need to be done for correct operation. (It simply makes it go
    *  faster, since fewer pixels need to be operated on).
    */
-  gimp_drawable_mask_bounds (drawable->id, &sx1, &sy1, &sx2, &sy2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &sx1, &sy1, &sx2, &sy2);
   w = sx2 - sx1;
   h = sy2 - sy1;
 
@@ -528,13 +528,13 @@ doit (void)
   height = drawable->height;
   bytes  = drawable->bpp;
 
-  if (gimp_drawable_is_rgb (drawable->id))
+  if (gimp_drawable_is_rgb (drawable->drawable_id))
     for (i = 0; i <3; i++)
       chanmask[i] = my_config.channels[i + 1];
   else /* Grayscale */
     chanmask[0] = my_config.channels[0];
 
-  if (gimp_drawable_has_alpha (drawable->id))
+  if (gimp_drawable_has_alpha (drawable->drawable_id))
     chanmask[bytes - 1] = my_config.channels[4];
 
   for (i = 0; i < 5; i++)
@@ -595,8 +595,8 @@ doit (void)
 
   /*  update the timred region  */
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, sx1, sy1, sx2 - sx1, sy2 - sy1);
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, sx1, sy1, sx2 - sx1, sy2 - sy1);
 }
 
 /***************************************************
@@ -753,13 +753,13 @@ check_config (void)
     if (my_config.channels[i] < 0)
       my_config.channels[i] = 0;
 
-  if (gimp_drawable_is_rgb (drawable->id))
+  if (gimp_drawable_is_rgb (drawable->drawable_id))
     my_config.channels[0] = -1;
-  else if (gimp_drawable_is_gray (drawable->id))
+  else if (gimp_drawable_is_gray (drawable->drawable_id))
     for (i = 1; i < 4; i++)
       my_config.channels[i] = -1;
 
-  if (!gimp_drawable_has_alpha (drawable->id))
+  if (!gimp_drawable_has_alpha (drawable->drawable_id))
     {
       my_config.channels[4] = -1;
       my_config.alpha_alg   = -1;

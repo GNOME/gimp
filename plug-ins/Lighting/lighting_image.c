@@ -345,7 +345,7 @@ image_setup (GimpDrawable *drawable,
   input_drawable  = drawable;
   output_drawable = drawable;
 
-  gimp_drawable_mask_bounds (drawable->id,
+  gimp_drawable_mask_bounds (drawable->drawable_id,
 			     &border_x1, &border_y1, &border_x2, &border_y2);
 
   width  = input_drawable->width;
@@ -360,7 +360,7 @@ image_setup (GimpDrawable *drawable,
   /* =================== */
 
   in_channels = 3;
-  if (gimp_drawable_has_alpha (input_drawable->id) == TRUE)
+  if (gimp_drawable_has_alpha (input_drawable->drawable_id) == TRUE)
     in_channels++;
 
   if (interactive == TRUE)

@@ -801,8 +801,8 @@ filter (void)
     }
 
   gimp_drawable_flush (p.drawable);
-  gimp_drawable_merge_shadow (p.drawable->id, TRUE);
-  gimp_drawable_update (p.drawable->id, p.selection.x0, p.selection.y0,
+  gimp_drawable_merge_shadow (p.drawable->drawable_id, TRUE);
+  gimp_drawable_update (p.drawable->drawable_id, p.selection.x0, p.selection.y0,
 			p.selection.width, p.selection.height);
 
   /* FREE */
@@ -865,15 +865,15 @@ plugin_run (gchar   *name,
   p.run_mode = params[0].data.d_int32;
   p.image    = params[1].data.d_image;
   p.drawable = gimp_drawable_get(params[2].data.d_drawable);
-  p.drawable_has_alpha = gimp_drawable_has_alpha(p.drawable->id);
+  p.drawable_has_alpha = gimp_drawable_has_alpha(p.drawable->drawable_id);
 
-  gimp_drawable_mask_bounds (p.drawable->id,
+  gimp_drawable_mask_bounds (p.drawable->drawable_id,
 			     &p.selection.x0, &p.selection.y0,
 			     &p.selection.x1, &p.selection.y1);
   p.selection.width  = p.selection.x1 - p.selection.x0;
   p.selection.height = p.selection.y1 - p.selection.y0;
 
-  if (gimp_drawable_is_rgb (p.drawable->id))
+  if (gimp_drawable_is_rgb (p.drawable->drawable_id))
     {
       switch (p.run_mode)
 	{

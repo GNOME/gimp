@@ -160,7 +160,7 @@ run (gchar      *name,
       INIT_I18N_UI();
       gimp_get_data (PLUG_IN_NAME, &pvals);
       /* Since a channel might be selected, we must check wheter RGB or not. */
-      if (!gimp_drawable_is_rgb (drawable->id))
+      if (!gimp_drawable_is_rgb (drawable->drawable_id))
 	{
 	  g_message (_("Max RGB: Can only operate on RGB drawables."));
 	  return;
@@ -215,8 +215,8 @@ main_function (GimpDrawable *drawable,
     } 
   else 
     {
-      gap = (gimp_drawable_has_alpha (drawable->id)) ? 1 : 0;
-      gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+      gap = (gimp_drawable_has_alpha (drawable->drawable_id)) ? 1 : 0;
+      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
       gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
       gimp_pixel_rgn_init (&src_rgn, drawable,
 			   x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
@@ -318,8 +318,8 @@ main_function (GimpDrawable *drawable,
 	}
       gimp_progress_update (1.0);
       gimp_drawable_flush (drawable);
-      gimp_drawable_merge_shadow (drawable->id, TRUE);
-      gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
+      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+      gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
       gimp_drawable_detach (drawable);
     }
   
@@ -434,7 +434,7 @@ preview_widget (GimpDrawable *drawable)
   GtkWidget *preview;
 
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  fill_preview_with_thumb (preview, drawable->id);
+  fill_preview_with_thumb (preview, drawable->drawable_id);
   size = GTK_PREVIEW (preview)->rowstride * GTK_PREVIEW (preview)->buffer_height;
   preview_bits = g_malloc (size);
   memcpy (preview_bits, GTK_PREVIEW (preview)->buffer, size);
