@@ -364,7 +364,6 @@ run (gchar      *name,
   values[0].data.d_status = status;
 }
 
-
 /* Compose a roll film image from several images */
 static gint32
 film (void)
@@ -442,8 +441,7 @@ film (void)
 	  num_pictures++;
 	}
 
-      if (layers)
-	g_free (layers);
+      g_free (layers);
     }
 #ifdef FILM_DEBUG
   printf ("film_height = %d, film_width = %d\n", film_height, film_width);
@@ -562,8 +560,7 @@ film (void)
 	}
     }
 
-  if (layers)
-    g_free (layers);
+  g_free (layers);
 
   /* Drawing text/numbers leaves us with a floating selection. Stop it */
   gimp_floating_sel_anchor (gimp_image_floating_selection (image_ID_dst));
@@ -573,7 +570,6 @@ film (void)
 
   return image_ID_dst;
 }
-
 
 /* Check filmvals. Unreasonable values are reset to a default. */
 /* If this is not possible, -1 is returned. Otherwise 0 is returned. */
@@ -595,14 +591,12 @@ check_filmvals (void)
   return 0;
 }
 
-
 /* Converts numpix pixels from src to RGB at dst */
 static void
 convert_to_rgb (GimpDrawable *srcdrawable,
 		gint          numpix,
 		guchar       *src,
 		guchar       *dst)
-
 {
  register guchar *from = src, *to = dst;
  register gint k;
@@ -675,7 +669,6 @@ convert_to_rgb (GimpDrawable *srcdrawable,
  }
 }
 
-
 /* Assigns numpix pixels starting at dst with color r,g,b */
 static void
 set_pixels (gint     numpix,
@@ -698,7 +691,6 @@ set_pixels (gint     numpix,
       *(udest++) = ub;
     }
 }
-
 
 /* Scales a portion of a layer and places it in another layer. */
 /* On success, 0 is returned. Otherwise -1 is returned */
@@ -805,7 +797,6 @@ scale_layer (gint32  src_layer,
   return 0;
 }
 
-
 /* Create the RGB-pixels that make up the hole */
 static guchar *
 create_hole_rgb (gint width,
@@ -839,7 +830,6 @@ create_hole_rgb (gint width,
 
   return hole;
 }
-
 
 /* Draw the hole at the specified position */
 static void
@@ -888,7 +878,6 @@ draw_hole_rgb (GimpDrawable *drw,
 
   g_free (data);
 }
-
 
 /* Draw the number of the picture onto the film */
 static void
@@ -968,7 +957,6 @@ draw_number (gint32 layer_ID,
   gimp_drawable_detach (drw);
 }
 
-
 /* Create an image. Sets layer_ID, drawable and rgn. Returns image_ID */
 static gint32
 create_new_image (gchar          *filename,
@@ -996,7 +984,7 @@ create_new_image (gchar          *filename,
 			      gdtype, 100, GIMP_NORMAL_MODE);
   gimp_image_add_layer (image_ID, *layer_ID, 0);
 
-  if (drawable != NULL)
+  if (drawable)
     {
       *drawable = gimp_drawable_get (*layer_ID);
       if (pixel_rgn != NULL)
@@ -1006,7 +994,6 @@ create_new_image (gchar          *filename,
 
   return image_ID;
 }
-
 
 static gchar *
 compose_image_name (gint32 image_ID)
@@ -1024,7 +1011,6 @@ compose_image_name (gint32 image_ID)
 
   return image_name;
 }
-
 
 static void
 add_list_item_callback (GtkWidget *widget,
@@ -1062,7 +1048,6 @@ add_list_item_callback (GtkWidget *widget,
     }
 }
 
-
 static void
 del_list_item_callback (GtkWidget *widget,
                         GtkWidget *list)
@@ -1086,13 +1071,11 @@ del_list_item_callback (GtkWidget *widget,
   g_list_free (clear_list);
 }
 
-
 static GtkWidget *
 add_image_list (gint       add_box_flag,
                 gint       n,
                 gint32    *image_id,
                 GtkWidget *hbox)
-
 {
   GtkWidget *vbox;
   GtkWidget *label;
@@ -1152,13 +1135,10 @@ add_image_list (gint       add_box_flag,
   return list;
 }
 
-
-static gint
-film_dialog (gint32 image_ID)
-
+static void
+create_selection_tab (GtkWidget *notebook, 
+		      gint32 image_ID)
 {
-  GtkWidget *dlg;
-  GtkWidget *main_vbox;
   GtkWidget *hbox;
   GtkWidget *table;
   GtkWidget *frame;
@@ -1169,39 +1149,14 @@ film_dialog (gint32 image_ID)
   GtkObject *adj;
   GtkWidget *button;
   GtkWidget *entry;
-  GtkWidget *sep;
+  GtkWidget *label;
   gint32    *image_id_list;
-  gint       nimages, j, row;
-
-  gimp_ui_init ("film", TRUE);
-
-  dlg = gimp_dialog_new (_("Film"), "film",
-			 gimp_standard_help_func, "filters/film.html",
-			 GTK_WIN_POS_NONE,
-			 FALSE, TRUE, FALSE,
-
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, film_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
-
-			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
-
-  main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox,
-		      TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
+  gint       nimages, j;
 
   hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, TRUE, TRUE, 0);
   gtk_widget_show (hbox);
-
-  /*** The frames on the left keep film options ***/
+  label = gtk_label_new_with_mnemonic (_("_Selection"));
+  gtk_notebook_append_page(GTK_NOTEBOOK(notebook), hbox, label);
 
   vbox2 = gtk_vbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (hbox), vbox2, FALSE, FALSE, 0);
@@ -1209,15 +1164,16 @@ film_dialog (gint32 image_ID)
 
   /* Film height/colour */
   frame = gtk_frame_new (_("Film"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (vbox2), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
 
   /* Keep maximum image height */
-  toggle = gtk_check_button_new_with_label (_("Fit Height to Images"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Fit Height to Images"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
@@ -1235,7 +1191,7 @@ film_dialog (gint32 image_ID)
   spinbutton = gimp_spin_button_new (&adj, filmvals.film_height, 10,
 				     GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Height:"), 1.0, 0.5,
+			     _("_Height:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
 
   g_signal_connect (adj, "value_changed",
@@ -1256,24 +1212,22 @@ film_dialog (gint32 image_ID)
 				  &filmvals.film_color, 
 				  GIMP_COLOR_AREA_FLAT);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Color:"), 1.0, 0.5,
+			     _("Co_lor:"), 1.0, 0.5,
 			     button, 1, TRUE);
 
   g_signal_connect (button, "color_changed",
                     G_CALLBACK (gimp_color_button_get_color),
                     &filmvals.film_color);
 
-  gtk_widget_show (vbox);
-  gtk_widget_show (frame);
-
   /* Film numbering: Startindex/Font/colour */
   frame = gtk_frame_new (_("Numbering"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (vbox2), frame, TRUE, TRUE, 0);
-
+  gtk_widget_show (frame);
+  
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
 
   table = gtk_table_new (3, 2, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 4);
@@ -1285,7 +1239,7 @@ film_dialog (gint32 image_ID)
   spinbutton = gimp_spin_button_new (&adj, filmvals.number_start, 0,
 				     G_MAXINT, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Start Index:"), 1.0, 0.5,
+			     _("St_art Index:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
 
   g_signal_connect (adj, "value_changed",
@@ -1297,7 +1251,7 @@ film_dialog (gint32 image_ID)
   gtk_widget_set_size_request (entry, 60, -1);
   gtk_entry_set_text (GTK_ENTRY (entry), filmvals.number_fontf);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Font:"), 1.0, 0.5,
+			     _("_Font:"), 1.0, 0.5,
 			     entry, 1, FALSE);
 
   /* Numbering color */
@@ -1306,7 +1260,7 @@ film_dialog (gint32 image_ID)
 				  &filmvals.number_color, 
 				  GIMP_COLOR_AREA_FLAT);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("Color:"), 1.0, 0.5,
+			     _("Colo_r:"), 1.0, 0.5,
 			     button, 1, TRUE);
 
   g_signal_connect (button, "color_changed",
@@ -1316,7 +1270,8 @@ film_dialog (gint32 image_ID)
   for (j = 0; j < 2; j++)
     {
       toggle =
-	gtk_check_button_new_with_label (j ? _("At Bottom") : _("At Top"));
+	gtk_check_button_new_with_mnemonic (j ? _("At _Bottom") 
+					    : _("At _Top"));
       gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				    filmvals.number_pos[j]);
@@ -1327,13 +1282,11 @@ film_dialog (gint32 image_ID)
                         &(filmvals.number_pos[j]));
     }
 
-  gtk_widget_show (vbox);
-  gtk_widget_show (frame);
-  gtk_widget_show (vbox2);
 
   /*** The right frame keeps the image selection ***/
   frame = gtk_frame_new (_("Image Selection"));
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
 
   hbox = gtk_hbox_new (TRUE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
@@ -1346,12 +1299,28 @@ film_dialog (gint32 image_ID)
   /* Get a list of the images used for the film */
   filmint.image_list_film = add_image_list (0, 1, &image_ID, hbox);
 
-  gtk_widget_show (frame);
   gtk_widget_show (hbox);
+}
+
+static void
+create_advanced_tab (GtkWidget *notebook)
+{
+  GtkWidget *hbox;
+  GtkWidget *table;
+  GtkWidget *frame;
+  GtkObject *adj;
+  GtkWidget *label;
+  GtkWidget *sep;
+  gint       row;
+
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_widget_show (hbox);
+  label = gtk_label_new_with_mnemonic (_("_Advanced"));
+  gtk_notebook_append_page(GTK_NOTEBOOK(notebook), hbox, label);
 
   frame = gtk_frame_new (_("Advanced Settings (All Values are Fractions "
 			   "of the Film Height)"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (11, 3, FALSE);
@@ -1365,28 +1334,22 @@ film_dialog (gint32 image_ID)
 
   filmint.advanced_adj[0] = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			  _("Image Height:"), 0, 0,
+			  _("Image _Height:"), 0, 0,
 			  filmvals.picture_height,
 			  0.0, 1.0, 0.001, 0.01, 3,
 			  TRUE, 0, 0,
 			  NULL, NULL);
-  gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
-			     GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.01, 3);
-
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.picture_height);
 
   filmint.advanced_adj[1] = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			  _("Image Spacing:"), 0, 0,
+			  _("Image Spac_ing:"), 0, 0,
 			  filmvals.picture_space,
 			  0.0, 1.0, 0.001, 0.01, 3,
 			  TRUE, 0, 0,
 			  NULL, NULL);
-  gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
-			     GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.01, 3);
-
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.picture_space);
@@ -1400,56 +1363,44 @@ film_dialog (gint32 image_ID)
 
   filmint.advanced_adj[2] = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			  _("Hole Offset:"), 0, 0,
+			  _("_Hole Offset:"), 0, 0,
 			  filmvals.hole_offset,
 			  0.0, 1.0, 0.001, 0.01, 3,
 			  TRUE, 0, 0,
 			  NULL, NULL);
-  gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
-			     GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.01, 3);
-
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.hole_offset);
 
   filmint.advanced_adj[3] = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			  _("Hole Width:"), 0, 0,
+			  _("Ho_le Width:"), 0, 0,
 			  filmvals.hole_width,
 			  0.0, 1.0, 0.001, 0.01, 3,
 			  TRUE, 0, 0,
 			  NULL, NULL);
-  gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
-			     GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.01, 3);
-
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.hole_width);
 
   filmint.advanced_adj[4] = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			  _("Hole Height:"), 0, 0,
+			  _("Hol_e Height:"), 0, 0,
 			  filmvals.hole_height,
 			  0.0, 1.0, 0.001, 0.01, 3,
 			  TRUE, 0, 0,
 			  NULL, NULL);
-  gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
-			     GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.01, 3);
-
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.hole_height);
 
   filmint.advanced_adj[5] = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			  _("Hole Spacing:"), 0, 0,
+			  _("Hole Sp_acing:"), 0, 0,
 			  filmvals.hole_space,
 			  0.0, 1.0, 0.001, 0.01, 3,
 			  TRUE, 0, 0,
 			  NULL, NULL);
-  gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
-			     GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.01, 3);
-
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.hole_space);
@@ -1463,38 +1414,58 @@ film_dialog (gint32 image_ID)
 
   filmint.advanced_adj[6] = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			  _("Number Height:"), 0, 0,
+			  _("_Number Height:"), 0, 0,
 			  filmvals.number_height,
 			  0.0, 1.0, 0.001, 0.01, 3,
 			  TRUE, 0, 0,
 			  NULL, NULL);
-  gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
-			     GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.01, 3);
-
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.number_height);
+}
 
-  sep = gtk_hseparator_new ();
-  gtk_table_attach (GTK_TABLE (table), sep, 0, 3, row, row + 1,
-		    GTK_FILL, 0, 0, 2);
-  gtk_widget_show (sep);
+static gint
+film_dialog (gint32 image_ID)
+{
+  GtkWidget *dlg;
+  GtkWidget *main_vbox;
+  GtkWidget *notebook;
 
-  row++;
+  gimp_ui_init ("film", TRUE);
 
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_table_attach_defaults (GTK_TABLE (table), hbox, 0, 3, row, row + 1);
-  gtk_widget_show (hbox);
+  dlg = gimp_dialog_new (_("Film"), "film",
+			 gimp_standard_help_func, "filters/film.html",
+			 GTK_WIN_POS_NONE,
+			 FALSE, TRUE, FALSE,
 
-  row++;
+			 GIMP_STOCK_RESET, film_reset_callback,
+			 NULL, NULL, NULL, FALSE, FALSE,
 
-  button = gtk_button_new_from_stock (GIMP_STOCK_RESET);
-  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+			 GTK_STOCK_CANCEL, gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
 
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (film_reset_callback),
+			 GTK_STOCK_OK, film_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+
+			 NULL);
+
+  g_signal_connect (dlg, "destroy",
+                    G_CALLBACK (gtk_main_quit),
                     NULL);
+
+  main_vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox,
+		      TRUE, TRUE, 0);
+  gtk_widget_show (main_vbox);
+
+  notebook = gtk_notebook_new();
+  gtk_box_pack_start (GTK_BOX (main_vbox), notebook, TRUE, TRUE, 0);
+
+  create_selection_tab (notebook, image_ID);
+  create_advanced_tab (notebook);
+
+  gtk_widget_show (notebook);
 
   gtk_widget_show (dlg);
 
@@ -1503,7 +1474,6 @@ film_dialog (gint32 image_ID)
 
   return filmint.run;
 }
-
 
 static void
 film_ok_callback (GtkWidget *widget,
@@ -1527,7 +1497,6 @@ film_ok_callback (GtkWidget *widget,
   num_images = 0;
   if (filmint.image_list_film != NULL)
     {
-      
       for (tmp_list = GTK_LIST (filmint.image_list_film)->children;
 	   tmp_list;
 	   tmp_list = g_list_next (tmp_list))
