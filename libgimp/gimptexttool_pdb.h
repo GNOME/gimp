@@ -65,8 +65,6 @@ gint32   gimp_text                      (gint32        image_ID,
 					 const gchar  *spacing,
 					 const gchar  *registry,
 					 const gchar  *encoding);
-#endif /* GIMP_DISABLE_DEPRECATED */
-#ifndef GIMP_DISABLE_DEPRECATED
 gboolean gimp_text_get_extents          (const gchar  *text,
 					 gdouble       size,
 					 GimpSizeType  size_type,

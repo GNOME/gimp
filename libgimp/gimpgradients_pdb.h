@@ -35,13 +35,9 @@ gchar**  gimp_gradients_get_list          (const gchar    *filter,
 #ifndef GIMP_DISABLE_DEPRECATED
 gdouble* gimp_gradients_sample_uniform    (gint            num_samples,
 					   gboolean        reverse);
-#endif /* GIMP_DISABLE_DEPRECATED */
-#ifndef GIMP_DISABLE_DEPRECATED
 gdouble* gimp_gradients_sample_custom     (gint            num_samples,
 					   const gdouble  *positions,
 					   gboolean        reverse);
-#endif /* GIMP_DISABLE_DEPRECATED */
-#ifndef GIMP_DISABLE_DEPRECATED
 gchar*   gimp_gradients_get_gradient_data (const gchar    *name,
 					   gint            sample_size,
 					   gboolean        reverse,

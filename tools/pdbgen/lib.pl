@@ -84,6 +84,15 @@ sub generate {
 	my $funcname = "gimp_$name"; my $wrapped = ""; my %usednames;
 	my $retdesc = "";
 
+	if ($proc->{deprecated} && !$out->{deprecated}) {
+	    push @{$out->{protos}}, "#ifndef GIMP_DISABLE_DEPRECATED\n";
+	    $out->{deprecated} = 1;
+	}
+	elsif (!$proc->{deprecated} && $out->{deprecated}) {
+	    push @{$out->{protos}}, "#endif /* GIMP_DISABLE_DEPRECATED */\n";
+	    $out->{deprecated} = 0;
+	}
+
 	# Find the return argument (defaults to the first arg if not
 	# explicity set
 	my $retarg  = undef; $retvoid = 0;
@@ -432,13 +441,8 @@ CODE
 
 	my $proto = "$hrettype $wrapped$funcname ($arglist);\n";
 	$proto =~ s/ +/ /g;
-	if ($proc->{deprecated}) {
-	    push @{$out->{protos}}, "#ifndef GIMP_DISABLE_DEPRECATED\n";
-	}
+
         push @{$out->{protos}}, $proto;
-	if ($proc->{deprecated}) {
-	    push @{$out->{protos}}, "#endif /* GIMP_DISABLE_DEPRECATED */\n";
-	}
 
 	my $clist = $arglist;
 	my $padlen = length($wrapped) + length($funcname) + 2;
@@ -476,6 +480,11 @@ $wrapped$funcname ($clist)
   $return_marshal
 }
 CODE
+    }
+
+    if ($out->{deprecated}) {
+        push @{$out->{protos}}, "#endif /* GIMP_DISABLE_DEPRECATED */\n";
+	$out->{deprecated} = 0;
     }
 
     my $lgpl_top = <<'LGPL';
@@ -604,12 +613,16 @@ LGPL
 	    else {
 		$arg = $_;
 	    }
+
 	    push @{$out->{protos}}, $arg;
 	}
 
 	my $body;
 	$body = $extra->{decls} if exists $extra->{decls};
 	foreach (@{$out->{protos}}) { $body .= $_ }
+        if ($out->{deprecated}) {
+	    $body .= "#endif /* GIMP_DISABLE_DEPRECATED */\n";
+	}
 	chomp $body;
 
 	open HFILE, "> $hfile" or die "Can't open $hfile: $!\n";

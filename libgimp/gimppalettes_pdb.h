@@ -34,8 +34,6 @@ gchar**  gimp_palettes_get_list          (const gchar *filter,
 					  gint        *num_palettes);
 #ifndef GIMP_DISABLE_DEPRECATED
 gchar*   gimp_palettes_get_palette       (gint        *num_colors);
-#endif /* GIMP_DISABLE_DEPRECATED */
-#ifndef GIMP_DISABLE_DEPRECATED
 gchar*   gimp_palettes_get_palette_entry (const gchar *name,
 					  gint         entry_num,
 					  gint        *num_colors,

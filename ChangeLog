@@ -1,5 +1,16 @@
 2004-10-06  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/lib.pl: put subsequent deprecated prototypes into
+	a single #ifndef ... #endif pair.
+
+	* libgimp/gimpbrushes_pdb.h
+	* libgimp/gimpgradients_pdb.h
+	* libgimp/gimppalettes_pdb.h
+	* libgimp/gimppatterns_pdb.h
+	* libgimp/gimptexttool_pdb.h: regenerated.
+
+2004-10-06  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage.[ch]: store the time when the image is first
 	dirtied.
 
