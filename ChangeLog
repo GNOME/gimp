@@ -1,3 +1,8 @@
+2003-01-30  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpcompat.h: removed GIMP_ENABLE_COMPAT_CRUFT guards.
+	The file needs to included explicitely anyway.
+
 2003-01-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/plug-in.[ch]: renamed plug_in->busy to
