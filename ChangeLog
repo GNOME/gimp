@@ -4,9 +4,9 @@
 	* app/fileops.c
 	* app/gimpimage.c: Ugly Win32-only hacks for UTF-8 which is used
 	by the GTK+ 1.3.0 branch that GIMP uses on Win32. Mostly stopgap
-	measurements to get past most of the hiccups that non-ASCII file
-	names cause. Committed to avoid having uncommitted source changes
-	in the Win32 build.
+	measures to get past most of the hiccups that non-ASCII file names
+	cause. Committed to avoid having uncommitted source changes in the
+	Win32 build.
 
 	* plug-ins/common/CML_explorer.c
 	* plug-ins/common/cubism.c 
