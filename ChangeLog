@@ -1,3 +1,10 @@
+2003-06-03  Jakub Steiner <jimmac@ximian.com>
+
+	* themes/Default/images/stock-path-16.png
+	* themes/Default/images/stock-path-22.png
+	* themes/Default/images/stock-paths-16.png
+	* themes/Default/images/stock-paths-22.png: make distinct
+
 2003-06-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage-rotate.c (gimp_image_rotate_item_offset):
