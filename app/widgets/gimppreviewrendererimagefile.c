@@ -23,8 +23,6 @@
 
 #include <string.h>
 
-/* #define ENABLE_FILE_SYSTEM_ICONS 1 */
-
 #include <gtk/gtk.h>
 #ifdef ENABLE_FILE_SYSTEM_ICONS
 #define GTK_FILE_SYSTEM_ENABLE_UNSUPPORTED
@@ -96,7 +94,9 @@ gimp_preview_renderer_imagefile_class_init (GimpPreviewRendererImagefileClass *k
 static void
 gimp_preview_renderer_imagefile_init (GimpPreviewRendererImagefile *renderer)
 {
+#ifdef ENABLE_FILE_SYSTEM_ICONS
   renderer->file_system = NULL;
+#endif
 }
 
 static void
