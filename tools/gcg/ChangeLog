@@ -1,3 +1,7 @@
+1999-01-07  Lauri Alanko  <la@iki.fi>
+
+	* Took out configure from autogen.sh
+
 1999-01-05  Lauri Alanko  <la@iki.fi>
 
 	* Fixed the parser and lexer a bit, changed naming conventions

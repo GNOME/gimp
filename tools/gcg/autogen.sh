@@ -10,10 +10,10 @@ echo processing...
 aclocal $ACLOCAL_FLAGS &&
 automake -a --foreign &&
 autoconf &&
-./configure "$@"
+# ./configure "$@"
 
 if [ $? -eq 0 ];then
-	echo "Now type 'make' to compile GCG."
+	echo "Now run './configure', then 'make' to compile GCG."
 else
 	echo "Configuration error!"
 fi
