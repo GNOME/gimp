@@ -1,4 +1,14 @@
 2001-03-23  Seth Burgess <sjburges@gimp.org>
+
+	* po-plug-ins/ro.po
+	* po-script-fu/ro.po
+	* po-libgimp/ro.po
+	* plug-ins/perl/po/ro.po
+	* plug-ins/perl/po/tr.po : added empty translation files so it would 
+	compile again.  Translators, please add these when you add a new 
+	language, even if they're blank!
+
+2001-03-23  Seth Burgess <sjburges@gimp.org>
 	
 	* app/tools/Makefile.am
 	* app/tools/gimpdodgeburntool.[ch]: dodgeburn works again.  Non-GUI
