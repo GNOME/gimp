@@ -1,3 +1,8 @@
+Thu Apr 16 19:46:46 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* plug-ins/script-fu/interp_slib.c: changed the link to 
+	the script-fu resources to point to www.gimp.org
+
 Wed Apr 15 13:18:47 EDT 1998 Matthew Wilson <msw@gimp.org>
 
 	* app/disp_callbacks.c: restart current tool when changing
