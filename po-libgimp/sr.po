@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-13 05:52+0200\n"
-"PO-Revision-Date: 2003-09-13 05:52+0200\n"
+"POT-Creation-Date: 2003-09-14 06:45+0200\n"
+"PO-Revision-Date: 2003-09-14 06:45+0200\n"
 "Last-Translator: Дејан Матијевић <dejan@ns.sympatico.ca>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -197,6 +197,10 @@ msgstr ""
 "Треба да додате унос као\n"
 "(%s \"%s\")\n"
 "у башу %s датотеку."
+
+#: libgimp/gimpmiscui.c:556
+msgid "Parameter Settings"
+msgstr "Подешавања параметра"
 
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
