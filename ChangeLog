@@ -1,3 +1,10 @@
+2003-03-27  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpmarshal.list: added a new marshaller.
+
+	* app/widgets/gimpcontainergridview.[ch]: added a "move_cursor"
+	signal and added keybindings for PageUp/PageDown and Home/End.
+
 2003-03-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/config/gimpconfig-deserialize.c

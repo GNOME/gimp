@@ -45,11 +45,16 @@ struct _GimpContainerGridView
 
   gint               rows;
   gint               columns;
+  gint               visible_rows;
 };
 
 struct _GimpContainerGridViewClass
 {
   GimpContainerViewClass  parent_class;
+
+  gboolean (* move_cursor) (GimpContainerGridView *grid_view,
+                            GtkMovementStep        step,
+                            gint                   count);
 };
 
 

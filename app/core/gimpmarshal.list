@@ -23,6 +23,7 @@
 #   BOOL        deprecated alias for BOOLEAN
 
 BOOLEAN: BOOLEAN
+BOOLEAN: ENUM, INT
 
 VOID: BOXED
 VOID: DOUBLE
