@@ -70,8 +70,6 @@ plug_in_run (Gimp       *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (proc_rec != NULL, NULL);
   g_return_val_if_fail (argc == 0 || args != NULL, NULL);
-  g_return_val_if_fail (proc_rec->proc_type != GIMP_EXTENSION ||
-                        synchronous == FALSE, NULL);
 
   if (proc_rec->proc_type == GIMP_TEMPORARY)
     {

@@ -1,3 +1,8 @@
+2004-06-14  Henrik Brix Andersen  <brix@gimp.org>
+
+	* app/plug-in/plug-in-run.c: let extensions run synchronously when
+	called via PDB. Fixes bug #140112. Merged from HEAD.
+
 2004-06-13  Manish Singh  <yosh@gimp.org>
 
 	* configure.in: Make sure PangoFT2 is using a recent enough fontconfig
