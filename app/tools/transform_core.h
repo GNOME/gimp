@@ -89,6 +89,10 @@ struct _transform_core
   int             function;     /*  current tool activity       */
 
   int             interactive;  /*  tool is interactive         */
+  int             bpressed;     /* Bug work around make sure we have 
+				 * a button pressed before we deal with
+				 * motion events. ALT.
+				 */
 };
 
 

@@ -1,3 +1,12 @@
+Sun Apr 12 01:19:35 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* configure.in: more fixes... when will it all end...
+
+	* plug-ins/xd/xd.c: compile with >= 0.15 now
+
+	* app/transform.[ch]: applied gimp-alt-980412, fixes control
+	point selection for transforms
+
 Sat Apr 11 15:23:26 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* Made 0.99.26 release

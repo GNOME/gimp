@@ -83,6 +83,8 @@ transform_core_button_press (tool, bevent, gdisp_ptr)
   gdisp = (GDisplay *) gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
 
+  transform_core->bpressed = TRUE; /* ALT */
+
   tool->drawable = gimage_active_drawable (gdisp->gimage);
 
   /*  Save the current transformation info  */
@@ -212,6 +214,8 @@ transform_core_button_release (tool, bevent, gdisp_ptr)
   gdisp = (GDisplay *) gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
 
+  transform_core->bpressed = FALSE; /* ALT */
+
   /*  if we are creating, there is nothing to be done...exit  */
   if (transform_core->function == CREATING && transform_core->interactive)
     return;
@@ -336,8 +340,17 @@ transform_core_motion (tool, mevent, gdisp_ptr)
   GDisplay *gdisp;
   TransformCore *transform_core;
 
+
   gdisp = (GDisplay *) gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
+
+  if(transform_core->bpressed == FALSE)
+  {
+    /* hey we have not got the button press yet
+     * so go away.
+     */
+    return;
+  }
 
   /*  if we are creating or this tool is non-interactive, there is
    *  nothing to be done so exit.
@@ -516,6 +529,8 @@ transform_core_new (type, interactive)
 
   private->function = CREATING;
   private->original = NULL;
+
+  private->bpressed = FALSE;
 
   for (i = 0; i < TRAN_INFO_SIZE; i++)
     private->trans_info[i] = 0;
