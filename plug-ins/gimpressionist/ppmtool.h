@@ -13,7 +13,7 @@ void getrgb(ppm_t *s, float xo, float yo, unsigned char *d);
 void resize(ppm_t *p, int nx, int ny);
 void rescale(ppm_t *p, double scale);
 void resize_fast(ppm_t *p, int nx, int ny);
-void loadppm(char *fn, ppm_t *p);
+void loadppm(const char *fn, ppm_t *p);
 void saveppm(ppm_t *p, const char *fn);
 void copyppm(ppm_t *s, ppm_t *p);
 void fill(ppm_t *p, guchar *c);

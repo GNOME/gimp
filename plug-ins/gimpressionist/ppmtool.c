@@ -229,7 +229,7 @@ void loadgbr(const gchar *fn, ppm_t *p)
   free(ptr);
 }
 
-void loadppm(char *fn, ppm_t *p)
+void loadppm(const char *fn, ppm_t *p)
 {
   char line[200];
   int y, pgm = 0;

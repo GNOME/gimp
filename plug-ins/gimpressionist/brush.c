@@ -39,9 +39,9 @@ ppm_t brushppm  = {0, 0, NULL};
 static GtkWidget    *brushprev  = NULL;
 static GtkListStore *brushstore = NULL;
 
-static void  updatebrushprev (char *fn);
+static void  updatebrushprev (const char *fn);
 
-static gboolean colorfile (char *fn)
+static gboolean colorfile (const char *fn)
 {
   return fn && strstr(fn, ".ppm");
 }
@@ -163,64 +163,69 @@ void dummybrushdmenuselect(GtkWidget *w, gpointer data)
   updatebrushprev(NULL);
 }
 
-static void brushlistrefresh(void)
+static void
+brushlistrefresh (void)
 {
   gtk_list_store_clear (brushstore);
   readdirintolist("Brushes", brushlist, NULL);
 }
 
-void
-savebrush_response (GtkFileSelection *fs,
-                    gint              response_id,
-                    gpointer          data)
+static void
+savebrush_response (GtkWidget *dialog,
+                    gint       response_id,
+                    gpointer   data)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      const gchar *fn;
+      gchar *name = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
-      fn = gtk_file_selection_get_filename (fs);
-
-      saveppm (&brushppm, fn);
+      saveppm (&brushppm, name);
       brushlistrefresh ();
+
+      g_free (name);
     }
 
-  gtk_widget_destroy (GTK_WIDGET (fs));
+  gtk_widget_destroy (dialog);
 }
 
-void
+static void
 savebrush (GtkWidget *wg,
            gpointer   data)
 {
-  static GtkWidget *window   = NULL;
+  static GtkWidget *dialog   = NULL;
   GList            *thispath = parsepath ();
   gchar            *path;
 
-  if(! brushppm.col)
+  if (! brushppm.col)
     {
       g_message( _("Can only save drawables!"));
       return;
     }
 
-  window = gtk_file_selection_new (_("Save Brush"));
+  dialog =
+    gtk_file_chooser_dialog_new (_("Save Brush"),
+                                 GTK_WINDOW (gtk_widget_get_toplevel (wg)),
+                                 GTK_FILE_CHOOSER_ACTION_SAVE,
 
-  gtk_window_set_transient_for (GTK_WINDOW (window),
-                                GTK_WINDOW (gtk_widget_get_toplevel (wg)));
-  gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
+                                 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                 GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
 
-  path = g_build_filename ((char *)thispath->data, "Brushes", "", NULL);
+                                 NULL);
 
-  gtk_file_selection_set_filename (GTK_FILE_SELECTION (window), path);
+  path = g_build_filename ((gchar *)thispath->data, "Brushes", NULL);
+
+  gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog), path);
 
   g_free (path);
 
-  g_signal_connect (window, "destroy",
+  g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),
-                    &window);
-  g_signal_connect (window, "response",
+                    &dialog);
+  g_signal_connect (dialog, "response",
                     G_CALLBACK (savebrush_response),
                     NULL);
 
-  gtk_widget_show (window);
+  gtk_widget_show (dialog);
 }
 
 static gboolean
@@ -232,12 +237,14 @@ validdrawable (gint32    imageid,
           gimp_drawable_is_gray (drawableid));
 }
 
-void reloadbrush(char *fn, ppm_t *p)
+void
+reloadbrush (const gchar *fn,
+             ppm_t       *p)
 {
   static char lastfn[256] = "";
   static ppm_t cache = {0,0,NULL};
 
-  if(strcmp(fn, lastfn))
+  if (strcmp(fn, lastfn))
     {
       g_strlcpy (lastfn, fn, sizeof (lastfn));
       loadppm (fn, &cache);
@@ -246,7 +253,10 @@ void reloadbrush(char *fn, ppm_t *p)
   pcvals.colorbrushes = colorfile(fn);
 }
 
-static void padbrush(ppm_t *p, int width, int height)
+static void
+padbrush (ppm_t *p,
+          gint   width,
+          gint   height)
 {
   guchar black[3] = {0,0,0};
   int left = (width - p->width) / 2;
@@ -256,7 +266,8 @@ static void padbrush(ppm_t *p, int width, int height)
   pad(p, left, right, top, bottom, black);
 }
 
-void updatebrushprev(char *fn)
+static void
+updatebrushprev (const gchar *fn)
 {
   gint   i, j;
   guchar buf[100];
@@ -310,7 +321,8 @@ void updatebrushprev(char *fn)
 
 static gboolean brushdontupdate = FALSE;
 
-static void selectbrush(GtkTreeSelection *selection, gpointer data)
+static void
+selectbrush (GtkTreeSelection *selection, gpointer data)
 {
   GtkTreeIter   iter;
   GtkTreeModel *model;
@@ -350,20 +362,23 @@ static void selectbrush(GtkTreeSelection *selection, gpointer data)
     }
 }
 
-static void selectbrushfile(GtkTreeSelection *selection, gpointer data)
+static void
+selectbrushfile (GtkTreeSelection *selection, gpointer data)
 {
   brushfile = 1;
   gtk_widget_set_sensitive (presetsavebutton, TRUE);
   selectbrush (selection, NULL);
 }
 
-static void brushaspectadjust_cb(GtkWidget *w, gpointer data)
+static void
+brushaspectadjust_cb (GtkWidget *w, gpointer data)
 {
   gimp_double_adjustment_update (GTK_ADJUSTMENT(w), data);
   updatebrushprev (pcvals.selectedbrush);
 }
 
-void create_brushpage(GtkNotebook *notebook)
+void
+create_brushpage(GtkNotebook *notebook)
 {
   GtkWidget *box1, *box2, *box3, *thispage;
   GtkWidget *view;
