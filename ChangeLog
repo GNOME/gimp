@@ -1,3 +1,8 @@
+Sat Oct 16 05:48:44 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/common/compose.c
+	* plug-ins/common/decompose.c: use gimp_message where appropriate
+
 Thu Oct 14 13:31:59 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/sunras.c	

@@ -256,7 +256,7 @@ static void show_message (const char *message)
 
 {
  if (run_mode == RUN_INTERACTIVE)
-   g_message (message);
+   gimp_message (message);
  else
    printf ("%s\n", message);
 }
@@ -380,396 +380,399 @@ run (char    *name,
 
 /* Compose an image from several gray-images */
 static gint32
-compose (char *compose_type,
+compose (char   *compose_type,
          gint32 *compose_ID,
-         int compose_by_drawable)
-
-{int width, height, tile_height, scan_lines;
- int num_images, compose_idx, incr_src[MAX_COMPOSE_IMAGES];
- int i, j;
- gint num_layers;
- gint32 layer_ID_dst, image_ID_dst;
- unsigned char *src[MAX_COMPOSE_IMAGES], *dst = (unsigned char *)ident;
- GDrawableType gdtype_dst;
- GDrawable *drawable_src[MAX_COMPOSE_IMAGES], *drawable_dst;
- GPixelRgn pixel_rgn_src[MAX_COMPOSE_IMAGES], pixel_rgn_dst;
-
+         int     compose_by_drawable)
+{
+  int width, height, tile_height, scan_lines;
+  int num_images, compose_idx, incr_src[MAX_COMPOSE_IMAGES];
+  int i, j;
+  gint num_layers;
+  gint32 layer_ID_dst, image_ID_dst;
+  unsigned char *src[MAX_COMPOSE_IMAGES], *dst = (unsigned char *)ident;
+  GDrawableType gdtype_dst;
+  GDrawable *drawable_src[MAX_COMPOSE_IMAGES], *drawable_dst;
+  GPixelRgn pixel_rgn_src[MAX_COMPOSE_IMAGES], pixel_rgn_dst;
+  
   /* Search type of composing */
   compose_idx = -1;
   for (j = 0; j < MAX_COMPOSE_TYPES; j++)
-  {
-    if (cmp_icase (compose_type, compose_dsc[j].compose_type) == 0)
-      compose_idx = j;
-  }
+    {
+      if (cmp_icase (compose_type, compose_dsc[j].compose_type) == 0)
+	compose_idx = j;
+    }
   if (compose_idx < 0)
     return (-1);
-
+  
   num_images = compose_dsc[compose_idx].num_images;
   tile_height = gimp_tile_height ();
-
+  
   /* Check image sizes */
   if (compose_by_drawable)
-  {
-    width = gimp_drawable_width (compose_ID[0]);
-    height = gimp_drawable_height (compose_ID[0]);
-
-    for (j = 1; j < num_images; j++)
     {
-      if (   (width != (int)gimp_drawable_width (compose_ID[j]))
-          || (height != (int)gimp_drawable_height (compose_ID[j])))
-      {
-        show_message (_("compose: drawables have different size"));
-        return -1;
-      }
+      width = gimp_drawable_width (compose_ID[0]);
+      height = gimp_drawable_height (compose_ID[0]);
+      
+      for (j = 1; j < num_images; j++)
+	{
+	  if (   (width != (int)gimp_drawable_width (compose_ID[j]))
+		 || (height != (int)gimp_drawable_height (compose_ID[j])))
+	    {
+	      show_message (_("compose: drawables have different size"));
+	      return -1;
+	    }
+	}
+      for (j = 0; j < num_images; j++)
+	drawable_src[j] = gimp_drawable_get (compose_ID[j]);
     }
-    for (j = 0; j < num_images; j++)
-      drawable_src[j] = gimp_drawable_get (compose_ID[j]);
-  }
   else    /* Compose by image ID */
-  {
-    width = gimp_image_width (compose_ID[0]);
-    height = gimp_image_height (compose_ID[0]);
-
-    for (j = 1; j < num_images; j++)
     {
-      if (   (width != (int)gimp_image_width (compose_ID[j]))
-          || (height != (int)gimp_image_height (compose_ID[j])))
-      {
-        show_message (_("compose: images have different size"));
-        return -1;
-      }
+      width = gimp_image_width (compose_ID[0]);
+      height = gimp_image_height (compose_ID[0]);
+      
+      for (j = 1; j < num_images; j++)
+	{
+	  if (   (width != (int)gimp_image_width (compose_ID[j]))
+		 || (height != (int)gimp_image_height (compose_ID[j])))
+	    {
+	      show_message (_("compose: images have different size"));
+	      return -1;
+	    }
+	}
+      
+      /* Get first layer/drawable for all input images */
+      for (j = 0; j < num_images; j++)
+	{gint32 *g32;
+	
+	/* Get first layer of image */
+	g32 = gimp_image_get_layers (compose_ID[j], &num_layers);
+	if ((g32 == NULL) || (num_layers <= 0))
+	  {
+	    show_message (_("compose: error in getting layer IDs"));
+	    return (-1);
+	  }
+	
+	/* Get drawable for layer */
+	drawable_src[j] = gimp_drawable_get (g32[0]);
+	g_free (g32);
+	}
     }
-
-    /* Get first layer/drawable for all input images */
-    for (j = 0; j < num_images; j++)
-    {gint32 *g32;
-
-      /* Get first layer of image */
-      g32 = gimp_image_get_layers (compose_ID[j], &num_layers);
-      if ((g32 == NULL) || (num_layers <= 0))
-      {
-        show_message (_("compose: error in getting layer IDs"));
-        return (-1);
-      }
-
-      /* Get drawable for layer */
-      drawable_src[j] = gimp_drawable_get (g32[0]);
-      g_free (g32);
-    }
-  }
-
+  
   /* Get pixel region for all input drawables */
   for (j = 0; j < num_images; j++)
-  {
-    /* Check bytes per pixel */
-    incr_src[j] = drawable_src[j]->bpp;
-    if ((incr_src[j] != 1) && (incr_src[j] != 2))
-    {char msg[256];
-      sprintf (msg, _("compose: image is not a gray image (bpp=%d)"),
-               incr_src[j]);
-      show_message (msg);
-      return (-1);
-    }
-
-    /* Get pixel region */
-    gimp_pixel_rgn_init (&(pixel_rgn_src[j]), drawable_src[j], 0, 0,
-                         width, height, FALSE, FALSE);
-
-    /* Get memory for retrieving information */
-    src[j] = (unsigned char *)g_malloc (tile_height * width
-                                        * drawable_src[j]->bpp);
-    if (src[j] == NULL)
     {
+      /* Check bytes per pixel */
+      incr_src[j] = drawable_src[j]->bpp;
+      if ((incr_src[j] != 1) && (incr_src[j] != 2))
+	{char msg[256];
+	sprintf (msg, _("compose: image is not a gray image (bpp=%d)"),
+		 incr_src[j]);
+	show_message (msg);
+	return (-1);
+	}
+      
+      /* Get pixel region */
+      gimp_pixel_rgn_init (&(pixel_rgn_src[j]), drawable_src[j], 0, 0,
+			   width, height, FALSE, FALSE);
+      
+      /* Get memory for retrieving information */
+      src[j] = (unsigned char *)g_malloc (tile_height * width
+					  * drawable_src[j]->bpp);
+      if (src[j] == NULL)
+	{
+	  show_message (_("compose: not enough memory"));
+	  return (-1);
+	}
+    }
+  
+  /* Create new image */
+  gdtype_dst = (compose_dsc[compose_idx].compose_fun == compose_rgba)
+    ? RGBA_IMAGE : RGB_IMAGE;
+  image_ID_dst = create_new_image (compose_dsc[compose_idx].filename,
+				   width, height, gdtype_dst,
+				   &layer_ID_dst, &drawable_dst, &pixel_rgn_dst);
+  dst = (unsigned char *)g_malloc (tile_height * width * drawable_dst->bpp);
+  if (dst == NULL)
+    {
+      for (j = 0; j < num_images; j++) 
+	g_free (src[j]);
       show_message (_("compose: not enough memory"));
       return (-1);
     }
-  }
-
-  /* Create new image */
-  gdtype_dst = (compose_dsc[compose_idx].compose_fun == compose_rgba)
-              ? RGBA_IMAGE : RGB_IMAGE;
-  image_ID_dst = create_new_image (compose_dsc[compose_idx].filename,
-                      width, height, gdtype_dst,
-                      &layer_ID_dst, &drawable_dst, &pixel_rgn_dst);
-  dst = (unsigned char *)g_malloc (tile_height * width * drawable_dst->bpp);
-  if (dst == NULL)
-  {
-    for (j = 0; j < num_images; j++) g_free (src[j]);
-    show_message (_("compose: not enough memory"));
-    return (-1);
-  }
-
+  
   /* Do the composition */
   i = 0;
   while (i < height)
-  {
-    scan_lines = (i+tile_height-1 < height) ? tile_height : (height-i);
-
-    /* Get source pixel regions */
-    for (j = 0; j < num_images; j++)
-      gimp_pixel_rgn_get_rect (&(pixel_rgn_src[j]), src[j], 0, i,
-                               width, scan_lines);
-
-    /* Do the composition */
-    compose_dsc[compose_idx].compose_fun (src,incr_src,width*tile_height,dst);
-
-    /* Set destination pixel region */
-    gimp_pixel_rgn_set_rect (&pixel_rgn_dst, dst, 0, i, width, scan_lines);
-
-    i += scan_lines;
-
-    if (run_mode != RUN_NONINTERACTIVE)
-      gimp_progress_update (((double)i) / (double)height);
-  }
-
+    {
+      scan_lines = (i+tile_height-1 < height) ? tile_height : (height-i);
+      
+      /* Get source pixel regions */
+      for (j = 0; j < num_images; j++)
+	gimp_pixel_rgn_get_rect (&(pixel_rgn_src[j]), src[j], 0, i,
+				 width, scan_lines);
+      
+      /* Do the composition */
+      compose_dsc[compose_idx].compose_fun (src,incr_src,width*tile_height,dst);
+      
+      /* Set destination pixel region */
+      gimp_pixel_rgn_set_rect (&pixel_rgn_dst, dst, 0, i, width, scan_lines);
+      
+      i += scan_lines;
+      
+      if (run_mode != RUN_NONINTERACTIVE)
+	gimp_progress_update (((double)i) / (double)height);
+    }
+  
   for (j = 0; j < num_images; j++)
-  {
-    g_free (src[j]);
-    gimp_drawable_flush (drawable_src[j]);
-    gimp_drawable_detach (drawable_src[j]);
-  }
+    {
+      g_free (src[j]);
+      gimp_drawable_flush (drawable_src[j]);
+      gimp_drawable_detach (drawable_src[j]);
+    }
   g_free (dst);
   gimp_drawable_flush (drawable_dst);
   gimp_drawable_detach (drawable_dst);
-
+  
   return image_ID_dst;
 }
 
 
 /* Create an image. Sets layer_ID, drawable and rgn. Returns image_ID */
 static gint32
-create_new_image (char *filename,
-                  guint width,
-                  guint height,
-                  GDrawableType gdtype,
-                  gint32 *layer_ID,
-                  GDrawable **drawable,
-                  GPixelRgn *pixel_rgn)
-
-{gint32 image_ID;
- GImageType gitype;
-
- if ((gdtype == GRAY_IMAGE) || (gdtype == GRAYA_IMAGE))
-   gitype = GRAY;
- else if ((gdtype == INDEXED_IMAGE) || (gdtype == INDEXEDA_IMAGE))
-   gitype = INDEXED;
- else
-   gitype = RGB;
-
- image_ID = gimp_image_new (width, height, gitype);
- gimp_image_set_filename (image_ID, filename);
-
- *layer_ID = gimp_layer_new (image_ID, _("Background"), width, height,
-                             gdtype, 100, NORMAL_MODE);
- gimp_image_add_layer (image_ID, *layer_ID, 0);
-
- *drawable = gimp_drawable_get (*layer_ID);
- gimp_pixel_rgn_init (pixel_rgn, *drawable, 0, 0, (*drawable)->width,
-                      (*drawable)->height, TRUE, FALSE);
-
- return (image_ID);
+create_new_image (char           *filename,
+                  guint           width,
+                  guint           height,
+                  GDrawableType   gdtype,
+                  gint32         *layer_ID,
+                  GDrawable     **drawable,
+                  GPixelRgn       *pixel_rgn)
+{
+  gint32 image_ID;
+  GImageType gitype;
+  
+  if ((gdtype == GRAY_IMAGE) || (gdtype == GRAYA_IMAGE))
+    gitype = GRAY;
+  else if ((gdtype == INDEXED_IMAGE) || (gdtype == INDEXEDA_IMAGE))
+    gitype = INDEXED;
+  else
+    gitype = RGB;
+  
+  image_ID = gimp_image_new (width, height, gitype);
+  gimp_image_set_filename (image_ID, filename);
+  
+  *layer_ID = gimp_layer_new (image_ID, _("Background"), width, height,
+			      gdtype, 100, NORMAL_MODE);
+  gimp_image_add_layer (image_ID, *layer_ID, 0);
+  
+  *drawable = gimp_drawable_get (*layer_ID);
+  gimp_pixel_rgn_init (pixel_rgn, *drawable, 0, 0, (*drawable)->width,
+		       (*drawable)->height, TRUE, FALSE);
+  
+  return (image_ID);
 }
 
 
 /* Compare two strings ignoring case (could also be done by strcasecmp() */
 /* but is it available everywhere ?) */
-static int cmp_icase (char *s1, char *s2)
-
-{int c1, c2;
-
+static int 
+cmp_icase (char *s1, 
+	   char *s2)     
+{
+  int c1, c2;
+  
   c1 = toupper (*s1);  c2 = toupper (*s2);
   while (*s1 && *s2)
-  {
-    if (c1 != c2) return (c2 - c1);
-    c1 = toupper (*(++s1));  c2 = toupper (*(++s2));
-  }
+    {
+      if (c1 != c2) return (c2 - c1);
+      c1 = toupper (*(++s1));  c2 = toupper (*(++s2));
+    }
   return (c2 - c1);
 }
 
 
 static void
 compose_rgb (unsigned char **src,
-             int *incr_src,
-             int numpix,
-             unsigned char *dst)
-
-{register unsigned char *red_src = src[0];
- register unsigned char *green_src = src[1];
- register unsigned char *blue_src = src[2];
- register unsigned char *rgb_dst = dst;
- register int count = numpix;
- int red_incr = incr_src[0], green_incr = incr_src[1], blue_incr = incr_src[2];
-
- if ((red_incr == 1) && (green_incr == 1) && (blue_incr == 1))
- {
-   while (count-- > 0)
-   {
-     *(rgb_dst++) = *(red_src++);
-     *(rgb_dst++) = *(green_src++);
-     *(rgb_dst++) = *(blue_src++);
-   }
- }
- else
- {
-   while (count-- > 0)
-   {
-     *(rgb_dst++) = *red_src;     red_src += red_incr;
-     *(rgb_dst++) = *green_src;   green_src += green_incr;
-     *(rgb_dst++) = *blue_src;    blue_src += blue_incr;
-   }
- }
+             int            *incr_src,
+             int             numpix,
+             unsigned char  *dst)
+{
+  register unsigned char *red_src = src[0];
+  register unsigned char *green_src = src[1];
+  register unsigned char *blue_src = src[2];
+  register unsigned char *rgb_dst = dst;
+  register int count = numpix;
+  int red_incr = incr_src[0], green_incr = incr_src[1], blue_incr = incr_src[2];
+  
+  if ((red_incr == 1) && (green_incr == 1) && (blue_incr == 1))
+    {
+      while (count-- > 0)
+	{
+	  *(rgb_dst++) = *(red_src++);
+	  *(rgb_dst++) = *(green_src++);
+	  *(rgb_dst++) = *(blue_src++);
+	}
+    }
+  else
+    {
+      while (count-- > 0)
+	{
+	  *(rgb_dst++) = *red_src;     red_src += red_incr;
+	  *(rgb_dst++) = *green_src;   green_src += green_incr;
+	  *(rgb_dst++) = *blue_src;    blue_src += blue_incr;
+	}
+    }
 }
 
 
 static void
 compose_rgba (unsigned char **src,
-              int *incr_src,
-              int numpix,
-              unsigned char *dst)
-
-{register unsigned char *red_src = src[0];
- register unsigned char *green_src = src[1];
- register unsigned char *blue_src = src[2];
- register unsigned char *alpha_src = src[3];
- register unsigned char *rgb_dst = dst;
- register int count = numpix;
- int red_incr = incr_src[0], green_incr = incr_src[1],
-     blue_incr = incr_src[2], alpha_incr = incr_src[3];
-
- if (   (red_incr == 1) && (green_incr == 1) && (blue_incr == 1)
-     && (alpha_incr == 1))
- {
-   while (count-- > 0)
-   {
-     *(rgb_dst++) = *(red_src++);
-     *(rgb_dst++) = *(green_src++);
-     *(rgb_dst++) = *(blue_src++);
-     *(rgb_dst++) = *(alpha_src++);
-   }
- }
- else
- {
-   while (count-- > 0)
-   {
-     *(rgb_dst++) = *red_src;    red_src += red_incr;
-     *(rgb_dst++) = *green_src;  green_src += green_incr;
-     *(rgb_dst++) = *blue_src;   blue_src += blue_incr;
-     *(rgb_dst++) = *alpha_src;  alpha_src += alpha_incr;
-   }
- }
+              int            *incr_src,
+              int             numpix,
+              unsigned char  *dst)
+{
+  register unsigned char *red_src = src[0];
+  register unsigned char *green_src = src[1];
+  register unsigned char *blue_src = src[2];
+  register unsigned char *alpha_src = src[3];
+  register unsigned char *rgb_dst = dst;
+  register int count = numpix;
+  int red_incr = incr_src[0], green_incr = incr_src[1],
+    blue_incr = incr_src[2], alpha_incr = incr_src[3];
+  
+  if (   (red_incr == 1) && (green_incr == 1) && (blue_incr == 1)
+	 && (alpha_incr == 1))
+    {
+      while (count-- > 0)
+	{
+	  *(rgb_dst++) = *(red_src++);
+	  *(rgb_dst++) = *(green_src++);
+	  *(rgb_dst++) = *(blue_src++);
+	  *(rgb_dst++) = *(alpha_src++);
+	}
+    }
+  else
+    {
+      while (count-- > 0)
+	{
+	  *(rgb_dst++) = *red_src;    red_src += red_incr;
+	  *(rgb_dst++) = *green_src;  green_src += green_incr;
+	  *(rgb_dst++) = *blue_src;   blue_src += blue_incr;
+	  *(rgb_dst++) = *alpha_src;  alpha_src += alpha_incr;
+	}
+    }
 }
 
 
 static void
 compose_hsv (unsigned char **src,
-             int *incr_src,
-             int numpix,
-             unsigned char *dst)
-
-{register unsigned char *hue_src = src[0];
- register unsigned char *sat_src = src[1];
- register unsigned char *val_src = src[2];
- register unsigned char *rgb_dst = dst;
- register int count = numpix;
- int hue_incr = incr_src[0], sat_incr = incr_src[1], val_incr = incr_src[2];
-
- while (count-- > 0)
- {
-   hsv_to_rgb (hue_src, sat_src, val_src, rgb_dst);
-   rgb_dst += 3;
-   hue_src += hue_incr;
-   sat_src += sat_incr;
-   val_src += val_incr;
- }
+             int            *incr_src,
+             int             numpix,
+             unsigned char  *dst)
+{
+  register unsigned char *hue_src = src[0];
+  register unsigned char *sat_src = src[1];
+  register unsigned char *val_src = src[2];
+  register unsigned char *rgb_dst = dst;
+  register int count = numpix;
+  int hue_incr = incr_src[0], sat_incr = incr_src[1], val_incr = incr_src[2];
+  
+  while (count-- > 0)
+    {
+      hsv_to_rgb (hue_src, sat_src, val_src, rgb_dst);
+      rgb_dst += 3;
+      hue_src += hue_incr;
+      sat_src += sat_incr;
+      val_src += val_incr;
+    }
 }
 
 
 static void
 compose_cmy (unsigned char **src,
-             int *incr_src,
-             int numpix,
-             unsigned char *dst)
-
-{register unsigned char *cyan_src = src[0];
- register unsigned char *magenta_src = src[1];
- register unsigned char *yellow_src = src[2];
- register unsigned char *rgb_dst = dst;
- register int count = numpix;
- int cyan_incr = incr_src[0], magenta_incr = incr_src[1],
-     yellow_incr = incr_src[2];
-
- if (   (cyan_incr == 1) && (magenta_incr == 1) && (yellow_incr == 1))
- {
-   while (count-- > 0)
-   {
-     *(rgb_dst++) = 255 - *(cyan_src++);
-     *(rgb_dst++) = 255 - *(magenta_src++);
-     *(rgb_dst++) = 255 - *(yellow_src++);
-   }
- }
- else
- {
-   while (count-- > 0)
-   {
-     *(rgb_dst++) = 255 - *cyan_src;
-     *(rgb_dst++) = 255 - *magenta_src;
-     *(rgb_dst++) = 255 - *yellow_src;
-     cyan_src += cyan_incr;
-     magenta_src += magenta_incr;
-     yellow_src += yellow_incr;
-   }
- }
+             int            *incr_src,
+             int             numpix,
+             unsigned char  *dst)
+{
+  register unsigned char *cyan_src = src[0];
+  register unsigned char *magenta_src = src[1];
+  register unsigned char *yellow_src = src[2];
+  register unsigned char *rgb_dst = dst;
+  register int count = numpix;
+  int cyan_incr = incr_src[0], magenta_incr = incr_src[1],
+    yellow_incr = incr_src[2];
+  
+  if ((cyan_incr == 1) && (magenta_incr == 1) && (yellow_incr == 1))
+    {
+      while (count-- > 0)
+	{
+	  *(rgb_dst++) = 255 - *(cyan_src++);
+	  *(rgb_dst++) = 255 - *(magenta_src++);
+	  *(rgb_dst++) = 255 - *(yellow_src++);
+	}
+    }
+  else
+    {
+      while (count-- > 0)
+	{
+	  *(rgb_dst++) = 255 - *cyan_src;
+	  *(rgb_dst++) = 255 - *magenta_src;
+	  *(rgb_dst++) = 255 - *yellow_src;
+	  cyan_src += cyan_incr;
+	  magenta_src += magenta_incr;
+	  yellow_src += yellow_incr;
+	}
+    }
 }
 
 
 static void
 compose_cmyk (unsigned char **src,
-              int *incr_src,
-              int numpix,
-              unsigned char *dst)
-
-{register unsigned char *cyan_src = src[0];
- register unsigned char *magenta_src = src[1];
- register unsigned char *yellow_src = src[2];
- register unsigned char *black_src = src[3];
- register unsigned char *rgb_dst = dst;
- register int count = numpix;
- int cyan, magenta, yellow, black;
- int cyan_incr = incr_src[0], magenta_incr = incr_src[1],
-     yellow_incr = incr_src[2], black_incr = incr_src[3];
-
- while (count-- > 0)
- {
-   black = (int)*black_src;
-   if (black)
-   {
-     cyan = (int)*cyan_src;
-     magenta = (int)*magenta_src;
-     yellow = (int)*yellow_src;
-     cyan += black; if (cyan > 255) cyan = 255;
-     magenta += black; if (magenta > 255) magenta = 255;
-     yellow += black; if (yellow > 255) yellow = 255;
-     *(rgb_dst++) = 255 - cyan;
-     *(rgb_dst++) = 255 - magenta;
-     *(rgb_dst++) = 255 - yellow;
-   }
-   else
-   {
-     *(rgb_dst++) = 255 - *cyan_src;
-     *(rgb_dst++) = 255 - *magenta_src;
-     *(rgb_dst++) = 255 - *yellow_src;
-   }
-   cyan_src += cyan_incr;
-   magenta_src += magenta_incr;
-   yellow_src += yellow_incr;
-   black_src += black_incr;
- }
+              int            *incr_src,
+              int             numpix,
+              unsigned char  *dst)
+{
+  register unsigned char *cyan_src = src[0];
+  register unsigned char *magenta_src = src[1];
+  register unsigned char *yellow_src = src[2];
+  register unsigned char *black_src = src[3];
+  register unsigned char *rgb_dst = dst;
+  register int count = numpix;
+  int cyan, magenta, yellow, black;
+  int cyan_incr = incr_src[0], magenta_incr = incr_src[1],
+    yellow_incr = incr_src[2], black_incr = incr_src[3];
+  
+  while (count-- > 0)
+    {
+      black = (int)*black_src;
+      if (black)
+	{
+	  cyan = (int)*cyan_src;
+	  magenta = (int)*magenta_src;
+	  yellow = (int)*yellow_src;
+	  cyan += black; if (cyan > 255) cyan = 255;
+	  magenta += black; if (magenta > 255) magenta = 255;
+	  yellow += black; if (yellow > 255) yellow = 255;
+	  *(rgb_dst++) = 255 - cyan;
+	  *(rgb_dst++) = 255 - magenta;
+	  *(rgb_dst++) = 255 - yellow;
+	}
+      else
+	{
+	  *(rgb_dst++) = 255 - *cyan_src;
+	  *(rgb_dst++) = 255 - *magenta_src;
+	  *(rgb_dst++) = 255 - *yellow_src;
+	}
+      cyan_src += cyan_incr;
+      magenta_src += magenta_incr;
+      yellow_src += yellow_incr;
+      black_src += black_incr;
+    }
 }
 
 
 static gint
-compose_dialog (char *compose_type,
-                gint32 drawable_ID)
+compose_dialog (char   *compose_type,
+                gint32  drawable_ID)
 {
   GtkWidget *dlg;
   GtkWidget *button;
@@ -935,84 +938,95 @@ hsv_to_rgb (unsigned char *h,
             unsigned char *s,
             unsigned char *v,
             unsigned char *rgb)
-
-{double hue, sat, val;
- double f, p, q, t;
- int red, green, blue;
-
+{
+  double hue, sat, val;
+  double f, p, q, t;
+  int red, green, blue;
+  
   if (*s == 0)
-  {
-    rgb[0] = rgb[1] = rgb[2] = *v;
-  }
+    {
+      rgb[0] = rgb[1] = rgb[2] = *v;
+    }
   else
-  {
-    hue = *h * 6.0 / 255.0;
-    sat = *s / 255.0;
-    val = *v / 255.0;
+    {
+      hue = *h * 6.0 / 255.0;
+      sat = *s / 255.0;
+      val = *v / 255.0;
+      
+      f = hue - (int) hue;
+      p = val * (1.0 - sat);
+      q = val * (1.0 - (sat * f));
+      t = val * (1.0 - (sat * (1.0 - f)));
+      
+      switch ((int) hue)
+	{
+	case 0:
+	  red = (int)(val * 255.0);
+	  green = (int)(t * 255.0);
+	  blue = (int)(p * 255.0);
+	  break;
+	case 1:
+	  red = (int)(q * 255.0);
+	  green = (int)(val * 255.0);
+	  blue = (int)(p * 255.0);
+	  break;
+	case 2:
+	  red = (int)(p * 255.0);
+	  green = (int)(val * 255.0);
+	  blue = (int)(t * 255.0);
+	  break;
+	case 3:
+	  red = (int)(p * 255.0);
+	  green = (int)(q * 255.0);
+	  blue = (int)(val * 255.0);
+	  break;
+	case 4:
+	  red = (int)(t * 255.0);
+	  green = (int)(p * 255.0);
+	  blue = (int)(val * 255.0);
+	  break;
+	case 5:
+	  red = (int)(val * 255.0);
+	  green = (int)(p * 255.0);
+	  blue = (int)(q * 255.0);
+	  break;
+	default:
+	  red = 0;
+	  green = 0;
+	  blue = 0;
+	  break;
+	}
 
-    f = hue - (int) hue;
-    p = val * (1.0 - sat);
-    q = val * (1.0 - (sat * f));
-    t = val * (1.0 - (sat * (1.0 - f)));
+      if (red < 0) 
+	red = 0; 
+      else if (red > 255) 
+	red = 255;
+      if (green < 0) 
+	green = 0; 
+      else if (green > 255) 
+	green = 255;
+      if (blue < 0) 
+	blue = 0; 
+      else if (blue > 255) 
+	blue = 255;
 
-    switch ((int) hue)
-      {
-      case 0:
-        red = (int)(val * 255.0);
-        green = (int)(t * 255.0);
-        blue = (int)(p * 255.0);
-        break;
-      case 1:
-        red = (int)(q * 255.0);
-        green = (int)(val * 255.0);
-        blue = (int)(p * 255.0);
-        break;
-      case 2:
-        red = (int)(p * 255.0);
-        green = (int)(val * 255.0);
-        blue = (int)(t * 255.0);
-        break;
-      case 3:
-        red = (int)(p * 255.0);
-        green = (int)(q * 255.0);
-        blue = (int)(val * 255.0);
-        break;
-      case 4:
-        red = (int)(t * 255.0);
-        green = (int)(p * 255.0);
-        blue = (int)(val * 255.0);
-        break;
-      case 5:
-        red = (int)(val * 255.0);
-        green = (int)(p * 255.0);
-        blue = (int)(q * 255.0);
-        break;
-      default:
-        red = 0;
-        green = 0;
-        blue = 0;
-        break;
-      }
-    if (red < 0) red = 0; else if (red > 255) red = 255;
-    if (green < 0) green = 0; else if (green > 255) green = 255;
-    if (blue < 0) blue = 0; else if (blue > 255) blue = 255;
-    rgb[0] = (unsigned char)red;
-    rgb[1] = (unsigned char)green;
-    rgb[2] = (unsigned char)blue;
-  }
+      rgb[0] = (unsigned char)red;
+      rgb[1] = (unsigned char)green;
+      rgb[2] = (unsigned char)blue;
+    }
 }
 
 /*  Compose interface functions  */
 
 static gint
-check_gray (gint32 image_id,
-            gint32 drawable_id,
+check_gray (gint32   image_id,
+            gint32   drawable_id,
             gpointer data)
 
 {
-  return (   (gimp_image_base_type (image_id) == GRAY)
-          && (gimp_image_width (image_id) == composeint.width)
-          && (gimp_image_height (image_id) == composeint.height));
+  return ((gimp_image_base_type (image_id) == GRAY)
+	  && (gimp_image_width (image_id) == composeint.width)
+	  && (gimp_image_height (image_id) == composeint.height));
 }
 
 
@@ -1020,7 +1034,7 @@ static void
 image_menu_callback (gint32   id,
                      gpointer data)
 {
- *(gint32 *)data = id;
+  *(gint32 *)data = id;
 }
 
 
@@ -1044,13 +1058,13 @@ compose_ok_callback (GtkWidget *widget,
     composevals.compose_ID[j] = composeint.select_ID[j];
 
   for (j = 0; j < MAX_COMPOSE_TYPES; j++)
-  {
-    if (composeint.compose_flag[j])
     {
-      strcpy (composevals.compose_type, compose_dsc[j].compose_type);
-      break;
+      if (composeint.compose_flag[j])
+	{
+	  strcpy (composevals.compose_type, compose_dsc[j].compose_type);
+	  break;
+	}
     }
-  }
 }
 
 
@@ -1065,19 +1079,27 @@ compose_type_toggle_update (GtkWidget *widget,
   toggle_val = (gint *) data;
 
   if (GTK_TOGGLE_BUTTON (widget)->active)
-  {
-    *toggle_val = TRUE;
-    compose_idx = toggle_val - &(composeint.compose_flag[0]);
-    for (j = 0; j < MAX_COMPOSE_IMAGES; j++)
-      gtk_label_set_text (GTK_LABEL (composeint.channel_label[j]),
-                     compose_dsc[compose_idx].channel_name[j]);
-
-    /* Set sensitivity of last label */
-    sensitive = (strcmp (compose_dsc[compose_idx].channel_name[3],
-                         CHNL_NA) != 0);
-    gtk_widget_set_sensitive (composeint.channel_label[3], sensitive);
-    gtk_widget_set_sensitive (composeint.channel_menu[3], sensitive);
-  }
+    {
+      *toggle_val = TRUE;
+      compose_idx = toggle_val - &(composeint.compose_flag[0]);
+      for (j = 0; j < MAX_COMPOSE_IMAGES; j++)
+	gtk_label_set_text (GTK_LABEL (composeint.channel_label[j]),
+			    compose_dsc[compose_idx].channel_name[j]);
+      
+      /* Set sensitivity of last label */
+      sensitive = (strcmp (compose_dsc[compose_idx].channel_name[3],
+			   CHNL_NA) != 0);
+      gtk_widget_set_sensitive (composeint.channel_label[3], sensitive);
+      gtk_widget_set_sensitive (composeint.channel_menu[3], sensitive);
+    }
   else
     *toggle_val = FALSE;
 }
+
+
+
+
+
+
+
+

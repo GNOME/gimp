@@ -228,10 +228,10 @@ query ()
 
 static void show_message (const char *message)
 {
- if (run_mode == RUN_INTERACTIVE)
-   g_message (message);
- else
-   printf ("%s\n", message);
+  if (run_mode == RUN_INTERACTIVE)
+    gimp_message (message);
+  else
+    printf ("%s\n", message);
 }
 
 
@@ -259,10 +259,10 @@ run (char    *name,
   values[0].type = PARAM_STATUS;
   values[0].data.d_status = status;
   for (j = 0; j < MAX_EXTRACT_IMAGES; j++)
-  {
-    values[j+1].type = PARAM_IMAGE;
-    values[j+1].data.d_int32 = -1;
-  }
+    {
+      values[j+1].type = PARAM_IMAGE;
+      values[j+1].data.d_int32 = -1;
+    }
 
   switch (run_mode)
     {
@@ -299,39 +299,39 @@ run (char    *name,
   /*  Make sure that the drawable is RGB color  */
   drawable_type = gimp_drawable_type (param[2].data.d_drawable);
   if ((drawable_type != RGB_IMAGE) && (drawable_type != RGBA_IMAGE))
-  {
-    show_message (_("plug_in_decompose: Can only work on RGB*_IMAGE"));
-    status = STATUS_CALLING_ERROR;
-  }
+    {
+      show_message (_("plug_in_decompose: Can only work on RGB*_IMAGE"));
+      status = STATUS_CALLING_ERROR;
+    }
   if (status == STATUS_SUCCESS)
     {
       if (run_mode != RUN_NONINTERACTIVE)
         gimp_progress_init (_("Decomposing..."));
-
+      
       num_images = decompose (param[1].data.d_image, param[2].data.d_drawable,
                               decovals.extract_type, image_ID_extract);
-
+      
       if (num_images <= 0)
-      {
-        status = STATUS_EXECUTION_ERROR;
-      }
+	{
+	  status = STATUS_EXECUTION_ERROR;
+	}
       else
-      {
-        for (j = 0; j < num_images; j++)
-        {
-          values[j+1].data.d_int32 = image_ID_extract[j];
-          gimp_image_enable_undo (image_ID_extract[j]);
-          gimp_image_clean_all (image_ID_extract[j]);
-          if (run_mode != RUN_NONINTERACTIVE)
-            gimp_display_new (image_ID_extract[j]);
-        }
-
-        /*  Store data  */
-        if (run_mode == RUN_INTERACTIVE)
-          gimp_set_data ("plug_in_decompose", &decovals, sizeof (DecoVals));
-      }
+	{
+	  for (j = 0; j < num_images; j++)
+	    {
+	      values[j+1].data.d_int32 = image_ID_extract[j];
+	      gimp_image_enable_undo (image_ID_extract[j]);
+	      gimp_image_clean_all (image_ID_extract[j]);
+	      if (run_mode != RUN_NONINTERACTIVE)
+		gimp_display_new (image_ID_extract[j]);
+	    }
+	  
+	  /*  Store data  */
+	  if (run_mode == RUN_INTERACTIVE)
+	    gimp_set_data ("plug_in_decompose", &decovals, sizeof (DecoVals));
+	}
     }
-
+  
   values[0].data.d_status = status;
 }
 
@@ -341,11 +341,10 @@ run (char    *name,
    On failure, -1 is returned.
 */
 static gint32
-decompose (gint32 image_ID,
-           gint32 drawable_ID,
+decompose (gint32  image_ID,
+           gint32  drawable_ID,
            char   *extract_type,
            gint32 *image_ID_dst)
-
 {
   int i, j, extract_idx, scan_lines;
   int height, width, tile_height, num_images;
@@ -358,29 +357,29 @@ decompose (gint32 image_ID,
 
   extract_idx = -1;   /* Search extract type */
   for (j = 0; j < NUM_EXTRACT_TYPES; j++)
-  {
-    if (cmp_icase (extract_type, extract[j].type) == 0)
     {
-      extract_idx = j;
-      break;
+      if (cmp_icase (extract_type, extract[j].type) == 0)
+	{
+	  extract_idx = j;
+	  break;
+	}
     }
-  }
   if (extract_idx < 0) return (-1);
-
+  
   /* Check structure of source image */
   drawable_src = gimp_drawable_get (drawable_ID);
   if (drawable_src->bpp < 3)
-  {
-    show_message (_("decompose: not an RGB image"));
-    return (-1);
-  }
-  if (   (extract[extract_idx].extract_fun == extract_alpha)
-      && (!gimp_drawable_has_alpha (drawable_ID)))
-  {
-    show_message (_("decompose: No alpha channel available"));
-    return (-1);
-  }
-
+    {
+      show_message (_("decompose: not an RGB image"));
+      return (-1);
+    }
+  if ((extract[extract_idx].extract_fun == extract_alpha) &&
+      (!gimp_drawable_has_alpha (drawable_ID)))
+    {
+      show_message (_("decompose: No alpha channel available"));
+      return (-1);
+    }
+  
   width = drawable_src->width;
   height = drawable_src->height;
 
@@ -393,106 +392,113 @@ decompose (gint32 image_ID,
 
   /* Create all new gray images */
   num_images = extract[extract_idx].num_images;
-  if (num_images > MAX_EXTRACT_IMAGES) num_images = MAX_EXTRACT_IMAGES;
-
+  if (num_images > MAX_EXTRACT_IMAGES) 
+    num_images = MAX_EXTRACT_IMAGES;
+  
   for (j = 0; j < num_images; j++)
-  {
-    sprintf (filename, "%s-%s", gimp_image_get_filename (image_ID),
-             extract[extract_idx].channel_name[j]);
-
-    image_ID_dst[j] = create_new_image (filename, width, height, GRAY,
-                         layer_ID_dst+j, drawable_dst+j, pixel_rgn_dst+j);
-    dst[j] = (unsigned char *)g_malloc (tile_height * width);
-  }
-  if (dst[num_images-1] == NULL)
-  {
-    show_message (_("decompose: out of memory"));
-    for (j = 0; j < num_images; j++)
     {
-      if (dst[j] != NULL) g_free (dst[j]);
+      sprintf (filename, "%s-%s", gimp_image_get_filename (image_ID),
+	       extract[extract_idx].channel_name[j]);
+      
+      image_ID_dst[j] = create_new_image (filename, width, height, GRAY,
+					  layer_ID_dst+j, drawable_dst+j, pixel_rgn_dst+j);
+      dst[j] = (unsigned char *)g_malloc (tile_height * width);
     }
-    return (-1);
-  }
-
+  if (dst[num_images-1] == NULL)
+    {
+      show_message (_("decompose: out of memory"));
+      for (j = 0; j < num_images; j++)
+	{
+	  if (dst[j] != NULL) g_free (dst[j]);
+	}
+      return (-1);
+    }
+  
   i = 0;
   while (i < height)
-  {
-    /* Get source pixel region */
-    scan_lines = (i+tile_height-1 < height) ? tile_height : (height-i);
-    gimp_pixel_rgn_get_rect (&pixel_rgn_src, src, 0, i, width, scan_lines);
-
-    /* Extract the channel information */
-    extract[extract_idx].extract_fun (src, drawable_src->bpp, scan_lines*width,
-                                      dst);
-
-    /* Set destination pixel regions */
-    for (j = 0; j < num_images; j++)
-      gimp_pixel_rgn_set_rect (&(pixel_rgn_dst[j]), dst[j], 0, i, width,
-                               scan_lines);
-    i += scan_lines;
-
-    if (run_mode != RUN_NONINTERACTIVE)
-      gimp_progress_update (((double)i) / (double)height);
-  }
+    {
+      /* Get source pixel region */
+      scan_lines = (i+tile_height-1 < height) ? tile_height : (height-i);
+      gimp_pixel_rgn_get_rect (&pixel_rgn_src, src, 0, i, width, scan_lines);
+      
+      /* Extract the channel information */
+      extract[extract_idx].extract_fun (src, drawable_src->bpp, scan_lines*width,
+					dst);
+      
+      /* Set destination pixel regions */
+      for (j = 0; j < num_images; j++)
+	gimp_pixel_rgn_set_rect (&(pixel_rgn_dst[j]), dst[j], 0, i, width,
+				 scan_lines);
+      i += scan_lines;
+      
+      if (run_mode != RUN_NONINTERACTIVE)
+	gimp_progress_update (((double)i) / (double)height);
+    }
   g_free (src);
   for (j = 0; j < num_images; j++)
-  {
-    gimp_drawable_flush (drawable_dst[j]);
-    gimp_drawable_detach (drawable_dst[j]);
-    g_free (dst[j]);
-  }
-
+    {
+      gimp_drawable_flush (drawable_dst[j]);
+      gimp_drawable_detach (drawable_dst[j]);
+      g_free (dst[j]);
+    }
+  
   gimp_drawable_flush (drawable_src);
   gimp_drawable_detach (drawable_src);
-
+  
   return (num_images);
 }
 
 
 /* Create an image. Sets layer_ID, drawable and rgn. Returns image_ID */
 static gint32
-create_new_image (char *filename,
-                  guint width,
-                  guint height,
-                  GImageType type,
-                  gint32 *layer_ID,
-                  GDrawable **drawable,
-                  GPixelRgn *pixel_rgn)
-
-{gint32 image_ID;
- GDrawableType gdtype;
-
- if (type == GRAY) gdtype = GRAY_IMAGE;
- else if (type == INDEXED) gdtype = INDEXED_IMAGE;
- else gdtype = RGB_IMAGE;
-
- image_ID = gimp_image_new (width, height, type);
- gimp_image_set_filename (image_ID, filename);
-
- *layer_ID = gimp_layer_new (image_ID, _("Background"), width, height,
-                            gdtype, 100, NORMAL_MODE);
- gimp_image_add_layer (image_ID, *layer_ID, 0);
-
- *drawable = gimp_drawable_get (*layer_ID);
- gimp_pixel_rgn_init (pixel_rgn, *drawable, 0, 0, (*drawable)->width,
-                      (*drawable)->height, TRUE, FALSE);
-
- return (image_ID);
+create_new_image (char        *filename,
+                  guint        width,
+                  guint        height,
+                  GImageType   type,
+                  gint32      *layer_ID,
+                  GDrawable  **drawable,
+                  GPixelRgn   *pixel_rgn)
+{
+  gint32 image_ID;
+  GDrawableType gdtype;
+  
+  if (type == GRAY) 
+    gdtype = GRAY_IMAGE;
+  else if (type == INDEXED) 
+    gdtype = INDEXED_IMAGE;
+  else 
+    gdtype = RGB_IMAGE;
+  
+  image_ID = gimp_image_new (width, height, type);
+  gimp_image_set_filename (image_ID, filename);
+  
+  *layer_ID = gimp_layer_new (image_ID, _("Background"), width, height,
+			      gdtype, 100, NORMAL_MODE);
+  gimp_image_add_layer (image_ID, *layer_ID, 0);
+  
+  *drawable = gimp_drawable_get (*layer_ID);
+  gimp_pixel_rgn_init (pixel_rgn, *drawable, 0, 0, (*drawable)->width,
+		       (*drawable)->height, TRUE, FALSE);
+  
+  return (image_ID);
 }
 
 
 /* Compare two strings ignoring case (could also be done by strcasecmp() */
 /* but is it available everywhere ?) */
-static int cmp_icase (char *s1, char *s2)
-
-{int c1, c2;
+static int 
+cmp_icase (char *s1, 
+	   char *s2)
+{
+  int c1, c2;
 
   c1 = toupper (*s1);  c2 = toupper (*s2);
   while (*s1 && *s2)
-  {
-    if (c1 != c2) return (c2 - c1);
-    c1 = toupper (*(++s1));  c2 = toupper (*(++s2));
-  }
+    {
+      if (c1 != c2) 
+	return (c2 - c1);
+      c1 = toupper (*(++s1));  c2 = toupper (*(++s2));
+    }
   return (c2 - c1);
 }
 
@@ -500,9 +506,14 @@ static int cmp_icase (char *s1, char *s2)
 /* Convert RGB to HSV. This routine was taken from decompose plug-in
    of GIMP V 0.54 and modified a little bit.
 */
-static void rgb_to_hsv (unsigned char *r, unsigned char *g, unsigned char *b,
-                        unsigned char *h, unsigned char *s, unsigned char *v)
-
+static void 
+rgb_to_hsv (unsigned char *r, 
+	    unsigned char *g, 
+	    unsigned char *b,
+	    unsigned char *h, 
+	    unsigned char *s, 
+	    unsigned char *v)
+     
 {
   int red = (int)*r, green = (int)*g, blue = (int)*b;
   double hue;
@@ -569,317 +580,377 @@ static void rgb_to_hsv (unsigned char *r, unsigned char *g, unsigned char *b,
 
 /* Extract functions */
 
-static void extract_rgb (unsigned char *src, int bpp, int numpix,
-                         unsigned char **dst)
-
-{register unsigned char *rgb_src = src;
- register unsigned char *red_dst = dst[0];
- register unsigned char *green_dst = dst[1];
- register unsigned char *blue_dst = dst[2];
- register int count = numpix, offset = bpp-3;
-
- while (count-- > 0)
- {
-   *(red_dst++) = *(rgb_src++);
-   *(green_dst++) = *(rgb_src++);
-   *(blue_dst++) = *(rgb_src++);
-   rgb_src += offset;
- }
+static void 
+extract_rgb (unsigned char  *src, 
+	     int             bpp, 
+	     int             numpix,
+	     unsigned char **dst)
+{
+  register unsigned char *rgb_src = src;
+  register unsigned char *red_dst = dst[0];
+  register unsigned char *green_dst = dst[1];
+  register unsigned char *blue_dst = dst[2];
+  register int count = numpix, offset = bpp-3;
+  
+  while (count-- > 0)
+    {
+      *(red_dst++) = *(rgb_src++);
+      *(green_dst++) = *(rgb_src++);
+      *(blue_dst++) = *(rgb_src++);
+      rgb_src += offset;
+    }
 }
 
 
-static void extract_red (unsigned char *src, int bpp, int numpix,
-                         unsigned char **dst)
-
-{register unsigned char *rgb_src = src;
- register unsigned char *red_dst = dst[0];
- register int count = numpix, offset = bpp;
-
- while (count-- > 0)
- {
-   *(red_dst++) = *rgb_src;
-   rgb_src += offset;
- }
+static void 
+extract_red (unsigned char  *src, 
+	     int             bpp, 
+	     int             numpix,
+	     unsigned char **dst)
+{
+  register unsigned char *rgb_src = src;
+  register unsigned char *red_dst = dst[0];
+  register int count = numpix, offset = bpp;
+  
+  while (count-- > 0)
+    {
+      *(red_dst++) = *rgb_src;
+      rgb_src += offset;
+    }
 }
 
 
-static void extract_green (unsigned char *src, int bpp, int numpix,
-                           unsigned char **dst)
-
-{register unsigned char *rgb_src = src+1;
- register unsigned char *green_dst = dst[0];
- register int count = numpix, offset = bpp;
-
- while (count-- > 0)
- {
-   *(green_dst++) = *rgb_src;
-   rgb_src += offset;
- }
+static void 
+extract_green (unsigned char  *src, 
+	       int            bpp, 
+	       int            numpix,
+	       unsigned char **dst)
+{
+  register unsigned char *rgb_src = src+1;
+  register unsigned char *green_dst = dst[0];
+  register int count = numpix, offset = bpp;
+  
+  while (count-- > 0)
+    {
+      *(green_dst++) = *rgb_src;
+      rgb_src += offset;
+    }
 }
 
 
-static void extract_blue (unsigned char *src, int bpp, int numpix,
-                          unsigned char **dst)
-
-{register unsigned char *rgb_src = src+2;
- register unsigned char *blue_dst = dst[0];
- register int count = numpix, offset = bpp;
-
- while (count-- > 0)
- {
-   *(blue_dst++) = *rgb_src;
-   rgb_src += offset;
- }
+static void 
+extract_blue (unsigned char  *src, 
+	      int             bpp, 
+	      int             numpix,
+	      unsigned char **dst)
+{
+  register unsigned char *rgb_src = src+2;
+  register unsigned char *blue_dst = dst[0];
+  register int count = numpix, offset = bpp;
+  
+  while (count-- > 0)
+    {
+      *(blue_dst++) = *rgb_src;
+      rgb_src += offset;
+    }
 }
 
 
-static void extract_alpha (unsigned char *src, int bpp, int numpix,
-                           unsigned char **dst)
-
-{register unsigned char *rgb_src = src+3;
- register unsigned char *alpha_dst = dst[0];
- register int count = numpix, offset = bpp;
-
- while (count-- > 0)
- {
-   *(alpha_dst++) = *rgb_src;
-   rgb_src += offset;
- }
+static void 
+extract_alpha (unsigned char  *src, 
+	       int             bpp, 
+	       int             numpix,
+	       unsigned char **dst)
+{
+  register unsigned char *rgb_src = src+3;
+  register unsigned char *alpha_dst = dst[0];
+  register int count = numpix, offset = bpp;
+  
+  while (count-- > 0)
+    {
+      *(alpha_dst++) = *rgb_src;
+      rgb_src += offset;
+    }
 }
 
 
-static void extract_cmy (unsigned char *src, int bpp, int numpix,
-                         unsigned char **dst)
-
-{register unsigned char *rgb_src = src;
- register unsigned char *cyan_dst = dst[0];
- register unsigned char *magenta_dst = dst[1];
- register unsigned char *yellow_dst = dst[2];
- register int count = numpix, offset = bpp-3;
-
- while (count-- > 0)
- {
-   *(cyan_dst++) = 255 - *(rgb_src++);
-   *(magenta_dst++) = 255 - *(rgb_src++);
-   *(yellow_dst++) = 255 - *(rgb_src++);
-   rgb_src += offset;
- }
+static void
+extract_cmy (unsigned char  *src, 
+	     int             bpp, 
+	     int             numpix,
+	     unsigned char **dst)
+{
+  register unsigned char *rgb_src = src;
+  register unsigned char *cyan_dst = dst[0];
+  register unsigned char *magenta_dst = dst[1];
+  register unsigned char *yellow_dst = dst[2];
+  register int count = numpix, offset = bpp-3;
+  
+  while (count-- > 0)
+    {
+      *(cyan_dst++) = 255 - *(rgb_src++);
+      *(magenta_dst++) = 255 - *(rgb_src++);
+      *(yellow_dst++) = 255 - *(rgb_src++);
+      rgb_src += offset;
+    }
 }
 
 
-static void extract_hsv (unsigned char *src, int bpp, int numpix,
-                         unsigned char **dst)
-
-{register unsigned char *rgb_src = src;
- register unsigned char *hue_dst = dst[0];
- register unsigned char *sat_dst = dst[1];
- register unsigned char *val_dst = dst[2];
- register int count = numpix, offset = bpp;
-
- while (count-- > 0)
- {
-   rgb_to_hsv (rgb_src, rgb_src+1, rgb_src+2, hue_dst++, sat_dst++, val_dst++);
-   rgb_src += offset;
- }
+static void 
+extract_hsv (unsigned char  *src, 
+	     int             bpp, 
+	     int             numpix,
+	     unsigned char **dst)
+{
+  register unsigned char *rgb_src = src;
+  register unsigned char *hue_dst = dst[0];
+  register unsigned char *sat_dst = dst[1];
+  register unsigned char *val_dst = dst[2];
+  register int count = numpix, offset = bpp;
+  
+  while (count-- > 0)
+    {
+      rgb_to_hsv (rgb_src, rgb_src+1, rgb_src+2, hue_dst++, sat_dst++, val_dst++);
+      rgb_src += offset;
+    }
 }
 
 
-static void extract_hue (unsigned char *src, int bpp, int numpix,
-                         unsigned char **dst)
-
-{register unsigned char *rgb_src = src;
- register unsigned char *hue_dst = dst[0];
- unsigned char dmy;
- unsigned char *dummy = &dmy;
- register int count = numpix, offset = bpp;
-
- while (count-- > 0)
- {
-   rgb_to_hsv (rgb_src, rgb_src+1, rgb_src+2, hue_dst++, dummy, dummy);
-   rgb_src += offset;
- }
+static void 
+extract_hue (unsigned char  *src, 
+	     int             bpp, 
+	     int             numpix,
+	     unsigned char **dst)
+{
+  register unsigned char *rgb_src = src;
+  register unsigned char *hue_dst = dst[0];
+  unsigned char dmy;
+  unsigned char *dummy = &dmy;
+  register int count = numpix, offset = bpp;
+  
+  while (count-- > 0)
+    {
+      rgb_to_hsv (rgb_src, rgb_src+1, rgb_src+2, hue_dst++, dummy, dummy);
+      rgb_src += offset;
+    }
 }
 
 
-static void extract_sat (unsigned char *src, int bpp, int numpix,
-                         unsigned char **dst)
-
-{register unsigned char *rgb_src = src;
- register unsigned char *sat_dst = dst[0];
- unsigned char dmy;
- unsigned char *dummy = &dmy;
- register int count = numpix, offset = bpp;
-
- while (count-- > 0)
- {
-   rgb_to_hsv (rgb_src, rgb_src+1, rgb_src+2, dummy, sat_dst++, dummy);
-   rgb_src += offset;
- }
+static void 
+extract_sat (unsigned char  *src, 
+	     int             bpp, 
+	     int             numpix,
+	     unsigned char **dst)
+{
+  register unsigned char *rgb_src = src;
+  register unsigned char *sat_dst = dst[0];
+  unsigned char dmy;
+  unsigned char *dummy = &dmy;
+  register int count = numpix, offset = bpp;
+  
+  while (count-- > 0)
+    {
+      rgb_to_hsv (rgb_src, rgb_src+1, rgb_src+2, dummy, sat_dst++, dummy);
+      rgb_src += offset;
+    }
 }
 
 
-static void extract_val (unsigned char *src, int bpp, int numpix,
-                         unsigned char **dst)
-
-{register unsigned char *rgb_src = src;
- register unsigned char *val_dst = dst[0];
- unsigned char dmy;
- unsigned char *dummy = &dmy;
- register int count = numpix, offset = bpp;
-
- while (count-- > 0)
- {
-   rgb_to_hsv (rgb_src, rgb_src+1, rgb_src+2, dummy, dummy, val_dst++);
-   rgb_src += offset;
- }
+static void 
+extract_val (unsigned char  *src, 
+	     int             bpp, 
+	     int             numpix,
+	     unsigned char **dst)
+{
+  register unsigned char *rgb_src = src;
+  register unsigned char *val_dst = dst[0];
+  unsigned char dmy;
+  unsigned char *dummy = &dmy;
+  register int count = numpix, offset = bpp;
+  
+  while (count-- > 0)
+    {
+      rgb_to_hsv (rgb_src, rgb_src+1, rgb_src+2, dummy, dummy, val_dst++);
+      rgb_src += offset;
+    }
 }
 
 
-static void extract_cyan (unsigned char *src, int bpp, int numpix,
-                          unsigned char **dst)
-
-{register unsigned char *rgb_src = src;
- register unsigned char *cyan_dst = dst[0];
- register int count = numpix, offset = bpp-1;
-
- while (count-- > 0)
- {
-   *(cyan_dst++) = 255 - *(rgb_src++);
-   rgb_src += offset;
- }
+static void 
+extract_cyan (unsigned char  *src, 
+	      int             bpp, 
+	      int             numpix,
+	      unsigned char **dst)
+{
+  register unsigned char *rgb_src = src;
+  register unsigned char *cyan_dst = dst[0];
+  register int count = numpix, offset = bpp-1;
+  
+  while (count-- > 0)
+    {
+      *(cyan_dst++) = 255 - *(rgb_src++);
+      rgb_src += offset;
+    }
 }
 
 
-static void extract_magenta (unsigned char *src, int bpp, int numpix,
-                             unsigned char **dst)
-
-{register unsigned char *rgb_src = src+1;
- register unsigned char *magenta_dst = dst[0];
- register int count = numpix, offset = bpp-1;
-
- while (count-- > 0)
- {
-   *(magenta_dst++) = 255 - *(rgb_src++);
-   rgb_src += offset;
- }
+static void 
+extract_magenta (unsigned char  *src, 
+		 int             bpp, 
+		 int             numpix,
+		 unsigned char **dst)
+{
+  register unsigned char *rgb_src = src+1;
+  register unsigned char *magenta_dst = dst[0];
+  register int count = numpix, offset = bpp-1;
+  
+  while (count-- > 0)
+    {
+      *(magenta_dst++) = 255 - *(rgb_src++);
+      rgb_src += offset;
+    }
 }
 
 
-static void extract_yellow (unsigned char *src, int bpp, int numpix,
-                            unsigned char **dst)
-
-{register unsigned char *rgb_src = src+2;
- register unsigned char *yellow_dst = dst[0];
- register int count = numpix, offset = bpp-1;
-
- while (count-- > 0)
- {
-   *(yellow_dst++) = 255 - *(rgb_src++);
-   rgb_src += offset;
- }
+static void 
+extract_yellow (unsigned char  *src, 
+		int             bpp, 
+		int             numpix,
+		unsigned char **dst)
+{
+  register unsigned char *rgb_src = src+2;
+  register unsigned char *yellow_dst = dst[0];
+  register int count = numpix, offset = bpp-1;
+  
+  while (count-- > 0)
+    {
+      *(yellow_dst++) = 255 - *(rgb_src++);
+      rgb_src += offset;
+    }
 }
 
 
-static void extract_cmyk (unsigned char *src, int bpp, int numpix,
-                          unsigned char **dst)
+static void 
+extract_cmyk (unsigned char  *src, 
+	      int             bpp, 
+	      int             numpix,
+	      unsigned char **dst)
 
-{register unsigned char *rgb_src = src;
- register unsigned char *cyan_dst = dst[0];
- register unsigned char *magenta_dst = dst[1];
- register unsigned char *yellow_dst = dst[2];
- register unsigned char *black_dst = dst[3];
- register unsigned char k, s;
- register int count = numpix, offset = bpp-3;
-
- while (count-- > 0)
- {
-   *cyan_dst = k = 255 - *(rgb_src++);
-   *magenta_dst = s = 255 - *(rgb_src++);
-   if (s < k) k = s;
-   *yellow_dst = s = 255 - *(rgb_src++);
-   if (s < k) k = s;   /* Black intensity is minimum of c, m, y */
-   if (k)
-   {
-     *cyan_dst -= k;     /* Remove common part of c, m, y */
-     *magenta_dst -= k;
-     *yellow_dst -= k;
-   }
-   cyan_dst++;
-   magenta_dst++;
-   yellow_dst++;
-   *(black_dst++) = k;
-
-   rgb_src += offset;
- }
+{
+  register unsigned char *rgb_src = src;
+  register unsigned char *cyan_dst = dst[0];
+  register unsigned char *magenta_dst = dst[1];
+  register unsigned char *yellow_dst = dst[2];
+  register unsigned char *black_dst = dst[3];
+  register unsigned char k, s;
+  register int count = numpix, offset = bpp-3;
+  
+  while (count-- > 0)
+    {
+      *cyan_dst = k = 255 - *(rgb_src++);
+      *magenta_dst = s = 255 - *(rgb_src++);
+      if (s < k) 
+	k = s;
+      *yellow_dst = s = 255 - *(rgb_src++);
+      if (s < k) 
+	k = s;                /* Black intensity is minimum of c, m, y */
+      if (k)
+	{
+	  *cyan_dst -= k;     /* Remove common part of c, m, y */
+	  *magenta_dst -= k;
+	  *yellow_dst -= k;
+	}
+      cyan_dst++;
+      magenta_dst++;
+      yellow_dst++;
+      *(black_dst++) = k;
+      
+      rgb_src += offset;
+    }
 }
 
 
-static void extract_cyank (unsigned char *src, int bpp, int numpix,
-                           unsigned char **dst)
-
-{register unsigned char *rgb_src = src;
- register unsigned char *cyan_dst = dst[0];
- register unsigned char s, k;
- register int count = numpix, offset = bpp-3;
-
- while (count-- > 0)
- {
-   *cyan_dst = k = 255 - *(rgb_src++);
-   s = 255 - *(rgb_src++);  /* magenta */
-   if (s < k) k = s;
-   s = 255 - *(rgb_src++);  /* yellow */
-   if (s < k) k = s;
-   if (k) *cyan_dst -= k;
-   cyan_dst++;
-
-   rgb_src += offset;
- }
+static void 
+extract_cyank (unsigned char  *src, 
+	       int             bpp, 
+	       int             numpix,
+	       unsigned char **dst)
+{
+  register unsigned char *rgb_src = src;
+  register unsigned char *cyan_dst = dst[0];
+  register unsigned char s, k;
+  register int count = numpix, offset = bpp-3;
+  
+  while (count-- > 0)
+    {
+      *cyan_dst = k = 255 - *(rgb_src++);
+      s = 255 - *(rgb_src++);  /* magenta */
+      if (s < k) k = s;
+      s = 255 - *(rgb_src++);  /* yellow */
+      if (s < k) k = s;
+      if (k) *cyan_dst -= k;
+      cyan_dst++;
+      
+      rgb_src += offset;
+    }
 }
 
 
-static void extract_magentak (unsigned char *src, int bpp, int numpix,
-                              unsigned char **dst)
-
-{register unsigned char *rgb_src = src;
- register unsigned char *magenta_dst = dst[0];
- register unsigned char s, k;
- register int count = numpix, offset = bpp-3;
-
- while (count-- > 0)
- {
-   k = 255 - *(rgb_src++);  /* cyan */
-   *magenta_dst = s = 255 - *(rgb_src++);  /* magenta */
-   if (s < k) k = s;
-   s = 255 - *(rgb_src++);  /* yellow */
-   if (s < k) k = s;
-   if (k) *magenta_dst -= k;
-   magenta_dst++;
-
-   rgb_src += offset;
- }
+static void 
+extract_magentak (unsigned char  *src, 
+		  int             bpp, 
+		  int             numpix,
+		  unsigned char **dst)
+{
+  register unsigned char *rgb_src = src;
+  register unsigned char *magenta_dst = dst[0];
+  register unsigned char s, k;
+  register int count = numpix, offset = bpp-3;
+  
+  while (count-- > 0)
+    {
+      k = 255 - *(rgb_src++);  /* cyan */
+      *magenta_dst = s = 255 - *(rgb_src++);  /* magenta */
+      if (s < k) 
+	k = s;
+      s = 255 - *(rgb_src++);  /* yellow */
+      if (s < k) 
+	k = s;
+      if (k) 
+	*magenta_dst -= k;
+      magenta_dst++;
+      
+      rgb_src += offset;
+    }
 }
 
 
-static void extract_yellowk (unsigned char *src, int bpp, int numpix,
-                             unsigned char **dst)
+static void 
+extract_yellowk (unsigned char  *src, 
+		 int             bpp, 
+		 int             numpix,
+		 unsigned char **dst)
 
-{register unsigned char *rgb_src = src;
- register unsigned char *yellow_dst = dst[0];
- register unsigned char s, k;
- register int count = numpix, offset = bpp-3;
-
- while (count-- > 0)
- {
-   k = 255 - *(rgb_src++);  /* cyan */
-   s = 255 - *(rgb_src++);  /* magenta */
-   if (s < k) k = s;
-   *yellow_dst = s = 255 - *(rgb_src++);
-   if (s < k) k = s;
-   if (k) *yellow_dst -= k;
-   yellow_dst++;
-
-   rgb_src += offset;
- }
+{
+  register unsigned char *rgb_src = src;
+  register unsigned char *yellow_dst = dst[0];
+  register unsigned char s, k;
+  register int count = numpix, offset = bpp-3;
+  
+  while (count-- > 0)
+    {
+      k = 255 - *(rgb_src++);  /* cyan */
+      s = 255 - *(rgb_src++);  /* magenta */
+      if (s < k) k = s;
+      *yellow_dst = s = 255 - *(rgb_src++);
+      if (s < k) 
+	k = s;
+      if (k) 
+	*yellow_dst -= k;
+      yellow_dst++;
+      
+      rgb_src += offset;
+    }
 }
 
 
