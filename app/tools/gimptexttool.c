@@ -66,9 +66,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#define WANT_TEXT_BITS
-#include "icons.h"
-
 
 #define FOUNDRY      0
 #define FAMILY       1
@@ -82,6 +79,7 @@
 #define SPACING     10
 #define REGISTRY    12
 #define ENCODING    13
+
 
 /*  the text tool structures  */
 
@@ -167,7 +165,7 @@ gimp_text_tool_register (Gimp *gimp)
 			      _("Add text to the image"),
 			      N_("/Tools/Text"), "T",
 			      NULL, "tools/text.html",
-			      (const gchar **) text_bits);
+			      GIMP_STOCK_TOOL_TEXT);
 }
 
 GtkType

@@ -45,9 +45,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#define WANT_BLUR_BITS
-#include "icons.h"
-
 
 #define FIELD_COLS    4
 #define MIN_BLUR      64         /*  (8/9 original pixel)   */
@@ -179,7 +176,7 @@ gimp_convolve_tool_register (Gimp *gimp)
   			      _("Blur or Sharpen"),
       			      N_("/Tools/Paint Tools/Convolve"), "B",
   			      NULL, "tools/convolve.html",
-			      (const gchar **) blur_bits);
+			      GIMP_STOCK_TOOL_BLUR);
 }
 
 GtkType

@@ -41,9 +41,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#define WANT_SCALE_BITS
-#include "icons.h"
-
 
 /*  forward function declarations  */
 static TileManager * gimp_scale_tool_transform      (GimpTransformTool  *tool,
@@ -88,15 +85,15 @@ gimp_scale_tool_register (Gimp *gimp)
                               "gimp:scale_tool",
                               _("Scale Tool"),
                               _("Scale the layer or selection"),
-                              N_("/Tools/Transform Tools/Transform"), "<shift>T",
+                              N_("/Tools/Transform Tools/Scale"), "<shift>T",
                               NULL, "tools/transform.html",
-                              (const gchar **) scale_bits);
+                              GIMP_STOCK_TOOL_SCALE);
 }
 
-GtkType
+GType
 gimp_scale_tool_get_type (void)
 {
-  static GtkType tool_type = 0;
+  static GType tool_type = 0;
 
   if (! tool_type)
     {
@@ -129,7 +126,7 @@ gimp_scale_tool_class_init (GimpScaleToolClass *klass)
   tool_class        = (GimpToolClass *) klass;
   transform_class   = (GimpTransformToolClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_TRANSFORM_TOOL);
+  parent_class = g_type_class_peek_parent (klass);
 
   transform_class->transform = gimp_scale_tool_transform;
 }

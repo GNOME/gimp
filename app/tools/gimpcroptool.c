@@ -45,9 +45,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#define WANT_CROP_BITS
-#include "icons.h"
-
 
 #define STATUSBAR_SIZE 128
 
@@ -179,7 +176,7 @@ gimp_crop_tool_register (Gimp *gimp)
                               _("Crop or Resize an image"),
                               N_("/Tools/Crop Tool"), "<shift>C",
                               NULL, "tools/crop_tool.html",
-                              (const gchar **) crop_bits);
+                              GIMP_STOCK_TOOL_CROP);
 }
 
 GtkType

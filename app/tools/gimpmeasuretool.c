@@ -45,9 +45,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#define WANT_MEASURE_BITS
-#include "icons.h"
-
 
 /*  definitions  */
 #define  TARGET         8
@@ -129,7 +126,7 @@ gimp_measure_tool_register (Gimp *gimp)
 			      _("Measure angles and lengths"),
 			      N_("/Tools/Measure"), NULL,
 			      NULL, "tools/measure.html",
-			      (const gchar **) measure_bits);
+			      GIMP_STOCK_TOOL_MEASURE);
 }
 
 GtkType

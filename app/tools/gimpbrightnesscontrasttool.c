@@ -43,9 +43,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#define WANT_ADJUSTMENT_BITS
-#include "icons.h"
-
 
 #define SLIDER_WIDTH 200
 
@@ -132,7 +129,7 @@ gimp_brightness_contrast_tool_register (Gimp *gimp)
 			      _("Adjust brightness and contrast"),
 			      N_("/Image/Colors/Brightness-Contrast..."), NULL,
 			      NULL, "tools/brightness_contrast.html",
-			      (const gchar **) adjustment_bits);
+			      GIMP_STOCK_TOOL_BRIGHTNESS_CONTRAST);
 }
 
 GtkType

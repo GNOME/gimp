@@ -42,9 +42,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#define WANT_ERASER_BITS
-#include "icons.h"
-
 
 #define ERASER_DEFAULT_HARD        FALSE
 #define ERASER_DEFAULT_INCREMENTAL FALSE
@@ -112,7 +109,7 @@ gimp_eraser_tool_register (Gimp *gimp)
   			      _("Paint fuzzy brush strokes"),
       			      N_("/Tools/Paint Tools/Eraser"), "<shift>E",
   			      NULL, "tools/eraser.html",
-			      (const gchar **) eraser_bits);
+			      GIMP_STOCK_TOOL_ERASER);
 }
 
 GtkType

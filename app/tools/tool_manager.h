@@ -58,7 +58,7 @@ void           tool_manager_register_tool         (Gimp             *gimp,
 						   const gchar      *menu_accel,
 						   const gchar      *help_domain,
 						   const gchar      *help_data,
-						   const gchar     **icon_data);
+						   const gchar      *stock_id);
 
 void           tool_manager_register_tool_options (GtkType           tool_type,
 						   GimpToolOptions  *tool_options);

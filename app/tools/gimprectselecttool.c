@@ -46,9 +46,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#define WANT_RECT_SELECT_BITS
-#include "icons.h"
-
 
 #define STATUSBAR_SIZE 128
 
@@ -103,7 +100,7 @@ gimp_rect_select_tool_register (Gimp *gimp)
                               _("Select rectangular regions"),
                               _("/Tools/Selection Tools/Rect Select"), "R",
                               NULL, "tools/rect_select.html",
-                              (const gchar **) rect_select_bits);
+                              GIMP_STOCK_TOOL_RECT_SELECT);
 }
 
 GtkType

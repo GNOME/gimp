@@ -56,9 +56,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#define WANT_BEZIER_SELECT_BITS
-#include "icons.h"
-
 
 #define STATUSBAR_SIZE 128
 
@@ -283,7 +280,7 @@ gimp_bezier_select_tool_register (Gimp *gimp)
                               _("Select regions using Bezier curves"),
                               _("/Tools/Selection Tools/Bezier Select"), "B",
                               NULL, "tools/bezier_select.html",
-                              (const gchar **) bezier_select_bits);
+                              GIMP_STOCK_TOOL_BEZIER_SELECT);
 }
 
 GtkType

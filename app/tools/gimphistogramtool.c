@@ -43,9 +43,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#define WANT_HISTOGRAM_BITS
-#include "icons.h"
-
 
 #define TEXT_WIDTH       45
 #define GRADIENT_HEIGHT  15
@@ -100,7 +97,7 @@ gimp_histogram_tool_register (Gimp *gimp)
 			      _("View image histogram"),
 			      N_("/Image/Histogram..."), NULL,
 			      NULL, "tools/histogram.html",
-			      (const gchar **) histogram_bits);
+			      GIMP_STOCK_TOOL_HISTOGRAM);
 }
 
 GtkType

@@ -46,9 +46,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#define WANT_SMUDGE_BITS
-#include "icons.h"
-
 
 /* default defines */
 
@@ -123,7 +120,7 @@ gimp_smudge_tool_register (Gimp *gimp)
   			      _("Smudge image"),
       			      N_("/Tools/Paint Tools/Smudge"), "S",
   			      NULL, "tools/smudge.html",
-			      (const gchar **) smudge_bits);
+			      GIMP_STOCK_TOOL_SMUDGE);
 }
 
 GtkType

@@ -45,9 +45,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#define WANT_AIRBRUSH_BITS
-#include "icons.h"
-
 
 /*  The maximum amount of pressure that can be exerted  */
 #define MAX_PRESSURE  0.075
@@ -134,7 +131,7 @@ gimp_airbrush_tool_register (Gimp *gimp)
                               _("Airbrush with variable pressure"),
                               N_("/Tools/Paint Tools/Airbrush"), "A",
                               NULL, "tools/airbrush.html",
-                              (const gchar **) airbrush_bits);
+                              GIMP_STOCK_TOOL_AIRBRUSH);
 }
 
 GtkType

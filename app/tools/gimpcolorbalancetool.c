@@ -44,9 +44,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#define WANT_ADJUSTMENT_BITS
-#include "icons.h"
-
 
 #define CYAN_RED       0x1
 #define MAGENTA_GREEN  0x2
@@ -114,7 +111,7 @@ gimp_color_balance_tool_register (Gimp *gimp)
 			      _("Adjust color balance"),
 			      N_("/Image/Colors/Color Balance..."), NULL,
 			      NULL, "tools/color_balance.html",
-			      (const gchar **) adjustment_bits);
+			      GIMP_STOCK_TOOL_COLOR_BALANCE);
 }
 
 GtkType

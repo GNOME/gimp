@@ -284,30 +284,24 @@ create_tools (GtkWidget   *wbox,
        list = g_list_next (list))
     {
       GimpToolInfo *tool_info;
-      GtkWidget    *alignment;
       GtkWidget    *button;
-      GtkWidget    *preview;
+      GtkWidget    *image;
 
       tool_info = (GimpToolInfo *) list->data;
 
       button = gtk_radio_button_new (group);
+      group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+      gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
+      gtk_wrap_box_pack (GTK_WRAP_BOX (wbox), button,
+			 FALSE, FALSE, FALSE, FALSE);
+      gtk_widget_show (button);
 
       g_object_set_data (G_OBJECT (tool_info), "toolbox_button", button);
 
-      gtk_container_set_border_width (GTK_CONTAINER (button), 0);
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
-
-      gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
-
-      gtk_wrap_box_pack (GTK_WRAP_BOX (wbox), button,
-			 FALSE, FALSE, FALSE, FALSE);
-
-      alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-      gtk_container_add (GTK_CONTAINER (button), alignment);
-
-      preview = gimp_preview_new (GIMP_VIEWABLE (tool_info), 22, 0, FALSE);
-      gtk_container_add (GTK_CONTAINER (alignment), preview);
-      gtk_widget_show (preview);
+      image = gtk_image_new_from_stock (tool_info->stock_id,
+					GTK_ICON_SIZE_BUTTON);
+      gtk_container_add (GTK_CONTAINER (button), image);
+      gtk_widget_show (image);
 
       g_signal_connect (G_OBJECT (button), "toggled",
 			G_CALLBACK (toolbox_tool_button_toggled),
@@ -321,9 +315,6 @@ create_tools (GtkWidget   *wbox,
 			       tool_info->help,
 			       tool_info->help_data);
 
-      gtk_widget_show (preview);
-      gtk_widget_show (alignment);
-      gtk_widget_show (button);
     }
 
   gtk_widget_show (wbox);

@@ -48,9 +48,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#define WANT_FLIP_BITS
-#include "icons.h"
-
 
 /*  FIXME: Lame - 1 hacks abound since the code assumes certain values for
  *  the ORIENTATION_FOO constants.
@@ -110,7 +107,7 @@ gimp_flip_tool_register (Gimp *gimp)
 			      _("Flip the layer or selection"),
 			      N_("/Tools/Transform Tools/Flip"), "<shift>F",
 			      NULL, "tools/flip.html",
-			      (const gchar **) flip_bits);
+			      GIMP_STOCK_TOOL_FLIP);
 }
 
 GtkType

@@ -39,9 +39,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#define WANT_MAGNIFY_BITS
-#include "icons.h"
-
 
 typedef struct _MagnifyOptions MagnifyOptions;
 
@@ -111,7 +108,7 @@ gimp_magnify_tool_register (Gimp *gimp)
 			      _("Zoom in & out"),
 			      N_("/Tools/Magnify"), NULL,
 			      NULL, "tools/magnify.html",
-			      (const gchar **) magnify_bits);
+			      GIMP_STOCK_TOOL_ZOOM);
 }
 
 GtkType

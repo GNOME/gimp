@@ -52,9 +52,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#define WANT_LEVELS_BITS
-#include "icons.h"
-
 
 #define LOW_INPUT          0x1
 #define GAMMA              0x2
@@ -214,7 +211,7 @@ gimp_levels_tool_register (Gimp *gimp)
 			      _("Adjust color levels"),
 			      N_("/Image/Colors/Levels..."), NULL,
 			      NULL, "tools/levels.html",
-			      (const gchar **) levels_bits);
+			      GIMP_STOCK_TOOL_LEVELS);
 }
 
 GtkType

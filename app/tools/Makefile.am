@@ -111,7 +111,6 @@ libapptools_a_SOURCES = @STRIP_BEGIN@ \
 	tool_options.c			\
 	tool_options.h			\
 	\
-	icons.h				\
 	tool_manager.c			\
 	tool_manager.h			\
 	path_tool.h			\

@@ -49,9 +49,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#define WANT_CURVES_BITS
-#include "icons.h"
-
 
 #define GRAPH          0x1
 #define XRANGE_TOP     0x2
@@ -210,7 +207,7 @@ gimp_curves_tool_register (Gimp *gimp)
 			      _("Adjust color curves"),
 			      N_("/Image/Colors/Curves..."), NULL,
 			      NULL, "tools/curves.html",
-			      (const gchar **) curves_bits);
+			      GIMP_STOCK_TOOL_CURVES);
 }
 
 GtkType

@@ -46,9 +46,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#define WANT_LEVELS_BITS
-#include "icons.h"
-
 
 #define HISTOGRAM_WIDTH  256
 #define HISTOGRAM_HEIGHT 150
@@ -121,7 +118,7 @@ gimp_threshold_tool_register (Gimp *gimp)
 			      _("Reduce image to two colors using a threshold"),
 			      N_("/Image/Colors/Threshold..."), NULL,
 			      NULL, "tools/threshold.html",
-			      (const gchar **) levels_bits);
+			      GIMP_STOCK_TOOL_THRESHOLD);
 }
 
 GtkType

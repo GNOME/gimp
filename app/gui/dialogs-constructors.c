@@ -651,7 +651,7 @@ dialogs_layer_list_view_new (GimpDialogFactory *factory,
 				   NULL,
 				   dialogs_set_drawable_context_func);
 
-  dialogs_set_drawable_context_func (GIMP_DOCKABLE (dockable), context);
+  gimp_dockable_set_context (GIMP_DOCKABLE (dockable), context);
 
   return dockable;
 }
@@ -687,7 +687,7 @@ dialogs_channel_list_view_new (GimpDialogFactory *factory,
 				   NULL,
 				   dialogs_set_drawable_context_func);
 
-  dialogs_set_drawable_context_func (GIMP_DOCKABLE (dockable), context);
+  gimp_dockable_set_context (GIMP_DOCKABLE (dockable), context);
 
   return dockable;
 }
@@ -714,7 +714,7 @@ dialogs_path_list_view_new (GimpDialogFactory *factory,
 				   NULL,
 				   dialogs_set_path_context_func);
 
-  dialogs_set_path_context_func (GIMP_DOCKABLE (dockable), context);
+  gimp_dockable_set_context (GIMP_DOCKABLE (dockable), context);
 
   return dockable;
 }

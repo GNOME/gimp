@@ -57,9 +57,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#define WANT_BLEND_BITS
-#include "icons.h"
-
 
 /*  target size  */
 #define  TARGET_HEIGHT    15
@@ -282,7 +279,7 @@ gimp_blend_tool_register (Gimp *gimp)
 			      _("Fill with a color gradient"),
 			      N_("/Tools/Paint Tools/Blend"), "L",
 			      NULL, "tools/blend.html",
-			      (const gchar **) blend_bits);
+			      GIMP_STOCK_TOOL_BLEND);
 }
 
 GtkType

@@ -39,12 +39,6 @@
 
 #include "path_tool.h"
 
-#define WANT_PATH_TOOL_BITS
-#include "icons.h"
-
-
-/*  definitions  */
-
 
 /*  local function prototypes  */
 static void   gimp_path_tool_class_init      (GimpPathToolClass *klass);
@@ -114,7 +108,7 @@ gimp_path_tool_register (Gimp *gimp)
 			      _("Path tool prototype"),
 			      N_("/Tools/Path"), NULL,
 			      NULL, "tools/path.html",
-			      (const gchar **) path_tool_bits);
+			      GIMP_STOCK_TOOL_PATH);
 }
 
 GtkType

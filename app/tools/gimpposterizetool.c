@@ -42,9 +42,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#define WANT_ADJUSTMENT_BITS
-#include "icons.h"
-
 
 typedef struct _PosterizeDialog PosterizeDialog;
 
@@ -115,7 +112,7 @@ gimp_posterize_tool_register (Gimp *gimp)
 			      _("Reduce image to a fixed numer of colors"),
 			      N_("/Image/Colors/Posterize..."), NULL,
 			      NULL, "tools/posterize.html",
-			      (const gchar **) adjustment_bits);
+			      GIMP_STOCK_TOOL_POSTERIZE);
 }
 
 GtkType

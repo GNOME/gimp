@@ -44,9 +44,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#define WANT_ROTATE_BITS
-#include "icons.h"
-
 
 /*  index into trans_info array  */
 #define ANGLE        0
@@ -105,7 +102,7 @@ gimp_rotate_tool_register (Gimp *gimp)
 			      _("Rotate the layer or selection"),
 			      N_("/Tools/Transform Tools/Rotate"), "<shift>R",
 			      NULL, "tools/rotate.html",
-			      (const gchar **) rotate_bits);
+			      GIMP_STOCK_TOOL_ROTATE);
 }
 
 GtkType

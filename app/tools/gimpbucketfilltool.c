@@ -53,9 +53,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#define WANT_BUCKET_FILL_BITS
-#include "icons.h"
-
 
 typedef struct _BucketOptions BucketOptions;
 
@@ -135,7 +132,7 @@ gimp_bucket_fill_tool_register (Gimp *gimp)
 			      _("Fill with a color or pattern"),
 			      N_("/Tools/Paint Tools/Bucket Fill"), "<shift>B",
 			      NULL, "tools/bucket_fill.html",
-			      (const gchar **) bucket_fill_bits);
+			      GIMP_STOCK_TOOL_BUCKET_FILL);
 }
 
 GtkType

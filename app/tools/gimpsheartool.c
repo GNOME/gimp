@@ -44,9 +44,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#define WANT_SHEAR_BITS
-#include "icons.h"
-
 
 /*  index into trans_info array  */
 #define HORZ_OR_VERT 0
@@ -102,7 +99,7 @@ gimp_shear_tool_register (Gimp *gimp)
 			      _("Shear the layer or selection"),
 			      N_("/Tools/Transform Tools/Shear"), "<shift>F",
 			      NULL, "tools/shear.html",
-			      (const gchar **) shear_bits);
+			      GIMP_STOCK_TOOL_SHEAR);
 }
 
 GtkType

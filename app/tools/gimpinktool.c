@@ -53,9 +53,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#define WANT_INK_BITS
-#include "icons.h"
-
 
 #define SUBSAMPLE 8
 
@@ -242,7 +239,7 @@ gimp_ink_tool_register (Gimp *gimp)
 			      _("Draw in ink"),
 			      N_("/Tools/Paint Tools/Ink"), "K",
 			      NULL, "tools/ink.html",
-			      (const gchar **) ink_bits);
+			      GIMP_STOCK_TOOL_INK);
 }
 
 GtkType

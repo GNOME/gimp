@@ -47,9 +47,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#define WANT_DODGE_BITS
-#include "icons.h"
-
 
 /*  Default values  */
 
@@ -146,7 +143,7 @@ gimp_dodgeburn_tool_register (Gimp *gimp)
 			      _("Dodge or Burn strokes"),
 			      N_("/Tools/Paint Tools/DodgeBurn"), "<shift>D",
 			      NULL, "tools/dodgeburn.html",
-			      (const gchar **) dodge_bits);
+			      GIMP_STOCK_TOOL_DODGE);
 }
 
 GtkType

@@ -22,6 +22,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "tools-types.h"
 
 #include "core/gimpimage.h"
@@ -39,9 +41,6 @@
 #include "tool_options.h"
 
 #include "libgimp/gimpintl.h"
-
-#define WANT_MOVE_BITS
-#include "icons.h"
 
 
 static void   gimp_move_tool_class_init (GimpMoveToolClass *klass);
@@ -88,7 +87,7 @@ gimp_move_tool_register (Gimp *gimp)
 			      _("Move layers & selections"),
 			      N_("/Tools/Transform Tools/Move"), "M",
 			      NULL, "tools/move.html",
-			      (const gchar **) move_bits);
+			      GIMP_STOCK_TOOL_MOVE);
 }
 
 GtkType

@@ -49,9 +49,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#define WANT_CLONE_BITS
-#include "icons.h"
-
 
 #define TARGET_HEIGHT  15
 #define TARGET_WIDTH   15
@@ -165,7 +162,7 @@ gimp_clone_tool_register (Gimp *gimp)
   			      _("Paint using Patterns or Image Regions"),
       			      N_("/Tools/Paint Tools/Clone"), "C",
   			      NULL, "tools/clone.html",
-			      (const gchar **) clone_bits);
+			      GIMP_STOCK_TOOL_CLONE);
 }
 
 GtkType

@@ -18,6 +18,7 @@
 
 #include "config.h"
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -1941,7 +1942,7 @@ menus_reorder_plugins (void)
 static void
 menus_tools_create (GimpToolInfo *tool_info)
 {
-  GimpItemFactoryEntry entry;
+  GimpItemFactoryEntry  entry;
 
   if (tool_info->menu_path == NULL)
     return;
@@ -1950,12 +1951,16 @@ menus_tools_create (GimpToolInfo *tool_info)
   entry.entry.accelerator     = tool_info->menu_accel;
   entry.entry.callback        = tools_select_cmd_callback;
   entry.entry.callback_action = tool_info->tool_type;
-  entry.entry.item_type       = NULL;
+  entry.entry.item_type       = "<StockItem>";
+  entry.entry.extra_data      = tool_info->stock_id;
   entry.quark_string          = NULL;
   entry.help_page             = tool_info->help_data;
   entry.description           = NULL;
 
-  menus_create_item (image_factory, &entry, (gpointer) tool_info, 2, TRUE, FALSE);
+  menus_create_item (image_factory,
+		     &entry, tool_info,
+		     2,
+		     TRUE, FALSE);
 }
 
 void

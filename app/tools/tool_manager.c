@@ -402,11 +402,14 @@ tool_manager_register_tool (Gimp         *gimp,
 			    const gchar  *menu_accel,
 			    const gchar  *help_domain,
 			    const gchar  *help_data,
-			    const gchar **icon_data)
+			    const gchar  *stock_id)
 {
   GimpToolManager *tool_manager;
   GimpToolInfo    *tool_info;
   const gchar     *pdb_string = "gimp_paintbrush_default";
+  GtkIconSet      *icon_set;
+  GtkStyle        *style;
+  GdkPixbuf       *pixbuf;
 
   if (tool_type == GIMP_TYPE_PENCIL_TOOL)
     {
@@ -441,6 +444,22 @@ tool_manager_register_tool (Gimp         *gimp,
       pdb_string = "gimp_dodgeburn_default";
     }
 
+  icon_set = gtk_icon_factory_lookup_default (stock_id);
+
+#ifdef __GNUC__
+#warning FIXME: remove gtk_widget_get_default_style()
+#endif
+
+  style = gtk_widget_get_default_style ();
+
+  pixbuf = gtk_icon_set_render_icon (icon_set,
+				     style,
+				     GTK_TEXT_DIR_LTR,
+				     GTK_STATE_NORMAL,
+				     GTK_ICON_SIZE_BUTTON,
+				     NULL,
+				     NULL);
+
   tool_manager = tool_manager_get (gimp);
 
   tool_info = gimp_tool_info_new (tool_manager->global_tool_context,
@@ -454,7 +473,10 @@ tool_manager_register_tool (Gimp         *gimp,
 				  help_domain,
 				  help_data,
 				  pdb_string,
-				  icon_data);
+				  stock_id,
+				  pixbuf);
+
+  g_object_unref (G_OBJECT (pixbuf));
 
   gimp_container_add (gimp->tool_info_list, GIMP_OBJECT (tool_info));
 }

@@ -54,9 +54,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#define WANT_BY_COLOR_SELECT_BITS
-#include "icons.h"
-
 
 #define PREVIEW_WIDTH       256
 #define PREVIEW_HEIGHT      256
@@ -183,7 +180,7 @@ gimp_by_color_select_tool_register (Gimp *gimp)
                               _("Select regions by color"),
                               _("/Tools/Selection Tools/By Color Select"), "C",
                               NULL, "tools/by_color_select.html",
-                              (const gchar **) by_color_select_bits);
+                              GIMP_STOCK_TOOL_BY_COLOR_SELECT);
 }
 
 GtkType

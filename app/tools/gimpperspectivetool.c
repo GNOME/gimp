@@ -39,9 +39,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#define WANT_PERSPECTIVE_BITS
-#include "icons.h"
-
 
 /*  forward function declarations  */
 static void          gimp_perspective_tool_class_init  (GimpPerspectiveToolClass *klass);
@@ -80,7 +77,7 @@ gimp_perspective_tool_register (Gimp *gimp)
 			      _("Change perspective of the layer or selection"),
 			      N_("/Tools/Transform Tools/Perspective"), "<shift>P",
 			      NULL, "tools/perspective.html",
-			      (const gchar **) perspective_bits);
+			      GIMP_STOCK_TOOL_PERSPECTIVE);
 }
 
 GtkType

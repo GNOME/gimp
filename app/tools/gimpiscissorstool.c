@@ -42,6 +42,7 @@
 #include <gdk/gdkkeysyms.h>
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
 
@@ -66,9 +67,6 @@
 #include "gdisplay.h"
 
 #include "libgimp/gimpintl.h"
-
-#define WANT_ISCISSORS_BITS
-#include "icons.h"
 
 
 struct _ICurve
@@ -283,7 +281,7 @@ gimp_iscissors_tool_register (Gimp *gimp)
 			      N_("/Tools/Selection Tools/Intelligent Scissors"),
                               "I",
 			      NULL, "tools/iscissors.html",
-			      (const gchar **) iscissors_bits);
+			      GIMP_STOCK_TOOL_ISCISSORS);
 }
 
 GtkType

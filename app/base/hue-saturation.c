@@ -44,9 +44,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#define WANT_ADJUSTMENT_BITS
-#include "icons.h"
-
 
 #define HUE_PARTITION_MASK  GDK_EXPOSURE_MASK | GDK_ENTER_NOTIFY_MASK
 
@@ -138,7 +135,7 @@ gimp_hue_saturation_tool_register (Gimp *gimp)
 			      _("Adjust hue and saturation"),
 			      N_("/Image/Colors/Hue-Saturation..."), NULL,
 			      NULL, "tools/hue_saturation.html",
-			      (const gchar **) adjustment_bits);
+			      GIMP_STOCK_TOOL_HUE_SATURATION);
 }
 
 GtkType

@@ -23,6 +23,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "libgimpmath/gimpmath.h"
 
 #include "tools-types.h"
@@ -43,9 +45,6 @@
 #include "gdisplay.h"
 
 #include "libgimp/gimpintl.h"
-
-#define WANT_FREE_SELECT_BITS
-#include "icons.h"
 
 
 #define DEFAULT_MAX_INC  1024
@@ -99,7 +98,7 @@ gimp_free_select_tool_register (Gimp *gimp)
                               _("Select hand-drawn regions"),
                               _("/Tools/Selection Tools/Free Select"), "F",
                               NULL, "tools/free_select.html",
-                              (const gchar **) free_select_bits);
+                              GIMP_STOCK_TOOL_FREE_SELECT);
 }
 
 GtkType

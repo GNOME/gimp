@@ -46,9 +46,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#define WANT_PAINT_BRUSH_BITS
-#include "icons.h"
-
 
 #define PAINT_LEFT_THRESHOLD           0.05
 #define PAINTBRUSH_DEFAULT_INCREMENTAL FALSE
@@ -92,7 +89,7 @@ gimp_paintbrush_tool_register (Gimp *gimp)
   			      _("Paint fuzzy brush strokes"),
       			      N_("/Tools/Paint Tools/Paintbrush"), "P",
   			      NULL, "tools/paintbrush.html",
-			      (const gchar **) paint_brush_bits);
+			      GIMP_STOCK_TOOL_PAINTBRUSH);
 }
 
 GtkType

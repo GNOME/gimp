@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
 
@@ -44,9 +45,6 @@
 #include "tool_manager.h"
 
 #include "libgimp/gimpintl.h"
-
-#define WANT_PENCIL_BITS
-#include "icons.h"
 
 
 #define PENCIL_INCREMENTAL_DEFAULT FALSE
@@ -85,7 +83,7 @@ gimp_pencil_tool_register (Gimp *gimp)
                               _("Paint hard edged pixels"),
                               N_("/Tools/Paint Tools/Pencil"), "P",
                               NULL, "tools/pencil.html",
-                              (const gchar **) pencil_bits);
+                              GIMP_STOCK_TOOL_PENCIL);
 }
 
 GtkType
