@@ -69,7 +69,7 @@
 #include "gimp-intl.h"
 
 
-static const GimpLayerModeEffects paint_modes[] =
+static const GimpLayerModeEffects layer_modes[] =
 {
   GIMP_NORMAL_MODE,
   GIMP_DISSOLVE_MODE,
@@ -108,7 +108,7 @@ static void   layers_resize_layer_query (GimpDisplay          *gdisp,
                                          GimpLayer            *layer,
                                          GimpContext          *context,
                                          GtkWidget            *parent);
-static gint   layers_paint_mode_index   (GimpLayerModeEffects  paint_mode);
+static gint   layers_mode_index         (GimpLayerModeEffects  layer_mode);
 
 
 /*  public functions  */
@@ -559,31 +559,31 @@ layers_opacity_cmd_callback (GtkAction *action,
 }
 
 void
-layers_paint_mode_cmd_callback (GtkAction *action,
-                                gint       value,
-                                gpointer   data)
+layers_mode_cmd_callback (GtkAction *action,
+                          gint       value,
+                          gpointer   data)
 {
   GimpImage            *gimage;
   GimpLayer            *layer;
-  GimpLayerModeEffects  paint_mode;
+  GimpLayerModeEffects  layer_mode;
   gint                  index;
   GimpUndo             *undo;
   gboolean              push_undo = TRUE;
   return_if_no_layer (gimage, layer, data);
 
   undo = gimp_image_undo_can_compress (gimage, GIMP_TYPE_ITEM_UNDO,
-                                       GIMP_UNDO_LAYER_OPACITY);
+                                       GIMP_UNDO_LAYER_MODE);
 
   if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))
     push_undo = FALSE;
 
-  paint_mode = gimp_layer_get_mode (layer);
+  layer_mode = gimp_layer_get_mode (layer);
 
   index = action_select_value ((GimpActionSelectType) value,
-                               layers_paint_mode_index (paint_mode),
-                               0, G_N_ELEMENTS (paint_modes) - 1,
+                               layers_mode_index (layer_mode),
+                               0, G_N_ELEMENTS (layer_modes) - 1,
                                1.0, 1.0, FALSE);
-  gimp_layer_set_mode (layer, paint_modes[index], push_undo);
+  gimp_layer_set_mode (layer, layer_modes[index], push_undo);
   gimp_image_flush (gimage);
 }
 
@@ -976,13 +976,6 @@ edit_layer_query_response (GtkWidget        *widget,
 }
 
 static void
-edit_layer_query_activate (GtkWidget        *widget,
-                           EditLayerOptions *options)
-{
-  gtk_dialog_response (GTK_DIALOG (options->query_box), GTK_RESPONSE_OK);
-}
-
-static void
 edit_layer_toggle_rename (GtkWidget        *widget,
                           EditLayerOptions *options)
 {
@@ -1055,6 +1048,7 @@ layers_edit_layer_query (GimpLayer   *layer,
   gtk_widget_show (table);
 
   options->name_entry = gtk_entry_new ();
+  gtk_entry_set_activates_default (GTK_ENTRY (options->name_entry), TRUE);
   gtk_entry_set_text (GTK_ENTRY (options->name_entry),
 		      ((gimp_layer_is_floating_sel (layer) ?
 			_("Floating Selection") :
@@ -1062,10 +1056,6 @@ layers_edit_layer_query (GimpLayer   *layer,
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Layer _Name"), 1.0, 0.5,
                              options->name_entry, 1, FALSE);
-
-  g_signal_connect (options->name_entry, "activate",
-		    G_CALLBACK (edit_layer_query_activate),
-		    options);
 
   /*  For text layers add a toggle to control "auto-rename"  */
   if (gimp_drawable_is_text_layer (GIMP_DRAWABLE (layer)))
@@ -1371,11 +1361,11 @@ layers_resize_layer_query (GimpDisplay *gdisp,
 }
 
 static gint
-layers_paint_mode_index (GimpLayerModeEffects paint_mode)
+layers_mode_index (GimpLayerModeEffects layer_mode)
 {
   gint i = 0;
 
-  while (i < (G_N_ELEMENTS (paint_modes) - 1) && paint_modes[i] != paint_mode)
+  while (i < (G_N_ELEMENTS (layer_modes) - 1) && layer_modes[i] != layer_mode)
     i++;
 
   return i;

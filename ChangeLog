@@ -1,5 +1,30 @@
 2004-09-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimphelp-ids.h: added help IDs for the drawable- and
+	vectors-visible and -liked actions as well as for the layer mask
+	property action.
+
+	* app/actions/drawable-actions.c
+	* app/actions/vectors-actions.c: use them.
+
+	* app/actions/layers-actions.c
+	* app/actions/layers-commands.[ch]: ditto. Use
+	GIMP_STOCK_TRANSPARENCY for all layer opacity actions. Replaced
+	"paint_mode" by "mode" in all action and function/variable names
+	because this is the layer mode, not a paint mode.
+
+	* app/actions/channels-commands.c
+	* app/actions/layers-commands.c
+	* app/actions/vectors-commands.c: set the "activates-default"
+	property on the name entry in all "New Foo" and "Edit Foo
+	Attributes" dialogs except in the "New Layer" dialog.
+	Addresses bug #148026.
+
+	* menus/image-menu.xml.in: added a (commented out) layer
+	properties menu containing all the new actions.
+
+2004-09-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/layers-actions.c
 	* app/actions/layers-commands.[ch]: added actions and callbacks
 	"layers-preserve-transparency" and

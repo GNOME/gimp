@@ -384,6 +384,7 @@ channels_new_channel_query (GimpImage   *gimage,
   gtk_widget_show (table);
 
   options->name_entry = gtk_entry_new ();
+  gtk_entry_set_activates_default (GTK_ENTRY (options->name_entry), TRUE);
   gtk_entry_set_text (GTK_ENTRY (options->name_entry),
 		      (channel_name ? channel_name : _("New Channel")));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
@@ -541,6 +542,7 @@ channels_edit_channel_query (GimpChannel *channel,
   gtk_widget_show (table);
 
   options->name_entry = gtk_entry_new ();
+  gtk_entry_set_activates_default (GTK_ENTRY (options->name_entry), TRUE);
   gtk_entry_set_text (GTK_ENTRY (options->name_entry),
 		      gimp_object_get_name (GIMP_OBJECT (channel)));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,

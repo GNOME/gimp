@@ -39,7 +39,7 @@
       <menu action="context-colors-menu" name="Colors">
         <menuitem action="context-colors-default" />
         <menuitem action="context-colors-swap" />
-      </menu> 
+      </menu>
       <menu action="context-opacity-menu" name="Opacity">
         <menuitem action="context-opacity-transparent" />
         <menuitem action="context-opacity-opaque" />
@@ -389,6 +389,26 @@
 	<separator />
         <menuitem action="drawable-offset" />
       </menu>
+<!--
+      <menu action="layers-properties-menu" name="Properties">
+        <menuitem action="layers-edit-attributes" />
+        <menu action="layers-opacity-menu" name="Opacity">
+          <menuitem action="layers-opacity-transparent" />
+          <menuitem action="layers-opacity-opaque" />
+          <menuitem action="layers-opacity-decrease" />
+          <menuitem action="layers-opacity-increase" />
+        </menu>
+        <menu action="layers-mode-menu" name="Layer Mode">
+          <menuitem action="layers-mode-first" />
+          <menuitem action="layers-mode-last" />
+          <menuitem action="layers-mode-previous" />
+          <menuitem action="layers-mode-next" />
+        </menu>
+        <menuitem action="drawable-visible" />
+        <menuitem action="drawable-linked" />
+        <menuitem action="layers-preserve-transparency" />
+      </menu>
+-->
       <separator />
       <placeholder name="Resize">
         <menuitem action="layers-resize" />
@@ -400,14 +420,6 @@
       <placeholder name="Crop">
         <menuitem action="layers-crop" />
       </placeholder>
-      <separator />
-<!--
-      <placeholder name="Properties">
-        <menuitem action="drawable-visible" />
-        <menuitem action="drawable-linked" />
-	<menuitem action="layers-preserve-transparency" />
-      </placeholder>
--->
       <separator />
     </menu>
 

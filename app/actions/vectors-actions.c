@@ -126,13 +126,13 @@ static GimpToggleActionEntry vectors_toggle_actions[] =
     N_("_Visible"), NULL, NULL,
     G_CALLBACK (vectors_visible_cmd_callback),
     FALSE,
-    NULL },
+    GIMP_HELP_PATH_VISIBLE },
 
   { "vectors-linked", GIMP_STOCK_LINKED,
     N_("_Linked"), NULL, NULL,
     G_CALLBACK (vectors_linked_cmd_callback),
     FALSE,
-    NULL }
+    GIMP_HELP_PATH_LINKED }
 };
 
 static GimpEnumActionEntry vectors_to_selection_actions[] =

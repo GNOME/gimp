@@ -69,13 +69,13 @@ static GimpToggleActionEntry drawable_toggle_actions[] =
     N_("_Visible"), NULL, NULL,
     G_CALLBACK (drawable_visible_cmd_callback),
     FALSE,
-    NULL },
+    GIMP_HELP_LAYER_VISIBLE },
 
   { "drawable-linked", GIMP_STOCK_LINKED,
     N_("_Linked"), NULL, NULL,
     G_CALLBACK (drawable_linked_cmd_callback),
     FALSE,
-    NULL }
+    GIMP_HELP_LAYER_LINKED }
 };
 
 static GimpEnumActionEntry drawable_flip_actions[] =

@@ -555,10 +555,11 @@ vectors_new_vectors_query (GimpImage   *gimage,
 
   options->name_entry = gtk_entry_new ();
   gtk_widget_set_size_request (options->name_entry, 150, -1);
-  gtk_table_attach_defaults (GTK_TABLE (table), options->name_entry,
-			     1, 2, 0, 1);
+  gtk_entry_set_activates_default (GTK_ENTRY (options->name_entry), TRUE);
   gtk_entry_set_text (GTK_ENTRY (options->name_entry),
 		      (vectors_name ? vectors_name : _("New Path")));
+  gtk_table_attach_defaults (GTK_TABLE (table), options->name_entry,
+			     1, 2, 0, 1);
   gtk_widget_show (options->name_entry);
 
   gtk_widget_show (options->query_box);
@@ -668,10 +669,11 @@ vectors_edit_vectors_query (GimpVectors *vectors,
 
   options->name_entry = gtk_entry_new ();
   gtk_widget_set_size_request (options->name_entry, 150, -1);
-  gtk_table_attach_defaults (GTK_TABLE (table), options->name_entry,
-			     1, 2, 0, 1);
+  gtk_entry_set_activates_default (GTK_ENTRY (options->name_entry), TRUE);
   gtk_entry_set_text (GTK_ENTRY (options->name_entry),
 		      gimp_object_get_name (GIMP_OBJECT (vectors)));
+  gtk_table_attach_defaults (GTK_TABLE (table), options->name_entry,
+			     1, 2, 0, 1);
   gtk_widget_show (options->name_entry);
 
   gtk_widget_show (options->query_box);

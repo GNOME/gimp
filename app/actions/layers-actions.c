@@ -47,13 +47,16 @@ static GimpActionEntry layers_actions[] =
   { "layers-popup", GIMP_STOCK_LAYERS, N_("Layers Menu"), NULL, NULL, NULL,
     GIMP_HELP_LAYER_DIALOG },
 
-  { "layers-menu",              NULL, N_("_Layer")        },
-  { "layers-stack-menu",        NULL, N_("Stac_k")        },
-  { "layers-colors-menu",       NULL, N_("_Colors")       },
-  { "layers-colors-auto-menu",  NULL, N_("_Auto")         },
-  { "layers-mask-menu",         NULL, N_("_Mask")         },
-  { "layers-transparency-menu", NULL, N_("Tr_ansparency") },
-  { "layers-transform-menu",    NULL, N_("_Transform")    },
+  { "layers-menu",              NULL,                    N_("_Layer")        },
+  { "layers-stack-menu",        NULL,                    N_("Stac_k")        },
+  { "layers-colors-menu",       NULL,                    N_("_Colors")       },
+  { "layers-colors-auto-menu",  NULL,                    N_("_Auto")         },
+  { "layers-mask-menu",         NULL,                    N_("_Mask")         },
+  { "layers-transparency-menu", NULL,                    N_("Tr_ansparency") },
+  { "layers-transform-menu",    NULL,                    N_("_Transform")    },
+  { "layers-properties-menu",   NULL,                    N_("_Properties")   },
+  { "layers-opacity-menu",      GIMP_STOCK_TRANSPARENCY, N_("_Opacity")      },
+  { "layers-mode-menu",         GIMP_STOCK_TOOL_PENCIL,  N_("Layer _Mode")   },
 
   { "layers-text-tool", GIMP_STOCK_TOOL_TEXT,
     N_("Te_xt Tool"), NULL, NULL,
@@ -160,28 +163,28 @@ static GimpActionEntry layers_actions[] =
 static GimpToggleActionEntry layers_toggle_actions[] =
 {
   { "layers-preserve-transparency", GIMP_STOCK_TRANSPARENCY,
-    N_("Preserve Transparency"), NULL, NULL,
+    N_("Keep Transparency"), NULL, NULL,
     G_CALLBACK (layers_preserve_trans_cmd_callback),
     FALSE,
-    NULL },
+    GIMP_HELP_LAYER_KEEP_TRANSPARENCY },
 
   { "layers-mask-edit", GIMP_STOCK_EDIT,
     N_("Edit Layer Mask"), NULL, NULL,
     G_CALLBACK (layers_mask_edit_cmd_callback),
     FALSE,
-    NULL },
+    GIMP_HELP_LAYER_MASK_EDIT },
 
   { "layers-mask-show", GIMP_STOCK_VISIBLE,
     N_("Show Layer Mask"), NULL, NULL,
     G_CALLBACK (layers_mask_show_cmd_callback),
     FALSE,
-    NULL },
+    GIMP_HELP_LAYER_MASK_SHOW },
 
   { "layers-mask-disable", NULL,
     N_("Disable Layer Mask"), NULL, NULL,
     G_CALLBACK (layers_mask_disable_cmd_callback),
     FALSE,
-    NULL }
+    GIMP_HELP_LAYER_MASK_DISABLE }
 };
 
 static GimpEnumActionEntry layers_mask_apply_actions[] =
@@ -271,51 +274,51 @@ static GimpEnumActionEntry layers_opacity_actions[] =
   { "layers-opacity-set", GIMP_STOCK_TRANSPARENCY,
     N_("Set Opacity"), NULL, NULL,
     GIMP_ACTION_SELECT_SET,
-    NULL },
-  { "layers-opacity-transparent", GTK_STOCK_GOTO_FIRST,
+    GIMP_HELP_LAYER_OPACITY },
+  { "layers-opacity-transparent", GIMP_STOCK_TRANSPARENCY,
     "Completely Transparent", NULL, NULL,
     GIMP_ACTION_SELECT_FIRST,
-    NULL },
-  { "layers-opacity-opaque", GTK_STOCK_GOTO_LAST,
+    GIMP_HELP_LAYER_OPACITY },
+  { "layers-opacity-opaque", GIMP_STOCK_TRANSPARENCY,
     "Completely Opaque", NULL, NULL,
     GIMP_ACTION_SELECT_LAST,
-    NULL },
-  { "layers-opacity-decrease", GTK_STOCK_REMOVE,
+    GIMP_HELP_LAYER_OPACITY },
+  { "layers-opacity-decrease", GIMP_STOCK_TRANSPARENCY,
     "More Transparent", NULL, NULL,
     GIMP_ACTION_SELECT_PREVIOUS,
-    NULL },
-  { "layers-opacity-increase", GTK_STOCK_ADD,
+    GIMP_HELP_LAYER_OPACITY },
+  { "layers-opacity-increase", GIMP_STOCK_TRANSPARENCY,
     "More Opaque", NULL, NULL,
     GIMP_ACTION_SELECT_NEXT,
-    NULL },
-  { "layers-opacity-decrease-skip", GTK_STOCK_REMOVE,
+    GIMP_HELP_LAYER_OPACITY },
+  { "layers-opacity-decrease-skip", GIMP_STOCK_TRANSPARENCY,
     "10% More Transparent", NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_PREVIOUS,
-    NULL },
-  { "layers-opacity-increase-skip", GTK_STOCK_ADD,
+    GIMP_HELP_LAYER_OPACITY },
+  { "layers-opacity-increase-skip", GIMP_STOCK_TRANSPARENCY,
     "10% More Opaque", NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_NEXT,
-    NULL }
+    GIMP_HELP_LAYER_OPACITY }
 };
 
-static GimpEnumActionEntry layers_paint_mode_actions[] =
+static GimpEnumActionEntry layers_mode_actions[] =
 {
-  { "layers-paint-mode-first", GIMP_STOCK_TOOL_PENCIL,
-    "First Paint Mode", NULL, NULL,
+  { "layers-mode-first", GIMP_STOCK_TOOL_PENCIL,
+    "First Layer Mode", NULL, NULL,
     GIMP_ACTION_SELECT_FIRST,
-    NULL },
-  { "layers-paint-mode-last", GIMP_STOCK_TOOL_PENCIL,
-    "Last Paint Mode", NULL, NULL,
+    GIMP_HELP_LAYER_MODE },
+  { "layers-mode-last", GIMP_STOCK_TOOL_PENCIL,
+    "Last Layer Mode", NULL, NULL,
     GIMP_ACTION_SELECT_LAST,
-    NULL },
-  { "layers-paint-mode-previous", GIMP_STOCK_TOOL_PENCIL,
-    "Previous Paint Mode", NULL, NULL,
+    GIMP_HELP_LAYER_MODE },
+  { "layers-mode-previous", GIMP_STOCK_TOOL_PENCIL,
+    "Previous Layer Mode", NULL, NULL,
     GIMP_ACTION_SELECT_PREVIOUS,
-    NULL },
-  { "layers-paint-mode-next", GIMP_STOCK_TOOL_PENCIL,
-    "Next Paint Mode", NULL, NULL,
+    GIMP_HELP_LAYER_MODE },
+  { "layers-mode-next", GIMP_STOCK_TOOL_PENCIL,
+    "Next Layer Mode", NULL, NULL,
     GIMP_ACTION_SELECT_NEXT,
-    NULL }
+    GIMP_HELP_LAYER_MODE }
 };
 
 
@@ -356,9 +359,9 @@ layers_actions_setup (GimpActionGroup *group)
                                       G_CALLBACK (layers_opacity_cmd_callback));
 
   gimp_action_group_add_enum_actions (group,
-                                      layers_paint_mode_actions,
-                                      G_N_ELEMENTS (layers_paint_mode_actions),
-                                      G_CALLBACK (layers_paint_mode_cmd_callback));
+                                      layers_mode_actions,
+                                      G_N_ELEMENTS (layers_mode_actions),
+                                      G_CALLBACK (layers_mode_cmd_callback));
 }
 
 void

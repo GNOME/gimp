@@ -84,7 +84,7 @@ void   layers_alpha_to_selection_cmd_callback (GtkAction   *action,
 void   layers_opacity_cmd_callback            (GtkAction   *action,
                                                gint         value,
                                                gpointer     data);
-void   layers_paint_mode_cmd_callback         (GtkAction   *action,
+void   layers_mode_cmd_callback               (GtkAction   *action,
                                                gint         value,
                                                gpointer     data);
 
