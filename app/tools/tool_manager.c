@@ -150,9 +150,7 @@ tool_manager_select_tool (Gimp     *gimp,
 
   if (tool_manager->active_tool)
     {
-      GimpDisplay *gdisp;
-
-      gdisp = tool_manager->active_tool->gdisp;
+      GimpDisplay *gdisp = tool_manager->active_tool->gdisp;
 
       if (! gdisp && GIMP_IS_DRAW_TOOL (tool_manager->active_tool))
         gdisp = GIMP_DRAW_TOOL (tool_manager->active_tool)->gdisp;
@@ -454,13 +452,11 @@ tool_manager_tool_changed (GimpContext  *user_context,
 			   GimpToolInfo *tool_info,
 			   gpointer      data)
 {
-  GimpToolManager *tool_manager;
-  GimpTool        *new_tool = NULL;
+  GimpToolManager *tool_manager = data;
+  GimpTool        *new_tool     = NULL;
 
   if (! tool_info)
     return;
-
-  tool_manager = (GimpToolManager *) data;
 
   /* FIXME: gimp_busy HACK */
   if (user_context->gimp->busy)
@@ -507,9 +503,7 @@ tool_manager_tool_changed (GimpContext  *user_context,
       tool_manager->active_tool->tool_info &&
       tool_manager->active_tool->tool_info->context_props)
     {
-      GimpToolInfo *old_tool_info;
-
-      old_tool_info = tool_manager->active_tool->tool_info;
+      GimpToolInfo *old_tool_info = tool_manager->active_tool->tool_info;
 
       gimp_context_set_parent (GIMP_CONTEXT (old_tool_info->tool_options), NULL);
     }

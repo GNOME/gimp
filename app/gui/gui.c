@@ -35,6 +35,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpenvirontable.h"
 #include "core/gimpimage.h"
+#include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
@@ -272,6 +273,9 @@ gui_initialize_after_callback (Gimp               *gimp,
     }
 
   gimp_tools_init (gimp);
+
+  gimp_context_set_tool (gimp_get_user_context (gimp),
+                         gimp_tool_info_get_standard (gimp));
 }
 
 static void

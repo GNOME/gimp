@@ -1,3 +1,10 @@
+2004-06-28  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/gui.c (gui_initialize_after_callback): select the
+	standard tool.
+
+	* app/tools/tool_manager.c: cosmetics.
+
 2004-06-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimplevelstool.c: reverted fix for bug #141930. These
