@@ -30,8 +30,10 @@ zip -r $DEVZIP -@ <<EOF
 bin/gimptool.exe
 lib/libgimp.dll.a
 lib/gimp.lib
+lib/gimp.def
 lib/libgimpui.dll.a
 lib/gimpui.lib
+lib/gimpui.def
 lib/libgck.dll.a
 lib/gck.lib
 include/libgimp

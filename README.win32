@@ -1,5 +1,5 @@
 For pre-built binary packages, see
-http://www.gimp.org/win32/new-downloads.html .
+http://www.gimp.org/win32/downloads.html .
 
 Building GIMP on Win32
 ======================
@@ -13,9 +13,7 @@ correctly in all directories, for instance in the po* directories it
 is much easier to use the makefile.mingw files.
 
 You most probably will want to use a bleeding efge libtool, and thus
-have to remove the old libtool cruft from acinclude.m4, remove the old
-ltmain.sh, config.sub and config.guess files, and rerun libtoolize. Or
-something like that.
+want to rerun libtoolize --force.
 
 2) Use the Microsoft compiler, cl and Make, nmake. Say nmake -f
 makefile.msc in various directories. These makefiles are
@@ -24,20 +22,5 @@ import libraries as the autoconfiscated libtool build does.
 
 3) Use gcc, and the makefile.mingw makefiles. These are probably not
 up-to-date, as I have switched to autoconfiscation.
-
-Libintl
-=======
-
-GIMP wants to be built with the GNU "intl" library for
-internationalisation (i18n). Get the version ported to Win32 (not a
-very big deal) from the web site mentioned above. The "intl" library
-is built as a DLL called libintl-1.dll. If you don't want any i18n
-stuff, undefine ENABLE_NLS, HAVE_GETTEXT and HAVE_LIBINTL in the
-config.h.win32 file, and remove references to the intl library from
-the makefiles.
-
-Note that while the GNU gettext package is under the GPL, the "intl"
-part of it is under the LGPL (like GTK or GLib), as of
-gettext-0.10.40.
 
 --Tor Lillqvist <tml@iki.fi>
