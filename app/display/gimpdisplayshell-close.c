@@ -46,15 +46,16 @@
 
 /*  local function prototypes  */
 
-static void    gimp_display_shell_close_dialog       (GimpDisplayShell *shell,
-                                                      GimpImage        *gimage);
-static void    gimp_display_shell_close_name_changed (GimpImage        *image,
-                                                      GtkWidget        *dialog);
-static void    gimp_display_shell_close_response     (GtkWidget        *widget,
-                                                      gboolean          close,
-                                                      GimpDisplayShell *shell);
+static void      gimp_display_shell_close_dialog       (GimpDisplayShell *shell,
+                                                        GimpImage        *gimage);
+static void      gimp_display_shell_close_name_changed (GimpImage        *image,
+                                                        GtkWidget        *box);
+static gboolean  gimp_display_shell_close_time_changed (GtkWidget        *box);
+static void      gimp_display_shell_close_response     (GtkWidget        *widget,
+                                                        gboolean          close,
+                                                        GimpDisplayShell *shell);
 
-static gchar * gimp_time_since                       (guint             then);
+static gchar   * gimp_time_since                       (guint             then);
 
 
 /*  public functions  */
@@ -104,9 +105,10 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
 {
   GtkWidget *dialog;
   GtkWidget *box;
+  GClosure  *closure;
+  GSource   *source;
   gchar     *name;
   gchar     *title;
-  gchar     *period = NULL;
 
   if (shell->close_dialog)
     {
@@ -122,7 +124,8 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
   shell->close_dialog =
     dialog = gimp_dialog_new (title,
                               "gimp-display-shell-close",
-                              GTK_WIDGET (shell), 0,
+                              GTK_WIDGET (shell),
+                              GTK_DIALOG_DESTROY_WITH_PARENT,
                               gimp_standard_help_func, NULL,
 
                               _("Close _without Saving"), GTK_RESPONSE_CLOSE,
@@ -148,47 +151,71 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), box);
   gtk_widget_show (box);
 
-  g_object_set_data (G_OBJECT (dialog), "message-box", box);
-
   g_signal_connect_object (gimage, "name_changed",
                            G_CALLBACK (gimp_display_shell_close_name_changed),
-                           dialog, 0);
+                           box, 0);
 
-  gimp_display_shell_close_name_changed (gimage, dialog);
+  gimp_display_shell_close_name_changed (gimage, box);
 
-  if (gimage->dirty_time)
-    period = gimp_time_since (gimage->dirty_time);
-  else
-    g_warning ("image->dirty_time is zero, how did this happen?");
+  closure =
+    g_cclosure_new_object (G_CALLBACK (gimp_display_shell_close_time_changed),
+                           G_OBJECT (box));
 
-  gimp_message_box_set_text (GIMP_MESSAGE_BOX (box),
-                             _("If you don't save the image, "
-                               "changes from the last %s will be lost."),
-                             period ? period : "???");
+  source = g_timeout_source_new (1000);
+  g_source_set_closure (source, closure);
+  g_source_attach (source, NULL);
 
-  g_free (period);
+  /*  The dialog is destroyed with the shell, so it should be safe
+   *  to keep a gimage pointer for the lifetime of the dialog.
+   */
+  g_object_set_data (G_OBJECT (box), "gimp-image", gimage);
+
+  gimp_display_shell_close_time_changed (box);
 
   gtk_widget_show (dialog);
 }
 
 static void
 gimp_display_shell_close_name_changed (GimpImage *image,
-                                       GtkWidget *dialog)
+                                       GtkWidget *box)
 {
-  GtkWidget *box = g_object_get_data (G_OBJECT (dialog), "message-box");
-  gchar     *name;
-  gchar     *title;
+  gchar *name;
+  gchar *title;
 
   name = file_utils_uri_to_utf8_basename (gimp_image_get_uri (image));
 
   title = g_strdup_printf (_("Close %s"), name);
-  gtk_window_set_title (GTK_WINDOW (dialog), title);
+  gtk_window_set_title (GTK_WINDOW (gtk_widget_get_toplevel (box)), title);
   g_free (title);
 
   gimp_message_box_set_primary_text (GIMP_MESSAGE_BOX (box),
                                      _("Save the changes to image '%s' "
                                        "before closing?"), name);
   g_free (name);
+}
+
+
+static gboolean
+gimp_display_shell_close_time_changed (GtkWidget *box)
+{
+  GimpImage *image  = g_object_get_data (G_OBJECT (box), "gimp-image");
+
+  if (image->dirty_time)
+    {
+      gchar *period = gimp_time_since (image->dirty_time);
+
+      gimp_message_box_set_text (GIMP_MESSAGE_BOX (box),
+                                 _("If you don't save the image, "
+                                   "changes from the last %s will be lost."),
+                                 period);
+      g_free (period);
+    }
+  else
+    {
+      gimp_message_box_set_text (GIMP_MESSAGE_BOX (box), NULL);
+    }
+
+  return TRUE;
 }
 
 static void

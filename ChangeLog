@@ -1,5 +1,10 @@
 2004-10-13  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-close.c
+	(gimp_display_shell_close_dialog): keep the time uptodate.
+
+2004-10-13  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimagefile.c (gimp_imagefile_create_thumbnail): ref
 	the imagefile while creating the thumbnail.
 
