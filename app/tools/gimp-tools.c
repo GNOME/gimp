@@ -461,6 +461,6 @@ gimp_tools_register (GType                   tool_type,
   gimp_container_add (gimp->tool_info_list, GIMP_OBJECT (tool_info));
   g_object_unref (tool_info);
 
-  if (tool_type == GIMP_TYPE_RECT_SELECT_TOOL)
+  if (tool_type == GIMP_TYPE_PAINTBRUSH_TOOL)
     gimp_tool_info_set_standard (gimp, tool_info);
 }

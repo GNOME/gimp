@@ -1,3 +1,8 @@
+2004-08-26  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimp-tools.c (gimp_tools_register): set the paintbrush
+	as the default tool as suggested in bug #151091.
+
 2004-08-26  DindinX  <david@dindinx.org>
 
 	* app/widgets/gimppreview-popup.c
