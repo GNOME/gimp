@@ -337,12 +337,9 @@ static MenuItem curve_type_items[] =
 };
 
 void
-curves_initialize (void *gdisp_ptr)
+curves_initialize (GDisplay *gdisp)
 {
-  GDisplay *gdisp;
   int i, j;
-
-  gdisp = (GDisplay *) gdisp_ptr;
 
   if (drawable_indexed (gimage_active_drawable (gdisp->gimage)))
     {
@@ -376,7 +373,7 @@ curves_initialize (void *gdisp_ptr)
 
   curves_dialog->drawable = gimage_active_drawable (gdisp->gimage);
   curves_dialog->color = drawable_color ( (curves_dialog->drawable));
-  curves_dialog->image_map = image_map_create (gdisp_ptr, curves_dialog->drawable);
+  curves_dialog->image_map = image_map_create (gdisp, curves_dialog->drawable);
 
   /* check for alpha channel */
   if (drawable_has_alpha ( (curves_dialog->drawable)))

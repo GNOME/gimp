@@ -65,144 +65,6 @@ static GdkPixmap *create_pixmap    (GdkWindow  *parent,
 				    int         width,
 				    int         height);
 
-typedef struct _ToolButton ToolButton;
-
-struct _ToolButton
-{
-  char **icon_data;
-  char  *tool_desc;
-  char  *private_tip;
-  gpointer callback_data;
-};
-
-static ToolButton tool_data[] =
-{
-  { (char **) rect_bits,
-    "Select rectangular regions",
-    "ContextHelp/rect-select",
-    (gpointer) RECT_SELECT },
-  { (char **) circ_bits,
-    "Select elliptical regions",
-    "ContextHelp/ellipse-select",
-    (gpointer) ELLIPSE_SELECT },
-  { (char **) free_bits,
-    "Select hand-drawn regions",
-    "ContextHelp/free-select",
-    (gpointer) FREE_SELECT },
-  { (char **) fuzzy_bits,
-    "Select contiguous regions",
-    "ContextHelp/fuzzy-select",
-    (gpointer) FUZZY_SELECT },
-  { (char **) bezier_bits,
-    "Select regions using Bezier curves",
-    "ContextHelp/bezier-select",
-    (gpointer) BEZIER_SELECT },
-  { (char **) iscissors_bits,
-    "Select shapes from image",
-    "ContextHelp/iscissors",
-    (gpointer) ISCISSORS },
-  { (char **) move_bits,
-    "Move layers & selections",
-    "ContextHelp/move",
-    (gpointer) MOVE },
-  { (char **) magnify_bits,
-    "Zoom in & out",
-    "ContextHelp/magnify",
-    (gpointer) MAGNIFY },
-  { (char **) crop_bits,
-    "Crop the image",
-    "ContextHelp/crop",
-    (gpointer) CROP },
-  { (char **) scale_bits,
-    "Transform the layer or selection",
-    "ContextHelp/rotate",
-    (gpointer) ROTATE },
-  { (char **) horizflip_bits,
-    "Flip the layer or selection",
-    "ContextHelp/flip",
-    (gpointer) FLIP_HORZ },
-  { (char **) text_bits,
-    "Add text to the image",
-    "ContextHelp/text",
-    (gpointer) TEXT },
-  { (char **) colorpicker_bits,
-    "Pick colors from the image",
-    "ContextHelp/color-picker",
-    (gpointer) COLOR_PICKER },
-  { (char **) fill_bits,
-    "Fill with a color or pattern",
-    "ContextHelp/bucket-fill",
-    (gpointer) BUCKET_FILL },
-  { (char **) gradient_bits,
-    "Fill with a color gradient",
-    "ContextHelp/gradient",
-    (gpointer) BLEND },
-  { (char **) pencil_bits,
-    "Draw sharp pencil strokes",
-    "ContextHelp/pencil",
-    (gpointer) PENCIL },
-  { (char **) paint_bits,
-    "Paint fuzzy brush strokes",
-    "ContextHelp/paintbrush",
-    (gpointer) PAINTBRUSH },
-  { (char **) erase_bits,
-    "Erase to background or transparency",
-    "ContextHelp/eraser",
-    (gpointer) ERASER },
-  { (char **) airbrush_bits,
-    "Airbrush with variable pressure",
-    "ContextHelp/airbrush",
-    (gpointer) AIRBRUSH },
-  { (char **) clone_bits,
-    "Paint using patterns or image regions",
-    "ContextHelp/clone",
-    (gpointer) CLONE },
-  { (char **) blur_bits,
-    "Blur or sharpen",
-    "ContextHelp/convolve",
-    (gpointer) CONVOLVE },
-  { (char **) ink_bits,
-    "Draw in ink",
-    "ContextHelp/ink",
-    (gpointer) INK },
-  { NULL,
-    NULL,
-    NULL,
-    (gpointer) BY_COLOR_SELECT },
-  { NULL,
-    NULL,
-    NULL,
-    (gpointer) COLOR_BALANCE },
-  { NULL,
-    NULL,
-    NULL,
-    (gpointer) BRIGHTNESS_CONTRAST },
-  { NULL,
-    NULL,
-    NULL,
-    (gpointer) HUE_SATURATION },
-  { NULL,
-    NULL,
-    NULL,
-    (gpointer) POSTERIZE },
-  { NULL,
-    NULL,
-    NULL,
-    (gpointer) THRESHOLD },
-  { NULL,
-    NULL,
-    NULL,
-    (gpointer) CURVES },
-  { NULL,
-    NULL,
-    NULL,
-    (gpointer) LEVELS },
-  { NULL,
-    NULL,
-    NULL,
-    (gpointer) HISTOGRAM }
-};
-
 static int pixmap_colors[8][3] =
 {
   { 0x00, 0x00, 0x00 }, /* a - 0   */
@@ -215,7 +77,8 @@ static int pixmap_colors[8][3] =
   { 0xFF, 0xFF, 0xFF }, /* h - 255 */
 };
 
-#define NUM_TOOLS (sizeof (tool_data) / sizeof (ToolButton))
+extern int num_tools;
+
 #define COLUMNS   3
 #define ROWS      8
 #define MARGIN    2
@@ -223,7 +86,6 @@ static int pixmap_colors[8][3] =
 /*  Widgets for each tool button--these are used from command.c to activate on
  *  tool selection via both menus and keyboard accelerators.
  */
-GtkWidget *tool_widgets[NUM_TOOLS];
 GtkWidget *tool_label;
 GtkTooltips *tool_tips;
 
@@ -379,18 +241,24 @@ create_tool_pixmap (GtkWidget *parent, ToolType type)
 {
   int i;
 
+  /*
+   * FIXME this really should be dones without using the #defined tool names
+   * but it should work this way for now
+   */
   if (type == SCALE || type == SHEAR || type == PERSPECTIVE)
     type = ROTATE;
   else if (type == FLIP_VERT)
     type = FLIP_HORZ;
 
-  for (i = FIRST_TOOLBOX_TOOL; i <= LAST_TOOLBOX_TOOL; i++)
-    {
-      if ((ToolType)tool_data[i].callback_data == type)
+      if (tool_info[(int) type].icon_data)
 	  return create_pixmap (parent->window, NULL,
-				tool_data[i].icon_data, 22, 22);
-    }
-
+				tool_info[(int) type].icon_data,
+				22, 22);
+      else
+	  return create_pixmap (parent->window, NULL,
+				dialog_bits,
+				22, 22);
+	
   g_return_val_if_fail (FALSE, NULL);
 
   return NULL;	/* not reached */
@@ -404,7 +272,7 @@ create_tools (GtkWidget *parent)
   GtkWidget *alignment;
   GtkWidget *pixmap;
   GSList *group;
-  gint i;
+  gint i, j;
 
   /*create_logo (parent);*/
   table = gtk_table_new (ROWS, COLUMNS, TRUE);
@@ -413,54 +281,56 @@ create_tools (GtkWidget *parent)
 
   group = NULL;
 
-  for (i = 0; i < 22; i++)
+  i = 0;
+  for (j = 0; j < num_tools; j++)
     {
-      tool_widgets[i] = button = gtk_radio_button_new (group);
-      gtk_container_border_width (GTK_CONTAINER (button), 0);
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+      if (tool_info[j].icon_data)
+	{
+	  tool_info[j].tool_widget = button = gtk_radio_button_new (group);
+	  gtk_container_border_width (GTK_CONTAINER (button), 0);
+	  group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+	  
+	  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
+	  
+	  gtk_table_attach (GTK_TABLE (table), button,
+			    (i % 3), (i % 3) + 1,
+			    (i / 3), (i / 3) + 1,
+			    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
+			    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
+			    0, 0);
 
-      gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
+	  alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+	  gtk_container_border_width (GTK_CONTAINER (alignment), 0);
+	  gtk_container_add (GTK_CONTAINER (button), alignment);
+	  
+	  pixmap = create_pixmap_widget (table->window, tool_info[j].icon_data, 22, 22);
+	  gtk_container_add (GTK_CONTAINER (alignment), pixmap);
+	  
+	  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+			      (GtkSignalFunc) tools_select_update,
+			      (gpointer) tool_info[j].tool_id);
+	  
+	  gtk_signal_connect (GTK_OBJECT (button), "button_press_event",
+			      (GtkSignalFunc) tools_button_press,
+			      (gpointer) tool_info[j].tool_id);
+	  
+	  gtk_tooltips_set_tip (tool_tips, button, tool_info[j].tool_desc, tool_info[i].private_tip);
+	  
+	  gtk_widget_show (pixmap);
+	  gtk_widget_show (alignment);
+	  gtk_widget_show (button);
+	  i++;
+	}
+      else 
+	{
+	  tool_info[j].tool_widget = button = gtk_radio_button_new (group);
+	  group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
 
-      gtk_table_attach (GTK_TABLE (table), button,
-			(i % 3), (i % 3) + 1,
-			(i / 3), (i / 3) + 1,
-			GTK_EXPAND | GTK_SHRINK | GTK_FILL,
-			GTK_EXPAND | GTK_SHRINK | GTK_FILL,
-			0, 0);
-
-      alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-      gtk_container_border_width (GTK_CONTAINER (alignment), 0);
-      gtk_container_add (GTK_CONTAINER (button), alignment);
-
-      pixmap = create_pixmap_widget (table->window, tool_data[i].icon_data, 22, 22);
-      gtk_container_add (GTK_CONTAINER (alignment), pixmap);
-
-      gtk_signal_connect (GTK_OBJECT (button), "toggled",
-			  (GtkSignalFunc) tools_select_update,
-			  tool_data[i].callback_data);
-
-      gtk_signal_connect (GTK_OBJECT (button), "button_press_event",
-			  (GtkSignalFunc) tools_button_press,
-			  tool_data[i].callback_data);
-
-      gtk_tooltips_set_tip (tool_tips, button, tool_data[i].tool_desc, tool_data[i].private_tip);
-
-      gtk_widget_show (pixmap);
-      gtk_widget_show (alignment);
-      gtk_widget_show (button);
-    }
-
-  /*  The non-visible tool buttons  */
-  for (i = 22; i < NUM_TOOLS; i++)
-    {
-      tool_widgets[i] = button = gtk_radio_button_new (group);
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
-
-      gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			  (GtkSignalFunc) tools_select_update,
-			  tool_data[i].callback_data);
-    }
-
+	  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+			      (GtkSignalFunc) tools_select_update,
+			      (gpointer) tool_info[j].tool_id);
+	}
+    }      
   gtk_widget_show (table);
 }
 
@@ -654,9 +524,10 @@ toolbox_free ()
 
   gdk_window_get_position (toolbox_shell->window, &toolbox_x, &toolbox_y);  
   gtk_widget_destroy (toolbox_shell);
-  for (i = 22; i < NUM_TOOLS; i++)
+  for (i = 0; i < num_tools; i++)
     {
-      gtk_object_sink    (GTK_OBJECT (tool_widgets[i]));
+      if (!tool_info[i].icon_data)
+	gtk_object_sink    (GTK_OBJECT (tool_info[i].tool_widget));
     }
   gtk_object_destroy (GTK_OBJECT (tool_tips));
   gtk_object_unref   (GTK_OBJECT (tool_tips));

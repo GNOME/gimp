@@ -25,7 +25,7 @@
 Tool *        tools_new_levels      (void);
 void          tools_free_levels     (Tool *);
 
-void          levels_initialize     (void *);
+void          levels_initialize     (GDisplay *);
 void          levels_free           (void);
 
 /*  Procedure definition and marshalling function  */

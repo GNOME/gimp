@@ -355,12 +355,9 @@ tools_free_hue_saturation (Tool *tool)
 }
 
 void
-hue_saturation_initialize (void *gdisp_ptr)
+hue_saturation_initialize (GDisplay *gdisp)
 {
-  GDisplay *gdisp;
   int i;
-
-  gdisp = (GDisplay *) gdisp_ptr;
 
   if (! drawable_color (gimage_active_drawable (gdisp->gimage)))
     {
@@ -383,7 +380,7 @@ hue_saturation_initialize (void *gdisp_ptr)
     }
 
   hue_saturation_dialog->drawable = gimage_active_drawable (gdisp->gimage);
-  hue_saturation_dialog->image_map = image_map_create (gdisp_ptr, hue_saturation_dialog->drawable);
+  hue_saturation_dialog->image_map = image_map_create (gdisp, hue_saturation_dialog->drawable);
   hue_saturation_update (hue_saturation_dialog, ALL);
 }
 

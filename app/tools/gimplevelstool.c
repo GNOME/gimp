@@ -416,12 +416,9 @@ static MenuItem color_option_items[] =
 };
 
 void
-levels_initialize (void *gdisp_ptr)
+levels_initialize (GDisplay *gdisp)
 {
-  GDisplay *gdisp;
   int i;
-
-  gdisp = (GDisplay *) gdisp_ptr;
 
   if (drawable_indexed (gimage_active_drawable (gdisp->gimage)))
     {
@@ -449,7 +446,7 @@ levels_initialize (void *gdisp_ptr)
 
   levels_dialog->drawable = gimage_active_drawable (gdisp->gimage);
   levels_dialog->color = drawable_color (levels_dialog->drawable);
-  levels_dialog->image_map = image_map_create (gdisp_ptr, levels_dialog->drawable);
+  levels_dialog->image_map = image_map_create (gdisp, levels_dialog->drawable);
 
   /* check for alpha channel */
   if (drawable_has_alpha (levels_dialog->drawable))

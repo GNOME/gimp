@@ -25,7 +25,7 @@
 Tool *        tools_new_color_balance      (void);
 void          tools_free_color_balance     (Tool *);
 
-void          color_balance_initialize     (void *);
+void          color_balance_initialize     (GDisplay *);
 
 /*  Procedure definition and marshalling function  */
 extern ProcRecord color_balance_proc;

@@ -365,7 +365,7 @@ select_device (guint32 new_device)
     {
       if (device_info->brush)
 	select_brush (device_info->brush);
-      gtk_widget_activate (tool_widgets[tool_info[(int) device_info->tool].toolbar_position]);
+      gtk_widget_activate (tool_info[(int) device_info->tool].tool_widget);
       palette_set_foreground (device_info->foreground[0], 
 			      device_info->foreground[1], 
 			      device_info->foreground[2]);
@@ -799,6 +799,7 @@ device_status_update (guint32 deviceid)
 			  create_tool_pixmap (deviceD->table, 
 					      device_info->tool),
 			  NULL);
+	  gtk_widget_draw (deviceD->tools[i], NULL);
 	  gtk_widget_show (deviceD->tools[i]);
 	  
 	  for (j=0;j<20*3;j+=3)
@@ -822,3 +823,7 @@ device_status_update (guint32 deviceid)
 	}
     }
 }
+
+
+
+

@@ -25,7 +25,7 @@
 Tool *        tools_new_brightness_contrast      (void);
 void          tools_free_brightness_contrast     (Tool *);
 
-void          brightness_contrast_initialize     (void *);
+void          brightness_contrast_initialize     (GDisplay *);
 
 /*  Procedure definition and marshalling function  */
 extern ProcRecord brightness_contrast_proc;

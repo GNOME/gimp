@@ -505,12 +505,8 @@ tools_free_by_color_select (Tool *tool)
 }
 
 void
-by_color_select_initialize (void *gimage_ptr)
+by_color_select_initialize_by_image (GImage *gimage)
 {
-  GImage *gimage;
-
-  gimage = (GImage *) gimage_ptr;
-
   /*  update the preview window  */
   if (by_color_dialog)
     {
@@ -521,6 +517,12 @@ by_color_select_initialize (void *gimage_ptr)
     }
 }
 
+void
+by_color_select_initialize (GDisplay *gdisp)
+{
+  /* wrap this call so the tool_info->init_func works  */
+  by_color_select_initialize_by_image (gdisp->gimage);
+}
 
 /****************************/
 /*  Select by Color dialog  */

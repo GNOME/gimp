@@ -243,12 +243,8 @@ tools_free_posterize (Tool *tool)
 }
 
 void
-posterize_initialize (void *gdisp_ptr)
+posterize_initialize (GDisplay *gdisp)
 {
-  GDisplay *gdisp;
-
-  gdisp = (GDisplay *) gdisp_ptr;
-
   if (drawable_indexed (gimage_active_drawable (gdisp->gimage)))
     {
       g_message ("Posterize does not operate on indexed drawables.");
@@ -262,7 +258,7 @@ posterize_initialize (void *gdisp_ptr)
     if (!GTK_WIDGET_VISIBLE (posterize_dialog->shell))
       gtk_widget_show (posterize_dialog->shell);
   posterize_dialog->drawable = gimage_active_drawable (gdisp->gimage);
-  posterize_dialog->image_map = image_map_create (gdisp_ptr, posterize_dialog->drawable);
+  posterize_dialog->image_map = image_map_create (gdisp, posterize_dialog->drawable);
   if (posterize_dialog->preview)
     posterize_preview (posterize_dialog);
 }

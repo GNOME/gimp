@@ -760,7 +760,7 @@ undo_pop_mask (GImage *gimage,
    *  for this gimage's mask, send it an update notice
    */
   if (gimage->by_color_select)
-    by_color_select_initialize ((void *) gimage);
+    by_color_select_initialize_by_image (gimage);
 
   return TRUE;
 }

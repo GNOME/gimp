@@ -94,8 +94,9 @@ static GtkItemFactoryEntry image_entries[] =
   { "/Select/Grow", NULL, select_grow_cmd_callback, 0 },
   { "/Select/Shrink", NULL, select_shrink_cmd_callback, 0 },
   { "/Select/Save To Channel", NULL, select_save_cmd_callback, 0 },
-  { "/Select/By Color...", NULL, select_by_color_cmd_callback, 0 },
-  
+  /*
+  { "/Select/By Color...", NULL, tools_select_cmd_callback, BY_COLOR_SELECT }, 
+  */
   { "/View/Zoom In", "equal", view_zoomin_cmd_callback, 0 },
   { "/View/Zoom Out", "minus", view_zoomout_cmd_callback, 0 },
   { "/View/Zoom/16:1", NULL, view_zoom_16_1_callback, 0 },
@@ -117,14 +118,16 @@ static GtkItemFactoryEntry image_entries[] =
   
   { "/Image/Colors/Equalize", NULL, image_equalize_cmd_callback, 0 },
   { "/Image/Colors/Invert", NULL, image_invert_cmd_callback, 0 },
-  { "/Image/Colors/Posterize", NULL, image_posterize_cmd_callback, 0 },
-  { "/Image/Colors/Threshold", NULL, image_threshold_cmd_callback, 0 },
+  /*
+  { "/Image/Colors/Posterize", NULL, tools_select_cmd_callback, POSTERIZE },
+  { "/Image/Colors/Threshold", NULL, tools_select_cmd_callback, THRESHOLD },
   { "/Image/Colors/---", NULL, NULL, 0, "<Separator>" },
-  { "/Image/Colors/Color Balance", NULL, image_color_balance_cmd_callback, 0 },
-  { "/Image/Colors/Brightness-Contrast", NULL, image_brightness_contrast_cmd_callback, 0 },
-  { "/Image/Colors/Hue-Saturation", NULL, image_hue_saturation_cmd_callback, 0 },
-  { "/Image/Colors/Curves", NULL, image_curves_cmd_callback, 0 },
-  { "/Image/Colors/Levels", NULL, image_levels_cmd_callback, 0 },
+  { "/Image/Colors/Color Balance", NULL, tools_select_cmd_callback, COLOR_BALANCE },
+  { "/Image/Colors/Brightness-Contrast", NULL, tools_select_cmd_callback, BRIGHTNESS_CONTRAST },
+  { "/Image/Colors/Hue-Saturation", NULL, tools_select_cmd_callback, 0 },
+  { "/Image/Colors/Curves", NULL, tools_select_cmd_callback, CURVES },
+  { "/Image/Colors/Levels", NULL, tools_select_cmd_callback, LEVELS },
+  */
   { "/Image/Colors/---", NULL, NULL, 0, "<Separator>" },
   { "/Image/Colors/Desaturate", NULL, image_desaturate_cmd_callback, 0 },
   { "/Image/Channel Ops/Duplicate", "<control>D", channel_ops_duplicate_cmd_callback, 0 },
@@ -139,7 +142,7 @@ static GtkItemFactoryEntry image_entries[] =
   { "/Image/Resize", NULL, image_resize_cmd_callback, 0 },
   { "/Image/Scale", NULL, image_scale_cmd_callback, 0 },
   { "/Image/---", NULL, NULL, 0, "<Separator>" },
-  { "/Image/Histogram", NULL, image_histogram_cmd_callback, 0 },
+  /*  { "/Image/Histogram", NULL, tools_select_cmd_callback, HISTOGRAM}, */
   { "/Image/---", NULL, NULL, 0, "<Separator>" },
   
   { "/Layers/Layers & Channels...", "<control>L", dialogs_lc_cmd_callback, 0 },
@@ -152,7 +155,7 @@ static GtkItemFactoryEntry image_entries[] =
   { "/Layers/Mask To Selection", NULL, layers_mask_select_cmd_callback, 0 },
   { "/Layers/Add Alpha Channel", NULL, layers_add_alpha_channel_cmd_callback, 0 },
   
-  { "/Tools/Rect Select", "R", tools_select_cmd_callback, RECT_SELECT },
+  /*  { "/Tools/Rect Select", "R", tools_select_cmd_callback, RECT_SELECT },
   { "/Tools/Ellipse Select", "E", tools_select_cmd_callback, ELLIPSE_SELECT },
   { "/Tools/Free Select", "F", tools_select_cmd_callback, FREE_SELECT },
   { "/Tools/Fuzzy Select", "Z", tools_select_cmd_callback, FUZZY_SELECT },
@@ -175,10 +178,9 @@ static GtkItemFactoryEntry image_entries[] =
   { "/Tools/Convolve", "V", tools_select_cmd_callback, CONVOLVE },
   { "/Tools/Ink", "K", tools_select_cmd_callback, INK },
   { "/Tools/Default Colors", "D", tools_default_colors_cmd_callback, 0 },
-  { "/Tools/Swap Colors", "X", tools_swap_colors_cmd_callback, 0 },  
-  { "/Tools/---", NULL, NULL, 0, "<Separator>" },
+  { "/Tools/Swap Colors", "X", tools_swap_colors_cmd_callback, 0 }, */ 
   { "/Tools/Toolbox", NULL, toolbox_raise_callback, 0 },
-  
+  { "/Tools/---", NULL, NULL, 0, "<Separator>" },  
   { "/Filters/", NULL, NULL, 0 },
   { "/Filters/Repeat last", "<alt>F", filters_repeat_cmd_callback, 0x0 },
   { "/Filters/Re-show last", "<alt><shift>F", filters_repeat_cmd_callback, 0x1 },
@@ -217,6 +219,7 @@ static GtkItemFactory *save_factory = NULL;
 
 static int initialize = TRUE;
 
+extern int num_tools;
 
 void
 menus_get_toolbox_menubar (GtkWidget           **menubar,
@@ -278,6 +281,28 @@ menus_create (GtkMenuEntry *entries,
     menus_init ();
 
   gtk_item_factory_create_menu_entries (nmenu_entries, entries);
+}
+
+void
+menus_tools_create (ToolInfo *tool_info)
+{
+  GtkItemFactoryEntry entry;
+  
+  /* entry.path = g_strconcat ("<Image>", tool_info->menu_path, NULL);*/
+  /* entry.callback_data = tool_info; */
+  entry.path = tool_info->menu_path;
+  entry.accelerator = tool_info->menu_accel;
+  entry.callback = tools_select_cmd_callback;
+  entry.callback_action = tool_info->tool_id;
+  entry.item_type = NULL;
+ 
+  fflush(stderr);
+  /*menus_create (&entry, 1);*/
+  gtk_item_factory_create_item (image_factory,
+				&entry,
+				(gpointer)tool_info,
+				2);
+
 }
 
 void
@@ -359,6 +384,8 @@ menus_quit ()
 static void
 menus_init ()
 {
+  int i;
+
   if (initialize)
     {
       gchar *filename;
@@ -385,9 +412,19 @@ menus_init ()
 					n_save_entries,
 					save_entries,
 					NULL, 2);
-
+      for (i = 0; i < num_tools; i++)
+	{
+	  /* FIXME this need to use access functions to check a flag */
+	  if (tool_info[i].menu_path)
+	    menus_tools_create (tool_info+i);
+	}
       filename = g_strconcat (gimp_directory (), "/menurc", NULL);
       gtk_item_factory_parse_rc (filename);
       g_free (filename);
     }
 }
+
+
+
+
+

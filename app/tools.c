@@ -55,6 +55,7 @@
 #include "threshold.h"
 #include "tools.h"
 #include "transform_tool.h"
+#include "pixmaps.h"
 
 /* Global Data */
 
@@ -71,45 +72,534 @@ static int global_tool_ID = 0;
 
 ToolInfo tool_info[] =
 {
-  { NULL, "Rect Select", 0, tools_new_rect_select, tools_free_rect_select },
-  { NULL, "Ellipse Select", 1, tools_new_ellipse_select, tools_free_ellipse_select },
-  { NULL, "Free Select", 2, tools_new_free_select, tools_free_free_select },
-  { NULL, "Fuzzy Select", 3, tools_new_fuzzy_select, tools_free_fuzzy_select },
-  { NULL, "Bezier Select", 4, tools_new_bezier_select, tools_free_bezier_select },
-  { NULL, "Intelligent Scissors", 5, tools_new_iscissors, tools_free_iscissors },
-  { NULL, "Move", 6, tools_new_move_tool, tools_free_move_tool },
-  { NULL, "Magnify", 7, tools_new_magnify, tools_free_magnify },
-  { NULL, "Crop", 8, tools_new_crop, tools_free_crop },
-  { NULL, "Transform", 9, tools_new_transform_tool, tools_free_transform_tool}, /* rotate */
-  { NULL, "Transform", 9, tools_new_transform_tool, tools_free_transform_tool }, /* scale */
-  { NULL, "Transform", 9, tools_new_transform_tool, tools_free_transform_tool }, /* shear */
-  { NULL, "Transform", 9, tools_new_transform_tool, tools_free_transform_tool }, /* perspective */
-  { NULL, "Flip", 10, tools_new_flip, tools_free_flip_tool }, /* horizontal */
-  { NULL, "Flip", 10, tools_new_flip, tools_free_flip_tool }, /* vertical */
-  { NULL, "Text", 11, tools_new_text, tools_free_text },
-  { NULL, "Color Picker", 12, tools_new_color_picker, tools_free_color_picker },
-  { NULL, "Bucket Fill", 13, tools_new_bucket_fill, tools_free_bucket_fill },
-  { NULL, "Blend", 14, tools_new_blend, tools_free_blend },
-  { NULL, "Pencil", 15, tools_new_pencil, tools_free_pencil },
-  { NULL, "Paintbrush", 16, tools_new_paintbrush, tools_free_paintbrush },
-  { NULL, "Eraser", 17, tools_new_eraser, tools_free_eraser },
-  { NULL, "Airbrush", 18, tools_new_airbrush, tools_free_airbrush },
-  { NULL, "Clone", 19, tools_new_clone, tools_free_clone },
-  { NULL, "Convolve", 20, tools_new_convolve, tools_free_convolve },
-  { NULL, "Ink", 21, tools_new_ink, tools_free_ink },
+  {
+    NULL,
+    "Rect Select",
+    0,
+    "/Tools/Rect Select",
+    "R",
+    (char **)rect_bits,
+    "Select rectangular regions",
+    "ContextHelp/rect-select",
+    RECT_SELECT,
+    tools_new_rect_select,
+    tools_free_rect_select, 
+    NULL
+  },
+
+  {
+    NULL,
+    "Ellipse Select",
+    1,
+    "/Tools/Ellipse Select",
+    "E",
+    (char **) circ_bits,
+    "Select elliptical regions",
+    "ContextHelp/ellipse-select",
+    ELLIPSE_SELECT,
+    tools_new_ellipse_select,
+    tools_free_ellipse_select,
+    NULL
+  },
+
+  {
+    NULL, 
+    "Free Select", 
+    2, 
+    "/Tools/Free Select",
+    "F",
+    (char **) free_bits,
+    "Select hand-drawn regions",
+    "ContextHelp/free-select",
+    FREE_SELECT,
+    tools_new_free_select,
+    tools_free_free_select, 
+    NULL
+  },
+  
+  {
+    NULL,
+    "Fuzzy Select",
+    3,
+    "/Tools/Fuzzy Select",
+    "Z",
+    (char **) fuzzy_bits,
+    "Select contiguous regions",
+    "ContextHelp/fuzzy-select",
+    FUZZY_SELECT,
+    tools_new_fuzzy_select,
+    tools_free_fuzzy_select, 
+    NULL
+  },
+  
+  {
+    NULL,
+    "Bezier Select",
+    4,
+    "/Tools/Bezier Select",
+    "B",
+    (char **) bezier_bits,
+    "Select regions using Bezier curves",
+    "ContextHelp/bezier-select",
+    BEZIER_SELECT,
+    tools_new_bezier_select,
+    tools_free_bezier_select,
+    NULL
+  },
+  
+  {
+    NULL,
+    "Intelligent Scissors",
+    5,
+    "/Tools/Intelligent Scissors",
+    "I",
+    (char **) iscissors_bits,
+    "Select shapes from image",
+    "ContextHelp/iscissors",
+    ISCISSORS,
+    tools_new_iscissors,
+    tools_free_iscissors, 
+    NULL
+  },
+  
+  {
+    NULL, 
+    "Move",
+    6,
+    "/Tools/Move",
+    "M",
+    (char **) move_bits,
+    "Move layers & selections",
+    "ContextHelp/move",
+    MOVE,
+    tools_new_move_tool,
+    tools_free_move_tool, 
+    NULL
+  },
+
+  {
+    NULL,
+    "Magnify",
+    7,
+    "/Tools/Magnify",
+    "<shift>M",
+    (char **) magnify_bits,
+    "Zoom in & out",
+    "ContextHelp/magnify",
+    MAGNIFY,
+    tools_new_magnify,
+    tools_free_magnify, 
+    NULL
+  },
+
+  {
+    NULL,
+    "Crop",
+    8,
+    "/Tools/Crop",
+    "<shift>C",
+    (char **) crop_bits,
+    "Crop the image",
+    "ContextHelp/crop",
+    CROP,
+    tools_new_crop,
+    tools_free_crop,
+    NULL
+  },
+  
+  {
+    NULL,
+    "Transform",
+    9,
+    "/Tools/Transform",
+    "<shift>T",
+    (char **) scale_bits,
+    "Transform the layer or selection",
+    "ContextHelp/rotate",
+    ROTATE,
+    tools_new_transform_tool,
+    tools_free_transform_tool,
+    NULL
+  }, /* rotate */
+  
+  {
+    NULL,
+    "Transform",
+    9,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    SCALE,
+    tools_new_transform_tool,
+    tools_free_transform_tool, 
+    NULL
+  }, /* scale */
+  
+  {
+    NULL, 
+    "Transform",
+    9,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    SHEAR,
+    tools_new_transform_tool,
+    tools_free_transform_tool,
+    NULL
+  }, /* shear */
+  
+  {
+    NULL, 
+    "Transform",
+    9,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    PERSPECTIVE,
+    tools_new_transform_tool,
+    tools_free_transform_tool,
+    NULL
+  }, /* perspective */
+  
+  {
+    NULL,
+    "Flip",
+    10,
+    "/Tools/Flip",
+    "<shift>F",
+    (char **) horizflip_bits,
+    "Flip the layer or selection",
+    "ContextHelp/flip",
+    FLIP_HORZ,
+    tools_new_flip,
+    tools_free_flip_tool,
+    NULL
+  }, /* horizontal */
+  
+  {
+    NULL,
+    "Flip",
+    10,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    FLIP_VERT,
+    tools_new_flip, 
+    tools_free_flip_tool,
+    NULL
+  }, /* vertical */
+  
+  {
+    NULL,
+    "Text",
+    11,
+    "/Tools/Text",
+    "T",
+    (char **) text_bits,
+    "Add text to the image",
+    "ContextHelp/text",
+    TEXT,
+    tools_new_text,
+    tools_free_text,
+    NULL,
+  },
+  
+  {
+    NULL,
+    "Color Picker",
+    12,
+    "/Tools/Color Picker",
+    "O",
+    (char **) colorpicker_bits,
+    "Pick colors from the image",
+    "ContextHelp/color-picker",
+    COLOR_PICKER,
+    tools_new_color_picker,
+    tools_free_color_picker,
+    NULL
+  },
+  
+  { 
+    NULL,
+    "Bucket Fill",
+    13,
+    "/Tools/Bucket Fill",
+    "<shift>B",
+    (char **) fill_bits,
+    "Fill with a color or pattern",
+    "ContextHelp/bucket-fill",
+    BUCKET_FILL,
+    tools_new_bucket_fill,
+    tools_free_bucket_fill,
+    NULL
+  },
+
+  { 
+    NULL,
+    "Blend",
+    14,
+    "/Tools/Blend",
+    "L",
+    (char **) gradient_bits,
+    "Fill with a color gradient",
+    "ContextHelp/gradient",
+    BLEND,
+    tools_new_blend,
+    tools_free_blend,
+    NULL
+  },
+  
+  {
+    NULL,
+    "Pencil",
+    15,
+    "/Tools/Pencil",
+    "<shift>P",
+    (char **) pencil_bits,
+    "Draw sharp pencil strokes",
+    "ContextHelp/pencil",
+    PENCIL,
+    tools_new_pencil,
+    tools_free_pencil,
+    NULL
+  },
+  
+  {
+    NULL,
+    "Paintbrush",
+    16,
+    "/Tools/Paintbrush",
+    "P",
+    (char **) paint_bits,
+    "Paint fuzzy brush strokes",
+    "ContextHelp/paintbrush",
+    PAINTBRUSH,
+    tools_new_paintbrush,
+    tools_free_paintbrush, 
+    NULL
+  },
+  
+  { 
+    NULL,
+    "Eraser",
+    17,
+    "/Tools/Eraser",
+    "<shift>E",
+    (char **) erase_bits,
+    "Erase to background or transparency",
+    "ContextHelp/eraser",
+    ERASER,
+    tools_new_eraser,
+    tools_free_eraser,
+    NULL
+  },
+  
+  { 
+    NULL,
+    "Airbrush",
+    18,
+    "/Tools/Airbrush",
+    "A",
+    (char **) airbrush_bits,
+    "Airbrush with variable pressure",
+    "ContextHelp/airbrush",
+    AIRBRUSH,
+    tools_new_airbrush,
+    tools_free_airbrush,
+    NULL
+  },
+  
+  { 
+    NULL,
+    "Clone",
+    19,
+    "/Tools/Clone",
+    "C",
+    (char **) clone_bits,
+    "Paint using patterns or image regions",
+    "ContextHelp/clone",
+    CLONE,
+    tools_new_clone,
+    tools_free_clone,
+    NULL
+  },
+  
+  { 
+    NULL,
+    "Convolve",
+    20,
+    "/Tools/Convolve",
+    "V",
+    (char **) blur_bits,
+    "Blur or sharpen",
+    "ContextHelp/convolve",
+    CONVOLVE,
+    tools_new_convolve,
+    tools_free_convolve,
+    NULL
+  },
+
+  {
+    NULL,
+    "Ink",
+    21,
+    "/Tools/Ink",
+    "K",
+    (char **) ink_bits,
+    "Draw in ink",
+    "ContextHelp/ink",
+    INK,
+    tools_new_ink,
+    tools_free_ink,
+    NULL
+  },
 
   /*  Non-toolbox tools  */
-  { NULL, "By Color Select", 22, tools_new_by_color_select, tools_free_by_color_select },
-  { NULL, "Color Balance", 23, tools_new_color_balance, tools_free_color_balance },
-  { NULL, "Brightness-Contrast", 24, tools_new_brightness_contrast, tools_free_brightness_contrast },
-  { NULL, "Hue-Saturation", 25, tools_new_hue_saturation, tools_free_hue_saturation },
-  { NULL, "Posterize", 26, tools_new_posterize, tools_free_posterize },
-  { NULL, "Threshold", 27, tools_new_threshold, tools_free_threshold },
-  { NULL, "Curves", 28, tools_new_curves, tools_free_curves },
-  { NULL, "Levels", 29, tools_new_levels, tools_free_levels },
-  { NULL, "Histogram", 30, tools_new_histogram_tool, tools_free_histogram_tool }
+  { 
+    NULL,
+    "By Color Select",
+    22,
+    "/Select/By Color",
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    BY_COLOR_SELECT,
+    tools_new_by_color_select,
+    tools_free_by_color_select,
+    by_color_select_initialize 
+  },
+  
+  { 
+    NULL,
+    "Color Balance",
+    23,
+    "/Image/Colors/Color Balance",
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    COLOR_BALANCE,
+    tools_new_color_balance,
+    tools_free_color_balance,
+    color_balance_initialize
+  },
+  
+  { 
+    NULL,
+    "Brightness-Contrast",
+    24,
+    "/Image/Colors/Brightness-Contrast",
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    BRIGHTNESS_CONTRAST,
+    tools_new_brightness_contrast,
+    tools_free_brightness_contrast,
+    brightness_contrast_initialize
+  },
+  
+  { 
+    NULL,
+    "Hue-Saturation",
+    25,
+    "/Image/Colors/Hue-Saturation",
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    HUE_SATURATION,
+    tools_new_hue_saturation,
+    tools_free_hue_saturation, 
+    hue_saturation_initialize
+  },
+
+  { 
+    NULL,
+    "Posterize",
+    26,
+    "/Image/Colors/Posterize",
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    POSTERIZE,
+    tools_new_posterize,
+    tools_free_posterize,
+    posterize_initialize
+  },
+  
+  { 
+    NULL,
+    "Threshold", 
+    27,
+    "/Image/Colors/Threshold",
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    THRESHOLD,
+    tools_new_threshold,
+    tools_free_threshold,
+    threshold_initialize
+  },
+  
+  { 
+    NULL,
+    "Curves",
+    28,
+    "/Image/Colors/Curves",
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    CURVES,
+    tools_new_curves, 
+    tools_free_curves,
+    curves_initialize
+  },
+  
+  { 
+    NULL,
+    "Levels",
+    29,
+    "/Image/Colors/Levels",
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    LEVELS,
+    tools_new_levels, 
+    tools_free_levels,
+    levels_initialize
+  },
+  
+  { 
+    NULL,
+    "Histogram",
+    30,
+    "/Image/Histogram",
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    HISTOGRAM,
+    tools_new_histogram_tool,
+    tools_free_histogram_tool,
+    histogram_tool_initialize 
+  }
 };
 
+gint num_tools = sizeof (tool_info) / sizeof (ToolInfo);
 
 /*  Local function declarations  */
 
@@ -163,94 +653,23 @@ tools_select (ToolType type)
 }
 
 void
-tools_initialize (ToolType type, GDisplay *gdisp_ptr)
+tools_initialize (ToolType type, GDisplay *gdisp)
 {
-  GDisplay *gdisp;
-
   /* If you're wondering... only these dialog type tools have init functions */
-  gdisp = gdisp_ptr;
-
   if (active_tool)
     active_tool_free ();
 
-  switch (type)
+  if (tool_info[(int) type].init_func)
     {
-    case BY_COLOR_SELECT:
       if (gdisp) {
-	active_tool = tools_new_by_color_select ();
-	by_color_select_initialize (gdisp->gimage);
+	active_tool = (* tool_info[(int) type].new_func) ();
+	(* tool_info[(int) type].init_func) (gdisp);
       } else {
 	active_tool = tools_new_rect_select ();
       }
-      break;
-    case COLOR_BALANCE:
-      if (gdisp) {
-	active_tool = tools_new_color_balance ();
-	color_balance_initialize (gdisp);
-      } else {
-	active_tool = tools_new_rect_select ();
-      }
-      break;
-    case BRIGHTNESS_CONTRAST:
-      if (gdisp) {
-	active_tool = tools_new_brightness_contrast ();
-	brightness_contrast_initialize (gdisp);
-      } else {
-	active_tool = tools_new_rect_select ();
-      }
-      break;
-    case HUE_SATURATION:
-      if (gdisp) {
-	active_tool = tools_new_hue_saturation ();
-	hue_saturation_initialize (gdisp);
-      } else {
-	active_tool = tools_new_rect_select ();
-      }
-      break;
-    case POSTERIZE:
-      if (gdisp) {
-	active_tool = tools_new_posterize ();
-	posterize_initialize (gdisp);
-      } else {
-	active_tool = tools_new_rect_select ();
-      }
-      break;
-    case THRESHOLD:
-      if (gdisp) {
-	active_tool = tools_new_threshold ();
-	threshold_initialize (gdisp);
-      } else {
-	active_tool = tools_new_rect_select ();
-      }
-      break;
-    case CURVES:
-      if (gdisp) {
-	active_tool = tools_new_curves ();
-	curves_initialize (gdisp);
-      } else {
-	active_tool = tools_new_rect_select ();
-      }
-      break;
-    case LEVELS:
-      if (gdisp) {
-	active_tool = tools_new_levels ();
-	levels_initialize (gdisp);
-      } else {
-	active_tool = tools_new_rect_select ();
-      }
-      break;
-    case HISTOGRAM:
-      if (gdisp) {
-	active_tool = tools_new_histogram_tool ();
-	histogram_tool_initialize (gdisp);
-      } else {
-	active_tool = tools_new_rect_select ();
-      }
-      break;
-    default:
-      active_tool = (* tool_info[(int) type].new_func) ();
-      break;
     }
+  else 
+    active_tool = (* tool_info[(int) type].new_func) ();
 
   /*  Show the options for the active tool
    */

@@ -379,12 +379,8 @@ tools_free_histogram_tool (Tool *tool)
 }
 
 void
-histogram_tool_initialize (void *gdisp_ptr)
+histogram_tool_initialize (GDisplay *gdisp)
 {
-  GDisplay *gdisp;
-
-  gdisp = (GDisplay *) gdisp_ptr;
-
   if (drawable_indexed (gimage_active_drawable (gdisp->gimage)))
     {
       g_message ("Histogram does not operate on indexed drawables.");

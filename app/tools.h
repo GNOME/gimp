@@ -103,6 +103,7 @@ typedef void (* ToolCtlFunc)       (Tool *, int, gpointer);
 /* ToolInfo function declarations */
 typedef Tool *(* ToolInfoNewFunc)  (void);
 typedef void  (* ToolInfoFreeFunc) (Tool *);
+typedef void  (* ToolInfoInitFunc) (GDisplay *);
 
 struct _tool
 {
@@ -134,9 +135,24 @@ struct _ToolInfo
 {
   GtkWidget *tool_options;
   char *tool_name;
-  int toolbar_position;
+
+  int toolbar_position;  
+
+  char *menu_path;  
+  char *menu_accel; 
+
+  char **icon_data;
+
+  char *tool_desc;
+  char *private_tip;
+
+  gint tool_id;
+
   ToolInfoNewFunc new_func;
   ToolInfoFreeFunc free_func;
+  ToolInfoInitFunc init_func;
+
+  GtkWidget *tool_widget;
 };
 
 

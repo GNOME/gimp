@@ -278,12 +278,8 @@ tools_free_brightness_contrast (Tool *tool)
 }
 
 void
-brightness_contrast_initialize (void *gdisp_ptr)
+brightness_contrast_initialize (GDisplay *gdisp)
 {
-  GDisplay *gdisp;
-
-  gdisp = (GDisplay *) gdisp_ptr;
-
   if (drawable_indexed (gimage_active_drawable (gdisp->gimage)))
     {
       g_message ("Brightness-Contrast does not operate on indexed drawables.");
@@ -303,7 +299,7 @@ brightness_contrast_initialize (void *gdisp_ptr)
   brightness_contrast_dialog->contrast = 0.0;
 
   brightness_contrast_dialog->drawable = gimage_active_drawable (gdisp->gimage);
-  brightness_contrast_dialog->image_map = image_map_create (gdisp_ptr,
+  brightness_contrast_dialog->image_map = image_map_create (gdisp,
 							    brightness_contrast_dialog->drawable);
 
   brightness_contrast_update (brightness_contrast_dialog, ALL);

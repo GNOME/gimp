@@ -25,7 +25,7 @@
 Tool *        tools_new_hue_saturation      (void);
 void          tools_free_hue_saturation     (Tool *);
 
-void          hue_saturation_initialize     (void *);
+void          hue_saturation_initialize     (GDisplay *);
 void          hue_saturation_free           (void);
 
 /*  Procedure definition and marshalling function  */

@@ -1,3 +1,33 @@
+Sun Jun 21 15:16:46 CDT 1998 Larry Ewing <lewing@gimp.org>
+
+	* app/bezier_select.c
+	* app/commands.[ch]
+	* app/devices.c
+	* app/disp_callbacks.c
+	* app/interface.c
+	* app/menus.c
+	* app/pixmaps.h
+	* app/tools.[ch]
+	* app/undo.c: Lots of changes to the way tools are intialized and
+	accessed.  All information about a tool type is now contained in a 
+	single ToolInfo array.  There are still some small issues to
+	adress about tool groups and we need some way of getting menu
+	ordering/grouping to work better (plug-ins need this too).  There
+	is still much to be done, but this is the next in cleaning up the
+	tools.
+	
+	* app/posterize.[ch]
+	* app/threshold.[ch]
+	* app/histogram_tool.[ch]
+	* app/hue_saturation.[ch]
+	* app/levels.[ch]
+	* app/brightness_contrast.[ch]
+	* app/by_color_select.[ch]
+	* app/color_balance.[ch]
+	* app/curves.[ch]: Changed the *_initalize function prototypes from
+	gpointer to GDisplay, to allow better type chacking and provide a 
+	uniform interface for all the dialog tools.
+		
 Sun Jun 21 15:49:43 1998  Owen Taylor  <otaylor@gtk.org>
 
 	* app/tools.c (tools_select): Set active_tool before

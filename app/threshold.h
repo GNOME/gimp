@@ -25,7 +25,7 @@
 Tool *        tools_new_threshold      (void);
 void          tools_free_threshold     (Tool *);
 
-void          threshold_initialize     (void *);
+void          threshold_initialize     (GDisplay *);
 
 /*  Procedure definition and marshalling function  */
 extern ProcRecord threshold_proc;

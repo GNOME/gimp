@@ -404,21 +404,6 @@ select_shrink_cmd_callback (GtkWidget *widget,
 }
 
 void
-select_by_color_cmd_callback (GtkWidget *widget,
-			      gpointer   client_data)
-{
-  GDisplay * gdisp;
-
-  gdisp = gdisplay_active ();
-  gtk_widget_activate (tool_widgets[tool_info[(int) BY_COLOR_SELECT].toolbar_position]);
-  by_color_select_initialize ((void *) gdisp->gimage);
-
-  gdisp = gdisplay_active ();
-
-  active_tool->drawable = gimage_active_drawable (gdisp->gimage);
-}
-
-void
 select_save_cmd_callback (GtkWidget *widget,
 			  gpointer   client_data)
 {
@@ -662,112 +647,6 @@ image_invert_cmd_callback (GtkWidget *widget,
 }
 
 void
-image_posterize_cmd_callback (GtkWidget *widget,
-			      gpointer   client_data)
-{
-  GDisplay * gdisp;
-
-  gdisp = gdisplay_active ();
-  gtk_widget_activate (tool_widgets[tool_info[(int) POSTERIZE].toolbar_position]);
-  posterize_initialize ((void *) gdisp);
-
-  gdisp = gdisplay_active ();
-
-  active_tool->drawable = gimage_active_drawable (gdisp->gimage);
-}
-
-void
-image_threshold_cmd_callback (GtkWidget *widget,
-			      gpointer   client_data)
-{
-  GDisplay * gdisp;
-
-  gdisp = gdisplay_active ();
-  gtk_widget_activate (tool_widgets[tool_info[(int) THRESHOLD].toolbar_position]);
-  threshold_initialize ((void *) gdisp);
-
-  gdisp = gdisplay_active ();
-
-  active_tool->drawable = gimage_active_drawable (gdisp->gimage);
-}
-
-void
-image_color_balance_cmd_callback (GtkWidget *widget,
-				  gpointer   client_data)
-{
-  GDisplay * gdisp;
-
-  gdisp = gdisplay_active ();
-  gtk_widget_activate (tool_widgets[tool_info[(int) COLOR_BALANCE].toolbar_position]);
-  color_balance_initialize ((void *) gdisp);
-
-  gdisp = gdisplay_active ();
-
-  active_tool->drawable = gimage_active_drawable (gdisp->gimage);
-
-}
-
-void
-image_brightness_contrast_cmd_callback (GtkWidget *widget,
-					gpointer   client_data)
-{
-  GDisplay * gdisp;
-
-  gdisp = gdisplay_active ();
-  gtk_widget_activate (tool_widgets[tool_info[(int) BRIGHTNESS_CONTRAST].toolbar_position]);
-  brightness_contrast_initialize ((void *) gdisp);
-
-  gdisp = gdisplay_active ();
-
-  active_tool->drawable = gimage_active_drawable (gdisp->gimage);
-}
-
-void
-image_hue_saturation_cmd_callback (GtkWidget *widget,
-				   gpointer   client_data)
-{
-  GDisplay * gdisp;
-
-  gdisp = gdisplay_active ();
-  gtk_widget_activate (tool_widgets[tool_info[(int) HUE_SATURATION].toolbar_position]);
-  hue_saturation_initialize ((void *) gdisp);
-
-  gdisp = gdisplay_active ();
-
-  active_tool->drawable = gimage_active_drawable (gdisp->gimage);
-}
-
-void
-image_curves_cmd_callback (GtkWidget *widget,
-			   gpointer client_data)
-{
-  GDisplay * gdisp;
-
-  gdisp = gdisplay_active ();
-  gtk_widget_activate (tool_widgets[tool_info[(int) CURVES].toolbar_position]);
-  curves_initialize ((void *) gdisp);
-
-  gdisp = gdisplay_active ();
-
-  active_tool->drawable = gimage_active_drawable (gdisp->gimage);
-}
-
-void
-image_levels_cmd_callback (GtkWidget *widget,
-			   gpointer client_data)
-{
-  GDisplay * gdisp;
-
-  gdisp = gdisplay_active ();
-  gtk_widget_activate (tool_widgets[tool_info[(int) LEVELS].toolbar_position]);
-  levels_initialize ((void *) gdisp);
-
-  gdisp = gdisplay_active ();
-
-  active_tool->drawable = gimage_active_drawable (gdisp->gimage);
-}
-
-void
 image_desaturate_cmd_callback (GtkWidget *widget,
 			       gpointer client_data)
 {
@@ -923,21 +802,6 @@ image_scale_cmd_callback (GtkWidget *widget,
 }
 
 void
-image_histogram_cmd_callback (GtkWidget *widget,
-			      gpointer   client_data)
-{
-  GDisplay * gdisp;
-
-  gdisp = gdisplay_active ();
-  gtk_widget_activate (tool_widgets[tool_info[(int) HISTOGRAM].toolbar_position]);
-  histogram_tool_initialize ((void *) gdisp);
-
-  gdisp = gdisplay_active ();
-
-  active_tool->drawable = gimage_active_drawable (gdisp->gimage);
-}
-
-void
 layers_raise_cmd_callback (GtkWidget *widget,
 			   gpointer   client_data)
 {
@@ -1054,9 +918,21 @@ tools_select_cmd_callback (GtkWidget           *widget,
 {
   GDisplay * gdisp;
 
-  /*  Activate the approriate widget  */
-  gtk_widget_activate (tool_widgets[tool_info[callback_action].toolbar_position]);
-
+  if (!tool_info[callback_action].init_func)
+    {
+      /*  Activate the approriate widget  */
+      gtk_widget_activate (tool_info[callback_action].tool_widget);
+    }
+  else 
+    {
+      /* if the tool_info has an init_func */
+      gdisp = gdisplay_active ();
+     
+      gtk_widget_activate (tool_info[callback_action].tool_widget);
+      
+      (* tool_info[callback_action].init_func) (gdisp);
+    }
+      
   gdisp = gdisplay_active ();
 
   active_tool->drawable = gimage_active_drawable (gdisp->gimage);

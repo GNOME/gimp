@@ -335,12 +335,8 @@ tools_free_threshold (Tool *tool)
 }
 
 void
-threshold_initialize (void *gdisp_ptr)
+threshold_initialize (GDisplay *gdisp)
 {
-  GDisplay *gdisp;
-
-  gdisp = (GDisplay *) gdisp_ptr;
-
   if (drawable_indexed (gimage_active_drawable (gdisp->gimage)))
     {
       g_message ("Threshold does not operate on indexed drawables.");
@@ -356,7 +352,7 @@ threshold_initialize (void *gdisp_ptr)
 
   threshold_dialog->drawable = gimage_active_drawable (gdisp->gimage);
   threshold_dialog->color = drawable_color (threshold_dialog->drawable);
-  threshold_dialog->image_map = image_map_create (gdisp_ptr, threshold_dialog->drawable);
+  threshold_dialog->image_map = image_map_create (gdisp, threshold_dialog->drawable);
   histogram_update (threshold_dialog->histogram,
 		    threshold_dialog->drawable,
 		    threshold_histogram_info,

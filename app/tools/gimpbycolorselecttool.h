@@ -25,7 +25,8 @@
 Tool *        tools_new_by_color_select      (void);
 void          tools_free_by_color_select     (Tool *);
 
-void          by_color_select_initialize     (void *);
+void          by_color_select_initialize          (GDisplay *);
+void          by_color_select_initialize_by_image (GImage *);
 
 /*  Procedure definition and marshalling function  */
 extern ProcRecord by_color_select_proc;

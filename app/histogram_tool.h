@@ -25,7 +25,7 @@
 Tool *        tools_new_histogram_tool      (void);
 void          tools_free_histogram_tool     (Tool *);
 
-void          histogram_tool_initialize     (void *);
+void          histogram_tool_initialize     (GDisplay *);
 void          histogram_tool_free           (void);
 
 /*  Procedure definition and marshalling function  */

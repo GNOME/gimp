@@ -435,7 +435,7 @@ gdisplay_hruler_button_press (GtkWidget      *widget,
     {
       gdisp = data;
 
-      gtk_widget_activate (tool_widgets[tool_info[(int) MOVE].toolbar_position]);
+      gtk_widget_activate (tool_info[(int) MOVE].tool_widget);
       move_tool_start_hguide (active_tool, gdisp);
       gtk_grab_add (gdisp->canvas);
     }
@@ -454,7 +454,7 @@ gdisplay_vruler_button_press (GtkWidget      *widget,
     {
       gdisp = data;
 
-      gtk_widget_activate (tool_widgets[tool_info[(int) MOVE].toolbar_position]);
+      gtk_widget_activate (tool_info[(int) MOVE].tool_widget);
       move_tool_start_vguide (active_tool, gdisp);
       gtk_grab_add (gdisp->canvas);
     }

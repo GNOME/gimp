@@ -311,12 +311,9 @@ tools_free_color_balance (Tool *tool)
 }
 
 void
-color_balance_initialize (void *gdisp_ptr)
+color_balance_initialize (GDisplay *gdisp)
 {
-  GDisplay *gdisp;
   int i;
-
-  gdisp = (GDisplay *) gdisp_ptr;
 
   if (! drawable_color (gimage_active_drawable (gdisp->gimage)))
     {
@@ -340,7 +337,7 @@ color_balance_initialize (void *gdisp_ptr)
       color_balance_dialog->yellow_blue[i] = 0.0;
     }
   color_balance_dialog->drawable = gimage_active_drawable (gdisp->gimage);
-  color_balance_dialog->image_map = image_map_create (gdisp_ptr, color_balance_dialog->drawable);
+  color_balance_dialog->image_map = image_map_create (gdisp, color_balance_dialog->drawable);
   color_balance_update (color_balance_dialog, ALL);
 }
 

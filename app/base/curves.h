@@ -25,7 +25,7 @@
 Tool *        tools_new_curves      (void);
 void          tools_free_curves     (Tool *);
 
-void          curves_initialize     (void *);
+void          curves_initialize     (GDisplay *);
 void          curves_free           (void);
 
 /*  Procedure definition and marshalling function  */

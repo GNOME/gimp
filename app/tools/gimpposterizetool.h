@@ -25,7 +25,7 @@
 Tool *        tools_new_posterize      (void);
 void          tools_free_posterize     (Tool *);
 
-void          posterize_initialize     (void *);
+void          posterize_initialize     (GDisplay *);
 
 /*  Procedure definition and marshalling function  */
 extern ProcRecord posterize_proc;

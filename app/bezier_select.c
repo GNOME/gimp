@@ -173,7 +173,7 @@ bezier_select_load (void        *gdisp_ptr,
   gdisp = (GDisplay *) gdisp_ptr;
 
   /*  select the bezier tool  */
-  gtk_widget_activate (tool_widgets[tool_info[BEZIER_SELECT].toolbar_position]);
+  gtk_widget_activate (tool_info[BEZIER_SELECT].tool_widget);
   tool = active_tool;
   tool->state = ACTIVE;
   tool->gdisp_ptr = gdisp_ptr;
