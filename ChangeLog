@@ -1,5 +1,10 @@
 2004-05-20  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/maze/maze_face.c
+	* plug-ins/xjt/xjt.c: HIG-ified. Say goodbye to "Parameter Settings".
+
+2004-05-20  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/warp.c
 	* plug-ins/common/whirlpinch.c
 	* plug-ins/common/wmf.c

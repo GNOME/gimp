@@ -382,19 +382,19 @@ t_prop_table g_prop_table[PROP_TABLE_ENTRIES] = {
 
 /* Declare local functions.
  */
-static void   query            (void);
-static void   run              (const gchar      *name,
-				gint              nparams,
-				const GimpParam  *param,
-				gint             *nreturn_vals,
-				GimpParam       **return_vals);
+static void      query            (void);
+static void      run              (const gchar      *name,
+                                   gint              nparams,
+                                   const GimpParam  *param,
+                                   gint             *nreturn_vals,
+                                   GimpParam       **return_vals);
 
-static gint32 load_xjt_image   (const gchar      *filename);
-static gint   save_xjt_image   (const gchar      *filename,
-				gint32            image_ID,
-				gint32            drawable_ID);
+static gint32    load_xjt_image   (const gchar      *filename);
+static gint      save_xjt_image   (const gchar      *filename,
+                                   gint32            image_ID,
+                                   gint32            drawable_ID);
 
-static gint   save_dialog      (void);
+static gboolean  save_dialog      (void);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -834,11 +834,10 @@ p_to_XJTUnitType(GimpUnit intype)
 
 /* ---------------------- SAVE DIALOG procedures  -------------------------- */
 
-static gint
+static gboolean
 save_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *toggle;
   GtkObject *scale_data;
@@ -855,16 +854,12 @@ save_dialog (void)
 
 			 NULL);
 
-  /*  parameter settings  */
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-
   table = gtk_table_new (4, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
+  gtk_widget_show (table);
 
   toggle = gtk_check_button_new_with_label (_("Optimize"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.optimize);
@@ -904,9 +899,6 @@ save_dialog (void)
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &jsvals.smoothing);
-
-  gtk_widget_show (frame);
-  gtk_widget_show (table);
 
   gtk_widget_show (dlg);
 

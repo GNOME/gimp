@@ -72,7 +72,7 @@ typedef struct
 gchar buffer[BUFSIZE];
 
 
-gint        maze_dialog         (void);
+gboolean    maze_dialog         (void);
 
 static void maze_msg            (gchar     *msg);
 static void maze_response       (GtkWidget *widget,
@@ -164,21 +164,18 @@ extern guint      sel_w, sel_h;
 static gint       maze_run = FALSE;
 static GtkWidget *msg_label;
 
-gint
+gboolean
 maze_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *frame;
+  GtkWidget *vbox;
   GtkWidget *table;
   GtkWidget *tilecheck;
-
-  GtkWidget *width_entry, *height_entry;
-  GtkWidget *seed_hbox;
-  GtkWidget *div_x_hbox, *div_y_hbox;
-  GtkWidget *div_x_entry, *div_y_entry;
-
-  gint      trow = 0;
-  gchar    *message;
+  GtkWidget *entry;
+  GtkWidget *hbox;
+  GtkWidget *frame;
+  gint       trow = 0;
+  gchar     *message;
 
   gimp_ui_init ("maze", FALSE);
 
@@ -199,51 +196,51 @@ maze_dialog (void)
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_container_set_border_width (GTK_CONTAINER(frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG(dlg)->vbox), frame, TRUE, TRUE, 0);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG(dlg)->vbox), vbox, TRUE, TRUE, 0);
 
 #ifdef SHOW_PRNG_PRIVATES
   table = gtk_table_new (8, 3, FALSE);
 #else
   table = gtk_table_new (6, 3, FALSE);
 #endif
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
+  gtk_widget_show (table);
 
   /* entscale == Entry and Scale pair function found in pixelize.c */
-  width_entry = entscale_int_new (table, 0, trow, _("Width (Pixels):"),
-				  &mvals.width,
-				  1, sel_w/4, TRUE,
-				  (EntscaleIntCallbackFunc) height_width_callback,
-				  &div_x_entry);
+  entry = entscale_int_new (table, 0, trow, _("Width (Pixels):"),
+                            &mvals.width,
+                            1, sel_w/4, TRUE,
+                            (EntscaleIntCallbackFunc) height_width_callback,
+                            &entry);
   trow++;
 
   /* Number of Divisions entry */
-  div_x_hbox = divbox_new (&sel_w, width_entry, &div_x_entry);
+  hbox = divbox_new (&sel_w, entry, &entry);
   g_snprintf (buffer, BUFSIZE, "%d", (sel_w / mvals.width));
-  gtk_entry_set_text (GTK_ENTRY (div_x_entry), buffer);
+  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, trow,
-			     _("Pieces:"), 1.0, 0.5,
-			     div_x_hbox, 1, FALSE);
+			     _("Pieces:"), 0.0, 0.5,
+			     hbox, 1, FALSE);
   gtk_table_set_row_spacing (GTK_TABLE (table), trow, 8);
   trow++;
 
-  height_entry = entscale_int_new (table, 0, trow, _("Height (Pixels):"),
-				   &mvals.height,
-				   1, sel_h/4, TRUE,
-				   (EntscaleIntCallbackFunc) height_width_callback,
-				   &div_y_entry);
+  entry = entscale_int_new (table, 0, trow, _("Height (Pixels):"),
+                            &mvals.height,
+                            1, sel_h/4, TRUE,
+                            (EntscaleIntCallbackFunc) height_width_callback,
+                            &entry);
   trow++;
 
-  div_y_hbox = divbox_new (&sel_h, height_entry, &div_y_entry);
+  hbox = divbox_new (&sel_h, entry, &entry);
   g_snprintf (buffer, BUFSIZE, "%d", (sel_h / mvals.height));
-  gtk_entry_set_text (GTK_ENTRY (div_y_entry), buffer);
+  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, trow,
-			     _("Pieces:"), 1.0, 0.5,
-			     div_y_hbox, 1, FALSE);
+			     _("Pieces:"), 0.0, 0.5,
+			     hbox, 1, FALSE);
   gtk_table_set_row_spacing (GTK_TABLE (table), trow, 8);
   trow++;
 
@@ -254,7 +251,7 @@ maze_dialog (void)
   g_snprintf (buffer, BUFSIZE, "%d", mvals.multiple);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer );
   gimp_table_attach_aligned (GTK_TABLE (table), 0, trow,
-			     _("Multiple (57):"), 1.0, 0.5,
+			     _("Multiple (57):"), 0.0, 0.5,
 			     entry, 1, FALSE);
   trow++;
   g_signal_connect (entry, "changed",
@@ -267,7 +264,7 @@ maze_dialog (void)
   g_snprintf (buffer, BUFSIZE, "%d", mvals.offset);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer );
   gimp_table_attach_aligned (GTK_TABLE (table), 0, trow,
-			     _("Offset (1):"), 1.0, 0.5,
+			     _("Offset (1):"), 0.0, 0.5,
 			     entry, 1, FALSE);
   trow++;
   g_signal_connect (entry, "changed",
@@ -279,7 +276,7 @@ maze_dialog (void)
   tilecheck = gtk_check_button_new_with_label (_("Tileable"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tilecheck), mvals.tile);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, trow,
-			     NULL, 1.0, 0.5,
+			     NULL, 0.0, 0.5,
 			     tilecheck, 1, FALSE);
   trow++;
   g_signal_connect (tilecheck, "clicked",
@@ -287,14 +284,14 @@ maze_dialog (void)
                     &mvals.tile);
 
   /* Seed input box */
-  seed_hbox = gimp_random_seed_new (&mvals.seed, &mvals.random_seed);
+  hbox = gimp_random_seed_new (&mvals.seed, &mvals.random_seed);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, trow,
-			     _("Seed:"), 1.0, 0.5,
-			     seed_hbox, 1, TRUE);
+			     _("Seed:"), 0.0, 0.5,
+			     hbox, 1, TRUE);
   trow++;
 
   /* Algorithm Choice */
-  frame = gimp_int_radio_group_new (TRUE, _("Style"),
+  frame = gimp_int_radio_group_new (FALSE, NULL,
                                     G_CALLBACK (gimp_radio_button_update),
 				    &mvals.algorithm, mvals.algorithm,
 
@@ -303,25 +300,14 @@ maze_dialog (void)
 
 				    NULL);
 
-  gtk_container_set_border_width (GTK_CONTAINER(frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG(dlg)->vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
-  /* Message label */
-  frame = gtk_frame_new (NULL);
-  gtk_container_set_border_width (GTK_CONTAINER(frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG(dlg)->vbox), frame, FALSE, FALSE, 0);
-
-  message = g_strdup_printf (_("Selection is %dx%d"), sel_w, sel_h);
-  msg_label = gtk_label_new (message);
-  g_free (message);
-  gtk_misc_set_padding (GTK_MISC (msg_label), 4, 4);
-  gtk_misc_set_alignment (GTK_MISC (msg_label), 0.5, 0.5);
-  gtk_container_add (GTK_CONTAINER (frame), msg_label);
+  msg_label = gtk_label_new (NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), msg_label, FALSE, FALSE, 12);
 
   gtk_widget_show_all (dlg);
 
   gtk_main ();
-  gdk_flush ();
 
   return maze_run;
 }
