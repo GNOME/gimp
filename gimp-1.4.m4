@@ -1,4 +1,4 @@
-# Configure paths for GIMP
+# Configure paths for GIMP-1.4
 # Manish Singh    98-6-11
 # Shamelessly stolen from Owen Taylor
 
@@ -30,7 +30,7 @@ AC_ARG_ENABLE(gimptest, [  --disable-gimptest      Do not try to compile and run
   fi
 
   AC_PATH_PROG(GIMPTOOL, gimptool-1.4, no)
-  min_gimp_version=ifelse([$1], ,1.0.0,$1)
+  min_gimp_version=ifelse([$1], ,1.3.0,$1)
   AC_MSG_CHECKING(for GIMP - version >= $min_gimp_version)
   no_gimp=""
   if test "$GIMPTOOL" = "no" ; then

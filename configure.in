@@ -96,11 +96,15 @@ AC_PATH_XTRA
 dnl Find pkg-config
 AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
 if test x$PKG_CONFIG = xno ; then
-  AC_MSG_ERROR([*** pkg-config not found. See http://pkgconfig.sourceforge.net])
+  AC_MSG_ERROR([
+*** pkg-config not found.
+    See the file 'INSTALL' for help.])
 fi
 
 if ! pkg-config --atleast-pkgconfig-version 0.7 ; then
-  AC_MSG_ERROR([*** pkg-config too old; version 0.7 or better required.])
+  AC_MSG_ERROR([
+*** pkg-config too old; version 0.7 or better required.
+    See the file 'INSTALL' for help.])
 fi
 
 dnl Check for GTK+

@@ -2,25 +2,30 @@ THIS IS A DEVELOPMENT VERSION OF THE GIMP !! YOU SHOULD BE USING THE
 STABLE VERSION 1.2 INSTEAD !! YOU HAVE BEEN WARNED!
 
 
-There are six basic steps to building and installing the GIMP:
+There are some basic steps to building and installing the GIMP:
 
-  1. You need to have installed GTK version 1.3.7 or better. Do not try
-     to use the stable GTK+ versions 1.2.x, it will not work.
-  2. You may want to install other third party libraries or programs that
+  1. You need to have installed a recent version of pkg-config available
+     from http://www.freedesktop.org/software/pkgconfig/.  
+  2. You need to have installed GTK version 1.3.7 or better. Do not try
+     to use the stable GTK+ versions 1.2.x, it will not work. GTK+-1.3.x
+     are development releases of the upcoming GTK+-2.0 release. GTK+-2.0
+     itself needs recent versions of GLib-2.0, Pango and ATK. 
+     GTK+-2.0 and friends can be installed side by side with GTK+-1.2.
+  3. You may want to install other third party libraries or programs that
      are needed for some of the available plugins: TIFF, PNG, JPEG, MPEG,
      perl, etc.
-  3. You may want to install the freefont package so you have the fonts
+  4. You may want to install the freefont package so you have the fonts
      most scripts use by default. 
      Grab it from ftp://ftp.gimp.org/pub/gimp/fonts/
-  4. Configure the GIMP by running the `configure' script.
+  5. Configure the GIMP by running the `configure' script.
      You may want to pass some options to it, see below.
-  5. Build the GIMP by running `make'.
-  6. Install the GIMP by running `make install' or `make install-strip'.
-  7. Optionally install the separate gimp-data-extras package.
+  6. Build the GIMP by running `make'.
+  7. Install the GIMP by running `make install' or `make install-strip'.
+  8. Optionally install the separate gimp-data-extras package.
 
-Please make sure you don't have any old GTK, jpeg, etc. libraries lying
-around on your system, otherwise configure will fail to find the new
-ones.
+Please make sure you don't have any old GTK+-2.0, jpeg, etc. libraries 
+lying around on your system, otherwise configure will fail to find the 
+new ones.
 
 Generic instructions for configuring and compiling auto-configured
 packages are included below. Here is an illustration of commands that
@@ -113,16 +118,21 @@ GIMP and its plug-ins.
 When ./configure fails
 ======================
 
+'configure' uses pkg-config, a tool that replaces the old foo-config
+scripts. The most recent version is available from 
+	http://www.freedesktop.org/software/pkgconfig/
+
 'configure' tries to compile and run a short GTK program. There are
 several reasons why this might fail:
 
-* The 'gtk-config' script installed with GTK could not be found.
-  (This script is used to get information about where GTK is
-   installed.)
+* pkg-config could not find the file 'gtk+-2.0.pc' that gets installed 
+  with GTK. (This file is used to get information about where GTK+ is
+  installed.)
 
-  Fix: Either make sure that this program is in your path, or set
-  the environment variable GTK_CONFIG to the full pathname to
-  this program before running configure.
+  Fix: Either make sure that this file is in the path where pkg-config 
+  looks for it (try 'pkg-config --debug' or add the location of 
+  gtk+-2.0.pc to the environment variable PKG_CONFIG_PATH before running 
+  configure.
 
 * The GTK libraries were not found at run time. The details
   of how to fix this problem will depend on the system:
