@@ -66,15 +66,6 @@
 #include "libgimp/gimpmath.h"
 
 
-#ifdef DEBUG
-#define TRC(x) g_print x
-#define D(x) x
-#else
-#define TRC(x)
-#define D(x)
-#endif
-
-
 /*  local structures  */
 
 typedef struct _ICurve ICurve;
@@ -164,25 +155,15 @@ struct _IScissorsOptions
 
 #define  MAX_POINTS        2048
 
-#ifdef USE_LAPLACIAN
-# define COST_WIDTH        3  /* number of bytes for each pixel in cost map  */
-#else
-# define COST_WIDTH        2  /* number of bytes for each pixel in cost map  */
-#endif
+#define COST_WIDTH         2  /* number of bytes for each pixel in cost map  */
 #define  BLOCK_WIDTH       64
 #define  BLOCK_HEIGHT      64
 #define  CONV_WIDTH        (BLOCK_WIDTH + 2)
 #define  CONV_HEIGHT       (BLOCK_HEIGHT + 2)
 
-/* weight to give between laplacian (_Z), gradient (_G) and direction (_D) */
-#ifdef USE_LAPLACIAN
-#  define  OMEGA_Z           0.16
-#  define  OMEGA_D           0.42
-#  define  OMEGA_G           0.42
-#else
-#  define  OMEGA_D           0.2
-#  define  OMEGA_G           0.8
-#endif
+/* weight to give between gradient (_G) and direction (_D) */
+#define  OMEGA_D           0.2
+#define  OMEGA_G           0.8
 
 /* sentinel to mark seed point in ?cost? map */
 #define  SEED_POINT        9
@@ -222,13 +203,9 @@ static GdkPoint    curve_points [MAX_POINTS];
 
 
 /*  temporary convolution buffers --  */
-D(static guint sent0 = 0xd0d0d0d0);
 static guchar  maxgrad_conv0 [TILE_WIDTH * TILE_HEIGHT * 4] = "";
-D(static guint sent1 = 0xd1d1d1d1);
 static guchar  maxgrad_conv1 [TILE_WIDTH * TILE_HEIGHT * 4] = "";
-D(static guint sent2 = 0xd2d2d2d2);
 static guchar  maxgrad_conv2 [TILE_WIDTH * TILE_HEIGHT * 4] = "";
-D(static guint sent3 = 0xd3d3d3d3);
 
 
 static gint horz_deriv [9] =
@@ -245,15 +222,6 @@ static gint vert_deriv [9] =
   -1, -2, -1,
 };
 
-
-#ifdef USE_LAPLACIAN
-static gint  laplacian [9] = 
-{
-  -1, -1, -1,
-  -1, 8, -1,
-  -1, -1, -1,
-};
-#endif
 
 static gint blur_32 [9] = 
 {
@@ -416,11 +384,6 @@ tools_free_iscissors (Tool *tool)
 
   iscissors = (Iscissors *) tool->private;
 
-  TRC (("tools_free_iscissors\n"));
-
-  /*  XXX? Undraw curve  */
-  /*iscissors->draw = DRAW_CURVE;*/
-
   if (tool->state == ACTIVE)
     draw_core_stop (iscissors->core, tool);
   draw_core_free (iscissors->core);
@@ -452,7 +415,6 @@ iscissors_button_press (Tool           *tool,
 
   if (tool->state == ACTIVE && gdisp != tool->gdisp)
     {
-      /*iscissors->draw = DRAW_CURVE; XXX? */
       draw_core_stop (iscissors->core, tool);
       iscissors_reset (iscissors);
     }
@@ -463,19 +425,6 @@ iscissors_button_press (Tool           *tool,
   switch (iscissors->state)
     {
     case NO_ACTION:
-#if 0
-      /* XXX what's this supposed to do? */
-      if (! (bevent->state & GDK_SHIFT_MASK) &&
-	  ! (bevent->state & GDK_CONTROL_MASK))
-	if (selection_point_inside (gdisp->select, gdisp,
-				    bevent->x, bevent->y))
-	  {
-	    init_edit_selection (tool, gdisp->select, gdisp,
-				 bevent->x, bevent->y);
-	    return;
-	  }
-#endif
-
       iscissors->state = SEED_PLACEMENT;
       iscissors->draw = DRAW_CURRENT_SEED;
       grab_pointer = TRUE;
@@ -583,7 +532,6 @@ iscissors_convert (Iscissors *iscissors,
   while (index)
     {
       index--;
-
       icurve = (ICurve *) g_slist_nth_data (list, index);
 
       npts = icurve->points->len;
@@ -602,6 +550,7 @@ iscissors_convert (Iscissors *iscissors,
 
   if (iscissors->mask)
     channel_delete (iscissors->mask);
+  
   iscissors->mask = scan_converter_to_channel (sc, gdisp->gimage);
   scan_converter_free (sc);
 
@@ -618,8 +567,6 @@ iscissors_button_release (Tool           *tool,
   ICurve    *curve;
 
   iscissors = (Iscissors *) tool->private;
-
-  TRC (("iscissors_button_release\n"));
 
   /* Make sure X didn't skip the button release event -- as it's known
    * to do */
@@ -682,10 +629,8 @@ iscissors_button_release (Tool           *tool,
 		  iscissors->ix = curve->x2 = iscissors->x;
 		  iscissors->iy = curve->y2 = iscissors->y;
 		  curve->points = NULL;
-		  TRC (("create new curve segment\n"));
 		  iscissors->curves = g_slist_append (iscissors->curves,
 						      (void *) curve);
-		  TRC (("calculate curve\n"));
 		  calculate_curve (tool, curve);
 		}
 	    }
@@ -715,8 +660,6 @@ iscissors_button_release (Tool           *tool,
 	  break;
 	}
     }
-
-  TRC (("button_release: draw core resume\n"));
 
   /*  Draw only the boundary  */
   iscissors->state = WAITING;
@@ -806,8 +749,6 @@ iscissors_draw (Tool *tool)
   gint       tx1, ty1, tx2, ty2;
   gint       txn, tyn;
 
-  TRC (("iscissors_draw\n"));
-
   gdisp     = tool->gdisp;
   iscissors = (Iscissors *) tool->private;
 
@@ -854,23 +795,17 @@ iscissors_draw (Tool *tool)
           curve->y2 = iscissors->y;
           curve->points = NULL;
 
-          TRC (("create new livewire segment\n"));
           if (iscissors->livewire)
             {
               if (iscissors->livewire->points)
-                {
-                  TRC (("g_ptr_array_free (iscissors->livewire->points);\n"));
-                  g_ptr_array_free (iscissors->livewire->points, TRUE);
-                }
-
-              TRC (("g_free (iscissors->livewire);\n"));
+                g_ptr_array_free (iscissors->livewire->points, TRUE);
+                
               g_free (iscissors->livewire);
 
               iscissors->livewire = NULL;
 	    }
 
           iscissors->livewire = curve;
-          TRC (("calculate curve\n"));
           calculate_curve (tool, curve);
           curve = NULL;
         }
@@ -887,8 +822,7 @@ iscissors_draw (Tool *tool)
 		      POINT_WIDTH, POINT_WIDTH, 0, 23040);
 
       /*  Go through the list of icurves, and render each one...  */
-      list = iscissors->curves;
-      while (list)
+      for (list = iscissors->curves; list; list = g_slist_next (list))
 	{
 	  curve = (ICurve *) list->data;
 
@@ -901,8 +835,6 @@ iscissors_draw (Tool *tool)
 	  gdk_draw_arc (iscissors->core->win, iscissors->core->gc, 1,
 			tx1 - POINT_HALFWIDTH, ty1 - POINT_HALFWIDTH, 
 			POINT_WIDTH, POINT_WIDTH, 0, 23040);
-
-	  list = g_slist_next (list);
 	}
     }
 
@@ -944,7 +876,7 @@ iscissors_draw_curve (GDisplay  *gdisp,
   gpointer *point;
   guint     len;
   gint      tx, ty;
-  gint      npts;
+  gint      npts = 0;
   guint32   coords;
 
   /* Uh, this shouldn't happen, but it does.  So we ignore it.
@@ -952,7 +884,6 @@ iscissors_draw_curve (GDisplay  *gdisp,
   if (!curve->points)
       return;
 
-  npts = 0;
   point = curve->points->pdata;
   len = curve->points->len;
   while (len--)
@@ -1198,13 +1129,10 @@ iscissors_control (Tool       *tool,
 static void
 iscissors_reset (Iscissors *iscissors)
 {
-  TRC( ("iscissors_reset\n"));
-
   /*  Free and reset the curve list  */
   if (iscissors->curves)
     {
       iscissors_free_icurves (iscissors->curves);
-      TRC (("g_slist_free (iscissors->curves);\n"));
       g_slist_free (iscissors->curves);
       iscissors->curves = NULL;
     }
@@ -1219,13 +1147,11 @@ iscissors_reset (Iscissors *iscissors)
     {
       /* release any tile we were using */
       if (cur_tile)
-      {
-	TRC (("tile_release\n"));
-	tile_release (cur_tile, FALSE);
-      }
-      cur_tile = NULL;
+	{
+	  tile_release (cur_tile, FALSE);
+          cur_tile = NULL;
+        }
 
-      TRC (("tile_manager_destroy (iscissors->gradient_map);\n"));
       tile_manager_destroy (iscissors->gradient_map);
       iscissors->gradient_map = NULL;
     }
@@ -1255,17 +1181,12 @@ iscissors_free_icurves (GSList *list)
 {
   ICurve * curve;
 
-  TRC (("iscissors_free_icurves\n"));
-
   while (list)
     {
       curve = (ICurve *) list->data;
       if (curve->points)
-	{
-	  TRC (("g_ptr_array_free (curve->points);\n"));
-	  g_ptr_array_free (curve->points, TRUE);
-	}
-      TRC (("g_free (curve);\n"));
+	g_ptr_array_free (curve->points, TRUE);
+
       g_free (curve);
       list = g_slist_next (list);
     }
@@ -1465,12 +1386,6 @@ precalculate_arrays (void)
       direction_value [i][1] = abs (127 - i) * 2;
       direction_value [i][2] = abs (191 - i) * 2;
       direction_value [i][3] = abs (63 - i) * 2;
-
-      TRC (("i: %d, v0: %d, v1: %d, v2: %d, v3: %d\n", i,
-	    direction_value [i][0],
-	    direction_value [i][1],
-	    direction_value [i][2],
-	    direction_value [i][3]));
     }
 
   /*  set the 256th index of the direction_values to the hightest cost  */
@@ -1492,8 +1407,6 @@ calculate_curve (Tool   *tool,
   gint       x1, y1, x2, y2;
   gint       width, height;
   gint       ewidth, eheight;
-
-  TRC (("calculate_curve(%p, %p)\n", tool, curve));
 
   /*  Calculate the lowest cost path from one vertex to the next as specified
    *  by the parameter "curve".
@@ -1540,7 +1453,6 @@ calculate_curve (Tool   *tool,
   /* blow away any previous points list we might have */
   if (curve->points)
     {
-      TRC (("1229: g_ptr_array_free (curve->points);\n"));
       g_ptr_array_free (curve->points, TRUE);
       curve->points = NULL;
     }
@@ -1556,18 +1468,15 @@ calculate_curve (Tool   *tool,
       if (!iscissors->gradient_map)
 	  iscissors->gradient_map = gradient_map_new (gdisp->gimage);
 
-      TRC (("dp buf resize\n"));
       /*  allocate the dynamic programming array  */
       iscissors->dp_buf = 
 	temp_buf_resize (iscissors->dp_buf, 4, x1, y1, width, height);
 
-      TRC (("find_optimal_path\n"));
       /*  find the optimal path of pixels from (x1, y1) to (x2, y2)  */
       find_optimal_path (iscissors->gradient_map, iscissors->dp_buf,
 			 x1, y1, x2, y2, xs, ys);
       
       /*  get a list of the pixels in the optimal path  */
-      TRC (("plot_pixels\n"));
       curve->points = plot_pixels (iscissors, iscissors->dp_buf,
 				   x1, y1, xs, ys, xe, ye);
     }
@@ -1748,14 +1657,8 @@ find_optimal_path (TileManager *gradient_map,
   guint32 pixel [8];
   guint32 * data, *d;
 
-  TRC (("find_optimal_path (%p, %p, [%d,%d-%d,%d] %d, %d)\n",
-	gradient_map, dp_buf, x1, y1, x2, y2, xs, ys));
-
   /*  initialize the dynamic programming buffer  */
-  data = (guint32 *) temp_buf_data (dp_buf);
-  for (i = 0; i < dp_buf->height; i++)
-    for (j = 0; j < dp_buf->width; j++)
-      *data++ = 0;  /*  0 cumulative cost, 0 direction  */
+  data = (guint32 *) temp_buf_data_clear (dp_buf);
 
   /*  what directions are we filling the array in according to?  */
   dirx = (xs - x1 == 0) ? 1 : -1;
@@ -1763,11 +1666,6 @@ find_optimal_path (TileManager *gradient_map,
   linkdir = (dirx * diry);
 
   y = ys;
-
-  /*  Start the data pointer at the correct location  */
-  data = (guint32 *) temp_buf_data (dp_buf);
-
-  TRC (("find_optimal_path: mainloop\n"));
 
   for (i = 0; i < dp_buf->height; i++)
     {
@@ -1864,8 +1762,6 @@ find_optimal_path (TileManager *gradient_map,
       /*  increment the y counter  */
       y += diry;
     }
-
-  TRC (("done: find_optimal_path\n"));
 }
 
 
@@ -1906,21 +1802,14 @@ gradmap_tile_validate (TileManager *tm,
   dw = tile_ewidth (tile);
   dh = tile_eheight (tile);
 
-  TRC (("fill req for tile %p @ (%d, %d)\n", tile, x, y));
-
   /* get corresponding tile in the gimage */
   srctile = tile_manager_get_tile (gimp_image_composite (gimage),
 				   x, y, TRUE, FALSE);
   if (!srctile)
-    {
-      g_warning ("bad tile coords?");
-      return;
-    }
+    return;
+  
   sw = tile_ewidth (srctile);
   sh = tile_eheight (srctile);
-
-  if (dw != sw || dh != sh)
-    g_warning ("dw:%d sw:%d  dh:%d sh:%d\n", dw, sw, dh, sh);
 
   srcPR.w = MIN (dw, sw);
   srcPR.h = MIN (dh, sh);
@@ -1993,21 +1882,11 @@ gradmap_tile_validate (TileManager *tm,
 	  else
 	    gradmap[j*COST_WIDTH + 1] = 255; /* reserved for weak gradient */
 
-	contin:
-	  {
-#ifdef DEBUG
-	    int g = gradmap[j*COST_WIDTH];
-	    int d = gradmap[j*COST_WIDTH + 1];
-	    TRC (("%c%c", 'a' + (g * 25 / 255), '0' + (d / 25)));
-#endif /* DEBUG */
-	  }
-
+contin:
 	  datah += srcPR.bytes;
 	  datav += srcPR.bytes;
 	}
-      TRC (("\n"));
     }
-  TRC (("\n"));
 
   tile_release (srctile, FALSE);
 }
@@ -2040,8 +1919,6 @@ find_max_gradient (Iscissors *iscissors,
   void   *pr;
   guint8 *gradient;
   gfloat  g, max_gradient;
-
-  TRC (("find_max_gradient(%d, %d)\n", *x, *y));
 
   /* Initialise the gradient map tile manager for this image if we
    * don't already have one. */
@@ -2093,8 +1970,6 @@ find_max_gradient (Iscissors *iscissors,
 	    }
 	}
     }
-
-  TRC (("done: find_max_gradient(%d, %d)\n", *x, *y));
 }
 
 /* End of iscissors.c */

@@ -59,6 +59,7 @@ TempBuf * temp_buf_copy_area  (TempBuf *,
 			       gint     );
 void      temp_buf_free       (TempBuf *);
 guchar  * temp_buf_data       (TempBuf *);
+guchar  * temp_buf_data_clear (TempBuf *);
 
 /* The mask buffer functions  */
 

@@ -1,3 +1,12 @@
+2001-01-02  Daniel Egger  <egger@suse.de>
+
+	* app/temp_buf.c:
+	* app/temp_buf.h: Add a new function "temp_buf_data_clear" to
+	get a nulled chunk of memory.
+	
+	* app/iscissors.c: Use it here instead of two expensive for
+	loops. Clean up the source a little.
+
 2001-01-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/bezier_select.c

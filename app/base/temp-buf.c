@@ -354,6 +354,15 @@ temp_buf_data (TempBuf *temp_buf)
   return temp_buf->data;
 }
 
+guchar *
+temp_buf_data_clear (TempBuf *temp_buf)
+{
+  if (temp_buf->swapped)
+    temp_buf_unswap (temp_buf);
+  
+  memset (temp_buf->data, 0, temp_buf->height * temp_buf->width);
+  return temp_buf->data;
+}
 
 /******************************************************************
  *  Mask buffer functions                                         *
