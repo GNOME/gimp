@@ -1,3 +1,9 @@
+2002-11-07  Dave Neary  <bolsh@gimp.org>
+	* help/C/images/brush_dialog.png
+	* help/C/dialogs/brush_selection.html: Applied patch from
+	Cameron Gregory <cameron@bloke.com> to add missing help
+	file. Closes bug #92377.
+
 2002-11-06  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/png.c: applied patch from Raphael Quinet that
