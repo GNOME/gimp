@@ -697,7 +697,6 @@ randomize_dialog (void)
   GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *seed_hbox;
-  GtkWidget *spinbutton;
   GtkObject *adj;
   gchar **argv;
   gint    argc;

@@ -226,8 +226,8 @@ gimp_dialog_create_action_areav (GtkDialog *dialog,
     {
       callback       = va_arg (args, GtkSignalFunc);
       data           = va_arg (args, gpointer);
-      slot_object    = va_arg (args, gpointer);
-      widget_ptr     = va_arg (args, gpointer);
+      slot_object    = va_arg (args, GtkObject *);
+      widget_ptr     = va_arg (args, GtkWidget **);
       default_action = va_arg (args, gboolean);
       connect_delete = va_arg (args, gboolean);
 

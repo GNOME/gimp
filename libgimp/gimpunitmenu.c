@@ -27,10 +27,10 @@
 #include "gimpintl.h"
 
 /*  private functions  */
-static const gchar * gimp_unit_menu_build_string (gchar *format,
-						  GUnit unit);
+static const gchar * gimp_unit_menu_build_string (gchar     *format,
+						  GUnit      unit);
 static void          gimp_unit_menu_callback     (GtkWidget *widget,
-						  gpointer data);
+						  gpointer   data);
 
 enum
 {

@@ -1,3 +1,17 @@
+2000-01-28  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimpwidgets.[ch]: added one more option menu constructor
+	and made the namespace more consistent, minor fixes.
+
+	* libgimp/gimpdialog.c
+	* libgimp/gimpunitmenu.c: minor fixes.
+
+	* app/preferences_dialog.c
+	* plug-ins/borderaverage/borderaverage.c
+	* plug-ins/common/gif.c
+	* plug-ins/common/randomize.c: changed according to the above
+	namespace cleanups.
+
 Thu Jan 27 23:54:05 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/newsprint.c

@@ -35,25 +35,110 @@ static void gimp_toggle_button_sensitive_update (GtkToggleButton *toggle_button)
 
 
 /*
- *  Widget Constructors...
+ *  Widget Constructors
  */
 
 GtkWidget *
-gimp_option_menu_new (GtkSignalFunc   menu_item_callback,
-		      gpointer        data,
-		      gpointer        initial, /* user_data */
+gimp_option_menu_new (gboolean            menu_only,
 
 		      /* specify menu items as va_list:
-		       *  gchar      *label,
-		       *  gpointer    user_data,
-		       *  GtkWidget **widget_ptr,
+		       *  gchar          *label,
+		       *  GtkSignalFunc   callback,
+		       *  gpointer        data,
+		       *  gpointer        user_data,
+		       *  GtkWidget     **widget_ptr,
+		       *  gboolean        active
 		       */
 
-		      ...)
+		       ...)
 {
   GtkWidget *menu;
   GtkWidget *menuitem;
-  GtkWidget *optionmenu;
+
+  /*  menu item variables  */
+  gchar          *label;
+  GtkSignalFunc   callback;
+  gpointer        data;
+  gpointer        user_data;
+  GtkWidget     **widget_ptr;
+  gboolean        active;
+
+  va_list args;
+  gint    i;
+  gint    initial_index;
+
+  menu = gtk_menu_new ();
+
+  /*  create the menu items  */
+  initial_index = 0;
+  va_start (args, menu_only);
+  label = va_arg (args, gchar*);
+  for (i = 0; label; i++)
+    {
+      callback   = va_arg (args, GtkSignalFunc);
+      data       = va_arg (args, gpointer);
+      user_data  = va_arg (args, gpointer);
+      widget_ptr = va_arg (args, GtkWidget **);
+      active     = va_arg (args, gboolean);
+
+      if (label != (gpointer) 1)
+	menuitem = gtk_menu_item_new_with_label (label);
+      else
+	menuitem = gtk_menu_item_new ();
+
+      gtk_menu_append (GTK_MENU (menu), menuitem);
+      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			  callback,
+			  data);
+
+      if (user_data)
+	gtk_object_set_user_data (GTK_OBJECT (menuitem), user_data);
+
+      if (widget_ptr)
+	*widget_ptr = menuitem;
+
+      gtk_widget_show (menuitem);
+
+      /*  remember the initial menu item  */
+      if (active)
+	initial_index = i;
+
+      label = va_arg (args, gchar*);
+    }
+  va_end (args);
+
+  if (! menu_only)
+    {
+      GtkWidget *optionmenu;
+
+      optionmenu = gtk_option_menu_new ();
+      gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), menu);
+
+      /*  select the initial menu item  */
+      gtk_option_menu_set_history (GTK_OPTION_MENU (optionmenu), initial_index);
+
+      return optionmenu;
+    }
+
+  return menu;
+}
+
+GtkWidget *
+gimp_option_menu_new2 (gboolean        menu_only,
+		       GtkSignalFunc   menu_item_callback,
+		       gpointer        data,
+		       gpointer        initial, /* user_data */
+
+		       /* specify menu items as va_list:
+			*  gchar      *label,
+			*  gpointer    user_data,
+			*  GtkWidget **widget_ptr,
+			*/
+
+		       ...)
+{
+  GtkWidget *menu;
+  GtkWidget *menuitem;
 
   /*  menu item variables  */
   gchar      *label;
@@ -73,7 +158,7 @@ gimp_option_menu_new (GtkSignalFunc   menu_item_callback,
   for (i = 0; label; i++)
     {
       user_data  = va_arg (args, gpointer);
-      widget_ptr = va_arg (args, gpointer);
+      widget_ptr = va_arg (args, GtkWidget **);
 
       if (label != (gpointer) 1)
 	menuitem = gtk_menu_item_new_with_label (label);
@@ -101,13 +186,20 @@ gimp_option_menu_new (GtkSignalFunc   menu_item_callback,
     }
   va_end (args);
 
-  optionmenu = gtk_option_menu_new ();
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), menu);
+  if (! menu_only)
+    {
+      GtkWidget *optionmenu;
 
-  /*  select the initial menu item  */
-  gtk_option_menu_set_history (GTK_OPTION_MENU (optionmenu), initial_index);
+      optionmenu = gtk_option_menu_new ();
+      gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), menu);
 
-  return optionmenu;
+      /*  select the initial menu item  */
+      gtk_option_menu_set_history (GTK_OPTION_MENU (optionmenu), initial_index);
+
+      return optionmenu;
+    }
+
+  return menu;
 }
 
 GtkWidget *
@@ -160,7 +252,7 @@ gimp_radio_group_new (gboolean            in_frame,
       callback   = va_arg (args, GtkSignalFunc);
       data       = va_arg (args, gpointer);
       user_data  = va_arg (args, gpointer);
-      widget_ptr = va_arg (args, gpointer);
+      widget_ptr = va_arg (args, GtkWidget **);
       active     = va_arg (args, gboolean);
 
       if (label != (gpointer) 1)
@@ -181,7 +273,7 @@ gimp_radio_group_new (gboolean            in_frame,
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
-			  GTK_SIGNAL_FUNC (callback),
+			  callback,
 			  data);
 
       gtk_widget_show (button);
@@ -199,7 +291,7 @@ gimp_radio_group_new (gboolean            in_frame,
 GtkWidget *
 gimp_radio_group_new2 (gboolean        in_frame,
 		       gchar          *frame_title,
-		       GtkSignalFunc   callback,
+		       GtkSignalFunc   radio_button_callback,
 		       gpointer        data,
 		       gpointer        initial, /* user_data */
 
@@ -241,7 +333,7 @@ gimp_radio_group_new2 (gboolean        in_frame,
   while (label)
     {
       user_data  = va_arg (args, gpointer);
-      widget_ptr = va_arg (args, gpointer);
+      widget_ptr = va_arg (args, GtkWidget **);
 
       if (label != (gpointer) 1)
 	button = gtk_radio_button_new_with_label (group, label);
@@ -261,7 +353,7 @@ gimp_radio_group_new2 (gboolean        in_frame,
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
-			  GTK_SIGNAL_FUNC (callback),
+			  radio_button_callback,
 			  data);
 
       gtk_widget_show (button);
@@ -433,7 +525,7 @@ gimp_random_seed_new (gint *seed,
 }
 
 /*
- *  Standard Callbacks...
+ *  Standard Callbacks
  */
 
 static void
@@ -561,24 +653,24 @@ gimp_unit_menu_update (GtkWidget *widget,
 }
 
 /*
- *  Helper Functions...
+ *  Helper Functions
  */
 
 /*  add aligned label & widget to a two-column table  */
 void
 gimp_table_attach_aligned (GtkTable  *table,
 			   gint       row,
-			   gchar     *text,
+			   gchar     *label_text,
 			   gfloat     xalign,
 			   gfloat     yalign,
 			   GtkWidget *widget,
 			   gboolean   left_adjust)
 {
-  if (text)
+  if (label_text)
     {
       GtkWidget *label;
 
-      label = gtk_label_new (text);
+      label = gtk_label_new (label_text);
       gtk_misc_set_alignment (GTK_MISC (label), xalign, yalign);
       gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_RIGHT);
       gtk_table_attach (table, GTK_WIDGET (label), 0, 1, row, row + 1,

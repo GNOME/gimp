@@ -32,7 +32,21 @@ extern "C" {
  *  Widget Constructors
  */
 
-GtkWidget * gimp_option_menu_new   (GtkSignalFunc       menu_item_callback,
+GtkWidget * gimp_option_menu_new   (gboolean            menu_only,
+
+				    /* specify menu items as va_list:
+				     *  gchar          *label,
+				     *  GtkSignalFunc   callback,
+				     *  gpointer        data,
+				     *  gpointer        user_data,
+				     *  GtkWidget     **widget_ptr,
+				     *  gboolean        active
+				     */
+
+				    ...);
+
+GtkWidget * gimp_option_menu_new2  (gboolean            menu_only,
+				    GtkSignalFunc       menu_item_callback,
 				    gpointer            data,
 				    gpointer            initial, /* user_data */
 
@@ -60,7 +74,7 @@ GtkWidget * gimp_radio_group_new   (gboolean            in_frame,
 
 GtkWidget * gimp_radio_group_new2  (gboolean            in_frame,
 				    gchar              *frame_title,
-				    GtkSignalFunc       callback,
+				    GtkSignalFunc       radio_button_callback,
 				    gpointer            data,
 				    gpointer            initial, /* user_data */
 
@@ -136,7 +150,7 @@ void gimp_unit_menu_update         (GtkWidget          *widget,
 /*  add aligned label & widget to a two-column table  */
 void gimp_table_attach_aligned     (GtkTable           *table,
 				    gint                row,
-				    gchar              *text,
+				    gchar              *label_text,
 				    gfloat              xalign,
 				    gfloat              yalign,
 				    GtkWidget          *widget,

@@ -66,7 +66,12 @@ struct borderaverage_data
 {
   gint  thickness;
   gint  bucket_exponent;
-} borderaverage_data = { 3, 4 };
+}
+borderaverage_data =
+{
+  3,
+  4
+};
 
 
 MAIN ()
@@ -444,23 +449,21 @@ borderaverage_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  menu = gimp_option_menu_new (gimp_menu_item_update,
-			       &borderaverage_bucket_exponent,
-			       (gpointer) borderaverage_bucket_exponent,
+  menu = gimp_option_menu_new2 (FALSE, gimp_menu_item_update,
+				&borderaverage_bucket_exponent,
+				(gpointer) borderaverage_bucket_exponent,
 
-			       _("1 (nonsense?)"),   (gpointer) 0, NULL,
-			       "2",                  (gpointer) 1, NULL,
-			       "4",                  (gpointer) 2, NULL,
-			       "8",                  (gpointer) 3, NULL,
-			       "16",                 (gpointer) 4, NULL,
-			       "32",                 (gpointer) 5, NULL,
-			       "64",                 (gpointer) 6, NULL,
-			       "128",                (gpointer) 7, NULL,
-			       _("256 (nonsense?)"), (gpointer) 8, NULL,
+				_("1 (nonsense?)"),   (gpointer) 0, NULL,
+				"2",                  (gpointer) 1, NULL,
+				"4",                  (gpointer) 2, NULL,
+				"8",                  (gpointer) 3, NULL,
+				"16",                 (gpointer) 4, NULL,
+				"32",                 (gpointer) 5, NULL,
+				"64",                 (gpointer) 6, NULL,
+				"128",                (gpointer) 7, NULL,
+				_("256 (nonsense?)"), (gpointer) 8, NULL,
 
-			       NULL);
-
-  
+				NULL);
   gtk_box_pack_start (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
   gtk_widget_show (menu);
 
