@@ -246,6 +246,7 @@ plug-ins/print/print.c
 plug-ins/rcm/rcm.c
 plug-ins/rcm/rcm_callback.c
 plug-ins/rcm/rcm_dialog.c
+plug-ins/sel2path/pxl-outline.c
 plug-ins/sel2path/sel2path.c
 plug-ins/sgi/sgi.c
 plug-ins/twain/twain.c

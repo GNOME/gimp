@@ -1,3 +1,9 @@
+2001-07-23  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added missing file
+	
+	* de.po: updated german translation.
+
 2001-07-20  Fatih Demir <kabalak@gtranslator.org>
 
 	* tr.po: Hm, small update by Alper Ersoy.
