@@ -1,5 +1,9 @@
 2003-07-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimppaintoptions-gui.c: removed double semicolons.
+
+2003-07-14  Michael Natterer  <mitch@gimp.org>
+
 	* tools/kernelgen.c: cleanup. Removed trailing whitespace in
 	generated output.
 

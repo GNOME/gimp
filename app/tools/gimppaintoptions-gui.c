@@ -263,7 +263,7 @@ pressure_options_gui (GimpPressureOptions *pressure,
       tool_type == GIMP_TYPE_PENCIL_TOOL)
     {
       button = gimp_prop_check_button_new (config, "pressure-opacity",
-                                           _("Opacity"));;
+                                           _("Opacity"));
       gtk_container_add (GTK_CONTAINER (wbox), button);
       gtk_widget_show (button);
     }
@@ -277,7 +277,7 @@ pressure_options_gui (GimpPressureOptions *pressure,
       tool_type == GIMP_TYPE_SMUDGE_TOOL)
     {
       button = gimp_prop_check_button_new (config, "pressure-pressure",
-                                           _("Hardness"));;
+                                           _("Hardness"));
       gtk_container_add (GTK_CONTAINER (wbox), button);
       gtk_widget_show (button);
     }
@@ -288,7 +288,7 @@ pressure_options_gui (GimpPressureOptions *pressure,
       tool_type == GIMP_TYPE_SMUDGE_TOOL)
     {
       button = gimp_prop_check_button_new (config, "pressure-rate",
-                                           _("Rate"));;
+                                           _("Rate"));
       gtk_container_add (GTK_CONTAINER (wbox), button);
       gtk_widget_show (button);
     }
@@ -303,7 +303,7 @@ pressure_options_gui (GimpPressureOptions *pressure,
       tool_type == GIMP_TYPE_PENCIL_TOOL)
     {
       button = gimp_prop_check_button_new (config, "pressure-size",
-                                           _("Size"));;
+                                           _("Size"));
       gtk_container_add (GTK_CONTAINER (wbox), button);
       gtk_widget_show (button);
     }
@@ -314,7 +314,7 @@ pressure_options_gui (GimpPressureOptions *pressure,
       tool_type == GIMP_TYPE_PENCIL_TOOL)
     {
       button = gimp_prop_check_button_new (config, "pressure-color",
-                                           _("Color"));;
+                                           _("Color"));
       gtk_container_add (GTK_CONTAINER (wbox), button);
       gtk_widget_show (button);
     }
