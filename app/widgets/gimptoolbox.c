@@ -627,6 +627,9 @@ toolbox_create_tools (GimpToolbox *toolbox,
 
   ui_manager = gimp_ui_managers_from_name ("<Image>")->data;
 
+  if (ui_manager)
+    gimp_ui_manager_ui_get (ui_manager, "/dummy-menubar");
+
   active_tool = gimp_context_get_tool (context);
 
   for (list = GIMP_LIST (context->gimp->tool_info_list)->list;
@@ -673,7 +676,6 @@ toolbox_create_tools (GimpToolbox *toolbox,
 			G_CALLBACK (toolbox_tool_button_press),
                         toolbox);
 
-#if 0
       if (ui_manager)
         {
           GimpActionGroup *group;
@@ -681,8 +683,7 @@ toolbox_create_tools (GimpToolbox *toolbox,
           const gchar     *identifier;
           gchar           *tmp;
           gchar           *name;
-          GClosure        *accel_closure;
-          GtkAccelGroup   *accel_group;
+          GClosure        *accel_closure = NULL;
 
           identifier = gimp_object_get_name (GIMP_OBJECT (tool_info));
 
@@ -696,26 +697,59 @@ toolbox_create_tools (GimpToolbox *toolbox,
 
           g_free (name);
 
+#if HAVE_GTK_ACTION_GET_ACCEL_CLOSURE
           accel_closure = gtk_action_get_accel_closure (action);
-
-          g_object_set_data (G_OBJECT (button), "toolbox-accel-closure",
-                             accel_closure);
-
-          accel_group =
-            gtk_accel_group_from_accel_closure (accel_closure);
-
-          g_signal_connect (accel_group, "accel_changed",
-                            G_CALLBACK (gimp_toolbox_button_accel_changed),
-                            button);
-
-          gimp_toolbox_button_accel_changed (accel_group,
-                                             0, 0,
-                                             accel_closure,
-                                             button);
-        }
 #else
-      gimp_help_set_help_data (button, tool_info->help, tool_info->help_id);
+          {
+            GSList *list;
+
+            for (list = gtk_action_get_proxies (action);
+                 list;
+                 list = g_slist_next (list))
+              {
+                if (GTK_IS_MENU_ITEM (list->data))
+                  {
+                    GtkWidget *label = GTK_BIN (list->data)->child;
+
+                    if (GTK_IS_ACCEL_LABEL (label))
+                      {
+                        g_object_get (label,
+                                      "accel-closure", &accel_closure,
+                                      NULL);
+
+                        if (accel_closure)
+                          break;
+                      }
+                  }
+              }
+          }
 #endif
+
+          if (accel_closure)
+            {
+              GtkAccelGroup *accel_group;
+
+              g_object_set_data (G_OBJECT (button), "toolbox-accel-closure",
+                                 accel_closure);
+
+              accel_group =
+                gtk_accel_group_from_accel_closure (accel_closure);
+
+              g_signal_connect (accel_group, "accel_changed",
+                                G_CALLBACK (gimp_toolbox_button_accel_changed),
+                                button);
+
+              gimp_toolbox_button_accel_changed (accel_group,
+                                                 0, 0,
+                                                 accel_closure,
+                                                 button);
+            }
+          else
+            {
+              gimp_help_set_help_data (button,
+                                       tool_info->help, tool_info->help_id);
+            }
+        }
     }
 
   g_signal_connect_object (context->gimp->tool_info_list, "reorder",
