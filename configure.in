@@ -43,7 +43,7 @@ fi)
 
 AC_DEFUN(AC_GIMP_CHECK,
 [
-	AM_PATH_GTK(1.0.3,,
+	AM_PATH_GTK(1.2.0,,
  	  AC_MSG_ERROR(Test for GTK failed. See the file 'INSTALL' for help.))
         X_LIBS=$GTK_LIBS
         X_CFLAGS=$GTK_CFLAGS

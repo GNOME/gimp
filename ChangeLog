@@ -1,3 +1,9 @@
+Sun Mar 28 14:38:53 PST 1999 Manish Singh <yosh@gimp.org>
+
+	* updated to libtool 1.2f
+
+	* configure.in: require gtk 1.2
+
 Sat Mar 27 01:13:42 EST 1999  Matt Wilson  <msw@gimp.org>
 
 	* app/app_procs.c: removed the idle function from the
