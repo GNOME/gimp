@@ -21,10 +21,7 @@
 
 #include "config.h"
 
-#include <stdlib.h>
 #include <string.h>
-
-#include <locale.h>
 
 #include <glib-object.h>
 #include <pango/pango.h>
@@ -38,6 +35,7 @@
 #include "config/gimpconfig-params.h"
 
 #include "core/gimpstrokeoptions.h"
+#include "core/gimp-utils.h"
 
 #include "gimptext.h"
 

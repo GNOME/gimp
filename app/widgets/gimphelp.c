@@ -38,6 +38,7 @@
 #include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimp-utils.h"
 
 #include "pdb/procedural_db.h"
 
