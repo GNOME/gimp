@@ -1604,8 +1604,6 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
   gint lind = -1;
   gint lnum = -1;
 
-  g_print ("boo\n");
-
   if (gdisp)
     {
       fs = (gimage_floating_sel (gdisp->gimage) != NULL);
