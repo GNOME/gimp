@@ -1,3 +1,9 @@
+2004-09-25  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/common/dog.c: made the preview behave like in all other
+	plug-ins by using a GimpDrawablePreview.  This allowed to remove a
+	bunch of complicated code.
+
 2004-09-25  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimptemplateeditor.[ch]: added resolution and image

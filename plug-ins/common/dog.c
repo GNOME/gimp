@@ -42,32 +42,8 @@ typedef struct
   gdouble  outer;
   gboolean normalize;
   gboolean invert;
-  gint32   preview_x0;
-  gint32   preview_y0;
+  gboolean preview;
 } DoGValues;
-
-#define PREVIEWSIZE 128
-
-typedef struct
-{
-  gint32        gimpimageid;
-  GimpDrawable *drawable;
-  gint32        src_id;
-  gint32        preview_id;
-  GtkWidget    *vbox;
-  GtkWidget    *sourceimage;
-  GtkWidget    *previewimage;
-  GtkWidget    *update_button;
-  guchar       *src_buffer;
-  guchar       *preview_buffer;
-  GimpPixelRgn  src_rgn;
-  GimpPixelRgn  preview_rgn;
-  GtkObject    *hadjust;
-  GtkObject    *vadjust;
-  gboolean      update_policy;
-}
-Preview;
-
 
 /* Declare local functions.
  */
@@ -99,12 +75,8 @@ static void      dog                  (GimpDrawable *drawable,
                                        gdouble       outer,
                                        gboolean      show_progress);
 
-static Preview * preview_new             (gint32     drawable_id);
-
-static void      preview_update_src_view (GtkWidget *widget,
-                                          gpointer   data);
-static void      preview_update_preview  (GtkWidget *widget,
-                                          gpointer   data);
+static void      preview_update_preview  (GimpDrawablePreview *preview,
+                                          GimpDrawable        *drawable);
 static void      change_radius_callback  (GtkWidget *widget,
                                           gpointer   data);
 
@@ -132,12 +104,11 @@ GimpPlugInInfo PLUG_IN_INFO =
 static DoGValues dogvals =
 {
   3.0,  /* inner radius  */
-  1.0, /* outer radius  */
-  TRUE, /* normalize */
-  TRUE /* invert */
+  1.0,  /* outer radius  */
+  TRUE, /* normalize     */
+  TRUE, /* invert        */
+  TRUE, /* preview       */
 };
-
-GtkWidget *coord;
 
 MAIN ()
 
@@ -286,11 +257,12 @@ static gint
 dog_dialog (gint32        image_ID,
             GimpDrawable *drawable)
 {
-  GtkWidget *dlg;
+  GtkWidget *dialog;
   GtkWidget *frame;
   GtkWidget *button;
-  GtkWidget *vbox;
-  Preview   *preview;
+  GtkWidget *main_vbox;
+  GtkWidget *preview;
+  GtkWidget *coord;
   GimpUnit   unit;
   gdouble    xres;
   gdouble    yres;
@@ -298,26 +270,29 @@ dog_dialog (gint32        image_ID,
 
   gimp_ui_init ("dog", FALSE);
 
-  dlg = gimp_dialog_new (_("DoG Edge Detect"), "dog",
-                         NULL, 0,
-                         gimp_standard_help_func, "plug-in-dog",
+  dialog = gimp_dialog_new (_("DoG Edge Detect"), "dog",
+                            NULL, 0,
+                            gimp_standard_help_func, "plug-in-dog",
 
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                         NULL);
+                            NULL);
 
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
 
-  preview = preview_new (drawable->drawable_id);
-  gtk_box_pack_start (GTK_BOX (vbox), preview->vbox, FALSE, FALSE, 0);
-  gtk_widget_show (preview->vbox);
+  preview = gimp_drawable_preview_new (drawable, &dogvals.preview);
+  gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
+  gtk_widget_show (preview);
+  g_signal_connect (preview, "invalidated",
+                    G_CALLBACK (preview_update_preview),
+                    drawable);
 
   frame = gimp_frame_new (_("Smoothing parameters"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   /*  Get the image resolution and unit  */
@@ -347,30 +322,30 @@ dog_dialog (gint32        image_ID,
                     preview);
 
   button = gtk_check_button_new_with_mnemonic (_("_Normalize"));
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), dogvals.normalize);
   g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &dogvals.normalize);
-  g_signal_connect (button, "toggled",
-                    G_CALLBACK (preview_update_preview),
-                    preview);
+  g_signal_connect_swapped (button, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
   gtk_widget_show (button);
 
   button = gtk_check_button_new_with_mnemonic (_("_Invert"));
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), dogvals.invert);
   g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &dogvals.invert);
-  g_signal_connect (button, "toggled",
-                    G_CALLBACK (preview_update_preview),
-                    preview);
+  g_signal_connect_swapped (button, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
   gtk_widget_show (button);
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
   if (run)
     {
@@ -378,9 +353,8 @@ dog_dialog (gint32        image_ID,
       dogvals.outer = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (coord), 1);
     }
 
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
-  gimp_image_delete (preview->gimpimageid);
 
   return run;
 }
@@ -933,258 +907,68 @@ run_length_encode (guchar *src,
     }
 }
 
-
-static Preview *
-preview_new (gint32 drawable_id)
+static void
+preview_update_preview (GimpDrawablePreview *preview,
+                        GimpDrawable        *drawable)
 {
-  GtkWidget *box;
-  GtkWidget *label;
-  GtkWidget *hscroll, *vscroll;
-  GtkWidget *table;
-  GdkPixbuf *pixbuf;
-  Preview   *preview;
-  gint       width, height, bpp;
-  gint       w;
-  gdouble    x0, y0;
+  gint          x1, y1;
+  gint          width, height;
+  gint          bpp;
+  guchar       *buffer;
+  GimpPixelRgn  src_rgn;
+  GimpPixelRgn  preview_rgn;
+  gint32        image_id;
+  gint32        preview_id;
+  GimpDrawable *preview_drawable;
 
-  preview = g_new (Preview, 1);
-  preview->src_id = drawable_id;
+  bpp = gimp_drawable_bpp (drawable->drawable_id);
 
-  preview->vbox = box = gtk_vbox_new (FALSE, 0);
+  gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
+  gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
 
-  width = gimp_drawable_width (drawable_id);
-  height = gimp_drawable_height (drawable_id);
-  bpp = gimp_drawable_bpp (drawable_id);
-  w = PREVIEWSIZE;
+  buffer = g_new (guchar, width * height * bpp);
 
-  table = gtk_table_new (4, 5, FALSE);
-  gtk_box_pack_start (GTK_BOX (box), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
-
-  /* "Source" label in top row, first column */
-  label = gtk_label_new (_("Source"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL, 0, 0, 5);
-  gtk_widget_show (label);
-
-  /* GtkImage for peek at original in second row, first column */
-  preview->src_buffer = g_new (guchar, bpp * w * w);
-
-  gimp_pixel_rgn_init (&preview->src_rgn, gimp_drawable_get (drawable_id),
-                       0, 0, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_get_rect (&preview->src_rgn, preview->src_buffer, 0, 0, w, w);
-
-  pixbuf = gdk_pixbuf_new_from_data (preview->src_buffer,
-                                     GDK_COLORSPACE_RGB,
-                                     gimp_drawable_has_alpha (drawable_id),
-                                     8, w, w,
-                                     bpp * w,
-                                     NULL, NULL);
-  preview->sourceimage = gtk_image_new_from_pixbuf (pixbuf);
-  g_object_unref (pixbuf);
-
-  gtk_table_attach (GTK_TABLE (table), preview->sourceimage,
-                    0, 1, 1, 2, 0, 0, 0, 0);
-  gtk_widget_show (preview->sourceimage);
-
-  /* vertical scrollbar in second row, second column */
-  y0 = CLAMP (dogvals.preview_y0, 0., (gdouble)(height - w));
-  preview->vadjust = gtk_adjustment_new (y0, 0., height, 1., 10., w);
-  g_signal_connect (preview->vadjust, "value-changed",
-                    G_CALLBACK (preview_update_src_view),
-                    preview);
-  g_signal_connect (preview->vadjust, "value-changed",
-                    G_CALLBACK (preview_update_preview),
-                    preview);
-  vscroll = gtk_vscrollbar_new (GTK_ADJUSTMENT (preview->vadjust));
-  gtk_range_set_update_policy (GTK_RANGE (vscroll), GTK_UPDATE_DISCONTINUOUS);
-  gtk_table_attach (GTK_TABLE (table), vscroll, 1, 2, 1, 2, 0, GTK_FILL, 0, 0);
-  gtk_widget_show (vscroll);
-
-  /* horizontal scrollbar in third row, first column */
-  x0 = CLAMP (dogvals.preview_x0, 0., (gdouble)(width - w));
-  preview->hadjust = gtk_adjustment_new (x0, 0., width, 1., 10., w);
-  g_signal_connect (preview->hadjust, "value-changed",
-                    G_CALLBACK (preview_update_src_view),
-                    preview);
-  g_signal_connect (preview->hadjust, "value-changed",
-                    G_CALLBACK (preview_update_preview),
-                    preview);
-  hscroll = gtk_hscrollbar_new (GTK_ADJUSTMENT (preview->hadjust));
-  gtk_range_set_update_policy (GTK_RANGE (hscroll), GTK_UPDATE_DISCONTINUOUS);
-  gtk_table_attach (GTK_TABLE (table), hscroll, 0, 1, 2, 3, GTK_FILL, 0, 0, 0);
-  gtk_widget_show (hscroll);
-
-  gtk_table_set_col_spacing (GTK_TABLE (table), 2, 12);
-
-  /* "Preview" label in first row, third column */
-  label = gtk_label_new (_("Preview"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1, GTK_FILL, 0, 5, 0);
-  gtk_widget_show (label);
+  gimp_pixel_rgn_init (&src_rgn, drawable,
+                       x1, y1, width, height, FALSE, FALSE);
+  gimp_pixel_rgn_get_rect (&src_rgn, buffer,
+                           x1, y1, width, height);
 
   /* set up gimp drawable for rendering preview into */
-  preview->gimpimageid = gimp_image_new (w, w, GIMP_RGB);
-  /*gimp_image_undo_disable (preview->gimpimageid);*/
-  preview->preview_id = gimp_layer_new (preview->gimpimageid, "preview", w, w,
-                                        gimp_drawable_type (preview->src_id),
-                                        100,
-                                        GIMP_NORMAL_MODE);
-  preview->drawable = gimp_drawable_get (preview->preview_id);
-  gimp_image_add_layer (preview->gimpimageid, preview->preview_id, 0);
-  gimp_layer_set_offsets (preview->preview_id, 0, 0);
-  gimp_pixel_rgn_init (&preview->preview_rgn, preview->drawable,
-                       0, 0, w, w, TRUE, TRUE);
-  bpp = gimp_drawable_bpp (preview->preview_id);
-  gimp_tile_cache_ntiles (2 * (1 + preview->drawable->ntile_rows)
-                          * (1 + preview->drawable->ntile_cols));
+  image_id = gimp_image_new (width, height, GIMP_RGB);
+  preview_id = gimp_layer_new (image_id, "preview", width, height,
+                               gimp_drawable_type (drawable->drawable_id),
+                               100,
+                               GIMP_NORMAL_MODE);
+  preview_drawable = gimp_drawable_get (preview_id);
+  gimp_image_add_layer (image_id, preview_id, 0);
+  gimp_layer_set_offsets (preview_id, 0, 0);
+  gimp_pixel_rgn_init (&preview_rgn, preview_drawable,
+                       0, 0, width, height, TRUE, TRUE);
+  gimp_pixel_rgn_set_rect (&preview_rgn, buffer,
+                           0, 0, width, height);
+  gimp_drawable_flush (preview_drawable);
+  gimp_drawable_merge_shadow (preview_id, TRUE);
+  gimp_drawable_update (preview_id, 0, 0, width, height);
 
-  /* GtkImage for preview in second row, third column */
-  preview->preview_buffer = g_new (guchar, bpp * w * w);
-  pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
-                           gimp_drawable_has_alpha (preview->preview_id),
-                           8, w, w);
-  gdk_pixbuf_fill (pixbuf, 0x000000ff /* opaque black */);
-  preview->previewimage = gtk_image_new_from_pixbuf (pixbuf);
-  g_object_unref (pixbuf);
+  dog (preview_drawable, dogvals.inner, dogvals.outer, FALSE);
 
-  gtk_table_attach (GTK_TABLE (table), preview->previewimage,
-                    2, 3, 1, 2, 0, 0, 5, 0);
-  gtk_widget_show (preview->previewimage);
+  gimp_pixel_rgn_get_rect (&preview_rgn, buffer,
+                           0, 0, width, height);
 
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (preview->hadjust),
-                            dogvals.preview_x0);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (preview->vadjust),
-                            dogvals.preview_y0);
+  gimp_drawable_preview_draw_buffer (preview, buffer, width * bpp);
 
-  preview_update_src_view (preview->vbox, preview);
-  preview_update_preview (NULL, preview);
-
-  return preview;
+  gimp_image_delete (image_id);
+  g_free (buffer);
 }
 
-
 static void
-preview_update_src_view (GtkWidget *widget,
-                         gpointer   data)
-{
-  Preview   *preview = data;
-  GdkPixbuf *pixbuf;
-  gint       x0, y0;
-  gint       w = PREVIEWSIZE;
-  gint       bpp = gimp_drawable_bpp (preview->src_id);
-  gboolean   has_alpha = gimp_drawable_has_alpha (preview->src_id);
-  gint       k;
-  guchar    *pixdata;
-  guchar    *src;
-
-  x0 = gtk_adjustment_get_value (GTK_ADJUSTMENT (preview->hadjust));
-  y0 = gtk_adjustment_get_value (GTK_ADJUSTMENT (preview->vadjust));
-  gimp_pixel_rgn_get_rect (&preview->src_rgn, preview->src_buffer,
-                           x0, y0, w, w);
-
-  /* it sucks that GdkPixbuf does not handle grayscale images */
-  if (bpp == 1 || bpp == 2)
-    {
-      pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
-                               has_alpha, 8, w, w);
-      pixdata = gdk_pixbuf_get_pixels (pixbuf);
-      src = preview->src_buffer;
-
-      for (k = 0; k < w * w; k++)
-        {
-          *(pixdata++) = *src;
-          *(pixdata++) = *src;
-          *(pixdata++) = *(src++);
-
-          if (has_alpha)
-            *(pixdata++) = *(src++);
-        }
-    }
-  else
-    {
-      pixbuf = gdk_pixbuf_new_from_data (preview->src_buffer,
-                                         GDK_COLORSPACE_RGB,
-                                         has_alpha, 8, w, w,
-                                         w*bpp, NULL, NULL);
-    }
-
-  gtk_image_set_from_pixbuf (GTK_IMAGE (preview->sourceimage), pixbuf);
-  g_object_unref (pixbuf);
-}
-
-
-static void
-preview_update_preview (GtkWidget *widget,
+change_radius_callback (GtkWidget *coord,
                         gpointer   data)
 {
-  Preview   *preview   = data;
-  GdkPixbuf *pixbuf;
-  gint       x0, y0;
-  gint       w         = PREVIEWSIZE;
-  gint       bpp       = gimp_drawable_bpp (preview->preview_id);
-  gint       has_alpha = gimp_drawable_has_alpha (preview->preview_id);
-  guchar    *pixdata;
-  guchar    *src;
-  gint       k;
+  GimpPreview *preview = GIMP_PREVIEW (data);
 
-  dogvals.preview_x0 = x0
-    = gtk_adjustment_get_value (GTK_ADJUSTMENT (preview->hadjust));
-  dogvals.preview_y0 = y0
-    = gtk_adjustment_get_value (GTK_ADJUSTMENT (preview->vadjust));
+  dogvals.inner = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (coord), 0);
+  dogvals.outer = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (coord), 1);
 
-
-  gimp_pixel_rgn_get_rect (&preview->src_rgn, preview->preview_buffer,
-                           x0, y0, w, w);
-  gimp_pixel_rgn_set_rect (&preview->preview_rgn, preview->preview_buffer,
-                           0, 0, w, w);
-  gimp_drawable_flush (preview->drawable);
-  gimp_drawable_merge_shadow (preview->preview_id, TRUE);
-  gimp_drawable_update (preview->preview_id, 0, 0, w, w);
-
-  dog (preview->drawable, dogvals.inner, dogvals.outer, FALSE);
-
-  gimp_pixel_rgn_get_rect (&preview->preview_rgn, preview->preview_buffer,
-                           0, 0, w, w);
-
-  /* it sucks that GdkPixbuf does not handle grayscale */
-  if (bpp == 1 || bpp == 2)
-    {
-      pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
-                               has_alpha, 8, w, w);
-      pixdata = gdk_pixbuf_get_pixels (pixbuf);
-      src = preview->preview_buffer;
-
-      for (k = 0; k < w * w; k++)
-        {
-          *(pixdata++) = *src;
-          *(pixdata++) = *src;
-          *(pixdata++) = *(src++);
-          if (has_alpha)
-            {
-              *(pixdata++) = *(src++);
-            }
-        }
-    }
-  else
-    {
-      pixbuf = gdk_pixbuf_new_from_data (preview->preview_buffer,
-                                         GDK_COLORSPACE_RGB,
-                                         has_alpha, 8, w, w,
-                                         w * bpp,
-                                         NULL, NULL);
-    }
-
-  gtk_image_set_from_pixbuf (GTK_IMAGE (preview->previewimage), pixbuf);
-  g_object_unref (pixbuf);
-}
-
-static void
-change_radius_callback (GtkWidget *widget,
-                        gpointer   data)
-{
-   dogvals.inner = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (coord), 0);
-   dogvals.outer = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (coord), 1);
-
-   preview_update_preview (widget, data);
+  gimp_preview_invalidate (preview);
 }
