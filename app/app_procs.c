@@ -110,8 +110,8 @@ app_init (gint    gimp_argc,
           const gchar *msg;
 
           msg = _("GIMP is not properly installed for the current user.\n"
-                  "User installation was skipped because the '--nointerface' flag was used.\n"
-                  "To perform user installation, run the GIMP without the '--nointerface' flag.");
+                  "User installation was skipped because the '--no-interface' flag was used.\n"
+                  "To perform user installation, run the GIMP without the '--no-interface' flag.");
 
           g_print ("%s\n\n", msg);
 	}

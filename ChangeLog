@@ -1,3 +1,11 @@
+2003-01-09  Sven Neumann  <sven@gimp.org>
+
+	* app/app_procs.c: fixed typos.
+
+	* app/tools/xinput_airbrush.[ch]: removed from CVS; can always be
+	resurrected from the Attic. The files kept getting in the way when
+	grepping the source.
+	
 2003-01-09  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/mblur.c: fixes #83968 (Motion Blur filter: disable 
