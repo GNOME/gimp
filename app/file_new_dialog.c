@@ -5,10 +5,13 @@
 #include "app_procs.h"
 #include "commands.h"
 #include "general.h"
+#include "gimage.h"
 #include "gimage_cmds.h"
 #include "gimprc.h"
+#include "global_edit.h"
 #include "interface.h"
 #include "plug_in.h"
+#include "tile_manager_pvt.h"
 
 typedef struct {
   GtkWidget *dlg;
@@ -49,6 +52,7 @@ static   int          last_fill_type = BACKGROUND_FILL;
 static   float        last_resolution = 72;     /* always in DPI */
 static   float        last_unit = 1;
 static   float        last_res_unit =1;
+static   gboolean     last_new_image = TRUE;
 
 /* these are temps that should be set in gimprc eventually */
 /*  FIXME */
@@ -57,7 +61,7 @@ static   float        default_unit =1;
 static   float        default_res_unit = 1;
 
 static int new_dialog_run;
-
+extern TileManager *global_buf;
 
 static void
 file_new_ok_callback (GtkWidget *widget,
@@ -74,7 +78,7 @@ file_new_ok_callback (GtkWidget *widget,
   vals->width = atoi (gtk_entry_get_text (GTK_ENTRY (vals->width_entry)));
   vals->height = atoi (gtk_entry_get_text (GTK_ENTRY (vals->height_entry)));
   vals->resolution = atof (gtk_entry_get_text (GTK_ENTRY (vals->resolution_entry)));
-
+  last_new_image = TRUE;
   gtk_widget_destroy (vals->dlg);
 
   last_width = vals->width;
@@ -84,6 +88,7 @@ file_new_ok_callback (GtkWidget *widget,
   last_resolution = vals->resolution;
   last_unit = vals->unit;
   last_res_unit = vals->res_unit;
+  
 
   switch (vals->fill_type)
     {
@@ -436,8 +441,6 @@ file_new_cmd_callback (GtkWidget           *widget,
   char buffer[32];
   float temp;
 
-
-
   if(!new_dialog_run)
     {
       last_width = default_width;
@@ -482,6 +485,17 @@ file_new_cmd_callback (GtkWidget           *widget,
 
   if (vals->type == INDEXED)
     vals->type = RGB;    /* no indexed images */
+
+  /*  if a cut buffer exist, default to using its size for the new image */
+  /* also check to see if a new_image has been opened */
+
+  printf("last_new_image is: %d \n", last_new_image);
+  if(global_buf && !last_new_image)
+    {
+      vals->width = global_buf->levels[0].width;
+      vals->height = global_buf->levels[0].height;
+      printf("foo foo foo\n");
+    }
 
   vals->dlg = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (vals->dlg), "new_image", "Gimp");
@@ -749,3 +763,10 @@ file_new_cmd_callback (GtkWidget           *widget,
   gtk_widget_show (vals->dlg);
 }
 
+void file_new_reset_current_cut_buffer()
+{
+  /* this unction just changes the status of last_image_new
+     so i can if theres been a cut/copy since the last file new */
+  last_new_image = FALSE;
+
+}
