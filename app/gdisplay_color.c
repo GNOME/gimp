@@ -263,6 +263,7 @@ gdisplay_color_detach_real (GDisplay         *gdisp,
   ColorDisplayInfo *info;
 
   g_return_if_fail (gdisp != NULL);
+  g_return_if_fail (node  != NULL);
 
   if ((info = g_hash_table_lookup (color_display_table, node->cd_name)))
     {

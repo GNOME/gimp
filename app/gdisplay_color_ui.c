@@ -204,7 +204,7 @@ color_display_ok_callback (GtkWidget *widget,
 			   gpointer   data)
 {
   ColorDisplayDialog *cdd = data;
-  GDisplay *gdisp = cdd->gdisp;
+  GDisplay           *gdisp = cdd->gdisp;
   GList *list;
 
   dialog_unregister(cdd->shell);
@@ -234,7 +234,7 @@ color_display_cancel_callback (GtkWidget *widget,
 			       gpointer   data)
 {
   ColorDisplayDialog *cdd = data;
-  GDisplay *gdisp = cdd->gdisp;
+  GDisplay           *gdisp = cdd->gdisp;
   GList *list;
   GList *next;
 
@@ -266,9 +266,9 @@ color_display_add_callback (GtkWidget *widget,
 			    gpointer   data)
 {
   ColorDisplayDialog *cdd = data;
-  GDisplay *gdisp = cdd->gdisp;
-  gchar *name = NULL;
-  ColorDisplayNode *node;
+  GDisplay           *gdisp = cdd->gdisp;
+  gchar              *name = NULL;
+  ColorDisplayNode   *node;
   gint row;
 
   if (cdd->src_row < 0)
@@ -294,8 +294,8 @@ color_display_remove_callback (GtkWidget *widget,
 			       gpointer   data)
 {
   ColorDisplayDialog *cdd = data;
-  GDisplay *gdisp = cdd->gdisp;
-  ColorDisplayNode *node;
+  GDisplay           *gdisp = cdd->gdisp;
+  ColorDisplayNode   *node;
 
   if (cdd->dest_row < 0)
     return;
@@ -310,6 +310,7 @@ color_display_remove_callback (GtkWidget *widget,
   else
     gdisplay_color_detach_destroy (gdisp, node);
 
+  cdd->dest_row = -1;
   UPDATE_DISPLAY (gdisp);
 }
 
@@ -318,8 +319,8 @@ color_display_up_callback (GtkWidget *widget,
 			   gpointer   data)
 {
   ColorDisplayDialog *cdd = data;
-  GDisplay *gdisp = cdd->gdisp;
-  ColorDisplayNode *node;
+  GDisplay           *gdisp = cdd->gdisp;
+  ColorDisplayNode   *node;
 
   if (cdd->dest_row < 0)
     return;
@@ -338,8 +339,8 @@ color_display_down_callback (GtkWidget *widget,
 			     gpointer   data)
 {
   ColorDisplayDialog *cdd = data;
-  GDisplay *gdisp = cdd->gdisp;
-  ColorDisplayNode *node;
+  GDisplay           *gdisp = cdd->gdisp;
+  ColorDisplayNode   *node;
 
   if (cdd->dest_row < 0)
     return;
@@ -358,7 +359,8 @@ color_display_configure_callback (GtkWidget *widget,
 				  gpointer   data)
 {
   ColorDisplayDialog *cdd = data;
-  ColorDisplayNode *node;
+  GDisplay           *gdisp = cdd->gdisp;
+  ColorDisplayNode   *node;
 
   if (cdd->dest_row < 0)
     return;
@@ -371,6 +373,9 @@ color_display_configure_callback (GtkWidget *widget,
   cdd->conf_nodes = g_list_append (cdd->conf_nodes, node);
   
   gdisplay_color_configure (node, NULL, NULL, NULL, NULL);
+
+  cdd->modified = TRUE;
+  UPDATE_DISPLAY (gdisp);
 }
 
 void
