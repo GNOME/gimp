@@ -3,6 +3,7 @@
 helpdatadir = $(gimpdatadir)/help/C/dialogs/palette_editor
 
 helpdata_DATA = \
+	delete_palette.html \
         import_palette.html \
         index.html \
         merge_palette.html \

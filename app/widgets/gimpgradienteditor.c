@@ -329,6 +329,7 @@ static void  gradient_editor_drop_gradient (GtkWidget  *widget,
 /* Gradient editor functions */
 
 static GtkWidget *ed_create_button (gchar         *label,
+				    gchar         *help_data,
 				    gdouble        xalign,
 				    gdouble        yalign,
 				    GtkSignalFunc  signal_func,
@@ -967,35 +968,45 @@ gradient_editor_create (void)
   gtk_container_add (GTK_CONTAINER (frame), gvbox);
 
   /* Buttons for gradient functions */
-  button = ed_create_button (_("New Gradient"), 0.5, 0.5,
+  button = ed_create_button (_("New Gradient"),
+			     "dialogs/gradient_editor/new_gradient.html",
+			     0.5, 0.5,
 			     GTK_SIGNAL_FUNC (ed_new_gradient_callback),
 			     NULL);
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
   gtk_box_pack_start (GTK_BOX (gvbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  button = ed_create_button (_("Copy Gradient"), 0.5, 0.5,
+  button = ed_create_button (_("Copy Gradient"),
+			     "dialogs/gradient_editor/copy_gradient.html",
+			     0.5, 0.5,
 			     GTK_SIGNAL_FUNC (ed_copy_gradient_callback),
 			     NULL);
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
   gtk_box_pack_start (GTK_BOX (gvbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  button = ed_create_button (_("Delete Gradient"), 0.5, 0.5,
+  button = ed_create_button (_("Delete Gradient"),
+			     "dialogs/gradient_editor/delete_gradient.html",
+			     0.5, 0.5,
 			     GTK_SIGNAL_FUNC (ed_delete_gradient_callback),
 			     NULL);
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
   gtk_box_pack_start (GTK_BOX (gvbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  button = ed_create_button (_("Rename Gradient"), 0.5, 0.5,
+  button = ed_create_button (_("Rename Gradient"),
+			     "dialogs/gradient_editor/rename_gradient.html",
+			     0.5, 0.5,
 			     GTK_SIGNAL_FUNC (ed_rename_gradient_callback),
 			     NULL);
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
   gtk_box_pack_start (GTK_BOX (gvbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  button = ed_create_button (_("Save as POV-Ray"), 0.5, 0.5,
+  button = ed_create_button (_("Save as POV-Ray"),
+			     "dialogs/gradient_editor/save_as_pov_ray.html",
+			     0.5, 0.5,
 			     GTK_SIGNAL_FUNC (ed_save_pov_callback),
 			     NULL);
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
@@ -1012,7 +1023,7 @@ gradient_editor_create (void)
   gtk_widget_show (hbox);
 
   /*  Zoom all button */
-  button = ed_create_button (_("Zoom all"), 0.5, 0.5,
+  button = ed_create_button (_("Zoom all"), NULL, 0.5, 0.5,
 			     GTK_SIGNAL_FUNC (ed_zoom_all_callback),
 			     g_editor);
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
@@ -1352,6 +1363,7 @@ ed_update_editor (int flags)
 
 static GtkWidget *
 ed_create_button (gchar         *label,
+		  gchar         *help_data,
 		  gdouble        xalign,
 		  gdouble        yalign,
 		  GtkSignalFunc  signal_func,
@@ -1372,6 +1384,9 @@ ed_create_button (gchar         *label,
     gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			signal_func,
 			data);
+
+  if (help_data)
+    gimp_help_set_help_data (button, NULL, help_data);
 
   return button;
 }
@@ -1874,7 +1889,7 @@ ed_delete_gradient_callback (GtkWidget *widget,
 			    gimp_standard_help_func,
 			    "dialogs/gradient_editor/delete_gradient.html",
 			    GTK_WIN_POS_MOUSE,
-			    FALSE, TRUE, FALSE,
+			    FALSE, FALSE, FALSE,
 
 			    _("Delete"), ed_do_delete_gradient_callback,
 			    NULL, NULL, FALSE, FALSE,

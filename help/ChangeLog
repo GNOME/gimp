@@ -1,3 +1,10 @@
+1999-12-19  Michael Natterer  <mitch@gimp.org>
+
+	* C/dialogs/palette_editor/Makefile.am
+	* C/dialogs/palette_editor/delete_palette.html
+	* C/dialogs/palette_editor/index.html: a help page for the new
+	"delete palette" confirmation dialog.
+
 1999-12-17  Michael Natterer  <mitch@gimp.org>
 
 	* C/*/Makefile.am: automatically create the symbolic links e.g. to

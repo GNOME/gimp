@@ -1,3 +1,11 @@
+1999-12-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/palette.c: Added a confirmation dialog for "delete palette".
+
+	* app/gradient.c
+	* app/palette.c: Attach help_data strings to the gradient/palette
+	ops buttons (for context help).
+
 Sun Dec 19 13:16:51 CET 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/bmp/bmp.c

@@ -137,7 +137,7 @@ static void  palette_entry_free    (PaletteEntry *);
 static void  palette_entries_free  (PaletteEntries *);
 static void  palette_entries_load  (gchar *);
 static void  palette_entries_save  (PaletteEntries *, gchar *);
-static void  palette_save_palettes ();
+static void  palette_save_palettes (void);
 
 static void  palette_entries_list_insert    (PaletteEntries *entries);
 
@@ -175,6 +175,9 @@ palettes_init (gint no_data)
 {
   if (!no_data)
     datafiles_read_directories (palette_path, palette_entries_load, 0);
+
+  if (!default_palette_entries && palette_entries_list)
+    default_palette_entries = palette_entries_list->data;
 }
 
 void
@@ -1787,13 +1790,13 @@ palette_dialog_new_callback (GtkWidget *widget,
 }
 
 static void
-palette_dialog_delete_callback (GtkWidget *widget,
-				gpointer   data)
+palette_dialog_do_delete_callback (GtkWidget *widget,
+				   gpointer   data)
 {
-  PaletteDialog *palette;
+  PaletteDialog  *palette;
   PaletteEntries *entries;
 
-  palette = data;
+  palette = (PaletteDialog *) data;
 
   if (palette && palette->entries)
     {
@@ -1805,6 +1808,70 @@ palette_dialog_delete_callback (GtkWidget *widget,
 
       palette_refresh_all ();
     }
+
+  gtk_widget_destroy (gtk_widget_get_toplevel (widget));
+  gtk_widget_set_sensitive (palette->shell, TRUE);
+}
+
+static void
+palette_dialog_cancel_delete_callback (GtkWidget *widget,
+				       gpointer   data)
+{
+  PaletteDialog *palette;
+
+  palette = (PaletteDialog *) data;
+
+  gtk_widget_destroy (gtk_widget_get_toplevel (widget));
+  gtk_widget_set_sensitive (palette->shell, TRUE);
+}
+
+static void
+palette_dialog_delete_callback (GtkWidget *widget,
+				gpointer   data)
+{
+  PaletteDialog *palette;
+
+  GtkWidget *dialog;
+  GtkWidget *vbox;
+  GtkWidget *label;
+  gchar     *str;
+
+  palette = data;
+
+  if (!palette || !palette->entries)
+    return;
+
+  dialog = gimp_dialog_new (_("Delete Palette"), "delete_palette",
+                            gimp_standard_help_func,
+                            "dialogs/palette_editor/delete_palette.html",
+                            GTK_WIN_POS_MOUSE,
+                            FALSE, FALSE, FALSE,
+
+                            _("Delete"), palette_dialog_do_delete_callback,
+                            palette, NULL, FALSE, FALSE,
+                            _("Cancel"), palette_dialog_cancel_delete_callback,
+                            palette, NULL, TRUE, TRUE,
+
+                            NULL);
+
+  /*  The main vbox  */
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
+  gtk_widget_show (vbox);
+
+  str = g_strdup_printf (_("Are you sure you want to delete\n"
+                           "\"%s\" from the list and from disk?"),
+                         palette->entries->name);
+
+  label = gtk_label_new (str);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  g_free (str);
+
+  gtk_widget_show (dialog);
+  gtk_widget_set_sensitive (palette->shell, FALSE);
 }
 
 static void
@@ -2239,6 +2306,8 @@ palette_dialog_new (gint vert)
 			  GTK_SIGNAL_FUNC (palette_dialog_new_callback),
 			  (gpointer) palette);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gimp_help_set_help_data (button, NULL,
+			       "dialogs/palette_editor/new_palette.html");
       gtk_widget_show (button);
 
       button = gtk_button_new_with_label (_("Delete"));
@@ -2248,6 +2317,8 @@ palette_dialog_new (gint vert)
 			  GTK_SIGNAL_FUNC (palette_dialog_delete_callback),
 			  (gpointer) palette);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gimp_help_set_help_data (button, NULL,
+			       "dialogs/palette_editor/delete_palette.html");
       gtk_widget_show (button);
       
       button = gtk_button_new_with_label (_("Import"));
@@ -2257,6 +2328,8 @@ palette_dialog_new (gint vert)
 			  GTK_SIGNAL_FUNC (palette_dialog_import_callback),
 			  (gpointer) palette);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gimp_help_set_help_data (button, NULL,
+			       "dialogs/palette_editor/import_palette.html");
       gtk_widget_show (button);
 
       button = gtk_button_new_with_label (_("Merge"));
@@ -2266,6 +2339,8 @@ palette_dialog_new (gint vert)
 			  GTK_SIGNAL_FUNC (palette_dialog_merge_callback),
 			  (gpointer) palette);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gimp_help_set_help_data (button, NULL,
+			       "dialogs/palette_editor/merge_palette.html");
       gtk_widget_show (button);
     }
 
