@@ -184,6 +184,7 @@
 #define GIMP_HELP_PATH_EXPORT                     "dialogs/export_path.html"
 #define GIMP_HELP_PATH_EDIT                       "dialogs/edit_path_attributes.html"
 
+#define GIMP_HELP_TOOL_DIALOG                     "dialogs/tools.html"
 #define GIMP_HELP_TOOL_AIRBRUSH                   "tools/airbrush.html"
 #define GIMP_HELP_TOOL_BLEND                      "tools/blend.html"
 #define GIMP_HELP_TOOL_BRIGHTNESS_CONTRAST        "tools/brightness-contrast.html"
@@ -286,6 +287,8 @@
 #define GIMP_HELP_PALETTE_REFRESH                 "dialogs/palette_selection.html"
 #define GIMP_HELP_PALETTE_IMPORT                  "dialogs/palette_selection.html"
 #define GIMP_HELP_PALETTE_MERGE                   "dialogs/palette_selection.html"
+
+#define GIMP_HELP_PALETTE_EDITOR_DIALOG           "dialogs/palette_selection.html"
 
 #define GIMP_HELP_FONT_DIALOG                     "dialogs/font_selection.html"
 

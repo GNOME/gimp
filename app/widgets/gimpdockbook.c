@@ -474,7 +474,7 @@ gimp_dockbook_get_tab_widget (GimpDockbook *dockbook,
       tab_widget = event_box;
     }
 
-  gimp_help_set_help_data (tab_widget, dockable->blurb, NULL);
+  gimp_help_set_help_data (tab_widget, dockable->blurb, dockable->help_id);
 
   g_object_set_data (G_OBJECT (tab_widget), "gimp-dockable", dockable);
 

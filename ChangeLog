@@ -1,5 +1,18 @@
 2003-08-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdockable.[ch]: added "gchar *help_id" member to
+	the GimpDockable struct and "const gchar *help_id" parameter to
+	gimp_dockable_new().
+
+	* app/widgets/gimphelp-ids.h: added help IDs for the tool list/grid
+	and the palette editor.
+
+	* app/widgets/gimpdockbook.c
+	* app/gui/dialogs-constructors.c
+	* app/gui/dialogs-menu.c: changed accordingly.
+
+2003-08-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/image-menu.c: added "Select->To Path" menu entry, using
 	the right stock_id and help_id.
 

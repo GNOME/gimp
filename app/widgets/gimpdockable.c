@@ -116,6 +116,7 @@ gimp_dockable_init (GimpDockable *dockable)
   dockable->name             = NULL;
   dockable->blurb            = NULL;
   dockable->stock_id         = NULL;
+  dockable->help_id          = NULL;
   dockable->tab_style        = GIMP_TAB_STYLE_ICON;
   dockable->dockbook         = NULL;
   dockable->context          = NULL;
@@ -150,6 +151,12 @@ gimp_dockable_destroy (GtkObject *object)
     {
       g_free (dockable->stock_id);
       dockable->stock_id = NULL;
+    }
+
+  if (dockable->help_id)
+    {
+      g_free (dockable->help_id);
+      dockable->help_id = NULL;
     }
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
@@ -220,6 +227,7 @@ GtkWidget *
 gimp_dockable_new (const gchar                *name,
 		   const gchar                *blurb,
                    const gchar                *stock_id,
+                   const gchar                *help_id,
 		   GimpDockableGetPreviewFunc  get_preview_func,
                    gpointer                    get_preview_data,
 		   GimpDockableSetContextFunc  set_context_func)
@@ -229,12 +237,14 @@ gimp_dockable_new (const gchar                *name,
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (blurb != NULL, NULL);
   g_return_val_if_fail (stock_id != NULL, NULL);
+  g_return_val_if_fail (help_id != NULL, NULL);
 
   dockable = g_object_new (GIMP_TYPE_DOCKABLE, NULL);
 
   dockable->name     = g_strdup (name);
   dockable->blurb    = g_strdup (blurb);
   dockable->stock_id = g_strdup (stock_id);
+  dockable->help_id  = g_strdup (help_id);
 
   dockable->get_preview_func = get_preview_func;
   dockable->get_preview_data = get_preview_data;

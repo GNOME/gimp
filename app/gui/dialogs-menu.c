@@ -113,9 +113,8 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
 
   MENU_SEPARATOR ("/Add Tab/---"),
 
-  { { N_("/Add Tab/Tools..."), NULL,
-      dialogs_add_tab_cmd_callback, 0 },
-    "gimp-tool-list", NULL, NULL },
+  ADD_TAB (N_("/Add Tab/Tools..."),             "gimp-tool-list",
+           GTK_STOCK_MISSING_IMAGE,             GIMP_HELP_TOOL_DIALOG),
 
   { { N_("/_Remove Tab"), NULL,
       dialogs_remove_tab_cmd_callback, 0,

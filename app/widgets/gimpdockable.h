@@ -51,6 +51,7 @@ struct _GimpDockable
   gchar        *name;
   gchar        *blurb;
   gchar        *stock_id;
+  gchar        *help_id;
   GimpTabStyle  tab_style;
 
   GimpDockbook *dockbook;
@@ -80,6 +81,7 @@ GType       gimp_dockable_get_type (void) G_GNUC_CONST;
 GtkWidget * gimp_dockable_new      (const gchar                *name,
 				    const gchar                *blurb,
                                     const gchar                *stock_id,
+                                    const gchar                *help_id,
 				    GimpDockableGetPreviewFunc  get_preview_func,
                                     gpointer                    get_preview_data,
 				    GimpDockableSetContextFunc  set_context_func);
