@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.1.17\n"
 "POT-Creation-Date: 2000-03-01 21:37+0100\n"
-"PO-Revision-Date: 2000-03-01 21:50+01:00\n"
+"PO-Revision-Date: 2000-03-02 09:44+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -6255,25 +6255,23 @@ msgstr "Duplikovat jednotku"
 
 #: plug-ins/common/uniteditor.c:589
 msgid "Create a new unit with the currently seleted unit as template."
-msgstr ""
+msgstr "Vytvoøit novou jednotku s právì zvolenou jednotkou jako vzorem."
 
 #: plug-ins/common/uniteditor.c:592
 msgid "Delete Unit"
 msgstr "Smazat jednotku"
 
 #: plug-ins/common/uniteditor.c:599
-#, fuzzy
 msgid "Don't save the currently selected unit before GIMP exits."
-msgstr "Smazat právì zvolený fraktál"
+msgstr "Nezapisovat právì zvolenou jednotku pøed skonèením programu GIMP."
 
 #: plug-ins/common/uniteditor.c:604
 msgid "Undelete Unit"
 msgstr "Zru¹it smazání jednotky"
 
 #: plug-ins/common/uniteditor.c:611
-#, fuzzy
 msgid "Save the currently selected unit before GIMP exits."
-msgstr "Smazat právì zvolený fraktál"
+msgstr "Zapsat právì zvolenou jednotku pøed skonèením programu GIMP."
 
 #: plug-ins/common/unsharp.c:184
 msgid "<Image>/Filters/Enhance/Unsharp Mask..."
@@ -7814,9 +7812,9 @@ msgstr "ZAPSAT stávající"
 #: plug-ins/gap/gap_lib.c:1677 plug-ins/gap/gap_lib.c:1684
 #: plug-ins/gap/gap_lib.c:1691 plug-ins/gap/gap_lib.c:1774
 #: plug-ins/gap/gap_lib.c:1796
-#, fuzzy, c-format
+#, c-format
 msgid "Error: could not rename frame %ld to %ld\n"
-msgstr "Chyba: nelze otevøít \"%s\""
+msgstr "Chyba: nelze pøejmenovat políèko %ld na %ld\n"
 
 #: plug-ins/gap/gap_lib.c:1586
 msgid "Duplicating frames .."
@@ -8141,7 +8139,7 @@ msgstr "Výchozí políèko:"
 #: plug-ins/gap/gap_mpege.c:259 plug-ins/gap/gap_range_ops.c:437
 #: plug-ins/gap/gap_range_ops.c:596
 msgid "first handled frame"
-msgstr "první obslou¾ené políèko"
+msgstr "první zpracované políèko"
 
 #: plug-ins/gap/gap_mod_layer.c:163 plug-ins/gap/gap_mpege.c:266
 #: plug-ins/gap/gap_range_ops.c:444
@@ -8160,7 +8158,7 @@ msgstr "Koncové políèko:"
 #: plug-ins/gap/gap_mpege.c:267 plug-ins/gap/gap_range_ops.c:445
 #: plug-ins/gap/gap_range_ops.c:604
 msgid "last handled frame"
-msgstr "poslední obslou¾ené políèko"
+msgstr "poslední zpracované políèko"
 
 #: plug-ins/gap/gap_mod_layer.c:172 plug-ins/gap/gap_range_ops.c:643
 msgid "Select Layer(s):"
@@ -8217,7 +8215,7 @@ msgid ""
 "[####] is replaced by frame number\n"
 "(is used on function rename only)"
 msgstr ""
-"Nové jméno vrstvy pro v¹echny obslou¾ené vrstvy\n"
+"Nové jméno vrstvy pro v¹echny zpracované vrstvy\n"
 "[####] je zamìnìno za èíslo políèka\n"
 "(pou¾ito pouze ve funkci pøejmenování)"
 
@@ -8242,8 +8240,7 @@ msgstr "Volba filtru pro pou¾ití na animovaná políèka"
 
 #: plug-ins/gap/gap_mod_layer.c:802
 msgid "GAP Modify: No layer selected in last handled frame\n"
-msgstr ""
-"Modifikace GAP: V posledním obslou¾eném políèku nejsou zvoleny ¾ádné vrstvy\n"
+msgstr "Modifikace GAP: V posledním zpracovaném políèku nejsou zvoleny ¾ádné vrstvy\n"
 
 #: plug-ins/gap/gap_mod_layer.c:888
 msgid "Modifying Frames/Layer(s) .."
@@ -8475,7 +8472,7 @@ msgid ""
 "at the next handled frame"
 msgstr ""
 "Zpùsob vyvolání následující zdrojové vrstvy   \n"
-"na následujícím obslou¾eném políèku"
+"na následujícím zpracovaném políèku"
 
 #. Source Image Handle menu
 #: plug-ins/gap/gap_mov_dialog.c:1460
@@ -8586,9 +8583,8 @@ msgstr ""
 
 #. toggle clip_to_image
 #: plug-ins/gap/gap_mov_dialog.c:1735
-#, fuzzy
 msgid "Show Path"
-msgstr "Cesta pøesunu"
+msgstr "Zobrazit cestu"
 
 #: plug-ins/gap/gap_mov_dialog.c:1741
 msgid ""
@@ -8596,6 +8592,9 @@ msgid ""
 "pick/drag with left button\n"
 "or move with right button"
 msgstr ""
+"Zobrazit cestu a povolit\n"
+"chycení/potáhnutí levým tlaèítkem\n"
+"nebo pøesun pravým tlaèítkem"
 
 #: plug-ins/gap/gap_mov_dialog.c:1751
 #: plug-ins/imagemap/imap_cmd_insert_point.c:57
@@ -9390,6 +9389,9 @@ msgid ""
 "- desired save plugin can't handle type\n"
 "- or desired save plugin not available\n"
 msgstr ""
+"Pøevod políèek: operace ZÁPISU SELHALA\n"
+"- po¾adovaný zápisový modul neumí zpracovat typ\n"
+"- nebo po¾adovaný zápisový modul není k dispozici\n"
 
 #: plug-ins/gap/gap_range_ops.c:1322
 msgid "Cropping all Animation Frames .."
@@ -9434,6 +9436,9 @@ msgid ""
 "- desired save plugin can't handle type\n"
 "- or desired save plugin not available\n"
 msgstr ""
+"Rozdìlení do políèek: operace ZÁPISU SELHALA\n"
+"- po¾adovaný zápisový modul neumí zpracovat typ\n"
+"- nebo po¾adovaný zápisový modul není k dispozici\n"
 
 #: plug-ins/gap/gap_split.c:223
 #, c-format
@@ -9489,6 +9494,10 @@ msgid ""
 "Try again on a Duplicate\n"
 "(image/duplicate)"
 msgstr ""
+"OPERACE ZRU©ENA\n"
+"Tento obrázek je ji¾ políèkem animace\n"
+"Zkuste znovu na duplikátu\n"
+"(obrázek/duplikát)"
 
 #: plug-ins/gap/resize.c:107
 msgid "Scale"
@@ -9579,6 +9588,8 @@ msgid ""
 "Current layer isn't a GDynText layer or it has no alpha channel.\n"
 "  Forcing new layer creation.\n"
 msgstr ""
+"Aktuální vrstva není vrstva GDynText nebo nemá alfa kanál.\n"
+"  Vnuceno vytvoøení nové vrstvy.\n"
 
 #: plug-ins/gdyntext/gdyntext.c:350
 msgid "Upgrading old GDynText layer to "
@@ -9591,6 +9602,10 @@ msgid ""
 "  A newer version is reqired to handle this layer.\n"
 "  Get it from "
 msgstr ""
+"VAROVÁNÍ: pøíli¹ starý GDynText!\n"
+"  Zmìnou textu se nìkterá data mohou ztratit.\n"
+"  Pro zpracování této vrstvy je nutná novìj¹í verze.\n"
+"  Lze ji získat na "
 
 #. remove old layer name
 #: plug-ins/gdyntext/gdyntext.c:392 plug-ins/gdyntext/gdyntext.c:531
@@ -9675,13 +9690,13 @@ msgstr "Náhled implicitního textového vzorku"
 msgid ""
 "Holding the Shift key while pressing this button will force GDynText in "
 "changing the layer name as done in GIMP 1.0."
-msgstr ""
+msgstr "Podr¾ení Pøeøaïovaèe bìhem stisknutí tohoto tlaèítka pøinutí GDynText ke zmìnì jména vrstvy jako u  programu GIMP 1.0."
 
 #: plug-ins/gdyntext/gdyntext_ui.c:920
 #, c-format
 msgid ""
 "Warning file \"%s\" is larger than the maximum allowed text length (%d).\n"
-msgstr ""
+msgstr "Soubor varování \"%s\" je vìt¹í ne¾ maximální povolená délka textu (%d).\n"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:928
 #, c-format
@@ -9698,7 +9713,7 @@ msgstr "<Image>/Filtry/Vyobrazení/Gfig..."
 
 #: plug-ins/gfig/gfig.c:861
 msgid "gfig-path misconfigured - the following directories were not found"
-msgstr ""
+msgstr "gfig-path ¹patnì nakonfigurovaná - následující adresáøe nebyly nalezeny"
 
 #: plug-ins/gfig/gfig.c:1084
 msgid "First Gfig"
@@ -9717,7 +9732,7 @@ msgstr "Úpravy"
 
 #: plug-ins/gfig/gfig.c:1934
 msgid "Edit Gfig object collection"
-msgstr ""
+msgstr "Úpravy souhrnu Gfig objektù"
 
 #: plug-ins/gfig/gfig.c:1937
 msgid "Merge"
@@ -9725,7 +9740,7 @@ msgstr "Slouèit"
 
 #: plug-ins/gfig/gfig.c:1942
 msgid "Merge Gfig Object collection into the current edit session"
-msgstr ""
+msgstr "Vlo¾ení souhrnu Gfig objektù do souèasného sezení"
 
 #: plug-ins/gfig/gfig.c:1981
 msgid "Number of Sides/Points/Turns:"
@@ -9754,7 +9769,7 @@ msgstr "Zavøeno"
 
 #: plug-ins/gfig/gfig.c:2047
 msgid "Close curve on completion"
-msgstr ""
+msgstr "Uzavøení køivky pøi dokonèení"
 
 #: plug-ins/gfig/gfig.c:2052
 msgid "Show Line Frame"
@@ -9762,11 +9777,11 @@ msgstr "Ukázat èárový model"
 
 #: plug-ins/gfig/gfig.c:2057
 msgid "Draws lines between the control points. Only during curve creation"
-msgstr ""
+msgstr "Kreslí èáry mezi øídícími body. Pouze bìhem vytváøení køivky"
 
 #: plug-ins/gfig/gfig.c:2073
 msgid "Regular Polygon Number of Sides"
-msgstr ""
+msgstr "Poèet stran pravidelného mnohoúhelníku"
 
 #: plug-ins/gfig/gfig.c:2085
 msgid "Star Number of Points"
@@ -9798,7 +9813,7 @@ msgstr "Vytvoøit výseè"
 
 #: plug-ins/gfig/gfig.c:2158
 msgid "Create reg polygon"
-msgstr ""
+msgstr "Vytvoøit pravidelný mnohoúhelník"
 
 #: plug-ins/gfig/gfig.c:2175
 msgid "Create spiral"
@@ -9806,7 +9821,7 @@ msgstr "Vytvoøit spirálu"
 
 #: plug-ins/gfig/gfig.c:2185
 msgid "Create bezier curve. Shift + Button ends object creation."
-msgstr ""
+msgstr "Vytváøí Bézierovu køivku. Pøeøaïovaè + tlaèítko my¹i ukonèuje vytváøení objektu."
 
 #: plug-ins/gfig/gfig.c:2191
 msgid "Move an object"
@@ -9847,7 +9862,7 @@ msgid ""
 "Use the brush/pencil or the airbrush when drawing on the image. Pattern "
 "paints with currently selected brush with a pattern. Only applies to "
 "circles/ellipses if Approx. Circles/Ellipses toggle is set."
-msgstr ""
+msgstr "Pou¾ít ¹tìtce/tu¾ky pøi kreslení obrázku rozpra¹ovaèem. Vzorek kreslí právì zvolenou stopou se vzorkem. U¾ije se pouze na kru¾nicích/elipsách, je-li pøepínaè Pøibli¾né kru¾nice/elipsy nastaven."
 
 #: plug-ins/gfig/gfig.c:2787 plug-ins/rcm/rcm_dialog.c:121
 msgid "Original"
@@ -9866,11 +9881,11 @@ msgstr "Vícenásobný"
 
 #: plug-ins/gfig/gfig.c:2793
 msgid "Draw all objects on one layer (original or new) or one object per layer"
-msgstr ""
+msgstr "Vykreslí v¹echny objekty v jedné vrstvì (pùvodní nebo nové) nebo jeden objekt na vrstvu"
 
 #: plug-ins/gfig/gfig.c:2798
 msgid "Draw on:"
-msgstr ""
+msgstr "Kreslit v:"
 
 #. Create selection
 #: plug-ins/gfig/gfig.c:2807 plug-ins/imagemap/imap_selection.c:358
@@ -9886,21 +9901,21 @@ msgstr "Výbìr+vyplnit"
 msgid ""
 "Draw type. Either a brush or a selection. See brush page or selection page "
 "for more options"
-msgstr ""
+msgstr "Typ kreslení. Buï stopa nebo výbìr. Dal¹í volby viz stránka stop a výbìru"
 
 #: plug-ins/gfig/gfig.c:2840
 msgid "Using:"
-msgstr ""
+msgstr "U¾ití:"
 
 #: plug-ins/gfig/gfig.c:2854
 msgid ""
 "Layer background type. Copy causes previous layer to be copied before the "
 "draw is performed"
-msgstr ""
+msgstr "Typo pozadí vrstvy. Kopie zpùsobí zkopírování pøedchozí vrstvy pøed provedením kreslení"
 
 #: plug-ins/gfig/gfig.c:2859
 msgid "With BG of:"
-msgstr ""
+msgstr "S pozadím z:"
 
 #: plug-ins/gfig/gfig.c:2862
 msgid "Reverse Line"
@@ -9908,7 +9923,7 @@ msgstr "Obrátit èáru"
 
 #: plug-ins/gfig/gfig.c:2869
 msgid "Draw lines in reverse order"
-msgstr ""
+msgstr "Kreslí èáry v obráceném poøadí"
 
 #: plug-ins/gfig/gfig.c:2877
 msgid "Scale to Image"
@@ -9920,17 +9935,17 @@ msgstr "Zmìnit velikost kresby dle velikosti obrázku"
 
 #: plug-ins/gfig/gfig.c:2907
 msgid "Approx. Circles/Ellipses"
-msgstr ""
+msgstr "Pøibli¾né kru¾nice/elipsy"
 
 #: plug-ins/gfig/gfig.c:2914
 msgid ""
 "Approx. circles & ellipses using lines. Allows the use of brush fading with "
 "these types of objects."
-msgstr ""
+msgstr "Pøibli¾né kru¾nice a elipsy pou¾ívají èar. Umo¾òuje u tohoto typu objektù pou¾ít dobìhu ¹tìtce."
 
 #: plug-ins/gfig/gfig.c:2989
 msgid "Fade out:"
-msgstr ""
+msgstr "Dobìh:"
 
 #: plug-ins/gfig/gfig.c:3009
 msgid "Pressure:"
@@ -10009,7 +10024,7 @@ msgstr "Obdélník"
 
 #: plug-ins/gfig/gfig.c:3297
 msgid "Isometric"
-msgstr ""
+msgstr "Izometrická"
 
 #: plug-ins/gfig/gfig.c:3301
 msgid "Grid Type:"
@@ -10204,7 +10219,7 @@ msgstr "<NIC>"
 
 #: plug-ins/gfig/gfig.c:5188
 msgid "Editing read-only object - you will not be able to save it"
-msgstr ""
+msgstr "Úpravy objektu pouze pro ètení - nebude mo¾né je zapsat"
 
 #. Create new entry with name + copy at end & copy object into it
 #: plug-ins/gfig/gfig.c:5291
@@ -10222,7 +10237,7 @@ msgstr "Chyba pøi ètení souboru"
 
 #: plug-ins/gfig/gfig.c:6576
 msgid "Hey where has the object gone ?"
-msgstr ""
+msgstr "A kde je ten objekt?"
 
 #: plug-ins/gflare/gflare.c:819
 msgid "<Image>/Filters/Light Effects/GFlare..."
@@ -11365,6 +11380,10 @@ msgid ""
 "allows you to rapidly create the most common image map type -\n"
 "image collection of \"thumbnails\", suitable for navigation bars."
 msgstr ""
+"Vodítka jsou pøeddefinované obdélníky pokrývající obrázek. Jsou\n"
+"definovány jejich ¹íøkou, vý¹kou a rozestupem od ostatních. To\n"
+"umo¾òuje rychlé vytvoøení nejbì¾nìj¹ích typù obrázkových map -\n"
+"soubor \"náhledù\", vhodný pro navigaèní prou¾ky."
 
 #: plug-ins/imagemap/imap_cmd_guides.c:164 plug-ins/imagemap/imap_grid.c:198
 msgid "Width"
@@ -12295,9 +12314,8 @@ msgid "Print"
 msgstr "Tisknout"
 
 #: plug-ins/print/print.c:841
-#, fuzzy
 msgid "Center Image"
-msgstr "Celý obrázek"
+msgstr "Vystøedit obrázek"
 
 #: plug-ins/print/print.c:889
 msgid "Printer Settings"
