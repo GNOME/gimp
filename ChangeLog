@@ -1,3 +1,8 @@
+2002-12-02  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpconfig-serialize.c: fixed serialization of empty
+	string properties that I broke yesterday.
+
 2002-12-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdata.[ch]: use GError for reporting load/save

@@ -137,18 +137,11 @@ dump_system_gimprc (void)
 
       g_string_append (str, "# ");
 
-      if (gimp_config_serialize_property (rc, prop_spec, str, TRUE))
+      if (! gimp_config_serialize_property (rc, prop_spec, str, TRUE))
 	{
 	  g_string_append (str, "\n");
 
           write (1, str->str, str->len);
-        }
-      else if (prop_spec->value_type != G_TYPE_STRING)
-        {
-          g_warning ("couldn't serialize property %s::%s of type %s",
-                     g_type_name (G_TYPE_FROM_INSTANCE (rc)),
-                     prop_spec->name, 
-                     g_type_name (prop_spec->value_type));
         }
     }
 

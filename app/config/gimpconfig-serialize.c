@@ -90,18 +90,9 @@ gimp_config_serialize_properties (GObject  *object,
 	{
           if (write (fd, str->str, str->len) == -1)
             return FALSE;
-
-	  g_string_assign (str, "\n");
         }
-      else if (prop_spec->value_type != G_TYPE_STRING)
-        {
-          g_warning ("couldn't serialize property %s::%s of type %s",
-                     g_type_name (G_TYPE_FROM_INSTANCE (object)),
-                     prop_spec->name, 
-                     g_type_name (prop_spec->value_type));
 
-	  g_string_assign (str, "");
-        }
+      g_string_assign (str, "\n");
     }
 
   g_free (property_specs);
@@ -153,6 +144,9 @@ gimp_config_serialize_changed_properties (GObject *new,
 
       prop_spec = (GParamSpec *) list->data;
 
+      if (! (prop_spec->flags & GIMP_PARAM_SERIALIZE))
+        continue;
+
       g_value_init (&new_value, prop_spec->value_type);
 
       g_object_get_property (new, prop_spec->name, &new_value);
@@ -165,7 +159,7 @@ gimp_config_serialize_changed_properties (GObject *new,
       gimp_config_string_indent (str, indent_level);
 
       g_string_append_printf (str, "(%s ", prop_spec->name);
-      
+
       if (gimp_config_serialize_value (&new_value, str, TRUE))
         {
           g_string_append (str, ")\n");
@@ -174,12 +168,14 @@ gimp_config_serialize_changed_properties (GObject *new,
           if (write (fd, str->str, str->len) == -1)
             return FALSE;
         }
-      else if (prop_spec->value_type != G_TYPE_STRING)
+      else 
         {
-          g_warning ("couldn't serialize property %s::%s of type %s",
-                     g_type_name (G_TYPE_FROM_INSTANCE (new)),
-                     prop_spec->name, 
-                     g_type_name (prop_spec->value_type));
+          /* don't warn for empty string properties */
+          if (prop_spec->value_type != G_TYPE_STRING)
+            g_warning ("couldn't serialize property %s::%s of type %s",
+                       g_type_name (G_TYPE_FROM_INSTANCE (new)),
+                       prop_spec->name, 
+                       g_type_name (prop_spec->value_type));
         }
 
       g_value_unset (&new_value);
@@ -245,12 +241,25 @@ gimp_config_serialize_property (GObject      *object,
 					      (const GValue *) &value,
 					      param_spec,
 					      str))
-	return FALSE;
+        {
+          g_value_unset (&value);
+          return FALSE;
+        }
     }
   else
     {
       if (! gimp_config_serialize_value (&value, str, escaped))
-	return FALSE;
+        {
+          /* don't warn for empty string properties */
+          if (! G_VALUE_HOLDS_STRING (&value))
+            g_warning ("couldn't serialize property %s::%s of type %s",
+                       g_type_name (G_TYPE_FROM_INSTANCE (object)),
+                       param_spec->name, 
+                       g_type_name (param_spec->value_type));
+
+          g_value_unset (&value);
+          return FALSE;
+        }
     }
 
   g_value_unset (&value);

@@ -10,6 +10,7 @@ dubbed GIMP 1.4.
 
 Overview of Changes in GIMP 1.3.11
 ==================================
+
 - Updated the Win32 build system [Hans Breuer]
 - Factored common code out of a number of plug-ins [Maurits]
 - Use g_rand* functions whereever random numbers are needed [Bolsh] 
@@ -29,6 +30,7 @@ Other contributors:
 
 Overview of Changes in GIMP 1.3.10
 ==================================
+
 - Text tool can load text files now [Sven]
 - Some unfinished work on the imagemap tools and related widgets [Sven]
 - Undeprecated ink tool [Bolsh, Sven]
@@ -51,6 +53,7 @@ Other contributors:
 
 Overview of Changes in GIMP 1.3.9
 =================================
+
 - Some minor improvements to the text tool [Sven]
 - Started to cleanup DND code [Mitch]
 - Added GimpViewableDialog [Mitch]
@@ -68,6 +71,7 @@ Other contributors:
 
 Overview of Changes in GIMP 1.3.8
 =================================
+
 - Lots of plug-ins cleaned up and improved [Maurits]
 - More work on the help browser [Sven]
 - Core code cleanup [Mitch, Sven]
@@ -82,12 +86,14 @@ Other contributors:
 
 Overview of Changes in GIMP 1.3.7
 =================================
+
 - Build fixes
 - Bug fixes
 
 
 Overview of Changes in GIMP 1.3.6
 =================================
+
 - Support tile cache > 4GB on machines with 64bit long integers [Sven]
 - Added support for large files (> 2GB) [Sven]
 - Cleaned up configure, updated to autoconf-2.52 [Sven]
@@ -118,6 +124,7 @@ Other contributors:
 
 Overview of Changes in GIMP 1.3.5
 =================================
+
 - Improved tool options and made them dockable [Mitch]
 - Cleanup of brush, gradient, pattern and palette PDB functions [Mitch]
 - Autogenerate libgimp/gimp_pdb.h [Yosh]
@@ -140,6 +147,7 @@ Other Contributors:
 
 Overview of Changes in GIMP 1.3.4
 =================================
+
 - Improved image status bar and image title [Mitch]
 - Updated thumbnail code according to changes in proposed standard [Sven]
 - Implemented init_proc in plug-ins [Nathan]
@@ -173,6 +181,7 @@ Other Contributors:
 
 Overview of Changes in GIMP 1.3.3
 =================================
+
 - Most of the code is free of deprecated GTK+ calls now [Mitch, Yosh, Sven]
 - More use of stock icons [Sven, Mitch]
 - New RGB->Indexed quantizer [Adam]
