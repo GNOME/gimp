@@ -1,5 +1,23 @@
 2001-03-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/Makefile.am
+	* app/tools/gimpfliptool.[ch]: applied a patch from Dave Neary
+	which re-activates this tool. Enabled the tool options too.
+
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimptexttool.c: trivial fixes.
+
+	* app/tools/gimptool.c: removed cruft.
+
+	* app/tools/gimptransformtool.[ch]: a special case for the flip
+	tool, cleanup.
+
+	* app/tools/tools.c: register the flip tool.
+
+2001-03-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/bezier_select.[ch]
 	* app/tools/bezier_selectP.h
 	* app/tools/transform_core.[ch]
