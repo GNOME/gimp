@@ -52,12 +52,14 @@ enum
   PROP_HINTING,
   PROP_AUTOHINT,
   PROP_ANTIALIAS,
+  PROP_KERNING,
   PROP_LANGUAGE,
   PROP_BASE_DIR,
   PROP_COLOR,
   PROP_JUSTIFICATION,
   PROP_INDENTATION,
   PROP_LINE_SPACING,
+  PROP_LETTER_SPACING,
   PROP_BOX_MODE,
   PROP_BOX_WIDTH,
   PROP_BOX_HEIGHT,
@@ -180,6 +182,10 @@ gimp_text_class_init (GimpTextClass *klass)
                                     "antialias", NULL,
                                     TRUE,
                                     0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_KERNING,
+                                    "kerning", NULL,
+                                    FALSE,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_LANGUAGE,
 				   "language", NULL,
 				   language,
@@ -209,6 +215,11 @@ gimp_text_class_init (GimpTextClass *klass)
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LINE_SPACING,
 				   "line-spacing",
                                    N_("Additional line spacing (in pixels)"),
+				   -8192.0, 8192.0, 0.0,
+				   0);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LETTER_SPACING,
+				   "letter-spacing",
+                                   N_("Additional letter spacing (in pixels)"),
 				   -8192.0, 8192.0, 0.0,
 				   0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BOX_MODE,
@@ -298,6 +309,9 @@ gimp_text_get_property (GObject      *object,
     case PROP_ANTIALIAS:
       g_value_set_boolean (value, text->antialias);
       break;
+    case PROP_KERNING:
+      g_value_set_boolean (value, text->kerning);
+      break;
     case PROP_BASE_DIR:
       g_value_set_enum (value, text->base_dir);
       break;
@@ -315,6 +329,9 @@ gimp_text_get_property (GObject      *object,
       break;
     case PROP_LINE_SPACING:
       g_value_set_double (value, text->line_spacing);
+      break;
+    case PROP_LETTER_SPACING:
+      g_value_set_double (value, text->letter_spacing);
       break;
     case PROP_BOX_MODE:
       g_value_set_enum (value, text->box_mode);
@@ -372,6 +389,9 @@ gimp_text_set_property (GObject      *object,
     case PROP_ANTIALIAS:
       text->antialias = g_value_get_boolean (value);
       break;
+    case PROP_KERNING:
+      text->kerning = g_value_get_boolean (value);
+      break;
     case PROP_LANGUAGE:
       g_free (text->language);
       text->language = g_value_dup_string (value);
@@ -391,6 +411,9 @@ gimp_text_set_property (GObject      *object,
       break;
     case PROP_LINE_SPACING:
       text->line_spacing = g_value_get_double (value);
+      break;
+    case PROP_LETTER_SPACING:
+      text->letter_spacing = g_value_get_double (value);
       break;
     case PROP_BOX_MODE:
       text->box_mode = g_value_get_enum (value);

@@ -203,18 +203,6 @@ gui_post_init (Gimp *gimp)
   if (GIMP_GUI_CONFIG (gimp->config)->show_tips)
     gimp_dialog_factory_dialog_new (global_dialog_factory,
                                     "gimp-tips-dialog", -1);
-
-#ifdef __GNUC__
-#warning FIXME: remove this as soon as we depend on GTK+ >= 2.2.2
-#endif
-  if (gtk_check_version (2, 2, 2) != NULL)
-    gimp_message_box (GIMP_STOCK_WILBER_EEK, NULL,
-                      "Please upgrade your GTK+ installation!\n\n"
-                      "The GTK+ version you are using is too old.\n"
-                      "Please upgrade to GTK+ version 2.2.2 or better\n"
-                      "or your extended input devices (tablets) will\n"
-                      "not work at all!",
-                      NULL, NULL);
 }
 
 

@@ -15,9 +15,9 @@ AC_INIT(app/core/gimp.c)
 ############
 
 GLIB_REQUIRED_VERSION=2.2.0
-GTK_REQUIRED_VERSION=$GLIB_REQUIRED_VERSION
+GTK_REQUIRED_VERSION=2.2.2
 GDKPIXBUF_REQUIRED_VERSION=$GTK_REQUIRED_VERSION
-PANGOFT2_REQUIRED_VERSION=1.2.0
+PANGOFT2_REQUIRED_VERSION=1.2.2
 FONTCONFIG_REQUIRED_VERSION=2.2.0
 GTKDOC_REQUIRED_VERSION=1.0
 GTKHTML2_REQUIRED_VERSION=2.0.0
@@ -25,12 +25,13 @@ GIMPPRINT_REQUIRED_VERSION=4.2.0
 GIMPPRINT_TOONEW_VERSION=4.3.0
 RSVG_REQUIRED_VERSION=2.2.0
 
-AC_SUBST(FONTCONFIG_REQUIRED_VERSION)
-AC_SUBST(PANGOFT2_REQUIRED_VERSION)
+AC_SUBST(GLIB_REQUIRED_VERSION)
 AC_SUBST(GTK_REQUIRED_VERSION)
+AC_SUBST(PANGOFT2_REQUIRED_VERSION)
+AC_SUBST(FONTCONFIG_REQUIRED_VERSION)
+AC_SUBST(GTKHTML2_REQUIRED_VERSION)
 AC_SUBST(GIMPPRINT_REQUIRED_VERSION)
 AC_SUBST(GIMPPRINT_TOONEW_VERSION)
-AC_SUBST(GTKHTML2_REQUIRED_VERSION)
 AC_SUBST(RSVG_REQUIRED_VERSION)
 
 #
@@ -294,7 +295,7 @@ AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE",
 dnl Note to translators: you MUST have .po files in all 4 directories: po,
 dnl po-libgimp, po-plug-ins, and po-script-fu before adding you language
 dnl code to ALL_LINGUAS
-ALL_LINGUAS="ca cs da de el en_GB es fi fr ga gl he hu hr id it ja ko nl no pl pt pt_BR ro ru sk sr sr@Latn sv tr uk vi yi zh_CN zh_TW"
+ALL_LINGUAS="ca cs da de el en_GB es fi fr ga gl he hu hr id it ja ko ms nl no pl pt pt_BR ro ru sk sr sr@Latn sv tr uk vi yi zh_CN zh_TW"
 
 AC_PROG_INTLTOOL
 AM_GLIB_GNU_GETTEXT
@@ -321,21 +322,8 @@ LIBS=$gimp_save_LIBS
 
 AC_PATH_XTRA
 
-dnl Additional test for GTK+ 2.2.2.  We want to avoid bug reports
-dnl related to XInput support (known to be broken in 2.2.1) but we do
-dnl not want to make the upgrade mandatory yet.  The extra test can
-dnl be removed once GTK+ 2.2.2 or later becomes mandatory (this is
-dnl planned for the next stable release).
-AM_PATH_GTK_2_0(2.2.2,gimp_broken_gtk=no,gimp_broken_gtk=yes)
-if test x$gimp_broken_gtk = xyes; then
-  AM_PATH_GTK_2_0($GTK_REQUIRED_VERSION,
-    AC_MSG_WARN([Please upgrade your GTK+ installation!
-*** The GTK+ version you are using is too old.
-*** Please upgrade to GTK+ version 2.2.2 or better
-*** or your extended input devices (tablets) will not
-*** work at all!]),
-    AC_MSG_ERROR(Test for GTK failed. See the file 'INSTALL' for help.))
-fi
+AM_PATH_GTK_2_0($GTK_REQUIRED_VERSION,,
+    AC_MSG_ERROR(Test for GTK+ failed. See the file 'INSTALL' for help.))
 
 PKG_CHECK_MODULES(GDK_PIXBUF, gdk-pixbuf-2.0 >= $GDKPIXBUF_REQUIRED_VERSION)
 AC_SUBST(GDK_PIXBUF_CFLAGS)

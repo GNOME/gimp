@@ -1,5 +1,25 @@
 2003-10-25  Sven Neumann  <sven@gimp.org>
 
+	* configure.in (ALL_LINUGUAS): added "ms" (Malay) now that all po
+	files are there.
+
+	(PANGOFT2_REQUIRED_VERSION) depend on PangoFT2 >= 1.2.2. There are
+	a couple of bug-fixes that are needed to make the text tool work.
+	Actually you should use at least version 1.2.4.
+
+	(GTK_REQUIRED_VERSION): depend on GTK+ >= 2.2.2. Earlier versions
+	had bugs that we don't want to work around any longer.
+
+	* INSTALL: document this change.
+	
+	* app/gui/gui.c (gui_post_init): removed the GTK+ version check.
+
+	* app/text/gimptext.[ch]: added properties for letter spacing and
+	kerning for compatibility with future GIMP versions implementing
+	these features.
+
+2003-10-25  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/gimpressionist/Makefile.am: fixed(?) dependencies.
 
 2003-10-25  Sven Neumann  <sven@gimp.org>
@@ -18,7 +38,7 @@
 
 	* plug-ins/gimpressionist/gimpressionist.c: changed accordingly.
 
-t2003-10-24  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+2003-10-24  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/gimpressionist/about.c: removed...
 	* plug-ins/gimpressionist/logo.xpm: and replaced by new .xpm file so
@@ -6726,7 +6746,7 @@ t2003-10-24  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 2003-08-22  Hasbullah Bin Pit  <sebol@ikhlas.com>
 
-        * configure.in(ALL_LINGUAS): Added "ms" (Malay).
+	* configure.in(ALL_LINGUAS): Added "ms" (Malay).
 
 2003-08-22  Simon Budig  <simon@gimp.org>
 

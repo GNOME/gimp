@@ -12,14 +12,17 @@ are fulfilled.  We depend on a number of tools and libraries which are
 listed below. For libraries this means you need to also have the
 header files installed.
 
+Please note that GIMP-1.2 and GIMP-1.3 peacefully coexist. You don't
+need to deinstall the 1.2 version.
+
   1. You need to have installed a recent version of pkg-config available
      from http://www.freedesktop.org/software/pkgconfig/.  
 
-  2. You need to have installed GTK+ version 2.2.0 or better. Do not try to
-     use an older GTK+ version (1.2.x), it will not work. GTK+-2.2 itself
-     needs recent versions of GLib, Pango and ATK. Grab them from
-     ftp://ftp.gtk.org/. GTK+-2.x and friends can be installed side by side
-     with GTK+-1.2.
+  2. You need to have installed GTK+ version 2.2.2 or better. Do not
+     try to use an older GTK+ version (1.2.x), it will not work.
+     GTK+-2.2 itself needs recent versions of GLib, Pango and ATK.
+     Sources for these can be grabbed from ftp://ftp.gtk.org/.
+     GTK+-2.x and friends can be installed side by side with GTK+-1.2.
 
   3. We require PangoFT2, a Pango backend that uses FreeType2. Make sure 
      you have FreeType2 and fontconfig installed before you compile Pango.
@@ -175,7 +178,7 @@ When ./configure fails
 scripts. The most recent version is available from 
 	http://www.freedesktop.org/software/pkgconfig/
 
-'configure' tries to compile and run a short GTK program. There are
+'configure' tries to compile and run a short GTK+ program. There are
 several reasons why this might fail:
 
 * pkg-config could not find the file 'gtk+-2.0.pc' that gets installed 

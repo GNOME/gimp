@@ -47,12 +47,14 @@ struct _GimpText
   gboolean               hinting;
   gboolean               autohint;
   gboolean               antialias;
+  gboolean               kerning;
   gchar                 *language;
   GimpTextDirection      base_dir;
   GimpRGB                color;
   GimpTextJustification  justify;
   gdouble                indent;
   gdouble                line_spacing;
+  gdouble                letter_spacing;
   GimpTextBoxMode        box_mode;
   gdouble                box_width;
   gdouble                box_height;
