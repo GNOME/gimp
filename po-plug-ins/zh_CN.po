@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp-std-plugins\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-19 23:19+0100\n"
-"PO-Revision-Date: 2004-11-17 11:00+0800\n"
+"PO-Revision-Date: 2004-11-20 17:47+0800\n"
 "Last-Translator: Yuheng Xie <elephant@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -9650,11 +9650,11 @@ msgstr "IFS 分形：目标"
 
 #: plug-ins/ifscompose/ifscompose.c:674
 msgid "Scale Hue by:"
-msgstr ""
+msgstr "色调缩放为："
 
 #: plug-ins/ifscompose/ifscompose.c:689
 msgid "Scale Value by:"
-msgstr ""
+msgstr "亮度缩放为："
 
 #. Full color control section
 #: plug-ins/ifscompose/ifscompose.c:706
