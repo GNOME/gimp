@@ -1,3 +1,4 @@
+
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
@@ -27,25 +28,30 @@
 
 #include "apptypes.h"
 
-#include "cursorutil.h"
-#include "draw_core.h"
+#include "paint-funcs/paint-funcs.h"
+
+#include "gimpclonetool.h"
+#include "paint_options.h"
+#include "tool_manager.h"
+#include "tool_options.h"
+
 #include "drawable.h"
 #include "gdisplay.h"
-#include "gimage_mask.h"
-#include "gimpcontext.h"
 #include "gimpimage.h"
+#include "gimage_mask.h"
 #include "gimppattern.h"
-#include "paint_funcs.h"
+#include "gimpcontext.h"
+#include "gimpbrush.h"
+#include "gimplut.h"
+#include "gimpui.h"
 #include "pixel_region.h"
 #include "selection.h"
 #include "temp_buf.h"
-
-#include "clone.h"
-#include "paint_core.h"
-#include "paint_options.h"
-#include "tools.h"
+#include "cursorutil.h"
 
 #include "libgimp/gimpintl.h"
+
+#include "pixmaps2.h"
 
 
 #define TARGET_HEIGHT  15
@@ -82,49 +88,62 @@ struct _CloneOptions
 
 /*  forward function declarations  */
 
-static gpointer   clone_paint_func   (PaintCore            *paint_core,
-				      GimpDrawable         *drawable,
-				      PaintState            state);
-static void       clone_draw         (Tool                 *tool);
-static void       clone_motion       (PaintCore            *paint_core,
-				      GimpDrawable         *drawable,
-				      GimpDrawable         *src_drawable,
-				      PaintPressureOptions *pressure_options,
-				      CloneType             type,
-				      gint                  offset_x,
-				      gint                  offset_y);
-static void       clone_line_image   (GImage               *dest,
-				      GImage               *src,
-				      GimpDrawable         *d_drawable,
-				      GimpDrawable         *s_drawable,
-				      guchar               *s,
-				      guchar               *d,
-				      gint                  has_alpha,
-				      gint                  src_bytes,
-				      gint                  dest_bytes,
-				      gint                  width);
-static void       clone_line_pattern (GImage               *dest,
-				      GimpDrawable         *drawable,
-				      GimpPattern          *pattern,
-				      guchar               *d,
-				      gint                  x,
-				      gint                  y,
-				      gint                  bytes,
-				      gint                  width);
+static void       gimp_clone_tool_class_init   (GimpCloneToolClass *klass);
+static void       gimp_clone_tool_init         (GimpCloneTool      *tool);
+
+static void       gimp_clone_tool_paint        (GimpPaintTool  *paint_tool,
+						GimpDrawable   *drawable,
+						PaintState      state);
+static void       gimp_clone_tool_draw         (GimpDrawTool   *draw_tool);
+static void       gimp_clone_tool_cursor_update (GimpTool       *tool,
+						 GdkEventMotion *mevent,
+						 GDisplay       *gdisp);
+static void       gimp_clone_tool_motion       (GimpPaintTool  *paint_tool,
+						GimpDrawable   *drawable,
+						GimpDrawable   *src_drawable,
+						PaintPressureOptions *pressure_options,
+						CloneType       type,
+						gint            offset_x,
+						gint            offset_y);
+static void       gimp_clone_tool_line_image   (GimpImage      *dest,
+						GimpImage      *src,
+						GimpDrawable   *d_drawable,
+						GimpDrawable   *s_drawable,
+						guchar         *s,
+						guchar         *d,
+						gint            has_alpha,
+						gint            src_bytes,
+						gint            dest_bytes,
+						gint            width);
+static void       gimp_clone_tool_line_pattern (GimpImage      *dest,
+						GimpDrawable   *drawable,
+						GimpPattern    *pattern,
+						guchar         *d,
+						gint            x,
+						gint            y,
+						gint            bytes,
+						gint            width);
+
+static CloneOptions * clone_options_new        (void);
+static void           clone_options_reset      (ToolOptions *options);
 
 
+/* The parent class */
+static GimpPaintToolClass *parent_class;
+ 
 /*  the clone tool options  */
 static CloneOptions *clone_options = NULL;
 
 /*  local variables  */
-static gint          src_x = 0;                /*                         */
-static gint          src_y = 0;                /*  position of clone src  */
-static gint          dest_x = 0;               /*                         */
-static gint          dest_y = 0;               /*  position of clone src  */
-static gint          offset_x = 0;             /*                         */
-static gint          offset_y = 0;             /*  offset for cloning     */
-static gint          first = TRUE;
-static gint          trans_tx, trans_ty;       /*  transformed target     */
+static gint          src_x         = 0;        /*                         */
+static gint          src_y         = 0;        /*  position of clone src  */
+static gint          dest_x        = 0;        /*                         */
+static gint          dest_y        = 0;        /*  position of clone src  */
+static gint          offset_x      = 0;        /*                         */
+static gint          offset_y      = 0;        /*  offset for cloning     */
+static gint          first         = TRUE;
+static gint          trans_tx      = 0;        /*                         */
+static gint          trans_ty      = 0;        /*  transformed target     */
 static GDisplay     *the_src_gdisp = NULL;     /*  ID of source gdisplay  */
 static GimpDrawable *src_drawable_ = NULL;     /*  source drawable        */
 
@@ -134,68 +153,89 @@ static gint          non_gui_offset_y;
 static CloneType     non_gui_type;
 
 
-/*  functions  */
+/* global functions  */
 
-static void
-clone_options_reset (void)
+void
+gimp_clone_tool_register (void)
 {
-  CloneOptions *options = clone_options;
-
-  paint_options_reset ((PaintOptions *) options);
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w[options->type_d]), TRUE);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->aligned_w[options->aligned_d]), TRUE);
+  tool_manager_register_tool (GIMP_TYPE_CLONE_TOOL,
+			      TRUE,
+  			      "gimp:clone_tool",
+  			      _("Clone"),
+  			      _("Paint using Patterns or Image Regions"),
+      			      N_("/Tools/Paint Tools/Clone"), "C",
+  			      NULL, "tools/clone.html",
+			      (const gchar **) clone_bits);
 }
 
-static CloneOptions *
-clone_options_new (void)
+GtkType
+gimp_clone_tool_get_type (void)
 {
-  CloneOptions *options;
-  GtkWidget    *vbox;
-  GtkWidget    *frame;
+  static GtkType tool_type = 0;
 
-  /*  the new clone tool options structure  */
-  options = g_new (CloneOptions, 1);
-  paint_options_init ((PaintOptions *) options,
-		      CLONE,
-		      clone_options_reset);
-  options->type    = options->type_d    = CLONE_DEFAULT_TYPE;
-  options->aligned = options->aligned_d = CLONE_DEFAULT_ALIGNED;
+  if (! tool_type)
+    {
+      GtkTypeInfo tool_info =
+      {
+        "GimpCloneTool",
+        sizeof (GimpCloneTool),
+        sizeof (GimpCloneToolClass),
+        (GtkClassInitFunc) gimp_clone_tool_class_init,
+        (GtkObjectInitFunc) gimp_clone_tool_init,
+        /* reserved_1 */ NULL,
+        /* reserved_2 */ NULL,
+        NULL
+      };
 
-  /*  the main vbox  */
-  vbox = ((ToolOptions *) options)->main_vbox;
+      tool_type = gtk_type_unique (GIMP_TYPE_PAINT_TOOL, &tool_info);
+    }
 
-  frame = gimp_radio_group_new2 (TRUE, _("Source"),
-				 gimp_radio_button_update,
-				 &options->type, (gpointer) options->type,
+  return tool_type;
+}
 
-				 _("Image Source"), (gpointer) IMAGE_CLONE,
-				 &options->type_w[0],
-				 _("Pattern Source"), (gpointer) PATTERN_CLONE,
-				 &options->type_w[1],
+/* static functions  */
 
-				 NULL);
+static void
+gimp_clone_tool_class_init (GimpCloneToolClass *klass)
+{
+  GimpPaintToolClass *paint_tool_class;
+  GimpDrawToolClass  *draw_tool_class;
+  GimpToolClass      *tool_class;
 
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  paint_tool_class = (GimpPaintToolClass *) klass;
+  draw_tool_class  = (GimpDrawToolClass *) klass;
+  tool_class       = (GimpToolClass *) klass;
 
-  frame = gimp_radio_group_new2 (TRUE, _("Alignment"),
-				 gimp_radio_button_update,
-				 &options->aligned, (gpointer) options->aligned,
+  parent_class = gtk_type_class (GIMP_TYPE_PAINT_TOOL);
 
-				 _("Non Aligned"), (gpointer) ALIGN_NO,
-				 &options->aligned_w[0],
-				 _("Aligned"), (gpointer) ALIGN_YES,
-				 &options->aligned_w[1],
-				 _("Registered"), (gpointer) ALIGN_REGISTERED,
-				 &options->aligned_w[2],
+  tool_class->cursor_update = gimp_clone_tool_cursor_update;
 
-				 NULL);
+  draw_tool_class->draw     = gimp_clone_tool_draw;
+  paint_tool_class->paint   = gimp_clone_tool_paint;
+}
 
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-  
-  return options;
+static void
+gimp_clone_tool_init (GimpCloneTool *clone)
+{
+  GimpTool      *tool;
+  GimpPaintTool *paint_tool;
+
+  tool       = GIMP_TOOL (clone);
+  paint_tool = GIMP_PAINT_TOOL (clone);
+
+  if (! clone_options)
+    {
+      clone_options = clone_options_new ();
+
+      tool_manager_register_tool_options (GIMP_TYPE_CLONE_TOOL,
+                                          (ToolOptions *) clone_options);
+    }
+
+  tool->tool_cursor = GIMP_CLONE_TOOL_CURSOR;
+
+  paint_tool->pick_colors =  TRUE;
+  paint_tool->flags       |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
+  paint_tool->flags       |= TOOL_TRACES_ON_WINDOW;
 }
 
 static void
@@ -225,32 +265,34 @@ clone_set_src_drawable (GimpDrawable *drawable)
     }
 }
 
-static gpointer
-clone_paint_func (PaintCore    *paint_core,
-		  GimpDrawable *drawable,
-		  PaintState    state)
+static void
+gimp_clone_tool_paint (GimpPaintTool    *paint_tool,
+		       GimpDrawable *drawable,
+		       PaintState    state)
 {
   GDisplay    *gdisp;
   GDisplay    *src_gdisp;
   gint         x1, y1, x2, y2;
   static gint  orig_src_x, orig_src_y;
+  GimpDrawTool *draw_tool;
 
   gdisp = (GDisplay *) active_tool->gdisp;
+  draw_tool = GIMP_DRAW_TOOL(paint_tool);
 
   switch (state)
     {
     case PRETRACE_PAINT:
-      draw_core_pause (paint_core->core, active_tool);
+      gimp_draw_tool_pause (draw_tool);
       break;
 
     case MOTION_PAINT:
-      x1 = paint_core->curx;
-      y1 = paint_core->cury;
-      x2 = paint_core->lastx;
-      y2 = paint_core->lasty;
+      x1 = paint_tool->curx;
+      y1 = paint_tool->cury;
+      x2 = paint_tool->lastx;
+      y2 = paint_tool->lasty;
 
       /*  If the control key is down, move the src target and return */
-      if (paint_core->state & GDK_CONTROL_MASK)
+      if (paint_tool->state & GDK_CONTROL_MASK)
 	{
 	  src_x = x1;
 	  src_y = y1;
@@ -277,20 +319,20 @@ clone_paint_func (PaintCore    *paint_core,
 	  src_x = dest_x + offset_x;
 	  src_y = dest_y + offset_y;
 
-	  clone_motion (paint_core, drawable, src_drawable_, 
-			clone_options->paint_options.pressure_options, 
-			clone_options->type, offset_x, offset_y);
+	  gimp_clone_tool_motion (paint_tool, drawable, src_drawable_, 
+				  clone_options->paint_options.pressure_options, 
+				  clone_options->type, offset_x, offset_y);
 	}
 
       break;
 
     case INIT_PAINT:
-      if (paint_core->state & GDK_CONTROL_MASK)
+      if (paint_tool->state & GDK_CONTROL_MASK)
 	{
 	  the_src_gdisp = gdisp;
 	  clone_set_src_drawable(drawable);
-	  src_x = paint_core->curx;
-	  src_y = paint_core->cury;
+	  src_x = paint_tool->curx;
+	  src_y = paint_tool->cury;
 	  first = TRUE;
 	}
       else if (clone_options->aligned == ALIGN_NO)
@@ -305,13 +347,13 @@ clone_paint_func (PaintCore    *paint_core,
       break;
 
     case FINISH_PAINT:
-      draw_core_stop (paint_core->core, active_tool);
+      gimp_draw_tool_stop (draw_tool);
       if (clone_options->aligned == ALIGN_NO && !first)
 	{
 	  src_x = orig_src_x;
 	  src_y = orig_src_y;
 	} 
-      return NULL;
+      return;
       break;
 
     default:
@@ -328,23 +370,21 @@ clone_paint_func (PaintCore    *paint_core,
 
   if (state == INIT_PAINT)
     /*  Initialize the tool drawing core  */
-    draw_core_start (paint_core->core,
-		     src_gdisp->canvas->window,
-		     active_tool);
+    gimp_draw_tool_start (draw_tool,
+			  src_gdisp->canvas->window);
   else if (state == POSTTRACE_PAINT)
     {
       /*  Find the target cursor's location onscreen  */
       gdisplay_transform_coords (src_gdisp, src_x, src_y,
 				 &trans_tx, &trans_ty, 1);
-      draw_core_resume (paint_core->core, active_tool);      
+      gimp_draw_tool_resume (draw_tool);      
     }
-  return NULL;
 }
 
 void
-clone_cursor_update (Tool           *tool,
-		     GdkEventMotion *mevent,
-		     GDisplay       *gdisp)
+gimp_clone_tool_cursor_update (GimpTool       *tool,
+			       GdkEventMotion *mevent,
+			       GDisplay       *gdisp)
 {
   GimpLayer     *layer;
   GdkCursorType  ctype = GDK_TOP_LEFT_ARROW;
@@ -389,67 +429,28 @@ clone_cursor_update (Tool           *tool,
 				GIMP_CURSOR_MODIFIER_NONE);
 }
 
-Tool *
-tools_new_clone (void)
-{
-  Tool * tool;
-  PaintCore * private;
-
-  /*  The tool options  */
-  if (! clone_options)
-    {
-      clone_options = clone_options_new ();
-      tools_register (CLONE, (ToolOptions *) clone_options);
-
-      /*  press all default buttons  */
-      clone_options_reset ();
-    }
-
-  tool = paint_core_new (CLONE);
-  /* the clone tool provides its own cursor_update_function 
-     until I figure out somethinh nicer -- Sven  */
-  tool->cursor_update_func = clone_cursor_update;
-
-  private = (PaintCore *) tool->private;
-  private->paint_func = clone_paint_func;
-  private->core->draw_func = clone_draw;
-  private->flags |= TOOL_TRACES_ON_WINDOW;
-
-  return tool;
-}
-
-void
-tools_free_clone (Tool *tool)
-{
-  paint_core_free (tool);
-}
-
 static void
-clone_draw (Tool *tool)
+gimp_clone_tool_draw (GimpDrawTool *draw_tool)
 {
-  PaintCore * paint_core;
-
-  paint_core = (PaintCore *) tool->private;
-
-  if (paint_core->core->gc != NULL && clone_options->type == IMAGE_CLONE)
+  if (draw_tool->gc != NULL && clone_options->type == IMAGE_CLONE)
     {
-      gdk_draw_line (paint_core->core->win, paint_core->core->gc,
+      gdk_draw_line (draw_tool->win, draw_tool->gc,
 		     trans_tx - (TARGET_WIDTH >> 1), trans_ty,
 		     trans_tx + (TARGET_WIDTH >> 1), trans_ty);
-      gdk_draw_line (paint_core->core->win, paint_core->core->gc,
+      gdk_draw_line (draw_tool->win, draw_tool->gc,
 		     trans_tx, trans_ty - (TARGET_HEIGHT >> 1),
 		     trans_tx, trans_ty + (TARGET_HEIGHT >> 1));
     }
 }
 
 static void
-clone_motion (PaintCore            *paint_core,
-	      GimpDrawable         *drawable,
-	      GimpDrawable         *src_drawable,
-	      PaintPressureOptions *pressure_options,
-	      CloneType             type,
-	      int                   offset_x,
-	      int                   offset_y)
+gimp_clone_tool_motion (GimpPaintTool        *paint_tool,
+			GimpDrawable         *drawable,
+			GimpDrawable         *src_drawable,
+			PaintPressureOptions *pressure_options,
+			CloneType             type,
+			int                   offset_x,
+			int                   offset_y)
 {
   GimpImage   *gimage;
   GimpImage   *src_gimage = NULL;
@@ -485,12 +486,12 @@ clone_motion (PaintCore            *paint_core,
     return;
 
   if (pressure_options->size)
-    scale = paint_core->curpressure;
+    scale = paint_tool->curpressure;
   else
     scale = 1.0;
 
   /*  Get a region which can be used to paint to  */
-  if (! (area = paint_core_get_paint_area (paint_core, drawable, scale)))
+  if (! (area = gimp_paint_tool_get_paint_area (paint_tool, drawable, scale)))
     return;
 
   switch (type)
@@ -533,7 +534,7 @@ clone_motion (PaintCore            *paint_core,
 	    return;
 
 	  /*  get the original image  */
-	  orig = paint_core_get_orig_image (paint_core, drawable, x1, y1, x2, y2);
+	  orig = gimp_paint_tool_get_orig_image (paint_tool, drawable, x1, y1, x2, y2);
 
 	  srcPR.bytes = orig->bytes;
 	  srcPR.x = 0; srcPR.y = 0;
@@ -584,14 +585,16 @@ clone_motion (PaintCore            *paint_core,
 	  switch (type)
 	    {
 	    case IMAGE_CLONE:
-	      clone_line_image (gimage, src_gimage, drawable, src_drawable, s, d,
-				has_alpha, srcPR.bytes, destPR.bytes, destPR.w);
+	      gimp_clone_tool_line_image (gimage, src_gimage, drawable, 
+					  src_drawable, s, d, has_alpha, 
+					  srcPR.bytes, destPR.bytes, destPR.w);
 	      s += srcPR.rowstride;
 	      break;
 	    case PATTERN_CLONE:
-	      clone_line_pattern (gimage, drawable, pattern, d,
-				  area->x + offset_x, area->y + y + offset_y,
-				  destPR.bytes, destPR.w);
+	      gimp_clone_tool_line_pattern (gimage, drawable, pattern, d,
+					    area->x + offset_x, 
+					    area->y + y + offset_y,
+					    destPR.bytes, destPR.w);
 	      break;
 	    }
 
@@ -601,34 +604,34 @@ clone_motion (PaintCore            *paint_core,
 
   opacity = 255.0 * gimp_context_get_opacity (NULL);
   if (pressure_options->opacity)
-    opacity = opacity * 2.0 * paint_core->curpressure;
+    opacity = opacity * 2.0 * paint_tool->curpressure;
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
-  paint_core_paste_canvas (paint_core, drawable, 
-			   MIN (opacity, 255),
-			   (int) (gimp_context_get_opacity (NULL) * 255),
-			   gimp_context_get_paint_mode (NULL),
-			   pressure_options->pressure ? PRESSURE : SOFT, 
-			   scale, CONSTANT);
+  gimp_paint_tool_paste_canvas (paint_tool, drawable, 
+				MIN (opacity, 255),
+				(gint) (gimp_context_get_opacity (NULL) * 255),
+				gimp_context_get_paint_mode (NULL),
+				pressure_options->pressure ? PRESSURE : SOFT, 
+				scale, CONSTANT);
 }
 
 
 static void
-clone_line_image (GImage        *dest,
-		  GImage        *src,
-		  GimpDrawable  *d_drawable,
-		  GimpDrawable  *s_drawable,
-		  unsigned char *s,
-		  unsigned char *d,
-		  int            has_alpha,
-		  int            src_bytes,
-		  int            dest_bytes,
-		  int            width)
+gimp_clone_tool_line_image (GimpImage    *dest,
+			    GimpImage    *src,
+			    GimpDrawable *d_drawable,
+			    GimpDrawable *s_drawable,
+			    guchar       *s,
+			    guchar       *d,
+			    gint          has_alpha,
+			    gint          src_bytes,
+			    gint          dest_bytes,
+			    gint          width)
 {
-  unsigned char rgb[3];
-  int src_alpha, dest_alpha;
+  guchar rgb[3];
+  gint   src_alpha, dest_alpha;
 
-  src_alpha = src_bytes - 1;
+  src_alpha  = src_bytes - 1;
   dest_alpha = dest_bytes - 1;
 
   while (width--)
@@ -647,14 +650,14 @@ clone_line_image (GImage        *dest,
 }
 
 static void
-clone_line_pattern (GImage        *dest,
-		    GimpDrawable  *drawable,
-		    GimpPattern   *pattern,
-		    unsigned char *d,
-		    int            x,
-		    int            y,
-		    int            bytes,
-		    int            width)
+gimp_clone_tool_line_pattern (GimpImage    *dest,
+			      GimpDrawable *drawable,
+			      GimpPattern  *pattern,
+			      guchar       *d,
+			      gint          x,
+			      gint          y,
+			      gint          bytes,
+			      gint          width)
 {
   guchar *pat, *p;
   gint    color, alpha;
@@ -685,22 +688,24 @@ clone_line_pattern (GImage        *dest,
     }
 }
 
+#if 0 /* leave these to the stub functions. */
+
 static gpointer
-clone_non_gui_paint_func (PaintCore    *paint_core,
-			  GimpDrawable *drawable,
-			  PaintState    state)
+gimp_clone_tool_non_gui_paint_func (GimpPaintTool    *paint_tool,
+				    GimpDrawable     *drawable,
+				    PaintState        state)
 {
-  clone_motion (paint_core, drawable, non_gui_src_drawable,
-		&non_gui_pressure_options,
-		non_gui_type, non_gui_offset_x, non_gui_offset_y);
+  gimp_clone_tool_motion (paint_tool, drawable, non_gui_src_drawable,
+			  &non_gui_pressure_options,
+			  non_gui_type, non_gui_offset_x, non_gui_offset_y);
 
   return NULL;
 }
 
 gboolean
-clone_non_gui_default (GimpDrawable *drawable,
-		       gint          num_strokes,
-		       gdouble      *stroke_array)
+gimp_clone_tool_non_gui_default (GimpDrawable *drawable,
+				 gint          num_strokes,
+				 gdouble      *stroke_array)
 {
   GimpDrawable *src_drawable = NULL;
   CloneType     clone_type = CLONE_DEFAULT_TYPE;
@@ -716,26 +721,26 @@ clone_non_gui_default (GimpDrawable *drawable,
       local_src_y = src_y;
     }
   
-  return clone_non_gui (drawable,
-			src_drawable,
-			clone_type,
-			local_src_x,local_src_y,
-			num_strokes, stroke_array);
+  return gimp_clone_tool_non_gui (drawable,
+				  src_drawable,
+				  clone_type,
+				  local_src_x,local_src_y,
+				  num_strokes, stroke_array);
 }
 
 gboolean
-clone_non_gui (GimpDrawable *drawable,
-    	       GimpDrawable *src_drawable,
-	       CloneType     clone_type,
-	       gdouble       src_x,
-	       gdouble       src_y,
-	       gint          num_strokes,
-	       gdouble      *stroke_array)
+gimp_clone_tool_non_gui (GimpDrawable *drawable,
+			 GimpDrawable *src_drawable,
+			 CloneType     clone_type,
+			 gdouble       src_x,
+			 gdouble       src_y,
+			 gint          num_strokes,
+			 gdouble      *stroke_array)
 {
   gint i;
 
-  if (paint_core_init (&non_gui_paint_core, drawable,
-		       stroke_array[0], stroke_array[1]))
+  if (gimp_paint_tool_start (&non_gui_paint_tool, drawable,
+			     stroke_array[0], stroke_array[1]))
     {
       /* Set the paint core's paint func */
       non_gui_paint_core.paint_func = clone_non_gui_paint_func;
@@ -772,4 +777,70 @@ clone_non_gui (GimpDrawable *drawable,
     }
   else
     return FALSE;
+}
+
+#endif /* 0 - non-gui functions */
+
+static CloneOptions *
+clone_options_new (void)
+{
+  CloneOptions *options;
+  GtkWidget    *vbox;
+  GtkWidget    *frame;
+
+  /*  the new clone tool options structure  */
+  options = g_new (CloneOptions, 1);
+  paint_options_init ((PaintOptions *) options,
+		      GIMP_TYPE_CLONE_TOOL,
+		      clone_options_reset);
+  options->type    = options->type_d    = CLONE_DEFAULT_TYPE;
+  options->aligned = options->aligned_d = CLONE_DEFAULT_ALIGNED;
+
+  /*  the main vbox  */
+  vbox = ((ToolOptions *) options)->main_vbox;
+
+  frame = gimp_radio_group_new2 (TRUE, _("Source"),
+				 gimp_radio_button_update,
+				 &options->type, (gpointer) options->type,
+
+				 _("Image Source"), (gpointer) IMAGE_CLONE,
+				 &options->type_w[0],
+				 _("Pattern Source"), (gpointer) PATTERN_CLONE,
+				 &options->type_w[1],
+
+				 NULL);
+
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  frame = gimp_radio_group_new2 (TRUE, _("Alignment"),
+				 gimp_radio_button_update,
+				 &options->aligned, (gpointer) options->aligned,
+
+				 _("Non Aligned"), (gpointer) ALIGN_NO,
+				 &options->aligned_w[0],
+				 _("Aligned"), (gpointer) ALIGN_YES,
+				 &options->aligned_w[1],
+				 _("Registered"), (gpointer) ALIGN_REGISTERED,
+				 &options->aligned_w[2],
+
+				 NULL);
+
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+  
+  return options;
+}
+
+static void
+clone_options_reset (ToolOptions *tool_options)
+{
+  CloneOptions *options;
+
+  options = (CloneOptions *) tool_options;
+
+  paint_options_reset (tool_options);
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w[options->type_d]), TRUE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->aligned_w[options->aligned_d]), TRUE);
 }

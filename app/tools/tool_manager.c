@@ -43,6 +43,8 @@
 
 #include "gimpairbrushtool.h"
 #include "gimppaintbrushtool.h"
+#include "gimpclonetool.h"
+#include "gimpconvolvetool.h"
 #include "gimpdodgeburntool.h"
 #include "gimperasertool.h"
 #include "gimppenciltool.h"

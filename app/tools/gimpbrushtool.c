@@ -51,6 +51,7 @@
 #include "gimpdrawtool.h"
 #include "gimpdodgeburntool.h"
 #include "gimperasertool.h"
+#include "gimpconvolvetool.h"
 #include "gimppainttool.h"
 
 #include "libgimp/gimpintl.h"

@@ -1,5 +1,19 @@
 2001-04-19  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/Makefile.am
+	* app/tools/gimpclonetool.[ch]
+	* app/tools/gimpconvolvetool.[ch]
+	* app/tools/gimppainttool.c
+	* app/tools/gimptool.h
+	* app/tools/paint_options.c
+	* app/tools/tool_manager.c
+	* app/tools/tools.c: Applied a patch from Dave Neary
+	<dneary@eircom.net> which brings clone and convolve back.
+
+	That's all paint tools, Dudes!
+
+2001-04-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am
 	* app/brush_header.h
 	* app/pattern_header.h

@@ -25,22 +25,25 @@
 
 #include "apptypes.h"
 
+#include "paint-funcs/paint-funcs.h"
+
+#include "gimpconvolvetool.h"
+#include "paint_options.h"
+#include "tool_manager.h"
+#include "tool_options.h"
+
 #include "drawable.h"
 #include "gdisplay.h"
-#include "gimage.h"
+#include "gimpimage.h"
 #include "gimpbrush.h"
 #include "gimpcontext.h"
-#include "paint_funcs.h"
 #include "pixel_region.h"
 #include "selection.h"
 #include "temp_buf.h"
 
-#include "convolve.h"
-#include "paint_core.h"
-#include "paint_options.h"
-#include "tools.h"
-
 #include "libgimp/gimpintl.h"
+
+#include "pixmaps2.h"
 
 
 #define FIELD_COLS    4
@@ -84,27 +87,43 @@ struct _ConvolveOptions
 
 
 /*  forward function declarations  */
-static void       calculate_matrix    (ConvolveType          type,
-				       gdouble               rate);
-static void       integer_matrix      (gfloat               *source,
-				       gint                 *dest,
-				       gint                  size);
-static void       copy_matrix         (gfloat               *src,
-				       gfloat               *dest,
-				       gint                  size);
-static gint       sum_matrix          (gint                 *matrix,
-				       gint                  size);
 
-static gpointer   convolve_paint_func (PaintCore            *paint_core,
-				       GimpDrawable         *drawable,
-				       PaintState            state);
-static void       convolve_motion     (PaintCore            *paint_core,
-				       GimpDrawable         *drawable, 
-				       PaintPressureOptions *pressure_options,
-				       ConvolveType          type,
-				       gdouble               rate);
+static void   gimp_convolve_tool_class_init    (GimpConvolveToolClass *klass);
+static void   gimp_convolve_tool_init          (GimpConvolveTool      *tool);
+
+static void   calculate_matrix                 (ConvolveType          type,
+						gdouble               rate);
+static void   integer_matrix                   (gfloat               *source,
+						gint                 *dest,
+						gint                  size);
+static void   copy_matrix                      (gfloat               *src,
+						gfloat               *dest,
+						gint                  size);
+static gint   sum_matrix                       (gint                 *matrix,
+						gint                  size);
+
+static void   gimp_convolve_tool_paint         (GimpPaintTool        *paint_tool,
+						GimpDrawable         *drawable,
+						PaintState            state);
+static void   gimp_convolve_tool_cursor_update (GimpTool             *tool,
+						GdkEventMotion       *mevent,
+						GDisplay             *gdisp);
+static void   gimp_convolve_tool_modifier_key  (GimpTool             *tool,
+					        GdkEventKey          *kevent,
+						GDisplay             *gdisp);
+static void   gimp_convolve_tool_motion        (GimpPaintTool        *paint_tool,
+						GimpDrawable         *drawable, 
+						PaintPressureOptions *pressure_options,
+						ConvolveType          type,
+						gdouble               rate);
+
+static ConvolveOptions * convolve_options_new   (void);
+static void              convolve_options_reset (ToolOptions *options);
 
 
+/* The parent class */
+static GimpPaintToolClass *parent_class;
+ 
 /*  the convolve tool options  */
 static ConvolveOptions * convolve_options = NULL;
 
@@ -116,7 +135,7 @@ static gint         matrix_divisor;
 static ConvolveType non_gui_type;
 static gdouble      non_gui_rate;
 
-static gfloat       custom_matrix [25] =
+static gfloat custom_matrix [25] =
 {
   0, 0, 0, 0, 0,
   0, 0, 0, 0, 0,
@@ -125,7 +144,7 @@ static gfloat       custom_matrix [25] =
   0, 0, 0, 0, 0,
 };
 
-static gfloat       blur_matrix [25] =
+static gfloat blur_matrix [25] =
 {
   0, 0, 0, 0, 0,
   0, 1, 1, 1, 0,
@@ -134,7 +153,7 @@ static gfloat       blur_matrix [25] =
   0, 0 ,0, 0, 0,
 };
 
-static gfloat       sharpen_matrix [25] =
+static gfloat sharpen_matrix [25] =
 {
   0, 0, 0, 0, 0,
   0, 1, 1, 1, 0,
@@ -144,103 +163,111 @@ static gfloat       sharpen_matrix [25] =
 };
 
 
-/* functions  */
+/* global functions  */
+
+void
+gimp_convolve_tool_register (void)
+{
+  tool_manager_register_tool (GIMP_TYPE_CONVOLVE_TOOL,
+			      TRUE,
+  			      "gimp:convolve_tool",
+  			      _("Convolve"),
+  			      _("Blur or Sharpen"),
+      			      N_("/Tools/Paint Tools/Convolve"), "B",
+  			      NULL, "tools/convolve.html",
+			      (const gchar **) blur_bits);
+}
+
+GtkType
+gimp_convolve_tool_get_type (void)
+{
+  static GtkType tool_type = 0;
+
+  if (! tool_type)
+    {
+      GtkTypeInfo tool_info =
+      {
+        "GimpConvolveTool",
+        sizeof (GimpConvolveTool),
+        sizeof (GimpConvolveToolClass),
+        (GtkClassInitFunc) gimp_convolve_tool_class_init,
+        (GtkObjectInitFunc) gimp_convolve_tool_init,
+        /* reserved_1 */ NULL,
+        /* reserved_2 */ NULL,
+        NULL
+      };
+
+      tool_type = gtk_type_unique (GIMP_TYPE_PAINT_TOOL, &tool_info);
+    }
+
+  return tool_type;
+}
+
+/* static functions  */
 
 static void
-convolve_options_reset (void)
+gimp_convolve_tool_class_init (GimpConvolveToolClass *klass)
 {
-  ConvolveOptions *options = convolve_options;
+  GimpPaintToolClass *paint_tool_class;
+  GimpDrawToolClass  *draw_tool_class;
+  GimpToolClass      *tool_class;
 
-  paint_options_reset ((PaintOptions *) options);
+  paint_tool_class = (GimpPaintToolClass *) klass;
+  draw_tool_class  = (GimpDrawToolClass *) klass;
+  tool_class       = (GimpToolClass *) klass;
 
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->rate_w), options->rate_d);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w[options->type_d]), TRUE);
+  parent_class = gtk_type_class (GIMP_TYPE_PAINT_TOOL);
+
+  tool_class->cursor_update = gimp_convolve_tool_cursor_update;
+  tool_class->modifier_key  = gimp_convolve_tool_modifier_key;
+
+  paint_tool_class->paint   = gimp_convolve_tool_paint;
 }
 
-static ConvolveOptions *
-convolve_options_new (void)
+static void
+gimp_convolve_tool_init (GimpConvolveTool *convolve)
 {
-  ConvolveOptions *options;
+  GimpTool      *tool;
+  GimpPaintTool *paint_tool;
 
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *label;
-  GtkWidget *scale;
-  GtkWidget *frame;
+  tool       = GIMP_TOOL (convolve);
+  paint_tool = GIMP_PAINT_TOOL (convolve);
 
-  /*  the new convolve tool options structure  */
-  options = g_new (ConvolveOptions, 1);
-  paint_options_init ((PaintOptions *) options,
-		      CONVOLVE,
-		      convolve_options_reset);
-  options->type = options->type_d = DEFAULT_CONVOLVE_TYPE;
-  options->rate = options->rate_d = DEFAULT_CONVOLVE_RATE;
+  if (! convolve_options)
+    {
+      convolve_options = convolve_options_new ();
 
-  /*  the main vbox  */
-  vbox = ((ToolOptions *) options)->main_vbox;
+      tool_manager_register_tool_options (GIMP_TYPE_CONVOLVE_TOOL,
+                                          (ToolOptions *) convolve_options);
+    }
 
-  /*  the rate scale  */
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-
-  label = gtk_label_new (_("Rate:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  options->rate_w =
-    gtk_adjustment_new (options->rate_d, 0.0, 100.0, 1.0, 1.0, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (options->rate_w));
-  gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (options->rate_w), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &options->rate);
-  gtk_widget_show (scale);
-  gtk_widget_show (hbox);
-
-  frame = gimp_radio_group_new2 (TRUE, _("Convolve Type"),
-				 gimp_radio_button_update,
-				 &options->type, (gpointer) options->type,
-
-				 _("Blur"), (gpointer) BLUR_CONVOLVE,
-				 &options->type_w[0],
-				 _("Sharpen"), (gpointer) SHARPEN_CONVOLVE,
-				 &options->type_w[1],
-
-				 NULL);
-
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  return options;
+  tool->tool_cursor = GIMP_BLUR_TOOL_CURSOR;
 }
 
-static gpointer
-convolve_paint_func (PaintCore    *paint_core,
-		     GimpDrawable *drawable,
-		     PaintState    state)
+static void
+gimp_convolve_tool_paint (GimpPaintTool    *paint_tool,
+			  GimpDrawable     *drawable,
+			  PaintState        state)
 {
   switch (state)
     {
     case MOTION_PAINT:
-      convolve_motion (paint_core, drawable, 
-		       convolve_options->paint_options.pressure_options,
-		       convolve_options->type, convolve_options->rate);
+      gimp_convolve_tool_motion (paint_tool, drawable, 
+				 convolve_options->paint_options.pressure_options,
+				 convolve_options->type, 
+				 convolve_options->rate);
       break;
 
     default:
       break;
     }
 
-  return NULL;
 }
 
 static void
-convolve_modifier_key_func (Tool        *tool,
-			    GdkEventKey *kevent,
-			    GDisplay    *gdisp)
+gimp_convolve_tool_modifier_key (GimpTool    *tool,
+				 GdkEventKey *kevent,
+				 GDisplay    *gdisp)
 {
   switch (kevent->keyval)
     {
@@ -295,66 +322,32 @@ convolve_modifier_key_func (Tool        *tool,
 }
 
 static void
-convolve_cursor_update_func (Tool           *tool,
-			     GdkEventMotion *mevent,
-			     GDisplay       *gdisp)
+gimp_convolve_tool_cursor_update (GimpTool       *tool,
+				  GdkEventMotion *mevent,
+				  GDisplay       *gdisp)
 {
   tool->toggled = (convolve_options->type == SHARPEN_CONVOLVE);
 
-  paint_core_cursor_update (tool, mevent, gdisp);
-}
-
-Tool *
-tools_new_convolve (void)
-{
-  Tool      *tool;
-  PaintCore *private;
-
-  /*  The tool options  */
-  if (! convolve_options)
-    {
-      convolve_options = convolve_options_new ();
-      tools_register (CONVOLVE, (ToolOptions *) convolve_options);
-
-      /*  press all default buttons  */
-      convolve_options_reset ();
-    }
-
-  tool = paint_core_new (CONVOLVE);
-
-  tool->tool_cursor = GIMP_BLUR_TOOL_CURSOR;
-
-  tool->modifier_key_func  = convolve_modifier_key_func;
-  tool->cursor_update_func = convolve_cursor_update_func;
-
-  private = (PaintCore *) tool->private;
-  private->paint_func = convolve_paint_func;
-
-  return tool;
-}
-
-void
-tools_free_convolve (Tool *tool)
-{
-  paint_core_free (tool);
+  if (GIMP_TOOL_CLASS (parent_class)->cursor_update)
+    GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, mevent, gdisp);
 }
 
 static void
-convolve_motion (PaintCore            *paint_core,
-		 GimpDrawable         *drawable,
-		 PaintPressureOptions *pressure_options,
-		 ConvolveType          type,
-		 double                rate)
+gimp_convolve_tool_motion (GimpPaintTool        *paint_tool,
+			   GimpDrawable         *drawable,
+			   PaintPressureOptions *pressure_options,
+			   ConvolveType          type,
+			   double                rate)
 {
-  TempBuf         *area;
-  guchar          *temp_data;
-  PixelRegion      srcPR; 
-  PixelRegion      destPR;
-  gdouble          scale;
-  ConvolveClipType area_hclip = CONVOLVE_NOT_CLIPPED;
-  ConvolveClipType area_vclip = CONVOLVE_NOT_CLIPPED;
-  gint             marginx = 0;
-  gint             marginy = 0;
+  TempBuf          *area;
+  guchar           *temp_data;
+  PixelRegion       srcPR; 
+  PixelRegion       destPR;
+  gdouble           scale;
+  ConvolveClipType  area_hclip = CONVOLVE_NOT_CLIPPED;
+  ConvolveClipType  area_vclip = CONVOLVE_NOT_CLIPPED;
+  gint              marginx    = 0;
+  gint              marginy    = 0;
 
   if (! gimp_drawable_gimage (drawable))
     return;
@@ -365,17 +358,17 @@ convolve_motion (PaintCore            *paint_core,
 
   /* If the brush is smaller than the convolution matrix, don't convolve */
 
-  if ((paint_core->brush->mask->width < matrix_size) ||
-      (paint_core->brush->mask->height < matrix_size))
+  if ((paint_tool->brush->mask->width < matrix_size) ||
+      (paint_tool->brush->mask->height < matrix_size))
     return;
 
   if (pressure_options->size)
-    scale = paint_core->curpressure;
+    scale = paint_tool->curpressure;
   else
     scale = 1.0;
 
   /*  Get image region around current brush (mask bbox + 1 pixel)  */
-  if (! (area = paint_core_get_paint_area (paint_core, drawable, scale)))
+  if (! (area = gimp_paint_tool_get_paint_area (paint_tool, drawable, scale)))
     return;
 
   /*  configure the source pixel region  */
@@ -394,27 +387,26 @@ convolve_motion (PaintCore            *paint_core,
   destPR.data      = temp_buf_data (area);
 
   if (pressure_options->rate)
-    rate = rate * 2.0 * paint_core->curpressure;
+    rate = rate * 2.0 * paint_tool->curpressure;
 
   calculate_matrix (type, rate); 
     
   /*  Image region near edges? If so, paint area will be clipped   */
   /*  with respect to brush mask + 1 pixel border (# 19285)        */
- 
-  if((marginx = (gint)paint_core->curx - paint_core->brush->mask->width/2 - 1)  != area->x)
-    area_hclip = CONVOLVE_NCLIP;
-  else
-    if((marginx = area->width - paint_core->brush->mask->width - 2) != 0)
-      area_hclip = CONVOLVE_PCLIP;
 
-  if((marginy = (gint)paint_core->cury - paint_core->brush->mask->height/2 - 1) != area->y)
+  if ((marginx = (gint) paint_tool->curx - paint_tool->brush->mask->width / 2 - 1) != area->x)
+    area_hclip = CONVOLVE_NCLIP;
+  else if ((marginx = area->width - paint_tool->brush->mask->width - 2) != 0)
+    area_hclip = CONVOLVE_PCLIP;
+
+  if ((marginy = (gint) paint_tool->cury - paint_tool->brush->mask->height / 2 - 1) != area->y)
     area_vclip = CONVOLVE_NCLIP;
-  else 
-    if((marginy = area->height - paint_core->brush->mask->height - 2) != 0)
-      area_vclip = CONVOLVE_PCLIP;
+  else if ((marginy = area->height - paint_tool->brush->mask->height - 2) != 0)
+    area_vclip = CONVOLVE_PCLIP;
 
   /* Has the TempBuf been clipped by a canvas edge or two ?        */
-  if((area_hclip == CONVOLVE_NOT_CLIPPED)  && (area_vclip == CONVOLVE_NOT_CLIPPED))
+  if ((area_hclip == CONVOLVE_NOT_CLIPPED)  &&
+      (area_vclip == CONVOLVE_NOT_CLIPPED))
     {
       /* No clipping...                                              */
       /* Standard case: copy src to temp. convolve temp to dest.     */
@@ -460,6 +452,7 @@ convolve_motion (PaintCore            *paint_core,
       tempPR.w    = area->width;
       tempPR.h    = area->height;
       tempPR.data = temp_data;
+
       convolve_region (&tempPR, &destPR, matrix, matrix_size,
 		       matrix_divisor, NORMAL_CONVOL);
 
@@ -468,18 +461,21 @@ convolve_motion (PaintCore            *paint_core,
     }
   else
     {
-      /* TempBuf clipping has occured on at least one edge...                   */
-      /* Edge case: expand area under brush margin px on near edge(s), convolve */
-      /* expanded buffers. copy src -> ovrsz1 convolve ovrsz1 -> ovrsz2         */
-      /* copy-with-crop ovrsz2 -> dest                                          */
-
+      /* TempBuf clipping has occured on at least one edge...
+       * Edge case: expand area under brush margin px on near edge(s), convolve
+       * expanded buffers. copy src -> ovrsz1 convolve ovrsz1 -> ovrsz2
+       * copy-with-crop ovrsz2 -> dest
+       */
       PixelRegion   ovrsz1PR;
       PixelRegion   ovrsz2PR;
       guchar        *ovrsz1_data = NULL;
       guchar        *ovrsz2_data = NULL;
-      guchar        *fillcolor   = gimp_drawable_get_color_at (drawable,
-				     CLAMP ((gint) paint_core->curx, 0, gimp_drawable_width (drawable) - 1),
-				     CLAMP ((gint) paint_core->cury, 0, gimp_drawable_height (drawable) - 1));
+      guchar        *fillcolor;
+
+      fillcolor = gimp_drawable_get_color_at
+	(drawable,
+	 CLAMP ((gint) paint_tool->curx, 0, gimp_drawable_width (drawable) - 1),
+	 CLAMP ((gint) paint_tool->cury, 0, gimp_drawable_height (drawable) - 1));
 
       marginx *= (marginx < 0) ? -1 : 0;
       marginy *= (marginy < 0) ? -1 : 0;
@@ -507,6 +503,7 @@ convolve_motion (PaintCore            *paint_core,
       ovrsz1PR.tiles     = NULL;
       ovrsz1_data        = g_malloc (ovrsz1PR.h * ovrsz1PR.rowstride);
       ovrsz1PR.data      = ovrsz1_data;
+
       color_region (&ovrsz1PR, (const guchar *)fillcolor); 
 
       ovrsz1PR.x         = (area_hclip == CONVOLVE_NCLIP)? marginx : 0; 
@@ -527,6 +524,7 @@ convolve_motion (PaintCore            *paint_core,
       ovrsz1PR.w    = area->width  + marginx;
       ovrsz1PR.h    = area->height + marginy;
       ovrsz1PR.data = ovrsz1_data;
+
       convolve_region (&ovrsz1PR, &ovrsz2PR, matrix, matrix_size,
 		       matrix_divisor, NORMAL_CONVOL);
 
@@ -537,24 +535,26 @@ convolve_motion (PaintCore            *paint_core,
       ovrsz2PR.w    = area->width;
       ovrsz2PR.h    = area->height;
       ovrsz2PR.data = ovrsz2_data + (ovrsz2PR.rowstride * ovrsz2PR.y) + (ovrsz2PR.bytes * ovrsz2PR.x);
+
       copy_region (&ovrsz2PR, &destPR);
+
       g_free(ovrsz1_data);
       g_free(ovrsz2_data);
       g_free(fillcolor);
     }
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
-  paint_core_replace_canvas (paint_core, drawable, OPAQUE_OPACITY,
-			     (int) (gimp_context_get_opacity (NULL) * 255),
-			     pressure_options->pressure ? PRESSURE : SOFT,
-			     scale, INCREMENTAL);
+  gimp_paint_tool_replace_canvas (paint_tool, drawable, OPAQUE_OPACITY,
+				  (gint) (gimp_context_get_opacity (NULL) * 255),
+				  pressure_options->pressure ? PRESSURE : SOFT,
+				  scale, INCREMENTAL);
 }
 
 static void
 calculate_matrix (ConvolveType type,
-		  double       rate)
+		  gdouble      rate)
 {
-  float percent;
+  gfloat percent;
 
   /*  find percent of tool pressure  */
   percent = MIN (rate / 100.0, 1.0);
@@ -610,7 +610,7 @@ copy_matrix (gfloat *src,
     *dest++ = *src++;
 }
 
-static int
+static gint
 sum_matrix (gint *matrix,
 	    gint  size)
 {
@@ -624,13 +624,13 @@ sum_matrix (gint *matrix,
   return sum;
 }
 
-
+#if 0 /* Leave these to the STUBs */
 static gpointer
-convolve_non_gui_paint_func (PaintCore    *paint_core,
+convolve_non_gui_paint_func (GimpPaintTool    *paint_tool,
 			     GimpDrawable *drawable,
 			     PaintState    state)
 {
-  convolve_motion (paint_core, drawable, &non_gui_pressure_options,
+  convolve_motion (paint_tool, drawable, &non_gui_pressure_options,
 		   non_gui_type, non_gui_rate);
 
   return NULL;
@@ -656,19 +656,16 @@ convolve_non_gui_default (GimpDrawable *drawable,
 
 gboolean
 convolve_non_gui (GimpDrawable *drawable,
-    		  double        rate,
+    		  gdouble       rate,
 		  ConvolveType  type,
 		  gint          num_strokes,
 		  gdouble      *stroke_array)
 {
   gint i;
 
-  if (paint_core_init (&non_gui_paint_core, drawable,
-		       stroke_array[0], stroke_array[1]))
+  if (gimp_paint_tool_init (&non_gui_paint_core, drawable,
+			    stroke_array[0], stroke_array[1]))
     {
-      /* Set the paint core's paint func */
-      non_gui_paint_core.paint_func = convolve_non_gui_paint_func;
-
       non_gui_type = type;
       non_gui_rate = rate;
 
@@ -688,13 +685,88 @@ convolve_non_gui (GimpDrawable *drawable,
 	  non_gui_paint_core.lasty = non_gui_paint_core.cury;
 	}
 
-      /* Finish the painting */
       paint_core_finish (&non_gui_paint_core, drawable, -1);
 
-      /* Cleanup */
       paint_core_cleanup ();
+
       return TRUE;
     }
 
   return FALSE;
+}
+
+#endif /* 0 - non-gui functions */
+
+static ConvolveOptions *
+convolve_options_new (void)
+{
+  ConvolveOptions *options;
+  GtkWidget       *vbox;
+  GtkWidget       *hbox;
+  GtkWidget       *label;
+  GtkWidget       *scale;
+  GtkWidget       *frame;
+
+  options = g_new0 (ConvolveOptions, 1);
+
+  paint_options_init ((PaintOptions *) options,
+		      GIMP_TYPE_CONVOLVE_TOOL,
+		      convolve_options_reset);
+
+  options->type = options->type_d = DEFAULT_CONVOLVE_TYPE;
+  options->rate = options->rate_d = DEFAULT_CONVOLVE_RATE;
+
+  /*  the main vbox  */
+  vbox = ((ToolOptions *) options)->main_vbox;
+
+  /*  the rate scale  */
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+
+  label = gtk_label_new (_("Rate:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  options->rate_w =
+    gtk_adjustment_new (options->rate_d, 0.0, 100.0, 1.0, 1.0, 0.0);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (options->rate_w));
+  gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
+  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
+  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  gtk_signal_connect (GTK_OBJECT (options->rate_w), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &options->rate);
+  gtk_widget_show (scale);
+  gtk_widget_show (hbox);
+
+  frame = gimp_radio_group_new2 (TRUE, _("Convolve Type"),
+				 gimp_radio_button_update,
+				 &options->type, (gpointer) options->type,
+
+				 _("Blur"), (gpointer) BLUR_CONVOLVE,
+				 &options->type_w[0],
+				 _("Sharpen"), (gpointer) SHARPEN_CONVOLVE,
+				 &options->type_w[1],
+
+				 NULL);
+
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  return options;
+}
+
+static void
+convolve_options_reset (ToolOptions *tool_options)
+{
+  ConvolveOptions *options;
+
+  options = (ConvolveOptions *) tool_options;
+
+  paint_options_reset (tool_options);
+
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->rate_w),
+			    options->rate_d);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w[options->type_d]), TRUE);
 }

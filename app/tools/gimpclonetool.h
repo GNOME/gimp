@@ -16,8 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __CLONE_H__
-#define __CLONE_H__
+#ifndef __GIMP_CLONE_TOOL_H__
+#define __GIMP_CLONE_TOOL_H__
+
+
+#include "gimppainttool.h"
 
 
 typedef enum
@@ -26,6 +29,37 @@ typedef enum
   PATTERN_CLONE
 } CloneType;
 
+
+#define GIMP_TYPE_CLONE_TOOL            (gimp_clone_tool_get_type ())
+#define GIMP_CLONE_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_CLONE_TOOL, GimpCloneTool))
+#define GIMP_IS_CLONE_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_CLONE_TOOL))
+#define GIMP_CLONE_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CLONE_TOOL, GimpCloneToolClass))
+#define GIMP_IS_CLONE_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CLONE_TOOL))
+
+
+typedef struct _GimpCloneTool      GimpCloneTool;
+typedef struct _GimpCloneToolClass GimpCloneToolClass;
+
+struct _GimpCloneTool
+{
+  GimpPaintTool parent_instance;
+};
+
+struct _GimpCloneToolClass
+{
+  GimpPaintToolClass parent_class;
+};
+
+
+void       gimp_clone_tool_register (void);
+
+GtkType    gimp_clone_tool_get_type (void);
+
+
+/* FIXME: Old style functions in need of a replacement. The only 
+ * time these are used is to stroke paths or fill selections
+ * They should be somewhere else.
+ */
 
 gboolean   clone_non_gui         (GimpDrawable *drawable,
 				  GimpDrawable *src_drawable,
@@ -37,8 +71,6 @@ gboolean   clone_non_gui         (GimpDrawable *drawable,
 gboolean   clone_non_gui_default (GimpDrawable *drawable,
 				  gint          num_strokes,
 				  gdouble      *stroke_array);
-Tool     * tools_new_clone       (void);
-void       tools_free_clone      (Tool         *tool);
 
 
-#endif  /*  __CLONE_H__  */
+#endif  /*  __GIMP_CLONE_TOOL_H__  */

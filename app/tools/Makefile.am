@@ -13,12 +13,12 @@ libapptools_la_SOURCES = \
 	gimpbucketfilltool.h	\
 ##	gimpbycolorselecttool.c	\
 ##	gimpbycolorselecttool.h	\
-##	gimpclonetool.c		\
-##	gimpclonetool.h		\
+	gimpclonetool.c		\
+	gimpclonetool.h		\
 	gimpcolorpickertool.c	\
 	gimpcolorpickertool.h	\
-##	gimpconvolvetool.c	\
-##	gimpconvolvetool.h	\
+	gimpconvolvetool.c	\
+	gimpconvolvetool.h	\
 	gimpcroptool.c		\
 	gimpcroptool.h		\
 	gimpdodgeburntool.c	\
