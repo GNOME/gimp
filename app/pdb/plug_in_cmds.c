@@ -222,7 +222,7 @@ plugins_query_invoker (Gimp     *gimp,
   gint32 *time_ints;
   gchar **realname_strs;
   PlugInProcDef *proc_def;
-  GSList *tmp = NULL;
+  GSList *list = NULL;
   gint i = 0;
   regex_t sregex;
 
@@ -237,9 +237,9 @@ plugins_query_invoker (Gimp     *gimp,
    * where we can store the strings.
    */
 
-  for (gimp->plug_in_proc_defs; tmp; tmp = g_slist_next (tmp))
+  for (list = gimp->plug_in_proc_defs; list; list = g_slist_next (list))
     {
-      proc_def = (PlugInProcDef *) tmp->data;
+      proc_def = (PlugInProcDef *) list->data;
 
       if (proc_def->prog && proc_def->menu_path)
 	{
@@ -264,12 +264,12 @@ plugins_query_invoker (Gimp     *gimp,
   realname_strs = g_new (gchar *, num_plugins);
   time_ints     = g_new (gint   , num_plugins);
 
-  for (tmp = gimp->plug_in_proc_defs; tmp; tmp = g_slist_next (tmp))
+  for (list = gimp->plug_in_proc_defs; list; list = g_slist_next (list))
     {
       if (i > num_plugins)
 	g_error ("Internal error counting plugins");
 
-      proc_def = (PlugInProcDef *) tmp->data;
+      proc_def = (PlugInProcDef *) list->data;
 
       if (proc_def->prog && proc_def->menu_path)
 	{

@@ -1,5 +1,12 @@
 2003-02-13  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/plug_in.pdb: fixed plugins_query() I broke
+	recently.
+
+	* app/pdb/plug_in_cmds.c: regenerated.
+
+2003-02-13  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/core-enums.[ch]: changed FOO_UNDO enum values to
 	GIMP_UNDO_FOO.
 
