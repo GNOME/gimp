@@ -22,7 +22,7 @@
 
 #include "libgimpmath/gimpmath.h"
 
-#include "tool-utils.h"
+#include "tools-utils.h"
 
 
 /**

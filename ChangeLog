@@ -1,3 +1,7 @@
+2004-08-23  DindinX  <david@dindinx.org>
+
+	* app/tools/tools-utils.c: fixed a typo that broke the build.
+
 2004-08-22  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/Makefile.am
