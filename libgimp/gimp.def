@@ -1,4 +1,6 @@
 EXPORTS
+	_gimp_drawable_thumbnail
+	_gimp_image_thumbnail
 	gimp_airbrush
 	gimp_airbrush_default
 	gimp_attach_new_parasite
