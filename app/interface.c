@@ -741,28 +741,25 @@ create_display_shell (int   gdisp_id,
 		      gdisp);
 
   /*  the vbox, table containing all widgets  */
-  vbox = gtk_vbox_new(0,0);
+  vbox = gtk_vbox_new(0,2);
   gtk_container_add(GTK_CONTAINER (gdisp->shell), vbox);
+  gtk_container_border_width(GTK_CONTAINER (vbox), 2);
 
   /*  the table widget is pretty stupid so we need 2 tables
       or it treats rulers and canvas with equal weight when 
       allocating space, ugh. */
   table = gtk_table_new (2, 2, FALSE);
-  /*
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 1);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 1, 2);
   gtk_table_set_row_spacing (GTK_TABLE (table), 0, 1);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 1, 2);
-  gtk_container_border_width (GTK_CONTAINER (table), 2);
-  */
   gtk_box_pack_start(GTK_BOX (vbox), table, TRUE, TRUE, 0); 
 
   table_inner = gtk_table_new (2, 2, FALSE);
+  gtk_table_set_col_spacing (GTK_TABLE (table_inner), 0, 1);
+  gtk_table_set_row_spacing (GTK_TABLE (table_inner), 0, 1);
 
 
   /* hbox for statusbar area */
   hbox = gtk_hbox_new(0,2);
-  gtk_container_border_width(GTK_CONTAINER (hbox), 2);
   gtk_box_pack_start(GTK_BOX (vbox), hbox, FALSE, TRUE, 0); 
 
   /*  scrollbars, rulers, canvas, menu popup button  */

@@ -1,3 +1,7 @@
+Sun Jun 15 00:41:05 CDT 1998 Shawn T. Amundson <amundson@gimp.org>
+
+	* app/interface.c: Table spacings
+
 Sun Jun 14 23:41:17 CDT 1998 Shawn T. Amundson <amundson@gimp.org>
 
 	* app/plug_in.c: Fixed progress code to account for when
