@@ -1,3 +1,7 @@
+2001-06-05  Dave Neary  <dneary@eircom.net>
+
+	* po/POTFILES.in: Changed one line to satisfy dependencies
+	
 2001-06-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am

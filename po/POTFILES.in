@@ -24,7 +24,6 @@ app/module_db.c
 app/nav_window.c
 app/plug_in.c
 app/qmask.c
-app/resize.c
 app/undo.c
 app/undo_history.c
 app/user_install.c
@@ -74,6 +73,7 @@ app/gui/palette-select.c
 app/gui/paths-dialog.c
 app/gui/pattern-select.c
 app/gui/preferences-dialog.c
+app/gui/resize-dialog.c
 app/gui/resolution-calibrate-dialog.c
 app/gui/splash.c
 app/gui/tips-dialog.c
