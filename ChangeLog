@@ -1,3 +1,10 @@
+2001-11-12  Sven Neumann  <sven@gimp.org>
+
+	* po/Makefile.in.in
+	* po-libgimp/Makefile.in.in
+	* po-plug-ins/Makefile.in.in
+	* po-script-fu/Makefile.in.in: fixed distdir.
+
 2001-11-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/widgets-types.h: changed GimpItemGetNameFunc
