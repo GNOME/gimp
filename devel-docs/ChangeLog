@@ -1,3 +1,10 @@
+2004-09-30  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/libgimp-sections.txt: moved stuff to right section.
+
+	* libgimp/tmpl/gimppalettes.sgml
+	* libgimp/tmpl/gimppaletteselect.sgml: regenerated.
+
 2004-09-29  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-docs.sgml

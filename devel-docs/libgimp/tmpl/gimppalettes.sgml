@@ -62,33 +62,3 @@ gimppalettes
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_palettes_popup ##### -->
-<para>
-
-</para>
-
-@palette_callback: 
-@popup_title: 
-@initial_palette: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_palettes_close_popup ##### -->
-<para>
-
-</para>
-
-@palette_callback: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_palettes_set_popup ##### -->
-<para>
-
-</para>
-
-@palette_callback: 
-@palette_name: 
-@Returns: 
-
-
