@@ -52,6 +52,7 @@ TESTS = test-composite gimp-composite-test
 
 test_composite_SOURCES = \
 	gimp-composite-regression.c	\
+	gimp-composite-regression.h	\
 	test-composite.c
 
 test_composite_DEPENDENCIES = $(gimpcomposite_dependencies)
@@ -64,6 +65,7 @@ test_composite_LDADD = \
 
 gimp_composite_test_SOURCES = \
 	gimp-composite-regression.c	\
+	gimp-composite-regression.h	\
 	gimp-composite-test.c
 
 gimp_composite_test_DEPENDENCIES = $(gimpcomposite_dependencies)
