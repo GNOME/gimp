@@ -1,3 +1,8 @@
+Mon Apr 20 00:01:26 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/disp_callbacks.c: we get events in a funny order sometimes,
+	so don't try to remove nonexistent signal handlers
+
 Sun Apr 19 20:18:29 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* added screenshot plug-in

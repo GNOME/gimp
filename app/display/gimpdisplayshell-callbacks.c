@@ -140,10 +140,21 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	{
 	case 1:
 	  gtk_grab_add (canvas);
-	  key_signal_id = gtk_signal_connect (GTK_OBJECT (canvas),
-					      "key_press_event",
-					      GTK_SIGNAL_FUNC (gtk_true),
-					      NULL);
+
+	  /* This is a hack to prevent other stuff being run in the middle of
+	     a tool operation (like changing image types.... brrrr). We just
+	     block all the keypress event. A better solution is to implement
+	     some sort of locking for images.
+	     Note that this is dependent on specific GTK behavior, and isn't
+	     guaranteed to work in future versions of GTK.
+	     -Yosh
+	   */
+	  if (key_signal_id == 0)
+	    key_signal_id = gtk_signal_connect (GTK_OBJECT (canvas),
+						"key_press_event",
+						GTK_SIGNAL_FUNC (gtk_true),
+						NULL);
+
 	  if (active_tool && ((active_tool->type == MOVE) ||
 			      !gimage_is_empty (gdisp->gimage)))
 	      {
@@ -197,7 +208,13 @@ gdisplay_canvas_events (GtkWidget *canvas,
       switch (bevent->button)
 	{
 	case 1:
-	  gtk_signal_disconnect (GTK_OBJECT (canvas), key_signal_id);
+	  /* Lame hack. See above */
+	  if (key_signal_id)
+	    {
+	      gtk_signal_disconnect (GTK_OBJECT (canvas), key_signal_id);
+	      key_signal_id = 0;
+	    }
+
 	  gtk_grab_remove (canvas);
 	  gdk_pointer_ungrab (bevent->time);  /* fixes pointer grab bug */
 	  if (active_tool && ((active_tool->type == MOVE) ||

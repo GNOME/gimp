@@ -37,6 +37,7 @@ scriptdata_DATA = \
 	copy-visible.scm			\
 	crystal-logo.scm			\
 	drop-shadow.scm				\
+	egg.scm					\
 	erase-rows.scm				\
 	flatland.scm				\
 	font-map.scm				\
