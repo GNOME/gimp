@@ -1,3 +1,7 @@
+2004-07-27  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpfiledialog.c (gimp_file_dialog_new): string change.
+
 2004-07-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpfiledialog.c (gimp_file_dialog_set_uri): make
@@ -46,7 +50,7 @@
 	* app/widgets/gimpitemtreeview.c
 	* app/widgets/gimplayertreeview.c
 	* app/widgets/gimptoolview.c
-	* app/widgets/widgets-types.h
+	* app/widgets/widgets-types.h: changed accordingly.
 
 	* libgimpwidgets/Makefile.am
 	* libgimpwidgets/gimpwidgets.def

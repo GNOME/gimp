@@ -147,7 +147,7 @@ gimp_file_dialog_new (Gimp                 *gimp,
     {
     case GTK_FILE_CHOOSER_ACTION_OPEN:
       file_procs = gimp->load_procs;
-      automatic  = _("Automatic");
+      automatic  = _("Automatically Detected");
       automatic_help_id = GIMP_HELP_FILE_OPEN_BY_EXTENSION;
       break;
 
