@@ -1259,7 +1259,15 @@ prefs_dialog_new (Gimp       *gimp,
         if (GIMP_GUI_CONFIG (object)->theme &&
             ! strcmp (GIMP_GUI_CONFIG (object)->theme, themes[i]))
           {
-            gtk_tree_selection_select_iter (sel, &iter);
+            GtkTreePath *path;
+
+            path = gtk_tree_model_get_path (GTK_TREE_MODEL (list_store), &iter);
+
+            gtk_tree_view_set_cursor (GTK_TREE_VIEW (view), path, NULL, FALSE);
+            gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (view), path,
+                                          NULL, FALSE, 0.0, 0.0);
+
+            gtk_tree_path_free (path);
           }
       }
 
