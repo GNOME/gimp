@@ -1,3 +1,11 @@
+2004-02-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-ins.c (plug_ins_init): when removing a
+	duplicate PDB procedure, also remove it from gimp->load_procs and
+	gimp->save_procs.  Fixes bug #133099.
+
+	Some general cleanup like moving variables to local scopes.
+
 2004-01-31  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/tiff.c (tiff_warning): use G_VA_COPY for copying

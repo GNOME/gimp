@@ -82,19 +82,15 @@ void
 plug_ins_init (Gimp               *gimp,
                GimpInitStatusFunc  status_callback)
 {
-  gchar         *filename;
-  gchar         *basename;
-  gchar         *path;
-  GSList        *tmp;
-  GSList        *tmp2;
-  GList         *extensions = NULL;
-  GList         *list;
-  PlugInDef     *plug_in_def;
-  PlugInProcDef *proc_def;
-  gdouble        n_plugins;
-  gdouble        n_extensions;
-  gdouble        nth;
-  GError        *error = NULL;
+  gchar   *filename;
+  gchar   *basename;
+  gchar   *path;
+  GSList  *tmp;
+  GList   *extensions = NULL;
+  gdouble  n_plugins;
+  gdouble  n_extensions;
+  gdouble  nth;
+  GError  *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (status_callback != NULL);
@@ -118,12 +114,12 @@ plug_ins_init (Gimp               *gimp,
       filename = gimp_config_path_expand (gimp->config->plug_in_rc_path,
                                           TRUE, NULL);
 
-      if (!g_path_is_absolute (filename))
+      if (! g_path_is_absolute (filename))
         {
-          gchar *tmp = g_build_filename (gimp_directory (), filename, NULL);
+          gchar *str = g_build_filename (gimp_directory (), filename, NULL);
 
           g_free (filename);
-          filename = tmp;
+          filename = str;
         }
     }
   else
@@ -150,7 +146,7 @@ plug_ins_init (Gimp               *gimp,
        tmp;
        tmp = g_slist_next (tmp), nth++)
     {
-      plug_in_def = tmp->data;
+      PlugInDef *plug_in_def = tmp->data;
 
       basename = g_path_get_basename (plug_in_def->prog);
       (* status_callback) (NULL, gimp_filename_to_utf8 (basename),
@@ -174,13 +170,13 @@ plug_ins_init (Gimp               *gimp,
   /* insert the proc defs */
   for (tmp = gimp->plug_in_defs; tmp; tmp = g_slist_next (tmp))
     {
-      plug_in_def = tmp->data;
+      PlugInDef *plug_in_def = tmp->data;
+      GSList    *tmp2;
 
       for (tmp2 = plug_in_def->proc_defs; tmp2; tmp2 = g_slist_next (tmp2))
 	{
+	  PlugInProcDef *proc_def = tmp2->data;
           PlugInProcDef *overridden_proc_def;
-
-	  proc_def = tmp2->data;
 
  	  proc_def->mtime = plug_in_def->mtime;
 
@@ -188,7 +184,7 @@ plug_ins_init (Gimp               *gimp,
 
           if (overridden_proc_def)
             {
-              GSList *tmp2;
+              GSList *tmp3;
 
               g_warning ("removing duplicate PDB procedure \"%s\"",
                          overridden_proc_def->db_info.name);
@@ -196,16 +192,20 @@ plug_ins_init (Gimp               *gimp,
               /* search the plugin list to see if any plugins had references to
                * the overridden_proc_def.
                */
-              for (tmp2 = gimp->plug_in_defs; tmp2; tmp2 = g_slist_next (tmp2))
+              for (tmp3 = gimp->plug_in_defs; tmp3; tmp3 = g_slist_next (tmp3))
                 {
-                  PlugInDef *plug_in_def2;
-
-                  plug_in_def2 = tmp2->data;
+                  PlugInDef *plug_in_def2 = tmp3->data;
 
                   plug_in_def2->proc_defs =
                     g_slist_remove (plug_in_def2->proc_defs,
                                     overridden_proc_def);
                 }
+
+              /* also remove it from the lists of load and save procs */
+              gimp->load_procs = g_slist_remove (gimp->load_procs,
+                                                 overridden_proc_def);
+              gimp->save_procs = g_slist_remove (gimp->save_procs,
+                                                 overridden_proc_def);
 
               plug_in_proc_def_free (overridden_proc_def);
             }
@@ -242,7 +242,7 @@ plug_ins_init (Gimp               *gimp,
   /* create help_path and locale_domain lists */
   for (tmp = gimp->plug_in_defs; tmp; tmp = g_slist_next (tmp))
     {
-      plug_in_def = tmp->data;
+      PlugInDef *plug_in_def = tmp->data;
 
       if (plug_in_def->locale_domain_name)
 	{
@@ -296,7 +296,7 @@ plug_ins_init (Gimp               *gimp,
        tmp;
        tmp = g_slist_next (tmp), nth++)
     {
-      plug_in_def = tmp->data;
+      PlugInDef *plug_in_def = tmp->data;
 
       basename = g_path_get_basename (plug_in_def->prog);
       (* status_callback) (NULL, gimp_filename_to_utf8 (basename),
@@ -320,7 +320,7 @@ plug_ins_init (Gimp               *gimp,
        tmp;
        tmp = g_slist_next (tmp), nth++)
     {
-      proc_def = tmp->data;
+      PlugInProcDef *proc_def = tmp->data;
 
       if (proc_def->prog                                &&
 	  proc_def->db_info.proc_type == GIMP_EXTENSION &&
@@ -336,13 +336,15 @@ plug_ins_init (Gimp               *gimp,
   /* run the available extensions */
   if (extensions)
     {
+      GList *list;
+
       (* status_callback) (_("Starting Extensions"), "", 0);
 
       for (list = extensions, nth = 0;
            list;
            list = g_list_next (list), nth++)
         {
-          proc_def = list->data;
+          PlugInProcDef *proc_def = list->data;
 
 	  if (gimp->be_verbose)
 	    g_print (_("Starting extension: '%s'\n"), proc_def->db_info.name);
@@ -359,11 +361,7 @@ plug_ins_init (Gimp               *gimp,
 
   /* free up stuff */
   for (tmp = gimp->plug_in_defs; tmp; tmp = g_slist_next (tmp))
-    {
-      plug_in_def = tmp->data;
-
-      plug_in_def_free (plug_in_def, FALSE);
-    }
+    plug_in_def_free (tmp->data, FALSE);
 
   g_slist_free (gimp->plug_in_defs);
   gimp->plug_in_defs = NULL;
@@ -737,23 +735,25 @@ plug_ins_proc_def_find (Gimp       *gimp,
 GSList *
 plug_ins_extensions_parse (gchar *extensions)
 {
-  GSList *list;
-  gchar  *extension;
-  gchar  *next_token;
-
-  list = NULL;
+  GSList *list = NULL;
 
   /* EXTENSIONS can be NULL.  Avoid calling strtok if it is.  */
   if (extensions)
     {
+      gchar *extension;
+      gchar *next_token;
+
       extensions = g_strdup (extensions);
+
       next_token = extensions;
       extension = strtok (next_token, " \t,");
+
       while (extension)
 	{
 	  list = g_slist_prepend (list, g_strdup (extension));
 	  extension = strtok (NULL, " \t,");
 	}
+
       g_free (extensions);
     }
 
@@ -766,11 +766,10 @@ plug_ins_image_types_parse (gchar *image_types)
   gchar           *type_spec = image_types;
   PlugInImageType  types     = 0;
 
-  /*
-   *  If the plug_in registers with image_type == NULL or "", return 0
+  /*  If the plug_in registers with image_type == NULL or "", return 0
    *  By doing so it won't be touched by plug_in_set_menu_sensitivity()
    */
-  if (!image_types)
+  if (! image_types)
     return types;
 
   while (*image_types)
@@ -961,9 +960,7 @@ plug_ins_proc_def_insert (Gimp          *gimp,
 
   for (list = gimp->plug_in_proc_defs; list; list = g_slist_next (list))
     {
-      PlugInProcDef *tmp_proc_def;
-
-      tmp_proc_def = (PlugInProcDef *) list->data;
+      PlugInProcDef *tmp_proc_def = list->data;
 
       if (strcmp (proc_def->db_info.name, tmp_proc_def->db_info.name) == 0)
 	{
