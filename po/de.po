@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.22\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-14 16:11+0100\n"
-"PO-Revision-Date: 2003-11-14 16:10+0100\n"
+"POT-Creation-Date: 2003-11-14 18:09+0100\n"
+"PO-Revision-Date: 2003-11-14 18:09+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -311,14 +311,23 @@ msgstr "Wert für Symbol %s ist keine gültige UTF-8-Zeichenkette"
 msgid "Cannot expand ${%s}"
 msgstr "${%s} konnte nicht nicht expandiert werden"
 
-#: app/config/gimpconfig-utils.c:472
+#: app/config/gimpconfig-utils.c:472 app/config/gimpscanner.c:92
+#: app/core/gimpbrush.c:413 app/core/gimpbrushgenerated.c:377
+#: app/core/gimpbrushpipe.c:352 app/core/gimpgradient.c:355
+#: app/core/gimppalette.c:386 app/core/gimppattern.c:349
+#: app/tools/gimpcurvestool.c:1279 app/tools/gimplevelstool.c:1485
+#: app/xcf/xcf.c:272
 #, c-format
-msgid "Cannot open '%s' for reading: %s"
+msgid "Could not open '%s' for reading: %s"
 msgstr "»%s« konnte nicht zum Lesen geöffnet werden: %s"
 
-#: app/config/gimpconfig-utils.c:481
+#: app/config/gimpconfig-utils.c:481 app/config/gimpconfigwriter.c:118
+#: app/core/gimpbrushgenerated.c:129 app/core/gimpgradient.c:508
+#: app/core/gimpgradient.c:593 app/core/gimppalette.c:597 app/gui/themes.c:189
+#: app/tools/gimpcurvestool.c:1278 app/tools/gimplevelstool.c:1484
+#: app/vectors/gimpvectors-export.c:77 app/xcf/xcf.c:333
 #, c-format
-msgid "Cannot open '%s' for writing: %s"
+msgid "Could not open '%s' for writing: %s"
 msgstr "»%s« konnte nicht zum Schreiben geöffnet werden: %s"
 
 #: app/config/gimpconfig-utils.c:492 app/config/gimpconfig-utils.c:515
@@ -343,15 +352,6 @@ msgstr ""
 #, c-format
 msgid "Could not create temporary file for '%s': %s"
 msgstr "Temporäre Datei für »%s« konnte nicht angelegt werden: %s"
-
-#: app/config/gimpconfigwriter.c:118 app/core/gimpbrushgenerated.c:129
-#: app/core/gimpgradient.c:508 app/core/gimpgradient.c:593
-#: app/core/gimppalette.c:597 app/tools/gimpcurvestool.c:1278
-#: app/tools/gimplevelstool.c:1484 app/vectors/gimpvectors-export.c:77
-#: app/xcf/xcf.c:333
-#, c-format
-msgid "Could not open '%s' for writing: %s"
-msgstr "»%s« konnte nicht zum Schreiben geöffnet werden: %s"
 
 #: app/config/gimpconfigwriter.c:566
 #, c-format
@@ -646,18 +646,19 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:279
 msgid ""
-"When enabled, you can change keyboard shortcuts for menu items on the fly."
+"When enabled, you can change keyboard shortcuts for menu items by hitting a "
+"key combination while the menu item is highlighted."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:282
+#: app/config/gimprc-blurbs.h:283
 msgid "Save changed keyboard shortcuts when the GIMP exits."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:285
+#: app/config/gimprc-blurbs.h:286
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:288
+#: app/config/gimprc-blurbs.h:289
 msgid ""
 "Sets the temporary storage directory. Files will appear here during the "
 "course of running the GIMP.  Most files will disappear when the GIMP exits, "
@@ -665,13 +666,13 @@ msgid ""
 "one that is shared by other users."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:300
+#: app/config/gimprc-blurbs.h:301
 msgid ""
 "Sets the size of the thumbnail saved with each image. Note that GIMP can not "
 "save thumbnails if layer previews are disabled."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:304
+#: app/config/gimprc-blurbs.h:305
 msgid ""
 "The tile cache is used to make sure the GIMP doesn't thrash tiles between "
 "memory and disk. Setting this value higher will cause the GIMP to use less "
@@ -679,38 +680,38 @@ msgid ""
 "smaller cache size causes the GIMP to use more swap space and less memory."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:311
+#: app/config/gimprc-blurbs.h:312
 msgid "Sets the manner in which transparency is displayed in images."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:314
+#: app/config/gimprc-blurbs.h:315
 msgid "Sets the size of the checkerboard used to display transparency."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:317
+#: app/config/gimprc-blurbs.h:318
 msgid ""
 "When enabled, the GIMP will not save if the image is unchanged since opening "
 "it."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:321
+#: app/config/gimprc-blurbs.h:322
 msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:325
+#: app/config/gimprc-blurbs.h:326
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
 "as configured can be undone."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:330
+#: app/config/gimprc-blurbs.h:331
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:333
+#: app/config/gimprc-blurbs.h:334
 #, c-format
 msgid ""
 "Sets the external web browser to be used.  This can be an absolute path or "
@@ -718,15 +719,6 @@ msgid ""
 "contains '%s' it will be replaced with the URL, else the URL will be "
 "appended to the command with a space separating the two."
 msgstr ""
-
-#: app/config/gimpscanner.c:92 app/core/gimpbrush.c:413
-#: app/core/gimpbrushgenerated.c:377 app/core/gimpbrushpipe.c:352
-#: app/core/gimpgradient.c:355 app/core/gimppalette.c:386
-#: app/core/gimppattern.c:349 app/tools/gimpcurvestool.c:1279
-#: app/tools/gimplevelstool.c:1485 app/xcf/xcf.c:272
-#, c-format
-msgid "Could not open '%s' for reading: %s"
-msgstr "»%s« konnte nicht zum Lesen geöffnet werden: %s"
 
 #: app/config/gimpscanner.c:217
 msgid "invalid UTF-8 string"
@@ -4586,7 +4578,7 @@ msgid "/_Delete Image"
 msgstr "/Bild _löschen"
 
 #. General
-#: app/gui/info-dialog.c:358 app/gui/preferences-dialog.c:1312
+#: app/gui/info-dialog.c:356 app/gui/preferences-dialog.c:1312
 #: app/gui/preferences-dialog.c:1424
 msgid "General"
 msgstr "Allgemein"
@@ -6048,12 +6040,12 @@ msgstr "/Vorlage _bearbeiten..."
 msgid "/_Delete Template"
 msgstr "/Vorlage _löschen"
 
-#: app/gui/themes.c:182 app/plug-in/plug-ins.c:218
+#: app/gui/themes.c:183 app/plug-in/plug-ins.c:218
 #, c-format
 msgid "Writing '%s'\n"
 msgstr "»%s« wird geschrieben\n"
 
-#: app/gui/themes.c:223
+#: app/gui/themes.c:225
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
 msgstr "Thema »%s« wird hinzugefügt (%s)\n"

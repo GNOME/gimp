@@ -1,5 +1,9 @@
 2003-11-14  Michael Natterer  <mitch@gimp.org>
 
+	* de.po: even more different file error messages were removed.
+
+2003-11-14  Michael Natterer  <mitch@gimp.org>
+
 	* de.po: updated German translation after app/ message cleanup.
 
 2003-11-12  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
