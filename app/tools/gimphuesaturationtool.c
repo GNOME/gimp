@@ -714,7 +714,7 @@ static void
 hue_saturation_preview (HueSaturationDialog *hsd)
 {
   if (!hsd->image_map)
-    g_message (_("hue_saturation_preview(): No image map"));
+    g_warning ("hue_saturation_preview(): No image map");
   active_tool->preserve = TRUE;
   image_map_apply (hsd->image_map, hue_saturation, (void *) hsd);
   active_tool->preserve = FALSE;

@@ -431,7 +431,7 @@ static void
 threshold_preview (ThresholdDialog *td)
 {
   if (!td->image_map)
-    g_message (_("threshold_preview(): No image map"));
+    g_warning ("threshold_preview(): No image map");
   image_map_apply (td->image_map, threshold, (void *) td);
 }
 

@@ -320,7 +320,7 @@ static void
 posterize_preview (PosterizeDialog *pd)
 {
   if (!pd->image_map)
-    g_message (_("posterize_preview(): No image map"));
+    g_warning ("posterize_preview(): No image map");
   active_tool->preserve = TRUE;
   posterize_lut_setup(pd->lut, pd->levels, gimp_drawable_bytes(pd->drawable));
   image_map_apply (pd->image_map,  (ImageMapApplyFunc)gimp_lut_process_2,

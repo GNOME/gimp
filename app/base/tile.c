@@ -187,12 +187,12 @@ tile_destroy (Tile *tile)
 {
   if (tile->ref_count) 
     {
-      g_warning (_("tried to destroy a ref'd tile"));
+      g_warning ("tried to destroy a ref'd tile");
       return;
     }
   if (tile->share_count)
     {
-      g_warning (_("tried to destroy an attached tile"));
+      g_warning ("tried to destroy an attached tile");
       return;
     }
   if (tile->data) 
@@ -308,7 +308,7 @@ tile_detach (Tile *tile, void *tm, int tile_num)
 
   if (*link == NULL) 
     {
-      g_warning (_("Tried to detach a nonattached tile"));
+      g_warning ("Tried to detach a nonattached tile");
       return;
     }
 

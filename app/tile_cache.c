@@ -111,7 +111,7 @@ tile_cache_insert (Tile *tile)
 	{
 	  if (!tile_cache_zorch_next()) 
 	    {
-	      g_warning (_("cache: unable to find room for a tile"));
+	      g_warning ("cache: unable to find room for a tile");
 	      goto out;
 	    }
 	}

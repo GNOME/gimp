@@ -1321,18 +1321,18 @@ plug_in_handle_message (WireMessage *msg)
       plug_in_handle_quit ();
       break;
     case GP_CONFIG:
-      g_message (_("plug_in_handle_message(): received a config message (should not happen)"));
+      g_warning ("plug_in_handle_message(): received a config message (should not happen)");
       plug_in_close (current_plug_in, TRUE);
       break;
     case GP_TILE_REQ:
       plug_in_handle_tile_req (msg->data);
       break;
     case GP_TILE_ACK:
-      g_message (_("plug_in_handle_message(): received a config message (should not happen)"));
+      g_warning ("plug_in_handle_message(): received a config message (should not happen)");
       plug_in_close (current_plug_in, TRUE);
       break;
     case GP_TILE_DATA:
-      g_message (_("plug_in_handle_message(): received a config message (should not happen)"));
+      g_warning ("plug_in_handle_message(): received a config message (should not happen)");
       plug_in_close (current_plug_in, TRUE);
       break;
     case GP_PROC_RUN:
@@ -1343,7 +1343,7 @@ plug_in_handle_message (WireMessage *msg)
       plug_in_close (current_plug_in, FALSE);
       break;
     case GP_TEMP_PROC_RUN:
-      g_message (_("plug_in_handle_message(): received a temp proc run message (should not happen)"));
+      g_warning ("plug_in_handle_message(): received a temp proc run message (should not happen)");
       plug_in_close (current_plug_in, TRUE);
       break;
     case GP_TEMP_PROC_RETURN:
@@ -1397,21 +1397,21 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
 
       if (!gp_tile_data_write (current_writechannel, &tile_data))
 	{
-	  g_message (_("plug_in_handle_tile_req: ERROR"));
+	  g_warning ("plug_in_handle_tile_req: ERROR");
 	  plug_in_close (current_plug_in, TRUE);
 	  return;
 	}
 
       if (!wire_read_msg (current_readchannel, &msg))
 	{
-	  g_message (_("plug_in_handle_tile_req: ERROR"));
+	  g_warning ("plug_in_handle_tile_req: ERROR");
 	  plug_in_close (current_plug_in, TRUE);
 	  return;
 	}
 
       if (msg.type != GP_TILE_DATA)
 	{
-	  g_message (_("expected tile data and received: %d"), msg.type);
+	  g_warning ("expected tile data and received: %d", msg.type);
 	  plug_in_close (current_plug_in, TRUE);
 	  return;
 	}
@@ -1425,7 +1425,7 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
 
       if (!tm)
 	{
-	  g_message (_("plug-in requested invalid drawable (killing)"));
+	  g_warning ("plug-in requested invalid drawable (killing)");
 	  plug_in_close (current_plug_in, TRUE);
 	  return;
 	}
@@ -1433,7 +1433,7 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
       tile = tile_manager_get (tm, tile_info->tile_num, TRUE, TRUE);
       if (!tile)
 	{
-	  g_message (_("plug-in requested invalid tile (killing)"));
+	  g_warning ("plug-in requested invalid tile (killing)");
 	  plug_in_close (current_plug_in, TRUE);
 	  return;
 	}
@@ -1448,7 +1448,7 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
       wire_destroy (&msg);
       if (!gp_tile_ack_write (current_writechannel))
 	{
-	  g_message (_("plug_in_handle_tile_req: ERROR"));
+	  g_warning ("plug_in_handle_tile_req: ERROR");
 	  plug_in_close (current_plug_in, TRUE);
 	  return;
 	}
@@ -1462,7 +1462,7 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
 
       if (!tm)
 	{
-	  g_message (_("plug-in requested invalid drawable (killing)"));
+	  g_warning ("plug-in requested invalid drawable (killing)");
 	  plug_in_close (current_plug_in, TRUE);
 	  return;
 	}
@@ -1470,7 +1470,7 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
       tile = tile_manager_get (tm, tile_req->tile_num, TRUE, FALSE);
       if (!tile)
 	{
-	  g_message (_("plug-in requested invalid tile (killing)"));
+	  g_warning ("plug-in requested invalid tile (killing)");
 	  plug_in_close (current_plug_in, TRUE);
 	  return;
 	}
@@ -1490,7 +1490,7 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
 
       if (!gp_tile_data_write (current_writechannel, &tile_data))
 	{
-	  g_message (_("plug_in_handle_tile_req: ERROR"));
+	  g_message ("plug_in_handle_tile_req: ERROR");
 	  plug_in_close (current_plug_in, TRUE);
 	  return;
 	}
@@ -1499,14 +1499,14 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
 
       if (!wire_read_msg (current_readchannel, &msg))
 	{
-	  g_message (_("plug_in_handle_tile_req: ERROR"));
+	  g_message ("plug_in_handle_tile_req: ERROR");
 	  plug_in_close (current_plug_in, TRUE);
 	  return;
 	}
 
       if (msg.type != GP_TILE_ACK)
 	{
-	  g_message (_("expected tile ack and received: %d"), msg.type);
+	  g_warning ("expected tile ack and received: %d", msg.type);
 	  plug_in_close (current_plug_in, TRUE);
 	  return;
 	}
@@ -1530,7 +1530,7 @@ plug_in_handle_proc_run (GPProcRun *proc_run)
   if (!proc_rec)
     {
       /* THIS IS PROBABLY NOT CORRECT -josh */
-      g_message (_("PDB lookup failed on %s"), proc_run->name);
+      g_warning ("PDB lookup failed on %s", proc_run->name);
       plug_in_args_destroy (args, proc_run->nparams, FALSE);
       return;
     }
@@ -1554,7 +1554,7 @@ plug_in_handle_proc_run (GPProcRun *proc_run)
 
       if (!gp_proc_return_write (current_writechannel, &proc_return))
 	{
-	  g_message (_("plug_in_handle_proc_run: ERROR"));
+	  g_warning ("plug_in_handle_proc_run: ERROR");
 	  plug_in_close (current_plug_in, TRUE);
 	  return;
 	}
@@ -1598,7 +1598,7 @@ plug_in_handle_proc_return (GPProcReturn *proc_return)
 	      plug_in_push (blocked->plug_in);
 	      if (!gp_proc_return_write (current_writechannel, proc_return))
 		{
-		  g_message (_("plug_in_handle_proc_run: ERROR"));
+		  g_message ("plug_in_handle_proc_run: ERROR");
 		  plug_in_close (current_plug_in, TRUE);
 		  return;
 		}
@@ -2315,7 +2315,7 @@ plug_in_callback (GtkWidget *widget,
 	}
       else
 	{
-	  g_message (_("Uh-oh, no active gdisplay for the plug-in!"));
+	  g_warning ("Uh-oh, no active gdisplay for the plug-in!");
 	  g_free (args);
 	  return;
 	}
@@ -2338,7 +2338,7 @@ plug_in_callback (GtkWidget *widget,
 	    }
 	  else
 	    {
-	      g_message (_("Uh-oh, no active gdisplay for the temporary procedure!"));
+	      g_warning ("Uh-oh, no active gdisplay for the temporary procedure!");
 	      g_free (args);
 	      return;
 	    }

@@ -143,7 +143,7 @@ tile_swap_exit1 (gpointer key,
   DefSwapFile *def_swap_file;
 
   if (tile_ref_count != 0)
-    g_message (_("tile ref count balance: %d\n"), tile_ref_count);
+    g_warning ("tile ref count balance: %d\n", tile_ref_count);
 
   swap_file = value;
   if (swap_file->swap_func == tile_swap_default)
@@ -151,7 +151,7 @@ tile_swap_exit1 (gpointer key,
       def_swap_file = swap_file->user_data;
       if (def_swap_file->swap_file_end != 0)
 	{
-	  g_message (_("swap file not empty: \"%s\"\n"), swap_file->filename);
+	  g_warning ("swap file not empty: \"%s\"\n", swap_file->filename);
 	  tile_swap_print_gaps (def_swap_file);
 	}
 
@@ -332,7 +332,7 @@ tile_swap_command (Tile *tile,
     swap_file = g_hash_table_lookup (swap_files, &tile->swap_num);
     if (!swap_file)
       {
-	g_message (_("could not find swap file for tile"));
+	g_warning ("could not find swap file for tile");
 	goto out;
       }
 
@@ -418,7 +418,7 @@ tile_swap_default (int       fd,
       tile_swap_default_delete (def_swap_file, fd, tile);
       break;
     case SWAP_COMPRESS:
-      g_message (_("tile_swap_default: SWAP_COMPRESS: UNFINISHED"));
+      g_warning ("tile_swap_default: SWAP_COMPRESS: UNFINISHED");
       break;
     }
 

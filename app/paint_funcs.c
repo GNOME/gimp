@@ -1257,7 +1257,7 @@ replace_pixels (unsigned char *src1,
 
   if (bytes1 != bytes2)
     {
-      g_message (_("replace_pixels only works on commensurate pixel regions"));
+      g_warning ("replace_pixels only works on commensurate pixel regions");
       return;
     }
 
@@ -4645,7 +4645,7 @@ border_region(PixelRegion *src, gint16 xradius, gint16 yradius)
 
   if (xradius < 0 || yradius < 0)
   {
-    g_warning (_("border_region: negative radius specified."));
+    g_warning ("border_region: negative radius specified.");
     return;
   }
   if (xradius == 0 || yradius == 0)

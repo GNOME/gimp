@@ -929,7 +929,7 @@ add_segment (int *num_segs,
       segs = (GdkSegment *) g_realloc ((void *) segs, sizeof (GdkSegment) * max_segs);
 
       if (!segs)
-	fatal_error (_("Unable to reallocate segment array in iscissors."));
+	fatal_error ("Unable to reallocate segment array in iscissors.");
     }
 
   if (*num_segs)
@@ -972,7 +972,7 @@ add_point (int    *num_pts,
       pts = (Point *) g_realloc ((void *) pts, sizeof (Point) * max_pts);
 
       if (!pts)
-	fatal_error (_("Unable to reallocate points array in iscissors."));
+	fatal_error ("Unable to reallocate points array in iscissors.");
     }
 
   pts[*num_pts].x = x;

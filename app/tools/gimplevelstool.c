@@ -773,7 +773,7 @@ static void
 levels_preview (LevelsDialog *ld)
 {
   if (!ld->image_map)
-    g_warning (_("No image map"));
+    g_warning ("No image map");
   active_tool->preserve = TRUE;
   image_map_apply (ld->image_map,  (ImageMapApplyFunc)gimp_lut_process_2,
 		   (void *) ld->lut);

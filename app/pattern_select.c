@@ -252,7 +252,7 @@ pattern_change_callbacks(PatternSelectP psp, gint closing)
 					    PDB_END);
  
       if (!return_vals || return_vals[0].value.pdb_int != PDB_SUCCESS)
-	g_message (_("failed to run pattern callback function"));
+	g_warning ("failed to run pattern callback function");
       
       procedural_db_destroy_args (return_vals, nreturn_vals);
     }

@@ -1,3 +1,24 @@
+Sat Jun  5 16:19:15 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	app/errors.c
+	app/hue_saturation.c
+	app/iscissors.c
+	app/layers_dialog.c
+	app/levels.c
+	app/menus.c
+	app/paint_funcs.c
+	app/palette.c
+	app/pattern_select.c
+	app/plug_in.c
+	app/posterize.c
+	app/text_tool.c
+	app/threshold.c
+	app/tile.c
+	app/tile_cache.c
+	app/tile_manager.c
+	app/tile_swap.c
+	app/xcf.c: i18n stuff from gimp-monniaux-050699-1 (partially applied)
+
 Sat Jun  5 14:16:57 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* po-plug-ins/Makefile.in.in: don't conflict with the app translation

@@ -40,6 +40,7 @@
 #include "interface.h"
 #include "errorconsole.h"
 #include "errors.h"
+#include "libgimp/gimpintl.h"
 
 extern char *prog_name;
 
@@ -72,11 +73,9 @@ fatal_error (char *fmt, ...)
 
   va_start (args, fmt);
 #ifndef NATIVE_WIN32
-  printf ("%s fatal error: ", prog_name);
-  vprintf (fmt, args);
-  printf ("\n");
+  printf (_("%s: fatal error: %s\n"), prog_name, g_strdup_vprintf (fmt, args));
 #else
-  g_error ("%s: %s\n", prog_name, g_strdup_vprintf (fmt, args));
+  g_error (_("%s: fatal error: %s\n"), prog_name, g_strdup_vprintf (fmt, args));
 #endif
   va_end (args);
 

@@ -6,35 +6,35 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
-"POT-Creation-Date: 1999-05-03 14:06-0700\n"
+"POT-Creation-Date: 1999-06-05 16:36+0200\n"
 "PO-Revision-Date: 1999-03-18 19:00+0100\n"
-"Last-Translator: Vincent Renardias <vincent@ldsol.com>\n"
+"Last-Translator: David Monniaux <David.Monniaux@ens.fr>\n"
 "Language-Team: Vincent Renardias <vincent@ldsol.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/about_dialog.c:155
+#: app/about_dialog.c:153
 msgid "About the GIMP"
 msgstr "À Propos de GIMP"
 
-#: app/about_dialog.c:198
+#: app/about_dialog.c:196
 msgid "-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*"
 msgstr "-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*"
 
-#: app/about_dialog.c:201
+#: app/about_dialog.c:199
 msgid "Version "
 msgstr "Version "
 
-#: app/about_dialog.c:202
+#: app/about_dialog.c:200
 msgid " brought to you by"
 msgstr " présentée par"
 
-#: app/about_dialog.c:208
+#: app/about_dialog.c:206
 msgid "Spencer Kimball & Peter Mattis"
 msgstr "Spencer Kimball et Peter Mattis"
 
-#: app/about_dialog.c:241
+#: app/about_dialog.c:239
 msgid "Please visit http://www.gimp.org/ for more info"
 msgstr "Visitez http://www.gimp.org/ pour plus d'informations"
 
@@ -47,70 +47,71 @@ msgstr "Taux:"
 msgid "Pressure:"
 msgstr "Pression:"
 
-#: app/airbrush.c:202
+#: app/airbrush.c:203
 msgid "killing stray timer, please report to lewing@gimp.org"
 msgstr ""
+"Erreur Interne. Veuillez signaler \"killing stray timer\" à lewing@gimp.org."
 
-#: app/app_procs.c:354
+#: app/app_procs.c:355
 msgid "GIMP Startup"
 msgstr "Lancement de GIMP"
 
-#: app/app_procs.c:467 app/gimprc.c:385
+#: app/app_procs.c:468 app/gimprc.c:389
 #, c-format
 msgid "parsing \"%s\"\n"
 msgstr "lecture de \"%s\"\n"
 
 #. initialize the xcf file format routines
-#: app/app_procs.c:522
+#: app/app_procs.c:524
 msgid "Looking for data files"
 msgstr "Recherche des fichiers de données"
 
-#: app/app_procs.c:522
+#: app/app_procs.c:524
 msgid "Parasites"
 msgstr "Parasites"
 
 #. initialize  the global parasite table
-#: app/app_procs.c:524 app/internal_procs.c:70 app/preferences_dialog.c:2209
+#: app/app_procs.c:526 app/internal_procs.c:70 app/preferences_dialog.c:2320
 msgid "Brushes"
 msgstr "Brosses"
 
 #. initialize the list of gimp brushes
-#: app/app_procs.c:526 app/internal_procs.c:139 app/preferences_dialog.c:2211
+#: app/app_procs.c:528 app/internal_procs.c:139 app/preferences_dialog.c:2322
 msgid "Patterns"
 msgstr "Motifs"
 
 #. initialize the list of gimp patterns
-#: app/app_procs.c:528 app/preferences_dialog.c:2213
+#: app/app_procs.c:530 app/preferences_dialog.c:2324
 msgid "Palettes"
 msgstr "Palettes"
 
 #. initialize the list of gimp palettes
-#: app/app_procs.c:530 app/gradient_select.c:557 app/internal_procs.c:109
-#: app/preferences_dialog.c:2215
+#: app/app_procs.c:532 app/gradient_select.c:557 app/internal_procs.c:109
+#: app/preferences_dialog.c:2326
 msgid "Gradients"
 msgstr "Dégradés"
 
-#: app/app_procs.c:670 app/app_procs.c:691
+#: app/app_procs.c:696 app/app_procs.c:717
 msgid "<Toolbox>/File/Quit"
 msgstr "<Toolbox>/Fichier/Quitter"
 
-#: app/app_procs.c:671 app/app_procs.c:692
+#: app/app_procs.c:697 app/app_procs.c:718
 msgid "<Image>/File/Quit"
 msgstr "<Image>/Fichier/Quitter"
 
-#: app/app_procs.c:696
+#: app/app_procs.c:722
 msgid "Really Quit?"
 msgstr "Vraiment Quitter?"
 
-#: app/app_procs.c:704 app/fileops.c:1418
+#: app/app_procs.c:730 app/fileops.c:1420
 msgid "Yes"
 msgstr "Oui"
 
-#: app/app_procs.c:713 app/fileops.c:1419
+#: app/app_procs.c:739 app/fileops.c:1421
 msgid "No"
 msgstr "Non"
 
-#: app/app_procs.c:721
+#: app/app_procs.c:747
 msgid "Some files unsaved.  Quit the GIMP?"
 msgstr "Certains fichiers n'ont pas été sauvés. Quitter The GIMP?"
 
@@ -120,7 +121,7 @@ msgstr "script-fu non disponible: mode batch désactivé\n"
 
 #: app/batch.c:78
 msgid "reading batch commands from stdin\n"
-msgstr "lecture des commands batch à partir de l'entrée standard\n"
+msgstr "lecture des commandes batch à partir de l'entrée standard\n"
 
 #: app/batch.c:118
 msgid "batch command: experienced an execution error.\n"
@@ -136,56 +137,60 @@ msgstr "commande batch: exécution réussie.\n"
 
 #: app/batch.c:205
 msgid "extension_perl_server not available: unable to start the perl server\n"
-msgstr ""
+msgstr "Je n'ai pas pu lancer le serveur Perl, extension Perl non disponible\n"
 
 #: app/batch.c:221
 msgid "perl server: experienced an execution error.\n"
-msgstr "serveur perl: erreur d'exécution.\n"
+msgstr "serveur Perl: erreur d'exécution.\n"
 
 #: app/batch.c:224
 msgid "perl server: experienced a calling error.\n"
-msgstr "serveur perl: erreur d'appel.\n"
+msgstr "serveur Perl: erreur d'appel.\n"
 
 #: app/batch.c:227
 msgid "perl server: executed successfully.\n"
-msgstr "serveur perl: exécution réussie.\n"
+msgstr "serveur Perl: exécution réussie.\n"
 
-#: app/bezier_select.c:713
+#: app/bezier_select.c:480
+msgid "Bezier path already closed."
+msgstr "Chemin Bézier déjà fermé."
+
+#: app/bezier_select.c:501
+msgid "Corrupt curve"
+msgstr "Courbe endommagée"
+
+#: app/bezier_select.c:1011
 msgid "tried to edit on open bezier curve in edit selection"
-msgstr ""
-"tentative d'edition sur une courbe de Bézier ouverte dans la sélection "
-"d'édition"
+msgstr "tentative d'édition sur une courbe de Bézier ouverte dans la sélection d'édition"
 
-#: app/bezier_select.c:906
+#: app/bezier_select.c:1291
 msgid "Encountered orphaned bezier control point"
 msgstr "Point de contrôle orphelin trouvé"
 
-#: app/bezier_select.c:1231 app/bezier_select.c:2402
+#: app/bezier_select.c:1971 app/bezier_select.c:3170
 msgid "bad bezier segment"
 msgstr "mauvais segment de Bézier"
 
-#: app/bezier_select.c:1248 app/bezier_select.c:1864
+#: app/bezier_select.c:1988 app/bezier_select.c:2630
 #, c-format
 msgid "unknown coordinate space: %d"
 msgstr "espace de coordonnées inconnu: %d"
 
-#: app/bezier_select.c:1390
+#: app/bezier_select.c:2131
 msgid "tried to convert an open bezier curve"
 msgstr "tentative de convertir une courbe de Bézier ouverte"
 
-#: app/bezier_select.c:2364
+#: app/bezier_select.c:3126
 msgid "Paintbrush operation failed."
-msgstr "Echec de l'opération pinceau."
+msgstr "Échec de l'opération pinceau."
 
 #: app/blend.c:261
-#, fuzzy
 msgid "FG to BG (RGB)"
-msgstr "AV vers AR RVB"
+msgstr "AV vers AR (RVB)"
 
 #: app/blend.c:263
-#, fuzzy
 msgid "FG to BG (HSV)"
-msgstr "AV vers AR TLS"
+msgstr "AV vers AR (TSV)"
 
 #: app/blend.c:265
 msgid "FG to Transparent"
@@ -201,7 +206,7 @@ msgstr "Linéaire"
 
 #: app/blend.c:275
 msgid "Bi-Linear"
-msgstr "Bi-Linéaire"
+msgstr "Bilinéaire"
 
 #: app/blend.c:277
 msgid "Radial"
@@ -239,7 +244,7 @@ msgstr "Spiral (sens des aiguilles d'une montre)"
 msgid "Spiral (anticlockwise)"
 msgstr "Spiral (sens inverse des aiguilles d'une montre)"
 
-#: app/blend.c:299 app/preferences_dialog.c:1680
+#: app/blend.c:299 app/preferences_dialog.c:1724
 msgid "None"
 msgstr "Aucun"
 
@@ -324,18 +329,6 @@ msgstr "gradient_fill_region(): %d est un type de gradient inconnu"
 msgid "gradient_fill_region(): unknown repeat mode %d"
 msgstr "gradient_fill_region(): %d est un mode de répétition inconnu"
 
-#: app/boundary.c:205
-msgid "Unable to reallocate segments array for mask boundary."
-msgstr ""
-
-#: app/boundary.c:247
-msgid "Unable to reallocate empty segments array for mask boundary."
-msgstr ""
-
-#: app/boundary.c:502
-msgid "sort_boundary(): Unconnected boundary group!"
-msgstr ""
-
 #: app/brightness_contrast.c:176
 msgid "Brightness-Contrast Options"
 msgstr "Options Luminosité-Contraste"
@@ -346,28 +339,29 @@ msgstr "Luminosité-Contraste ne peux opérer sur des images indexées."
 
 #. Action area
 #: app/brightness_contrast.c:252 app/channel_ops.c:104
-#: app/channels_dialog.c:1853 app/channels_dialog.c:2026
+#: app/channels_dialog.c:1889 app/channels_dialog.c:2062
 #: app/color_balance.c:301 app/color_notebook.c:43 app/color_notebook.c:186
 #: app/color_select.c:154 app/color_select.c:209 app/convert.c:295
-#: app/curves.c:371 app/file_new_dialog.c:64 app/hue_saturation.c:411
-#: app/interface.c:857 app/interface.c:1220 app/layers_dialog.c:3161
-#: app/layers_dialog.c:3362 app/layers_dialog.c:3503 app/layers_dialog.c:3976
-#: app/levels.c:373 app/posterize.c:241 app/preferences_dialog.c:1399
-#: app/resize.c:97 app/threshold.c:318
+#: app/curves.c:417 app/file_new_dialog.c:288 app/file_new_dialog.c:478
+#: app/hue_saturation.c:411 app/interface.c:877 app/interface.c:1263
+#: app/layers_dialog.c:3218 app/layers_dialog.c:3432 app/layers_dialog.c:3574
+#: app/layers_dialog.c:4049 app/levels.c:373 app/posterize.c:241
+#: app/preferences_dialog.c:1435 app/resize.c:114 app/threshold.c:318
 msgid "OK"
 msgstr "OK"
 
 #: app/brightness_contrast.c:253 app/channel_ops.c:113
-#: app/channels_dialog.c:1854 app/channels_dialog.c:2027
+#: app/channels_dialog.c:1890 app/channels_dialog.c:2063
 #: app/color_balance.c:302 app/color_notebook.c:44 app/color_notebook.c:187
 #: app/color_select.c:155 app/color_select.c:210 app/convert.c:296
-#: app/curves.c:372 app/file_new_dialog.c:65 app/gdisplay_ops.c:353
-#: app/gimpprogress.c:135 app/global_edit.c:593 app/gradient.c:1486
-#: app/gradient.c:4566 app/gradient.c:4921 app/hue_saturation.c:412
-#: app/interface.c:745 app/interface.c:864 app/layers_dialog.c:3162
-#: app/layers_dialog.c:3363 app/layers_dialog.c:3504 app/layers_dialog.c:3650
-#: app/layers_dialog.c:3977 app/levels.c:374 app/posterize.c:242
-#: app/preferences_dialog.c:1403 app/resize.c:98 app/threshold.c:319
+#: app/curves.c:418 app/file_new_dialog.c:290 app/file_new_dialog.c:480
+#: app/gdisplay_ops.c:353 app/gimpprogress.c:135 app/global_edit.c:593
+#: app/gradient.c:1486 app/gradient.c:4566 app/gradient.c:4921
+#: app/hue_saturation.c:412 app/interface.c:788 app/interface.c:878
+#: app/layers_dialog.c:3219 app/layers_dialog.c:3433 app/layers_dialog.c:3575
+#: app/layers_dialog.c:3722 app/layers_dialog.c:4050 app/levels.c:374
+#: app/posterize.c:242 app/preferences_dialog.c:1439 app/resize.c:115
+#: app/threshold.c:319
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -386,24 +380,20 @@ msgid "Contrast"
 msgstr "Contraste"
 
 #. The preview toggle
-#: app/brightness_contrast.c:363 app/color_balance.c:481 app/curves.c:615
-#: app/fileops.c:393 app/hue_saturation.c:620 app/levels.c:583
+#: app/brightness_contrast.c:363 app/color_balance.c:481 app/curves.c:661
+#: app/fileops.c:395 app/hue_saturation.c:620 app/levels.c:583
 #: app/palette.c:2849 app/posterize.c:297 app/threshold.c:404
 msgid "Preview"
 msgstr "Prévisualisation"
 
-#: app/brightness_contrast.c:419
-msgid "brightness_contrast_preview(): No image map"
-msgstr ""
-
 #. The close push button
-#: app/brush_edit.c:38 app/brush_select.c:133 app/by_color_select.c:675
-#: app/color_notebook.c:181 app/color_picker.c:207 app/color_select.c:204
-#: app/colormap_dialog.i.c:94 app/colormap_dialog.i.c:103 app/crop.c:997
-#: app/devices.c:123 app/docindexif.c:95 app/errorconsole.c:228
+#: app/brush_edit.c:38 app/brush_select.c:133 app/by_color_select.c:678
+#: app/color_notebook.c:181 app/color_picker.c:208 app/color_select.c:204
+#: app/colormap_dialog.i.c:94 app/colormap_dialog.i.c:103 app/crop.c:1011
+#: app/devices.c:124 app/docindexif.c:95 app/errorconsole.c:228
 #: app/gdisplay_ops.c:352 app/gradient.c:646 app/gradient_select.c:76
-#: app/info_window.c:121 app/layers_dialog.c:394 app/palette.c:2235
-#: app/palette_select.c:59 app/pattern_select.c:90 app/tips_dialog.c:144
+#: app/info_window.c:121 app/layers_dialog.c:419 app/palette.c:2235
+#: app/palette_select.c:59 app/pattern_select.c:90 app/tips_dialog.c:146
 #: app/tools.c:716
 msgid "Close"
 msgstr "Fermer"
@@ -413,7 +403,7 @@ msgid "Brush Editor"
 msgstr "Éditeur de brosse"
 
 #. brush radius scale
-#: app/brush_edit.c:240 app/color_picker.c:162
+#: app/brush_edit.c:240 app/color_picker.c:163
 msgid "Radius:"
 msgstr "Rayon:"
 
@@ -428,7 +418,7 @@ msgid "Aspect Ratio:"
 msgstr "Rapport hauteur/largeur:"
 
 #. brush angle scale
-#: app/brush_edit.c:289 app/rotate_tool.c:87
+#: app/brush_edit.c:289 app/rotate_tool.c:91
 msgid "Angle:"
 msgstr "Angle:"
 
@@ -445,12 +435,12 @@ msgid "Active"
 msgstr "Active"
 
 #. Create the opacity scale widget
-#: app/brush_select.c:271 app/layers_dialog.c:728
+#: app/brush_select.c:271 app/layers_dialog.c:756
 msgid "Opacity:"
 msgstr "Opacité:"
 
 #. Create the paint mode option menu
-#: app/brush_select.c:289 app/layers_dialog.c:705
+#: app/brush_select.c:289 app/layers_dialog.c:733
 msgid "Mode:"
 msgstr "Mode:"
 
@@ -466,36 +456,34 @@ msgstr "Nouvelle brosse"
 msgid "Spacing:"
 msgstr "Espacement:"
 
-#: app/brush_select.c:528
+#: app/brush_select.c:531
 msgid "failed to run brush callback function"
 msgstr "échec de l'appel de la fonction de rappel de brosse"
 
-#: app/brush_select.c:1184
+#: app/brush_select.c:1187
 msgid ""
 "We are all fresh out of brush editors today,\n"
 "please write your own or try back tomorrow\n"
-msgstr ""
+msgstr "Éditeur de brosse non disponible.\n"
 
 #: app/bucket_fill.c:114
-#, fuzzy
 msgid "FG Color Fill"
-msgstr "Remplissage par couleur"
+msgstr "Remplissage par couleur AV"
 
 #: app/bucket_fill.c:115
-#, fuzzy
 msgid "BG Color Fill"
-msgstr "Remplissage par couleur"
+msgstr "Remplissage par couleur AR"
 
 #: app/bucket_fill.c:116
 msgid "Pattern Fill"
 msgstr "Remplissage par motif"
 
-#: app/bucket_fill.c:157 app/color_picker.c:137
+#: app/bucket_fill.c:157 app/color_picker.c:138
 msgid "Sample Merged"
 msgstr "Échantillons mélangés"
 
 #. fill type
-#: app/bucket_fill.c:165 app/file_new_dialog.c:504
+#: app/bucket_fill.c:165 app/file_new_dialog.c:838
 msgid "Fill Type"
 msgstr "Type de Remplissage"
 
@@ -507,42 +495,42 @@ msgstr "L'opération de remplissage a échoué"
 msgid "No available patterns for this operation."
 msgstr "Aucun motif disponible pour cette opération."
 
-#: app/by_color_select.c:555 app/paint_funcs.c:99
+#: app/by_color_select.c:557 app/paint_funcs.c:100
 msgid "Replace"
 msgstr "Remplacer"
 
-#: app/by_color_select.c:556 app/colormap_dialog.i.c:99
+#: app/by_color_select.c:558 app/colormap_dialog.i.c:99
 msgid "Add"
 msgstr "Ajouter"
 
-#: app/by_color_select.c:557 app/layers_dialog.c:276
+#: app/by_color_select.c:559 app/layers_dialog.c:282
 msgid "Subtract"
 msgstr "Soustraction"
 
-#: app/by_color_select.c:558
+#: app/by_color_select.c:560
 msgid "Intersect"
 msgstr "Intersection"
 
-#: app/by_color_select.c:576
+#: app/by_color_select.c:578
 msgid "By Color Selection"
 msgstr "Sélection par Couleur"
 
-#: app/by_color_select.c:619
+#: app/by_color_select.c:621
 msgid "Inactive"
 msgstr "Inactif"
 
 #. Create the selection mode radio box
-#: app/by_color_select.c:626
+#: app/by_color_select.c:628
 msgid "Selection Mode"
 msgstr "Mode de sélection"
 
-#: app/by_color_select.c:649
+#: app/by_color_select.c:652
 msgid "Fuzziness Threshold"
 msgstr "Seuil de Flou"
 
 #. The reset push button
-#: app/by_color_select.c:665 app/curves.c:370 app/tools.c:715
-#: app/transform_core.c:113
+#: app/by_color_select.c:668 app/curves.c:416 app/file_new_dialog.c:479
+#: app/tools.c:715 app/transform_core.c:116
 msgid "Reset"
 msgstr "R.à.Z."
 
@@ -561,7 +549,7 @@ msgstr "Copie de %s"
 msgid "Selection Mask"
 msgstr "Masque de sélection"
 
-#: app/channel_ops.c:96 app/resize.c:371
+#: app/channel_ops.c:96 app/resize.c:396
 msgid "Offset"
 msgstr "Décalage"
 
@@ -576,19 +564,19 @@ msgstr "Décalage Y:"
 #. the wrap around option
 #: app/channel_ops.c:152
 msgid "Wrap-Around"
-msgstr "Espace torique"
+msgstr "Espace enroulé"
 
 #. The fill options
 #: app/channel_ops.c:157
 msgid "Fill Options"
 msgstr "Options du remplissage"
 
-#: app/channel_ops.c:164 app/file_new_dialog.c:132 app/file_new_dialog.c:524
-#: app/layers_dialog.c:3177
+#: app/channel_ops.c:164 app/file_new_dialog.c:133 app/file_new_dialog.c:493
+#: app/layers_dialog.c:3210
 msgid "Background"
 msgstr "Fond"
 
-#: app/channel_ops.c:175 app/file_new_dialog.c:546 app/layers_dialog.c:3179
+#: app/channel_ops.c:175 app/file_new_dialog.c:495 app/layers_dialog.c:3212
 msgid "Transparent"
 msgstr "Transparent"
 
@@ -597,90 +585,102 @@ msgstr "Transparent"
 msgid "Offset by (x/2),(y/2)"
 msgstr "Décalage par (x/2),(y/2)"
 
-#: app/channels_dialog.c:158 app/channels_dialog.c:186
-#: app/channels_dialog.c:1900
+#: app/channels_dialog.c:159 app/channels_dialog.c:193
+#: app/channels_dialog.c:1936
 msgid "New Channel"
 msgstr "Nouveau Canal"
 
-#: app/channels_dialog.c:160 app/channels_dialog.c:187
+#: app/channels_dialog.c:161 app/channels_dialog.c:194
 msgid "Raise Channel"
-msgstr "Élever Canal"
+msgstr "Remonter Canal"
 
-#: app/channels_dialog.c:162 app/channels_dialog.c:188
+#: app/channels_dialog.c:163 app/channels_dialog.c:195
 msgid "Lower Channel"
-msgstr "Abaisser Canal"
+msgstr "Descendre Canal"
 
-#: app/channels_dialog.c:164 app/channels_dialog.c:189
+#: app/channels_dialog.c:165 app/channels_dialog.c:196
 msgid "Duplicate Channel"
 msgstr "Dupliquer Canal"
 
-#: app/channels_dialog.c:166 app/channels_dialog.c:190
+#: app/channels_dialog.c:167 app/channels_dialog.c:197
 msgid "Delete Channel"
 msgstr "Effacer Canal"
 
-#: app/channels_dialog.c:168 app/channels_dialog.c:191
+#: app/channels_dialog.c:169
 msgid "Channel To Selection"
 msgstr "Canal vers Sélection"
 
-#: app/channels_dialog.c:170
-msgid "Add Channel To Selection"
-msgstr "Ajouter Canal à Sélection"
+#: app/channels_dialog.c:171
+msgid "Add To Selection"
+msgstr "Ajouter à la Sélection"
 
-#: app/channels_dialog.c:172
-msgid "Sub Channel From Selection"
-msgstr "Soustraire Canal de Sélection"
+#: app/channels_dialog.c:173
+msgid "Subtract From Selection"
+msgstr "Soustraire de la Sélection"
 
-#: app/channels_dialog.c:624 app/channels_dialog.c:678
+#: app/channels_dialog.c:175
+msgid "Intersect With Selection"
+msgstr "Intersection avec la Sélection"
+
+#: app/channels_dialog.c:198
+msgid ""
+"Channel To Selection \n"
+"<Shift> Add          <Ctrl> Subtract      <Shift><Ctrl> Intersect"
+msgstr ""
+"Canal vers sélection\n"
+"<Shift> Ajouter      <Ctrl> Soustraire     <Shift><Ctrl> Intersection"
+
+#: app/channels_dialog.c:633 app/channels_dialog.c:687
 #, c-format
 msgid "error in %s at %d: this shouldn't happen."
 msgstr "erreur dans %s à %d: cela ne devrait jamais arriver."
 
-#: app/channels_dialog.c:1130 app/color_balance.c:413 app/curves.c:378
+#: app/channels_dialog.c:1166 app/color_balance.c:413 app/curves.c:424
 #: app/levels.c:282
 msgid "Red"
 msgstr "Rouge"
 
-#: app/channels_dialog.c:1134 app/color_balance.c:440 app/curves.c:379
+#: app/channels_dialog.c:1170 app/color_balance.c:440 app/curves.c:425
 #: app/levels.c:283
 msgid "Green"
 msgstr "Vert"
 
-#: app/channels_dialog.c:1138 app/color_balance.c:467 app/curves.c:380
+#: app/channels_dialog.c:1174 app/color_balance.c:467 app/curves.c:426
 #: app/levels.c:284
 msgid "Blue"
 msgstr "Bleu"
 
-#: app/channels_dialog.c:1142
+#: app/channels_dialog.c:1178
 msgid "Gray"
 msgstr "Gris"
 
-#: app/channels_dialog.c:1146
+#: app/channels_dialog.c:1182
 msgid "Indexed"
 msgstr "Indexée"
 
-#: app/channels_dialog.c:1872
+#: app/channels_dialog.c:1908
 msgid "New Channel Options"
 msgstr "Options de Nouveau Canal"
 
 #. the name entry hbox, label and entry
-#: app/channels_dialog.c:1890
+#: app/channels_dialog.c:1926
 msgid "Channel name: "
 msgstr "Nom du Canal: "
 
 #. the opacity scale
-#: app/channels_dialog.c:1904
+#: app/channels_dialog.c:1940
 msgid "Fill Opacity: "
 msgstr "Opacité: "
 
-#: app/channels_dialog.c:2051
+#: app/channels_dialog.c:2087
 msgid "Edit Channel Attributes"
 msgstr "Édition des Attributs du Canal"
 
-#: app/channels_dialog.c:2071
+#: app/channels_dialog.c:2107
 msgid "Channel name:"
 msgstr "Nom du Canal:"
 
-#: app/channels_dialog.c:2086
+#: app/channels_dialog.c:2122
 msgid "Fill Opacity"
 msgstr "Opacité de remplissage"
 
@@ -766,10 +766,6 @@ msgstr "Jaune"
 msgid "Preserve Luminosity"
 msgstr "Préserver la luminosité"
 
-#: app/color_balance.c:623
-msgid "color_balance_preview(): No image map"
-msgstr ""
-
 #: app/color_notebook.c:111 app/color_select.c:186
 msgid "Color Selection"
 msgstr "Sélection de couleur"
@@ -778,56 +774,55 @@ msgstr "Sélection de couleur"
 msgid "Revert to Old Color"
 msgstr "Revenir à l'ancienne couleur"
 
-#: app/color_picker.c:126
+#: app/color_picker.c:127
 msgid "Color Picker Options"
 msgstr "Options de la Pipette à Couleurs"
 
-#: app/color_picker.c:152
-#, fuzzy
+#: app/color_picker.c:153
 msgid "Sample Average"
 msgstr "Échantillons mélangés"
 
-#: app/color_picker.c:223 app/tools.c:310
+#: app/color_picker.c:224 app/tools.c:310
 msgid "Color Picker"
 msgstr "Pipette à Couleurs"
 
-#: app/color_picker.c:230 app/color_picker.c:240
+#: app/color_picker.c:231 app/color_picker.c:241
 msgid "Red:"
 msgstr "Rouge:"
 
-#: app/color_picker.c:231 app/color_picker.c:241
+#: app/color_picker.c:232 app/color_picker.c:242
 msgid "Green:"
 msgstr "Vert:"
 
-#: app/color_picker.c:232 app/color_picker.c:242
+#: app/color_picker.c:233 app/color_picker.c:243
 msgid "Blue:"
 msgstr "Bleu:"
 
-#: app/color_picker.c:233 app/color_picker.c:239 app/color_picker.c:248
+#: app/color_picker.c:234 app/color_picker.c:240 app/color_picker.c:249
 msgid "Alpha:"
 msgstr "Alpha:"
 
-#: app/color_picker.c:234 app/color_picker.c:249 app/color_select.c:386
+#: app/color_picker.c:235 app/color_picker.c:250 app/color_select.c:386
 #: app/colormap_dialog.i.c:199
 msgid "Hex Triplet:"
 msgstr "Triplet Hexa:"
 
-#: app/color_picker.c:238 app/colormap_dialog.i.c:192
+#: app/color_picker.c:239 app/colormap_dialog.i.c:192
 msgid "Index:"
 msgstr "Index:"
 
-#: app/color_picker.c:243
+#: app/color_picker.c:244
 msgid "Hex Triplet"
 msgstr "Triplet Héxa"
 
-#: app/color_picker.c:247 app/histogram_tool.c:311
+#: app/color_picker.c:248 app/histogram_tool.c:311
 msgid "Intensity:"
 msgstr "Intensité:"
 
-#: app/color_picker.c:540 app/color_picker.c:541 app/color_picker.c:542
-#: app/color_picker.c:543 app/color_picker.c:544 app/color_picker.c:545
-#: app/color_picker.c:546 app/color_picker.c:559 app/color_picker.c:571
-#: app/color_picker.c:586
+#: app/color_picker.c:541 app/color_picker.c:542 app/color_picker.c:543
+#: app/color_picker.c:544 app/color_picker.c:545 app/color_picker.c:546
+#: app/color_picker.c:547 app/color_picker.c:560 app/color_picker.c:572
+#: app/color_picker.c:587
 msgid "N/A"
 msgstr "N/C"
 
@@ -841,7 +836,7 @@ msgid "Indexed Color Palette"
 msgstr "Palette des couleurs indexées"
 
 #. The GIMP image option menu
-#: app/colormap_dialog.i.c:136 app/layers_dialog.c:350
+#: app/colormap_dialog.i.c:136 app/layers_dialog.c:359
 msgid "Image:"
 msgstr "Image:"
 
@@ -849,49 +844,49 @@ msgstr "Image:"
 msgid "Operations"
 msgstr "Opérations"
 
-#: app/colormap_dialog.i.c:831 app/layers_dialog.c:851
+#: app/colormap_dialog.i.c:831 app/layers_dialog.c:879
 msgid "none"
 msgstr "aucun"
 
-#: app/commands.c:370
+#: app/commands.c:366
 msgid "Border Selection"
 msgstr "Sélection du bord"
 
-#: app/commands.c:371
+#: app/commands.c:366
 msgid "Border selection by:"
 msgstr "Épaisseur du bord à sélectionner :"
 
-#: app/commands.c:387
+#: app/commands.c:384
 msgid "Feather Selection"
 msgstr "Adoucir"
 
-#: app/commands.c:388
+#: app/commands.c:384
 msgid "Feather selection by:"
 msgstr "Largeur de la zone adoucie :"
 
-#: app/commands.c:404
+#: app/commands.c:402
 msgid "Grow Selection"
 msgstr "Agrandir"
 
-#: app/commands.c:405
+#: app/commands.c:402
 msgid "Grow selection by:"
 msgstr "Agrandir la sélection de :"
 
-#: app/commands.c:421
+#: app/commands.c:420
 msgid "Shrink Selection"
 msgstr "Rapetisser"
 
-#: app/commands.c:422
+#: app/commands.c:420
 msgid "Shrink selection by:"
 msgstr "Rapetisser la sélection de :"
 
-#: app/commands.c:1123
+#: app/commands.c:1199
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr ""
 "Erreur de redimensionnement: Les hauteurs et largeurs doivent être "
 "supérieures à zéro."
 
-#: app/commands.c:1168
+#: app/commands.c:1248
 msgid "Scale Error: Both width and height must be greater than zero."
 msgstr ""
 "Erreur de redimensionnement: Les hauteurs et largeurs doivent être "
@@ -937,10 +932,6 @@ msgstr "Tramage de Floyd-Steinberg"
 msgid " [ Warning ] "
 msgstr " [ Avertissement ] "
 
-#: app/convert.c:2566
-msgid "Non-existant colour was expected to be in non-destructive colourmap."
-msgstr ""
-
 #: app/convolve.c:129
 msgid "Blur"
 msgstr "Flou"
@@ -950,158 +941,153 @@ msgid "Sharpen"
 msgstr "Faire ressortir les formes"
 
 #: app/convolve.c:164
-#, fuzzy
 msgid "Convolve Type"
-msgstr "Convolution"
+msgstr "Type de convolution"
 
-#: app/crop.c:166 app/crop.c:995
+#: app/crop.c:169 app/crop.c:1009
 msgid "Crop"
 msgstr "Rogner"
 
-#: app/crop.c:166 app/crop.c:996
+#: app/crop.c:169 app/crop.c:1010
 msgid "Resize"
 msgstr "Redimensionner"
 
-#: app/crop.c:172
-#, fuzzy
+#: app/crop.c:175
 msgid "Crop & Resize Options"
-msgstr "Options de Rognage"
+msgstr "Options de Rognage et de Redimensionnement"
 
-#: app/crop.c:183
+#: app/crop.c:186
 msgid "Current layer only"
 msgstr "Calque courant seulement"
 
 #. enlarge toggle
-#: app/crop.c:194
+#: app/crop.c:197
 msgid "Allow Enlarging"
-msgstr ""
+msgstr "Permettre d'élargir"
 
 #. tool toggle
-#: app/crop.c:205 app/flip_tool.c:84
+#: app/crop.c:208 app/flip_tool.c:84
 msgid "Tool Toggle"
-msgstr ""
+msgstr "Fonctionnement de l'outil"
 
-#: app/crop.c:497 app/crop.c:505
+#: app/crop.c:500 app/crop.c:508
 msgid "Crop: "
 msgstr "Rogner: "
 
-#: app/crop.c:983
+#: app/crop.c:997
 msgid "Crop: 0 x 0"
 msgstr "Rogner: 0 x 0"
 
 #. create the info dialog
-#: app/crop.c:1011
-#, fuzzy
+#: app/crop.c:1025
 msgid "Crop & Resize Information"
-msgstr "Rognage, zone à conserver"
+msgstr "Rognage & Redimensionnement, information"
 
 #. add the information fields
-#: app/crop.c:1014
+#: app/crop.c:1028
 msgid "Origin X:"
 msgstr "Origine X:"
 
-#: app/crop.c:1017 app/resize.c:319 app/resize.c:393 app/resize.c:541
-#: app/rotate_tool.c:104 app/scale_tool.c:109 app/shear_tool.c:83
+#: app/crop.c:1031 app/file_new_dialog.c:749 app/resize.c:334 app/resize.c:419
+#: app/resize.c:577 app/rotate_tool.c:108 app/scale_tool.c:99
+#: app/shear_tool.c:83
 msgid "Y:"
 msgstr "Y:"
 
-#: app/crop.c:1043
+#. the pixel size labels
+#: app/crop.c:1059 app/file_new_dialog.c:610 app/file_new_dialog.c:628
 msgid "Width:"
 msgstr "Largeur:"
 
-#: app/crop.c:1046 app/resize.c:232 app/resize.c:257 app/resize.c:483
-#: app/scale_tool.c:74 app/scale_tool.c:81
+#: app/crop.c:1062 app/file_new_dialog.c:616 app/file_new_dialog.c:634
+#: app/layers_dialog.c:3271 app/resize.c:245 app/resize.c:270 app/resize.c:514
+#: app/scale_tool.c:78 app/scale_tool.c:85
 msgid "Height:"
 msgstr "Hauteur:"
 
-#: app/crop.c:1079
-#, fuzzy
+#: app/crop.c:1097
 msgid "From Selection"
-msgstr "Agrandir"
+msgstr "D'après la sélection"
 
-#: app/crop.c:1085
+#: app/crop.c:1103
 msgid "Automatic"
 msgstr "Automatique"
 
-#: app/curves.c:327
+#: app/curves.c:373
 msgid "Curves Options"
 msgstr "Options de courbure"
 
-#: app/curves.c:377 app/layers_dialog.c:282 app/levels.c:281
-#: app/paint_funcs.c:96
+#: app/curves.c:423 app/layers_dialog.c:288 app/levels.c:281
+#: app/paint_funcs.c:97
 msgid "Value"
 msgstr "Valeur"
 
-#: app/curves.c:381 app/levels.c:285
+#: app/curves.c:427 app/levels.c:285
 msgid "Alpha"
 msgstr "Alpha"
 
-#: app/curves.c:387
+#: app/curves.c:433
 msgid "Smooth"
 msgstr "Régulariser"
 
-#: app/curves.c:388
+#: app/curves.c:434
 msgid "Free"
 msgstr "Libre"
 
-#: app/curves.c:399
+#: app/curves.c:445
 msgid "Curves for indexed drawables cannot be adjusted."
 msgstr "Les courbes des images indexées ne peuvent pas être ajustées."
 
-#: app/curves.c:514 app/tools.c:551
+#: app/curves.c:560 app/tools.c:551
 msgid "Curves"
 msgstr "Courbes"
 
-#: app/curves.c:528
+#: app/curves.c:574
 msgid "Modify Curves for Channel: "
 msgstr "Modifier les courbes pour le canal: "
 
 #. The option menu for selecting the drawing method
-#: app/curves.c:602
+#: app/curves.c:648
 msgid "Curve Type: "
 msgstr "Type de courbe: "
 
-#: app/curves.c:883
-msgid "curves_preview(): No image map"
-msgstr ""
-
 #: app/desaturate.c:43
 msgid "Desaturate operates only on RGB color drawables."
-msgstr "La désaturation n'opére que sur les images RVB."
+msgstr "La désaturation n'opère que sur les images RVB."
 
-#: app/devices.c:122 app/palette.c:2187 app/preferences_dialog.c:1401
+#: app/devices.c:123 app/palette.c:2187 app/preferences_dialog.c:1437
 msgid "Save"
 msgstr "Enregistrer"
 
-#: app/devices.c:377
+#: app/devices.c:378
 msgid "devices_rc_update called multiple times for not present device\n"
 msgstr "devices_rc_update appelé plusieurs fois pour un périphérique absent\n"
 
-#: app/devices.c:676
+#: app/devices.c:677
 msgid "Device Status"
 msgstr "État du périphérique"
 
-#: app/devices.c:1052
+#: app/devices.c:1053
 msgid "Failed to find device_info\n"
 msgstr "Impossible de trouver device_info\n"
 
-#: app/docindex.c:519
+#: app/docindex.c:545
 msgid "This file cannot be moved up."
 msgstr "Ce fichier ne peux pas être remonté."
 
-#: app/docindex.c:522
+#: app/docindex.c:548
 msgid "There's no selection to move up."
 msgstr "Il n'y a pas de sélection à remonter."
 
-#: app/docindex.c:532
+#: app/docindex.c:558
 msgid "This file cannot be moved down."
 msgstr "Ce fichier ne peux pas être descendu."
 
-#: app/docindex.c:535
+#: app/docindex.c:561
 msgid "There's no selection to move down."
 msgstr "Il n'y a pas de sélection à descendre."
 
-#: app/docindex.c:547
+#: app/docindex.c:573
 msgid "There's no selection to remove."
 msgstr "Il n'y a pas de sélection à enlever."
 
@@ -1155,11 +1141,11 @@ msgstr "réussite du démarrage de GTK"
 msgid "drawable_fill called with unknown fill type"
 msgstr "drawable_fill appelé avec un type de remplissage inconnu"
 
-#: app/edit_selection.c:161
+#: app/edit_selection.c:164
 msgid "Move: 0, 0"
 msgstr "Déplacer: 0, 0"
 
-#: app/edit_selection.c:440 app/edit_selection.c:450
+#: app/edit_selection.c:443 app/edit_selection.c:453
 msgid "Move: "
 msgstr "Déplacement: "
 
@@ -1202,141 +1188,192 @@ msgstr "Enregistrer toutes les erreurs dans un fichier..."
 msgid "Write selection to file..."
 msgstr "Enregistrer la sélection dans un fichier..."
 
-#: app/file_new_dialog.c:344
-msgid "New Image"
-msgstr "Nouvelle Image"
+#: app/file_new_dialog.c:299
+msgid "Confirm Image Size"
+msgstr "Confirmer la taille de l'image"
 
-#: app/file_new_dialog.c:385 app/preferences_dialog.c:1476
-msgid "Width"
-msgstr "Largeur"
+#: app/file_new_dialog.c:313
+#, c-format
+msgid ""
+"You are trying to create an image which\n"
+"has an initial size of %s.\n"
+"\n"
+"Choose OK to create this image anyway.\n"
+"Choose Cancel if you didn't mean to\n"
+"create such a large image.\n"
+"\n"
+"To prevent this dialog from appearing,\n"
+"increase the \"Maximum Image Size\"\n"
+"setting (currently %s) in the\n"
+"preferences dialog."
+msgstr ""
+"Vous essayez de créer une image dont la\n"
+"taille initiale serait %s.\n"
+"\n"
+"Sélectionnez \"Confirmer\" pour la créer tout\n"
+"de même. Sélectionnez \"Annuler\" si vous\n"
+"n'aviez pas vraiment voulu créer une si\n"
+"grosse image.\n"
+"\n"
+"Pour empêcher cet avertissement d'apparaître,\n"
+"veuillez augmenter le réglage \"Taille maximale\n"
+"d'image\" (actuellement %s) dans les\n"
+"préférences."
 
-#: app/file_new_dialog.c:387 app/preferences_dialog.c:1478
-msgid "Height"
-msgstr "Hauteur"
+#: app/file_new_dialog.c:407
+#, c-format
+msgid "%d Bytes"
+msgstr "%d Octets"
 
-#: app/file_new_dialog.c:389 app/preferences_dialog.c:1480
-msgid "Pixels"
-msgstr "Pixels"
+#: app/file_new_dialog.c:409
+#, c-format
+msgid "%.2f KB"
+msgstr "%.2f ko"
 
-#. resolution frame
-#: app/file_new_dialog.c:394
-msgid "Resolution"
-msgstr "Résolution"
+#: app/file_new_dialog.c:411
+#, c-format
+msgid "%.1f KB"
+msgstr "%.1f ko"
 
-#: app/file_new_dialog.c:411 app/file_new_dialog.c:444
-#: app/preferences_dialog.c:1517 app/preferences_dialog.c:2138
-msgid "Pixels per "
-msgstr "pixels par  "
+#: app/file_new_dialog.c:413
+#, c-format
+msgid "%d KB"
+msgstr "%d ko"
 
-#: app/file_new_dialog.c:416
-msgid "Advanced options >>"
-msgstr "Options avancées >>"
+#: app/file_new_dialog.c:415
+#, c-format
+msgid "%.2f MB"
+msgstr "%.2f Mo"
 
-#: app/file_new_dialog.c:438 app/flip_tool.c:70 app/preferences_dialog.c:1511
-#: app/preferences_dialog.c:2132
-msgid "Horizontal"
-msgstr "Horizontal"
+#: app/file_new_dialog.c:417
+#, c-format
+msgid "%.1f MB"
+msgstr "%.1f Mo"
 
-#: app/file_new_dialog.c:440 app/flip_tool.c:70 app/preferences_dialog.c:1513
-#: app/preferences_dialog.c:2134
-msgid "Vertical"
-msgstr "Vertical"
+#. bytes per pixel
+#. alpha channel
+#: app/file_new_dialog.c:442
+#, c-format
+msgid "Image Size: %s"
+msgstr "Taille d'image : %s"
 
-#: app/file_new_dialog.c:442 app/preferences_dialog.c:1515
-#: app/preferences_dialog.c:2136
-msgid "dpi"
-msgstr "pts par pouce"
-
-#. frame for Image Type
-#: app/file_new_dialog.c:470
-msgid "Image Type"
-msgstr "Type d'image"
-
-#: app/file_new_dialog.c:480 app/gdisplay.c:194 app/preferences_dialog.c:1554
+#: app/file_new_dialog.c:485 app/gdisplay.c:197 app/preferences_dialog.c:1598
 msgid "RGB"
 msgstr "RVB"
 
-#: app/file_new_dialog.c:491 app/info_window.c:50 app/info_window.c:241
-#: app/preferences_dialog.c:1555
+#: app/file_new_dialog.c:486 app/info_window.c:50 app/info_window.c:241
+#: app/preferences_dialog.c:1599
 msgid "Grayscale"
 msgstr "Niveaux de gris"
 
-#: app/file_new_dialog.c:513 app/layers_dialog.c:3176
+#: app/file_new_dialog.c:492 app/layers_dialog.c:3209
 msgid "Foreground"
 msgstr "Avant-Plan"
 
-#: app/file_new_dialog.c:535 app/layers_dialog.c:3178
+#: app/file_new_dialog.c:494 app/layers_dialog.c:3211
 msgid "White"
 msgstr "Blanc"
 
-#: app/fileops.c:220 app/fileops.c:249
+#: app/file_new_dialog.c:568
+msgid "New Image"
+msgstr "Nouvelle Image"
+
+#: app/file_new_dialog.c:674 app/preferences_dialog.c:1507
+msgid "Pixels"
+msgstr "Pixels"
+
+#. the resolution labels
+#: app/file_new_dialog.c:743 app/resize.c:571
+msgid "Resolution X:"
+msgstr "Résolution X:"
+
+#: app/file_new_dialog.c:764 app/resize.c:592
+msgid "pixels/%a"
+msgstr "pixels/%a"
+
+#. frame for Image Type
+#: app/file_new_dialog.c:808
+msgid "Image Type"
+msgstr "Type d'image"
+
+#: app/fileops.c:222 app/fileops.c:251
 msgid "Load Image"
 msgstr "Charger Image"
 
 #. format-chooser frame
-#: app/fileops.c:261
+#: app/fileops.c:263
 msgid "Open Options"
 msgstr "Options d'ouverture"
 
-#: app/fileops.c:276 app/fileops.c:477
+#: app/fileops.c:278 app/fileops.c:479
 msgid "Determine file type:"
 msgstr "Déterminer le type du fichier:"
 
-#: app/fileops.c:439 app/fileops.c:461
+#: app/fileops.c:441 app/fileops.c:463
 msgid "Save Image"
 msgstr "Enregistrer image"
 
-#: app/fileops.c:469
+#: app/fileops.c:471
 msgid "Save Options"
 msgstr "Options d'enregistrement"
 
-#: app/fileops.c:520
+#: app/fileops.c:522
 msgid "Can't revert. No filename associated with this image"
 msgstr ""
 "Impossible de revenir à l'image sur disque.\n"
 "Pas de fichier associé à cette image."
 
-#: app/fileops.c:534
+#: app/fileops.c:536
 msgid "Revert failed."
 msgstr "Échec lors du retour à l'image sur disque."
 
-#: app/fileops.c:1210 app/fileops.c:1300
+#: app/fileops.c:1212 app/fileops.c:1302
 msgid "Open failed: "
-msgstr "Echec de l'ouverture: "
+msgstr "Échec de l'ouverture: "
 
-#: app/fileops.c:1366
+#: app/fileops.c:1368
 #, c-format
 msgid "%s is an irregular file (%s)"
 msgstr "%s n'est pas un fichier ordinaire (%s)"
 
-#: app/fileops.c:1380 app/fileops.c:1483
+#: app/fileops.c:1382 app/fileops.c:1485
 msgid "Save failed: "
-msgstr "Echec de l'enregistrement: "
+msgstr "Échec de l'enregistrement: "
 
-#: app/fileops.c:1392 app/fileops.c:1405
+#: app/fileops.c:1394 app/fileops.c:1407
 msgid "<Toolbox>/File/Open"
 msgstr "<Toolbox>/Fichier/Ouvrir"
 
-#: app/fileops.c:1393 app/fileops.c:1406
+#: app/fileops.c:1395 app/fileops.c:1408
 msgid "<Image>/File/Open"
 msgstr "<Image>/Fichier/Ouvrir"
 
-#: app/fileops.c:1394 app/fileops.c:1407
+#: app/fileops.c:1396 app/fileops.c:1409
 msgid "<Image>/File/Save"
 msgstr "<Image>/Fichier/Enregistrer"
 
-#: app/fileops.c:1395 app/fileops.c:1408
+#: app/fileops.c:1397 app/fileops.c:1410
 msgid "<Image>/File/Save as"
 msgstr "<Image>/Fichier/Enregistrer sous"
 
-#: app/fileops.c:1428
+#: app/fileops.c:1430
 #, c-format
 msgid "%s exists, overwrite?"
 msgstr "%s existe, écraser?"
 
-#: app/fileops.c:1434
+#: app/fileops.c:1436
 msgid "File Exists!"
 msgstr "Le fichier existe!"
+
+#: app/flip_tool.c:70 app/preferences_dialog.c:1553
+#: app/preferences_dialog.c:2215
+msgid "Horizontal"
+msgstr "Horizontal"
+
+#: app/flip_tool.c:70 app/preferences_dialog.c:1555
+#: app/preferences_dialog.c:2217
+msgid "Vertical"
+msgstr "Vertical"
 
 #: app/flip_tool.c:76
 msgid "Flip Tool Options"
@@ -1348,7 +1385,7 @@ msgid ""
 "it is not a floating selection."
 msgstr ""
 "Impossible d'ancrer ce calque\n"
-"car ce n'est pas une sélection flotante."
+"car ce n'est pas une sélection flottante."
 
 #: app/floating_sel.c:174
 msgid ""
@@ -1360,221 +1397,221 @@ msgstr ""
 "de la sélection flottante car elle appartient à\n"
 "un canal ou masque de calque."
 
-#: app/free_select.c:73
-msgid "Unable to reallocate points array in free_select."
-msgstr ""
-
-#: app/free_select.c:218
+#: app/free_select.c:220
 msgid "Cannot properly scanline convert polygon!\n"
 msgstr ""
 "Je n'arrive pas à convertir le polygone en lignes horizontales de trame.\n"
 
-#: app/gdisplay.c:194
+#: app/gdisplay.c:197
 msgid "RGB-empty"
 msgstr "RVB-vide"
 
-#: app/gdisplay.c:197
+#: app/gdisplay.c:200
 msgid "grayscale-empty"
 msgstr "niveau-de-gris-vide"
 
-#: app/gdisplay.c:197
+#: app/gdisplay.c:200
 msgid "grayscale"
 msgstr "niveaux de gris"
 
-#: app/gdisplay.c:200
+#: app/gdisplay.c:203
 msgid "indexed-empty"
 msgstr "indexé-vide"
 
-#: app/gdisplay.c:200
+#: app/gdisplay.c:203
 msgid "indexed"
 msgstr "indexé"
 
-#: app/gdisplay.c:216
-msgid "image-title-format string ended within %%-sequence"
-msgstr ""
+#: app/gdisplay.c:1573
+msgid "<Image>/Layers/Stack/Previous Layer"
+msgstr "<Image>/Calques/Pile/Calque précédent"
 
-#: app/gdisplay.c:264
-msgid "image-title-format contains unknown format sequence '%%%c'"
-msgstr ""
+#: app/gdisplay.c:1574
+msgid "<Image>/Layers/Stack/Next Layer"
+msgstr "<Image>/Calques/Pile/Calque suivant"
 
-#: app/gdisplay.c:538
-msgid "Wanted to start idlerender thread with no update_areas. (+memleak)"
-msgstr ""
+#: app/gdisplay.c:1575
+msgid "<Image>/Layers/Stack/Raise Layer"
+msgstr "<Image>/Calques/Pile/Remonter calque"
 
-#: app/gdisplay.c:1562
-msgid "<Image>/Layers/Raise Layer"
-msgstr "<Image>/Calques/Élever Calque"
+#: app/gdisplay.c:1576
+msgid "<Image>/Layers/Stack/Lower Layer"
+msgstr "<Image>/Calques/Pile/Descendre calque"
 
-#: app/gdisplay.c:1563
-msgid "<Image>/Layers/Lower Layer"
-msgstr "<Image>/Calques/Abaisser Calque"
+#: app/gdisplay.c:1577
+msgid "<Image>/Layers/Stack/Layer to Top"
+msgstr "<Image>/Calques/Pile/Calque vers le sommet"
 
-#: app/gdisplay.c:1564
+#: app/gdisplay.c:1578
+msgid "<Image>/Layers/Stack/Layer to Bottom"
+msgstr "<Image>/Calques/Pile/Calque vers le fond"
+
+#: app/gdisplay.c:1579
 msgid "<Image>/Layers/Anchor Layer"
 msgstr "<Image>/Calques/Ancrer Calque"
 
-#: app/gdisplay.c:1565
+#: app/gdisplay.c:1580
 msgid "<Image>/Layers/Merge Visible Layers"
 msgstr "<Image>/Calques/Fusionner les Calques Visibles"
 
-#: app/gdisplay.c:1566
+#: app/gdisplay.c:1581
 msgid "<Image>/Layers/Flatten Image"
 msgstr "<Image>/Calques/Aplatir Image"
 
-#: app/gdisplay.c:1567
+#: app/gdisplay.c:1582
 msgid "<Image>/Layers/Alpha To Selection"
-msgstr "<Image>/Calques/Alpha To Selection"
+msgstr "<Image>/Calques/Alpha vers Sélection"
 
-#: app/gdisplay.c:1568
+#: app/gdisplay.c:1583
 msgid "<Image>/Layers/Mask To Selection"
-msgstr "<Image>/Calques/Mask To Selection"
+msgstr "<Image>/Calques/Masque vers Sélection"
 
-#: app/gdisplay.c:1569
+#: app/gdisplay.c:1584
 msgid "<Image>/Layers/Add Alpha Channel"
 msgstr "<Image>/Calques/Ajouter Canal Alpha"
 
-#: app/gdisplay.c:1571
+#: app/gdisplay.c:1586
 msgid "<Image>/Image/RGB"
 msgstr "<Image>/Image/RVB"
 
-#: app/gdisplay.c:1572
+#: app/gdisplay.c:1587
 msgid "<Image>/Image/Grayscale"
 msgstr "<Image>/Image/Niveaux de Gris"
 
-#: app/gdisplay.c:1573
+#: app/gdisplay.c:1588
 msgid "<Image>/Image/Indexed"
 msgstr "<Image>/Image/Indexée"
 
-#: app/gdisplay.c:1575
+#: app/gdisplay.c:1590
 msgid "<Image>/Image/Colors/Threshold"
 msgstr "<Image>/Image/Couleurs/Seuil"
 
-#: app/gdisplay.c:1576
+#: app/gdisplay.c:1591
 msgid "<Image>/Image/Colors/Posterize"
 msgstr "<Image>/Image/Couleurs/Postériser"
 
-#: app/gdisplay.c:1577
+#: app/gdisplay.c:1592
 msgid "<Image>/Image/Colors/Equalize"
 msgstr "<Image>/Image/Couleurs/Égaliser"
 
-#: app/gdisplay.c:1578
+#: app/gdisplay.c:1593
 msgid "<Image>/Image/Colors/Invert"
 msgstr "<Image>/Image/Couleurs/Inverser"
 
-#: app/gdisplay.c:1580
+#: app/gdisplay.c:1595
 msgid "<Image>/Image/Colors/Color Balance"
 msgstr "<Image>/Image/Couleurs/Balance des couleurs"
 
-#: app/gdisplay.c:1581
+#: app/gdisplay.c:1596
 msgid "<Image>/Image/Colors/Brightness-Contrast"
 msgstr "<Image>/Image/Couleurs/Luminosité-Contraste"
 
-#: app/gdisplay.c:1582
+#: app/gdisplay.c:1597
 msgid "<Image>/Image/Colors/Hue-Saturation"
 msgstr "<Image>/Image/Couleurs/Teinte-Saturation"
 
-#: app/gdisplay.c:1583
+#: app/gdisplay.c:1598
 msgid "<Image>/Image/Colors/Curves"
 msgstr "<Image>/Image/Couleurs/Courbes"
 
-#: app/gdisplay.c:1584
+#: app/gdisplay.c:1599
 msgid "<Image>/Image/Colors/Levels"
 msgstr "<Image>/Image/Couleurs/Niveaux"
 
-#: app/gdisplay.c:1586
+#: app/gdisplay.c:1601
 msgid "<Image>/Image/Colors/Desaturate"
 msgstr "<Image>/Image/Couleurs/Désaturer"
 
-#: app/gdisplay.c:1588
+#: app/gdisplay.c:1603
 msgid "<Image>/Image/Alpha/Add Alpha Channel"
 msgstr "<Image>/Image/Alpha/Ajouter Canal Alpha"
 
-#: app/gdisplay.c:1590
+#: app/gdisplay.c:1605
 msgid "<Image>/Select"
 msgstr "<Image>/Sélection"
 
-#: app/gdisplay.c:1591
+#: app/gdisplay.c:1606
 msgid "<Image>/Edit/Cut"
 msgstr "<Image>/Édition/Couper"
 
-#: app/gdisplay.c:1592
+#: app/gdisplay.c:1607
 msgid "<Image>/Edit/Copy"
 msgstr "<Image>/Édition/Copier"
 
-#: app/gdisplay.c:1593
+#: app/gdisplay.c:1608
 msgid "<Image>/Edit/Paste"
 msgstr "<Image>/Édition/Coller"
 
-#: app/gdisplay.c:1594
+#: app/gdisplay.c:1609
 msgid "<Image>/Edit/Paste Into"
 msgstr "<Image>/Édition/Coller dans"
 
-#: app/gdisplay.c:1595
+#: app/gdisplay.c:1610
 msgid "<Image>/Edit/Clear"
 msgstr "<Image>/Édition/Effacer"
 
-#: app/gdisplay.c:1596
+#: app/gdisplay.c:1611
 msgid "<Image>/Edit/Fill"
 msgstr "<Image>/Édition/Remplir"
 
-#: app/gdisplay.c:1597
+#: app/gdisplay.c:1612
 msgid "<Image>/Edit/Stroke"
 msgstr "<Image>/Édition/Coup de Pinceau"
 
-#: app/gdisplay.c:1598
+#: app/gdisplay.c:1613
 msgid "<Image>/Edit/Cut Named"
 msgstr "<Image>/Édition/Couper Nommé"
 
-#: app/gdisplay.c:1599
+#: app/gdisplay.c:1614
 msgid "<Image>/Edit/Copy Named"
 msgstr "<Image>/Édition/Copier Nommé"
 
-#: app/gdisplay.c:1600
+#: app/gdisplay.c:1615
 msgid "<Image>/Edit/Paste Named"
 msgstr "<Image>/Édition/Coller Nommé"
 
-#: app/gdisplay.c:1601
+#: app/gdisplay.c:1616
 msgid "<Image>/Image/Colors"
 msgstr "<Image>/Image/Couleurs"
 
-#: app/gdisplay.c:1602
+#: app/gdisplay.c:1617
 msgid "<Image>/Image/Channel Ops/Offset"
-msgstr "<Image>/Image/Channel Ops/Décalage"
+msgstr "<Image>/Image/Canaux/Décalage"
 
-#: app/gdisplay.c:1603
+#: app/gdisplay.c:1618
 msgid "<Image>/Image/Histogram"
 msgstr "<Image>/Image/Histogramme"
 
-#: app/gdisplay.c:1604
+#: app/gdisplay.c:1619
 msgid "<Image>/Filters"
 msgstr "<Image>/Filtres"
 
 #. save selection to channel
-#: app/gdisplay.c:1607
+#: app/gdisplay.c:1622
 msgid "<Image>/Select/Save To Channel"
 msgstr "<Image>/Sélection/Enregistrer dans Canal"
 
-#: app/gdisplay.c:1609
+#: app/gdisplay.c:1624
 msgid "<Image>/View/Toggle Rulers"
 msgstr "<Image>/Vue/(Dés)activer les Règles"
 
-#: app/gdisplay.c:1610
+#: app/gdisplay.c:1625
 msgid "<Image>/View/Toggle Guides"
 msgstr "<Image>/Vue/(Dés)activer les Guides"
 
-#: app/gdisplay.c:1611
+#: app/gdisplay.c:1626
 msgid "<Image>/View/Snap To Guides"
 msgstr "<Image>/Vue/Aligner sur les Guides"
 
-#: app/gdisplay.c:1612
+#: app/gdisplay.c:1627
 msgid "<Image>/View/Toggle Statusbar"
 msgstr "<Image>/Vue/(Dés)activer la Barre d'État"
 
-#: app/gdisplay.c:1613
+#: app/gdisplay.c:1628
 msgid "<Image>/View/Dot for dot"
 msgstr "<Image>/Vue/Point pour point"
 
-#: app/gdisplay.c:2048
+#: app/gdisplay.c:2063
 msgid "gdisplays_flush() called recursively."
 msgstr "gdisplays_flush() appelé récursivement."
 
@@ -1588,18 +1625,18 @@ msgstr "<Image>/Fichier/Fermer"
 msgid "Changes were made to %s. Close anyway?"
 msgstr "Changements effectués sur %s. Fermer quand même?"
 
-#: app/gimage_mask.c:217
+#: app/gimage_mask.c:213
 msgid ""
 "Unable to cut/copy because the selected\n"
 "region is empty."
 msgstr "Impossible de copier/coller car la région sélectionnée est vide."
 
-#: app/gimage_mask.c:347
+#: app/gimage_mask.c:343
 msgid "Float Selection: No selection to float."
 msgstr "Faire flotter la sélection: pas de sélection."
 
 #. Create a new layer from the buffer
-#: app/gimage_mask.c:358
+#: app/gimage_mask.c:354
 msgid "Floated Layer"
 msgstr "Calque Flottant"
 
@@ -1659,11 +1696,7 @@ msgstr "Type de calque %d non supporté."
 
 #: app/gimpimage.c:596 app/gimpimage.c:690
 msgid "gimp_image_apply_image sent illegal parameters"
-msgstr "gimp_image_apply_image a envoyé des paramétres illégaux"
-
-#: app/gimpimage.c:1031
-msgid "Tattoo state has become corrupt (2.1 billion operation limit exceded)"
-msgstr ""
+msgstr "gimp_image_apply_image a envoyé des paramètres illégaux"
 
 #: app/gimpimage.c:1096
 msgid "Unable to project indexed image."
@@ -1671,11 +1704,11 @@ msgstr "Impossible de projeter une image indexée."
 
 #: app/gimpimage.c:1966
 msgid "Layer cannot be raised any further"
-msgstr "Impossible d'élever encore ce calque"
+msgstr "Impossible de remonter encore ce calque"
 
 #: app/gimpimage.c:2040
 msgid "Layer cannot be lowered any further"
-msgstr "Impossible d'abaisser encore ce calque"
+msgstr "Impossible de descendre encore ce calque"
 
 #. layer_arg is already the top_layer
 #: app/gimpimage.c:2069
@@ -1684,7 +1717,7 @@ msgstr "Calque déjà en haut"
 
 #: app/gimpimage.c:2074
 msgid "Can't raise Layer without alpha"
-msgstr "Impossible d'élever un Calque sans alpha"
+msgstr "Impossible de remonter un Calque sans alpha"
 
 #. there is no next layer below layer_arg
 #: app/gimpimage.c:2168
@@ -1709,7 +1742,7 @@ msgstr "Il n'y a pas assez de calques visibles pour une fusion."
 
 #: app/gimpimage.c:2432 app/gimpimage.c:2465
 msgid "gimp_image_merge_layers: could not allocate merge layer"
-msgstr "gimp_image_merge_layers: impossible d'alouer le calque pour la fusion"
+msgstr "gimp_image_merge_layers: impossible d'allouer le calque pour la fusion"
 
 #: app/gimpimage.c:2504
 msgid "gimp_image_merge_layers attempting to merge incompatible layers\n"
@@ -1758,7 +1791,7 @@ msgstr ""
 
 #: app/gimpimage.c:2826
 msgid "Channel cannot be raised any further"
-msgstr "Le canal ne peux pas être élevé plus"
+msgstr "Le canal ne peux pas être plus remonté"
 
 #: app/gimpimage.c:2873
 msgid "Channel cannot be lowered any further"
@@ -1783,50 +1816,50 @@ msgstr "SansTitre"
 msgid "Progress"
 msgstr "Avancement"
 
-#: app/gimprc.c:349 app/plug_in.c:288
+#: app/gimprc.c:353 app/plug_in.c:302
 msgid "Resource configuration"
 msgstr "Configuration des Ressources"
 
-#: app/gimprc.c:404
+#: app/gimprc.c:408
 #, c-format
 msgid "error parsing: \"%s\"\n"
 msgstr "erreur de lecture: \"%s\"\n"
 
-#: app/gimprc.c:405
+#: app/gimprc.c:409
 #, c-format
 msgid "  at line %d column %d\n"
 msgstr " à la ligne %d, colonne %d\n"
 
-#: app/gimprc.c:406
+#: app/gimprc.c:410
 #, c-format
 msgid "  unexpected token: %s\n"
 msgstr "  mot inattendu: %s\n"
 
-#: app/gimprc.c:1292
+#: app/gimprc.c:1300
 msgid "error parsing pluginrc"
 msgstr "erreur d'analyse dans pluginrc"
 
-#: app/gimprc.c:1627
+#: app/gimprc.c:1635
 #, c-format
 msgid "gimprc token referenced but not defined: %s"
 msgstr "lexème de gimprc référencé mais non défini: %s"
 
-#: app/gimprc.c:2503
+#: app/gimprc.c:2518
 #, c-format
 msgid "Can't open %s; %s"
 msgstr "Je ne puis ouvrir %s; %s"
 
-#: app/gimprc.c:2522
+#: app/gimprc.c:2537
 #, c-format
 msgid "Can't rename %s to %s.old; %s"
 msgstr "Je ne puis renommer %s en %s.old; %s"
 
-#: app/gimprc.c:2528
+#: app/gimprc.c:2543
 #, c-format
 msgid "Couldn't reopen %s\n"
 msgstr "Je ne peux réouvrir %s\n"
 
-#: app/gimprc.c:2540
+#: app/gimprc.c:2555
 #, c-format
 msgid "Can't write to %s; %s"
 msgstr "Je ne puis écrire dans %s; %s"
@@ -1987,17 +2020,15 @@ msgstr "sans-titre"
 
 #: app/gradient.c:1271
 msgid "ed_do_new_gradient_callback(): oops, received NULL in call_data"
-msgstr "ed_do_new_gradient_callback(): oops, NULL reçu dans call_data"
+msgstr "ed_do_new_gradient_callback(): houla, NULL reçu dans call_data"
 
 #: app/gradient.c:1310
 msgid "ed_do_rename_gradient_callback(): oops, received NULL in call_data"
-msgstr "ed_do_rename_gradient_callback(): oops, NULL reçu dans call_data"
+msgstr "ed_do_rename_gradient_callback(): houla, NULL reçu dans call_data"
 
 #: app/gradient.c:1328
 msgid "ed_do_rename_gradient_callback(): oops, can't find gradient to rename"
-msgstr ""
-"ed_do_rename_gradient_callback(): oops, impossible de trouver le dégradé a "
-"renommer"
+msgstr "ed_do_rename_gradient_callback(): houla impossible de trouver le dégradé a renommer"
 
 #: app/gradient.c:1362
 msgid "Enter a name for the copied gradient"
@@ -2047,9 +2078,7 @@ msgstr "Facteur de Zoom: %d:1    Affichage [%0.6f, %0.6f]"
 msgid ""
 "Position: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
 "Opacity: %0.3f"
-msgstr ""
-"Position: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
-"Opacité: %0.3f"
+msgstr "Position: %0.6f    RVB (%0.3f, %0.3f, %0.3f)    TSV (%0.3f, %0.3f, %0.3f)    Opacité: %0.3f"
 
 #: app/gradient.c:1955
 #, c-format
@@ -2068,11 +2097,6 @@ msgstr "Clic: sélectionner   Shift+Clic: étendre la sélection"
 msgid "Click: select    Shift+click: extend selection    Drag: move"
 msgstr "Clic: sélectionner  Shift+Clic: étendre la sélection  Tirer: déplacer"
 
-#: app/gradient.c:2259
-#, c-format
-msgid "control_do_hint: oops, in_handle is true yet we got handle type %d"
-msgstr ""
-
 #: app/gradient.c:2264
 msgid ""
 "Click: select    Shift+click: extend selection    Drag: move    Shift+drag: "
@@ -2080,17 +2104,6 @@ msgid ""
 msgstr ""
 "Clic: sélectionner  Shift+Clic: étendre la sélection  Tirer: déplacer  "
 "Shift+Tirer: déplacer & compresser"
-
-#: app/gradient.c:2363
-#, c-format
-msgid ""
-"control_button_press(): oops, in_handle is true yet we got handle type %d"
-msgstr ""
-
-#: app/gradient.c:2407
-#, c-format
-msgid "control_point_in_handle(): oops, can not handle drag mode %d"
-msgstr ""
 
 #: app/gradient.c:2468 app/gradient.c:2477
 #, c-format
@@ -2101,11 +2114,6 @@ msgstr "Position du taquet: %0.6f"
 #, c-format
 msgid "Distance: %0.6f"
 msgstr "Distance: %0.6f"
-
-#: app/gradient.c:2501
-#, c-format
-msgid "control_motion(): aieee, attempt to move bogus handle %d"
-msgstr ""
 
 #: app/gradient.c:2954 app/gradient.c:4281
 msgid "Left endpoint's color"
@@ -2169,7 +2177,7 @@ msgstr "Recentrer le point médian du segment"
 
 #: app/gradient.c:3299
 msgid "Re-distribute handles in segment"
-msgstr "Re-distribuer les taquets dans le segment"
+msgstr "Redistribuer les taquets dans le segment"
 
 #: app/gradient.c:3301
 msgid "Flip segment"
@@ -2283,6 +2291,8 @@ msgid ""
 "grad_load_gradient(): badly formatted gradient segment %d in \"%s\" --- bad "
 "things may happen soon"
 msgstr ""
+"grad_load_gradient(): segment de dégradé dans un format incorrect (%d dans "
+"\"%s\") --- des choses bizarres pourront bientôt arriver"
 
 #: app/gradient.c:5480
 msgid "grad_save_gradient(): can not save gradient with NULL filename"
@@ -2302,18 +2312,13 @@ msgstr ""
 "seg_get_segment_at(): aïe, pas de segment correspondant pour la position "
 "%0.15f"
 
-#: app/gradient_select.c:393
-msgid "failed to run gradient callback function"
-msgstr ""
-
 #: app/gradient_select.c:509
 msgid "Gradient Selection"
 msgstr "Sélection de Dégradé"
 
 #: app/histogram_tool.c:207
-#, fuzzy
 msgid "Histogram Options"
-msgstr "Options de Tramage"
+msgstr "Options d'histogramme"
 
 #: app/histogram_tool.c:307
 msgid "Mean:"
@@ -2324,9 +2329,8 @@ msgid "Std Dev:"
 msgstr "Dev Std:"
 
 #: app/histogram_tool.c:309
-#, fuzzy
 msgid "Median:"
-msgstr "Médiane: "
+msgstr "Médiane:"
 
 #: app/histogram_tool.c:310
 msgid "Pixels:"
@@ -2337,7 +2341,6 @@ msgid "Count:"
 msgstr "Compte:"
 
 #: app/histogram_tool.c:313
-#, fuzzy
 msgid "Percentile:"
 msgstr "%-ile: "
 
@@ -2347,7 +2350,7 @@ msgstr "Options de Teinte-Saturation"
 
 #: app/hue_saturation.c:348
 msgid "Hue-Saturation operates only on RGB color drawables."
-msgstr "Teinte-Saturation oppére seulement sur des images RVB."
+msgstr "Teinte-Saturation opère seulement sur des images RVB."
 
 #: app/hue_saturation.c:416
 msgid "Master"
@@ -2386,7 +2389,7 @@ msgid "Hue / Lightness / Saturation Adjustments"
 msgstr "Teinte / Luminosité / Ajustements de la Saturation"
 
 #. Create the hue scale widget
-#: app/hue_saturation.c:514 app/layers_dialog.c:279 app/paint_funcs.c:93
+#: app/hue_saturation.c:514 app/layers_dialog.c:285 app/paint_funcs.c:94
 msgid "Hue"
 msgstr "Teinte"
 
@@ -2396,17 +2399,15 @@ msgid "Lightness"
 msgstr "Luminosité"
 
 #. Create the saturation scale widget
-#: app/hue_saturation.c:582 app/layers_dialog.c:280 app/paint_funcs.c:94
+#: app/hue_saturation.c:582 app/layers_dialog.c:286 app/paint_funcs.c:95
 msgid "Saturation"
 msgstr "Saturation"
-
-#: app/hue_saturation.c:717
-msgid "hue_saturation_preview(): No image map"
-msgstr ""
 
 #: app/image_map.c:283
 msgid "image depth change, unable to restore original image"
 msgstr ""
+"Changement du nombre de bits par pixel,\n"
+"je ne peux restaurer l'image initiale."
 
 #: app/info_window.c:49
 msgid "Static Gray"
@@ -2422,7 +2423,7 @@ msgstr "Pseudo Couleur"
 
 #: app/info_window.c:53
 msgid "True Color"
-msgstr "True Color"
+msgstr "\"True Color\""
 
 #: app/info_window.c:54
 msgid "Direct Color"
@@ -2460,7 +2461,6 @@ msgid "Visual Class:"
 msgstr "Classe de « visual » :"
 
 #: app/info_window.c:167
-#, fuzzy
 msgid "Visual Depth:"
 msgstr "Bits du « visual » :"
 
@@ -2497,7 +2497,7 @@ msgstr "Sensibilité:"
 #. tilt sens slider
 #: app/ink.c:328
 msgid "Tilt"
-msgstr ""
+msgstr "Inclinaison"
 
 #. velocity sens slider
 #: app/ink.c:358
@@ -2510,9 +2510,8 @@ msgid "Angle"
 msgstr "Angle"
 
 #: app/ink.c:394
-#, fuzzy
 msgid "Adjust:"
-msgstr "Ajustement d'angle"
+msgstr "Ajustement: "
 
 #. Brush type radiobuttons
 #: app/ink.c:417
@@ -2524,37 +2523,34 @@ msgstr "Type"
 msgid "Shape"
 msgstr "Forme"
 
-#: app/install.c:83
+#: app/install.c:85
 msgid "The GIMP is not properly installed for the current user\n"
 msgstr "The GIMP n'est pas installé correctement pour l'utilisateur courant\n"
 
-#: app/install.c:84
+#: app/install.c:86
 msgid ""
 "User installation was skipped because the '--nointerface' flag was "
 "encountered\n"
-msgstr ""
-"Installation personnelle non effectuée car le paramétre '--nointerface'a été "
-"détecté\n"
+msgstr "Installation personnelle non effectuée car le paramètre '--nointerface'a été détecté\n"
 
-#: app/install.c:85
+#: app/install.c:87
 msgid ""
 "To perform user installation, run the GIMP without the '--nointerface' flag\n"
-msgstr ""
-"Pour effectuer l'installation, lancer GIMP avec le paramtre '--nointerface'\n"
+msgstr "Pour effectuer l'installation, lancer GIMP avec le paramètre '--nointerface'\n"
 
-#: app/install.c:104
+#: app/install.c:106
 msgid "Install"
 msgstr "Installer"
 
-#: app/install.c:105
+#: app/install.c:107
 msgid "Ignore"
 msgstr "Ignorer"
 
-#: app/install.c:106 app/install.c:389
+#: app/install.c:108 app/install.c:391
 msgid "Quit"
 msgstr "Quitter"
 
-#: app/install.c:119
+#: app/install.c:121
 msgid ""
 "The GIMP - GNU Image Manipulation Program\n"
 "\n"
@@ -2562,60 +2558,47 @@ msgstr ""
 "The GIMP - Programme GNU de Manipulation d'Image\n"
 "\n"
 
-#: app/install.c:120
+#: app/install.c:122
 msgid "Copyright (C) 1995 Spencer Kimball and Peter Mattis\n"
 msgstr "Copyright (C) 1995 Spencer Kimball et Peter Mattis\n"
 
-#: app/install.c:123
-msgid "This program is free software; you can redistribute it and/or modify\n"
-msgstr ""
-"Ce programme est un logiciel libre ; vous pouvez le redistribuer et/ou le "
-"modifier\n"
-
-#: app/install.c:124
-msgid "it under the terms of the GNU General Public License as published by\n"
-msgstr ""
-"en suivant les termes de la GNU General Public License telle que publiée\n"
-
-#: app/install.c:125
-msgid "the Free Software Foundation; either version 2 of the License, or\n"
-msgstr ""
-"par la Free Software Foundation ; soit la version 2 de la licence, ou\n"
-
 #: app/install.c:126
-msgid "(at your option) any later version.\n"
-msgstr "(à votre choix) une version ultérieure.\n"
-
-#: app/install.c:128
-msgid "This program is distributed in the hope that it will be useful,\n"
-msgstr "Ce programme est distribué dans l'espoir qu'il sera utile, mais\n"
-
-#: app/install.c:129
-msgid "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-msgstr "SANS AUCUNE GARANTIE ; sans même une garantie implicite de\n"
-
-#: app/install.c:130
-msgid "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
-msgstr "COMMERCIALISABILITÉ ou d'ADÉQUATION À UN BUT PARTICULIER.\n"
-
-#: app/install.c:131
-msgid "See the GNU General Public License for more details.\n"
-msgstr "Voir la GNU General Public License pour plus de détails.\n"
-
-#: app/install.c:133
-msgid "You should have received a copy of the GNU General Public License\n"
-msgstr "Vous avez dû recevoir une copie de la GNU General Public License\n"
-
-#: app/install.c:134
-msgid "along with this program; if not, write to the Free Software\n"
-msgstr "avec ce logiciel ; sinon, écrivez à la Free Software Foundation,\n"
-
-#: app/install.c:135
 msgid ""
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.\n"
-msgstr "59 Temple Place - Suite 330, Boston, MA 02111-1307, États-Unis.\n"
+"This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+msgstr ""
+"Ce logiciel est un logiciel libre; vous pouvez le diffuser et le\n"
+"modifier suivant les termes de la GNU General Public License telle\n"
+"que publiée par la Free Software Foundation; soit la version 2 de cette\n"
+"license, soit (à votre convenance) une version ultérieure.\n"
+
+#: app/install.c:132
+msgid ""
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
+"See the GNU General Public License for more details.\n"
+msgstr ""
+"Ce programme est diffusé dans l'espoir qu'il sera utile, mais\n"
+"SANS AUCUNE GARANTIE; sans même une garantie implicite de\n"
+"COMMERCIALISABILITÉ ou d'ADÉQUATION À UN USAGE PARTICULIER.\n"
+"Voyez la GNU General Public License pour plus de détails.\n"
 
 #: app/install.c:138
+msgid ""
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
+"MA 02111-1307, USA.\n"
+msgstr ""
+"Vous devriez avoir reçu une copie de la GNU General Public License\n"
+"avec ce programme; sinon, veuillez écrire à la Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
+"MA 02111-1307, États-Unis.\n"
+
+#: app/install.c:144
 msgid ""
 "Personal GIMP Installation\n"
 "\n"
@@ -2623,356 +2606,311 @@ msgstr ""
 "Installation personnelle de GIMP\n"
 "\n"
 
-#: app/install.c:139
+#: app/install.c:145
 msgid "For a proper GIMP installation, a subdirectory called\n"
 msgstr "Pour une installation correcte de GIMP, un sous-répertoire nommé\n"
 
 #. will be replaced with gimp_directory()
-#: app/install.c:141
-msgid " needs to be created.  This\n"
-msgstr "doit être créé. Celui-ci\n"
-
-#: app/install.c:142
+#: app/install.c:147
 msgid ""
+" needs to be created.  This\n"
 "subdirectory will contain a number of important files:\n"
 "\n"
 msgstr "contiendra un nombre de fichiers importants:\n"
 
-#: app/install.c:144
+#: app/install.c:150
 msgid "gimprc\n"
 msgstr "gimprc\n"
 
-#: app/install.c:145
-msgid "\t\tThe gimprc is used to store personal preferences\n"
-msgstr "\t\t gimprc est utilisé pour stocker les préférences personnelles\n"
-
-#: app/install.c:146
-msgid "\t\tsuch as default GIMP behaviors & plug-in hotkeys.\n"
-msgstr ""
-"\t\ttelles que les comportements par défaut et les raccourcis clavier pour "
-"les modules.\n"
-
-#: app/install.c:147
-msgid "\t\tPaths to search for brushes, palettes, gradients\n"
-msgstr "\t\tLes chemins pour rechercher les brosses, palettes, dégradés\n"
-
-#: app/install.c:148
-msgid "\t\tpatterns, plug-ins and modules are also configured here.\n"
-msgstr "\t\tmotifsi, appendices et modules et sont également paramétrés ici.\n"
-
-#: app/install.c:150
-msgid "unitrc\n"
-msgstr "pluginrc\n"
-
 #: app/install.c:151
-msgid "\t\tThe unitrc is used to store your user units database.\n"
-msgstr "\t\tunitrc est utilisé pour stocker les unités personnelles\n"
+msgid ""
+"\t\tThe gimprc is used to store personal preferences\n"
+"\t\tsuch as default GIMP behaviors & plug-in hotkeys.\n"
+"\t\tPaths to search for brushes, palettes, gradients\n"
+"\t\tpatterns, plug-ins and modules are also configured here.\n"
+msgstr ""
+"\t\tLe fichier gimprc est utilisé pour stocker les préférences\n"
+"\t\tpersonnelles telles que les comportements par défaut et les\n"
+"\t\traccourcis clavier des modules.\n"
+"\t\tLes chemins pour rechercher les brosses, palettes, dégradés\n"
+"\t\tmotifs, appendices et modules sont également paramétrés ici.\n"
 
-#: app/install.c:152
-msgid "\t\tYou can define additional units and use them just\n"
-msgstr "\t\tVous pouvez définir des unités supplémentaires et les\n"
-
-#: app/install.c:153
-msgid "\t\tlike you use the built-in units inches, millimeters,\n"
-msgstr "\t\tutiliser comme les unités integrées (pouces, millimètres,\n"
-
-#: app/install.c:154
-msgid "\t\tpoints and picas. This file is overwritten each time\n"
-msgstr "\t\tpoints, picas). Ce fichier est réécrit chaque fois\n"
-
-#: app/install.c:155
-msgid "\t\tyou quit the GIMP.\n"
-msgstr "\t\tque vous quittez GIMP.\n"
+#: app/install.c:156
+msgid "unitrc\n"
+msgstr "unitrc\n"
 
 #: app/install.c:157
+msgid ""
+"\t\tThe unitrc is used to store your user units database.\n"
+"\t\tYou can define additional units and use them just\n"
+"\t\tlike you use the built-in units inches, millimeters,\n"
+"\t\tpoints and picas. This file is overwritten each time\n"
+"\t\tyou quit the GIMP.\n"
+msgstr ""
+"\t\tunitrc est utilisé pour stocker les unités de mesure\n"
+"\t\tpersonnelles. Vous pouvez définir des unités supplémentaires\n"
+"\t\tet les utiliser comme les unités intégrées (pouces,\n"
+"\t\tmillimètres, points, picas). Ce fichier est réécrit chaque\n"
+"\t\tfois que vous quittez GIMP.\n"
+
+#: app/install.c:163
 msgid "pluginrc\n"
 msgstr "pluginrc\n"
 
-#: app/install.c:158
-msgid "\t\tPlug-ins and extensions are external programs run by\n"
+#: app/install.c:164
+msgid ""
+"\t\tPlug-ins and extensions are external programs run by\n"
+"\t\tthe GIMP which provide additional functionality.\n"
+"\t\tThese programs are searched for at run-time and\n"
+"\t\tinformation about their functionality and mod-times\n"
+"\t\tis cached in this file.  This file is intended to\n"
+"\t\tbe GIMP-readable only, and should not be edited.\n"
 msgstr ""
-"\t\tLes appendices et extensions sont des programmes externes lancés par\n"
+"\t\tLes appendices et extensions sont des programmes\n"
+"\t\texternes, lancés par GIMP, qui fournissent des\n"
+"\t\tfonctionnalitées additionnelles. Ces programmes sont\n"
+"\t\tinterrogés lors du lancement de GIMP et des\n"
+"\t\tinformations sur leurs fonctionnalités et dates de\n"
+"\t\tmodifications sont stockées dans ce fichier pour des\n"
+"\t\tlancements ultérieurs plus rapides.\n"
+"\t\tCe fichier est prévu pour n'être lu que par GIMP\n"
+"\t\tet ne doit pas être édité.\n"
 
-#: app/install.c:159
-msgid "\t\tthe GIMP which provide additional functionality.\n"
-msgstr "\t\tThe GIMP qui fournissent des fonctionnalitées additionnelles.\n"
-
-#: app/install.c:160
-msgid "\t\tThese programs are searched for at run-time and\n"
-msgstr "\t\tCes programmes sont recherchés lors de l'exécution et\n"
-
-#: app/install.c:161
-msgid "\t\tinformation about their functionality and mod-times\n"
-msgstr ""
-"\t\tles informations sur leurs fonctionnalités et dates de modifications\n"
-
-#: app/install.c:162
-msgid "\t\tis cached in this file.  This file is intended to\n"
-msgstr "\t\tsont stoquées dans ce fichier. Celui-ci est prévu pour\n"
-
-#: app/install.c:163
-msgid "\t\tbe GIMP-readable only, and should not be edited.\n"
-msgstr "\t\tn'être lu que par GIMP et ne doit pas être édité.\n"
-
-#: app/install.c:165
+#: app/install.c:171
 msgid "brushes\n"
 msgstr "brushes\n"
 
-#: app/install.c:166 app/install.c:173 app/install.c:180 app/install.c:187
-#: app/install.c:194 app/install.c:201 app/install.c:211 app/install.c:218
-msgid "\t\tThis is a subdirectory which can be used to store\n"
-msgstr "\t\tRépertoire qui peux être utilisé pour stocker\n"
-
-#: app/install.c:167
-msgid "\t\tuser defined brushes.  The default gimprc file\n"
-msgstr ""
-"\t\tles brosses définies par l'utilisateur. Le fichier gimprc par défaut\n"
-
-#: app/install.c:168 app/install.c:175 app/install.c:213 app/install.c:221
-msgid "\t\tchecks this subdirectory in addition to the system-\n"
-msgstr "\t\tregarde dans ce répertoire en plus de l'installation globale\n"
-
-#: app/install.c:169
-msgid "\t\twide gimp brushes installation when searching for\n"
-msgstr "\t\tau système de brosses lorsqu'ils recherche des \n"
-
-#: app/install.c:170
-msgid "\t\tbrushes.\n"
-msgstr "\t\tbrosses.\n"
-
 #: app/install.c:172
+msgid ""
+"\t\tThis is a subdirectory which can be used to store\n"
+"\t\tuser defined brushes.  The default gimprc file\n"
+"\t\tchecks this subdirectory in addition to the system-\n"
+"\t\twide gimp brushes installation when searching for\n"
+"\t\tbrushes.\n"
+msgstr ""
+"\t\tRépertoire qui peut être utilisé pour stocker vos\n"
+"\t\tpinceaux personnels. Avec les paramètres (gimprc)\n"
+"\t\tpar défaut, GIMP regarde dans ce répertoire et dans\n"
+"\t\tle répertoire de pinceaux global à tous les\n"
+"\t\tutilisateurs lorsqu'il recherche des pinceaux.\n"
+
+#: app/install.c:178
 msgid "gradients\n"
 msgstr "gradients\n"
 
-#: app/install.c:174
-msgid "\t\tuser defined gradients.  The default gimprc file\n"
-msgstr "\t\tdégradés définis par l'utilisateur. Le fichier gimprc par défaut\n"
-
-#: app/install.c:176
-msgid "\t\twide gimp gradients installation when searching for\n"
-msgstr "\t\tau système de dégradés lorsqu'il recherche des\n"
-
-#: app/install.c:177
-msgid "\t\tgradients.\n"
-msgstr "\t\tdégradés.\n"
-
 #: app/install.c:179
+msgid ""
+"\t\tThis is a subdirectory which can be used to store\n"
+"\t\tuser defined gradients.  The default gimprc file\n"
+"\t\tchecks this subdirectory in addition to the system-\n"
+"\t\twide gimp gradients installation when searching for\n"
+"\t\tgradients.\n"
+msgstr ""
+"\t\tRépertoire qui peut être utilisé pour stocker vos\n"
+"\t\tdégradés personnels. Avec les paramètres (gimprc)\n"
+"\t\tpar défaut, GIMP regarde dans ce répertoire et dans\n"
+"\t\tle répertoire de dégradés global à tous les\n"
+"\t\tutilisateurs lorsqu'il recherche des dégradés.\n"
+
+#: app/install.c:181
 msgid "gfig\n"
 msgstr "gfig\n"
 
-#: app/install.c:181
-msgid "\t\tuser defined figures to be used by the gfig plug-in.\n"
-msgstr "\t\tfigures définies par l'utilisateur pour le module gfig.\n"
+#: app/install.c:182
+msgid ""
+"\t\tThis is a subdirectory which can be used to store\n"
+"\t\tuser defined figures to be used by the gfig plug-in.\n"
+"\t\tThe default gimprc file checks this subdirectory in\n"
+"\t\taddition to the systemwide gimp gfig installation\n"
+"\t\twhen searching for gfig figures.\n"
+msgstr ""
+"\t\tRépertoire qui peut être utilisé pour stocker vos\n"
+"\t\tfigures au trait personnelles. Avec les paramètres (gimprc)\n"
+"\t\tpar défaut, GIMP regarde dans ce répertoire et dans\n"
+"\t\tle répertoire de dégradés global à tous les\n"
+"\t\tutilisateurs lorsqu'il recherche des figures pour\n"
+"\t\tl'appendice gfig.\n"
 
-#: app/install.c:182 app/install.c:189 app/install.c:196
-msgid "\t\tThe default gimprc file checks this subdirectory in\n"
-msgstr "\t\tLe fichier gimprc par défaut regarde dans ce répertoire\n"
-
-#: app/install.c:183
-msgid "\t\taddition to the systemwide gimp gfig installation\n"
-msgstr "\t\ten plus de l'installation globale au système de gfig\n"
-
-#: app/install.c:184
-msgid "\t\twhen searching for gfig figures.\n"
-msgstr "\t\tlorsqu'il recherche des figures gfig.\n"
-
-#: app/install.c:186
+#: app/install.c:188
 msgid "gflares\n"
 msgstr "gflares\n"
 
-#: app/install.c:188
-msgid "\t\tuser defined gflares to be used by the gflare plug-in.\n"
-msgstr "\t\tparamètres pour le module gflare définis par l'utilisateur.\n"
-
-#: app/install.c:190
-msgid "\t\taddition to the systemwide gimp gflares installation\n"
-msgstr "\t\ten plus de l'installation globale au système de gflare\n"
-
-#: app/install.c:191
-msgid "\t\twhen searching for gflares.\n"
-msgstr "\t\tlorsqu'il recherche des paramètres d'éblouissement pour gflare.\n"
-
-#: app/install.c:193
-msgid "fractalexplorer\n"
+#: app/install.c:189
+msgid ""
+"\t\tThis is a subdirectory which can be used to store\n"
+"\t\tuser defined gflares to be used by the gflare plug-in.\n"
+"\t\tThe default gimprc file checks this subdirectory in\n"
+"\t\taddition to the systemwide gimp gflares installation\n"
+"\t\twhen searching for gflares.\n"
 msgstr ""
+"\t\tRépertoire qui peut être utilisé pour stocker vos\n"
+"\t\tparamètres personnels pour l'effet « éblouissement ».\n"
+"\t\tAvec les paramètres (gimprc) par défaut, GIMP regarde\n"
+"\t\tdans ce répertoire et dans le répertoire de dégradés\n"
+"\t\tglobal à tous les utilisateurs lorsqu'il recherche des\n"
+"\t\tparamètres pour l'appendice gflare.\n"
 
 #: app/install.c:195
-msgid "\t\tuser defined fractals to be used by the FractalExplorer plug-in.\n"
+msgid "fractalexplorer\n"
+msgstr "fractalexplorer\n"
+
+#: app/install.c:196
+msgid ""
+"\t\tThis is a subdirectory which can be used to store\n"
+"\t\tuser defined fractals to be used by the FractalExplorer plug-in.\n"
+"\t\tThe default gimprc file checks this subdirectory in\n"
+"\t\taddition to the systemwide gimp FractalExplorer installation\n"
+"\t\twhen searching for fractals.\n"
 msgstr ""
-"\t\tparamètres de fractales pour le module FractalExplorer.\n"
-"\n"
+"\t\tRépertoire qui peut être utilisé pour stocker vos\n"
+"\t\tfigures fractales personnelles. Avec les paramètres (gimprc)\n"
+"\t\tpar défaut, GIMP regarde dans ce répertoire et dans\n"
+"\t\tle répertoire de dégradés global à tous les\n"
+"\t\tutilisateurs lorsqu'il recherche des figures pour\n"
+"\t\tl'appendice FractalExplorer.\n"
 
-#: app/install.c:197
-msgid "\t\taddition to the systemwide gimp FractalExplorer installation\n"
-msgstr "\t\ten plus de l'installation globale au système de FractalExplorer\n"
-
-#: app/install.c:198
-msgid "\t\twhen searching for fractals.\n"
-msgstr "\t\tlorsqu'il recherche des fractales.\n"
-
-#: app/install.c:200
+#: app/install.c:202
 msgid "palettes\n"
 msgstr "palettes\n"
 
-#: app/install.c:202
-msgid "\t\tuser defined palettes.  The default gimprc file\n"
-msgstr ""
-"\t\tpalettes définies par l'utilisateur. Le fichier gimprc par défaut\n"
-
 #: app/install.c:203
-msgid "\t\tchecks only this subdirectory (not the system-wide\n"
+msgid ""
+"\t\tThis is a subdirectory which can be used to store\n"
+"\t\tuser defined palettes.  The default gimprc file\n"
+"\t\tchecks only this subdirectory (not the system-wide\n"
+"\t\tinstallation) when searching for palettes.  During\n"
+"\t\tinstallation, the system palettes will be copied\n"
+"\t\there.  This is done to allow modifications made to\n"
+"\t\tpalettes during GIMP execution to persist across\n"
+"\t\tsessions.\n"
 msgstr ""
-"\t\tregarde uniquement dans ce répertoire (et non dans l'installation\n"
+"\t\tRépertoire contenant vos palettes personnelles.\n"
+"\t\tLa configuration (gimprc) par défaut ne regarde que\n"
+"\t\tdans ce répertoire (et non dans celui global au système)\n"
+"\t\tlorsqu'il recherche des palettes. Pendant l'installation,\n"
+"\t\tles palettes du système seront copiées dans ce\n"
+"\t\trépertoire.\n"
+"\t\tCeci est fait de sorte que les modifications faites aux\n"
+"\t\tpalettes pendant l'exécution de GIMP persistent entre les\n"
+"\t\tsessions.\n"
 
-#: app/install.c:204
-msgid "\t\tinstallation) when searching for palettes.  During\n"
-msgstr "\t\tglobale) lorsqu'il cherche des palettes. Pendant l'installation,\n"
-
-#: app/install.c:205
-msgid "\t\tinstallation, the system palettes will be copied\n"
-msgstr "\t\tles palettes du système seront copiées dans ce répertoire.\n"
-
-#: app/install.c:206
-msgid "\t\there.  This is done to allow modifications made to\n"
-msgstr "\t\tCeci est fait de sorte que les modifications faites aux\n"
-
-#: app/install.c:207
-msgid "\t\tpalettes during GIMP execution to persist across\n"
-msgstr "\t\tpalettes pendant l'exécution de GIMP persistent entre les\n"
-
-#: app/install.c:208
-msgid "\t\tsessions.\n"
-msgstr "\t\tsessions.\n"
-
-#: app/install.c:210
+#: app/install.c:212
 msgid "patterns\n"
 msgstr "patterns\n"
 
-#: app/install.c:212
-msgid "\t\tuser defined patterns.  The default gimprc file\n"
-msgstr "\t\tmotifs définis par l'utilisateur. Le fichier gimprc par défaut\n"
+#: app/install.c:213
+msgid ""
+"\t\tThis is a subdirectory which can be used to store\n"
+"\t\tuser defined patterns.  The default gimprc file\n"
+"\t\tchecks this subdirectory in addition to the system-\n"
+"\t\twide gimp patterns installation when searching for\n"
+"\t\tpatterns.\n"
+msgstr ""
+"\t\tRépertoire qui peut être utilisé pour stocker vos\n"
+"\t\tmotifs personnels. Avec les paramètres (gimprc)\n"
+"\t\tpar défaut, GIMP regarde dans ce répertoire et dans\n"
+"\t\tle répertoire de motifs global à tous les\n"
+"\t\tutilisateurs lorsqu'il recherche des motifss.\n"
 
-#: app/install.c:214
-msgid "\t\twide gimp patterns installation when searching for\n"
-msgstr "\t\tau système de dégradés lorsqu'il cherche des\n"
-
-#: app/install.c:215
-msgid "\t\tpatterns.\n"
-msgstr "\t\tdégradés.\n"
-
-#: app/install.c:217
+#: app/install.c:219
 msgid "plug-ins\n"
 msgstr "plug-ins\n"
 
-#: app/install.c:219
-msgid "\t\tuser created, temporary, or otherwise non-system-\n"
-msgstr "\t\tplug-ins personnels (p.ex. temporaires, non supportés\n"
-
 #: app/install.c:220
-msgid "\t\tsupported plug-ins.  The default gimprc file\n"
-msgstr "\t\tpar les administrateurs). Le fichier gimprc par défaut\n"
+msgid ""
+"\t\tThis is a subdirectory which can be used to store\n"
+"\t\tuser created, temporary, or otherwise non-system-\n"
+"\t\tsupported plug-ins.  The default gimprc file\n"
+"\t\tchecks this subdirectory in addition to the system-\n"
+"\t\twide GIMP plug-in directories when searching for\n"
+"\t\tplug-ins.\n"
+msgstr ""
+"\t\tRépertoire qui peut être utilisé pour stocker vos\n"
+"\t\tappendices (plug-ins) personnels (p.ex. temporaires,\n"
+"\t\tnon supportés par les administrateurs). Avec les\n"
+"\t\tparamètres (gimprc) par défaut, GIMP regarde dans ce\n"
+"\t\trépertoire et dans répertoire d'appendices global\n"
+"\t\tlorsqu'il recherche des plug-ins.\n"
 
-#: app/install.c:222
-msgid "\t\twide GIMP plug-in directories when searching for\n"
-msgstr "\t\tau système de plug-ins GIMP lorsqu'il recherche des \n"
-
-#: app/install.c:223
-msgid "\t\tplug-ins.\n"
-msgstr "\t\tplug-ins.\n"
-
-#: app/install.c:225
+#: app/install.c:227
 msgid "modules\n"
 msgstr "modules\n"
 
-#: app/install.c:226
-msgid "\t\tThis subdirectory can be used to store user created,\n"
-msgstr "\t\tRépertoire qui peux être utilisé pour stocker\n"
-
-#: app/install.c:227
-msgid "\t\ttemporary, or otherwise non-system-supported DLL modules.\n"
-msgstr ""
-"\t\tdes modules DLL temporaires ou non supportés par les administrateurs. \n"
-
 #: app/install.c:228
-msgid "\t\tThe default gimprc file checks this subdirectory\n"
-msgstr "\t\tLe fichier gimprc par défaut regarde dans ce répertoire\n"
-
-#: app/install.c:229
-msgid "\t\tin addition to the system-wide GIMP module directory\n"
-msgstr "\t\ten plus du répertoire global au système de modules GIMP\n"
-
-#: app/install.c:230
-msgid "\t\twhen searching for modules to load when initialising.\n"
+msgid ""
+"\t\tThis subdirectory can be used to store user created,\n"
+"\t\ttemporary, or otherwise non-system-supported DLL modules.\n"
+"\t\tThe default gimprc file checks this subdirectory\n"
+"\t\tin addition to the system-wide GIMP module directory\n"
+"\t\twhen searching for modules to load when initialising.\n"
 msgstr ""
-"\t\tlorsqu'il recherche des modules à charger lors de l'initialisation.\n"
-
-#: app/install.c:232
-msgid "scripts\n"
-msgstr ""
-
-#: app/install.c:233
-msgid "\t\tThis subdirectory is used by the GIMP to store \n"
-msgstr ""
+"\t\tRépertoire qui peut être utilisé pour stocker vos\n"
+"\t\tmodules DLL personnels (p.ex. temporaires,\n"
+"\t\tnon supportés par les administrateurs). Avec les\n"
+"\t\tparamètres (gimprc) par défaut, GIMP regarde dans ce\n"
+"\t\trépertoire et dans répertoire de modules global\n"
+"\t\tlorsqu'il recherche des modules DLL.\n"
 
 #: app/install.c:234
-msgid "\t\tuser created and installed scripts. The default gimprc\n"
-msgstr ""
+msgid "scripts\n"
+msgstr "scripts\n"
 
 #: app/install.c:235
-msgid "\t\tfile checks this subdirectory in addition to the system\n"
+msgid ""
+"\t\tThis subdirectory is used by the GIMP to store \n"
+"\t\tuser created and installed scripts. The default gimprc\n"
+"\t\tfile checks this subdirectory in addition to the system\n"
+"\t\t-wide gimp scripts subdirectory when searching for scripts\n"
 msgstr ""
-
-#: app/install.c:236
-msgid "\t\t-wide gimp scripts subdirectory when searching for scripts\n"
-msgstr ""
-
-#: app/install.c:238
-msgid "tmp\n"
-msgstr ""
-
-#: app/install.c:239
-msgid "\t\tThis subdirectory is used by the GIMP to temporarily\n"
-msgstr ""
+"\t\tRépertoire qui peut être utilisé pour stocker vos\n"
+"\t\tscripts personnels. Avec les paramètres (gimprc)\n"
+"\t\tpar défaut, GIMP regarde dans ce répertoire et dans\n"
+"\t\tle répertoire de scripts global à tous les\n"
+"\t\tutilisateurs lorsqu'il recherche des scripts.\n"
 
 #: app/install.c:240
-msgid "\t\tstore undo buffers to reduce memory usage.  If GIMP is\n"
-msgstr ""
+msgid "tmp\n"
+msgstr "tmp\n"
 
 #: app/install.c:241
-msgid "\t\tunceremoniously killed, files may persist in this directory\n"
+msgid ""
+"\t\tThis subdirectory is used by the GIMP to temporarily\n"
+"\t\tstore undo buffers to reduce memory usage.  If GIMP is\n"
+"\t\tunceremoniously killed, files may persist in this directory\n"
+"\t\tof the form: gimp<#>.<#>.  These files are useless across\n"
+"\t\tGIMP sessions and can be destroyed with impunity.\n"
 msgstr ""
+"\t\tCe répertoire est utilisé par GIMP pour stocker\n"
+"\t\ttemporairement des tampons d'annulation, afin de réduire\n"
+"\t\tla place mémoire utilisée. Si GIMP est tué brutalement\n"
+"\t\tdes fichiers de la forme gimp.<nn>.<nn> peuvent rester\n"
+"\t\tdans ce répertoire. Ces fichiers sont inutiles lors des\n"
+"\t\tutilisations ultérieures de GIMP et peuvent être détruits\n"
+"\t\tsans préjudice entre deux utilisations.\n"
 
-#: app/install.c:242
-msgid "\t\tof the form: gimp<#>.<#>.  These files are useless across\n"
-msgstr ""
-
-#: app/install.c:243
-msgid "\t\tGIMP sessions and can be destroyed with impunity.\n"
-msgstr ""
-
-#: app/install.c:253
+#: app/install.c:255
 msgid "GIMP Installation"
 msgstr "Installation de GIMP"
 
-#: app/install.c:388
+#: app/install.c:390
 msgid "Continue"
 msgstr "Continuer"
 
-#: app/install.c:408
+#: app/install.c:410
 msgid "Installation Log"
 msgstr "Historique de l'installation"
 
-#: app/install.c:440
+#: app/install.c:442
 msgid ""
 "User Installation Log\n"
 "\n"
 msgstr "Historique le l'installation\n"
 
-#: app/install.c:450
+#: app/install.c:452
 msgid " does not exist.  Cannot install.\n"
 msgstr " n'existe pas. Impossible d'installer.\n"
 
-#: app/install.c:458
+#: app/install.c:460
 msgid ""
 " has invalid permissions.\n"
 "Cannot install."
@@ -2980,7 +2918,7 @@ msgstr ""
 " a des permissions invalides.\n"
 "Impossible d'installer."
 
-#: app/install.c:524
+#: app/install.c:526
 msgid ""
 "\n"
 "Installation successful!\n"
@@ -2988,15 +2926,13 @@ msgstr ""
 "\n"
 "Installation terminée avec succès !\n"
 
-#: app/install.c:533
+#: app/install.c:535
 msgid ""
 "\n"
 "Installation failed.  Contact system administrator.\n"
-msgstr ""
-"\n"
-"Echec de l'installation. Contactez votre administrateur système.\n"
+msgstr "\nÉchec de l'installation. Contactez votre administrateur système.\n"
 
-#: app/interface.c:235
+#: app/interface.c:268
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to select a color from a colorrequester."
@@ -3006,11 +2942,11 @@ msgstr ""
 "intervertissent. Double-cliquez pour sélectionner une couleur dans un "
 "dialogue de sélection de couleurs."
 
-#: app/interface.c:452
+#: app/interface.c:485
 msgid "The GIMP"
 msgstr "The GIMP"
 
-#: app/interface.c:1213
+#: app/interface.c:1256
 msgid "GIMP Message"
 msgstr "Message GIMP"
 
@@ -3019,28 +2955,24 @@ msgid "Internal Procedures"
 msgstr "Procédures Internes"
 
 #: app/internal_procs.c:67
-#, fuzzy
 msgid "Brush UI"
-msgstr "Brosses"
+msgstr "Pinceaux (interface utilisateur)"
 
 #: app/internal_procs.c:73
-#, fuzzy
 msgid "Channel"
-msgstr "Canaux"
+msgstr "Canal"
 
 #: app/internal_procs.c:76
-#, fuzzy
 msgid "Channel Ops"
 msgstr "Opérations de canaux"
 
-#: app/internal_procs.c:79 app/layers_dialog.c:281 app/paint_funcs.c:95
+#: app/internal_procs.c:79 app/layers_dialog.c:287 app/paint_funcs.c:96
 msgid "Color"
 msgstr "Couleur"
 
 #: app/internal_procs.c:82
-#, fuzzy
 msgid "Convert"
-msgstr "Contraste"
+msgstr "Convertir"
 
 #: app/internal_procs.c:85
 msgid "Drawable procedures"
@@ -3051,9 +2983,8 @@ msgid "Edit procedures"
 msgstr "Procédures d'édition"
 
 #: app/internal_procs.c:91
-#, fuzzy
 msgid "File Operations"
-msgstr "Options du remplissage"
+msgstr "Opérations de fichiers"
 
 #: app/internal_procs.c:94
 msgid "Floating selections"
@@ -3064,31 +2995,26 @@ msgid "GDisplay procedures"
 msgstr "Procédures GDisplay"
 
 #: app/internal_procs.c:100
-#, fuzzy
 msgid "Image"
-msgstr "Image:"
+msgstr "Image"
 
 #: app/internal_procs.c:103
-#, fuzzy
 msgid "Image mask"
-msgstr "Échelle de l'image"
+msgstr "Masque d'image"
 
 #: app/internal_procs.c:106
-#, fuzzy
 msgid "Gimprc procedures"
-msgstr "Procédures GDisplay"
+msgstr "Procédures Gimprc"
 
 #: app/internal_procs.c:112
-#, fuzzy
 msgid "Gradient UI"
-msgstr "Dégradé"
+msgstr "Dégradé (interface utilisateur)"
 
 #: app/internal_procs.c:115
-#, fuzzy
 msgid "Guide procedures"
-msgstr "Procédures GImage"
+msgstr "Procédures sur les guides"
 
-#: app/internal_procs.c:118 app/preferences_dialog.c:1642
+#: app/internal_procs.c:118 app/preferences_dialog.c:1686
 msgid "Interface"
 msgstr "Interface"
 
@@ -3099,39 +3025,35 @@ msgstr "Calque"
 
 #: app/internal_procs.c:124
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Divers"
 
 #: app/internal_procs.c:127 app/palette.c:2131 app/palette_select.c:276
 msgid "Palette"
 msgstr "Palette"
 
 #: app/internal_procs.c:130
-#, fuzzy
 msgid "Parasite procedures"
-msgstr "Procédures d'édition"
+msgstr "Procédures sur les parasites"
 
-#: app/internal_procs.c:133 app/layers_dialog.c:384
+#: app/internal_procs.c:133 app/layers_dialog.c:407
 msgid "Paths"
 msgstr "Chemins"
 
 #: app/internal_procs.c:136
-#, fuzzy
 msgid "Pattern UI"
-msgstr "Motifs"
+msgstr "Motifs (interface utilisateur)"
 
 #: app/internal_procs.c:142
-#, fuzzy
 msgid "Plug-in"
-msgstr "Modules"
+msgstr "Module"
 
 #: app/internal_procs.c:145
 msgid "Procedural database"
 msgstr "Base de données procédurales"
 
 #: app/internal_procs.c:148
-#, fuzzy
 msgid "Text procedures"
-msgstr "Procédures Outils"
+msgstr "Procédures Texte"
 
 #: app/internal_procs.c:151
 msgid "Tool procedures"
@@ -3142,9 +3064,8 @@ msgid "Undo"
 msgstr "Défaire"
 
 #: app/internal_procs.c:157
-#, fuzzy
 msgid "Units"
-msgstr "Unité:"
+msgstr "Unités"
 
 #: app/invert.c:43
 msgid "Invert does not operate on indexed drawables."
@@ -3152,7 +3073,7 @@ msgstr "L'inversion ne fonctionne pas sur les dessins indexés."
 
 #: app/invert.c:53
 msgid "Invert operation failed."
-msgstr "Echec de l'opération d'inversion."
+msgstr "Échec de l'opération d'inversion."
 
 #: app/iscissors.c:321
 msgid "Curve"
@@ -3160,29 +3081,20 @@ msgstr "Courbe"
 
 #. the threshold scale
 #: app/iscissors.c:350
-#, fuzzy
 msgid "Edge Detect "
-msgstr "Seuil de détection de contour: "
+msgstr "Détection de contour"
 
 #. the elasticity scale
 #: app/iscissors.c:379
 msgid "Elasticity:"
-msgstr "Elasticité:"
+msgstr "Élasticité:"
 
 #. the convert to bezier button
 #: app/iscissors.c:399
 msgid "Convert to Bezier Curve"
 msgstr "Convertir en courbe de Bézier"
 
-#: app/iscissors.c:931
-msgid "Unable to reallocate segment array in iscissors."
-msgstr ""
-
-#: app/iscissors.c:974
-msgid "Unable to reallocate points array in iscissors."
-msgstr ""
-
-#: app/iscissors.c:1778
+#: app/iscissors.c:1779
 msgid "Boundary contains < 4 points!  Cannot bezierify."
 msgstr ""
 "Le pourtour contient < 4 points ! Je ne peux le transformer en courbe de "
@@ -3194,11 +3106,11 @@ msgstr "Les calques de largeur ou hauteur nulle ne sont pas permis."
 
 #: app/layer.c:352
 msgid "layer_copy: could not allocate new layer"
-msgstr ""
+msgstr "layer_copy: impossible d'allouer un nouveau calque"
 
 #: app/layer.c:429
 msgid "layer_from_tiles: could not allocate new layer"
-msgstr ""
+msgstr "layer_from_tiles: impossible d'allouer un nouveau calque"
 
 #: app/layer.c:484
 #, c-format
@@ -3209,243 +3121,257 @@ msgstr "masque %s"
 msgid "Layer Select"
 msgstr "Sélection de Calque"
 
-#: app/layers_dialog.c:226 app/layers_dialog.c:297 app/layers_dialog.c:3224
+#: app/layers_dialog.c:232 app/layers_dialog.c:303 app/layers_dialog.c:3261
 msgid "New Layer"
 msgstr "Nouveau Calque"
 
-#: app/layers_dialog.c:228 app/layers_dialog.c:298
+#: app/layers_dialog.c:234
 msgid "Raise Layer"
-msgstr "Élever Calque"
+msgstr "Remonter Calque"
 
-#: app/layers_dialog.c:230 app/layers_dialog.c:299
+#: app/layers_dialog.c:236
 msgid "Lower Layer"
-msgstr "Abaisser Calque"
+msgstr "Descendre Calque"
 
-#: app/layers_dialog.c:232 app/layers_dialog.c:300
+#: app/layers_dialog.c:238 app/layers_dialog.c:306
 msgid "Duplicate Layer"
 msgstr "Dupliquer Calque"
 
-#: app/layers_dialog.c:234 app/layers_dialog.c:301
+#: app/layers_dialog.c:240 app/layers_dialog.c:307
 msgid "Delete Layer"
 msgstr "Effacer Calque"
 
-#: app/layers_dialog.c:236 app/resize.c:154
+#: app/layers_dialog.c:242 app/resize.c:159
 msgid "Scale Layer"
 msgstr "Mettre calque à l'échelle"
 
-#: app/layers_dialog.c:238 app/resize.c:169
+#: app/layers_dialog.c:244 app/resize.c:174
 msgid "Resize Layer"
 msgstr "Redimensionner calque"
 
-#: app/layers_dialog.c:240
+#: app/layers_dialog.c:246
 msgid "Add Layer Mask"
 msgstr "Ajouter un masque de calque"
 
-#: app/layers_dialog.c:242
+#: app/layers_dialog.c:248
 msgid "Apply Layer Mask"
 msgstr "Appliquer le masque de calque"
 
-#: app/layers_dialog.c:244 app/layers_dialog.c:302
+#: app/layers_dialog.c:250 app/layers_dialog.c:308
 msgid "Anchor Layer"
 msgstr "Ancrer calque"
 
-#: app/layers_dialog.c:246
+#: app/layers_dialog.c:252
 msgid "Merge Visible Layers"
 msgstr "Fusionner les calques visibles"
 
-#: app/layers_dialog.c:248
+#: app/layers_dialog.c:254
 msgid "Merge Down"
 msgstr "Fusionner vers le bas"
 
-#: app/layers_dialog.c:250
+#: app/layers_dialog.c:256
 msgid "Flatten Image"
 msgstr "Aplatir l'image"
 
-#: app/layers_dialog.c:252
+#: app/layers_dialog.c:258
 msgid "Alpha To Selection"
 msgstr "Alpha vers Sélection"
 
-#: app/layers_dialog.c:254
+#: app/layers_dialog.c:260
 msgid "Mask To Selection"
 msgstr "Masque vers Sélection"
 
-#: app/layers_dialog.c:256
+#: app/layers_dialog.c:262
 msgid "Add Alpha Channel"
 msgstr "Ajouter Canal Alpha"
 
-#: app/layers_dialog.c:258
+#: app/layers_dialog.c:264
 msgid "Layer to Top"
 msgstr "Calque vers le sommet"
 
-#: app/layers_dialog.c:260
+#: app/layers_dialog.c:266
 msgid "Layer to Bottom"
 msgstr "Calque vers le fond"
 
-#: app/layers_dialog.c:268 app/paint_funcs.c:82
+#: app/layers_dialog.c:274 app/paint_funcs.c:83
 msgid "Normal"
 msgstr "Normal"
 
-#: app/layers_dialog.c:269 app/paint_funcs.c:83
+#: app/layers_dialog.c:275 app/paint_funcs.c:84
 msgid "Dissolve"
 msgstr "Dissoudre"
 
-#: app/layers_dialog.c:270 app/paint_funcs.c:85
+#: app/layers_dialog.c:276 app/paint_funcs.c:86
 msgid "Multiply (Burn)"
 msgstr "Multiplier (Brûler)"
 
-#: app/layers_dialog.c:271 app/paint_funcs.c:97
+#: app/layers_dialog.c:277 app/paint_funcs.c:98
 msgid "Divide (Dodge)"
 msgstr "Diviser"
 
-#: app/layers_dialog.c:272 app/paint_funcs.c:86
+#: app/layers_dialog.c:278 app/paint_funcs.c:87
 msgid "Screen"
 msgstr "Écran"
 
-#: app/layers_dialog.c:273 app/paint_funcs.c:87
+#: app/layers_dialog.c:279 app/paint_funcs.c:88
 msgid "Overlay"
 msgstr "Superposer"
 
-#: app/layers_dialog.c:274 app/paint_funcs.c:88
+#: app/layers_dialog.c:280 app/paint_funcs.c:89
 msgid "Difference"
 msgstr "Différence"
 
-#: app/layers_dialog.c:275 app/paint_funcs.c:89
+#: app/layers_dialog.c:281 app/paint_funcs.c:90
 msgid "Addition"
 msgstr "Addition"
 
-#: app/layers_dialog.c:277 app/paint_funcs.c:91
+#: app/layers_dialog.c:283 app/paint_funcs.c:92
 msgid "Darken Only"
 msgstr "Noircir seulement"
 
-#: app/layers_dialog.c:278 app/paint_funcs.c:92
+#: app/layers_dialog.c:284 app/paint_funcs.c:93
 msgid "Lighten Only"
 msgstr "Éclaircir seulement"
 
-#: app/layers_dialog.c:328
+#: app/layers_dialog.c:304
+msgid ""
+"Raise Layer    \n"
+"<Shift> To Top"
+msgstr ""
+"Remonter Calque\n"
+"<Shift> vers le dessus"
+
+#: app/layers_dialog.c:305
+msgid ""
+"Lower Layer       \n"
+"<Shift> To Bottom"
+msgstr ""
+"Descendre calque\n"
+"<Shift> vers le bas"
+
+#: app/layers_dialog.c:335
 msgid "Layers & Channels"
 msgstr "Calques & Canaux"
 
-#: app/layers_dialog.c:372
+#. The Auto-button
+#: app/layers_dialog.c:373
+msgid "Auto"
+msgstr "Auto"
+
+#: app/layers_dialog.c:391
 msgid "Layers"
 msgstr "Calques"
 
-#: app/layers_dialog.c:378
+#: app/layers_dialog.c:401
 msgid "Channels"
 msgstr "Canaux"
 
-#: app/layers_dialog.c:716
+#: app/layers_dialog.c:744
 msgid "Keep Trans."
 msgstr "Garder trans."
 
-#: app/layers_dialog.c:889
-msgid "layersD->layer_widgets not empty!"
-msgstr ""
-
-#: app/layers_dialog.c:1461
+#: app/layers_dialog.c:1489
 msgid "Unknown layer mode"
 msgstr "Mode de calque inconnu"
 
-#: app/layers_dialog.c:2146 app/layers_dialog.c:2968 app/layers_dialog.c:3400
+#: app/layers_dialog.c:2206 app/layers_dialog.c:3028 app/layers_dialog.c:3471
 msgid "Floating Selection"
 msgstr "Sélection Flottante"
 
-#: app/layers_dialog.c:3085
+#: app/layers_dialog.c:3149
 msgid "new_layer_query_ok_callback: could not allocate new layer"
-msgstr ""
+msgstr "new_layer_query_ok_callback: je n'ai pu allouer de nouveau calque"
 
-#: app/layers_dialog.c:3197
+#: app/layers_dialog.c:3231
 msgid "New Layer Options"
 msgstr "Options de Nouveau Calque"
 
-#. the name entry hbox, label and entry
-#: app/layers_dialog.c:3214
-msgid "Layer name:"
-msgstr "Nom du calque:"
+#. the name label and entry
+#: app/layers_dialog.c:3251
+msgid "Layer Name:"
+msgstr "Nom du calque: "
 
-#: app/layers_dialog.c:3229
-msgid "Layer width: "
+#. the size labels
+#: app/layers_dialog.c:3265
+msgid "Layer Width:"
 msgstr "Largeur du Calque: "
 
-#: app/layers_dialog.c:3243
-msgid "Layer height: "
-msgstr "Hauteur du Calque: "
-
 #. the radio frame and box
-#: app/layers_dialog.c:3258
+#: app/layers_dialog.c:3324
 msgid "Layer Fill Type"
 msgstr "Type de Remplissage de Calque"
 
-#: app/layers_dialog.c:3377
+#: app/layers_dialog.c:3447
 msgid "Edit Layer Attributes"
-msgstr "Editer les Attributs du Calque"
+msgstr "Éditer les Attributs du Calque"
 
-#: app/layers_dialog.c:3393
+#: app/layers_dialog.c:3464
 msgid "Layer name: "
 msgstr "Nom du calque: "
 
-#: app/layers_dialog.c:3516
+#: app/layers_dialog.c:3587
 msgid "White (Full Opacity)"
 msgstr "Blanc (Opacité Complète)"
 
-#: app/layers_dialog.c:3517
+#: app/layers_dialog.c:3588
 msgid "Black (Full Transparency)"
 msgstr "Noir (Transparence Totale)"
 
-#: app/layers_dialog.c:3518
+#: app/layers_dialog.c:3589
 msgid "Layer's Alpha Channel"
 msgstr "Canal Alpha du Calque"
 
-#: app/layers_dialog.c:3535
+#: app/layers_dialog.c:3606
 msgid "Add Mask Options"
 msgstr "Options d'Ajout de masque"
 
 #. the name entry hbox, label and entry
-#: app/layers_dialog.c:3549
+#: app/layers_dialog.c:3621
 msgid "Initialize Layer Mask To:"
 msgstr "Initialiser le masque de calque à:"
 
-#: app/layers_dialog.c:3648
+#: app/layers_dialog.c:3720
 msgid "Apply"
 msgstr "Appliquer"
 
-#: app/layers_dialog.c:3649
+#: app/layers_dialog.c:3721
 msgid "Discard"
 msgstr "Jeter"
 
-#: app/layers_dialog.c:3663
+#: app/layers_dialog.c:3735
 msgid "Layer Mask Options"
 msgstr "Options de Masque de Calque"
 
 #. the name entry hbox, label and entry
-#: app/layers_dialog.c:3678
+#: app/layers_dialog.c:3751
 msgid "Apply layer mask?"
 msgstr "Appliquer le masque de calque ?"
 
-#: app/layers_dialog.c:3738 app/layers_dialog.c:3836
+#: app/layers_dialog.c:3811 app/layers_dialog.c:3909
 msgid "Invalid width or height.  Both must be positive."
 msgstr "Hauteur ou largeur non Valide. Les deux doivent être positives."
 
-#: app/layers_dialog.c:3989
+#: app/layers_dialog.c:4062
 msgid "Expanded as necessary"
 msgstr "Étendu autant que nécessaire"
 
-#: app/layers_dialog.c:3990
+#: app/layers_dialog.c:4063
 msgid "Clipped to image"
 msgstr "Rogné à la taille de l'image"
 
-#: app/layers_dialog.c:3991
+#: app/layers_dialog.c:4064
 msgid "Clipped to bottom layer"
 msgstr "Rogné à la taille du calque le plus bas"
 
-#: app/layers_dialog.c:4009
+#: app/layers_dialog.c:4082
 msgid "Layer Merge Options"
 msgstr "Options de Fusion de Calques"
 
-#: app/layers_dialog.c:4024
+#: app/layers_dialog.c:4098
 msgid "Final, merged layer should be:"
 msgstr "Le calque final, fusionné, devra être:"
 
-#: app/layers_dialog.c:4026
+#: app/layers_dialog.c:4100
 msgid "Final, anchored layer should be:"
 msgstr "Le calque final, ancré, devra être:"
 
@@ -3455,7 +3381,7 @@ msgstr "Options de niveau"
 
 #: app/levels.c:296
 msgid "Levels for indexed drawables cannot be adjusted."
-msgstr "les niveaux d'un dessin indexé ne peuvent être ajust'es."
+msgstr "les niveaux d'un dessin indexé ne peuvent être ajustés."
 
 #: app/levels.c:372
 msgid "Auto Levels"
@@ -3477,10 +3403,6 @@ msgstr "Niveaux d'Entrée: "
 msgid "Output Levels: "
 msgstr "Niveaux de Sortie: "
 
-#: app/levels.c:776
-msgid "No image map"
-msgstr ""
-
 #: app/magnify.c:95
 msgid "Magnify Options"
 msgstr "Options de Loupe"
@@ -3489,45 +3411,45 @@ msgstr "Options de Loupe"
 msgid "Allow Window Resizing"
 msgstr "Permettre le changement de taille de la fenêtre"
 
-#: app/main.c:280
+#: app/main.c:279
 msgid "GIMP version"
 msgstr "Version GIMP"
 
-#: app/main.c:284
+#: app/main.c:283
 #, c-format
 msgid "Usage: %s [option ...] [files ...]\n"
 msgstr "Usage: %s [option ...] [fichiers ...]\n"
 
-#: app/main.c:285
+#: app/main.c:284
 msgid "Valid options are:\n"
 msgstr "Les options valides sont:\n"
 
-#: app/main.c:286
+#: app/main.c:285
 msgid "  -h --help                Output this help.\n"
 msgstr "  -h --help                Affiche cette aide.\n"
 
-#: app/main.c:287
+#: app/main.c:286
 msgid "  -v --version             Output version info.\n"
 msgstr "  -v --version             Affiche la version.\n"
 
-#: app/main.c:288
+#: app/main.c:287
 msgid "  -b --batch <commands>    Run in batch mode.\n"
 msgstr "  -b --batch <commandes>   Lancement en mode batch.\n"
 
-#: app/main.c:289
+#: app/main.c:288
 msgid "  -g --gimprc <gimprc>     Use an alternate gimprc file.\n"
 msgstr "  -g --gimprc <gimprc>     Utiliser un autre fichier gimprc.\n"
 
-#: app/main.c:290
+#: app/main.c:289
 msgid "  -n --no-interface        Run without a user interface.\n"
 msgstr "  -n -no-interface         Lancer sans interface utilisateur.\n"
 
-#: app/main.c:291
+#: app/main.c:290
 msgid "  -r --restore-session     Try to restore saved session.\n"
 msgstr ""
 "  -r --restore-session     Tenter de restorer une session enregistrée.\n"
 
-#: app/main.c:292
+#: app/main.c:291
 msgid ""
 "  --no-data                Do not load patterns, gradients, palettes, "
 "brushes.\n"
@@ -3535,21 +3457,21 @@ msgstr ""
 "  --no-data                Ne charge pas les motifs, dégradés, palettes, "
 "brosses.\n"
 
-#: app/main.c:293
+#: app/main.c:292
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                Affiche les messages de démarrage.\n"
 
-#: app/main.c:294
+#: app/main.c:293
 msgid "  --no-splash              Do not show the startup window.\n"
 msgstr "  --no-splash              N'affiche pas l'écran de démarrage.\n"
 
-#: app/main.c:295
+#: app/main.c:294
 msgid "  --no-splash-image        Do not add an image to the startup window.\n"
 msgstr ""
 "  --no-splash-image        Ne pas utiliser d'image dans l'écran de "
 "démarrage.\n"
 
-#: app/main.c:296
+#: app/main.c:295
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and its "
 "plugins.\n"
@@ -3557,12 +3479,12 @@ msgstr ""
 "  --no-shm           Ne pas utiliser la mémoire partagée and GIMP et ses "
 "plugins.\n"
 
-#: app/main.c:297
+#: app/main.c:296
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
 msgstr ""
 "  --no-xshm                Ne pas utiliser l'extension X Shared Memory.\n"
 
-#: app/main.c:298
+#: app/main.c:297
 msgid ""
 "  --console-messages       Display warnings to console instead of a dialog "
 "box.\n"
@@ -3570,59 +3492,59 @@ msgstr ""
 "  --console-messages       Affiche les avertissement dans la console à la "
 "place d'une boite de dialogue.\n"
 
-#: app/main.c:299
+#: app/main.c:298
 msgid "  --debug-handlers         Enable debugging signal handlers.\n"
 msgstr ""
 "  --debug-handlers         Active le déboguage des gestionnaires de "
 "signaux.\n"
 
-#: app/main.c:300
+#: app/main.c:299
 msgid ""
 "  --display <display>      Use the designated X display.\n"
 "\n"
 msgstr "  --display <affichage>    Utilise l'affichage X spécifié.\n"
 
-#: app/main.c:301
+#: app/main.c:300
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr "  --system-gimprc <gimprc> Utilise un autre fichier système gimprc.\n"
 
-#: app/main.c:409
+#: app/main.c:412
 msgid "sighup caught"
 msgstr "sighup reçu"
 
-#: app/main.c:414
+#: app/main.c:417
 msgid "sigint caught"
 msgstr "sigint reçu"
 
-#: app/main.c:419
+#: app/main.c:422
 msgid "sigquit caught"
 msgstr "sigquit reçu"
 
-#: app/main.c:424
+#: app/main.c:427
 msgid "sigabrt caught"
 msgstr "sigabrt reçu"
 
-#: app/main.c:429
+#: app/main.c:432
 msgid "sigbus caught"
 msgstr "sigbus reçu"
 
-#: app/main.c:434
+#: app/main.c:437
 msgid "sigsegv caught"
 msgstr "sigsegv reçu"
 
-#: app/main.c:439
+#: app/main.c:442
 msgid "sigpipe caught"
 msgstr "sigpipe reçu"
 
-#: app/main.c:444
+#: app/main.c:447
 msgid "sigterm caught"
 msgstr "sigterm reçu"
 
-#: app/main.c:449
+#: app/main.c:452
 msgid "sigfpe caught"
 msgstr "sigfpe reçu"
 
-#: app/main.c:453
+#: app/main.c:456
 msgid "unknown signal"
 msgstr "signal inconnu"
 
@@ -3650,53 +3572,53 @@ msgstr "/Fichier/Préférences..."
 msgid "/File/Tip of the day"
 msgstr "/Fichier/Conseil du jour"
 
-#: app/menus.c:58 app/menus.c:70 app/menus.c:75 app/menus.c:86
-msgid "/File/---"
-msgstr "/Fichier/---"
-
-#: app/menus.c:59
+#: app/menus.c:58
 msgid "/File/Dialogs/Brushes..."
 msgstr "/Fichier/Dialogues/Brosses..."
 
-#: app/menus.c:60
+#: app/menus.c:59
 msgid "/File/Dialogs/Patterns..."
 msgstr "/Fichier/Dialogues/Motifs..."
 
-#: app/menus.c:61
+#: app/menus.c:60
 msgid "/File/Dialogs/Palette..."
 msgstr "/Fichier/Dialogues/Palette..."
 
-#: app/menus.c:62
+#: app/menus.c:61
 msgid "/File/Dialogs/Gradient..."
 msgstr "/Fichier/Dialogues/Dégradé..."
 
-#: app/menus.c:63
+#: app/menus.c:62
 msgid "/File/Dialogs/Layers & Channels..."
 msgstr "/Fichier/Dialogues/Calques & Canaux..."
 
-#: app/menus.c:64
+#: app/menus.c:63
 msgid "/File/Dialogs/Tool Options..."
 msgstr "/Fichier/Dialogues/Options des outils..."
 
-#: app/menus.c:65
+#: app/menus.c:64
 msgid "/File/Dialogs/Input Devices..."
 msgstr "/Fichier/Dialogues/Périphériques d'Acquisition..."
 
-#: app/menus.c:66
+#: app/menus.c:65
 msgid "/File/Dialogs/Device Status..."
 msgstr "/Fichier/Dialogues/État des Périphériques..."
 
-#: app/menus.c:67
+#: app/menus.c:66
 msgid "/File/Dialogs/Document Index..."
 msgstr "/Fichier/Dialogues/Index des Documents..."
 
-#: app/menus.c:68
+#: app/menus.c:67
 msgid "/File/Dialogs/Error Console..."
 msgstr "/Fichier/Dialogues/Console d'Erreur..."
 
-#: app/menus.c:69
-msgid "/File/Dialogs/Module Browser..."
-msgstr "/Fichier/Dialogues/Explorateur de Modules..."
+#: app/menus.c:68
+msgid "/Xtns/Module Browser"
+msgstr "/Extensions/Explorateur de Modules..."
+
+#: app/menus.c:69 app/menus.c:70 app/menus.c:75 app/menus.c:86
+msgid "/File/---"
+msgstr "/Fichier/---"
 
 #: app/menus.c:76 app/menus.c:89
 msgid "/File/Quit"
@@ -3760,7 +3682,7 @@ msgstr "/Édition/Refaire"
 
 #: app/menus.c:101 app/menus.c:105
 msgid "/Edit/---"
-msgstr "/Edit/---"
+msgstr "/Édition/---"
 
 #: app/menus.c:102
 msgid "/Edit/Cut Named"
@@ -3916,11 +3838,11 @@ msgstr "/Image/Couleurs/Désaturer"
 
 #: app/menus.c:144
 msgid "/Image/Channel Ops/Duplicate"
-msgstr "/Image/Channel Ops/Dupliquer"
+msgstr "/Image/Canaux/Dupliquer"
 
 #: app/menus.c:145
 msgid "/Image/Channel Ops/Offset"
-msgstr "/Image/Channel Ops/Décalage"
+msgstr "/Image/Canaux/Décalage"
 
 #: app/menus.c:146
 msgid "/Image/Alpha/Add Alpha Channel"
@@ -3955,34 +3877,54 @@ msgid "/Layers/Layers & Channels..."
 msgstr "/Calques/Calques & Canaux..."
 
 #: app/menus.c:158
-msgid "/Layers/Raise Layer"
-msgstr "/Calques/Élever Calque"
+msgid "/Layers/Stack/Previous Layer"
+msgstr "/Calques/Pile/Calque précédent"
 
 #: app/menus.c:159
-msgid "/Layers/Lower Layer"
-msgstr "/Calques/Abaisser Calque"
+msgid "/Layers/Stack/Next Layer"
+msgstr "/Calques/Pile/Calque suivant"
 
 #: app/menus.c:160
+msgid "/Layers/Stack/Raise Layer"
+msgstr "/Calques/Pile/Remonter calque"
+
+#: app/menus.c:161
+msgid "/Layers/Stack/Lower Layer"
+msgstr "/Calques/Pile/Descendre calque"
+
+#: app/menus.c:162
+msgid "/Layers/Stack/Layer to Top"
+msgstr "/Calques/Pile/Calque vers le sommet"
+
+#: app/menus.c:163
+msgid "/Layers/Stack/Layer to Bottom"
+msgstr "/Calques/Pile/Calque vers le fond"
+
+#: app/menus.c:164
+msgid "/Layers/---"
+msgstr "/Calques/---"
+
+#: app/menus.c:165
 msgid "/Layers/Anchor Layer"
 msgstr "/Calques/Ancrer Calque"
 
-#: app/menus.c:161
+#: app/menus.c:166
 msgid "/Layers/Merge Visible Layers"
 msgstr "/Calques/Fusionner les Calques Visibles"
 
-#: app/menus.c:162
+#: app/menus.c:167
 msgid "/Layers/Flatten Image"
 msgstr "/Calques/Aplatir Image"
 
-#: app/menus.c:163
+#: app/menus.c:168
 msgid "/Layers/Alpha To Selection"
-msgstr "/Calques/Alpha To Selection"
+msgstr "/Calques/Alpha vers Sélection"
 
-#: app/menus.c:164
+#: app/menus.c:169
 msgid "/Layers/Mask To Selection"
-msgstr "/Calques/Mask To Selection"
+msgstr "/Calques/Masque vers Sélection"
 
-#: app/menus.c:165
+#: app/menus.c:170
 msgid "/Layers/Add Alpha Channel"
 msgstr "/Calques/Ajouter Canal Alpha"
 
@@ -4015,102 +3957,88 @@ msgstr "/Calques/Ajouter Canal Alpha"
 #. { N_("/Tools/Default Colors"), "D", tools_default_colors_cmd_callback, 0 },
 #. { N_("/Tools/Swap Colors"), "X", tools_swap_colors_cmd_callback, 0 },
 #.
-#: app/menus.c:198
+#: app/menus.c:203
 msgid "/Tools/Toolbox"
 msgstr "/Outils/Boîte à outils"
 
-#: app/menus.c:199
+#: app/menus.c:204
 msgid "/Tools/Default Colors"
 msgstr "/Outils/Couleurs par défaut"
 
-#: app/menus.c:200
+#: app/menus.c:205
 msgid "/Tools/Swap Colors"
 msgstr "/Outils/Échanger les Couleurs"
 
-#: app/menus.c:201
+#: app/menus.c:206
 msgid "/Tools/---"
 msgstr "/Outils/---"
 
-#: app/menus.c:203
+#: app/menus.c:208
 msgid "/Filters/Repeat last"
 msgstr "/Filtres/Répéter le dernier"
 
-#: app/menus.c:204
+#: app/menus.c:209
 msgid "/Filters/Re-show last"
-msgstr "/Filtres/Re-montrer le dernier"
+msgstr "/Filtres/Remontrer le dernier"
 
-#: app/menus.c:205
+#: app/menus.c:210
 msgid "/Filters/---"
 msgstr "/Filtres/---"
 
-#: app/menus.c:207
+#: app/menus.c:212
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: app/menus.c:209
+#: app/menus.c:214
 msgid "/Dialogs/Brushes..."
 msgstr "/Dialogues/Brosses..."
 
-#: app/menus.c:210
+#: app/menus.c:215
 msgid "/Dialogs/Patterns..."
 msgstr "/Dialogues/Motifs..."
 
-#: app/menus.c:211
+#: app/menus.c:216
 msgid "/Dialogs/Palette..."
 msgstr "/Dialogues/Palette..."
 
-#: app/menus.c:212
+#: app/menus.c:217
 msgid "/Dialogs/Gradient..."
 msgstr "/Dialogues/Dégradé..."
 
-#: app/menus.c:213
+#: app/menus.c:218
 msgid "/Dialogs/Layers & Channels..."
 msgstr "/Dialogues/Calques & Canaux..."
 
-#: app/menus.c:214
+#: app/menus.c:219
 msgid "/Dialogs/Indexed Palette..."
 msgstr "/Dialogues/Palette Indexée..."
 
-#: app/menus.c:215
+#: app/menus.c:220
 msgid "/Dialogs/Tool Options..."
 msgstr "/Dialogues/Options des Outils..."
 
-#: app/menus.c:216
+#: app/menus.c:221
 msgid "/Dialogs/Input Devices..."
 msgstr "/Dialogues/Périphériques d'Entrée..."
 
-#: app/menus.c:217
+#: app/menus.c:222
 msgid "/Dialogs/Device Status..."
 msgstr "/Dialogues/État des Périphériques..."
 
-#: app/menus.c:224
+#: app/menus.c:229
 msgid "/Automatic"
 msgstr "/Automatique"
 
-#: app/menus.c:232
+#: app/menus.c:237
 msgid "/By extension"
 msgstr "/Par extension"
 
-#: app/menus.c:364
-#, c-format
-msgid ""
-"Unable to set sensitivity for menu which doesn't exist:\n"
-"%s"
-msgstr ""
-
-#: app/menus.c:389
-#, c-format
-msgid ""
-"Unable to set state for menu which doesn't exist:\n"
-"%s\n"
-msgstr ""
-
-#: app/menus.c:431
+#: app/menus.c:436
 #, c-format
 msgid "Error opening file: %s\n"
 msgstr "Erreur lors de l'ouverture du fichier: %s\n"
 
-#: app/menus.c:453 app/menus.c:534
+#: app/menus.c:458 app/menus.c:539
 #, c-format
 msgid "/File/MRU%02d"
 msgstr "/Fichier/MRU%02d"
@@ -4119,37 +4047,29 @@ msgstr "/Fichier/MRU%02d"
 msgid "Move Tool Options"
 msgstr "Options de l'Outil Déplacement"
 
-#: app/paint_core.c:428
+#: app/paint_core.c:547
 msgid "No brushes available for use with this tool."
 msgstr "Pas de brosse disponible pour être utilisée avec cet outil."
 
-#: app/paint_core.c:1181
+#: app/paint_core.c:1290
 msgid "paint_core_replace only works in INCREMENTAL mode"
 msgstr "paint_core_replace fonctionne seulement en mode INCREMENTAL"
 
-#: app/paint_core.c:1322
+#: app/paint_core.c:1427
 msgid "set_undo_tiles: undo_tiles is null"
 msgstr "set_undo_tiles: undo_tiles est nul"
 
-#: app/paint_funcs.c:84
+#: app/paint_funcs.c:85
 msgid "Behind"
 msgstr "Derrière"
 
-#: app/paint_funcs.c:90
+#: app/paint_funcs.c:91
 msgid "Subtraction"
 msgstr "Soustraction"
 
-#: app/paint_funcs.c:98
+#: app/paint_funcs.c:99
 msgid "Erase"
 msgstr "Effacer"
-
-#: app/paint_funcs.c:1076
-msgid "replace_pixels only works on commensurate pixel regions"
-msgstr ""
-
-#: app/paint_funcs.c:4445
-msgid "border_region: negative radius specified."
-msgstr ""
 
 #: app/paintbrush.c:153
 msgid "Once Forward"
@@ -4185,11 +4105,6 @@ msgstr "Type de Dégradé"
 msgid "can't save palette \"%s\"\n"
 msgstr "impossible d'enregistrer la palette \"%s\"\n"
 
-#: app/palette.c:613
-#, c-format
-msgid "failed to open palette file %s: can't happen?"
-msgstr ""
-
 #: app/palette.c:626
 #, c-format
 msgid ""
@@ -4197,6 +4112,9 @@ msgid ""
 "Corrupt palette: missing magic header\n"
 "Does this file need converting from DOS?"
 msgstr ""
+"Chargement de la palette %s :\n"
+"palette endommagée : en-tête magique manquant.\n"
+"Ce fichier doit-il être converti depuis DOS ?"
 
 #: app/palette.c:628
 #, c-format
@@ -4204,6 +4122,8 @@ msgid ""
 "Loading palette %s:\n"
 "Corrupt palette: missing magic header"
 msgstr ""
+"Chargement de la palette %s :\n"
+"palette endommagée : en-tête magique manquant."
 
 #: app/palette.c:640
 #, c-format
@@ -4211,6 +4131,8 @@ msgid ""
 "Loading palette %s (line %d):\n"
 "Read error"
 msgstr ""
+"Chargement de la palette %s (ligne %d) :\n"
+"erreur de lecture"
 
 #: app/palette.c:655
 #, c-format
@@ -4218,6 +4140,8 @@ msgid ""
 "Loading palette %s (line %d):\n"
 "Missing RED component"
 msgstr ""
+"Chargement de la palette %s (ligne %d) :\n"
+"composante ROUGE manquante"
 
 #: app/palette.c:663
 #, c-format
@@ -4225,6 +4149,8 @@ msgid ""
 "Loading palette %s (line %d):\n"
 "Missing GREEN component"
 msgstr ""
+"Chargement de la palette %s (ligne %d) :\n"
+"composante VERTE manquante"
 
 #: app/palette.c:670
 #, c-format
@@ -4232,6 +4158,8 @@ msgid ""
 "Loading palette %s (line %d):\n"
 "Missing BLUE component"
 msgstr ""
+"Chargement de la palette %s (ligne %d) :\n"
+"composante BLEUE manquante"
 
 #: app/palette.c:679
 #, c-format
@@ -4239,6 +4167,8 @@ msgid ""
 "Loading palette %s (line %d):\n"
 "RGB value out of range"
 msgstr ""
+"Loading palette %s (line %d):\n"
+"valeur RVB hors norme"
 
 #: app/palette.c:885
 msgid "Black"
@@ -4337,10 +4267,6 @@ msgstr "Sélection de Palette"
 msgid "Pattern Selection"
 msgstr "Sélection de Motif"
 
-#: app/pattern_select.c:252
-msgid "failed to run pattern callback function"
-msgstr ""
-
 #: app/patterns.c:144
 msgid "Specified default pattern not found!"
 msgstr "Motif spécifié non trouvé !"
@@ -4366,156 +4292,117 @@ msgstr "Information de Transformation Perspective"
 msgid "Perspective..."
 msgstr "Perspective..."
 
-#: app/plug_in.c:216
+#: app/plug_in.c:204
 msgid "shmget failed...disabling shared memory tile transport"
 msgstr ""
+"shmget a échoué : transport des carreaux d'images par mémoire partagée "
+"désactivé"
 
-#: app/plug_in.c:222
+#: app/plug_in.c:210
 msgid "shmat failed...disabling shared memory tile transport"
 msgstr ""
+"shmat a échoué : transport des carreaux d'images par mémoire partagée "
+"désactivé"
 
-#: app/plug_in.c:295
+#: app/plug_in.c:309
 msgid "Plug-ins"
-msgstr "Modules"
+msgstr "Appendices"
 
-#: app/plug_in.c:307
+#: app/plug_in.c:321
 #, c-format
 msgid "query plug-in: \"%s\"\n"
 msgstr "interrogation du module: \"%s\"\n"
 
-#: app/plug_in.c:345
+#: app/plug_in.c:359
 #, c-format
 msgid "writing \"%s\"\n"
 msgstr "écriture \"%s\"\n"
 
-#: app/plug_in.c:360
+#: app/plug_in.c:374
 msgid "Starting extensions: "
 msgstr "Lancement des extensions: "
 
-#: app/plug_in.c:361
+#: app/plug_in.c:375
 msgid "Extensions"
 msgstr "Extensions"
 
-#: app/plug_in.c:676
+#: app/plug_in.c:690
 #, c-format
 msgid "\"%s\" executable not found\n"
 msgstr "exécutable \"%s\" non trouvé\n"
 
-#: app/plug_in.c:729
+#: app/plug_in.c:743
 #, c-format
 msgid "unable to locate plug-in: \"%s\""
-msgstr "impossible de localiser le plug-in: \"%s\""
+msgstr "impossible de trouver l'appendice: \"%s\""
 
-#: app/plug_in.c:811
+#: app/plug_in.c:825
 msgid "unable to open pipe"
 msgstr "impossible d'ouvrir un tube"
 
-#: app/plug_in.c:900
+#: app/plug_in.c:914
 #, c-format
 msgid "unable to run plug-in: %s"
-msgstr "impossible d'exécuter le plug-in: %s"
+msgstr "impossible d'exécuter l'appendice: %s"
 
-#: app/plug_in.c:1267
+#: app/plug_in.c:1281
 msgid "<Image>/Filters/Repeat last"
 msgstr "<Image>/Filtres/Répéter le dernier"
 
-#: app/plug_in.c:1268
+#: app/plug_in.c:1282
 msgid "<Image>/Filters/Re-show last"
 msgstr "<Image>/Filtres/Re-montrer le dernier"
 
-#: app/plug_in.c:1310 app/plug_in.c:1317 app/plug_in.c:1321
-msgid "plug_in_handle_message(): received a config message (should not happen)"
-msgstr ""
-
-#: app/plug_in.c:1332
-msgid ""
-"plug_in_handle_message(): received a temp proc run message (should not "
-"happen)"
-msgstr ""
-
-#: app/plug_in.c:1386 app/plug_in.c:1393 app/plug_in.c:1437 app/plug_in.c:1479
-#: app/plug_in.c:1488
-msgid "plug_in_handle_tile_req: ERROR"
-msgstr ""
-
-#: app/plug_in.c:1400
-#, c-format
-msgid "expected tile data and received: %d"
-msgstr ""
-
-#: app/plug_in.c:1414 app/plug_in.c:1451
-msgid "plug-in requested invalid drawable (killing)"
-msgstr ""
-
-#: app/plug_in.c:1422 app/plug_in.c:1459
-msgid "plug-in requested invalid tile (killing)"
-msgstr ""
-
-#: app/plug_in.c:1495
-#, c-format
-msgid "expected tile ack and received: %d"
-msgstr ""
-
-#. THIS IS PROBABLY NOT CORRECT -josh
-#: app/plug_in.c:1519
-#, c-format
-msgid "PDB lookup failed on %s"
-msgstr ""
-
-#: app/plug_in.c:1543 app/plug_in.c:1587
-msgid "plug_in_handle_proc_run: ERROR"
-msgstr ""
-
-#: app/plug_in.c:1626 app/plug_in.c:1639 app/plug_in.c:1652 app/plug_in.c:1667
+#: app/plug_in.c:1640 app/plug_in.c:1653 app/plug_in.c:1666 app/plug_in.c:1681
 #, c-format
 msgid ""
 "plug-in \"%s\" attempted to install procedure \"%s\" which does not take the "
 "standard plug-in args"
 msgstr ""
+"L'appendice \"%s\" a essayé d'installer la procédure \"%s\", qui ne prend "
+"pas les arguments standards d'appendice."
 
-#: app/plug_in.c:1675
+#: app/plug_in.c:1689
 #, c-format
 msgid ""
 "plug-in \"%s\" attempted to install procedure \"%s\" in an invalid menu "
 "location.  Use either \"<Toolbox>\", \"<Image>\", \"<Load>\", or \"<Save>\"."
 msgstr ""
+"L'appendice \"%s\" a essayé d'installer la procédure \"%s\" dans un "
+"emplacement de menu incorrect. Utilisez \"<Toolbox>\", \"<Image>\", "
+"\"<Load>\" ou \"<Save>\"."
 
-#: app/plug_in.c:1695
+#: app/plug_in.c:1709
 #, c-format
 msgid ""
 "plug_in \"%s\" attempted to install procedure \"%s\" which fails to comply "
 "with the array parameter passing standard.  Argument %d is noncompliant."
 msgstr ""
+"L'appendice \"%s\" a essayé d'installer la procédure \"%s\", laquelle ne "
+"suit pas le standard de passages de tableaux en paramètres. L'argument %d "
+"n'est pas standard."
 
-#: app/plug_in.c:2127
+#: app/plug_in.c:2141
 #, c-format
 msgid "duplicate plug-in: \"%s\" (skipping)\n"
 msgstr "module en double: \"%s\" (sauté)\n"
 
-#: app/plug_in.c:2304
-msgid "Uh-oh, no active gdisplay for the plug-in!"
-msgstr "Oh oh, pas de gdisplay actif pour le module!"
-
-#: app/plug_in.c:2327
-msgid "Uh-oh, no active gdisplay for the temporary procedure!"
-msgstr "Oh oh, pas de gdisplay actif pour la procédure temporaire!"
-
-#: app/plug_in.c:2335
+#: app/plug_in.c:2349
 msgid "Unknown procedure type."
 msgstr "Type de procédure inconnu."
 
-#: app/plug_in.c:2416
+#: app/plug_in.c:2430
 #, c-format
 msgid "removing duplicate PDB procedure \"%s\""
-msgstr ""
+msgstr "élimination de la procédure en double \"%s\""
 
-#: app/plug_in.c:2672 app/plug_in.c:2837 app/plug_in.c:2954 app/plug_in.c:3039
+#: app/plug_in.c:2686 app/plug_in.c:2851 app/plug_in.c:2968 app/plug_in.c:3053
 msgid "the \"region\" arg type is not currently supported"
 msgstr "le type d'argument \"region\" n'est pas supporté actuellement"
 
 #: app/posterize.c:217
 msgid "Posterize does not operate on indexed drawables."
-msgstr "La postérisation n'oppére pas sur les images indexées."
+msgstr "La postérisation n'opère pas sur les images indexées."
 
 #: app/posterize.c:262 app/tools.c:521
 msgid "Posterize"
@@ -4525,450 +4412,456 @@ msgstr "Postériser"
 msgid "Posterize Levels: "
 msgstr "Niveaux de Postérisation: "
 
-#: app/posterize.c:323
-msgid "posterize_preview(): No image map"
-msgstr ""
-
-#: app/preferences_dialog.c:211
+#: app/preferences_dialog.c:203
 msgid "Error: Levels of undo must be zero or greater."
 msgstr "Erreur : le nombre de niveaux d'annulation doit être positif ou nul."
 
-#: app/preferences_dialog.c:217
+#: app/preferences_dialog.c:209
 msgid "Error: Number of processors must be between 1 and 30."
 msgstr "Erreur : le nombre de processeurs doit être entre 1 et 30."
 
-#: app/preferences_dialog.c:223
+#: app/preferences_dialog.c:215
 msgid "Error: Marching speed must be 50 or greater."
 msgstr "Erreur : La vitesse des « marchings ants » doit être de 50 au minimum."
 
-#: app/preferences_dialog.c:229
+#: app/preferences_dialog.c:221
 msgid "Error: Default width must be one or greater."
 msgstr "Erreur: La largeur par défaut doit être au moins un."
 
-#: app/preferences_dialog.c:235
+#: app/preferences_dialog.c:227
 msgid "Error: Default height must be one or greater."
 msgstr "Erreur: La hauteur par défaut doit être au moins un."
 
-#: app/preferences_dialog.c:242
-#, fuzzy
+#: app/preferences_dialog.c:234
 msgid "Error: Default unit must be within unit range."
-msgstr "Erreur: L par défaut doit être au moins un."
+msgstr "Erreur: L'unité par défaut doit être au moins un."
 
-#: app/preferences_dialog.c:248
+#: app/preferences_dialog.c:241
 msgid "Error: default resolution must not be zero."
 msgstr "Erreur: la résolution du moniteur ne peux pas être zéro."
 
-#: app/preferences_dialog.c:256
-#, fuzzy
+#: app/preferences_dialog.c:249
 msgid "Error: Default resolution unit must be within unit range."
-msgstr "Erreur: L par défaut doit être au moins un."
+msgstr "Erreur: L'unité de résolution par défaut doit être au moins un."
 
-#: app/preferences_dialog.c:262
+#: app/preferences_dialog.c:256
 msgid "Error: Monitor resolution must not be zero."
 msgstr "Erreur: la résolution du moniteur ne peux pas être zéro."
 
-#: app/preferences_dialog.c:269
-#, fuzzy
+#: app/preferences_dialog.c:263
 msgid "Error: Image title format must not be NULL."
-msgstr "Erreur: la résolution du moniteur ne peux pas être zéro."
+msgstr "Erreur: le format du titre d'image ne peut pas être NULL."
 
-#: app/preferences_dialog.c:529
+#: app/preferences_dialog.c:520
 msgid "You will need to restart GIMP for these changes to take effect."
 msgstr "Vous devez relancer GIMP pour que ces changements prennent effet."
 
-#: app/preferences_dialog.c:1397
+#: app/preferences_dialog.c:1433
 msgid "Preferences"
 msgstr "Préférences"
 
 #. The categories tree
-#: app/preferences_dialog.c:1415
+#: app/preferences_dialog.c:1451
 msgid "Categories"
 msgstr "Catégories"
 
-#: app/preferences_dialog.c:1441
+#: app/preferences_dialog.c:1477
 msgid "New File Settings"
 msgstr "Réglages de Nouveau Fichier"
 
-#: app/preferences_dialog.c:1443
+#: app/preferences_dialog.c:1479
 msgid "New File"
 msgstr "Nouveau Fichier"
 
-#: app/preferences_dialog.c:1453
+#: app/preferences_dialog.c:1489
 msgid "Default Image Size and Unit"
 msgstr "Taille et unité par défaut de l'image"
 
-#: app/preferences_dialog.c:1490
+#: app/preferences_dialog.c:1503
+msgid "Width"
+msgstr "Largeur"
+
+#: app/preferences_dialog.c:1505
+msgid "Height"
+msgstr "Hauteur"
+
+#: app/preferences_dialog.c:1532
 msgid "Default Image Resolution and Resolution Unit"
 msgstr "Résolution et unités par défaut de l'image"
 
-#: app/preferences_dialog.c:1558
+#: app/preferences_dialog.c:1557 app/preferences_dialog.c:2219
+msgid "dpi"
+msgstr "pts par pouce"
+
+#: app/preferences_dialog.c:1602
 msgid "Default Image Type:"
 msgstr "Type d'image par défaut"
 
-#: app/preferences_dialog.c:1563
+#: app/preferences_dialog.c:1607
 msgid "Display Settings"
 msgstr "Configuration de l'affichage"
 
-#: app/preferences_dialog.c:1565
+#: app/preferences_dialog.c:1609
 msgid "Display"
 msgstr "Affichage"
 
-#: app/preferences_dialog.c:1572
+#: app/preferences_dialog.c:1616
 msgid "Transparency"
 msgstr "Transparence"
 
-#: app/preferences_dialog.c:1590
+#: app/preferences_dialog.c:1634
 msgid "Light Checks"
-msgstr "Échiquier clair"
+msgstr "Damier clair"
 
-#: app/preferences_dialog.c:1592
+#: app/preferences_dialog.c:1636
 msgid "Mid-Tone Checks"
-msgstr "Échiquier gris moyen"
+msgstr "Damier gris moyen"
 
-#: app/preferences_dialog.c:1594
+#: app/preferences_dialog.c:1638
 msgid "Dark Checks"
-msgstr "Échiquier sombre"
+msgstr "Damier sombre"
 
-#: app/preferences_dialog.c:1596
+#: app/preferences_dialog.c:1640
 msgid "White Only"
 msgstr "Blanc Seulement"
 
-#: app/preferences_dialog.c:1598
+#: app/preferences_dialog.c:1642
 msgid "Gray Only"
 msgstr "Gris Seulement"
 
-#: app/preferences_dialog.c:1600
+#: app/preferences_dialog.c:1644
 msgid "Black Only"
 msgstr "Noir Seulement"
 
-#: app/preferences_dialog.c:1604
+#: app/preferences_dialog.c:1648
 msgid "Transparency Type:"
 msgstr "Type de Transparence:"
 
-#: app/preferences_dialog.c:1610 app/preferences_dialog.c:1681
+#: app/preferences_dialog.c:1654 app/preferences_dialog.c:1725
 msgid "Small"
 msgstr "Petit"
 
-#: app/preferences_dialog.c:1612 app/preferences_dialog.c:1682
+#: app/preferences_dialog.c:1656 app/preferences_dialog.c:1726
 msgid "Medium"
 msgstr "Moyen"
 
-#: app/preferences_dialog.c:1614 app/preferences_dialog.c:1683
+#: app/preferences_dialog.c:1658 app/preferences_dialog.c:1727
 msgid "Large"
 msgstr "Large"
 
-#: app/preferences_dialog.c:1618
+#: app/preferences_dialog.c:1662
 msgid "Check Size:"
 msgstr "Taille des Cases:"
 
-#: app/preferences_dialog.c:1620 app/transform_tool.c:167
+#: app/preferences_dialog.c:1664 app/transform_tool.c:191
 msgid "Scaling"
 msgstr "Mis à l'échelle"
 
-#: app/preferences_dialog.c:1629
+#: app/preferences_dialog.c:1673
 msgid "Cubic Interpolation"
 msgstr "Interpolation cubique"
 
-#: app/preferences_dialog.c:1640
+#: app/preferences_dialog.c:1684
 msgid "Interface Settings"
 msgstr "Configuration de l'interface"
 
-#: app/preferences_dialog.c:1649
+#: app/preferences_dialog.c:1693
 msgid "General"
 msgstr "Général"
 
-#: app/preferences_dialog.c:1686
+#: app/preferences_dialog.c:1730
 msgid "Preview Size:"
 msgstr "Taille de la prévisualisation: "
 
-#: app/preferences_dialog.c:1695
+#: app/preferences_dialog.c:1739
 msgid "Levels of Undo:"
 msgstr "Niveaux d'annulation:"
 
-#: app/preferences_dialog.c:1704
+#: app/preferences_dialog.c:1748
 msgid "Recent Documents List Size:"
 msgstr "Taille de la liste des documents récents:"
 
-#: app/preferences_dialog.c:1707
+#: app/preferences_dialog.c:1751
 msgid "Help System"
 msgstr "Système d'aide"
 
-#: app/preferences_dialog.c:1716
+#: app/preferences_dialog.c:1760
 msgid "Show Tool Tips"
 msgstr "Afficher les bulles d'aide"
 
-#: app/preferences_dialog.c:1727
+#: app/preferences_dialog.c:1771
 msgid "Image Windows Settings"
 msgstr "Configuration des fenêtres d'image"
 
-#: app/preferences_dialog.c:1729
+#: app/preferences_dialog.c:1773
 msgid "Image Windows"
 msgstr "Fenêtres d'images"
 
-#: app/preferences_dialog.c:1736
+#: app/preferences_dialog.c:1780
 msgid "Appearance"
 msgstr "Apparence"
 
-#: app/preferences_dialog.c:1745
+#: app/preferences_dialog.c:1789
 msgid "Resize Window on Zoom"
 msgstr "Redimensionner la fenêtre après un zoom"
 
-#: app/preferences_dialog.c:1754
+#: app/preferences_dialog.c:1798
 msgid "Show Rulers"
 msgstr "Afficher les règles"
 
-#: app/preferences_dialog.c:1763
+#: app/preferences_dialog.c:1807
 msgid "Show Statusbar"
 msgstr "Afficher la barre d'état"
 
-#: app/preferences_dialog.c:1787
+#: app/preferences_dialog.c:1831
 msgid "Marching Ants Speed:"
 msgstr "Vitesse des « marching ants »:"
 
 #. Set the currently used string as "Custom"
-#: app/preferences_dialog.c:1795
+#: app/preferences_dialog.c:1839
 msgid "Custom"
 msgstr "Personnalisé"
 
 #. set some commonly used format strings
-#: app/preferences_dialog.c:1801
+#: app/preferences_dialog.c:1845
 msgid "Standard"
 msgstr "Standard"
 
-#: app/preferences_dialog.c:1806
+#: app/preferences_dialog.c:1850
 msgid "Show zoom percentage"
 msgstr "Afficher le pourcentage de zoom"
 
-#: app/preferences_dialog.c:1811
+#: app/preferences_dialog.c:1855
 msgid "Show zoom ratio"
 msgstr "Afficher le ratio de zoom"
 
-#: app/preferences_dialog.c:1816
+#: app/preferences_dialog.c:1860
 msgid "Show reversed zoom ratio"
 msgstr "Afficher le facteur inverse de zoom"
 
-#: app/preferences_dialog.c:1827
+#: app/preferences_dialog.c:1871
 msgid "Image Title Format:"
 msgstr "Format de titre d'image:"
 
 #. End of the title format string
-#: app/preferences_dialog.c:1830
+#: app/preferences_dialog.c:1874
 msgid "Pointer Movement Feedback"
-msgstr ""
+msgstr "Suivi du mouvement du pointeur"
 
-#: app/preferences_dialog.c:1840
+#: app/preferences_dialog.c:1884
 msgid "Perfect-but-slow Pointer Tracking"
 msgstr "Suivi du pointeur parfait mais lent"
 
-#: app/preferences_dialog.c:1849
+#: app/preferences_dialog.c:1893
 msgid "Disable Cursor Updating"
 msgstr "Désactive la mise à jour du curseur"
 
-#: app/preferences_dialog.c:1860
-#, fuzzy
+#: app/preferences_dialog.c:1904
 msgid "Tool Options Settings"
-msgstr "Options des outils"
+msgstr "Réglages des options des outils"
 
-#: app/preferences_dialog.c:1862 app/tools.c:726
+#: app/preferences_dialog.c:1906 app/tools.c:726
 msgid "Tool Options"
 msgstr "Options des outils"
 
-#: app/preferences_dialog.c:1869
-#, fuzzy
+#: app/preferences_dialog.c:1913
 msgid "Paint Options"
-msgstr "Options du Pinceau"
+msgstr "Options de dessin"
 
-#: app/preferences_dialog.c:1879
-#, fuzzy
+#: app/preferences_dialog.c:1923
 msgid "Use Global Paint Options"
-msgstr "Options de la Balance des Couleurs"
+msgstr "Appliquer les options de dessin globales"
 
-#: app/preferences_dialog.c:1889
+#: app/preferences_dialog.c:1933
 msgid "(Switching this off does not yet work consistently.)"
-msgstr ""
+msgstr "(Désactiver ceci ne fonctionne pas encore tout à fait partout.)"
 
-#: app/preferences_dialog.c:1896
+#: app/preferences_dialog.c:1943
 msgid "Environment Settings"
-msgstr "Configuration de l'environement"
+msgstr "Configuration de l'environnement"
 
-#: app/preferences_dialog.c:1898
+#: app/preferences_dialog.c:1945
 msgid "Environment"
 msgstr "Environnement"
 
-#: app/preferences_dialog.c:1905
+#: app/preferences_dialog.c:1952
 msgid "Resource Consumption"
 msgstr "Configuration des Ressources"
 
-#: app/preferences_dialog.c:1914
+#: app/preferences_dialog.c:1961
 msgid "Conservative Memory Usage"
 msgstr "Utilisation parcimonieuse de la mémoire"
 
-#: app/preferences_dialog.c:1948
+#: app/preferences_dialog.c:2012 app/preferences_dialog.c:2053
 msgid "Bytes"
 msgstr "Octets"
 
-#: app/preferences_dialog.c:1949
+#: app/preferences_dialog.c:2013 app/preferences_dialog.c:2054
 msgid "KiloBytes"
-msgstr "KiloOctets"
+msgstr "Kilo-octets"
 
-#: app/preferences_dialog.c:1950
+#: app/preferences_dialog.c:2014 app/preferences_dialog.c:2055
 msgid "MegaBytes"
-msgstr "MégaOctets"
+msgstr "Méga-octets"
 
-#: app/preferences_dialog.c:1956
+#: app/preferences_dialog.c:2019
 msgid "Tile Cache Size:"
 msgstr "Taille du cache de carreaux:"
 
-#: app/preferences_dialog.c:1966
+#: app/preferences_dialog.c:2060
+msgid "Maximum Image Size:"
+msgstr "Taille maximal de l'image:"
+
+#: app/preferences_dialog.c:2070
 msgid "Number of Processors to Use:"
 msgstr "Nombre de processeurs à utiliser:"
 
-#: app/preferences_dialog.c:1970
+#: app/preferences_dialog.c:2074
 msgid "8-Bit Displays"
 msgstr "Affichages 8-bits"
 
-#: app/preferences_dialog.c:1981
+#: app/preferences_dialog.c:2085
 msgid "Install Colormap"
 msgstr "Installer la palette de couleurs (8-bits uniquement)"
 
-#: app/preferences_dialog.c:1990
+#: app/preferences_dialog.c:2094
 msgid "Colormap Cycling"
 msgstr "Cyclage de la palette de couleurs (8-bits uniquement)"
 
-#: app/preferences_dialog.c:2001
+#: app/preferences_dialog.c:2105
 msgid "Session Management"
 msgstr "Gestion de session"
 
-#: app/preferences_dialog.c:2003
+#: app/preferences_dialog.c:2107
 msgid "Session"
 msgstr "Session"
 
-#: app/preferences_dialog.c:2010
+#: app/preferences_dialog.c:2114
 msgid "Window Positions"
 msgstr "Effacer les positions de fenêtres sauvées"
 
-#: app/preferences_dialog.c:2019
+#: app/preferences_dialog.c:2123
 msgid "Save Window Positions on Exit"
 msgstr "Enregistrer la position des fenêtres en quittant"
 
-#: app/preferences_dialog.c:2033
+#: app/preferences_dialog.c:2137
 msgid "Clear Saved Window Positions"
 msgstr "Effacer les positions de fenêtres sauvées"
 
-#: app/preferences_dialog.c:2040
+#: app/preferences_dialog.c:2144
 msgid "Always Try to Restore Session"
 msgstr "Toujours essayer de restaurer la session"
 
-#: app/preferences_dialog.c:2049
+#: app/preferences_dialog.c:2153
 msgid "Devices"
 msgstr "Périphériques"
 
-#: app/preferences_dialog.c:2058
+#: app/preferences_dialog.c:2162
 msgid "Save Device Status on Exit"
 msgstr "Enregistrer l'état des périphériques en quittant"
 
-#: app/preferences_dialog.c:2069
+#: app/preferences_dialog.c:2173
 msgid "Monitor Information"
 msgstr "Information sur le moniteur"
 
-#: app/preferences_dialog.c:2071
+#: app/preferences_dialog.c:2175
 msgid "Monitor"
 msgstr "Moniteur"
 
-#: app/preferences_dialog.c:2078
+#: app/preferences_dialog.c:2182
 msgid "Get Monitor Resolution"
 msgstr "Obtenir la résolution du moniteur"
 
-#: app/preferences_dialog.c:2088
-msgid "From X Server"
-msgstr "à partir du serveur X"
-
-#: app/preferences_dialog.c:2102
+#: app/preferences_dialog.c:2197
 #, c-format
 msgid "(Currently %d x %d dpi)"
 msgstr "(actuellement %d x %d ppp)"
 
-#: app/preferences_dialog.c:2110
+#: app/preferences_dialog.c:2244
+msgid "From X Server"
+msgstr "à partir du serveur X"
+
+#: app/preferences_dialog.c:2259
 msgid "Manually:"
 msgstr "manuellement:"
 
-#: app/preferences_dialog.c:2161
+#: app/preferences_dialog.c:2272
 msgid "Directories Settings"
 msgstr "Configuration des répertoires"
 
-#: app/preferences_dialog.c:2163
+#: app/preferences_dialog.c:2274
 msgid "Directories"
 msgstr "Répertoires"
 
-#: app/preferences_dialog.c:2176
+#: app/preferences_dialog.c:2287
 msgid "Temp Dir:"
 msgstr "Répertoire temporaire:"
 
-#: app/preferences_dialog.c:2176
+#: app/preferences_dialog.c:2287
 msgid "Select Temp Dir"
 msgstr "Choisir répertoire temporaire"
 
-#: app/preferences_dialog.c:2177
+#: app/preferences_dialog.c:2288
 msgid "Swap Dir:"
 msgstr "Répertoire d'échange:"
 
-#: app/preferences_dialog.c:2177
+#: app/preferences_dialog.c:2288
 msgid "Select Swap Dir"
 msgstr "Choisir répertoire d'échange"
 
-#: app/preferences_dialog.c:2209
+#: app/preferences_dialog.c:2320
 msgid "Brushes Directories"
 msgstr "Répertoires des Brosses"
 
-#: app/preferences_dialog.c:2209
+#: app/preferences_dialog.c:2320
 msgid "Select Brushes Dir"
 msgstr "Choisir répertoire des brosses"
 
-#: app/preferences_dialog.c:2211
+#: app/preferences_dialog.c:2322
 msgid "Patterns Directories"
 msgstr "Répertoires de Motifs"
 
-#: app/preferences_dialog.c:2211
+#: app/preferences_dialog.c:2322
 msgid "Select Patterns Dir"
 msgstr "Choisir répertoire de motifs:"
 
-#: app/preferences_dialog.c:2213
+#: app/preferences_dialog.c:2324
 msgid "Palettes Directories"
 msgstr "Répertoires de Palettes"
 
-#: app/preferences_dialog.c:2213
+#: app/preferences_dialog.c:2324
 msgid "Select Palettes Dir"
 msgstr "Choisir répertoires de Palettes"
 
-#: app/preferences_dialog.c:2215
+#: app/preferences_dialog.c:2326
 msgid "Gradients Directories"
 msgstr "Répertoires de Dégradés"
 
-#: app/preferences_dialog.c:2215
+#: app/preferences_dialog.c:2326
 msgid "Select Gradients Dir"
 msgstr "Choisir répertoire de Dégradés"
 
-#: app/preferences_dialog.c:2217
+#: app/preferences_dialog.c:2328
 msgid "Plug-Ins"
 msgstr "Modules"
 
-#: app/preferences_dialog.c:2217
+#: app/preferences_dialog.c:2328
 msgid "Plug-Ins Directories"
-msgstr "Répertoires de plug-ins"
+msgstr "Répertoires d'appendices (plug-ins)"
 
-#: app/preferences_dialog.c:2217
+#: app/preferences_dialog.c:2328
 msgid "Select Plug-Ins Dir"
-msgstr "Sélectionner répertoire de plug-ins"
+msgstr "Sélectionner répertoire d'appendices (plug-ins)"
 
-#: app/preferences_dialog.c:2219
+#: app/preferences_dialog.c:2330
 msgid "Modules"
 msgstr "Modules"
 
-#: app/preferences_dialog.c:2219
+#: app/preferences_dialog.c:2330
 msgid "Modules Directories"
 msgstr "Répertoires de modules"
 
-#: app/preferences_dialog.c:2219
+#: app/preferences_dialog.c:2330
 msgid "Select Modules Dir"
 msgstr "Choisir répertoire de modules"
 
@@ -4979,7 +4872,7 @@ msgstr "Base de données procédurale"
 #: app/procedural_db.c:142
 #, c-format
 msgid "PDB calling error %s"
-msgstr ""
+msgstr "Erreur d'appel de la procédure %s."
 
 #: app/procedural_db.c:218
 #, c-format
@@ -4987,133 +4880,116 @@ msgid ""
 "Incorrect arguments passed to procedural_db_run_proc:\n"
 "Argument %d to '%s' should be a %s, but got passed a %s"
 msgstr ""
+"Des arguments incorrects ont été passés à procedural_db_run_proc:\n"
+"l'argument %d de \"%s\" devrait être un %s, mais on a passé un %s."
 
-#: app/rect_select.c:185
+#: app/rect_select.c:179
 msgid "Selection: ADD"
 msgstr "Sélection: AJOUTER"
 
-#: app/rect_select.c:188
+#: app/rect_select.c:182
 msgid "Selection: SUBTRACT"
 msgstr "Sélection: SOUSTRAIRE"
 
-#: app/rect_select.c:191
+#: app/rect_select.c:185
 msgid "Selection: INTERSECT"
 msgstr "Sélection: INTERSECTER"
 
-#: app/rect_select.c:194
+#: app/rect_select.c:188
 msgid "Selection: REPLACE"
 msgstr "Sélection: REMPLACER"
 
-#: app/rect_select.c:410 app/rect_select.c:417
+#: app/rect_select.c:404 app/rect_select.c:411
 msgid "Selection: "
 msgstr "Sélection: "
 
-#: app/resize.c:155 app/resize.c:176
-#, fuzzy
+#: app/resize.c:160 app/resize.c:181
 msgid "Size"
-msgstr "Taille:"
+msgstr "Taille"
 
-#: app/resize.c:159
+#: app/resize.c:164
 msgid "Image Scale"
 msgstr "Échelle de l'image"
 
-#: app/resize.c:160
-msgid "Pixel Dimensions & Image Unit"
-msgstr ""
+#: app/resize.c:165
+msgid "Pixel Dimensions"
+msgstr "Dimensions en pixels"
 
-#: app/resize.c:173
+#: app/resize.c:178
 msgid "Image Resize"
-msgstr "Redimensionner l'Image"
+msgstr "Redimensionner l'image"
 
 #. the original width & height labels
-#: app/resize.c:226 app/scale_tool.c:72
+#: app/resize.c:239 app/scale_tool.c:76
 msgid "Original Width:"
 msgstr "Largeur d'origine:"
 
-#. the size sizeentry
-#: app/resize.c:251 app/resize.c:477
-#, fuzzy
+#. the new size labels
+#: app/resize.c:264 app/resize.c:508
 msgid "New Width:"
 msgstr "Nouvelle largeur:"
 
-#. the scale ratio labels and spinbuttons
-#: app/resize.c:313
-#, fuzzy
+#. the scale ratio labels
+#: app/resize.c:328
 msgid "Ratio X:"
 msgstr "Facteur d'échelle X:"
 
-#: app/resize.c:387
+#. the x and y offset labels
+#: app/resize.c:413
 msgid "X:"
-msgstr ""
+msgstr "X:"
 
-#: app/resize.c:463
-#, fuzzy
-msgid "Print Size"
-msgstr "Taille de la prévisualisation: "
+#: app/resize.c:494
+msgid "Print Size & Display Unit"
+msgstr "Afficher la taille & afficher l'unité"
 
-#. the resolution sizeentry
-#: app/resize.c:535
-#, fuzzy
-msgid "Resolution X:"
-msgstr "Résolution:"
-
-#: app/rotate_tool.c:84
+#: app/rotate_tool.c:88
 msgid "Rotation Information"
 msgstr "Informations de Rotation"
 
-#: app/rotate_tool.c:101
+#: app/rotate_tool.c:105
 msgid "Center X:"
 msgstr "Centre X:"
 
-#: app/rotate_tool.c:390
+#: app/rotate_tool.c:400
 msgid "Rotating..."
 msgstr "Rotation en cours..."
 
-#: app/scale_tool.c:70
+#: app/scale_tool.c:74
 msgid "Scaling Information"
 msgstr "Informations de mise à l'échelle"
 
-#: app/scale_tool.c:78
+#: app/scale_tool.c:82
 msgid "Current Width:"
 msgstr "Largeur actuelle:"
 
-#: app/scale_tool.c:107
+#: app/scale_tool.c:97
 msgid "Scale Ratio X:"
 msgstr "Facteur d'échelle X:"
 
-#: app/scale_tool.c:477
+#: app/scale_tool.c:494
 msgid "Scaling..."
 msgstr "Mise à l'échelle..."
 
 #: app/session.c:139
-msgid "# GIMP sessionrc\n"
-msgstr "# GIMP sessionrc\n"
-
-#: app/session.c:140
-msgid "# This file takes session-specific info (that is info,\n"
-msgstr ""
-
-#: app/session.c:141
-msgid "# you want to keep between two gimp-sessions). You are\n"
-msgstr ""
-
-#: app/session.c:142
-msgid "# not supposed to edit it manually, but of course you\n"
-msgstr ""
-
-#: app/session.c:143
-msgid "# can do. This file will be entirely rewritten every time\n"
-msgstr ""
-
-#: app/session.c:144
-msgid "# you quit the gimp. If this file isn't found, defaults\n"
-msgstr ""
-
-#: app/session.c:145
 msgid ""
+"# GIMP sessionrc\n"
+"# This file takes session-specific info (that is info,\n"
+"# you want to keep between two gimp-sessions). You are\n"
+"# not supposed to edit it manually, but of course you\n"
+"# can do. This file will be entirely rewritten every time\n"
+"# you quit the gimp. If this file isn't found, defaults\n"
 "# are used.\n"
 "\n"
 msgstr ""
+"# GIMP sessionrc\n"
+"# Ce fichier contient les informations à conserver entre deux\n"
+"# sessions d'utilisation afin de pouvoir reprendre le travail\n"
+"# en cours. Vous n'êtes pas censé l'éditer à la main, mais le\n"
+"# pouvez bien entendu si vous y tenez. Ce fichier est écrasé\n"
+"# à chaque fois que vous quittez Gimp; s'il est absent, des\n"
+"# valeurs par défaut sont utilisées.\n"
+"\n"
 
 #: app/shear_tool.c:74
 msgid "Shear Information"
@@ -5127,37 +5003,39 @@ msgstr "Ampleur de cisaillement X:"
 msgid "Shearing..."
 msgstr "Cisaillement..."
 
-#: app/text_tool.c:147
+#: app/text_tool.c:158
 msgid "Text Tool Options"
 msgstr "Options Texte"
 
-#: app/text_tool.c:158
+#: app/text_tool.c:169
 msgid "Antialiasing"
 msgstr "Lissage"
 
-#: app/text_tool.c:172
+#: app/text_tool.c:183
 msgid "Border:"
 msgstr "Bordure:"
 
-#: app/text_tool.c:198
+#: app/text_tool.c:209
 msgid "Use Dynamic Text"
-msgstr ""
+msgstr "Texte dynamique"
 
-#: app/text_tool.c:270
+#: app/text_tool.c:285
 msgid "text_call_gdyntext: gDynText procedure lookup failed"
 msgstr ""
+"text_call_gdyntext: la procédure d'affichage de texte dynamique n'est pas "
+"installée"
 
 #. Create the shell
-#: app/text_tool.c:393 app/text_tool.c:395
+#: app/text_tool.c:408 app/text_tool.c:410
 msgid "Text Tool"
 msgstr "Outil Texte"
 
-#: app/text_tool.c:609
+#: app/text_tool.c:617
 #, c-format
 msgid "Font '%s' not found.%s"
 msgstr "Police '%s' non trouvée. %s"
 
-#: app/text_tool.c:611
+#: app/text_tool.c:619
 msgid ""
 "\n"
 "If you don't have scalable fonts, try turning off antialiasing in the tool "
@@ -5167,21 +5045,13 @@ msgstr ""
 "Si vous n'avez pas de polices vectorielles, essayez de couper le lissage "
 "dans les options de l'outil."
 
-#: app/text_tool.c:702
-msgid "sanity check failed: could not get gdk image"
-msgstr "échec du test de sanité: impossible d'obtenir une image gdk"
-
-#: app/text_tool.c:705
-msgid "sanity check failed: image should have 1 bit per pixel"
-msgstr ""
-
-#: app/text_tool.c:722
+#: app/text_tool.c:730
 msgid "Text Layer"
 msgstr "Calque Texte"
 
-#: app/text_tool.c:765
+#: app/text_tool.c:773
 msgid "text_render: could not allocate image"
-msgstr "text_render: impossible d'alouer l'image"
+msgstr "text_render: impossible d'allouer l'image"
 
 #: app/threshold.c:234
 msgid "Threshold Options"
@@ -5199,113 +5069,40 @@ msgstr "Seuil"
 msgid "Threshold Range: "
 msgstr "Intervalle de seuil: "
 
-#: app/threshold.c:434
-msgid "threshold_preview(): No image map"
-msgstr ""
-
-#: app/tile.c:142
-msgid "tried to destroy a ref'd tile"
-msgstr ""
-
-#: app/tile.c:147
-msgid "tried to destroy an attached tile"
-msgstr ""
-
-#: app/tile.c:263
-msgid "Tried to detach a nonattached tile"
-msgstr ""
-
-#: app/tile_cache.c:114
-msgid "cache: unable to find room for a tile"
-msgstr ""
-
 #: app/tile_cache.c:266
 msgid "starting tile preswapper\n"
-msgstr ""
+msgstr "démarrage du prééchangeur de carreaux d'images\n"
 
-#: app/tile_manager.c:326
-msgid "tile_manager_map_tile: tile co-ord out of range."
-msgstr ""
+#: app/tips_dialog.c:57
+msgid "gimp_tips.txt"
+msgstr "gimp_conseils.fr.txt"
 
-#: app/tile_manager.c:354
-msgid "tile_manager_map: tile out of range."
-msgstr ""
-
-#: app/tile_manager.c:400
-#, c-format
-msgid "tile_manager_map: nonconformant map (%p -> %p)"
-msgstr ""
-
-#: app/tile_manager.c:483
-msgid "tile_manager_get_tile_coordinates: tile not attached to manager"
-msgstr ""
-
-#: app/tile_manager.c:504
-msgid "tile_manager_map_over_tile: tile not attached to manager"
-msgstr ""
-
-#: app/tile_swap.c:146
-#, c-format
-msgid "tile ref count balance: %d\n"
-msgstr ""
-
-#: app/tile_swap.c:154
-#, c-format
-msgid "swap file not empty: \"%s\"\n"
-msgstr "fichier d'échange non vide: \"%s\"\n"
-
-#: app/tile_swap.c:335
-msgid "could not find swap file for tile"
-msgstr ""
-
-#: app/tile_swap.c:379
-msgid "unable to open swap file...BAD THINGS WILL HAPPEN SOON"
-msgstr ""
-"impossible d'ouvrir le fichier d'échange... DES TRUCS BIZARRES VONT BIENTOT "
-"ARRIVER"
-
-#: app/tile_swap.c:421
-msgid "tile_swap_default: SWAP_COMPRESS: UNFINISHED"
-msgstr ""
-
-#: app/tile_swap.c:499 app/tile_swap.c:560
-#, c-format
-msgid "unable to seek to tile location on disk: %d"
-msgstr ""
-
-#: app/tile_swap.c:518
-#, c-format
-msgid "unable to read tile data from disk: %d/%d ( %d ) bytes read"
-msgstr ""
-
-#: app/tile_swap.c:573
-#, c-format
-msgid "unable to write tile data to disk: %d ( %d ) bytes written"
-msgstr ""
-
-#: app/tips_dialog.c:67
+#: app/tips_dialog.c:69
 msgid "GIMP Tip of the day"
 msgstr "Conseil du jour GIMP"
 
-#: app/tips_dialog.c:128
+#: app/tips_dialog.c:130
 msgid "Previous Tip"
 msgstr "Conseil précédent"
 
-#: app/tips_dialog.c:136
+#: app/tips_dialog.c:138
 msgid "Next Tip"
 msgstr "Conseil suivant"
 
-#: app/tips_dialog.c:156
+#: app/tips_dialog.c:158
 msgid "Show tip next time"
 msgstr "Afficher un conseil la prochaine fois"
 
-#: app/tips_dialog.c:254
+#: app/tips_dialog.c:256
 msgid ""
 "Your GIMP tips file appears to be missing!\n"
-"There should be a file called "
+"There should be a file called gimp_tips.txt in the\n"
+"GIMP data directory.  Please check your installation."
 msgstr ""
 "Votre fichier de conseils GIMP manque!\n"
-"Il devrait y avoir un fichier nommé "
+"Il devrait y avoir un fichier nommé gimp_conseils.fr.txt\n"
+"dans le répertoire de données de GIMP.\n"
+"Vérifiez votre installation."
 
 #: app/tools.c:85
 msgid "Rect Select"
@@ -5333,11 +5130,11 @@ msgstr "Sélection des régions elliptique"
 
 #: app/tools.c:115
 msgid "Free Select"
-msgstr "Sélection à main-levée"
+msgstr "Sélection à main levée"
 
 #: app/tools.c:117
 msgid "/Tools/Free Select"
-msgstr "/Outils/Sélection à main-levée"
+msgstr "/Outils/Sélection à main levée"
 
 #: app/tools.c:120
 msgid "Select hand-drawn regions"
@@ -5404,23 +5201,20 @@ msgid "Zoom in & out"
 msgstr "Zoom avant & arrière"
 
 #: app/tools.c:205
-#, fuzzy
 msgid "Crop & Resize"
-msgstr "Redimensionner"
+msgstr "Rogner & Redimensionner"
 
 #: app/tools.c:207
-#, fuzzy
 msgid "/Tools/Crop & Resize"
-msgstr "/Outils/Rogner"
+msgstr "/Outils/Rogner & Redimensionner"
 
 #: app/tools.c:210
-#, fuzzy
 msgid "Crop or resize the image"
-msgstr "Rogne les bords de l'image"
+msgstr "Rogne ou redimensionne l'image"
 
 #. the first radio frame and box, for transform type
 #: app/tools.c:220 app/tools.c:235 app/tools.c:250 app/tools.c:265
-#: app/transform_core.c:121 app/transform_tool.c:199
+#: app/transform_core.c:125 app/transform_tool.c:224
 msgid "Transform"
 msgstr "Transformer"
 
@@ -5616,19 +5410,19 @@ msgstr "Histogramme"
 msgid "/Image/Histogram"
 msgstr "/Image/Histogramme"
 
-#: app/transform_core.c:118
+#: app/transform_core.c:122
 msgid "Rotate"
 msgstr "Rotation"
 
-#: app/transform_core.c:119
+#: app/transform_core.c:123
 msgid "Scale"
 msgstr "Échelle"
 
-#: app/transform_core.c:120
+#: app/transform_core.c:124
 msgid "Shear"
 msgstr "Cisaillement"
 
-#: app/transform_core.c:226
+#: app/transform_core.c:229
 msgid ""
 "Transformations do not work on\n"
 "layers that contain layer masks."
@@ -5636,80 +5430,79 @@ msgstr ""
 "Les transformations ne marchent pas\n"
 "sur les calques qui contiennent des masques."
 
-#: app/transform_core.c:1117
+#: app/transform_core.c:1132
 msgid "homogeneous coordinate = 0...\n"
 msgstr "coordonnée homogène = 0...\n"
 
-#: app/transform_core.c:1374
+#: app/transform_core.c:1387
 msgid "Transformation"
 msgstr "Transformation"
 
-#: app/transform_tool.c:166
+#: app/transform_tool.c:190
 msgid "Rotation"
 msgstr "Rotation"
 
-#: app/transform_tool.c:168
+#: app/transform_tool.c:192
 msgid "Shearing"
 msgstr "Cisaillement"
 
-#: app/transform_tool.c:169
+#: app/transform_tool.c:193
 msgid "Perspective"
 msgstr "Perspective"
 
-#: app/transform_tool.c:173
+#: app/transform_tool.c:197
 msgid "Traditional"
 msgstr "Traditionnel"
 
-#: app/transform_tool.c:174
+#: app/transform_tool.c:198
 msgid "Corrective"
 msgstr "Corrective"
 
-#: app/transform_tool.c:180
+#: app/transform_tool.c:204
 msgid "Transform Tool Options"
 msgstr "Options des Outils de Transformation"
 
 #. the smoothing toggle button
-#: app/transform_tool.c:226
+#: app/transform_tool.c:251
 msgid "Smoothing"
 msgstr "Adoucissement"
 
+#: app/transform_tool.c:258
+msgid "Showpath"
+msgstr "Affichage du chemin"
+
 #. the second radio frame and box, for transform direction
-#: app/transform_tool.c:240
+#: app/transform_tool.c:272
 msgid "Tool paradigm"
 msgstr "Action de l'Outil"
 
 #. the show grid toggle button
-#: app/transform_tool.c:267
+#: app/transform_tool.c:299
 msgid "Show grid"
 msgstr "Afficher la grille"
 
-#: app/transform_tool.c:278
+#: app/transform_tool.c:310
 msgid "Grid density:"
 msgstr "Densité de la grille:"
 
 #. the clip resulting image toggle button
-#: app/transform_tool.c:299
+#: app/transform_tool.c:331
 msgid "Clip result"
-msgstr ""
+msgstr "Rogner le résultat"
 
-#: app/xcf.c:364
+#: app/xcf.c:365
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "Erreur XCF: Version %d non supportée du format XCF rencontrée"
 
-#: app/xcf.c:418
+#: app/xcf.c:419
 #, c-format
 msgid "open failed on %s: %s\n"
-msgstr "echec de l'ouverture de %s: %s\n"
+msgstr "échec de l'ouverture de %s: %s\n"
 
-#: app/xcf.c:1486 app/xcf.c:2490
+#: app/xcf.c:1486 app/xcf.c:2492
 msgid "xcf: zlib compression unimplemented"
 msgstr "xcf: compression zlib non-implementée"
-
-#: app/xcf.c:1635
-#, c-format
-msgid "xcf: uh oh! xcf rle tile saving error: %d\n"
-msgstr ""
 
 #: app/xcf.c:1777
 msgid ""
@@ -5717,63 +5510,52 @@ msgid ""
 "did not save indexed colormaps correctly.\n"
 "Substituting grayscale map."
 msgstr ""
+"Avertissement XCF : la version 0 du format de\n"
+"fichier XCF ne sauvait pas correctement les\n"
+"palettes des images indexées."
 
 #: app/xcf.c:1808
 #, c-format
 msgid "unknown compression type: %d"
 msgstr "type de compression inconnu: %d"
 
-#: app/xcf.c:1846
+#: app/xcf.c:1848
 msgid "Warning, resolution out of range in XCF file"
 msgstr ""
 "Avertissement: résolution en dehors de l'intervalle dans le fichier XCF"
 
-#: app/xcf.c:1869
+#: app/xcf.c:1871
 msgid "Error detected while loading an image's parasites"
 msgstr "Erreur détectée lors du chargement des parasites d'une image"
 
-#: app/xcf.c:1880
+#: app/xcf.c:1882
 msgid "Warning, unit out of range in XCF file, falling back to inches"
 msgstr ""
 "Avertissement: unité hors normes dans le fichier XCF, utilisation de pouces"
 
-#: app/xcf.c:1944
+#: app/xcf.c:1946
 #, c-format
 msgid "unexpected/unknown image property: %d (skipping)"
-msgstr "propriété d'image inatendue/inconnue: %d (ignorée)"
+msgstr "propriété d'image inattendue/inconnue: %d (ignorée)"
 
-#: app/xcf.c:2036
+#: app/xcf.c:2038
 #, c-format
 msgid "unexpected/unknown layer property: %d (skipping)"
-msgstr "propriété de calque inatendue/inconnue: %d (ignorée)"
+msgstr "propriété de calque inattendue/inconnue: %d (ignorée)"
 
-#: app/xcf.c:2113
+#: app/xcf.c:2115
 #, c-format
 msgid "unexpected/unknown channel property: %d (skipping)"
 msgstr "propriété de canal inatendue/inconnue: %d (ignorée)"
 
-#: app/xcf.c:2453
-msgid "not enough tiles found in level"
-msgstr ""
-
-#: app/xcf.c:2494
+#: app/xcf.c:2496
 msgid "xcf: fractal compression unimplemented"
 msgstr "xcf: compression fractale non implémentée"
 
-#: app/xcf.c:2536
-#, c-format
-msgid "encountered garbage after reading level: %d"
-msgstr ""
-
-#: app/xcf.c:2634
-#, c-format
-msgid "xcf: uh oh! xcf rle tile loading error: %d"
-msgstr ""
-
-#: app/xcf.c:2681
+#: app/xcf.c:2683
 #, c-format
 msgid "unable to read tile data from xcf file: %d ( %d ) bytes read"
-msgstr ""
+msgstr "Lecture de données d'un fichier XCF impossible : %d (%d) octets lus."
 
 #: app/regex.c:976
 msgid "Success"
@@ -5792,7 +5574,7 @@ msgstr "Expression régulière invalide"
 #. REG_BADPAT
 #: app/regex.c:979
 msgid "Invalid collation character"
-msgstr ""
+msgstr "Caractère de comparaison incorrect"
 
 #. REG_ECOLLATE
 #: app/regex.c:980
@@ -5807,7 +5589,7 @@ msgstr "Backslash final"
 #. REG_EESCAPE
 #: app/regex.c:982
 msgid "Invalid back reference"
-msgstr ""
+msgstr "Référence en arrière incorrecte"
 
 #. REG_ESUBREG
 #: app/regex.c:983
@@ -5842,7 +5624,7 @@ msgstr "Plus de mémoire disponible"
 #. REG_ESPACE
 #: app/regex.c:989
 msgid "Invalid preceding regular expression"
-msgstr ""
+msgstr "Expression régulière précédente incorrecte"
 
 #. REG_BADRPT
 #: app/regex.c:990
@@ -5861,7 +5643,269 @@ msgstr ") ou \\) sans correspondance"
 
 #: app/regex.c:5442
 msgid "No previous regular expression"
-msgstr "Aucune expression régulière antèrieure"
+msgstr "Aucune expression régulière antérieure"
+
+#~ msgid "xcf: uh oh! xcf rle tile loading error: %d"
+#~ msgstr "XCF: erreur de lecture de données com"
+
+#~ msgid "xcf: uh oh! xcf rle tile saving error: %d\n"
+#~ msgstr "xcf: oh oh! erreur de sauvegarde en compr"
+
+#~ msgid "Add Channel To Selection"
+#~ msgstr "Ajouter Canal à Sélection"
+
+#~ msgid "Uh-oh, no active gdisplay for the plug-in!"
+#~ msgstr "Oh oh, pas de gdisplay actif pour le module!"
+
+#~ msgid "Uh-oh, no active gdisplay for the temporary procedure!"
+#~ msgstr "Oh oh, pas de gdisplay actif pour la procédure temporaire!"
+
+#~ msgid "sanity check failed: could not get gdk image"
+#~ msgstr "échec du test de sanité: impossible d'obtenir une image gdk"
+
+#~ msgid "swap file not empty: \"%s\"\n"
+#~ msgstr "fichier d'échange non vide: \"%s\"\n"
+
+#~ msgid "unable to open swap file...BAD THINGS WILL HAPPEN SOON"
+#~ msgstr ""
+#~ "impossible d'ouvrir le fichier d'échange... DES TRUCS BIZARRES VONT BIENTOT "
+#~ "ARRIVER"
+
+#~ msgid "Resolution"
+#~ msgstr "Résolution"
+
+#~ msgid "Pixels per "
+#~ msgstr "pixels par  "
+
+#~ msgid "Advanced options >>"
+#~ msgstr "Options avancées >>"
+
+#~ msgid ""
+#~ "This program is free software; you can redistribute it and/or modify\n"
+#~ msgstr ""
+#~ "Ce programme est un logiciel libre ; vous pouvez le redistribuer et/ou le "
+#~ "modifier\n"
+
+#~ msgid ""
+#~ "it under the terms of the GNU General Public License as published by\n"
+#~ msgstr ""
+#~ "en suivant les termes de la GNU General Public License telle que publiée\n"
+
+#~ msgid "the Free Software Foundation; either version 2 of the License, or\n"
+#~ msgstr ""
+#~ "par la Free Software Foundation ; soit la version 2 de la licence, ou\n"
+
+#~ msgid "(at your option) any later version.\n"
+#~ msgstr "(à votre choix) une version ultérieure.\n"
+
+#~ msgid "This program is distributed in the hope that it will be useful,\n"
+#~ msgstr "Ce programme est distribué dans l'espoir qu'il sera utile, mais\n"
+
+#~ msgid "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+#~ msgstr "SANS AUCUNE GARANTIE ; sans même une garantie implicite de\n"
+
+#~ msgid "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
+#~ msgstr "COMMERCIALISABILITÉ ou d'ADÉQUATION À UN BUT PARTICULIER.\n"
+
+#~ msgid "See the GNU General Public License for more details.\n"
+#~ msgstr "Voir la GNU General Public License pour plus de détails.\n"
+
+#~ msgid "You should have received a copy of the GNU General Public License\n"
+#~ msgstr "Vous avez dû recevoir une copie de la GNU General Public License\n"
+
+#~ msgid "along with this program; if not, write to the Free Software\n"
+#~ msgstr "avec ce logiciel ; sinon, écrivez à la Free Software Foundation,\n"
+
+#~ msgid ""
+#~ "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.\n"
+#~ msgstr "59 Temple Place - Suite 330, Boston, MA 02111-1307, États-Unis.\n"
+
+#~ msgid " needs to be created.  This\n"
+#~ msgstr "doit être créé. Celui-ci\n"
+
+#~ msgid "\t\tThe gimprc is used to store personal preferences\n"
+#~ msgstr "\t\t gimprc est utilisé pour stocker les préférences personnelles\n"
+
+#~ msgid "\t\tsuch as default GIMP behaviors & plug-in hotkeys.\n"
+#~ msgstr ""
+#~ "\t\ttelles que les comportements par défaut et les raccourcis clavier pour "
+#~ "les modules.\n"
+
+#~ msgid "\t\tPaths to search for brushes, palettes, gradients\n"
+#~ msgstr "\t\tLes chemins pour rechercher les brosses, palettes, dégradés\n"
+
+#~ msgid "\t\tpatterns, plug-ins and modules are also configured here.\n"
+#~ msgstr ""
+#~ "\t\tmotifsi, appendices et modules et sont également paramétrés ici.\n"
+
+#~ msgid "\t\tThe unitrc is used to store your user units database.\n"
+#~ msgstr "\t\tunitrc est utilisé pour stocker les unités personnelles\n"
+
+#~ msgid "\t\tYou can define additional units and use them just\n"
+#~ msgstr "\t\tVous pouvez définir des unités supplémentaires et les\n"
+
+#~ msgid "\t\tlike you use the built-in units inches, millimeters,\n"
+#~ msgstr "\t\tutiliser comme les unités integrées (pouces, millimètres,\n"
+
+#~ msgid "\t\tpoints and picas. This file is overwritten each time\n"
+#~ msgstr "\t\tpoints, picas). Ce fichier est réécrit chaque fois\n"
+
+#~ msgid "\t\tyou quit the GIMP.\n"
+#~ msgstr "\t\tque vous quittez GIMP.\n"
+
+#~ msgid "\t\tPlug-ins and extensions are external programs run by\n"
+#~ msgstr ""
+#~ "\t\tLes appendices et extensions sont des programmes externes lancés par\n"
+
+#~ msgid "\t\tthe GIMP which provide additional functionality.\n"
+#~ msgstr "\t\tThe GIMP qui fournissent des fonctionnalitées additionnelles.\n"
+
+#~ msgid "\t\tThese programs are searched for at run-time and\n"
+#~ msgstr "\t\tCes programmes sont recherchés lors de l'exécution et\n"
+
+#~ msgid "\t\tinformation about their functionality and mod-times\n"
+#~ msgstr ""
+#~ "\t\tles informations sur leurs fonctionnalités et dates de modifications\n"
+
+#~ msgid "\t\tis cached in this file.  This file is intended to\n"
+#~ msgstr "\t\tsont stoquées dans ce fichier. Celui-ci est prévu pour\n"
+
+#~ msgid "\t\tbe GIMP-readable only, and should not be edited.\n"
+#~ msgstr "\t\tn'être lu que par GIMP et ne doit pas être édité.\n"
+
+#~ msgid "\t\tThis is a subdirectory which can be used to store\n"
+#~ msgstr "\t\tRépertoire qui peux être utilisé pour stocker\n"
+
+#~ msgid "\t\tuser defined brushes.  The default gimprc file\n"
+#~ msgstr ""
+#~ "\t\tles brosses définies par l'utilisateur. Le fichier gimprc par défaut\n"
+
+#~ msgid "\t\tchecks this subdirectory in addition to the system-\n"
+#~ msgstr "\t\tregarde dans ce répertoire en plus de l'installation globale\n"
+
+#~ msgid "\t\twide gimp brushes installation when searching for\n"
+#~ msgstr "\t\tau système de brosses lorsqu'ils recherche des \n"
+
+#~ msgid "\t\tbrushes.\n"
+#~ msgstr "\t\tbrosses.\n"
+
+#~ msgid "\t\tuser defined gradients.  The default gimprc file\n"
+#~ msgstr ""
+#~ "\t\tdégradés définis par l'utilisateur. Le fichier gimprc par défaut\n"
+
+#~ msgid "\t\twide gimp gradients installation when searching for\n"
+#~ msgstr "\t\tau système de dégradés lorsqu'il recherche des\n"
+
+#~ msgid "\t\tgradients.\n"
+#~ msgstr "\t\tdégradés.\n"
+
+#~ msgid "\t\tuser defined figures to be used by the gfig plug-in.\n"
+#~ msgstr "\t\tfigures définies par l'utilisateur pour le module gfig.\n"
+
+#~ msgid "\t\tThe default gimprc file checks this subdirectory in\n"
+#~ msgstr "\t\tLe fichier gimprc par défaut regarde dans ce répertoire\n"
+
+#~ msgid "\t\taddition to the systemwide gimp gfig installation\n"
+#~ msgstr "\t\ten plus de l'installation globale au système de gfig\n"
+
+#~ msgid "\t\twhen searching for gfig figures.\n"
+#~ msgstr "\t\tlorsqu'il recherche des figures gfig.\n"
+
+#~ msgid "\t\tuser defined gflares to be used by the gflare plug-in.\n"
+#~ msgstr "\t\tparamètres pour le module gflare définis par l'utilisateur.\n"
+
+#~ msgid "\t\taddition to the systemwide gimp gflares installation\n"
+#~ msgstr "\t\ten plus de l'installation globale au système de gflare\n"
+
+#~ msgid "\t\twhen searching for gflares.\n"
+#~ msgstr ""
+#~ "\t\tlorsqu'il recherche des paramètres d'éblouissement pour gflare.\n"
+
+#~ msgid ""
+#~ "\t\tuser defined fractals to be used by the FractalExplorer plug-in.\n"
+#~ msgstr ""
+#~ "\t\tparamètres de fractales pour le module FractalExplorer.\n"
+#~ "\n"
+
+#~ msgid "\t\taddition to the systemwide gimp FractalExplorer installation\n"
+#~ msgstr ""
+#~ "\t\ten plus de l'installation globale au système de FractalExplorer\n"
+
+#~ msgid "\t\twhen searching for fractals.\n"
+#~ msgstr "\t\tlorsqu'il recherche des fractales.\n"
+
+#~ msgid "\t\tuser defined palettes.  The default gimprc file\n"
+#~ msgstr ""
+#~ "\t\tpalettes définies par l'utilisateur. Le fichier gimprc par défaut\n"
+
+#~ msgid "\t\tchecks only this subdirectory (not the system-wide\n"
+#~ msgstr ""
+#~ "\t\tregarde uniquement dans ce répertoire (et non dans l'installation\n"
+
+#~ msgid "\t\tinstallation) when searching for palettes.  During\n"
+#~ msgstr ""
+#~ "\t\tglobale) lorsqu'il cherche des palettes. Pendant l'installation,\n"
+
+#~ msgid "\t\tinstallation, the system palettes will be copied\n"
+#~ msgstr "\t\tles palettes du système seront copiées dans ce répertoire.\n"
+
+#~ msgid "\t\there.  This is done to allow modifications made to\n"
+#~ msgstr "\t\tCeci est fait de sorte que les modifications faites aux\n"
+
+#~ msgid "\t\tpalettes during GIMP execution to persist across\n"
+#~ msgstr "\t\tpalettes pendant l'exécution de GIMP persistent entre les\n"
+
+#~ msgid "\t\tsessions.\n"
+#~ msgstr "\t\tsessions.\n"
+
+#~ msgid "\t\tuser defined patterns.  The default gimprc file\n"
+#~ msgstr ""
+#~ "\t\tmotifs définis par l'utilisateur. Le fichier gimprc par défaut\n"
+
+#~ msgid "\t\twide gimp patterns installation when searching for\n"
+#~ msgstr "\t\tau système de dégradés lorsqu'il cherche des\n"
+
+#~ msgid "\t\tpatterns.\n"
+#~ msgstr "\t\tdégradés.\n"
+
+#~ msgid "\t\tuser created, temporary, or otherwise non-system-\n"
+#~ msgstr "\t\tplug-ins personnels (p.ex. temporaires, non supportés\n"
+
+#~ msgid "\t\tsupported plug-ins.  The default gimprc file\n"
+#~ msgstr "\t\tpar les administrateurs). Le fichier gimprc par défaut\n"
+
+#~ msgid "\t\twide GIMP plug-in directories when searching for\n"
+#~ msgstr "\t\tau système de plug-ins GIMP lorsqu'il recherche des \n"
+
+#~ msgid "\t\tplug-ins.\n"
+#~ msgstr "\t\tplug-ins.\n"
+
+#~ msgid "\t\tThis subdirectory can be used to store user created,\n"
+#~ msgstr "\t\tRépertoire qui peux être utilisé pour stocker\n"
+
+#~ msgid "\t\ttemporary, or otherwise non-system-supported DLL modules.\n"
+#~ msgstr ""
+#~ "\t\tdes modules DLL temporaires ou non supportés par les administrateurs. \n"
+
+#~ msgid "\t\tThe default gimprc file checks this subdirectory\n"
+#~ msgstr "\t\tLe fichier gimprc par défaut regarde dans ce répertoire\n"
+
+#~ msgid "\t\tin addition to the system-wide GIMP module directory\n"
+#~ msgstr "\t\ten plus du répertoire global au système de modules GIMP\n"
+
+#~ msgid "\t\twhen searching for modules to load when initialising.\n"
+#~ msgstr ""
+#~ "\t\tlorsqu'il recherche des modules à charger lors de l'initialisation.\n"
+
+#~ msgid "Layer height: "
+#~ msgstr "Hauteur du Calque: "
+
+#, fuzzy
+#~ msgid "Print Size"
+#~ msgstr "Taille d'impression"
+
+#~ msgid "# GIMP sessionrc\n"
+#~ msgstr "# GIMP sessionrc\n"
 
 #~ msgid "Airbrush Options"
 #~ msgstr "Options de l'aérographe"
@@ -6014,9 +6058,6 @@ msgstr "Aucune expression régulière antèrieure"
 #~ msgid "/Image/_Alpha"
 #~ msgstr "/Image/_Alpha"
 
-#~ msgid "/_Layers"
-#~ msgstr "/_Calques"
-
 #~ msgid "/_Tools"
 #~ msgstr "/_Outils"
 
@@ -6085,9 +6126,6 @@ msgstr "Aucune expression régulière antèrieure"
 
 #~ msgid "pixel"
 #~ msgstr "pixel"
-
-#~ msgid "pixels"
-#~ msgstr "pixels"
 
 #~ msgid "inch"
 #~ msgstr "pouce"

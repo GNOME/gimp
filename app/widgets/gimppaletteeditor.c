@@ -610,7 +610,7 @@ palette_entries_load (char *filename)
   if (!(fp = fopen (filename, "rb")))
     {
       palette_entries_free (entries);
-      g_warning (_("failed to open palette file %s: can't happen?"), filename);
+      g_warning ("failed to open palette file %s: can't happen?", filename);
       return;
     }
 

@@ -707,10 +707,10 @@ text_render (GimpImage *gimage,
       image = gdk_image_get (pixmap, 0, 0, pixmap_width, pixmap_height);
 
       if (!image)
-	fatal_error (_("sanity check failed: could not get gdk image"));
+	fatal_error ("sanity check failed: could not get gdk image");
 
       if (image->depth != 1)
-	fatal_error (_("sanity check failed: image should have 1 bit per pixel"));
+	fatal_error ("sanity check failed: image should have 1 bit per pixel");
 
       /* convert the GdkImage bitmap to a region */
       text_gdk_image_to_region (image, antialias, &maskPR);

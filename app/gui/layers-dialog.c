@@ -914,7 +914,7 @@ layers_dialog_update (GimpImage* gimage)
       layer_widget_delete (lw);
     }
   if (layersD->layer_widgets)
-    g_message (_("layersD->layer_widgets not empty!"));
+    g_warning ("layersD->layer_widgets not empty!");
   layersD->layer_widgets = NULL;
 
   /*  Find the preview extents  */

@@ -1632,7 +1632,7 @@ xcf_save_tile_rle (XcfInfo *info,
 	}
 
       if (count != (tile_ewidth (tile) * tile_eheight (tile)))
-	g_print (_("xcf: uh oh! xcf rle tile saving error: %d\n"), count);
+	g_message (_("xcf: uh oh! xcf rle tile saving error: %d"), count);
     }
   info->cp += xcf_write_int8(info->fp, rlebuf, len);
   tile_release (tile, FALSE);
@@ -1775,8 +1775,8 @@ xcf_load_image_props (XcfInfo *info,
 	    {
 	      int i;
 	      g_message (_("XCF warning: version 0 of XCF file format\n"
-			 "did not save indexed colormaps correctly.\n"
-			 "Substituting grayscale map."));
+			   "did not save indexed colormaps correctly.\n"
+			   "Substituting grayscale map."));
 	      info->cp += xcf_read_int32 (info->fp, (guint32*) &gimage->num_cols, 1);
 	      gimage->cmap = g_new (guchar, gimage->num_cols*3);
 	      xcf_seek_pos (info, info->cp + gimage->num_cols);
@@ -2535,7 +2535,7 @@ xcf_load_level (XcfInfo     *info,
 
   if (offset != 0)
     {
-      g_message (_("encountered garbage after reading level: %d"), offset);
+      g_message ("encountered garbage after reading level: %d", offset);
       return FALSE;
     }
 
