@@ -69,15 +69,21 @@ static void       run    (const gchar      *name,
                           gint             *nreturn_vals,
                           GimpParam       **return_vals);
 
-static void       noisify (GimpDrawable    *drawable,
-                           gboolean         preview_mode);
-static gdouble    gauss   (GRand *gr);
 
-static gint       noisify_dialog                   (GimpDrawable *drawable,
-                                                    gint           channels);
-static void       noisify_double_adjustment_update (GtkAdjustment *adjustment,
-                                                    gpointer       data);
-static void       preview_scroll_callback          (GimpDrawable *drawable);
+static void    noisify_func (const guchar        *src,
+                             guchar              *dest,
+                             gint                 bpp,
+                             gpointer             data);
+
+static void    noisify      (GimpDrawablePreview *preview);
+
+
+static gdouble gauss                            (GRand *gr);
+
+static gint    noisify_dialog                   (GimpDrawable    *drawable,
+                                                 gint             channels);
+static void    noisify_double_adjustment_update (GtkAdjustment   *adjustment,
+                                                 gpointer         data);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -100,15 +106,6 @@ static NoisifyInterface noise_int =
 };
 
 static GimpRunMode     run_mode;
-
-/* All the Preview stuff... */
-#define PREVIEW_SIZE 128
-static GtkWidget *preview;
-static GtkObject *hscroll_data, *vscroll_data;
-static gint       preview_width, preview_height, preview_bpp;
-static gint       preview_x1, preview_x2, preview_y1, preview_y2;
-static gint       sel_width, sel_height;
-static gint       sel_x1, sel_x2, sel_y1, sel_y2;
 
 MAIN ()
 
@@ -167,12 +164,6 @@ run (const gchar      *name,
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
-  gimp_drawable_mask_bounds (drawable->drawable_id,
-                             &sel_x1, &sel_y1, &sel_x2, &sel_y2);
-
-  sel_width  = sel_x2 - sel_x1;
-  sel_height = sel_y2 - sel_y1;
-
   if (gimp_drawable_is_gray (drawable->drawable_id))
     nvals.noise[1] = 0.;
 
@@ -219,11 +210,14 @@ run (const gchar      *name,
   if (gimp_drawable_is_rgb (drawable->drawable_id) ||
       gimp_drawable_is_gray (drawable->drawable_id))
     {
+      GRand *gr = g_rand_new ();
+
       gimp_progress_init (_("Adding Noise..."));
       gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
 
       /*  compute the luminosity which exceeds the luminosity threshold  */
-      noisify (drawable, FALSE);
+      gimp_rgn_iterate2 (drawable, run_mode, noisify_func, gr);
+      g_rand_free (gr);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
@@ -276,67 +270,44 @@ noisify_func (const guchar *src,
 }
 
 static void
-noisify (GimpDrawable *drawable,
-         gboolean      preview_mode)
+noisify (GimpDrawablePreview *preview)
 {
-  GRand *gr = g_rand_new ();
+  guchar       *src, *dst;
+  GimpPixelRgn  src_rgn;
+  gint          i;
+  gint          x1, y1;
+  gint          width, height;
+  gint          bpp;
+  GRand        *gr = g_rand_new ();
 
-  if (preview_mode)
-    {
-      guchar       *preview_src, *preview_dst;
-      GimpPixelRgn  src_rgn;
-      gint          i;
+  gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
+  gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+  bpp = preview->drawable->bpp;
 
-      preview_src = g_new (guchar, preview_width * preview_height * preview_bpp);
-      preview_dst = g_new (guchar, preview_width * preview_height * preview_bpp);
+  src = g_new (guchar, width * height * bpp);
+  dst = g_new (guchar, width * height * bpp);
 
-      gimp_pixel_rgn_init (&src_rgn, drawable,
-                           preview_x1, preview_y1,
-                           preview_width, preview_height,
-                           FALSE, FALSE);
-      gimp_pixel_rgn_get_rect (&src_rgn, preview_src,
-                               preview_x1, preview_y1,
-                               preview_width, preview_height);
+  gimp_pixel_rgn_init (&src_rgn, preview->drawable,
+                       x1, y1, width, height,
+                       FALSE, FALSE);
+  gimp_pixel_rgn_get_rect (&src_rgn, src, x1, y1, width, height);
 
-      for (i = 0; i < preview_width * preview_height; i++)
-        noisify_func (preview_src + i * preview_bpp,
-                      preview_dst + i * preview_bpp,
-                      preview_bpp,
-                      gr);
+  for (i = 0; i < width * height; i++)
+    noisify_func (src + i * bpp, dst + i * bpp, bpp, gr);
 
-      gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
-                              0, 0, preview_width, preview_height,
-                              gimp_drawable_type (drawable->drawable_id),
-                              preview_dst,
-                              preview_width * preview_bpp);
+  gimp_drawable_preview_draw (preview, dst);
 
-      g_free (preview_src);
-      g_free (preview_dst);
-    }
-  else
-    {
-      gimp_rgn_iterate2 (drawable, run_mode, noisify_func, gr);
-    }
-
+  g_free (src);
+  g_free (dst);
   g_rand_free (gr);
-}
-
-static void
-preview_scroll_callback (GimpDrawable *drawable)
-{
-  preview_x1 = sel_x1 + GTK_ADJUSTMENT (hscroll_data)->value;
-  preview_y1 = sel_y1 + GTK_ADJUSTMENT (vscroll_data)->value;
-  preview_x2 = preview_x1 + MIN (preview_width, sel_width);
-  preview_y2 = preview_y1 + MIN (preview_height, sel_height);
-
-  noisify (drawable, TRUE);
 }
 
 static void
 noisify_add_channel (GtkWidget    *table,
                      gint          channel,
                      gchar        *name,
-                     GimpDrawable *drawable)
+                     GimpDrawable *drawable,
+                     GtkWidget    *preview)
 {
   GtkObject *adj;
 
@@ -351,6 +322,9 @@ noisify_add_channel (GtkWidget    *table,
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (noisify_double_adjustment_update),
                     &nvals.noise[channel]);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   noise_int.channel_adj[channel] = adj;
 }
@@ -359,7 +333,8 @@ static void
 noisify_add_alpha_channel (GtkWidget    *table,
                            gint          channel,
                            gchar        *name,
-                           GimpDrawable *drawable)
+                           GimpDrawable *drawable,
+                           GtkWidget    *preview)
 {
   GtkObject *adj;
 
@@ -374,6 +349,9 @@ noisify_add_alpha_channel (GtkWidget    *table,
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &nvals.noise[channel]);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   noise_int.channel_adj[channel] = adj;
 }
@@ -385,9 +363,7 @@ noisify_dialog (GimpDrawable *drawable,
   GtkWidget *dlg;
   GtkWidget *vbox;
   GtkWidget *hbox;
-  GtkWidget *ptable;
-  GtkWidget *frame;
-  GtkWidget *scrollbar;
+  GtkWidget *preview;
   GtkWidget *toggle;
   GtkWidget *table;
   gboolean   run;
@@ -408,61 +384,15 @@ noisify_dialog (GimpDrawable *drawable,
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  /* preview */
-  hbox = gtk_hbox_new (FALSE, 0);
+  hbox = gtk_hbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  ptable = gtk_table_new (2, 2, FALSE);
-  gtk_box_pack_start (GTK_BOX (hbox), ptable, FALSE, FALSE, 0);
-  gtk_widget_show (ptable);
-
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_table_attach (GTK_TABLE (ptable), frame, 0, 1, 0, 1, 0, 0, 0, 0);
-  gtk_widget_show (frame);
-
-  preview_width  = MIN (sel_width, PREVIEW_SIZE);
-  preview_height = MIN (sel_height, PREVIEW_SIZE);
-  preview_bpp    = drawable->bpp;
-
-  preview_x1 = sel_x1;
-  preview_y1 = sel_y1;
-  preview_x2 = preview_x1 + preview_width;
-  preview_y2 = preview_y1 + preview_height;
-
-  preview = gimp_preview_area_new ();
-  gtk_widget_set_size_request (preview, preview_width, preview_height);
-  gtk_container_add (GTK_CONTAINER (frame), preview);
+  preview = gimp_drawable_preview_new (drawable, NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
   gtk_widget_show (preview);
-
-  hscroll_data = gtk_adjustment_new (0, 0, sel_width - 1, 1.0,
-                                    MIN (preview_width, sel_width),
-                                    MIN (preview_width, sel_width));
-
-  g_signal_connect_swapped (hscroll_data, "value_changed",
-                            G_CALLBACK (preview_scroll_callback),
-                            drawable);
-
-  scrollbar = gtk_hscrollbar_new (GTK_ADJUSTMENT (hscroll_data));
-  gtk_range_set_update_policy (GTK_RANGE (scrollbar), GTK_UPDATE_CONTINUOUS);
-  gtk_table_attach (GTK_TABLE (ptable), scrollbar, 0, 1, 1, 2,
-                    GTK_FILL, 0, 0, 0);
-  gtk_widget_show (scrollbar);
-
-  vscroll_data = gtk_adjustment_new (0, 0, sel_height - 1, 1.0,
-                                     MIN (preview_height, sel_height),
-                                     MIN (preview_height, sel_height));
-
-  g_signal_connect_swapped (vscroll_data, "value_changed",
-                            G_CALLBACK (preview_scroll_callback),
-                            drawable);
-
-  scrollbar = gtk_vscrollbar_new (GTK_ADJUSTMENT (vscroll_data));
-  gtk_range_set_update_policy (GTK_RANGE (scrollbar), GTK_UPDATE_CONTINUOUS);
-  gtk_table_attach (GTK_TABLE (ptable), scrollbar, 1, 2, 0, 1,
-                    0, GTK_FILL, 0, 0);
-  gtk_widget_show (scrollbar);
+  g_signal_connect (preview, "invalidated",
+                    G_CALLBACK (noisify), NULL);
 
   if (gimp_drawable_is_rgb (drawable->drawable_id))
     {
@@ -474,6 +404,9 @@ noisify_dialog (GimpDrawable *drawable,
       g_signal_connect (toggle, "toggled",
                         G_CALLBACK (gimp_toggle_button_update),
                         &nvals.independent);
+      g_signal_connect_swapped (toggle, "toggled",
+                                G_CALLBACK (gimp_preview_invalidate),
+                                preview);
     }
 
   table = gtk_table_new (channels, 3, FALSE);
@@ -486,27 +419,27 @@ noisify_dialog (GimpDrawable *drawable,
 
   if (channels == 1)
     {
-      noisify_add_channel (table, 0, _("_Gray:"), drawable);
+      noisify_add_channel (table, 0, _("_Gray:"), drawable, preview);
     }
   else if (channels == 2)
     {
-      noisify_add_channel (table, 0, _("_Gray:"), drawable);
-      noisify_add_alpha_channel (table, 1, _("_Alpha:"), drawable);
+      noisify_add_channel (table, 0, _("_Gray:"), drawable, preview);
+      noisify_add_alpha_channel (table, 1, _("_Alpha:"), drawable, preview);
       gtk_table_set_row_spacing (GTK_TABLE (table), 1, 15);
     }
   else if (channels == 3)
     {
-      noisify_add_channel (table, 0, _("_Red:"), drawable);
-      noisify_add_channel (table, 1, _("_Green:"), drawable);
-      noisify_add_channel (table, 2, _("_Blue:"), drawable);
+      noisify_add_channel (table, 0, _("_Red:"), drawable, preview);
+      noisify_add_channel (table, 1, _("_Green:"), drawable, preview);
+      noisify_add_channel (table, 2, _("_Blue:"), drawable, preview);
     }
 
   else if (channels == 4)
     {
-      noisify_add_channel (table, 0, _("_Red:"), drawable);
-      noisify_add_channel (table, 1, _("_Green:"), drawable);
-      noisify_add_channel (table, 2, _("_Blue:"), drawable);
-      noisify_add_alpha_channel (table, 3, _("_Alpha:"), drawable);
+      noisify_add_channel (table, 0, _("_Red:"), drawable, preview);
+      noisify_add_channel (table, 1, _("_Green:"), drawable, preview);
+      noisify_add_channel (table, 2, _("_Blue:"), drawable, preview);
+      noisify_add_alpha_channel (table, 3, _("_Alpha:"), drawable, preview);
       gtk_table_set_row_spacing (GTK_TABLE (table), 3, 15);
     }
   else
@@ -518,15 +451,13 @@ noisify_dialog (GimpDrawable *drawable,
         {
           buffer = g_strdup_printf (_("Channel #%d:"), i);
 
-          noisify_add_channel (table, i, buffer, drawable);
+          noisify_add_channel (table, i, buffer, drawable, preview);
 
           g_free (buffer);
         }
     }
 
   gtk_widget_show (dlg);
-
-  noisify (drawable, TRUE); /* preview noisify */
 
   run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
@@ -568,8 +499,6 @@ noisify_double_adjustment_update (GtkAdjustment *adjustment,
   gimp_double_adjustment_update (adjustment, data);
 
   drawable = g_object_get_data (G_OBJECT (adjustment), "drawable");
-
-  noisify (drawable, TRUE);
 
   if (! nvals.independent)
     {
