@@ -1426,6 +1426,10 @@ dialog(GimpDrawable *drawable)
    g_signal_connect(dlg, "key_release_event",
 		    G_CALLBACK(key_release_cb), NULL);
 
+   g_signal_connect (dlg, "destroy",
+		     G_CALLBACK (gtk_main_quit),
+                     NULL);
+
    main_vbox = gtk_vbox_new(FALSE, 1);
    gtk_container_set_border_width(GTK_CONTAINER(main_vbox), 1);
    gtk_container_add(GTK_CONTAINER(dlg), main_vbox);
@@ -1533,7 +1537,6 @@ dialog(GimpDrawable *drawable)
       menu_build_mru_items(_mru);
 
    gtk_main();
-   gdk_flush();
 
    return run_flag;
 }
