@@ -49,6 +49,12 @@ struct _GimpProgressBar
 struct _GimpProgressBarClass
 {
   GtkProgressBarClass  parent_class;
+
+  /* Padding for future expansion */
+  void (* _gimp_reserved1) (void);
+  void (* _gimp_reserved2) (void);
+  void (* _gimp_reserved3) (void);
+  void (* _gimp_reserved4) (void);
 };
 
 

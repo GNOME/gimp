@@ -48,17 +48,23 @@ typedef enum
 
 typedef struct _GimpIntStoreClass  GimpIntStoreClass;
 
+struct _GimpIntStore
+{
+  GtkListStore  parent_instance;
+
+  /*< private >*/
+  GtkTreeIter  *empty_iter;
+};
+
 struct _GimpIntStoreClass
 {
   GtkListStoreClass  parent_instance;
-};
 
-struct _GimpIntStore
-{
-  GtkListStore       parent_instance;
-
-  /*< private >*/
-  GtkTreeIter       *empty_iter;
+  /* Padding for future expansion */
+  void (* _gimp_reserved1) (void);
+  void (* _gimp_reserved2) (void);
+  void (* _gimp_reserved3) (void);
+  void (* _gimp_reserved4) (void);
 };
 
 

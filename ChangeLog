@@ -1,5 +1,20 @@
 2004-10-23  Michael Natterer  <mitch@gimp.org>
 
+	* libgimp/gimpaspectpreview.h
+	* libgimp/gimpdrawablepreview.h
+	* libgimp/gimpprogressbar.h
+	* libgimpwidgets/gimpcellrenderercolor.h
+	* libgimpwidgets/gimpcellrenderertoggle.h
+	* libgimpwidgets/gimpframe.h
+	* libgimpwidgets/gimpintcombobox.h
+	* libgimpwidgets/gimpintstore.h
+	* libgimpwidgets/gimppreview.h
+	* libgimpwidgets/gimppreviewarea.h
+	* libgimpwidgets/gimpscrolledpreview.h: added padding to all class
+	structs which have been added since 2.0.
+
+2004-10-23  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/file-commands.c (file_save_cmd_callback): don't
 	g_return_if_fail() if there is no active drawable, just silently
 	return.
