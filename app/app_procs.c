@@ -117,8 +117,8 @@ static void      splash_logo_expose                   (GtkWidget *widget);
 static void      toast_old_temp_files                 (void);
 
 
-static gint is_app_exit_finish_done = FALSE;
-gint        we_are_exiting          = FALSE;
+static gboolean is_app_exit_finish_done = FALSE;
+gboolean        we_are_exiting          = FALSE;
 
 static GtkWidget *logo_area   = NULL;
 static GdkPixmap *logo_pixmap = NULL;
