@@ -15,14 +15,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdlib.h>
+#include "config.h"
 
 #include <gdk/gdkkeysyms.h>
 
 #include "appenv.h"
 #include "cursorutil.h"
 #include "drawable.h"
-#include "errors.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimpui.h"
@@ -33,8 +32,8 @@
 #include "selection.h"
 #include "tools.h"
 
-#include "config.h"
 #include "libgimp/gimpintl.h"
+
 
 /* Defaults */
 #define ERASER_DEFAULT_HARD        FALSE
@@ -159,10 +158,10 @@ eraser_paint_func (PaintCore    *paint_core,
 {
   switch (state)
     {
-    case INIT_PAINT :
+    case INIT_PAINT:
       break;
 
-    case MOTION_PAINT :
+    case MOTION_PAINT:
       eraser_motion (paint_core,
 		     drawable,
 		     eraser_options->paint_options.pressure_options,
@@ -171,10 +170,10 @@ eraser_paint_func (PaintCore    *paint_core,
 		     eraser_options->anti_erase);
       break;
 
-    case FINISH_PAINT :
+    case FINISH_PAINT:
       break;
 
-    default :
+    default:
       break;
     }
 
@@ -182,7 +181,7 @@ eraser_paint_func (PaintCore    *paint_core,
 }
 
 Tool *
-tools_new_eraser ()
+tools_new_eraser (void)
 {
   Tool * tool;
   PaintCore * private;
@@ -205,8 +204,7 @@ tools_new_eraser ()
 
 
 void
-tools_free_eraser (tool)
-     Tool * tool;
+tools_free_eraser (Tool *tool)
 {
   paint_core_free (tool);
 }

@@ -15,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #include "config.h"
 
 #include <glib.h>
@@ -37,26 +36,26 @@
 #include "appenv.h"
 #include "drawable.h"
 #include "gdisplay.h"
-#include "general.h"
 #include "gimprc.h"
 #include "paint_funcs.h"
 #include "temp_buf.h"
 
 #include "libgimp/gimpcolorspace.h"
 
-static unsigned char *   temp_buf_allocate (unsigned int);
-static void              temp_buf_to_color (TempBuf *, TempBuf *);
-static void              temp_buf_to_gray  (TempBuf *, TempBuf *);
+
+static guchar * temp_buf_allocate (guint);
+static void     temp_buf_to_color (TempBuf *, TempBuf *);
+static void     temp_buf_to_gray  (TempBuf *, TempBuf *);
 
 
 /*  Memory management  */
 
-static unsigned char *
-temp_buf_allocate (unsigned int size)
+static guchar *
+temp_buf_allocate (guint size)
 {
-  unsigned char *data;
+  guchar *data;
 
-  data = (unsigned char *) g_malloc (size);
+  data = g_new (guchar, size);
 
   return data;
 }
@@ -68,8 +67,8 @@ static void
 temp_buf_to_color (TempBuf *src_buf, 
 		   TempBuf *dest_buf)
 {
-  unsigned char *src;
-  unsigned char *dest;
+  guchar *src;
+  guchar *dest;
   long num_bytes;
 
   src = temp_buf_data (src_buf);
@@ -79,7 +78,7 @@ temp_buf_to_color (TempBuf *src_buf,
 
   while (num_bytes--)
     {
-      unsigned char tmpch;
+      guchar tmpch;
       *dest++ = *src++;  /* alpha channel */
       *dest++ = tmpch = *src++;
       *dest++ = tmpch;
@@ -92,8 +91,8 @@ static void
 temp_buf_to_gray (TempBuf *src_buf, 
 		  TempBuf *dest_buf)
 {
-  unsigned char *src;
-  unsigned char *dest;
+  guchar *src;
+  guchar *dest;
   long  num_bytes;
   float pix;
 
@@ -108,25 +107,25 @@ temp_buf_to_gray (TempBuf *src_buf,
 
       pix = INTENSITY (*src++, *src++, *src++);
 
-      *dest++ = (unsigned char) pix;
+      *dest++ = (guchar) pix;
     }
 }
 
 
 TempBuf *
-temp_buf_new (int width, 
-	      int height, 
-	      int bytes, 
-	      int x, 
-	      int y, 
-	      unsigned char *col)
+temp_buf_new (gint    width, 
+	      gint    height, 
+	      gint    bytes, 
+	      gint    x, 
+	      gint    y, 
+	      guchar *col)
 {
   long i;
   int  j;
-  unsigned char * data;
-  TempBuf * temp;
+  guchar  *data;
+  TempBuf *temp;
 
-  temp = (TempBuf *) g_malloc (sizeof (TempBuf));
+  temp = g_new (TempBuf, 1);
 
   temp->width  = width;
   temp->height = height;
@@ -157,12 +156,12 @@ temp_buf_new (int width,
       else
         {
           /* No, we cannot */
-          unsigned char * dptr;
+          guchar * dptr;
           /* Fill the first row */
           dptr = data;
           for (i = width - 1; i >= 0; --i)
             {
-              unsigned char * init;
+              guchar * init;
               j = bytes;
               init = col;
               while (j--)
@@ -226,13 +225,13 @@ temp_buf_copy (TempBuf *src,
 
 TempBuf *
 temp_buf_resize (TempBuf *buf, 
-		 int      bytes, 
-		 int      x, 
-		 int      y, 
-		 int      w, 
-		 int      h)
+		 gint     bytes, 
+		 gint     x, 
+		 gint     y, 
+		 gint     w, 
+		 gint     h)
 {
-  int size;
+  gint size;
 
   /*  calculate the requested size  */
   size = w * h * bytes;
@@ -266,16 +265,16 @@ temp_buf_resize (TempBuf *buf,
 TempBuf *
 temp_buf_copy_area (TempBuf *src, 
 		    TempBuf *dest, 
-		    int      x, 
-		    int      y, 
-		    int      w, 
-		    int      h, 
-		    int      border)
+		    gint     x, 
+		    gint     y, 
+		    gint     w, 
+		    gint     h, 
+		    gint     border)
 {
   TempBuf * new;
   PixelRegion srcR, destR;
-  unsigned char empty[MAX_CHANNELS] = { 0, 0, 0, 0 };
-  int x1, y1, x2, y2;
+  guchar empty[MAX_CHANNELS] = { 0, 0, 0, 0 };
+  gint x1, y1, x2, y2;
 
   if (!src)
     {
@@ -339,7 +338,7 @@ temp_buf_free (TempBuf *temp_buf)
 }
 
 
-unsigned char *
+guchar *
 temp_buf_data (TempBuf *temp_buf)
 {
   if (temp_buf->swapped)
@@ -355,10 +354,10 @@ temp_buf_data (TempBuf *temp_buf)
 
 
 MaskBuf *
-mask_buf_new (int width, 
-	      int height)
+mask_buf_new (gint width, 
+	      gint height)
 {
-  static unsigned char empty = 0;
+  static guchar empty = 0;
 
   return (temp_buf_new (width, height, 1, 0, 0, &empty));
 }
@@ -371,7 +370,7 @@ mask_buf_free (MaskBuf *mask)
 }
 
 
-unsigned char *
+guchar *
 mask_buf_data (MaskBuf *mask_buf)
 {
   if (mask_buf->swapped)
@@ -409,13 +408,13 @@ mask_buf_data (MaskBuf *mask_buf)
 
 
 /*  a static counter for generating unique filenames  */
-static int swap_index = 0;
+static gint swap_index = 0;
 
 /*  a static pointer which keeps track of the last request for a swapped buffer  */
 static TempBuf * cached_in_memory = NULL;
 
 
-static char *
+static gchar *
 generate_unique_filename (void)
 {
   pid_t pid;
@@ -429,9 +428,9 @@ void
 temp_buf_swap (TempBuf *buf)
 {
   TempBuf * swap;
-  char * filename;
+  gchar * filename;
   struct stat stat_buf;
-  int err;
+  gint err;
   FILE * fp;
 
   if (!buf || buf->swapped)

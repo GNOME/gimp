@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdlib.h>
+#include "config.h"
 
 #include "appenv.h"
 #include "airbrush.h"
@@ -43,7 +43,6 @@
 #include "fuzzy_select.h"
 #include "histogram_tool.h"
 #include "ink.h"
-#include "interface.h"
 #include "iscissors.h"
 #include "levels.h"
 #include "magnify.h"
@@ -63,10 +62,10 @@
 #include "transform_tool.h"
 #include "dialog_handler.h"
 
-#include "config.h"
 #include "libgimp/gimpintl.h"
 
 #include "pixmaps2.h"
+
 
 /*  Global Data  */
 Tool * active_tool = NULL;

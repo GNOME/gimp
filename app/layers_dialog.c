@@ -22,7 +22,6 @@
 #include "appenv.h"
 #include "colormaps.h"
 #include "drawable.h"
-#include "errors.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "gimage.h"

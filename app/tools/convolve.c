@@ -15,13 +15,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdlib.h>
+#include "config.h"
 
 #include <gdk/gdkkeysyms.h>
 
 #include "appenv.h"
 #include "drawable.h"
-#include "errors.h"
 #include "convolve.h"
 #include "gdisplay.h"
 #include "gimpui.h"
@@ -32,8 +31,8 @@
 #include "tools.h"
 #include "gimage.h"
 
-#include "config.h"
 #include "libgimp/gimpintl.h"
+
 
 #define FIELD_COLS    4
 #define MIN_BLUR      64         /*  (8/9 original pixel)   */
@@ -251,7 +250,7 @@ convolve_modifier_key_func (Tool        *tool,
 }
 
 Tool *
-tools_new_convolve ()
+tools_new_convolve (void)
 {
   Tool * tool;
   PaintCore * private;
@@ -288,9 +287,9 @@ convolve_motion (PaintCore            *paint_core,
 		 ConvolveType          type,
 		 double                rate)
 {
-  GImage *gimage;
-  TempBuf * area;
-  unsigned char *temp_data;
+  GImage  *gimage;
+  TempBuf *area;
+  guchar  *temp_data;
   PixelRegion srcPR, destPR, tempPR;
   gdouble scale;
 
@@ -312,7 +311,8 @@ convolve_motion (PaintCore            *paint_core,
     return;
 
   /*  configure the pixel regions correctly  */
-  pixel_region_init (&srcPR, drawable_data (drawable), area->x, area->y, area->width, area->height, FALSE);
+  pixel_region_init (&srcPR, drawable_data (drawable),
+		     area->x, area->y, area->width, area->height, FALSE);
 
   destPR.bytes = area->bytes;
   destPR.x = 0; destPR.y = 0;

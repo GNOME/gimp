@@ -19,9 +19,9 @@
 
 #include <stdlib.h>
 
-#include "gdk/gdkkeysyms.h"
+#include <gdk/gdkkeysyms.h>
+
 #include "appenv.h"
-#include "colormaps.h"
 #include "cursorutil.h"
 #include "dialog_handler.h"
 #include "info_dialog.h"
@@ -32,13 +32,13 @@
 #include "gimprc.h"
 #include "gimpui.h"
 #include "gximage.h"
-#include "interface.h"
 #include "nav_window.h"
 #include "scroll.h"
 #include "scale.h"
 
-#include "libgimp/gimpintl.h"
 #include "libgimp/gimpunit.h"
+
+#include "libgimp/gimpintl.h"
 
 #include "pixmaps/zoom_in.xpm"
 #include "pixmaps/zoom_out.xpm"

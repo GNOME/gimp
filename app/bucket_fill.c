@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdlib.h>
+#include "config.h"
 
 #include <gdk/gdkkeysyms.h>
 
@@ -28,14 +28,12 @@
 #include "gimage_mask.h"
 #include "gimprc.h"
 #include "gimpui.h"
-#include "interface.h"
 #include "paint_funcs.h"
 #include "paint_options.h"
 #include "selection.h"
 #include "tools.h"
 #include "undo.h"
 
-#include "config.h"
 #include "libgimp/gimpintl.h"
 
 /*  the bucket fill structures  */

@@ -27,15 +27,15 @@
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "rect_select.h"
-#include "interface.h"
 #include "bezier_select.h"
 #include "bezier_selectP.h"
 #include "paths_dialogP.h"
 #include "selection_options.h"
 #include "undo.h"
 
-#include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
+
+#include "libgimp/gimpintl.h"
 
 /* Bezier extensions made by Raphael FRANCOIS (fraph@ibm.net)
 

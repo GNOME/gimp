@@ -21,7 +21,6 @@
 #include "gimpbrushlist.h"
 #include "gimprc.h"
 #include "gradient_header.h"
-#include "interface.h"
 #include "tools.h"
 
 #include "libgimp/gimplimits.h"

@@ -15,13 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
+#include "config.h"
 
 #include "appenv.h"
 #include "drawable.h"
-#include "errors.h"
 #include "gdisplay.h"
 #include "gimpbrushlist.h"
 #include "gimpbrushpipe.h"
@@ -34,9 +31,11 @@
 #include "selection.h"
 #include "tools.h"
 
-#include "config.h"
+#include "libgimp/gimpmath.h"
 #include "libgimp/gimpunitmenu.h"
+
 #include "libgimp/gimpintl.h"
+
 
 /*  defines  */
 #define  PAINT_LEFT_THRESHOLD  0.05
@@ -136,7 +135,7 @@ paintbrush_options_reset (void)
 {
   PaintbrushOptions *options = paintbrush_options;
   GtkWidget *spinbutton;
-  int        digits;
+  gint       digits;
 
   paint_options_reset ((PaintOptions *) options);
 
@@ -416,7 +415,7 @@ paintbrush_paint_func (PaintCore    *paint_core,
       if (timer)
       {
 	g_timer_stop(timer);
-	printf("painting took %f:\n", g_timer_elapsed(timer, NULL));
+	g_print ("painting took %f:\n", g_timer_elapsed(timer, NULL));
 	g_timer_destroy(timer);
 	timer = NULL;
       }

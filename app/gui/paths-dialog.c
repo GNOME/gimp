@@ -22,11 +22,10 @@
 #include <errno.h>
 #include <string.h>
 
-#include "gdk/gdkkeysyms.h"
+#include <gdk/gdkkeysyms.h>
 
 #include "appenv.h"
 #include "draw_core.h"
-#include "colormaps.h"
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gimage.h"

@@ -22,11 +22,9 @@
 
 #include "appenv.h"
 #include "drawable.h"
-#include "errors.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimpui.h"
-#include "interface.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
 #include "paint_options.h"

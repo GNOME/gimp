@@ -15,13 +15,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <math.h>
-#include <stdlib.h>
 #include "appenv.h"
 #include "color_panel.h"
 #include "color_notebook.h"
 #include "colormaps.h"
 #include "gimpdnd.h"
+
 
 #define EVENT_MASK  GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK | \
                     GDK_BUTTON_RELEASE_MASK | GDK_ENTER_NOTIFY_MASK | \

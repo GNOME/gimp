@@ -15,23 +15,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
+#include "config.h"
 
 #include "appenv.h"
-#include "colormaps.h"
 #include "drawable.h"
-#include "general.h"
 #include "gimage_mask.h"
 #include "gdisplay.h"
 #include "gimpui.h"
 #include "hue_saturation.h"
-#include "interface.h"
 
-#include "config.h"
 #include "libgimp/gimpcolorspace.h"
+#include "libgimp/gimpmath.h"
+
 #include "libgimp/gimpintl.h"
+
 
 #define HUE_PARTITION_MASK  GDK_EXPOSURE_MASK | GDK_ENTER_NOTIFY_MASK
 

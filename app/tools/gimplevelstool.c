@@ -24,7 +24,6 @@
 #include <errno.h>
 
 #include "appenv.h"
-#include "colormaps.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "histogramwidget.h"

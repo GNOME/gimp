@@ -15,9 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdlib.h>
-#include <string.h>
-#include <gtk/gtkmain.h>
+#include "config.h"
 
 #include "appenv.h"
 #include "colormaps.h"
@@ -31,7 +29,6 @@
 #include "scale.h"
 #include "gimprc.h"
 
-#include "config.h"
 #include "libgimp/gimpintl.h"
 
 static void gdisplay_close_warning_callback  (GtkWidget *widget,

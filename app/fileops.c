@@ -44,7 +44,6 @@
 #include "cursorutil.h"
 #include "dialog_handler.h"
 #include "gdisplay.h"
-#include "general.h"
 #include "gimage.h"
 #include "gimpcontext.h"
 #include "gimpui.h"
@@ -59,8 +58,10 @@
 #include "docindex.h"
 #include "undo.h"
 
-#include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
+
+#include "libgimp/gimpintl.h"
+
 
 typedef struct _OverwriteBox OverwriteBox;
 

@@ -1,20 +1,23 @@
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
-#include "gdk/gdkkeysyms.h"
+
+#include <gdk/gdkkeysyms.h>
 
 #include "color_notebook.h"
 #include "image_render.h"
 #include "dialog_handler.h"
 #include "colormaps.h"
 #include "color_area.h"
-#include "general.h"
 #include "gimpdnd.h"
 #include "gimpui.h"
 
-#include "config.h"
+#include "libgimp/gimpmath.h"
+
 #include "libgimp/gimpintl.h"
+
 
 /*  Add these features:
  *

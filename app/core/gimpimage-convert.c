@@ -97,14 +97,14 @@
 #include "fsdither.h"
 #include "gdisplay.h"
 #include "gimpui.h"
-#include "interface.h"
 #include "undo.h"
 #include "palette.h"
 #include "palette_select.h"
 
 #include "libgimp/gimpcolorspace.h"
-#include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
+
+#include "libgimp/gimpintl.h"
 
 #include "layer_pvt.h"			/* ick. */
 #include "drawable_pvt.h"		/* ick ick. */

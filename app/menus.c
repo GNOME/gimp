@@ -15,13 +15,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#include "config.h"
+
 #include <stdlib.h>
 #include <string.h>
+
 #include <gdk/gdkkeysyms.h>
 
 #include "appenv.h"
 #include "channels_dialog.h"
-#include "colormaps.h"
 #include "commands.h"
 #include "dialog_handler.h"
 #include "fileops.h"
@@ -38,9 +40,10 @@
 #include "gdisplay.h"
 #include "docindex.h"
 
-#include "config.h"
-#include "libgimp/gimpintl.h"
 #include "libgimp/gimpenv.h"
+
+#include "libgimp/gimpintl.h"
+
 
 #define MRU_MENU_ENTRY_SIZE (strlen ("/File/MRU00 ") + 1)
 #define MRU_MENU_ACCEL_SIZE sizeof ("<control>0")

@@ -15,11 +15,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#include "config.h"
+
 #include "appenv.h"
 #include "about_dialog.h"
 #include "app_procs.h"
 #include "brush_select.h"
-#include "colormaps.h"
 #include "colormap_dialog.i.h"
 #include "color_area.h"
 #include "commands.h"
@@ -55,8 +56,6 @@
 #include "tips_dialog.h"
 #include "tools.h"
 #include "undo.h"
-
-#include "config.h"
 
 #include "libgimp/gimpmath.h"
 #include "libgimp/gimpintl.h"

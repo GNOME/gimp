@@ -30,12 +30,12 @@
 #include "gimpui.h"
 #include "gradient.h"
 #include "gradient_header.h"
-#include "interface.h"
 #include "session.h"
 #include "tools.h"
 
-#include "libgimp/gimpintl.h"
 #include "libgimp/gimpenv.h"
+
+#include "libgimp/gimpintl.h"
 
 #define CELL_SIZE 20 /* The size of the preview cells */
 

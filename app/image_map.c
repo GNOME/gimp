@@ -15,12 +15,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "appenv.h"
 #include "drawable.h"
-#include "errors.h"
 #include "gdisplay.h"
 #include "gimage.h"
 #include "gimage_mask.h"
@@ -28,6 +24,7 @@
 #include "tile_manager.h"
 
 #include "tile_manager_pvt.h"
+
 
 #define WAITING 0
 #define WORKING 1
@@ -37,15 +34,15 @@
 /*  Local structures  */
 typedef struct _ImageMap
 {
-  GDisplay *        gdisp;
-  GimpDrawable *    drawable;
-  TileManager *     undo_tiles;
-  ImageMapApplyFunc apply_func;
-  void *            user_data;
-  PixelRegion       srcPR, destPR;
-  void *            pr;
-  int               state;
-  gint              idle;
+  GDisplay          *gdisp;
+  GimpDrawable      *drawable;
+  TileManager       *undo_tiles;
+  ImageMapApplyFunc  apply_func;
+  gpointer           user_data;
+  PixelRegion        srcPR, destPR;
+  void              *pr;
+  gint               state;
+  gint               idle;
 } _ImageMap;
 
 
@@ -357,4 +354,3 @@ image_map_get_color_at (ImageMap image_map,
       return NULL;
     }
 }
-

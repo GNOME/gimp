@@ -50,8 +50,9 @@
 #include "bezier_selectP.h"
 #include "layer_pvt.h"			/* ick. (not alone either) */
 
-#include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
+
+#include "libgimp/gimpintl.h"
 
 
 #define OVERHEAD          25  /*  in units of pixel area  */

@@ -18,7 +18,6 @@
 #ifndef __PATTERNS_H__
 #define __PATTERNS_H__
 
-#include <glib.h>
 #include <stdio.h>
 
 #include "temp_buf.h"

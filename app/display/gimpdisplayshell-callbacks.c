@@ -18,19 +18,18 @@
 #include "config.h"
 
 #include <stdlib.h>
-#include "gdk/gdkkeysyms.h"
+
+#include <gdk/gdkkeysyms.h>
+
 #include "appenv.h"
 #include "bucket_fill.h"
-#include "colormaps.h"
 #include "cursorutil.h"
 #include "devices.h"
 #include "disp_callbacks.h"
 #include "gdisplay.h"
-#include "general.h"
 #include "gimpcontext.h"
 #include "gimprc.h"
 #include "info_window.h"
-#include "interface.h"
 #include "layer_select.h"
 #include "move.h"
 #include "patterns.h"

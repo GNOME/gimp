@@ -15,26 +15,25 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdlib.h>
-#include <string.h>
+#include "config.h"
 
 #include "appenv.h"
 #include "drawable.h"
 #include "layer.h"
-#include "errors.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "gimage.h"
 #include "gimage_mask.h"
-#include "interface.h"
 #include "paint_funcs.h"
 #include "undo.h"
 
-#include "config.h"
-#include "libgimp/gimpintl.h"
-
 #include "layer_pvt.h"
 #include "tile_manager_pvt.h"		/* ick. */
+
+#include "libgimp/gimpmath.h"
+
+#include "libgimp/gimpintl.h"
+
 
 void
 floating_sel_attach (Layer        *layer,

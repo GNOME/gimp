@@ -32,7 +32,6 @@
 #include "gimpdnd.h"
 #include "gimpui.h"
 #include "gradient.h"
-#include "interface.h"
 #include "paint_options.h"
 #include "selection.h"
 #include "tools.h"
@@ -41,8 +40,9 @@
 #include "tile.h"
 
 #include "libgimp/gimpcolorspace.h"
-#include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
+
+#include "libgimp/gimpintl.h"
 
 
 /*  target size  */

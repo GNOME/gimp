@@ -26,12 +26,12 @@
 #include "gximage.h"
 #include "info_dialog.h"
 #include "info_window.h"
-#include "interface.h"
 #include "scroll.h"
 #include "tools.h"
 
-#include "libgimp/gimpintl.h"
 #include "libgimp/gimpunit.h"
+
+#include "libgimp/gimpintl.h"
 
 #define MAX_BUF 256
 

@@ -15,18 +15,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdlib.h>
-#include "gdk/gdkkeysyms.h"
+#include "config.h"
+
+#include <gdk/gdkkeysyms.h>
+
 #include "appenv.h"
-#include "colormaps.h"
-#include "errors.h"
 #include "gdisplay.h"
 #include "gimprc.h"
-#include "interface.h"
 #include "layer_select.h"
 #include "layers_dialogP.h"
 
-#include "config.h"
 #include "libgimp/gimpintl.h"
 
 
@@ -34,30 +32,31 @@
 
 typedef struct _LayerSelect LayerSelect;
 
-struct _LayerSelect {
+struct _LayerSelect
+{
   GtkWidget *shell;
   GtkWidget *layer_preview;
   GtkWidget *label;
   GdkPixmap *layer_pixmap;
   GtkWidget *preview;
 
-  GImage *gimage;
-  Layer *current_layer;
-  int dirty;
-  int image_width, image_height;
-  double ratio;
+  GImage   *gimage;
+  Layer    *current_layer;
+  gboolean  dirty;
+  gint      image_width, image_height;
+  gdouble   ratio;
 };
 
 /*  layer widget function prototypes  */
-static void layer_select_advance (LayerSelect *, int);
-static void layer_select_forward (LayerSelect *);
-static void layer_select_backward (LayerSelect *);
-static void layer_select_end (LayerSelect *, guint32);
+static void layer_select_advance    (LayerSelect *, gint);
+static void layer_select_forward    (LayerSelect *);
+static void layer_select_backward   (LayerSelect *);
+static void layer_select_end        (LayerSelect *, guint32);
 static void layer_select_set_gimage (LayerSelect *, GImage *);
-static void layer_select_set_layer (LayerSelect *);
-static gint layer_select_events (GtkWidget *, GdkEvent *);
-static gint preview_events (GtkWidget *, GdkEvent *);
-static void preview_redraw (LayerSelect *);
+static void layer_select_set_layer  (LayerSelect *);
+static gint layer_select_events     (GtkWidget *, GdkEvent *);
+static gint preview_events          (GtkWidget *, GdkEvent *);
+static void preview_redraw          (LayerSelect *);
 
 /*
  *  Local variables
@@ -72,7 +71,7 @@ LayerSelect *layer_select = NULL;
 
 void
 layer_select_init (GImage  *gimage,
-		   int      dir,
+		   gint     dir,
 		   guint32  time)
 {
   GtkWidget *frame1;
@@ -160,7 +159,7 @@ layer_select_init (GImage  *gimage,
 }
 
 void
-layer_select_update_preview_size ()
+layer_select_update_preview_size (void)
 {
   if (layer_select != NULL)
     {
@@ -177,14 +176,14 @@ layer_select_update_preview_size ()
 
 static void
 layer_select_advance (LayerSelect *layer_select,
-		      int          dir)
+		      gint         dir)
 {
-  int index;
-  int length;
-  int count;
+  gint index;
+  gint length;
+  gint count;
   GSList *list;
   GSList *nth;
-  Layer *layer;
+  Layer  *layer;
 
   index = 0;
 
@@ -260,7 +259,7 @@ static void
 layer_select_set_gimage (LayerSelect *layer_select,
 			 GImage      *gimage)
 {
-  int image_width, image_height;
+  gint image_width, image_height;
 
   layer_select->gimage = gimage;
   layer_select->current_layer = gimage->active_layer;
@@ -304,7 +303,8 @@ layer_select_set_layer (LayerSelect *layer_select)
     return;
 
   /*  Set the layer label  */
-  gtk_label_set_text (GTK_LABEL (layer_select->label), drawable_get_name (GIMP_DRAWABLE(layer)));
+  gtk_label_set_text (GTK_LABEL (layer_select->label),
+		      drawable_get_name (GIMP_DRAWABLE (layer)));
 }
 
 
@@ -403,10 +403,10 @@ preview_events (GtkWidget *widget,
 static void
 preview_redraw (LayerSelect *layer_select)
 {
-  Layer * layer;
-  TempBuf * preview_buf;
-  int w, h;
-  int offx, offy;
+  Layer   *layer;
+  TempBuf *preview_buf;
+  gint w, h;
+  gint offx, offy;
 
   if (! (layer =  (layer_select->current_layer)))
     return;
@@ -443,7 +443,8 @@ preview_redraw (LayerSelect *layer_select)
       gtk_preview_put (GTK_PREVIEW (layer_select->preview),
 		       layer_select->layer_pixmap,
 		       layer_select->layer_preview->style->black_gc,
-		       0, 0, 0, 0, layer_select->image_width, layer_select->image_height);
+		       0, 0, 0, 0,
+		       layer_select->image_width, layer_select->image_height);
 
       /*  make sure the image has been transfered completely to the pixmap before
        *  we use it again...

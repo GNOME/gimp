@@ -17,25 +17,22 @@
  */
 #include "config.h"
 
-#include <stdlib.h>
-#include <string.h>
-
 #include "appenv.h"
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimprc.h"
-#include "interface.h"
 #include "layer.h"
 #include "paint_core.h"
 #include "paint_options.h"
 #include "undo.h"
 
-#include "libgimp/gimpintl.h"
-
 #include "channel_pvt.h"
 #include "tile_manager_pvt.h"
+
+#include "libgimp/gimpintl.h"
+
 
 /*  local variables  */
 static int gimage_mask_stroking = FALSE;

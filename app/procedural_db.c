@@ -15,21 +15,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdarg.h>
-#include <string.h>
-#include <sys/types.h>
-#include "appenv.h"
-#include "app_procs.h"
-#include "general.h"
-#include "gdisplay.h"
-#include "plug_in.h"
-#include "procedural_db.h"
-#include "libgimp/parasite.h"
 #include "config.h"
 
+#include <stdarg.h>
+#include <string.h>
+
+#include "appenv.h"
+#include "app_procs.h"
+#include "plug_in.h"
+#include "procedural_db.h"
+
+#include "libgimp/parasite.h"
+
 #include "libgimp/gimpintl.h"
+
 
 GHashTable *procedural_ht = NULL;
 

@@ -18,15 +18,16 @@
 #include "config.h"
 
 #include <string.h>
+
 #include "appenv.h"
 #include "dialog_handler.h"
 #include "gimprc.h"
+#include "gimpui.h"
 #include "info_dialog.h"
-#include "interface.h"
 #include "session.h"
 
 #include "libgimp/gimpintl.h"
-#include "libgimp/gimpsizeentry.h"
+
 
 /*  static functions  */
 static void info_field_new (InfoDialog *, InfoFieldType, char *, GtkWidget *,

@@ -39,7 +39,6 @@
 #include "fileops.h"
 #include "general.h"
 #include "gimpparasite.h"
-#include "gimphelp.h"
 #include "gimprc.h"
 #include "menus.h"
 #include "plug_in.h"
@@ -48,9 +47,11 @@
 #include "tools.h"
 
 #include "libgimp/gimpenv.h"
-#include "libgimp/gimpintl.h"
 #include "libgimp/gimputils.h"
 #include "libgimp/parasite.h"
+
+#include "libgimp/gimpintl.h"
+
 
 #define ERROR  0
 #define DONE   1

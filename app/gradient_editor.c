@@ -47,7 +47,6 @@
  *
  * - Add a Gradient brush mode (color changes as you move it).
  */
-
 #include "config.h"
 
 #include <stdio.h>
@@ -58,11 +57,9 @@
 #endif
 
 #include "appenv.h"
-#include "colormaps.h"
 #include "cursorutil.h"
 #include "datafiles.h"
 #include "errors.h"
-#include "general.h"
 #include "gimpcontext.h"
 #include "gimpdnd.h"
 #include "gimprc.h"
@@ -73,13 +70,15 @@
 #include "gradient_select.h"
 
 #include "libgimp/gimpenv.h"
-#include "libgimp/gimpintl.h"
 #include "libgimp/gimplimits.h"
 #include "libgimp/gimpmath.h"
 #include "libgimp/gimpcolorspace.h"
 
+#include "libgimp/gimpintl.h"
+
 #include "pixmaps/zoom_in.xpm"
 #include "pixmaps/zoom_out.xpm"
+
 
 /***** Magic numbers *****/
 

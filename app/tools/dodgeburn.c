@@ -17,14 +17,10 @@
  */
 #include "config.h"
 
-#include <stdlib.h>
-#include <stdio.h>
-
 #include <gdk/gdkkeysyms.h>
 
 #include "appenv.h"
 #include "drawable.h"
-#include "errors.h"
 #include "dodgeburn.h"
 #include "gdisplay.h"
 #include "gimplut.h"
@@ -36,8 +32,10 @@
 #include "tools.h"
 #include "gimage.h"
 
-#include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
+
+#include "libgimp/gimpintl.h"
+
 
 /*  the dodgeburn structures  */
 
@@ -279,7 +277,6 @@ dodgeburn_make_luts (PaintCore     *paint_core,
   gimp_lut_setup_exact (lut, 
 	lut_func, (void *)&exposure,
 	nchannels);
-	                  
 }
 		     
 static void
@@ -330,7 +327,7 @@ dodgeburn_modifier_key_func (Tool        *tool,
 }
 
 Tool *
-tools_new_dodgeburn ()
+tools_new_dodgeburn (void)
 {
   Tool * tool;
   PaintCore * private;
@@ -481,7 +478,7 @@ dodgeburn_non_gui_default (GimpDrawable *drawable,
   DodgeBurnMode mode = DODGEBURN_DEFAULT_MODE;
   DodgeBurnOptions *options = dodgeburn_options;
 
-  if(options)
+  if (options)
     {
       exposure = dodgeburn_options->exposure;
       type     = dodgeburn_options->type;
@@ -556,8 +553,8 @@ dodgeburn_highlights_lut_func (void   *user_data,
    gfloat exposure = *exposure_ptr;
    gfloat factor = 1.0 + exposure * (.333333);
             
-  if ( (nchannels == 2 && channel == 1) ||
-	(nchannels == 4 && channel == 3))
+  if ((nchannels == 2 && channel == 1) ||
+      (nchannels == 4 && channel == 3))
     return value;
 
    return factor * value;
@@ -573,8 +570,8 @@ dodgeburn_midtones_lut_func (void   *user_data,
    gfloat exposure = *exposure_ptr;
    gfloat factor;
 
-  if ( (nchannels == 2 && channel == 1) ||
-	(nchannels == 4 && channel == 3))
+  if ((nchannels == 2 && channel == 1) ||
+      (nchannels == 4 && channel == 3))
     return value;
 
    if (exposure < 0)
@@ -594,30 +591,24 @@ dodgeburn_shadows_lut_func (void   *user_data,
   gfloat exposure = *exposure_ptr;
   gfloat new_value;
   gfloat factor;
-  
+
   if ( (nchannels == 2 && channel == 1) ||
 	(nchannels == 4 && channel == 3))
     return value;
 
   if (exposure >= 0)
-  {
-    factor = .333333 * exposure;
-    new_value =  factor + value - factor * value; 
-  }
+    {
+      factor = 0.333333 * exposure;
+      new_value =  factor + value - factor * value; 
+    }
   else /* exposure < 0 */ 
-  {
-    factor = -.333333 * exposure;
-    if (value < factor)
-      new_value = 0;
-    else /*factor <= value <=1*/
-      new_value = (value - factor)/(1 - factor);
-  }
+    {
+      factor = -0.333333 * exposure;
+      if (value < factor)
+	new_value = 0;
+      else /*factor <= value <=1*/
+	new_value = (value - factor)/(1 - factor);
+    }
+
   return new_value; 
 }
-
-
-
-
-
-
-

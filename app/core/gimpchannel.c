@@ -23,7 +23,6 @@
 #include "appenv.h"
 #include "channel.h"
 #include "drawable.h"
-#include "errors.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "layer.h"
@@ -34,14 +33,16 @@
 #include "gimpsignal.h"
 #include "gimppreviewcache.h"
 
-#include "libgimp/gimpintl.h"
-#include "libgimp/gimpmath.h"
-
 #include "channel_pvt.h"
 #include "tile.h"
 
 #include "gimplut.h"
 #include "lut_funcs.h"
+
+#include "libgimp/gimpmath.h"
+
+#include "libgimp/gimpintl.h"
+
 
 enum {
   REMOVED,

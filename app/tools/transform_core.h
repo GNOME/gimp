@@ -21,7 +21,6 @@
 #include "draw_core.h"
 #include "gimpprogress.h"
 #include "info_dialog.h"
-#include "temp_buf.h"
 
 #include "libgimp/gimpmatrix.h"
 

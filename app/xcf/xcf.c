@@ -31,7 +31,6 @@
 #endif
 #include <errno.h>
 
-#include <glib.h>
 #include <gtk/gtk.h>
 
 #include "cursorutil.h"
@@ -39,26 +38,27 @@
 #include "gimage.h"
 #include "gimage_mask.h"
 #include "gimprc.h"
-#include "interface.h"
 #include "plug_in.h"
+#include "parasitelist.h"
+#include "path.h"
 #include "procedural_db.h"
 /* #include "tile_swap.h"*/
 #include "xcf.h"
-
-#include "libgimp/gimpintl.h"
 
 #include "drawable_pvt.h"
 #include "layer_pvt.h"
 #include "channel_pvt.h"
 #include "tile_manager_pvt.h"
-#include "tile.h"			/* ick. */
-#include <libgimp/parasiteP.h>
-#include <libgimp/parasite.h>
-#include "parasitelist.h"
-#include "path.h"
 #include "pathP.h"
+#include "tile.h"			/* ick. */
+
 #include <libgimp/gimpunit.h>
 #include <libgimp/gimplimits.h>
+#include <libgimp/parasiteP.h>
+#include <libgimp/parasite.h>
+
+#include "libgimp/gimpintl.h"
+
 
 /* #define SWAP_FROM_FILE */
 

@@ -14,7 +14,6 @@
 #include "layer_pvt.h"
 #include "channel.h"
 #include "tools.h"
-#include "general.h"
 #include "appenv.h"
 #include "gimpset.h"
 #include "dialog_handler.h"

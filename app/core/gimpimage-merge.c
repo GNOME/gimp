@@ -15,17 +15,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#include "config.h"
+
 #include <string.h>
+
 #include "gimpimageP.h"
 #include "cursorutil.h"
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
-#include "general.h"
 #include "gimage_mask.h"
 #include "gimpcontext.h"
 #include "paint_funcs.h"
-#include "libgimp/parasite.h"
 #include "parasitelist.h"
 #include "undo.h"
 #include "gimpsignal.h"
@@ -33,15 +34,16 @@
 #include "path.h"
 #include "gimprc.h"
 
-#include "config.h"
-#include "libgimp/gimpcolorspace.h"
-#include "libgimp/gimpintl.h"
-#include "libgimp/gimplimits.h"
-
 #include "tile_manager.h"
 #include "tile.h"
 #include "layer_pvt.h"
 #include "drawable_pvt.h"		/* ick ick. */
+
+#include "libgimp/gimpcolorspace.h"
+#include "libgimp/gimplimits.h"
+#include "libgimp/parasite.h"
+
+#include "libgimp/gimpintl.h"
 
 
 #ifdef DEBUG

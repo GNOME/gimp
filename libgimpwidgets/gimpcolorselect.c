@@ -17,14 +17,12 @@
  */
 #include "config.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "appenv.h"
 #include "color_select.h"
 #include "colormaps.h"
-#include "errors.h"
 #include "gimpdnd.h"
 #include "gimprc.h"
 #include "gimpui.h"
@@ -32,7 +30,9 @@
 #include "color_area.h" /* for color_area_draw_rect */
 
 #include "libgimp/color_selector.h"
+
 #include "libgimp/gimpintl.h"
+
 
 #define XY_DEF_WIDTH       240
 #define XY_DEF_HEIGHT      240
@@ -879,7 +879,6 @@ color_select_update_colors (ColorSelect *csp,
       if (which)
 	{
 	  window = csp->orig_color->window;
-	  color.pixel = old_color_pixel;
 	  red   = csp->orig_values[0];
 	  green = csp->orig_values[1];
 	  blue  = csp->orig_values[2];
@@ -887,7 +886,6 @@ color_select_update_colors (ColorSelect *csp,
       else
 	{
 	  window = csp->new_color->window;
-	  color.pixel = new_color_pixel;
 	  red   = csp->values[COLOR_SELECT_RED];
 	  green = csp->values[COLOR_SELECT_GREEN];
 	  blue  = csp->values[COLOR_SELECT_BLUE];

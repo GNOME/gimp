@@ -16,7 +16,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include "appenv.h"
-#include "colormaps.h"
 #include "cursorutil.h"
 #include "context_manager.h"
 #include "gdisplay.h"
@@ -107,28 +106,6 @@ context_manager_tool_changed (GimpContext *user_context,
     }
 }
 
-static void
-context_manager_foreground_changed (GimpContext *context,
-				    gint         r,
-				    gint         g,
-				    gint         b,
-				    gpointer     data)
-{
-  if (no_interface == FALSE)
-    foreground_pixel = get_color (r, g, b);
-}
-
-static void
-context_manager_background_changed (GimpContext *context,
-				    gint         r,
-				    gint         g,
-				    gint         b,
-				    gpointer     data)
-{
-  if (no_interface == FALSE)
-    background_pixel = get_color (r, g, b);
-}
-
 void
 context_manager_init (void)
 {
@@ -156,14 +133,6 @@ context_manager_init (void)
   /*  Update the tool system  */
   gtk_signal_connect (GTK_OBJECT (user_context), "tool_changed",
 		      GTK_SIGNAL_FUNC (context_manager_tool_changed),
-		      NULL);
-
-  /*  Update color-related stuff  */
-  gtk_signal_connect (GTK_OBJECT (user_context), "foreground_changed",
-		      GTK_SIGNAL_FUNC (context_manager_foreground_changed),
-		      NULL);
-  gtk_signal_connect (GTK_OBJECT (user_context), "background_changed",
-		      GTK_SIGNAL_FUNC (context_manager_background_changed),
 		      NULL);
 
   /*  Make the user contect the currently active context  */

@@ -21,10 +21,8 @@
 
 #include "appenv.h"
 #include "channels_dialog.h"
-#include "colormaps.h"
 #include "color_panel.h"
 #include "drawable.h"
-#include "errors.h"
 #include "gdisplay.h"
 #include "gimage.h"
 #include "gimage_mask.h"
@@ -38,6 +36,8 @@
 #include "paint_funcs.h"
 #include "undo.h"
 
+#include "channel_pvt.h"
+
 #include "libgimp/gimpintl.h"
 
 #include "pixmaps/eye.xbm"
@@ -48,8 +48,6 @@
 #include "pixmaps/duplicate.xpm"
 #include "pixmaps/delete.xpm"
 #include "pixmaps/toselection.xpm"
-
-#include "channel_pvt.h"
 
 #define COMPONENT_BASE_ID 0x10000000
 

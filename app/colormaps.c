@@ -31,12 +31,6 @@ gulong g_color_pixel;
 gulong g_normal_guide_pixel;
 gulong g_active_guide_pixel;
 
-gulong foreground_pixel;
-gulong background_pixel;
-
-gulong old_color_pixel;
-gulong new_color_pixel;
-
 gulong marching_ants_pixels[8];
 
 static void
@@ -51,11 +45,6 @@ set_app_colors (void)
 
   g_normal_guide_pixel = get_color (0, 127, 255);
   g_active_guide_pixel = get_color (255, 0, 0);
-
-  foreground_pixel = get_color (0, 0, 0);
-  background_pixel = get_color (255, 255, 255);
-  old_color_pixel  = get_color (0, 0, 0);
-  new_color_pixel  = get_color (255, 255, 255);
 }
 
 gulong
@@ -69,15 +58,11 @@ get_color (int red,
 void
 get_standard_colormaps (void)
 {
-  GtkPreviewInfo *info;
+  g_visual = gdk_rgb_get_visual ();
+  g_cmap   = gdk_rgb_get_cmap ();
 
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
-
-  info = gtk_preview_get_info ();
-  g_visual = info->visual;
-
-  g_cmap = info->cmap;
+  gtk_widget_set_default_visual (g_visual);
+  gtk_widget_set_default_colormap (g_cmap);
 
   set_app_colors ();
 }

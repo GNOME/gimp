@@ -15,18 +15,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
 #include "appenv.h"
 #include "drawable.h"
-#include "errors.h"
 #include "gdisplay.h"
 #include "gimage.h"
 #include "gimage_mask.h"
 #include "histogramwidget.h"
 #include "tile_manager.h"
+
+#include "libgimp/gimpmath.h"
+
 
 #define WAITING 0
 #define WORKING 1
@@ -43,7 +41,7 @@
 #define ALL       0xF
 
 
-enum{
+enum {
   RANGED,
   LAST_SIGNAL
 };
@@ -51,7 +49,7 @@ enum{
 static guint histogram_widget_signals[LAST_SIGNAL];
 
 static void   histogram_widget_class_init (HistogramWidgetClass *klass);
-static void   histogram_widget_init       (HistogramWidget *histogram);
+static void   histogram_widget_init       (HistogramWidget      *histogram);
 
 
 /**************************/
@@ -98,8 +96,6 @@ histogram_widget_class_init (HistogramWidgetClass *klass)
 
   gtk_object_class_add_signals (GTK_OBJECT_CLASS(klass),
 				histogram_widget_signals, LAST_SIGNAL);
-
-  
 }
 
 static void 

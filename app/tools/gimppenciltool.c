@@ -15,11 +15,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdlib.h>
-
 #include "appenv.h"
 #include "drawable.h"
-#include "errors.h"
 #include "gdisplay.h"
 #include "gimpbrushpipe.h"
 #include "gradient.h"
@@ -30,6 +27,7 @@
 #include "pencil.h"
 #include "selection.h"
 #include "tools.h"
+
 
 /*  the pencil tool options  */
 typedef struct _PencilOptions PencilOptions;

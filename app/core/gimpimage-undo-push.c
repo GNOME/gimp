@@ -15,20 +15,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #include "config.h"
 
 #include <stdlib.h>
 #include <string.h>
+
 #include "appenv.h"
 #include "by_color_select.h"
 #include "channel.h"
 #include "drawable.h"
-#include "errors.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
 #include "gimage_mask.h"
+#include "gimpparasite.h"
 #include "gimprc.h"
 #include "layer.h"
 #include "paint_core.h"
@@ -46,8 +46,8 @@
 #include "tile.h"			/* ick. */
 
 #include "libgimp/parasite.h"
+
 #include "libgimp/gimpintl.h"
-#include "gimpparasite.h"
 
 
 /*#define DEBUG*/

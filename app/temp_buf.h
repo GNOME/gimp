@@ -18,48 +18,48 @@
 #ifndef __TEMP_BUF_H__
 #define __TEMP_BUF_H__
 
+typedef struct _TempBuf TempBuf;
+typedef struct _TempBuf MaskBuf;
 
-typedef struct _temp_buf TempBuf;
-typedef struct _temp_buf MaskBuf;
-
-struct _temp_buf
+struct _TempBuf
 {
-  int             bytes;      /*  The necessary info  */
-  int             width;
-  int             height;
-  int             x, y;       /*  origin of data source  */
+  gint      bytes;      /*  The necessary info  */
+  gint      width;
+  gint      height;
+  gint      x, y;       /*  origin of data source  */
 
-  int             swapped;    /*  flag indicating whether buf is cached to disk  */
-  char *          filename;   /*  filename of cached information  */
+  gboolean  swapped;    /*  flag indicating whether buf is cached to disk  */
+  gchar    *filename;   /*  filename of cached information  */
 
-  unsigned char * data;       /*  The data buffer     */
+  guchar   *data;       /*  The data buffer     */
 };
 
 
 /*  The temp buffer functions  */
 
-TempBuf *         temp_buf_new        (int, int, int, int, int, unsigned char *);
-TempBuf *         temp_buf_copy       (TempBuf *, TempBuf *);
-TempBuf *         temp_buf_resize     (TempBuf *, int, int, int, int, int);
-TempBuf *         temp_buf_copy_area  (TempBuf *, TempBuf *, int, int, int, int, int);
-void              temp_buf_free       (TempBuf *);
-unsigned char *   temp_buf_data       (TempBuf *);
+TempBuf * temp_buf_new        (gint, gint, gint, gint, gint, guchar *);
+TempBuf * temp_buf_copy       (TempBuf *, TempBuf *);
+TempBuf * temp_buf_resize     (TempBuf *, gint, gint, gint, gint, gint);
+TempBuf * temp_buf_copy_area  (TempBuf *, TempBuf *,
+			       gint, gint, gint, gint, gint);
+void      temp_buf_free       (TempBuf *);
+guchar  * temp_buf_data       (TempBuf *);
 
 /* The mask buffer functions  */
 
-MaskBuf *         mask_buf_new        (int, int);
-void              mask_buf_free       (MaskBuf *);
-unsigned char *   mask_buf_data       (MaskBuf *);
+MaskBuf * mask_buf_new        (gint, gint);
+void      mask_buf_free       (MaskBuf *);
+guchar  * mask_buf_data       (MaskBuf *);
 
 /*  The disk caching functions  */
 
-void              temp_buf_swap       (TempBuf *);
-void              temp_buf_unswap     (TempBuf *);
-void              temp_buf_swap_free  (TempBuf *);
+void      temp_buf_swap       (TempBuf *);
+void      temp_buf_unswap     (TempBuf *);
+void      temp_buf_swap_free  (TempBuf *);
 
 
-/*  Called by app_procs:exit to free up the cached undo buffer  */
+/*  Called by app_procs:exit() to free up the cached undo buffer  */
 
-void              swapping_free       (void);
+void      swapping_free       (void);
 
 #endif  /*  __TEMP_BUF_H__  */

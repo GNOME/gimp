@@ -17,14 +17,10 @@
  */
 #include "config.h"
 
-#include <stdlib.h>
-#include <stdio.h>
-
-#include "gdk/gdkkeysyms.h"
+#include <gdk/gdkkeysyms.h>
 
 #include "appenv.h"
 #include "drawable.h"
-#include "errors.h"
 #include "smudge.h"
 #include "gdisplay.h"
 #include "gimplut.h"
@@ -36,8 +32,9 @@
 #include "tools.h"
 #include "gimage.h"
 
-#include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
+
+#include "libgimp/gimpintl.h"
 
 
 /* default defines */

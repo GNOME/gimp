@@ -27,15 +27,15 @@
 #include "gdisplay.h"
 #include "gimpcontext.h"
 #include "gimpui.h"
-#include "interface.h"
 #include "parasitelist.h"
-
-#include "libgimp/gimpsizeentry.h"
-#include "libgimp/gimpmath.h"
-#include "libgimp/gimpintl.h"
 
 #include "channel_pvt.h"
 #include "layer_pvt.h"
+
+#include "libgimp/gimpmath.h"
+
+#include "libgimp/gimpintl.h"
+
 
 #define ENTRY_WIDTH  60
 

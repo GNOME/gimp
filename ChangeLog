@@ -1,3 +1,20 @@
+2000-04-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/color_select.c
+	* app/colormaps.[ch]
+	* app/context_manager.c: removed unused global variables
+	[foreground|background]_pixel and [old|new]_color_pixel.
+
+	Initialize the colormap and visual stuff with GdkRGB instead of
+	GtkPreview functions (which are deprecated).
+
+	* app/[62 files]: removed #include's (started with colormaps.h and
+	couldn't stop). Also ordered them consistently and did some small
+	unrelated cleanups.
+	Removed variuos <stdlib.h> et.al. but checked the files carefully
+	before doing so. If I was too radical and you get warnings on your
+	platform, please flame me or just put them back :)
+
 2000-04-27  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/imagemap/imap_object.c: on request of plug-in author

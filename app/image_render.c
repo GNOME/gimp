@@ -17,9 +17,8 @@
  */
 #include <stdlib.h>
 #include <string.h>
+
 #include "appenv.h"
-#include "colormaps.h"
-#include "errors.h"
 #include "gimprc.h"
 #include "gximage.h"
 #include "image_render.h"

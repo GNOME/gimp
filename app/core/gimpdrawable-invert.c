@@ -15,18 +15,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
+#include "config.h"
+
 #include "appenv.h"
 #include "drawable.h"
-#include "interface.h"
 #include "invert.h"
 #include "gimage.h"
 #include "gimplut.h"
 #include "lut_funcs.h"
 
-#include "config.h"
 #include "libgimp/gimpintl.h"
 
 
@@ -35,7 +32,7 @@ image_invert (GimpImage *gimage)
 {
   GimpDrawable *drawable;
   Argument *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   drawable = gimage_active_drawable (gimage);
 
@@ -63,19 +60,21 @@ void
 invert (GimpDrawable *drawable)
 {
   PixelRegion srcPR, destPR;
-  int x1, y1, x2, y2;
+  gint x1, y1, x2, y2;
   GimpLut *lut;
 
-  lut = invert_lut_new(gimp_drawable_bytes(drawable));
+  lut = invert_lut_new (gimp_drawable_bytes (drawable));
 
   drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-  pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
-  pixel_region_init (&destPR, drawable_shadow (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
+  pixel_region_init (&srcPR, drawable_data (drawable),
+		     x1, y1, (x2 - x1), (y2 - y1), FALSE);
+  pixel_region_init (&destPR, drawable_shadow (drawable),
+		     x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
-  pixel_regions_process_parallel((p_func)gimp_lut_process, lut, 
-				 2, &srcPR, &destPR);
+  pixel_regions_process_parallel ((p_func)gimp_lut_process, lut, 
+				  2, &srcPR, &destPR);
 
-  gimp_lut_free(lut);
+  gimp_lut_free (lut);
 
   drawable_merge_shadow (drawable, TRUE);
   drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));

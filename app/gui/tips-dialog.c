@@ -21,15 +21,17 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
-#include "gtk/gtk.h"
+
 #include "tips_dialog.h"
 #include "gimprc.h"
-#include "gimphelp.h"
-#include "interface.h"
-#include "wilber.h"
+#include "gimpui.h"
+
+#include "libgimp/gimpenv.h"
 
 #include "libgimp/gimpintl.h"
-#include "libgimp/gimpenv.h"
+
+#include "wilber.h"
+
 
 #define TIPS_DIR_NAME   "tips"
 

@@ -28,16 +28,10 @@ extern gulong g_black_pixel;
 extern gulong g_gray_pixel;
 extern gulong g_white_pixel;
 extern gulong g_color_pixel;
+
+/*  Pixel values for guides  */
 extern gulong g_normal_guide_pixel;
 extern gulong g_active_guide_pixel;
-
-/*  Foreground and Background colors  */
-extern gulong foreground_pixel;
-extern gulong background_pixel;
-
-/*  Old and New colors  */
-extern gulong old_color_pixel;
-extern gulong new_color_pixel;
 
 /*  Colormap entries reserved for color cycled marching ants--optional  */
 extern gulong marching_ants_pixels[8];

@@ -32,9 +32,7 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 #include <gdk/gdkkeysyms.h>
 
@@ -43,10 +41,8 @@
 #include "channel_pvt.h"
 #include "cursorutil.h"
 #include "drawable.h"
-#include "errors.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
-#include "interface.h"
 #include "iscissors.h"
 #include "edit_selection.h"
 #include "paint_funcs.h"
@@ -59,7 +55,7 @@
 #include "libgimp/gimpmath.h"
 
 #ifdef DEBUG
-#define TRC(x) printf x
+#define TRC(x) g_print x
 #define D(x) x
 #else
 #define TRC(x)

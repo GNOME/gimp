@@ -15,12 +15,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdlib.h>
+#include "config.h"
 
 #include "appenv.h"
 #include "airbrush.h"
 #include "drawable.h"
-#include "errors.h"
 #include "gdisplay.h"
 #include "gimpbrushpipe.h"
 #include "gradient.h"
@@ -32,8 +31,8 @@
 #include "selection.h"
 #include "tools.h"
 
-#include "config.h"
 #include "libgimp/gimpintl.h"
+
 
 /*  The maximum amount of pressure that can be exerted  */
 #define MAX_PRESSURE  0.075
