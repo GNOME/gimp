@@ -33,12 +33,23 @@
 #include "general.h"
 #include "interface.h"
 #include "layers_dialogP.h"
+#include "ops_buttons.h"
 #include "paint_funcs.h"
 #include "palette.h"
 #include "resize.h"
 
 #include "tools/eye.xbm"
 #include "tools/channel.xbm"
+#include "tools/new.xpm"
+#include "tools/new_is.xpm"
+#include "tools/raise.xpm"
+#include "tools/raise_is.xpm"
+#include "tools/lower.xpm"
+#include "tools/lower_is.xpm"
+#include "tools/duplicate.xpm"
+#include "tools/duplicate_is.xpm"
+#include "tools/delete.xpm"
+#include "tools/delete_is.xpm"
 
 #include "channel_pvt.h"
 
@@ -160,6 +171,16 @@ static MenuItem channels_ops[] =
   { NULL, 0, 0, NULL, NULL, NULL, NULL },
 };
 
+/* the ops buttons */
+static OpsButton channels_ops_buttons[] =
+{
+  { new_xpm, new_is_xpm, channels_dialog_new_channel_callback, "New Channel", NULL, NULL, NULL, NULL, NULL, NULL },
+  { raise_xpm, raise_is_xpm, channels_dialog_raise_channel_callback, "Raise Channel", NULL, NULL, NULL, NULL, NULL, NULL },
+  { lower_xpm, lower_is_xpm, channels_dialog_lower_channel_callback, "Lower Channel", NULL, NULL, NULL, NULL, NULL, NULL },
+  { duplicate_xpm, duplicate_is_xpm, channels_dialog_duplicate_channel_callback, "Duplicate Channel", NULL, NULL, NULL, NULL, NULL, NULL },
+  { delete_xpm, delete_is_xpm, channels_dialog_delete_channel_callback, "Delete Channel", NULL, NULL, NULL, NULL, NULL, NULL },
+  { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL}
+};
 
 /**************************************/
 /*  Public channels dialog functions  */
@@ -170,6 +191,7 @@ channels_dialog_create ()
 {
   GtkWidget *vbox;
   GtkWidget *listbox;
+  GtkWidget *button_box;
 
   if (!channelsD)
     {
@@ -208,6 +230,14 @@ channels_dialog_create ()
 
       gtk_widget_show (channelsD->channel_list);
       gtk_widget_show (listbox);
+
+
+      /* The ops buttons */
+
+      button_box = ops_button_box_new (lc_shell, tool_tips, channels_ops_buttons);
+
+      gtk_box_pack_start (GTK_BOX (vbox), button_box, FALSE, FALSE, 2);
+      gtk_widget_show (button_box);
 
       /*  Set up signals for map/unmap for the accelerators  */
       gtk_signal_connect (GTK_OBJECT (channelsD->vbox), "map",
@@ -513,14 +543,19 @@ channels_dialog_set_menu_sensitivity ()
 
   /* new channel */
   gtk_widget_set_sensitive (channels_ops[0].widget, !fs_sensitive);
+  ops_button_set_sensitive (channels_ops_buttons[0], !fs_sensitive);
   /* raise channel */
   gtk_widget_set_sensitive (channels_ops[1].widget, !fs_sensitive && aux_sensitive);
+  ops_button_set_sensitive (channels_ops_buttons[1], !fs_sensitive && aux_sensitive);
   /* lower channel */
   gtk_widget_set_sensitive (channels_ops[2].widget, !fs_sensitive && aux_sensitive);
+  ops_button_set_sensitive (channels_ops_buttons[2], !fs_sensitive && aux_sensitive);
   /* duplicate channel */
   gtk_widget_set_sensitive (channels_ops[3].widget, !fs_sensitive && aux_sensitive);
+  ops_button_set_sensitive (channels_ops_buttons[3], !fs_sensitive && aux_sensitive);
   /* delete channel */
   gtk_widget_set_sensitive (channels_ops[4].widget, !fs_sensitive && aux_sensitive);
+  ops_button_set_sensitive (channels_ops_buttons[4], !fs_sensitive && aux_sensitive);
   /* channel to selection */
   gtk_widget_set_sensitive (channels_ops[5].widget, aux_sensitive);
 }

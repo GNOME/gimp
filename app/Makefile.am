@@ -187,6 +187,8 @@ gimp_SOURCES = \
 	menus.h			\
 	move.c			\
 	move.h			\
+	ops_buttons.c		\
+	ops_buttons.h		\
 	palette.c		\
 	palette.h		\
 	paint_core.c		\
@@ -266,7 +268,19 @@ EXTRA_DIST = \
 	tools/eye.xbm		\
 	tools/layer.xbm		\
 	tools/linked.xbm	\
-	tools/mask.xbm
+	tools/mask.xbm		\
+	tools/anchor.xpm	\
+	tools/anchor_is.xpm	\
+	tools/delete.xpm	\
+	tools/delete_is.xpm	\
+	tools/duplicate.xpm	\
+	tools/duplicate_is.xpm	\
+	tools/lower.xpm		\
+	tools/lower_is.xpm	\
+	tools/new.xpm		\
+	tools/new_is.xpm	\
+	tools/raise.xpm		\
+	tools/raise_is.xpm
 
 CPPFLAGS = \
 	-DLIBDIR=\""$(gimpplugindir)"\"	\

@@ -35,6 +35,7 @@
 #include "interface.h"
 #include "layers_dialog.h"
 #include "layers_dialogP.h"
+#include "ops_buttons.h"
 #include "paint_funcs.h"
 #include "palette.h"
 #include "resize.h"
@@ -44,6 +45,19 @@
 #include "tools/linked.xbm"
 #include "tools/layer.xbm"
 #include "tools/mask.xbm"
+
+#include "tools/new.xpm"
+#include "tools/new_is.xpm"
+#include "tools/raise.xpm"
+#include "tools/raise_is.xpm"
+#include "tools/lower.xpm"
+#include "tools/lower_is.xpm"
+#include "tools/duplicate.xpm"
+#include "tools/duplicate_is.xpm"
+#include "tools/delete.xpm"
+#include "tools/delete_is.xpm"
+#include "tools/anchor.xpm"
+#include "tools/anchor_is.xpm"
 
 #include "layer_pvt.h"
 
@@ -252,6 +266,18 @@ static MenuItem option_items[] =
   { "Color", 0, 0, paint_mode_menu_callback, (gpointer) COLOR_MODE, NULL, NULL },
   { "Value", 0, 0, paint_mode_menu_callback, (gpointer) VALUE_MODE, NULL, NULL },
   { NULL, 0, 0, NULL, NULL, NULL, NULL }
+};
+
+/* the ops buttons */
+static OpsButton layers_ops_buttons[] =
+{
+  { new_xpm, new_is_xpm, layers_dialog_new_layer_callback, "New Layer", NULL, NULL, NULL, NULL, NULL, NULL },
+  { raise_xpm, raise_is_xpm, layers_dialog_raise_layer_callback, "Raise Layer", NULL, NULL, NULL, NULL, NULL, NULL },
+  { lower_xpm, lower_is_xpm, layers_dialog_lower_layer_callback, "Lower Layer", NULL, NULL, NULL, NULL, NULL, NULL },
+  { duplicate_xpm, duplicate_is_xpm, layers_dialog_duplicate_layer_callback, "Duplicate Layer", NULL, NULL, NULL, NULL, NULL, NULL },
+  { delete_xpm, delete_is_xpm, layers_dialog_delete_layer_callback, "Delete Layer", NULL, NULL, NULL, NULL, NULL, NULL },
+  { anchor_xpm, anchor_is_xpm, layers_dialog_anchor_layer_callback, "Anchor Layer", NULL, NULL, NULL, NULL, NULL, NULL },
+  { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL}
 };
 
 
@@ -586,10 +612,12 @@ layers_dialog_create ()
 {
   GtkWidget *vbox;
   GtkWidget *util_box;
+  GtkWidget *button_box;
   GtkWidget *label;
   GtkWidget *menu;
   GtkWidget *slider;
   GtkWidget *listbox;
+  
 
   if (!layersD)
     {
@@ -675,6 +703,12 @@ layers_dialog_create ()
       gtk_widget_show (layersD->layer_list);
       gtk_widget_show (listbox);
 
+      /* The ops buttons */
+
+      button_box = ops_button_box_new (lc_shell, tool_tips, layers_ops_buttons);
+
+      gtk_box_pack_start (GTK_BOX (vbox), button_box, FALSE, FALSE, 2);
+      gtk_widget_show (button_box);
 
       /*  Set up signals for map/unmap for the accelerators  */
       gtk_signal_connect (GTK_OBJECT (layersD->vbox), "map",
@@ -1127,14 +1161,19 @@ layers_dialog_set_menu_sensitivity ()
 
   /* new layer */
   gtk_widget_set_sensitive (layers_ops[0].widget, gimage);
+  ops_button_set_sensitive (layers_ops_buttons[0], gimage);
   /* raise layer */
   gtk_widget_set_sensitive (layers_ops[1].widget, fs && ac && gimage && lp);
+  ops_button_set_sensitive (layers_ops_buttons[1], fs && ac && gimage && lp);
   /* lower layer */
   gtk_widget_set_sensitive (layers_ops[2].widget, fs && ac && gimage && lp);
+  ops_button_set_sensitive (layers_ops_buttons[2], fs && ac && gimage && lp);
   /* duplicate layer */
   gtk_widget_set_sensitive (layers_ops[3].widget, fs && ac && gimage && lp);
+  ops_button_set_sensitive (layers_ops_buttons[3], fs && ac && gimage && lp);
   /* delete layer */
   gtk_widget_set_sensitive (layers_ops[4].widget, ac && gimage && lp);
+  ops_button_set_sensitive (layers_ops_buttons[4], ac && gimage && lp);
   /* scale layer */
   gtk_widget_set_sensitive (layers_ops[5].widget, ac && gimage && lp);
   /* resize layer */
@@ -1145,6 +1184,7 @@ layers_dialog_set_menu_sensitivity ()
   gtk_widget_set_sensitive (layers_ops[8].widget, fs && ac && gimage && lm && lp);
   /* anchor layer */
   gtk_widget_set_sensitive (layers_ops[9].widget, !fs && ac && gimage && lp);
+  ops_button_set_sensitive (layers_ops_buttons[5], !fs && ac && gimage && lp);
   /* merge visible layers */
   gtk_widget_set_sensitive (layers_ops[10].widget, fs && ac && gimage && lp);
   /* flatten image */

@@ -1,3 +1,13 @@
+Fri Apr  3 12:22:40 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* app/Makefile.am
+	* tools/*.xpm
+	* app/ops_buttons.[c|h]
+	* app/channels_dialog.c
+	* app/layers_dialog.c: Added buttons to access the menu functions
+	in the Layers&Channels-dialog more directly. They are connected to
+	the menu-item-callback-functions.
+
 Thu Apr  2 04:06:50 EST 1998 Matthew Wilson <msw@gimp.org>
 
 	* app/disp_callbacks.c: Always ungrab the pointer on button release.
