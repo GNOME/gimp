@@ -13,26 +13,26 @@ GIMP. Pensez à votre image comme à une superposition de transparents
 ou de filtres tels que l'image soit une combinaison du contenu des
 différents calques.
 
-Vous pouvez effectuer beaucoup d'opération sur les calques en
+Vous pouvez effectuer beaucoup d'opérations sur les calques en
 pressant avec le bouton droit sur le nom d'un calque dans la
 boîte de dialogue répertoriant les calques
-(Dialogues -> Calques & Canaux).
+(Dialogues -> Calques, canaux & chemins).
 
-Avant de sauvegarder des images dans des formats utilisant des
+Avant d'enregistrer des images dans des formats utilisant des
 couleurs indexées tels que GIF et XPM, vous devez d'abord convertir
-l'image en couleurs indexées (menu Image/Indexée).
+l'image en couleurs indexées (menu Image -> Mode -> Indexée).
 
 Vous pouvez ouvrir le menu d'options d'un outil en double-cliquant
 dessus dans la barre d'outils.
 
 Vous pouvez renommer un calque en double-cliquant sur son nom
-dans le dialogue Calques & Canaux.
+dans la boîte de dialogue (Dialogues -> Calques, canaux & chemins).
 
 # Fond ou Background?
 Le calque appellé "Fond" est spécial. Vous ne pouvez lui ajouter
 de transparence ou de masque de calque. Pour ajouter de la
 transparence, vous devez d'abord lui ajouter un canal alpha
-(click droit dans Calques & Canaux, "Ajouter Canal Alpha").
+(click droit dans Calques, canaux & chemin -> Ajouter un canal alpha).
 
 Lors de l'utilisation d'un outil de dessin (Pinceau, Aérographe
 ou Crayon), Shift+Click tracera une ligne droite depuis le dernier
@@ -40,7 +40,7 @@ point de tracé jusqu'à la position du pointeur (souris).
 
 La plupart des appendices opèrent sur le calque courant
 de l'image courante. Dans certains cas, vous devrez d'abord
-fusionner tous les calques (Calques->Aplatir image) si vous
+fusionner tous les calques (Calques -> Aplatir l'image) si vous
 voulez que le module opère sur l'image entière.
 
 La plupart des formats de fichiers ne gèrent pas les calques et
@@ -98,15 +98,15 @@ de départ.
 Vous pouvez ajuster l'intervalle de sélection pour la sélection
 floue en cliquant et en tirant à gauche et à droite.
 
-Shift+Click sur l'icône «oeil» dans Calques & Canaux pour
-cacher tous les calques sauf celui-ci. Shift+Click de nouveau
-pour voir tous les calques.
+Shift+Click sur l'icône «oeil» dans "Calques, canaux & chemins"
+pour cacher tous les calques sauf celui-ci. Shift+Click de
+nouveau pour voir tous les calques.
 
-Control+Click sur la prévisualisation du masque de calque
-dans Calques & Canaux (dés)active l'effet de ce masque.
+Control+Click sur la prévisualisation du masque de calque dans
+"Calques, canaux & chemins" (dés)active l'effet de ce masque.
 
-Alt+Click sur la prévisualisation du masque de calque
-dans Calques & Canaux (dés)active la visualisation directe
+Alt+Click sur la prévisualisation du masque de calque dans
+"Calques, canaux & chemins" (dés)active la visualisation directe
 du masque.
 
 Alt+Tab pour voir à tour de rôle tous les calques d'une image

@@ -1,16 +1,17 @@
 # gimp-libgimp fr.po
-# Copyright (C) 1998 Free Software Foundation, Inc.
-# Vincent Renardias <vincent@ldsol.com>, 1998, 1999.
+#
+# Copyright (C) 1998-2001 Free Software Foundation, Inc.
+# Vincent Renardias <vincent@ldsol.com>, 1998-1999.
 # David Monniaux <monniaux@ens.fr>, 1999.
 # Joaquim Fellmann <joaquim@hrnet.fr>, 2000.
-# Christophe Merlet (RedFox) <redfox@eikonex.org>, 2000.
+# Christophe Merlet (RedFox) <redfox@eikonex.org>, 2000-2001.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp 1.1.29\n"
-"POT-Creation-Date: 2001-01-02 17:52+0100\n"
-"PO-Revision-Date: 2000-11-24 15:46+0200\n"
+"Project-Id-Version: gimp-libgimp 1.2.0\n"
+"POT-Creation-Date: 2001-01-04 16:49+0100\n"
+"PO-Revision-Date: 2001-01-04 16:46+0100\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@eikonex.org>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -234,11 +235,11 @@ msgstr "Octets"
 
 #: libgimp/gimpwidgets.c:1042
 msgid "KiloBytes"
-msgstr "KiloOctets"
+msgstr "Kilo-octets"
 
 #: libgimp/gimpwidgets.c:1043
 msgid "MegaBytes"
-msgstr "MégaOctets"
+msgstr "Méga-octets"
 
 #~ msgid "Select"
 #~ msgstr "Sélectionner"

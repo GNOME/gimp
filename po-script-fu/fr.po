@@ -1,14 +1,15 @@
-# The Gimp (script-fu) fr.po
-# Copyright (C) 2000 Free Software Foundation, Inc.
+# gimp-script-fu fr.po
+#
+# Copyright (C) 2000-2001 Free Software Foundation, Inc.
 # David Monniaux <monniaux@arbouse.ens.fr>, 2000.
-# Christophe Merlet (RedFox) <redfox@eikonex.org>, 2000.
+# Christophe Merlet (RedFox) <redfox@eikonex.org>, 2000-2001.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu 1.1.29\n"
-"POT-Creation-Date: 2001-01-02 17:52+0100\n"
-"PO-Revision-Date: 2000-11-24 15:36+0100\n"
+"Project-Id-Version: gimp-script-fu 1.2.0\n"
+"POT-Creation-Date: 2001-01-04 17:00+0100\n"
+"PO-Revision-Date: 2001-01-04 15:59+0100\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@eikonex.org>\n"
 "Language-Team: Gnome French Team <gnomefr@gnomefr.traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -750,7 +751,7 @@ msgstr "<Toolbox>/Exts/Navigateur Web/FAQ utilisateur"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 msgid "Add Background"
-msgstr "Ajouter un fond"
+msgstr "Ajouter un arrière-plan"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 msgid "Add Drop-Shadow"
@@ -833,12 +834,12 @@ msgstr "Opacité de l'Arr. Plan"
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "Background Color"
-msgstr "Couleur de fond"
+msgstr "Couleur d'arrière-plan"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
 msgid "Background Image"
-msgstr "Image de fond"
+msgstr "Image d'arrière-plan"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
 msgid "Bar Height"
@@ -1365,7 +1366,7 @@ msgstr "Polices"
 
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "Foreground Color"
-msgstr "Couleur d'avant-plan"
+msgstr "Couleur de premier plan"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm:0
 msgid "Frame Color"
@@ -1524,7 +1525,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Keep Background"
-msgstr "Garder le fond"
+msgstr "Garder l'arrière-plan"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:0
 #: plug-ins/script-fu/scripts/chip-away.scm:0
@@ -1569,7 +1570,7 @@ msgstr "Couleur du bas à droite"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Make New Background"
-msgstr "Créer un nouveau fond"
+msgstr "Créer un nouvel arrière-plan"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm:0
 msgid "Mask Opacity"
@@ -1593,7 +1594,7 @@ msgstr "Marbrer"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 msgid "No Background (only for separate layer)"
-msgstr ""
+msgstr "Aucun arrière-plan (seulement pour le calque separe)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Not Pressed (Active)"
@@ -1812,7 +1813,7 @@ msgstr "Rayon relatif"
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Remove Background"
-msgstr "Supprimer le fond"
+msgstr "Supprimer l'arrière-plan"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "Ribbon Spacing"
@@ -2095,7 +2096,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Transparent Background"
-msgstr "Fond transparent"
+msgstr "Arriere-plan transparent"
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Turn from Left to Right"

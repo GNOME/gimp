@@ -1,19 +1,17 @@
 # gimp fr.po
 #
-# French translation for The Gimp
-#
-# Copyright (C) 1998-2000 Free Software Foundation, Inc.
-# Vincent Renardias <vincent@ldsol.com>, 1998, 1999, 2000.
-# David Monniaux <monniaux@brick.ens.fr>, 1999, 2000.
+# Copyright (C) 1998-2001 Free Software Foundation, Inc.
+# Vincent Renardias <vincent@ldsol.com>, 1998-2000.
+# David Monniaux <monniaux@brick.ens.fr>, 1999-2000.
 # Daniel Egger <Daniel.Egger@rz.fh-muenchen.de>, 1999.
-# Christophe Merlet (RedFox) <redfox@eikonex.org>, 2000, 2001.
+# Christophe Merlet (RedFox) <redfox@eikonex.org>, 2000-2001.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.0\n"
-"POT-Creation-Date: 2001-01-02 17:52+0100\n"
-"PO-Revision-Date: 2001-01-02 16:50+0100\n"
+"POT-Creation-Date: 2001-01-04 16:44+0100\n"
+"PO-Revision-Date: 2001-01-04 16:36+0100\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@eikonex.org>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -415,15 +413,15 @@ msgstr "Type de remplissage"
 
 #: app/bucket_fill.c:163
 msgid "FG Color Fill"
-msgstr "Remplissage par couleur AV"
+msgstr "Couleur de premier plan"
 
 #: app/bucket_fill.c:166
 msgid "BG Color Fill"
-msgstr "Remplissage par couleur AR"
+msgstr "Couleur d'arrière-plan"
 
 #: app/bucket_fill.c:169
 msgid "Pattern Fill"
-msgstr "Remplissage par motif"
+msgstr "Motif"
 
 #: app/bucket_fill.c:248
 msgid "Bucket Fill operation failed."
@@ -515,7 +513,7 @@ msgstr "Espace enroulé"
 #: app/channel_ops.c:180 app/image_new.c:80 app/image_new.c:294
 #: app/layers_dialog.c:3663
 msgid "Background"
-msgstr "Fond"
+msgstr "Arrière-plan"
 
 #: app/channel_ops.c:181 app/image_new.c:90 app/layers_dialog.c:3665
 msgid "Transparent"
@@ -583,12 +581,12 @@ msgstr "Indexée"
 
 #: app/channels_dialog.c:2533
 msgid "New Channel Options"
-msgstr "Options de Nouveau Canal"
+msgstr "Options du nouveau canal"
 
 #. The name entry hbox, label and entry
 #: app/channels_dialog.c:2566 app/channels_dialog.c:2729
 msgid "Channel name:"
-msgstr "Nom du Canal :"
+msgstr "Nom du canal :"
 
 #. The opacity scale
 #: app/channels_dialog.c:2581 app/channels_dialog.c:2744
@@ -1042,7 +1040,7 @@ msgstr "Enregistrer courbes"
 msgid "Load/Save Curves"
 msgstr "Charger/Enregistrer courbes"
 
-#: app/curves.c:1666 app/curves.c:1684 app/levels.c:1485 app/levels.c:1503
+#: app/curves.c:1666 app/curves.c:1684 app/levels.c:1477 app/levels.c:1495
 #: app/paths_dialog.c:1908
 #, c-format
 msgid "Unable to open file %s"
@@ -1185,7 +1183,7 @@ msgstr ""
 "Vous essayez de créer une image dont la\n"
 "taille initiale serait %s.\n"
 "\n"
-"Sélectionnez \"OK\" pour la créer tout\n"
+"Sélectionnez \"Valider\" pour la créer tout\n"
 "de même. Sélectionnez \"Annuler\" si vous\n"
 "n'aviez pas vraiment voulu créer une si\n"
 "grosse image.\n"
@@ -1206,7 +1204,7 @@ msgstr "Taille d'image : %s"
 
 #: app/file_new_dialog.c:352
 msgid "New Image"
-msgstr "Nouvelle Image"
+msgstr "Nouvelle image"
 
 #: app/file_new_dialog.c:458 app/preferences_dialog.c:1556
 #: app/preferences_dialog.c:1593 app/user_install.c:1198
@@ -1364,7 +1362,7 @@ msgstr ""
 
 #: app/fileops.c:1422
 msgid "(This thumbnail may be out of date)"
-msgstr "(cette icône peut ne pas être à jour)"
+msgstr "(cette vignette peut ne pas être à jour)"
 
 #: app/fileops.c:1423
 msgid "(No Information)"
@@ -1372,15 +1370,15 @@ msgstr "(aucune information)"
 
 #: app/fileops.c:1433
 msgid "(Thumbnail saving is disabled)"
-msgstr "(enregistrement des icônes désactivé)"
+msgstr "(enregistrement des vignettes désactivé)"
 
 #: app/fileops.c:1437
 msgid "(Could not write thumbnail file)"
-msgstr "(impossible d'écrire le fichier d'icône)"
+msgstr "(impossible d'écrire le fichier de vignette)"
 
 #: app/fileops.c:1441
 msgid "(Thumbnail file not written)"
-msgstr "(fichier d'icône non écrit)"
+msgstr "(fichier de vignette non écrit)"
 
 #: app/fileops.c:1459
 msgid "No preview available"
@@ -1494,11 +1492,11 @@ msgstr "Impossible de copier/coller car la région sélectionnée est vide."
 
 #: app/gimage_mask.c:351
 msgid "Float Selection: No selection to float."
-msgstr "Faire flotter la sélection: pas de sélection."
+msgstr "Faire flotter la sélection : pas de sélection."
 
 #: app/gimage_mask.c:363
 msgid "Floated Layer"
-msgstr "Calque Flottant"
+msgstr "Calque flottant"
 
 #: app/gimage_mask.c:499
 msgid ""
@@ -1640,7 +1638,7 @@ msgstr "Calque déjà en haut"
 
 #: app/gimpimage.c:2384
 msgid "Can't raise Layer without alpha"
-msgstr "Impossible de remonter un Calque sans alpha"
+msgstr "Impossible de remonter un calque sans alpha"
 
 #: app/gimpimage.c:2412
 msgid "Layer is already on bottom"
@@ -1648,7 +1646,7 @@ msgstr "Calque déjà en bas"
 
 #: app/gimpimage.c:2467
 msgid "BG has no alpha, layer was placed above"
-msgstr "Fond sans alpha, calque placé par dessus"
+msgstr "Arrière-plan sans alpha, calque placé par dessus"
 
 #: app/gimpimage.c:2539
 msgid ""
@@ -1989,12 +1987,12 @@ msgstr ""
 #: app/gradient.c:2380
 #, c-format
 msgid "Foreground color set to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
-msgstr "Couleur d'avant plan à RVB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
+msgstr "Couleur de premier plan à RVB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 
 #: app/gradient.c:2404
 #, c-format
 msgid "Background color to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
-msgstr "Couleur d'avant plan à RVB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
+msgstr "Couleur d'arrière-plan à RVB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 
 #: app/gradient.c:2695
 msgid "Drag: move    Shift+drag: move & compress"
@@ -2137,7 +2135,7 @@ msgstr "Dupliquer la sélection"
 
 #: app/gradient.c:4149
 msgid "FG color"
-msgstr "Couleur AV"
+msgstr "Couleur de premier plan"
 
 #: app/gradient.c:4197
 #, c-format
@@ -2482,7 +2480,7 @@ msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to select a color from a colorrequester."
 msgstr ""
-"Couleurs de premier et d'arrière-plan (souvent notées AV et AR). Les carrés "
+"Couleurs de premier et d'arrière-plan (souvent notées PP et AP). Les carrés "
 "noirs et blancs réinitialisent les couleurs, les flèches les "
 "intervertissent. Double-cliquez pour sélectionner une couleur dans un "
 "dialogue de sélection de couleurs."
@@ -2837,15 +2835,15 @@ msgstr "Niveaux d'entrée :"
 msgid "Output Levels:"
 msgstr "Niveaux de sortie :"
 
-#: app/levels.c:1096
+#: app/levels.c:1088
 msgid "Load Levels"
 msgstr "Charger niveaux"
 
-#: app/levels.c:1111
+#: app/levels.c:1103
 msgid "Save Levels"
 msgstr "Enregistrer niveaux"
 
-#: app/levels.c:1440
+#: app/levels.c:1432
 msgid "Load/Save Levels"
 msgstr "Charger/Enregistrer niveaux"
 
@@ -3178,11 +3176,11 @@ msgstr "/Édition/Effacer"
 
 #: app/menus.c:265
 msgid "/Edit/Fill with FG Color"
-msgstr "/Édition/Remplir avec la couleur d'Av. Pl."
+msgstr "/Édition/Remplir avec la couleur de PP"
 
 #: app/menus.c:267
 msgid "/Edit/Fill with BG Color"
-msgstr "/Édition/Remplir avec la couleur d'Ar. Pl."
+msgstr "/Édition/Remplir avec la couleur d'AP"
 
 #: app/menus.c:269
 msgid "/Edit/Stroke"
@@ -3409,7 +3407,7 @@ msgstr "/Calques/Rotation"
 
 #: app/menus.c:451
 msgid "/Layers/Anchor Layer"
-msgstr "/Calques/Ancrer Calque"
+msgstr "/Calques/Ancrer le calque"
 
 #: app/menus.c:453
 msgid "/Layers/Merge Visible Layers..."
@@ -3417,7 +3415,7 @@ msgstr "/Calques/Fusionner les calques visibles..."
 
 #: app/menus.c:455
 msgid "/Layers/Flatten Image"
-msgstr "/Calques/Aplatir Image"
+msgstr "/Calques/Aplatir l'image"
 
 #: app/menus.c:460
 msgid "/Layers/Mask to Selection"
@@ -3425,7 +3423,7 @@ msgstr "/Calques/Masque vers Sélection"
 
 #: app/menus.c:465
 msgid "/Layers/Add Alpha Channel"
-msgstr "/Calques/Ajouter Canal Alpha"
+msgstr "/Calques/Ajouter un canal alpha"
 
 #: app/menus.c:467
 msgid "/Layers/Alpha to Selection"
@@ -3585,31 +3583,31 @@ msgstr "/Nouveau calque..."
 #. <Layers>/Stack
 #: app/menus.c:620
 msgid "/Stack/Raise Layer"
-msgstr "/Pile/Remonter calque"
+msgstr "/Pile/Remonter le calque"
 
 #: app/menus.c:622
 msgid "/Stack/Lower Layer"
-msgstr "/Pile/Descendre calque"
+msgstr "/Pile/Descendre le calque"
 
 #: app/menus.c:624
 msgid "/Stack/Layer to Top"
-msgstr "/Pile/Calque vers le sommet"
+msgstr "/Pile/Monter le calque au sommet"
 
 #: app/menus.c:626
 msgid "/Stack/Layer to Bottom"
-msgstr "/Pile/Calque vers le fond"
+msgstr "/Pile/Descendre le calque au fond"
 
 #: app/menus.c:629
 msgid "/Duplicate Layer"
-msgstr "/Dupliquer calque"
+msgstr "/Dupliquer le calque"
 
 #: app/menus.c:631
 msgid "/Anchor Layer"
-msgstr "/Ancrer calque"
+msgstr "/Ancrer le calque"
 
 #: app/menus.c:633
 msgid "/Delete Layer"
-msgstr "/Supprimer Calque"
+msgstr "/Supprimer le calque"
 
 #: app/menus.c:638
 msgid "/Layer Boundary Size..."
@@ -3621,7 +3619,7 @@ msgstr "/Mettre aux dimensions de l'image"
 
 #: app/menus.c:642
 msgid "/Scale Layer..."
-msgstr "/Mettre calque à l'échelle..."
+msgstr "/Redimensionner le calque..."
 
 #: app/menus.c:647
 msgid "/Merge Visible Layers..."
@@ -3653,7 +3651,7 @@ msgstr "/Masque vers Sélection"
 
 #: app/menus.c:667
 msgid "/Add Alpha Channel"
-msgstr "/Ajouter Canal Alpha"
+msgstr "/Ajouter un canal alpha"
 
 #: app/menus.c:669
 msgid "/Alpha to Selection"
@@ -3685,7 +3683,7 @@ msgstr "/Canal vers Sélection"
 
 #: app/menus.c:698
 msgid "/Add to Selection"
-msgstr "/Ajouter à la Sélection"
+msgstr "/Ajouter à la sélection"
 
 #: app/menus.c:700
 msgid "/Subtract from Selection"
@@ -3741,7 +3739,7 @@ msgstr "/Importer un chemin..."
 
 #: app/menus.c:744
 msgid "/Export Path..."
-msgstr "/Exporter Chemin..."
+msgstr "/Exporter le chemin..."
 
 #: app/menus.c:749
 msgid "/Edit Path Attributes..."
@@ -3750,7 +3748,7 @@ msgstr "/Éditer les attributs du chemin"
 #: app/menus.c:1302
 #, c-format
 msgid "Error opening file: %s\n"
-msgstr "Erreur lors de l'ouverture du fichier: %s\n"
+msgstr "Erreur lors de l'ouverture du fichier : %s\n"
 
 #: app/module_db.c:66
 msgid "Module error"
@@ -3779,17 +3777,17 @@ msgstr "Module BDD"
 #: app/module_db.c:606
 #, c-format
 msgid "load module: \"%s\"\n"
-msgstr "charger module: \"%s\"\n"
+msgstr "charger module : \"%s\"\n"
 
 #: app/module_db.c:613
 #, c-format
 msgid "skipping module: \"%s\"\n"
-msgstr "module ignoré: \"%s\"\n"
+msgstr "module ignoré : \"%s\"\n"
 
 #: app/module_db.c:639
 #, c-format
 msgid "module load error: %s: %s"
-msgstr "erreur de chargement du module: %s: %s"
+msgstr "erreur de chargement du module : %s: %s"
 
 #: app/module_db.c:826
 msgid "<No modules>"
@@ -5398,7 +5396,7 @@ msgstr "/Outils/Dessin/Gomme"
 
 #: app/tools.c:719
 msgid "Erase to background or transparency"
-msgstr "Gomme (met la couleur de fond ou rend transparent)"
+msgstr "Gomme (met la couleur d'arrière-plan ou rend transparent)"
 
 #: app/tools.c:742
 msgid "/Tools/Paint Tools/Airbrush"
