@@ -125,7 +125,7 @@ void query (void)
 			  "Tim Newsome",
 			  "Tim Newsome, Sven Neumann, Tom Rathborne",
 			  "1997, 1999",
-			  _("<Image>/Filters/Render/Pattern/Grid"),
+			  N_("<Image>/Filters/Render/Pattern/Grid..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

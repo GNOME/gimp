@@ -9,7 +9,6 @@ plug-ins/bmp/bmp.c
 plug-ins/bmp/bmpread.c
 plug-ins/bmp/bmpwrite.c
 plug-ins/borderaverage/borderaverage.c
-plug-ins/common/CEL.c
 plug-ins/common/CML_explorer.c
 plug-ins/common/animationplay.c
 plug-ins/common/animoptimize.c
@@ -70,6 +69,7 @@ plug-ins/gap/gap_split.c
 plug-ins/gap/resize.c
 plug-ins/gdyntext/charmap.c
 plug-ins/gdyntext/charmap_window.c
+plug-ins/gdyntext/gdyntext.c
 plug-ins/gdyntext/font_selection.c
 plug-ins/gdyntext/message_window.c
 plug-ins/gimpressionist/brush.c

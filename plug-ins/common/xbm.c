@@ -707,7 +707,7 @@ static int gtk_initialized = FALSE;
 static void
 not_bw_dialog (void)
 {
-  GtkWidget *dlg, *button, *label, *frame, *vbox;
+  GtkWidget *dlg, *button, *hbbox, *label, *frame, *vbox;
 
   if (!gtk_initialized)
     {
@@ -725,17 +725,23 @@ not_bw_dialog (void)
 		      (GtkSignalFunc) close_callback,
 		      dlg);
 
-  /* Action area */
+  /*  Action area  */
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
+  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+
   button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
 			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button,
-		      TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-      /*  the warning message  */
+  /*  the warning message  */
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
@@ -745,12 +751,10 @@ not_bw_dialog (void)
   gtk_container_border_width (GTK_CONTAINER (vbox), 5);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
-  g_message(_(
-	 "The image which you are trying to save as\n"
-	 "an XBM contains more than two colors.\n\n"
-	 "Please convert it to a black and white\n"
-	 "(1-bit) indexed image and try again."
-	 ));
+  label = gtk_label_new (_("The image which you are trying to save as\n"
+			   "an XBM contains more than two colors.\n\n"
+			   "Please convert it to a black and white\n"
+			   "(1-bit) indexed image and try again."));
   gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, TRUE, 0);
   gtk_widget_show (label);
   gtk_widget_show (vbox);
@@ -966,7 +970,7 @@ init_gtk ()
 static gint
 save_dialog (gint32  drawable_ID)
 {
-  GtkWidget *dlg, *button, *toggle, *label, *entry, *frame, *hbox, *vbox;
+  GtkWidget *dlg, *hbbox, *button, *toggle, *label, *entry, *frame, *hbox, *vbox;
 
   xsint.run = FALSE;
 
@@ -981,13 +985,19 @@ save_dialog (gint32  drawable_ID)
 		      dlg);
 
   /*  Action area  */
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
+  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+ 
   button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) save_ok_callback,
-                      dlg);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button,
-		      TRUE, TRUE, 0);
+		      (GtkSignalFunc) save_ok_callback,
+		      dlg);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
@@ -996,8 +1006,7 @@ save_dialog (gint32  drawable_ID)
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
 			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button,
-		      TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
 

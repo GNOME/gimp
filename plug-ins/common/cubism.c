@@ -170,11 +170,11 @@ query ()
   INIT_I18N();
   gimp_install_procedure ("plug_in_cubism",
 			  _("Convert the input drawable into a collection of rotated squares"),
-			  "Help not yet written for this plug-in",
+			  _("Help not yet written for this plug-in"),
 			  "Spencer Kimball & Tracy Scott",
 			  "Spencer Kimball & Tracy Scott",
 			  "1996",
-			  _("<Image>/Filters/Artistic/Cubism"),
+			  N_("<Image>/Filters/Artistic/Cubism..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -302,6 +302,7 @@ cubism_dialog ()
 {
   GtkWidget *dlg;
   GtkWidget *label;
+  GtkWidget *hbbox;
   GtkWidget *button;
   GtkWidget *toggle;
   GtkWidget *scale;
@@ -326,12 +327,19 @@ cubism_dialog ()
 		      NULL);
 
   /*  Action area  */
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
+  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+ 
   button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) cubism_ok_callback,
-                      dlg);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
+		      (GtkSignalFunc) cubism_ok_callback,
+		      dlg);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
@@ -340,7 +348,7 @@ cubism_dialog ()
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
 			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   /*  parameter settings  */

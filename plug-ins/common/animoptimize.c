@@ -127,13 +127,13 @@ static void query()
   INIT_I18N();
 
   gimp_install_procedure("plug_in_animationoptimize",
-           _("This plugin applies various optimizations to"
+			 _("This plugin applies various optimizations to"
 			 " a GIMP layer-based animation."),
 			 "",
 			 "Adam D. Moss <adam@gimp.org>",
 			 "Adam D. Moss <adam@gimp.org>",
 			 "1997-98",
-			 _("<Image>/Filters/Animation/Animation Optimize"),
+			 N_("<Image>/Filters/Animation/Animation Optimize"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs, nreturn_vals,
@@ -149,7 +149,7 @@ static void query()
 			 "Adam D. Moss <adam@gimp.org>",
 			 "Adam D. Moss <adam@gimp.org>",
 			 "1997-98",
-			 _("<Image>/Filters/Animation/Animation UnOptimize"),
+			 N_("<Image>/Filters/Animation/Animation UnOptimize"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs, nreturn_vals,

@@ -139,7 +139,7 @@ the current background color is mapped to white."),
                           "Peter Kirchgessner",
                           "Peter Kirchgessner",
                           dversio,
-                          _("<Image>/Filters/Colors/Map/Adjust Fgrd.-Bkgrd."),
+                          N_("<Image>/Filters/Colors/Map/Adjust FG-BG"),
                           "RGB*",
                           PROC_PLUG_IN,
                           nadjust_args, 0,
@@ -153,7 +153,7 @@ Other colors are mapped by interpolation."),
                           "Peter Kirchgessner",
                           "Peter Kirchgessner",
                           dversio,
-                          _("<Image>/Filters/Colors/Map/Color Mapping"),
+                          N_("<Image>/Filters/Colors/Map/Color Mapping..."),
                           "RGB*",
                           PROC_PLUG_IN,
                           nmap_args, 0,
@@ -222,7 +222,7 @@ run (char    *name,
       plvals.map_mode = 0;
 
       if (run_mode != RUN_NONINTERACTIVE)
-        gimp_progress_init ("Adjusting Foreground/Background");
+        gimp_progress_init (_("Adjusting Foreground/Background"));
 
       color_mapping (drawable);
       break;
@@ -392,7 +392,7 @@ add_color_button (int csel_index,
  gtk_table_attach (GTK_TABLE (table), hbox, left, left+1, top, top+1,
                    GTK_FILL, GTK_FILL, 0, 0);
 
- label = gtk_label_new ((left == 0) ? "From:" : "To:");
+ label = gtk_label_new ((left == 0) ? _("From:") : _("To:"));
  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
  gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
  gtk_widget_show (label);

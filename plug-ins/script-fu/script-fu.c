@@ -24,8 +24,9 @@
 #include <unistd.h>
 #endif
 
-#include "libgimp/gimp.h"
 #include "gtk/gtk.h"
+#include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 #include "siod.h"
 #include "script-fu-console.h"
@@ -137,8 +138,8 @@ query (void)
   static gint nserver_args = sizeof (server_args) / sizeof (server_args[0]);
 
   gimp_install_procedure ("extension_script_fu",
-			  "A scheme interpreter for scripting GIMP operations",
-			  "More help here later",
+			  _("A scheme interpreter for scripting GIMP operations"),
+			  _("More help here later"),
 			  "Spencer Kimball & Peter Mattis",
 			  "Spencer Kimball & Peter Mattis",
 			  "1997",
@@ -149,24 +150,24 @@ query (void)
 
 #ifndef G_OS_WIN32
   gimp_install_procedure ("extension_script_fu_console",
-			  "Provides a console mode for script-fu development",
-			  "Provides an interface which allows interactive scheme development.",
+			  _("Provides a console mode for script-fu development"),
+			  _("Provides an interface which allows interactive scheme development."),
 			  "Spencer Kimball & Peter Mattis",
 			  "Spencer Kimball & Peter Mattis",
 			  "1997",
-			  "<Toolbox>/Xtns/Script-Fu/Console",
+			  N_("<Toolbox>/Xtns/Script-Fu/Console..."),
 			  "",
 			  PROC_EXTENSION,
 			  nconsole_args, 0,
 			  console_args, NULL);
 
   gimp_install_procedure ("extension_script_fu_server",
-			  "Provides a server for remote script-fu operation",
-			  "Provides a server for remote script-fu operation",
+			  _("Provides a server for remote script-fu operation"),
+			  _("Provides a server for remote script-fu operation"),
 			  "Spencer Kimball & Peter Mattis",
 			  "Spencer Kimball & Peter Mattis",
 			  "1997",
-			  "<Toolbox>/Xtns/Script-Fu/Server",
+			  N_("<Toolbox>/Xtns/Script-Fu/Server..."),
 			  "",
 			  PROC_EXTENSION,
 			  nserver_args, 0,
@@ -174,8 +175,8 @@ query (void)
 #endif
 
   gimp_install_procedure ("extension_script_fu_eval",
-			  "Evaluate scheme code",
-			  "Evaluate the code under the scheme interpeter (primarily for batch mode)",
+			  _("Evaluate scheme code"),
+			  _("Evaluate the code under the scheme interpeter (primarily for batch mode)"),
 			  "Manish Singh",
 			  "Manish Singh",
 			  "1998",

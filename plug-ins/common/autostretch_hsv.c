@@ -147,7 +147,7 @@ run (char    *name,
 
 
 static void
-indexed_autostretch_hsv(gint32 image_ID)  /* a.d.m. */
+indexed_autostretch_hsv (gint32 image_ID)  /* a.d.m. */
 {
   guchar *cmap;
   gint ncols,i;
@@ -291,7 +291,10 @@ autostretch_hsv (GDrawable *drawable)
 }
 
 static void
-calc_rgb_to_hsv(guchar *rgb, double *hue, double *sat, double *val)
+calc_rgb_to_hsv (guchar *rgb, 
+		 double *hue, 
+		 double *sat, 
+		 double *val)
 {
   double red, green, blue;
   double h, s, v;
@@ -363,7 +366,10 @@ calc_rgb_to_hsv(guchar *rgb, double *hue, double *sat, double *val)
 }
 
 static void
-calc_hsv_to_rgb(guchar *rgb, double h, double s, double v)
+calc_hsv_to_rgb (guchar *rgb, 
+		 double  h, 
+		 double  s, 
+		 double  v)
 {
   double hue, saturation, value;
   double f, p, q, t;

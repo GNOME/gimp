@@ -170,7 +170,7 @@ static void query ()
 			  "Xavier Bouchoux",
 			  "Xavier Bouchoux",
 			  "1997",
-			  _("<Image>/Filters/Render/Sinus"),
+			  N_("<Image>/Filters/Render/Sinus..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

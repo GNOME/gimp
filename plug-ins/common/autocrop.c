@@ -34,7 +34,7 @@ GPlugInInfo PLUG_IN_INFO =
 {
   NULL,		/* init_proc */
   NULL,         /* quit_proc */
-  query,	/* query_proc */
+   query,	/* query_proc */
   run,		/* run_proc */
 };
 

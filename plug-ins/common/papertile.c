@@ -939,7 +939,7 @@ plugin_query ( void )
       "Hirotsuna Mizuno <s1041150@u-aizu.ac.jp>",
       "Copyright (c)1997-1999 Hirotsuna Mizuno",
       _("September 31, 1999"),
-      _("<Image>/Filters/Map/Paper Tile"),
+      N_("<Image>/Filters/Map/Paper Tile..."),
       "RGB*",
       PROC_PLUG_IN,
       numof_args,

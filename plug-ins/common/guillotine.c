@@ -78,7 +78,7 @@ query (void)
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "1998",
-			 N_("<Image>/Image/Transforms/Guillotine"),
+			  N_("<Image>/Image/Transforms/Guillotine"),
 			  "RGB*, INDEXED*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

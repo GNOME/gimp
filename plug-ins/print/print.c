@@ -679,6 +679,7 @@ do_print_dialog(void)
   GtkWidget	*dialog,	/* Dialog window */
 		*table,		/* Table "container" for controls */
 		*label,		/* Label string */
+		*hbbox,	        /* button_box for OK/Cancel buttons */
 		*button,	/* OK/Cancel buttons */
 		*scale,		/* Scale widget */
 		*entry,		/* Text entry widget */
@@ -1024,23 +1025,29 @@ do_print_dialog(void)
   * Print, cancel buttons...
   */
 
-  gtk_box_set_homogeneous(GTK_BOX(GTK_DIALOG(dialog)->action_area), FALSE);
-  gtk_box_set_spacing(GTK_BOX(GTK_DIALOG(dialog)->action_area), 0);
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 2);
+  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dialog)->action_area), FALSE);
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->action_area), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+ 
+  button = gtk_button_new_with_label (_("Print"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) print_callback,
+		      NULL);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gtk_widget_grab_default (button);
+  gtk_widget_show (button);
 
-  button = gtk_button_new_with_label(_("Cancel"));
-  GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-  gtk_signal_connect(GTK_OBJECT(button), "clicked",
-		     (GtkSignalFunc)cancel_callback, NULL);
-  gtk_box_pack_end(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, FALSE, FALSE, 0);
-  gtk_widget_show(button);
+  button = gtk_button_new_with_label (_("Cancel"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT(button), "clicked",
+		     (GtkSignalFunc) cancel_callback, NULL);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
-  button = gtk_button_new_with_label(_("Print"));
-  GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-  gtk_signal_connect(GTK_OBJECT(button), "clicked",
-		     (GtkSignalFunc)print_callback, NULL);
-  gtk_widget_grab_default(button);
-  gtk_box_pack_end(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, FALSE, FALSE, 0);
-  gtk_widget_show(button);
 
  /*
   * Setup dialog window...
@@ -1130,23 +1137,28 @@ do_print_dialog(void)
   * OK, cancel buttons...
   */
 
-  gtk_box_set_homogeneous(GTK_BOX(GTK_DIALOG(dialog)->action_area), FALSE);
-  gtk_box_set_spacing(GTK_BOX(GTK_DIALOG(dialog)->action_area), 0);
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 2);
+  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dialog)->action_area), FALSE);
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->action_area), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+ 
+  button = gtk_button_new_with_label (_("OK"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) setup_ok_callback, NULL);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gtk_widget_grab_default (button);
+  gtk_widget_show (button);
 
-  button = gtk_button_new_with_label(_("Cancel"));
-  GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
+  button = gtk_button_new_with_label (_("Cancel"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect(GTK_OBJECT(button), "clicked",
 		     (GtkSignalFunc)setup_cancel_callback, NULL);
-  gtk_box_pack_end(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, FALSE, FALSE, 0);
-  gtk_widget_show(button);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
-  button = gtk_button_new_with_label(_("OK"));
-  GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-  gtk_signal_connect(GTK_OBJECT(button), "clicked",
-		     (GtkSignalFunc)setup_ok_callback, NULL);
-  gtk_widget_grab_default(button);
-  gtk_box_pack_end(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, FALSE, FALSE, 0);
-  gtk_widget_show(button);
 
  /*
   * Output file selection dialog...
@@ -1600,7 +1612,6 @@ print_callback(void)
     gtk_widget_show(file_browser);
 }
 
-
 /*
  * 'cancel_callback()' - Cancel the print...
  */
@@ -1610,7 +1621,6 @@ cancel_callback(void)
 {
   gtk_widget_destroy(print_dialog);
 }
-
 
 /*
  * 'close_callback()' - Exit the print dialog application.

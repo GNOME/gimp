@@ -109,7 +109,7 @@ static void query ()
 			  "Karl-Johan Andersson", /* Author */
 			  "Karl-Johan Andersson", /* Copyright */
 			  "1997",
-			  _("<Image>/Filters/Artistic/Apply Canvas"),
+			  N_("<Image>/Filters/Artistic/Apply Canvas..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -213,6 +213,7 @@ static void run (gchar   *name,
 static gint struc_dialog(void)
 {
   GtkWidget *dlg;
+  GtkWidget *hbbox;
   GtkWidget *oframe, *iframe;
   GtkWidget *abox, *bbox, *cbox;
   GtkWidget *button, *label;
@@ -235,23 +236,30 @@ static gint struc_dialog(void)
   gtk_signal_connect (GTK_OBJECT(dlg), "destroy",
 		     (GtkSignalFunc) struc_close_callback,
 		     NULL);
-  /* Action area */
-  button = gtk_button_new_with_label ( _("OK"));
+  /*  Action area  */
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
+  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+ 
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT(button), "clicked",
-		     (GtkSignalFunc) struc_ok_callback,
-		     dlg);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) struc_ok_callback,
+		      dlg);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ( _("Cancel"));
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
 			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
-  gtk_widget_show(button);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   /* Parameter settings */
   abox = gtk_vbox_new (FALSE, 5); 

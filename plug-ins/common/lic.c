@@ -977,6 +977,7 @@ void create_main_dialog(void)
   GtkWidget *label;
   GtkWidget *option_menu;
   GtkWidget *menu;
+  GtkWidget *hbbox;
   GtkWidget *button;
   GtkWidget *scale;
   GtkObject *scale_data;
@@ -1239,27 +1240,31 @@ void create_main_dialog(void)
   gtk_widget_show(vbox);
   gtk_widget_show(hbox);
 
-  /* Buttons */
-    
-  gtk_container_border_width(GTK_CONTAINER(GTK_DIALOG(dialog)->action_area), 6);
-    
-  button = gtk_button_new_with_label( _("OK"));
-  GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-  gtk_signal_connect(GTK_OBJECT(button), "clicked",
-    (GtkSignalFunc)ok_button_clicked,(gpointer)dialog);
+  /*  Action area  */
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 2);
+  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dialog)->action_area), FALSE);
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->action_area), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+ 
+  button = gtk_button_new_with_label (_("OK"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) ok_button_clicked,
+		      dialog);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gtk_widget_grab_default (button);
+  gtk_widget_show (button);
 
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, TRUE, TRUE, 0);
-  gtk_widget_grab_default(button);
-  gtk_widget_show(button);
-    
-  button = gtk_button_new_with_label( _("Cancel"));
-  GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-  gtk_signal_connect(GTK_OBJECT(button), "clicked",
-    (GtkSignalFunc)cancel_button_clicked,(gpointer)dialog);
+  button = gtk_button_new_with_label (_("Cancel"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) cancel_button_clicked,
+		      (gpointer)dialog);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, TRUE, TRUE, 0);
-  gtk_widget_show(button);
-    
   /* Done */
     
   gtk_widget_show(dialog);
@@ -1311,7 +1316,7 @@ static void query(void)
 			  "Tom Bech & Federico Mena Quintero",
 			  "Tom Bech & Federico Mena Quintero",
 			  "Version 0.14, September 24 1997",
-			  _("<Image>/Filters/Map/Van Gogh (LIC)"),
+			  N_("<Image>/Filters/Map/Van Gogh (LIC)..."),
 			  "RGB",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

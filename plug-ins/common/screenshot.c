@@ -152,9 +152,9 @@ static void query (void)
 			    "it may grab the root window or use the window-id passed as "
 			    "a parameter."),
 			  "Sven Neumann <sven@gimp.org>",
-			  "1998, 1999 Sven Neumann",
+			  "1998, 1999",
 			  "v0.9.2 (99/09/01)",
-			  _("<Toolbox>/File/Acquire/Screen Shot..."),
+			  N_("<Toolbox>/File/Acquire/Screen Shot..."),
 			  NULL,
 			  PROC_EXTENSION,		
 			  nargs,

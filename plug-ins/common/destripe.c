@@ -35,7 +35,6 @@
  *   dialog_ientry_update()      - Update the value field using the text entry.
  *   dialog_histogram_callback()
  *   dialog_ok_callback()        - Start the filter...
- *   dialog_cancel_callback()    - Cancel the filter...
  *   dialog_close_callback()     - Exit the filter dialog application.
  *
  *   1997/08/16 * Initial Revision.
@@ -78,7 +77,6 @@ static void	dialog_create_ivalue(char *, GtkTable *, int, gint *, int, int);
 static void	dialog_iscale_update(GtkAdjustment *, gint *);
 static void	dialog_ientry_update(GtkWidget *, gint *);
 static void	dialog_ok_callback(GtkWidget *, gpointer);
-static void	dialog_cancel_callback(GtkWidget *, gpointer);
 static void	dialog_close_callback(GtkWidget *, gpointer);
 
 static void	preview_init(void);
@@ -152,7 +150,7 @@ query(void)
       _("This plug-in tries to remove vertical stripes from an image."),
       "Marc Lehmann <pcg@goof.com>", "Marc Lehmann <pcg@goof.com>",
       PLUG_IN_VERSION,
-      _("<Image>/Filters/Enhance/Destripe"),
+      N_("<Image>/Filters/Enhance/Destripe..."),
       "RGB*, GRAY*",
       PROC_PLUG_IN, nargs, nreturn_vals, args, return_vals);
 }
@@ -551,6 +549,7 @@ destripe_dialog(void)
 		*ftable,	/* Filter table */
 		*frame,		/* Frame for preview */
 		*scrollbar,	/* Horizontal + vertical scroller */
+                *hbbox,
 		*button;
   gint		argc;		/* Fake argc for GUI */
   gchar		**argv;		/* Fake argv for GUI */
@@ -686,28 +685,31 @@ destripe_dialog(void)
 
   dialog_create_ivalue(_("Width"), GTK_TABLE(table), 2, &avg_width, 2, MAX_AVG);
 
- /*
-  * OK, cancel buttons...
-  */
+  /*  Action area  */
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 2);
+  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dialog)->action_area), FALSE);
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->action_area), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+ 
+  button = gtk_button_new_with_label (_("OK"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) dialog_ok_callback,
+		      dialog);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gtk_widget_grab_default (button);
+  gtk_widget_show (button);
 
-  gtk_container_border_width(GTK_CONTAINER(GTK_DIALOG(dialog)->action_area), 6);
+  button = gtk_button_new_with_label (_("Cancel"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
+			     (GtkSignalFunc) gtk_widget_destroy,
+			     GTK_OBJECT (dialog));
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
-  button = gtk_button_new_with_label(_("OK"));
-  GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-  gtk_signal_connect(GTK_OBJECT(button), "clicked",
-		     (GtkSignalFunc) dialog_ok_callback,
-		     dialog);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, TRUE, TRUE, 0);
-  gtk_widget_grab_default(button);
-  gtk_widget_show(button);
-
-  button = gtk_button_new_with_label(_("Cancel"));
-  GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-  gtk_signal_connect(GTK_OBJECT(button), "clicked",
-		     (GtkSignalFunc) dialog_cancel_callback,
-		     dialog);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, TRUE, TRUE, 0);
-  gtk_widget_show(button);
 
  /*
   * Show it and wait for the user to do something...
@@ -928,17 +930,6 @@ dialog_ok_callback(GtkWidget *widget,	/* I - OK button widget */
   gtk_widget_destroy(GTK_WIDGET(data));
 }
 
-
-/*
- * 'dialog_cancel_callback()' - Cancel the filter...
- */
-
-static void
-dialog_cancel_callback(GtkWidget *widget,	/* I - Cancel button widget */
-                       gpointer  data)		/* I - Dialog window */
-{
-  gtk_widget_destroy(GTK_WIDGET(data));
-}
 
 
 /*

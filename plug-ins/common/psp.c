@@ -448,6 +448,7 @@ static gint
 save_dialog ()
 {
   GtkWidget *dlg;
+  GtkWidget *hbbox;
   GtkWidget *button;
   GtkWidget *toggle;
   GtkWidget *frame;
@@ -458,32 +459,39 @@ save_dialog ()
   gint use_lz77 = (psvals.compression == PSP_COMP_LZ77);
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Save as PSP");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Save as PSP"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) save_close_callback,
 		      NULL);
 
   /*  Action area  */
-  button = gtk_button_new_with_label ("OK");
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
+  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+ 
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) save_ok_callback,
-                      dlg);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
+		      (GtkSignalFunc) save_ok_callback,
+		      dlg);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
 			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   /*  file save type  */
-  frame = gtk_frame_new ("Data Compression");
+  frame = gtk_frame_new (_("Data Compression"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, FALSE, TRUE, 0);
@@ -492,7 +500,7 @@ save_dialog ()
   gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
 
   group = NULL;
-  toggle = gtk_radio_button_new_with_label (group, "None");
+  toggle = gtk_radio_button_new_with_label (group, _("None"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -501,7 +509,7 @@ save_dialog ()
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_none);
   gtk_widget_show (toggle);
 
-  toggle = gtk_radio_button_new_with_label (group, "RLE");
+  toggle = gtk_radio_button_new_with_label (group, _("RLE"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -510,7 +518,7 @@ save_dialog ()
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_rle);
   gtk_widget_show (toggle);
 
-  toggle = gtk_radio_button_new_with_label (group, "LZ77");
+  toggle = gtk_radio_button_new_with_label (group, _("LZ77"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",

@@ -23,7 +23,7 @@
 #ifndef _GDYNTEXT_H_
 #define _GDYNTEXT_H_
 
-#include "libgimp/gimpintl.h"
+#include "libgimp/stdplugins-intl.h"
 
 #define GDYNTEXT_VERSION				"1.4.3"
 #define GDYNTEXT_MAGIC					"GDT09"

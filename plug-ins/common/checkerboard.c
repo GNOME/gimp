@@ -99,7 +99,7 @@ query ()
 			  "Brent Burton & the Edward Blevins",
 			  "Brent Burton & the Edward Blevins",
 			  "1997",
-			  _("<Image>/Filters/Render/Pattern/Checkerboard"),
+			  N_("<Image>/Filters/Render/Pattern/Checkerboard..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -184,7 +184,7 @@ run    (gchar    *name,
 
 
 static void
-check( GDrawable * drawable)
+check (GDrawable *drawable)
 {
   GPixelRgn dest_rgn;
   GParam *return_vals;
@@ -303,7 +303,8 @@ check( GDrawable * drawable)
 
 
 static int
-inblock( gint pos, gint size)
+inblock (gint pos, 
+	 gint size)
 {
     static gint *in = NULL;		/* initialized first time */
     gint i,j,k, len;
@@ -350,9 +351,10 @@ inblock( gint pos, gint size)
 
 
 static gint
-check_dialog ()
+check_dialog (void)
 {
   GtkWidget *dlg;
+  GtkWidget *hbbox;
   GtkWidget *button;
   GtkWidget *frame;
   GtkWidget *table;
@@ -378,12 +380,19 @@ check_dialog ()
 		      NULL);
 
   /*  Action area  */
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
+  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+ 
   button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) check_ok_callback,
-                      dlg);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
+		      (GtkSignalFunc) check_ok_callback,
+		      dlg);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
@@ -392,7 +401,7 @@ check_dialog ()
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
 			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   /*  parameter settings  */
@@ -441,7 +450,7 @@ check_dialog ()
 
 static void
 check_slider_update (GtkAdjustment *adjustment,
-		     gint        *size_val)
+		     gint          *size_val)
 {
   *size_val = adjustment->value;
 }
@@ -449,7 +458,7 @@ check_slider_update (GtkAdjustment *adjustment,
 
 static void
 check_toggle_update (GtkWidget *widget,
-		       gpointer   data)
+		     gpointer   data)
 {
   gint *toggle_val;
 
@@ -463,14 +472,14 @@ check_toggle_update (GtkWidget *widget,
 
 static void
 check_close_callback (GtkWidget *widget,
-			 gpointer   data)
+		      gpointer   data)
 {
   gtk_main_quit ();
 }
 
 static void
 check_ok_callback (GtkWidget *widget,
-		      gpointer   data)
+		   gpointer   data)
 {
   cint.run = TRUE;
   gtk_widget_destroy (GTK_WIDGET (data));

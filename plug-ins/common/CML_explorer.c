@@ -73,7 +73,6 @@
 
 #include "gtk/gtk.h"
 
-#include "libgimp/gimp.h"
 
 #include <errno.h>
 #include <stdio.h>
@@ -83,6 +82,7 @@
 #include <sys/stat.h>
 #include <time.h>		/* for seed of random number */
 
+#include "libgimp/gimp.h"
 #include "libgimp/stdplugins-intl.h"
 
 #ifndef RAND_MAX
@@ -91,9 +91,6 @@
 
 #define PARAM_FILE_FORMAT_VERSION	1.0
 #define	PLUG_IN_NAME	"plug_in_CML_explorer"
-#define SHORT_NAME	"CML_explorer"
-#define PROGRESS_NAME	"CML_explorer: evoluting..."
-#define MENU_POSITION	"<Image>/Filters/Render/Pattern/CML explorer"
 #define	VERBOSE_DIALOGS	1
 #define	MAIN_FUNCTION	CML
 #define INTERFACE	CML_explorer_interface
@@ -494,7 +491,7 @@ query ()
 			  "Shuji Narazaki (narazaki@InetQ.or.jp); http://www.inetq.or.jp/~narazaki/TheGIMP/",
 			  "Shuji Narazaki",
 			  "1997",
-			  MENU_POSITION,
+			  N_("<Image>/Filters/Render/Pattern/CML explorer..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -796,7 +793,7 @@ MAIN_FUNCTION (gint preview_p)
 	  vals[index] = (gdouble) rgbi[2] / (gdouble) 255;
 	}
     }
-  if (! preview_p) gimp_progress_init (PROGRESS_NAME);
+  if (! preview_p) gimp_progress_init (_("CML_explorer: evoluting..."));
 
   /* rolling start */
   for (index = 0; index < VALS.start_offset; index++)
@@ -1802,6 +1799,7 @@ static void
 function_graph_new (GtkWidget *widget, gpointer data)
 {
   GtkWidget	*dlg;
+  GtkWidget     *hbbox;
   GtkWidget	*button;
   GtkWidget	*frame;
   GtkWidget	*vbox;
@@ -1815,13 +1813,19 @@ function_graph_new (GtkWidget *widget, gpointer data)
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) gtkW_close_callback, NULL);
   /* Action Area */
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
+  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+
   button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
 			     GTK_OBJECT(dlg));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button,
-		      TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
@@ -2667,7 +2671,9 @@ gtkW_dialog_new (gchar		*name,
 		 GtkSignalFunc	ok_callback,
 		 GtkSignalFunc	close_callback)
 {
-  GtkWidget *dlg, *button;
+  GtkWidget *dlg;
+  GtkWidget *hbbox;
+  GtkWidget *button;
 
   dlg = gtk_dialog_new ();
   gtk_window_set_title (GTK_WINDOW (dlg), name);
@@ -2676,12 +2682,19 @@ gtkW_dialog_new (gchar		*name,
 		      (GtkSignalFunc) close_callback, NULL);
 
   /* Action Area */
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
+  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+
   button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) ok_callback, dlg);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button,
-		      TRUE, TRUE, 0);
+		      (GtkSignalFunc) ok_callback,
+		      dlg);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
@@ -2689,9 +2702,8 @@ gtkW_dialog_new (gchar		*name,
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT(dlg));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button,
-		      TRUE, TRUE, 0);
+			     GTK_OBJECT (dlg));
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   return dlg;

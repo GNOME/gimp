@@ -205,7 +205,7 @@ query()
         (char *) author,
         (char *) copyrights,
         (char *) copyright_date,
-        _("<Image>/Filters/Blur/Blur"),
+        N_("<Image>/Filters/Blur/Blur..."),
         "RGB*, GRAY*",
         PROC_PLUG_IN,
         nargs, nreturn_vals,
@@ -235,8 +235,11 @@ query()
  ********************************/
 
 static void
-run(char *name, int nparams, GParam *param, int *nreturn_vals,
-    GParam **return_vals)
+run (char    *name, 
+     int      nparams, 
+     GParam  *param, 
+     int     *nreturn_vals,
+     GParam **return_vals)
 {
 
     GDrawable *drawable;
@@ -369,7 +372,11 @@ run(char *name, int nparams, GParam *param, int *nreturn_vals,
  ********************************/
 
 static inline void
-blur_prepare_row(GPixelRgn *pixel_rgn, guchar *data, int x, int y, int w)
+blur_prepare_row (GPixelRgn *pixel_rgn, 
+		  guchar    *data, 
+		  int        x, 
+		  int        y, 
+		  int        w)
 {
     int b;
 
@@ -398,7 +405,7 @@ blur_prepare_row(GPixelRgn *pixel_rgn, guchar *data, int x, int y, int w)
  ********************************/
 
 static void
-blur(GDrawable *drawable)
+blur (GDrawable *drawable)
 {
     GPixelRgn srcPR, destPR, destPR2, *sp, *dp, *tp;
     gint width, height;
@@ -570,7 +577,7 @@ blur(GDrawable *drawable)
  ********************************/
 
 static gint
-blur_dialog()
+blur_dialog ()
 {
     GtkWidget *dlg, *entry, *frame,
         *seed_hbox, *seed_vbox, *table;
@@ -698,7 +705,9 @@ blur_dialog()
 
 
 static void
-blur_ok_callback(GtkWidget *widget, gpointer data) {
+blur_ok_callback (GtkWidget *widget, 
+		  gpointer   data) 
+{
     blur_int.run = TRUE;
     gtk_widget_destroy(GTK_WIDGET(data));
 }

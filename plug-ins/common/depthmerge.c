@@ -199,7 +199,7 @@ static void query() {
     "Sean Cier",
     "Sean Cier",
     PLUG_IN_VERSION,
-    _("<Image>/Filters/Combine/Depth Merge"),
+    N_("<Image>/Filters/Combine/Depth Merge..."),
     "RGB*, GRAY*",
     PROC_PLUG_IN,
     numArgs,
@@ -576,7 +576,8 @@ gint32 DepthMerge_dialog(DepthMerge *dm) {
   GtkWidget   *tempOptionMenu;
   GtkWidget   *tempMenu;
   GtkWidget *numericParameterTable;
-  GtkWidget *tempButton;
+  GtkWidget *hbbox;
+  GtkWidget *button;
   gint      argc;
   gchar     **argv;
   guchar    *color_cube;
@@ -740,27 +741,30 @@ gint32 DepthMerge_dialog(DepthMerge *dm) {
 			       &(dm->params.scale2),
 			       -1, 1, 0.001);
 
-  /* Buttons */
+  /*  Action area  */
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dm->interface->dialog)->action_area), 2);
+  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dm->interface->dialog)->action_area), FALSE);
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dm->interface->dialog)->action_area), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+ 
+  button = gtk_button_new_with_label (_("OK"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) dialogOkCallback,
+		      dm);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gtk_widget_grab_default (button);
+  gtk_widget_show (button);
 
-  gtk_container_border_width(GTK_CONTAINER(GTK_DIALOG(dm->interface->dialog)->action_area), 6);
-  tempButton = gtk_button_new_with_label(_("OK"));
-  GTK_WIDGET_SET_FLAGS(tempButton, GTK_CAN_DEFAULT);
-  gtk_signal_connect(GTK_OBJECT(tempButton), "clicked",
-		     (GtkSignalFunc)dialogOkCallback,
-		     dm);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dm->interface->dialog)->action_area),
-		     tempButton, TRUE, TRUE, 0);
-  gtk_widget_grab_default(tempButton);
-  gtk_widget_show(tempButton);
-
-  tempButton = gtk_button_new_with_label(_("Cancel"));
-  GTK_WIDGET_SET_FLAGS(tempButton, GTK_CAN_DEFAULT);
-  gtk_signal_connect(GTK_OBJECT(tempButton), "clicked",
+  button = gtk_button_new_with_label (_("Cancel"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		     (GtkSignalFunc)dialogCancelCallback,
 		     dm);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dm->interface->dialog)->action_area),
-		     tempButton, TRUE, TRUE, 0);
-  gtk_widget_show(tempButton);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   /* Done */
 

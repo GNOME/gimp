@@ -119,51 +119,41 @@ char *strescape(char *text)
 
 static void gdt_query(void)
 {
-#if defined(ENABLE_NLS) & defined(LOCALEDIR)
-#ifdef HAVE_LC_MESSAGES
-	setlocale(LC_MESSAGES, "");
-#endif
-	bindtextdomain(TEXT_DOMAIN, LOCALEDIR);
-	textdomain(TEXT_DOMAIN);
-#endif
-
-	{
-		static GParamDef gdt_args[] = {
-			/* standard params */
-			{ PARAM_INT32,		_("run_mode"),			_("Interactive, non-interactive")},
-			{ PARAM_IMAGE,		_("image"),					_("Input image") },
-			{ PARAM_DRAWABLE,	_("drawable"),			_("Input drawable")},
-			/* gdyntext params */
-			{ PARAM_STRING,		_("text"),					_("Text to render")},
-			{ PARAM_STRING,		_("font_family"),		_("Font family")},
-			{ PARAM_STRING,		_("font_weight"),		_("Font weight or \"*\"")},
-			{ PARAM_STRING,		_("font_slant"),		_("Font slant or \"*\"")},
-			{ PARAM_STRING,		_("font_spacing"),	_("Font spacing or \"*\"")},
-			{ PARAM_INT32,		_("font_size"),			_("Font size")},
-			{ PARAM_INT32,		_("font_metric"),		_("Font size metric: { PIXELS(0), POINTS(1) } ")},
-			{ PARAM_INT32,		_("antialias"),			_("Generate antialiased text")},
-			{ PARAM_INT32,		_("alignment"),			_("Text alignment: { LEFT = 0, CENTER = 1, RIGHT = 2 }")},
-			{ PARAM_INT32,		_("rotation"),			_("Text rotation (degrees)")},
-			{ PARAM_INT32,		_("spacing"),				_("Line spacing")},
-			{ PARAM_COLOR,		_("color"),					_("Text color")},
-		};
-		static GParamDef gdt_rets[] = {
-			{ PARAM_LAYER,		"layer",				_("The text layer")},
-		};
-		static int ngdt_args = sizeof(gdt_args) / sizeof(gdt_args[0]);
-		static int ngdt_rets = sizeof(gdt_rets) / sizeof(gdt_rets[0]);
-
-		gimp_install_procedure("plug_in_dynamic_text",
-			"GIMP Dynamic Text",
-			"",
-			"Marco Lamberto <lm@geocities.com>",
-			"Marco Lamberto",
-			"Jan 1999",
-			"<Image>/Filters/Render/Dynamic Text",
-			"RGB*,GRAY*,INDEXED*",
-			PROC_PLUG_IN,
-			ngdt_args, ngdt_rets, gdt_args, gdt_rets);
-	}
+  static GParamDef gdt_args[] = {
+    /* standard params */
+    { PARAM_INT32,		"run_mode",			"Interactive, non-interactive"},
+    { PARAM_IMAGE,		"image",                        "Input image"},
+    { PARAM_DRAWABLE,	        "drawable",			"Input drawable"},
+    /* gdyntext params */
+    { PARAM_STRING,		"text",                         "Text to render"},
+    { PARAM_STRING,		"font_family",		        "Font family"},
+    { PARAM_STRING,		"font_weight",		        "Font weight or \"*\""},
+    { PARAM_STRING,		"font_slant",		        "Font slant or \"*\""},
+    { PARAM_STRING,		"font_spacing",	                "Font spacing or \"*\""},
+    { PARAM_INT32,		"font_size",			"Font size"},
+    { PARAM_INT32,		"font_metric",                  "Font size metric: { PIXELS(0), POINTS(1) } "},
+    { PARAM_INT32,		"antialias",			"Generate antialiased text"},
+    { PARAM_INT32,		"alignment",			"Text alignment: { LEFT = 0, CENTER = 1, RIGHT = 2 }"},
+    { PARAM_INT32,		"rotation",			"Text rotation (degrees)"},
+    { PARAM_INT32,		"spacing",                      "Line spacing"},
+    { PARAM_COLOR,		"color",                        "Text color"},
+  };
+  static GParamDef gdt_rets[] = {
+    { PARAM_LAYER,		"layer",                        "The text layer"},
+  };
+  static int ngdt_args = sizeof(gdt_args) / sizeof(gdt_args[0]);
+  static int ngdt_rets = sizeof(gdt_rets) / sizeof(gdt_rets[0]);
+  
+  gimp_install_procedure("plug_in_dynamic_text",
+			 _("GIMP Dynamic Text"),
+			 "",
+			 "Marco Lamberto <lm@geocities.com>",
+			 "Marco Lamberto",
+			 "Jan 1999",
+			 N_("<Image>/Filters/Render/Dynamic Text..."),
+			 "RGB*,GRAY*,INDEXED*",
+			 PROC_PLUG_IN,
+			 ngdt_args, ngdt_rets, gdt_args, gdt_rets);
 }
 
 
@@ -174,13 +164,7 @@ static void gdt_run(char *name, int nparams, GParam *param, int *nreturn_vals,
 	GRunModeType run_mode;
 	GdtVals oldvals;
 
-#if defined(ENABLE_NLS) & defined(LOCALEDIR)
-#ifdef HAVE_LC_MESSAGES
-	setlocale(LC_MESSAGES, "");
-#endif
-	bindtextdomain(TEXT_DOMAIN, LOCALEDIR);
-	textdomain(TEXT_DOMAIN);
-#endif
+        INIT_I18N_UI(); 
 
 	gdtvals.valid							= TRUE;
 #ifdef GIMP_HAVE_PARASITES
@@ -384,7 +368,7 @@ void gdt_set_values(GdtVals *data)
 	strncpy(text, data->text, sizeof(text));
 	strescape(text);
 	if ((lname = calloc(MAX_TEXT_SIZE + 1024 * 4, sizeof(char))) == NULL) {
-		puts(_("gdt_set_values: NOT ENOUGH MEMORY!"));
+		puts("gdt_set_values: NOT ENOUGH MEMORY!");
 		exit(1);
 	}
 	sprintf(lname, GDYNTEXT_MAGIC"{%s}{%s}{%d}{%d}{%06X}{%d}{%d}{%d}{%s}{%d}",
@@ -440,10 +424,8 @@ void gdt_render_text_p(GdtVals *data, gboolean show_progress)
 	GParamColor old_color, text_color;
 
 	if (show_progress)
-		gimp_progress_init("GIMP Dynamic Text");
-	ret_vals = gimp_run_procedure("gimp_undo_push_group_start", &nret_vals,
-		PARAM_IMAGE, data->image_id, PARAM_END);
-	gimp_destroy_params(ret_vals, nret_vals);
+		gimp_progress_init(_("GIMP Dynamic Text"));
+	gimp_undo_push_group_start (data->image_id);
 
 	/* save and remove current selection */
 	ret_vals = gimp_run_procedure("gimp_selection_is_empty", &nret_vals,
@@ -675,10 +657,7 @@ void gdt_render_text_p(GdtVals *data, gboolean show_progress)
 		gimp_image_remove_channel(data->image_id, selection_channel);
 	}
 
-	ret_vals = gimp_run_procedure("gimp_undo_push_group_end", &nret_vals,
-		PARAM_IMAGE, data->image_id, PARAM_END);
-	gimp_destroy_params(ret_vals, nret_vals);
-
+	gimp_undo_push_group_end (data->image_id);
 	gimp_displays_flush();
 	if (show_progress)
 		gimp_progress_update(100.0);

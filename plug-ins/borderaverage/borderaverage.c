@@ -90,12 +90,12 @@ query ()
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_borderaverage",
-			  "Borderaverage",
+			  _("Borderaverage"),
 			  "",
 			  "Philipp Klaus",
 			  "Internet Access AG",
 			  "1998",
-			  _("<Image>/Filters/Colors/Border Average"),
+			  N_("<Image>/Filters/Colors/Border Average..."),
 			  "RGB*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -187,7 +187,11 @@ run (char    *name,
 }
 
 static void
-borderaverage (GDrawable *drawable, guchar *res_r, guchar *res_g, guchar *res_b) {
+borderaverage (GDrawable *drawable, 
+	       guchar    *res_r, 
+	       guchar    *res_g, 
+	       guchar    *res_b) 
+{
 	gint		width;
 	gint		height;
 	gint		x1, x2, y1, y2;
@@ -296,7 +300,12 @@ borderaverage (GDrawable *drawable, guchar *res_r, guchar *res_g, guchar *res_b)
 }
 
 
-static void add_new_color(gint bytes, guchar* buffer, gint *cube, gint bucket_expo) {
+static void 
+add_new_color (gint    bytes, 
+	       guchar *buffer, 
+	       gint   *cube, 
+	       gint    bucket_expo) 
+{
 	guchar		r,g,b;
 	gint		bucket_rexpo;
 	
@@ -315,7 +324,9 @@ static void add_new_color(gint bytes, guchar* buffer, gint *cube, gint bucket_ex
 	cube[(r << (bucket_rexpo << 1)) + (g << bucket_rexpo) + b]++;
 }
 
-static gint borderaverage_dialog() {
+static gint 
+borderaverage_dialog () 
+{
   GtkWidget *dlg, *frame, *vbox2;
   GtkWidget *vbox, *menu;
   gint runp;
@@ -329,7 +340,7 @@ static gint borderaverage_dialog() {
   gtk_init(&argc, &argv);
   gtk_rc_parse(gimp_gtkrc());
 
-  dlg = mw_app_new("plug_in_borderaverage", "Borderaverage", &runp);
+  dlg = mw_app_new("plug_in_borderaverage", _("Borderaverage"), &runp);
 
   vbox = gtk_vbox_new(FALSE, 0);
   gtk_container_border_width(GTK_CONTAINER(vbox), 5);
@@ -358,6 +369,8 @@ static gint borderaverage_dialog() {
 }
 
 
-void menu_callback(GtkWidget *widget, gpointer client_data) {
+void menu_callback (GtkWidget *widget, 
+		    gpointer   client_data) 
+{
   borderaverage_bucket_exponent=(gint)gtk_object_get_data(GTK_OBJECT(widget),"_GckOptionMenuItemID");
 }

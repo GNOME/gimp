@@ -226,7 +226,7 @@ query ()
 			  "Peter Kirchgessner",
 			  "Peter Kirchgessner (peter@kirchgessner.net)",
 			  "1997",
-			  _("<Image>/Filters/Combine/Film"),
+			  N_("<Image>/Filters/Combine/Film..."),
 			  "INDEXED*, GRAY*, RGB*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

@@ -111,7 +111,7 @@ query ()
 			  "Seth Burgess",
 			  "Seth Burgess <sjburges@gimp.org>",
 			  _("7th Aug 1999"),
-			  _("<Image>/Filters/Colors/Color To Alpha"),
+			  N_("<Image>/Filters/Colors/Color To Alpha..."),
 			  "RGBA",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

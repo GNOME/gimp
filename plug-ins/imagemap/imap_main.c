@@ -25,9 +25,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "libgimp/gimp.h"
 #include "gdk/gdkkeysyms.h" /* for keyboard values */
 #include "gtk/gtk.h"
+
+#include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 #include "imap_about.h"
 #include "imap_circle.h"
@@ -56,7 +58,6 @@
 #include "imap_edit_area_info.h"
 #include "imap_file.h"
 #include "imap_grid.h"
-#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 #include "imap_menu.h"
 #include "imap_object.h"
@@ -133,12 +134,12 @@ static void query()
    INIT_I18N();
 
    gimp_install_procedure("plug_in_imagemap",
-			  "Creates a clickable imagemap.",
+			  _("Creates a clickable imagemap."),
 			  "",
 			  "Maurits Rijk",
 			  "Maurits Rijk",
 			  "1998-1999",
-			  "<Image>/Filters/Misc/ImageMap",
+			  N_("<Image>/Filters/Misc/ImageMap..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

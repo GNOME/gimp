@@ -351,7 +351,7 @@ query ()
 			  "Owen Taylor",
 			  "Owen Taylor",
 			  "1997",
-			  _("<Image>/Filters/Render/Nature/IfsCompose"),
+			  N_("<Image>/Filters/Render/Nature/IfsCompose..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
