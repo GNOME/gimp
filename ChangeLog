@@ -1,5 +1,8 @@
 2003-08-04  Henrik Brix Andersen  <brix@gimp.org>
 
+	* app/gui/image-menu.c (image_menu_entries): reverted change to
+	web-separator which accidentially slipped in with last commit
+
 	* app/gui/plug-in-menus.c (plug_in_menus_update)
 	* app/plug-in/plug-in.c (plug_in_get_undo_desc): use
 	gimp_menu_path_strip_uline() to strip plug-in mnemonics from
