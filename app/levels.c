@@ -1469,6 +1469,12 @@ read_levels_from_file (FILE *f)
   int i, fields;
   char buf[50], *nptr;
   
+  if (!fgets (buf, 50, f))
+    return FALSE;
+
+  if (strcmp (buf, "# GIMP Levels File\n") != 0)
+    return FALSE;
+
   for (i = 0; i < 5; i++)
     {
       fields = fscanf (f, "%d %d %d %d ",
@@ -1477,7 +1483,10 @@ read_levels_from_file (FILE *f)
 		       &low_output[i],
 		       &high_output[i]);
 
-      if (fields != 4 || !fgets(buf, 50, f))
+      if (fields != 4)
+	return FALSE;
+
+      if (!fgets (buf, 50, f))
 	return FALSE;
 
       gamma[i] = strtod(buf, &nptr);
@@ -1506,6 +1515,8 @@ static void
 write_levels_to_file (FILE *f)
 {
   int i;
+
+  fprintf (f, "# GIMP Levels File\n");
 
   for (i = 0; i < 5; i++)
     {
