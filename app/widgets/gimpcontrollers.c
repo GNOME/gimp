@@ -63,6 +63,13 @@ struct _GimpControllerManager
 static GimpControllerManager * gimp_controller_manager_get  (Gimp *gimp);
 static void   gimp_controller_manager_free (GimpControllerManager *manager);
 
+static void   gimp_controllers_add         (GimpContainer         *container,
+                                            GimpControllerInfo    *info,
+                                            GimpControllerManager *manager);
+static void   gimp_controllers_remove      (GimpContainer         *container,
+                                            GimpControllerInfo    *info,
+                                            GimpControllerManager *manager);
+
 static gboolean gimp_controllers_event_mapped (GimpControllerInfo        *info,
                                                GimpController            *controller,
                                                const GimpControllerEvent *event,
@@ -87,6 +94,13 @@ gimp_controllers_init (Gimp *gimp)
                           (GDestroyNotify) gimp_controller_manager_free);
 
   manager->controllers = gimp_list_new (GIMP_TYPE_CONTROLLER_INFO, TRUE);
+
+  g_signal_connect (manager->controllers, "add",
+                    G_CALLBACK (gimp_controllers_add),
+                    manager);
+  g_signal_connect (manager->controllers, "remove",
+                    G_CALLBACK (gimp_controllers_remove),
+                    manager);
 
   manager->event_mapped_id =
     gimp_container_add_handler (manager->controllers, "event-mapped",
@@ -250,6 +264,24 @@ gimp_controller_manager_free (GimpControllerManager *manager)
   g_object_unref (manager->ui_manager);
 
   g_free (manager);
+}
+
+static void
+gimp_controllers_add (GimpContainer         *container,
+                      GimpControllerInfo    *info,
+                      GimpControllerManager *manager)
+{
+  if (GIMP_IS_CONTROLLER_WHEEL (info->controller))
+    manager->wheel = info->controller;
+}
+
+static void
+gimp_controllers_remove (GimpContainer         *container,
+                         GimpControllerInfo    *info,
+                         GimpControllerManager *manager)
+{
+  if (info->controller == manager->wheel)
+    manager->wheel = NULL;
 }
 
 static gboolean

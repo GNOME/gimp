@@ -1,3 +1,14 @@
+2004-06-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpcontainer.c (gimp_container_deserialize): add newly
+	created children to the container *after* deserializing them so
+	GimpContainer::add() callbacks get the already deserialized
+	object.
+
+	* app/widgets/gimpcontrollers.c: connect to "add" and "remove" of
+	the controller list and remember / clear the wheel controller when
+	it appears / disappears.
+
 2004-06-17  Sven Neumann  <sven@gimp.org>
 
 	* autogen.sh: check for xsltproc and mention that the intltool

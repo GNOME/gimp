@@ -429,7 +429,8 @@ gimp_container_deserialize (GimpConfig *config,
           {
             GimpObject *child;
             GType       type;
-            gchar      *name = NULL;
+            gchar      *name      = NULL;
+            gboolean    add_child = FALSE;
 
             type = g_type_from_name (scanner->value.v_identifier);
 
@@ -483,10 +484,7 @@ gimp_container_deserialize (GimpConfig *config,
                                           "name", name, NULL);
                  }
 
-                gimp_container_add (container, child);
-
-                if (container->policy == GIMP_CONTAINER_POLICY_STRONG)
-                  g_object_unref (child);
+                add_child = TRUE;
               }
 
             g_free (name);
@@ -496,8 +494,19 @@ gimp_container_deserialize (GimpConfig *config,
                                                                   nest_level + 1,
                                                                   FALSE))
               {
+                if (add_child)
+                  g_object_unref (child);
+
                 /*  warning should be already set by child  */
                 return FALSE;
+              }
+
+            if (add_child)
+              {
+                gimp_container_add (container, child);
+
+                if (container->policy == GIMP_CONTAINER_POLICY_STRONG)
+                  g_object_unref (child);
               }
           }
           token = G_TOKEN_RIGHT_PAREN;
