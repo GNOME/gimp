@@ -1,3 +1,10 @@
+2004-11-24  Simon Budig  <simon@gimp.org>
+
+	* modules/controller_linux_input.c: Accept >= 0 return values of the
+	ioctl() to figure out the device name. Apparently it is the number of
+	bytes written to the string, so we might omit the strlen() following,
+	but I don't like to rely on that...
+
 2004-11-24  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpcontroller.[ch]: guarded the whole header

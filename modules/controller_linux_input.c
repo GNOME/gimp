@@ -361,7 +361,7 @@ linux_input_set_device (ControllerLinuxInput *controller,
           gchar name[256];
 
           name[0] = '\0';
-          if (ioctl (fd, EVIOCGNAME (sizeof (name)), name) == 0 &&
+          if (ioctl (fd, EVIOCGNAME (sizeof (name)), name) >= 0 &&
               strlen (name) > 0                                 &&
               g_utf8_validate (name, -1, NULL))
             {
