@@ -239,6 +239,15 @@ package Gimp::CodeGen::enums;
 		       CHANNEL_OP_REPLACE => 'REPLACE',
 		       CHANNEL_OP_INTERSECT => 'INTERSECT' }
 	},
+    RunModeType =>
+	{ contig => 1,
+	  header => 'appenums.h',
+	  symbols => [ qw(RUN_INTERACTIVE RUN_NONINTERACTIVE
+			  RUN_WITH_LAST_VALS) ],
+	  mapping => { RUN_INTERACTIVE => '0',
+		       RUN_NONINTERACTIVE => '1',
+		       RUN_WITH_LAST_VALS => '2' }
+	},
     MessageHandlerType =>
 	{ contig => 1,
 	  header => 'appenv.h',
@@ -318,15 +327,6 @@ package Gimp::CodeGen::enums;
 		       GREEN_LUT => '2',
 		       BLUE_LUT => '3',
 		       ALPHA_LUT => '4' }
-	},
-    RunModeType =>
-	{ contig => 1,
-	  header => 'plug_in.h',
-	  symbols => [ qw(RUN_INTERACTIVE RUN_NONINTERACTIVE
-			  RUN_WITH_LAST_VALS) ],
-	  mapping => { RUN_INTERACTIVE => '0',
-		       RUN_NONINTERACTIVE => '1',
-		       RUN_WITH_LAST_VALS => '2' }
 	},
     GradientType =>
 	{ contig => 1,

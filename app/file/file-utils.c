@@ -44,91 +44,11 @@
 
 #include "apptypes.h"
 
-#include "gdisplay.h"
-#include "gimpui.h"
-#include "gui/menus.h"
-
 #include "file-utils.h"
 #include "gimpimage.h"
 #include "plug_in.h"
 #include "temp_buf.h"
 
-
-void
-file_update_name (PlugInProcDef *proc,
-		  GtkWidget     *filesel)
-{
-  if (proc->extensions_list)
-    {
-      gchar *text;
-      gchar *last_dot;
-      GString *s;
-
-      text = gtk_entry_get_text (GTK_ENTRY (GTK_FILE_SELECTION (filesel)->selection_entry));
-      last_dot = strrchr (text, '.');
-
-      if (last_dot == text || !text[0])
-	return;
-
-      s = g_string_new (text);
-
-      if (last_dot)
-	g_string_truncate (s, last_dot-text);
-
-      g_string_append (s, ".");
-      g_string_append (s, (gchar *) proc->extensions_list->data);
-
-      gtk_entry_set_text (GTK_ENTRY (GTK_FILE_SELECTION (filesel)->selection_entry), s->str);
-
-      g_string_free (s, TRUE);
-    }
-}
-
-void
-file_update_menus (GSList *procs,
-		   gint    image_type)
-{
-  PlugInProcDef *file_proc;
-
-  while (procs)
-    {
-      file_proc = procs->data;
-      procs = procs->next;
-
-      if (file_proc->db_info.proc_type != PDB_EXTENSION)
-	menus_set_sensitive (file_proc->menu_path,
-			     (file_proc->image_types_val & image_type));
-    }
-}
-
-void
-file_dialog_show (GtkWidget *filesel)
-{
-  menus_set_sensitive ("<Toolbox>/File/Open...", FALSE);
-  menus_set_sensitive ("<Image>/File/Open...", FALSE);
-  menus_set_sensitive ("<Image>/File/Save", FALSE);
-  menus_set_sensitive ("<Image>/File/Save as...", FALSE);
-  menus_set_sensitive ("<Image>/File/Save a Copy as...", FALSE);
-
-  gtk_widget_grab_focus (GTK_FILE_SELECTION (filesel)->selection_entry);
-  gtk_widget_show (filesel);
-}
-
-void
-file_dialog_hide (GtkWidget *filesel)
-{
-  gimp_dialog_hide (filesel);
-  
-  menus_set_sensitive ("<Toolbox>/File/Open...", TRUE);
-  menus_set_sensitive ("<Image>/File/Open...", TRUE);
-
-  if (gdisplay_active ())
-    {
-      menus_set_sensitive ("<Image>/File/Save", TRUE);
-      menus_set_sensitive ("<Image>/File/Save as...", TRUE);
-      menus_set_sensitive ("<Image>/File/Save a Copy as...", TRUE);
-    }
-}
 
 static PlugInProcDef *
 file_proc_find_by_name (GSList      *procs,
@@ -623,15 +543,6 @@ file_save_thumbnail (GimpImage   *gimage,
     {
       return FALSE;
     }
-
-  /* just for debugging 
-   *  if (gimp_image_preview_valid (gimage, GRAY_CHANNEL))
-   *   {
-   *     g_print ("(incidentally, gimage already has a valid preview - %dx%d)\n",
-   *	         gimage->comp_preview->width,
-   *	         gimage->comp_preview->height);
-   *   }
-   */
 
   pathname = g_dirname (full_source_filename);
   filename = g_basename (full_source_filename); /* Don't free! */

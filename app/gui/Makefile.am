@@ -31,8 +31,14 @@ libappgui_la_SOURCES = \
 	dialogs-commands.h	\
 	dialogs-constructors.c	\
 	dialogs-constructors.h	\
+	file-dialog-utils.c	\
+	file-dialog-utils.h	\
 	file-new-dialog.c	\
 	file-new-dialog.h	\
+	file-open-dialog.c	\
+	file-open-dialog.h	\
+	file-save-dialog.c	\
+	file-save-dialog.h	\
 	gradient-editor.c	\
 	gradient-editor.h	\
 	gradient-select.h	\

@@ -16,21 +16,17 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __FILE_OPEN_H__
-#define __FILE_OPEN_H__
+#ifndef __FILE_DIALOG_UTILS_H__
+#define __FILE_DIALOG_UTILS_H__
 
 
-extern GSList *load_procs;
+void   file_dialog_show         (GtkWidget     *filesel);
+void   file_dialog_hide         (GtkWidget     *filesel);
+
+void   file_dialog_update_name  (PlugInProcDef *proc,
+				 GtkWidget     *filesel);
+void   file_dialog_update_menus (GSList        *procs,
+				 gint           image_type);
 
 
-GimpImage * file_open_image             (const gchar   *filename,
-					 const gchar   *raw_filename,
-					 const gchar   *open_mode,
-					 PlugInProcDef *file_proc,
-					 RunModeType    run_mode,
-					 gint          *status);
-
-gchar     * file_open_absolute_filename (const gchar   *name);
-
-
-#endif /* __FILE_OPEN_H__ */
+#endif /* __FILE_DIALOG_UTILS_H__ */

@@ -56,6 +56,7 @@
 
 #include "gui/color-notebook.h"
 #include "gui/color-select.h"
+#include "gui/file-open-dialog.h"
 #include "gui/gui.h"
 #include "gui/splash.h"
 #include "gui/tips-dialog.h"
@@ -66,7 +67,6 @@
 #include "color_transfer.h"
 #include "colormaps.h"
 #include "context_manager.h"
-#include "file-open.h"
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
 #include "gimpcontext.h"
@@ -115,7 +115,7 @@ gimp_init (gint    gimp_argc,
     while (gimp_argc--)
       {
 	if (*gimp_argv)
-	  file_open (*gimp_argv, *gimp_argv);
+	  file_open_with_display (*gimp_argv, *gimp_argv);
 	gimp_argv++;
       }
 

@@ -23,14 +23,6 @@
 #include <stdio.h>
 
 
-void            file_dialog_show      (GtkWidget     *filesel);
-void            file_dialog_hide      (GtkWidget     *filesel);
-
-void            file_update_name      (PlugInProcDef *proc,
-				       GtkWidget     *filesel);
-void            file_update_menus     (GSList        *procs,
-				       gint           image_type);
-
 PlugInProcDef * file_proc_find        (GSList        *procs,
 				       const gchar   *filename);
 

@@ -26,9 +26,10 @@
 
 #include "apptypes.h"
 
+#include "gui/file-open-dialog.h"
+
 #include "dialog_handler.h"
 #include "docindex.h"
-#include "file-open.h"
 #include "gdisplay.h"
 #include "gimpimage.h"
 #include "gimpdnd.h"
@@ -513,12 +514,12 @@ open_or_raise (gchar    *file_name,
 
       if (! pair.boole)
 	{
-	  file_open (file_name, file_name);
+	  file_open_with_display (file_name, file_name);
 	}
     }
   else
     {
-      file_open (file_name, file_name);
+      file_open_with_display (file_name, file_name);
     }
 }
 

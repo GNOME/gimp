@@ -218,6 +218,14 @@ typedef enum /*< skip >*/
   SELECTION_ANCHOR
 } SelectOps;
 
+/*  Plug-In run modes  */
+typedef enum
+{
+  RUN_INTERACTIVE    = 0,
+  RUN_NONINTERACTIVE = 1,
+  RUN_WITH_LAST_VALS = 2
+} RunModeType;
+
 /*  The possible states for tools  */
 typedef enum /*< skip >*/
 {

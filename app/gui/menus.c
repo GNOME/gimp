@@ -36,14 +36,14 @@
 #include "commands.h"
 #include "dialog_handler.h"
 #include "dialogs-commands.h"
+#include "file-open-dialog.h"
+#include "file-save-dialog.h"
 #include "gdisplay.h"
 #include "layers-commands.h"
 #include "menus.h"
 #include "paths-dialog.h"
 #include "test-commands.h"
 
-#include "file-open.h"
-#include "file-save.h"
 #include "gimphelp.h"
 #include "gimplist.h"
 #include "gimprc.h"
@@ -1456,7 +1456,7 @@ menus_last_opened_cmd_callback (GtkWidget *widget,
     ((GString *) g_slist_nth_data (last_opened_raw_filenames, num))->str;
   filename = g_basename (raw_filename);
 
-  status = file_open (raw_filename, raw_filename);
+  status = file_open_with_display (raw_filename, raw_filename);
 
   if (status != PDB_SUCCESS &&
       status != PDB_CANCEL)

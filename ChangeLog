@@ -1,3 +1,27 @@
+2001-04-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/appenums.h: added RunModeType.
+	* app/plug_in.h: removed RunModeType.
+	* tools/pdbgen/Makefile.am: don't scan app/plug_in.h for enums.
+	* tools/pdbgen/enums.pl: regenerated.
+
+	* app/file-open.[ch]
+	* app/file-save.[ch]
+	* app/file-utils.[ch]: removed all GUI specific code.
+
+	* app/gui/Makefile.am
+	* app/gui/file-dialog-utils.[ch]
+	* app/gui/file-open-dialog.[ch]
+	* app/gui/file-save-dialog.[ch]: new files.
+	Renamed file_open() to 	file_open_with_display().
+
+	* app/app_procs.c
+	* app/docindex.c
+	* app/gimpdnd.c
+	* app/gui/commands.c
+	* app/gui/gui.c
+	* app/gui/menus.c: changed accordingly.
+
 2001-04-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/app_procs.[ch]: removed stuff which now lives in gui/gui.c,

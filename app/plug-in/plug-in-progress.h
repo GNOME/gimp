@@ -20,8 +20,11 @@
 #define __PLUG_IN_H__
 
 
+#include <time.h>      /* time_t */
+#include <sys/types.h> /* pid_t  */
+
 #include "pdb/procedural_db.h"
-#include <time.h> /* time_t */
+
 
 #define WRITE_BUFFER_SIZE  512
 
@@ -31,14 +34,6 @@
 #define PLUG_IN_RGBA_IMAGE      0x08
 #define PLUG_IN_GRAYA_IMAGE     0x10
 #define PLUG_IN_INDEXEDA_IMAGE  0x20
-
-
-typedef enum
-{
-  RUN_INTERACTIVE    = 0,
-  RUN_NONINTERACTIVE = 1,
-  RUN_WITH_LAST_VALS = 2
-} RunModeType;
 
 
 struct _PlugIn

@@ -23,17 +23,17 @@
 extern GSList *save_procs;
 
 
-void   file_save_menu_init             (void);
+PDBStatusType   file_save           (GimpImage     *gimage,
+				     gchar         *filename,
+				     gchar         *raw_filename,
+				     RunModeType    run_mode,
+				     gboolean       set_filename);
 
-void   file_save_callback              (GtkWidget   *widget,
-                                        gpointer     data);
-void   file_save_as_callback           (GtkWidget   *widget,
-                                        gpointer     data);
-void   file_save_a_copy_as_callback    (GtkWidget   *widget,
-                                        gpointer     data);
-
-void   file_save_by_extension_callback (GtkWidget   *widget,
-                                        gpointer     data);
+gboolean        file_save_with_proc (GimpImage     *gimage,
+				     gchar         *full_filename,
+				     gchar         *raw_filename,
+				     PlugInProcDef *save_proc,
+				     gboolean       set_filename);
 
 
 #endif /* __FILE_SAVE_H__ */

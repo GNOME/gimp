@@ -34,8 +34,9 @@
 
 #include "widgets/gimppreview.h"
 
+#include "gui/file-open-dialog.h"
+
 #include "context_manager.h"
-#include "file-open.h"
 #include "gimpimage.h"
 #include "gimpbrush.h"
 #include "gimpchannel.h"
@@ -1481,7 +1482,7 @@ gimp_dnd_file_open_files (gchar *buffer)
         name += sig_len;
 
       if (name && strlen (name) > 2)
-	file_open (name, name);
+	file_open_with_display (name, name);
 
       if (*buffer)
         buffer++;

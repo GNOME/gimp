@@ -35,6 +35,8 @@
 #include "dialogs.h"
 #include "docindex.h"
 #include "errorconsole.h"
+#include "file-open-dialog.h"
+#include "file-save-dialog.h"
 #include "gimprc.h"
 #include "gradient-select.h"
 #include "gui.h"
@@ -48,8 +50,6 @@
 #include "toolbox.h"
 
 #include "app_procs.h"
-#include "file-open.h"
-#include "file-save.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -56,7 +56,6 @@ enum_headers = \
 	../../app/gimpimage.h			\
 	../../app/gimpimage-convert.h		\
 	../../app/lut_funcs.h			\
-	../../app/plug_in.h			\
 	../../app/paint-funcs/paint-funcs.h	\
 	../../app/tools/gimpblendtool.h		\
 	../../app/tools/gimpbucketfilltool.h	\

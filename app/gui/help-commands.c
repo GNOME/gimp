@@ -36,6 +36,8 @@
 #include "commands.h"
 #include "convert-dialog.h"
 #include "errorconsole.h"
+#include "file-open-dialog.h"
+#include "file-save-dialog.h"
 #include "info-dialog.h"
 #include "info-window.h"
 #include "layer-select.h"
@@ -43,8 +45,6 @@
 
 #include "app_procs.h"
 #include "context_manager.h"
-#include "file-open.h"
-#include "file-save.h"
 #include "floating_sel.h"
 #include "gdisplay_ops.h"
 #include "gimage_mask.h"
