@@ -697,6 +697,7 @@ blob_pixmap (GdkColormap *colormap,
   gdk_draw_rectangle (pixmap, black_gc, FALSE, 0, 0, 21, 20);
   blob = (*function) (10, 10, 8, 0, 0, 8);
   paint_blob (pixmap, black_gc, blob);
+  g_free (blob);
 
   gdk_gc_unref (white_gc);
   gdk_gc_unref (black_gc);

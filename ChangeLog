@@ -1,3 +1,9 @@
+Sun Nov 14 23:47:10 MET 1999  Sven Neumann <sven.gimp.org>
+
+	* app/ink.c: plugged a memleak
+
+	* app/xinput_airbrush.c; make it compile w/o patch_xinput_airbrush
+
 Sun Nov 14 22:50:32 MET 1999  Sven Neumann <sven.gimp.org>
 	
 	* libgimp/gimpui.h: include all header files that belong to 

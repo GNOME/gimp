@@ -483,7 +483,7 @@ static XinputAirbrushOptions *
     gtk_widget_show (label);
 
     options->height_w =
-      gtk_adjustment_new (options->minheight_d, 5.0 , 61.0, 1.0, 1.0, 1.0);
+      gtk_adjustment_new (options->height_d, 5.0 , 61.0, 1.0, 1.0, 1.0);
     slider = gtk_hscale_new (GTK_ADJUSTMENT (options->height_w));
     gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
     gtk_table_attach_defaults (GTK_TABLE (table), slider, 1, 2, 7, 8);
