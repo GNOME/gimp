@@ -1,7 +1,7 @@
 2002-03-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdock.c: reduced the gimp_dock_remove_book()
-	if() {} else if () {} ... paned removal madness to two cases.
+	if () {} else if () {} ... paned removal madness to two cases.
 
 2002-03-21  Michael Natterer  <mitch@gimp.org>
 

@@ -436,7 +436,7 @@ void
 gimp_dock_remove_book (GimpDock     *dock,
 		       GimpDockbook *dockbook)
 {
-  gint length;
+  gint old_length;
   gint index;
 
   g_return_if_fail (GIMP_IS_DOCK (dock));
@@ -444,13 +444,13 @@ gimp_dock_remove_book (GimpDock     *dock,
 
   g_return_if_fail (dockbook->dock == dock);
 
-  length = g_list_length (dock->dockbooks);
-  index  = g_list_index (dock->dockbooks, dockbook);
+  old_length = g_list_length (dock->dockbooks);
+  index      = g_list_index (dock->dockbooks, dockbook);
 
   dockbook->dock  = NULL;
   dock->dockbooks = g_list_remove (dock->dockbooks, dockbook);
 
-  if (length == 1)
+  if (old_length == 1)
     {
       GtkWidget *separator;
       GList     *children;
@@ -464,88 +464,36 @@ gimp_dock_remove_book (GimpDock     *dock,
 
       g_list_free (children);
     }
-  else if (length == 2)
-    {
-      GtkWidget *other_book;
-      GtkWidget *parent;
-
-      other_book = g_list_nth_data (dock->dockbooks, 0);
-
-      parent = other_book->parent;
-
-      g_object_ref (G_OBJECT (other_book));
-
-      gtk_container_remove (GTK_CONTAINER (parent), GTK_WIDGET (dockbook));
-      gtk_container_remove (GTK_CONTAINER (parent), other_book);
-
-      gtk_container_remove (GTK_CONTAINER (dock->vbox), parent);
-
-      gtk_box_pack_start (GTK_BOX (dock->vbox), other_book, TRUE, TRUE, 0);
-
-      g_object_unref (G_OBJECT (other_book));
-    }
   else
     {
       GtkWidget *other_book;
       GtkWidget *parent;
       GtkWidget *grandparent;
 
+      parent      = GTK_WIDGET (dockbook)->parent;
+      grandparent = parent->parent;
+
       if (index == 0)
-        {
-          other_book = g_list_nth_data (dock->dockbooks, 0);
-
-          parent      = other_book->parent;
-          grandparent = parent->parent;
-
-          g_object_ref (G_OBJECT (other_book));
-
-          gtk_container_remove (GTK_CONTAINER (parent), GTK_WIDGET (dockbook));
-          gtk_container_remove (GTK_CONTAINER (parent), other_book);
-
-          gtk_container_remove (GTK_CONTAINER (grandparent), parent);
-
-          gtk_paned_pack1 (GTK_PANED (grandparent), other_book, TRUE, FALSE);
-
-          g_object_unref (G_OBJECT (other_book));
-        }
-      else if (index == (length - 1))
-        {
-          parent = GTK_WIDGET (dockbook)->parent;
-
-          other_book = GTK_PANED (parent)->child1;
-
-          g_object_ref (G_OBJECT (other_book));
-
-          gtk_container_remove (GTK_CONTAINER (parent), other_book);
-          gtk_container_remove (GTK_CONTAINER (parent), GTK_WIDGET (dockbook));
-
-          gtk_container_remove (GTK_CONTAINER (dock->vbox), parent);
-
-          gtk_box_pack_start (GTK_BOX (dock->vbox), other_book, TRUE, TRUE, 0);
-
-          g_object_unref (G_OBJECT (other_book));
-        }
+        other_book = GTK_PANED (parent)->child2;
       else
-        {
-          parent      = GTK_WIDGET (dockbook)->parent;
-          grandparent = parent->parent;
+        other_book = GTK_PANED (parent)->child1;
 
-          other_book = GTK_PANED (parent)->child1;
+      g_object_ref (G_OBJECT (other_book));
 
-          g_object_ref (G_OBJECT (other_book));
+      gtk_container_remove (GTK_CONTAINER (parent), other_book);
+      gtk_container_remove (GTK_CONTAINER (parent), GTK_WIDGET (dockbook));
 
-          gtk_container_remove (GTK_CONTAINER (parent), other_book);
-          gtk_container_remove (GTK_CONTAINER (parent), GTK_WIDGET (dockbook));
+      gtk_container_remove (GTK_CONTAINER (grandparent), parent);
 
-          gtk_container_remove (GTK_CONTAINER (grandparent), parent);
+      if (GTK_IS_VPANED (grandparent))
+        gtk_paned_pack1 (GTK_PANED (grandparent), other_book, TRUE, FALSE);
+      else
+        gtk_box_pack_start (GTK_BOX (dock->vbox), other_book, TRUE, TRUE, 0);
 
-          gtk_paned_pack1 (GTK_PANED (grandparent), other_book, TRUE, FALSE);
-
-          g_object_unref (G_OBJECT (other_book));
-        }
+      g_object_unref (G_OBJECT (other_book));
     }
 
-  if ((length == 1) && (dock->destroy_if_empty))
+  if ((old_length == 1) && (dock->destroy_if_empty))
     {
       gtk_widget_destroy (GTK_WIDGET (dock));
     }
