@@ -1,7 +1,16 @@
 2002-02-03  Sven Neumann  <sven@gimp.org>
 
+	* app/convert.c (custompal_pass1): only use the first 256 colors
+	from the palette to prevent us from crashing if convert_indexed()
+	is called with a custom palette that has more than 256 entries
+	(bug #70344).  The real fix would be to allow to dither to more
+	than 256 colors but that's left for 1.3.
+
+2002-02-03  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/smooth_palette.c: applied a patch from 
-	iccii@hotmail.com that corrects PDB registration of return values.
+	iccii@hotmail.com that corrects PDB registration of return values
+	(bug #70333).
 
 2002-02-03  Sven Neumann  <sven@gimp.org>
 

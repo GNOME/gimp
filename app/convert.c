@@ -2922,12 +2922,13 @@ custompal_pass1 (QuantizeObj *quantobj)
   GSList *list;
   PaletteEntry *entry;
 
-  /* fprintf(stderr, "custompal_pass1: using (theCustomPalette %s) from (file %s)\n",
-			 theCustomPalette->name, theCustomPalette->filename); */
+  /* fprintf (stderr, 
+              "custompal_pass1: using (theCustomPalette %s) from (file %s)\n",
+	      theCustomPalette->name, theCustomPalette->filename); */
 
-  for (i=0,list=theCustomPalette->colors;
-       list;
-       i++,list=g_slist_next(list))
+  for (i = 0,list = theCustomPalette->colors;
+       i < 256 && list;
+       i++, list = g_slist_next (list))
     {
       entry = (PaletteEntry *) list->data;
       quantobj->cmap[i].red = entry->color[0];
