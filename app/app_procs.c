@@ -78,6 +78,12 @@ app_gui_libs_init (gint    *argc,
 }
 
 void
+app_gui_abort (const gchar *abort_message)
+{
+  gui_abort (abort_message);
+}
+
+void
 app_run (const gchar         *full_prog_name,
          gint                 gimp_argc,
          gchar              **gimp_argv,

@@ -49,6 +49,7 @@
 
 #include "app_procs.h"
 #include "errors.h"
+#include "sanity.h"
 #include "units.h"
 
 #include "gimp-intl.h"
@@ -91,6 +92,7 @@ int
 main (int    argc,
       char **argv)
 {
+  const gchar        *abort_message           = NULL;
   gchar              *full_prog_name          = NULL;
   gchar              *alternate_system_gimprc = NULL;
   gchar              *alternate_gimprc        = NULL;
@@ -218,6 +220,18 @@ main (int    argc,
       g_print ("%s\n\n", msg);
 
       gimp_text_console_exit (EXIT_FAILURE);
+    }
+
+  abort_message = sanity_check (no_interface);
+
+  if (abort_message)
+    {
+      if (no_interface)
+        g_print ("%s\n\n", abort_message);
+      else
+        app_gui_abort (abort_message);
+
+      exit (EXIT_FAILURE);
     }
 
   g_set_application_name (_("The GIMP"));

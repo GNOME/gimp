@@ -41,6 +41,8 @@ gimp_2_0_SOURCES = \
 	batch.h		\
 	errors.c	\
 	errors.h	\
+	sanity.c	\
+	sanity.h	\
 	units.c		\
 	units.h		\
 	gimp-intl.h

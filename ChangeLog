@@ -1,6 +1,23 @@
 2004-03-30  Michael Natterer  <mitch@gimp.org>
 
-	* configure.in (ALL_LINGUAS): revert addition on "pa" until
+	* app/Makefile.am
+	* app/sanity.[ch]: new files implementing sanity_check() for
+	run-time checking library versions. Added a check for FreeType but
+	disabled it until we figured if and how freetype causes some of
+	the DLL hell bugs.
+
+	* app/main.c (main): call it and abort if it fails.
+
+	* app/app_procs.[ch]: added app_gui_abort() so main.c doesn't
+	need to #include "gui/gui.h"
+
+	* app/gui/gui.[ch] (gui_libs_init): removed library sanity checking.
+
+	(gui_abort): new function which shows the abort message.
+
+2004-03-30  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in (ALL_LINGUAS): revert addition of "pa" until
 	all .po files are there.
 
 2004-03-20  Guntupalli Karunakar  <karunakar@freedomink.org>

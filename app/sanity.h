@@ -16,17 +16,15 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GUI_H__
-#define __GUI_H__
+#ifndef __SANITY_H__
+#define __SANITY_H__
+
+#ifndef GIMP_APP_GLUE_COMPILATION
+#error You must not #include "sanity.h" from an app/ subdir
+#endif
 
 
-gboolean           gui_libs_init (gint          *argc,
-                                  gchar       ***argv);
-void               gui_abort     (const gchar   *abort_message);
-
-GimpInitStatusFunc gui_init      (Gimp          *gimp,
-                                  gboolean       no_spash);
-void               gui_post_init (Gimp          *gimp);
+const gchar * sanity_check (gboolean no_interface);
 
 
-#endif /* __GUI_H__ */
+#endif /* __SANITY_H__ */
