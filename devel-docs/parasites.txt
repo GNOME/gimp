@@ -95,6 +95,10 @@ Global data follows no strict rules.
 "jpeg-save-options" (IMAGE)
         The JpegSaveVals structure from the JPEG plugin.
 
+"jpeg-exif-data" (IMAGE)
+        The ExifData structure serialized into a uchar* blob from
+        libexif. 
+
 "gamma" (IMAGE, PERSISTENT)
 	The original gamma this image was created/saved. For JPEG; this is
         always one, for PNG it's usually taken from the image data. The gimp
