@@ -423,6 +423,8 @@ gimp_drawable_preview_draw_region (GimpDrawablePreview *preview,
       GimpPixelRgn  src = *region;
       gpointer      iter;
 
+      src.dirty = FALSE; /* we don't dirty the tiles, just read them */
+
       for (iter = gimp_pixel_rgns_register (1, &src);
            iter != NULL;
            iter = gimp_pixel_rgns_process (iter))

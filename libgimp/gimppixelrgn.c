@@ -90,30 +90,37 @@ static void     gimp_pixel_rgn_configure  (GimpPixelRgnHolder   *prh,
  *
  * Initialize the pixel region pointed by @pr with the specified parameters.
  *
- * Note: here are some useful usecases for the @dirty/@shadow combination:
- * - dirty = FALSE, shadow = FALSE: the region will be used to read the actual
- *                                  drawable datas.  This is useful for save
- *                                  plug-ins or for filters.
+ * The @dirty and @shadow flags can be used as follows:
  *
- * - dirty = FALSE, shadow = TRUE:  the region will be used to read the shadow
- *                                  tiles.  This is used in some filter
- *                                  plug-ins which operate in two passes such
- *                                  as gaussian blur.  The first one read the
- *                                  actual drawable data and write to the
- *                                  shadow tiles, and the second one read from
- *                                  and write to the shadow tiles.
- * 
- * - dirty = TRUE, shadow = TRUE:   the region will be used to write to the
- *                                  shadow tiles.  This is a very common
- *                                  practice to write to the shadow tiles and
- *                                  then use #gimp_drawable_merge_shadow () to
- *                                  merge the changes from the shadow tiles
- *                                  using the current selection as a mask.
+ * - @dirty = FALSE, @shadow = FALSE: the region will be used to read
+ *                                    the actual drawable datas.  This
+ *                                    is useful for save plug-ins or for
+ *                                    filters.
  *
- * - dirty = TRUE, shadow = FALSE:  the region will be used to directly change
- *                                  the drawable content. Don't do this, since
- *                                  this could prevent the Undo-System from
- *                                  working as expected.
+ * - @dirty = FALSE, @shadow = TRUE:  the region will be used to read the
+ *                                    shadow tiles.  This is used in
+ *                                    some filter plug-ins which operate
+ *                                    in two passes such as gaussian
+ *                                    blur.  The first pass reads the
+ *                                    actual drawable data and writes to
+ *                                    the shadow tiles, and the second
+ *                                    one reads from and writes to the
+ *                                    shadow tiles.
+ *
+ * - @dirty = TRUE, @shadow = TRUE:   the region will be used to write to
+ *                                    the shadow tiles. It is common
+ *                                    practice to write to the shadow
+ *                                    tiles and then use
+ *                                    #gimp_drawable_merge_shadow () to
+ *                                    merge the changes from the shadow
+ *                                    tiles using the current selection
+ *                                    as a mask.
+ *
+ * - @dirty = TRUE, @shadow = FALSE:  the region will be used to directly
+ *                                    change the drawable content. Don't
+ *                                    do this, since this could prevent
+ *                                    the Undo-System from working as
+ *                                    expected.
  **/
 void
 gimp_pixel_rgn_init (GimpPixelRgn *pr,
