@@ -114,7 +114,7 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
           return TRUE;
         }
 
-      gdk_drag_status (context, GDK_ACTION_DEFAULT, time);
+      gdk_drag_status (context, 0, time);
 
       gtk_tree_path_free (path);
     }

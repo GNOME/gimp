@@ -1,5 +1,15 @@
 2003-10-17  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdnd.c (gimp_dnd_file_dest_add): according to an
+	older mail from Owen, GDK_ACTION_DEFAULT means nothing and should
+	not be used.
+
+	* app/widgets/gimpcontainertreeview-dnd.c
+	(gimp_container_tree_view_drop_status): pass 0 to gdk_drag_status()
+	instead of GDK_ACTION_DEFAULT.
+
+2003-10-17  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpdnd.c (gimp_dnd_file_dest_add): for file drag
 	destinations, set GDK_ACTION_DEFAULT and GDK_ACTION_MOVE in
 	addition to GDK_ACTION_COPY. Enables DND from Konqueror.
