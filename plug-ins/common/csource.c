@@ -31,8 +31,8 @@ typedef struct {
   gchar   *comment;
   gboolean use_comment;
   gboolean glib_types;
-  gboolean stringify;
   gboolean alpha;
+  gboolean use_macros;
   gdouble  opacity;
 } Config;
 
@@ -117,14 +117,14 @@ run (gchar   *name,
       gchar *x;
       GDrawableType drawable_type = gimp_drawable_type (drawable_ID);
       Config config = {
-	NULL,
-	"gimp_image",
-	NULL,
-	FALSE,
-	TRUE,
-	TRUE,
-	FALSE,
-	100.0,
+	NULL,			/* file_name */
+	"gimp_image",		/* prefixed_name */
+	NULL,			/* comment */
+	FALSE,			/* use_comment */
+	TRUE,			/* glib_types */
+	FALSE,			/* alpha */
+	FALSE,			/* use_macros */
+	100.0,			/* opacity */
       };
 
       config.file_name = param[3].data.d_string;
@@ -167,33 +167,26 @@ run (gchar   *name,
     }
 }
 
-static guint
-save_uchar_n (FILE  *fp,
-	      guint  c,
-	      guint8 d)
-{
-  if (c > 74)
-    {
-      fprintf (fp, "\n   ");
-      c = 3;
-    }
-  fprintf (fp, " %u,", d);
-  c += 1 + (d > 99) + (d > 9) + 1 + 1;
-
-  return c;
-}
-
-static guint
-save_uchar_s (FILE  *fp,
-	      guint  c,
-	      guint8 d)
+static inline guint
+save_uchar (FILE   *fp,
+	    guint   c,
+	    guint8  d,
+	    Config *config)
 {
   static guint8 pad = 0;
 
   if (c > 74)
     {
-      fprintf (fp, "\"\n  \"");
-      c = 3;
+      if (!config->use_macros)
+	{
+	  fprintf (fp, "\"\n  \"");
+	  c = 3;
+	}
+      else
+	{
+	  fprintf (fp, "\"\n \"");
+	  c = 2;
+	}
     }
   if (d < 33 || d > 126)
     {
@@ -238,10 +231,10 @@ save_image (Config *config,
   GDrawable *drawable = gimp_drawable_get (drawable_ID);
   GDrawableType drawable_type = gimp_drawable_type (drawable_ID);
   GPixelRgn pixel_rgn;
-  gchar *s_uint_8, *s_uint_32, *s_int, *s_uint, *s_char, *s_null;
+  gchar *s_uint_8, *s_uint_32, *s_uint, *s_char, *s_null;
   FILE *fp;
   guint c;
-  guint (*save_uchar) (FILE*, guint, guint8);
+  gchar *macro_name;
   
   fp = fopen (config->file_name, "w");
   if (!fp)
@@ -249,56 +242,86 @@ save_image (Config *config,
   
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width, drawable->height, FALSE, FALSE);
 
-  if (config->stringify)
-    save_uchar = save_uchar_s;
-  else
-    save_uchar = save_uchar_n;
-
-  if (config->glib_types)
+  if (!config->use_macros && config->glib_types)
     {
       s_uint_8 =  "guint8 ";
       s_uint_32 = "guint32";
       s_uint  =   "guint  ";
-      s_int  =    "gint   ";
       s_char =    "gchar  ";
       s_null =    "NULL";
     }
-  else
+  else if (!config->use_macros)
     {
       s_uint_8 =  "unsigned char";
       s_uint_32 = "unsigned int ";
       s_uint =    "unsigned int ";
-      s_int =     "int          ";
       s_char =    "char         ";
       s_null =    "(char*) 0";
     }
+  else if (config->use_macros && config->glib_types)
+    {
+      s_uint_8 =  "guint8";
+      s_uint_32 = "guint32";
+      s_uint  =   "guint";
+      s_char =    "gchar";
+      s_null =    "NULL";
+    }
+  else /* config->use_macros && !config->glib_types */
+    {
+      s_uint_8 =  "unsigned char";
+      s_uint_32 = "unsigned int";
+      s_uint =    "unsigned int";
+      s_char =    "char";
+      s_null =    "(char*) 0";
+    }
+  macro_name = g_strdup (config->prefixed_name);
+  g_strup (macro_name);
   
   fprintf (fp, "/* GIMP %s C-Source image dump (%s) */\n\n",
 	   config->alpha ? "RGBA" : "RGB",
-	   config->file_name);
+	   g_basename (config->file_name));
 
-  fprintf (fp, "static const struct {\n");
-  fprintf (fp, "  %s\t width;\n", s_uint);
-  fprintf (fp, "  %s\t height;\n", s_uint);
-  fprintf (fp, "  %s\t bytes_per_pixel; /* 3:RGB, 4:RGBA */ \n", s_uint);
-  if (config->use_comment)
-    fprintf (fp, "  %s\t*comment;\n", s_char);
-  fprintf (fp, "  %s\t pixel_data[%u * %u * %u];\n",
-	   s_uint_8,
-	   drawable->width,
-	   drawable->height,
-	   config->alpha ? 4 : 3);
-  fprintf (fp, "} %s = {\n", config->prefixed_name);
-  fprintf (fp, "  %u, %u, %u,\n",
-	   drawable->width,
-	   drawable->height,
-	   config->alpha ? 4 : 3);
+  if (!config->use_macros)
+    {
+      fprintf (fp, "static const struct {\n");
+      fprintf (fp, "  %s\t width;\n", s_uint);
+      fprintf (fp, "  %s\t height;\n", s_uint);
+      fprintf (fp, "  %s\t bytes_per_pixel; /* 3:RGB, 4:RGBA */ \n", s_uint);
+      if (config->use_comment)
+	fprintf (fp, "  %s\t*comment;\n", s_char);
+      fprintf (fp, "  %s\t pixel_data[%u * %u * %u];\n",
+	       s_uint_8,
+	       drawable->width,
+	       drawable->height,
+	       config->alpha ? 4 : 3);
+      fprintf (fp, "} %s = {\n", config->prefixed_name);
+      fprintf (fp, "  %u, %u, %u,\n",
+	       drawable->width,
+	       drawable->height,
+	       config->alpha ? 4 : 3);
+    }
+  else /* use macros */
+    {
+      fprintf (fp, "#define %s_WIDTH (%u)\n",
+	       macro_name, drawable->width);
+      fprintf (fp, "#define %s_HEIGHT (%u)\n",
+	       macro_name, drawable->height);
+      fprintf (fp, "#define %s_BYTES_PER_PIXEL (%u)\n",
+	       macro_name, config->alpha ? 4 : 3);
+    }
   if (config->use_comment && !config->comment)
-    fprintf (fp, "  %s,\n", s_null);
+    {
+      if (!config->use_macros)
+	fprintf (fp, "  %s,\n", s_null);
+      else /* use macros */
+	fprintf (fp, "#define %s_COMMENT (%s)\n", macro_name, s_null);
+    }
   else if (config->use_comment)
     {
       gchar *p = config->comment - 1;
       
+      if (config->use_macros)
+	fprintf (fp, "#define %s_COMMENT \\\n", macro_name);
       fprintf (fp, "  \"");
       while (*(++p))
 	if (*p == '\\')
@@ -306,7 +329,8 @@ save_image (Config *config,
 	else if (*p == '"')
 	  fprintf (fp, "\\\"");
 	else if (*p == '\n' && p[1])
-	  fprintf (fp, "\\n\"\n  \"");
+	  fprintf (fp, "\\n\"%s\n  \"",
+		   config->use_macros ? " \\" : "");
 	else if (*p == '\n')
 	  fprintf (fp, "\\n");
 	else if (*p == '\r')
@@ -319,13 +343,29 @@ save_image (Config *config,
 	  fprintf (fp, "%c", *p);
 	else
 	  fprintf (fp, "\\%03o", *p);
-      fprintf (fp, "\",\n");
+      if (!config->use_macros)
+	fprintf (fp, "\",\n");
+      else /* use macros */
+	fprintf (fp, "\"\n");
     }
-  if (config->stringify)
-    fprintf (fp, "  \"");
+  if (config->use_macros)
+    {
+      fprintf (fp, "#define %s_PIXEL_DATA (%s_pixel_data)\n",
+	       macro_name, macro_name);
+      fprintf (fp, "static const %s %s_pixel_data[%u * %u * %u] = \n",
+	       s_uint_8,
+	       macro_name,
+	       drawable->width,
+	       drawable->height,
+	       config->alpha ? 4 : 3);
+      fprintf (fp, "(\"");
+      c = 2;
+    }
   else
-    fprintf (fp, "  {");
-  c = 3;
+    {
+      fprintf (fp, "  \"");
+      c = 3;
+    }
   switch (drawable_type)
     {
       guint8 *data;
@@ -342,15 +382,15 @@ save_image (Config *config,
 	    {
 	      guint8 *d = data + x * drawable->bpp;
 	      
-	      c = save_uchar (fp, c, d[0]);
-	      c = save_uchar (fp, c, d[1]);
-	      c = save_uchar (fp, c, d[2]);
+	      c = save_uchar (fp, c, d[0], config);
+	      c = save_uchar (fp, c, d[1], config);
+	      c = save_uchar (fp, c, d[2], config);
 	      if (config->alpha)
 		{
 		  gdouble alpha = drawable_type == RGBA_IMAGE ? d[3] : 0xff;
 
 		  alpha *= config->opacity / 100.0;
-		  c = save_uchar (fp, c, alpha + 0.5);
+		  c = save_uchar (fp, c, alpha + 0.5, config);
 		}
 	    }
 	}
@@ -361,10 +401,10 @@ save_image (Config *config,
       g_warning ("unhandled drawable type (%d)", drawable_type);
       return FALSE;
     }
-  if (config->stringify)
+  if (!config->use_macros)
     fprintf (fp, "\",\n};\n\n");
-  else
-    fprintf (fp, "\n  },\n};\n\n");
+  else /* use macros */
+    fprintf (fp, "\");\n\n");
   
   fclose (fp);
   
@@ -383,7 +423,7 @@ static gboolean
 run_save_dialog	(Config *config)
 {
   GtkWidget *dialog, *vbox, *hbox;
-  GtkWidget *prefixed_name, *centry, *alpha, *gtype, *use_comment, *any;
+  GtkWidget *prefixed_name, *centry, *alpha, *use_macros, *gtype, *use_comment, *any;
   GtkObject *opacity;
   gboolean do_save = FALSE;
   
@@ -487,6 +527,20 @@ run_save_dialog	(Config *config)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gtype), config->glib_types);
   gtk_widget_ref (gtype);
 
+  /* Use Macros
+   */
+  hbox = gtk_widget_new (GTK_TYPE_HBOX,
+			 "visible", TRUE,
+			 "parent", vbox,
+			 NULL);
+  use_macros = gtk_widget_new (GTK_TYPE_CHECK_BUTTON,
+			       "label", "Use macros instead of struct",
+			       "visible", TRUE,
+			       "parent", hbox,
+			       NULL);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (use_macros), config->use_macros);
+  gtk_widget_ref (use_macros);
+
   /* Alpha
    */
   hbox = gtk_widget_new (GTK_TYPE_HBOX,
@@ -531,6 +585,7 @@ run_save_dialog	(Config *config)
   gtk_main ();
   
   config->prefixed_name = g_strdup (gtk_entry_get_text (GTK_ENTRY (prefixed_name)));
+  config->use_macros = GTK_TOGGLE_BUTTON (use_macros)->active;
   config->alpha = GTK_TOGGLE_BUTTON (alpha)->active;
   config->glib_types = GTK_TOGGLE_BUTTON (gtype)->active;
   config->comment = g_strdup (gtk_entry_get_text (GTK_ENTRY (centry)));
@@ -540,6 +595,7 @@ run_save_dialog	(Config *config)
   gtk_widget_unref (gtype);
   gtk_widget_unref (centry);
   gtk_widget_unref (alpha);
+  gtk_widget_unref (use_macros);
   gtk_widget_unref (use_comment);
   gtk_widget_unref (prefixed_name);
   gtk_object_unref (opacity);

@@ -1,3 +1,11 @@
+Sat Oct  2 14:36:21 1999  Tim Janik  <timj@gtk.org>
+
+	* plug-ins/common/csource.c: removed cruft (old test code)
+	(run): commented config structure initialization.
+	(save_image): put only the file's basename into the C comment.
+	feature saving of macros instead of a plain structure, so the
+	data can be used for third party structure initialization.
+
 1999-10-01  Kelly Lynn Martin  <kelly@poverty.bloomington.in.us>
 
 	* po/it.po po-plug-ins/it.po plug-ins/perl/po/it.po
