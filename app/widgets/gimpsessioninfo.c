@@ -732,7 +732,8 @@ gimp_session_info_restore (GimpSessionInfo   *info,
       dialog =
         gimp_dialog_factory_dialog_new (factory, screen,
                                         info->toplevel_entry->identifier,
-                                        info->toplevel_entry->preview_size);
+                                        info->toplevel_entry->preview_size,
+                                        TRUE);
 
       if (dialog && info->aux_info)
         session_info_set_aux_info (dialog, info->aux_info);

@@ -234,7 +234,7 @@ gui_post_init (Gimp *gimp)
   if (GIMP_GUI_CONFIG (gimp->config)->show_tips)
     gimp_dialog_factory_dialog_new (global_dialog_factory,
                                     gdk_screen_get_default (),
-                                    "gimp-tips-dialog", -1);
+                                    "gimp-tips-dialog", -1, TRUE);
 
   if (gimp_check_glib_version (2, 4, 4) == NULL &&
       gimp_check_glib_version (2, 4, 5) != NULL)

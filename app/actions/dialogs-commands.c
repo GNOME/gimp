@@ -67,7 +67,7 @@ dialogs_create_toplevel_cmd_callback (GtkAction   *action,
   if (value)
     gimp_dialog_factory_dialog_new (global_dialog_factory,
                                     gtk_widget_get_screen (widget),
-                                    value, -1);
+                                    value, -1, TRUE);
 }
 
 void
@@ -197,7 +197,7 @@ dialogs_create_dock (GdkScreen   *screen,
     {
       dockable = gimp_dialog_factory_dialog_new (global_dock_factory,
                                                  screen,
-                                                 tabs[i], -1);
+                                                 tabs[i], -1, TRUE);
 
       if (dockable && ! GIMP_DOCKABLE (dockable)->dockbook)
         gimp_dock_add (GIMP_DOCK (dock), GIMP_DOCKABLE (dockable), -1, -1);

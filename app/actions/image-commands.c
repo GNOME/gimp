@@ -117,9 +117,14 @@ image_new_cmd_callback (GtkAction *action,
 
   dialog = gimp_dialog_factory_dialog_new (global_dialog_factory,
                                            gtk_widget_get_screen (widget),
-                                           "gimp-file-new-dialog", -1);
+                                           "gimp-file-new-dialog", -1, FALSE);
+
   if (dialog)
-    file_new_dialog_set (dialog, NULL, NULL);
+    {
+      file_new_dialog_set (dialog, NULL, NULL);
+
+      gtk_window_present (GTK_WINDOW (dialog));
+    }
 }
 
 void
@@ -132,7 +137,7 @@ image_new_from_image_cmd_callback (GtkAction *action,
 
   dialog = gimp_dialog_factory_dialog_new (global_dialog_factory,
                                            gtk_widget_get_screen (widget),
-                                           "gimp-file-new-dialog", -1);
+                                           "gimp-file-new-dialog", -1, FALSE);
 
   if (dialog)
     {
@@ -140,6 +145,8 @@ image_new_from_image_cmd_callback (GtkAction *action,
 
       if (gimage)
         file_new_dialog_set (dialog, gimage, NULL);
+
+      gtk_window_present (GTK_WINDOW (dialog));
     }
 }
 

@@ -367,8 +367,12 @@ templates_file_new_dialog (Gimp         *gimp,
 
   dialog = gimp_dialog_factory_dialog_new (global_dialog_factory,
                                            gtk_widget_get_screen (parent),
-                                           "gimp-file-new-dialog", -1);
+                                           "gimp-file-new-dialog", -1, FALSE);
 
   if (dialog)
-    file_new_dialog_set (dialog, NULL, template);
+    {
+      file_new_dialog_set (dialog, NULL, template);
+
+      gtk_window_present (GTK_WINDOW (dialog));
+    }
 }

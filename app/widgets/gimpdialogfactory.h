@@ -115,7 +115,8 @@ GimpSessionInfo * gimp_dialog_factory_find_session_info
 GtkWidget * gimp_dialog_factory_dialog_new        (GimpDialogFactory *factory,
                                                    GdkScreen         *screen,
 						   const gchar       *identifier,
-                                                   gint               preview_size);
+                                                   gint               preview_size,
+                                                   gboolean           present);
 GtkWidget * gimp_dialog_factory_dialog_raise      (GimpDialogFactory *factory,
                                                    GdkScreen         *screen,
 						   const gchar       *identifiers,

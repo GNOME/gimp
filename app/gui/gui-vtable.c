@@ -229,13 +229,17 @@ gui_message (Gimp        *gimp,
       {
         GtkWidget *dialog;
 
-        dialog = gimp_dialog_factory_dialog_raise (global_dialog_factory,
-                                                   gdk_screen_get_default (),
-                                                   "gimp-error-dialog", -1);
+        dialog = gimp_dialog_factory_dialog_new (global_dialog_factory,
+                                                 gdk_screen_get_default (),
+                                                 "gimp-error-dialog", -1,
+                                                 FALSE);
+
         if (dialog)
           {
             gimp_error_dialog_add (GIMP_ERROR_DIALOG (dialog),
                                    GIMP_STOCK_WARNING, domain, message);
+
+            gtk_window_present (GTK_WINDOW (dialog));
 
             return;
           }

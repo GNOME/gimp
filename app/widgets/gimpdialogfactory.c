@@ -395,7 +395,6 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
       return NULL;
     }
 
-  /*  a singleton dialog is always only raised if it already exisits  */
   if (raise_if_found || entry->singleton)
     {
       GimpSessionInfo *info;
@@ -504,7 +503,9 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
       if (GTK_WIDGET_TOPLEVEL (dialog))
         {
           gtk_window_set_screen (GTK_WINDOW (dialog), screen);
-          gtk_window_present (GTK_WINDOW (dialog));
+
+          if (raise_if_found)
+            gtk_window_present (GTK_WINDOW (dialog));
         }
       else if (GIMP_IS_DOCKABLE (dialog))
         {
@@ -544,11 +545,10 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
  * @identifier:   the identifier of the dialog as registered with
  *                gimp_dialog_factory_register_entry()
  * @preview_size:
+ * @present:      whether gtk_window_present() should be called
  *
  * Creates a new toplevel dialog or a #GimpDockable, depending on whether
  * %factory is a toplevel of dockable factory.
- *
- * Implicitly raises singleton dialogs.
  *
  * Return value: the newly created dialog or an already existing singleton
  *               dialog.
@@ -557,7 +557,8 @@ GtkWidget *
 gimp_dialog_factory_dialog_new (GimpDialogFactory *factory,
                                 GdkScreen         *screen,
                                 const gchar       *identifier,
-                                gint               preview_size)
+                                gint               preview_size,
+                                gboolean           present)
 {
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
   g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
@@ -568,7 +569,7 @@ gimp_dialog_factory_dialog_new (GimpDialogFactory *factory,
                                                   factory->context,
                                                   identifier,
                                                   preview_size,
-                                                  FALSE);
+                                                  present);
 }
 
 /**
