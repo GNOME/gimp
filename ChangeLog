@@ -1,3 +1,11 @@
+2005-01-07  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/jpeg/Makefile.am
+	* plug-ins/jpeg/jpeg-exif.c
+	* plug-ins/jpeg/jpeg-load.c
+	* plug-ins/jpeg/jpeg-save.c
+	* plug-ins/jpeg/jpeg.[ch]: some code cleanup.
+
 2005-01-06  Manish Singh  <yosh@gimp.org>
 
 	* libgimpwidgets/gimpdialog.c: flush the display in dispose if we're

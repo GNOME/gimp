@@ -31,12 +31,12 @@ libexec_PROGRAMS = $(JPEG)
 EXTRA_PROGRAMS = jpeg
 
 jpeg_SOURCES = \
-	jpeg.c      \
-	jpeg-load.c \
-	jpeg-save.c \
-	jpeg.h      \
-	jpeg-save.h \
-	jpeg-load.h \
+	jpeg.c		\
+	jpeg-load.c	\
+	jpeg-save.c	\
+	jpeg.h		\
+	jpeg-save.h	\
+	jpeg-load.h	\
 	jpeg-exif.c 
 
 jpeg_LDADD = \

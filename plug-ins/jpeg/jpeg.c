@@ -16,20 +16,39 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#include "jpeg.h"
-#include "jpeg-save.h"
-#include "jpeg-load.h"
+#include "config.h"
 
+#include <stdio.h>
+#include <setjmp.h>
+#include <string.h>
+
+#include <jpeglib.h>
+#include <jerror.h>
+
+#ifdef HAVE_EXIF
+#include <libexif/exif-data.h>
+#endif /* HAVE_EXIF */
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
+#include "libgimp/stdplugins-intl.h"
+
+#include "jpeg.h"
+#include "jpeg-load.h"
+#include "jpeg-save.h"
 
 
 /* Declare local functions.
  */
-static void      query               (void);
-static void      run                 (const gchar      *name,
-                                      gint              nparams,
-                                      const GimpParam  *param,
-                                      gint             *nreturn_vals,
-                                      GimpParam       **return_vals);
+
+static void  query (void);
+static void  run   (const gchar      *name,
+                    gint              nparams,
+                    const GimpParam  *param,
+                    gint             *nreturn_vals,
+                    GimpParam       **return_vals);
+
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -38,7 +57,6 @@ GimpPlugInInfo PLUG_IN_INFO =
   query, /* query_proc */
   run,   /* run_proc   */
 };
-
 
 
 MAIN ()
@@ -559,6 +577,3 @@ my_output_message (j_common_ptr cinfo)
       g_message (buffer);
     }
 }
-
-
-

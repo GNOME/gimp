@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, 2MA 02111-1307, USA.
  */
 
 /*
@@ -22,30 +22,47 @@
  * other plugins.
  */
 
-#include "jpeg.h"
+#include "config.h"
 
 #ifdef HAVE_EXIF
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <setjmp.h>
+
+#include <jpeglib.h>
+#include <jerror.h>
+
 #include <libexif/exif-content.h>
+#include <libexif/exif-data.h>
 #include <libexif/exif-utils.h>
 
 #define EXIF_HEADER_SIZE 8
 
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
-#define jpeg_exif_content_get_value(c,t,v,m)					\
-	(exif_content_get_entry (c,t) ?					\
+#include "libgimp/stdplugins-intl.h"
+
+#include "jpeg.h"
+
+
+#define jpeg_exif_content_get_value(c,t,v,m) \
+	(exif_content_get_entry (c,t) ?	     \
 	 jpeg_exif_entry_get_value (exif_content_get_entry (c,t),v,m) : NULL)
 
 
-static void            jpeg_remove_exif_entry (ExifData     *exif_data,
-                                               ExifIfd       ifd,
-                                               ExifTag       tag);
+static void          jpeg_remove_exif_entry    (ExifData    *exif_data,
+                                                ExifIfd      ifd,
+                                                ExifTag      tag);
 
-static const gchar *jpeg_exif_entry_get_value (ExifEntry    *e,
-                                               gchar        *val,
-                                               guint         maxlen);
+static const gchar * jpeg_exif_entry_get_value (ExifEntry   *e,
+                                                gchar       *val,
+                                                guint        maxlen);
 
-static gboolean     jpeg_query                 (const gchar *msg);
+static gboolean      jpeg_query                (const gchar *msg);
+
 
 void
 jpeg_apply_exif_data_to_image (const gchar   *filename,
@@ -397,28 +414,19 @@ jpeg_exif_entry_get_value (ExifEntry *e,
 static gboolean
 jpeg_query (const gchar *msg)
 {
-  GtkWidget   *label;
-  gboolean     ret;
+  GtkWidget *dialog;
+  gboolean   ret;
 
-  GtkWidget *dialog = gimp_dialog_new (_("Loading JPEG . . ."), "jpeg-query",
-                                       NULL, 0, gimp_standard_help_func,
-                                       "file-jpeg-load",
+  dialog = gtk_message_dialog_new (NULL, 0,
+                                   GTK_MESSAGE_QUESTION,
+                                   GTK_BUTTONS_OK_CANCEL,
+                                   "%s", msg);
 
-                                       GTK_STOCK_NO,  GTK_RESPONSE_CANCEL,
-                                       GTK_STOCK_YES, GTK_RESPONSE_OK,
-
-                                       NULL);
-
-  label = gtk_label_new (msg);
-  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), label, TRUE, TRUE, 12);
-  gtk_widget_show (label);
-
-  ret = gimp_dialog_run (GIMP_DIALOG (dialog));
+  ret = gtk_dialog_run (GTK_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
-  return ((ret == GTK_RESPONSE_OK));
+  return (ret == GTK_RESPONSE_OK);
 }
 
 

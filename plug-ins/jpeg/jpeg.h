@@ -1,30 +1,20 @@
-#include "config.h"   /* configure cares about HAVE_PROGRESSIVE_JPEG */
-
-#include <glib.h>     /* We want glib.h first because of some
-                       * pretty obscure Win32 compilation issues.
-                       */
-#include <errno.h>
-#include <setjmp.h>
-#include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-#include <jpeglib.h>
-#include <jerror.h>
-
-#ifdef HAVE_EXIF
-#include <libexif/exif-data.h>
-#endif /* HAVE_EXIF */
-
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
-
-#include "libgimp/stdplugins-intl.h"
+/* The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
 
 typedef struct my_error_mgr
 {
@@ -51,30 +41,30 @@ gint32           display_ID;
 gchar           *image_comment;
 
 
-gint32    load_image               (const gchar   *filename,
-                                    GimpRunMode    runmode,
-                                    gboolean       preview);
+gint32    load_image                    (const gchar   *filename,
+                                         GimpRunMode    runmode,
+                                         gboolean       preview);
 
-void      destroy_preview          (void);
+void      destroy_preview               (void);
 
-void   my_error_exit               (j_common_ptr   cinfo);
-void   my_emit_message             (j_common_ptr   cinfo,
-                                    int            msg_level);
-void   my_output_message           (j_common_ptr   cinfo);
+void      my_error_exit                 (j_common_ptr   cinfo);
+void      my_emit_message               (j_common_ptr   cinfo,
+                                         int            msg_level);
+void      my_output_message             (j_common_ptr   cinfo);
 
 #ifdef HAVE_EXIF
 
 ExifData        *exif_data;
 
-gint32 load_thumbnail_image        (const gchar   *filename,
-                                    gint          *width,
-                                    gint          *height);
+gint32    load_thumbnail_image          (const gchar   *filename,
+                                         gint          *width,
+                                         gint          *height);
 
-void jpeg_apply_exif_data_to_image (const gchar   *filename,
-                                    const gint32   image_ID);
+void      jpeg_apply_exif_data_to_image (const gchar   *filename,
+                                         const gint32   image_ID);
 
-void jpeg_setup_exif_for_save      (ExifData      *exif_data,
-                                    const gint32   image_ID);
+void      jpeg_setup_exif_for_save      (ExifData      *exif_data,
+                                         const gint32   image_ID);
 
 #endif /* HAVE_EXIF */
 

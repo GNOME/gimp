@@ -16,8 +16,28 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
+
+#include <stdio.h>
+#include <string.h>
+#include <errno.h>
+#include <setjmp.h>
+
+#include <jpeglib.h>
+#include <jerror.h>
+
+#ifdef HAVE_EXIF
+#include <libexif/exif-data.h>
+#endif /* HAVE_EXIF */
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
+#include "libgimp/stdplugins-intl.h"
+
 #include "jpeg.h"
 #include "jpeg-load.h"
+
 
 /* Read next byte */
 static guint
@@ -239,9 +259,8 @@ load_image (const gchar *filename,
       /*fallthrough*/
 
     default:
-      g_message ("Don't know how to load JPEGs\n"
-                 "with %d color channels\n"
-                 "using colorspace %d (%d)",
+      g_message ("Don't know how to load JPEG images "
+                 "with %d color channels, using colorspace %d (%d).",
                  cinfo.output_components, cinfo.out_color_space,
                  cinfo.jpeg_color_space);
       gimp_quit ();
@@ -321,7 +340,7 @@ load_image (const gchar *filename,
           break;
 
         default:
-          g_message ("Unknown density unit %d\nassuming dots per inch",
+          g_message ("Unknown density unit %d, assuming dots per inch.",
                      cinfo.density_unit);
           break;
         }
@@ -372,7 +391,8 @@ load_image (const gchar *filename,
               break;
 
             default:
-              g_warning ("JPEG - shouldn't have gotten here.\nReport to http://bugzilla.gnome.org/");
+              g_warning ("JPEG - shouldn't have gotten here.\n"
+                         "Report to http://bugzilla.gnome.org/");
               break;
             }
         }
@@ -660,9 +680,8 @@ load_thumbnail_image (const gchar *filename,
       /*fallthrough*/
 
     default:
-      g_message ("Don't know how to load JPEGs\n"
-                 "with %d color channels\n"
-                 "using colorspace %d (%d)",
+      g_message ("Don't know how to load JPEG images "
+                 "with %d color channels, using colorspace %d (%d).",
                  cinfo.output_components, cinfo.out_color_space,
                  cinfo.jpeg_color_space);
 
@@ -728,7 +747,7 @@ load_thumbnail_image (const gchar *filename,
           break;
 
         default:
-          g_message ("Unknown density unit %d\nassuming dots per inch",
+          g_message ("Unknown density unit %d, assuming dots per inch.",
                      cinfo.density_unit);
           break;
         }

@@ -16,8 +16,35 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+#include <setjmp.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
+#include <jpeglib.h>
+#include <jerror.h>
+
+#ifdef HAVE_EXIF
+#include <libexif/exif-data.h>
+#endif /* HAVE_EXIF */
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
+#include "libgimp/stdplugins-intl.h"
+
 #include "jpeg.h"
 #include "jpeg-save.h"
+
 
 typedef struct
 {
