@@ -80,3 +80,16 @@ GimpBilinear
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_bilinear_pixels_8 ##### -->
+<para>
+
+</para>
+
+@dest: 
+@x: 
+@y: 
+@bpp: 
+@has_alpha: 
+@values: 
+
+

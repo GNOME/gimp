@@ -6,6 +6,7 @@ EXPORTS
 	gimp_bilinear_8
 	gimp_bilinear_rgb
 	gimp_bilinear_rgba
+	gimp_bilinear_pixels_8
 	gimp_hls_to_rgb_int
 	gimp_hsl_to_rgb
 	gimp_hsv_clamp

@@ -78,4 +78,5 @@ gimp_bilinear_16
 gimp_bilinear_32
 gimp_bilinear_rgb
 gimp_bilinear_rgba
+gimp_bilinear_pixels_8
 </SECTION>

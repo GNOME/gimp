@@ -28,25 +28,30 @@ G_BEGIN_DECLS
 /*  bilinear interpolation functions taken from LibGCK  */
 
 
-gdouble   gimp_bilinear      (gdouble  x,
-			      gdouble  y,
-			      gdouble *values);
-guchar    gimp_bilinear_8    (gdouble  x,
-			      gdouble  y,
-			      guchar  *values);
-guint16   gimp_bilinear_16   (gdouble  x,
-			      gdouble  y,
-			      guint16 *values);
-guint32   gimp_bilinear_32   (gdouble  x,
-			      gdouble  y,
-			      guint32 *values);
-GimpRGB   gimp_bilinear_rgb  (gdouble  x,
-			      gdouble  y,
-			      GimpRGB *values);
-GimpRGB   gimp_bilinear_rgba (gdouble  x,
-			      gdouble  y,
-			      GimpRGB *values);
-
+gdouble   gimp_bilinear          (gdouble    x,
+                                  gdouble    y,
+                                  gdouble   *values);
+guchar    gimp_bilinear_8        (gdouble    x,
+                                  gdouble    y,
+                                  guchar    *values);
+guint16   gimp_bilinear_16       (gdouble    x,
+                                  gdouble    y,
+                                  guint16   *values);
+guint32   gimp_bilinear_32       (gdouble    x,
+                                  gdouble    y,
+                                  guint32   *values);
+GimpRGB   gimp_bilinear_rgb      (gdouble    x,
+                                  gdouble    y,
+                                  GimpRGB   *values);
+GimpRGB   gimp_bilinear_rgba     (gdouble    x,
+                                  gdouble    y,
+                                  GimpRGB   *values);
+void      gimp_bilinear_pixels_8 (guchar    *dest,
+                                  gdouble    x,
+                                  gdouble    y,
+                                  guint      bpp,
+                                  gboolean   has_alpha,
+                                  guchar   **values);
 
 G_END_DECLS
 
