@@ -122,6 +122,7 @@ libexec_PROGRAMS = \
 	psd_save \
 	$(PSP) \
 	randomize \
+	raw \
 	ripple \
 	rotate \
 	sample_colorize \
@@ -1406,6 +1407,19 @@ randomize_SOURCES = \
 	randomize.c
 
 randomize_LDADD = \
+	$(libgimpui)		\
+	$(libgimpwidgets)	\
+	$(libgimp)		\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GTK_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)
+
+raw_SOURCES = \
+	raw.c
+
+raw_LDADD = \
 	$(libgimpui)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
