@@ -1,7 +1,39 @@
+1999-02-28  Jay Cox  <jaycox@earthlink.net>
+
+	* app/Makefile.am: added gimphistogram*, histogramwidget*, 
+	removed histogram.[ch]
+
+	* app/histogram.[ch]: removed.  replaced with histogramwidget.[ch].
+
+	* app/{gimphistogramP.h, gimphistogram.h, gimphistogram.c}: new
+ 	functions that calculate histograms in parallel and perform
+ 	calculations on them.
+	
+	* app/histogramwidget.[ch]: Same as old histogram.[ch], only it is
+ 	now a real widget, and it uses GimpHistograms instead of arrays of
+ 	values.
+
+	* app/curves.c: #include gimphistogram.h instead of histogram.h.
+	
+	* app/equalize.c: use GimpHistogram and GimpLut.
+	
+	* app/gimpbrush.c, app/gimpimage.c, app/gimpset.c: use 
+	GTK_RUN_FIRST in calls to gimp_signal_new.
+
+	* app/histogram_tool.c, app/levels.c, app/threshold.c: modified to
+ 	use the new HistogramWidget.
+
+	* app/paint_funcs.c: removed some unused variables.
+	
+	* app/preferences_dialog.c: only display the num-processor field
+ 	if we are configured --with-mp
+	
+	* plug-ins/gee/gee.c: removed a couple of c++ style comments.
+	
 Sun Feb 28 23:48:17 CET 1999 Marc Lehmann <pcg@goof.com>
 
 	* configure.in: loosened check for perl version, perl5.004 is now
-        supposed to work with gimp-perl.
+ 	supposed to work with gimp-perl.
 
 Sat Feb 27 23:25:55 EST 1999 Adrian Likins <adrian@gimp.org>
 
