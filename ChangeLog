@@ -1,3 +1,8 @@
+1998-07-10  Chris Lahey  <clahey@umich.edu>
+
+	* app/docindexif.c: 
+	* app/docindexif.h: Screwed up a file name change.
+
 Fri Jul 10 23:06:09 BST 1998 Adam D. Moss <adam@gimp.org>
 
 	* app/paint_funcs.c:
@@ -148,7 +153,6 @@ Wed Jul  8 01:35:22 EEST 1998  Lauri Alanko <nether@gimp.org>
 	* app/app_procs.c (app_exit_finish): Unregister pdb procs _before_ 
 	destroying pdb.
 	
->>>>>>> 1.475
 Mon Jul  6 20:38:36 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* app/gimage_mask.c (gimage_mask_boundary): fixed crash when you
