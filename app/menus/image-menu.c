@@ -754,7 +754,7 @@ GimpItemFactoryEntry image_menu_entries[] =
       "<StockItem>", GTK_STOCK_SELECT_COLOR },
     "gimp-palette-list",
     "dialogs/palette_selection.html", NULL },
-  { { N_("/Dialogs/Fonts..."), "<control>P",
+  { { N_("/Dialogs/Fonts..."), NULL,
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_SELECT_FONT },
     "gimp-font-list",

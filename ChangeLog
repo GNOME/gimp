@@ -1,3 +1,9 @@
+2003-03-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/image-menu.c
+	* app/gui/toolbox-menu.c: removed cut'n'paste-duplicated
+	accelerators from the new font selection menu entries.
+
 2003-03-26  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimptextoptions.c (gimp_text_options_gui): added a
