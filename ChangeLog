@@ -1,11 +1,29 @@
 2000-11-18  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/rcm/rcm_pixmaps.h: removed.
+
+	* plug-ins/rcm/pixmaps/.cvsignore
+	* plug-ins/rcm/pixmaps/rcm_360.xpm
+	* plug-ins/rcm/pixmaps/rcm_a_b.xpm
+	* plug-ins/rcm/pixmaps/rcm_ccw.xpm
+	* plug-ins/rcm/pixmaps/rcm_cw.xpm: new files.
+
+	* plug-ins/rcm/Makefile.am
+	* plug-ins/rcm/rcm_callback.c
+	* plug-ins/rcm/rcm_dialog.c: changed accordingly.
+
+	The old method was producing warnings because not all pixmaps
+	were used in all files. Also changed the XPMs a bit now that I
+	could load them into the GIMP... they are still ugly, though.
+
+2000-11-18  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/print/Makefile.am
 	* plug-ins/print/print.c: Oops, didn't see Sven's patch when applying
 	a different one to both sourceforge branches:
 
 	Don't define LOCALE in Makefile.am but check if the macro
-	INIT_I18N_UI exists and use in that case.
+	INIT_I18N_UI exists and use it in that case.
 
 2000-11-18  Michael Natterer  <mitch@gimp.org>
 

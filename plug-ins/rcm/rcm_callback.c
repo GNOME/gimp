@@ -49,8 +49,11 @@
 #include "rcm_misc.h"
 #include "rcm_gdk.h"
 #include "rcm_dialog.h"
-#include "rcm_pixmaps.h"
 #include "rcm_callback.h"
+
+#include "pixmaps/rcm_ccw.xpm"
+#include "pixmaps/rcm_cw.xpm"
+
 
 /*---------------------------------------------------------------------------*/
 /* Misc functions */
@@ -144,7 +147,7 @@ rcm_cw_ccw (GtkWidget *button,
   circle->angle->cw_ccw *= -1;
 
   rcm_set_pixmap(&circle->cw_ccw_pixmap, circle->cw_ccw_button->parent,
-		 circle->cw_ccw_box, (circle->angle->cw_ccw>0) ? rcm_cw : rcm_ccw);
+		 circle->cw_ccw_box, (circle->angle->cw_ccw>0) ? rcm_cw_xpm : rcm_ccw_xpm);
 
   gtk_label_set_text (GTK_LABEL (circle->cw_ccw_label),
 		      (circle->angle->cw_ccw>0) ?

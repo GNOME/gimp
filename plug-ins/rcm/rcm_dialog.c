@@ -50,10 +50,14 @@
 
 #include "rcm.h"
 #include "rcm_misc.h"
-#include "rcm_pixmaps.h"
 #include "rcm_gdk.h"
 #include "rcm_callback.h"
 #include "rcm_dialog.h"
+
+#include "pixmaps/rcm_360.xpm"
+#include "pixmaps/rcm_a_b.xpm"
+#include "pixmaps/rcm_cw.xpm"
+
 
 /*---------------------------------------------------------------------------*/
 /* Defines */
@@ -189,9 +193,9 @@ rcm_create_pixmap_button (GtkWidget     **label,
 void 
 rcm_set_pixmaps (RcmCircle *circle)
 {
-  rcm_set_pixmap(&circle->cw_ccw_pixmap, circle->cw_ccw_button->parent, circle->cw_ccw_box, rcm_cw);
-  rcm_set_pixmap(&circle->a_b_pixmap, circle->a_b_button->parent, circle->a_b_box, rcm_a_b);
-  rcm_set_pixmap(&circle->f360_pixmap, circle->f360_button->parent, circle->f360_box, rcm_360);
+  rcm_set_pixmap(&circle->cw_ccw_pixmap, circle->cw_ccw_button->parent, circle->cw_ccw_box, rcm_cw_xpm);
+  rcm_set_pixmap(&circle->a_b_pixmap, circle->a_b_button->parent, circle->a_b_box, rcm_a_b_xpm);
+  rcm_set_pixmap(&circle->f360_pixmap, circle->f360_button->parent, circle->f360_box, rcm_360_xpm);
 }
 
 /*---------------------------------------------------------------------------*/
