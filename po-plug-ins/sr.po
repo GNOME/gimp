@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp 1.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-01-10 04:01+0100\n"
-"PO-Revision-Date: 2004-01-10 04:02+0100\n"
+"PO-Revision-Date: 2004-01-10 04:23+0100\n"
 "Last-Translator: Бранко Ивановић <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@bogus.example.com>\n"
 "MIME-Version: 1.0\n"
@@ -497,11 +497,11 @@ msgstr "„%s“ је оштећена. Линија %d у секцији Опц
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:261
 msgid "<Image>/Filters/Render/_Fractal Explorer..."
-msgstr "<Слика>/Филтери/Рендер/Фрацтал Истраживач..."
+msgstr "<Слика>/Филтери/Исцртавање/Истраживач фрактала..."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:389
 msgid "Rendering Fractal..."
-msgstr "Рендерујем фрактал..."
+msgstr "Исцртавам фрактал..."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:763 plug-ins/gfig/gfig.c:3825
 #: plug-ins/gflare/gflare.c:3112
@@ -1803,7 +1803,7 @@ msgstr "Вредност"
 #
 #: plug-ins/common/CML_explorer.c:460
 msgid "<Image>/Filters/Render/Pattern/CML _Explorer..."
-msgstr "<Слика>/Филтери/Рендерирање/Узорак/CML Истраживач..."
+msgstr "<Слика>/Филтери/Исцртавање/Мустра/CML Истраживач..."
 
 #: plug-ins/common/CML_explorer.c:742
 msgid "CML_explorer: evoluting..."
@@ -2616,7 +2616,7 @@ msgstr "Упозорење операције датотеке за мешање
 
 #: plug-ins/common/checkerboard.c:94
 msgid "<Image>/Filters/Render/Pattern/_Checkerboard..."
-msgstr "<Слика>/Филтери/Рендерирање/Узорак/Шаховска табла..."
+msgstr "<Слика>/Филтери/Исцртавање/Мустра/Шаховска табла..."
 
 #: plug-ins/common/checkerboard.c:158
 msgid "Adding Checkerboard..."
@@ -3502,16 +3502,16 @@ msgstr "%s: није ваљана DICOM датотека"
 #
 #: plug-ins/common/diffraction.c:184
 msgid "<Image>/Filters/Render/Pattern/_Diffraction Patterns..."
-msgstr "<Слика>/Филтери/Рендерирање/Узорак/Дифракција исечака..."
+msgstr "<Слика>/Филтери/Исцртавање/Мустра/Дифракција мустри..."
 
 #: plug-ins/common/diffraction.c:336
 msgid "Creating diffraction pattern..."
-msgstr "Креирам дифракционирани узорак..."
+msgstr "Правим дифракционирану мустру..."
 
 #
 #: plug-ins/common/diffraction.c:440
 msgid "Diffraction Patterns"
-msgstr "Дифракционирани Узорци"
+msgstr "Дифракциониране мустре"
 
 #
 #: plug-ins/common/diffraction.c:531
@@ -3914,17 +3914,17 @@ msgstr "<Слика>/Филтери/Светлосни ефекти/Одсјај
 #
 #: plug-ins/common/flarefx.c:263
 msgid "Render Flare..."
-msgstr "Фларе рендерирање..."
+msgstr "Исцртавање одсјаја..."
 
 #: plug-ins/common/flarefx.c:300
 msgid "FlareFX"
-msgstr "ФлареФX"
+msgstr "Ефекти одсјаја"
 
 #
 #. to avoid side effects while initialization
 #: plug-ins/common/flarefx.c:726
 msgid "Center of FlareFX"
-msgstr "Средина ФлареФX"
+msgstr "Средина ефеката одсјаја"
 
 #
 #. show / hide cursor
@@ -4383,7 +4383,7 @@ msgstr "Висина делића:"
 #
 #: plug-ins/common/gqbist.c:438
 msgid "<Image>/Filters/Render/Pattern/_Qbist..."
-msgstr "<Слика>/Филтери/Рендерирање/Исечак/Кубист..."
+msgstr "<Слика>/Филтери/Исцртавање/Мустра/Кубист..."
 
 #
 #: plug-ins/common/gqbist.c:535
@@ -4415,7 +4415,7 @@ msgstr "Мапа прелива..."
 #
 #: plug-ins/common/grid.c:152
 msgid "<Image>/Filters/Render/Pattern/_Grid..."
-msgstr "<Слика>/Филтери/Рендеровање/Исечак/Мрежа..."
+msgstr "<Слика>/Филтери/Исцртавање/Мустра/Мрежа..."
 
 #: plug-ins/common/grid.c:239
 msgid "Drawing Grid..."
@@ -4792,15 +4792,15 @@ msgstr "ИWарп"
 #
 #: plug-ins/common/jigsaw.c:408
 msgid "<Image>/Filters/Render/Pattern/_Jigsaw..."
-msgstr "<Слика>/Филтери/Рендерирање/Исечак/_Jigsaw..."
+msgstr "<Слика>/Филтери/Исцртавање/Мустра/_Слагалица..."
 
 #: plug-ins/common/jigsaw.c:462
 msgid "Assembling Jigsaw..."
-msgstr "Састављам _Jigsaw..."
+msgstr "Састављам _слагалицу..."
 
 #: plug-ins/common/jigsaw.c:2543
 msgid "Jigsaw"
-msgstr "Јигсаw"
+msgstr "Слагалица"
 
 #
 #: plug-ins/common/jigsaw.c:2567
@@ -4841,7 +4841,7 @@ msgstr "вредност осветљења сваког делића ивице
 
 #: plug-ins/common/jigsaw.c:2651
 msgid "Jigsaw Style"
-msgstr "_Jigsaw стил"
+msgstr "_Стил слагалице"
 
 #
 #: plug-ins/common/jigsaw.c:2655
@@ -5357,7 +5357,7 @@ msgstr "Тражим Крајеве.."
 #. Progress bar for rendering tiles
 #: plug-ins/common/mosaic.c:482
 msgid "Rendering Tiles..."
-msgstr "Рендерирам Дјелиће..."
+msgstr "Исцртавам делиће..."
 
 #: plug-ins/common/mosaic.c:508
 msgid "Mosaic"
@@ -5646,7 +5646,7 @@ msgstr "<Слика>/Филтери/Светлосни Ефекти/СуперН
 #
 #: plug-ins/common/nova.c:277
 msgid "Rendering SuperNova..."
-msgstr "Рендерирам СуперНову.."
+msgstr "Исцртавам СуперНову.."
 
 #: plug-ins/common/nova.c:318
 msgid "SuperNova"
@@ -5799,7 +5799,7 @@ msgstr "<Слика>/Филтери/Мапа/Делићи папира..."
 #
 #: plug-ins/common/pat.c:447
 msgid "Save as Pattern"
-msgstr "Спреми као Узорак"
+msgstr "Сачувај као мустру"
 
 #: plug-ins/common/pcx.c:312
 #, c-format
@@ -5849,7 +5849,7 @@ msgstr "Висина пиксела:"
 #
 #: plug-ins/common/plasma.c:182
 msgid "<Image>/Filters/Render/Clouds/_Plasma..."
-msgstr "<Слика>/Филтери/Рендеровање/Облаци/Плазма..."
+msgstr "<Слика>/Филтери/Исцртавање/Облаци/Плазма..."
 
 #: plug-ins/common/plasma.c:261
 msgid "Plasma..."
@@ -6207,7 +6207,7 @@ msgstr "Учитај Постсцрипт"
 #. Rendering
 #: plug-ins/common/ps.c:2644
 msgid "Rendering"
-msgstr "Рендерирам"
+msgstr "Исцртавам"
 
 #. Resolution
 #: plug-ins/common/ps.c:2661 plug-ins/common/svg.c:816
@@ -6723,11 +6723,11 @@ msgstr "Вредност Помака:"
 #
 #: plug-ins/common/sinus.c:196
 msgid "<Image>/Filters/Render/Pattern/_Sinus..."
-msgstr "<Слика>/Филтери/Рендерирање/Исечак/Синус..."
+msgstr "<Слика>/Филтери/Исцртавање/Мустра/Синус..."
 
 #: plug-ins/common/sinus.c:281
 msgid "Sinus: rendering..."
-msgstr "Синус: рендерирање..."
+msgstr "Синус: исцртавам..."
 
 #
 #. Create Main window with a vbox
@@ -6873,7 +6873,7 @@ msgstr "Изводим углађену палету..."
 #
 #: plug-ins/common/smooth_palette.c:408
 msgid "Smooth Palette"
-msgstr "Углађена Палета"
+msgstr "Углађена палета"
 
 #
 #: plug-ins/common/smooth_palette.c:445
@@ -6883,17 +6883,17 @@ msgstr "Дубина тражења:"
 #
 #: plug-ins/common/snoise.c:171
 msgid "<Image>/Filters/Render/Clouds/_Solid Noise..."
-msgstr "<Слика>/Филтери/Рендеровање/Облаци/Јаки Шум..."
+msgstr "<Слика>/Филтери/Исцртавање/Облаци/Јаки Шум..."
 
 #: plug-ins/common/snoise.c:297
 msgid "Solid Noise..."
-msgstr "Јаки Шум..."
+msgstr "Јаки шум..."
 
 #
 #. Dialog initialization
 #: plug-ins/common/snoise.c:495
 msgid "Solid Noise"
-msgstr "Јаки Шум"
+msgstr "Јаки шум"
 
 #
 #: plug-ins/common/snoise.c:529
@@ -7223,11 +7223,11 @@ msgstr "Извези:"
 #
 #: plug-ins/common/spheredesigner.c:3066
 msgid "Rendering Sphere..."
-msgstr "Рендерирам лопту.."
+msgstr "Исцртавам лопту.."
 
 #: plug-ins/common/spheredesigner.c:3123
 msgid "<Image>/Filters/Render/Sphere _Designer..."
-msgstr "<Слика>/Филтери/Рендерирање/Дизајнер лопте..."
+msgstr "<Слика>/Филтери/Исцртавање/Дизајнер лопте..."
 
 #: plug-ins/common/spread.c:107
 msgid "<Image>/Filters/Noise/Sp_read..."
@@ -7338,11 +7338,11 @@ msgstr "Непознат разлог"
 
 #: plug-ins/common/svg.c:246
 msgid "Rendering SVG..."
-msgstr "Рендерујем SVG..."
+msgstr "Исцртавам SVG..."
 
 #: plug-ins/common/svg.c:256
 msgid "Rendered SVG"
-msgstr "Рендерован SVG"
+msgstr "Исцртан SVG"
 
 #: plug-ins/common/svg.c:421
 msgid ""
@@ -7364,7 +7364,7 @@ msgstr "Отвори SVG"
 #. Scalable Vector Graphics is SVG, should perhaps not be translated
 #: plug-ins/common/svg.c:642
 msgid "Render Scalable Vector Graphics"
-msgstr "Реднеруј Scalable Vector Graphics (SVG)"
+msgstr "Исцртај скалабилну векторску графику (SVG)"
 
 #: plug-ins/common/svg.c:701 plug-ins/print/gimp_main_window.c:1025
 #: plug-ins/print/gimp_main_window.c:1237
@@ -7797,7 +7797,7 @@ msgstr "Видео"
 #. frame for the radio buttons
 #: plug-ins/common/video.c:2160
 msgid "RGB Pattern Type"
-msgstr "Врста RGB исечака"
+msgstr "Врста RGB мустре"
 
 #: plug-ins/common/video.c:2170
 msgid "_Additive"
@@ -8144,11 +8144,11 @@ msgstr "<Слика>/Филтери/Дисторзије/Ветар..."
 
 #: plug-ins/common/wind.c:322
 msgid "Rendering Blast..."
-msgstr "Рендерирам експлозију..."
+msgstr "Исцртавам експлозију..."
 
 #: plug-ins/common/wind.c:441
 msgid "Rendering Wind..."
-msgstr "Рендерирам Ветар..."
+msgstr "Исцртавам ветар..."
 
 #: plug-ins/common/wind.c:872
 msgid "Wind"
@@ -8268,12 +8268,12 @@ msgstr "Учитај Windows метадатотеку"
 #: plug-ins/common/wmf.c:212
 #, c-format
 msgid "Rendering %s"
-msgstr "Рендерујем %s"
+msgstr "Исцртавам %s"
 
 #
 #: plug-ins/common/wmf.c:236
 msgid "Scale (log 2):"
-msgstr "Лествица (лог 2):"
+msgstr "Размера (лог 2):"
 
 #: plug-ins/common/wmf.c:396
 #, c-format
@@ -8282,7 +8282,7 @@ msgstr "Не могу отворити „%s“ за читање."
 
 #: plug-ins/common/wmf.c:415
 msgid "Rendered WMF"
-msgstr "Редндерујем WMF"
+msgstr "Исцртавам WMF"
 
 #: plug-ins/common/xbm.c:240
 msgid "Created with The GIMP"
@@ -8574,7 +8574,7 @@ msgstr "Компонирање Слике"
 
 #: plug-ins/flame/flame.c:139
 msgid "<Image>/Filters/Render/Nature/_Flame..."
-msgstr "<Слика>/Филтери/Рендеровање/Природа/Пламен..."
+msgstr "<Слика>/Филтери/Исцртавање/Природа/Пламен..."
 
 #: plug-ins/flame/flame.c:226
 msgid "Drawing Flame..."
@@ -8652,7 +8652,7 @@ msgstr "Пламен"
 
 #: plug-ins/flame/flame.c:981
 msgid "_Rendering"
-msgstr "Рендерујем"
+msgstr "И_сцртавам"
 
 #: plug-ins/flame/flame.c:1007
 msgid "Co_ntrast:"
@@ -8861,7 +8861,7 @@ msgstr "Величина прегледа"
 
 #: plug-ins/gfig/gfig.c:347
 msgid "<Image>/Filters/Render/_Gfig..."
-msgstr "<Слика>/Филтери/Рендеровање/_Gfig..."
+msgstr "<Слика>/Филтери/Исцртавање/_Gfig..."
 
 #: plug-ins/gfig/gfig.c:623
 msgid "First Gfig"
@@ -8967,17 +8967,14 @@ msgstr "Оловка"
 
 #: plug-ins/gfig/gfig.c:1684 plug-ins/gfig/gfig.c:2442
 msgid "Pattern"
-msgstr "Исечак"
+msgstr "Мустра"
 
 #: plug-ins/gfig/gfig.c:1691
 msgid ""
 "Use the brush/pencil or the airbrush when drawing on the image. Pattern "
 "paints with currently selected brush with a pattern. Only applies to circles/"
 "ellipses if Approx. Circles/Ellipses toggle is set."
-msgstr ""
-"Користите четку/оловку или спреј када цртате на слици. Исечак слика тренутно "
-"одабраном четком са исечком. Само се примењује на кругове/елипсе ако је "
-"Прос. Кругови/Елипсе мењање укључено."
+msgstr "Користите четку/оловку или спреј када цртате на слици. Мустра слика тренутно одабраном четком помоћу мустре. Само се примењује на кругове/елипсе ако је Прос. Кругови/Елипсе мењање укључено."
 
 #: plug-ins/gfig/gfig.c:2038 plug-ins/rcm/rcm_dialog.c:129
 msgid "Original"
@@ -10391,7 +10388,7 @@ msgstr ""
 #
 #: plug-ins/ifscompose/ifscompose.c:371
 msgid "<Image>/Filters/Render/Nature/Ifs_Compose..."
-msgstr "<Слика>/Филтери/Рендеровање/Природа/Ifs_Састављање..."
+msgstr "<Слика>/Филтери/Исцртавање/Природа/Ifs_Састављање..."
 
 #
 #. Asym
@@ -10476,7 +10473,7 @@ msgstr "Развлачење"
 #
 #: plug-ins/ifscompose/ifscompose.c:919
 msgid "Render Options"
-msgstr "Могућности Рендерирања"
+msgstr "Могућности исцртавања"
 
 #: plug-ins/ifscompose/ifscompose.c:933 plug-ins/print/gimp_main_window.c:482
 msgid "Auto"
@@ -10527,7 +10524,7 @@ msgstr "Полупречник спота:"
 #: plug-ins/ifscompose/ifscompose.c:1389
 #, c-format
 msgid "Rendering IFS (%d/%d)..."
-msgstr "Рендерујем IFS (%d/%d)..."
+msgstr "Исцртавам IFS (%d/%d)..."
 
 #. transfer the image to the drawable
 #: plug-ins/ifscompose/ifscompose.c:1408
@@ -11353,7 +11350,7 @@ msgstr "Црта лавиринт."
 
 #: plug-ins/maze/maze.c:167
 msgid "<Image>/Filters/Render/Pattern/_Maze..."
-msgstr "<Слика>/Филтери/Рендеровање/Одсечак/Лавиринт..."
+msgstr "<Слика>/Филтери/Исцртавање/Мустра/Лавиринт..."
 
 #: plug-ins/maze/maze.c:446
 msgid "Drawing Maze..."
