@@ -557,12 +557,9 @@ static void
 update_preview (GtkWidget *preview,
                 GtkWidget *size)
 {
-  gdouble horizontal = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size), 0);
-  gdouble vertical   = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size), 1);
-
   gauss (GIMP_DRAWABLE_PREVIEW (preview)->drawable,
-         horizontal,
-         vertical,
+         gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size), 0),
+         gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size), 1),
          bvals.method,
          preview);
 }
@@ -652,7 +649,12 @@ gauss (GimpDrawable *drawable,
   guchar       *preview_buffer2 = NULL;
 
   if (horz <= 0.0 && vert <= 0.0)
-    return;
+    {
+      if (preview)
+        gimp_preview_draw (preview);
+
+      return;
+    }
 
   if (preview)
     {
@@ -872,11 +874,6 @@ gauss (GimpDrawable *drawable,
                            drawable, 0, 0, drawable->width, drawable->height,
                            FALSE, TRUE);
     }
-  else if (preview)
-    {
-      gimp_pixel_rgn_get_rect (&src_rgn, preview_buffer1,
-                               x1, y1, width, height);
-    }
 
   /*  Now the horizontal pass  */
   if (horz > 0.0)
@@ -1046,10 +1043,6 @@ gauss (GimpDrawable *drawable,
                 gimp_progress_update (progress / max_progress);
             }
         }
-    }
-  else if (preview)
-    {
-      memcpy (preview_buffer2, preview_buffer1, width * height * bytes);
     }
 
   if (preview)

@@ -89,6 +89,7 @@ void      gimp_preview_get_position (GimpPreview *preview,
                                      gint        *x,
                                      gint        *y);
 
+void      gimp_preview_draw         (GimpPreview *preview);
 void      gimp_preview_invalidate   (GimpPreview *preview);
 
 

@@ -1,9 +1,25 @@
+2004-09-02  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimppreview.[ch]: made gimp_preview_draw() public,
+	added some gtk-doc comments.
+	(gimp_preview_toggle_callback): immidiately invalidate the preview.
+	
+	* plug-ins/common/gauss.c (gauss): fixed (and simplified) handling
+	of zero radii by using the new GimpPreview API.
+
 2004-09-01  Helvetix Victorinox  <helvetix@gimp.org>
 
-	* Added gimp_composite_addition_va8_va8_va8_mmx():
-	* Regression tests now include printing the image type for each test.
-	* Regenerated
+	* app/composite/gimp-composite-mmx.[ch]: Added
+	gimp_composite_addition_va8_va8_va8_mmx().
 
+	* app/composite/make-installer.py: Regression tests now include
+	printing the image type for each test.
+
+	* app/composite/gimp-composite-mmx-test.c
+	* app/composite/gimp-composite-regression.c
+	* app/composite/gimp-composite-sse-test.c
+	* app/composite/gimp-composite-sse2-test.c
+	* app/composite/gimp-composite-x86.h: regenerated.
 
 2004-09-02  Sven Neumann  <sven@gimp.org>
 
@@ -15,7 +31,7 @@
 	* plug-ins/common/ripple.c
 	* plug-ins/common/spread.c
 	* plug-ins/common/video.c: don't pass run_mode to
-	gimp_rgn_iterator_new(), it's unused. Removes the need for ir being
+	gimp_rgn_iterator_new(), it's unused. Removes the need for it being
 	a global variable.
 
 2004-09-01  Michael Natterer  <mitch@gimp.org>

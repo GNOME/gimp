@@ -58,7 +58,6 @@ static void      gimp_preview_set_property       (GObject          *object,
                                                   guint             property_id,
                                                   const GValue     *value,
                                                   GParamSpec       *pspec);
-static void      gimp_preview_draw               (GimpPreview      *preview);
 
 static void      gimp_preview_area_realize       (GtkWidget        *widget,
                                                   GimpPreview      *preview);
@@ -77,6 +76,8 @@ static void      gimp_preview_v_scroll           (GtkAdjustment    *vadj,
                                                   GimpPreview      *preview);
 static void      gimp_preview_toggle_callback    (GtkWidget        *toggle,
                                                   GimpPreview      *preview);
+static gboolean  gimp_preview_invalidate_now     (GimpPreview      *preview);
+
 
 static guint preview_signals[LAST_SIGNAL] = { 0 };
 
@@ -301,15 +302,6 @@ gimp_preview_set_property (GObject      *object,
 }
 
 static void
-gimp_preview_draw (GimpPreview *preview)
-{
-  GimpPreviewClass *class = GIMP_PREVIEW_GET_CLASS (preview);
-
-  if (class->draw)
-    class->draw (preview);
-}
-
-static void
 gimp_preview_area_realize (GtkWidget   *widget,
                            GimpPreview *preview)
 {
@@ -512,11 +504,16 @@ gimp_preview_toggle_callback (GtkWidget   *toggle,
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle)))
     {
       preview->update_preview = TRUE;
-      gimp_preview_invalidate (preview);
+
+      if (preview->timeout_id)
+        g_source_remove (preview->timeout_id);
+
+      gimp_preview_invalidate_now (preview);
     }
   else
     {
       preview->update_preview = FALSE;
+
       gimp_preview_draw (preview);
     }
 
@@ -562,7 +559,10 @@ gimp_preview_invalidate_now (GimpPreview *preview)
 /**
  * gimp_preview_set_update:
  * @preview: a #GimpPreview widget
- * @update:
+ * @update: %TRUE if the preview should invalidate itself when being
+ *          scrolled or when gimp_preview_invalidate() is being called
+ *
+ * Sets the state of the "Preview" check button.
  *
  * Since: GIMP 2.2
  **/
@@ -638,8 +638,40 @@ gimp_preview_get_position (GimpPreview  *preview,
 }
 
 /*
+ * gimp_preview_draw:
+ * @preview: a #GimpPreview widget
+ *
+ * Calls the GimpPreview::draw method. GimpPreview itself doesn't
+ * implement a default draw method so the behaviour is determined by
+ * the derived class implementing this method.
+ *
+ * #GimpDrawablePreview implements gimp_preview_draw() by drawing the
+ * original, unmodified drawable to the @preview.
+ *
+ * Since: GIMP 2.2
+ **/
+void
+gimp_preview_draw (GimpPreview *preview)
+{
+  GimpPreviewClass *class = GIMP_PREVIEW_GET_CLASS (preview);
+
+  if (class->draw)
+    class->draw (preview);
+}
+
+/*
  * gimp_preview_invalidate:
  * @preview: a #GimpPreview widget
+ *
+ * This function starts or renews a short low-priority timeout. When
+ * the timeout expires, the GimpPreview::invalidated signal is emitted
+ * which will usually cause the @preview to be updated.
+ *
+ * This function does nothing unless the "Preview" button is checked.
+ *
+ * During the emission of the signal a busy cursor is set on the
+ * toplevel window containing the @preview and on the preview area
+ * itself.
  *
  * Since: GIMP 2.2
  **/
