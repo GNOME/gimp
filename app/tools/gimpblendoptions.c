@@ -44,6 +44,7 @@ enum
   PROP_0,
   PROP_OFFSET,
   PROP_GRADIENT_TYPE,
+  PROP_GRADIENT_REPEAT,  /*  overrides an GimpPaintOptions property  */
   PROP_SUPERSAMPLE,
   PROP_SUPERSAMPLE_DEPTH,
   PROP_SUPERSAMPLE_THRESHOLD,
@@ -120,6 +121,11 @@ gimp_blend_options_class_init (GimpBlendOptionsClass *klass)
                                  GIMP_TYPE_GRADIENT_TYPE,
                                  GIMP_GRADIENT_LINEAR,
                                  0);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_GRADIENT_REPEAT,
+                                 "gradient-repeat", NULL,
+                                 GIMP_TYPE_REPEAT_MODE,
+                                 GIMP_REPEAT_NONE,
+                                 0);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SUPERSAMPLE,
                                     "supersample", NULL,
@@ -163,6 +169,10 @@ gimp_blend_options_set_property (GObject      *object,
     case PROP_GRADIENT_TYPE:
       options->gradient_type = g_value_get_enum (value);
       break;
+    case PROP_GRADIENT_REPEAT:
+      GIMP_PAINT_OPTIONS (options)->gradient_options->gradient_repeat =
+        g_value_get_enum (value);
+      break;
 
     case PROP_SUPERSAMPLE:
       options->supersample = g_value_get_boolean (value);
@@ -201,6 +211,10 @@ gimp_blend_options_get_property (GObject    *object,
       break;
     case PROP_GRADIENT_TYPE:
       g_value_set_enum (value, options->gradient_type);
+      break;
+    case PROP_GRADIENT_REPEAT:
+      g_value_set_enum (value,
+                        GIMP_PAINT_OPTIONS (options)->gradient_options->gradient_repeat);
       break;
 
     case PROP_SUPERSAMPLE:

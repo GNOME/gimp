@@ -1,5 +1,11 @@
 2004-03-13  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpblendoptions.c: override the "gradient_repeat"
+	property inherited from GimpPaintOptions and set the default to
+	GIMP_REPEAT_NONE. Seems more appropriate for the blend tool.
+
+2004-03-13  Sven Neumann  <sven@gimp.org>
+
 	* app/text/gimptextlayer.[ch]: implement GimpDrawable functions
 	that affect the tiles and mark the text layer as modified. Added
 	new function gimp_drawable_is_text_layer() that checks whether a
