@@ -1,8 +1,12 @@
+2004-07-14  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/pagecurl/pagecurl.c: GUI polishing.
+
 2004-07-14  Shlomi Fish  <shlomif@iglu.org.il>
 
 	* plug-ins/gimpressionist/: Added more underscores to identifiers.
-	Fixed some of the style (added whitespace before the '(' in function
-	calls)
+	Fixed some of the style issues (added whitespace before the '(' in
+	function calls).
 
 2004-07-14  Philip Lafleur  <plafleur@cvs.gnome.org>
 

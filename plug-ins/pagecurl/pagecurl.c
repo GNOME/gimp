@@ -510,7 +510,7 @@ dialog (void)
                            CURL_EDGE_LEFT  (i) ? 1 : 2,
                            CURL_EDGE_UPPER (i) ? 0 : 2,
                            CURL_EDGE_UPPER (i) ? 1 : 3,
-			   GTK_SHRINK, GTK_SHRINK, 0, 0);
+			   GTK_FILL | GTK_EXPAND, GTK_SHRINK, 0, 0);
 	 gtk_widget_show (button);
 
 	 g_signal_connect (button, "toggled",
@@ -529,7 +529,7 @@ dialog (void)
    frame = gimp_frame_new (_("Curl Orientation"));
    gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
-   hbox = gtk_hbox_new (FALSE, 6);
+   hbox = gtk_hbox_new (TRUE, 6);
    gtk_container_add (GTK_CONTAINER (frame), hbox);
 
    {
@@ -554,7 +554,7 @@ dialog (void)
          g_object_set_data (G_OBJECT (button),
                             "gimp-item-data", GINT_TO_POINTER (i));
 
-	 gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+	 gtk_box_pack_end (GTK_BOX (hbox), button, TRUE, TRUE, 0);
 	 gtk_widget_show (button);
 
 	 g_signal_connect (button, "toggled",
@@ -579,13 +579,24 @@ dialog (void)
                      G_CALLBACK (gimp_toggle_button_update),
                      &curl.shade);
 
-   combo = gimp_int_combo_box_new (_("Foreground / background colors"),
-                                   CURL_COLORS_FG_BG,
-                                   _("Current gradient"),
-                                   CURL_COLORS_GRADIENT,
-                                   _("Current gradient (reversed)"),
-                                   CURL_COLORS_GRADIENT_REVERSE,
-                                   NULL);
+   combo = gimp_int_combo_box_new (NULL, -1);
+
+   gimp_int_combo_box_prepend (GIMP_INT_COMBO_BOX (combo),
+                               GIMP_INT_STORE_VALUE,    CURL_COLORS_GRADIENT_REVERSE,
+                               GIMP_INT_STORE_LABEL,    _("Current gradient (reversed)"),
+                               GIMP_INT_STORE_STOCK_ID, GIMP_STOCK_GRADIENT,
+                               -1);
+   gimp_int_combo_box_prepend (GIMP_INT_COMBO_BOX (combo),
+                               GIMP_INT_STORE_VALUE,    CURL_COLORS_GRADIENT,
+                               GIMP_INT_STORE_LABEL,    _("Current gradient"),
+                               GIMP_INT_STORE_STOCK_ID, GIMP_STOCK_GRADIENT,
+                               -1);
+   gimp_int_combo_box_prepend (GIMP_INT_COMBO_BOX (combo),
+                               GIMP_INT_STORE_VALUE,    CURL_COLORS_FG_BG,
+                               GIMP_INT_STORE_LABEL,    _("Foreground / background colors"),
+                               GIMP_INT_STORE_STOCK_ID, GIMP_STOCK_DEFAULT_COLORS,
+                               -1);
+
    gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
    gtk_widget_show (combo);
 
