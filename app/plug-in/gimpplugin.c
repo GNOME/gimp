@@ -268,11 +268,12 @@ plug_in_new (Gimp        *gimp,
   plug_in->write_buffer_index = 0;
 
   plug_in->temp_proc_defs     = NULL;
-  plug_in->current_temp_proc  = NULL;
 
   plug_in->ext_main_loop      = NULL;
   plug_in->recurse_main_loop  = NULL;
+
   plug_in->temp_main_loops    = NULL;
+  plug_in->temp_proc_recs     = NULL;
 
   plug_in->return_vals        = NULL;
   plug_in->n_return_vals      = 0;
@@ -873,9 +874,9 @@ plug_in_get_undo_desc (PlugIn *plug_in)
 
   g_return_val_if_fail (plug_in != NULL, NULL);
 
-  if (plug_in->current_temp_proc)
+  if (plug_in->temp_proc_recs)
     proc_def = plug_ins_proc_def_find (plug_in->gimp,
-                                       plug_in->current_temp_proc);
+                                       plug_in->temp_proc_recs->data);
   else if (plug_in->proc_rec)
     proc_def = plug_ins_proc_def_find (plug_in->gimp,
                                        plug_in->proc_rec);

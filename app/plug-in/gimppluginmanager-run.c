@@ -211,6 +211,8 @@ plug_in_repeat (Gimp    *gimp,
 
 /*  private functions  */
 
+#define ENABLE_TEMP_RETURN 1
+
 static Argument *
 plug_in_temp_run (ProcRecord *proc_rec,
 		  Argument   *args,
@@ -225,13 +227,8 @@ plug_in_temp_run (ProcRecord *proc_rec,
     {
       GPProcRun proc_run;
 
-      if (plug_in->current_temp_proc)
-	{
-	  return_vals = procedural_db_return_args (proc_rec, FALSE);
-	  goto done;
-	}
-
-      plug_in->current_temp_proc = proc_rec;
+      plug_in->temp_proc_recs = g_list_prepend (plug_in->temp_proc_recs,
+                                                proc_rec);
 
       proc_run.name    = proc_rec->name;
       proc_run.nparams = argc;
@@ -241,6 +238,10 @@ plug_in_temp_run (ProcRecord *proc_rec,
 	  ! wire_flush (plug_in->my_write, plug_in))
 	{
 	  return_vals = procedural_db_return_args (proc_rec, FALSE);
+
+          plug_in->temp_proc_recs = g_list_remove (plug_in->temp_proc_recs,
+                                                   proc_rec);
+
 	  goto done;
 	}
 
@@ -256,7 +257,8 @@ plug_in_temp_run (ProcRecord *proc_rec,
       return_vals = procedural_db_return_args (proc_rec, TRUE);
 #endif
 
-      plug_in->current_temp_proc = NULL;
+      plug_in->temp_proc_recs = g_list_remove (plug_in->temp_proc_recs,
+                                               proc_rec);
 
       plug_in_unref (plug_in);
     }

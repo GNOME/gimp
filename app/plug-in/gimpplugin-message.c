@@ -42,6 +42,9 @@
 #include "plug-in-shm.h"
 
 
+#define ENABLE_TEMP_RETURN 1
+
+
 typedef struct _PlugInBlocked PlugInBlocked;
 
 struct _PlugInBlocked

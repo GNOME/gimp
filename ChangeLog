@@ -1,3 +1,27 @@
+2004-01-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-in.[ch]: changed member
+	"ProcRec *current_temp_proc" to "GList *temp_proc_recs", a stack
+	of temporary procedures, just as the "temp_main_loops" member is
+	supposed to be the stack of main loops for waiting for the
+	temp_procs' return values.
+
+	* app/plug-in/plug-in-run.c (plug_in_temp_run): changed accordingly.
+
+	* app/plug-in/plug-in-message.c
+	* app/plug-in/plug-in-run.c
+	* libgimp/gimp.c: added #define ENABLE_TEMP_RETURN 1.
+
+	Enables return values for temporary procedures. On the libgimp
+	side, this just enables the code which returns the values, on the
+	app side it enables per-plug-in stacks of proc_recs and main_loops
+	and a message handler for the GP_TEMP_PROC_RETURN message.
+	A temp_proc's caller now blocks until the proc is finished.
+	Fixes bug #50649.
+
+	Left the #ifdefs there so it can be easily disabled if things
+	break. Please play with Script-Fu and test this.
+
 2004-01-19  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* plug-ins/common/ccanalyze.c (analyze): Call gimp_drawable_detach()

@@ -1729,6 +1729,10 @@ gimp_proc_run (GPProcRun *proc_run)
     }
 }
 
+
+#define ENABLE_TEMP_RETURN 1
+
+
 static void
 gimp_temp_proc_run (GPProcRun *proc_run)
 {

@@ -54,11 +54,12 @@ struct _PlugIn
   gint          write_buffer_index;              /*  Buffer index for writing */
 
   GSList       *temp_proc_defs;   /*  Temporary procedures                    */
-  ProcRecord   *current_temp_proc;/*  The temp proc the plug-in is busy with  */
 
   GMainLoop    *ext_main_loop;    /*  for waiting for extension_ack           */
   GMainLoop    *recurse_main_loop;/*  for waiting for proc_return             */
+
   GList        *temp_main_loops;  /*  for waiting for temp_proc_returns       */
+  GList        *temp_proc_recs;   /*  The temp procs the plug-in is busy with */
 
   Argument     *return_vals;      /*  The return value we wait for            */
   gint          n_return_vals;
