@@ -58,7 +58,7 @@
  * Constants...
  */
 
-#define PLUG_IN_VERSION  "1.1.10 - 8 Nov 1999"
+#define PLUG_IN_VERSION  "1.1.11 - 29 Jan 2000"
 #define SCALE_WIDTH      125
 
 #define DEFAULT_GAMMA    2.20
@@ -524,8 +524,8 @@ load_image (gchar *filename)	/* I - File to load */
 				  ((double) info->y_pixels_per_unit) * 0.0254);
       else  /*  set aspect ratio as resolution  */
 	gimp_image_set_resolution(image,
-				  ((double) info->x_pixels_per_unit),
-				  ((double) info->y_pixels_per_unit));
+				  ((double) info->x_pixels_per_unit) * 72.0,
+				  ((double) info->y_pixels_per_unit)i * 72.0);
     }
 #endif /* GIMP_HAVE_RESOLUTION_INFO */
 
