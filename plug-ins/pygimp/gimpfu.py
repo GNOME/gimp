@@ -239,8 +239,19 @@ def _interact(func_name):
     import gimpui
 
     gtk.rc_parse(gimp.gtkrc())
-	
+
     defaults = _get_defaults(func_name)
+
+    class EntryValueError(Exception):
+	pass
+
+    def error_dialog(parent, msg):
+	dlg = gtk.MessageDialog(parent, gtk.DIALOG_DESTROY_WITH_PARENT,
+				gtk.MESSAGE_WARNING, gtk.BUTTONS_CLOSE,
+				msg)
+	dlg.run()
+	dlg.destroy()
+
     # define a mapping of param types to edit objects ...
     class StringEntry(gtk.Entry):
 	def __init__(self, default=''):
@@ -250,15 +261,19 @@ def _interact(func_name):
 	    return self.get_text()
     class IntEntry(StringEntry):
 	def get_value(self):
-	    import string
-	    return string.atoi(self.get_text())
+	    try:
+		return int(self.get_text())
+	    except ValueError, e:
+		raise EntryValueError, e.args
     class FloatEntry(StringEntry):
 	def get_value(self):
-	    import string
-	    return string.atof(self.get_text())
+	    try:
+		return float(self.get_text())
+	    except ValueError, e:
+		raise EntryValueError, e.args
     class ArrayEntry(StringEntry):
 	def get_value(self):
-	    return eval(self.get_text())
+	    return eval(self.get_text(), {}, {})
     class SliderEntry(gtk.HScale):
 	# bounds is (upper, lower, step)
 	def __init__(self, default=0, bounds=(0, 100, 5)):
@@ -276,7 +291,10 @@ def _interact(func_name):
 				      bounds[2], bounds[2])
 	    gtk.SpinButton.__init__(self, self.adj, 1, 0)
 	def get_value(self):
-	    return int(self.adj.value)
+	    try:
+		return int(self.get_text())
+	    except ValueError, e:
+		raise EntryValueError, e.args
     class ToggleEntry(gtk.ToggleButton):
 	def __init__(self, default=0):
 	    gtk.ToggleButton.__init__(self)
@@ -388,20 +406,38 @@ def _interact(func_name):
 	    wid = _edit_mapping[type](def_val, params[i][4])
 	else:
 	    wid = _edit_mapping[type](def_val)
+
 	table.attach(wid, 2,3, i,i+1)
 	tooltips.set_tip(wid, desc, None)
 	wid.show()
+
+	wid.desc = desc
 	edit_wids.append(wid)
 
     tooltips.enable()
     dialog.show()
-    response = dialog.run()
-    dialog.hide()
+
     ret = None
-    if response == gtk.RESPONSE_OK:
-	# OK was clicked
-	ret = map(lambda wid: wid.get_value(), edit_wids)
-	_set_defaults(func_name, ret)
+    while 1:
+	ret = None
+
+	response = dialog.run()
+	if response == gtk.RESPONSE_OK:
+    	    # OK was clicked
+	    ret = []
+	    msg = None
+
+	    try:
+		for wid in edit_wids:
+		    ret.append(wid.get_value())
+	    except EntryValueError:
+		error_dialog(dialog, 'Invalid input for "%s"' % wid.desc)
+	    else:
+		_set_defaults(func_name, ret)
+		break
+	else:
+	    break
+
     dialog.destroy()
     return ret
 	

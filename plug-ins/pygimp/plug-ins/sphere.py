@@ -21,6 +21,8 @@ import math
 from gimpfu import *
 
 def python_sphere(radius, light, shadow, bg_colour, sphere_colour):
+    if radius < 1:
+	radius = 1
     width = int(radius * 3.75)
     height = int(radius * 2.5)
     img = gimp.Image(width, height, RGB)

@@ -1,3 +1,12 @@
+2004-02-20  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/pygimp/gimpfu.py: Do some simple validation on the
+	GUI input. Arrays are still kinda hokey though. Based on Dave Neary's
+	patch, addresses bug #122049.
+
+	* plug-ins/common/pygimp/plug-ins/sphere.py: Make sure radius is at
+	least 1. Thanks to Florian Traverse for noticing. (Also in #122049)
+
 2004-02-20  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/common/lic.c: fixed crash when the effect image
