@@ -43,14 +43,24 @@
 
 typedef enum
 {
-  COLORBLIND_DEFICIENCY_FIRST,
-
-  COLORBLIND_DEFICIENCY_PROTANOPIA = COLORBLIND_DEFICIENCY_FIRST,
+  COLORBLIND_DEFICIENCY_PROTANOPIA,
   COLORBLIND_DEFICIENCY_DEUTERANOPIA,
-  COLORBLIND_DEFICIENCY_TRITANOPIA,
-
-  COLORBLIND_DEFICIENCY_LAST = COLORBLIND_DEFICIENCY_TRITANOPIA
+  COLORBLIND_DEFICIENCY_TRITANOPIA
 } ColorblindDeficiency;
+
+#define CDISPLAY_TYPE_COLORBLIND_DEFICIENCY (cdisplay_colorblind_deficiency_type)
+static GType  cdisplay_colorblind_deficiency_get_type (GTypeModule *module);
+
+static const GEnumValue cdisplay_colorblind_deficiency_enum_values[] =
+{
+  { COLORBLIND_DEFICIENCY_PROTANOPIA,
+    N_("Protanopia (insensitivity to red)"),     "protanopia"   },
+  { COLORBLIND_DEFICIENCY_DEUTERANOPIA,
+    N_("Deuteranopia (insensitivity to green)"), "deuteranopia" },
+  { COLORBLIND_DEFICIENCY_TRITANOPIA,
+    N_("Tritanopia (insensitivity to blue)"),    "tritanopia"   },
+  { 0, NULL, NULL }
+};
 
 
 #define DEFAULT_DEFICIENCY  COLORBLIND_DEFICIENCY_DEUTERANOPIA
@@ -93,11 +103,27 @@ struct _CdisplayColorblindClass
 };
 
 
+enum
+{
+  PROP_0,
+  PROP_DEFICIENCY
+};
+
+
 static GType   cdisplay_colorblind_get_type   (GTypeModule             *module);
 static void    cdisplay_colorblind_class_init (CdisplayColorblindClass *klass);
 static void    cdisplay_colorblind_init       (CdisplayColorblind      *colorblind);
 
-static void    cdisplay_colorblind_dispose    (GObject                 *object);
+static void    cdisplay_colorblind_dispose      (GObject               *object);
+static void    cdisplay_colorblind_set_property (GObject               *object,
+                                                                                                                                 guint                  property_id,
+                                                 const GValue          *value,
+                                                 GParamSpec            *pspec);
+static void    cdisplay_colorblind_get_property (GObject               *object,
+                                                 guint                  property_id,
+                                                 GValue                *value,
+                                                 GParamSpec            *pspec);
+
 
 static GimpColorDisplay * cdisplay_colorblind_clone  (GimpColorDisplay   *display);
 static void    cdisplay_colorblind_convert           (GimpColorDisplay   *display,
@@ -114,6 +140,9 @@ static void    cdisplay_colorblind_configure_reset   (GimpColorDisplay   *displa
 
 static void    cdisplay_colorblind_changed           (GimpColorDisplay   *display);
 
+static void    cdisplay_colorblind_set_deficiency    (CdisplayColorblind   *colorblind,
+                                                      ColorblindDeficiency  value);
+
 static void    colorblind_deficiency_callback        (GtkWidget          *widget,
                                                       CdisplayColorblind *colorblind);
 
@@ -122,14 +151,16 @@ static const GimpModuleInfo cdisplay_colorblind_info =
 {
   GIMP_MODULE_ABI_VERSION,
   N_("Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"),
-  "Michael Natterer <mitch@gimp.org>, Bob Dougherty <bob@vischeck.com>, Alex Wade <alex@vischeck.com>",
+  "Michael Natterer <mitch@gimp.org>, Bob Dougherty <bob@vischeck.com>, "
+  "Alex Wade <alex@vischeck.com>",
   "v0.2",
-  "(c) 2002-2003, released under the GPL",
+  "(c) 2002-2004, released under the GPL",
   "January 22, 2003"
 };
 
-static GType                  cdisplay_colorblind_type = 0;
-static GimpColorDisplayClass *parent_class             = NULL;
+static GType                  cdisplay_colorblind_type            = 0;
+static GType                  cdisplay_colorblind_deficiency_type = 0;
+static GimpColorDisplayClass *parent_class                        = NULL;
 
 
 G_MODULE_EXPORT const GimpModuleInfo *
@@ -142,6 +173,7 @@ G_MODULE_EXPORT gboolean
 gimp_module_register (GTypeModule *module)
 {
   cdisplay_colorblind_get_type (module);
+  cdisplay_colorblind_deficiency_get_type (module);
 
   return TRUE;
 }
@@ -174,6 +206,19 @@ cdisplay_colorblind_get_type (GTypeModule *module)
   return cdisplay_colorblind_type;
 }
 
+
+static GType
+cdisplay_colorblind_deficiency_get_type (GTypeModule *module)
+{
+  if (! cdisplay_colorblind_deficiency_type)
+    cdisplay_colorblind_deficiency_type =
+      gimp_module_register_enum (module,
+                                 "CDisplayColorblindDeficiency",
+                                 cdisplay_colorblind_deficiency_enum_values);
+
+  return cdisplay_colorblind_deficiency_type;
+}
+
 static void
 cdisplay_colorblind_class_init (CdisplayColorblindClass *klass)
 {
@@ -183,6 +228,15 @@ cdisplay_colorblind_class_init (CdisplayColorblindClass *klass)
   parent_class = g_type_class_peek_parent (klass);
 
   object_class->dispose          = cdisplay_colorblind_dispose;
+  object_class->get_property     = cdisplay_colorblind_get_property;
+  object_class->set_property     = cdisplay_colorblind_set_property;
+
+  g_object_class_install_property (object_class, PROP_DEFICIENCY,
+                                   g_param_spec_enum ("deficiency", NULL, NULL,
+                                                      CDISPLAY_TYPE_COLORBLIND_DEFICIENCY,
+                                                      DEFAULT_DEFICIENCY,
+                                                      G_PARAM_READWRITE |
+                                                      G_PARAM_CONSTRUCT));
 
   display_class->name            = _("Color Deficient Vision");
   display_class->help_id         = "gimp-colordisplay-colorblind";
@@ -198,8 +252,6 @@ cdisplay_colorblind_class_init (CdisplayColorblindClass *klass)
 static void
 cdisplay_colorblind_init (CdisplayColorblind *colorblind)
 {
-  colorblind->deficiency = DEFAULT_DEFICIENCY;
-
   /* For most modern Cathode-Ray Tube monitors (CRTs), the following
    * are good estimates of the RGB->LMS and LMS->RGB transform
    * matrices.  They are based on spectra measured on a typical CRT
@@ -247,8 +299,6 @@ cdisplay_colorblind_init (CdisplayColorblind *colorblind)
   colorblind->gammaRGB[0] = 2.1;
   colorblind->gammaRGB[1] = 2.0;
   colorblind->gammaRGB[2] = 2.1;
-
-  cdisplay_colorblind_changed (GIMP_COLOR_DISPLAY (colorblind));
 }
 
 static void
@@ -262,6 +312,44 @@ cdisplay_colorblind_dispose (GObject *object)
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
+static void
+cdisplay_colorblind_get_property (GObject    *object,
+                                  guint       property_id,
+                                  GValue     *value,
+                                  GParamSpec *pspec)
+{
+  CdisplayColorblind *colorblind = CDISPLAY_COLORBLIND (object);
+
+  switch (property_id)
+    {
+    case PROP_DEFICIENCY:
+      g_value_set_enum (value, colorblind->deficiency);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+cdisplay_colorblind_set_property (GObject      *object,
+                                  guint         property_id,
+                                  const GValue *value,
+                                  GParamSpec   *pspec)
+{
+  CdisplayColorblind *colorblind = CDISPLAY_COLORBLIND (object);
+
+  switch (property_id)
+    {
+    case PROP_DEFICIENCY:
+      cdisplay_colorblind_set_deficiency (colorblind,
+                                          g_value_get_enum (value));
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
 
 static GimpColorDisplay *
 cdisplay_colorblind_clone (GimpColorDisplay *display)
@@ -414,18 +502,10 @@ cdisplay_colorblind_load_state (GimpColorDisplay *display,
 
   if (str[gimp_parasite_data_size (state) - 1] == '\0')
     {
-      gint deficiency;
+      gint value;
 
-      if (sscanf (str, "%d", &deficiency) == 1)
-        {
-          if (deficiency >= COLORBLIND_DEFICIENCY_FIRST &&
-              deficiency <= COLORBLIND_DEFICIENCY_LAST)
-            {
-              colorblind->deficiency = deficiency;
-
-              gimp_color_display_changed (GIMP_COLOR_DISPLAY (colorblind));
-            }
-        }
+      if (sscanf (str, "%d", &value) == 1)
+        cdisplay_colorblind_set_deficiency (colorblind, value);
     }
 }
 
@@ -508,7 +588,7 @@ cdisplay_colorblind_changed (GimpColorDisplay *display)
   gfloat              anchor[12];
 
   /*  This function performs initialisations that are dependant
-   *  on the type of color defiency.
+   *  on the type of color deficiency.
    */
 
   /* Performs protan, deutan or tritan color image simulation based on
@@ -576,11 +656,32 @@ cdisplay_colorblind_changed (GimpColorDisplay *display)
 }
 
 static void
+cdisplay_colorblind_set_deficiency (CdisplayColorblind   *colorblind,
+                                    ColorblindDeficiency  value)
+{
+  if (value != colorblind->deficiency)
+    {
+      GEnumClass *enum_class;
+
+      enum_class = g_type_class_peek (CDISPLAY_TYPE_COLORBLIND_DEFICIENCY);
+
+      if (! g_enum_get_value (enum_class, value))
+        return;
+
+      colorblind->deficiency = value;
+
+      g_object_notify (G_OBJECT (colorblind), "deficiency");
+      gimp_color_display_changed (GIMP_COLOR_DISPLAY (colorblind));
+    }
+}
+
+static void
 colorblind_deficiency_callback (GtkWidget          *widget,
                                 CdisplayColorblind *colorblind)
 {
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
-                                 (gint *) &colorblind->deficiency);
+  gint  value;
 
-  gimp_color_display_changed (GIMP_COLOR_DISPLAY (colorblind));
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value);
+
+  cdisplay_colorblind_set_deficiency (colorblind, value);
 }

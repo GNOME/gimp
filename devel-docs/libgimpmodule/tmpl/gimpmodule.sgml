@@ -155,6 +155,17 @@ are compiled against.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_module_register_enum ##### -->
+<para>
+
+</para>
+
+@module: 
+@name: 
+@const_static_values: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_module_info_new ##### -->
 <para>
 

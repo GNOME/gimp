@@ -35,10 +35,10 @@ G_BEGIN_DECLS
 /*  increment the ABI version each time one of the following changes:
  *
  *  - the libgimpmodule implementation (if the change affects modules).
- *  - one of the classes implemented by modules (currently GimpColorDisplay
- *    and GimpColorSelector).
+ *  - one of the classes implemented by modules (currently GimpColorDisplay,
+ *    GimpColorSelector and GimpController).
  */
-#define GIMP_MODULE_ABI_VERSION 0x0003
+#define GIMP_MODULE_ABI_VERSION 0x0004
 
 
 typedef enum
@@ -133,6 +133,13 @@ void          gimp_module_set_load_inhibit (GimpModule      *module,
                                             gboolean         load_inhibit);
 
 const gchar * gimp_module_state_name       (GimpModuleState  state);
+
+
+/*  supplement for missing GTypeModule API  */
+
+GType         gimp_module_register_enum    (GTypeModule      *module,
+                                            const gchar	     *name,
+                                            const GEnumValue *const_static_values);
 
 
 /*  GimpModuleInfo functions  */

@@ -1,3 +1,10 @@
+2004-07-04  Sven Neumann  <sven@gimp.org>
+
+	* libgimpmodule/libgimpmodule-sections.txt: added new function
+	gimp_module_register_enum().
+
+	* libgimpmodule/tmpl/gimpmodule.sgml: regenerated.
+
 2004-06-21  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt

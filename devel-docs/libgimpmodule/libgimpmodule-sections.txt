@@ -12,6 +12,7 @@ gimp_module_modified
 gimp_module_query_module
 gimp_module_set_load_inhibit
 gimp_module_state_name
+gimp_module_register_enum
 gimp_module_info_new
 gimp_module_info_copy
 gimp_module_info_free
