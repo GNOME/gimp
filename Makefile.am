@@ -4,7 +4,7 @@ SUBDIRS = libgimp plug-ins app data
 
 bin_SCRIPTS = gimptool
 
-EXTRA_DIST = TODO NOTES gtkrc gimp_logo.ppm gimp_splash.ppm rmshm user_install gimp_tips.txt ps-menurc gimp.1 gimptool.1 gtkrc.forest2
+EXTRA_DIST = TODO gtkrc gimp_logo.ppm gimp_splash.ppm rmshm user_install gimp_tips.txt ps-menurc gimp.1 gimptool.1 gtkrc.forest2
 
 gimpdata_DATA = gimprc gimprc_user gtkrc gimp_logo.ppm gimp_splash.ppm gimp_tips.txt ps-menurc
 

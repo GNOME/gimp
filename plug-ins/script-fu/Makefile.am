@@ -16,7 +16,6 @@ script_fu_SOURCES = \
 	interp_sliba.c		\
 	interp_trace.c		\
 	script-fu.c		\
-	script-fu.h		\
 	script-fu-console.c	\
 	script-fu-console.h	\
 	script-fu-scripts.c	\
