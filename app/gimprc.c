@@ -398,21 +398,9 @@ parse_gimprc ()
 }
 
 gboolean
-parse_gimprc_file (char *filename)
+parse_absolute_gimprc_file (char *filename)
 {
   int status;
-  char rfilename[MAXPATHLEN];
-
-  if (!g_path_is_absolute (filename))
-    {
-      if (g_get_home_dir () != NULL)
-	{
-	  g_snprintf (rfilename, sizeof (rfilename),
-		      "%s" G_DIR_SEPARATOR_S "%s",
-		      g_get_home_dir (), filename);
-	  filename = rfilename;
-	}
-    }
 
   parse_info.fp = fopen (filename, "rt");
   if (!parse_info.fp)
@@ -446,6 +434,25 @@ parse_gimprc_file (char *filename)
     }
 
   return TRUE;
+}
+
+gboolean
+parse_gimprc_file (char *filename)
+{
+  char rfilename[MAXPATHLEN];
+
+  if (!g_path_is_absolute (filename))
+    {
+      if (g_get_home_dir () != NULL)
+	{
+	  g_snprintf (rfilename, sizeof (rfilename),
+		      "%s" G_DIR_SEPARATOR_S "%s",
+		      g_get_home_dir (), filename);
+	  filename = rfilename;
+	}
+    }
+
+  return (parse_absolute_gimprc_file (filename));
 }
 
 static GList *

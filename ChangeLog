@@ -1,3 +1,12 @@
+Tue Sep 28 16:53:43 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
+
+	* app/gimprc.c (parse_absolute_gimprc_file): Move the good code
+	from parse_gimprc_file() into the new function called
+	parse_absolute_gimprc_file(). 
+	This new function is tested with parse_gimprc.
+	* app/unittest/parse_gimprc.c : remove unused code.	
+	* app/unittest/Makefile.am: Add ../gimpui.o ../gimphelp.o
+
 Mon Sep 27 15:07:03 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* app/main.c: revert that last set_locale change, it was bogus
