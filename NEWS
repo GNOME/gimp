@@ -10,56 +10,52 @@ GIMP version 2.0.
 Bugs fixed in GIMP 2.0pre2
 ==========================
 - 130828: Compile error with gcc 2.95 (Adrian Bunk)
-- 35335: Curve tool doesn't conserve black (Simon Budig)
-- 130866: Remove multiple PNG entries in file type dropdown (Henrik Brix 
-  Andersen)
-- 106991: Add mnemonics for all menu items (finished by Mitch Natterer)
+- 35335:  Curve tool doesn't conserve black (Simon)
+- 130866: Remove multiple PNG entries in file type dropdown (Brix)
+- 106991: Add mnemonics for all menu items (finished by Mitch)
 - 130869: Add smaller image templates (Dave Neary)
-- 130916: Handle multiline texts better (Mitch Natterer)
-- 120424: Add dirty flag to default image title (Henrik Brix Andersen)
+- 130916: Handle multiline texts better (Mitch)
+- 120424: Add dirty flag to default image title (Brix)
 - 130912: Fix rounding errors in JPEG plug-in (keith@goatman.me.uk)
-- 131016: Add support for layer offsets in multipage tiff loading (Pablo 
+- 131016: Add support for layer offsets in multipage tiff loading (Pablo
   d'Angelo)
 - 124073: Modify behaviour of zoom tool to avoid funny fractions (Dave Neary, 
-  Simon Budig)
-- 131088: fix select-to-pattern script-fu (Mitch Natterer)
-- 82478: Fix zoom handling in fractal explorer (Pedro Gimeno)
+  Simon)
+- 131088: fix select-to-pattern script-fu (Mitch)
+- 82478:  Fix zoom handling in fractal explorer (Pedro Gimeno)
 - 115793: Make thumbnail preview of indexed images match display (Pedro Gimeno)
 - 130471: Handle RGBA images correctly in the CEL plug-in (Dov Grobgeld)
-- 131109: Remove EMX specific code (Sven Neumann)
+- 131109: Remove EMX specific code (Sven)
 - 130118: Handle GIMP2_DIRECTORY with non-UTF-8 characters correctly (Tor 
-  Lillqvist, Sven Neumann)
-- 82465: Make preview match image when image is greyscale (Sven Neumann)
-- 92586: Force SF_IMAGE value to reflect the selected image (Sven Neumann)
-- 116765: Fix selection artifacts while moving selections (Pedro Gimeno, Mitch 
-  Natterer)
+  Lillqvist, Sven)
+- 82465:  Make preview match image when image is greyscale (Sven)
+- 92586:  Force SF_IMAGE value to reflect the selected image (Sven)
+- 116765: Fix selection artifacts while moving selections (Pedro Gimeno, Mitch)
 - 131215: Only call bind_textdomain_codeset when available (Reinhard Geissler)
 - 125141: Resolve API issues with GimpPixelFetcher and GimpRegionIterator 
   (David Odin, Maurits Rijk)
-- 109078: Fix histogram for graylevel images (Pedro Gimeno, Mitch Natterer)
-- 131146: Fix drag & drop of patterns to layer masks (Dave Neary, Mitch 
-  Natterer)
-- 128112: Use a better error message if help files are not present (Dave Neary)
-- 78732: Don't paste outside the visible screen, if possible (Mitch Natterer)
+- 109078: Fix histogram for graylevel images (Pedro Gimeno, Mitch)
+- 131146: Fix drag & drop of patterns to layer masks (Dave Neary, Mitch) 
+- 128112: Use a better error message if help files are not present (Mitch)
+- 78732:  Don't paste outside the visible screen, if possible (Mitch)
 - 131561: Make "Condensed" fonts available for use (Manish Singh)
-- 71922: Fix SuperNova preview for Alpha channel (David Odin)
-- 82464: Fix SuperNova preview for greyscale images (David Odin)
+- 71922:  Fix SuperNova preview for Alpha channel (David Odin)
+- 82464:  Fix SuperNova preview for greyscale images (David Odin)
 - 121966: Fix SuperNova plug-in (David Odin)
 - 110610: Allow user to choose file formats even if the current image type is 
   not supported by them (Pedro Gimeno)
-- 131980: Fix crash in crop tool (David Odin, Sven Neumann)
+- 131980: Fix crash in crop tool (David Odin, Sven)
 - 131030: Allow saving data without pre-multiplying by alpha channel in tiff 
   plug-in (Pablo d'Angelo, Dave Neary)
-- 125864: Guides behave correctly when spacing is set to 1px (Henrik Brix 
-  Andersen)
-- 131721: Fix handling of alpha channels across undo steps (Mitch Natterer)
-- 128025: Fix behaviour when there is a floating selection (Mitch Natterer)
-- 131076: Make fuzzy select tool respect alpha channel in indexed mode (Mitch
-  Natterer)
+- 125864: Guides behave correctly when spacing is set to 1px (Brix)
+- 131721: Fix handling of alpha channels across undo steps (Mitch)
+- 128025: Fix behaviour when there is a floating selection (Mitch)
+- 131076: Make fuzzy select tool respect alpha channel in indexed mode (Mitch)
 
 Other contributions:
-  David Odin, Manish Singh, Simon Budig, Mitch Natterer, Sven Neumann, Tor 
-  Lillqvist, Henrik Brix Andersen
+  David Odin, Manish Singh, Simon Budig, Michael Natterer, Sven Neumann,
+  Tor Lillqvist, Henrik Brix Andersen
+
 
 Overview of Changes in GIMP 2.0pre1
 ===================================
