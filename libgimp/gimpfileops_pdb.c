@@ -23,7 +23,7 @@
 
 #include "gimp.h"
 
-void
+gboolean
 gimp_register_magic_load_handler (gchar *procedure_name,
 				  gchar *extensions,
 				  gchar *prefixes,
@@ -31,6 +31,7 @@ gimp_register_magic_load_handler (gchar *procedure_name,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_register_magic_load_handler",
 				    &nreturn_vals,
@@ -40,16 +41,21 @@ gimp_register_magic_load_handler (gchar *procedure_name,
 				    GIMP_PDB_STRING, magics,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_register_load_handler (gchar *procedure_name,
 			    gchar *extensions,
 			    gchar *prefixes)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_register_load_handler",
 				    &nreturn_vals,
@@ -58,16 +64,21 @@ gimp_register_load_handler (gchar *procedure_name,
 				    GIMP_PDB_STRING, prefixes,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_register_save_handler (gchar *procedure_name,
 			    gchar *extensions,
 			    gchar *prefixes)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_register_save_handler",
 				    &nreturn_vals,
@@ -76,5 +87,9 @@ gimp_register_save_handler (gchar *procedure_name,
 				    GIMP_PDB_STRING, prefixes,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }

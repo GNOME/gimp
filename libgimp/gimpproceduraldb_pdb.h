@@ -31,42 +31,42 @@ extern "C" {
 /* For information look into the C source or the html documentation */
 
 
-void gimp_procedural_db_dump          (gchar             *filename);
-void gimp_procedural_db_query         (gchar             *name,
-				       gchar             *blurb,
-				       gchar             *help,
-				       gchar             *author,
-				       gchar             *copyright,
-				       gchar             *date,
-				       gchar             *proc_type,
-				       gint              *num_matches,
-				       gchar           ***procedure_names);
-void _gimp_procedural_db_proc_info    (gchar             *procedure,
-				       gchar            **blurb,
-				       gchar            **help,
-				       gchar            **author,
-				       gchar            **copyright,
-				       gchar            **date,
-				       GimpPDBProcType   *proc_type,
-				       gint              *num_args,
-				       gint              *num_values);
-void _gimp_procedural_db_proc_arg     (gchar             *procedure,
-				       gint               arg_num,
-				       GimpPDBArgType    *arg_type,
-				       gchar            **arg_name,
-				       gchar            **arg_desc);
-void _gimp_procedural_db_proc_val     (gchar             *procedure,
-				       gint               val_num,
-				       GimpPDBArgType    *val_type,
-				       gchar            **val_name,
-				       gchar            **val_desc);
-void _gimp_procedural_db_get_data     (gchar             *identifier,
-				       gint              *bytes,
-				       guint8           **data);
-gint gimp_procedural_db_get_data_size (gchar             *identifier);
-void _gimp_procedural_db_set_data     (gchar             *identifier,
-				       gint               bytes,
-				       guint8            *data);
+gboolean gimp_procedural_db_dump          (gchar             *filename);
+gboolean gimp_procedural_db_query         (gchar             *name,
+					   gchar             *blurb,
+					   gchar             *help,
+					   gchar             *author,
+					   gchar             *copyright,
+					   gchar             *date,
+					   gchar             *proc_type,
+					   gint              *num_matches,
+					   gchar           ***procedure_names);
+gboolean _gimp_procedural_db_proc_info    (gchar             *procedure,
+					   gchar            **blurb,
+					   gchar            **help,
+					   gchar            **author,
+					   gchar            **copyright,
+					   gchar            **date,
+					   GimpPDBProcType   *proc_type,
+					   gint              *num_args,
+					   gint              *num_values);
+gboolean gimp_procedural_db_proc_arg      (gchar             *procedure,
+					   gint               arg_num,
+					   GimpPDBArgType    *arg_type,
+					   gchar            **arg_name,
+					   gchar            **arg_desc);
+gboolean gimp_procedural_db_proc_val      (gchar             *procedure,
+					   gint               val_num,
+					   GimpPDBArgType    *val_type,
+					   gchar            **val_name,
+					   gchar            **val_desc);
+gboolean _gimp_procedural_db_get_data     (gchar             *identifier,
+					   gint              *bytes,
+					   guint8           **data);
+gint     gimp_procedural_db_get_data_size (gchar             *identifier);
+gboolean _gimp_procedural_db_set_data     (gchar             *identifier,
+					   gint               bytes,
+					   guint8            *data);
 
 
 #ifdef __cplusplus

@@ -23,7 +23,7 @@
 
 #include "gimp.h"
 
-void
+gboolean
 gimp_selection_bounds (gint32    image_ID,
 		       gboolean *non_empty,
 		       gint     *x1,
@@ -33,6 +33,7 @@ gimp_selection_bounds (gint32    image_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_selection_bounds",
 				    &nreturn_vals,
@@ -45,7 +46,9 @@ gimp_selection_bounds (gint32    image_ID,
   *x2 = 0;
   *y2 = 0;
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
     {
       *non_empty = return_vals[1].data.d_int32;
       *x1 = return_vals[2].data.d_int32;
@@ -55,6 +58,8 @@ gimp_selection_bounds (gint32    image_ID,
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 gboolean
@@ -101,16 +106,21 @@ _gimp_selection_float (gint32 drawable_ID,
   return layer_ID;
 }
 
-void
+gboolean
 gimp_selection_none (gint32 image_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_selection_none",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }

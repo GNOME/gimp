@@ -31,12 +31,12 @@ extern "C" {
 /* For information look into the C source or the html documentation */
 
 
-void gimp_patterns_popup       (gchar *pattern_callback,
-				gchar *popup_title,
-				gchar *initial_pattern);
-void gimp_patterns_close_popup (gchar *pattern_callback);
-void gimp_patterns_set_popup   (gchar *pattern_callback,
-				gchar *pattern_name);
+gboolean gimp_patterns_popup       (gchar *pattern_callback,
+				    gchar *popup_title,
+				    gchar *initial_pattern);
+gboolean gimp_patterns_close_popup (gchar *pattern_callback);
+gboolean gimp_patterns_set_popup   (gchar *pattern_callback,
+				    gchar *pattern_name);
 
 
 #ifdef __cplusplus

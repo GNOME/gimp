@@ -23,21 +23,26 @@
 
 #include "gimp.h"
 
-void
+gboolean
 gimp_procedural_db_dump (gchar *filename)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_procedural_db_dump",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, filename,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_procedural_db_query (gchar   *name,
 			  gchar   *blurb,
 			  gchar   *help,
@@ -50,6 +55,7 @@ gimp_procedural_db_query (gchar   *name,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
   gint i;
 
   return_vals = gimp_run_procedure ("gimp_procedural_db_query",
@@ -66,7 +72,9 @@ gimp_procedural_db_query (gchar   *name,
   *num_matches = 0;
   *procedure_names = NULL;
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
     {
       *num_matches = return_vals[1].data.d_int32;
       *procedure_names = g_new (gchar *, *num_matches);
@@ -75,9 +83,11 @@ gimp_procedural_db_query (gchar   *name,
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 _gimp_procedural_db_proc_info (gchar            *procedure,
 			       gchar           **blurb,
 			       gchar           **help,
@@ -90,6 +100,7 @@ _gimp_procedural_db_proc_info (gchar            *procedure,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_procedural_db_proc_info",
 				    &nreturn_vals,
@@ -105,7 +116,9 @@ _gimp_procedural_db_proc_info (gchar            *procedure,
   *num_args = 0;
   *num_values = 0;
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
     {
       *blurb = g_strdup (return_vals[1].data.d_string);
       *help = g_strdup (return_vals[2].data.d_string);
@@ -118,17 +131,20 @@ _gimp_procedural_db_proc_info (gchar            *procedure,
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
-_gimp_procedural_db_proc_arg (gchar           *procedure,
-			      gint             arg_num,
-			      GimpPDBArgType  *arg_type,
-			      gchar          **arg_name,
-			      gchar          **arg_desc)
+gboolean
+gimp_procedural_db_proc_arg (gchar           *procedure,
+			     gint             arg_num,
+			     GimpPDBArgType  *arg_type,
+			     gchar          **arg_name,
+			     gchar          **arg_desc)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_procedural_db_proc_arg",
 				    &nreturn_vals,
@@ -140,7 +156,9 @@ _gimp_procedural_db_proc_arg (gchar           *procedure,
   *arg_name = NULL;
   *arg_desc = NULL;
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
     {
       *arg_type = return_vals[1].data.d_int32;
       *arg_name = g_strdup (return_vals[2].data.d_string);
@@ -148,17 +166,20 @@ _gimp_procedural_db_proc_arg (gchar           *procedure,
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
-_gimp_procedural_db_proc_val (gchar           *procedure,
-			      gint             val_num,
-			      GimpPDBArgType  *val_type,
-			      gchar          **val_name,
-			      gchar          **val_desc)
+gboolean
+gimp_procedural_db_proc_val (gchar           *procedure,
+			     gint             val_num,
+			     GimpPDBArgType  *val_type,
+			     gchar          **val_name,
+			     gchar          **val_desc)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_procedural_db_proc_val",
 				    &nreturn_vals,
@@ -170,7 +191,9 @@ _gimp_procedural_db_proc_val (gchar           *procedure,
   *val_name = NULL;
   *val_desc = NULL;
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
     {
       *val_type = return_vals[1].data.d_int32;
       *val_name = g_strdup (return_vals[2].data.d_string);
@@ -178,15 +201,18 @@ _gimp_procedural_db_proc_val (gchar           *procedure,
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 _gimp_procedural_db_get_data (gchar   *identifier,
 			      gint    *bytes,
 			      guint8 **data)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_procedural_db_get_data",
 				    &nreturn_vals,
@@ -196,7 +222,9 @@ _gimp_procedural_db_get_data (gchar   *identifier,
   *bytes = 0;
   *data = NULL;
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
     {
       *bytes = return_vals[1].data.d_int32;
       *data = g_new (guint8, *bytes);
@@ -205,6 +233,8 @@ _gimp_procedural_db_get_data (gchar   *identifier,
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 gint
@@ -227,13 +257,14 @@ gimp_procedural_db_get_data_size (gchar *identifier)
   return bytes;
 }
 
-void
+gboolean
 _gimp_procedural_db_set_data (gchar  *identifier,
 			      gint    bytes,
 			      guint8 *data)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_procedural_db_set_data",
 				    &nreturn_vals,
@@ -242,5 +273,9 @@ _gimp_procedural_db_set_data (gchar  *identifier,
 				    GIMP_PDB_INT8ARRAY, data,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }

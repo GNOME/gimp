@@ -106,12 +106,13 @@ gimp_path_get_current (gint32 image_ID)
   return current_path_name;
 }
 
-void
+gboolean
 gimp_path_set_current (gint32  image_ID,
 		       gchar  *set_current_path_name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_path_set_current",
 				    &nreturn_vals,
@@ -119,10 +120,14 @@ gimp_path_set_current (gint32  image_ID,
 				    GIMP_PDB_STRING, set_current_path_name,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_path_set_points (gint32   image_ID,
 		      gchar   *pathname,
 		      gint     ptype,
@@ -131,6 +136,7 @@ gimp_path_set_points (gint32   image_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_path_set_points",
 				    &nreturn_vals,
@@ -141,21 +147,30 @@ gimp_path_set_points (gint32   image_ID,
 				    GIMP_PDB_FLOATARRAY, points_pairs,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_path_stroke_current (gint32 image_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_path_stroke_current",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 gint
@@ -230,12 +245,13 @@ gimp_get_path_by_tattoo (gint32 image_ID,
   return path_name;
 }
 
-void
+gboolean
 gimp_path_delete (gint32  image_ID,
 		  gchar  *path_name_to_del)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_path_delete",
 				    &nreturn_vals,
@@ -243,7 +259,11 @@ gimp_path_delete (gint32  image_ID,
 				    GIMP_PDB_STRING, path_name_to_del,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 gint
@@ -268,13 +288,14 @@ gimp_path_get_locked (gint32  image_ID,
   return lockstatus;
 }
 
-void
+gboolean
 gimp_path_set_locked (gint32  image_ID,
 		      gchar  *pathname,
 		      gint    lockstatus)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_path_set_locked",
 				    &nreturn_vals,
@@ -283,16 +304,21 @@ gimp_path_set_locked (gint32  image_ID,
 				    GIMP_PDB_INT32, lockstatus,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_path_set_tattoo (gint32  image_ID,
 		      gchar  *pathname,
 		      gint    tattovalue)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_path_set_tattoo",
 				    &nreturn_vals,
@@ -301,5 +327,9 @@ gimp_path_set_tattoo (gint32  image_ID,
 				    GIMP_PDB_INT32, tattovalue,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }

@@ -43,29 +43,39 @@ gimp_display_new (gint32 image_ID)
   return display_ID;
 }
 
-void
+gboolean
 gimp_display_delete (gint32 display_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_display_delete",
 				    &nreturn_vals,
 				    GIMP_PDB_DISPLAY, display_ID,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_displays_flush (void)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_displays_flush",
 				    &nreturn_vals,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }

@@ -69,18 +69,23 @@ gimp_gradients_get_active (void)
   return name;
 }
 
-void
+gboolean
 gimp_gradients_set_active (gchar *name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_gradients_set_active",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, name,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 gdouble *

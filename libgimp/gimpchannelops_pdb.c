@@ -23,7 +23,7 @@
 
 #include "gimp.h"
 
-void
+gboolean
 gimp_channel_ops_offset (gint32                drawable_ID,
 			 gboolean              wrap_around,
 			 GimpChannelOffsetType fill_type,
@@ -32,6 +32,7 @@ gimp_channel_ops_offset (gint32                drawable_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_channel_ops_offset",
 				    &nreturn_vals,
@@ -42,7 +43,11 @@ gimp_channel_ops_offset (gint32                drawable_ID,
 				    GIMP_PDB_INT32, offset_y,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 gint32

@@ -23,12 +23,13 @@
 
 #include "gimp.h"
 
-void
+gboolean
 gimp_drawable_merge_shadow (gint32   drawable_ID,
 			    gboolean undo)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_drawable_merge_shadow",
 				    &nreturn_vals,
@@ -36,15 +37,20 @@ gimp_drawable_merge_shadow (gint32   drawable_ID,
 				    GIMP_PDB_INT32, undo,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_drawable_fill (gint32       drawable_ID,
 		    GimpFillType fill_type)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_drawable_fill",
 				    &nreturn_vals,
@@ -52,10 +58,14 @@ gimp_drawable_fill (gint32       drawable_ID,
 				    GIMP_PDB_INT32, fill_type,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_drawable_update (gint32 drawable_ID,
 		      gint   x,
 		      gint   y,
@@ -64,6 +74,7 @@ gimp_drawable_update (gint32 drawable_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_drawable_update",
 				    &nreturn_vals,
@@ -74,7 +85,11 @@ gimp_drawable_update (gint32 drawable_ID,
 				    GIMP_PDB_INT32, height,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 gboolean
@@ -307,13 +322,14 @@ gimp_drawable_height (gint32 drawable_ID)
   return height;
 }
 
-void
+gboolean
 gimp_drawable_offsets (gint32  drawable_ID,
 		       gint   *offset_x,
 		       gint   *offset_y)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_drawable_offsets",
 				    &nreturn_vals,
@@ -323,13 +339,17 @@ gimp_drawable_offsets (gint32  drawable_ID,
   *offset_x = 0;
   *offset_y = 0;
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
     {
       *offset_x = return_vals[1].data.d_int32;
       *offset_y = return_vals[2].data.d_int32;
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 gboolean
@@ -392,7 +412,7 @@ gimp_drawable_is_channel (gint32 drawable_ID)
   return channel;
 }
 
-void
+gboolean
 _gimp_drawable_thumbnail (gint32   drawable_ID,
 			  gint     width,
 			  gint     height,
@@ -404,6 +424,7 @@ _gimp_drawable_thumbnail (gint32   drawable_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_drawable_thumbnail",
 				    &nreturn_vals,
@@ -418,7 +439,9 @@ _gimp_drawable_thumbnail (gint32   drawable_ID,
   *thumbnail_data_count = 0;
   *thumbnail_data = NULL;
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
     {
       *ret_width = return_vals[1].data.d_int32;
       *ret_height = return_vals[2].data.d_int32;
@@ -430,4 +453,6 @@ _gimp_drawable_thumbnail (gint32   drawable_ID,
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }

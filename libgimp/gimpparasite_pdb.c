@@ -43,40 +43,51 @@ gimp_parasite_find (gchar *name)
   return parasite;
 }
 
-void
+gboolean
 gimp_parasite_attach (GimpParasite *parasite)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_parasite_attach",
 				    &nreturn_vals,
 				    GIMP_PDB_PARASITE, parasite,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_parasite_detach (gchar *name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_parasite_detach",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, name,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_parasite_list (gint    *num_parasites,
 		    gchar ***parasites)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
   gint i;
 
   return_vals = gimp_run_procedure ("gimp_parasite_list",
@@ -86,7 +97,9 @@ gimp_parasite_list (gint    *num_parasites,
   *num_parasites = 0;
   *parasites = NULL;
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
     {
       *num_parasites = return_vals[1].data.d_int32;
       *parasites = g_new (gchar *, *num_parasites);
@@ -95,6 +108,8 @@ gimp_parasite_list (gint    *num_parasites,
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 GimpParasite *
@@ -119,12 +134,13 @@ gimp_drawable_parasite_find (gint32  drawable_ID,
   return parasite;
 }
 
-void
+gboolean
 gimp_drawable_parasite_attach (gint32        drawable_ID,
 			       GimpParasite *parasite)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_drawable_parasite_attach",
 				    &nreturn_vals,
@@ -132,15 +148,20 @@ gimp_drawable_parasite_attach (gint32        drawable_ID,
 				    GIMP_PDB_PARASITE, parasite,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_drawable_parasite_detach (gint32  drawable_ID,
 			       gchar  *name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_drawable_parasite_detach",
 				    &nreturn_vals,
@@ -148,16 +169,21 @@ gimp_drawable_parasite_detach (gint32  drawable_ID,
 				    GIMP_PDB_STRING, name,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_drawable_parasite_list (gint32    drawable_ID,
 			     gint     *num_parasites,
 			     gchar  ***parasites)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
   gint i;
 
   return_vals = gimp_run_procedure ("gimp_drawable_parasite_list",
@@ -168,7 +194,9 @@ gimp_drawable_parasite_list (gint32    drawable_ID,
   *num_parasites = 0;
   *parasites = NULL;
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
     {
       *num_parasites = return_vals[1].data.d_int32;
       *parasites = g_new (gchar *, *num_parasites);
@@ -177,6 +205,8 @@ gimp_drawable_parasite_list (gint32    drawable_ID,
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 GimpParasite *
@@ -201,12 +231,13 @@ gimp_image_parasite_find (gint32  image_ID,
   return parasite;
 }
 
-void
+gboolean
 gimp_image_parasite_attach (gint32        image_ID,
 			    GimpParasite *parasite)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_image_parasite_attach",
 				    &nreturn_vals,
@@ -214,15 +245,20 @@ gimp_image_parasite_attach (gint32        image_ID,
 				    GIMP_PDB_PARASITE, parasite,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_image_parasite_detach (gint32  image_ID,
 			    gchar  *name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_image_parasite_detach",
 				    &nreturn_vals,
@@ -230,16 +266,21 @@ gimp_image_parasite_detach (gint32  image_ID,
 				    GIMP_PDB_STRING, name,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_image_parasite_list (gint32    image_ID,
 			  gint     *num_parasites,
 			  gchar  ***parasites)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
   gint i;
 
   return_vals = gimp_run_procedure ("gimp_image_parasite_list",
@@ -250,7 +291,9 @@ gimp_image_parasite_list (gint32    image_ID,
   *num_parasites = 0;
   *parasites = NULL;
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
     {
       *num_parasites = return_vals[1].data.d_int32;
       *parasites = g_new (gchar *, *num_parasites);
@@ -259,4 +302,6 @@ gimp_image_parasite_list (gint32    image_ID,
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }

@@ -1,3 +1,15 @@
+Tue Aug 22 18:42:04 PDT 2000 Manish Singh <yosh@gimp.org>
+
+	* configure.in: $srcdir != $builddir fix for GIMP_CONTRIBUTORS
+
+	* plug-ins/common/plugin-defs.pl: More tidying up after Daniel Egger
+
+	* tools/pdbgen/Makefile.am: parse pdb defs only once for app and lib
+
+	* tools/pdbgen/lib.pl
+	* tools/pdbgen/pdb/procedural_db.pdb: all void rets now return a
+	boolean for success/failure
+
 2000-08-23  Nick Lamb  <njl195@zepler.org.uk>
 
 	* plug-ins/Makefile.am:

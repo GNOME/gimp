@@ -61,7 +61,7 @@ gimp_text_fontname (gint32        image_ID,
   return text_layer_ID;
 }
 
-void
+gboolean
 gimp_text_get_extents_fontname (gchar        *text,
 				gdouble       size,
 				GimpSizeType  size_type,
@@ -73,6 +73,7 @@ gimp_text_get_extents_fontname (gchar        *text,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_text_get_extents_fontname",
 				    &nreturn_vals,
@@ -87,7 +88,9 @@ gimp_text_get_extents_fontname (gchar        *text,
   *ascent = 0;
   *descent = 0;
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
     {
       *width = return_vals[1].data.d_int32;
       *height = return_vals[2].data.d_int32;
@@ -96,6 +99,8 @@ gimp_text_get_extents_fontname (gchar        *text,
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 gint32
@@ -150,7 +155,7 @@ gimp_text (gint32        image_ID,
   return text_layer_ID;
 }
 
-void
+gboolean
 gimp_text_get_extents (gchar        *text,
 		       gdouble       size,
 		       GimpSizeType  size_type,
@@ -169,6 +174,7 @@ gimp_text_get_extents (gchar        *text,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_text_get_extents",
 				    &nreturn_vals,
@@ -190,7 +196,9 @@ gimp_text_get_extents (gchar        *text,
   *ascent = 0;
   *descent = 0;
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
     {
       *width = return_vals[1].data.d_int32;
       *height = return_vals[2].data.d_int32;
@@ -199,4 +207,6 @@ gimp_text_get_extents (gchar        *text,
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }

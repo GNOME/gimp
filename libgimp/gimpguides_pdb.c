@@ -67,12 +67,13 @@ gimp_image_add_vguide (gint32 image_ID,
   return guide_ID;
 }
 
-void
+gboolean
 gimp_image_delete_guide (gint32 image_ID,
 			 gint32 guide_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_image_delete_guide",
 				    &nreturn_vals,
@@ -80,7 +81,11 @@ gimp_image_delete_guide (gint32 image_ID,
 				    GIMP_PDB_INT32, guide_ID,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 gint32

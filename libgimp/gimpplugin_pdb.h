@@ -31,12 +31,12 @@ extern "C" {
 /* For information look into the C source or the html documentation */
 
 
-void   gimp_progress_init          (gchar   *message);
-void   gimp_progress_update        (gdouble  percentage);
-gchar* gimp_temp_PDB_name          (void);
-void   gimp_plugin_domain_register (gchar   *domain_name,
-				    gchar   *domain_path);
-void   gimp_plugin_help_register   (gchar   *help_path);
+gboolean gimp_progress_init          (gchar   *message);
+gboolean gimp_progress_update        (gdouble  percentage);
+gchar*   gimp_temp_PDB_name          (void);
+gboolean gimp_plugin_domain_register (gchar   *domain_name,
+				      gchar   *domain_path);
+gboolean gimp_plugin_help_register   (gchar   *help_path);
 
 
 #ifdef __cplusplus

@@ -31,40 +31,40 @@ extern "C" {
 /* For information look into the C source or the html documentation */
 
 
-gchar** gimp_path_list              (gint32    image_ID,
-				     gint     *num_paths);
-gint    gimp_path_get_points        (gint32    image_ID,
-				     gchar    *pathname,
-				     gint     *path_closed,
-				     gint     *num_path_point_details,
-				     gdouble **points_pairs);
-gchar*  gimp_path_get_current       (gint32    image_ID);
-void    gimp_path_set_current       (gint32    image_ID,
-				     gchar    *set_current_path_name);
-void    gimp_path_set_points        (gint32    image_ID,
-				     gchar    *pathname,
-				     gint      ptype,
-				     gint      num_path_points,
-				     gdouble  *points_pairs);
-void    gimp_path_stroke_current    (gint32    image_ID);
-gint    gimp_path_get_point_at_dist (gint32    image_ID,
-				     gdouble   distance,
-				     gint     *y_point,
-				     gdouble  *gradient);
-gint    gimp_path_get_tattoo        (gint32    image_ID,
-				     gchar    *pathname);
-gchar*  gimp_get_path_by_tattoo     (gint32    image_ID,
-				     gint      tattoo);
-void    gimp_path_delete            (gint32    image_ID,
-				     gchar    *path_name_to_del);
-gint    gimp_path_get_locked        (gint32    image_ID,
-				     gchar    *pathname);
-void    gimp_path_set_locked        (gint32    image_ID,
-				     gchar    *pathname,
-				     gint      lockstatus);
-void    gimp_path_set_tattoo        (gint32    image_ID,
-				     gchar    *pathname,
-				     gint      tattovalue);
+gchar**  gimp_path_list              (gint32    image_ID,
+				      gint     *num_paths);
+gint     gimp_path_get_points        (gint32    image_ID,
+				      gchar    *pathname,
+				      gint     *path_closed,
+				      gint     *num_path_point_details,
+				      gdouble **points_pairs);
+gchar*   gimp_path_get_current       (gint32    image_ID);
+gboolean gimp_path_set_current       (gint32    image_ID,
+				      gchar    *set_current_path_name);
+gboolean gimp_path_set_points        (gint32    image_ID,
+				      gchar    *pathname,
+				      gint      ptype,
+				      gint      num_path_points,
+				      gdouble  *points_pairs);
+gboolean gimp_path_stroke_current    (gint32    image_ID);
+gint     gimp_path_get_point_at_dist (gint32    image_ID,
+				      gdouble   distance,
+				      gint     *y_point,
+				      gdouble  *gradient);
+gint     gimp_path_get_tattoo        (gint32    image_ID,
+				      gchar    *pathname);
+gchar*   gimp_get_path_by_tattoo     (gint32    image_ID,
+				      gint      tattoo);
+gboolean gimp_path_delete            (gint32    image_ID,
+				      gchar    *path_name_to_del);
+gint     gimp_path_get_locked        (gint32    image_ID,
+				      gchar    *pathname);
+gboolean gimp_path_set_locked        (gint32    image_ID,
+				      gchar    *pathname,
+				      gint      lockstatus);
+gboolean gimp_path_set_tattoo        (gint32    image_ID,
+				      gchar    *pathname,
+				      gint      tattovalue);
 
 
 #ifdef __cplusplus

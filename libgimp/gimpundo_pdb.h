@@ -31,8 +31,8 @@ extern "C" {
 /* For information look into the C source or the html documentation */
 
 
-void gimp_undo_push_group_start (gint32 image_ID);
-void gimp_undo_push_group_end   (gint32 image_ID);
+gboolean gimp_undo_push_group_start (gint32 image_ID);
+gboolean gimp_undo_push_group_end   (gint32 image_ID);
 
 
 #ifdef __cplusplus

@@ -23,7 +23,7 @@
 
 #include "gimp.h"
 
-void
+gboolean
 gimp_gradients_popup (gchar *gradients_callback,
 		      gchar *popup_title,
 		      gchar *initial_gradient,
@@ -31,6 +31,7 @@ gimp_gradients_popup (gchar *gradients_callback,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_gradients_popup",
 				    &nreturn_vals,
@@ -40,29 +41,39 @@ gimp_gradients_popup (gchar *gradients_callback,
 				    GIMP_PDB_INT32, sample_size,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_gradients_close_popup (gchar *gradients_callback)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_gradients_close_popup",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, gradients_callback,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_gradients_set_popup (gchar *gradients_callback,
 			  gchar *gradient_name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_gradients_set_popup",
 				    &nreturn_vals,
@@ -70,7 +81,11 @@ gimp_gradients_set_popup (gchar *gradients_callback,
 				    GIMP_PDB_STRING, gradient_name,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 gchar *

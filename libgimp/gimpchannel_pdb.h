@@ -40,29 +40,29 @@ gint32   _gimp_channel_new            (gint32    image_ID,
 				       guchar    green,
 				       guchar    blue);
 gint32   gimp_channel_copy            (gint32    channel_ID);
-void     gimp_channel_delete          (gint32    channel_ID);
+gboolean gimp_channel_delete          (gint32    channel_ID);
 gchar*   gimp_channel_get_name        (gint32    channel_ID);
-void     gimp_channel_set_name        (gint32    channel_ID,
+gboolean gimp_channel_set_name        (gint32    channel_ID,
 				       gchar    *name);
 gboolean gimp_channel_get_visible     (gint32    channel_ID);
-void     gimp_channel_set_visible     (gint32    channel_ID,
+gboolean gimp_channel_set_visible     (gint32    channel_ID,
 				       gboolean  visible);
 gboolean gimp_channel_get_show_masked (gint32    channel_ID);
-void     gimp_channel_set_show_masked (gint32    channel_ID,
+gboolean gimp_channel_set_show_masked (gint32    channel_ID,
 				       gboolean  show_masked);
 gdouble  gimp_channel_get_opacity     (gint32    channel_ID);
-void     gimp_channel_set_opacity     (gint32    channel_ID,
+gboolean gimp_channel_set_opacity     (gint32    channel_ID,
 				       gdouble   opacity);
-void     gimp_channel_get_color       (gint32    channel_ID,
+gboolean gimp_channel_get_color       (gint32    channel_ID,
 				       guchar   *red,
 				       guchar   *green,
 				       guchar   *blue);
-void     gimp_channel_set_color       (gint32    channel_ID,
+gboolean gimp_channel_set_color       (gint32    channel_ID,
 				       guchar    red,
 				       guchar    green,
 				       guchar    blue);
 gint     gimp_channel_get_tattoo      (gint32    channel_ID);
-void     gimp_channel_set_tattoo      (gint32    channel_ID,
+gboolean gimp_channel_set_tattoo      (gint32    channel_ID,
 				       gint      tattoo);
 
 

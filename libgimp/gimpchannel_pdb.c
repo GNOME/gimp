@@ -80,18 +80,23 @@ gimp_channel_copy (gint32 channel_ID)
   return channel_copy_ID;
 }
 
-void
+gboolean
 gimp_channel_delete (gint32 channel_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_channel_delete",
 				    &nreturn_vals,
 				    GIMP_PDB_CHANNEL, channel_ID,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 gchar *
@@ -114,12 +119,13 @@ gimp_channel_get_name (gint32 channel_ID)
   return name;
 }
 
-void
+gboolean
 gimp_channel_set_name (gint32  channel_ID,
 		       gchar  *name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_channel_set_name",
 				    &nreturn_vals,
@@ -127,7 +133,11 @@ gimp_channel_set_name (gint32  channel_ID,
 				    GIMP_PDB_STRING, name,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 gboolean
@@ -150,12 +160,13 @@ gimp_channel_get_visible (gint32 channel_ID)
   return visible;
 }
 
-void
+gboolean
 gimp_channel_set_visible (gint32   channel_ID,
 			  gboolean visible)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_channel_set_visible",
 				    &nreturn_vals,
@@ -163,7 +174,11 @@ gimp_channel_set_visible (gint32   channel_ID,
 				    GIMP_PDB_INT32, visible,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 gboolean
@@ -186,12 +201,13 @@ gimp_channel_get_show_masked (gint32 channel_ID)
   return show_masked;
 }
 
-void
+gboolean
 gimp_channel_set_show_masked (gint32   channel_ID,
 			      gboolean show_masked)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_channel_set_show_masked",
 				    &nreturn_vals,
@@ -199,7 +215,11 @@ gimp_channel_set_show_masked (gint32   channel_ID,
 				    GIMP_PDB_INT32, show_masked,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 gdouble
@@ -222,12 +242,13 @@ gimp_channel_get_opacity (gint32 channel_ID)
   return opacity;
 }
 
-void
+gboolean
 gimp_channel_set_opacity (gint32  channel_ID,
 			  gdouble opacity)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_channel_set_opacity",
 				    &nreturn_vals,
@@ -235,10 +256,14 @@ gimp_channel_set_opacity (gint32  channel_ID,
 				    GIMP_PDB_FLOAT, opacity,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_channel_get_color (gint32  channel_ID,
 			guchar *red,
 			guchar *green,
@@ -246,13 +271,16 @@ gimp_channel_get_color (gint32  channel_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_channel_get_color",
 				    &nreturn_vals,
 				    GIMP_PDB_CHANNEL, channel_ID,
 				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
     {
       *red = return_vals[1].data.d_color.red;
       *green = return_vals[1].data.d_color.green;
@@ -260,9 +288,11 @@ gimp_channel_get_color (gint32  channel_ID,
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_channel_set_color (gint32 channel_ID,
 			guchar red,
 			guchar green,
@@ -270,6 +300,7 @@ gimp_channel_set_color (gint32 channel_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
   guchar color[3];
 
   color[0] = red;
@@ -282,7 +313,11 @@ gimp_channel_set_color (gint32 channel_ID,
 				    GIMP_PDB_COLOR, color,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 gint
@@ -305,12 +340,13 @@ gimp_channel_get_tattoo (gint32 channel_ID)
   return tattoo;
 }
 
-void
+gboolean
 gimp_channel_set_tattoo (gint32 channel_ID,
 			 gint   tattoo)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_channel_set_tattoo",
 				    &nreturn_vals,
@@ -318,5 +354,9 @@ gimp_channel_set_tattoo (gint32 channel_ID,
 				    GIMP_PDB_INT32, tattoo,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }

@@ -31,16 +31,16 @@ extern "C" {
 /* For information look into the C source or the html documentation */
 
 
-void gimp_register_magic_load_handler (gchar *procedure_name,
-				       gchar *extensions,
-				       gchar *prefixes,
-				       gchar *magics);
-void gimp_register_load_handler       (gchar *procedure_name,
-				       gchar *extensions,
-				       gchar *prefixes);
-void gimp_register_save_handler       (gchar *procedure_name,
-				       gchar *extensions,
-				       gchar *prefixes);
+gboolean gimp_register_magic_load_handler (gchar *procedure_name,
+					   gchar *extensions,
+					   gchar *prefixes,
+					   gchar *magics);
+gboolean gimp_register_load_handler       (gchar *procedure_name,
+					   gchar *extensions,
+					   gchar *prefixes);
+gboolean gimp_register_save_handler       (gchar *procedure_name,
+					   gchar *extensions,
+					   gchar *prefixes);
 
 
 #ifdef __cplusplus

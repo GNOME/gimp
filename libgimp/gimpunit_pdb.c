@@ -113,12 +113,13 @@ _gimp_unit_get_deletion_flag (GimpUnit unit_id)
   return deletion_flag;
 }
 
-void
+gboolean
 _gimp_unit_set_deletion_flag (GimpUnit unit_id,
 			      gboolean deletion_flag)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_unit_set_deletion_flag",
 				    &nreturn_vals,
@@ -126,7 +127,11 @@ _gimp_unit_set_deletion_flag (GimpUnit unit_id,
 				    GIMP_PDB_INT32, deletion_flag,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 gchar *

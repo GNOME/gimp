@@ -23,54 +23,70 @@
 
 #include "gimp.h"
 
-void
+gboolean
 gimp_floating_sel_remove (gint32 floating_sel_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_floating_sel_remove",
 				    &nreturn_vals,
 				    GIMP_PDB_LAYER, floating_sel_ID,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_floating_sel_anchor (gint32 floating_sel_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_floating_sel_anchor",
 				    &nreturn_vals,
 				    GIMP_PDB_LAYER, floating_sel_ID,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_floating_sel_to_layer (gint32 floating_sel_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_floating_sel_to_layer",
 				    &nreturn_vals,
 				    GIMP_PDB_LAYER, floating_sel_ID,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_floating_sel_attach (gint32 layer_ID,
 			  gint32 drawable_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_floating_sel_attach",
 				    &nreturn_vals,
@@ -78,15 +94,20 @@ gimp_floating_sel_attach (gint32 layer_ID,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_floating_sel_rigor (gint32   floating_sel_ID,
 			 gboolean undo)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_floating_sel_rigor",
 				    &nreturn_vals,
@@ -94,15 +115,20 @@ gimp_floating_sel_rigor (gint32   floating_sel_ID,
 				    GIMP_PDB_INT32, undo,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_floating_sel_relax (gint32   floating_sel_ID,
 			 gboolean undo)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_floating_sel_relax",
 				    &nreturn_vals,
@@ -110,5 +136,9 @@ gimp_floating_sel_relax (gint32   floating_sel_ID,
 				    GIMP_PDB_INT32, undo,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }

@@ -31,8 +31,8 @@ extern "C" {
 /* For information look into the C source or the html documentation */
 
 
-void gimp_help (gchar *prog_name,
-		gchar *help_page);
+gboolean gimp_help (gchar *prog_name,
+		    gchar *help_page);
 
 
 #ifdef __cplusplus

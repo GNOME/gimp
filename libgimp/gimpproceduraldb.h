@@ -28,16 +28,7 @@ extern "C" {
 
 /* For information look into the C source or the html documentation */
 
-gboolean gimp_procedural_db_proc_arg     (gchar            *procedure,
-					  gint              arg_num,
-					  GimpPDBArgType   *arg_type,
-					  gchar           **arg_name,
-					  gchar           **arg_desc);
-gboolean gimp_procedural_db_proc_val     (gchar            *procedure,
-                                          gint              val_num,
-					  GimpPDBArgType   *val_type,
-					  gchar           **val_name,
-					  gchar           **val_desc);
+
 gboolean gimp_procedural_db_proc_info    (gchar            *procedure,
 					  gchar           **blurb,
 					  gchar           **help,

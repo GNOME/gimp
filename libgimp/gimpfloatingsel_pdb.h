@@ -31,15 +31,15 @@ extern "C" {
 /* For information look into the C source or the html documentation */
 
 
-void gimp_floating_sel_remove   (gint32   floating_sel_ID);
-void gimp_floating_sel_anchor   (gint32   floating_sel_ID);
-void gimp_floating_sel_to_layer (gint32   floating_sel_ID);
-void gimp_floating_sel_attach   (gint32   layer_ID,
-				 gint32   drawable_ID);
-void gimp_floating_sel_rigor    (gint32   floating_sel_ID,
-				 gboolean undo);
-void gimp_floating_sel_relax    (gint32   floating_sel_ID,
-				 gboolean undo);
+gboolean gimp_floating_sel_remove   (gint32   floating_sel_ID);
+gboolean gimp_floating_sel_anchor   (gint32   floating_sel_ID);
+gboolean gimp_floating_sel_to_layer (gint32   floating_sel_ID);
+gboolean gimp_floating_sel_attach   (gint32   layer_ID,
+				     gint32   drawable_ID);
+gboolean gimp_floating_sel_rigor    (gint32   floating_sel_ID,
+				     gboolean undo);
+gboolean gimp_floating_sel_relax    (gint32   floating_sel_ID,
+				     gboolean undo);
 
 
 #ifdef __cplusplus

@@ -73,7 +73,7 @@ gimp_image_new (gint              width,
   return image_ID;
 }
 
-void
+gboolean
 gimp_image_resize (gint32 image_ID,
 		   gint   new_width,
 		   gint   new_height,
@@ -82,6 +82,7 @@ gimp_image_resize (gint32 image_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_image_resize",
 				    &nreturn_vals,
@@ -92,16 +93,21 @@ gimp_image_resize (gint32 image_ID,
 				    GIMP_PDB_INT32, offy,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_image_scale (gint32 image_ID,
 		  gint   new_width,
 		  gint   new_height)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_image_scale",
 				    &nreturn_vals,
@@ -110,35 +116,49 @@ gimp_image_scale (gint32 image_ID,
 				    GIMP_PDB_INT32, new_height,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_image_delete (gint32 image_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_image_delete",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_image_free_shadow (gint32 image_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_image_free_shadow",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 gint *
@@ -197,18 +217,23 @@ gimp_image_get_channels (gint32  image_ID,
   return channel_ids;
 }
 
-void
+gboolean
 gimp_image_unset_active_channel (gint32 image_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_image_unset_active_channel",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 gint32
@@ -235,12 +260,13 @@ gimp_image_pick_correlate_layer (gint32 image_ID,
   return layer_ID;
 }
 
-void
+gboolean
 gimp_image_raise_layer (gint32 image_ID,
 			gint32 layer_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_image_raise_layer",
 				    &nreturn_vals,
@@ -248,15 +274,20 @@ gimp_image_raise_layer (gint32 image_ID,
 				    GIMP_PDB_LAYER, layer_ID,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_image_lower_layer (gint32 image_ID,
 			gint32 layer_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_image_lower_layer",
 				    &nreturn_vals,
@@ -264,15 +295,20 @@ gimp_image_lower_layer (gint32 image_ID,
 				    GIMP_PDB_LAYER, layer_ID,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_image_raise_layer_to_top (gint32 image_ID,
 			       gint32 layer_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_image_raise_layer_to_top",
 				    &nreturn_vals,
@@ -280,15 +316,20 @@ gimp_image_raise_layer_to_top (gint32 image_ID,
 				    GIMP_PDB_LAYER, layer_ID,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_image_lower_layer_to_bottom (gint32 image_ID,
 				  gint32 layer_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_image_lower_layer_to_bottom",
 				    &nreturn_vals,
@@ -296,7 +337,11 @@ gimp_image_lower_layer_to_bottom (gint32 image_ID,
 				    GIMP_PDB_LAYER, layer_ID,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 gint32
@@ -365,13 +410,14 @@ gimp_image_flatten (gint32 image_ID)
   return layer_ID;
 }
 
-void
+gboolean
 gimp_image_add_layer (gint32 image_ID,
 		      gint32 layer_ID,
 		      gint   position)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_image_add_layer",
 				    &nreturn_vals,
@@ -380,15 +426,20 @@ gimp_image_add_layer (gint32 image_ID,
 				    GIMP_PDB_INT32, position,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_image_remove_layer (gint32 image_ID,
 			 gint32 layer_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_image_remove_layer",
 				    &nreturn_vals,
@@ -396,16 +447,21 @@ gimp_image_remove_layer (gint32 image_ID,
 				    GIMP_PDB_LAYER, layer_ID,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_image_add_layer_mask (gint32 image_ID,
 			   gint32 layer_ID,
 			   gint32 mask_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_image_add_layer_mask",
 				    &nreturn_vals,
@@ -414,16 +470,21 @@ gimp_image_add_layer_mask (gint32 image_ID,
 				    GIMP_PDB_CHANNEL, mask_ID,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_image_remove_layer_mask (gint32            image_ID,
 			      gint32            layer_ID,
 			      GimpMaskApplyMode mode)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_image_remove_layer_mask",
 				    &nreturn_vals,
@@ -432,15 +493,20 @@ gimp_image_remove_layer_mask (gint32            image_ID,
 				    GIMP_PDB_INT32, mode,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_image_raise_channel (gint32 image_ID,
 			  gint32 channel_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_image_raise_channel",
 				    &nreturn_vals,
@@ -448,15 +514,20 @@ gimp_image_raise_channel (gint32 image_ID,
 				    GIMP_PDB_CHANNEL, channel_ID,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_image_lower_channel (gint32 image_ID,
 			  gint32 layer_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_image_lower_channel",
 				    &nreturn_vals,
@@ -464,16 +535,21 @@ gimp_image_lower_channel (gint32 image_ID,
 				    GIMP_PDB_LAYER, layer_ID,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_image_add_channel (gint32 image_ID,
 			gint32 channel_ID,
 			gint   position)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_image_add_channel",
 				    &nreturn_vals,
@@ -482,15 +558,20 @@ gimp_image_add_channel (gint32 image_ID,
 				    GIMP_PDB_INT32, position,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_image_remove_channel (gint32 image_ID,
 			   gint32 channel_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_image_remove_channel",
 				    &nreturn_vals,
@@ -498,7 +579,11 @@ gimp_image_remove_channel (gint32 image_ID,
 				    GIMP_PDB_CHANNEL, channel_ID,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 gint32
@@ -569,13 +654,14 @@ _gimp_image_get_cmap (gint32  image_ID,
   return cmap;
 }
 
-void
+gboolean
 _gimp_image_set_cmap (gint32  image_ID,
 		      gint    num_bytes,
 		      guint8 *cmap)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_image_set_cmap",
 				    &nreturn_vals,
@@ -584,7 +670,11 @@ _gimp_image_set_cmap (gint32  image_ID,
 				    GIMP_PDB_INT8ARRAY, cmap,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 gboolean
@@ -687,18 +777,23 @@ gimp_image_undo_thaw (gint32 image_ID)
   return thawed;
 }
 
-void
+gboolean
 gimp_image_clean_all (gint32 image_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_image_clean_all",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 gint32
@@ -741,7 +836,7 @@ gimp_image_floating_sel_attached_to (gint32 image_ID)
   return drawable_ID;
 }
 
-void
+gboolean
 _gimp_image_thumbnail (gint32   image_ID,
 		       gint     width,
 		       gint     height,
@@ -753,6 +848,7 @@ _gimp_image_thumbnail (gint32   image_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_image_thumbnail",
 				    &nreturn_vals,
@@ -767,7 +863,9 @@ _gimp_image_thumbnail (gint32   image_ID,
   *thumbnail_data_count = 0;
   *thumbnail_data = NULL;
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
     {
       *ret_width = return_vals[1].data.d_int32;
       *ret_height = return_vals[2].data.d_int32;
@@ -779,14 +877,17 @@ _gimp_image_thumbnail (gint32   image_ID,
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_image_set_tattoo_state (gint32 image_ID,
 			     gint   tattoo)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_image_set_tattoo_state",
 				    &nreturn_vals,
@@ -794,7 +895,11 @@ gimp_image_set_tattoo_state (gint32 image_ID,
 				    GIMP_PDB_INT32, tattoo,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 gint
@@ -877,12 +982,13 @@ gimp_image_get_active_layer (gint32 image_ID)
   return active_layer_ID;
 }
 
-void
+gboolean
 gimp_image_set_active_layer (gint32 image_ID,
 			     gint32 active_layer_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_image_set_active_layer",
 				    &nreturn_vals,
@@ -890,7 +996,11 @@ gimp_image_set_active_layer (gint32 image_ID,
 				    GIMP_PDB_LAYER, active_layer_ID,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 gint32
@@ -913,12 +1023,13 @@ gimp_image_get_active_channel (gint32 image_ID)
   return active_channel_ID;
 }
 
-void
+gboolean
 gimp_image_set_active_channel (gint32 image_ID,
 			       gint32 active_channel_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_image_set_active_channel",
 				    &nreturn_vals,
@@ -926,7 +1037,11 @@ gimp_image_set_active_channel (gint32 image_ID,
 				    GIMP_PDB_CHANNEL, active_channel_ID,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 gint32
@@ -971,13 +1086,14 @@ gimp_image_get_component_active (gint32          image_ID,
   return active;
 }
 
-void
+gboolean
 gimp_image_set_component_active (gint32          image_ID,
 				 GimpChannelType component,
 				 gboolean        active)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_image_set_component_active",
 				    &nreturn_vals,
@@ -986,7 +1102,11 @@ gimp_image_set_component_active (gint32          image_ID,
 				    GIMP_PDB_INT32, active,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 gboolean
@@ -1011,13 +1131,14 @@ gimp_image_get_component_visible (gint32          image_ID,
   return visible;
 }
 
-void
+gboolean
 gimp_image_set_component_visible (gint32          image_ID,
 				  GimpChannelType component,
 				  gboolean        visible)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_image_set_component_visible",
 				    &nreturn_vals,
@@ -1026,7 +1147,11 @@ gimp_image_set_component_visible (gint32          image_ID,
 				    GIMP_PDB_INT32, visible,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 gchar *
@@ -1049,12 +1174,13 @@ gimp_image_get_filename (gint32 image_ID)
   return filename;
 }
 
-void
+gboolean
 gimp_image_set_filename (gint32  image_ID,
 			 gchar  *filename)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_image_set_filename",
 				    &nreturn_vals,
@@ -1062,16 +1188,21 @@ gimp_image_set_filename (gint32  image_ID,
 				    GIMP_PDB_STRING, filename,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_image_get_resolution (gint32   image_ID,
 			   gdouble *xresolution,
 			   gdouble *yresolution)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_image_get_resolution",
 				    &nreturn_vals,
@@ -1081,22 +1212,27 @@ gimp_image_get_resolution (gint32   image_ID,
   *xresolution = 0.0;
   *yresolution = 0.0;
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
     {
       *xresolution = return_vals[1].data.d_float;
       *yresolution = return_vals[2].data.d_float;
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_image_set_resolution (gint32  image_ID,
 			   gdouble xresolution,
 			   gdouble yresolution)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_image_set_resolution",
 				    &nreturn_vals,
@@ -1105,7 +1241,11 @@ gimp_image_set_resolution (gint32  image_ID,
 				    GIMP_PDB_FLOAT, yresolution,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 GimpUnit
@@ -1128,12 +1268,13 @@ gimp_image_get_unit (gint32 image_ID)
   return unit;
 }
 
-void
+gboolean
 gimp_image_set_unit (gint32   image_ID,
 		     GimpUnit unit)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_image_set_unit",
 				    &nreturn_vals,
@@ -1141,7 +1282,11 @@ gimp_image_set_unit (gint32   image_ID,
 				    GIMP_PDB_INT32, unit,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 gint32

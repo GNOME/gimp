@@ -31,7 +31,7 @@ extern "C" {
 /* For information look into the C source or the html documentation */
 
 
-void     gimp_selection_bounds   (gint32    image_ID,
+gboolean gimp_selection_bounds   (gint32    image_ID,
 				  gboolean *non_empty,
 				  gint     *x1,
 				  gint     *y1,
@@ -41,7 +41,7 @@ gboolean gimp_selection_is_empty (gint32    image_ID);
 gint32   _gimp_selection_float   (gint32    drawable_ID,
 				  gint      offx,
 				  gint      offy);
-void     gimp_selection_none     (gint32    image_ID);
+gboolean gimp_selection_none     (gint32    image_ID);
 
 
 #ifdef __cplusplus

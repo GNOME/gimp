@@ -31,21 +31,21 @@ extern "C" {
 /* For information look into the C source or the html documentation */
 
 
-void gimp_palette_get_foreground     (guchar *red,
-				      guchar *green,
-				      guchar *blue);
-void gimp_palette_get_background     (guchar *red,
-				      guchar *green,
-				      guchar *blue);
-void gimp_palette_set_foreground     (guchar  red,
-				      guchar  green,
-				      guchar  blue);
-void gimp_palette_set_background     (guchar  red,
-				      guchar  green,
-				      guchar  blue);
-void gimp_palette_set_default_colors (void);
-void gimp_palette_swap_colors        (void);
-void gimp_palette_refresh            (void);
+gboolean gimp_palette_get_foreground     (guchar *red,
+					  guchar *green,
+					  guchar *blue);
+gboolean gimp_palette_get_background     (guchar *red,
+					  guchar *green,
+					  guchar *blue);
+gboolean gimp_palette_set_foreground     (guchar  red,
+					  guchar  green,
+					  guchar  blue);
+gboolean gimp_palette_set_background     (guchar  red,
+					  guchar  green,
+					  guchar  blue);
+gboolean gimp_palette_set_default_colors (void);
+gboolean gimp_palette_swap_colors        (void);
+gboolean gimp_palette_refresh            (void);
 
 
 #ifdef __cplusplus

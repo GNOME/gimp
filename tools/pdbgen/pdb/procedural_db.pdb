@@ -70,7 +70,7 @@ HELP
     @outargs = (
 	{ name => "${type}_type", type => 'enum PDBArgType (no PDB_END)',
 	  desc => "The type of $long_type { %%desc%% }", void_ret => 1,
-	  alias => "${type}->arg_type", no_declare => 1, wrap => 1 },
+	  alias => "${type}->arg_type", no_declare => 1 },
 	{ name => "${type}_name", type => 'string',
 	  desc => "The name of the $long_type",
 	  alias => "g_strdup (${type}->name)", no_declare => 1 },

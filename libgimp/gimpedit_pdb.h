@@ -31,14 +31,14 @@ extern "C" {
 /* For information look into the C source or the html documentation */
 
 
-void   gimp_edit_cut    (gint32       drawable_ID);
-void   gimp_edit_copy   (gint32       drawable_ID);
-gint32 gimp_edit_paste  (gint32       drawable_ID,
-			 gboolean     paste_into);
-void   gimp_edit_clear  (gint32       drawable_ID);
-void   gimp_edit_fill   (gint32       drawable_ID,
-			 GimpFillType fill_type);
-void   gimp_edit_stroke (gint32       drawable_ID);
+gboolean gimp_edit_cut    (gint32       drawable_ID);
+gboolean gimp_edit_copy   (gint32       drawable_ID);
+gint32   gimp_edit_paste  (gint32       drawable_ID,
+			   gboolean     paste_into);
+gboolean gimp_edit_clear  (gint32       drawable_ID);
+gboolean gimp_edit_fill   (gint32       drawable_ID,
+			   GimpFillType fill_type);
+gboolean gimp_edit_stroke (gint32       drawable_ID);
 
 
 #ifdef __cplusplus

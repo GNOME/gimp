@@ -23,18 +23,23 @@
 
 #include "gimp.h"
 
-void
+gboolean
 gimp_message (gchar *message)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_message",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, message,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 GimpMessageHandlerType
@@ -56,16 +61,21 @@ gimp_message_get_handler (void)
   return handler;
 }
 
-void
+gboolean
 gimp_message_set_handler (GimpMessageHandlerType handler)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_message_set_handler",
 				    &nreturn_vals,
 				    GIMP_PDB_INT32, handler,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }

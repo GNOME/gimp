@@ -23,7 +23,7 @@
 
 #include "gimp.h"
 
-void
+gboolean
 gimp_airbrush (gint32   drawable_ID,
 	       gdouble  pressure,
 	       gint     num_strokes,
@@ -31,6 +31,7 @@ gimp_airbrush (gint32   drawable_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_airbrush",
 				    &nreturn_vals,
@@ -40,16 +41,21 @@ gimp_airbrush (gint32   drawable_ID,
 				    GIMP_PDB_FLOATARRAY, strokes,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_airbrush_default (gint32   drawable_ID,
 		       gint     num_strokes,
 		       gdouble *strokes)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_airbrush_default",
 				    &nreturn_vals,
@@ -58,10 +64,14 @@ gimp_airbrush_default (gint32   drawable_ID,
 				    GIMP_PDB_FLOATARRAY, strokes,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_blend (gint32               drawable_ID,
 	    GimpBlendMode        blend_mode,
 	    GimpLayerModeEffects paint_mode,
@@ -79,6 +89,7 @@ gimp_blend (gint32               drawable_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_blend",
 				    &nreturn_vals,
@@ -98,10 +109,14 @@ gimp_blend (gint32               drawable_ID,
 				    GIMP_PDB_FLOAT, y2,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_bucket_fill (gint32               drawable_ID,
 		  GimpBucketFillMode   fill_mode,
 		  GimpLayerModeEffects paint_mode,
@@ -113,6 +128,7 @@ gimp_bucket_fill (gint32               drawable_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_bucket_fill",
 				    &nreturn_vals,
@@ -126,10 +142,14 @@ gimp_bucket_fill (gint32               drawable_ID,
 				    GIMP_PDB_FLOAT, y,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_by_color_select (gint32         drawable_ID,
 		      guchar         red,
 		      guchar         green,
@@ -143,6 +163,7 @@ gimp_by_color_select (gint32         drawable_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
   guchar color[3];
 
   color[0] = red;
@@ -161,10 +182,14 @@ gimp_by_color_select (gint32         drawable_ID,
 				    GIMP_PDB_INT32, sample_merged,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_clone (gint32         drawable_ID,
 	    gint32         src_drawable_ID,
 	    GimpCloneType  clone_type,
@@ -175,6 +200,7 @@ gimp_clone (gint32         drawable_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_clone",
 				    &nreturn_vals,
@@ -187,16 +213,21 @@ gimp_clone (gint32         drawable_ID,
 				    GIMP_PDB_FLOATARRAY, strokes,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_clone_default (gint32   drawable_ID,
 		    gint     num_strokes,
 		    gdouble *strokes)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_clone_default",
 				    &nreturn_vals,
@@ -205,10 +236,14 @@ gimp_clone_default (gint32   drawable_ID,
 				    GIMP_PDB_FLOATARRAY, strokes,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_color_picker (gint32    image_ID,
 		   gint32    drawable_ID,
 		   gdouble   x,
@@ -223,6 +258,7 @@ gimp_color_picker (gint32    image_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_color_picker",
 				    &nreturn_vals,
@@ -236,7 +272,9 @@ gimp_color_picker (gint32    image_ID,
 				    GIMP_PDB_INT32, save_color,
 				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
     {
       *red = return_vals[1].data.d_color.red;
       *green = return_vals[1].data.d_color.green;
@@ -244,9 +282,11 @@ gimp_color_picker (gint32    image_ID,
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_convolve (gint32            drawable_ID,
 	       gdouble           pressure,
 	       GimpConvolveType  convolve_type,
@@ -255,6 +295,7 @@ gimp_convolve (gint32            drawable_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_convolve",
 				    &nreturn_vals,
@@ -265,16 +306,21 @@ gimp_convolve (gint32            drawable_ID,
 				    GIMP_PDB_FLOATARRAY, strokes,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_convolve_default (gint32   drawable_ID,
 		       gint     num_strokes,
 		       gdouble *strokes)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_convolve_default",
 				    &nreturn_vals,
@@ -283,10 +329,14 @@ gimp_convolve_default (gint32   drawable_ID,
 				    GIMP_PDB_FLOATARRAY, strokes,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_crop (gint32 image_ID,
 	   gint   new_width,
 	   gint   new_height,
@@ -295,6 +345,7 @@ gimp_crop (gint32 image_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_crop",
 				    &nreturn_vals,
@@ -305,10 +356,14 @@ gimp_crop (gint32 image_ID,
 				    GIMP_PDB_INT32, offy,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_dodgeburn (gint32             drawable_ID,
 		gdouble            exposure,
 		GimpDodgeBurnType  dodgeburn_type,
@@ -318,6 +373,7 @@ gimp_dodgeburn (gint32             drawable_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_dodgeburn",
 				    &nreturn_vals,
@@ -329,16 +385,21 @@ gimp_dodgeburn (gint32             drawable_ID,
 				    GIMP_PDB_FLOATARRAY, strokes,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_dodgeburn_default (gint32   drawable_ID,
 			gint     num_strokes,
 			gdouble *strokes)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_dodgeburn_default",
 				    &nreturn_vals,
@@ -347,10 +408,14 @@ gimp_dodgeburn_default (gint32   drawable_ID,
 				    GIMP_PDB_FLOATARRAY, strokes,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_ellipse_select (gint32         image_ID,
 		     gdouble        x,
 		     gdouble        y,
@@ -363,6 +428,7 @@ gimp_ellipse_select (gint32         image_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_ellipse_select",
 				    &nreturn_vals,
@@ -377,10 +443,14 @@ gimp_ellipse_select (gint32         image_ID,
 				    GIMP_PDB_FLOAT, feather_radius,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_eraser (gint32                    drawable_ID,
 	     gint                      num_strokes,
 	     gdouble                  *strokes,
@@ -389,6 +459,7 @@ gimp_eraser (gint32                    drawable_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_eraser",
 				    &nreturn_vals,
@@ -399,16 +470,21 @@ gimp_eraser (gint32                    drawable_ID,
 				    GIMP_PDB_INT32, method,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_eraser_default (gint32   drawable_ID,
 		     gint     num_strokes,
 		     gdouble *strokes)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_eraser_default",
 				    &nreturn_vals,
@@ -417,7 +493,11 @@ gimp_eraser_default (gint32   drawable_ID,
 				    GIMP_PDB_FLOATARRAY, strokes,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 gint32
@@ -442,7 +522,7 @@ gimp_flip (gint32              drawable_ID,
   return ret_drawable_ID;
 }
 
-void
+gboolean
 gimp_free_select (gint32          image_ID,
 		  gint            num_segs,
 		  gdouble        *segs,
@@ -453,6 +533,7 @@ gimp_free_select (gint32          image_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_free_select",
 				    &nreturn_vals,
@@ -465,10 +546,14 @@ gimp_free_select (gint32          image_ID,
 				    GIMP_PDB_FLOAT, feather_radius,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_fuzzy_select (gint32         drawable_ID,
 		   gdouble        x,
 		   gdouble        y,
@@ -481,6 +566,7 @@ gimp_fuzzy_select (gint32         drawable_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_fuzzy_select",
 				    &nreturn_vals,
@@ -495,10 +581,14 @@ gimp_fuzzy_select (gint32         drawable_ID,
 				    GIMP_PDB_INT32, sample_merged,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_paintbrush (gint32                    drawable_ID,
 		 gdouble                   fade_out,
 		 gint                      num_strokes,
@@ -508,6 +598,7 @@ gimp_paintbrush (gint32                    drawable_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_paintbrush",
 				    &nreturn_vals,
@@ -519,16 +610,21 @@ gimp_paintbrush (gint32                    drawable_ID,
 				    GIMP_PDB_FLOAT, gradient_length,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_paintbrush_default (gint32   drawable_ID,
 			 gint     num_strokes,
 			 gdouble *strokes)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_paintbrush_default",
 				    &nreturn_vals,
@@ -537,16 +633,21 @@ gimp_paintbrush_default (gint32   drawable_ID,
 				    GIMP_PDB_FLOATARRAY, strokes,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_pencil (gint32   drawable_ID,
 	     gint     num_strokes,
 	     gdouble *strokes)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_pencil",
 				    &nreturn_vals,
@@ -555,7 +656,11 @@ gimp_pencil (gint32   drawable_ID,
 				    GIMP_PDB_FLOATARRAY, strokes,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 gint32
@@ -596,7 +701,7 @@ gimp_perspective (gint32   drawable_ID,
   return ret_drawable_ID;
 }
 
-void
+gboolean
 gimp_rect_select (gint32         image_ID,
 		  gdouble        x,
 		  gdouble        y,
@@ -608,6 +713,7 @@ gimp_rect_select (gint32         image_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_rect_select",
 				    &nreturn_vals,
@@ -621,7 +727,11 @@ gimp_rect_select (gint32         image_ID,
 				    GIMP_PDB_FLOAT, feather_radius,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 gint32
@@ -704,7 +814,7 @@ gimp_shear (gint32              drawable_ID,
   return ret_drawable_ID;
 }
 
-void
+gboolean
 gimp_smudge (gint32   drawable_ID,
 	     gdouble  pressure,
 	     gint     num_strokes,
@@ -712,6 +822,7 @@ gimp_smudge (gint32   drawable_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_smudge",
 				    &nreturn_vals,
@@ -721,16 +832,21 @@ gimp_smudge (gint32   drawable_ID,
 				    GIMP_PDB_FLOATARRAY, strokes,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_smudge_default (gint32   drawable_ID,
 		     gint     num_strokes,
 		     gdouble *strokes)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_smudge_default",
 				    &nreturn_vals,
@@ -739,7 +855,11 @@ gimp_smudge_default (gint32   drawable_ID,
 				    GIMP_PDB_FLOATARRAY, strokes,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 gint32

@@ -31,18 +31,18 @@ extern "C" {
 /* For information look into the C source or the html documentation */
 
 
-void gimp_brushes_popup       (gchar                *brush_callback,
-			       gchar                *popup_title,
-			       gchar                *initial_brush,
-			       gdouble               opacity,
-			       gint                  spacing,
-			       GimpLayerModeEffects  paint_mode);
-void gimp_brushes_close_popup (gchar                *brush_callback);
-void gimp_brushes_set_popup   (gchar                *brush_callback,
-			       gchar                *brush_name,
-			       gdouble               opacity,
-			       gint                  spacing,
-			       GimpLayerModeEffects  paint_mode);
+gboolean gimp_brushes_popup       (gchar                *brush_callback,
+				   gchar                *popup_title,
+				   gchar                *initial_brush,
+				   gdouble               opacity,
+				   gint                  spacing,
+				   GimpLayerModeEffects  paint_mode);
+gboolean gimp_brushes_close_popup (gchar                *brush_callback);
+gboolean gimp_brushes_set_popup   (gchar                *brush_callback,
+				   gchar                *brush_name,
+				   gdouble               opacity,
+				   gint                  spacing,
+				   GimpLayerModeEffects  paint_mode);
 
 
 #ifdef __cplusplus

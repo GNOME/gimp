@@ -22,38 +22,6 @@
 #include "gimp.h"
 
 gboolean
-gimp_procedural_db_proc_arg (gchar           *procedure,
-			     gint             arg_num,
-			     GimpPDBArgType  *arg_type,
-			     gchar          **arg_name,
-			     gchar          **arg_desc)
-{
-  _gimp_procedural_db_proc_arg (procedure,
-      				arg_num,
-				arg_type,
-				arg_name,
-				arg_desc);
-
-  return (*arg_name != NULL);
-}
-
-gboolean
-gimp_procedural_db_proc_val (gchar           *procedure,
-			     gint             val_num,
-			     GimpPDBArgType  *val_type,
-			     gchar          **val_name,
-			     gchar          **val_desc)
-{
-  _gimp_procedural_db_proc_val (procedure,
-      				val_num,
-				val_type,
-				val_name,
-				val_desc);
-
-  return (*val_name != NULL);
-}
-
-gboolean
 gimp_procedural_db_proc_info (gchar            *procedure,
 			      gchar           **blurb,
 			      gchar           **help,
@@ -69,17 +37,15 @@ gimp_procedural_db_proc_info (gchar            *procedure,
   gint i;
   gboolean success = TRUE;
 
-  _gimp_procedural_db_proc_info (procedure,
-				 blurb,
-				 help,
-				 author,
-				 copyright,
-				 date,
-				 proc_type,
-				 num_args,
-				 num_values);
-
-  success = (*blurb != NULL);
+  success = _gimp_procedural_db_proc_info (procedure,
+					   blurb,
+					   help,
+					   author,
+					   copyright,
+					   date,
+					   proc_type,
+					   num_args,
+					   num_values);
 
   if (success)
     {

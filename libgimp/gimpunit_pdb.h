@@ -41,7 +41,7 @@ GimpUnit _gimp_unit_new                          (gchar    *identifier,
 						  gchar    *singular,
 						  gchar    *plural);
 gboolean _gimp_unit_get_deletion_flag            (GimpUnit  unit_id);
-void     _gimp_unit_set_deletion_flag            (GimpUnit  unit_id,
+gboolean _gimp_unit_set_deletion_flag            (GimpUnit  unit_id,
 						  gboolean  deletion_flag);
 gchar*   _gimp_unit_get_identifier               (GimpUnit  unit_id);
 gdouble  _gimp_unit_get_factor                   (GimpUnit  unit_id);

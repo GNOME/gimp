@@ -23,35 +23,45 @@
 
 #include "gimp.h"
 
-void
+gboolean
 gimp_convert_rgb (gint32 image_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_convert_rgb",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_convert_grayscale (gint32 image_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_convert_grayscale",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_convert_indexed (gint32                  image_ID,
 		      GimpConvertDitherType   dither_type,
 		      GimpConvertPaletteType  palette_type,
@@ -62,6 +72,7 @@ gimp_convert_indexed (gint32                  image_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_convert_indexed",
 				    &nreturn_vals,
@@ -74,5 +85,9 @@ gimp_convert_indexed (gint32                  image_ID,
 				    GIMP_PDB_STRING, palette,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }

@@ -42,54 +42,54 @@ gint32               _gimp_layer_copy              (gint32                layer_
 						    gboolean              add_alpha);
 gint32               gimp_layer_create_mask        (gint32                layer_ID,
 						    GimpAddMaskType       mask_type);
-void                 gimp_layer_scale              (gint32                layer_ID,
+gboolean             gimp_layer_scale              (gint32                layer_ID,
 						    gint                  new_width,
 						    gint                  new_height,
 						    gboolean              local_origin);
-void                 gimp_layer_resize             (gint32                layer_ID,
+gboolean             gimp_layer_resize             (gint32                layer_ID,
 						    gint                  new_width,
 						    gint                  new_height,
 						    gint                  offx,
 						    gint                  offy);
-void                 gimp_layer_delete             (gint32                layer_ID);
-void                 gimp_layer_translate          (gint32                layer_ID,
+gboolean             gimp_layer_delete             (gint32                layer_ID);
+gboolean             gimp_layer_translate          (gint32                layer_ID,
 						    gint                  offx,
 						    gint                  offy);
-void                 gimp_layer_add_alpha          (gint32                layer_ID);
-void                 gimp_layer_set_offsets        (gint32                layer_ID,
+gboolean             gimp_layer_add_alpha          (gint32                layer_ID);
+gboolean             gimp_layer_set_offsets        (gint32                layer_ID,
 						    gint                  offx,
 						    gint                  offy);
 gint32               gimp_layer_mask               (gint32                layer_ID);
 gboolean             gimp_layer_is_floating_sel    (gint32                layer_ID);
 gchar*               gimp_layer_get_name           (gint32                layer_ID);
-void                 gimp_layer_set_name           (gint32                layer_ID,
+gboolean             gimp_layer_set_name           (gint32                layer_ID,
 						    gchar                *name);
 gboolean             gimp_layer_get_visible        (gint32                layer_ID);
-void                 gimp_layer_set_visible        (gint32                layer_ID,
+gboolean             gimp_layer_set_visible        (gint32                layer_ID,
 						    gboolean              visible);
 gboolean             gimp_layer_get_preserve_trans (gint32                layer_ID);
-void                 gimp_layer_set_preserve_trans (gint32                layer_ID,
+gboolean             gimp_layer_set_preserve_trans (gint32                layer_ID,
 						    gboolean              preserve_trans);
 gboolean             gimp_layer_get_apply_mask     (gint32                layer_ID);
-void                 gimp_layer_set_apply_mask     (gint32                layer_ID,
+gboolean             gimp_layer_set_apply_mask     (gint32                layer_ID,
 						    gboolean              apply_mask);
 gboolean             gimp_layer_get_show_mask      (gint32                layer_ID);
-void                 gimp_layer_set_show_mask      (gint32                layer_ID,
+gboolean             gimp_layer_set_show_mask      (gint32                layer_ID,
 						    gboolean              show_mask);
 gboolean             gimp_layer_get_edit_mask      (gint32                layer_ID);
-void                 gimp_layer_set_edit_mask      (gint32                layer_ID,
+gboolean             gimp_layer_set_edit_mask      (gint32                layer_ID,
 						    gboolean              edit_mask);
 gdouble              gimp_layer_get_opacity        (gint32                layer_ID);
-void                 gimp_layer_set_opacity        (gint32                layer_ID,
+gboolean             gimp_layer_set_opacity        (gint32                layer_ID,
 						    gdouble               opacity);
 GimpLayerModeEffects gimp_layer_get_mode           (gint32                layer_ID);
-void                 gimp_layer_set_mode           (gint32                layer_ID,
+gboolean             gimp_layer_set_mode           (gint32                layer_ID,
 						    GimpLayerModeEffects  mode);
 gboolean             gimp_layer_get_linked         (gint32                layer_ID);
-void                 gimp_layer_set_linked         (gint32                layer_ID,
+gboolean             gimp_layer_set_linked         (gint32                layer_ID,
 						    gboolean              linked);
 gint                 gimp_layer_get_tattoo         (gint32                layer_ID);
-void                 gimp_layer_set_tattoo         (gint32                layer_ID,
+gboolean             gimp_layer_set_tattoo         (gint32                layer_ID,
 						    gint                  tattoo);
 
 

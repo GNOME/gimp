@@ -153,6 +153,11 @@ CODE
 	my $return_args = "";
 	my $return_marshal = "gimp_destroy_params (return_vals, nreturn_vals);";
 
+	# return success/failure boolean if we don't have anything else
+	if ($rettype eq 'void') {
+	    $return_args .= "\n" . ' ' x 2 . "gboolean success = TRUE;";
+	}
+
 	# We only need to bother with this if we have to return a value
 	if ($rettype ne 'void' || $retcol || $retvoid) {
 	    my $once = 0;
@@ -234,9 +239,18 @@ CODE
 		$return_marshal =~ s/\n  $/\n\n  /s;
 	    }
 
-	    $return_marshal .= <<CODE;
+	    if ($rettype eq 'void') {
+		$return_marshal .= <<CODE;
+success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
+CODE
+	    }
+	    else {
+		$return_marshal .= <<CODE;
 if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
 CODE
+	    }
 
 	    $return_marshal .= ' ' x 4 . "{\n" if $#outargs;
 
@@ -348,8 +362,18 @@ CODE
 		$return_marshal .= ' ' x 2 . "return $firstvar;";
 	    }
 	    else {
-		$return_marshal =~ s/\n\n$//s;
+		$return_marshal .= ' ' x 2 . "return success;";
 	    }
+	}
+	else {
+	    $return_marshal = <<CODE;
+success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  $return_marshal
+
+  return success;
+CODE
+	    chop $return_marshal;
 	}
 
 	if ($arglist) {
@@ -380,6 +404,8 @@ CODE
 	else {
 	    $arglist = "void";
 	}
+	
+	$rettype = 'gboolean' if $rettype eq 'void';
 
 	# Our function prototype for the headers
 	(my $hrettype = $rettype) =~ s/ //g;
@@ -393,7 +419,7 @@ CODE
 	my $padtab = $padlen / 8; my $padspace = $padlen % 8;
 	my $padding = "\t" x $padtab . ' ' x $padspace;
 	$clist =~ s/\t/$padding/eg;
-	
+
 	$out->{code} .= <<CODE;
 
 $rettype

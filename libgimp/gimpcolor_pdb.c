@@ -23,13 +23,14 @@
 
 #include "gimp.h"
 
-void
+gboolean
 gimp_brightness_contrast (gint32 drawable_ID,
 			  gint   brightness,
 			  gint   contrast)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_brightness_contrast",
 				    &nreturn_vals,
@@ -38,10 +39,14 @@ gimp_brightness_contrast (gint32 drawable_ID,
 				    GIMP_PDB_INT32, contrast,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_levels (gint32             drawable_ID,
 	     GimpChannelLutType channel,
 	     gint               low_input,
@@ -52,6 +57,7 @@ gimp_levels (gint32             drawable_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_levels",
 				    &nreturn_vals,
@@ -64,15 +70,20 @@ gimp_levels (gint32             drawable_ID,
 				    GIMP_PDB_INT32, high_output,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_posterize (gint32 drawable_ID,
 		gint   levels)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_posterize",
 				    &nreturn_vals,
@@ -80,29 +91,39 @@ gimp_posterize (gint32 drawable_ID,
 				    GIMP_PDB_INT32, levels,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_desaturate (gint32 drawable_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_desaturate",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_equalize (gint32   drawable_ID,
 	       gboolean mask_only)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_equalize",
 				    &nreturn_vals,
@@ -110,24 +131,33 @@ gimp_equalize (gint32   drawable_ID,
 				    GIMP_PDB_INT32, mask_only,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_invert (gint32 drawable_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_invert",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_curves_spline (gint32              drawable_ID,
 		    GimpChannelLutType  channel,
 		    gint                num_points,
@@ -135,6 +165,7 @@ gimp_curves_spline (gint32              drawable_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_curves_spline",
 				    &nreturn_vals,
@@ -144,10 +175,14 @@ gimp_curves_spline (gint32              drawable_ID,
 				    GIMP_PDB_INT8ARRAY, control_pts,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_curves_explicit (gint32              drawable_ID,
 		      GimpChannelLutType  channel,
 		      gint                num_bytes,
@@ -155,6 +190,7 @@ gimp_curves_explicit (gint32              drawable_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_curves_explicit",
 				    &nreturn_vals,
@@ -164,10 +200,14 @@ gimp_curves_explicit (gint32              drawable_ID,
 				    GIMP_PDB_INT8ARRAY, curve,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_color_balance (gint32           drawable_ID,
 		    GimpTransferMode transfer_mode,
 		    gboolean         preserve_lum,
@@ -177,6 +217,7 @@ gimp_color_balance (gint32           drawable_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_color_balance",
 				    &nreturn_vals,
@@ -188,10 +229,14 @@ gimp_color_balance (gint32           drawable_ID,
 				    GIMP_PDB_FLOAT, yellow_blue,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_histogram (gint32              drawable_ID,
 		GimpChannelLutType  channel,
 		gint                start_range,
@@ -205,6 +250,7 @@ gimp_histogram (gint32              drawable_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_histogram",
 				    &nreturn_vals,
@@ -221,7 +267,9 @@ gimp_histogram (gint32              drawable_ID,
   *count = 0.0;
   *percentile = 0.0;
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
     {
       *mean = return_vals[1].data.d_float;
       *std_dev = return_vals[2].data.d_float;
@@ -232,9 +280,11 @@ gimp_histogram (gint32              drawable_ID,
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_hue_saturation (gint32       drawable_ID,
 		     GimpHueRange hue_range,
 		     gdouble      hue_offset,
@@ -243,6 +293,7 @@ gimp_hue_saturation (gint32       drawable_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_hue_saturation",
 				    &nreturn_vals,
@@ -253,16 +304,21 @@ gimp_hue_saturation (gint32       drawable_ID,
 				    GIMP_PDB_FLOAT, saturation,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_threshold (gint32 drawable_ID,
 		gint   low_threshold,
 		gint   high_threshold)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_threshold",
 				    &nreturn_vals,
@@ -271,5 +327,9 @@ gimp_threshold (gint32 drawable_ID,
 				    GIMP_PDB_INT32, high_threshold,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }

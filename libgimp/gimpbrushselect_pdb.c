@@ -23,7 +23,7 @@
 
 #include "gimp.h"
 
-void
+gboolean
 gimp_brushes_popup (gchar                *brush_callback,
 		    gchar                *popup_title,
 		    gchar                *initial_brush,
@@ -33,6 +33,7 @@ gimp_brushes_popup (gchar                *brush_callback,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_brushes_popup",
 				    &nreturn_vals,
@@ -44,24 +45,33 @@ gimp_brushes_popup (gchar                *brush_callback,
 				    GIMP_PDB_INT32, paint_mode,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_brushes_close_popup (gchar *brush_callback)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_brushes_close_popup",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, brush_callback,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_brushes_set_popup (gchar                *brush_callback,
 			gchar                *brush_name,
 			gdouble               opacity,
@@ -70,6 +80,7 @@ gimp_brushes_set_popup (gchar                *brush_callback,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_brushes_set_popup",
 				    &nreturn_vals,
@@ -80,5 +91,9 @@ gimp_brushes_set_popup (gchar                *brush_callback,
 				    GIMP_PDB_INT32, paint_mode,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }

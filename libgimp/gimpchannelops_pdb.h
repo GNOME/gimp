@@ -31,12 +31,12 @@ extern "C" {
 /* For information look into the C source or the html documentation */
 
 
-void   gimp_channel_ops_offset    (gint32                drawable_ID,
-				   gboolean              wrap_around,
-				   GimpChannelOffsetType fill_type,
-				   gint                  offset_x,
-				   gint                  offset_y);
-gint32 gimp_channel_ops_duplicate (gint32                image_ID);
+gboolean gimp_channel_ops_offset    (gint32                drawable_ID,
+				     gboolean              wrap_around,
+				     GimpChannelOffsetType fill_type,
+				     gint                  offset_x,
+				     gint                  offset_y);
+gint32   gimp_channel_ops_duplicate (gint32                image_ID);
 
 
 #ifdef __cplusplus

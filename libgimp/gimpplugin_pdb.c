@@ -23,11 +23,12 @@
 
 #include "gimp.h"
 
-void
+gboolean
 gimp_progress_init (gchar *message)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_progress_init",
 				    &nreturn_vals,
@@ -35,21 +36,30 @@ gimp_progress_init (gchar *message)
 				    GIMP_PDB_INT32, gimp_default_display (),
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_progress_update (gdouble percentage)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_progress_update",
 				    &nreturn_vals,
 				    GIMP_PDB_FLOAT, percentage,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 gchar *
@@ -71,12 +81,13 @@ gimp_temp_PDB_name (void)
   return temp_name;
 }
 
-void
+gboolean
 gimp_plugin_domain_register (gchar *domain_name,
 			     gchar *domain_path)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_plugin_domain_register",
 				    &nreturn_vals,
@@ -84,19 +95,28 @@ gimp_plugin_domain_register (gchar *domain_name,
 				    GIMP_PDB_STRING, domain_path,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
-void
+gboolean
 gimp_plugin_help_register (gchar *help_path)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_plugin_help_register",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, help_path,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }

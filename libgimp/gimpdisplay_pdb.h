@@ -31,9 +31,9 @@ extern "C" {
 /* For information look into the C source or the html documentation */
 
 
-gint32 gimp_display_new    (gint32 image_ID);
-void   gimp_display_delete (gint32 display_ID);
-void   gimp_displays_flush (void);
+gint32   gimp_display_new    (gint32 image_ID);
+gboolean gimp_display_delete (gint32 display_ID);
+gboolean gimp_displays_flush (void);
 
 
 #ifdef __cplusplus

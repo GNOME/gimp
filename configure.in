@@ -677,7 +677,7 @@ rm -f confauthorsgen
 IFS="${IFS=         }"; gimp_save_IFS="$IFS"; IFS='
 '
 
-for i in `sed -e '/^#/d' -e 's/\.*\[.*\]//' -e 's/^ *//' -e 's/ *$//' -e '/^$/d' < tools/authorsgen/contributors`; do
+for i in `sed -e '/^#/d' -e 's/\.*\[.*\]//' -e 's/^ *//' -e 's/ *$//' -e '/^$/d' < $srcdir/tools/authorsgen/contributors`; do
   echo $ac_n "$i, $ac_c" >> confauthorsgen
 done
 

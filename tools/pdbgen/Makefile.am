@@ -106,21 +106,13 @@ stamp-groups: Makefile.am
 	&& rm groups.pl.tmp \
 	&& echo timestamp > $$rootme/stamp-groups
 
-stamp-app: $(srcdir)/app.pl $(pdb_scripts) $(pdb_sources)
+stamp-pdbgen: $(srcdir)/app.pl $(srcdir)/lib.pl $(pdb_scripts) $(pdb_sources)
 	rootme=`pwd`; \
 	destdir=`cd $(top_srcdir) && pwd`; export destdir; \
 	cd $(srcdir) && \
 	   PDBGEN_BACKUP=$(PDBGEN_BACKUP) PDBGEN_GROUPS=$(PDBGEN_GROUPS) \
-	   $(PERL) pdbgen.pl app \
-	&& echo timestamp > $$rootme/stamp-app
-
-stamp-lib: $(srcdir)/lib.pl $(pdb_scripts) $(pdb_sources)
-	rootme=`pwd`; \
-	destdir=`cd $(top_srcdir) && pwd`; export destdir; \
-	cd $(srcdir) && \
-	   PDBGEN_BACKUP=$(PDBGEN_BACKUP) PDBGEN_GROUPS=$(PDBGEN_GROUPS) \
-	   $(PERL) pdbgen.pl lib \
-	&& echo timestamp > $$rootme/stamp-lib
+	   $(PERL) pdbgen.pl app lib \
+	&& echo timestamp > $$rootme/stamp-pdbgen
 
 stamp-enum-code: $(srcdir)/enumcode.pl enums.pl util.pl
 	rootme=`pwd`; \
@@ -130,4 +122,4 @@ stamp-enum-code: $(srcdir)/enumcode.pl enums.pl util.pl
 	  $(PERL) enumcode.pl \
 	 && echo timestamp > $$rootme/stamp-enum-code
 
-all-local: stamp-app stamp-lib stamp-enum-code
+all-local: stamp-pdbgen stamp-enum-code

@@ -23,12 +23,13 @@
 
 #include "gimp.h"
 
-void
+gboolean
 gimp_help (gchar *prog_name,
 	   gchar *help_page)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_help",
 				    &nreturn_vals,
@@ -36,5 +37,9 @@ gimp_help (gchar *prog_name,
 				    GIMP_PDB_STRING, help_page,
 				    GIMP_PDB_END);
 
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }

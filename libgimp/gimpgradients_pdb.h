@@ -33,7 +33,7 @@ extern "C" {
 
 gchar**  gimp_gradients_get_list       (gint    *num_gradients);
 gchar*   gimp_gradients_get_active     (void);
-void     gimp_gradients_set_active     (gchar   *name);
+gboolean gimp_gradients_set_active     (gchar   *name);
 gdouble* gimp_gradients_sample_uniform (gint     num_samples);
 gdouble* gimp_gradients_sample_custom  (gint     num_samples,
 					gdouble *positions);
