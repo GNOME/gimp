@@ -480,10 +480,7 @@ midi_set_device (ControllerMidi *midi,
           state = g_strdup_printf (_("Reading from %s"), alsa);
           g_free (alsa);
 
-          g_object_set (midi,
-                        "name",  snd_seq_name (midi->sequencer),
-                        "state", state,
-                        NULL);
+          g_object_set (midi, "state", state, NULL);
           g_free (state);
 
           event_source = (GAlsaSource *) g_source_new (&alsa_source_funcs,
@@ -852,7 +849,9 @@ midi_alsa_dispatch (GSource     *source,
                     gpointer     user_data)
 {
   ControllerMidi  *midi = CONTROLLER_MIDI (((GAlsaSource *) source)->controller);
-  snd_seq_event_t *event;
+  snd_seq_event_t       *event;
+  snd_seq_client_info_t *client_info;
+  snd_seq_port_info_t   *port_info;
 
   if (snd_seq_event_input_pending (midi->sequencer, 1) > 0)
     {
@@ -877,6 +876,28 @@ midi_alsa_dispatch (GSource     *source,
         case SND_SEQ_EVENT_CONTROLLER:
           midi_event (midi, midi->channel, event->data.control.param + 256,
                       (gdouble) event->data.control.value / 127.0);
+          break;
+
+        case SND_SEQ_EVENT_PORT_SUBSCRIBED:
+          snd_seq_client_info_alloca (&client_info);
+          snd_seq_port_info_alloca (&port_info);
+          snd_seq_get_any_client_info (midi->sequencer,
+                                       event->data.connect.sender.client,
+                                       client_info);
+          snd_seq_get_any_port_info (midi->sequencer,
+                                     event->data.connect.sender.client,
+                                     event->data.connect.sender.port,
+                                     port_info);
+          /*
+           * g_printerr ("subscribed to \"%s:%s\"\n",
+           *             snd_seq_client_info_get_name (client_info),
+           *             snd_seq_port_info_get_name (port_info));
+           */
+          break;
+
+        case SND_SEQ_EVENT_PORT_UNSUBSCRIBED:
+          /* g_printerr ("unsubscribed\n");
+           */
           break;
 
         default:

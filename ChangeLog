@@ -1,3 +1,10 @@
+2004-11-25  Simon Budig  <simon@gimp.org>
+
+	* modules/controller_linux_input.c: Add some sample code to retrieve
+	the name of the connected MIDI device (ALSA).
+	Do not set the "name" when connected to Alsa, since snd_seq_name()
+	returns an uninteresting name.
+
 2004-11-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/gui.c (gui_display_changed): if the active display
