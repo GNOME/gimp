@@ -900,6 +900,7 @@ layers_previous_cmd_callback (GtkWidget *widget,
     {
       gimage_set_active_layer (gdisp->gimage, new_layer);
       gdisplays_flush ();
+      layer_select_init (gdisp->gimage, 0, GDK_CURRENT_TIME);
     }
 }
 
@@ -922,6 +923,7 @@ layers_next_cmd_callback (GtkWidget *widget,
     {
       gimage_set_active_layer (gdisp->gimage, new_layer);
       gdisplays_flush ();
+      layer_select_init (gdisp->gimage, 0, GDK_CURRENT_TIME);
     }
 }
 

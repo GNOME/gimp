@@ -15,12 +15,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef  __LAYER_SELECT_H__
 #define  __LAYER_SELECT_H__
 
 #include "gimage.h"
 
-void   layer_select_init (GImage *, int, guint32);
+
+void   layer_select_init                (GImage  *gimage, 
+					 gint     move, 
+					 guint32  time);
 void   layer_select_update_preview_size (void);
+
 
 #endif  /*  __LAYER_SELECT_H__  */

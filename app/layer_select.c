@@ -52,16 +52,23 @@ struct _LayerSelect
   gdouble    ratio;
 };
 
+
 /*  layer widget function prototypes  */
-static void layer_select_advance    (LayerSelect *, gint);
-static void layer_select_forward    (LayerSelect *);
-static void layer_select_backward   (LayerSelect *);
-static void layer_select_end        (LayerSelect *, guint32);
-static void layer_select_set_gimage (LayerSelect *, GImage *);
-static void layer_select_set_layer  (LayerSelect *);
-static gint layer_select_events     (GtkWidget *, GdkEvent *);
-static gint preview_events          (GtkWidget *, GdkEvent *);
-static void preview_redraw          (LayerSelect *);
+static void layer_select_advance    (LayerSelect *layer_select, 
+				     gint         move);
+static void layer_select_forward    (LayerSelect *layer_select);
+static void layer_select_backward   (LayerSelect *layer_select);
+static void layer_select_end        (LayerSelect *layer_select, 
+				     guint32      time);
+static void layer_select_set_gimage (LayerSelect *layer_select, 
+				     GImage      *gimage);
+static void layer_select_set_layer  (LayerSelect *layer_select);
+static gint layer_select_events     (GtkWidget   *widget, 
+				     GdkEvent    *event);
+static gint preview_events          (GtkWidget   *widget, 
+				     GdkEvent    *event);
+static void preview_redraw          (LayerSelect *layer_select);
+
 
 /*
  *  Local variables
@@ -76,7 +83,7 @@ LayerSelect *layer_select = NULL;
 
 void
 layer_select_init (GImage  *gimage,
-		   gint     dir,
+		   gint     move,
 		   guint32  time)
 {
   GtkWidget *frame1;
@@ -92,7 +99,7 @@ layer_select_init (GImage  *gimage,
       layer_select->preview = NULL;
       layer_select->image_width = layer_select->image_height = 0;
       layer_select_set_gimage (layer_select, gimage);
-      layer_select_advance (layer_select, dir);
+      layer_select_advance (layer_select, move);
 
       if (preview_size)
 	{
@@ -159,7 +166,7 @@ layer_select_init (GImage  *gimage,
   else
     {
       layer_select_set_gimage (layer_select, gimage);
-      layer_select_advance (layer_select, dir);
+      layer_select_advance (layer_select, move);
 
       if (! GTK_WIDGET_VISIBLE (layer_select->shell))
 	gtk_widget_show (layer_select->shell);
@@ -175,8 +182,7 @@ void
 layer_select_update_preview_size (void)
 {
   if (layer_select != NULL)
-    {
-      gtk_preview_size (GTK_PREVIEW (layer_select->preview), 
+    {      gtk_preview_size (GTK_PREVIEW (layer_select->preview), 
 			preview_size, preview_size);
       if (GTK_WIDGET_VISIBLE (layer_select->shell))
         gtk_widget_draw (layer_select->layer_preview, NULL);
@@ -188,40 +194,37 @@ layer_select_update_preview_size (void)
 /*  Private functions  */
 /***********************/
 
+
 static void
 layer_select_advance (LayerSelect *layer_select,
-		      gint         dir)
+		      gint         move)
 {
-  gint    index;
-  gint    length;
-  gint    count;
+  gint    index;  gint    count;
   GSList *list;
   GSList *nth;
   Layer  *layer;
 
   index = 0;
 
+  if (move == 0)
+    return;
+
   /*  If there is a floating selection, allow no advancement  */
   if (gimage_floating_sel (layer_select->gimage))
     return;
 
-  count = 0;
-  list = layer_select->gimage->layer_stack;
-  while (list)
+  for (list = layer_select->gimage->layer_stack, count = 0; 
+       list; 
+       list = g_slist_next (list), count++)
     {
       layer = (Layer *) list->data;
+
       if (layer == layer_select->current_layer)
 	index = count;
-      count++;
-      list = g_slist_next (list);
     }
 
-  length = g_slist_length (layer_select->gimage->layer_stack);
-
-  if (dir == 1)
-    index = (index == length - 1) ? 0 : (index + 1);
-  else
-    index = (index == 0) ? (length - 1) : (index - 1);
+  index += move;
+  index = CLAMP (index, 0, count - 1);
 
   nth = g_slist_nth (layer_select->gimage->layer_stack, index);
 
@@ -232,7 +235,6 @@ layer_select_advance (LayerSelect *layer_select,
     }
 }
 
-
 static void
 layer_select_forward (LayerSelect *layer_select)
 {
@@ -241,7 +243,6 @@ layer_select_forward (LayerSelect *layer_select)
   gtk_widget_draw (layer_select->layer_preview, NULL);
 }
 
-
 static void
 layer_select_backward (LayerSelect *layer_select)
 {
@@ -249,7 +250,6 @@ layer_select_backward (LayerSelect *layer_select)
   layer_select->dirty = TRUE;
   gtk_widget_draw (layer_select->layer_preview, NULL);
 }
-
 
 static void
 layer_select_end (LayerSelect *layer_select,
@@ -263,11 +263,11 @@ layer_select_end (LayerSelect *layer_select,
   /*  only reset the active layer if a new layer was specified  */
   if (layer_select->current_layer != layer_select->gimage->active_layer)
     {
-      gimage_set_active_layer (layer_select->gimage, layer_select->current_layer);
+      gimage_set_active_layer (layer_select->gimage, 
+			       layer_select->current_layer);
       gdisplays_flush ();
     }
 }
-
 
 static void
 layer_select_set_gimage (LayerSelect *layer_select,
@@ -310,7 +310,6 @@ layer_select_set_gimage (LayerSelect *layer_select,
     }
 }
 
-
 static void
 layer_select_set_layer (LayerSelect *layer_select)
 {
@@ -323,7 +322,6 @@ layer_select_set_layer (LayerSelect *layer_select)
   gtk_label_set_text (GTK_LABEL (layer_select->label),
 		      drawable_get_name (GIMP_DRAWABLE (layer)));
 }
-
 
 static gint
 layer_select_events (GtkWidget *widget,
@@ -380,7 +378,6 @@ layer_select_events (GtkWidget *widget,
   return FALSE;
 }
 
-
 static gint
 preview_events (GtkWidget *widget,
 		GdkEvent  *event)
@@ -415,7 +412,6 @@ preview_events (GtkWidget *widget,
 
   return FALSE;
 }
-
 
 static void
 preview_redraw (LayerSelect *layer_select)
