@@ -1,5 +1,10 @@
 2003-10-15  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/Lighting/lighting_ui.c: mark string as translatable
+	(bug #124600).
+
+2003-10-15  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/preferences-dialog.c: some fine-tuning.
 
 2003-10-15  Sven Neumann  <sven@gimp.org>

@@ -1211,7 +1211,7 @@ main_dialog (GimpDrawable *drawable)
 			   _("Enable/disable real time preview of changes"),
 			   NULL);
 
-  frame = gtk_frame_new ("Preview options");
+  frame = gtk_frame_new (_("Preview Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (frame);
