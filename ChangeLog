@@ -1,3 +1,17 @@
+2004-10-08  Michael Natterer  <mitch@gimp.org>
+
+	Made the text options about two toolbox grid columns smaller.
+	Addresses bug #122862.
+
+	* app/widgets/gimppropwidgets.c (gimp_prop_size_entry_new): use
+	the number of digits of the property's max_val plus two as number
+	of chars for the sizeentry'y spinbutton (instead of always 10 as
+	before).
+
+	* app/tools/gimptextoptions.c (gimp_text_options_gui): GtkEntry
+	has a minimal width of 150 pixels (eek). Set a silly small minimal
+	width instead (the entry expands to the available width anyway).
+
 2004-10-08  Sven Neumann  <sven@gimp.org>
 
 	* app/file/file-utils.c: added lots of const qualifiers.

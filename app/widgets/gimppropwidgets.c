@@ -1952,7 +1952,8 @@ gimp_prop_size_entry_new (GObject                   *config,
     }
 
   sizeentry = gimp_size_entry_new (1, unit_value, unit_format,
-                                   TRUE, FALSE, FALSE, 10,
+                                   TRUE, FALSE, FALSE,
+                                   ceil (log (upper) / log (10) + 2),
                                    update_policy);
   gtk_table_set_col_spacing (GTK_TABLE (sizeentry), 1, 4);
 

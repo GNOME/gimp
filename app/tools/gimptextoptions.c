@@ -434,6 +434,10 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   entry = gimp_container_entry_new (GIMP_CONTEXT (options)->gimp->fonts,
                                     GIMP_CONTEXT (options),
                                     GIMP_VIEW_SIZE_SMALL, 1);
+  /*  set a silly smally size request on the entry to disable
+   *  GtkEntry's minimal width of 150 pixels.
+   */
+  gtk_widget_set_size_request (entry, 10, -1);
   gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
   gtk_widget_show (entry);
 
