@@ -29,29 +29,23 @@
 #include "tile-swap.h"
 
 
+/*  Uncomment for verbose debugging on copy-on-write logic  */
+/*  #define TILE_DEBUG  */
+
+/*  Sanity checks on tile hinting code  */
+/*  #define HINTS_SANITY */
+
+
 static void tile_destroy (Tile *tile);
 
 
 gint tile_count = 0;
 
-
 void
 tile_sanitize_rowhints (Tile *tile)
 {
-  gint height, y;
-
-  /*  If tile has rowhints array already, do nothing.  */
-  if (tile->rowhint)
-    return;
-
-  height = tile->eheight;
-  
-  tile->rowhint = g_new (TileRowHint, height);
-  
-  for (y=0; y<height; y++)
-    {
-      tile->rowhint[y] = TILEROWHINT_UNKNOWN;
-    }
+  if (! tile->rowhint)
+    tile->rowhint = g_new0 (TileRowHint, tile->eheight);
 }
 
 TileRowHint
@@ -67,7 +61,7 @@ tile_get_rowhint (Tile *tile,
     g_error("GET_ROWHINT OUT OF RANGE");
   return TILEROWHINT_OUTOFRANGE;
 #else
-  return tile->rowhint[yoff];  
+  return tile->rowhint[yoff];
 #endif
 }
 
@@ -140,9 +134,9 @@ tile_lock (Tile *tile)
   TILE_MUTEX_LOCK (tile);
   tile->ref_count++;
 
-  if (tile->ref_count == 1) 
+  if (tile->ref_count == 1)
     {
-      if (tile->listhead) 
+      if (tile->listhead)
 	{
 	  /* remove from cache, move to main store */
 	  tile_cache_flush (tile);
@@ -167,7 +161,7 @@ tile_lock (Tile *tile)
 }
 
 void
-tile_release (Tile     *tile, 
+tile_release (Tile     *tile,
 	      gboolean  dirty)
 {
   /* Decrement the global reference count.
@@ -207,7 +201,7 @@ tile_release (Tile     *tile,
 	  tile_destroy (tile);
 	  return;			/* skip terminal unlock */
 	}
-      else 
+      else
 	{
 	  /* last reference was just released, so move the tile to the
 	     tile cache */
@@ -238,7 +232,7 @@ tile_alloc (Tile *tile)
 static void
 tile_destroy (Tile *tile)
 {
-  if (tile->ref_count) 
+  if (tile->ref_count)
     {
       g_warning ("tried to destroy a ref'd tile");
       return;
@@ -248,12 +242,12 @@ tile_destroy (Tile *tile)
       g_warning ("tried to destroy an attached tile");
       return;
     }
-  if (tile->data) 
+  if (tile->data)
     {
       g_free (tile->data);
       tile->data = NULL;
     }
-  if (tile->rowhint) 
+  if (tile->rowhint)
     {
       g_free (tile->rowhint);
       tile->rowhint = NULL;
@@ -267,8 +261,8 @@ tile_destroy (Tile *tile)
     }
   if (tile->listhead)
     tile_cache_flush (tile);
-  
-  TILE_MUTEX_UNLOCK (tile); 
+
+  TILE_MUTEX_UNLOCK (tile);
   g_free (tile);
 
   tile_count--;
@@ -305,7 +299,7 @@ tile_bpp (Tile *tile)
   return tile->bpp;
 }
 
-gint 
+gint
 tile_is_valid (Tile *tile)
 {
   return tile->valid;
@@ -326,7 +320,7 @@ tile_attach (Tile *tile,
 {
   TileLink *tmp;
 
-  if ((tile->share_count > 0) && (!tile->valid)) 
+  if ((tile->share_count > 0) && (!tile->valid))
     {
       /* trying to share invalid tiles is problematic, not to mention silly */
       tile_manager_validate ((TileManager*) tile->tlink->tm, tile);
@@ -369,7 +363,7 @@ tile_detach (Tile *tile,
 	break;
     }
 
-  if (*link == NULL) 
+  if (*link == NULL)
     {
       g_warning ("Tried to detach a nonattached tile -- TILE BUG!");
       return;
@@ -381,7 +375,7 @@ tile_detach (Tile *tile,
 
   tile_share_count--;
   tile->share_count--;
- 
+
   if (tile->share_count == 0 && tile->ref_count == 0)
     {
       tile_destroy (tile);

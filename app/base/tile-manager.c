@@ -216,6 +216,7 @@ tile_manager_get (TileManager *tm,
 	      Tile *newtile = g_new (Tile, 1);
 
 	      tile_init (newtile, (*tile_ptr)->bpp);
+
 	      newtile->ewidth  = (*tile_ptr)->ewidth;
 	      newtile->eheight = (*tile_ptr)->eheight;
 	      newtile->valid   = (*tile_ptr)->valid;
@@ -225,14 +226,8 @@ tile_manager_get (TileManager *tm,
 		g_warning ("Oh boy, r/w tile is invalid... we suck.  Please report.");
 
               if ((*tile_ptr)->rowhint)
-              {
-                tile_sanitize_rowhints (newtile);
-	        i = newtile->eheight;
-	        while (i--)
-		  {
-		    newtile->rowhint[i] = (*tile_ptr)->rowhint[i];
-		  }
-              }
+                newtile->rowhint = g_memdup ((*tile_ptr)->rowhint,
+                                             newtile->eheight * sizeof (TileRowHint));
 
 	      if ((*tile_ptr)->data != NULL)
 		{

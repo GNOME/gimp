@@ -23,12 +23,6 @@
 #define TILE_WIDTH   64
 #define TILE_HEIGHT  64
 
-/* Uncomment for verbose debugging on copy-on-write logic
-#define TILE_DEBUG
-*/
-
-/* sanity checking on new tile hinting code */
-/* #define HINTS_SANITY */
 
 /*  explicit guchar type rather than enum since gcc chooses an int
  *  representation but arrays of TileRowHints are quite space-critical
@@ -36,13 +30,13 @@
  */
 typedef guchar TileRowHint;
 
-#define TILEROWHINT_BROKEN      0
+#define TILEROWHINT_UNKNOWN     0
 #define TILEROWHINT_OPAQUE      1
 #define TILEROWHINT_TRANSPARENT 2
 #define TILEROWHINT_MIXED       3
 #define TILEROWHINT_OUTOFRANGE  4
 #define TILEROWHINT_UNDEFINED   5
-#define TILEROWHINT_UNKNOWN     6
+#define TILEROWHINT_BROKEN      6
 
 
 /* Initializes the fields of a tile to "good" values.
@@ -80,7 +74,6 @@ gint          tile_is_valid          (Tile        *tile);
 
 void          tile_mark_valid        (Tile        *tile);
 
-/* DOCUMENT ME -- adm */
 TileRowHint   tile_get_rowhint       (Tile        *tile,
 				      gint         yoff);
 void          tile_set_rowhint       (Tile        *tile,
