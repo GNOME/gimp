@@ -1,5 +1,13 @@
 2003-10-01  Sven Neumann  <sven@gimp.org>
 
+	* app/text/gimptextlayout.c: pango_font_description_set_size()
+	takes points not pixels as the old code assumed.
+
+	* app/text/gimptext.c
+	* app/text/gimptextlayout-render.c: fixed includes.
+	
+2003-10-01  Sven Neumann  <sven@gimp.org>
+
 	* app/composite/gimp-composite-altivec.c: added missing code
 	snippets to make it compile on PPC.
 

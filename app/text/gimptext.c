@@ -29,7 +29,7 @@
 #include <glib-object.h>
 #include <pango/pango.h>
 
-#include "libgimpbase/gimplimits.h"
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 
 #include "text/text-types.h"

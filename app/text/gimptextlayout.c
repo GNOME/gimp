@@ -24,11 +24,10 @@
 #include <glib-object.h>
 #include <pango/pangoft2.h>
 
-#include "libgimpbase/gimpbase.h"
-
 #include "text-types.h"
 
 #include "core/gimpimage.h"
+#include "core/gimpunit.h"
 
 #include "gimptext.h"
 #include "gimptext-private.h"
@@ -45,9 +44,14 @@ static PangoContext * gimp_text_get_pango_context (GimpText     *text,
                                                    gdouble       xres,
                                                    gdouble       yres);
 
-static gint   gimp_text_layout_compute_size        (gdouble      value,
-                                                    GimpUnit     unit,
-                                                    gdouble      res);
+static gint   gimp_text_layout_pixel_size         (Gimp         *gimp,
+                                                   gdouble       value,
+                                                   GimpUnit      unit,
+                                                   gdouble       res);
+static gint   gimp_text_layout_point_size         (Gimp         *gimp,
+                                                   gdouble       value,
+                                                   GimpUnit      unit,
+                                                   gdouble       res);
 
 
 static GObjectClass * parent_class = NULL;
@@ -143,9 +147,11 @@ gimp_text_layout_new (GimpText  *text,
 
   gimp_image_get_resolution (image, &xres, &yres);
 
-  size = gimp_text_layout_compute_size (text->font_size, text->font_size_unit,
-                                        yres);
-  
+  size = gimp_text_layout_point_size (image->gimp,
+                                      text->font_size,
+                                      text->font_size_unit,
+                                      yres);
+
   pango_font_description_set_size (font_desc, MAX (1, size));
 
   context = gimp_text_get_pango_context (text, xres, yres);
@@ -189,9 +195,10 @@ gimp_text_layout_new (GimpText  *text,
       break;
     case GIMP_TEXT_BOX_FIXED:
       pango_layout_set_width (layout->layout,
-                              gimp_text_layout_compute_size (text->box_width,
-                                                             text->box_unit,
-                                                             xres));
+                              gimp_text_layout_pixel_size (image->gimp,
+                                                           text->box_width,
+                                                           text->box_unit,
+                                                           xres));
       break;
     }
 
@@ -206,9 +213,10 @@ gimp_text_layout_new (GimpText  *text,
       break;
     case GIMP_TEXT_BOX_FIXED:
       layout->extents.height =
-        PANGO_PIXELS (gimp_text_layout_compute_size (text->box_height,
-                                                     text->box_unit,
-                                                     yres));
+        PANGO_PIXELS (gimp_text_layout_pixel_size (image->gimp,
+                                                   text->box_height,
+                                                   text->box_unit,
+                                                   yres));
       break;
     }
 
@@ -260,9 +268,9 @@ gimp_text_layout_position (GimpTextLayout *layout)
   pango_layout_get_pixel_extents (layout->layout, &ink, &logical);
 
 #ifdef VERBOSE
-  g_print ("ink rect: %d x %d @ %d, %d\n", 
+  g_print ("ink rect: %d x %d @ %d, %d\n",
            ink.width, ink.height, ink.x, ink.y);
-  g_print ("logical rect: %d x %d @ %d, %d\n", 
+  g_print ("logical rect: %d x %d @ %d, %d\n",
            logical.width, logical.height, logical.x, logical.y);
 #endif
 
@@ -282,14 +290,14 @@ gimp_text_layout_position (GimpTextLayout *layout)
     {
       gint border = layout->text->border;
 
-      layout->extents.x      += border;     
-      layout->extents.y      += border;     
+      layout->extents.x      += border;
+      layout->extents.y      += border;
       layout->extents.width  += 2 * border;
       layout->extents.height += 2 * border;
     }
 
 #ifdef VERBOSE
-  g_print ("layout extents: %d x %d @ %d, %d\n", 
+  g_print ("layout extents: %d x %d @ %d, %d\n",
            layout->extents.width, layout->extents.height,
            layout->extents.x, layout->extents.y);
 #endif
@@ -316,7 +324,7 @@ gimp_text_get_pango_context (GimpText *text,
   PangoFT2FontMap *fontmap;
 
   fontmap = PANGO_FT2_FONT_MAP (pango_ft2_font_map_new ());
-  
+
   pango_ft2_font_map_set_resolution (fontmap, xres, yres);
 
   pango_ft2_font_map_set_default_substitute (fontmap,
@@ -345,9 +353,10 @@ gimp_text_get_pango_context (GimpText *text,
 }
 
 static gint
-gimp_text_layout_compute_size (gdouble  value,
-                               GimpUnit unit,
-                               gdouble  res)
+gimp_text_layout_pixel_size (Gimp     *gimp,
+                             gdouble   value,
+                             GimpUnit  unit,
+                             gdouble   res)
 {
   gdouble factor;
 
@@ -357,9 +366,36 @@ gimp_text_layout_compute_size (gdouble  value,
       return PANGO_SCALE * value;
 
     default:
-      factor = gimp_unit_get_factor (unit);
+      factor = _gimp_unit_get_factor (gimp, unit);
       g_return_val_if_fail (factor > 0.0, 0);
 
-      return (gdouble) PANGO_SCALE * value * res / factor;
+      return PANGO_SCALE * value * res / factor;
+    }
+}
+
+static gint
+gimp_text_layout_point_size (Gimp     *gimp,
+                             gdouble   value,
+                             GimpUnit  unit,
+                             gdouble   res)
+{
+  gdouble factor;
+
+  switch (unit)
+    {
+    case GIMP_UNIT_POINT:
+      return PANGO_SCALE * value;
+
+    case GIMP_UNIT_PIXEL:
+      g_return_val_if_fail (res > 0.0, 0);
+      return (PANGO_SCALE * value *
+              _gimp_unit_get_factor (gimp, GIMP_UNIT_POINT) / res);
+
+    default:
+      factor = _gimp_unit_get_factor (gimp, unit);
+      g_return_val_if_fail (factor > 0.0, 0);
+
+      return (PANGO_SCALE * value *
+              _gimp_unit_get_factor (gimp, GIMP_UNIT_POINT) / factor);
     }
 }

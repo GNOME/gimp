@@ -24,8 +24,6 @@
 #include <glib-object.h>
 #include <pango/pangoft2.h>
 
-#include "libgimpbase/gimpbase.h"
-
 #include "text-types.h"
 
 #include "base/pixel-region.h"
