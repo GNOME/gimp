@@ -1,3 +1,9 @@
+Sun Apr 12 22:51:31 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* gimp_tips.txt: added a few more tips
+	* plugins/webbrowser/webbrowser.scm: updated the URL to the
+	GIMP Bugs page
+
 Sun Apr 12 15:49:25 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/palette.c: fixed a typo in the menu
