@@ -213,6 +213,7 @@ gfig_dialog (void)
   GtkWidget    *hbox;
   GtkUIManager *ui_manager;
   GtkWidget    *empty_label;
+  gchar        *path;
 
   gimp_ui_init ("gfig", TRUE);
 
@@ -256,19 +257,23 @@ gfig_dialog (void)
 
   gfig_stock_init ();
 
-  gfig_path = gimp_gimprc_query ("gfig-path");
+  path = gimp_gimprc_query ("gfig-path");
 
-  if (! gfig_path)
+  if (path)
+    {
+      gfig_path = g_filename_from_utf8 (path, -1, NULL, NULL, NULL);
+      g_free (path);
+    }
+  else
     {
       gchar *gimprc = gimp_personal_rc_file ("gimprc");
       gchar *full_path;
       gchar *esc_path;
 
-      full_path =
-        g_strconcat ("${gimp_dir}", G_DIR_SEPARATOR_S, "gfig",
-                     G_SEARCHPATH_SEPARATOR_S,
-                     "${gimp_data_dir}", G_DIR_SEPARATOR_S, "gfig",
-                     NULL);
+      full_path = g_strconcat ("${gimp_dir}", G_DIR_SEPARATOR_S, "gfig",
+                               G_SEARCHPATH_SEPARATOR_S,
+                               "${gimp_data_dir}", G_DIR_SEPARATOR_S, "gfig",
+                               NULL);
       esc_path = g_strescape (full_path, NULL);
       g_free (full_path);
 

@@ -102,8 +102,7 @@ static GList *parsepath_cached_path = NULL;
 GList *
 parsepath (void)
 {
-  gchar *gimpdatasubdir, *defaultpath, *tmps;
-
+  gchar *gimpdatasubdir, *defaultpath, *rc_path, *path;
 
   if (parsepath_cached_path)
     return parsepath_cached_path;
@@ -114,9 +113,13 @@ parsepath (void)
   defaultpath = g_build_filename (gimp_directory (),
                                   "gimpressionist", gimpdatasubdir, NULL);
 
-  tmps = gimp_gimprc_query ("gimpressionist-path");
-
-  if (!tmps)
+  path = gimp_gimprc_query ("gimpressionist-path");
+  if (path)
+    {
+      rc_path = g_filename_from_utf8 (path, -1, NULL, NULL, NULL);
+      g_free (path);
+    }
+  else
     {
       if (!g_file_test (gimpdatasubdir, G_FILE_TEST_IS_DIR))
         {
@@ -137,12 +140,13 @@ parsepath (void)
                        "(or similar) to your gimprc file."), path);
           g_free (path);
         }
-      tmps = g_strdup (defaultpath);
+
+      rc_path = g_strdup (defaultpath);
     }
 
-  parsepath_cached_path = gimp_path_parse (tmps, 16, FALSE, NULL);
+  parsepath_cached_path = gimp_path_parse (rc_path, 16, FALSE, NULL);
 
-  g_free (tmps);
+  g_free (rc_path);
 
   return parsepath_cached_path;
 }

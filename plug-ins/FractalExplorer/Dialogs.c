@@ -516,27 +516,32 @@ explorer_dialog (void)
   GtkWidget *table;
   GtkWidget *button;
   GtkWidget *gradient;
+  gchar     *path;
   gchar     *gradient_name;
   GSList    *group = NULL;
   gint       i;
 
   gimp_ui_init ("fractalexplorer", TRUE);
 
-  fractalexplorer_path = gimp_gimprc_query ("fractalexplorer-path");
+  path = gimp_gimprc_query ("fractalexplorer-path");
 
-  if (! fractalexplorer_path)
+  if (path)
+    {
+      fractalexplorer_path = g_filename_from_utf8 (path, -1, NULL, NULL, NULL);
+      g_free (path);
+    }
+  else
     {
       gchar *gimprc = gimp_personal_rc_file ("gimprc");
       gchar *full_path;
       gchar *esc_path;
 
-      full_path =
-        g_strconcat ("${gimp_dir}", G_DIR_SEPARATOR_S,
-                     "fractalexplorer",
-                     G_SEARCHPATH_SEPARATOR_S,
-                     "${gimp_data_dir}", G_DIR_SEPARATOR_S,
-                     "fractalexplorer",
-                     NULL);
+      full_path = g_strconcat ("${gimp_dir}", G_DIR_SEPARATOR_S,
+                               "fractalexplorer",
+                               G_SEARCHPATH_SEPARATOR_S,
+                               "${gimp_data_dir}", G_DIR_SEPARATOR_S,
+                               "fractalexplorer",
+                               NULL);
       esc_path = g_strescape (full_path, NULL);
       g_free (full_path);
 
@@ -550,7 +555,6 @@ explorer_dialog (void)
       g_free (gimprc);
       g_free (esc_path);
     }
-
 
   wint.wimage = g_new (guchar, preview_width * preview_height * 3);
   elements    = g_new (DialogElements, 1);

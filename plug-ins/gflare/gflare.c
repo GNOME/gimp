@@ -833,9 +833,10 @@ plugin_run (const gchar      *name,
             gint             *nreturn_vals,
             GimpParam       **return_vals)
 {
-  static GimpParam  values[1];
-  GimpRunMode       run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  gchar             *path;
 
   /* Initialize */
   run_mode = param[0].data.d_int32;
@@ -871,18 +872,22 @@ plugin_run (const gchar      *name,
    *    Parse gflare path from gimprc and load gflares
    */
 
-  gflare_path = gimp_gimprc_query ("gflare-path");
-  if (! gflare_path)
+  path = gimp_gimprc_query ("gflare-path");
+  if (path)
+    {
+      gflare_path = g_filename_from_utf8 (path, -1, NULL, NULL, NULL);
+      g_free (path);
+    }
+  else
     {
       gchar *gimprc = gimp_personal_rc_file ("gimprc");
       gchar *full_path;
       gchar *esc_path;
 
-      full_path =
-        g_strconcat ("${gimp_dir}", G_DIR_SEPARATOR_S, "gflare",
-                     G_SEARCHPATH_SEPARATOR_S,
-                     "${gimp_data_dir}", G_DIR_SEPARATOR_S, "gflare",
-                     NULL);
+      full_path = g_strconcat ("${gimp_dir}", G_DIR_SEPARATOR_S, "gflare",
+                               G_SEARCHPATH_SEPARATOR_S,
+                               "${gimp_data_dir}", G_DIR_SEPARATOR_S, "gflare",
+                               NULL);
       esc_path = g_strescape (full_path, NULL);
       g_free (full_path);
 

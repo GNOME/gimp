@@ -49,7 +49,7 @@ static GtkWidget *light_type_combo;
 static GtkWidget *lightselect_combo;
 static GtkWidget *spin_intensity;
 static GtkWidget *isolate_button;
-static gchar     *lighting_effects_path       = NULL;
+static gchar     *lighting_effects_path = NULL;
 
 static void create_main_notebook      (GtkWidget       *container);
 
@@ -949,6 +949,7 @@ main_dialog (GimpDrawable *drawable)
   GtkWidget *frame;
   GtkWidget *button;
   GtkWidget *toggle;
+  gchar     *path;
   gboolean   run = FALSE;
 
   /*
@@ -956,7 +957,13 @@ main_dialog (GimpDrawable *drawable)
   */
 
   gimp_ui_init ("Lighting", FALSE);
-  lighting_effects_path = gimp_gimprc_query ("lighting-effects-path");
+
+  path = gimp_gimprc_query ("lighting-effects-path");
+  if (path)
+    {
+      lighting_effects_path = g_filename_from_utf8 (path, -1, NULL, NULL, NULL);
+      g_free (path);
+    }
 
   lighting_stock_init ();
 
