@@ -33,6 +33,10 @@
 #define M_PI    3.14159265358979323846
 #endif /* M_PI */
 
+#ifndef RAND_MAX
+#define RAND_MAX 2147483647
+#endif /* RAND_MAX */
+
 #define SCALE_WIDTH 125
 #define BLACK 0
 #define BG    1

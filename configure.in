@@ -102,7 +102,7 @@ dnl Test for Xmu
       WEBBROWSER="webbrowser"; LIBXMU_LIB='-lXmu -lXt -lSM -lICE',
       AC_CHECK_LIB(Xmu, XmuUpdateMapHints,
 	WEBBROWSER="webbrowser"; LIBXMU_LIB='-lXmu -lXt',
-	AC_MSG_WARN(*** webbrowser plug-in will not be built ***), -lXt), -lXt, -lSM, -lICE)
+	AC_MSG_WARN(*** webbrowser plug-in will not be built ***), -lXt), -lXt -lSM -lICE)
   fi
 
 dnl Test for libaa
@@ -223,10 +223,13 @@ AC_C_INLINE
 
 dnl Check for random number functions
 AC_CHECK_FUNC(random,
-  AC_DEFINE(RAND_FUNC, random) AC_DEFINE(SRAND_FUNC, srandom),
-  AC_CHECK_FUNC(lrand48,
-    AC_DEFINE(RAND_FUNC, lrand48) AC_DEFINE(SRAND_FUNC, srand48),
-    AC_DEFINE(RAND_FUNC, rand) AC_DEFINE(SRAND_FUNC, srand)))
+    AC_DEFINE(RAND_FUNC, random) AC_DEFINE(SRAND_FUNC, srandom),
+    AC_CHECK_FUNC(lrand48,
+        AC_DEFINE(RAND_FUNC, lrand48) AC_DEFINE(SRAND_FUNC, srand48),
+        AC_DEFINE(RAND_FUNC, rand) AC_DEFINE(SRAND_FUNC, srand)))
+
+dnl check for difftime
+AC_CHECK_FUNC(difftime, , AC_DEFINE(NO_DIFFTIME))
 
 CFLAGS="$gimp_save_CFLAGS"
 LIBS="$gimp_save_LIBS"

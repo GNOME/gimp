@@ -884,9 +884,11 @@ text_size_key_function (GtkWidget   *w,
 
   text_tool = (TextTool *) data;
 
-  if (event->keyval == GDK_Return)
+  if ((event->keyval == GDK_Return) || (event->keyval == GDK_Tab) ||
+        (event->keyval == GDK_space))
     {
-      gtk_signal_emit_stop_by_name (GTK_OBJECT (w), "key_press_event");
+      if (event->keyval != GDK_Tab)
+          gtk_signal_emit_stop_by_name (GTK_OBJECT (w), "key_press_event");
 
       old_value = atoi (gtk_entry_get_text (GTK_ENTRY (text_tool->size_text)));
       if (!text_load_font (text_tool))

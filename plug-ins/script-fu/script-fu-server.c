@@ -25,13 +25,17 @@
 #include <time.h>
 #include <sys/time.h>
 #include <sys/types.h>
-#ifdef HAVE_SYS_SELECT_H
-#include <sys/select.h>
-#endif /* HAVE_SYS_SELECT_H */
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h>
+
+#include "config.h"
+
+#ifdef HAVE_SYS_SELECT_H
+#include <sys/select.h>
+#endif /* HAVE_SYS_SELECT_H */
+
 #include "libgimp/gimp.h"
 #include "gtk/gtk.h"
 #include "siod.h"
@@ -41,6 +45,9 @@
 #define RESPONSE_HEADER 4
 #define MAGIC   'G'
 
+#ifdef NO_DIFFTIME
+#define difftime(a,b) (((double)(a)) - ((double)(b)))
+#endif
 
 #ifndef NO_FD_SET
 #  define SELECT_MASK fd_set
@@ -133,7 +140,7 @@ static gint   server_sock;
 static GList *command_queue = NULL;
 static gint   queue_length = 0;
 static gint   request_no = 0;
-static FILE  *server_log_file = stdout;
+static FILE  *server_log_file = NULL;
 static GHashTable *clientname_ht = NULL;
 static SELECT_MASK server_active, server_read;
 

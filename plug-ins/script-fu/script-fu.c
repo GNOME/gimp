@@ -26,6 +26,8 @@
 #include "script-fu-scripts.h"
 #include "script-fu-server.h"
 
+extern FILE *siod_output;
+
 /* External functions
  */
 extern void gimp_extension_process (guint timeout);
@@ -163,6 +165,8 @@ run (char    *name,
      int     *nreturn_vals,
      GParam **return_vals)
 {
+  siod_output = stdout;
+
   /*  Determine before we allow scripts to register themselves
    *   whether this is the base, automatically installed script-fu extension
    */

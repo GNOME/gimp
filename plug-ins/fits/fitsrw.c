@@ -87,6 +87,7 @@ static char ident[] = "@(#) libfits.c              0.11  20-Dec-97  (%I%)";
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "fitsrw.h"
 

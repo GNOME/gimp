@@ -79,6 +79,7 @@
 #include <errno.h>
 #include <sys/types.h>
 #include <sys/times.h>
+#include <glib.h>
 
 #include "siod.h"
 #include "siodp.h"
@@ -169,7 +170,7 @@ long siod_verbose_level = 4;
 #endif
 
 /*  Added by Spencer Kimball for script-fu shit 6/3/97 */
-FILE *siod_output = stdout;
+FILE *siod_output;
 
 char *siod_lib = SIOD_LIB_DEFAULT;
 
@@ -3137,7 +3138,7 @@ vload (char *fname, long cflag, long rflag)
 	   *end && isalnum (*end);
 	   ++end);
       j = end - start;
-      memmove (buffer, start, j);
+      g_memmove (buffer, start, j);
       buffer[strlen (key) - 1] = '_';
       buffer[j] = 0;
       strcat (buffer, ftype);
@@ -3509,7 +3510,7 @@ last_c_errmsg (int num)
   int xerrno = (num < 0) ? errno : num;
   static char serrmsg[100];
   char *errmsg;
-  errmsg = strerror (xerrno);
+  errmsg = g_strerror (xerrno);
   if (!errmsg)
     {
       sprintf (serrmsg, "errno %d", xerrno);
@@ -3522,7 +3523,7 @@ LISP
 llast_c_errmsg (int num)
 {
   int xerrno = (num < 0) ? errno : num;
-  char *errmsg = strerror (xerrno);
+  char *errmsg = g_strerror (xerrno);
   if (!errmsg)
     return (flocons (xerrno));
   return (cintern (errmsg));

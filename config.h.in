@@ -42,10 +42,8 @@
 
 #undef IPC_RMID_DEFERRED_RELEASE
 
+#undef NO_DIFFTIME
 #undef NO_FD_SET
-
-#undef RETSIGTYPE
-#undef TIME_WITH_SYS_TIME
 
 #undef RAND_FUNC
 #undef SRAND_FUNC

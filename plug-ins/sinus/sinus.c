@@ -52,6 +52,10 @@
 #define M_PI    3.14159265358979323846
 #endif /* M_PI */
 
+#ifndef RAND_MAX
+#define RAND_MAX 2147483647
+#endif /* RAND_MAX */
+
 #define ROUND_TO_INT(val) ((val) + 0.5)
 
 typedef gdouble colRGBA[4];

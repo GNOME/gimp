@@ -1,3 +1,24 @@
+Tue Mar 24 18:03:37 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* configure.in: corrected test for libXmu for some systems; added
+	test for difftime
+
+	* app/main.c: use glib ATEXIT macro
+
+	* app/text_tool.c: applied gimp-stric-980321-0 (text preview
+	refresh)
+
+	* plug-ins/script-fu/script-fu-console.c: don't need to init
+	gtkpreview stuff, since we don't use them
+
+	* plug-ins/script-fu/*: many portability fixes
+
+	* plug-ins/pnm/pnm.c: sprintf portability patch
+
+	* plug-ins now #define RAND_MAX if needed
+
+	* plug-ins/sparkle/sparkle.c: applied gimp-joke-980322-1
+
 Tue Mar 24 04:19:55 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* app/convert.c: fix for fencepost error from Adam

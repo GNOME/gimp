@@ -31,6 +31,10 @@
 /*  The mosaic logo  */
 #include "mosaic_logo.h"
 
+#ifndef RAND_MAX
+#define RAND_MAX 2147483647
+#endif /* RAND_MAX */
+
 #ifndef M_PI
 #define M_PI    3.14159265358979323846
 #endif /* M_PI */

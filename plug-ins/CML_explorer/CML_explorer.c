@@ -84,6 +84,10 @@
 #define M_PI    3.14159265358979323846
 #endif /* M_PI */
 
+#ifndef RAND_MAX
+#define RAND_MAX 2147483647
+#endif /* RAND_MAX */
+
 #define PARAM_FILE_FORMAT_VERSION	1.0
 #define	PLUG_IN_NAME	"plug_in_CML_explorer"
 #define SHORT_NAME	"CML_explorer"

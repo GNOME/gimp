@@ -28,6 +28,10 @@
 #include <string.h>
 #include <time.h>		/* for seed of random number */
 
+#ifndef RAND_MAX
+#define RAND_MAX 2147483647
+#endif /* RAND_MAX */
+
 #define	PLUG_IN_NAME	"plug_in_scatter_hsv"
 #define SHORT_NAME	"scatter_hsv"
 #define PROGRESS_NAME	"scatter_hsv: scattering..."

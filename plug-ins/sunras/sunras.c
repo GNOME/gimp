@@ -39,9 +39,9 @@ static char ident[] = "@(#) GIMP SunRaster file-plugin v1.95  20-Dec-97";
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
-
 
 typedef int WRITE_FUN(void*,size_t,size_t,FILE*);
 

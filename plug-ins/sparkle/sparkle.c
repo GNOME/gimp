@@ -619,7 +619,7 @@ fspike (GPixelRgn *dest_rgn,
   gdouble rpos;
   gdouble in[MAX_CHANNELS];
   gdouble val[MAX_CHANNELS];
-  gdouble ho, so, vo;
+  gdouble ho = 1.0, so = 1.0, vo = 1.0;
   gdouble theta, efac;
   gdouble sfac;
   gdouble *gd_tmp1, *gd_tmp2;

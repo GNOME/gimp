@@ -64,6 +64,10 @@
 
 /*---- Defines ----*/
 
+#ifndef RAND_MAX
+#define RAND_MAX 2147483647
+#endif /* RAND_MAX */
+
 #define TABLE_SIZE 64
 #define WEIGHT(T) ((2.0*fabs(T)-3.0)*(T)*(T)+1.0)
 
