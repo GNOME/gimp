@@ -107,7 +107,7 @@ brushes_get_list_invoker (Gimp     *gimp,
   Argument *return_args;
   gchar *filter;
   gint32 num_brushes;
-  gchar **brush_list;
+  gchar **brush_list = NULL;
 
   filter = (gchar *) args[0].value.pdb_pointer;
   if (filter && !g_utf8_validate (filter, -1, NULL))

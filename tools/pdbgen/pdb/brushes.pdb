@@ -111,7 +111,8 @@ HELP
 	{ name => 'brush_list', type => 'stringarray',
 	  desc => 'The list of brush names',
 	  array => { name => 'num_brushes',
-		     desc => 'The number of brushes in the brush list' } }
+		     desc => 'The number of brushes in the brush list' },
+	  init => 1 }
     );
 
     %invoke = (

@@ -90,7 +90,7 @@ gradients_get_list_invoker (Gimp     *gimp,
   Argument *return_args;
   gchar *filter;
   gint32 num_gradients;
-  gchar **gradient_list;
+  gchar **gradient_list = NULL;
 
   filter = (gchar *) args[0].value.pdb_pointer;
   if (filter && !g_utf8_validate (filter, -1, NULL))

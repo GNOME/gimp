@@ -86,7 +86,7 @@ patterns_get_list_invoker (Gimp     *gimp,
   Argument *return_args;
   gchar *filter;
   gint32 num_patterns;
-  gchar **pattern_list;
+  gchar **pattern_list = NULL;
 
   filter = (gchar *) args[0].value.pdb_pointer;
   if (filter && !g_utf8_validate (filter, -1, NULL))

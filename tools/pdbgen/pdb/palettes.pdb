@@ -107,7 +107,8 @@ HELP
         { name => 'palette_list', type => 'stringarray',
           desc => 'The list of palette names',
           array => { name => 'num_palettes',
-                     desc => 'The number of palettes in the list' } }
+                     desc => 'The number of palettes in the list' },
+	  init => 1 }
     );
 
     %invoke = (

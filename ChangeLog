@@ -1,3 +1,18 @@
+2003-09-04  Manish Singh  <yosh@gimp.org>
+
+	* tools/pdbgen/pdb/brushes.pdb
+	* tools/pdbgen/pdb/fonts.pdb
+	* tools/pdbgen/pdb/gradients.pdb
+	* tools/pdbgen/pdb/palettes.pdb
+	* tools/pdbgen/pdb/patterns.pdb: init pattern_list to quell gcc
+	warning.
+
+	* app/pdb/brushes_cmds.c
+	* app/pdb/fonts_cmds.c
+	* app/pdb/gradients_cmds.c
+	* app/pdb/palettes_cmds.c
+	* app/pdb/patterns_cmds.c: regenerated.
+
 2003-09-04  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/plug_in.pdb (plugins_query): use regfree()
