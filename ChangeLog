@@ -1,3 +1,7 @@
+Sat Jun 20 22:09:16 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* gimptool.in: fixes for new library versioning
+
 Sat Jun 20 11:36:16 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* configure.in

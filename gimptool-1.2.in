@@ -71,7 +71,7 @@ while test $# -gt 0; do
       echo $includes `$gtk_config --cflags`
       ;;
     --libs)
-      echo -L@libdir@ -lgimpui -lgimp `$gtk_config --libs`
+      echo -L@libdir@ -lgimpui-@LT_RELEASE@ -lgimp-@LT_RELEASE@ `$gtk_config --libs`
       ;;
     --install-bin | --install-admin-bin \
     | --install-script | --install-admin-script)
@@ -125,7 +125,7 @@ while test $# -gt 0; do
       shift
       if test "x$1" != "x"; then
         if test -r "$1"; then
-          cmd="$cc $cflags $includes `$gtk_config --cflags` -o $install_dir/`echo $1|sed 's/\.[^\.]*$//'` $1 -L@libdir@ -lgimpui -lgimp `$gtk_config --libs`"
+          cmd="$cc $cflags $includes `$gtk_config --cflags` -o $install_dir/`echo $1|sed 's/\.[^\.]*$//'` $1 -L@libdir@ -lgimpui-@LT_RELEASE@ -lgimp-@LT_RELEASE@ `$gtk_config --libs`"
           echo $cmd
           exec $cmd
         else
