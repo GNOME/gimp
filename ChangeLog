@@ -1,3 +1,8 @@
+2004-11-11  Jay Cox  <jaycox@gimp.org>
+
+	* app/base/brush-scale.c: Keep computed brush values from
+	overflowing with large reduction factors.  Fixes bug #76228.
+
 2004-11-11  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpintstore.c

@@ -57,7 +57,7 @@ brush_scale_mask (MaskBuf *brush_mask,
 
   fx = fx0 = (256.0 * src_width) / dest_width;
   fy = fy0 = (256.0 * src_height) / dest_height;
-  area = fx0 * fy0;
+  area = (fx0 * fy0) >> 8;
 
   x = x0 = 0;
   y = y0 = 0;
@@ -82,20 +82,20 @@ brush_scale_mask (MaskBuf *brush_mask,
 	      
 	      if (dx)
 		{
-		  value += dx * dy * src[x + src_width * y]; 
+		  value += (dx * dy * src[x + src_width * y]) >> 8;
 		  x++;
 		  fx -= dx;
 		  dx = 0;
 		}
 	      while (fx >= 256)
 		{
-		  value += 256 * dy * src[x + src_width * y];  
+		  value += dy * src[x + src_width * y];  
 		  x++;
 		  fx -= 256;
 		}
 	      if (fx)
 		{
-		  value += fx * dy * src[x + src_width * y];
+		  value += fx * dy * src[x + src_width * y] >> 8;
 		  dx = 256 - fx;
 		}	      
 	      y++;
@@ -111,20 +111,20 @@ brush_scale_mask (MaskBuf *brush_mask,
 	      
 	      if (dx)
 		{
-		  value += dx * 256 * src[x + src_width * y]; 
+		  value += dx * src[x + src_width * y]; 
 		  x++;
 		  fx -= dx;
 		  dx = 0;
 		}
 	      while (fx >= 256)
 		{
-		  value += 256 * 256 * src[x + src_width * y];  
+		  value += 256 * src[x + src_width * y];  
 		  x++;
 		  fx -= 256;
 		}
 	      if (fx)
 		{
-		  value += fx * 256 * src[x + src_width * y];
+		  value += fx * src[x + src_width * y];
 		  dx = 256 - fx;
 		}
 	      y++;
@@ -139,20 +139,20 @@ brush_scale_mask (MaskBuf *brush_mask,
 	      
 	      if (dx)
 		{
-		  value += dx * fy * src[x + src_width * y]; 
+		  value += (dx * fy * src[x + src_width * y]) >> 8; 
 		  x++;
 		  fx -= dx;
 		  dx = 0;
 		}
 	      while (fx >= 256)
 		{
-		  value += 256 * fy * src[x + src_width * y];  
+		  value += fy * src[x + src_width * y];  
 		  x++;
 		  fx -= 256;
 		}
 	      if (fx)
 		{
-		  value += fx * fy * src[x + src_width * y];
+		  value += (fx * fy * src[x + src_width * y]) >> 8;
 		  dx = 256 - fx;
 		}
 	      dy = 256 - fy;
@@ -210,7 +210,7 @@ brush_scale_pixmap (MaskBuf *pixmap,
 
   fx = fx0 = (256.0 * src_width) / dest_width;
   fy = fy0 = (256.0 * src_height) / dest_height;
-  area = fx0 * fy0;
+  area = (fx0 * fy0) >> 8;
 
   x = x0 = 0;
   y = y0 = 0;
@@ -237,7 +237,7 @@ brush_scale_pixmap (MaskBuf *pixmap,
 	      
 	      if (dx)
 		{
-		  factor = dx * dy;
+		  factor = (dx * dy) >> 8;
 		  src_ptr = src + 3 * (x + y * src_width);
 		  ADD_RGB (value, factor, src_ptr);
 		  x++;
@@ -246,7 +246,7 @@ brush_scale_pixmap (MaskBuf *pixmap,
 		}
 	      while (fx >= 256)
 		{
-		  factor = 256 * dy;
+		  factor = dy;
 		  src_ptr = src + 3 * (x + y * src_width);
 		  ADD_RGB (value, factor, src_ptr);
 		  x++;
@@ -254,7 +254,7 @@ brush_scale_pixmap (MaskBuf *pixmap,
 		}
 	      if (fx)
 		{
-		  factor = fx * dy;
+		  factor = (fx * dy) >> 8;
 		  src_ptr = src + 3 * (x + y * src_width);
 		  ADD_RGB (value, factor, src_ptr);
 		  dx = 256 - fx;
@@ -272,7 +272,7 @@ brush_scale_pixmap (MaskBuf *pixmap,
 	      
 	      if (dx)
 		{
-		  factor = dx * 256;
+		  factor = dx;
 		  src_ptr = src + 3 * (x + y * src_width);
 		  ADD_RGB (value, factor, src_ptr);
 		  x++;
@@ -281,7 +281,7 @@ brush_scale_pixmap (MaskBuf *pixmap,
 		}
 	      while (fx >= 256)
 		{
-		  factor = 256 * 256;
+		  factor = 256;
 		  src_ptr = src + 3 * (x + y * src_width);
 		  ADD_RGB (value, factor, src_ptr);
 		  x++;
@@ -289,7 +289,7 @@ brush_scale_pixmap (MaskBuf *pixmap,
 		}
 	      if (fx)
 		{
-		  factor = fx * 256;
+		  factor = fx;
 		  src_ptr = src + 3 * (x + y * src_width);
 		  ADD_RGB (value, factor, src_ptr);
 		  dx = 256 - fx;
@@ -306,7 +306,7 @@ brush_scale_pixmap (MaskBuf *pixmap,
 	      
 	      if (dx)
 		{
-		  factor = dx * fy;
+		  factor = (dx * fy) >> 8;
 		  src_ptr = src + 3 * (x + y * src_width);
 		  ADD_RGB (value, factor, src_ptr);
 		  x++;
@@ -315,7 +315,7 @@ brush_scale_pixmap (MaskBuf *pixmap,
 		}
 	      while (fx >= 256)
 		{
-		  factor = 256 * fy;
+		  factor = fy;
 		  src_ptr = src + 3 * (x + y * src_width);
 		  ADD_RGB (value, factor, src_ptr);
 		  x++;
@@ -323,7 +323,7 @@ brush_scale_pixmap (MaskBuf *pixmap,
 		}
 	      if (fx)
 		{
-		  factor = fx * fy;
+		  factor = (fx * fy) >> 8;
 		  src_ptr = src + 3 * (x + y * src_width);
 		  ADD_RGB (value, factor, src_ptr);
 		  dx = 256 - fx;
