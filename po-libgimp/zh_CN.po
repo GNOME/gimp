@@ -1,0 +1,262 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# Xie Yuheng <phycommusyee@263.net>, 2001
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: libgimp\n"
+"POT-Creation-Date: 2001-10-25 22:50+0800\n"
+"PO-Revision-Date: 2001-10-26 17:00+0800\n"
+"Last-Translator: Xie Yuheng <phycommusyee@263.net>\n"
+"Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Translator: Xie Yuheng <phycommusyee@263.net>\n"
+
+#: libgimp/gimpexport.c:170 libgimp/gimpexport.c:206
+msgid "can't handle layers"
+msgstr "无法处理图层"
+
+#: libgimp/gimpexport.c:171 libgimp/gimpexport.c:180 libgimp/gimpexport.c:189
+msgid "Merge Visible Layers"
+msgstr "合并可见的层"
+
+#: libgimp/gimpexport.c:179
+msgid "can't handle layer offsets, size or opacity"
+msgstr "无法处理图层位移、大小或不透明度"
+
+#: libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
+msgid "can only handle layers as animation frames"
+msgstr "只能以动画的帧的方式处理图层"
+
+#: libgimp/gimpexport.c:189 libgimp/gimpexport.c:198
+msgid "Save as Animation"
+msgstr "以动画储存"
+
+#: libgimp/gimpexport.c:198 libgimp/gimpexport.c:207 libgimp/gimpexport.c:216
+msgid "Flatten Image"
+msgstr "平整图像"
+
+#: libgimp/gimpexport.c:215
+msgid "can't handle transparency"
+msgstr "无法处理透明度"
+
+#: libgimp/gimpexport.c:224
+msgid "can only handle RGB images"
+msgstr "只能处理 RGB 图像"
+
+#: libgimp/gimpexport.c:225 libgimp/gimpexport.c:253 libgimp/gimpexport.c:262
+msgid "Convert to RGB"
+msgstr "转换到 RGB"
+
+#: libgimp/gimpexport.c:233
+msgid "can only handle grayscale images"
+msgstr "只能处理灰度图像"
+
+#: libgimp/gimpexport.c:234 libgimp/gimpexport.c:253 libgimp/gimpexport.c:274
+msgid "Convert to Grayscale"
+msgstr "转换到灰度"
+
+#: libgimp/gimpexport.c:242
+msgid "can only handle indexed images"
+msgstr "只能处理索引图像"
+
+#: libgimp/gimpexport.c:243 libgimp/gimpexport.c:262 libgimp/gimpexport.c:272
+msgid ""
+"Convert to Indexed using default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+"使用缺省的设置转换到索引\n"
+"(手工操作以调整结果)"
+
+#: libgimp/gimpexport.c:252
+msgid "can only handle RGB or grayscale images"
+msgstr "只能处理 RGB 或灰度图像"
+
+#: libgimp/gimpexport.c:261
+msgid "can only handle RGB or indexed images"
+msgstr "只能处理 RGB 或索引图像"
+
+#: libgimp/gimpexport.c:271
+msgid "can only handle grayscale or indexed images"
+msgstr "只能处理灰度或索引图像"
+
+#: libgimp/gimpexport.c:282
+msgid "needs an alpha channel"
+msgstr "需要一个 alpha 通道"
+
+#: libgimp/gimpexport.c:283
+msgid "Add Alpha Channel"
+msgstr "添加 Alpha 通道"
+
+#.
+#. *  Plug-ins must have called gtk_init () before calling gimp_export ().
+#. *  Otherwise bad things will happen now!!
+#.
+#. the dialog
+#: libgimp/gimpexport.c:356
+msgid "Confirm Save"
+msgstr "确认保存"
+
+#: libgimp/gimpexport.c:360
+msgid "Confirm"
+msgstr "确认"
+
+#: libgimp/gimpexport.c:362
+msgid "Cancel"
+msgstr "取消"
+
+#: libgimp/gimpexport.c:376
+#, c-format
+msgid ""
+"You are about to save %s as %s.\n"
+"This will not save the visible layers."
+msgstr ""
+"你将要把 %s 保存为 %s。\n"
+"这样将不会保存可见的图层。"
+
+#.
+#. *  Plug-ins must have called gtk_init () before calling gimp_export ().
+#. *  Otherwise bad things will happen now!!
+#.
+#. the dialog
+#: libgimp/gimpexport.c:414
+msgid "Export File"
+msgstr "导出文件"
+
+#: libgimp/gimpexport.c:419
+msgid "Export"
+msgstr "导出"
+
+#: libgimp/gimpexport.c:421
+msgid "Ignore"
+msgstr "忽略"
+
+#: libgimp/gimpexport.c:438
+msgid ""
+"Your image should be exported before it can be saved for the following "
+"reasons:"
+msgstr ""
+"你的图像在保存之前应该先进行导出，"
+"因为："
+
+#. the footline
+#: libgimp/gimpexport.c:503
+msgid "The export conversion won't modify your original image."
+msgstr "导出转换不会改变你原来的图像。"
+
+#: libgimp/gimpexport.c:571
+msgid "a layer mask"
+msgstr ""
+
+#: libgimp/gimpexport.c:573
+msgid "a channel (saved selection)"
+msgstr ""
+
+#. pseudo unit
+#: libgimp/gimpunit.c:52
+msgid "pixel"
+msgstr "像素"
+
+#: libgimp/gimpunit.c:52
+msgid "pixels"
+msgstr "像素"
+
+#. standard units
+#: libgimp/gimpunit.c:55
+msgid "inch"
+msgstr "英寸"
+
+#: libgimp/gimpunit.c:55
+msgid "inches"
+msgstr "英寸"
+
+#: libgimp/gimpunit.c:56
+msgid "millimeter"
+msgstr "毫米"
+
+#: libgimp/gimpunit.c:56
+msgid "millimeters"
+msgstr "毫米"
+
+#. professional units
+#: libgimp/gimpunit.c:59
+msgid "point"
+msgstr "点"
+
+#: libgimp/gimpunit.c:59
+msgid "points"
+msgstr "点"
+
+#: libgimp/gimpunit.c:60
+msgid "pica"
+msgstr "派卡"
+
+#: libgimp/gimpunit.c:60
+msgid "picas"
+msgstr "派卡"
+
+#: libgimp/gimpunit.c:67
+msgid "percent"
+msgstr "百分点"
+
+#: libgimpwidgets/gimpcolorbutton.c:78
+msgid "/Use Foreground Color"
+msgstr "/使用前景色"
+
+#: libgimpwidgets/gimpcolorbutton.c:79
+msgid "/Use Background Color"
+msgstr "/使用背景色"
+
+#: libgimpwidgets/gimpfileselection.c:362
+msgid "Select File"
+msgstr "选择文件"
+
+#: libgimpwidgets/gimpunitmenu.c:257
+msgid "More..."
+msgstr "更多..."
+
+#: libgimpwidgets/gimpunitmenu.c:513
+msgid "Unit Selection"
+msgstr "单位选择"
+
+#: libgimpwidgets/gimpunitmenu.c:549
+msgid "Unit"
+msgstr "单位"
+
+#: libgimpwidgets/gimpunitmenu.c:550
+msgid "Factor"
+msgstr "因子"
+
+#: libgimpwidgets/gimpwidgets.c:724
+msgid ""
+"If the \"Time\" button is not pressed, use this value for random number "
+"generator seed - this allows you to repeat a given \"random\" operation"
+msgstr ""
+"如果“时间”按钮没有按下，将使用这个值作为随机数"
+"生成种子 - 这将允许你重复一个指定的“随机”操作"
+
+#: libgimpwidgets/gimpwidgets.c:729
+msgid "Time"
+msgstr "时间"
+
+#: libgimpwidgets/gimpwidgets.c:738
+msgid ""
+"Seed random number generator from the current time - this guarantees a "
+"reasonable randomization"
+msgstr ""
+"以当前时间作为随机数生成器的种子 - 这保证了一定"
+"程度的随机性"
+
+#: libgimpwidgets/gimpwidgets.c:1052
+msgid "Bytes"
+msgstr "字节"
+
+#: libgimpwidgets/gimpwidgets.c:1053
+msgid "KiloBytes"
+msgstr "K 字节"
+
+#: libgimpwidgets/gimpwidgets.c:1054
+msgid "MegaBytes"
+msgstr "M 字节"

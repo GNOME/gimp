@@ -1,3 +1,8 @@
+2001-10-30  Wang Jian  <lark@linux.net.cn>
+
+	* zh_CN.po: Added Simplified Chinese translation by
+	Xie Yuheng <phycommusyee@263.net>.
+
 2001-09-27  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.in.in: different version for AM_GLIB_GNU_GETTEXT.
