@@ -76,9 +76,13 @@ $opts
 install-\%: \%
 	\@\$(NORMAL_INSTALL)
 	\$(mkinstalldirs) \$(DESTDIR)\$(libexecdir)
-	\@if test -f \$<; then \\
-	  echo " \$(LIBTOOL)  --mode=install \$(INSTALL_PROGRAM) \$< \$(DESTDIR)\$(libexecdir)/`echo \$<|sed 's/\$(EXEEXT)\$\$//'|sed '\$(transform)'|sed 's/\$\$/\$(EXEEXT)/'`"; \\
-	  \$(LIBTOOL)  --mode=install \$(INSTALL_PROGRAM) \$< \$(DESTDIR)\$(libexecdir)/`echo \$<|sed 's/\$(EXEEXT)\$\$//'|sed '\$(transform)'|sed 's/\$\$/\$(EXEEXT)/'`; \\
+	\@p=\$<; p1=`echo \$\$p|sed 's/\$(EXEEXT)\$\$//'`; \\
+	if test -f \$\$p \\
+	   || test -f \$\$p1 \\
+	; then \\
+	  f=`echo "\$\$p1" | sed 's,^.*/,,;\$(transform);s/\$\$/\$(EXEEXT)/'`; \\
+	  echo " \$(INSTALL_PROGRAM_ENV) \$(LIBTOOL) --mode=install \$(libexecPROGRAMS_INSTALL) \$\$p \$(DESTDIR)\$(libexecdir)/\$\$f"; \\
+	  \$(INSTALL_PROGRAM_ENV) \$(LIBTOOL) --mode=install \$(libexecPROGRAMS_INSTALL) \$\$p \$(DESTDIR)\$(libexecdir)/\$\$f || exit 1; \\
 	else :; fi
 EOT
 
