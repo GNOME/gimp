@@ -805,7 +805,9 @@ boundscheck (gint32 image_ID)
 
 	  /* Image has illegal bounds - ask the user what it wants to do */
 
-	  if (badbounds_dialog())
+	  /* Do the crop if we can't talk to the user, or if we asked
+	   * the user and they said yes. */
+	  if ((run_mode == RUN_NONINTERACTIVE) || badbounds_dialog ())
 	    {
 	      gimp_run_procedure("gimp_crop", &nreturn_vals,
 				 PARAM_IMAGE, image_ID,

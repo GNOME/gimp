@@ -1,3 +1,20 @@
+Tue Jul 18 23:34:34 BST 2000  Austin Donnelly  <austin@gimp.org>
+
+	* plugs-ins/common/gif.c: The gif save plugin normally asks the
+	    user if it's ok to crop the image if there are layers larger
+	    than the image size.  This isn't a good idea if we're running
+	    with run_mode == NON_INTERACTIVE.  Fix similar to that
+	    suggested by Bryan Livingston <bryan@cooltext.com> on
+	    gimp-developer mailing list.
+
+	* app/layer.c: Fix for Bug#17347: Scale Layer leaves artifacts.
+	    Basic problem is that scaling a layer when there's a selection
+	    active (eg there's a floating selection) doesn't invalidate
+	    the layer bounds.  Same problem with resizing a layer,
+	    although the bug report didn't mention that.  Fixed by changing
+	    layer_resize() and layer_scale_lowlevel() to call
+	    layer_invalidate_boundary() once done changing the layer.
+
 2000-07-18  Tor Lillqvist  <tml@iki.fi>
 
 	* libgimp/gimp.c (gimp_flush): Add horrible hack that seems to

@@ -832,6 +832,9 @@ layer_scale_lowlevel (Layer *layer,
       GIMP_DRAWABLE(layer->mask)->offset_y = GIMP_DRAWABLE(layer)->offset_y;
       channel_scale (GIMP_CHANNEL(layer->mask), new_width, new_height);
     }
+
+  /*  Make sure we're not caching any old selection info  */
+  layer_invalidate_boundary (layer);
   
   /*  Update the new layer position  */
 
@@ -1080,6 +1083,9 @@ layer_resize (Layer *layer,
       channel_resize (GIMP_CHANNEL (layer->mask),
 		      new_width, new_height, offx, offy);
     }
+
+  /*  Make sure we're not caching any old selection info  */
+  layer_invalidate_boundary (layer);
 
   /*  update the new layer area  */
   drawable_update (GIMP_DRAWABLE(layer),
