@@ -68,11 +68,11 @@ typedef struct
 /* Declare local functions.
  */
 static void    query  (void);
-static void    run    (gchar    *name,
-		       gint      nparams,
-		       GimpParam   *param,
-		       gint     *nreturn_vals,
-		       GimpParam  **return_vals);
+static void    run    (gchar      *name,
+		       gint        nparams,
+		       GimpParam  *param,
+		       gint       *nreturn_vals,
+		       GimpParam **return_vals);
 
 static void    ripple             (GimpDrawable *drawable);
 
@@ -81,16 +81,16 @@ static void    ripple_ok_callback (GtkWidget *widget,
 				   gpointer   data);
 
 static GimpTile * ripple_pixel (GimpDrawable *drawable,
-			     GimpTile     *tile,
-			     gint        x1,
-			     gint        y1,
-			     gint        x2,
-			     gint        y2,
-			     gint        x,
-			     gint        y,
-			     gint       *row,
-			     gint       *col,
-			     guchar     *pixel);
+                                GimpTile     *tile,
+                                gint        x1,
+                                gint        y1,
+                                gint        x2,
+                                gint        y2,
+                                gint        x,
+                                gint        y,
+                                gint       *row,
+                                gint       *col,
+                                guchar     *pixel);
 
 
 static gdouble displace_amount (gint     location);
@@ -160,16 +160,16 @@ query (void)
 }
 
 static void
-run (gchar  *name,
-     gint    nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint   *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  GimpRunMode run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
@@ -177,9 +177,9 @@ run (gchar  *name,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   switch (run_mode)
@@ -583,9 +583,9 @@ ripple_dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /*  The main vbox  */
   main_vbox = gtk_vbox_new (FALSE, 6);
@@ -611,33 +611,39 @@ ripple_dialog (void)
 
   toggle = gtk_check_button_new_with_label (_("Antialiasing"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &rvals.antialias);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), rvals.antialias);
   gtk_widget_show (toggle);
 
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &rvals.antialias);
+
   toggle = gtk_check_button_new_with_label ( _("Retain Tilability"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &rvals.tile);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), (rvals.tile));
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &rvals.tile);
 
   gtk_widget_show (toggle_vbox);
   gtk_widget_show (frame);
 
   /*  Orientation toggle box  */
-  frame =
-    gimp_radio_group_new2 (TRUE, _("Orientation"),
-			   G_CALLBACK (gimp_radio_button_update),
-			   &rvals.orientation, (gpointer) rvals.orientation,
+  frame = gimp_radio_group_new2 (TRUE, _("Orientation"),
+                                 G_CALLBACK (gimp_radio_button_update),
+                                 &rvals.orientation,
+                                 GINT_TO_POINTER (rvals.orientation),
 
-			   _("Horizontal"), (gpointer) HORIZONTAL, NULL,
-			   _("Vertical"),   (gpointer) VERTICAL, NULL,
+                                 _("Horizontal"),
+                                 GINT_TO_POINTER (HORIZONTAL), NULL,
 
-			   NULL);
+                                 _("Vertical"),
+                                 GINT_TO_POINTER (VERTICAL), NULL,
+
+                                 NULL);
+
   gtk_table_attach (GTK_TABLE (table), frame, 1, 2, 0, 1,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (frame);
@@ -688,9 +694,9 @@ ripple_dialog (void)
 				     rvals.period, 0, 200, 1, 10, 0,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &rvals.period);
+  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &rvals.period);
 
   /*  Amplitude  */
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
@@ -698,9 +704,9 @@ ripple_dialog (void)
 				     rvals.amplitude, 0, 200, 1, 10, 0,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &rvals.amplitude);
+  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &rvals.amplitude);
 
   gtk_widget_show (frame);
   gtk_widget_show (table);
@@ -717,15 +723,15 @@ ripple_dialog (void)
 static GimpTile *
 ripple_pixel (GimpDrawable *drawable,
 	      GimpTile     *tile,
-	      gint       x1,
-	      gint       y1,
-	      gint       x2,
-	      gint       y2,
-	      gint       x,
-	      gint       y,
-	      gint      *row,
-	      gint      *col,
-	      guchar    *pixel)
+	      gint          x1,
+	      gint          y1,
+	      gint          x2,
+	      gint          y2,
+	      gint          x,
+	      gint          y,
+	      gint         *row,
+	      gint         *col,
+	      guchar       *pixel)
 {
   static guchar empty_pixel[4] = {0, 0, 0, 0};
 

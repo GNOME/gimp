@@ -147,23 +147,23 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam	values[1];
-  GimpPDBStatusType   status = GIMP_PDB_EXECUTION_ERROR;
-  GimpRunMode  run_mode;
+  static GimpParam  values[1];
+  GimpPDBStatusType status = GIMP_PDB_EXECUTION_ERROR;
+  GimpRunMode       run_mode;
   
   run_mode = param[0].data.d_int32;
   drawable_id = param[2].data.d_int32;
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
   
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   switch (run_mode)
@@ -378,9 +378,9 @@ scatter_hsv_dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
@@ -417,10 +417,11 @@ scatter_hsv_dialog (void)
 			 GDK_BUTTON_RELEASE_MASK | 
 			 GDK_BUTTON_MOTION_MASK |
 			 GDK_POINTER_MOTION_HINT_MASK);
-  gtk_signal_connect (GTK_OBJECT (preview), "event",
-		      (GtkSignalFunc) preview_event_handler,
-		      NULL);
   gtk_widget_show (preview);
+
+  g_signal_connect (G_OBJECT (preview), "event",
+                    G_CALLBACK (preview_event_handler),
+                    NULL);
 
   gtk_widget_show (frame);
 
@@ -441,36 +442,36 @@ scatter_hsv_dialog (void)
 			      VALS.holdness, 1, 8, 1, 2, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (scatter_hsv_iscale_update),
-		      &VALS.holdness);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (scatter_hsv_iscale_update),
+                    &VALS.holdness);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Hue:"), SCALE_WIDTH, 0,
 			      VALS.hue_distance, 0, 255, 1, 8, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (scatter_hsv_iscale_update),
-		      &VALS.hue_distance);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (scatter_hsv_iscale_update),
+                    &VALS.hue_distance);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("Saturation:"), SCALE_WIDTH, 0,
 			      VALS.saturation_distance, 0, 255, 1, 8, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (scatter_hsv_iscale_update),
-		      &VALS.saturation_distance);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (scatter_hsv_iscale_update),
+                    &VALS.saturation_distance);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
 			      _("Value:"), SCALE_WIDTH, 0,
 			      VALS.value_distance, 0, 255, 1, 8, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (scatter_hsv_iscale_update),
-		      &VALS.value_distance);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (scatter_hsv_iscale_update),
+                    &VALS.value_distance);
 
   gtk_widget_show (table);
   gtk_widget_show (frame);
@@ -629,8 +630,8 @@ scatter_hsv_preview_update (void)
 	scatter_hsv_scatter (data+0, data+1, data+2);
 	gtk_preview_draw_row (GTK_PREVIEW (preview), data, x, y, 1);
       }
-  gtk_widget_draw (preview, NULL);
-  gdk_flush ();
+
+  gtk_widget_queue_draw (preview);
 }
 
 static void

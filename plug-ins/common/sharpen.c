@@ -71,10 +71,10 @@
  */
 
 static void	query (void);
-static void	run   (gchar   *name,
-		       gint     nparams,
+static void	run   (gchar      *name,
+		       gint        nparams,
 		       GimpParam  *param,
-		       gint    *nreturn_vals,
+		       gint       *nreturn_vals,
 		       GimpParam **returm_vals);
 
 static void	compute_luts   (void);
@@ -171,15 +171,15 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  GimpRunMode	run_mode;	/* Current run mode */
-  GimpPDBStatusType	status;		/* Return status */
-  GimpParam	*values;	/* Return values */
+  GimpRunMode        run_mode;  /* Current run mode */
+  GimpPDBStatusType  status;    /* Return status */
+  GimpParam	    *values;    /* Return values */
 
   /*
    * Initialize parameter data...
@@ -190,11 +190,11 @@ run (gchar   *name,
 
   values = g_new (GimpParam, 1);
 
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
-
   *nreturn_vals = 1;
   *return_vals  = values;
+
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = status;
 
   /*
    * Get drawable information...
@@ -532,9 +532,9 @@ sharpen_dialog (void)
 
   g_free (title);
 
-  gtk_signal_connect (GTK_OBJECT(dialog), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT(dialog), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /*
    * Top-level table for dialog...
@@ -580,9 +580,9 @@ sharpen_dialog (void)
 				     MIN (preview_width, sel_width),
 				     MIN (preview_width, sel_width));
 
-  gtk_signal_connect (hscroll_data, "value_changed",
-		      (GtkSignalFunc) preview_scroll_callback,
-		      NULL);
+  g_signal_connect (G_OBJECT (hscroll_data), "value_changed",
+                    G_CALLBACK (preview_scroll_callback),
+                    NULL);
 
   scrollbar = gtk_hscrollbar_new (GTK_ADJUSTMENT (hscroll_data));
   gtk_range_set_update_policy (GTK_RANGE (scrollbar), GTK_UPDATE_CONTINUOUS);
@@ -594,9 +594,9 @@ sharpen_dialog (void)
 				     MIN (preview_height, sel_height),
 				     MIN (preview_height, sel_height));
 
-  gtk_signal_connect (vscroll_data, "value_changed",
-		      GTK_SIGNAL_FUNC (preview_scroll_callback),
-		      NULL);
+  g_signal_connect (G_OBJECT (vscroll_data), "value_changed",
+                    G_CALLBACK (preview_scroll_callback),
+                    NULL);
 
   scrollbar = gtk_vscrollbar_new (GTK_ADJUSTMENT (vscroll_data));
   gtk_range_set_update_policy (GTK_RANGE (scrollbar), GTK_UPDATE_CONTINUOUS);
@@ -625,9 +625,9 @@ sharpen_dialog (void)
 			      sharpen_percent, 1, 99, 1, 10, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_iscale_update),
-		      &sharpen_percent);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialog_iscale_update),
+                    &sharpen_percent);
 
   gtk_widget_show (dialog);
 
@@ -842,8 +842,7 @@ preview_update (void)
     gtk_preview_draw_row (GTK_PREVIEW (preview), image_ptr, 0, y,
 			  preview_width);
 
-  gtk_widget_draw (preview, NULL);
-  gdk_flush ();
+  gtk_widget_queue_draw (preview);
 }
 
 static void

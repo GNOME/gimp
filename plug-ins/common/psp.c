@@ -287,15 +287,15 @@ typedef struct
 /* Declare some local functions.
  */
 static void   query      (void);
-static void   run        (gchar   *name,
-                          gint     nparams,
+static void   run        (gchar      *name,
+                          gint        nparams,
                           GimpParam  *param,
-                          gint    *nreturn_vals,
+                          gint       *nreturn_vals,
                           GimpParam **return_vals);
-static gint32 load_image (gchar  *filename);
-static gint   save_image (gchar  *filename,
-			  gint32  image_ID,
-			  gint32  drawable_ID);
+static gint32 load_image (gchar      *filename);
+static gint   save_image (gchar      *filename,
+			  gint32      image_ID,
+			  gint32      drawable_ID);
 
 /* Various local variables...
  */
@@ -425,26 +425,33 @@ save_dialog (void)
 
 			 GTK_STOCK_CANCEL, gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
+
 			 GTK_STOCK_OK, save_ok_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /*  file save type  */
   frame = gimp_radio_group_new2 (TRUE, _("Data Compression"),
 				 G_CALLBACK (gimp_radio_button_update),
 				 &psvals.compression,
-				 (gpointer) psvals.compression,
+				 GINT_TO_POINTER (psvals.compression),
 
-				 _("None"), (gpointer) PSP_COMP_NONE, NULL,
-				 _("RLE"),  (gpointer) PSP_COMP_RLE, NULL,
-				 _("LZ77"), (gpointer) PSP_COMP_LZ77, NULL,
+				 _("None"),
+                                 GINT_TO_POINTER (PSP_COMP_NONE), NULL,
+
+				 _("RLE"),
+                                 GINT_TO_POINTER (PSP_COMP_RLE), NULL,
+
+				 _("LZ77"),
+                                 GINT_TO_POINTER (PSP_COMP_LZ77), NULL,
 
 				 NULL);
+
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, FALSE, TRUE, 0);
   gtk_widget_show (frame);
@@ -1679,18 +1686,18 @@ save_image (gchar  *filename,
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[2];
-  GimpRunMode  run_mode;
-  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
-  gint32        image_ID;
-  gint32        drawable_ID;
-  GimpExportReturnType export = GIMP_EXPORT_CANCEL;
+  static GimpParam      values[2];
+  GimpRunMode           run_mode;
+  GimpPDBStatusType     status = GIMP_PDB_SUCCESS;
+  gint32                image_ID;
+  gint32                drawable_ID;
+  GimpExportReturnType  export = GIMP_EXPORT_CANCEL;
 
   tile_height = gimp_tile_height ();
 
@@ -1698,6 +1705,7 @@ run (gchar   *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 

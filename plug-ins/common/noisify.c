@@ -67,16 +67,17 @@ typedef struct
 /* Declare local functions.
  */
 static void       query  (void);
-static void       run    (gchar     *name,
-			  gint       nparams,
-			  GimpParam    *param,
-			  gint      *nreturn_vals,
-			  GimpParam   **return_vals);
+static void       run    (gchar      *name,
+			  gint        nparams,
+			  GimpParam  *param,
+			  gint       *nreturn_vals,
+			  GimpParam **return_vals);
 
-static void       noisify (GimpDrawable *drawable, gboolean preview_mode);
+static void       noisify (GimpDrawable *drawable,
+                           gboolean      preview_mode);
 static gdouble    gauss   (void);
 
-static void       fill_preview   (GtkWidget *preview_widget, 
+static void       fill_preview   (GtkWidget    *preview_widget, 
 				  GimpDrawable *drawable);
 static GtkWidget *preview_widget (GimpDrawable *drawable);
 
@@ -145,23 +146,23 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  GimpRunMode run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   /*  Get the specified drawable  */
@@ -492,9 +493,9 @@ noisify_dialog (GimpDrawable *drawable,
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 0);
@@ -534,11 +535,12 @@ noisify_dialog (GimpDrawable *drawable,
 
   toggle = gtk_check_button_new_with_label (_("Independent"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 0, 1, GTK_FILL, 0, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &nvals.independent);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), nvals.independent);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &nvals.independent);
 
   noise_int.channels = channels;
 
@@ -550,10 +552,12 @@ noisify_dialog (GimpDrawable *drawable,
 				  TRUE, 0, 0,
 				  NULL, NULL);
 
-      gtk_object_set_data (GTK_OBJECT (adj), "drawable", drawable);
-      gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			  GTK_SIGNAL_FUNC (noisify_double_adjustment_update),
-			  &nvals.noise[0]);
+      g_object_set_data (G_OBJECT (adj), "drawable", drawable);
+
+      g_signal_connect (G_OBJECT (adj), "value_changed",
+                        G_CALLBACK (noisify_double_adjustment_update),
+                        &nvals.noise[0]);
+
       noise_int.channel_adj[0] = adj;
     }
   else if (channels == 2)
@@ -563,10 +567,13 @@ noisify_dialog (GimpDrawable *drawable,
 				  nvals.noise[0], 0.0, 1.0, 0.01, 0.1, 2,
 				  TRUE, 0, 0,
 				  NULL, NULL);
-      gtk_object_set_data (GTK_OBJECT (adj), "drawable", drawable);
-      gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			  GTK_SIGNAL_FUNC (noisify_double_adjustment_update),
-			  &nvals.noise[0]);
+
+      g_object_set_data (G_OBJECT (adj), "drawable", drawable);
+
+      g_signal_connect (G_OBJECT (adj), "value_changed",
+                        G_CALLBACK (noisify_double_adjustment_update),
+                        &nvals.noise[0]);
+
       noise_int.channel_adj[0] = adj;
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
@@ -574,10 +581,13 @@ noisify_dialog (GimpDrawable *drawable,
 				  nvals.noise[1], 0.0, 1.0, 0.01, 0.1, 2,
 				  TRUE, 0, 0,
 				  NULL, NULL);
-      gtk_object_set_data (GTK_OBJECT (adj), "drawable", drawable);
-      gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			  GTK_SIGNAL_FUNC (noisify_double_adjustment_update),
-			  &nvals.noise[1]);
+
+      g_object_set_data (G_OBJECT (adj), "drawable", drawable);
+
+      g_signal_connect (G_OBJECT (adj), "value_changed",
+                        G_CALLBACK (noisify_double_adjustment_update),
+                        &nvals.noise[1]);
+
       noise_int.channel_adj[1] = adj;
     }
   
@@ -588,10 +598,13 @@ noisify_dialog (GimpDrawable *drawable,
 				  nvals.noise[0], 0.0, 1.0, 0.01, 0.1, 2,
 				  TRUE, 0, 0,
 				  NULL, NULL);
-      gtk_object_set_data (GTK_OBJECT (adj), "drawable", drawable);
-      gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			  GTK_SIGNAL_FUNC (noisify_double_adjustment_update),
-			  &nvals.noise[0]);
+
+      g_object_set_data (G_OBJECT (adj), "drawable", drawable);
+
+      g_signal_connect (G_OBJECT (adj), "value_changed",
+                        G_CALLBACK (noisify_double_adjustment_update),
+                        &nvals.noise[0]);
+
       noise_int.channel_adj[0] = adj;
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
@@ -599,10 +612,13 @@ noisify_dialog (GimpDrawable *drawable,
 				  nvals.noise[1], 0.0, 1.0, 0.01, 0.1, 2,
 				  TRUE, 0, 0,
 				  NULL, NULL);
-      gtk_object_set_data (GTK_OBJECT (adj), "drawable", drawable);
-      gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			  GTK_SIGNAL_FUNC (noisify_double_adjustment_update),
-			  &nvals.noise[1]);
+
+      g_object_set_data (G_OBJECT (adj), "drawable", drawable);
+
+      g_signal_connect (G_OBJECT (adj), "value_changed",
+                        G_CALLBACK (noisify_double_adjustment_update),
+                        &nvals.noise[1]);
+
       noise_int.channel_adj[1] = adj;
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
@@ -610,10 +626,13 @@ noisify_dialog (GimpDrawable *drawable,
 				  nvals.noise[2], 0.0, 1.0, 0.01, 0.1, 2,
 				  TRUE, 0, 0,
 				  NULL, NULL);
-      gtk_object_set_data (GTK_OBJECT (adj), "drawable", drawable);
-      gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			  GTK_SIGNAL_FUNC (noisify_double_adjustment_update),
-			  &nvals.noise[2]);
+
+      g_object_set_data (G_OBJECT (adj), "drawable", drawable);
+
+      g_signal_connect (G_OBJECT (adj), "value_changed",
+                        G_CALLBACK (noisify_double_adjustment_update),
+                        &nvals.noise[2]);
+
       noise_int.channel_adj[2] = adj;
     }
 
@@ -624,10 +643,13 @@ noisify_dialog (GimpDrawable *drawable,
 				  nvals.noise[0], 0.0, 1.0, 0.01, 0.1, 2,
 				  TRUE, 0, 0,
 				  NULL, NULL);
-      gtk_object_set_data (GTK_OBJECT (adj), "drawable", drawable);
-      gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			  GTK_SIGNAL_FUNC (noisify_double_adjustment_update),
-			  &nvals.noise[0]);
+
+      g_object_set_data (G_OBJECT (adj), "drawable", drawable);
+
+      g_signal_connect (G_OBJECT (adj), "value_changed",
+                        G_CALLBACK (noisify_double_adjustment_update),
+                        &nvals.noise[0]);
+
       noise_int.channel_adj[0] = adj;
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
@@ -635,10 +657,13 @@ noisify_dialog (GimpDrawable *drawable,
 				  nvals.noise[1], 0.0, 1.0, 0.01, 0.1, 2,
 				  TRUE, 0, 0,
 				  NULL, NULL);
-      gtk_object_set_data (GTK_OBJECT (adj), "drawable", drawable);
-      gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			  GTK_SIGNAL_FUNC (noisify_double_adjustment_update),
-			  &nvals.noise[1]);
+
+      g_object_set_data (G_OBJECT (adj), "drawable", drawable);
+
+      g_signal_connect (G_OBJECT (adj), "value_changed",
+                        G_CALLBACK (noisify_double_adjustment_update),
+                        &nvals.noise[1]);
+
       noise_int.channel_adj[1] = adj;
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
@@ -646,10 +671,13 @@ noisify_dialog (GimpDrawable *drawable,
 				  nvals.noise[2], 0.0, 1.0, 0.01, 0.1, 2,
 				  TRUE, 0, 0,
 				  NULL, NULL);
-      gtk_object_set_data (GTK_OBJECT (adj), "drawable", drawable);
-      gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			  GTK_SIGNAL_FUNC (noisify_double_adjustment_update),
-			  &nvals.noise[2]);
+
+      g_object_set_data (G_OBJECT (adj), "drawable", drawable);
+
+      g_signal_connect (G_OBJECT (adj), "value_changed",
+                        G_CALLBACK (noisify_double_adjustment_update),
+                        &nvals.noise[2]);
+
       noise_int.channel_adj[2] = adj;
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
@@ -657,10 +685,13 @@ noisify_dialog (GimpDrawable *drawable,
 				  nvals.noise[3], 0.0, 1.0, 0.01, 0.1, 2,
 				  TRUE, 0, 0,
 				  NULL, NULL);
-      gtk_object_set_data (GTK_OBJECT (adj), "drawable", drawable);
-      gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			  GTK_SIGNAL_FUNC (noisify_double_adjustment_update),
-			  &nvals.noise[3]);
+
+      g_object_set_data (G_OBJECT (adj), "drawable", drawable);
+
+      g_signal_connect (G_OBJECT (adj), "value_changed",
+                        G_CALLBACK (noisify_double_adjustment_update),
+                        &nvals.noise[3]);
+
       noise_int.channel_adj[3] = adj;
     }
   else
@@ -674,10 +705,13 @@ noisify_dialog (GimpDrawable *drawable,
 				      nvals.noise[i], 0.0, 1.0, 0.01, 0.1, 2,
 				      TRUE, 0, 0,
 				      NULL, NULL);
-          gtk_object_set_data (GTK_OBJECT (adj), "drawable", drawable);
-	  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			      GTK_SIGNAL_FUNC (noisify_double_adjustment_update),
-			      &nvals.noise[i]);
+
+          g_object_set_data (G_OBJECT (adj), "drawable", drawable);
+
+	  g_signal_connect (G_OBJECT (adj), "value_changed",
+                            G_CALLBACK (noisify_double_adjustment_update),
+                            &nvals.noise[i]);
+
 	  noise_int.channel_adj[i] = adj;
 
 	  g_free (buffer);
@@ -731,7 +765,9 @@ noisify_double_adjustment_update (GtkAdjustment *adjustment,
   GimpDrawable *drawable;
   
   gimp_double_adjustment_update (adjustment, data);
-  drawable = gtk_object_get_data (GTK_OBJECT (adjustment), "drawable");
+
+  drawable = g_object_get_data (G_OBJECT (adjustment), "drawable");
+
   noisify (drawable, TRUE);
 
   if (! nvals.independent)

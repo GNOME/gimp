@@ -160,23 +160,23 @@ static RandomizeInterface rndm_int =
  ********************************/
 
 static void query (void);
-static void run   (gchar   *name,
-		   gint     nparams,
+static void run   (gchar      *name,
+		   gint        nparams,
 		   GimpParam  *param,
-		   gint    *nreturn_vals,
+		   gint       *nreturn_vals,
 		   GimpParam **return_vals);
 
 static void randomize                    (GimpDrawable *drawable);
 
 static inline void randomize_prepare_row (GimpPixelRgn *pixel_rgn,
-					  guchar    *data,
-					  gint       x,
-					  gint       y,
-					  gint       w);
+					  guchar       *data,
+					  gint          x,
+					  gint          y,
+					  gint          w);
 
 static gint randomize_dialog             (void);
-static void randomize_ok_callback        (GtkWidget *widget,
-					  gpointer   data);
+static void randomize_ok_callback        (GtkWidget    *widget,
+					  gpointer      data);
 
 /************************************ Guts ***********************************/
 
@@ -277,35 +277,37 @@ query (void)
  ********************************/
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  GimpDrawable *drawable;
-  GimpRunMode run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;        /* assume the best! */
-  gchar *rndm_type_str = '\0';
-  gchar prog_label[32];
-  static GimpParam values[1];
+  GimpDrawable      *drawable;
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;        /* assume the best! */
+  gchar             *rndm_type_str = '\0';
+  gchar              prog_label[32];
+  static GimpParam   values[1];
+
   /*
    *  Get the specified drawable, do standard initialization.
    */
-  if (strcmp(name, PLUG_IN_NAME[0]) == 0)
+  if (strcmp (name, PLUG_IN_NAME[0]) == 0)
     rndm_type = RNDM_HURL;
-  else if (strcmp(name, PLUG_IN_NAME[1]) == 0)
+  else if (strcmp (name, PLUG_IN_NAME[1]) == 0)
     rndm_type = RNDM_PICK;
-  else if (strcmp(name, PLUG_IN_NAME[2]) == 0)
+  else if (strcmp (name, PLUG_IN_NAME[2]) == 0)
     rndm_type = RNDM_SLUR;
 
   run_mode = param[0].data.d_int32;
   drawable = gimp_drawable_get(param[2].data.d_drawable);
 
-  values[0].type = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
+
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = status;
   /*
    *  Make sure the drawable type is appropriate.
    */
@@ -705,9 +707,9 @@ randomize_dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   gimp_help_init ();
 
@@ -744,9 +746,9 @@ randomize_dialog (void)
 			      pivals.rndm_pct, 1.0, 100.0, 1.0, 10.0, 0,
 			      TRUE, 0, 0,
 			      _("Percentage of pixels to be filtered"), NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-                      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-                      &pivals.rndm_pct);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &pivals.rndm_pct);
 
   /*
    *  Repeat count label & scale (1 to 100)
@@ -756,9 +758,9 @@ randomize_dialog (void)
 			      pivals.rndm_rcount, 1.0, 100.0, 1.0, 10.0, 0,
 			      TRUE, 0, 0,
 			      _("Number of times to apply filter"), NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-                      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-                      &pivals.rndm_rcount);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &pivals.rndm_rcount);
 
   gtk_widget_show (frame);
 

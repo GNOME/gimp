@@ -95,11 +95,11 @@ typedef struct
  */
 
 static void	query	(void);
-static void	run	(gchar   *name,
-			 gint    nparams,
+static void	run	(gchar      *name,
+			 gint        nparams,
 			 GimpParam  *param,
-			 gint    *nreturn_vals,
-			 GimpParam  **return_vals);
+			 gint       *nreturn_vals,
+			 GimpParam **return_vals);
 
 static GtkWidget *preview_widget         (void);
 static gint	plasma_dialog            (GimpDrawable *drawable);
@@ -194,23 +194,23 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint    nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
-     GimpParam  **return_vals)
+     gint       *nreturn_vals,
+     GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  GimpRunMode run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   /*  Get the specified drawable  */
@@ -314,9 +314,9 @@ plasma_dialog (GimpDrawable *drawable)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   gimp_help_init ();
 
@@ -361,14 +361,14 @@ plasma_dialog (GimpDrawable *drawable)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Random Seed:"), 1.0, 0.5,
 			     seed, 1, TRUE);
-  gtk_signal_connect_object (GTK_OBJECT (GIMP_RANDOM_SEED_SPINBUTTON_ADJ (seed)),
-			     "value_changed",
-			     GTK_SIGNAL_FUNC (plasma),
-			     (gpointer)drawable);
-  gtk_signal_connect_object (GTK_OBJECT (GIMP_RANDOM_SEED_TOGGLEBUTTON (seed)),
-			     "toggled",
-			     GTK_SIGNAL_FUNC (plasma),
-			     (gpointer)drawable);
+  g_signal_connect_swapped (G_OBJECT (GIMP_RANDOM_SEED_SPINBUTTON_ADJ (seed)),
+                            "value_changed",
+                            G_CALLBACK (plasma),
+                            drawable);
+  g_signal_connect_swapped (G_OBJECT (GIMP_RANDOM_SEED_TOGGLEBUTTON (seed)),
+                            "toggled",
+                            G_CALLBACK (plasma),
+                            drawable);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Turbulence:"), SCALE_WIDTH, 0,
@@ -376,12 +376,12 @@ plasma_dialog (GimpDrawable *drawable)
 			      0.1, 7.0, 0.1, 1.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &pvals.turbulence);
-  gtk_signal_connect_object (GTK_OBJECT (adj), "value_changed",
-			     GTK_SIGNAL_FUNC (plasma),
-			     (gpointer)drawable);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &pvals.turbulence);
+  g_signal_connect_swapped (G_OBJECT (adj), "value_changed",
+                            G_CALLBACK (plasma),
+                            drawable);
 
   gtk_widget_show (frame);
   gtk_widget_show (table);

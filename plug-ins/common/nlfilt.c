@@ -174,7 +174,7 @@ run (gchar      *name,
   struct piArgs args;
 
   *nretvals = 1;
-  *retvals = rvals;
+  *retvals  = rvals;
 
   memset (&args, (int) 0, sizeof (struct piArgs));
 
@@ -183,7 +183,7 @@ run (gchar      *name,
   args.img = param[1].data.d_image;
   args.drw = param[2].data.d_drawable;
 
-  rvals[0].type = GIMP_PDB_STATUS;
+  rvals[0].type          = GIMP_PDB_STATUS;
   rvals[0].data.d_status = GIMP_PDB_SUCCESS;
 
   switch (param[0].data.d_int32)
@@ -371,9 +371,9 @@ pluginCoreIA (struct piArgs *argp)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -386,7 +386,7 @@ pluginCoreIA (struct piArgs *argp)
   gtk_widget_show (hbox);
 
   preview = mw_preview_new (hbox, thePreview);
-  gtk_object_set_data (GTK_OBJECT (preview), "piArgs", argp);
+  g_object_set_data (G_OBJECT (preview), "piArgs", argp);
   nlfilt_do_preview (preview);
 
   frame = gimp_radio_group_new2 (TRUE, _("Filter"),
@@ -421,18 +421,18 @@ pluginCoreIA (struct piArgs *argp)
 			      argp->alpha, 0.0, 1.0, 0.05, 0.1, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (nlfilt_double_adjustment_update),
-		      &argp->alpha);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (nlfilt_double_adjustment_update),
+                    &argp->alpha);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Radius:"), 0, 0,
 			      argp->radius, 1.0 / 3.0, 1.0, 0.05, 0.1, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (nlfilt_double_adjustment_update),
-		      &argp->radius);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (nlfilt_double_adjustment_update),
+                    &argp->radius);
 
   gtk_widget_show (table);
 
@@ -471,7 +471,7 @@ nlfilt_do_preview (GtkWidget *w)
       theWidget = w;
     }
 
-  ap = gtk_object_get_data (GTK_OBJECT (theWidget), "piArgs");
+  ap = g_object_get_data (G_OBJECT (theWidget), "piArgs");
 
   rowsize = thePreview->width * thePreview->bpp;
   filtno =  nlfiltInit (ap->alpha, ap->radius, ap->filter);
@@ -491,8 +491,7 @@ nlfilt_do_preview (GtkWidget *w)
       src0 = src1; src1 = src2; src2 += rowsize;
     }
 
-  gtk_widget_draw (theWidget, NULL);
-  gdk_flush ();
+  gtk_widget_queue_draw (theWidget);
   g_free (dst);
 }
 
@@ -595,11 +594,12 @@ mw_preview_new (GtkWidget        *parent,
 
   button = gtk_check_button_new_with_label (_("Do Preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), do_preview);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-                      GTK_SIGNAL_FUNC (mw_preview_toggle_callback),
-                      &do_preview);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+                    G_CALLBACK (mw_preview_toggle_callback),
+                    &do_preview);
 
   return preview;
 }

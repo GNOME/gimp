@@ -113,15 +113,15 @@ typedef struct
 /* Declare some local functions.
  */
 static void   query      (void);
-static void   run        (gchar   *name,
-                          gint     nparams,
+static void   run        (gchar      *name,
+                          gint        nparams,
                           GimpParam  *param,
-                          gint    *nreturn_vals,
+                          gint       *nreturn_vals,
                           GimpParam **return_vals);
-static gint32 load_image (gchar  *filename);
-static gint   save_image (gchar  *filename,
-			  gint32  image_ID,
-			  gint32  drawable_ID);
+static gint32 load_image (gchar      *filename);
+static gint   save_image (gchar      *filename,
+			  gint32      image_ID,
+			  gint32      drawable_ID);
 
 static gint   save_dialog              (void);
 static void   save_ok_callback         (GtkWidget *widget,
@@ -931,17 +931,18 @@ save_dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /*  file save type  */
   frame = gimp_radio_group_new2 (TRUE, _("Data Formatting"),
 				 G_CALLBACK (gimp_radio_button_update),
-				 &psvals.raw, (gpointer) psvals.raw,
+				 &psvals.raw,
+                                 GINT_TO_POINTER (psvals.raw),
 
-				 _("Raw"),   (gpointer) TRUE, NULL,
-				 _("Ascii"), (gpointer) FALSE, NULL,
+				 _("Raw"),   GINT_TO_POINTER (TRUE),  NULL,
+				 _("Ascii"), GINT_TO_POINTER (FALSE), NULL,
 
 				 NULL);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);

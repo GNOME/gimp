@@ -62,15 +62,15 @@ typedef struct
 /* Declare local functions.
  */
 static void   query  (void);
-static void   run    (gchar     *name,
-		      gint       nparams,
-		      GimpParam     *param,
-		      gint      *nreturn_vals,
-		      GimpParam   **return_vals);
+static void   run    (gchar      *name,
+		      gint        nparams,
+		      GimpParam  *param,
+		      gint       *nreturn_vals,
+		      GimpParam **return_vals);
 
 static void   sel_gauss (GimpDrawable *drawable,
-			 gdouble    radius,
-			 gint       maxdelta);
+			 gdouble       radius,
+			 gint          maxdelta);
 
 static gint   sel_gauss_dialog      (void);
 static void   sel_gauss_ok_callback (GtkWidget *widget,
@@ -129,26 +129,26 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam	values[1];
-  GimpRunMode	run_mode;
-  GimpPDBStatusType	status = GIMP_PDB_SUCCESS;
-  GimpDrawable	*drawable;
-  gdouble	radius;
+  static GimpParam   values[1];
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpDrawable	    *drawable;
+  gdouble	     radius;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
   INIT_I18N_UI(); 
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   switch (run_mode)
@@ -246,9 +246,9 @@ sel_gauss_dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /* parameter settings */
   frame = gtk_frame_new (_("Parameter Settings"));
@@ -269,18 +269,18 @@ sel_gauss_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Blur Radius:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &bvals.radius);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &bvals.radius);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Max. Delta:"), 128, 0,
 			      bvals.maxdelta, 0, 255, 1, 8, 0,
 			      TRUE, 0, 0,
 			      FALSE, FALSE);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &bvals.maxdelta);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &bvals.maxdelta);
 
   gtk_widget_show (table);
   gtk_widget_show (frame);

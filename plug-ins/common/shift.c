@@ -59,11 +59,11 @@ typedef struct
 /* Declare local functions.
  */
 static void    query  (void);
-static void    run    (gchar    *name,
-		       gint      nparams,
-		       GimpParam   *param,
-		       gint     *nreturn_vals,
-		       GimpParam  **return_vals);
+static void    run    (gchar      *name,
+		       gint        nparams,
+		       GimpParam  *param,
+		       gint       *nreturn_vals,
+		       GimpParam **return_vals);
 
 static void    shift  (GimpDrawable *drawable);
 
@@ -72,16 +72,16 @@ static void    shift_ok_callback (GtkWidget *widget,
 				  gpointer   data);
 
 static GimpTile * shift_pixel (GimpDrawable *drawable,
-			    GimpTile     *tile,
-			    gint       x1,
-			    gint       y1,
-			    gint       x2,
-			    gint       y2,
-			    gint       x,
-			    gint       y,
-			    gint      *row,
-			    gint      *col,
-			    guchar    *pixel);
+                               GimpTile     *tile,
+                               gint          x1,
+                               gint          y1,
+                               gint          x2,
+                               gint          y2,
+                               gint          x,
+                               gint          y,
+                               gint         *row,
+                               gint         *col,
+                               guchar       *pixel);
 
 
 /***** Local vars *****/
@@ -135,16 +135,16 @@ query (void)
 }
 
 static void
-run (gchar  *name,
-     gint    nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint   *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  GimpRunMode run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
@@ -152,9 +152,9 @@ run (gchar  *name,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   switch (run_mode)
@@ -379,20 +379,24 @@ shift_dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /*  parameter settings  */
-  frame = 
-    gimp_radio_group_new2 (TRUE, _("Parameter Settings"),
-			   G_CALLBACK (gimp_radio_button_update),
-			   &shvals.orientation, (gpointer) shvals.orientation,
+  frame = gimp_radio_group_new2 (TRUE, _("Parameter Settings"),
+                                 G_CALLBACK (gimp_radio_button_update),
+                                 &shvals.orientation,
+                                 GINT_TO_POINTER (shvals.orientation),
 
-			   _("Shift Horizontally"), (gpointer) HORIZONTAL, NULL,
-			   _("Shift Vertically"),   (gpointer) VERTICAL, NULL,
+                                 _("Shift Horizontally"),
+                                 GINT_TO_POINTER (HORIZONTAL), NULL,
 
-			   NULL);
+                                 _("Shift Vertically"),
+                                 GINT_TO_POINTER (VERTICAL), NULL,
+
+                                 NULL);
+
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
@@ -413,9 +417,9 @@ shift_dialog (void)
 				      shvals.shift_amount, 0, 200, 1, 10, 0,
 				      TRUE, 0, 0,
 				      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (amount_data), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &shvals.shift_amount);
+  g_signal_connect (G_OBJECT (amount_data), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &shvals.shift_amount);
 
   gtk_widget_show (frame);
 

@@ -142,7 +142,7 @@ run (gchar      *name,
      GimpParam **return_vals)
 {
   static GimpParam     values[2];
-  GimpRunMode      run_mode;
+  GimpRunMode          run_mode;
   GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
   gint32               image_ID;
   gint32               drawable_ID;
@@ -456,9 +456,9 @@ save_dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /* The main table */
   table = gtk_table_new (1, 2, FALSE);
@@ -474,10 +474,11 @@ save_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Description:"), 1.0, 0.5,
 			     entry, 1, FALSE);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      GTK_SIGNAL_FUNC (entry_callback),
-		      description);
   gtk_widget_show (entry);
+
+  g_signal_connect (G_OBJECT (entry), "changed",
+                    G_CALLBACK (entry_callback),
+                    description);
 
   gtk_widget_show (dlg);
 

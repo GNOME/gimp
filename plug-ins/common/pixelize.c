@@ -207,7 +207,7 @@ run (gchar      *name,
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;
-  GimpRunMode    run_mode;
+  GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
@@ -330,9 +330,9 @@ pixelize_dialog (GimpDrawable *drawable)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /*  parameter settings  */
   frame = gtk_frame_new (_("Parameter Settings"));

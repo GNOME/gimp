@@ -921,9 +921,9 @@ polarize_dialog (void)
 
 			    NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dialog), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /* Initialize Tooltips */
   gimp_help_init ();
@@ -975,18 +975,18 @@ polarize_dialog (void)
 			      pcvals.circle, 0.0, 100.0, 1.0, 10.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_scale_update),
-		      &pcvals.circle);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialog_scale_update),
+                    &pcvals.circle);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Offset Angle:"), SCALE_WIDTH, 0,
 			      pcvals.angle, 0.0, 359.0, 1.0, 15.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_scale_update),
-		      &pcvals.angle);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialog_scale_update),
+                    &pcvals.angle);
 
   /* togglebuttons for backwards, top, polar->rectangular */
   hbox = gtk_hbox_new (TRUE, 4);
@@ -994,41 +994,47 @@ polarize_dialog (void)
 
   toggle = gtk_check_button_new_with_label (_("Map Backwards"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pcvals.backwards);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled", 
-		      GTK_SIGNAL_FUNC (polar_toggle_callback),
-		      &pcvals.backwards);
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
   gtk_widget_show (toggle);
+
   gimp_help_set_help_data (toggle,
 			   _("If checked the mapping will begin at the right "
 			     "side, as opposed to beginning at the left."),
 			   NULL);
 
+  g_signal_connect (G_OBJECT (toggle), "toggled", 
+                    G_CALLBACK (polar_toggle_callback),
+                    &pcvals.backwards);
+
   toggle = gtk_check_button_new_with_label (_("Map from Top"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pcvals.inverse);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled", 
-		      (GtkSignalFunc) polar_toggle_callback,
-		      &pcvals.inverse);
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
   gtk_widget_show (toggle);
+
   gimp_help_set_help_data (toggle,
 			   _("If unchecked the mapping will put the bottom "
 			     "row in the middle and the top row on the "
 			     "outside.  If checked it will be the opposite."),
 			   NULL);
 
+  g_signal_connect (G_OBJECT (toggle), "toggled", 
+                    G_CALLBACK (polar_toggle_callback),
+                    &pcvals.inverse);
+
   toggle = gtk_check_button_new_with_label (_("To Polar"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pcvals.polrec);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled", 
-		      (GtkSignalFunc) polar_toggle_callback,
-		      &pcvals.polrec);
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
   gtk_widget_show (toggle);
+
   gimp_help_set_help_data (toggle,
 			   _("If unchecked the image will be circularly "
 			     "mapped onto a rectangle.  If checked the image "
 			     "will be mapped onto a circle."),
 			   NULL);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled", 
+                    G_CALLBACK (polar_toggle_callback),
+                    &pcvals.polrec);
 
   gtk_widget_show (hbox);
 
@@ -1156,8 +1162,7 @@ dialog_update_preview (void)
       p += preview_width * 3;
     }
 
-  gtk_widget_draw (pcint.preview, NULL);
-  gdk_flush ();
+  gtk_widget_queue_draw (pcint.preview);
 }
 
 static void

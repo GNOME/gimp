@@ -86,25 +86,25 @@ typedef struct
  */
 
 static void	query                     (void);
-static void	run                       (gchar   *name,
-					   gint     nparams,
-					   GimpParam  *param,
-					   gint    *nreturn_vals,
-					   GimpParam **return_vals);
+static void	run                       (gchar       *name,
+					   gint         nparams,
+					   GimpParam   *param,
+					   gint        *nreturn_vals,
+					   GimpParam  **return_vals);
 
-static gint32	load_image                (gchar   *filename);
-static gint	save_image                (gchar   *filename,
-					   gint32   image_ID,
-					   gint32   drawable_ID,
-					   gint32   orig_image_ID);
+static gint32	load_image                (gchar       *filename);
+static gint	save_image                (gchar       *filename,
+					   gint32       image_ID,
+					   gint32       drawable_ID,
+					   gint32       orig_image_ID);
 
-static void	respin_cmap		  (png_structp pp,
-					   png_infop info,
-					   gint32   image_ID);
+static void	respin_cmap		  (png_structp  pp,
+					   png_infop    info,
+					   gint32       image_ID);
 
 static gint	save_dialog               (void);
-static void	save_ok_callback          (GtkWidget     *widget,
-					   gpointer       data);
+static void	save_ok_callback          (GtkWidget   *widget,
+					   gpointer     data);
 
 
 /*
@@ -208,22 +208,23 @@ query (void)
  */
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[2];
-  GimpRunMode  run_mode;
-  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
-  gint32        image_ID;
-  gint32        drawable_ID;
-  gint32        orig_image_ID;
+  static GimpParam     values[2];
+  GimpRunMode          run_mode;
+  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  gint32               image_ID;
+  gint32               drawable_ID;
+  gint32               orig_image_ID;
   GimpExportReturnType export = GIMP_EXPORT_CANCEL;
 
   *nreturn_vals = 1;
   *return_vals  = values;
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
@@ -1053,9 +1054,9 @@ save_dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   frame = gtk_frame_new (_("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
@@ -1073,60 +1074,66 @@ save_dialog (void)
   toggle = gtk_check_button_new_with_label (_("Interlacing (Adam7)"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 0, 1,
 		    GTK_FILL, 0, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &pngvals.interlaced);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.interlaced);
   gtk_widget_show (toggle);
+#
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &pngvals.interlaced);
 
   toggle = gtk_check_button_new_with_label (_("Save background color"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 1, 2,
 		    GTK_FILL, 0, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &pngvals.bkgd);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.bkgd);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &pngvals.bkgd);
 
   toggle = gtk_check_button_new_with_label (_("Save gamma"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 2, 3,
 		    GTK_FILL, 0, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &pngvals.gama);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.gama);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &pngvals.gama);
 
   toggle = gtk_check_button_new_with_label (_("Save layer offset"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 3, 4,
 		    GTK_FILL, 0, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &pngvals.offs);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.offs);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &pngvals.offs);
 
   toggle = gtk_check_button_new_with_label (_("Save resolution"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 4, 5,
 		    GTK_FILL, 0, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &pngvals.phys);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.phys);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &pngvals.phys);
 
   toggle = gtk_check_button_new_with_label (_("Save creation time"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 5, 6,
 		    GTK_FILL, 0, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &pngvals.time);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.time);
   gtk_widget_show (toggle);
 
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &pngvals.time);
+
   scale_data = gtk_adjustment_new (pngvals.compression_level,
 				   1.0, 9.0, 1.0, 1.0, 0.0);
-  scale      = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
   gtk_widget_set_size_request (scale, SCALE_WIDTH, -1);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_scale_set_digits (GTK_SCALE (scale), 0);
@@ -1134,10 +1141,11 @@ save_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 6,
 			     _("Compression Level:"), 1.0, 1.0,
 			     scale, 1, FALSE);
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &pngvals.compression_level);
   gtk_widget_show (scale);
+
+  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &pngvals.compression_level);
 
   gtk_widget_show (dlg);
 

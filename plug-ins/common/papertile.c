@@ -254,9 +254,9 @@ open_dialog (void)
 
 			    NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dialog), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   main_hbox = gtk_hbox_new (FALSE, 5);
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 6);
@@ -284,18 +284,18 @@ open_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("X:"), 1.0, 0.5,
 			     button, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (w.division_x_adj), "value_changed",
-		      GTK_SIGNAL_FUNC (division_x_adj_changed),
-		      NULL);
+  g_signal_connect (G_OBJECT (w.division_x_adj), "value_changed",
+                    G_CALLBACK (division_x_adj_changed),
+                    NULL);
 
   button = gimp_spin_button_new (&w.division_y_adj, p.params.division_y,
 				 1.0, p.drawable->width, 1.0, 5.0, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Y:"), 1.0, 0.5,
 			     button, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (w.division_y_adj), "value_changed",
-		      GTK_SIGNAL_FUNC (division_y_adj_changed),
-		      NULL);
+  g_signal_connect (G_OBJECT (w.division_y_adj), "value_changed",
+                    G_CALLBACK (division_y_adj_changed),
+                    NULL);
 
   button = gimp_spin_button_new (&w.tile_size_adj, p.params.tile_size,
 				 1.0, MAX (p.drawable->width,
@@ -304,9 +304,9 @@ open_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Size:"), 1.0, 0.5,
 			     button, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (w.tile_size_adj), "value_changed",
-		      GTK_SIGNAL_FUNC (tile_size_adj_changed),
-		      NULL);
+  g_signal_connect (G_OBJECT (w.tile_size_adj), "value_changed",
+                    G_CALLBACK (tile_size_adj_changed),
+                    NULL);
 
   frame = gimp_radio_group_new2 (TRUE, _("Fractional Pixels"),
 				 G_CALLBACK (gimp_radio_button_update),
@@ -333,10 +333,11 @@ open_dialog (void)
   button = gtk_check_button_new_with_label(_("Centering"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), p.params.centering);
   gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &p.params.centering);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &p.params.centering);
 
   /* Right */
   vbox = gtk_vbox_new (FALSE, 4);
@@ -359,18 +360,19 @@ open_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Max (%):"), 1.0, 0.5,
 			     button, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &p.params.move_max_rate);
+  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &p.params.move_max_rate);
 
   button = gtk_check_button_new_with_label (_("Wrap Around"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				p.params.wrap_around);
   gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 2, 1, 2);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &p.params.wrap_around);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &p.params.wrap_around);
 
   frame = gimp_radio_group_new2 (TRUE, _("Background Type"),
 				 G_CALLBACK (gimp_radio_button_update),
@@ -399,15 +401,16 @@ open_dialog (void)
 					p.drawable_has_alpha ?
 					GIMP_COLOR_AREA_SMALL_CHECKS : 
 					GIMP_COLOR_AREA_FLAT);
-  gtk_signal_connect (GTK_OBJECT (color_button), "color_changed", 
-		      GTK_SIGNAL_FUNC (gimp_color_button_get_color), 
-		      &p.params.background_color);
   gtk_container_add (GTK_CONTAINER (button), color_button);
   gtk_widget_show (color_button);
 
   gtk_widget_set_sensitive (color_button,
 			    p.params.background_type == BACKGROUND_TYPE_COLOR);
-  gtk_object_set_data (GTK_OBJECT (button), "set_sensitive", color_button);
+  g_object_set_data (G_OBJECT (button), "set_sensitive", color_button);
+
+  g_signal_connect (G_OBJECT (color_button), "color_changed", 
+                    G_CALLBACK (gimp_color_button_get_color), 
+                    &p.params.background_color);
 
   gtk_widget_show (dialog);
 
@@ -849,10 +852,10 @@ plugin_query (void)
 }
 
 static void
-plugin_run (gchar   *name,
-	    gint     numof_params,
+plugin_run (gchar      *name,
+	    gint        numof_params,
 	    GimpParam  *params,
-	    gint    *numof_return_vals,
+	    gint       *numof_return_vals,
 	    GimpParam **return_vals)
 {
   GimpPDBStatusType status;

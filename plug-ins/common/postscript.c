@@ -2609,9 +2609,9 @@ load_dialog (void)
 
 			    NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-                      GTK_SIGNAL_FUNC (gtk_main_quit),
-                      NULL);
+  g_signal_connect (G_OBJECT (dialog), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -2644,27 +2644,27 @@ load_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Resolution:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &plvals.resolution);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &plvals.resolution);
 
   spinbutton = gimp_spin_button_new (&adj, plvals.width,
 				     1, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Width:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &plvals.width);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &plvals.width);
 
   spinbutton = gimp_spin_button_new (&adj, plvals.height,
 				     1, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Height:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &plvals.height);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &plvals.height);
 
   pages_entry = gtk_entry_new ();
   gtk_widget_set_size_request (pages_entry, 80, -1);
@@ -2672,17 +2672,18 @@ load_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("Pages:"), 1.0, 0.5,
 			     pages_entry, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (pages_entry), "changed",
-		      GTK_SIGNAL_FUNC (load_pages_entry_callback),
-		      NULL);
+  g_signal_connect (G_OBJECT (pages_entry), "changed",
+                    G_CALLBACK (load_pages_entry_callback),
+                    NULL);
 
   toggle = gtk_check_button_new_with_label (_("Try Bounding Box"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-                      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-                      &plvals.use_bbox);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), plvals.use_bbox);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &plvals.use_bbox);
 
   gtk_widget_show (vbox);
   gtk_widget_show (frame);
@@ -2792,9 +2793,9 @@ save_dialog (void)
 
 			    NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-                      GTK_SIGNAL_FUNC (gtk_main_quit),
-                      NULL);
+  g_signal_connect (G_OBJECT (dialog), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /* Main hbox */
   hbox = gtk_hbox_new (FALSE, 6);
@@ -2830,57 +2831,65 @@ save_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Width:"), 1.0, 0.5,
 			     spinbutton, 1, FALSE);
-  gtk_signal_connect (GTK_OBJECT (vals->adjustment[0]), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &psvals.width);
+  g_signal_connect (G_OBJECT (vals->adjustment[0]), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &psvals.width);
 
   spinbutton = gimp_spin_button_new (&vals->adjustment[1], psvals.height,
 				     1e-5, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Height:"), 1.0, 0.5,
 			     spinbutton, 1, FALSE);
-  gtk_signal_connect (GTK_OBJECT (vals->adjustment[1]), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &psvals.height);
+  g_signal_connect (G_OBJECT (vals->adjustment[1]), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &psvals.height);
 
   spinbutton = gimp_spin_button_new (&vals->adjustment[2], psvals.x_offset,
 				     1e-5, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("X-Offset:"), 1.0, 0.5,
 			     spinbutton, 1, FALSE);
-  gtk_signal_connect (GTK_OBJECT (vals->adjustment[2]), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &psvals.x_offset);
+  g_signal_connect (G_OBJECT (vals->adjustment[2]), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &psvals.x_offset);
 
   spinbutton = gimp_spin_button_new (&vals->adjustment[3], psvals.y_offset,
 				     1e-5, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("Y-Offset:"), 1.0, 0.5,
 			     spinbutton, 1, FALSE);
-  gtk_signal_connect (GTK_OBJECT (vals->adjustment[3]), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &psvals.y_offset);
+  g_signal_connect (G_OBJECT (vals->adjustment[3]), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &psvals.y_offset);
 
   toggle = gtk_check_button_new_with_label (_("Keep Aspect Ratio"));
-  gimp_help_set_help_data (toggle, _("When toggled, the resulting image will be scaled to fit "
-				     "into the given size without changing the aspect ratio."),
-			   "#keep_aspect_ratio"), 
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-                      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-                      &psvals.keep_ratio);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), psvals.keep_ratio);
   gtk_widget_show (toggle);
+
+  gimp_help_set_help_data (toggle,
+                           _("When toggled, the resulting image will be scaled to fit "
+                             "into the given size without changing the aspect ratio."),
+			   "#keep_aspect_ratio"), 
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &psvals.keep_ratio);
 
   /* Unit */
   uframe = gimp_radio_group_new2 (TRUE, _("Unit"),
 				  G_CALLBACK (save_unit_toggle_update),
-				  vals, (gpointer) psvals.unit_mm,
+				  vals,
+                                  GINT_TO_POINTER (psvals.unit_mm),
 
-				  _("Inch"),       (gpointer) FALSE, NULL,
-				  _("Millimeter"), (gpointer) TRUE, NULL,
+				  _("Inch"),
+                                  GINT_TO_POINTER (FALSE), NULL,
+
+				  _("Millimeter"),
+                                  GINT_TO_POINTER (TRUE), NULL,
 
 				  NULL);
+
   gtk_box_pack_start (GTK_BOX (vbox), uframe, FALSE, FALSE, 0);
   gtk_widget_show (uframe);
 
@@ -2890,14 +2899,16 @@ save_dialog (void)
   /* Rotation */
   frame = gimp_radio_group_new2 (TRUE, _("Rotation"),
 				 G_CALLBACK (gimp_radio_button_update),
-				 &psvals.rotate, (gpointer) psvals.rotate,
+				 &psvals.rotate,
+                                 GINT_TO_POINTER (psvals.rotate),
 
-				 "0",   (gpointer) 0, NULL,
-				 "90",  (gpointer) 90, NULL,
-				 "180", (gpointer) 180, NULL,
-				 "270", (gpointer) 270, NULL,
+				 "0",   GINT_TO_POINTER (0),   NULL,
+				 "90",  GINT_TO_POINTER (90),  NULL,
+				 "180", GINT_TO_POINTER (180), NULL,
+				 "270", GINT_TO_POINTER (270), NULL,
 
 				 NULL);
+
   gtk_box_pack_start (GTK_BOX (main_vbox[1]), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -2912,27 +2923,30 @@ save_dialog (void)
 
   toggle = gtk_check_button_new_with_label (_("PostScript Level 2"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-                      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-                      &(vals->level));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), vals->level);
   gtk_widget_show (toggle);
 
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &vals->level);
+
   toggle = gtk_check_button_new_with_label (_("Encapsulated PostScript"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-                      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-                      &psvals.eps);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), psvals.eps);
   gtk_widget_show (toggle);
 
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &psvals.eps);
+
   toggle = gtk_check_button_new_with_label (_("Preview"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-                      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-                      &psvals.preview);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), psvals.preview);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &psvals.preview);
 
   /* Preview size label/entry */
   table = gtk_table_new (1, 2, FALSE);
@@ -2940,7 +2954,7 @@ save_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  gtk_object_set_data (GTK_OBJECT (toggle), "set_sensitive", table);
+  g_object_set_data (G_OBJECT (toggle), "set_sensitive", table);
   gtk_widget_set_sensitive (table, psvals.preview);
 
   spinbutton = gimp_spin_button_new (&adj, psvals.preview_size,
@@ -2948,10 +2962,11 @@ save_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Preview Size:"), 1.0, 0.5,
 			     spinbutton, 1, FALSE);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &psvals.preview_size);
   gtk_widget_show (spinbutton);
+
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &psvals.preview_size);
 
   gtk_widget_show (vbox);
   gtk_widget_show (frame);
@@ -2994,7 +3009,8 @@ save_unit_toggle_update (GtkWidget *widget,
       gint    i;
 
       vals    = (SaveDialogVals *) data;
-      unit_mm = (gint) gtk_object_get_user_data (GTK_OBJECT (widget));
+      unit_mm = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
+                                                    "gimp-item-data"));
 
       psvals.unit_mm = unit_mm;
 
