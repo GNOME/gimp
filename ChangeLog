@@ -1,3 +1,7 @@
+Sun Sep 20 12:57:00 CST 1998 Seth Burgess <sjburges@gimp.org>
+	* plug-ins/gauss_iir/gauss_iir.c: Fixed segfault if neither 
+	horizontal nor vertical was selected (as reported by Marc Lehman).
+
 Sat Sep 19 01:19:18 BST 1998 Andy Thomas <alt@picnic.demon.co.uk>
 
 	* app/blend.c app/brush_select.c app/brush_select.h app/bucket_fill.c 

@@ -394,6 +394,11 @@ gauss_iir (GDrawable *drawable,
   guchar *guc_tmp1, *guc_tmp2;
   gint *gi_tmp1, *gi_tmp2;
 
+/* Take care of the case that neither horizontal nor vertical is selected */
+  if (!(horz || vert)) {
+	return;
+	}
+
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
 
   width = (x2 - x1);
