@@ -28,8 +28,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
-"POT-Creation-Date: 2002-03-28 14:51+0100\n"
-"PO-Revision-Date: 2002-03-02 17:26+0100\n"
+"POT-Creation-Date: 2002-04-09 20:04+0200\n"
+"PO-Revision-Date: 2002-04-09 20:04+0200\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -3621,9 +3621,10 @@ msgstr ""
 msgid "<Image>/Filters/Toys/Gee-Zoom"
 msgstr "<Image>/Filter/Legetøj/Gee-zoom..."
 
+# direkte oversættelse umulig
 #: plug-ins/common/gee_zoom.c:202
 msgid "GEE-ZOOM: The Plug-In Formerly Known As \"The GIMP E'er Egg\""
-msgstr "GEE-ZOOM: Indstikket tidligere kendt som Gimpens påskeæg"
+msgstr "GEE-ZOOM: Gimpens tidligere påskeæg"
 
 #: plug-ins/common/gee_zoom.c:226
 msgid ""
