@@ -80,7 +80,7 @@ struct _ColorDisplayDialog
 };
 
 
-static void   make_dialog                      (ColorDisplayDialog *cdd);
+static void   color_display_dialog_create      (ColorDisplayDialog *cdd);
 
 static void   color_display_response           (GtkWidget          *widget,
                                                 gint                response_id,
@@ -111,7 +111,7 @@ static void   color_display_update_up_and_down (ColorDisplayDialog *cdd);
 
 
 static void
-make_dialog (ColorDisplayDialog *cdd)
+color_display_dialog_create (ColorDisplayDialog *cdd)
 {
   GtkWidget *main_vbox;
   GtkWidget *hbox;
@@ -121,8 +121,11 @@ make_dialog (ColorDisplayDialog *cdd)
   GtkWidget *vbox;
   GtkWidget *image;
 
+  g_return_if_fail (GTK_IS_WINDOW (cdd->shell));
+
   cdd->dialog = gimp_dialog_new (_("Color Display Filters"), "display_filters",
-                                 NULL, 0,
+                                 GTK_WIDGET (cdd->shell),
+                                 GTK_DIALOG_DESTROY_WITH_PARENT,
                                  gimp_standard_help_func,
                                  GIMP_HELP_DISPLAY_FILTER_DIALOG,
 
@@ -527,7 +530,9 @@ gimp_display_shell_filter_dialog_new (GimpDisplayShell *shell)
 
   cdd = g_new0 (ColorDisplayDialog, 1);
 
-  make_dialog (cdd);
+  cdd->shell = shell;
+
+  color_display_dialog_create (cdd);
 
   filter_types = g_type_children (GIMP_TYPE_COLOR_DISPLAY, &n_filter_types);
 
@@ -553,8 +558,6 @@ gimp_display_shell_filter_dialog_new (GimpDisplayShell *shell)
   cdd->old_nodes = shell->filters;
   dest_list_populate (shell->filters, cdd->dest);
   shell->filters = g_list_copy (cdd->old_nodes);
-
-  cdd->shell = shell;
 
   shell->filters_dialog = cdd->dialog;
 }
