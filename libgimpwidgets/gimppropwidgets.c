@@ -1707,6 +1707,15 @@ gimp_prop_size_entry_new (GObject                   *config,
                                    update_policy);
   gtk_table_set_col_spacing (GTK_TABLE (sizeentry), 1, 4);
 
+  set_param_spec (NULL,
+                  gimp_size_entry_get_help_widget (GIMP_SIZE_ENTRY (sizeentry),
+                                                   0),
+                  param_spec);
+
+  if (unit_param_spec)
+    set_param_spec (NULL,
+                    GIMP_SIZE_ENTRY (sizeentry)->unitmenu, unit_param_spec);
+
   switch (GIMP_SIZE_ENTRY (sizeentry)->update_policy)
     {
     case GIMP_SIZE_ENTRY_UPDATE_SIZE:
@@ -2008,6 +2017,19 @@ gimp_prop_coordinates_connect (GObject     *config,
                  g_type_name (G_TYPE_FROM_INSTANCE (config)));
       return FALSE;
     }
+
+  set_param_spec (NULL,
+                  gimp_size_entry_get_help_widget (GIMP_SIZE_ENTRY (sizeentry),
+                                                   0),
+                  x_param_spec);
+  set_param_spec (NULL,
+                  gimp_size_entry_get_help_widget (GIMP_SIZE_ENTRY (sizeentry),
+                                                   1),
+                  y_param_spec);
+
+  if (unit_param_spec)
+    set_param_spec (NULL,
+                    GIMP_SIZE_ENTRY (sizeentry)->unitmenu, unit_param_spec);
 
   switch (GIMP_SIZE_ENTRY (sizeentry)->update_policy)
     {
@@ -2787,10 +2809,13 @@ set_param_spec (GObject     *object,
                 GtkWidget   *widget,
                 GParamSpec  *param_spec)
 {
-  if (! param_spec_quark)
-    param_spec_quark = g_quark_from_static_string ("gimp-config-param-spec");
+  if (object)
+    {
+      if (! param_spec_quark)
+        param_spec_quark = g_quark_from_static_string ("gimp-config-param-spec");
 
-  g_object_set_qdata (object, param_spec_quark, param_spec);
+      g_object_set_qdata (object, param_spec_quark, param_spec);
+    }
 
   if (widget)
     {

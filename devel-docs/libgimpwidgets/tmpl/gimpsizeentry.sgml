@@ -232,6 +232,16 @@ gimp_coordinates_new()
 @gse: 
 
 
+<!-- ##### FUNCTION gimp_size_entry_get_help_widget ##### -->
+<para>
+
+</para>
+
+@gse: 
+@field: 
+@Returns: 
+
+
 <!-- ##### SIGNAL GimpSizeEntry::refval-changed ##### -->
 <para>
 

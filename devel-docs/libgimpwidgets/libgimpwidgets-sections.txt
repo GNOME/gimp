@@ -152,6 +152,7 @@ gimp_size_entry_get_unit
 gimp_size_entry_set_unit
 gimp_size_entry_set_pixel_digits
 gimp_size_entry_grab_focus
+gimp_size_entry_get_help_widget
 <SUBSECTION Standard>
 GIMP_SIZE_ENTRY
 GIMP_IS_SIZE_ENTRY

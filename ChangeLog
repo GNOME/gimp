@@ -1,5 +1,18 @@
 2003-10-15  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpsizeentry.[ch]: added new function
+	gimp_size_entry_get_help_widget() to make it possible to set
+	tooltips on a GimpSizeEntry.
+
+	* app/widgets/gimppropwidgets.c (gimp_prop_size_entry_new)
+	(gimp_prop_coordinates_connect): set tooltips from property blurbs.
+
+	* app/core/gimpgrid.c
+	* app/core/gimptemplate.c
+	* app/gui/preferences-dialog.c: minor string changes.
+
+2003-10-15  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimptemplateeditor.c: added a hbox to align the
 	landscape/portrait buttons so they don't move with the label below.
 

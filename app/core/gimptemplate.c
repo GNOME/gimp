@@ -142,34 +142,34 @@ gimp_template_class_init (GimpTemplateClass *klass)
   viewable_class->default_stock_id = "gimp-template";
 
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_WIDTH, "width",
-                                "The image width in pixels.",
+                                NULL,
                                 1, GIMP_MAX_IMAGE_SIZE, 256,
                                 0);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_HEIGHT, "height",
-                                "The image height in pixels.",
+                                NULL,
                                 1, GIMP_MAX_IMAGE_SIZE, 256,
                                 0);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_UNIT, "unit",
-                                 "The unit used for coordinate display "
-                                 "when not in dot-for-dot mode.",
+                                 N_("The unit used for coordinate display "
+                                    "when not in dot-for-dot mode."),
                                  FALSE, FALSE, GIMP_UNIT_INCH,
                                  0);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_XRESOLUTION,
                                    "xresolution",
-                                   "The horizonal resolution in dpi.",
+                                   N_("The horizonal image resolution."),
                                    GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
                                    72.0,
                                    0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_YRESOLUTION,
                                    "yresolution",
-                                   "The vertical resolution in dpi.",
+                                   N_("The vertical image resolution."),
                                    GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
                                    72.0,
                                    0);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_RESOLUTION_UNIT,
                                  "resolution-unit",
-                                 "The unit used to display resolutions.",
+                                 NULL,
                                  FALSE, FALSE, GIMP_UNIT_INCH,
                                  0);
 

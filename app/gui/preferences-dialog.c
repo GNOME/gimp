@@ -1004,7 +1004,7 @@ prefs_dialog_new (Gimp       *gimp,
   /***************/
   vbox = prefs_notebook_append_page (gimp,
                                      GTK_NOTEBOOK (notebook),
-				     _("Defaults for New Images"),
+				     _("New Image"),
                                      "new-image.png",
 				     GTK_TREE_STORE (tree),
 				     _("New Image"),
