@@ -1,3 +1,10 @@
+2000-04-11  Sven Neumann  <sven@gimp.org>
+
+	* script-fu-xgettext: set all linenumbers to 0 since they
+	were bogus anyway
+
+	* de.po: updated german translation
+
 2000-04-04  Kjartan Maraas  <kmaraas@online.no>
 
 	* ru.po: Updated Russian translation from Valek Filippov

@@ -622,7 +622,7 @@ measure_tool_draw (Tool *tool)
 	  if (measure_tool->num_points == 2)
 	    gdk_draw_line (measure_tool->core->win, measure_tool->core->gc,
 			   x[0], y[0],
-			   x[1] - x[0] < 0 ? x[0] - ARC_RADIUS - 4 : x[0] + ARC_RADIUS + 4, 
+			   x[1] - x[0] <= 0 ? x[0] - ARC_RADIUS - 4 : x[0] + ARC_RADIUS + 4, 
 			   y[0]);
 	}
     }

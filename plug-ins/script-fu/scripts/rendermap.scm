@@ -75,6 +75,6 @@
  SF-ADJUSTMENT _"Image Size" '(256 0 2048 1 10 0 0)
  SF-ADJUSTMENT _"Granularity" '(4 0 15 1 1 0 0)
  SF-GRADIENT   _"Gradient" "Land_and_Sea"
- SF-TOGGLE     _"TRUE = Detail in middle, FALSE = tile" FALSE
+ SF-TOGGLE     _"TRUE = Detail in Middle, FALSE = Tile" FALSE
 )
 

@@ -1,8 +1,10 @@
 #!/usr/bin/perl
 
 # a lame attempt at xgettext for scheme
-
 # adapted from pxgettext as found in the plug-ins/perl directory
+
+# TODO:
+# proper linenumbers
 
 # There are rumors that perl version 5.005_02 has a bug
 # resulting in an endless loop and a memory leak in the 
@@ -15,8 +17,7 @@
 
 undef $/;
 
-my $line;
-my $file = "";
+my $file;
 my $fileposition;
 my $e;
 my $s;
@@ -24,24 +25,22 @@ my $s;
 while (<>) {
     $file = $ARGV;
     $file =~ s/\.\.\///;
-    $line = 0;
 
     while (/_\(?"((?:[^"\\]+|\\.)*)"\)?/sg) {
-       $line++;
-       my $s = $1;
-       if ($s =~ /\n/) {
-          $e = "msgid \"\"\n";
-          for (split /\n/, $s) {
-             $e .= "\"$_\\n\"\n";
-          }
-       } else {
-          $e = "msgid \"$s\"\n";
-       }
-       $e .= "msgstr \"\"\n";
+        my $s = $1;
+        if ($s =~ /\n/) {
+            $e = "msgid \"\"\n";
+            for (split /\n/, $s) {
+                $e .= "\"$_\\n\"\n";
+            }
+        } else {
+            $e = "msgid \"$s\"\n";
+        }
+        $e .= "msgstr \"\"\n";
 
-       $fileposition = "#: $file:$line\n";
+        $fileposition = "#: $file:0\n";
 
-       push @{$entry{$e}}, $fileposition;
+        push @{$entry{$e}}, $fileposition;
     }
 }
 

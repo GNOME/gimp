@@ -144,13 +144,13 @@
 		    SF-FONT   _"Font" "-*-times-*-r-*-*-24-*-*-*-p-*-*-*"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(50 2 1000 1 10 0 1)
 		    SF-COLOR  _"Text Color" '(82 108 159)
-		    SF-COLOR  _"Higlight Color" '(190 220 250)
+		    SF-COLOR  _"Highlight Color" '(190 220 250)
 		    SF-COLOR  _"Dark Color" '(46 74 92)
 		    SF-COLOR  _"Shadow Color" '(0 0 0)
 		    SF-TOGGLE _"AutoCrop" TRUE
 		    SF-TOGGLE _"Remove Background" TRUE
 		    SF-TOGGLE _"Index Image" TRUE
-		    SF-VALUE "Number of Colors" "15")
+		    SF-VALUE  _"Number of Colors" "15")
 
 (script-fu-register "script-fu-small-header-gimp-org"
 		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
@@ -163,7 +163,7 @@
 		    SF-FONT   _"Font" "-*-helvetica-*-r-*-*-24-*-*-*-p-*-*-*"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(24 2 1000 1 10 0 1)
 		    SF-COLOR  _"Text Color" '(135 220 220)
-		    SF-COLOR  _"Higlight Color" '(210 240 245)
+		    SF-COLOR  _"Highlight Color" '(210 240 245)
 		    SF-COLOR  _"Dark Color" '(46 74 92)
 		    SF-COLOR  _"Shadow Color" '(0 0 0)
 		    SF-TOGGLE _"AutoCrop" TRUE

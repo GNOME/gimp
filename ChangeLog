@@ -1,3 +1,18 @@
+2000-04-11  Sven Neumann  <sven@gimp.org>
+
+        * app/measure.c: the arc displaying the angle was drawn incorrect
+	in the case of 90 degrees
+
+	* app/tips_dialog.c: cosmetics
+	
+	* plug-ins/script-fu/scripts/3dTruchet.scm
+	* plug-ins/script-fu/scripts/comic-logo.scm
+	* plug-ins/script-fu/scripts/gimp-headers.scm
+	* plug-ins/script-fu/scripts/rendermap.scm
+	* plug-ins/script-fu/scripts/spinning_globe.scm
+	* plug-ins/script-fu/scripts/truchet.scm: fixed typos and unified 
+	messages
+
 2000-04-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug_in.c: if attaching to the newly created shared memory

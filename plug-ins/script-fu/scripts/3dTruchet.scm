@@ -169,6 +169,6 @@
 		    SF-COLOR  _"Start Blend" '(0 0 0)
 		    SF-COLOR  _"End Blend" '(255 255 255)
 		    SF-TOGGLE _"Supersample" TRUE
-		    SF-VALUE  _"Number of Xtiles" "5"
-		    SF-VALUE  _"Number of Ytiles" "5"
+		    SF-VALUE  _"Number of X Tiles" "5"
+		    SF-VALUE  _"Number of Y Tiles" "5"
 		    )

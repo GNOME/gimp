@@ -49,6 +49,7 @@ void
 tips_dialog_create (void)
 {
   GtkWidget *vbox;
+  GtkWidget *vbox2;
   GtkWidget *hbox;
   GtkWidget *bbox;
   GtkWidget *frame;
@@ -93,7 +94,7 @@ tips_dialog_create (void)
       gtk_quit_add_destroy (1, GTK_OBJECT (tips_dialog));
 
       vbox = gtk_vbox_new (FALSE, 0);
-      gtk_container_add (GTK_CONTAINER (tips_dialog), vbox);
+      gtk_container_add (GTK_CONTAINER (tips_dialog), vbox);      
       gtk_widget_show (vbox);
 
       hbox = gtk_hbox_new (FALSE, 5);
@@ -104,12 +105,14 @@ tips_dialog_create (void)
       tips_label = gtk_label_new (tips_text[last_tip]);
       gtk_label_set_justify (GTK_LABEL (tips_label), GTK_JUSTIFY_LEFT);
       gtk_misc_set_alignment (GTK_MISC (tips_label), 0.5, 0.5);
-      gtk_box_pack_start (GTK_BOX (hbox), tips_label, TRUE, FALSE, 3);
+      gtk_box_pack_start (GTK_BOX (hbox), tips_label, TRUE, TRUE, 3);
       gtk_widget_show (tips_label);
      
+      vbox2 = gtk_vbox_new (FALSE, 0);
+      gtk_box_pack_end (GTK_BOX (hbox), vbox2, FALSE, FALSE, 0);
       frame = gtk_frame_new (NULL);
       gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-      gtk_box_pack_end (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (vbox2), frame, TRUE, FALSE, 0);
 
       preview = gtk_preview_new (GTK_PREVIEW_COLOR);
       gtk_preview_size (GTK_PREVIEW (preview), wilber_width, wilber_height);
@@ -129,6 +132,7 @@ tips_dialog_create (void)
       gtk_container_add (GTK_CONTAINER (frame), preview);
       gtk_widget_show (preview);
       gtk_widget_show (frame);
+      gtk_widget_show (vbox2);
  
       hbox = gtk_hbox_new (FALSE, 15);
       gtk_container_set_border_width (GTK_CONTAINER (hbox), 10);

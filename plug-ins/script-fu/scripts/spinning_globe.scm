@@ -107,13 +107,11 @@
     "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
     "16th April 1998"
     "RGB* GRAY*"
-    SF-IMAGE "The Image" 0
+    SF-IMAGE    "The Image" 0
     SF-DRAWABLE "The Layer" 0
-    ; SF-VALUE _"Frames" "10"
-    SF-ADJUSTMENT "Frames:" '(10 1 360 1 10 0 1)
-    SF-TOGGLE _"Turn from Left to Right" FALSE
-    SF-TOGGLE _"Transparent Background" TRUE
-    ; SF-VALUE  _"Index to n Colors (0 = Remain RGB):" "63"
-    SF-ADJUSTMENT "Index of n Colors (0 = Remain RGB):" '(63 0 256 1 10 0 1)
-    SF-TOGGLE _"Work on Copy" TRUE
+    SF-ADJUSTMENT _"Frames" '(10 1 360 1 10 0 1)
+    SF-TOGGLE     _"Turn from Left to Right" FALSE
+    SF-TOGGLE     _"Transparent Background" TRUE
+    SF-ADJUSTMENT _"Index to n Colors (0 = Remain RGB)" '(63 0 256 1 10 0 1)
+    SF-TOGGLE     _"Work on Copy" TRUE
 )
