@@ -49,11 +49,11 @@ static GimpColorSelectorMethods methods =
 
 static GimpModuleInfo info = {
     NULL,
-    "Watercolor style color selector as a pluggable colour selector",
+    "Watercolor style color selector as a pluggable module",
     "Raph Levien <raph@acm.org>, Sven Neumann <sven@gimp.org>",
-    "v0.2",
+    "v0.3",
     "(c) 1998-1999, released under the GPL",
-    "May, 08 1999"
+    "May, 09 1999"
 };
 
 
@@ -105,6 +105,7 @@ typedef struct {
 static gdouble    bucket[N_BUCKETS + 1][3];
 static GtkWidget *color_preview[N_BUCKETS + 1];
 static gdouble    last_x, last_y, last_pressure;
+static gfloat     pressure_adjust = 100.0;
 static guint32    motion_time;
 static gint       button_state;
 static ColorselWater *coldata;
@@ -266,7 +267,6 @@ select_area_draw (GtkWidget *preview)
 	  g += dg;
 	  b += db;
 	}
-
       gtk_preview_draw_row (GTK_PREVIEW (preview), buf, 0, y, IMAGE_SIZE);
     }
 }
@@ -277,10 +277,12 @@ add_pigment (gboolean erase, gdouble x, gdouble y, gdouble much)
 {
   gdouble r, g, b;
 
+  much *= (gdouble)pressure_adjust / 100.0; 
+
 #ifdef VERBOSE
-  g_print ("x: %g, y: %g, much: %g\n",
-	   x, y, much);
+  g_print ("x: %g, y: %g, much: %g\n", x, y, much);
 #endif
+
   if (erase)
     {
       bucket[0][0] = 1 - (1 - bucket[0][0]) * (1 - much);
@@ -371,12 +373,13 @@ motion_notify_event (GtkWidget *widget, GdkEventMotion *event)
   int i;
   gboolean erase;
 
-  if (event->state & (GDK_BUTTON1_MASK | GDK_BUTTON3_MASK | GDK_BUTTON4_MASK))
+  if (event->state & (GDK_BUTTON1_MASK | GDK_BUTTON2_MASK | GDK_BUTTON3_MASK | GDK_BUTTON4_MASK))
     {
       coords = gdk_input_motion_events (event->window, event->deviceid,
 					motion_time, event->time,
 					&nevents);
-      erase = (event->state & (GDK_BUTTON3_MASK | GDK_BUTTON4_MASK)) ||
+      erase = (event->state & 
+	       (GDK_BUTTON2_MASK | GDK_BUTTON3_MASK | GDK_BUTTON4_MASK)) ||
 	(event->source == GDK_SOURCE_ERASER);
       motion_time = event->time;
       if (coords)
@@ -402,7 +405,6 @@ motion_notify_event (GtkWidget *widget, GdkEventMotion *event)
 				    NULL, NULL, NULL, NULL);
     }
 
-
   return TRUE;
 }
 
@@ -416,7 +418,7 @@ proximity_out_event (GtkWidget *widget, GdkEventProximity *event)
 }
 
 static void
-new_color_callback (GtkWidget *widget, gpointer *data)
+new_color_callback (GtkWidget *widget, gpointer data)
 {
 #ifdef VERBOSE
   g_print ("new color\n");
@@ -435,7 +437,7 @@ new_color_callback (GtkWidget *widget, gpointer *data)
 }
 
 static void
-reset_color_callback (GtkWidget *widget, gpointer *data)
+reset_color_callback (GtkWidget *widget, gpointer data)
 {
 #ifdef VERBOSE
   g_print ("reset color\n");
@@ -449,6 +451,12 @@ reset_color_callback (GtkWidget *widget, gpointer *data)
   colorsel_water_update ();
 
   return;
+}
+
+static void
+pressure_adjust_update (GtkAdjustment *adj, gpointer data)
+{
+  pressure_adjust = adj->value;
 }
 
 
@@ -475,6 +483,9 @@ colorsel_water_new (int r, int g, int b,
   GtkWidget *table;
   GtkWidget *button;
   GtkWidget *bbox;
+  GtkWidget *label;
+  GtkObject *adj;
+  GtkWidget *scale;
   guint      i;
 
   coldata = g_malloc (sizeof (ColorselWater));
@@ -486,7 +497,7 @@ colorsel_water_new (int r, int g, int b,
 
   vbox = gtk_vbox_new (FALSE, 0);
   hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, FALSE, 8);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, FALSE, 4);
 
   /* the event box */
   frame = gtk_frame_new (NULL);
@@ -528,19 +539,18 @@ colorsel_water_new (int r, int g, int b,
   gtk_box_pack_end (GTK_BOX (hbox), vbox2, TRUE, FALSE, 0);
 
   hbox2 = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox2), hbox2, TRUE, FALSE, 8);
+  gtk_box_pack_start (GTK_BOX (vbox2), hbox2, TRUE, FALSE, 4);
 
   vbox3 = gtk_vbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (hbox2), vbox3, FALSE, FALSE, 8);
+  gtk_box_pack_start (GTK_BOX (hbox2), vbox3, FALSE, FALSE, 4);
   hbox3 = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox3), hbox3, FALSE, FALSE, 8);
+  gtk_box_pack_start (GTK_BOX (vbox3), hbox3, FALSE, FALSE, 4);
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (hbox3), frame, TRUE, FALSE, 0); 
   color_preview[0] = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (color_preview[0]), PREVIEW_SIZE, PREVIEW_SIZE);
   gtk_container_add (GTK_CONTAINER (frame), color_preview[0]);
-  gtk_widget_show_all (vbox3);
 
   bbox = gtk_vbutton_box_new ();
   gtk_box_pack_end (GTK_BOX (hbox2), bbox, FALSE, FALSE, 0);
@@ -556,13 +566,11 @@ colorsel_water_new (int r, int g, int b,
 		      (GtkSignalFunc) reset_color_callback,
 		      NULL);
 
-  gtk_widget_show_all (hbox2);
-
   frame = gtk_frame_new ("Color history");
   gtk_box_pack_start (GTK_BOX (vbox2), frame, TRUE, FALSE, 0); 
 
   table = gtk_table_new (2, 5, TRUE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
   gtk_container_add (GTK_CONTAINER (frame), table);
   
   for (i = 0; i < N_BUCKETS; i++)
@@ -579,12 +587,21 @@ colorsel_water_new (int r, int g, int b,
       color_preview[i+1] = gtk_preview_new (GTK_PREVIEW_COLOR);
       gtk_preview_size (GTK_PREVIEW (color_preview[i+1]), BUCKET_SIZE, BUCKET_SIZE);
       gtk_container_add (GTK_CONTAINER (button), color_preview[i+1]);
-      gtk_widget_show (preview);
-      gtk_widget_show (button);
       set_bucket (i+1, 1.0, 1.0, 1.0);
     }
 
-  gtk_widget_show_all (vbox2);
+  hbox2 = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), hbox2, TRUE, FALSE, 0);  
+  label = gtk_label_new ("Pressure:");
+  gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
+
+  adj = gtk_adjustment_new (100.0, 0.0, 200.0, 1.0, 1.0, 0.0);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (pressure_adjust_update), NULL);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (adj));
+  gtk_scale_set_digits (GTK_SCALE (scale), 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), scale, TRUE, TRUE, 0);
+
   gtk_widget_show_all (hbox);
   
   colorsel_water_setcolor (coldata, r, g, b, 0);

@@ -1,3 +1,9 @@
+Sun May  9 23:45:08 MEST 1999 Sven Neumann <sven@gimp.org>
+
+	* modules/colorsel_water.c: Added a pressure slider. Still don't 
+	know why the color history is initially drawn in black and is not 
+	updated properly.
+
 1999-05-09  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/text_tool.c: made the font selection dialog static again, so
