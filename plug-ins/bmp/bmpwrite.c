@@ -207,7 +207,7 @@ WriteBMP (gchar  *filename,
 
   Bitmap_Head.biWidth  = cols;
   Bitmap_Head.biHeight = rows;
-  Bitmap_Head.biPlanes = channels;
+  Bitmap_Head.biPlanes = 1;
   Bitmap_Head.biBitCnt = BitsPerPixel;
 
   if (encoded == 0)
