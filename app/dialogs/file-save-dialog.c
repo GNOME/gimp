@@ -272,6 +272,8 @@ file_save_overwrite_callback (GtkWidget *widget,
     {
       GimpFileDialog *dialog = GIMP_FILE_DIALOG (overwrite_data->save_dialog);
 
+      gtk_widget_hide (widget);
+
       if (file_save_dialog_save_image (overwrite_data->save_dialog,
                                        dialog->gimage,
                                        overwrite_data->uri,
