@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-04 02:48+0100\n"
-"PO-Revision-Date: 2004-02-02 18:42+0100\n"
+"POT-Creation-Date: 2004-02-04 14:55+0100\n"
+"PO-Revision-Date: 2004-02-04 18:33+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3775,6 +3775,7 @@ msgid "Scale Error: Both width and height must be greater than zero."
 msgstr "Chyba velikosti: Jak šířka tak výška musí být větší než nula."
 
 #. <Image>/File
+#. <Toolbox>/File
 #: app/gui/image-menu.c:99 app/gui/toolbox-menu.c:49
 msgid "/_File"
 msgstr "/_Soubor"
@@ -3788,6 +3789,7 @@ msgid "/File/_Open..."
 msgstr "/Soubor/_Otevřít..."
 
 #. <Image>/File/Open Recent
+#. <Toolbox>/File/Open Recent
 #: app/gui/image-menu.c:114 app/gui/toolbox-menu.c:64
 msgid "/File/Open _Recent"
 msgstr "/Soubor/Ot_evřít nedávný"
@@ -3994,49 +3996,40 @@ msgid "/View/Zoom/Zoom to _Fit Window"
 msgstr "/Zobrazení/Zvětšení/Přizpůsobit velikosti _okna"
 
 #: app/gui/image-menu.c:381
-#, fuzzy
 msgid "/View/Zoom/16:1  (1600%)"
-msgstr "/Zobrazení/Zvětšení/16:1"
+msgstr "/Zobrazení/Zvětšení/16:1  (1600%)"
 
 #: app/gui/image-menu.c:385
-#, fuzzy
 msgid "/View/Zoom/8:1  (800%)"
-msgstr "/Zobrazení/Zvětšení/8:1"
+msgstr "/Zobrazení/Zvětšení/8:1  (800%)"
 
 #: app/gui/image-menu.c:389
-#, fuzzy
 msgid "/View/Zoom/4:1  (400%)"
-msgstr "/Zobrazení/Zvětšení/4:1"
+msgstr "/Zobrazení/Zvětšení/4:1  (400%)"
 
 #: app/gui/image-menu.c:393
-#, fuzzy
 msgid "/View/Zoom/2:1  (200%)"
-msgstr "/Zobrazení/Zvětšení/2:1"
+msgstr "/Zobrazení/Zvětšení/2:1  (200%)"
 
 #: app/gui/image-menu.c:397
-#, fuzzy
 msgid "/View/Zoom/1:1  (100%)"
-msgstr "/Zobrazení/Zvětšení/1:1"
+msgstr "/Zobrazení/Zvětšení/1:1  (100%)"
 
 #: app/gui/image-menu.c:401
-#, fuzzy
 msgid "/View/Zoom/1:2  (50%)"
-msgstr "/Zobrazení/Zvětšení/1:2"
+msgstr "/Zobrazení/Zvětšení/1:2  (50%)"
 
 #: app/gui/image-menu.c:405
-#, fuzzy
 msgid "/View/Zoom/1:4  (25%)"
-msgstr "/Zobrazení/Zvětšení/1:2"
+msgstr "/Zobrazení/Zvětšení/1:2  (25%)"
 
 #: app/gui/image-menu.c:409
-#, fuzzy
 msgid "/View/Zoom/1:8  (12.5%)"
-msgstr "/Zobrazení/Zvětšení/1:1"
+msgstr "/Zobrazení/Zvětšení/1:1  (12,5%)"
 
 #: app/gui/image-menu.c:413
-#, fuzzy
 msgid "/View/Zoom/1:16  (6.25%)"
-msgstr "/Zobrazení/Zvětšení/1:16"
+msgstr "/Zobrazení/Zvětšení/1:16  (6,25%)"
 
 #: app/gui/image-menu.c:427
 msgid "/View/_Info Window"
@@ -4662,14 +4655,14 @@ msgid "_Redo"
 msgstr "Zn_ovu"
 
 #: app/gui/image-menu.c:1712
-#, fuzzy, c-format
+#, c-format
 msgid "Other (%s) ..."
-msgstr "Jiný (%.0f%%) ..."
+msgstr "Jiný (%s) ..."
 
 #: app/gui/image-menu.c:1721
-#, fuzzy, c-format
+#, c-format
 msgid "_Zoom (%s)"
-msgstr "_Zvětšení (%.0f%%)"
+msgstr "_Zvětšení (%s)"
 
 #: app/gui/images-menu.c:42
 msgid "/_Raise Views"
@@ -6047,6 +6040,7 @@ msgid "Original Width:"
 msgstr "Původní šířka:"
 
 #. the new size labels
+#. the print size labels
 #: app/gui/resize-dialog.c:318 app/gui/resize-dialog.c:564
 msgid "New Width:"
 msgstr "Nová šířka:"
@@ -6853,6 +6847,7 @@ msgid "New Path Options"
 msgstr "Volby nové cesty"
 
 #. The name entry hbox, label and entry
+#. The name entry
 #: app/gui/vectors-commands.c:495 app/gui/vectors-commands.c:613
 msgid "Path name:"
 msgstr "Název cesty:"
@@ -7768,6 +7763,7 @@ msgid "Origin X:"
 msgstr "X počátek:"
 
 #. the pixel size labels
+#. the unit size labels
 #: app/tools/gimpcroptool.c:999 app/tools/gimpselectionoptions.c:565
 #: app/widgets/gimptemplateeditor.c:235 app/widgets/gimptemplateeditor.c:253
 msgid "Width:"
@@ -9845,22 +9841,6 @@ msgstr "chyba XCF: nalezena nepodporovaná verze %d XCF souboru"
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
 msgstr "Vytvářet a upravovat obrázky a fotografie"
-
-#~ msgid "/View/Zoom/1:4"
-#~ msgstr "/Zobrazení/Zvětšení/1:4"
-
-#~ msgid "/View/Zoom/1:8"
-#~ msgstr "/Zobrazení/Zvětšení/1:8"
-
-#~ msgid "Other (%.2f%%) ..."
-#~ msgstr "Jiný (%.2f%%) ..."
-
-#~ msgid "_Zoom (%.2f%%)"
-#~ msgstr "_Zvětšení (%.2f%%)"
-
-# FIXME
-#~ msgid "@GIMP_VISIBLE_NAME@"
-#~ msgstr "@GIMP_VISIBLE_NAME@"
 
 #~ msgid "Copy"
 #~ msgstr "Kopírovat"
