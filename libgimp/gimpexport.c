@@ -155,7 +155,7 @@ static ExportAction export_action_merge =
 {
   export_merge,
   NULL,
-  N_("can't Handle Layers"),
+  N_("can't handle layers"),
   { N_("Merge Visible Layers"), NULL },
   0
 };
@@ -164,7 +164,7 @@ static ExportAction export_action_animate_or_merge =
 {
   NULL,
   export_merge,
-  N_("can only Handle Layers as Animation Frames"),
+  N_("can only handle layers as animation frames"),
   { N_("Save as Animation"), N_("Merge Visible Layers") },
   0
 };
@@ -173,7 +173,7 @@ static ExportAction export_action_animate_or_flatten =
 {
   NULL,
   export_flatten,
-  N_("can only Handle Layers as Animation Frames"),
+  N_("can only handle layers as animation frames"),
   { N_("Save as Animation"), N_("Flatten Image") },
   0
 };
@@ -182,7 +182,7 @@ static ExportAction export_action_merge_flat =
 {
   export_flatten,
   NULL,
-  N_("can't Handle Layers"),
+  N_("can't handle layers"),
   { N_("Flatten Image"), NULL },
   0
 };
@@ -191,7 +191,7 @@ static ExportAction export_action_flatten =
 {
   export_flatten,
   NULL,
-  N_("can't Handle Transparency"),
+  N_("can't handle transparency"),
   { N_("Flatten Image"), NULL },
   0
 };
@@ -200,7 +200,7 @@ static ExportAction export_action_convert_rgb =
 {
   export_convert_rgb,
   NULL,
-  N_("can only Handle RGB Images"),
+  N_("can only handle RGB images"),
   { N_("Convert to RGB"), NULL },
   0
 };
@@ -209,7 +209,7 @@ static ExportAction export_action_convert_grayscale =
 {
   export_convert_grayscale,
   NULL,
-  N_("can only Handle Grayscale Images"),
+  N_("can only handle grayscale images"),
   { N_("Convert to Grayscale"), NULL },
   0
 };
@@ -218,8 +218,8 @@ static ExportAction export_action_convert_indexed =
 {
   export_convert_indexed,
   NULL,
-  N_("can only Handle Indexed Images"),
-  { N_("Convert to indexed using default settings\n"
+  N_("can only handle indexed images"),
+  { N_("Convert to Indexed using default settings\n"
        "(Do it manually to tune the result)"), NULL },
   0
 };
@@ -228,7 +228,7 @@ static ExportAction export_action_convert_rgb_or_grayscale =
 {
   export_convert_rgb,
   export_convert_grayscale,
-  N_("can only Handle RGB or Grayscale Images"),
+  N_("can only handle RGB or grayscale images"),
   { N_("Convert to RGB"), N_("Convert to Grayscale")},
   0
 };
@@ -237,8 +237,8 @@ static ExportAction export_action_convert_rgb_or_indexed =
 {
   export_convert_rgb,
   export_convert_indexed,
-  N_("can only Handle RGB or Indexed Images"),
-  { N_("Convert to RGB"), N_("Convert to indexed using default settings\n"
+  N_("can only handle RGB or indexed images"),
+  { N_("Convert to RGB"), N_("Convert to Indexed using default settings\n"
 			     "(Do it manually to tune the result)")},
   0
 };
@@ -247,8 +247,8 @@ static ExportAction export_action_convert_indexed_or_grayscale =
 {
   export_convert_indexed,
   export_convert_grayscale,
-  N_("can only Handle Grayscale or Indexed Images"),
-  { N_("Convert to indexed using default settings\n"
+  N_("can only handle grayscale or indexed images"),
+  { N_("Convert to Indexed using default settings\n"
        "(Do it manually to tune the result)"), 
     N_("Convert to Grayscale") },
   0
@@ -258,7 +258,7 @@ static ExportAction export_action_add_alpha =
 {
   export_add_alpha,
   NULL,
-  N_("needs an Alpha Channel"),
+  N_("needs an alpha channel"),
   { N_("Add Alpha Channel"), NULL},
   0
 };

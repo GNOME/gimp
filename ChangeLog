@@ -1,3 +1,7 @@
+2000-06-27  Daniel Egger  <egger@suse.de>
+
+	* libgimp/gimpexport.c: changed some words to lowercase
+	
 2000-06-27  Sven Neumann  <sven@gimp.org>
 
 	* app/about_dialog.c: we used an array with a hardcoded size here 

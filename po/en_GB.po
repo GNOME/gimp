@@ -1,14 +1,15 @@
-# English translation.
+# This is the English, British catalog for GIMP.
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Robert Brady <robert@susu.org.uk>, 2000.
+# Piers Cornwell <piers.cornwell@usa.net>, 2000.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp CVS\n"
+"Project-Id-Version: GIMP 1.1.24\n"
 "POT-Creation-Date: 2000-06-18 19:40-0700\n"
-"PO-Revision-Date: 2000-02-02 13:36+0000\n"
-"Last-Translator: Robert Brady <robert@susu.org.uk>\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2000-06-24 21:46+0000\n"
+"Last-Translator: Piers Cornwell <piers.cornwell@usa.net>\n"
+"Language-Team: English, British\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -461,9 +462,8 @@ msgid "Fuzziness Threshold"
 msgstr ""
 
 #: app/by_color_select.c:813
-#, fuzzy
 msgid "Selection"
-msgstr "Colour Selection"
+msgstr "Selection"
 
 #: app/by_color_select.c:824
 msgid "Invert"
@@ -790,18 +790,16 @@ msgid "Feather Selection"
 msgstr ""
 
 #: app/commands.c:335
-#, fuzzy
 msgid "Feather Selection by:"
-msgstr "Colour Selection"
+msgstr ""
 
 #: app/commands.c:368
 msgid "Shrink Selection"
 msgstr ""
 
 #: app/commands.c:371
-#, fuzzy
 msgid "Shrink Selection by:"
-msgstr "Colour Selection"
+msgstr ""
 
 #: app/commands.c:380
 msgid "Shrink from image border"
@@ -812,18 +810,16 @@ msgid "Grow Selection"
 msgstr ""
 
 #: app/commands.c:405
-#, fuzzy
 msgid "Grow Selection by:"
-msgstr "Colour Selection"
+msgstr ""
 
 #: app/commands.c:425
 msgid "Border Selection"
 msgstr ""
 
 #: app/commands.c:428
-#, fuzzy
 msgid "Border Selection by:"
-msgstr "Colour Selection"
+msgstr ""
 
 #: app/commands.c:1324
 msgid "Resize Error: Both width and height must be greater than zero."
@@ -2353,9 +2349,8 @@ msgid "Indexed Color"
 msgstr "Indexed Colour"
 
 #: app/info_window.c:537
-#, fuzzy
 msgid "colors"
-msgstr "Colour"
+msgstr "Colours"
 
 #. adjust sliders
 #: app/ink.c:291
@@ -3042,14 +3037,12 @@ msgid "/Edit/Clear"
 msgstr ""
 
 #: app/menus.c:252
-#, fuzzy
 msgid "/Edit/Fill with FG Color"
-msgstr "Fill with a colour gradient"
+msgstr "/Edit/Fill with FG Colour"
 
 #: app/menus.c:254
-#, fuzzy
 msgid "/Edit/Fill with BG Color"
-msgstr "Fill with a colour gradient"
+msgstr "/Edit/Fill with BG Colour"
 
 #: app/menus.c:256
 msgid "/Edit/Stroke"
@@ -5681,7 +5674,6 @@ msgid ""
 msgstr ""
 
 #: app/user_install.c:188
-#, fuzzy
 msgid ""
 "The unitrc is used to store your user units database.\n"
 "You can define additional units and use them just\n"
@@ -5692,8 +5684,8 @@ msgstr ""
 "The unitrc is used to store your user units database.\n"
 "You can define additional units and use them just\n"
 "like you use the built-in units inches, millimetres,\n"
-"points and picas. This file is overwritten each time\n"
-"you quit the GIMP.\n"
+"points and picas.  This file is overwritten each time\n"
+"you quit the GIMP."
 
 #: app/user_install.c:196
 msgid ""
@@ -5862,7 +5854,6 @@ msgid ""
 msgstr ""
 
 #: app/user_install.c:699
-#, fuzzy
 msgid ""
 "This program is free software; you can redistribute it and/or modify\n"
 "it under the terms of the GNU General Public License as published by\n"
@@ -5872,10 +5863,9 @@ msgstr ""
 "This program is free software; you can redistribute it and/or modify\n"
 "it under the terms of the GNU General Public License as published by\n"
 "the Free Software Foundation; either version 2 of the Licence, or\n"
-"(at your option) any later version.\n"
+"(at your option) any later version."
 
 #: app/user_install.c:704
-#, fuzzy
 msgid ""
 "This program is distributed in the hope that it will be useful,\n"
 "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
@@ -5885,10 +5875,9 @@ msgstr ""
 "This program is distributed in the hope that it will be useful,\n"
 "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
 "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
-"See the GNU General Public Licence for more details.\n"
+"See the GNU General Public Licence for more details."
 
 #: app/user_install.c:709
-#, fuzzy
 msgid ""
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
@@ -5898,7 +5887,7 @@ msgstr ""
 "You should have received a copy of the GNU General Public Licence\n"
 "along with this program; if not, write to the Free Software\n"
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
-"MA 02111-1307, USA.\n"
+"MA 02111-1307, USA."
 
 #: app/user_install.c:735
 msgid "Personal GIMP Directory"
@@ -5939,9 +5928,8 @@ msgid "For optimal GIMP performance, some settings may have to be adjusted."
 msgstr ""
 
 #: app/user_install.c:864
-#, fuzzy
 msgid "Monitor Resolution"
-msgstr "Colour Selection"
+msgstr ""
 
 #: app/user_install.c:865
 msgid "Click \"Continue\" to start The GIMP."
@@ -6007,9 +5995,8 @@ msgid "Swap Directory:"
 msgstr ""
 
 #: app/user_install.c:1183
-#, fuzzy
 msgid "Calibrate Monitor Resolution"
-msgstr "Colour Selection"
+msgstr ""
 
 #: app/user_install.c:1291
 msgid "Measure the rulers and enter their lengths below."
@@ -6080,9 +6067,8 @@ msgid "Gamma:"
 msgstr ""
 
 #: modules/cdisplay_highcontrast.c:96
-#, fuzzy
 msgid "High Contrast color display filter"
-msgstr "Gamma colour display filter"
+msgstr "High Contrast colour display filter"
 
 #: modules/cdisplay_highcontrast.c:318
 msgid "High Contrast"

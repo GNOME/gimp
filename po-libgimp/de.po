@@ -6,9 +6,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.18\n"
-"POT-Creation-Date: 2000-06-06 12:41-0700\n"
-"PO-Revision-Date: 2000-03-15 16:50+0100\n"
+"Project-Id-Version: GIMP 1.1.24\n"
+"POT-Creation-Date: 2000-06-28 00:03+0200\n"
+"PO-Revision-Date: 2000-06-28 00:04+02:00\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -23,8 +23,8 @@ msgstr "/Vordergrundfarbe verwenden"
 msgid "/Use Background Color"
 msgstr "/Hintergrundfarbe verwenden"
 
-#: libgimp/gimpexport.c:158
-msgid "can't Handle Layers"
+#: libgimp/gimpexport.c:158 libgimp/gimpexport.c:185
+msgid "can't handle layers"
 msgstr "kennt keine Ebenen"
 
 #: libgimp/gimpexport.c:159 libgimp/gimpexport.c:168
@@ -32,66 +32,66 @@ msgid "Merge Visible Layers"
 msgstr "Sichtbare Ebenen vereinen"
 
 #: libgimp/gimpexport.c:167 libgimp/gimpexport.c:176
-msgid "can only Handle Layers as Animation Frames"
+msgid "can only handle layers as animation frames"
 msgstr "kann Ebenen nur als Animation abspeichern"
 
 #: libgimp/gimpexport.c:168 libgimp/gimpexport.c:177
 msgid "Save as Animation"
 msgstr "Als Animation speichern"
 
-#: libgimp/gimpexport.c:177 libgimp/gimpexport.c:186
+#: libgimp/gimpexport.c:177 libgimp/gimpexport.c:186 libgimp/gimpexport.c:195
 msgid "Flatten Image"
 msgstr "Bild zusammenfügen"
 
-#: libgimp/gimpexport.c:185
-msgid "can't Handle Transparency"
+#: libgimp/gimpexport.c:194
+msgid "can't handle transparency"
 msgstr "kennt keine Transparenz"
 
-#: libgimp/gimpexport.c:194
-msgid "can only Handle RGB Images"
+#: libgimp/gimpexport.c:203
+msgid "can only handle RGB images"
 msgstr "kennt nur RGB"
 
-#: libgimp/gimpexport.c:195 libgimp/gimpexport.c:223 libgimp/gimpexport.c:232
+#: libgimp/gimpexport.c:204 libgimp/gimpexport.c:232 libgimp/gimpexport.c:241
 msgid "Convert to RGB"
 msgstr "In RGB umwandeln"
 
-#: libgimp/gimpexport.c:203
-msgid "can only Handle Grayscale Images"
+#: libgimp/gimpexport.c:212
+msgid "can only handle grayscale images"
 msgstr "kennt nur Graustufen"
 
-#: libgimp/gimpexport.c:204 libgimp/gimpexport.c:223 libgimp/gimpexport.c:244
+#: libgimp/gimpexport.c:213 libgimp/gimpexport.c:232 libgimp/gimpexport.c:253
 msgid "Convert to Grayscale"
 msgstr "In Graustufen umwandeln"
 
-#: libgimp/gimpexport.c:212
-msgid "can only Handle Indexed Images"
+#: libgimp/gimpexport.c:221
+msgid "can only handle indexed images"
 msgstr "kennt nur indizierte Paletten"
 
-#: libgimp/gimpexport.c:213 libgimp/gimpexport.c:232 libgimp/gimpexport.c:242
+#: libgimp/gimpexport.c:222 libgimp/gimpexport.c:241 libgimp/gimpexport.c:251
 msgid ""
-"Convert to indexed using default settings\n"
+"Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
 "Mit Standardeinstellungen in indiziertes Format umwandeln\n"
 "(Für bessere Resultate, diesen Schritt manuell durchführen)"
 
-#: libgimp/gimpexport.c:222
-msgid "can only Handle RGB or Grayscale Images"
+#: libgimp/gimpexport.c:231
+msgid "can only handle RGB or grayscale images"
 msgstr "kennt nur RGB und Graustufen"
 
-#: libgimp/gimpexport.c:231
-msgid "can only Handle RGB or Indexed Images"
+#: libgimp/gimpexport.c:240
+msgid "can only handle RGB or indexed images"
 msgstr "kennt nur RGB und indizierte Paletten"
 
-#: libgimp/gimpexport.c:241
-msgid "can only Handle Grayscale or Indexed Images"
+#: libgimp/gimpexport.c:250
+msgid "can only handle grayscale or indexed images"
 msgstr "kennt nur Graustufen und indizierte Paletten"
 
-#: libgimp/gimpexport.c:252
-msgid "needs an Alpha Channel"
+#: libgimp/gimpexport.c:261
+msgid "needs an alpha channel"
 msgstr "benötigt einen Alphakanal"
 
-#: libgimp/gimpexport.c:253
+#: libgimp/gimpexport.c:262
 msgid "Add Alpha Channel"
 msgstr "Alphakanal hinzufügen"
 
@@ -100,32 +100,32 @@ msgstr "Alphakanal hinzufügen"
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:322
+#: libgimp/gimpexport.c:331
 msgid "Export File"
 msgstr "Datei exportieren"
 
-#: libgimp/gimpexport.c:327
+#: libgimp/gimpexport.c:336
 msgid "Export"
 msgstr "Exportieren"
 
-#: libgimp/gimpexport.c:329
+#: libgimp/gimpexport.c:338
 msgid "Ignore"
 msgstr "Ignorieren"
 
-#: libgimp/gimpexport.c:331 libgimp/gimpquerybox.c:183
+#: libgimp/gimpexport.c:340 libgimp/gimpquerybox.c:183
 #: libgimp/gimpquerybox.c:237 libgimp/gimpquerybox.c:293
 #: libgimp/gimpquerybox.c:356 libgimp/gimpunitmenu.c:501
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: libgimp/gimpexport.c:346
+#: libgimp/gimpexport.c:355
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
 msgstr "Das Bild sollte vor dem Abspeichern exportiert werden, denn:"
 
 #. the footline
-#: libgimp/gimpexport.c:409
+#: libgimp/gimpexport.c:418
 msgid "The export conversion won't modify your original image."
 msgstr "Dieser Vorgang wird das Originalbild nicht verändern."
 
