@@ -1,3 +1,9 @@
+2003-05-13  Sven Neumann  <sven@gimp.org>
+
+	* app/plug-in/plug-in.c (plug_in_close): wait 10 ms before killing
+	the plug-in just like the comment says. The code used to wait 0.1 ms
+	only.
+
 2003-05-12  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-handlers.c

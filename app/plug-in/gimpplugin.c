@@ -530,7 +530,7 @@ plug_in_close (PlugIn   *plug_in,
       /*  give the plug-in some time (10 ms)  */
 #ifndef G_OS_WIN32
       tv.tv_sec  = 0;
-      tv.tv_usec = 100;	/* But this is 0.1 ms? */
+      tv.tv_usec = 10 * 1000;
       select (0, NULL, NULL, NULL, &tv);
 #else
       Sleep (10);
