@@ -13,6 +13,8 @@ EXTRA_DIST = \
 	cursors/mouse1_mmsk	\
 	cursors/mouse1_p	\
         cursors/mouse1_pmsk     \
+	cursors/picker		\
+        cursors/pickermsk	\
 	pixmaps/anchor.xpm	 \
 	pixmaps/chain.xpm	 \
 	pixmaps/channel.xbm	 \
