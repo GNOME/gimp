@@ -202,7 +202,7 @@ gimp_data_factory_data_init (GimpDataFactory *factory,
 
   if (path && strlen (path))
     {
-      gchar    *tmp;
+      gchar *tmp;
 
       tmp = gimp_config_path_expand (path, TRUE, NULL);
       g_free (path);
@@ -216,7 +216,7 @@ gimp_data_factory_data_init (GimpDataFactory *factory,
 
   g_free (path);
 
-  gimp_container_thaw (factory->container);  
+  gimp_container_thaw (factory->container);
 }
 
 void
@@ -235,23 +235,20 @@ gimp_data_factory_data_save (GimpDataFactory *factory)
 
   if (path && strlen (path))
     {
-      GimpList *gimp_list;
-      GList    *list;
-      gchar    *tmp;
+      GList *list;
+      gchar *tmp;
 
       tmp = gimp_config_path_expand (path, TRUE, NULL);
       g_free (path);
       path = tmp;
 
-      gimp_list = GIMP_LIST (factory->container);
-
       gimp_container_freeze (factory->container);
 
-      for (list = gimp_list->list; list; list = g_list_next (list))
+      for (list = GIMP_LIST (factory->container)->list;
+           list;
+           list = g_list_next (list))
         {
-          GimpData *data;
-
-          data = GIMP_DATA (list->data);
+          GimpData *data = list->data;
 
           if (! data->filename)
             gimp_data_create_filename (data, GIMP_OBJECT (data)->name, path);

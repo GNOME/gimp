@@ -18,6 +18,7 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <signal.h>
 #include <stdlib.h>
 #include <string.h>
@@ -186,7 +187,7 @@ plug_in_call_query (Gimp      *gimp,
                 {
                   plug_in_close (plug_in, TRUE);
                 }
-	      else 
+	      else
 		{
 		  plug_in_handle_message (plug_in, &msg);
 		  wire_destroy (&msg);
@@ -225,7 +226,7 @@ plug_in_call_init (Gimp      *gimp,
                 {
                   plug_in_close (plug_in, TRUE);
                 }
-	      else 
+	      else
 		{
 		  plug_in_handle_message (plug_in, &msg);
 		  wire_destroy (&msg);
@@ -356,9 +357,9 @@ plug_in_open (PlugIn *plug_in)
    */
   if ((pipe (my_read) == -1) || (pipe (my_write) == -1))
     {
-      g_message ("pipe() failed: Unable to start Plug-In \"%s\"\n(%s)",
-                 plug_in->name,
-                 plug_in->prog);
+      g_message ("Unable to run Plug-In \"%s\"\n(%s)\n\npipe() failed: %s",
+                 plug_in->name, plug_in->prog,
+                 g_strerror (errno));
       return FALSE;
     }
 
@@ -410,7 +411,7 @@ plug_in_open (PlugIn *plug_in)
       mode = "-init";
       debug_flag = GIMP_DEBUG_WRAP_INIT;
     }
-  else  
+  else
     {
       mode = "-run";
       debug_flag = GIMP_DEBUG_WRAP_RUN;
@@ -459,9 +460,8 @@ plug_in_open (PlugIn *plug_in)
                        &plug_in->pid,
                        &error))
     {
-      g_message ("Unable to run Plug-In: \"%s\"\n(%s)\n%s",
-                 plug_in->name,
-                 plug_in->prog,
+      g_message ("Unable to run Plug-In \"%s\"\n(%s)\n\n%s",
+                 plug_in->name, plug_in->prog,
                  error->message);
       g_error_free (error);
       goto cleanup;
@@ -697,8 +697,7 @@ plug_in_recv_message (GIOChannel   *channel,
 		 "The dying Plug-In may have messed up GIMP's internal state. "
 		 "You may want to save your images and restart GIMP "
 		 "to be on the safe side."),
-	       plug_in->name,
-	       plug_in->prog);
+	       plug_in->name, plug_in->prog);
 
   if (! plug_in->open)
     plug_in_unref (plug_in);

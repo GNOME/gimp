@@ -92,8 +92,9 @@ plug_in_handle_message (PlugIn      *plug_in,
       break;
 
     case GP_CONFIG:
-      g_warning ("plug_in_handle_message: "
-		 "received a config message (should not happen)");
+      g_message ("Plug-In \"%s\"\n(%s)\n\n"
+		 "sent a CONFIG message (should not happen)",
+                 plug_in->name, plug_in->prog);
       plug_in_close (plug_in, TRUE);
       break;
 
@@ -102,14 +103,16 @@ plug_in_handle_message (PlugIn      *plug_in,
       break;
 
     case GP_TILE_ACK:
-      g_warning ("plug_in_handle_message: "
-		 "received a tile ack message (should not happen)");
+      g_message ("Plug-In \"%s\"\n(%s)\n\n"
+		 "sent a TILE_ACK message (should not happen)",
+                 plug_in->name, plug_in->prog);
       plug_in_close (plug_in, TRUE);
       break;
 
     case GP_TILE_DATA:
-      g_warning ("plug_in_handle_message: "
-		 "received a tile data message (should not happen)");
+      g_message ("Plug-In \"%s\"\n(%s)\n\n"
+		 "sent a TILE_DATA message (should not happen)",
+                 plug_in->name, plug_in->prog);
       plug_in_close (plug_in, TRUE);
       break;
 
@@ -122,8 +125,9 @@ plug_in_handle_message (PlugIn      *plug_in,
       break;
 
     case GP_TEMP_PROC_RUN:
-      g_warning ("plug_in_handle_message: "
-		 "received a temp proc run message (should not happen)");
+      g_message ("Plug-In \"%s\"\n(%s)\n\n"
+		 "sent a TEMP_PROC_RUN message (should not happen)",
+                 plug_in->name, plug_in->prog);
       plug_in_close (plug_in, TRUE);
       break;
 
@@ -131,8 +135,9 @@ plug_in_handle_message (PlugIn      *plug_in,
 #ifdef ENABLE_TEMP_RETURN
       plug_in_handle_temp_proc_return (plug_in, msg->data);
 #else
-      g_warning ("plug_in_handle_message: "
-		 "received a temp proc return message (should not happen)");
+      g_message ("Plug-In \"%s\"\n(%s)\n\n"
+		 "sent a TEMP_PROC_RETURN message (should not happen)",
+                 plug_in->name, plug_in->prog);
       plug_in_close (plug_in, TRUE);
 #endif
       break;
@@ -168,12 +173,13 @@ static void
 plug_in_handle_tile_req (PlugIn    *plug_in,
                          GPTileReq *tile_req)
 {
-  GPTileData   tile_data;
-  GPTileData  *tile_info;
-  WireMessage  msg;
-  TileManager *tm;
-  Tile        *tile;
-  gint         shm_ID;
+  GPTileData    tile_data;
+  GPTileData   *tile_info;
+  WireMessage   msg;
+  GimpDrawable *drawable;
+  TileManager  *tm;
+  Tile         *tile;
+  gint          shm_ID;
 
   shm_ID = plug_in_shm_get_ID (plug_in->gimp);
 
@@ -213,26 +219,30 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
 
       tile_info = msg.data;
 
-      if (tile_info->shadow)
-	tm = gimp_drawable_shadow ((GimpDrawable *)
-                                   gimp_item_get_by_ID (plug_in->gimp,
-                                                        tile_info->drawable_ID));
-      else
-	tm = gimp_drawable_data ((GimpDrawable *)
-                                 gimp_item_get_by_ID (plug_in->gimp,
-                                                      tile_info->drawable_ID));
+      drawable = (GimpDrawable *) gimp_item_get_by_ID (plug_in->gimp,
+                                                       tile_info->drawable_ID);
 
-      if (!tm)
+      if (! drawable)
 	{
-	  g_warning ("plug-in requested invalid drawable (killing)");
+          g_message ("Plug-In \"%s\"\n(%s)\n\n"
+                     "requested invalid drawable (killing)",
+                     plug_in->name, plug_in->prog);
 	  plug_in_close (plug_in, TRUE);
 	  return;
 	}
 
+      if (tile_info->shadow)
+	tm = gimp_drawable_shadow (drawable);
+      else
+	tm = gimp_drawable_data (drawable);
+
       tile = tile_manager_get (tm, tile_info->tile_num, TRUE, TRUE);
-      if (!tile)
+
+      if (! tile)
 	{
-	  g_warning ("plug-in requested invalid tile (killing)");
+          g_message ("Plug-In \"%s\"\n(%s)\n\n"
+                     "requested invalid tile (killing)",
+                     plug_in->name, plug_in->prog);
 	  plug_in_close (plug_in, TRUE);
 	  return;
 	}
@@ -260,26 +270,30 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
     {
       /*  this branch communicates with libgimp/gimptile.c:gimp_tile_get()  */
 
-      if (tile_req->shadow)
-	tm = gimp_drawable_shadow ((GimpDrawable *)
-                                   gimp_item_get_by_ID (plug_in->gimp,
-                                                        tile_req->drawable_ID));
-      else
-	tm = gimp_drawable_data ((GimpDrawable *)
-                                 gimp_item_get_by_ID (plug_in->gimp,
-                                                      tile_req->drawable_ID));
+      drawable = (GimpDrawable *) gimp_item_get_by_ID (plug_in->gimp,
+                                                       tile_req->drawable_ID);
 
-      if (! tm)
+      if (! drawable)
 	{
-	  g_warning ("plug-in requested invalid drawable (killing)");
+          g_message ("Plug-In \"%s\"\n(%s)\n\n"
+                     "requested invalid drawable (killing)",
+                     plug_in->name, plug_in->prog);
 	  plug_in_close (plug_in, TRUE);
 	  return;
 	}
 
+      if (tile_req->shadow)
+	tm = gimp_drawable_shadow (drawable);
+      else
+	tm = gimp_drawable_data (drawable);
+
       tile = tile_manager_get (tm, tile_req->tile_num, TRUE, FALSE);
+
       if (! tile)
 	{
-	  g_warning ("plug-in requested invalid tile (killing)");
+          g_message ("Plug-In \"%s\"\n(%s)\n\n"
+                     "requested invalid tile (killing)",
+                     plug_in->name, plug_in->prog);
 	  plug_in_close (plug_in, TRUE);
 	  return;
 	}
@@ -348,7 +362,7 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
 
           if (plug_in->gimp->pdb_compat_mode == GIMP_PDB_COMPAT_WARN)
             {
-              g_message ("WARNING: Plug-In '%s'\n\n(%s)\n\n"
+              g_message ("WARNING: Plug-In \"%s\"\n(%s)\n\n"
                          "called deprecated procedure '%s'.\n"
                          "It should call '%s' instead!",
                          plug_in->name, plug_in->prog,
@@ -375,6 +389,9 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
     {
       GPProcReturn proc_return;
 
+      /*  Return the name we got called with, *not* proc_name, since
+       *  proc_name may have been remapped by gimp->procedural_compat_ht
+       */
       proc_return.name = proc_run->name;
 
       if (proc_rec)
@@ -486,9 +503,10 @@ plug_in_handle_temp_proc_return (PlugIn       *plug_in,
     }
   else
     {
-      g_warning ("plug_in_handle_temp_proc_return: "
-                 "received a temp_proc_return mesage while not running "
-                 "a temp proc (should not happen)");
+      g_message ("Plug-In \"%s\"\n(%s)\n\n"
+		 "sent a TEMP_PROC_RETURN message while not running "
+                 "a temp proc (should not happen)",
+                 plug_in->name, plug_in->prog);
       plug_in_close (plug_in, TRUE);
     }
 }
@@ -517,14 +535,13 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 	  if ((proc_install->nparams < 1) ||
 	      (proc_install->params[0].type != GIMP_PDB_INT32))
 	    {
-	      g_message ("Plug-In \"%s\"\n(%s)\n"
+	      g_message ("Plug-In \"%s\"\n(%s)\n\n"
 			 "attempted to install <Toolbox> procedure \"%s\" "
 			 "which does not take the standard <Toolbox> Plug-In "
                          "args.\n"
                          "(INT32)",
-			 plug_in->name,
-			 plug_in->prog,
-			 proc_install->name);
+                         plug_in->name, plug_in->prog,
+                         proc_install->name);
 	      return;
 	    }
 	}
@@ -535,14 +552,13 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 	      (proc_install->params[1].type != GIMP_PDB_IMAGE) ||
 	      (proc_install->params[2].type != GIMP_PDB_DRAWABLE))
 	    {
-	      g_message ("Plug-In \"%s\"\n(%s)\n"
-			 "attempted to install <Image> procedure \"%s\" "
-			 "which does not take the standard <Image> Plug-In "
+	      g_message ("Plug-In \"%s\"\n(%s)\n\n"
+                         "attempted to install <Image> procedure \"%s\" "
+                         "which does not take the standard <Image> Plug-In "
                          "args.\n"
                          "(INT32, IMAGE, DRAWABLE)",
-			 plug_in->name,
-			 plug_in->prog,
-			 proc_install->name);
+                         plug_in->name, plug_in->prog,
+                         proc_install->name);
 	      return;
 	    }
 	}
@@ -553,14 +569,13 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 	      (proc_install->params[1].type != GIMP_PDB_STRING) ||
 	      (proc_install->params[2].type != GIMP_PDB_STRING))
 	    {
-	      g_message ("Plug-In \"%s\"\n(%s)\n"
-			 "attempted to install <Load> procedure \"%s\" "
-			 "which does not take the standard <Load> Plug-In "
+	      g_message ("Plug-In \"%s\"\n(%s)\n\n"
+                         "attempted to install <Load> procedure \"%s\" "
+                         "which does not take the standard <Load> Plug-In "
                          "args.\n"
                          "(INT32, STRING, STRING)",
-			 plug_in->name,
-			 plug_in->prog,
-			 proc_install->name);
+                         plug_in->name, plug_in->prog,
+                         proc_install->name);
 	      return;
 	    }
 	}
@@ -573,27 +588,25 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 	      (proc_install->params[3].type != GIMP_PDB_STRING)   ||
 	      (proc_install->params[4].type != GIMP_PDB_STRING))
 	    {
-	      g_message ("Plug-In \"%s\"\n(%s)\n"
-			 "attempted to install <Save> procedure \"%s\" "
-			 "which does not take the standard <Save> Plug-In "
+	      g_message ("Plug-In \"%s\"\n(%s)\n\n"
+                         "attempted to install <Save> procedure \"%s\" "
+                         "which does not take the standard <Save> Plug-In "
                          "args.\n"
                          "(INT32, IMAGE, DRAWABLE, STRING, STRING)",
-			 plug_in->name,
-			 plug_in->prog,
-			 proc_install->name);
+                         plug_in->name, plug_in->prog,
+                         proc_install->name);
 	      return;
 	    }
 	}
       else
 	{
-	  g_message ("Plug-In \"%s\"\n(%s)\n"
-		     "attempted to install procedure \"%s\" "
-		     "in an invalid menu location.\n"
-		     "Use either \"<Toolbox>\", \"<Image>\", "
-		     "\"<Load>\", or \"<Save>\".",
-		     plug_in->name,
-		     plug_in->prog,
-		     proc_install->name);
+	  g_message ("Plug-In \"%s\"\n(%s)\n\n"
+                     "attempted to install procedure \"%s\" "
+                     "in an invalid menu location.\n"
+                     "Use either \"<Toolbox>\", \"<Image>\", "
+                     "\"<Load>\", or \"<Save>\".",
+                     plug_in->name, plug_in->prog,
+                     proc_install->name);
 	  return;
 	}
     }
@@ -609,13 +622,12 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
           &&
 	  proc_install->params[i-1].type != GIMP_PDB_INT32)
 	{
-	  g_message ("Plug-In \"%s\"\n(%s)\n"
-		     "attempted to install procedure \"%s\" "
-		     "which fails to comply with the array parameter "
-		     "passing standard.  Argument %d is noncompliant.",
-		     plug_in->name,
-		     plug_in->prog,
-		     proc_install->name, i);
+	  g_message ("Plug-In \"%s\"\n(%s)\n\n"
+                     "attempted to install procedure \"%s\" "
+                     "which fails to comply with the array parameter "
+                     "passing standard.  Argument %d is noncompliant.",
+                     plug_in->name, plug_in->prog,
+                     proc_install->name, i);
 	  return;
 	}
     }
@@ -657,10 +669,9 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 
   if (! valid_utf8)
     {
-      g_message ("Plug-In \"%s\"\n(%s)\n"
+      g_message ("Plug-In \"%s\"\n(%s)\n\n"
                  "attempted to install a procedure with invalid UTF-8 strings.",
-                 plug_in->name,
-                 plug_in->prog);
+                 plug_in->name, plug_in->prog);
       return;
     }
 
@@ -806,9 +817,10 @@ plug_in_handle_extension_ack (PlugIn *plug_in)
     }
   else
     {
-      g_warning ("plug_in_handle_extension_ack: "
-		 "received an extension_ack message while not starting "
-                 "an extension (should not happen)");
+      g_message ("Plug-In \"%s\"\n(%s)\n\n"
+		 "sent an EXTENSION_ACK message while not being started "
+                 "as extension (should not happen)",
+                 plug_in->name, plug_in->prog);
       plug_in_close (plug_in, TRUE);
     }
 }
@@ -822,9 +834,10 @@ plug_in_handle_has_init (PlugIn *plug_in)
     }
   else
     {
-      g_warning ("plug_in_handle_has_init: "
-		 "received a has_init message while not in query() "
-                 "(should not happen)");
+      g_message ("Plug-In \"%s\"\n(%s)\n\n"
+		 "sent an HAS_INIT message while not in query() "
+                 "(should not happen)",
+                 plug_in->name, plug_in->prog);
       plug_in_close (plug_in, TRUE);
     }
 }
