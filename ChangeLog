@@ -1,9 +1,16 @@
+2004-07-26  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/bmp/bmp.h
+	* plug-ins/bmp/bmpread.c: applied a patch by Brion Vibber that
+	fixes extra data overflow, nonstandard 16bpp field arrangement
+	and unrecognized compression (bug #143682).
+
 2004-07-25  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/decompose.c: clamp results of LAB decomposition
-	so that out-of-gamut conversions do not overflow and get 
-	badly distorted.  Fixes bug #147603.  Note that it would probably
-	be a good idea to do similar things for other conversion types.
+	so that out-of-gamut conversions do not overflow and get badly
+	distorted.  Fixes bug #147603.  Note that it would probably be a
+	good idea to do similar things for other conversion types.
 
 2004-07-25  Shlomi Fish  <shlomif@iglu.org.il>
 
@@ -12,9 +19,10 @@
 
 2004-07-25  Shlomi Fish  <shlomif@iglu.org.il>
 
-	* plug-ins/gimpressionist/: fixed bug #148088: ("Gimpressioinst crashes if 
-	given malicious presets with out of range values, in the radio buttons 
-	group numeric values: "placetype", "orienttype", etc. ").
+	* plug-ins/gimpressionist/: fixed bug #148088: ("Gimpressioinst
+	crashes if given malicious presets with out of range values, in
+	the radio buttons group numeric values: "placetype", "orienttype",
+	etc. ").
 	
 	This was done by adding clamps to the relevant values in the preset.
 

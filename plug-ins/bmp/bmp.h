@@ -57,3 +57,10 @@ extern struct Bitmap_Head_Struct
   gulong   biClrImp;    /* 32 */
                         /* 36 */
 } Bitmap_Head;
+
+typedef struct _Bitmap_Channel
+{
+  guint32 mask;
+  guint32 shiftin;
+  guint32 shiftout;
+} Bitmap_Channel;
