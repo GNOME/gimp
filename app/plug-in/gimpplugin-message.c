@@ -475,11 +475,6 @@ plug_in_handle_proc_return_priv (PlugIn       *plug_in,
     {
       GSList *list;
 
-      g_warning ("%s: EEEEEEEEEK! \n"
-                 "You managed to trigger a code path that \n"
-                 "should be dead. Please report this to bugs.gimp.org.",
-                 G_STRFUNC);
-
       for (list = blocked_plug_ins; list; list = g_slist_next (list))
 	{
           PlugInBlocked *blocked;

@@ -1,5 +1,11 @@
 2004-09-23  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/plug-in-message.c (plug_in_handle_proc_return_priv):
+	removed warning about entering a dead code path. That path is not
+	dead at all :)
+
+2004-09-23  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/context.pdb: added accessors for the context's
 	brush, pattern, gradient, palette and brush. Deprecation of old
 	functions will follow. Fixes gimp-context-set-background wrapper.
