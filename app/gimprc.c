@@ -42,7 +42,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpcoreconfig.h"
-#include "core/gimpparasite.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpdevices.h"
@@ -87,7 +86,6 @@ typedef enum
   TT_XDEVICE,
   TT_XSESSIONINFO,
   TT_XCOLORHISTORY,
-  TT_XPARASITE,
   TT_XNAVPREVSIZE,
   TT_XTHUMBSIZE,
   TT_XHELPBROWSER,
@@ -135,7 +133,6 @@ static gint           parse_thumbnail_size      (gpointer val1p, gpointer val2p)
 static gint           parse_units               (gpointer val1p, gpointer val2p);
 static gint           parse_device              (gpointer val1p, gpointer val2p);
 static gint           parse_session_info        (gpointer val1p, gpointer val2p);
-static gint           parse_parasite            (gpointer val1p, gpointer val2p);
 static gint           parse_help_browser        (gpointer val1p, gpointer val2p);
 static gint           parse_cursor_mode         (gpointer val1p, gpointer val2p);
 static gint           parse_color_history       (gpointer val1p, gpointer val2p);
@@ -279,7 +276,6 @@ static ParseFunc funcs[] =
   { "theme-path",                    TT_PATH,          &gimprc.theme_path, NULL                },
   { "theme",                         TT_STRING,        &gimprc.theme, NULL                     },
 
-  { "parasite",                      TT_XPARASITE,     NULL, NULL },
   { "device",                        TT_XDEVICE,       NULL, NULL },
   { "session-info",                  TT_XSESSIONINFO,  NULL, NULL },
   { "color-history",                 TT_XCOLORHISTORY, NULL, NULL }
@@ -903,8 +899,6 @@ parse_statement (void)
 	  return parse_session_info (func->val1p, func->val2p);
 	case TT_XCOLORHISTORY:
 	  return parse_color_history (func->val1p, func->val2p);
-	case TT_XPARASITE:
-	  return parse_parasite (func->val1p, func->val2p);
 	case TT_XHELPBROWSER:
 	  return parse_help_browser (func->val1p, func->val2p);
 	case TT_XCURSORMODE:
@@ -2105,48 +2099,6 @@ parse_color_history (gpointer val1p,
 }
 
 static gint
-parse_parasite (gpointer val1p, 
-		gpointer val2p)
-{
-  gint          token;
-  gint          res        = ERROR;
-  gchar        *identifier = NULL;
-  gulong        flags      = 0;
-  GimpParasite *parasite;
-
-  token = get_next_token ();
-  if (token != TOKEN_STRING)
-    goto error;
-
-  identifier = g_strdup (token_str);
-
-  token = get_next_token ();
-
-  /* possible future extension: allow flags as symbolic strings.  */
-  if (token == TOKEN_NUMBER)
-    flags |= token_int;
-
-  token = get_next_token ();
-  if (token != TOKEN_STRING)
-    goto error;
-
-  parasite = gimp_parasite_new (identifier, flags, token_int, token_str);
-  gimp_parasite_attach (the_gimp, parasite);  /* attaches a copy */
-  gimp_parasite_free (parasite);
-
-  token = get_next_token ();
-  if (token != TOKEN_RIGHT_PAREN)
-    goto error;
-
-  res = OK;
-
- error:
-  g_free (identifier);
-
-  return res;
-}
-
-static gint
 parse_help_browser (gpointer val1p,
 		    gpointer val2p)
 {
@@ -2297,7 +2249,6 @@ gimprc_value_to_str (const gchar *name)
 	case TT_XDEVICE:
 	case TT_XSESSIONINFO:
 	case TT_XCOLORHISTORY:
-	case TT_XPARASITE:
 	  return NULL;
 	}
     }

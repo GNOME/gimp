@@ -32,7 +32,9 @@
 #include "gimpparasite.h"
 #include "gimpparasitelist.h"
 
-#include "gimprc.h"
+#include "config/gimpscanner.h"
+
+#include "libgimp/gimpintl.h"
 
 
 void
@@ -102,6 +104,9 @@ gimp_parasite_list (Gimp *gimp,
   return list;
 }
 
+
+/*  parasiterc functions  **********/
+
 static void 
 save_func (gchar        *key,
 	   GimpParasite *parasite,
@@ -145,14 +150,107 @@ save_func (gchar        *key,
     }
 }
 
+enum
+{
+  PARASITE = 1
+};
+
 void
 gimp_parasiterc_load (Gimp *gimp)
 {
-  gchar *filename;
+  gchar      *filename;
+  GScanner   *scanner;
+  GTokenType  token;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   filename = gimp_personal_rc_file ("parasiterc");
-  gimprc_parse_file (filename);
+  scanner = gimp_scanner_new (filename);
   g_free (filename);
+
+  if (! scanner)
+    return;
+
+  g_scanner_scope_add_symbol (scanner, 0,
+                              "parasite", GINT_TO_POINTER (PARASITE));
+
+  token = G_TOKEN_LEFT_PAREN;
+
+  do
+    {
+      if (g_scanner_peek_next_token (scanner) != token)
+        break;
+
+      token = g_scanner_get_next_token (scanner);
+
+      switch (token)
+        {
+        case G_TOKEN_LEFT_PAREN:
+          token = G_TOKEN_SYMBOL;
+          break;
+
+        case G_TOKEN_SYMBOL:
+          if (scanner->value.v_symbol == GINT_TO_POINTER (PARASITE))
+            {
+              gchar        *parasite_name  = NULL;
+              gint          parasite_flags = 0;
+              gchar        *parasite_data  = NULL;
+              GimpParasite *parasite;
+
+              token = G_TOKEN_STRING;
+
+              if (g_scanner_peek_next_token (scanner) != token)
+                break;
+
+              if (! gimp_scanner_parse_string (scanner, &parasite_name))
+                break;
+
+             token = G_TOKEN_INT;
+
+              if (g_scanner_peek_next_token (scanner) != token)
+                break;
+
+              if (! gimp_scanner_parse_int (scanner, &parasite_flags))
+                break;
+
+              token = G_TOKEN_STRING;
+
+              if (g_scanner_peek_next_token (scanner) != token)
+                break;
+
+              if (! gimp_scanner_parse_string (scanner, &parasite_data))
+                break;
+
+              parasite = gimp_parasite_new (parasite_name,
+                                            parasite_flags,
+                                            strlen (parasite_data),
+                                            parasite_data);
+              gimp_parasite_attach (gimp, parasite);  /* attaches a copy */
+              gimp_parasite_free (parasite);
+
+              token = G_TOKEN_RIGHT_PAREN;
+            }
+          break;
+
+        case G_TOKEN_RIGHT_PAREN:
+          token = G_TOKEN_LEFT_PAREN;
+          break;
+
+        default: /* do nothing */
+          break;
+        }
+    }
+  while (token != G_TOKEN_EOF);
+
+  if (token != G_TOKEN_LEFT_PAREN)
+    {
+      g_scanner_get_next_token (scanner);
+      g_scanner_unexp_token (scanner, token, NULL, NULL, NULL,
+                             _("fatal parse error"), TRUE);
+    }
+
+  gimp_scanner_destroy (scanner);
+
 }
 
 void

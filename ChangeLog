@@ -1,3 +1,10 @@
+2002-05-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpparasite.c: parse parasiterc using GScanner instead
+	of gimprc.
+
+	* app/gimprc.c: removed the parasite parsing stuff.
+
 2002-05-13  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpenummenu.[ch]: added _with_range variants for all
