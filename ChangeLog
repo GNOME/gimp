@@ -1,5 +1,10 @@
 2003-12-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage.h: removed unused "gint proj_level" from the
+	GimpImage struct.
+
+2003-12-04  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/pygimp/pygimp-drawable.c (lay_set_linked): made it
 	compile again.
 
@@ -37,7 +42,7 @@
 
 2003-12-03  Michael Natterer  <mitch@gimp.org>
 
-	* plug-ins/pygimp/gimpmodule.c (pygimp_delete): follow change below.
+	* plug-ins/pygimp/gimpmodule.c: follow change below.
 
 2003-12-03  Michael Natterer  <mitch@gimp.org>
 

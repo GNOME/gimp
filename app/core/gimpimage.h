@@ -118,7 +118,6 @@ struct _GimpImage
   gboolean           construct_flag;        /*  flag for construction        */
   GimpImageType      proj_type;             /*  type of the projection image */
   gint               proj_bytes;            /*  bpp in projection image      */
-  gint               proj_level;            /*  projection level             */
   TileManager       *projection;            /*  The projection--layers &     */
                                             /*  channels                     */
 
