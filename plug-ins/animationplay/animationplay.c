@@ -1,5 +1,5 @@
 /*
- * Animation Playback plug-in version 0.81.7
+ * Animation Playback plug-in version 0.83.0
  *
  * by Adam D. Moss, 1997
  *     adam@gimp.org
@@ -10,6 +10,10 @@
 
 /*
  * REVISION HISTORY:
+ *
+ * 97.12.11 : version 0.83.0
+ *            GTK's timer logic changed a little... adjusted
+ *            plugin to fit.
  *
  * 97.09.16 : version 0.81.7
  *            Fixed progress bar's off-by-one problem with
@@ -257,12 +261,17 @@ build_dialog(GImageType basetype,
 
   GtkWidget* dlg;
   GtkWidget* button;
+  GtkWidget* toggle;
+  GtkWidget* label;
+  GtkWidget* entry;
   GtkWidget* frame;
   GtkWidget* frame2;
   GtkWidget* vbox;
+  GtkWidget* vbox2;
   GtkWidget* hbox;
   GtkWidget* hbox2;
   guchar* color_cube;
+  GSList* group = NULL;
 
   argc = 1;
   argv = g_new (gchar *, 1);
@@ -389,7 +398,9 @@ build_dialog(GImageType basetype,
 
 static void do_playback(void)
 {
-  int i;
+  GPixelRgn srcPR, destPR;
+  guchar *buffer;
+  int nreturn_vals, i;
 
   width     = gimp_image_width(image_id);
   height    = gimp_image_height(image_id);
@@ -875,7 +886,7 @@ window_close_callback (GtkWidget *widget,
   gtk_main_quit();
 }
 
-static void
+static gint
 advance_frame_callback (GtkWidget *widget,
 			gpointer   data)
 {
@@ -884,6 +895,8 @@ advance_frame_callback (GtkWidget *widget,
 			   (GtkFunction) advance_frame_callback, NULL);
   show_frame();
   do_step();
+
+  return FALSE;
 }
 
 static void

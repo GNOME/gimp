@@ -3,7 +3,7 @@
  *      Based around original GIF code by David Koblas.
  *
  *
- * Version 1.99.17 - 97/11/30
+ * Version 1.99.18 - 97/12/11
  *
  *   Adam D. Moss - <adam@gimp.org> <adam@foxbox.org>
  *
@@ -22,9 +22,15 @@
 /*
  * REVISION HISTORY
  *
+ * 97/12/11
+ * 1.99.18 - Bleh.  Disposals should specify how the next frame will
+ *           be composed with this frame, NOT how this frame will
+ *           be composed with the previous frame.  Fixed.  [Adam]
+ *
  * 97/11/30
  * 1.99.17 - No more bogus transparency indices in animated GIFs,
  *           hopefully.  Saved files are better-behaved, sometimes
+ *           smaller.  [Adam]files are better-behaved, sometimes
  *           smaller.  [Adam]
  *
  * 97/09/29
@@ -1043,6 +1049,7 @@ ReadImage (FILE *fd,
   gchar framename[200]; /* FIXME */
   gboolean alpha_frame = FALSE;
   int nreturn_vals;
+  static int previous_disposal;
 
 
 
@@ -1080,9 +1087,11 @@ ReadImage (FILE *fd,
       else
 	sprintf(framename, "Background (%dms)", 10*Gif89.delayTime);
 
-      switch (Gif89.disposal)
+      previous_disposal = Gif89.disposal;
+
+      /*      switch (Gif89.disposal)
 	{
-	case 0x00: break; /* 'don't care' */
+	case 0x00: break; 
 	case 0x01: strcat(framename," (combine)"); break;
 	case 0x02: strcat(framename," (replace)"); break;
 	case 0x03: strcat(framename," (combine)"); break;
@@ -1092,7 +1101,7 @@ ReadImage (FILE *fd,
 	case 0x07: printf("GIF: Hmm... please forward this GIF to the "
 			  "GIF plugin author!\n  (adam@foxbox.org)\n"); break;
 	default: printf("GIF: Something got corrupted.\n"); break;
-	}
+	}*/
   
       if (Gif89.transparent == -1)
 	{
@@ -1140,7 +1149,7 @@ ReadImage (FILE *fd,
 	sprintf(framename, "Frame %d (%dms)",
 		frame_number, 10*Gif89.delayTime);
 
-      switch (Gif89.disposal)
+      switch (previous_disposal)
 	{
 	case 0x00: break; /* 'don't care' */
 	case 0x01: strcat(framename," (combine)"); break;
@@ -1156,6 +1165,8 @@ ReadImage (FILE *fd,
 	  break;
 	default: printf("GIF: Something got corrupted.\n"); break;
 	}
+
+      previous_disposal = Gif89.disposal;
 
       layer_ID = gimp_layer_new (image_ID, framename,
 				 len, height,
@@ -1736,11 +1747,17 @@ save_image (char   *filename,
       
       if (is_gif89)
 	{
+	  if (i>0)
+	    {
+	      layer_name = gimp_layer_get_name(layers[i-1]);
+	      Disposal = parse_disposal_tag(layer_name);
+	      g_free(layer_name);
+	    }
+	  else
+	    Disposal = gsvals.default_dispose;
+
 	  layer_name = gimp_layer_get_name(layers[i]);
-	  
-	  Disposal = parse_disposal_tag(layer_name);
 	  Delay89 = parse_ms_tag(layer_name);
-	  
 	  g_free(layer_name);
 
 	  if (Delay89 < 0)
