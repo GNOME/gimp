@@ -10,6 +10,8 @@ dubbed GIMP 1.4.
 
 Overview of Changes in GIMP 1.3.16
 ==================================
+- Save and load text layers to/from XCF files [Sven]
+- Added the ability to show a grid over the canvas [Brix]
 - Keep EXIF data in JPEG files using libexif [Bolsh]
 - Changed a couple of gimprc defaults [Bolsh]
 - Updated PS keybindings (ps-menurc) [Eric Pierce]
@@ -22,7 +24,7 @@ Overview of Changes in GIMP 1.3.16
 - Lots of bug fixes
 
 Other contributors:
-  Yohei Honda
+  Yohei Honda, Elad Shahar
 
 
 Overview of Changes in GIMP 1.3.15

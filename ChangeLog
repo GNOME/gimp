@@ -23,8 +23,7 @@
 	* devel-docs/parasites.txt: documented the new "gimp-text-layer"
 	parasite.
 
-	* app/text/gimptext-parasite.[ch]
-	* app/gui/session.c (session_save): plugged minor memory leaks.
+	* app/gui/session.c (session_save): plugged a minor memory leak.
 
 2003-06-24  Sven Neumann  <sven@gimp.org>
 
