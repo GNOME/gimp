@@ -25,6 +25,7 @@
 #include <string.h>
 
 #include <glib-object.h>
+#include <pango/pangoft2.h>
 
 #include "text-types.h"
 
@@ -104,16 +105,53 @@ gimp_font_list_add (GimpContainer *container,
 }
 
 GimpContainer *
-gimp_font_list_new (void)
+gimp_font_list_new (gdouble xresolution,
+                    gdouble yresolution)
 {
   GimpFontList *list;
+  PangoContext *pango_context;
+
+  g_return_val_if_fail (xresolution > 0.0, NULL);
+  g_return_val_if_fail (yresolution > 0.0, NULL);
 
   list = g_object_new (GIMP_TYPE_FONT_LIST,
                        "children_type", GIMP_TYPE_FONT,
                        "policy",        GIMP_CONTAINER_POLICY_STRONG,
                        NULL);
 
+  list->xresolution = xresolution;
+  list->yresolution = yresolution;
+
+  pango_context = pango_ft2_get_context (xresolution, yresolution);
+
+  g_object_set_data_full (G_OBJECT (list), "pango-context", pango_context,
+                          (GDestroyNotify) g_object_unref);
+
   return GIMP_CONTAINER (list);
+}
+
+void
+gimp_font_list_restore (GimpFontList *list)
+{
+  PangoContext *pango_context;
+  const gchar  *fonts[] = { "Sans", "Serif", "Monospace" };
+  gint          i;
+
+  g_return_if_fail (GIMP_IS_FONT_LIST (list));
+
+  pango_context = g_object_get_data (G_OBJECT (list), "pango-context");
+
+  for (i = 0; i < G_N_ELEMENTS (fonts); i++)
+    {
+      GimpFont *font;
+
+      font = g_object_new (GIMP_TYPE_FONT,
+                           "name",          fonts[i],
+                           "pango-context", pango_context,
+                           NULL);
+      gimp_container_add (GIMP_CONTAINER (list), GIMP_OBJECT (font));
+      g_object_unref (font);
+    }
 }
 
 static gint

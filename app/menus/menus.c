@@ -273,11 +273,9 @@ menus_last_opened_add (GimpItemFactory *item_factory,
                                   gimp, 2, TRUE, FALSE);
 
   for (i = 0; i < n; i++)
-    {
-      gimp_item_factory_set_visible (GTK_ITEM_FACTORY (item_factory),
-                                     last_opened_entries[i].entry.path,
-                                     FALSE);
-    }
+    gimp_item_factory_set_visible (GTK_ITEM_FACTORY (item_factory),
+                                   last_opened_entries[i].entry.path,
+                                   FALSE);
 
   gimp_item_factory_set_sensitive (GTK_ITEM_FACTORY (item_factory),
                                    "/File/Open Recent/(None)",

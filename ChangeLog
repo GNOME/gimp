@@ -1,3 +1,18 @@
+2003-03-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/text/gimpfontlist.[ch]: added gimp_font_list_restore()
+	which loads the fonts (not yet).
+
+	* app/core/gimp.c: call it.
+
+	* app/gui/dialogs-constructors.[ch]
+	* app/gui/dialogs-menu.c
+	* app/gui/dialogs.c
+	* app/gui/image-menu.c
+	* app/gui/toolbox-menu.c: added font list and grid views.
+
+	* app/gui/menus.c: cosmetic.
+
 2003-03-25  Sven Neumann  <sven@gimp.org>
 
 	* app/text/gimpfont.c: made the PangoContext an object property of

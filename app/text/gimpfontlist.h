@@ -40,6 +40,9 @@ typedef struct _GimpFontListClass GimpFontListClass;
 struct _GimpFontList
 {
   GimpList  parent_instance;
+
+  gdouble   xresolution;
+  gdouble   yresolution;
 };
 
 struct _GimpFontListClass
@@ -50,7 +53,9 @@ struct _GimpFontListClass
 
 GType           gimp_font_list_get_type (void) G_GNUC_CONST;
 
-GimpContainer * gimp_font_list_new      (void);
+GimpContainer * gimp_font_list_new      (gdouble       xresolution,
+                                         gdouble       yresolution);
+void            gimp_font_list_restore  (GimpFontList *list);
 
 
 #endif  /*  __GIMP_FONT_LIST_H__  */

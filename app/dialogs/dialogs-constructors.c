@@ -103,6 +103,9 @@ static GtkWidget * dialogs_gradient_tab_func      (GimpDockable       *dockable,
 static GtkWidget * dialogs_palette_tab_func       (GimpDockable       *dockable,
                                                    GimpDockbook       *dockbook,
                                                    GtkIconSize         size);
+static GtkWidget * dialogs_font_tab_func          (GimpDockable       *dockable,
+                                                   GimpDockbook       *dockbook,
+                                                   GtkIconSize         size);
 static GtkWidget * dialogs_tool_tab_func          (GimpDockable       *dockable,
                                                    GimpDockbook       *dockbook,
                                                    GtkIconSize         size);
@@ -399,6 +402,25 @@ dialogs_palette_list_view_new (GimpDialogFactory *factory,
 }
 
 GtkWidget *
+dialogs_font_list_view_new (GimpDialogFactory *factory,
+                            GimpContext       *context,
+                            gint               preview_size)
+{
+  GtkWidget *view;
+
+  view = gimp_container_tree_view_new (context->gimp->fonts,
+				       context,
+				       preview_size,
+                                       FALSE,
+				       5, 3);
+
+  return dialogs_dockable_new (view,
+			       _("Font List"), _("Fonts"), NULL,
+			       dialogs_font_tab_func,
+			       dialogs_set_view_context_func);
+}
+
+GtkWidget *
 dialogs_tool_list_view_new (GimpDialogFactory *factory,
 			    GimpContext       *context,
                             gint               preview_size)
@@ -544,6 +566,25 @@ dialogs_palette_grid_view_new (GimpDialogFactory *factory,
 			       _("Palette Grid"), _("Palettes"), NULL,
 			       dialogs_palette_tab_func,
 			       dialogs_set_editor_context_func);
+}
+
+GtkWidget *
+dialogs_font_grid_view_new (GimpDialogFactory *factory,
+                            GimpContext       *context,
+                            gint               preview_size)
+{
+  GtkWidget *view;
+
+  view = gimp_container_grid_view_new (context->gimp->fonts,
+				       context,
+				       preview_size,
+                                       FALSE,
+				       5, 3);
+
+  return dialogs_dockable_new (view,
+			       _("Font Grid"), _("Fonts"), NULL,
+			       dialogs_font_tab_func,
+			       dialogs_set_view_context_func);
 }
 
 GtkWidget *
@@ -1106,6 +1147,33 @@ dialogs_palette_tab_func (GimpDockable *dockable,
 			   FALSE, FALSE, FALSE);
 
   g_signal_connect_object (context, "palette_changed",
+			   G_CALLBACK (gimp_preview_set_viewable),
+			   preview,
+			   G_CONNECT_SWAPPED);
+
+  return preview;
+}
+
+static GtkWidget *
+dialogs_font_tab_func (GimpDockable *dockable,
+                       GimpDockbook *dockbook,
+                       GtkIconSize   size)
+{
+  GimpContext *context;
+  GtkWidget   *preview;
+  gint         width;
+  gint         height;
+
+  context = dockbook->dock->context;
+
+  gtk_icon_size_lookup (size, &width, &height);
+
+  preview =
+    gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_font (context)),
+			   width, height, 1,
+			   FALSE, FALSE, FALSE);
+
+  g_signal_connect_object (context, "font_changed",
 			   G_CALLBACK (gimp_preview_set_viewable),
 			   preview,
 			   G_CONNECT_SWAPPED);

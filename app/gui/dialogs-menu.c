@@ -85,6 +85,8 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
            "<StockItem>",                      GIMP_STOCK_TOOL_BLEND),
   ADD_TAB (N_("/Add Tab/Palettes..."),         "gimp-palette-list",
            "<StockItem>",                      GTK_STOCK_SELECT_COLOR),
+  ADD_TAB (N_("/Add Tab/Fonts..."),            "gimp-font-list",
+           "<StockItem>",                      GTK_STOCK_SELECT_FONT),
   ADD_TAB (N_("/Add Tab/Buffers..."),          "gimp-buffer-list",
            "<StockItem>",                      GTK_STOCK_PASTE),
 

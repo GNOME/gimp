@@ -228,7 +228,7 @@ gimp_init (Gimp *gimp)
 					     GIMP_CONTAINER_POLICY_STRONG);
   gimp_object_set_name (GIMP_OBJECT (gimp->named_buffers), "named buffers");
 
-  gimp->fonts               = gimp_font_list_new ();
+  gimp->fonts               = gimp_font_list_new (72.0, 72.0);
   gimp_object_set_name (GIMP_OBJECT (gimp->fonts), "fonts");
 
   gimp->brush_factory       = NULL;
@@ -746,20 +746,26 @@ gimp_restore (Gimp               *gimp,
   gimp_parasiterc_load (gimp);
 
   /*  initialize the list of gimp brushes    */
-  (* status_callback) (NULL, _("Brushes"), 0.18);
+  (* status_callback) (NULL, _("Brushes"), 0.15);
   gimp_data_factory_data_init (gimp->brush_factory, no_data); 
 
   /*  initialize the list of gimp patterns   */
-  (* status_callback) (NULL, _("Patterns"), 0.36);
+  (* status_callback) (NULL, _("Patterns"), 0.30);
   gimp_data_factory_data_init (gimp->pattern_factory, no_data); 
 
   /*  initialize the list of gimp palettes   */
-  (* status_callback) (NULL, _("Palettes"), 0.54);
+  (* status_callback) (NULL, _("Palettes"), 0.45);
   gimp_data_factory_data_init (gimp->palette_factory, no_data); 
 
   /*  initialize the list of gimp gradients  */
-  (* status_callback) (NULL, _("Gradients"), 0.72);
+  (* status_callback) (NULL, _("Gradients"), 0.60);
   gimp_data_factory_data_init (gimp->gradient_factory, no_data); 
+
+  /*  initialize the list of gimp fonts  */
+  (* status_callback) (NULL, _("Fonts"), 0.75);
+  gimp_container_freeze (gimp->fonts);
+  gimp_font_list_restore (GIMP_FONT_LIST (gimp->fonts));
+  gimp_container_thaw (gimp->fonts);
 
   /*  initialize the document history  */
   (* status_callback) (NULL, _("Documents"), 0.90);
