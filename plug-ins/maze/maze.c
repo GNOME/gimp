@@ -116,8 +116,6 @@ MazeValues mvals =
     57,    /* multiple * These two had "Experiment with this?" comments */
     1,     /* offset   * in the maz.c source, so, lets expiriment.  :) */
     DEPTH_FIRST, /* Algorithm */
-    /* Interface options */
-    TRUE /* Default seed? */
 };
 
 GRand *gr;
@@ -221,7 +219,7 @@ run    (gchar    *name,
 	  mvals.height = (gint16)   param[4].data.d_int16;
 	  mvals.tile = (gint8)      param[5].data.d_int8;
           mvals.algorithm = (gint8) param[6].data.d_int8;
-	  mvals.seed = (gint32)     param[7].data.d_int32;
+	  mvals.seed = (guint32)    param[7].data.d_int32;
 	  mvals.multiple = (gint16) param[8].data.d_int16;
 	  mvals.offset = (gint16)   param[9].data.d_int16;
 	}
@@ -246,7 +244,7 @@ run    (gchar    *name,
 	gimp_displays_flush ();
 
       if (run_mode == GIMP_RUN_INTERACTIVE || 
-	  (mvals.defaultseed && run_mode == GIMP_RUN_WITH_LAST_VALS))
+	  (run_mode == GIMP_RUN_WITH_LAST_VALS))
 	gimp_set_data ("plug_in_maze", &mvals, sizeof (MazeValues));
     }
   else

@@ -292,9 +292,7 @@ maze_dialog (void)
                     &mvals.tile);
 
   /* Seed input box */
-  seed_hbox = gimp_random_seed_new (&mvals.seed,
-				    &mvals.defaultseed, 
-				    TRUE, FALSE);
+  seed_hbox = gimp_random_seed_new (&mvals.seed);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, trow, 
 			     _("Seed:"), 1.0, 0.5,
 			     seed_hbox, 1, TRUE);

@@ -27,13 +27,12 @@ typedef enum {
 typedef struct {
      gint width;
      gint height;
-     guint seed;
+     guint32 seed;
      gboolean tile;
      gint multiple;
      gint offset;
      MazeAlgoType algorithm;
      /* Interface options. */
-     gboolean defaultseed;
 } MazeValues;
 
 enum CellTypes {

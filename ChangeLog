@@ -1,3 +1,20 @@
+2002-11-24  Dave Neary  <bolsh@gimp.org>
+
+	* libgimpwidgets/gimpwidgets.c
+	* libgimpwidgets/gimpwidgets.h
+	* plug-ins/common/blur.c
+	* plug-ins/common/plasma.c
+	* plug-ins/common/randomize.c
+	* plug-ins/common/sinus.c
+	* plug-ins/common/snoise.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/maze/algorithms.c
+	* plug-ins/maze/maze.c
+	* plug-ins/maze/maze.h
+	* plug-ins/maze/maze_face.c: Changed the gimp random seed
+	widget's behaviour and made associated changes in
+	plug-ins that use it.
+
 2002-11-24  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-callbacks.c
