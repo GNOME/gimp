@@ -59,10 +59,15 @@ struct _GimpStrokeOptions
 struct _GimpStrokeOptionsClass
 {
   GimpContextClass parent_class;
+
+  void (* dash_info_changed) (GimpStrokeOptions *stroke_options,
+                              GimpDashPreset     preset);
 };
 
 
-GType  gimp_stroke_options_get_type (void) G_GNUC_CONST;
+GType  gimp_stroke_options_get_type        (void) G_GNUC_CONST;
 
+void   gimp_stroke_options_set_dash_preset (GimpStrokeOptions *options,
+                                            GimpDashPreset     preset);
 
 #endif  /*  __GIMP_STROKE_OPTIONS_H__  */

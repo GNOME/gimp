@@ -231,6 +231,26 @@ typedef enum  /*< pdb-skip >*/
 } GimpCapStyle;
 
 
+#define GIMP_TYPE_DASH_PRESET (gimp_dash_preset_get_type ())
+
+GType gimp_dash_preset_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_DASH_CUSTOM,       /*< desc="Custom"          >*/
+  GIMP_DASH_LINE,         /*< desc="Line"            >*/
+  GIMP_DASH_LONG_DASH,    /*< desc="Long Dashes"     >*/
+  GIMP_DASH_MEDIUM_DASH,  /*< desc="Medium Dashes"   >*/
+  GIMP_DASH_SHORT_DASH,   /*< desc="Short Dashes"    >*/
+  GIMP_DASH_SPARSE_DOTS,  /*< desc="Sparse Dots"     >*/
+  GIMP_DASH_NORMAL_DOTS,  /*< desc="Normal Dots"     >*/
+  GIMP_DASH_DENSE_DOTS,   /*< desc="Dense Dots"      >*/
+  GIMP_DASH_STIPPLES,     /*< desc="Stipples"        >*/
+  GIMP_DASH_DASH_DOT,     /*< desc="Dash Dot..."     >*/
+  GIMP_DASH_DASH_DOT_DOT  /*< desc="Dash Dot Dot..." >*/
+} GimpDashPreset;
+
+
 #define GIMP_TYPE_IMAGE_BASE_TYPE (gimp_image_base_type_get_type ())
 
 GType gimp_image_base_type_get_type (void) G_GNUC_CONST;

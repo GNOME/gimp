@@ -29,6 +29,7 @@
 
 #include "gimppropwidgets.h"
 #include "gimpdasheditor.h"
+#include "gimpenummenu.h"
 #include "gimpstrokeeditor.h"
 
 #include "gimp-intl.h"
@@ -57,6 +58,9 @@ static void      gimp_stroke_editor_finalize     (GObject         *object);
 static gboolean  gimp_stroke_editor_paint_button (GtkWidget       *widget,
                                                   GdkEventExpose  *event,
                                                   gpointer         user_data);
+static void      gimp_stroke_editor_dash_preset  (GtkWidget       *widget,
+                                                  gpointer         user_data);
+                                                  
 
 
 static GtkVBoxClass *parent_class = NULL;
@@ -256,6 +260,18 @@ gimp_stroke_editor_constructor (GType                   type,
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("Dash Pattern:"), 1.0, 0.5, frame, 2, FALSE);
 
+  box = gimp_enum_option_menu_new (GIMP_TYPE_DASH_PRESET,
+                                   G_CALLBACK (gimp_stroke_editor_dash_preset),
+                                   editor->options);
+  g_signal_connect_object (G_OBJECT (editor->options), "dash_info_changed",
+                           G_CALLBACK (gtk_option_menu_set_history),
+                           box, G_CONNECT_SWAPPED);
+
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                             _("Dash Preset:"), 1.0, 0.5, box, 2, TRUE);
+
+  gtk_widget_show (box);
+
   button = gimp_prop_check_button_new (G_OBJECT (editor->options), "antialias",
                                        _("_Antialiasing"));
   gtk_table_attach (GTK_TABLE (table), button, 0, 2, row, row + 1,
@@ -319,4 +335,16 @@ gimp_stroke_editor_paint_button (GtkWidget       *widget,
                    alloc->y + (alloc->height - w) / 2,
                    w, w);
   return FALSE;
+}
+
+static void
+gimp_stroke_editor_dash_preset (GtkWidget *widget,
+                                gpointer   user_data)
+{
+  gint value;
+
+  value = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
+                                              "gimp-item-data"));
+
+  gimp_stroke_options_set_dash_preset (GIMP_STROKE_OPTIONS (user_data), value);
 }

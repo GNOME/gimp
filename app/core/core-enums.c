@@ -314,6 +314,34 @@ gimp_cap_style_get_type (void)
 }
 
 
+static const GEnumValue gimp_dash_preset_enum_values[] =
+{
+  { GIMP_DASH_CUSTOM, N_("Custom"), "custom" },
+  { GIMP_DASH_LINE, N_("Line"), "line" },
+  { GIMP_DASH_LONG_DASH, N_("Long Dashes"), "long-dash" },
+  { GIMP_DASH_MEDIUM_DASH, N_("Medium Dashes"), "medium-dash" },
+  { GIMP_DASH_SHORT_DASH, N_("Short Dashes"), "short-dash" },
+  { GIMP_DASH_SPARSE_DOTS, N_("Sparse Dots"), "sparse-dots" },
+  { GIMP_DASH_NORMAL_DOTS, N_("Normal Dots"), "normal-dots" },
+  { GIMP_DASH_DENSE_DOTS, N_("Dense Dots"), "dense-dots" },
+  { GIMP_DASH_STIPPLES, N_("Stipples"), "stipples" },
+  { GIMP_DASH_DASH_DOT, N_("Dash Dot..."), "dash-dot" },
+  { GIMP_DASH_DASH_DOT_DOT, N_("Dash Dot Dot..."), "dash-dot-dot" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_dash_preset_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpDashPreset", gimp_dash_preset_enum_values);
+
+  return enum_type;
+}
+
+
 static const GEnumValue gimp_image_base_type_enum_values[] =
 {
   { GIMP_RGB, N_("RGB"), "rgb" },

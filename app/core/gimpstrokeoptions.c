@@ -29,6 +29,7 @@
 
 #include "config/gimpconfig-params.h"
 
+#include "gimpmarshal.h"
 #include "gimpstrokeoptions.h"
 
 enum
@@ -46,6 +47,11 @@ enum
   PROP_DASH_INFO
 };
 
+enum
+{
+  DASH_INFO_CHANGED,
+  LAST_SIGNAL
+};
 
 static void   gimp_stroke_options_class_init   (GimpStrokeOptionsClass *klass);
 
@@ -58,6 +64,7 @@ static void   gimp_stroke_options_get_property (GObject         *object,
                                                 GValue          *value,
                                                 GParamSpec      *pspec);
 
+static guint  stroke_options_signals[LAST_SIGNAL] = { 0 };
 
 static GimpContextClass *parent_class = NULL;
 
@@ -99,6 +106,18 @@ gimp_stroke_options_class_init (GimpStrokeOptionsClass *klass)
   object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
+
+  stroke_options_signals[DASH_INFO_CHANGED] = 
+      g_signal_new ("dash_info_changed",
+                    G_TYPE_FROM_CLASS (klass),
+                    G_SIGNAL_RUN_FIRST,
+                    G_STRUCT_OFFSET (GimpStrokeOptionsClass, dash_info_changed),
+                    NULL, NULL,
+                    gimp_marshal_VOID__ENUM,
+                    G_TYPE_NONE, 1,
+                    GIMP_TYPE_DASH_PRESET);
+
+  klass->dash_info_changed = NULL;
 
   object_class->set_property = gimp_stroke_options_set_property;
   object_class->get_property = gimp_stroke_options_get_property;
@@ -214,6 +233,9 @@ gimp_stroke_options_set_property (GObject      *object,
                                                          val);
               }
           }
+        g_signal_emit (options,
+                       stroke_options_signals [DASH_INFO_CHANGED], 0,
+                       GIMP_DASH_CUSTOM);
       }
       break;
 
@@ -291,4 +313,91 @@ gimp_stroke_options_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+void
+gimp_stroke_options_set_dash_preset (GimpStrokeOptions *options,
+                                     GimpDashPreset     preset)
+{
+  GArray *new_pattern;
+  gdouble dash;
+  gint    i;
+
+  if (preset == GIMP_DASH_CUSTOM)
+    return;
+
+  new_pattern = g_array_new (FALSE, FALSE, sizeof (gdouble));
+
+  switch (preset)
+    {
+      case GIMP_DASH_LINE:
+        break;
+      case GIMP_DASH_LONG_DASH:
+        dash = 9.0; g_array_append_val (new_pattern, dash);
+        dash = 3.0; g_array_append_val (new_pattern, dash);
+        break;
+      case GIMP_DASH_MEDIUM_DASH:
+        dash = 6.0; g_array_append_val (new_pattern, dash);
+        dash = 6.0; g_array_append_val (new_pattern, dash);
+        break;
+      case GIMP_DASH_SHORT_DASH:
+        dash = 3.0; g_array_append_val (new_pattern, dash);
+        dash = 9.0; g_array_append_val (new_pattern, dash);
+        break;
+      case GIMP_DASH_SPARSE_DOTS:
+        for (i = 0; i < 2; i++)
+          {
+            dash = 1.0; g_array_append_val (new_pattern, dash);
+            dash = 5.0; g_array_append_val (new_pattern, dash);
+          }
+        break;
+      case GIMP_DASH_NORMAL_DOTS:
+        for (i = 0; i < 3; i++)
+          {
+            dash = 1.0; g_array_append_val (new_pattern, dash);
+            dash = 3.0; g_array_append_val (new_pattern, dash);
+          }
+        break;
+      case GIMP_DASH_DENSE_DOTS:
+        for (i = 0; i < 12; i++)
+          {
+            dash = 1.0; g_array_append_val (new_pattern, dash);
+          }
+        break;
+      case GIMP_DASH_STIPPLES:
+        for (i = 0; i < 24; i++)
+          {
+            dash = 0.5; g_array_append_val (new_pattern, dash);
+          }
+        break;
+      case GIMP_DASH_DASH_DOT:
+        dash = 7.0; g_array_append_val (new_pattern, dash);
+        dash = 2.0; g_array_append_val (new_pattern, dash);
+        dash = 1.0; g_array_append_val (new_pattern, dash);
+        dash = 2.0; g_array_append_val (new_pattern, dash);
+        break;
+      case GIMP_DASH_DASH_DOT_DOT:
+        dash = 7.0; g_array_append_val (new_pattern, dash);
+        for (i=0; i < 5; i++)
+          {
+            dash = 1.0; g_array_append_val (new_pattern, dash);
+          }
+        break;
+      default:
+        g_printerr ("Unknown Dash pattern: %d\n", preset);
+    }
+
+  if (options->dash_info != NULL)
+    g_array_free (options->dash_info, TRUE);
+  options->dash_info = NULL;
+
+  if (new_pattern->len >= 2)
+    options->dash_info = new_pattern;
+  else
+    g_array_free (new_pattern, TRUE);
+
+  g_signal_emit (options,
+                 stroke_options_signals [DASH_INFO_CHANGED], 0,
+                 preset);
+  g_object_notify (G_OBJECT (options), "dash-info");
 }

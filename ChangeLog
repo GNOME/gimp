@@ -1,5 +1,16 @@
 2003-12-28  Simon Budig  <simon@gimp.org>
 
+	* app/core/core-enums.h: Some default dash pattern enum.
+	* app/core/core-enums.c: regenerated.
+
+	* app/core/gimpstrokeoptions.[ch]: Implement default dash
+	patterns, add a signal when the dash pattern changes.
+
+	* app/widgets/gimpstrokeeditor.c: Add an option menu for
+	the dash pattern and connect it to the signal mentioned above.
+
+2003-12-28  Simon Budig  <simon@gimp.org>
+
 	* app/widgets/gimpstrokeeditor.c: Fixed packing of the widgets.
 
 2003-12-28  Simon Budig  <simon@gimp.org>
