@@ -25,12 +25,6 @@
 
 typedef enum
 {
-  GIMP_DRAW_TOOL_STATE_INVISIBLE,
-  GIMP_DRAW_TOOL_STATE_VISIBLE
-} GimpDrawToolState;
-
-typedef enum
-{
   GIMP_HANDLE_SQUARE,
   GIMP_HANDLE_FILLED_SQUARE,
   GIMP_HANDLE_CIRCLE,
@@ -51,21 +45,20 @@ typedef struct _GimpDrawToolClass GimpDrawToolClass;
 
 struct _GimpDrawTool
 {
-  GimpTool           parent_instance;
+  GimpTool      parent_instance;
 
-  GimpDisplay       *gdisp;        /*  The display we are drawing to (may be
-                                    *  a different one than tool->gdisp)
-                                    */
-  GdkWindow         *win;          /*  Window to draw draw operation to       */
-  GdkGC             *gc;           /*  Graphics context for draw functions    */
+  GimpDisplay  *gdisp;        /*  The display we are drawing to (may be
+                               *  a different one than tool->gdisp)
+                               */
+  GdkWindow    *win;          /*  Window to draw draw operation to       */
+  GdkGC        *gc;           /*  Graphics context for draw functions    */
 
-  GimpDrawToolState  draw_state;   /*  Current state in the draw process      */
-  gint               paused_count; /*  count to keep track of multiple pauses */
+  gint          paused_count; /*  count to keep track of multiple pauses */
 
-  gint               line_width;   /*  line attributes                        */
-  gint               line_style;   /**/
-  gint               cap_style;    /**/
-  gint               join_style;   /**/
+  gint          line_width;   /*  line attributes                        */
+  GdkLineStyle  line_style;   /**/
+  GdkCapStyle   cap_style;    /**/
+  GdkJoinStyle  join_style;   /**/
 };
 
 struct _GimpDrawToolClass
@@ -152,7 +145,7 @@ void       gimp_draw_tool_draw_cross_by_anchor     (GimpDrawTool   *draw_tool,
                                                     GtkAnchorType   anchor,
                                                     gboolean        use_offsets);
 
-void       gimp_draw_tool_draw_handle              (GimpDrawTool   *draw_tool, 
+void       gimp_draw_tool_draw_handle              (GimpDrawTool   *draw_tool,
                                                     GimpHandleType  type,
                                                     gdouble         x,
                                                     gdouble         y,
@@ -172,17 +165,23 @@ gboolean   gimp_draw_tool_on_handle                (GimpDrawTool   *draw_tool,
                                                     GtkAnchorType   anchor,
                                                     gboolean        use_offsets);
 
-void       gimp_draw_tool_draw_lines               (GimpDrawTool   *draw_tool, 
+void       gimp_draw_tool_draw_lines               (GimpDrawTool   *draw_tool,
                                                     gdouble        *points,
                                                     gint            n_points,
                                                     gboolean        filled,
                                                     gboolean        use_offsets);
 
-void       gimp_draw_tool_draw_strokes             (GimpDrawTool   *draw_tool, 
+void       gimp_draw_tool_draw_strokes             (GimpDrawTool   *draw_tool,
                                                     GimpCoords     *points,
                                                     gint            n_points,
                                                     gboolean        filled,
                                                     gboolean        use_offsets);
+
+void       gimp_draw_tool_draw_boundary            (GimpDrawTool   *draw_tool,
+                                                    BoundSeg       *bound_segs,
+                                                    gint            n_bound_segs,
+                                                    gint            offset_x,
+                                                    gint            offset_y);
 
 
 #endif  /*  __GIMP_DRAW_TOOL_H__  */

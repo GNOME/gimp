@@ -24,6 +24,8 @@
 
 #include "tools-types.h"
 
+#include "base/boundary.h"
+
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-transform.h"
@@ -116,7 +118,6 @@ gimp_draw_tool_init (GimpDrawTool *draw_tool)
   draw_tool->win          = NULL;
   draw_tool->gc           = NULL;
 
-  draw_tool->draw_state   = GIMP_DRAW_TOOL_STATE_INVISIBLE;
   draw_tool->paused_count = 0;
 
   draw_tool->line_width   = 0;
@@ -174,15 +175,10 @@ gimp_draw_tool_control (GimpTool       *tool,
 static void
 gimp_draw_tool_draw (GimpDrawTool *draw_tool)
 {
-  if (draw_tool->draw_state == GIMP_DRAW_TOOL_STATE_VISIBLE)
-    draw_tool->draw_state = GIMP_DRAW_TOOL_STATE_INVISIBLE;
-  else
-    draw_tool->draw_state = GIMP_DRAW_TOOL_STATE_VISIBLE;
-
- if (draw_tool->gdisp)
-   {
+  if (draw_tool->paused_count == 0 && draw_tool->gdisp)
+    {
       GIMP_DRAW_TOOL_GET_CLASS (draw_tool)->draw (draw_tool);
-   }
+    }
 }
 
 void
@@ -199,9 +195,9 @@ gimp_draw_tool_start (GimpDrawTool *draw_tool,
 
   gimp_draw_tool_stop (draw_tool);
 
-  draw_tool->gdisp        = gdisp;
-  draw_tool->win          = shell->canvas->window;
-  draw_tool->gc           = gdk_gc_new (draw_tool->win);
+  draw_tool->gdisp = gdisp;
+  draw_tool->win   = shell->canvas->window;
+  draw_tool->gc    = gdk_gc_new (draw_tool->win);
 
   gdk_gc_set_function (draw_tool->gc, GDK_INVERT);
   fg.pixel = 0xFFFFFFFF;
@@ -222,12 +218,7 @@ gimp_draw_tool_stop (GimpDrawTool *draw_tool)
 {
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  if (draw_tool->draw_state == GIMP_DRAW_TOOL_STATE_VISIBLE)
-    {
-      gimp_draw_tool_draw (draw_tool);
-    }
-
-  draw_tool->paused_count = 0;
+  gimp_draw_tool_draw (draw_tool);
 
   draw_tool->gdisp = NULL;
   draw_tool->win   = NULL;
@@ -252,10 +243,7 @@ gimp_draw_tool_pause (GimpDrawTool *draw_tool)
 {
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  if (draw_tool->paused_count == 0)
-    {
-      gimp_draw_tool_draw (draw_tool);
-    }
+  gimp_draw_tool_draw (draw_tool);
 
   draw_tool->paused_count++;
 }
@@ -269,10 +257,7 @@ gimp_draw_tool_resume (GimpDrawTool *draw_tool)
     {
       draw_tool->paused_count--;
 
-      if (draw_tool->paused_count == 0)
-        {
-          gimp_draw_tool_draw (draw_tool);
-        }
+      gimp_draw_tool_draw (draw_tool);
     }
   else
     {
@@ -592,7 +577,7 @@ gimp_draw_tool_draw_cross_by_anchor (GimpDrawTool  *draw_tool,
 }
 
 void
-gimp_draw_tool_draw_handle (GimpDrawTool   *draw_tool, 
+gimp_draw_tool_draw_handle (GimpDrawTool   *draw_tool,
                             GimpHandleType  type,
                             gdouble         x,
                             gdouble         y,
@@ -730,7 +715,7 @@ gimp_draw_tool_on_handle (GimpDrawTool   *draw_tool,
 }
 
 void
-gimp_draw_tool_draw_lines (GimpDrawTool *draw_tool, 
+gimp_draw_tool_draw_lines (GimpDrawTool *draw_tool,
 			   gdouble      *points,
 			   gint          n_points,
 			   gboolean      filled,
@@ -740,6 +725,8 @@ gimp_draw_tool_draw_lines (GimpDrawTool *draw_tool,
   GdkPoint         *coords;
   gint              i;
   gdouble           sx, sy;
+
+  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
   shell = GIMP_DISPLAY_SHELL (draw_tool->gdisp->shell);
 
@@ -772,7 +759,7 @@ gimp_draw_tool_draw_lines (GimpDrawTool *draw_tool,
 }
 
 void
-gimp_draw_tool_draw_strokes (GimpDrawTool *draw_tool, 
+gimp_draw_tool_draw_strokes (GimpDrawTool *draw_tool,
 			     GimpCoords   *points,
 			     gint          n_points,
 			     gboolean      filled,
@@ -782,6 +769,8 @@ gimp_draw_tool_draw_strokes (GimpDrawTool *draw_tool,
   GdkPoint         *coords;
   gint              i;
   gdouble           sx, sy;
+
+  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
   shell = GIMP_DISPLAY_SHELL (draw_tool->gdisp->shell);
 
@@ -811,6 +800,84 @@ gimp_draw_tool_draw_strokes (GimpDrawTool *draw_tool,
     }
 
   g_free (coords);
+}
+
+void
+gimp_draw_tool_draw_boundary (GimpDrawTool *draw_tool,
+                              BoundSeg     *bound_segs,
+                              gint          n_bound_segs,
+                              gint          offset_x,
+                              gint          offset_y)
+{
+  GimpDisplayShell *shell;
+  GdkSegment       *gdk_segs;
+  gint              n_gdk_segs;
+  gint              xclamp, yclamp;
+  gint              x, y;
+  gint              i;
+
+  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+  g_return_if_fail (n_bound_segs > 0 || bound_segs == NULL);
+
+  shell = GIMP_DISPLAY_SHELL (draw_tool->gdisp->shell);
+
+  gdk_segs   = g_new0 (GdkSegment, n_bound_segs);
+  n_gdk_segs = 0;
+
+  xclamp = shell->disp_width  + 1;
+  yclamp = shell->disp_height + 1;
+
+  for (i = 0; i < n_bound_segs; i++)
+    {
+      gimp_display_shell_transform_xy (shell,
+                                       bound_segs[i].x1 + offset_x,
+                                       bound_segs[i].y1 + offset_y,
+                                       &x, &y,
+                                       FALSE);
+
+      gdk_segs[n_gdk_segs].x1 = CLAMP (x, -1, xclamp);
+      gdk_segs[n_gdk_segs].y1 = CLAMP (y, -1, yclamp);
+
+      gimp_display_shell_transform_xy (shell,
+                                       bound_segs[i].x2 + offset_x,
+                                       bound_segs[i].y2 + offset_y,
+                                       &x, &y,
+                                       FALSE);
+
+      gdk_segs[n_gdk_segs].x2 = CLAMP (x, -1, xclamp);
+      gdk_segs[n_gdk_segs].y2 = CLAMP (y, -1, yclamp);
+
+      if (gdk_segs[n_gdk_segs].x1 == gdk_segs[n_gdk_segs].x2 &&
+          gdk_segs[n_gdk_segs].y1 == gdk_segs[n_gdk_segs].y2)
+        continue;
+
+      /*  If this segment is a closing segment && the segments lie inside
+       *  the region, OR if this is an opening segment and the segments
+       *  lie outside the region...
+       *  we need to transform it by one display pixel
+       */
+      if (! bound_segs[i].open)
+        {
+          /*  If it is vertical  */
+          if (gdk_segs[n_gdk_segs].x1 == gdk_segs[n_gdk_segs].x2)
+            {
+              gdk_segs[n_gdk_segs].x1 -= 1;
+              gdk_segs[n_gdk_segs].x2 -= 1;
+            }
+          else
+            {
+              gdk_segs[n_gdk_segs].y1 -= 1;
+              gdk_segs[n_gdk_segs].y2 -= 1;
+            }
+        }
+
+      n_gdk_segs++;
+    }
+
+  gdk_draw_segments (draw_tool->win, draw_tool->gc,
+                     gdk_segs, n_gdk_segs);
+
+  g_free (gdk_segs);
 }
 
 
@@ -877,7 +944,7 @@ gimp_draw_tool_shift_to_north_west (gdouble        x,
   if (shifted_y)
     *shifted_y = y;
 }
-                                    
+
 static inline void
 gimp_draw_tool_shift_to_center (gdouble        x,
                                 gdouble        y,

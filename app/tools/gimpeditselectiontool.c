@@ -659,17 +659,10 @@ static void
 gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpEditSelectionTool *edit_select;
-  GimpTool              *tool;
   GimpDisplay           *gdisp;
-  GimpDisplayShell      *shell;
-  Selection             *select;
 
   edit_select = GIMP_EDIT_SELECTION_TOOL (draw_tool);
-  tool        = GIMP_TOOL (draw_tool);
-
-  gdisp  = tool->gdisp;
-  shell  = GIMP_DISPLAY_SHELL (gdisp->shell);
-  select = shell->select;
+  gdisp       = GIMP_TOOL (draw_tool)->gdisp;
 
   switch (edit_select->edit_type)
     {
@@ -677,36 +670,19 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
       {
         GimpLayer  *layer        = gimp_image_get_active_layer (gdisp->gimage);
         gboolean    floating_sel = gimp_layer_is_floating_sel (layer);
-        GdkSegment *segs_copy;
 
         if (! floating_sel)
-          {
-            segs_copy =
-              gimp_display_shell_transform_boundary (shell,
-                                                     edit_select->segs_in,
-                                                     edit_select->num_segs_in,
-                                                     edit_select->cumlx,
-                                                     edit_select->cumly);
+          gimp_draw_tool_draw_boundary (draw_tool,
+                                        edit_select->segs_in,
+                                        edit_select->num_segs_in,
+                                        edit_select->cumlx,
+                                        edit_select->cumly);
 
-            /*  Draw the items  */
-            gdk_draw_segments (draw_tool->win, draw_tool->gc,
-                               segs_copy, select->num_segs_in);
-
-            g_free (segs_copy);
-          }
-
-        segs_copy =
-          gimp_display_shell_transform_boundary (shell,
-                                                 edit_select->segs_out,
-                                                 edit_select->num_segs_out,
-                                                 edit_select->cumlx,
-                                                 edit_select->cumly);
-
-        /*  Draw the items  */
-        gdk_draw_segments (draw_tool->win, draw_tool->gc,
-                           segs_copy, select->num_segs_out);
-
-        g_free (segs_copy);
+        gimp_draw_tool_draw_boundary (draw_tool,
+                                      edit_select->segs_out,
+                                      edit_select->num_segs_out,
+                                      edit_select->cumlx,
+                                      edit_select->cumly);
       }
       break;
 
@@ -774,22 +750,11 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
       break;
 
     case EDIT_FLOATING_SEL_TRANSLATE:
-      {
-        GdkSegment *segs_copy;
-
-        segs_copy =
-          gimp_display_shell_transform_boundary (shell,
-                                                 edit_select->segs_in,
-                                                 edit_select->num_segs_in,
-                                                 edit_select->cumlx,
-                                                 edit_select->cumly);
-
-        /*  Draw the items  */
-        gdk_draw_segments (draw_tool->win, draw_tool->gc,
-                           segs_copy, select->num_segs_in);
-
-        g_free (segs_copy);
-      }
+      gimp_draw_tool_draw_boundary (draw_tool,
+                                    edit_select->segs_in,
+                                    edit_select->num_segs_in,
+                                    edit_select->cumlx,
+                                    edit_select->cumly);
       break;
     }
 }

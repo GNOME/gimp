@@ -1,5 +1,26 @@
 2003-07-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell-transform.[ch]: removed
+	gimp_display_shell_transform_boundary() again...
+
+	* app/tools/gimpdrawtool.[ch]: ...and added as
+	gimp_draw_tool_draw_boundary(). Removed the GimpDrawToolState enum
+	and the "draw_state" member since they were redundant. Cleanup.
+
+	* app/tools/gimpeditselectiontool.c: changed accordingly.
+
+	* app/tools/gimppainttool.[ch]: added a brush preview so we
+	finally see where we will paint. Fixes bug #32498. Cleanup.
+
+	* app/tools/tool_manager.c: also look at draw_tool->gdisp, not
+	only at tool->gdisp when deciding whether the active tool has to
+	be suspended/resumed/halted. Fixes a couple of fnords with the
+	line preview and the new brush preview.
+
+	* app/tools/gimpcolortool.c: minor cleanup.
+
+2003-07-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpbrush.c
 	* app/paint/gimppaintcore.c
 	* app/tools/gimpcurvestool.c

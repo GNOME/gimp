@@ -289,12 +289,10 @@ gimp_color_tool_cursor_update (GimpTool        *tool,
 static void
 gimp_color_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpColorTool *color_tool;
+  GimpColorTool *color_tool = GIMP_COLOR_TOOL (draw_tool);
 
-  if (! GIMP_COLOR_TOOL (draw_tool)->enabled)
+  if (! color_tool->enabled)
     return;
-
-  color_tool = GIMP_COLOR_TOOL (draw_tool);
 
   if (color_tool->options->sample_average)
     {

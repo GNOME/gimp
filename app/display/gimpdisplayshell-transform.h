@@ -54,12 +54,5 @@ void  gimp_display_shell_untransform_xy_f   (GimpDisplayShell *shell,
 					     gdouble          *ny,
 					     gboolean          use_offsets);
 
-GdkSegment *
-      gimp_display_shell_transform_boundary (GimpDisplayShell *shell,
-                                             BoundSeg         *bound_segs,
-                                             gint              n_bound_segs,
-                                             gint              offset_x,
-                                             gint              offset_y);
-
 
 #endif /* __GIMP_DISPLAY_SHELL_TRANSFORM_H__ */

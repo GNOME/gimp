@@ -242,11 +242,17 @@ tool_manager_select_tool (Gimp     *gimp,
 
   if (tool_manager->active_tool)
     {
-      if (tool_manager->active_tool->gdisp)
+      if (tool_manager->active_tool->gdisp ||
+          GIMP_DRAW_TOOL (tool_manager->active_tool)->gdisp)
         {
-          tool_manager_control_active (gimp,
-                                       HALT,
-                                       tool_manager->active_tool->gdisp);
+          GimpDisplay *gdisp;
+
+          gdisp = tool_manager->active_tool->gdisp;
+
+          if (! gdisp)
+            gdisp = GIMP_DRAW_TOOL (tool_manager->active_tool)->gdisp;
+
+          tool_manager_control_active (gimp, HALT, gdisp);
         }
 
       g_object_unref (tool_manager->active_tool);
@@ -336,7 +342,8 @@ tool_manager_control_active (Gimp           *gimp,
   if (! tool_manager->active_tool)
     return;
 
-  if (gdisp && tool_manager->active_tool->gdisp == gdisp)
+  if (gdisp && (tool_manager->active_tool->gdisp                  == gdisp ||
+                GIMP_DRAW_TOOL (tool_manager->active_tool)->gdisp == gdisp))
     {
       gimp_tool_control (tool_manager->active_tool,
                          action,
