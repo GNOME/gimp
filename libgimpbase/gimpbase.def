@@ -29,6 +29,7 @@ EXPORTS
 	gimp_pixpipe_params_parse
 	gimp_plug_in_directory
 	gimp_signal_private
+	gimp_strip_uline
 	gimp_sysconf_directory
 	gimp_utf8_strtrim
 	gp_config_write
