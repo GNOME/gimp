@@ -115,6 +115,7 @@
     <xi:include href="xml/gimppalette.xml"/>
     <xi:include href="xml/gimpparasitelist.xml"/>
     <xi:include href="xml/gimppattern.xml"/>
+    <xi:include href="xml/gimpselection.xml"/>
     <xi:include href="xml/gimptemplate.xml"/>
     <xi:include href="xml/gimpundo.xml"/>
     <xi:include href="xml/gimpundostack.xml"/>
@@ -167,7 +168,6 @@
     <xi:include href="xml/gimppattern-header.xml"/>
     <xi:include href="xml/gimppreviewcache.xml"/>
     <xi:include href="xml/gimpscanconvert.xml"/>
-    <xi:include href="xml/gimpselection.xml"/>
     <xi:include href="xml/gimptoolinfo.xml"/>
     <xi:include href="xml/gimptooloptions.xml"/>
     <xi:include href="xml/gimpunits.xml"/>

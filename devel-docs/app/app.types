@@ -38,6 +38,7 @@ gimp_paint_info_get_type
 gimp_palette_get_type 
 gimp_parasite_list_get_type 
 gimp_pattern_get_type 
+gimp_selection_get_type 
 gimp_template_get_type 
 gimp_tool_info_get_type 
 gimp_tool_options_get_type 
