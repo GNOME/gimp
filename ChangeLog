@@ -1,3 +1,33 @@
+2002-02-25  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpvectors.c
+	* app/vectors/gimpvectors.h: Changed to a container of
+	GimpStrokes. This will enable it to contain different
+	Stroke-types in one Vectors-Object (think Entry in path
+	dialog)
+	
+	* app/vectors/gimpstroke.c
+	* app/vectors/gimpstroke.h
+	* app/vectors/gimpbezierstroke.c
+	* app/vectors/gimpbezierstroke.h: New Objects: A connected
+	component in a vector.
+	
+	* app/vectors/gimpbezier.c
+	* app/vectors/gimpbezier.h: Removed, obsoleted by gimpstroke
+	and gimpbezierstroke.
+
+	* app/tools/gimpvectortool.c
+	* app/vectors/Makefile.am
+	* app/vectors/vectors-types.h
+	* app/vectors/gimpanchor.h: Changed accordingly.
+
+	There is a nasty bug I am yet unable to find in the tool.
+	Don't use it. For some reason a wrong function instead of
+	gimp_stroke_real_anchor_get_next gets called. I have *no*
+	idea, whats wrong here. I stared at the code for hours.
+
+	If somebody has an idea I'd appreciate a hint.
+
 2002-02-25  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/Makefile.am

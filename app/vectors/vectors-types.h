@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * vectors-types.h
- * Copyright (C) 2001 Simon Budig  <simon@gimp.org>
+ * Copyright (C) 2002 Simon Budig  <simon@gimp.org>
  *
  *
  * This program is free software; you can redistribute it and/or modify
@@ -26,7 +26,11 @@
 #include "core/core-types.h"
 
 typedef struct _GimpAnchor GimpAnchor;
-typedef         gpointer   GimpStroke;
+
+typedef struct _GimpStroke            GimpStroke;
+typedef struct _GimpStrokeClass       GimpStrokeClass;
+typedef struct _GimpBezierStroke      GimpBezierStroke;
+typedef struct _GimpBezierStrokeClass GimpBezierStrokeClass;
 
 typedef struct _GimpBezier        GimpBezier;
 typedef struct _GimpBezierClass   GimpBezierClass;

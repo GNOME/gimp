@@ -38,7 +38,7 @@
 
 #include "vectors/gimpanchor.h"
 #include "vectors/gimpvectors.h"
-#include "vectors/gimpbezier.h"
+#include "vectors/gimpbezierstroke.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
@@ -190,7 +190,7 @@ gimp_vector_tool_init (GimpVectorTool *vector_tool)
 
   tool->preserve    = TRUE;  /*  Preserve on drawable change  */
   
-  vector_tool->vectors = g_object_new (GIMP_TYPE_BEZIER, 0);
+  vector_tool->vectors = g_object_new (GIMP_TYPE_VECTORS, 0);
 }
 
 static void
@@ -229,12 +229,13 @@ gimp_vector_tool_button_press (GimpTool        *tool,
                                 GdkModifierType  state,
                                 GimpDisplay     *gdisp)
 {
-  GimpVectorTool  *vector_tool;
-  VectorOptions   *options;
+  GimpVectorTool   *vector_tool;
+  VectorOptions    *options;
   GimpDisplayShell *shell;
   gint              i;
   GimpCoords        cur_point;
   GimpAnchor       *anchor;
+  GimpStroke       *stroke;
 
   vector_tool = GIMP_VECTOR_TOOL (tool);
 
@@ -256,7 +257,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
        *  the new function will be moving or adding a new point or guide
        */
 
-      anchor = gimp_bezier_anchor_get (vector_tool->vectors, coords);
+      anchor = gimp_vectors_anchor_get (vector_tool->vectors, coords);
 
       if (anchor && gimp_draw_tool_on_handle (GIMP_DRAW_TOOL (tool), gdisp,
                                               coords->x,
@@ -282,9 +283,11 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 	  gimp_draw_tool_stop (GIMP_DRAW_TOOL (vector_tool));
 	}
 
-      cur_point.x = coords->x;
-      cur_point.y = coords->y;
-      anchor = gimp_vectors_anchor_set (vector_tool->vectors, &cur_point, TRUE);
+      stroke = gimp_bezier_stroke_new (coords);
+      anchor = gimp_stroke_anchor_get (stroke, coords);
+
+      gimp_vectors_stroke_add (vector_tool->vectors, stroke);
+
       vector_tool->cur_anchor = anchor;
       vector_tool->function = VMOVING;
 
@@ -371,7 +374,7 @@ gimp_vector_tool_cursor_update (GimpTool        *tool,
 
   if (tool->state == ACTIVE && tool->gdisp == gdisp)
     {
-      anchor = gimp_bezier_anchor_get (vector_tool->vectors, coords);
+      anchor = gimp_vectors_anchor_get (vector_tool->vectors, coords);
 
       if (anchor && gimp_draw_tool_on_handle (GIMP_DRAW_TOOL (tool), gdisp,
                                               coords->x,
@@ -411,15 +414,20 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
 
   vectors = vector_tool->vectors;
 
-  while ((cur_anchor = gimp_vectors_anchor_get_next (vectors, cur_anchor))) {
-    gimp_draw_tool_draw_handle (draw_tool,
-                                GIMP_HANDLE_CIRCLE,
-                                cur_anchor->position.x,
-                                cur_anchor->position.y,
-                                TARGET,
-                                TARGET,
-                                GTK_ANCHOR_CENTER,
-                                FALSE);
+  while ((cur_stroke = gimp_vectors_stroke_get_next (vectors, cur_stroke))) {
+    cur_anchor = NULL;
+    while ((cur_anchor = gimp_stroke_anchor_get_next (cur_stroke, cur_anchor))) {
+      g_printerr ("drawing %p\n", cur_anchor);
+      gimp_draw_tool_draw_handle (draw_tool,
+                                  GIMP_HANDLE_CIRCLE,
+                                  cur_anchor->position.x,
+                                  cur_anchor->position.y,
+                                  TARGET,
+                                  TARGET,
+                                  GTK_ANCHOR_CENTER,
+                                  FALSE);
+      G_BREAKPOINT();
+    }
   }
 
   for (i = 0; i < vector_tool->num_points; i++)

@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpvectors.h
- * Copyright (C) 2001 Simon Budig  <simon@gimp.org>
+ * Copyright (C) 2002 Simon Budig  <simon@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,6 +40,8 @@ struct _GimpVectors
   gboolean          visible;            /* controls visibility            */
   gboolean          locked;             /* transformation locking         */
 
+  GList           * strokes;            /* The vectors components         */
+
   /* Stuff missing */
 };
 
@@ -52,28 +54,9 @@ struct _GimpVectorsClass
               
   void          (* removed)              (GimpVectors       *vectors);
               
-  GimpAnchor  * (* anchor_get)           (const GimpVectors *vectors,
-                                          const GimpCoords  *coord);
-              
-  GimpAnchor  * (* anchor_get_next)      (const GimpVectors *vectors,
-                                          const GimpAnchor  *prev);
-              
-  GimpAnchor  * (* anchor_set)           (const GimpVectors *vectors,
-                                          const GimpCoords  *coord,
-                                          const gboolean     new_stroke);
-              
-  void          (* anchor_move_relative) (GimpVectors       *vectors,
-                                          GimpAnchor        *anchor,
-                                          const GimpCoords  *deltacoord,
-                                          const gint         type);
-              
-  void          (* anchor_move_absolute) (GimpVectors       *vectors,
-                                          GimpAnchor        *anchor,
-					  const GimpCoords  *coord,
-                                          const gint         type);
-              
-  void          (* anchor_delete)        (GimpVectors       *vectors,
-                                          GimpAnchor        *anchor);
+
+  void          (* stroke_add)           (GimpVectors       *vectors,
+                                          const GimpStroke  *stroke);
               
   GimpStroke  * (* stroke_get)           (const GimpVectors *vectors,
 		                          const GimpCoords  *coord);
@@ -83,6 +66,23 @@ struct _GimpVectorsClass
               
   gdouble       (* stroke_get_length)    (const GimpVectors *vectors,
                                           const GimpStroke  *stroke);
+              
+
+  GimpAnchor  * (* anchor_get)           (const GimpVectors *vectors,
+                                          const GimpCoords  *coord);
+              
+  void          (* anchor_move_relative) (GimpVectors       *vectors,
+                                          GimpAnchor        *anchor,
+                                          const GimpCoords  *deltacoord,
+                                          const gint         type);
+              
+  void          (* anchor_move_absolute) (GimpVectors       *vectors,
+                                          GimpAnchor        *anchor,
+                                          const GimpCoords  *coord,
+                                          const gint         type);
+              
+  void          (* anchor_delete)        (GimpVectors       *vectors,
+                                          GimpAnchor        *anchor);
               
   gdouble       (* get_length)           (const GimpVectors *vectors,
                                           const GimpAnchor  *start);
@@ -122,10 +122,6 @@ GimpAnchor    * gimp_vectors_anchor_get         (const GimpVectors  *vectors,
 GimpAnchor    * gimp_vectors_anchor_get_next    (const GimpVectors  *vectors,
                                                  const GimpAnchor   *prev);
                                                                     
-GimpAnchor    * gimp_vectors_anchor_set         (const GimpVectors  *vectors,
-                                                 const GimpCoords   *coord,
-                                                 const gboolean      new_stroke);
-                                                                    
 /* type will be an xorable enum:
  * VECTORS_NONE, VECTORS_FIX_ANGLE, VECTORS_FIX_RATIO, VECTORS_RESTRICT_ANGLE
  *  or so.
@@ -144,6 +140,9 @@ void            gimp_vectors_anchor_delete      (GimpVectors        *vectors,
                                                  GimpAnchor         *anchor);
 
 /* GimpStroke is a connected component of a GimpVectors object */
+
+void            gimp_vectors_stroke_add         (GimpVectors       *vectors,
+                                                 GimpStroke        *stroke);
 
 GimpStroke    * gimp_vectors_stroke_get         (const GimpVectors  *vectors,
                                                  const GimpCoords   *coord);

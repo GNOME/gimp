@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpvectors.c
- * Copyright (C) 2001 Simon Budig  <simon@gimp.org>
+ * Copyright (C) 2002 Simon Budig  <simon@gimp.org>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,8 @@
 
 #include "vectors-types.h"
 
+#include "gimpanchor.h"
+#include "gimpstroke.h"
 #include "gimpvectors.h"
 
 
@@ -33,8 +35,10 @@
 /*  private variables  */
 
 
-static GimpVectorsClass *parent_class = NULL;
+static GimpViewableClass *parent_class = NULL;
 
+
+static void     gimp_vectors_init     (GimpVectors  *vectors);
 
 static void
 gimp_vectors_finalize (GObject *object)
@@ -63,16 +67,15 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
   klass->changed                     = NULL;
   klass->removed                     = NULL;
 
-  klass->anchor_get		     = NULL;
-  klass->anchor_get_next	     = NULL;
-  klass->anchor_set		     = NULL;
-  klass->anchor_move_relative	     = NULL;
-  klass->anchor_move_absolute	     = NULL;
-  klass->anchor_delete		     = NULL;
-
+  klass->stroke_add                  = NULL;
   klass->stroke_get		     = NULL;
   klass->stroke_get_next	     = NULL;
   klass->stroke_get_length	     = NULL;
+
+  klass->anchor_get		     = NULL;
+  klass->anchor_move_relative	     = NULL;
+  klass->anchor_move_absolute	     = NULL;
+  klass->anchor_delete		     = NULL;
 
   klass->get_length		     = NULL;
   klass->get_distance		     = NULL;
@@ -103,23 +106,29 @@ gimp_vectors_get_type (void)
         NULL,           /* class_data     */
         sizeof (GimpVectors),
         0,              /* n_preallocs    */
-        (GInstanceInitFunc) NULL,
+        (GInstanceInitFunc) gimp_vectors_init,
       };
 
       vectors_type = g_type_register_static (GIMP_TYPE_VIEWABLE,
-                                            "GimpVectors", 
-                                            &vectors_info, 0);
+                                             "GimpVectors",
+                                             &vectors_info, 0);
     }
 
   return vectors_type;
 }
+
+static void
+gimp_vectors_init                (GimpVectors        *vectors)
+{
+    vectors->strokes = NULL;
+};
 
 
 /* Calling the virtual functions */
 
 GimpAnchor *
 gimp_vectors_anchor_get (const GimpVectors *vectors,
-			 const GimpCoords  *coord)
+                         const GimpCoords  *coord)
 {
   GimpVectorsClass *vectors_class;
 
@@ -130,55 +139,41 @@ gimp_vectors_anchor_get (const GimpVectors *vectors,
   if (vectors_class->anchor_get)
     return vectors_class->anchor_get (vectors, coord);
   else
-    g_printerr ("gimp_vectors_anchor_get: default implementation\n");
+    {
+      gdouble     dx, dy, mindist;
+      GList      *list;
+      GimpAnchor *anchor = NULL, *minanchor = NULL;
+
+      mindist = -1;
+      list = vectors->strokes;
+
+      while (list)
+        {
+          anchor = gimp_stroke_anchor_get (GIMP_STROKE (list->data), coord);
+          if (anchor)
+            {
+              dx = coord->x - anchor->position.x;
+              dy = coord->y - anchor->position.y;
+              if (mindist > dx * dx + dy * dy || mindist < 0)
+                {
+                  mindist = dx * dx + dy * dy;
+                  minanchor = anchor;
+                }
+            }
+          list = list->next;
+        }
+      return minanchor;
+    }
 
   return NULL;
 }
 
-
-GimpAnchor *
-gimp_vectors_anchor_get_next (const GimpVectors *vectors,
-		              const GimpAnchor  *prev)
-{
-  GimpVectorsClass *vectors_class;
-
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
-
-  vectors_class = GIMP_VECTORS_GET_CLASS (vectors);
-
-  if (vectors_class->anchor_get_next)
-    return vectors_class->anchor_get_next (vectors, prev);
-  else
-    g_printerr ("gimp_vectors_anchor_get_next: default implementation\n");
-
-  return NULL;
-}
-
-
-GimpAnchor *
-gimp_vectors_anchor_set (const GimpVectors *vectors,
-			 const GimpCoords  *coord,
-                         const gboolean     new_stroke)
-{
-  GimpVectorsClass *vectors_class;
-
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
-
-  vectors_class = GIMP_VECTORS_GET_CLASS (vectors);
-
-  if (vectors_class->anchor_set)
-    return vectors_class->anchor_set (vectors, coord, new_stroke);
-  else
-    g_printerr ("gimp_vectors_anchor_set: default implementation\n");
-
-  return NULL;
-}
 
 
 void
 gimp_vectors_anchor_move_relative (GimpVectors       *vectors,
                                    GimpAnchor        *anchor,
-				   const GimpCoords  *deltacoord,
+                                   const GimpCoords  *deltacoord,
                                    const gint         type)
 {
   GimpVectorsClass *vectors_class;
@@ -199,7 +194,7 @@ gimp_vectors_anchor_move_relative (GimpVectors       *vectors,
 void
 gimp_vectors_anchor_move_absolute (GimpVectors       *vectors,
                                    GimpAnchor        *anchor,
-				   const GimpCoords  *coord,
+                                   const GimpCoords  *coord,
                                    const gint         type)
 {
   GimpVectorsClass *vectors_class;
@@ -236,9 +231,34 @@ gimp_vectors_anchor_delete (GimpVectors     *vectors,
 }
 
 
+
+void
+gimp_vectors_stroke_add (GimpVectors *vectors,
+                         GimpStroke  *stroke)
+{
+  GimpVectorsClass *vectors_class;
+
+  g_return_if_fail (GIMP_IS_VECTORS (vectors));
+  g_return_if_fail (GIMP_IS_STROKE (stroke));
+
+  vectors_class = GIMP_VECTORS_GET_CLASS (vectors);
+
+  if (vectors_class->stroke_add)
+    vectors_class->stroke_add (vectors, stroke);
+  else
+    {
+      vectors->strokes = g_list_append (vectors->strokes, stroke);
+      g_object_ref (G_OBJECT (stroke));
+      g_printerr ("gimp_vectors_stroke_add: default implementation\n");
+    }
+
+  return;
+}
+
+
 GimpStroke *
 gimp_vectors_stroke_get (const GimpVectors *vectors,
-			 const GimpCoords  *coord)
+                         const GimpCoords  *coord)
 {
   GimpVectorsClass *vectors_class;
 
@@ -249,7 +269,32 @@ gimp_vectors_stroke_get (const GimpVectors *vectors,
   if (vectors_class->stroke_get)
     return vectors_class->stroke_get (vectors, coord);
   else
-    g_printerr ("gimp_vectors_stroke_get: default implementation\n");
+    {
+      gdouble     dx, dy, mindist;
+      GList      *list;
+      GimpStroke *minstroke = NULL;
+      GimpAnchor *anchor = NULL;
+
+      mindist = -1;
+      list = vectors->strokes;
+
+      while (list)
+        {
+          anchor = gimp_stroke_anchor_get (GIMP_STROKE (list->data), coord);
+          if (anchor)
+            {
+              dx = coord->x - anchor->position.x;
+              dy = coord->y - anchor->position.y;
+              if (mindist > dx * dx + dy * dy || mindist < 0)
+                {
+                  mindist = dx * dx + dy * dy;
+                  minstroke = GIMP_STROKE (list->data);
+                }
+            }
+          list = list->next;
+        }
+      return minstroke;
+    }
 
   return NULL;
 }
@@ -260,6 +305,7 @@ gimp_vectors_stroke_get_next (const GimpVectors *vectors,
                               const GimpStroke  *prev)
 {
   GimpVectorsClass *vectors_class;
+  static GList *last_shown = NULL;
 
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
 
@@ -268,7 +314,22 @@ gimp_vectors_stroke_get_next (const GimpVectors *vectors,
   if (vectors_class->stroke_get_next)
     return vectors_class->stroke_get_next (vectors, prev);
   else
-    g_printerr ("gimp_vectors_stroke_get_next: default implementation\n");
+    {
+      g_printerr ("gimp_vectors_stroke_get_next: default implementation\n");
+
+      if (!prev) {
+        last_shown = vectors->strokes;
+      } else {
+        if (last_shown != NULL && last_shown->data != prev) {
+          last_shown = g_list_find (vectors->strokes, prev);
+        }
+        if (last_shown != NULL)
+          last_shown = last_shown->next;
+      }
+
+      if (last_shown)
+        return GIMP_STROKE (last_shown->data);
+    }
 
   return NULL;
 }

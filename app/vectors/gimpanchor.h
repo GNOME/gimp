@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  * 
  * gimpanchor.h
- * Copyright (C) 2001 Simon Budig  <simon@gimp.org>
+ * Copyright (C) 2002 Simon Budig  <simon@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

@@ -17,9 +17,10 @@ noinst_LIBRARIES = libappvectors.a
 
 libappvectors_a_sources = @STRIP_BEGIN@ \
 	gimpanchor.h			\
-	gimpbezier.c			\
-	gimpbezier.h			\
+	gimpbezierstroke.h		\
+	gimpbezierstroke.c		\
 	gimpstroke.h			\
+	gimpstroke.c			\
 	gimpvectors.c			\
 	gimpvectors.h			\
 @STRIP_END@
