@@ -158,6 +158,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_CHANNEL_GREEN            "gimp-channel-green"
 #define GIMP_STOCK_CHANNEL_BLUE             "gimp-channel-blue"
 #define GIMP_STOCK_CHANNEL_GRAY             "gimp-channel-gray"
+#define GIMP_STOCK_CHANNEL_INDEXED          "gimp-channel-indexed"
 #define GIMP_STOCK_CHANNEL_ALPHA            "gimp-channel-alpha"
 #define GIMP_STOCK_LAYER_MASK               "gimp-layer-mask"
 #define GIMP_STOCK_PATH                     "gimp-path"

@@ -177,12 +177,12 @@ gimp_preview_renderer_image_render (GimpPreviewRenderer *renderer,
 
       switch (rendererimage->channel)
         {
-        case GIMP_RED_CHANNEL:     stock_id = GIMP_STOCK_CHANNEL_RED;   break;
-        case GIMP_GREEN_CHANNEL:   stock_id = GIMP_STOCK_CHANNEL_GREEN; break;
-        case GIMP_BLUE_CHANNEL:    stock_id = GIMP_STOCK_CHANNEL_BLUE;  break;
-        case GIMP_GRAY_CHANNEL:    stock_id = GIMP_STOCK_CHANNEL_GRAY;  break;
-        case GIMP_INDEXED_CHANNEL: stock_id = GIMP_STOCK_QUESTION;      break;
-        case GIMP_ALPHA_CHANNEL:   stock_id = GIMP_STOCK_CHANNEL_ALPHA; break;
+        case GIMP_RED_CHANNEL:     stock_id = GIMP_STOCK_CHANNEL_RED;     break;
+        case GIMP_GREEN_CHANNEL:   stock_id = GIMP_STOCK_CHANNEL_GREEN;   break;
+        case GIMP_BLUE_CHANNEL:    stock_id = GIMP_STOCK_CHANNEL_BLUE;    break;
+        case GIMP_GRAY_CHANNEL:    stock_id = GIMP_STOCK_CHANNEL_GRAY;    break;
+        case GIMP_INDEXED_CHANNEL: stock_id = GIMP_STOCK_CHANNEL_INDEXED; break;
+        case GIMP_ALPHA_CHANNEL:   stock_id = GIMP_STOCK_CHANNEL_ALPHA;   break;
 
         default:
           stock_id = gimp_viewable_get_stock_id (renderer->viewable);

@@ -31,6 +31,7 @@ STOCK_MENU_IMAGES = \
 	stock-channel-blue-16.png			\
 	stock-channel-gray-16.png			\
 	stock-channel-green-16.png			\
+	stock-channel-indexed-16.png			\
 	stock-channel-red-16.png			\
 	stock-channels-16.png				\
 	stock-close-12.png				\
@@ -115,6 +116,7 @@ STOCK_BUTTON_IMAGES = \
 	stock-channel-blue-24.png		\
 	stock-channel-gray-24.png		\
 	stock-channel-green-24.png		\
+	stock-channel-indexed-24.png		\
 	stock-channel-red-24.png		\
 	stock-channels-24.png			\
 	stock-char-picker-22.png		\
@@ -186,6 +188,7 @@ STOCK_DND_IMAGES = \
 	stock-channel-blue-32.png		\
 	stock-channel-gray-32.png		\
 	stock-channel-green-32.png		\
+	stock-channel-indexed-32.png		\
 	stock-channel-red-32.png		\
 	stock-floating-selection-32.png		\
 	stock-image-32.png			\
@@ -199,6 +202,7 @@ STOCK_DIALOG_IMAGES = \
 	stock-channel-blue-48.png		\
 	stock-channel-gray-48.png		\
 	stock-channel-green-48.png		\
+	stock-channel-indexed-48.png		\
 	stock-channel-red-48.png		\
 	stock-error-64.png			\
 	stock-floating-selection-48.png		\

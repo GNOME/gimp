@@ -1,3 +1,17 @@
+2004-01-27  Michael Natterer  <mitch@gimp.org>
+
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-channel-indexed-16.png
+	* themes/Default/images/stock-channel-indexed-24.png
+	* themes/Default/images/stock-channel-indexed-32.png
+	* themes/Default/images/stock-channel-indexed-48.png
+	* libgimpwidgets/gimpstock.[ch]: added placeholders for an INDEXED
+	channel icon (copied from the GRAY channel icon). To be replaced...
+
+	* app/widgets/gimppreviewrendererimage.c: use
+	GIMP_STOCK_CHANNEL_INDEXED instead of GIMP_STOCK_QUESTION for the
+	indexed channel.
+
 2004-01-27  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/comic-logo.scm: applied a patch from
