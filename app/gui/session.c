@@ -131,7 +131,7 @@ save_sessionrc (void)
 
   filename = gimp_personal_rc_file ("sessionrc");
 
-  fp = fopen (filename, "w");
+  fp = fopen (filename, "wt");
   g_free (filename);
   if (!fp)
     return;
