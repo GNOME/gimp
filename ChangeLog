@@ -1,3 +1,8 @@
+2004-12-08  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* app/dialogs/print-size-dialog.c (print_size_dialog_size_changed):
+	fixed kludgy use of size entry, seems to fix bug #159273.
+
 2004-12-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpuimanager.[ch]: renamed
