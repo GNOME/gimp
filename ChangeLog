@@ -1,3 +1,20 @@
+2005-02-27  Daniel Egger  <de@axiros.com>
+
+	* app/base/Makefile.am
+	* app/composite/*akefile.am
+	* app/config/*akefile.am
+	* app/core/*akefile.am
+	* app/display/*akefile.am
+	* app/file/*akefile.am
+	* app/paint-funcs/*akefile.am
+	* app/pdb/*akefile.am
+	* app/plug-in/*akefile.am
+	* app/text/*akefile.am
+	* app/tools/*akefile.am
+	* app/vectors/*akefile.am
+	* app/xcf/*akefile.am: Commonized include paths to always look
+	in the builddir also to cater for srcdir != builddir builds.
+
 2005-02-27  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpgradient.[ch]: removed the "last_visited" field

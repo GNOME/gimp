@@ -11,7 +11,9 @@ libapppaint_funcs_a_SOURCES = \
 	scale-funcs.h
 
 INCLUDES = \
+	-I$(top_builddir)	\
 	-I$(top_srcdir)		\
+	-I$(top_builddir)/app	\
 	-I$(top_srcdir)/app	\
 	$(GLIB_CFLAGS)		\
 	-I$(includedir)
