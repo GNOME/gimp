@@ -713,7 +713,7 @@ save_image (gchar  *filename,	        /* I - File to save to */
   */
 
 #if PNG_LIBPNG_VER > 88
-  pp   = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+  pp   = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
   info = png_create_info_struct(pp);
 #else
   pp = (png_structp)calloc(sizeof(png_struct), 1);
