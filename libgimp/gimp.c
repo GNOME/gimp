@@ -1597,7 +1597,8 @@ gimp_config (GPConfig *config)
       g_message ("Could not execute plug-in \"%s\"\n(%s)\n"
 		 "because the GIMP is using an older version of the "
 		 "plug-in protocol.",
-		 g_get_prgname (), progname);
+		 gimp_filename_to_utf8 (g_get_prgname ()),
+                 gimp_filename_to_utf8 (progname));
       gimp_quit ();
     }
   else if (config->version > GIMP_PROTOCOL_VERSION)
@@ -1605,7 +1606,8 @@ gimp_config (GPConfig *config)
       g_message ("Could not execute plug-in \"%s\"\n(%s)\n"
 		 "because it uses an obsolete version of the "
 		 "plug-in protocol.",
-		 g_get_prgname (), progname);
+		 gimp_filename_to_utf8 (g_get_prgname ()),
+                 gimp_filename_to_utf8 (progname));
       gimp_quit ();
     }
 

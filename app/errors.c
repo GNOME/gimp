@@ -28,7 +28,7 @@
 
 #include <glib-object.h>
 
-#include "libgimpbase/gimpversion.h"
+#include "libgimpbase/gimpbase.h"
 
 #include "core/core-types.h"
 
@@ -93,7 +93,7 @@ gimp_message_log_func (const gchar    *log_domain,
       return;
     }
 
-  g_printerr ("%s: %s\n\n", full_prog_name, message);
+  g_printerr ("%s: %s\n\n", gimp_filename_to_utf8 (full_prog_name), message);
 }
 
 void
@@ -141,7 +141,8 @@ gimp_eek (const gchar *reason,
 {
 #ifndef G_OS_WIN32
 
-  g_printerr ("%s: %s: %s\n", full_prog_name, reason, message);
+  g_printerr ("%s: %s: %s\n", gimp_filename_to_utf8 (full_prog_name),
+              reason, message);
 
   if (use_handler)
     {

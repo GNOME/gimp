@@ -288,7 +288,8 @@ gimp_vectors_import (GimpImage    *image,
       else
         {
           if (filename)
-            g_set_error (error, 0, 0, _("No paths found in '%s'"), filename);
+            g_set_error (error, 0, 0, _("No paths found in '%s'"),
+                         gimp_filename_to_utf8 (filename));
           else
             g_set_error (error, 0, 0, _("No paths found in the buffer"));
 

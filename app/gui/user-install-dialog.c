@@ -1065,10 +1065,10 @@ user_install_run (void)
              S_IRGRP | S_IXGRP |
              S_IROTH | S_IXOTH) == -1)
     {
-      g_set_error (&error,
-                   G_FILE_ERROR, g_file_error_from_errno (errno),
+      g_set_error (&error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Cannot create folder '%s': %s"),
-                   gimp_filename_to_utf8 (gimp_directory ()), g_strerror (errno));
+                   gimp_filename_to_utf8 (gimp_directory ()),
+                   g_strerror (errno));
       goto break_out_of_loop;
     }
 
@@ -1098,9 +1098,9 @@ user_install_run (void)
                      S_IRGRP | S_IXGRP |
                      S_IROTH | S_IXOTH) == -1)
             {
-              g_set_error (&error,
-                           G_FILE_ERROR, g_file_error_from_errno (errno),
-                           _("Cannot create folder: %s"), g_strerror (errno));
+              g_set_error (&error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                           _("Cannot create folder '%s': %s"),
+                           gimp_filename_to_utf8 (dest), g_strerror (errno));
               goto break_out_of_loop;
             }
           break;

@@ -240,7 +240,7 @@ gimp_data_delete_from_disk (GimpData  *data,
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_DELETE,
                    _("Could not delete '%s': %s"),
-                   data->filename, g_strerror (errno));
+                   gimp_filename_to_utf8 (data->filename), g_strerror (errno));
       return FALSE;
     }
 

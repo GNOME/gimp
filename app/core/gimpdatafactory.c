@@ -439,7 +439,7 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
         {
           g_message (_("Trying legacy loader on file '%s' "
 		       "with unknown extension."),
-                     file_data->filename);
+                     gimp_filename_to_utf8 (file_data->filename));
           goto insert;
         }
     }

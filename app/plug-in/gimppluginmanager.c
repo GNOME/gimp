@@ -260,7 +260,8 @@ plug_ins_init (Gimp               *gimp,
 #ifdef VERBOSE
           g_print ("added locale domain \"%s\" for path \"%s\"\n",
                    def->domain_name ? def->domain_name : "(null)",
-                   def->domain_path ? def->domain_path : "(null)");
+                   def->domain_path ?
+                   gimp_filename_to_utf8 (def->domain_path) : "(null)");
 #endif
 	}
 
@@ -305,7 +306,8 @@ plug_ins_init (Gimp               *gimp,
       if (plug_in_def->has_init)
 	{
 	  if (gimp->be_verbose)
-	    g_print (_("Initializing plug-in: '%s'\n"), plug_in_def->prog);
+	    g_print (_("Initializing plug-in: '%s'\n"),
+                     gimp_filename_to_utf8 (plug_in_def->prog));
 
 	  plug_in_call_init (gimp, plug_in_def);
 	}
@@ -561,7 +563,8 @@ plug_ins_def_add_from_rc (Gimp      *gimp,
   g_free (basename1);
 
   gimp->write_pluginrc = TRUE;
-  g_printerr ("executable not found: '%s'\n", plug_in_def->prog);
+  g_printerr ("executable not found: '%s'\n",
+              gimp_filename_to_utf8 (plug_in_def->prog));
   plug_in_def_free (plug_in_def, FALSE);
 }
 
@@ -834,7 +837,9 @@ plug_ins_image_types_parse (gchar *image_types)
 	    }
 	  else
 	    {
-              g_warning ("image_type contains unrecognizable parts: '%s'", type_spec);
+              g_warning ("image_type contains unrecognizable parts: '%s'",
+                         type_spec);
+
 	      while (*image_types &&
                      ((*image_types != ' ') ||
                       (*image_types != '\t') ||

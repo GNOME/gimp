@@ -1,3 +1,20 @@
+2004-01-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/app_procs.c
+	* app/errors.c
+	* app/main.c
+	* app/config/gimpconfigwriter.c
+	* app/core/gimpdata.c
+	* app/core/gimpdatafactory.c
+	* app/gui/user-install-dialog.c
+	* app/plug-in/plug-ins.c
+	* app/vectors/gimpvectors-import.c: some more gimp_filename_to_utf8().
+
+	* libgimp/gimp.c
+	* libgimpmodule/gimpmodule.c
+	* libgimpmodule/gimpmoduledb.c: use it here, too, now that is in
+	libgimpbase.
+
 2004-01-23  Henrik Brix Andersen  <brix@gimp.org>
 
 	* plug-ins/common/.cvsignore: s/ps/postscript/ to shut up cvs.

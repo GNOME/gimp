@@ -262,9 +262,7 @@ app_run (const gchar         *full_prog_name,
 
                   if (! gimage && status != GIMP_PDB_CANCEL)
                     {
-                      gchar *filename;
-
-                      filename = file_utils_uri_to_utf8_filename (uri);
+                      gchar *filename = file_utils_uri_to_utf8_filename (uri);
 
                       g_message (_("Opening '%s' failed: %s"),
                                  filename, error->message);

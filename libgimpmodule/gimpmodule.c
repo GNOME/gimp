@@ -26,6 +26,8 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "gimpmodule.h"
 
 #include "libgimp/libgimp-intl.h"
@@ -163,7 +165,6 @@ gimp_module_load (GTypeModule *module)
 {
   GimpModule             *gimp_module;
   GimpModuleRegisterFunc  func;
-  gchar                  *module_filename_utf8;
 
   g_return_val_if_fail (GIMP_IS_MODULE (module), FALSE);
 
@@ -172,22 +173,15 @@ gimp_module_load (GTypeModule *module)
   g_return_val_if_fail (gimp_module->filename != NULL, FALSE);
   g_return_val_if_fail (gimp_module->module == NULL, FALSE);
 
-  module_filename_utf8 = g_filename_to_utf8 (gimp_module->filename,
-					     -1, NULL, NULL, NULL);
   if (gimp_module->verbose)
-    g_print (_("Loading module: '%s'\n"), module_filename_utf8);
+    g_print (_("Loading module: '%s'\n"),
+             gimp_filename_to_utf8 (gimp_module->filename));
 
   if (! gimp_module_open (gimp_module))
-    {
-      g_free (module_filename_utf8);
-      return FALSE;
-    }
+    return FALSE;
 
   if (! gimp_module_query_module (gimp_module))
-    {
-      g_free (module_filename_utf8);
-      return FALSE;
-    }
+    return FALSE;
 
   /* find the gimp_module_register symbol */
   if (! g_module_symbol (gimp_module->module, "gimp_module_register",
@@ -198,14 +192,13 @@ gimp_module_load (GTypeModule *module)
 
       if (gimp_module->verbose)
 	g_message (_("Module '%s' load error: %s"),
-		   module_filename_utf8, gimp_module->last_module_error);
+		   gimp_filename_to_utf8 (gimp_module->filename),
+                   gimp_module->last_module_error);
 
       gimp_module_close (gimp_module);
 
       gimp_module->state = GIMP_MODULE_STATE_ERROR;
 
-      g_free (module_filename_utf8);
-      
       return FALSE;
     }
 
@@ -218,21 +211,18 @@ gimp_module_load (GTypeModule *module)
 
       if (gimp_module->verbose)
 	g_message (_("Module '%s' load error: %s"),
-		   module_filename_utf8, gimp_module->last_module_error);
+		   gimp_filename_to_utf8 (gimp_module->filename),
+                   gimp_module->last_module_error);
 
       gimp_module_close (gimp_module);
 
       gimp_module->state = GIMP_MODULE_STATE_LOAD_FAILED;
 
-      g_free (module_filename_utf8);
-      
       return FALSE;
     }
 
   gimp_module->state = GIMP_MODULE_STATE_LOADED;
 
-  g_free (module_filename_utf8);
-  
   return TRUE;
 }
 
@@ -335,13 +325,9 @@ gimp_module_query_module (GimpModule *module)
                                   "Missing gimp_module_query() symbol");
 
       if (module->verbose)
-	{
-	  gchar *filename_utf8 = g_filename_to_utf8 (module->filename,
-						     -1, NULL, NULL, NULL);
-	  g_message (_("Module '%s' load error: %s"),
-		     filename_utf8, module->last_module_error);
-	  g_free (filename_utf8);
-	}
+        g_message (_("Module '%s' load error: %s"),
+                   gimp_filename_to_utf8 (module->filename),
+                   module->last_module_error);
 
       gimp_module_close (module);
 
@@ -367,13 +353,9 @@ gimp_module_query_module (GimpModule *module)
                                   "gimp_module_query() returned NULL");
 
       if (module->verbose)
-	{
-	  gchar *filename_utf8 = g_filename_to_utf8 (module->filename,
-						     -1, NULL, NULL, NULL);
-	  g_message (_("Module '%s' load error: %s"),
-		     filename_utf8, module->last_module_error);
-	  g_free (filename_utf8);
-	}
+        g_message (_("Module '%s' load error: %s"),
+                   gimp_filename_to_utf8 (module->filename),
+                   module->last_module_error);
 
       gimp_module_close (module);
 
@@ -465,13 +447,10 @@ gimp_module_open (GimpModule *module)
       gimp_module_set_last_error (module, g_module_error ());
 
       if (module->verbose)
-	{
-	  gchar *filename_utf8 = g_filename_to_utf8 (module->filename,
-						     -1, NULL, NULL, NULL);
-	  g_message (_("Module '%s' load error: %s"),
-		     filename_utf8, module->last_module_error);
-	  g_free (filename_utf8);
-	}
+        g_message (_("Module '%s' load error: %s"),
+                   gimp_filename_to_utf8 (module->filename),
+                   module->last_module_error);
+
       return FALSE;
     }
 

@@ -503,7 +503,8 @@ gimp_show_help (const gchar *progname)
 {
   gimp_show_version ();
 
-  g_print (_("\nUsage: %s [option ... ] [file ... ]\n\n"), progname);
+  g_print (_("\nUsage: %s [option ... ] [file ... ]\n\n"),
+           gimp_filename_to_utf8 (progname));
   g_print (_("Options:\n"));
   g_print (_("  -h, --help               Output this help.\n"));
   g_print (_("  -v, --version            Output version information.\n"));

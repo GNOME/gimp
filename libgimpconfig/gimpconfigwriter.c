@@ -37,6 +37,8 @@
 #include <io.h>
 #endif
 
+#include "libgimpbase/gimpbase.h"
+
 #include "config-types.h"
 
 #include "gimpconfig-error.h"
@@ -103,7 +105,7 @@ gimp_config_writer_new_file (const gchar  *filename,
 	{
 	  g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
 		       _("Could not create temporary file for '%s': %s"),
-		       filename, g_strerror (errno));
+		       gimp_filename_to_utf8 (filename), g_strerror (errno));
 	  g_free (tmpname);
 	  return NULL;
 	}
@@ -116,7 +118,7 @@ gimp_config_writer_new_file (const gchar  *filename,
 	{
 	  g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
 		       _("Could not open '%s' for writing: %s"),
-		       filename, g_strerror (errno));
+		       gimp_filename_to_utf8 (filename), g_strerror (errno));
 	  return NULL;
 	}
     }
@@ -565,14 +567,16 @@ gimp_config_writer_close_file (GimpConfigWriter  *writer,
 	      g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
 			   _("Error writing to temporary file for '%s': %s\n"
 			     "The original file has not been touched."),
-			   writer->filename, g_strerror (errno));
+			   gimp_filename_to_utf8 (writer->filename),
+                           g_strerror (errno));
 	    }
 	  else
 	    {
 	      g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
 			   _("Error writing to temporary file for '%s': %s\n"
 			     "No file has been created."),
-			   writer->filename, g_strerror (errno));
+			   gimp_filename_to_utf8 (writer->filename),
+                           g_strerror (errno));
 	    }
 
 	  unlink (writer->tmpname);
@@ -581,7 +585,8 @@ gimp_config_writer_close_file (GimpConfigWriter  *writer,
 	{
 	  g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
 		       _("Error writing to '%s': %s"),
-		       writer->filename, g_strerror (errno));
+		       gimp_filename_to_utf8 (writer->filename),
+                       g_strerror (errno));
 	}
 
       return FALSE;
@@ -598,7 +603,8 @@ gimp_config_writer_close_file (GimpConfigWriter  *writer,
 	{
 	  g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
 		       _("Could not create '%s': %s"),
-		       writer->filename, g_strerror (errno));
+		       gimp_filename_to_utf8 (writer->filename),
+                       g_strerror (errno));
 
 	  unlink (writer->tmpname);
 	  return FALSE;

@@ -113,9 +113,7 @@ gimp_module_db_get_type (void)
 static void
 gimp_module_db_class_init (GimpModuleDBClass *klass)
 {
-  GObjectClass *object_class;
-
-  object_class = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -166,9 +164,7 @@ gimp_module_db_init (GimpModuleDB *db)
 static void
 gimp_module_db_finalize (GObject *object)
 {
-  GimpModuleDB *db;
-
-  db = GIMP_MODULE_DB (object);
+  GimpModuleDB *db = GIMP_MODULE_DB (object);
 
   if (db->modules)
     {
@@ -255,8 +251,7 @@ void
 gimp_module_db_set_load_inhibit (GimpModuleDB *db,
                                  const gchar  *load_inhibit)
 {
-  GimpModule *module;
-  GList      *list;
+  GList *list;
 
   g_return_if_fail (GIMP_IS_MODULE_DB (db));
 
@@ -267,7 +262,7 @@ gimp_module_db_set_load_inhibit (GimpModuleDB *db,
 
   for (list = db->modules; list; list = g_list_next (list))
     {
-      module = (GimpModule *) list->data;
+      GimpModule *module = list->data;
 
       gimp_module_set_load_inhibit (module,
                                     is_in_inhibit_list (module->filename,
@@ -362,9 +357,7 @@ gimp_module_db_refresh (GimpModuleDB *db,
 static gboolean
 valid_module_name (const gchar *filename)
 {
-  gchar *basename;
-
-  basename = g_path_get_basename (filename);
+  gchar *basename = g_path_get_basename (filename);
 
 #if !defined(G_OS_WIN32) && !defined(G_WITH_CYGWIN)
   if (strncmp (basename, "lib", 3))
@@ -423,12 +416,11 @@ static GimpModule *
 gimp_module_db_module_find_by_path (GimpModuleDB *db,
                                     const char   *fullpath)
 {
-  GimpModule *module;
-  GList      *list;
+  GList *list;
 
   for (list = db->modules; list; list = g_list_next (list))
     {
-      module = (GimpModule *) list->data;
+      GimpModule *module = list->data;
 
       if (! strcmp (module->filename, fullpath))
         return module;
@@ -442,17 +434,17 @@ static void
 gimp_module_db_dump_module (gpointer data,
                             gpointer user_data)
 {
-  GimpModule *i = data;
+  GimpModule *module = data;
 
   g_print ("\n%s: %s\n",
-	   i->filename,
-           gimp_module_state_name (i->state));
+	   gimp_filename_to_utf8 (module->filename),
+           gimp_module_state_name (module->state));
 
-  g_print ("  module:%p  lasterr:%s  query:%p register:%p\n",
-	   i->module,
-           i->last_module_error ? i->last_module_error : "NONE",
-	   i->query_module,
-	   i->register_module);
+  g_print ("  module: %p  lasterr: %s  query: %p register: %p\n",
+	   module->module,
+           module->last_module_error ? module->last_module_error : "NONE",
+	   module->query_module,
+	   module->register_module);
 
   if (i->info)
     {
@@ -461,11 +453,11 @@ gimp_module_db_dump_module (gpointer data,
                "  version:   %s\n"
                "  copyright: %s\n"
                "  date:      %s\n",
-               i->info->purpose   ? i->info->purpose   : "NONE",
-               i->info->author    ? i->info->author    : "NONE",
-               i->info->version   ? i->info->version   : "NONE",
-               i->info->copyright ? i->info->copyright : "NONE",
-               i->info->date      ? i->info->date      : "NONE");
+               module->info->purpose   ? module->info->purpose   : "NONE",
+               module->info->author    ? module->info->author    : "NONE",
+               module->info->version   ? module->info->version   : "NONE",
+               module->info->copyright ? module->info->copyright : "NONE",
+               module->info->date      ? module->info->date      : "NONE");
     }
 }
 #endif
