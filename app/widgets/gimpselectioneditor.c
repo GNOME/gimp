@@ -37,7 +37,6 @@
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
-#include "core/gimpchannel.h"
 #include "core/gimpchannel-select.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
@@ -147,7 +146,7 @@ gimp_selection_editor_init (GimpSelectionEditor *selection_editor)
   selection_editor->selection_to_vectors_func = NULL;
 
   selection_editor->preview = gimp_preview_new_by_types (GIMP_TYPE_PREVIEW,
-                                                         GIMP_TYPE_DRAWABLE,
+                                                         GIMP_TYPE_SELECTION,
                                                          GIMP_PREVIEW_SIZE_HUGE,
                                                          0, TRUE);
   gtk_widget_set_size_request (selection_editor->preview,

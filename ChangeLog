@@ -1,3 +1,13 @@
+2003-11-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpselection.c (gimp_selection_class_init): use
+	GIMP_STOCK_SELECTION as the viewable class' default stock ID.
+
+	* app/widgets/gimpselectioneditor.c (gimp_selection_editor_init):
+	create the preview for GIMP_TYPE_SELECTION, not just
+	GIMP_TYPE_DRAWABLE so the selection icon is used if the editor is
+	empty.
+
 2003-11-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/file-dialog-utils.[ch]

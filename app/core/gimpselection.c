@@ -157,15 +157,19 @@ gimp_selection_get_type (void)
 static void
 gimp_selection_class_init (GimpSelectionClass *klass)
 {
+  GimpViewableClass *viewable_class;
   GimpItemClass     *item_class;
   GimpDrawableClass *drawable_class;
   GimpChannelClass  *channel_class;
 
+  viewable_class = GIMP_VIEWABLE_CLASS (klass);
   item_class     = GIMP_ITEM_CLASS (klass);
   drawable_class = GIMP_DRAWABLE_CLASS (klass);
   channel_class  = GIMP_CHANNEL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
+
+  viewable_class->default_stock_id    = "gimp-selection";
 
   item_class->translate               = gimp_selection_translate;
   item_class->scale                   = gimp_selection_scale;
