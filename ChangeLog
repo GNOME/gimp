@@ -7,10 +7,7 @@
 2002-05-30  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/displace.c (displace_dialog)
-	* plug-ins/common/illusion.c (dialog)
-	* plug-ins/common/plasma.c
-	* plug-ins-common/snoise.c
-	* plug-ins/gflare/gflare.c: enable mnemonics
+	* plug-ins/common/illusion.c (dialog): enable mnemonics
 
 2002-05-30  Sven Neumann  <sven@gimp.org>
 
