@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
-"POT-Creation-Date: 2001-11-22 20:11+0100\n"
-"PO-Revision-Date: 2001-11-10 10:00+0800\n"
+"POT-Creation-Date: 2001-12-18 22:36+0800\n"
+"PO-Revision-Date: 2001-12-15 16:30+0800\n"
 "Last-Translator: Xie Yuheng <phycommusyee@263.net>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -48,65 +48,61 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1216
-#: plug-ins/script-fu/script-fu-scripts.c:1219
+#: plug-ins/script-fu/script-fu-scripts.c:1189
+#: plug-ins/script-fu/script-fu-scripts.c:1192
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1218
-#: plug-ins/script-fu/script-fu-scripts.c:1221
+#: plug-ins/script-fu/script-fu-scripts.c:1191
+#: plug-ins/script-fu/script-fu-scripts.c:1194
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu：%s"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1245
+#: plug-ins/script-fu/script-fu-scripts.c:1218
 msgid "Script Arguments"
 msgstr "脚本参数"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1268
+#: plug-ins/script-fu/script-fu-scripts.c:1241
 #, c-format
 msgid "%s:"
 msgstr "%s："
 
-#: plug-ins/script-fu/script-fu-scripts.c:1315
+#: plug-ins/script-fu/script-fu-scripts.c:1288
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu 颜色选择"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1396
+#: plug-ins/script-fu/script-fu-scripts.c:1369
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu 文件选择"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1401
+#: plug-ins/script-fu/script-fu-scripts.c:1374
 #, fuzzy
 msgid "Script-Fu Directory Selection"
 msgstr "Script-Fu 文件选择"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1436
+#: plug-ins/script-fu/script-fu-scripts.c:1409
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu 图案选择"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1443
+#: plug-ins/script-fu/script-fu-scripts.c:1416
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu 渐变选择"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1451
+#: plug-ins/script-fu/script-fu-scripts.c:1424
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu 画笔选择"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1499
+#: plug-ins/script-fu/script-fu-scripts.c:1472
 msgid "Reset to Defaults"
-msgstr "复位到缺省值"
+msgstr "复位到默认值"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1527
+#: plug-ins/script-fu/script-fu-scripts.c:1500
 msgid "About"
 msgstr "关于"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1715
-msgid "NOT SET"
-msgstr ""
-
-#: plug-ins/script-fu/script-fu-scripts.c:1745
+#: plug-ins/script-fu/script-fu-scripts.c:1696
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -115,29 +111,29 @@ msgstr ""
 "请检查你的设置。\n"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:503
-#: plug-ins/script-fu/script-fu-scripts.c:2042
+#: plug-ins/script-fu/script-fu-scripts.c:1994
 msgid "Author:"
 msgstr "作者："
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:519
-#: plug-ins/script-fu/script-fu-scripts.c:2048
+#: plug-ins/script-fu/script-fu-scripts.c:2000
 msgid "Copyright:"
 msgstr "版权所有："
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:511
-#: plug-ins/script-fu/script-fu-scripts.c:2054
+#: plug-ins/script-fu/script-fu-scripts.c:2006
 msgid "Date:"
 msgstr "日期："
 
-#: plug-ins/script-fu/script-fu-scripts.c:2062
+#: plug-ins/script-fu/script-fu-scripts.c:2014
 msgid "Image Types:"
 msgstr "图像类型："
 
-#: plug-ins/script-fu/script-fu-scripts.c:2207
+#: plug-ins/script-fu/script-fu-scripts.c:2159
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu 字体选择"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2277
+#: plug-ins/script-fu/script-fu-scripts.c:2229
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -160,19 +156,19 @@ msgstr "服务器端口："
 msgid "Server Logfile:"
 msgstr "服务器日志文件："
 
-#: plug-ins/script-fu/script-fu.c:131
+#: plug-ins/script-fu/script-fu.c:127
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."
 msgstr "<Toolbox>/Xtns/Script-Fu/控制台..."
 
-#: plug-ins/script-fu/script-fu.c:156
+#: plug-ins/script-fu/script-fu.c:152
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
 msgstr "<Toolbox>/Xtns/Script-Fu/服务器..."
 
-#: plug-ins/script-fu/script-fu.c:281 plug-ins/script-fu/script-fu.c:282
+#: plug-ins/script-fu/script-fu.c:276 plug-ins/script-fu/script-fu.c:277
 msgid "Re-read all available scripts"
 msgstr "重新读入所有可用的脚本"
 
-#: plug-ins/script-fu/script-fu.c:286
+#: plug-ins/script-fu/script-fu.c:281
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Xtns/Script-Fu/刷新"
 
@@ -359,6 +355,10 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 msgid "<Image>/Script-Fu/Animators/Rippling..."
+msgstr ""
+
+#: plug-ins/gap/sel-to-anim-img.scm:0
+msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
@@ -820,6 +820,10 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Angle"
+msgstr ""
+
+#: plug-ins/gap/sel-to-anim-img.scm:0
+msgid "Anim-Filter for all Copies"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
@@ -1313,6 +1317,10 @@ msgstr ""
 msgid "Fill BG with Pattern"
 msgstr ""
 
+#: plug-ins/gap/sel-to-anim-img.scm:0
+msgid "Fill with BG Color"
+msgstr ""
+
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Fill with BG"
 msgstr ""
@@ -1668,6 +1676,10 @@ msgstr ""
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Number of Colors"
+msgstr ""
+
+#: plug-ins/gap/sel-to-anim-img.scm:0
+msgid "Number of Copies"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0

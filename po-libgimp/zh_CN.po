@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"POT-Creation-Date: 2001-11-23 23:54+0100\n"
-"PO-Revision-Date: 2001-11-17 22:31+0800\n"
+"POT-Creation-Date: 2001-12-18 22:31+0800\n"
+"PO-Revision-Date: 2001-12-18 22:33+0800\n"
 "Last-Translator: Xie Yuheng <phycommusyee@263.net>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -67,7 +67,7 @@ msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"使用缺省的设置转换到索引\n"
+"使用默认的设置转换到索引\n"
 "(手工操作以调整结果)"
 
 #: libgimp/gimpexport.c:252
@@ -199,28 +199,25 @@ msgstr "派卡"
 msgid "percent"
 msgstr "百分点"
 
-#: libgimpwidgets/gimpcolorbutton.c:82
-#, fuzzy
+#: libgimpwidgets/gimpcolorbutton.c:81
 msgid "/Foreground Color"
-msgstr "/使用前景色"
+msgstr "/前景色"
 
-#: libgimpwidgets/gimpcolorbutton.c:84
-#, fuzzy
+#: libgimpwidgets/gimpcolorbutton.c:83
 msgid "/Background Color"
-msgstr "/使用背景色"
+msgstr "/背景色"
 
-#: libgimpwidgets/gimpcolorbutton.c:87
+#: libgimpwidgets/gimpcolorbutton.c:86
 msgid "/Black"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorbutton.c:89
+#: libgimpwidgets/gimpcolorbutton.c:88
 msgid "/White"
 msgstr ""
 
 #: libgimpwidgets/gimpfileselection.c:352
-#, fuzzy
 msgid "Select Directory"
-msgstr "选择文件"
+msgstr "选择目录"
 
 #: libgimpwidgets/gimpfileselection.c:366
 msgid "Select File"
@@ -242,7 +239,7 @@ msgstr "单位"
 msgid "Factor"
 msgstr "因子"
 
-#: libgimpwidgets/gimpwidgets.c:769
+#: libgimpwidgets/gimpwidgets.c:801
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -250,24 +247,24 @@ msgstr ""
 "如果“时间”按钮没有按下，将使用这个值作为随机数生成种子 - 这将允许你重复一个指"
 "定的“随机”操作"
 
-#: libgimpwidgets/gimpwidgets.c:774
+#: libgimpwidgets/gimpwidgets.c:806
 msgid "Time"
 msgstr "时间"
 
-#: libgimpwidgets/gimpwidgets.c:783
+#: libgimpwidgets/gimpwidgets.c:815
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
 msgstr "以当前时间作为随机数生成器的种子 - 这保证了一定程度的随机性"
 
-#: libgimpwidgets/gimpwidgets.c:1097
+#: libgimpwidgets/gimpwidgets.c:1129
 msgid "Bytes"
 msgstr "字节"
 
-#: libgimpwidgets/gimpwidgets.c:1098
+#: libgimpwidgets/gimpwidgets.c:1130
 msgid "KiloBytes"
 msgstr "K 字节"
 
-#: libgimpwidgets/gimpwidgets.c:1099
+#: libgimpwidgets/gimpwidgets.c:1131
 msgid "MegaBytes"
 msgstr "M 字节"

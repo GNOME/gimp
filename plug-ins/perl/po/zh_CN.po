@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl\n"
 "POT-Creation-Date: Sat Nov 10 09:50:47 2001\n"
-"PO-Revision-Date: 2001-11-10 10:00+0800\n"
+"PO-Revision-Date: 2001-12-15 16:30+0800\n"
 "Last-Translator: Xie Yuheng <phycommusyee@263.net>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -253,7 +253,7 @@ msgstr ""
 
 #: examples/image_tile:0
 msgid "<Image>/Filters/Map/Image Tile..."
-msgstr "<Image>/滤镜/影射/图像平铺..."
+msgstr "<Image>/滤镜/映射/图像平铺..."
 
 #: examples/pixelmap:0
 msgid "<Image>/Filters/Map/Pixelmap..."
@@ -673,7 +673,7 @@ msgstr ""
 
 #: UI/UI.pm:0
 msgid "Reset all values to their default"
-msgstr "复位到缺省值"
+msgstr "复位到默认值"
 
 #: UI/UI.pm:0
 msgid "Restore values to the previous ones"
@@ -1000,7 +1000,7 @@ msgstr "没有可用的附加信息，用 --help\n"
 #: Gimp/Util.pm:0
 #: Gimp/Util.pm:0
 msgid "no font specified, using default"
-msgstr "没有指定字体，使用缺省"
+msgstr "没有指定字体，使用默认值"
 
 #: Gimp/Lib.xs:0
 msgid "not enough"

@@ -910,8 +910,8 @@ msgid ""
 "in file '%s'.\n"
 "GIMP Patterns must be GRAY or RGB.\n"
 msgstr ""
-"文件“%s”中有不支持的\n"
-"图案深度 %d。\n"
+"文件“%2$s”中有不支持的\n"
+"图案深度 %1$d。\n"
 "GIMP 图案必须为灰度或 RGB。\n"
 
 #: app/core/gimppattern.c:312
