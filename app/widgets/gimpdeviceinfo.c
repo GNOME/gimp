@@ -267,12 +267,12 @@ devices_init (void)
 
       device_info->context    = gimp_create_context (the_gimp,
 						     device_info->name, NULL);
-      gimp_context_define_args (device_info->context,
-				DEVICE_CONTEXT_MASK,
-				FALSE);
-      gimp_context_copy_args (gimp_get_user_context (the_gimp),
-			      device_info->context,
-			      DEVICE_CONTEXT_MASK);
+      gimp_context_define_properties (device_info->context,
+				      DEVICE_CONTEXT_MASK,
+				      FALSE);
+      gimp_context_copy_properties (gimp_get_user_context (the_gimp),
+				    device_info->context,
+				    DEVICE_CONTEXT_MASK);
       device_status_context_connect (device_info->context,
 				     device_info->device);
 
@@ -299,7 +299,8 @@ devices_restore (void)
 
   context = gimp_get_user_context (the_gimp);
 
-  gimp_context_copy_args (device_info->context, context, DEVICE_CONTEXT_MASK);
+  gimp_context_copy_properties (device_info->context, context,
+				DEVICE_CONTEXT_MASK);
   gimp_context_set_parent (device_info->context, context);
 
   suppress_update = FALSE;
@@ -364,12 +365,12 @@ devices_rc_update (gchar        *name,
 
       device_info->context = gimp_create_context (the_gimp,
 						  device_info->name, NULL);
-      gimp_context_define_args (device_info->context,
-				DEVICE_CONTEXT_MASK,
-				FALSE);
-      gimp_context_copy_args (gimp_get_user_context (the_gimp),
-			      device_info->context,
-			      DEVICE_CONTEXT_MASK);
+      gimp_context_define_properties (device_info->context,
+				      DEVICE_CONTEXT_MASK,
+				      FALSE);
+      gimp_context_copy_properties (gimp_get_user_context (the_gimp),
+				    device_info->context,
+				    DEVICE_CONTEXT_MASK);
       device_status_context_connect (device_info->context,
 				     device_info->device);
 
@@ -523,7 +524,8 @@ select_device (GdkDevice *new_device)
 
   context = gimp_get_user_context (the_gimp);
 
-  gimp_context_copy_args (device_info->context, context, DEVICE_CONTEXT_MASK);
+  gimp_context_copy_properties (device_info->context, context,
+				DEVICE_CONTEXT_MASK);
   gimp_context_set_parent (device_info->context, context);
 
   suppress_update = FALSE;

@@ -28,20 +28,20 @@
 
 typedef enum
 {
-  GIMP_CONTEXT_ARG_IMAGE,
-  GIMP_CONTEXT_ARG_DISPLAY,
-  GIMP_CONTEXT_ARG_TOOL,
-  GIMP_CONTEXT_ARG_FOREGROUND,
-  GIMP_CONTEXT_ARG_BACKGROUND,
-  GIMP_CONTEXT_ARG_OPACITY,
-  GIMP_CONTEXT_ARG_PAINT_MODE,
-  GIMP_CONTEXT_ARG_BRUSH,
-  GIMP_CONTEXT_ARG_PATTERN,
-  GIMP_CONTEXT_ARG_GRADIENT,
-  GIMP_CONTEXT_ARG_PALETTE,
-  GIMP_CONTEXT_ARG_BUFFER,
-  GIMP_CONTEXT_NUM_ARGS
-} GimpContextArgType;
+  GIMP_CONTEXT_PROP_IMAGE,
+  GIMP_CONTEXT_PROP_DISPLAY,
+  GIMP_CONTEXT_PROP_TOOL,
+  GIMP_CONTEXT_PROP_FOREGROUND,
+  GIMP_CONTEXT_PROP_BACKGROUND,
+  GIMP_CONTEXT_PROP_OPACITY,
+  GIMP_CONTEXT_PROP_PAINT_MODE,
+  GIMP_CONTEXT_PROP_BRUSH,
+  GIMP_CONTEXT_PROP_PATTERN,
+  GIMP_CONTEXT_PROP_GRADIENT,
+  GIMP_CONTEXT_PROP_PALETTE,
+  GIMP_CONTEXT_PROP_BUFFER,
+  GIMP_CONTEXT_NUM_PROPS
+} GimpContextPropType;
 
 typedef enum
 {
@@ -59,20 +59,20 @@ typedef enum
   GIMP_CONTEXT_BUFFER_MASK     = 1 << 11,
 
   /*  aliases  */
-  GIMP_CONTEXT_PAINT_ARGS_MASK = (GIMP_CONTEXT_FOREGROUND_MASK |
-				  GIMP_CONTEXT_BACKGROUND_MASK |
-				  GIMP_CONTEXT_OPACITY_MASK    |
-				  GIMP_CONTEXT_PAINT_MODE_MASK |
-				  GIMP_CONTEXT_BRUSH_MASK      |
-				  GIMP_CONTEXT_PATTERN_MASK    |
-				  GIMP_CONTEXT_GRADIENT_MASK),
-  GIMP_CONTEXT_ALL_ARGS_MASK   = (GIMP_CONTEXT_IMAGE_MASK      |
-				  GIMP_CONTEXT_DISPLAY_MASK    |
-				  GIMP_CONTEXT_TOOL_MASK       |
-				  GIMP_CONTEXT_PALETTE_MASK    |
-				  GIMP_CONTEXT_BUFFER_MASK     |
-				  GIMP_CONTEXT_PAINT_ARGS_MASK)
-} GimpContextArgMask;
+  GIMP_CONTEXT_PAINT_PROPS_MASK = (GIMP_CONTEXT_FOREGROUND_MASK |
+				   GIMP_CONTEXT_BACKGROUND_MASK |
+				   GIMP_CONTEXT_OPACITY_MASK    |
+				   GIMP_CONTEXT_PAINT_MODE_MASK |
+				   GIMP_CONTEXT_BRUSH_MASK      |
+				   GIMP_CONTEXT_PATTERN_MASK    |
+				   GIMP_CONTEXT_GRADIENT_MASK),
+  GIMP_CONTEXT_ALL_PROPS_MASK   = (GIMP_CONTEXT_IMAGE_MASK      |
+				   GIMP_CONTEXT_DISPLAY_MASK    |
+				   GIMP_CONTEXT_TOOL_MASK       |
+				   GIMP_CONTEXT_PALETTE_MASK    |
+				   GIMP_CONTEXT_BUFFER_MASK     |
+				   GIMP_CONTEXT_PAINT_PROPS_MASK)
+} GimpContextPropMask;
 
 
 #define GIMP_TYPE_CONTEXT            (gimp_context_get_type ())
@@ -93,7 +93,7 @@ struct _GimpContext
 
   GimpContext	   *parent;
 
-  guint32           defined_args;
+  guint32           defined_props;
 
   GimpImage	   *image;
   GDisplay	   *display;
@@ -170,35 +170,35 @@ void          gimp_context_set_parent        (GimpContext       *context,
 					      GimpContext       *parent);
 void          gimp_context_unset_parent      (GimpContext       *context);
 
-/*  define / undefinine context arguments
+/*  define / undefinine context properties
  *
- *  the value of an undefined argument will be taken from the parent context.
+ *  the value of an undefined property will be taken from the parent context.
  */
-void          gimp_context_define_arg        (GimpContext        *context,
-					      GimpContextArgType  arg,
-					      gboolean            defined);
+void          gimp_context_define_property   (GimpContext         *context,
+					      GimpContextPropType  prop,
+					      gboolean             defined);
 
-gboolean      gimp_context_arg_defined       (GimpContext        *context,
-					      GimpContextArgType  arg);
+gboolean      gimp_context_property_defined  (GimpContext         *context,
+					      GimpContextPropType  prop);
 
-void          gimp_context_define_args       (GimpContext        *context,
-					      GimpContextArgMask  args_mask,
-					      gboolean            defined);
+void          gimp_context_define_properties (GimpContext         *context,
+					      GimpContextPropMask  props_mask,
+					      gboolean             defined);
 
-/*  copying context arguments
+/*  copying context properties
  */
-void          gimp_context_copy_arg          (GimpContext        *src,
-					      GimpContext        *dest,
-					      GimpContextArgType  arg);
+void          gimp_context_copy_property     (GimpContext         *src,
+					      GimpContext         *dest,
+					      GimpContextPropType  prop);
 
-void          gimp_context_copy_args         (GimpContext        *src,
-					      GimpContext        *dest,
-					      GimpContextArgMask  args_mask);
+void          gimp_context_copy_properties   (GimpContext         *src,
+					      GimpContext         *dest,
+					      GimpContextPropMask  props_mask);
 
 
 /*  manipulate by GType  */
-GimpContextArgType   gimp_context_type_to_arg         (GType         type);
-const gchar        * gimp_context_type_to_signal_name (GType         type);
+GimpContextPropType   gimp_context_type_to_property    (GType         type);
+const gchar         * gimp_context_type_to_signal_name (GType         type);
 
 GimpObject       * gimp_context_get_by_type        (GimpContext     *context,
 						    GType            type);

@@ -122,8 +122,8 @@ tool_manager_init (Gimp *gimp)
 							   user_context);
 
   /*  TODO: add foreground, background, brush, pattern, gradient  */
-  gimp_context_define_args (tool_manager->global_tool_context,
-			    PAINT_OPTIONS_MASK, FALSE);
+  gimp_context_define_properties (tool_manager->global_tool_context,
+				  PAINT_OPTIONS_MASK, FALSE);
 
   /* register internal tools */
   tools_init (gimp);
@@ -190,9 +190,9 @@ tool_manager_set_global_paint_options (Gimp     *gimp,
 	  gimp_context_unset_parent (tool_info->context);
 	}
 
-      gimp_context_copy_args (tool_manager->global_tool_context,
-			      gimp_get_user_context (gimp),
-			      PAINT_OPTIONS_MASK);
+      gimp_context_copy_properties (tool_manager->global_tool_context,
+				    gimp_get_user_context (gimp),
+				    PAINT_OPTIONS_MASK);
       gimp_context_set_parent (tool_manager->global_tool_context,
 			       gimp_get_user_context (gimp));
     }
@@ -202,9 +202,9 @@ tool_manager_set_global_paint_options (Gimp     *gimp,
 
       if (tool_info && tool_info->context)
 	{
-	  gimp_context_copy_args (tool_info->context,
-				  gimp_get_user_context (gimp),
-				  GIMP_CONTEXT_PAINT_ARGS_MASK);
+	  gimp_context_copy_properties (tool_info->context,
+					gimp_get_user_context (gimp),
+					GIMP_CONTEXT_PAINT_PROPS_MASK);
 	  gimp_context_set_parent (tool_info->context,
 				   gimp_get_user_context (gimp));
 	}
@@ -686,8 +686,8 @@ tool_manager_tool_changed (GimpContext  *user_context,
 
       if ((tool_context = tool_info->context))
 	{
-	  gimp_context_copy_args (tool_context, user_context,
-				  PAINT_OPTIONS_MASK);
+	  gimp_context_copy_properties (tool_context, user_context,
+					PAINT_OPTIONS_MASK);
 	  gimp_context_set_parent (tool_context, user_context);
 	}
     }

@@ -55,7 +55,7 @@ enum
 static void   gimp_container_init                   (GimpContainer      *container);
 static void   gimp_container_class_init             (GimpContainerClass *klass);
 static void   gimp_container_dispose                (GObject            *object);
-static void   gimp_container_child_destroy_callback (GtkObject          *object,
+static void   gimp_container_disconnect_callback    (GimpObject         *object,
 						     gpointer            data);
 
 
@@ -193,14 +193,14 @@ gimp_container_dispose (GObject *object)
 }
 
 static void
-gimp_container_child_destroy_callback (GtkObject *object,
-				       gpointer   data)
+gimp_container_disconnect_callback (GimpObject *object,
+				    gpointer    data)
 {
   GimpContainer *container;
 
   container = GIMP_CONTAINER (data);
 
-  gimp_container_remove (container, GIMP_OBJECT (object));
+  gimp_container_remove (container, object);
 }
 
 GType
@@ -268,8 +268,8 @@ gimp_container_add (GimpContainer *container,
       break;
 
     case GIMP_CONTAINER_POLICY_WEAK:
-      g_signal_connect (G_OBJECT (object), "destroy",
-			G_CALLBACK (gimp_container_child_destroy_callback),
+      g_signal_connect (G_OBJECT (object), "disconnect",
+			G_CALLBACK (gimp_container_disconnect_callback),
 			container);
       break;
     }
@@ -327,7 +327,7 @@ gimp_container_remove (GimpContainer *container,
     case GIMP_CONTAINER_POLICY_WEAK:
       g_signal_handlers_disconnect_by_func
 	(G_OBJECT (object),
-	 G_CALLBACK (gimp_container_child_destroy_callback),
+	 G_CALLBACK (gimp_container_disconnect_callback),
 	 container);
       break;
     }

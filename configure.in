@@ -129,12 +129,14 @@ if test -z "$GLIB_LDFLAGS" ; then
 fi 
 GLIB_LIBS="$GLIB_LDFLAGS `echo $GTK_LIBS | sed 's/^.*\(-lglib[^ ]*\).*$/\1/'`"
 
-#
-# Check for PangoFT2
-#
+changequote([,])dnl
+
+dnl
+dnl Check for PangoFT2
+dnl
 PANGOFT2_REQUIRED_VERSION=0.17
 
-AC_MSG_CHECKING(for Freetype 2.0 font support for Pango)
+AC_MSG_CHECKING([for Freetype 2.0 font support for Pango])
   if $PKG_CONFIG --atleast-version $PANGOFT2_REQUIRED_VERSION pangoft2; then
       AC_MSG_RESULT(found)
       PANGOFT2_CFLAGS=`$PKG_CONFIG --cflags pangoft2`
@@ -142,7 +144,6 @@ AC_MSG_CHECKING(for Freetype 2.0 font support for Pango)
   else
       AC_MSG_ERROR([*** PangoFT2 $PANGOFT2_REQUIRED_VERSION or newer is required.])
   fi
-
 
 if eval "test x$GCC = xyes"; then
   case " $CFLAGS " in
@@ -162,8 +163,6 @@ if eval "test x$GCC = xyes"; then
     esac
   fi
 fi
-
-changequote([,])dnl
 
 AC_CHECK_HEADERS(math.h ieeefp.h)
 

@@ -1,3 +1,25 @@
+2001-08-11  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: fsck^^^ -- lovely autofoo wants "changequote([,])dnl"
+
+	* app/core/gimpcontext.[ch]: lots of GObject porting.
+
+	* app/core/gimpobject.[ch]: added a "disconnect" signal, which
+	like gtk's "destroy" is emitted in dispose(). This is ugly but
+	I don't see another "clean" way to implement weak containers.
+
+	* app/core/gimpcontainer.c: connect to the "disconnect" signal of
+	the children of weak containes.
+
+	* app/core/gimpimage.[ch]: replaced the "destroy" implementation
+	with "dispose" + "finalize". Removed gimage->undo_history.
+
+	* app/devices.c
+	* app/gui/dialogs-constructors.c
+	* app/gui/tools-commands.c
+	* app/tools/tool_manager.c
+	* app/widgets/gimpimagedock.c: changed accordingly.
+
 2001-08-11  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimptexttool.c: made border work and fixed render offsets.

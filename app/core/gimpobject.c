@@ -29,6 +29,7 @@
 
 enum
 {
+  DISCONNECT,
   NAME_CHANGED,
   LAST_SIGNAL
 };
@@ -43,7 +44,9 @@ enum
 static void   gimp_object_class_init   (GimpObjectClass *klass);
 static void   gimp_object_init         (GimpObject      *object);
 
+static void   gimp_object_dispose      (GObject         *object);
 static void   gimp_object_finalize     (GObject         *object);
+
 static void   gimp_object_set_property (GObject         *object,
 					guint            property_id,
 					const GValue    *value,
@@ -96,6 +99,15 @@ gimp_object_class_init (GimpObjectClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
+  object_signals[DISCONNECT] =
+    g_signal_new ("disconnect",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpObjectClass, disconnect),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
+
   object_signals[NAME_CHANGED] =
     g_signal_new ("name_changed",
 		  G_TYPE_FROM_CLASS (klass),
@@ -105,6 +117,7 @@ gimp_object_class_init (GimpObjectClass *klass)
 		  g_cclosure_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
+  object_class->dispose      = gimp_object_dispose;
   object_class->finalize     = gimp_object_finalize;
   object_class->set_property = gimp_object_set_property;
   object_class->get_property = gimp_object_get_property;
@@ -123,6 +136,14 @@ static void
 gimp_object_init (GimpObject *object)
 {
   object->name = NULL;
+}
+
+static void
+gimp_object_dispose (GObject *object)
+{
+  g_signal_emit (G_OBJECT (object), object_signals[DISCONNECT], 0);
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void

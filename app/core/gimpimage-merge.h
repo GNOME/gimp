@@ -122,7 +122,6 @@ struct _GimpImage
   gint               undo_levels;           /*  levels in undo stack         */
   gint               group_count;           /*  nested undo groups           */
   UndoType           pushing_undo_group;    /*  undo group status flag       */
-  GtkWidget         *undo_history;	    /*  history viewer, or NULL      */
 
   /*  New undo apparatus  */
   GimpUndoStack     *new_undo_stack;        /*  stack for undo operations    */

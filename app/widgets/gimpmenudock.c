@@ -174,16 +174,16 @@ gimp_image_dock_new (GimpDialogFactory *factory,
 
   dock->context = gimp_create_context (factory->context->gimp,
 				       "Dock Context", NULL);
-  gimp_context_define_args (dock->context,
-			    GIMP_CONTEXT_ALL_ARGS_MASK &
-			    ~(GIMP_CONTEXT_IMAGE_MASK |
-			      GIMP_CONTEXT_DISPLAY_MASK),
-			    FALSE);
+  gimp_context_define_properties (dock->context,
+				  GIMP_CONTEXT_ALL_PROPS_MASK &
+				  ~(GIMP_CONTEXT_IMAGE_MASK |
+				    GIMP_CONTEXT_DISPLAY_MASK),
+				  FALSE);
   gimp_context_set_parent (dock->context, factory->context);
 
   if (image_dock->auto_follow_active)
-    gimp_context_copy_arg (factory->context, dock->context,
-			   GIMP_CONTEXT_ARG_IMAGE);
+    gimp_context_copy_property (factory->context, dock->context,
+				GIMP_CONTEXT_PROP_IMAGE);
 
   g_signal_connect_object (G_OBJECT (factory->context), "image_changed",
 			   G_CALLBACK (gimp_image_dock_factory_image_changed),

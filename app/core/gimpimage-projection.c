@@ -68,7 +68,10 @@
 /*  Local function declarations  */
 static void     gimp_image_class_init            (GimpImageClass *klass);
 static void     gimp_image_init                  (GimpImage      *gimage);
-static void     gimp_image_destroy               (GtkObject      *object);
+
+static void     gimp_image_dispose               (GObject        *object);
+static void     gimp_image_finalize              (GObject        *object);
+
 static void     gimp_image_name_changed          (GimpObject     *object);
 static void     gimp_image_invalidate_preview    (GimpViewable   *viewable);
 static void     gimp_image_size_changed          (GimpViewable   *viewable);
@@ -215,13 +218,13 @@ gimp_image_get_type (void)
 static void
 gimp_image_class_init (GimpImageClass *klass)
 {
-  GtkObjectClass    *object_class;
+  GObjectClass      *object_class;
   GimpObjectClass   *gimp_object_class;
   GimpViewableClass *viewable_class;
 
-  object_class      = (GtkObjectClass *) klass;
-  gimp_object_class = (GimpObjectClass *) klass;
-  viewable_class    = (GimpViewableClass *) klass;
+  object_class      = G_OBJECT_CLASS (klass);
+  gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  viewable_class    = GIMP_VIEWABLE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -350,7 +353,8 @@ gimp_image_class_init (GimpImageClass *klass)
 		  G_TYPE_NONE, 1,
 		  G_TYPE_INT);
 
-  object_class->destroy               = gimp_image_destroy;
+  object_class->dispose               = gimp_image_dispose;
+  object_class->finalize              = gimp_image_finalize;
 
   gimp_object_class->name_changed     = gimp_image_name_changed;
 
@@ -442,7 +446,6 @@ gimp_image_init (GimpImage *gimage)
   gimage->undo_levels           = 0;
   gimage->group_count           = 0;
   gimage->pushing_undo_group    = UNDO_NULL;
-  gimage->undo_history          = NULL;
 
   gimage->new_undo_stack        = gimp_undo_stack_new (gimage);
   gimage->new_redo_stack        = gimp_undo_stack_new (gimage);
@@ -452,7 +455,19 @@ gimp_image_init (GimpImage *gimage)
 }
 
 static void
-gimp_image_destroy (GtkObject *object)
+gimp_image_dispose (GObject *object)
+{
+  GimpImage *gimage;
+
+  gimage = GIMP_IMAGE (object);
+
+  undo_free (gimage);
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
+gimp_image_finalize (GObject *object)
 {
   GimpImage *gimage;
 
@@ -518,8 +533,6 @@ gimp_image_destroy (GtkObject *object)
       gimage->guides = NULL;
     }
 
-  undo_free (gimage);
-
   if (gimage->new_undo_stack)
     {
       g_object_unref (G_OBJECT (gimage->new_undo_stack));
@@ -531,8 +544,7 @@ gimp_image_destroy (GtkObject *object)
       gimage->new_redo_stack = NULL;
     }
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void

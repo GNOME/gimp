@@ -28,6 +28,7 @@
 #define GIMP_OBJECT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_OBJECT, GimpObjectClass))
 #define GIMP_IS_OBJECT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OBJECT))
 #define GIMP_IS_OBJECT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_OBJECT))
+#define GIMP_OBJECT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_OBJECT, GimpObjectClass))
 
 
 typedef struct _GimpObjectClass GimpObjectClass;
@@ -43,6 +44,7 @@ struct _GimpObjectClass
 {
   GtkObjectClass  parent_class;
 
+  void (* disconnect)   (GimpObject *object);
   void (* name_changed) (GimpObject *object);
 };
 

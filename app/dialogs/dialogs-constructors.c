@@ -240,6 +240,7 @@ dialogs_undo_history_get (GimpDialogFactory *factory,
 {
   GDisplay  *gdisp;
   GimpImage *gimage;
+  GtkWidget *undo_history;
 
   gdisp = gimp_context_get_display (context);
 
@@ -248,10 +249,16 @@ dialogs_undo_history_get (GimpDialogFactory *factory,
 
   gimage = gdisp->gimage;
 
-  if (! gimage->undo_history)
-    gimage->undo_history = undo_history_new (gimage);
+  undo_history = g_object_get_data (G_OBJECT (gimage), "undo-history");
 
-  return gimage->undo_history;
+  if (! undo_history)
+    {
+      undo_history = undo_history_new (gimage);
+
+      g_object_set_data (G_OBJECT (gimage), "undo-history", undo_history);
+    }
+
+  return undo_history;
 }
 
 GtkWidget *

@@ -69,15 +69,15 @@ tools_swap_contexts_cmd_callback (GtkWidget *widget,
 					  NULL);
     }
 
-  gimp_context_copy_args (gimp_get_user_context (the_gimp),
-			  temp_context,
-			  GIMP_CONTEXT_ALL_ARGS_MASK);
-  gimp_context_copy_args (swap_context,
-			  gimp_get_user_context (the_gimp),
-			  GIMP_CONTEXT_ALL_ARGS_MASK);
-  gimp_context_copy_args (temp_context,
-			  swap_context,
-			  GIMP_CONTEXT_ALL_ARGS_MASK);
+  gimp_context_copy_properties (gimp_get_user_context (the_gimp),
+				temp_context,
+				GIMP_CONTEXT_ALL_PROPS_MASK);
+  gimp_context_copy_properties (swap_context,
+				gimp_get_user_context (the_gimp),
+				GIMP_CONTEXT_ALL_PROPS_MASK);
+  gimp_context_copy_properties (temp_context,
+				swap_context,
+				GIMP_CONTEXT_ALL_PROPS_MASK);
 }
 
 void
