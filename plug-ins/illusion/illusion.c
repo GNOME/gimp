@@ -300,6 +300,7 @@ static int dialog( void )
     gchar **argv = g_new( gchar *, 1 );
     argv[0] = g_strdup( DIALOG_CAPTION );
     gtk_init( &argc, &argv );
+    gtk_rc_parse( gimp_gtkrc () );
   }
 
   /* dialog window */

@@ -1,3 +1,7 @@
+Fri Jun 26 10:57:25 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/illusion/illusion.c: parse gtkrc
+
 Tue Jun 23 22:33:05 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/gif/gif.c: make it less verbose
