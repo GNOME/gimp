@@ -25,6 +25,16 @@
 #include "apptypes.h"
 
 
+/*  enums  */
+
+typedef enum
+{
+  GIMP_DROP_NONE,
+  GIMP_DROP_ABOVE,
+  GIMP_DROP_BELOW
+} GimpDropType;
+
+
 /*  non-widget objects  */
 
 typedef struct _GimpDialogFactory     GimpDialogFactory;

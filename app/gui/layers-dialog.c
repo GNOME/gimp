@@ -28,6 +28,7 @@
 #include "libgimp/gimplimits.h"
 
 #include "apptypes.h"
+#include "widgets/widgets-types.h"
 
 #include "paint-funcs/paint-funcs.h"
 
