@@ -23,9 +23,10 @@
 
     (gimp-image-undo-disable new-image)
 
+    (gimp-image-add-layer new-image original-layer 0)
     (gimp-floating-sel-anchor
      (car (gimp-edit-paste original-layer FALSE)))
-    (gimp-image-add-layer new-image original-layer 0)
+
     (set! original-layer-for-darker (car (gimp-layer-copy original-layer TRUE)))
     (set! original-layer-for-lighter (car (gimp-layer-copy original-layer TRUE)))
     (set! blured-layer-for-darker (car (gimp-layer-copy original-layer TRUE)))

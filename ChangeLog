@@ -1,5 +1,73 @@
 2004-01-26  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/script-fu/scripts/unsharp-mask.scm: add the layer to
+	the image before pasting to it. Fixes bug #132504.
+
+	Fixed the underlying problem: make it impossible to attach
+	floating selections to drawables which are not currently part of
+	the image's layer or channel stacks.
+	Also cleaned up image <-> floating_sel interaction:
+
+	* app/core/gimplayer-floating-sel.[ch] (floating_sel_attach):
+	added assertion that the drawable is part of the image (see below).
+	Don't call gimp_image_floating_selection_changed(), it's emitted
+	by gimp_image_add_layer() now.
+
+	(floating_sel_remove)
+	(floating_sel_anchor): don't emit "floating_selection_changed",
+	it's emitted by gimp_image_remove_layer() now.
+
+	(floating_sel_anchor): removed the fix for bug #132162 because
+	gimp_image_remove_layer() behaves correctly now (see below).
+
+	Renamed floating_sel_reset() to floating_sel_activate_drawable().
+	Added g_return_if_fail() all over the place.
+
+	* app/core/gimpimage.[ch]: added new function gimp_image_owns_item()
+	which return TRUE if the passed item is part of the image.
+
+	(gimp_image_add_layer): emit "floating_selection_changed" here if
+	needed.
+
+	(gimp_image_remove_layer): emit "floating_selection_changed" if
+	needed, don't try to activate a layer if we called
+	floating_sel_activate_drawable().
+	This is the real fix for bug #132162.
+
+	* app/core/gimpimage-undo-push.c (undo_pop_layer): apply the same
+	fixes as to gimp_image_add,remove_layer(). Don't call
+	gimp_drawable_invalidate_preview() on the previously active layer
+	because that's done by gimp_image_set_active_layer() now.
+
+	* app/xcf/xcf-load.c: remember the "floating_sel_drawable" in the
+	XcfInfo struct and attach it *after* all layers and channels are
+	loaded to avoid attaching the floating selection to an
+	out-of-image drawable.
+
+	* app/core/gimp-edit.c (gimp_edit_paste)
+	* app/core/gimpdrawable-transform.c (gimp_drawable_transform_affine,
+	gimp_drawable_transform_flip, gimp_drawable_transform_rotate)
+	* app/core/gimpselection.c (gimp_selection_float)
+	* app/text/gimptext-compat.c (text_render): added checks for
+	gimp_image_owns_item() in all functions which can produce
+	floating selections.
+
+	* tools/pdbgen/pdb/edit.pdb
+	* tools/pdbgen/pdb/floating_sel.pdb
+	* tools/pdbgen/pdb/selection.pdb
+	* tools/pdbgen/pdb/text_tool.pdb
+	* tools/pdbgen/pdb/transform_tools.pdb: added checks for
+	gimp_item_owns_image() and return an execution error if invoked
+	with a drawable which is not part of the image.
+
+	* app/pdb/edit_cmds.c
+	* app/pdb/floating_sel_cmds.c
+	* app/pdb/selection_cmds.c
+	* app/pdb/text_tool_cmds.c
+	* app/pdb/transform_tools_cmds.c: regenerated.
+
+2004-01-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/xcf/xcf-save.c (xcf_save_channel): store the correct offset
 	of the floating selection's drawable. This bug has been around
 	since 1.2 (!!!) and made it impossible to save images correctly

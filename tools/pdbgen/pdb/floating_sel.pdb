@@ -108,8 +108,18 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("core/gimplayer-floating-sel.h") ],
-	code => 'floating_sel_attach (layer, drawable);'
+	headers => [ qw("core/gimplayer-floating-sel.h"
+                        "core/gimpimage.h") ],
+	code => <<CODE
+{
+  GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+
+  if (gimp_image_owns_item (gimage, GIMP_ITEM (drawable)))
+    floating_sel_attach (layer, drawable);
+  else
+    success = FALSE;
+}
+CODE
     );
 }
 

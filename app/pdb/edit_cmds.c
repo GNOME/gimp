@@ -162,7 +162,6 @@ edit_paste_invoker (Gimp     *gimp,
   GimpDrawable *drawable;
   gboolean paste_into;
   GimpLayer *layer = NULL;
-  GimpImage *gimage;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_DRAWABLE (drawable))
@@ -172,9 +171,17 @@ edit_paste_invoker (Gimp     *gimp,
 
   if (success)
     {
-      gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-      layer = gimp_edit_paste (gimage, drawable, gimp->global_buffer, paste_into, -1, -1, -1, -1);
-      success = layer != NULL;
+      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+    
+      success = gimp_image_owns_item (gimage, GIMP_ITEM (drawable));
+    
+      if (success)
+	{
+	  layer = gimp_edit_paste (gimage, drawable, gimp->global_buffer,
+				   paste_into, -1, -1, -1, -1);
+	  if (! layer)
+	    success = FALSE;
+	}
     }
 
   return_args = procedural_db_return_args (&edit_paste_proc, success);

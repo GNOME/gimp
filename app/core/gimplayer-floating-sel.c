@@ -47,11 +47,18 @@ floating_sel_attach (GimpLayer    *layer,
   GimpImage *gimage;
   GimpLayer *floating_sel;
 
-  if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
-    return;
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (drawable != GIMP_DRAWABLE (layer));
+  g_return_if_fail (gimp_item_get_image (GIMP_ITEM (layer)) ==
+                    gimp_item_get_image (GIMP_ITEM (drawable)));
+
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+
+  g_return_if_fail (gimp_image_owns_item (gimage, GIMP_ITEM (drawable)));
 
   /*  If there is already a floating selection, anchor it  */
-  if (gimage->floating_sel != NULL)
+  if (gimage->floating_sel)
     {
       floating_sel = gimage->floating_sel;
       floating_sel_anchor (gimp_image_floating_sel (gimage));
@@ -75,8 +82,6 @@ floating_sel_attach (GimpLayer    *layer,
 
   /*  store the affected area from the drawable in the backing store  */
   floating_sel_rigor (layer, TRUE);
-
-  gimp_image_floating_selection_changed (gimage);
 }
 
 void
@@ -84,8 +89,10 @@ floating_sel_remove (GimpLayer *layer)
 {
   GimpImage *gimage;
 
-  if (! (gimage = gimp_item_get_image (GIMP_ITEM (layer->fs.drawable))))
-    return;
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+  g_return_if_fail (gimp_layer_is_floating_sel (layer));
+
+  gimage = gimp_item_get_image (GIMP_ITEM (layer->fs.drawable));
 
   /*  store the affected area from the drawable in the backing store  */
   floating_sel_relax (layer, TRUE);
@@ -98,8 +105,6 @@ floating_sel_remove (GimpLayer *layer)
 
   /*  remove the layer from the gimage  */
   gimp_image_remove_layer (gimage, layer);
-
-  gimp_image_floating_selection_changed (gimage);
 }
 
 void
@@ -108,8 +113,10 @@ floating_sel_anchor (GimpLayer *layer)
   GimpImage    *gimage;
   GimpDrawable *drawable;
 
-  if (! (gimage = gimp_item_get_image (GIMP_ITEM (layer))))
-    return;
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+  g_return_if_fail (gimp_layer_is_floating_sel (layer));
+
+  gimage = gimp_item_get_image (GIMP_ITEM (layer));
 
   if (! gimp_layer_is_floating_sel (layer))
     {
@@ -142,52 +149,37 @@ floating_sel_anchor (GimpLayer *layer)
   /*  remove the floating selection  */
   gimp_image_remove_layer (gimage, layer);
 
-  /*  activate the drawable the floating selection was attached to  */
-  if (GIMP_IS_LAYER_MASK (drawable))
-    {
-      GimpLayerMask *mask = GIMP_LAYER_MASK (drawable);
-
-      gimp_image_set_active_layer (gimage, gimp_layer_mask_get_layer (mask));
-    }
-  else if (GIMP_IS_CHANNEL (drawable))
-    {
-      gimp_image_set_active_channel (gimage, GIMP_CHANNEL (drawable));
-    }
-  else
-    {
-      gimp_image_set_active_layer (gimage, GIMP_LAYER (drawable));
-    }
-
   /*  end the group undo  */
   gimp_image_undo_group_end (gimage);
 
   /*  invalidate the boundaries  */
   gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (gimp_image_get_mask (gimage)));
-
-  gimp_image_floating_selection_changed (gimage);
 }
 
 void
-floating_sel_reset (GimpLayer *layer)
+floating_sel_activate_drawable (GimpLayer *layer)
 {
   GimpImage *gimage;
 
-  if (! (gimage = gimp_item_get_image (GIMP_ITEM (layer))))
-    return;
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+  g_return_if_fail (gimp_layer_is_floating_sel (layer));
+
+  gimage = gimp_item_get_image (GIMP_ITEM (layer));
 
   /*  set the underlying drawable to active  */
-  if (GIMP_IS_LAYER (layer->fs.drawable))
+  if (GIMP_IS_LAYER_MASK (layer->fs.drawable))
     {
-      gimp_image_set_active_layer (gimage, GIMP_LAYER (layer->fs.drawable));
-    }
-  else if (GIMP_IS_LAYER_MASK (layer->fs.drawable))
-    {
-      gimp_image_set_active_layer (gimage,
-				   GIMP_LAYER_MASK (layer->fs.drawable)->layer);
+      GimpLayerMask *mask = GIMP_LAYER_MASK (layer->fs.drawable);
+
+      gimp_image_set_active_layer (gimage, gimp_layer_mask_get_layer (mask));
     }
   else if (GIMP_IS_CHANNEL (layer->fs.drawable))
     {
       gimp_image_set_active_channel (gimage, GIMP_CHANNEL (layer->fs.drawable));
+    }
+  else
+    {
+      gimp_image_set_active_layer (gimage, GIMP_LAYER (layer->fs.drawable));
     }
 }
 
@@ -200,6 +192,7 @@ floating_sel_to_layer (GimpLayer *layer)
   gint       width, height;
 
   g_return_if_fail (GIMP_IS_LAYER (layer));
+  g_return_if_fail (gimp_layer_is_floating_sel (layer));
 
   item = GIMP_ITEM (layer);
 
@@ -262,6 +255,9 @@ floating_sel_store (GimpLayer *layer,
   gint        offx, offy;
   gint        x1, y1, x2, y2;
 
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+  g_return_if_fail (gimp_layer_is_floating_sel (layer));
+
   /*  Check the backing store & make sure it has the correct dimensions  */
   if ((tile_manager_width  (layer->fs.backing_store) !=
        gimp_item_width (GIMP_ITEM(layer)))  ||
@@ -323,6 +319,9 @@ floating_sel_restore (GimpLayer *layer,
   gint        offx, offy;
   gint        x1, y1, x2, y2;
 
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+  g_return_if_fail (gimp_layer_is_floating_sel (layer));
+
   /*  What this function does is "uncover" the specified area in the
    *  drawable that this floating selection obscures.  We do this so
    *  that either the floating selection can be removed or it can be
@@ -362,6 +361,9 @@ void
 floating_sel_rigor (GimpLayer *layer,
 		    gboolean   push_undo)
 {
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+  g_return_if_fail (gimp_layer_is_floating_sel (layer));
+
   /*  store the affected area from the drawable in the backing store  */
   floating_sel_store (layer,
 		      GIMP_ITEM (layer)->offset_x,
@@ -380,6 +382,9 @@ void
 floating_sel_relax (GimpLayer *layer,
 		    gboolean   push_undo)
 {
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+  g_return_if_fail (gimp_layer_is_floating_sel (layer));
+
   /*  restore the contents of drawable the floating layer is attached to  */
   if (layer->fs.initial == FALSE)
     floating_sel_restore (layer,
@@ -405,14 +410,15 @@ floating_sel_composite (GimpLayer *layer,
 {
   PixelRegion  fsPR;
   GimpImage   *gimage;
-  GimpLayer   *d_layer;
+  GimpLayer   *d_layer = NULL;
   gint         preserve_trans;
   gint         active[MAX_CHANNELS];
   gint         offx, offy;
   gint         x1, y1, x2, y2;
   gint         i;
 
-  d_layer = NULL;
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+  g_return_if_fail (gimp_layer_is_floating_sel (layer));
 
   if (! (gimage = gimp_item_get_image (GIMP_ITEM (layer))))
     return;
@@ -512,6 +518,10 @@ floating_sel_boundary (GimpLayer *layer,
   PixelRegion bPR;
   gint        i;
 
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
+  g_return_val_if_fail (gimp_layer_is_floating_sel (layer), NULL);
+  g_return_val_if_fail (n_segs != NULL, NULL);
+
   if (layer->fs.boundary_known == FALSE)
     {
       if (layer->fs.segs)
@@ -548,6 +558,9 @@ floating_sel_boundary (GimpLayer *layer,
 void
 floating_sel_invalidate (GimpLayer *layer)
 {
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+  g_return_if_fail (gimp_layer_is_floating_sel (layer));
+
   /*  Invalidate the attached-to drawable's preview  */
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer->fs.drawable));
 

@@ -818,7 +818,8 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (gimp_image_owns_item (gimage, GIMP_ITEM (drawable)),
+                        FALSE);
 
   /* Start a transform undo group */
   gimp_image_undo_group_start (gimage,
@@ -874,7 +875,8 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (gimp_image_owns_item (gimage, GIMP_ITEM (drawable)),
+                        FALSE);
 
   /* Start a transform undo group */
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM, _("Flip"));
@@ -941,7 +943,8 @@ gimp_drawable_transform_rotate (GimpDrawable     *drawable,
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (gimp_image_owns_item (gimage, GIMP_ITEM (drawable)),
+                        FALSE);
 
   /* Start a transform undo group */
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM, _("Rotate"));
@@ -1042,7 +1045,8 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (gimp_image_owns_item (gimage, GIMP_ITEM (drawable)),
+                        FALSE);
 
   if (new_layer)
     {

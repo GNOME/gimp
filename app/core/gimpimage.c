@@ -2093,6 +2093,43 @@ gimp_image_get_vectors (const GimpImage *gimage)
   return gimage->vectors;
 }
 
+gboolean
+gimp_image_owns_item (const GimpImage *gimage,
+                      const GimpItem  *item)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  if (GIMP_IS_VECTORS (item))
+    {
+      return gimp_container_have (gimage->vectors, GIMP_OBJECT (item));
+    }
+  else if (GIMP_IS_LAYER_MASK (item))
+    {
+      GimpLayerMask *mask  = GIMP_LAYER_MASK (item);
+      GimpLayer     *layer = gimp_layer_mask_get_layer (mask);
+
+      if (gimp_layer_get_mask (layer) == mask)
+        return gimp_image_owns_item (gimage, GIMP_ITEM (layer));
+
+      return FALSE;
+    }
+  else if (GIMP_IS_SELECTION (item))
+    {
+      return GIMP_CHANNEL (item) == gimp_image_get_mask (gimage);
+    }
+  else if (GIMP_IS_CHANNEL (item))
+    {
+      return gimp_container_have (gimage->channels, GIMP_OBJECT (item));
+    }
+  else if (GIMP_IS_LAYER (item))
+    {
+      return gimp_container_have (gimage->layers, GIMP_OBJECT (item));
+    }
+
+  return FALSE;
+}
+
 GimpDrawable *
 gimp_image_active_drawable (const GimpImage *gimage)
 {
@@ -2483,6 +2520,9 @@ gimp_image_add_layer (GimpImage *gimage,
   if (old_has_alpha != gimp_image_has_alpha (gimage))
     gimp_image_alpha_changed (gimage);
 
+  if (gimp_layer_is_floating_sel (layer))
+    gimp_image_floating_selection_changed (gimage);
+
   return TRUE;
 }
 
@@ -2518,15 +2558,18 @@ gimp_image_remove_layer (GimpImage *gimage,
   gimp_container_remove (gimage->layers, GIMP_OBJECT (layer));
   gimage->layer_stack = g_slist_remove (gimage->layer_stack, layer);
 
-  /*  If this was the floating selection, reset the fs pointer  */
   if (gimage->floating_sel == layer)
     {
+      /*  If this was the floating selection, reset the fs pointer
+       *  and activate the underlying drawable
+       */
       gimage->floating_sel = NULL;
 
-      floating_sel_reset (layer);
-    }
+      floating_sel_activate_drawable (layer);
 
-  if (layer == active_layer)
+      gimp_image_floating_selection_changed (gimage);
+    }
+  else if (layer == active_layer)
     {
       if (gimage->layer_stack)
 	{

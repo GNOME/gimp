@@ -1505,9 +1505,6 @@ undo_pop_layer (GimpUndo            *undo,
 
       undo->size += gimp_object_get_memsize (GIMP_OBJECT (layer), NULL);
 
-      /*  Make sure we're not caching any old selection info  */
-      gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
-
       /*  record the current position  */
       lu->prev_position = gimp_image_get_layer_index (undo->gimage, layer);
 
@@ -1515,17 +1512,16 @@ undo_pop_layer (GimpUndo            *undo,
       undo->gimage->layer_stack = g_slist_remove (undo->gimage->layer_stack,
                                                   layer);
 
-      /*  reset the gimage values  */
       if (gimp_layer_is_floating_sel (layer))
 	{
 	  undo->gimage->floating_sel = NULL;
-	  /*  reset the old drawable  */
-	  floating_sel_reset (layer);
 
-	  gimp_image_floating_selection_changed (undo->gimage);
+	  /*  activate the underlying drawable  */
+	  floating_sel_activate_drawable (layer);
+
+          gimp_image_floating_selection_changed (undo->gimage);
 	}
-
-      if (layer == gimp_image_get_active_layer (undo->gimage))
+      else if (layer == gimp_image_get_active_layer (undo->gimage))
         {
           if (lu->prev_layer)
             {
@@ -1556,10 +1552,6 @@ undo_pop_layer (GimpUndo            *undo,
 
       /*  record the active layer  */
       lu->prev_layer = gimp_image_get_active_layer (undo->gimage);
-
-      /*  hide the current selection--for all views  */
-      if (lu->prev_layer)
-	gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (lu->prev_layer));
 
       /*  if this is a floating selection, set the fs pointer  */
       if (gimp_layer_is_floating_sel (layer))

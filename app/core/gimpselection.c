@@ -808,6 +808,9 @@ gimp_selection_float (GimpChannel  *selection,
 
   gimage = gimp_item_get_image (GIMP_ITEM (selection));
 
+  g_return_val_if_fail (gimp_image_owns_item (gimage, GIMP_ITEM (drawable)),
+                        NULL);
+
   /*  Make sure there is a region to float...  */
   non_empty = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
   if (! non_empty || (x2 - x1) == 0 || (y2 - y1) == 0)

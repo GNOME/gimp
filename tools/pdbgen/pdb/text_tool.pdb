@@ -116,17 +116,22 @@ HELP
     &render_outargs;
 
     %invoke = (
-	vars => [ 'gchar *real_fontname' ],
 	code => <<'CODE'
 {
-  real_fontname = g_strdup_printf ("%s %d", fontname, (gint) size);
-
-  text_layer = text_render (gimage, drawable, x, y, real_fontname, text,
-			    border, antialias);
-  if (text_layer == NULL)
+  if (drawable && ! gimp_image_owns_item (gimage, GIMP_ITEM (drawable)))
     success = FALSE;
 
-  g_free (real_fontname);
+  if (success)
+    {
+      gchar *real_fontname = g_strdup_printf ("%s %d", fontname, (gint) size);
+
+      text_layer = text_render (gimage, drawable, x, y, real_fontname, text,
+                                border, antialias);
+      if (text_layer == NULL)
+        success = FALSE;
+
+      g_free (real_fontname);
+    }
 }
 CODE
     );
@@ -203,17 +208,22 @@ HELP
     &render_outargs;
 
     %invoke = (
-	vars => [ 'gchar *real_fontname' ],
 	code => <<'CODE'
 {
-  real_fontname = g_strdup_printf ("%s %d", family, (gint) size);
-
-  text_layer = text_render (gimage, drawable, x, y, real_fontname, text,
-			    border, antialias);
-  if (text_layer == NULL)
+  if (drawable && ! gimp_image_owns_item (gimage, GIMP_ITEM (drawable)))
     success = FALSE;
 
-  g_free (real_fontname);
+  if (success)
+    {
+      gchar *real_fontname = g_strdup_printf ("%s %d", family, (gint) size);
+
+      text_layer = text_render (gimage, drawable, x, y, real_fontname, text,
+                                border, antialias);
+      if (text_layer == NULL)
+        success = FALSE;
+
+      g_free (real_fontname);
+    }
 }
 CODE
    );

@@ -369,12 +369,17 @@ selection_float_invoker (Gimp     *gimp,
 
   if (success)
     {
-      GimpImage *gimage;
+      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
     
-      gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-      layer = gimp_selection_float (gimp_image_get_mask (gimage),
-				    drawable, TRUE, offx, offy);
-      success = layer != NULL;
+      success = gimp_image_owns_item (gimage, GIMP_ITEM (drawable));
+    
+      if (success)
+	{
+	  layer = gimp_selection_float (gimp_image_get_mask (gimage),
+					drawable, TRUE, offx, offy);
+	  if (! layer)
+	    success = FALSE;
+	}
     }
 
   return_args = procedural_db_return_args (&selection_float_proc, success);

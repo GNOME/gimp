@@ -235,6 +235,9 @@ xcf_load_image (Gimp    *gimp,
         goto error;
     }
 
+  if (info->floating_sel && info->floating_sel_drawable)
+    floating_sel_attach (info->floating_sel, info->floating_sel_drawable);
+
   if (info->active_layer)
     gimp_image_set_active_layer (gimage, info->active_layer);
 
@@ -805,14 +808,13 @@ xcf_load_layer (XcfInfo   *info,
   gint           width;
   gint           height;
   gint           type;
-  gint           add_floating_sel;
+  gboolean       is_fs_drawable;
   gchar         *name;
 
   /* check and see if this is the drawable the floating selection
-   *  is attached to. if it is then we'll do the attachment at
-   *  the end of this function.
+   *  is attached to. if it is then we'll do the attachment in our caller.
    */
-  add_floating_sel = (info->cp == info->floating_sel_offset);
+  is_fs_drawable = (info->cp == info->floating_sel_offset);
 
   /* read in the layer width, height, type and name */
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &width, 1);
@@ -877,8 +879,8 @@ xcf_load_layer (XcfInfo   *info,
     }
 
   /* attach the floating selection... */
-  if (add_floating_sel)
-    floating_sel_attach (info->floating_sel, GIMP_DRAWABLE (layer));
+  if (is_fs_drawable)
+    info->floating_sel_drawable = GIMP_DRAWABLE (layer);
 
   return layer;
 
@@ -895,16 +897,15 @@ xcf_load_channel (XcfInfo   *info,
   guint32      hierarchy_offset;
   gint         width;
   gint         height;
-  gboolean     add_floating_sel;
+  gboolean     is_fs_drawable;
   gboolean     is_qmask = FALSE;
   gchar       *name;
   GimpRGB      color = { 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE };
 
   /* check and see if this is the drawable the floating selection
-   *  is attached to. if it is then we'll do the attachment at
-   *  the end of this function.
+   *  is attached to. if it is then we'll do the attachment in our caller.
    */
-  add_floating_sel = (info->cp == info->floating_sel_offset);
+  is_fs_drawable = (info->cp == info->floating_sel_offset);
 
   /* read in the layer width, height and name */
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &width, 1);
@@ -934,9 +935,8 @@ xcf_load_channel (XcfInfo   *info,
   if (!xcf_load_hierarchy (info, GIMP_DRAWABLE (channel)->tiles))
     goto error;
 
-  /* attach the floating selection... */
-  if (add_floating_sel)
-    floating_sel_attach (info->floating_sel, GIMP_DRAWABLE (channel));
+  if (is_fs_drawable)
+    info->floating_sel_drawable = GIMP_DRAWABLE (channel);
 
   if (is_qmask)
     gimage->qmask_state = TRUE;
@@ -957,15 +957,14 @@ xcf_load_layer_mask (XcfInfo   *info,
   guint32        hierarchy_offset;
   gint           width;
   gint           height;
-  gint           add_floating_sel;
+  gboolean       is_fs_drawable;
   gchar         *name;
   GimpRGB        color = { 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE };
 
   /* check and see if this is the drawable the floating selection
-   *  is attached to. if it is then we'll do the attachment at
-   *  the end of this function.
+   *  is attached to. if it is then we'll do the attachment in our caller.
    */
-  add_floating_sel = (info->cp == info->floating_sel_offset);
+  is_fs_drawable = (info->cp == info->floating_sel_offset);
 
   /* read in the layer width, height and name */
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &width, 1);
@@ -994,8 +993,8 @@ xcf_load_layer_mask (XcfInfo   *info,
     goto error;
 
   /* attach the floating selection... */
-  if (add_floating_sel)
-    floating_sel_attach (info->floating_sel, GIMP_DRAWABLE (layer_mask));
+  if (is_fs_drawable)
+    info->floating_sel_drawable = GIMP_DRAWABLE (layer_mask);
 
   return layer_mask;
 

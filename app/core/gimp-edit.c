@@ -99,6 +99,9 @@ gimp_edit_paste (GimpImage    *gimage,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (drawable == NULL ||
+                        gimp_image_owns_item (gimage,
+                                              GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_BUFFER (paste), NULL);
 
   /*  Make a new layer: if drawable == NULL,
