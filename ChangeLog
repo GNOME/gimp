@@ -1,5 +1,9 @@
 1999-03-14  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
+	* libgimp/gimppatheditor.c: checked in a buggy version before ;)
+
+1999-03-14  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
 	* app/app_procs.c: only save sessionrc if the corresponding
 	preferences option is enabled
 

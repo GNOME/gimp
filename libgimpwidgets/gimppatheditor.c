@@ -404,8 +404,7 @@ gimp_path_editor_new_callback (GtkWidget *widget,
   gtk_widget_set_sensitive (gpe->delete_button, FALSE);
   gtk_widget_set_sensitive (gpe->up_button, FALSE);
   gtk_widget_set_sensitive (gpe->down_button, FALSE);
-  gtk_widget_set_sensitive (GIMP_FILE_SELECTION (gpe->file_selection)->entry, TRUE);
-  gtk_widget_set_sensitive (GIMP_FILE_SELECTION (gpe->file_selection)->browse_button, TRUE);
+  gtk_widget_set_sensitive (gpe->file_selection, TRUE);
 
   gtk_editable_set_position (GTK_EDITABLE (GIMP_FILE_SELECTION (gpe->file_selection)->entry), -1);
   /* gtk_editable_select_region (GTK_EDITABLE (gpe->entry), 0, -1); */
@@ -488,6 +487,8 @@ gimp_path_editor_filesel_callback (GtkWidget *widget,
   gchar          *directory;
 
   directory = gimp_file_selection_get_filename (GIMP_FILE_SELECTION (widget));
+  if (strcmp (directory, "") == 0)
+    return;
 
   if (gpe->selected_item == NULL)
     {
