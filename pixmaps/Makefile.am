@@ -1,20 +1,13 @@
 ## Process this file with automake to produce Makefile.in
 
 EXTRA_DIST = @STRIP_BEGIN@ \
-	anchor.xpm		\
 	delete.xpm		\
 	duplicate.xpm		\
-	edit.xpm		\
-	eye.xpm			\
-	linked.xpm		\
 	lower.xpm		\
 	new.xpm			\
 	paste.xpm		\
-	paste-as-new.xpm	\
-	paste-into.xpm		\
 	penstroke.xpm		\
 	raise.xpm		\
-	refresh.xpm		\
 	topath.xpm		\
 	toselection.xpm		\
 	zoom_in.xpm		\

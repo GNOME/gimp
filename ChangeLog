@@ -1,5 +1,17 @@
 2001-11-21  Michael Natterer  <mitch@gimp.org>
 
+	* pixmaps/Makefile.am
+	* pixmaps/anchor.xpm
+	* pixmaps/edit.xpm
+	* pixmaps/eye.xpm
+	* pixmaps/linked.xpm
+	* pixmaps/paste-as-new.xpm
+	* pixmaps/paste-into.xpm
+	* pixmaps/refresh.xpm: felt like i had to remove some cruft, so
+	these unused pixmaps had to go to the Attic.
+
+2001-11-21  Michael Natterer  <mitch@gimp.org>
+
 	* RELEASE-TO-CVS.patch: regenerated after the text tool changes.
 
 2001-11-20  Michael Natterer  <mitch@gimp.org>
