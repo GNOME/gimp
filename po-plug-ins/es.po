@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.25\n"
-"POT-Creation-Date: 2000-10-16 11:59-0700\n"
+"POT-Creation-Date: 2000-10-01 20:09+0200\n"
 "PO-Revision-Date: 2000-09-28 01:22+02:00\n"
 "Last-Translator: Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -48,7 +48,7 @@ msgstr "Acerca"
 #: plug-ins/common/despeckle.c:620 plug-ins/common/destripe.c:550
 #: plug-ins/common/diffraction.c:534 plug-ins/common/displace.c:298
 #: plug-ins/common/edge.c:650 plug-ins/common/emboss.c:522
-#: plug-ins/common/engrave.c:224 plug-ins/common/exchange.c:279
+#: plug-ins/common/engrave.c:224 plug-ins/common/exchange.c:278
 #: plug-ins/common/film.c:1182 plug-ins/common/flarefx.c:332
 #: plug-ins/common/fractaltrace.c:725 plug-ins/common/gauss_iir.c:365
 #: plug-ins/common/gauss_iir.c:448 plug-ins/common/gauss_rle.c:361
@@ -62,13 +62,13 @@ msgstr "Acerca"
 #: plug-ins/common/jpeg.c:1595 plug-ins/common/lic.c:1021
 #: plug-ins/common/mail.c:465 plug-ins/common/mapcolor.c:558
 #: plug-ins/common/max_rgb.c:348 plug-ins/common/mblur.c:763
-#: plug-ins/common/newsprint.c:1211 plug-ins/common/nlfilt.c:365
+#: plug-ins/common/newsprint.c:1211 plug-ins/common/nlfilt.c:348
 #: plug-ins/common/noisify.c:489 plug-ins/common/nova.c:466
 #: plug-ins/common/oilify.c:458 plug-ins/common/papertile.c:250
 #: plug-ins/common/pat.c:412 plug-ins/common/pixelize.c:280
 #: plug-ins/common/plasma.c:307 plug-ins/common/png.c:1045
 #: plug-ins/common/pnm.c:933 plug-ins/common/polar.c:914
-#: plug-ins/common/ps.c:2615 plug-ins/common/ps.c:2797
+#: plug-ins/common/ps.c:2586 plug-ins/common/ps.c:2768
 #: plug-ins/common/psp.c:428 plug-ins/common/randomize.c:702
 #: plug-ins/common/ripple.c:580 plug-ins/common/scatter_hsv.c:375
 #: plug-ins/common/sel_gauss.c:242 plug-ins/common/sharpen.c:523
@@ -103,7 +103,7 @@ msgstr "Acerca"
 #: plug-ins/ifscompose/ifscompose.c:786
 #: plug-ins/imagemap/imap_default_dialog.c:117 plug-ins/maze/maze_face.c:191
 #: plug-ins/mosaic/mosaic.c:531 plug-ins/pagecurl/pagecurl.c:518
-#: plug-ins/print/gimp_main_window.c:829 plug-ins/rcm/rcm_dialog.c:727
+#: plug-ins/print/gimp_main_window.c:742 plug-ins/rcm/rcm_dialog.c:727
 #: plug-ins/sel2path/sel2path.c:336 plug-ins/sgi/sgi.c:640
 #: plug-ins/webbrowser/webbrowser.c:281 plug-ins/xjt/xjt.c:793
 msgid "OK"
@@ -130,7 +130,7 @@ msgstr "Aceptar"
 #: plug-ins/common/destripe.c:552 plug-ins/common/diffraction.c:536
 #: plug-ins/common/displace.c:300 plug-ins/common/edge.c:652
 #: plug-ins/common/emboss.c:524 plug-ins/common/engrave.c:226
-#: plug-ins/common/exchange.c:281 plug-ins/common/film.c:1184
+#: plug-ins/common/exchange.c:280 plug-ins/common/film.c:1184
 #: plug-ins/common/flarefx.c:334 plug-ins/common/fractaltrace.c:727
 #: plug-ins/common/gauss_iir.c:367 plug-ins/common/gauss_iir.c:450
 #: plug-ins/common/gauss_rle.c:363 plug-ins/common/gauss_rle.c:446
@@ -144,13 +144,13 @@ msgstr "Aceptar"
 #: plug-ins/common/lic.c:1023 plug-ins/common/mail.c:467
 #: plug-ins/common/mapcolor.c:560 plug-ins/common/max_rgb.c:350
 #: plug-ins/common/mblur.c:765 plug-ins/common/newsprint.c:1213
-#: plug-ins/common/nlfilt.c:367 plug-ins/common/noisify.c:491
+#: plug-ins/common/nlfilt.c:350 plug-ins/common/noisify.c:491
 #: plug-ins/common/nova.c:468 plug-ins/common/oilify.c:460
 #: plug-ins/common/papertile.c:252 plug-ins/common/pat.c:414
 #: plug-ins/common/pixelize.c:282 plug-ins/common/plasma.c:309
 #: plug-ins/common/png.c:1047 plug-ins/common/pnm.c:935
-#: plug-ins/common/polar.c:916 plug-ins/common/ps.c:2617
-#: plug-ins/common/ps.c:2799 plug-ins/common/psp.c:430
+#: plug-ins/common/polar.c:916 plug-ins/common/ps.c:2588
+#: plug-ins/common/ps.c:2770 plug-ins/common/psp.c:430
 #: plug-ins/common/randomize.c:704 plug-ins/common/ripple.c:582
 #: plug-ins/common/scatter_hsv.c:377 plug-ins/common/screenshot.c:375
 #: plug-ins/common/sel_gauss.c:244 plug-ins/common/sharpen.c:525
@@ -187,7 +187,7 @@ msgstr "Aceptar"
 #: plug-ins/ifscompose/ifscompose.c:794
 #: plug-ins/imagemap/imap_default_dialog.c:132 plug-ins/maze/maze_face.c:195
 #: plug-ins/mosaic/mosaic.c:533 plug-ins/pagecurl/pagecurl.c:520
-#: plug-ins/print/gimp_main_window.c:270 plug-ins/print/gimp_main_window.c:831
+#: plug-ins/print/gimp_main_window.c:236 plug-ins/print/gimp_main_window.c:744
 #: plug-ins/rcm/rcm_dialog.c:729 plug-ins/sel2path/sel2path.c:342
 #: plug-ins/sgi/sgi.c:642 plug-ins/webbrowser/webbrowser.c:283
 #: plug-ins/winsnap/winsnap.c:913 plug-ins/xjt/xjt.c:795
@@ -199,13 +199,13 @@ msgstr "Cancelar"
 #: plug-ins/MapObject/mapobject_ui.c:1400 plug-ins/common/CML_explorer.c:1202
 #: plug-ins/common/blinds.c:343 plug-ins/common/curve_bend.c:1503
 #: plug-ins/common/destripe.c:575 plug-ins/common/emboss.c:739
-#: plug-ins/common/exchange.c:296 plug-ins/common/fractaltrace.c:746
+#: plug-ins/common/exchange.c:295 plug-ins/common/fractaltrace.c:746
 #: plug-ins/common/glasstile.c:276 plug-ins/common/grid.c:680
 #: plug-ins/common/illusion.c:580 plug-ins/common/iwarp.c:1160
 #: plug-ins/common/jigsaw.c:2511 plug-ins/common/mapcolor.c:576
-#: plug-ins/common/max_rgb.c:364 plug-ins/common/nlfilt.c:584
+#: plug-ins/common/max_rgb.c:364 plug-ins/common/nlfilt.c:575
 #: plug-ins/common/noisify.c:506 plug-ins/common/plasma.c:326
-#: plug-ins/common/polar.c:935 plug-ins/common/ps.c:2938
+#: plug-ins/common/polar.c:935 plug-ins/common/ps.c:2909
 #: plug-ins/common/sharpen.c:550 plug-ins/common/sinus.c:2123
 #: plug-ins/common/spheredesigner.c:2254 plug-ins/common/tileit.c:407
 #: plug-ins/common/waves.c:576 plug-ins/common/whirlpinch.c:826
@@ -215,7 +215,7 @@ msgstr "Cancelar"
 #: plug-ins/gimpressionist/preview.c:106 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/ifscompose/ifscompose.c:901
 #: plug-ins/imagemap/imap_edit_area_info.c:287
-#: plug-ins/imagemap/imap_grid.c:232 plug-ins/print/gimp_main_window.c:295
+#: plug-ins/imagemap/imap_grid.c:232 plug-ins/print/gimp_main_window.c:261
 #: plug-ins/rcm/rcm_dialog.c:115 plug-ins/rcm/rcm_dialog.c:627
 msgid "Preview"
 msgstr "Vista previa"
@@ -440,7 +440,7 @@ msgstr "Número de colores:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:641
 msgid "Change the number of colors in the mapping"
-msgstr "Cambia el número de colores en la proyección"
+msgstr "Cambia el número de colores en la aplicación"
 
 #: plug-ins/FractalExplorer/Dialogs.c:648
 msgid "Use loglog Smoothing"
@@ -462,9 +462,9 @@ msgstr "Densidad de color"
 #: plug-ins/FractalExplorer/Dialogs.c:673 plug-ins/common/AlienMap.c:1439
 #: plug-ins/common/compose.c:120 plug-ins/common/compose.c:124
 #: plug-ins/common/diffraction.c:600 plug-ins/common/diffraction.c:639
-#: plug-ins/common/diffraction.c:678 plug-ins/common/exchange.c:354
+#: plug-ins/common/diffraction.c:678 plug-ins/common/exchange.c:353
 #: plug-ins/common/noisify.c:588 plug-ins/common/noisify.c:624
-#: plug-ins/fp/fp_gtk.c:20
+#: plug-ins/fp/fp_gtk.c:20 plug-ins/print/gimp_color_window.c:135
 msgid "Red:"
 msgstr "Rojo:"
 
@@ -475,9 +475,9 @@ msgstr "Cambiar intensidad del canal rojo"
 #: plug-ins/FractalExplorer/Dialogs.c:683 plug-ins/common/AlienMap.c:1448
 #: plug-ins/common/compose.c:121 plug-ins/common/compose.c:125
 #: plug-ins/common/diffraction.c:609 plug-ins/common/diffraction.c:648
-#: plug-ins/common/diffraction.c:687 plug-ins/common/exchange.c:382
+#: plug-ins/common/diffraction.c:687 plug-ins/common/exchange.c:381
 #: plug-ins/common/noisify.c:599 plug-ins/common/noisify.c:635
-#: plug-ins/fp/fp_gtk.c:21
+#: plug-ins/fp/fp_gtk.c:21 plug-ins/print/gimp_color_window.c:149
 msgid "Green:"
 msgstr "Verde:"
 
@@ -488,9 +488,9 @@ msgstr "Cambiar intensidad del canal verde"
 #: plug-ins/FractalExplorer/Dialogs.c:693 plug-ins/common/AlienMap.c:1457
 #: plug-ins/common/compose.c:122 plug-ins/common/compose.c:126
 #: plug-ins/common/diffraction.c:618 plug-ins/common/diffraction.c:657
-#: plug-ins/common/diffraction.c:696 plug-ins/common/exchange.c:411
+#: plug-ins/common/diffraction.c:696 plug-ins/common/exchange.c:410
 #: plug-ins/common/noisify.c:610 plug-ins/common/noisify.c:646
-#: plug-ins/fp/fp_gtk.c:22
+#: plug-ins/fp/fp_gtk.c:22 plug-ins/print/gimp_color_window.c:163
 msgid "Blue:"
 msgstr "Azul:"
 
@@ -531,7 +531,7 @@ msgstr "Coseno"
 #: plug-ins/common/AlienMap.c:1472 plug-ins/common/AlienMap.c:1495
 #: plug-ins/common/AlienMap.c:1518 plug-ins/common/CML_explorer.c:167
 #: plug-ins/common/align_layers.c:452 plug-ins/common/align_layers.c:485
-#: plug-ins/common/ps.c:2722 plug-ins/common/ps.c:2735
+#: plug-ins/common/ps.c:2693 plug-ins/common/ps.c:2706
 #: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1551
 #: plug-ins/fits/fits.c:1032 plug-ins/gap/gap_mov_dialog.c:301
 msgid "None"
@@ -556,8 +556,8 @@ msgid ""
 "Use linear mapping instead of any trigonometrical function for this color "
 "channel"
 msgstr ""
-"Usar proyección lineal en vez de una función trigonométrica para este canal "
-"de color"
+"Usar una aplicación lineal en vez de una función trigonométrica para este "
+"canal de color"
 
 #: plug-ins/FractalExplorer/Dialogs.c:741
 #: plug-ins/FractalExplorer/Dialogs.c:782
@@ -603,7 +603,7 @@ msgid ""
 "Create a color-map with the options you specified above (color "
 "density/function). The result is visible in the preview image"
 msgstr ""
-"Crear un mapa de colores con las opciones que especificó arriba "
+"Crear una aplicación de colores con las opciones que especificó arriba "
 "(densidad/función de color). El resultado es visible en la imagen de vista "
 "previa."
 
@@ -613,7 +613,8 @@ msgstr "Aplicar Gradiente activo a imagen final"
 
 #: plug-ins/FractalExplorer/Dialogs.c:879
 msgid "Create a color-map using a gradient from the gradient editor"
-msgstr "Crear un mapa de colores usando un Gradiente del Editor de Gradientes"
+msgstr ""
+"Crear una aplicación de colores usando un Gradiente del Editor de Gradientes"
 
 #: plug-ins/FractalExplorer/Dialogs.c:884
 msgid "FractalExplorer Gradient"
@@ -691,7 +692,7 @@ msgstr "<Image>/Filtros/Render/Patrón/Explorador Fractal..."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:355
 msgid "Rendering Fractal..."
-msgstr "Renderizando Fractal..."
+msgstr "Renderizando fractal..."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:735 plug-ins/gfig/gfig.c:5012
 #: plug-ins/gflare/gflare.c:3360
@@ -705,7 +706,7 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:739
 msgid "Delete Fractal"
-msgstr "Borrar Fractal"
+msgstr "Borrar fractal"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:744
 #: plug-ins/FractalExplorer/FractalExplorer.c:1404 plug-ins/gfig/gfig.c:3568
@@ -718,15 +719,15 @@ msgstr "Borrar"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:829
 msgid "Edit fractal name"
-msgstr "Editar nombre de Fractal"
+msgstr "Editar nombre de fractal"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:840
 msgid "Fractal name:"
-msgstr "Nombre de Fractal:"
+msgstr "Nombre de fractal:"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:881
 msgid "New Fractal"
-msgstr "Nuevo Fractal"
+msgstr "Nuevo fractal"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1153
 #, c-format
@@ -913,7 +914,6 @@ msgstr "Ver color de fuente de luz"
 
 #: plug-ins/Lighting/lighting_ui.c:598 plug-ins/MapObject/mapobject_ui.c:730
 #: plug-ins/MapObject/mapobject_ui.c:1028
-#: plug-ins/print/gimp_main_window.c:335
 msgid "Position"
 msgstr "Posición"
 
@@ -1031,11 +1031,11 @@ msgstr "Valores más altos hace que los reflejos estén más concentrados"
 
 #: plug-ins/Lighting/lighting_ui.c:898
 msgid "Bumpmap Settings"
-msgstr "Configuración de Relieve"
+msgstr "Configuración de relieve"
 
 #: plug-ins/Lighting/lighting_ui.c:907
 msgid "Enable Bump Mapping"
-msgstr "Activar mapa de relieve"
+msgstr "Activar aplicación de relieve"
 
 #: plug-ins/Lighting/lighting_ui.c:917
 msgid "Enable/disable bump-mapping (image depth)"
@@ -1043,7 +1043,7 @@ msgstr "Activar/desactivar relieve (profundidad de imagen)"
 
 #: plug-ins/Lighting/lighting_ui.c:934
 msgid "Bumpmap Image:"
-msgstr "Imagen de Relieve:"
+msgstr "Imagen de relieve:"
 
 #: plug-ins/Lighting/lighting_ui.c:942 plug-ins/common/mblur.c:784
 #: plug-ins/common/sinus.c:1988 plug-ins/flame/flame.c:721
@@ -1071,18 +1071,16 @@ msgid "Maximum Height:"
 msgstr "Altura máxima:"
 
 #: plug-ins/Lighting/lighting_ui.c:962
-#, fuzzy
 msgid "Maximum height for bumps"
-msgstr "Altura máxima "
+msgstr "Altura máxima del relieve"
 
 #: plug-ins/Lighting/lighting_ui.c:968
 msgid "Minimum Height:"
 msgstr "Altura mínima:"
 
 #: plug-ins/Lighting/lighting_ui.c:975
-#, fuzzy
 msgid "Minimum height for bumps"
-msgstr "Altura mínima:"
+msgstr "Altura mínima del relieve"
 
 # //R Demasiado libre, quizá
 #: plug-ins/Lighting/lighting_ui.c:978
@@ -1095,19 +1093,19 @@ msgstr "Ajustar al rango de valores"
 
 #: plug-ins/Lighting/lighting_ui.c:1009
 msgid "Environment Settings"
-msgstr "Configuración de Entorno"
+msgstr "Configuración de entorno"
 
 #: plug-ins/Lighting/lighting_ui.c:1018
 msgid "Enable Environment Mapping"
-msgstr "Activar proyección de Entorno"
+msgstr "Activar aplicación de entorno"
 
 #: plug-ins/Lighting/lighting_ui.c:1028
 msgid "Enable/disable environment-mapping (reflection)"
-msgstr "Activar/Desactivar Proyección de Entorno (reflexión)"
+msgstr "Activar/Desactivar aplicación de entorno (reflexión)"
 
 #: plug-ins/Lighting/lighting_ui.c:1045
 msgid "Environment Image:"
-msgstr "Imagen de Entorno:"
+msgstr "Imagen de entorno:"
 
 #: plug-ins/Lighting/lighting_ui.c:1049
 msgid "Environment image to use"
@@ -1131,15 +1129,15 @@ msgstr "Material"
 
 #: plug-ins/Lighting/lighting_ui.c:1084 plug-ins/common/bumpmap.c:844
 msgid "Bump Map"
-msgstr "Mapa de relieve"
+msgstr "Aplicación de relieve"
 
 #: plug-ins/Lighting/lighting_ui.c:1088
 msgid "Environment Map"
-msgstr "Proyección de entorno"
+msgstr "Aplicación de entorno"
 
 #: plug-ins/Lighting/lighting_ui.c:1137
 msgid "Lighting Effects"
-msgstr "Efectos de Iluminación"
+msgstr "Efectos de iluminación"
 
 #: plug-ins/Lighting/lighting_ui.c:1197 plug-ins/common/grid.c:709
 #: plug-ins/gap/gap_mov_dialog.c:496
@@ -1152,7 +1150,7 @@ msgstr "Recalcular imagen de vista previa"
 
 #: plug-ins/MapObject/mapobject_main.c:205
 msgid "<Image>/Filters/Map/Map Object..."
-msgstr "<Image>/Filtros/Proyección/Proyectar en objeto..."
+msgstr "<Image>/Filtros/Aplicación/Proyectar en objeto..."
 
 #: plug-ins/MapObject/mapobject_ui.c:262 plug-ins/MapObject/mapobject_ui.c:556
 #: plug-ins/MapObject/mapobject_ui.c:1332
@@ -1186,13 +1184,13 @@ msgstr "Hacer la imagen transparente fuera del objeto"
 
 #: plug-ins/MapObject/mapobject_ui.c:577
 msgid "Tile Source Image"
-msgstr "Enlosar con Imagen fuente"
+msgstr "Enlosar con imagen fuente"
 
 #: plug-ins/MapObject/mapobject_ui.c:587
 msgid "Tile source image: useful for infinite planes"
 msgstr ""
 "Repite la imagen fuente, colocándola una y otra vez de forma adyacente; como "
-"formando un losado. Esto es últil para producir planos infinitos."
+"formando un enlosado. Esto es últil para producir planos infinitos."
 
 #: plug-ins/MapObject/mapobject_ui.c:602
 msgid "Enable Tooltips"
@@ -1243,7 +1241,7 @@ msgid "Object Z position in XYZ space"
 msgstr "Posición Z del objeto en el espacio XYZ"
 
 #. Rotation
-#: plug-ins/MapObject/mapobject_ui.c:1072 plug-ins/common/ps.c:2900
+#: plug-ins/MapObject/mapobject_ui.c:1072 plug-ins/common/ps.c:2871
 #: plug-ins/gdyntext/gdyntext_ui.c:470
 msgid "Rotation"
 msgstr "Rotación"
@@ -1270,24 +1268,24 @@ msgstr "Fondo:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1130
 #: plug-ins/MapObject/mapobject_ui.c:1226
-#: plug-ins/print/gimp_main_window.c:397
+#: plug-ins/print/gimp_main_window.c:354
 msgid "Top:"
 msgstr "Cima:"
 
 # //R Vaya, ya he utilizado Fondo...
 #: plug-ins/MapObject/mapobject_ui.c:1130
 #: plug-ins/MapObject/mapobject_ui.c:1226
-#: plug-ins/print/gimp_main_window.c:431
+#: plug-ins/print/gimp_main_window.c:376
 msgid "Bottom:"
 msgstr "Suelo:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1131
-#: plug-ins/print/gimp_main_window.c:386
+#: plug-ins/print/gimp_main_window.c:343
 msgid "Left:"
 msgstr "Izquierda:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1131
-#: plug-ins/print/gimp_main_window.c:408
+#: plug-ins/print/gimp_main_window.c:365
 msgid "Right:"
 msgstr "Derecha:"
 
@@ -1322,7 +1320,7 @@ msgid "Size"
 msgstr "Tamaño"
 
 #: plug-ins/MapObject/mapobject_ui.c:1272 plug-ins/common/despeckle.c:745
-#: plug-ins/common/nlfilt.c:427 plug-ins/common/nova.c:504
+#: plug-ins/common/nlfilt.c:410 plug-ins/common/nova.c:504
 #: plug-ins/common/unsharp.c:811 plug-ins/common/whirlpinch.c:877
 #: plug-ins/gfig/gfig.c:3175 plug-ins/gflare/gflare.c:2902
 #: plug-ins/imagemap/imap_circle.c:273
@@ -1451,7 +1449,7 @@ msgstr "No puedo abrir %s"
 #: plug-ins/common/jpeg.c:1196 plug-ins/common/pat.c:343
 #: plug-ins/common/pcx.c:547 plug-ins/common/pix.c:532
 #: plug-ins/common/png.c:775 plug-ins/common/png.c:777
-#: plug-ins/common/pnm.c:786 plug-ins/common/ps.c:1003
+#: plug-ins/common/pnm.c:786 plug-ins/common/ps.c:1002
 #: plug-ins/common/sunras.c:524 plug-ins/common/tga.c:1196
 #: plug-ins/common/tiff.c:1282 plug-ins/common/xbm.c:983
 #: plug-ins/common/xpm.c:653 plug-ins/common/xwd.c:534
@@ -1476,15 +1474,15 @@ msgstr "Codificado RLE"
 
 #: plug-ins/common/AlienMap.c:964
 msgid "<Image>/Filters/Colors/Map/Alien Map..."
-msgstr "<Image>/Filtros/Colores/Proyección/Proyección Alien..."
+msgstr "<Image>/Filtros/Colores/Aplicación/Aplic. Alien..."
 
 #: plug-ins/common/AlienMap.c:1162
 msgid "AlienMap: Transforming..."
-msgstr "Proyección Alien: Transformando ..."
+msgstr "Aplicación Alien: Transformando ..."
 
 #: plug-ins/common/AlienMap.c:1391
 msgid "AlienMap"
-msgstr "Proyección Alien"
+msgstr "Aplicación Alien"
 
 #: plug-ins/common/AlienMap.c:1442
 msgid "Change intensity of the red channel"
@@ -1508,7 +1506,7 @@ msgstr "Usar función coseno para componente roja."
 
 #: plug-ins/common/AlienMap.c:1481
 msgid "Red channel: use linear mapping instead of any trigonometrical function"
-msgstr "Canal rojo: usar proyección lineal en vez de funciones trigonométricas"
+msgstr "Canal rojo: usar aplicación lineal en vez de funciones trigonométricas"
 
 #: plug-ins/common/AlienMap.c:1500
 msgid "Use sine-function for green component."
@@ -1522,7 +1520,7 @@ msgstr "Usar función coseno para componente verde."
 msgid ""
 "Green channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
-"Canal verde: usar proyección lineal en vez de funciones trigonométricas"
+"Canal verde: usar aplicación lineal en vez de funciones trigonométricas"
 
 #: plug-ins/common/AlienMap.c:1523
 msgid "Use sine-function for blue component."
@@ -1535,23 +1533,23 @@ msgstr "Usar función coseno para componente azul."
 #: plug-ins/common/AlienMap.c:1527
 msgid ""
 "Blue channel: use linear mapping instead of any trigonometrical function"
-msgstr "Canal azul: usar proyección lineal en vez de funciones trigonométricas"
+msgstr "Canal azul: usar aplicación lineal en vez de funciones trigonométricas"
 
 #: plug-ins/common/AlienMap.c:1657
 msgid "About AlienMap"
-msgstr "Acerca de Proyección Alien"
+msgstr "Acerca de Aplicación Alien"
 
 #: plug-ins/common/AlienMap2.c:988
 msgid "<Image>/Filters/Colors/Map/Alien Map 2..."
-msgstr "<Image>/Filtros/Colores/Proyección/Proyección Alien 2..."
+msgstr "<Image>/Filtros/Colores/Aplicación/Aplic. Alien 2..."
 
 #: plug-ins/common/AlienMap2.c:1161
 msgid "AlienMap2: Transforming..."
-msgstr "Proyección Alien 2: Transformando ..."
+msgstr "Aplicación Alien 2: Transformando ..."
 
 #: plug-ins/common/AlienMap2.c:1383
 msgid "AlienMap2"
-msgstr "Proyección Alien 2"
+msgstr "Aplicación Alien 2"
 
 #: plug-ins/common/AlienMap2.c:1432
 msgid "R/H-Frequency:"
@@ -1642,12 +1640,12 @@ msgstr "Usar función para componente azul/luminancia"
 
 #: plug-ins/common/AlienMap2.c:1671
 msgid "About AlienMap2"
-msgstr "Acerca de Proyección Alien 2"
+msgstr "Acerca de Aplicación Alien 2"
 
 #. Let user choose KCF palette (cancel ignores)
 #: plug-ins/common/CEL.c:194
 msgid "Load KISS Palette"
-msgstr "Cargar Paleta KISS"
+msgstr "Cargar paleta KISS"
 
 #: plug-ins/common/CEL.c:262
 #, c-format
@@ -1789,7 +1787,9 @@ msgid "Min (x-d, -), (0.5 < x)"
 msgstr "Mín (x-d, -), (0.5 < x)"
 
 #: plug-ins/common/CML_explorer.c:200 plug-ins/common/sunras.c:1606
-#: plug-ins/print/gimp_main_window.c:1093
+#: plug-ins/print/gimp_color_window.c:349
+#: plug-ins/print/gimp_main_window.c:999
+#: plug-ins/print/gimp_main_window.c:1069
 msgid "Standard"
 msgstr "Estándar"
 
@@ -1913,23 +1913,23 @@ msgstr "Semilla aleatoria"
 
 #: plug-ins/common/CML_explorer.c:1250
 msgid "Fix Seed"
-msgstr "Fijar Semilla"
+msgstr "Fijar semilla"
 
 #: plug-ins/common/CML_explorer.c:1260
 msgid "New Seed"
-msgstr "Nueva Semilla"
+msgstr "Nueva semilla"
 
 #: plug-ins/common/CML_explorer.c:1279
 msgid "Hue Settings"
-msgstr "Ajustes de Tono"
+msgstr "Ajustes de tono"
 
 #: plug-ins/common/CML_explorer.c:1284
 msgid "Saturation Settings"
-msgstr "Ajustes de Saturación"
+msgstr "Ajustes de saturación"
 
 #: plug-ins/common/CML_explorer.c:1289
 msgid "Value (Gray Image) Settings"
-msgstr "Ajustes de Valor (Imagen gris)"
+msgstr "Ajustes de valor (imagen gris)"
 
 #: plug-ins/common/CML_explorer.c:1294
 msgid "Advanced Settings"
@@ -1954,11 +1954,11 @@ msgstr "Valor inicial:"
 
 #: plug-ins/common/CML_explorer.c:1370
 msgid "Zoom Scale:"
-msgstr "Escala de Zoom:"
+msgstr "Escala de zoom:"
 
 #: plug-ins/common/CML_explorer.c:1378
 msgid "Start Offset:"
-msgstr "Comienzo de Desfase:"
+msgstr "Comienzo de desplazamiento:"
 
 #: plug-ins/common/CML_explorer.c:1386
 msgid "Seed of Random (only for \"From Seed\" Modes)"
@@ -2175,15 +2175,15 @@ msgstr "Formateado de datos"
 
 #: plug-ins/common/align_layers.c:152
 msgid "<Image>/Layers/Align Visible Layers..."
-msgstr "<Image>/Capas/Alinear Capas visibles"
+msgstr "<Image>/Capas/Alinear capas visibles"
 
 #: plug-ins/common/align_layers.c:187
 msgid "Align Visible Layers: there are too few layers."
-msgstr "Alinear Capas visibles: hay demasiadas pocas capas"
+msgstr "Alinear capas visibles: hay demasiadas pocas capas"
 
 #: plug-ins/common/align_layers.c:420
 msgid "Align Visible Layers"
-msgstr "Alinear Capas visibles"
+msgstr "Alinear capas visibles"
 
 #.
 #. *  Parameter settings
@@ -2200,7 +2200,7 @@ msgstr "Alinear Capas visibles"
 #: plug-ins/common/glasstile.c:294 plug-ins/common/grid.c:720
 #: plug-ins/common/illusion.c:597 plug-ins/common/jpeg.c:1643
 #: plug-ins/common/lic.c:1090 plug-ins/common/max_rgb.c:381
-#: plug-ins/common/nlfilt.c:406 plug-ins/common/noisify.c:524
+#: plug-ins/common/nlfilt.c:389 plug-ins/common/noisify.c:524
 #: plug-ins/common/nova.c:478 plug-ins/common/oilify.c:470
 #: plug-ins/common/pixelize.c:292 plug-ins/common/plasma.c:344
 #: plug-ins/common/png.c:1056 plug-ins/common/polar.c:955
@@ -2252,7 +2252,7 @@ msgstr "Centro"
 msgid "Right Edge"
 msgstr "Borde derecho"
 
-#: plug-ins/common/align_layers.c:478
+#: plug-ins/common/align_layers.c:478 plug-ins/common/align_layers.c:511
 msgid "Horizontal Base:"
 msgstr "Base horizontal:"
 
@@ -2276,30 +2276,25 @@ msgstr "Borde superior"
 msgid "Bottom Edge"
 msgstr "Borde inferior"
 
-#: plug-ins/common/align_layers.c:511
-#, fuzzy
-msgid "Vertical Base:"
-msgstr "Vertical:"
-
 #: plug-ins/common/align_layers.c:516
 msgid "Ignore the Bottom Layer even if Visible"
-msgstr "No considerar Capa inferior aunque esté visible"
+msgstr "No considerar capa inferior aunque esté visible"
 
 #: plug-ins/common/align_layers.c:526
 msgid "Use the (Invisible) Bottom Layer as the Base"
-msgstr "Usar la Capa inferior (invisible) como base"
+msgstr "Usar la capa inferior (invisible) como base"
 
 #: plug-ins/common/align_layers.c:536
 msgid "Grid Size:"
-msgstr "Tamaño de Rejilla:"
+msgstr "Tamaño de rejilla:"
 
 #: plug-ins/common/animationplay.c:273
 msgid "<Image>/Filters/Animation/Animation Playback..."
-msgstr "<Image>/Filtros/Animación/Reproducir Animación..."
+msgstr "<Image>/Filtros/Animación/Reproducir animación..."
 
 #: plug-ins/common/animationplay.c:669
 msgid "Animation Playback: "
-msgstr "Reproducir Animación:"
+msgstr "Reproducir animación:"
 
 #. if no buttons are specified use one CLOSE button per default
 #: plug-ins/common/animationplay.c:676 plug-ins/common/plugindetails.c:1009
@@ -2311,7 +2306,7 @@ msgstr "Reproducir Animación:"
 #: plug-ins/gfig/gfig.c:1952 plug-ins/gfig/gfig.c:2012
 #: plug-ins/helpbrowser/helpbrowser.c:822
 #: plug-ins/ifscompose/ifscompose.c:1238 plug-ins/imagemap/imap_menu.c:227
-#: plug-ins/print/gimp_color_window.c:142
+#: plug-ins/print/gimp_color_window.c:85
 msgid "Close"
 msgstr "Cerrar"
 
@@ -2334,11 +2329,11 @@ msgstr "Paso"
 
 #: plug-ins/common/animationplay.c:793
 msgid "Frame %v of %u"
-msgstr "Fotograma %v de %u"
+msgstr "Cuadro %v de %u"
 
 #: plug-ins/common/animoptimize.c:162
 msgid "<Image>/Filters/Animation/Animation Optimize"
-msgstr "<Image>/Filtros/Animación/Optimizar Animación"
+msgstr "<Image>/Filtros/Animación/Optimizar animación"
 
 #: plug-ins/common/animoptimize.c:178
 msgid "<Image>/Filters/Animation/Animation UnOptimize"
@@ -2346,11 +2341,11 @@ msgstr "<Image>/Filtros/Animación/Desoptimizar Animación"
 
 #: plug-ins/common/animoptimize.c:278
 msgid "Optimizing Animation..."
-msgstr "Optimizando Animación..."
+msgstr "Optimizando animación..."
 
 #: plug-ins/common/animoptimize.c:280
 msgid "UnOptimizing Animation..."
-msgstr "Desoptimizando Animación..."
+msgstr "Desoptimizando animación..."
 
 #: plug-ins/common/animoptimize.c:309
 msgid "Not enough memory to allocate buffers for optimization.\n"
@@ -2358,7 +2353,7 @@ msgstr "No hay memoria suficiente para alojar búferes para optimización.\n"
 
 #: plug-ins/common/apply_lens.c:132
 msgid "<Image>/Filters/Glass Effects/Apply Lens..."
-msgstr "<Image>/Filtros/Efectos de Cristal/Aplicar Lente..."
+msgstr "<Image>/Filtros/Efectos de Cristal/Aplicar lente..."
 
 #: plug-ins/common/apply_lens.c:196
 msgid "Applying lens..."
@@ -2378,7 +2373,7 @@ msgstr "Poner alrededores a índice 0"
 
 #: plug-ins/common/apply_lens.c:427
 msgid "Set Surroundings to Background Color"
-msgstr "Poner alrededores a Color de Fondo"
+msgstr "Poner alrededores a color de Fondo"
 
 #: plug-ins/common/apply_lens.c:442
 msgid "Make Surroundings Transparent"
@@ -2386,7 +2381,7 @@ msgstr "Hacer alrededores transparentes"
 
 #: plug-ins/common/apply_lens.c:460
 msgid "Lens Refraction Index:"
-msgstr "Índice de refracción de Lente:"
+msgstr "Índice de refracción de lente:"
 
 #: plug-ins/common/autocrop.c:73
 msgid "<Image>/Image/Transforms/Autocrop"
@@ -2456,7 +2451,7 @@ msgstr "Semilla aleatoria:"
 
 #: plug-ins/common/blur.c:655
 msgid "Randomization %:"
-msgstr "% de Aleatorización :"
+msgstr "% de aleatorización :"
 
 #: plug-ins/common/blur.c:658 plug-ins/common/randomize.c:747
 msgid "Percentage of pixels to be filtered"
@@ -2505,27 +2500,27 @@ msgstr "256 (¿una tontería?)"
 
 #: plug-ins/common/bumpmap.c:367
 msgid "<Image>/Filters/Map/Bump Map..."
-msgstr "<Image>/Filtros/Proyección/Mapa de Relieve..."
+msgstr "<Image>/Filtros/Aplicación/Aplicación de relieve..."
 
 #: plug-ins/common/bumpmap.c:522
 msgid "Bump-mapping..."
-msgstr "Haciendo Relieve..."
+msgstr "Haciendo relieve..."
 
 #: plug-ins/common/bumpmap.c:935
 msgid "Map Type"
-msgstr "Tipo de proyección"
+msgstr "Tipo de aplicación"
 
 #: plug-ins/common/bumpmap.c:939
 msgid "Linear Map"
-msgstr "Proyección Lineal"
+msgstr "Aplicación lineal"
 
 #: plug-ins/common/bumpmap.c:940
 msgid "Spherical Map"
-msgstr "Proyección Esférica"
+msgstr "Aplicación esférica"
 
 #: plug-ins/common/bumpmap.c:941
 msgid "Sinuosidal Map"
-msgstr "Proyección Senoidal"
+msgstr "Aplicación senoidal"
 
 #. Compensate darkening
 #: plug-ins/common/bumpmap.c:954
@@ -2535,13 +2530,12 @@ msgstr "Compensar oscurecimiento"
 #. Invert bumpmap
 #: plug-ins/common/bumpmap.c:964
 msgid "Invert Bumpmap"
-msgstr "Invertir Mapa de Relieve"
+msgstr "Invertir relieve"
 
-# //R NO ESTOY SEGURO
 #. Tile bumpmap
 #: plug-ins/common/bumpmap.c:974
 msgid "Tile Bumpmap"
-msgstr "Relieve en baldosas"
+msgstr "Enlosar mapa de relieve"
 
 #: plug-ins/common/bumpmap.c:1005
 msgid "Bump Map:"
@@ -2575,23 +2569,23 @@ msgstr ""
 
 #: plug-ins/common/c_astretch.c:88
 msgid "<Image>/Image/Colors/Auto/Stretch Contrast"
-msgstr "<Image>/Imagen/Colores/Auto/Estirar Contraste"
+msgstr "<Image>/Imagen/Colores/Auto/Estirar contraste"
 
 #: plug-ins/common/c_astretch.c:121
 msgid "Auto-Stretching Contrast..."
-msgstr "Auto-estirando Contraste..."
+msgstr "Auto-estirando contraste..."
 
 #: plug-ins/common/checkerboard.c:102
 msgid "<Image>/Filters/Render/Pattern/Checkerboard..."
-msgstr "<Image>/Filtros/Render/Patrón/Tablero de Ajedrez..."
+msgstr "<Image>/Filtros/Render/Patrón/Tablero de ajedrez..."
 
 #: plug-ins/common/checkerboard.c:165
 msgid "Adding Checkerboard..."
-msgstr "Añadiendo Tablero de Ajedrez..."
+msgstr "Añadiendo tablero de ajedrez..."
 
 #: plug-ins/common/checkerboard.c:344
 msgid "Checkerboard"
-msgstr "Tablero de Ajedrez"
+msgstr "Tablero de ajedrez"
 
 # //R ¿¿EEEEEEEEEEEIIIIIIINNNNNNNNNNHHHHHHHHHHHGGG???
 #: plug-ins/common/checkerboard.c:370
@@ -2604,11 +2598,11 @@ msgstr "Tamaño de ajedrez:"
 
 #: plug-ins/common/color_enhance.c:91
 msgid "<Image>/Image/Colors/Auto/Color Enhance"
-msgstr "<Image>/Imagen/Colores/Auto/Realce de Color"
+msgstr "<Image>/Imagen/Colores/Auto/Realce de color"
 
 #: plug-ins/common/color_enhance.c:124
 msgid "Color Enhance..."
-msgstr "Realzando Colores..."
+msgstr "Realzando colores..."
 
 #: plug-ins/common/colorify.c:154
 msgid "<Image>/Filters/Colors/Colorify..."
@@ -2623,10 +2617,10 @@ msgid "Colorify"
 msgstr "Colorear"
 
 #: plug-ins/common/colorify.c:338 plug-ins/common/colortoalpha.c:414
-#: plug-ins/common/ps.c:2707 plug-ins/common/xpm.c:439
+#: plug-ins/common/ps.c:2678 plug-ins/common/xpm.c:439
 #: plug-ins/gap/gap_mov_dialog.c:276 plug-ins/gimpressionist/color.c:51
 #: plug-ins/gimpressionist/color.c:56 plug-ins/imagemap/imap_menu.c:325
-#: plug-ins/print/gimp_main_window.c:758
+#: plug-ins/print/gimp_main_window.c:504
 msgid "Color"
 msgstr "Color"
 
@@ -2636,15 +2630,15 @@ msgstr "Color personalizado:"
 
 #: plug-ins/common/colorify.c:356
 msgid "Colorify Custom Color"
-msgstr "Colorear con Color personalizado"
+msgstr "Colorear con color personalizado"
 
 #: plug-ins/common/colortoalpha.c:122
 msgid "<Image>/Filters/Colors/Color to Alpha..."
-msgstr "<Image>/Filtros/Colores/Color a Alfa..."
+msgstr "<Image>/Filtros/Colores/Color a alfa..."
 
 #: plug-ins/common/colortoalpha.c:398
 msgid "Color to Alpha"
-msgstr "Color a Alfa"
+msgstr "Color a alfa"
 
 #: plug-ins/common/colortoalpha.c:425 plug-ins/common/mapcolor.c:652
 #: plug-ins/gap/gap_decode_mpeg_main.c:652 plug-ins/gap/gap_decode_xanim.c:223
@@ -2656,11 +2650,11 @@ msgstr "Desde:"
 
 #: plug-ins/common/colortoalpha.c:430
 msgid "Color to Alpha Color Picker"
-msgstr "Selector de color de Color a Alfa"
+msgstr "Selector de color para \"De color a alfa\""
 
 #: plug-ins/common/colortoalpha.c:438
 msgid "to Alpha"
-msgstr "a Alfa"
+msgstr "a alfa"
 
 #: plug-ins/common/compose.c:120 plug-ins/common/decompose.c:113
 #: plug-ins/common/newsprint.c:1337
@@ -2675,7 +2669,7 @@ msgstr "componer-rgb"
 msgid "RGBA"
 msgstr "RGBA"
 
-#: plug-ins/common/compose.c:127 plug-ins/common/nlfilt.c:418
+#: plug-ins/common/compose.c:127 plug-ins/common/nlfilt.c:401
 #: plug-ins/common/noisify.c:574 plug-ins/common/noisify.c:657
 msgid "Alpha:"
 msgstr "Alfa:"
@@ -2696,7 +2690,7 @@ msgstr "Tono:"
 
 #. Gray: Circle: Spinbutton 2
 #: plug-ins/common/compose.c:129 plug-ins/common/scatter_hsv.c:459
-#: plug-ins/print/gimp_color_window.c:253 plug-ins/rcm/rcm_dialog.c:453
+#: plug-ins/print/gimp_color_window.c:177 plug-ins/rcm/rcm_dialog.c:453
 msgid "Saturation:"
 msgstr "Saturación:"
 
@@ -2714,17 +2708,17 @@ msgid "CMY"
 msgstr "CMY (Cian/Mag/Amar)"
 
 #: plug-ins/common/compose.c:132 plug-ins/common/compose.c:136
-#: plug-ins/fp/fp_gtk.c:23 plug-ins/print/gimp_color_window.c:208
+#: plug-ins/fp/fp_gtk.c:23
 msgid "Cyan:"
 msgstr "Cian:"
 
 #: plug-ins/common/compose.c:133 plug-ins/common/compose.c:137
-#: plug-ins/fp/fp_gtk.c:25 plug-ins/print/gimp_color_window.c:223
+#: plug-ins/fp/fp_gtk.c:25
 msgid "Magenta:"
 msgstr "Magenta:"
 
 #: plug-ins/common/compose.c:134 plug-ins/common/compose.c:138
-#: plug-ins/fp/fp_gtk.c:24 plug-ins/print/gimp_color_window.c:238
+#: plug-ins/fp/fp_gtk.c:24
 msgid "Yellow:"
 msgstr "Amarillo:"
 
@@ -2783,7 +2777,7 @@ msgstr "Componer"
 #. The left frame keeps the compose type toggles
 #: plug-ins/common/compose.c:794
 msgid "Compose Channels"
-msgstr "Componer Canales"
+msgstr "Componer canales"
 
 #. The right frame keeps the selection menues for images.
 #. Because the labels within this frame will change when a toggle
@@ -2791,7 +2785,7 @@ msgstr "Componer Canales"
 #. Otherwise it can occur, that a non-existing label might be changed.
 #: plug-ins/common/compose.c:807
 msgid "Channel Representations"
-msgstr "Representaciones de Canal"
+msgstr "Representaciones de canal"
 
 #: plug-ins/common/convmatrix.c:82 plug-ins/common/newsprint.c:383
 #: plug-ins/gfig/gfig.c:3322
@@ -2818,7 +2812,7 @@ msgstr "Recortar"
 
 #: plug-ins/common/convmatrix.c:191
 msgid "<Image>/Filters/Generic/Convolution Matrix..."
-msgstr "<Image>/Filtros/Genérico/Matriz de Convolución..."
+msgstr "<Image>/Filtros/Genérico/Matriz de convolución..."
 
 #: plug-ins/common/convmatrix.c:264
 msgid "Applying convolution"
@@ -2826,7 +2820,7 @@ msgstr "Aplicando convolución"
 
 #: plug-ins/common/convmatrix.c:795
 msgid "Convolution Matrix"
-msgstr "Matriz de Convolución"
+msgstr "Matriz de convolución"
 
 #: plug-ins/common/convmatrix.c:821
 msgid "Matrix"
@@ -2840,14 +2834,14 @@ msgstr "Divisor:"
 msgid "Offset:"
 msgstr "Desplazamiento:"
 
-#: plug-ins/common/convmatrix.c:900 plug-ins/common/ps.c:2708
+#: plug-ins/common/convmatrix.c:900 plug-ins/common/ps.c:2679
 #: plug-ins/fits/fits.c:1020
 msgid "Automatic"
 msgstr "Automático"
 
 #: plug-ins/common/convmatrix.c:908
 msgid "Alpha-weighting"
-msgstr "Ponderar con Alfa"
+msgstr "Ponderar con alfa"
 
 #: plug-ins/common/convmatrix.c:923
 msgid "Border"
@@ -2886,7 +2880,7 @@ msgstr "Usar tipos GLib (guint8*)"
 #.
 #: plug-ins/common/csource.c:718
 msgid "Use Macros instead of Struct"
-msgstr "Usar Macros en vez de Struct"
+msgstr "Usar macros en vez de struct"
 
 #. Use RLE
 #.
@@ -2915,7 +2909,7 @@ msgstr "<Image>/Filtros/Artístico/Cubismo..."
 
 #: plug-ins/common/cubism.c:276
 msgid "Cubistic Transformation"
-msgstr "Transformacion Cubística"
+msgstr "Transformacion cubística"
 
 #: plug-ins/common/cubism.c:298
 msgid "Cubism"
@@ -2923,15 +2917,15 @@ msgstr "Cubismo"
 
 #: plug-ins/common/cubism.c:327
 msgid "Use Background Color"
-msgstr "Usar Color de Fondo"
+msgstr "Usar color de Fondo"
 
 #: plug-ins/common/cubism.c:338 plug-ins/mosaic/mosaic.c:654
 msgid "Tile Size:"
-msgstr "Tamaño de Baldosa:"
+msgstr "Tamaño de baldosa:"
 
 #: plug-ins/common/cubism.c:348
 msgid "Tile Saturation:"
-msgstr "Saturación de Baldosas:"
+msgstr "Saturación de baldosas:"
 
 #: plug-ins/common/curve_bend.c:351
 msgid "Upper"
@@ -2984,12 +2978,12 @@ msgstr "Intercambiar"
 #. The Load button
 #: plug-ins/common/curve_bend.c:1386
 msgid "LoadCurve"
-msgstr "Cargar Curva"
+msgstr "Cargar curva"
 
 #. The Save button
 #: plug-ins/common/curve_bend.c:1394
 msgid "SaveCurve"
-msgstr "Guardar Curva"
+msgstr "Guardar curva"
 
 #. Rotate label & spinbutton
 #: plug-ins/common/curve_bend.c:1402
@@ -3008,7 +3002,7 @@ msgstr "Tipo de curva:"
 #. The preview button
 #: plug-ins/common/curve_bend.c:1494
 msgid "PreviewOnce"
-msgstr "Vista Previa"
+msgstr "Vista previa"
 
 # //R Ojito
 #. The smoothing toggle
@@ -3139,7 +3133,7 @@ msgstr "Descomponer"
 #. parameter settings
 #: plug-ins/common/decompose.c:886
 msgid "Extract Channels:"
-msgstr "Extrer Canales:"
+msgstr "Extrer canales:"
 
 # //R Es un palabro extraño, pero creo que se entiende
 #: plug-ins/common/deinterlace.c:92
@@ -3255,11 +3249,11 @@ msgstr "Recursivo"
 
 #: plug-ins/common/despeckle.c:758
 msgid "Black Level:"
-msgstr "Nivel de Negro:"
+msgstr "Nivel de negro:"
 
 #: plug-ins/common/despeckle.c:771
 msgid "White Level:"
-msgstr "Nivel de Blanco:"
+msgstr "Nivel de blanco:"
 
 # //R Se refiere a las bandas que producen los escáneres baratos
 #: plug-ins/common/destripe.c:147
@@ -3281,16 +3275,16 @@ msgstr "Crear histograma"
 #. Widht Scale
 #. table col, row
 #: plug-ins/common/destripe.c:670 plug-ins/common/gtm.c:551
-#: plug-ins/common/ps.c:2664 plug-ins/common/ps.c:2840
+#: plug-ins/common/ps.c:2635 plug-ins/common/ps.c:2811
 #: plug-ins/common/smooth_palette.c:430 plug-ins/common/tile.c:406
 #: plug-ins/gap/gap_mov_dialog.c:2139 plug-ins/imagemap/imap_rectangle.c:387
-#: plug-ins/print/gimp_main_window.c:638
+#: plug-ins/print/gimp_main_window.c:387
 msgid "Width:"
 msgstr "Anchura:"
 
 #: plug-ins/common/diffraction.c:185
 msgid "<Image>/Filters/Render/Pattern/Diffraction Patterns..."
-msgstr "<Image>/Filtros/Render/Patrón/Patrones de Difracción"
+msgstr "<Image>/Filtros/Render/Patrón/Patrones de difracción"
 
 #: plug-ins/common/diffraction.c:331
 msgid "Creating diffraction pattern..."
@@ -3298,7 +3292,7 @@ msgstr "Creando patrón de difracción..."
 
 #: plug-ins/common/diffraction.c:529
 msgid "Diffraction Patterns"
-msgstr "Patrones de Difracción"
+msgstr "Patrones de difracción"
 
 #: plug-ins/common/diffraction.c:626
 msgid "Frequencies"
@@ -3313,7 +3307,7 @@ msgid "Sharp edges"
 msgstr "Bordes remarcados"
 
 #: plug-ins/common/diffraction.c:717 plug-ins/flame/flame.c:1011
-#: plug-ins/print/gimp_color_window.c:178
+#: plug-ins/print/gimp_color_window.c:107
 msgid "Brightness:"
 msgstr "Brillo:"
 
@@ -3331,7 +3325,7 @@ msgstr "Otras opciones"
 
 #: plug-ins/common/displace.c:183
 msgid "<Image>/Filters/Map/Displace..."
-msgstr "<Image>/Filtros/Proyección/Desplazar..."
+msgstr "<Image>/Filtros/Aplicación/Desplazar..."
 
 #: plug-ins/common/displace.c:254
 msgid "Displacing..."
@@ -3344,7 +3338,7 @@ msgstr "Desplazar"
 #. The main table
 #: plug-ins/common/displace.c:310
 msgid "Displace Options"
-msgstr "Opciones de Desplazar"
+msgstr "Opciones de desplazar"
 
 #. X options
 #: plug-ins/common/displace.c:322
@@ -3409,9 +3403,9 @@ msgstr "Función"
 
 #: plug-ins/common/emboss.c:551 plug-ins/common/spheredesigner.c:1574
 msgid "Bumpmap"
-msgstr "Mapa de relieve"
+msgstr "Aplicación de relieve"
 
-#: plug-ins/common/emboss.c:759 plug-ins/common/nlfilt.c:604
+#: plug-ins/common/emboss.c:759 plug-ins/common/nlfilt.c:595
 #: plug-ins/common/sinus.c:2143 plug-ins/common/waves.c:596
 msgid "Do Preview"
 msgstr "Hacer vista previa"
@@ -3422,7 +3416,7 @@ msgstr "<Image>/Filtros/Distorsión/Grabado"
 
 #: plug-ins/common/engrave.c:191
 msgid "Engraving..."
-msgstr "Haciendo Grabado..."
+msgstr "Haciendo grabado..."
 
 #: plug-ins/common/engrave.c:219
 msgid "Engrave"
@@ -3435,11 +3429,11 @@ msgstr "Limitar anchura de línea"
 #. Height Scale
 #. table col, row
 #: plug-ins/common/engrave.c:256 plug-ins/common/film.c:1239
-#: plug-ins/common/gtm.c:565 plug-ins/common/ps.c:2673
-#: plug-ins/common/ps.c:2849 plug-ins/common/smooth_palette.c:439
+#: plug-ins/common/gtm.c:565 plug-ins/common/ps.c:2644
+#: plug-ins/common/ps.c:2820 plug-ins/common/smooth_palette.c:439
 #: plug-ins/common/tile.c:410 plug-ins/gap/gap_mov_dialog.c:2156
 #: plug-ins/imagemap/imap_rectangle.c:393
-#: plug-ins/print/gimp_main_window.c:652
+#: plug-ins/print/gimp_main_window.c:398
 msgid "Height:"
 msgstr "Altura:"
 
@@ -3448,44 +3442,44 @@ msgstr "Altura:"
 msgid "<Image>/Filters/Colors/Map/Color Exchange..."
 msgstr "<Image>/Filtros/Colores/Proyección/Intercambio de color..."
 
-#: plug-ins/common/exchange.c:223
+#: plug-ins/common/exchange.c:222
 msgid "Color Exchange..."
 msgstr "Intercambio de color..."
 
 #. set up the dialog
-#: plug-ins/common/exchange.c:274
+#: plug-ins/common/exchange.c:273
 msgid "Color Exchange"
 msgstr "Intercambio de color"
 
-#: plug-ins/common/exchange.c:322
+#: plug-ins/common/exchange.c:321
 msgid "To Color"
 msgstr "Al color"
 
-#: plug-ins/common/exchange.c:322
+#: plug-ins/common/exchange.c:321
 msgid "From Color"
 msgstr "Del color"
 
-#: plug-ins/common/exchange.c:335
+#: plug-ins/common/exchange.c:334
 msgid "Color Exchange: To Color"
-msgstr "Intercambio de color: Al color"
+msgstr "Intercambio de color: al color"
 
-#: plug-ins/common/exchange.c:336
+#: plug-ins/common/exchange.c:335
 msgid "Color Exchange: From Color"
-msgstr "Intercambio de color: Del color"
+msgstr "Intercambio de color: del color"
 
-#: plug-ins/common/exchange.c:370
+#: plug-ins/common/exchange.c:369
 msgid "Red Threshold:"
 msgstr "Umbral de rojo:"
 
-#: plug-ins/common/exchange.c:398
+#: plug-ins/common/exchange.c:397
 msgid "Green Threshold:"
 msgstr "Umbral de verde:"
 
-#: plug-ins/common/exchange.c:427
+#: plug-ins/common/exchange.c:426
 msgid "Blue Threshold:"
 msgstr "Umbral de azul:"
 
-#: plug-ins/common/exchange.c:445
+#: plug-ins/common/exchange.c:444
 msgid "Lock Thresholds"
 msgstr "Fijar umbrales"
 
@@ -3582,15 +3576,15 @@ msgstr ""
 
 #: plug-ins/common/film.c:1353
 msgid "Image Height:"
-msgstr "Altura de Imagen:"
+msgstr "Altura de imagen:"
 
 #: plug-ins/common/film.c:1367
 msgid "Image Spacing:"
-msgstr "Espaciado de Imagen:"
+msgstr "Espaciado de imagen:"
 
 #: plug-ins/common/film.c:1388
 msgid "Hole Offset:"
-msgstr "Desfase de agujeros:"
+msgstr "Desplazamiento de agujeros:"
 
 #: plug-ins/common/film.c:1402
 msgid "Hole Width:"
@@ -3618,7 +3612,7 @@ msgstr "<Image>/Filtros/Efectos de Luz/Destello FX..."
 
 #: plug-ins/common/flarefx.c:291
 msgid "Render Flare..."
-msgstr "Dibujando Destello..."
+msgstr "Dibujando destello..."
 
 #: plug-ins/common/flarefx.c:327
 msgid "FlareFX"
@@ -3627,20 +3621,20 @@ msgstr "Destello FX"
 #. to avoid side effects while initialization
 #: plug-ins/common/flarefx.c:772
 msgid "Center of FlareFX"
-msgstr "Centro del Destello FX"
+msgstr "Centro del destello FX"
 
 #. show / hide cursor
 #: plug-ins/common/flarefx.c:846 plug-ins/common/nova.c:669
 msgid "Show Cursor"
-msgstr "Mostrar Color"
+msgstr "Mostrar color"
 
 #: plug-ins/common/fractaltrace.c:126
 msgid "<Image>/Filters/Map/Fractal Trace..."
-msgstr "<Image>/Filtros/Proyección/Huella fractal..."
+msgstr "<Image>/Filtros/Aplicación/Huella fractal..."
 
 #: plug-ins/common/fractaltrace.c:451 plug-ins/common/fractaltrace.c:720
 msgid "Fractal Trace"
-msgstr "Huella Fractal"
+msgstr "Huella fractal"
 
 #. Settings
 #: plug-ins/common/fractaltrace.c:765
@@ -3724,7 +3718,7 @@ msgstr "No puedo abrir %s"
 
 #: plug-ins/common/gbr.c:451
 msgid "Save as Brush"
-msgstr "Guardar como Brocha"
+msgstr "Guardar como brocha"
 
 #: plug-ins/common/gbr.c:478
 msgid "Spacing:"
@@ -3742,7 +3736,7 @@ msgstr "<Image>/Filtros/Juguetes/Huevo de Pascua..."
 
 #: plug-ins/common/gee.c:200
 msgid "GEE!  The GIMP E'er Egg!"
-msgstr "¡Eh! ¡Encontró el Huevo de Pascua!"
+msgstr "¡Eh! ¡Encontró el huevo de Pascua!"
 
 #. Action area - 'close' button only.
 #: plug-ins/common/gee.c:211
@@ -3755,7 +3749,7 @@ msgstr "Guardar como GIcono"
 
 #: plug-ins/common/gicon.c:464
 msgid "Icon Name:"
-msgstr "Nombre de Icono:"
+msgstr "Nombre de icono:"
 
 #: plug-ins/common/gif.c:674
 msgid ""
@@ -3773,7 +3767,7 @@ msgid ""
 msgstr ""
 "GIF: Lo siento, no puedo guardar imágenes RGB como GIFs - convierta a "
 "INDEXADA\n"
-"o ESCALA DE GRISES primro.\n"
+"o ESCALA DE GRISES primero.\n"
 
 #: plug-ins/common/gif.c:947
 #, c-format
@@ -3830,7 +3824,7 @@ msgstr "Repetir eternamente"
 
 #: plug-ins/common/gif.c:1328
 msgid "Delay between Frames where Unspecified:"
-msgstr "Pausa entre Fotogramas cuando no se especifique:"
+msgstr "Pausa entre cuadros cuando no se especifique:"
 
 #: plug-ins/common/gif.c:1340
 msgid "Milliseconds"
@@ -3838,7 +3832,7 @@ msgstr "Milisegundos"
 
 #: plug-ins/common/gif.c:1350
 msgid "Frame Disposal where Unspecified: "
-msgstr "Colocación de Fotogramas cuando no se especifique:"
+msgstr "Colocación de cuadros cuando no se especifique:"
 
 #: plug-ins/common/gif.c:1359
 msgid "I don't Care"
@@ -3846,11 +3840,11 @@ msgstr "No me importa"
 
 #: plug-ins/common/gif.c:1361
 msgid "Cumulative Layers (Combine)"
-msgstr "Capas acumulativas (combinar)"
+msgstr "Capas acumulativas (Combinar)"
 
 #: plug-ins/common/gif.c:1363
 msgid "One Frame per Layer (Replace)"
-msgstr "Un Fotograma por Capa (Reemplazar)"
+msgstr "Un Cuadro por Capa (Reemplazar)"
 
 #: plug-ins/common/gif.c:2347
 msgid "GIF: error writing output file\n"
@@ -3869,12 +3863,12 @@ msgstr "Fondo (%dms)"
 #: plug-ins/common/iwarp.c:765 plug-ins/common/mpeg.c:302
 #, c-format
 msgid "Frame %d"
-msgstr "Fotograma %d"
+msgstr "Cuadro %d"
 
 #: plug-ins/common/gifload.c:901 plug-ins/common/mpeg.c:299
 #, c-format
 msgid "Frame %d (%dms)"
-msgstr "Fotograma %d (%dms)"
+msgstr "Cuadro %d (%dms)"
 
 # //R PROVISIONAL hasta que encuentre un nombre técnico
 #: plug-ins/common/glasstile.c:138
@@ -3883,19 +3877,19 @@ msgstr "<Image>/Filtros/Efectos de Cristal/Baldosas de cristal..."
 
 #: plug-ins/common/glasstile.c:215
 msgid "Glass Tile..."
-msgstr "Baldosa de Cristal..."
+msgstr "Baldosa de cristal..."
 
 #: plug-ins/common/glasstile.c:255
 msgid "Glass Tile"
-msgstr "Baldosa de Cristal"
+msgstr "Baldosa de cristal"
 
 #: plug-ins/common/glasstile.c:307
 msgid "Tile Width:"
-msgstr "Anchura de Baldosa:"
+msgstr "Anchura de baldosa:"
 
 #: plug-ins/common/glasstile.c:320 plug-ins/mosaic/mosaic.c:663
 msgid "Tile Height:"
-msgstr "Altura de Baldosa:"
+msgstr "Altura de baldosa:"
 
 #: plug-ins/common/gpb.c:282
 msgid "Spacing (Percent):"
@@ -3903,11 +3897,11 @@ msgstr "Espaciado (Porcentaje):"
 
 #: plug-ins/common/gpb.c:308
 msgid "Save as Pixmap Brush"
-msgstr "Guardar como Brocha Píxmap"
+msgstr "Guardar como brocha píxmap"
 
 #: plug-ins/common/gpb.c:365
 msgid "Save as Pixmap Brush Pipe"
-msgstr "Guardar como Tubo de brochas píxmap"
+msgstr "Guardar como tubo de brochas píxmap"
 
 #: plug-ins/common/gpb.c:428
 msgid "Pixels"
@@ -3980,11 +3974,11 @@ msgstr "G-Qbista 1.10"
 
 #: plug-ins/common/gradmap.c:118
 msgid "<Image>/Filters/Colors/Map/Gradient Map"
-msgstr "<Image>/Filtros/Colores/Proyección/Proyección Gradiente"
+msgstr "<Image>/Filtros/Colores/Aplicación/Aplicar gradiente"
 
 #: plug-ins/common/gradmap.c:154
 msgid "Gradient Map..."
-msgstr "Proyección Gradiente..."
+msgstr "Aplicar gradiente..."
 
 #: plug-ins/common/grid.c:158
 msgid "<Image>/Filters/Render/Pattern/Grid..."
@@ -3992,7 +3986,7 @@ msgstr "<Image>/Filtros/Render/Patrón/Rejilla..."
 
 #: plug-ins/common/grid.c:242
 msgid "Drawing Grid..."
-msgstr "Dibujando Rejilla.."
+msgstr "Dibujando rejilla.."
 
 #: plug-ins/common/grid.c:654 plug-ins/gfig/gfig.c:3396
 #: plug-ins/imagemap/imap_menu.c:400 plug-ins/imagemap/imap_popup.c:148
@@ -4033,7 +4027,7 @@ msgstr "Color de intersección"
 
 #: plug-ins/common/gtm.c:370
 msgid "GIMP Table Magic"
-msgstr "Tabla Mágica de GIMP"
+msgstr "Tabla mágica de GIMP"
 
 #: plug-ins/common/gtm.c:400 plug-ins/gfig/gfig.c:4075
 msgid "Warning"
@@ -4078,7 +4072,7 @@ msgstr "Opciones de creación de tabla"
 # //R ¿Cómo traduzco esto?
 #: plug-ins/common/gtm.c:457
 msgid "Use Cellspan"
-msgstr "Usar Cellspan"
+msgstr "Usar cellspan"
 
 #: plug-ins/common/gtm.c:465
 msgid ""
@@ -4188,7 +4182,7 @@ msgstr "Quitar píxeles \"calientes\""
 
 #: plug-ins/common/hot.c:609
 msgid "Create New Layer"
-msgstr "Crear nueva Capa"
+msgstr "Crear nueva capa"
 
 #: plug-ins/common/hot.c:630
 msgid "Action"
@@ -4208,7 +4202,7 @@ msgstr "Ennegrecer"
 
 #: plug-ins/common/illusion.c:117
 msgid "<Image>/Filters/Map/Illusion..."
-msgstr "<Image>/Filtros/Proyección/Espejismo..."
+msgstr "<Image>/Filtros/Aplicación/Espejismo..."
 
 #: plug-ins/common/illusion.c:181
 msgid "Illusion..."
@@ -4233,7 +4227,7 @@ msgstr "Deformando..."
 #: plug-ins/common/iwarp.c:746 plug-ins/common/iwarp.c:757
 #, c-format
 msgid "Warping Frame Nr %d ..."
-msgstr "Deformando Fotograma nº %d ..."
+msgstr "Deformando cuadro nº %d ..."
 
 #: plug-ins/common/iwarp.c:758 plug-ins/common/iwarp.c:961
 msgid "Ping Pong"
@@ -4245,7 +4239,7 @@ msgstr "Animar"
 
 #: plug-ins/common/iwarp.c:944
 msgid "Number of Frames:"
-msgstr "Número de Fotogramas:"
+msgstr "Número de cuadros:"
 
 #: plug-ins/common/iwarp.c:953
 msgid "Reverse"
@@ -4315,7 +4309,7 @@ msgstr "<Image>/Filtros/Render/Patrón/Puzzle..."
 
 #: plug-ins/common/jigsaw.c:450
 msgid "Assembling Jigsaw"
-msgstr "Ensamblando Puzzle"
+msgstr "Ensamblando puzzle"
 
 #: plug-ins/common/jigsaw.c:2481
 msgid "Jigsaw"
@@ -4547,7 +4541,7 @@ msgstr "Valor máximo:"
 
 #: plug-ins/common/lic.c:1220
 msgid "<Image>/Filters/Map/Van Gogh (LIC)..."
-msgstr "<Image>/Filtros/Proyección/Van Gogh (LIC)..."
+msgstr "<Image>/Filtros/Aplicación/Van Gogh (LIC)..."
 
 #: plug-ins/common/mail.c:220
 msgid "<Image>/File/Mail Image..."
@@ -4611,19 +4605,18 @@ msgstr "Segundo color destino"
 
 #: plug-ins/common/mapcolor.c:346
 msgid "<Image>/Filters/Colors/Map/Adjust FG-BG"
-msgstr "<Image>/Filtros/Colores/Proyección/Ajustar Frente-Fondo"
+msgstr "<Image>/Filtros/Colores/Aplicación/Ajustar Frente-Fondo"
 
-# //R No lo encuentro...
 #: plug-ins/common/mapcolor.c:361
 msgid "<Image>/Filters/Colors/Map/Color Range Mapping..."
-msgstr "<Image>/Filtros/Colores/Proyección/Proyección de rango de color"
+msgstr "<Image>/Filtros/Colores/Proyección/Aplicar rango de color"
 
 #: plug-ins/common/mapcolor.c:406 plug-ins/common/mapcolor.c:746
 msgid ""
 "Color Mapping / Adjust FG/BG:\n"
 "Cannot operate on gray/indexed images"
 msgstr ""
-"Proyección de Color / Ajuste Frente-Fondo:\n"
+"Aplicación de Color / Ajuste Frente-Fondo:\n"
 "No puedo trabajar en imágenes de grises o indexadas"
 
 #: plug-ins/common/mapcolor.c:434
@@ -4632,11 +4625,11 @@ msgstr "Ajustando Frente/Fondo"
 
 #: plug-ins/common/mapcolor.c:482
 msgid "Mapping colors"
-msgstr "Proyectando colores"
+msgstr "Aplicando colores"
 
 #: plug-ins/common/mapcolor.c:553
 msgid "Map Color Range"
-msgstr "Proyección de rango de color"
+msgstr "Aplicar rango de color"
 
 #: plug-ins/common/mapcolor.c:604
 msgid "Source color range"
@@ -4673,12 +4666,12 @@ msgstr "RGB. Máx"
 # //R Convendría revista esto
 #: plug-ins/common/max_rgb.c:385
 msgid "Hold the Maximal Channels"
-msgstr "Fijar Canales máximos"
+msgstr "Fijar canales máximos"
 
 # //R Revistar también esto
 #: plug-ins/common/max_rgb.c:387
 msgid "Hold the Minimal Channels"
-msgstr "Fijar Canales mínimos"
+msgstr "Fijar canales mínimos"
 
 #: plug-ins/common/mblur.c:167
 msgid "<Image>/Filters/Blur/Motion Blur..."
@@ -4750,7 +4743,7 @@ msgstr "<Image>/Filtros/Distorsión/Papel de periódico..."
 
 #: plug-ins/common/newsprint.c:666
 msgid "Newsprintifing..."
-msgstr "Haciendo Papel de periódico..."
+msgstr "Haciendo papel de periódico..."
 
 #: plug-ins/common/newsprint.c:1051
 msgid "Spot Function:"
@@ -4790,7 +4783,7 @@ msgstr "Separara a:"
 
 #: plug-ins/common/newsprint.c:1378
 msgid "Lock Channels"
-msgstr "Fijar Canales"
+msgstr "Fijar canales"
 
 #: plug-ins/common/newsprint.c:1388
 msgid "Factory Defaults"
@@ -4800,28 +4793,28 @@ msgstr "Valores por omisión"
 msgid "Oversample:"
 msgstr "Sobremuestreo:"
 
-#: plug-ins/common/nlfilt.c:159
+#: plug-ins/common/nlfilt.c:153
 msgid "<Image>/Filters/Enhance/NL Filter..."
 msgstr "<Image>/Filtros/Realce/Filtro NL..."
 
-#: plug-ins/common/nlfilt.c:277 plug-ins/common/nlfilt.c:360
+#: plug-ins/common/nlfilt.c:263 plug-ins/common/nlfilt.c:343
 msgid "NL Filter"
 msgstr "Filtro NL"
 
-#: plug-ins/common/nlfilt.c:390
+#: plug-ins/common/nlfilt.c:373
 msgid "Filter"
 msgstr "Filtro"
 
 # //R :-????
-#: plug-ins/common/nlfilt.c:394
+#: plug-ins/common/nlfilt.c:377
 msgid "Alpha Trimmed Mean"
-msgstr "Media arreglada por Alfa"
+msgstr "Media arreglada por alfa"
 
-#: plug-ins/common/nlfilt.c:396
+#: plug-ins/common/nlfilt.c:379
 msgid "Optimal Estimation"
 msgstr "Aproximación óptima"
 
-#: plug-ins/common/nlfilt.c:398
+#: plug-ins/common/nlfilt.c:381
 msgid "Edge Enhancement"
 msgstr "Realce de bordes"
 
@@ -4897,7 +4890,7 @@ msgstr "Pintura al óleo..."
 
 #: plug-ins/common/oilify.c:453
 msgid "Oilify"
-msgstr "Pintura al Óleo"
+msgstr "Pintura al óleo"
 
 #: plug-ins/common/oilify.c:481
 msgid "Use Intensity Algorithm"
@@ -4909,7 +4902,7 @@ msgstr "Tamaño de máscara:"
 
 #: plug-ins/common/papertile.c:245
 msgid "Paper Tile"
-msgstr "Baldosas de Papel"
+msgstr "Losas de papel"
 
 #: plug-ins/common/papertile.c:271
 msgid "Division"
@@ -4951,7 +4944,7 @@ msgstr "Dar la vuelta en los bordes"
 
 #: plug-ins/common/papertile.c:375
 msgid "Background Type"
-msgstr "Tipo de Fondo"
+msgstr "Tipo de fondo"
 
 #: plug-ins/common/papertile.c:382
 msgid "Inverted Image"
@@ -4976,11 +4969,11 @@ msgstr "31 de Septiembre de 1999"
 
 #: plug-ins/common/papertile.c:839
 msgid "<Image>/Filters/Map/Paper Tile..."
-msgstr "<Image>/Filtros/Proyección/Baldosas de papel..."
+msgstr "<Image>/Filtros/Aplicación/Baldosas de papel..."
 
 #: plug-ins/common/pat.c:407
 msgid "Save as Pattern"
-msgstr "Guardar como Patrón"
+msgstr "Guardar como patrón"
 
 #: plug-ins/common/pixelize.c:163
 msgid "<Image>/Filters/Blur/Pixelize..."
@@ -5174,11 +5167,11 @@ msgstr "Entrelazado (Adam7)"
 
 #: plug-ins/common/png.c:1078
 msgid "Save background color"
-msgstr "Guardar Color de Fondo"
+msgstr "Guardar color de Fondo"
 
 #: plug-ins/common/png.c:1087
 msgid "Save gamma"
-msgstr "Guardar Gamma"
+msgstr "Guardar gamma"
 
 #: plug-ins/common/png.c:1096
 msgid "Save layer offset"
@@ -5208,9 +5201,9 @@ msgid "PNM: Premature end of file."
 msgstr "PNM: Fin de fichero prematuro."
 
 #: plug-ins/common/pnm.c:452
-#, fuzzy
-msgid "PNM: Invalid file."
-msgstr "PNM: Valor máximo no válido."
+#, c-format
+msgid "PNM: %s is not a valid file."
+msgstr "PNM: %s no es un fichero válido."
 
 #: plug-ins/common/pnm.c:465
 msgid "PNM: File not in a supported format."
@@ -5250,7 +5243,7 @@ msgstr "Ascii"
 
 #: plug-ins/common/polar.c:215
 msgid "<Image>/Filters/Distorts/Polar Coords..."
-msgstr "<Image>/Filtros/Distorsión/Coordenadas Polares..."
+msgstr "<Image>/Filtros/Distorsión/Coordenadas polares..."
 
 # //R Esto no puede ser "polarizar"
 #: plug-ins/common/polar.c:405
@@ -5305,110 +5298,110 @@ msgstr ""
 "Si no se activa la imagen será proyectada circularmente en un rectángulo. Si "
 "se activa la imagen será proyectada en un círculo."
 
-#: plug-ins/common/ps.c:875
+#: plug-ins/common/ps.c:874
 msgid "PS: can't open file for reading"
 msgstr "PS: no puedo abrir fichero para leerlo"
 
-#: plug-ins/common/ps.c:882
+#: plug-ins/common/ps.c:881
 #, c-format
 msgid "Interpreting and Loading %s:"
 msgstr "Interpretando y cargando %s:"
 
-#: plug-ins/common/ps.c:890
+#: plug-ins/common/ps.c:889
 msgid "PS: can't interprete file"
 msgstr "PS: no puedo interpretar fichero"
 
-#: plug-ins/common/ps.c:977
+#: plug-ins/common/ps.c:976
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr "Guardar como PostScript no funciona con imágenes con canales alfa"
 
-#: plug-ins/common/ps.c:988
+#: plug-ins/common/ps.c:987
 msgid "PS: cannot operate on unknown image types"
 msgstr "PS: no puedo operar en tipos de imagen desconocidos."
 
-#: plug-ins/common/ps.c:997
+#: plug-ins/common/ps.c:996
 msgid "PS: can't open file for writing"
 msgstr "PS: no puedo abrir fichero para escribir"
 
-#: plug-ins/common/ps.c:2193 plug-ins/common/ps.c:2319
-#: plug-ins/common/ps.c:2463 plug-ins/common/ps.c:2585
+#: plug-ins/common/ps.c:2164 plug-ins/common/ps.c:2290
+#: plug-ins/common/ps.c:2434 plug-ins/common/ps.c:2556
 msgid "write error occured"
 msgstr "ocurrió un error de escritura"
 
-#: plug-ins/common/ps.c:2610
+#: plug-ins/common/ps.c:2581
 msgid "Load PostScript"
 msgstr "Cargar PostScript"
 
 #. Rendering
-#: plug-ins/common/ps.c:2637 plug-ins/flame/flame.c:994
+#: plug-ins/common/ps.c:2608 plug-ins/flame/flame.c:994
 msgid "Rendering"
 msgstr "Renderizado"
 
-#: plug-ins/common/ps.c:2655 plug-ins/print/gimp_main_window.c:534
+#: plug-ins/common/ps.c:2626 plug-ins/print/gimp_main_window.c:482
 msgid "Resolution:"
 msgstr "Resolución:"
 
-#: plug-ins/common/ps.c:2683
+#: plug-ins/common/ps.c:2654
 msgid "Pages:"
 msgstr "Páginas:"
 
 # //R ¿Está bien traducido?
-#: plug-ins/common/ps.c:2689
+#: plug-ins/common/ps.c:2660
 msgid "Try Bounding Box"
 msgstr "Intentar con cajas de contorno"
 
 #. Colouring
-#: plug-ins/common/ps.c:2701
+#: plug-ins/common/ps.c:2672
 msgid "Coloring"
 msgstr "Coloreado"
 
-#: plug-ins/common/ps.c:2705
+#: plug-ins/common/ps.c:2676
 msgid "B/W"
 msgstr "B/N"
 
 #. * Gray *
-#: plug-ins/common/ps.c:2706 plug-ins/rcm/rcm_dialog.c:394
+#: plug-ins/common/ps.c:2677 plug-ins/rcm/rcm_dialog.c:394
 msgid "Gray"
 msgstr "Gris"
 
-#: plug-ins/common/ps.c:2718
+#: plug-ins/common/ps.c:2689
 msgid "Text Antialiasing"
 msgstr "Alisado de texto"
 
-#: plug-ins/common/ps.c:2723 plug-ins/common/ps.c:2736
+#: plug-ins/common/ps.c:2694 plug-ins/common/ps.c:2707
 msgid "Weak"
 msgstr "Débil"
 
-#: plug-ins/common/ps.c:2724 plug-ins/common/ps.c:2737
+#: plug-ins/common/ps.c:2695 plug-ins/common/ps.c:2708
 msgid "Strong"
 msgstr "Fuerte"
 
-#: plug-ins/common/ps.c:2730
+#: plug-ins/common/ps.c:2701
 msgid "Graphic Antialiasing"
 msgstr "Alisado de gráficos"
 
-#: plug-ins/common/ps.c:2792
+#: plug-ins/common/ps.c:2763
 msgid "Save as PostScript"
 msgstr "Guardar como PostScript"
 
 #. Image Size
-#: plug-ins/common/ps.c:2822
+#: plug-ins/common/ps.c:2793
 msgid "Image Size"
-msgstr "Tamaño de Imagen"
+msgstr "Tamaño de imagen"
 
-#: plug-ins/common/ps.c:2858
+#: plug-ins/common/ps.c:2829
 msgid "X-Offset:"
 msgstr "Desplazmiento-X:"
 
-#: plug-ins/common/ps.c:2867
+#: plug-ins/common/ps.c:2838
 msgid "Y-Offset:"
 msgstr "Desplazamiento-Y:"
 
-#: plug-ins/common/ps.c:2873
+#: plug-ins/common/ps.c:2844
 msgid "Keep Aspect Ratio"
 msgstr "Mantener razón de aspecto"
 
-#: plug-ins/common/ps.c:2874
+#: plug-ins/common/ps.c:2845
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -5417,32 +5410,32 @@ msgstr ""
 "el tamaño dado sin cambiar la razón de aspecto."
 
 #. Unit
-#: plug-ins/common/ps.c:2885
+#: plug-ins/common/ps.c:2856
 msgid "Unit"
 msgstr "Unidad"
 
-#: plug-ins/common/ps.c:2889 plug-ins/print/gimp_main_window.c:360
+#: plug-ins/common/ps.c:2860 plug-ins/print/gimp_main_window.c:317
 msgid "Inch"
 msgstr "Pulgada"
 
-#: plug-ins/common/ps.c:2890
+#: plug-ins/common/ps.c:2861
 msgid "Millimeter"
 msgstr "Milímetro"
 
 #. Format
-#: plug-ins/common/ps.c:2914
+#: plug-ins/common/ps.c:2885
 msgid "Output"
 msgstr "Salida"
 
-#: plug-ins/common/ps.c:2922
+#: plug-ins/common/ps.c:2893
 msgid "PostScript Level 2"
 msgstr "PostScript Nivel 2"
 
-#: plug-ins/common/ps.c:2930
+#: plug-ins/common/ps.c:2901
 msgid "Encapsulated PostScript"
 msgstr "PostScript encapsulado"
 
-#: plug-ins/common/ps.c:2958
+#: plug-ins/common/ps.c:2929
 msgid "Preview Size:"
 msgstr "Tamaño de Vistas previas:"
 
@@ -5561,15 +5554,15 @@ msgstr "<Image>/Imagen/Transformaciones/Rotar/270 grados"
 
 #: plug-ins/common/rotate.c:526
 msgid "You can not rotate the whole image if there's a selection."
-msgstr "No puede rotar la imagen entera si hay una Selección"
+msgstr "No puede rotar la imagen entera si hay una selección"
 
 #: plug-ins/common/rotate.c:532
 msgid "You can not rotate the whole image if there's a floating selection."
-msgstr "No puede rotar la imagen entera si hay una Selección Flotante."
+msgstr "No puede rotar la imagen entera si hay una selección flotante."
 
 #: plug-ins/common/rotate.c:542
 msgid "Sorry, channels and masks can not be rotated."
-msgstr "Lo siento, los Canales y las Máscaras no pueden rotarse."
+msgstr "Lo siento, los canales y las máscaras no pueden rotarse."
 
 #: plug-ins/common/rotate.c:548
 msgid "Rotating..."
@@ -5577,7 +5570,7 @@ msgstr "Rotando..."
 
 #: plug-ins/common/sample_colorize.c:306
 msgid "<Image>/Filters/Colors/Map/Sample Colorize..."
-msgstr "<Image>/Filtros/Colores/Proyección/Colorear desde muestra"
+msgstr "<Image>/Filtros/Colores/Aplicación/Colorear desde muestra"
 
 #: plug-ins/common/sample_colorize.c:1363
 msgid "Sample Colorize"
@@ -5620,13 +5613,13 @@ msgstr "** Desde un GRADIENTE INVERTIDO **"
 #: plug-ins/common/sample_colorize.c:1465
 #: plug-ins/common/sample_colorize.c:1490
 msgid "Show Selection"
-msgstr "Mostrar Selección"
+msgstr "Mostrar selección"
 
 #. check button
 #: plug-ins/common/sample_colorize.c:1475
 #: plug-ins/common/sample_colorize.c:1500
 msgid "Show Color"
-msgstr "Mostrar Color"
+msgstr "Mostrar color"
 
 #: plug-ins/common/sample_colorize.c:1606
 msgid "In Level:"
@@ -5658,7 +5651,7 @@ msgstr "Suavizar muestra de colores"
 
 #: plug-ins/common/sample_colorize.c:2736
 msgid "Sample Analyze..."
-msgstr "Análisis de Muestra..."
+msgstr "Análisis de muestra..."
 
 #: plug-ins/common/sample_colorize.c:3101
 msgid "Remap Colorized..."
@@ -5691,7 +5684,7 @@ msgstr "<Toolbox>/Fichero/Adquirir/Captura de pantalla..."
 #. Main Dialog
 #: plug-ins/common/screenshot.c:368
 msgid "Screen Shot"
-msgstr "Captura de Pantalla"
+msgstr "Captura de pantalla"
 
 #. Action area
 #: plug-ins/common/screenshot.c:373 plug-ins/winsnap/winsnap.c:903
@@ -5701,7 +5694,7 @@ msgstr "Capturar"
 # //R ¿Con acento o sin ella?
 #: plug-ins/common/screenshot.c:400
 msgid "Grab a Single Window"
-msgstr "Capturar una sóla Ventana"
+msgstr "Capturar una sóla ventana"
 
 #: plug-ins/common/screenshot.c:414
 msgid "Include Decorations"
@@ -5841,7 +5834,7 @@ msgstr "Los colores son blanco y negro"
 
 #: plug-ins/common/sinus.c:1881
 msgid "Black & White"
-msgstr "Blanco y Negro"
+msgstr "Blanco y negro"
 
 #: plug-ins/common/sinus.c:1883
 msgid "Foreground & Background"
@@ -5869,7 +5862,7 @@ msgstr "Primer color:"
 
 #: plug-ins/common/sinus.c:1943
 msgid "Second Color:"
-msgstr "Segundo Color:"
+msgstr "Segundo color:"
 
 #: plug-ins/common/sinus.c:1973
 msgid "Blend Settings"
@@ -6068,7 +6061,7 @@ msgstr "Añadir borde"
 
 #: plug-ins/common/sparkle.c:513
 msgid "Draw a Border of Spikes around the Image"
-msgstr "Dibujar un borde de puntas alrededor de la Imagen"
+msgstr "Dibujar un borde de puntas alrededor de la imagen"
 
 #: plug-ins/common/sparkle.c:526
 msgid "Natural Color"
@@ -6076,7 +6069,7 @@ msgstr "Color natural"
 
 #: plug-ins/common/sparkle.c:535
 msgid "Use the Color of the Image"
-msgstr "Usar el color de la Imagen"
+msgstr "Usar el color de la imagen"
 
 #: plug-ins/common/sparkle.c:536
 msgid "Use the Foreground Color"
@@ -6145,7 +6138,7 @@ msgstr "Diálogo de selección de color"
 
 #: plug-ins/common/spheredesigner.c:2227
 msgid "Sphere Designer"
-msgstr "Diseñador de Esferas"
+msgstr "Diseñador de esferas"
 
 #: plug-ins/common/spheredesigner.c:2268 plug-ins/gimpressionist/preview.c:117
 #: plug-ins/gimpressionist/repaint.c:874 plug-ins/gimpressionist/repaint.c:876
@@ -6243,7 +6236,7 @@ msgstr "Renderizando..."
 
 #: plug-ins/common/spheredesigner.c:2837
 msgid "<Image>/Filters/Render/Sphere Designer..."
-msgstr "<Image>/Filtros/Render/Diseñador de Esferas..."
+msgstr "<Image>/Filtros/Render/Diseñador de esferas..."
 
 #: plug-ins/common/spread.c:133
 msgid "<Image>/Filters/Noise/Spread..."
@@ -6268,11 +6261,11 @@ msgstr "<Image>/Filtros/Artístico/Aplicar lienzo..."
 
 #: plug-ins/common/struc.c:1242
 msgid "Applying Canvas..."
-msgstr "Aplicando Lienzo..."
+msgstr "Aplicando lienzo..."
 
 #: plug-ins/common/struc.c:1276
 msgid "Apply Canvas"
-msgstr "Aplicar Lienzo"
+msgstr "Aplicar lienzo"
 
 #. *****************************************************
 #. radio buttons for choosing LEFT or RIGHT
@@ -6370,7 +6363,7 @@ msgstr "Compresión RLE"
 
 #: plug-ins/common/threshold_alpha.c:104
 msgid "<Image>/Image/Alpha/Threshold Alpha..."
-msgstr "<Image>/Imagen/Alfa/Umbral Alfa..."
+msgstr "<Image>/Imagen/Alfa/Umbral alfa..."
 
 #: plug-ins/common/threshold_alpha.c:147
 msgid "The layer preserves transparency."
@@ -6386,7 +6379,7 @@ msgstr "Umbral Alfa: Coloreando transparencia..."
 
 #: plug-ins/common/threshold_alpha.c:266
 msgid "Threshold Alpha"
-msgstr "Umbral Alfa"
+msgstr "Umbral alfa"
 
 #: plug-ins/common/tiff.c:685
 msgid "TIFF Channel"
@@ -6418,7 +6411,7 @@ msgstr "JPEG"
 
 #: plug-ins/common/tile.c:126
 msgid "<Image>/Filters/Map/Tile..."
-msgstr "<Image>/Filtros/Proyección/Baldosa..."
+msgstr "<Image>/Filtros/Aplicación/Baldosa..."
 
 #: plug-ins/common/tile.c:203 plug-ins/common/tileit.c:333
 msgid "Tiling..."
@@ -6435,7 +6428,7 @@ msgstr "Enlosar a tamaño nuevo"
 
 #: plug-ins/common/tileit.c:235
 msgid "<Image>/Filters/Map/Small Tiles..."
-msgstr "<Image>/Filtros/Proyección/Poner baldosas pequeñas..."
+msgstr "<Image>/Filtros/Aplicación/Poner baldosas pequeñas..."
 
 #. Get the preview image and store it also set has_alpha
 #. Start buildng the dialog up
@@ -6480,7 +6473,7 @@ msgstr "Configuración de segmentación"
 # //R :-??
 #: plug-ins/common/tiler.c:73
 msgid "<Image>/Filters/Map/Make Seamless"
-msgstr "<Image>/Filtros/Proyección/Hacer enlosable"
+msgstr "<Image>/Filtros/Aplicación/Hacer enlosable"
 
 #: plug-ins/common/tiler.c:185
 msgid "Tiler..."
@@ -6817,7 +6810,7 @@ msgstr "Propagando canal de valor"
 
 #: plug-ins/common/warp.c:278
 msgid "<Image>/Filters/Map/Warp..."
-msgstr "<Image>/Filtros/Proyección/Deformar..."
+msgstr "<Image>/Filtros/Aplicación/Deformar..."
 
 #: plug-ins/common/warp.c:455
 msgid "Main Options"
@@ -6992,11 +6985,11 @@ msgstr "<Image>/Filtros/Distorsión/Viento..."
 
 #: plug-ins/common/wind.c:417
 msgid "Rendering Blast..."
-msgstr "Renderizando Soplo..."
+msgstr "Renderizando soplo..."
 
 #: plug-ins/common/wind.c:548
 msgid "Rendering Wind..."
-msgstr "Renderizando Viento..."
+msgstr "Renderizando viento..."
 
 #: plug-ins/common/wind.c:962
 msgid "Wind Strength must be greater than 0."
@@ -7063,7 +7056,7 @@ msgstr "<Image>/Fichero/Imprimir"
 
 #: plug-ins/common/winprint.c:201
 msgid "<Image>/File/Page Setup"
-msgstr "<Image>/Fichero/Configurar Página"
+msgstr "<Image>/Fichero/Configurar página"
 
 #: plug-ins/common/winprint.c:303
 #, c-format
@@ -7078,7 +7071,7 @@ msgstr "La impresora no soporta mapas de bits."
 msgid "StartPage failed"
 msgstr "Falló comienzo de página"
 
-#: plug-ins/common/winprint.c:391 plug-ins/print/print-image-gimp.c:270
+#: plug-ins/common/winprint.c:391 plug-ins/print/print-image-gimp.c:276
 msgid "Printing..."
 msgstr "Imprimiendo..."
 
@@ -7110,7 +7103,7 @@ msgstr "Falló PageSetupDlg : %d"
 
 #: plug-ins/common/wmf.c:926
 msgid "Load Windows Metafile"
-msgstr "Cargar Metafichero Windows"
+msgstr "Cargar metafichero de Windows"
 
 #. Rendering
 #: plug-ins/common/wmf.c:943
@@ -7281,7 +7274,7 @@ msgstr "FIN-DE-FICHERO encontrado en"
 
 #: plug-ins/common/xwd.c:1322
 msgid "No memory for mapping colors"
-msgstr "No hay memoria para proyectar colores"
+msgstr "No hay memoria para correspondencia de colores"
 
 #: plug-ins/common/xwd.c:2008
 msgid "Error during writing indexed/grey image"
@@ -7413,7 +7406,7 @@ msgstr "%s: no es un fichero normal"
 
 #: plug-ins/flame/flame.c:626 plug-ins/flame/flame.c:972
 msgid "Edit Flame"
-msgstr "Editar Llama"
+msgstr "Editar llama"
 
 #: plug-ins/flame/flame.c:645
 msgid "Directions"
@@ -7462,22 +7455,22 @@ msgstr "Variación:"
 
 #: plug-ins/flame/flame.c:766 plug-ins/flame/flame.c:979
 msgid "Load Flame"
-msgstr "Cargar Llama"
+msgstr "Cargar llama"
 
 #: plug-ins/flame/flame.c:788 plug-ins/flame/flame.c:986
 msgid "Save Flame"
-msgstr "Guardar Llama"
+msgstr "Guardar llama"
 
 #: plug-ins/flame/flame.c:915 plug-ins/flame/flame.c:954
 msgid "Flame"
 msgstr "Llama"
 
-#: plug-ins/flame/flame.c:1024 plug-ins/print/gimp_color_window.c:193
+#: plug-ins/flame/flame.c:1024 plug-ins/print/gimp_color_window.c:121
 msgid "Contrast:"
 msgstr "Contraste:"
 
 #: plug-ins/flame/flame.c:1037 plug-ins/gimpressionist/brush.c:401
-#: plug-ins/print/gimp_color_window.c:285
+#: plug-ins/print/gimp_color_window.c:205
 msgid "Gamma:"
 msgstr "Gamma:"
 
@@ -7512,7 +7505,7 @@ msgstr "Zoom:"
 
 #: plug-ins/fp/fp.c:93
 msgid "<Image>/Image/Colors/Filter Pack..."
-msgstr "<Image>/Imagen/Colores/Paquete de Filtros..."
+msgstr "<Image>/Imagen/Colores/Paquete de filtros..."
 
 #: plug-ins/fp/fp.c:128
 msgid "Convert the image to RGB first!"
@@ -7553,7 +7546,7 @@ msgstr "Original:"
 
 #: plug-ins/fp/fp_gtk.c:195
 msgid "Hue Variations"
-msgstr "Variaciones de Tono"
+msgstr "Variaciones de tono"
 
 #: plug-ins/fp/fp_gtk.c:210
 msgid "Roughness"
@@ -7581,11 +7574,11 @@ msgstr "Ventanas"
 
 #: plug-ins/fp/fp_gtk.c:341
 msgid "Value Variations"
-msgstr "Variaciones de Valor"
+msgstr "Variaciones de valor"
 
 #: plug-ins/fp/fp_gtk.c:389
 msgid "Saturation Variations"
-msgstr "Variaciones de Saturación"
+msgstr "Variaciones de saturación"
 
 #: plug-ins/fp/fp_gtk.c:404
 msgid "Select Pixels by"
@@ -7683,54 +7676,54 @@ msgstr "Seleccionar"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:65
 msgid "GAP Animated Filter apply"
-msgstr "Aplicar filtro de animación GAP"
+msgstr "Aplicar filtro en animación GAP"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:86
 msgid "Animated Filter apply (init)"
-msgstr "Aplicar filtro de animación (inicio)"
+msgstr "Aplicar filtro en animación (inicio)"
 
 # //R Odio cuando usan abreviaturas raras...
 #: plug-ins/gap/gap_dbbrowser_utils.c:165
 msgid "Gen Code by name"
-msgstr "Gen Code por nombre"
+msgstr "Generar código por nombre"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:665
 msgid "Animated Filter apply (by name - please wait)"
-msgstr "Aplicar filtro de animación (por nombre - por favor, espere)"
+msgstr "Aplicar filtro en animación (por nombre - por favor, espere)"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:689
 msgid "Animated Filter apply (by blurb - please wait)"
-msgstr "Aplicar filtro de animación (por descripción - por favor, espere)"
+msgstr "Aplicar filtro en animación (por descripción - por favor, espere)"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:697
 msgid "Animated Filter apply (please wait)"
-msgstr "Aplicar filtro de animación (por favor, espere)"
+msgstr "Aplicar filtro en animación (por favor, espere)"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:744
 #: plug-ins/gap/gap_filter_foreach.c:161 plug-ins/gap/gap_mod_layer.c:284
 msgid "Animated Filter apply"
-msgstr "Aplicar filtro de animación"
+msgstr "Aplicar filtro en animación"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:101
 msgid "<Image>/Video/Split Video to Frames"
-msgstr "<Image>/Vídeo/Partir vídeo en fotogramas"
+msgstr "<Image>/Vídeo/Partir vídeo en cuadros"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:102
 msgid "<Toolbox>/Xtns/Split Video to Frames"
-msgstr "<Toolbox>/Exts/Partir vídeo en fotogramas"
+msgstr "<Toolbox>/Exts/Partir vídeo en cuadros"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:178
 msgid "<Image>/Video/Split Video to Frames/MPEG1"
-msgstr "<Image>/Vídeo/Partir vídeo en fotogramas/MPEG1"
+msgstr "<Image>/Vídeo/Partir vídeo en cuadros/MPEG1"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:190
 msgid "<Toolbox>/Xtns/Split Video to Frames/MPEG1"
-msgstr "<Toolbox>/Exts/Partir vídeo en fotogramas/MPEG1"
+msgstr "<Toolbox>/Exts/Partir vídeo en cuadros/MPEG1"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:332 plug-ins/gap/gap_decode_xanim.c:336
 #: plug-ins/gap/gap_range_ops.c:1239
 msgid "Overwrite Frame"
-msgstr "Sobreescribir fotograma"
+msgstr "Sobreescribir cuadro"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:334 plug-ins/gap/gap_decode_xanim.c:338
 #: plug-ins/gap/gap_range_ops.c:1241
@@ -7740,7 +7733,7 @@ msgstr "Sobreescribir todo"
 #: plug-ins/gap/gap_decode_mpeg_main.c:342 plug-ins/gap/gap_decode_xanim.c:346
 #: plug-ins/gap/gap_lib.c:1026 plug-ins/gap/gap_range_ops.c:1246
 msgid "GAP Question"
-msgstr "Cuestión GAP"
+msgstr "Pregunta de GAP"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:343 plug-ins/gap/gap_decode_xanim.c:347
 msgid "File already exists"
@@ -7758,29 +7751,29 @@ msgid ""
 "Audiotracks in the videofile are ignored."
 msgstr ""
 "Nombre del fichero de vídeo MPEG1 a leer.\n"
-"Se extraen los fotogramas del fichero\n"
+"Se extraen los cuadros del fichero\n"
 "y se escribir en ficheros de disco separados.\n"
 "Se pasan por alto las pistas de audio."
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:653 plug-ins/gap/gap_decode_xanim.c:224
 msgid "Framenumber of 1st frame to extract"
-msgstr "Número del primer fotograma a extraer"
+msgstr "Número del primer cuadro a extraer"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:663 plug-ins/gap/gap_decode_xanim.c:234
 msgid "Framenumber of last frame to extract"
-msgstr "Número del último fotograma a extraer"
+msgstr "Número del último cuadro a extraer"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:672 plug-ins/gap/gap_decode_xanim.c:243
 msgid "Framenames:"
-msgstr "Nombres de fotogramas:"
+msgstr "Nombres de cuadros:"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:673
 msgid ""
 "Basename for the AnimFrames to write on disk\n"
 "(framenumber and .xcf is added)"
 msgstr ""
-"Nombre base para escribir los fotogramas en el disco\n"
-"(se añade nº de fotograma y .xcf)"
+"Nombre base para escribir los cuadros en el disco\n"
+"(se añade nº de cuadro y .xcf)"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:680 plug-ins/gap/gap_decode_xanim.c:282
 #: plug-ins/imagemap/imap_toolbar.c:110
@@ -7789,7 +7782,7 @@ msgstr "Abrir"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:681 plug-ins/gap/gap_decode_xanim.c:283
 msgid "Open the 1st one of the extracted frames"
-msgstr "Abrir el primero de los fotogramas extraídos"
+msgstr "Abrir el primero de los cuadros extraídos"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:685
 msgid ""
@@ -7803,12 +7796,12 @@ msgstr ""
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:688
 msgid "Split MPEG1 Video to Frames"
-msgstr "Partir vídeo MPEG1 en fotogramas"
+msgstr "Partir vídeo MPEG1 en cuadros"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:689 plug-ins/gap/gap_decode_xanim.c:297
 #: plug-ins/gap/gap_range_ops.c:1461
 msgid "Select Frame Range"
-msgstr "Seleccione rango de fotogramas"
+msgstr "Seleccione rango de cuadros"
 
 #: plug-ins/gap/gap_decode_xanim.c:113
 msgid "Conditions to run the xanim based video split"
@@ -7859,18 +7852,20 @@ msgid ""
 "and written to seprate diskfiles.\n"
 "xanim exporting edition is required."
 msgstr ""
-"Nombre de un fichero de vídeo para que xanim\n"
-"lo LEA. Se extraen los fotogramas del fichero \n"
-"y escriben en ficheros en disco separados. \n"
-"Se requiere la versión exportante de XAnim."
+"Nombre de un fichero de vídeo para \n"
+"que xanim lo LEA. Se extraen los \n"
+"cuadros del fichero y escriben en\n"
+"ficheros en disco separados. Se\n"
+"requiere la versión exportante de\n"
+" XAnim."
 
 #: plug-ins/gap/gap_decode_xanim.c:244
 msgid ""
 "Basename for the AnimFrames to write on disk\n"
 "(framenumber and extension is added)"
 msgstr ""
-"Nombre base de los fotogramas a escribir en disco\n"
-"(Se añade nº de fotograma y extensión)"
+"Nombre base de los cuadros a escribir en disco\n"
+"(Se añade nº de cuadro y extensión)"
 
 #: plug-ins/gap/gap_decode_xanim.c:251
 msgid "Format"
@@ -7881,29 +7876,30 @@ msgid ""
 "Fileformat for the extracted AnimFrames\n"
 "(xcf is extracted as ppm and converted to xcf)"
 msgstr ""
-"Formato de fichero para los fotogramas extraídos\n"
+"Formato de fichero para los cuadros extraídos\n"
 "(xcf es extraído como ppm y convertido a xcf)"
 
 #: plug-ins/gap/gap_decode_xanim.c:259
 msgid "Extract Frames"
-msgstr "Extraer Fotogramas"
+msgstr "Extraer cuadros"
 
 #: plug-ins/gap/gap_decode_xanim.c:260
 msgid "Enable extraction of Frames"
-msgstr "Activar extracción de fotogramas"
+msgstr "Activar extracción de cuadros"
 
 #: plug-ins/gap/gap_decode_xanim.c:264
 msgid "Extract Audio"
-msgstr "Extrar audio"
+msgstr "Extraer audio"
 
 #: plug-ins/gap/gap_decode_xanim.c:265
 msgid ""
 "Enable extraction of audio to raw audiofile\n"
 "(frame range limits are ignored for audio)"
 msgstr ""
-"Activar extracción de audio a ficheros de audio\n"
-"crudos (no se consideran los límites en el rango\n"
-"de fotogramas al extraer audio)"
+"Activar extracción de audio a ficheros \n"
+"de audio crudos (no se consideran los\n"
+"límites en el rango de cuadros al\n"
+" extraer audio)"
 
 #: plug-ins/gap/gap_decode_xanim.c:270
 msgid "Jpeg Quality:"
@@ -7914,7 +7910,7 @@ msgid ""
 "Quality for resulting Jpeg frames\n"
 "(is ignored when other formats are used)"
 msgstr ""
-"Calidad para los fotogramas Jpeg resultantes\n"
+"Calidad para los cuadros Jpeg resultantes\n"
 "(no se considera cuando se usan otros formatos)"
 
 #: plug-ins/gap/gap_decode_xanim.c:287
@@ -7926,9 +7922,9 @@ msgid ""
 "Run xanim asynchronously and delete unwanted frames\n"
 "(out of the specified range) while xanim is still running"
 msgstr ""
-"Ejecuta xanim asincrónicamente y borra fotogramas no \n"
-"deseados (fuera del rango especificado) mientras xanim\n"
-"sigue ejecutándose"
+"Ejecuta xanim asincrónicamente y borra los cuadros \n"
+"no deseados (fuera del rango especificado) mientras\n"
+"xanim sigue ejecutándose"
 
 #: plug-ins/gap/gap_decode_xanim.c:293
 msgid ""
@@ -7938,12 +7934,12 @@ msgid ""
 msgstr ""
 "\n"
 "AVISO: XAnim 2.80 sólo tiene soporte MPEG limitado.\n"
-"La mayoría de los fotogramas (tipos P y B) serán \n"
+"La mayoría de los cuadros (tipos P y B) serán \n"
 "saltados."
 
 #: plug-ins/gap/gap_decode_xanim.c:296
 msgid "Split any Xanim readable Video to Frames"
-msgstr "Partir cualquier vídeo legible por XAnim en fotogramas"
+msgstr "Partir cualquier vídeo legible por XAnim en cuadros"
 
 #: plug-ins/gap/gap_decode_xanim.c:539
 #, c-format
@@ -7952,14 +7948,14 @@ msgid ""
 "%s\n"
 "maybe xanim has failed or was cancelled"
 msgstr ""
-"no puedo encontrar ningún fotograma extraído,\n"
+"no puedo encontrar ningún cuadro extraído,\n"
 "%s\n"
 "quizás xanim ha fallado o fue cancelado"
 
 #: plug-ins/gap/gap_decode_xanim.c:564
 #, c-format
 msgid "frames are not extracted, because overwrite of %s was cancelled"
-msgstr "no se extrajeron fotogramas, porque se canceló la sobreescritura de %s"
+msgstr "no se extrajeron cuadros, porque se canceló la sobreescritura de %s"
 
 #: plug-ins/gap/gap_decode_xanim.c:574
 #, c-format
@@ -7998,7 +7994,7 @@ msgid ""
 "does not support exporting of single frames"
 msgstr ""
 "El programa xanim de su sistema, \"%s\",\n"
-"no soporta la exportación de fotogramas concretos"
+"no soporta la exportación de cuadros concretos"
 
 #: plug-ins/gap/gap_decode_xanim.c:1024
 #, c-format
@@ -8012,11 +8008,11 @@ msgid ""
 "(that is required for xanim frame export)"
 msgstr ""
 "no pude crear directorio %s\n"
-"(requerido para la exportación de fotogramas de xanim)"
+"(requerido para la exportación de cuadros de xanim)"
 
 #: plug-ins/gap/gap_decode_xanim.c:1088
 msgid "extracting frames..."
-msgstr "extrayendo fotogramas..."
+msgstr "extrayendo cuadros..."
 
 #: plug-ins/gap/gap_decode_xanim.c:1113
 #, c-format
@@ -8032,16 +8028,16 @@ msgid ""
 "can't find any extracted frames,\n"
 "xanim has failed or was cancelled"
 msgstr ""
-"no puedo encontrar ningún fotograma extraído,\n"
+"no puedo encontrar ningún cuadro extraído,\n"
 "xanim falló o fue cancelado"
 
 #: plug-ins/gap/gap_decode_xanim.c:1153
 msgid "renaming frames..."
-msgstr "renombrando fotogramas..."
+msgstr "renombrando cuadros..."
 
 #: plug-ins/gap/gap_decode_xanim.c:1158
 msgid "converting frames..."
-msgstr "convirtiendo fotogramas..."
+msgstr "convirtiendo cuadros..."
 
 #: plug-ins/gap/gap_filter_foreach.c:124
 msgid "backup to file"
@@ -8093,15 +8089,15 @@ msgstr "Aplicar variando"
 
 #: plug-ins/gap/gap_filter_main.c:105
 msgid "<Image>/Filters/Filter all Layers..."
-msgstr "<Image>/Filtros/Filtrar todas las Capas..."
+msgstr "<Image>/Filtros/Filtrar todas las capas..."
 
 #: plug-ins/gap/gap_frontends_main.c:127
 msgid "<Image>/Video/Split Video to Frames/Any XANIM readable..."
-msgstr "<Image>/Vídeo/Partir vídeo en fotogramas/Uno legible por XANIM..."
+msgstr "<Image>/Vídeo/Partir vídeo en cuadros/Uno legible por XANIM..."
 
 #: plug-ins/gap/gap_frontends_main.c:139
 msgid "<Toolbox>/Xtns/Split Video to Frames/Any XANIM readable..."
-msgstr "<Toolbox>/Exts/Partir vídeo en fotogramas/Uno legible por XANIM..."
+msgstr "<Toolbox>/Exts/Partir vídeo en cuadros/Uno legible por XANIM..."
 
 #: plug-ins/gap/gap_frontends_main.c:151
 msgid "<Image>/Video/Encode/MPEG1..."
@@ -8121,7 +8117,7 @@ msgid ""
 "Current frame changed while dialog was open."
 msgstr ""
 "OPERACIÓN CANCELADA.\n"
-"El fotograma actual cambió mientras el diálogo estaba abierto."
+"El cuadro actual cambió mientras el diálogo estaba abierto."
 
 #: plug-ins/gap/gap_lib.c:917
 msgid ""
@@ -8143,7 +8139,7 @@ msgid ""
 msgstr ""
 "Está usando un formato de fichero \n"
 "distinto de XCF. Al guardar puede\n"
-"perder información de las Capas."
+"perder información de las capas."
 
 #: plug-ins/gap/gap_lib.c:1020
 msgid "Save Flattened"
@@ -8151,7 +8147,7 @@ msgstr "Guardar aplanada"
 
 #: plug-ins/gap/gap_lib.c:1022
 msgid "Save As Is"
-msgstr "Guardar como es"
+msgstr "Guardar tal cual"
 
 #: plug-ins/gap/gap_lib.c:1497 plug-ins/gap/gap_lib.c:1614
 #: plug-ins/gap/gap_lib.c:1693 plug-ins/gap/gap_lib.c:1700
@@ -8159,25 +8155,25 @@ msgstr "Guardar como es"
 #: plug-ins/gap/gap_lib.c:1812 plug-ins/gap/gap_lib.c:2701
 #, c-format
 msgid "Error: could not rename frame %ld to %ld"
-msgstr "Error: No puedo renombrar fotograma %ld a %ld"
+msgstr "Error: No puedo renombrar cuadro %ld a %ld"
 
 #: plug-ins/gap/gap_lib.c:1602
 msgid "Duplicating frames..."
-msgstr "Duplicando fotogramas..."
+msgstr "Duplicando cuadros..."
 
 #: plug-ins/gap/gap_lib.c:1778
 msgid "Renumber Framesequence..."
-msgstr "Renombrando secuencia de fotogramas..."
+msgstr "Renombrando secuencia de cuadros..."
 
 #: plug-ins/gap/gap_lib.c:1964
 #, c-format
 msgid "Goto Frame (%ld/%ld)"
-msgstr "Ir a fotograma (%ld/%ld)"
+msgstr "Ir a cuadro (%ld/%ld)"
 
 #: plug-ins/gap/gap_lib.c:1967
 #, c-format
 msgid "Destination Frame Number (%ld  - %ld)"
-msgstr "Nº de fotograma destino (%ld  - %ld)"
+msgstr "Nº de cuadro destino (%ld  - %ld)"
 
 #: plug-ins/gap/gap_lib.c:1971 plug-ins/gap/gap_lib.c:2048
 #: plug-ins/gap/gap_lib.c:2236
@@ -8187,25 +8183,25 @@ msgstr "Número:"
 #: plug-ins/gap/gap_lib.c:2032
 #, c-format
 msgid "Delete Frames (%ld/%ld)"
-msgstr "Borrar fotogramas (%ld/%ld)"
+msgstr "Borrar cuadros (%ld/%ld)"
 
 #: plug-ins/gap/gap_lib.c:2035
 #, c-format
 msgid "Delete Frames from %ld to (number)"
-msgstr "Borrar fotogramas desde %ld hasta (nº)"
+msgstr "Borrar cuadros desde %ld hasta (nº)"
 
 #: plug-ins/gap/gap_lib.c:2098
 #, c-format
 msgid "Duplicate Frames (%ld/%ld)"
-msgstr "Duplicar fotogramas (%ld/%ld)"
+msgstr "Duplicar cuadros (%ld/%ld)"
 
 #: plug-ins/gap/gap_lib.c:2108
 msgid "Source Range starts at this framenumber"
-msgstr "El rango de origen comienza en este nº de fotograma"
+msgstr "El rango de origen comienza en este nº de cuadro"
 
 #: plug-ins/gap/gap_lib.c:2116
 msgid "Source Range ends at this framenumber"
-msgstr "El rango de origen termina en este nº de fotograma"
+msgstr "El rango de origen termina en este nº de cuadro"
 
 #: plug-ins/gap/gap_lib.c:2119
 msgid "N times:"
@@ -8221,30 +8217,30 @@ msgstr ""
 
 #: plug-ins/gap/gap_lib.c:2128
 msgid "Duplicate Frame Range"
-msgstr "Duplicar rango de fotogramas"
+msgstr "Duplicar rango de cuadros"
 
 #: plug-ins/gap/gap_lib.c:2231
 #, c-format
 msgid "Exchange current Frame (%ld)"
-msgstr "Intercambiar fotograma actual (%ld)"
+msgstr "Intercambiar cuadro actual (%ld)"
 
 #: plug-ins/gap/gap_lib.c:2235
 msgid "With Frame (number)"
-msgstr "con fotograma (nº)"
+msgstr "con cuadro (nº)"
 
 # //R Revisar lo de desplazamiento
 #: plug-ins/gap/gap_lib.c:2277
 #, c-format
 msgid "Framesequence Shift (%ld/%ld)"
-msgstr "Desplazamiento de la secuencia de fotogramas (%ld/%ld)"
+msgstr "Desplazamiento de la secuencia de cuadros (%ld/%ld)"
 
 #: plug-ins/gap/gap_lib.c:2287
 msgid "Affected Range starts at this framenumber"
-msgstr "Rango afectado comienza en este nº de fotograma"
+msgstr "Rango afectado comienza en este nº de cuadro"
 
 #: plug-ins/gap/gap_lib.c:2295
 msgid "Affected Range ends at this framenumber"
-msgstr "Rango afectado termina en este nº de fotograma"
+msgstr "Rango afectado termina en este nº de cuadro"
 
 # //R Huy huy
 #: plug-ins/gap/gap_lib.c:2298
@@ -8256,44 +8252,44 @@ msgid ""
 "Renumber the affected framesequence     \n"
 "(numbers are shifted in circle by N)"
 msgstr ""
-"Renumerar la secuencia de fotogramas afectada     \n"
+"Renumerar la secuencia de cuadros afectada     \n"
 "(se desplaza circularmente los nºs por N)"
 
 #: plug-ins/gap/gap_lib.c:2305
 msgid "Framesequence shift"
-msgstr "Desplazamiento de secuencia de fotogramas"
+msgstr "Desplazamiento de secuencia de cuadros"
 
 #: plug-ins/gap/gap_main.c:374
 msgid "<Image>/Video/Goto/Next Frame"
-msgstr "<Image>/Vídeo/Ir a/Siguiente fotograma"
+msgstr "<Image>/Vídeo/Ir a/Siguiente cuadro"
 
 #: plug-ins/gap/gap_main.c:386
 msgid "<Image>/Video/Goto/Previous Frame"
-msgstr "<Image>/Vídeo/Ir a/Anterior fotograma"
+msgstr "<Image>/Vídeo/Ir a/Anterior cuadro"
 
 #: plug-ins/gap/gap_main.c:398
 msgid "<Image>/Video/Goto/First Frame"
-msgstr "<Image>/Vídeo/Ir a/Anterior/Primer fotograma"
+msgstr "<Image>/Vídeo/Ir a/Anterior/Primer cuadro"
 
 #: plug-ins/gap/gap_main.c:410
 msgid "<Image>/Video/Goto/Last Frame"
-msgstr "<Image>/Vídeo/Ir a/Último fotograma"
+msgstr "<Image>/Vídeo/Ir a/Último cuadro"
 
 #: plug-ins/gap/gap_main.c:422
 msgid "<Image>/Video/Goto/Any Frame..."
-msgstr "<Image>/Vídeo/Ir a/Cualquier fotograma..."
+msgstr "<Image>/Vídeo/Ir a/Cualquier cuadro..."
 
 #: plug-ins/gap/gap_main.c:434
 msgid "<Image>/Video/Delete Frames..."
-msgstr "<Image>/Vídeo/Borrar fotogramas..."
+msgstr "<Image>/Vídeo/Borrar cuadros..."
 
 #: plug-ins/gap/gap_main.c:446
 msgid "<Image>/Video/Duplicate Frames..."
-msgstr "<Image>/Vídeo/Duplicar fotogramas..."
+msgstr "<Image>/Vídeo/Duplicar cuadros..."
 
 #: plug-ins/gap/gap_main.c:458
 msgid "<Image>/Video/Exchange Frame..."
-msgstr "<Image>/Vídeo/Intercambiar fotograma..."
+msgstr "<Image>/Vídeo/Intercambiar cuadro..."
 
 #: plug-ins/gap/gap_main.c:470
 msgid "<Image>/Video/Move Path..."
@@ -8301,64 +8297,64 @@ msgstr "<Image>/Vídeo/Mover camino..."
 
 #: plug-ins/gap/gap_main.c:482
 msgid "<Image>/Video/Frames to Image..."
-msgstr "<Image>/Vídeo/Fotogramas a Imagen..."
+msgstr "<Image>/Vídeo/Cuadros a imagen..."
 
 #: plug-ins/gap/gap_main.c:494
 msgid "<Image>/Video/Frames Flatten..."
-msgstr "<Image>/Vídeo/Fotogramas aplanados..."
+msgstr "<Image>/Vídeo/Cuadros: Aplanar..."
 
 #: plug-ins/gap/gap_main.c:506
 msgid "<Image>/Video/Frames LayerDel..."
-msgstr "<Image>/Vídeo/Borrar Capas en fotogramas..."
+msgstr "<Image>/Vídeo/Cuadros: Borrar capas..."
 
 #: plug-ins/gap/gap_main.c:530
 msgid "<Image>/Video/Frames Convert..."
-msgstr "<Image>/Vídeo/Convertir fotogramas..."
+msgstr "<Image>/Vídeo/Cuadros: Convertir"
 
 #: plug-ins/gap/gap_main.c:542
 msgid "<Image>/Video/Frames Resize..."
-msgstr "<Image>/Vídeo/Cambiar tamaño de fotogramas..."
+msgstr "<Image>/Vídeo/Cuadros: Cambiar tamaño..."
 
 #: plug-ins/gap/gap_main.c:554
 msgid "<Image>/Video/Frames Crop..."
-msgstr "<Image>/Vídeo/Recortar fotogramas..."
+msgstr "<Image>/Vídeo/Cuadros: Recortar..."
 
 #: plug-ins/gap/gap_main.c:566
 msgid "<Image>/Video/Frames Scale..."
-msgstr "<Image>/Vídeo/Redimensionar fotogramas..."
+msgstr "<Image>/Vídeo/Cuadros: Redimensionar..."
 
 #: plug-ins/gap/gap_main.c:578
 msgid "<Image>/Video/Split Image to Frames..."
-msgstr "<Image>/Vídeo/Partir imagen en fotogramas..."
+msgstr "<Image>/Vídeo/Partir imagen en cuadros..."
 
 #: plug-ins/gap/gap_main.c:591
 msgid "<Image>/Video/Framesequence Shift..."
-msgstr "<Image>/Vídeo/Desplazar secuencia de fotogramas..."
+msgstr "<Image>/Vídeo/Desplazar secuencia de cuadros..."
 
 #: plug-ins/gap/gap_main.c:603
 msgid "<Image>/Video/Frames Modify..."
-msgstr "<Image>/Vídeo/Modificar fotogramas..."
+msgstr "<Image>/Vídeo/Cuadros: Modificar..."
 
 #. Layer select modes
 #: plug-ins/gap/gap_mod_layer.c:82 plug-ins/gap/gap_range_ops.c:573
 msgid "Pattern is equal to LayerName"
-msgstr "El patrón es igual a nombre de Capa"
+msgstr "El patrón es igual a nombre de capa"
 
 #: plug-ins/gap/gap_mod_layer.c:83 plug-ins/gap/gap_range_ops.c:574
 msgid "Pattern is Start of LayerName"
-msgstr "El patrón comienza como el nombre de Capa"
+msgstr "El patrón comienza como el nombre de capa"
 
 #: plug-ins/gap/gap_mod_layer.c:84 plug-ins/gap/gap_range_ops.c:575
 msgid "Pattern is End of Layername"
-msgstr "El patrón acaba como el nombre de Capa"
+msgstr "El patrón acaba como el nombre de capa"
 
 #: plug-ins/gap/gap_mod_layer.c:85 plug-ins/gap/gap_range_ops.c:576
 msgid "Pattern is a Part of LayerName"
-msgstr "El patrón es parte del nombre de Capa"
+msgstr "El patrón es parte del nombre de capa"
 
 #: plug-ins/gap/gap_mod_layer.c:86 plug-ins/gap/gap_range_ops.c:577
 msgid "Pattern is LayerstackNumber List"
-msgstr "El patrón es una lista de números de la pila de Capas"
+msgstr "El patrón es una lista de números de la pila de capas"
 
 #: plug-ins/gap/gap_mod_layer.c:87 plug-ins/gap/gap_range_ops.c:578
 msgid "Pattern is REVERSE-stack List"
@@ -8370,19 +8366,19 @@ msgstr "Todas las visibles (no considerar el patrón)"
 
 #: plug-ins/gap/gap_mod_layer.c:90
 msgid "Select all Layers where Layername is equal to Pattern"
-msgstr "Selecciona todas las Capas cuyo nombre sea igual que el patrón"
+msgstr "Selecciona todas las capas cuyo nombre sea igual que el patrón"
 
 #: plug-ins/gap/gap_mod_layer.c:91
 msgid "Select all Layers where Layername starts with Pattern"
-msgstr "Selecciona todas las Capas cuyo nombre comience con el patrón"
+msgstr "Selecciona todas las capas cuyo nombre comience con el patrón"
 
 #: plug-ins/gap/gap_mod_layer.c:92
 msgid "Select all Layers where Layername ends up with Pattern"
-msgstr "Selecciona todas las Capas cuyo nombre acabe con el patrón"
+msgstr "Selecciona todas las capas cuyo nombre acabe con el patrón"
 
 #: plug-ins/gap/gap_mod_layer.c:93
 msgid "Select all Layers where Layername contains Pattern"
-msgstr "Selecciona todas las Capas cuyo nombre contenga al patrón"
+msgstr "Selecciona todas las capas cuyo nombre contenga al patrón"
 
 #: plug-ins/gap/gap_mod_layer.c:94
 msgid ""
@@ -8390,9 +8386,8 @@ msgid ""
 "0, 4-5, 8\n"
 "where 0 == Top-layer"
 msgstr ""
-"Selecciona posiciones en la pila de Capas.\n"
-"0, 4-5, 8\n"
-"donde 0 == Capa en la cima"
+"Selecciona posiciones en la pila de capas.\n"
+"0, 4-5, 8 (Donde 0 == Capa en la cima)"
 
 #: plug-ins/gap/gap_mod_layer.c:95
 msgid ""
@@ -8400,95 +8395,94 @@ msgid ""
 "0, 4-5, 8\n"
 "where 0 == BG-layer"
 msgstr ""
-"Selecciona posiciones en la pila de Capas.\n"
-"0, 4-5, 8\n"
-"donde 0 == Capa del fondo"
+"Selecciona posiciones en la pila de capas.\n"
+"0, 4-5, 8 (Donde 0 == Capa del fondo)"
 
 #: plug-ins/gap/gap_mod_layer.c:96
 msgid "Select all visible Layers"
-msgstr "Selecciona todas las Capas visibles"
+msgstr "Selecciona todas las capas visibles"
 
 #. action items what to do with the selected layer(s)
 #: plug-ins/gap/gap_mod_layer.c:100
 msgid "Set Layer(s) visible"
-msgstr "Hacer Capa(s) visible(s)"
+msgstr "Hacer capa(s) visible(s)"
 
 #: plug-ins/gap/gap_mod_layer.c:101
 msgid "Set Layer(s) invisible"
-msgstr "Hacer Capa(s) invisible(s)"
+msgstr "Hacer capa(s) invisible(s)"
 
 #: plug-ins/gap/gap_mod_layer.c:102
 msgid "Set Layer(s) linked"
-msgstr "Hacer Capa(s) enlazadas"
+msgstr "Hacer capa(s) enlazadas"
 
 #: plug-ins/gap/gap_mod_layer.c:103
 msgid "Set Layer(s) unlinked"
-msgstr "Hacer Capa(s) desenlazada(s)"
+msgstr "Hacer capa(s) desenlazada(s)"
 
 #: plug-ins/gap/gap_mod_layer.c:104
 msgid "Raise Layer(s)"
-msgstr "Elevar Capa(s)"
+msgstr "Elevar capa(s)"
 
 #: plug-ins/gap/gap_mod_layer.c:105
 msgid "Lower Layer(s)"
-msgstr "Hundir Capa(s)"
+msgstr "Hundir capa(s)"
 
 #: plug-ins/gap/gap_mod_layer.c:106
 msgid "Merge Layer(s) expand as necessary"
-msgstr "Mezclar Capa(s) expandiendo lo necesario"
+msgstr "Mezclar capa(s) expandiendo lo necesario"
 
 #: plug-ins/gap/gap_mod_layer.c:107
 msgid "Merge Layer(s) clipped to image"
-msgstr "Mezclar Capa(s) recortando según imagen"
+msgstr "Mezclar capa(s) recortando según imagen"
 
 #: plug-ins/gap/gap_mod_layer.c:108
 msgid "Merge Layer(s) clipped to bg-layer"
-msgstr "Mezclar Capa(s) recortando según capa de fondo"
+msgstr "Mezclar capa(s) recortando según capa de fondo"
 
 #: plug-ins/gap/gap_mod_layer.c:109
 msgid "Apply filter on Layer(s)"
-msgstr "Aplicar filtro en Capa(s)"
+msgstr "Aplicar filtro en capa(s)"
 
 #: plug-ins/gap/gap_mod_layer.c:110
 msgid "Duplicate Layer(s)"
-msgstr "Duplicar Capa(s)"
+msgstr "Duplicar capa(s)"
 
 #: plug-ins/gap/gap_mod_layer.c:111
 msgid "Delete Layer(s)"
-msgstr "Borrar Capa(s)"
+msgstr "Borrar capa(s)"
 
 #: plug-ins/gap/gap_mod_layer.c:112
 msgid "Rename Layer(s)"
-msgstr "Renombrar Capa(s)"
+msgstr "Renombrar capa(s)"
 
 #: plug-ins/gap/gap_mod_layer.c:151
 msgid ""
 "Perform function on one or more Layer(s)\n"
 "in all frames of the selected frame range\n"
 msgstr ""
-"Realiza la función en una o más Capas\n"
-"en todos los fotogramas del rango seleccionado\n"
+"Realiza la función en una o más capas\n"
+"en todos los cuadros del rango seleccionado\n"
 
 #: plug-ins/gap/gap_mod_layer.c:155 plug-ins/gap/gap_mpege.c:258
 #: plug-ins/gap/gap_range_ops.c:442
 msgid "From Frame:"
-msgstr "Desde Fotograma:"
+msgstr "Desde cuadro:"
 
 # //R Humm
 #: plug-ins/gap/gap_mod_layer.c:156 plug-ins/gap/gap_mpege.c:259
 #: plug-ins/gap/gap_range_ops.c:443 plug-ins/gap/gap_range_ops.c:602
 msgid "first handled frame"
-msgstr "Primer fotograma manejado"
+msgstr "Primer cuadro manejado"
 
 #: plug-ins/gap/gap_mod_layer.c:163 plug-ins/gap/gap_range_ops.c:450
 msgid "To Frame:"
-msgstr "Hasta Fotograma:"
+msgstr "Hasta cuadro:"
 
 # //R Hum de nuevo
 #: plug-ins/gap/gap_mod_layer.c:164 plug-ins/gap/gap_mpege.c:267
 #: plug-ins/gap/gap_range_ops.c:451 plug-ins/gap/gap_range_ops.c:610
 msgid "last handled frame"
-msgstr "Último fotograma manejado"
+msgstr "Último cuadro manejado"
 
 #: plug-ins/gap/gap_mod_layer.c:172 plug-ins/gap/gap_range_ops.c:649
 msgid "Select Layer(s):"
@@ -8505,9 +8499,9 @@ msgid ""
 "or layerstack position numbers\n"
 "0,3-5"
 msgstr ""
-"Cadena que identifica los nombres de las capas\n"
-"o los nºs de posición en la pila de capas\n"
-"0,3-5"
+"Cadena para identificar los nombres de las capas o los nºs de posición en la "
+"pila de capas\n"
+" 0,3-5"
 
 #: plug-ins/gap/gap_mod_layer.c:189 plug-ins/gap/gap_range_ops.c:666
 msgid "Case sensitive"
@@ -8536,7 +8530,7 @@ msgstr "Función que debe realizarse en todas las capas seleccionadas"
 
 #: plug-ins/gap/gap_mod_layer.c:211
 msgid "New Layername:"
-msgstr "Nuevo nombre de Capa:"
+msgstr "Nuevo nombre de capa:"
 
 # //R No veo nada
 #. pixel
@@ -8546,14 +8540,12 @@ msgid ""
 "[####] is replaced by frame number\n"
 "(is used on function rename only)"
 msgstr ""
-"Nuevo nombre para todas las Capas\n"
-"manejadas. [####] se reemplaza por \n"
-"el número de fotograma (usado sólo\n"
-"en la función de renombrado)"
+"Nuevo nombre para todas las Capas manejadas. [####] se reemplaza por el "
+"número de cuadro (usado sólo en la función de renombrado)"
 
 #: plug-ins/gap/gap_mod_layer.c:218
 msgid "Frames Modify"
-msgstr "Modificar Fotogramas"
+msgstr "Cuadros: Modificar"
 
 #: plug-ins/gap/gap_mod_layer.c:282
 #, c-format
@@ -8564,24 +8556,25 @@ msgstr ""
 "Llamada no interactiva de %s\n"
 "(para todas las capas seleccionadas)"
 
+# //R Quizá mal
 #. GAP-PDB-Browser Dialog
 #. ----------------------
 #: plug-ins/gap/gap_mod_layer.c:660
 msgid "Select Filter for Animated frames-apply"
-msgstr ""
+msgstr "Seleccione FIltro para aplicar en los cuadros de animación"
 
+# //R Quizá mal
 #: plug-ins/gap/gap_mod_layer.c:802
 msgid "GAP Modify: No layer selected in last handled frame"
-msgstr ""
-"Modificador GAP: No hay Capa seleccionada en el último fotograma manejado"
+msgstr "Modificador GAP: No hay Capa seleccionada en el último cuadro manejado"
 
 #: plug-ins/gap/gap_mod_layer.c:888
 msgid "Modifying Frames/Layer(s)..."
-msgstr "Modificando Fotogramas/Capa(s)..."
+msgstr "Modificando Cuadros/Capa(s)..."
 
 #: plug-ins/gap/gap_mod_layer.c:969
 msgid "No selected Layer in start frame"
-msgstr "No hay Capa seleccionada en el fotograma inicial"
+msgstr "No hay Capa seleccionada en el cuadro inicial"
 
 #: plug-ins/gap/gap_mov_dialog.c:264 plug-ins/gfig/gfig.c:3319
 #: plug-ins/gflare/gflare.c:594 plug-ins/gimpressionist/orientmap.c:590
@@ -8659,14 +8652,13 @@ msgstr "Ping-Pong"
 
 #: plug-ins/gap/gap_mov_dialog.c:469
 msgid "Move Path"
-msgstr "Mover camino"
+msgstr "Camino de movimiento"
 
-# //R Revisar
 #: plug-ins/gap/gap_mov_dialog.c:503
 msgid "Show PreviewFrame with Selected SrcLayer at current Controlpoint"
 msgstr ""
-"Mostrar fotograma de vista previa con la Capa fuente seleccionada en el "
-"punto de control actual"
+"Mostrar cuadro de vista previa con la capa origen seleccionada en el punto "
+"de control actual"
 
 #: plug-ins/gap/gap_mov_dialog.c:507
 msgid "Anim Preview"
@@ -8679,13 +8671,13 @@ msgstr "Generar vista previa animada como imagen multicapa"
 #. parameter settings
 #: plug-ins/gap/gap_mov_dialog.c:527
 msgid "Copy moving source-layer(s) into frames"
-msgstr ""
+msgstr "Copiar y mover capa(s) origen en cuadros"
 
 #. the start frame scale_entry
 #. table col, row
 #: plug-ins/gap/gap_mov_dialog.c:560
 msgid "Start Frame:"
-msgstr "Fotograma inicio:"
+msgstr "Cuadro inicial:"
 
 # //R Humm
 #. label text
@@ -8698,15 +8690,14 @@ msgstr "Fotograma inicio:"
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:568
 msgid "First handled frame"
-msgstr "Primer fotograma manejado"
+msgstr "Primer cuadro manejado"
 
 #. the end frame scale_entry
 #. table col, row
 #: plug-ins/gap/gap_mov_dialog.c:575
 msgid "End Frame:"
-msgstr "Fotograma fin:"
+msgstr "Cuadro final:"
 
-# //R Hum de nuevo
 #. label text
 #. scalesize spinsize
 #. value
@@ -8717,13 +8708,13 @@ msgstr "Fotograma fin:"
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:583
 msgid "Last handled frame"
-msgstr "Último fotograma manejado"
+msgstr "Último cuadro manejado"
 
 #. the Preview Frame scale_entry
 #. table col, row
 #: plug-ins/gap/gap_mov_dialog.c:590
 msgid "Preview Frame:"
-msgstr "Vista previa del fotograma:"
+msgstr "Vista previa del cuadro:"
 
 #. label text
 #. scalesize spinsize
@@ -8735,13 +8726,13 @@ msgstr "Vista previa del fotograma:"
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:598
 msgid "Frame to show when UpdPreview button is pressed"
-msgstr "Fotograma a mostrar cuando se pulse el botón Actualizar vista previa."
+msgstr "Cuadro a mostrar cuando se pulse el botón Actualizar vista previa."
 
 #. the Layerstack scale_entry
 #. table col, row
 #: plug-ins/gap/gap_mov_dialog.c:606 plug-ins/gap/gap_range_ops.c:266
 msgid "Layerstack:"
-msgstr "Pila de Capas:"
+msgstr "Pila de capas:"
 
 #. label text
 #. scalesize spinsize
@@ -8756,7 +8747,7 @@ msgid ""
 "How to insert SrcLayer into the Dst. Frame's Layerstack\n"
 "0 means on top i.e. in front"
 msgstr ""
-"Cómo insertar Capa origen en la pila de Capas del fotograma destino\n"
+"Cómo insertar la capa origen en la pila de capas del cuadro destino\n"
 "0 significa en la cima, es decir, en el frente"
 
 #. toggle force visibility
@@ -8767,17 +8758,16 @@ msgstr "Forzar visibilidad"
 # //R Esto está en chino
 #: plug-ins/gap/gap_mov_dialog.c:633
 msgid "Force visibility for all copied Src-Layers"
-msgstr "Forzar visibilidad para todas las capas fuente copiadas"
+msgstr "Forzar visibilidad para todas las capas origen copiadas"
 
 #. toggle clip_to_image
 #: plug-ins/gap/gap_mov_dialog.c:639
 msgid "Clip To Frame"
-msgstr "Recortar a Fotograma"
+msgstr "Recortar a cuadro"
 
 #: plug-ins/gap/gap_mov_dialog.c:646
 msgid "Clip all copied Src-Layers at Frame Boundaries"
-msgstr ""
-"Recorta todas las Capas origen copiadas en los bordes de los fotogramas"
+msgstr "Recorta todas las capas origen copiadas en los bordes de los cuadros"
 
 #: plug-ins/gap/gap_mov_dialog.c:694
 msgid ""
@@ -8785,19 +8775,20 @@ msgid ""
 "(Please open a 2nd Image of the same type before opening Move Path)"
 msgstr ""
 "No se seleccionó imagen origen\n"
-"(Por favor, abra una 2ª imagen del mismo tipo antes de abrir Mover Camino)"
+"(Por favor, abra una 2ª imagen del mismo tipo antes de abrir Camino de "
+"movimiento)"
 
 #: plug-ins/gap/gap_mov_dialog.c:790
 msgid "Object on empty frames"
-msgstr "Objeto en fotogramas vacíos"
+msgstr "Objeto en cuadros vacíos"
 
 #: plug-ins/gap/gap_mov_dialog.c:791
 msgid "Object on one frame"
-msgstr "Objeto en un fotograma"
+msgstr "Objeto en un cuadro"
 
 #: plug-ins/gap/gap_mov_dialog.c:792
 msgid "Exact Object on frames"
-msgstr "Objeto exacto en fotogramas"
+msgstr "Objeto exacto en cuadros"
 
 #: plug-ins/gap/gap_mov_dialog.c:822
 msgid "Anim Preview Mode"
@@ -8814,11 +8805,11 @@ msgstr "Cambia el tamaño de la vista previa animada (en %)"
 # //R Mejorar
 #: plug-ins/gap/gap_mov_dialog.c:839
 msgid "Framerate"
-msgstr "Tasa de fotogramas"
+msgstr "Tasa de cuadros"
 
 #: plug-ins/gap/gap_mov_dialog.c:840
 msgid "Framerate to use in the animated preview in frames/sec"
-msgstr ""
+msgstr "Tasa de cuadros (en cuadros/seg.) a usar en la vista previa animada"
 
 #: plug-ins/gap/gap_mov_dialog.c:854
 msgid "Copy to Video Buffer"
@@ -8829,29 +8820,31 @@ msgid ""
 "Save all single frames of animated preview to video buffer\n"
 "(configured in gimprc by video-paste-dir and video-paste-basename)"
 msgstr ""
+"Guardar todos los cuadros de la vista previa animada al búfer de vídeo\n"
+"(se configura en gimprc con video-paste-dir y video-paste-basename)"
 
 #: plug-ins/gap/gap_mov_dialog.c:860
 msgid "Move Path Animated Preview"
-msgstr ""
+msgstr "Vista previa animada de Camino de movimiento"
 
 #: plug-ins/gap/gap_mov_dialog.c:906
 msgid "Generate Animated Preview failed\n"
-msgstr ""
+msgstr "Falló la generación de vista previa animada\n"
 
 #. filesel is already open
 #: plug-ins/gap/gap_mov_dialog.c:1345
 msgid "Load Path Points from file"
-msgstr ""
+msgstr "Cargar puntos del camino desde un fichero"
 
 #. filesel is already open
 #: plug-ins/gap/gap_mov_dialog.c:1381
 msgid "Save Path Points to file"
-msgstr ""
+msgstr "Guardar puntos del camino en un fichero"
 
 #: plug-ins/gap/gap_mov_dialog.c:1727
 #, c-format
 msgid "Current Point: [ %3d ] of [ %3d ]"
-msgstr ""
+msgstr "Punto actual: [ %3d< ] de [ %3d ]"
 
 #: plug-ins/gap/gap_mov_dialog.c:1919
 msgid "Source Select"
@@ -8860,11 +8853,11 @@ msgstr "Selección de origen"
 #. Source Layer menu
 #: plug-ins/gap/gap_mov_dialog.c:1935
 msgid "Source Image/Layer:"
-msgstr "Imagen/Capa origen"
+msgstr "Imagen/capa origen"
 
 #: plug-ins/gap/gap_mov_dialog.c:1945
 msgid "Source Object to insert into Frame Range"
-msgstr "Objeto origen a insertar en el rango de fotogramas"
+msgstr "Objeto origen a insertar en el rango de cuadros"
 
 #. Paintmode menu
 #: plug-ins/gap/gap_mov_dialog.c:1960
@@ -8878,26 +8871,26 @@ msgstr "Modo pintura"
 #. Loop Stepmode menu
 #: plug-ins/gap/gap_mov_dialog.c:1984
 msgid "Stepmode:"
-msgstr "Modo a pasos:"
+msgstr "Modo de paso:"
 
 #: plug-ins/gap/gap_mov_dialog.c:2002
 msgid "How to fetch the next SrcLayer at the next handled frame"
-msgstr ""
+msgstr "Cómo obtener la siguiente capa origen en el siguiente cuadro manejado"
 
 #. Source Image Handle menu
 #: plug-ins/gap/gap_mov_dialog.c:2008
 msgid "Handle:"
-msgstr ""
+msgstr "Manejar:"
 
 #: plug-ins/gap/gap_mov_dialog.c:2026
 msgid "How to place the SrcLayer at Controlpoint Coordinates"
-msgstr ""
+msgstr "Cómo colocar la capa origen en las coordenadas del punto de control"
 
 #. to avoid side effects while initialization
 #. the frame
 #: plug-ins/gap/gap_mov_dialog.c:2080
 msgid "Move Path Preview"
-msgstr ""
+msgstr "Vista previa de Camino de movimiento"
 
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:2112
@@ -8919,7 +8912,7 @@ msgstr "Coordenada Y"
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:2147
 msgid "Scale Source Layer's Width in percent"
-msgstr "Redimensionar anchura de Capa origen (en %)"
+msgstr "Redimensionar anchura de capa origen (en %)"
 
 #. label text
 #. scalesize spinsize
@@ -8931,7 +8924,7 @@ msgstr "Redimensionar anchura de Capa origen (en %)"
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:2164
 msgid "Scale SrcLayer's Height in percent"
-msgstr "Redimensionar altura de Capa origen (en %)"
+msgstr "Redimensionar altura de capa origen (en %)"
 
 #. label text
 #. scalesize spinsize
@@ -8961,14 +8954,14 @@ msgstr "Rotar:"
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:2198
 msgid "Rotate SrcLayer (in degree)"
-msgstr "Rotar Capa origen (en grados)"
+msgstr "Rotar capa origen (en grados)"
 
 # //R Muy literal...
 #. Keyframe
 #. table col, row
 #: plug-ins/gap/gap_mov_dialog.c:2209
 msgid "Keyframe:"
-msgstr "Fotograma llave:"
+msgstr "Cuadro llave:"
 
 #. label text
 #. scalesize spinsize
@@ -8983,12 +8976,12 @@ msgid ""
 "Fix Controlpoint to Keyframe number\n"
 "(0 == No Keyframe)"
 msgstr ""
-"Fijar punto de control en fotograma clave nº\n"
-"(0 == Sin fotograma clave)"
+"Fijar punto de control en cuadro clave nº\n"
+"(0 == Sin cuadro clave)"
 
 #: plug-ins/gap/gap_mov_dialog.c:2292
 msgid "Add Point"
-msgstr "Añadir Punto"
+msgstr "Añadir punto"
 
 #: plug-ins/gap/gap_mov_dialog.c:2300
 msgid ""
@@ -9001,25 +8994,29 @@ msgstr ""
 #. toggle clip_to_image
 #: plug-ins/gap/gap_mov_dialog.c:2305
 msgid "Show Path"
-msgstr "Mostrar Camino"
+msgstr "Mostrar camino"
 
 #: plug-ins/gap/gap_mov_dialog.c:2312
 msgid ""
 "Show Path Lines and enable pick/drag with left button or move with right "
 "button"
 msgstr ""
+"Mostrar las líneas del camino y permitir pulsar/arrastrar con el botón "
+"izquierdo, o mover con el derecho"
 
 #: plug-ins/gap/gap_mov_dialog.c:2322
 #: plug-ins/imagemap/imap_cmd_insert_point.c:57
 #: plug-ins/imagemap/imap_polygon.c:683
 msgid "Insert Point"
-msgstr ""
+msgstr "Insertar punto"
 
 #: plug-ins/gap/gap_mov_dialog.c:2330
 msgid ""
 "Insert Controlpoint\n"
 "(the current Point is duplicated)"
 msgstr ""
+"Insertar punto de control\n"
+"(se duplica el punto actual)"
 
 #: plug-ins/gap/gap_mov_dialog.c:2334
 #: plug-ins/imagemap/imap_cmd_delete_point.c:57
@@ -9080,16 +9077,22 @@ msgid ""
 "Reset all Controlpoints to default Values but dont change the path (X/Y "
 "Values)"
 msgstr ""
+"Restaura todos los puntos de control a sus valores predefinidos pero no "
+"cambiar el camino (Valores X/Y)"
 
 #: plug-ins/gap/gap_mov_dialog.c:2427
 msgid "Rotate Follow"
-msgstr ""
+msgstr "Rotación de seguimiento"
 
 #: plug-ins/gap/gap_mov_dialog.c:2438
 msgid ""
 "Set Rotation for all Controlpoints to follow the shape of the path.\n"
 "(Shift: use Rotation of contolpoint 1 as offset)"
 msgstr ""
+"Pone las rotaciones en todos los puntos de control de manera que se siga la "
+"forma del camino.\n"
+"(Con Mayúsculas: utilizar la rotación del primer punto de control para "
+"desfasar todas las rotaciones)"
 
 #: plug-ins/gap/gap_mov_dialog.c:2445
 msgid "Delete All Points"
@@ -9121,6 +9124,9 @@ msgid ""
 "\n"
 "Error: Keyframe %d at point [%d] higher or equal than last handled frame"
 msgstr ""
+"\n"
+"Error: El cuadro clave %d en el punto [%d] es mayor o igual que el último "
+"cuadro manejado"
 
 #: plug-ins/gap/gap_mov_dialog.c:2959
 #, c-format
@@ -9129,6 +9135,10 @@ msgid ""
 "Error: Keyframe %d at point [%d] leaves not enough space (frames)\n"
 "for the previous controlpoints"
 msgstr ""
+"\n"
+"Error: El cuadro clave %d en el punto [%d] no deja el suficiente espacio "
+"(cuadros)\n"
+"para los puntos de control anteriores"
 
 #: plug-ins/gap/gap_mov_dialog.c:2969
 #, c-format
@@ -9136,6 +9146,8 @@ msgid ""
 "\n"
 "Error: Keyframe %d is not in sequence at point [%d]"
 msgstr ""
+"\n"
+"Error: El cuadro clave %d no está en secuencia en el punto [%d]"
 
 #: plug-ins/gap/gap_mov_dialog.c:2987
 #, c-format
@@ -9143,6 +9155,8 @@ msgid ""
 "\n"
 "Error: controlpoint [%d] is out of handled framerange"
 msgstr ""
+"\n"
+"Error: El punto de control [%d] está fuera del rango de cuadros manejados"
 
 #: plug-ins/gap/gap_mov_dialog.c:3001
 #, c-format
@@ -9151,6 +9165,9 @@ msgid ""
 "Error: more controlpoints (%d) than handled frames (%d)\n"
 "please reduce controlpoints or select more frames"
 msgstr ""
+"\n"
+"Error: Hay más puntos de control (%d) que cuadros manejados (%d)\n"
+"Por favor, reduzca los puntos de control o seleccione más cuadros"
 
 #: plug-ins/gap/gap_mov_dialog.c:3014
 msgid ""
@@ -9158,15 +9175,15 @@ msgid ""
 "or Keyframe settings"
 msgstr ""
 "No puedo operar con los actuales puntos de\n"
-"control o ajustes de fotogramas llave."
+"control o ajustes de cuadros llave."
 
 #: plug-ins/gap/gap_mov_dialog.c:3021
 msgid "Reset Keyframes"
-msgstr "Restaurar fotogramas llave"
+msgstr "Restaurar cuadros llave"
 
 #: plug-ins/gap/gap_mov_dialog.c:3026
 msgid "Move Path Controlpointcheck"
-msgstr ""
+msgstr "Chequeo de puntos de control de Camino de movimiento"
 
 #: plug-ins/gap/gap_mov_dialog.c:3027
 msgid "Errors:"
@@ -9182,7 +9199,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mov_exec.c:350
 msgid "Copying Layers into Frames..."
-msgstr "Copiando Capas en Fotogramas..."
+msgstr "Copiando capas en cuadros..."
 
 #: plug-ins/gap/gap_mov_exec.c:354
 msgid "Generating Animated Preview..."
@@ -9223,7 +9240,7 @@ msgstr "   o en ftp://ftp.mpeg.org/pub/mpeg/mssg "
 #: plug-ins/gap/gap_mpege.c:148
 msgid "2.) You need a series of single Images on disk (AnimFrames)"
 msgstr ""
-"2.) Necesita una serie de imágenes simples en disco (Fotogramas de Animación)"
+"2.) Necesita una serie de imágenes simples en disco (Cuadros de Animación)"
 
 #: plug-ins/gap/gap_mpege.c:152
 msgid "    all with fileformat JPEG (or YUV or PNM or PPM)"
@@ -9235,11 +9252,11 @@ msgstr "   todas con formato de fichero PPM (o YUV)"
 
 #: plug-ins/gap/gap_mpege.c:160
 msgid "    (use 'Frames Convert' from the Video Menu"
-msgstr "    (use 'Convertir Fotogramas' del menú Video"
+msgstr "    (use 'Convertir Cuadros' del menú Video"
 
 #: plug-ins/gap/gap_mpege.c:164
 msgid "    or 'Split Image to Frames' from the Video Menu)"
-msgstr "    o 'Partir Imagen en Fotogramas' del menú Vídeo)"
+msgstr "    o 'Partir Imagen en Cuadros' del menú Vídeo)"
 
 #: plug-ins/gap/gap_mpege.c:168
 msgid "3.) All Images must have the same size,"
@@ -9265,25 +9282,26 @@ msgstr "genera flujo MPEG1 (ISO/IEC 11172-2)"
 msgid "generate MPEG2 (ISO/IEC DIS 13818-2) stream"
 msgstr "genera flujo MPEG2 (ISO/IEC DIS 13818-2)"
 
+# //R ¿Será esto?
 #: plug-ins/gap/gap_mpege.c:242
 msgid "GenParams"
-msgstr ""
+msgstr "Generar parámetros"
 
 #: plug-ins/gap/gap_mpege.c:244
 msgid "Gen + Encode"
-msgstr ""
+msgstr "Generar y codificar"
 
 #: plug-ins/gap/gap_mpege.c:266
 msgid "To   Frame:"
-msgstr ""
+msgstr "Al cuadro:"
 
 #: plug-ins/gap/gap_mpege.c:273
 msgid "Framerate :"
-msgstr "Tasa de fotogramas :"
+msgstr "Tasa de cuadros :"
 
 #: plug-ins/gap/gap_mpege.c:274
 msgid "framerate in frames/second"
-msgstr "Tasa de fotogramas en fotogramas/segundo"
+msgstr "Tasa de cuadros en cuadros/segundo"
 
 #: plug-ins/gap/gap_mpege.c:281
 msgid "Bitrate:"
@@ -9294,7 +9312,7 @@ msgid ""
 "used for constant bitrates (bit/sec)                  \n"
 "(low rate gives good compression + bad quality)"
 msgstr ""
-"Usaso para tasas de bit constantes (bits/segundo)\n"
+"Usado para tasas de bit constantes (bits/segundo)\n"
 "(Tasas bajas dan buena compresión y mala calidad)"
 
 #: plug-ins/gap/gap_mpege.c:296
@@ -9333,11 +9351,14 @@ msgstr ""
 "Nombre del Guión de Comienzo\n"
 "(se genera y ejecuta)"
 
+# //R ¿Libre? ¿Gratis?
 #: plug-ins/gap/gap_mpege.c:320
 msgid ""
 "Generate parameterfile for mpeg_encode 1.5\n"
 "(the freely distributed Berkeley MPEG-1 Video  Encoder.)\n"
 msgstr ""
+"Generar fichero de parámetros para mpeg_encode 1.5\n"
+"(El libremente distribuido Codificador de Vídeo MPEG-1 de Berkeley)\n"
 
 #: plug-ins/gap/gap_mpege.c:324
 msgid "Constant Bitrate :"
@@ -9345,7 +9366,7 @@ msgstr "Tasa de bits constante:"
 
 #: plug-ins/gap/gap_mpege.c:325
 msgid "Iqnore I/P/QSCALE values and use constant bit-rate)"
-msgstr ""
+msgstr "Pasar por alto valores I/P/QSCALE y usar tasa de bits constante)"
 
 #: plug-ins/gap/gap_mpege.c:330
 msgid "Pattern:"
@@ -9354,90 +9375,100 @@ msgstr "Patrón:"
 #. pixel
 #: plug-ins/gap/gap_mpege.c:332
 msgid "How to encode MPEG framesequence (I/P/B frames)"
-msgstr ""
+msgstr "Cómo codificar secuencia de cuadros MPEG (Cuadros I/P/B)"
 
 #: plug-ins/gap/gap_mpege.c:338
 msgid "IQSCALE:"
-msgstr ""
+msgstr "IQSCALE:"
 
 #: plug-ins/gap/gap_mpege.c:339
 msgid ""
 "Quality scale for I-Frames                       \n"
 "(1 = best quality, 31 = best comression)"
 msgstr ""
+"Escala de calidad para cuadros I\n"
+"(1 = la mejor calidad, 31 = la mejor compresión)"
 
 #: plug-ins/gap/gap_mpege.c:346
 msgid "PQSCALE:"
-msgstr ""
+msgstr "PQSCALE:"
 
 #: plug-ins/gap/gap_mpege.c:347
 msgid ""
 "Quality scale for P-Frames                  \n"
 "(1 = best quality, 31 = best comression)"
 msgstr ""
+"Escala de calidad para cuadros P\n"
+"(1 = la mejor calidad, 31 = la mejor compresión)"
 
 #: plug-ins/gap/gap_mpege.c:354
 msgid "BQSCALE:"
-msgstr ""
+msgstr "BQSCALE:"
 
 #: plug-ins/gap/gap_mpege.c:355
 msgid ""
 "Quality scale for B-Frames                  \n"
 "(1 = best quality, 31 = best comression)"
 msgstr ""
+"Escala de calidad para cuadros B\n"
+"(1 = la mejor calidad, 31 = la mejor compresión)"
 
 #: plug-ins/gap/gap_mpege.c:362
 msgid "P-Search :"
-msgstr ""
+msgstr "Búsqueda P:"
 
 #: plug-ins/gap/gap_mpege.c:363
 msgid "Search Algorithmus used for P-frames"
-msgstr ""
+msgstr "Algoritmos de búsqueda de cuadros P"
 
 #: plug-ins/gap/gap_mpege.c:369
 msgid "B-Search :"
-msgstr ""
+msgstr "Búsqueda B:"
 
 #: plug-ins/gap/gap_mpege.c:370
 msgid "Search Algorithmus used for B-frames"
-msgstr ""
+msgstr "Algoritmos de búsqueda de cuadros B"
 
 #: plug-ins/gap/gap_mpege.c:375
 msgid "Gen MPEG_ENCODE Parameters"
-msgstr ""
+msgstr "Generar parámetros MPEG_ENCODE"
 
 #: plug-ins/gap/gap_mpege.c:376 plug-ins/gap/gap_mpege.c:414
 msgid "Encode Values"
-msgstr ""
+msgstr "Codificar valores"
 
 #: plug-ins/gap/gap_mpege.c:392
 msgid ""
 "Generate parameterfile for mpeg2encode 1.2\n"
 "(MPEG-2 Video  Encoder.)\n"
 msgstr ""
+"Generar fichero de parámetros para mpeg2encode 1.2\n"
+"(Codificador de Vídeo MPEG-2)\n"
 
 #: plug-ins/gap/gap_mpege.c:395
 msgid "MPEG-type :"
-msgstr ""
+msgstr "Tipo MPEG :"
 
 #: plug-ins/gap/gap_mpege.c:404
 msgid "Videoformat :"
-msgstr ""
+msgstr "Formato de vídeo : "
 
 #: plug-ins/gap/gap_mpege.c:405
 msgid "Videoformat"
-msgstr ""
+msgstr "Formato de vídeo"
 
 #. framerates above 30 ar not allowed in mpeg2encode
 #: plug-ins/gap/gap_mpege.c:413
 msgid "Gen MPEG2ENCODE Parameters"
-msgstr ""
+msgstr "Generar parámetros MPEG2ENCODE"
 
 #: plug-ins/gap/gap_mpege.c:978
 msgid ""
 "\n"
 "WARNING: mpeg_encode does not support Fileformat "
 msgstr ""
+"\n"
+"AVISO: mpeg_encode no entiende el formato de fichero "
 
 #: plug-ins/gap/gap_mpege.c:981
 msgid ""
@@ -9461,7 +9492,7 @@ msgid ""
 "WARNING: mpeg2encode does not support Fileformat "
 msgstr ""
 "\n"
-"AVISO: mpeg2encode no entiende el formato de fichero"
+"AVISO: mpeg2encode no entiende el formato de fichero "
 
 #: plug-ins/gap/gap_mpege.c:993
 msgid ""
@@ -9469,55 +9500,63 @@ msgid ""
 "ERROR: invoked from a single image, animframe required"
 msgstr ""
 "\n"
-"ERROR: Se invocó desde una imagen única; se requiere fotograma de animación"
+"ERROR: Se invocó desde una imagen única; se requiere cuadro de animación"
 
 #: plug-ins/gap/gap_navigator_dialog.c:367
 msgid ""
 "Playback         \n"
 "<Shift> optimized"
 msgstr ""
+"Reproducción\n"
+"<Mays> Optimizada"
 
 #: plug-ins/gap/gap_navigator_dialog.c:372
 msgid ""
 "Smart Update .xvpics\n"
 "<Shift> forced upd"
 msgstr ""
+"Actualización inteligente de .xvpics\n"
+"<Mays> Forzar actualización"
 
 #: plug-ins/gap/gap_navigator_dialog.c:377
 msgid "Duplicate selected Frames"
-msgstr ""
+msgstr "Duplicar cuadros seleccionados"
 
 #: plug-ins/gap/gap_navigator_dialog.c:381
 msgid "Delete selected Frames"
-msgstr ""
+msgstr "Borrar cuadros seleccionados"
 
 #: plug-ins/gap/gap_navigator_dialog.c:390
 msgid "Goto 1st Frame"
-msgstr ""
+msgstr "Ir al primer cuadro"
 
 #: plug-ins/gap/gap_navigator_dialog.c:394
 msgid ""
 "Goto prev Frame\n"
 "<Shift> use timezoom stepsize"
 msgstr ""
+"Ir al cuadro anterior\n"
+"<Mays> Usar paso de zoom de tiempo"
 
 #: plug-ins/gap/gap_navigator_dialog.c:399
 msgid ""
 "Goto next Frame\n"
 "<Shift> use timezoom stepsize"
 msgstr ""
+"Ir al cuadro siguiente\n"
+"<Mays> Usar paso de zoom de tiempo"
 
 #: plug-ins/gap/gap_navigator_dialog.c:404
 msgid "Goto last Frame"
-msgstr ""
+msgstr "Ir al último cuadro"
 
 #: plug-ins/gap/gap_navigator_dialog.c:462
 msgid "<Image>/Video/VCR Navigator..."
-msgstr ""
+msgstr "<Image>/Vídeo/Navegador VCR..."
 
 #: plug-ins/gap/gap_navigator_dialog.c:525
 msgid "Cant open two or more Video Navigator Windows."
-msgstr ""
+msgstr "No puedo abrir dos o más Ventanas de Navegador de Vídeo."
 
 #. menu_item cut
 #: plug-ins/gap/gap_navigator_dialog.c:2931
@@ -9549,11 +9588,11 @@ msgstr "Limpiar búfer de vídeo"
 
 #: plug-ins/gap/gap_navigator_dialog.c:2996
 msgid "Videoframes:"
-msgstr "Fotogramas de vídeo:"
+msgstr "Cuadros de vídeo:"
 
 #: plug-ins/gap/gap_navigator_dialog.c:3011
 msgid "Framerate:"
-msgstr "Tasa de fotogramas:"
+msgstr "Tasa de cuadros:"
 
 #: plug-ins/gap/gap_navigator_dialog.c:3034
 msgid "Timezoom:"
@@ -9582,30 +9621,30 @@ msgstr "Desplazamiento Y:"
 
 #: plug-ins/gap/gap_range_ops.c:157
 msgid "Crop AnimFrames (all)"
-msgstr ""
+msgstr "Recortar cuadros (todos)"
 
 #: plug-ins/gap/gap_range_ops.c:158
 #, c-format
 msgid "Crop (original %dx%d)"
-msgstr ""
+msgstr "Recortar (original %dx%d)"
 
 #: plug-ins/gap/gap_range_ops.c:168
 msgid "Resize AnimFrames (all)"
-msgstr ""
+msgstr "Cambiar tamaño de cuadros (todos)"
 
 #: plug-ins/gap/gap_range_ops.c:169
 #, c-format
 msgid "Resize (original %dx%d)"
-msgstr ""
+msgstr "Cambiar tamaño (original %dx%d)"
 
 #: plug-ins/gap/gap_range_ops.c:175
 msgid "Scale AnimFrames (all)"
-msgstr ""
+msgstr "Redimensionar cuadros (todos)"
 
 #: plug-ins/gap/gap_range_ops.c:176
 #, c-format
 msgid "Scale (original %dx%d)"
-msgstr ""
+msgstr "Redimensionar (original %dx%d)"
 
 #: plug-ins/gap/gap_range_ops.c:307
 msgid "Generate Optimal Palette"
@@ -9689,7 +9728,7 @@ msgstr "Activar tramado de transparencia"
 
 #: plug-ins/gap/gap_range_ops.c:364
 msgid "Convert Frames to Indexed"
-msgstr "Convertir Fotogramas a Indexados"
+msgstr "Convertir Cuadros a Indexados"
 
 #: plug-ins/gap/gap_range_ops.c:365
 msgid "Palette and Dither Settings"
@@ -9718,8 +9757,8 @@ msgid ""
 "optionally convert imagetype\n"
 msgstr ""
 "\n"
-"Seleccionar formato de fichero destino por la extensión\n"
-"opcionalmente convertir tipo de imagen\n"
+"Seleccione formato de fichero destino mediante la extensión.\n"
+"Opcionalmente convierta el tipo de imagen\n"
 
 #: plug-ins/gap/gap_range_ops.c:460
 msgid "Basename:"
@@ -9729,9 +9768,7 @@ msgstr "Nombre base"
 msgid ""
 "basename of the resulting frames       \n"
 "(0001.ext is added)"
-msgstr ""
-"Nombre base de los fotogramas resultantes\n"
-"(se añade 0001.ext)"
+msgstr "Nombre base de los cuadros resultantes (se añade 0001.ext)"
 
 #: plug-ins/gap/gap_range_ops.c:466 plug-ins/gap/gap_split.c:234
 msgid "Extension:"
@@ -9742,8 +9779,8 @@ msgid ""
 "extension of resulting frames       \n"
 "(is also used to define Fileformat)"
 msgstr ""
-"extenssión de los fotogramas resultantes\n"
-"(también se usa para definir el formato de fichero)"
+"extensión de los cuadros resultantes (también se usa para definir el formato "
+"de fichero)"
 
 #: plug-ins/gap/gap_range_ops.c:473
 msgid "Imagetype:"
@@ -9754,28 +9791,28 @@ msgid ""
 "Convert to, or keep imagetype           \n"
 "(most fileformats can't handle all types)"
 msgstr ""
-"Convertir a, o mantener tipo de imagen\n"
-"(la mayoría de los formatos no admiten todos los tipos)"
+"Convertir a, o mantener tipo de imagen (la mayoría de los formatos no "
+"admiten todos los tipos)"
 
 #: plug-ins/gap/gap_range_ops.c:480 plug-ins/gap/gap_split.c:245
 msgid "Flatten:"
-msgstr "Aplanar Imagen:"
+msgstr "Aplanar:"
 
 #: plug-ins/gap/gap_range_ops.c:481
 msgid ""
 "Flatten all resulting frames               \n"
 "(most fileformats need flattened frames)"
 msgstr ""
-"Aplanar todos los fotogramas resultantes    \\n\n"
-"(la mayoría de los formatos necesitan fotogramas planos)"
+"Aplanar todos los cuadros resultantes (la mayoría de los formatos necesitan "
+"cuadros planos)"
 
 #: plug-ins/gap/gap_range_ops.c:486
 msgid "Convert Frames to other Formats"
-msgstr "Convertir Fotogramas a otros formatos"
+msgstr "Convertir Cuadros a otros formatos"
 
 #: plug-ins/gap/gap_range_ops.c:487
 msgid "Convert Settings"
-msgstr "Convertir ajustes"
+msgstr "Ajustes de conversión"
 
 #: plug-ins/gap/gap_range_ops.c:564
 msgid "Expand as necessary"
@@ -9783,11 +9820,11 @@ msgstr "Expandir lo necesario"
 
 #: plug-ins/gap/gap_range_ops.c:565
 msgid "Clipped to image"
-msgstr "Recortada según la imagen"
+msgstr "Recortar según la imagen"
 
 #: plug-ins/gap/gap_range_ops.c:566
 msgid "Clipped to bottom layer"
-msgstr "Recortada según la capa del fondo"
+msgstr "Recortar según la capa del fondo"
 
 #: plug-ins/gap/gap_range_ops.c:567
 msgid "Flattened image"
@@ -9798,49 +9835,47 @@ msgid ""
 "Resulting Layer Size is made of the outline-rectangle \n"
 "of all visible layers (may differ from frame to frame)"
 msgstr ""
-"El tamaño de la Capa resultante se saca del contorno\n"
-"rectangular de todas las capas visibles (puede diferir\n"
-"de fotograma a fotograma)"
+"El tamaño de la capa resultante se saca del contorno rectangular de todas "
+"las capas visibles (puede diferir de cuadro a cuadro)"
 
 #: plug-ins/gap/gap_range_ops.c:569
 msgid "Resulting Layer Size is the frame size"
-msgstr "Tamaño de Capa resultante es el tamaño del fotograma"
+msgstr "Tamaño de capa resultante es el tamaño del cuadro"
 
 #: plug-ins/gap/gap_range_ops.c:570
 msgid ""
 "Resulting Layer Size is the size of the bottom layer\n"
 "(may differ from frame to frame)"
 msgstr ""
-"El tamaño de la Capa resultante es el tamaño de la capa\n"
-"del fondo (puede diferir de fotograma a fotograma)"
+"El tamaño de la capa resultante es el tamaño de la capa del fondo (puede "
+"diferir de cuadro a cuadro)"
 
 #: plug-ins/gap/gap_range_ops.c:571
 msgid ""
 "Resulting Layer Size is the frame size     \n"
 "transparent parts are filled with BG color"
 msgstr ""
-"El tamaño de la Capa resultante es el tamaño del\n"
-"fotograma. Regiones transparentes de rellenan\n"
-"con color de Fondo"
+"El tamaño de la capa resultante es el tamaño del cuadro. Regiones "
+"transparentes de rellenan con color de Fondo"
 
 #: plug-ins/gap/gap_range_ops.c:581
 msgid "select all Layers where Layername is equal to Pattern"
 msgstr ""
-"seleccionar todas las Capas donde el nombre de capa sea igual al patrón"
+"Seleccionar todas las capas donde el nombre de capa sea igual al patrón"
 
 #: plug-ins/gap/gap_range_ops.c:582
 msgid "select all Layers where Layername starts with Pattern"
 msgstr ""
-"seleccionar todas las Capas donde el nombre de cada comience con el patrón"
+"Seleccionar todas las capas donde el nombre de cada comience con el patrón"
 
 #: plug-ins/gap/gap_range_ops.c:583
 msgid "select all Layers where Layername ends up with Pattern"
 msgstr ""
-"seleccionar todas las Capas donde el nombre de capa termine con el patrón"
+"Seleccionar todas las capas donde el nombre de capa termine con el patrón"
 
 #: plug-ins/gap/gap_range_ops.c:584
 msgid "select all Layers where Layername contains Pattern"
-msgstr "seleccionar todas las Capas donde el nombre de capa contenga al patrón"
+msgstr "Seleccionar todas las capas donde el nombre de capa contenga al patrón"
 
 #: plug-ins/gap/gap_range_ops.c:585
 msgid ""
@@ -9848,9 +9883,8 @@ msgid ""
 "0, 4-5, 8\n"
 "where 0 == Top-layer"
 msgstr ""
-"seleccione posiciones de pila de Capas.\n"
-"0, 4-5, 8\n"
-"donde0 == Capa en la cima"
+"Seleccione posiciones de pila de capas. \n"
+"0, 4-5, 8  (Donde 0 == Capa en la cima)"
 
 #: plug-ins/gap/gap_range_ops.c:586
 msgid ""
@@ -9858,31 +9892,31 @@ msgid ""
 "0, 4-5, 8\n"
 "where 0 == BG-layer"
 msgstr ""
-"seleccione posiciones de pila de Capas\n"
-"0, 4-5, 8\n"
-"donde 0 == Capa Fondo"
+"Seleccione posiciones de pila de capas\n"
+"0, 4-5, 8 (Donde 0 == Capa de Fondo)"
 
 #: plug-ins/gap/gap_range_ops.c:587
 msgid "select all visible Layers"
-msgstr "seleccionar todas las Capas visibles"
+msgstr "Seleccionar todas las Capas visibles"
 
 #: plug-ins/gap/gap_range_ops.c:616
 msgid "Layer Basename:"
-msgstr "Nombre base de capa:"
+msgstr "Nombre base para Capas:"
 
 #: plug-ins/gap/gap_range_ops.c:617
 msgid ""
 "Basename for all Layers    \n"
 "[####] is replaced by frame number"
 msgstr ""
+"Nombre base para todas las capas. Se sustituye [####] por el nº de cuadro"
 
 #: plug-ins/gap/gap_range_ops.c:635
 msgid "Layer Mergemode:"
-msgstr ""
+msgstr "Modo de mezcla de capa:"
 
 #: plug-ins/gap/gap_range_ops.c:642
 msgid "Exclude BG-Layer"
-msgstr ""
+msgstr "Excluír capa de fondo"
 
 #: plug-ins/gap/gap_range_ops.c:643
 msgid ""
@@ -9890,30 +9924,32 @@ msgid ""
 "in all handled frames\n"
 "regardless to selection"
 msgstr ""
+"Excluir las capas de fondo en todos los cuadros manejados a pesar de la "
+"selección"
 
 #: plug-ins/gap/gap_range_ops.c:673
 msgid "Use all unselected Layers"
-msgstr ""
+msgstr "Usar las capas no seleccionadas"
 
 #: plug-ins/gap/gap_range_ops.c:747
 msgid "Creating Layer-Animated Image..."
-msgstr ""
+msgstr "Creando imagen animada mediante capas..."
 
 #: plug-ins/gap/gap_range_ops.c:969
 msgid "Frames to Image"
-msgstr ""
+msgstr "Cuadros a imagen"
 
 #: plug-ins/gap/gap_range_ops.c:970
 msgid "Create Multilayer-Image from Frames"
-msgstr ""
+msgstr "Crear imagen multicapa desde cuadros"
 
 #: plug-ins/gap/gap_range_ops.c:1111
 msgid "Flattening Frames..."
-msgstr ""
+msgstr "Aplanando cuadros..."
 
 #: plug-ins/gap/gap_range_ops.c:1112
 msgid "Converting Frames..."
-msgstr ""
+msgstr "Convirtiendo cuadros..."
 
 #: plug-ins/gap/gap_range_ops.c:1260
 msgid ""
@@ -9921,39 +9957,43 @@ msgid ""
 "Desired save plugin can't handle type\n"
 "or desired save plugin not available."
 msgstr ""
+"Convertir cuadros: FAllÓ la operación GUARDAR. \n"
+"El Añadido de guardar deseado no trabaja con \n"
+"ese tipo de imagen, o bien dicho añadido no \n"
+"está disponible."
 
 #: plug-ins/gap/gap_range_ops.c:1368
 msgid "Cropping all Animation Frames..."
-msgstr ""
+msgstr "Recortando todos los cuadros de animación..."
 
 #: plug-ins/gap/gap_range_ops.c:1371
 msgid "Resizing all Animation Frames..."
-msgstr ""
+msgstr "Cambiando tamaño de todos los cuadros de animación..."
 
 #: plug-ins/gap/gap_range_ops.c:1374
 msgid "Scaling all Animation Frames..."
-msgstr ""
+msgstr "Redimensionando todos los cuadros de animación..."
 
 #: plug-ins/gap/gap_range_ops.c:1460
 msgid "Flatten Frames"
-msgstr "Aplanar fotogramas"
+msgstr "Aplanar cuadros"
 
 #: plug-ins/gap/gap_range_ops.c:1516
 #, c-format
 msgid "Removing Layer (pos:%ld) from Frames..."
-msgstr "Quitando Capa (pos:%ld) de fotogramas..."
+msgstr "Quitando capa (pos:%ld) de cuadros..."
 
 #: plug-ins/gap/gap_range_ops.c:1640
 msgid "Delete Layers in Frames"
-msgstr ""
+msgstr "Borrar capas en cuadros"
 
 #: plug-ins/gap/gap_range_ops.c:1641
 msgid "Select Frame Range & Position"
-msgstr ""
+msgstr "Seleccionar rango y posición de cuadros"
 
 #: plug-ins/gap/gap_split.c:100
 msgid "Splitting into Frames..."
-msgstr ""
+msgstr "Partiendo en cuadros..."
 
 #: plug-ins/gap/gap_split.c:175
 msgid ""
@@ -9961,6 +10001,10 @@ msgid ""
 "desired save plugin can't handle type\n"
 "or desired save plugin not available."
 msgstr ""
+"Partir cuadros: FALLÓ la operación GUARDAR.\n"
+"El Añadido de guardar deseado no funciona\n"
+"con este tipo de imagen, o bien dicho \n"
+"añadido no está disponible."
 
 #: plug-ins/gap/gap_split.c:225
 #, c-format
@@ -9969,20 +10013,23 @@ msgid ""
 "%s\n"
 "(%s_0001.%s)\n"
 msgstr ""
+"%s\n"
+"%s\n"
+"(%s_0001.%s)\n"
 
 #: plug-ins/gap/gap_split.c:226
 msgid "Make a frame (diskfile) from each Layer"
-msgstr "Crear un fotograma (fichero en disco) por cada Capa"
+msgstr "Crear un cuadro (fichero en disco) por cada capa"
 
 #: plug-ins/gap/gap_split.c:227
 msgid "frames are named: base_nr.extension"
-msgstr "Nombres de fotogramas: base_número.extension"
+msgstr "Nombres de cuadros: base_número.extension"
 
 #: plug-ins/gap/gap_split.c:235
 msgid "extension of resulting frames (is also used to define Fileformat)"
 msgstr ""
-"Extensión de los fotogramas resultantes (también se usa para elegir el "
-"formato de fichero)"
+"Extensión de los cuadros resultantes (también se usa para elegir el formato "
+"de fichero)"
 
 #: plug-ins/gap/gap_split.c:240
 msgid "Inverse Order:"
@@ -9990,23 +10037,23 @@ msgstr "Orden inverso:"
 
 #: plug-ins/gap/gap_split.c:241
 msgid "Start frame 0001 at Top Layer"
-msgstr "Comenzar fotograma 0001 en la Capa en la cima"
+msgstr "Comenzar cuadro 0001 en la capa en la cima"
 
 #: plug-ins/gap/gap_split.c:246
 msgid ""
 "Remove Alpha Channel in resulting Frames. Transparent parts are filled with "
 "BG color."
 msgstr ""
-"Quitar canal Alfa de los fotogramas resultantes. Las partes transparentes se "
+"Quitar canal alfa de los cuadros resultantes. Las partes transparentes se "
 "rellenan con el color de Fondo."
 
 #: plug-ins/gap/gap_split.c:249
 msgid "Split Image into Frames"
-msgstr "Partir imagen en fotogramas"
+msgstr "Partir imagen en cuadros"
 
 #: plug-ins/gap/gap_split.c:250
 msgid "Split Settings"
-msgstr "Configuración de la partición"
+msgstr "Ajustar partición"
 
 #: plug-ins/gap/gap_split.c:297
 msgid ""
@@ -10015,7 +10062,7 @@ msgid ""
 "Try again on a Duplicate (Image/Duplicate)."
 msgstr ""
 "OPERACIÓN CANCELADA.\n"
-"Esta imagen ya es un fotograma de animación.\n"
+"Esta imagen ya es un cuadro de animación.\n"
 "Inténtelo de nuevo en un duplicado (Imagen/Duplicado)."
 
 #: plug-ins/gap/resize.c:107
@@ -10045,7 +10092,7 @@ msgstr "Razón Y:"
 #. the constrain toggle button
 #: plug-ins/gap/resize.c:231
 msgid "Constrain Ratio"
-msgstr ""
+msgstr "Fijar razón"
 
 #: plug-ins/gdyntext/charmap.c:121
 #, c-format
@@ -10199,11 +10246,11 @@ msgid ""
 "Alignment"
 msgstr ""
 "Alineación\n"
-"de Capas"
+"de capas"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:427
 msgid "Set layer alignment"
-msgstr "Poner alineación de Capas"
+msgstr "Poner alineación de capas"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:457
 msgid ""
@@ -10338,7 +10385,7 @@ msgid "Anti-Clockwise"
 msgstr "Sentido antihorario"
 
 #: plug-ins/gfig/gfig.c:1987 plug-ins/gimpressionist/orientation.c:121
-#: plug-ins/print/gimp_main_window.c:469
+#: plug-ins/print/gimp_main_window.c:473
 msgid "Orientation:"
 msgstr "Orientación:"
 
@@ -10367,15 +10414,15 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:2058
 msgid "Regular Polygon Number of Sides"
-msgstr "Nº de caras del Polígono regular"
+msgstr "Nº de caras del polígono regular"
 
 #: plug-ins/gfig/gfig.c:2070
 msgid "Star Number of Points"
-msgstr "Nº de puntos de la Estrella"
+msgstr "Nº de puntos de la estrella"
 
 #: plug-ins/gfig/gfig.c:2082
 msgid "Spiral Number of Points"
-msgstr "Nº de puntos de la Espiral"
+msgstr "Nº de puntos de la espiral"
 
 #: plug-ins/gfig/gfig.c:2106
 msgid "Ops"
@@ -10486,7 +10533,7 @@ msgstr "Selección"
 
 #: plug-ins/gfig/gfig.c:2793
 msgid "Selection+Fill"
-msgstr "Selección+Relleno"
+msgstr "Selección y relleno"
 
 #: plug-ins/gfig/gfig.c:2820
 msgid ""
@@ -10526,7 +10573,7 @@ msgstr "Dibuja líneas en orden inverso"
 
 #: plug-ins/gfig/gfig.c:2862
 msgid "Scale to Image"
-msgstr "Redimensionar a Imagen"
+msgstr "Redimensionar a imagen"
 
 #: plug-ins/gfig/gfig.c:2870
 msgid "Scale drawings to images size"
@@ -10549,9 +10596,8 @@ msgid "Fade out:"
 msgstr "Desvanecimiento:"
 
 #: plug-ins/gfig/gfig.c:2998
-#, fuzzy
 msgid "Gradient:"
-msgstr "Gradiente"
+msgstr "Gradiente:"
 
 #: plug-ins/gfig/gfig.c:3018
 msgid "Pressure:"
@@ -10584,15 +10630,15 @@ msgstr "Tipo de relleno:"
 
 #: plug-ins/gfig/gfig.c:3202
 msgid "Fill Opacity:"
-msgstr "Opacidad del Relleno:"
+msgstr "Opacidad del relleno:"
 
 #: plug-ins/gfig/gfig.c:3210
 msgid "Each Selection"
-msgstr "Cada Selección"
+msgstr "Cada selección"
 
 #: plug-ins/gfig/gfig.c:3211
 msgid "All Selections"
-msgstr "Todas las Selecciones"
+msgstr "Todas las selecciones"
 
 #: plug-ins/gfig/gfig.c:3215
 msgid "Fill after:"
@@ -10658,7 +10704,7 @@ msgstr "Mostrar posición"
 
 #: plug-ins/gfig/gfig.c:3352
 msgid "Hide Control Points"
-msgstr "Ocultar Ptos. de Cntrl."
+msgstr "Ocultar ptos. de cntrl."
 
 #: plug-ins/gfig/gfig.c:3364
 msgid "Show Tooltips"
@@ -10666,16 +10712,15 @@ msgstr "Mostrar consejos"
 
 #: plug-ins/gfig/gfig.c:3415
 msgid "Display Grid"
-msgstr "Mostrar Rejilla"
+msgstr "Mostrar rejilla"
 
-# //R No sé para qué sirve esto
 #: plug-ins/gfig/gfig.c:3426
 msgid "Lock on Grid"
-msgstr "Ceñirse a Rejilla"
+msgstr "Ceñirse a rejilla"
 
 #: plug-ins/gfig/gfig.c:3441
 msgid "Grid Spacing:"
-msgstr "Espaciado de Rejilla:"
+msgstr "Espaciado de rejilla:"
 
 #: plug-ins/gfig/gfig.c:3506
 msgid "Object"
@@ -10705,11 +10750,11 @@ msgstr "Posición XY"
 
 #: plug-ins/gfig/gfig.c:3707
 msgid "Object Details"
-msgstr "Detalles de Objeto"
+msgstr "Detalles de objeto"
 
 #: plug-ins/gfig/gfig.c:3736
 msgid "Collection Details"
-msgstr "Detalles de Colección"
+msgstr "Detalles de colección"
 
 #: plug-ins/gfig/gfig.c:3743
 msgid "Draw Name:"
@@ -11002,7 +11047,7 @@ msgstr "Editor de Destellos Gimp"
 
 #: plug-ins/gflare/gflare.c:3466
 msgid "Rescan Gradients"
-msgstr "Reescanear Gradientes"
+msgstr "Reescanear gradientes"
 
 #. Glow
 #: plug-ins/gflare/gflare.c:3583
@@ -11049,7 +11094,7 @@ msgstr "Gradiente angular:"
 
 #: plug-ins/gflare/gflare.c:3721 plug-ins/gflare/gflare.c:3831
 msgid "Angular Size Gradient:"
-msgstr "Tamaño angular del Gradiente:"
+msgstr "Tamaño angular del gradiente:"
 
 #: plug-ins/gflare/gflare.c:3742 plug-ins/gflare/gflare.c:3852
 #: plug-ins/gflare/gflare.c:3994
@@ -11118,7 +11163,7 @@ msgstr "FLI: No puedo abrir \"%s\""
 #: plug-ins/gfli/gfli.c:526
 #, c-format
 msgid "Frame (%i)"
-msgstr "Fotograma (%i)"
+msgstr "Cuadro (%i)"
 
 #: plug-ins/gfli/gfli.c:675
 msgid "FLI: Sorry, I can save only INDEXED and GRAY images."
@@ -11127,11 +11172,11 @@ msgstr ""
 
 #: plug-ins/gfli/gfli.c:816
 msgid "GFLI 1.3 - Load framestack"
-msgstr "GLI 1.3 - Cargar pila de fotogramas"
+msgstr "GLI 1.3 - Cargar pila de cuadros"
 
 #: plug-ins/gfli/gfli.c:885
 msgid "GFLI 1.3 - Save framestack"
-msgstr "GFLI 1.3 - Guardar pila de fotogramas"
+msgstr "GFLI 1.3 - Guardar pila de cuadros"
 
 # //R ¿Drawables?
 #: plug-ins/gimpressionist/brush.c:183
@@ -11144,7 +11189,7 @@ msgstr "Guardar brocha"
 
 #: plug-ins/gimpressionist/brush.c:392
 msgid "Brush Preview:"
-msgstr "Vista previa de Brocha."
+msgstr "Vista previa de brocha."
 
 #: plug-ins/gimpressionist/brush.c:414
 msgid "Changes the gamma (brightness) of the selected brush"
@@ -11172,7 +11217,7 @@ msgstr "Guardar..."
 
 #: plug-ins/gimpressionist/brush.c:477
 msgid "Specifies the aspect ratio of the brush"
-msgstr "Especifica la razón de aspecto de la Brocha"
+msgstr "Especifica la razón de aspecto de la brocha"
 
 # //R ¿Relieve?
 #: plug-ins/gimpressionist/brush.c:488
@@ -11320,7 +11365,7 @@ msgstr ""
 #: plug-ins/gimpressionist/gimpressionist.c:346
 #: plug-ins/gimpressionist/gimpressionist.c:442
 msgid "The GIMPressionist!"
-msgstr "¡El GIMPresionista!"
+msgstr "El GIMPresionista"
 
 #: plug-ins/gimpressionist/gimpressionist.c:484
 msgid "Run with the selected settings"
@@ -11425,11 +11470,11 @@ msgstr "Editar..."
 
 #: plug-ins/gimpressionist/orientation.c:228
 msgid "Opens up the Orientation Map Editor"
-msgstr "Abre un Editor de Mapa de Orientación"
+msgstr "Abre un editor de mapa de orientación"
 
 #: plug-ins/gimpressionist/orientmap.c:461
 msgid "Orientation Map Editor"
-msgstr "Editor de Mapa de Orientación"
+msgstr "Editor de mapa de orientación"
 
 #: plug-ins/gimpressionist/orientmap.c:469
 msgid "Vectors"
@@ -11716,11 +11761,11 @@ msgstr "Especificar manualmente el tamaño de la pincelada"
 
 #: plug-ins/gimpressionist/size.c:225
 msgid "Opens up the Size Map Editor"
-msgstr "Abre el Editor de Mapa de Tamaños"
+msgstr "Abre el editor de mapa de tamaños"
 
 #: plug-ins/gimpressionist/sizemap.c:361
 msgid "Size Map Editor"
-msgstr "Editor de Mapa de Tamaños"
+msgstr "Editor de mapa de tamaños"
 
 #: plug-ins/gimpressionist/sizemap.c:369
 msgid "Smvectors"
@@ -11874,11 +11919,11 @@ msgstr "Componer IFS: Destino"
 
 #: plug-ins/ifscompose/ifscompose.c:651
 msgid "Scale Hue by:"
-msgstr "Redimensionar Tono por:"
+msgstr "Redimensionar tono por:"
 
 #: plug-ins/ifscompose/ifscompose.c:666
 msgid "Scale Value by:"
-msgstr "Redimensionar Valor por:"
+msgstr "Redimensionar valor por:"
 
 #. Full color control section
 #: plug-ins/ifscompose/ifscompose.c:683
@@ -11917,7 +11962,7 @@ msgstr "Estirar"
 msgid "Render Options"
 msgstr "Opciones de render"
 
-#: plug-ins/ifscompose/ifscompose.c:908 plug-ins/print/gimp_main_window.c:452
+#: plug-ins/ifscompose/ifscompose.c:908 plug-ins/print/gimp_main_window.c:462
 msgid "Auto"
 msgstr "Auto"
 
@@ -11984,7 +12029,7 @@ msgid ""
 "\n"
 "  Released under the GNU General Public License  "
 msgstr ""
-"Añadido Mapa de Imagen 1.3\n"
+"Añadido: Mapa de Imagen 1.3\n"
 "\n"
 "Copyright(c) 1999 por Maurits Rijk\n"
 "lpeek.mrijk@consunet.nl\n"
@@ -12005,7 +12050,7 @@ msgstr "Crear"
 
 #: plug-ins/imagemap/imap_cmd_edit_object.c:50
 msgid "Edit Object"
-msgstr "Editar Objeto"
+msgstr "Editar objeto"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:71
 msgid "Create Guides"
@@ -12146,13 +12191,11 @@ msgstr "Otro"
 #.
 #. * The format of the list is the File printer followed by a qsort'ed list
 #. * of system printers. So, if we want to update the file printer, it is
-#. * always first in the list, else call psearch.
+#. * always first in the list, else call bsearch.
 #.
 #: plug-ins/imagemap/imap_edit_area_info.c:201
-#: plug-ins/imagemap/imap_menu.c:211 plug-ins/print/print.c:969
-#: plug-ins/print/print.c:970 plug-ins/print/print.c:1051
-#: plug-ins/print/print.c:1052 plug-ins/print/print.c:1151
-#: plug-ins/print/print.c:1152 plug-ins/print/print.c:1388
+#: plug-ins/imagemap/imap_menu.c:211 plug-ins/print/print.c:905
+#: plug-ins/print/print.c:906 plug-ins/print/print.c:1078
 msgid "File"
 msgstr "Fichero"
 
@@ -12232,7 +12275,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_file.c:120
 msgid "Save Imagemap"
-msgstr "Guardar Mapa de Imagen"
+msgstr "Guardar mapa de imagen"
 
 #: plug-ins/imagemap/imap_file.c:144
 msgid "Error"
@@ -12240,7 +12283,7 @@ msgstr "Error"
 
 #: plug-ins/imagemap/imap_grid.c:143
 msgid "Grid Settings"
-msgstr "Configuración de Rejilla"
+msgstr "Configuración de rejilla"
 
 #: plug-ins/imagemap/imap_grid.c:154
 msgid "Snap-To Grid Enabled"
@@ -12248,7 +12291,7 @@ msgstr "Saltar a Rejilla Activado"
 
 #: plug-ins/imagemap/imap_grid.c:160
 msgid "Grid Visibility and Type"
-msgstr "Tipo y visibilidad de la Rejilla"
+msgstr "Tipo y visibilidad de la rejilla"
 
 #: plug-ins/imagemap/imap_grid.c:167
 msgid "Hidden"
@@ -12280,7 +12323,7 @@ msgstr "píxeles desde arriba"
 
 #: plug-ins/imagemap/imap_main.c:145
 msgid "<Image>/Filters/Web/ImageMap..."
-msgstr "<Image>/Filtros/Web/Mapa de Imagen..."
+msgstr "<Image>/Filtros/Web/Mapa de imagen..."
 
 #: plug-ins/imagemap/imap_main.c:660
 msgid "Data changed"
@@ -12305,7 +12348,7 @@ msgstr "No puedo guardar fichero:"
 
 #: plug-ins/imagemap/imap_main.c:902
 msgid "Image size changed"
-msgstr "Tamaño de Imagen cambiado"
+msgstr "Tamaño de imagen cambiado"
 
 #: plug-ins/imagemap/imap_main.c:906
 msgid ""
@@ -12352,7 +12395,7 @@ msgstr "Rehacer %s"
 
 #: plug-ins/imagemap/imap_menu.c:301
 msgid "Edit Area Info..."
-msgstr "Editar Info. de Área"
+msgstr "Editar info. de área"
 
 #: plug-ins/imagemap/imap_menu.c:313
 msgid "View"
@@ -12360,7 +12403,7 @@ msgstr "Ver"
 
 #: plug-ins/imagemap/imap_menu.c:317
 msgid "Area List"
-msgstr "Lista de Áreas"
+msgstr "Lista de áreas"
 
 #: plug-ins/imagemap/imap_menu.c:321
 msgid "Source..."
@@ -12372,19 +12415,20 @@ msgstr "Escala de grises"
 
 #: plug-ins/imagemap/imap_menu.c:341
 msgid "Zoom In"
-msgstr "Zoom Acercar"
+msgstr "Zoom acercar"
 
 #: plug-ins/imagemap/imap_menu.c:344
 msgid "Zoom Out"
-msgstr "Zoom Alejar"
+msgstr "Zoom alejar"
 
 #: plug-ins/imagemap/imap_menu.c:349
 msgid "Zoom To"
-msgstr "Zoom A"
+msgstr "Zoom a"
 
+# //R ¿Dónde está?
 #: plug-ins/imagemap/imap_menu.c:379
 msgid "Mapping"
-msgstr "Mapa"
+msgstr "Correspondencia"
 
 #: plug-ins/imagemap/imap_menu.c:382 plug-ins/imagemap/imap_popup.c:129
 msgid "Arrow"
@@ -12392,7 +12436,7 @@ msgstr "Flecha"
 
 #: plug-ins/imagemap/imap_menu.c:392
 msgid "Edit Map Info..."
-msgstr "Editar Info. de Mapa..."
+msgstr "Editar info. de mapa..."
 
 # //R "Golosinas" me parece un poco tonto
 #: plug-ins/imagemap/imap_menu.c:399
@@ -12401,11 +12445,11 @@ msgstr "Faciliades"
 
 #: plug-ins/imagemap/imap_menu.c:401 plug-ins/imagemap/imap_popup.c:149
 msgid "Grid Settings..."
-msgstr "Configuración de Rejilla"
+msgstr "Configuración de rejilla"
 
 #: plug-ins/imagemap/imap_menu.c:403
 msgid "Create Guides..."
-msgstr "Crear Guías"
+msgstr "Crear guías"
 
 #: plug-ins/imagemap/imap_menu.c:410 plug-ins/maze/maze_face.c:193
 msgid "Help"
@@ -12413,7 +12457,7 @@ msgstr "Ayuda"
 
 #: plug-ins/imagemap/imap_menu.c:413
 msgid "About ImageMap..."
-msgstr "Acerca de Mapa de Imagen"
+msgstr "Acerca de Mapa de imagen"
 
 #: plug-ins/imagemap/imap_polygon.c:391
 msgid "x (pixels)"
@@ -12453,7 +12497,7 @@ msgstr "No puedo guardar fichero de recursos:"
 
 #: plug-ins/imagemap/imap_preferences.c:356
 msgid "Select Color"
-msgstr "Seleccione Color"
+msgstr "Seleccione color"
 
 #: plug-ins/imagemap/imap_preferences.c:434
 msgid "Default Map Type"
@@ -12533,7 +12577,7 @@ msgstr "Comentario"
 
 #: plug-ins/imagemap/imap_settings.c:68
 msgid "Settings for this Mapfile"
-msgstr "Configuración de este fichero de Mapa"
+msgstr "Configuración de este fichero de mapa"
 
 #: plug-ins/imagemap/imap_settings.c:82
 msgid "Image name:"
@@ -12541,7 +12585,7 @@ msgstr "Nombre de imagen:"
 
 #: plug-ins/imagemap/imap_settings.c:83
 msgid "Select Image File"
-msgstr "Seleccione fichero de Imagen"
+msgstr "Seleccione fichero de imagen"
 
 #: plug-ins/imagemap/imap_settings.c:87
 msgid "Title:"
@@ -12553,7 +12597,7 @@ msgstr "URL por omisión:"
 
 #: plug-ins/imagemap/imap_settings.c:108
 msgid "Map file format"
-msgstr "Formato del fichero de Mapa"
+msgstr "Formato del fichero de mapa"
 
 #: plug-ins/imagemap/imap_source.c:54
 msgid "View Source"
@@ -12573,11 +12617,11 @@ msgstr "Zoom alejar"
 
 #: plug-ins/imagemap/imap_toolbar.c:150
 msgid "Edit Map Info"
-msgstr "Editar Info. de Mapa"
+msgstr "Editar info. de mapa"
 
 #: plug-ins/imagemap/imap_toolbar.c:154
 msgid "Move To Front"
-msgstr "Mover al Frente"
+msgstr "Mover al frente"
 
 #: plug-ins/imagemap/imap_tools.c:128
 msgid "Select existing area"
@@ -12617,7 +12661,7 @@ msgstr "<Image>/Filtros/Render/Patrón/Laberinto..."
 
 #: plug-ins/maze/maze.c:403
 msgid "Drawing Maze..."
-msgstr "Dibujando Laberinto..."
+msgstr "Dibujando laberinto..."
 
 #. entscale == Entry and Scale pair function found in pixelize.c
 #: plug-ins/maze/maze_face.c:220
@@ -12679,7 +12723,7 @@ msgstr "<Image>/Filtros/Render/Patrón/Mosaico..."
 #. progress bar for gradient finding
 #: plug-ins/mosaic/mosaic.c:447
 msgid "Finding Edges..."
-msgstr "Encontrando Bordes..."
+msgstr "Encontrando bordes..."
 
 #. Progress bar for rendering tiles
 #: plug-ins/mosaic/mosaic.c:497
@@ -12692,7 +12736,7 @@ msgstr "Mosaico"
 
 #: plug-ins/mosaic/mosaic.c:593
 msgid "Color Averaging"
-msgstr "Ponderación de Color"
+msgstr "Ponderación de color"
 
 #: plug-ins/mosaic/mosaic.c:602
 msgid "Pitted Surfaces"
@@ -12718,15 +12762,15 @@ msgstr "Hexágonos"
 
 #: plug-ins/mosaic/mosaic.c:633
 msgid "Octagons & Squares"
-msgstr "Octógonos y Cuadrados"
+msgstr "Octógonos y cuadrados"
 
 #: plug-ins/mosaic/mosaic.c:672
 msgid "Tile Spacing:"
-msgstr "Espaciado de Baldosa:"
+msgstr "Espaciado de baldosa:"
 
 #: plug-ins/mosaic/mosaic.c:681
 msgid "Tile Neatness:"
-msgstr "Pulcritud de Baldosa:"
+msgstr "Pulcritud de baldosa:"
 
 #: plug-ins/mosaic/mosaic.c:691
 msgid "Light Direction:"
@@ -12781,7 +12825,7 @@ msgid ""
 "Use Current Gradient\n"
 "instead of FG/BG-Color"
 msgstr ""
-"Utilizar Gradiente actual\n"
+"Utilizar gradiente actual\n"
 "en vez de color Frente/Fondo"
 
 #: plug-ins/pagecurl/pagecurl.c:696
@@ -12796,32 +12840,27 @@ msgstr "Capa del enrollamiento"
 msgid "Page Curl..."
 msgstr "Enrollando página..."
 
-#: plug-ins/print/gimp_color_window.c:135
+#: plug-ins/print/gimp_color_window.c:80
 msgid "Print Color Adjust"
 msgstr "Ajuste de impresión en color"
 
-#: plug-ins/print/gimp_color_window.c:140
-#, fuzzy
-msgid "Set Defaults"
-msgstr "Restaurar valores por omisión"
-
-#: plug-ins/print/gimp_color_window.c:269
+#: plug-ins/print/gimp_color_window.c:191
 msgid "Density:"
 msgstr "Densidad"
 
-#: plug-ins/print/gimp_color_window.c:300
+#: plug-ins/print/gimp_color_window.c:219
 msgid "Dither Algorithm:"
 msgstr "Algoritmo de entramado:"
 
 #.
 #. * Create the main dialog
 #.
-#: plug-ins/print/gimp_main_window.c:255
+#: plug-ins/print/gimp_main_window.c:221
 #, c-format
 msgid "%s -- Print v%s"
 msgstr "%s -- Imprimir v%s"
 
-#: plug-ins/print/gimp_main_window.c:264
+#: plug-ins/print/gimp_main_window.c:230
 msgid ""
 "Print and\n"
 "Save Settings"
@@ -12829,7 +12868,7 @@ msgstr ""
 "Imprimir y\n"
 "guardar configuración"
 
-#: plug-ins/print/gimp_main_window.c:266
+#: plug-ins/print/gimp_main_window.c:232
 msgid ""
 "Save\n"
 "Settings"
@@ -12837,196 +12876,173 @@ msgstr ""
 "Guardar\n"
 "configuración"
 
-#: plug-ins/print/gimp_main_window.c:268
+#: plug-ins/print/gimp_main_window.c:234
 msgid "Print"
 msgstr "Imprimir"
 
-#: plug-ins/print/gimp_main_window.c:346
+#: plug-ins/print/gimp_main_window.c:303
 msgid "Center Image"
-msgstr "Centrar Imagen"
+msgstr "Centrar imagen"
 
-#: plug-ins/print/gimp_main_window.c:357
+#: plug-ins/print/gimp_main_window.c:314
 msgid "Units:"
 msgstr "Unidades:"
 
-#: plug-ins/print/gimp_main_window.c:369
+#: plug-ins/print/gimp_main_window.c:326
 msgid "cm"
 msgstr "cm"
-
-#: plug-ins/print/gimp_main_window.c:420
-#, fuzzy
-msgid "Right Border:"
-msgstr "Borde:"
-
-#: plug-ins/print/gimp_main_window.c:443
-#, fuzzy
-msgid "Bottom Border:"
-msgstr "Borde inferior"
-
-#: plug-ins/print/gimp_main_window.c:455
-msgid "Portrait"
-msgstr "Vertical"
-
-#: plug-ins/print/gimp_main_window.c:458
-msgid "Landscape"
-msgstr "Apaisado"
-
-#: plug-ins/print/gimp_main_window.c:461
-msgid "Upside down"
-msgstr ""
-
-#: plug-ins/print/gimp_main_window.c:464
-#, fuzzy
-msgid "Seascape"
-msgstr "Apaisado"
 
 #.
 #. *  Printer settings frame...
 #.
-#: plug-ins/print/gimp_main_window.c:476
+#: plug-ins/print/gimp_main_window.c:405
 msgid "Printer Settings"
 msgstr "Configuración de impresora"
 
-#: plug-ins/print/gimp_main_window.c:498
+#: plug-ins/print/gimp_main_window.c:427
 msgid "Media Size:"
 msgstr "Tamaño del medio:"
 
-#: plug-ins/print/gimp_main_window.c:507
+#: plug-ins/print/gimp_main_window.c:436
 msgid "Media Type:"
 msgstr "Tipo de medio:"
 
-#: plug-ins/print/gimp_main_window.c:516
+#: plug-ins/print/gimp_main_window.c:445
 msgid "Media Source:"
 msgstr "Fuente del medio:"
 
-#: plug-ins/print/gimp_main_window.c:525
+#: plug-ins/print/gimp_main_window.c:454
 msgid "Ink Type:"
 msgstr "Tipo de tinta:"
 
-#.
-#. * Scaling...
-#.
-#: plug-ins/print/gimp_main_window.c:540
-#, fuzzy
-msgid "Scaling"
-msgstr "Escala:"
+#: plug-ins/print/gimp_main_window.c:465
+msgid "Portrait"
+msgstr "Vertical"
 
-#: plug-ins/print/gimp_main_window.c:580 plug-ins/print/gimp_main_window.c:589
-msgid "Scaling:"
-msgstr "Escala:"
+#: plug-ins/print/gimp_main_window.c:468
+msgid "Landscape"
+msgstr "Apaisado"
 
-#: plug-ins/print/gimp_main_window.c:604
-msgid "Percent"
-msgstr "Por ciento"
+#: plug-ins/print/gimp_main_window.c:491
+msgid "Output Type:"
+msgstr "Tipo de salida:"
 
-#: plug-ins/print/gimp_main_window.c:614
-msgid "PPI"
-msgstr "PPP"
+#: plug-ins/print/gimp_main_window.c:494
+msgid "B&W"
+msgstr "ByN"
 
-#: plug-ins/print/gimp_main_window.c:623
-msgid "Set Image Scale"
-msgstr "Poner escala de Imagen"
+#: plug-ins/print/gimp_main_window.c:516
+msgid "Output Level:"
+msgstr "Nivel de salida:"
+
+#: plug-ins/print/gimp_main_window.c:520
+msgid "Normal Scale"
+msgstr "Escala normal"
+
+#: plug-ins/print/gimp_main_window.c:532
+msgid "Experimental Linear Scale"
+msgstr "Escala experimental lineal"
 
 #.
 #. * Image type
 #.
-#: plug-ins/print/gimp_main_window.c:669
-#, fuzzy
-msgid "Image Settings"
-msgstr "Ajustes de Tono"
+#: plug-ins/print/gimp_main_window.c:545
+msgid "Image Type"
+msgstr "Tipo de imágen"
 
 # //R Sé lo que es, pero no sé traducirlo
-#: plug-ins/print/gimp_main_window.c:689
+#: plug-ins/print/gimp_main_window.c:555
 msgid "Line Art"
 msgstr "Line Art"
 
-#: plug-ins/print/gimp_main_window.c:700
+#: plug-ins/print/gimp_main_window.c:566
 msgid "Solid Colors"
 msgstr "Colores sólidos"
 
-#: plug-ins/print/gimp_main_window.c:711
+#: plug-ins/print/gimp_main_window.c:577
 msgid "Photograph"
 msgstr "Fotografía"
 
-#: plug-ins/print/gimp_main_window.c:722
+#: plug-ins/print/gimp_main_window.c:588
 msgid "Monochrome"
 msgstr "Monocromo"
 
-#: plug-ins/print/gimp_main_window.c:737
+#.
+#. * Scaling...
+#.
+#: plug-ins/print/gimp_main_window.c:601
+msgid "Scaling and Color Settings"
+msgstr "Escala y ajustes de color"
+
+#: plug-ins/print/gimp_main_window.c:627 plug-ins/print/gimp_main_window.c:635
+msgid "Scaling:"
+msgstr "Escala:"
+
+#: plug-ins/print/gimp_main_window.c:650
+msgid "Percent"
+msgstr "Por ciento"
+
+#: plug-ins/print/gimp_main_window.c:660
+msgid "PPI"
+msgstr "PPP"
+
+#: plug-ins/print/gimp_main_window.c:669
+msgid "Set Image Scale"
+msgstr "Poner escala de Imagen"
+
+#: plug-ins/print/gimp_main_window.c:682
 msgid "Adjust Color"
 msgstr "Ajustar Color"
 
-#.
-#. * Output type toggles...
-#.
-#: plug-ins/print/gimp_main_window.c:749
-msgid "Output Type:"
-msgstr "Tipo de salida:"
-
-#: plug-ins/print/gimp_main_window.c:768
-msgid "B&W"
-msgstr "ByN"
-
-#: plug-ins/print/gimp_main_window.c:802
+#: plug-ins/print/gimp_main_window.c:715
 msgid "Printer:"
 msgstr "Impresora:"
 
-#: plug-ins/print/gimp_main_window.c:811 plug-ins/print/gimp_main_window.c:824
+#: plug-ins/print/gimp_main_window.c:724 plug-ins/print/gimp_main_window.c:737
 msgid "Setup"
 msgstr "Configuración"
 
 #.
 #. * Printer driver option menu...
 #.
-#: plug-ins/print/gimp_main_window.c:853
-#, fuzzy
-msgid "Printer Model:"
-msgstr "Modo de pintar:"
+#: plug-ins/print/gimp_main_window.c:766
+msgid "Driver:"
+msgstr "Controlador:"
 
 #.
 #. * PPD file...
 #.
-#: plug-ins/print/gimp_main_window.c:889
+#: plug-ins/print/gimp_main_window.c:802
 msgid "PPD File:"
 msgstr "Fichero PPD:"
 
-#: plug-ins/print/gimp_main_window.c:904
+#: plug-ins/print/gimp_main_window.c:817
 msgid "Browse"
 msgstr "Explorar"
 
 #.
 #. * Print command...
 #.
-#: plug-ins/print/gimp_main_window.c:916
+#: plug-ins/print/gimp_main_window.c:829
 msgid "Command:"
 msgstr "Orden:"
 
 #.
 #. * Output file selection dialog...
 #.
-#: plug-ins/print/gimp_main_window.c:931
+#: plug-ins/print/gimp_main_window.c:844
 msgid "Print To File?"
 msgstr "¿Imprimir en fichero?"
 
 #.
 #. * PPD file selection dialog...
 #.
-#: plug-ins/print/gimp_main_window.c:945
+#: plug-ins/print/gimp_main_window.c:858
 msgid "PPD File?"
 msgstr "¿Fichero PPD?"
 
-#: plug-ins/print/print.c:223 plug-ins/print/print.c:232
+#: plug-ins/print/print.c:234
 msgid "<Image>/File/Print..."
-msgstr "<Image>/Fichero/Imprimir..."
-
-#: plug-ins/print/print.c:241
-#, fuzzy
-msgid "<Image>/File/Print (Gtk)..."
-msgstr "<Image>/Fichero/Imprimir..."
-
-#: plug-ins/print/print.c:249
-#, fuzzy
-msgid "<Image>/File/Print (Gimp)..."
 msgstr "<Image>/Fichero/Imprimir..."
 
 #: plug-ins/rcm/rcm.c:118
@@ -13059,7 +13075,11 @@ msgid "From"
 msgstr "Desde"
 
 #. spinbutton 2
-#: plug-ins/rcm/rcm_dialog.c:307 plug-ins/rcm/rcm_dialog.c:357
+#: plug-ins/rcm/rcm_dialog.c:307
+msgid "to"
+msgstr "a"
+
+#: plug-ins/rcm/rcm_dialog.c:357
 msgid "To"
 msgstr "a"
 
@@ -13110,7 +13130,7 @@ msgstr "Contexto"
 #. Create dialog
 #: plug-ins/rcm/rcm_dialog.c:722
 msgid "Colormap Rotation"
-msgstr "Rotación de Mapa de Color"
+msgstr "Rotación de mapa de color"
 
 #: plug-ins/rcm/rcm_dialog.c:773
 msgid "Main"
@@ -13122,7 +13142,7 @@ msgstr "Misc"
 
 #: plug-ins/sel2path/sel2path.c:160
 msgid "<Image>/Select/To Path"
-msgstr "<Image>/Selección/A Camino"
+msgstr "<Image>/Selección/A camino"
 
 #: plug-ins/sel2path/sel2path.c:207
 msgid "No selection to convert"
@@ -13130,7 +13150,7 @@ msgstr "No hay selección que convertir"
 
 #: plug-ins/sel2path/sel2path.c:331
 msgid "Sel2Path Advanced Settings"
-msgstr "Ajustes avanzados de Selección A Camino"
+msgstr "Ajustes avanzados de Selección a camino"
 
 #: plug-ins/sel2path/sel2path.c:540
 #, c-format
@@ -13295,27 +13315,3 @@ msgstr "Error: No puedo leer fichero de propiedades XJT %s"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Error: fichero de propiedades XJT %s está vacío"
-
-#~ msgid "PNM: %s is not a valid file."
-#~ msgstr "PNM: %s no es un fichero válido."
-
-#~ msgid "to"
-#~ msgstr "a"
-
-#~ msgid "Output Level:"
-#~ msgstr "Nivel de salida:"
-
-#~ msgid "Normal Scale"
-#~ msgstr "Escala normal"
-
-#~ msgid "Experimental Linear Scale"
-#~ msgstr "Escala experimental lineal"
-
-#~ msgid "Image Type"
-#~ msgstr "Tipo de imágen"
-
-#~ msgid "Scaling and Color Settings"
-#~ msgstr "Escala y ajustes de color"
-
-#~ msgid "Driver:"
-#~ msgstr "Controlador:"
