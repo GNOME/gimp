@@ -20,14 +20,14 @@
 #define __INFO_WINDOW_H__
 
 
-InfoDialog * info_window_create      (GDisplay   *gdisp);
-void         info_window_free        (InfoDialog *info_win);
+InfoDialog * info_window_create          (GDisplay   *gdisp);
+void         info_window_free            (InfoDialog *info_win);
 
-void         info_window_update      (GDisplay   *gdisp);
-void         info_window_update_RGB  (GDisplay   *gdisp,
-				      gdouble     tx,
-				      gdouble     ty);
-void         info_window_follow_auto (void);
+void         info_window_update          (GDisplay   *gdisp);
+void         info_window_update_extended (GDisplay   *gdisp,
+                                          gdouble     tx,
+                                          gdouble     ty);
+void         info_window_follow_auto     (void);
 
 
 #endif /*  __INFO_WINDOW_H__  */

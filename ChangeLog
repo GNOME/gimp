@@ -1,5 +1,15 @@
 2001-06-14  Sven Neumann  <sven@gimp.org>
 
+	* app/disp_callbacks.c
+	* app/gdisplay.c
+	* app/gui/info-window.[ch]: 
+	applied a patch from Ralf Engels <ralf-engels@gmx.de> that adds info
+	about the cursor position to the Info window. Cleaned up the code a
+	little while I was on it and renamed info_window_update_RGB() to
+	info_window_update_extended().
+
+2001-06-14  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage.c: fixed typo, closes bug #56193
 
 2001-06-12  Michael Natterer  <mitch@gimp.org>
