@@ -18,6 +18,11 @@
 
 2003-01-10  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
+	* plug-ins/common/tiff.c: trivial fix for #95737. Plug-in now displays
+	a message when 16 bits per channel images are converted to 8 bits.
+
+2003-01-10  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
 	* plug-ins/common/tiff.c (load_image): improved fix for #96611
 
 2003-01-10  Michael Natterer  <mitch@gimp.org>

@@ -681,6 +681,9 @@ load_image (gchar *filename)
     }
   }
 
+  if (bps == 16)
+    g_message (_("TIFF warning: the image you are loading has 16 bits per channel.\nGIMP can only handle 8 bit, so it will be converted for you.\nInformation will be lost because of this conversion."
+
   if (worst_case) {
     load_rgba (tif, channel);
   } else if (TIFFIsTiled(tif)) {
@@ -719,32 +722,31 @@ load_image (gchar *filename)
       }
 
     if (flip_horizontal || flip_vertical)
-      gimp_image_undo_disable(image);
-    gimp_image_undo_enable(image);
+      gimp_image_undo_disable (image);
     
     if (flip_horizontal)
       {
-	return_vals = gimp_run_procedure("gimp_flip",
-					 &nreturn_vals,
-					 GIMP_PDB_DRAWABLE, 
-					 layer,
-					 GIMP_PDB_INT32, 0,
-					 GIMP_PDB_END);
-	gimp_destroy_params(return_vals, nreturn_vals);
+	return_vals = gimp_run_procedure ("gimp_flip",
+					  &nreturn_vals,
+					  GIMP_PDB_DRAWABLE, 
+					  layer,
+					  GIMP_PDB_INT32, 0,
+					  GIMP_PDB_END);
+	gimp_destroy_params (return_vals, nreturn_vals);
       }
     if (flip_vertical)
       {
-	return_vals = gimp_run_procedure("gimp_flip",
-					 &nreturn_vals,
-					 GIMP_PDB_DRAWABLE,
-					 layer,
-					 GIMP_PDB_INT32, 1,
-					 GIMP_PDB_END);
-	gimp_destroy_params(return_vals, nreturn_vals);
+	return_vals = gimp_run_procedure ("gimp_flip",
+					  &nreturn_vals,
+					  GIMP_PDB_DRAWABLE,
+					  layer,
+					  GIMP_PDB_INT32, 1,
+					  GIMP_PDB_END);
+	gimp_destroy_params (return_vals, nreturn_vals);
       }
 
     if (flip_horizontal || flip_vertical)
-      gimp_image_undo_enable(image);
+      gimp_image_undo_enable (image);
   }
 
   for (i= 0; !worst_case && i < extra; ++i) {
