@@ -27,9 +27,6 @@
 
 #include "libgimp/gimpintl.h"
 
-static void       desaturate (GimpDrawable *);
-static Argument * desaturate_invoker (Argument *);
-
 
 void
 image_desaturate (gimage_ptr)
@@ -50,9 +47,9 @@ image_desaturate (gimage_ptr)
 }
 
 
-/*  Desaturateer  */
+/*  Desaturater  */
 
-static void
+void
 desaturate (GimpDrawable *drawable)
 {
   PixelRegion srcPR, destPR;
@@ -110,69 +107,4 @@ desaturate (GimpDrawable *drawable)
 
   drawable_merge_shadow (drawable, TRUE);
   drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
-}
-
-
-/*  The desaturate procedure definition  */
-ProcArg desaturate_args[] =
-{
-  { PDB_DRAWABLE,
-    "drawable",
-    "the drawable"
-  }
-};
-
-ProcRecord desaturate_proc =
-{
-  "gimp_desaturate",
-  "Desaturate the contents of the specified drawable",
-  "This procedure desaturates the contents of the specified drawable.  This procedure only works on drawables of type RGB color.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  1,
-  desaturate_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { desaturate_invoker } },
-};
-
-
-static Argument *
-desaturate_invoker (args)
-     Argument *args;
-{
-  int success = TRUE;
-  int int_value;
-  GImage *gimage;
-  GimpDrawable *drawable;
-
-  drawable = NULL;
-
-  /*  the drawable  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      drawable = drawable_get_ID (int_value);
-      if (drawable == NULL)                                        
-        success = FALSE;
-      else
-        gimage = drawable_gimage (drawable);
-    }
-
-  /*  check to make sure the drawable is color  */
-  if (success)
-    success = drawable_color (drawable);
-
-  if (success)
-    desaturate (drawable);
-
-  return procedural_db_return_args (&desaturate_proc, success);
 }

@@ -18,17 +18,41 @@
 #ifndef __HISTOGRAM_TOOL_H__
 #define __HISTOGRAM_TOOL_H__
 
+#include "histogramwidget.h"
+#include "image_map.h"
 #include "tools.h"
-#include "procedural_db.h"
+
+#define HISTOGRAM_WIDTH 256
+#define HISTOGRAM_HEIGHT 150
+
+typedef struct _HistogramToolDialog HistogramToolDialog;
+struct _HistogramToolDialog
+{
+  GtkWidget       *shell;
+  GtkWidget       *info_labels[7];
+  GtkWidget       *channel_menu;
+  HistogramWidget *histogram;
+  GimpHistogram   *hist;
+
+  double       mean;
+  double       std_dev;
+  double       median;
+  double       pixels;
+  double       count;
+  double       percentile;
+
+  GimpDrawable *drawable;
+  ImageMap     image_map;
+  int          channel;
+  int          color;
+};
 
 /*  histogram_tool functions  */
-Tool *        tools_new_histogram_tool      (void);
-void          tools_free_histogram_tool     (Tool *);
+Tool *        tools_new_histogram_tool  (void);
+void          tools_free_histogram_tool (Tool *);
 
-void          histogram_tool_initialize     (GDisplay *);
-void          histogram_tool_free           (void);
-
-/*  Procedure definition and marshalling function  */
-extern ProcRecord histogram_proc;
-
+void          histogram_tool_initialize      (GDisplay *);
+void          histogram_tool_free            (void);
+void          histogram_tool_histogram_range (HistogramWidget *, int, int,
+					      void *);
 #endif /* __HISTOGRAM_H__ */

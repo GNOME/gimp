@@ -27,7 +27,6 @@
 #include "general.h"
 #include "gdisplay.h"
 #include "gimphistogram.h"
-#include "image_map.h"
 #include "interface.h"
 #include "curves.h"
 #include "gimplut.h"
@@ -52,9 +51,6 @@
 #define RADIUS           3
 #define MIN_DISTANCE     8
 
-#define SMOOTH       0
-#define GFREE        1
-
 #define RANGE_MASK  GDK_EXPOSURE_MASK | \
                     GDK_ENTER_NOTIFY_MASK
 
@@ -72,34 +68,6 @@ typedef struct _Curves Curves;
 struct _Curves
 {
   int x, y;    /*  coords for last mouse click  */
-};
-
-typedef struct _CurvesDialog CurvesDialog;
-struct _CurvesDialog
-{
-  GtkWidget *    shell;
-  GtkWidget *    channel_menu;
-  GtkWidget *    xrange;
-  GtkWidget *    yrange;
-  GtkWidget *    graph;
-  GdkPixmap *    pixmap;
-
-  GimpDrawable * drawable;
-  ImageMap       image_map;
-  int            color;
-  int            channel;
-  gint           preview;
-
-  int            grab_point;
-  int            last;
-  int            leftmost;
-  int            rightmost;
-  int            curve_type;
-  int            points[5][17][2];
-  unsigned char  curve[5][256];
-  int            col_value[5];
-
-  GimpLut       *lut;
 };
 
 typedef double CRMatrix[4][4];
@@ -130,7 +98,6 @@ static void   curves_control        (Tool *, int, gpointer);
 static CurvesDialog *  curves_new_dialog              (void);
 static void            curves_update                  (CurvesDialog *, int);
 static void            curves_plot_curve              (CurvesDialog *, int, int, int, int);
-static void            curves_calculate_curve         (CurvesDialog *);
 static void            curves_preview                 (CurvesDialog *);
 static void            curves_value_callback          (GtkWidget *, gpointer);
 static void            curves_red_callback            (GtkWidget *, gpointer);
@@ -149,15 +116,12 @@ static gint            curves_yrange_events           (GtkWidget *, GdkEvent *, 
 static gint            curves_graph_events            (GtkWidget *, GdkEvent *, CurvesDialog *);
 static void            curves_CR_compose              (CRMatrix, CRMatrix, CRMatrix);
 
-static Argument * curves_spline_invoker (Argument *);
-static Argument * curves_explicit_invoker (Argument *);
-
 
 /*  curves machinery  */
 
-static float
-curves_lut_func(CurvesDialog *cd,
-		int nchannels, int channel, float value)
+float
+curves_lut_func (CurvesDialog *cd,
+		 int nchannels, int channel, float value)
 {
   float f;
   int index;
@@ -169,7 +133,7 @@ curves_lut_func(CurvesDialog *cd,
   else
     j = channel + 1;
   inten = value;
-  /* For color  images this runs through the loop with j = channel +1
+  /* For color images this runs through the loop with j = channel +1
      the first time and j = 0 the second time */
   /* For bw images this runs through the loop with j = 0 the first and
      only time  */
@@ -868,7 +832,7 @@ curves_plot_curve (CurvesDialog *cd,
     }
 }
 
-static void
+void
 curves_calculate_curve (CurvesDialog *cd)
 {
   int i;
@@ -1397,300 +1361,3 @@ curves_CR_compose (CRMatrix a,
         }
     }
 }
-
-/*
- *  The curves procedure definitions
- */
-
-
-/*  Procedure for defining the curve with a spline  */
-ProcArg curves_spline_args[] =
-{
-  { PDB_DRAWABLE,
-    "drawable",
-    "the drawable"
-  },
-  { PDB_INT32,
-    "channel",
-    "the channel to modify: { VALUE (0), RED (1), GREEN (2), BLUE (3), ALPHA (4), GRAY (0) }"
-  },
-  { PDB_INT32,
-    "num_points",
-    "the number of values in the control point array ( 3 < num_points <= 32 )"
-  },
-  { PDB_INT8ARRAY,
-    "control_pts",
-    "the spline control points: { cp1.x, cp1.y, cp2.x, cp2.y, ... }"
-  }
-};
-
-ProcRecord curves_spline_proc =
-{
-  "gimp_curves_spline",
-  "Modifies the intensity curve(s) for specified drawable",
-  "Modifies the intensity mapping for one channel in the specified drawable.  The drawable must be either grayscale or RGB, and the channel can be either an intensity component, or the value.  The 'control_pts' parameter is an array of integers which define a set of control points which describe a Catmull Rom spline which yields the final intensity curve.  Use the 'gimp_curves_explicit' function to explicitly modify intensity levels.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  4,
-  curves_spline_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { curves_spline_invoker } },
-};
-
-
-static Argument *
-curves_spline_invoker (Argument *args)
-{
-  PixelRegion srcPR, destPR;
-  int success = TRUE;
-  int int_value;
-  CurvesDialog cd;
-  GImage *gimage;
-  int channel;
-  int num_cp;
-  unsigned char *control_pts;
-  int x1, y1, x2, y2;
-  int i, j;
-  GimpDrawable *drawable;
-
-  /*  the drawable  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      drawable =  drawable_get_ID (int_value);
-      cd.drawable = drawable;
-      if (drawable == NULL)                                        
-        success = FALSE;
-      else
-        gimage = drawable_gimage (drawable);
-    }
-  /*  make sure the drawable is not indexed color  */
-  if (success)
-    success = ! drawable_indexed (drawable);
-  
-    
-  /*  channel  */
-  if (success)
-    {
-      int_value = args[1].value.pdb_int;
-      if (success)
-	{
-	  if (drawable_gray (drawable))
-	    {
-	      if (int_value != 0)
-		success = FALSE;
-	    }
-	  else if (drawable_color (drawable))
-	    {
-	      if (int_value < 0 || int_value > 3)
-		success = FALSE;
-	    }
-	  else
-	    success = FALSE;
-	}
-      channel = int_value;
-    }
-  if (success)
-    {
-      num_cp = args[2].value.pdb_int;
-      if (num_cp < 4 || num_cp > 32 || (num_cp & 0x1))
-	success = FALSE;
-    }
-  /*  control points  */
-  if (success)
-    {
-      control_pts = (unsigned char *) args[3].value.pdb_pointer;
-    }
-
-  /*  arrange to modify the curves  */
-  if (success)
-    {
-      cd.lut = gimp_lut_new();
-      for (i = 0; i < 5; i++)
-	for (j = 0; j < 256; j++)
-	  cd.curve[i][j] = j;
-
-      for (i = 0; i < 5; i++)
-	for (j = 0; j < 17; j++)
-	  {
-	    cd.points[i][j][0] = -1;
-	    cd.points[i][j][1] = -1;
-	  }
-
-      cd.channel = channel;
-      cd.color = drawable_color (drawable);
-      cd.curve_type = SMOOTH;
-
-      for (j = 0; j < num_cp / 2; j++)
-	{
-	  cd.points[cd.channel][j][0] = control_pts[j * 2];
-	  cd.points[cd.channel][j][1] = control_pts[j * 2 + 1];
-	}
-      curves_calculate_curve (&cd);
-
-      /*  The application should occur only within selection bounds  */
-      drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-
-      pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
-      pixel_region_init (&destPR, drawable_shadow (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
-
-      pixel_regions_process_parallel((p_func)gimp_lut_process, cd.lut, 
-				     2, &srcPR, &destPR);
-
-      gimp_lut_free(cd.lut);
-      drawable_merge_shadow (drawable, TRUE);
-      drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
-    }
-
-  return procedural_db_return_args (&curves_spline_proc, success);
-}
-
-/*  Procedure for explicitly defining the curve  */
-ProcArg curves_explicit_args[] =
-{
-  { PDB_DRAWABLE,
-    "drawable",
-    "the drawable"
-  },
-  { PDB_INT32,
-    "channel",
-    "the channel to modify: { VALUE (0), RED (1), GREEN (2), BLUE (3), GRAY (0) }"
-  },
-  { PDB_INT32,
-    "num_bytes",
-    "the number of bytes in the new curve (always 256)"
-  },
-  { PDB_INT8ARRAY,
-    "curve",
-    "the explicit curve"
-  }
-};
-
-ProcRecord curves_explicit_proc =
-{
-  "gimp_curves_explicit",
-  "Modifies the intensity curve(s) for specified drawable",
-  "Modifies the intensity mapping for one channel in the specified drawable.  The drawable must be either grayscale or RGB, and the channel can be either an intensity component, or the value.  The 'curve' parameter is an array of bytes which explicitly defines how each pixel value in the drawable will be modified.  Use the 'gimp_curves_spline' function to modify intensity levels with Catmull Rom splines.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  4,
-  curves_explicit_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { curves_explicit_invoker } },
-};
-
-
-static Argument *
-curves_explicit_invoker (Argument *args)
-{
-  PixelRegion srcPR, destPR;
-  int success = TRUE;
-  int int_value;
-  CurvesDialog cd;
-  GImage *gimage;
-  int channel;
-  unsigned char *curve;
-  int x1, y1, x2, y2;
-  int i, j;
-  GimpDrawable *drawable;
-
-  /*  the drawable  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      drawable =  drawable_get_ID (int_value);
-      cd.drawable = drawable;
-      if (drawable == NULL)                                        
-        success = FALSE;
-      else
-        gimage = drawable_gimage (drawable);
-    }
-  /*  make sure the drawable is not indexed color  */
-  if (success)
-    success = ! drawable_indexed (drawable);
-  
-  /*  channel  */
-  if (success)
-    {
-      int_value = args[1].value.pdb_int;
-      if (success)
-	{
-	  if (drawable_gray (drawable))
-	    {
-	      if (int_value != 0)
-		success = FALSE;
-	    }
-	  else if (drawable_color (drawable))
-	    {
-	      if (int_value < 0 || int_value > 3)
-		success = FALSE;
-	    }
-	  else
-	    success = FALSE;
-	}
-      channel = int_value;
-    }
-  /*  the number of bytes  */
-  if (success)
-    {
-      int_value = args[2].value.pdb_int;
-      if (int_value != 256)
-	success = FALSE;
-    }
-  /*  the curve  */
-  if (success)
-    {
-      curve = (unsigned char *) args[3].value.pdb_pointer;
-    }
-
-  /*  arrange to modify the curves  */
-  if (success)
-    {
-      for (i = 0; i < 5; i++)
-	for (j = 0; j < 256; j++)
-	  cd.curve[i][j] = j;
-
-      cd.channel = channel;
-      cd.color = drawable_color (drawable);
-
-      for (j = 0; j < 256; j++)
-	cd.curve[cd.channel][j] = curve[j];
-      cd.lut = gimp_lut_new();
-      gimp_lut_setup(cd.lut, (GimpLutFunc) curves_lut_func,
-		     (void *) &cd, gimp_drawable_bytes(drawable));
-      
-      /*  The application should occur only within selection bounds  */
-      drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-
-      pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
-      pixel_region_init (&destPR, drawable_shadow (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
-
-      pixel_regions_process_parallel((p_func)gimp_lut_process, cd.lut, 
-				     2, &srcPR, &destPR);
-
-      drawable_merge_shadow (drawable, TRUE);
-      drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
-    }
-
-  return procedural_db_return_args (&curves_explicit_proc, success);
-}
-
-

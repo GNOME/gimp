@@ -18,6 +18,7 @@
 #ifndef __IMAGE_MAP_H__
 #define __IMAGE_MAP_H__
 
+#include "gimpdrawableF.h"
 #include "pixel_region.h"
 
 /*  Image map apply function  */

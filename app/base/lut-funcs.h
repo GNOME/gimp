@@ -28,6 +28,7 @@ typedef enum /*< chop=_LUT >*/
   RED_LUT,
   GREEN_LUT,
   BLUE_LUT,
+  ALPHA_LUT,
   GRAY_LUT = 0  /*< skip >*/
 } ChannelLutType;
 

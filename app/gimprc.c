@@ -194,7 +194,6 @@ static inline char* units_to_str (gpointer val1p, gpointer val2p);
 
 static char* transform_path (char *path, int destroy);
 static void gimprc_set_token (char *token, char *value);
-static Argument * gimprc_query (Argument *args);
 static void add_gimp_directory_token (char *gimp_dir);
 static char* open_backup_file (char *filename,
 			       char *secondary_filename,

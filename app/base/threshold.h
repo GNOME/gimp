@@ -18,16 +18,35 @@
 #ifndef __THRESHOLD_H__
 #define __THRESHOLD_H__
 
+#include <gtk/gtk.h>
+#include "gimpdrawableF.h"
+#include "image_map.h"
+#include "histogramwidget.h"
 #include "tools.h"
-#include "procedural_db.h"
+
+typedef struct _ThresholdDialog ThresholdDialog;
+struct _ThresholdDialog
+{
+  GtkWidget   *shell;
+  GtkWidget   *low_threshold_text;
+  GtkWidget   *high_threshold_text;
+  HistogramWidget *histogram;
+  GimpHistogram   *hist;
+
+  GimpDrawable *drawable;
+  ImageMap     image_map;
+  int          color;
+  int          low_threshold;
+  int          high_threshold;
+
+  gint         preview;
+};
 
 /*  by_color select functions  */
 Tool *        tools_new_threshold      (void);
 void          tools_free_threshold     (Tool *);
 
 void          threshold_initialize     (GDisplay *);
-
-/*  Procedure definition and marshalling function  */
-extern ProcRecord threshold_proc;
+void          threshold_2              (void *, PixelRegion *, PixelRegion *);
 
 #endif  /*  __THRESHOLD_H__  */

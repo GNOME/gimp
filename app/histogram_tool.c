@@ -24,8 +24,6 @@
 #include "drawable.h"
 #include "general.h"
 #include "gdisplay.h"
-#include "histogramwidget.h"
-#include "gimphistogram.h"
 #include "histogram_tool.h"
 #include "image_map.h"
 #include "interface.h"
@@ -33,8 +31,6 @@
 #include "libgimp/gimpintl.h"
 
 #define TEXT_WIDTH 45
-#define HISTOGRAM_WIDTH 256
-#define HISTOGRAM_HEIGHT 150
 
 /*  the histogram structures  */
 
@@ -42,29 +38,6 @@ typedef struct _HistogramTool HistogramTool;
 struct _HistogramTool
 {
   int x, y;    /*  coords for last mouse click  */
-};
-
-typedef struct _HistogramToolDialog HistogramToolDialog;
-struct _HistogramToolDialog
-{
-  GtkWidget       *shell;
-  GtkWidget       *info_labels[7];
-  GtkWidget       *channel_menu;
-  HistogramWidget *histogram;
-
-  GimpHistogram   *hist;
-
-  double       mean;
-  double       std_dev;
-  double       median;
-  double       pixels;
-  double       count;
-  double       percentile;
-
-  GimpDrawable *drawable;
-  ImageMap     image_map;
-  int          channel;
-  int          color;
 };
 
 
@@ -90,16 +63,12 @@ static void                   histogram_tool_red_callback     (GtkWidget *, gpoi
 static void                   histogram_tool_green_callback   (GtkWidget *, gpointer);
 static void                   histogram_tool_blue_callback    (GtkWidget *, gpointer);
 
-static void       histogram_tool_histogram_range (HistogramWidget *, int, int,
-						  void *);
 static void       histogram_tool_dialog_update   (HistogramToolDialog *, int, int);
-
-static Argument * histogram_invoker (Argument *args);
 
 
 /*  histogram_tool machinery  */
 
-static void
+void
 histogram_tool_histogram_range (HistogramWidget *w,
 				int              start,
 				int              end,
@@ -525,201 +494,4 @@ histogram_tool_blue_callback (GtkWidget *w,
       htd->channel = HISTOGRAM_BLUE;
       histogram_widget_channel (htd->histogram, htd->channel);
     }
-}
-
-/*  The histogram procedure definition  */
-ProcArg histogram_args[] =
-{
-  { PDB_DRAWABLE,
-    "drawable",
-    "the drawable"
-  },
-  { PDB_INT32,
-    "channel",
-    "the channel to modify: { VALUE (0), RED (1), GREEN (2), BLUE (3), GRAY (0) }"
-  },
-  { PDB_INT32,
-    "start_range",
-    "start of the intensity measurement range"
-  },
-  { PDB_INT32,
-    "end_range",
-    "end of the intensity measurement range"
-  }
-};
-
-ProcArg histogram_out_args[] =
-{
-  { PDB_FLOAT,
-    "mean",
-    "mean intensity value"
-  },
-  { PDB_FLOAT,
-    "std_dev",
-    "standard deviation of intensity values"
-  },
-  { PDB_FLOAT,
-    "median",
-    "median intensity value"
-  },
-  { PDB_FLOAT,
-    "pixels",
-    "alpha-weighted pixel count for entire image"
-  },
-  { PDB_FLOAT,
-    "count",
-    "alpha-weighted pixel count for range"
-  },
-  { PDB_FLOAT,
-    "percentile",
-    "percentile that range falls under"
-  }
-};
-
-ProcRecord histogram_proc =
-{
-  "gimp_histogram",
-  "Returns information on the intensity histogram for the specified drawable",
-  "This tool makes it possible to gather information about the intensity histogram of a drawable.  A channel to examine is first specified.  This can be either value, red, green, or blue, depending on whether the drawable is of type color or grayscale.  The drawable may not be indexed.  Second, a range of intensities are specified.  The gimp_histogram function returns statistics based on the pixels in the drawable that fall under this range of values.  Mean, standard deviation, median, number of pixels, and percentile are all returned.  Additionally, the total count of pixels in the image is returned.  Counts of pixels are weighted by any associated alpha values and by the current selection mask.  That is, pixels that lie outside an active selection mask will not be counted.  Similarly, pixels with transparent alpha values will not be counted.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  4,
-  histogram_args,
-
-  /*  Output arguments  */
-  6,
-  histogram_out_args,
-
-  /*  Exec method  */
-  { { histogram_invoker } },
-};
-
-
-static Argument *
-histogram_invoker (Argument *args)
-{
-  Argument *return_args;
-  PixelRegion srcPR, maskPR;
-  int success = TRUE;
-  HistogramToolDialog htd;
-  GImage *gimage;
-  Channel *mask;
-  GimpDrawable *drawable;
-  int channel;
-  int low_range;
-  int high_range;
-  int int_value;
-  int no_mask;
-  int x1, y1, x2, y2;
-  int off_x, off_y;
-
-  drawable = NULL;
-  low_range   = 0;
-  high_range  = 0;
-
-  /*  the drawable  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      drawable = drawable_get_ID (int_value);
-      if (drawable == NULL)                                        
-        success = FALSE;
-      else
-        gimage = drawable_gimage (drawable);
-    }
-  /*  channel  */
-  if (success)
-    {
-      int_value = args[1].value.pdb_int;
-      if (success)
-	{
-	  if (drawable_gray (drawable))
-	    {
-	      if (int_value != 0)
-		success = FALSE;
-	    }
-	  else if (drawable_color (drawable))
-	    {
-	      if (int_value < 0 || int_value > 3)
-		success = FALSE;
-	    }
-	  else
-	    success = FALSE;
-	}
-      channel = int_value;
-    }
-  /*  low range  */
-  if (success)
-    {
-      int_value = args[2].value.pdb_int;
-      if (int_value >= 0 && int_value < 256)
-	low_range = int_value;
-      else
-	success = FALSE;
-    }
-  /*  high range  */
-  if (success)
-    {
-      int_value = args[3].value.pdb_int;
-      if (int_value >= 0 && int_value < 256)
-	high_range = int_value;
-      else
-	success = FALSE;
-    }
-
-  /*  arrange to calculate the histogram  */
-  if (success)
-    {
-      htd.shell = NULL;
-      htd.channel = channel;
-      htd.drawable = drawable;
-      htd.color = drawable_color (drawable);
-      htd.histogram = histogram_widget_new (HISTOGRAM_WIDTH,
-					    HISTOGRAM_HEIGHT);
-
-      gtk_signal_connect (GTK_OBJECT (htd.histogram), "rangechanged",
-			  (GtkSignalFunc) histogram_tool_histogram_range,
-			  (void*)&htd);
-
-      /*  The information collection should occur only within selection bounds  */
-      no_mask = (drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2) == FALSE);
-      drawable_offsets (drawable, &off_x, &off_y);
-
-      /*  Configure the src from the drawable data  */
-      pixel_region_init (&srcPR, drawable_data (drawable),
-			 x1, y1, (x2 - x1), (y2 - y1), FALSE);
-
-      /*  Configure the mask from the gimage's selection mask  */
-      mask = gimage_get_mask (gimage);
-      pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)),
-			 x1 + off_x, y1 + off_y, (x2 - x1), (y2 - y1), FALSE);
-
-      /*  Apply the image transformation to the pixels  */
-      htd.hist = gimp_histogram_new ();
-      if (no_mask)
-	gimp_histogram_calculate(htd.hist, &srcPR, NULL);
-      else
-	gimp_histogram_calculate(htd.hist, &srcPR, &maskPR);
-
-      /*  calculate the statistics  */
-      histogram_tool_histogram_range (htd.histogram, low_range, high_range,
-				      &htd);
-
-      return_args = procedural_db_return_args (&histogram_proc, success);
-
-      return_args[1].value.pdb_float = htd.mean;
-      return_args[2].value.pdb_float = htd.std_dev;
-      return_args[3].value.pdb_float = htd.median;
-      return_args[4].value.pdb_float = htd.pixels;
-      return_args[5].value.pdb_float = htd.count;
-      return_args[6].value.pdb_float = htd.percentile;
-    }
-  else
-    return_args = procedural_db_return_args (&histogram_proc, success);
-
-  return return_args;
 }

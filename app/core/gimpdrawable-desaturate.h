@@ -18,12 +18,10 @@
 #ifndef __DESATURATE_H__
 #define __DESATURATE_H__
 
-#include "procedural_db.h"
+#include "gimpdrawableF.h"
 
 /*  desaturate functions  */
 void  image_desaturate (void *);
-
-/*  Procedure definition and marshalling function  */
-extern ProcRecord desaturate_proc;
+void  desaturate (GimpDrawable *);
 
 #endif  /*  __DESATURATE_H__  */

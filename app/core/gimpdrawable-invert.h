@@ -18,13 +18,11 @@
 #ifndef __INVERT_H__
 #define __INVERT_H__
 
-#include "gimage.h"
-#include "procedural_db.h"
+#include "gimpimageF.h"
+#include "gimpdrawableF.h"
 
 /*  invert functions  */
-void  image_invert (GImage *);
-
-/*  Procedure definition and marshalling function  */
-extern ProcRecord invert_proc;
+void  image_invert (GimpImage *);
+void  invert (GimpDrawable *);
 
 #endif  /*  __INVERT_H__  */

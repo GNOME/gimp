@@ -18,17 +18,54 @@
 #ifndef __HUE_SATURATION_H__
 #define __HUE_SATURATION_H__
 
+#include <gtk/gtk.h>
+#include "gimpdrawableF.h"
+#include "image_map.h"
 #include "tools.h"
-#include "procedural_db.h"
+
+typedef enum
+{
+  ALL_HUES,
+  RED_HUES,
+  YELLOW_HUES,
+  GREEN_HUES,
+  CYAN_HUES,
+  BLUE_HUES,
+  MAGENTA_HUES
+} HueRange;
+
+typedef struct _HueSaturationDialog HueSaturationDialog;
+struct _HueSaturationDialog
+{
+  GtkWidget   *shell;
+  GtkWidget   *gimage_name;
+  GtkWidget   *hue_text;
+  GtkWidget   *lightness_text;
+  GtkWidget   *saturation_text;
+  GtkWidget   *hue_partition_da[6];
+  GtkAdjustment  *hue_data;
+  GtkAdjustment  *lightness_data;
+  GtkAdjustment  *saturation_data;
+
+  GimpDrawable *drawable;
+  ImageMap     image_map;
+
+  double       hue[7];
+  double       lightness[7];
+  double       saturation[7];
+
+  int          hue_partition;
+  gint         preview;
+};
 
 /*  hue-saturation functions  */
-Tool *        tools_new_hue_saturation      (void);
-void          tools_free_hue_saturation     (Tool *);
+Tool *        tools_new_hue_saturation  (void);
+void          tools_free_hue_saturation (Tool *);
 
-void          hue_saturation_initialize     (GDisplay *);
-void          hue_saturation_free           (void);
+void          hue_saturation_initialize (GDisplay *);
+void          hue_saturation_free       (void);
+void          hue_saturation            (PixelRegion *, PixelRegion *, void *);
 
-/*  Procedure definition and marshalling function  */
-extern ProcRecord hue_saturation_proc;
+void          hue_saturation_calculate_transfers (HueSaturationDialog *hsd);
 
 #endif  /*  __HUE_SATURATION_H__  */

@@ -18,12 +18,11 @@
 #ifndef __EQUALIZE_H__
 #define __EQUALIZE_H__
 
-#include "procedural_db.h"
+#include "gimpimageF.h"
+#include "gimpdrawableF.h"
 
 /*  equalize functions  */
 void  image_equalize (void *);
-
-/*  Procedure definition and marshalling function  */
-extern ProcRecord equalize_proc;
+void  equalize (GimpImage *, GimpDrawable *, gboolean);
 
 #endif  /*  __INVERT_H__  */

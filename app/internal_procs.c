@@ -24,23 +24,16 @@
 #include "gimpbrushlist.h"
 #include "channel_cmds.h"
 #include "channel_ops.h"
-#include "color_balance.h"
-#include "curves.h"
-#include "desaturate.h"
 #include "drawable_cmds.h"
 #include "equalize.h"
 #include "gimage_cmds.h"
 #include "gimage_mask_cmds.h"
 #include "gimprc.h"
 #include "gradient.h"
-#include "histogram_tool.h"
-#include "hue_saturation.h"
-#include "invert.h"
 #include "layer_cmds.h"
 #include "internal_procs.h"
 #include "patterns.h"
 #include "pattern_select.h"
-#include "threshold.h"
 #include "parasite_cmds.h"
 #include "procedural_db.h"
 
@@ -325,20 +318,8 @@ internal_procs_init ()
   app_init_update_status(NULL, _("Image procedures"),
 			 pcount/total_pcount);
 
-  /*  Image procedures  */
-  procedural_db_register (&desaturate_proc); pcount++;
-  procedural_db_register (&equalize_proc); pcount++;
-  procedural_db_register (&invert_proc); pcount++;
-
-  procedural_db_register (&curves_spline_proc); pcount++;
-  procedural_db_register (&curves_explicit_proc); pcount++;
-  procedural_db_register (&color_balance_proc); pcount++;
-  procedural_db_register (&histogram_proc); pcount++;
-  procedural_db_register (&hue_saturation_proc); pcount++;
-  procedural_db_register (&threshold_proc); pcount++;
-
   register_color_procs ();
-  pcount += 3;
+  pcount += 12;
 
   register_convert_procs ();
   pcount += 4;

@@ -33,10 +33,6 @@
 
 #define TEXT_WIDTH 55
 
-#define SHADOWS    0
-#define MIDTONES   1
-#define HIGHLIGHTS 2
-
 #define CR_SLIDER 0x1
 #define MG_SLIDER 0x2
 #define YB_SLIDER 0x4
@@ -52,34 +48,6 @@ struct _ColorBalance
 {
   int x, y;    /*  coords for last mouse click  */
 };
-
-typedef struct _ColorBalanceDialog ColorBalanceDialog;
-struct _ColorBalanceDialog
-{
-  GtkWidget   *shell;
-  GtkWidget   *cyan_red_text;
-  GtkWidget   *magenta_green_text;
-  GtkWidget   *yellow_blue_text;
-  GtkAdjustment  *cyan_red_data;
-  GtkAdjustment  *magenta_green_data;
-  GtkAdjustment  *yellow_blue_data;
-
-  GimpDrawable *drawable;
-  ImageMap     image_map;
-
-  double       cyan_red[3];
-  double       magenta_green[3];
-  double       yellow_blue[3];
-
-  guchar       r_lookup[256];
-  guchar       g_lookup[256];
-  guchar       b_lookup[256];
-
-  gint         preserve_luminosity;
-  gint         preview;
-  gint         application_mode;
-};
-
 
 /*  the color balance tool options  */
 static ToolOptions *color_balance_options = NULL;
@@ -113,13 +81,10 @@ static void                  color_balance_cr_text_update      (GtkWidget *, gpo
 static void                  color_balance_mg_text_update      (GtkWidget *, gpointer);
 static void                  color_balance_yb_text_update      (GtkWidget *, gpointer);
 
-static void       color_balance (PixelRegion *, PixelRegion *, void *);
-static Argument * color_balance_invoker (Argument *);
-
 
 /*  color balance machinery  */
 
-static void
+void
 color_balance (PixelRegion *srcPR,
 	       PixelRegion *destPR,
 	       void        *user_data)
@@ -598,7 +563,7 @@ color_balance_update (ColorBalanceDialog *cbd,
     }
 }
 
-static void
+void
 color_balance_create_lookup_tables (ColorBalanceDialog *cbd)
 {
   double *cyan_red_transfer[3];
@@ -907,175 +872,4 @@ color_balance_yb_text_update (GtkWidget *w,
       if (cbd->preview)
 	color_balance_preview (cbd);
     }
-}
-
-
-/*  The color_balance procedure definition  */
-ProcArg color_balance_args[] =
-{
-  { PDB_DRAWABLE,
-    "drawable",
-    "the drawable"
-  },
-  { PDB_INT32,
-    "transfer_mode",
-    "Transfer mode: { SHADOWS (0), MIDTONES (1), HIGHLIGHTS (2) }"
-  },
-  { PDB_INT32,
-    "preserve_lum",
-    "Preserve luminosity values at each pixel"
-  },
-  { PDB_FLOAT,
-    "cyan_red",
-    "Cyan-Red color balance: (-100 <= cyan_red <= 100)"
-  },
-  { PDB_FLOAT,
-    "magenta_green",
-    "Magenta-Green color balance: (-100 <= magenta_green <= 100)"
-  },
-  { PDB_FLOAT,
-    "yellow_blue",
-    "Yellow-Blue color balance: (-100 <= yellow_blue <= 100)"
-  }
-};
-
-ProcRecord color_balance_proc =
-{
-  "gimp_color_balance",
-  "Modify the color balance of the specified drawable",
-  "Modify the color balance of the specified drawable.  There are three axis which can be modified: cyan-red, magenta-green, and yellow-blue.  Negative values increase the amount of the former, positive values increase the amount of the latter.  Color balance can be controlled with the 'transfer_mode' setting, which allows shadows, midtones, and highlights in an image to be affected differently.  The 'preserve_lum' parameter, if non-zero, ensures that the luminosity of each pixel remains fixed.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1997",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  6,
-  color_balance_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { color_balance_invoker } },
-};
-
-
-static Argument *
-color_balance_invoker (Argument *args)
-{
-  PixelRegion srcPR, destPR;
-  int success = TRUE;
-  int int_value;
-  ColorBalanceDialog cbd;
-  GImage *gimage;
-  int transfer_mode;
-  int preserve_lum;
-  double cyan_red;
-  double magenta_green;
-  double yellow_blue;
-  double fp_value;
-  int x1, y1, x2, y2;
-  int i;
-  void *pr;
-  GimpDrawable *drawable;
-
-  drawable      = NULL;
-  transfer_mode = MIDTONES;
-  cyan_red      = 0;
-  magenta_green = 0;
-  yellow_blue   = 0;
-
-  /*  the drawable  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      drawable = drawable_get_ID (int_value);
-      if (drawable == NULL)                                        
-        success = FALSE;
-      else
-        gimage = drawable_gimage (drawable);
-    }
-  /*  make sure the drawable is not indexed color  */
-  if (success)
-    success = ! drawable_indexed (drawable);
-
-  /*  transfer_mode  */
-  if (success)
-    {
-      int_value = args[1].value.pdb_int;
-      switch (int_value)
-	{
-	case 0: transfer_mode = SHADOWS; break;
-	case 1: transfer_mode = MIDTONES; break;
-	case 2: transfer_mode = HIGHLIGHTS; break;
-	default: success = FALSE; break;
-	}
-    }
-  /*  preserve_lum  */
-  if (success)
-    {
-      int_value = args[2].value.pdb_int;
-      preserve_lum = (int_value) ? TRUE : FALSE;
-    }
-  /*  cyan_red  */
-  if (success)
-    {
-      fp_value = args[3].value.pdb_float;
-      if (fp_value >= -100 && fp_value <= 100)
-	cyan_red = fp_value;
-      else
-	success = FALSE;
-    }
-  /*  magenta_green  */
-  if (success)
-    {
-      fp_value = args[4].value.pdb_float;
-      if (fp_value >= -100 && fp_value <= 100)
-	magenta_green = fp_value;
-      else
-	success = FALSE;
-    }
-  /*  yellow_blue  */
-  if (success)
-    {
-      fp_value = args[5].value.pdb_float;
-      if (fp_value >= -100 && fp_value <= 100)
-	yellow_blue = fp_value;
-      else
-	success = FALSE;
-    }
-
-  /*  arrange to modify the color balance  */
-  if (success)
-    {
-      for (i = 0; i < 3; i++)
-	{
-	  cbd.cyan_red[i] = 0.0;
-	  cbd.magenta_green[i] = 0.0;
-	  cbd.yellow_blue[i] = 0.0;
-	}
-
-      cbd.preserve_luminosity = preserve_lum;
-      cbd.cyan_red[transfer_mode] = cyan_red;
-      cbd.magenta_green[transfer_mode] = magenta_green;
-      cbd.yellow_blue[transfer_mode] = yellow_blue;
-
-      color_balance_create_lookup_tables (&cbd);
-
-      /*  The application should occur only within selection bounds  */
-      drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-
-      pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
-      pixel_region_init (&destPR, drawable_shadow (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
-
-      for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
-	color_balance (&srcPR, &destPR, (void *) &cbd);
-
-      drawable_merge_shadow (drawable, TRUE);
-      drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
-    }
-
-  return procedural_db_return_args (&color_balance_proc, success);
 }

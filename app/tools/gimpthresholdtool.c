@@ -23,8 +23,6 @@
 #include "drawable.h"
 #include "general.h"
 #include "gdisplay.h"
-#include "histogramwidget.h"
-#include "image_map.h"
 #include "interface.h"
 #include "threshold.h"
 
@@ -40,24 +38,6 @@ typedef struct _Threshold Threshold;
 struct _Threshold
 {
   int x, y;    /*  coords for last mouse click  */
-};
-
-typedef struct _ThresholdDialog ThresholdDialog;
-struct _ThresholdDialog
-{
-  GtkWidget   *shell;
-  GtkWidget   *low_threshold_text;
-  GtkWidget   *high_threshold_text;
-  HistogramWidget *histogram;
-  GimpHistogram   *hist;
-
-  GimpDrawable *drawable;
-  ImageMap     image_map;
-  int          color;
-  int          low_threshold;
-  int          high_threshold;
-
-  gint         preview;
 };
 
 
@@ -88,12 +68,11 @@ static void               threshold_high_threshold_text_update (GtkWidget *, gpo
 static void       threshold (PixelRegion *, PixelRegion *, void *);
 static void       threshold_histogram_range (HistogramWidget *, int, int,
 					     void*);
-static Argument * threshold_invoker (Argument *);
 
 
 /*  threshold machinery  */
 
-static void
+void
 threshold_2 (void        *user_data,
 	     PixelRegion *srcPR,
 	     PixelRegion *destPR)
@@ -571,121 +550,4 @@ threshold_high_threshold_text_update (GtkWidget *w,
       if (td->preview)
 	threshold_preview (td);
     }
-}
-
-
-/*  The threshold procedure definition  */
-ProcArg threshold_args[] =
-{
-  { PDB_DRAWABLE,
-    "drawable",
-    "the drawable"
-  },
-  { PDB_INT32,
-    "low_threshold",
-    "the low threshold value: (0 <= low_threshold <= 255)"
-  },
-  { PDB_INT32,
-    "high_threshold",
-    "the high threshold value: (0 <= high_threshold <= 255)"
-  }
-};
-
-ProcRecord threshold_proc =
-{
-  "gimp_threshold",
-  "Threshold the specified drawable",
-  "This procedures generates a threshold map of the specified drawable.  All pixels between the values of 'low_threshold' and 'high_threshold' are replaced with white, and all other pixels with black.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1997",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  3,
-  threshold_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { threshold_invoker } },
-};
-
-
-static Argument *
-threshold_invoker (args)
-     Argument *args;
-{
-  PixelRegion srcPR, destPR;
-  int success = TRUE;
-  ThresholdDialog td;
-  GImage *gimage;
-  GimpDrawable *drawable;
-  int low_threshold;
-  int high_threshold;
-  int int_value;
-  int x1, y1, x2, y2;
-
-  drawable    = NULL;
-  low_threshold  = 0;
-  high_threshold = 0;
-
-  /*  the drawable  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      drawable = drawable_get_ID (int_value);
-      if (drawable == NULL)                                        
-        success = FALSE;
-      else
-        gimage = drawable_gimage (drawable);
-    }
-  /*  make sure the drawable is not indexed color  */
-  if (success)
-    success = ! drawable_indexed (drawable);
-  
-  /*  low threhsold  */
-  if (success)
-    {
-      int_value = args[1].value.pdb_int;
-      if (int_value >= 0 && int_value < 256)
-	low_threshold = int_value;
-      else
-	success = FALSE;
-    }
-  /*  high threhsold  */
-  if (success)
-    {
-      int_value = args[2].value.pdb_int;
-      if (int_value >= 0 && int_value < 256)
-	high_threshold = int_value;
-      else
-	success = FALSE;
-    }
-  if (success)
-    success =  (low_threshold < high_threshold);
-
-  /*  arrange to modify the levels  */
-  if (success)
-    {
-      td.color = drawable_color (drawable);
-      td.low_threshold = low_threshold;
-      td.high_threshold = high_threshold;
-
-      /*  The application should occur only within selection bounds  */
-      drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-
-      pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
-      pixel_region_init (&destPR, drawable_shadow (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
-
-      pixel_regions_process_parallel((p_func)threshold_2, (void*) &td,
-				     2, &srcPR, &destPR);
-
-      drawable_merge_shadow (drawable, TRUE);
-      drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
-    }
-
-  return procedural_db_return_args (&threshold_proc, success);
 }

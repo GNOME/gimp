@@ -23,6 +23,12 @@ sub drawable_arg () {{
     desc => 'The drawable',
 }}
 
+sub channel_arg () {{
+    name => 'channel',
+    type => 'enum ChannelLutType',
+    desc => 'The channel to modify: { %%desc%% }'
+}}
+
 sub brightness_contrast {
     $blurb = 'Modify brightness/contrast in the specified drawable.';
 
@@ -97,9 +103,9 @@ HELP
 
     @inargs = (
 	&drawable_arg,
-	{ name => 'channel', type => 'enum ChannelLutType',
-	  desc => 'The channel to modify: { %%desc%% }' } 
+	&channel_arg
     );
+    $inargs[1]->{type} .= ' (no ALPHA_LUT)';
 
     foreach $arg (qw(input output)) {
 	foreach (qw(low high)) {
@@ -218,11 +224,548 @@ CODE
     );
 }
 
+sub desaturate {
+    $blurb = 'Desaturate the contents of the specified drawable.';
+
+    $help = <<'HELP';
+This procedure desaturates the contents of the specified drawable. This
+procedure only works on drawables of type RGB color.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = ( &drawable_arg );
+
+    %invoke = (
+	headers => [ qw("desaturate.h") ],
+	code => <<'CODE'
+{
+  if (gimp_drawable_color (drawable))
+    desaturate (drawable);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub equalize {
+    $blurb = 'Equalize the contents of the specified drawable.';
+
+    $help = <<'HELP';
+This procedure equalizes the contents of the specified drawable. Each intensity
+channel is equalizeed independently. The equalized intensity is given as inten'
+= (255 - inten). Indexed color drawables are not valid for this operation. The
+'mask_only' option specifies whether to adjust only the area of the image
+within the selection bounds, or the entire image based on the histogram of the
+selected area. If there is no selection, the entire image is adjusted based on
+the histogram for the entire image.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&drawable_arg,
+	{ name => 'mask_only', type => 'boolean',
+	  desc => 'Equalization option' }
+    );
+
+    %invoke = (
+	headers => [ qw("equalize.h") ],
+	code => <<'CODE'
+{
+  if (! gimp_drawable_indexed (drawable))
+    equalize (drawable_gimage (drawable), drawable, mask_only);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub invert {
+    $blurb = 'Invert the contents of the specified drawable.';
+
+    $help = <<'HELP';
+This procedure inverts the contents of the specified drawable. Each intensity
+channel is inverted independently. The inverted intensity is given as inten' =
+(255 - inten). Indexed color drawables are not valid for this operation.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = ( &drawable_arg );
+
+    %invoke = (
+	headers => [ qw("invert.h") ],
+	code => <<'CODE'
+{
+  if (! gimp_drawable_indexed (drawable))
+    invert (drawable);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub curves_spline {
+    $blurb = 'Modifies the intensity curve(s) for specified drawable.';
+
+    $help = <<'HELP';
+Modifies the intensity mapping for one channel in the specified drawable. The
+drawable must be either grayscale or RGB, and the channel can be either an
+intensity component, or the value. The 'control_pts' parameter is an array of
+integers which define a set of control points which describe a Catmull Rom
+spline which yields the final intensity curve. Use the 'gimp_curves_explicit'
+function to explicitly modify intensity levels.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&drawable_arg,
+	&channel_arg,
+	{ name => 'control_pts', type => 'int8array',
+	  desc => 'The spline control points: { cp1.x, cp1.y, cp2.x, cp2.y,
+		   ... }',
+	  array => { name => 'num_points', type => '3 < int32 <= 32',
+		     desc => 'The number of values in the control point array
+			      (%%desc%%)' } }
+    );
+
+    %invoke = (
+	headers => [ qw("curves.h") ],
+	vars => [ 'CurvesDialog cd', 'int x1, y1, x2, y2', 'int i, j',
+		  'PixelRegion srcPR, destPR' ],
+	code => <<'CODE'
+{
+  if (gimp_drawable_indexed (drawable) || (num_points & 1) ||
+      (gimp_drawable_gray (drawable) && channel != GRAY))
+    success = FALSE;
+  else
+    {
+      cd.lut = gimp_lut_new ();
+
+      for (i = 0; i < 5; i++)
+	for (j = 0; j < 256; j++)
+	  cd.curve[i][j] = j;
+
+      for (i = 0; i < 5; i++)
+	for (j = 0; j < 17; j++)
+	  {
+	    cd.points[i][j][0] = -1;
+	    cd.points[i][j][1] = -1;
+	  }
+
+      cd.drawable = drawable;
+      cd.channel = channel;
+      cd.color = gimp_drawable_color (drawable);
+      cd.curve_type = SMOOTH;
+
+      for (j = 0; j < num_points / 2; j++)
+	{
+	  cd.points[cd.channel][j][0] = control_pts[j * 2];
+	  cd.points[cd.channel][j][1] = control_pts[j * 2 + 1];
+	}
+      curves_calculate_curve (&cd);
+
+      /* The application should occur only within selection bounds */
+      gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+
+      pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+			 x1, y1, (x2 - x1), (y2 - y1), FALSE);
+      pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
+			 x1, y1, (x2 - x1), (y2 - y1), TRUE);
+
+      pixel_regions_process_parallel ((p_func) gimp_lut_process, cd.lut, 2,
+				      &srcPR, &destPR);
+
+      gimp_lut_free (cd.lut);
+      gimp_drawable_merge_shadow (drawable, TRUE);
+      drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+    }
+}
+CODE
+    );
+}
+
+sub curves_explicit {
+    $blurb = 'Modifies the intensity curve(s) for specified drawable.';
+
+    $help = <<'HELP';
+Modifies the intensity mapping for one channel in the specified drawable. The
+drawable must be either grayscale or RGB, and the channel can be either an
+intensity component, or the value. The 'curve' parameter is an array of bytes
+which explicitly defines how each pixel value in the drawable will be modified.
+Use the 'gimp_curves_spline' function to modify intensity levels with Catmull
+Rom splines.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&drawable_arg,
+	&channel_arg,
+	{ name => 'curve', type => 'int8array',
+	  desc => 'The explicit curve',
+	  array => { name => 'num_bytes',
+		     desc => 'The number of bytes in the new curve (always
+			      256)' } }
+    );
+
+    %invoke = (
+	headers => [ qw("curves.h") ],
+	vars => [ 'CurvesDialog cd', 'int x1, y1, x2, y2', 'int i, j',
+		  'PixelRegion srcPR, destPR' ],
+	code => <<'CODE'
+{
+  if (gimp_drawable_indexed (drawable) || (num_bytes != 256) ||
+      (gimp_drawable_gray (drawable) && channel != GRAY))
+    success = FALSE;
+  else 
+    {
+      for (i = 0; i < 5; i++)
+	for (j = 0; j < 256; j++)
+	  cd.curve[i][j] = j;
+
+      cd.drawable = drawable;
+      cd.channel = channel;
+      cd.color = gimp_drawable_color (drawable);
+
+      for (j = 0; j < 256; j++)
+	cd.curve[cd.channel][j] = curve[j];
+
+      cd.lut = gimp_lut_new ();
+      gimp_lut_setup (cd.lut, (GimpLutFunc) curves_lut_func,
+		      (void *) &cd, gimp_drawable_bytes(drawable));
+      
+      /* The application should occur only within selection bounds */
+      gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+      pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+			 x1, y1, (x2 - x1), (y2 - y1), FALSE);
+      pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
+			 x1, y1, (x2 - x1), (y2 - y1), TRUE);
+
+      pixel_regions_process_parallel ((p_func) gimp_lut_process, cd.lut, 2,
+				      &srcPR, &destPR);
+
+      gimp_lut_free (cd.lut);
+      gimp_drawable_merge_shadow (drawable, TRUE);
+      drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+    }
+}
+CODE
+    );
+}
+
+sub color_balance {
+    $blurb = 'Modify the color balance of the specified drawable.';
+
+    $help = <<'HELP';
+Modify the color balance of the specified drawable. There are three axis which
+can be modified: cyan-red, magenta-green, and yellow-blue. Negative values
+increase the amount of the former, positive values increase the amount of the
+latter. Color balance can be controlled with the 'transfer_mode' setting, which
+allows shadows, midtones, and highlights in an image to be affected
+differently. The 'preserve_lum' parameter, if non-zero, ensures that the
+luminosity of each pixel remains fixed.
+HELP
+
+    &std_pdb_misc;
+    $date = '1997';
+
+    @inargs = (
+	&drawable_arg,
+	{ name => 'transfer_mode', type => 'enum TransferMode',
+	  desc => 'Transfer mode: { %%desc%% }' },
+	{ name => 'preserve_lum', type => 'boolean',
+	  desc => 'Preserve luminosity values at each pixel' }
+    );
+
+    foreach (qw(cyan_red magenta_green yellow_blue)) {
+	my $arg = { name => $_, type => '-100 <= float <= 100' };
+        ($arg->{desc} = ucfirst $_) =~ s/_(.)/-\U$1\E/;
+	 $arg->{desc} .= ' color balance: (%%desc%%)';
+	push @inargs, $arg;
+    }
+
+    %invoke = (
+	headers => [ qw("color_balance.h") ],
+	vars => [ 'ColorBalanceDialog cbd', 'int i', 'void *pr',
+		  'PixelRegion srcPR, destPR', 'int x1, y1, x2, y2' ],
+	code => <<'CODE'
+{
+  if (! gimp_drawable_indexed (drawable))
+    success = FALSE;
+  else
+    {
+      for (i = 0; i < 3; i++)
+	{
+	  cbd.cyan_red[i] = 0.0;
+	  cbd.magenta_green[i] = 0.0;
+	  cbd.yellow_blue[i] = 0.0;
+	}
+
+      cbd.preserve_luminosity = preserve_lum;
+      cbd.cyan_red[transfer_mode] = cyan_red;
+      cbd.magenta_green[transfer_mode] = magenta_green;
+      cbd.yellow_blue[transfer_mode] = yellow_blue;
+
+      color_balance_create_lookup_tables (&cbd);
+
+      /* The application should occur only within selection bounds */
+      gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+
+      pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+			 x1, y1, (x2 - x1), (y2 - y1), FALSE);
+      pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
+			 x1, y1, (x2 - x1), (y2 - y1), TRUE);
+
+      for (pr = pixel_regions_register (2, &srcPR, &destPR); pr;
+	   pr = pixel_regions_process (pr))
+        color_balance (&srcPR, &destPR, (void *) &cbd);
+
+      gimp_drawable_merge_shadow (drawable, TRUE);
+      drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+    }
+}
+CODE
+    );
+}
+
+sub histogram {
+    $blurb = <<'BLURB';
+Returns information on the intensity histogram for the specified drawable.
+BLURB
+
+    $help = <<'HELP';
+This tool makes it possible to gather information about the intensity histogram
+of a drawable. A channel to examine is first specified. This can be either
+value, red, green, or blue, depending on whether the drawable is of type color
+or grayscale. The drawable may not be indexed. Second, a range of intensities
+are specified. The gimp_histogram function returns statistics based on the
+pixels in the drawable that fall under this range of values. Mean, standard
+deviation, median, number of pixels, and percentile are all returned.
+Additionally, the total count of pixels in the image is returned. Counts of
+pixels are weighted by any associated alpha values and by the current selection
+mask. That is, pixels that lie outside an active selection mask will not be
+counted. Similarly, pixels with transparent alpha values will not be counted.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&drawable_arg,
+	&channel_arg,
+    );
+
+    foreach (qw(start end)) {
+	push @inargs, { name => "${_}_range", type => '0 <= int32 < 256',
+			desc => ucfirst $_ . ' of the intensity measurement
+					       range' }
+    }
+
+    @outargs = (
+	{ name => 'mean',
+	  desc => 'Mean itensity value' },
+	{ name => 'std_dev',
+	  desc => 'Standard deviation of intensity values' },
+	{ name => 'median',
+	  desc => 'Median itensity value' },
+	{ name => 'pixels',
+	  desc => 'Alpha-weighted pixel count for entire image' },
+	{ name => 'count',
+	  desc => 'Alpha-weighted pixel count for range' },
+	{ name => 'percentile',
+	  desc => 'Percentile that range falls under' }
+    );
+
+    foreach (@outargs) {
+	@$_{qw(type alias no_declare)} = ('float', "htd.$_->{name}", 1)
+    }
+
+    %invoke = (
+	headers => [ qw("histogram_tool.h" "gimage.h") ],
+	vars => [ 'PixelRegion srcPR, maskPR', 'int x1, y1, x2, y2',
+		  'HistogramToolDialog htd', 'int off_x, off_y',
+		  'gboolean no_mask', 'Channel *mask' ],
+	code => <<'CODE'
+{
+  if (gimp_drawable_indexed (drawable) ||
+      (gimp_drawable_gray (drawable) && channel != GRAY))
+    success = FALSE;
+  else
+    {
+      htd.shell = NULL;
+      htd.channel = channel;
+      htd.drawable = drawable;
+      htd.color = gimp_drawable_color (drawable);
+      htd.histogram = histogram_widget_new (HISTOGRAM_WIDTH,
+					    HISTOGRAM_HEIGHT);
+
+      gtk_signal_connect (GTK_OBJECT (htd.histogram), "rangechanged",
+                          (GtkSignalFunc) histogram_tool_histogram_range,
+                          (void*) &htd);
+
+      /* The information collection should occur only within selection bounds */
+      no_mask = (gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2) == FALSE);
+      gimp_drawable_offsets (drawable, &off_x, &off_y);
+
+      /* Configure the src from the drawable data */
+      pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+			 x1, y1, (x2 - x1), (y2 - y1), FALSE);
+
+      /*  Configure the mask from the gimage's selection mask */
+      mask = gimage_get_mask (drawable_gimage (GIMP_DRAWABLE (drawable)));
+      pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE(mask)),
+			 x1 + off_x, y1 + off_y, (x2 - x1), (y2 - y1), FALSE);
+
+      /* Apply the image transformation to the pixels */
+      htd.hist = gimp_histogram_new ();
+      if (no_mask)
+	gimp_histogram_calculate (htd.hist, &srcPR, NULL);
+      else
+	gimp_histogram_calculate (htd.hist, &srcPR, &maskPR);
+
+      /* Calculate the statistics */
+      histogram_tool_histogram_range (htd.histogram, start_range, end_range,
+				      &htd);
+    }
+}
+CODE
+    );
+}
+
+sub hue_saturation {
+    $blurb = <<'BLURB';
+Modify hue, lightness, and saturation in the specified drawable.
+BLURB
+
+    $help = <<'HELP';
+This procedures allows the hue, lightness, and saturation in the specified
+drawable to be modified. The 'hue_range' parameter provides the capability to
+limit range of affected hues.
+HELP
+
+    &std_pdb_misc;
+    $date = '1997';
+
+    @inargs = (
+	&drawable_arg,
+	{ name => 'hue_range', type => 'enum HueRange',
+	  desc => 'Range of affected hues: { %%desc%% }' },
+	{ name => 'hue_offset', type => '-180 <= float <= 180',
+	  desc => 'Hue offset in degrees: (%%desc%%)' }
+    );
+
+    foreach (qw(lightness saturation)) {
+	push @inargs, { name => $_, type => '-100 <= float <= 100',
+			desc => "$_ modification: (%%desc%%)" }
+    }
+
+    %invoke = (
+	headers => [ qw("hue_saturation.h") ],
+	vars => [ 'HueSaturationDialog hsd', 'int i', 'void *pr',
+		  'PixelRegion srcPR, destPR', 'int x1, y1, x2, y2' ],
+	code => <<'CODE'
+{
+  if (! gimp_drawable_indexed (drawable))
+    success = FALSE;
+  else
+    {
+      for (i = 0; i < 7; i++)
+	{
+	  hsd.hue[i] = 0.0;
+	  hsd.lightness[i] = 0.0;
+	  hsd.saturation[i] = 0.0;
+	}
+
+      hsd.hue[hue_range] = hue_offset;
+      hsd.lightness[hue_range] = lightness;
+      hsd.saturation[hue_range] = saturation;
+
+      /* Calculate the transfer arrays */
+      hue_saturation_calculate_transfers (&hsd);
+
+      /* The application should occur only within selection bounds */
+      gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+
+      pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+			 x1, y1, (x2 - x1), (y2 - y1), FALSE);
+      pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
+			 x1, y1, (x2 - x1), (y2 - y1), TRUE);
+
+      for (pr = pixel_regions_register (2, &srcPR, &destPR); pr;
+	   pr = pixel_regions_process (pr))
+        hue_saturation (&srcPR, &destPR, (void *) &hsd);
+
+      gimp_drawable_merge_shadow (drawable, TRUE);
+      drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+    }
+}
+CODE
+    );
+}
+
+sub threshold {
+    $blurb = 'Threshold the specified drawable.';
+
+    $help = <<'HELP';
+This procedures generates a threshold map of the specified drawable. All pixels
+between the values of 'low_threshold' and 'high_threshold' are replaced with
+white, and all other pixels with black.
+HELP
+
+    &std_pdb_misc;
+    $date = '1997';
+
+    @inargs = ( &drawable_arg );
+    foreach (qw(low high)) {
+	push @inargs, { name => "${_}_threshold", type => '0 <= int32 <= 255',
+			desc => "The $_ threshold value: %%desc%%" }
+    }
+
+    %invoke = (
+	headers => [ qw("threshold.h") ],
+	vars => [ 'ThresholdDialog td', 'int x1, y1, x2, y2',
+		  'PixelRegion srcPR, destPR' ],
+	code => <<'CODE'
+{
+  if (! gimp_drawable_indexed (drawable) || (low_threshold >= high_threshold))
+    success = FALSE;
+  else
+    {
+      td.color = gimp_drawable_color (drawable);
+      td.low_threshold = low_threshold;
+      td.high_threshold = high_threshold;
+
+      /* The application should occur only within selection bounds */
+      gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+
+      pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+			 x1, y1, (x2 - x1), (y2 - y1), FALSE);
+      pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
+			 x1, y1, (x2 - x1), (y2 - y1), TRUE);
+
+      pixel_regions_process_parallel ((p_func) threshold_2, (void*) &td, 2,
+				      &srcPR, &destPR);
+
+      gimp_drawable_merge_shadow (drawable, TRUE);
+      drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+    }
+}
+CODE
+    );
+}
+
 @headers = qw("gimpimage.h" "gimpdrawable.h" "gimplut.h" "lut_funcs.h");
 
-@procs = qw(brightness_contrast levels posterize);
+@procs = qw(brightness_contrast levels posterize desaturate equalize invert
+	    curves_spline curves_explicit color_balance histogram
+	    hue_saturation threshold);
 %exports = (app => [@procs]);
 
-$desc = 'Palette';
+$desc = 'Color';
 
 1;

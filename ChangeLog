@@ -1,3 +1,39 @@
+Tue Apr 20 21:53:01 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/color_cmds.c: moved a bunch of PDB stuff here
+
+	* app/color_balance.[ch]: removed PDB proc, exported TransferMode
+	enum, ColorBalanceDialog, color_balance_create_lookup_tables, and
+	color_balance
+
+	* app/curves.[ch]: removed PDB procs, exported SMOOTH and GFREE
+	#defines, CurvesDialog, curves_lut_func and curves_calculate_curve
+
+	* app/desaturate.[ch]: removed PDB proc, exported desaturate
+
+	* app/equalize.[ch]: removed PDB proc, exported equalize
+
+	* app/histogram_tool.[ch]: removed PDB proc, exported HISTOGRAM_WIDTH
+	and HISTOGRAM_HEIGHT #defines, HistogramToolDialog,
+	histogram_tool_histogram_range
+
+	* app/hue_saturation.[ch]: removed PDB proc, exported HueRange enum,
+	HueSaturationDialog, hue_saturation_calculate_transfers,
+	hue_saturation
+
+	* app/invert.[ch]: remove PDB proc, export invert
+
+	* app/threshold.[ch]: remove PDB proc, export ThresholdDialog and
+	threshold_2
+
+	* internal_procs.c: changes for pdbgen
+
+	* app/gimprc.c: removed leftover declaration
+
+	* app/image_map.h: add #include "gimpdrawableF.h"
+
+	* app/lut_funcs.h: add ALPHA_LUT to ChannelLutType
+
 Wed Apr 21 01:21:55 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* app/crop.c: optimized the autocrop algorithm

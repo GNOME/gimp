@@ -26,7 +26,6 @@
 #include "gimage_mask.h"
 #include "gdisplay.h"
 #include "hue_saturation.h"
-#include "image_map.h"
 #include "interface.h"
 
 #include "libgimp/gimpintl.h"
@@ -57,31 +56,6 @@ struct _HueSaturation
 {
   int x, y;    /*  coords for last mouse click  */
 };
-
-typedef struct _HueSaturationDialog HueSaturationDialog;
-struct _HueSaturationDialog
-{
-  GtkWidget   *shell;
-  GtkWidget   *gimage_name;
-  GtkWidget   *hue_text;
-  GtkWidget   *lightness_text;
-  GtkWidget   *saturation_text;
-  GtkWidget   *hue_partition_da[6];
-  GtkAdjustment  *hue_data;
-  GtkAdjustment  *lightness_data;
-  GtkAdjustment  *saturation_data;
-
-  GimpDrawable *drawable;
-  ImageMap     image_map;
-
-  double       hue[7];
-  double       lightness[7];
-  double       saturation[7];
-
-  int          hue_partition;
-  gint         preview;
-};
-
 
 /*  the hue-saturation tool options  */
 static ToolOptions *hue_saturation_options = NULL;
@@ -133,13 +107,10 @@ static void   hue_saturation_lightness_text_update   (GtkWidget *, gpointer);
 static void   hue_saturation_saturation_text_update  (GtkWidget *, gpointer);
 static gint   hue_saturation_hue_partition_events    (GtkWidget *, GdkEvent *, HueSaturationDialog *);
 
-static void       hue_saturation          (PixelRegion *, PixelRegion *, void *);
-static Argument * hue_saturation_invoker  (Argument *);
-
 
 /*  hue saturation machinery  */
 
-static void
+void
 hue_saturation_calculate_transfers (HueSaturationDialog *hsd)
 {
   int value;
@@ -182,7 +153,7 @@ hue_saturation_calculate_transfers (HueSaturationDialog *hsd)
       }
 }
 
-static void
+void
 hue_saturation (PixelRegion *srcPR,
 		PixelRegion *destPR,
 		void        *user_data)
@@ -1034,160 +1005,4 @@ hue_saturation_hue_partition_events (GtkWidget           *widget,
     }
 
   return FALSE;
-}
-
-/*  The hue_saturation procedure definition  */
-ProcArg hue_saturation_args[] =
-{
-  { PDB_DRAWABLE,
-    "drawable",
-    "the drawable"
-  },
-  { PDB_INT32,
-    "hue_range",
-    "range of affected hues: { ALL_HUES (0), RED_HUES (1), YELLOW_HUES (2), GREEN_HUES (3), CYAN_HUES (4), BLUE_HUES (5), MAGENTA_HUES (6)"
-  },
-  { PDB_FLOAT,
-    "hue_offset",
-    "hue offset in degrees: (-180 <= hue_offset <= 180)"
-  },
-  { PDB_FLOAT,
-    "lightness",
-    "lightness modification: (-100 <= lightness <= 100)"
-  },
-  { PDB_FLOAT,
-    "saturation",
-    "saturation modification: (-100 <= saturation <= 100)"
-  }
-};
-
-ProcRecord hue_saturation_proc =
-{
-  "gimp_hue_saturation",
-  "Modify hue, lightness, and saturation in the specified drawable",
-  "This procedures allows the hue, lightness, and saturation in the specified drawable to be modified.  The 'hue_range' parameter provides the capability to limit range of affected hues.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1997",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  5,
-  hue_saturation_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { hue_saturation_invoker } },
-};
-
-
-static Argument *
-hue_saturation_invoker (Argument *args)
-{
-  PixelRegion srcPR, destPR;
-  int success = TRUE;
-  HueSaturationDialog hsd;
-  GImage *gimage;
-  GimpDrawable *drawable;
-  int hue_range;
-  double hue_offset;
-  double lightness;
-  double saturation;
-  int int_value;
-  double fp_value;
-  int x1, y1, x2, y2;
-  int i;
-  void *pr;
-
-  drawable = NULL;
-  hue_range   = 0;
-  hue_offset  = 0.0;
-  lightness   = 0.0;
-  saturation  = 0.0;
-
-  /*  the drawable  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      drawable = drawable_get_ID (int_value);
-      if (drawable == NULL)                                        
-        success = FALSE;
-      else
-        gimage = drawable_gimage (drawable);
-    }
-  /*  make sure the drawable is not indexed color  */
-  if (success)
-    success = ! drawable_indexed (drawable);
-    
-  /*  hue_range  */
-  if (success)
-    {
-      int_value = args[1].value.pdb_int;
-      if (int_value < 0 || int_value > 6)
-	success = FALSE;
-      else
-	hue_range = int_value;
-    }
-  /*  hue_offset  */
-  if (success)
-    {
-      fp_value = args[2].value.pdb_float;
-      if (fp_value < -180 || fp_value > 180)
-	success = FALSE;
-      else
-	hue_offset = fp_value;
-    }
-  /*  lightness  */
-  if (success)
-    {
-      fp_value = args[3].value.pdb_float;
-      if (fp_value < -100 || fp_value > 100)
-	success = FALSE;
-      else
-	lightness = fp_value;
-    }
-  /*  saturation  */
-  if (success)
-    {
-      fp_value = args[4].value.pdb_float;
-      if (fp_value < -100 || fp_value > 100)
-	success = FALSE;
-      else
-	saturation = fp_value;
-    }
-
-  /*  arrange to modify the levels  */
-  if (success)
-    {
-      for (i = 0; i < 7; i++)
-	{
-	  hsd.hue[i] = 0.0;
-	  hsd.lightness[i] = 0.0;
-	  hsd.saturation[i] = 0.0;
-	}
-
-      hsd.hue[hue_range] = hue_offset;
-      hsd.lightness[hue_range] = lightness;
-      hsd.saturation[hue_range] = saturation;
-
-      /*  calculate the transfer arrays  */
-      hue_saturation_calculate_transfers (&hsd);
-
-      /*  The application should occur only within selection bounds  */
-      drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-
-      pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
-      pixel_region_init (&destPR, drawable_shadow (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
-
-      for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
-	hue_saturation (&srcPR, &destPR, (void *) &hsd);
-
-      drawable_merge_shadow (drawable, TRUE);
-      drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
-    }
-
-  return procedural_db_return_args (&hue_saturation_proc, success);
 }

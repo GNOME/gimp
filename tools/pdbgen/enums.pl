@@ -286,15 +286,17 @@ package Gimp::CodeGen::enums;
 	},
     ChannelLutType =>
 	{ contig => 1,
-	  symbols => [ qw(VALUE_LUT RED_LUT GREEN_LUT BLUE_LUT) ],
+	  symbols => [ qw(VALUE_LUT RED_LUT GREEN_LUT BLUE_LUT ALPHA_LUT) ],
 	  mapping => { VALUE_LUT => '0',
 		       RED_LUT => '1',
 		       GREEN_LUT => '2',
-		       BLUE_LUT => '3' },
+		       BLUE_LUT => '3',
+		       ALPHA_LUT => '4' },
 	  nicks   => { VALUE_LUT => 'VALUE/GRAY',
 		       RED_LUT => 'RED',
 		       GREEN_LUT => 'GREEN',
-		       BLUE_LUT => 'BLUE' }
+		       BLUE_LUT => 'BLUE',
+		       ALPHA_LUT => 'ALPHA' }
 	},
     ShearType =>
 	{ contig => 1,
@@ -303,6 +305,25 @@ package Gimp::CodeGen::enums;
 		       VERT_SHEAR => '1' },
 	  nicks   => { HORZ_SHEAR => 'HORIZONTAL',
 		       VERT_SHEAR => 'VERTICAL' }
+	},
+    TransferMode =>
+	{ contig => 1,
+	  symbols => [ qw(SHADOWS MIDTONES HIGHLIGHTS) ],
+	  mapping => { SHADOWS => '0',
+		       MIDTONES => '1',
+		       HIGHLIGHTS => '2' }
+	},
+    HueRange =>
+	{ contig => 1,
+	  symbols => [ qw(ALL_HUES RED_HUES YELLOW_HUES GREEN_HUES CYAN_HUES
+			  BLUE_HUES MAGENTA_HUES) ],
+	  mapping => { ALL_HUES => '0',
+		       RED_HUES => '1',
+		       YELLOW_HUES => '2',
+		       GREEN_HUES => '3',
+		       CYAN_HUES => '4',
+		       BLUE_HUES => '5',
+		       MAGENTA_HUES => '6' }
 	}
 );
 
