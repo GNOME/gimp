@@ -1,7 +1,13 @@
 The GNU Image Manipulation Program Version 2.0
+----------------------------------------------
 
-Bugs fixed since GIMP 2.0.0
-===========================
+This is the stable branch of GIMP 2.0. Only bug-fixes are applied
+here, new features are being added in the HEAD branch that is supposed
+to be released as GIMP version 2.2 in a not too distant future.
+
+
+Bugs fixed in GIMP 2.0.1
+========================
 - don't leak file descriptor for the POSIX shm implementation (Yosh)
 - fixed path tool undo (#138086, Mitch)
 - don't transform drawables away (#138117, Mitch)
@@ -25,4 +31,8 @@ Bugs fixed since GIMP 2.0.0
 - made undo names translatable (#139000, Sven)
 - optimized grid drawing (#138081, Sven)
 - don't create a gimptool link to gimptool-2.0 (#139024, Sven)
-
+- sanitize rectangle and ellipse selection (#138237, #138103, Pedro)
+- fixed problems with Copy-Visible and Drop-Shadow scripts (#138662, Pedro)
+- fixed X server authentification problems with gimp-remote (#139158, Sven)
+- let Script-Fu PDB marshallers handle NULL strings (#139386, Kevin Cozens)
+- fixed rounding error in transformation code (#120490, William Skaggs)
