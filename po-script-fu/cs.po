@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-07 22:55+0200\n"
-"PO-Revision-Date: 2003-08-30 16:43+0200\n"
+"POT-Creation-Date: 2003-09-14 11:49+0200\n"
+"PO-Revision-Date: 2003-09-14 20:10+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1321,21 +1321,20 @@ msgid "<Toolbox>/Xtns/Script-Fu/Utils/_Font Map..."
 msgstr "<Toolbox>/Rozš./Skript-fu/Pomůcky/_Znaková mapa..."
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
-#, fuzzy
 msgid "Border (pixels)"
-msgstr "Velikost okraje (pixely)"
+msgstr "Okraj (pixely)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:3
 msgid "Filter (regexp)"
-msgstr ""
+msgstr "Filtr (regexp)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:5
 msgid "Labels"
-msgstr ""
+msgstr "Jmenovky"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:7
 msgid "Use Font Name as Text"
-msgstr ""
+msgstr "Použít název písma jako text"
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/_Frosty..."
