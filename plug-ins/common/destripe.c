@@ -138,11 +138,9 @@ query (void)
   static int		nargs        = sizeof(args) / sizeof(args[0]),
 			nreturn_vals = 0;
 
-  INIT_I18N();
-
   gimp_install_procedure (PLUG_IN_NAME,
-			  _("Destripe filter, used to remove vertical stripes caused by cheap scanners."),
-			  _("This plug-in tries to remove vertical stripes from an image."),
+			  "Destripe filter, used to remove vertical stripes caused by cheap scanners.",
+			  "This plug-in tries to remove vertical stripes from an image.",
 			  "Marc Lehmann <pcg@goof.com>", "Marc Lehmann <pcg@goof.com>",
 			  PLUG_IN_VERSION,
 			  N_("<Image>/Filters/Enhance/Destripe..."),

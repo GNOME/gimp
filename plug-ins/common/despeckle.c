@@ -171,11 +171,9 @@ query (void)
   static int		nargs        = sizeof(args) / sizeof(args[0]),
 			nreturn_vals = 0;
 
-  INIT_I18N();
-
   gimp_install_procedure (PLUG_IN_NAME,
-			  _("Despeckle filter, typically used to \'despeckle\' a photographic image."),
-			  _("This plug-in selectively performs a median or adaptive box filter on an image."),
+			  "Despeckle filter, typically used to \'despeckle\' a photographic image.",
+			  "This plug-in selectively performs a median or adaptive box filter on an image.",
 			  "Michael Sweet <mike@easysw.com>",
 			  "Copyright 1997-1998 by Michael Sweet",
 			  PLUG_IN_VERSION,

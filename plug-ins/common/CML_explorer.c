@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * CML_explorer.c -- This is a plug-in for The GIMP 1.0
- * Time-stamp: <1999-08-28 20:37:08 yasuhiro>
+ * Time-stamp: <2000-02-13 18:18:37 yasuhiro>
  * Copyright (C) 1997 Shuji Narazaki <narazaki@InetQ.or.jp>
  * Version: 1.0.11
  * URL: http://www.inetq.or.jp/~narazaki/TheGIMP/
@@ -458,11 +458,9 @@ query (void)
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
-  INIT_I18N();
-
   gimp_install_procedure (PLUG_IN_NAME,
-			  _("Make an image of Coupled-Map Lattice"),
-			  _("Make an image of Coupled-Map Lattice (CML). CML is a kind of Cellula Automata on continuous (value) domain. In RUN_NONINTERACTIVE, the name of a prameter file is passed as the 4th arg. You can control CML_explorer via parameter file."),
+			  "Make an image of Coupled-Map Lattice",
+			  "Make an image of Coupled-Map Lattice (CML). CML is a kind of Cellula Automata on continuous (value) domain. In RUN_NONINTERACTIVE, the name of a prameter file is passed as the 4th arg. You can control CML_explorer via parameter file.",
 			  /*  Or do you want to call me with over 50 args? */
 			  "Shuji Narazaki (narazaki@InetQ.or.jp); http://www.inetq.or.jp/~narazaki/TheGIMP/",
 			  "Shuji Narazaki",

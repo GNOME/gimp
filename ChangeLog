@@ -1,5 +1,13 @@
 2000-02-13  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
 
+	* plug-ins/common/CML_explorer.c
+	* plug-ins/common/depthmerge.c
+	* plug-ins/common/despeckle.c
+	* plug-ins/common/destripe.c
+	* plug-ins/common/edge.c
+	* plug-ins/common/fractaltrace.c
+	* plug-ins/common/gqbist.c: unmarked blurb and help.
+
 	* plug-ins/script-fu/script-fu-console.c: minor i18n fix.
 
 Sat Feb 12 17:49:02 PST 2000 Manish Singh <yosh@gimp.org>

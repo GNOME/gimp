@@ -328,11 +328,9 @@ query (void)
   };
   gint nargs = sizeof (args) / sizeof (args[0]);
 
-  INIT_I18N();
-
   gimp_install_procedure (PLUG_IN_NAME,
-			  _("Create images based on a random genetic formula"),
-			  _("This Plug-in is based on an article by Jörn Loviscach (appeared in c't 10/95, page 326). It generates modern art pictures from a random genetic formula."),
+			  "Create images based on a random genetic formula",
+			  "This Plug-in is based on an article by Jörn Loviscach (appeared in c't 10/95, page 326). It generates modern art pictures from a random genetic formula.",
 			  "Jörn Loviscach, Jens Ch. Restemeier",
 			  "Jörn Loviscach, Jens Ch. Restemeier",
 			  PLUG_IN_VERSION,

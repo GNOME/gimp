@@ -117,11 +117,9 @@ query (void)
   };
   static gint nargs = sizeof(args) / sizeof(args[0]);
 
-  INIT_I18N();
-  
   gimp_install_procedure (PLUG_IN_NAME,
-			  _("transform image with the Mandelbrot Fractal"),
-			  _("transform image with the Mandelbrot Fractal"),
+			  "transform image with the Mandelbrot Fractal",
+			  "transform image with the Mandelbrot Fractal",
 			  "Hirotsuna Mizuno <s1041150@u-aizu.ac.jp>",
 			  "Copyright (C) 1997 Hirotsuna Mizuno",
 			  PLUG_IN_VERSION,

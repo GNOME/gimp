@@ -183,16 +183,14 @@ query (void)
   };
   static gint numArgs = sizeof (args) / sizeof (GParamDef);
 
-  INIT_I18N();
-
   gimp_install_procedure (PLUG_IN_NAME,
-			  _("Combine two images using corresponding "
-			    "depth maps (z-buffers)"),
-			  _("Taking as input two full-color, full-alpha "
+			  "Combine two images using corresponding "
+			    "depth maps (z-buffers)",
+			  "Taking as input two full-color, full-alpha "
 			    "images and two corresponding grayscale depth "
 			    "maps, this plug-in combines the images based "
 			    "on which is closer (has a lower depth map value) "
-			    "at each point."),
+			    "at each point.",
 			  "Sean Cier",
 			  "Sean Cier",
 			  PLUG_IN_VERSION,

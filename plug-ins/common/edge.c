@@ -156,9 +156,8 @@ query ()
   static gint nargs = sizeof (args) / sizeof (args[0]);
   static gint nreturn_vals = 0;
   gchar *help_string =
-    _(" Perform edge detection on the contents of the specified drawable. It applies, I think, convolution with 3x3 kernel. AMOUNT is an arbitrary constant, WRAPMODE is like displace plug-in (useful for tilable image).");
+    " Perform edge detection on the contents of the specified drawable. It applies, I think, convolution with 3x3 kernel. AMOUNT is an arbitrary constant, WRAPMODE is like displace plug-in (useful for tilable image).";
 
-  INIT_I18N();
   gimp_install_procedure ("plug_in_edge",
 			  "Perform edge detection on the contents of the specified drawable",
 			  help_string,
