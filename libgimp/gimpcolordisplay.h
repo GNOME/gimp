@@ -21,7 +21,7 @@
 
 #include <glib.h>
 
-#include <libgimp/parasite.h>
+#include <libgimp/parasiteF.h>
 
 typedef void       (*GimpColorDisplayInit)      (void);
 typedef gpointer   (*GimpColorDisplayNew)       (int       type);
