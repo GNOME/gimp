@@ -50,6 +50,7 @@ struct _GimpItemFactory
   Gimp                      *gimp;
   GimpItemFactoryUpdateFunc  update_func;
   gboolean                   update_on_popup;
+  gchar                     *title;
   gchar                     *help_id;
 
   GList                     *translation_trash;
@@ -68,6 +69,7 @@ GType   gimp_item_factory_get_type        (void) G_GNUC_CONST;
 GimpItemFactory * gimp_item_factory_new   (Gimp                 *gimp,
                                            GType                 container_type,
                                            const gchar          *factory_path,
+                                           const gchar          *title,
                                            const gchar          *help_id,
                                            GimpItemFactoryUpdateFunc  update_func,
                                            gboolean              update_on_popup,

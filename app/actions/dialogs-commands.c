@@ -88,11 +88,9 @@ dialogs_add_tab_cmd_callback (GtkWidget *widget,
 			      gpointer   data,
 			      guint      action)
 {
-  GimpDockbook *dockbook;
+  GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
 
-  dockbook = (GimpDockbook *) gtk_item_factory_popup_data_from_widget (widget);
-
-  if (dockbook && action)
+  if (action)
     {
       GtkWidget   *dockable;
       const gchar *identifier;
@@ -118,26 +116,40 @@ dialogs_add_tab_cmd_callback (GtkWidget *widget,
 }
 
 void
-dialogs_remove_tab_cmd_callback (GtkWidget *widget,
-				 gpointer   data,
-				 guint      action)
+dialogs_close_tab_cmd_callback (GtkWidget *widget,
+                                gpointer   data,
+                                guint      action)
 {
-  GimpDockbook *dockbook;
+  GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
+  GimpDockable *dockable;
+  gint          page_num;
 
-  dockbook = (GimpDockbook *) gtk_item_factory_popup_data_from_widget (widget);
+  page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
 
-  if (dockbook)
+  dockable = (GimpDockable *)
+    gtk_notebook_get_nth_page (GTK_NOTEBOOK (dockbook), page_num);
+
+  if (dockable)
+    gimp_dockbook_remove (dockbook, dockable);
+}
+
+void
+dialogs_detach_tab_cmd_callback (GtkWidget *widget,
+                                 gpointer   data,
+                                 guint      action)
+{
+  GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
+  GimpDockable *dockable;
+  gint          page_num;
+
+  page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
+
+  dockable = (GimpDockable *)
+    gtk_notebook_get_nth_page (GTK_NOTEBOOK (dockbook), page_num);
+
+  if (dockable)
     {
-      GimpDockable *dockable;
-      gint          page_num;
-
-      page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
-
-      dockable = (GimpDockable *)
-	gtk_notebook_get_nth_page (GTK_NOTEBOOK (dockbook), page_num);
-
-      if (dockable)
-	gimp_dockbook_remove (dockbook, dockable);
+      /* TODO */
     }
 }
 
@@ -146,85 +158,87 @@ dialogs_toggle_view_cmd_callback (GtkWidget *widget,
                                   gpointer   data,
                                   guint      action)
 {
-  GimpDockbook *dockbook;
+  GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
+  GimpDockable *dockable;
   GimpViewType  view_type;
+  gint          page_num;
 
   if (! GTK_CHECK_MENU_ITEM (widget)->active)
     return;
 
-  dockbook = (GimpDockbook *) gtk_item_factory_popup_data_from_widget (widget);
-
   view_type = (GimpViewType) action;
 
-  if (dockbook)
+  page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
+
+  dockable = (GimpDockable *)
+    gtk_notebook_get_nth_page (GTK_NOTEBOOK (dockbook), page_num);
+
+  if (dockable)
     {
-      GimpDockable *dockable;
-      gint          page_num;
+      GimpDialogFactoryEntry *entry;
 
-      page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
+      entry = g_object_get_data (G_OBJECT (dockable),
+                                 "gimp-dialog-factory-entry");
 
-      dockable = (GimpDockable *)
-	gtk_notebook_get_nth_page (GTK_NOTEBOOK (dockbook), page_num);
-
-      if (dockable)
+      if (entry)
         {
-          GimpDialogFactoryEntry *entry;
+          gchar *identifier;
+          gchar *substring = NULL;
 
-          entry = g_object_get_data (G_OBJECT (dockable),
-                                     "gimp-dialog-factory-entry");
+          identifier = g_strdup (entry->identifier);
 
-          if (entry)
+          substring = strstr (identifier, "grid");
+
+          if (substring && view_type == GIMP_VIEW_TYPE_GRID)
+            return;
+
+          if (! substring)
             {
-              gchar *identifier;
-              gchar *substring = NULL;
+              substring = strstr (identifier, "list");
 
-              identifier = g_strdup (entry->identifier);
-
-              substring = strstr (identifier, "grid");
-
-              if (! substring)
-                substring = strstr (identifier, "list");
-
-              if (substring)
-                {
-                  GimpContainerView *old_view;
-                  GtkWidget         *new_dockable;
-                  gint               preview_size = -1;
-
-                  if (view_type == GIMP_VIEW_TYPE_LIST)
-                    memcpy (substring, "list", 4);
-                  else if (view_type == GIMP_VIEW_TYPE_GRID)
-                    memcpy (substring, "grid", 4);
-
-                  old_view = gimp_container_view_get_by_dockable (dockable);
-
-                  if (old_view)
-                    preview_size = old_view->preview_size;
-
-                  new_dockable =
-                    gimp_dialog_factory_dockable_new (dockbook->dock->dialog_factory,
-                                                      dockbook->dock,
-                                                      identifier,
-                                                      preview_size);
-
-                  /*  Maybe gimp_dialog_factory_dockable_new() returned
-                   *  an already existing singleton dockable, so check
-                   *  if it already is attached to a dockbook.
-                   */
-                  if (new_dockable && ! GIMP_DOCKABLE (new_dockable)->dockbook)
-                    {
-                      gimp_dockbook_add (dockbook, GIMP_DOCKABLE (new_dockable),
-                                         page_num);
-
-                      gimp_dockbook_remove (dockbook, dockable);
-
-                      gtk_notebook_set_current_page (GTK_NOTEBOOK (dockbook),
-                                                     page_num);
-                    }
-                }
-
-              g_free (identifier);
+              if (substring && view_type == GIMP_VIEW_TYPE_LIST)
+                return;
             }
+
+          if (substring)
+            {
+              GimpContainerView *old_view;
+              GtkWidget         *new_dockable;
+              gint               preview_size = -1;
+
+              if (view_type == GIMP_VIEW_TYPE_LIST)
+                memcpy (substring, "list", 4);
+              else if (view_type == GIMP_VIEW_TYPE_GRID)
+                memcpy (substring, "grid", 4);
+
+              old_view = gimp_container_view_get_by_dockable (dockable);
+
+              if (old_view)
+                preview_size = old_view->preview_size;
+
+              new_dockable =
+                gimp_dialog_factory_dockable_new (dockbook->dock->dialog_factory,
+                                                  dockbook->dock,
+                                                  identifier,
+                                                  preview_size);
+
+              /*  Maybe gimp_dialog_factory_dockable_new() returned
+               *  an already existing singleton dockable, so check
+               *  if it already is attached to a dockbook.
+               */
+              if (new_dockable && ! GIMP_DOCKABLE (new_dockable)->dockbook)
+                {
+                  gimp_dockbook_add (dockbook, GIMP_DOCKABLE (new_dockable),
+                                     page_num);
+
+                  gimp_dockbook_remove (dockbook, dockable);
+
+                  gtk_notebook_set_current_page (GTK_NOTEBOOK (dockbook),
+                                                 page_num);
+                }
+            }
+
+          g_free (identifier);
         }
     }
 }
@@ -234,33 +248,30 @@ dialogs_preview_size_cmd_callback (GtkWidget *widget,
                                    gpointer   data,
                                    guint      action)
 {
-  GimpDockbook *dockbook;
+  GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
+  GimpDockable *dockable;
   gint          preview_size;
+  gint          page_num;
 
   if (! GTK_CHECK_MENU_ITEM (widget)->active)
     return;
 
-  dockbook = (GimpDockbook *) gtk_item_factory_popup_data_from_widget (widget);
-
   preview_size = (gint) action;
 
-  if (dockbook)
+  page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
+
+  dockable = (GimpDockable *)
+    gtk_notebook_get_nth_page (GTK_NOTEBOOK (dockbook), page_num);
+
+  if (dockable)
     {
-      GimpDockable *dockable;
-      gint          page_num;
+      GimpContainerView *view;
 
-      page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
+      view = gimp_container_view_get_by_dockable (dockable);
 
-      dockable = (GimpDockable *)
-	gtk_notebook_get_nth_page (GTK_NOTEBOOK (dockbook), page_num);
-
-      if (dockable)
+      if (view)
         {
-          GimpContainerView *view;
-
-          view = gimp_container_view_get_by_dockable (dockable);
-
-          if (view)
+          if (view->preview_size != preview_size)
             gimp_container_view_set_preview_size (view, preview_size,
                                                   view->preview_border_width);
         }
@@ -272,27 +283,24 @@ dialogs_tab_style_cmd_callback (GtkWidget *widget,
                                 gpointer   data,
                                 guint      action)
 {
-  GimpDockbook *dockbook;
+  GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
+  GimpDockable *dockable;
   GimpTabStyle  tab_style;
+  gint          page_num;
 
   if (! GTK_CHECK_MENU_ITEM (widget)->active)
     return;
 
-  dockbook = (GimpDockbook *) gtk_item_factory_popup_data_from_widget (widget);
-
   tab_style = (gint) action;
 
-  if (dockbook)
+  page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
+
+  dockable = (GimpDockable *)
+    gtk_notebook_get_nth_page (GTK_NOTEBOOK (dockbook), page_num);
+
+  if (dockable)
     {
-      GimpDockable *dockable;
-      gint          page_num;
-
-      page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
-
-      dockable = (GimpDockable *)
-	gtk_notebook_get_nth_page (GTK_NOTEBOOK (dockbook), page_num);
-
-      if (dockable)
+      if (dockable->tab_style != tab_style)
         {
           GtkWidget *tab_widget;
 
@@ -312,11 +320,9 @@ dialogs_toggle_image_menu_cmd_callback (GtkWidget *widget,
 					gpointer   data,
 					guint      action)
 {
-  GimpDockbook *dockbook;
+  GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
 
-  dockbook = (GimpDockbook *) gtk_item_factory_popup_data_from_widget (widget);
-
-  if (dockbook && GIMP_IS_IMAGE_DOCK (dockbook->dock))
+  if (GIMP_IS_IMAGE_DOCK (dockbook->dock))
     {
       gimp_image_dock_set_show_image_menu (GIMP_IMAGE_DOCK (dockbook->dock),
 					   GTK_CHECK_MENU_ITEM (widget)->active);
@@ -328,11 +334,9 @@ dialogs_toggle_auto_cmd_callback (GtkWidget *widget,
 				  gpointer   data,
 				  guint      action)
 {
-  GimpDockbook *dockbook;
+  GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
 
-  dockbook = (GimpDockbook *) gtk_item_factory_popup_data_from_widget (widget);
-
-  if (dockbook && GIMP_IS_IMAGE_DOCK (dockbook->dock))
+  if (GIMP_IS_IMAGE_DOCK (dockbook->dock))
     {
       gimp_image_dock_set_auto_follow_active (GIMP_IMAGE_DOCK (dockbook->dock),
 					      GTK_CHECK_MENU_ITEM (widget)->active);

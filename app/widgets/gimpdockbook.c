@@ -241,7 +241,7 @@ gimp_dockbook_new (GimpMenuFactory *menu_factory)
   dockbook->item_factory = gimp_menu_factory_menu_new (menu_factory,
                                                        "<Dialogs>",
                                                        GTK_TYPE_MENU,
-                                                       menu_factory->gimp,
+                                                       dockbook,
                                                        FALSE);
 
   gimp_help_connect (GTK_WIDGET (dockbook), gimp_dockbook_help_func,
@@ -584,6 +584,11 @@ gimp_dockbook_tab_button_press (GtkWidget      *widget,
   if (bevent->button == 3)
     {
       GtkWidget *add_widget;
+
+      gimp_item_factory_set_visible (GTK_ITEM_FACTORY (dockbook->item_factory),
+                                     "/dialog-menu", FALSE);
+      gimp_item_factory_set_visible (GTK_ITEM_FACTORY (dockbook->item_factory),
+                                     "/Select Tab", TRUE);
 
       add_widget =
         gtk_item_factory_get_widget (GTK_ITEM_FACTORY (dockbook->item_factory),

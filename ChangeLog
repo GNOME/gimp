@@ -1,5 +1,45 @@
 2003-09-23  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpmenufactory.[ch]: added a "menu_title" which is
+	registered with each menu.
+
+	* app/widgets/gimpitemfactory.[ch]: added the title to the
+	constructor and to the GimpItemFactory struct.
+
+	* app/gui/menus.c: register titles with all menus.
+
+	* app/widgets/gimpdockable.[ch]: show the tab menu, not the
+	contained dialog's menu when clicking on the menu button.
+	Embed the dialog's menu as submenu. Use the item_factory's
+	title and the dockable's stock_id for the submenu entry.
+
+	* app/widgets/gimpeditor.c: removed GtkWidget:popup_menu()
+	implementation since that's done by GimpDockable now.
+
+	* app/widgets/gimpdockbook.c: set the new menu item invisible
+	when showing the menu as tab menu.
+
+	* app/widgets/gimphelp-ids.h: added GIMP_HELP_DOCK_TAB_DETACH
+	and renamed _TAB_REMOVE to _TAB_CLOSE.
+
+	* app/gui/dialogs-menu.c: added the new menu entry for showing the
+	dialog's sub-menu. Added a "Detach" menu item, renamed "Remove" to
+	"Close". Accept both a GimpDockbook and a GimpDockable pointer as
+	"data" in dialogs_menu_update().
+
+	* app/gui/dialogs-commands.[ch]: changed accordingly. Never use
+	gtk_item_factory_popup_data_from_widget() but always the "data"
+	passed to the callbacks. Take care to not set the already active
+	preview_size, tab_style and list/grid type in the resp. callbacks
+	to avoid being called from dialogs_menu_update().
+
+	* app/gui/dialogs-constructors.c: removed separate
+	set_context_funcs and get_menu_funcs for GimpContainerView and
+	GimpContainerEditor widgets and simply use
+	gimp_container_view_get_by_dockable() to find the right widget.
+
+2003-09-23  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdialogfactory.c
 	(gimp_dialog_factories_restore_foreach): pass the menu_factory of
 	the newly created dock to gimp_dockbook_new(), not the one of the

@@ -117,6 +117,7 @@ gimp_item_factory_init (GimpItemFactory *factory)
   factory->gimp              = NULL;
   factory->update_func       = NULL;
   factory->update_on_popup   = FALSE;
+  factory->title             = NULL;
   factory->help_id           = NULL;
   factory->translation_trash = NULL;
 }
@@ -127,6 +128,12 @@ gimp_item_factory_finalize (GObject *object)
   GimpItemFactory *factory;
 
   factory = GIMP_ITEM_FACTORY (object);
+
+  if (factory->title)
+    {
+      g_free (factory->title);
+      factory->title = NULL;
+    }
 
   if (factory->help_id)
     {
@@ -170,6 +177,9 @@ gimp_item_factory_destroy (GtkObject *object)
     }
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
+
+  if (GTK_ITEM_FACTORY (factory)->widget)
+    g_object_unref (GTK_ITEM_FACTORY (factory)->widget);
 }
 
 
@@ -179,6 +189,7 @@ GimpItemFactory *
 gimp_item_factory_new (Gimp                      *gimp,
                        GType                      container_type,
                        const gchar               *factory_path,
+                       const gchar               *title,
                        const gchar               *help_id,
                        GimpItemFactoryUpdateFunc  update_func,
                        gboolean                   update_on_popup,
@@ -193,6 +204,7 @@ gimp_item_factory_new (Gimp                      *gimp,
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (factory_path != NULL, NULL);
+  g_return_val_if_fail (title != NULL, NULL);
   g_return_val_if_fail (help_id != NULL, NULL);
   g_return_val_if_fail (factory_path[0] == '<', NULL);
   g_return_val_if_fail (factory_path[strlen (factory_path) - 1] == '>', NULL);
@@ -214,6 +226,7 @@ gimp_item_factory_new (Gimp                      *gimp,
   factory->gimp            = gimp;
   factory->update_func     = update_func;
   factory->update_on_popup = update_on_popup;
+  factory->title           = g_strdup (title);
   factory->help_id         = g_strdup (help_id);
 
   list = g_hash_table_lookup (factory_class->factories, factory_path);
@@ -233,6 +246,9 @@ gimp_item_factory_new (Gimp                      *gimp,
                                   TRUE);
 
   g_type_class_unref (factory_class);
+
+  if (GTK_ITEM_FACTORY (factory)->widget)
+    g_object_ref (GTK_ITEM_FACTORY (factory)->widget);
 
   return factory;
 }

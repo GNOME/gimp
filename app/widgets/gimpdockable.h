@@ -95,14 +95,14 @@ GtkWidget * gimp_dockable_new      (const gchar                *name,
 				    GimpDockableSetContextFunc  set_context_func,
                                     GimpDockableGetMenuFunc     get_menu_func);
 
-GtkWidget       * gimp_dockable_get_tab_widget (GimpDockable           *dockable,
-                                                GimpContext            *context,
-                                                GimpTabStyle            tab_style,
-                                                GtkIconSize             size);
-void              gimp_dockable_set_context    (GimpDockable           *dockable,
-                                                GimpContext            *context);
-GimpItemFactory * gimp_dockable_get_menu       (GimpDockable           *dockable,
-                                                gpointer               *item_factory_data);
+GtkWidget       * gimp_dockable_get_tab_widget (GimpDockable   *dockable,
+                                                GimpContext    *context,
+                                                GimpTabStyle    tab_style,
+                                                GtkIconSize     size);
+void              gimp_dockable_set_context    (GimpDockable   *dockable,
+                                                GimpContext    *context);
+GimpItemFactory * gimp_dockable_get_menu       (GimpDockable   *dockable,
+                                                gpointer       *item_factory_data);
 
 
 #endif /* __GIMP_DOCKABLE_H__ */

@@ -30,7 +30,6 @@
 #include "gimpeditor.h"
 #include "gimpdnd.h"
 #include "gimpenummenu.h"
-#include "gimpitemfactory.h"
 #include "gimpmenufactory.h"
 
 
@@ -45,7 +44,6 @@ static void        gimp_editor_init              (GimpEditor      *editor);
 static void        gimp_editor_destroy           (GtkObject       *object);
 static void        gimp_editor_style_set         (GtkWidget       *widget,
                                                   GtkStyle        *prev_style);
-static gboolean    gimp_editor_popup_menu        (GtkWidget       *widget);
 
 static GtkIconSize gimp_editor_ensure_button_box (GimpEditor      *editor);
 
@@ -92,10 +90,9 @@ gimp_editor_class_init (GimpEditorClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->destroy    = gimp_editor_destroy;
+  object_class->destroy   = gimp_editor_destroy;
 
-  widget_class->style_set  = gimp_editor_style_set;
-  widget_class->popup_menu = gimp_editor_popup_menu;
+  widget_class->style_set = gimp_editor_style_set;
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_int ("content_spacing",
@@ -192,62 +189,6 @@ gimp_editor_style_set (GtkWidget *widget,
 
   if (GTK_WIDGET_CLASS (parent_class)->style_set)
     GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
-}
-
-static void
-gimp_editor_menu_position (GtkMenu  *menu,
-                           gint     *x,
-                           gint     *y,
-                           gpointer  data)
-{
-  GtkRequisition  requisition;
-  GtkWidget      *editor;
-  GdkScreen      *screen;
-  gint            editor_x;
-  gint            editor_y;
-
-  editor = (GtkWidget *) data;
-
-  gdk_window_get_origin (editor->window, &editor_x, &editor_y);
-
-  gtk_widget_size_request (GTK_WIDGET (menu), &requisition);
-
-  *x = editor_x + editor->allocation.x + 2;
-  *y = editor_y + editor->allocation.y + 2;
-
-  screen = gtk_widget_get_screen (GTK_WIDGET (menu));
-
-  if (*x + requisition.width > gdk_screen_get_width (screen))
-    *x -= requisition.width;
-
-  if (*x < 0)
-    *x = 0;
-
-  if (*y + requisition.height > gdk_screen_get_height (screen))
-    *y -= requisition.height;
-
-  if (*y < 0)
-    *y = 0;
-}
-
-static gboolean
-gimp_editor_popup_menu (GtkWidget *widget)
-{
-  GimpEditor *editor;
-
-  editor = GIMP_EDITOR (widget);
-
-  if (editor->item_factory)
-    {
-      gimp_item_factory_popup_with_data (editor->item_factory,
-                                         editor->item_factory_data,
-                                         gimp_editor_menu_position,
-                                         editor,
-                                         NULL);
-      return TRUE;
-    }
-
-  return FALSE;
 }
 
 GtkWidget *

@@ -45,6 +45,7 @@
 #include "widgets/gimpcolormapeditor.h"
 #include "widgets/gimpcontainergridview.h"
 #include "widgets/gimpcontainertreeview.h"
+#include "widgets/gimpcontainerview-utils.h"
 #include "widgets/gimpdataeditor.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimperrorconsole.h"
@@ -106,8 +107,6 @@ static GtkWidget * dialogs_tool_options_preview_func (GimpDockable    *dockable,
 
 static void   dialogs_set_view_context_func         (GimpDockable     *dockable,
                                                      GimpContext      *context);
-static void   dialogs_set_editor_context_func       (GimpDockable     *dockable,
-                                                     GimpContext      *context);
 static void   dialogs_set_color_editor_context_func (GimpDockable     *dockable,
                                                      GimpContext      *context);
 static void   dialogs_set_image_item_context_func   (GimpDockable     *dockable,
@@ -118,8 +117,6 @@ static void   dialogs_set_navigation_context_func   (GimpDockable     *dockable,
                                                      GimpContext      *context);
 
 static GimpItemFactory * dialogs_get_view_menu_func   (GimpDockable *dockable,
-                                                       gpointer     *item_factory_data);
-static GimpItemFactory * dialogs_get_editor_menu_func (GimpDockable *dockable,
                                                        gpointer     *item_factory_data);
 
 static GtkWidget * dialogs_dockable_new (GtkWidget                  *widget,
@@ -307,7 +304,7 @@ dialogs_error_console_get (GimpDialogFactory *factory,
                                GIMP_HELP_ERRORS_DIALOG,
                                NULL, NULL,
                                NULL,
-                               dialogs_get_editor_menu_func);
+                               dialogs_get_view_menu_func);
 }
 
 
@@ -331,8 +328,8 @@ dialogs_image_list_view_new (GimpDialogFactory *factory,
                                GIMP_STOCK_IMAGES,
                                GIMP_HELP_IMAGE_DIALOG,
 			       NULL, NULL,
-			       dialogs_set_editor_context_func,
-                               dialogs_get_editor_menu_func);
+			       dialogs_set_view_context_func,
+                               dialogs_get_view_menu_func);
 }
 
 GtkWidget *
@@ -355,8 +352,8 @@ dialogs_brush_list_view_new (GimpDialogFactory *factory,
                                GIMP_STOCK_TOOL_PAINTBRUSH,
                                GIMP_HELP_BRUSH_DIALOG,
 			       dialogs_viewable_preview_func, "brush",
-			       dialogs_set_editor_context_func,
-                               dialogs_get_editor_menu_func);
+			       dialogs_set_view_context_func,
+                               dialogs_get_view_menu_func);
 }
 
 GtkWidget *
@@ -378,8 +375,8 @@ dialogs_pattern_list_view_new (GimpDialogFactory *factory,
                                GIMP_STOCK_TOOL_BUCKET_FILL,
                                GIMP_HELP_PATTERN_DIALOG,
 			       dialogs_viewable_preview_func, "pattern",
-			       dialogs_set_editor_context_func,
-                               dialogs_get_editor_menu_func);
+			       dialogs_set_view_context_func,
+                               dialogs_get_view_menu_func);
 }
 
 GtkWidget *
@@ -401,8 +398,8 @@ dialogs_gradient_list_view_new (GimpDialogFactory *factory,
                                GIMP_STOCK_TOOL_BLEND,
                                GIMP_HELP_GRADIENT_DIALOG,
 			       dialogs_viewable_preview_func, "gradient",
-			       dialogs_set_editor_context_func,
-                               dialogs_get_editor_menu_func);
+			       dialogs_set_view_context_func,
+                               dialogs_get_view_menu_func);
 }
 
 GtkWidget *
@@ -424,8 +421,8 @@ dialogs_palette_list_view_new (GimpDialogFactory *factory,
                                GTK_STOCK_SELECT_COLOR,
                                GIMP_HELP_PALETTE_DIALOG,
 			       dialogs_viewable_preview_func, "palette",
-			       dialogs_set_editor_context_func,
-                               dialogs_get_editor_menu_func);
+			       dialogs_set_view_context_func,
+                               dialogs_get_view_menu_func);
 }
 
 GtkWidget *
@@ -488,8 +485,8 @@ dialogs_buffer_list_view_new (GimpDialogFactory *factory,
                                GTK_STOCK_PASTE,
                                GIMP_HELP_BUFFER_DIALOG,
                                NULL, NULL,
-			       dialogs_set_editor_context_func,
-                               dialogs_get_editor_menu_func);
+			       dialogs_set_view_context_func,
+                               dialogs_get_view_menu_func);
 }
 
 GtkWidget *
@@ -511,8 +508,8 @@ dialogs_document_list_new (GimpDialogFactory *factory,
                                GTK_STOCK_OPEN,
                                GIMP_HELP_DOCUMENT_DIALOG,
                                NULL, NULL,
-			       dialogs_set_editor_context_func,
-                               dialogs_get_editor_menu_func);
+			       dialogs_set_view_context_func,
+                               dialogs_get_view_menu_func);
 }
 
 GtkWidget *
@@ -540,8 +537,8 @@ dialogs_template_list_new (GimpDialogFactory *factory,
                                GIMP_STOCK_TEMPLATE,
                                GIMP_HELP_TEMPLATE_DIALOG,
 			       NULL, NULL,
-			       dialogs_set_editor_context_func,
-                               dialogs_get_editor_menu_func);
+			       dialogs_set_view_context_func,
+                               dialogs_get_view_menu_func);
 }
 
 
@@ -565,8 +562,8 @@ dialogs_image_grid_view_new (GimpDialogFactory *factory,
                                GIMP_STOCK_IMAGES,
                                GIMP_HELP_IMAGE_DIALOG,
 			       NULL, NULL,
-			       dialogs_set_editor_context_func,
-                               dialogs_get_editor_menu_func);
+			       dialogs_set_view_context_func,
+                               dialogs_get_view_menu_func);
 }
 
 GtkWidget *
@@ -589,8 +586,8 @@ dialogs_brush_grid_view_new (GimpDialogFactory *factory,
                                GIMP_STOCK_TOOL_PAINTBRUSH,
                                GIMP_HELP_BRUSH_DIALOG,
 			       dialogs_viewable_preview_func, "brush",
-			       dialogs_set_editor_context_func,
-                               dialogs_get_editor_menu_func);
+			       dialogs_set_view_context_func,
+                               dialogs_get_view_menu_func);
 }
 
 GtkWidget *
@@ -612,8 +609,8 @@ dialogs_pattern_grid_view_new (GimpDialogFactory *factory,
                                GIMP_STOCK_TOOL_BUCKET_FILL,
                                GIMP_HELP_PATTERN_DIALOG,
 			       dialogs_viewable_preview_func, "pattern",
-			       dialogs_set_editor_context_func,
-                               dialogs_get_editor_menu_func);
+			       dialogs_set_view_context_func,
+                               dialogs_get_view_menu_func);
 }
 
 GtkWidget *
@@ -635,8 +632,8 @@ dialogs_gradient_grid_view_new (GimpDialogFactory *factory,
                                GIMP_STOCK_TOOL_BLEND,
                                GIMP_HELP_GRADIENT_DIALOG,
 			       dialogs_viewable_preview_func, "gradient",
-			       dialogs_set_editor_context_func,
-                               dialogs_get_editor_menu_func);
+			       dialogs_set_view_context_func,
+                               dialogs_get_view_menu_func);
 }
 
 GtkWidget *
@@ -658,8 +655,8 @@ dialogs_palette_grid_view_new (GimpDialogFactory *factory,
                                GTK_STOCK_SELECT_COLOR,
                                GIMP_HELP_PALETTE_DIALOG,
 			       dialogs_viewable_preview_func, "palette",
-			       dialogs_set_editor_context_func,
-                               dialogs_get_editor_menu_func);
+			       dialogs_set_view_context_func,
+                               dialogs_get_view_menu_func);
 }
 
 GtkWidget *
@@ -722,8 +719,8 @@ dialogs_buffer_grid_view_new (GimpDialogFactory *factory,
                                GTK_STOCK_PASTE,
                                GIMP_HELP_BUFFER_DIALOG,
 			       NULL, NULL,
-			       dialogs_set_editor_context_func,
-                               dialogs_get_editor_menu_func);
+			       dialogs_set_view_context_func,
+                               dialogs_get_view_menu_func);
 }
 
 GtkWidget *
@@ -745,8 +742,8 @@ dialogs_document_grid_new (GimpDialogFactory *factory,
                                GTK_STOCK_OPEN,
                                GIMP_HELP_DOCUMENT_DIALOG,
                                NULL, NULL,
-			       dialogs_set_editor_context_func,
-                               dialogs_get_editor_menu_func);
+			       dialogs_set_view_context_func,
+                               dialogs_get_view_menu_func);
 }
 
 
@@ -948,7 +945,7 @@ dialogs_undo_history_new (GimpDialogFactory *factory,
                                    GIMP_HELP_UNDO_DIALOG,
                                    NULL, NULL,
 				   dialogs_set_image_editor_context_func,
-                                   dialogs_get_view_menu_func);
+                                   NULL);
 
   gimp_dockable_set_context (GIMP_DOCKABLE (dockable), context);
 
@@ -1227,21 +1224,10 @@ static void
 dialogs_set_view_context_func (GimpDockable *dockable,
 			       GimpContext  *context)
 {
-  GtkWidget *widget = GTK_BIN (dockable)->child;
+  GimpContainerView *view = gimp_container_view_get_by_dockable (dockable);
 
-  if (GIMP_IS_CONTAINER_VIEW (widget))
-    gimp_container_view_set_context (GIMP_CONTAINER_VIEW (widget), context);
-}
-
-static void
-dialogs_set_editor_context_func (GimpDockable *dockable,
-				 GimpContext  *context)
-{
-  GtkWidget *widget = GTK_BIN (dockable)->child;
-
-  if (GIMP_IS_CONTAINER_EDITOR (widget))
-    gimp_container_view_set_context (GIMP_CONTAINER_EDITOR (widget)->view,
-                                     context);
+  if (view)
+    gimp_container_view_set_context (view, context);
 }
 
 static void
@@ -1342,30 +1328,11 @@ static GimpItemFactory *
 dialogs_get_view_menu_func (GimpDockable *dockable,
                             gpointer     *item_factory_data)
 {
-  GtkWidget *widget = GTK_BIN (dockable)->child;
+  GimpContainerView *view = gimp_container_view_get_by_dockable (dockable);
 
-  if (GIMP_IS_EDITOR (widget))
+  if (view)
     {
-      GimpEditor *editor = GIMP_EDITOR (widget);
-
-      if (item_factory_data)
-        *item_factory_data = editor->item_factory_data;
-
-      return editor->item_factory;
-    }
-
-  return NULL;
-}
-
-static GimpItemFactory *
-dialogs_get_editor_menu_func (GimpDockable *dockable,
-                              gpointer     *item_factory_data)
-{
-  GtkWidget *widget = GTK_BIN (dockable)->child;
-
-  if (GIMP_IS_CONTAINER_EDITOR (widget))
-    {
-      GimpEditor *editor = GIMP_EDITOR (GIMP_CONTAINER_EDITOR (widget)->view);
+      GimpEditor *editor = GIMP_EDITOR (view);
 
       if (item_factory_data)
         *item_factory_data = editor->item_factory_data;

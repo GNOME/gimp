@@ -33,7 +33,10 @@ void   dialogs_create_dockable_cmd_callback   (GtkWidget *widget,
 void   dialogs_add_tab_cmd_callback           (GtkWidget *widget,
                                                gpointer   data,
                                                guint      action);
-void   dialogs_remove_tab_cmd_callback        (GtkWidget *widget,
+void   dialogs_close_tab_cmd_callback         (GtkWidget *widget,
+                                               gpointer   data,
+                                               guint      action);
+void   dialogs_detach_tab_cmd_callback        (GtkWidget *widget,
                                                gpointer   data,
                                                guint      action);
 
