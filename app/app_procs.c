@@ -353,12 +353,14 @@ make_initialization_status_window (void)
       GtkWidget *logo_hbox;
       GtkStyle  *style;
 
-      win_initstatus = gtk_window_new (GTK_WINDOW_POPUP);
+      win_initstatus = gtk_window_new (GTK_WINDOW_DIALOG);
 
+      gtk_window_set_title (GTK_WINDOW (win_initstatus),                      
+			    _("GIMP Startup"));
       gtk_window_set_wmclass (GTK_WINDOW (win_initstatus),
 			      "gimp_startup", "Gimp");
       gtk_window_set_position (GTK_WINDOW (win_initstatus), GTK_WIN_POS_CENTER);
-      gtk_window_set_policy (GTK_WINDOW (win_initstatus), FALSE, TRUE, FALSE);
+      gtk_window_set_policy (GTK_WINDOW (win_initstatus), FALSE, FALSE, FALSE);
 
       if (no_splash_image == FALSE &&
 	  splash_logo_load_size (win_initstatus))
