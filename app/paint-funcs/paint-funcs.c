@@ -2887,7 +2887,7 @@ expand_line (gdouble               *dest,
 static void
 shrink_line (gdouble               *dest,
 	     gdouble               *src,
-	     guint                  bytes,
+	     gint                   bytes,
 	     gint                   old_width,
 	     gint                   width,
 	     GimpInterpolationType  interp)
