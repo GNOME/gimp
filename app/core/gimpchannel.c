@@ -18,13 +18,11 @@
 
 #include "config.h"
 
-#include <stdlib.h>
 #include <string.h>
 
 #include <glib-object.h>
 
 #include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
 
 #include "core-types.h"
 
@@ -49,7 +47,6 @@
 #include "gimpdrawable-stroke.h"
 #include "gimplayer.h"
 #include "gimppaintinfo.h"
-#include "gimpparasitelist.h"
 #include "gimpstrokeoptions.h"
 
 #include "gimp-intl.h"
@@ -101,7 +98,27 @@ static gboolean   gimp_channel_stroke        (GimpItem         *item,
                                               GimpDrawable     *drawable,
                                               GimpObject       *stroke_desc);
 
-static void gimp_channel_invalidate_boundary (GimpDrawable     *drawable);
+static void gimp_channel_invalidate_boundary   (GimpDrawable       *drawable);
+static void gimp_channel_get_active_components (const GimpDrawable *drawable,
+                                                gboolean           *active);
+
+static void       gimp_channel_apply_region  (GimpDrawable     *drawable,
+                                              PixelRegion      *src2PR,
+                                              gboolean          push_undo,
+                                              const gchar      *undo_desc,
+                                              gdouble           opacity,
+                                              GimpLayerModeEffects  mode,
+                                              TileManager      *src1_tiles,
+                                              gint              x,
+                                              gint              y);
+static void      gimp_channel_replace_region (GimpDrawable     *drawable,
+                                              PixelRegion      *src2PR,
+                                              gboolean          push_undo,
+                                              const gchar      *undo_desc,
+                                              gdouble           opacity,
+                                              PixelRegion      *maskPR,
+                                              gint              x,
+                                              gint              y);
 
 static gboolean   gimp_channel_real_boundary (GimpChannel      *channel,
                                               const BoundSeg  **segs_in,
@@ -200,47 +217,50 @@ gimp_channel_class_init (GimpChannelClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize              = gimp_channel_finalize;
+  object_class->finalize           = gimp_channel_finalize;
 
-  gimp_object_class->get_memsize      = gimp_channel_get_memsize;
+  gimp_object_class->get_memsize   = gimp_channel_get_memsize;
 
-  viewable_class->default_stock_id    = "gimp-channel";
+  viewable_class->default_stock_id = "gimp-channel";
 
-  item_class->duplicate               = gimp_channel_duplicate;
-  item_class->translate               = gimp_channel_translate;
-  item_class->scale                   = gimp_channel_scale;
-  item_class->resize                  = gimp_channel_resize;
-  item_class->flip                    = gimp_channel_flip;
-  item_class->rotate                  = gimp_channel_rotate;
-  item_class->transform               = gimp_channel_transform;
-  item_class->stroke                  = gimp_channel_stroke;
-  item_class->default_name            = _("Channel");
-  item_class->rename_desc             = _("Rename Channel");
+  item_class->duplicate    = gimp_channel_duplicate;
+  item_class->translate    = gimp_channel_translate;
+  item_class->scale        = gimp_channel_scale;
+  item_class->resize       = gimp_channel_resize;
+  item_class->flip         = gimp_channel_flip;
+  item_class->rotate       = gimp_channel_rotate;
+  item_class->transform    = gimp_channel_transform;
+  item_class->stroke       = gimp_channel_stroke;
+  item_class->default_name = _("Channel");
+  item_class->rename_desc  = _("Rename Channel");
 
-  drawable_class->invalidate_boundary = gimp_channel_invalidate_boundary;
+  drawable_class->invalidate_boundary   = gimp_channel_invalidate_boundary;
+  drawable_class->get_active_components = gimp_channel_get_active_components;
+  drawable_class->apply_region          = gimp_channel_apply_region;
+  drawable_class->replace_region        = gimp_channel_replace_region;
 
-  klass->boundary                     = gimp_channel_real_boundary;
-  klass->bounds                       = gimp_channel_real_bounds;
-  klass->is_empty                     = gimp_channel_real_is_empty;
-  klass->value                        = gimp_channel_real_value;
-  klass->feather                      = gimp_channel_real_feather;
-  klass->sharpen                      = gimp_channel_real_sharpen;
-  klass->clear                        = gimp_channel_real_clear;
-  klass->all                          = gimp_channel_real_all;
-  klass->invert                       = gimp_channel_real_invert;
-  klass->border                       = gimp_channel_real_border;
-  klass->grow                         = gimp_channel_real_grow;
-  klass->shrink                       = gimp_channel_real_shrink;
+  klass->boundary       = gimp_channel_real_boundary;
+  klass->bounds         = gimp_channel_real_bounds;
+  klass->is_empty       = gimp_channel_real_is_empty;
+  klass->value          = gimp_channel_real_value;
+  klass->feather        = gimp_channel_real_feather;
+  klass->sharpen        = gimp_channel_real_sharpen;
+  klass->clear          = gimp_channel_real_clear;
+  klass->all            = gimp_channel_real_all;
+  klass->invert         = gimp_channel_real_invert;
+  klass->border         = gimp_channel_real_border;
+  klass->grow           = gimp_channel_real_grow;
+  klass->shrink         = gimp_channel_real_shrink;
 
-  klass->translate_desc               = _("Move Channel");
-  klass->feather_desc                 = _("Feather Channel");
-  klass->sharpen_desc                 = _("Sharpen Channel");
-  klass->clear_desc                   = _("Clear Channel");
-  klass->all_desc                     = _("Fill Channel");
-  klass->invert_desc                  = _("Invert Channel");
-  klass->border_desc                  = _("Border Channel");
-  klass->grow_desc                    = _("Grow Channel");
-  klass->shrink_desc                  = _("Shrink Channel");
+  klass->translate_desc = _("Move Channel");
+  klass->feather_desc   = _("Feather Channel");
+  klass->sharpen_desc   = _("Sharpen Channel");
+  klass->clear_desc     = _("Clear Channel");
+  klass->all_desc       = _("Fill Channel");
+  klass->invert_desc    = _("Invert Channel");
+  klass->border_desc    = _("Border Channel");
+  klass->grow_desc      = _("Grow Channel");
+  klass->shrink_desc    = _("Shrink Channel");
 }
 
 static void
@@ -642,6 +662,58 @@ gimp_channel_invalidate_boundary (GimpDrawable *drawable)
   GimpChannel *channel = GIMP_CHANNEL (drawable);
 
   channel->boundary_known = FALSE;
+}
+
+static void
+gimp_channel_get_active_components (const GimpDrawable *drawable,
+                                    gboolean           *active)
+{
+  /*  Make sure that the alpha channel is not valid.  */
+  active[GRAY_PIX]    = TRUE;
+  active[ALPHA_G_PIX] = FALSE;
+}
+
+static void
+gimp_channel_apply_region (GimpDrawable         *drawable,
+                           PixelRegion          *src2PR,
+                           gboolean              push_undo,
+                           const gchar          *undo_desc,
+                           gdouble               opacity,
+                           GimpLayerModeEffects  mode,
+                           TileManager          *src1_tiles,
+                           gint                  x,
+                           gint                  y)
+{
+  gimp_drawable_invalidate_boundary (drawable);
+
+  GIMP_DRAWABLE_CLASS (parent_class)->apply_region (drawable, src2PR,
+                                                    push_undo, undo_desc,
+                                                    opacity, mode,
+                                                    src1_tiles,
+                                                    x, y);
+
+  GIMP_CHANNEL (drawable)->bounds_known = FALSE;
+}
+
+static void
+gimp_channel_replace_region (GimpDrawable *drawable,
+                             PixelRegion  *src2PR,
+                             gboolean      push_undo,
+                             const gchar  *undo_desc,
+                             gdouble       opacity,
+                             PixelRegion  *maskPR,
+                             gint          x,
+                             gint          y)
+{
+  gimp_drawable_invalidate_boundary (drawable);
+
+  GIMP_DRAWABLE_CLASS (parent_class)->replace_region (drawable, src2PR,
+                                                      push_undo, undo_desc,
+                                                      opacity,
+                                                      maskPR,
+                                                      x, y);
+
+  GIMP_CHANNEL (drawable)->bounds_known = FALSE;
 }
 
 static gboolean

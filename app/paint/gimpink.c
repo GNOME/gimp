@@ -1021,12 +1021,12 @@ ink_paste (GimpInkTool  *ink_tool,
   srcPR.data = temp_buf_data (canvas_buf);
 
   /*  apply the paint area to the gimage  */
-  gimp_image_apply_image (gimage, drawable, &srcPR,
-			  FALSE, NULL,
-			  gimp_context_get_opacity (context),
-			  gimp_context_get_paint_mode (context),
-			  undo_tiles,  /*  specify an alternative src1  */
-			  canvas_buf->x, canvas_buf->y);
+  gimp_drawable_apply_region (drawable, &srcPR,
+                              FALSE, NULL,
+                              gimp_context_get_opacity (context),
+                              gimp_context_get_paint_mode (context),
+                              undo_tiles,  /*  specify an alternative src1  */
+                              canvas_buf->x, canvas_buf->y);
 
   /*  Update the undo extents  */
   ink_tool->x1 = MIN (ink_tool->x1, canvas_buf->x);

@@ -53,15 +53,34 @@ struct _GimpDrawableClass
   GimpItemClass  parent_class;
 
   /*  signals  */
-  void (* update)              (GimpDrawable *drawable,
-                                gint          x,
-                                gint          y,
-                                gint          width,
-                                gint          height);
-  void (* alpha_changed)       (GimpDrawable *drawable);
+  void (* update)                (GimpDrawable         *drawable,
+                                  gint                  x,
+                                  gint                  y,
+                                  gint                  width,
+                                  gint                  height);
+  void (* alpha_changed)         (GimpDrawable         *drawable);
 
   /*  virtual functions  */
-  void (* invalidate_boundary) (GimpDrawable *drawable);
+  void (* invalidate_boundary)   (GimpDrawable         *drawable);
+  void (* get_active_components) (const GimpDrawable   *drawable,
+                                  gboolean             *active);
+  void (* apply_region)          (GimpDrawable         *drawable,
+                                  PixelRegion          *src2PR,
+                                  gboolean              push_undo,
+                                  const gchar          *undo_desc,
+                                  gdouble               opacity,
+                                  GimpLayerModeEffects  mode,
+                                  TileManager          *src1_tiles,
+                                  gint                  x,
+                                  gint                  y);
+  void (* replace_region)        (GimpDrawable         *drawable,
+                                  PixelRegion          *src2PR,
+                                  gboolean              push_undo,
+                                  const gchar          *undo_desc,
+                                  gdouble               opacity,
+                                  PixelRegion          *maskPR,
+                                  gint                  x,
+                                  gint                  y);
 };
 
 
@@ -83,6 +102,29 @@ void            gimp_drawable_update             (GimpDrawable       *drawable,
 						  gint                y,
 						  gint                width,
 						  gint                height);
+void            gimp_drawable_alpha_changed      (GimpDrawable       *drawable);
+
+void           gimp_drawable_invalidate_boundary (GimpDrawable       *drawable);
+void         gimp_drawable_get_active_components (const GimpDrawable *drawable,
+                                                  gboolean           *active);
+
+void            gimp_drawable_apply_region       (GimpDrawable       *drawable,
+                                                  PixelRegion        *src2PR,
+                                                  gboolean            push_undo,
+                                                  const gchar        *undo_desc,
+                                                  gdouble             opacity,
+                                                  GimpLayerModeEffects  mode,
+                                                  TileManager        *src1_tiles,
+                                                  gint                x,
+                                                  gint                y);
+void            gimp_drawable_replace_region     (GimpDrawable       *drawable,
+                                                  PixelRegion        *src2PR,
+                                                  gboolean            push_undo,
+                                                  const gchar        *undo_desc,
+                                                  gdouble             opacity,
+                                                  PixelRegion        *maskPR,
+                                                  gint                x,
+                                                  gint                y);
 
 void            gimp_drawable_push_undo          (GimpDrawable       *drawable,
                                                   const gchar        *undo_desc,
@@ -119,10 +161,6 @@ TileManager   * gimp_drawable_data               (const GimpDrawable *drawable);
 TileManager   * gimp_drawable_shadow             (GimpDrawable       *drawable);
 gint            gimp_drawable_bytes              (const GimpDrawable *drawable);
 gint            gimp_drawable_bytes_with_alpha   (const GimpDrawable *drawable);
-
-void            gimp_drawable_alpha_changed      (GimpDrawable       *drawable);
-
-void           gimp_drawable_invalidate_boundary (GimpDrawable       *drawable);
 
 guchar        * gimp_drawable_cmap               (const GimpDrawable *drawable);
 

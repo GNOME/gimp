@@ -1673,12 +1673,12 @@ gimp_paint_core_paste (GimpPaintCore            *core,
   srcPR.data      = temp_buf_data (core->canvas_buf);
 
   /*  apply the paint area to the gimage  */
-  gimp_image_apply_image (gimage, drawable, &srcPR,
-			  FALSE, NULL,
-                          image_opacity, paint_mode,
-			  alt,  /*  specify an alternative src1  */
-			  core->canvas_buf->x,
-                          core->canvas_buf->y);
+  gimp_drawable_apply_region (drawable, &srcPR,
+                              FALSE, NULL,
+                              image_opacity, paint_mode,
+                              alt,  /*  specify an alternative src1  */
+                              core->canvas_buf->x,
+                              core->canvas_buf->y);
 
   /*  Update the undo extents  */
   core->x1 = MIN (core->x1, core->canvas_buf->x);
@@ -1785,12 +1785,12 @@ gimp_paint_core_replace (GimpPaintCore            *core,
   srcPR.data      = temp_buf_data (core->canvas_buf);
 
   /*  apply the paint area to the gimage  */
-  gimp_image_replace_image (gimage, drawable, &srcPR,
-			    FALSE, NULL,
-                            image_opacity,
-			    &maskPR,
-			    core->canvas_buf->x,
-                            core->canvas_buf->y);
+  gimp_drawable_replace_region (drawable, &srcPR,
+                                FALSE, NULL,
+                                image_opacity,
+                                &maskPR,
+                                core->canvas_buf->x,
+                                core->canvas_buf->y);
 
   /*  Update the undo extents  */
   core->x1 = MIN (core->x1, core->canvas_buf->x);

@@ -237,13 +237,13 @@ gimp_drawable_blend (GimpDrawable         *drawable,
     }
 
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
-  gimp_image_apply_image (gimage, drawable, &bufPR,
-                          TRUE, _("Blend"),
-			  opacity, paint_mode,
-                          NULL, x1, y1);
+  gimp_drawable_apply_region (drawable, &bufPR,
+                              TRUE, _("Blend"),
+                              opacity, paint_mode,
+                              NULL, x1, y1);
 
   /*  update the image  */
-  gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_update (drawable, x1, y1, x2 - x1, y2 - y1);
 
   /*  free the temporary buffer  */
   tile_manager_unref (buf_tiles);

@@ -512,11 +512,11 @@ gimp_image_map_do (GimpImageMap *image_map)
 
   /*  apply the results  */
   pixel_region_init (&shadowPR, gimage->shadow, x, y, w, h, FALSE);
-  gimp_image_apply_image (gimage, image_map->drawable, &shadowPR,
-                          FALSE, NULL,
-                          GIMP_OPACITY_OPAQUE, GIMP_REPLACE_MODE,
-                          NULL,
-                          x, y);
+  gimp_drawable_apply_region (image_map->drawable, &shadowPR,
+                              FALSE, NULL,
+                              GIMP_OPACITY_OPAQUE, GIMP_REPLACE_MODE,
+                              NULL,
+                              x, y);
 
   /*  display the results  */
   gimp_drawable_update (image_map->drawable, x, y, w, h);

@@ -1,5 +1,42 @@
 2003-10-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpdrawable.[ch]: added new virtual functions
+	GimpDrawable::get_active_components(), apply_region() and
+	replace_region().
+
+	* app/core/Makefile.am
+	* app/core/gimpdrawable-combine.[ch]: new files containing
+	apply_region()'s and replace_region()'s default implementation.
+	They are identical to the ones removed from GimpImage except that
+	they don't mask the selection with itself (bug #107949).
+
+	* app/core/gimpchannel.c
+	* app/core/gimplayer.c: implement get_active_components().
+
+	* app/core/gimpchannel.c: implement apply_region() and
+	replace_region() and invalidate the channel's boundary
+	before upchaining (bug #107949).
+
+	* app/core/gimpimage.[ch]: removed gimp_image_apply_image(),
+	gimp_image_replace_image() and gimp_image_get_active_components().
+
+	* app/core/gimpimage-undo-push.c (undo_pop_image): invalidate
+	boundary and bounds if the drawable is a channel (bug #107949).
+
+	(undo_pop_mask)
+	(undo_pop_channel_mod): finish previous commit :)
+
+	* app/core/gimp-edit.c
+	* app/core/gimpdrawable-blend.c
+	* app/core/gimpdrawable-bucket-fill.c
+	* app/core/gimpdrawable-stroke.c
+	* app/core/gimpimagemap.c
+	* app/core/gimplayer-floating-sel.c
+	* app/paint/gimppaintcore.c
+	* app/tools/gimpinktool.c: changed accordingly.
+
+2003-10-06  Michael Natterer  <mitch@gimp.org>
+
 	Treat changes to the selection like changes to any other drawable:
 
 	* app/core/gimpchannel.c

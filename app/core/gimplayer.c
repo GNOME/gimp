@@ -112,7 +112,9 @@ static void       gimp_layer_transform          (GimpItem           *item,
                                                  GimpProgressFunc    progress_callback,
                                                  gpointer            progress_data);
 
-static void      gimp_layer_invalidate_boundary (GimpDrawable       *drawable);
+static void    gimp_layer_invalidate_boundary   (GimpDrawable       *drawable);
+static void    gimp_layer_get_active_components (const GimpDrawable *drawable,
+                                                 gboolean           *active);
 
 static void       gimp_layer_transform_color    (GimpImage          *gimage,
                                                  PixelRegion        *layerPR,
@@ -234,7 +236,8 @@ gimp_layer_class_init (GimpLayerClass *klass)
   item_class->default_name            = _("Layer");
   item_class->rename_desc             = _("Rename Layer");
 
-  drawable_class->invalidate_boundary = gimp_layer_invalidate_boundary;
+  drawable_class->invalidate_boundary   = gimp_layer_invalidate_boundary;
+  drawable_class->get_active_components = gimp_layer_get_active_components;
 
   klass->opacity_changed              = NULL;
   klass->mode_changed                 = NULL;
@@ -332,6 +335,22 @@ gimp_layer_invalidate_preview (GimpViewable *viewable)
 
   if (gimp_layer_is_floating_sel (layer))
     floating_sel_invalidate (layer);
+}
+
+static void
+gimp_layer_get_active_components (const GimpDrawable *drawable,
+                                  gboolean           *active)
+{
+  GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  GimpLayer *layer  = GIMP_LAYER (drawable);
+  gint       i;
+
+  /*  first copy the gimage active channels  */
+  for (i = 0; i < MAX_CHANNELS; i++)
+    active[i] = gimage->active[i];
+
+  if (gimp_drawable_has_alpha (drawable) && layer->preserve_trans)
+    active[gimp_drawable_bytes (drawable) - 1] = FALSE;
 }
 
 static GimpItem *

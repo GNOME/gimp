@@ -477,12 +477,12 @@ floating_sel_composite (GimpLayer *layer,
 	  /*  apply the fs with the undo specified by the value
 	   *  passed to this function
 	   */
-	  gimp_image_apply_image (gimage, layer->fs.drawable, &fsPR,
-                                  push_undo, NULL,
-				  layer->opacity,
-				  layer->mode,
-				  NULL,
-				  (x1 - offx), (y1 - offy));
+	  gimp_drawable_apply_region (layer->fs.drawable, &fsPR,
+                                      push_undo, NULL,
+                                      layer->opacity,
+                                      layer->mode,
+                                      NULL,
+                                      (x1 - offx), (y1 - offy));
 
 	  /*  restore preserve transparency  */
 	  if (preserve_trans)

@@ -347,29 +347,6 @@ TileManager   * gimp_image_shadow                (GimpImage          *gimage,
 void            gimp_image_free_shadow           (GimpImage          *gimage);
 
 
-/*  combine functions  */
-
-void            gimp_image_apply_image           (GimpImage          *gimage,
-                                                  GimpDrawable       *drawable,
-                                                  PixelRegion        *src2PR,
-                                                  gboolean            push_undo,
-                                                  const gchar        *undo_desc,
-                                                  gdouble             opacity,
-                                                  GimpLayerModeEffects  mode,
-                                                  TileManager        *src1_tiles,
-                                                  gint                x,
-                                                  gint                y);
-void            gimp_image_replace_image         (GimpImage          *gimage,
-                                                  GimpDrawable       *drawable,
-                                                  PixelRegion        *src2PR,
-                                                  gboolean            push_undo,
-                                                  const gchar        *undo_desc,
-                                                  gdouble             opacity,
-                                                  PixelRegion        *maskPR,
-                                                  gint                x,
-                                                  gint                y);
-
-
 /*  parasites  */
 
 GimpParasite  * gimp_image_parasite_find         (const GimpImage    *gimage,

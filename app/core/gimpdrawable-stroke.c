@@ -319,12 +319,11 @@ gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
 
   /* Apply to drawable */
   pixel_region_init (&basePR, base, 0, 0, w, h, FALSE);
-  gimp_image_apply_image (gimp_item_get_image (GIMP_ITEM (drawable)),
-                          drawable, &basePR,
-                          TRUE, _("Render Stroke"),
-                          context->opacity,
-                          context->paint_mode,
-                          NULL, x1, y1);
+  gimp_drawable_apply_region (drawable, &basePR,
+                              TRUE, _("Render Stroke"),
+                              gimp_context_get_opacity (context),
+                              gimp_context_get_paint_mode (context),
+                              NULL, x1, y1);
 
   tile_manager_unref (mask);
   tile_manager_unref (base);

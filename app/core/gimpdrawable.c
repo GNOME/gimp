@@ -18,15 +18,9 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-
 #include <glib-object.h>
 
 #include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpbase/gimpbase.h"
 
 #include "core-types.h"
 
@@ -40,15 +34,12 @@
 #include "gimp-utils.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
-#include "gimpdrawable.h"
+#include "gimpdrawable-combine.h"
 #include "gimpdrawable-preview.h"
 #include "gimpdrawable-transform.h"
 #include "gimpimage.h"
 #include "gimpimage-undo-push.h"
-#include "gimplayer.h"
-#include "gimplist.h"
 #include "gimpmarshal.h"
-#include "gimpparasitelist.h"
 #include "gimppreviewcache.h"
 
 #include "gimp-intl.h"
@@ -201,6 +192,9 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   klass->update                      = gimp_drawable_real_update;
   klass->alpha_changed               = NULL;
   klass->invalidate_boundary         = NULL;
+  klass->get_active_components       = NULL;
+  klass->apply_region                = gimp_drawable_real_apply_region;
+  klass->replace_region              = gimp_drawable_real_replace_region;
 }
 
 static void
@@ -612,6 +606,80 @@ gimp_drawable_update (GimpDrawable *drawable,
 }
 
 void
+gimp_drawable_alpha_changed (GimpDrawable *drawable)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+
+  g_signal_emit (drawable, gimp_drawable_signals[ALPHA_CHANGED], 0);
+}
+
+void
+gimp_drawable_invalidate_boundary (GimpDrawable *drawable)
+{
+  GimpDrawableClass *drawable_class;
+
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+
+  drawable_class = GIMP_DRAWABLE_GET_CLASS (drawable);
+
+  if (drawable_class->invalidate_boundary)
+    drawable_class->invalidate_boundary (drawable);
+}
+
+void
+gimp_drawable_get_active_components (const GimpDrawable *drawable,
+                                     gboolean           *active)
+{
+  GimpDrawableClass *drawable_class;
+
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (active != NULL);
+
+  drawable_class = GIMP_DRAWABLE_GET_CLASS (drawable);
+
+  if (drawable_class->get_active_components)
+    drawable_class->get_active_components (drawable, active);
+}
+
+void
+gimp_drawable_apply_region (GimpDrawable         *drawable,
+                            PixelRegion          *src2PR,
+                            gboolean              push_undo,
+                            const gchar          *undo_desc,
+                            gdouble               opacity,
+                            GimpLayerModeEffects  mode,
+                            TileManager          *src1_tiles,
+                            gint                  x,
+                            gint                  y)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+
+  GIMP_DRAWABLE_GET_CLASS (drawable)->apply_region (drawable, src2PR,
+                                                    push_undo, undo_desc,
+                                                    opacity, mode,
+                                                    src1_tiles,
+                                                    x, y);
+}
+
+void
+gimp_drawable_replace_region (GimpDrawable *drawable,
+                              PixelRegion  *src2PR,
+                              gboolean      push_undo,
+                              const gchar  *undo_desc,
+                              gdouble       opacity,
+                              PixelRegion  *maskPR,
+                              gint          x,
+                              gint          y)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+
+  GIMP_DRAWABLE_GET_CLASS (drawable)->replace_region (drawable, src2PR,
+                                                      push_undo, undo_desc,
+                                                      opacity, maskPR,
+                                                      x, y);
+}
+
+void
 gimp_drawable_push_undo (GimpDrawable *drawable,
                          const gchar  *undo_desc,
                          gint          x1,
@@ -659,10 +727,10 @@ gimp_drawable_merge_shadow (GimpDrawable *drawable,
   gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
   pixel_region_init (&shadowPR, gimage->shadow, x1, y1,
 		     (x2 - x1), (y2 - y1), FALSE);
-  gimp_image_apply_image (gimage, drawable, &shadowPR,
-                          push_undo, undo_desc,
-                          GIMP_OPACITY_OPAQUE, GIMP_REPLACE_MODE,
-                          NULL, x1, y1);
+  gimp_drawable_apply_region (drawable, &shadowPR,
+                              push_undo, undo_desc,
+                              GIMP_OPACITY_OPAQUE, GIMP_REPLACE_MODE,
+                              NULL, x1, y1);
 }
 
 void
@@ -907,27 +975,6 @@ gimp_drawable_bytes_with_alpha (const GimpDrawable *drawable)
   type = GIMP_IMAGE_TYPE_WITH_ALPHA (gimp_drawable_type (drawable));
 
   return GIMP_IMAGE_TYPE_BYTES (type);
-}
-
-void
-gimp_drawable_alpha_changed (GimpDrawable *drawable)
-{
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-
-  g_signal_emit (drawable, gimp_drawable_signals[ALPHA_CHANGED], 0);
-}
-
-void
-gimp_drawable_invalidate_boundary (GimpDrawable *drawable)
-{
-  GimpDrawableClass *drawable_class;
-
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-
-  drawable_class = GIMP_DRAWABLE_GET_CLASS (drawable);
-
-  if (drawable_class->invalidate_boundary)
-    drawable_class->invalidate_boundary (drawable);
 }
 
 guchar *

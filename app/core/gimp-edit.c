@@ -312,15 +312,13 @@ gimp_edit_clear (GimpImage    *gimage,
   color_region (&bufPR, col);
 
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
-  gimp_image_apply_image (gimage, drawable, &bufPR,
-                          TRUE, _("Clear"),
-                          GIMP_OPACITY_OPAQUE, GIMP_ERASE_MODE,
-                          NULL, x1, y1);
+  gimp_drawable_apply_region (drawable, &bufPR,
+                              TRUE, _("Clear"),
+                              GIMP_OPACITY_OPAQUE, GIMP_ERASE_MODE,
+                              NULL, x1, y1);
 
   /*  update the image  */
-  gimp_drawable_update (drawable,
-			x1, y1,
-			(x2 - x1), (y2 - y1));
+  gimp_drawable_update (drawable, x1, y1, x2 - x1, y2 - y1);
 
   /*  free the temporary tiles  */
   tile_manager_unref (buf_tiles);
@@ -396,15 +394,13 @@ gimp_edit_fill (GimpImage    *gimage,
   color_region (&bufPR, col);
 
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
-  gimp_image_apply_image (gimage, drawable, &bufPR,
-                          TRUE, undo_desc,
-                          GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE,
-                          NULL, x1, y1);
+  gimp_drawable_apply_region (drawable, &bufPR,
+                              TRUE, undo_desc,
+                              GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE,
+                              NULL, x1, y1);
 
   /*  update the image  */
-  gimp_drawable_update (drawable,
-			x1, y1,
-			(x2 - x1), (y2 - y1));
+  gimp_drawable_update (drawable, x1, y1, x2 - x1, y2 - y1);
 
   /*  free the temporary tiles  */
   tile_manager_unref (buf_tiles);

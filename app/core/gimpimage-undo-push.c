@@ -223,6 +223,9 @@ undo_pop_image (GimpUndo            *undo,
   x = image_undo->x1;
   y = image_undo->y1;
 
+  if (GIMP_IS_CHANNEL (drawable))
+    gimp_drawable_invalidate_boundary (drawable);
+
   if (image_undo->sparse == FALSE)
     {
       w = tile_manager_width (tiles);
@@ -275,6 +278,9 @@ undo_pop_image (GimpUndo            *undo,
 	    }
 	}
     }
+
+  if (GIMP_IS_CHANNEL (drawable))
+    GIMP_CHANNEL (drawable)->bounds_known = FALSE;
 
   gimp_drawable_update (drawable, x, y, w, h);
 
@@ -1025,15 +1031,8 @@ undo_pop_mask (GimpUndo            *undo,
       tile_manager_unref (mu->tiles);
     }
 
-  if (channel == gimp_image_get_mask (undo->gimage))
-    {
-      /* invalidate the current bounds and boundary of the mask */
-      gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (gimp_image_get_mask (undo->gimage)));
-    }
-  else
-    {
-      channel->boundary_known = FALSE;
-    }
+  /* invalidate the current bounds and boundary of the mask */
+  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (channel));
 
   if (mu->tiles)
     {
@@ -2312,7 +2311,7 @@ undo_pop_channel_mod (GimpUndo            *undo,
   channel = GIMP_CHANNEL (GIMP_ITEM_UNDO (undo)->item);
 
   /* invalidate the current bounds and boundary of the mask */
-  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (gimp_image_get_mask (undo->gimage)));
+  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (channel));
 
   /*  Issue the first update  */
   gimp_drawable_update (GIMP_DRAWABLE (channel),
