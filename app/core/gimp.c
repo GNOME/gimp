@@ -303,9 +303,7 @@ gimp_init (Gimp *gimp)
 static void
 gimp_dispose (GObject *object)
 {
-  Gimp *gimp;
-
-  gimp = GIMP (object);
+  Gimp *gimp = GIMP (object);
 
   if (gimp->brush_factory)
     gimp_data_factory_data_free (gimp->brush_factory);
@@ -326,6 +324,9 @@ static void
 gimp_finalize (GObject *object)
 {
   Gimp *gimp = GIMP (object);
+
+  if (gimp->be_verbose)
+    g_print ("EXIT: gimp_finalize\n");
 
   gimp_set_current_context (gimp, NULL);
   gimp_set_user_context (gimp, NULL);
@@ -962,9 +963,7 @@ gimp_set_busy (Gimp *gimp)
 static gboolean
 gimp_idle_unset_busy (gpointer data)
 {
-  Gimp *gimp;
-
-  gimp = (Gimp *) data;
+  Gimp *gimp = (Gimp *) data;
 
   gimp_unset_busy (gimp);
 

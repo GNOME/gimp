@@ -1,5 +1,9 @@
 2003-11-17  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimp.c (gimp_finalize): print a message if being verbose.
+
+2003-11-17  Sven Neumann  <sven@gimp.org>
+
 	* app/main.c: unref the gimp object after dumping the
 	configuration as a test for Gimp::finalize.
 
