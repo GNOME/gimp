@@ -1,7 +1,12 @@
+Sun Feb 14 23:27:57 CET 1999 Marc Lehmann <pcg@goof.com>
+
+        * docs/parasites.txt: Added some suggestions from Jay Cox.
+
 Sun Feb 14 4:28:00 CST 1999 Seth Burgess <sjburges@gimp.org>
 	* plug-ins/sinus/sinus.c: changed macro definition supplied by
 	Thomas to allow tilable sinus again.
 
+>>>>>>> 1.858
 Sun Feb 14 23:11:30 CET 1999 Marc Lehmann <pcg@goof.com>
 
         * libgimp/gimptile.c (gimp_tile_cache_ntiles): Round up, not down,
