@@ -1,3 +1,13 @@
+2004-02-12  Adam D. Moss  <adam@gimp.org>
+
+	* plug-ins/common/psd.c:
+	- Disable one of the PanoTools fixes by default, since it causes
+          regressions in some ordinary PSD file loading.
+	- Fix a twisted utf8-obsessive bug diagnosed by Piotr Krysiuk
+	- Fix another one...
+	- Fix from Daniel Rogers: GIMP crashes on 0x0 layers, so we skip them.
+	- Also try to avoid 0-sized drawables (including channels)
+
 2004-02-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage-convert.c (gimp_image_convert): call
