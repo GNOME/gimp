@@ -41,6 +41,7 @@
 #include "free_select.h"
 #include "fuzzy_select.h"
 #include "gimpimage.h"
+#include "ink.h"
 #include "measure.h"
 #include "move.h"
 #include "gimppaintbrushtool.h"
@@ -57,11 +58,12 @@
 void
 register_tools (void)
 {
-  gimp_color_picker_tool_register ();
+  gimp_ink_tool_register ();
   gimp_paintbrush_tool_register ();
   gimp_measure_tool_register ();
-  gimp_move_tool_register ();
+  gimp_color_picker_tool_register ();
   gimp_text_tool_register ();
+  gimp_move_tool_register ();
 
 /*
   snatched from the pdb.  For inspiration only.  ;)

@@ -37,7 +37,6 @@
 #define GIMP_TYPE_CONVOLVE_TOOL        GTK_TYPE_NONE
 #define GIMP_TYPE_DODGEBURN_TOOL       GTK_TYPE_NONE
 #define GIMP_TYPE_SMUDGE_TOOL          GTK_TYPE_NONE
-#define GIMP_TYPE_INK_TOOL             GTK_TYPE_NONE
 
 
 /*  The possibilities for where the cursor lies  */

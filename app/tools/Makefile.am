@@ -12,8 +12,8 @@ libapptools_la_SOURCES = \
 ##	bezier_selectP.h	\
 ##	blend.c			\
 ##	blend.h			\
-##	blob.c			\
-##	blob.h			\
+	blob.c			\
+	blob.h			\
 ##	brightness_contrast.c	\
 ##	brightness_contrast.h	\
 ##	bucket_fill.c		\
@@ -54,8 +54,8 @@ libapptools_la_SOURCES = \
 ##	histogram_tool.h	\
 ##	hue_saturation.c	\
 ##	hue_saturation.h	\
-##	ink.c			\
-##	ink.h			\
+	ink.c			\
+	ink.h			\
 ##	iscissors.c		\
 ##	iscissors.h		\
 ##	levels.c		\

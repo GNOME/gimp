@@ -34,6 +34,7 @@
 #include "tool_manager.h"
 
 #include "gimppaintbrushtool.h"
+#include "ink.h"
 
 #include "libgimp/gimpintl.h"
 

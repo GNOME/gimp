@@ -1,5 +1,16 @@
 2001-02-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/Makefile.am
+	* app/tools/ink.[ch]: back as object.
+
+	* app/tools/paint_options.c: #include "ink.h"
+
+	* app/tools/tool.h: removed the type #define.
+
+	* app/tools/tools.c: register it.
+
+2001-02-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/context_manager.[ch]: made the global_paint_options public.
 
 	* app/tools/gimptoolinfo.[ch]: added a "tool_context" boolean to

@@ -28,8 +28,8 @@
 
 #include "apptypes.h"
 
+#include "cursorutil.h"
 #include "drawable.h"
-#include "draw_core.h"
 #include "gimage_mask.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"
@@ -45,15 +45,15 @@
 #include "blob.h"
 #include "ink.h"
 #include "paint_options.h"
-#include "tools.h"
+#include "tool.h"
+#include "tool_manager.h"
 
 #include "libgimp/gimpintl.h"
 
+#include "pixmaps2.h"
+
 
 #define SUBSAMPLE 8
-
-#define DIST_SMOOTHER_BUFFER 10
-#define TIME_SMOOTHER_BUFFER 10
 
 /*  the Ink structures  */
 
@@ -64,31 +64,6 @@ typedef Blob * (* BlobFunc) (gdouble,
 			     gdouble,
 			     gdouble);
 
-
-typedef struct _InkTool InkTool;
-
-struct _InkTool
-{
-  DrawCore *core;         /*  Core select object             */
-  
-  Blob     *last_blob;	   /*  blob for last cursor position  */
-
-  gint      x1, y1;       /*  image space coordinate         */
-  gint      x2, y2;       /*  image space coords             */
-
-  /* circular distance history buffer */
-  gdouble   dt_buffer[DIST_SMOOTHER_BUFFER];
-  gint      dt_index;
-
-  /* circular timing history buffer */
-  guint32   ts_buffer[TIME_SMOOTHER_BUFFER];
-  gint      ts_index;
-
-  gdouble   last_time;    /*  previous time of a motion event      */
-  gdouble   lastx, lasty; /*  previous position of a motion event  */
-
-  gboolean  init_velocity;
-};
 
 typedef struct _BrushWidget BrushWidget;
 
@@ -138,40 +113,47 @@ struct _InkOptions
 
 /*  local function prototypes  */
 
-static void        ink_button_press     (Tool           *tool,
+static void        gimp_ink_tool_class_init      (GimpInkToolClass *klass);
+static void        gimp_ink_tool_init            (GimpInkTool      *tool);
+
+static void        gimp_ink_tool_destroy         (GtkObject        *object);
+
+static InkOptions * ink_options_new     (void);
+static void         ink_options_reset   (void);
+
+static void        ink_button_press     (GimpTool       *tool,
 					 GdkEventButton *mevent,
 					 GDisplay       *gdisp);
-static void        ink_button_release   (Tool           *tool,
+static void        ink_button_release   (GimpTool       *tool,
 					 GdkEventButton *bevent,
 					 GDisplay       *gdisp);
-static void        ink_motion           (Tool           *tool,
+static void        ink_motion           (GimpTool       *tool,
 					 GdkEventMotion *mevent,
 					 GDisplay       *gdisp);
-static void        ink_cursor_update    (Tool           *tool,
+static void        ink_cursor_update    (GimpTool       *tool,
 					 GdkEventMotion *mevent,
 					 GDisplay       *gdisp);
-static void        ink_control          (Tool           *tool,
+static void        ink_control          (GimpTool       *tool,
 					 ToolAction      tool_action,
 					 GDisplay       *gdisp);
 
-static void        time_smoother_add    (InkTool        *ink_tool,
+static void        time_smoother_add    (GimpInkTool    *ink_tool,
 					 guint32         value);
-static gdouble     time_smoother_result (InkTool        *ink_tool);
-static void        time_smoother_init   (InkTool        *ink_tool,
+static gdouble     time_smoother_result (GimpInkTool    *ink_tool);
+static void        time_smoother_init   (GimpInkTool    *ink_tool,
 					 guint32         initval);
-static void        dist_smoother_add    (InkTool        *ink_tool,
+static void        dist_smoother_add    (GimpInkTool    *ink_tool,
 					 gdouble         value);
-static gdouble     dist_smoother_result (InkTool        *ink_tool);
-static void        dist_smoother_init   (InkTool        *ink_tool,
+static gdouble     dist_smoother_result (GimpInkTool    *ink_tool);
+static void        dist_smoother_init   (GimpInkTool    *ink_tool,
 					 gdouble         initval);
 
-static void        ink_init             (InkTool        *ink_tool, 
+static void        ink_init             (GimpInkTool    *ink_tool, 
 					 GimpDrawable   *drawable, 
 					 gdouble         x, 
 					 gdouble         y);
-static void        ink_finish           (InkTool        *ink_tool, 
-					 GimpDrawable   *drawable, 
-					 gint            tool_id);
+static void        ink_finish           (GimpInkTool    *ink_tool, 
+					 GimpDrawable   *drawable);
 static void        ink_cleanup          (void);
 
 static void        ink_type_update      (GtkWidget      *radio_button,
@@ -184,14 +166,14 @@ static void        paint_blob           (GdkDrawable    *drawable,
 					 Blob           *blob);
 
 /*  Rendering functions  */
-static void        ink_set_paint_area   (InkTool        *ink_tool, 
+static void        ink_set_paint_area   (GimpInkTool    *ink_tool, 
 					 GimpDrawable   *drawable, 
 					 Blob           *blob);
-static void        ink_paste            (InkTool        *ink_tool, 
+static void        ink_paste            (GimpInkTool    *ink_tool, 
 					 GimpDrawable   *drawable,
 					 Blob           *blob);
 
-static void        ink_to_canvas_tiles  (InkTool        *ink_tool,
+static void        ink_to_canvas_tiles  (GimpInkTool    *ink_tool,
 					 Blob           *blob,
 					 guchar         *color);
 
@@ -240,8 +222,103 @@ static TileManager *canvas_tiles = NULL;
  */
 static TempBuf *canvas_buf = NULL;
 
+static GimpToolClass *parent_class      = NULL;
+
 
 /*  functions  */
+
+void
+gimp_ink_tool_register (void)
+{
+  tool_manager_register_tool (GIMP_TYPE_INK_TOOL,
+			      TRUE,
+			      "gimp:ink_tool",
+			      _("Ink Tool"),
+			      _("Draw in ink"),
+			      N_("/Tools/Paint Tools/Ink"), "K",
+			      NULL, "tools/ink.html",
+			      (const gchar **) ink_bits);
+}
+
+GtkType
+gimp_ink_tool_get_type (void)
+{
+  static GtkType tool_type = 0;
+
+  if (! tool_type)
+    {
+      GtkTypeInfo tool_info =
+      {
+	"GimpInkTool",
+	sizeof (GimpInkTool),
+	sizeof (GimpInkToolClass),
+	(GtkClassInitFunc) gimp_ink_tool_class_init,
+	(GtkObjectInitFunc) gimp_ink_tool_init,
+	/* reserved_1 */ NULL,
+	/* reserved_2 */ NULL,
+	(GtkClassInitFunc) NULL,
+      };
+
+      tool_type = gtk_type_unique (GIMP_TYPE_TOOL, &tool_info);
+    }
+
+  return tool_type;
+}
+
+static void
+gimp_ink_tool_class_init (GimpInkToolClass *klass)
+{
+  GtkObjectClass *object_class;
+  GimpToolClass  *tool_class;
+
+  object_class = (GtkObjectClass *) klass;
+  tool_class   = (GimpToolClass *) klass;
+
+  parent_class = gtk_type_class (GIMP_TYPE_TOOL);
+
+  object_class->destroy = gimp_ink_tool_destroy;
+
+  tool_class->control        = ink_control;
+  tool_class->button_press   = ink_button_press;
+  tool_class->button_release = ink_button_release;
+  tool_class->motion         = ink_motion;
+  tool_class->cursor_update  = ink_cursor_update;
+}
+
+static void
+gimp_ink_tool_init (GimpInkTool *ink_tool)
+{
+  GimpTool *tool;
+
+  tool = GIMP_TOOL (ink_tool);
+ 
+  /*  The tool options  */
+  if (! ink_options)
+    {
+      ink_options = ink_options_new ();
+
+      tool_manager_register_tool_options (GIMP_TYPE_INK_TOOL,
+					  (ToolOptions *) ink_options);
+
+      ink_options_reset ();
+    }
+}
+
+static void
+gimp_ink_tool_destroy (GtkObject *object)
+{
+  GimpInkTool *ink_tool;
+
+  ink_tool = GIMP_INK_TOOL (object);
+
+  if (ink_tool->last_blob)
+    g_free (ink_tool->last_blob);
+
+  ink_cleanup ();
+
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
 
 static void 
 ink_type_update (GtkWidget      *radio_button,
@@ -300,10 +377,12 @@ ink_options_new (void)
   GdkPixmap *pixmap;
 
   /*  the new ink tool options structure  */
-  options = g_new (InkOptions, 1);
+  options = g_new0 (InkOptions, 1);
+
   paint_options_init ((PaintOptions *) options,
-		      INK,
+		      GIMP_TYPE_INK_TOOL,
 		      ink_options_reset);
+
   options->size             = options->size_d             = 4.4;
   options->sensitivity      = options->sensitivity_d      = 1.0;
   options->vel_sensitivity  = options->vel_sensitivity_d  = 0.8;
@@ -679,13 +758,13 @@ brush_widget_motion_notify (GtkWidget      *widget,
  */
 static GdkPixmap *
 blob_pixmap (GdkColormap *colormap,
-	     GdkVisual *visual,
-	     BlobFunc function)
+	     GdkVisual   *visual,
+	     BlobFunc     function)
 {
   GdkPixmap *pixmap;
-  GdkGC *black_gc, *white_gc;
-  GdkColor tmp_color;
-  Blob *blob;
+  GdkGC     *black_gc, *white_gc;
+  GdkColor   tmp_color;
+  Blob      *blob;
 
   pixmap = gdk_pixmap_new (NULL, 22, 21, visual->depth);
 
@@ -713,8 +792,9 @@ blob_pixmap (GdkColormap *colormap,
  * Draw a blob onto a drawable with the specified graphics context
  */
 static void
-paint_blob (GdkDrawable *drawable, GdkGC *gc,
-	    Blob *blob)
+paint_blob (GdkDrawable *drawable,
+	    GdkGC       *gc,
+	    Blob        *blob)
 {
   int i;
 
@@ -729,8 +809,11 @@ paint_blob (GdkDrawable *drawable, GdkGC *gc,
 
 
 static Blob *
-ink_pen_ellipse (gdouble x_center, gdouble y_center,
-		 gdouble pressure, gdouble xtilt, gdouble ytilt,
+ink_pen_ellipse (gdouble x_center,
+		 gdouble y_center,
+		 gdouble pressure,
+		 gdouble xtilt,
+		 gdouble ytilt,
 		 gdouble velocity)
 {
   double size;
@@ -816,16 +899,16 @@ ink_pen_ellipse (gdouble x_center, gdouble y_center,
 }
 
 static void
-ink_button_press (Tool           *tool,
+ink_button_press (GimpTool       *tool,
 		  GdkEventButton *bevent,
 		  GDisplay       *gdisp)
 {
-  gdouble       x, y;
-  InkTool      *ink_tool;
+  GimpInkTool  *ink_tool;
   GimpDrawable *drawable;
   Blob         *b;
+  gdouble       x, y;
 
-  ink_tool = (InkTool *) tool->private;
+  ink_tool = GIMP_INK_TOOL (tool);
 
   /*  Keep the coordinates of the target  */
   gdisplay_untransform_coords_f (gdisp, bevent->x, bevent->y,
@@ -872,15 +955,16 @@ ink_button_press (Tool           *tool,
 }
 
 static void
-ink_button_release (Tool           *tool,
+ink_button_release (GimpTool       *tool,
 		    GdkEventButton *bevent,
 		    GDisplay       *gdisp)
 {
-  GImage  *gimage;
-  InkTool *ink_tool;
+  GimpInkTool *ink_tool;
+  GimpImage   *gimage;
 
-  gimage   = gdisp->gimage;
-  ink_tool = (InkTool *) tool->private;
+  ink_tool = GIMP_INK_TOOL (tool);
+
+  gimage = gdisp->gimage;
 
   /*  resume the current selection and ungrab the pointer  */
   gdisplays_selection_visibility (gdisp->gimage, SelectionResume);
@@ -895,13 +979,14 @@ ink_button_release (Tool           *tool,
   g_free (ink_tool->last_blob);
   ink_tool->last_blob = NULL;
 
-  ink_finish (ink_tool, gimp_image_active_drawable (gdisp->gimage), tool->ID);
+  ink_finish (ink_tool, gimp_image_active_drawable (gdisp->gimage));
   gdisplays_flush ();
 }
 
 
 static void
-dist_smoother_init (InkTool* ink_tool, gdouble initval)
+dist_smoother_init (GimpInkTool *ink_tool,
+		    gdouble      initval)
 {
   gint i;
 
@@ -914,21 +999,22 @@ dist_smoother_init (InkTool* ink_tool, gdouble initval)
 }
 
 static gdouble
-dist_smoother_result (InkTool* ink_tool)
+dist_smoother_result (GimpInkTool *ink_tool)
 {
-  gint i;
+  gint    i;
   gdouble result = 0.0;
 
-  for (i=0; i<DIST_SMOOTHER_BUFFER; i++)
+  for (i = 0; i < DIST_SMOOTHER_BUFFER; i++)
     {
       result += ink_tool->dt_buffer[i];
     }
 
-  return (result / (gdouble)DIST_SMOOTHER_BUFFER);
+  return (result / (gdouble) DIST_SMOOTHER_BUFFER);
 }
 
 static void
-dist_smoother_add (InkTool* ink_tool, gdouble value)
+dist_smoother_add (GimpInkTool *ink_tool,
+		   gdouble      value)
 {
   ink_tool->dt_buffer[ink_tool->dt_index] = value;
 
@@ -938,25 +1024,26 @@ dist_smoother_add (InkTool* ink_tool, gdouble value)
 
 
 static void
-time_smoother_init (InkTool* ink_tool, guint32 initval)
+time_smoother_init (GimpInkTool *ink_tool,
+		    guint32      initval)
 {
   gint i;
 
   ink_tool->ts_index = 0;
 
-  for (i=0; i<TIME_SMOOTHER_BUFFER; i++)
+  for (i = 0; i < TIME_SMOOTHER_BUFFER; i++)
     {
       ink_tool->ts_buffer[i] = initval;
     }
 }
 
 static gdouble
-time_smoother_result (InkTool* ink_tool)
+time_smoother_result (GimpInkTool *ink_tool)
 {
-  gint i;
+  gint    i;
   guint64 result = 0;
 
-  for (i=0; i<TIME_SMOOTHER_BUFFER; i++)
+  for (i = 0; i < TIME_SMOOTHER_BUFFER; i++)
     {
       result += ink_tool->ts_buffer[i];
     }
@@ -969,7 +1056,8 @@ time_smoother_result (InkTool* ink_tool)
 }
 
 static void
-time_smoother_add (InkTool* ink_tool, guint32 value)
+time_smoother_add (GimpInkTool *ink_tool,
+		   guint32      value)
 {
   ink_tool->ts_buffer[ink_tool->ts_index] = value;
 
@@ -979,11 +1067,11 @@ time_smoother_add (InkTool* ink_tool, guint32 value)
 
 
 static void
-ink_motion (Tool           *tool,
+ink_motion (GimpTool       *tool,
 	    GdkEventMotion *mevent,
 	    GDisplay       *gdisp)
 {
-  InkTool      *ink_tool;
+  GimpInkTool  *ink_tool;
   GimpDrawable *drawable;
   Blob         *b, *blob_union;
 
@@ -993,7 +1081,7 @@ ink_motion (Tool           *tool,
   gdouble dist;
   gdouble lasttime, thistime;
   
-  ink_tool = (InkTool *) tool->private;
+  ink_tool = GIMP_INK_TOOL (tool);
 
   gdisplay_untransform_coords_f (gdisp, mevent->x, mevent->y, &x, &y, TRUE);
   drawable = gimp_image_active_drawable (gdisp->gimage);
@@ -1001,8 +1089,7 @@ ink_motion (Tool           *tool,
   lasttime = ink_tool->last_time;
 
   time_smoother_add (ink_tool, mevent->time);
-  thistime = ink_tool->last_time =
-    time_smoother_result(ink_tool);
+  thistime = ink_tool->last_time = time_smoother_result (ink_tool);
 
   /* The time resolution on X-based GDK motion events is
      bloody awful, hence the use of the smoothing function.
@@ -1016,22 +1103,25 @@ ink_motion (Tool           *tool,
 
   if (ink_tool->init_velocity)
     {
-      dist_smoother_init (ink_tool, dist = sqrt((ink_tool->lastx-x)*(ink_tool->lastx-x) +
-						(ink_tool->lasty-y)*(ink_tool->lasty-y)));
+      dist_smoother_init (ink_tool,
+			  dist = sqrt ((ink_tool->lastx-x) * (ink_tool->lastx-x) +
+				       (ink_tool->lasty-y) * (ink_tool->lasty-y)));
       ink_tool->init_velocity = FALSE;
     }
   else
     {
-      dist_smoother_add (ink_tool, sqrt((ink_tool->lastx-x)*(ink_tool->lastx-x) +
-					(ink_tool->lasty-y)*(ink_tool->lasty-y)));
-      dist = dist_smoother_result(ink_tool);
+      dist_smoother_add (ink_tool,
+			 sqrt ((ink_tool->lastx-x) * (ink_tool->lastx-x) +
+			       (ink_tool->lasty-y) * (ink_tool->lasty-y)));
+
+      dist = dist_smoother_result (ink_tool);
     }
 
   ink_tool->lastx = x;
   ink_tool->lasty = y;
 
   pressure = mevent->pressure;
-  velocity = 10.0 * sqrt((dist) / (double)(thistime - lasttime));
+  velocity = 10.0 * sqrt ((dist) / (double) (thistime - lasttime));
   
   b = ink_pen_ellipse (x, y, pressure, mevent->xtilt, mevent->ytilt, velocity);
   blob_union = blob_convex_union (ink_tool->last_blob, b);
@@ -1040,12 +1130,12 @@ ink_motion (Tool           *tool,
 
   ink_paste (ink_tool, drawable, blob_union);  
   g_free (blob_union);
-  
+
   gdisplay_flush_now (gdisp);
 }
 
 static void
-ink_cursor_update (Tool           *tool,
+ink_cursor_update (GimpTool       *tool,
 		   GdkEventMotion *mevent,
 		   GDisplay       *gdisp)
 {
@@ -1074,6 +1164,7 @@ ink_cursor_update (Tool           *tool,
 	    ctype = GIMP_MOUSE_CURSOR;
 	}
     }
+
   gdisplay_install_tool_cursor (gdisp,
 				ctype,
 				GIMP_INK_TOOL_CURSOR,
@@ -1081,22 +1172,20 @@ ink_cursor_update (Tool           *tool,
 }
 
 static void
-ink_control (Tool       *tool,
+ink_control (GimpTool   *tool,
 	     ToolAction  action,
 	     GDisplay   *gdisp)
 {
-  InkTool *ink_tool;
+  GimpInkTool *ink_tool;
 
-  ink_tool = (InkTool *) tool->private;
+  ink_tool = GIMP_INK_TOOL (tool);
 
   switch (action)
     {
     case PAUSE:
-      draw_core_pause (ink_tool->core, tool);
       break;
 
     case RESUME:
-      draw_core_resume (ink_tool->core, tool);
       break;
 
     case HALT:
@@ -1109,7 +1198,7 @@ ink_control (Tool       *tool,
 }
 
 static void
-ink_init (InkTool      *ink_tool,
+ink_init (GimpInkTool  *ink_tool,
 	  GimpDrawable *drawable, 
 	  gdouble       x,
 	  gdouble       y)
@@ -1135,9 +1224,8 @@ ink_init (InkTool      *ink_tool,
 }
 
 static void
-ink_finish (InkTool      *ink_tool,
-	    GimpDrawable *drawable,
-	    gint          tool_id)
+ink_finish (GimpInkTool  *ink_tool,
+	    GimpDrawable *drawable)
 {
   /*  push an undo  */
   drawable_apply_image (drawable, ink_tool->x1, ink_tool->y1,
@@ -1153,7 +1241,6 @@ ink_finish (InkTool      *ink_tool,
 static void
 ink_cleanup (void)
 {
-  /*  CLEANUP  */
   /*  If the undo tiles exist, nuke them  */
   if (undo_tiles)
     {
@@ -1170,8 +1257,10 @@ ink_cleanup (void)
 
   /*  Free the temporary buffer if it exist  */
   if (canvas_buf)
-    temp_buf_free (canvas_buf);
-  canvas_buf = NULL;
+    {
+      temp_buf_free (canvas_buf);
+      canvas_buf = NULL;
+    }
 }
 
 /*********************************
@@ -1188,14 +1277,14 @@ ink_cleanup (void)
  */
 
 static void
-ink_set_paint_area (InkTool      *ink_tool, 
+ink_set_paint_area (GimpInkTool  *ink_tool, 
 		    GimpDrawable *drawable, 
 		    Blob         *blob)
 {
   gint x, y, width, height;
   gint x1, y1, x2, y2;
   gint bytes;
-  
+
   blob_bounds (blob, &x, &y, &width, &height);
 
   bytes = gimp_drawable_has_alpha (drawable) ?
@@ -1269,9 +1358,9 @@ render_blob_line (Blob   *blob,
 		  gint    y,
 		  gint    width)
 {
-  gint  buf[4*SUBSAMPLE];
-  gint *data = buf;
-  gint  n = 0;
+  gint  buf[4 * SUBSAMPLE];
+  gint *data    = buf;
+  gint  n       = 0;
   gint  i, j;
   gint  current = 0;  /* number of filled rows at this point
 		       * in the scan line
@@ -1281,16 +1370,17 @@ render_blob_line (Blob   *blob,
   /* Sort start and ends for all lines */
   
   j = y * SUBSAMPLE - blob->y;
-  for (i=0; i<SUBSAMPLE; i++)
+  for (i = 0; i < SUBSAMPLE; i++)
     {
       if (j >= blob->height)
 	break;
+
       if ((j > 0) && (blob->data[j].left <= blob->data[j].right))
 	{
-	  data[2*n] = blob->data[j].left;
-	  data[2*n+1] = ROW_START;
-	  data[2*SUBSAMPLE+2*n] = blob->data[j].right;
-	  data[2*SUBSAMPLE+2*n+1] = ROW_STOP;
+	  data[2 * n]                     = blob->data[j].left;
+	  data[2 * n + 1]                 = ROW_START;
+	  data[2 * SUBSAMPLE + 2 * n]     = blob->data[j].right;
+	  data[2 * SUBSAMPLE + 2 * n + 1] = ROW_STOP;
 	  n++;
 	}
       j++;
@@ -1299,8 +1389,8 @@ render_blob_line (Blob   *blob,
   /*   If we have less than SUBSAMPLE rows, compress */
   if (n < SUBSAMPLE)
     {
-      for (i=0; i<2*n; i++)
-	data[2*n+i] = data[2*SUBSAMPLE+i];
+      for (i = 0; i < 2 * n; i++)
+	data[2 * n + i] = data[2 * SUBSAMPLE + i];
     }
 
   /*   Now count start and end separately */
@@ -1326,33 +1416,34 @@ render_blob_line (Blob   *blob,
   /* Render the row */
 
   last_x = 0;
-  for (i=0; i<n;)
+  for (i = 0; i < n;)
     {
-      gint cur_x = data[2*i] / SUBSAMPLE - x;
+      gint cur_x = data[2 * i] / SUBSAMPLE - x;
       gint pixel;
 
       /* Fill in portion leading up to this pixel */
       if (current && cur_x != last_x)
-	fill_run (dest + last_x, (255*current)/SUBSAMPLE, cur_x - last_x);
+	fill_run (dest + last_x, (255 * current) / SUBSAMPLE, cur_x - last_x);
 
       /* Compute the value for this pixel */
       pixel = current * SUBSAMPLE; 
 
       while (i<n)
 	{
-	  int tmp_x = data[2*i] / SUBSAMPLE;
+	  gint tmp_x = data[2 * i] / SUBSAMPLE;
+
 	  if (tmp_x - x != cur_x)
 	    break;
 
-	  if (data[2*i+1] == ROW_START)
+	  if (data[2 * i + 1] == ROW_START)
 	    {
 	      current++;
-	      pixel += ((tmp_x + 1) * SUBSAMPLE) - data[2*i];
+	      pixel += ((tmp_x + 1) * SUBSAMPLE) - data[2 * i];
 	    }
 	  else
 	    {
 	      current--;
-	      pixel -= ((tmp_x + 1) * SUBSAMPLE) - data[2*i];
+	      pixel -= ((tmp_x + 1) * SUBSAMPLE) - data[2 * i];
 	    }
 	  
 	  i++;
@@ -1364,7 +1455,7 @@ render_blob_line (Blob   *blob,
     }
 
   if (current != 0)
-    fill_run (dest + last_x, (255*current)/SUBSAMPLE, width - last_x);
+    fill_run (dest + last_x, (255 * current)/ SUBSAMPLE, width - last_x);
 }
 
 static void
@@ -1393,11 +1484,11 @@ render_blob (PixelRegion *dest,
 }
 
 static void
-ink_paste (InkTool      *ink_tool, 
+ink_paste (GimpInkTool  *ink_tool, 
 	   GimpDrawable *drawable,
 	   Blob         *blob)
 {
-  GImage      *gimage;
+  GimpImage   *gimage;
   PixelRegion  srcPR;
   gint         offx, offy;
   gchar        col[MAX_CHANNELS];
@@ -1468,9 +1559,9 @@ ink_paste (InkTool      *ink_tool,
  * into canvas_buf.
  */
 static void
-ink_to_canvas_tiles (InkTool *ink_tool,
-		     Blob    *blob,
-		     guchar  *color)
+ink_to_canvas_tiles (GimpInkTool *ink_tool,
+		     Blob        *blob,
+		     guchar      *color)
 {
   PixelRegion srcPR, maskPR;
 
@@ -1499,9 +1590,12 @@ ink_to_canvas_tiles (InkTool *ink_tool,
 
 static void
 ink_set_undo_tiles (GimpDrawable *drawable,
-		    int x, int y, int w, int h)
+		    gint          x,
+		    gint          y,
+		    gint          w,
+		    gint          h)
 {
-  int i, j;
+  gint  i, j;
   Tile *src_tile;
   Tile *dest_tile;
 
@@ -1546,73 +1640,4 @@ ink_set_canvas_tiles (gint x,
 	    }
 	}
     }
-}
-
-/**************************/
-/*  Global ink functions  */
-/**************************/
-
-void
-ink_no_draw (Tool *tool)
-{
-  return;
-}
-
-Tool *
-tools_new_ink (void)
-{
-  Tool    *tool;
-  InkTool *private;
-
-  /*  The tool options  */
-  if (! ink_options)
-    {
-      ink_options = ink_options_new ();
-      tools_register (INK, (ToolOptions *) ink_options);
-
-      /*  press all default buttons  */
-      ink_options_reset ();
-    }
-
-  tool    = tools_new_tool (INK);
-  private = g_new0 (InkTool, 1);
-
-  private->core      = draw_core_new (ink_no_draw);
-  private->last_blob = NULL;
-
-  tool->private = private;
-
-  tool->button_press_func   = ink_button_press;
-  tool->button_release_func = ink_button_release;
-  tool->motion_func         = ink_motion;
-  tool->cursor_update_func  = ink_cursor_update;
-  tool->control_func        = ink_control;
-
-  return tool;
-}
-
-void
-tools_free_ink (Tool *tool)
-{
-  InkTool *ink_tool;
-
-  ink_tool = (InkTool *) tool->private;
-
-  /*  Make sure the selection core is not visible  */
-  if (tool->state == ACTIVE && ink_tool->core)
-    draw_core_stop (ink_tool->core, tool);
-
-  /*  Free the selection core  */
-  if (ink_tool->core)
-    draw_core_free (ink_tool->core);
-
-  /*  Free the last blob, if any  */
-  if (ink_tool->last_blob)
-    g_free (ink_tool->last_blob);
-  
-  /*  Cleanup memory  */
-  ink_cleanup ();
-
-  /*  Free the paint core  */
-  g_free (ink_tool);
 }
