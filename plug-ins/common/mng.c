@@ -44,6 +44,7 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -498,17 +499,12 @@ mng_save_image (const gchar *filename,
 	break;
       }
 
-  if ((userdata = g_new0 (struct mnglib_userdata_t, 1)) == NULL)
-    {
-      g_warning
-	("Unable to allocate a user data buffer in mng_save_image()");
-      return 0;
-    }
+  userdata = g_new0 (struct mnglib_userdata_t, 1);
 
   if ((userdata->fp = fopen (filename, "wb")) == NULL)
     {
-      g_warning ("Unable to open output file %s in mng_save_image()",
-		 filename);
+      g_message (_("Could not open '%s' for writing: %s"),
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       g_free (userdata);
       return 0;
     }
@@ -839,8 +835,9 @@ mng_save_image (const gchar *filename,
 
       if ((outfile = fopen (temp_file_name, "wb")) == NULL)
 	{
-	  g_warning ("fopen() failed for '%s' in mng_save_image()",
-                     temp_file_name);
+          g_message (_("Could not open '%s' for writing: %s"),
+                     gimp_filename_to_utf8 (temp_file_name),
+                     g_strerror (errno));
 	  unlink (temp_file_name);
 	  mng_cleanup (&handle);
 	  fclose (userdata->fp);
@@ -1007,7 +1004,9 @@ mng_save_image (const gchar *filename,
 
       if ((infile = fopen (temp_file_name, "rb")) == NULL)
 	{
-	  g_warning ("Unable to fopen(in) in mng_save_image()");
+          g_message (_("Could not open '%s' for reading: %s"),
+                     gimp_filename_to_utf8 (temp_file_name),
+                     g_strerror (errno));
 	  unlink (temp_file_name);
 	  mng_cleanup (&handle);
 	  fclose (userdata->fp);

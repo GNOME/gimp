@@ -197,7 +197,7 @@ load_image (const gchar       *filename,
 	      || !WIFEXITED (process_status)
 	      || (WEXITSTATUS (process_status) != 0))
 	    {
-	      g_message ("wget exited abnormally on URL %s", filename);
+	      g_message ("wget exited abnormally on URL '%s'", filename);
 	      g_free (tmpname);
 	      *status = GIMP_PDB_EXECUTION_ERROR;
 	      return -1;
@@ -243,7 +243,7 @@ load_image (const gchar       *filename,
 	  /*  The second line is the local copy of the file  */
 	  if (fgets (buf, BUFSIZE, input) == NULL)
 	    {
-	      g_message ("wget exited abnormally on URL\n'%s'", filename);
+	      g_message ("wget exited abnormally on URL '%s'", filename);
 	      g_free (tmpname);
 	      *status = GIMP_PDB_EXECUTION_ERROR;
 	      return -1;
@@ -258,7 +258,7 @@ load_image (const gchar       *filename,
 read_connect:
 	  if (fgets (buf, BUFSIZE, input) == NULL)
 	    {
-	      g_message ("wget exited abnormally on URL\n'%s'", filename);
+	      g_message ("wget exited abnormally on URL '%s'", filename);
 	      g_free (tmpname);
 	      *status = GIMP_PDB_EXECUTION_ERROR;
 	      return -1;
@@ -282,7 +282,7 @@ read_connect:
 
 	  if (fgets (buf, BUFSIZE, input) == NULL)
 	    {
-	      g_message ("wget exited abnormally on URL\n'%s'", filename);
+	      g_message ("wget exited abnormally on URL '%s'", filename);
 	      g_free (tmpname);
 	      *status = GIMP_PDB_EXECUTION_ERROR;
 	      return -1;
@@ -303,7 +303,7 @@ read_connect:
 	  /*  The fifth line is either the length of the file or an error  */
 	  if (fgets (buf, BUFSIZE, input) == NULL)
 	    {
-	      g_message ("wget exited abnormally on URL\n'%s'", filename);
+	      g_message ("wget exited abnormally on URL '%s'", filename);
 	      g_free (tmpname);
 	      *status = GIMP_PDB_EXECUTION_ERROR;
 	      return -1;

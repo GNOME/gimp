@@ -1,5 +1,11 @@
 2004-01-20  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/mail.c
+	* plug-ins/common/mng.c: use more already translated standard file
+	error messages. Some cleanup.
+
+2004-01-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/file-open-menu.c
 	* app/gui/file-save-menu.c
 	* app/gui/image-menu.c
