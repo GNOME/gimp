@@ -19,10 +19,11 @@
 #define __BRUSHES_H__
 
 #include <glib.h>
+#include "canvas.h"
 #include "procedural_db.h"
 #include "temp_buf.h"
 
-
+struct _Canvas;
 typedef struct _GBrush  GBrush, * GBrushP;
 
 struct _GBrush
@@ -32,6 +33,7 @@ struct _GBrush
   int        spacing;     /*  brush's spacing                            */
   int        index;       /*  brush's index...                           */
   TempBuf *  mask;        /*  the actual mask...                         */
+  struct _Canvas *  mask_canvas;  /*  the actual mask as canvas                  */
 };
 
 /*  global variables  */

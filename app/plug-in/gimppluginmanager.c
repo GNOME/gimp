@@ -36,6 +36,7 @@
 
 #include "app_procs.h"
 #include "appenv.h"
+#include "canvas.h"
 #include "drawable.h"
 #include "datafiles.h"
 #include "errors.h"
@@ -45,7 +46,9 @@
 #include "gimprc.h"
 #include "interface.h"
 #include "menus.h"
+#include "pixelarea.h"
 #include "plug_in.h"
+#include "tag.h"
 
 
 #define SEPARATE_PROGRESS_BAR
@@ -66,7 +69,12 @@ struct _PlugInBlocked
   char *proc_name;
 };
 
+#define COPY_AREA_TO_BUFFER 0
+#define COPY_BUFFER_TO_AREA 1
 
+static void plug_in_copyarea             (PixelArea         *a, 
+					   guchar            *buf, 
+					   gint               direction);
 static int  plug_in_write                 (int                fd,
 					   guint8            *buf,
 				           gulong             count);
@@ -1187,6 +1195,13 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
   WireMessage msg;
   TileManager *tm;
   Tile *tile;
+  PixelArea a;
+  Canvas *canvas;
+  GimpDrawable *drawable;
+  gint ntile_cols, ntile_rows;
+  gint ewidth, eheight;
+  gint i, j;
+  gint x, y;
 
   if (tile_req->drawable_ID == -1)
     {
@@ -1221,36 +1236,63 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
 	}
 
       tile_info = msg.data;
-
+      drawable = drawable_get_ID (tile_info->drawable_ID);
+      
       if (tile_info->shadow)
-	tm = drawable_shadow (drawable_get_ID (tile_info->drawable_ID));
+#define PLUG_IN_C_1_cw
+      /*canvas = drawable_shadow_canvas (drawable);*/
+	canvas = NULL; 
       else
-	tm = drawable_data (drawable_get_ID (tile_info->drawable_ID));
+	canvas = drawable_data_canvas (drawable);
 
-      if (!tm)
+      if (!canvas)
 	{
 	  g_warning ("plug-in requested invalid drawable (killing)\n");
 	  plug_in_close (current_plug_in, TRUE);
 	  return;
 	}
-
-      tile = tile_manager_get (tm, tile_info->tile_num, 0);
-      if (!tile)
+        
+        /* Find the upper left corner (x,y) of the plugins tile with index tile_num. */ 
+	ntile_cols = ( drawable_width (drawable) + TILE_WIDTH - 1 ) / TILE_WIDTH;
+        ntile_rows = ( drawable_height (drawable) + TILE_HEIGHT - 1 ) / TILE_HEIGHT;
+	i = tile_info->tile_num % ntile_cols;
+	j = tile_info->tile_num / ntile_cols;
+	x = TILE_WIDTH * i;
+	y = TILE_HEIGHT * j; 
+        /*printf ("Get tilenum: %d, (i,j)=(%d,%d) (x,y)=(%d,%d) (rows,cols)=(%d,%d)\n",
+			tile_info->tile_num, i, j, x, y, ntile_rows, ntile_cols);*/
+        
+        /* Make sure there is some valid canvas data there on the gimp side */
+       canvas_ref (canvas, x, y);
+       if (!canvas_data( canvas, x, y))
 	{
-	  g_warning ("plug-in requested invalid tile (killing)\n");
+	  g_warning ("plug-in requested invalid tile data (killing)\n");
 	  plug_in_close (current_plug_in, TRUE);
+          canvas_unref (canvas, x, y);
 	  return;
 	}
+        
+        /* Now find the plugins tile ewidth and eheight */
+	if (i == (ntile_cols - 1))
+	  ewidth = drawable_width(drawable) - ((ntile_cols - 1) * TILE_WIDTH);
+	else
+	  ewidth = TILE_WIDTH;
 
-      tile_ref (tile);
-
-      if (tile_data.use_shm)
-	memcpy (tile->data, shm_addr, tile_size (tile));
-      else
-	memcpy (tile->data, tile_info->data, tile_size (tile));
-
-      tile_unref (tile, TRUE);
-
+	if (j == (ntile_rows - 1))
+	  eheight = drawable_height(drawable) - ((ntile_rows - 1) * TILE_HEIGHT);
+	else
+	  eheight = TILE_HEIGHT;
+        
+        /* Now copy the data from plugins tile to the gimp's canvas */ 
+	pixelarea_init (&a, canvas, NULL, x, y, ewidth, eheight, TRUE);
+	
+	if (tile_data.use_shm)
+	  plug_in_copyarea (&a, shm_addr, COPY_BUFFER_TO_AREA);  /* shm to gimp */
+	else
+	  plug_in_copyarea (&a, tile_info->data, COPY_BUFFER_TO_AREA); /* pipe buffer to gimp */
+        canvas_unref (canvas, x, y);
+      
+      
       wire_destroy (&msg);
       if (!gp_tile_ack_write (current_writefd))
 	{
@@ -1261,49 +1303,76 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
     }
   else
     {
+#define PLUG_IN_C_2_cw
       if (tile_req->shadow)
-	tm = drawable_shadow (drawable_get_ID (tile_req->drawable_ID));
+      /*canvas = drawable_shadow_canvas (drawable_get_ID (tile_req->drawable_ID));*/
+	canvas = NULL; 
       else
-	tm = drawable_data (drawable_get_ID (tile_req->drawable_ID));
-
-      if (!tm)
+	canvas = drawable_data_canvas (drawable_get_ID (tile_req->drawable_ID));
+      
+      if (!canvas)
 	{
 	  g_warning ("plug-in requested invalid drawable (killing)\n");
 	  plug_in_close (current_plug_in, TRUE);
 	  return;
 	}
-
-      tile = tile_manager_get (tm, tile_req->tile_num, 0);
-      if (!tile)
+     
+      drawable = drawable_get_ID (tile_req->drawable_ID);
+      
+      /* Find the lower left corner (x,y) of the plugins tile with index tile_num. */ 
+      ntile_cols = ( drawable_width (drawable) + TILE_WIDTH - 1 ) / TILE_WIDTH;
+      ntile_rows = ( drawable_height (drawable) + TILE_HEIGHT - 1 ) / TILE_HEIGHT;
+      i = tile_req->tile_num % ntile_cols;
+      j = tile_req->tile_num / ntile_cols;
+      x = TILE_WIDTH * i;
+      y = TILE_HEIGHT * j;
+      /*printf ("Put tilenum: %d, (i,j)=(%d,%d) (x,y)=(%d,%d) (rows,cols)=(%d,%d)\n",
+			tile_req->tile_num, i, j, x, y, ntile_rows, ntile_cols);*/
+      
+      canvas_ref (canvas, x, y);
+      if (!canvas_data( canvas, x, y))
 	{
-	  g_warning ("plug-in requested invalid tile (killing)\n");
+	  g_warning ("plug-in requested invalid tile data(killing)\n");
 	  plug_in_close (current_plug_in, TRUE);
+          canvas_unref (canvas, x, y);
 	  return;
 	}
-
+      
       tile_data.drawable_ID = tile_req->drawable_ID;
       tile_data.tile_num = tile_req->tile_num;
       tile_data.shadow = tile_req->shadow;
-      tile_data.bpp = tile->bpp;
-      tile_data.width = tile->ewidth;
-      tile_data.height = tile->eheight;
-      tile_data.use_shm = (shm_ID == -1) ? FALSE : TRUE;
-
-      tile_ref (tile);
-
-      if (tile_data.use_shm)
-	memcpy (shm_addr, tile->data, tile_size (tile));
+      tile_data.bpp = tag_bytes (canvas_tag (canvas));
+      
+      /* Find the plugins notion of ewidth and eheight of the tile */
+      if (i == (ntile_cols - 1))
+	ewidth = drawable_width(drawable) - ((ntile_cols - 1) * TILE_WIDTH);
       else
-	tile_data.data = tile->data;
+	ewidth = TILE_WIDTH;
 
+      if (j == (ntile_rows - 1))
+	eheight = drawable_height(drawable) - ((ntile_rows - 1) * TILE_HEIGHT);
+      else
+	eheight = TILE_HEIGHT;
+      
+      tile_data.height = eheight;
+      tile_data.width = ewidth; 
+
+      tile_data.use_shm = (shm_ID == -1) ? FALSE : TRUE;
+      /*printf(" ewidth = %d, eheight = %d \n", ewidth, eheight);*/
+      pixelarea_init (&a, canvas, NULL, x, y, ewidth, eheight, FALSE);
+      
+      if (tile_data.use_shm)
+	plug_in_copyarea (&a, shm_addr, COPY_AREA_TO_BUFFER);  /* gimp to shm*/
+      else
+	plug_in_copyarea (&a, tile_data.data, COPY_AREA_TO_BUFFER); /* gimp to pipe buffer */
+      
+      canvas_unref (canvas, x, y);
       if (!gp_tile_data_write (current_writefd, &tile_data))
 	{
 	  g_warning ("plug_in_handle_tile_req: ERROR");
 	  plug_in_close (current_plug_in, TRUE);
 	  return;
 	}
-
-      tile_unref (tile, FALSE);
 
       if (!wire_read_msg (current_readfd, &msg))
 	{
@@ -1322,6 +1391,56 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
       wire_destroy (&msg);
     }
 }
+
+
+static void
+plug_in_copyarea (PixelArea *a, guchar *buf, gint direction)
+{
+  void *pag;
+  Tag a_tag = pixelarea_tag (a);
+  gint bpp = tag_bytes (a_tag);
+  guchar *d, *s;
+  gint d_rowstride, s_rowstride;
+  gint width, height;
+  
+  for (pag = pixelarea_register (1, a) ;
+       pag != NULL;
+       pag = pixelarea_process (pag))
+    {
+      height = pixelarea_height (a);
+      width = pixelarea_width (a);
+      
+      if (direction == COPY_AREA_TO_BUFFER)
+      {
+        /* copy from a to buf */
+	s = pixelarea_data (a);                           
+        s_rowstride = pixelarea_rowstride (a);
+        d = buf;
+        d_rowstride = width * bpp;
+/*        printf("putting data : s_rowstride: %d, d_rowstride: %d\n",
+			s_rowstride, d_rowstride); 
+      printf("pixelarea width : %d, height: %d\n", width, height);*/
+      }
+      else 
+      {
+        /* copy from buf to a */
+        s = buf;
+        s_rowstride = width * bpp;
+	d = pixelarea_data (a);
+        d_rowstride = pixelarea_rowstride (a);
+/*        printf("getting data : s_rowstride: %d, d_rowstride: %d\n", 
+			s_rowstride, d_rowstride); 
+      printf("pixelarea width : %d, height: %d\n", width, height);*/
+      } 
+       while ( height --)
+        {
+          memcpy(d, s, width * bpp);
+	  d += d_rowstride;
+	  s += s_rowstride;
+        } 
+    }
+}
+
 
 static void
 plug_in_handle_proc_run (GPProcRun *proc_run)

@@ -23,10 +23,13 @@
 #include "brushes.h"
 #include "brush_select.h"
 #include "buildmenu.h"
+#include "canvas.h"
 #include "colormaps.h"
 #include "disp_callbacks.h"
+#include "lookup_tables.h"
 #include "errors.h"
 #include "paint_funcs.h"
+#include "tag.h"
 
 
 #define STD_CELL_WIDTH    24
@@ -65,6 +68,24 @@ static gint brush_select_delete_callback        (GtkWidget *, GdkEvent *, gpoint
 static void preview_scroll_update        (GtkAdjustment *, gpointer);
 static void opacity_scale_update         (GtkAdjustment *, gpointer);
 static void spacing_scale_update         (GtkAdjustment *, gpointer);
+
+/* static 8bit channel data functions */
+static void display_brush_get_row_u8     (guchar *, guchar *, gint);
+
+/* static 16bit channel data functions */
+static void display_brush_get_row_u16    (guchar *, guchar *, gint);
+
+/* static float channel data functions */
+static void display_brush_get_row_float  (guchar *, guchar *, gint);
+
+/* function pointers for different data types */
+typedef void  (*DisplayBrushGetRowFunc) (guchar *, guchar *,gint);
+static DisplayBrushGetRowFunc display_brush_get_row_funcs[3] =
+{
+  display_brush_get_row_u8,
+  display_brush_get_row_u16,
+  display_brush_get_row_float
+};
 
 /*  the option menu items -- the paint modes  */
 static MenuItem option_items[] =
@@ -325,7 +346,11 @@ brush_popup_open (BrushSelectP bsp,
 {
   gint x_org, y_org;
   gint scr_w, scr_h;
-  gchar *src, *buf;
+  gint brush_width, brush_height;
+  gint rowbytes;
+  guchar *src, *buf;
+  Tag brush_tag;
+  Precision brush_prec;
 
   /* make sure the popup exists and is not visible */
   if (bsp->brush_popup == NULL)
@@ -352,30 +377,31 @@ brush_popup_open (BrushSelectP bsp,
   gdk_window_get_origin (bsp->preview->window, &x_org, &y_org);
   scr_w = gdk_screen_width ();
   scr_h = gdk_screen_height ();
-  x = x_org + x - brush->mask->width * 0.5;
-  y = y_org + y - brush->mask->height * 0.5;
+  brush_width = canvas_width (brush->mask_canvas);
+  brush_height = canvas_height (brush->mask_canvas);
+
+  x = x_org + x - brush_width * 0.5;
+  y = y_org + y - brush_height * 0.5;
+  
   x = (x < 0) ? 0 : x;
   y = (y < 0) ? 0 : y;
-  x = (x + brush->mask->width > scr_w) ? scr_w - brush->mask->width : x;
-  y = (y + brush->mask->height > scr_h) ? scr_h - brush->mask->height : y;
-  gtk_preview_size (GTK_PREVIEW (bsp->brush_preview), brush->mask->width, brush->mask->height);
-
+  
+  x = (x + brush_width > scr_w) ? scr_w - brush_width : x;
+  y = (y + brush_height > scr_h) ? scr_h - brush_height : y;
+  gtk_preview_size (GTK_PREVIEW (bsp->brush_preview), brush_width, brush_height);
   gtk_widget_popup (bsp->brush_popup, x, y);
   
   /*  Draw the brush  */
-  buf = g_new (gchar, brush->mask->width);
-  src = temp_buf_data (brush->mask);
-  for (y = 0; y < brush->mask->height; y++)
+  buf = g_new (gchar, brush_width);
+  brush_tag = canvas_tag (brush->mask_canvas);
+  brush_prec = tag_precision (brush_tag);
+  src = canvas_data (brush->mask_canvas,0,0);
+  rowbytes = canvas_rowstride (brush->mask_canvas,0,0);
+  for (y = 0; y < brush_height; y++)
     {
-      /*  Invert the mask for display.  We're doing this because
-       *  a value of 255 in the  mask means it is full intensity.
-       *  However, it makes more sense for full intensity to show
-       *  up as black in this brush preview window...
-       */
-      for (x = 0; x < brush->mask->width; x++)
-	buf[x] = 255 - src[x];
-      gtk_preview_draw_row (GTK_PREVIEW (bsp->brush_preview), buf, 0, y, brush->mask->width);
-      src += brush->mask->width;
+      (*display_brush_get_row_funcs [brush_prec-1]) (buf, src, brush_width); 
+      gtk_preview_draw_row (GTK_PREVIEW (bsp->brush_preview), buf, 0, y, brush_width);
+      src += rowbytes;
     }
   g_free(buf);
   
@@ -390,13 +416,15 @@ brush_popup_close (BrushSelectP bsp)
   if (bsp->brush_popup != NULL)
     gtk_widget_hide (bsp->brush_popup);
 }
+
+
 static void
 display_brush (BrushSelectP bsp,
 	       GBrushP      brush,
 	       int          col,
 	       int          row)
 {
-  TempBuf * brush_buf;
+  Canvas *brush_buf_canvas;
   unsigned char * src, *s;
   unsigned char * buf, *b;
   int width, height;
@@ -404,47 +432,106 @@ display_brush (BrushSelectP bsp,
   int yend;
   int ystart;
   int i, j;
+  Tag brush_tag;
+  Precision brush_prec;
 
   buf = (unsigned char *) g_malloc (sizeof (char) * bsp->cell_width);
 
-  brush_buf = brush->mask;
-
+  brush_buf_canvas = brush->mask_canvas;
+  brush_tag = canvas_tag (brush->mask_canvas);
+  brush_prec = tag_precision (brush_tag);
+  
   /*  calculate the offset into the image  */
-  width = (brush_buf->width > bsp->cell_width) ? bsp->cell_width :
-    brush_buf->width;
-  height = (brush_buf->height > bsp->cell_height) ? bsp->cell_height :
-    brush_buf->height;
-
+  width = (canvas_width (brush_buf_canvas) > bsp->cell_width) ? bsp->cell_width :
+    canvas_width (brush_buf_canvas);
+  height = (canvas_height(brush_buf_canvas) > bsp->cell_height) ? bsp->cell_height :
+    canvas_height(brush_buf_canvas);
+  
   offset_x = col * bsp->cell_width + ((bsp->cell_width - width) >> 1);
   offset_y = row * bsp->cell_height + ((bsp->cell_height - height) >> 1)
     - bsp->scroll_offset;
 
   ystart = BOUNDS (offset_y, 0, bsp->preview->requisition.height);
   yend = BOUNDS (offset_y + height, 0, bsp->preview->requisition.height);
+  
+  /*  Get a generic pointer into the brush mask data */
+  {
+    gint rowbytes = canvas_rowstride (brush_buf_canvas,0,0);
+    guchar* src = canvas_data (brush_buf_canvas,0,0) + (ystart - offset_y) * rowbytes;
+    
+    /*  Fill the brush display buffer and display it */ 
+    for (i = ystart; i < yend; i++)
+      {
+      (*display_brush_get_row_funcs [brush_prec-1]) (buf, src, width); 
+	gtk_preview_draw_row (GTK_PREVIEW (bsp->preview), buf, offset_x, i, width);
+	src += rowbytes;
+      }
+  }
+  g_free (buf);
+}
 
-  /*  Get the pointer into the brush mask data  */
-  src = mask_buf_data (brush_buf) + (ystart - offset_y) * brush_buf->width;
-
-  for (i = ystart; i < yend; i++)
-    {
+#define BRUSH_SELECT_C_1_cw
+static void  
+display_brush_get_row_u8(  
+                        guchar *buf,
+			guchar *src,
+                        gint width
+		  )
+{
+  guint8 *s; 
+  guchar *b; 
+  gint i;
+      
+      s = (guint8*)src;
+      b = buf;
+      
       /*  Invert the mask for display.  We're doing this because
        *  a value of 255 in the  mask means it is full intensity.
        *  However, it makes more sense for full intensity to show
        *  up as black in this brush preview window...
        */
-      s = src;
-      b = buf;
-      for (j = 0; j < width; j++)
+      
+       for (i = 0; i < width; i++)
 	*b++ = 255 - *s++;
-
-      gtk_preview_draw_row (GTK_PREVIEW (bsp->preview), buf, offset_x, i, width);
-
-      src += brush_buf->width;
-    }
-
-  g_free (buf);
 }
 
+static void  
+display_brush_get_row_u16(  
+                        guchar *buf,
+			guchar *src,
+                        gint width
+		  )
+{
+  guint16 *s;
+  guchar *b; 
+  gint i;
+      
+      s = (guint16*)src;
+      b = buf;
+      
+      /*  Invert the mask for display. */ 
+      for (i = 0; i < width; i++)
+	*b++ = 255 - g_lookup_16_to_8[*s++];
+}
+
+static void  
+display_brush_get_row_float(  
+                        guchar *buf,
+			guchar *src,
+                        gint width
+		  )
+{
+  gfloat *s;
+  guchar *b; 
+  gint i;
+      
+      s = (gfloat*)src;
+      b = buf;
+      
+      /*  Invert the mask for display. */ 
+      for (i = 0; i < width; i++)
+	*b++ = 255 -  (gint)(255 * *s++ + .5);
+}
 
 static void
 display_setup (BrushSelectP bsp)
@@ -654,7 +741,9 @@ update_active_brush_field (BrushSelectP bsp)
   gtk_label_set (GTK_LABEL (bsp->brush_name), brush->name);
 
   /*  Set brush size  */
-  sprintf (buf, "(%d X %d)", brush->mask->width, brush->mask->height);
+#define BRUSH_SELECT_C_1_cw
+  /*sprintf (buf, "(%d X %d)", brush->mask->width, brush->mask->height);*/
+  sprintf (buf, "(%d X %d)", canvas_width(brush->mask_canvas), canvas_height(brush->mask_canvas));
   gtk_label_set (GTK_LABEL (bsp->brush_size), buf);
 
   /*  Set brush spacing  */
@@ -694,13 +783,17 @@ brush_select_events (GtkWidget    *widget,
 				 GDK_BUTTON1_MOTION_MASK |
 				 GDK_BUTTON_RELEASE_MASK),
 				NULL, NULL, bevent->time);
-
 	      /*  Make this brush the active brush  */
 	      select_brush (brush);
 
 	      /*  Show the brush popup window if the brush is too large  */
-	      if (brush->mask->width > bsp->cell_width ||
+#define BRUSH_SELECT_C_2_cw
+/*	      if (brush->mask->width > bsp->cell_width ||
 		  brush->mask->height > bsp->cell_height)
+		brush_popup_open (bsp, bevent->x, bevent->y, brush);
+*/
+	      if (canvas_width (brush->mask_canvas) > bsp->cell_width ||
+		  canvas_height(brush->mask_canvas) > bsp->cell_height)
 		brush_popup_open (bsp, bevent->x, bevent->y, brush);
 	    }
 	}

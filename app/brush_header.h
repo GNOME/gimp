@@ -18,21 +18,22 @@
 #ifndef __BRUSH_HEADER_H__
 #define __BRUSH_HEADER_H__
 
+#include "tag.h"
 typedef struct _BrushHeader BrushHeader;
 
 #define FILE_VERSION   2
 #define GBRUSH_MAGIC   (('G' << 24) + ('I' << 16) + ('M' << 8) + ('P' << 0))
 #define sz_BrushHeader (sizeof (BrushHeader))
 
+#define BRUSH_HEADER_C_2_cw
 /*  All field entries are MSB  */
-
 struct _BrushHeader
 {
   unsigned int   header_size; /*  header_size = sz_BrushHeader + brush name  */
   unsigned int   version;     /*  brush file version #  */
   unsigned int   width;       /*  width of brush  */
   unsigned int   height;      /*  height of brush  */
-  unsigned int   bytes;       /*  depth of brush in bytes--always 1 */
+  Tag            tag;         /*  = bpp in  version <= 2, but tag in  version >= 3*/
   unsigned int   magic_number;/*  GIMP brush magic number  */
   unsigned int   spacing;     /*  brush spacing  */
 };

@@ -247,12 +247,16 @@ paint_core_16_init  (
       warning ("No brushes available for use with this tool.");
       return FALSE;
     }
+ 
+ #define PAINT_CORE_16_C_2_cw 
   paint_core->spacing =
-    (double) MAX (brush->mask->height, brush->mask->width) *
+    (double) MAX (canvas_height (brush->mask_canvas), canvas_width (brush->mask_canvas)) *
     ((double) get_brush_spacing () / 100.0);
+
   if (paint_core->spacing < 1.0)
     paint_core->spacing = 1.0;
-  paint_core->brush_mask = canvas_from_tb (brush->mask);
+  
+  paint_core->brush_mask = brush->mask_canvas;
 
   /*  Allocate the undo structure  */
   if (undo_tiles)
@@ -378,8 +382,8 @@ paint_core_16_finish  (
    *  it is not done during the actual painting.
    */
   drawable_invalidate_preview (drawable);
-
-  canvas_delete (paint_core->brush_mask);
+#define PAINT_CORE_16_3_cw
+  /*canvas_delete (paint_core->brush_mask);*/
 }
 
 
@@ -667,7 +671,7 @@ paint_core_16_area  (
   
   dw = drawable_width (drawable);
   dh = drawable_height (drawable);
-
+  
   x1 = CLAMP (x - 1 , 0, dw);
   y1 = CLAMP (y - 1, 0, dh);
   x2 = CLAMP (x + bw + 1, 0, dw);
@@ -1069,17 +1073,11 @@ brush_mask_get  (
                  )
 {
   Canvas * bm;
-
   switch (brush_hardness)
     {
     case SOFT:
-#if 1
       bm = brush_mask_subsample (paint_core->brush_mask,
                                  paint_core->curx, paint_core->cury);
-#else
-      /* have to call subsample to resize brush by +2 */
-      bm = paint_core->brush_mask;
-#endif
       break;
     case HARD:
       bm = brush_mask_solidify (paint_core->brush_mask);
@@ -1088,7 +1086,6 @@ brush_mask_get  (
       bm = NULL;
       break;
     }
-
   return bm;
 }
 
@@ -1229,11 +1226,15 @@ brush_mask_solidify  (
   last_brush = brush_mask;
   if (solid_brush)
     canvas_delete (solid_brush);
+  
   solid_brush = canvas_new (canvas_tag (brush_mask),
                             canvas_width (brush_mask) + 2,
                             canvas_height (brush_mask) + 2,
                             canvas_tiling (brush_mask));
 
+  canvas_ref (solid_brush, 0, 0);
+  canvas_ref (brush_mask, 0, 0);
+  
   /*  get the data and advance one line into it  */
   data = canvas_data (solid_brush, 0, 1);
   src = canvas_data (brush_mask, 0, 0);
@@ -1247,6 +1248,10 @@ brush_mask_solidify  (
 	}
       data++;
     }
+  
+  canvas_unref (solid_brush, 0, 0);
+  canvas_unref (brush_mask, 0, 0);
+  
   return solid_brush;
 }
 

@@ -1,5 +1,6 @@
 Issues
 
+
 IMAGE_RENDER_C_1_cw 
 The tilebuf (where the display pixels get built) is hard coded
 to handle the max byte size right now.
@@ -24,8 +25,54 @@ Not sure what to do with the subsample parameter here. scale_area
 does use this value. 
 PIXELAREA_C_2_cw
 Same as above .. subsample not used.
+PIXELAREA_C_3_cw
+I fixed a portion width bug. If the width isnt clamped here
+it can actually be as large as the whole canvas (when canvas
+is flat_buf) even if the desired pixelarea width was originally
+set. pixelarea_width() was returning widths bigger than the
+original pixelarea width. 
+PIXELAREA_C_4_cw
+fixed portion height clamp bug (see above).
 
 
 PAINT_CORE_16_C_1_cw
-Commented out the grab pointer for debuggging
+Commented out the grab pointer for debugging
+PAINT_CORE_16_C_2_cw 
+I changed the brush mask to a canvas in paint_core_init.
+PAINT_CORE_16_3_cw
+I commented out this canvas_delete because the brush
+mask is a true canvas now. 
+
+
+PLUG_IN_C_1_cw
+Once the shadow canvas for drawable is working set up this.
+PLUG_IN_C_2_cw
+Once the shadow canvas for drawable is working set up this.
+
+
+BRUSHES_C_1_cw
+Need a way to decide what to make default brush precisions.
+Maybe make one of each type...
+BRUSHES_C_2_cw
+I dont know if there is an analogue to temp_buf_swap to put here. 
+There are a number of these in this file.
+
+
+BRUSH_SELECT_C_1_cw
+These routines should be passed tags when color brushes are
+introduced -- not just generic data like now. So for now
+this will only display gray-scale brushes.
+
+BRUSH_HEADER_C_2_cw
+Because I changed the name of this field and since gbr plugin
+actually includes this file (egads!!) I have to change
+the gbr.c plugin. Well I have to alter gbr to
+work with 16bit tags anyway...I didnt change the FILE_VERSION
+of gbrs yet though. Once the gbr.c actually saves 
+the real tag (not just bytes) we'll have to change the
+FILE_VERSION. Someone else may have plans about all this
+-we'll have to check.
+
+
+
 

@@ -606,6 +606,8 @@ pixelareagroup_portion_height (
                 }
               height = canvas_portion_height (pa->canvas,
                                               pa->x, pa->y);          
+#define PIXELAREA_C_4_cw
+              height = CLAMP (height, 0 , pag->region_height); 
               if (height < min_height)
                 min_height = height;
             }
@@ -644,6 +646,8 @@ pixelareagroup_portion_width (
                 }
               width = canvas_portion_width (pa->canvas,
                                             pa->x, pa->y);          
+#define PIXELAREA_C_3_cw
+              width = CLAMP (width, 0 , pag->region_width); 
               if (width < min_width)
                 min_width = width;
             }

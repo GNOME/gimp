@@ -27,12 +27,17 @@
 #include "brush_header.h"
 #include "brush_select.h"
 #include "buildmenu.h"
+#include "canvas.h"
 #include "colormaps.h"
 #include "datafiles.h"
 #include "errors.h"
 #include "general.h"
 #include "gimprc.h"
 #include "menus.h"
+#include "paint.h"
+#include "paint_funcs_area.h"
+#include "pixelarea.h"
+#include "tag.h"
 
 
 /*  global variables  */
@@ -65,7 +70,6 @@ void
 brushes_init ()
 {
   GSList * list;
-
   if (brush_list)
     brushes_free();
 
@@ -157,23 +161,51 @@ create_default_brush ()
   GBrushP brush;
   gchar filled[] = { 255 };
 
+#define BRUSHES_C_1_cw
+  Tag brush_tag = tag_new (PRECISION_U8, FORMAT_GRAY, ALPHA_YES);
+
   brush = g_new (GBrush, 1);
 
   brush->filename = NULL;
   brush->name = g_strdup ("Default");
-  brush->mask = temp_buf_new (1, 1, 1, 0, 0, filled);
   brush->spacing = 25;
-
+  
+  /*brush->mask = temp_buf_new (1, 1, 1, 0, 0, filled);*/
+  
+  brush->mask_canvas = canvas_new (brush_tag,1,1,TILING_NEVER);
+  canvas_ref (brush->mask_canvas,0,0);
+  
+  /* Fill the default brush canvas with white */
+  {
+    PixelArea area;
+    Paint *fill_color = paint_new (brush_tag, NULL);
+    gfloat fill_color_data[] = {1.0};
+    Tag data_tag = tag_new (PRECISION_FLOAT, tag_format (brush_tag), tag_alpha(brush_tag)); 
+    paint_load (fill_color, data_tag , (void *) &fill_color_data);
+    pixelarea_init (&area, brush->mask_canvas, NULL,
+		     0, 0,
+		     canvas_width (brush->mask_canvas),
+		     canvas_height (brush->mask_canvas),
+		     TRUE);
+    color_area (&area, fill_color);
+    paint_delete (fill_color);
+  }
+  canvas_unref (brush->mask_canvas,0,0);
+  
   /*  Swap the brush to disk (if we're being stingy with memory) */
+#define BRUSHES_C_1_cw
   if (stingy_memory_use)
-    temp_buf_swap (brush->mask);
-
+    {
+      /*temp_buf_swap (brush->mask);*/
+      g_warning( "create_default_brush: canvas_swap not implemented.");
+    }
   brush_list = insert_brush_in_list(brush_list, brush);
 
   /*  Make this the default, active brush  */
   active_brush = brush;
   have_default_brush = 1;
 }
+
 
 static void
 load_brush(char *filename)
@@ -185,7 +217,7 @@ load_brush(char *filename)
   BrushHeader header;
   unsigned int * hp;
   int i;
-
+  gint bytes; 
   brush = (GBrushP) g_malloc (sizeof (GBrush));
 
   brush->filename = g_strdup (filename);
@@ -224,9 +256,10 @@ load_brush(char *filename)
 	  return;
 	}
     }
-  /*  Check for correct version  */
-  if (header.version != FILE_VERSION)
+  /*  Check for version 1 or 2  */
+  if (header.version == 1 || header.version == 2)
     {
+      Format format = FORMAT_NONE;
       /*  If this is a version 1 brush, set the fp back 8 bytes  */
       if (header.version == 1)
 	{
@@ -235,18 +268,31 @@ load_brush(char *filename)
 	  /*  spacing is not defined in version 1  */
 	  header.spacing = 25;
 	}
-      else
-	{
-	  warning ("Unknown GIMP version #%d in \"%s\"\n", header.version,
-		   filename);
-	  fclose (fp);
-	  free_brush (brush);
-	  return;
-	}
+      
+      /* If its version 1 or 2 the tag field contains just
+         the number of bytes and must be converted to a true tag. */    
+      if (header.tag == 1)   /* 1 byte */ 
+	format = FORMAT_GRAY;
+      else if (header.tag == 3) /* 3 bytes */
+	format = FORMAT_RGB;
+      
+      /* version 1 or 2 are always u8 data as well */
+      header.tag = tag_new( PRECISION_U8, format, ALPHA_NO ); 
+    }
+  else if (header.version != FILE_VERSION)
+    {
+      warning ("Unknown GIMP version #%d in \"%s\"\n", header.version,
+	       filename);
+      fclose (fp);
+      free_brush (brush);
+      return;
     }
 
   /*  Get a new brush mask  */
-  brush->mask = temp_buf_new (header.width, header.height, header.bytes, 0, 0, NULL);
+  brush->mask_canvas = canvas_new ( header.tag, 
+					header.width,
+					header.height,
+					TILING_NEVER );					
   brush->spacing = header.spacing;
 
   /*  Read in the brush name  */
@@ -263,19 +309,27 @@ load_brush(char *filename)
     }
   else
     brush->name = g_strdup ("Unnamed");
-
+  
+  /* ref the canvas to allocate memory */
+  canvas_ref( brush->mask_canvas,0,0); 
+  
   /*  Read the brush mask data  */
-  /*  Read the image data  */
-  if ((fread (temp_buf_data (brush->mask), 1, header.width * header.height, fp)) <
-      header.width * header.height)
+  bytes = tag_bytes (header.tag); 
+  if ((fread (canvas_data (brush->mask_canvas,0,0), 1, header.width * header.height * bytes, fp)) <
+      header.width * header.height * bytes)
     warning ("GIMP brush file appears to be truncated.");
-
+  
+  canvas_unref (brush->mask_canvas,0,0); 
+  
   /*  Clean up  */
   fclose (fp);
 
   /*  Swap the brush to disk (if we're being stingy with memory) */
   if (stingy_memory_use)
-    temp_buf_swap (brush->mask);
+    {
+      /*temp_buf_swap (brush->mask);*/
+      g_warning( "load_brush: canvas_swap not implemented.");
+    }
 
   brush_list = insert_brush_in_list(brush_list, brush);
 
@@ -307,14 +361,20 @@ select_brush (GBrushP brush)
 {
   /*  Make sure the active brush is swapped before we get a new one... */
   if (stingy_memory_use)
-    temp_buf_swap (active_brush->mask);
+    {
+      /*temp_buf_swap (active_brush->mask);*/
+      g_warning( "select_brush: canvas_swap not implemented.");
+    }
 
   /*  Set the active brush  */
   active_brush = brush;
 
   /*  Make sure the active brush is unswapped... */
   if (stingy_memory_use)
-    temp_buf_unswap (brush->mask);
+    {
+      /*temp_buf_unswap (brush->mask);*/
+      g_warning( "select_brush: canvas_swap not implemented.");
+    }
 
   /*  Keep up appearances in the brush dialog  */
   if (brush_select_dialog)
@@ -346,13 +406,16 @@ static void
 free_brush (brush)
      GBrushP brush;
 {
+#if 0
   if (brush->mask)
     temp_buf_free (brush->mask);
+#endif
+  if (brush->mask_canvas);
+    canvas_delete (brush->mask_canvas);
   if (brush->filename)
     g_free (brush->filename);
   if (brush->name)
     g_free (brush->name);
-
   g_free (brush);
 }
 
