@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-07 02:24+0100\n"
-"PO-Revision-Date: 2003-11-24 09:29+0100\n"
+"POT-Creation-Date: 2004-01-13 08:20+0100\n"
+"PO-Revision-Date: 2004-01-12 15:04+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -156,7 +156,6 @@ msgstr "Z_ignoruj"
 msgid "_Export"
 msgstr "Wy_eksportuj"
 
-#. the headline
 #: libgimp/gimpexport.c:484
 #, c-format
 msgid ""
@@ -196,7 +195,7 @@ msgstr "Wybór czcionki"
 msgid "Gradient Selection"
 msgstr "Wybór gradientu"
 
-#: libgimp/gimpmenu.c:401
+#: libgimp/gimpmenu.c:407
 msgid "None"
 msgstr "Brak"
 
@@ -298,7 +297,7 @@ msgstr "Niezaładowany"
 #: libgimpthumb/gimpthumb-utils.c:195
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
-msgstr ""
+msgstr "Nie można utworzyć folderu \"%s\" z miniaturkami."
 
 #: libgimpwidgets/gimpcolorbutton.c:93
 msgid "/_Foreground Color"
@@ -577,19 +576,19 @@ msgstr "Korekcja kolorów"
 
 #: modules/cdisplay_proof.c:319
 msgid "Perceptual"
-msgstr ""
+msgstr "Percepcyjny"
 
 #: modules/cdisplay_proof.c:321
 msgid "Relative Colorimetric"
-msgstr ""
+msgstr "Względny kolometryczny"
 
 #: modules/cdisplay_proof.c:325
 msgid "Absolute Colorimetric"
-msgstr ""
+msgstr "Bwzwzględny kolometryczny"
 
 #: modules/cdisplay_proof.c:331
 msgid "_Intent:"
-msgstr ""
+msgstr "Pożądany _efekt:"
 
 #: modules/cdisplay_proof.c:334
 msgid "Choose an ICC Color Profile"
@@ -601,7 +600,7 @@ msgstr "_Profil:"
 
 #: modules/cdisplay_proof.c:345
 msgid "_Black Point Compensation"
-msgstr ""
+msgstr "Kompensacja _czarnego punktu"
 
 #: modules/colorsel_cmyk.c:73
 msgid "CMYK color selector"
