@@ -26,6 +26,10 @@
 #include <gtk/gtkdrawingarea.h>
 
 
+#define GIMP_PREVIEW_MAX_SIZE       1024
+#define GIMP_PREVIEW_MAX_POPUP_SIZE  256
+
+
 #define GIMP_TYPE_PREVIEW            (gimp_preview_get_type ())
 #define GIMP_PREVIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PREVIEW, GimpPreview))
 #define GIMP_PREVIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PREVIEW, GimpPreviewClass))

@@ -1,5 +1,27 @@
 2002-05-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpnavigationview.c: connect to size allocations of
+	the navigation preview's parent container and resize it so it
+	takes all available space.
+
+	* app/widgets/gimppreview.[ch]: replaced magic values by public
+	#defines of GIMP_PREVIEW_MAX_SIZE and GIMP_PREVIEW_MAX_POPUP_SIZE.
+	Increased the maximum preview size to 1024. Don't call the virtual
+	get_size() function if preview->viewable is NULL but call
+	gimp_preview_real_get_size() directly.
+
+	* app/widgets/gimpbufferpreview.c
+	* app/widgets/gimpcomponentlistitem.c
+	* app/widgets/gimpcontainermenu.c
+	* app/widgets/gimpdrawablepreview.c
+	* app/widgets/gimpimagepreview.c
+	* app/widgets/gimplistitem.c
+	* app/widgets/gimpmenuitem.c
+	* app/widgets/gimpnavigationpreview.c: replaced magic values by
+	the new costants.
+
+2002-05-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcolormapeditor.c: Added a comment to explain why
 	the "correct" size calculation is commented out and put back the
 	old buffer size so we don't crash. Made the code robust against

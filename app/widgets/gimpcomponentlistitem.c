@@ -144,7 +144,8 @@ gimp_component_list_item_new (GimpImage       *gimage,
   GimpListItem *list_item;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
-  g_return_val_if_fail (preview_size > 0 && preview_size <= 256, NULL);
+  g_return_val_if_fail (preview_size > 0 &&
+                        preview_size <= GIMP_PREVIEW_MAX_SIZE, NULL);
  
   list_item = g_object_new (GIMP_TYPE_COMPONENT_LIST_ITEM, NULL);
 

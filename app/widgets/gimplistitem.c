@@ -268,7 +268,8 @@ gimp_list_item_new (GimpViewable  *viewable,
   GimpListItem *list_item;
 
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
-  g_return_val_if_fail (preview_size > 0 && preview_size <= 256, NULL);
+  g_return_val_if_fail (preview_size > 0 &&
+                        preview_size <= GIMP_PREVIEW_MAX_SIZE, NULL);
 
   if (GIMP_IS_LAYER (viewable))
     {
@@ -344,7 +345,7 @@ gimp_list_item_set_preview_size (GimpListItem *list_item,
 				 gint          preview_size)
 {
   g_return_if_fail (GIMP_IS_LIST_ITEM (list_item));
-  g_return_if_fail (preview_size > 0 && preview_size <= 256 /* FIXME: 64 */);
+  g_return_if_fail (preview_size > 0 && preview_size <= GIMP_PREVIEW_MAX_SIZE);
 
   list_item->preview_size = preview_size;
 

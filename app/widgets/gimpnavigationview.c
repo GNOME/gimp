@@ -573,7 +573,7 @@ gimp_navigation_preview_new (GimpImage *gimage,
   GimpPreview *preview;
 
   g_return_val_if_fail (! gimage || GIMP_IS_IMAGE (gimage), NULL);
-  g_return_val_if_fail (size > 0 && size <= 256, NULL);
+  g_return_val_if_fail (size > 0 && size <= GIMP_PREVIEW_MAX_SIZE, NULL);
 
   preview = g_object_new (GIMP_TYPE_NAVIGATION_PREVIEW, NULL);
 
