@@ -354,11 +354,17 @@ edit_selection_motion (Tool           *tool,
 	    break;
 	
 	  case MaskToLayerTranslate:
-	    gimage_mask_float (gdisp->gimage, 
-			       gimage_active_drawable (gdisp->gimage),
-			       0, 0);
+	    if (!gimage_mask_float (gdisp->gimage, 
+				    gimage_active_drawable (gdisp->gimage),
+				    0, 0))
+	      {
+		/* no region to float, abort safely */
+		 draw_core_resume (edit_select.core, tool);
+		 return;
+	      }
 
-	    /* this is always the first move, since we switch to FloatingSelTranslate */
+	    /* this is always the first move, since we switch to 
+	       FloatingSelTranslate when finished here */
 	    gimp_image_undo_freeze (gdisp->gimage);
 	    edit_select.first_move = FALSE; 
 
@@ -443,18 +449,14 @@ edit_selection_draw (Tool *tool)
   gdisp = (GDisplay *) tool->gdisp_ptr;
   select = gdisp->select;
 
-  if (edit_select.edit_type == FloatingSelTranslate ||
-      edit_select.edit_type == MaskTranslate)
-    {
-      diff_x = SCALEX (gdisp, edit_select.cumlx);
-      diff_y = SCALEY (gdisp, edit_select.cumly);
-    }
-
   switch (edit_select.edit_type)
     {
     case MaskTranslate:
       layer = gimage_get_active_layer (gdisp->gimage);
       floating_sel = layer_is_floating_sel (layer);
+
+      diff_x = SCALEX (gdisp, edit_select.cumlx);
+      diff_y = SCALEY (gdisp, edit_select.cumly);
 
       /*  offset the current selection  */
       seg = select->segs_in;
@@ -552,7 +554,10 @@ edit_selection_draw (Tool *tool)
       break;
 
     case FloatingSelTranslate:
-      seg = select->segs_in;
+      diff_x = SCALEX (gdisp, edit_select.cumlx);
+      diff_y = SCALEY (gdisp, edit_select.cumly);
+
+     seg = select->segs_in;
       for (i = 0; i < select->num_segs_in; i++)
 	{
 	  seg->x1 += diff_x;
