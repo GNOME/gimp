@@ -253,7 +253,6 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_plugin_menu_register ("file_png_load", "<Load>");
   gimp_register_file_handler_mime ("file_png_load", "image/png");
   gimp_register_magic_load_handler ("file_png_load",
                                     "png", "", "0,string,\211PNG\r\n\032\n");
@@ -299,7 +298,6 @@ query (void)
                           G_N_ELEMENTS (save_args_defaults), 0,
                           save_args_defaults, NULL);
 
-  gimp_plugin_menu_register ("file_png_save_defaults", "<Save>");
   gimp_register_file_handler_mime ("file_png_save_defaults", "image/png");
   gimp_register_save_handler ("file_png_save_defaults", "png", "");
 

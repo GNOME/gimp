@@ -134,7 +134,6 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_plugin_menu_register ("file_gbr_load", "<Load>");
   gimp_plugin_icon_register ("file_gbr_load",
                              GIMP_ICON_TYPE_STOCK_ID, GIMP_STOCK_BRUSH);
   gimp_register_file_handler_mime ("file_gbr_load", "image/x-gimp-gbr");
@@ -155,13 +154,10 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_plugin_menu_register ("file_gbr_save", "<Save>");
   gimp_plugin_icon_register ("file_gbr_save",
                              GIMP_ICON_TYPE_STOCK_ID, GIMP_STOCK_BRUSH);
   gimp_register_file_handler_mime ("file_gbr_save", "image/x-gimp-gbr");
-  gimp_register_save_handler ("file_gbr_save",
-                              "gbr",
-                              "");
+  gimp_register_save_handler ("file_gbr_save", "gbr", "");
 }
 
 static void

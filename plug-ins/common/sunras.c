@@ -221,7 +221,6 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_plugin_menu_register ("file_sunras_load", "<Load>");
   gimp_register_file_handler_mime ("file_sunras_load", "image/x-sun-raster");
   gimp_register_magic_load_handler ("file_sunras_load",
 				    "im1,im8,im24,im32,rs,ras",
@@ -241,11 +240,9 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_plugin_menu_register ("file_sunras_save", "<Save>");
   gimp_register_file_handler_mime ("file_sunras_save", "image/x-sun-raster");
   gimp_register_save_handler ("file_sunras_save",
-                              "im1,im8,im24,im32,rs,ras",
-                              "");
+                              "im1,im8,im24,im32,rs,ras", "");
 }
 
 

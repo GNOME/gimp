@@ -405,11 +405,8 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_plugin_menu_register ("file_gif_save", "<Save>");
   gimp_register_file_handler_mime ("file_gif_save", "image/gif");
-  gimp_register_save_handler ("file_gif_save",
-			      "gif",
-			      "");
+  gimp_register_save_handler ("file_gif_save", "gif", "");
 }
 
 static void

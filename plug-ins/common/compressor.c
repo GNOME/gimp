@@ -246,7 +246,6 @@ query (void)
                               G_N_ELEMENTS (load_return_vals),
                               load_args, load_return_vals);
 
-      gimp_plugin_menu_register (compressor->load_proc, "<Load>");
       gimp_register_file_handler_mime (compressor->load_proc,
                                        compressor->mime_type);
       gimp_register_magic_load_handler (compressor->load_proc,
@@ -269,8 +268,7 @@ query (void)
       gimp_register_file_handler_mime (compressor->save_proc,
                                        compressor->mime_type);
       gimp_register_save_handler (compressor->save_proc,
-                                  compressor->extensions,
-                                  "");
+                                  compressor->extensions, "");
     }
 }
 

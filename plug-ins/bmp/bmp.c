@@ -124,7 +124,6 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_plugin_menu_register ("file_bmp_load", "<Load>");
   gimp_register_file_handler_mime ("file_bmp_load", "image/bmp");
   gimp_register_magic_load_handler ("file_bmp_load",
 				    "bmp",
@@ -143,11 +142,8 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_plugin_menu_register ("file_bmp_save", "<Save>");
   gimp_register_file_handler_mime ("file_bmp_save", "image/bmp");
-  gimp_register_save_handler ("file_bmp_save",
-                              "bmp",
-                              "");
+  gimp_register_save_handler ("file_bmp_save", "bmp", "");
 }
 
 static void

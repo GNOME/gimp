@@ -570,7 +570,6 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_plugin_menu_register ("file_ps_load", "<Load>");
   gimp_register_file_handler_mime ("file_ps_load", "application/postscript");
   gimp_register_magic_load_handler ("file_ps_load",
 				    "ps",
@@ -590,7 +589,6 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_plugin_menu_register ("file_eps_load", "<Load>");
   gimp_register_file_handler_mime ("file_eps_load", "image/x-eps");
   gimp_register_magic_load_handler ("file_eps_load",
 				    "eps",
@@ -610,7 +608,6 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_plugin_menu_register ("file_pdf_load", "<Load>");
   gimp_register_file_handler_mime ("file_pdf_load", "application/pdf");
   gimp_register_magic_load_handler ("file_pdf_load",
 				    "pdf",
@@ -641,11 +638,8 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_plugin_menu_register ("file_ps_save", "<Save>");
   gimp_register_file_handler_mime ("file_ps_save", "application/postscript");
-  gimp_register_save_handler ("file_ps_save",
-                              "ps",
-                              "");
+  gimp_register_save_handler ("file_ps_save", "ps", "");
 
   gimp_install_procedure ("file_eps_save",
                           "save image as Encapsulated PostScript image",
@@ -659,11 +653,8 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_plugin_menu_register ("file_eps_save", "<Save>");
   gimp_register_file_handler_mime ("file_eps_save", "application/x-eps");
-  gimp_register_save_handler ("file_eps_save",
-                              "eps",
-                              "");
+  gimp_register_save_handler ("file_eps_save", "eps", "");
 }
 
 static void

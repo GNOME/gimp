@@ -237,7 +237,6 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_plugin_menu_register ("file_tga_load", "<Load>");
   gimp_register_file_handler_mime ("file_tga_load", "image/x-tga");
   gimp_register_load_handler ("file_tga_load", "tga", "");
 
@@ -253,7 +252,6 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_plugin_menu_register ("file_tga_save", "<Save>");
   gimp_register_file_handler_mime ("file_tga_save", "image/x-tga");
   gimp_register_save_handler ("file_tga_save", "tga", "");
 }

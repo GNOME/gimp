@@ -145,7 +145,6 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
 			  load_args, load_return_vals);
 
-  gimp_plugin_menu_register ("file_pix_load", "<Load>");
   gimp_register_load_handler ("file_pix_load",
 			      "pix,matte,mask,alpha,als",
 			      "");
@@ -162,10 +161,7 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_plugin_menu_register ("file_pix_save", "<Save>");
-  gimp_register_save_handler ("file_pix_save",
-			      "pix,matte,mask,alpha,als",
-			      "");
+  gimp_register_save_handler ("file_pix_save", "pix,matte,mask,alpha,als", "");
 }
 
 /*

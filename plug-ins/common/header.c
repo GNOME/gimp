@@ -78,11 +78,8 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_plugin_menu_register ("file_header_save", "<Save>");
   gimp_register_file_handler_mime ("file_header_save", "text/x-chdr");
-  gimp_register_save_handler ("file_header_save",
-			      "h",
-			      "");
+  gimp_register_save_handler ("file_header_save", "h", "");
 }
 
 static void

@@ -163,7 +163,6 @@ query (void)
 			  load_args,
                           load_return_vals);
 
-  gimp_plugin_menu_register ("file_fli_load", "<Load>");
   gimp_register_file_handler_mime ("file_fli_load", "image/x-flic");
   gimp_register_magic_load_handler ("file_fli_load",
 				    "fli,flc",
@@ -182,12 +181,10 @@ query (void)
 			  G_N_ELEMENTS (save_args), 0,
 			  save_args, NULL);
 
-  gimp_plugin_menu_register ("file_fli_save", "<Save>");
   gimp_register_file_handler_mime ("file_fli_save", "image/x-flic");
   gimp_register_save_handler ("file_fli_save",
 			      "fli,flc",
 			      "");
-
 
   /*
    * Utility functions:

@@ -49,7 +49,7 @@
  *
  *  2004-01-01 / v3.0.11 / Daniel Rogers <dsrogers@phaseveloctiy.org>
  *       GIMP crashes on 0x0 layers, so we skip them.
- *       
+ *
  *  2003-11-27 / v3.0.10 / Adam D. Moss
  *       GIMP 1.3/2.0 needs its layer/channel names to be UTF8 or it
  *       fails wackily, so convert the strings from the PSD file to
@@ -435,7 +435,6 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_plugin_menu_register ("file_psd_load", "<Load>");
   gimp_register_file_handler_mime ("file_psd_load", "image/x-psd");
   gimp_register_magic_load_handler ("file_psd_load",
 				    "psd",
@@ -966,18 +965,18 @@ do_layer_record(FILE *fd, guint32 *offset, gint layernum)
   if (layer->num_channels)
     {
       layer->channel = g_new(PSDchannel, layer->num_channels);
-      
+
       for (i = 0; i < layer->num_channels; i++)
 	{
 	  PSDchannel *channel = layer->channel + i;
-	  
+
 	  /* table 11-13 */
 	  IFDBG printf("\t\t\t\tCHANNEL LENGTH INFO (%d)\n", i);
-	  
+
 	  channel->type = getgshort(fd, "channel id");
 	  (*offset)+=2;
 	  IFDBG printf("\t\t\t\t\tChannel TYPE: %d\n", channel->type);
-	  
+
 	  channel->compressedsize = getglong(fd, "channeldatalength");
 	  (*offset)+=4;
 	  IFDBG printf("\t\t\t\t\tChannel Data Length: %d\n",
@@ -1795,7 +1794,7 @@ load_image (const gchar *name)
 	  gint numc;
 	  guchar* merged_data = NULL;
 	  PSDlayer *layer = psd_image.layer + lnum;
-	  
+
 	  /*
 	   * since ps supports sloppy bounding boxes it is possible to
 	   * have a 0x0 or Xx0 or 0xY layer.  Gimp doesn't support a
@@ -1808,7 +1807,7 @@ load_image (const gchar *name)
 	      continue;
 	    }
 	  numc = layer->num_channels;
-	  
+
 	  IFDBG printf("Hey, it's a LAYER with %d channels!\n", numc);
 
 	  switch (gimagetype)

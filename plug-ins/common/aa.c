@@ -97,11 +97,8 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_plugin_menu_register ("file_aa_save", "<Save>");
   gimp_register_file_handler_mime ("file_aa_save", "text/plain");
-  gimp_register_save_handler ("file_aa_save",
-                              "txt,ansi,text",
-                              "");
+  gimp_register_save_handler ("file_aa_save", "txt,ansi,text", "");
 }
 
 /**

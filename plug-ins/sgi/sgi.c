@@ -127,7 +127,6 @@ query (void)
 			  load_args,
 			  load_return_vals);
 
-  gimp_plugin_menu_register ("file_sgi_load", "<Load>");
   gimp_register_file_handler_mime ("file_sgi_load", "image/x-sgi");
   gimp_register_magic_load_handler ("file_sgi_load",
 				    "sgi,rgb,bw,icon",
@@ -148,11 +147,8 @@ query (void)
 			  save_args,
 			  NULL);
 
-  gimp_plugin_menu_register ("file_sgi_save", "<Save>");
   gimp_register_file_handler_mime ("file_sgi_save", "image/x-sgi");
-  gimp_register_save_handler ("file_sgi_save",
-                              "sgi,rgb,bw,icon",
-                              "");
+  gimp_register_save_handler ("file_sgi_save", "sgi,rgb,bw,icon", "");
 }
 
 static void

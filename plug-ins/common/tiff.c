@@ -215,7 +215,6 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_plugin_menu_register ("file_tiff_load", "<Load>");
   gimp_register_file_handler_mime ("file_tiff_load", "image/tiff");
   gimp_register_magic_load_handler ("file_tiff_load",
                                     "tif,tiff",
@@ -236,11 +235,8 @@ query (void)
                           G_N_ELEMENTS (save_args_old), 0,
                           save_args_old, NULL);
 
-  gimp_plugin_menu_register ("file_tiff_save", "<Save>");
   gimp_register_file_handler_mime ("file_tiff_save", "image/tiff");
-  gimp_register_save_handler ("file_tiff_save",
-                              "tif,tiff",
-                              "");
+  gimp_register_save_handler ("file_tiff_save", "tif,tiff", "");
 
   gimp_install_procedure ("file_tiff_save2",
                           "saves files in the tiff file format",

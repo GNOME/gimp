@@ -128,7 +128,6 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_plugin_menu_register ("file_svg_load", "<Load>");
   gimp_register_file_handler_mime ("file_svg_load", "image/svg+xml");
   gimp_register_magic_load_handler ("file_svg_load",
 				    "svg", "",

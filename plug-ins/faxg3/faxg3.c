@@ -104,7 +104,6 @@ void query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_plugin_menu_register ("file_faxg3_load", "<Load>");
   gimp_register_file_handler_mime ("file_faxg3_load", "image/g3-fax");
   gimp_register_magic_load_handler ("file_faxg3_load",
 				    "g3",
