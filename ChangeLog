@@ -1,3 +1,8 @@
+Thu Nov 25 12:21:27 PST 1999 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/script-fu/script-fu-scripts.c: augh, fix stupid braino
+	from my last change
+
 1999-11-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/menus.c: Removed the definitions of the tearoff menu items

@@ -1076,8 +1076,6 @@ script_fu_interface (SFScript *script)
   GtkWidget *bbox;
   gchar  *title;
   gchar  *buf;
-  gchar **argv;
-  gint argc;
   int start_args;
   int i;
   guchar *color_cube;
@@ -1090,7 +1088,7 @@ script_fu_interface (SFScript *script)
     {
       INIT_I18N_UI();
 
-      gtk_init (&argc, &argv);
+      gtk_init (NULL, NULL);
       g_set_prgname ("script-fu");
       gtk_rc_parse (gimp_gtkrc ());
       
