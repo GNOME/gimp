@@ -1,3 +1,9 @@
+2001-11-02  Tor Lillqvist  <tml@iki.fi>
+
+	* makefile.cygwin: Remove
+
+	* makefile.mingw: Use this instead. Includes ../po/makefile.mingw.
+
 2001-10-30  Christian Rose  <menthos@menthos.com>
 
 	* sv.po: Updated Swedish translation.

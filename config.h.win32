@@ -71,7 +71,7 @@
 /* #undef ENABLE_MP */
 #define ENABLE_NLS 1
 /* #undef HAVE_CATGETS */
-/* #undef HAVE_DIRENT_H */
+#define HAVE_DIRENT_H 1
 /* #undef HAVE_DOPRNT */
 /* #undef HAVE_GETTEXT */
 /* #undef HAVE_IPC_H */

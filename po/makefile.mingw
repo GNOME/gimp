@@ -1,0 +1,143 @@
+## Makefile for compiling UTF-8 message catalogs on Win32
+##
+## Use: make -f makefile.mingw install
+##
+## To convert the clear-text message catalogs to binary form (.gmo)
+## files in the UTF-8 encoding of Unicode that we want,
+## you will need: - iconv, from the tests directory in libiconv
+##		  - msgfmt, from GNU gettext
+
+ifndef PACKAGE
+PACKAGE = gimp
+endif
+
+# This is what I use as installation target, from where installer-builders
+# or zip file creating scripts will pick it up. 
+LOCALEDIR = /install/gimp/locale
+
+LANGUAGES = $(subst .po,,$(wildcard *.po))
+LANGUAGES := $(subst .GB2312,,$(LANGUAGES))
+LANGUAGES := $(subst .Big5,,$(LANGUAGES))
+
+################################################################
+
+all : $(addsuffix .gmo,$(LANGUAGES))
+
+install : all
+	mkdir -p $(addsuffix /LC_MESSAGES,$(addprefix $(LOCALEDIR)/,$(LANGUAGES)))
+	for l in $(LANGUAGES); do cp $$l.gmo $(LOCALEDIR)/$$l/LC_MESSAGES/$(PACKAGE).mo; done
+
+.SUFFIXES: .po .utf8 .gmo
+
+.utf8.gmo:
+	sed -e 's,^"Content-Type: text/plain; charset=.*\\n","Content-Type: text/plain; charset=UTF-8\\n",' <$< >$<.xxx
+	msgfmt -o $@ $<.xxx
+	rm -f $<.xxx
+
+ca.utf8: ca.po
+	iconv -f ISO-8859-1 -t UTF-8 ca.po >$@
+
+cs.utf8: cs.po
+	iconv -f ISO-8859-2 -t UTF-8 cs.po >$@
+
+da.utf8: da.po
+	iconv -f ISO-8859-1 -t UTF-8 da.po >$@
+
+de.utf8: de.po
+	iconv -f ISO-8859-1 -t UTF-8 de.po >$@
+
+el.utf8: el.po
+	iconv -f ISO-8859-7 -t UTF-8 el.po >$@
+
+en_GB.utf8: en_GB.po
+	iconv -f ISO-8859-1 -t UTF-8 en_GB.po >$@
+
+es.utf8: es.po
+	iconv -f ISO-8859-1 -t UTF-8 es.po >$@
+
+et.utf8: et.po
+	iconv -f ISO-8859-1 -t UTF-8 et.po >$@
+
+eu.utf8: eu.po
+	iconv -f ISO-8859-1 -t UTF-8 eu.po >$@
+
+fi.utf8: fi.po
+	iconv -f ISO-8859-1 -t UTF-8 fi.po >$@
+
+fr.utf8: fr.po
+	iconv -f ISO-8859-1 -t UTF-8 fr.po >$@
+
+ga.utf8: ga.po
+	iconv -f ISO-8859-1 -t UTF-8 ga.po >$@
+
+gl.utf8: gl.po
+	iconv -f ISO-8859-1 -t UTF-8 gl.po >$@
+
+hr.utf8: hr.po
+	iconv -f ISO-8859-2 -t UTF-8 hr.po >$@
+
+hu.utf8: hu.po
+	iconv -f ISO-8859-2 -t UTF-8 hu.po >$@
+
+it.utf8: it.po
+	iconv -f ISO-8859-1 -t UTF-8 it.po >$@
+
+ja.utf8: ja.po
+	iconv -f EUC-JP -t UTF-8 ja.po >$@
+
+ko.utf8: ko.po
+	iconv -f EUC-KR -t UTF-8 ko.po >$@
+
+lt.utf8: lt.po
+	iconv -f ISO-8859-13 -t UTF-8 lt.po >$@
+
+nl.utf8: nl.po
+	iconv -f ISO-8859-1 -t UTF-8 nl.po >$@
+
+nn.utf8: no.po
+	iconv -f ISO-8859-1 -t UTF-8 nn.po >$@
+
+no.utf8: no.po
+	iconv -f ISO-8859-1 -t UTF-8 no.po >$@
+
+pl.utf8: pl.po
+	iconv -f ISO-8859-2 -t UTF-8 pl.po >$@
+
+pt.utf8: pt.po
+	iconv -f ISO-8859-1 -t UTF-8 pt.po >$@
+
+pt_BR.utf8: pt_BR.po
+	iconv -f ISO-8859-1 -t UTF-8 pt_BR.po >$@
+
+ro.utf8: ru.po
+	iconv -f ISO-8859-2 -t UTF-8 ro.po >$@
+
+ru.utf8: ru.po
+	iconv -f KOI8-R -t UTF-8 ru.po >$@
+
+sk.utf8: sk.po
+	iconv -f ISO-8859-2 -t UTF-8 sk.po >$@
+
+sl.utf8: sl.po
+	iconv -f ISO-8859-2 -t UTF-8 sl.po >$@
+
+sv.utf8: sv.po
+	iconv -f ISO-8859-1 -t UTF-8 sv.po >$@
+
+uk.utf8: uk.po
+	iconv -f KOI8-U -t UTF-8 uk.po >$@
+
+tr.utf8: tr.po
+	iconv -f ISO-8859-9 -t UTF-8 tr.po >$@
+
+wa.utf8: wa.po
+	iconv -f ISO-8859-1 -t UTF-8 wa.po >$@
+
+zh_CN.utf8: zh_CN.po
+	iconv -f GB2312 -t UTF-8 zh_CN.po >$@
+
+zh_TW.utf8: zh_TW.po
+	iconv -f BIG5 -t UTF-8 zh_TW.po >$@
+
+clean:
+	-rm *.utf8 *.gmo

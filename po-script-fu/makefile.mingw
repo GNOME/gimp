@@ -1,0 +1,2 @@
+PACKAGE = gimp-script-fu
+include ../po/makefile.mingw

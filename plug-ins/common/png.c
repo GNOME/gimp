@@ -650,7 +650,9 @@ load_image (gchar *filename)	/* I - File to load */
   */
 
   png_read_end(pp, info);
+#if PNG_LIBPNG_VER < 10200	/* ?? Anyway, this function isn't in 1.2.0*/
   png_read_destroy(pp, info, NULL);
+#endif
 
   g_free(pixel);
   g_free(pixels);
@@ -967,7 +969,9 @@ save_image (gchar  *filename,	        /* I - File to save to */
   };
 
   png_write_end (pp, info);
+#if PNG_LIBPNG_VER < 10200	/* ?? Anyway, this function isn't in 1.2.0*/
   png_write_destroy (pp);
+#endif
 
   g_free (pixel);
   g_free (pixels);

@@ -1,3 +1,9 @@
+2001-11-02  Tor Lillqvist  <tml@iki.fi>
+
+	* makefile.cygwin: Remove
+
+	* makefile.mingw: Use this instead. Includes ../po/makefile.mingw.
+
 2001-10-28  Andras Timar  <timar@gnome.hu>
 
 	* hu.po: Updated Hungarian translation.

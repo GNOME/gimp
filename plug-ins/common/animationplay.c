@@ -114,10 +114,18 @@
 #include <ctype.h>
 
 #include <gtk/gtk.h>
+
 #ifndef GDK_WINDOWING_WIN32
-#include <gdk/gdkx.h>
+# include <gdk/gdkx.h>
 #else
-#include <gdk/win32/gdkwin32.h>
+# if GTK_MAJOR_VERSION == 1 && GTK_MINOR_VERSION == 3 && GTK_MICRO_VERSION == 0
+/* The gtk+-1.3.0-win32-production distribution has an unsuitable gdkwin32.h */
+#  include <windows.h>
+#  define GDK_ROOT_WINDOW() ((guint32) HWND_DESKTOP)
+GdkPixmap *gdk_pixmap_foreign_new (guint32 anid);
+# else
+#  include <gdk/gdkwin32.h>
+# endif
 #endif
 
 #include <libgimp/gimp.h>

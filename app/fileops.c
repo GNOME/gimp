@@ -219,7 +219,7 @@ file_ops_post_init (void)
 
       file_proc = tmp->data;
 
-      help_page = g_strconcat ("filters/",
+      help_page = g_strconcat ("filters" G_DIR_SEPARATOR_S,
 			       g_basename (file_proc->prog),
 			       ".html",
 			       NULL);
@@ -242,7 +242,7 @@ file_ops_post_init (void)
 
       file_proc = tmp->data;
 
-      help_page = g_strconcat ("filters/",
+      help_page = g_strconcat ("filters" G_DIR_SEPARATOR_S,
 			       g_basename (file_proc->prog),
 			       ".html",
 			       NULL);

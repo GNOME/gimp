@@ -111,7 +111,7 @@ gimp_OBJECTS =					\
 	gimpwire.o
 
 gimp-$(GIMP_VER).dll : $(gimp_OBJECTS) gimp.def
-	$(GLIB)/build-dll gimp $(GIMP_VER) gimp.def -s $(gimp_OBJECTS) $(INTL_LIBS) $(GLIB_LIBS) -luser32
+	$(BUILD_DLL) gimp-$(GIMP_VER) - gimp.def -s $(gimp_OBJECTS) $(INTL_LIBS) $(GLIB_LIBS) -luser32
 
 # Pass -DLIBGIMP_COMPILATION when compiling gimp.c which
 # defines the exported variables.
@@ -139,7 +139,7 @@ gimpui_OBJECTS =				\
 	gimpwidgets.o
 
 gimpui-$(GIMP_VER).dll : $(gimpui_OBJECTS) gimpui.def
-	$(GLIB)/build-dll gimpui $(GIMP_VER) gimpui.def -s $(gimpui_OBJECTS) -L . -lgimp-$(GIMP_VER) $(GTK_LIBS) $(INTL_LIBS) $(GLIB_LIBS)
+	$(BUILD_DLL) gimpui-$(GIMP_VER) - gimpui.def -s $(gimpui_OBJECTS) -L . -lgimp-$(GIMP_VER) $(GTK_LIBS) $(INTL_LIBS) $(GLIB_LIBS)
 
 # Hack to get an updated makefile.mingw automatically after updating
 # makefile.mingw.in. Only for developer use.

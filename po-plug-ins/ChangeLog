@@ -1,3 +1,11 @@
+2001-11-02  Tor Lillqvist  <tml@iki.fi>
+
+	* fi.po: Fix typo in my e-mail address.
+
+	* makefile.cygwin: Remove
+
+	* makefile.mingw: Use this instead. Includes ../po/makefile.mingw.
+
 2001-10-31  Christian Rose  <menthos@menthos.com>
 
 	* sv.po: Updated the Swedish translation some.

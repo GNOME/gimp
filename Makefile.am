@@ -188,7 +188,12 @@ EXTRA_DIST = \
 	ps-menurc				\
 	gimp.m4					\
 	gimprc.win32				\
-	config.h.win32
+	config.h.win32				\
+	po/makefile.mingw			\
+	po-libgimp/makefile.mingw		\
+	po-plug-ins/makefile.mingw		\
+	po-script-fu/makefile.mingw
+
 
 gimpdata_DATA = \
 	gimp_logo.ppm		 \

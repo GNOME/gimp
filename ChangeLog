@@ -1,3 +1,47 @@
+2001-11-02  Tor Lillqvist  <tml@iki.fi>
+
+	* README.win32: Updates.
+
+	* configure.in: First preparations for autoconfiscated build on
+	Win32 (with gcc): Call AC_LIBTOOL_WIN32_DLL. Check for Windows
+	platform, and pure Windows. Set Automake macros PLATFORM_WIN32 and
+	OS_WIN32 correspondingly. Check for availability of lib.exe.
+
+	On Win32, don't check for GTK+ 1.2.8, but for
+	gtk+-1.3-win32-production using the PKG_CHECK_MODULES macro. This
+	macro is called only on Win32, so I hope it doesn't matter if
+	autoconf is run on a Unix system without pkg-config?
+
+	Assure -fnative-struct is used. Enclose nested AC_CHECK_HEADER
+	calls in brackets, otherwise Autoconf 2.52 will generate bad shell
+	code.
+
+	* Makefile.am (EXTRA_DIST): Distribute po*/makefile.mingw here.
+
+	* config.h.win32: Define HAVE_DIRENT_H. Mingw has it, and for MSVC
+	it is also available in build/win32/dirent.
+
+	* libgimp/makefile.mingw.in
+	* modules/makefile.mingw.in: Use new build-dll invokation syntax.
+
+	* app/fileops.c (file_ops_post_init): Use G_DIR_SEPARATOR_S.
+
+	* plug-ins/makefile.mingw.in: Don't build separate tiff_nolzw
+	plug-in. Build just one tiff.exe, but distribute alternative
+	libtiff DLLs (with identical entry points). Remove more
+	unnecessarily copied Makefiles when installing gflare,
+	gimpressionist or fractalexplorer stuff.
+
+	* plug-ins/common/animationplay.c: Don't include gdkwin32.h, as
+	the gtk+-1.3.0-win32-production dist doesn't include a good
+	one. Instead copy the two lines necessary.
+
+	* plug-ins/common/png.c (load_image): libpng 1.2.0 doesn't have
+	png_read_destroy() or png_write_destroy() as public functions.
+
+	* plug-ins/script-fu/script-fu.ico
+	* plug-ins/script-fu/script-fu.rc: Were missing from CVS.
+
 2001-10-31  Gediminas Paulauskas <menesis@delfi.lt>
 
 	* tips/gimp_tips.lt.txt: convert to UNIX newline format.

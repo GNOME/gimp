@@ -1,3 +1,0 @@
-PACKAGE = gimp-std-plugins
-INSTALLSUBDIR = gimp
-include ../../gtk+/po/makefile.cygwin

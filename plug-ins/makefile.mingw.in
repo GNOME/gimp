@@ -142,7 +142,6 @@ COMMON = 			\
 	tga			\
 	threshold_alpha		\
 	tiff			\
-	tiff_nolzw		\
 	tile			\
 	tileit			\
 	tiler			\
@@ -292,18 +291,18 @@ data-install : gap-data-install gflare-data-install gimpressionist-data-install 
 gap-data-install:
 	-mkdir $(DEST)/scripts
 	$(INSTALL) gap/*.scm $(DEST)/scripts
-	
+
 gflare-data-install:
 	-mkdir $(DEST)/gflare
 	-$(INSTALL) gflare/gflares/* $(DEST)/gflare
-	-rm $(DEST)/gflare/Makefile.am
+	-rm $(DEST)/gflare/Makefile*
 
 gimpressionist-data-install :
 	-mkdir $(DEST)/gimpressionist $(DEST)/gimpressionist/Brushes $(DEST)/gimpressionist/Paper $(DEST)/gimpressionist/Presets
 	$(INSTALL) gimpressionist/Brushes/*.p?m $(DEST)/gimpressionist/Brushes
 	$(INSTALL) gimpressionist/Paper/*.p?m $(DEST)/gimpressionist/Paper
 	-$(INSTALL) gimpressionist/Presets/* $(DEST)/gimpressionist/Presets
-	-rm $(DEST)/gimpressionist/Presets/Makefile.am
+	-rm $(DEST)/gimpressionist/Presets/Makefile*
 
 guash-data-install:
 
@@ -313,7 +312,7 @@ script-fu-data-install:
 	rm $(DEST)/scripts/test-sphere.scm
 	$(INSTALL) script-fu/scripts/*.jpg $(DEST)/scripts
 	for d in FractalExplorer/fractalexplorer-examples/*; do if [ -f $$d ]; then $(INSTALL) $$d $(DEST)/fractalexplorer; fi; done
-	rm $(DEST)/fractalexplorer/Makefile.am
+	-rm $(DEST)/fractalexplorer/Makefile*
 
 endif # ifndef MODULE
 endif # ifndef PLUGIN
@@ -419,7 +418,7 @@ OBJECTS = \
 	gap_arr_dialog.o \
 	gap_pdb_calls.o
 endif
-	
+
 ifdef EXTRA_gap_plugins
 OBJECTS = \
 	gap_main.o \
@@ -647,14 +646,7 @@ endif
 
 ifdef EXTRA_tiff
 EXTRACFLAGS = $(TIFF_CFLAGS)
-EXTRALIBS = $(TIFF_LZW_LIBS)
-endif
-
-ifdef EXTRA_tiff_nolzw
-OBJECTS = \
-	tiff.o
-EXTRACFLAGS = $(TIFF_CFLAGS)
-EXTRALIBS = $(TIFF_NOLZW_LIBS)
+EXTRALIBS = $(TIFF_LIBS)
 endif
 
 ifdef EXTRA_gimp_ace
