@@ -437,6 +437,36 @@ gimp_orientation_type_get_type (void)
 }
 
 GType
+gimp_image_resize_layers_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_IMAGE_RESIZE_LAYERS_NONE, "GIMP_IMAGE_RESIZE_LAYERS_NONE", "none" },
+    { GIMP_IMAGE_RESIZE_LAYERS_MATCHING, "GIMP_IMAGE_RESIZE_LAYERS_MATCHING", "matching" },
+    { GIMP_IMAGE_RESIZE_LAYERS_ALL, "GIMP_IMAGE_RESIZE_LAYERS_ALL", "all" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_IMAGE_RESIZE_LAYERS_NONE, N_("None"), NULL },
+    { GIMP_IMAGE_RESIZE_LAYERS_MATCHING, N_("Image-sized layers"), NULL },
+    { GIMP_IMAGE_RESIZE_LAYERS_ALL, N_("All layers"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpImageResizeLayers", values);
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_rotation_type_get_type (void)
 {
   static const GEnumValue values[] =

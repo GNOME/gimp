@@ -49,10 +49,10 @@ struct _ResizeDialog
   gint                   old_width;
   gint                   old_height;
   GimpUnit               old_unit;
-  GimpUnit               unit;
   GtkWidget             *box;
   GtkWidget             *offset;
   GtkWidget             *area;
+  GimpImageResizeLayers  resize_layers;
   GimpResizeCallback     callback;
   gpointer               user_data;
 };
@@ -88,6 +88,7 @@ resize_dialog_new (GimpViewable       *viewable,
                    gpointer            user_data)
 {
   GtkWidget    *dialog;
+  GtkWidget    *main_vbox;
   GtkWidget    *vbox;
   GtkWidget    *abox;
   GtkWidget    *frame;
@@ -153,12 +154,13 @@ resize_dialog_new (GimpViewable       *viewable,
 
   g_object_weak_ref (G_OBJECT (dialog), (GWeakNotify) g_free, private);
 
-  private->viewable   = viewable;
-  private->old_width  = width;
-  private->old_height = height;
-  private->old_unit   = unit;
-  private->callback   = callback;
-  private->user_data  = user_data;
+  private->viewable      = viewable;
+  private->old_width     = width;
+  private->old_height    = height;
+  private->old_unit      = unit;
+  private->resize_layers = GIMP_IMAGE_RESIZE_LAYERS_NONE;
+  private->callback      = callback;
+  private->user_data     = user_data;
 
   gimp_image_get_resolution (image, &xres, &yres);
 
@@ -176,20 +178,20 @@ resize_dialog_new (GimpViewable       *viewable,
                     G_CALLBACK (resize_dialog_response),
                     private);
 
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
-  gtk_widget_show (vbox);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
 
   frame = gimp_frame_new (text);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   gtk_container_add (GTK_CONTAINER (frame), private->box);
   gtk_widget_show (private->box);
 
   frame = gimp_frame_new (_("Offset"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   vbox = gtk_vbox_new (FALSE, 6);
@@ -269,6 +271,36 @@ resize_dialog_new (GimpViewable       *viewable,
                     G_CALLBACK (size_notify),
                     private);
 
+  if (GIMP_IS_IMAGE (viewable))
+    {
+      GtkWidget *hbox;
+      GtkWidget *label;
+      GtkWidget *combo;
+
+      frame = gimp_frame_new (_("Layers"));
+      gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+      gtk_widget_show (frame);
+
+      hbox = gtk_hbox_new (FALSE, 6);
+      gtk_container_add (GTK_CONTAINER (frame), hbox);
+      gtk_widget_show (hbox);
+
+      label = gtk_label_new_with_mnemonic (_("Resize _Layers:"));
+      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+      gtk_widget_show (label);
+
+      combo = gimp_enum_combo_box_new (GIMP_TYPE_IMAGE_RESIZE_LAYERS);
+      gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
+      gtk_widget_show (combo);
+
+      gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
+
+      gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+                                  private->resize_layers,
+                                  G_CALLBACK (gimp_int_combo_box_get_active),
+                                  &private->resize_layers);
+    }
+
   return dialog;
 }
 
@@ -299,6 +331,7 @@ resize_dialog_response (GtkWidget    *dialog,
                          height,
                          gimp_size_entry_get_refval (entry, 0),
                          gimp_size_entry_get_refval (entry, 1),
+                         private->resize_layers,
                          private->user_data);
       break;
 

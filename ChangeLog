@@ -1,3 +1,20 @@
+2005-02-24  Michael Natterer  <mitch@gimp.org>
+
+	Allow to resize layers with the image. Fixes bug #87789.
+
+	* app/core/core-enums.[ch]: added enum GimpImageResizeLayers which
+	can be one of { NONE, MATCHING, ALL }.
+
+	* app/core/gimpimage-resize.[ch]: added new function
+	gimp_image_resize_with_layers().
+
+	* app/dialogs/resize-dialog.[ch]: added a "Layers" frame
+	containing a "Resize Layers" combo box offering the choices above.
+	Changed GimpResizeCallback signature accordingly.
+
+	* app/actions/image-commands.c
+	* app/actions/layers-commands.c: changed accordingly.
+
 2005-02-23  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpbutton.c (gimp_button_button_press): don't

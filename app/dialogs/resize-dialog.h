@@ -20,13 +20,14 @@
 #define __RESIZE_DIALOG_H__
 
 
-typedef void (* GimpResizeCallback) (GtkWidget    *dialog,
-                                     GimpViewable *viewable,
-                                     gint          width,
-                                     gint          height,
-                                     gint          offset_x,
-                                     gint          offset_y,
-                                     gpointer      user_data);
+typedef void (* GimpResizeCallback) (GtkWidget             *dialog,
+                                     GimpViewable          *viewable,
+                                     gint                   width,
+                                     gint                   height,
+                                     gint                   offset_x,
+                                     gint                   offset_y,
+                                     GimpImageResizeLayers  resize_layers,
+                                     gpointer               user_data);
 
 
 GtkWidget * resize_dialog_new (GimpViewable          *viewable,

@@ -79,6 +79,7 @@ static void   image_resize_callback        (GtkWidget              *dialog,
                                             gint                    height,
                                             gint                    offset_x,
                                             gint                    offset_y,
+                                            GimpImageResizeLayers   resize_layers,
                                             gpointer                data);
 static void   image_print_size_callback    (GtkWidget              *dialog,
                                             GimpImage              *image,
@@ -423,13 +424,14 @@ image_configure_grid_cmd_callback (GtkAction *action,
 /*  private functions  */
 
 static void
-image_resize_callback (GtkWidget    *dialog,
-                       GimpViewable *viewable,
-                       gint          width,
-                       gint          height,
-                       gint          offset_x,
-                       gint          offset_y,
-                       gpointer      data)
+image_resize_callback (GtkWidget             *dialog,
+                       GimpViewable          *viewable,
+                       gint                   width,
+                       gint                   height,
+                       gint                   offset_x,
+                       gint                   offset_y,
+                       GimpImageResizeLayers  resize_layers,
+                       gpointer               data)
 {
   ImageResizeOptions *options = data;
 
@@ -448,10 +450,11 @@ image_resize_callback (GtkWidget    *dialog,
       progress = gimp_progress_start (GIMP_PROGRESS (gdisp),
                                       _("Resizing..."), FALSE);
 
-      gimp_image_resize (image,
-                         context,
-                         width, height, offset_x, offset_y,
-                         progress);
+      gimp_image_resize_with_layers (image,
+                                     context,
+                                     width, height, offset_x, offset_y,
+                                     resize_layers,
+                                     progress);
 
       if (progress)
         gimp_progress_end (progress);

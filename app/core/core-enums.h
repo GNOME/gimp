@@ -214,6 +214,18 @@ typedef enum
 } GimpOrientationType;
 
 
+#define GIMP_TYPE_IMAGE_RESIZE_LAYERS (gimp_image_resize_layers_get_type ())
+
+GType gimp_image_resize_layers_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_IMAGE_RESIZE_LAYERS_NONE,     /*< desc="None"               >*/
+  GIMP_IMAGE_RESIZE_LAYERS_MATCHING, /*< desc="Image-sized layers" >*/
+  GIMP_IMAGE_RESIZE_LAYERS_ALL       /*< desc="All layers"         >*/
+} GimpImageResizeLayers;
+
+
 #define GIMP_TYPE_ROTATION_TYPE (gimp_rotation_type_get_type ())
 
 GType gimp_rotation_type_get_type (void) G_GNUC_CONST;
