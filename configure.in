@@ -776,8 +776,9 @@ fi
 
 GIMPDOCS=
 if test -n "$DISTMAKE"; then
-  WEBBROWSER=webbrowser TIFF=tiff JPEG=jpeg PNG=png AA=aa MPEG=mpeg
-  XJT=xjt XPM=xpm GIMPDOCS=docs
+  HELPBROWSER=helpbrowser WEBBROWSER=webbrowser
+  TIFF=tiff JPEG=jpeg PNG=png AA=aa MPEG=mpeg XJT=xjt XPM=xpm
+  GIMPDOCS=docs
 fi
 
 dnl eek, what a hack...

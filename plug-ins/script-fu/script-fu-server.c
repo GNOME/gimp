@@ -27,6 +27,7 @@
 #include <ctype.h>
 #include <unistd.h>
 #include <time.h>
+#include <errno.h>
 #include <sys/time.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -451,12 +452,23 @@ read_from_client (gint filedes)
   command_len = (buffer [CMD_LEN_H_BYTE] << 8) | buffer [CMD_LEN_L_BYTE];
   command = g_new (gchar, command_len + 1);
 
-  for (i = 0; i < command_len; i++)
-    if (read (filedes, command + i, 1) == 0)
-      {
-	server_log ("Error reading command.  Read %d out of %d bytes.\n", i, command_len);
-	return -1;
-      }
+  for (i = 0; i < command_len;)
+    {
+      gint n = read (filedes, command + i, command_len - i);
+
+      if (n <= 0)
+        {
+          if (n < 0 && errno == EINTR)
+            continue;
+
+          server_log ("Error reading command.  Read %d out of %d bytes.\n",
+                      i, command_len);
+          g_free (command);
+          return -1;
+        }
+
+      i += n;
+    }      
 
   command[command_len] = '\0';
   cmd = g_new (SFCommand, 1);
