@@ -10,6 +10,9 @@ GIMP version 2.0.
 
 Overview of Changes in GIMP 1.3.23
 ==================================
+- Imported new WMF plug-in from libwmf2 [Sven, Mitch]
+- Fixed multi-head issues [Mitch]
+- Allow to merge visible paths [Simon]
 - Redone GimpDialog API [Mitch]
 - Load GIMP brush format version 3 [Sven]
 - Allow to use GIMP without any fonts [Sven]
@@ -17,7 +20,7 @@ Overview of Changes in GIMP 1.3.23
 
 Other contributors:
   Ville Pätsi, Eric Pierce, Tor Lillqvist, Henrik Brix Andersen,
-  Manish Singh
+  Manish Singh, Dom Lachowicz, Francis James Franklin, Dave Neary
 
 
 Overview of Changes in GIMP 1.3.22
