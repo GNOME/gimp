@@ -1,3 +1,9 @@
+Thu Feb 12 13:10:50 EST 1998 Adrian Likins <adrian@gimp.org>
+
+	*libgimp/gimp.h
+		applied a patch from Lauri Alanko to make
+	  libgimp/pdb bindings for some languages a little easier
+
 Wed Feb  4 19:04:35 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* channel.c 
