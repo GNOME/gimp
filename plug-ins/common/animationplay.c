@@ -116,13 +116,14 @@
 #include <gtk/gtk.h>
 
 #if defined (GDK_WINDOWING_X11)
-#include <gdk/x11/gdkx.h>
+#include <gdk/gdkx.h>
 #elif defined (GDK_WINDOWING_WIN32)
+/* the win32 headers aren't installed so the source location is needed */
 #include <gdk/win32/gdkwin32.h>
 #elif defined (GDK_WINDOWING_DIRECTFB)
 #include <gdk/gdkdirectfb.h>
 #elif defined (GDK_WINDOWING_FB)
-#include <gdk/linux-fb/gdkfb.h>
+#include <gdk/gdkfb.h>
 #endif
 
 #include <libgimp/gimp.h>

@@ -1,3 +1,10 @@
+2001-07-29  Hans Breuer  <hans@breuer.org>
+
+	* plug-ins/common/animationplay.c : REVERTED for all platforms
+	which do install headers 'reflect that GTK2 has its
+	gdk<x|win32|fb>.h files in the back-end sub directories'
+	only the win32 headers aren't installed ...
+
 2001-07-29  Sven Neumann  <sven@gimp.org>
 
 	* INSTALL
