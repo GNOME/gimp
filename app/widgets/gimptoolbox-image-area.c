@@ -32,7 +32,7 @@
 
 #include "gimpdialogfactory.h"
 #include "gimpdnd.h"
-#include "gimppreview.h"
+#include "gimpview.h"
 #include "gimptoolbox.h"
 #include "gimptoolbox-image-area.h"
 
@@ -46,11 +46,11 @@
 static void
 image_preview_clicked (GtkWidget       *widget,
                        GdkModifierType  state,
-		       GimpToolbox     *toolbox)
+                       GimpToolbox     *toolbox)
 {
   gimp_dialog_factory_dialog_raise (GIMP_DOCK (toolbox)->dialog_factory,
                                     gtk_widget_get_screen (widget),
-				    "gimp-image-list|gimp-image-grid", -1);
+                                    "gimp-image-list|gimp-image-grid", -1);
 }
 
 static void
@@ -72,37 +72,37 @@ gimp_toolbox_image_area_create (GimpToolbox *toolbox,
                                 gint         height)
 {
   GimpContext *context;
-  GtkWidget   *image_preview;
+  GtkWidget   *image_view;
 
   g_return_val_if_fail (GIMP_IS_TOOLBOX (toolbox), NULL);
 
   context = GIMP_DOCK (toolbox)->context;
 
-  image_preview =
-    gimp_preview_new_full_by_types (GIMP_TYPE_PREVIEW, GIMP_TYPE_IMAGE,
-                                    width, height, 0,
-                                    FALSE, TRUE, TRUE);
-  gimp_preview_set_viewable (GIMP_PREVIEW (image_preview),
-                             (GimpViewable *) gimp_context_get_image (context));
-  gtk_widget_show (image_preview);
+  image_view =
+    gimp_view_new_full_by_types (GIMP_TYPE_VIEW, GIMP_TYPE_IMAGE,
+                                 width, height, 0,
+                                 FALSE, TRUE, TRUE);
+  gimp_view_set_viewable (GIMP_VIEW (image_view),
+                          (GimpViewable *) gimp_context_get_image (context));
+  gtk_widget_show (image_view);
 
-  gimp_help_set_help_data (image_preview,
-			   _("The active image.\n"
-			     "Click to open the Image Dialog."), NULL);
+  gimp_help_set_help_data (image_view,
+                           _("The active image.\n"
+                             "Click to open the Image Dialog."), NULL);
 
   g_signal_connect_object (context, "image_changed",
-			   G_CALLBACK (gimp_preview_set_viewable),
-                           image_preview,
-			   G_CONNECT_SWAPPED);
+                           G_CALLBACK (gimp_view_set_viewable),
+                           image_view,
+                           G_CONNECT_SWAPPED);
 
-  g_signal_connect (image_preview, "clicked",
-		    G_CALLBACK (image_preview_clicked),
-		    toolbox);
+  g_signal_connect (image_view, "clicked",
+                    G_CALLBACK (image_preview_clicked),
+                    toolbox);
 
-  gimp_dnd_viewable_dest_add (image_preview,
+  gimp_dnd_viewable_dest_add (image_view,
                               GIMP_TYPE_IMAGE,
                               image_preview_drop_image,
                               context);
 
-  return image_preview;
+  return image_view;
 }

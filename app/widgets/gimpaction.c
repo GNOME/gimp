@@ -36,7 +36,7 @@
 #include "core/gimpviewable.h"
 
 #include "gimpaction.h"
-#include "gimppreview.h"
+#include "gimpview.h"
 
 
 enum
@@ -298,17 +298,17 @@ gimp_action_set_proxy (GimpAction *action,
     }
   else if (action->viewable)
     {
-      GtkWidget *preview;
+      GtkWidget *view;
 
-      preview = gtk_image_menu_item_get_image (GTK_IMAGE_MENU_ITEM (proxy));
+      view = gtk_image_menu_item_get_image (GTK_IMAGE_MENU_ITEM (proxy));
 
-      if (preview && ! GIMP_IS_PREVIEW (preview))
+      if (view && ! GIMP_IS_VIEW (view))
         {
           gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (proxy), NULL);
-          preview = NULL;
+          view = NULL;
         }
 
-      if (! preview)
+      if (! view)
         {
           GdkScreen *screen;
           gint       width, height;
@@ -318,15 +318,15 @@ gimp_action_set_proxy (GimpAction *action,
                                              GTK_ICON_SIZE_MENU,
                                              &width, &height);
 
-          preview = gimp_preview_new_full (action->viewable,
+          view = gimp_view_new_full (action->viewable,
                                            width - 2, height - 2, 1,
                                            FALSE, FALSE, FALSE);
-          gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (proxy), preview);
-          gtk_widget_show (preview);
+          gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (proxy), view);
+          gtk_widget_show (view);
         }
       else
         {
-          gimp_preview_set_viewable (GIMP_PREVIEW (preview), action->viewable);
+          gimp_view_set_viewable (GIMP_VIEW (view), action->viewable);
         }
     }
   else
@@ -335,7 +335,7 @@ gimp_action_set_proxy (GimpAction *action,
 
       image = gtk_image_menu_item_get_image (GTK_IMAGE_MENU_ITEM (proxy));
 
-      if (image && (GIMP_IS_PREVIEW (image) || GIMP_IS_COLOR_AREA (image)))
+      if (image && (GIMP_IS_VIEW (image) || GIMP_IS_COLOR_AREA (image)))
         {
           gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (proxy), NULL);
           g_object_notify (G_OBJECT (action), "stock-id");

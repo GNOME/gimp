@@ -35,7 +35,7 @@
 #include "paint/gimppaintoptions.h"
 
 #include "widgets/gimpdialogfactory.h"
-#include "widgets/gimppreview.h"
+#include "widgets/gimpview.h"
 #include "widgets/gimppreviewrenderergradient.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gtkhwrapbox.h"
@@ -72,7 +72,7 @@ static GtkWidget * gradient_options_gui (GimpGradientOptions *gradient,
 
 static void gradient_options_reverse_notify (GimpPaintOptions *paint_options,
                                              GParamSpec       *pspec,
-                                             GimpPreview      *preview);
+                                             GimpView         *view);
 
 
 GtkWidget *
@@ -209,7 +209,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
 
       gradient_options_reverse_notify (GIMP_PAINT_OPTIONS (config),
                                        NULL,
-                                       GIMP_PREVIEW (preview));
+                                       GIMP_VIEW (preview));
     }
 
   /*  the "incremental" toggle  */
@@ -493,11 +493,11 @@ gradient_options_gui (GimpGradientOptions *gradient,
 static void
 gradient_options_reverse_notify (GimpPaintOptions *paint_options,
                                  GParamSpec       *pspec,
-                                 GimpPreview      *preview)
+                                 GimpView         *view)
 {
   GimpPreviewRendererGradient *rendergrad;
 
-  rendergrad = GIMP_PREVIEW_RENDERER_GRADIENT (preview->renderer);
+  rendergrad = GIMP_PREVIEW_RENDERER_GRADIENT (view->renderer);
 
   gimp_preview_renderer_gradient_set_reverse (rendergrad,
                                               paint_options->gradient_options->gradient_reverse);

@@ -161,13 +161,13 @@ typedef struct _GimpTemplateEditor           GimpTemplateEditor;
 typedef struct _GimpThumbBox                 GimpThumbBox;
 
 
-/*  previews  */
+/*  views  */
 
-typedef struct _GimpPreview                  GimpPreview;
+typedef struct _GimpView                     GimpView;
 typedef struct _GimpNavigationPreview        GimpNavigationPreview;
 
 
-/*  preview rednerers  */
+/*  preview renderers  */
 
 typedef struct _GimpPreviewRenderer          GimpPreviewRenderer;
 typedef struct _GimpPreviewRendererBrush     GimpPreviewRendererBrush;

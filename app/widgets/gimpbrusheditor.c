@@ -34,13 +34,13 @@
 
 #include "gimpbrusheditor.h"
 #include "gimpenumwidgets.h"
-#include "gimppreview.h"
+#include "gimpview.h"
 
 #include "gimp-intl.h"
 
 
-#define BRUSH_PREVIEW_WIDTH  128
-#define BRUSH_PREVIEW_HEIGHT  96
+#define BRUSH_VIEW_WIDTH  128
+#define BRUSH_VIEW_HEIGHT  96
 
 
 /*  local function prototypes  */
@@ -111,14 +111,14 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
   gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  editor->preview = gimp_preview_new_full_by_types (GIMP_TYPE_PREVIEW,
-                                                    GIMP_TYPE_BRUSH,
-                                                    BRUSH_PREVIEW_WIDTH,
-                                                    BRUSH_PREVIEW_HEIGHT, 0,
-                                                    FALSE, FALSE, TRUE);
+  editor->preview = gimp_view_new_full_by_types (GIMP_TYPE_VIEW,
+                                                 GIMP_TYPE_BRUSH,
+                                                 BRUSH_VIEW_WIDTH,
+                                                 BRUSH_VIEW_HEIGHT, 0,
+                                                 FALSE, FALSE, TRUE);
   gtk_widget_set_size_request (editor->preview,
-                               BRUSH_PREVIEW_WIDTH, BRUSH_PREVIEW_HEIGHT);
-  gimp_preview_set_expand (GIMP_PREVIEW (editor->preview), TRUE);
+                               BRUSH_VIEW_WIDTH, BRUSH_VIEW_HEIGHT);
+  gimp_view_set_expand (GIMP_VIEW (editor->preview), TRUE);
   gtk_container_add (GTK_CONTAINER (frame), editor->preview);
   gtk_widget_show (editor->preview);
 
@@ -236,8 +236,8 @@ gimp_brush_editor_set_data (GimpDataEditor *editor,
                       G_CALLBACK (gimp_brush_editor_notify_brush),
                       editor);
 
-  gimp_preview_set_viewable (GIMP_PREVIEW (brush_editor->preview),
-                             (GimpViewable *) data);
+  gimp_view_set_viewable (GIMP_VIEW (brush_editor->preview),
+                          (GimpViewable *) data);
 
   if (editor->data && GIMP_IS_BRUSH_GENERATED (editor->data))
     {

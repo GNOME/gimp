@@ -37,7 +37,7 @@
 #include "gimpbufferview.h"
 #include "gimpdnd.h"
 #include "gimphelp-ids.h"
-#include "gimppreview.h"
+#include "gimpview.h"
 #include "gimppreviewrenderer.h"
 #include "gimpuimanager.h"
 
@@ -109,11 +109,11 @@ gimp_buffer_view_init (GimpBufferView *view)
 
 GtkWidget *
 gimp_buffer_view_new (GimpViewType     view_type,
-		      GimpContainer   *container,
-		      GimpContext     *context,
-		      gint             preview_size,
-                      gint             preview_border_width,
-		      GimpMenuFactory *menu_factory)
+                      GimpContainer   *container,
+                      GimpContext     *context,
+                      gint             view_size,
+                      gint             view_border_width,
+                      GimpMenuFactory *menu_factory)
 {
   GimpBufferView      *buffer_view;
   GimpContainerEditor *editor;
@@ -125,7 +125,7 @@ gimp_buffer_view_new (GimpViewType     view_type,
   if (! gimp_container_editor_construct (GIMP_CONTAINER_EDITOR (buffer_view),
                                          view_type,
                                          container, context,
-                                         preview_size, preview_border_width,
+                                         view_size, view_border_width,
                                          menu_factory, "<Buffers>",
                                          "/buffers-popup"))
     {
@@ -146,14 +146,14 @@ gimp_buffer_view_new (GimpViewType     view_type,
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
-  buffer_view->global_preview = gimp_preview_new_by_types (GIMP_TYPE_PREVIEW,
-                                                           GIMP_TYPE_BUFFER,
-                                                           preview_size,
-                                                           preview_border_width,
+  buffer_view->global_preview = gimp_view_new_by_types (GIMP_TYPE_VIEW,
+                                                        GIMP_TYPE_BUFFER,
+                                                        view_size,
+                                                        view_border_width,
                                                            FALSE);
   gtk_widget_set_size_request (buffer_view->global_preview,
-                               preview_size + 2 * preview_border_width,
-                               preview_size + 2 * preview_border_width);
+                               view_size + 2 * view_border_width,
+                               view_size + 2 * view_border_width);
   gtk_box_pack_start (GTK_BOX (hbox), buffer_view->global_preview,
                       FALSE, FALSE, 0);
   gtk_widget_show (buffer_view->global_preview);
@@ -193,17 +193,17 @@ gimp_buffer_view_new (GimpViewType     view_type,
                                    "buffers-delete", NULL);
 
   gimp_container_view_enable_dnd (editor->view,
-				  GTK_BUTTON (buffer_view->paste_button),
-				  GIMP_TYPE_BUFFER);
+                                  GTK_BUTTON (buffer_view->paste_button),
+                                  GIMP_TYPE_BUFFER);
   gimp_container_view_enable_dnd (editor->view,
-				  GTK_BUTTON (buffer_view->paste_into_button),
-				  GIMP_TYPE_BUFFER);
+                                  GTK_BUTTON (buffer_view->paste_into_button),
+                                  GIMP_TYPE_BUFFER);
   gimp_container_view_enable_dnd (editor->view,
-				  GTK_BUTTON (buffer_view->paste_as_new_button),
-				  GIMP_TYPE_BUFFER);
+                                  GTK_BUTTON (buffer_view->paste_as_new_button),
+                                  GIMP_TYPE_BUFFER);
   gimp_container_view_enable_dnd (editor->view,
-				  GTK_BUTTON (buffer_view->delete_button),
-				  GIMP_TYPE_BUFFER);
+                                  GTK_BUTTON (buffer_view->delete_button),
+                                  GIMP_TYPE_BUFFER);
 
   gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager, editor);
 
@@ -212,7 +212,7 @@ gimp_buffer_view_new (GimpViewType     view_type,
 
 static void
 gimp_buffer_view_activate_item (GimpContainerEditor *editor,
-				GimpViewable        *viewable)
+                                GimpViewable        *viewable)
 {
   GimpBufferView *view = GIMP_BUFFER_VIEW (editor);
   GimpContainer  *container;
@@ -232,8 +232,8 @@ static void
 gimp_buffer_view_buffer_changed (Gimp           *gimp,
                                  GimpBufferView *buffer_view)
 {
-  gimp_preview_set_viewable (GIMP_PREVIEW (buffer_view->global_preview),
-                             (GimpViewable *) gimp->global_buffer);
+  gimp_view_set_viewable (GIMP_VIEW (buffer_view->global_preview),
+                          (GimpViewable *) gimp->global_buffer);
 
   if (gimp->global_buffer)
     {
@@ -251,20 +251,20 @@ gimp_buffer_view_buffer_changed (Gimp           *gimp,
 }
 
 static void
-gimp_buffer_view_preview_notify (GimpContainerView *view,
+gimp_buffer_view_preview_notify (GimpContainerView *container_view,
                                  GParamSpec        *pspec,
                                  GimpBufferView    *buffer_view)
 {
-  GimpPreview *preview = GIMP_PREVIEW (buffer_view->global_preview);
-  gint         preview_size;
-  gint         preview_border_width;
+  GimpView *view = GIMP_VIEW (buffer_view->global_preview);
+  gint      view_size;
+  gint      view_border_width;
 
-  preview_size = gimp_container_view_get_preview_size (view,
-                                                       &preview_border_width);
+  view_size = gimp_container_view_get_preview_size (container_view,
+                                                    &view_border_width);
 
-  gimp_preview_renderer_set_size (preview->renderer,
-                                  preview_size, preview_border_width);
+  gimp_preview_renderer_set_size (view->renderer,
+                                  view_size, view_border_width);
   gtk_widget_set_size_request (buffer_view->global_preview,
-                               preview_size + 2 * preview_border_width,
-                               preview_size + 2 * preview_border_width);
+                               view_size + 2 * view_border_width,
+                               view_size + 2 * view_border_width);
 }

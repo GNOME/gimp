@@ -41,13 +41,13 @@
 #include "gimpdevices.h"
 #include "gimpdevicestatus.h"
 #include "gimpdialogfactory.h"
-#include "gimppreview.h"
+#include "gimpview.h"
 #include "gimppropwidgets.h"
 
 #include "gimp-intl.h"
 
 
-#define CELL_SIZE 20 /* The size of the preview cells */
+#define CELL_SIZE 20 /* The size of the view cells */
 
 
 struct _GimpDeviceStatusEntry
@@ -200,7 +200,7 @@ gimp_device_status_init (GimpDeviceStatus *status)
 
       entry->tool = gimp_prop_preview_new (G_OBJECT (context),
                                             "tool", CELL_SIZE);
-      GIMP_PREVIEW (entry->tool)->clickable = TRUE;
+      GIMP_VIEW (entry->tool)->clickable = TRUE;
       gtk_table_attach (GTK_TABLE (status->table), entry->tool,
                         1, 2, row, row + 1,
                         0, 0, 0, 0);
@@ -237,8 +237,8 @@ gimp_device_status_init (GimpDeviceStatus *status)
 
       entry->brush = gimp_prop_preview_new (G_OBJECT (context),
                                              "brush", CELL_SIZE);
-      GIMP_PREVIEW (entry->brush)->clickable  = TRUE;
-      GIMP_PREVIEW (entry->brush)->show_popup = TRUE;
+      GIMP_VIEW (entry->brush)->clickable  = TRUE;
+      GIMP_VIEW (entry->brush)->show_popup = TRUE;
       gtk_table_attach (GTK_TABLE (status->table), entry->brush,
                         4, 5, row, row + 1,
                         0, 0, 0, 0);
@@ -251,8 +251,8 @@ gimp_device_status_init (GimpDeviceStatus *status)
 
       entry->pattern = gimp_prop_preview_new (G_OBJECT (context),
                                                "pattern", CELL_SIZE);
-      GIMP_PREVIEW (entry->pattern)->clickable  = TRUE;
-      GIMP_PREVIEW (entry->pattern)->show_popup = TRUE;
+      GIMP_VIEW (entry->pattern)->clickable  = TRUE;
+      GIMP_VIEW (entry->pattern)->show_popup = TRUE;
       gtk_table_attach (GTK_TABLE (status->table), entry->pattern,
                         5, 6, row, row + 1,
                         0, 0, 0, 0);
@@ -265,8 +265,8 @@ gimp_device_status_init (GimpDeviceStatus *status)
 
       entry->gradient = gimp_prop_preview_new (G_OBJECT (context),
                                                 "gradient", 2 * CELL_SIZE);
-      GIMP_PREVIEW (entry->gradient)->clickable  = TRUE;
-      GIMP_PREVIEW (entry->gradient)->show_popup = TRUE;
+      GIMP_VIEW (entry->gradient)->clickable  = TRUE;
+      GIMP_VIEW (entry->gradient)->show_popup = TRUE;
       gtk_table_attach (GTK_TABLE (status->table), entry->gradient,
                         6, 7, row, row + 1,
                         0, 0, 0, 0);

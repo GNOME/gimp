@@ -29,7 +29,7 @@
 
 #include "core/gimpviewable.h"
 
-#include "gimppreview.h"
+#include "gimpview.h"
 #include "gimppreviewrenderer.h"
 #include "gimppreview-popup.h"
 
@@ -118,8 +118,8 @@ gimp_preview_popup_show (GtkWidget      *widget,
                     popup);
 
   popup->timeout_id = g_timeout_add (PREVIEW_POPUP_DELAY,
-				     (GSourceFunc) gimp_preview_popup_timeout,
-				     popup);
+                                     (GSourceFunc) gimp_preview_popup_timeout,
+                                     popup);
 
   g_object_set_data_full (G_OBJECT (widget), "gimp-preview-popup", popup,
                           (GDestroyNotify) gimp_preview_popup_hide);
@@ -155,7 +155,7 @@ gimp_preview_popup_hide (GimpPreviewPopup *popup)
 
 static gboolean
 gimp_preview_popup_button_release (GtkWidget        *widget,
-				   GdkEventButton   *bevent,
+                                   GdkEventButton   *bevent,
                                    GimpPreviewPopup *popup)
 {
   if (bevent->button == popup->button)
@@ -176,7 +176,7 @@ gimp_preview_popup_timeout (GimpPreviewPopup *popup)
 {
   GtkWidget    *window;
   GtkWidget    *frame;
-  GtkWidget    *preview;
+  GtkWidget    *view;
   GdkScreen    *screen;
   GdkRectangle  rect;
   gint          monitor;
@@ -197,14 +197,14 @@ gimp_preview_popup_timeout (GimpPreviewPopup *popup)
   gtk_container_add (GTK_CONTAINER (window), frame);
   gtk_widget_show (frame);
 
-  preview = gimp_preview_new_full (popup->viewable,
-                                   popup->popup_width,
-                                   popup->popup_height,
-                                   0, TRUE, FALSE, FALSE);
-  gimp_preview_renderer_set_dot_for_dot (GIMP_PREVIEW (preview)->renderer,
+  view = gimp_view_new_full (popup->viewable,
+                             popup->popup_width,
+                             popup->popup_height,
+                             0, TRUE, FALSE, FALSE);
+  gimp_preview_renderer_set_dot_for_dot (GIMP_VIEW (view)->renderer,
                                          popup->dot_for_dot);
-  gtk_container_add (GTK_CONTAINER (frame), preview);
-  gtk_widget_show (preview);
+  gtk_container_add (GTK_CONTAINER (frame), view);
+  gtk_widget_show (view);
 
   gdk_window_get_origin (popup->widget->window, &x, &y);
 

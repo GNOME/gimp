@@ -36,7 +36,7 @@
 #include "gimpcontainerview.h"
 #include "gimpdnd.h"
 #include "gimpdocked.h"
-#include "gimppreview.h"
+#include "gimpview.h"
 #include "gimppreviewrenderer.h"
 #include "gimppropwidgets.h"
 
@@ -236,8 +236,8 @@ gimp_container_box_get_preview (GimpDocked   *docked,
     border_width = 0;
 
   preview = gimp_prop_preview_new (G_OBJECT (context), prop_name, height);
-  GIMP_PREVIEW (preview)->renderer->size = -1;
-  gimp_preview_renderer_set_size_full (GIMP_PREVIEW (preview)->renderer,
+  GIMP_VIEW (preview)->renderer->size = -1;
+  gimp_preview_renderer_set_size_full (GIMP_VIEW (preview)->renderer,
                                        width, height, border_width);
 
   return preview;

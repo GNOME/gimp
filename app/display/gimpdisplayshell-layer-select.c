@@ -30,7 +30,7 @@
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 
-#include "widgets/gimppreview.h"
+#include "widgets/gimpview.h"
 #include "widgets/gimppreviewrenderer.h"
 
 #include "gimpdisplay.h"
@@ -150,11 +150,11 @@ layer_select_new (GimpImage *gimage,
   gtk_box_pack_start (GTK_BOX (hbox), alignment, FALSE, FALSE, 0);
   gtk_widget_show (alignment);
 
-  layer_select->preview = gimp_preview_new_by_types (GIMP_TYPE_PREVIEW,
-                                                     GIMP_TYPE_LAYER,
-                                                     preview_size, 1, FALSE);
-  gimp_preview_set_viewable (GIMP_PREVIEW (layer_select->preview),
-                             GIMP_VIEWABLE (layer));
+  layer_select->preview = gimp_view_new_by_types (GIMP_TYPE_VIEW,
+                                                  GIMP_TYPE_LAYER,
+                                                  preview_size, 1, FALSE);
+  gimp_view_set_viewable (GIMP_VIEW (layer_select->preview),
+                          GIMP_VIEWABLE (layer));
   gtk_container_add (GTK_CONTAINER (alignment), layer_select->preview);
   gtk_widget_show (layer_select->preview);
   gtk_widget_show (alignment);
@@ -222,8 +222,8 @@ layer_select_advance (LayerSelect *layer_select,
 
       if (current_layer)
         {
-          gimp_preview_set_viewable (GIMP_PREVIEW (layer_select->preview),
-                                     GIMP_VIEWABLE (current_layer));
+          gimp_view_set_viewable (GIMP_VIEW (layer_select->preview),
+                                  GIMP_VIEWABLE (current_layer));
           gtk_label_set_text (GTK_LABEL (layer_select->label),
                               GIMP_OBJECT (current_layer)->name);
         }

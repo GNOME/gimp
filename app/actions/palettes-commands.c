@@ -32,7 +32,7 @@
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpdatafactoryview.h"
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimppreview.h"
+#include "widgets/gimpview.h"
 
 #include "gui/palette-import-dialog.h"
 
@@ -126,7 +126,7 @@ palettes_merge_palettes_callback (GtkWidget   *widget,
 
       list_item = GIMP_LIST_ITEM (sel_list->data);
 
-      palette = (GimpPalette *) GIMP_PREVIEW (list_item->preview)->viewable;
+      palette = (GimpPalette *) GIMP_VIEW (list_item->preview)->viewable;
 
       if (palette)
 	{

@@ -32,7 +32,7 @@
 
 #include "file/file-utils.h"
 
-#include "gimppreview.h"
+#include "gimpview.h"
 #include "gimpviewabledialog.h"
 
 
@@ -277,7 +277,7 @@ gimp_viewable_dialog_set_viewable (GimpViewableDialog *dialog,
     {
       GimpViewable *old_viewable;
 
-      old_viewable = GIMP_PREVIEW (dialog->preview)->viewable;
+      old_viewable = GIMP_VIEW (dialog->preview)->viewable;
 
       if (viewable == old_viewable)
         return;
@@ -304,7 +304,7 @@ gimp_viewable_dialog_set_viewable (GimpViewableDialog *dialog,
                                dialog,
                                0);
 
-      dialog->preview = gimp_preview_new (viewable, 32, 1, TRUE);
+      dialog->preview = gimp_view_new (viewable, 32, 1, TRUE);
       gtk_box_pack_end (GTK_BOX (dialog->icon->parent), dialog->preview,
                         FALSE, FALSE, 2);
       gtk_widget_show (dialog->preview);

@@ -44,7 +44,6 @@
 #include "gimpdocked.h"
 #include "gimphelp-ids.h"
 #include "gimppaletteeditor.h"
-#include "gimppreview.h"
 #include "gimpsessioninfo.h"
 #include "gimpwidgets-utils.h"
 

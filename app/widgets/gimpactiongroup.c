@@ -35,7 +35,6 @@
 #include "gimpaction.h"
 #include "gimpenumaction.h"
 #include "gimppluginaction.h"
-#include "gimppreview.h"
 #include "gimpstringaction.h"
 
 #include "gimp-intl.h"

@@ -46,7 +46,7 @@
 #include "vectors/gimpvectors.h"
 
 #include "gimpdnd.h"
-#include "gimppreview.h"
+#include "gimpview.h"
 #include "gimpselectiondata.h"
 
 #include "gimp-intl.h"
@@ -769,7 +769,7 @@ gimp_dnd_data_source_add (GimpDndType  data_type,
   g_object_set_data (G_OBJECT (widget), dnd_data->get_data_data_name,
                      get_data_data);
 
-  /*  remember the first set source type for drag preview creation  */
+  /*  remember the first set source type for drag view creation  */
   if (! g_object_get_data (G_OBJECT (widget), "gimp-dnd-get-data-type"))
     g_object_set_data (G_OBJECT (widget), "gimp-dnd-get-data-type",
                        GINT_TO_POINTER (data_type));
@@ -1209,7 +1209,7 @@ gimp_dnd_get_viewable_icon (GtkWidget *widget,
                             GCallback  get_viewable_func,
                             gpointer   get_viewable_data)
 {
-  GtkWidget    *preview;
+  GtkWidget    *view;
   GimpViewable *viewable;
 
   viewable = (* (GimpDndDragViewableFunc) get_viewable_func) (widget,
@@ -1218,9 +1218,9 @@ gimp_dnd_get_viewable_icon (GtkWidget *widget,
   if (! viewable)
     return NULL;
 
-  preview = gimp_preview_new (viewable, DRAG_PREVIEW_SIZE, 0, TRUE);
+  view = gimp_view_new (viewable, DRAG_PREVIEW_SIZE, 0, TRUE);
 
-  return preview;
+  return view;
 }
 
 static GimpDndType

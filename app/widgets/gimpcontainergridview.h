@@ -47,7 +47,7 @@ struct _GimpContainerGridView
   gint              columns;
   gint              visible_rows;
 
-  GimpPreview      *selected_item;
+  GimpView         *selected_item;
 };
 
 struct _GimpContainerGridViewClass
@@ -63,8 +63,8 @@ struct _GimpContainerGridViewClass
 GType       gimp_container_grid_view_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_container_grid_view_new      (GimpContainer *container,
-					       GimpContext   *context,
-					       gint           preview_size,
+                                               GimpContext   *context,
+                                               gint           preview_size,
                                                gint           preview_border_width);
 
 

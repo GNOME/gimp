@@ -46,7 +46,7 @@
 #include "gimpdnd.h"
 #include "gimphelp-ids.h"
 #include "gimpmenufactory.h"
-#include "gimppreview.h"
+#include "gimpview.h"
 #include "gimppreviewrenderer.h"
 #include "gimpwidgets-utils.h"
 
@@ -128,15 +128,15 @@ gimp_selection_editor_init (GimpSelectionEditor *editor)
   gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  editor->preview = gimp_preview_new_by_types (GIMP_TYPE_PREVIEW,
-                                               GIMP_TYPE_SELECTION,
-                                               GIMP_PREVIEW_SIZE_HUGE,
-                                               0, TRUE);
-  gimp_preview_renderer_set_background (GIMP_PREVIEW (editor->preview)->renderer,
+  editor->preview = gimp_view_new_by_types (GIMP_TYPE_VIEW,
+                                            GIMP_TYPE_SELECTION,
+                                            GIMP_PREVIEW_SIZE_HUGE,
+                                            0, TRUE);
+  gimp_preview_renderer_set_background (GIMP_VIEW (editor->preview)->renderer,
                                         GIMP_STOCK_TEXTURE);
   gtk_widget_set_size_request (editor->preview,
                                GIMP_PREVIEW_SIZE_HUGE, GIMP_PREVIEW_SIZE_HUGE);
-  gimp_preview_set_expand (GIMP_PREVIEW (editor->preview), TRUE);
+  gimp_view_set_expand (GIMP_VIEW (editor->preview), TRUE);
   gtk_container_add (GTK_CONTAINER (frame), editor->preview);
   gtk_widget_show (editor->preview);
 
@@ -223,12 +223,12 @@ gimp_selection_editor_set_image (GimpImageEditor *image_editor,
                         G_CALLBACK (gimp_selection_editor_mask_changed),
                         editor);
 
-      gimp_preview_set_viewable (GIMP_PREVIEW (editor->preview),
-                                 GIMP_VIEWABLE (gimp_image_get_mask (gimage)));
+      gimp_view_set_viewable (GIMP_VIEW (editor->preview),
+                              GIMP_VIEWABLE (gimp_image_get_mask (gimage)));
     }
   else
     {
-      gimp_preview_set_viewable (GIMP_PREVIEW (editor->preview), NULL);
+      gimp_view_set_viewable (GIMP_VIEW (editor->preview), NULL);
     }
 }
 
@@ -273,7 +273,7 @@ gimp_selection_preview_button_press (GtkWidget           *widget,
   if (! image_editor->gimage)
     return TRUE;
 
-  renderer = GIMP_PREVIEW (editor->preview)->renderer;
+  renderer = GIMP_VIEW (editor->preview)->renderer;
 
   tool_info = (GimpToolInfo *)
     gimp_container_get_child_by_name (image_editor->gimage->gimp->tool_info_list,
@@ -376,5 +376,5 @@ static void
 gimp_selection_editor_mask_changed (GimpImage           *gimage,
                                     GimpSelectionEditor *editor)
 {
-  gimp_preview_renderer_invalidate (GIMP_PREVIEW (editor->preview)->renderer);
+  gimp_preview_renderer_invalidate (GIMP_VIEW (editor->preview)->renderer);
 }

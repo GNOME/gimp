@@ -37,7 +37,7 @@
 #include "gimpdocked.h"
 #include "gimphelp-ids.h"
 #include "gimpmenufactory.h"
-#include "gimppreview.h"
+#include "gimpview.h"
 #include "gimppreviewrenderer.h"
 #include "gimppropwidgets.h"
 #include "gimptooloptionseditor.h"
@@ -254,7 +254,7 @@ gimp_tool_options_editor_get_preview (GimpDocked   *docked,
                                       GtkIconSize   size)
 {
   GdkScreen *screen;
-  GtkWidget *preview;
+  GtkWidget *view;
   gint       width;
   gint       height;
 
@@ -262,12 +262,12 @@ gimp_tool_options_editor_get_preview (GimpDocked   *docked,
   gtk_icon_size_lookup_for_settings (gtk_settings_get_for_screen (screen),
                                      size, &width, &height);
 
-  preview = gimp_prop_preview_new (G_OBJECT (context), "tool", height);
-  GIMP_PREVIEW (preview)->renderer->size = -1;
-  gimp_preview_renderer_set_size_full (GIMP_PREVIEW (preview)->renderer,
+  view = gimp_prop_preview_new (G_OBJECT (context), "tool", height);
+  GIMP_VIEW (view)->renderer->size = -1;
+  gimp_preview_renderer_set_size_full (GIMP_VIEW (view)->renderer,
                                        width, height, 0);
 
-  return preview;
+  return view;
 }
 
 static gchar *

@@ -36,7 +36,7 @@
 #include "file/file-utils.h"
 
 #include "gimpfiledialog.h" /* eek */
-#include "gimppreview.h"
+#include "gimpview.h"
 #include "gimpthumbbox.h"
 #include "gimpwidgets-utils.h"
 
@@ -343,8 +343,8 @@ gimp_thumb_box_new (Gimp *gimp)
                     G_CALLBACK (gimp_thumb_box_imagefile_info_changed),
                     box);
 
-  box->preview = gimp_preview_new (GIMP_VIEWABLE (box->imagefile),
-                                   gimp->config->thumbnail_size, 0, FALSE);
+  box->preview = gimp_view_new (GIMP_VIEWABLE (box->imagefile),
+                                gimp->config->thumbnail_size, 0, FALSE);
   gtk_box_pack_start (GTK_BOX (hbox), box->preview, TRUE, FALSE, 10);
   gtk_widget_show (box->preview);
 

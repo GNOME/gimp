@@ -40,7 +40,7 @@
 #include "widgets/gimpcontainercombobox.h"
 #include "widgets/gimpdnd.h"
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimppreview.h"
+#include "widgets/gimpview.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "palette-import-dialog.h"
@@ -367,10 +367,10 @@ palette_import_dialog_new (Gimp *gimp)
   gtk_container_add (GTK_CONTAINER (frame), abox);
   gtk_widget_show (abox);
 
-  import_dialog->preview = gimp_preview_new_full_by_types (GIMP_TYPE_PREVIEW,
-                                                           GIMP_TYPE_PALETTE,
-                                                           192, 192, 1,
-                                                           TRUE, FALSE, FALSE);
+  import_dialog->preview = gimp_view_new_full_by_types (GIMP_TYPE_VIEW,
+                                                        GIMP_TYPE_PALETTE,
+                                                        192, 192, 1,
+                                                        TRUE, FALSE, FALSE);
   gtk_container_add (GTK_CONTAINER (abox), import_dialog->preview);
   gtk_widget_show (import_dialog->preview);
 
@@ -751,8 +751,8 @@ palette_import_make_palette (ImportDialog *import_dialog)
 
       palette->n_columns = n_columns;
 
-      gimp_preview_set_viewable (GIMP_PREVIEW (import_dialog->preview),
-                                 GIMP_VIEWABLE (palette));
+      gimp_view_set_viewable (GIMP_VIEW (import_dialog->preview),
+                              GIMP_VIEWABLE (palette));
 
       import_dialog->palette = palette;
     }

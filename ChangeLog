@@ -1,3 +1,49 @@
+2004-08-24  DindinX  <david@dindinx.org>
+
+	* app/widgets/gimppreview.c
+	* app/widgets/gimppreview.h: renamed these two files to...
+
+	* app/widgets/gimpview.c
+	* app/widgets/gimpview.h: ... these files.
+	
+	Also renamed GimpPreview to GimpView.
+	This is the first step of the great Preview->View renaming process.
+
+	* app/actions/palettes-commands.c
+
+	* app/display/gimpdisplayshell-layer-select.c
+	* app/display/gimpnavigationview.c
+
+	* app/gui/palette-import-dialog.c
+
+	* app/tools/gimppaintoptions-gui.c
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimpaction.c
+	* app/widgets/gimpactiongroup.c
+	* app/widgets/gimpbrusheditor.c
+	* app/widgets/gimpbufferview.c
+	* app/widgets/gimpcontainerbox.c
+	* app/widgets/gimpcontainergridview.c
+	* app/widgets/gimpcontainergridview.h
+	* app/widgets/gimpdevicestatus.c
+	* app/widgets/gimpdnd.c
+	* app/widgets/gimpdockbook.c
+	* app/widgets/gimpfiledialog.c
+	* app/widgets/gimpgradienteditor.c
+	* app/widgets/gimpnavigationpreview.c
+	* app/widgets/gimpnavigationpreview.h
+	* app/widgets/gimppaletteeditor.c
+	* app/widgets/gimppreview-popup.c
+	* app/widgets/gimppropwidgets.c
+	* app/widgets/gimpselectioneditor.c
+	* app/widgets/gimpthumbbox.c
+	* app/widgets/gimptoolbox-image-area.c
+	* app/widgets/gimptoolbox-indicator-area.c
+	* app/widgets/gimptooloptionseditor.c
+	* app/widgets/gimpviewabledialog.c
+	* app/widgets/widgets-types.h: changed accordingly.
+
 2004-08-24  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/Makefile.am

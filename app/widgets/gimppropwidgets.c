@@ -43,7 +43,7 @@
 #include "gimpenumcombobox.h"
 #include "gimpenumstore.h"
 #include "gimpenumwidgets.h"
-#include "gimppreview.h"
+#include "gimpview.h"
 #include "gimppropwidgets.h"
 #include "gimpwidgets-constructors.h"
 
@@ -2869,9 +2869,9 @@ gimp_prop_preview_new (GObject     *config,
       return NULL;
     }
 
-  preview = gimp_preview_new_by_types (GIMP_TYPE_PREVIEW,
-                                       param_spec->value_type,
-                                       size, 0, FALSE);
+  preview = gimp_view_new_by_types (GIMP_TYPE_VIEW,
+                                    param_spec->value_type,
+                                    size, 0, FALSE);
 
   if (! preview)
     {
@@ -2886,7 +2886,7 @@ gimp_prop_preview_new (GObject     *config,
 
   if (viewable)
     {
-      gimp_preview_set_viewable (GIMP_PREVIEW (preview), viewable);
+      gimp_view_set_viewable (GIMP_VIEW (preview), viewable);
       g_object_unref (viewable);
     }
 
@@ -2933,7 +2933,7 @@ gimp_prop_preview_notify (GObject      *config,
                 param_spec->name, &viewable,
                 NULL);
 
-  gimp_preview_set_viewable (GIMP_PREVIEW (preview), viewable);
+  gimp_view_set_viewable (GIMP_VIEW (preview), viewable);
 
   if (viewable)
     g_object_unref (viewable);
