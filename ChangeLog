@@ -1,5 +1,10 @@
 2004-11-16  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/pygimp/gimpui.py: Use img.name if filename is not
+	available (bug #158392). Patch by Joao S. O. Bueno.
+
+2004-11-16  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/pygimp/gimpfu.py
 	* plug-ins/pygimp/gimpui.py: Add a palette selector (bug #155325).
 	Patch by Joao S. O. Bueno.
