@@ -28,10 +28,23 @@
 #include "gimplist.h"
 
 
+typedef enum
+{
+  GIMP_ITEM_LINKED_LAYERS   = 1 << 0,
+  GIMP_ITEM_LINKED_CHANNELS = 1 << 1,
+  GIMP_ITEM_LINKED_VECTORS  = 1 << 2,
+
+  GIMP_ITEM_LINKED_ALL      = (GIMP_ITEM_LINKED_LAYERS   |
+                               GIMP_ITEM_LINKED_CHANNELS |
+                               GIMP_ITEM_LINKED_VECTORS)
+} GimpItemLinkedMask;
+
+
 /*  local function prototypes  */
 
-static GList * gimp_item_linked_get_list (GimpImage *gimage,
-                                          GimpItem  *item);
+static GList * gimp_item_linked_get_list (GimpImage          *gimage,
+                                          GimpItem           *item,
+                                          GimpItemLinkedMask  which);
 
 
 /*  public functions  */
@@ -53,7 +66,7 @@ gimp_item_linked_translate (GimpItem *item,
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  linked_list = gimp_item_linked_get_list (gimage, item);
+  linked_list = gimp_item_linked_get_list (gimage, item, GIMP_ITEM_LINKED_ALL);
 
   for (list = linked_list; list; list = g_list_next (list))
     gimp_item_translate (GIMP_ITEM (list->data),
@@ -79,7 +92,7 @@ gimp_item_linked_flip (GimpItem            *item,
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  linked_list = gimp_item_linked_get_list (gimage, item);
+  linked_list = gimp_item_linked_get_list (gimage, item, GIMP_ITEM_LINKED_ALL);
 
   for (list = linked_list; list; list = g_list_next (list))
     gimp_item_flip (GIMP_ITEM (list->data),
@@ -106,11 +119,22 @@ gimp_item_linked_rotate (GimpItem         *item,
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  linked_list = gimp_item_linked_get_list (gimage, item);
+  linked_list = gimp_item_linked_get_list (gimage, item,
+                                           GIMP_ITEM_LINKED_LAYERS |
+                                           GIMP_ITEM_LINKED_VECTORS);
 
   for (list = linked_list; list; list = g_list_next (list))
     gimp_item_rotate (GIMP_ITEM (list->data),
                       rotate_type, center_x, center_y, clip_result);
+
+  g_list_free (linked_list);
+
+  linked_list = gimp_item_linked_get_list (gimage, item,
+                                           GIMP_ITEM_LINKED_CHANNELS);
+
+  for (list = linked_list; list; list = g_list_next (list))
+    gimp_item_rotate (GIMP_ITEM (list->data),
+                      rotate_type, center_x, center_y, TRUE);
 
   g_list_free (linked_list);
 }
@@ -135,7 +159,7 @@ gimp_item_linked_transform (GimpItem               *item,
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  linked_list = gimp_item_linked_get_list (gimage, item);
+  linked_list = gimp_item_linked_get_list (gimage, item, GIMP_ITEM_LINKED_ALL);
 
   for (list = linked_list; list; list = g_list_next (list))
     gimp_item_transform (GIMP_ITEM (list->data),
@@ -150,41 +174,51 @@ gimp_item_linked_transform (GimpItem               *item,
 /*  private functions  */
 
 static GList *
-gimp_item_linked_get_list (GimpImage *gimage,
-                           GimpItem  *item)
+gimp_item_linked_get_list (GimpImage          *gimage,
+                           GimpItem           *item,
+                           GimpItemLinkedMask  which)
 {
   GimpItem *linked_item;
   GList    *list;
   GList    *linked_list = NULL;
 
-  for (list = GIMP_LIST (gimage->layers)->list;
-       list;
-       list = g_list_next (list))
+  if (which & GIMP_ITEM_LINKED_LAYERS)
     {
-      linked_item = (GimpItem *) list->data;
+      for (list = GIMP_LIST (gimage->layers)->list;
+           list;
+           list = g_list_next (list))
+        {
+          linked_item = (GimpItem *) list->data;
 
-      if (linked_item != item && gimp_item_get_linked (linked_item))
-        linked_list = g_list_prepend (linked_list, linked_item);
+          if (linked_item != item && gimp_item_get_linked (linked_item))
+            linked_list = g_list_prepend (linked_list, linked_item);
+        }
     }
 
-  for (list = GIMP_LIST (gimage->channels)->list;
-       list;
-       list = g_list_next (list))
+  if (which & GIMP_ITEM_LINKED_CHANNELS)
     {
-      linked_item = (GimpItem *) list->data;
+      for (list = GIMP_LIST (gimage->channels)->list;
+           list;
+           list = g_list_next (list))
+        {
+          linked_item = (GimpItem *) list->data;
 
-      if (linked_item != item && gimp_item_get_linked (linked_item))
-        linked_list = g_list_prepend (linked_list, linked_item);
+          if (linked_item != item && gimp_item_get_linked (linked_item))
+            linked_list = g_list_prepend (linked_list, linked_item);
+        }
     }
 
-  for (list = GIMP_LIST (gimage->vectors)->list;
-       list;
-       list = g_list_next (list))
+  if (which & GIMP_ITEM_LINKED_VECTORS)
     {
-      linked_item = (GimpItem *) list->data;
+      for (list = GIMP_LIST (gimage->vectors)->list;
+           list;
+           list = g_list_next (list))
+        {
+          linked_item = (GimpItem *) list->data;
 
-      if (linked_item != item && gimp_item_get_linked (linked_item))
-        linked_list = g_list_prepend (linked_list, linked_item);
+          if (linked_item != item && gimp_item_get_linked (linked_item))
+            linked_list = g_list_prepend (linked_list, linked_item);
+        }
     }
 
   return g_list_reverse (linked_list);

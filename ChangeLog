@@ -1,3 +1,17 @@
+2003-05-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage-undo-push.c (undo_pop_layer_mod): call
+	gimp_layer_invalidate_boundary() because the layer extents may
+	change.
+
+	* app/core/gimpitem-linked.c: pass clip_result == TRUE when
+	rotating linked channels.
+
+	* app/core/gimpdrawable-transform.c: implement clip_result so
+	linked channels can be rotated without leaving the image in an
+	inconsistent state. Added utility function
+	gimp_drawable_transform_rotate_point().
+
 2003-05-20  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell.[ch]

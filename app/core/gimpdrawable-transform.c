@@ -551,6 +551,40 @@ gimp_drawable_transform_tiles_flip (GimpDrawable        *drawable,
   return new_tiles;
 }
 
+static void
+gimp_drawable_transform_rotate_point (gint              x,
+                                      gint              y,
+                                      GimpRotationType  rotate_type,
+                                      gdouble           center_x,
+                                      gdouble           center_y,
+                                      gint             *new_x,
+                                      gint             *new_y)
+{
+  g_return_if_fail (new_x != NULL);
+  g_return_if_fail (new_y != NULL);
+
+  switch (rotate_type)
+    {
+    case GIMP_ROTATE_90:
+      *new_x = ROUND (center_x - (gdouble) y + center_y);
+      *new_y = ROUND (center_y + (gdouble) x - center_x);
+      break;
+
+    case GIMP_ROTATE_180:
+      *new_x = ROUND (center_x - ((gdouble) x - center_x));
+      *new_y = ROUND (center_y - ((gdouble) y - center_y));
+      break;
+
+    case GIMP_ROTATE_270:
+      *new_x = ROUND (center_x + (gdouble) y - center_y);
+      *new_y = ROUND (center_y - (gdouble) x + center_x);
+      break;
+
+    default:
+      g_assert_not_reached ();
+    }
+}
+
 TileManager *
 gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
                                       TileManager      *orig_tiles,
@@ -585,28 +619,28 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
   switch (rotate_type)
     {
     case GIMP_ROTATE_90:
-      new_x      = ROUND (center_x -
-                          (gdouble) (orig_y + orig_height) + center_y);
-      new_y      = ROUND (center_y +
-                          (gdouble) orig_x - center_x);
+      gimp_drawable_transform_rotate_point (orig_x,
+                                            orig_y + orig_height,
+                                            rotate_type, center_x, center_y,
+                                            &new_x, &new_y);
       new_width  = orig_height;
       new_height = orig_width;
       break;
 
     case GIMP_ROTATE_180:
-      new_x      = ROUND (center_x -
-                          ((gdouble) (orig_x + orig_width)  - center_x));
-      new_y      = ROUND (center_y -
-                          ((gdouble) (orig_y + orig_height) - center_y));
+      gimp_drawable_transform_rotate_point (orig_x + orig_width,
+                                            orig_y + orig_height,
+                                            rotate_type, center_x, center_y,
+                                            &new_x, &new_y);
       new_width  = orig_width;
       new_height = orig_height;
       break;
 
     case GIMP_ROTATE_270:
-      new_x      = ROUND (center_x +
-                          (gdouble) orig_y - center_y);
-      new_y      = ROUND (center_y -
-                          (gdouble) (orig_x + orig_width) + center_x);
+      gimp_drawable_transform_rotate_point (orig_x + orig_width,
+                                            orig_y,
+                                            rotate_type, center_x, center_y,
+                                            &new_x, &new_y);
       new_width  = orig_height;
       new_height = orig_width;
       break;
@@ -616,13 +650,15 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
       return NULL;
     }
 
-  new_tiles = tile_manager_new (new_width, new_height, orig_bpp);
-
-  if (FALSE && clip_result)
+  if (clip_result && (new_x != orig_x || new_y != orig_y ||
+                      new_width != orig_width || new_height != orig_height))
+      
     {
       guchar bg_color[MAX_CHANNELS];
       gint   clip_x, clip_y;
       gint   clip_width, clip_height;
+
+      new_tiles = tile_manager_new (orig_width, orig_height, orig_bpp);
 
       tile_manager_set_offsets (new_tiles, orig_x, orig_y);
 
@@ -633,7 +669,7 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
         bg_color[0] = TRANSPARENT_OPACITY;
 
       pixel_region_init (&destPR, new_tiles,
-                         0, 0, new_width, new_height, TRUE);
+                         0, 0, orig_width, orig_height, TRUE);
       color_region (&destPR, bg_color);
 
       if (gimp_rectangle_intersect (orig_x, orig_y, orig_width, orig_height,
@@ -641,15 +677,58 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
                                     &clip_x, &clip_y,
                                     &clip_width, &clip_height))
         {
-          orig_x = new_x = clip_x - orig_x;
-          orig_y = new_y = clip_y - orig_y;
+          gint saved_orig_x = orig_x;
+          gint saved_orig_y = orig_y;
+
+          new_x = clip_x - orig_x;
+          new_y = clip_y - orig_y;
+
+          switch (rotate_type)
+            {
+            case GIMP_ROTATE_90:
+              gimp_drawable_transform_rotate_point (clip_x + clip_width,
+                                                    clip_y,
+                                                    GIMP_ROTATE_270,
+                                                    center_x,
+                                                    center_y,
+                                                    &orig_x,
+                                                    &orig_y);
+              orig_x      -= saved_orig_x;
+              orig_y      -= saved_orig_y;
+              orig_width   = clip_height;
+              orig_height  = clip_width;
+              break;
+
+            case GIMP_ROTATE_180:
+              orig_x      = clip_x - orig_x;
+              orig_y      = clip_y - orig_y;
+              orig_width  = clip_width;
+              orig_height = clip_height;
+              break;
+
+            case GIMP_ROTATE_270:
+              gimp_drawable_transform_rotate_point (clip_x,
+                                                    clip_y + clip_height,
+                                                    GIMP_ROTATE_90,
+                                                    center_x,
+                                                    center_y,
+                                                    &orig_x,
+                                                    &orig_y);
+              orig_x      -= saved_orig_x;
+              orig_y      -= saved_orig_y;
+              orig_width   = clip_height;
+              orig_height  = clip_width;
+              break;
+            }
         }
 
-      orig_width  = new_width  = clip_width;
-      orig_height = new_height = clip_height;
+      new_width  = clip_width;
+      new_height = clip_height;
     }
   else
     {
+      new_tiles = tile_manager_new (new_width, new_height, orig_bpp);
+
       tile_manager_set_offsets (new_tiles, new_x, new_y);
 
       orig_x = 0;
