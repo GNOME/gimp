@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp /gnome-cvs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-08 18:49+0100\n"
-"PO-Revision-Date: 2004-03-08 18:49+0100\n"
+"POT-Creation-Date: 2004-03-14 23:11+0100\n"
+"PO-Revision-Date: 2004-03-14 23:13+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -411,6 +411,14 @@ msgstr "Megabyte"
 #: libgimpwidgets/gimpmemsizeentry.c:236
 msgid "GigaBytes"
 msgstr "Gigabyte"
+
+#: libgimpwidgets/gimppatheditor.c:243
+msgid "Writable"
+msgstr "Kan skrives"
+
+#: libgimpwidgets/gimppatheditor.c:252
+msgid "Folder"
+msgstr "Mappe"
 
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
