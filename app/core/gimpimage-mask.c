@@ -559,21 +559,6 @@ gimp_image_mask_shrink (GimpImage *gimage,
 }
 
 void
-gimp_image_mask_load (GimpImage   *gimage,
-                      GimpChannel *channel)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-  g_return_if_fail (GIMP_IS_CHANNEL (channel));
-
-  gimp_image_mask_push_undo (gimage, _("Selection from Channel"));
-
-  /*  load the specified channel to the gimage mask  */
-  gimp_channel_load (gimp_image_get_mask (gimage), channel, FALSE);
-
-  gimp_image_mask_changed (gimage);
-}
-
-void
 gimp_image_mask_translate (GimpImage *gimage,
                            gint       off_x,
                            gint       off_y,
@@ -592,53 +577,19 @@ gimp_image_mask_translate (GimpImage *gimage,
   gimp_image_mask_changed (gimage);
 }
 
-
 void
-gimp_image_mask_layer_alpha (GimpImage *gimage,
-                             GimpLayer *layer)
+gimp_image_mask_load (GimpImage   *gimage,
+                      GimpChannel *channel)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
-  g_return_if_fail (GIMP_IS_LAYER (layer));
+  g_return_if_fail (GIMP_IS_CHANNEL (channel));
 
-  if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
-    {
-      gimp_image_mask_push_undo (gimage, _("Selection from Alpha"));
+  gimp_image_mask_push_undo (gimage, _("Selection from Channel"));
 
-      /*  load the mask with the given layer's alpha channel  */
-      gimp_channel_layer_alpha (gimp_image_get_mask (gimage), layer, FALSE);
+  /*  load the specified channel to the gimage mask  */
+  gimp_channel_load (gimp_image_get_mask (gimage), channel, FALSE);
 
-      gimp_image_mask_changed (gimage);
-    }
-  else
-    {
-      g_message (_("The active layer has no alpha channel\n"
-		   "to convert to a selection."));
-      return;
-    }
-}
-
-void
-gimp_image_mask_layer_mask (GimpImage *gimage,
-                            GimpLayer *layer)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-  g_return_if_fail (GIMP_IS_LAYER (layer));
-
-  if (gimp_layer_get_mask (layer))
-    {
-      gimp_image_mask_push_undo (gimage, _("Selection from Mask"));
-
-      /*  load the mask with the given layer's mask  */
-      gimp_channel_layer_mask (gimp_image_get_mask (gimage), layer, FALSE);
-
-      gimp_image_mask_changed (gimage);
-    }
-  else
-    {
-      g_message (_("The active layer has no mask\n"
-		   "to convert to a selection."));
-      return;
-    }
+  gimp_image_mask_changed (gimage);
 }
 
 GimpChannel *

@@ -30,6 +30,7 @@
 #include "widgets/gimpcontainereditor.h"
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpdatafactoryview.h"
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 
 #include "data-commands.h"
@@ -45,22 +46,22 @@ GimpItemFactoryEntry patterns_menu_entries[] =
       data_new_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_NEW },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_PATTERN_NEW, NULL },
   { { N_("/Duplicate Pattern"), NULL,
       data_duplicate_data_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_DUPLICATE },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_PATTERN_DUPLICATE, NULL },
   { { N_("/Edit Pattern..."), NULL,
       data_edit_data_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_EDIT },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_PATTERN_EDIT, NULL },
   { { N_("/Delete Pattern..."), NULL,
       data_delete_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_DELETE },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_PATTERN_DELETE, NULL },
 
   MENU_SEPARATOR ("/---"),
 
@@ -68,7 +69,7 @@ GimpItemFactoryEntry patterns_menu_entries[] =
       data_refresh_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_REFRESH },
     NULL,
-    NULL, NULL }
+    GIMP_HELP_PATTERN_REFRESH, NULL }
 };
 
 gint n_patterns_menu_entries = G_N_ELEMENTS (patterns_menu_entries);

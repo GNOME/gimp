@@ -20,31 +20,31 @@
 #define __CHANNELS_COMMANDS_H__
 
 
-void   channels_new_channel_cmd_callback                (GtkWidget   *widget,
-							 gpointer     data);
-void   channels_raise_channel_cmd_callback              (GtkWidget   *widget,
-							 gpointer     data);
-void   channels_lower_channel_cmd_callback              (GtkWidget   *widget,
-							 gpointer     data);
-void   channels_duplicate_channel_cmd_callback          (GtkWidget   *widget,
-							 gpointer     data);
-void   channels_delete_channel_cmd_callback             (GtkWidget   *widget,
-							 gpointer     data);
-void   channels_channel_to_sel_cmd_callback             (GtkWidget   *widget,
-							 gpointer     data);
-void   channels_add_channel_to_sel_cmd_callback         (GtkWidget   *widget,
-							 gpointer     data);
-void   channels_sub_channel_from_sel_cmd_callback       (GtkWidget   *widget,
-							 gpointer     data);
-void   channels_intersect_channel_with_sel_cmd_callback (GtkWidget   *widget,
-							 gpointer     data);
-void   channels_edit_channel_attributes_cmd_callback    (GtkWidget   *widget,
-							 gpointer     data);
+void   channels_new_cmd_callback                 (GtkWidget   *widget,
+                                                  gpointer     data);
+void   channels_raise_cmd_callback               (GtkWidget   *widget,
+                                                  gpointer     data);
+void   channels_lower_cmd_callback               (GtkWidget   *widget,
+                                                  gpointer     data);
+void   channels_duplicate_cmd_callback           (GtkWidget   *widget,
+                                                  gpointer     data);
+void   channels_delete_cmd_callback              (GtkWidget   *widget,
+                                                  gpointer     data);
+void   channels_selection_replace_cmd_callback   (GtkWidget   *widget,
+                                                  gpointer     data);
+void   channels_selection_add_cmd_callback       (GtkWidget   *widget,
+                                                  gpointer     data);
+void   channels_selection_sub_cmd_callback       (GtkWidget   *widget,
+                                                  gpointer     data);
+void   channels_selection_intersect_cmd_callback (GtkWidget   *widget,
+                                                  gpointer     data);
+void   channels_edit_attributes_cmd_callback     (GtkWidget   *widget,
+                                                  gpointer     data);
 
-void   channels_new_channel_query                       (GimpImage   *gimage,
-                                                         GimpChannel *template,
-                                                         gboolean     interactive);
-void   channels_edit_channel_query                      (GimpChannel *channel);
+void   channels_new_channel_query                (GimpImage   *gimage,
+                                                  GimpChannel *template,
+                                                  gboolean     interactive);
+void   channels_edit_channel_query               (GimpChannel *channel);
 
 
 #endif /* __CHANNELS_COMMANDS_H__ */

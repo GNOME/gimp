@@ -28,6 +28,7 @@
 #include "core/gimpimage-mask.h"
 #include "core/gimplist.h"
 
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpitemtreeview.h"
 
@@ -41,91 +42,88 @@
 GimpItemFactoryEntry vectors_menu_entries[] =
 {
   { { N_("/_New Path..."), "<control>N",
-      vectors_new_vectors_cmd_callback, 0,
+      vectors_new_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_NEW },
     NULL,
-    "new_path.html", NULL },
+    GIMP_HELP_PATH_NEW, NULL },
   { { N_("/_Raise Path"), "<control>F",
-      vectors_raise_vectors_cmd_callback, 0,
+      vectors_raise_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_GO_UP },
     NULL,
-    "raise_path.html", NULL },
+    GIMP_HELP_PATH_RAISE, NULL },
   { { N_("/_Lower Path"), "<control>B",
-      vectors_lower_vectors_cmd_callback, 0,
+      vectors_lower_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_GO_DOWN },
     NULL,
-    "lower_path.html", NULL },
+    GIMP_HELP_PATH_LOWER, NULL },
   { { N_("/D_uplicate Path"), "<control>U",
-      vectors_duplicate_vectors_cmd_callback, 0,
+      vectors_duplicate_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_DUPLICATE },
     NULL,
-    "duplicate_path.html", NULL },
+    GIMP_HELP_PATH_DUPLICATE, NULL },
+  { { N_("/_Delete Path"), "<control>X",
+      vectors_delete_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_DELETE },
+    NULL,
+    GIMP_HELP_PATH_DELETE, NULL },
 
   MENU_SEPARATOR ("/---"),
 
   { { N_("/Path to Sele_ction"), "<control>S",
-      vectors_vectors_to_sel_cmd_callback, 0,
+      vectors_selection_replace_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_SELECTION_REPLACE },
     NULL,
-    "path_to_selection.html", NULL },
+    GIMP_HELP_PATH_SEL_REPLACE, NULL },
   { { N_("/_Add to Selection"), NULL,
-      vectors_add_vectors_to_sel_cmd_callback, 0,
+      vectors_selection_add_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_SELECTION_ADD },
     NULL,
-    "path_to_selection.html#add", NULL },
+    GIMP_HELP_PATH_SEL_ADD, NULL },
   { { N_("/_Subtract from Selection"), NULL,
-      vectors_sub_vectors_from_sel_cmd_callback, 0,
+      vectors_selection_sub_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_SELECTION_SUBTRACT },
     NULL,
-    "path_to_selection.html#subtract", NULL },
+    GIMP_HELP_PATH_SEL_SUB, NULL },
   { { N_("/_Intersect with Selection"), NULL,
-      vectors_intersect_vectors_with_sel_cmd_callback, 0,
+      vectors_selection_intersect_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_SELECTION_INTERSECT },
     NULL,
-    "path_to_selection.html#intersect", NULL },
+    GIMP_HELP_PATH_SEL_INTERSECT, NULL },
 
   { { N_("/Selecti_on to Path"), "<control>P",
-      vectors_sel_to_vectors_cmd_callback, 0,
+      vectors_selection_to_vectors_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_SELECTION_TO_PATH },
     NULL,
     "filters/sel2path.html", NULL },
   { { N_("/Stro_ke Path"), "<control>T",
-      vectors_stroke_vectors_cmd_callback, 0,
+      vectors_stroke_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_PATH_STROKE },
     NULL,
-    "stroke_path.html", NULL },
+    GIMP_HELP_PATH_STROKE, NULL },
 
   MENU_SEPARATOR ("/---"),
 
   { { N_("/Co_py Path"), "<control>C",
-      vectors_copy_vectors_cmd_callback, 0,
+      vectors_copy_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_COPY },
     NULL,
-    "copy_path.html", NULL },
+    GIMP_HELP_PATH_COPY, NULL },
 
   { { N_("/Paste Pat_h"), "<control>V",
-      vectors_paste_vectors_cmd_callback, 0,
+      vectors_paste_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_PASTE },
     NULL,
-    "paste_path.html", NULL },
+    GIMP_HELP_PATH_PASTE, NULL },
   { { N_("/I_mport Path..."), "<control>I",
-      vectors_import_vectors_cmd_callback, 0,
+      vectors_import_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_OPEN },
     NULL,
-    "dialogs/import_path.html", NULL },
+    GIMP_HELP_PATH_IMPORT, NULL },
   { { N_("/E_xport Path..."), "<control>E",
-      vectors_export_vectors_cmd_callback, 0,
+      vectors_export_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_SAVE },
     NULL,
-    "dialogs/export_path.html", NULL },
-
-  MENU_SEPARATOR ("/---"),
-
-  { { N_("/_Delete Path"), "<control>X",
-      vectors_delete_vectors_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_DELETE },
-    NULL,
-    "delete_path.html", NULL },
+    GIMP_HELP_PATH_EXPORT, NULL },
 
   MENU_SEPARATOR ("/---"),
 
@@ -133,12 +131,12 @@ GimpItemFactoryEntry vectors_menu_entries[] =
       vectors_vectors_tool_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_TOOL_PATH },
     NULL,
-    "tools/path_tool.html", NULL },
+    GIMP_HELP_TOOL_VECTORS, NULL },
   { { N_("/_Edit Path Attributes..."), NULL,
-      vectors_edit_vectors_attributes_cmd_callback, 0,
+      vectors_edit_attributes_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_EDIT },
     NULL,
-    "dialogs/edit_path_attributes.html", NULL }
+    GIMP_HELP_PATH_EDIT, NULL }
 };
 
 gint n_vectors_menu_entries = G_N_ELEMENTS (vectors_menu_entries);
@@ -187,18 +185,23 @@ vectors_menu_update (GtkItemFactory *factory,
   SET_SENSITIVE ("/Raise Path",               vectors && prev);
   SET_SENSITIVE ("/Lower Path",               vectors && next);
   SET_SENSITIVE ("/Duplicate Path",           vectors);
+  SET_SENSITIVE ("/Delete Path",              vectors);
+
   SET_SENSITIVE ("/Path to Selection",        vectors);
   SET_SENSITIVE ("/Add to Selection",         vectors);
   SET_SENSITIVE ("/Subtract from Selection",  vectors);
   SET_SENSITIVE ("/Intersect with Selection", vectors);
+
   SET_SENSITIVE ("/Selection to Path",        ! mask_empty);
   SET_SENSITIVE ("/Stroke Path",              vectors);
-  SET_SENSITIVE ("/Delete Path",              vectors);
+
   SET_SENSITIVE ("/Copy Path",                vectors);
   SET_SENSITIVE ("/Paste Path",               global_buf);
   SET_SENSITIVE ("/Import Path...",           gimage);
   SET_SENSITIVE ("/Export Path...",           vectors);
+
   SET_SENSITIVE ("/Path Tool",                vectors);
+
   SET_SENSITIVE ("/Edit Path Attributes...",  vectors);
 
 #undef SET_SENSITIVE

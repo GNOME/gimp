@@ -30,6 +30,7 @@
 #include "widgets/gimpcontainereditor.h"
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpdatafactoryview.h"
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 
 #include "data-commands.h"
@@ -46,22 +47,22 @@ GimpItemFactoryEntry gradients_menu_entries[] =
       data_new_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_NEW },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_GRADIENT_NEW, NULL },
   { { N_("/D_uplicate Gradient"), NULL,
       data_duplicate_data_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_DUPLICATE },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_GRADIENT_DUPLICATE, NULL },
   { { N_("/_Edit Gradient..."), NULL,
       data_edit_data_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_EDIT },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_GRADIENT_EDIT, NULL },
   { { N_("/_Delete Gradient..."), NULL,
       data_delete_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_DELETE },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_GRADIENT_DELETE, NULL },
 
   MENU_SEPARATOR ("/---"),
 
@@ -69,7 +70,7 @@ GimpItemFactoryEntry gradients_menu_entries[] =
       data_refresh_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_REFRESH },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_GRADIENT_REFRESH, NULL },
 
   MENU_SEPARATOR ("/---"),
 
@@ -77,7 +78,7 @@ GimpItemFactoryEntry gradients_menu_entries[] =
       gradients_save_as_pov_ray_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_SAVE_AS },
     NULL,
-    NULL, NULL }
+    GIMP_HELP_GRADIENT_SAVE_AS_POV, NULL }
 };
 
 gint n_gradients_menu_entries = G_N_ELEMENTS (gradients_menu_entries);

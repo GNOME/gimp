@@ -85,11 +85,6 @@ void          gimp_image_mask_translate   (GimpImage    *gimage,
 
 void          gimp_image_mask_load        (GimpImage    *gimage,
                                            GimpChannel  *channel);
-void          gimp_image_mask_layer_alpha (GimpImage    *gimage,
-                                           GimpLayer    *layer);
-void          gimp_image_mask_layer_mask  (GimpImage    *gimage,
-                                           GimpLayer    *layer);
-
 GimpChannel * gimp_image_mask_save        (GimpImage    *gimage);
 
 gboolean      gimp_image_mask_stroke      (GimpImage    *gimage,

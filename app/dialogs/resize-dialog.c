@@ -33,6 +33,7 @@
 #include "core/gimplayer.h"
 
 #include "widgets/gimpenummenu.h"
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "resize-dialog.h"
@@ -192,7 +193,7 @@ resize_widget_new (GimpViewable *viewable,
 	    wmclass      = "scale_layer";
 	    window_title = _("Scale Layer");
             window_desc  = _("Scale Layer Options");
-	    help_page    = "layers/dialogs/scale_layer.html";
+	    help_page    = GIMP_HELP_LAYER_SCALE;
 	    frame        = gtk_frame_new (_("Size"));
 	    break;
 
@@ -200,7 +201,7 @@ resize_widget_new (GimpViewable *viewable,
 	    wmclass      = "scale_image";
 	    window_title = _("Scale Image");
             window_desc  = _("Scale Image Options");
-	    help_page    = "dialogs/scale_image.html";
+	    help_page    = GIMP_HELP_IMAGE_SCALE;
 	    frame        = gtk_frame_new (_("Pixel Dimensions"));
 	    break;
 	  }
@@ -215,14 +216,14 @@ resize_widget_new (GimpViewable *viewable,
 	    wmclass      = "resize_layer";
 	    window_title = _("Layer Boundary Size");
             window_desc  = _("Set Layer Boundary Size");
-	    help_page    = "layers/dialogs/layer_boundary_size.html";
+	    help_page    = GIMP_HELP_LAYER_RESIZE;
 	    break;
 
 	  case ResizeImage:
 	    wmclass      = "resize_image";
 	    window_title = _("Canvas Size");
             window_desc  = _("Set Image Canvas Size");
-	    help_page    = "dialogs/set_canvas_size.html";
+	    help_page    = GIMP_HELP_IMAGE_RESIZE;
 	    break;
 	  }
 	frame = gtk_frame_new (_("Size"));

@@ -32,6 +32,7 @@
 #include "core/gimplayermask.h"
 #include "core/gimpimage.h"
 
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "offset-dialog.h"
@@ -103,7 +104,7 @@ offset_dialog_create (GimpDrawable *drawable)
                               GIMP_STOCK_TOOL_MOVE,
                               title,
                               gimp_standard_help_func,
-                              "dialogs/offset.html",
+                              GIMP_HELP_LAYER_OFFSET,
 
                               GTK_STOCK_CANCEL, gtk_widget_destroy,
                               NULL, (gpointer) 1, NULL, FALSE, TRUE,

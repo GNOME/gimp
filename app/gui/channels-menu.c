@@ -28,6 +28,7 @@
 #include "core/gimplist.h"
 
 #include "widgets/gimpcomponenteditor.h"
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpitemtreeview.h"
 
@@ -41,64 +42,61 @@
 GimpItemFactoryEntry channels_menu_entries[] =
 {
   { { N_("/_New Channel..."), "<control>N",
-      channels_new_channel_cmd_callback, 0,
+      channels_new_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_NEW },
     NULL,
-    "dialogs/new_channel.html", NULL },
+    GIMP_HELP_CHANNEL_NEW, NULL },
   { { N_("/_Raise Channel"), "<control>F",
-      channels_raise_channel_cmd_callback, 0,
+      channels_raise_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_GO_UP },
     NULL,
-    "raise_channel.html", NULL },
+    GIMP_HELP_CHANNEL_RAISE, NULL },
   { { N_("/_Lower Channel"), "<control>B",
-      channels_lower_channel_cmd_callback, 0,
+      channels_lower_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_GO_DOWN },
     NULL,
-    "lower_channel.html", NULL },
+    GIMP_HELP_CHANNEL_LOWER, NULL },
   { { N_("/D_uplicate Channel"), "<control>C",
-      channels_duplicate_channel_cmd_callback, 0,
+      channels_duplicate_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_DUPLICATE },
     NULL,
-    "duplicate_channel.html", NULL },
+    GIMP_HELP_CHANNEL_DUPLICATE, NULL },
+  { { N_("/_Delete Channel"), "<control>X",
+      channels_delete_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_DELETE },
+    NULL,
+    GIMP_HELP_CHANNEL_DELETE, NULL },
 
   MENU_SEPARATOR ("/---"),
 
   { { N_("/Channel to Sele_ction"), "<control>S",
-      channels_channel_to_sel_cmd_callback, 0,
+      channels_selection_replace_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_SELECTION_REPLACE },
     NULL,
-    "channel_to_selection.html", NULL },
+    GIMP_HELP_CHANNEL_SEL_REPLACE, NULL },
   { { N_("/_Add to Selection"), NULL,
-      channels_add_channel_to_sel_cmd_callback, 0,
+      channels_selection_add_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_SELECTION_ADD },
     NULL,
-    "channel_to_selection.html#add", NULL },
+    GIMP_HELP_CHANNEL_SEL_ADD, NULL },
   { { N_("/_Subtract from Selection"), NULL,
-      channels_sub_channel_from_sel_cmd_callback, 0,
+      channels_selection_sub_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_SELECTION_SUBTRACT },
     NULL,
-    "channel_to_selection.html#subtract", NULL },
+    GIMP_HELP_CHANNEL_SEL_SUB, NULL },
   { { N_("/_Intersect with Selection"), NULL,
-      channels_intersect_channel_with_sel_cmd_callback, 0,
+      channels_selection_intersect_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_SELECTION_INTERSECT },
     NULL,
-    "channel_to_selection.html#intersect", NULL },
-
-  MENU_SEPARATOR ("/---"),
-
-  { { N_("/_Delete Channel"), "<control>X",
-      channels_delete_channel_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_DELETE },
-    NULL,
-    "delete_channel.html", NULL },
+    GIMP_HELP_CHANNEL_SEL_INTERSECT, NULL },
 
   MENU_SEPARATOR ("/---"),
 
   { { N_("/_Edit Channel Attributes..."), NULL,
-      channels_edit_channel_attributes_cmd_callback, 0,
+      channels_edit_attributes_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_EDIT },
     NULL,
-    "dialogs/edit_channel_attributes.html", NULL }
+    GIMP_HELP_CHANNEL_EDIT, NULL }
 };
 
 gint n_channels_menu_entries = G_N_ELEMENTS (channels_menu_entries);
@@ -159,11 +157,13 @@ channels_menu_update (GtkItemFactory *factory,
   SET_SENSITIVE ("/Raise Channel",              !fs && channel && prev);
   SET_SENSITIVE ("/Lower Channel",              !fs && channel && next);
   SET_SENSITIVE ("/Duplicate Channel",          !fs && (channel || component));
+  SET_SENSITIVE ("/Delete Channel",             !fs && channel);
+
   SET_SENSITIVE ("/Channel to Selection",       !fs && (channel || component));
   SET_SENSITIVE ("/Add to Selection",           !fs && (channel || component));
   SET_SENSITIVE ("/Subtract from Selection",    !fs && (channel || component));
   SET_SENSITIVE ("/Intersect with Selection",   !fs && (channel || component));
-  SET_SENSITIVE ("/Delete Channel",             !fs && channel);
+
   SET_SENSITIVE ("/Edit Channel Attributes...", !fs && channel);
 
 #undef SET_SENSITIVE

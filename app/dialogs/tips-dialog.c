@@ -34,6 +34,7 @@
 
 #include "core/gimp.h"
 
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimppropwidgets.h"
 
 #include "tips-dialog.h"
@@ -217,9 +218,8 @@ tips_dialog_create (Gimp *gimp)
 		    NULL);
 
   /*  Connect the "F1" help key  */
-  gimp_help_connect (tips_dialog,
-		     gimp_standard_help_func,
-		     "dialogs/tip_of_the_day.html");
+  gimp_help_connect (tips_dialog, gimp_standard_help_func,
+		     GIMP_HELP_TIPS_DIALOG);
 
   tips_set_labels (current_tip->data);
 

@@ -69,6 +69,20 @@ void   gimp_image_mask_select_channel   (GimpImage      *gimage,
                                          gdouble         feather_radius_x,
                                          gdouble         feather_radius_y);
 
+void   gimp_image_mask_select_alpha     (GimpImage      *gimage,
+                                         GimpLayer      *layer,
+                                         GimpChannelOps  op,
+                                         gboolean        feather,
+                                         gdouble         feather_radius_x,
+                                         gdouble         feather_radius_y);
+
+void   gimp_image_mask_select_component (GimpImage      *gimage,
+                                         GimpChannelType component,
+                                         GimpChannelOps  op,
+                                         gboolean        feather,
+                                         gdouble         feather_radius_x,
+                                         gdouble         feather_radius_y);
+
 void   gimp_image_mask_select_fuzzy     (GimpImage      *gimage,
                                          GimpDrawable   *drawable,
                                          gboolean        sample_merged,

@@ -39,6 +39,7 @@
 
 #include "display/gimpdisplay.h"
 
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpdialogfactory.h"
 
 #include "dialogs.h"
@@ -192,7 +193,7 @@ edit_named_cut_cmd_callback (GtkWidget *widget,
 
   qbox = gimp_query_string_box (_("Cut Named"),
 				gimp_standard_help_func,
-				"dialogs/cut_named.html",
+				GIMP_HELP_BUFFER_CUT,
 				_("Enter a name for this buffer"),
 				NULL,
 				G_OBJECT (gdisp->gimage), "disconnect",
@@ -210,7 +211,7 @@ edit_named_copy_cmd_callback (GtkWidget *widget,
 
   qbox = gimp_query_string_box (_("Copy Named"),
 				gimp_standard_help_func,
-				"dialogs/copy_named.html",
+				GIMP_HELP_BUFFER_COPY,
 				_("Enter a name for this buffer"),
 				NULL,
 				G_OBJECT (gimage), "disconnect",

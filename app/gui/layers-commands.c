@@ -32,6 +32,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
+#include "core/gimpimage-mask-select.h"
 #include "core/gimpimage-merge.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimplayer.h"
@@ -42,6 +43,7 @@
 #include "pdb/procedural_db.h"
 
 #include "widgets/gimpenummenu.h"
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemtreeview.h"
 #include "widgets/gimpviewabledialog.h"
 
@@ -365,8 +367,8 @@ layers_crop_cmd_callback (GtkWidget *widget,
 }
 
 void
-layers_add_layer_mask_cmd_callback (GtkWidget *widget,
-				    gpointer   data)
+layers_mask_add_cmd_callback (GtkWidget *widget,
+                              gpointer   data)
 {
   GimpImage *gimage;
   GimpLayer *active_layer;
@@ -376,8 +378,8 @@ layers_add_layer_mask_cmd_callback (GtkWidget *widget,
 }
 
 void
-layers_apply_layer_mask_cmd_callback (GtkWidget *widget,
-				      gpointer   data)
+layers_mask_apply_cmd_callback (GtkWidget *widget,
+                                gpointer   data)
 {
   GimpImage *gimage;
   GimpLayer *active_layer;
@@ -391,8 +393,8 @@ layers_apply_layer_mask_cmd_callback (GtkWidget *widget,
 }
 
 void
-layers_delete_layer_mask_cmd_callback (GtkWidget *widget,
-				       gpointer   data)
+layers_mask_delete_cmd_callback (GtkWidget *widget,
+                                 gpointer   data)
 {
   GimpImage *gimage;
   GimpLayer *active_layer;
@@ -405,36 +407,64 @@ layers_delete_layer_mask_cmd_callback (GtkWidget *widget,
     }
 }
 
-void
-layers_mask_select_cmd_callback (GtkWidget *widget,
-				 gpointer   data)
+static void
+layers_mask_to_selection (GtkWidget      *widget,
+                          gpointer        data,
+                          GimpChannelOps  op)
 {
-  GimpImage *gimage;
-  GimpLayer *active_layer;
+  GimpImage     *gimage;
+  GimpLayer     *active_layer;
+  GimpLayerMask *mask;
   return_if_no_layer (gimage, active_layer, data);
 
-  if (gimp_layer_get_mask (active_layer))
+  mask = gimp_layer_get_mask (active_layer);
+
+  if (mask)
     {
-      gimp_image_mask_layer_mask (gimage, active_layer);
+      gint off_x, off_y;
+
+      gimp_item_offsets (GIMP_ITEM (mask), &off_x, &off_y);
+
+      gimp_image_mask_select_channel (gimage,
+                                      _("Layer Mask to Selection"),
+                                      GIMP_CHANNEL (mask),
+                                      off_x, off_y,
+                                      op, FALSE, 0.0, 0.0);
       gimp_image_flush (gimage);
     }
 }
 
 void
-layers_alpha_select_cmd_callback (GtkWidget *widget,
-				  gpointer   data)
+layers_mask_selection_replace_cmd_callback (GtkWidget *widget,
+                                            gpointer   data)
 {
-  GimpImage *gimage;
-  GimpLayer *active_layer;
-  return_if_no_layer (gimage, active_layer, data);
-
-  gimp_image_mask_layer_alpha (gimage, active_layer);
-  gimp_image_flush (gimage);
+  layers_mask_to_selection (widget, data, GIMP_CHANNEL_OP_REPLACE);
 }
 
 void
-layers_add_alpha_channel_cmd_callback (GtkWidget *widget,
-				       gpointer   data)
+layers_mask_selection_add_cmd_callback (GtkWidget *widget,
+                                        gpointer   data)
+{
+  layers_mask_to_selection (widget, data, GIMP_CHANNEL_OP_ADD);
+}
+
+void
+layers_mask_selection_sub_cmd_callback (GtkWidget *widget,
+                                        gpointer   data)
+{
+  layers_mask_to_selection (widget, data, GIMP_CHANNEL_OP_SUBTRACT);
+}
+
+void
+layers_mask_selection_intersect_cmd_callback (GtkWidget *widget,
+                                              gpointer   data)
+{
+  layers_mask_to_selection (widget, data, GIMP_CHANNEL_OP_INTERSECT);
+}
+
+void
+layers_alpha_add_cmd_callback (GtkWidget *widget,
+                               gpointer   data)
 {
   GimpImage *gimage;
   GimpLayer *active_layer;
@@ -445,6 +475,51 @@ layers_add_alpha_channel_cmd_callback (GtkWidget *widget,
       gimp_layer_add_alpha (active_layer);
       gimp_image_flush (gimage);
     }
+}
+
+static void
+layers_alpha_to_selection (GtkWidget      *widget,
+                           gpointer        data,
+                           GimpChannelOps  op)
+{
+  GimpImage *gimage;
+  GimpLayer *active_layer;
+  return_if_no_layer (gimage, active_layer, data);
+
+  if (gimp_drawable_has_alpha (GIMP_DRAWABLE (active_layer)))
+    {
+      gimp_image_mask_select_alpha (gimage, active_layer,
+                                    op, FALSE, 0.0, 0.0);
+      gimp_image_flush (gimage);
+    }
+}
+
+void
+layers_alpha_selection_replace_cmd_callback (GtkWidget *widget,
+                                             gpointer   data)
+{
+  layers_alpha_to_selection (widget, data, GIMP_CHANNEL_OP_REPLACE);
+}
+
+void
+layers_alpha_selection_add_cmd_callback (GtkWidget *widget,
+                                         gpointer   data)
+{
+  layers_alpha_to_selection (widget, data, GIMP_CHANNEL_OP_ADD);
+}
+
+void
+layers_alpha_selection_sub_cmd_callback (GtkWidget *widget,
+                                         gpointer   data)
+{
+  layers_alpha_to_selection (widget, data, GIMP_CHANNEL_OP_SUBTRACT);
+}
+
+void
+layers_alpha_selection_intersect_cmd_callback (GtkWidget *widget,
+                                               gpointer   data)
+{
+  layers_alpha_to_selection (widget, data, GIMP_CHANNEL_OP_INTERSECT);
 }
 
 void
@@ -620,7 +695,7 @@ layers_new_layer_query (GimpImage *gimage,
                               GIMP_STOCK_LAYER,
                               _("Create a New Layer"),
                               gimp_standard_help_func,
-                              "dialogs/layers/new_layer.html",
+                              GIMP_HELP_LAYER_NEW,
 
                               GTK_STOCK_CANCEL, gtk_widget_destroy,
                               NULL, 1, NULL, FALSE, TRUE,
@@ -794,7 +869,7 @@ layers_edit_layer_query (GimpLayer *layer)
                               GIMP_STOCK_EDIT,
                               _("Edit Layer Attributes"),
                               gimp_standard_help_func,
-                              "dialogs/layers/edit_layer_attributes.html",
+                              GIMP_HELP_LAYER_EDIT,
 
                               GTK_STOCK_CANCEL, gtk_widget_destroy,
                               NULL, 1, NULL, FALSE, TRUE,
@@ -902,7 +977,7 @@ layers_add_mask_query (GimpLayer *layer)
                               GTK_STOCK_ADD,
                               _("Add a Mask to the Layer"),
                               gimp_standard_help_func,
-                              "dialogs/layers/add_layer_mask.html",
+                              GIMP_HELP_LAYER_MASK_ADD,
 
                               GTK_STOCK_CANCEL, gtk_widget_destroy,
                               NULL, 1, NULL, FALSE, TRUE,

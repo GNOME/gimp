@@ -40,6 +40,7 @@
 #include "file/file-save.h"
 #include "file/file-utils.h"
 
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpdialogfactory.h"
 
 #include "display/gimpdisplay.h"
@@ -288,7 +289,7 @@ file_save_template_cmd_callback (GtkWidget *widget,
 
   qbox = gimp_query_string_box (_("Create New Template"),
 				gimp_standard_help_func,
-				"dialogs/new_template.html",
+				GIMP_HELP_FILE_SAVE_AS_TEMPLATE,
 				_("Enter a name for this template"),
 				NULL,
 				G_OBJECT (gdisp->gimage), "disconnect",
@@ -336,7 +337,7 @@ file_revert_cmd_callback (GtkWidget *widget,
 
       query_box = gimp_query_boolean_box (_("Revert Image"),
 					  gimp_standard_help_func,
-					  "file/revert.html",
+					  GIMP_HELP_FILE_REVERT,
 					  GIMP_STOCK_QUESTION,
 					  text,
 					  GTK_STOCK_YES, GTK_STOCK_NO,

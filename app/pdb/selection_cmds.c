@@ -30,6 +30,7 @@
 
 #include "core/gimpchannel.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpimage-mask-select.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
@@ -858,7 +859,8 @@ selection_layer_alpha_invoker (Gimp     *gimp,
   if (success)
     {
       gimage = gimp_item_get_image (GIMP_ITEM (layer));
-      gimp_image_mask_layer_alpha (gimage, layer);
+      gimp_image_mask_select_alpha (gimage, layer,
+				    GIMP_CHANNEL_OP_REPLACE, FALSE, 0.0, 0.0);
     }
 
   return procedural_db_return_args (&selection_layer_alpha_proc, success);

@@ -72,6 +72,10 @@ GimpChannel   * gimp_channel_new                (GimpImage         *gimage,
                                                  const gchar       *name,
                                                  const GimpRGB     *color);
 
+GimpChannel   * gimp_channel_new_from_alpha     (GimpImage         *gimage,
+                                                 GimpLayer         *layer,
+                                                 const gchar       *name,
+                                                 const GimpRGB     *color);
 GimpChannel   * gimp_channel_new_from_component (GimpImage         *gimage,
                                                  GimpChannelType    type,
                                                  const gchar       *name,
@@ -177,12 +181,6 @@ void            gimp_channel_shrink            (GimpChannel      *mask,
 
 void            gimp_channel_load              (GimpChannel      *mask,
 						GimpChannel      *channel,
-                                                gboolean          push_undo);
-void            gimp_channel_layer_alpha       (GimpChannel      *mask, 
-						GimpLayer        *layer,
-                                                gboolean          push_undo);
-void            gimp_channel_layer_mask        (GimpChannel      *mask, 
-						GimpLayer        *layer,
                                                 gboolean          push_undo);
 
 void		gimp_channel_invalidate_bounds (GimpChannel      *channel);

@@ -33,6 +33,7 @@
 #include "core/gimptemplate.h"
 
 #include "widgets/gimpcontainermenuimpl.h"
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimptemplateeditor.h"
 #include "widgets/gimpviewabledialog.h"
 
@@ -97,7 +98,7 @@ file_new_dialog_new (Gimp *gimp)
                               GIMP_STOCK_IMAGE,
                               _("Create a New Image"),
                               gimp_standard_help_func,
-                              "dialogs/file_new.html",
+                              GIMP_HELP_FILE_NEW,
 
                               GIMP_STOCK_RESET, file_new_reset_callback,
                               dialog, NULL, NULL, FALSE, FALSE,
@@ -290,7 +291,7 @@ file_new_confirm_dialog (FileNewDialog *dialog)
   dialog->confirm_dialog =
     gimp_query_boolean_box (_("Confirm Image Size"),
 			    gimp_standard_help_func,
-			    "dialogs/file_new.html#confirm_size",
+			    GIMP_HELP_FILE_NEW_CONFIRM,
 			    GIMP_STOCK_INFO,
 			    text,
 			    GTK_STOCK_OK, GTK_STOCK_CANCEL,

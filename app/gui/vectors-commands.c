@@ -46,6 +46,7 @@
 
 #include "vectors/gimpvectors.h"
 
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemtreeview.h"
 #include "widgets/gimpviewabledialog.h"
 
@@ -83,8 +84,8 @@
 /*  public functions  */
 
 void
-vectors_new_vectors_cmd_callback (GtkWidget *widget,
-                                  gpointer   data)
+vectors_new_cmd_callback (GtkWidget *widget,
+                          gpointer   data)
 {
   GimpImage *gimage;
   return_if_no_image (gimage, data);
@@ -93,8 +94,8 @@ vectors_new_vectors_cmd_callback (GtkWidget *widget,
 }
 
 void
-vectors_raise_vectors_cmd_callback (GtkWidget *widget,
-                                    gpointer   data)
+vectors_raise_cmd_callback (GtkWidget *widget,
+                            gpointer   data)
 {
   GimpImage   *gimage;
   GimpVectors *active_vectors;
@@ -105,8 +106,8 @@ vectors_raise_vectors_cmd_callback (GtkWidget *widget,
 }
 
 void
-vectors_lower_vectors_cmd_callback (GtkWidget *widget,
-                                    gpointer   data)
+vectors_lower_cmd_callback (GtkWidget *widget,
+                            gpointer   data)
 {
   GimpImage   *gimage;
   GimpVectors *active_vectors;
@@ -117,8 +118,8 @@ vectors_lower_vectors_cmd_callback (GtkWidget *widget,
 }
 
 void
-vectors_duplicate_vectors_cmd_callback (GtkWidget *widget,
-                                        gpointer   data)
+vectors_duplicate_cmd_callback (GtkWidget *widget,
+                                gpointer   data)
 {
   GimpImage   *gimage;
   GimpVectors *active_vectors;
@@ -133,8 +134,8 @@ vectors_duplicate_vectors_cmd_callback (GtkWidget *widget,
 }
 
 void
-vectors_delete_vectors_cmd_callback (GtkWidget *widget,
-                                     gpointer   data)
+vectors_delete_cmd_callback (GtkWidget *widget,
+                             gpointer   data)
 {
   GimpImage   *gimage;
   GimpVectors *active_vectors;
@@ -145,9 +146,9 @@ vectors_delete_vectors_cmd_callback (GtkWidget *widget,
 }
 
 static void
-vectors_vectors_to_sel (GtkWidget      *widget,
-                        gpointer        data,
-                        GimpChannelOps  op)
+vectors_vectors_to_selection (GtkWidget      *widget,
+                              gpointer        data,
+                              GimpChannelOps  op)
 {
   GimpImage   *gimage;
   GimpVectors *active_vectors;
@@ -162,36 +163,36 @@ vectors_vectors_to_sel (GtkWidget      *widget,
 }
 
 void
-vectors_vectors_to_sel_cmd_callback (GtkWidget *widget,
-                                     gpointer   data)
+vectors_selection_replace_cmd_callback (GtkWidget *widget,
+                                        gpointer   data)
 {
-  vectors_vectors_to_sel (widget, data, GIMP_CHANNEL_OP_REPLACE);
+  vectors_vectors_to_selection (widget, data, GIMP_CHANNEL_OP_REPLACE);
 }
 
 void
-vectors_add_vectors_to_sel_cmd_callback (GtkWidget *widget,
-                                         gpointer   data)
+vectors_selection_add_cmd_callback (GtkWidget *widget,
+                                    gpointer   data)
 {
-  vectors_vectors_to_sel (widget, data, GIMP_CHANNEL_OP_ADD);
+  vectors_vectors_to_selection (widget, data, GIMP_CHANNEL_OP_ADD);
 }
 
 void
-vectors_sub_vectors_from_sel_cmd_callback (GtkWidget *widget,
+vectors_selection_sub_cmd_callback (GtkWidget *widget,
+                                    gpointer   data)
+{
+  vectors_vectors_to_selection (widget, data, GIMP_CHANNEL_OP_SUBTRACT);
+}
+
+void
+vectors_selection_intersect_cmd_callback (GtkWidget *widget,
+                                          gpointer   data)
+{
+  vectors_vectors_to_selection (widget, data, GIMP_CHANNEL_OP_INTERSECT);
+}
+
+void
+vectors_selection_to_vectors_cmd_callback (GtkWidget *widget,
                                            gpointer   data)
-{
-  vectors_vectors_to_sel (widget, data, GIMP_CHANNEL_OP_SUBTRACT);
-}
-
-void
-vectors_intersect_vectors_with_sel_cmd_callback (GtkWidget *widget,
-                                                 gpointer   data)
-{
-  vectors_vectors_to_sel (widget, data, GIMP_CHANNEL_OP_INTERSECT);
-}
-
-void
-vectors_sel_to_vectors_cmd_callback (GtkWidget *widget,
-                                     gpointer   data)
 {
   GimpImage *gimage;
   return_if_no_image (gimage, data);
@@ -200,8 +201,8 @@ vectors_sel_to_vectors_cmd_callback (GtkWidget *widget,
 }
 
 void
-vectors_stroke_vectors_cmd_callback (GtkWidget *widget,
-                                     gpointer   data)
+vectors_stroke_cmd_callback (GtkWidget *widget,
+                             gpointer   data)
 {
   GimpImage   *gimage;
   GimpVectors *active_vectors;
@@ -211,8 +212,8 @@ vectors_stroke_vectors_cmd_callback (GtkWidget *widget,
 }
 
 void
-vectors_copy_vectors_cmd_callback (GtkWidget *widget,
-                                   gpointer   data)
+vectors_copy_cmd_callback (GtkWidget *widget,
+                           gpointer   data)
 {
   GimpImage   *gimage;
   GimpVectors *active_vectors;
@@ -224,8 +225,8 @@ vectors_copy_vectors_cmd_callback (GtkWidget *widget,
 }
 
 void
-vectors_paste_vectors_cmd_callback (GtkWidget *widget,
-                                    gpointer   data)
+vectors_paste_cmd_callback (GtkWidget *widget,
+                            gpointer   data)
 {
   GimpImage *gimage;
   return_if_no_image (gimage, data);
@@ -236,8 +237,8 @@ vectors_paste_vectors_cmd_callback (GtkWidget *widget,
 }
 
 void
-vectors_import_vectors_cmd_callback (GtkWidget *widget,
-                                     gpointer   data)
+vectors_import_cmd_callback (GtkWidget *widget,
+                             gpointer   data)
 {
   GimpImage *gimage;
   return_if_no_image (gimage, data);
@@ -248,8 +249,8 @@ vectors_import_vectors_cmd_callback (GtkWidget *widget,
 }
 
 void
-vectors_export_vectors_cmd_callback (GtkWidget *widget,
-                                     gpointer   data)
+vectors_export_cmd_callback (GtkWidget *widget,
+                             gpointer   data)
 {
   GimpImage   *gimage;
   GimpVectors *active_vectors;
@@ -272,8 +273,8 @@ vectors_vectors_tool_cmd_callback (GtkWidget   *widget,
 }
 
 void
-vectors_edit_vectors_attributes_cmd_callback (GtkWidget *widget,
-                                              gpointer   data)
+vectors_edit_attributes_cmd_callback (GtkWidget *widget,
+                                      gpointer   data)
 {
   GimpImage   *gimage;
   GimpVectors *active_vectors;
@@ -482,7 +483,7 @@ vectors_new_vectors_query (GimpImage   *gimage,
                               GIMP_STOCK_TOOL_PATH,
                               _("New Path Options"),
                               gimp_standard_help_func,
-                              "dialogs/vectors/new_vectors.html",
+                              GIMP_HELP_PATH_NEW,
 
                               GTK_STOCK_CANCEL, gtk_widget_destroy,
                               NULL, 1, NULL, FALSE, TRUE,
@@ -597,7 +598,7 @@ vectors_edit_vectors_query (GimpVectors *vectors)
                               GIMP_STOCK_EDIT,
                               _("Edit Path Attributes"),
                               gimp_standard_help_func,
-                              "dialogs/paths/edit_path_attributes.html",
+                              GIMP_HELP_PATH_EDIT,
 
                               GTK_STOCK_CANCEL, gtk_widget_destroy,
                               NULL, 1, NULL, FALSE, TRUE,

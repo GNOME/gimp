@@ -54,6 +54,7 @@
 #include "file/file-open.h"
 #include "file/file-utils.h"
 
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimppreview.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -181,7 +182,7 @@ file_open_dialog_create (Gimp            *gimp,
                                  "gimp-file-open-dialog",
                                  menu_factory, "<Load>",
                                  _("Open Image"), "open_image",
-                                 "open/dialogs/file_open.html",
+                                 GIMP_HELP_FILE_OPEN,
                                  G_CALLBACK (file_open_ok_callback));
 
   fs = GTK_FILE_SELECTION (open_dialog);

@@ -28,6 +28,7 @@
 
 #include "widgets/gimpcontainereditor.h"
 #include "widgets/gimpcontainerview.h"
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 
 #include "buffers-commands.h"
@@ -42,22 +43,22 @@ GimpItemFactoryEntry buffers_menu_entries[] =
       buffers_paste_buffer_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_PASTE },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_BUFFER_PASTE, NULL },
   { { N_("/Paste Buffer _Into"), NULL,
       buffers_paste_buffer_into_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_PASTE_INTO },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_BUFFER_PASTE_INTO, NULL },
   { { N_("/Paste Buffer as _New"), NULL,
       buffers_paste_buffer_as_new_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_PASTE_AS_NEW },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_BUFFER_PASTE_AS_NEW, NULL },
   { { N_("/_Delete Buffer"), NULL,
       buffers_delete_buffer_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_DELETE },
     NULL,
-    NULL, NULL }
+    GIMP_HELP_BUFFER_DELETE, NULL }
 };
 
 gint n_buffers_menu_entries = G_N_ELEMENTS (buffers_menu_entries);

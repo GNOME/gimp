@@ -28,6 +28,7 @@
 
 #include "plug-in/plug-ins.h"
 
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 
 #include "debug-commands.h"
@@ -51,12 +52,12 @@ GimpItemFactoryEntry toolbox_menu_entries[] =
       file_new_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_NEW },
     NULL,
-    "file/dialogs/file_new.html", NULL },
+    GIMP_HELP_FILE_NEW, NULL },
   { { N_("/File/_Open..."), "<control>O",
       file_open_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_OPEN },
     NULL,
-    "file/dialogs/file_open.html", NULL },
+    GIMP_HELP_FILE_OPEN, NULL },
 
   /*  <Toolbox>/File/Open Recent  */
 
@@ -71,7 +72,7 @@ GimpItemFactoryEntry toolbox_menu_entries[] =
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_OPEN },
     "gimp-document-list",
-    "file/dialogs/document_index.html", NULL },
+    GIMP_HELP_DOCUMENT_DIALOG, NULL },
 
   /*  <Toolbox>/File/Acquire  */
 
@@ -83,7 +84,7 @@ GimpItemFactoryEntry toolbox_menu_entries[] =
       dialogs_create_toplevel_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_PREFERENCES },
     "gimp-preferences-dialog",
-    "file/dialogs/preferences/preferences.html", NULL },
+    GIMP_HELP_PREFERENCES_DIALOG, NULL },
 
   /*  <Toolbox>/File/Dialogs  */
 
@@ -94,7 +95,7 @@ GimpItemFactoryEntry toolbox_menu_entries[] =
   { { N_("/File/Dialogs/Create New Dock/_Layers, Channels & Paths..."), NULL,
       dialogs_create_lc_cmd_callback, 0 },
     NULL,
-    "file/dialogs/layers_and_channels.html", NULL },
+    NULL, NULL },
   { { N_("/File/Dialogs/Create New Dock/_Brushes, Patterns & Gradients..."), NULL,
       dialogs_create_data_cmd_callback, 0 },
     NULL,
@@ -108,12 +109,12 @@ GimpItemFactoryEntry toolbox_menu_entries[] =
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_TOOL_OPTIONS },
     "gimp-tool-options",
-    "file/dialogs/tool_options.html", NULL },
+    GIMP_HELP_TOOL_OPTIONS_DIALOG, NULL },
   { { N_("/File/Dialogs/_Device Status..."), NULL,
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_DEVICE_STATUS },
     "gimp-device-status",
-    "file/dialogs/device_status.html", NULL },
+    GIMP_HELP_DEVICE_STATUS_DIALOG, NULL },
 
   MENU_SEPARATOR ("/File/Dialogs/---"),
 
@@ -136,22 +137,22 @@ GimpItemFactoryEntry toolbox_menu_entries[] =
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_INDEXED_PALETTE },
     "gimp-indexed-palette",
-    "file/dialogs/indexed_palette.html", NULL },
+    GIMP_HELP_INDEXED_PALETTE_DIALOG, NULL },
   { { N_("/File/Dialogs/_Selection Editor..."), NULL,
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_TOOL_RECT_SELECT },
     "gimp-selection-editor",
-    NULL, NULL },
+    GIMP_HELP_SELECT_DIALOG, NULL },
   { { N_("/File/Dialogs/Na_vigation..."), NULL,
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_NAVIGATION },
     "gimp-navigation-view",
-    NULL, NULL },
+    GIMP_HELP_NAVIGATION_DIALOG, NULL },
   { { N_("/File/Dialogs/_Undo History..."), NULL,
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_UNDO_HISTORY },
     "gimp-undo-history",
-    NULL, NULL },
+    GIMP_HELP_UNDO_DIALOG, NULL },
 
   MENU_SEPARATOR ("/File/Dialogs/---"),
 
@@ -164,32 +165,32 @@ GimpItemFactoryEntry toolbox_menu_entries[] =
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_TOOL_PAINTBRUSH },
     "gimp-brush-grid",
-    "file/dialogs/brush_selection.html", NULL },
+    GIMP_HELP_BRUSH_DIALOG, NULL },
   { { N_("/File/Dialogs/P_atterns..."), "<control><shift>P",
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_TOOL_BUCKET_FILL },
     "gimp-pattern-grid",
-    "file/dialogs/pattern_selection.html", NULL },
+    GIMP_HELP_PATTERN_DIALOG, NULL },
   { { N_("/File/Dialogs/_Gradients..."), "<control>G",
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_TOOL_BLEND },
     "gimp-gradient-list",
-    "file/dialogs/gradient_selection.html", NULL },
+    GIMP_HELP_GRADIENT_DIALOG, NULL },
   { { N_("/File/Dialogs/Pal_ettes..."), "<control>P",
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_SELECT_COLOR },
     "gimp-palette-list",
-    "file/dialogs/palette_selection.html", NULL },
+    GIMP_HELP_PALETTE_DIALOG, NULL },
   { { N_("/File/Dialogs/_Fonts..."), NULL,
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_SELECT_FONT },
     "gimp-font-list",
-    "file/dialogs/font_selection.html", NULL },
+    GIMP_HELP_FONT_DIALOG, NULL },
   { { N_("/File/Dialogs/_Buffers..."), "foo",
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_PASTE },
     "gimp-buffer-list",
-    NULL, NULL },
+    GIMP_HELP_BUFFER_DIALOG, NULL },
 
   MENU_SEPARATOR ("/File/Dialogs/---"),
 
@@ -197,22 +198,22 @@ GimpItemFactoryEntry toolbox_menu_entries[] =
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_IMAGES },
     "gimp-image-list",
-    NULL, NULL },
+    GIMP_HELP_IMAGE_DIALOG, NULL },
   { { N_("/File/Dialogs/Document Histor_y..."), "",
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_OPEN },
     "gimp-document-list",
-    "file/dialogs/document_index.html", NULL },
+    GIMP_HELP_DOCUMENT_DIALOG, NULL },
   { { N_("/File/Dialogs/_Templates..."), "",
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_TEMPLATE },
     "gimp-template-list",
-    "file/dialogs/templates.html", NULL },
+    GIMP_HELP_TEMPLATE_DIALOG, NULL },
   { { N_("/File/Dialogs/Error Co_nsole..."), NULL,
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_WARNING },
     "gimp-error-console",
-    "file/dialogs/error_console.html", NULL },
+    GIMP_HELP_ERROR_DIALOG, NULL },
 
 #ifdef ENABLE_DEBUG_ENTRIES
   MENU_BRANCH (N_("/File/D_ebug")),
@@ -231,7 +232,7 @@ GimpItemFactoryEntry toolbox_menu_entries[] =
       file_quit_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_QUIT },
     NULL,
-    "file/quit.html", NULL },
+    GIMP_HELP_FILE_QUIT, NULL },
 
   /*  <Toolbox>/Xtns  */
 
@@ -240,7 +241,7 @@ GimpItemFactoryEntry toolbox_menu_entries[] =
   { { N_("/Xtns/_Module Manager..."), NULL,
       dialogs_create_toplevel_cmd_callback, 0 },
     "gimp-module-manager-dialog",
-    "dialogs/module_manager.html", NULL },
+    GIMP_HELP_MODULE_DIALOG, NULL },
 
   MENU_SEPARATOR ("/Xtns/---"),
 
@@ -252,22 +253,22 @@ GimpItemFactoryEntry toolbox_menu_entries[] =
       help_help_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_HELP },
     NULL,
-    "help/dialogs/help.html", NULL },
+    GIMP_HELP_HELP, NULL },
   { { N_("/Help/_Context Help..."), "<shift>F1",
       help_context_help_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_HELP },
     NULL,
-    "help/context_help.html", NULL },
+    GIMP_HELP_HELP_CONTEXT, NULL },
   { { N_("/Help/_Tip of the Day..."), NULL,
       dialogs_create_toplevel_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_INFO },
     "gimp-tips-dialog",
-    "help/dialogs/tip_of_the_day.html", NULL },
+    GIMP_HELP_TIPS_DIALOG, NULL },
   { { N_("/Help/_About..."), NULL,
       dialogs_create_toplevel_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_WILBER },
     "gimp-about-dialog",
-    "help/dialogs/about.html", NULL }
+    GIMP_HELP_ABOUT_DIALOG, NULL }
 };
 
 gint n_toolbox_menu_entries = G_N_ELEMENTS (toolbox_menu_entries);

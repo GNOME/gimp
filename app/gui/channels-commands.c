@@ -37,6 +37,7 @@
 
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpcomponenteditor.h"
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemtreeview.h"
 #include "widgets/gimpviewabledialog.h"
 
@@ -80,8 +81,8 @@ static void   channels_color_changed  (GimpColorButton *button,
 /*  public functions  */
 
 void
-channels_new_channel_cmd_callback (GtkWidget *widget,
-				   gpointer   data)
+channels_new_cmd_callback (GtkWidget *widget,
+                           gpointer   data)
 {
   GimpImage *gimage;
   return_if_no_image (gimage, data);
@@ -90,8 +91,8 @@ channels_new_channel_cmd_callback (GtkWidget *widget,
 }
 
 void
-channels_raise_channel_cmd_callback (GtkWidget *widget,
-				     gpointer   data)
+channels_raise_cmd_callback (GtkWidget *widget,
+                             gpointer   data)
 {
   GimpImage   *gimage;
   GimpChannel *active_channel;
@@ -102,8 +103,8 @@ channels_raise_channel_cmd_callback (GtkWidget *widget,
 }
 
 void
-channels_lower_channel_cmd_callback (GtkWidget *widget,
-				     gpointer   data)
+channels_lower_cmd_callback (GtkWidget *widget,
+                             gpointer   data)
 {
   GimpImage   *gimage;
   GimpChannel *active_channel;
@@ -114,8 +115,8 @@ channels_lower_channel_cmd_callback (GtkWidget *widget,
 }
 
 void
-channels_duplicate_channel_cmd_callback (GtkWidget *widget,
-					 gpointer   data)
+channels_duplicate_cmd_callback (GtkWidget *widget,
+                                 gpointer   data)
 {
   GimpImage   *gimage;
   GimpChannel *new_channel;
@@ -143,6 +144,11 @@ channels_duplicate_channel_cmd_callback (GtkWidget *widget,
       new_channel = gimp_channel_new_from_component (gimage, component,
                                                      name, &color);
 
+      /*  copied components are invisible by default so subsequent copies
+       *  of components don't affect each other
+       */
+      gimp_drawable_set_visible (GIMP_DRAWABLE (new_channel), FALSE, FALSE);
+
       g_free (name);
     }
   else
@@ -161,8 +167,8 @@ channels_duplicate_channel_cmd_callback (GtkWidget *widget,
 }
 
 void
-channels_delete_channel_cmd_callback (GtkWidget *widget,
-				      gpointer   data)
+channels_delete_cmd_callback (GtkWidget *widget,
+                              gpointer   data)
 {
   GimpImage   *gimage;
   GimpChannel *active_channel;
@@ -173,75 +179,66 @@ channels_delete_channel_cmd_callback (GtkWidget *widget,
 }
 
 static void
-channels_channel_to_sel (GtkWidget      *widget,
-                         gpointer        data,
-                         GimpChannelOps  op)
+channels_channel_to_selection (GtkWidget      *widget,
+                               gpointer        data,
+                               GimpChannelOps  op)
 {
-  GimpImage   *gimage;
-  GimpChannel *channel;
+  GimpImage *gimage;
 
   if (GIMP_IS_COMPONENT_EDITOR (data))
     {
-      GimpRGB         color;
       GimpChannelType component;
       return_if_no_image (gimage, data);
 
-      gimp_rgba_set (&color, 0, 0, 0, 1);
-
       component = GIMP_COMPONENT_EDITOR (data)->clicked_component;
 
-      channel = gimp_channel_new_from_component (gimage, component,
-                                                 "Component Copy",
-                                                 &color);
+      gimp_image_mask_select_component (gimage, component,
+                                        op, FALSE, 0.0, 0.0);
     }
   else
     {
+      GimpChannel *channel;
       return_if_no_channel (gimage, channel, data);
+
+      gimp_image_mask_select_channel (gimage, _("Channel to Selection"),
+                                      channel, 0, 0,
+                                      op, FALSE, 0.0, 0.0);
     }
 
-  gimp_image_mask_select_channel (gimage,
-                                  _("Channel to Selection"),
-                                  channel,
-                                  0, 0,
-                                  op,
-                                  FALSE, 0, 0);
   gimp_image_flush (gimage);
-
-  if (GIMP_IS_COMPONENT_EDITOR (data))
-    g_object_unref (channel);
 }
 
 void
-channels_channel_to_sel_cmd_callback (GtkWidget *widget,
-				      gpointer   data)
+channels_selection_replace_cmd_callback (GtkWidget *widget,
+                                         gpointer   data)
 {
-  channels_channel_to_sel (widget, data, GIMP_CHANNEL_OP_REPLACE);
+  channels_channel_to_selection (widget, data, GIMP_CHANNEL_OP_REPLACE);
 }
 
 void
-channels_add_channel_to_sel_cmd_callback (GtkWidget *widget,
-					  gpointer   data)
+channels_selection_add_cmd_callback (GtkWidget *widget,
+                                     gpointer   data)
 {
-  channels_channel_to_sel (widget, data, GIMP_CHANNEL_OP_ADD);
+  channels_channel_to_selection (widget, data, GIMP_CHANNEL_OP_ADD);
 }
 
 void
-channels_sub_channel_from_sel_cmd_callback (GtkWidget *widget,
-					    gpointer   data)
+channels_selection_sub_cmd_callback (GtkWidget *widget,
+                                     gpointer   data)
 {
-  channels_channel_to_sel (widget, data, GIMP_CHANNEL_OP_SUBTRACT);
+  channels_channel_to_selection (widget, data, GIMP_CHANNEL_OP_SUBTRACT);
 }
 
 void
-channels_intersect_channel_with_sel_cmd_callback (GtkWidget *widget,
-						  gpointer   data)
+channels_selection_intersect_cmd_callback (GtkWidget *widget,
+                                           gpointer   data)
 {
-  channels_channel_to_sel (widget, data, GIMP_CHANNEL_OP_INTERSECT);
+  channels_channel_to_selection (widget, data, GIMP_CHANNEL_OP_INTERSECT);
 }
 
 void
-channels_edit_channel_attributes_cmd_callback (GtkWidget *widget,
-					       gpointer   data)
+channels_edit_attributes_cmd_callback (GtkWidget *widget,
+                                       gpointer   data)
 {
   GimpImage   *gimage;
   GimpChannel *active_channel;
@@ -372,7 +369,7 @@ channels_new_channel_query (GimpImage   *gimage,
                               GIMP_STOCK_CHANNEL,
                               _("New Channel Options"),
                               gimp_standard_help_func,
-                              "dialogs/channels/new_channel.html",
+                              GIMP_HELP_CHANNEL_NEW,
 
                               GTK_STOCK_CANCEL, gtk_widget_destroy,
                               NULL, 1, NULL, FALSE, TRUE,
@@ -532,7 +529,7 @@ channels_edit_channel_query (GimpChannel *channel)
                               GIMP_STOCK_EDIT,
                               _("Edit Channel Attributes"),
                               gimp_standard_help_func,
-                              "dialogs/channels/edit_channel_attributes.html",
+                              GIMP_HELP_CHANNEL_EDIT,
 
                               GTK_STOCK_CANCEL, gtk_widget_destroy,
                               NULL, 1, NULL, FALSE, TRUE,

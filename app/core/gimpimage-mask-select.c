@@ -20,6 +20,8 @@
 
 #include <glib-object.h>
 
+#include "libgimpcolor/gimpcolor.h"
+
 #include "core-types.h"
 
 #include "gimpchannel.h"
@@ -27,6 +29,7 @@
 #include "gimpimage-contiguous-region.h"
 #include "gimpimage-mask.h"
 #include "gimpimage-mask-select.h"
+#include "gimplayer.h"
 #include "gimpscanconvert.h"
 
 #include "vectors/gimpstroke.h"
@@ -307,6 +310,78 @@ gimp_image_mask_select_channel (GimpImage      *gimage,
     }
 
   gimp_image_mask_changed (gimage);
+}
+
+void
+gimp_image_mask_select_alpha (GimpImage      *gimage,
+                              GimpLayer      *layer,
+                              GimpChannelOps  op,
+                              gboolean        feather,
+                              gdouble         feather_radius_x,
+                              gdouble         feather_radius_y)
+{
+  GimpChannel *channel;
+  GimpRGB      color;
+
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+
+  gimp_rgba_set (&color, 0.0, 0.0, 0.0, 1.0);
+
+  channel = gimp_channel_new_from_alpha (gimage, layer, NULL, &color);
+
+  if (feather)
+    gimp_channel_feather (channel,
+                          feather_radius_x,
+                          feather_radius_y,
+                          FALSE /* no undo */);
+
+  gimp_image_mask_select_channel (gimage, _("Alpha to Selection"), channel,
+                                  0, 0, op,
+                                  FALSE, 0.0, 0.0);
+
+  g_object_unref (channel);
+}
+
+void
+gimp_image_mask_select_component (GimpImage       *gimage,
+                                  GimpChannelType  component,
+                                  GimpChannelOps   op,
+                                  gboolean         feather,
+                                  gdouble          feather_radius_x,
+                                  gdouble          feather_radius_y)
+{
+  GimpChannel *channel;
+  GimpRGB      color;
+  GEnumClass  *enum_class;
+  GEnumValue  *enum_value;
+  gchar       *name;
+
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  gimp_rgba_set (&color, 0.0, 0.0, 0.0, 1.0);
+
+  channel = gimp_channel_new_from_component (gimage, component, NULL, &color);
+
+  if (feather)
+    gimp_channel_feather (channel,
+                          feather_radius_x,
+                          feather_radius_y,
+                          FALSE /* no undo */);
+
+  enum_class = g_type_class_ref (GIMP_TYPE_CHANNEL_TYPE);
+  enum_value = g_enum_get_value (enum_class, component);
+  g_type_class_unref (enum_class);
+
+  name = g_strdup_printf (_("%s Channel to Selection"),
+                          gettext (enum_value->value_name));
+
+  gimp_image_mask_select_channel (gimage, name, channel,
+                                  0, 0, op,
+                                  FALSE, 0.0, 0.0);
+
+  g_free (name);
+  g_object_unref (channel);
 }
 
 void

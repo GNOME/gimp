@@ -30,6 +30,7 @@
 #include "widgets/gimpcontainereditor.h"
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpdatafactoryview.h"
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 
 #include "brushes-menu.h"
@@ -45,22 +46,22 @@ GimpItemFactoryEntry brushes_menu_entries[] =
       data_new_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_NEW },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_BRUSH_NEW, NULL },
   { { N_("/D_uplicate Brush"), NULL,
       data_duplicate_data_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_DUPLICATE },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_BRUSH_DUPLICATE, NULL },
   { { N_("/_Edit Brush..."), NULL,
       data_edit_data_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_EDIT },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_BRUSH_EDIT, NULL },
   { { N_("/_Delete Brush..."), NULL,
       data_delete_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_DELETE },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_BRUSH_DELETE, NULL },
 
   MENU_SEPARATOR ("/---"),
 
@@ -68,7 +69,7 @@ GimpItemFactoryEntry brushes_menu_entries[] =
       data_refresh_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_REFRESH },
     NULL,
-    NULL, NULL }
+    GIMP_HELP_BRUSH_REFRESH, NULL }
 };
 
 gint n_brushes_menu_entries = G_N_ELEMENTS (brushes_menu_entries);

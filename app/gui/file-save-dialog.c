@@ -44,6 +44,7 @@
 #include "file/file-save.h"
 #include "file/file-utils.h"
 
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpmenufactory.h"
 
@@ -204,7 +205,7 @@ file_save_dialog_create (Gimp            *gimp,
                           "gimp-file-save-dialog",
                           menu_factory, "<Save>",
                           _("Save Image"), "save_image",
-                          "save/dialogs/file_save.html",
+                          GIMP_HELP_FILE_SAVE,
                           G_CALLBACK (file_save_ok_callback));
 }
 
@@ -296,7 +297,7 @@ file_save_overwrite (GtkWidget   *save_dialog,
 
   query_box = gimp_query_boolean_box (_("File Exists!"),
 				      gimp_standard_help_func,
-				      "save/file_exists.html",
+				      GIMP_HELP_FILE_SAVE_OVERWRITE,
 				      GIMP_STOCK_QUESTION,
 				      message,
 				      GTK_STOCK_YES, GTK_STOCK_NO,

@@ -34,6 +34,7 @@
 
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpdnd.h"
 
 #include "about-dialog.h"
@@ -241,7 +242,7 @@ about_dialog_create (void)
       gtk_window_set_resizable (GTK_WINDOW (about_dialog), FALSE);
 
       gimp_help_connect (about_dialog, gimp_standard_help_func,
-			 "dialogs/about.html");
+			 GIMP_HELP_ABOUT_DIALOG);
 
       g_signal_connect (about_dialog, "destroy",
 			G_CALLBACK (about_dialog_destroy),

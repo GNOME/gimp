@@ -30,6 +30,7 @@
 #include "widgets/gimpcontainereditor.h"
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpdatafactoryview.h"
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 
 #include "data-commands.h"
@@ -46,22 +47,22 @@ GimpItemFactoryEntry palettes_menu_entries[] =
       data_new_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_NEW },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_PALETTE_NEW, NULL },
   { { N_("/D_uplicate Palette"), NULL,
       data_duplicate_data_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_DUPLICATE },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_PALETTE_DUPLICATE, NULL },
   { { N_("/_Edit Palette..."), NULL,
       data_edit_data_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_EDIT },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_PALETTE_EDIT, NULL },
   { { N_("/_Delete Palette..."), NULL,
       data_delete_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_DELETE },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_PALETTE_DELETE, NULL },
 
   MENU_SEPARATOR ("/---"),
 
@@ -69,7 +70,7 @@ GimpItemFactoryEntry palettes_menu_entries[] =
       data_refresh_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_REFRESH },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_PALETTE_REFRESH, NULL },
 
   MENU_SEPARATOR ("/---"),
 
@@ -77,11 +78,11 @@ GimpItemFactoryEntry palettes_menu_entries[] =
       palettes_import_palette_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_CONVERT },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_PALETTE_IMPORT, NULL },
   { { N_("/_Merge Palettes..."), NULL,
       palettes_merge_palettes_cmd_callback, 0 },
     NULL,
-    NULL, NULL }
+    GIMP_HELP_PALETTE_MERGE, NULL }
 };
 
 gint n_palettes_menu_entries = G_N_ELEMENTS (palettes_menu_entries);

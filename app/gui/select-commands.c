@@ -31,6 +31,7 @@
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage-qmask.h"
 
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpdialogfactory.h"
 
 #include "display/gimpdisplay.h"
@@ -147,7 +148,7 @@ select_feather_cmd_callback (GtkWidget *widget,
 
   qbox = gimp_query_size_box (_("Feather Selection"),
 			      gimp_standard_help_func,
-			      "dialogs/feather_selection.html",
+			      GIMP_HELP_SELECT_FEATHER,
 			      _("Feather Selection by:"),
 			      selection_feather_radius, 0, 32767, 3,
 			      gdisp->gimage->unit,
@@ -182,7 +183,7 @@ select_shrink_cmd_callback (GtkWidget *widget,
   shrink_dialog =
     gimp_query_size_box (_("Shrink Selection"),
 			 gimp_standard_help_func,
-			 "dialogs/shrink_selection.html",
+			 GIMP_HELP_SELECT_SHRINK,
 			 _("Shrink Selection by:"),
 			 selection_shrink_pixels, 1, 32767, 0,
 			 gdisp->gimage->unit,
@@ -215,7 +216,7 @@ select_grow_cmd_callback (GtkWidget *widget,
 
   qbox = gimp_query_size_box (_("Grow Selection"),
 			      gimp_standard_help_func,
-			      "dialogs/grow_selection.html",
+			      GIMP_HELP_SELECT_GROW,
 			      _("Grow Selection by:"),
 			      selection_grow_pixels, 1, 32767, 0,
 			      gdisp->gimage->unit,
@@ -237,7 +238,7 @@ select_border_cmd_callback (GtkWidget *widget,
 
   qbox = gimp_query_size_box (_("Border Selection"),
 			      gimp_standard_help_func,
-			      "dialogs/border_selection.html",
+			      GIMP_HELP_SELECT_BORDER,
 			      _("Border Selection by:"),
 			      selection_border_radius, 1, 32767, 0,
 			      gdisp->gimage->unit,

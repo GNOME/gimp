@@ -38,6 +38,7 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "gimp-utils.h"
 #include "gimpimage.h"
 #include "gimpimage-projection.h"
 #include "gimpimage-undo.h"
@@ -554,6 +555,53 @@ gimp_channel_new (GimpImage     *gimage,
   /*  selection mask variables  */
   channel->x2          = width;
   channel->y2          = height;
+
+  return channel;
+}
+
+GimpChannel *
+gimp_channel_new_from_alpha (GimpImage     *gimage,
+                             GimpLayer     *layer,
+                             const gchar   *name,
+                             const GimpRGB *color)
+{
+  GimpChannel *channel;
+  gint         x, y;
+  gint         width;
+  gint         height;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
+  g_return_val_if_fail (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)), NULL);
+  g_return_val_if_fail (color != NULL, NULL);
+
+  width  = gimp_image_get_width  (gimage);
+  height = gimp_image_get_height (gimage);
+
+  channel = gimp_channel_new (gimage, width, height, name, color);
+
+  gimp_channel_clear (channel, FALSE);
+
+  if (gimp_rectangle_intersect (0, 0, width, height,
+                                GIMP_ITEM (layer)->offset_x,
+                                GIMP_ITEM (layer)->offset_y,
+                                GIMP_ITEM (layer)->width,
+                                GIMP_ITEM (layer)->height,
+                                &x, &y, &width, &height))
+    {
+      PixelRegion srcPR, destPR;
+
+      pixel_region_init (&srcPR, GIMP_DRAWABLE (layer)->tiles,
+                         x - GIMP_ITEM (layer)->offset_x,
+                         y - GIMP_ITEM (layer)->offset_y,
+                         width, height, FALSE);
+      pixel_region_init (&destPR, GIMP_DRAWABLE (channel)->tiles,
+                         x, y, width, height, TRUE);
+
+      extract_alpha_region (&srcPR, NULL, &destPR);
+
+      channel->bounds_known = FALSE;
+    }
 
   return channel;
 }
@@ -1804,83 +1852,6 @@ gimp_channel_load (GimpChannel *mask,
 		     0, 0,
 		     GIMP_ITEM (channel)->width,
 		     GIMP_ITEM (channel)->height, TRUE);
-  copy_region (&srcPR, &destPR);
-
-  mask->bounds_known = FALSE;
-}
-
-void
-gimp_channel_layer_alpha (GimpChannel *mask,
-			  GimpLayer   *layer,
-                          gboolean     push_undo)
-{
-  PixelRegion srcPR, destPR;
-  gint        x1, y1, x2, y2;
-
-  g_return_if_fail (GIMP_IS_CHANNEL (mask));
-  g_return_if_fail (GIMP_IS_LAYER (layer));
-  g_return_if_fail (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)));
-
-  if (push_undo)
-    gimp_channel_push_undo (mask, _("Channel from Alpha"));
-
-  /*  clear the mask if it is not already known to be empty  */
-  if (! (mask->bounds_known && mask->empty))
-    gimp_channel_clear (mask, FALSE);
-
-  x1 = CLAMP (GIMP_ITEM (layer)->offset_x, 0, GIMP_ITEM (mask)->width);
-  y1 = CLAMP (GIMP_ITEM (layer)->offset_y, 0, GIMP_ITEM (mask)->height);
-  x2 = CLAMP (GIMP_ITEM (layer)->offset_x + GIMP_ITEM (layer)->width,
-	      0, GIMP_ITEM (mask)->width);
-  y2 = CLAMP (GIMP_ITEM (layer)->offset_y + GIMP_ITEM (layer)->height,
-	      0, GIMP_ITEM (mask)->height);
-
-  pixel_region_init (&srcPR, GIMP_DRAWABLE (layer)->tiles,
-		     (x1 - GIMP_ITEM (layer)->offset_x),
-		     (y1 - GIMP_ITEM (layer)->offset_y),
-		     (x2 - x1), (y2 - y1), FALSE);
-  pixel_region_init (&destPR, GIMP_DRAWABLE (mask)->tiles,
-		     x1, y1, (x2 - x1), (y2 - y1), TRUE);
-  extract_alpha_region (&srcPR, NULL, &destPR);
-
-  mask->bounds_known = FALSE;
-}
-
-void
-gimp_channel_layer_mask (GimpChannel *mask,
-			 GimpLayer   *layer,
-                         gboolean     push_undo)
-{
-  PixelRegion srcPR, destPR;
-  gint        x1, y1, x2, y2;
-
-  g_return_if_fail (GIMP_IS_CHANNEL (mask));
-  g_return_if_fail (GIMP_IS_LAYER (layer));
-  g_return_if_fail (gimp_layer_get_mask (layer));
-
-  if (push_undo)
-    gimp_channel_push_undo (mask, _("Channel from Mask"));
-
-  /*  clear the mask if it is not already known to be empty  */
-  if (! (mask->bounds_known && mask->empty))
-    gimp_channel_clear (mask, FALSE);
-
-  x1 = CLAMP (GIMP_ITEM (layer)->offset_x, 0, GIMP_ITEM (mask)->width);
-  y1 = CLAMP (GIMP_ITEM (layer)->offset_y, 0, GIMP_ITEM (mask)->height);
-  x2 = CLAMP (GIMP_ITEM (layer)->offset_x + GIMP_ITEM (layer)->width, 
-	      0, GIMP_ITEM (mask)->width);
-  y2 = CLAMP (GIMP_ITEM (layer)->offset_y + GIMP_ITEM (layer)->height, 
-	      0, GIMP_ITEM (mask)->height);
-
-  pixel_region_init (&srcPR, GIMP_DRAWABLE (layer->mask)->tiles,
-		     (x1 - GIMP_ITEM (layer)->offset_x), 
-		     (y1 - GIMP_ITEM (layer)->offset_y),
-		     (x2 - x1), (y2 - y1), 
-		     FALSE);
-  pixel_region_init (&destPR, GIMP_DRAWABLE (mask)->tiles, 
-		     x1, y1, 
-		     (x2 - x1), (y2 - y1), 
-		     TRUE);
   copy_region (&srcPR, &destPR);
 
   mask->bounds_known = FALSE;

@@ -29,6 +29,7 @@
 
 #include "widgets/gimpcontainereditor.h"
 #include "widgets/gimpcontainerview.h"
+#include "widgets/gimphelp-ids.h"
 
 #include "gradients-commands.h"
 
@@ -102,9 +103,8 @@ gradients_save_as_pov_query (GimpContainerEditor *editor)
                            gradient, 
                            G_CONNECT_SWAPPED);
 
-  /*  Connect the "F1" help key  */
   gimp_help_connect (GTK_WIDGET (filesel), gimp_standard_help_func,
-		     "dialogs/save_as_povray.html");
+		     GIMP_HELP_GRADIENT_SAVE_AS_POV);
 
   gtk_widget_show (GTK_WIDGET (filesel));
 }

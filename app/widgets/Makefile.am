@@ -97,6 +97,7 @@ libappwidgets_a_sources = \
 	gimpgradienteditor.h		\
 	gimphelp.c			\
 	gimphelp.h			\
+	gimphelp-ids.h			\
 	gimphistogrambox.c		\
 	gimphistogrambox.h		\
 	gimphistogramview.c		\

@@ -1,3 +1,70 @@
+2003-08-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimphelp-ids.h: new file defining the available help
+	topics. Work in progress and totally unusable for matching to the
+	help system. Stay tuned...
+
+	* app/gui/about-dialog.c
+	* app/gui/brushes-menu.c
+	* app/gui/buffers-menu.c
+	* app/gui/channels-commands.[ch]
+	* app/gui/channels-menu.c
+	* app/gui/edit-commands.c
+	* app/gui/file-commands.c
+	* app/gui/file-new-dialog.c
+	* app/gui/file-open-dialog.c
+	* app/gui/file-save-dialog.c
+	* app/gui/gradients-commands.c
+	* app/gui/gradients-menu.c
+	* app/gui/image-menu.c
+	* app/gui/layers-commands.[ch]
+	* app/gui/layers-menu.c
+	* app/gui/module-browser.c
+	* app/gui/offset-dialog.c
+	* app/gui/palettes-menu.c
+	* app/gui/patterns-menu.c
+	* app/gui/resize-dialog.c
+	* app/gui/select-commands.c
+	* app/gui/templates-menu.c
+	* app/gui/tips-dialog.c
+	* app/gui/toolbox-menu.c
+	* app/gui/vectors-commands.[ch]
+	* app/gui/vectors-menu.c: replaced literal HTML file paths by help
+	IDs from gimphelp-ids.h. Renamed some menu callbacks to be
+	consistent with similar ones. This is just an intermediate commit
+	and not finished.
+
+	While browsing all the menus, I noticed that our "x to selection"
+	functions are not consistent at all. They should all offer the
+	REPLACE,ADD,SUBTRACT,INTERSECT options:
+
+	* app/core/gimpchannel.[ch]: added new function
+	gimp_channel_new_from_alpha(). Removed gimp_channel_layer_alpha()
+	and gimp_channel_layer_mask().
+
+	* app/core/gimpimage-mask.[ch]: added
+	gimp_image_mask_select_alpha() and
+	gimp_image_mask_select_component() which offer the full set of
+	operation, feather and feather_radius parameters as the other
+	selection functions.
+
+	* app/core/gimpimage-mask-select.[ch]: removed
+	gimp_image_mask_layer_alpha() and gimp_image_mask_layer_mask().
+
+	* app/gui/channels-commands.c (channels_channel_to_selection): use
+	gimp_image_mask_select_component() instead of implementing it
+	here.
+
+	* app/gui/image-menu.c
+	* app/gui/layers-commands.[ch]: offer the full choice of
+	REPLACE,ADD,SUBTRACT,INTERSECT with "Alpha to Selection" and "Mask
+	to Selection".
+
+	* tools/pdbgen/pdb/selection.pdb: changed accordingly.
+
+	* app/pdb/selection_cmds.c: regenerated.
+
 2003-08-21  Sven Neumann  <sven@gimp.org>
 
 	* themes/Default/images/Makefile.am

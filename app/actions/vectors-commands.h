@@ -20,49 +20,49 @@
 #define __VECTORS_COMMANDS_H__
 
 
-void   vectors_new_vectors_cmd_callback                (GtkWidget   *widget,
-                                                        gpointer     data);
-void   vectors_raise_vectors_cmd_callback              (GtkWidget   *widget,
-                                                        gpointer     data);
-void   vectors_lower_vectors_cmd_callback              (GtkWidget   *widget,
-                                                        gpointer     data);
-void   vectors_duplicate_vectors_cmd_callback          (GtkWidget   *widget,
-                                                        gpointer     data);
-void   vectors_delete_vectors_cmd_callback             (GtkWidget   *widget,
-                                                        gpointer     data);
-void   vectors_vectors_to_sel_cmd_callback             (GtkWidget   *widget,
-                                                        gpointer     data);
-void   vectors_add_vectors_to_sel_cmd_callback         (GtkWidget   *widget,
-                                                        gpointer     data);
-void   vectors_sub_vectors_from_sel_cmd_callback       (GtkWidget   *widget,
-                                                        gpointer     data);
-void   vectors_intersect_vectors_with_sel_cmd_callback (GtkWidget   *widget,
-                                                        gpointer     data);
-void   vectors_sel_to_vectors_cmd_callback             (GtkWidget   *widget,
-                                                        gpointer     data);
-void   vectors_stroke_vectors_cmd_callback             (GtkWidget   *widget,
-                                                        gpointer     data);
-void   vectors_copy_vectors_cmd_callback               (GtkWidget   *widget,
-                                                        gpointer     data);
-void   vectors_paste_vectors_cmd_callback              (GtkWidget   *widget,
-                                                        gpointer     data);
-void   vectors_import_vectors_cmd_callback             (GtkWidget   *widget,
-                                                        gpointer     data);
-void   vectors_export_vectors_cmd_callback             (GtkWidget   *widget,
-                                                        gpointer     data);
-void   vectors_vectors_tool_cmd_callback               (GtkWidget   *widget,
-                                                        gpointer     data);
-void   vectors_edit_vectors_attributes_cmd_callback    (GtkWidget   *widget,
-                                                        gpointer     data);
+void   vectors_new_cmd_callback                  (GtkWidget   *widget,
+                                                  gpointer     data);
+void   vectors_raise_cmd_callback                (GtkWidget   *widget,
+                                                  gpointer     data);
+void   vectors_lower_cmd_callback                (GtkWidget   *widget,
+                                                  gpointer     data);
+void   vectors_duplicate_cmd_callback            (GtkWidget   *widget,
+                                                  gpointer     data);
+void   vectors_delete_cmd_callback               (GtkWidget   *widget,
+                                                  gpointer     data);
+void   vectors_selection_replace_cmd_callback    (GtkWidget   *widget,
+                                                  gpointer     data);
+void   vectors_selection_add_cmd_callback        (GtkWidget   *widget,
+                                                  gpointer     data);
+void   vectors_selection_sub_cmd_callback        (GtkWidget   *widget,
+                                                  gpointer     data);
+void   vectors_selection_intersect_cmd_callback  (GtkWidget   *widget,
+                                                  gpointer     data);
+void   vectors_selection_to_vectors_cmd_callback (GtkWidget   *widget,
+                                                  gpointer     data);
+void   vectors_stroke_cmd_callback               (GtkWidget   *widget,
+                                                  gpointer     data);
+void   vectors_copy_cmd_callback                 (GtkWidget   *widget,
+                                                  gpointer     data);
+void   vectors_paste_cmd_callback                (GtkWidget   *widget,
+                                                  gpointer     data);
+void   vectors_import_cmd_callback               (GtkWidget   *widget,
+                                                  gpointer     data);
+void   vectors_export_cmd_callback               (GtkWidget   *widget,
+                                                  gpointer     data);
+void   vectors_vectors_tool_cmd_callback         (GtkWidget   *widget,
+                                                  gpointer     data);
+void   vectors_edit_attributes_cmd_callback      (GtkWidget   *widget,
+                                                  gpointer     data);
 
-void   vectors_stroke_vectors                          (GimpVectors *vectors);
-void   vectors_selection_to_vectors                    (GimpImage   *gimage,
-                                                        gboolean     advanced);
-void   vectors_vectors_tool                            (GimpVectors *vectors);
-void   vectors_new_vectors_query                       (GimpImage   *gimage,
-                                                        GimpVectors *template,
-                                                        gboolean     interactive);
-void   vectors_edit_vectors_query                      (GimpVectors *vectors);
+void   vectors_stroke_vectors                    (GimpVectors *vectors);
+void   vectors_selection_to_vectors              (GimpImage   *gimage,
+                                                  gboolean     advanced);
+void   vectors_vectors_tool                      (GimpVectors *vectors);
+void   vectors_new_vectors_query                 (GimpImage   *gimage,
+                                                  GimpVectors *template,
+                                                  gboolean     interactive);
+void   vectors_edit_vectors_query                (GimpVectors *vectors);
 
 
 #endif /* __VECTORS_COMMANDS_H__ */

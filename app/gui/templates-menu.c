@@ -28,6 +28,7 @@
 
 #include "widgets/gimpcontainereditor.h"
 #include "widgets/gimpcontainerview.h"
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 
 #include "templates-commands.h"
@@ -42,23 +43,28 @@ GimpItemFactoryEntry templates_menu_entries[] =
   { { N_("/_New Template..."), "",
       templates_new_template_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_NEW },
-    NULL, NULL, NULL },
+    NULL,
+    GIMP_HELP_TEMPLATE_NEW, NULL },
   { { N_("/D_uplicate Template..."), "",
       templates_duplicate_template_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_DUPLICATE },
-    NULL, NULL, NULL },
+    NULL,
+    GIMP_HELP_TEMPLATE_DUPLICATE, NULL },
   { { N_("/_Edit Template..."), "",
       templates_edit_template_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_EDIT },
-    NULL, NULL, NULL },
+    NULL,
+    GIMP_HELP_TEMPLATE_EDIT, NULL },
   { { N_("/_Create Image from Template..."), "",
       templates_create_image_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_IMAGE },
-    NULL, NULL, NULL },
+    NULL,
+    GIMP_HELP_TEMPLATE_IMAGE_NEW, NULL },
   { { N_("/_Delete Template..."), "",
       templates_delete_template_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_DELETE },
-    NULL, NULL, NULL }
+    NULL,
+    GIMP_HELP_TEMPLATE_DELETE, NULL }
 };
 
 gint n_templates_menu_entries = G_N_ELEMENTS (templates_menu_entries);

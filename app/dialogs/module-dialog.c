@@ -32,6 +32,7 @@
 #include "core/gimp.h"
 #include "core/gimpmodules.h"
 
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "module-browser.h"
@@ -122,7 +123,7 @@ module_browser_new (Gimp *gimp)
                                     GTK_STOCK_EXECUTE,
                                     _("Manage Loadable Modules"),
                                     gimp_standard_help_func,
-                                    "dialogs/module_manager.html",
+                                    GIMP_HELP_MODULE_DIALOG,
 
                                     GTK_STOCK_REFRESH, browser_refresh_callback,
                                     browser, NULL, NULL, FALSE, FALSE,
