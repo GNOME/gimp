@@ -250,7 +250,6 @@ plug_in_new (Gimp        *gimp,
   plug_in = g_new0 (PlugIn, 1);
 
   plug_in->gimp               = gimp;
-  plug_in->context            = g_object_ref (context);
 
   plug_in->ref_count          = 1;
 
@@ -277,6 +276,7 @@ plug_in_new (Gimp        *gimp,
 
   proc_frame = &plug_in->main_proc_frame;
 
+  proc_frame->context         = g_object_ref (context);
   proc_frame->proc_rec        = proc_rec;
   proc_frame->main_loop       = NULL;
   proc_frame->return_vals     = NULL;
@@ -322,7 +322,7 @@ plug_in_unref (PlugIn *plug_in)
       if (plug_in->progress)
         g_object_unref (plug_in->progress);
 
-      g_object_unref (plug_in->context);
+      g_object_unref (plug_in->main_proc_frame.context);
 
       g_free (plug_in);
     }
@@ -868,16 +868,19 @@ plug_in_pop (Gimp *gimp)
 }
 
 void
-plug_in_proc_frame_push (PlugIn     *plug_in,
-                         ProcRecord *proc_rec)
+plug_in_proc_frame_push (PlugIn      *plug_in,
+                         GimpContext *context,
+                         ProcRecord  *proc_rec)
 {
   PlugInProcFrame *proc_frame;
 
   g_return_if_fail (plug_in != NULL);
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (proc_rec != NULL);
 
   proc_frame = g_new0 (PlugInProcFrame, 1);
 
+  proc_frame->context  = g_object_ref (context);
   proc_frame->proc_rec = proc_rec;
 
   plug_in->temp_proc_frames = g_list_prepend (plug_in->temp_proc_frames,
@@ -897,6 +900,7 @@ plug_in_proc_frame_pop (PlugIn *plug_in)
   plug_in->temp_proc_frames = g_list_remove (plug_in->temp_proc_frames,
                                              proc_frame);
 
+  g_object_unref (proc_frame->context);
   g_free (proc_frame);
 }
 

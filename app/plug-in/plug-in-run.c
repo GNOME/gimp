@@ -50,6 +50,7 @@
 /*  local function prototypes  */
 
 static Argument * plug_in_temp_run        (ProcRecord      *proc_rec,
+                                           GimpContext     *context,
                                            GimpProgress    *progress,
                                            Argument        *args,
                                            gint             argc);
@@ -81,7 +82,7 @@ plug_in_run (Gimp         *gimp,
 
   if (proc_rec->proc_type == GIMP_TEMPORARY)
     {
-      return_vals = plug_in_temp_run (proc_rec, progress, args, argc);
+      return_vals = plug_in_temp_run (proc_rec, context, progress, args, argc);
       goto done;
     }
 
@@ -235,6 +236,7 @@ plug_in_repeat (Gimp         *gimp,
 
 static Argument *
 plug_in_temp_run (ProcRecord   *proc_rec,
+                  GimpContext  *context,
                   GimpProgress *progress,
 		  Argument     *args,
 		  gint          argc)
@@ -248,7 +250,7 @@ plug_in_temp_run (ProcRecord   *proc_rec,
     {
       GPProcRun proc_run;
 
-      plug_in_proc_frame_push (plug_in, proc_rec);
+      plug_in_proc_frame_push (plug_in, context, proc_rec);
 
       proc_run.name    = proc_rec->name;
       proc_run.nparams = argc;

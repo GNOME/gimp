@@ -28,16 +28,16 @@
 
 struct _PlugInProcFrame
 {
-  ProcRecord *proc_rec;
-  GMainLoop  *main_loop;
-  Argument   *return_vals;
-  gint        n_return_vals;
+  GimpContext *context;
+  ProcRecord  *proc_rec;
+  GMainLoop   *main_loop;
+  Argument    *return_vals;
+  gint         n_return_vals;
 };
 
 struct _PlugIn
 {
   Gimp         *gimp;
-  GimpContext  *context;
 
   gint          ref_count;
 
@@ -104,6 +104,7 @@ void       plug_in_push            (Gimp        *gimp,
 void       plug_in_pop             (Gimp        *gimp);
 
 void       plug_in_proc_frame_push (PlugIn      *plug_in,
+                                    GimpContext *context,
                                     ProcRecord  *proc_rec);
 void       plug_in_proc_frame_pop  (PlugIn      *plug_in);
 

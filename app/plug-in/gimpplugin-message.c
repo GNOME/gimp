@@ -344,10 +344,16 @@ static void
 plug_in_handle_proc_run (PlugIn    *plug_in,
                          GPProcRun *proc_run)
 {
-  const gchar *proc_name = NULL;
-  ProcRecord  *proc_rec;
-  Argument    *args;
-  Argument    *return_vals;
+  PlugInProcFrame *proc_frame;
+  const gchar     *proc_name = NULL;
+  ProcRecord      *proc_rec;
+  Argument        *args;
+  Argument        *return_vals;
+
+  if (plug_in->temp_proc_frames)
+    proc_frame = plug_in->temp_proc_frames->data;
+  else
+    proc_frame = &plug_in->main_proc_frame;
 
   proc_rec = procedural_db_lookup (plug_in->gimp, proc_run->name);
 
@@ -382,7 +388,7 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
   /*  Execute the procedure even if procedural_db_lookup() returned NULL,
    *  procedural_db_execute() will return appropriate error return_vals.
    */
-  return_vals = procedural_db_execute (plug_in->gimp, plug_in->context,
+  return_vals = procedural_db_execute (plug_in->gimp, proc_frame->context,
                                        plug_in->progress,
                                        proc_name, args);
 

@@ -129,7 +129,8 @@ gboolean
 plug_in_progress_install (PlugIn      *plug_in,
                           const gchar *progress_callback)
 {
-  ProcRecord *proc_rec;
+  PlugInProcFrame *proc_frame;
+  ProcRecord      *proc_rec;
 
   g_return_val_if_fail (plug_in != NULL, FALSE);
   g_return_val_if_fail (progress_callback != NULL, FALSE);
@@ -147,6 +148,11 @@ plug_in_progress_install (PlugIn      *plug_in,
       return FALSE;
     }
 
+  if (plug_in->temp_proc_frames)
+    proc_frame = plug_in->temp_proc_frames->data;
+  else
+    proc_frame = &plug_in->main_proc_frame;
+
   if (plug_in->progress)
     {
       plug_in_progress_end (plug_in);
@@ -159,7 +165,7 @@ plug_in_progress_install (PlugIn      *plug_in,
     }
 
   plug_in->progress = g_object_new (GIMP_TYPE_PDB_PROGRESS,
-                                    "context",       plug_in->context,
+                                    "context",       proc_frame->context,
                                     "callback-name", progress_callback,
                                     NULL);
 
