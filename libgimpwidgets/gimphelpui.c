@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimphelpui.c
- * Copyright (C) 2000 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2000-2003 Michael Natterer <mitch@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -25,15 +25,6 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
-#include <gtk/gtktipsquery.h>
-
-#define GTK_DISABLE_DEPRECATED
-
 #include "gimpwidgetstypes.h"
 
 #include "gimpdialog.h"
@@ -49,26 +40,23 @@ typedef enum
 
 /*  local function prototypes  */
 
-static const gchar * gimp_help_get_help_data         (GtkWidget      *widget,
-                                                      GtkWidget     **help_widget,
-                                                      gpointer       *ret_data);
-static gboolean gimp_help_callback                   (GtkWidget      *widget,
-                                                      GtkWidgetHelpType help_type,
-                                                      GimpHelpFunc    help_func);
-static gboolean gimp_help_tips_query_idle_show_help  (gpointer        data);
-static gboolean gimp_help_tips_query_widget_selected (GtkWidget      *tips_query,
-                                                      GtkWidget      *widget,
-                                                      const gchar    *tip_text,
-                                                      const gchar    *tip_private,
-                                                      GdkEventButton *event,
-                                                      gpointer        func_data);
-static gboolean gimp_help_tips_query_idle_start      (gpointer        tips_query);
+static const gchar * gimp_help_get_help_data       (GtkWidget        *widget,
+                                                    GtkWidget       **help_widget,
+                                                    gpointer         *ret_data);
+static gboolean   gimp_help_callback               (GtkWidget        *widget,
+                                                    GtkWidgetHelpType help_type,
+                                                    GimpHelpFunc      help_func);
+
+static gboolean   gimp_context_help_idle_start     (gpointer          widget);
+static gboolean   gimp_context_help_button_press   (GtkWidget        *widget,
+                                                    GdkEventButton   *bevent,
+                                                    gpointer          data);
+static gboolean   gimp_context_help_idle_show_help (gpointer          data);
 
 
 /*  local variables  */
 
-static GtkTooltips *tool_tips     = NULL;
-static GtkWidget   *tips_query    = NULL;
+static GtkTooltips *tool_tips = NULL;
 
 
 /*  public functions  */
@@ -153,12 +141,14 @@ gimp_help_connect (GtkWidget    *widget,
 		   const gchar  *help_id,
                    gpointer      help_data)
 {
+  static gboolean initialized = FALSE;
+
   g_return_if_fail (GTK_IS_WIDGET (widget));
   g_return_if_fail (help_func != NULL);
 
-  /*  set up the help signals and tips query widget
+  /*  set up the help signals
    */
-  if (! tips_query)
+  if (! initialized)
     {
       GtkBindingSet *binding_set;
 
@@ -174,22 +164,7 @@ gimp_help_connect (GtkWidget    *widget,
 				    GTK_TYPE_WIDGET_HELP_TYPE,
 				    GIMP_WIDGET_HELP_TYPE_HELP);
 
-      tips_query = gtk_tips_query_new ();
-
-      g_object_set (tips_query,
-                    "emit_always", TRUE,
-                    NULL);
-
-      g_signal_connect (tips_query, "widget_selected",
-			G_CALLBACK (gimp_help_tips_query_widget_selected),
-			NULL);
-
-      /*  FIXME: EEEEEEEEEEEEEEEEEEEEK, this is very ugly and forbidden...
-       *  does anyone know a way to do this tips query stuff without
-       *  having to attach to some parent widget???
-       */
-      tips_query->parent = widget;
-      gtk_widget_realize (tips_query);
+      initialized = TRUE;
     }
 
   gimp_help_set_help_data (widget, NULL, help_id);
@@ -232,8 +207,9 @@ gimp_help_set_help_data (GtkWidget   *widget,
 
 /**
  * gimp_context_help:
+ * @widget: Any #GtkWidget on the screen.
  *
- * This function invokes the #GtkTipsQuery tooltips inspector.
+ * This function invokes the context help inspector.
  *
  * The mouse cursor will turn turn into a question mark and the user can
  * click on any widget of the application which started the inspector.
@@ -245,10 +221,11 @@ gimp_help_set_help_data (GtkWidget   *widget,
  * case at least for every window/dialog).
  **/
 void
-gimp_context_help (void)
+gimp_context_help (GtkWidget *widget)
 {
-  if (tips_query)
-    gimp_help_callback (NULL, GTK_WIDGET_HELP_WHATS_THIS, NULL);
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  gimp_help_callback (widget, GTK_WIDGET_HELP_WHATS_THIS, NULL);
 }
 
 
@@ -323,8 +300,7 @@ gimp_help_callback (GtkWidget          *widget,
       return TRUE;
 
     case GTK_WIDGET_HELP_WHATS_THIS:
-      if (! GTK_TIPS_QUERY (tips_query)->in_query)
-	g_idle_add (gimp_help_tips_query_idle_start, tips_query);
+      g_idle_add (gimp_context_help_idle_start, widget);
       return TRUE;
 
     default:
@@ -334,7 +310,7 @@ gimp_help_callback (GtkWidget          *widget,
   return FALSE;
 }
 
-/*  Do all the actual GtkTipsQuery calls in idle functions and check for
+/*  Do all the actual context help calls in idle functions and check for
  *  some widget holding a grab before starting the query because strange
  *  things happen if (1) the help browser pops up while the query has
  *  grabbed the pointer or (2) the query grabs the pointer while some
@@ -342,7 +318,71 @@ gimp_help_callback (GtkWidget          *widget,
  */
 
 static gboolean
-gimp_help_tips_query_idle_show_help (gpointer data)
+gimp_context_help_idle_start (gpointer widget)
+{
+  if (! gtk_grab_get_current ())
+    {
+      GtkWidget     *invisible;
+      GdkCursor     *cursor;
+      GdkGrabStatus  status;
+
+      invisible = gtk_invisible_new_for_screen (gtk_widget_get_screen (widget));
+      gtk_widget_show (invisible);
+
+      cursor = gdk_cursor_new_for_display (gtk_widget_get_display (invisible),
+                                           GDK_QUESTION_ARROW);
+
+      status = gdk_pointer_grab (invisible->window, TRUE,
+                                 GDK_BUTTON_PRESS_MASK   |
+                                 GDK_BUTTON_RELEASE_MASK |
+                                 GDK_ENTER_NOTIFY_MASK   |
+                                 GDK_LEAVE_NOTIFY_MASK,
+                                 NULL, cursor,
+                                 GDK_CURRENT_TIME);
+
+      gdk_cursor_unref (cursor);
+
+      if (status != GDK_GRAB_SUCCESS)
+        {
+          gtk_widget_destroy (invisible);
+          return FALSE;
+        }
+
+      gtk_grab_add (invisible);
+
+      g_signal_connect (invisible, "button_press_event",
+                        G_CALLBACK (gimp_context_help_button_press),
+                        NULL);
+    }
+
+  return FALSE;
+}
+
+static gboolean
+gimp_context_help_button_press (GtkWidget      *widget,
+                                GdkEventButton *bevent,
+                                gpointer        data)
+{
+  GtkWidget *event_widget;
+
+  event_widget = gtk_get_event_widget ((GdkEvent *) bevent);
+
+  if (event_widget && bevent->button == 1 && bevent->type == GDK_BUTTON_PRESS)
+    {
+      gtk_grab_remove (widget);
+      gdk_display_pointer_ungrab (gtk_widget_get_display (widget),
+				  bevent->time);
+      gtk_widget_destroy (widget);
+
+      if (event_widget != widget)
+        g_idle_add (gimp_context_help_idle_show_help, event_widget);
+    }
+
+  return TRUE;
+}
+
+static gboolean
+gimp_context_help_idle_show_help (gpointer data)
 {
   GtkWidget   *help_widget;
   const gchar *help_id   = NULL;
@@ -353,29 +393,6 @@ gimp_help_tips_query_idle_show_help (gpointer data)
 
   if (help_id)
     gimp_standard_help_func (help_id, help_data);
-
-  return FALSE;
-}
-
-static gboolean
-gimp_help_tips_query_widget_selected (GtkWidget      *tips_query,
-				      GtkWidget      *widget,
-				      const gchar    *tip_text,
-				      const gchar    *tip_private,
-				      GdkEventButton *event,
-				      gpointer        func_data)
-{
-  if (widget)
-    g_idle_add (gimp_help_tips_query_idle_show_help, widget);
-
-  return TRUE;
-}
-
-static gboolean
-gimp_help_tips_query_idle_start (gpointer tips_query)
-{
-  if (! gtk_grab_get_current ())
-    gtk_tips_query_start_query (GTK_TIPS_QUERY (tips_query));
 
   return FALSE;
 }

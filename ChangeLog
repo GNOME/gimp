@@ -1,3 +1,16 @@
+2003-10-27  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimphelpui.c: stop using the deprecated
+	GtkTipsQuery widget for context help and implement the needed part
+	of its functionality using a grab on a GtkInvisible. Should stop
+	GIMP crashing with Gtk+ HEAD.
+
+	* libgimpwidgets/gimphelpui.[ch] (gimp_context_help): requires
+	a GtkWidget parameter now (finding the correct GdkScreen).
+
+	* app/gui/help-commands.c (help_context_help_cmd_callback):
+	changed accordingly.
+
 2003-10-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/gui.c (gui_libs_init): resurrected the runtime check for

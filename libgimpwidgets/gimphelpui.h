@@ -2,13 +2,13 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimphelpui.h
- * Copyright (C) 2000 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2000-2003 Michael Natterer <mitch@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2 of the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
@@ -50,7 +50,7 @@ void  gimp_help_set_help_data      (GtkWidget    *widget,
 				    const gchar  *help_id);
 
 /*  activate the context help inspector  */
-void  gimp_context_help            (void);
+void  gimp_context_help            (GtkWidget    *widget);
 
 
 G_END_DECLS
