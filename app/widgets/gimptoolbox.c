@@ -396,12 +396,9 @@ gimp_toolbox_size_allocate (GtkWidget     *widget,
     gint            area_rows;
     gint            area_columns;
 
-    gtk_widget_get_child_requisition (toolbox->color_area,
-                                      &color_requisition);
-    gtk_widget_get_child_requisition (toolbox->foo_area,
-                                      &foo_requisition);
-    gtk_widget_get_child_requisition (toolbox->image_area,
-                                      &image_requisition);
+    gtk_widget_size_request (toolbox->color_area, &color_requisition);
+    gtk_widget_size_request (toolbox->foo_area,   &foo_requisition);
+    gtk_widget_size_request (toolbox->image_area, &image_requisition);
 
     width  = MAX (color_requisition.width,
                   MAX (foo_requisition.width,

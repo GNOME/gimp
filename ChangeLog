@@ -1,3 +1,10 @@
+2004-06-03  Michael Natterer  <mitch@gimpmp.org>
+
+	* app/widgets/gimptoolbox.c (gimp_toolbox_size_allocate): use
+	gtk_widget_size_request() instead of _get_child_requisition()
+	because we need to know the size of the toolbox' areas
+	even if they are invisible. Fixes SIGFPE spotted by Jimmac.
+
 2004-06-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcursor.c: some cleanup. Make the tool_cursor
