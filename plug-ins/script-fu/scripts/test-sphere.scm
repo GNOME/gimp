@@ -75,6 +75,18 @@
 ; gradient name. If the above selection was not altered the string would
 ; contain "Deep Sea"
 ; ----------------------------------------------------------------------
+; SF-PALETTE
+; Only useful in interactive mode. It will create a widget in the control
+; dialog. The widget consists of a button containing a preview of the selected
+; palette. If the button is pressed a palette selection dialog will popup.
+;
+; Usage:
+; SF-PALETTE "Palette" "Named Colors"
+;
+; The value returned when the script is invoked is a string containing the
+; palette name. If the above selection was not altered the string would
+; contain "Named Colors"
+; ----------------------------------------------------------------------
 ; SF-FILENAME
 ; Only useful in interactive mode. It will create a widget in the control
 ; dialog. The widget consists of a button containing the name of a file.
