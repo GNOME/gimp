@@ -204,17 +204,14 @@ gimp_toplevel_directory (void)
 
   /* If the executable file name is of the format
    * <foobar>\bin\*.exe or
-   * <foobar>\lib\gimp\GIMP_MAJOR_VERSION.GIMP_MINOR_VERSION\plug-ins\*.exe,
-   * use <foobar>. Otherwise, use the directory where the
-   * executable is.
+   * <foobar>\lib\gimp\GIMP_API_VERSION\plug-ins\*.exe, use <foobar>.
+   * Otherwise, use the directory where the executable is.
    */
 
   sep1 = strrchr (filename, '\\');
-
   *sep1 = '\0';
 
   sep2 = strrchr (filename, '\\');
-
   if (sep2 != NULL)
     {
       if (g_ascii_strcasecmp (sep2 + 1, "bin") == 0)
@@ -225,8 +222,8 @@ gimp_toplevel_directory (void)
 	{
 	  gchar test[MAX_PATH];
 
-	  sprintf (test, "\\lib\\gimp\\%d.%d\\plug-ins",
-		   GIMP_MAJOR_VERSION, GIMP_MINOR_VERSION);
+	  g_snprintf (test, sizeof (test) - 1,
+                      "\\lib\\gimp\\%s\\plug-ins", GIMP_API_VERSION);
 
 	  if (strlen (filename) > strlen (test) &&
 	      g_ascii_strcasecmp (filename + strlen (filename) - strlen (test),

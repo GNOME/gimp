@@ -1,3 +1,11 @@
+2004-12-14  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: added GIMP_API_VERSION to the generated gimpversion.h.
+
+	* libgimpbase/gimpenv.c (gimp_toplevel_directory): use
+	GIMP_API_VERSION instead of GIMP_MACRO_VERSION.GIMP_MINOR_VERSION
+	when building a path to test the plug-in executable path against.
+
 2004-12-14  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/drawable.pdb: added gimp_drawable_sub_thumbnail()

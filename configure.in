@@ -1525,6 +1525,7 @@ _______EOF
 #define GIMP_MINOR_VERSION                              ($gimp_minor_ver)
 #define GIMP_MICRO_VERSION                              ($gimp_micro_ver)
 #define GIMP_VERSION                                    "$gimp_ver"
+#define GIMP_API_VERSION                                "$gimp_api_ver"
 _______EOF
                                                                                 
   cat >>$outfile <<\_______EOF
@@ -1551,6 +1552,7 @@ _______EOF
   gimp_minor_ver=gimp_minor_version
   gimp_micro_ver=gimp_micro_version
   gimp_ver=gimp_version
+  gimp_api_ver=gimp_api_version
 ])
 
 AC_CONFIG_FILES([
