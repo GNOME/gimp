@@ -745,12 +745,7 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 
       proc->exec_method.temporary.plug_in = plug_in;
 
-      plug_ins_temp_proc_def_add (plug_in->gimp, proc_def,
-                                  plug_ins_locale_domain (plug_in->gimp,
-                                                          plug_in->prog,
-                                                          NULL),
-                                  plug_ins_help_path (plug_in->gimp,
-                                                      plug_in->prog));
+      plug_ins_temp_proc_def_add (plug_in->gimp, proc_def);
       break;
     }
 }

@@ -74,25 +74,10 @@ file_save_menu_setup (GimpItemFactory *factory)
 
       progname = plug_in_proc_def_get_progname (file_proc);
 
-      locale_domain = plug_ins_locale_domain (factory->gimp,
-                                              progname, NULL);
-      help_path = plug_ins_help_path (factory->gimp,
-                                      progname);
+      locale_domain = plug_ins_locale_domain (factory->gimp, progname, NULL);
+      help_path     = plug_ins_help_path (factory->gimp, progname);
 
-#ifdef __GNUC__
-#warning FIXME: fix plug-in menu item help
-#endif
-      {
-        gchar *basename;
-        gchar *lowercase_basename;
-
-        basename = g_path_get_basename (file_proc->prog);
-        lowercase_basename = g_ascii_strdown (basename, -1);
-
-        help_id = g_strconcat (lowercase_basename, ".html", NULL);
-
-        g_free (lowercase_basename);
-      }
+      help_id = plug_in_proc_def_get_help_id (file_proc);
 
       if (help_path)
         help_page = g_strconcat (help_path, ":", help_id, NULL);

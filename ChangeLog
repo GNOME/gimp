@@ -1,5 +1,22 @@
 2003-08-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/plug-ins.[ch] (plug_ins_temp_proc_def_add): removed
+	the "locale_domain" and "help_path" parameters since the function
+	can figure them by itself.
+
+	* app/plug-in/plug-in-message.c (plug_in_handle_proc_install):
+	changed accordingly.
+
+	* app/plug-in/plug-in-proc.[ch] (plug_in_proc_def_get_help_id):
+	new function which will soon be implemented correctly :-)
+
+	* app/gui/file-open-menu.c (file_open_menu_setup)
+	* app/gui/file-save-menu.c (file_save_menu_setup)
+	* app/gui/plug-in-menus.c (plug_in_menus_create_entry): use it
+	here instead of duplicating broken code.
+
+2003-08-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimphelp-ids.h: added GIMP_HELP_TEXT_EDITOR_DIALOG.
 
 	* app/widgets/gimptexteditor.c: use it.

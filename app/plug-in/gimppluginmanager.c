@@ -552,9 +552,7 @@ plug_ins_def_add_from_rc (Gimp      *gimp,
 
 void
 plug_ins_temp_proc_def_add (Gimp          *gimp,
-                            PlugInProcDef *proc_def,
-                            const gchar   *locale_domain,
-                            const gchar   *help_path)
+                            PlugInProcDef *proc_def)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (proc_def != NULL);
@@ -563,10 +561,17 @@ plug_ins_temp_proc_def_add (Gimp          *gimp,
     {
       if (proc_def->menu_path)
         {
-          if (! locale_domain)
-            locale_domain = STD_PLUGINS_DOMAIN;
+          const gchar *progname;
+          const gchar *locale_domain;
+          const gchar *help_path;
 
-          plug_in_menus_create_entry (NULL, proc_def, locale_domain, help_path);
+          progname = plug_in_proc_def_get_progname (proc_def);
+
+          locale_domain = plug_ins_locale_domain (gimp, progname, NULL);
+          help_path     = plug_ins_help_path (gimp, progname);
+
+          plug_in_menus_create_entry (NULL, proc_def,
+                                      locale_domain, help_path);
         }
     }
 

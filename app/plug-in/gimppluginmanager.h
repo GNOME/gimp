@@ -44,9 +44,7 @@ void              plug_ins_def_add_from_rc      (Gimp          *gimp,
 
 /* Add/Remove temporary procedures. */
 void              plug_ins_temp_proc_def_add    (Gimp          *gimp,
-                                                 PlugInProcDef *proc_def,
-                                                 const gchar   *locale_domain,
-                                                 const gchar   *help_path);
+                                                 PlugInProcDef *proc_def);
 void              plug_ins_temp_proc_def_remove (Gimp          *gimp,
                                                  PlugInProcDef *proc_def);
 

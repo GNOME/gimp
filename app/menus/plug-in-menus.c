@@ -94,10 +94,8 @@ plug_in_menus_init (Gimp        *gimp,
                                               &locale_path);
 
       for (list = domains; list; list = list->next)
-        {
-          if (! strcmp (locale_domain, (gchar *) list->data))
-            break;
-        }
+        if (! strcmp (locale_domain, (gchar *) list->data))
+          break;
 
       if (! list)
         {
@@ -115,9 +113,8 @@ void
 plug_in_menus_create (GimpItemFactory *item_factory,
                       GSList          *proc_defs)
 {
-  PlugInProcDef   *proc_def;
-  GSList          *procs;
-  GTree           *menu_entries;
+  GSList *procs;
+  GTree  *menu_entries;
 
   g_return_if_fail (GIMP_IS_ITEM_FACTORY (item_factory));
   g_return_if_fail (proc_defs != NULL);
@@ -127,7 +124,7 @@ plug_in_menus_create (GimpItemFactory *item_factory,
 
   for (procs = proc_defs; procs; procs = procs->next)
     {
-      proc_def = procs->data;
+      PlugInProcDef *proc_def = procs->data;
 
       if (proc_def->prog         &&
           proc_def->menu_path    &&
@@ -177,21 +174,9 @@ plug_in_menus_create_entry (GimpItemFactory *item_factory,
 
   g_return_if_fail (item_factory == NULL ||
                     GIMP_IS_ITEM_FACTORY (item_factory));
+  g_return_if_fail (proc_def != NULL);
 
-#ifdef __GNUC__
-#warning FIXME: fix plug-in menu item help
-#endif
-  {
-    gchar *basename;
-    gchar *lowercase_basename;
-
-    basename = g_path_get_basename (proc_def->prog);
-    lowercase_basename = g_ascii_strdown (basename, -1);
-
-    help_id = g_strconcat (lowercase_basename, ".html", NULL);
-
-    g_free (lowercase_basename);
-  }
+  help_id = plug_in_proc_def_get_help_id (proc_def);
 
   if (help_path)
     help_page = g_strconcat (help_path, ":", help_id, NULL);
