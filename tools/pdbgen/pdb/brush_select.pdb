@@ -1,0 +1,291 @@
+# The GIMP -- an image manipulation program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub pdb_misc {
+    $author = $copyright = 'Andy Thomas';
+    $date = '1998';
+}
+
+sub brush_args {(
+    { name => 'opacity', type => 'float',
+      desc => 'The initial opacity of the brush' },
+    { name => 'spacing', type => 'int32',
+      desc => 'The initial spacing of the brush (if < 0 then use brush default
+	       spacing)' },
+    { name => 'paint_mode',
+      type => 'enum LayerModeEffects (no ERASE_MODE, REPLACE_MODE)',
+      desc => 'The initial paint mode: { %%desc%%'  }
+)}
+
+sub brushes_popup {
+    $blurb = 'Invokes the Gimp brush selection.';
+
+    $help = 'This procedure popups the brush selection dialog.';
+
+    &pdb_misc;
+
+    @inargs = (
+	{ name => 'brush_callback', type => 'string', alias => 'name',
+	  desc => 'The callback PDB proc to call when brush selection is
+		   made' },
+	{ name => 'popup_title', type => 'string', alias => 'title',
+	  desc => 'Title to give the brush popup window' },
+	{ name => 'initial_brush', type => 'string',
+	  desc => 'The name of the brush to set as the first selected',
+	  no_success => 1 },
+	&brush_args
+    );
+
+    %invoke = (
+	vars => [ 'ProcRecord *prec', 'BrushSelectP newdialog' ],
+	code => <<'CODE'
+{
+  if ((prec = procedural_db_lookup (name)))
+    {
+      if (initial_brush && strlen (initial_brush))
+	newdialog = brush_select_new (title, brush, opacity, spacing,
+				      paint_mode);
+      else
+	newdialog = brush_select_new (title, NULL, 0.0, 0, 0);
+
+      /* Add to list of proc to run when brush changes */
+      /* change_callbacks = g_list_append (change_callbacks, g_strdup(name)); */
+      newdialog->callback_name = g_strdup (name);
+
+      /* Add to active brush dialogs list */
+      active_dialogs = g_slist_append (active_dialogs, newdialog);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub brush_close_popup {
+    $blurb = 'Popdown the Gimp brush selection.';
+
+    $help = 'This procedure closes an opened brush selection dialog.';
+
+    &pdb_misc;
+
+    @inargs = (
+	{ name => 'brush_callback', type => 'string', alias => 'name',
+	  desc => 'The name of the callback registered for this popup' }
+    );
+
+    %invoke = (
+	vars => [ 'ProcRecord *prec', 'BrushSelectP bsp' ],
+	code => <<'CODE'
+{
+  if ((prec = procedural_db_lookup (name)) &&
+      (bsp = brush_get_brushselect (name))
+    {
+      active_dialogs = g_slist_remove (active_dialogs, bsp);
+
+      if (GTK_WIDGET_VISIBLE (bsp->shell))
+	gtk_widget_hide (bsp->shell);
+
+      /* Free memory if poping down dialog which is not the main one */
+      if (bsp != brush_select_dialog)
+	{
+	  gtk_widget_destroy (bsp->shell);
+	  grad_select_free (bsp);
+	}
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub brush_set_popup {
+    $blurb = 'Sets the current brush selection in a popup.';
+
+    $help = $blurb;
+
+    &pdb_misc;
+
+    @inargs = (
+	{ name => 'brush_callback', type => 'string', alias => 'name',
+	  desc => 'The name of the callback registered for this popup' },
+	{ name => 'brush_name', type => 'string',
+	  desc => 'The name of the brush to set as selected' },
+	&brush_args
+    );
+
+    %invoke = (
+	vars => [ 'ProcRecord *prec', 'BrushSelectP bsp' ],
+	code => <<'CODE'
+{
+  if ((prec = procedural_db_lookup (name)) &&
+      (bsp = brush_get_brushselect (name))
+    {
+      GimpBrushP active = gimp_brush_list_get_brush (brush_list, brush_name);
+
+      if (active)
+	{
+	  /* Must alter the wigdets on screen as well */
+
+	  bsp->brush = active;
+	  brush_select_select (bsp, gimp_brush_list_get_brush_index (brush_list, active));
+
+	  bsp->opacity_value = opacity;
+	  bsp->spacing_value = spacing;
+	  bsp->paint_mode = paint_mode;
+
+	  bsp->spacing_data->value = bsp->spacing_value;
+	  gtk_signal_emit_by_name (GTK_OBJECT (bsp->spacing_data), "value_changed");
+
+	  bsp->opacity_data->value = bsp->opacity_value * 100.0;
+	  gtk_signal_emit_by_name (GTK_OBJECT (bsp->opacity_data), "value_changed");
+          
+	  gtk_option_menu_set_history (GTK_OPTION_MENU (bsp->option_menu), bsp->paint_mode);
+
+	}
+      else
+	success = FALSE;
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub brush_get_brush_data {
+    $blurb = <<'BLURB';
+Retrieve information about the specified brush (including data).
+BLURB
+
+    $help = <<'HELP';
+This procedure retrieves information about the brush. This includes the
+brush name, and the sample data for the brush.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+	{ name => 'name', type => 'string',
+	  desc => 'The brush name ("" means current active brush)' },
+	&sample_size_arg
+    );
+
+    @outargs = (
+	{ name => 'name', type => 'string',
+	  desc => 'The brush name',
+	  alias => 'g_strdup (grad->name)', no_declare => 1 },
+	{ name => 'grad_data', type => 'floatarray', alias => 'values',
+	  desc => 'The brush sample data',
+	  array => { name => 'width',
+		     desc => 'The brush sample width (r,g,b,a)',
+		     alias => 'sample_size * 4', no_declare => 1 } }
+    );
+
+    %invoke = (
+	headers => [ qw("brush_select.h") ],
+	vars => ['brush_t *grad'],
+	code => <<'CODE'
+{
+  if (strlen (name))
+    {
+      GSList *list = brush_list;
+
+      success = FALSE;
+
+      while (list)
+	{
+	  grad = list->data;
+
+	  if (!strcmp (grad->name, name))
+	    {
+	      success = TRUE;
+	      break;      /* We found it! */
+	    }
+
+	  list = list->next;
+	}
+    }
+  else
+    success = (grad = curr_brush) != NULL;
+
+  if (success)
+    {
+      gdouble *values, *pv;
+      gdouble pos, delta;
+      gdouble r, g, b, a;
+      int i = sample_size;
+
+      pos = 0.0;
+      delta = 1.0 / (i - 1);
+
+      pv = values = g_new (gdouble, i * 4);
+
+      curr_brush = grad;
+
+      while (i--)
+	{
+	  grad_get_color_at (pos, &r, &g, &b, &a);
+
+	  *pv++ = r;
+	  *pv++ = g;
+	  *pv++ = b;
+	  *pv++ = a;
+
+	  pos += delta;
+	}
+
+      curr_brush = oldgrad;
+    }
+}
+CODE
+    );
+}
+
+@headers = qw("brush_select.h");
+
+$extra{app}->{code} = <<'CODE';
+static BrushSelectP
+brush_get_brushselect(gchar *name)
+{
+  GSList *list = active_dialogs;
+  BrushSelectP bsp;
+
+  while (list)
+    {
+      bsp = (BrushSelectP) list->data;
+      
+      if (!strcmp (name, bsp->callback_name))
+	return bsp;
+
+      list = list->next;
+    }
+
+  return NULL;
+}
+CODE
+
+@procs = qw(brushes_popup brushes_close_popup brushes_set_popup
+	    brushes_get_brush_data);
+%exports = (app => [@procs]);
+
+$desc = 'Brush UI';
+
+1;
