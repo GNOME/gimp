@@ -1,3 +1,9 @@
+2004-11-25  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/jpeg.c: Use a jpeg_error_mgr that lives within
+	PreviewPersistent, instead of an automatic variable in save_image.
+	Fixes bug #159076.
+
 2004-11-25  Simon Budig  <simon@gimp.org>
 
 	* modules/controller_linux_input.c: Add some sample code to retrieve

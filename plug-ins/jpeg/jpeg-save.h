@@ -222,6 +222,7 @@ typedef struct
 typedef struct
 {
   struct jpeg_compress_struct cinfo;
+  struct jpeg_error_mgr jerr;
   gint          tile_height;
   FILE         *outfile;
   gboolean      has_alpha;
@@ -1711,7 +1712,8 @@ save_image (const gchar *filename,
       pp->abort_me    = FALSE;
       abort_me = &(pp->abort_me);
 
-      jerr.pub.error_exit = background_error_exit;
+      pp->cinfo.err = jpeg_std_error(&(pp->jerr));
+      pp->jerr.error_exit = background_error_exit;
 
       g_idle_add ((GSourceFunc) background_jpeg_save, pp);
 
