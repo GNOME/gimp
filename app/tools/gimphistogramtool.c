@@ -246,6 +246,7 @@ histogram_tool_dialog_new (void)
   GtkWidget *main_vbox;
   GtkWidget *hbox;
   GtkWidget *vbox;
+  GtkWidget *grad_hbox;
   GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *label;
@@ -335,11 +336,19 @@ histogram_tool_dialog_new (void)
   gtk_widget_show (frame);
 
   /*  The gradient below the histogram */
+  grad_hbox = gtk_hbox_new (TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), grad_hbox, FALSE, FALSE, 0);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_box_pack_start (GTK_BOX (grad_hbox), frame, FALSE, FALSE, 0);
+
   htd->gradient = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (htd->gradient), 
 		    HISTOGRAM_WIDTH, GRADIENT_HEIGHT);
-  gtk_box_pack_start (GTK_BOX (vbox), htd->gradient, FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET(htd->gradient));
   gtk_widget_show (htd->gradient);
+  gtk_widget_show (frame);
+  gtk_widget_show (grad_hbox);
   histogram_tool_gradient_draw (htd->gradient, HISTOGRAM_VALUE);
 
   gtk_widget_show (vbox);

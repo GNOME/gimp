@@ -1,3 +1,7 @@
+Fri Nov 26 01:33:04 MET 1999  Sven Neumann <sven@gimp.org>
+
+	* app/histogram_tool.c: purely cosmetic change
+
 1999-11-26  Tor Lillqvist  <tml@iki.fi>
 
 	* libgimp/gimp.h (MAIN) (Win32): Improve WinMain prototype to
