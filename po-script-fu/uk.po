@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins-1.1.19\n"
-"POT-Creation-Date: 2000-10-04 16:46+0300\n"
+"POT-Creation-Date: 2000-10-10 09:45+0300\n"
 "PO-Revision-Date: 2000-03-10 11:26+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -636,7 +636,8 @@ msgstr "<Toolbox>/Розш./Теми стор╕нок WWW/Опуклий шаблон/Заголовок..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
-msgstr "<Toolbox>/Розш./Теми стор╕нок WWW/Опуклий шаблон/Горизонтальна л╕н╕йка..."
+msgstr ""
+"<Toolbox>/Розш./Теми стор╕нок WWW/Опуклий шаблон/Горизонтальна л╕н╕йка..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
@@ -664,7 +665,8 @@ msgstr "<Toolbox>/Розш./Теми стор╕нок WWW/Gimp.Org/Позначка п╕дкнопки труби..."
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button "
 "Label..."
-msgstr "<Toolbox>/Розш./Теми стор╕нок WWW/Gimp.Org/Позначка п╕дп╕дкнопки труби..."
+msgstr ""
+"<Toolbox>/Розш./Теми стор╕нок WWW/Gimp.Org/Позначка п╕дп╕дкнопки труби..."
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
@@ -1444,7 +1446,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Hue Rate"
-msgstr ""
+msgstr "Коф╕ц╕╓нт в╕дт╕нку"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "IIR"
@@ -1541,7 +1543,7 @@ msgstr "Нижн╕й кол╕р"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 msgid "Lower-Right color"
-msgstr ""
+msgstr "Нижн╕й правий кол╕р"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Make New Background"
@@ -1730,7 +1732,7 @@ msgstr "Шаблон"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
-msgstr ""
+msgstr "Рад╕ус ол╕вця / рад╕ус колеса [0.0:1.0]"
 
 #: plug-ins/script-fu/scripts/predator.scm:0
 msgid "Pixel Amount"
