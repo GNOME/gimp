@@ -1,3 +1,8 @@
+2005-02-05  Dave Neary  <bolsh@gimp.org>
+
+	* tools/gimp-remote.c: Added locale.h to the headers
+	included - fixes the build.
+
 2005-02-04  Manish Singh  <yosh@gimp.org>
 
 	* app/widgets/gimppropwidgets.h: readd declaration of

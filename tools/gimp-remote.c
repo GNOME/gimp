@@ -43,6 +43,8 @@
 #include <unistd.h>
 #endif
 
+#include <locale.h>
+
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
 
