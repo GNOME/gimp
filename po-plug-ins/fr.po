@@ -1314,32 +1314,29 @@ msgstr "Agrandir"
 
 #: plug-ins/MapObject/mapobject_main.c:205
 msgid "<Image>/Filters/Map/Map Object..."
-msgstr "<Image>/Filtres/Carte/Mapper l'Objet..."
+msgstr "<Image>/Filtres/Carte/Plaquer sur un objet..."
 
 #: plug-ins/MapObject/mapobject_ui.c:262 plug-ins/MapObject/mapobject_ui.c:556
 #: plug-ins/MapObject/mapobject_ui.c:1332
 msgid "Box"
-msgstr ""
+msgstr "Parallélépipède rectangle (boîte)"
 
 #: plug-ins/MapObject/mapobject_ui.c:280 plug-ins/MapObject/mapobject_ui.c:557
 #: plug-ins/MapObject/mapobject_ui.c:1338
-#, fuzzy
 msgid "Cylinder"
-msgstr "ligne"
+msgstr "Cylindre"
 
 #: plug-ins/MapObject/mapobject_ui.c:545
 msgid "Map to:"
-msgstr ""
+msgstr "Plaquer sur :"
 
 #: plug-ins/MapObject/mapobject_ui.c:554
-#, fuzzy
 msgid "Plane"
-msgstr "ligne"
+msgstr "Plan"
 
 #: plug-ins/MapObject/mapobject_ui.c:555
-#, fuzzy
 msgid "Sphere"
-msgstr "Vitesse"
+msgstr "Sphère"
 
 #: plug-ins/MapObject/mapobject_ui.c:563
 #, fuzzy
@@ -1347,32 +1344,28 @@ msgid "Type of object to map to"
 msgstr "Type de la source de lumière a appliquer"
 
 #: plug-ins/MapObject/mapobject_ui.c:565
-#, fuzzy
 msgid "Transpararent Background"
 msgstr "Fond transparent"
 
 #: plug-ins/MapObject/mapobject_ui.c:575
 msgid "Make image transparent outside object"
-msgstr ""
+msgstr "Rendre l'image transparente autour de l'objet"
 
 #: plug-ins/MapObject/mapobject_ui.c:577
-#, fuzzy
 msgid "Tile Source Image"
-msgstr "Avec une image source"
+msgstr "Carreler avec l'image source"
 
 #: plug-ins/MapObject/mapobject_ui.c:587
 msgid "Tile source image: useful for infinite planes"
-msgstr ""
+msgstr "Répéter l'image source sur une grille rectangulaire (utile pour les plans infinis)"
 
 #: plug-ins/MapObject/mapobject_ui.c:1043
-#, fuzzy
 msgid "Object X position in XYZ space"
-msgstr "Position X de la source en espace XYZ"
+msgstr "Position X de l'objet en espace XYZ"
 
 #: plug-ins/MapObject/mapobject_ui.c:1054
-#, fuzzy
 msgid "Object Y position in XYZ space"
-msgstr "Position Y de la source en espace XYZ"
+msgstr "Position Y de l'objet en espace XYZ"
 
 #: plug-ins/MapObject/mapobject_ui.c:1065
 #, fuzzy
@@ -1386,56 +1379,47 @@ msgid "Rotation"
 msgstr "Rotation"
 
 #: plug-ins/MapObject/mapobject_ui.c:1087
-#, fuzzy
 msgid "Rotation angle about X axis"
-msgstr "Angle de Rotation :"
+msgstr "Angle de rotation autour de l'axe X :"
 
 #: plug-ins/MapObject/mapobject_ui.c:1096
 #, fuzzy
 msgid "Rotation angle about Y axis"
-msgstr "Angle de Rotation :"
+msgstr "Angle de rotation autour de l'axe Y :"
 
 #: plug-ins/MapObject/mapobject_ui.c:1105
-#, fuzzy
 msgid "Rotation angle about Z axis"
-msgstr "Angle de Rotation :"
+msgstr "Angle de rotation autour de l'axe Z :"
 
 #: plug-ins/MapObject/mapobject_ui.c:1129
-#, fuzzy
 msgid "Front:"
-msgstr "Police :"
+msgstr "Avant :"
 
 #: plug-ins/MapObject/mapobject_ui.c:1129
-#, fuzzy
 msgid "Back:"
-msgstr "Noir:"
+msgstr "Arrière :"
 
 #: plug-ins/MapObject/mapobject_ui.c:1130
 #: plug-ins/MapObject/mapobject_ui.c:1226 plug-ins/print/print.c:865
-#, fuzzy
 msgid "Top:"
-msgstr "À :"
+msgstr "Dessus :"
 
 #: plug-ins/MapObject/mapobject_ui.c:1130
 #: plug-ins/MapObject/mapobject_ui.c:1226 plug-ins/print/print.c:885
-#, fuzzy
 msgid "Bottom:"
-msgstr "En bas"
+msgstr "Bas :"
 
 #: plug-ins/MapObject/mapobject_ui.c:1131 plug-ins/print/print.c:855
-#, fuzzy
 msgid "Left:"
-msgstr "Gauche"
+msgstr "Gauche :"
 
 #: plug-ins/MapObject/mapobject_ui.c:1131 plug-ins/print/print.c:875
-#, fuzzy
 msgid "Right:"
-msgstr "Droite"
+msgstr "Droite :"
 
 #: plug-ins/MapObject/mapobject_ui.c:1137
-#, fuzzy
 msgid "Map Images to Box Faces"
-msgstr "Séparer l'Image en Trames"
+msgstr "Plaquer différentes images sur les côtés de la boîte"
 
 #: plug-ins/MapObject/mapobject_ui.c:1178
 #: plug-ins/common/spheredesigner.c:2446
@@ -1444,19 +1428,19 @@ msgstr "Échelle en X :"
 
 #: plug-ins/MapObject/mapobject_ui.c:1181
 msgid "X scale (size)"
-msgstr ""
+msgstr "Échelle X (taille)"
 
 #: plug-ins/MapObject/mapobject_ui.c:1192
 msgid "Y scale (size)"
-msgstr ""
+msgstr "Échelle Y (taille)"
 
 #: plug-ins/MapObject/mapobject_ui.c:1203
 msgid "Z scale (size)"
-msgstr ""
+msgstr "Échelle Z (taille)"
 
 #: plug-ins/MapObject/mapobject_ui.c:1231
 msgid "Images for the Cap Faces"
-msgstr ""
+msgstr "Images pour les bouts du cylindre"
 
 #: plug-ins/MapObject/mapobject_ui.c:1260 plug-ins/gimpressionist/size.c:51
 #: plug-ins/gimpressionist/size.c:56
@@ -1497,13 +1481,12 @@ msgid "Map to Object"
 msgstr "Éditer l'Objet"
 
 #: plug-ins/MapObject/mapobject_ui.c:1461
-#, fuzzy
 msgid "Show Preview Wireframe"
-msgstr "Aperçu de la trame :"
+msgstr "Montrer l'aperçu en fil de fer"
 
 #: plug-ins/MapObject/mapobject_ui.c:1469
 msgid "Show/hide preview wireframe"
-msgstr ""
+msgstr "Tracer les arêtes de l'objet (fil de fer)"
 
 #. memory mapped file data
 #. must check file size
@@ -3979,6 +3962,12 @@ msgid ""
 "HTML file which will most likely\n"
 "crash your browser."
 msgstr ""
+"Êtes vous fou ?\n"
+"\n"
+"Vous êtes sur le point de créer\n"
+"un énorme fichier HTML qui,\n"
+"selon toute probabilité,\n"
+"plantera votre navigateur."
 
 #. HTML Page Options
 #: plug-ins/common/gtm.c:429
@@ -5101,28 +5090,28 @@ msgstr "Impossible d'ouvrir %s"
 #: plug-ins/common/pnm.c:480 plug-ins/common/pnm.c:489
 #: plug-ins/common/pnm.c:564 plug-ins/common/pnm.c:620
 msgid "PNM: Premature end of file."
-msgstr ""
+msgstr "PNM : fin de fichier prématurée"
 
 #: plug-ins/common/pnm.c:454
 #, fuzzy, c-format
 msgid "PNM: %s is not a valid file."
-msgstr "%s: n'est pas un fichier BMP valide %s\n"
+msgstr "PNM : le fichier %s est invalide."
 
 #: plug-ins/common/pnm.c:467
 msgid "PNM: File not in a supported format."
-msgstr ""
+msgstr "PNM : le fichier est dans un format non supporté."
 
 #: plug-ins/common/pnm.c:476
 msgid "PNM: Invalid X resolution."
-msgstr ""
+msgstr "PNM : résolution X invalide."
 
 #: plug-ins/common/pnm.c:483
 msgid "PNM: Invalid Y resolution."
-msgstr ""
+msgstr "PNM : résolution Y invalide."
 
 #: plug-ins/common/pnm.c:495
 msgid "PNM: Invalid maximum value."
-msgstr ""
+msgstr "PNM : valeur d'intensité maximale invalide."
 
 #: plug-ins/common/pnm.c:668
 #, fuzzy
@@ -6281,129 +6270,116 @@ msgid "Tiler..."
 msgstr "Carrelage..."
 
 #: plug-ins/common/uniteditor.c:71
-#, fuzzy
 msgid "<Toolbox>/Xtns/Unit Editor..."
-msgstr "<Toolbox>/Extensions/Explorer la base de procédures..."
+msgstr "<Toolbox>/Extensions/Éditeur d'unités..."
 
 #: plug-ins/common/uniteditor.c:150 plug-ins/common/uniteditor.c:573
-#, fuzzy
 msgid "New Unit"
-msgstr "Unité"
+msgstr "Nouvelle unité de mesure"
 
 #: plug-ins/common/uniteditor.c:178
 msgid "ID:"
-msgstr ""
+msgstr "Identificateur :"
 
 #: plug-ins/common/uniteditor.c:188
-#, fuzzy
 msgid "Factor:"
-msgstr "Facteur"
+msgstr "Facteur :"
 
 #: plug-ins/common/uniteditor.c:197
-#, fuzzy
 msgid "Digits:"
-msgstr "Diviseur :"
+msgstr "Chiffres :"
 
 #: plug-ins/common/uniteditor.c:208
 msgid "Symbol:"
-msgstr ""
+msgstr "Symbole :"
 
 #: plug-ins/common/uniteditor.c:219
-#, fuzzy
 msgid "Abbreviation:"
-msgstr "Élévation :"
+msgstr "Abbréviation :"
 
 #: plug-ins/common/uniteditor.c:230
-#, fuzzy
 msgid "Singular:"
-msgstr "Spéculaire :"
+msgstr "Singulier :"
 
 #: plug-ins/common/uniteditor.c:241
 msgid "Plural:"
-msgstr ""
+msgstr "Pluriel :"
 
 #: plug-ins/common/uniteditor.c:276
 msgid "Unit factor must not be 0."
-msgstr ""
+msgstr "Le facteur de l'unité ne doit pas être nul."
 
 #: plug-ins/common/uniteditor.c:286
 msgid "All text fields must contain a value."
-msgstr ""
+msgstr "Tous les champs de texte doivent être renseignés."
 
 #: plug-ins/common/uniteditor.c:494
 msgid "Unit Editor"
-msgstr ""
+msgstr "Éditeur d'unité"
 
 #: plug-ins/common/uniteditor.c:499 plug-ins/gimpressionist/presets.c:656
 msgid "Refresh"
-msgstr ""
+msgstr "Remettre à jour"
 
 #: plug-ins/common/uniteditor.c:526
-#, fuzzy
 msgid "Saved"
-msgstr "Enregistrer"
+msgstr "Enregistré"
 
 #: plug-ins/common/uniteditor.c:527
 msgid "ID"
-msgstr ""
+msgstr "Identificateur"
 
 #: plug-ins/common/uniteditor.c:528
 msgid "Factor"
 msgstr "Facteur"
 
 #: plug-ins/common/uniteditor.c:529
-#, fuzzy
 msgid "Digits"
-msgstr "Tons clairs"
+msgstr "Chiffres"
 
 #: plug-ins/common/uniteditor.c:530
 msgid "Symbol"
-msgstr ""
+msgstr "Symbole"
 
 #: plug-ins/common/uniteditor.c:531
 msgid "Abbr."
-msgstr ""
+msgstr "Abbr."
 
 #: plug-ins/common/uniteditor.c:532
-#, fuzzy
 msgid "Singular"
-msgstr "Sinus"
+msgstr "Singulier"
 
 #: plug-ins/common/uniteditor.c:533
 msgid "Plural"
-msgstr ""
+msgstr "Pluriel"
 
 #: plug-ins/common/uniteditor.c:580
 msgid "Create a new unit from scratch."
-msgstr ""
+msgstr "Créer une nouvelle unité (à partir de rien)"
 
 #: plug-ins/common/uniteditor.c:582
-#, fuzzy
 msgid "Duplicate Unit"
-msgstr "Dupliquer l'intervalle"
+msgstr "Dupliquer unité"
 
 #: plug-ins/common/uniteditor.c:589
 msgid "Create a new unit with the currently seleted unit as template."
-msgstr ""
+msgstr "Créer une nouvelle unité avec l'unité actuelle comme patron"
 
 #: plug-ins/common/uniteditor.c:592
 msgid "Don't Save Unit"
-msgstr ""
+msgstr "Ne pas enregistrer l'unité"
 
 #: plug-ins/common/uniteditor.c:599
-#, fuzzy
 msgid "Don't save the currently selected unit before GIMP exits."
-msgstr "Effacer la fractale actuellement sélectionnée."
+msgstr "Ne pas enregistrer l'unité actuellement sélectionnée avant de quitter Gimp"
 
 #: plug-ins/common/uniteditor.c:604
-#, fuzzy
 msgid "Save Unit"
-msgstr "Enregistrer points"
+msgstr "Enregistrer unité"
 
 #: plug-ins/common/uniteditor.c:611
-#, fuzzy
 msgid "Save the currently selected unit before GIMP exits."
-msgstr "Effacer la fractale actuellement sélectionnée."
+msgstr "Enregistrer l'unité actuellement sélectionnée avant de quitter Gim"
 
 #: plug-ins/common/unsharp.c:184
 msgid "<Image>/Filters/Enhance/Unsharp Mask..."
@@ -8604,7 +8580,7 @@ msgstr "Sauver des points de chemin depuis un fichier"
 #: plug-ins/gap/gap_mov_dialog.c:1207
 #, c-format
 msgid "Current Point: [ %3d ] of [ %3d ]"
-msgstr ""
+msgstr "Point courant : [ %3d ] parmi [ %3d ]"
 
 #: plug-ins/gap/gap_mov_dialog.c:1370
 msgid "Source Select"
@@ -8753,9 +8729,8 @@ msgstr ""
 
 #. toggle clip_to_image
 #: plug-ins/gap/gap_mov_dialog.c:1735
-#, fuzzy
 msgid "Show Path"
-msgstr "Déplacer selon chemin"
+msgstr "Montrer chemin"
 
 #: plug-ins/gap/gap_mov_dialog.c:1741
 msgid ""
@@ -8763,6 +8738,9 @@ msgid ""
 "pick/drag with left button\n"
 "or move with right button"
 msgstr ""
+"Montrer les lignes de chemin et permettre :\n"
+"* ramasser/tirer avec le bouton de gauche\n"
+"* déplacer avec le bouton de droite"
 
 #: plug-ins/gap/gap_mov_dialog.c:1751
 #: plug-ins/imagemap/imap_cmd_insert_point.c:57
@@ -9902,14 +9880,13 @@ msgstr "<Image>/Filtres/Rendu/Gfig..."
 
 #: plug-ins/gfig/gfig.c:861
 msgid "gfig-path misconfigured - the following directories were not found"
-msgstr ""
+msgstr "gfig-path mal configuré - les répertoires suivants n'ont pas été trouvés"
 
 #: plug-ins/gfig/gfig.c:1084
 msgid "First Gfig"
-msgstr ""
+msgstr "Première GFig"
 
 #: plug-ins/gfig/gfig.c:1900
-#, fuzzy
 msgid "Prev"
 msgstr "Aperçu"
 
@@ -9922,68 +9899,60 @@ msgstr "Éditer"
 
 #: plug-ins/gfig/gfig.c:1934
 msgid "Edit Gfig object collection"
-msgstr ""
+msgstr "Éditer la collection d'objets GFig"
 
 #: plug-ins/gfig/gfig.c:1937
-#, fuzzy
 msgid "Merge"
-msgstr "Superposer suivant la profondeur"
+msgstr "Fusionner"
 
 #: plug-ins/gfig/gfig.c:1942
 msgid "Merge Gfig Object collection into the current edit session"
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:1981
-#, fuzzy
 msgid "Number of Sides/Points/Turns:"
-msgstr "Nombre de pièces se recouvrant"
+msgstr "Nombre de faces/points/angles :"
 
 #: plug-ins/gfig/gfig.c:1997
-#, fuzzy
 msgid "Clockwise"
-msgstr "Fermer"
+msgstr "Sens des aiguilles"
 
 #: plug-ins/gfig/gfig.c:1998
-#, fuzzy
 msgid "Anti-Clockwise"
-msgstr "Lissage"
+msgstr "Sens inverse des aiguilles"
 
 #: plug-ins/gfig/gfig.c:2002 plug-ins/gimpressionist/orientation.c:121
 #: plug-ins/print/print.c:947
 msgid "Orientation:"
-msgstr "Orientation:"
+msgstr "Orientation :"
 
 #: plug-ins/gfig/gfig.c:2022
-#, fuzzy
 msgid "Bezier Settings"
-msgstr "Paramètres du Mélange"
+msgstr "Paramètres des courbes de Bézier"
 
 #: plug-ins/gfig/gfig.c:2042
-#, fuzzy
 msgid "Closed"
-msgstr "Fermer"
+msgstr "Courbe fermée"
 
 #: plug-ins/gfig/gfig.c:2047
 msgid "Close curve on completion"
-msgstr ""
+msgstr "Fermer la courbe lorsqu'elle est terminée"
 
 #: plug-ins/gfig/gfig.c:2052
-#, fuzzy
 msgid "Show Line Frame"
-msgstr "À la trame :"
+msgstr "Montrer les lignes"
 
 #: plug-ins/gfig/gfig.c:2057
 msgid "Draws lines between the control points. Only during curve creation"
-msgstr ""
+msgstr "Montre les lignes entre les points de contrôle (seulement pendant la création de courbe)"
 
 #: plug-ins/gfig/gfig.c:2073
 msgid "Regular Polygon Number of Sides"
-msgstr ""
+msgstr "Polygone régulier : nombre de côtés"
 
 #: plug-ins/gfig/gfig.c:2085
-#, fuzzy
 msgid "Star Number of Points"
-msgstr "Nombre de carreaux"
+msgstr "Étoile : nombre de points"
 
 #: plug-ins/gfig/gfig.c:2097
 #, fuzzy
@@ -9991,88 +9960,78 @@ msgid "Spiral Number of Points"
 msgstr "Nombre de carreaux"
 
 #: plug-ins/gfig/gfig.c:2121
-#, fuzzy
 msgid "Ops"
-msgstr "Options"
+msgstr "Opérations"
 
 #: plug-ins/gfig/gfig.c:2134
-#, fuzzy
 msgid "Create line"
-msgstr "Créer des Guides"
+msgstr "Créer une ligne"
 
 #: plug-ins/gfig/gfig.c:2139
-#, fuzzy
 msgid "Create circle"
-msgstr "Créer des Guides"
+msgstr "Créer un cercle"
 
 #: plug-ins/gfig/gfig.c:2144
-#, fuzzy
 msgid "Create ellipse"
-msgstr "Créer une nouvelle image"
+msgstr "Créer une ellipse"
 
 #: plug-ins/gfig/gfig.c:2149
-#, fuzzy
 msgid "Create arch"
-msgstr "Créer"
+msgstr "Créer une courbe"
 
 #: plug-ins/gfig/gfig.c:2158
 msgid "Create reg polygon"
-msgstr ""
+msgstr "Créer un polygone régulier"
 
 #: plug-ins/gfig/gfig.c:2175
 #, fuzzy
 msgid "Create spiral"
-msgstr "Créer histogramme"
+msgstr "Créer spirale"
 
 #: plug-ins/gfig/gfig.c:2185
 msgid "Create bezier curve. Shift + Button ends object creation."
-msgstr ""
+msgstr "Créer une courbe de Bézier. <Maj> + bouton termine la création de l'objet."
 
 #: plug-ins/gfig/gfig.c:2191
-#, fuzzy
 msgid "Move an object"
-msgstr "Déplacer les Objets Sélectionnés"
+msgstr "Déplacer un objet"
 
 #: plug-ins/gfig/gfig.c:2196
-#, fuzzy
 msgid "Move a single point"
-msgstr "Capture une fenêtre seule"
+msgstr "Déplacer un point seul"
 
 #: plug-ins/gfig/gfig.c:2201
 msgid "Copy an object"
-msgstr ""
+msgstr "Copier un objet"
 
 #: plug-ins/gfig/gfig.c:2206
-#, fuzzy
 msgid "Delete an object"
-msgstr "Effacer la fractale"
+msgstr "Effacer un objet"
 
 #: plug-ins/gfig/gfig.c:2365 plug-ins/gfig/gfig.c:2805
 #: plug-ins/gfig/gfig.c:4023 plug-ins/gimpressionist/brush.c:351
 #: plug-ins/gimpressionist/brush.c:356
 msgid "Brush"
-msgstr "Brosse"
+msgstr "Pinceau"
 
 #: plug-ins/gfig/gfig.c:2366
-#, fuzzy
 msgid "Airbrush"
-msgstr "Brosse"
+msgstr "Aérographe"
 
 #: plug-ins/gfig/gfig.c:2367
 msgid "Pencil"
-msgstr ""
+msgstr "Crayon"
 
 #: plug-ins/gfig/gfig.c:2368 plug-ins/gfig/gfig.c:3174
-#, fuzzy
 msgid "Pattern"
-msgstr "Motif :"
+msgstr "Motif"
 
 #: plug-ins/gfig/gfig.c:2375
 msgid ""
 "Use the brush/pencil or the airbrush when drawing on the image. Pattern "
 "paints with currently selected brush with a pattern. Only applies to "
 "circles/ellipses if Approx. Circles/Ellipses toggle is set."
-msgstr ""
+msgstr "Utilise le pinceau, le crayon ou l'aérographe pour dessiner sur l'image. « Motif » peint avec le pinceau sélectionné et un motif. Ne s'applique aux cercles et ellipses que si « Cercles/ellipses approx. » est coché."
 
 #: plug-ins/gfig/gfig.c:2787 plug-ins/rcm/rcm_dialog.c:121
 msgid "Original"
@@ -10149,104 +10108,87 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:2907
 msgid "Approx. Circles/Ellipses"
-msgstr ""
+msgstr "Cercles/ellipses approx."
 
 #: plug-ins/gfig/gfig.c:2914
 msgid ""
 "Approx. circles & ellipses using lines. Allows the use of brush fading with "
 "these types of objects."
-msgstr ""
+msgstr "Approxime les cercles et ellipses avec des lignes. Permet l'utilisation de l'estompement de pinceau avec ce type d'objets."
 
 #: plug-ins/gfig/gfig.c:2989
 msgid "Fade out:"
-msgstr ""
+msgstr "Estompement :"
 
 #: plug-ins/gfig/gfig.c:3009
-#, fuzzy
 msgid "Pressure:"
-msgstr "Progressif"
+msgstr "Pression :"
 
 #: plug-ins/gfig/gfig.c:3027
-#, fuzzy
 msgid "No Options..."
-msgstr "Options de Zoom"
+msgstr "Pas d'options..."
 
 #: plug-ins/gfig/gfig.c:3130
-#, fuzzy
 msgid "Replace"
-msgstr " (remplacer)"
+msgstr "Remplacer"
 
 #: plug-ins/gfig/gfig.c:3131
-#, fuzzy
 msgid "Intersect"
 msgstr "Intersection"
 
 #: plug-ins/gfig/gfig.c:3135
-#, fuzzy
 msgid "Selection Type:"
-msgstr "Sélection :"
+msgstr "Type de sélection :"
 
 #. 3
 #: plug-ins/gfig/gfig.c:3148
-#, fuzzy
 msgid "Feather"
-msgstr "après"
+msgstr "Plume"
 
 #: plug-ins/gfig/gfig.c:3175
-#, fuzzy
 msgid "Foreground"
-msgstr "Uniquement l'Avant Plan"
+msgstr "Avant plan"
 
 #: plug-ins/gfig/gfig.c:3180
-#, fuzzy
 msgid "Fill Type:"
-msgstr "Type de Fonction :"
+msgstr "Type de remplissage :"
 
 #: plug-ins/gfig/gfig.c:3193
-#, fuzzy
 msgid "Fill Opacity:"
-msgstr "Opacité :"
+msgstr "Opacité de remplissage :"
 
 #: plug-ins/gfig/gfig.c:3201
-#, fuzzy
 msgid "Each Selection"
-msgstr "Afficher la Sélection"
+msgstr "Chaque sélection"
 
 #: plug-ins/gfig/gfig.c:3202
-#, fuzzy
 msgid "All Selections"
-msgstr "Sélection"
+msgstr "Toutes les sélections"
 
 #: plug-ins/gfig/gfig.c:3206
-#, fuzzy
 msgid "Fill after:"
-msgstr "Filtre"
+msgstr "Remplir après"
 
 #: plug-ins/gfig/gfig.c:3213
-#, fuzzy
 msgid "Segment"
-msgstr "Nombre de segments"
+msgstr "Segment"
 
 #: plug-ins/gfig/gfig.c:3214
-#, fuzzy
 msgid "Sector"
-msgstr "Sélectionneur"
+msgstr "Secteur"
 
 #: plug-ins/gfig/gfig.c:3218
-#, fuzzy
 msgid "Arc as:"
-msgstr "Zone :"
+msgstr "Arc comme :"
 
 #. Put buttons in
 #: plug-ins/gfig/gfig.c:3272
-#, fuzzy
 msgid "Show Image"
-msgstr "Nouvelle Image"
+msgstr "Montrer image"
 
 #: plug-ins/gfig/gfig.c:3283
-#, fuzzy
 msgid "Reload Image"
-msgstr "Chargement du plan de l'image"
+msgstr "Recharger image"
 
 #: plug-ins/gfig/gfig.c:3295 plug-ins/imagemap/imap_menu.c:384
 #: plug-ins/imagemap/imap_popup.c:132 plug-ins/imagemap/imap_rectangle.c:60
@@ -10255,124 +10197,105 @@ msgstr "Rectangle"
 
 #: plug-ins/gfig/gfig.c:3297
 msgid "Isometric"
-msgstr ""
+msgstr "Isométrique"
 
 #: plug-ins/gfig/gfig.c:3301
-#, fuzzy
 msgid "Grid Type:"
-msgstr "Taille de grille :"
+msgstr "Type de grille :"
 
 #: plug-ins/gfig/gfig.c:3312
-#, fuzzy
 msgid "Darker"
-msgstr "Plus sombre :"
+msgstr "Plus sombre"
 
 #: plug-ins/gfig/gfig.c:3313
-#, fuzzy
 msgid "Lighter"
-msgstr "Plus lumineux :"
+msgstr "Plus lumineux"
 
 #: plug-ins/gfig/gfig.c:3314
 msgid "Very Dark"
-msgstr ""
+msgstr "Très sombre"
 
 #: plug-ins/gfig/gfig.c:3318
-#, fuzzy
 msgid "Grid Color:"
-msgstr "Couleur d'Av. Plan"
+msgstr "Couleur de grille :"
 
 #: plug-ins/gfig/gfig.c:3322
-#, fuzzy
 msgid "Max Undo:"
-msgstr "Profondeur max :"
+msgstr "Niveaux d'annulation :"
 
 #: plug-ins/gfig/gfig.c:3330
-#, fuzzy
 msgid "Show Position"
-msgstr "Position"
+msgstr "Montrer position"
 
 #: plug-ins/gfig/gfig.c:3341
 msgid "Hide Cntr Pnts"
-msgstr ""
+msgstr "Cacher les points de contrôle"
 
 #: plug-ins/gfig/gfig.c:3353
-#, fuzzy
 msgid "Show Tooltips"
-msgstr "Desactiver les bulles d'aide"
+msgstr "Montrer les bulles d'aide"
 
 #: plug-ins/gfig/gfig.c:3404
-#, fuzzy
 msgid "Display Grid"
-msgstr "Déplacement"
+msgstr "Grille d'affichage"
 
 #: plug-ins/gfig/gfig.c:3415
 msgid "Lock on Grid"
-msgstr ""
+msgstr "Aligner sur la grille"
 
 #: plug-ins/gfig/gfig.c:3430
-#, fuzzy
 msgid "Grid Spacing:"
-msgstr "Espacement des Morceaux :"
+msgstr "Espacement de la grille :"
 
 #: plug-ins/gfig/gfig.c:3495
-#, fuzzy
 msgid "Object"
-msgstr "Sujet :"
+msgstr "Objet"
 
 #: plug-ins/gfig/gfig.c:3531
-#, fuzzy
 msgid "Select directory and rescan Gfig object collection"
-msgstr "Sélectionner un répertoire et actualiser la collection."
+msgstr "Sélectionner un répertoire et actualiser la collection d'objets"
 
 #: plug-ins/gfig/gfig.c:3542
 msgid "Load a single Gfig object collection"
-msgstr ""
+msgstr "Charger une collection d'objets Gfig"
 
 #: plug-ins/gfig/gfig.c:3551
-#, fuzzy
 msgid "Create a new Gfig object collection for editing"
-msgstr "Objet Gfig non sauvegardé - quitter ?"
+msgstr "Créer une nouvelle collection d'objets Gfig à éditer"
 
 #: plug-ins/gfig/gfig.c:3561
-#, fuzzy
 msgid "Delete currently selected Gfig Object collection"
-msgstr "Effacer la fractale actuellement sélectionnée."
+msgstr "Effacer la collection d'objets Gfig actuellement sélectionnée"
 
 #. Position labels
 #: plug-ins/gfig/gfig.c:3689
-#, fuzzy
 msgid "XY Pos:"
-msgstr "Pos X :"
+msgstr "Position XY :"
 
 #: plug-ins/gfig/gfig.c:3721
-#, fuzzy
 msgid "Obj Details"
-msgstr " Détails <<< "
+msgstr "Détails objet"
 
 #: plug-ins/gfig/gfig.c:3749
-#, fuzzy
 msgid "Collection Details"
-msgstr "Boîte de sélection de couleur"
+msgstr "Détails collection"
 
 #: plug-ins/gfig/gfig.c:3754
-#, fuzzy
 msgid "Draw Name:"
-msgstr "Dessine un labyrinthe."
+msgstr "Nom du dessin :"
 
 #: plug-ins/gfig/gfig.c:3766 plug-ins/gfig/gfig.c:3771
-#, fuzzy
 msgid "(none)"
-msgstr "(Aucun)"
+msgstr "(aucun)"
 
 #. Start buildng the dialog up
 #: plug-ins/gfig/gfig.c:3944
-#, fuzzy
 msgid "GFig"
-msgstr "Gfig"
+msgstr "GFig"
 
 #: plug-ins/gfig/gfig.c:3949
 msgid "Done"
-msgstr "Fait"
+msgstr "Terminé"
 
 #: plug-ins/gfig/gfig.c:3951 plug-ins/gfig/gfig.c:4018
 msgid "Paint"
@@ -10389,37 +10312,35 @@ msgid "Undo"
 msgstr "Défaire"
 
 #: plug-ins/gfig/gfig.c:4099
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%d unsaved Gfig objects.\n"
 "Continue with exiting?"
-msgstr "Objet Gfig non sauvegardé - quitter ?"
+msgstr ""
+"%d objet Gfig non sauvegardés.\n"
+"Vraiment quitter ?"
 
 #: plug-ins/gfig/gfig.c:4446
-#, fuzzy
 msgid "Enter Gfig Entry Name"
-msgstr "Éditer le nom de l'entrée Gfig"
+msgstr "Entrer le nom de l'entrée GFig"
 
 #: plug-ins/gfig/gfig.c:4470
-#, fuzzy
 msgid "Gfig Object Name:"
 msgstr "Nom de l'objet Gfig :"
 
 #. the dialog
 #: plug-ins/gfig/gfig.c:4529
-#, fuzzy
 msgid "Rescan for Gfig Objects"
 msgstr "Actualiser la liste d'objets Gfig"
 
 #: plug-ins/gfig/gfig.c:4547
-#, fuzzy
 msgid "Add Gfig Path"
 msgstr "Ajouter un Chemin Gfig"
 
 #. Load a single object
 #: plug-ins/gfig/gfig.c:4625
 msgid "Load Gfig obj"
-msgstr "Charger un obj Gfig"
+msgstr "Charger un objet Gfig"
 
 #: plug-ins/gfig/gfig.c:4686
 msgid "Error in copy layer for onlayers\n"
@@ -11019,7 +10940,7 @@ msgstr "Étendue d'angles à utiliser (350 = cercle complet)"
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
-msgstr ""
+msgstr "Si coché, la valeur (luminosité) de la région déterminera la direction de tracé"
 
 #: plug-ins/gimpressionist/orientation.c:141
 #: plug-ins/gimpressionist/size.c:140
@@ -11030,33 +10951,34 @@ msgstr "Rayon"
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
-msgstr ""
+msgstr "La distance au centre de l'image détermine la direction du coup de pinceau"
 
 #: plug-ins/gimpressionist/orientation.c:157
 msgid "Selects a random direction of each stroke"
-msgstr ""
+msgstr "Sélectionne une direction aléatoire à chaque coup de pinceau"
 
 #: plug-ins/gimpressionist/orientation.c:167
 msgid "Let the direction from the center determine the direction of the stroke"
-msgstr ""
+msgstr "La direction du coup de pinceau est déterminée par la direction depuis le centre"
 
 #: plug-ins/gimpressionist/orientation.c:176
 #: plug-ins/gimpressionist/size.c:175
 msgid "Flowing"
-msgstr ""
+msgstr "Flot"
 
+# bof
 #: plug-ins/gimpressionist/orientation.c:182
 #: plug-ins/gimpressionist/size.c:181
 msgid "The strokes follow a \"flowing\" pattern"
-msgstr ""
+msgstr "Les coups de pinceau forment un motif évoquant le flot d'une rivière"
 
 #: plug-ins/gimpressionist/orientation.c:194
 msgid "The hue of the region determines the direction of the stroke"
-msgstr ""
+msgstr "La teinte de la région détermine la direction du coup de pinceau"
 
 #: plug-ins/gimpressionist/orientation.c:204
 msgid "The direction that matches the original image the closest is selected"
-msgstr ""
+msgstr "La direction qui colle le mieux à l'image originale est choisie"
 
 #: plug-ins/gimpressionist/orientation.c:213
 #: plug-ins/gimpressionist/size.c:210
@@ -11065,20 +10987,20 @@ msgstr "Manuel"
 
 #: plug-ins/gimpressionist/orientation.c:219
 msgid "Manually specify the stroke orientation"
-msgstr ""
+msgstr "Spécifier manuellement la direction du coup de pinceau"
 
 #: plug-ins/gimpressionist/orientation.c:223
 #: plug-ins/gimpressionist/size.c:220
 msgid "Edit..."
-msgstr ""
+msgstr "Éditer..."
 
 #: plug-ins/gimpressionist/orientation.c:228
 msgid "Opens up the Orientation Map Editor"
-msgstr ""
+msgstr "Ouvre l'éditeur de carte d'orientation"
 
 #: plug-ins/gimpressionist/orientmap.c:461
 msgid "Orientation Map Editor"
-msgstr ""
+msgstr "Éditeur de carte d'orientation"
 
 #: plug-ins/gimpressionist/orientmap.c:469
 msgid "Vectors"
@@ -11089,6 +11011,10 @@ msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
 msgstr ""
+"Le champ de vecteurs :\n"
+"* bouton gauche pour bouger le vecteur sélectioné\n"
+"* bouton droit pour le diriger vers la souris\n"
+"* bouton du milieu pour ajouter un nouveau vecteur"
 
 #: plug-ins/gimpressionist/orientmap.c:500
 #: plug-ins/gimpressionist/sizemap.c:400
