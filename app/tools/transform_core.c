@@ -694,7 +694,10 @@ transform_core_cursor_update (Tool           *tool,
   else if (use_bad_cursor)
     ctype = GIMP_BAD_CURSOR;
 
-  gdisplay_install_tool_cursor (gdisp, ctype);
+  gdisplay_install_tool_cursor (gdisp, ctype,
+				TOOL_TYPE_NONE,
+				CURSOR_MODIFIER_NONE,
+				FALSE);
 }
 
 void

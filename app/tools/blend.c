@@ -641,10 +641,16 @@ blend_cursor_update (Tool           *tool,
     {
     case INDEXED_GIMAGE:
     case INDEXEDA_GIMAGE:
-      gdisplay_install_tool_cursor (gdisp, GDK_TOP_LEFT_ARROW);
+      gdisplay_install_tool_cursor (gdisp, GIMP_BAD_CURSOR,
+				    BLEND,
+				    CURSOR_MODIFIER_NONE,
+				    FALSE);
       break;
     default:
-      gdisplay_install_tool_cursor (gdisp, GDK_TCROSS);
+      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+				    BLEND,
+				    CURSOR_MODIFIER_NONE,
+				    FALSE);
       break;
     }
 }

@@ -350,17 +350,24 @@ text_cursor_update (Tool           *tool,
 
   gdisp = (GDisplay *) gdisp_ptr;
 
-  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, FALSE, FALSE);
+  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
+			       &x, &y, FALSE, FALSE);
 
   if ((layer = gimage_pick_correlate_layer (gdisp->gimage, x, y)))
     /*  if there is a floating selection, and this aint it...  */
     if (layer_is_floating_sel (layer))
       {
-	gdisplay_install_tool_cursor (gdisp, GDK_FLEUR);
+	gdisplay_install_tool_cursor (gdisp, GDK_FLEUR,
+				      MOVE,
+				      CURSOR_MODIFIER_NONE,
+				      FALSE);
 	return;
       }
 
-  gdisplay_install_tool_cursor (gdisp, GDK_XTERM);
+  gdisplay_install_tool_cursor (gdisp, GDK_XTERM,
+				TEXT,
+				CURSOR_MODIFIER_NONE,
+				FALSE);
 }
 
 static void

@@ -744,6 +744,7 @@ user_install_dialog_create (UserInstallCallback callback)
     PAGE_STYLE (ctree);
     gtk_ctree_set_indent (GTK_CTREE (ctree), 12);
     gtk_clist_set_shadow_type (GTK_CLIST (ctree), GTK_SHADOW_NONE);
+    gtk_clist_set_selection_mode (GTK_CLIST (ctree), GTK_SELECTION_BROWSE);
     gtk_box_pack_start (GTK_BOX (hbox), ctree, FALSE, FALSE, 0);
     gtk_widget_show (ctree);
 

@@ -323,31 +323,35 @@ clone_cursor_update (Tool           *tool,
   if ((layer = gimage_get_active_layer (gdisp->gimage))) 
     {
       int off_x, off_y;
-      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
+      drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 
       if (x >= off_x && y >= off_y &&
-	  x < (off_x + drawable_width (GIMP_DRAWABLE(layer))) &&
-	  y < (off_y + drawable_height (GIMP_DRAWABLE(layer))))
+	  x < (off_x + drawable_width (GIMP_DRAWABLE (layer))) &&
+	  y < (off_y + drawable_height (GIMP_DRAWABLE (layer))))
 	{
 	  /*  One more test--is there a selected region?
 	   *  if so, is cursor inside?
 	   */
 	  if (gimage_mask_is_empty (gdisp->gimage))
-	    ctype = GDK_PENCIL;
+	    ctype = GIMP_MOUSE_CURSOR;
 	  else if (gimage_mask_value (gdisp->gimage, x, y))
-	    ctype = GDK_PENCIL;
+	    ctype = GIMP_MOUSE_CURSOR;
 	}
     }
   
   if (clone_options->type == IMAGE_CLONE)
     {
       if (mevent->state & GDK_CONTROL_MASK)
-	ctype = GDK_CROSSHAIR;
+	ctype = GIMP_CROSSHAIR_SMALL_CURSOR;
       else if (!src_drawable_)
 	ctype = GIMP_BAD_CURSOR;
     }
 
-  gdisplay_install_tool_cursor (gdisp, ctype);
+  gdisplay_install_tool_cursor (gdisp, ctype,
+				ctype == GIMP_CROSSHAIR_SMALL_CURSOR ?
+				TOOL_TYPE_NONE : CLONE,
+				CURSOR_MODIFIER_NONE,
+				FALSE);
 }
 
 Tool *

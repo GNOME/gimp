@@ -615,15 +615,15 @@ edit_selection_control (Tool       *tool,
 {
   switch (action)
     {
-    case PAUSE :
+    case PAUSE:
       draw_core_pause (edit_select.core, tool);
       break;
 
-    case RESUME :
+    case RESUME:
       draw_core_resume (edit_select.core, tool);
       break;
 
-    case HALT :
+    case HALT:
       draw_core_stop (edit_select.core, tool);
       draw_core_free (edit_select.core);
       break;
@@ -642,7 +642,10 @@ edit_selection_cursor_update (Tool           *tool,
   GDisplay *gdisp;
 
   gdisp = (GDisplay *) gdisp_ptr;
-  gdisplay_install_tool_cursor (gdisp, GDK_FLEUR);
+  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+				TOOL_TYPE_NONE,
+				CURSOR_MODIFIER_MOVE,
+				FALSE);
 }
 
 static gint

@@ -334,7 +334,10 @@ measure_tool_button_press (Tool           *tool,
   /*  set the pointer to the crosshair,
    *  so one actually sees the cursor position
    */
-  gdisplay_install_tool_cursor (gdisp, GDK_TCROSS);
+  gdisplay_install_tool_cursor (gdisp, GIMP_CROSSHAIR_SMALL_CURSOR,
+				MEASURE,
+				CURSOR_MODIFIER_NONE,
+				FALSE);
 }
 
 static void
@@ -567,13 +570,15 @@ measure_tool_cursor_update (Tool           *tool,
 			    GdkEventMotion *mevent,
 			    gpointer        gdisp_ptr)
 {
-  GdkCursorType  ctype = GDK_TCROSS;
   MeasureTool   *measure_tool;
   GDisplay      *gdisp;
   gint           x[3];
   gint           y[3];
   gint           i;
   gboolean       in_handle = FALSE;
+
+  GdkCursorType  ctype     = GIMP_CROSSHAIR_SMALL_CURSOR;
+  CursorModifier cmodifier = CURSOR_MODIFIER_NONE;
 
   gdisp = (GDisplay *) gdisp_ptr;
   measure_tool = (MeasureTool *) tool->private;
@@ -604,18 +609,27 @@ measure_tool_cursor_update (Tool           *tool,
 		  break;
 		}
 
-	      ctype = (mevent->state & GDK_SHIFT_MASK) ? GDK_EXCHANGE : GDK_FLEUR;
+	      if (mevent->state & GDK_SHIFT_MASK)
+		cmodifier = CURSOR_MODIFIER_PLUS;
+	      else
+		cmodifier = CURSOR_MODIFIER_MOVE;
 
-	      if (i == 0 && measure_tool->num_points == 3 && ctype == GDK_EXCHANGE)
-		ctype = GDK_FLEUR;
+	      if (i == 0 && measure_tool->num_points == 3 &&
+		  cmodifier == CURSOR_MODIFIER_PLUS)
+		cmodifier = CURSOR_MODIFIER_MOVE;
 	      break;
 	    }
 	}
 
-      if (!in_handle && measure_tool->num_points > 1 && mevent->state & GDK_MOD1_MASK)
-	ctype = GDK_FLEUR;
+      if (!in_handle && measure_tool->num_points > 1 &&
+	  mevent->state & GDK_MOD1_MASK)
+	cmodifier = CURSOR_MODIFIER_MOVE;
     }
-  gdisplay_install_tool_cursor (gdisp, ctype);
+
+  gdisplay_install_tool_cursor (gdisp, ctype,
+				MEASURE,
+				cmodifier,
+				FALSE);
 }
 
 static void

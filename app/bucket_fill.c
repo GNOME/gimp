@@ -262,24 +262,28 @@ bucket_fill_cursor_update (Tool           *tool,
 
   gdisp = (GDisplay *) gdisp_ptr;
 
-  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, FALSE, FALSE);
+  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
+			       &x, &y, FALSE, FALSE);
   if ((layer = gimage_get_active_layer (gdisp->gimage))) 
     {
       drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
       if (x >= off_x && y >= off_y &&
-	  x < (off_x + drawable_width (GIMP_DRAWABLE(layer))) &&
-	  y < (off_y + drawable_height (GIMP_DRAWABLE(layer))))
+	  x < (off_x + drawable_width (GIMP_DRAWABLE (layer))) &&
+	  y < (off_y + drawable_height (GIMP_DRAWABLE (layer))))
 	{
 	  /*  One more test--is there a selected region?
 	   *  if so, is cursor inside?
 	   */
 	  if (gimage_mask_is_empty (gdisp->gimage))
-	    ctype = GDK_TCROSS;
+	    ctype = GIMP_MOUSE_CURSOR;
 	  else if (gimage_mask_value (gdisp->gimage, x, y))
-	    ctype = GDK_TCROSS;
+	    ctype = GIMP_MOUSE_CURSOR;
 	}
     }
-  gdisplay_install_tool_cursor (gdisp, ctype);
+  gdisplay_install_tool_cursor (gdisp, ctype,
+				BUCKET_FILL,
+				CURSOR_MODIFIER_NONE,
+				FALSE);
 }
 
 static void

@@ -324,11 +324,17 @@ move_tool_cursor_update (Tool           *tool,
   if (mevent->state & GDK_MOD1_MASK &&
       !gimage_mask_is_empty (gdisp->gimage))
     {
-      gdisplay_install_tool_cursor (gdisp, GIMP_SELECTION_MOVE_CURSOR);
+      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+				    RECT_SELECT,
+				    CURSOR_MODIFIER_MOVE,
+				    FALSE);
     }
   else if (mevent->state & GDK_SHIFT_MASK)
     {
-      gdisplay_install_tool_cursor (gdisp, GDK_FLEUR);
+      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+				    MOVE,
+				    CURSOR_MODIFIER_NONE,
+				    FALSE);
     }
   else
     {
@@ -336,7 +342,10 @@ move_tool_cursor_update (Tool           *tool,
 	  (guide = gdisplay_find_guide (gdisp, mevent->x, mevent->y)))
 	{
 	  tool->gdisp_ptr = gdisp_ptr;
-	  gdisplay_install_tool_cursor (gdisp, GDK_HAND2);
+	  gdisplay_install_tool_cursor (gdisp, GDK_HAND2,
+					TOOL_TYPE_NONE,
+					CURSOR_MODIFIER_HAND,
+					FALSE);
 
 	  if (tool->state != ACTIVE)
 	    {
@@ -358,15 +367,27 @@ move_tool_cursor_update (Tool           *tool,
 	  /*  if there is a floating selection, and this aint it...  */
 	  if (gimage_floating_sel (gdisp->gimage) &&
 	      !layer_is_floating_sel (layer))
-	    gdisplay_install_tool_cursor (gdisp, GDK_SB_DOWN_ARROW);
+	    gdisplay_install_tool_cursor (gdisp, GDK_SB_DOWN_ARROW,
+					  TOOL_TYPE_NONE,
+					  CURSOR_MODIFIER_NONE,
+					  FALSE);
 	  else if (layer == gdisp->gimage->active_layer)
-	    gdisplay_install_tool_cursor (gdisp, GDK_FLEUR);
+	    gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+					  MOVE,
+					  CURSOR_MODIFIER_NONE,
+					  FALSE);
 	  else
-	    gdisplay_install_tool_cursor (gdisp, GDK_HAND2);
+	    gdisplay_install_tool_cursor (gdisp, GDK_HAND2,
+					  TOOL_TYPE_NONE,
+					  CURSOR_MODIFIER_HAND,
+					  FALSE);
 	}
       else
 	{
-	  gdisplay_install_tool_cursor (gdisp, GDK_TOP_LEFT_ARROW);
+	  gdisplay_install_tool_cursor (gdisp, GIMP_BAD_CURSOR,
+					MOVE,
+					CURSOR_MODIFIER_NONE,
+					FALSE);
 	}
     }
 }

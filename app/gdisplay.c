@@ -166,7 +166,10 @@ gdisplay_new (GimpImage *gimage,
   g_hash_table_insert (display_ht, gdisp->canvas, gdisp);
 
   /*  set the current tool cursor  */
-  gdisplay_install_tool_cursor (gdisp, default_gdisplay_cursor);
+  gdisplay_install_tool_cursor (gdisp, default_gdisplay_cursor,
+				TOOL_TYPE_NONE,
+				CURSOR_MODIFIER_NONE,
+				FALSE);
 
   gimage->instance_count++;   /* this is obsolete */
   gimage->disp_count++;
@@ -1567,22 +1570,23 @@ gdisplay_real_install_tool_cursor (GDisplay      *gdisp,
 				   gboolean       toggle_cursor,
 				   gboolean       always_install)
 {
-  switch (cursor_mode)
+  if (cursor_type != GIMP_BAD_CURSOR)
     {
-    case CURSOR_MODE_TOOL_ICON:
-      break;
+      switch (cursor_mode)
+	{
+	case CURSOR_MODE_TOOL_ICON:
+	  break;
 
-    case CURSOR_MODE_TOOL_CROSSHAIR:
-      cursor_type = GIMP_CROSSHAIR_SMALL_CURSOR;
-      tool_type   = RECT_SELECT;
-      modifier    = CURSOR_MODIFIER_PLUS;
-      break;
+	case CURSOR_MODE_TOOL_CROSSHAIR:
+	  cursor_type = GIMP_CROSSHAIR_SMALL_CURSOR;
+	  break;
 
-    case CURSOR_MODE_CROSSHAIR:
-      cursor_type = GIMP_CROSSHAIR_CURSOR;
-      tool_type   = TOOL_TYPE_NONE;
-      modifier    = CURSOR_MODIFIER_NONE;
-      break;
+	case CURSOR_MODE_CROSSHAIR:
+	  cursor_type = GIMP_CROSSHAIR_CURSOR;
+	  tool_type   = TOOL_TYPE_NONE;
+	  modifier    = CURSOR_MODIFIER_NONE;
+	  break;
+	}
     }
 
   if (gdisp->current_cursor  != cursor_type   ||
@@ -1606,20 +1610,17 @@ gdisplay_real_install_tool_cursor (GDisplay      *gdisp,
 
 void
 gdisplay_install_tool_cursor (GDisplay       *gdisp,
-			      GdkCursorType   cursor_type) /*,
+			      GdkCursorType   cursor_type,
 			      ToolType        tool_type,
 			      CursorModifier  modifier,
-			      gboolean        toggle_cursor) */
+			      gboolean        toggle_cursor)
 {
   if (!gdisp->using_override_cursor)
     gdisplay_real_install_tool_cursor (gdisp,
 				       cursor_type,
-				       TOOL_TYPE_NONE,
-				       CURSOR_MODIFIER_NONE,
-				       FALSE,
-				       /*tool_type,
+				       tool_type,
 				       modifier,
-				       toggle_cursor,*/
+				       toggle_cursor,
 				       FALSE);
 }
 
@@ -1654,8 +1655,8 @@ gdisplay_remove_override_cursor (GDisplay *gdisp)
       gdisplay_real_install_tool_cursor (gdisp,
 					 gdisp->current_cursor,
 					 gdisp->cursor_tool,
-					 CURSOR_MODIFIER_NONE,
-					 FALSE,
+					 gdisp->cursor_modifier,
+					 gdisp->toggle_cursor,
 					 TRUE);
     }
 }

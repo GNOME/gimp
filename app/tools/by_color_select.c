@@ -464,28 +464,49 @@ by_color_select_cursor_update (Tool           *tool,
       switch (by_col_sel->operation)
 	{
 	case SELECTION_ADD:
-	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_ADD_CURSOR);
+	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+					TOOL_TYPE_NONE,
+					CURSOR_MODIFIER_PLUS,
+					FALSE);
 	  break;
 	case SELECTION_SUB:
-	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_SUBTRACT_CURSOR);
+	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+					TOOL_TYPE_NONE,
+					CURSOR_MODIFIER_MINUS,
+					FALSE);
 	  break;
 	case SELECTION_INTERSECT: 
-	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_INTERSECT_CURSOR);
+	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+					TOOL_TYPE_NONE,
+					CURSOR_MODIFIER_INTERSECT,
+					FALSE);
 	  break;
 	case SELECTION_REPLACE:
-	  gdisplay_install_tool_cursor (gdisp, GDK_TCROSS);
+	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+					TOOL_TYPE_NONE,
+					CURSOR_MODIFIER_NONE,
+					FALSE);
 	  break;
 	case SELECTION_MOVE_MASK:
-	  gdisplay_install_tool_cursor (gdisp, GIMP_SELECTION_MOVE_CURSOR);
+	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+					RECT_SELECT,
+					CURSOR_MODIFIER_MOVE,
+					FALSE);
 	  break;
 	case SELECTION_MOVE: 
-	  gdisplay_install_tool_cursor (gdisp, GDK_FLEUR);
+	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+					MOVE,
+					CURSOR_MODIFIER_NONE,
+					FALSE);
 	}
 
       return;
     }
 
-  gdisplay_install_tool_cursor (gdisp, GIMP_BAD_CURSOR);
+  gdisplay_install_tool_cursor (gdisp, GIMP_BAD_CURSOR,
+				TOOL_TYPE_NONE,
+				CURSOR_MODIFIER_NONE,
+				FALSE);
 }
 
 static void

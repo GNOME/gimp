@@ -27,42 +27,12 @@
 #include "cursors/crosshair_mask.xbm"
 #include "cursors/crosshair_small.xbm"
 #include "cursors/crosshair_small_mask.xbm"
-
-/*  stuff to be reordered  */
-#include "cursors/zoom.xbm"
-#include "cursors/zoom_mask.xbm"
-
-/*  old stuff  */
-#include "cursors/mouse_add.xbm"
-#include "cursors/mouse_add_mask.xbm"
-#include "cursors/mouse_subtract.xbm"
-#include "cursors/mouse_subtract_mask.xbm"
-#include "cursors/mouse_intersect.xbm"
-#include "cursors/mouse_intersect_mask.xbm"
-#include "cursors/mouse_point.xbm"
-#include "cursors/mouse_point_mask.xbm"
-#include "cursors/mouse_rectangle.xbm"
-#include "cursors/mouse_rectangle_mask.xbm"
-#include "cursors/mouse_move.xbm"
-#include "cursors/mouse_move_mask.xbm"
-#include "cursors/selection.xbm"
-#include "cursors/selection_mask.xbm"
-#include "cursors/selection_add.xbm"
-#include "cursors/selection_add_mask.xbm"
-#include "cursors/selection_subtract.xbm"
-#include "cursors/selection_subtract_mask.xbm"
-#include "cursors/selection_intersect.xbm"
-#include "cursors/selection_intersect_mask.xbm"
-#include "cursors/selection_move.xbm"
-#include "cursors/selection_move_mask.xbm"
 #include "cursors/bad.xbm"
 #include "cursors/bad_mask.xbm"
+#include "cursors/zoom.xbm"
+#include "cursors/zoom_mask.xbm"
 #include "cursors/dropper.xbm"
 #include "cursors/dropper_mask.xbm"
-#include "cursors/zoom_in.xbm"
-#include "cursors/zoom_in_mask.xbm"
-#include "cursors/zoom_out.xbm"
-#include "cursors/zoom_out_mask.xbm"
 
 /* modifiers */
 #include "cursors/plus.xbm"
@@ -73,6 +43,12 @@
 #include "cursors/intersect_mask.xbm"
 #include "cursors/move.xbm"
 #include "cursors/move_mask.xbm"
+#include "cursors/resize.xbm"
+#include "cursors/resize_mask.xbm"
+#include "cursors/control.xbm"
+#include "cursors/control_mask.xbm"
+#include "cursors/hand.xbm"
+#include "cursors/hand_mask.xbm"
 
 
 /* FIXME: gimp_busy HACK */
@@ -96,89 +72,20 @@ static BitmapCursor gimp_cursors[] =
     crosshair_small_width, crosshair_small_height,
     crosshair_small_x_hot, crosshair_small_y_hot, NULL, NULL, NULL
   },
-
-  /*  to be reordered  */
-  {
-    zoom_bits, zoom_mask_bits,
-    zoom_width, zoom_height,
-    zoom_x_hot, zoom_y_hot, NULL, NULL, NULL
-  },
-
-  /*  to be removed  */
-  {
-    mouse_add_bits, mouse_add_mask_bits,
-    mouse_add_width, mouse_add_height,
-    mouse_add_x_hot, mouse_add_y_hot, NULL, NULL, NULL
-  },
-  {
-    mouse_subtract_bits, mouse_subtract_mask_bits,
-    mouse_subtract_width, mouse_subtract_height,
-    mouse_subtract_x_hot, mouse_subtract_y_hot, NULL, NULL, NULL
-  },
-  {
-    mouse_intersect_bits, mouse_intersect_mask_bits,
-    mouse_intersect_width, mouse_intersect_height,
-    mouse_intersect_x_hot, mouse_intersect_y_hot, NULL, NULL, NULL
-  },
-  {
-    mouse_point_bits, mouse_point_mask_bits,
-    mouse_point_width, mouse_point_height,
-    mouse_point_x_hot, mouse_point_y_hot, NULL, NULL, NULL
-  },
-  {
-    mouse_rectangle_bits, mouse_rectangle_mask_bits,
-    mouse_rectangle_width, mouse_rectangle_height,
-    mouse_rectangle_x_hot, mouse_rectangle_y_hot, NULL, NULL, NULL
-  },
-  {
-    mouse_move_bits, mouse_move_mask_bits,
-    mouse_move_width, mouse_move_height,
-    mouse_move_x_hot, mouse_move_y_hot, NULL, NULL, NULL
-  },
-  {
-    selection_bits, selection_mask_bits,
-    selection_width, selection_height,
-    selection_x_hot, selection_y_hot, NULL, NULL, NULL
-  },
-  {
-    selection_add_bits, selection_add_mask_bits,
-    selection_add_width, selection_add_height,
-    selection_add_x_hot, selection_add_y_hot, NULL, NULL, NULL
-  },
-  {
-    selection_subtract_bits, selection_subtract_mask_bits,
-    selection_subtract_width, selection_subtract_height,
-    selection_subtract_x_hot, selection_subtract_y_hot, NULL, NULL, NULL
-  },
-  {
-    selection_intersect_bits, selection_intersect_mask_bits,
-    selection_intersect_width, selection_intersect_height,
-    selection_intersect_x_hot, selection_intersect_y_hot, NULL, NULL, NULL
-  },
-  {
-    selection_move_bits, selection_move_mask_bits,
-    selection_move_width, selection_move_height,
-    selection_move_x_hot, selection_move_y_hot, NULL, NULL, NULL
-  },
   {
     bad_bits, bad_mask_bits,
     bad_width, bad_height,
     bad_x_hot, bad_y_hot, NULL, NULL, NULL
   },
   {
+    zoom_bits, zoom_mask_bits,
+    zoom_width, zoom_height,
+    zoom_x_hot, zoom_y_hot, NULL, NULL, NULL
+  },
+  {
     dropper_bits, dropper_mask_bits,
     dropper_width, dropper_height,
     dropper_x_hot, dropper_y_hot, NULL, NULL, NULL
-  },
-  {
-    zoom_in_bits, zoom_in_mask_bits,
-    zoom_in_width, zoom_in_height,
-    zoom_in_x_hot, zoom_in_y_hot, NULL, NULL, NULL
-  },
-  {
-    zoom_out_bits, zoom_out_mask_bits,
-    zoom_out_width, zoom_out_height,
-    zoom_out_x_hot, zoom_out_y_hot, NULL, NULL, NULL
   }
 };
 
@@ -187,7 +94,10 @@ enum
   GIMP_PLUS_CURSOR = GIMP_LAST_CURSOR_ENTRY + 1,
   GIMP_MINUS_CURSOR,
   GIMP_INTERSECT_CURSOR,
-  GIMP_MOVE_CURSOR
+  GIMP_MOVE_CURSOR,
+  GIMP_RESIZE_CURSOR,
+  GIMP_CONTROL_CURSOR,
+  GIMP_HAND_CURSOR
 };
 
 static BitmapCursor modifier_cursors[] =
@@ -212,6 +122,21 @@ static BitmapCursor modifier_cursors[] =
     move_bits, move_mask_bits,
     move_width, move_height,
     move_x_hot, move_y_hot, NULL, NULL, NULL
+  },
+  {
+    resize_bits, resize_mask_bits,
+    resize_width, resize_height,
+    resize_x_hot, resize_y_hot, NULL, NULL, NULL
+  },
+  {
+    control_bits, control_mask_bits,
+    control_width, control_height,
+    control_x_hot, control_y_hot, NULL, NULL, NULL
+  },
+  {
+    hand_bits, hand_mask_bits,
+    hand_width, hand_height,
+    hand_x_hot, hand_y_hot, NULL, NULL, NULL
   }
 };
 
@@ -288,11 +213,12 @@ gimp_change_win_cursor (GdkWindow      *win,
 
   g_return_if_fail (curtype < GIMP_LAST_CURSOR_ENTRY);
 
-  /*  allow the small tool cursor only with the standard mouse and
-   *  the small crosshair
+  /*  allow the small tool cursor only with the standard mouse,
+   *  the small crosshair and the bad cursor
    */
   if (curtype != GIMP_MOUSE_CURSOR &&
-      curtype != GIMP_CROSSHAIR_SMALL_CURSOR)
+      curtype != GIMP_CROSSHAIR_SMALL_CURSOR &&
+      curtype != GIMP_BAD_CURSOR)
     tool_type = TOOL_TYPE_NONE;
 
   curtype -= GIMP_MOUSE_CURSOR;
@@ -322,6 +248,15 @@ gimp_change_win_cursor (GdkWindow      *win,
       break;
     case CURSOR_MODIFIER_MOVE:
       modtype = GIMP_MOVE_CURSOR;
+      break;
+    case CURSOR_MODIFIER_RESIZE:
+      modtype = GIMP_RESIZE_CURSOR;
+      break;
+    case CURSOR_MODIFIER_CONTROL:
+      modtype = GIMP_CONTROL_CURSOR;
+      break;
+    case CURSOR_MODIFIER_HAND:
+      modtype = GIMP_HAND_CURSOR;
       break;
     default:
       break;
@@ -353,11 +288,12 @@ gimp_change_win_cursor (GdkWindow      *win,
       bmcursor->mask == NULL)
     create_cursor_bitmaps (bmcursor);
 
-  if (bmmodifier->bitmap == NULL ||
-      bmmodifier->mask == NULL)
+  if (bmmodifier &&
+      (bmmodifier->bitmap == NULL ||
+       bmmodifier->mask == NULL))
     create_cursor_bitmaps (bmmodifier);
 
-  if (bmtool &&
+ if (bmtool &&
       (bmtool->bitmap == NULL ||
        bmtool->mask == NULL))
     create_cursor_bitmaps (bmtool);
@@ -435,7 +371,9 @@ change_win_cursor (GdkWindow      *win,
   if (cursortype > GDK_LAST_CURSOR)
     {
       gimp_change_win_cursor (win, (GimpCursorType) cursortype,
-			      tool_type, modifier, toggle_cursor);
+			      tool_type,
+			      modifier,
+			      toggle_cursor);
       return;
     }
 

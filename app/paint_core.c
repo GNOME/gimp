@@ -457,7 +457,10 @@ paint_core_cursor_update (Tool           *tool,
   PaintCore     *paint_core;
   gint           x, y;
   gchar          status_str[STATUSBAR_SIZE];
-  GdkCursorType  ctype = GDK_TOP_LEFT_ARROW;
+
+  GdkCursorType  ctype     = GDK_TOP_LEFT_ARROW;
+  CursorModifier cmodifier = CURSOR_MODIFIER_NONE;
+  gboolean       ctoggle   = FALSE;
 
   gdisp = (GDisplay *) gdisp_ptr;
   paint_core = (PaintCore *) tool->private;
@@ -544,7 +547,9 @@ paint_core_cursor_update (Tool           *tool,
 			      paint_core->context_id, status_str);
 
 	  if (paint_core->core->gc == NULL)
-	    draw_core_start (paint_core->core, gdisp->canvas->window, tool);
+	    {
+	      draw_core_start (paint_core->core, gdisp->canvas->window, tool);
+	    }
 	  else
 	    {
 	      /* is this a bad hack ? */
@@ -559,30 +564,57 @@ paint_core_cursor_update (Tool           *tool,
         {
 	  ctype = GIMP_COLOR_PICKER_CURSOR;
 	}
+      /* Set toggle cursors for various paint tools */
+      else if (!(mevent->state & GDK_SHIFT_MASK) &&
+	       (mevent->state & GDK_CONTROL_MASK))
+	{
+	  switch (tool->type)
+	    {
+	    case ERASER:
+	      ctype     = GIMP_MOUSE_CURSOR;
+	      cmodifier = CURSOR_MODIFIER_MINUS;
+	      break;
+	    case CONVOLVE:
+	      ctype     = GIMP_MOUSE_CURSOR;
+	      cmodifier = CURSOR_MODIFIER_MINUS;
+	      break;
+	    case DODGEBURN:
+	      ctype   = GIMP_MOUSE_CURSOR;
+	      ctoggle = TRUE;
+	      break;
+	    default:
+	      ctype = GIMP_MOUSE_CURSOR;
+	      break;
+	    }
+	}
       /* Normal operation -- no modifier pressed or first stroke */
       else 
 	{
 	  gint off_x, off_y;
 
-	  drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
+	  drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 	  gdisplay_untransform_coords (gdisp,
 				       (double) mevent->x, (double) mevent->y,
 				       &x, &y, TRUE, FALSE);
  
 	  if (x >= off_x && y >= off_y &&
-	       x < (off_x + drawable_width (GIMP_DRAWABLE(layer))) &&
-	       y < (off_y + drawable_height (GIMP_DRAWABLE(layer))))
+	       x < (off_x + drawable_width (GIMP_DRAWABLE (layer))) &&
+	       y < (off_y + drawable_height (GIMP_DRAWABLE (layer))))
 	    {
 	      /*  One more test--is there a selected region?
 	       *  if so, is cursor inside?
 	       */
 	      if (gimage_mask_is_empty (gdisp->gimage))
-		ctype = GDK_PENCIL;
+		ctype = GIMP_MOUSE_CURSOR;
 	      else if (gimage_mask_value (gdisp->gimage, x, y))
-		ctype = GDK_PENCIL;
+		ctype = GIMP_MOUSE_CURSOR;
 	    }
 	}
-      gdisplay_install_tool_cursor (gdisp, ctype);
+      gdisplay_install_tool_cursor (gdisp, ctype,
+				    ctype == GIMP_COLOR_PICKER_CURSOR ?
+				    COLOR_PICKER : tool->type,
+				    cmodifier,
+				    ctoggle);
     }
 }
 

@@ -1582,9 +1582,12 @@ bezier_select_cursor_update (Tool           *tool,
 
   bezier_sel = tool->private;
 
-  if(gdisp != tool->gdisp_ptr || bezier_sel->core->draw_state == INVISIBLE)
+  if (gdisp != tool->gdisp_ptr || bezier_sel->core->draw_state == INVISIBLE)
     {
-      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR);
+      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+				    BEZIER_SELECT,
+				    CURSOR_MODIFIER_NONE,
+				    FALSE);
       return;
     }
 
@@ -1608,21 +1611,33 @@ bezier_select_cursor_update (Tool           *tool,
       if ((mevent->state & GDK_SHIFT_MASK) &&
 	  !(mevent->state & GDK_CONTROL_MASK))
 	{
-	  gdisplay_install_tool_cursor (gdisp, GIMP_SELECTION_ADD_CURSOR);
+	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+					RECT_SELECT,
+					CURSOR_MODIFIER_PLUS,
+					FALSE);
 	}
       else if ((mevent->state & GDK_CONTROL_MASK) &&
 	       !(mevent->state & GDK_SHIFT_MASK))
 	{
-	  gdisplay_install_tool_cursor (gdisp, GIMP_SELECTION_SUBTRACT_CURSOR);
+	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+					RECT_SELECT,
+					CURSOR_MODIFIER_MINUS,
+					FALSE);
 	}
       else if ((mevent->state & GDK_CONTROL_MASK) &&
 	       (mevent->state & GDK_SHIFT_MASK))
 	{
-	  gdisplay_install_tool_cursor (gdisp, GIMP_SELECTION_INTERSECT_CURSOR);
+	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+					RECT_SELECT,
+					CURSOR_MODIFIER_INTERSECT,
+					FALSE);
 	}
       else
 	{
-	  gdisplay_install_tool_cursor (gdisp, GIMP_SELECTION_CURSOR);
+	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+					RECT_SELECT,
+					CURSOR_MODIFIER_NONE,
+					FALSE);
 	}
       return;
     }
@@ -1633,11 +1648,17 @@ bezier_select_cursor_update (Tool           *tool,
       if (mevent->state & GDK_SHIFT_MASK)
 	{
 	  /* moving on 1 curve */
-	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_MOVE_CURSOR);
+	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+					BEZIER_SELECT,
+					CURSOR_MODIFIER_MOVE,
+					FALSE);
 	}
       else
 	{
-	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_MOVE_CURSOR);
+	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+					BEZIER_SELECT,
+					CURSOR_MODIFIER_MOVE,
+					FALSE);
 	}
     }
   else
@@ -1647,63 +1668,96 @@ bezier_select_cursor_update (Tool           *tool,
 	case EXTEND_NEW:
 	  if (on_control_pnt && bezier_sel->closed)
 	    {
-	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_RECTANGLE_CURSOR);
+	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+					    BEZIER_SELECT,
+					    CURSOR_MODIFIER_CONTROL,
+					    FALSE);
 /* 	      g_print ("add to curve cursor\n"); */
 	    }
 	  else if (on_curve)
 	    {
-	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_POINT_CURSOR);
+	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+					    BEZIER_SELECT,
+					    CURSOR_MODIFIER_NONE,
+					    FALSE);
 /* 	      g_print ("edit control point cursor\n"); */
 	    }
 	  else
 	    {
-	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_POINT_CURSOR);
+	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+					    BEZIER_SELECT,
+					    CURSOR_MODIFIER_NONE,
+					    FALSE);
 	    }
 	  break;
 	case EXTEND_ADD:
 	  if (on_curve)
 	    {
-	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_ADD_CURSOR);
+	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+					    BEZIER_SELECT,
+					    CURSOR_MODIFIER_PLUS,
+					    FALSE);
 /* 	      g_print ("add to curve cursor\n"); */
 	    }
 	  else
 	    {
-	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR);
+	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+					    BEZIER_SELECT,
+					    CURSOR_MODIFIER_NONE,
+					    FALSE);
 /* 	      g_print ("default no action cursor\n"); */
 	    }
 	  break;
 	case EXTEND_EDIT:
 	  if (on_control_pnt)
 	    {
-	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_RECTANGLE_CURSOR);
+	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+					    BEZIER_SELECT,
+					    CURSOR_MODIFIER_CONTROL,
+					    FALSE);
 /* 	      g_print ("edit control point cursor\n"); */
 	    }
 	  else
 	    {
-	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR);
+	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+					    BEZIER_SELECT,
+					    CURSOR_MODIFIER_NONE,
+					    FALSE);
 /* 	      g_print ("default no action cursor\n"); */
 	    }
 	  break;
 	case EXTEND_REMOVE:
 	  if (on_control_pnt && mevent->state & GDK_SHIFT_MASK)
 	    {
-	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_SUBTRACT_CURSOR);
+	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+					    BEZIER_SELECT,
+					    CURSOR_MODIFIER_MINUS,
+					    FALSE);
 /*            g_print ("delete whole curve cursor\n"); */
 	    }
 	  else if (on_control_pnt)
 	    {
-	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_SUBTRACT_CURSOR);
+	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+					    BEZIER_SELECT,
+					    CURSOR_MODIFIER_MINUS,
+					    FALSE);
 /* 	      g_print ("remove point cursor\n"); */
 	    }
 	  else
 	    {
-	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR);
+	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+					    BEZIER_SELECT,
+					    CURSOR_MODIFIER_NONE,
+					    FALSE);
 /* 	      g_print ("default no action cursor\n"); */
 	    }
 	  break;
 	default:
 	  g_print ("In default\n");
-	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR);
+	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+					BEZIER_SELECT,
+					CURSOR_MODIFIER_NONE,
+					FALSE);
 	  break;
 	}
     }

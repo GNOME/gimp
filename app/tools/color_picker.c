@@ -423,9 +423,15 @@ color_picker_cursor_update (Tool           *tool,
 			       FALSE, FALSE);
 
   if (gimage_pick_correlate_layer (gdisp->gimage, x, y))
-    gdisplay_install_tool_cursor (gdisp, GIMP_COLOR_PICKER_CURSOR);
+    gdisplay_install_tool_cursor (gdisp, GIMP_COLOR_PICKER_CURSOR,
+				  COLOR_PICKER,
+				  CURSOR_MODIFIER_NONE,
+				  FALSE);
   else
-    gdisplay_install_tool_cursor (gdisp, GDK_TOP_LEFT_ARROW);
+    gdisplay_install_tool_cursor (gdisp, GIMP_BAD_CURSOR,
+				  COLOR_PICKER,
+				  CURSOR_MODIFIER_NONE,
+				  FALSE);
 }
 
 static void

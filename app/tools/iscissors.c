@@ -903,10 +903,13 @@ iscissors_oper_update (Tool           *tool,
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
 			       &x, &y, FALSE, FALSE);
 
-  if (mouse_over_vertex (iscissors, x, y) ||
-      mouse_over_curve (iscissors, x, y))
+  if (mouse_over_vertex (iscissors, x, y))
     {
       iscissors->op = SELECTION_MOVE_MASK; /* abused */
+    }
+  else if (mouse_over_curve (iscissors, x, y))
+    {
+      iscissors->op = SELECTION_MOVE; /* abused */
     }
   else if (iscissors->connected && iscissors->mask &&
 	   channel_value (iscissors->mask, x, y))
@@ -931,11 +934,11 @@ iscissors_oper_update (Tool           *tool,
     }
   else if (iscissors->connected && iscissors->mask)
     {
-      iscissors->op = SELECTION_MOVE; /* abused */
+      iscissors->op = -1;
     }
   else
     {
-      iscissors->op = -1;
+      iscissors->op = -2;
     }
 }
 
@@ -951,7 +954,7 @@ iscissors_modifier_update (Tool        *tool,
 
   op = iscissors->op;
 
-  if (op == -1)
+  if (op == -2)
     return;
 
   switch (kevent->keyval)
@@ -993,41 +996,66 @@ iscissors_cursor_update (Tool           *tool,
   iscissors = (Iscissors *) tool->private;
   gdisp = (GDisplay *) gdisp_ptr;
 
-  if (iscissors->op != -1)
+  switch (iscissors->op)
     {
-      switch (iscissors->op)
-	{
-	case SELECTION_ADD:
-	  gdisplay_install_tool_cursor (gdisp, GIMP_SELECTION_ADD_CURSOR);
-	  break;
-	case SELECTION_SUB:
-	  gdisplay_install_tool_cursor (gdisp, GIMP_SELECTION_SUBTRACT_CURSOR);
-	  break;
-	case SELECTION_INTERSECT:
-	  gdisplay_install_tool_cursor (gdisp, GIMP_SELECTION_INTERSECT_CURSOR);
-	  break;
-	case SELECTION_MOVE_MASK: /* abused */
-	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_POINT_CURSOR);
-	  break;
-	case SELECTION_MOVE: /* abused */
-	  gdisplay_install_tool_cursor (gdisp, GIMP_BAD_CURSOR);
-	  break;
-	default:
-	  gdisplay_install_tool_cursor (gdisp, GIMP_SELECTION_CURSOR);
-	  break;
-	}
-    }
-  else
-    {
+    case SELECTION_REPLACE:
+      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+				    RECT_SELECT,
+				    CURSOR_MODIFIER_NONE,
+				    FALSE);
+      break;
+    case SELECTION_ADD:
+      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+				    RECT_SELECT,
+				    CURSOR_MODIFIER_PLUS,
+				    FALSE);
+      break;
+    case SELECTION_SUB:
+      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+				    RECT_SELECT,
+				    CURSOR_MODIFIER_MINUS,
+				    FALSE);
+      break;
+    case SELECTION_INTERSECT:
+      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+				    RECT_SELECT,
+				    CURSOR_MODIFIER_INTERSECT,
+				    FALSE);
+      break;
+    case SELECTION_MOVE_MASK: /* abused */
+      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+				    ISCISSORS,
+				    CURSOR_MODIFIER_MOVE,
+				    FALSE);
+      break;
+    case SELECTION_MOVE: /* abused */
+      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+				    ISCISSORS,
+				    CURSOR_MODIFIER_PLUS,
+				    FALSE);
+      break;
+    case -1:
+      gdisplay_install_tool_cursor (gdisp, GIMP_BAD_CURSOR,
+				    ISCISSORS,
+				    CURSOR_MODIFIER_NONE,
+				    FALSE);
+      break;
+    default:
       switch (iscissors->state)
 	{
 	case WAITING:
-	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_POINT_CURSOR);
+	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+					ISCISSORS,
+					CURSOR_MODIFIER_PLUS,
+					FALSE);
 	  break;
 	case SEED_PLACEMENT:
 	case SEED_ADJUSTMENT:
 	default:
-	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR);
+	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+					ISCISSORS,
+					CURSOR_MODIFIER_NONE,
+					FALSE);
 	  break;
 	}
     }

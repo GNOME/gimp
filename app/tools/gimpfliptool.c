@@ -171,7 +171,7 @@ flip_cursor_update (Tool           *tool,
 {
   GDisplay      *gdisp;
   GimpDrawable  *drawable;
-  GdkCursorType  ctype = GDK_TOP_LEFT_ARROW;
+  GdkCursorType  ctype = GIMP_BAD_CURSOR;
 
   gdisp = (GDisplay *) gdisp_ptr;
   
@@ -200,7 +200,10 @@ flip_cursor_update (Tool           *tool,
 	    }
 	}
     }
-  gdisplay_install_tool_cursor (gdisp, ctype);
+  gdisplay_install_tool_cursor (gdisp, ctype,
+				FLIP,
+				CURSOR_MODIFIER_NONE,
+				ctype == GDK_SB_V_DOUBLE_ARROW);
 }
 
 Tool *

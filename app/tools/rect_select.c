@@ -495,13 +495,13 @@ selection_tool_update_op_state (RectSelect *rect_sel,
   if (state & GDK_MOD1_MASK &&
       !gimage_mask_is_empty (gdisp->gimage))
     {
-      rect_sel->op = SELECTION_MOVE_MASK;  /* move just the selection mask */
+      rect_sel->op = SELECTION_MOVE_MASK; /* move just the selection mask */
     }
   else if (!(state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK)) &&
 	   layer &&
 	   (layer == floating_sel ||
 	    (gdisplay_mask_value (gdisp, x, y) &&
-	     !floating_sel)))
+	     floating_sel == NULL)))
     {
       rect_sel->op = SELECTION_MOVE;      /* move the selection */
     }
@@ -513,16 +513,16 @@ selection_tool_update_op_state (RectSelect *rect_sel,
   else if ((state & GDK_CONTROL_MASK) &&
 	   !(state & GDK_SHIFT_MASK))
     {
-      rect_sel->op = SELECTION_SUB;      /* subtract from the selection */
+      rect_sel->op = SELECTION_SUB;       /* subtract from the selection */
     }
   else if ((state & GDK_CONTROL_MASK) &&
 	   (state & GDK_SHIFT_MASK))
     {
-      rect_sel->op = SELECTION_INTERSECT;/* intersect with selection */
+      rect_sel->op = SELECTION_INTERSECT; /* intersect with selection */
     }
   else
     {
-      rect_sel->op = SELECTION_REPLACE;  /* replace the selection */
+      rect_sel->op = SELECTION_REPLACE;   /* replace the selection */
     }
 }
 
@@ -534,7 +534,13 @@ rect_select_oper_update  (Tool           *tool,
   RectSelect *rect_sel;
 
   rect_sel = (RectSelect *) tool->private;
-  selection_tool_update_op_state (rect_sel, mevent->x, mevent->y,
+
+  rect_sel->current_x = mevent->x;
+  rect_sel->current_y = mevent->y;
+
+  selection_tool_update_op_state (rect_sel,
+				  rect_sel->current_x,
+				  rect_sel->current_y,
 				  mevent->state, gdisp_ptr);
 }
 
@@ -574,7 +580,8 @@ rect_select_modifier_update (Tool        *tool,
 
   rect_sel = (RectSelect *) tool->private;
   selection_tool_update_op_state (rect_sel,
-				  rect_sel->current_x, rect_sel->current_y,
+				  rect_sel->current_x,
+				  rect_sel->current_y,
 				  state, gdisp_ptr);
 }
 
@@ -592,22 +599,40 @@ rect_select_cursor_update (Tool           *tool,
   switch (rect_sel->op)
     {
     case SELECTION_ADD:
-      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_ADD_CURSOR);
+      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+				    tool->type,
+				    CURSOR_MODIFIER_PLUS,
+				    FALSE);
       break;
     case SELECTION_SUB:
-      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_SUBTRACT_CURSOR);
+      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+				    tool->type,
+				    CURSOR_MODIFIER_MINUS,
+				    FALSE);
       break;
     case SELECTION_INTERSECT: 
-      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_INTERSECT_CURSOR);
+      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+				    tool->type,
+				    CURSOR_MODIFIER_INTERSECT,
+				    FALSE);
       break;
     case SELECTION_REPLACE:
-      gdisplay_install_tool_cursor (gdisp, GDK_TCROSS);
+      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+				    tool->type,
+				    CURSOR_MODIFIER_NONE,
+				    FALSE);
       break;
     case SELECTION_MOVE_MASK:
-      gdisplay_install_tool_cursor (gdisp, GIMP_SELECTION_MOVE_CURSOR);
+      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+				    tool->type,
+				    CURSOR_MODIFIER_MOVE,
+				    FALSE);
       break;
     case SELECTION_MOVE: 
-      gdisplay_install_tool_cursor (gdisp, GDK_FLEUR);
+      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+				    MOVE,
+				    CURSOR_MODIFIER_NONE,
+				    FALSE);
       break;
     }
 }

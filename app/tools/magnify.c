@@ -344,11 +344,17 @@ magnify_cursor_update (Tool           *tool,
 
   if (magnify_options->type == ZOOMIN)
     {
-      gdisplay_install_tool_cursor (gdisp, GIMP_ZOOM_IN_CURSOR);
+      gdisplay_install_tool_cursor (gdisp, GIMP_ZOOM_CURSOR,
+				    MAGNIFY,
+				    CURSOR_MODIFIER_PLUS,
+				    FALSE);
     }
   else
     {
-      gdisplay_install_tool_cursor (gdisp, GIMP_ZOOM_OUT_CURSOR);
+      gdisplay_install_tool_cursor (gdisp, GIMP_ZOOM_CURSOR,
+				    MAGNIFY,
+				    CURSOR_MODIFIER_MINUS,
+				    FALSE);
    }
 }
 

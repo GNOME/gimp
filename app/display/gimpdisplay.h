@@ -190,10 +190,10 @@ void       gdisplay_real_install_tool_cursor (GDisplay       *gdisp,
 					      gboolean        toggle_cursor,
 					      gboolean        always_install);
 void       gdisplay_install_tool_cursor      (GDisplay       *gdisp,
-					      GdkCursorType   cursor_type); /*,
+					      GdkCursorType   cursor_type,
 					      ToolType        tool_type,
 					      CursorModifier  modifier,
-					      gboolean        toggle_cursor); */
+					      gboolean        toggle_cursor);
 void       gdisplay_remove_tool_cursor       (GDisplay       *gdisp);
 void       gdisplay_install_override_cursor  (GDisplay       *gdisp,
 					      GdkCursorType   cursor_type);

@@ -1,3 +1,38 @@
+2000-06-14  Michael Natterer  <mitch@gimp.org>
+
+	* Makefile.am
+	* app/cursorutil.[ch]
+	* app/tools.c
+	* cursors/*: added lots of new cursors and removed old ones.
+
+	* app/gdisplay.[ch]: enabled the cursor setting parameters in
+	gdisplay_install_tool_cursor().
+
+	* app/bezier_select.c
+	* app/blend.c
+	* app/bucket_fill.c
+	* app/by_color_select.c
+	* app/clone.c
+	* app/color_picker.c
+	* app/crop.c
+	* app/disp_callbacks.c
+	* app/edit_selection.c
+	* app/eraser.c
+	* app/flip_tool.c
+	* app/ink.c
+	* app/iscissors.c
+	* app/magnify.c
+	* app/measure.c
+	* app/move.c
+	* app/paint_core.c
+	* app/rect_select.c
+	* app/text_tool.c
+	* app/transform_core.c: use the new cursors. Only the transform
+	tools are still using old cursors.
+
+	* app/layers_dialog.c: a tooltip for "Keep Trans."
+
+	* app/user_install.c: set the ctree's selection mode to BROWSE.
 
 Tue Jun 13 22:38:22 BST 2000 Andy Thomas <alt@gimp.org>
 
@@ -7,7 +42,6 @@ Tue Jun 13 22:38:22 BST 2000 Andy Thomas <alt@gimp.org>
 	take acount of the display offset so that if you moved a selection
 	to the edge of an image that cause the image to scroll in the viewing
 	window the section outline was drawn incorrectly.
-
 
 2000-06-13  Jay Cox  <jaycox@gimp.org>
 

@@ -615,7 +615,10 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	}
       else if (gimage_is_empty (gdisp->gimage))
 	{
-	  gdisplay_install_tool_cursor (gdisp, GIMP_BAD_CURSOR);
+	  gdisplay_install_tool_cursor (gdisp, GIMP_BAD_CURSOR,
+					TOOL_TYPE_NONE,
+					CURSOR_MODIFIER_NONE,
+					FALSE);
 	}
     }
 

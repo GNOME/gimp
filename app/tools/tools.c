@@ -74,20 +74,52 @@
 #include "cursors/free_select_small_mask.xbm"
 #include "cursors/fuzzy_select_small.xbm"
 #include "cursors/fuzzy_select_small_mask.xbm"
+#include "cursors/bezier_select_small.xbm"
+#include "cursors/bezier_select_small_mask.xbm"
+#include "cursors/scissors_small.xbm"
+#include "cursors/scissors_small_mask.xbm"
+#include "cursors/move_small.xbm"
+#include "cursors/move_small_mask.xbm"
 #include "cursors/zoom_small.xbm"
 #include "cursors/zoom_small_mask.xbm"
 #include "cursors/crop_small.xbm"
 #include "cursors/crop_small_mask.xbm"
 #include "cursors/resize_small.xbm"
 #include "cursors/resize_small_mask.xbm"
+#include "cursors/flip_horizontal_small.xbm"
+#include "cursors/flip_horizontal_small_mask.xbm"
+#include "cursors/flip_vertical_small.xbm"
+#include "cursors/flip_vertical_small_mask.xbm"
+#include "cursors/text_small.xbm"
+#include "cursors/text_small_mask.xbm"
+#include "cursors/dropper_small.xbm"
+#include "cursors/dropper_small_mask.xbm"
 #include "cursors/bucket_fill_small.xbm"
 #include "cursors/bucket_fill_small_mask.xbm"
+#include "cursors/blend_small.xbm"
+#include "cursors/blend_small_mask.xbm"
 #include "cursors/pencil_small.xbm"
 #include "cursors/pencil_small_mask.xbm"
 #include "cursors/paintbrush_small.xbm"
 #include "cursors/paintbrush_small_mask.xbm"
 #include "cursors/eraser_small.xbm"
 #include "cursors/eraser_small_mask.xbm"
+#include "cursors/airbrush_small.xbm"
+#include "cursors/airbrush_small_mask.xbm"
+#include "cursors/clone_small.xbm"
+#include "cursors/clone_small_mask.xbm"
+#include "cursors/blur_small.xbm"
+#include "cursors/blur_small_mask.xbm"
+#include "cursors/ink_small.xbm"
+#include "cursors/ink_small_mask.xbm"
+#include "cursors/dodge_small.xbm"
+#include "cursors/dodge_small_mask.xbm"
+#include "cursors/burn_small.xbm"
+#include "cursors/burn_small_mask.xbm"
+#include "cursors/smudge_small.xbm"
+#include "cursors/smudge_small_mask.xbm"
+#include "cursors/measure_small.xbm"
+#include "cursors/measure_small_mask.xbm"
 
 
 /*  Global Data  */
@@ -234,8 +266,8 @@ ToolInfo tool_info[] =
     NULL,
     NULL,
     {
-      NULL, NULL,
-      0, 0,
+      bezier_select_small_bits, bezier_select_small_mask_bits,
+      bezier_select_small_width, bezier_select_small_height,
       0, 0, NULL, NULL, NULL
     },
     {
@@ -262,8 +294,8 @@ ToolInfo tool_info[] =
     NULL,
     NULL,
     {
-      NULL, NULL,
-      0, 0,
+      scissors_small_bits, scissors_small_mask_bits,
+      scissors_small_width, scissors_small_height,
       0, 0, NULL, NULL, NULL
     },
     {
@@ -290,8 +322,8 @@ ToolInfo tool_info[] =
     NULL,
     NULL,
     {
-      NULL, NULL,
-      0, 0,
+      move_small_bits, move_small_mask_bits,
+      move_small_width, move_small_height,
       0, 0, NULL, NULL, NULL
     },
     {
@@ -486,13 +518,13 @@ ToolInfo tool_info[] =
     NULL,
     NULL,
     {
-      NULL, NULL,
-      0, 0,
+      flip_horizontal_small_bits, flip_horizontal_small_mask_bits,
+      flip_horizontal_small_width, flip_horizontal_small_height,
       0, 0, NULL, NULL, NULL
     },
     {
-      NULL, NULL,
-      0, 0,
+      flip_vertical_small_bits, flip_vertical_small_mask_bits,
+      flip_vertical_small_width, flip_vertical_small_height,
       0, 0, NULL, NULL, NULL
     }
   },
@@ -514,8 +546,8 @@ ToolInfo tool_info[] =
     NULL,
     NULL,
     {
-      NULL, NULL,
-      0, 0,
+      text_small_bits, text_small_mask_bits,
+      text_small_width, text_small_height,
       0, 0, NULL, NULL, NULL
     },
     {
@@ -542,8 +574,8 @@ ToolInfo tool_info[] =
     NULL,
     NULL,
     {
-      NULL, NULL,
-      0, 0,
+      dropper_small_bits, dropper_small_mask_bits,
+      dropper_small_width, dropper_small_height,
       0, 0, NULL, NULL, NULL
     },
     {
@@ -598,8 +630,8 @@ ToolInfo tool_info[] =
     NULL,
     NULL,
     {
-      NULL, NULL,
-      0, 0,
+      blend_small_bits, blend_small_mask_bits,
+      blend_small_width, blend_small_height,
       0, 0, NULL, NULL, NULL
     },
     {
@@ -710,8 +742,8 @@ ToolInfo tool_info[] =
     NULL,
     NULL,
     {
-      NULL, NULL,
-      0, 0,
+      airbrush_small_bits, airbrush_small_mask_bits,
+      airbrush_small_width, airbrush_small_height,
       0, 0, NULL, NULL, NULL
     },
     {
@@ -738,8 +770,8 @@ ToolInfo tool_info[] =
     NULL,
     NULL,
     {
-      NULL, NULL,
-      0, 0,
+      clone_small_bits, clone_small_mask_bits,
+      clone_small_width, clone_small_height,
       0, 0, NULL, NULL, NULL
     },
     {
@@ -766,8 +798,8 @@ ToolInfo tool_info[] =
     NULL,
     NULL,
     {
-      NULL, NULL,
-      0, 0,
+      blur_small_bits, blur_small_mask_bits,
+      blur_small_width, blur_small_height,
       0, 0, NULL, NULL, NULL
     },
     {
@@ -794,8 +826,8 @@ ToolInfo tool_info[] =
     NULL,
     NULL,
     {
-      NULL, NULL,
-      0, 0,
+      ink_small_bits, ink_small_mask_bits,
+      ink_small_width, ink_small_height,
       0, 0, NULL, NULL, NULL
     },
     {
@@ -822,13 +854,13 @@ ToolInfo tool_info[] =
     NULL,
     NULL,
     {
-      NULL, NULL,
-      0, 0,
+      dodge_small_bits, dodge_small_mask_bits,
+      dodge_small_width, dodge_small_height,
       0, 0, NULL, NULL, NULL
     },
     {
-      NULL, NULL,
-      0, 0,
+      burn_small_bits, burn_small_mask_bits,
+      burn_small_width, burn_small_height,
       0, 0, NULL, NULL, NULL
     }
   },
@@ -850,8 +882,8 @@ ToolInfo tool_info[] =
     NULL,
     NULL,
     {
-      NULL, NULL,
-      0, 0,
+      smudge_small_bits, smudge_small_mask_bits,
+      smudge_small_width, smudge_small_height,
       0, 0, NULL, NULL, NULL
     },
     {
@@ -908,8 +940,8 @@ ToolInfo tool_info[] =
     NULL,
     NULL,
     {
-      NULL, NULL,
-      0, 0,
+      measure_small_bits, measure_small_mask_bits,
+      measure_small_width, measure_small_height,
       0, 0, NULL, NULL, NULL
     },
     {
@@ -1388,7 +1420,10 @@ standard_cursor_update_func (Tool           *tool,
   GDisplay *gdisp;
 
   gdisp = (GDisplay *) gdisp_ptr;
-  gdisplay_install_tool_cursor (gdisp, GDK_TOP_LEFT_ARROW);
+  gdisplay_install_tool_cursor (gdisp, GDK_TOP_LEFT_ARROW,
+				TOOL_TYPE_NONE,
+				CURSOR_MODIFIER_NONE,
+				FALSE);
 }
 
 static void
@@ -1397,6 +1432,7 @@ standard_operator_update_func (Tool           *tool,
 			       gpointer        gdisp_ptr)
 {
 }
+
 static void
 standard_control_func (Tool       *tool,
 		       ToolAction  action,

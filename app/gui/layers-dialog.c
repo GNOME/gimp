@@ -401,7 +401,8 @@ layers_dialog_create (void)
 		      layersD);
   gtk_widget_show (layersD->preserve_trans);
 
-  gimp_help_set_help_data (layersD->preserve_trans, NULL, "#keep_trans_button");
+  gimp_help_set_help_data (layersD->preserve_trans,
+			   _("Keep Transparency"), "#keep_trans_button");
 
   gtk_widget_show (util_box);
 
