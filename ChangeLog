@@ -1,3 +1,7 @@
+2003-02-22  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimprc.c: documented gimp_rc_save().
+
 2003-02-22  Dave Neary  <bolsh@gimp.org>
 
         * plug-ins/common/png.c: Fixed bug #105360. Previously,

@@ -48,6 +48,15 @@
 
   <part id="libgimp">
     <title>GIMP Library</title>
+
+    <partintro>
+      <para>
+	GIMP's Procedural Database (PDB) offers an interface to core
+	functions and to functionality provided by plug-ins. The role
+	of libgimp is to provide C bindings for this interface.
+      </para>
+    </partintro>
+
     &Gimp;
     &GimpBrushes;
     &GimpChannel;

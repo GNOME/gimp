@@ -48,7 +48,8 @@
 #include "libgimp/gimpintl.h"
 
 
-enum {
+enum
+{
   PROP_0,
   PROP_VERBOSE,
   PROP_SYSTEM_GIMPRC,
@@ -210,7 +211,7 @@ gimp_rc_set_property (GObject      *object,
     case PROP_USER_GIMPRC:
       filename = g_value_get_string (value);
       break;
-   default:
+    default:
       break;
     }
 
@@ -409,10 +410,10 @@ gimp_rc_new (const gchar *system_gimprc,
 {
   GimpRc *rc;
 
-  rc = GIMP_RC (g_object_new (GIMP_TYPE_RC,
-                              "system-gimprc", system_gimprc,
-                              "user-gimprc",   user_gimprc,
-                              NULL));
+  rc = g_object_new (GIMP_TYPE_RC,
+                     "system-gimprc", system_gimprc,
+                     "user-gimprc",   user_gimprc,
+                     NULL);
 
   rc->verbose = verbose ? TRUE : FALSE;
   g_return_val_if_fail (GIMP_IS_RC (rc), NULL);
@@ -438,8 +439,7 @@ gimp_rc_set_autosave (GimpRc   *rc,
                       G_CALLBACK (gimp_rc_notify),
                       NULL);
   else
-    g_signal_handlers_disconnect_by_func (rc,
-                                          gimp_rc_notify, NULL);
+    g_signal_handlers_disconnect_by_func (rc, gimp_rc_notify, NULL);
 
   rc->autosave = autosave;
 }
@@ -543,11 +543,20 @@ gimp_rc_query (GimpRc      *rc,
   return retval;
 }
 
+/**
+ * gimp_rc_save:
+ * @rc: a #GimpRc object.
+ * 
+ * Saves any settings that differ from the system-wide defined
+ * defaults to the users personal gimprc file.
+ **/
 void
 gimp_rc_save (GimpRc *rc)
 {
   GimpRc *global;
-  
+  gchar  *header;
+  GError *error = NULL;
+
   const gchar *top = 
     "# GIMP gimprc\n"
     "#\n"
@@ -561,9 +570,6 @@ gimp_rc_save (GimpRc *rc)
   const gchar *footer =
     "# end of gimprc\n";
 
-  gchar  *header;
-  GError *error = NULL;
-  
   g_return_if_fail (GIMP_IS_RC (rc));
  
   global = g_object_new (GIMP_TYPE_RC, NULL);

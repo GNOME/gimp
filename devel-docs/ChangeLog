@@ -1,3 +1,7 @@
+2003-02-22  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-docs.sgml: added some introductory words.
+
 2003-02-19  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am
