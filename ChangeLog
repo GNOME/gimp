@@ -1,5 +1,11 @@
 2004-08-28  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/compose.c (compose_dialog): applied patch from
+	Markus Triska that improves which layers are choosen by
+	default (bug #148172).
+
+2004-08-28  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage-contiguous-region.c
 	(find_contiguous_region_helper): applied a patch from Eric Cheung
 	that changes the function to use a GQueue to implement recursion

@@ -1070,6 +1070,8 @@ compose_dialog (const gchar *compose_type,
   GtkWidget *table;
   GtkWidget *image;
   GSList    *group;
+  gint32    *layer_list;
+  gint       nlayers;
   gint       j, compose_idx;
   gboolean   run;
 
@@ -1087,6 +1089,9 @@ compose_dialog (const gchar *compose_type,
   composeint.height = gimp_drawable_height (drawable_ID);
 
   gimp_ui_init ("compose", TRUE);
+
+  layer_list = gimp_image_get_layers (gimp_drawable_get_image (drawable_ID),
+                                      &nlayers);
 
   dlg = gimp_dialog_new (_("Compose"), "compose",
                          NULL, 0,
@@ -1148,7 +1153,10 @@ compose_dialog (const gchar *compose_type,
 			GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (label);
 
-      composeint.select_ID[j] = drawable_ID;
+      if (nlayers >= compose_dsc[compose_idx].num_images)
+        composeint.select_ID[j] = layer_list[nlayers - (j + 1)];
+      else
+        composeint.select_ID[j] = drawable_ID;
 
       combo = gimp_drawable_combo_box_new (check_gray, NULL);
       gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
@@ -1162,6 +1170,7 @@ compose_dialog (const gchar *compose_type,
 
       composeint.channel_menu[j] = combo;
     }
+  g_free (layer_list);
 
   /* Set sensitivity of last menu */
   gtk_widget_set_sensitive (composeint.channel_menu[3],
