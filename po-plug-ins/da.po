@@ -32,8 +32,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 23:20+0100\n"
-"PO-Revision-Date: 2004-03-14 23:15+0100\n"
+"POT-Creation-Date: 2004-03-21 20:56+0100\n"
+"PO-Revision-Date: 2004-03-21 20:57+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -9920,7 +9920,7 @@ msgstr "Hjælpefilerne til Gimp'en er ikke installeret."
 
 #: plug-ins/help/domain.c:163
 msgid "There is a problem with the GIMP help files."
-msgstr ""
+msgstr "Der er et problem med hjælpefilerne til Gimp'en."
 
 #: plug-ins/help/domain.c:168
 msgid "Please check your installation."
@@ -9937,25 +9937,27 @@ msgid ""
 "Parse error in '%s':\n"
 "%s"
 msgstr ""
+"Fortolkningsfejl i '%s':\n"
+"%s"
 
 #: plug-ins/helpbrowser/dialog.c:149
 msgid "GIMP Help Browser"
 msgstr "Gimp hjælpelæser"
 
-#: plug-ins/helpbrowser/dialog.c:463 plug-ins/imagemap/imap_main.c:586
+#: plug-ins/helpbrowser/dialog.c:465 plug-ins/imagemap/imap_main.c:586
 #: plug-ins/imagemap/imap_settings.c:167
 msgid "<Untitled>"
 msgstr "<unavngiven>"
 
-#: plug-ins/helpbrowser/dialog.c:531
+#: plug-ins/helpbrowser/dialog.c:533
 msgid "Document Not Found"
 msgstr "Dokument ikke fundet"
 
-#: plug-ins/helpbrowser/dialog.c:533
+#: plug-ins/helpbrowser/dialog.c:535
 msgid "Could not locate help document"
 msgstr "Kunne ikke find hjælpedokument"
 
-#: plug-ins/helpbrowser/dialog.c:535
+#: plug-ins/helpbrowser/dialog.c:537
 msgid ""
 "The requested document could not be found in your GIMP help path as shown "
 "above. This means that the topic has not yet been written or your "

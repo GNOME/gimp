@@ -81,8 +81,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP /gnome-cvs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 23:18+0100\n"
-"PO-Revision-Date: 2004-03-14 23:09+0100\n"
+"POT-Creation-Date: 2004-03-21 20:57+0100\n"
+"PO-Revision-Date: 2004-03-21 20:56+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -107,6 +107,9 @@ msgid ""
 "location and permissions of the swap directory defined in your Preferences "
 "(currently \"%s\")."
 msgstr ""
+"Kunne ikke åbne en testmellemlagerfil. Kontrollér placeringen og "
+"rettighederne for mellemlagerkataloget defineret i dine indstillinger "
+"(aktuelt \"%s\")."
 
 #: app/app_procs.c:275
 #, c-format
@@ -1431,14 +1434,12 @@ msgid "Change Indexed Palette"
 msgstr "Skift indekseret palet"
 
 #: app/core/core-enums.c:621
-#, fuzzy
 msgid "Drawable"
-msgstr "Forskyd tegneobjekt"
+msgstr "Tegneobjekt"
 
 #: app/core/core-enums.c:622
-#, fuzzy
 msgid "Drawable Mod"
-msgstr "Tegneobjektprocedurer"
+msgstr "Tegneobjektsændring"
 
 #: app/core/core-enums.c:624
 msgid "Rename Item"
@@ -2801,9 +2802,8 @@ msgid "%s Channel Copy"
 msgstr "%s-kanalkopi"
 
 #: app/gui/channels-commands.c:322
-#, fuzzy
 msgid "Empty Channel"
-msgstr "Tøm kanalkopi"
+msgstr "Tøm kanal"
 
 #: app/gui/channels-commands.c:338
 msgid "New Channel Color"
@@ -4051,9 +4051,8 @@ msgid "/Select/_Invert"
 msgstr "/Markering/I_nvertér"
 
 #: app/gui/image-menu.c:292
-#, fuzzy
 msgid "/Select/Fr_om Path"
-msgstr "/Markering/Til _bane"
+msgstr "/Markering/Fr_a bane"
 
 #: app/gui/image-menu.c:297
 msgid "/Select/_Float"
@@ -4959,9 +4958,8 @@ msgid "Layer Mask to Selection"
 msgstr "Lagmaske til markering"
 
 #: app/gui/layers-commands.c:723
-#, fuzzy
 msgid "Empty Layer"
-msgstr "Tomt tekstlag"
+msgstr "Tomt lag"
 
 #: app/gui/layers-commands.c:747
 msgid "Create a New Layer"
@@ -5001,9 +4999,8 @@ msgid "Layer _Name"
 msgstr "_Navn på lag"
 
 #: app/gui/layers-commands.c:1009
-#, fuzzy
 msgid "Set Name from _Text"
-msgstr "Opret bane fra tekst"
+msgstr "Sæt navn fra _tekst"
 
 #: app/gui/layers-commands.c:1096
 msgid "Add a Mask to the Layer"
@@ -7057,9 +7054,8 @@ msgid "Calibrate"
 msgstr "Kalibrér"
 
 #: app/gui/vectors-commands.c:444
-#, fuzzy
 msgid "Empty Path"
-msgstr "Importering af baner"
+msgstr "Tøm bane"
 
 #: app/gui/vectors-commands.c:458 app/gui/vectors-commands.c:506
 msgid "New Path"
@@ -8203,7 +8199,7 @@ msgstr "Ændr valgt farve"
 msgid "R_eset Color"
 msgstr "N_ulstil farve"
 
-#: app/tools/gimpimagemaptool.c:243 app/widgets/gimpthumbbox.c:187
+#: app/tools/gimpimagemaptool.c:243 app/widgets/gimpthumbbox.c:206
 msgid "_Preview"
 msgstr "_Miniature"
 
@@ -8747,7 +8743,7 @@ msgstr "Tekstredigering"
 
 #: app/tools/gimptexttool.c:757 app/tools/gimptexttool.c:760
 msgid "Confirm Text Editing"
-msgstr ""
+msgstr "Bekræft tekstredigering"
 
 #: app/tools/gimptexttool.c:781
 msgid ""
@@ -8757,6 +8753,11 @@ msgid ""
 "\n"
 "You can edit the layer or create a new text layer from its text attributes."
 msgstr ""
+"Det lag du valgte, er et tekstlag, men det er blevet ændret vha. andre "
+"værktøjer. Redigering af laget med tekstværktøjet vil forkaste disse "
+"ændringer.\n"
+"\n"
+"Du kan redigere laget eller oprette et nyt tekstlag fra dets tekstegenskaber."
 
 #: app/tools/gimpthresholdtool.c:93
 msgid "Reduce image to two colors using a threshold"
@@ -9067,11 +9068,13 @@ msgid "Delete"
 msgstr "Slet"
 
 #: app/widgets/gimpchanneltreeview.c:121
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "New Channel\n"
 "%s New Channel Dialog"
-msgstr "Ny kanalfarve"
+msgstr ""
+"Ny kanal\n"
+"%s Ny kanal-vindue"
 
 #: app/widgets/gimpchanneltreeview.c:123
 msgid "Duplicate Channel"
@@ -9631,6 +9634,8 @@ msgid ""
 "New Layer\n"
 "%s  New Layer Dialog"
 msgstr ""
+"Nyt lag\n"
+"%s Nyt lag-vindue"
 
 #: app/widgets/gimplayertreeview.c:209
 msgid "Duplicate Layer"
@@ -9789,7 +9794,7 @@ msgstr "Åbn tekstfil (UTF-8)"
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Ugyldige UTF-8-data i filen '%s'."
 
-#: app/widgets/gimpthumbbox.c:170
+#: app/widgets/gimpthumbbox.c:189
 #, c-format
 msgid ""
 "Click to update preview\n"
@@ -9799,11 +9804,11 @@ msgstr ""
 "%s  Klik for at gennemtvinge opdatering også selvom miniaturen er opdateret"
 
 # i filvælgervinduet - derfor valgt i stedet for markeret
-#: app/widgets/gimpthumbbox.c:239 app/widgets/gimpthumbbox.c:285
+#: app/widgets/gimpthumbbox.c:250 app/widgets/gimpthumbbox.c:296
 msgid "No Selection"
 msgstr "Intet valg"
 
-#: app/widgets/gimpthumbbox.c:371 app/widgets/gimpthumbbox.c:391
+#: app/widgets/gimpthumbbox.c:382 app/widgets/gimpthumbbox.c:402
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr "Miniature %d af %d"
@@ -9898,6 +9903,8 @@ msgid ""
 "New Path\n"
 "%s New Path Dialog"
 msgstr ""
+"Ny bane\n"
+"%s Ny bane-vindue"
 
 #: app/widgets/gimpvectorstreeview.c:133
 msgid "Duplicate Path"
