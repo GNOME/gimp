@@ -474,8 +474,6 @@ static const gchar *coloring_types[] =
 
 /***** Public functions *****/
 
-/*****/
-
 void
 gradients_init (int no_data)
 {
@@ -510,8 +508,11 @@ gradients_free (void)
 /*****/
 
 void
-grad_get_color_at (double pos,
-		   double *r, double *g, double *b, double *a)
+grad_get_color_at (double  pos,
+		   double *r,
+		   double *g,
+		   double *b,
+		   double *a)
 {
   double          factor = 0.0;
   grad_segment_t *seg;
@@ -641,8 +642,6 @@ grad_get_color_at (double pos,
 }
 
 /***** The main gradient editor dialog *****/
-
-/*****/
 
 void 
 grad_create_gradient_editor_init (gint need_show)
@@ -984,7 +983,10 @@ grad_create_gradient_editor_init (gint need_show)
 /***** Gradient editor functions *****/
 
 static void
-ed_fetch_foreground (double *fg_r, double *fg_g, double *fg_b, double *fg_a)
+ed_fetch_foreground (double *fg_r,
+		     double *fg_g,
+		     double *fg_b,
+		     double *fg_a)
 {
   guchar r, g, b;
 	
@@ -1094,209 +1096,222 @@ ed_set_list_of_gradients (GdkGC      *gc,
 /*****/
 
 static void
-fill_clist_prev(gradient_t *grad, guchar *buf, gint width, gint height, double left, double right)
+fill_clist_prev (gradient_t *grad,
+		 guchar     *buf,
+		 gint        width,
+		 gint        height,
+		 double      left,
+		 double      right)
 {
-	guchar *p0, *p1,*even,*odd;
-	int     x, y;
-	double  dx, cur_x;
-	double  r, g, b, a;
-	double  c0, c1;
-	gradient_t *oldgrad = curr_gradient;
-	curr_gradient = grad;
+  guchar *p0, *p1,*even,*odd;
+  int     x, y;
+  double  dx, cur_x;
+  double  r, g, b, a;
+  double  c0, c1;
+  gradient_t *oldgrad = curr_gradient;
+  curr_gradient = grad;
 
-	dx    = (right - left) / (width - 1);
-	cur_x = left;
-	p0    = even = g_malloc(width*3);
-	p1    = odd = g_malloc(width*3);
+  dx    = (right - left) / (width - 1);
+  cur_x = left;
+  p0    = even = g_malloc (width * 3);
+  p1    = odd  = g_malloc (width * 3);
 
-	/* Create lines to fill the image */
+  /* Create lines to fill the image */
 
-	for (x = 0; x < width; x++) {
-		grad_get_color_at(cur_x, &r, &g, &b, &a);
+  for (x = 0; x < width; x++)
+    {
+      grad_get_color_at (cur_x, &r, &g, &b, &a);
 
-		if ((x / GRAD_CHECK_SIZE_SM) & 1) {
-			c0 = GRAD_CHECK_LIGHT;
-			c1 = GRAD_CHECK_DARK;
-		} else {
-			c0 = GRAD_CHECK_DARK;
-			c1 = GRAD_CHECK_LIGHT;
-		} /* else */
+      if ((x / GRAD_CHECK_SIZE_SM) & 1)
+	{
+	  c0 = GRAD_CHECK_LIGHT;
+	  c1 = GRAD_CHECK_DARK;
+	}
+      else
+	{
+	  c0 = GRAD_CHECK_DARK;
+	  c1 = GRAD_CHECK_LIGHT;
+	}
 
-		*p0++ = (c0 + (r - c0) * a) * 255.0;
-		*p0++ = (c0 + (g - c0) * a) * 255.0;
-		*p0++ = (c0 + (b - c0) * a) * 255.0;
+      *p0++ = (c0 + (r - c0) * a) * 255.0;
+      *p0++ = (c0 + (g - c0) * a) * 255.0;
+      *p0++ = (c0 + (b - c0) * a) * 255.0;
 
-		*p1++ = (c1 + (r - c1) * a) * 255.0;
-		*p1++ = (c1 + (g - c1) * a) * 255.0;
-		*p1++ = (c1 + (b - c1) * a) * 255.0;
+      *p1++ = (c1 + (r - c1) * a) * 255.0;
+      *p1++ = (c1 + (g - c1) * a) * 255.0;
+      *p1++ = (c1 + (b - c1) * a) * 255.0;
 
-		cur_x += dx;
-	} /* for */
+      cur_x += dx;
+    }
 
-	for (y = 0; y < height; y++)
-	  {
-	    if ((y / GRAD_CHECK_SIZE_SM) & 1)
-	      {
- 		memcpy(buf+(width*y*3),odd,width*3); 
-	      }
-	    else
-	      {
- 		memcpy(buf+(width*y*3),even,width*3); 
-	      }
-	  }
+  for (y = 0; y < height; y++)
+    {
+      if ((y / GRAD_CHECK_SIZE_SM) & 1)
+	{
+	  memcpy (buf+(width*y*3),odd,width*3); 
+	}
+      else
+	{
+	  memcpy (buf+(width*y*3),even,width*3); 
+	}
+    }
 
-	g_free(even);
-	g_free(odd);
-	curr_gradient = oldgrad;
+  g_free (even);
+  g_free (odd);
+  curr_gradient = oldgrad;
 }
 
 /*****/
+
 static void 
-draw_small_preview(GdkGC *gc, GtkWidget * clist,gradient_t *grad,int pos)
+draw_small_preview (GdkGC      *gc,
+		    GtkWidget  *clist,
+		    gradient_t *grad,
+		    int         pos)
 {
-	char rgb_buf[48*16*3];
+  char rgb_buf[48*16*3];
 
-	fill_clist_prev(grad,rgb_buf,48,16,0.0,1.0);
+  fill_clist_prev (grad, rgb_buf, 48, 16, 0.0, 1.0);
 
-	gdk_draw_rgb_image (grad->pixmap,
-                    gc,
-                    0,
-                    0,
-                    48,
-                    16,
-                    GDK_RGB_DITHER_NORMAL,
-                    rgb_buf,
-                    48*3);
+  gdk_draw_rgb_image (grad->pixmap,
+		      gc,
+		      0,
+		      0,
+		      48,
+		      16,
+		      GDK_RGB_DITHER_NORMAL,
+		      rgb_buf,
+		      48*3);
 
-    	gdk_gc_set_foreground(gc, &black);
-	gdk_draw_rectangle(grad->pixmap, gc, FALSE, 0, 0, 47, 15);
- 	gtk_clist_set_text(GTK_CLIST(clist),pos,1,grad->name);  
+  gdk_gc_set_foreground (gc, &black);
+  gdk_draw_rectangle (grad->pixmap, gc, FALSE, 0, 0, 47, 15);
+  gtk_clist_set_text (GTK_CLIST (clist), pos, 1, grad->name);  
 }
-
 
 /*****/
 
 void
-ed_insert_in_gradients_listbox(GdkGC * gc,
-			       GtkWidget * clist,
-			       gradient_t *grad, 
-			       int pos, 
-			       int select)
+ed_insert_in_gradients_listbox (GdkGC      *gc,
+				GtkWidget  *clist,
+				gradient_t *grad, 
+				int         pos, 
+				int         select)
 {
-	char *string[2];
+  char *string[2];
 
-	string[0] = NULL;
-	string[1] = grad->name;
+  string[0] = NULL;
+  string[1] = grad->name;
 
-	gtk_clist_insert(GTK_CLIST(clist), pos,string);
+  gtk_clist_insert (GTK_CLIST (clist), pos,string);
 
-	if(grad->pixmap == NULL)
-	  grad->pixmap = gdk_pixmap_new(g_editor->shell->window,
-					48, 16, gtk_widget_get_visual(g_editor->shell)->depth);
+  if(grad->pixmap == NULL)
+    grad->pixmap =
+      gdk_pixmap_new (g_editor->shell->window,
+		      48, 16, gtk_widget_get_visual (g_editor->shell)->depth);
 	
-	draw_small_preview(gc,clist,grad,pos);
+  draw_small_preview (gc, clist, grad, pos);
 
-	gtk_clist_set_pixmap(GTK_CLIST(clist), pos, 0, grad->pixmap, NULL);
+  gtk_clist_set_pixmap (GTK_CLIST (clist), pos, 0, grad->pixmap, NULL);
 
-	if (select)
-	{
-	  gtk_clist_select_row(GTK_CLIST(clist),pos,-1);
-	  gtk_clist_moveto(GTK_CLIST(clist),pos,0,0.5,0.0);
-	}
+  if (select)
+    {
+      gtk_clist_select_row (GTK_CLIST (clist), pos, -1);
+      gtk_clist_moveto (GTK_CLIST (clist), pos, 0, 0.5, 0.0);
+    }
 
-} /* ed_insert_in_gradients_listbox */
-
-
-/*****/
-
-static void
-ed_list_item_update(GtkWidget *widget, 
-		    gint row,
-		   gint column,
-		   GdkEventButton *event,
-		   gpointer data)
-{
-	/* Update current gradient */
-        GSList* tmp = g_slist_nth(gradients_list,row);
- 	curr_gradient = (gradient_t *)(tmp->data);
-
-	ed_update_editor(GRAD_UPDATE_PREVIEW | GRAD_RESET_CONTROL);
-} /* ed_list_item_update */
-
+}
 
 /*****/
 
 static void
-ed_initialize_saved_colors(void)
+ed_list_item_update (GtkWidget      *widget, 
+		     gint            row,
+		     gint            column,
+		     GdkEventButton *event,
+		     gpointer        data)
 {
-	int i;
+  /* Update current gradient */
+  GSList* tmp = g_slist_nth (gradients_list,row);
+  curr_gradient = (gradient_t *)(tmp->data);
 
-	for (i = 0; i < (GRAD_NUM_COLORS + 3); i++) {
-		g_editor->left_load_color_boxes[i] = NULL;
-		g_editor->left_load_labels[i]      = NULL;
+  ed_update_editor (GRAD_UPDATE_PREVIEW | GRAD_RESET_CONTROL);
+}
 
-		g_editor->right_load_color_boxes[i] = NULL;
-		g_editor->right_load_labels[i]      = NULL;
-	} /* for */
+/*****/
 
-	for (i = 0; i < GRAD_NUM_COLORS; i++) {
-		g_editor->left_save_color_boxes[i] = NULL;
-		g_editor->left_save_labels[i]      = NULL;
+static void
+ed_initialize_saved_colors (void)
+{
+  int i;
 
-		g_editor->right_save_color_boxes[i] = NULL;
-		g_editor->right_save_labels[i]      = NULL;
-	} /* for */
+  for (i = 0; i < (GRAD_NUM_COLORS + 3); i++)
+    {
+      g_editor->left_load_color_boxes[i] = NULL;
+      g_editor->left_load_labels[i]      = NULL;
 
-	g_editor->saved_colors[0].r = 0.0; /* Black */
-	g_editor->saved_colors[0].g = 0.0;
-	g_editor->saved_colors[0].b = 0.0;
-	g_editor->saved_colors[0].a = 1.0;
+      g_editor->right_load_color_boxes[i] = NULL;
+      g_editor->right_load_labels[i]      = NULL;
+    }
 
-	g_editor->saved_colors[1].r = 0.5; /* 50% Gray */
-	g_editor->saved_colors[1].g = 0.5;
-	g_editor->saved_colors[1].b = 0.5;
-	g_editor->saved_colors[1].a = 1.0;
+  for (i = 0; i < GRAD_NUM_COLORS; i++)
+    {
+      g_editor->left_save_color_boxes[i] = NULL;
+      g_editor->left_save_labels[i]      = NULL;
 
-	g_editor->saved_colors[2].r = 1.0; /* White */
-	g_editor->saved_colors[2].g = 1.0;
-	g_editor->saved_colors[2].b = 1.0;
-	g_editor->saved_colors[2].a = 1.0;
+      g_editor->right_save_color_boxes[i] = NULL;
+      g_editor->right_save_labels[i]      = NULL;
+    }
 
-	g_editor->saved_colors[3].r = 0.0; /* Clear */
-	g_editor->saved_colors[3].g = 0.0;
-	g_editor->saved_colors[3].b = 0.0;
-	g_editor->saved_colors[3].a = 0.0;
+  g_editor->saved_colors[0].r = 0.0; /* Black */
+  g_editor->saved_colors[0].g = 0.0;
+  g_editor->saved_colors[0].b = 0.0;
+  g_editor->saved_colors[0].a = 1.0;
 
-	g_editor->saved_colors[4].r = 1.0; /* Red */
-	g_editor->saved_colors[4].g = 0.0;
-	g_editor->saved_colors[4].b = 0.0;
-	g_editor->saved_colors[4].a = 1.0;
+  g_editor->saved_colors[1].r = 0.5; /* 50% Gray */
+  g_editor->saved_colors[1].g = 0.5;
+  g_editor->saved_colors[1].b = 0.5;
+  g_editor->saved_colors[1].a = 1.0;
 
-	g_editor->saved_colors[5].r = 1.0; /* Yellow */
-	g_editor->saved_colors[5].g = 1.0;
-	g_editor->saved_colors[5].b = 0.0;
-	g_editor->saved_colors[5].a = 1.0;
+  g_editor->saved_colors[2].r = 1.0; /* White */
+  g_editor->saved_colors[2].g = 1.0;
+  g_editor->saved_colors[2].b = 1.0;
+  g_editor->saved_colors[2].a = 1.0;
 
-	g_editor->saved_colors[6].r = 0.0; /* Green */
-	g_editor->saved_colors[6].g = 1.0;
-	g_editor->saved_colors[6].b = 0.0;
-	g_editor->saved_colors[6].a = 1.0;
+  g_editor->saved_colors[3].r = 0.0; /* Clear */
+  g_editor->saved_colors[3].g = 0.0;
+  g_editor->saved_colors[3].b = 0.0;
+  g_editor->saved_colors[3].a = 0.0;
 
-	g_editor->saved_colors[7].r = 0.0; /* Cyan */
-	g_editor->saved_colors[7].g = 1.0;
-	g_editor->saved_colors[7].b = 1.0;
-	g_editor->saved_colors[7].a = 1.0;
+  g_editor->saved_colors[4].r = 1.0; /* Red */
+  g_editor->saved_colors[4].g = 0.0;
+  g_editor->saved_colors[4].b = 0.0;
+  g_editor->saved_colors[4].a = 1.0;
 
-	g_editor->saved_colors[8].r = 0.0; /* Blue */
-	g_editor->saved_colors[8].g = 0.0;
-	g_editor->saved_colors[8].b = 1.0;
-	g_editor->saved_colors[8].a = 1.0;
+  g_editor->saved_colors[5].r = 1.0; /* Yellow */
+  g_editor->saved_colors[5].g = 1.0;
+  g_editor->saved_colors[5].b = 0.0;
+  g_editor->saved_colors[5].a = 1.0;
 
-	g_editor->saved_colors[9].r = 1.0; /* Magenta */
-	g_editor->saved_colors[9].g = 0.0;
-	g_editor->saved_colors[9].b = 1.0;
-	g_editor->saved_colors[9].a = 1.0;
-} /* ed_initialize_saved_colors */
+  g_editor->saved_colors[6].r = 0.0; /* Green */
+  g_editor->saved_colors[6].g = 1.0;
+  g_editor->saved_colors[6].b = 0.0;
+  g_editor->saved_colors[6].a = 1.0;
+
+  g_editor->saved_colors[7].r = 0.0; /* Cyan */
+  g_editor->saved_colors[7].g = 1.0;
+  g_editor->saved_colors[7].b = 1.0;
+  g_editor->saved_colors[7].a = 1.0;
+
+  g_editor->saved_colors[8].r = 0.0; /* Blue */
+  g_editor->saved_colors[8].g = 0.0;
+  g_editor->saved_colors[8].b = 1.0;
+  g_editor->saved_colors[8].a = 1.0;
+
+  g_editor->saved_colors[9].r = 1.0; /* Magenta */
+  g_editor->saved_colors[9].g = 0.0;
+  g_editor->saved_colors[9].b = 1.0;
+  g_editor->saved_colors[9].a = 1.0;
+}
 
 /***** Main gradient editor dialog callbacks *****/
 
@@ -1805,8 +1820,8 @@ ed_scrollbar_update (GtkAdjustment *adjustment,
 }
 
 static void
-ed_zoom_all_callback(GtkWidget *widget,
-		     gpointer   data)
+ed_zoom_all_callback (GtkWidget *widget,
+		      gpointer   data)
 {
   GtkAdjustment *adjustment;
 
@@ -1848,8 +1863,8 @@ ed_zoom_out_callback (GtkWidget *widget,
   else if ((value + page_size) > 1.0)
     value = 1.0 - page_size;
 
-  adjustment->value     	   = value;
-  adjustment->page_size 	   = page_size;
+  adjustment->value          = value;
+  adjustment->page_size      = page_size;
   adjustment->step_increment = page_size * GRAD_SCROLLBAR_STEP_SIZE;
   adjustment->page_increment = page_size * GRAD_SCROLLBAR_PAGE_SIZE;
 
@@ -3338,7 +3353,7 @@ cpopup_create_main_menu (void)
 static void
 cpopup_do_popup (void)
 {
-  cpopup_adjust_menus();
+  cpopup_adjust_menus ();
   gtk_menu_popup (GTK_MENU (g_editor->control_main_popup),
 		  NULL, NULL, NULL, NULL, 3, 0);
 }
@@ -4051,8 +4066,6 @@ cpopup_set_color_selection_color (GtkColorSelection *cs,
 
   gtk_color_selection_set_color (cs, color);
 }
-
-/*****/
 
 static void
 cpopup_get_color_selection_color (GtkColorSelection *cs,
