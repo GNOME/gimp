@@ -1,5 +1,30 @@
 2002-05-15  Michael Natterer  <mitch@gimp.org>
 
+	New feature: pressing <space> in the image window temporary
+	switches to the move tool (so that releasing <space> switches back
+	to the old tool).
+
+	* app/display/gimpdisplayshell.[ch]: added booleans
+	shell->space_pressed and shell->space_release_pending. Connect
+	more events to gimp_display_shell_events() so they can be blocked
+	there if needed.
+
+	* app/display/gimpdisplayshell-callbacks.c: beautified and
+	uglified at the same time:
+
+	beauty:
+	- moved the checks if gimp is busy or button1 is down to
+	  gimp_display_shell_events() so they don't clutter
+	  gimp_display_shell_canvas_tool_events().
+	- factored tool modifer updating out to a separate function.
+	- indentation/spacing cleanup.
+
+	ugly:
+	- added more static variables to track the state of <space>
+	- added the actual move tool toggling code.
+
+2002-05-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/splash.c
 	* libgimpproxy/gimpobject.h: reverted stuff someone
 	accidentially checked in...

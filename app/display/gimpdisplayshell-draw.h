@@ -103,6 +103,10 @@ struct _GimpDisplayShell
 
   GList            *filters;           /* color display conversion stuff      */
   GtkWidget        *filters_dialog;    /* color display filter dialog         */
+
+  /*  the state of gimp_display_shell_tool_events()  */
+  gboolean          space_pressed;
+  gboolean          space_release_pending;
 };
 
 struct _GimpDisplayShellClass

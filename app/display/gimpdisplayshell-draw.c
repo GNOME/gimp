@@ -268,6 +268,9 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->filters               = NULL;
   shell->filters_dialog        = NULL;
 
+  shell->space_pressed         = FALSE;
+  shell->space_release_pending = FALSE;
+
   gtk_window_set_wmclass (GTK_WINDOW (shell), "image_window", "Gimp");
   gtk_window_set_resizable (GTK_WINDOW (shell), TRUE);
 
@@ -279,6 +282,9 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   /*  active display callback  */
   g_signal_connect (G_OBJECT (shell), "button_press_event",
+		    G_CALLBACK (gimp_display_shell_events),
+		    shell);
+  g_signal_connect (G_OBJECT (shell), "button_release_event",
 		    G_CALLBACK (gimp_display_shell_events),
 		    shell);
   g_signal_connect (G_OBJECT (shell), "key_press_event",
