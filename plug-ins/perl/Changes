@@ -14,6 +14,7 @@ Revision history for Gimp-Perl extension.
         - applied patch by Ar't <artie@kmfms.com> that fixes a lot of
           perl5.004 compatibility issues and even identifies the
           buggy perl version that causes pxgettext to not work!
+        - do yet another compile/link flags rotation.
 
 1.2   Thu May 11 18:55:13 CEST 2000
 	- image types updated to reflect gimp's reality.
