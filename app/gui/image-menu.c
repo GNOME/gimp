@@ -1156,7 +1156,7 @@ image_menu_setup (GimpItemFactory *factory)
             gimp_item_factory_create_item (factory,
                                            &entry,
                                            NULL,
-                                           factory->gimp, 2, TRUE);
+                                           factory->gimp, 2, FALSE);
           }
       }
   }

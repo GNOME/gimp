@@ -1,5 +1,16 @@
 2004-01-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/file-open-menu.c
+	* app/gui/file-save-menu.c
+	* app/gui/image-menu.c
+	* app/gui/menus.c
+	* app/gui/plug-in-menus.c: when dynamically creating menu entries,
+	pass static_entry == FALSE to gimp_item_factory_create_item() so a
+	*copy* of the the help_id is attached to the menu item.
+	Fixes help for plug-in menu entries.
+
+2004-01-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/plug-in.[ch]: changed member
 	"ProcRec *current_temp_proc" to "GList *temp_proc_recs", a stack
 	of temporary procedures, just as the "temp_main_loops" member is

@@ -201,8 +201,7 @@ plug_in_menus_create_entry (GimpItemFactory *item_factory,
           gimp_item_factory_create_item (item_factory,
                                          &entry,
                                          locale_domain,
-                                         &proc_def->db_info, 2,
-                                         TRUE);
+                                         &proc_def->db_info, 2, FALSE);
         }
     }
   else
@@ -218,7 +217,7 @@ plug_in_menus_create_entry (GimpItemFactory *item_factory,
           gimp_item_factory_create_item (item_factory,
                                          &entry,
                                          locale_domain,
-                                         &proc_def->db_info, 2, TRUE);
+                                         &proc_def->db_info, 2, FALSE);
         }
     }
 

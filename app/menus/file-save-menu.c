@@ -109,7 +109,7 @@ file_save_menu_setup (GimpItemFactory *factory)
       gimp_item_factory_create_item (factory,
                                      &entry,
                                      locale_domain,
-                                     file_proc, 2, TRUE);
+                                     file_proc, 2, FALSE);
 
       if (is_xcf)
         {
