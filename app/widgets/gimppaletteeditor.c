@@ -74,7 +74,7 @@ typedef enum
 {
   GRAD_IMPORT = 0,
   IMAGE_IMPORT = 1,
-  INDEXED_IMPORT = 2,
+  INDEXED_IMPORT = 2
 } ImportType;
 
 typedef struct _ImportDialog ImportDialog;

@@ -54,8 +54,14 @@ static void   menus_create_items   (GtkItemFactory       *item_factory,
 				    gpointer              callback_data,
 				    guint                 callback_type);
 static void   menus_init           (void);
+
+#ifdef ENABLE_NLS
 static gchar *menu_translate       (const gchar          *path,
 				    gpointer              data);
+#else
+#define menu_translate NULL
+#endif
+
 static void   tearoff_cmd_callback (GtkWidget            *widget,
 				    gpointer              callback_data,
 				    guint                 callback_action);
@@ -63,6 +69,8 @@ static void   tearoff_cmd_callback (GtkWidget            *widget,
 static void   help_debug_cmd_callback (GtkWidget *widget,
 				       gpointer   callback_data,
 				       guint      callback_action);
+
+#ifdef ENABLE_NLS
 
 /*  from main.c  */
 extern gchar *plugin_domains[];
@@ -109,6 +117,8 @@ static gchar G_GNUC_UNUSED *dummy_entries[] =
   N_("/Video"),
   N_("/Video/Encode")
 };
+
+#endif  /*  ENABLE_NLS  */
 
 static GSList *last_opened_raw_filenames = NULL;
 
@@ -1707,6 +1717,8 @@ menus_init (void)
   g_free (filename);
 }
 
+#ifdef ENABLE_NLS
+
 static gchar *
 menu_translate (const gchar *path,
     		gpointer     data)
@@ -1743,6 +1755,8 @@ menu_translate (const gchar *path,
 
   return retval;
 }
+
+#endif  /*  ENABLE_NLS  */
 
 static gint
 tearoff_delete_cb (GtkWidget *widget, 

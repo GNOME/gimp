@@ -1,3 +1,17 @@
+1999-12-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/main.c
+	* app/menus.c: Wrapped the 'plugin_domains' definition and
+	initialization and menu_translate() with '#ifdef ENABLE_NLS'.
+
+	* app/palette.c: Removed another trailing comma from an enum.
+
+	* app/tile_cache.c (tile_idle_thread): Changed tile->swap to
+	tile->swap_offset because tile->swap doesn't exist. Note that I
+	don't understand at all what's going on there. I commited this
+	because (1) this way it compiles and (2) it at least _looks_ like
+	the right thing to do. Garry, could you check this please?
+
 Tue Dec  7 15:04:11 CET 1999  Stanislav Brabec  <utx@penguin.cz>
 
         * tips/gimp_tips.cs.txt: Added translation.
