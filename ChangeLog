@@ -1,3 +1,8 @@
+2003-10-07 Simon Budig  <simon@gimp.org>
+
+	* docs/Wilber.svg: Debugged winding rule issue,
+	removed redundant paths, added IDs. Indentation madness.
+
 2003-10-07  Sven Neumann  <sven@gimp.org>
 
 	* app/composite/gimp-composite-sse2.c (gimp_composite_sse2_init):
