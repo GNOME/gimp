@@ -19,6 +19,14 @@ gimpdrawable
 
 </para>
 
+@id: 
+@width: 
+@height: 
+@bpp: 
+@ntile_rows: 
+@ntile_cols: 
+@tiles: 
+@shadow_tiles: 
 
 <!-- ##### FUNCTION gimp_drawable_get ##### -->
 <para>

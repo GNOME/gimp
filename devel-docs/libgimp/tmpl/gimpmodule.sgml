@@ -20,12 +20,20 @@ Common definitions for creating a pluggable GIMP module.
 
 </para>
 
+@GIMP_MODULE_OK: 
+@GIMP_MODULE_UNLOAD: 
 
 <!-- ##### STRUCT GimpModuleInfo ##### -->
 <para>
 
 </para>
 
+@shutdown_data: 
+@purpose: 
+@author: 
+@version: 
+@copyright: 
+@date: 
 
 <!-- ##### USER_FUNCTION GimpModuleInitFunc ##### -->
 <para>

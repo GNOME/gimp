@@ -19,6 +19,10 @@ gimpparasite.sgml
 
 </para>
 
+@name: 
+@flags: 
+@size: 
+@data: 
 
 <!-- ##### MACRO GIMP_PARASITE_PERSISTENT ##### -->
 <para>

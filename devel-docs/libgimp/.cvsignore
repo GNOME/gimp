@@ -3,5 +3,9 @@ Makefile.in
 libgimp.html
 libgimp-decl-list.txt
 libgimp-unused.txt
+libgimp-undocumented.txt
+html.stamp
+sgml.stamp
+tmpl.stamp
 html
 sgml

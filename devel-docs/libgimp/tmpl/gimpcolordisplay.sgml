@@ -116,6 +116,16 @@ display color correction module.
 
 </para>
 
+@init: 
+@new: 
+@clone: 
+@convert: 
+@destroy: 
+@finalize: 
+@load: 
+@save: 
+@configure: 
+@cancel: 
 
 <!-- ##### FUNCTION gimp_color_display_register ##### -->
 <para>

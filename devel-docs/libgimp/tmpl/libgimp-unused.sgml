@@ -1,9 +1,3 @@
-<!-- ##### FUNCTION gimp_request_wakeups ##### -->
-<para>
-
-</para>
-
-
 <!-- ##### FUNCTION gp_request_wakeups_write ##### -->
 <para>
 
@@ -11,4 +5,10 @@
 
 @channel: 
 @Returns: 
+
+<!-- ##### FUNCTION gimp_request_wakeups ##### -->
+<para>
+
+</para>
+
 

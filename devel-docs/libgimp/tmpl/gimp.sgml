@@ -113,24 +113,38 @@ all other GIMP Library headers.
 
 </para>
 
+@init_proc: 
+@quit_proc: 
+@query_proc: 
+@run_proc: 
 
 <!-- ##### STRUCT GimpParamDef ##### -->
 <para>
 
 </para>
 
+@type: 
+@name: 
+@description: 
 
 <!-- ##### STRUCT GimpParamColor ##### -->
 <para>
 
 </para>
 
+@red: 
+@green: 
+@blue: 
 
 <!-- ##### STRUCT GimpParamRegion ##### -->
 <para>
 
 </para>
 
+@x: 
+@y: 
+@width: 
+@height: 
 
 <!-- ##### UNION GimpParamData ##### -->
 <para>
@@ -143,6 +157,8 @@ all other GIMP Library headers.
 
 </para>
 
+@type: 
+@data: 
 
 <!-- ##### MACRO MAIN ##### -->
 <para>

@@ -21,6 +21,10 @@ gimp_parasite_attach() and their related functions.
 
 </para>
 
+@name: 
+@flags: 
+@size: 
+@data: 
 
 <!-- ##### MACRO GIMP_PARASITE_PERSISTENT ##### -->
 <para>

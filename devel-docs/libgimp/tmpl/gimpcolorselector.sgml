@@ -94,6 +94,9 @@ can choose to ignore this information.
 
 </para>
 
+@new: 
+@free: 
+@setcolor: 
 
 <!-- ##### TYPEDEF GimpColorSelectorID ##### -->
 <para>

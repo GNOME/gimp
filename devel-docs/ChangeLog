@@ -1,3 +1,24 @@
+2001-07-17  Sven Neumann  <sven@gimp.org>
+
+	* libgimp-decl.txt
+	* tmpl/gimp.sgml
+	* tmpl/gimpchainbutton.sgml
+	* tmpl/gimpcolordisplay.sgml
+	* tmpl/gimpcolorselector.sgml
+	* tmpl/gimpdrawable.sgml
+	* tmpl/gimpenums.sgml
+	* tmpl/gimpexport.sgml
+	* tmpl/gimpmodule.sgml
+	* tmpl/gimpparasite.sgml
+	* tmpl/gimpparasite.sgml.sgml
+	* tmpl/gimppixelrgn.sgml
+	* tmpl/gimpprotocol.sgml
+	* tmpl/gimpsizeentry.sgml
+	* tmpl/gimptile.sgml
+	* tmpl/gimpunit.sgml
+	* tmpl/gimpvector.sgml
+	* tmpl/gimpwire.sgml: recreated templates for gimp-1.2.2.
+
 2000-12-21  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am

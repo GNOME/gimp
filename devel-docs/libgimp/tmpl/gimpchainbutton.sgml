@@ -46,6 +46,10 @@ performs the cast if valid.
 
 </para>
 
+@GIMP_CHAIN_TOP: 
+@GIMP_CHAIN_LEFT: 
+@GIMP_CHAIN_BOTTOM: 
+@GIMP_CHAIN_RIGHT: 
 
 <!-- ##### FUNCTION gimp_chain_button_new ##### -->
 <para>

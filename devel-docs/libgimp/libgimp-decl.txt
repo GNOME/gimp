@@ -22,6 +22,18 @@
 <NAME>gimp_set_data</NAME>
 #define gimp_set_data         gimp_procedural_db_set_data
 </MACRO>
+<VARIABLE>
+<NAME>gimp_major_version</NAME>
+extern guint gimp_major_version;
+</VARIABLE>
+<VARIABLE>
+<NAME>gimp_minor_version</NAME>
+extern guint gimp_minor_version;
+</VARIABLE>
+<VARIABLE>
+<NAME>gimp_micro_version</NAME>
+extern guint gimp_micro_version;
+</VARIABLE>
 <USER_FUNCTION>
 <NAME>GimpInitProc</NAME>
 <RETURNS>void </RETURNS>
@@ -334,15 +346,6 @@ struct GimpChainButton
   gboolean           active;
 };
 </STRUCT>
-<STRUCT>
-<NAME>GimpChainButtonClass</NAME>
-struct GimpChainButtonClass
-{
-  GtkTableClass parent_class;
-
-  void (* toggled)  (GimpChainButton *gcb);
-};
-</STRUCT>
 <FUNCTION>
 <NAME>gimp_chain_button_get_type</NAME>
 <RETURNS>GtkType  </RETURNS>
@@ -513,6 +516,70 @@ gint32              drawable_ID,GimpHueRange        hue_range,gdouble           
 gint32              drawable_ID,gint                low_threshold,gint                high_threshold
 </FUNCTION>
 <MACRO>
+<NAME>GIMP_MAJOR_VERSION</NAME>
+#define GIMP_MAJOR_VERSION				(1)
+</MACRO>
+<MACRO>
+<NAME>GIMP_MINOR_VERSION</NAME>
+#define GIMP_MINOR_VERSION				(2)
+</MACRO>
+<MACRO>
+<NAME>GIMP_MICRO_VERSION</NAME>
+#define GIMP_MICRO_VERSION				(2)
+</MACRO>
+<MACRO>
+<NAME>GIMP_VERSION</NAME>
+#define GIMP_VERSION					"1.2.2"
+</MACRO>
+<MACRO>
+<NAME>GIMP_CHECK_VERSION</NAME>
+#define GIMP_CHECK_VERSION(major, minor, micro)	\
+    (GIMP_MAJOR_VERSION > (major) || \
+     (GIMP_MAJOR_VERSION == (major) && GIMP_MINOR_VERSION > (minor)) || \
+     (GIMP_MAJOR_VERSION == (major) && GIMP_MINOR_VERSION == (minor) && \
+      GIMP_MICRO_VERSION >= (micro)))
+</MACRO>
+<MACRO>
+<NAME>GIMP_HAVE_PROCEDURAL_DB_GET_DATA_SIZE</NAME>
+#define GIMP_HAVE_PROCEDURAL_DB_GET_DATA_SIZE		1-1-0
+</MACRO>
+<MACRO>
+<NAME>GIMP_HAVE_PARASITES</NAME>
+#define GIMP_HAVE_PARASITES				1-1-0
+</MACRO>
+<MACRO>
+<NAME>GIMP_HAVE_RESOLUTION_INFO</NAME>
+#define GIMP_HAVE_RESOLUTION_INFO			1-1-0
+</MACRO>
+<MACRO>
+<NAME>GIMP_HAVE_DESTROY_PARAMDEFS</NAME>
+#define GIMP_HAVE_DESTROY_PARAMDEFS			1-1-0
+</MACRO>
+<MACRO>
+<NAME>GIMP_HAVE_FEATURES_1_1_5</NAME>
+#define GIMP_HAVE_FEATURES_1_1_5			1-1-5
+</MACRO>
+<MACRO>
+<NAME>GIMP_HAVE_DEFAULT_DISPLAY</NAME>
+#define GIMP_HAVE_DEFAULT_DISPLAY			1-1-5
+</MACRO>
+<MACRO>
+<NAME>GIMP_HAVE_PIXEL_RGNS_REGISTER2</NAME>
+#define GIMP_HAVE_PIXEL_RGNS_REGISTER2			1-1-5
+</MACRO>
+<MACRO>
+<NAME>GIMP_HAVE_NEW_ENUMS</NAME>
+#define GIMP_HAVE_NEW_ENUMS				1-1-10
+</MACRO>
+<MACRO>
+<NAME>GIMP_HAVE_EXPORT</NAME>
+#define GIMP_HAVE_EXPORT                                1-1-10
+</MACRO>
+<MACRO>
+<NAME>GIMP_HAVE_SYSCONFDIR</NAME>
+#define GIMP_HAVE_SYSCONFDIR                            1-1-28
+</MACRO>
+<MACRO>
 <NAME>GIMP_TYPE_COLOR_BUTTON</NAME>
 #define GIMP_TYPE_COLOR_BUTTON            (gimp_color_button_get_type ())
 </MACRO>
@@ -537,15 +604,6 @@ gint32              drawable_ID,gint                low_threshold,gint          
 </STRUCT>
 <STRUCT>
 <NAME>GimpColorButtonClass</NAME>
-</STRUCT>
-<STRUCT>
-<NAME>GimpColorButtonClass</NAME>
-struct GimpColorButtonClass
-{
-  GtkButtonClass parent_class;
-
-  void (* color_changed) (GimpColorButton *gcb);
-};
 </STRUCT>
 <FUNCTION>
 <NAME>gimp_color_button_get_type</NAME>
@@ -2189,15 +2247,6 @@ struct GimpFileSelection
   gboolean   check_valid;
 };
 </STRUCT>
-<STRUCT>
-<NAME>GimpFileSelectionClass</NAME>
-struct GimpFileSelectionClass
-{
-  GtkHBoxClass parent_class;
-
-  void (* filename_changed) (GimpFileSelection *gfs);
-};
-</STRUCT>
 <FUNCTION>
 <NAME>gimp_file_selection_get_type</NAME>
 <RETURNS>GtkType  </RETURNS>
@@ -2964,7 +3013,7 @@ gint32                layer_ID,gint                  tattoo
 </MACRO>
 <MACRO>
 <NAME>FINITE</NAME>
-#define FINITE(x) _finite(x)
+#define FINITE(x) finite(x)
 </MACRO>
 <MACRO>
 <NAME>FINITE</NAME>
@@ -2972,7 +3021,11 @@ gint32                layer_ID,gint                  tattoo
 </MACRO>
 <MACRO>
 <NAME>FINITE</NAME>
-#define FINITE(x) finite(x) 
+#define FINITE(x) _finite(x)
+</MACRO>
+<MACRO>
+<NAME>FINITE</NAME>
+#define FINITE(x) isfinite(x)
 </MACRO>
 <TYPEDEF>
 <NAME>GimpMatrix3[3][3]</NAME>
@@ -3526,15 +3579,6 @@ struct GimpPathEditor
   gint       number_of_items;
 };
 </STRUCT>
-<STRUCT>
-<NAME>GimpPathEditorClass</NAME>
-struct GimpPathEditorClass
-{
-  GtkVBoxClass parent_class;
-
-  void (* path_changed) (GimpPathEditor *gpe);
-};
-</STRUCT>
 <FUNCTION>
 <NAME>gimp_path_editor_get_type</NAME>
 <RETURNS>GtkType  </RETURNS>
@@ -3748,13 +3792,6 @@ struct GimpPixmap
   GtkPixmap   pixmap;
 
   gchar **xpm_data;
-};
-</STRUCT>
-<STRUCT>
-<NAME>GimpPixmapClass</NAME>
-struct GimpPixmapClass
-{
-  GtkPixmapClass parent_class;
 };
 </STRUCT>
 <FUNCTION>
@@ -4297,17 +4334,6 @@ struct GimpSizeEntry
   GimpSizeEntryUpdatePolicy  update_policy;
 };
 </STRUCT>
-<STRUCT>
-<NAME>GimpSizeEntryClass</NAME>
-struct GimpSizeEntryClass
-{
-  GtkTableClass parent_class;
-
-  void (* value_changed)  (GimpSizeEntry *gse);
-  void (* refval_changed) (GimpSizeEntry *gse);
-  void (* unit_changed)   (GimpSizeEntry *gse);
-};
-</STRUCT>
 <FUNCTION>
 <NAME>gimp_size_entry_get_type</NAME>
 <RETURNS>GtkType  </RETURNS>
@@ -4770,15 +4796,6 @@ struct GimpUnitMenu
   /* private */
   GtkWidget     *selection;
   GtkWidget     *clist;
-};
-</STRUCT>
-<STRUCT>
-<NAME>GimpUnitMenuClass</NAME>
-struct GimpUnitMenuClass
-{
-  GtkOptionMenuClass parent_class;
-
-  void (* unit_changed) (GimpUnitMenu *gum);
 };
 </STRUCT>
 <FUNCTION>
@@ -5283,67 +5300,3 @@ GIOChannel      *channel,gdouble         *data,gint             count
 <RETURNS>gboolean  </RETURNS>
 GIOChannel      *channel,gchar          **data,gint             count
 </FUNCTION>
-<MACRO>
-<NAME>GIMP_MAJOR_VERSION</NAME>
-#define GIMP_MAJOR_VERSION				(1)
-</MACRO>
-<MACRO>
-<NAME>GIMP_MINOR_VERSION</NAME>
-#define GIMP_MINOR_VERSION				(2)
-</MACRO>
-<MACRO>
-<NAME>GIMP_MICRO_VERSION</NAME>
-#define GIMP_MICRO_VERSION				(0)
-</MACRO>
-<MACRO>
-<NAME>GIMP_VERSION</NAME>
-#define GIMP_VERSION					"1.2.0"
-</MACRO>
-<MACRO>
-<NAME>GIMP_CHECK_VERSION</NAME>
-#define GIMP_CHECK_VERSION(major, minor, micro)	\
-    (GIMP_MAJOR_VERSION > (major) || \
-     (GIMP_MAJOR_VERSION == (major) && GIMP_MINOR_VERSION > (minor)) || \
-     (GIMP_MAJOR_VERSION == (major) && GIMP_MINOR_VERSION == (minor) && \
-      GIMP_MICRO_VERSION >= (micro)))
-</MACRO>
-<MACRO>
-<NAME>GIMP_HAVE_PROCEDURAL_DB_GET_DATA_SIZE</NAME>
-#define GIMP_HAVE_PROCEDURAL_DB_GET_DATA_SIZE		1-1-0
-</MACRO>
-<MACRO>
-<NAME>GIMP_HAVE_PARASITES</NAME>
-#define GIMP_HAVE_PARASITES				1-1-0
-</MACRO>
-<MACRO>
-<NAME>GIMP_HAVE_RESOLUTION_INFO</NAME>
-#define GIMP_HAVE_RESOLUTION_INFO			1-1-0
-</MACRO>
-<MACRO>
-<NAME>GIMP_HAVE_DESTROY_PARAMDEFS</NAME>
-#define GIMP_HAVE_DESTROY_PARAMDEFS			1-1-0
-</MACRO>
-<MACRO>
-<NAME>GIMP_HAVE_FEATURES_1_1_5</NAME>
-#define GIMP_HAVE_FEATURES_1_1_5			1-1-5
-</MACRO>
-<MACRO>
-<NAME>GIMP_HAVE_DEFAULT_DISPLAY</NAME>
-#define GIMP_HAVE_DEFAULT_DISPLAY			1-1-5
-</MACRO>
-<MACRO>
-<NAME>GIMP_HAVE_PIXEL_RGNS_REGISTER2</NAME>
-#define GIMP_HAVE_PIXEL_RGNS_REGISTER2			1-1-5
-</MACRO>
-<MACRO>
-<NAME>GIMP_HAVE_NEW_ENUMS</NAME>
-#define GIMP_HAVE_NEW_ENUMS				1-1-10
-</MACRO>
-<MACRO>
-<NAME>GIMP_HAVE_EXPORT</NAME>
-#define GIMP_HAVE_EXPORT                                1-1-10
-</MACRO>
-<MACRO>
-<NAME>GIMP_HAVE_SYSCONFDIR</NAME>
-#define GIMP_HAVE_SYSCONFDIR                            1-1-28
-</MACRO>
