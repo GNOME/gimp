@@ -89,7 +89,7 @@ gimp_enum_store_init (GimpEnumStore *enum_store)
     {
       G_TYPE_INT,       /*  GIMP_ENUM_STORE_VALUE      */
       G_TYPE_STRING,    /*  GIMP_ENUM_STORE_LABEL      */
-      GDK_TYPE_PIXBUF,  /*  GIMP_ENUM_STORE_ICON       */
+      G_TYPE_STRING,    /*  GIMP_ENUM_STORE_ICON       */
       G_TYPE_POINTER    /*  GIMP_ENUM_STORE_USER_DATA  */
     };
 
@@ -299,32 +299,23 @@ gimp_enum_store_lookup_by_value (GtkTreeModel *model,
 }
 
 /**
- * gimp_enum_store_set_icons:
+ * gimp_enum_store_set_stock_prefix:
  * @store:        a #GimpEnumStore
- * @widget:       the widget used to create the icon pixbufs
  * @stock_prefix: a prefix to create icon stock ID from enum values
- * @size:         the size to create the icons in
  *
  * Creates a stock ID for each enum value in the @store by appending
  * the value's nick to the given @stock_prefix inserting a hyphen
- * between them. If an icon is registered for the resulting stock ID,
- * it is rendered by @widget (which should be the @combo_box using
- * this @store as it's model). The rendered pixbuf is then added to
- * the @store in the %GIMP_ENUM_STORE_PIXBUF column.
+ * between them.
  **/
 void
-gimp_enum_store_set_icons (GimpEnumStore *store,
-                           GtkWidget     *widget,
-                           const gchar   *stock_prefix,
-                           GtkIconSize    size)
+gimp_enum_store_set_stock_prefix (GimpEnumStore *store,
+                                  const gchar   *stock_prefix)
 {
   GtkTreeModel *model;
   GtkTreeIter   iter;
   gboolean      iter_valid;
 
   g_return_if_fail (GIMP_IS_ENUM_STORE (store));
-  g_return_if_fail (stock_prefix == NULL || GTK_IS_WIDGET (widget));
-  g_return_if_fail (size > GTK_ICON_SIZE_INVALID || size == -1);
 
   model = GTK_TREE_MODEL (store);
 
@@ -332,12 +323,11 @@ gimp_enum_store_set_icons (GimpEnumStore *store,
        iter_valid;
        iter_valid = gtk_tree_model_iter_next (model, &iter))
     {
-      GdkPixbuf *pixbuf = NULL;
+      gchar *stock_id = NULL;
 
       if (stock_prefix)
         {
           GEnumValue *enum_value;
-          gchar      *stock_id;
           gint        value;
 
           gtk_tree_model_get (model, &iter,
@@ -349,17 +339,13 @@ gimp_enum_store_set_icons (GimpEnumStore *store,
           stock_id = g_strconcat (stock_prefix, "-",
                                   enum_value->value_nick,
                                   NULL);
-
-          pixbuf = gtk_widget_render_icon (widget, stock_id, size, NULL);
-
-          g_free (stock_id);
         }
 
       gtk_list_store_set (GTK_LIST_STORE (store), &iter,
-                          GIMP_ENUM_STORE_ICON, pixbuf,
+                          GIMP_ENUM_STORE_ICON, stock_id,
                           -1);
 
-      if (pixbuf)
-        g_object_unref (pixbuf);
+      if (stock_id)
+        g_free (stock_id);
     }
 }

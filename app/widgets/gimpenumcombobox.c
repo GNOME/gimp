@@ -112,13 +112,15 @@ gimp_enum_combo_box_new_with_model (GimpEnumStore *enum_store)
                             "model", enum_store,
                             NULL);
 
-  cell = gtk_cell_renderer_pixbuf_new ();
+  cell = g_object_new (GTK_TYPE_CELL_RENDERER_PIXBUF,
+                       "stock_size", GTK_ICON_SIZE_MENU,
+                       NULL);
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo_box), cell, FALSE);
   gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo_box), cell,
-                                  "pixbuf", GIMP_ENUM_STORE_ICON,
+                                  "stock_id", GIMP_ENUM_STORE_ICON,
                                   NULL);
 
-  cell = gtk_cell_renderer_text_new ();
+  cell = g_object_new (GTK_TYPE_CELL_RENDERER_TEXT, NULL);
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo_box), cell, TRUE);
   gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo_box), cell,
                                   "text", GIMP_ENUM_STORE_LABEL,
@@ -208,9 +210,7 @@ gimp_enum_combo_box_set_stock_prefix (GimpEnumComboBox *combo_box,
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
 
-  gimp_enum_store_set_icons (GIMP_ENUM_STORE (model),
-                             GTK_WIDGET (combo_box),
-                             stock_prefix, GTK_ICON_SIZE_MENU);
+  gimp_enum_store_set_stock_prefix (GIMP_ENUM_STORE (model), stock_prefix);
 }
 
 /**

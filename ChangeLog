@@ -1,5 +1,11 @@
 2004-04-20  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpenumstore.[ch]
+	* app/widgets/gimpenumcombobox.c: let the pixbuf renderer take care
+	of rendering the pixbuf from the stock_id.
+
+2004-04-20  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpmemsizeentry.c
 	* modules/cdisplay_colorblind.c
 	* modules/cdisplay_proof.c: ported to GimpIntComboBox.

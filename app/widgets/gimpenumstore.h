@@ -75,10 +75,8 @@ gboolean       gimp_enum_store_lookup_by_value  (GtkTreeModel  *model,
                                                  gint           value,
                                                  GtkTreeIter   *iter);
 
-void           gimp_enum_store_set_icons        (GimpEnumStore *store,
-                                                 GtkWidget     *widget,
-                                                 const gchar   *stock_prefix,
-                                                 GtkIconSize    size);
+void           gimp_enum_store_set_stock_prefix (GimpEnumStore *store,
+                                                 const gchar   *stock_prefix);
 
 
 #endif  /* __GIMP_ENUM_STORE_H__ */
