@@ -1,3 +1,9 @@
+2003-06-12  Dave Neary  <bolsh@gimp.org>
+
+	* plug-ins/common/tga.c: Applied a patch from Yohei Honda
+	<yoh2@d2.dion.ne.jp> to handle 16 bit TGAs which use the
+	spare bit to do alpha. Closes bug #114913.
+
 2003-06-11  Sven Neumann  <sven@gimp.org>
 
 	* app/paint_funcs.c (blend_pixels): merged fix for bug #114882
