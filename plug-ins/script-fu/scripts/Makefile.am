@@ -101,8 +101,8 @@ scriptdata_DATA = \
 	waves-anim.scm			\
 	weave.scm			\
 	web-browser.scm			\
-	xach-effect.scm			\
-	\
-	test-sphere.scm
+	xach-effect.scm
 
-EXTRA_DIST = $(scriptdata_DATA)
+EXTRA_DIST = \
+	$(scriptdata_DATA)		\
+	test-sphere.scm
