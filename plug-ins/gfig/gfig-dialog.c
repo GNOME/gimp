@@ -154,8 +154,6 @@ static void       gfig_response             (GtkWidget *widget,
                                              gpointer   data);
 static void       load_button_callback      (GtkWidget *widget,
                                              gpointer   data);
-static void       merge_button_callback     (GtkWidget *widget,
-                                             gpointer   data);
 static void       gfig_new_gc               (void);
 static void       gfig_save_menu_callback   (GtkWidget *widget,
                                              gpointer   data);
@@ -177,12 +175,12 @@ static void       toggle_show_image         (void);
 static void       gridtype_combo_callback   (GtkWidget *widget,
                                              gpointer data);
 
-static void      gfig_load_file_chooser_response (GtkFileChooser *chooser,
-                                                  gint            response_id,
-                                                  gpointer        data);
-static void      file_chooser_response     (GtkFileChooser *chooser,
-                                            gint            response_id,
-                                            GFigObj        *obj);
+static void      load_file_chooser_response (GtkFileChooser *chooser,
+                                             gint            response_id,
+                                             gpointer        data);
+static void      save_file_chooser_response (GtkFileChooser *chooser,
+                                             gint            response_id,
+                                             GFigObj        *obj);
 static GtkWidget *but_with_pix             (const gchar  *stock_id,
                                             GSList      **group,
                                             gint          baction);
@@ -211,8 +209,6 @@ gfig_dialog (void)
   GimpParasite *parasite;
   gint          newlayer;
   GtkWidget    *menubar;
-  GtkWidget    *menuitem;
-  GtkWidget    *menu;
   GtkWidget    *combo;
   GtkWidget    *frame;
   gint          k;
@@ -598,35 +594,25 @@ static void
 load_button_callback (GtkWidget *widget,
                       gpointer   data)
 {
-  static GtkWidget *window = NULL;
+  GtkWidget *window;
 
-  /* Load a single object */
-  window = gtk_file_chooser_dialog_new (_("Load Gfig object collection"),
-                                        GTK_WINDOW (gtk_widget_get_toplevel (widget)),
-                                        GTK_FILE_CHOOSER_ACTION_OPEN,
+  window =
+    gtk_file_chooser_dialog_new (_("Load Gfig object collection"),
+                                 GTK_WINDOW (gtk_widget_get_toplevel (widget)),
+                                 GTK_FILE_CHOOSER_ACTION_OPEN,
 
-                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                        GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
+                                 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                 GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
 
-                                        NULL);
+                                 NULL);
 
   gtk_dialog_set_default_response (GTK_DIALOG (window), GTK_RESPONSE_OK);
 
-  g_signal_connect (window, "destroy",
-                    G_CALLBACK (gtk_widget_destroyed),
-                    &window);
   g_signal_connect (window, "response",
-                    G_CALLBACK (gfig_load_file_chooser_response),
+                    G_CALLBACK (load_file_chooser_response),
                     window);
 
   gtk_widget_show (window);
-}
-
-static void
-merge_button_callback (GtkWidget *widget,
-                       gpointer   data)
-{
-  /* apparently this function (call) is all broken at the moment */
 }
 
 static void
@@ -708,27 +694,20 @@ create_save_file_chooser (GFigObj   *obj,
                           gchar     *tpath,
                           GtkWidget *parent)
 {
-  static GtkWidget *window = NULL;
+  GtkWidget *window;
 
-  if (! window)
-    {
-      window =
-        gtk_file_chooser_dialog_new (_("Save Gfig Drawing"),
-                                     GTK_WINDOW (parent),
-                                     GTK_FILE_CHOOSER_ACTION_SAVE,
+  window = gtk_file_chooser_dialog_new (_("Save Gfig Drawing"),
+                                        GTK_WINDOW (parent),
+                                        GTK_FILE_CHOOSER_ACTION_SAVE,
 
-                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                     GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
+                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                        GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
 
-                                     NULL);
+                                        NULL);
 
-      g_signal_connect (window, "destroy",
-                        G_CALLBACK (gtk_widget_destroyed),
-                        &window);
-      g_signal_connect (window, "response",
-                        G_CALLBACK (file_chooser_response),
-                        obj);
-    }
+  g_signal_connect (window, "response",
+                    G_CALLBACK (save_file_chooser_response),
+                    obj);
 
   if (tpath)
     {
@@ -752,19 +731,17 @@ create_save_file_chooser (GFigObj   *obj,
     }
   else
     {
-      const gchar *tmp = g_get_tmp_dir ();
-
-      gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (window), tmp);
+      gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (window),
+                                           g_get_tmp_dir ());
     }
 
-
-  gtk_window_present (GTK_WINDOW (window));
+  gtk_widget_show (window);
 }
 
 static GtkUIManager *
 create_ui_manager (GtkWidget *window)
 {
-static GtkActionEntry actions[] =
+  static GtkActionEntry actions[] =
   {
     { "gfig-menubar", NULL, "GFig Menu" },
 
@@ -1526,9 +1503,9 @@ update_options (GFigObj *old_obj)
 }
 
 static void
-file_chooser_response (GtkFileChooser *chooser,
-                       gint            response_id,
-                       GFigObj        *obj)
+save_file_chooser_response (GtkFileChooser *chooser,
+                            gint            response_id,
+                            GFigObj        *obj)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
@@ -1788,9 +1765,9 @@ typedef struct _GfigListOptions
 } GfigListOptions;
 
 static void
-gfig_load_file_chooser_response (GtkFileChooser *chooser,
-                                 gint            response_id,
-                                 gpointer        data)
+load_file_chooser_response (GtkFileChooser *chooser,
+                            gint            response_id,
+                            gpointer        data)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
