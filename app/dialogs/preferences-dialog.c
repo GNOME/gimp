@@ -1070,7 +1070,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (spinbutton), "changed",
                           (GtkSignalFunc) file_prefs_spinbutton_callback,
-                          &last_opened_size);
+                          &edit_last_opened_size);
       gtk_widget_show (spinbutton);
 
       label = gtk_label_new ("Interface");

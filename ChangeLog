@@ -1,3 +1,9 @@
+Tue Jul 14 00:26:49 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* app/fileops.c
+	* app/menus.c
+	* app/preferences_dialog.c: fixed a few bugs in the new MRU list
+	
 Mon Jul 13 03:00:46 PDT 1998 Jay Cox  <jaycox@earthlink.net>
 
 	* brush_select.c gimpbrushlist.c: fixed brush ref counting

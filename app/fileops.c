@@ -750,9 +750,10 @@ file_open (char *filename, char* raw_filename)
 
       /*  display the image */
       gdisplay_new (gimage, 0x0101);
-    }
 
-  idea_add( filename );
+      idea_add (filename);
+      menus_last_opened_add (filename);
+    }
 
   return return_val;
 }
@@ -803,12 +804,14 @@ file_save (GimpImage* gimage,
 
       /*  set the image title  */
       gimage_set_filename (gimage, filename);
+
+      idea_add( filename );
+      menus_last_opened_add (filename);
     }
 
   g_free (return_vals);
   g_free (args);
 
-  idea_add( filename );
 
   return return_val;
 }
@@ -856,7 +859,6 @@ file_open_ok_callback (GtkWidget *w,
     {
       file_dialog_hide (client_data);
       gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
-      menus_last_opened_add (filename);
       return;
     }
 

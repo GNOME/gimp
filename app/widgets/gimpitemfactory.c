@@ -39,7 +39,6 @@
 static void menus_init (void);
 
 static GSList *last_opened_raw_filenames = NULL;
-static gint num_entries = 0;
 
 static GtkItemFactoryEntry toolbox_entries[] =
 {
@@ -415,11 +414,13 @@ menus_last_opened_update_labels ()
   GString	*entry_filename, *path;
   GtkWidget	*widget;
   gint		i;
+  guint         num_entries;
 
   entry_filename = g_string_new ("");
   path = g_string_new ("");
 
   filename_slist = last_opened_raw_filenames;
+  num_entries = g_slist_length (last_opened_raw_filenames); 
 
   for (i = 1; i <= num_entries; i++)
     {
@@ -444,10 +445,14 @@ menus_last_opened_add (gchar *filename)
 {
   GString	*raw_filename;
   GtkWidget	*widget;
+  guint         num_entries;
+
+  num_entries = g_slist_length (last_opened_raw_filenames);
 
   if (num_entries == last_opened_size)
     {
-      g_slist_free (g_slist_last (last_opened_raw_filenames));
+      g_slist_remove_link (last_opened_raw_filenames, 
+			   g_slist_last (last_opened_raw_filenames));
     }
 
   raw_filename = g_string_new (filename);
@@ -458,9 +463,6 @@ menus_last_opened_add (gchar *filename)
       widget = gtk_item_factory_get_widget (toolbox_factory, file_menu_separator.path);
       gtk_widget_show (widget);
     }
-
-  if (num_entries < last_opened_size)
-    num_entries++;
 
   menus_last_opened_update_labels ();
 }
