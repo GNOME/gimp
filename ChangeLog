@@ -1,5 +1,10 @@
 2004-05-08  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpstatusbar.c (gimp_statusbar_resize_cursor):
+	added 1 pixel horizontal padding around the label.
+
+2004-05-08  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpstatusbar.[ch]: renamed struct member combo to
 	unit_combo. Place the combobox into the cursor frame.
 

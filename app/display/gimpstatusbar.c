@@ -302,7 +302,7 @@ gimp_statusbar_resize_cursor (GimpStatusbar *statusbar)
   GtkTreeModel     *model;
   const gchar      *text;
   gint              cursor_label_width;
-  gint              label_frame_size_difference;
+  gint              diff;
 
   g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
 
@@ -347,20 +347,21 @@ gimp_statusbar_resize_cursor (GimpStatusbar *statusbar)
 
   pango_layout_get_pixel_size (layout, &cursor_label_width, NULL);
 
+  cursor_label_width += 2;
+
   /*  find out how many pixels the label's parent frame is bigger than
    *  the label itself
    */
-  label_frame_size_difference = (statusbar->cursor_frame->allocation.width -
-                                 statusbar->cursor_label->allocation.width);
+  diff = (statusbar->cursor_frame->allocation.width -
+          statusbar->cursor_label->allocation.width);
 
-  gtk_widget_set_size_request (statusbar->cursor_label, cursor_label_width, -1);
+  gtk_widget_set_size_request (statusbar->cursor_label,
+                               cursor_label_width, -1);
 
   /* don't resize if this is a new display */
-  if (label_frame_size_difference)
+  if (diff)
     gtk_widget_set_size_request (statusbar->cursor_frame,
-                                 cursor_label_width +
-                                 label_frame_size_difference,
-                                 -1);
+                                 cursor_label_width + diff, -1);
 }
 
 static void
@@ -401,4 +402,3 @@ gimp_statusbar_unit_changed (GtkWidget     *combo,
   gimp_image_set_unit (statusbar->shell->gdisp->gimage,
                        gtk_combo_box_get_active (GTK_COMBO_BOX (combo)));
 }
-
