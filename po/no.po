@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-02 21:00+0100\n"
-"PO-Revision-Date: 2004-07-08 18:16+0200\n"
+"PO-Revision-Date: 2004-12-20 17:16+0100\n"
 "Last-Translator: Runar Ingebrigtsen <ringe@skolelinux.no>\n"
 "Language-Team: Norwegian <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -4092,9 +4092,8 @@ msgid "/View/Zoom/1:16  (6.25%)"
 msgstr "/Vis/Zoom/1:16\t(6.25%)"
 
 #: app/gui/image-menu.c:427
-#, fuzzy
 msgid "/View/Zoom/O_ther..."
-msgstr "/Vis/Zoom/Zoom _ut"
+msgstr "/Vis/Zoom/Anne_t..."
 
 #: app/gui/image-menu.c:434
 msgid "/View/_Info Window"
@@ -6512,11 +6511,11 @@ msgstr "/Fil/_Feilsøking"
 #. <Toolbox>/Xtns
 #: app/gui/toolbox-menu.c:249
 msgid "/_Xtns"
-msgstr "/_Utvid"
+msgstr "/_Tillegg"
 
 #: app/gui/toolbox-menu.c:251
 msgid "/Xtns/_Module Manager"
-msgstr "/Utvid/Modulhåndterer"
+msgstr "/Tillegg/Modulhåndterer"
 
 #. <Toolbox>/Help
 #: app/gui/toolbox-menu.c:260

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: achtung 1.2.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-02 21:01+0100\n"
-"PO-Revision-Date: 2004-04-22 02:05+0100\n"
+"PO-Revision-Date: 2004-12-20 17:28+0100\n"
 "Last-Translator: Runar Ingebrigtsen <ringe@skolelinux.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,15 +17,15 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:533 plug-ins/gfig/gfig.c:2903
 #: plug-ins/gflare/gflare.c:898
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "No %s in gimprc:\n"
 "You need to add an entry like\n"
 "(%s \"%s\")\n"
 "to your %s file."
 msgstr ""
-"Ingen %s i fila «gimprc»:\n"
-"Du må legge til et innslag som\n"
+"Ingen %s i filen «gimprc»:\n"
+"Du må legge til en oppføring som\n"
 "(%s «%s»)\n"
 "i din %s fil."
 
@@ -105,12 +105,11 @@ msgstr "Angre forrige zoom"
 
 #: plug-ins/FractalExplorer/Dialogs.c:665
 msgid "Redo last zoom"
-msgstr "Gjenopprett forrige zoom"
+msgstr "Gjenta forrige zoom"
 
 #: plug-ins/FractalExplorer/Dialogs.c:697
-#, fuzzy
 msgid "_Parameters"
-msgstr "Parametere"
+msgstr "_Parametere"
 
 #: plug-ins/FractalExplorer/Dialogs.c:700
 msgid "Fractal Parameters"
@@ -244,7 +243,6 @@ msgid "Number of Colors"
 msgstr "Antall farger"
 
 #: plug-ins/FractalExplorer/Dialogs.c:917
-#, fuzzy
 msgid "Number of colors:"
 msgstr "Antall farger:"
 
@@ -253,7 +251,6 @@ msgid "Change the number of colors in the mapping"
 msgstr "Endre antall farger i mappingen"
 
 #: plug-ins/FractalExplorer/Dialogs.c:927
-#, fuzzy
 msgid "Use loglog smoothing"
 msgstr "Bruk loglog utjevning"
 
@@ -398,7 +395,6 @@ msgstr ""
 "(fargetetthet/ffunksjon). Resultatet er synlig i forhåndsvisningen"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1145
-#, fuzzy
 msgid "Apply active gradient to final image"
 msgstr "Legg på aktiv gradient på endelig bilde"
 
@@ -433,14 +429,14 @@ msgstr "_Fraktaler"
 #: plug-ins/flame/flame.c:434 plug-ins/gfig/gfig.c:1025
 #: plug-ins/gfli/gfli.c:716 plug-ins/ifscompose/ifscompose.c:2601
 #: plug-ins/xjt/xjt.c:1272 plug-ins/xjt/xjt.c:1711
-#, fuzzy, c-format
+#, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Kan ikke åpne filen for skriving"
+msgstr "Kan ikke åpne «%s» for skriving: %s"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1841
-#, fuzzy, c-format
+#, c-format
 msgid "Could not write '%s': %s"
-msgstr "Feil under skriving av GFlare-fil «%s»: %s"
+msgstr "Kunne ikke skrive «%s»: %s"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1861
 msgid "Save: No filename given"
@@ -484,21 +480,18 @@ msgid "Could not open '%s' for reading: %s"
 msgstr "Kan ikke åpne «%s» for lesing: %s"
 
 #: plug-ins/FractalExplorer/Dialogs.c:2136
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a FractalExplorer file"
-msgstr "Filen '%s' er ikke en FractalExplorer fil"
+msgstr "«%s» er ikke en FractalExplorer-fil"
 
 #: plug-ins/FractalExplorer/Dialogs.c:2142
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
-msgstr ""
-"Filen '%s' er korrupt.\n"
-"Linje %d Alternativ-seksjonen er ugyldig"
+msgstr "Filen '%s' er korrupt. Linje %d Alternativ-seksjonen er feil"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:261
-#, fuzzy
 msgid "<Image>/Filters/Render/_Fractal Explorer..."
-msgstr "<Image>/Filtre/Render/Mønster/Fraktalutforsker..."
+msgstr "<Image>/Filtre/Render/Fraktalutforsker..."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:389
 msgid "Rendering Fractal..."
@@ -506,11 +499,9 @@ msgstr "Genererer fraktal..."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:763 plug-ins/gfig/gfig.c:3827
 #: plug-ins/gflare/gflare.c:3109
-#, fuzzy, c-format
+#, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
-msgstr ""
-"Er du sikker på om du vil slette\n"
-"\"%s\" fra listen og disken?"
+msgstr "Er du sikker på om du vil slette «%s» fra listen og disken?"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:767
 msgid "Delete Fractal"
@@ -568,14 +559,12 @@ msgid "Add FractalExplorer Path"
 msgstr "Legg til sti for fraktalutforsker"
 
 #: plug-ins/Lighting/lighting_apply.c:103
-#, fuzzy
 msgid "Lighting Effects..."
-msgstr "Lyn-effekter..."
+msgstr "Lyseffekter..."
 
 #: plug-ins/Lighting/lighting_main.c:167
-#, fuzzy
 msgid "<Image>/Filters/Light Effects/_Lighting Effects..."
-msgstr "<Image>/Filtre/Lyseffekter/Lyseffekter..."
+msgstr "<Image>/Filtre/Lyseffekter/_Lyseffekter..."
 
 #. General options
 #: plug-ins/Lighting/lighting_ui.c:333 plug-ins/MapObject/mapobject_ui.c:532
@@ -919,9 +908,8 @@ msgid "Enable/disable real time preview of changes"
 msgstr "Slå på/av sanntids forhåndsvisning av endringer"
 
 #: plug-ins/Lighting/lighting_ui.c:1175
-#, fuzzy
 msgid "Preview Options"
-msgstr "Alternativer for lagring"
+msgstr "Alternativer for forhåndsvisning"
 
 #: plug-ins/MapObject/mapobject_apply.c:273
 #, fuzzy
@@ -1270,9 +1258,8 @@ msgstr "Kan ikke lagre bilder med gjennomsiktig kanal."
 #: plug-ins/bmp/bmpwrite.c:182 plug-ins/common/dicom.c:631
 #: plug-ins/common/postscript.c:987 plug-ins/common/xwd.c:524
 #: plug-ins/fits/fits.c:441 plug-ins/xjt/xjt.c:1686
-#, fuzzy
 msgid "Cannot operate on unknown image types."
-msgstr "Kan ikke operere på ukjent bildetype"
+msgstr "Kan ikke arbeide med ukjente bildetyper."
 
 #. And let's begin the progress
 #. init the progress meter
@@ -1289,9 +1276,9 @@ msgstr "Kan ikke operere på ukjent bildetype"
 #: plug-ins/common/xbm.c:1000 plug-ins/common/xpm.c:619
 #: plug-ins/common/xwd.c:538 plug-ins/fits/fits.c:457 plug-ins/gfli/gfli.c:683
 #: plug-ins/sgi/sgi.c:544 plug-ins/xjt/xjt.c:1691
-#, fuzzy, c-format
+#, c-format
 msgid "Saving '%s'..."
-msgstr "Laster «%s»..."
+msgstr "Lagrer «%s»..."
 
 #: plug-ins/bmp/bmpwrite.c:555
 msgid "Save as BMP"
@@ -1735,9 +1722,8 @@ msgid "Value"
 msgstr "Verdi"
 
 #: plug-ins/common/CML_explorer.c:461
-#, fuzzy
 msgid "<Image>/Filters/Render/Pattern/CML _Explorer..."
-msgstr "<Image>/Filtre/Render/Mønster/CML-utforsker..."
+msgstr "<Image>/Filtre/Render/Mønster/_CML-utforsker..."
 
 #: plug-ins/common/CML_explorer.c:749
 msgid "CML_explorer: evoluting..."
@@ -1933,24 +1919,22 @@ msgid "Save Parameters to"
 msgstr "Lagre parametere til"
 
 #: plug-ins/common/CML_explorer.c:2191
-#, fuzzy, c-format
+#, c-format
 msgid "Parameters were Saved to '%s'"
-msgstr ""
-"Parametere ble lagret til\n"
-"\"%s\""
+msgstr "Parametere ble lagret til «%s»"
 
 #: plug-ins/common/CML_explorer.c:2210
 msgid "CML File Operation Warning"
 msgstr "Advarsel for CML-filoperasjon"
 
 #: plug-ins/common/CML_explorer.c:2223 plug-ins/common/channel_mixer.c:1256
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "File '%s' exists.\n"
 "Overwrite it?"
 msgstr ""
-"%s\n"
-"eksisterer, overskriv?"
+"Filen «%s» eksisterer.\n"
+"Vil du overskrive den?"
 
 #: plug-ins/common/CML_explorer.c:2267
 msgid "Load Parameters from"
@@ -1965,15 +1949,14 @@ msgid "Error: it's not CML parameter file."
 msgstr "Feil: dette er ikke en CML-parameter fil."
 
 #: plug-ins/common/CML_explorer.c:2370
-#, fuzzy, c-format
+#, c-format
 msgid "Warning: '%s' is an old format file."
-msgstr "Advarsel: det er en fil i gammelt format."
+msgstr "Advarsel: «%s» er en fil i gammelt format."
 
 #: plug-ins/common/CML_explorer.c:2373
-#, fuzzy, c-format
+#, c-format
 msgid "Warning: '%s' is a parameter file for newer CML_explorer than me."
-msgstr ""
-"Advarsel: Hmmm, dette er en parameterfil for en nyere CML_explorer enn meg."
+msgstr "Advarsel: «%s» er en parameterfil for en nyere CML_explorer enn dette."
 
 #: plug-ins/common/CML_explorer.c:2436
 msgid "Error: failed to load parameters"
@@ -1991,9 +1974,8 @@ msgid "Data Formatting"
 msgstr "Dataformattering"
 
 #: plug-ins/common/align_layers.c:140
-#, fuzzy
 msgid "<Image>/Layer/Align _Visible Layers..."
-msgstr "<Image>/Lag/Juster synlige lag..."
+msgstr "<Image>/Lag/Juster s_ynlige lag..."
 
 #: plug-ins/common/align_layers.c:176
 #, fuzzy
@@ -2141,9 +2123,8 @@ msgid "_Grid Size:"
 msgstr "_Størrelse på rutenett:"
 
 #: plug-ins/common/animationplay.c:243
-#, fuzzy
 msgid "<Image>/Filters/Animation/_Playback..."
-msgstr "<Image>/Filtre/Animasjon/Avspilling av animasjon..."
+msgstr "<Image>/Filtre/Animasjon/Avs_pilling..."
 
 #: plug-ins/common/animationplay.c:479
 msgid "Animation Playback: "
@@ -2171,9 +2152,8 @@ msgid "Frame %d of %d"
 msgstr "Ramme %d av %d"
 
 #: plug-ins/common/animoptimize.c:196
-#, fuzzy
 msgid "<Image>/Filters/Animation/Optimize (for _GIF)"
-msgstr "<Image>/Filtre/Animasjon/Optimer animasjon"
+msgstr "<Image>/Filtre/Animasjon/Optimer (for _GIF)"
 
 #: plug-ins/common/animoptimize.c:214
 #, fuzzy
@@ -2254,9 +2234,8 @@ msgid "Cropping..."
 msgstr "Beskjærer..."
 
 #: plug-ins/common/autostretch_hsv.c:92
-#, fuzzy
 msgid "<Image>/Layer/Colors/Auto/Stretch _HSV"
-msgstr "<Image>/Lag/Farger/Auto/Strekk HSV"
+msgstr "<Image>/Lag/Farger/Auto/Strekk _HSV"
 
 #: plug-ins/common/autostretch_hsv.c:124
 msgid "Auto-Stretching HSV..."
@@ -2561,11 +2540,9 @@ msgid "Save Channel Mixer Settings"
 msgstr "Lagre alternativer for kanalmikser"
 
 #: plug-ins/common/channel_mixer.c:1223
-#, fuzzy, c-format
+#, c-format
 msgid "Parameters were saved to '%s'"
-msgstr ""
-"Parametere ble lagret til\n"
-"\"%s\""
+msgstr "Parametere ble lagret til «%s»"
 
 #: plug-ins/common/channel_mixer.c:1242
 #, fuzzy
@@ -3011,15 +2988,13 @@ msgstr "Alternativer"
 
 #. Rotate spinbutton
 #: plug-ins/common/curve_bend.c:1344
-#, fuzzy
 msgid "Rotat_e:"
-msgstr "R_oter:"
+msgstr "Rot_er:"
 
 #. The smoothing toggle
 #: plug-ins/common/curve_bend.c:1362
-#, fuzzy
 msgid "Smoo_thing"
-msgstr "_Utjevning"
+msgstr "U_tjevning"
 
 #. The antialiasing toggle
 #: plug-ins/common/curve_bend.c:1372 plug-ins/common/gqbist.c:847
@@ -3059,9 +3034,8 @@ msgid "Smoot_h"
 msgstr "Myk"
 
 #: plug-ins/common/curve_bend.c:1441
-#, fuzzy
 msgid "_Free"
-msgstr "Fri"
+msgstr "_Fri"
 
 #. The Copy button
 #: plug-ins/common/curve_bend.c:1456
@@ -3468,7 +3442,6 @@ msgid "Sc_attering:"
 msgstr "S_predning:"
 
 #: plug-ins/common/diffraction.c:637
-#, fuzzy
 msgid "Po_larization:"
 msgstr "Po_larisasjon:"
 
@@ -3536,37 +3509,32 @@ msgstr "Finn kant"
 
 #. compression
 #: plug-ins/common/edge.c:651
-#, fuzzy
 msgid "Algorithm"
-msgstr "Prim's algoritme"
+msgstr "Algoritme"
 
 #: plug-ins/common/edge.c:655
 msgid "_Sobel"
-msgstr ""
+msgstr "_Sobel"
 
 #: plug-ins/common/edge.c:656
-#, fuzzy
 msgid "_Prewitt"
-msgstr "_Forhåndsvisning"
+msgstr "_Prewitt"
 
 #: plug-ins/common/edge.c:657 plug-ins/common/lic.c:668
 msgid "_Gradient"
 msgstr "_Gradient"
 
 #: plug-ins/common/edge.c:658
-#, fuzzy
 msgid "_Roberts"
-msgstr "_Prikker"
+msgstr "_Roberts"
 
 #: plug-ins/common/edge.c:659
-#, fuzzy
 msgid "_Differential"
-msgstr "Differanse"
+msgstr "_Differensiell"
 
 #: plug-ins/common/edge.c:660
-#, fuzzy
 msgid "_Laplace"
-msgstr "Laplace..."
+msgstr "_Laplace"
 
 #: plug-ins/common/edge.c:680 plug-ins/common/unsharp.c:674
 msgid "_Amount:"
@@ -3681,9 +3649,8 @@ msgid "Lock _Thresholds"
 msgstr "Lås terskler"
 
 #: plug-ins/common/film.c:247
-#, fuzzy
 msgid "<Image>/Filters/Combine/_Film..."
-msgstr "<Image>/Filtre/Kombiner/Film..."
+msgstr "<Image>/Filtre/Kombiner/_Film..."
 
 #: plug-ins/common/film.c:333
 msgid "Composing Images..."
@@ -3737,9 +3704,8 @@ msgid "Numbering"
 msgstr "Nummerering"
 
 #: plug-ins/common/film.c:1277
-#, fuzzy
 msgid "Start _Index:"
-msgstr "Startindeks:"
+msgstr "Start_indeks:"
 
 #: plug-ins/common/film.c:1290
 msgid "_Font:"
@@ -8925,9 +8891,8 @@ msgid "Release 2.0"
 msgstr "Utgave 2.0"
 
 #: plug-ins/gfig/gfig.c:3710
-#, fuzzy
 msgid "New Gfig Object"
-msgstr "Nytt gfig-objekt"
+msgstr "Nytt Gfig-objekt"
 
 #: plug-ins/gfig/gfig.c:3831
 msgid "Delete Gfig Drawing"
