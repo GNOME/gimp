@@ -1,5 +1,11 @@
 1999-12-07  Michael Natterer  <mitch@gimp.org>
 
+	* pixmaps/yes.xpm: Resize it to the same size as "no.xpm" because
+	the fileselection switches between them and it looks ugly if the
+	widget's padding changes.
+
+1999-12-07  Michael Natterer  <mitch@gimp.org>
+
 	* app/main.c
 	* app/menus.c: Wrapped the 'plugin_domains' definition and
 	initialization and menu_translate() with '#ifdef ENABLE_NLS'.
