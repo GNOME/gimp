@@ -58,26 +58,31 @@ static gboolean  start_new = FALSE;
 
 
 static GdkWindow *
-gimp_remote_find_window (void)
+gimp_remote_find_window (GdkDisplay *display,
+                         GdkScreen  *screen)
 {
-  GdkWindow *result = NULL;
-  Window     root, parent;
-  Window    *children;
-  Atom       class_atom;
-  Atom       string_atom;
-  guint      nchildren;
-  gint       i;
+  GdkWindow  *result = NULL;
+  Display    *xdisplay;
+  Window      root, parent;
+  Window     *children;
+  Atom        class_atom;
+  Atom        string_atom;
+  guint       nchildren;
+  gint        i;
 
-  if (XQueryTree (gdk_display,
-                  gdk_x11_get_default_root_xwindow (),
+  GdkWindow  *root_window = gdk_screen_get_root_window (screen);
+
+  xdisplay = gdk_x11_display_get_xdisplay (display);
+
+  if (XQueryTree (xdisplay, GDK_WINDOW_XID (root_window),
                   &root, &parent, &children, &nchildren) == 0)
     return NULL;
 
   if (! (children && nchildren))
     return NULL;
 
-  class_atom  = XInternAtom (gdk_display, "WM_CLASS", TRUE);
-  string_atom = XInternAtom (gdk_display, "STRING",   TRUE);
+  class_atom  = XInternAtom (xdisplay, "WM_CLASS", TRUE);
+  string_atom = XInternAtom (xdisplay, "STRING",   TRUE);
 
   for (i = nchildren - 1; i >= 0; i--)
     {
@@ -94,7 +99,7 @@ gimp_remote_find_window (void)
        *  is returned.
        */
 
-      window = XmuClientWindow (gdk_display, children[i]);
+      window = XmuClientWindow (xdisplay, children[i]);
 
       /*  We are searching the Gimp toolbox: Its WM_CLASS Property
        *  has the values "toolbox\0Gimp\0". This is pretty relieable,
@@ -102,7 +107,7 @@ gimp_remote_find_window (void)
        *  set from the gimp. See below... :-)
        */
 
-      if (XGetWindowProperty (gdk_display, window,
+      if (XGetWindowProperty (xdisplay, window,
                               class_atom,
                               0, 32,
                               FALSE,
@@ -116,7 +121,7 @@ gimp_remote_find_window (void)
               strcmp (data + 8, "Gimp")    == 0)
             {
               XFree (data);
-              result = gdk_window_foreign_new (window);
+              result = gdk_window_foreign_new_for_display (display, window);
               break;
             }
 
@@ -130,11 +135,11 @@ gimp_remote_find_window (void)
 }
 
 static void
-source_selection_get (GtkWidget          *widget,
-		      GtkSelectionData   *selection_data,
-		      guint               info,
-		      guint               time,
-		      gpointer            data)
+source_selection_get (GtkWidget        *widget,
+		      GtkSelectionData *selection_data,
+		      guint             info,
+		      guint             time,
+		      gpointer          data)
 {
   gchar *uri = (gchar *) data;
 
@@ -161,15 +166,18 @@ usage (const gchar *name)
   g_print ("Tells a running Gimp to open a (local or remote) image file.\n\n"
 	   "Usage: %s [options] [FILE|URI]...\n\n", name);
   g_print ("Valid options are:\n"
-	   "  -h --help       Output this help.\n"
-	   "  -v --version    Output version info.\n"
-	   "  -n --new        Start gimp if no active gimp window was found.\n\n");
+           "  --display <display>  Use the designated X display.\n"
+	   "  -n --new             Start gimp if no active gimp window was found.\n"
+	   "  -h --help            Output this help.\n"
+	   "  -v --version         Output version info.\n"
+             "\n");
   g_print ("Example:  %s http://www.gimp.org/icons/frontpage-small.gif\n"
 	   "     or:  %s localfile.png\n\n", name, name);
 }
 
 static void
-start_new_gimp (gchar *argv0, GString *file_list)
+start_new_gimp (gchar   *argv0,
+                GString *file_list)
 {
   gint    i;
   gchar **argv;
@@ -279,8 +287,9 @@ gint
 main (gint    argc,
       gchar **argv)
 {
-  GtkWidget *source;
-  GdkWindow *gimp_window;
+  GtkWidget  *source;
+  GdkDisplay *display;
+  GdkWindow  *gimp_window;
 
   GdkDragContext  *context;
   GdkDragProtocol  protocol;
@@ -295,6 +304,8 @@ main (gint    argc,
   gchar    *cwd       = g_get_current_dir ();
   gchar    *file_uri  = "";
   guint    i;
+
+  gtk_init (&argc, &argv);
 
   for (i = 1; i < argc; i++)
     {
@@ -317,9 +328,9 @@ main (gint    argc,
         }
 
       /* If not already a valid URI */
-      if (g_ascii_strncasecmp ("file:", argv[i], 5) &&
-          g_ascii_strncasecmp ("ftp:",  argv[i], 4) &&
-          g_ascii_strncasecmp ("http:", argv[i], 5) &&
+      if (g_ascii_strncasecmp ("file:",  argv[i], 5) &&
+          g_ascii_strncasecmp ("ftp:",   argv[i], 4) &&
+          g_ascii_strncasecmp ("http:",  argv[i], 5) &&
           g_ascii_strncasecmp ("https:", argv[i], 6))
         {
           if (g_path_is_absolute (argv[i]))
@@ -345,10 +356,11 @@ main (gint    argc,
       return EXIT_SUCCESS;
     }
 
-  gtk_init (&argc, &argv);
-
   /*  locate Gimp window */
-  gimp_window = gimp_remote_find_window ();
+
+  display = gdk_display_get_default ();
+
+  gimp_window = gimp_remote_find_window (display, gdk_screen_get_default ());
 
   if (!gimp_window)
     {
@@ -359,7 +371,8 @@ main (gint    argc,
       return EXIT_FAILURE;
     }
 
-  gdk_drag_get_protocol (GDK_WINDOW_XID (gimp_window), &protocol);
+  gdk_drag_get_protocol_for_display (display, GDK_WINDOW_XID (gimp_window),
+                                     &protocol);
   if (protocol != GDK_DRAG_PROTO_XDND)
     {
       g_printerr ("Gimp Window doesnt use Xdnd-Protocol - huh?\n");

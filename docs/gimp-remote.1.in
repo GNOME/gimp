@@ -1,9 +1,10 @@
-.TH GIMP-REMOTE 1 "8 August 2000" "Version @GIMP_VERSION@" "GIMP Manual Pages"
+.TH GIMP-REMOTE 1 "31 October 2003" "Version @GIMP_VERSION@" "GIMP Manual Pages"
 .SH NAME
 gimp-remote - tells a running GIMP to open a (local or remote) image file.
 .SH SYNOPSIS
 .B gimp-remote
-[\-h] [\-\-help] [-v] [\-\-version] [\-n] [\-\-new] \fIfilename\fP...
+[\-h] [\-\-help] [-v] [\-\-version] [\-\-display \fIdisplay\fP]
+[\-n] [\-\-new] \fIfilename\fP...
 
 .SH DESCRIPTION
 .PP
@@ -23,6 +24,9 @@ Display a list of all commandline options.
 .TP 8
 .B \-v, \-\-version
 Output the version info.
+.TP 8
+.B \-\-display  \fIdisplay\fP
+Use the designated X display.
 .TP 8
 .B \-n, \-\-new
 If no running GIMP is found, a new instance of GIMP is started.

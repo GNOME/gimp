@@ -1,3 +1,10 @@
+2003-10-31  Sven Neumann  <sven@gimp.org>
+
+	* tools/gimp-remote.c: made multi-head safe. Let GTK+ parse the
+	command-line before checking for application-specific parameters.
+
+	* docs/gimp-remote-1.3.in: document the --display command-line option.
+
 2003-10-31  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpmovetool.c: some cleanup.
