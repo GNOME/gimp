@@ -43,6 +43,7 @@ INCLUDES = \
 
 AM_CPPFLAGS = \
         -DLOCALEDIR=\""$(localedir)"\"		\
+        -DLOCALE=\""gimp-std-plugins"\"		\
 	@LP_DEF@				\
 	@LPSTAT_DEF@				\
 	@LPR_DEF@				\

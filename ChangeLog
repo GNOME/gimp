@@ -1,3 +1,12 @@
+2000-11-16  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/print/Makefile.am
+	* plug-ins/print/print.c: set the locale to "gimp-std-plug-ins". We
+	do this by defining LOCALE in the Makefile so the gimp-print people
+	can define their own value and we can still continue to use the same 
+	C files that ship with the standalone gimp-print package. Thanks to
+	Zbigniew Chyla <cyba@gnome.pl> for pointing this out.
+
 2000-11-15  Sven Neumann  <sven@gimp.org>
 
 	* app/fileops.c: we used to g_free memory returned by strdup() here!
