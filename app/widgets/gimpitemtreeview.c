@@ -47,7 +47,7 @@
 #include "gimpdocked.h"
 #include "gimplayertreeview.h"
 #include "gimpmenufactory.h"
-#include "gimppreviewrenderer.h"
+#include "gimpviewrenderer.h"
 #include "gimpuimanager.h"
 #include "gimpvectorstreeview.h"
 #include "gimpwidgets-utils.h"
@@ -636,7 +636,7 @@ gimp_item_tree_view_new (gint                  preview_size,
   g_return_val_if_fail (preview_size >  0 &&
 			preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
   g_return_val_if_fail (preview_border_width >= 0 &&
-                        preview_border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH,
+                        preview_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
                         NULL);
   g_return_val_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (signal_name != NULL, NULL);
@@ -1256,8 +1256,8 @@ gimp_item_tree_view_name_edited (GtkCellRendererText *cell,
 
   if (gtk_tree_model_get_iter (tree_view->model, &iter, path))
     {
-      GimpPreviewRenderer *renderer;
-      GimpItem            *item;
+      GimpViewRenderer *renderer;
+      GimpItem         *item;
 
       gtk_tree_model_get (tree_view->model, &iter,
                           tree_view->model_column_renderer, &renderer,
@@ -1398,10 +1398,10 @@ gimp_item_tree_view_toggle_clicked (GtkCellRendererToggle *toggle,
 
   if (gtk_tree_model_get_iter (tree_view->model, &iter, path))
     {
-      GimpPreviewRenderer *renderer;
-      GimpItem            *item;
-      GimpImage           *gimage;
-      gboolean             active;
+      GimpViewRenderer *renderer;
+      GimpItem         *item;
+      GimpImage        *gimage;
+      gboolean          active;
 
       gtk_tree_model_get (tree_view->model, &iter,
                           tree_view->model_column_renderer, &renderer,

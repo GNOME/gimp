@@ -32,7 +32,7 @@
 #include "gimpcontainertreeview-dnd.h"
 #include "gimpcontainerview.h"
 #include "gimpdnd.h"
-#include "gimppreviewrenderer.h"
+#include "gimpviewrenderer.h"
 #include "gimpselectiondata.h"
 
 
@@ -94,7 +94,7 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
   if (gtk_tree_view_get_path_at_pos (tree_view->view, x, y,
                                      &path, NULL, NULL, NULL))
     {
-      GimpPreviewRenderer     *renderer;
+      GimpViewRenderer        *renderer;
       GimpViewable            *dest_viewable;
       GtkTreeIter              iter;
       GdkRectangle             cell_area;

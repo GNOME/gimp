@@ -29,8 +29,8 @@
 #include "core/gimpviewable.h"
 
 #include "gimpcellrendererviewable.h"
-#include "gimppreview-popup.h"
-#include "gimppreviewrenderer.h"
+#include "gimpview-popup.h"
+#include "gimpviewrenderer.h"
 
 
 enum
@@ -147,7 +147,7 @@ gimp_cell_renderer_viewable_class_init (GimpCellRendererViewableClass *klass)
                                    PROP_RENDERER,
                                    g_param_spec_object ("renderer",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_PREVIEW_RENDERER,
+                                                        GIMP_TYPE_VIEW_RENDERER,
                                                         G_PARAM_READWRITE));
 }
 
@@ -203,9 +203,9 @@ gimp_cell_renderer_viewable_set_property (GObject      *object,
     {
     case PROP_RENDERER:
       {
-        GimpPreviewRenderer *renderer;
+        GimpViewRenderer *renderer;
 
-        renderer = (GimpPreviewRenderer *) g_value_dup_object (value);
+        renderer = (GimpViewRenderer *) g_value_dup_object (value);
         if (cell->renderer)
           g_object_unref (cell->renderer);
         cell->renderer = renderer;
@@ -228,8 +228,8 @@ gimp_cell_renderer_viewable_get_size (GtkCellRenderer *cell,
                                       gint            *height)
 {
   GimpCellRendererViewable *cellviewable;
-  gint                      preview_width  = 0;
-  gint                      preview_height = 0;
+  gint                      view_width  = 0;
+  gint                      view_height = 0;
   gint                      calc_width;
   gint                      calc_height;
 
@@ -237,19 +237,19 @@ gimp_cell_renderer_viewable_get_size (GtkCellRenderer *cell,
 
   if (cellviewable->renderer)
     {
-      preview_width  = (cellviewable->renderer->width  +
-                        2 * cellviewable->renderer->border_width);
-      preview_height = (cellviewable->renderer->height +
-                        2 * cellviewable->renderer->border_width);
+      view_width  = (cellviewable->renderer->width  +
+                     2 * cellviewable->renderer->border_width);
+      view_height = (cellviewable->renderer->height +
+                     2 * cellviewable->renderer->border_width);
     }
 
-  calc_width  = (gint) cell->xpad * 2 + preview_width;
-  calc_height = (gint) cell->ypad * 2 + preview_height;
+  calc_width  = (gint) cell->xpad * 2 + view_width;
+  calc_height = (gint) cell->ypad * 2 + view_height;
 
   if (x_offset) *x_offset = 0;
   if (y_offset) *y_offset = 0;
 
-  if (cell_area && preview_width > 0 && preview_height > 0)
+  if (cell_area && view_width > 0 && view_height > 0)
     {
       if (x_offset)
 	{
@@ -288,17 +288,17 @@ gimp_cell_renderer_viewable_render (GtkCellRenderer      *cell,
       if (! (flags & GTK_CELL_RENDERER_SELECTED))
         {
           /* this is an ugly hack. The cell state should be passed to
-           * the preview renderer, so that it can adjust its border.
+           * the view renderer, so that it can adjust its border.
            * (or something like this) */
-          if (cellviewable->renderer->border_type == GIMP_PREVIEW_BORDER_WHITE)
-            gimp_preview_renderer_set_border_type (cellviewable->renderer,
-                                                   GIMP_PREVIEW_BORDER_BLACK);
+          if (cellviewable->renderer->border_type == GIMP_VIEW_BORDER_WHITE)
+            gimp_view_renderer_set_border_type (cellviewable->renderer,
+                                                GIMP_VIEW_BORDER_BLACK);
 
-          gimp_preview_renderer_remove_idle (cellviewable->renderer);
+          gimp_view_renderer_remove_idle (cellviewable->renderer);
         }
 
-      gimp_preview_renderer_draw (cellviewable->renderer, window, widget,
-                                  cell_area, expose_area);
+      gimp_view_renderer_draw (cellviewable->renderer, window, widget,
+                               cell_area, expose_area);
     }
 }
 
@@ -362,12 +362,12 @@ gimp_cell_renderer_viewable_clicked (GimpCellRendererViewable *cell,
       if (bevent->type == GDK_BUTTON_PRESS &&
           (bevent->button == 1 || bevent->button == 2))
         {
-          gimp_preview_popup_show (gtk_get_event_widget (event),
-                                   bevent,
-                                   cell->renderer->viewable,
-                                   cell->renderer->width,
-                                   cell->renderer->height,
-                                   cell->renderer->dot_for_dot);
+          gimp_view_popup_show (gtk_get_event_widget (event),
+                                bevent,
+                                cell->renderer->viewable,
+                                cell->renderer->width,
+                                cell->renderer->height,
+                                cell->renderer->dot_for_dot);
         }
 
       gdk_event_free (event);

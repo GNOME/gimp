@@ -37,11 +37,11 @@
 static void   gimp_preview_renderer_image_class_init (GimpPreviewRendererImageClass *klass);
 static void   gimp_preview_renderer_image_init       (GimpPreviewRendererImage      *renderer);
 
-static void   gimp_preview_renderer_image_render     (GimpPreviewRenderer *renderer,
-                                                      GtkWidget           *widget);
+static void   gimp_preview_renderer_image_render     (GimpViewRenderer *renderer,
+                                                      GtkWidget        *widget);
 
 
-static GimpPreviewRendererClass *parent_class = NULL;
+static GimpViewRendererClass *parent_class = NULL;
 
 
 GType
@@ -64,7 +64,7 @@ gimp_preview_renderer_image_get_type (void)
         (GInstanceInitFunc) gimp_preview_renderer_image_init,
       };
 
-      renderer_type = g_type_register_static (GIMP_TYPE_PREVIEW_RENDERER,
+      renderer_type = g_type_register_static (GIMP_TYPE_VIEW_RENDERER,
                                               "GimpPreviewRendererImage",
                                               &renderer_info, 0);
     }
@@ -75,9 +75,9 @@ gimp_preview_renderer_image_get_type (void)
 static void
 gimp_preview_renderer_image_class_init (GimpPreviewRendererImageClass *klass)
 {
-  GimpPreviewRendererClass *renderer_class;
+  GimpViewRendererClass *renderer_class;
 
-  renderer_class = GIMP_PREVIEW_RENDERER_CLASS (klass);
+  renderer_class = GIMP_VIEW_RENDERER_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -91,8 +91,8 @@ gimp_preview_renderer_image_init (GimpPreviewRendererImage *renderer)
 }
 
 static void
-gimp_preview_renderer_image_render (GimpPreviewRenderer *renderer,
-                                    GtkWidget           *widget)
+gimp_preview_renderer_image_render (GimpViewRenderer *renderer,
+                                    GtkWidget        *widget)
 {
   GimpPreviewRendererImage *rendererimage;
   GimpImage                *gimage;
@@ -121,7 +121,7 @@ gimp_preview_renderer_image_render (GimpPreviewRenderer *renderer,
       TempBuf *temp_buf;
 
       temp_buf = gimp_viewable_get_new_preview (renderer->viewable,
-						gimage->width, gimage->height);
+                                                gimage->width, gimage->height);
 
       if (temp_buf)
         {
@@ -134,8 +134,8 @@ gimp_preview_renderer_image_render (GimpPreviewRenderer *renderer,
   else
     {
       render_buf = gimp_viewable_get_new_preview (renderer->viewable,
-						  preview_width,
-						  preview_height);
+                                                  preview_width,
+                                                  preview_height);
     }
 
   if (render_buf)
@@ -164,10 +164,10 @@ gimp_preview_renderer_image_render (GimpPreviewRenderer *renderer,
         component_index =
           gimp_image_get_component_index (gimage, rendererimage->channel);
 
-      gimp_preview_renderer_render_buffer (renderer, render_buf,
-                                           component_index,
-                                           GIMP_PREVIEW_BG_CHECKS,
-                                           GIMP_PREVIEW_BG_WHITE);
+      gimp_view_renderer_render_buffer (renderer, render_buf,
+                                        component_index,
+                                        GIMP_VIEW_BG_CHECKS,
+                                        GIMP_VIEW_BG_WHITE);
 
       temp_buf_free (render_buf);
     }
@@ -189,6 +189,6 @@ gimp_preview_renderer_image_render (GimpPreviewRenderer *renderer,
           break;
         }
 
-      gimp_preview_renderer_default_render_stock (renderer, widget, stock_id);
+      gimp_view_renderer_default_render_stock (renderer, widget, stock_id);
     }
 }

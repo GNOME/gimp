@@ -38,7 +38,7 @@
 #include "gimpdnd.h"
 #include "gimphelp-ids.h"
 #include "gimpview.h"
-#include "gimppreviewrenderer.h"
+#include "gimpviewrenderer.h"
 #include "gimpuimanager.h"
 
 #include "gimp-intl.h"
@@ -262,8 +262,8 @@ gimp_buffer_view_preview_notify (GimpContainerView *container_view,
   view_size = gimp_container_view_get_preview_size (container_view,
                                                     &view_border_width);
 
-  gimp_preview_renderer_set_size (view->renderer,
-                                  view_size, view_border_width);
+  gimp_view_renderer_set_size (view->renderer,
+                               view_size, view_border_width);
   gtk_widget_set_size_request (buffer_view->global_preview,
                                view_size + 2 * view_border_width,
                                view_size + 2 * view_border_width);

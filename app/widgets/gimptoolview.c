@@ -34,7 +34,7 @@
 
 #include "gimpcontainertreeview.h"
 #include "gimpcontainerview.h"
-#include "gimppreviewrenderer.h"
+#include "gimpviewrenderer.h"
 #include "gimptoolview.h"
 #include "gimphelp-ids.h"
 #include "gimpuimanager.h"
@@ -264,7 +264,7 @@ gimp_tool_view_eye_data_func (GtkTreeViewColumn *tree_column,
                               gpointer           data)
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (data);
-  GimpPreviewRenderer   *renderer;
+  GimpViewRenderer      *renderer;
   gboolean               visible;
 
   gtk_tree_model_get (tree_model, iter,
@@ -291,8 +291,8 @@ gimp_tool_view_eye_clicked (GtkCellRendererToggle *toggle,
 
   if (gtk_tree_model_get_iter (tree_view->model, &iter, path))
     {
-      GimpPreviewRenderer *renderer;
-      gboolean             active;
+      GimpViewRenderer *renderer;
+      gboolean          active;
 
       g_object_get (toggle,
                     "active", &active,

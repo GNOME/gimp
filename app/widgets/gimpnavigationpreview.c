@@ -35,7 +35,7 @@
 #include "core/gimpmarshal.h"
 
 #include "gimpnavigationpreview.h"
-#include "gimppreviewrenderer.h"
+#include "gimpviewrenderer.h"
 
 
 #define BORDER_PEN_WIDTH 3

@@ -22,7 +22,7 @@
 #ifndef __GIMP_PREVIEW_RENDERER_DRAWABLE_H__
 #define __GIMP_PREVIEW_RENDERER_DRAWABLE_H__
 
-#include "gimppreviewrenderer.h"
+#include "gimpviewrenderer.h"
 
 #define GIMP_TYPE_PREVIEW_RENDERER_DRAWABLE            (gimp_preview_renderer_drawable_get_type ())
 #define GIMP_PREVIEW_RENDERER_DRAWABLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PREVIEW_RENDERER_DRAWABLE, GimpPreviewRendererDrawable))
@@ -36,12 +36,12 @@ typedef struct _GimpPreviewRendererDrawableClass  GimpPreviewRendererDrawableCla
 
 struct _GimpPreviewRendererDrawable
 {
-  GimpPreviewRenderer  parent_instance;
+  GimpViewRenderer  parent_instance;
 };
 
 struct _GimpPreviewRendererDrawableClass
 {
-  GimpPreviewRendererClass  parent_class;
+  GimpViewRendererClass  parent_class;
 };
 
 

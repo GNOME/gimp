@@ -34,7 +34,7 @@
 #include "gimpcellrendererviewable.h"
 #include "gimpcontainercombobox.h"
 #include "gimpcontainerview.h"
-#include "gimppreviewrenderer.h"
+#include "gimpviewrenderer.h"
 
 
 enum
@@ -51,27 +51,27 @@ static void     gimp_container_combo_box_init         (GimpContainerComboBox  *v
 static void     gimp_container_combo_box_view_iface_init (GimpContainerViewInterface *view_iface);
 
 static gpointer gimp_container_combo_box_insert_item  (GimpContainerView      *view,
-						       GimpViewable           *viewable,
-						       gint                    index);
+                                                       GimpViewable           *viewable,
+                                                       gint                    index);
 static void     gimp_container_combo_box_remove_item  (GimpContainerView      *view,
-						       GimpViewable           *viewable,
-						       gpointer                insert_data);
+                                                       GimpViewable           *viewable,
+                                                       gpointer                insert_data);
 static void     gimp_container_combo_box_reorder_item (GimpContainerView      *view,
-						       GimpViewable           *viewable,
-						       gint                    new_index,
-						       gpointer                insert_data);
+                                                       GimpViewable           *viewable,
+                                                       gint                    new_index,
+                                                       gpointer                insert_data);
 static void     gimp_container_combo_box_rename_item  (GimpContainerView      *view,
-						       GimpViewable           *viewable,
-						       gpointer                insert_data);
+                                                       GimpViewable           *viewable,
+                                                       gpointer                insert_data);
 static gboolean  gimp_container_combo_box_select_item (GimpContainerView      *view,
-						       GimpViewable           *viewable,
-						       gpointer                insert_data);
+                                                       GimpViewable           *viewable,
+                                                       gpointer                insert_data);
 static void     gimp_container_combo_box_clear_items  (GimpContainerView      *view);
 static void gimp_container_combo_box_set_preview_size (GimpContainerView      *view);
 
 static void     gimp_container_combo_box_changed      (GtkComboBox            *combo_box,
                                                        GimpContainerView      *view);
-static void gimp_container_combo_box_renderer_update  (GimpPreviewRenderer    *renderer,
+static void gimp_container_combo_box_renderer_update  (GimpViewRenderer       *renderer,
                                                        GimpContainerView      *view);
 
 
@@ -152,7 +152,7 @@ gimp_container_combo_box_init (GimpContainerComboBox *combo_box)
   GtkCellRenderer *cell;
 
   store = gtk_list_store_new (NUM_COLUMNS,
-                              GIMP_TYPE_PREVIEW_RENDERER,
+                              GIMP_TYPE_VIEW_RENDERER,
                               G_TYPE_STRING);
 
   gtk_combo_box_set_model (GTK_COMBO_BOX (combo_box), GTK_TREE_MODEL (store));
@@ -235,12 +235,12 @@ gimp_container_combo_box_set (GimpContainerComboBox *combo_box,
                               GtkTreeIter           *iter,
                               GimpViewable          *viewable)
 {
-  GimpContainerView   *view = GIMP_CONTAINER_VIEW (combo_box);
-  GtkTreeModel        *model;
-  GimpPreviewRenderer *renderer;
-  gchar               *name;
-  gint                 preview_size;
-  gint                 border_width;
+  GimpContainerView *view = GIMP_CONTAINER_VIEW (combo_box);
+  GtkTreeModel      *model;
+  GimpViewRenderer  *renderer;
+  gchar             *name;
+  gint               preview_size;
+  gint               border_width;
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
 
@@ -248,11 +248,11 @@ gimp_container_combo_box_set (GimpContainerComboBox *combo_box,
 
   name = gimp_viewable_get_description (viewable, NULL);
 
-  renderer = gimp_preview_renderer_new (G_TYPE_FROM_INSTANCE (viewable),
-                                        preview_size, border_width,
-                                        FALSE);
-  gimp_preview_renderer_set_viewable (renderer, viewable);
-  gimp_preview_renderer_remove_idle (renderer);
+  renderer = gimp_view_renderer_new (G_TYPE_FROM_INSTANCE (viewable),
+                                     preview_size, border_width,
+                                     FALSE);
+  gimp_view_renderer_set_viewable (renderer, viewable);
+  gimp_view_renderer_remove_idle (renderer);
 
   g_signal_connect (renderer, "update",
                     G_CALLBACK (gimp_container_combo_box_renderer_update),
@@ -271,8 +271,8 @@ gimp_container_combo_box_set (GimpContainerComboBox *combo_box,
 
 static gpointer
 gimp_container_combo_box_insert_item (GimpContainerView *view,
-				      GimpViewable      *viewable,
-				      gint               index)
+                                      GimpViewable      *viewable,
+                                      gint               index)
 {
   GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (view));
   GtkTreeIter  *iter;
@@ -292,8 +292,8 @@ gimp_container_combo_box_insert_item (GimpContainerView *view,
 
 static void
 gimp_container_combo_box_remove_item (GimpContainerView *view,
-				      GimpViewable      *viewable,
-				      gpointer           insert_data)
+                                      GimpViewable      *viewable,
+                                      gpointer           insert_data)
 {
   GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (view));
   GtkTreeIter  *iter  = insert_data;
@@ -317,9 +317,9 @@ gimp_container_combo_box_remove_item (GimpContainerView *view,
 
 static void
 gimp_container_combo_box_reorder_item (GimpContainerView *view,
-				       GimpViewable      *viewable,
-				       gint               new_index,
-				       gpointer           insert_data)
+                                       GimpViewable      *viewable,
+                                       gint               new_index,
+                                       gpointer           insert_data)
 {
   GtkTreeModel  *model     = gtk_combo_box_get_model (GTK_COMBO_BOX (view));
   GimpContainer *container = gimp_container_view_get_container (view);
@@ -363,8 +363,8 @@ gimp_container_combo_box_reorder_item (GimpContainerView *view,
 
 static void
 gimp_container_combo_box_rename_item (GimpContainerView *view,
-				      GimpViewable      *viewable,
-				      gpointer           insert_data)
+                                      GimpViewable      *viewable,
+                                      gpointer           insert_data)
 {
   GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (view));
   GtkTreeIter  *iter  = insert_data;
@@ -383,8 +383,8 @@ gimp_container_combo_box_rename_item (GimpContainerView *view,
 
 static gboolean
 gimp_container_combo_box_select_item (GimpContainerView *view,
-				      GimpViewable      *viewable,
-				      gpointer           insert_data)
+                                      GimpViewable      *viewable,
+                                      gpointer           insert_data)
 {
   GtkComboBox *combo_box = GTK_COMBO_BOX (view);
   GtkTreeIter *iter      = insert_data;
@@ -434,13 +434,13 @@ gimp_container_combo_box_set_preview_size (GimpContainerView *view)
        iter_valid;
        iter_valid = gtk_tree_model_iter_next (model, &iter))
     {
-      GimpPreviewRenderer *renderer;
+      GimpViewRenderer *renderer;
 
       gtk_tree_model_get (model, &iter,
                           COLUMN_RENDERER, &renderer,
                           -1);
 
-      gimp_preview_renderer_set_size (renderer, preview_size, border_width);
+      gimp_view_renderer_set_size (renderer, preview_size, border_width);
       g_object_unref (renderer);
     }
 }
@@ -456,7 +456,7 @@ gimp_container_combo_box_changed (GtkComboBox       *combo_box,
 
   if (gtk_combo_box_get_active_iter (combo_box, &iter))
     {
-      GimpPreviewRenderer *renderer;
+      GimpViewRenderer *renderer;
 
       gtk_tree_model_get (gtk_combo_box_get_model (combo_box), &iter,
                           COLUMN_RENDERER, &renderer,
@@ -468,8 +468,8 @@ gimp_container_combo_box_changed (GtkComboBox       *combo_box,
 }
 
 static void
-gimp_container_combo_box_renderer_update (GimpPreviewRenderer *renderer,
-                                          GimpContainerView   *view)
+gimp_container_combo_box_renderer_update (GimpViewRenderer  *renderer,
+                                          GimpContainerView *view)
 {
   GtkTreeIter *iter = gimp_container_view_lookup (view, renderer->viewable);
 

@@ -35,22 +35,22 @@ typedef struct _GimpViewClass  GimpViewClass;
 
 struct _GimpView
 {
-  GtkWidget            parent_instance;
+  GtkWidget         parent_instance;
 
-  GdkWindow           *event_window;
+  GdkWindow        *event_window;
 
-  GimpViewable        *viewable;
-  GimpPreviewRenderer *renderer;
+  GimpViewable     *viewable;
+  GimpViewRenderer *renderer;
 
-  gboolean             clickable;
-  gboolean             eat_button_events;
-  gboolean             show_popup;
-  gboolean             expand;
+  gboolean          clickable;
+  gboolean          eat_button_events;
+  gboolean          show_popup;
+  gboolean          expand;
 
   /*< private >*/
-  gboolean             in_button;
-  gboolean             has_grab;
-  GdkModifierType      press_state;
+  gboolean          in_button;
+  gboolean          has_grab;
+  GdkModifierType   press_state;
 };
 
 struct _GimpViewClass

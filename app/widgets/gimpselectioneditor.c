@@ -47,7 +47,7 @@
 #include "gimphelp-ids.h"
 #include "gimpmenufactory.h"
 #include "gimpview.h"
-#include "gimppreviewrenderer.h"
+#include "gimpviewrenderer.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
@@ -132,8 +132,8 @@ gimp_selection_editor_init (GimpSelectionEditor *editor)
                                             GIMP_TYPE_SELECTION,
                                             GIMP_PREVIEW_SIZE_HUGE,
                                             0, TRUE);
-  gimp_preview_renderer_set_background (GIMP_VIEW (editor->preview)->renderer,
-                                        GIMP_STOCK_TEXTURE);
+  gimp_view_renderer_set_background (GIMP_VIEW (editor->preview)->renderer,
+                                     GIMP_STOCK_TEXTURE);
   gtk_widget_set_size_request (editor->preview,
                                GIMP_PREVIEW_SIZE_HUGE, GIMP_PREVIEW_SIZE_HUGE);
   gimp_view_set_expand (GIMP_VIEW (editor->preview), TRUE);
@@ -262,7 +262,7 @@ gimp_selection_preview_button_press (GtkWidget           *widget,
                                      GimpSelectionEditor *editor)
 {
   GimpImageEditor      *image_editor = GIMP_IMAGE_EDITOR (editor);
-  GimpPreviewRenderer  *renderer;
+  GimpViewRenderer     *renderer;
   GimpToolInfo         *tool_info;
   GimpSelectionOptions *options;
   GimpDrawable         *drawable;
@@ -376,5 +376,5 @@ static void
 gimp_selection_editor_mask_changed (GimpImage           *gimage,
                                     GimpSelectionEditor *editor)
 {
-  gimp_preview_renderer_invalidate (GIMP_VIEW (editor->preview)->renderer);
+  gimp_view_renderer_invalidate (GIMP_VIEW (editor->preview)->renderer);
 }

@@ -39,14 +39,14 @@
 
 static void   gimp_preview_renderer_vectors_class_init (GimpPreviewRendererVectorsClass *klass);
 
-static void   gimp_preview_renderer_vectors_draw (GimpPreviewRenderer *renderer,
-                                                  GdkWindow           *window,
-                                                  GtkWidget           *widget,
-                                                  const GdkRectangle  *draw_area,
-                                                  const GdkRectangle  *expose_area);
+static void   gimp_preview_renderer_vectors_draw (GimpViewRenderer   *renderer,
+                                                  GdkWindow          *window,
+                                                  GtkWidget          *widget,
+                                                  const GdkRectangle *draw_area,
+                                                  const GdkRectangle *expose_area);
 
 
-static GimpPreviewRendererClass *parent_class = NULL;
+static GimpViewRendererClass *parent_class = NULL;
 
 
 GType
@@ -69,7 +69,7 @@ gimp_preview_renderer_vectors_get_type (void)
         NULL,           /* instance_init */
       };
 
-      renderer_type = g_type_register_static (GIMP_TYPE_PREVIEW_RENDERER,
+      renderer_type = g_type_register_static (GIMP_TYPE_VIEW_RENDERER,
                                               "GimpPreviewRendererVectors",
                                               &renderer_info, 0);
     }
@@ -80,9 +80,9 @@ gimp_preview_renderer_vectors_get_type (void)
 static void
 gimp_preview_renderer_vectors_class_init (GimpPreviewRendererVectorsClass *klass)
 {
-  GimpPreviewRendererClass *renderer_class;
+  GimpViewRendererClass *renderer_class;
 
-  renderer_class = GIMP_PREVIEW_RENDERER_CLASS (klass);
+  renderer_class = GIMP_VIEW_RENDERER_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -90,11 +90,11 @@ gimp_preview_renderer_vectors_class_init (GimpPreviewRendererVectorsClass *klass
 }
 
 static void
-gimp_preview_renderer_vectors_draw (GimpPreviewRenderer *renderer,
-                                    GdkWindow           *window,
-                                    GtkWidget           *widget,
-                                    const GdkRectangle  *draw_area,
-                                    const GdkRectangle  *expose_area)
+gimp_preview_renderer_vectors_draw (GimpViewRenderer   *renderer,
+                                    GdkWindow          *window,
+                                    GtkWidget          *widget,
+                                    const GdkRectangle *draw_area,
+                                    const GdkRectangle *expose_area)
 {
   GimpVectors  *vectors;
   GimpStroke   *stroke;

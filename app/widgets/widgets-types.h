@@ -170,7 +170,7 @@ typedef struct _GimpNavigationPreview        GimpNavigationPreview;
 
 /*  preview renderers  */
 
-typedef struct _GimpPreviewRenderer          GimpPreviewRenderer;
+typedef struct _GimpViewRenderer             GimpViewRenderer;
 typedef struct _GimpPreviewRendererBrush     GimpPreviewRendererBrush;
 typedef struct _GimpPreviewRendererDrawable  GimpPreviewRendererDrawable;
 typedef struct _GimpPreviewRendererGradient  GimpPreviewRendererGradient;

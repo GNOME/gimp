@@ -42,7 +42,7 @@
 #include "gimptemplateview.h"
 #include "gimpdnd.h"
 #include "gimphelp-ids.h"
-#include "gimppreviewrenderer.h"
+#include "gimpviewrenderer.h"
 #include "gimpuimanager.h"
 
 #include "gimp-intl.h"
@@ -227,8 +227,8 @@ gimp_template_view_tree_name_edited (GtkCellRendererText *cell,
 
   if (gtk_tree_model_get_iter (tree_view->model, &iter, path))
     {
-      GimpPreviewRenderer *renderer;
-      GimpObject          *object;
+      GimpViewRenderer *renderer;
+      GimpObject       *object;
 
       gtk_tree_model_get (tree_view->model, &iter,
                           tree_view->model_column_renderer, &renderer,

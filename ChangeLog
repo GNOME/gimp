@@ -1,3 +1,67 @@
+2004-08-26  DindinX  <david@dindinx.org>
+
+	* app/widgets/gimppreview-popup.c
+	* app/widgets/gimppreview-popup.h: renamed these files...
+
+	* app/widgets/gimpview-popup.c
+	* app/widgets/gimpview-popup.h: .. to these files, and changed the
+	GimpPreviewPopup type to GimpViewPopup.
+
+	* app/widgets/gimppreviewrenderer.c
+	* app/widgets/gimppreviewrenderer.h: renamed these files...
+
+	* app/widgets/gimpviewrenderer.c
+	* app/widgets/gimpviewrenderer.h: .. to these files, and changed
+	GimpPreviewRenderer to GimpViewRenderer.
+
+	This is the second step of the great Preview->View renaming process.
+	
+	* app/display/gimpdisplayshell-layer-select.c
+	* app/display/gimpnavigationeditor.c
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimpbrushfactoryview.c
+	* app/widgets/gimpbufferview.c
+	* app/widgets/gimpcellrendererviewable.c
+	* app/widgets/gimpcellrendererviewable.h
+	* app/widgets/gimpcomponenteditor.c
+	* app/widgets/gimpcontainerbox.c
+	* app/widgets/gimpcontainercombobox.c
+	* app/widgets/gimpcontainereditor.c
+	* app/widgets/gimpcontainerentry.c
+	* app/widgets/gimpcontainergridview.c
+	* app/widgets/gimpcontainerpopup.c
+	* app/widgets/gimpcontainertreeview-dnd.c
+	* app/widgets/gimpcontainertreeview.c
+	* app/widgets/gimpcontainerview.c
+	* app/widgets/gimpdatafactoryview.c
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimpnavigationpreview.c
+	* app/widgets/gimppatternfactoryview.c
+	* app/widgets/gimppreviewrenderer-utils.c
+	* app/widgets/gimppreviewrendererbrush.c
+	* app/widgets/gimppreviewrendererbrush.h
+	* app/widgets/gimppreviewrendererdrawable.c
+	* app/widgets/gimppreviewrendererdrawable.h
+	* app/widgets/gimppreviewrenderergradient.c
+	* app/widgets/gimppreviewrenderergradient.h
+	* app/widgets/gimppreviewrendererimage.c
+	* app/widgets/gimppreviewrendererimage.h
+	* app/widgets/gimppreviewrendererimagefile.c
+	* app/widgets/gimppreviewrendererimagefile.h
+	* app/widgets/gimppreviewrendererlayer.c
+	* app/widgets/gimppreviewrenderervectors.c
+	* app/widgets/gimpselectioneditor.c
+	* app/widgets/gimptemplateview.c
+	* app/widgets/gimptooloptionseditor.c
+	* app/widgets/gimptoolview.c
+	* app/widgets/gimpview.c
+	* app/widgets/gimpview.h
+	* app/widgets/gimpviewablebutton.c
+	* app/widgets/widgets-enums.h
+	* app/widgets/widgets-types.h: Modified accordingly.
+
 2004-08-25  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimperrordialog.[ch] (gimp_error_dialog_add): stop

@@ -22,7 +22,7 @@
 #ifndef __GIMP_PREVIEW_RENDERER_BRUSH_H__
 #define __GIMP_PREVIEW_RENDERER_BRUSH_H__
 
-#include "gimppreviewrenderer.h"
+#include "gimpviewrenderer.h"
 
 #define GIMP_TYPE_PREVIEW_RENDERER_BRUSH            (gimp_preview_renderer_brush_get_type ())
 #define GIMP_PREVIEW_RENDERER_BRUSH(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PREVIEW_RENDERER_BRUSH, GimpPreviewRendererBrush))
@@ -36,15 +36,15 @@ typedef struct _GimpPreviewRendererBrushClass  GimpPreviewRendererBrushClass;
 
 struct _GimpPreviewRendererBrush
 {
-  GimpPreviewRenderer parent_instance;
+  GimpViewRenderer parent_instance;
 
-  guint               pipe_timeout_id;
-  gint                pipe_animation_index;
+  guint            pipe_timeout_id;
+  gint             pipe_animation_index;
 };
 
 struct _GimpPreviewRendererBrushClass
 {
-  GimpPreviewRendererClass  parent_class;
+  GimpViewRendererClass  parent_class;
 };
 
 

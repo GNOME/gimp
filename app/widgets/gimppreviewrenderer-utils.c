@@ -44,7 +44,7 @@
 GType
 gimp_preview_renderer_type_from_viewable_type (GType viewable_type)
 {
-  GType type = GIMP_TYPE_PREVIEW_RENDERER;
+  GType type = GIMP_TYPE_VIEW_RENDERER;
 
   g_return_val_if_fail (g_type_is_a (viewable_type, GIMP_TYPE_VIEWABLE),
                         G_TYPE_NONE);

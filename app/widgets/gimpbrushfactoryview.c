@@ -35,7 +35,7 @@
 
 #include "gimpcontainerview.h"
 #include "gimpbrushfactoryview.h"
-#include "gimppreviewrenderer.h"
+#include "gimpviewrenderer.h"
 
 #include "gimp-intl.h"
 
@@ -45,12 +45,12 @@ static void   gimp_brush_factory_view_init       (GimpBrushFactoryView      *vie
 static void   gimp_brush_factory_view_destroy    (GtkObject                *object);
 
 static void   gimp_brush_factory_view_select_item     (GimpContainerEditor  *editor,
-						       GimpViewable         *viewable);
+                                                       GimpViewable         *viewable);
 
 static void   gimp_brush_factory_view_spacing_changed (GimpBrush            *brush,
-						       GimpBrushFactoryView *view);
+                                                       GimpBrushFactoryView *view);
 static void   gimp_brush_factory_view_spacing_update  (GtkAdjustment        *adjustment,
-						       GimpBrushFactoryView *view);
+                                                       GimpBrushFactoryView *view);
 
 
 static GimpDataFactoryViewClass *parent_class = NULL;
@@ -120,8 +120,8 @@ gimp_brush_factory_view_init (GimpBrushFactoryView *view)
   view->spacing_scale = GIMP_SCALE_ENTRY_SCALE (view->spacing_adjustment);
 
   g_signal_connect (view->spacing_adjustment, "value_changed",
-		    G_CALLBACK (gimp_brush_factory_view_spacing_update),
-		    view);
+                    G_CALLBACK (gimp_brush_factory_view_spacing_update),
+                    view);
 
   view->spacing_changed_handler_id = 0;
 }
@@ -149,22 +149,22 @@ gimp_brush_factory_view_destroy (GtkObject *object)
 
 GtkWidget *
 gimp_brush_factory_view_new (GimpViewType      view_type,
-			     GimpDataFactory  *factory,
-			     GimpDataEditFunc  edit_func,
-			     GimpContext      *context,
-			     gboolean          change_brush_spacing,
-			     gint              preview_size,
-                             gint              preview_border_width,
-			     GimpMenuFactory  *menu_factory)
+                             GimpDataFactory  *factory,
+                             GimpDataEditFunc  edit_func,
+                             GimpContext      *context,
+                             gboolean          change_brush_spacing,
+                             gint              view_size,
+                             gint              view_border_width,
+                             GimpMenuFactory  *menu_factory)
 {
   GimpBrushFactoryView *factory_view;
   GimpContainerEditor  *editor;
 
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
-  g_return_val_if_fail (preview_size > 0 &&
-			preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
-  g_return_val_if_fail (preview_border_width >= 0 &&
-                        preview_border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH,
+  g_return_val_if_fail (view_size > 0 &&
+                        view_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
+  g_return_val_if_fail (view_border_width >= 0 &&
+                        view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
                         NULL);
 
   factory_view = g_object_new (GIMP_TYPE_BRUSH_FACTORY_VIEW, NULL);
@@ -172,12 +172,12 @@ gimp_brush_factory_view_new (GimpViewType      view_type,
   factory_view->change_brush_spacing = change_brush_spacing;
 
   if (! gimp_data_factory_view_construct (GIMP_DATA_FACTORY_VIEW (factory_view),
-					  view_type,
-					  factory,
-					  edit_func,
-					  context,
-					  preview_size, preview_border_width,
-					  menu_factory, "<Brushes>",
+                                          view_type,
+                                          factory,
+                                          edit_func,
+                                          context,
+                                          view_size, view_border_width,
+                                          menu_factory, "<Brushes>",
                                           "/brushes-popup",
                                           "brushes"))
     {
@@ -202,7 +202,7 @@ gimp_brush_factory_view_new (GimpViewType      view_type,
 
 static void
 gimp_brush_factory_view_select_item (GimpContainerEditor *editor,
-				     GimpViewable        *viewable)
+                                     GimpViewable        *viewable)
 {
   GimpBrushFactoryView *view = GIMP_BRUSH_FACTORY_VIEW (editor);
   GimpContainer        *container;
@@ -220,15 +220,15 @@ gimp_brush_factory_view_select_item (GimpContainerEditor *editor,
       spacing_sensitive = TRUE;
 
       g_signal_handlers_block_by_func (view->spacing_adjustment,
-				       gimp_brush_factory_view_spacing_update,
-				       view);
+                                       gimp_brush_factory_view_spacing_update,
+                                       view);
 
       gtk_adjustment_set_value (view->spacing_adjustment,
-				gimp_brush_get_spacing (brush));
+                                gimp_brush_get_spacing (brush));
 
       g_signal_handlers_unblock_by_func (view->spacing_adjustment,
-					 gimp_brush_factory_view_spacing_update,
-					 view);
+                                         gimp_brush_factory_view_spacing_update,
+                                         view);
     }
 
   gtk_widget_set_sensitive (view->spacing_scale, spacing_sensitive);
@@ -236,7 +236,7 @@ gimp_brush_factory_view_select_item (GimpContainerEditor *editor,
 
 static void
 gimp_brush_factory_view_spacing_changed (GimpBrush            *brush,
-					 GimpBrushFactoryView *view)
+                                         GimpBrushFactoryView *view)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
   GimpContext         *context;
@@ -246,21 +246,21 @@ gimp_brush_factory_view_spacing_changed (GimpBrush            *brush,
   if (brush == gimp_context_get_brush (context))
     {
       g_signal_handlers_block_by_func (view->spacing_adjustment,
-				       gimp_brush_factory_view_spacing_update,
-				       view);
+                                       gimp_brush_factory_view_spacing_update,
+                                       view);
 
       gtk_adjustment_set_value (view->spacing_adjustment,
-				gimp_brush_get_spacing (brush));
+                                gimp_brush_get_spacing (brush));
 
       g_signal_handlers_unblock_by_func (view->spacing_adjustment,
-					 gimp_brush_factory_view_spacing_update,
-					 view);
+                                         gimp_brush_factory_view_spacing_update,
+                                         view);
     }
 }
 
 static void
 gimp_brush_factory_view_spacing_update (GtkAdjustment        *adjustment,
-					GimpBrushFactoryView *view)
+                                        GimpBrushFactoryView *view)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
   GimpContext         *context;
@@ -273,13 +273,13 @@ gimp_brush_factory_view_spacing_update (GtkAdjustment        *adjustment,
   if (brush && view->change_brush_spacing)
     {
       g_signal_handlers_block_by_func (brush,
-				       gimp_brush_factory_view_spacing_changed,
-				       view);
+                                       gimp_brush_factory_view_spacing_changed,
+                                       view);
 
       gimp_brush_set_spacing (brush, adjustment->value);
 
       g_signal_handlers_unblock_by_func (brush,
-					 gimp_brush_factory_view_spacing_changed,
-					 view);
+                                         gimp_brush_factory_view_spacing_changed,
+                                         view);
     }
 }

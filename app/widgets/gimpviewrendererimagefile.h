@@ -23,7 +23,7 @@
 #define __GIMP_PREVIEW_RENDERER_IMAGEFILE_H__
 
 
-#include "gimppreviewrenderer.h"
+#include "gimpviewrenderer.h"
 
 /* #define ENABLE_FILE_SYSTEM_ICONS 1 */
 
@@ -40,7 +40,7 @@ typedef struct _GimpPreviewRendererImagefileClass  GimpPreviewRendererImagefileC
 
 struct _GimpPreviewRendererImagefile
 {
-  GimpPreviewRenderer parent_instance;
+  GimpViewRenderer parent_instance;
 
 #ifdef ENABLE_FILE_SYSTEM_ICONS
   gpointer            file_system;
@@ -49,7 +49,7 @@ struct _GimpPreviewRendererImagefile
 
 struct _GimpPreviewRendererImagefileClass
 {
-  GimpPreviewRendererClass parent_class;
+  GimpViewRendererClass parent_class;
 };
 
 

@@ -34,7 +34,7 @@
 #include "gimpcontainerpopup.h"
 #include "gimpdialogfactory.h"
 #include "gimppropwidgets.h"
-#include "gimppreviewrenderer.h"
+#include "gimpviewrenderer.h"
 #include "gimpviewablebutton.h"
 
 #include "gimp-intl.h"
@@ -243,7 +243,7 @@ gimp_viewable_button_new (GimpContainer     *container,
   g_return_val_if_fail (preview_size >  0 &&
                         preview_size <= GIMP_VIEWABLE_MAX_BUTTON_SIZE, NULL);
   g_return_val_if_fail (preview_border_width >= 0 &&
-                        preview_border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH,
+                        preview_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
                         NULL);
   g_return_val_if_fail (dialog_factory == NULL ||
                         GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);

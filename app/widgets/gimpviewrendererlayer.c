@@ -34,8 +34,8 @@
 
 static void   gimp_preview_renderer_layer_class_init (GimpPreviewRendererLayerClass *klass);
 
-static void   gimp_preview_renderer_layer_render (GimpPreviewRenderer *renderer,
-                                                  GtkWidget           *widget);
+static void   gimp_preview_renderer_layer_render (GimpViewRenderer *renderer,
+                                                  GtkWidget        *widget);
 
 
 static GimpPreviewRendererDrawableClass *parent_class = NULL;
@@ -72,9 +72,9 @@ gimp_preview_renderer_layer_get_type (void)
 static void
 gimp_preview_renderer_layer_class_init (GimpPreviewRendererLayerClass *klass)
 {
-  GimpPreviewRendererClass *renderer_class;
+  GimpViewRendererClass *renderer_class;
 
-  renderer_class = GIMP_PREVIEW_RENDERER_CLASS (klass);
+  renderer_class = GIMP_VIEW_RENDERER_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -82,8 +82,8 @@ gimp_preview_renderer_layer_class_init (GimpPreviewRendererLayerClass *klass)
 }
 
 static void
-gimp_preview_renderer_layer_render (GimpPreviewRenderer *renderer,
-                                    GtkWidget           *widget)
+gimp_preview_renderer_layer_render (GimpViewRenderer *renderer,
+                                    GtkWidget        *widget)
 {
   const gchar *stock_id = NULL;
 
@@ -97,7 +97,7 @@ gimp_preview_renderer_layer_render (GimpPreviewRenderer *renderer,
     }
 
   if (stock_id)
-    gimp_preview_renderer_default_render_stock (renderer, widget, stock_id);
+    gimp_view_renderer_default_render_stock (renderer, widget, stock_id);
   else
-    GIMP_PREVIEW_RENDERER_CLASS (parent_class)->render (renderer, widget);
+    GIMP_VIEW_RENDERER_CLASS (parent_class)->render (renderer, widget);
 }

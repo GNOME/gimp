@@ -39,7 +39,7 @@
 #include "widgets/gimpdocked.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpnavigationpreview.h"
-#include "widgets/gimppreviewrenderer.h"
+#include "widgets/gimpviewrenderer.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
@@ -431,9 +431,9 @@ gimp_navigation_editor_new_private (GimpDisplayShell  *shell,
     {
       GimpView *view = GIMP_VIEW (editor->view);
 
-      gimp_preview_renderer_set_size (view->renderer,
-                                      config->nav_preview_size * 3,
-                                      view->renderer->border_width);
+      gimp_view_renderer_set_size (view->renderer,
+                                   config->nav_preview_size * 3,
+                                   view->renderer->border_width);
     }
   else
     {
@@ -530,8 +530,8 @@ gimp_navigation_editor_new_private (GimpDisplayShell  *shell,
   if (shell)
     gimp_navigation_editor_set_shell (editor, shell);
 
-  gimp_preview_renderer_set_background (GIMP_VIEW (editor->view)->renderer,
-                                        GIMP_STOCK_TEXTURE);
+  gimp_view_renderer_set_background (GIMP_VIEW (editor->view)->renderer,
+                                     GIMP_STOCK_TEXTURE);
 
   return GTK_WIDGET (editor);
 }
@@ -741,9 +741,9 @@ gimp_navigation_editor_shell_reconnect (GimpDisplayShell     *shell,
 static void
 gimp_navigation_editor_update_marker (GimpNavigationEditor *editor)
 {
-  GimpPreviewRenderer *renderer;
-  gdouble              xratio;
-  gdouble              yratio;
+  GimpViewRenderer *renderer;
+  gdouble           xratio;
+  gdouble           yratio;
 
   renderer = GIMP_VIEW (editor->view)->renderer;
 
@@ -751,8 +751,8 @@ gimp_navigation_editor_update_marker (GimpNavigationEditor *editor)
   yratio = SCALEFACTOR_Y (editor->shell);
 
   if (renderer->dot_for_dot != editor->shell->dot_for_dot)
-    gimp_preview_renderer_set_dot_for_dot (renderer,
-                                           editor->shell->dot_for_dot);
+    gimp_view_renderer_set_dot_for_dot (renderer,
+                                        editor->shell->dot_for_dot);
 
   gimp_navigation_preview_set_marker (GIMP_NAVIGATION_PREVIEW (editor->view),
                                       editor->shell->offset_x    / xratio,

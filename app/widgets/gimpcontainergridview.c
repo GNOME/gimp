@@ -37,7 +37,7 @@
 #include "gimpcontainergridview.h"
 #include "gimpcontainerview.h"
 #include "gimpview.h"
-#include "gimppreviewrenderer.h"
+#include "gimpviewrenderer.h"
 #include "gimpwidgets-utils.h"
 #include "gtkhwrapbox.h"
 
@@ -254,7 +254,7 @@ gimp_container_grid_view_new (GimpContainer *container,
   g_return_val_if_fail (view_size  > 0 &&
                         view_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
   g_return_val_if_fail (view_border_width >= 0 &&
-                        view_border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH,
+                        view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
                         NULL);
 
   grid_view = g_object_new (GIMP_TYPE_CONTAINER_GRID_VIEW, NULL);
@@ -429,9 +429,9 @@ gimp_container_grid_view_insert_item (GimpContainerView *view,
                                 preview_size,
                                 1,
                                 FALSE, TRUE, TRUE);
-  gimp_preview_renderer_set_border_type (GIMP_VIEW (preview)->renderer,
-                                         GIMP_PREVIEW_BORDER_WHITE);
-  gimp_preview_renderer_remove_idle (GIMP_VIEW (preview)->renderer);
+  gimp_view_renderer_set_border_type (GIMP_VIEW (preview)->renderer,
+                                      GIMP_VIEW_BORDER_WHITE);
+  gimp_view_renderer_remove_idle (GIMP_VIEW (preview)->renderer);
 
   gtk_wrap_box_pack (GTK_WRAP_BOX (grid_view->wrap_box), preview,
                      FALSE, FALSE, FALSE, FALSE);
@@ -539,9 +539,9 @@ gimp_container_grid_view_set_preview_size (GimpContainerView *view)
     {
       GimpView *view = GIMP_VIEW (child->widget);
 
-      gimp_preview_renderer_set_size (view->renderer,
-                                      preview_size,
-                                      view->renderer->border_width);
+      gimp_view_renderer_set_size (view->renderer,
+                                   preview_size,
+                                   view->renderer->border_width);
     }
 
   gtk_widget_queue_resize (grid_view->wrap_box);
@@ -608,9 +608,9 @@ gimp_container_grid_view_highlight_item (GimpContainerView *view,
 
   if (grid_view->selected_item && grid_view->selected_item != preview)
     {
-      gimp_preview_renderer_set_border_type (grid_view->selected_item->renderer,
-                                             GIMP_PREVIEW_BORDER_WHITE);
-      gimp_preview_renderer_update (grid_view->selected_item->renderer);
+      gimp_view_renderer_set_border_type (grid_view->selected_item->renderer,
+                                          GIMP_VIEW_BORDER_WHITE);
+      gimp_view_renderer_update (grid_view->selected_item->renderer);
     }
 
   if (preview)
@@ -644,8 +644,9 @@ gimp_container_grid_view_highlight_item (GimpContainerView *view,
                                     (row + 1) * item_height - adj->page_size);
         }
 
-      gimp_preview_renderer_set_border_type (preview->renderer, GIMP_PREVIEW_BORDER_BLACK);
-      gimp_preview_renderer_update (preview->renderer);
+      gimp_view_renderer_set_border_type (preview->renderer,
+                                          GIMP_VIEW_BORDER_BLACK);
+      gimp_view_renderer_update (preview->renderer);
 
       name = gimp_viewable_get_description (preview->renderer->viewable, NULL);
       gtk_label_set_text (GTK_LABEL (grid_view->name_label), name);

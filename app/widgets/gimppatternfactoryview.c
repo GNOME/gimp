@@ -33,7 +33,7 @@
 
 #include "gimpcontainerview.h"
 #include "gimppatternfactoryview.h"
-#include "gimppreviewrenderer.h"
+#include "gimpviewrenderer.h"
 
 
 GType
@@ -66,31 +66,31 @@ gimp_pattern_factory_view_get_type (void)
 
 GtkWidget *
 gimp_pattern_factory_view_new (GimpViewType      view_type,
-			       GimpDataFactory  *factory,
-			       GimpDataEditFunc  edit_func,
-			       GimpContext      *context,
-			       gint              preview_size,
+                               GimpDataFactory  *factory,
+                               GimpDataEditFunc  edit_func,
+                               GimpContext      *context,
+                               gint              preview_size,
                                gint              preview_border_width,
-			       GimpMenuFactory  *menu_factory)
+                               GimpMenuFactory  *menu_factory)
 {
   GimpPatternFactoryView *factory_view;
 
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
   g_return_val_if_fail (preview_size > 0 &&
-			preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
+                        preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
   g_return_val_if_fail (preview_border_width >= 0 &&
-                        preview_border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH,
+                        preview_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
                         NULL);
 
   factory_view = g_object_new (GIMP_TYPE_PATTERN_FACTORY_VIEW, NULL);
 
   if (! gimp_data_factory_view_construct (GIMP_DATA_FACTORY_VIEW (factory_view),
-					  view_type,
-					  factory,
-					  edit_func,
-					  context,
-					  preview_size, preview_border_width,
-					  menu_factory, "<Patterns>",
+                                          view_type,
+                                          factory,
+                                          edit_func,
+                                          context,
+                                          preview_size, preview_border_width,
+                                          menu_factory, "<Patterns>",
                                           "/patterns-popup",
                                           "patterns"))
     {

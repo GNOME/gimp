@@ -188,10 +188,6 @@ libappwidgets_a_sources = \
 	gimppdbdialog.h			\
 	gimppluginaction.c		\
 	gimppluginaction.h		\
-	gimppreview-popup.c		\
-	gimppreview-popup.h		\
-	gimppreviewrenderer.c		\
-	gimppreviewrenderer.h		\
 	gimppreviewrenderer-utils.c	\
 	gimppreviewrenderer-utils.h	\
 	gimppreviewrendererbrush.c	\
@@ -260,10 +256,14 @@ libappwidgets_a_sources = \
 	gimpvectorstreeview.h		\
 	gimpview.c			\
 	gimpview.h			\
+	gimpview-popup.c		\
+	gimpview-popup.h		\
 	gimpviewablebutton.c		\
 	gimpviewablebutton.h		\
 	gimpviewabledialog.c		\
 	gimpviewabledialog.h		\
+	gimpviewrenderer.c		\
+	gimpviewrenderer.h		\
 	gimpwidgets-constructors.c	\
 	gimpwidgets-constructors.h	\
 	gimpwidgets-utils.c		\

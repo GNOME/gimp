@@ -71,10 +71,10 @@ static gboolean gimp_component_editor_select        (GtkTreeSelection    *select
 static gboolean gimp_component_editor_button_press  (GtkWidget           *widget,
                                                      GdkEventButton      *bevent,
                                                      GimpComponentEditor *editor);
-static void gimp_component_editor_renderer_update   (GimpPreviewRenderer *renderer,
+static void gimp_component_editor_renderer_update   (GimpViewRenderer    *renderer,
                                                      GimpComponentEditor *editor);
 static void gimp_component_editor_mode_changed      (GimpImage           *gimage,
-						     GimpComponentEditor *editor);
+                                                     GimpComponentEditor *editor);
 static void gimp_component_editor_alpha_changed     (GimpImage           *gimage,
                                                      GimpComponentEditor *editor);
 static void gimp_component_editor_visibility_changed(GimpImage           *gimage,
@@ -146,7 +146,7 @@ gimp_component_editor_init (GimpComponentEditor *editor)
   list = gtk_list_store_new (NUM_COLUMNS,
                              G_TYPE_INT,
                              G_TYPE_BOOLEAN,
-                             GIMP_TYPE_PREVIEW_RENDERER,
+                             GIMP_TYPE_VIEW_RENDERER,
                              G_TYPE_STRING);
   editor->model = GTK_TREE_MODEL (list);
 
@@ -207,13 +207,13 @@ gimp_component_editor_unrealize (GtkWidget *widget)
        iter_valid;
        iter_valid = gtk_tree_model_iter_next (editor->model, &iter))
     {
-      GimpPreviewRenderer *renderer;
+      GimpViewRenderer *renderer;
 
       gtk_tree_model_get (editor->model, &iter,
                           COLUMN_RENDERER, &renderer,
                           -1);
 
-      gimp_preview_renderer_unrealize (renderer);
+      gimp_view_renderer_unrealize (renderer);
       g_object_unref (renderer);
     }
 
@@ -233,17 +233,17 @@ gimp_component_editor_set_image (GimpImageEditor *editor,
       gimp_component_editor_clear_components (component_editor);
 
       g_signal_handlers_disconnect_by_func (editor->gimage,
-					    gimp_component_editor_mode_changed,
-					    component_editor);
+                                            gimp_component_editor_mode_changed,
+                                            component_editor);
       g_signal_handlers_disconnect_by_func (editor->gimage,
-					    gimp_component_editor_alpha_changed,
-					    component_editor);
+                                            gimp_component_editor_alpha_changed,
+                                            component_editor);
       g_signal_handlers_disconnect_by_func (editor->gimage,
-					    gimp_component_editor_visibility_changed,
-					    component_editor);
+                                            gimp_component_editor_visibility_changed,
+                                            component_editor);
       g_signal_handlers_disconnect_by_func (editor->gimage,
-					    gimp_component_editor_active_changed,
-					    component_editor);
+                                            gimp_component_editor_active_changed,
+                                            component_editor);
     }
 
   GIMP_IMAGE_EDITOR_CLASS (parent_class)->set_image (editor, gimage);
@@ -253,17 +253,17 @@ gimp_component_editor_set_image (GimpImageEditor *editor,
       gimp_component_editor_create_components (component_editor);
 
       g_signal_connect (editor->gimage, "mode_changed",
-			G_CALLBACK (gimp_component_editor_mode_changed),
-			component_editor);
+                        G_CALLBACK (gimp_component_editor_mode_changed),
+                        component_editor);
       g_signal_connect (editor->gimage, "alpha_changed",
-			G_CALLBACK (gimp_component_editor_alpha_changed),
-			component_editor);
+                        G_CALLBACK (gimp_component_editor_alpha_changed),
+                        component_editor);
       g_signal_connect (editor->gimage, "component_visibility_changed",
-			G_CALLBACK (gimp_component_editor_visibility_changed),
-			component_editor);
+                        G_CALLBACK (gimp_component_editor_visibility_changed),
+                        component_editor);
       g_signal_connect (editor->gimage, "component_active_changed",
-			G_CALLBACK (gimp_component_editor_active_changed),
-			component_editor);
+                        G_CALLBACK (gimp_component_editor_active_changed),
+                        component_editor);
     }
 }
 
@@ -274,7 +274,7 @@ gimp_component_editor_new (gint             preview_size,
   GimpComponentEditor *editor;
 
   g_return_val_if_fail (preview_size > 0 &&
-			preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
+                        preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
 
   editor = g_object_new (GIMP_TYPE_COMPONENT_EDITOR,
@@ -319,13 +319,13 @@ gimp_component_editor_set_preview_size (GimpComponentEditor *editor,
        iter_valid;
        iter_valid = gtk_tree_model_iter_next (editor->model, &iter))
     {
-      GimpPreviewRenderer *renderer;
+      GimpViewRenderer *renderer;
 
       gtk_tree_model_get (editor->model, &iter,
                           COLUMN_RENDERER, &renderer,
                           -1);
 
-      gimp_preview_renderer_set_size (renderer, preview_size, 1);
+      gimp_view_renderer_set_size (renderer, preview_size, 1);
       g_object_unref (renderer);
     }
 
@@ -372,17 +372,17 @@ gimp_component_editor_create_components (GimpComponentEditor *editor)
 
   for (i = 0; i < n_components; i++)
     {
-      GimpPreviewRenderer *renderer;
-      gboolean             visible;
-      GEnumValue          *enum_value;
-      GtkTreeIter          iter;
+      GimpViewRenderer *renderer;
+      gboolean          visible;
+      GEnumValue       *enum_value;
+      GtkTreeIter       iter;
 
       visible = gimp_image_get_component_visible (gimage, components[i]);
 
-      renderer = gimp_preview_renderer_new (G_TYPE_FROM_INSTANCE (gimage),
-                                            editor->preview_size, 1, FALSE);
-      gimp_preview_renderer_set_viewable (renderer, GIMP_VIEWABLE (gimage));
-      gimp_preview_renderer_remove_idle (renderer);
+      renderer = gimp_view_renderer_new (G_TYPE_FROM_INSTANCE (gimage),
+                                         editor->preview_size, 1, FALSE);
+      gimp_view_renderer_set_viewable (renderer, GIMP_VIEWABLE (gimage));
+      gimp_view_renderer_remove_idle (renderer);
 
       GIMP_PREVIEW_RENDERER_IMAGE (renderer)->channel = components[i];
 
@@ -546,7 +546,7 @@ gimp_component_editor_get_iter (GimpComponentEditor *editor,
 }
 
 static void
-gimp_component_editor_renderer_update (GimpPreviewRenderer *renderer,
+gimp_component_editor_renderer_update (GimpViewRenderer    *renderer,
                                        GimpComponentEditor *editor)
 {
   GtkTreeIter iter;

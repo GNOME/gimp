@@ -22,7 +22,7 @@
 #ifndef __GIMP_PREVIEW_RENDERER_GRADIENT_H__
 #define __GIMP_PREVIEW_RENDERER_GRADIENT_H__
 
-#include "gimppreviewrenderer.h"
+#include "gimpviewrenderer.h"
 
 #define GIMP_TYPE_PREVIEW_RENDERER_GRADIENT            (gimp_preview_renderer_gradient_get_type ())
 #define GIMP_PREVIEW_RENDERER_GRADIENT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PREVIEW_RENDERER_GRADIENT, GimpPreviewRendererGradient))
@@ -36,20 +36,20 @@ typedef struct _GimpPreviewRendererGradientClass  GimpPreviewRendererGradientCla
 
 struct _GimpPreviewRendererGradient
 {
-  GimpPreviewRenderer  parent_instance;
+  GimpViewRenderer  parent_instance;
 
-  guchar              *even;
-  guchar              *odd;
-  gint                 width;
-  gdouble              left;
-  gdouble              right;
+  guchar           *even;
+  guchar           *odd;
+  gint              width;
+  gdouble           left;
+  gdouble           right;
 
-  gboolean             reverse;
+  gboolean          reverse;
 };
 
 struct _GimpPreviewRendererGradientClass
 {
-  GimpPreviewRendererClass  parent_class;
+  GimpViewRendererClass  parent_class;
 };
 
 

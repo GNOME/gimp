@@ -47,11 +47,11 @@ static void   gimp_preview_renderer_gradient_init       (GimpPreviewRendererGrad
 
 static void   gimp_preview_renderer_gradient_finalize   (GObject             *object);
 
-static void   gimp_preview_renderer_gradient_render     (GimpPreviewRenderer *renderer,
+static void   gimp_preview_renderer_gradient_render     (GimpViewRenderer    *renderer,
                                                          GtkWidget           *widget);
 
 
-static GimpPreviewRendererClass *parent_class = NULL;
+static GimpViewRendererClass *parent_class = NULL;
 
 
 GType
@@ -74,7 +74,7 @@ gimp_preview_renderer_gradient_get_type (void)
         (GInstanceInitFunc) gimp_preview_renderer_gradient_init,
       };
 
-      renderer_type = g_type_register_static (GIMP_TYPE_PREVIEW_RENDERER,
+      renderer_type = g_type_register_static (GIMP_TYPE_VIEW_RENDERER,
                                               "GimpPreviewRendererGradient",
                                               &renderer_info, 0);
     }
@@ -85,11 +85,11 @@ gimp_preview_renderer_gradient_get_type (void)
 static void
 gimp_preview_renderer_gradient_class_init (GimpPreviewRendererGradientClass *klass)
 {
-  GObjectClass             *object_class;
-  GimpPreviewRendererClass *renderer_class;
+  GObjectClass          *object_class;
+  GimpViewRendererClass *renderer_class;
 
   object_class   = G_OBJECT_CLASS (klass);
-  renderer_class = GIMP_PREVIEW_RENDERER_CLASS (klass);
+  renderer_class = GIMP_VIEW_RENDERER_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -132,8 +132,8 @@ gimp_preview_renderer_gradient_finalize (GObject *object)
 }
 
 static void
-gimp_preview_renderer_gradient_render (GimpPreviewRenderer *renderer,
-                                       GtkWidget           *widget)
+gimp_preview_renderer_gradient_render (GimpViewRenderer *renderer,
+                                       GtkWidget        *widget)
 {
   GimpPreviewRendererGradient *rendergrad;
   GimpGradient *gradient;
@@ -237,10 +237,10 @@ gimp_preview_renderer_gradient_set_offsets (GimpPreviewRendererGradient *rendere
       renderer->left  = left;
       renderer->right = right;
 
-      gimp_preview_renderer_invalidate (GIMP_PREVIEW_RENDERER (renderer));
+      gimp_view_renderer_invalidate (GIMP_VIEW_RENDERER (renderer));
 
       if (instant_update)
-        gimp_preview_renderer_update (GIMP_PREVIEW_RENDERER (renderer));
+        gimp_view_renderer_update (GIMP_VIEW_RENDERER (renderer));
     }
 }
 
@@ -254,7 +254,7 @@ gimp_preview_renderer_gradient_set_reverse (GimpPreviewRendererGradient *rendere
     {
       renderer->reverse = reverse ? TRUE : FALSE;
 
-      gimp_preview_renderer_invalidate (GIMP_PREVIEW_RENDERER (renderer));
-      gimp_preview_renderer_update (GIMP_PREVIEW_RENDERER (renderer));
+      gimp_view_renderer_invalidate (GIMP_VIEW_RENDERER (renderer));
+      gimp_view_renderer_update (GIMP_VIEW_RENDERER (renderer));
     }
 }

@@ -38,7 +38,7 @@
 #include "gimphelp-ids.h"
 #include "gimpmenufactory.h"
 #include "gimpview.h"
-#include "gimppreviewrenderer.h"
+#include "gimpviewrenderer.h"
 #include "gimppropwidgets.h"
 #include "gimptooloptionseditor.h"
 #include "gimpuimanager.h"
@@ -264,8 +264,8 @@ gimp_tool_options_editor_get_preview (GimpDocked   *docked,
 
   view = gimp_prop_preview_new (G_OBJECT (context), "tool", height);
   GIMP_VIEW (view)->renderer->size = -1;
-  gimp_preview_renderer_set_size_full (GIMP_VIEW (view)->renderer,
-                                       width, height, 0);
+  gimp_view_renderer_set_size_full (GIMP_VIEW (view)->renderer,
+                                    width, height, 0);
 
   return view;
 }

@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppreview-popup.h
+ * gimpview-popup.h
  * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,16 +19,16 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_PREVIEW_POPUP_H__
-#define __GIMP_PREVIEW_POPUP_H__
+#ifndef __GIMP_VIEW_POPUP_H__
+#define __GIMP_VIEW_POPUP_H__
 
 
-gboolean   gimp_preview_popup_show (GtkWidget      *widget,
-                                    GdkEventButton *bevent,
-                                    GimpViewable   *viewable,
-                                    gint            preview_width,
-                                    gint            preview_height,
-                                    gboolean        dot_for_dot);
+gboolean   gimp_view_popup_show (GtkWidget      *widget,
+                                 GdkEventButton *bevent,
+                                 GimpViewable   *viewable,
+                                 gint            view_width,
+                                 gint            view_height,
+                                 gboolean        dot_for_dot);
 
 
-#endif /* __GIMP_PREVIEW_POPUP_H__ */
+#endif /* __GIMP_VIEW_POPUP_H__ */

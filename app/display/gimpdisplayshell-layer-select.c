@@ -31,7 +31,6 @@
 #include "core/gimplayer.h"
 
 #include "widgets/gimpview.h"
-#include "widgets/gimppreviewrenderer.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"

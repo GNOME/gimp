@@ -41,7 +41,7 @@
 #include "gimpcontainergridview.h"
 #include "gimpcontainertreeview.h"
 #include "gimpdnd.h"
-#include "gimppreviewrenderer.h"
+#include "gimpviewrenderer.h"
 #include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 
@@ -112,12 +112,12 @@ gimp_data_factory_view_init (GimpDataFactoryView *view)
 
 GtkWidget *
 gimp_data_factory_view_new (GimpViewType      view_type,
-			    GimpDataFactory  *factory,
-			    GimpDataEditFunc  edit_func,
-			    GimpContext      *context,
-			    gint              preview_size,
+                            GimpDataFactory  *factory,
+                            GimpDataEditFunc  edit_func,
+                            GimpContext      *context,
+                            gint              preview_size,
                             gint              preview_border_width,
-			    GimpMenuFactory  *menu_factory,
+                            GimpMenuFactory  *menu_factory,
                             const gchar      *menu_identifier,
                             const gchar      *ui_identifier,
                             const gchar      *action_group)
@@ -127,13 +127,13 @@ gimp_data_factory_view_new (GimpViewType      view_type,
   factory_view = g_object_new (GIMP_TYPE_DATA_FACTORY_VIEW, NULL);
 
   if (! gimp_data_factory_view_construct (factory_view,
-					  view_type,
-					  factory,
-					  edit_func,
-					  context,
-					  preview_size,
+                                          view_type,
+                                          factory,
+                                          edit_func,
+                                          context,
+                                          preview_size,
                                           preview_border_width,
-					  menu_factory,
+                                          menu_factory,
                                           menu_identifier,
                                           ui_identifier,
                                           action_group))
@@ -147,13 +147,13 @@ gimp_data_factory_view_new (GimpViewType      view_type,
 
 gboolean
 gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
-				  GimpViewType         view_type,
-				  GimpDataFactory     *factory,
-				  GimpDataEditFunc     edit_func,
-				  GimpContext         *context,
-				  gint                 preview_size,
+                                  GimpViewType         view_type,
+                                  GimpDataFactory     *factory,
+                                  GimpDataEditFunc     edit_func,
+                                  GimpContext         *context,
+                                  gint                 preview_size,
                                   gint                 preview_border_width,
-				  GimpMenuFactory     *menu_factory,
+                                  GimpMenuFactory     *menu_factory,
                                   const gchar         *menu_identifier,
                                   const gchar         *ui_identifier,
                                   const gchar         *action_group)
@@ -164,19 +164,19 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY_VIEW (factory_view), FALSE);
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), FALSE);
   g_return_val_if_fail (preview_size >  0 &&
-			preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, FALSE);
+                        preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, FALSE);
   g_return_val_if_fail (preview_border_width >= 0 &&
-                        preview_border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH,
+                        preview_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
                         FALSE);
 
   factory_view->factory        = factory;
   factory_view->data_edit_func = edit_func;
 
   if (! gimp_container_editor_construct (GIMP_CONTAINER_EDITOR (factory_view),
-					 view_type,
-					 factory->container, context,
-					 preview_size, preview_border_width,
-					 menu_factory, menu_identifier,
+                                         view_type,
+                                         factory->container, context,
+                                         preview_size, preview_border_width,
+                                         menu_factory, menu_identifier,
                                          ui_identifier))
     {
       return FALSE;
@@ -253,11 +253,11 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
                                     factory->container->children_type);
 
   gimp_container_view_enable_dnd (editor->view,
-				  GTK_BUTTON (factory_view->duplicate_button),
-				  factory->container->children_type);
+                                  GTK_BUTTON (factory_view->duplicate_button),
+                                  factory->container->children_type);
   gimp_container_view_enable_dnd (editor->view,
-				  GTK_BUTTON (factory_view->delete_button),
-				  factory->container->children_type);
+                                  GTK_BUTTON (factory_view->delete_button),
+                                  factory->container->children_type);
 
   gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager, editor);
 
@@ -266,7 +266,7 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 
 static void
 gimp_data_factory_view_activate_item (GimpContainerEditor *editor,
-				      GimpViewable        *viewable)
+                                      GimpViewable        *viewable)
 {
   GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (editor);
   GimpData            *data = GIMP_DATA (viewable);
@@ -297,8 +297,8 @@ gimp_data_factory_view_tree_name_edited (GtkCellRendererText *cell,
 
   if (gtk_tree_model_get_iter (tree_view->model, &iter, path))
     {
-      GimpPreviewRenderer *renderer;
-      GimpData            *data;
+      GimpViewRenderer *renderer;
+      GimpData         *data;
 
       gtk_tree_model_get (tree_view->model, &iter,
                           tree_view->model_column_renderer, &renderer,

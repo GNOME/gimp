@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppreview-popup.h
+ * gimpview-popup.c
  * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -30,16 +30,16 @@
 #include "core/gimpviewable.h"
 
 #include "gimpview.h"
-#include "gimppreviewrenderer.h"
-#include "gimppreview-popup.h"
+#include "gimpviewrenderer.h"
+#include "gimpview-popup.h"
 
 
-#define PREVIEW_POPUP_DELAY 150
+#define VIEW_POPUP_DELAY 150
 
 
-typedef struct _GimpPreviewPopup GimpPreviewPopup;
+typedef struct _GimpViewPopup GimpViewPopup;
 
-struct _GimpPreviewPopup
+struct _GimpViewPopup
 {
   GtkWidget    *widget;
   GimpViewable *viewable;
@@ -58,42 +58,42 @@ struct _GimpPreviewPopup
 
 /*  local function prototypes  */
 
-static void       gimp_preview_popup_hide           (GimpPreviewPopup *popup);
-static gboolean   gimp_preview_popup_button_release (GtkWidget        *widget,
-                                                     GdkEventButton   *bevent,
-                                                     GimpPreviewPopup *popup);
-static void       gimp_preview_popup_unmap          (GtkWidget        *widget,
-                                                     GimpPreviewPopup *popup);
-static gboolean   gimp_preview_popup_timeout        (GimpPreviewPopup *popup);
+static void       gimp_view_popup_hide           (GimpViewPopup  *popup);
+static gboolean   gimp_view_popup_button_release (GtkWidget      *widget,
+                                                  GdkEventButton *bevent,
+                                                  GimpViewPopup  *popup);
+static void       gimp_view_popup_unmap          (GtkWidget      *widget,
+                                                  GimpViewPopup  *popup);
+static gboolean   gimp_view_popup_timeout        (GimpViewPopup  *popup);
 
 
 /*  public functions  */
 
 gboolean
-gimp_preview_popup_show (GtkWidget      *widget,
-                         GdkEventButton *bevent,
-                         GimpViewable   *viewable,
-                         gint            preview_width,
-                         gint            preview_height,
-                         gboolean        dot_for_dot)
+gimp_view_popup_show (GtkWidget      *widget,
+                      GdkEventButton *bevent,
+                      GimpViewable   *viewable,
+                      gint            view_width,
+                      gint            view_height,
+                      gboolean        dot_for_dot)
 {
-  GimpPreviewPopup *popup;
-  gint              popup_width;
-  gint              popup_height;
+  GimpViewPopup *popup;
+  gint           popup_width;
+  gint           popup_height;
 
   g_return_val_if_fail (GTK_IS_WIDGET (widget), FALSE);
   g_return_val_if_fail (bevent != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), FALSE);
 
   if (! gimp_viewable_get_popup_size (viewable,
-                                      preview_width,
-                                      preview_height,
+                                      view_width,
+                                      view_height,
                                       dot_for_dot,
                                       &popup_width,
                                       &popup_height))
     return FALSE;
 
-  popup = g_new0 (GimpPreviewPopup, 1);
+  popup = g_new0 (GimpViewPopup, 1);
 
   popup->widget       = widget;
   popup->viewable     = viewable;
@@ -111,18 +111,18 @@ gimp_preview_popup_show (GtkWidget      *widget,
     }
 
   g_signal_connect (widget, "button_release_event",
-                    G_CALLBACK (gimp_preview_popup_button_release),
+                    G_CALLBACK (gimp_view_popup_button_release),
                     popup);
   g_signal_connect (widget, "unmap",
-                    G_CALLBACK (gimp_preview_popup_unmap),
+                    G_CALLBACK (gimp_view_popup_unmap),
                     popup);
 
-  popup->timeout_id = g_timeout_add (PREVIEW_POPUP_DELAY,
-                                     (GSourceFunc) gimp_preview_popup_timeout,
+  popup->timeout_id = g_timeout_add (VIEW_POPUP_DELAY,
+                                     (GSourceFunc) gimp_view_popup_timeout,
                                      popup);
 
-  g_object_set_data_full (G_OBJECT (widget), "gimp-preview-popup", popup,
-                          (GDestroyNotify) gimp_preview_popup_hide);
+  g_object_set_data_full (G_OBJECT (widget), "gimp-view-popup", popup,
+                          (GDestroyNotify) gimp_view_popup_hide);
 
   gtk_grab_add (widget);
 
@@ -133,7 +133,7 @@ gimp_preview_popup_show (GtkWidget      *widget,
 /*  private functions  */
 
 static void
-gimp_preview_popup_hide (GimpPreviewPopup *popup)
+gimp_view_popup_hide (GimpViewPopup *popup)
 {
   if (popup->timeout_id)
     g_source_remove (popup->timeout_id);
@@ -142,10 +142,10 @@ gimp_preview_popup_hide (GimpPreviewPopup *popup)
     gtk_widget_destroy (popup->popup);
 
   g_signal_handlers_disconnect_by_func (popup->widget,
-                                        gimp_preview_popup_button_release,
+                                        gimp_view_popup_button_release,
                                         popup);
   g_signal_handlers_disconnect_by_func (popup->widget,
-                                        gimp_preview_popup_unmap,
+                                        gimp_view_popup_unmap,
                                         popup);
 
   gtk_grab_remove (popup->widget);
@@ -154,25 +154,25 @@ gimp_preview_popup_hide (GimpPreviewPopup *popup)
 }
 
 static gboolean
-gimp_preview_popup_button_release (GtkWidget        *widget,
-                                   GdkEventButton   *bevent,
-                                   GimpPreviewPopup *popup)
+gimp_view_popup_button_release (GtkWidget      *widget,
+                                GdkEventButton *bevent,
+                                GimpViewPopup  *popup)
 {
   if (bevent->button == popup->button)
-    g_object_set_data (G_OBJECT (popup->widget), "gimp-preview-popup", NULL);
+    g_object_set_data (G_OBJECT (popup->widget), "gimp-view-popup", NULL);
 
   return FALSE;
 }
 
 static void
-gimp_preview_popup_unmap (GtkWidget        *widget,
-                          GimpPreviewPopup *popup)
+gimp_view_popup_unmap (GtkWidget     *widget,
+                       GimpViewPopup *popup)
 {
-  g_object_set_data (G_OBJECT (popup->widget), "gimp-preview-popup", NULL);
+  g_object_set_data (G_OBJECT (popup->widget), "gimp-view-popup", NULL);
 }
 
 static gboolean
-gimp_preview_popup_timeout (GimpPreviewPopup *popup)
+gimp_view_popup_timeout (GimpViewPopup *popup)
 {
   GtkWidget    *window;
   GtkWidget    *frame;
@@ -201,8 +201,8 @@ gimp_preview_popup_timeout (GimpPreviewPopup *popup)
                              popup->popup_width,
                              popup->popup_height,
                              0, TRUE, FALSE, FALSE);
-  gimp_preview_renderer_set_dot_for_dot (GIMP_VIEW (view)->renderer,
-                                         popup->dot_for_dot);
+  gimp_view_renderer_set_dot_for_dot (GIMP_VIEW (view)->renderer,
+                                      popup->dot_for_dot);
   gtk_container_add (GTK_CONTAINER (frame), view);
   gtk_widget_show (view);
 

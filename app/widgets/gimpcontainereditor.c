@@ -37,7 +37,7 @@
 #include "gimpcontainerview.h"
 #include "gimpdocked.h"
 #include "gimpmenufactory.h"
-#include "gimppreviewrenderer.h"
+#include "gimpviewrenderer.h"
 #include "gimpuimanager.h"
 
 
@@ -46,19 +46,19 @@ static void   gimp_container_editor_init              (GimpContainerEditor      
 static void   gimp_container_editor_docked_iface_init (GimpDockedInterface      *docked_iface);
 
 static gboolean gimp_container_editor_select_item    (GtkWidget           *widget,
-						      GimpViewable        *viewable,
-						      gpointer             insert_data,
-						      GimpContainerEditor *editor);
+                                                      GimpViewable        *viewable,
+                                                      gpointer             insert_data,
+                                                      GimpContainerEditor *editor);
 static void   gimp_container_editor_activate_item    (GtkWidget           *widget,
-						      GimpViewable        *viewable,
-						      gpointer             insert_data,
-						      GimpContainerEditor *editor);
+                                                      GimpViewable        *viewable,
+                                                      gpointer             insert_data,
+                                                      GimpContainerEditor *editor);
 static void   gimp_container_editor_context_item     (GtkWidget           *widget,
-						      GimpViewable        *viewable,
-						      gpointer             insert_data,
-						      GimpContainerEditor *editor);
+                                                      GimpViewable        *viewable,
+                                                      gpointer             insert_data,
+                                                      GimpContainerEditor *editor);
 static void   gimp_container_editor_real_context_item(GimpContainerEditor *editor,
-						      GimpViewable        *viewable);
+                                                      GimpViewable        *viewable);
 
 static GtkWidget * gimp_container_editor_get_preview (GimpDocked       *docked,
                                                       GimpContext      *context,
@@ -137,12 +137,12 @@ gimp_container_editor_docked_iface_init (GimpDockedInterface *docked_iface)
 
 gboolean
 gimp_container_editor_construct (GimpContainerEditor *editor,
-				 GimpViewType         view_type,
-				 GimpContainer       *container,
-				 GimpContext         *context,
-				 gint                 preview_size,
+                                 GimpViewType         view_type,
+                                 GimpContainer       *container,
+                                 GimpContext         *context,
+                                 gint                 preview_size,
                                  gint                 preview_border_width,
-				 GimpMenuFactory     *menu_factory,
+                                 GimpMenuFactory     *menu_factory,
                                  const gchar         *menu_identifier,
                                  const gchar         *ui_identifier)
 {
@@ -150,9 +150,9 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
   g_return_val_if_fail (preview_size > 0 &&
-			preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, FALSE);
+                        preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, FALSE);
   g_return_val_if_fail (preview_border_width >= 0 &&
-                        preview_border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH,
+                        preview_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
                         FALSE);
   g_return_val_if_fail (menu_factory == NULL ||
                         GIMP_IS_MENU_FACTORY (menu_factory), FALSE);
@@ -161,7 +161,7 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
     {
     case GIMP_VIEW_TYPE_GRID:
       editor->view =
-	GIMP_CONTAINER_VIEW (gimp_container_grid_view_new (container,
+        GIMP_CONTAINER_VIEW (gimp_container_grid_view_new (container,
                                                            context,
                                                            preview_size,
                                                            preview_border_width));
@@ -169,7 +169,7 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
 
     case GIMP_VIEW_TYPE_LIST:
       editor->view =
-	GIMP_CONTAINER_VIEW (gimp_container_tree_view_new (container,
+        GIMP_CONTAINER_VIEW (gimp_container_tree_view_new (container,
                                                            context,
                                                            preview_size,
                                                            preview_border_width));
@@ -210,9 +210,9 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
 
 static gboolean
 gimp_container_editor_select_item (GtkWidget           *widget,
-				   GimpViewable        *viewable,
-				   gpointer             insert_data,
-				   GimpContainerEditor *editor)
+                                   GimpViewable        *viewable,
+                                   gpointer             insert_data,
+                                   GimpContainerEditor *editor)
 {
   GimpContainerEditorClass *klass = GIMP_CONTAINER_EDITOR_GET_CLASS (editor);
 
@@ -227,9 +227,9 @@ gimp_container_editor_select_item (GtkWidget           *widget,
 
 static void
 gimp_container_editor_activate_item (GtkWidget           *widget,
-				     GimpViewable        *viewable,
-				     gpointer             insert_data,
-				     GimpContainerEditor *editor)
+                                     GimpViewable        *viewable,
+                                     gpointer             insert_data,
+                                     GimpContainerEditor *editor)
 {
   GimpContainerEditorClass *klass = GIMP_CONTAINER_EDITOR_GET_CLASS (editor);
 
@@ -239,9 +239,9 @@ gimp_container_editor_activate_item (GtkWidget           *widget,
 
 static void
 gimp_container_editor_context_item (GtkWidget           *widget,
-				    GimpViewable        *viewable,
-				    gpointer             insert_data,
-				    GimpContainerEditor *editor)
+                                    GimpViewable        *viewable,
+                                    gpointer             insert_data,
+                                    GimpContainerEditor *editor)
 {
   GimpContainerEditorClass *klass = GIMP_CONTAINER_EDITOR_GET_CLASS (editor);
 
@@ -251,7 +251,7 @@ gimp_container_editor_context_item (GtkWidget           *widget,
 
 static void
 gimp_container_editor_real_context_item (GimpContainerEditor *editor,
-					 GimpViewable        *viewable)
+                                         GimpViewable        *viewable)
 {
   GimpContainer *container = gimp_container_view_get_container (editor->view);
 

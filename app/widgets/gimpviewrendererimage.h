@@ -22,7 +22,7 @@
 #ifndef __GIMP_PREVIEW_RENDERER_IMAGE_H__
 #define __GIMP_PREVIEW_RENDERER_IMAGE_H__
 
-#include "gimppreviewrenderer.h"
+#include "gimpviewrenderer.h"
 
 #define GIMP_TYPE_PREVIEW_RENDERER_IMAGE            (gimp_preview_renderer_image_get_type ())
 #define GIMP_PREVIEW_RENDERER_IMAGE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PREVIEW_RENDERER_IMAGE, GimpPreviewRendererImage))
@@ -36,14 +36,14 @@ typedef struct _GimpPreviewRendererImageClass  GimpPreviewRendererImageClass;
 
 struct _GimpPreviewRendererImage
 {
-  GimpPreviewRenderer parent_instance;
+  GimpViewRenderer parent_instance;
 
   GimpChannelType     channel;
 };
 
 struct _GimpPreviewRendererImageClass
 {
-  GimpPreviewRendererClass  parent_class;
+  GimpViewRendererClass  parent_class;
 };
 
 

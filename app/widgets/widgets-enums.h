@@ -162,17 +162,17 @@ typedef enum
 
 typedef enum  /*< skip >*/
 {
-  GIMP_PREVIEW_BG_CHECKS,
-  GIMP_PREVIEW_BG_WHITE
-} GimpPreviewBG;
+  GIMP_VIEW_BG_CHECKS,
+  GIMP_VIEW_BG_WHITE
+} GimpViewBG;
 
 typedef enum  /*< skip >*/
 {
-  GIMP_PREVIEW_BORDER_BLACK,
-  GIMP_PREVIEW_BORDER_WHITE,
-  GIMP_PREVIEW_BORDER_RED,
-  GIMP_PREVIEW_BORDER_GREEN
-} GimpPreviewBorderType;
+  GIMP_VIEW_BORDER_BLACK,
+  GIMP_VIEW_BORDER_WHITE,
+  GIMP_VIEW_BORDER_RED,
+  GIMP_VIEW_BORDER_GREEN
+} GimpViewBorderType;
 
 typedef enum  /*< skip >*/
 {

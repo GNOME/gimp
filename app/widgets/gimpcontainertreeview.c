@@ -40,7 +40,7 @@
 #include "gimpcontainertreeview-dnd.h"
 #include "gimpcontainerview.h"
 #include "gimpdnd.h"
-#include "gimppreviewrenderer.h"
+#include "gimpviewrenderer.h"
 #include "gimpwidgets-utils.h"
 
 
@@ -69,21 +69,21 @@ static void    gimp_container_tree_view_set_container (GimpContainerView      *v
                                                        GimpContainer          *container);
 
 static gpointer gimp_container_tree_view_insert_item  (GimpContainerView      *view,
-						       GimpViewable           *viewable,
-						       gint                    index);
+                                                       GimpViewable           *viewable,
+                                                       gint                    index);
 static void     gimp_container_tree_view_remove_item  (GimpContainerView      *view,
-						       GimpViewable           *viewable,
-						       gpointer                insert_data);
+                                                       GimpViewable           *viewable,
+                                                       gpointer                insert_data);
 static void     gimp_container_tree_view_reorder_item (GimpContainerView      *view,
-						       GimpViewable           *viewable,
-						       gint                    new_index,
-						       gpointer                insert_data);
+                                                       GimpViewable           *viewable,
+                                                       gint                    new_index,
+                                                       gpointer                insert_data);
 static void     gimp_container_tree_view_rename_item  (GimpContainerView      *view,
-						       GimpViewable           *viewable,
-						       gpointer                insert_data);
+                                                       GimpViewable           *viewable,
+                                                       gpointer                insert_data);
 static gboolean  gimp_container_tree_view_select_item (GimpContainerView      *view,
-						       GimpViewable           *viewable,
-						       gpointer                insert_data);
+                                                       GimpViewable           *viewable,
+                                                       gpointer                insert_data);
 static void     gimp_container_tree_view_clear_items  (GimpContainerView      *view);
 static void gimp_container_tree_view_set_preview_size (GimpContainerView      *view);
 
@@ -93,9 +93,9 @@ static void gimp_container_tree_view_name_canceled    (GtkCellRendererText    *c
 static void gimp_container_tree_view_selection_changed (GtkTreeSelection      *sel,
                                                         GimpContainerTreeView *tree_view);
 static gboolean gimp_container_tree_view_button_press (GtkWidget              *widget,
-						       GdkEventButton         *bevent,
-						       GimpContainerTreeView  *tree_view);
-static void gimp_container_tree_view_renderer_update  (GimpPreviewRenderer    *renderer,
+                                                       GdkEventButton         *bevent,
+                                                       GimpContainerTreeView  *tree_view);
+static void gimp_container_tree_view_renderer_update  (GimpViewRenderer       *renderer,
                                                        GimpContainerTreeView  *tree_view);
 
 static GimpViewable * gimp_container_tree_view_drag_viewable (GtkWidget       *widget,
@@ -172,7 +172,7 @@ gimp_container_tree_view_init (GimpContainerTreeView *tree_view)
 
   tree_view->n_model_columns = NUM_COLUMNS;
 
-  tree_view->model_columns[COLUMN_RENDERER]        = GIMP_TYPE_PREVIEW_RENDERER;
+  tree_view->model_columns[COLUMN_RENDERER]        = GIMP_TYPE_VIEW_RENDERER;
   tree_view->model_columns[COLUMN_NAME]            = G_TYPE_STRING;
   tree_view->model_columns[COLUMN_NAME_ATTRIBUTES] = PANGO_TYPE_ATTR_LIST;
 
@@ -303,13 +303,13 @@ gimp_container_tree_view_unrealize (GtkWidget *widget)
        iter_valid;
        iter_valid = gtk_tree_model_iter_next (tree_view->model, &iter))
     {
-      GimpPreviewRenderer *renderer;
+      GimpViewRenderer *renderer;
 
       gtk_tree_model_get (tree_view->model, &iter,
                           COLUMN_RENDERER, &renderer,
                           -1);
 
-      gimp_preview_renderer_unrealize (renderer);
+      gimp_view_renderer_unrealize (renderer);
       g_object_unref (renderer);
     }
 
@@ -401,7 +401,7 @@ gimp_container_tree_view_new (GimpContainer *container,
   g_return_val_if_fail (preview_size > 0 &&
                         preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
   g_return_val_if_fail (preview_border_width >= 0 &&
-                        preview_border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH,
+                        preview_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
                         NULL);
 
   tree_view = g_object_new (GIMP_TYPE_CONTAINER_TREE_VIEW, NULL);
@@ -425,19 +425,19 @@ gimp_container_tree_view_set (GimpContainerTreeView *tree_view,
                               GtkTreeIter           *iter,
                               GimpViewable          *viewable)
 {
-  GimpContainerView   *view = GIMP_CONTAINER_VIEW (tree_view);
-  GimpPreviewRenderer *renderer;
-  gchar               *name;
-  gint                 preview_size;
-  gint                 border_width;
+  GimpContainerView *view = GIMP_CONTAINER_VIEW (tree_view);
+  GimpViewRenderer  *renderer;
+  gchar             *name;
+  gint               preview_size;
+  gint               border_width;
 
   preview_size = gimp_container_view_get_preview_size (view, &border_width);
 
-  renderer = gimp_preview_renderer_new (G_TYPE_FROM_INSTANCE (viewable),
-                                        preview_size, border_width,
-                                        FALSE);
-  gimp_preview_renderer_set_viewable (renderer, viewable);
-  gimp_preview_renderer_remove_idle (renderer);
+  renderer = gimp_view_renderer_new (G_TYPE_FROM_INSTANCE (viewable),
+                                     preview_size, border_width,
+                                     FALSE);
+  gimp_view_renderer_set_viewable (renderer, viewable);
+  gimp_view_renderer_remove_idle (renderer);
 
   g_signal_connect (renderer, "update",
                     G_CALLBACK (gimp_container_tree_view_renderer_update),
@@ -506,8 +506,8 @@ gimp_container_tree_view_set_container (GimpContainerView *view,
 
 static gpointer
 gimp_container_tree_view_insert_item (GimpContainerView *view,
-				      GimpViewable      *viewable,
-				      gint               index)
+                                      GimpViewable      *viewable,
+                                      gint               index)
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
   GtkTreeIter           *iter;
@@ -526,8 +526,8 @@ gimp_container_tree_view_insert_item (GimpContainerView *view,
 
 static void
 gimp_container_tree_view_remove_item (GimpContainerView *view,
-				      GimpViewable      *viewable,
-				      gpointer           insert_data)
+                                      GimpViewable      *viewable,
+                                      gpointer           insert_data)
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
   GtkTreeIter           *iter      = (GtkTreeIter *) insert_data;
@@ -554,9 +554,9 @@ gimp_container_tree_view_remove_item (GimpContainerView *view,
 
 static void
 gimp_container_tree_view_reorder_item (GimpContainerView *view,
-				       GimpViewable      *viewable,
-				       gint               new_index,
-				       gpointer           insert_data)
+                                       GimpViewable      *viewable,
+                                       gint               new_index,
+                                       gpointer           insert_data)
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
   GtkTreeIter           *iter      = (GtkTreeIter *) insert_data;
@@ -575,7 +575,7 @@ gimp_container_tree_view_reorder_item (GimpContainerView *view,
 
       if (selected)
         {
-          GimpPreviewRenderer *renderer;
+          GimpViewRenderer *renderer;
 
           gtk_tree_model_get (tree_view->model, &selected_iter,
                               COLUMN_RENDERER, &renderer,
@@ -628,8 +628,8 @@ gimp_container_tree_view_reorder_item (GimpContainerView *view,
 
 static void
 gimp_container_tree_view_rename_item (GimpContainerView *view,
-				      GimpViewable      *viewable,
-				      gpointer           insert_data)
+                                      GimpViewable      *viewable,
+                                      gpointer           insert_data)
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
   GtkTreeIter           *iter      = (GtkTreeIter *) insert_data;
@@ -648,8 +648,8 @@ gimp_container_tree_view_rename_item (GimpContainerView *view,
 
 static gboolean
 gimp_container_tree_view_select_item (GimpContainerView *view,
-				      GimpViewable      *viewable,
-				      gpointer           insert_data)
+                                      GimpViewable      *viewable,
+                                      gpointer           insert_data)
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
   GtkTreeIter           *iter      = (GtkTreeIter *) insert_data;
@@ -661,14 +661,14 @@ gimp_container_tree_view_select_item (GimpContainerView *view,
       path = gtk_tree_model_get_path (tree_view->model, iter);
 
       g_signal_handlers_block_by_func (tree_view->selection,
-				       gimp_container_tree_view_selection_changed,
-				       tree_view);
+                                       gimp_container_tree_view_selection_changed,
+                                       tree_view);
 
       gtk_tree_view_set_cursor (tree_view->view, path, NULL, FALSE);
 
       g_signal_handlers_unblock_by_func (tree_view->selection,
-					 gimp_container_tree_view_selection_changed,
-					 tree_view);
+                                         gimp_container_tree_view_selection_changed,
+                                         tree_view);
 
       gtk_tree_view_scroll_to_cell (tree_view->view, path,
                                     NULL, FALSE, 0.0, 0.0);
@@ -735,13 +735,13 @@ gimp_container_tree_view_set_preview_size (GimpContainerView *view)
        iter_valid;
        iter_valid = gtk_tree_model_iter_next (tree_view->model, &iter))
     {
-      GimpPreviewRenderer *renderer;
+      GimpViewRenderer *renderer;
 
       gtk_tree_model_get (tree_view->model, &iter,
                           COLUMN_RENDERER, &renderer,
                           -1);
 
-      gimp_preview_renderer_set_size (renderer, preview_size, border_width);
+      gimp_view_renderer_set_size (renderer, preview_size, border_width);
       g_object_unref (renderer);
     }
 
@@ -761,8 +761,8 @@ gimp_container_tree_view_name_canceled (GtkCellRendererText   *cell,
 
   if (gtk_tree_selection_get_selected (tree_view->selection, NULL, &iter))
     {
-      GimpPreviewRenderer *renderer;
-      gchar               *name;
+      GimpViewRenderer *renderer;
+      gchar            *name;
 
       gtk_tree_model_get (tree_view->model, &iter,
                           tree_view->model_column_renderer, &renderer,
@@ -789,7 +789,7 @@ gimp_container_tree_view_selection_changed (GtkTreeSelection      *selection,
 
   if (gtk_tree_selection_get_selected (selection, NULL, &iter))
     {
-      GimpPreviewRenderer *renderer;
+      GimpViewRenderer *renderer;
 
       gtk_tree_model_get (tree_view->model, &iter,
                           COLUMN_RENDERER, &renderer,
@@ -854,7 +854,7 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
                                      bevent->y,
                                      &path, &column, NULL, NULL))
     {
-      GimpPreviewRenderer      *renderer;
+      GimpViewRenderer         *renderer;
       GimpCellRendererToggle   *toggled_cell = NULL;
       GimpCellRendererViewable *clicked_cell = NULL;
       GtkCellRenderer          *edit_cell    = NULL;
@@ -1024,7 +1024,7 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
 }
 
 static void
-gimp_container_tree_view_renderer_update (GimpPreviewRenderer   *renderer,
+gimp_container_tree_view_renderer_update (GimpViewRenderer      *renderer,
                                           GimpContainerTreeView *tree_view)
 {
   GimpContainerView *view = GIMP_CONTAINER_VIEW (tree_view);

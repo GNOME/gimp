@@ -38,9 +38,9 @@ typedef struct _GimpCellRendererViewableClass GimpCellRendererViewableClass;
 
 struct _GimpCellRendererViewable
 {
-  GtkCellRenderer      parent_instance;
+  GtkCellRenderer   parent_instance;
 
-  GimpPreviewRenderer *renderer;
+  GimpViewRenderer *renderer;
 };
 
 struct _GimpCellRendererViewableClass
