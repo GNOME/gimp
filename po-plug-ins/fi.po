@@ -19,7 +19,6 @@ msgid "<Image>/Filters/Colors/Map/Alien Map..."
 msgstr "<Image>/Suotimet/V‰rit/Kuvaus/Alien Map..."
 
 #: plug-ins/AlienMap/AlienMap.c:378
-#, fuzzy
 msgid "AlienMap: Transforming..."
 msgstr "AlienMap: Muunnos k‰ynniss‰..."
 
@@ -339,7 +338,6 @@ msgid "<Image>/Filters/Colors/Map/Alien Map 2..."
 msgstr "<Image>/Suotimet/V‰rit/Kuvaus/Alien Map2..."
 
 #: plug-ins/AlienMap2/AlienMap2.c:380
-#, fuzzy
 msgid "AlienMap2: Transforming..."
 msgstr "AlienMap2: Muunnos k‰ynniss‰..."
 
@@ -880,7 +878,7 @@ msgid "New Fractal"
 msgstr "Uusi fraktaali"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1159
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "No fractalexplorer-path in gimprc:\n"
 "You need to add an entry like\n"
@@ -3465,9 +3463,8 @@ msgid "<Image>/Filters/Light Effects/FlareFX..."
 msgstr ""
 
 #: plug-ins/common/flarefx.c:278
-#, fuzzy
 msgid "Render Flare..."
-msgstr "Muodostan fraktaalia..."
+msgstr ""
 
 #: plug-ins/common/flarefx.c:333
 msgid "FlareFX"
@@ -4052,9 +4049,8 @@ msgid "Animate"
 msgstr ""
 
 #: plug-ins/common/iwarp.c:941
-#, fuzzy
 msgid "Number of Frames:"
-msgstr "V‰rien lukum‰‰r‰:"
+msgstr ""
 
 #: plug-ins/common/iwarp.c:950
 msgid "Reverse"
@@ -4069,9 +4065,8 @@ msgid "Deform Amount:"
 msgstr ""
 
 #: plug-ins/common/iwarp.c:1017
-#, fuzzy
 msgid "Deform Mode"
-msgstr "V‰ritila"
+msgstr ""
 
 #: plug-ins/common/iwarp.c:1031 plug-ins/ifscompose/ifscompose.c:867
 #: plug-ins/ifscompose/ifscompose.c:1134 plug-ins/imagemap/imap_cmd_move.c:80
@@ -4375,9 +4370,8 @@ msgid "Recipient:"
 msgstr ""
 
 #: plug-ins/common/mail.c:542
-#, fuzzy
 msgid "Sender:"
-msgstr "H‰m‰h‰kki"
+msgstr ""
 
 #: plug-ins/common/mail.c:554
 msgid "Subject:"
@@ -6006,9 +6000,8 @@ msgid "Pack Bits"
 msgstr ""
 
 #: plug-ins/common/tiff.c:1493
-#, fuzzy
 msgid "Deflate"
-msgstr "Poista"
+msgstr ""
 
 #: plug-ins/common/tiff.c:1494
 msgid "JPEG"
@@ -6977,9 +6970,8 @@ msgid "Controls"
 msgstr ""
 
 #: plug-ins/flame/flame.c:683
-#, fuzzy
 msgid "Speed:"
-msgstr "Pallo"
+msgstr ""
 
 #: plug-ins/flame/flame.c:699
 msgid "Randomize"
@@ -7036,9 +7028,8 @@ msgid "Gamma:"
 msgstr ""
 
 #: plug-ins/flame/flame.c:1059
-#, fuzzy
 msgid "Sample Density:"
-msgstr "V‰ritiheys"
+msgstr ""
 
 #: plug-ins/flame/flame.c:1069
 msgid "Spatial Oversample:"
@@ -7049,9 +7040,8 @@ msgid "Spatial Filter Radius:"
 msgstr ""
 
 #: plug-ins/flame/flame.c:1105
-#, fuzzy
 msgid "Colormap:"
-msgstr "V‰rit"
+msgstr ""
 
 #: plug-ins/flame/flame.c:1153
 msgid "Custom Gradient"
@@ -7770,9 +7760,8 @@ msgid "<Image>/Video/Goto/Last Frame"
 msgstr ""
 
 #: plug-ins/gap/gap_main.c:391
-#, fuzzy
 msgid "<Image>/Video/Goto/Any Frame..."
-msgstr "<Image>/Suotimet/V‰rit/Kuvaus/Alien Map..."
+msgstr ""
 
 #: plug-ins/gap/gap_main.c:403
 msgid "<Image>/Video/Delete Frames..."
@@ -9459,7 +9448,7 @@ msgid "<Image>/Filters/Render/Gfig..."
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:850
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "No gfig-path in gimprc:\n"
 "You need to add an entry like\n"
@@ -10005,7 +9994,7 @@ msgid "GFlare: cannot operate on indexed color images"
 msgstr ""
 
 #: plug-ins/gflare/gflare.c:998
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "No gflare-path in gimprc:\n"
 "You need to add an entry like\n"
