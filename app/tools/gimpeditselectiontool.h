@@ -15,28 +15,44 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __EDIT_SELECTION_H__
 #define __EDIT_SELECTION_H__
 
+
 #include "tools.h"
+
 
 typedef enum
 {
-  MaskTranslate,
-  MaskToLayerTranslate,
-  LayerTranslate,
-  FloatingSelTranslate
+  EDIT_MASK_TRANSLATE,
+  EDIT_MASK_TO_LAYER_TRANSLATE,
+  EDIT_LAYER_TRANSLATE,
+  EDIT_FLOATING_SEL_TRANSLATE
 } EditType;
 
-/*  action functions  */
-void   edit_selection_button_release (Tool *, GdkEventButton *, gpointer);
-void   edit_selection_motion         (Tool *, GdkEventMotion *, gpointer);
-void   edit_selection_control        (Tool *, ToolAction,       gpointer);
-void   edit_selection_cursor_update  (Tool *, GdkEventMotion *, gpointer);
-void   edit_selection_draw           (Tool *);
-void   edit_sel_arrow_keys_func      (Tool *, GdkEventKey *,    gpointer);
 
-void   init_edit_selection           (Tool *, gpointer, GdkEventButton *,
-				      EditType);
+void   init_edit_selection           (Tool           *tool,
+				      gpointer        gdisp_ptr,
+				      GdkEventButton *bevent,
+				      EditType        edit_type);
+
+void   edit_selection_button_release (Tool           *tool, 
+				      GdkEventButton *bevent, 
+				      gpointer        gdisp_ptr);
+void   edit_selection_motion         (Tool           *tool, 
+				      GdkEventMotion *mevent, 
+				      gpointer        gdisp_ptr);
+void   edit_selection_control        (Tool           *tool, 
+				      ToolAction      action,    
+				      gpointer        gdisp_ptr);
+void   edit_selection_cursor_update  (Tool           *tool, 
+				      GdkEventMotion *mevent, 
+				      gpointer        gdisp_ptr);
+void   edit_selection_draw           (Tool           *tool);
+void   edit_sel_arrow_keys_func      (Tool           *tool,
+				      GdkEventKey    *kevent,
+				      gpointer        gdisp_ptr);
+
 
 #endif  /*  __EDIT_SELECTION_H__  */

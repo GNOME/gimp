@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include "config.h"
 
 #include <stdlib.h>
@@ -38,9 +39,11 @@
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
 
+
 #define EDIT_SELECT_SCROLL_LOCK FALSE
 #define ARROW_VELOCITY          25
 #define STATUSBAR_SIZE          128
+
 
 typedef struct _EditSelection EditSelection;
 struct _EditSelection
@@ -50,15 +53,15 @@ struct _EditSelection
   gint                x, y;              /*  current x and y coords          */
   gint                num_segs_in;       /* Num seg in selection boundary    */
   gint                num_segs_out;      /* Num seg in selection boundary    */
-  BoundSeg            *segs_in;          /* Pointer to the channel sel. segs */
-  BoundSeg            *segs_out;         /* Pointer to the channel sel. segs */
+  BoundSeg           *segs_in;           /* Pointer to the channel sel. segs */
+  BoundSeg           *segs_out;          /* Pointer to the channel sel. segs */
 
   gint                x1, y1;            /*  bounding box of selection mask  */
   gint                x2, y2;
 
   EditType            edit_type;         /*  translate the mask or layer?    */
 
-  DrawCore *          core;              /* selection core for drawing bounds*/
+  DrawCore           *core;              /* selection core for drawing bounds*/
 
   ButtonReleaseFunc   old_button_release;/*  old button press member func    */
   MotionFunc          old_motion;        /*  old motion member function      */
@@ -73,7 +76,7 @@ struct _EditSelection
 };
 
 
-/*  static EditSelection structure--there is ever only one present  */
+/*  static EditSelection structure -- there is ever only one present  */
 static EditSelection edit_select;
 
 
@@ -109,8 +112,8 @@ edit_selection_snap (GDisplay *gdisp,
       gdisplay_untransform_coords_f (gdisp, x1, y1, &x1, &y1, TRUE);
     }
   
-  edit_select.x = (int)x1 - (edit_select.x1 - edit_select.origx);
-  edit_select.y = (int)y1 - (edit_select.y1 - edit_select.origy);
+  edit_select.x = (gint) RINT (x1) - (edit_select.x1 - edit_select.origx);
+  edit_select.y = (gint) RINT (y1) - (edit_select.y1 - edit_select.origy);
 }
 
 void
@@ -128,7 +131,8 @@ init_edit_selection (Tool           *tool,
   undo_push_group_start (gdisp->gimage, LAYER_DISPLACE_UNDO);
 
   /*  Move the (x, y) point from screen to image space  */
-  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, FALSE, TRUE);
+  gdisplay_untransform_coords (gdisp, 
+			       bevent->x, bevent->y, &x, &y, FALSE, TRUE);
 
   edit_select.x = edit_select.origx = x;
   edit_select.y = edit_select.origy = y;
@@ -142,14 +146,14 @@ init_edit_selection (Tool           *tool,
 			&edit_select.num_segs_out);
 
   /*  Make a check to see if it should be a floating selection translation  */
-  if (edit_type == MaskToLayerTranslate && gimage_floating_sel (gdisp->gimage))
-    edit_type = FloatingSelTranslate;
+  if (edit_type == EDIT_MASK_TO_LAYER_TRANSLATE && gimage_floating_sel (gdisp->gimage))
+    edit_type = EDIT_FLOATING_SEL_TRANSLATE;
 
-  if (edit_type == LayerTranslate)
+  if (edit_type == EDIT_LAYER_TRANSLATE)
     {
       layer = gimage_get_active_layer (gdisp->gimage);
       if (layer_is_floating_sel (layer))
-	edit_type = FloatingSelTranslate;
+	edit_type = EDIT_FLOATING_SEL_TRANSLATE;
     }
 
   edit_select.edit_type = edit_type;
@@ -164,7 +168,7 @@ init_edit_selection (Tool           *tool,
   edit_select.first_move         = TRUE;
 
   /*  find the bounding box of the selection mask -
-   *  this is used for the case of a MaskToLayerTranslate,
+   *  this is used for the case of a EDIT_MASK_TO_LAYER_TRANSLATE,
    *  where the translation will result in floating the selection
    *  mask and translating the resulting layer
    */
@@ -186,8 +190,12 @@ init_edit_selection (Tool           *tool,
   selection_pause (gdisp->select);
 
   /* initialize the statusbar display */
-  edit_select.context_id = gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), "edit_select");
-  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), edit_select.context_id, _("Move: 0, 0"));
+  edit_select.context_id 
+    = gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), 
+				    "edit_select");
+  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), 
+		      edit_select.context_id, 
+		      _("Move: 0, 0"));
 
   /*  Create and start the selection core  */
   edit_select.core = draw_core_new (edit_selection_draw);
@@ -229,10 +237,10 @@ edit_selection_button_release (Tool           *tool,
   tool->scroll_lock         = edit_select.old_scroll_lock;
   tool->auto_snap_to        = edit_select.old_auto_snap_to;
 
-  /* MaskTranslate is performed here at movement end, not 'live' like
+  /* EDIT_MASK_TRANSLATE is performed here at movement end, not 'live' like
    *  the other translation types.
    */
-  if (edit_select.edit_type == MaskTranslate)
+  if (edit_select.edit_type == EDIT_MASK_TRANSLATE)
     {
       edit_selection_snap (gdisp, bevent->x, bevent->y);
       x = edit_select.x;
@@ -261,9 +269,9 @@ edit_selection_button_release (Tool           *tool,
 	 or moved it around and eventually just put it back in
 	 exactly the same spot. */
 
-     /*  If no movement occured and the type is FloatingSelTranslate,
+     /*  If no movement occured and the type is EDIT_FLOATING_SEL_TRANSLATE,
 	  check if the layer is a floating selection.  If so, anchor. */
-      if (edit_select.edit_type == FloatingSelTranslate)
+      if (edit_select.edit_type == EDIT_FLOATING_SEL_TRANSLATE)
 	{
 	  layer = gimage_get_active_layer (gdisp->gimage);
 	  if (layer_is_floating_sel (layer))
@@ -304,15 +312,15 @@ edit_selection_motion (Tool           *tool,
 
   gdisp = (GDisplay *) gdisp_ptr;
 
-  gdk_flush();
+  gdk_flush ();
 
   draw_core_pause (edit_select.core, tool);
 
 
   /* Perform motion compression so that we don't lag and/or waste time. */
 
-  if (!gtkutil_compress_motion(gtk_get_event_widget((GdkEvent*)mevent),
-			       &lastmotion_x, &lastmotion_y))
+  if (!gtkutil_compress_motion (gtk_get_event_widget ((GdkEvent*) mevent),
+				&lastmotion_x, &lastmotion_y))
     {
       lastmotion_x = mevent->x;
       lastmotion_y = mevent->y;
@@ -320,14 +328,14 @@ edit_selection_motion (Tool           *tool,
 
   /* now do the actual move. */
 
-  edit_selection_snap (gdisp, RINT(lastmotion_x), RINT(lastmotion_y));
+  edit_selection_snap (gdisp, RINT (lastmotion_x), RINT (lastmotion_y));
 
   /******************************************* adam's live move *******/
   /********************************************************************/
   {
-    gint x, y;
-    Layer *layer;
-    Layer *floating_layer;
+    gint    x, y;
+    Layer  *layer;
+    Layer  *floating_layer;
     GSList *layer_list;
 
     x = edit_select.x;
@@ -346,19 +354,20 @@ edit_selection_motion (Tool           *tool,
 
 	switch (edit_select.edit_type)
 	  {
-	  case MaskTranslate:
+	  case EDIT_MASK_TRANSLATE:
 	    /*  we don't do the actual edit selection move here.  */
 	    edit_select.origx = x;
 	    edit_select.origy = y;
 	    break;
 	
-	  case LayerTranslate:
+	  case EDIT_LAYER_TRANSLATE:
 	    if ((floating_layer = gimage_floating_sel (gdisp->gimage)))
 	      floating_sel_relax (floating_layer, TRUE);
       
 	    /*  translate the layer--and any "linked" layers as well  */
-	    layer_list = gdisp->gimage->layers;
-	    while (layer_list)
+	    for (layer_list = gdisp->gimage->layers;
+		 layer_list;
+		 layer_list = g_slist_next (layer_list))
 	      {
 		layer = (Layer *) layer_list->data;
 		if (layer == gdisp->gimage->active_layer || 
@@ -366,7 +375,6 @@ edit_selection_motion (Tool           *tool,
 		  {
 		    layer_translate (layer, xoffset, yoffset);
 		  }
-		layer_list = g_slist_next (layer_list);
 	      }
       
 	    if (floating_layer)
@@ -379,7 +387,7 @@ edit_selection_motion (Tool           *tool,
 	      }
 	    break;
 	
-	  case MaskToLayerTranslate:
+	  case EDIT_MASK_TO_LAYER_TRANSLATE:
 	    if (!gimage_mask_float (gdisp->gimage, 
 				    gimage_active_drawable (gdisp->gimage),
 				    0, 0))
@@ -390,7 +398,7 @@ edit_selection_motion (Tool           *tool,
 	      }
 
 	    /* this is always the first move, since we switch to 
-	       FloatingSelTranslate when finished here */
+	       EDIT_FLOATING_SEL_TRANSLATE when finished here */
 	    gimp_image_undo_freeze (gdisp->gimage);
 	    edit_select.first_move = FALSE; 
 
@@ -401,10 +409,10 @@ edit_selection_motion (Tool           *tool,
 	    edit_select.x1 = 0;
 	    edit_select.y1 = 0;
 
-	    edit_select.edit_type = FloatingSelTranslate;
+	    edit_select.edit_type = EDIT_FLOATING_SEL_TRANSLATE;
 	    break;
       
-	  case FloatingSelTranslate:
+	  case EDIT_FLOATING_SEL_TRANSLATE:
 	    layer = gimage_get_active_layer (gdisp->gimage);
       
 	    floating_sel_relax (layer, TRUE);
@@ -423,13 +431,13 @@ edit_selection_motion (Tool           *tool,
 	  }
       }
 
-    gdisplay_flush(gdisp);
+    gdisplay_flush (gdisp);
   }
   /********************************************************************/
   /********************************************************************/
   
 
-  gtk_statusbar_pop (GTK_STATUSBAR(gdisp->statusbar), edit_select.context_id);
+  gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), edit_select.context_id);
   if (gdisp->dot_for_dot)
     {
       g_snprintf (offset, STATUSBAR_SIZE, gdisp->cursor_format_str,
@@ -444,13 +452,13 @@ edit_selection_motion (Tool           *tool,
 
       g_snprintf (offset, STATUSBAR_SIZE, gdisp->cursor_format_str,
 		  _("Move: "), 
-		  (edit_select.cumlx) * unit_factor /
+		  (edit_select.cumlx) * unit_factor / 
 		  gdisp->gimage->xresolution,
 		  ", ",
 		  (edit_select.cumly) * unit_factor /
 		  gdisp->gimage->yresolution);
     }
-  gtk_statusbar_push (GTK_STATUSBAR(gdisp->statusbar), edit_select.context_id,
+  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), edit_select.context_id,
 		      offset);
 
   draw_core_resume (edit_select.core, tool);
@@ -460,23 +468,25 @@ static void
 selection_transform_segs (GDisplay   *gdisp,
 			  BoundSeg   *src_segs,
 			  GdkSegment *dest_segs,
-			  int         num_segs)
+			  gint        num_segs)
 {
-  int x, y;
-  int i;
+  gint x, y;
+  gint i;
 
   for (i = 0; i < num_segs; i++)
     {
-      gdisplay_transform_coords (gdisp, src_segs[i].x1+edit_select.cumlx, 
-				 src_segs[i].y1+edit_select.cumly,
-				 &x, &y, 0);
+      gdisplay_transform_coords (gdisp, 
+				 src_segs[i].x1 + edit_select.cumlx, 
+				 src_segs[i].y1 + edit_select.cumly,
+				 &x, &y, FALSE);
 
       dest_segs[i].x1 = x;
       dest_segs[i].y1 = y;
 
-      gdisplay_transform_coords (gdisp, src_segs[i].x2+edit_select.cumlx, 
-				 src_segs[i].y2+edit_select.cumly,
-				 &x, &y, 0);
+      gdisplay_transform_coords (gdisp, 
+				 src_segs[i].x2 + edit_select.cumlx, 
+				 src_segs[i].y2 + edit_select.cumly,
+				 &x, &y, FALSE);
 
       dest_segs[i].x2 = x;
       dest_segs[i].y2 = y;
@@ -502,59 +512,64 @@ edit_selection_draw (Tool *tool)
 
   switch (edit_select.edit_type)
     {
-    case MaskTranslate:
+    case EDIT_MASK_TRANSLATE:
       layer = gimage_get_active_layer (gdisp->gimage);
       floating_sel = layer_is_floating_sel (layer);
 
       if (!floating_sel)
 	{
-	   segs_copy = g_new(GdkSegment,edit_select.num_segs_in);
+	   segs_copy = g_new (GdkSegment, edit_select.num_segs_in);
 
-	   selection_transform_segs(gdisp,
-				    edit_select.segs_in,
-				    segs_copy,
-				    edit_select.num_segs_in);
+	   selection_transform_segs (gdisp,
+				     edit_select.segs_in,
+				     segs_copy,
+				     edit_select.num_segs_in);
       
 	   /*  Draw the items  */
 	   gdk_draw_segments (edit_select.core->win, edit_select.core->gc,
 			      segs_copy, select->num_segs_in);
 	   
-	   g_free(segs_copy);
+	   g_free (segs_copy);
 	}
 
-      segs_copy = g_new(GdkSegment,edit_select.num_segs_out);
+      segs_copy = g_new (GdkSegment, edit_select.num_segs_out);
       
-      selection_transform_segs(gdisp,
-			       edit_select.segs_out,
-			       segs_copy,
-			       edit_select.num_segs_out);
+      selection_transform_segs (gdisp,
+				edit_select.segs_out,
+				segs_copy,
+				edit_select.num_segs_out);
       
       /*  Draw the items  */
       gdk_draw_segments (edit_select.core->win, edit_select.core->gc,
 			 segs_copy, select->num_segs_out);
 
-      g_free(segs_copy);
+      g_free (segs_copy);
       break;
 
-    case MaskToLayerTranslate:
-      gdisplay_transform_coords (gdisp, edit_select.x1, edit_select.y1, &x1, &y1, TRUE);
-      gdisplay_transform_coords (gdisp, edit_select.x2, edit_select.y2, &x2, &y2, TRUE);
+    case EDIT_MASK_TO_LAYER_TRANSLATE:
+      gdisplay_transform_coords (gdisp, 
+				 edit_select.x1, edit_select.y1, 
+				 &x1, &y1, TRUE);
+      gdisplay_transform_coords (gdisp, 
+				 edit_select.x2, edit_select.y2, 
+				 &x2, &y2, TRUE);
       gdk_draw_rectangle (edit_select.core->win,
 			  edit_select.core->gc, 0,
 			  x1, y1,
 			  x2 - x1 + 1, y2 - y1 + 1);
       break;
 
-    case LayerTranslate:
+    case EDIT_LAYER_TRANSLATE:
       gdisplay_transform_coords (gdisp, 0, 0, &x1, &y1, TRUE);
       gdisplay_transform_coords (gdisp,
-				 drawable_width ( GIMP_DRAWABLE (gdisp->gimage->active_layer)),
-				 drawable_height ( GIMP_DRAWABLE (gdisp->gimage->active_layer)),
+				 drawable_width (GIMP_DRAWABLE (gdisp->gimage->active_layer)),
+				 drawable_height (GIMP_DRAWABLE (gdisp->gimage->active_layer)),
 				 &x2, &y2, TRUE);
 
       /*  Now, expand the rectangle to include all linked layers as well  */
-      layer_list = gdisp->gimage->layers;
-      while (layer_list)
+      for (layer_list= gdisp->gimage->layers;
+	   layer_list;
+	   layer_list = g_slist_next (layer_list))
 	{
 	  layer = (Layer *) layer_list->data;
 	  if (((layer) != gdisp->gimage->active_layer) && layer_linked (layer))
@@ -574,7 +589,6 @@ edit_selection_draw (Tool *tool)
 	      if (y4 > y2)
 		y2 = y4;
 	    }
-	  layer_list = g_slist_next (layer_list);
 	}
 
       gdk_draw_rectangle (edit_select.core->win,
@@ -583,24 +597,24 @@ edit_selection_draw (Tool *tool)
 			  x2 - x1, y2 - y1);
       break;
 
-    case FloatingSelTranslate:
-      segs_copy = g_new(GdkSegment,edit_select.num_segs_in);
+    case EDIT_FLOATING_SEL_TRANSLATE:
+      segs_copy = g_new (GdkSegment, edit_select.num_segs_in);
 
       /* The selection segs are in image space convert these 
        * to display space.
        * Takes care of offset/zoom etc etc.
        */
 
-      selection_transform_segs(gdisp,
-			       edit_select.segs_in,
-			       segs_copy,
-			       edit_select.num_segs_in);
+      selection_transform_segs (gdisp,
+				edit_select.segs_in,
+				segs_copy,
+				edit_select.num_segs_in);
       
       /*  Draw the items  */
       gdk_draw_segments (edit_select.core->win, edit_select.core->gc,
 			 segs_copy, select->num_segs_in);
 
-      g_free(segs_copy);
+      g_free (segs_copy);
       break;
     }
 }
@@ -647,7 +661,8 @@ edit_selection_cursor_update (Tool           *tool,
 }
 
 static gint
-process_event_queue_keys (GdkEventKey *kevent, ...)
+process_event_queue_keys (GdkEventKey *kevent, 
+			  ...)
 /* GdkKeyType, GdkModifierType, value ... 0 
  * could move this function to a more central location so it can be used
  * by other tools? */
@@ -655,70 +670,85 @@ process_event_queue_keys (GdkEventKey *kevent, ...)
 #define FILTER_MAX_KEYS 50
   va_list argp;
   GdkEvent *event;
-  GList *list = NULL;
+  GList *event_list = NULL;
+  GList *list;
   guint keys[FILTER_MAX_KEYS];
   GdkModifierType modifiers[FILTER_MAX_KEYS];
   gint values[FILTER_MAX_KEYS];
-  gint i = 0, nkeys = 0, value = 0, done = 0, discard_event;
+  gint i = 0, nkeys = 0, value = 0;
+  gboolean done = FALSE;
+  gboolean discard_event;
   GtkWidget *orig_widget;
 
-  va_start(argp, kevent);
+  va_start (argp, kevent);
   while (nkeys <FILTER_MAX_KEYS && (keys[nkeys] = va_arg (argp, guint)) != 0)
-  {
-    modifiers[nkeys] = va_arg (argp, GdkModifierType);
-    values[nkeys]    = va_arg (argp, int);
-    nkeys++;
-  }
+    {
+      modifiers[nkeys] = va_arg (argp, GdkModifierType);
+      values[nkeys]    = va_arg (argp, gint);
+      nkeys++;
+    }
   va_end(argp);
 
   for (i = 0; i < nkeys; i++)
-    if (kevent->keyval == keys[i] && kevent->state == modifiers[i])
-      value += values[i];
+    {
+      if (kevent->keyval == keys[i] && kevent->state == modifiers[i])
+	value += values[i];
+    }
 
-  orig_widget = gtk_get_event_widget((GdkEvent*)kevent);
+  orig_widget = gtk_get_event_widget ((GdkEvent*) kevent);
 
-  while (gdk_events_pending() > 0 && !done)
+  while (gdk_events_pending () > 0 && !done)
   {
-    discard_event = 0;
-    event = gdk_event_get();
-    if (!event || orig_widget != gtk_get_event_widget(event))
-    {
-      done = 1;
-    }
-    else
-    {
-      if (event->any.type == GDK_KEY_PRESS)
+    discard_event = FALSE;
+    event = gdk_event_get ();
+
+    if (!event || orig_widget != gtk_get_event_widget (event))
       {
-	for (i = 0; i < nkeys; i++)
-	  if (event->key.keyval == keys[i] &&
-	      event->key.state  == modifiers[i])
-	  {
-	    discard_event = 1;
-	    value += values[i];
-	  }
-	if (!discard_event)
-	  done = 1;
+	done = TRUE;
       }
+    else
+      {
+	if (event->any.type == GDK_KEY_PRESS)
+	  {
+	    for (i = 0; i < nkeys; i++)
+	      if (event->key.keyval == keys[i] &&
+		  event->key.state  == modifiers[i])
+		{
+		  discard_event = TRUE;
+		  value += values[i];
+		}
+
+	    if (!discard_event)
+	      done = TRUE;
+	  }
 	     /* should there be more types here? */
-      else if (event->any.type != GDK_KEY_RELEASE &&
-	       event->any.type != GDK_MOTION_NOTIFY &&
-	       event->any.type != GDK_EXPOSE)
-	done = 1;
-    }
+	else if (event->any.type != GDK_KEY_RELEASE &&
+		 event->any.type != GDK_MOTION_NOTIFY &&
+		 event->any.type != GDK_EXPOSE)
+	  done = FALSE;
+      }
 
     if (!event)
       ; /* Do nothing */
     else if (!discard_event)
-      list = g_list_append(list, event);
+      event_list = g_list_prepend (event_list, event);
     else
-      gdk_event_free(event);
+      gdk_event_free (event);
   }
-  while (list) /* unget the unused events and free the list */
-  {
-    gdk_event_put((GdkEvent*)list->data);
-    gdk_event_free((GdkEvent*)list->data);
-    list = g_list_remove_link (list, list);
-  }
+
+  event_list = g_list_reverse (event_list);
+
+  /* unget the unused events and free the list */
+  for (list = event_list;
+       list;
+       list = g_list_next (list))
+    {
+      gdk_event_put ((GdkEvent*)list->data);
+      gdk_event_free ((GdkEvent*)list->data);
+    }
+
+  g_list_free (event_list);
+
   return value;
 #undef FILTER_MAX_KEYS
 }
@@ -739,35 +769,36 @@ edit_sel_arrow_keys_func (Tool        *tool,
 
   gdisp = (GDisplay *) gdisp_ptr;
 
-  inc_x = process_event_queue_keys(kevent,
-			    GDK_Left,  0,              -1, 
-			    GDK_Left,  GDK_SHIFT_MASK, -1*ARROW_VELOCITY, 
-			    GDK_Right, 0,               1, 
-			    GDK_Right, GDK_SHIFT_MASK,  ARROW_VELOCITY, 
-			    0);
-  inc_y = process_event_queue_keys(kevent,
-			    GDK_Up,   0,              -1, 
-			    GDK_Up,   GDK_SHIFT_MASK, -1*ARROW_VELOCITY, 
-			    GDK_Down, 0,               1, 
-			    GDK_Down, GDK_SHIFT_MASK,   ARROW_VELOCITY, 
-			    0);
+  inc_x = 
+    process_event_queue_keys (kevent,
+			      GDK_Left,  0,              -1, 
+			      GDK_Left,  GDK_SHIFT_MASK, -1 * ARROW_VELOCITY, 
+			      GDK_Right, 0,               1, 
+			      GDK_Right, GDK_SHIFT_MASK,  1 * ARROW_VELOCITY, 
+			      0);
+  inc_y = 
+    process_event_queue_keys (kevent,
+			      GDK_Up,   0,              -1, 
+			      GDK_Up,   GDK_SHIFT_MASK, -1 * ARROW_VELOCITY, 
+			      GDK_Down, 0,               1, 
+			      GDK_Down, GDK_SHIFT_MASK,  1 * ARROW_VELOCITY, 
+			      0);
+  
+  mask_inc_x = 
+    process_event_queue_keys (kevent,
+			      GDK_Left,  GDK_MOD1_MASK,                    -1, 
+			      GDK_Left,  (GDK_MOD1_MASK | GDK_SHIFT_MASK), -1 * ARROW_VELOCITY, 
+			      GDK_Right, GDK_MOD1_MASK,                     1, 
+			      GDK_Right, (GDK_MOD1_MASK | GDK_SHIFT_MASK),  1 * ARROW_VELOCITY, 
+			      0);
+  mask_inc_y = 
+    process_event_queue_keys (kevent,
+			      GDK_Up,   GDK_MOD1_MASK,                    -1, 
+			      GDK_Up,   (GDK_MOD1_MASK | GDK_SHIFT_MASK), -1 * ARROW_VELOCITY, 
+			      GDK_Down, GDK_MOD1_MASK,                     1, 
+			      GDK_Down, (GDK_MOD1_MASK | GDK_SHIFT_MASK),  1 * ARROW_VELOCITY, 
+			      0);
 
-  mask_inc_x = process_event_queue_keys(kevent,
-				 GDK_Left,  GDK_MOD1_MASK,              -1, 
-				 GDK_Left,  (GDK_MOD1_MASK | GDK_SHIFT_MASK),
-				            -1*ARROW_VELOCITY, 
-				 GDK_Right, GDK_MOD1_MASK,               1, 
-				 GDK_Right, (GDK_MOD1_MASK | GDK_SHIFT_MASK),
-				            ARROW_VELOCITY, 
-				 0);
-  mask_inc_y = process_event_queue_keys(kevent,
-				 GDK_Up,   GDK_MOD1_MASK,              -1, 
-				 GDK_Up,   (GDK_MOD1_MASK | GDK_SHIFT_MASK),
-				            -1*ARROW_VELOCITY, 
-				 GDK_Down, GDK_MOD1_MASK,               1, 
-				 GDK_Down, (GDK_MOD1_MASK | GDK_SHIFT_MASK),
-				            ARROW_VELOCITY, 
-				 0);
   if (inc_x == 0 && inc_y == 0  &&  mask_inc_x == 0 && mask_inc_y == 0)
     return;
 
@@ -777,56 +808,56 @@ edit_sel_arrow_keys_func (Tool        *tool,
     gimage_mask_translate (gdisp->gimage, mask_inc_x, mask_inc_y);
 
   if (inc_x != 0 || inc_y != 0)
-  {
-    layer = gimage_get_active_layer (gdisp->gimage);
-    if (layer_is_floating_sel (layer))
-      edit_type = FloatingSelTranslate;
-    else
-      edit_type = LayerTranslate;
-
-    switch (edit_type)
     {
-     case MaskToLayerTranslate:
-       gimage_mask_float (gdisp->gimage,
-			  gimage_active_drawable (gdisp->gimage),
-			  inc_x, inc_y);
-       break;
+      layer = gimage_get_active_layer (gdisp->gimage);
+ 
+      if (layer_is_floating_sel (layer))
+	edit_type = EDIT_FLOATING_SEL_TRANSLATE;
+      else
+	edit_type = EDIT_LAYER_TRANSLATE;
+      
+      switch (edit_type)
+	{
+	case EDIT_MASK_TRANSLATE:
+	case EDIT_MASK_TO_LAYER_TRANSLATE:
+	  /*  this won't happen  */
+	  break;
 
-     case LayerTranslate:
-  
-       if ((floating_layer = gimage_floating_sel (gdisp->gimage)))
-	 floating_sel_relax (floating_layer, TRUE);
-
-       /*  translate the layer--and any "linked" layers as well  */
-       layer_list = gdisp->gimage->layers;
-       while (layer_list)
-       {
-	 layer = (Layer *) layer_list->data;
-	 if (((layer) == gdisp->gimage->active_layer) || layer_linked (layer))
-	   layer_translate (layer, inc_x, inc_y);
-	 layer_list = g_slist_next (layer_list);
-       }
-
-       if (floating_layer)
-	 floating_sel_rigor (floating_layer, TRUE);
-
-       break;
-
-     case FloatingSelTranslate:
-
-       floating_sel_relax (layer, TRUE);
-
-       layer_translate (layer, inc_x, inc_y);
-
-       floating_sel_rigor (layer, TRUE);
-
-       break;
-
-     default:
-       /*  this won't occur  */
-       break;
+	case EDIT_LAYER_TRANSLATE:
+	  
+	  if ((floating_layer = gimage_floating_sel (gdisp->gimage)))
+	    floating_sel_relax (floating_layer, TRUE);
+	  
+	  /*  translate the layer -- and any "linked" layers as well  */
+	  for (layer_list = gdisp->gimage->layers; 
+	       layer_list; 
+	       layer_list = g_slist_next (layer_list))
+	    {
+	      layer = (Layer *) layer_list->data;
+	      if (((layer) == gdisp->gimage->active_layer) || 
+		  layer_linked (layer))
+		{
+		  layer_translate (layer, inc_x, inc_y);
+		}
+	    }
+	  
+	  if (floating_layer)
+	    floating_sel_rigor (floating_layer, TRUE);
+	  
+	  break;
+	  
+	case EDIT_FLOATING_SEL_TRANSLATE:
+	  
+	  floating_sel_relax (layer, TRUE);
+	  
+	  layer_translate (layer, inc_x, inc_y);
+	  
+	  floating_sel_rigor (layer, TRUE);
+	  
+	  break;
+	}
     }
-  }
+
   undo_push_group_end (gdisp->gimage);
   gdisplays_flush ();
 }

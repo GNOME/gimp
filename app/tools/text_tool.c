@@ -314,7 +314,7 @@ text_button_press (Tool           *tool,
     /*  If there is a floating selection, and this aint it, use the move tool  */
     if (layer_is_floating_sel (layer))
       {
-	init_edit_selection (tool, gdisp_ptr, bevent, LayerTranslate);
+	init_edit_selection (tool, gdisp_ptr, bevent, EDIT_LAYER_TRANSLATE);
 	return;
       }
 

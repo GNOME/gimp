@@ -182,10 +182,10 @@ rect_select_button_press (Tool           *tool,
   switch (rect_sel->op)
     {
     case SELECTION_MOVE_MASK:
-      init_edit_selection (tool, gdisp_ptr, bevent, MaskTranslate);
+      init_edit_selection (tool, gdisp_ptr, bevent, EDIT_MASK_TRANSLATE);
       return;
     case SELECTION_MOVE:
-      init_edit_selection (tool, gdisp_ptr, bevent, MaskToLayerTranslate);
+      init_edit_selection (tool, gdisp_ptr, bevent, EDIT_MASK_TO_LAYER_TRANSLATE);
       return;
     default:
       break;

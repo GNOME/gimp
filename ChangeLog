@@ -1,3 +1,27 @@
+2000-10-22  Sven Neumann  <sven@gimp.org>
+
+	* app/edit_selection.[ch]: plugged memleak (similar to the one that 
+	was present in gtkutil_compress_motion()) in the key snooper.
+
+	Round moves to nearest integer instead of truncating the value.
+	This seems to fix the reported redraw problems when moving 
+	selections at low zoom levels.
+	
+	Cleaned up the code a little and converted enum values to uppercase.
+
+	* app/bezier_select.c
+	* app/free_select.c
+	* app/fuzzy_select.c
+	* app/move.c
+	* app/rect_select.c
+	* app/text_tool.c: updated to use the new EditType enum values.
+	
+	* app/gimprc.c: minor optimization in the GList handling.
+
+	* app/layer.[ch]: removed unused functions.
+	
+	* app/menus.c: removed "Dump Items (Debug)" menu entry.
+
 2000-10-21  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/print/RELNOTES: new file
@@ -18,7 +42,7 @@
 	* AUTHORS
 	* app/authors.h
 	* tools/authorsgen/contributors: Add the prolific David Hodson
-	    to the authors list.
+	to the authors list.
 
 2000-10-19  Seth Burgess  <sjburges@gimp.org>
   

@@ -910,14 +910,14 @@ bezier_select_button_press (Tool           *tool,
 
 /*       if (bevent->state & GDK_MOD1_MASK) */
 /* 	{ */
-/* 	  init_edit_selection (tool, gdisp_ptr, bevent, MaskTranslate); */
+/* 	  init_edit_selection (tool, gdisp_ptr, bevent, EDIT_MASK_TRANSLATE); */
 /* 	  break; */
 /* 	} */
 /*       else if (!(bevent->state & GDK_SHIFT_MASK) && !(bevent->state & GDK_CONTROL_MASK)) */
 /* 	if (! (layer_is_floating_sel (gimage_get_active_layer (gdisp->gimage))) && */
 /* 	    gdisplay_mask_value (gdisp, bevent->x, bevent->y) > HALF_WAY) */
 /* 	  { */
-/* 	    init_edit_selection (tool, gdisp_ptr, bevent, MaskToLayerTranslate); */
+/* 	    init_edit_selection (tool, gdisp_ptr, bevent, EDIT_MASK_TO_LAYER_TRANSLATE); */
 /* 	    break; */
 /* 	  } */
 

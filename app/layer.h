@@ -102,9 +102,6 @@ void            layer_removed               (Layer            *layer,
 					     gpointer          data);
 void            layer_apply_mask            (Layer            *layer,
 					     MaskApplyMode     mode);
-void            layer_temporarily_translate (Layer            *layer,
-					     gint              off_x,
-					     gint              off_y);
 void            layer_translate             (Layer            *layer,
 					     gint              off_x,
 					     gint              off_y);

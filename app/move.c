@@ -85,12 +85,12 @@ move_tool_button_press (Tool           *tool,
   if (bevent->state & GDK_MOD1_MASK &&
       !gimage_mask_is_empty (gdisp->gimage))
     {
-      init_edit_selection (tool, gdisp_ptr, bevent, MaskTranslate);
+      init_edit_selection (tool, gdisp_ptr, bevent, EDIT_MASK_TRANSLATE);
       tool->state = ACTIVE;
     }
   else if (bevent->state & GDK_SHIFT_MASK)
     {
-      init_edit_selection (tool, gdisp_ptr, bevent, LayerTranslate);
+      init_edit_selection (tool, gdisp_ptr, bevent, EDIT_LAYER_TRANSLATE);
       tool->state = ACTIVE;
     }
   else
@@ -127,7 +127,7 @@ move_tool_button_press (Tool           *tool,
 	  else
 	    {
 	      gimage_set_active_layer (gdisp->gimage, layer);
-	      init_edit_selection (tool, gdisp_ptr, bevent, LayerTranslate);
+	      init_edit_selection (tool, gdisp_ptr, bevent, EDIT_LAYER_TRANSLATE);
 	    }
 	  tool->state = ACTIVE;
 	}

@@ -741,9 +741,8 @@ save_gimprc (GList **updated_options,
 	      g_free (str);
 
 	      *updated_options = g_list_remove_link (*updated_options, option);
-	      *conflicting_options = g_list_append (*conflicting_options,
-						    (gpointer) option->data);
-	      g_list_free_1 (option);
+	      *conflicting_options = g_list_concat (*conflicting_options,
+						    option);
 	      continue;
 	    }
 

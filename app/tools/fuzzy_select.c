@@ -402,12 +402,12 @@ fuzzy_select_button_press (Tool           *tool,
 
   if (fuzzy_sel->op == SELECTION_MOVE_MASK)
     {
-      init_edit_selection (tool, gdisp_ptr, bevent, MaskTranslate);
+      init_edit_selection (tool, gdisp_ptr, bevent, EDIT_MASK_TRANSLATE);
       return;
     }
   else if (fuzzy_sel->op == SELECTION_MOVE)
     {
-      init_edit_selection (tool, gdisp_ptr, bevent, MaskToLayerTranslate);
+      init_edit_selection (tool, gdisp_ptr, bevent, EDIT_MASK_TO_LAYER_TRANSLATE);
       return;
     }
 

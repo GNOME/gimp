@@ -74,13 +74,14 @@ static void   tearoff_cmd_callback  (GtkWidget            *widget,
 static gint   tearoff_delete_cb     (GtkWidget		  *widget, 
     				     GdkEvent		  *event,
 				     gpointer		   data);
-
+#ifdef ENABLE_DEBUG_ENTRY
 static void   menus_debug_recurse_menu (GtkWidget *menu,
 					gint       depth,
 					gchar     *path);
 static void   menus_debug_cmd_callback (GtkWidget *widget,
 					gpointer   callback_data,
 					guint      callback_action);
+#endif  /*  ENABLE_DEBUG_ENTRY  */
 
 static GSList *last_opened_raw_filenames = NULL;
 
@@ -182,8 +183,10 @@ static GimpItemFactoryEntry toolbox_entries[] =
     "help/dialogs/tip_of_the_day.html", NULL },
   { { N_("/Help/About..."), NULL, help_about_cmd_callback, 0 },
     "help/dialogs/about.html", NULL },
+#ifdef ENABLE_DEBUG_ENTRY
   { { N_("/Help/Dump Items (Debug)"), NULL, menus_debug_cmd_callback, 0 },
     NULL, NULL }
+#endif
 };
 
 static guint n_toolbox_entries = (sizeof (toolbox_entries) /
@@ -1364,9 +1367,9 @@ menus_last_opened_add (gchar *filename)
       list = g_slist_last (last_opened_raw_filenames);
       if (list)
 	{
-	  last_opened_raw_filenames = g_slist_remove_link (last_opened_raw_filenames, list);
 	  g_string_free ((GString *)list->data, TRUE);
-	  g_slist_free (list);
+	  last_opened_raw_filenames = 
+	    g_slist_remove (last_opened_raw_filenames, list);
 	}
     }
 
@@ -1376,7 +1379,8 @@ menus_last_opened_add (gchar *filename)
 
   if (num_entries == 0)
     {
-      menu_item = gtk_item_factory_get_widget (toolbox_factory, "/File/---MRU");
+      menu_item = gtk_item_factory_get_widget (toolbox_factory, 
+					       "/File/---MRU");
       gtk_widget_show (menu_item);
     }
 
@@ -1477,7 +1481,8 @@ menus_item_key_press (GtkWidget   *widget,
 	  (strcmp (help_page, "help/dialogs/help.html") == 0 ||
 	   strcmp (help_page, "help/context_help.html") == 0))
 	{
-	  gtk_signal_emit_stop_by_name (GTK_OBJECT (widget), "key_press_event");
+	  gtk_signal_emit_stop_by_name (GTK_OBJECT (widget), 
+					"key_press_event");
 	  return TRUE;
 	}
     }
@@ -1934,7 +1939,7 @@ tearoff_cmd_callback (GtkWidget *widget,
     }
 }
 
-
+#ifdef ENABLE_DEBUG_ENTRY
 static void
 menus_debug_recurse_menu (GtkWidget *menu,
 			  gint       depth,
@@ -1957,22 +1962,27 @@ menus_debug_recurse_menu (GtkWidget *menu,
       if (GTK_IS_LABEL (GTK_BIN (menu_item)->child))
 	{
 	  gtk_label_get (GTK_LABEL (GTK_BIN (menu_item)->child), &label);
-	  help_page = (gchar *) gtk_object_get_data (GTK_OBJECT (menu_item), "help_page");
+	  help_page = (gchar *) gtk_object_get_data (GTK_OBJECT (menu_item), 
+						     "help_page");
 	  
 	  full_path = g_strconcat (path, "/", label, NULL);
 	  class = gtk_type_class (GTK_TYPE_ITEM_FACTORY);
 	  item = g_hash_table_lookup (class->item_ht, full_path);
 	  if (item)
-	    accel = gtk_accelerator_name (item->accelerator_key, item->accelerator_mods);
+	    accel = gtk_accelerator_name (item->accelerator_key, 
+					  item->accelerator_mods);
 	  else
 	    accel = NULL;
 
-	  format_str = g_strdup_printf ("%%%ds%%%ds %%-20s %%s\n", depth * 2, depth * 2 - 40);
-	  g_print (format_str, "", label, accel ? accel : "", help_page ? help_page : "");
+	  format_str = g_strdup_printf ("%%%ds%%%ds %%-20s %%s\n", 
+					depth * 2, depth * 2 - 40);
+	  g_print (format_str, 
+		   "", label, accel ? accel : "", help_page ? help_page : "");
 	  g_free (format_str);
 
 	  if (GTK_MENU_ITEM (menu_item)->submenu)
-	    menus_debug_recurse_menu (GTK_MENU_ITEM (menu_item)->submenu, depth + 1, full_path);
+	    menus_debug_recurse_menu (GTK_MENU_ITEM (menu_item)->submenu, 
+				      depth + 1, full_path);
 
 	  g_free (full_path);
 	}			      
@@ -2027,3 +2037,4 @@ menus_debug_cmd_callback (GtkWidget *widget,
       g_print ("\n");
     }
 }
+#endif  /*  ENABLE_DEBUG_ENTRY  */

@@ -656,64 +656,40 @@ layer_apply_mask (Layer         *layer,
     }
 }
 
-static void
-layer_translate_lowlevel (Layer    *layer,
-			  gint      off_x,
-			  gint      off_y,
-			  gboolean  temporary)
+void
+layer_translate (Layer    *layer,
+		 gint      off_x,
+		 gint      off_y)
 {
-  if (!temporary)
-    {
-      /*  the undo call goes here  */
-      /*g_warning ("setting undo for layer translation");*/
-      undo_push_layer_displace (GIMP_DRAWABLE(layer)->gimage, layer);
-    }
+  /*  the undo call goes here  */
+  undo_push_layer_displace (GIMP_DRAWABLE(layer)->gimage, layer);
 
   /*  update the affected region  */
   drawable_update (GIMP_DRAWABLE(layer), 0, 0, 
 		   GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
 
-  if (!temporary)
-    {
-      /*  invalidate the selection boundary because of a layer modification  */
-      layer_invalidate_boundary (layer);
-    }
-
+  /*  invalidate the selection boundary because of a layer modification  */
+  layer_invalidate_boundary (layer);
+ 
   /*  update the layer offsets  */
-  GIMP_DRAWABLE(layer)->offset_x += off_x;
-  GIMP_DRAWABLE(layer)->offset_y += off_y;
+  GIMP_DRAWABLE (layer)->offset_x += off_x;
+  GIMP_DRAWABLE (layer)->offset_y += off_y;
 
   /*  update the affected region  */
-  drawable_update (GIMP_DRAWABLE(layer), 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
+  drawable_update (GIMP_DRAWABLE (layer), 
+		   0, 0, 
+		   GIMP_DRAWABLE (layer)->width, 
+		   GIMP_DRAWABLE (layer)->height);
 
   if (layer->mask) 
     {
-      GIMP_DRAWABLE(layer->mask)->offset_x += off_x;
-      GIMP_DRAWABLE(layer->mask)->offset_y += off_y;
+      GIMP_DRAWABLE (layer->mask)->offset_x += off_x;
+      GIMP_DRAWABLE (layer->mask)->offset_y += off_y;
 
-      if (!temporary)
-	{
-	  /*  invalidate the mask preview  */
-	  gimp_drawable_invalidate_preview (GIMP_DRAWABLE (layer->mask),
-					    FALSE);
-	}
+      /*  invalidate the mask preview  */
+      gimp_drawable_invalidate_preview (GIMP_DRAWABLE (layer->mask),
+					FALSE);
     }
-}
-
-void
-layer_temporarily_translate (Layer *layer,
-			     gint   off_x,
-			     gint   off_y)
-{
-  layer_translate_lowlevel (layer, off_x, off_y, TRUE);
-}
-
-void
-layer_translate (Layer *layer,
-		 gint   off_x,
-		 gint   off_y)
-{
-  layer_translate_lowlevel (layer, off_x, off_y, FALSE);
 }
 
 void
@@ -797,7 +773,8 @@ layer_scale_lowlevel (Layer *layer,
 		     FALSE);
 
   /*  Allocate the new layer, configure dest region  */
-  new_tiles = tile_manager_new (new_width, new_height, GIMP_DRAWABLE(layer)->bytes);
+  new_tiles = tile_manager_new (new_width, new_height, 
+				GIMP_DRAWABLE(layer)->bytes);
   pixel_region_init (&destPR, new_tiles, 
 		     0, 0, 
 		     new_width, new_height, 
@@ -859,7 +836,7 @@ layer_check_scaling (Layer  *layer,
 		     gint    new_width,
 		     gint    new_height)
 {
-   GImage  *gimage           =  GIMP_DRAWABLE(layer)->gimage;
+   GImage  *gimage           = GIMP_DRAWABLE(layer)->gimage;
    gdouble  img_scale_w      = (gdouble)new_width / (gdouble)gimage->width;
    gdouble  img_scale_h      = (gdouble)new_height / (gdouble)gimage->height;
    gint     new_layer_width  = (gint)(0.5 + img_scale_w * (gdouble)GIMP_DRAWABLE(layer)->width); 
