@@ -1,3 +1,11 @@
+2004-07-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpeditselectiontool.c: don't freeze()/thaw() the
+	image's undo to prevent live-movement from ending up on the undo
+	stack. Instead, just stop pushing undo steps after the initial
+	movement. Simplifies edit_select's undo code quite a bit and fixes
+	bug #148458.
+
 2004-07-26  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpcolorscales.c (gimp_color_scales_hex_events):
