@@ -1,5 +1,11 @@
 2004-05-31  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/mblur.c: applied patch from William Skaggs that
+	adds the possibility to choose the center of radial and zoom
+	motion blurs (bug #113711).
+
+2004-05-31  Sven Neumann  <sven@gimp.org>
+
 	* app/paint/gimpconvolve.c
 	* app/paint-funcs/paint-funcs.[ch]
 	* app/tools/gimpiscissorstool.c: reverted last change and applied
