@@ -75,7 +75,7 @@ gimp_vectors_export (const GimpVectors  *vectors,
            image->width, image->height);
   fprintf (file,
            "  <path d=\"%s\"\n"
-           "        fill=\"none\" stroke=\"black\", stroke-width=\"1\">\n",
+           "        fill=\"none\" stroke=\"black\", stroke-width=\"1\" />\n",
            data);
   fprintf (file,
            "</svg>\n");
