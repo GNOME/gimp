@@ -1294,7 +1294,7 @@ user_install_migrate_files (const gchar   *oldgimp,
       return FALSE;
     }
 
-  gimp_templates_migrate ();
+  gimp_templates_migrate (oldgimp);
 
   return TRUE;
 }
