@@ -1125,7 +1125,12 @@ ps_open (gchar            *filename,
   if (gs == NULL) gs = "gs";
 #else
   /* We want the console ghostscript application. It should be in the PATH */
-  if (gs == NULL) gs = "gswin32c";
+  if (gs == NULL)
+    gs = "gswin32c";
+  /* Quote the filename in case it contains spaces. Ignore memory leak,
+   * this is a short-lived plug-in.
+   */
+  filename = g_strdup_printf ("\"%s\"", filename);
 #endif
 
   gs_opts = getenv ("GS_OPTIONS");

@@ -9,6 +9,9 @@
 	introduced last May, don't overrun a g_strdup'ed string with
 	strcat.
 
+	* plug-ins/common/ps.c (ps_open): Enclose file name with double
+	quotes on Win32, in case it contains spaces.
+
 Mon Feb  7 23:22:53 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/curve_bend.c: found a bug that I introduced 
