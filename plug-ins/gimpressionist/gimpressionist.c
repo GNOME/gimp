@@ -240,7 +240,7 @@ void reselect(GtkWidget *list, char *fname)
   GtkWidget *tmpw;
   char *tmps, *tmpfile;
 
-  tmpfile = strrchr(fname, G_DIR_SEPARATOR);
+  tmpfile = strrchr(fname, '/');
   if(tmpfile)
     fname = ++tmpfile;  
 
@@ -280,7 +280,7 @@ void readdirintolist_real(char *subdir, GtkWidget *list, char *selected)
       selected = NULL;
     else {
       char *nsel;
-      nsel = strrchr(selected, G_DIR_SEPARATOR);
+      nsel = strrchr(selected, '/');
       if(nsel) selected = ++nsel;
     }
   }

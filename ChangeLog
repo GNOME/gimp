@@ -1,3 +1,10 @@
+2000-11-11  Tor Lillqvist  <tml@iki.fi>
+
+	* plug-ins/gimpressionist/gimpressionist.c (readdirintolist_real,
+	reselect): Use '/' instead of G_DIR_SEPARATOR. We are scanning a
+	"preset" file here, with file names always in Unix format. Thanks
+	to Jean-Louis HAMEL for this fix.
+
 Thu Nov  9 14:29:20 PST 2000 Manish Singh <yosh@gimp.org>
 
 	* AUTHORS
