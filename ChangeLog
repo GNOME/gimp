@@ -1,3 +1,13 @@
+2000-06-07  Sven Neumann  <sven@gimp.org>
+
+	* app/pixel_region.c: applied patch provided by Daniel Egger:
+	store the result of tile_bpp() into a variable and use it
+	instead of calling it over and over again in the inner loop.
+
+	* app/pixel_region.h
+	* app/pixel_regionP.h:
+	Did some additional indentation and code cleanup.
+	
 2000-06-07  Michael Natterer  <mitch@gimp.org>
             Jay Cox  <jaycox@gimp.org>
 

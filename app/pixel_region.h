@@ -25,34 +25,68 @@ typedef struct _PixelRegion PixelRegion;
 
 struct _PixelRegion
 {
-  unsigned char *    data;           /*  pointer to region data  */
-  TileManager *      tiles;          /*  pointer to tiles  */
-  Tile *             curtile;	     /*  current tile  */
-  int		     offx, offy;     /*  tile offsets */
-  int                rowstride;      /*  bytes per pixel row  */
-  int                x, y;           /*  origin  */
-  int                w, h;           /*  width and  height of region  */
-  int                bytes;          /*  bytes per pixel  */
-  int                dirty;          /*  will this region be dirtied?  */
-  int                process_count;  /*  used internally  */
+  guchar      *data;           /*  pointer to region data        */
+  TileManager *tiles;          /*  pointer to tiles              */
+  Tile        *curtile;        /*  current tile                  */
+  gint         offx;           /*  tile offsets                  */
+  gint         offy;           /*  tile offsets                  */
+  gint         rowstride;      /*  bytes per pixel row           */
+  gint         x;              /*  origin                        */
+  gint         y;              /*  origin                        */
+  gint         w;              /*  width of region               */
+  gint         h;              /*  height of region              */
+  gint         bytes;          /*  bytes per pixel               */
+  gboolean     dirty;          /*  will this region be dirtied?  */
+  gint         process_count;  /*  used internally               */
 };
 
 
 /*  PixelRegion functions  */
-void  pixel_region_init          (PixelRegion *, TileManager *, int, int, int, int, int);
-void  pixel_region_resize        (PixelRegion *, int, int, int, int);
-void  pixel_region_get_async     (PixelRegion *PR, int ulx, int uly,
-				  int lrx, int lry);
-void  pixel_region_get_row       (PixelRegion *, int, int, int, unsigned char *, int);
-void  pixel_region_set_row       (PixelRegion *, int, int, int, unsigned char *);
-void  pixel_region_get_col       (PixelRegion *, int, int, int, unsigned char *, int);
-void  pixel_region_set_col       (PixelRegion *, int, int, int, unsigned char *);
-int   pixel_region_has_alpha     (PixelRegion *);
 
-
-void *pixel_regions_register     (int, ...);
-void *pixel_regions_process      (void *);
-void  pixel_regions_process_stop (void *);
+void     pixel_region_init          (PixelRegion *PR, 
+				     TileManager *tiles, 
+				     gint         x, 
+				     gint         y, 
+				     gint         w, 
+				     gint         h, 
+				     gboolean     dirty);
+void     pixel_region_resize        (PixelRegion *PR, 
+				     gint         x, 
+				     gint         y, 
+				     gint         w, 
+				     gint         h);
+void     pixel_region_get_async     (PixelRegion *PR, 
+				     gint         ulx, 
+				     gint         uly, 
+				     gint         lrx, 
+				     gint         lry);
+void     pixel_region_get_row       (PixelRegion *PR, 
+				     gint         x, 
+				     gint         y, 
+				     gint         w, 
+				     guchar      *data, 
+				     gint         subsample);
+void     pixel_region_set_row       (PixelRegion *PR, 
+				     gint         x, 
+				     gint         y, 
+				     gint         w, 
+				     guchar      *data);
+void     pixel_region_get_col       (PixelRegion *PR, 
+				     gint         x, 
+				     gint         y, 
+				     gint         h, 
+				     guchar      *data, 
+				     gint         subsample);
+void     pixel_region_set_col       (PixelRegion *PR, 
+				     gint         x, 
+				     gint         y, 
+				     gint         h, 
+				     guchar      *data);
+gboolean pixel_region_has_alpha     (PixelRegion *PR);
+gpointer pixel_regions_register     (gint         num_regions, 
+				     ...);
+gpointer pixel_regions_process      (gpointer     PRI_ptr);
+void     pixel_regions_process_stop (gpointer     PRI_ptr);
 
 
 #endif /* __PIXEL_REGION_H__ */

@@ -27,9 +27,10 @@ typedef struct _PixelRegionHolder PixelRegionHolder;
 struct _PixelRegionHolder
 {
   PixelRegion *PR;
-  unsigned char *original_data;
-  int startx, starty;
-  int count;
+  guchar      *original_data;
+  gint         startx;
+  gint         starty;
+  gint         count;
 };
 
 
@@ -38,12 +39,12 @@ typedef struct _PixelRegionIterator PixelRegionIterator;
 struct _PixelRegionIterator
 {
   GSList *pixel_regions;
-  int dirty_tiles;
-  int region_width;
-  int region_height;
-  int portion_width;
-  int portion_height;
-  int process_count;
+  gint    dirty_tiles;
+  gint    region_width;
+  gint    region_height;
+  gint    portion_width;
+  gint    portion_height;
+  gint    process_count;
 };
 
 #endif  /*  __PIXEL_REGION_P_H__  */
