@@ -1,3 +1,12 @@
+2003-12-02  Jakub Steiner <jimmac@ximian.com>
+
+	* data/patterns/Makefile.am
+	* data/patterns/Stripes1px.pat
+	* data/patterns/Stripes2px.pat: simple RGBA stripes patterns.
+	  Very useful for the obligatory 'interlace' effect. can be done
+	  with the grid plugin currently, but dragging a pattern is by
+	  far the fastest.
+
 2003-12-02  Sven Neumann  <sven@gimp.org>
 
 	* libgimpthumb/Makefile.am
