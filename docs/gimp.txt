@@ -184,7 +184,7 @@ Tools
 		holding down the left mouse button and dragging allows the threshold parameter
 		to be dynamically adjusted.  moving the mouse left or up decreases the threshold;
 		moving the mouse right or down, increases.
-		intelligent scissors:  take the shit i wrote a long time ago
+		intelligent scissors:  take the stuff i wrote a long time ago
 		by-color:  this tool is invoked not through the toolbox, but through the menus
 		it selects in a manner similar to the fuzzy selection tool, except that it searches the
 		entire image for pixels of color similar to the initial point, instead of doing a seed
@@ -510,7 +510,7 @@ Image Correction
 	hue/saturation
 		allows adjustment of hue saturation--more on this
 	brightness/contrast
-		more on this shit
+		more on this stuff
 	levels
 		histogram
 	curves
