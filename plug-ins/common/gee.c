@@ -336,7 +336,7 @@ static void init_lut(void)
 
   for (i=0; i<LUTSIZE; i++)
     {
-      wigglelut[i] = ((double)(wiggleamp<<11))*(sin((double)(i) /
+      wigglelut[i] = rint((double)(wiggleamp<<11))*(sin((double)(i) /
 					    ((double)LUTSIZEMASK /
 					     31.4159265358979323)));
     }
