@@ -1442,11 +1442,11 @@ ps_open (gchar            *filename,
       indirfile = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "i%lx",
 				   g_get_tmp_dir (), getpid ());
       indf = fopen (indirfile, "w");
-      fprintf (indf, "%s -sDEVICE=%s -r%d %s%s%s-q -dNOPAUSE %s "
+      fprintf (indf, "-sDEVICE=%s -r%d %s%s%s-q -dNOPAUSE %s "
 	             "-sOutputFile=%s %s-f %s %s-c quit\n",
-	       gs, driver, resolution, geometry,
+	       driver, resolution, geometry,
 	       TextAlphaBits, GraphicsAlphaBits,
-	       gs_opts, pnmfile, offset, filename,
+	       gs_opts, pnmfile, offset, quoted_fn,
 	       *is_epsf ? "-c showpage " : "");
       sprintf (cmd, "%s @%s", gs, indirfile);
       fclose (indf);
@@ -3032,9 +3032,13 @@ save_unit_toggle_update (GtkWidget *widget,
 static gchar *
 g_shell_quote (const gchar *unquoted_string)
 {
-  /* We always use single quotes, because the algorithm is cheesier.
-   * We could use double if we felt like it, that might be more
-   * human-readable.
+  /* On Unix, we always use single quotes, because the algorithm is
+   * cheesier. We could use double if we felt like it, that might be
+   * more human-readable.
+   *
+   * On Windows, we always enclose the file name with double
+   * quotes. No more is needed, as file names can't contain double
+   * quotes.
    */
 
   const gchar *p;
@@ -3043,10 +3047,14 @@ g_shell_quote (const gchar *unquoted_string)
 
   g_return_val_if_fail (unquoted_string != NULL, NULL);
 
+#ifndef G_OS_WIN32
   dest = g_string_new ("'");
-
   p = unquoted_string;
+#else
+  dest = g_string_new ("\"");
+#endif
 
+#ifndef G_OS_WIN32
   /* could speed this up a lot by appending chunks of text at a
    * time.
    */
@@ -3060,9 +3068,16 @@ g_shell_quote (const gchar *unquoted_string)
 
       ++p;
     }
+#else
+  g_string_append (dest, unquoted_string);
+#endif
 
   /* close the quote */
+#ifndef G_OS_WIN32
   g_string_append_c (dest, '\'');
+#else
+  g_string_append_c (dest, '"');
+#endif
 
   ret = dest->str;
   g_string_free (dest, FALSE);
