@@ -39,6 +39,7 @@ struct _GimpUndoEditor
 
   GimpContainer   *container;
   GtkWidget       *view;
+  GimpPreviewSize  preview_size;
 
   GimpUndo        *base_item;
 
@@ -54,7 +55,7 @@ struct _GimpUndoEditorClass
 
 GType       gimp_undo_editor_get_type  (void) G_GNUC_CONST;
 
-GtkWidget * gimp_undo_editor_new       (GimpImage *gimage);
+GtkWidget * gimp_undo_editor_new       (GimpCoreConfig *config);
 
 
 #endif /* __GIMP_UNDO_EDITOR_H__ */

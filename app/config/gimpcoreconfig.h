@@ -68,6 +68,7 @@ struct _GimpCoreConfig
   GimpGrid              *default_grid;
   gint                   levels_of_undo;
   guint64                undo_size;
+  GimpPreviewSize        undo_preview_size;
   gchar                 *plug_in_rc_path;
   gboolean               layer_previews;
   GimpPreviewSize        layer_preview_size;

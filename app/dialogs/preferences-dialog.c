@@ -1199,7 +1199,7 @@ prefs_dialog_new (Gimp       *gimp,
                           _("_Enable Layer & Channel Previews"),
                           GTK_BOX (vbox2));
 
-  table = prefs_table_new (2, GTK_CONTAINER (vbox2), FALSE);
+  table = prefs_table_new (3, GTK_CONTAINER (vbox2), FALSE);
 
   prefs_enum_option_menu_add (object, "layer-preview-size", 0, 0,
                               _("Default _Layer & Channel Preview Size:"),
@@ -1207,6 +1207,9 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_enum_option_menu_add (object, "navigation-preview-size", 0, 0,
                               _("_Navigation Preview Size:"),
                               GTK_TABLE (table), 1);
+  prefs_enum_option_menu_add (object, "undo-preview-size", 0, 0,
+                              _("_Undo History Preview Size:"),
+                              GTK_TABLE (table), 2);
 
   /* Dialog Bahavior */
   vbox2 = prefs_frame_new (_("Dialog Behavior"), GTK_CONTAINER (vbox), FALSE);

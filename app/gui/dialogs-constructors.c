@@ -804,12 +804,17 @@ dialogs_undo_history_new (GimpDialogFactory *factory,
                           GimpContext       *context,
                           gint               preview_size)
 {
-  GtkWidget *view;
+  GtkWidget *editor;
   GtkWidget *dockable;
+  GimpImage *gimage;
 
-  view = gimp_undo_editor_new (gimp_context_get_image (context));
+  editor = gimp_undo_editor_new (context->gimp->config);
 
-  dockable = dialogs_dockable_new (view,
+  gimage = gimp_context_get_image (context);
+  if (gimage)
+    gimp_image_editor_set_image (GIMP_IMAGE_EDITOR (editor), gimage);
+
+  dockable = dialogs_dockable_new (editor,
 				   _("Undo"), _("Undo History"),
                                    GIMP_STOCK_UNDO_HISTORY,
                                    GIMP_HELP_UNDO_DIALOG);

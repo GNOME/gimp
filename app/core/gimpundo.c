@@ -24,6 +24,9 @@
 
 #include "base/temp-buf.h"
 
+#include "config/gimpcoreconfig.h"
+
+#include "gimp.h"
 #include "gimpimage.h"
 #include "gimpmarshal.h"
 #include "gimpundo.h"
@@ -370,45 +373,46 @@ gimp_undo_create_preview_idle (gpointer data)
   return FALSE;
 }
 
-void
+static void
 gimp_undo_create_preview_private (GimpUndo *undo)
 {
-  GimpViewable *preview_viewable;
-  gint          width;
-  gint          height;
+  GimpImage       *image = undo->gimage;
+  GimpViewable    *preview_viewable;
+  GimpPreviewSize  preview_size;
+  gint             width;
+  gint             height;
 
   switch (undo->undo_type)
     {
     case GIMP_UNDO_GROUP_IMAGE_QMASK:
     case GIMP_UNDO_GROUP_MASK:
     case GIMP_UNDO_MASK:
-      preview_viewable = GIMP_VIEWABLE (gimp_image_get_mask (undo->gimage));
+      preview_viewable = GIMP_VIEWABLE (gimp_image_get_mask (image));
       break;
 
     default:
-      preview_viewable = GIMP_VIEWABLE (undo->gimage);
+      preview_viewable = GIMP_VIEWABLE (image);
       break;
     }
 
-  if (undo->gimage->width  <= GIMP_UNDO_PREVIEW_SIZE &&
-      undo->gimage->height <= GIMP_UNDO_PREVIEW_SIZE)
+  preview_size = image->gimp->config->undo_preview_size;
+
+  if (image->width <= preview_size && image->height <= preview_size)
     {
-      width  = undo->gimage->width;
-      height = undo->gimage->height;
+      width  = image->width;
+      height = image->height;
     }
   else
     {
-      if (undo->gimage->width > undo->gimage->height)
+      if (image->width > image->height)
         {
-          width  = GIMP_UNDO_PREVIEW_SIZE;
-          height = MAX (1, (undo->gimage->height * GIMP_UNDO_PREVIEW_SIZE /
-                            undo->gimage->width));
+          width  = preview_size;
+          height = MAX (1, (image->height * preview_size / image->width));
         }
       else
         {
-          height = GIMP_UNDO_PREVIEW_SIZE;
-          width  = MAX (1, (undo->gimage->width * GIMP_UNDO_PREVIEW_SIZE /
-                            undo->gimage->height));
+          height = preview_size;
+          width  = MAX (1, (image->width * preview_size / image->height));
         }
     }
 

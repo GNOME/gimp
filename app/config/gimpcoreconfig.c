@@ -99,6 +99,7 @@ enum
   PROP_DEFAULT_GRID,
   PROP_UNDO_LEVELS,
   PROP_UNDO_SIZE,
+  PROP_UNDO_PREVIEW_SIZE,
   PROP_PLUGINRC_PATH,
   PROP_LAYER_PREVIEWS,
   PROP_LAYER_PREVIEW_SIZE,
@@ -283,6 +284,11 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                     "undo-size", UNDO_SIZE_BLURB,
                                     0, GIMP_MAX_MEMSIZE, 1 << 22,
                                     GIMP_PARAM_CONFIRM);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_UNDO_PREVIEW_SIZE,
+                                 "undo-preview-size", UNDO_PREVIEW_SIZE_BLURB,
+                                 GIMP_TYPE_PREVIEW_SIZE,
+                                 GIMP_PREVIEW_SIZE_LARGE,
+                                 GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class,
                                  PROP_PLUGINRC_PATH,
                                  "pluginrc-path", PLUGINRC_PATH_BLURB,
@@ -479,6 +485,9 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_UNDO_SIZE:
       core_config->undo_size = g_value_get_uint64 (value);
       break;
+    case PROP_UNDO_PREVIEW_SIZE:
+      core_config->undo_preview_size = g_value_get_enum (value);
+      break;
     case PROP_PLUGINRC_PATH:
       g_free (core_config->plug_in_rc_path);
       core_config->plug_in_rc_path = g_value_dup_string (value);
@@ -598,6 +607,9 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_UNDO_SIZE:
       g_value_set_uint64 (value, core_config->undo_size);
+      break;
+    case PROP_UNDO_PREVIEW_SIZE:
+      g_value_set_enum (value, core_config->undo_preview_size);
       break;
     case PROP_PLUGINRC_PATH:
       g_value_set_string (value, core_config->plug_in_rc_path);

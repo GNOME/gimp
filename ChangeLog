@@ -1,5 +1,24 @@
 2004-03-07  Sven Neumann  <sven@gimp.org>
 
+	Made size of undo previews configurable. Not dynamic for now, but
+	at least not hardcoded any longer. Fixes bug #119905:
+	
+	* app/config/gimpcoreconfig.[ch]
+	* app/config/gimprc-blurbs.h: added "undo-preview-size" property.
+
+	* app/core/gimpundo.[ch]: use the new property instead of a
+	hardcoded value.
+
+	* app/widgets/gimpundoeditor.[ch]: added a "preview-size"
+	construct property.
+
+	* app/gui/dialogs-constructors.c: changed accordingly.
+
+	* app/gui/preferences-dialog.c: added a widget to control the undo
+	preview size.
+
+2004-03-07  Sven Neumann  <sven@gimp.org>
+
 	* tools/gimp-remote.c: more cleanup.
 
 2004-03-07  Sven Neumann  <sven@gimp.org>
