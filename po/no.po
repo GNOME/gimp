@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.1.24\n"
-"POT-Creation-Date: 2000-08-30 21:26+0200\n"
-"PO-Revision-Date: 2000-08-30 21:32+02:00\n"
+"Project-Id-Version: gimp 1.1.25\n"
+"POT-Creation-Date: 2000-09-04 22:32+0200\n"
+"PO-Revision-Date: 2000-09-04 22:32+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2864,7 +2864,9 @@ msgstr "Zoom ut"
 msgid ""
 "\n"
 "Invalid option.\n"
-msgstr "\nUgyldig flagg.\n"
+msgstr ""
+"\n"
+"Ugyldig flagg.\n"
 
 #: app/main.c:301
 msgid "GIMP version"
@@ -2876,7 +2878,10 @@ msgid ""
 "\n"
 "Usage: %s [option ... ] [file ... ]\n"
 "\n"
-msgstr "\nBruk: %s [flagg ... ] [fil ... ]\n\n"
+msgstr ""
+"\n"
+"Bruk: %s [flagg ... ] [fil ... ]\n"
+"\n"
 
 #: app/main.c:306
 msgid "Options:\n"
@@ -2890,13 +2895,17 @@ msgstr "  -b, --batch <kommandoer>   Kjør i batch-modus.\n"
 msgid ""
 "  -c, --console-messages   Display warnings to console instead of a dialog "
 "box.\n"
-msgstr "  -c, --console-messages   Vis advarsler på konsollet i stedet for i en dialogboks.\n"
+msgstr ""
+"  -c, --console-messages   Vis advarsler på konsollet i stedet for i en "
+"dialogboks.\n"
 
 #: app/main.c:309
 msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
-msgstr "  -d, --no-                Ikke last pensler, gradienter, paletter, mønstre.\n"
+msgstr ""
+"  -d, --no-                Ikke last pensler, gradienter, paletter, "
+"mønstre.\n"
 
 #: app/main.c:310
 msgid "  -i, --no-interface       Run without a user interface.\n"
@@ -2934,7 +2943,8 @@ msgstr "  --verbose                Vis meldinger under oppstart.\n"
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
-msgstr "  --no-shm             Ikke bruk delt minne mellom GIMP og dens tillegg.\n"
+msgstr ""
+"  --no-shm             Ikke bruk delt minne mellom GIMP og dens tillegg.\n"
 
 #: app/main.c:319
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
@@ -2943,7 +2953,9 @@ msgstr "  --no-xshm                Ikke bruk X-utvidelsen for delt minne.\n"
 #: app/main.c:320
 msgid ""
 "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
-msgstr "  --debug-handlers         Slå på feilsøkings-signalhåndterere for ikke-fatale signaler.\n"
+msgstr ""
+"  --debug-handlers         Slå på feilsøkings-signalhåndterere for "
+"ikke-fatale signaler.\n"
 
 #: app/main.c:321
 msgid "  --display <display>      Use the designated X display.\n"
@@ -2957,7 +2969,9 @@ msgstr "  --system-gimprc <gimprc> Bruk en alternativ system gimprc fil.\n"
 msgid ""
 "                           Debugging mode for fatal signals.\n"
 "\n"
-msgstr "                           Feilsøkingsmodus for fatale signaler.\n\n"
+msgstr ""
+"                           Feilsøkingsmodus for fatale signaler.\n"
+"\n"
 
 #: app/main.c:341
 msgid "(This console window will close in ten seconds)\n"
