@@ -55,7 +55,6 @@
 #include <windows.h>
 #else
 static void       on_signal       (gint);
-static void       on_sig_child    (gint);
 #endif
 
 static void       init            (void);
@@ -345,10 +344,16 @@ main (int    argc,
   gimp_signal_syscallrestart (SIGTERM, on_signal);
   gimp_signal_syscallrestart (SIGFPE,  on_signal);
 
-  /* Handle child exits */
+#ifndef __EMX__ /* OS/2 may not support SA_NOCLDSTOP -GRO */
 
-  gimp_signal_syscallrestart (SIGCHLD, on_sig_child);
+  /* Disable child exit notification.  This doesn't just block */
+  /* receipt of SIGCHLD, it in fact completely disables the    */
+  /* generation of the signal by the OS.  This behavior is     */
+  /* mandated by POSIX.1.                                      */
 
+  gimp_signal_private (SIGCHLD, NULL, SA_NOCLDSTOP);
+
+#endif
 #endif
 
   g_log_set_handler (NULL, G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL,
@@ -461,22 +466,6 @@ on_signal (gint sig_num)
     default:
       gimp_fatal_error ("unknown signal");
       break;
-    }
-}
-
-/* gimp core signal handler for death-of-child signals */
-
-static void
-on_sig_child (gint sig_num)
-{
-  gint pid;
-  gint status;
-
-  while (1)
-    {
-      pid = waitpid (WAIT_ANY, &status, WNOHANG);
-      if (pid <= 0)
-	break;
     }
 }
 

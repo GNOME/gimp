@@ -1,3 +1,22 @@
+2000-04-30 Garry R. Osgood <gosgood@idt.net>
+	* app/main.c
+	* libgimp/gimpsignal.c [Documentation only]
+
+	Based on a patch and testing furnished by Tim Mooney
+ 	<mooney@dogbert.cc.ndsu.nodak.edu> Retiring app/main.c
+ 	on_sig_chld(); at best this function is schizoid: On the left hand it
+ 	employs a facility for processes that have nothing better to do
+ 	than sleep until children die. (waitpid()) But it employs this
+ 	policy on the right hand, in a SIGCLD handler, a facility for
+ 	processes that have better things to do than sleep until children
+ 	die (!). And - at worse - it appeared to be contributing to the
+ 	ongoing #2742 saga. Mr. Mooney and I concur that for now asking
+ 	POSIX OS's not to generate SIGCLD at all is better than asking
+ 	mentally divided functions to handle them. Eventually we will need
+ 	SIGCLD handlers to implement runtime plug-in management (Mitch:
+ 	"gimp_nanny()") When we come to that fork in the road (;)), we
+ 	will need to work carefully so as not to re-introduce #2742.
+
 2000-04-30  Sven Neumann  <sven@gimp.org>
 
 	* app/gimage_cmds.c: reverted Asbjorns change (changing this file
