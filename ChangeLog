@@ -1,3 +1,9 @@
+2001-03-25 Seth Burgess <sjburges@gimp.org>
+	
+	* app/tools/paint_options.c : applied 1-line patch by Dave Peary
+	<dneary@eircom.net> that takes away the warning on startup of 
+	dodgeburn.
+
 2001-03-25 18:16:50  Adam D. Moss <adam@gimp.org>
 
 	* app/convert.c: Define accessor function/macro for histogram

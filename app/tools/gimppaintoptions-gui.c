@@ -416,6 +416,7 @@ paint_pressure_options_new (GtkType       tool_type,
   if (tool_type == GIMP_TYPE_AIRBRUSH_TOOL   ||
       tool_type == GIMP_TYPE_CLONE_TOOL      ||
       tool_type == GIMP_TYPE_CONVOLVE_TOOL   ||
+      tool_type == GIMP_TYPE_DODGEBURN_TOOL  ||
       tool_type == GIMP_TYPE_ERASER_TOOL     ||
       tool_type == GIMP_TYPE_PAINTBRUSH_TOOL ||
       tool_type == GIMP_TYPE_PENCIL_TOOL     ||
