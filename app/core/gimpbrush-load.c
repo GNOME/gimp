@@ -263,6 +263,9 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
       brush_width  = (gdouble) brush_width  / MAX (ratio_x, ratio_y) + 0.5;
       brush_height = (gdouble) brush_height / MAX (ratio_x, ratio_y) + 0.5;
 
+      if (brush_width <= 0)  brush_width  = 1;
+      if (brush_height <= 0) brush_height = 1;
+
       mask_buf = brush_scale_mask (mask_buf, brush_width, brush_height);
 
       if (pixmap_buf)
@@ -544,6 +547,33 @@ gimp_brush_load_brush (gint          fd,
   header.spacing      = g_ntohl (header.spacing);
 
   /*  Check for correct file format */
+
+  if (header.width == 0)
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Fatal parse error in brush file '%s': "
+                     "Width = 0."),
+                   gimp_filename_to_utf8 (filename));
+      return NULL;
+    }
+
+  if (header.height == 0)
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Fatal parse error in brush file '%s': "
+                     "Height = 0."),
+                   gimp_filename_to_utf8 (filename));
+      return NULL;
+    }
+
+  if (header.bytes == 0)
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Fatal parse error in brush file '%s': "
+                     "Bytes = 0."),
+                   gimp_filename_to_utf8 (filename));
+      return NULL;
+    }
 
   switch (header.version)
     {

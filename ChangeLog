@@ -1,5 +1,13 @@
 2004-12-24  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
+	* app/core/gimpbrush.c: don't ask for preview with
+	zero width or height, fixes bug #162232.
+
+	* app/base/brush-scale.c: remove tabs and trailing
+	whitespace.
+
+2004-12-24  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
 	* app/actions/documents-commands.c
 	* app/actions/file-commands.c
 	* app/dialogs/file-open-dialog.c
