@@ -47,6 +47,7 @@ FILES = \
 	confetti.gbr		\
 	confetti.gih		\
 	dunes.gbr		\
+	feltpen.gih		\
 	galaxy.gbr		\
 	galaxy_big.gbr		\
 	galaxy_small.gbr	\

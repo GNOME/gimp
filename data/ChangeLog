@@ -1,3 +1,7 @@
+2001-04-06  Simon Budig  <simon@gimp.org>
+
+        * brushes/Makefile.am: added feltpen.gih
+	
 2000-12-29  Sven Neumann  <sven@gimp.org>
 
 	* brushes/Makefile.am: added confetti.gih and hsparks.gih
