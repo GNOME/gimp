@@ -1,3 +1,14 @@
+Sun Apr 11 23:35:31 CEST 1999 Marc Lehmann <pcg@goof.com>
+
+	* app/general.c: save string token length into "token_int".
+        Fixed parsing of escape sequences, added '\0' and '"' sequences.
+
+        * app/gimprc.c: implement new type "parasite".
+
+        * app/gimpparasite.c: load and save parasiterc in "semi-ascii".
+
+        * libgimp/parasite.[ch]: new function parasite_flags.
+
 Sat Apr 10 23:33:26 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* app/color_picker.c: added a sample average feature (requested

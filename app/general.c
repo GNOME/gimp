@@ -197,15 +197,19 @@ get_token (ParseInfo *info)
 	    }
 	  else if (slashed || (buffer[info->position] != '"'))
 	    {
-	      slashed = FALSE;
 	      if (slashed && buffer[info->position] == 'n')
 		tokenbuf[tokenpos++] = '\n';
 	      else if (slashed && buffer[info->position] == 'r')
 		tokenbuf[tokenpos++] = '\r';
 	      else if (slashed && buffer[info->position] == 'z') /* ^Z */
 		tokenbuf[tokenpos++] = '\032';
+	      else if (slashed && buffer[info->position] == '0') /* \0 */
+		tokenbuf[tokenpos++] = '\0';
+	      else if (slashed && buffer[info->position] == '"')
+		tokenbuf[tokenpos++] = '"';
 	      else
-	      tokenbuf[tokenpos++] = buffer[info->position];
+	        tokenbuf[tokenpos++] = buffer[info->position];
+	      slashed = FALSE;
 	      info->position += 1;
 	    }
 	  else
@@ -213,6 +217,7 @@ get_token (ParseInfo *info)
 	      tokenbuf[tokenpos] = '\0';
 	      token_str = tokenbuf;
 	      token_sym = tokenbuf;
+              token_int = tokenpos;
 	      info->position += 1;
 	      return TOKEN_STRING;
 	    }

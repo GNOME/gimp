@@ -177,6 +177,14 @@ parasite_compare (const Parasite *a, const Parasite *b)
   return FALSE;
 }
 
+gulong
+parasite_flags(const Parasite *p)
+{
+  if (p == NULL)
+    return 0;
+  return p->flags;
+}
+
 int
 parasite_is_persistent(const Parasite *p)
 {

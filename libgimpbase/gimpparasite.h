@@ -50,6 +50,7 @@ int         parasite_is_type       (const Parasite *parasite,
 				    const char *name);
 int         parasite_is_persistent (const Parasite *p);
 int         parasite_has_flag      (const Parasite *p, gulong flag);
+gulong      parasite_flags         (const Parasite *p);
 const char *parasite_name          (const Parasite *p);
 void       *parasite_data          (const Parasite *p);
 long        parasite_data_size     (const Parasite *p);

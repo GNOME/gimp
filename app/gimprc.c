@@ -44,7 +44,9 @@
 #include "gimage.h"
 #include "session.h"
 #include "tools.h"
+#include "gimpparasite.h"
 
+#include "libgimp/parasite.h"
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpenv.h"
 
@@ -70,7 +72,8 @@ typedef enum {
   TT_XMENUPATH,
   TT_XDEVICE,
   TT_XSESSIONINFO,
-  TT_XUNITINFO
+  TT_XUNITINFO,
+  TT_XPARASITE
 } TokenType;
 
 typedef struct _ParseFunc ParseFunc;
@@ -167,6 +170,7 @@ static int parse_device (gpointer val1p, gpointer val2p);
 static int parse_menu_path (gpointer val1p, gpointer val2p);
 static int parse_session_info (gpointer val1p, gpointer val2p);
 static int parse_unit_info (gpointer val1p, gpointer val2p);
+static int parse_parasite (gpointer val1p, gpointer val2p);
 
 static int parse_proc_def (PlugInProcDef **proc_def);
 static int parse_proc_arg (ProcArg *arg);
@@ -275,6 +279,7 @@ static ParseFunc funcs[] =
   { "monitor-yresolution",   TT_FLOAT,      &monitor_yres, NULL },
   { "num-processors",        TT_INT,        &num_processors, NULL },
   { "image-title-format",    TT_STRING,     &image_title_format, NULL },
+  { "parasite",              TT_XPARASITE,  NULL, NULL },
 };
 static int nfuncs = sizeof (funcs) / sizeof (funcs[0]);
 
@@ -619,6 +624,8 @@ parse_statement ()
 	  return parse_session_info (funcs[i].val1p, funcs[i].val2p);
 	case TT_XUNITINFO:
 	  return parse_unit_info (funcs[i].val1p, funcs[i].val2p);
+	case TT_XPARASITE:
+	  return parse_parasite (funcs[i].val1p, funcs[i].val2p);
 	}
 
   return parse_unknown (token_sym);
@@ -2011,6 +2018,44 @@ parse_unit_info (gpointer val1p,
 }
 
 static int
+parse_parasite  (gpointer val1p, 
+		 gpointer val2p)
+{
+  int token;
+  int res = ERROR;
+  gchar *identifier = NULL;
+  gulong flags = 0;
+
+  token = get_next_token ();
+  if (token != TOKEN_STRING)
+    goto error;
+
+  identifier = g_strdup (token_str);
+
+  token = get_next_token ();
+
+  /* possible future extension: allow flags as symbolic strings.  */
+  if (token == TOKEN_NUMBER)
+    flags |= token_int;
+
+  token = get_next_token ();
+  if (token != TOKEN_STRING)
+    goto error;
+
+  gimp_attach_parasite (parasite_new (identifier, flags, token_int, token_str));
+
+  token = get_next_token ();
+  if (token != TOKEN_RIGHT_PAREN)
+    goto error;
+
+  res = OK;
+
+error:
+  g_free (identifier);
+  return res;
+}
+
+static int
 parse_unknown (char *token_sym)
 {
   int token;
@@ -2102,6 +2147,7 @@ value_to_str (char *name)
 	case TT_XDEVICE:
 	case TT_XSESSIONINFO:
 	case TT_XUNITINFO:
+	case TT_XPARASITE:
 	  return NULL;
 	}
   return NULL;

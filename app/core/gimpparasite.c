@@ -20,8 +20,10 @@
 #include <unistd.h>
 #include "parasitelist.h"
 #include "gimpparasite.h"
+#include "gimprc.h"
 #include "libgimp/parasite.h"
 #include "libgimp/gimpenv.h"
+#include "libgimp/gimpintl.h"
 
 static ParasiteList *parasites = NULL;
 
@@ -69,40 +71,68 @@ gimp_parasite_list (gint *count)
   return list;
 }
 
+static void save_func(char *key, Parasite *p, FILE *fp)
+{
+  if (parasite_is_persistent (p))
+    {
+      gchar *s;
+      guint32 l;
+
+      fprintf (fp, "(parasite \"%s\" %lu \"", parasite_name (p), parasite_flags (p));
+
+      for (s = (gchar *)parasite_data (p), l = parasite_data_size (p);
+           l;
+           l--, s++)
+        {
+          switch (*s)
+            {
+              case '\0': fputs ("\\0", fp); break;
+              case '"' : fputs ("\\\"", fp); break;
+              /* disabled, not portable!  */
+/*              case '\n': fputs ("\\n", fp); break;*/
+/*              case '\r': fputs ("\\r", fp); break;*/
+              case 26  : fputs ("\\z", fp); break;
+              default  : fputc (*s, fp); break;
+            }
+        }
+      
+      fputs ("\")\n\n", fp);
+    }
+}
+
 void
 gimp_parasiterc_save()
 {
+  int i;
+  char *filename;
   FILE *fp;
-  guint32 version = 1;
-  if (!(fp = fopen(gimp_personal_rc_file ("#parasiterc.tmp"), "w")))
+
+  filename = gimp_personal_rc_file ("#parasiterc.tmp~");
+
+  fp = fopen (filename, "w");
+  g_free (filename);
+  if (!fp)
     return;
-  version = GINT32_TO_BE(version);
-  fwrite(&version, 4, 1, fp);
 
-  parasite_list_save(parasites, fp);
+  fprintf (fp, _("# GIMP parasiterc\n"));
+  fprintf (fp, _("# This file will be entirely rewritten every time you quit the gimp.\n\n"));
+  
+  parasite_list_foreach (parasites, (GHFunc)save_func, fp);
 
-  fclose(fp);
-  if (rename(gimp_personal_rc_file ("#parasiterc.tmp"),
+  fclose (fp);
+
+  if (rename(gimp_personal_rc_file ("#parasiterc.tmp~"),
 	     gimp_personal_rc_file("parasiterc")) != 0)
-    unlink(gimp_personal_rc_file ("#parasiterc.tmp"));
+    unlink(gimp_personal_rc_file ("#parasiterc.tmp~"));
 }
 
 void
 gimp_parasiterc_load()
 {
-  FILE *fp;
-  guint32 version;
-  if (!(fp = fopen(gimp_personal_rc_file ("parasiterc"), "r")))
-    return;
-  fread(&version, 4, 1, fp);
-  version = GINT32_FROM_BE(version);
-  if (version != 1)
-  {
-    fclose(fp);
-    return;
-  }
+  char *filename;
 
-  parasite_list_load(parasites, fp);
-
-  fclose(fp);
+  filename = gimp_personal_rc_file ("parasiterc");
+  app_init_update_status(NULL, filename, -1);
+  parse_gimprc_file (filename);
+  g_free (filename);
 }
