@@ -1,3 +1,8 @@
+2004-06-17  Sven Neumann  <sven@gimp.org>
+
+	* autogen.sh: check for xsltproc and mention that the intltool
+	version mismatch is harmless.
+
 2004-06-17  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* tools/pdbgen/pdb/paths.pdb: Fix typos and improve documentation.
@@ -9,7 +14,7 @@
 2004-06-17  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpcontroller.[ch]: removed "enabled"
-	property. Removed GIMP_CONTROLLER_PARAM_RERIALIZE from the "name"
+	property. Removed GIMP_CONTROLLER_PARAM_SERIALIZE from the "name"
 	property because it's the hardware-determined name of this
 	controller instance.
 

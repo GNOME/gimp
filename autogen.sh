@@ -150,6 +150,8 @@ if (intltoolize --version) < /dev/null > /dev/null 2>&1; then
             echo "  generate incorrect XML output.  Please consider using an"
             echo "  earlier version of intltool in order to avoid these"
             echo "  problems until a newer version of intltool is released."
+	    echo
+	    echo "  This problem is harmless, you may continue the build." 
         else
             echo "yes"
         fi
@@ -160,6 +162,16 @@ else
     echo "not found"
 fi
 
+echo -n "checking for xsltproc ... "
+if (xsltproc --version) < /dev/null > /dev/null 2>&1; then
+    echo "yes"
+else
+    echo
+    echo "  You must have xsltproc installed to compile $PROJECT."
+    echo "  Get the latest version from"
+    echo "  ftp://ftp.gnome.org/pub/GNOME/sources/libxslt/"
+    DIE=1
+fi
 
 if test "$DIE" -eq 1; then
     echo
