@@ -9,10 +9,10 @@ msgstr ""
 "Project-Id-Version: GIMP plugins 1.2.4\n"
 "POT-Creation-Date: 2003-08-11 18:41+0300\n"
 "PO-Revision-Date: 2002-10-08 00:11+0100\n"
-"Last-Translator: Eglë Girinaitë <eglyte@centras.lt>\n"
+"Last-Translator: EglÄ— GirinaitÄ— <eglyte@centras.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-13\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:295
@@ -39,7 +39,7 @@ msgstr "Apie"
 #: plug-ins/ifscompose/ifscompose.c:931 plug-ins/print/gimp_main_window.c:411
 #: plug-ins/rcm/rcm_dialog.c:124 plug-ins/rcm/rcm_dialog.c:671
 msgid "Preview"
-msgstr "Perşiûra"
+msgstr "PerÅ¾iÅ«ra"
 
 #: plug-ins/FractalExplorer/Dialogs.c:364
 msgid "Realtime Preview"
@@ -51,11 +51,11 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:374
 msgid "Redraw"
-msgstr "Perpieğti"
+msgstr "PerpieÅ¡ti"
 
 #: plug-ins/FractalExplorer/Dialogs.c:380
 msgid "Redraw preview"
-msgstr "Atnaujinti perşiûrà"
+msgstr "Atnaujinti perÅ¾iÅ«rÄ…"
 
 #. Zoom Options
 #: plug-ins/FractalExplorer/Dialogs.c:383
@@ -64,11 +64,11 @@ msgstr "Mastelio parinktys"
 
 #: plug-ins/FractalExplorer/Dialogs.c:397
 msgid "Undo last zoom"
-msgstr "Atğaukti paskutiná mastelio pakeitimà"
+msgstr "AtÅ¡aukti paskutinÄ¯ mastelio pakeitimÄ…"
 
 #: plug-ins/FractalExplorer/Dialogs.c:407
 msgid "Redo last zoom"
-msgstr "Atstatyti paskutiná mastelio pakeitimà"
+msgstr "Atstatyti paskutinÄ¯ mastelio pakeitimÄ…"
 
 #.
 #. *  Scales
@@ -630,7 +630,7 @@ msgstr ""
 #: plug-ins/Lighting/lighting_ui.c:529
 #, fuzzy
 msgid "L_ight Type:"
-msgstr "Paveikslëlio tipas:"
+msgstr "PaveikslÄ—lio tipas:"
 
 #: plug-ins/Lighting/lighting_ui.c:532 plug-ins/MapObject/mapobject_ui.c:708
 msgid "Type of light source to apply"
@@ -769,7 +769,7 @@ msgstr ""
 #: plug-ins/Lighting/lighting_ui.c:853
 #, fuzzy
 msgid "_Highlight:"
-msgstr "Aukğtis:"
+msgstr "AukÅ¡tis:"
 
 #: plug-ins/Lighting/lighting_ui.c:871 plug-ins/MapObject/mapobject_ui.c:1006
 msgid "Higher values makes the highlights more focused"
@@ -810,7 +810,7 @@ msgstr ""
 #: plug-ins/Lighting/lighting_ui.c:953
 #, fuzzy
 msgid "Ma_ximum Height:"
-msgstr "Aukğtis:"
+msgstr "AukÅ¡tis:"
 
 #: plug-ins/Lighting/lighting_ui.c:960
 msgid "Maximum height for bumps"
@@ -819,7 +819,7 @@ msgstr ""
 #: plug-ins/Lighting/lighting_ui.c:966
 #, fuzzy
 msgid "M_inimum Height:"
-msgstr "Aukğtis:"
+msgstr "AukÅ¡tis:"
 
 #: plug-ins/Lighting/lighting_ui.c:973
 msgid "Minimum height for bumps"
@@ -857,7 +857,7 @@ msgstr "Pasirinkimai"
 #: plug-ins/Lighting/lighting_ui.c:1071 plug-ins/MapObject/mapobject_ui.c:1335
 #, fuzzy
 msgid "_Light"
-msgstr "Değinë"
+msgstr "DeÅ¡inÄ—"
 
 #: plug-ins/Lighting/lighting_ui.c:1075 plug-ins/MapObject/mapobject_ui.c:1339
 msgid "_Material"
@@ -895,7 +895,7 @@ msgstr ""
 #: plug-ins/MapObject/mapobject_main.c:202
 #, fuzzy
 msgid "<Image>/Filters/Map/Map _Object..."
-msgstr "<Image>/File/Iğsiøsti pağtu..."
+msgstr "<Image>/File/IÅ¡siÅ³sti paÅ¡tu..."
 
 #: plug-ins/MapObject/mapobject_ui.c:252
 #: plug-ins/MapObject/mapobject_ui.c:1349
@@ -1040,22 +1040,22 @@ msgstr ""
 #: plug-ins/MapObject/mapobject_ui.c:1142
 #: plug-ins/print/gimp_main_window.c:524
 msgid "Top:"
-msgstr "Virğus"
+msgstr "VirÅ¡us"
 
 #: plug-ins/MapObject/mapobject_ui.c:1142
 #: plug-ins/print/gimp_main_window.c:565
 msgid "Bottom:"
-msgstr "Apaèia"
+msgstr "ApaÄia"
 
 #: plug-ins/MapObject/mapobject_ui.c:1143
 #: plug-ins/print/gimp_main_window.c:511
 msgid "Left:"
-msgstr "Kairë:"
+msgstr "KairÄ—:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1143
 #: plug-ins/print/gimp_main_window.c:537
 msgid "Right:"
-msgstr "Değinë:"
+msgstr "DeÅ¡inÄ—:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1149
 msgid "Map Images to Box Faces"
@@ -1081,12 +1081,12 @@ msgstr ""
 #: plug-ins/MapObject/mapobject_ui.c:1241
 #, fuzzy
 msgid "_Top:"
-msgstr "Virğus"
+msgstr "VirÅ¡us"
 
 #: plug-ins/MapObject/mapobject_ui.c:1241
 #, fuzzy
 msgid "_Bottom:"
-msgstr "Apaèia"
+msgstr "ApaÄia"
 
 #: plug-ins/MapObject/mapobject_ui.c:1246
 msgid "Images for the Cap Faces"
@@ -1132,7 +1132,7 @@ msgstr ""
 #: plug-ins/MapObject/mapobject_ui.c:1436 plug-ins/common/diffraction.c:575
 #, fuzzy
 msgid "_Preview!"
-msgstr "Perşiûra!"
+msgstr "PerÅ¾iÅ«ra!"
 
 #: plug-ins/MapObject/mapobject_ui.c:1459
 msgid "Zoom out (make image smaller)"
@@ -1303,7 +1303,7 @@ msgstr "Dydis"
 #: plug-ins/common/AlienMap.c:1281
 #, fuzzy
 msgid "Cos_ine"
-msgstr "Uşdaryti"
+msgstr "UÅ¾daryti"
 
 #: plug-ins/common/AlienMap.c:1236 plug-ins/common/AlienMap.c:1259
 #: plug-ins/common/AlienMap.c:1282 plug-ins/common/tiff.c:1805
@@ -1678,7 +1678,7 @@ msgstr "Sodrumas"
 #: plug-ins/gimpressionist/orientation.c:108
 #: plug-ins/gimpressionist/size.c:106
 msgid "Value"
-msgstr "Reikğmë"
+msgstr "ReikÅ¡mÄ—"
 
 #: plug-ins/common/CML_explorer.c:475
 #, fuzzy
@@ -1718,7 +1718,7 @@ msgstr "Sodrumas"
 #: plug-ins/common/CML_explorer.c:1283 plug-ins/fp/fp_gtk.c:300
 #, fuzzy
 msgid "_Value"
-msgstr "Reikğmë"
+msgstr "ReikÅ¡mÄ—"
 
 #: plug-ins/common/CML_explorer.c:1287
 msgid "_Advanced"
@@ -1942,7 +1942,7 @@ msgstr "<Image>/Layers/Lygiuoti matomus sluoksnius"
 
 #: plug-ins/common/align_layers.c:187
 msgid "Align Visible Layers: there are too few layers."
-msgstr "Sulygiuoti matomus sluoksnius: per maşai sluoksniø."
+msgstr "Sulygiuoti matomus sluoksnius: per maÅ¾ai sluoksniÅ³."
 
 #: plug-ins/common/align_layers.c:411
 msgid "Align Visible Layers"
@@ -2084,7 +2084,7 @@ msgstr ""
 #: plug-ins/common/animationplay.c:1315
 #, fuzzy, c-format
 msgid "Frame %d of %d"
-msgstr "Kadras %v iğ %u"
+msgstr "Kadras %v iÅ¡ %u"
 
 #: plug-ins/common/animoptimize.c:176
 msgid "<Image>/Filters/Animation/Animation _Optimize"
@@ -2158,7 +2158,7 @@ msgstr ""
 #: plug-ins/common/autocrop.c:75
 #, fuzzy
 msgid "<Image>/Image/Transform/_Autocrop"
-msgstr "<Image>/Image/Transforms/Rotate/90 laipsniø"
+msgstr "<Image>/Image/Transforms/Rotate/90 laipsniÅ³"
 
 #: plug-ins/common/autocrop.c:120
 msgid "Cropping..."
@@ -2284,7 +2284,7 @@ msgstr ""
 #: plug-ins/common/bumpmap.c:376
 #, fuzzy
 msgid "<Image>/Filters/Map/_Bump Map..."
-msgstr "<Image>/File/Iğsiøsti pağtu..."
+msgstr "<Image>/File/IÅ¡siÅ³sti paÅ¡tu..."
 
 #: plug-ins/common/bumpmap.c:528
 msgid "Bump-mapping..."
@@ -2559,7 +2559,7 @@ msgstr ""
 #: plug-ins/common/compose.c:301
 #, fuzzy
 msgid "<Image>/Filters/Colors/C_ompose..."
-msgstr "<Image>/File/Iğsiøsti pağtu..."
+msgstr "<Image>/File/IÅ¡siÅ³sti paÅ¡tu..."
 
 #: plug-ins/common/compose.c:364
 #, c-format
@@ -2621,7 +2621,7 @@ msgstr "Ekranas"
 #: plug-ins/common/convmatrix.c:88 plug-ins/common/newsprint.c:398
 #, fuzzy
 msgid "_Blue"
-msgstr "Reikğmë"
+msgstr "ReikÅ¡mÄ—"
 
 #: plug-ins/common/convmatrix.c:89
 msgid "_Alpha"
@@ -2695,7 +2695,7 @@ msgstr ""
 #: plug-ins/common/csource.c:680
 #, fuzzy
 msgid "_Prefixed Name:"
-msgstr "Spausdintuvo·vardas:"
+msgstr "SpausdintuvoÂ·vardas:"
 
 #: plug-ins/common/csource.c:689
 #, fuzzy
@@ -2798,7 +2798,7 @@ msgstr ""
 #: plug-ins/common/curve_bend.c:1412
 #, fuzzy
 msgid "_Preview Once"
-msgstr "Perşiûra"
+msgstr "PerÅ¾iÅ«ra"
 
 #. The preview toggle
 #: plug-ins/common/curve_bend.c:1421
@@ -2844,7 +2844,7 @@ msgstr ""
 #: plug-ins/common/curve_bend.c:1538
 #, fuzzy
 msgid "Curve _Type:"
-msgstr "Paveikslëlio tipas:"
+msgstr "PaveikslÄ—lio tipas:"
 
 #. The Copy button
 #: plug-ins/common/curve_bend.c:1548
@@ -2872,7 +2872,7 @@ msgstr ""
 #: plug-ins/common/curve_bend.c:1577
 #, fuzzy
 msgid "Swap the two curves"
-msgstr "Visà ekranà"
+msgstr "VisÄ… ekranÄ…"
 
 #: plug-ins/common/curve_bend.c:1589
 msgid "Reset the active curve"
@@ -3118,7 +3118,7 @@ msgstr ""
 #: plug-ins/common/despeckle.c:186
 #, fuzzy
 msgid "<Image>/Filters/Enhance/Des_peckle..."
-msgstr "<Image>/File/Iğsiøsti pağtu..."
+msgstr "<Image>/File/IÅ¡siÅ³sti paÅ¡tu..."
 
 #. Source image region
 #. Destination image region
@@ -3257,7 +3257,7 @@ msgstr "Pasirinkimai"
 #: plug-ins/common/displace.c:163
 #, fuzzy
 msgid "<Image>/Filters/Map/_Displace..."
-msgstr "<Image>/File/Iğsiøsti pağtu..."
+msgstr "<Image>/File/IÅ¡siÅ³sti paÅ¡tu..."
 
 #: plug-ins/common/displace.c:235
 msgid "Displacing..."
@@ -3292,7 +3292,7 @@ msgstr ""
 #: plug-ins/common/ripple.c:567 plug-ins/common/waves.c:337
 #, fuzzy
 msgid "_Smear"
-msgstr "Ieğkoti:"
+msgstr "IeÅ¡koti:"
 
 #: plug-ins/common/displace.c:417 plug-ins/common/edge.c:746
 #: plug-ins/common/fractaltrace.c:804 plug-ins/common/newsprint.c:435
@@ -3377,7 +3377,7 @@ msgstr "Sutrumpinimas:"
 #: plug-ins/common/emboss.c:742 plug-ins/common/sinus.c:2067
 #, fuzzy
 msgid "Do _Preview"
-msgstr "Perşiûra"
+msgstr "PerÅ¾iÅ«ra"
 
 #: plug-ins/common/engrave.c:118
 #, fuzzy
@@ -3403,12 +3403,12 @@ msgstr ""
 #: plug-ins/imagemap/imap_rectangle.c:411
 #, fuzzy
 msgid "_Height:"
-msgstr "Aukğtis:"
+msgstr "AukÅ¡tis:"
 
 #: plug-ins/common/exchange.c:140
 #, fuzzy
 msgid "<Image>/Filters/Colors/Map/_Color Exchange..."
-msgstr "<Image>/File/Iğsiøsti pağtu..."
+msgstr "<Image>/File/IÅ¡siÅ³sti paÅ¡tu..."
 
 #: plug-ins/common/exchange.c:242
 msgid "Color Exchange..."
@@ -3484,7 +3484,7 @@ msgstr ""
 #: plug-ins/common/film.c:1197
 #, fuzzy
 msgid "_Selection"
-msgstr "Raiğka"
+msgstr "RaiÅ¡ka"
 
 #. Film height/colour
 #: plug-ins/common/film.c:1205 plug-ins/common/film.c:1488
@@ -3519,7 +3519,7 @@ msgstr ""
 #: plug-ins/common/film.c:1294
 #, fuzzy
 msgid "_Font:"
-msgstr "Ğriftas:"
+msgstr "Å riftas:"
 
 #. Numbering color
 #: plug-ins/common/film.c:1298
@@ -3529,7 +3529,7 @@ msgstr ""
 #: plug-ins/common/film.c:1312
 #, fuzzy
 msgid "At _Bottom"
-msgstr "Apaèia"
+msgstr "ApaÄia"
 
 #: plug-ins/common/film.c:1313
 msgid "At _Top"
@@ -3551,12 +3551,12 @@ msgstr ""
 #: plug-ins/common/film.c:1377
 #, fuzzy
 msgid "Image _Height:"
-msgstr "Aukğtis:"
+msgstr "AukÅ¡tis:"
 
 #: plug-ins/common/film.c:1388
 #, fuzzy
 msgid "Image Spac_ing:"
-msgstr "Paveikslëlio tipas:"
+msgstr "PaveikslÄ—lio tipas:"
 
 #: plug-ins/common/film.c:1406
 msgid "_Hole Offset:"
@@ -3570,7 +3570,7 @@ msgstr "Plotis:"
 #: plug-ins/common/film.c:1428
 #, fuzzy
 msgid "Hol_e Height:"
-msgstr "Aukğtis:"
+msgstr "AukÅ¡tis:"
 
 #: plug-ins/common/film.c:1439
 msgid "Hole Sp_acing:"
@@ -3579,7 +3579,7 @@ msgstr ""
 #: plug-ins/common/film.c:1457
 #, fuzzy
 msgid "_Number Height:"
-msgstr "Aukğtis:"
+msgstr "AukÅ¡tis:"
 
 #. don't translate '<Image>' entry,
 #. * it is keyword for the gtk toolkit
@@ -3795,8 +3795,8 @@ msgstr ""
 msgid ""
 "Sorry, can't save RGB images as GIFs. Convert to Indexed or Grayscale first."
 msgstr ""
-"GIF: Atsiprağome, RGB paveikslëlio neina iğsaugoti kaip GIF - konvertuokite\n"
-"á INDEXED arba GRAY pirma.\n"
+"GIF: AtsipraÅ¡ome, RGB paveikslÄ—lio neina iÅ¡saugoti kaip GIF - konvertuokite\n"
+"Ä¯ INDEXED arba GRAY pirma.\n"
 
 #: plug-ins/common/gif.c:1132
 msgid ""
@@ -3811,7 +3811,7 @@ msgstr ""
 
 #: plug-ins/common/gif.c:1215
 msgid "GIF Warning"
-msgstr "GIF perspëjimas"
+msgstr "GIF perspÄ—jimas"
 
 #: plug-ins/common/gif.c:1241
 msgid ""
@@ -3826,7 +3826,7 @@ msgstr ""
 
 #: plug-ins/common/gif.c:1287
 msgid "Save as GIF"
-msgstr "Iğsaugoti kaip GIF"
+msgstr "IÅ¡saugoti kaip GIF"
 
 #. regular gif parameter settings
 #: plug-ins/common/gif.c:1309
@@ -3864,7 +3864,7 @@ msgstr ""
 
 #: plug-ins/common/gif.c:1447
 msgid "I don't Care"
-msgstr "Man nerûpi"
+msgstr "Man nerÅ«pi"
 
 #: plug-ins/common/gif.c:1449
 msgid "Cumulative Layers (Combine)"
@@ -3989,7 +3989,7 @@ msgstr "Plotis:"
 #: plug-ins/common/glasstile.c:293 plug-ins/mosaic/mosaic.c:692
 #, fuzzy
 msgid "Tile _Height:"
-msgstr "Aukğtis:"
+msgstr "AukÅ¡tis:"
 
 #: plug-ins/common/gqbist.c:438
 #, fuzzy
@@ -4090,11 +4090,11 @@ msgid ""
 "HTML file which will most likely\n"
 "crash your browser."
 msgstr ""
-"Ar iğprotëjote?\n"
+"Ar iÅ¡protÄ—jote?\n"
 "\n"
-"Jûs norite sukurti didşiulæ\n"
-"HTML bylà, kuri greièiausiai\n"
-"nulauğ jûsø narğyklæ."
+"JÅ«s norite sukurti didÅ¾iulÄ™\n"
+"HTML bylÄ…, kuri greiÄiausiai\n"
+"nulauÅ¡ jÅ«sÅ³ narÅ¡yklÄ™."
 
 #. HTML Page Options
 #: plug-ins/common/gtm.c:461
@@ -4166,7 +4166,7 @@ msgstr ""
 #: plug-ins/common/gtm.c:591
 #, fuzzy
 msgid "_Border:"
-msgstr "Rëmelis:"
+msgstr "RÄ—melis:"
 
 #: plug-ins/common/gtm.c:595
 msgid "The number of pixels in the table border."
@@ -4199,7 +4199,7 @@ msgstr ""
 #: plug-ins/common/guillotine.c:79
 #, fuzzy
 msgid "<Image>/Image/Transform/_Guillotine"
-msgstr "<Image>/Image/Transforms/Rotate/90 laipsniø"
+msgstr "<Image>/Image/Transforms/Rotate/90 laipsniÅ³"
 
 #: plug-ins/common/guillotine.c:110
 msgid "Guillotine..."
@@ -4310,7 +4310,7 @@ msgstr ""
 #: plug-ins/common/iwarp.c:993
 #, fuzzy
 msgid "Number of _Frames:"
-msgstr "kadrø skaièius:"
+msgstr "kadrÅ³ skaiÄius:"
 
 #: plug-ins/common/iwarp.c:1002
 #, fuzzy
@@ -4430,7 +4430,7 @@ msgstr ""
 #: plug-ins/common/jigsaw.c:2638
 #, fuzzy
 msgid "H_ighlight:"
-msgstr "Aukğtis:"
+msgstr "AukÅ¡tis:"
 
 #: plug-ins/common/jigsaw.c:2642
 msgid "The amount of highlighting on the edges of each piece"
@@ -4620,12 +4620,12 @@ msgstr ""
 #: plug-ins/common/lic.c:896
 #, fuzzy
 msgid "<Image>/Filters/Map/_Van Gogh (LIC)..."
-msgstr "<Image>/File/Iğsiøsti pağtu..."
+msgstr "<Image>/File/IÅ¡siÅ³sti paÅ¡tu..."
 
 #: plug-ins/common/mail.c:220
 #, fuzzy
 msgid "<Image>/File/_Mail Image..."
-msgstr "<Image>/File/Iğsiøsti pağtu..."
+msgstr "<Image>/File/IÅ¡siÅ³sti paÅ¡tu..."
 
 #: plug-ins/common/mail.c:463
 msgid "Send to Mail"
@@ -4693,7 +4693,7 @@ msgstr ""
 #: plug-ins/common/mapcolor.c:369
 #, fuzzy
 msgid "<Image>/Filters/Colors/Map/Color Range _Mapping..."
-msgstr "<Image>/File/Iğsiøsti pağtu..."
+msgstr "<Image>/File/IÅ¡siÅ³sti paÅ¡tu..."
 
 #: plug-ins/common/mapcolor.c:416 plug-ins/common/mapcolor.c:751
 msgid ""
@@ -4792,7 +4792,7 @@ msgstr ""
 #: plug-ins/common/mng.c:1111
 #, fuzzy
 msgid "Save as MNG"
-msgstr "Iğsaugoti kaip PNG"
+msgstr "IÅ¡saugoti kaip PNG"
 
 #: plug-ins/common/mng.c:1130
 #, fuzzy
@@ -4811,7 +4811,7 @@ msgstr ""
 #: plug-ins/common/mng.c:1170
 #, fuzzy
 msgid "Save Resolution"
-msgstr "Raiğka"
+msgstr "RaiÅ¡ka"
 
 #: plug-ins/common/mng.c:1180
 msgid "Save Creation Time"
@@ -4931,7 +4931,7 @@ msgstr ""
 #. resolution settings
 #: plug-ins/common/newsprint.c:1240
 msgid "Resolution"
-msgstr "Raiğka"
+msgstr "RaiÅ¡ka"
 
 #: plug-ins/common/newsprint.c:1259
 msgid "_Input SPI:"
@@ -5026,7 +5026,7 @@ msgstr ""
 #: plug-ins/common/nlfilt.c:485 plug-ins/common/waves.c:475
 #, fuzzy
 msgid "_Do Preview"
-msgstr "Perşiûra"
+msgstr "PerÅ¾iÅ«ra"
 
 #: plug-ins/common/noisify.c:132
 #, fuzzy
@@ -5205,7 +5205,7 @@ msgstr ""
 #: plug-ins/common/papertile.c:838
 #, fuzzy
 msgid "<Image>/Filters/Map/_Paper Tile..."
-msgstr "<Image>/File/Iğsiøsti pağtu..."
+msgstr "<Image>/File/IÅ¡siÅ³sti paÅ¡tu..."
 
 #: plug-ins/common/pat.c:451
 msgid "Save as Pattern"
@@ -5256,7 +5256,7 @@ msgstr "Plotis:"
 #: plug-ins/common/pixelize.c:363
 #, fuzzy
 msgid "Pixel _Height:"
-msgstr "Aukğtis:"
+msgstr "AukÅ¡tis:"
 
 #: plug-ins/common/plasma.c:192
 #, fuzzy
@@ -5281,7 +5281,7 @@ msgstr ""
 
 #: plug-ins/common/plugindetails.c:106
 msgid "Internal GIMP procedure"
-msgstr "Vidinë GIMP procedûra"
+msgstr "VidinÄ— GIMP procedÅ«ra"
 
 #: plug-ins/common/plugindetails.c:107
 msgid "GIMP Plug-In"
@@ -5289,24 +5289,24 @@ msgstr "GIMP priedas"
 
 #: plug-ins/common/plugindetails.c:108
 msgid "GIMP Extension"
-msgstr "GIMP iğplëtimas"
+msgstr "GIMP iÅ¡plÄ—timas"
 
 #: plug-ins/common/plugindetails.c:109
 msgid "Temporary Procedure"
-msgstr "Laikina procedûra"
+msgstr "Laikina procedÅ«ra"
 
 #: plug-ins/common/plugindetails.c:145
 #, fuzzy
 msgid "<Toolbox>/Xtns/_Plugin Details..."
-msgstr "<Toolbox>/Xtns/Priedø detalës..."
+msgstr "<Toolbox>/Xtns/PriedÅ³ detalÄ—s..."
 
 #: plug-ins/common/plugindetails.c:221
 msgid "Details <<"
-msgstr "Detalës <<"
+msgstr "DetalÄ—s <<"
 
 #: plug-ins/common/plugindetails.c:231 plug-ins/common/plugindetails.c:1108
 msgid "Details >>"
-msgstr "Detalës >>"
+msgstr "DetalÄ—s >>"
 
 #. Number of plugins
 #: plug-ins/common/plugindetails.c:317
@@ -5343,11 +5343,11 @@ msgstr "Tipas:"
 
 #: plug-ins/common/plugindetails.c:993
 msgid "Plugin Descriptions"
-msgstr "Priedø aprağymai"
+msgstr "PriedÅ³ apraÅ¡ymai"
 
 #: plug-ins/common/plugindetails.c:1000
 msgid "Search by Name"
-msgstr "Ieğkoti pagal vardà"
+msgstr "IeÅ¡koti pagal vardÄ…"
 
 #. list : list in a scrolled_win
 #: plug-ins/common/plugindetails.c:1032
@@ -5364,11 +5364,11 @@ msgstr ""
 
 #: plug-ins/common/plugindetails.c:1035 plug-ins/common/plugindetails.c:1062
 msgid "Image Types"
-msgstr "Paveikslëlio tipas"
+msgstr "PaveikslÄ—lio tipas"
 
 #: plug-ins/common/plugindetails.c:1053
 msgid "List View"
-msgstr "Sàrağo vaizdas"
+msgstr "SÄ…raÅ¡o vaizdas"
 
 #. notebook->ctree
 #: plug-ins/common/plugindetails.c:1060
@@ -5377,11 +5377,11 @@ msgstr ""
 
 #: plug-ins/common/plugindetails.c:1077
 msgid "Tree View"
-msgstr "Medşio vaizdas"
+msgstr "MedÅ¾io vaizdas"
 
 #: plug-ins/common/plugindetails.c:1097
 msgid "Search:"
-msgstr "Ieğkoti:"
+msgstr "IeÅ¡koti:"
 
 #: plug-ins/common/png.c:471
 #, fuzzy, c-format
@@ -5407,7 +5407,7 @@ msgid ""
 "PNG error. Couldn't save image"
 msgstr ""
 "%s\n"
-"PNG klaida. Nepavyko iğsaugoti paveikslëlio"
+"PNG klaida. Nepavyko iÅ¡saugoti paveikslÄ—lio"
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
@@ -5419,7 +5419,7 @@ msgstr ""
 
 #: plug-ins/common/png.c:1294
 msgid "Save as PNG"
-msgstr "Iğsaugoti kaip PNG"
+msgstr "IÅ¡saugoti kaip PNG"
 
 #. parameter settings
 #: plug-ins/common/png.c:1306 plug-ins/common/sample_colorize.c:1382
@@ -5446,7 +5446,7 @@ msgstr ""
 #: plug-ins/common/png.c:1353
 #, fuzzy
 msgid "Save _Resolution"
-msgstr "Raiğka"
+msgstr "RaiÅ¡ka"
 
 #: plug-ins/common/png.c:1361
 msgid "Save Creation _Time"
@@ -5590,7 +5590,7 @@ msgstr ""
 
 #: plug-ins/common/ps.c:2672 plug-ins/print/gimp_main_window.c:1095
 msgid "Resolution:"
-msgstr "Raiğka:"
+msgstr "RaiÅ¡ka:"
 
 #: plug-ins/common/ps.c:2700
 msgid "Pages:"
@@ -5692,12 +5692,12 @@ msgstr ""
 #: plug-ins/common/ps.c:2967
 #, fuzzy
 msgid "P_review"
-msgstr "Perşiûra"
+msgstr "PerÅ¾iÅ«ra"
 
 #: plug-ins/common/ps.c:2988
 #, fuzzy
 msgid "Preview _Size:"
-msgstr "Perşiûra"
+msgstr "PerÅ¾iÅ«ra"
 
 #: plug-ins/common/psp.c:422
 msgid "Save as PSP"
@@ -5793,7 +5793,7 @@ msgstr ""
 
 #: plug-ins/common/rotate.c:421
 msgid "You can not rotate the whole image if there's a selection."
-msgstr "Negalima pasukti viso vaizdo jei yra paşymejimas "
+msgstr "Negalima pasukti viso vaizdo jei yra paÅ¾ymejimas "
 
 #: plug-ins/common/rotate.c:428
 msgid "You can not rotate the whole image if there's a floating selection."
@@ -5926,12 +5926,12 @@ msgstr "Sodrumas"
 #: plug-ins/common/scatter_hsv.c:446
 #, fuzzy
 msgid "_Value:"
-msgstr "Reikğmë"
+msgstr "ReikÅ¡mÄ—"
 
 #: plug-ins/common/screenshot.c:135
 #, fuzzy
 msgid "<Toolbox>/File/Acquire/_Screen Shot..."
-msgstr "<Toolbox>/File/Acquire/Ekrano nuotraukà..."
+msgstr "<Toolbox>/File/Acquire/Ekrano nuotraukÄ…..."
 
 #. main dialog
 #: plug-ins/common/screenshot.c:383
@@ -5946,12 +5946,12 @@ msgstr "Nufotografuoti"
 #: plug-ins/common/screenshot.c:415
 #, fuzzy
 msgid "_Single Window"
-msgstr "Vienà langà"
+msgstr "VienÄ… langÄ…"
 
 #: plug-ins/common/screenshot.c:432
 #, fuzzy
 msgid "With _Decorations"
-msgstr "Priedø aprağymai"
+msgstr "PriedÅ³ apraÅ¡ymai"
 
 #: plug-ins/common/screenshot.c:452
 #, fuzzy
@@ -5961,11 +5961,11 @@ msgstr "Visas ekranas"
 #: plug-ins/common/screenshot.c:471
 #, fuzzy
 msgid "_after"
-msgstr "uş"
+msgstr "uÅ¾"
 
 #: plug-ins/common/screenshot.c:484 plug-ins/winsnap/winsnap.c:1023
 msgid "Seconds Delay"
-msgstr "sekundşiø"
+msgstr "sekundÅ¾iÅ³"
 
 #: plug-ins/common/sel_gauss.c:124
 #, fuzzy
@@ -6187,7 +6187,7 @@ msgstr ""
 #: plug-ins/common/smooth_palette.c:468
 #, fuzzy
 msgid "_Search Depth:"
-msgstr "Ieğkoti:"
+msgstr "IeÅ¡koti:"
 
 #: plug-ins/common/snoise.c:183
 #, fuzzy
@@ -6206,7 +6206,7 @@ msgstr ""
 #: plug-ins/common/snoise.c:548
 #, fuzzy
 msgid "_Detail:"
-msgstr "Detalës >>"
+msgstr "DetalÄ—s >>"
 
 #. Turbulent
 #: plug-ins/common/snoise.c:555
@@ -6358,7 +6358,7 @@ msgstr ""
 #: plug-ins/common/sparkle.c:509
 #, fuzzy
 msgid "A_dd Border"
-msgstr "Rëmelis:"
+msgstr "RÄ—melis:"
 
 #: plug-ins/common/sparkle.c:515
 msgid "Draw a Border of Spikes around the Image"
@@ -6404,7 +6404,7 @@ msgstr ""
 #: plug-ins/common/spheredesigner.c:281
 #, fuzzy
 msgid "Lizard"
-msgstr "Ákelti"
+msgstr "Ä®kelti"
 
 #: plug-ins/common/spheredesigner.c:282
 msgid "Phong"
@@ -6413,7 +6413,7 @@ msgstr ""
 #: plug-ins/common/spheredesigner.c:283
 #, fuzzy
 msgid "Noise"
-msgstr "Uşdaryti"
+msgstr "UÅ¾daryti"
 
 #: plug-ins/common/spheredesigner.c:284
 msgid "Wood"
@@ -6447,7 +6447,7 @@ msgstr "Atidaryti"
 #: plug-ins/common/spheredesigner.c:2152
 #, fuzzy
 msgid "Save File"
-msgstr "Iğsaugoti"
+msgstr "IÅ¡saugoti"
 
 #: plug-ins/common/spheredesigner.c:2463
 msgid "Sphere Designer"
@@ -6582,22 +6582,22 @@ msgstr ""
 #: plug-ins/common/struc.c:1298
 #, fuzzy
 msgid "_Top-Right"
-msgstr "Değinë"
+msgstr "DeÅ¡inÄ—"
 
 #: plug-ins/common/struc.c:1301
 #, fuzzy
 msgid "Top-_Left"
-msgstr "Kairë"
+msgstr "KairÄ—"
 
 #: plug-ins/common/struc.c:1304
 #, fuzzy
 msgid "_Bottom-Left"
-msgstr "Apaèia"
+msgstr "ApaÄia"
 
 #: plug-ins/common/struc.c:1307
 #, fuzzy
 msgid "Bottom-_Right"
-msgstr "Apaèia"
+msgstr "ApaÄia"
 
 #: plug-ins/common/sunras.c:402
 msgid "Can't open file as SUN-raster-file"
@@ -6743,7 +6743,7 @@ msgstr ""
 #: plug-ins/common/tiff.c:1814
 #, fuzzy
 msgid "_Deflate"
-msgstr "Iğtrinti"
+msgstr "IÅ¡trinti"
 
 #: plug-ins/common/tiff.c:1817
 msgid "_JPEG"
@@ -6752,7 +6752,7 @@ msgstr ""
 #: plug-ins/common/tile.c:127
 #, fuzzy
 msgid "<Image>/Filters/Map/_Tile..."
-msgstr "<Image>/File/Iğsiøsti pağtu..."
+msgstr "<Image>/File/IÅ¡siÅ³sti paÅ¡tu..."
 
 #: plug-ins/common/tile.c:205 plug-ins/common/tileit.c:329
 msgid "Tiling..."
@@ -6855,7 +6855,7 @@ msgstr ""
 
 #: plug-ins/common/uniteditor.c:85
 msgid "How many units make up an inch."
-msgstr "Kiek vienetø sudaro colá."
+msgstr "Kiek vienetÅ³ sudaro colÄ¯."
 
 #: plug-ins/common/uniteditor.c:86
 msgid "Digits"
@@ -6906,7 +6906,7 @@ msgstr ""
 #: plug-ins/common/uniteditor.c:115
 #, fuzzy
 msgid "<Toolbox>/Xtns/_Unit Editor..."
-msgstr "<Toolbox>/Xtns/Vienetø redaktorius..."
+msgstr "<Toolbox>/Xtns/VienetÅ³ redaktorius..."
 
 #: plug-ins/common/uniteditor.c:179
 msgid "New Unit"
@@ -6948,7 +6948,7 @@ msgstr "Daugiskaita:"
 
 #: plug-ins/common/uniteditor.c:316
 msgid "Unit factor must not be 0."
-msgstr "Vienetø daugiklis negali bûti 0."
+msgstr "VienetÅ³ daugiklis negali bÅ«ti 0."
 
 #: plug-ins/common/uniteditor.c:326
 msgid "All text fields must contain a value."
@@ -6956,7 +6956,7 @@ msgstr ""
 
 #: plug-ins/common/uniteditor.c:541
 msgid "Unit Editor"
-msgstr "Vienetø redaktorius"
+msgstr "VienetÅ³ redaktorius"
 
 #: plug-ins/common/uniteditor.c:626
 msgid "Create a new unit from scratch."
@@ -7101,7 +7101,7 @@ msgstr "<Image>/File/Spausdinti"
 #: plug-ins/common/vpropagate.c:461
 #, fuzzy
 msgid "Value Propagating..."
-msgstr "Ádedama..."
+msgstr "Ä®dedama..."
 
 #: plug-ins/common/vpropagate.c:1032
 msgid "Value Propagate"
@@ -7127,12 +7127,12 @@ msgstr ""
 #: plug-ins/common/vpropagate.c:1125
 #, fuzzy
 msgid "To L_eft"
-msgstr "Kairë"
+msgstr "KairÄ—"
 
 #: plug-ins/common/vpropagate.c:1128
 #, fuzzy
 msgid "To _Right"
-msgstr "Değinë"
+msgstr "DeÅ¡inÄ—"
 
 #: plug-ins/common/vpropagate.c:1131
 msgid "To _Top"
@@ -7141,7 +7141,7 @@ msgstr ""
 #: plug-ins/common/vpropagate.c:1134
 #, fuzzy
 msgid "To _Bottom"
-msgstr "Apaèia"
+msgstr "ApaÄia"
 
 #: plug-ins/common/vpropagate.c:1147
 msgid "Propagating _Alpha Channel"
@@ -7154,7 +7154,7 @@ msgstr ""
 #: plug-ins/common/warp.c:266
 #, fuzzy
 msgid "<Image>/Filters/Map/_Warp..."
-msgstr "<Image>/File/Iğsiøsti pağtu..."
+msgstr "<Image>/File/IÅ¡siÅ³sti paÅ¡tu..."
 
 #: plug-ins/common/warp.c:413
 msgid "Warp"
@@ -7292,7 +7292,7 @@ msgstr ""
 #: plug-ins/common/waves.c:380
 #, fuzzy
 msgid "_Phase:"
-msgstr "Ádëta"
+msgstr "Ä®dÄ—ta"
 
 #: plug-ins/common/waves.c:389
 #, fuzzy
@@ -7326,15 +7326,15 @@ msgstr ""
 
 #: plug-ins/common/winclipboard.c:109
 msgid "<Image>/Edit/Copy to Clipboard"
-msgstr "<Image>/Edit/Kopijuoti á iğkarpinæ"
+msgstr "<Image>/Edit/Kopijuoti Ä¯ iÅ¡karpinÄ™"
 
 #: plug-ins/common/winclipboard.c:121
 msgid "<Image>/Edit/Paste from Clipboard"
-msgstr "<Image>/Edit/Ádëti iğ iğkarpinës"
+msgstr "<Image>/Edit/Ä®dÄ—ti iÅ¡ iÅ¡karpinÄ—s"
 
 #: plug-ins/common/winclipboard.c:133
 msgid "<Toolbox>/File/Acquire/From Clipboard"
-msgstr "<Toolbox>/File/Acquire/Iğ iğkarpinës"
+msgstr "<Toolbox>/File/Acquire/IÅ¡ iÅ¡karpinÄ—s"
 
 #: plug-ins/common/winclipboard.c:308
 #, fuzzy
@@ -7347,17 +7347,17 @@ msgstr "Nepalaikomas formatas arba nieko nera nukopijuota"
 
 #: plug-ins/common/winclipboard.c:482
 msgid "Can't get Clipboard data."
-msgstr "Neina paimti duomenø iğ iğkarpinës."
+msgstr "Neina paimti duomenÅ³ iÅ¡ iÅ¡karpinÄ—s."
 
 #. ??? gimp_convert_rgb (image_ID);
 #.
 #: plug-ins/common/winclipboard.c:564
 msgid "Pasted"
-msgstr "Ádëta"
+msgstr "Ä®dÄ—ta"
 
 #: plug-ins/common/winclipboard.c:577
 msgid "Pasting..."
-msgstr "Ádedama..."
+msgstr "Ä®dedama..."
 
 #: plug-ins/common/wind.c:195
 #, fuzzy
@@ -7394,12 +7394,12 @@ msgstr ""
 #: plug-ins/common/wind.c:964
 #, fuzzy
 msgid "_Left"
-msgstr "Kairë"
+msgstr "KairÄ—"
 
 #: plug-ins/common/wind.c:967
 #, fuzzy
 msgid "_Right"
-msgstr "Değinë"
+msgstr "DeÅ¡inÄ—"
 
 #. ****************************************************
 #. radio buttons for choosing BOTH, LEADING, TRAILING
@@ -7593,7 +7593,7 @@ msgstr ""
 #: plug-ins/common/xbm.c:1285
 #, fuzzy
 msgid "_Mask File Extension:"
-msgstr "GIMP iğplëtimas"
+msgstr "GIMP iÅ¡plÄ—timas"
 
 #: plug-ins/common/xpm.c:767
 msgid "Save as XPM"
@@ -7647,7 +7647,7 @@ msgstr ""
 #: plug-ins/common/zealouscrop.c:69
 #, fuzzy
 msgid "<Image>/Layer/Transform/_Zealous Crop"
-msgstr "<Image>/Image/Transforms/Rotate/90 laipsniø"
+msgstr "<Image>/Image/Transforms/Rotate/90 laipsniÅ³"
 
 #: plug-ins/common/zealouscrop.c:115
 msgid "ZealousCropping(tm)..."
@@ -7660,7 +7660,7 @@ msgstr ""
 #: plug-ins/dbbrowser/dbbrowser.c:89
 #, fuzzy
 msgid "<Toolbox>/Xtns/_DB Browser..."
-msgstr "<Toolbox>/Xtns/DB narğyklë..."
+msgstr "<Toolbox>/Xtns/DB narÅ¡yklÄ—..."
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:118
 #: plug-ins/dbbrowser/dbbrowser_utils.c:137
@@ -7671,18 +7671,18 @@ msgstr ""
 #: plug-ins/dbbrowser/dbbrowser_utils.c:142
 #, fuzzy
 msgid "Search by _Name"
-msgstr "Ieğkoti pagal vardà"
+msgstr "IeÅ¡koti pagal vardÄ…"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:125
 #: plug-ins/dbbrowser/dbbrowser_utils.c:144
 #, fuzzy
 msgid "Search by _Blurb"
-msgstr "Ieğkoti pagal vardà"
+msgstr "IeÅ¡koti pagal vardÄ…"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:205
 #, fuzzy
 msgid "_Search:"
-msgstr "Ieğkoti:"
+msgstr "IeÅ¡koti:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:368
 msgid "In:"
@@ -7888,7 +7888,7 @@ msgstr ""
 #: plug-ins/flame/flame.c:1184
 #, fuzzy
 msgid "_Zoom:"
-msgstr "Apaèia"
+msgstr "ApaÄia"
 
 #: plug-ins/fp/fp.c:92
 #, fuzzy
@@ -7988,7 +7988,7 @@ msgstr "Sodrumas"
 #: plug-ins/fp/fp_gtk.c:434
 #, fuzzy
 msgid "V_alue"
-msgstr "Reikğmë"
+msgstr "ReikÅ¡mÄ—"
 
 #: plug-ins/fp/fp_gtk.c:447
 msgid "Show"
@@ -8116,7 +8116,7 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:1869
 msgid "Closed"
-msgstr "Uşdaryta"
+msgstr "UÅ¾daryta"
 
 #: plug-ins/gfig/gfig.c:1874
 msgid "Close curve on completion"
@@ -8604,7 +8604,7 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:5047 plug-ins/imagemap/imap_toolbar.c:104
 msgid "Save"
-msgstr "Iğsaugoti"
+msgstr "IÅ¡saugoti"
 
 #: plug-ins/gfig/gfig.c:5061
 msgid "Save As..."
@@ -8693,7 +8693,7 @@ msgstr ""
 #: plug-ins/gflare/gflare.c:2690
 #, fuzzy
 msgid "Ro_tation:"
-msgstr "Raiğka:"
+msgstr "RaiÅ¡ka:"
 
 #: plug-ins/gflare/gflare.c:2702
 msgid "_Hue Rotation:"
@@ -8890,7 +8890,7 @@ msgstr ""
 #: plug-ins/gflare/gflare.c:3850
 #, fuzzy
 msgid "_Second Flares"
-msgstr "sekundşiø"
+msgstr "sekundÅ¾iÅ³"
 
 #: plug-ins/gflare/gflare.c:4450
 msgid "none"
@@ -9435,7 +9435,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/preview.c:128
 msgid "Refresh the Preview window"
-msgstr "Atnaujinti perşiûros langà"
+msgstr "Atnaujinti perÅ¾iÅ«ros langÄ…"
 
 #: plug-ins/gimpressionist/preview.c:136
 msgid "Revert to the original image"
@@ -9580,7 +9580,7 @@ msgstr ""
 
 #: plug-ins/helpbrowser/helpbrowser.c:594
 msgid "GIMP Help Browser"
-msgstr "GIMP pagalbos narğyklë"
+msgstr "GIMP pagalbos narÅ¡yklÄ—"
 
 #: plug-ins/helpbrowser/helpbrowser.c:874
 #, c-format
@@ -9745,7 +9745,7 @@ msgstr ""
 #: plug-ins/ifscompose/ifscompose.c:2738
 #, fuzzy
 msgid "Save as IFS file"
-msgstr "Iğsaugoti kaip GIF"
+msgstr "IÅ¡saugoti kaip GIF"
 
 #: plug-ins/ifscompose/ifscompose.c:2763
 msgid "Load IFS file"
@@ -9807,7 +9807,7 @@ msgstr ""
 #: plug-ins/imagemap/imap_cmd_delete.c:57
 #: plug-ins/imagemap/imap_selection.c:178 plug-ins/imagemap/imap_tools.c:172
 msgid "Delete"
-msgstr "Iğtrinti"
+msgstr "IÅ¡trinti"
 
 #: plug-ins/imagemap/imap_cmd_delete_point.c:61
 #: plug-ins/imagemap/imap_polygon.c:725
@@ -9840,22 +9840,22 @@ msgstr ""
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:177
 #, fuzzy
 msgid "L_eft Border"
-msgstr "Rëmelis:"
+msgstr "RÄ—melis:"
 
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:181
 #, fuzzy
 msgid "_Right Border"
-msgstr "Rëmelis:"
+msgstr "RÄ—melis:"
 
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:185
 #, fuzzy
 msgid "_Upper Border"
-msgstr "Rëmelis:"
+msgstr "RÄ—melis:"
 
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:189
 #, fuzzy
 msgid "Lo_wer Border"
-msgstr "Rëmelis:"
+msgstr "RÄ—melis:"
 
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:198
 msgid "_Base URL:"
@@ -10015,7 +10015,7 @@ msgstr ""
 #: plug-ins/imagemap/imap_edit_area_info.c:240
 #, fuzzy
 msgid "Tel_net"
-msgstr "Iğtrinti"
+msgstr "IÅ¡trinti"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:246
 msgid "e-_mail"
@@ -10052,7 +10052,7 @@ msgstr ""
 #: plug-ins/imagemap/imap_edit_area_info.c:313
 #, fuzzy
 msgid "Pre_view"
-msgstr "Perşiûra"
+msgstr "PerÅ¾iÅ«ra"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:351
 msgid "_JavaScript"
@@ -10112,7 +10112,7 @@ msgstr ""
 #: plug-ins/imagemap/imap_grid.c:235
 #, fuzzy
 msgid "C_rosses"
-msgstr "Uşdaryti"
+msgstr "UÅ¾daryti"
 
 #: plug-ins/imagemap/imap_grid.c:243
 msgid "Grid Granularity"
@@ -10126,7 +10126,7 @@ msgstr "Plotis:"
 #: plug-ins/imagemap/imap_grid.c:257
 #, fuzzy
 msgid "_Height"
-msgstr "Aukğtis:"
+msgstr "AukÅ¡tis:"
 
 #: plug-ins/imagemap/imap_grid.c:271
 msgid "Grid Offset"
@@ -10143,12 +10143,12 @@ msgstr ""
 #: plug-ins/imagemap/imap_grid.c:295
 #, fuzzy
 msgid "_Preview"
-msgstr "Perşiûra"
+msgstr "PerÅ¾iÅ«ra"
 
 #: plug-ins/imagemap/imap_main.c:128
 #, fuzzy
 msgid "<Image>/Filters/Web/_ImageMap..."
-msgstr "<Image>/File/Iğsiøsti pağtu..."
+msgstr "<Image>/File/IÅ¡siÅ³sti paÅ¡tu..."
 
 #: plug-ins/imagemap/imap_main.c:737
 msgid "Some data has been changed!"
@@ -10195,7 +10195,7 @@ msgstr ""
 #: plug-ins/imagemap/imap_menu.c:208
 #, fuzzy, c-format
 msgid "_Undo %s"
-msgstr "Atğaukti"
+msgstr "AtÅ¡aukti"
 
 #: plug-ins/imagemap/imap_menu.c:224
 #, c-format
@@ -10249,7 +10249,7 @@ msgstr ""
 #: plug-ins/imagemap/imap_menu.c:381
 #, fuzzy
 msgid "_Tools"
-msgstr "Árankiai"
+msgstr "Ä®rankiai"
 
 #: plug-ins/imagemap/imap_menu.c:383 plug-ins/imagemap/imap_popup.c:154
 msgid "Grid Settings..."
@@ -10298,7 +10298,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_popup.c:133
 msgid "Tools"
-msgstr "Árankiai"
+msgstr "Ä®rankiai"
 
 #: plug-ins/imagemap/imap_popup.c:146
 msgid "Zoom"
@@ -10427,7 +10427,7 @@ msgstr ""
 #: plug-ins/imagemap/imap_settings.c:106
 #, fuzzy
 msgid "_Description:"
-msgstr "Priedø aprağymai"
+msgstr "PriedÅ³ apraÅ¡ymai"
 
 #: plug-ins/imagemap/imap_settings.c:126
 msgid "Map file format"
@@ -10451,7 +10451,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_toolbar.c:112
 msgid "Undo"
-msgstr "Atğaukti"
+msgstr "AtÅ¡aukti"
 
 #: plug-ins/imagemap/imap_toolbar.c:116
 msgid "Redo"
@@ -10725,28 +10725,28 @@ msgstr ""
 
 #: plug-ins/print/gimp_color_window.c:270
 msgid "Set the contrast of the print"
-msgstr "Nustatyti spausdinimo kontrastà"
+msgstr "Nustatyti spausdinimo kontrastÄ…"
 
 #: plug-ins/print/gimp_color_window.c:289
 msgid "Adjust the cyan balance of the print"
-msgstr "Nustatyti spausdinimo cyan balansà"
+msgstr "Nustatyti spausdinimo cyan balansÄ…"
 
 #: plug-ins/print/gimp_color_window.c:308
 msgid "Adjust the magenta balance of the print"
-msgstr "Nustatyti spausdinimo magenta balansà"
+msgstr "Nustatyti spausdinimo magenta balansÄ…"
 
 #: plug-ins/print/gimp_color_window.c:327
 msgid "Adjust the yellow balance of the print"
-msgstr "Nustatyti spausdinimo yellow balansà"
+msgstr "Nustatyti spausdinimo yellow balansÄ…"
 
 #: plug-ins/print/gimp_color_window.c:346
 msgid ""
 "Adjust the saturation (color balance) of the print\n"
 "Use zero saturation to produce grayscale output using color and black inks"
 msgstr ""
-"Nustatyti spausdinimo sodrumà (spalvø balansà)\n"
-"Naudokite nuliná sodrumà spausdindami pilkumo atspalvius juodu ir spalvotais "
-"rağalais"
+"Nustatyti spausdinimo sodrumÄ… (spalvÅ³ balansÄ…)\n"
+"Naudokite nulinÄ¯ sodrumÄ… spausdindami pilkumo atspalvius juodu ir spalvotais "
+"raÅ¡alais"
 
 #: plug-ins/print/gimp_color_window.c:359
 msgid "Density:"
@@ -10758,10 +10758,10 @@ msgid ""
 "ink bleeds through the paper or smears; increase the density if black "
 "regions are not solid."
 msgstr ""
-"Nustatyti spausdinimo tankumà (naudojamo rağalo kieká). Sumaşinkite tankumà "
-"jei rağalas persisunkia per popieriø\n"
-"arba iğsilieja. Padidinkite tankumà, jei juodi plotai nëra tinkamai "
-"uşpildyti."
+"Nustatyti spausdinimo tankumÄ… (naudojamo raÅ¡alo kiekÄ¯). SumaÅ¾inkite tankumÄ… "
+"jei raÅ¡alas persisunkia per popieriÅ³\n"
+"arba iÅ¡silieja. Padidinkite tankumÄ…, jei juodi plotai nÄ—ra tinkamai "
+"uÅ¾pildyti."
 
 #: plug-ins/print/gimp_color_window.c:389
 msgid ""
@@ -10797,7 +10797,7 @@ msgid ""
 "Save\n"
 "Settings"
 msgstr ""
-"Iğsaugoti\n"
+"IÅ¡saugoti\n"
 "nustatymus"
 
 #: plug-ins/print/gimp_main_window.c:366
@@ -10806,7 +10806,7 @@ msgid ""
 "Save Settings"
 msgstr ""
 "Spausdinti ir\n"
-"Iğsaugoti nustatymus"
+"IÅ¡saugoti nustatymus"
 
 #: plug-ins/print/gimp_main_window.c:435
 msgid ""
@@ -10824,11 +10824,11 @@ msgstr ""
 
 #: plug-ins/print/gimp_main_window.c:482
 msgid "Portrait"
-msgstr "Staèias"
+msgstr "StaÄias"
 
 #: plug-ins/print/gimp_main_window.c:484
 msgid "Landscape"
-msgstr "Gulsèias"
+msgstr "GulsÄias"
 
 #: plug-ins/print/gimp_main_window.c:486
 msgid "Upside down"
@@ -10906,14 +10906,14 @@ msgstr ""
 
 #: plug-ins/print/gimp_main_window.c:648
 msgid "Setup Printer"
-msgstr "Nustatyti spaudintuvà"
+msgstr "Nustatyti spaudintuvÄ…"
 
 #.
 #. * Printer driver option menu.
 #.
 #: plug-ins/print/gimp_main_window.c:677 plug-ins/print/gimp_main_window.c:934
 msgid "Printer Model:"
-msgstr "Spausdintuvo·modelis:"
+msgstr "SpausdintuvoÂ·modelis:"
 
 #: plug-ins/print/gimp_main_window.c:689
 msgid "Select your printer model"
@@ -10957,7 +10957,7 @@ msgstr ""
 #.
 #: plug-ins/print/gimp_main_window.c:785
 msgid "Print To File?"
-msgstr "Spausdinti á bylà"
+msgstr "Spausdinti Ä¯ bylÄ…"
 
 #.
 #. * PPD file selection dialog.
@@ -10972,7 +10972,7 @@ msgstr ""
 
 #: plug-ins/print/gimp_main_window.c:838 plug-ins/print/gimp_main_window.c:929
 msgid "Printer Name:"
-msgstr "Spausdintuvo·vardas:"
+msgstr "SpausdintuvoÂ·vardas:"
 
 #: plug-ins/print/gimp_main_window.c:842
 msgid "Enter the name you wish to give this logical printer"
@@ -11025,7 +11025,7 @@ msgstr ""
 #.
 #: plug-ins/print/gimp_main_window.c:945
 msgid "Setup Printer..."
-msgstr "Nustatyti Spaudintuvà..."
+msgstr "Nustatyti SpaudintuvÄ…..."
 
 #: plug-ins/print/gimp_main_window.c:947
 msgid ""
@@ -11070,7 +11070,7 @@ msgstr ""
 #: plug-ins/print/gimp_main_window.c:1017
 #: plug-ins/print/gimp_main_window.c:1229
 msgid "Height:"
-msgstr "Aukğtis:"
+msgstr "AukÅ¡tis:"
 
 #: plug-ins/print/gimp_main_window.c:1028
 msgid "Height of the paper that you wish to print to"
@@ -11098,7 +11098,7 @@ msgstr ""
 
 #: plug-ins/print/gimp_main_window.c:1079
 msgid "Ink Type:"
-msgstr "Rağalo tipas:"
+msgstr "RaÅ¡alo tipas:"
 
 #: plug-ins/print/gimp_main_window.c:1092
 msgid "Resolution and quality of the print"
@@ -11185,7 +11185,7 @@ msgstr ""
 
 #: plug-ins/print/gimp_main_window.c:1332
 msgid "Image Type:"
-msgstr "Paveikslëlio tipas:"
+msgstr "PaveikslÄ—lio tipas:"
 
 #: plug-ins/print/gimp_main_window.c:1337
 msgid "Optimize the output for the type of image being printed"
@@ -11408,7 +11408,7 @@ msgstr ""
 
 #: plug-ins/twain/twain.c:533
 msgid "<Toolbox>/File/Acquire/TWAIN..."
-msgstr "<Toolbox>/File/Acquire/iğ skanerio (TWAIN)..."
+msgstr "<Toolbox>/File/Acquire/iÅ¡ skanerio (TWAIN)..."
 
 #. Initialize our progress dialog
 #: plug-ins/twain/twain.c:667
@@ -11437,7 +11437,7 @@ msgstr ""
 
 #: plug-ins/winsnap/winsnap.c:949
 msgid "Grab a single window"
-msgstr "Vienà langà"
+msgstr "VienÄ… langÄ…"
 
 #: plug-ins/winsnap/winsnap.c:960
 msgid "Include decorations"
@@ -11445,15 +11445,15 @@ msgstr ""
 
 #: plug-ins/winsnap/winsnap.c:996
 msgid "Grab the whole screen"
-msgstr "Visà ekranà"
+msgstr "VisÄ… ekranÄ…"
 
 #: plug-ins/winsnap/winsnap.c:1014
 msgid "after"
-msgstr "uş"
+msgstr "uÅ¾"
 
 #: plug-ins/winsnap/winsnap.c:1077
 msgid "<Toolbox>/File/Acquire/Screen Shot..."
-msgstr "<Toolbox>/File/Acquire/Ekrano nuotraukà..."
+msgstr "<Toolbox>/File/Acquire/Ekrano nuotraukÄ…..."
 
 #: plug-ins/winsnap/winsnap.c:1225
 msgid "No data captured"
@@ -11540,49 +11540,49 @@ msgstr ""
 #~ msgstr "Gerai"
 
 #~ msgid "Cancel"
-#~ msgstr "Atğaukti"
+#~ msgstr "AtÅ¡aukti"
 
 #~ msgid "Undo Zoom"
-#~ msgstr "Atğaukti mastelio pakeitimà"
+#~ msgstr "AtÅ¡aukti mastelio pakeitimÄ…"
 
 #~ msgid "Redo Zoom"
-#~ msgstr "Atstatyti mastelio pakeitimà"
+#~ msgstr "Atstatyti mastelio pakeitimÄ…"
 
 #~ msgid "Could not save."
-#~ msgstr "Negaliu iğsaugoti."
+#~ msgstr "Negaliu iÅ¡saugoti."
 
 #~ msgid "<Image>/Layers/Rotate/90 degrees"
-#~ msgstr "<Image>/Layers/Rotate/90 laipsniø"
+#~ msgstr "<Image>/Layers/Rotate/90 laipsniÅ³"
 
 #~ msgid "<Image>/Layers/Rotate/180 degrees"
-#~ msgstr "<Image>/Layers/Rotate/180 laipsniø"
+#~ msgstr "<Image>/Layers/Rotate/180 laipsniÅ³"
 
 #~ msgid "<Image>/Layers/Rotate/270 degrees"
-#~ msgstr "<Image>/Layers/Rotate/270 laipsniø"
+#~ msgstr "<Image>/Layers/Rotate/270 laipsniÅ³"
 
 #~ msgid "<Image>/Image/Transforms/Rotate/180 degrees"
-#~ msgstr "<Image>/Image/Transforms/Rotate/180 laipsniø"
+#~ msgstr "<Image>/Image/Transforms/Rotate/180 laipsniÅ³"
 
 #~ msgid "<Image>/Image/Transforms/Rotate/270 degrees"
-#~ msgstr "<Image>/Image/Transforms/Rotate/270 laipsniø"
+#~ msgstr "<Image>/Image/Transforms/Rotate/270 laipsniÅ³"
 
 #~ msgid "Refresh"
 #~ msgstr "Atnaujinti"
 
 #~ msgid "File-Browser"
-#~ msgstr "Bylø-narğyklë"
+#~ msgstr "BylÅ³-narÅ¡yklÄ—"
 
 #~ msgid "<Image>/Video/Split Video to Frames"
-#~ msgstr "<Image>/Video/Iğskaldyti video á kadrus"
+#~ msgstr "<Image>/Video/IÅ¡skaldyti video Ä¯ kadrus"
 
 #~ msgid "<Toolbox>/Xtns/Split Video to Frames"
-#~ msgstr "<Toolbox>/Xtns/Iğskaldyti video á kadrus"
+#~ msgstr "<Toolbox>/Xtns/IÅ¡skaldyti video Ä¯ kadrus"
 
 #~ msgid "File already exists"
 #~ msgstr "Byla jau egzistuoja"
 
 #~ msgid "Goto Frame (%ld/%ld)"
-#~ msgstr "Eiti á kadrà (%ld/%ld)"
+#~ msgstr "Eiti Ä¯ kadrÄ… (%ld/%ld)"
 
 #~ msgid "<Image>/Video/Goto/Next Frame"
 #~ msgstr "<Image>/Video/Goto/Sekantis kadras"
@@ -11600,52 +11600,52 @@ msgstr ""
 #~ msgstr "<Image>/Video/Goto/Bet kuris kadras... "
 
 #~ msgid "<Image>/Video/Delete Frames..."
-#~ msgstr "<Image>/Video/Goto/Iğtrinti kadrà..."
+#~ msgstr "<Image>/Video/Goto/IÅ¡trinti kadrÄ…..."
 
 #~ msgid "<Image>/Video/Duplicate Frames..."
-#~ msgstr "<Image>/Video/Goto/Dublikuoti kadrà..."
+#~ msgstr "<Image>/Video/Goto/Dublikuoti kadrÄ…..."
 
 #~ msgid "Select all visible Layers"
-#~ msgstr "Paşymëti visus matomus sluoksnius"
+#~ msgstr "PaÅ¾ymÄ—ti visus matomus sluoksnius"
 
 #~ msgid "Set Layer(s) visible"
-#~ msgstr "Padaryti sluoksná (-ius) matomu"
+#~ msgstr "Padaryti sluoksnÄ¯ (-ius) matomu"
 
 #~ msgid "Set Layer(s) invisible"
-#~ msgstr "Padaryti sluoksná (-ius) nematomu"
+#~ msgstr "Padaryti sluoksnÄ¯ (-ius) nematomu"
 
 #~ msgid "Raise Layer(s)"
-#~ msgstr "Pakelti·sluoksná"
+#~ msgstr "PakeltiÂ·sluoksnÄ¯"
 
 #~ msgid "Lower Layer(s)"
-#~ msgstr "Nuleisti sluoksná"
+#~ msgstr "Nuleisti sluoksnÄ¯"
 
 #~ msgid "Duplicate Layer(s)"
-#~ msgstr "Dublikuoti sluoksná (-ius)"
+#~ msgstr "Dublikuoti sluoksnÄ¯ (-ius)"
 
 #~ msgid "Delete Layer(s)"
-#~ msgstr "Iğtrinti sluoksná (-ius)"
+#~ msgstr "IÅ¡trinti sluoksnÄ¯ (-ius)"
 
 #~ msgid "Rename Layer(s)"
-#~ msgstr "Pervadinti sluoksná (-ius)"
+#~ msgstr "Pervadinti sluoksnÄ¯ (-ius)"
 
 #~ msgid "Duplicate selected Frames"
-#~ msgstr "Dublikuoti paşymëtà kadrà"
+#~ msgstr "Dublikuoti paÅ¾ymÄ—tÄ… kadrÄ…"
 
 #~ msgid "Delete selected Frames"
-#~ msgstr "Iğtrinti paşymëtà kadrà"
+#~ msgstr "IÅ¡trinti paÅ¾ymÄ—tÄ… kadrÄ…"
 
 #~ msgid "Goto 1st Frame"
-#~ msgstr "Eiti á pirmà kadrà"
+#~ msgstr "Eiti Ä¯ pirmÄ… kadrÄ…"
 
 #~ msgid "Goto last Frame"
-#~ msgstr "Eiti á paskutiná kadrà"
+#~ msgstr "Eiti Ä¯ paskutinÄ¯ kadrÄ…"
 
 #~ msgid "select all visible Layers"
-#~ msgstr "Paşymëti visus matomus sluoksnius"
+#~ msgstr "PaÅ¾ymÄ—ti visus matomus sluoksnius"
 
 #~ msgid "Zoom Out"
-#~ msgstr "Sumaşinti"
+#~ msgstr "SumaÅ¾inti"
 
 #~ msgid "Image preview"
-#~ msgstr "Paveiklëlio perşiûra"
+#~ msgstr "PaveiklÄ—lio perÅ¾iÅ«ra"

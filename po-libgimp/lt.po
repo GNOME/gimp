@@ -1,6 +1,6 @@
 # Lithuanian translation of GIMP (libgimp).
 # Copyright (C) 2001 Free Software Foundation, Inc.
-# Mantas Kriauèiûnas <mantelis@centras.lt>, 2001.
+# Mantas KriauÄiÅ«nas <mantelis@centras.lt>, 2001.
 # 
 msgid ""
 msgstr ""
@@ -10,18 +10,18 @@ msgstr ""
 "Last-Translator: Mantas Kriauciunas <mantelis@centras.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-13\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: libgimp/gimpbrushmenu.c:132
 #, fuzzy
 msgid "Brush Selection"
-msgstr "Matavimo vienetø pasirinkimas"
+msgstr "Matavimo vienetÅ³ pasirinkimas"
 
 #: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
 #, fuzzy, c-format
 msgid "%s can't handle layers"
-msgstr "negalima suprasti sluoksniø"
+msgstr "negalima suprasti sluoksniÅ³"
 
 #: libgimp/gimpexport.c:184 libgimp/gimpexport.c:193 libgimp/gimpexport.c:202
 msgid "Merge Visible Layers"
@@ -30,7 +30,7 @@ msgstr "Sujungti matomus sluoksnius"
 #: libgimp/gimpexport.c:192
 #, fuzzy, c-format
 msgid "%s can't handle layer offsets, size or opacity"
-msgstr "negalima suprasti sluoksniø"
+msgstr "negalima suprasti sluoksniÅ³"
 
 #: libgimp/gimpexport.c:201 libgimp/gimpexport.c:210
 #, fuzzy, c-format
@@ -39,11 +39,11 @@ msgstr "galima suprasti sluoksnius tik kaip animacijos kadrus"
 
 #: libgimp/gimpexport.c:202 libgimp/gimpexport.c:211
 msgid "Save as Animation"
-msgstr "Iğsaugoti kaip animacijà"
+msgstr "IÅ¡saugoti kaip animacijÄ…"
 
 #: libgimp/gimpexport.c:211 libgimp/gimpexport.c:220 libgimp/gimpexport.c:229
 msgid "Flatten Image"
-msgstr "Iğlyginti paveikslëlá"
+msgstr "IÅ¡lyginti paveikslÄ—lÄ¯"
 
 #: libgimp/gimpexport.c:228
 #, fuzzy, c-format
@@ -53,50 +53,50 @@ msgstr "negaliu suprasti permatomumo"
 #: libgimp/gimpexport.c:237
 #, fuzzy, c-format
 msgid "%s can only handle RGB images"
-msgstr "galima suprasti tik RGB paveikslëlius"
+msgstr "galima suprasti tik RGB paveikslÄ—lius"
 
 #: libgimp/gimpexport.c:238 libgimp/gimpexport.c:266 libgimp/gimpexport.c:275
 msgid "Convert to RGB"
-msgstr "Konvertuoti á RGB"
+msgstr "Konvertuoti Ä¯ RGB"
 
 #: libgimp/gimpexport.c:246
 #, fuzzy, c-format
 msgid "%s can only handle grayscale images"
-msgstr "galima·suprasti·tik·pilkumo atspalviø (grayscale)·paveikslëlius"
+msgstr "galimaÂ·suprastiÂ·tikÂ·pilkumo atspalviÅ³ (grayscale)Â·paveikslÄ—lius"
 
 #: libgimp/gimpexport.c:247 libgimp/gimpexport.c:266 libgimp/gimpexport.c:287
 msgid "Convert to Grayscale"
-msgstr "konvertuoti á pilkumo·atspalvius·(grayscale)"
+msgstr "konvertuoti Ä¯ pilkumoÂ·atspalviusÂ·(grayscale)"
 
 #: libgimp/gimpexport.c:255
 #, fuzzy, c-format
 msgid "%s can only handle indexed images"
-msgstr "galima·suprasti·tik·indeksuotus·paveikslëlius"
+msgstr "galimaÂ·suprastiÂ·tikÂ·indeksuotusÂ·paveikslÄ—lius"
 
 #: libgimp/gimpexport.c:256 libgimp/gimpexport.c:275 libgimp/gimpexport.c:285
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Konvertuoti á indeksuotà naudojant áprastus nustatymus\n"
-"(Rezultatà galima paderinti rankiniu bûdu)"
+"Konvertuoti Ä¯ indeksuotÄ… naudojant Ä¯prastus nustatymus\n"
+"(RezultatÄ… galima paderinti rankiniu bÅ«du)"
 
 #: libgimp/gimpexport.c:265
 #, fuzzy, c-format
 msgid "%s can only handle RGB or grayscale images"
-msgstr "galima·suprasti·tik RGB ar·pilkumo atspalviø (grayscale)·paveikslëlius"
+msgstr "galimaÂ·suprastiÂ·tik RGB arÂ·pilkumo atspalviÅ³ (grayscale)Â·paveikslÄ—lius"
 
 #: libgimp/gimpexport.c:274
 #, fuzzy, c-format
 msgid "%s can only handle RGB or indexed images"
-msgstr "galima·suprasti·tik·RGB ar indeksuotus·paveikslëlius"
+msgstr "galimaÂ·suprastiÂ·tikÂ·RGB ar indeksuotusÂ·paveikslÄ—lius"
 
 #: libgimp/gimpexport.c:284
 #, fuzzy, c-format
 msgid "%s can only handle grayscale or indexed images"
 msgstr ""
-"galima·suprasti·tik·pilkumo atspalviø (grayscale) ar "
-"indeksuotus·paveikslëlius"
+"galimaÂ·suprastiÂ·tikÂ·pilkumo atspalviÅ³ (grayscale) ar "
+"indeksuotusÂ·paveikslÄ—lius"
 
 #: libgimp/gimpexport.c:295
 #, fuzzy, c-format
@@ -105,7 +105,7 @@ msgstr "reikalingas alfa kanalas"
 
 #: libgimp/gimpexport.c:296
 msgid "Add Alpha Channel"
-msgstr "Pridëti alfa kanalà"
+msgstr "PridÄ—ti alfa kanalÄ…"
 
 #.
 #. *  Plug-ins must have called gtk_init () before calling gimp_export ().
@@ -127,7 +127,7 @@ msgstr ""
 #. the dialog
 #: libgimp/gimpexport.c:431
 msgid "Export File"
-msgstr "Eksportuoti bylà"
+msgstr "Eksportuoti bylÄ…"
 
 #: libgimp/gimpexport.c:436
 msgid "Ignore"
@@ -142,12 +142,12 @@ msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
 msgstr ""
-"Prieğ iğsaugant paveikslëlis turi bûti eksportuojamas dël ğiø prieşasèiø:"
+"PrieÅ¡ iÅ¡saugant paveikslÄ—lis turi bÅ«ti eksportuojamas dÄ—l Å¡iÅ³ prieÅ¾asÄiÅ³:"
 
 #. the footline
 #: libgimp/gimpexport.c:541
 msgid "The export conversion won't modify your original image."
-msgstr "Eksportavimas nepakeis jûsø originalaus paveikslëlio."
+msgstr "Eksportavimas nepakeis jÅ«sÅ³ originalaus paveikslÄ—lio."
 
 #: libgimp/gimpexport.c:611
 #, c-format
@@ -166,12 +166,12 @@ msgstr ""
 #: libgimp/gimpfontmenu.c:89
 #, fuzzy
 msgid "Font Selection"
-msgstr "Matavimo vienetø pasirinkimas"
+msgstr "Matavimo vienetÅ³ pasirinkimas"
 
 #: libgimp/gimpgradientmenu.c:102
 #, fuzzy
 msgid "Gradient Selection"
-msgstr "Matavimo vienetø pasirinkimas"
+msgstr "Matavimo vienetÅ³ pasirinkimas"
 
 #: libgimp/gimpmenu.c:401
 msgid "None"
@@ -193,7 +193,7 @@ msgstr ""
 #: libgimp/gimppatternmenu.c:115
 #, fuzzy
 msgid "Pattern Selection"
-msgstr "Matavimo vienetø pasirinkimas"
+msgstr "Matavimo vienetÅ³ pasirinkimas"
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
@@ -202,7 +202,7 @@ msgstr "procentas"
 #: libgimpbase/gimputils.c:118
 #, fuzzy, c-format
 msgid "%d Bytes"
-msgstr "Baitø"
+msgstr "BaitÅ³"
 
 #: libgimpbase/gimputils.c:122
 #, c-format
@@ -267,12 +267,12 @@ msgstr ""
 #: libgimpwidgets/gimpcolorbutton.c:84
 #, fuzzy
 msgid "/Foreground Color"
-msgstr "/Naudoti priekinio plano spalvà"
+msgstr "/Naudoti priekinio plano spalvÄ…"
 
 #: libgimpwidgets/gimpcolorbutton.c:86
 #, fuzzy
 msgid "/Background Color"
-msgstr "/Naudoti fono spalvà"
+msgstr "/Naudoti fono spalvÄ…"
 
 #: libgimpwidgets/gimpcolorbutton.c:89
 msgid "/Black"
@@ -353,24 +353,24 @@ msgstr ""
 #: libgimpwidgets/gimpfileselection.c:352
 #, fuzzy
 msgid "Select Folder"
-msgstr "Pasirinkite bylà"
+msgstr "Pasirinkite bylÄ…"
 
 #: libgimpwidgets/gimpfileselection.c:366
 msgid "Select File"
-msgstr "Pasirinkite bylà"
+msgstr "Pasirinkite bylÄ…"
 
 #: libgimpwidgets/gimpmemsizeentry.c:187
 msgid "KiloBytes"
-msgstr "KiloBaitø"
+msgstr "KiloBaitÅ³"
 
 #: libgimpwidgets/gimpmemsizeentry.c:188
 msgid "MegaBytes"
-msgstr "MegaBaitø"
+msgstr "MegaBaitÅ³"
 
 #: libgimpwidgets/gimpmemsizeentry.c:189
 #, fuzzy
 msgid "GigaBytes"
-msgstr "MegaBaitø"
+msgstr "MegaBaitÅ³"
 
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
@@ -449,11 +449,11 @@ msgstr "Daugiau..."
 
 #: libgimpwidgets/gimpunitmenu.c:527
 msgid "Unit Selection"
-msgstr "Matavimo vienetø pasirinkimas"
+msgstr "Matavimo vienetÅ³ pasirinkimas"
 
 #: libgimpwidgets/gimpunitmenu.c:573
 msgid "Unit"
-msgstr "Matavimo·vienetai"
+msgstr "MatavimoÂ·vienetai"
 
 #: libgimpwidgets/gimpunitmenu.c:577
 msgid "Factor"
@@ -465,9 +465,9 @@ msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
-"Jei mygtukas \"Laikas\" nëra paspaustas, atsitiktiniø skaièiø generatoriaus "
-"inicializavimui naudokite ğià reikğmæ - tai leis jums pakartoti nurodytà "
-"\"atsitiktinæ\" operacijà"
+"Jei mygtukas \"Laikas\" nÄ—ra paspaustas, atsitiktiniÅ³ skaiÄiÅ³ generatoriaus "
+"inicializavimui naudokite Å¡iÄ… reikÅ¡mÄ™ - tai leis jums pakartoti nurodytÄ… "
+"\"atsitiktinÄ™\" operacijÄ…"
 
 #: libgimpwidgets/gimpwidgets.c:947
 msgid "_Randomize"
@@ -477,8 +477,8 @@ msgstr ""
 #, fuzzy
 msgid "Seed random number generator with a generated random number"
 msgstr ""
-"Atsitiktiniø skaièiø generatoriø inicializuoti pagal dabartiná laikà - tai "
-"garantuos jums patikimà atsitiktinumà"
+"AtsitiktiniÅ³ skaiÄiÅ³ generatoriÅ³ inicializuoti pagal dabartinÄ¯ laikÄ… - tai "
+"garantuos jums patikimÄ… atsitiktinumÄ…"
 
 #: modules/cdisplay_colorblind.c:122
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
@@ -559,7 +559,7 @@ msgstr ""
 #: modules/colorsel_cmyk.c:150
 #, fuzzy
 msgid "Cyan"
-msgstr "Atğaukti"
+msgstr "AtÅ¡aukti"
 
 #: modules/colorsel_cmyk.c:151
 msgid "Magenta"
@@ -597,10 +597,10 @@ msgstr ""
 #~ msgstr "OK"
 
 #~ msgid "pixel"
-#~ msgstr "tağkelis"
+#~ msgstr "taÅ¡kelis"
 
 #~ msgid "pixels"
-#~ msgstr "tağkeliai"
+#~ msgstr "taÅ¡keliai"
 
 #~ msgid "inches"
 #~ msgstr "coliai"
@@ -612,10 +612,10 @@ msgstr ""
 #~ msgstr "milimetrai"
 
 #~ msgid "point"
-#~ msgstr "tağkas"
+#~ msgstr "taÅ¡kas"
 
 #~ msgid "points"
-#~ msgstr "tağkai"
+#~ msgstr "taÅ¡kai"
 
 #~ msgid "Time"
 #~ msgstr "Laikas"

@@ -7,10 +7,10 @@ msgstr ""
 "Project-Id-Version: GIMP 1.2\n"
 "POT-Creation-Date: 2003-08-11 17:41+0200\n"
 "PO-Revision-Date: 2001-07-27 15:06+0200\n"
-"Last-Translator: Mantas Kriauèiûnas <mantelis@centras.lt>\n"
+"Last-Translator: Mantas KriauÄiÅ«nas <mantelis@centras.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-13\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/script-fu/script-fu-console.c:143
