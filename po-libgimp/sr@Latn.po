@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-10-05 20:23+0200\n"
-"PO-Revision-Date: 2003-09-14 06:45+0200\n"
+"POT-Creation-Date: 2003-10-18 04:40+0200\n"
+"PO-Revision-Date: 2003-10-18 04:48+0200\n"
 "Last-Translator: Dejan Matijević <dejan@ns.sympatico.ca>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -210,32 +210,37 @@ msgstr "Selekcija obrasca"
 msgid "percent"
 msgstr "odsto"
 
-#: libgimpbase/gimputils.c:118
+#: libgimpbase/gimputils.c:161 libgimpbase/gimputils.c:166
+msgid "(invalid UTF-8 string)"
+msgstr "(neispravna UTF-8 niska)"
+
+# bug: plural-forms
+#: libgimpbase/gimputils.c:189
 #, c-format
 msgid "%d Bytes"
-msgstr "%d Bajtova"
+msgstr "%d bajtova"
 
-#: libgimpbase/gimputils.c:122
+#: libgimpbase/gimputils.c:193
 #, c-format
 msgid "%.2f KB"
 msgstr "%.2f KB"
 
-#: libgimpbase/gimputils.c:126
+#: libgimpbase/gimputils.c:197
 #, c-format
 msgid "%.1f KB"
 msgstr "%.1f KB"
 
-#: libgimpbase/gimputils.c:130
+#: libgimpbase/gimputils.c:201
 #, c-format
 msgid "%d KB"
 msgstr "%d KB"
 
-#: libgimpbase/gimputils.c:135
+#: libgimpbase/gimputils.c:206
 #, c-format
 msgid "%.2f MB"
 msgstr "%.2f MB"
 
-#: libgimpbase/gimputils.c:140
+#: libgimpbase/gimputils.c:211
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f MB"
@@ -243,7 +248,7 @@ msgstr "%.1f MB"
 #: libgimpmodule/gimpmodule.c:174
 #, c-format
 msgid "Loading module: '%s'\n"
-msgstr "Natovar modula: '%s'\n"
+msgstr "Učitavam modul: „%s“\n"
 
 #: libgimpmodule/gimpmodule.c:190 libgimpmodule/gimpmodule.c:207
 #: libgimpmodule/gimpmodule.c:314 libgimpmodule/gimpmodule.c:341
@@ -253,7 +258,7 @@ msgid ""
 "Module '%s' load error:\n"
 "%s"
 msgstr ""
-"Modul '%s' greška prilikom natovara:\n"
+"Greška pri učitavanju modula „%s“:\n"
 "%s"
 
 #: libgimpmodule/gimpmodule.c:271
@@ -267,15 +272,15 @@ msgstr "Greška modula"
 
 #: libgimpmodule/gimpmodule.c:409
 msgid "Loaded"
-msgstr "Natovareno"
+msgstr "Učitan"
 
 #: libgimpmodule/gimpmodule.c:410
 msgid "Load failed"
-msgstr "Neuspeo natovar"
+msgstr "Neuspelo učitavanje"
 
 #: libgimpmodule/gimpmodule.c:411
 msgid "Not loaded"
-msgstr "Nije natovareno"
+msgstr "Nije učitano"
 
 #: libgimpwidgets/gimpcolorbutton.c:84
 msgid "/Foreground Color"
@@ -295,7 +300,7 @@ msgstr "/Bela"
 
 #: libgimpwidgets/gimpcolorscales.c:142
 msgid "Scales"
-msgstr "Veličine"
+msgstr "Razmere"
 
 #: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:354
 msgid "_H"
@@ -355,11 +360,11 @@ msgstr "Alfa"
 
 #: libgimpwidgets/gimpcolorscales.c:254
 msgid "Hexadecimal color notation as used in HTML"
-msgstr "Heksadecimalna obeležavanje boje kao korištenje u HTML"
+msgstr "Heksadecimalna obeležavanje boje kako se koristi u HTML-u"
 
 #: libgimpwidgets/gimpcolorscales.c:268
 msgid "He_x Triplet:"
-msgstr "He_x Trostruki bit:"
+msgstr "Heksadekadna _trojka:"
 
 #: libgimpwidgets/gimpfileselection.c:352
 msgid "Select Folder"
@@ -371,15 +376,15 @@ msgstr "Odaberi datoteku"
 
 #: libgimpwidgets/gimpmemsizeentry.c:187
 msgid "KiloBytes"
-msgstr "Kilo bajta"
+msgstr "kilobajta"
 
 #: libgimpwidgets/gimpmemsizeentry.c:188
 msgid "MegaBytes"
-msgstr "Mega bajta"
+msgstr "megabajta"
 
 #: libgimpwidgets/gimpmemsizeentry.c:189
 msgid "GigaBytes"
-msgstr "Giga bajta"
+msgstr "gigabajta"
 
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
@@ -391,7 +396,7 @@ msgstr ""
 
 #: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
-msgstr "Oznaka"
+msgstr "Veza"
 
 #: libgimpwidgets/gimpstock.c:114
 msgid "_Duplicate"
@@ -411,7 +416,7 @@ msgstr "Ubaci kao novu sliku"
 
 #: libgimpwidgets/gimpstock.c:118
 msgid "Paste Into"
-msgstr "Ubaci u to"
+msgstr "Ubaci u"
 
 #: libgimpwidgets/gimpstock.c:119
 msgid "_Reset"

@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-10-05 20:23+0200\n"
-"PO-Revision-Date: 2003-09-14 06:45+0200\n"
+"POT-Creation-Date: 2003-10-18 04:40+0200\n"
+"PO-Revision-Date: 2003-10-18 04:48+0200\n"
 "Last-Translator: Дејан Матијевић <dejan@ns.sympatico.ca>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -210,32 +210,37 @@ msgstr "Селекција обрасца"
 msgid "percent"
 msgstr "одсто"
 
-#: libgimpbase/gimputils.c:118
+#: libgimpbase/gimputils.c:161 libgimpbase/gimputils.c:166
+msgid "(invalid UTF-8 string)"
+msgstr "(неисправна УТФ-8 ниска)"
+
+# bug: plural-forms
+#: libgimpbase/gimputils.c:189
 #, c-format
 msgid "%d Bytes"
-msgstr "%d Бајтова"
+msgstr "%d бајтова"
 
-#: libgimpbase/gimputils.c:122
+#: libgimpbase/gimputils.c:193
 #, c-format
 msgid "%.2f KB"
 msgstr "%.2f KB"
 
-#: libgimpbase/gimputils.c:126
+#: libgimpbase/gimputils.c:197
 #, c-format
 msgid "%.1f KB"
 msgstr "%.1f KB"
 
-#: libgimpbase/gimputils.c:130
+#: libgimpbase/gimputils.c:201
 #, c-format
 msgid "%d KB"
 msgstr "%d KB"
 
-#: libgimpbase/gimputils.c:135
+#: libgimpbase/gimputils.c:206
 #, c-format
 msgid "%.2f MB"
 msgstr "%.2f MB"
 
-#: libgimpbase/gimputils.c:140
+#: libgimpbase/gimputils.c:211
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f MB"
@@ -243,7 +248,7 @@ msgstr "%.1f MB"
 #: libgimpmodule/gimpmodule.c:174
 #, c-format
 msgid "Loading module: '%s'\n"
-msgstr "Натовар модула: '%s'\n"
+msgstr "Учитавам модул: „%s“\n"
 
 #: libgimpmodule/gimpmodule.c:190 libgimpmodule/gimpmodule.c:207
 #: libgimpmodule/gimpmodule.c:314 libgimpmodule/gimpmodule.c:341
@@ -253,7 +258,7 @@ msgid ""
 "Module '%s' load error:\n"
 "%s"
 msgstr ""
-"Mодул '%s' грешка приликом натовара:\n"
+"Грешка при учитавању модула „%s“:\n"
 "%s"
 
 #: libgimpmodule/gimpmodule.c:271
@@ -267,15 +272,15 @@ msgstr "Грешка модула"
 
 #: libgimpmodule/gimpmodule.c:409
 msgid "Loaded"
-msgstr "Натоварено"
+msgstr "Учитан"
 
 #: libgimpmodule/gimpmodule.c:410
 msgid "Load failed"
-msgstr "Неуспеo натовар"
+msgstr "Неуспелo учитавање"
 
 #: libgimpmodule/gimpmodule.c:411
 msgid "Not loaded"
-msgstr "Није натоварено"
+msgstr "Није учитано"
 
 #: libgimpwidgets/gimpcolorbutton.c:84
 msgid "/Foreground Color"
@@ -295,35 +300,35 @@ msgstr "/Бела"
 
 #: libgimpwidgets/gimpcolorscales.c:142
 msgid "Scales"
-msgstr "Величине"
+msgstr "Размере"
 
 #: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:354
 msgid "_H"
-msgstr "_Х"
+msgstr "_H"
 
 #: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:354
 msgid "_S"
-msgstr "_С"
+msgstr "_S"
 
 #: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:354
 msgid "_V"
-msgstr "_В"
+msgstr "_V"
 
 #: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:354
 msgid "_R"
-msgstr "_Р"
+msgstr "_R"
 
 #: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:354
 msgid "_G"
-msgstr "_Г"
+msgstr "_G"
 
 #: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:354
 msgid "_B"
-msgstr "_Б"
+msgstr "_B"
 
 #: libgimpwidgets/gimpcolorscales.c:170
 msgid "_A"
-msgstr "_А"
+msgstr "_A"
 
 #: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:358
 msgid "Hue"
@@ -355,11 +360,11 @@ msgstr "Алфа"
 
 #: libgimpwidgets/gimpcolorscales.c:254
 msgid "Hexadecimal color notation as used in HTML"
-msgstr "Хексадецимална обележавање боје као кориштење у HTML"
+msgstr "Хексадецимална обележавање боје како се користи у HTML-у"
 
 #: libgimpwidgets/gimpcolorscales.c:268
 msgid "He_x Triplet:"
-msgstr "He_x Троструки бит:"
+msgstr "Хексадекадна _тројка:"
 
 #: libgimpwidgets/gimpfileselection.c:352
 msgid "Select Folder"
@@ -371,15 +376,15 @@ msgstr "Одабери датотеку"
 
 #: libgimpwidgets/gimpmemsizeentry.c:187
 msgid "KiloBytes"
-msgstr "Кило бајта"
+msgstr "килобајта"
 
 #: libgimpwidgets/gimpmemsizeentry.c:188
 msgid "MegaBytes"
-msgstr "Мега бајта"
+msgstr "мегабајта"
 
 #: libgimpwidgets/gimpmemsizeentry.c:189
 msgid "GigaBytes"
-msgstr "Гига бајта"
+msgstr "гигабајта"
 
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
@@ -391,7 +396,7 @@ msgstr ""
 
 #: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
-msgstr "Ознака"
+msgstr "Веза"
 
 #: libgimpwidgets/gimpstock.c:114
 msgid "_Duplicate"
@@ -411,7 +416,7 @@ msgstr "Убаци као нову слику"
 
 #: libgimpwidgets/gimpstock.c:118
 msgid "Paste Into"
-msgstr "Убаци у то"
+msgstr "Убаци у"
 
 #: libgimpwidgets/gimpstock.c:119
 msgid "_Reset"
