@@ -197,6 +197,8 @@ dialogs_init (Gimp *gimp)
 {
   gint i;
 
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
   global_dialog_factory = gimp_dialog_factory_new ("toplevel",
 						   gimp_get_user_context (gimp),
 						   NULL,
@@ -236,6 +238,8 @@ dialogs_init (Gimp *gimp)
 void
 dialogs_exit (Gimp *gimp)
 {
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
   if (global_dialog_factory)
     {
       g_object_unref (global_dialog_factory);
