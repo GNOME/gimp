@@ -907,24 +907,15 @@ bumpmap_dialog (void)
   gtk_widget_show (table);
 
   /* Bump map menu */
-
-  label = gtk_label_new (_("Bump Map:"));
-  gtk_misc_set_alignment (GTK_MISC(label), 1.0, 0.5);
-  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1,
-		   GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
   option_menu = gtk_option_menu_new ();
-  gtk_table_attach (GTK_TABLE (table), option_menu, 1, 2, 0, 1,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_show (option_menu);
-
   menu = gimp_drawable_menu_new (dialog_constrain,
 				 dialog_bumpmap_callback,
 				 NULL,
 				 bmvals.bumpmap_id);
   gtk_option_menu_set_menu (GTK_OPTION_MENU(option_menu), menu);
-  gtk_widget_show (option_menu);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+			     _("Bump Map:"), 1.0, 0.5,
+			     option_menu, 2, FALSE);
 
   /* Controls */
 

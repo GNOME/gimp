@@ -330,9 +330,9 @@ blend_options_new ()
   scale = gtk_hscale_new (GTK_ADJUSTMENT (options->offset_w));
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Offset:"), 1.0, 1.0,
-			     scale, FALSE);
+			     scale, 1, FALSE);
   gtk_signal_connect (GTK_OBJECT (options->offset_w), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &options->offset);
@@ -341,25 +341,25 @@ blend_options_new ()
   options->blend_mode_w = gtk_option_menu_new ();
   menu = build_menu (blend_option_items, NULL);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (options->blend_mode_w), menu);
-  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Blend:"), 1.0, 0.5,
-			     options->blend_mode_w, TRUE);
+			     options->blend_mode_w, 1, TRUE);
 
   /*  the gradient type menu  */
   options->gradient_type_w = gtk_option_menu_new ();
   menu = build_menu (gradient_option_items, NULL);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (options->gradient_type_w), menu);
-  gimp_table_attach_aligned (GTK_TABLE (table), 2,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Gradient:"), 1.0, 0.5,
-			     options->gradient_type_w, TRUE);
+			     options->gradient_type_w, 1, TRUE);
 
   /*  the repeat option  */
   options->repeat_w = gtk_option_menu_new ();
   menu = build_menu (repeat_option_items, NULL);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (options->repeat_w), menu);
-  gimp_table_attach_aligned (GTK_TABLE (table), 3,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("Repeat:"), 1.0, 0.5,
-			     options->repeat_w, TRUE);
+			     options->repeat_w, 1, TRUE);
 
   /*  show the table  */
   gtk_widget_show (table);
@@ -404,9 +404,9 @@ blend_options_new ()
   scale = gtk_hscale_new (GTK_ADJUSTMENT (options->max_depth_w));
   gtk_scale_set_digits (GTK_SCALE (scale), 0);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Max Depth:"), 1.0, 1.0,
-			     scale, FALSE);
+			     scale, 1, FALSE);
   gtk_signal_connect (GTK_OBJECT(options->max_depth_w), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &options->max_depth);
@@ -417,9 +417,9 @@ blend_options_new ()
   scale = gtk_hscale_new (GTK_ADJUSTMENT (options->threshold_w));
   gtk_scale_set_digits (GTK_SCALE (scale), 2);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Threshold:"), 1.0, 1.0,
-			     scale, FALSE);
+			     scale, 1, FALSE);
   gtk_signal_connect (GTK_OBJECT(options->threshold_w), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &options->threshold);

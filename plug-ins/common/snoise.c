@@ -552,16 +552,16 @@ solid_noise_dialog (void)
   /*  Random Seed  */
   seed_hbox = gimp_random_seed_new (&snvals.seed, &snvals.timeseed,
 				    TRUE, FALSE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Random Seed:"), 1.0, 0.5,
-			     seed_hbox, TRUE);
+			     seed_hbox, 1, TRUE);
 
   /*  Detail  */
   spinbutton = gimp_spin_button_new (&adj, snvals.detail,
 				     1, 15, 1, 3, 0, 1, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Detail:"), 1.0, 0.5,
-			     spinbutton, TRUE);
+			     spinbutton, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &snvals.detail);

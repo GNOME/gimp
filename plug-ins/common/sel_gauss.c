@@ -261,7 +261,7 @@ sel_gauss_dialog (void)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame,
 		      TRUE, TRUE, 0);
 
-  table = gtk_table_new (2, 2, FALSE);
+  table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
@@ -270,9 +270,9 @@ sel_gauss_dialog (void)
   spinbutton = gimp_spin_button_new (&adj,
 				     bvals.radius, 1.0, G_MAXINT, 1.0, 5.0,
 				     0, 1, 2);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Blur Radius:"), 1.0, 0.5,
-			     spinbutton, TRUE);
+			     spinbutton, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &bvals.radius);

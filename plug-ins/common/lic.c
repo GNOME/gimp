@@ -1098,9 +1098,9 @@ create_main_dialog (void)
 				NULL,
                                 licvals.effect_image_id);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Effect Image:"), 1.0, 0.5,
-			     option_menu, TRUE);
+			     option_menu, 2, TRUE);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 				     _("Filter Length"), 0, 0,

@@ -1635,9 +1635,9 @@ file_pref_cmd_callback (GtkWidget *widget,
 			   _("Grayscale"), (gpointer) GRAY, NULL,
 
 			   NULL);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Default Image Type:"), 1.0, 0.5,
-			     optionmenu, TRUE);
+			     optionmenu, 1, TRUE);
 
   /*  The maximum size of a new image  */
   mem_size_unit = 1;
@@ -1679,8 +1679,9 @@ file_pref_cmd_callback (GtkWidget *widget,
 			   NULL);
   gtk_box_pack_start (GTK_BOX (hbox), optionmenu, FALSE, FALSE, 0);
   gtk_widget_show (optionmenu);
-  gimp_table_attach_aligned (GTK_TABLE (table), 1,
-			     _("Maximum Image Size:"), 1.0, 0.5, hbox, TRUE);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+			     _("Maximum Image Size:"), 1.0, 0.5,
+			     hbox, 1, TRUE);
 
 
   /* Display page */
@@ -1722,9 +1723,9 @@ file_pref_cmd_callback (GtkWidget *widget,
 			   _("Black Only"),      (gpointer) BLACK_ONLY, NULL,
 
 			   NULL);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Transparency Type:"), 1.0, 0.5,
-			     optionmenu, TRUE);
+			     optionmenu, 1, TRUE);
 
   optionmenu =
     gimp_option_menu_new2 (FALSE, file_prefs_toggle_callback,
@@ -1735,8 +1736,9 @@ file_pref_cmd_callback (GtkWidget *widget,
 			   _("Large"),  (gpointer) LARGE_CHECKS, NULL,
 
 			   NULL);
-  gimp_table_attach_aligned (GTK_TABLE (table), 1,
-			     _("Check Size:"), 1.0, 0.5, optionmenu, TRUE);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+			     _("Check Size:"), 1.0, 0.5,
+			     optionmenu, 1, TRUE);
 
   vbox2 = file_prefs_frame_new (_("8-Bit Displays"), GTK_BOX (vbox));
 
@@ -1808,8 +1810,9 @@ file_pref_cmd_callback (GtkWidget *widget,
 			   _("Huge"),   (gpointer) 128, NULL,
 
 			   NULL);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
-			     _("Preview Size:"), 1.0, 0.5, optionmenu, TRUE);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+			     _("Preview Size:"), 1.0, 0.5,
+			     optionmenu, 1, TRUE);
 
   optionmenu =
     gimp_option_menu_new2 (FALSE, file_prefs_nav_preview_size_callback,
@@ -1820,8 +1823,9 @@ file_pref_cmd_callback (GtkWidget *widget,
 			   _("Large"),  (gpointer) 112, NULL,
 
 			   NULL);
-  gimp_table_attach_aligned (GTK_TABLE (table), 1,
-			     _("Nav Preview Size:"), 1.0, 0.5, optionmenu, TRUE);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+			     _("Nav Preview Size:"), 1.0, 0.5,
+			     optionmenu, 1, TRUE);
 
   spinbutton =
     gimp_spin_button_new (&adjustment, edit_last_opened_size,
@@ -1829,9 +1833,9 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &edit_last_opened_size);
-  gimp_table_attach_aligned (GTK_TABLE (table), 3,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("Recent Documents List Size:"), 1.0, 0.5,
-			     spinbutton, TRUE);
+			     spinbutton, 1, TRUE);
 
   /* Indicators */
   vbox2 = file_prefs_frame_new (_("Toolbox"), GTK_BOX (vbox));
@@ -1915,9 +1919,9 @@ file_pref_cmd_callback (GtkWidget *widget,
 			   _("Netscape"), (gpointer) HELP_BROWSER_NETSCAPE, NULL,
 
 			   NULL);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Help Browser to Use:"), 1.0, 0.5,
-			     optionmenu, TRUE);
+			     optionmenu, 1, TRUE);
 
   /* Interface / Image Windows */
   vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
@@ -1983,9 +1987,9 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &marching_speed);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Marching Ants Speed:"), 1.0, 0.5,
-			     spinbutton, TRUE);
+			     spinbutton, 1, TRUE);
 
   /* The title format string */
   combo = gtk_combo_new ();
@@ -2023,8 +2027,9 @@ file_pref_cmd_callback (GtkWidget *widget,
 		      GTK_SIGNAL_FUNC (file_prefs_string_callback), 
 		      &image_title_format);
 
-  gimp_table_attach_aligned (GTK_TABLE (table), 1,
-			     _("Image Title Format:"), 1.0, 0.5, combo, FALSE);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+			     _("Image Title Format:"), 1.0, 0.5,
+			     combo, 1, FALSE);
   /* End of the title format string */
 
   vbox2 = file_prefs_frame_new (_("Pointer Movement Feedback"), GTK_BOX (vbox));
@@ -2118,8 +2123,9 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &levels_of_undo);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
-			     _("Levels of Undo:"), 1.0, 0.5, spinbutton, TRUE);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+			     _("Levels of Undo:"), 1.0, 0.5,
+			     spinbutton, 1, TRUE);
 
   /*  The tile cache size  */
   mem_size_unit = 1;
@@ -2161,8 +2167,9 @@ file_pref_cmd_callback (GtkWidget *widget,
 			   NULL);
   gtk_box_pack_start (GTK_BOX (hbox), optionmenu, FALSE, FALSE, 0);
   gtk_widget_show (optionmenu);
-  gimp_table_attach_aligned (GTK_TABLE (table), 1,
-			     _("Tile Cache Size:"), 1.0, 0.5, hbox, TRUE);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+			     _("Tile Cache Size:"), 1.0, 0.5,
+			     hbox, 1, TRUE);
 
 #ifdef ENABLE_MP
   spinbutton =
@@ -2171,9 +2178,9 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &edit_num_processors);
-  gimp_table_attach_aligned (GTK_TABLE (table), 2,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Number of Processors to Use:"), 1.0, 0.5,
-			     spinbutton, TRUE);
+			     spinbutton, 1, TRUE);
 #endif /* ENABLE_MP */
 
   frame = gtk_frame_new (_("Scaling")); 
@@ -2202,9 +2209,9 @@ file_pref_cmd_callback (GtkWidget *widget,
 			   (gpointer) CUBIC_INTERPOLATION, NULL,
 
 			   NULL);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Interpolation Type:"), 1.0, 0.5,
-			     optionmenu, TRUE);
+			     optionmenu, 1, TRUE);
 
   vbox2 = file_prefs_frame_new (_("File Saving"), GTK_BOX (vbox));
 
@@ -2227,9 +2234,9 @@ file_pref_cmd_callback (GtkWidget *widget,
 			   _("Never"),  (gpointer) 0, NULL,
 
 			   NULL);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Try to Write a Thumbnail File:"), 1.0, 0.5,
-			     optionmenu, TRUE);
+			     optionmenu, 1, TRUE);
 
   optionmenu =
     gimp_option_menu_new2 (FALSE, file_prefs_toggle_callback,
@@ -2239,9 +2246,9 @@ file_pref_cmd_callback (GtkWidget *widget,
 			   _("Always"),             (gpointer) 0, NULL,
 
 			   NULL);
-  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("\"File > Save\" Saves the Image:"), 1.0, 0.5,
-                               optionmenu, TRUE);
+			     optionmenu, 1, TRUE);
                                      
 
   /* Session Management */
@@ -2432,9 +2439,9 @@ file_pref_cmd_callback (GtkWidget *widget,
 	gtk_signal_connect (GTK_OBJECT (fileselection), "filename_changed",
 			    GTK_SIGNAL_FUNC (file_prefs_filename_callback),
 			    dirs[i].mdir);
-	gimp_table_attach_aligned (GTK_TABLE (table), i,
+	gimp_table_attach_aligned (GTK_TABLE (table), 0, i,
 				   gettext(dirs[i].label), 1.0, 0.5,
-				   fileselection, FALSE);
+				   fileselection, 1, FALSE);
       }
   }
 

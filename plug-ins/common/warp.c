@@ -472,18 +472,18 @@ warp_dialog (GDrawable *drawable)
   spinbutton = gimp_spin_button_new (&adj, dvals.amount,
 				     -1000, 1000, /* ??? */
 				     1, 10, 0, 1, 2);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Step Size:"), 1.0, 0.5,
-			     spinbutton, TRUE);
+			     spinbutton, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &dvals.amount);
 
   spinbutton = gimp_spin_button_new (&adj, dvals.iter,
 				     1, 100, 1, 5, 0, 1, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Iterations:"), 1.0, 0.5,
-			     spinbutton, TRUE);
+			     spinbutton, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &dvals.iter);
@@ -579,27 +579,27 @@ warp_dialog (GDrawable *drawable)
 
   spinbutton = gimp_spin_button_new (&adj, dvals.dither,
 				     0, 100, 1, 10, 0, 1, 2);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Dither Size:"), 1.0, 0.5,
-			     spinbutton, TRUE);
+			     spinbutton, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &dvals.dither);
 
   spinbutton = gimp_spin_button_new (&adj, dvals.angle,
 				     0, 360, 1, 15, 0, 1, 1);
-  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Rotation Angle:"), 1.0, 0.5,
-			     spinbutton, TRUE);
+			     spinbutton, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &dvals.angle);
 
   spinbutton = gimp_spin_button_new (&adj, dvals.substeps,
 				     1, 100, 1, 5, 0, 1, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 2,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Substeps:"), 1.0, 0.5,
-			     spinbutton, TRUE);
+			     spinbutton, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &dvals.substeps);
@@ -653,9 +653,9 @@ warp_dialog (GDrawable *drawable)
   spinbutton = gimp_spin_button_new (&adj, dvals.grad_scale,
 				     -1000, 1000, /* ??? */
 				     0.01, 0.1, 0, 1, 3);
-  gimp_table_attach_aligned (GTK_TABLE (otable), 0,
+  gimp_table_attach_aligned (GTK_TABLE (otable), 0, 0,
 			     _("Gradient Scale:"), 1.0, 0.5,
-			     spinbutton, TRUE);
+			     spinbutton, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &dvals.grad_scale);
@@ -678,9 +678,9 @@ warp_dialog (GDrawable *drawable)
   spinbutton = gimp_spin_button_new (&adj, dvals.vector_scale,
 				     -1000, 1000, /* ??? */
 				     0.01, 0.1, 0, 1, 3);
-  gimp_table_attach_aligned (GTK_TABLE (otable), 1,
+  gimp_table_attach_aligned (GTK_TABLE (otable), 0, 1,
 			     _("Vector Mag:"), 1.0, 0.5,
-			     spinbutton, TRUE);
+			     spinbutton, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &dvals.vector_scale);
@@ -689,9 +689,9 @@ warp_dialog (GDrawable *drawable)
 
   spinbutton = gimp_spin_button_new (&adj, dvals.vector_angle,
 				     0, 360, 1, 15, 0, 1, 1);
-  gimp_table_attach_aligned (GTK_TABLE (otable), 2,
+  gimp_table_attach_aligned (GTK_TABLE (otable), 0, 2,
 			     _("Angle:"), 1.0, 0.5,
-			     spinbutton, TRUE);
+			     spinbutton, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &dvals.vector_angle);

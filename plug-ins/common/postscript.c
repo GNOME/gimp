@@ -2309,27 +2309,27 @@ load_dialog (void)
 
   spinbutton = gimp_spin_button_new (&adj, plvals.resolution,
 				     5, 1440, 1, 10, 0, 1, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Resolution:"), 1.0, 0.5,
-			     spinbutton, TRUE);
+			     spinbutton, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &plvals.resolution);
 
   spinbutton = gimp_spin_button_new (&adj, plvals.width,
 				     1, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Width:"), 1.0, 0.5,
-			     spinbutton, TRUE);
+			     spinbutton, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &plvals.width);
 
   spinbutton = gimp_spin_button_new (&adj, plvals.height,
 				     1, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 2,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Height:"), 1.0, 0.5,
-			     spinbutton, TRUE);
+			     spinbutton, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &plvals.height);
@@ -2337,9 +2337,9 @@ load_dialog (void)
   pages_entry = gtk_entry_new ();
   gtk_widget_set_usize (pages_entry, 80, 0);
   gtk_entry_set_text (GTK_ENTRY (pages_entry), plvals.pages);
-  gimp_table_attach_aligned (GTK_TABLE (table), 3,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("Pages:"), 1.0, 0.5,
-			     pages_entry, TRUE);
+			     pages_entry, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (pages_entry), "changed",
 		      GTK_SIGNAL_FUNC (load_pages_entry_callback),
 		      NULL);
@@ -2493,36 +2493,36 @@ save_dialog (void)
 
   spinbutton = gimp_spin_button_new (&vals->adjustment[0], psvals.width,
 				     1e-5, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 2);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Width:"), 1.0, 0.5,
-			     spinbutton, FALSE);
+			     spinbutton, 1, FALSE);
   gtk_signal_connect (GTK_OBJECT (vals->adjustment[0]), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &psvals.width);
 
   spinbutton = gimp_spin_button_new (&vals->adjustment[1], psvals.height,
 				     1e-5, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 2);
-  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Height:"), 1.0, 0.5,
-			     spinbutton, FALSE);
+			     spinbutton, 1, FALSE);
   gtk_signal_connect (GTK_OBJECT (vals->adjustment[1]), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &psvals.height);
 
   spinbutton = gimp_spin_button_new (&vals->adjustment[2], psvals.x_offset,
 				     1e-5, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 2);
-  gimp_table_attach_aligned (GTK_TABLE (table), 2,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("X-Offset:"), 1.0, 0.5,
-			     spinbutton, FALSE);
+			     spinbutton, 1, FALSE);
   gtk_signal_connect (GTK_OBJECT (vals->adjustment[2]), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &psvals.x_offset);
 
   spinbutton = gimp_spin_button_new (&vals->adjustment[3], psvals.y_offset,
 				     1e-5, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 2);
-  gimp_table_attach_aligned (GTK_TABLE (table), 3,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("Y-Offset:"), 1.0, 0.5,
-			     spinbutton, FALSE);
+			     spinbutton, 1, FALSE);
   gtk_signal_connect (GTK_OBJECT (vals->adjustment[3]), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &psvals.y_offset);
@@ -2608,9 +2608,9 @@ save_dialog (void)
 
   spinbutton = gimp_spin_button_new (&adj, psvals.preview_size,
 				     0, 1024, 1, 10, 0, 1, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Preview Size:"), 1.0, 0.5,
-			     spinbutton, FALSE);
+			     spinbutton, 1, FALSE);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &psvals.preview_size);

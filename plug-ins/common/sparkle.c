@@ -343,14 +343,11 @@ sparkle_dialog (void)
   GtkWidget *table;
   GtkWidget *toggle;
   GtkWidget *sep;
+  GtkWidget *r1, *r2, *r3;
   GtkObject *scale_data;
   GSList    *group = NULL;
   gchar **argv;
   gint    argc;
-
-  gint use_natural    = (svals.colortype == NATURAL);
-  gint use_foreground = (svals.colortype == FOREGROUND);
-  gint use_background = (svals.colortype == BACKGROUND);
 
   argc    = 1;
   argv    = g_new (gchar *, 1);
@@ -487,7 +484,7 @@ sparkle_dialog (void)
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  vbox = gtk_vbox_new (FALSE, 2);
+  vbox = gtk_vbox_new (FALSE, 1);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
@@ -526,53 +523,29 @@ sparkle_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), sep, FALSE, FALSE, 0);
   gtk_widget_show (sep);
 
-  vbox = gtk_vbox_new (FALSE, 2);
+  /*  colortype  */
+  vbox =
+    gimp_radio_group_new2 (FALSE, NULL,
+			   gimp_radio_button_update,
+			   &svals.colortype, (gpointer) svals.colortype,
+
+			   _("Natural Color"),    (gpointer) NATURAL, &r1,
+			   _("Foreground Color"), (gpointer) FOREGROUND, &r2,
+			   _("Background Color"), (gpointer) BACKGROUND, &r3,
+
+			   NULL);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 0);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  /*  colortype  */
-  toggle = gtk_radio_button_new_with_label (group, _("Natural Color"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_natural);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &use_natural);
-  gtk_widget_show (toggle);
-  gimp_help_set_help_data (toggle, _("Use the Color of the Image"), NULL);
-
-  toggle = gtk_radio_button_new_with_label (group, _("Foreground Color"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_foreground);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &use_foreground);
-  gtk_widget_show (toggle);
-  gimp_help_set_help_data (toggle, _("Use the Foreground Color"), NULL);
-
-  toggle = gtk_radio_button_new_with_label (group, _("Background Color"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_background);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &use_background);
-  gtk_widget_show (toggle);
-  gimp_help_set_help_data (toggle, _("Use the Background Color"), NULL);
+  gimp_help_set_help_data (r1, _("Use the Color of the Image"), NULL);
+  gimp_help_set_help_data (r2, _("Use the Foreground Color"), NULL);
+  gimp_help_set_help_data (r3, _("Use the Background Color"), NULL);
 
   gtk_widget_show (dlg);
 
   gtk_main ();
   gdk_flush ();
-
-  /*  determine colortype  */
-  if (use_natural)
-    svals.colortype = NATURAL;
-  else if (use_foreground)
-    svals.colortype = FOREGROUND;
-  else if (use_background)
-    svals.colortype = BACKGROUND;
 
   return sint.run;
 }

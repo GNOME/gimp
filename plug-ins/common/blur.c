@@ -656,9 +656,9 @@ blur_dialog (void)
   /*  Random Seed  */
   seed_hbox = gimp_random_seed_new (&pivals.blur_seed, &pivals.seed_type,
 				    SEED_TIME, SEED_USER);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Random Seed:"), 1.0, 0.5,
-                             seed_hbox, TRUE);
+                             seed_hbox, 1, TRUE);
 
   /*
    *  Randomization percentage label & scale (1 to 100)

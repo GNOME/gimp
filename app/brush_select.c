@@ -442,9 +442,9 @@ brush_select_new (gchar   *title,
   gtk_signal_connect (GTK_OBJECT (bsp->opacity_data), "value_changed",
 		      GTK_SIGNAL_FUNC (opacity_scale_update),
 		      bsp);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Opacity:"), 1.0, 1.0,
-			     slider, FALSE);
+			     slider, 1, FALSE);
 
   /*  Create the paint mode option menu  */
   menu = paint_mode_menu_new (paint_mode_menu_callback, (gpointer) bsp);
@@ -452,9 +452,9 @@ brush_select_new (gchar   *title,
   gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
   gtk_option_menu_set_history (GTK_OPTION_MENU (option_menu),
 			       gimp_context_get_paint_mode (bsp->context));
-  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Mode:"), 1.0, 0.5,
-			     option_menu, TRUE);
+			     option_menu, 1, TRUE);
 
   gtk_widget_show (table);
   gtk_widget_show (bsp->paint_options_box);
@@ -506,9 +506,9 @@ brush_select_new (gchar   *title,
   gtk_signal_connect (GTK_OBJECT (bsp->spacing_data), "value_changed",
 		      GTK_SIGNAL_FUNC (spacing_scale_update),
 		      bsp);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Spacing:"), 1.0, 1.0,
-			     slider, FALSE);
+			     slider, 1, FALSE);
 
   gtk_widget_show (table);
 

@@ -456,9 +456,9 @@ align_layers_dialog (void)
 			   (gpointer) SNAP2HGRID, NULL,
 
 			   NULL);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Horizontal Style:"), 1.0, 0.5,
-			     optionmenu, FALSE);
+			     optionmenu, 1, FALSE);
 
   optionmenu =
     gimp_option_menu_new2 (FALSE, gimp_menu_item_update,
@@ -469,9 +469,9 @@ align_layers_dialog (void)
 			   _("Right Edge"), (gpointer) H_BASE_RIGHT, NULL,
 
 			   NULL);
-  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Horizontal Base:"), 1.0, 0.5,
-			     optionmenu, FALSE);
+			     optionmenu, 1, FALSE);
 
   optionmenu =
     gimp_option_menu_new2 (FALSE, gimp_menu_item_update,
@@ -489,9 +489,9 @@ align_layers_dialog (void)
 			   (gpointer) SNAP2VGRID, NULL,
 
 			   NULL);
-  gimp_table_attach_aligned (GTK_TABLE (table), 2,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Vertical Style:"), 1.0, 0.5,
-			     optionmenu, FALSE);
+			     optionmenu, 1, FALSE);
 
   optionmenu =
     gimp_option_menu_new2 (FALSE, gimp_menu_item_update,
@@ -502,9 +502,9 @@ align_layers_dialog (void)
 			   _("Bottom Edge"), (gpointer) V_BASE_BOTTOM, NULL,
 
 			   NULL);
-  gimp_table_attach_aligned (GTK_TABLE (table), 3,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("Horizontal Base:"), 1.0, 0.5,
-			     optionmenu, FALSE);
+			     optionmenu, 1, FALSE);
 
   toggle =
     gtk_check_button_new_with_label

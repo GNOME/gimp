@@ -361,9 +361,9 @@ doDialog (void)
 					   framenumber ?
 					   &xargs.tored : &xargs.fromred,
 					   3);
-      gimp_table_attach_aligned (GTK_TABLE (table), 0,
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 				 NULL, 0.0, 0.0,
-				 colorbutton, TRUE);
+				 colorbutton, 1, TRUE);
       gtk_signal_connect (GTK_OBJECT (colorbutton), "color_changed",
 			  GTK_SIGNAL_FUNC (color_button_callback),
 			  NULL);

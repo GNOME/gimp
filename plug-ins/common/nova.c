@@ -391,9 +391,9 @@ nova_dialog (GDrawable *drawable)
   button = gimp_color_button_new (_("SuperNova Color Picker"), 
 				  SCALE_WIDTH - 8, 16, 
 				  pvals.color, 3);
-  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Color:"), 1.0, 0.5,
-			     button, TRUE);
+			     button, 1, TRUE);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("Radius:"), SCALE_WIDTH, 0,

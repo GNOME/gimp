@@ -1376,9 +1376,9 @@ CML_explorer_dialog (void)
 	 NULL);
       CML_explorer_menu_entry_init (&widget_pointers[3][0],
 				    optionmenu, &VALS.initial_value);
-      gimp_table_attach_aligned2 (GTK_TABLE (table), 0,
-				  _("Initial Value:"), 1.0, 0.5,
-				  optionmenu, 1, 3, FALSE);
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+				 _("Initial Value:"), 1.0, 0.5,
+				 optionmenu, 2, FALSE);
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 				  _("Zoom Scale:"), SCALE_WIDTH, 0,
@@ -1477,9 +1477,9 @@ CML_explorer_dialog (void)
 					  (gpointer)             2, NULL,
 
 					  NULL);
-      gimp_table_attach_aligned (GTK_TABLE (table), 0,
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 				 _("Source Channel:"), 1.0, 0.5,
-				 optionmenu, TRUE);
+				 optionmenu, 1, TRUE);
 
       optionmenu = gimp_option_menu_new2 (FALSE, gimp_menu_item_update,
 					  &copy_destination,
@@ -1493,9 +1493,9 @@ CML_explorer_dialog (void)
 					  (gpointer)             2, NULL,
 
 					  NULL);
-      gimp_table_attach_aligned (GTK_TABLE (table), 1,
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 				 _("Destination Channel:"), 1.0, 0.5,
-				 optionmenu, TRUE);
+				 optionmenu, 1, TRUE);
 
       button = gtk_button_new_with_label (_("Copy Parameters"));
       gtk_table_attach (GTK_TABLE (table), button, 0, 2, 2, 3,
@@ -1530,9 +1530,9 @@ CML_explorer_dialog (void)
 					  (gpointer) 3, NULL,
 
 					  NULL);
-      gimp_table_attach_aligned (GTK_TABLE (table), 0,
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 				 _("Source Channel in File:"), 1.0, 0.5,
-				 optionmenu, TRUE);
+				 optionmenu, 1, TRUE);
 
       optionmenu = gimp_option_menu_new2 (FALSE, gimp_menu_item_update,
 					  &selective_load_destination,
@@ -1548,9 +1548,9 @@ CML_explorer_dialog (void)
 					  (gpointer) 3, NULL,
 
 					  NULL);
-      gimp_table_attach_aligned (GTK_TABLE (table), 1,
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 				 _("Destination Channel:"), 1.0, 0.5,
-				 optionmenu, TRUE);
+				 optionmenu, 1, TRUE);
 
       gtk_notebook_append_page (GTK_NOTEBOOK (notebook), frame,
 				gtk_label_new (_("Misc Ops.")));
@@ -1646,9 +1646,9 @@ CML_dialog_channel_panel_new (gchar     *name,
 			   NULL);
   CML_explorer_menu_entry_init (&widget_pointers[channel_id][index],
 				optionmenu, &param->function);
-  gimp_table_attach_aligned2 (GTK_TABLE (table), index,
-			      _("Function Type:"), 1.0, 0.5,
-			      optionmenu, 1, 3, FALSE);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, index,
+			     _("Function Type:"), 1.0, 0.5,
+			     optionmenu, 2, FALSE);
   index++;
 
   optionmenu =
@@ -1703,9 +1703,9 @@ CML_dialog_channel_panel_new (gchar     *name,
 			   NULL);
   CML_explorer_menu_entry_init (&widget_pointers[channel_id][index],
 				optionmenu, &param->composition);
-  gimp_table_attach_aligned2 (GTK_TABLE (table), index,
-			      _("Composition:"), 1.0, 0.5,
-			      optionmenu, 1, 3, FALSE);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, index,
+			     _("Composition:"), 1.0, 0.5,
+			     optionmenu, 2, FALSE);
   index++;
 
   optionmenu =
@@ -1745,9 +1745,9 @@ CML_dialog_channel_panel_new (gchar     *name,
 			   NULL);
   CML_explorer_menu_entry_init (&widget_pointers[channel_id][index],
 				optionmenu, &param->arrange);
-  gimp_table_attach_aligned2 (GTK_TABLE (table), index,
-			      _("Misc Arrange:"), 1.0, 0.5,
-			      optionmenu, 1, 3, FALSE);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, index,
+			     _("Misc Arrange:"), 1.0, 0.5,
+			     optionmenu, 2, FALSE);
   index++;
 
   toggle = gtk_check_button_new_with_label (_("Use Cyclic Range"));

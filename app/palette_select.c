@@ -37,13 +37,14 @@ PaletteSelect *
 palette_select_new (gchar *title,
 		    gchar *initial_palette)
 {
-  PaletteSelect *psp;
+  PaletteEntries *p_entries = NULL;
+  PaletteSelect  *psp;
   GSList     *list;
   GtkWidget  *vbox;
   GtkWidget  *hbox;
   GtkWidget  *scrolled_win;
-  PaletteEntries *p_entries = NULL;
-  gint select_pos;
+  gchar      *titles[3];
+  gint        select_pos;
 
   palette_select_palette_init ();
 
@@ -69,32 +70,29 @@ palette_select_new (gchar *title,
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 1);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (psp->shell)->vbox), vbox);
 
-  /* clist preview of gradients */
-  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
-
-  psp->clist = gtk_clist_new (3);
-  gtk_clist_set_shadow_type (GTK_CLIST (psp->clist), GTK_SHADOW_IN);
-
-  gtk_clist_set_row_height (GTK_CLIST (psp->clist), SM_PREVIEW_HEIGHT + 2);
-
-  gtk_widget_set_usize (psp->clist, 203, 200);
-  gtk_clist_set_column_title (GTK_CLIST (psp->clist), 0, _("Palette"));
-  gtk_clist_set_column_title (GTK_CLIST (psp->clist), 1, _("Ncols"));
-  gtk_clist_set_column_title (GTK_CLIST (psp->clist), 2, _("Name"));
-  gtk_clist_column_titles_show (GTK_CLIST(psp->clist));
-  gtk_clist_set_column_width (GTK_CLIST (psp->clist), 0, SM_PREVIEW_WIDTH + 2);
-
   hbox = gtk_hbox_new (FALSE, 8);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
   gtk_widget_show (hbox);
 
-  gtk_box_pack_start (GTK_BOX (hbox), scrolled_win, TRUE, TRUE, 0); 
-  gtk_container_add (GTK_CONTAINER (scrolled_win), psp->clist);
+  /* clist preview of gradients */
+  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
 				  GTK_POLICY_AUTOMATIC,
 				  GTK_POLICY_ALWAYS);
-
+  gtk_box_pack_start (GTK_BOX (hbox), scrolled_win, TRUE, TRUE, 0); 
   gtk_widget_show (scrolled_win);
+
+  titles[0] = _("Palette");
+  titles[1] = _("Ncols");
+  titles[2] = _("Name");
+  psp->clist = gtk_clist_new_with_titles (3, titles);
+  gtk_clist_set_shadow_type (GTK_CLIST (psp->clist), GTK_SHADOW_IN);
+  gtk_clist_set_row_height (GTK_CLIST (psp->clist), SM_PREVIEW_HEIGHT + 2);
+  gtk_clist_set_use_drag_icons (GTK_CLIST (psp->clist), FALSE);
+  gtk_clist_column_titles_passive (GTK_CLIST (psp->clist));
+  gtk_widget_set_usize (psp->clist, 203, 200);
+  gtk_clist_set_column_width (GTK_CLIST (psp->clist), 0, SM_PREVIEW_WIDTH + 2);
+  gtk_container_add (GTK_CONTAINER (scrolled_win), psp->clist);
   gtk_widget_show (psp->clist);
 
   select_pos = -1;

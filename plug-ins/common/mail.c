@@ -526,9 +526,9 @@ save_dialog (void)
   gtk_widget_set_usize (entry, 200, 0);
   g_snprintf (buffer, sizeof (buffer), "%s", mail_info.receipt);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("To:"), 1.0, 0.5,
-			     entry, FALSE);
+			     entry, 1, FALSE);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      GTK_SIGNAL_FUNC (mail_entry_callback),
 		      &mail_info.receipt);
@@ -538,9 +538,9 @@ save_dialog (void)
   gtk_widget_set_usize (entry, 200, 0);
   g_snprintf (buffer, sizeof (buffer), "%s", mail_info.from);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("From:"), 1.0, 0.5,
-			     entry, FALSE);
+			     entry, 1, FALSE);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      GTK_SIGNAL_FUNC (mail_entry_callback),
 		      &mail_info.from);
@@ -550,9 +550,9 @@ save_dialog (void)
   gtk_widget_set_usize (entry, 200, 0);
   g_snprintf (buffer, sizeof (buffer), "%s", mail_info.subject);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gimp_table_attach_aligned (GTK_TABLE (table), 2,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Subject:"), 1.0, 0.5,
-			     entry, FALSE);
+			     entry, 1, FALSE);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      GTK_SIGNAL_FUNC (mail_entry_callback),
 		      &mail_info.subject);
@@ -562,9 +562,9 @@ save_dialog (void)
   gtk_widget_set_usize (entry, 200, 0);
   g_snprintf (buffer, sizeof (buffer), "%s", mail_info.comment);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gimp_table_attach_aligned (GTK_TABLE (table), 3,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("Comment:"), 1.0, 0.5,
-			     entry, FALSE);
+			     entry, 1, FALSE);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      GTK_SIGNAL_FUNC (mail_entry_callback),
 		      &mail_info.comment);
@@ -574,9 +574,9 @@ save_dialog (void)
   gtk_widget_set_usize (entry, 200, 0);
   g_snprintf (buffer, sizeof (buffer), "%s", mail_info.filename);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gimp_table_attach_aligned (GTK_TABLE (table), 4,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
 			     _("Filename:"), 1.0, 0.5,
-			     entry, FALSE);
+			     entry, 1, FALSE);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      GTK_SIGNAL_FUNC (mail_entry_callback),
 		      &mail_info.filename);

@@ -851,18 +851,18 @@ load_dialog (gchar *name)
    */
   spinbutton = gimp_spin_button_new (&adj,
 				     from_frame, 1, nframes, 1, 10, 0, 1, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     "From:", 1.0, 0.5,
-			     spinbutton, TRUE);
+			     spinbutton, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &from_frame);
 
   spinbutton = gimp_spin_button_new (&adj,
 				     to_frame, 1, nframes, 1, 10, 0, 1, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     "To:", 1.0, 0.5,
-			     spinbutton, TRUE);
+			     spinbutton, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &to_frame);
@@ -922,18 +922,18 @@ save_dialog (gint32 image_id)
    */
   spinbutton = gimp_spin_button_new (&adj,
 				     from_frame, 1, nframes, 1, 10, 0, 1, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     "From:", 1.0, 0.5,
-			     spinbutton, TRUE);
+			     spinbutton, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &from_frame);
 
   spinbutton = gimp_spin_button_new (&adj,
 				     to_frame, 1, nframes, 1, 10, 0, 1, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     "To:", 1.0, 0.5,
-			     spinbutton, TRUE);
+			     spinbutton, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &to_frame);

@@ -147,25 +147,16 @@ void gimp_unit_menu_update         (GtkWidget          *widget,
  *  Helper Functions
  */
 
-/*  add aligned label & widget to a two-column table  */
-void gimp_table_attach_aligned     (GtkTable           *table,
-				    gint                row,
-				    gchar              *label_text,
-				    gfloat              xalign,
-				    gfloat              yalign,
-				    GtkWidget          *widget,
-				    gboolean            left_adjust);
-
 /*  add aligned label & widget to a table  */
-void gimp_table_attach_aligned2    (GtkTable           *table,
+void gimp_table_attach_aligned     (GtkTable           *table,
+				    gint                column,
 				    gint                row,
 				    gchar              *label_text,
 				    gfloat              xalign,
 				    gfloat              yalign,
 				    GtkWidget          *widget,
-				    gint                widget_left,
-				    gint                widget_right,
-				    gboolean            left_adjust);
+				    gint                colspan,
+				    gboolean            left_align);
 
 #ifdef __cplusplus
 }

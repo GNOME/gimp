@@ -1,3 +1,13 @@
+2000-02-01  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimpwidgets.[ch]: merged the table attach helper
+	functions into one function.
+
+	* app/*
+	* plug-ins/*: changed the calls to gimp_table_attach_aligned()
+	accordingly. Did minimal ui updates (spacing and stuff) in some
+	files.
+
 Mon Jan 31 23:24:44 CET 2000  Marc Lehmann <pcg@goof.com>
 
 	* MapObject/mapobject_main.c: add missing N_.

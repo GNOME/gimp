@@ -96,15 +96,4 @@ GtkWidget * gimp_message_box      (gchar        *message,
 				   GtkCallback   callback,
 				   gpointer      data);
 
-/*  helper functions  */
-
-/*  add aligned label & widget to a two-column table  */
-void gimp_table_attach_aligned (GtkTable  *table,
-				gint       row,
-				gchar     *text,
-				gfloat     xalign,
-				gfloat     yalign,
-				GtkWidget *widget,
-				gboolean   left_adjust);
-
 #endif /* __GIMP_UI_H__ */

@@ -1010,9 +1010,9 @@ save_dialog (gint32 drawable_ID)
   /* prefix */
   entry = gtk_entry_new_with_max_length (MAX_PREFIX);
   gtk_entry_set_text (GTK_ENTRY (entry), xsvals.prefix);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Identifier Prefix:"), 1.0, 0.5,
-			     entry, TRUE);
+			     entry, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
                       GTK_SIGNAL_FUNC (prefix_entry_callback),
                       NULL);
@@ -1021,9 +1021,9 @@ save_dialog (gint32 drawable_ID)
   entry = gtk_entry_new_with_max_length (MAX_COMMENT);
   gtk_widget_set_usize (entry, 240, 0);
   gtk_entry_set_text (GTK_ENTRY (entry), xsvals.comment);
-  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Comment:"), 1.0, 0.5,
-			     entry, TRUE);
+			     entry, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
                       GTK_SIGNAL_FUNC (comment_entry_callback),
                       NULL);

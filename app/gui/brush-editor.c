@@ -271,9 +271,9 @@ brush_edit_generated_new (void)
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (begw->radius_data), "value_changed",
 		      (GtkSignalFunc) update_brush_callback, begw);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Radius:"), 1.0, 1.0,
-			     slider, FALSE);
+			     slider, 1, FALSE);
 
   /*  brush hardness scale  */
   begw->hardness_data =
@@ -283,9 +283,9 @@ brush_edit_generated_new (void)
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (begw->hardness_data), "value_changed",
 		      (GtkSignalFunc) update_brush_callback, begw);
-  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Hardness:"), 1.0, 1.0,
-			     slider, FALSE);
+			     slider, 1, FALSE);
 
   /*  brush aspect ratio scale  */
   begw->aspect_ratio_data =
@@ -295,9 +295,9 @@ brush_edit_generated_new (void)
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (begw->aspect_ratio_data), "value_changed",
 		      (GtkSignalFunc) update_brush_callback, begw);
-  gimp_table_attach_aligned (GTK_TABLE (table), 3,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("Aspect Ratio:"), 1.0, 1.0,
-			     slider, FALSE);
+			     slider, 1, FALSE);
 
   /*  brush angle scale  */
   begw->angle_data =
@@ -307,9 +307,9 @@ brush_edit_generated_new (void)
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (begw->angle_data), "value_changed",
 		      (GtkSignalFunc) update_brush_callback, begw);
-  gimp_table_attach_aligned (GTK_TABLE (table), 2,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Angle:"), 1.0, 1.0,
-			     slider, FALSE);
+			     slider, 1, FALSE);
 
   gtk_table_set_row_spacings (GTK_TABLE (table), 3);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);

@@ -491,18 +491,18 @@ save_dialog (void)
 
   spinbutton = gimp_spin_button_new (&adj,
 				     info.spacing, 1, 1000, 1, 10, 0, 1, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Spacing:"), 1.0, 0.5,
-			     spinbutton, TRUE);
+			     spinbutton, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &info.spacing);
 
   entry = gtk_entry_new ();
   gtk_widget_set_usize (entry, 200, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Description:"), 1.0, 0.5,
-			     entry, FALSE);
+			     entry, 1, FALSE);
   gtk_entry_set_text (GTK_ENTRY (entry), info.description);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      GTK_SIGNAL_FUNC (entry_callback),

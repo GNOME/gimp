@@ -489,9 +489,9 @@ save_dialog (void)
 
   entry = gtk_entry_new ();
   gtk_widget_set_usize (entry, 200, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 3,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("Cell Content:"), 1.0, 0.5,
-			     entry, FALSE);
+			     entry, 1, FALSE);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      GTK_SIGNAL_FUNC (gtm_cellcontent_callback),
 		      NULL);
@@ -515,9 +515,9 @@ save_dialog (void)
 
   spinbutton = gimp_spin_button_new (&adj, gtmvals.border,
 				     0, 1000, 1, 10, 0, 1, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Border:"), 1.0, 0.5,
-			     spinbutton, TRUE);
+			     spinbutton, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
                       GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
                       &gtmvals.border);
@@ -527,9 +527,9 @@ save_dialog (void)
 
   entry = gtk_entry_new ();
   gtk_widget_set_usize (entry, 60, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Width:"), 1.0, 0.5,
-			     entry, TRUE);
+			     entry, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
                       GTK_SIGNAL_FUNC (gtm_clwidth_callback),
                       NULL);
@@ -541,9 +541,9 @@ save_dialog (void)
 
   entry = gtk_entry_new ();
   gtk_widget_set_usize (entry, 60, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 2,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Height:"), 1.0, 0.5,
-			     entry, TRUE);
+			     entry, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
                       GTK_SIGNAL_FUNC (gtm_clheight_callback),
                       NULL);
@@ -555,9 +555,9 @@ save_dialog (void)
 
   spinbutton = gimp_spin_button_new (&adj, gtmvals.cellpadding,
 				     0, 1000, 1, 10, 0, 1, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 3,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("Cell-Padding:"), 1.0, 0.5,
-			     spinbutton, TRUE);
+			     spinbutton, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
                       GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
                       &gtmvals.cellpadding);
@@ -566,9 +566,9 @@ save_dialog (void)
 
   spinbutton = gimp_spin_button_new (&adj, gtmvals.cellspacing,
 				     0, 1000, 1, 10, 0, 1, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 4,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
 			     _("Cell-Spacing:"), 1.0, 0.5,
-			     spinbutton, TRUE);
+			     spinbutton, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
                       GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
                       &gtmvals.cellspacing);

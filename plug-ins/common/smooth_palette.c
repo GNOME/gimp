@@ -427,27 +427,27 @@ dialog (void)
 
   spinbutton = gimp_spin_button_new (&adj, config.width,
 				     1, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Width:"), 1.0, 0.5,
-			     spinbutton, FALSE);
+			     spinbutton, 1, FALSE);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &config.width);
 
   spinbutton = gimp_spin_button_new (&adj, config.height,
 				     1, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Height:"), 1.0, 0.5,
-			     spinbutton, FALSE);
+			     spinbutton, 1, FALSE);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &config.height);
 
   spinbutton = gimp_spin_button_new (&adj, config.ntries,
 				     1, 1024, 1, 10, 0, 1, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 2,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Search Time:"), 1.0, 0.5,
-			     spinbutton, FALSE);
+			     spinbutton, 1, FALSE);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &config.ntries);

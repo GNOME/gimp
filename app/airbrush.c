@@ -137,9 +137,9 @@ airbrush_options_new (void)
   gtk_signal_connect (GTK_OBJECT (options->rate_w), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &options->rate);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Rate:"), 1.0, 1.0,
-			     scale, FALSE);
+			     scale, 1, FALSE);
 
   /*  the pressure scale  */
   options->pressure_w =
@@ -150,9 +150,9 @@ airbrush_options_new (void)
   gtk_signal_connect (GTK_OBJECT (options->pressure_w), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &options->pressure);
-  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Pressure:"), 1.0, 1.0,
-			     scale, FALSE);
+			     scale, 1, FALSE);
 
   gtk_widget_show (table);
 

@@ -321,9 +321,9 @@ plasma_dialog (void)
 
   seed_hbox = gimp_random_seed_new (&pvals.seed, &pvals.timeseed,
 				    TRUE, FALSE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Random Seed:"), 1.0, 0.5,
-			     seed_hbox, TRUE);
+			     seed_hbox, 1, TRUE);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Turbulence:"), SCALE_WIDTH, 0,

@@ -416,18 +416,18 @@ tile_dialog (gint width, gint height)
 
   spinbutton = gimp_spin_button_new (&tint.width_adj, width,
 				     1, width, 1, 10, 0, 1, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Width:"), 1.0, 0.5,
-			     spinbutton, FALSE);
+			     spinbutton, 1, FALSE);
   gtk_signal_connect (GTK_OBJECT (tint.width_adj), "value_changed",
 		      GTK_SIGNAL_FUNC (tile_adjustment_update),
 		      &tvals.new_width);
 
   spinbutton = gimp_spin_button_new (&tint.height_adj, height,
 				     1, height, 1, 10, 0, 1, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Height:"), 1.0, 0.5,
-			     spinbutton, FALSE);
+			     spinbutton, 1, FALSE);
   gtk_signal_connect (GTK_OBJECT (tint.height_adj), "value_changed",
 		      GTK_SIGNAL_FUNC (tile_adjustment_update),
 		      &tvals.new_height);

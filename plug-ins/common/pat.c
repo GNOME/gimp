@@ -447,9 +447,9 @@ save_dialog (void)
   entry = gtk_entry_new ();
   gtk_widget_set_usize (entry, 200, 0);
   gtk_entry_set_text (GTK_ENTRY (entry), description);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Description:"), 1.0, 0.5,
-			     entry, FALSE);
+			     entry, 1, FALSE);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      GTK_SIGNAL_FUNC (entry_callback),
 		      description);

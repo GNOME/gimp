@@ -302,9 +302,9 @@ selection_options_init (SelectionOptions     *options,
       gtk_signal_connect (GTK_OBJECT (options->fixed_width_w), "value_changed",
                           GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
                           &options->fixed_width);
-      gimp_table_attach_aligned (GTK_TABLE (table), 0,
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 				 _("Width:"), 1.0, 0.5,
-				 width_spinbutton, FALSE);
+				 width_spinbutton, 1, FALSE);
 
       options->fixed_height_w =
 	gtk_adjustment_new (options->fixed_height_d, 1e-5, 32767.0,
@@ -318,9 +318,9 @@ selection_options_init (SelectionOptions     *options,
       gtk_signal_connect (GTK_OBJECT (options->fixed_height_w), "value_changed",
                           GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
                           &options->fixed_height);
-      gimp_table_attach_aligned (GTK_TABLE (table), 1,
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 				 _("Height:"), 1.0, 0.5,
-				 height_spinbutton, FALSE);
+				 height_spinbutton, 1, FALSE);
 
       options->fixed_unit_w =
 	gimp_unit_menu_new ("%a", options->fixed_unit_d, TRUE, TRUE, TRUE);
@@ -331,9 +331,9 @@ selection_options_init (SelectionOptions     *options,
 			   width_spinbutton);
       gtk_object_set_data (GTK_OBJECT (width_spinbutton), "set_digits",
 			   height_spinbutton);
-      gimp_table_attach_aligned (GTK_TABLE (table), 2,
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 				 _("Unit:"), 1.0, 0.5,
-				 options->fixed_unit_w, FALSE);
+				 options->fixed_unit_w, 1, FALSE);
 
       gtk_widget_show (table);
     }
@@ -474,9 +474,9 @@ paint_options_init (PaintOptions         *options,
   gtk_signal_connect (GTK_OBJECT (options->opacity_w), "value_changed",
 		      GTK_SIGNAL_FUNC (tool_options_opacity_adjustment_update),
 		      tool_context);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Opacity:"), 1.0, 1.0,
-			     scale, FALSE);
+			     scale, 1, FALSE);
 
   /*  the paint mode menu  */
   switch (tool_type)
@@ -497,9 +497,9 @@ paint_options_init (PaintOptions         *options,
       gtk_option_menu_set_menu (GTK_OPTION_MENU (options->paint_mode_w), menu);
       gtk_option_menu_set_history (GTK_OPTION_MENU (options->paint_mode_w),
 				   gimp_context_get_paint_mode (tool_context));
-      gimp_table_attach_aligned (GTK_TABLE (table), 1,
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 				 _("Mode:"), 1.0, 0.5,
-				 options->paint_mode_w, TRUE);
+				 options->paint_mode_w, 1, TRUE);
 
       /* eek */
       gtk_object_set_data (GTK_OBJECT (options->paint_mode_w), "tool_context",

@@ -693,18 +693,18 @@ run_save_dialog	(Config *config)
   /* Prefixed Name
    */
   prefixed_name = gtk_entry_new ();
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Prefixed Name:"), 1.0, 0.5,
-			     prefixed_name, FALSE);
+			     prefixed_name, 1, FALSE);
   gtk_entry_set_text (GTK_ENTRY (prefixed_name),
 		      config->prefixed_name ? config->prefixed_name : "");
   
   /* Comment Entry
    */
   centry = gtk_entry_new ();
-  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Comment:"), 1.0, 0.5,
-			     centry, FALSE);
+			     centry, 1, FALSE);
   gtk_entry_set_text (GTK_ENTRY (centry),
 		      config->comment ? config->comment : "");
 

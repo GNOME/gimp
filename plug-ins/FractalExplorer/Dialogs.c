@@ -394,7 +394,7 @@ explorer_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  button = gtk_button_new_with_label (_("Undo zoom"));
+  button = gtk_button_new_with_label (_("Undo Zoom"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (dialog_undo_zoom_callback),
@@ -402,7 +402,7 @@ explorer_dialog (void)
   gtk_widget_show (button);
   gimp_help_set_help_data (button, _("Undo last zoom"), NULL);
 
-  button = gtk_button_new_with_label (_("Redo zoom"));
+  button = gtk_button_new_with_label (_("Redo Zoom"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (dialog_redo_zoom_callback),
@@ -921,7 +921,7 @@ explorer_dialog (void)
 			    gtk_label_new (_("Fractals")));
   gtk_widget_show (frame);
 
-  gtk_notebook_set_page (GTK_NOTEBOOK (notebook), 0);
+  gtk_notebook_set_page (GTK_NOTEBOOK (notebook), 1);
 
   /* Done */
 
@@ -933,7 +933,6 @@ explorer_dialog (void)
   ready_now = TRUE;
 
   set_cmap_preview ();
-
   dialog_update_preview ();
 
   gtk_main ();

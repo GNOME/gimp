@@ -279,18 +279,18 @@ dialog_create (void)
 
   button = gimp_spin_button_new (&w.division_x_adj, p.params.division_x,
 				 1.0, p.drawable->width, 1.0, 5.0, 0, 1, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("X:"), 1.0, 0.5,
-			     button, TRUE);
+			     button, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (w.division_x_adj), "value_changed",
 		      GTK_SIGNAL_FUNC (division_x_adj_changed),
 		      NULL);
 
   button = gimp_spin_button_new (&w.division_y_adj, p.params.division_y,
 				 1.0, p.drawable->width, 1.0, 5.0, 0, 1, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Y:"), 1.0, 0.5,
-			     button, TRUE);
+			     button, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (w.division_y_adj), "value_changed",
 		      GTK_SIGNAL_FUNC (division_y_adj_changed),
 		      NULL);
@@ -299,9 +299,9 @@ dialog_create (void)
 				 1.0, MAX (p.drawable->width,
 					   p.drawable->height),
 				 1.0, 5.0, 0, 1, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 2,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Size:"), 1.0, 0.5,
-			     button, TRUE);
+			     button, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (w.tile_size_adj), "value_changed",
 		      GTK_SIGNAL_FUNC (tile_size_adj_changed),
 		      NULL);
@@ -354,9 +354,9 @@ dialog_create (void)
 
   button = gimp_spin_button_new (&adjustment, p.params.move_max_rate,
 				 0.0, 100.0, 1.0, 10.0, 0, 1, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Max (%):"), 1.0, 0.5,
-			     button, TRUE);
+			     button, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &p.params.move_max_rate);
