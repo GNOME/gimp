@@ -38,6 +38,7 @@
 #include "text/gimptext.h"
 
 #include "widgets/gimpcolorpanel.h"
+#include "widgets/gimpcontainerentry.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimptexteditor.h"
@@ -396,6 +397,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   GObject           *config;
   GtkWidget         *vbox;
   GtkWidget         *table;
+  GtkWidget         *hbox;
   GtkWidget         *button;
   GimpDialogFactory *dialog_factory;
   GtkWidget         *auto_button;
@@ -417,6 +419,11 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
+  hbox = gtk_hbox_new (FALSE, 2);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                             _("_Font:"), 0.0, 0.5,
+                             hbox, 2, FALSE);
+
   button = gimp_viewable_button_new (GIMP_CONTEXT (options)->gimp->fonts,
                                      GIMP_CONTEXT (options),
                                      GIMP_PREVIEW_SIZE_SMALL, 1,
@@ -424,20 +431,22 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
                                      "gimp-font-list|gimp-font-grid",
                                      GIMP_STOCK_FONT,
                                      _("Open the font selection dialog"));
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("_Font:"), 0.0, 0.5,
-                             button, 2, TRUE);
+  entry = gimp_container_entry_new (GIMP_CONTEXT (options)->gimp->fonts,
+                                    GIMP_CONTEXT (options),
+                                    GIMP_PREVIEW_SIZE_SMALL, 1);
+  gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
+  gtk_widget_show (entry);
 
   entry = gimp_prop_size_entry_new (config,
                                     "font-size", "font-size-unit", "%a",
                                     GIMP_SIZE_ENTRY_UPDATE_SIZE, 72.0);
 
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("_Size:"), 0.0, 0.5,
                              entry, 2, FALSE);
-  gtk_widget_show (entry);
-  row++;
 
   options->size_entry = GIMP_SIZE_ENTRY (entry);
 

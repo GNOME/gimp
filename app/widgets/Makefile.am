@@ -57,6 +57,8 @@ libappwidgets_a_sources = \
 	gimpcontainercombobox.h		\
 	gimpcontainereditor.c		\
 	gimpcontainereditor.h		\
+	gimpcontainerentry.c		\
+	gimpcontainerentry.h		\
 	gimpcontainergridview.c		\
 	gimpcontainergridview.h		\
 	gimpcontainerpopup.c		\
