@@ -1,3 +1,8 @@
+2003-08-29  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: removed be (Belarusian) from ALL_LINGUAS until all
+	be.po files are provided.
+
 2003-08-29  Dmitry G. Mastrukov  <dmitry@taurussoft.org>
 
 	* configure.in: Added Belarusian to ALL_LINGUAS.

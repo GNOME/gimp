@@ -280,7 +280,7 @@ AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE",
                    [The prefix for our gettext translation domains.])
 
-ALL_LINGUAS="be ca cs da de el en_GB es fi fr ga gl he hu hr id it ja ko nl no pl pt pt_BR ro ru sk sv tr uk vi yi zh_CN zh_TW"
+ALL_LINGUAS="ca cs da de el en_GB es fi fr ga gl he hu hr id it ja ko nl no pl pt pt_BR ro ru sk sv tr uk vi yi zh_CN zh_TW"
 
 AC_PROG_INTLTOOL
 AM_GLIB_GNU_GETTEXT
