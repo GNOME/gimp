@@ -126,3 +126,8 @@ display color correction modules.
 
 @gimpcolordisplay: the object which received the signal.
 
+<!-- ##### ARG GimpColorDisplay:enabled ##### -->
+<para>
+
+</para>
+
