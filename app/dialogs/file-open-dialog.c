@@ -23,7 +23,6 @@
 #include <sys/param.h>
 #endif
 
-#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -179,7 +178,7 @@ static void
 file_open_dialog_create (Gimp *gimp)
 {
   GtkFileSelection *file_sel;
-  GtkTreeSelection *sel;
+  GtkTreeSelection *tree_sel;
 
   fileload = gtk_file_selection_new (_("Open Image"));
 
@@ -206,11 +205,15 @@ file_open_dialog_create (Gimp *gimp)
 
   gtk_quit_add_destroy (1, GTK_OBJECT (fileload));
 
-  sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (GTK_FILE_SELECTION (fileload)->file_list));
-  gtk_tree_selection_set_mode (sel, GTK_SELECTION_MULTIPLE);
+  tree_sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (GTK_FILE_SELECTION (fileload)->file_list));
+
+  /* disabled until fixed in GTK+
+   *
+   *  gtk_tree_selection_set_mode (tree_sel, GTK_SELECTION_MULTIPLE);
+   */
 
   /* Catch file-list clicks so we can update the preview thumbnail */
-  g_signal_connect (G_OBJECT (sel), "changed",
+  g_signal_connect (G_OBJECT (tree_sel), "changed",
 		    G_CALLBACK (file_open_selchanged_callback),
 		    fileload);
 

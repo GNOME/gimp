@@ -1,3 +1,18 @@
+2002-02-10  Sven Neumann  <sven@gimp.org>
+
+	* app/batch.c
+	* app/general.c
+	* app/core/gimpbrushgenerated.c
+	* app/core/gimpbrushpipe.c
+	* app/core/gimpdata.c
+	* app/file/file-open.c
+	* app/file/file-save.c
+	* app/file/file-utils.c: don't include ctype.h, use g_ascii_* 
+	functions from GLib instead.
+	
+	* app/gui/file-open-dialog.c: disabled multiple selection in the
+	file open dialog until this is fixed in GTK+.
+
 2002-02-10  Adam D. Moss  <adam@gimp.org>
 
 	* app/core/gimpimage-convert.[ch]:

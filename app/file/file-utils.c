@@ -23,7 +23,6 @@
 #include <sys/param.h>
 #endif
 
-#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -103,7 +102,7 @@ file_proc_find_by_name (GSList      *procs,
 
 	  while (*p1 && *p2)
 	    {
-	      if (tolower (*p1) != tolower (*p2))
+	      if (g_ascii_tolower (*p1) != g_ascii_tolower (*p2))
 		break;
 
 	      p1++;
@@ -204,7 +203,7 @@ file_convert_string (gchar *instr,
             for (tmpptr = tmp; (tmpptr-tmp) <= 3;)
               {
                 *(tmpptr++) = *(uin++);
-                if (   (*uin == '\0') || (!isdigit (*uin))
+                if (   (*uin == '\0') || (!g_ascii_isdigit (*uin))
                     || (*uin == '8') || (*uin == '9'))
                   break;
               }
@@ -280,7 +279,7 @@ file_check_single_magic (gchar  *offset,
   /* Check numerical operator value if present */
   if (num_operator_ptr && (*num_operator_ptr == '&'))
     {
-      if (isdigit (num_operator_ptr[1]))
+      if (g_ascii_isdigit (num_operator_ptr[1]))
         {
           if (num_operator_ptr[1] != '0')      /* decimal */
             sscanf (num_operator_ptr+1, "%ld", &num_operatorval);
@@ -300,7 +299,7 @@ file_check_single_magic (gchar  *offset,
         num_test = value[0];
         value++;
       }
-      if (!isdigit (value[0])) return (0);
+      if (!g_ascii_isdigit (value[0])) return (0);
 
       /* 
        * to anybody reading this: is strtol's parsing behaviour (e.g. "0x" prefix)

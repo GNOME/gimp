@@ -21,7 +21,6 @@
 
 #include "config.h"
 
-#include <ctype.h>
 #include <errno.h>
 #include <stdio.h>
 #include <string.h>
@@ -305,7 +304,7 @@ gimp_data_create_filename (GimpData    *data,
   if (safe_name[0] == '.')
     safe_name[0] = '_';
   for (i = 0; safe_name[i]; i++)
-    if (safe_name[i] == G_DIR_SEPARATOR || isspace (safe_name[i]))
+    if (safe_name[i] == G_DIR_SEPARATOR || g_ascii_isspace (safe_name[i]))
       safe_name[i] = '_';
 
   filename = g_strdup_printf ("%s%s",

@@ -15,9 +15,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
+#include "config.h"
+
 #include <glib.h>
 
-#include <ctype.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -106,7 +108,8 @@ get_token (ParseInfo *info)
 	      state = 1;
 	      slashed = FALSE;
 	    }
-	  else if ((buffer[info->position] == '-') || isdigit (buffer[info->position]))
+	  else if ((buffer[info->position] == '-') || 
+                   g_ascii_isdigit (buffer[info->position]))
 	    {
 	      tokenbuf[tokenpos++] = buffer[info->position];
 	      info->position += 1;
@@ -184,7 +187,7 @@ get_token (ParseInfo *info)
 	    }
 	  break;
 	case 3:
-	  if (isdigit (buffer[info->position]) ||
+	  if (g_ascii_isdigit (buffer[info->position]) ||
 	      (buffer[info->position] == '.'))
 	    {
 	      tokenbuf[tokenpos++] = buffer[info->position];

@@ -22,7 +22,6 @@
 #include <errno.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -362,7 +361,7 @@ gimp_brush_pipe_load (const gchar *filename)
       return NULL;
     }
 
-  while (*paramstring && isspace (*paramstring))
+  while (*paramstring && g_ascii_isspace (*paramstring))
     paramstring++;
 
   if (*paramstring)
@@ -442,7 +441,8 @@ gimp_brush_pipe_load (const gchar *filename)
 	}
       else
 	{
-	  g_message (_("Fatal parsing error:\nBrush pipe file '%s' is corrupt."), filename);
+	  g_message (_("Fatal parsing error:\n"
+                       "Brush pipe file '%s' is corrupt."), filename);
 	  close (fd);
 	  g_object_unref (G_OBJECT (pipe));
 	  return NULL;
