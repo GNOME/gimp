@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-04 01:08+0200\n"
-"PO-Revision-Date: 2005-04-03 17:12+0200\n"
+"POT-Creation-Date: 2005-04-06 23:37+0200\n"
+"PO-Revision-Date: 2005-04-06 23:37+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -3131,15 +3131,15 @@ msgstr "_Deinterlaccia..."
 msgid "Deinterlace..."
 msgstr "Deinterlaccia..."
 
-#: ../plug-ins/common/deinterlace.c:313
+#: ../plug-ins/common/deinterlace.c:322
 msgid "Deinterlace"
 msgstr "Deinterlaccia"
 
-#: ../plug-ins/common/deinterlace.c:343
+#: ../plug-ins/common/deinterlace.c:352
 msgid "Keep o_dd fields"
 msgstr "Mantieni campi _dispari"
 
-#: ../plug-ins/common/deinterlace.c:344
+#: ../plug-ins/common/deinterlace.c:353
 msgid "Keep _even fields"
 msgstr "Mantieni campi _pari"
 
@@ -8109,50 +8109,47 @@ msgstr "RitaglioPreciso(tm)..."
 msgid "Nothing to crop."
 msgstr "Niente da ritagliare."
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:128
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:142
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:126
 msgid "Procedure Browser"
 msgstr "Navigatore delle procedure"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:132
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:146
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:130
 #: ../plug-ins/dbbrowser/plugin-browser.c:546
 msgid "Search by _Name"
 msgstr "Ricerca per _nome"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:133
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:147
-msgid "Search by _Blurb"
-msgstr "Ricerca per _blurb"
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:131
+msgid "Search by _Description"
+msgstr "Ricerca per _descrizione"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:224
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:213
 #: ../plug-ins/dbbrowser/plugin-browser.c:716
 msgid "_Search:"
 msgstr "_Cerca:"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:386
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:375
 #: ../plug-ins/dbbrowser/plugin-browser.c:395
 msgid "Searching by name - please wait"
 msgstr "Ricerca per nome - attendere"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:410
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:399
 msgid "Searching by blurb - please wait"
 msgstr "Ricerca per blurb - attendere"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:421
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:410
 msgid "Searching - please wait"
 msgstr "Ricerca in corso..."
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:428
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:417
 msgid "1 Procedure"
 msgstr "1 procedura"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:430
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:419
 #, c-format
 msgid "%d Procedures"
 msgstr "%d procedure"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:476
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:465
 #: ../plug-ins/dbbrowser/plugin-browser.c:514
 msgid "No matches"
 msgstr "Nessuna occorrenza"
@@ -8163,45 +8160,45 @@ msgstr "Nessuna occorrenza"
 #.
 #. *    Scales
 #.
-#: ../plug-ins/dbbrowser/gimpprocview.c:133 ../plug-ins/gflare/gflare.c:2681
+#: ../plug-ins/dbbrowser/gimpprocview.c:134 ../plug-ins/gflare/gflare.c:2681
 #: ../plug-ins/gflare/gflare.c:3512 ../plug-ins/gflare/gflare.c:3617
 #: ../plug-ins/gflare/gflare.c:3754
 msgid "Parameters"
 msgstr "Parametri"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:146
+#: ../plug-ins/dbbrowser/gimpprocview.c:147
 msgid "Return Values"
 msgstr "Valori restituiti"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:159
+#: ../plug-ins/dbbrowser/gimpprocview.c:160
 msgid "Additional Information"
 msgstr "Informazioni aggiuntive"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:198
+#: ../plug-ins/dbbrowser/gimpprocview.c:199
 msgid "Author:"
 msgstr "Autore:"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:209
+#: ../plug-ins/dbbrowser/gimpprocview.c:210
 msgid "Date:"
 msgstr "Data:"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:220
+#: ../plug-ins/dbbrowser/gimpprocview.c:221
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:319
+#: ../plug-ins/dbbrowser/gimpprocview.c:320
 msgid "Internal GIMP procedure"
 msgstr "Procedura interna di GIMP"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:320
+#: ../plug-ins/dbbrowser/gimpprocview.c:321
 msgid "GIMP Plug-In"
 msgstr "Plug-In di GIMP"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:321
+#: ../plug-ins/dbbrowser/gimpprocview.c:322
 msgid "GIMP Extension"
 msgstr "Estensione di GIMP"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:322
+#: ../plug-ins/dbbrowser/gimpprocview.c:323
 msgid "Temporary Procedure"
 msgstr "Procedura temporanea"
 
@@ -10478,7 +10475,7 @@ msgstr "Formato file mappa"
 msgid "View Source"
 msgstr "Visualizza sorgente"
 
-#: ../plug-ins/imagemap/imap_stock.c:45
+#: ../plug-ins/imagemap/imap_stock.c:43
 msgid "Edit Map Info..."
 msgstr "Modifica informazioni mappa..."
 

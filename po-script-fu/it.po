@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-04 01:08+0200\n"
-"PO-Revision-Date: 2005-04-03 16:29+0200\n"
+"POT-Creation-Date: 2005-04-06 23:35+0200\n"
+"PO-Revision-Date: 2005-04-06 23:36+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -115,17 +115,17 @@ msgid "(none)"
 msgstr "(nessuno)"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:1083
-#: ../plug-ins/dbbrowser/gimpprocview.c:198
+#: ../plug-ins/dbbrowser/gimpprocview.c:199
 msgid "Author:"
 msgstr "Autore:"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:1090
-#: ../plug-ins/dbbrowser/gimpprocview.c:220
+#: ../plug-ins/dbbrowser/gimpprocview.c:221
 msgid "Copyright:"
 msgstr "Copyright:"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:1097
-#: ../plug-ins/dbbrowser/gimpprocview.c:209
+#: ../plug-ins/dbbrowser/gimpprocview.c:210
 msgid "Date:"
 msgstr "Data:"
 
@@ -257,75 +257,72 @@ msgstr "_Opzioni matite"
 msgid "_Refresh Scripts"
 msgstr "_Rinfresca gli scripts"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:128
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:142
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:126
 msgid "Procedure Browser"
 msgstr "Navigatore delle procedure"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:132
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:146
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:130
 msgid "Search by _Name"
 msgstr "Ricerca per _nome"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:133
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:147
-msgid "Search by _Blurb"
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:131
+msgid "Search by _Description"
 msgstr "Ricerca per _descrizione"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:224
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:213
 msgid "_Search:"
 msgstr "_Cerca:"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:386
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:375
 msgid "Searching by name - please wait"
 msgstr "Ricerca per nome - attendere"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:410
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:399
 msgid "Searching by blurb - please wait"
 msgstr "Ricerca per descrizione - attendere"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:421
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:410
 msgid "Searching - please wait"
 msgstr "Ricerca - attendere"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:428
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:417
 msgid "1 Procedure"
 msgstr "1 procedura"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:430
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:419
 #, c-format
 msgid "%d Procedures"
 msgstr "%d procedure"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:476
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:465
 msgid "No matches"
 msgstr "Nessun riscontro"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:133
+#: ../plug-ins/dbbrowser/gimpprocview.c:134
 msgid "Parameters"
 msgstr "Parametri"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:146
+#: ../plug-ins/dbbrowser/gimpprocview.c:147
 msgid "Return Values"
 msgstr "Valori restituiti"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:159
+#: ../plug-ins/dbbrowser/gimpprocview.c:160
 msgid "Additional Information"
 msgstr "Informazioni aggiuntive"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:319
+#: ../plug-ins/dbbrowser/gimpprocview.c:320
 msgid "Internal GIMP procedure"
 msgstr "Procedura interna di GIMP"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:320
+#: ../plug-ins/dbbrowser/gimpprocview.c:321
 msgid "GIMP Plug-In"
 msgstr "Plug-in di GIMP"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:321
+#: ../plug-ins/dbbrowser/gimpprocview.c:322
 msgid "GIMP Extension"
 msgstr "Estensione di GIMP"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:322
+#: ../plug-ins/dbbrowser/gimpprocview.c:323
 msgid "Temporary Procedure"
 msgstr "Procedura temporanea"
 
