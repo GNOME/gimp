@@ -1,3 +1,11 @@
+2003-08-14  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/gimp-composite-mmx-installer.c
+	* app/composite/gimp-composite-sse-installer.c:
+	* app/composite/gimp-composite-sse.c:
+	Conditional compilation matching the conditional compilation in
+	gimp-composite-{mmx,sse}.c
+
 2003-08-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/text/gimptextlayer.c: removed trailing whitespace.

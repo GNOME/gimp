@@ -134,18 +134,18 @@
                   "\tpsrlw     $8,        %%"#opr2"\n"
  
 
-static unsigned long rgba8_alpha_mask[2] = { 0xFF000000, 0xFF000000 };
-static unsigned long rgba8_b1[2] = { 0x01010101, 0x01010101 };
-static unsigned long rgba8_b255[2] = { 0xFFFFFFFF, 0xFFFFFFFF };
-static unsigned long rgba8_w1[2] = { 0x00010001, 0x00010001 };
-static unsigned long rgba8_w128[2] = { 0x00800080, 0x00800080 };
-static unsigned long rgba8_w256[2] = { 0x01000100, 0x01000100 };
-static unsigned long rgba8_w255[2] = { 0X00FF00FF, 0X00FF00FF };
+const static unsigned long rgba8_alpha_mask[2] = { 0xFF000000, 0xFF000000 };
+const static unsigned long rgba8_b1[2] = { 0x01010101, 0x01010101 };
+const static unsigned long rgba8_b255[2] = { 0xFFFFFFFF, 0xFFFFFFFF };
+const static unsigned long rgba8_w1[2] = { 0x00010001, 0x00010001 };
+const static unsigned long rgba8_w128[2] = { 0x00800080, 0x00800080 };
+const static unsigned long rgba8_w256[2] = { 0x01000100, 0x01000100 };
+const static unsigned long rgba8_w255[2] = { 0X00FF00FF, 0X00FF00FF };
 
-static unsigned long va8_alpha_mask[2] = { 0xFF00FF00, 0xFF00FF00 };
-static unsigned long va8_b255[2] = { 0xFFFFFFFF, 0xFFFFFFFF };
-static unsigned long va8_w1[2] = { 0x00010001, 0x00010001 };
-static unsigned long va8_w255[2] = { 0X00FF00FF, 0X00FF00FF };
+const static unsigned long va8_alpha_mask[2] = { 0xFF00FF00, 0xFF00FF00 };
+const static unsigned long va8_b255[2] = { 0xFFFFFFFF, 0xFFFFFFFF };
+const static unsigned long va8_w1[2] = { 0x00010001, 0x00010001 };
+const static unsigned long va8_w255[2] = { 0X00FF00FF, 0X00FF00FF };
 /*
  *
  */

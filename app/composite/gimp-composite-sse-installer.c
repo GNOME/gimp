@@ -10,6 +10,9 @@
 #include "gimp-composite-sse.h"
 
 
+#ifdef USE_MMX
+#ifdef ARCH_X86
+#if __GNUC__ >= 3
 static void (*gimp_composite_sse[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N])(GimpCompositeContext *) = {
  { /* GIMP_COMPOSITE_NORMAL */
   { /* A = v8 */
@@ -844,11 +847,17 @@ static void (*gimp_composite_sse[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXE
   },
  },
 };
+#endif
+#endif
+#endif
 
 
 void
 gimp_composite_sse_install (void)
 {
+#ifdef USE_MMX
+#ifdef ARCH_X86
+#if __GNUC__ >= 3
   int mode, a, b, d;
 
   for (mode = 0; mode < GIMP_COMPOSITE_N; mode++) {
@@ -865,6 +874,9 @@ gimp_composite_sse_install (void)
       }
     }
   }
+#endif
+#endif
+#endif
 
   gimp_composite_sse_init();
 }
