@@ -81,7 +81,8 @@ gtk_multi_option_menu_get_type ()
 	sizeof (GtkMultiOptionMenuClass),
 	(GtkClassInitFunc) gtk_multi_option_menu_class_init,
 	(GtkObjectInitFunc) gtk_multi_option_menu_init,
-	(GtkArgFunc) NULL,
+	(GtkArgSetFunc) NULL,
+	(GtkArgGetFunc) NULL,
       };
 
       multi_option_menu_type = gtk_type_unique (gtk_button_get_type (), &multi_option_menu_info);
