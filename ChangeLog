@@ -1,5 +1,14 @@
 2004-06-13  Jakub Steiner <jimmac@ximian.com>
 
+	* cursors/gimp-tool-cursors.xcf
+	* cursors/tool-blur.png
+	* cursors/tool-bucket-fill.png
+	* cursors/tool-dodge.png
+	* cursors/tool-eraser.png
+	* cursors/tool-hand.png: fix a few problems hidden by low opacity
+
+2004-06-13  Jakub Steiner <jimmac@ximian.com>
+
 	* cursor/*png: updated the cursors
 
 2004-06-13  Michael Natterer  <mitch@gimp.org>
