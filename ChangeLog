@@ -1,3 +1,10 @@
+2005-02-13  Sven Neumann  <sven@gimp.org>
+
+	* app/base/base.c: fixed typo.
+
+	* app/config/gimpbaseconfig.c: reverted last change,
+	"num-processor" doesn't need a confirmation.
+
 2005-02-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/file/file-save.[ch]: removed file_save() and renamed

@@ -94,7 +94,7 @@ base_init (GimpBaseConfig *config,
   swap_is_ok = tile_swap_test ();
 
   pixel_processor_init (config->num_processors);
-  g_signal_connect (config, "notify::num_processors",
+  g_signal_connect (config, "notify::num-processors",
                     G_CALLBACK (base_num_processors_notify),
                     NULL);
 
