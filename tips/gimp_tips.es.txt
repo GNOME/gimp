@@ -30,8 +30,8 @@
 #on the image.  And don't worry, you can undo most mistakes...    
 
 Casi todas las operaciones sobre la imagen se realizan pulsando
-el botón derecho en la imagen. No te preocupes, puedes deshacer
-la mayoría de tus errores...
+el botón derecho en la imagen. No se preocupe, puede deshacer
+la mayoría de sus errores...
 
 
 # Tips for beginners start here
@@ -41,21 +41,21 @@ la mayoría de tus errores...
 #You can get context-sensitive help for most of the GIMP's features by
 #pressing the F1 key at any time.  This also works inside the menus.
 
-Puedes obtener ayuda contextual de la mayoría de las características
+Puede obtener ayuda contextual de la mayoría de las características
 del GIMP pulsando F1. También funciona en los menús.
 
 #The GIMP uses layers to let you organize your image.  Think of them
 #as a stack of slides or filters, such that looking through them you
 #see a composite of their contents.
 
-El GIMP usa capas para organizar tu imagen. Piensa en ellas como una
-pila de transparencias o filtros, de forma que mirando a traves de
-ellas observas una composición de sus contenidos.
+El GIMP usa capas para organizar su imagen. Piense en ellas como una
+pila de transparencias o filtros, de forma que mirando a través de
+ellas observa una composición de sus contenidos.
 
 #You can perform many layer operations by right-clicking on the text
 #label of a layer in the "Layers, Channels and Paths" dialog
 
-Puedes realizar muchas operaciones sobre las capas pulsando el botón
+Puede realizar muchas operaciones sobre las capas pulsando el botón
 derecho del ratón sobre la etiqueta de texto de una capa en el diálogo
 de "Capas, Canales y Caminos".
 
@@ -64,26 +64,19 @@ de "Capas, Canales y Caminos".
 #This preserves the layers and every aspect of your work-in-progress.
 #Once a project is completed, you can save it as JPEG, PNG, GIF, ...
 
-Cuando guardes una imagen para trabajar en ella más tarde, intenta
-usar XCF, el formato nativo de GIMP (usa la extensión ".xcf"). Esto
-guarda las capas y todos los aspectos de tu "trabajo-en-progreso".
-Una vez has acabado el proyecto, puedes guardarlo como JPEG, PNG, GIF...
+Cuando guarde una imagen para trabajar en ella más tarde, intente
+usar XCF, el formato nativo de GIMP (use la extensión ".xcf"). Esto
+guarda las capas y todos los aspectos de su "trabajo-en-progreso".
+Una vez ha acabado el proyecto, puede guardarlo como JPEG, PNG, GIF...
 
 #The layer named "Background" it special because it lacks transparency.
 #This prevents you from adding a layer mask or moving the layer up in
 #the stack.  You may add transparency to it by right-clicking in the
 #"Layers, Channels and Paths" dialog and selecting "Add Alpha Channel".
 
-# //R LA TRADUCCIÓN ORIGINAL
-#La capa llamada "Fondo" es especial porque no posee trasparencia. Esto 
-#te previene de añadir una máscara de capa o mover la capa hacia arriba
-#en la pila. Deberías añadir trasparencia a ella pulsando sobre ella con
-#el botón derecho en el diálogo "Capas, Canales y Caminos" y seleccionando
-#"Añadir Canal Alfa".
-
 La capa llamada "Fondo" es especial porque no posee trasparencia. Esto 
-impide que añadas una máscara de capa o que muevas la capa hacia arriba
-en la pila. Puedes añadirle trasparencia pulsando en ella con el botón
+impide que añada una máscara de capa o que mueva la capa hacia arriba
+en la pila. Puede añadirle trasparencia pulsando en ella con el botón
 derecho en el diálogo "Capas, Canales y Caminos" y seleccionando 
 "Añadir Canal Alfa".
 
@@ -92,8 +85,8 @@ derecho en el diálogo "Capas, Canales y Caminos" y seleccionando
 #if you want the plug-in to work on the whole image.
 
 La mayoría de los añadidos trabajan sobre la capa actual de la imagen.
-En algunos casos tendrás que mezclar todas las capas (Capas->Aplanar
-Imagen) si quieres que el añadido trabaje sobre toda la imagen.
+En algunos casos tendrá que mezclar todas las capas (Capas->Aplanar
+Imagen) si quiere que el añadido trabaje sobre toda la imagen.
 
 #Not all effects can be applied to all kinds of images.  This is
 #indicated by a grayed-out menu-entry.  You may need to change
@@ -101,7 +94,7 @@ Imagen) si quieres que el añadido trabaje sobre toda la imagen.
 #(Layers->Add Alpha Channel) or flatten it (Layers->Flatten Image).
 
 No todos los efectos pueden ser aplicados a todos los tipos de imagen.
-Esto se indica mediante una opción sombreada en el menú. Necesitarás
+Esto se indica mediante una opción sombreada en el menú. Necesitará
 cambiar el modo de imagen a RGB (Imagen->Modo->RGB), añadir un canal
 alfa (Capas->Añadir Canal Alfa) o aplanarla (Capas->Aplanar Imagen).
 
@@ -112,7 +105,7 @@ alfa (Capas->Añadir Canal Alfa) o aplanarla (Capas->Aplanar Imagen).
 #a color from the toolbox or from a color palette and dropping it into
 #an image will fill the current image or selection with that color.
 
-Puedes "arrastrar y soltar" muchas cosas en el GIMP. Por ejemplo,
+Puede "arrastrar y soltar" muchas cosas en el GIMP. Por ejemplo,
 arrastrar un color de la caja de herramientas o de la paleta de 
 colores y soltarlo en una imagen rellenará la imagen o la selección
 actual con ese color.
@@ -122,56 +115,48 @@ actual con ese color.
 #point to your current cursor position.  If you also press Ctrl,
 #the line will be constrained to 15 degree angles.
 
-Cuando uses una herramienta de dibujo (Brocha, Aerógrafo o Lápiz),
+Cuando use una herramienta de dibujo (Brocha, Aerógrafo o Lápiz),
 pulsando la tecla de "mayúsculas" dibujará una línea recta desde el
 último punto dibujado a la posición actual del cursor. Si además 
-pulsas "Control" la línea se forzará a formar ángulos múltiplos de
+pulsa "Control" la línea se forzará a formar ángulos múltiplos de
 15 grados.
 
 #The file selection dialog box has command-line completion with
 #Tab, just like the shell.  Type part of a filename, hit tab, and voila!
 #It's completed.
 
-La caja de diálogo de selección de fichero posee capacida de completar
-la línea de comandos usando el tabulador, como el "shell". Pon una 
-parte del nombre del fichero, pulsa el tabulador y ¡ya está!.
+La caja de diálogo de selección de fichero posee capacidad de completar
+la línea de comandos usando el tabulador, como el "shell". Ponga una 
+parte del nombre del fichero, pulse el tabulador y ¡ya está!.
 Está completo.  
 
 #You can reassign shortcut keys on any menu by bringing up the menu,
 #selecting a menu item, and pressing the new shortcut key combination.
 #This is dynamic and is saved when you exit GIMP.
 
-Puedes reasignar las combinacines de teclas en cualquier menú mostrando
+Puede reasignar las combinacines de teclas en cualquier menú mostrando
 el menú, seleccionar una opción, y pulsar una nueva combinación de teclas.
-Es dinámico y se guarda cuando salgas del GIMP.
+Es dinámico y se guarda cuando sale del GIMP.
 
 #You can use the middle mouse button to pan around
 #the image, if it's larger than its display window.
 
-Puedes usar el botón central del ratón para mover la imagen dentro
+Puede usar el botón central del ratón para mover la imagen dentro
 de su ventana de visualización si la imagen es mayor que la ventana.
 
 #Click and drag on a ruler to place a Guide on an image.  All
 #dragged selections will snap to the guides.  You can remove
 #guides by dragging them off the image with the Move tool.
 
-#//O Esta traducción no me convence como eh traducido snap
-#//R Yo había usado "saltar", pero "ajustar" también queda bien
-#//R A ver que te parece el cambio del principio:
-#//R ORIGINAL:
-#Pulsa y arrastra una regla para tener una guía en la imagen. Todas
-#las selecciones arrastradas se ajustarán a las guías. Puedes quitar
-#las guías arrastrándolas fuera de la imagen con la herramienta Mover.
-
-Pulsa y arrastra en una regla para poner una guía en la imagen. Todas
-las selecciones arrastradas se ajustarán a las guías. Puedes quitar
+Pulse y arrastre en una regla para poner una guía en la imagen. Todas
+las selecciones arrastradas se ajustarán a las guías. Puede quitar
 las guías arrastrándolas fuera de la imagen con la herramienta Mover.
 
 #You can drag a layer from the "Layers, Channels and Paths" dialog
 #and drop it onto the toolbox.  This will create a new image
 #containing only that layer.
 
-Puedes arrastrar una capa del diálogo de "Capas, Canales y Caminos"
+Puede arrastrar una capa del diálogo de "Capas, Canales y Caminos"
 y soltarlo en la caja de herramientas. Esto creará una nueva imagen
 conteniendo únicamente esta capa.
 
@@ -181,27 +166,18 @@ conteniendo únicamente esta capa.
 #dialog, or use the menus to do the same.
 
 Una Selección Flotante debe ser fijada en una nueva capa o en la última
-capa activa antes de hacer otras operaciones en la imagen. Pulsa en los
+capa activa antes de hacer otras operaciones en la imagen. Pulse en los
 botones de Nueva Capa o Fijar Capa en el diálogo de "Capas, Canales y
-Caminos", o usa los menús para hacer lo mismo.
+Caminos", o use los menús para hacer lo mismo.
 
 #The GIMP supports gzip compression on the fly.  Just add
 #".gz" (or ".bz2", if you have bzip2 installed) to the filename
 #and your image will be saved compressed.  Of course loading
 #compressed images works too.
 
-#//O traduzco "on the fly" por tiempo real, "en el aire" no me suna
-#//O muy bien.
-#//R ¿Qué tal "al vuelo"?
-#//R ORIGINAL:
-#El GIMP soporta compresión gzip en tiempo real. Sólo añade ".gz"
-#(o ".bz2", si tienes el bzip2 instalado) al nombre de fichero y
-#tu imágen se guardará comprimida. Por supuesto cargar imágenes
-#comprimidas funciona también.
-
-El GIMP soporta compresión gzip "al vuelo". Sólo añade ".gz"
-(o ".bz2", si tienes el bzip2 instalado) al nombre de fichero y
-tu imágen se guardará comprimida. Por supuesto cargar imágenes
+El GIMP soporta compresión gzip "al vuelo". Sólo añada ".gz"
+(o ".bz2", si tiene el bzip2 instalado) al nombre de fichero y
+su imágen se guardará comprimida. Por supuesto cargar imágenes
 comprimidas funciona también.
 
 
@@ -210,7 +186,7 @@ comprimidas funciona también.
 #Ctrl before making a selection subtracts from the current one.
 
 Pulsando y manteniendo pulsada la tecla de mayúsculas antes de hacer
-una selección te permite añadir a la selección actual en lugar de 
+una selección le permite añadir a la selección actual en lugar de 
 reemplazarla. Usar la tecla Control resta la nueva selección a la
 actual.
 
@@ -218,24 +194,24 @@ actual.
 #making a selection in order to constrain it to a perfect square
 #or circle, or to have it centered on its starting point.
 
-Puedes pulsar o soltar las teclas de Mayúscula y Control mientras
-estas haciendo una selección para conseguir un cuadrado o círculo
+Puede pulsar o soltar las teclas de Mayúscula y Control mientras
+está haciendo una selección para conseguir un cuadrado o círculo
 perfecto, o tenerla centrada en su punto inicial.
 
 #Using Edit->Stroke allows you to draw simple squares or circles by
 #painting the edge of your current selection with the active brush.
 #More complex shapes can be drawn with Filters->Render->Gfig.
 
-Usar Editar->Trazar te permite dibujar cuadrados o círculos simples
-pintando el límite de tu selección actual con la brocha activa. Figuras
+Usar Editar->Trazar le permite dibujar cuadrados o círculos simples
+pintando el límite de su selección actual con la brocha activa. Figuras
 más complejas pueden dibujarse con Filtros->Render->Gfig.
 
 #If you stroke a path (Edit->Stroke), the current drawing tool and its
 #settings are used.  You can use the Paintbrush in gradient mode, the
 #Clone tool with a pattern or even the Eraser or the Smudge tool.
 
-Si trazas un camino (Editar->Trazar), la herramienta de dibujo actual
-y sus ajustes son usados. Puedes usar el pincel en modo gradiente, la
+Si traza un camino (Editar->Trazar), la herramienta de dibujo actual
+y sus ajustes son usados. Puede usar el pincel en modo gradiente, la
 herramienta de Clonar con un patrón o incluso la goma de borrar o la
 herramienta de Tiznar.
 
@@ -243,9 +219,9 @@ herramienta de Tiznar.
 #The "Paths" tab in the "Layers, Channels and Paths" dialog allows
 #you to work on multiple paths and to convert them to selections.
 
-Puedes crear y editar selecciones complejas usando la herramienta
+Puede crear y editar selecciones complejas usando la herramienta
 Bèzier. La etiqueta "caminos" en el diálogo "Capas, Canales y
-Caminos" te permite trabajar con varios caminos y convertirlos
+Caminos" le permite trabajar con varios caminos y convertirlos
 a selecciones.
 
 #You can use the paint tools to change the selection.  Click on the
@@ -253,9 +229,9 @@ a selecciones.
 #selection by painting in the image and click on the button again to
 #convert it back to a normal selection.
 
-Puedes usar las herramientas de pintura para cambiar la selección. Pulsa
+Puede usar las herramientas de pintura para cambiar la selección. Pulse
 en el botón de Máscara Rápida en la parte inferior izqda. de una ventana
-de imagen. Cambia tu selección pintando en la imagen y pulsa el botón de
+de imagen. Cambie su selección pintando en la imagen y pulsa el botón de
 nuevo para convertirla a una selección normal.
 
 #You can save a selection to a channel (Select->Save to Channel) and
@@ -263,10 +239,10 @@ nuevo para convertirla a una selección normal.
 #the "Channels" tab of the "Layers, Channels and Paths" dialog, you can
 #toggle the visibility of this new channel or convert it to a selection.
 
-Puedes guardar la selección en un canal (Selección-> Guardar en Canal) y
+Puede guardar la selección en un canal (Selección-> Guardar en Canal) y
 después modificar este canal con cualquiera de las herramientas de pintura.
 Usando los botones en la etiqueta "Canales" del diálogo de "Capas, Canales
-y Caminos" puedes cambiar la visibilidad de este nuevo canal o convertirlo
+y Caminos" puede cambiar la visibilidad de este nuevo canal o convertirlo
 en una selección.
 
 
@@ -277,39 +253,34 @@ en una selección.
 #If your screen is too cluttered, you can press Tab multiple times
 #in an image window to hide or show the toolbox and other dialogs.
 
-#//O Creo que "cluttered" en realidad es desordenada, pero me ha parecido
-#//O mejor poner lo de llena.
-#//R Vale pero le quito las comillas :-)
-Si tu pantalla está demasiado llena puedes pulsar el tabulador
+Si su pantalla está demasiado llena puede pulsar el tabulador
 varias veces en una ventana de imagen para ocultar o mostrar la
 caja de herramientas y otros diálogos.
 
 #You can adjust the selection range for fuzzy select
 #by clicking and dragging left and right.
 
-Puedes ajustar el rango de selección de la herramienta de selección
+Puede ajustar el rango de selección de la herramienta de selección
 borrosa pulsando y arrastrado izqda. y derecha.
 
 #Shift-click on the eye icon in the Layers dialog to hide all
 #layers but that one.  Shift-click again to show all layers.
 
 Pulsando sobre el icono del ojo en el diálogo de Capas con la tecla 
-de mayúsculas pulsada, ocultarás todas las Capas excepto la pulsada.
-Vuelve a usar la misma combinación para mostrar de nuevo todas las
+de mayúsculas pulsada, ocultará todas las Capas excepto la pulsada.
+Vuelva a usar la misma combinación para mostrar de nuevo todas las
 Capas. 
 
 #Ctrl-click on the layer mask's preview in the Layers dialog 
 #toggles the effect of the layer mask.
 
-# //R Mejor "vista previa" para "preview" ¿no?
-Si pulsas con el ratón sobre la vista previa de la máscara de capa
+Si pulsa con el ratón sobre la vista previa de la máscara de capa
 teniendo pulsada la tecla "Control" se activa el efecto de la máscara
 de capa. 
 
 #Alt-click on the layer mask's preview in the Layers dialog 
 #toggles viewing the mask directly.
 
-# //R Idem
 Con la tecla "Alt" y pulsando en la vista previa de la capa de
 máscara en el diálogo de capas, se activa la visualización de la 
 máscara directamente.
@@ -317,26 +288,26 @@ máscara directamente.
 #You can use Alt-Tab to cycle through all layers in an image 
 #(if your window manager doesn't trap those keys...).
 
-Puedes usar "Alt-Tabulador" para pasar a través de todas las capas
-de una imagen (si tu gestor de ventanas no usa esta combinación...).
+Puede usar "Alt-Tabulador" para pasar a través de todas las capas
+de una imagen (si su gestor de ventanas no usa esta combinación...).
 
 #Shift-click with the Bucket Fill tool to have it use 
 #the background color instead of the foreground color.
 
 Manteniendo la tecla "mayúsculas" pulsada, y pulsando con el ratón en
-la herramienta relleno usarás el color de fondo en lugar de el de primer
+la herramienta relleno usará el color de fondo en lugar de el de primer
 plano.
 
 #Control-drag with the Transform tool in rotation mode 
 #will constrain the rotation to 15 degree angles.
 
-En el modo de rotación de la herramienta de transformación, si pulsas
-"Control" y arrastras forzarás la rotación a ángulos múltiplos de 15
+En el modo de rotación de la herramienta de transformación, si pulsa
+"Control" y arrastra forzará la rotación a ángulos múltiplos de 15
 grados.
 
 #You can adjust and re-place a selection by using Alt-drag.
 
-Puedes ajustar y reposicionar una selección usando la tecla "Alt" y
+Puede ajustar y reposicionar una selección usando la tecla "Alt" y
 arrastrando.
 
 #If your fonts turn out blocky, that's because they're not scalable 
@@ -347,9 +318,10 @@ arrastrando.
 #//O Eso de "hechas a cuadros" creo que es una buena forma de traducir
 #//O lo de "turn out blocky", supongo que se refieren a eso. 
 #//R Vale pero aquí sí que le pongo comillas ;)
-Si tus fuentes parecen "hechas a cuadros", esto es porque no son fuentes
+#//O Otra solución sería usar la palabreja "pixeladas" pero, no se ¿?
+Si sus fuentes parecen "hechas a cuadros", esto es porque no son fuentes
 escalables. Muchos servidores X soportan fuentes escalables Postscript de 
-Tipo 1. Algunos servidores de fuentes te permiten usar fuentes TrueType
+Tipo 1. Algunos servidores de fuentes le permiten usar fuentes TrueType
 (.ttf), que también son escalables.
 
 #To create a perfect circle, hold Shift while doing an ellipse select. To
@@ -357,10 +329,10 @@ Tipo 1. Algunos servidores de fuentes te permiten usar fuentes TrueType
 #the circle you want to select, place your cursor at the intersection
 #of the guides, and the resulting selection will just touch the guides.
 
-Para crear un círculo perfecto, pulsa "Mayúsculas" mientras estás
+Para crear un círculo perfecto, pulse "Mayúsculas" mientras está
 realizando una selección con la elipse. Para colocar un círculo de forma
-precisa, arrastra las guías verticales y horizontales de forma tangente al
-círculo que quieres seleccionar, pon el cursor en la intersección de las
+precisa, arrastre las guías verticales y horizontales de forma tangente al
+círculo que quiere seleccionar, pogan el cursor en la intersección de las
 guías, y la selección resultante tocará las guías.
 
 #If some of your scanned photos do not look colorful enough, you can
@@ -368,16 +340,10 @@ guías, y la selección resultante tocará las guías.
 #tool (Image->Colors->Levels).  If there are any color casts, you can
 #correct them with the Curves tool (Image->Colors->Curves).
 
-#//O Perdón por lo de "Auto", pero en estos momentos el gimp no lo tengo
-#//O en castellano (esto de "mudanza" de distribución) y no se como se
-#//O ha traducido el botón en cuestión. Lo de "color casts" no se que 
-#//O significa, de momento he puesto lo de desviaviones de color
-#//R Pues de momento está puesto efectivamente "auto" ;-) 
-#//R Buena telepatía ;D
-Si algunas de tus fotos escaneadas no parecen lo suficiente coloridas,
-puedes mejorar fácilmente su rango de tonos con el botón "Auto" en la 
-herramienta de niveles (Imagen->Colores->Niveles). Si hay desviaciones
-de color puedes corregirlas con la herramienta Curvas
+Si algunas de sus fotos escaneadas no parecen lo suficiente coloridas,
+puede mejorar fácilmente su rango de tonos con el botón "Auto" en la 
+herramienta de nivles (Imagen->Colores->Niveles). Si hay desviaciones
+de color puede corregirlas con la herramienta Curvas
 (Imagen->Colores->Curvas).
 
 # (end of tips)
