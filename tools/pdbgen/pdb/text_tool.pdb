@@ -264,7 +264,7 @@ text_xlfd_insert_size (gchar    *fontname,
   if (antialias)
     size *= SUPERSAMPLE;
 
-  sprintf (buffer, "%d", (int) size);
+  sprintf (buffer, "%d", (int) (metric == PIXELS ? size : size * 10));
 
   newfont = workfont = g_new (char, strlen (fontname) + 16);
 

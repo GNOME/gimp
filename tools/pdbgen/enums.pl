@@ -266,6 +266,18 @@ package Gimp::CodeGen::enums;
 	  mapping => { CONSTANT => '0',
 		       INCREMENTAL => '1' },
 	  nicks   => { CONSTANT => 'CONTINUOUS' }
+	},
+    ChannelLutType =>
+	{ contig => 1,
+	  symbols => [ qw(VALUE_LUT RED_LUT GREEN_LUT BLUE_LUT) ],
+	  mapping => { VALUE_LUT => '0',
+		       RED_LUT => '1',
+		       GREEN_LUT => '2',
+		       BLUE_LUT => '3' },
+	  nicks   => { VALUE_LUT => 'VALUE/GRAY',
+		       RED_LUT => 'RED',
+		       GREEN_LUT => 'GREEN',
+		       BLUE_LUT => 'BLUE' }
 	}
 );
 

@@ -197,7 +197,7 @@ HELP
 
     %invoke = (
 	headers => [ qw("gradient_select.h") ],
-	vars => ['gradient_t *grad'],
+	vars => [ 'gradient_t *grad' ],
 	code => <<'CODE'
 {
   if (strlen (name))

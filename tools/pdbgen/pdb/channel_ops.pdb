@@ -49,7 +49,7 @@ HELP
 
     %invoke = (
 	headers => [ qw("channel_ops.h") ],
-	vars => ['GimpImage *gimage'],
+	vars => [ 'GimpImage *gimage' ],
 	code => <<'CODE'
 {
   gimage = drawable_gimage (GIMP_DRAWABLE (drawable));

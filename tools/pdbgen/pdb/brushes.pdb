@@ -111,7 +111,7 @@ HELP
     &brush_outargs;
 
     %invoke = (
-	vars => ['GimpBrush *brushp'],
+	vars => [ 'GimpBrush *brushp' ],
 	code => 'success = (brushp = get_active_brush ()) != NULL;'
     );
 }
@@ -132,7 +132,7 @@ HELP
     @inargs = ( &brush_arg );
 
     %invoke = (
-	vars => ['GimpBrush *brushp'],
+	vars => [ 'GimpBrush *brushp' ],
 	code => <<'CODE'
 {
   brushp = gimp_brush_list_get_brush (brush_list, name);
@@ -316,7 +316,7 @@ HELP
 				desc => 'Length of brush mask data' } };
     
     %invoke = (
-	vars => ['GimpBrushP brushp = NULL'],
+	vars => [ 'GimpBrushP brushp = NULL' ],
 	code => <<'CODE'
 {
   if (strlen (name))

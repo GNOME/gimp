@@ -29,7 +29,7 @@ sub inargs {
 sub invoke {
     %invoke = (
 	headers => [ qw("global_edit.h") ],
-	vars => ['GimpImage *gimage'],
+	vars => [ 'GimpImage *gimage' ],
 	code => <<CODE
 {
   gimage = drawable_gimage (GIMP_DRAWABLE (drawable));

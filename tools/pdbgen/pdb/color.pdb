@@ -1,0 +1,228 @@
+# The GIMP -- an image manipulation program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub drawable_arg () {{
+    name => 'drawable',
+    type => 'drawable',
+    desc => 'The drawable',
+}}
+
+sub brightness_contrast {
+    $blurb = 'Modify brightness/contrast in the specified drawable.';
+
+    $help = <<'HELP';
+This procedures allows the brightness and contrast of the specified drawable to
+be modified.  Both 'brightness' and 'contrast' parameters are defined between
+-127 and 127.
+HELP
+
+    &std_pdb_misc;
+    $date = '1997';
+
+    @inargs = ( &drawable_arg );
+    foreach (qw( brightness contrast)) {
+	push @inargs, { name => $_, type => '-127 <= int32 <= 127',
+			desc => "@{[ ucfirst $_ ]} adjustment: (%%desc%%)" }
+    }
+
+    %invoke = (
+	vars => [ 'GimpImage *gimage', 'GimpLut *lut',
+		  'PixelRegion srcPR, destPR', 'int x1, y1, x2, y2' ],
+	code => <<'CODE'
+{
+  if (gimp_drawable_indexed (drawable))
+    success = FALSE;
+  else
+    {
+      gimage = gimp_drawable_gimage (drawable);
+
+      lut = brightness_contrast_lut_new (brightness / 255.0,
+					 contrast / 127.0,
+					 gimp_drawable_bytes (drawable));
+
+      /* The application should occur only within selection bounds */
+      gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+
+      pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+			 x1, y1, (x2 - x1), (y2 - y1), FALSE);
+      pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
+			 x1, y1, (x2 - x1), (y2 - y1), TRUE);
+
+      pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 2,
+				      &srcPR, &destPR);
+
+      gimp_lut_free (lut);
+      gimp_drawable_merge_shadow (drawable, TRUE);
+      drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+    }
+}
+CODE
+    );
+}
+
+sub levels {
+    $blurb = 'Modifies intensity levels in the specified drawable.';
+
+    $help = <<'HELP';
+This tool allows intensity levels in the specified drawable to be remapped
+according to a set of parameters. The low/high input levels specify an initial
+mapping from the source intensities. The gamma value determines how intensities
+between the low and high input intensities are interpolated. A gamma value of
+1.0 results in a linear interpolation. Higher gamma values result in more
+high-level intensities. Lower gamma values result in more low-level
+intensities. The low/high output levels constrain the final intensity
+mapping--that is, no final intensity will be lower than the low output level
+and no final intensity will be higher than the high output level. This tool is
+only valid on RGB color and grayscale images. It will not operate on indexed
+drawables.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&drawable_arg,
+	{ name => 'channel', type => 'enum ChannelLutType',
+	  desc => 'The channel to modify: { %%desc%% }' } 
+    );
+
+    foreach $arg (qw(input output)) {
+	foreach (qw(low high)) {
+	    push @inargs, { name => "${_}_$arg", type => '0 <= int32 <= 255',
+			    desc => "Intensity of ${_}est $arg: (%%desc%%)",
+			    alias => "${_}_${arg}v" }
+	}
+	push @inargs, { name => 'gamma', type => '0.1 <= float <= 10',
+			desc => 'Gamma correction factor: (%%desc%%)',
+			alias => 'gammav' }
+    }
+    $#inargs--;
+
+    %invoke = (
+	vars => [ 'PixelRegion srcPR, destPR', 'int x1, y1, x2, y2',
+		  'GimpLut *lut', 'int i' ],
+	code => <<'CODE'
+{
+  if (gimp_drawable_indexed (drawable) ||
+      (gimp_drawable_gray (drawable) && channel != GRAY))
+    success = FALSE;
+  else
+    {
+      for (i = 0; i < 5; i++)
+	{
+	  low_input[i] = 0;
+	  high_input[i] = 255;
+	  low_output[i] = 0;
+	  high_output[i] = 255;
+	  gamma[i] = 1.0;
+	}
+
+      low_input[channel] = low_inputv;
+      high_input[channel] = high_inputv;
+      gamma[channel] = gammav;
+      low_output[channel] = low_outputv;
+      high_output[channel] = high_outputv;
+
+      /* setup the lut */
+      lut = levels_lut_new (gamma, low_input, high_input,
+			    low_output, high_output,
+			    gimp_drawable_bytes (drawable));
+
+      /* The application should occur only within selection bounds */
+      gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+
+      pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+			 x1, y1, (x2 - x1), (y2 - y1), FALSE);
+      pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
+			 x1, y1, (x2 - x1), (y2 - y1), TRUE);
+
+      pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 2,
+				      &srcPR, &destPR);
+
+      gimp_lut_free(lut);
+      gimp_drawable_merge_shadow (drawable, TRUE);
+      drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+    }
+}
+CODE
+    );
+
+    foreach (@inargs[2..6]) {
+	my $type = $_->{type} =~ /float/ ? 'double' : 'int';
+	push @{$invoke{vars}}, "$type $_->{name}\[5]";
+    }
+}
+
+sub posterize {
+    $blurb = 'Posterize the specified drawable.';
+
+    $help = <<'HELP';
+This procedures reduces the number of shades allows in each intensity channel
+to the specified 'levels' parameter.
+HELP
+
+    &std_pdb_misc;
+    $date = '1997';
+
+    @inargs = (
+	&drawable_arg,
+	{ name => 'levels', type => '2 <= int32 <= 255',
+	  desc => 'Levels of posterization: (%%desc%%)' }
+    );
+
+    %invoke = (
+	vars => [ 'GimpImage *gimage', 'GimpLut *lut',
+		  'PixelRegion srcPR, destPR', 'int x1, y1, x2, y2' ],
+	code => <<'CODE'
+{
+  if (gimp_drawable_indexed (drawable))
+    success = FALSE;
+  else
+    {
+      gimage = gimp_drawable_gimage (drawable);
+
+      lut = posterize_lut_new (levels, gimp_drawable_bytes (drawable)); 
+
+      /* The application should occur only within selection bounds */
+      gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+
+      pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+			 x1, y1, (x2 - x1), (y2 - y1), FALSE);
+      pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
+			 x1, y1, (x2 - x1), (y2 - y1), TRUE);
+
+      pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 2,
+				      &srcPR, &destPR);
+
+      gimp_lut_free (lut);
+      gimp_drawable_merge_shadow (drawable, TRUE);
+      drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+    }
+}
+CODE
+    );
+}
+
+@headers = qw("gimpimage.h" "gimpdrawable.h" "gimplut.h" "lut_funcs.h");
+
+@procs = qw(brightness_contrast levels posterize);
+%exports = (app => [@procs]);
+
+$desc = 'Palette';
+
+1;

@@ -144,7 +144,7 @@ HELP
 
     %invoke = (
         headers => [ qw("blend.h") ],
-	vars => ['GimpImage *gimage'],
+	vars => [ 'GimpImage *gimage' ],
 	code => <<'CODE'
 {
   gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
@@ -202,7 +202,7 @@ HELP
 
     %invoke = (
         headers => [ qw ("bucket_fill.h") ],
-	vars => ['GimpImage *gimage'],
+	vars => [ 'GimpImage *gimage' ],
 	code => <<'CODE'
 {
   gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
@@ -248,7 +248,7 @@ HELP
 
     %invoke = (
         headers => [ qw("by_color_select.h") ],
-	vars => ['GimpImage *gimage'],
+	vars => [ 'GimpImage *gimage' ],
 	code => <<'CODE'
 {
   gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
@@ -339,7 +339,7 @@ HELP
 
     %invoke = (
 	headers => [ qw("color_picker.h") ],
-	vars => ['GimpImage *gimage'],
+	vars => [ 'GimpImage *gimage' ],
 	code => <<'CODE'
 {
   gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
@@ -521,7 +521,7 @@ HELP
 
     %invoke = (
 	headers => [ qw("flip_tool.h" "tranform_core.h") ],
-	vars => ['GimpImage *gimage', 'TileManger *float_tiles, *new_tiles'],
+	vars => [ 'GimpImage *gimage', 'TileManger *float_tiles, *new_tiles' ],
 	code => <<'CODE'
 {
   gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
@@ -642,7 +642,7 @@ HELP
 
     %invoke = (
 	headers => qw("fuzzy_select.h"),
-	vars => ['GimpImage *gimage', 'Channel *new, *old_fuzzy_mask'],
+	vars => [ 'GimpImage *gimage', 'Channel *new, *old_fuzzy_mask' ],
 	code => <<'CODE'
 {
   gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
@@ -763,9 +763,9 @@ HELP
 
     %invoke = (
 	headers => [ qw("perspective_tool.h" "tranform_core.h") ],
-	vars => ['GimpImage *gimage', 'TileManger *float_tiles, *new_tiles',
-		 'int new_layer', 'double cx, cy', 'double scalex, scaley',
-		 'double trans_info[8]', 'GimpMatrix matrix'],
+	vars => [ 'GimpImage *gimage', 'TileManger *float_tiles, *new_tiles',
+		  'int new_layer', 'double cx, cy', 'double scalex, scaley',
+		  'double trans_info[8]', 'GimpMatrix matrix' ],
 	code => <<'CODE'
 {
   gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
@@ -885,9 +885,9 @@ HELP
 
     %invoke = (
 	headers => [ qw("rotate_tool.h" "tranform_core.h") ],
-	vars => ['GimpImage *gimage', 'TileManger *float_tiles, *new_tiles',
-		 'Layer *layer', 'int new_layer', 'double cx, cy',
-		 'GimpMatrix matrix'],
+	vars => [ 'GimpImage *gimage', 'TileManger *float_tiles, *new_tiles',
+		  'Layer *layer', 'int new_layer', 'double cx, cy',
+		  'GimpMatrix matrix' ],
 	code => <<'CODE'
 {
   gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
@@ -967,9 +967,9 @@ HELP
 
     %invoke = (
 	headers => [ qw("scale_tool.h" "tranform_core.h") ],
-	vars => ['GimpImage *gimage', 'TileManger *float_tiles, *new_tiles',
-		 'int new_layer', 'double scalex, scaley',
-		 'double trans_info[4]', 'GimpMatrix matrix'],
+	vars => [ 'GimpImage *gimage', 'TileManger *float_tiles, *new_tiles',
+		  'int new_layer', 'double scalex, scaley',
+		  'double trans_info[4]', 'GimpMatrix matrix' ],
 	code => <<'CODE'
 {
   if (trans_info[X1] < trans_info[X2] &&
@@ -1057,9 +1057,9 @@ HELP
 
     %invoke = (
 	headers => [ qw("perspective_tool.h" "tranform_core.h") ],
-	vars => ['GimpImage *gimage', 'TileManger *float_tiles, *new_tiles',
-		 'Layer *layer', 'int new_layer', 'double cx, cy',
-		 'GimpMatrix matrix'],
+	vars => [ 'GimpImage *gimage', 'TileManger *float_tiles, *new_tiles',
+		  'Layer *layer', 'int new_layer', 'double cx, cy',
+		  'GimpMatrix matrix' ],
 	code => <<'CODE'
 {
   gimage = drawable_gimage (GIMP_DRAWABLE (drawable));

@@ -276,7 +276,7 @@ HELP
     $outargs[0]->{alias} = 'data_copy';
 
     %invoke = (
-	vars => ['PDBData *data', 'char *data_copy', 'GList *list'],
+	vars => [ 'PDBData *data', 'char *data_copy', 'GList *list' ],
 	code => <<'CODE'
 {
   success = FALSE;
@@ -318,7 +318,7 @@ HELP
     @outargs = ( &data_bytes_arg );
 
     %invoke = (
-	vars => ['PDBData *data', 'GList *list'],
+	vars => [ 'PDBData *data', 'GList *list' ],
 	code => <<'CODE'
 {
   success = FALSE;
@@ -357,7 +357,7 @@ HELP
     $inargs[1]->{alias} = 'data_src';
 
     %invoke = (
-	vars => ['PDBData *data = NULL', 'GList *list'],
+	vars => [ 'PDBData *data = NULL', 'GList *list' ],
 	code => <<'CODE'
 {
   list = data_list;

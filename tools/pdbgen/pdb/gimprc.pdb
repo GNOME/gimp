@@ -51,7 +51,7 @@ HELP
 
     %invoke = (
 	headers => [ qw("gimprc.h") ],
-	vars => ['gchar *value'],
+	vars => [ 'gchar *value' ],
 	code => 'success = (value = gimprc_find_token (token)) != NULL;'
     );
 }

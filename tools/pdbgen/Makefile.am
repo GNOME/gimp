@@ -12,7 +12,8 @@ enum_headers = \
 	../../app/convolve.h		\
 	../../app/channel.h		\
 	../../app/eraser.h		\
-	../../app/paint_core.h
+	../../app/paint_core.h		\
+	../../app/lut_funcs.h
 
 enums.pl: enumgen.pl $(enum_headers)
 	cd $(srcdir) \

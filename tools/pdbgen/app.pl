@@ -261,13 +261,15 @@ CODE
 		    }
 
 		    $okvals .= &format_switch_frag($_, 'on_success');
+		    chomp $okvals;
 
 		    $failvals .= "default:\n";
 		    if (!exists $_->{no_success}) {
 			$success = 1;
-			$failvals .= ' ' x 6 . "success = FALSE\n"
+			$failvals .= ' ' x 6 . "success = FALSE;\n"
 		    }
 		    $failvals .=  &format_switch_frag($_, 'on_fail');
+		    chomp $failvals;
 
 		    $result .= <<CODE;
   switch ($var)

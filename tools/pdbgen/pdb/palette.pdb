@@ -34,7 +34,7 @@ sub color_arg {
 sub invoke_get {
     %invoke = (
 	headers => [ qw("gimpimage.h" "palette.h") ],
-	vars => ['guchar r, g, b'],
+	vars => [ 'guchar r, g, b' ],
 	code => <<CODE
 {
   palette_get_@{[shift]}ground (&r, &g, &b);

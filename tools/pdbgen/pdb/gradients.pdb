@@ -43,7 +43,7 @@ HELP
 
     %invoke = (
 	headers => [ qw("gradient.h") ],
-	vars => ['gradient_t *grad', 'GSList *list', 'int i = 0'],
+	vars => [ 'gradient_t *grad', 'GSList *list', 'int i = 0' ],
 	success => 'NONE',
 	code => <<'CODE'
 {
@@ -141,7 +141,7 @@ HELP
 
     %invoke = (
 	headers => [ qw("gradient.h") ],
-	vars => ['gdouble pos, delta', 'gdouble r, g, b, a', 'gdouble *pv'],
+	vars => [ 'gdouble pos, delta', 'gdouble r, g, b, a', 'gdouble *pv' ],
 	code => <<'CODE'
 {
   pos = 0.0;
@@ -194,7 +194,7 @@ HELP
     &sample_outargs;
 
     %invoke = (
-	vars => ['gdouble r, g, b, a', 'gdouble *pv'],
+	vars => [ 'gdouble r, g, b, a', 'gdouble *pv' ],
 	code => <<'CODE'
 {
   array_length = i * 4;
