@@ -1,3 +1,16 @@
+2004-01-08  Manish Singh  <yosh@gimp.org>
+
+	* tools/pdbgen/fileops.pdb: Add notes about menu path requirements
+	for Load/Save handlers.
+
+	* plug-ins/common/png.c: Document the behavior here too.
+
+	* app/gui/file-open-menu.c
+	* app/gui/file-save-menu.c: Robustify against NULL menu_path.
+
+	* app/pdb/fileops_cmds.c
+	* libgimp/gimpfileops_pdb.c: Regenerated.
+
 2004-01-08  Henrik Brix Andersen  <brix@gimp.org>
 
 	* plug-ins/common/png.c (query): only expose

@@ -275,6 +275,9 @@ query (void)
                           G_N_ELEMENTS (save_args2), 0,
                           save_args2, NULL);
 
+  /* We only register a save menu path for this one, since it is the only one
+   * registered as a save handler below.
+   */
   gimp_install_procedure ("file_png_save_defaults",
                           "Saves files in PNG file format",
                           "This plug-in saves Portable Network Graphics (PNG) files, using the default settings stored as a parasite.",
@@ -286,6 +289,10 @@ query (void)
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args_defaults), 0,
                           save_args_defaults, NULL);
+
+  gimp_register_magic_load_handler ("file_png_load",
+                                    "png", "", "0,string,\211PNG\r\n\032\n");
+  gimp_register_save_handler ("file_png_save_defaults", "png", "");
 
   gimp_install_procedure ("file_png_get_defaults",
                           "Get the current set of defaults used by the PNG file save plug-in",
@@ -312,10 +319,6 @@ query (void)
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args_set_defaults), 0,
                           save_args_set_defaults, NULL);
-
-  gimp_register_magic_load_handler ("file_png_load",
-                                    "png", "", "0,string,\211PNG\r\n\032\n");
-  gimp_register_save_handler ("file_png_save_defaults", "png", "");
 }
 
 

@@ -72,6 +72,9 @@ file_save_menu_setup (GimpItemFactory *factory)
 
       file_proc = (PlugInProcDef *) list->data;
 
+      if (! file_proc->menu_path)
+        continue;
+
       is_xcf = (strcmp (file_proc->db_info.name, "gimp_xcf_save") == 0);
 
       if (is_xcf)
