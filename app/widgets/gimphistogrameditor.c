@@ -310,18 +310,9 @@ gimp_histogram_editor_set_image (GimpImageEditor *image_editor,
 }
 
 GtkWidget *
-gimp_histogram_editor_new (GimpImage *gimage)
+gimp_histogram_editor_new (void)
 {
-  GimpImageEditor *editor;
-
-  g_return_val_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage), NULL);
-
-  editor = g_object_new (GIMP_TYPE_HISTOGRAM_EDITOR, NULL);
-
-  if (gimage)
-    gimp_image_editor_set_image (editor, gimage);
-
-  return GTK_WIDGET (editor);
+  return g_object_new (GIMP_TYPE_HISTOGRAM_EDITOR, NULL);
 }
 
 static void

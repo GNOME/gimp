@@ -24,11 +24,7 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#ifdef __GNUC__
-#warning #include "tools/tools-types.h"
-#endif
-
-#include "tools/tools-types.h"
+#include "widgets-types.h"
 
 #include "config/gimpcoreconfig.h"
 
@@ -40,6 +36,10 @@
 #include "core/gimpselection.h"
 #include "core/gimptoolinfo.h"
 
+#ifdef __GNUC__
+#warning #include "tools/tools-types.h"
+#endif
+#include "tools/tools-types.h"
 #include "tools/gimpselectionoptions.h"
 
 #include "gimpselectioneditor.h"
@@ -236,24 +236,15 @@ gimp_selection_editor_set_image (GimpImageEditor *image_editor,
 /*  public functions  */
 
 GtkWidget *
-gimp_selection_editor_new (GimpImage       *gimage,
-                           GimpMenuFactory *menu_factory)
+gimp_selection_editor_new (GimpMenuFactory *menu_factory)
 {
-  GimpSelectionEditor *editor;
-
-  g_return_val_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
 
-  editor = g_object_new (GIMP_TYPE_SELECTION_EDITOR,
-                         "menu-factory",    menu_factory,
-                         "menu-identifier", "<SelectionEditor>",
-                         "ui-path",         "/selection-editor-popup",
-                         NULL);
-
-  if (gimage)
-    gimp_image_editor_set_image (GIMP_IMAGE_EDITOR (editor), gimage);
-
-  return GTK_WIDGET (editor);
+  return g_object_new (GIMP_TYPE_SELECTION_EDITOR,
+                       "menu-factory",    menu_factory,
+                       "menu-identifier", "<SelectionEditor>",
+                       "ui-path",         "/selection-editor-popup",
+                       NULL);
 }
 
 static gboolean

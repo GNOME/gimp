@@ -100,7 +100,7 @@ static GtkWidget * dialogs_dockable_new        (GtkWidget          *widget,
 
 static void   dialogs_indexed_palette_selected (GimpColormapEditor *editor,
                                                 GdkModifierType     state,
-                                                GimpDockable       *dockable);
+                                                gpointer            data);
 
 
 /**********************/
@@ -672,7 +672,6 @@ dialogs_layer_list_view_new (GimpDialogFactory *factory,
                              gint               preview_size)
 {
   GtkWidget *view;
-  GtkWidget *dockable;
 
   if (preview_size < 1)
     preview_size = context->gimp->config->layer_preview_size;
@@ -688,14 +687,10 @@ dialogs_layer_list_view_new (GimpDialogFactory *factory,
                              factory->menu_factory, "<Layers>",
                              "/layers-popup");
 
-  dockable = dialogs_dockable_new (view,
-				   _("Layers"), NULL,
-                                   GIMP_STOCK_LAYERS,
-                                   GIMP_HELP_LAYER_DIALOG);
-
-  gimp_dockable_set_context (GIMP_DOCKABLE (dockable), context);
-
-  return dockable;
+  return dialogs_dockable_new (view,
+                               _("Layers"), NULL,
+                               GIMP_STOCK_LAYERS,
+                               GIMP_HELP_LAYER_DIALOG);
 }
 
 GtkWidget *
@@ -704,7 +699,6 @@ dialogs_channel_list_view_new (GimpDialogFactory *factory,
                                gint               preview_size)
 {
   GtkWidget *view;
-  GtkWidget *dockable;
 
   if (preview_size < 1)
     preview_size = context->gimp->config->layer_preview_size;
@@ -720,14 +714,10 @@ dialogs_channel_list_view_new (GimpDialogFactory *factory,
                              factory->menu_factory, "<Channels>",
                              "/channels-popup");
 
-  dockable = dialogs_dockable_new (view,
-				   _("Channels"), NULL,
-                                   GIMP_STOCK_CHANNELS,
-                                   GIMP_HELP_CHANNEL_DIALOG);
-
-  gimp_dockable_set_context (GIMP_DOCKABLE (dockable), context);
-
-  return dockable;
+  return dialogs_dockable_new (view,
+                               _("Channels"), NULL,
+                               GIMP_STOCK_CHANNELS,
+                               GIMP_HELP_CHANNEL_DIALOG);
 }
 
 GtkWidget *
@@ -736,7 +726,6 @@ dialogs_vectors_list_view_new (GimpDialogFactory *factory,
                                gint               preview_size)
 {
   GtkWidget *view;
-  GtkWidget *dockable;
 
   if (preview_size < 1)
     preview_size = context->gimp->config->layer_preview_size;
@@ -752,14 +741,10 @@ dialogs_vectors_list_view_new (GimpDialogFactory *factory,
                              factory->menu_factory, "<Vectors>",
                              "/vectors-popup");
 
-  dockable = dialogs_dockable_new (view,
-				   _("Paths"), NULL,
-                                   GIMP_STOCK_PATHS,
-                                   GIMP_HELP_PATH_DIALOG);
-
-  gimp_dockable_set_context (GIMP_DOCKABLE (dockable), context);
-
-  return dockable;
+  return dialogs_dockable_new (view,
+                               _("Paths"), NULL,
+                               GIMP_STOCK_PATHS,
+                               GIMP_HELP_PATH_DIALOG);
 }
 
 GtkWidget *
@@ -768,23 +753,17 @@ dialogs_indexed_palette_new (GimpDialogFactory *factory,
                              gint               preview_size)
 {
   GtkWidget *view;
-  GtkWidget *dockable;
 
-  view = gimp_colormap_editor_new (gimp_context_get_image (context),
-                                   factory->menu_factory);
-
-  dockable = dialogs_dockable_new (view,
-				   _("Colormap"), _("Indexed Palette"),
-                                   GIMP_STOCK_INDEXED_PALETTE,
-                                   GIMP_HELP_INDEXED_PALETTE_DIALOG);
-
-  gimp_dockable_set_context (GIMP_DOCKABLE (dockable), context);
+  view = gimp_colormap_editor_new (factory->menu_factory);
 
   g_signal_connect (view, "selected",
 		    G_CALLBACK (dialogs_indexed_palette_selected),
-		    dockable);
+		    NULL);
 
-  return dockable;
+  return dialogs_dockable_new (view,
+                               _("Colormap"), _("Indexed Palette"),
+                               GIMP_STOCK_INDEXED_PALETTE,
+                               GIMP_HELP_INDEXED_PALETTE_DIALOG);
 }
 
 GtkWidget *
@@ -793,18 +772,13 @@ dialogs_histogram_editor_new (GimpDialogFactory *factory,
                               gint               preview_size)
 {
   GtkWidget *view;
-  GtkWidget *dockable;
 
-  view = gimp_histogram_editor_new (gimp_context_get_image (context));
+  view = gimp_histogram_editor_new ();
 
-  dockable = dialogs_dockable_new (view,
-				   _("Histogram"), NULL,
-                                   GIMP_STOCK_HISTOGRAM,
-                                   GIMP_HELP_HISTOGRAM_DIALOG);
-
-  gimp_dockable_set_context (GIMP_DOCKABLE (dockable), context);
-
-  return dockable;
+  return dialogs_dockable_new (view,
+                               _("Histogram"), NULL,
+                               GIMP_STOCK_HISTOGRAM,
+                               GIMP_HELP_HISTOGRAM_DIALOG);
 }
 
 GtkWidget *
@@ -813,19 +787,13 @@ dialogs_selection_editor_new (GimpDialogFactory *factory,
                               gint               preview_size)
 {
   GtkWidget *view;
-  GtkWidget *dockable;
 
-  view = gimp_selection_editor_new (gimp_context_get_image (context),
-                                    factory->menu_factory);
+  view = gimp_selection_editor_new (factory->menu_factory);
 
-  dockable = dialogs_dockable_new (view,
-				   _("Selection"), _("Selection Editor"),
-                                   GIMP_STOCK_TOOL_RECT_SELECT,
-                                   GIMP_HELP_SELECTION_DIALOG);
-
-  gimp_dockable_set_context (GIMP_DOCKABLE (dockable), context);
-
-  return dockable;
+  return dialogs_dockable_new (view,
+                               _("Selection"), _("Selection Editor"),
+                               GIMP_STOCK_TOOL_RECT_SELECT,
+                               GIMP_HELP_SELECTION_DIALOG);
 }
 
 GtkWidget *
@@ -834,24 +802,14 @@ dialogs_undo_history_new (GimpDialogFactory *factory,
                           gint               preview_size)
 {
   GtkWidget *editor;
-  GtkWidget *dockable;
-  GimpImage *gimage;
 
   editor = gimp_undo_editor_new (context->gimp->config,
                                  factory->menu_factory);
 
-  gimage = gimp_context_get_image (context);
-  if (gimage)
-    gimp_image_editor_set_image (GIMP_IMAGE_EDITOR (editor), gimage);
-
-  dockable = dialogs_dockable_new (editor,
-				   _("Undo"), _("Undo History"),
-                                   GIMP_STOCK_UNDO_HISTORY,
-                                   GIMP_HELP_UNDO_DIALOG);
-
-  gimp_dockable_set_context (GIMP_DOCKABLE (dockable), context);
-
-  return dockable;
+  return dialogs_dockable_new (editor,
+                               _("Undo"), _("Undo History"),
+                               GIMP_STOCK_UNDO_HISTORY,
+                               GIMP_HELP_UNDO_DIALOG);
 }
 
 
@@ -1014,22 +972,22 @@ dialogs_dockable_new (GtkWidget   *widget,
 static void
 dialogs_indexed_palette_selected (GimpColormapEditor *editor,
                                   GdkModifierType     state,
-				  GimpDockable       *dockable)
+				  gpointer            data)
 {
-  GimpImage *gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
+  GimpImageEditor *image_editor = GIMP_IMAGE_EDITOR (editor);
 
-  if (gimage)
+  if (image_editor->gimage)
     {
       GimpRGB color;
       gint    index;
 
       index = gimp_colormap_editor_col_index (editor);
 
-      gimp_image_get_colormap_entry (gimage, index, &color);
+      gimp_image_get_colormap_entry (image_editor->gimage, index, &color);
 
       if (state & GDK_CONTROL_MASK)
-        gimp_context_set_background (dockable->context, &color);
+        gimp_context_set_background (image_editor->context, &color);
       else
-        gimp_context_set_foreground (dockable->context, &color);
+        gimp_context_set_foreground (image_editor->context, &color);
     }
 }

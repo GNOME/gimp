@@ -54,9 +54,9 @@ struct _GimpHistogramEditorClass
 };
 
 
-GType       gimp_histogram_editor_get_type  (void) G_GNUC_CONST;
+GType       gimp_histogram_editor_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_histogram_editor_new       (GimpImage *gimage);
+GtkWidget * gimp_histogram_editor_new      (void);
 
 
 #endif /* __GIMP_HISTOGRAM_EDITOR_H__ */

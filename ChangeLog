@@ -1,5 +1,21 @@
 2004-09-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcolormapeditor.[ch]
+	* app/widgets/gimphistogrameditor.[ch]
+	* app/widgets/gimpselectioneditor.[ch]: removed redundant "gimage"
+	parameters from public constructors. They are all GimpImageEditor
+	widgets which get their image via gimp_docked_set_context() and
+	gimp_image_editor_set_image() later anyway. Fixes uglyness as well
+	as problems where the editors had an image but no context, causing
+	strange behavior in their foo_actions_update() functions.
+
+	* app/dialogs/dialogs-constructors.c: changed accordingly. Removed
+	redundant calls to gimp_dockable_set_context() on newly created
+	dockables because they will get a context when added to their
+	containers.
+
+2004-09-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcolormapeditor.c: moved stuff from
 	gimp_colormap_editor_new() to
 	gimp_colormap_editor_init(). Untabified.

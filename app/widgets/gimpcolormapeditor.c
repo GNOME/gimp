@@ -394,24 +394,15 @@ gimp_colormap_editor_set_image (GimpImageEditor *image_editor,
 /*  public functions  */
 
 GtkWidget *
-gimp_colormap_editor_new (GimpImage       *gimage,
-                          GimpMenuFactory *menu_factory)
+gimp_colormap_editor_new (GimpMenuFactory *menu_factory)
 {
-  GtkWidget *editor;
-
-  g_return_val_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
 
-  editor = g_object_new (GIMP_TYPE_COLORMAP_EDITOR,
-                         "menu-factory",    menu_factory,
-                         "menu-identifier", "<ColormapEditor>",
-                         "ui-path",         "/colormap-editor-popup",
-                         NULL);
-
-  if (gimage)
-    gimp_image_editor_set_image (GIMP_IMAGE_EDITOR (editor), gimage);
-
-  return editor;
+  return g_object_new (GIMP_TYPE_COLORMAP_EDITOR,
+                       "menu-factory",    menu_factory,
+                       "menu-identifier", "<ColormapEditor>",
+                       "ui-path",         "/colormap-editor-popup",
+                       NULL);
 }
 
 void
