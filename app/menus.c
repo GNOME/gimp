@@ -1311,7 +1311,13 @@ menus_last_opened_cmd_callback (GtkWidget *widget,
   if (status != PDB_SUCCESS &&
       status != PDB_CANCEL)
     {
+#ifdef GDK_USE_UTF8_MBS
+      gchar *utf8_raw_filename = g_filename_to_utf8 (raw_filename, -1, NULL, NULL, NULL);
+      g_message (_("Error opening file: %s\n"), utf8_raw_filename);
+      g_free (utf8_raw_filename);
+#else
       g_message (_("Error opening file: %s\n"), raw_filename);
+#endif
     }
 }
 
@@ -1333,8 +1339,19 @@ menus_last_opened_update_labels (void)
 
   for (i = 1; i <= num_entries; i++)
     {
+#ifdef GDK_USE_UTF8_MBS
+      {
+	gchar *tmp = g_filename_to_utf8 (g_basename (((GString *) filename_slist->data)->str),
+					 -1, NULL, NULL, NULL);
+	
+	g_string_sprintf (entry_filename, "%d. %s", i,
+			  tmp);
+	g_free (tmp);
+      }
+#else
       g_string_sprintf (entry_filename, "%d. %s", i,
 			g_basename (((GString *) filename_slist->data)->str));
+#endif
 
       g_string_sprintf (path, "/File/MRU%02d", i);
 
@@ -1345,8 +1362,18 @@ menus_last_opened_update_labels (void)
 
 	  gtk_label_set_text (GTK_LABEL (GTK_BIN (widget)->child),
 			      entry_filename->str);
+#ifdef GDK_USE_UTF8_MBS
+	  {
+	    gchar *tmp = g_filename_to_utf8 (((GString *) filename_slist->data)->str,
+					     -1, NULL, NULL, NULL);
+	    gimp_help_set_help_data (widget, 
+				     tmp, NULL);
+	    g_free (tmp);
+	  }
+#else
 	  gimp_help_set_help_data (widget, 
 				   ((GString *) filename_slist->data)->str, NULL);
+#endif
 	}
       filename_slist = filename_slist->next;
     }

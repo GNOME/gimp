@@ -1,3 +1,9 @@
+2003-02-18  Tor Lillqvist  <tml@iki.fi>
+
+	* app/menus.c (menus_last_opened_cmd_callback,
+	menus_last_opened_update_labels): Some Win32 UTF-8 hacks needed
+	here, too.
+
 2003-02-17  Tor Lillqvist  <tml@iki.fi>
 
 	* libgimp/gimp.c: Undef DATADIR here, too.
