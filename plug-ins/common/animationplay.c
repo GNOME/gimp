@@ -206,7 +206,7 @@ static guint           frame_number;
 static gint32         *layers;
 static GimpDrawable      *drawable;
 static gboolean        playing = FALSE;
-static gint            timer = 0;
+static guint           timer = 0;
 static GimpImageBaseType      imagetype;
 static guchar         *palette;
 static gint            ncolours;
@@ -1391,7 +1391,7 @@ remove_timer (void)
 {
   if (timer)
     {
-      gtk_timeout_remove (timer);
+      g_source_remove (timer);
       timer = 0;
     }
 }
@@ -1434,13 +1434,12 @@ window_close_callback (GtkWidget *widget,
 }
 
 static gint
-advance_frame_callback (GtkWidget *widget,
-			gpointer   data)
+advance_frame_callback (gpointer data)
 {
   remove_timer();
 
-  timer = gtk_timeout_add (get_frame_duration((frame_number+1)%total_frames),
-			   (GtkFunction) advance_frame_callback, NULL);
+  timer = g_timeout_add (get_frame_duration((frame_number+1)%total_frames),
+			 advance_frame_callback, NULL);
 
   do_step();
   show_frame();
@@ -1455,8 +1454,8 @@ playstop_callback (GtkWidget *widget,
   if (!playing)
     { /* START PLAYING */
       playing = TRUE;
-      timer = gtk_timeout_add (get_frame_duration(frame_number),
-			       (GtkFunction) advance_frame_callback, NULL);
+      timer = g_timeout_add (get_frame_duration(frame_number),
+			     advance_frame_callback, NULL);
     }
   else
     { /* STOP PLAYING */

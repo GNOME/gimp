@@ -268,7 +268,7 @@ static void auto_preview_callback         (GtkWidget *widget, gpointer data);
 static void design_op_callback            (GtkWidget *widget, gpointer data);
 static void design_op_update_callback     (GtkWidget *widget, gpointer data);
 static void flip_check_button_callback    (GtkWidget *widget, gpointer data);
-static gint preview_idle_render           (void);
+static gint preview_idle_render           (gpointer   data);
 
 static void ifs_compose_preview           (void);
 static void ifs_compose_set_defaults      (void);
@@ -2579,7 +2579,7 @@ ifs_compose_delete_callback (GtkWidget *widget,
 }
 
 static gint
-preview_idle_render (void)
+preview_idle_render (gpointer data)
 {
   gint width  = GTK_WIDGET (ifsD->preview)->requisition.width;
   gint height = GTK_WIDGET (ifsD->preview)->requisition.height;
@@ -2640,7 +2640,7 @@ ifs_compose_preview (void)
     }
 
   if (ifsD->preview_iterations == 0)
-    gtk_idle_add ((GtkFunction)preview_idle_render, NULL);
+    g_idle_add (preview_idle_render, NULL);
 
   ifsD->preview_iterations = ifsvals.iterations*((gdouble)width*height/
 				 (ifsD->drawable_width*ifsD->drawable_height));

@@ -4198,14 +4198,14 @@ preview_render_start (Preview *preview)
   preview->init_done = FALSE;
   preview->current_y = 0;
   preview->drawn_y = 0;
-  preview->timeout_tag = gtk_timeout_add (100, (GtkFunction) preview_render_start_2, preview);
+  preview->timeout_tag = g_timeout_add (100, (GSourceFunc) preview_render_start_2, preview);
 }
 
 static gint
 preview_render_start_2 (Preview *preview)
 {
   preview->timeout_tag = 0;
-  preview->idle_tag = gtk_idle_add ((GtkFunction) preview_handle_idle, preview);
+  preview->idle_tag = g_idle_add ((GSourceFunc) preview_handle_idle, preview);
   return FALSE;
 }
 
@@ -4214,7 +4214,7 @@ preview_render_end (Preview *preview)
 {
   if (preview->timeout_tag > 0)
     {
-      gtk_timeout_remove (preview->timeout_tag);
+      g_source_remove (preview->timeout_tag);
       preview->timeout_tag = 0;
     }
   if (preview->idle_tag > 0)
@@ -4222,7 +4222,7 @@ preview_render_end (Preview *preview)
       if (preview->deinit_func)
 	(*preview->deinit_func) (preview, preview->deinit_data);
 
-      gtk_idle_remove (preview->idle_tag);
+      g_source_remove (preview->idle_tag);
       preview->idle_tag = 0;
     }
 }

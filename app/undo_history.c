@@ -419,7 +419,7 @@ undo_history_set_pixmap_idle (gpointer data)
   return (FALSE);
 }
 
-/* check if a preview is already made, otherwise gtk_idle_add the pixmap func */ 
+/* check if a preview is already made, otherwise g_idle_add the pixmap func */ 
 static void
 undo_history_set_pixmap (GtkCList  *clist,
 			 gint       row,
@@ -436,7 +436,7 @@ undo_history_set_pixmap (GtkCList  *clist,
   idle.size   = size;
   idle.gimage = gimage;
 
-  gtk_idle_add ((GtkFunction)undo_history_set_pixmap_idle, &idle);
+  g_idle_add (undo_history_set_pixmap_idle, &idle);
 }
 
 

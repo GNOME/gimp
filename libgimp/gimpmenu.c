@@ -87,9 +87,9 @@ typedef struct _GimpGradientData GimpGradientData;
 static void     gimp_menu_callback      (GtkWidget         *widget,
 					 gint32            *id);
 static void     do_brush_callback       (GimpBrushData     *bdata);
-static gint     idle_test_brush         (GimpBrushData     *bdata);
-static gint     idle_test_pattern       (GimpPatternData   *pdata);
-static gint     idle_test_gradient      (GimpGradientData  *gdata);
+static gint     idle_test_brush         (gpointer           bdata);
+static gint     idle_test_pattern       (gpointer           pdata);
+static gint     idle_test_gradient      (gpointer           gdata);
 static void     temp_brush_invoker      (gchar             *name,
 					 gint               nparams,
 					 GimpParam         *param,
@@ -782,7 +782,7 @@ do_gradient_callback (GimpGradientData *gdata)
 }
 
 static gint
-idle_test_brush (GimpBrushData *bdata)
+idle_test_brush (gpointer bdata)
 {
   do_brush_callback (bdata);
 
@@ -791,7 +791,7 @@ idle_test_brush (GimpBrushData *bdata)
 
 
 static gint
-idle_test_pattern (GimpPatternData *pdata)
+idle_test_pattern (gpointer pdata)
 {
   do_pattern_callback (pdata);
 
@@ -799,7 +799,7 @@ idle_test_pattern (GimpPatternData *pdata)
 }
 
 static gint
-idle_test_gradient (GimpGradientData *gdata)
+idle_test_gradient (gpointer gdata)
 {
   do_gradient_callback (gdata);
 
@@ -837,7 +837,7 @@ temp_brush_invoker (gchar      *name,
 	active_brush_pdb       = bdata;
 	bdata->busy            = TRUE;
 	
-	gtk_idle_add ((GtkFunction)idle_test_brush, active_brush_pdb);
+	g_idle_add (idle_test_brush, active_brush_pdb);
       }
 
   *nreturn_vals = 1;
@@ -876,7 +876,7 @@ temp_pattern_invoker (gchar      *name,
 	active_pattern_pdb       = pdata;
 	pdata->busy              = TRUE;
 
-	gtk_idle_add ((GtkFunction)idle_test_pattern, active_pattern_pdb);
+	g_idle_add (idle_test_pattern, active_pattern_pdb);
       }
 
   *nreturn_vals = 1;
@@ -922,7 +922,7 @@ temp_gradient_invoker (gchar      *name,
 	  gdata->closing      = param[3].data.d_int32;
 	  active_gradient_pdb = gdata;
 	  gdata->busy         = TRUE;
-	  gtk_idle_add ((GtkFunction)idle_test_gradient, active_gradient_pdb);
+	  g_idle_add (idle_test_gradient, active_gradient_pdb);
 	}
     }
 

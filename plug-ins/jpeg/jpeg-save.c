@@ -1436,7 +1436,7 @@ save_image (gchar    *filename,
       
       jerr.pub.error_exit = background_error_exit;
  
-      gtk_idle_add ((GtkFunction) background_jpeg_save, (gpointer) pp);
+      g_idle_add ((GSourceFunc) background_jpeg_save, pp);
       
       /* background_jpeg_save() will cleanup as needed */
       return TRUE;

@@ -321,7 +321,7 @@ static void frame_widget_select_update       (GtkWidget *, gpointer);
 static gint frame_widget_button_events       (GtkWidget *, GdkEvent *);
 static gint frame_widget_preview_events      (GtkWidget *, GdkEvent *);
 
-static gint navi_dialog_poll(GtkWidget *w, gpointer   data);
+static gint navi_dialog_poll(gpointer   data);
 static void navi_dialog_update(gint32 update_flag);
 static void navi_scroll_to_current_frame_nr(void);
 
@@ -2422,7 +2422,7 @@ frame_widget_preview_events (GtkWidget *widget,
 
 
 static gint
-navi_dialog_poll(GtkWidget *w, gpointer   data)
+navi_dialog_poll(gpointer   data)
 {
    gint32 frame_nr;
    gint32 update_flag;
@@ -2465,8 +2465,7 @@ navi_dialog_poll(GtkWidget *w, gpointer   data)
       }
       
       /* restart timer */
-      naviD->timer = gtk_timeout_add(naviD->cycle_time,
-                                    (GtkFunction)navi_dialog_poll, NULL);
+      naviD->timer = g_timeout_add(naviD->cycle_time, navi_dialog_poll, NULL);
    }
    return FALSE;
 }
@@ -3117,8 +3116,7 @@ int  gap_navigator(gint32 image_id)
   frames_dialog_flush();
   navi_scroll_to_current_frame_nr();
   
-  naviD->timer = gtk_timeout_add(naviD->cycle_time,
-                                (GtkFunction)navi_dialog_poll, NULL);
+  naviD->timer = g_timeout_add(naviD->cycle_time, navi_dialog_poll, NULL);
 
    
   if(gap_debug) printf("BEFORE  gtk_main\n");  

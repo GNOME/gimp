@@ -1,3 +1,21 @@
+2003-01-30  Manish Singh  <yosh@gimp.org>
+
+	* app/undo_history.c
+	* libgimp/gimpmenu.c
+	* plug-ins/Lighting/lighting_preview.c
+	* plug-ins/common/animationplay.c
+	* plug-ins/common/jpeg.c
+	* plug-ins/common/screenshot.c
+	* plug-ins/gap/gap_navigator_dialog.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/ifscompose/ifscompose.c
+	* plug-ins/imagemap/imap_main.c
+	* plug-ins/imagemap/imap_polygon.c: changed gtk_{timeout,idle} stuff
+	to their glib equivalents. Minor cleanups also with support code.
+
+	* plug-ins/dbbrowser/dbbrowser_utils.c (gimp_db_browser): use
+	gtk_entry_set_activates_default()
+
 2003-01-30  Seth Burgess <sjburges@gimp.org>
 	
 	* plug-ins/common/laplace.c: fixed off-by-1 error that caused 

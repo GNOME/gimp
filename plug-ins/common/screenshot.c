@@ -82,7 +82,7 @@ static gboolean  shoot_dialog         (void);
 static void      shoot_ok_callback    (GtkWidget *widget, 
 				       gpointer   data);
 static void      shoot_delay          (gint32     delay);
-static gint      shoot_delay_callback (gpointer   data);
+static gboolean  shoot_delay_callback (gpointer   data);
 
 
 /* Global Variables */
@@ -480,12 +480,11 @@ shoot_dialog (void)
 void
 shoot_delay (gint delay)
 {
-  gint timeout;
-
-  timeout = gtk_timeout_add (1000, shoot_delay_callback, &delay);  gtk_main ();
+  g_timeout_add (1000, shoot_delay_callback, &delay);
+  gtk_main ();
 }
 
-gint 
+gboolean
 shoot_delay_callback (gpointer data)
 {
   gint *seconds_left = (gint *)data;

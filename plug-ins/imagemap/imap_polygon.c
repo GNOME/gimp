@@ -299,7 +299,7 @@ typedef struct {
    GtkWidget *append;
    GtkWidget *remove;
    gint	      selected_row;
-   gint	      timeout;
+   guint      timeout;
 } PolygonProperties_t;
 
 static void
@@ -570,8 +570,8 @@ polygon_update_info_widget(Object_t *obj, gpointer data)
    }
    
    if (props->timeout)
-      gtk_timeout_remove(props->timeout);
-   props->timeout = gtk_timeout_add(1000, update_timeout, data);
+      g_source_remove(props->timeout);
+   props->timeout = g_timeout_add(1000, update_timeout, data);
 }
 
 static void

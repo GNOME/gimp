@@ -44,8 +44,8 @@ static guint preview_update_timer = 0;
 
 /* Protos */
 /* ====== */
-static void
-interactive_preview_timer_callback ( void );
+static gboolean
+interactive_preview_timer_callback ( gpointer data );
 
 static void
 compute_preview (gint startx, gint starty, gint w, gint h)
@@ -546,16 +546,15 @@ interactive_preview_callback (GtkWidget *widget)
 {
   if ( preview_update_timer != 0)
     {
-      gtk_timeout_remove ( preview_update_timer );
+      g_source_remove ( preview_update_timer );
     }
   /* start new timer */
-  preview_update_timer = gtk_timeout_add(100, (GtkFunction) interactive_preview_timer_callback, NULL);
+  preview_update_timer = g_timeout_add(100, interactive_preview_timer_callback, NULL);
 }
 
-void
-interactive_preview_timer_callback ( void )
+static gboolean
+interactive_preview_timer_callback ( gpointer data )
 {
-  gtk_timeout_remove ( preview_update_timer );
   gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_pos_x), mapvals.lightsource.position.x);
   gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_pos_y), mapvals.lightsource.position.y);
   gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_pos_z), mapvals.lightsource.position.z);
@@ -564,4 +563,8 @@ interactive_preview_timer_callback ( void )
   gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_dir_z), mapvals.lightsource.direction.z);
 
   draw_preview_image (TRUE);
+
+  preview_update_timer = 0;
+
+  return FALSE;
 }

@@ -1086,7 +1086,7 @@ button_press(GtkWidget* widget, GdkEventButton* event, gpointer data)
 
 /* A few global vars for key movement */
 
-static gint _timeout;
+static guint _timeout;
 static guint _keyval;
 static gint _dx, _dy;
 
@@ -1134,7 +1134,7 @@ key_press_cb(GtkWidget *widget, GdkEventKey *event)
 
    preview_freeze();
    if (_timeout)
-      gtk_timeout_remove(_timeout);
+      g_source_remove(_timeout);
 
    switch (event->keyval) {
    case GDK_Left:
@@ -1172,7 +1172,7 @@ static gboolean
 key_release_cb(GtkWidget *widget, GdkEventKey *event)
 {
    _keyval = event->keyval;
-   _timeout = gtk_timeout_add(250, key_timeout_cb, NULL);
+   _timeout = g_timeout_add(250, key_timeout_cb, NULL);
    return FALSE;
 }
 
