@@ -95,6 +95,7 @@ tools_actions_setup (GimpActionGroup *group)
           entry.label       = tool_info->menu_path;
           entry.accelerator = tool_info->menu_accel;
           entry.tooltip     = tool_info->blurb;
+          entry.help_id     = tool_info->help_id;
           entry.value       = identifier;
 
           gimp_action_group_add_string_actions (group,

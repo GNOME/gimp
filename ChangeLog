@@ -1,3 +1,11 @@
+2004-05-03  Manish Singh  <yosh@gimp.org>
+
+	* app/actions/qmask-actions.c: initialize is_active for qmask-toggle.
+
+	* app/actions/tools-actions.c: set entry help_id from tool_info,
+	since gimp_action_group_add_string_actions expects it to be there
+	now.
+
 2004-05-03  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpframe.c (gimp_frame_new): added a hack that

@@ -58,6 +58,7 @@ static GimpToggleActionEntry qmask_toggle_actions[] =
   { "qmask-toggle", GIMP_STOCK_QMASK_ON,
     N_("Toggle _QuickMask"), "<shift>Q", NULL,
     G_CALLBACK (qmask_toggle_cmd_callback),
+    FALSE,
     GIMP_HELP_QMASK_TOGGLE }
 
 };
