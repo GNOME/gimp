@@ -37,6 +37,7 @@
 #include "widgets/gimpfiledialog.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmessagebox.h"
+#include "widgets/gimpmessagedialog.h"
 
 #include "file-save-dialog.h"
 
@@ -151,38 +152,33 @@ file_save_overwrite (GtkWidget   *save_dialog,
 {
   OverwriteData *overwrite_data = g_new0 (OverwriteData, 1);
   GtkWidget     *dialog;
-  GtkWidget     *box;
   gchar         *filename;
 
   overwrite_data->save_dialog  = save_dialog;
   overwrite_data->uri          = g_strdup (uri);
   overwrite_data->raw_filename = g_strdup (raw_filename);
 
-  dialog = gimp_dialog_new (_("File exists"), "gimp-file-overwrite",
-                            save_dialog, 0,
-                            gimp_standard_help_func, NULL,
+  dialog =
+    gimp_message_dialog_new (_("File exists"), GIMP_STOCK_WARNING,
+                             save_dialog, 0,
+                             gimp_standard_help_func, NULL,
 
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            _("_Replace"),    GTK_RESPONSE_OK,
+                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                             _("_Replace"),    GTK_RESPONSE_OK,
 
-                            NULL);
+                             NULL);
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (file_save_overwrite_response),
                     overwrite_data);
 
-  box = gimp_message_box_new (GIMP_STOCK_WARNING);
-  gtk_container_set_border_width (GTK_CONTAINER (box), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), box);
-  gtk_widget_show (box);
-
   filename = file_utils_uri_to_utf8_filename (uri);
-  gimp_message_box_set_primary_text (GIMP_MESSAGE_BOX (box),
+  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
                                      _("A file named '%s' already exists."),
                                      filename);
   g_free (filename);
 
-  gimp_message_box_set_text (GIMP_MESSAGE_BOX (box),
+  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
                              _("Do you want to replace it with the image "
                                "you are saving?"));
 

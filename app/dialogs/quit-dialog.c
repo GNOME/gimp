@@ -36,6 +36,7 @@
 #include "widgets/gimpcontainertreeview.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmessagebox.h"
+#include "widgets/gimpmessagedialog.h"
 
 #include "quit-dialog.h"
 
@@ -53,13 +54,13 @@ static void  quit_dialog_container_changed (GimpContainer  *images,
 GtkWidget *
 quit_dialog_new (Gimp *gimp)
 {
-  GimpContainer *images;
-  GtkWidget     *dialog;
-  GtkWidget     *box;
-  GtkWidget     *label;
-  GtkWidget     *view;
-  gint           rows;
-  gint           preview_size;
+  GimpContainer  *images;
+  GimpMessageBox *box;
+  GtkWidget      *dialog;
+  GtkWidget      *label;
+  GtkWidget      *view;
+  gint            rows;
+  gint            preview_size;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
@@ -71,23 +72,21 @@ quit_dialog_new (Gimp *gimp)
 
   g_return_val_if_fail (images != NULL, NULL);
 
-  dialog = gimp_dialog_new (_("Quit The GIMP"), "gimp-quit",
-                            NULL, 0,
-                            gimp_standard_help_func, NULL,
+  dialog =
+    gimp_message_dialog_new (_("Quit The GIMP"), GIMP_STOCK_WILBER_EEK,
+                             NULL, 0,
+                             gimp_standard_help_func, NULL,
 
-                            GTK_STOCK_CANCEL,      GTK_RESPONSE_CANCEL,
-                            _("_Discard Changes"), GTK_RESPONSE_OK,
+                             GTK_STOCK_CANCEL,      GTK_RESPONSE_CANCEL,
+                             _("_Discard Changes"), GTK_RESPONSE_OK,
 
-                            NULL);
+                             NULL);
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (quit_dialog_response),
                     gimp);
 
-  box = gimp_message_box_new (GIMP_STOCK_WILBER_EEK);
-  gtk_container_set_border_width (GTK_CONTAINER (box), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), box);
-  gtk_widget_show (box);
+  box = GIMP_MESSAGE_DIALOG (dialog)->box;
 
   g_signal_connect_object (images, "add",
                            G_CALLBACK (quit_dialog_container_changed),
@@ -116,7 +115,8 @@ quit_dialog_new (Gimp *gimp)
 
   g_object_set_data (G_OBJECT (box), "lost-label", label);
 
-  quit_dialog_container_changed (images, NULL, GIMP_MESSAGE_BOX (box));
+  quit_dialog_container_changed (images, NULL,
+                                 GIMP_MESSAGE_DIALOG (dialog)->box);
 
   return dialog;
 }

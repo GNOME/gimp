@@ -34,6 +34,8 @@
 #include "gimpactiongroup.h"
 #include "gimpactionview.h"
 #include "gimpcellrendereraccel.h"
+#include "gimpmessagebox.h"
+#include "gimpmessagedialog.h"
 #include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 
@@ -441,14 +443,14 @@ typedef struct
 } ConfirmData;
 
 static void
-gimp_action_view_accel_confirm (GtkWidget   *query_box,
-                                gboolean     value,
-                                gpointer     data)
+gimp_action_view_conflict_response (GtkWidget   *dialog,
+                                    gint         response_id,
+                                    ConfirmData *confirm_data)
 {
-  if (value)
-    {
-      ConfirmData *confirm_data = data;
+  gtk_widget_destroy (dialog);
 
+  if (response_id == GTK_RESPONSE_OK)
+    {
       if (! gtk_accel_map_change_entry (confirm_data->accel_path,
                                         confirm_data->accel_key,
                                         confirm_data->accel_mask,
@@ -457,6 +459,74 @@ gimp_action_view_accel_confirm (GtkWidget   *query_box,
           g_message (_("Changing shortcut failed."));
         }
     }
+
+  g_free (confirm_data->accel_path);
+  g_free (confirm_data);
+}
+
+static void
+gimp_action_view_conflict_confirm (GimpActionView  *view,
+                                   GtkAction       *action,
+                                   guint            accel_key,
+                                   GdkModifierType  accel_mask,
+                                   const gchar     *accel_path)
+{
+  GimpActionGroup *group;
+  GimpMessageBox  *box;
+  gchar           *label;
+  gchar           *stripped;
+  gchar           *accel_string;
+  ConfirmData     *confirm_data;
+  GtkWidget       *dialog;
+
+  g_object_get (action,
+                "action-group", &group,
+                "label",        &label,
+                NULL);
+
+  stripped = gimp_strip_uline (label);
+  g_free (label);
+
+  accel_string = gimp_get_accel_string (accel_key, accel_mask);
+
+  confirm_data = g_new0 (ConfirmData, 1);
+
+  confirm_data->accel_path = g_strdup (accel_path);
+  confirm_data->accel_key  = accel_key;
+  confirm_data->accel_mask = accel_mask;
+
+  dialog =
+    gimp_message_dialog_new (_("Conflicting Shortcuts"),
+                             GIMP_STOCK_WARNING,
+                             gtk_widget_get_toplevel (GTK_WIDGET (view)), 0,
+                             gimp_standard_help_func, NULL,
+
+                             GTK_STOCK_CANCEL,         GTK_RESPONSE_CANCEL,
+                             _("_Resassign shortcut"), GTK_RESPONSE_OK,
+
+                             NULL);
+
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (gimp_action_view_conflict_response),
+                    confirm_data);
+
+  box = GIMP_MESSAGE_DIALOG (dialog)->box;
+
+  gimp_message_box_set_primary_text (box,
+                                     _("Shortcut \"%s\" is already taken "
+                                       "by \"%s\" from the \"%s\" group."),
+                                     accel_string, stripped, group->label);
+  gimp_message_box_set_text (box,
+                             _("Reassigning the shortcut will cause it "
+                               "to be removed from \"%s\"."),
+                             stripped);
+
+  g_free (stripped);
+  g_free (accel_string);
+
+  g_object_unref (group);
+
+  gtk_widget_show (dialog);
 }
 
 static void
@@ -568,69 +638,11 @@ gimp_action_view_accel_edited (GimpCellRendererAccel *accel,
 
               if (conflict_action && conflict_action != action)
                 {
-                  GimpActionGroup *conflict_group;
-                  gchar           *label;
-                  gchar           *stripped;
-                  gchar           *accel_string;
-                  gchar           *message;
-                  ConfirmData     *confirm_data;
-                  GtkWidget       *query_box;
-
-                  g_object_get (conflict_action,
-                                "action-group", &conflict_group,
-                                "label",        &label,
-                                NULL);
-
-                  stripped = gimp_strip_uline (label);
-
-                  accel_string = gimp_get_accel_string (accel_key, accel_mask);
-
-                  message =
-                    g_strdup_printf ("Shortcut \"%s\" is already taken by "
-                                     "\"%s\" from the \"%s\" group.\n"
-                                     "\n"
-                                     "Choose \"Reassign Shortcut\" to "
-                                     "reassign the shortcut, thereby removing "
-                                     "the shortcut from %s.",
-                                     accel_string,
-                                     stripped,
-                                     conflict_group->label,
-                                     stripped);
-
-                  confirm_data = g_new0 (ConfirmData, 1);
-
-                  confirm_data->accel_path = g_strdup (accel_path);
-                  confirm_data->accel_key  = accel_key;
-                  confirm_data->accel_mask = accel_mask;
-
-                  query_box =
-                    gimp_query_boolean_box (_("Conflicting Shortcuts"),
-                                            gtk_widget_get_toplevel (GTK_WIDGET (view)),
-                                            gimp_standard_help_func,
-                                            NULL,
-                                            GIMP_STOCK_WARNING,
-                                            message,
-                                            _("_Resassign Shortcut"),
-                                            GTK_STOCK_CANCEL,
-                                            G_OBJECT (view), "destroy",
-                                            gimp_action_view_accel_confirm,
-                                            confirm_data);
-
-                  g_object_weak_ref (G_OBJECT (query_box),
-                                     (GWeakNotify) g_free,
-                                     confirm_data);
-                  g_object_weak_ref (G_OBJECT (query_box),
-                                     (GWeakNotify) g_free,
-                                     confirm_data->accel_path);
-
-                  g_free (label);
-                  g_free (stripped);
-                  g_free (accel_string);
-                  g_free (message);
+                  gimp_action_view_conflict_confirm (view, conflict_action,
+                                                     accel_key,
+                                                     accel_mask,
+                                                     accel_path);
                   g_object_unref (conflict_action);
-                  g_object_unref (conflict_group);
-
-                  gtk_widget_show (query_box);
                 }
               else if (conflict_action != action)
                 {

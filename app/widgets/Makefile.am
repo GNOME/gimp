@@ -174,6 +174,8 @@ libappwidgets_a_sources = \
 	gimpmenufactory.h		\
 	gimpmessagebox.c		\
 	gimpmessagebox.h		\
+	gimpmessagedialog.c		\
+	gimpmessagedialog.h		\
 	gimpnavigationview.c		\
 	gimpnavigationview.h		\
 	gimppaletteeditor.c		\

@@ -44,6 +44,7 @@
 #include "gimphelp.h"
 #include "gimphelp-ids.h"
 #include "gimpmessagebox.h"
+#include "gimpmessagedialog.h"
 
 #include "gimp-intl.h"
 
@@ -229,24 +230,19 @@ gimp_help_browser_error (Gimp        *gimp,
                          const gchar *text)
 {
   GtkWidget *dialog;
-  GtkWidget *box;
 
-  dialog = gimp_dialog_new (title, "gimp-help-error",
-                            NULL, 0,
-                            NULL, NULL,
+  dialog =
+    gimp_message_dialog_new (title, GIMP_STOCK_WARNING,
+                             NULL, 0,
+                             NULL, NULL,
 
-                            GTK_STOCK_CANCEL,              GTK_RESPONSE_CANCEL,
-                            _("Use _web browser instead"), GTK_RESPONSE_OK,
+                             GTK_STOCK_CANCEL,              GTK_RESPONSE_CANCEL,
+                             _("Use _web browser instead"), GTK_RESPONSE_OK,
 
-                            NULL);
+                             NULL);
 
-  box = gimp_message_box_new (GIMP_STOCK_WARNING);
-  gtk_container_set_border_width (GTK_CONTAINER (box), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), box);
-  gtk_widget_show (box);
-
-  gimp_message_box_set_primary_text (GIMP_MESSAGE_BOX (box), primary);
-  gimp_message_box_set_text (GIMP_MESSAGE_BOX (box), text);
+  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box, primary);
+  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box, text);
 
   if (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK)
     g_object_set (gimp->config,

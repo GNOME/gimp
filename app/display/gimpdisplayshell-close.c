@@ -35,6 +35,7 @@
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmessagebox.h"
+#include "widgets/gimpmessagedialog.h"
 #include "widgets/gimpuimanager.h"
 
 #include "gimpdisplay.h"
@@ -103,12 +104,12 @@ static void
 gimp_display_shell_close_dialog (GimpDisplayShell *shell,
                                  GimpImage        *gimage)
 {
-  GtkWidget *dialog;
-  GtkWidget *box;
-  GClosure  *closure;
-  GSource   *source;
-  gchar     *name;
-  gchar     *title;
+  GtkWidget      *dialog;
+  GimpMessageBox *box;
+  GClosure       *closure;
+  GSource        *source;
+  gchar          *name;
+  gchar          *title;
 
   if (shell->close_dialog)
     {
@@ -122,18 +123,16 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
   g_free (name);
 
   shell->close_dialog =
-    dialog = gimp_dialog_new (title,
-                              "gimp-display-shell-close",
-                              GTK_WIDGET (shell),
-                              GTK_DIALOG_DESTROY_WITH_PARENT,
-                              gimp_standard_help_func, NULL,
+    dialog = gimp_message_dialog_new (title, GIMP_STOCK_WARNING,
+                                      GTK_WIDGET (shell),
+                                      GTK_DIALOG_DESTROY_WITH_PARENT,
+                                      gimp_standard_help_func, NULL,
 
-                              _("Do_n't save"), GTK_RESPONSE_CLOSE,
-                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                              GTK_STOCK_SAVE,   RESPONSE_SAVE,
+                                      _("Do_n't save"), GTK_RESPONSE_CLOSE,
+                                      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                      GTK_STOCK_SAVE,   RESPONSE_SAVE,
 
-                              NULL);
-
+                                      NULL);
   g_free (title);
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), RESPONSE_SAVE);
@@ -146,10 +145,7 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
                     G_CALLBACK (gimp_display_shell_close_response),
                     shell);
 
-  box = gimp_message_box_new (GIMP_STOCK_WARNING);
-  gtk_container_set_border_width (GTK_CONTAINER (box), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), box);
-  gtk_widget_show (box);
+  box = GIMP_MESSAGE_DIALOG (dialog)->box;
 
   g_signal_connect_object (gimage, "name_changed",
                            G_CALLBACK (gimp_display_shell_close_name_changed),

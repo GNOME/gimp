@@ -41,11 +41,11 @@ enum
 };
 
 
-static void      gimp_message_box_class_init   (GimpMessageBoxClass   *klass);
+static void      gimp_message_box_class_init    (GimpMessageBoxClass   *klass);
 
-static GObject * gimp_message_box_constructor  (GType                  type,
-                                                guint                  n_params,
-                                                GObjectConstructParam *params);
+static GObject * gimp_message_box_constructor   (GType                  type,
+                                                 guint                  n_params,
+                                                 GObjectConstructParam *params);
 
 static void      gimp_message_box_init          (GimpMessageBox *box);
 static void      gimp_message_box_finalize      (GObject        *object);
@@ -136,6 +136,7 @@ gimp_message_box_init (GimpMessageBox *box)
   gint i;
 
   gtk_box_set_spacing (GTK_BOX (box), 12);
+  gtk_container_set_border_width (GTK_CONTAINER (box), 12);
 
   for (i = 0; i < 2; i++)
     {

@@ -1,3 +1,19 @@
+2004-10-13  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpmessagedialog.[ch]: added a simple message
+	dialog to avoid code duplication.
+
+	* app/widgets/gimpmessagebox.c: set the border width to 12 pixels.
+
+	* app/dialogs/file-save-dialog.c
+	* app/dialogs/quit-dialog.c
+	* app/display/gimpdisplayshell-close.c
+	* app/widgets/gimperrordialog.c
+	* app/widgets/gimphelp.c
+	* app/widgets/gimpactionview.c: use the new GimpMessageDialog.
+
 2004-10-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/image-actions.c
