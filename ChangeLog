@@ -1,3 +1,24 @@
+Mon Nov 23 01:17:57 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* configure.in: require GTK+ 1.1.5
+
+	* app/bezier_select.c
+	* app/channels_dialog.c
+	* app/global_edit.c
+	* app/layers_dialog.c
+	* plug-ins/film/film.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/xd/xd.c
+	* plug-ins/libgck/gck/gcklistbox.c: fixes for new scrolled window
+	viewport behavior
+
+	* libgimp/gimpwire.c
+	* app/xcf.c: use g_htonl and friends
+
+	* app/main.c: ditch some unused variables
+
+	* app/Makefile.am: removed unused pixmap references
+
 Thu Nov 19 21:17:19 MET 1998 Sven Neumann <sven@gimp.org>
 
 	* app/gdisplay.[ch]

@@ -721,7 +721,8 @@ layers_dialog_create ()
       gtk_box_pack_start (GTK_BOX (vbox), listbox, TRUE, TRUE, 2);
 
       layersD->layer_list = gtk_list_new ();
-      gtk_container_add (GTK_CONTAINER (listbox), layersD->layer_list);
+      gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (listbox),
+					     layersD->layer_list);
       gtk_list_set_selection_mode (GTK_LIST (layersD->layer_list), GTK_SELECTION_BROWSE);
       gtk_signal_connect (GTK_OBJECT (layersD->layer_list), "event",
 			  (GtkSignalFunc) layer_list_events,

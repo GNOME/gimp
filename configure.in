@@ -66,7 +66,7 @@ ALL_LINGUAS="fr sv ja it fi ko de"
 AM_GNU_GETTEXT
 
 dnl Check for GTK+
-AM_PATH_GTK(1.1.3,,
+AM_PATH_GTK(1.1.5,,
   AC_MSG_ERROR(Test for GTK failed. See the file 'INSTALL' for help.))
 
 changequote(,)dnl
@@ -74,7 +74,7 @@ changequote(,)dnl
 dnl Evil stuff to extract GLIB stuff from gtk-config output
 dnl (we want to make sure it matches with the gtk we're using)
 GLIB_CFLAGS=`echo $GTK_CFLAGS | sed 's/^.*\(-I[^ ]*glib[^ ]*  *-I[^ ]*\).*$/\1/'`
-GLIB_LDFLAGS=`echo $gtk_libs | sed -e 's/^.*-lgdk[^ ]* *\(-L[^ ]*\).*$/\1/' -e 's/^.* -lgdk[^ ]* .*$//'`
+GLIB_LDFLAGS=`echo $GTK_LIBS | sed -e 's/^.*-lgdk[^ ]* *\(-L[^ ]*\).*$/\1/' -e 's/^.* -lgdk[^ ]* .*$//'`
 if test -z "$GLIB_LDFLAGS" ; then
   GLIB_LDFLAGS=`echo $GTK_LIBS | sed 's/^ *\(-L[^ ]*\) .*$/\1/'`
 fi 

@@ -1165,7 +1165,8 @@ add_image_list (int add_box_flag,
   list = gtk_list_new ();
   gtk_list_set_selection_mode (GTK_LIST (list), GTK_SELECTION_MULTIPLE);
   gtk_list_set_selection_mode (GTK_LIST (list), GTK_SELECTION_BROWSE);
-  gtk_container_add (GTK_CONTAINER (scrolled_win), list);
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win),
+					 list);
   gtk_widget_show (list);
 
   for (i = 0; i < n; i++)

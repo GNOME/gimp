@@ -3575,7 +3575,8 @@ brush_page()
 
   list = gtk_list_new ();
   gtk_list_set_selection_mode (GTK_LIST (list), GTK_SELECTION_SINGLE);
-  gtk_container_add (GTK_CONTAINER (scrolled_win), list);
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win),
+					 list);
   gtk_widget_show (list);
   gtk_table_attach(GTK_TABLE(table), list_frame, 0, 4, 1, 5, GTK_FILL|GTK_EXPAND , GTK_FILL|GTK_EXPAND, 0, 0);
 
@@ -4353,7 +4354,7 @@ add_objects_list ()
   gfig_gtk_list = list = gtk_list_new ();
   /* gtk_list_set_selection_mode (GTK_LIST (list), GTK_SELECTION_MULTIPLE); */
   gtk_list_set_selection_mode (GTK_LIST (list), GTK_SELECTION_BROWSE);
-  gtk_container_add (GTK_CONTAINER (scrolled_win), list);
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win),						 list);
   gtk_widget_show (list);
 
   /* Load saved objects */
@@ -5576,7 +5577,8 @@ gfig_rescan_list (void)
 
   list_widget = gtk_list_new ();
   gtk_list_set_selection_mode (GTK_LIST (list_widget), GTK_SELECTION_BROWSE);
-  gtk_container_add (GTK_CONTAINER (scrolled_win), list_widget);
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win),
+					 list_widget);
   gtk_widget_show (list_widget);
   gtk_box_pack_start (GTK_BOX (vbox), list_frame, TRUE, TRUE, 0);
 

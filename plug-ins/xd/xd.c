@@ -696,7 +696,7 @@ get_a_version (XdFile* xd, gchar* ext)
   gtk_widget_show (button);
 
   plist = gtk_list_new ();
-  gtk_container_add (GTK_CONTAINER (listbox), plist);
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (listbox), plist);
   gtk_list_set_selection_mode (GTK_LIST (plist), GTK_SELECTION_BROWSE);
 
   gtk_widget_show (plist);

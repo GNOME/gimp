@@ -315,23 +315,17 @@ gimp_SOURCES = \
 	xcf.h
 
 EXTRA_DIST = \
+	tools/anchor.xpm	\
 	tools/channel.xbm	\
+	tools/delete.xpm	\
+	tools/duplicate.xpm	\
 	tools/eye.xbm		\
 	tools/layer.xbm		\
 	tools/linked.xbm	\
-	tools/mask.xbm		\
-	tools/anchor.xpm	\
-	tools/anchor_is.xpm	\
-	tools/delete.xpm	\
-	tools/delete_is.xpm	\
-	tools/duplicate.xpm	\
-	tools/duplicate_is.xpm	\
 	tools/lower.xpm		\
-	tools/lower_is.xpm	\
+	tools/mask.xbm		\
 	tools/new.xpm		\
-	tools/new_is.xpm	\
-	tools/raise.xpm		\
-	tools/raise_is.xpm
+	tools/raise.xpm
 
 CPPFLAGS = \
 	-DLIBDIR=\""$(gimpplugindir)"\"	\

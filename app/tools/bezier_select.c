@@ -2192,7 +2192,8 @@ static void bezier_named_buffer_proc (GDisplay *gdisp)
 
   pn_dlg->list = gtk_list_new ();
   gtk_list_set_selection_mode (GTK_LIST (pn_dlg->list), GTK_SELECTION_BROWSE);
-  gtk_container_add (GTK_CONTAINER (listbox), pn_dlg->list);
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (listbox),
+					 pn_dlg->list);
   set_list_of_named_buffers (pn_dlg->list);
   gtk_widget_show (pn_dlg->list);
 
