@@ -592,11 +592,18 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
   oldgimp = g_strdup (gimp_directory ());
 
   /*  FIXME  */
-  version = strstr (oldgimp, "2.2");
-  if (version)
-    version[2] = '0';
+  version = strstr (oldgimp, "2.3");
 
+  if (version)
+    version[2] = '2';
   migrate = (version && g_file_test (oldgimp, G_FILE_TEST_IS_DIR));
+
+  if (! migrate)
+    {
+      if (version)
+        version[2] = '0';
+      migrate = (version && g_file_test (oldgimp, G_FILE_TEST_IS_DIR));
+    }
 
   if (! migrate)
     {
@@ -811,6 +818,8 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
   /*  MIGRATION_PAGE  */
   {
     GtkWidget *box;
+    gchar     *title;
+    gchar     *label;
 
     page = user_install_notebook_append_page (GTK_NOTEBOOK (notebook),
                                               _("Migrate User Settings"),
@@ -818,17 +827,23 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
                                                 "with the user installation."),
                                               12);
 
-    box = gimp_int_radio_group_new (TRUE,
-                                    _("It seems you have used GIMP 2.0 before."),
+    title = g_strdup_printf (_("It seems you have used GIMP %s before."),
+                             version);
+    label = g_strdup_printf (_("_Migrate GIMP %s user settings"), version);
+
+    box = gimp_int_radio_group_new (TRUE, title,
                                     G_CALLBACK (gimp_radio_button_update),
                                     &migrate, migrate,
 
-                                    _("_Migrate GIMP 2.0 user settings"),
+                                    label,
                                     TRUE,  NULL,
 
                                     _("Do a _fresh user installation"),
                                     FALSE, NULL,
                                     NULL);
+
+    g_free (label);
+    g_free (title);
 
     gtk_box_pack_start (GTK_BOX (page), box, FALSE, FALSE, 0);
     gtk_widget_show (box);
@@ -1300,7 +1315,7 @@ user_install_migrate_files (const gchar   *oldgimp,
       return FALSE;
     }
 
-  gimp_templates_migrate ();
+  gimp_templates_migrate (oldgimp);
 
   return TRUE;
 }

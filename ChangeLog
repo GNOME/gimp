@@ -1,3 +1,13 @@
+2005-02-20  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/user-install-dialog.c: migrate gimp-2.2 settings if
+	available. Pass the version to gimp_templates_migrate().
+
+	* app/core/gimp-templates.[ch] (gimp_templates_migrate): if
+	migrating templaterc from ~/.gimp-2.0, do a case-insensitive match
+	on template names to accommodate for the fact that we changed the
+	spelling of some default templates between 2.0 and 2.2.
+
 2005-02-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimptexttool.c (gimp_text_tool_create_layer): block

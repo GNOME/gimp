@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -105,8 +107,28 @@ gimp_templates_save (Gimp *gimp)
 }
 
 
+/*  just like gimp_list_get_child_by_name() but matches case-insensitive  */
+static GimpObject *
+gimp_templates_migrate_get_child_by_name (const GimpContainer *container,
+                                          const gchar         *name)
+{
+  GimpList *list = GIMP_LIST (container);
+  GList    *glist;
+
+  for (glist = list->list; glist; glist = g_list_next (glist))
+    {
+      GimpObject *object = glist->data;
+
+      if (! g_ascii_strcasecmp (object->name, name))
+        return object;
+    }
+
+  return NULL;
+}
+
 /**
  * gimp_templates_migrate:
+ * @olddir: the old user directory
  *
  * Migrating the templaterc from GIMP 2.0 to GIMP 2.2 needs this special
  * hack since we changed the way that units are handled. This function
@@ -114,7 +136,7 @@ gimp_templates_save (Gimp *gimp)
  * is to replace the unit for a couple of default templates with "pixels".
  **/
 void
-gimp_templates_migrate (void)
+gimp_templates_migrate (const gchar *olddir)
 {
   GimpContainer *templates = gimp_list_new (GIMP_TYPE_TEMPLATE, TRUE);
   gchar         *filename  = gimp_personal_rc_file ("templaterc");
@@ -125,7 +147,26 @@ gimp_templates_migrate (void)
       gchar *tmp = g_build_filename (gimp_sysconf_directory (),
                                      "templaterc", NULL);
 
-      gimp_config_deserialize_file (GIMP_CONFIG (templates), tmp, NULL, NULL);
+      if (olddir && strstr (olddir, "2.0"))
+        {
+          /* We changed the spelling of a couple of template names
+           * from upper to lower case between 2.0 and 2.2.
+           */
+          GimpContainerClass *class = GIMP_CONTAINER_GET_CLASS (templates);
+          gpointer            func  = class->get_child_by_name;
+
+          class->get_child_by_name = gimp_templates_migrate_get_child_by_name;
+
+          gimp_config_deserialize_file (GIMP_CONFIG (templates),
+                                        tmp, NULL, NULL);
+
+          class->get_child_by_name = func;
+        }
+      else
+        {
+          gimp_config_deserialize_file (GIMP_CONFIG (templates),
+                                        tmp, NULL, NULL);
+        }
 
       g_free (tmp);
 
