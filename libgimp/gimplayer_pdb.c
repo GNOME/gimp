@@ -275,39 +275,6 @@ gimp_layer_resize_to_image_size (gint32 layer_ID)
 }
 
 /**
- * gimp_layer_delete:
- * @layer_ID: The layer to delete.
- *
- * Delete a layer.
- *
- * This procedure deletes the specified layer. This must not be done if
- * the gimage containing this layer was already deleted or if the layer
- * was already removed from the image. The only case in which this
- * procedure is useful is if you want to get rid of a layer which has
- * not yet been added to an image.
- *
- * Returns: TRUE on success.
- */
-gboolean
-gimp_layer_delete (gint32 layer_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp_layer_delete",
-				    &nreturn_vals,
-				    GIMP_PDB_LAYER, layer_ID,
-				    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
  * gimp_layer_translate:
  * @layer_ID: The layer.
  * @offx: Offset in x direction.

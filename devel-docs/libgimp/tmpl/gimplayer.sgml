@@ -83,15 +83,6 @@ Operations on single layers.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_layer_delete ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_layer_translate ##### -->
 <para>
 

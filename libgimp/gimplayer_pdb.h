@@ -50,7 +50,6 @@ gboolean             gimp_layer_resize               (gint32                laye
 						      gint                  offx,
 						      gint                  offy);
 gboolean             gimp_layer_resize_to_image_size (gint32                layer_ID);
-gboolean             gimp_layer_delete               (gint32                layer_ID);
 gboolean             gimp_layer_translate            (gint32                layer_ID,
 						      gint                  offx,
 						      gint                  offy);

@@ -46,7 +46,6 @@ static ProcRecord layer_create_mask_proc;
 static ProcRecord layer_scale_proc;
 static ProcRecord layer_resize_proc;
 static ProcRecord layer_resize_to_image_size_proc;
-static ProcRecord layer_delete_proc;
 static ProcRecord layer_translate_proc;
 static ProcRecord layer_add_alpha_proc;
 static ProcRecord layer_set_offsets_proc;
@@ -77,7 +76,6 @@ register_layer_procs (Gimp *gimp)
   procedural_db_register (gimp, &layer_scale_proc);
   procedural_db_register (gimp, &layer_resize_proc);
   procedural_db_register (gimp, &layer_resize_to_image_size_proc);
-  procedural_db_register (gimp, &layer_delete_proc);
   procedural_db_register (gimp, &layer_translate_proc);
   procedural_db_register (gimp, &layer_add_alpha_proc);
   procedural_db_register (gimp, &layer_set_offsets_proc);
@@ -596,53 +594,6 @@ static ProcRecord layer_resize_to_image_size_proc =
   0,
   NULL,
   { { layer_resize_to_image_size_invoker } }
-};
-
-static Argument *
-layer_delete_invoker (Gimp     *gimp,
-                      Argument *args)
-{
-  gboolean success = TRUE;
-  GimpLayer *layer;
-
-  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
-    success = FALSE;
-
-  if (success)
-    {
-      if (! gimp_item_get_image (GIMP_ITEM (layer)))
-	g_object_unref (layer);
-      else
-	success = FALSE;
-    }
-
-  return procedural_db_return_args (&layer_delete_proc, success);
-}
-
-static ProcArg layer_delete_inargs[] =
-{
-  {
-    GIMP_PDB_LAYER,
-    "layer",
-    "The layer to delete"
-  }
-};
-
-static ProcRecord layer_delete_proc =
-{
-  "gimp_layer_delete",
-  "Delete a layer.",
-  "This procedure deletes the specified layer. This must not be done if the gimage containing this layer was already deleted or if the layer was already removed from the image. The only case in which this procedure is useful is if you want to get rid of a layer which has not yet been added to an image.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  1,
-  layer_delete_inargs,
-  0,
-  NULL,
-  { { layer_delete_invoker } }
 };
 
 static Argument *

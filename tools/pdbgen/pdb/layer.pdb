@@ -378,32 +378,6 @@ HELP
 CODE
 }
 
-sub layer_delete {
-    $blurb = 'Delete a layer.';
-
-    $help = <<'HELP';
-This procedure deletes the specified layer. This must not be done if the 
-gimage containing this layer was already deleted or if the layer was 
-already removed from the image. The only case in which this procedure is
-useful is if you want to get rid of a layer which has not yet been
-added to an image.
-HELP
-
-    &std_pdb_misc;
-
-    @inargs = ( &layer_arg );
-    $inargs[0]->{desc} .= ' to delete';
-
-    %invoke = ( code => <<'CODE' );
-{
-  if (! gimp_item_get_image (GIMP_ITEM (layer)))
-    g_object_unref (layer);
-  else
-    success = FALSE;
-}
-CODE
-}
-
 sub layer_translate {
     $blurb = 'Translate the layer by the specified offsets.';
 
@@ -629,7 +603,7 @@ CODE
               "core/gimpitem-linked.h" "pdb_glue.h" "gimp-intl.h");
 
 unshift @procs, qw(layer_new layer_copy layer_create_mask layer_scale
-		   layer_resize layer_resize_to_image_size layer_delete
+		   layer_resize layer_resize_to_image_size
 		   layer_translate layer_add_alpha layer_set_offsets layer_mask
 		   layer_is_floating_sel layer_new_from_drawable);
 %exports = (app => [@procs], lib => [@procs]);

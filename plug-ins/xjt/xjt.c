@@ -3570,24 +3570,25 @@ load_xjt_image (const gchar *filename)
 	}
 
       /* Handle channel parasites */
-      p_check_and_add_parasite(l_channel_id,
-			       l_dirname,
-			       l_image_prp_ptr->parasite_props,
-			       l_channel_prp_ptr->channel_pos,
-			       XJT_CHANNEL_PARASITE);
+      p_check_and_add_parasite (l_channel_id,
+                                l_dirname,
+                                l_image_prp_ptr->parasite_props,
+                                l_channel_prp_ptr->channel_pos,
+                                XJT_CHANNEL_PARASITE);
 
-      if(l_channel_prp_ptr->tattoo >= 0)
+      if (l_channel_prp_ptr->tattoo >= 0)
 	{
-	  gimp_drawable_set_tattoo(l_channel_id, l_channel_prp_ptr->tattoo);
+	  gimp_drawable_set_tattoo (l_channel_id, l_channel_prp_ptr->tattoo);
 	}
-      if(l_channel_prp_ptr->selection)
+
+      if (l_channel_prp_ptr->selection)
 	{
-	  if(xjt_debug) printf("XJT-DEBUG: SELECTION loaded channel id = %d\n", (int)l_channel_id);
+	  if (xjt_debug) printf("XJT-DEBUG: SELECTION loaded channel id = %d\n", (int)l_channel_id);
 
 	  gimp_selection_load (l_channel_id);
 
 	  /* delete the channel after load into selection */
-	  gimp_channel_delete (l_channel_id);
+	  gimp_drawable_delete (l_channel_id);
 	}
       else
 	{
@@ -3598,12 +3599,12 @@ load_xjt_image (const gchar *filename)
 	  gimp_drawable_set_visible (l_channel_id, l_channel_prp_ptr->visible);
 	  gimp_channel_set_show_masked (l_channel_id, l_channel_prp_ptr->show_masked);
 
-	  if(l_channel_prp_ptr->floating_attached)
+	  if (l_channel_prp_ptr->floating_attached)
 	    {
 	      l_fsel_attached_to_id = l_channel_id;    /* the floating_selection is attached to this channel */
 	    }
 
-	  if(l_channel_prp_ptr->active_channel)
+	  if (l_channel_prp_ptr->active_channel)
 	    {
 	      l_active_channel_id = l_channel_id;
 	    }
@@ -3613,7 +3614,7 @@ load_xjt_image (const gchar *filename)
   /* attach the floating selection... */
   if ((l_fsel_id >= 0) && (l_fsel_attached_to_id >= 0))
     {
-      if(xjt_debug) printf("XJT-DEBUG: attaching floating_selection id=%d to id %d\n",
+      if (xjt_debug) printf("XJT-DEBUG: attaching floating_selection id=%d to id %d\n",
 			   (int)l_fsel_id, (int)l_fsel_attached_to_id);
       if (gimp_floating_sel_attach (l_fsel_id, l_fsel_attached_to_id) < 0)
 	{
@@ -3628,36 +3629,39 @@ load_xjt_image (const gchar *filename)
   /* set active layer/channel */
   if (l_active_channel_id >= 0)
     {
-      if(xjt_debug) printf("SET active channel\n");
+      if (xjt_debug) printf("SET active channel\n");
+
       gimp_image_set_active_channel (l_image_id, l_active_channel_id);
     }
+
   if (l_active_layer_id >= 0)
     {
-      if(xjt_debug) printf("SET active layer\n");
+      if (xjt_debug) printf("SET active layer\n");
+
       gimp_image_set_active_layer (l_image_id, l_active_layer_id);
     }
 
   /* set guides */
   for (l_guide_prp_ptr = l_image_prp_ptr->guide_props;
        l_guide_prp_ptr != NULL;
-       l_guide_prp_ptr = (t_guide_props *)l_guide_prp_ptr->next)
+       l_guide_prp_ptr = (t_guide_props *) l_guide_prp_ptr->next)
     {
       if (l_guide_prp_ptr->orientation == GIMP_ORIENTATION_HORIZONTAL)
-	gimp_image_add_hguide(l_image_id, l_guide_prp_ptr->position);
+	gimp_image_add_hguide (l_image_id, l_guide_prp_ptr->position);
       else
-	gimp_image_add_vguide(l_image_id, l_guide_prp_ptr->position);
+	gimp_image_add_vguide (l_image_id, l_guide_prp_ptr->position);
     }
 
   /* create paths */
   if (l_image_prp_ptr->path_props)
     {
-      p_add_paths(l_image_id, l_image_prp_ptr->path_props);
+      p_add_paths (l_image_id, l_image_prp_ptr->path_props);
     }
 
   /* set tattoo_state */
   if (l_image_prp_ptr->tattoo_state > 0)
     {
-      gimp_image_set_tattoo_state(l_image_id, l_image_prp_ptr->tattoo_state);
+      gimp_image_set_tattoo_state (l_image_id, l_image_prp_ptr->tattoo_state);
     }
 
  cleanup:
@@ -3682,4 +3686,4 @@ load_xjt_image (const gchar *filename)
   /* destroy the tmp image */
   gimp_image_delete (l_image_id);
   return -1;
-}	/* end load_xjt_image */
+}

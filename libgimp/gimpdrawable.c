@@ -52,10 +52,12 @@ gimp_drawable_detach (GimpDrawable *drawable)
   if (drawable)
     {
       gimp_drawable_flush (drawable);
+
       if (drawable->tiles)
 	g_free (drawable->tiles);
       if (drawable->shadow_tiles)
 	g_free (drawable->shadow_tiles);
+
       g_free (drawable);
     }
 }
@@ -64,42 +66,30 @@ void
 gimp_drawable_flush (GimpDrawable *drawable)
 {
   GimpTile *tiles;
-  gint ntiles;
-  gint i;
+  gint      n_tiles;
+  gint      i;
 
   if (drawable)
     {
       if (drawable->tiles)
 	{
-	  tiles = drawable->tiles;
-	  ntiles = drawable->ntile_rows * drawable->ntile_cols;
+	  tiles   = drawable->tiles;
+	  n_tiles = drawable->ntile_rows * drawable->ntile_cols;
 
-	  for (i = 0; i < ntiles; i++)
+	  for (i = 0; i < n_tiles; i++)
 	    if ((tiles[i].ref_count > 0) && tiles[i].dirty)
 	      gimp_tile_flush (&tiles[i]);
 	}
 
       if (drawable->shadow_tiles)
 	{
-	  tiles = drawable->shadow_tiles;
-	  ntiles = drawable->ntile_rows * drawable->ntile_cols;
+	  tiles   = drawable->shadow_tiles;
+	  n_tiles = drawable->ntile_rows * drawable->ntile_cols;
 
-	  for (i = 0; i < ntiles; i++)
+	  for (i = 0; i < n_tiles; i++)
 	    if ((tiles[i].ref_count > 0) && tiles[i].dirty)
 	      gimp_tile_flush (&tiles[i]);
 	}
-    }
-}
-
-void
-gimp_drawable_delete (GimpDrawable *drawable)
-{
-  if (drawable)
-    {
-      if (gimp_drawable_is_layer (drawable->drawable_id))
-	gimp_layer_delete (drawable->drawable_id);
-      else
-	gimp_channel_delete (drawable->drawable_id);
     }
 }
 
@@ -110,11 +100,11 @@ gimp_drawable_get_tile (GimpDrawable *drawable,
 			gint          col)
 {
   GimpTile *tiles;
-  guint right_tile;
-  guint bottom_tile;
-  gint  ntiles;
-  gint  tile_num;
-  gint  i, j, k;
+  guint     right_tile;
+  guint     bottom_tile;
+  gint      n_tiles;
+  gint      tile_num;
+  gint      i, j, k;
 
   if (drawable)
     {
@@ -125,8 +115,8 @@ gimp_drawable_get_tile (GimpDrawable *drawable,
 
       if (!tiles)
 	{
-	  ntiles = drawable->ntile_rows * drawable->ntile_cols;
-	  tiles = g_new (GimpTile, ntiles);
+	  n_tiles = drawable->ntile_rows * drawable->ntile_cols;
+	  tiles = g_new (GimpTile, n_tiles);
 
 	  right_tile = drawable->width - ((drawable->ntile_cols - 1) * TILE_WIDTH);
 	  bottom_tile = drawable->height - ((drawable->ntile_rows - 1) * TILE_HEIGHT);
@@ -162,6 +152,7 @@ gimp_drawable_get_tile (GimpDrawable *drawable,
 	}
 
       tile_num = row * drawable->ntile_cols + col;
+
       return &tiles[tile_num];
     }
 

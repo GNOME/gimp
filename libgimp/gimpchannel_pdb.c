@@ -107,39 +107,6 @@ gimp_channel_copy (gint32 channel_ID)
 }
 
 /**
- * gimp_channel_delete:
- * @channel_ID: The channel to delete.
- *
- * Delete a channel.
- *
- * This procedure deletes the specified channel. This must not be done
- * if the gimage containing this channel was already deleted or if the
- * channel was already removed from the image. The only case in which
- * this procedure is useful is if you want to get rid of a channel
- * which has not yet been added to an image.
- *
- * Returns: TRUE on success.
- */
-gboolean
-gimp_channel_delete (gint32 channel_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp_channel_delete",
-				    &nreturn_vals,
-				    GIMP_PDB_CHANNEL, channel_ID,
-				    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
  * gimp_channel_combine_masks:
  * @channel1_ID: The channel1.
  * @channel2_ID: The channel2.

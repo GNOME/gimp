@@ -1,3 +1,32 @@
+2003-12-03  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/channel.pdb
+	* tools/pdbgen/pdb/layer.pdb: removed gimp_layer_delete() and
+	gimp_channel_delete() PDB wrappers...
+
+	* tools/pdbgen/pdb/drawable.pdb: ...added gimp_drawable_delete().
+
+	* libgimp/gimpdrawable.[ch]: removed gimp_drawable_delete()
+	(having this function work on the GimpDrawable wrapper and not on
+	the drawable_id was more than questionable anyway).
+
+	* libgimp/gimpcompat.h: added gimp_layer_delete and
+	gimp_channel_delete cruft #defines.
+
+	* app/pdb/channel_cmds.c
+	* app/pdb/drawable_cmds.c
+	* app/pdb/internal_procs.c
+	* app/pdb/layer_cmds.c
+	* libgimp/gimpchannel_pdb.[ch]
+	* libgimp/gimpdrawable_pdb.[ch]
+	* libgimp/gimplayer_pdb.[ch]: regenerated.
+
+	* plug-ins/script-fu/scripts/add-bevel.scm
+	* plug-ins/xjt/xjt.c: changed accordingly.
+
+	* plug-ins/imagemap/imap_main.c: just removed the call to
+	gimp_channel_delete(), it was wrong anyway.
+
 2003-12-03  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/pygimp-drawable.c

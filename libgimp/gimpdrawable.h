@@ -43,29 +43,28 @@ struct _GimpDrawable
 };
 
 
-GimpDrawable * gimp_drawable_get                 (gint32          drawable_ID);
-void           gimp_drawable_detach              (GimpDrawable   *drawable);
-void           gimp_drawable_flush               (GimpDrawable   *drawable);
-void           gimp_drawable_delete              (GimpDrawable   *drawable);
-GimpTile     * gimp_drawable_get_tile            (GimpDrawable   *drawable,
-						  gint            shadow,
-						  gint            row,
-						  gint            col);
-GimpTile     * gimp_drawable_get_tile2           (GimpDrawable   *drawable,
-						  gint            shadow,
-						  gint            x,
-						  gint            y);
+GimpDrawable * gimp_drawable_get                 (gint32         drawable_ID);
+void           gimp_drawable_detach              (GimpDrawable  *drawable);
+void           gimp_drawable_flush               (GimpDrawable  *drawable);
+GimpTile     * gimp_drawable_get_tile            (GimpDrawable  *drawable,
+                                                  gint           shadow,
+                                                  gint           row,
+                                                  gint           col);
+GimpTile     * gimp_drawable_get_tile2           (GimpDrawable  *drawable,
+                                                  gint           shadow,
+                                                  gint           x,
+                                                  gint           y);
 
-guchar       * gimp_drawable_get_thumbnail_data  (gint32          drawable_ID,
-						  gint           *width,
-						  gint           *height,
-						  gint           *bpp);
+guchar       * gimp_drawable_get_thumbnail_data  (gint32         drawable_ID,
+                                                  gint          *width,
+                                                  gint          *height,
+                                                  gint          *bpp);
 
-void           gimp_drawable_attach_new_parasite (gint32          drawable_ID,
-						  const gchar    *name,
-						  gint            flags,
-						  gint            size,
-						  gconstpointer   data);
+void           gimp_drawable_attach_new_parasite (gint32         drawable_ID,
+                                                  const gchar   *name,
+                                                  gint           flags,
+                                                  gint           size,
+                                                  gconstpointer  data);
 
 G_END_DECLS
 

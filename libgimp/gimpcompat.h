@@ -44,6 +44,7 @@ G_BEGIN_DECLS
 
 #define gimp_crop                               gimp_image_crop
 
+#define gimp_channel_delete                     gimp_drawable_delete
 #define gimp_channel_get_name                   gimp_drawable_get_name
 #define gimp_channel_set_name                   gimp_drawable_set_name
 #define gimp_channel_get_visible                gimp_drawable_get_visible
@@ -51,6 +52,7 @@ G_BEGIN_DECLS
 #define gimp_channel_get_tattoo                 gimp_drawable_get_tattoo
 #define gimp_channel_set_tattoo                 gimp_drawable_set_tattoo
 
+#define gimp_layer_delete                       gimp_drawable_delete
 #define gimp_layer_get_name                     gimp_drawable_get_name
 #define gimp_layer_set_name                     gimp_drawable_set_name
 #define gimp_layer_get_visible                  gimp_drawable_get_visible

@@ -125,7 +125,6 @@ gimp_brushes_set_popup
 <FILE>gimpchannel</FILE>
 gimp_channel_new
 gimp_channel_copy
-gimp_channel_delete
 gimp_channel_get_show_masked
 gimp_channel_set_show_masked
 gimp_channel_get_opacity
@@ -391,7 +390,6 @@ gimp_layer_create_mask
 gimp_layer_scale
 gimp_layer_resize
 gimp_layer_resize_to_image_size
-gimp_layer_delete
 gimp_layer_translate
 gimp_layer_add_alpha
 gimp_layer_set_offsets

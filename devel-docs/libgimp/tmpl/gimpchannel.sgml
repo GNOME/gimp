@@ -37,15 +37,6 @@ Functions for manipulating channels.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_channel_delete ##### -->
-<para>
-
-</para>
-
-@channel_ID: 
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_channel_get_show_masked ##### -->
 <para>
 

@@ -36,7 +36,6 @@
 
 static ProcRecord channel_new_proc;
 static ProcRecord channel_copy_proc;
-static ProcRecord channel_delete_proc;
 static ProcRecord channel_combine_masks_proc;
 static ProcRecord channel_get_show_masked_proc;
 static ProcRecord channel_set_show_masked_proc;
@@ -50,7 +49,6 @@ register_channel_procs (Gimp *gimp)
 {
   procedural_db_register (gimp, &channel_new_proc);
   procedural_db_register (gimp, &channel_copy_proc);
-  procedural_db_register (gimp, &channel_delete_proc);
   procedural_db_register (gimp, &channel_combine_masks_proc);
   procedural_db_register (gimp, &channel_get_show_masked_proc);
   procedural_db_register (gimp, &channel_set_show_masked_proc);
@@ -228,55 +226,6 @@ static ProcRecord channel_copy_proc =
   1,
   channel_copy_outargs,
   { { channel_copy_invoker } }
-};
-
-static Argument *
-channel_delete_invoker (Gimp     *gimp,
-                        Argument *args)
-{
-  gboolean success = TRUE;
-  GimpChannel *channel;
-
-  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_CHANNEL (channel))
-    success = FALSE;
-
-  if (success)
-    {
-      if (! gimp_item_get_image (GIMP_ITEM (channel)))
-	{
-	  g_object_unref (channel);
-	  success = TRUE;
-	}
-    
-    }
-
-  return procedural_db_return_args (&channel_delete_proc, success);
-}
-
-static ProcArg channel_delete_inargs[] =
-{
-  {
-    GIMP_PDB_CHANNEL,
-    "channel",
-    "The channel to delete"
-  }
-};
-
-static ProcRecord channel_delete_proc =
-{
-  "gimp_channel_delete",
-  "Delete a channel.",
-  "This procedure deletes the specified channel. This must not be done if the gimage containing this channel was already deleted or if the channel was already removed from the image. The only case in which this procedure is useful is if you want to get rid of a channel which has not yet been added to an image.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  1,
-  channel_delete_inargs,
-  0,
-  NULL,
-  { { channel_delete_invoker } }
 };
 
 static Argument *

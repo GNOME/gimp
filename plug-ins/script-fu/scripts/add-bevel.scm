@@ -188,7 +188,7 @@
 	(begin
 	  (gimp-image-add-layer image bump-layer 1)
 	  (gimp-drawable-set-visible bump-layer 0))
-	(gimp-layer-delete bump-layer)
+	(gimp-drawable-delete bump-layer)
 	)
 
     (gimp-image-set-active-layer image pic-layer)

@@ -92,6 +92,7 @@ gboolean      gimp_drawable_offset          (gint32           drawable_ID,
 					     GimpOffsetType   fill_type,
 					     gint             offset_x,
 					     gint             offset_y);
+gboolean      gimp_drawable_delete          (gint32           drawable_ID);
 
 
 G_END_DECLS

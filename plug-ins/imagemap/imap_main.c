@@ -493,7 +493,6 @@ fuzzy_select_on_button_press (GtkWidget      *widget,
       /* Restore old selection */
       (void) gimp_selection_load(channel_ID);
       (void) gimp_image_remove_channel(image_ID, channel_ID);
-      gimp_channel_delete(channel_ID);
    }
    return FALSE;
 }

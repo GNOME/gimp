@@ -70,6 +70,7 @@ static ProcRecord drawable_set_pixel_proc;
 static ProcRecord drawable_set_image_proc;
 static ProcRecord drawable_thumbnail_proc;
 static ProcRecord drawable_offset_proc;
+static ProcRecord drawable_delete_proc;
 
 void
 register_drawable_procs (Gimp *gimp)
@@ -103,6 +104,7 @@ register_drawable_procs (Gimp *gimp)
   procedural_db_register (gimp, &drawable_set_image_proc);
   procedural_db_register (gimp, &drawable_thumbnail_proc);
   procedural_db_register (gimp, &drawable_offset_proc);
+  procedural_db_register (gimp, &drawable_delete_proc);
 }
 
 static Argument *
@@ -1943,4 +1945,51 @@ static ProcRecord drawable_offset_proc =
   0,
   NULL,
   { { drawable_offset_invoker } }
+};
+
+static Argument *
+drawable_delete_invoker (Gimp     *gimp,
+                         Argument *args)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_DRAWABLE (drawable))
+    success = FALSE;
+
+  if (success)
+    {
+      if (! gimp_item_get_image (GIMP_ITEM (drawable)))
+	g_object_unref (drawable);
+      else
+	success = FALSE;
+    }
+
+  return procedural_db_return_args (&drawable_delete_proc, success);
+}
+
+static ProcArg drawable_delete_inargs[] =
+{
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The drawable to delete"
+  }
+};
+
+static ProcRecord drawable_delete_proc =
+{
+  "gimp_drawable_delete",
+  "Delete a drawable.",
+  "This procedure deletes the specified drawable. This must not be done if the gimage containing this drawable was already deleted or if the drawable was already removed from the image. The only case in which this procedure is useful is if you want to get rid of a drawable which has not yet been added to an image.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  1,
+  drawable_delete_inargs,
+  0,
+  NULL,
+  { { drawable_delete_invoker } }
 };

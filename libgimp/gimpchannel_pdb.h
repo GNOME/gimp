@@ -36,7 +36,6 @@ gint32   _gimp_channel_new            (gint32          image_ID,
 				       gdouble         opacity,
 				       const GimpRGB  *color);
 gint32   gimp_channel_copy            (gint32          channel_ID);
-gboolean gimp_channel_delete          (gint32          channel_ID);
 gboolean gimp_channel_combine_masks   (gint32          channel1_ID,
 				       gint32          channel2_ID,
 				       GimpChannelOps  operation,

@@ -59,6 +59,9 @@ Functions to manipulate drawables.
 
 </para>
 
+@drawable_ID: 
+@Returns: 
+<!-- # Unused Parameters # -->
 @drawable: 
 
 

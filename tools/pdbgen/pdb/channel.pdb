@@ -199,34 +199,6 @@ HELP
     %invoke = ( code => 'success = (copy = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (channel), G_TYPE_FROM_INSTANCE (channel), FALSE))) != NULL;' );
 }
 
-sub channel_delete {
-    $blurb = 'Delete a channel.';
-
-    $help = <<'HELP';
-This procedure deletes the specified channel. This must not be done if the 
-gimage containing this channel was already deleted or if the channel was 
-already removed from the image. The only case in which this procedure is
-useful is if you want to get rid of a channel which has not yet been
-added to an image.
-HELP
-
-    &std_pdb_misc;
-
-    @inargs = ( &channel_arg );
-    $inargs[0]->{desc} .= ' to delete';
-
-    %invoke = ( code => <<'CODE' );
-{
-  if (! gimp_item_get_image (GIMP_ITEM (channel)))
-    {
-      g_object_unref (channel);
-      success = TRUE;
-    }
-
-}
-CODE
-}
-
 sub channel_combine_masks {
     $blurb = 'Combine two channel masks.';
 
@@ -278,8 +250,7 @@ CODE
 &channel_accessors('color', 'color', 'compositing color', 0,
                    [ '$outargs[0]->{void_ret} = 1', '' ]);
 
-unshift @procs, qw(channel_new channel_copy channel_delete
-		   channel_combine_masks);
+unshift @procs, qw(channel_new channel_copy channel_combine_masks);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Channel';
