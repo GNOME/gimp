@@ -193,16 +193,19 @@ gimp_unitrc_save (Gimp *gimp)
     {
       if (gimp_unit_get_deletion_flag (i) == FALSE)
         {
+          gchar buf[G_ASCII_DTOSTR_BUF_SIZE];
+
           fprintf (fp,
                    "(unit-info \"%s\"\n"
-                   "   (factor %f)\n"
+                   "   (factor %s)\n"
                    "   (digits %d)\n"
                    "   (symbol \"%s\")\n"
                    "   (abbreviation \"%s\")\n"
                    "   (singular \"%s\")\n"
                    "   (plural \"%s\"))\n\n",
                    gimp_unit_get_identifier (i),
-                   gimp_unit_get_factor (i),
+                   g_ascii_formatd (buf, sizeof (buf), "%f",
+                                    gimp_unit_get_factor (i)),
                    gimp_unit_get_digits (i),
                    gimp_unit_get_symbol (i),
                    gimp_unit_get_abbreviation (i),
