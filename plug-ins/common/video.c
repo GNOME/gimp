@@ -25,11 +25,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -1772,19 +1767,19 @@ static  GimpRunMode run_mode;
  */
 static void      query  (void);
 static void      run    (const gchar      *name,
-			 gint              nparams,
-			 const GimpParam  *param,
-			 gint             *nreturn_vals,
-			 GimpParam       **return_vals);
+                         gint              nparams,
+                         const GimpParam  *param,
+                         gint             *nreturn_vals,
+                         GimpParam       **return_vals);
 
 static void      video  (GimpDrawable     *drawable);
 
 
 static gboolean  video_dialog          (void);
 static void      video_toggle_update   (GtkWidget *widget,
-					gpointer   data);
+                                        gpointer   data);
 static void      video_radio_update    (GtkWidget *widget,
-					gpointer   data);
+                                        gpointer   data);
 
 static void      video_render_preview  (gboolean raw);
 
@@ -1812,19 +1807,19 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_video",
-			  "Apply low-dotpitch RGB simulation to the "
+                          "Apply low-dotpitch RGB simulation to the "
                           "specified drawable",
-			  "This function simulates the degradation of "
+                          "This function simulates the degradation of "
                           "being on an old low-dotpitch RGB video monitor "
                           "to the specified drawable.",
-			  "Adam D. Moss (adam@foxbox.org)",
-			  "Adam D. Moss (adam@foxbox.org)",
-			  "2nd March 1997",
-			  N_("Vi_deo..."),
-			  "RGB*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Adam D. Moss (adam@foxbox.org)",
+                          "Adam D. Moss (adam@foxbox.org)",
+                          "2nd March 1997",
+                          N_("Vi_deo..."),
+                          "RGB*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register ("plug_in_video",
                              N_("<Image>/Filters/Distorts"));
@@ -1859,19 +1854,19 @@ run (const gchar      *name,
 
       /*  First acquire information with a dialog  */
       if (! video_dialog ())
-	return;
+        return;
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
       if (nparams != 6)
-	status = GIMP_PDB_CALLING_ERROR;
+        status = GIMP_PDB_CALLING_ERROR;
       if (status == GIMP_PDB_SUCCESS)
-	{
-	  vvals.pattern_number = param[3].data.d_int32;
-	  vvals.additive = param[4].data.d_int32;
-	  vvals.rotated = param[5].data.d_int32;
-	}
+        {
+          vvals.pattern_number = param[3].data.d_int32;
+          vvals.additive = param[4].data.d_int32;
+          vvals.rotated = param[5].data.d_int32;
+        }
       break;
 
       case GIMP_RUN_WITH_LAST_VALS:
@@ -1891,23 +1886,23 @@ run (const gchar      *name,
     {
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb (drawable->drawable_id))
-	{
-	  gimp_progress_init (_("Video/RGB..."));
-	  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width ()
-				       + 1));
-	  video (drawable);
+        {
+          gimp_progress_init (_("Video/RGB..."));
+          gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width ()
+                                       + 1));
+          video (drawable);
 
-	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	    gimp_displays_flush ();
+          if (run_mode != GIMP_RUN_NONINTERACTIVE)
+            gimp_displays_flush ();
 
-	  /*  Store vvals data  */
-	  if (run_mode == GIMP_RUN_INTERACTIVE)
-	    gimp_set_data ("plug_in_video", &vvals, sizeof (VideoValues));
-	}
+          /*  Store vvals data  */
+          if (run_mode == GIMP_RUN_INTERACTIVE)
+            gimp_set_data ("plug_in_video", &vvals, sizeof (VideoValues));
+        }
       else
-	{
-	  status = GIMP_PDB_EXECUTION_ERROR;
-	}
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
     }
 
   values[0].data.d_status = status;
@@ -1917,44 +1912,44 @@ run (const gchar      *name,
 
 static void
 video_func (gint x,
-	    gint y,
-	    const guchar *src,
-	    guchar *dest,
-	    gint bpp,
-	    gpointer data)
+            gint y,
+            const guchar *src,
+            guchar *dest,
+            gint bpp,
+            gpointer data)
 {
   gint b, sel_b;
 
   if (vvals.rotated)
     {
       sel_b = pattern[vvals.pattern_number]
-	[pattern_width[vvals.pattern_number]*
-	 (x % pattern_height[vvals.pattern_number]) +
-	 y % pattern_width[vvals.pattern_number] ];
+        [pattern_width[vvals.pattern_number]*
+         (x % pattern_height[vvals.pattern_number]) +
+         y % pattern_width[vvals.pattern_number] ];
     }
   else
     {
       sel_b = pattern[vvals.pattern_number]
-	[pattern_width[vvals.pattern_number]*
-	 (y % pattern_height[vvals.pattern_number]) +
-	 x % pattern_width[vvals.pattern_number] ];
+        [pattern_width[vvals.pattern_number]*
+         (y % pattern_height[vvals.pattern_number]) +
+         x % pattern_width[vvals.pattern_number] ];
     }
 
   for (b = 0; b < bpp; b++)
     {
       if (b < 3 )
-	{
-	  dest [b] = (sel_b == b) ? src[b] : 0;
-	  if (vvals.additive)
-	    {
-	      gint temp = (gint) dest[b] + src[b];
-	      dest[b] = MIN (temp, 255);
-	    }
-	}
+        {
+          dest [b] = (sel_b == b) ? src[b] : 0;
+          if (vvals.additive)
+            {
+              gint temp = (gint) dest[b] + src[b];
+              dest[b] = MIN (temp, 255);
+            }
+        }
       else
-	{
-	  dest[b] = src[b];
-	}
+        {
+          dest[b] = src[b];
+        }
     }
 }
 
@@ -1972,7 +1967,7 @@ static void
 video_render_preview (gboolean raw)
 {
   gint x, y;
-  guchar preview_row[PREVIEW_WIDTH * 3];
+  guchar preview_row[PREVIEW_WIDTH * PREVIEW_WIDTH * 3];
 
   if (vvals.pattern_number == -1)
     {
@@ -1983,25 +1978,30 @@ video_render_preview (gboolean raw)
   for (y = 0; y < PREVIEW_HEIGHT; y++)
     {
       for (x = 0; x < PREVIEW_WIDTH; x++)
-	{
-	  if (raw)
-	    {
-	      preview_row[x*3+0] = preview_raw[x*3+0 + y*PREVIEW_WIDTH*3];
-	      preview_row[x*3+1] = preview_raw[x*3+1 + y*PREVIEW_WIDTH*3];
-	      preview_row[x*3+2] = preview_raw[x*3+2 + y*PREVIEW_WIDTH*3];
-	    }
-	  else
-	    {
-	      video_func (x, y, &preview_raw[y * PREVIEW_WIDTH * 3 + x * 3], 
-			  preview_row + x * 3, 3, NULL);
-	    }
-	}
-      gtk_preview_draw_row (GTK_PREVIEW (preview),
-			    preview_row,
-			    0, y, PREVIEW_WIDTH);
+        {
+          if (raw)
+            {
+              preview_row[(y*PREVIEW_WIDTH+x)*3+0] =
+                preview_raw[x*3+0 + y*PREVIEW_WIDTH*3];
+              preview_row[(y*PREVIEW_WIDTH+x)*3+1] =
+                preview_raw[x*3+1 + y*PREVIEW_WIDTH*3];
+              preview_row[(y*PREVIEW_WIDTH+x)*3+2] =
+                preview_raw[x*3+2 + y*PREVIEW_WIDTH*3];
+            }
+          else
+            {
+              video_func (x, y, 
+                          &preview_raw[y * PREVIEW_WIDTH * 3 + x * 3], 
+                          preview_row + (y * PREVIEW_WIDTH + x) * 3, 3,
+                          NULL);
+            }
+        }
     }
-
-  gtk_widget_queue_draw (preview);
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                          0, 0, PREVIEW_WIDTH, PREVIEW_HEIGHT,
+                          GIMP_RGB_IMAGE,
+                          preview_row,
+                          PREVIEW_WIDTH * 3);
 }
 
 static gboolean
@@ -2020,7 +2020,7 @@ video_dialog (void)
 
   dlg = gimp_dialog_new (_("Video"), "video",
                          NULL, 0,
-			 gimp_standard_help_func, "plug-in-video",
+                         gimp_standard_help_func, "plug-in-video",
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -2059,7 +2059,7 @@ video_dialog (void)
                         &vvals.pattern_number);
 
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-				    vvals.pattern_number == y);
+                                    vvals.pattern_number == y);
     }
 
   /* vbox for preview and toggles */
@@ -2072,8 +2072,8 @@ video_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (preview), PREVIEW_WIDTH, PREVIEW_HEIGHT);
+  preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (preview, PREVIEW_WIDTH, PREVIEW_HEIGHT);
   gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
 
@@ -2097,9 +2097,9 @@ video_dialog (void)
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), vvals.rotated);
 
-  video_render_preview (FALSE);
-
   gtk_widget_show (dlg);
+
+  video_render_preview (FALSE);
 
   in_main_loop = TRUE;
 
@@ -2114,7 +2114,7 @@ video_dialog (void)
 
 static void
 video_toggle_update (GtkWidget *widget,
-		     gpointer   data)
+                     gpointer   data)
 {
   gimp_toggle_button_update (widget, data);
 
@@ -2124,7 +2124,7 @@ video_toggle_update (GtkWidget *widget,
 
 static void
 video_radio_update (GtkWidget *widget,
-		    gpointer   data)
+                    gpointer   data)
 {
   gimp_radio_button_update (widget, data);
 
