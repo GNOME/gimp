@@ -1,3 +1,8 @@
+2003-11-15  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/preferences-dialog.c: readded a toggle for
+	"confirm-on-close" that seems to have been lost some day.
+
 2003-11-15  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpmodule/gimpmodule.c: removed newlines from messages,

@@ -1829,6 +1829,11 @@ prefs_dialog_new (Gimp       *gimp,
 
   /*  File Saving  */
   vbox2 = prefs_frame_new (_("File Saving"), GTK_CONTAINER (vbox), FALSE);
+
+  prefs_check_button_add (object, "confirm-on-close",
+                          _("Confirm Closing of Unsaved Images"),
+                          GTK_BOX (vbox2));
+
   table = prefs_table_new (2, GTK_CONTAINER (vbox2), TRUE);
 
   prefs_boolean_option_menu_add (object, "trust-dirty-flag",
