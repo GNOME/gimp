@@ -480,7 +480,7 @@ gint bumpmap_constrain(gint32 image_id, gint32 drawable_id, gpointer data)
   if (drawable_id == -1)
     return(TRUE);
 
-  return (gimp_drawable_gray(drawable_id) && !gimp_drawable_has_alpha(drawable_id) &&
+  return (gimp_drawable_is_gray(drawable_id) && !gimp_drawable_has_alpha(drawable_id) &&
           gimp_drawable_width(drawable_id)==gimp_drawable_width(mapvals.drawable_id) &&
           gimp_drawable_height(drawable_id)==gimp_drawable_height(mapvals.drawable_id));
 }
@@ -495,7 +495,7 @@ gint envmap_constrain(gint32 image_id, gint32 drawable_id, gpointer data)
   if (drawable_id == -1)
     return(TRUE);
 
-  return (!gimp_drawable_gray(drawable_id) && !gimp_drawable_has_alpha(drawable_id));
+  return (!gimp_drawable_is_gray(drawable_id) && !gimp_drawable_has_alpha(drawable_id));
 }
 
 void envmap_drawable_callback(gint32 id, gpointer data)

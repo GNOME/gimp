@@ -385,7 +385,7 @@ rotate_drawable (GDrawable *drawable)
 
   if (rotvals.angle == 2)  /* we're rotating by 180° */
     { 
-      if ( !gimp_drawable_layer(drawable->id) ) exit;
+      if ( !gimp_drawable_is_layer(drawable->id) ) exit;
       /* not a layer, probably a channel, abort operation */
 
       gimp_tile_cache_ntiles ( 2*((width/gimp_tile_width())+1) );
@@ -428,7 +428,7 @@ rotate_drawable (GDrawable *drawable)
     {  
       (width > height) ? (longside = width) : (longside = height);
 
-      if ( gimp_drawable_layer(drawable->id) )
+      if ( gimp_drawable_is_layer(drawable->id) )
 	{
 	  gimp_layer_resize(drawable->id, longside, longside, 0, 0);
 	  gimp_drawable_flush (drawable);

@@ -962,7 +962,7 @@ gint constraintResultSizeAndResultColorOrGray(gint32 imageId,
 	   gimp_drawable_height(dm->params.result)) &&
 	  ((gimp_drawable_color(drawableId) &&
 	    (gimp_drawable_color(dm->params.result))) ||
-	   gimp_drawable_gray( drawableId))));
+	   gimp_drawable_is_gray( drawableId))));
 }
 
 gint constraintResultSizeAndGray(gint32 imageId,
@@ -974,7 +974,7 @@ gint constraintResultSizeAndGray(gint32 imageId,
 	   gimp_drawable_width( dm->params.result)) &&
 	  (gimp_drawable_height(drawableId) ==
 	   gimp_drawable_height(dm->params.result)) &&
-	  (gimp_drawable_gray( drawableId))));
+	  (gimp_drawable_is_gray( drawableId))));
 }
 
 void dialogOkCallback(GtkWidget *widget, gpointer data) {

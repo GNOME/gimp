@@ -713,7 +713,7 @@ run    (gchar    *name,
       break;
     }
 
-  if (gimp_drawable_color (drawable->id) || gimp_drawable_gray (drawable->id))
+  if (gimp_drawable_color (drawable->id) || gimp_drawable_is_gray (drawable->id))
     {
       /* Set the tile cache size */
 
@@ -3278,7 +3278,7 @@ paint_page()
   page_menu_layers = paint_page_menu_layers();
   gtk_tooltips_set_tip(gfig_tooltips,page_menu_layers,"Draw all objects on one layer (original or new) or one object per layer",NULL);
   gtk_table_attach(GTK_TABLE(table), page_menu_layers, 3, 4, 1, 2, GTK_FILL , GTK_FILL, 0, 0);
-  if(gimp_drawable_channel(gfig_drawable))
+  if(gimp_drawable_is_channel(gfig_drawable))
       gtk_widget_set_sensitive(page_menu_layers,FALSE);
 
 

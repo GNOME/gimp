@@ -487,7 +487,7 @@ pick_color_do (GimpImage    *gimage,
       y -= offy;
       
       sample_type = gimp_drawable_type (drawable);
-      is_indexed = gimp_drawable_indexed (drawable);
+      is_indexed = gimp_drawable_is_indexed (drawable);
       
       get_color_func = (GetColorFunc) gimp_drawable_get_color_at;
       get_color_obj = GTK_OBJECT (drawable);

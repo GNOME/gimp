@@ -724,7 +724,7 @@ scatter_hsv_preview_update ()
 			     &bound_start_x, &bound_start_y,
 			     &bound_end_x, &bound_end_y);
   src_has_alpha  = gimp_drawable_has_alpha (drawable_id);
-  src_is_gray =  gimp_drawable_gray (drawable_id);
+  src_is_gray =  gimp_drawable_is_gray (drawable_id);
   src_bpp = (src_is_gray ? 1 : 3) + (src_has_alpha ? 1 : 0);
   src_bpl = preview_width * src_bpp;
 

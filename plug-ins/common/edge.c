@@ -226,7 +226,7 @@ run (gchar  *name,
     }
 
   /* make sure the drawable exist and is not indexed */
-  if (gimp_drawable_color (drawable->id) || gimp_drawable_gray (drawable->id))
+  if (gimp_drawable_color (drawable->id) || gimp_drawable_is_gray (drawable->id))
     {
       gimp_progress_init ("Edge detection...");
 

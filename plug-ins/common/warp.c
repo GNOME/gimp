@@ -416,8 +416,8 @@ run (gchar  *name,
     gimp_layer_delete(map_y->id);
   } else {
     image_ID = gimp_layer_get_image_id(drawable->id);
-    gimp_image_disable_undo(image_ID);
-    gimp_image_enable_undo(image_ID);
+    gimp_image_undo_disable(image_ID);
+    gimp_image_undo_enable(image_ID);
   }
   */
 

@@ -90,7 +90,7 @@
 	 (old-bg (car (gimp-palette-get-background)))
 	 (old-brush (car (gimp-brushes-get-brush)))
 	 (old-pattern (car (gimp-patterns-get-pattern))))
-    (gimp-image-disable-undo img)
+    (gimp-image-undo-disable img)
 
     (gimp-image-add-channel img mask 0)
     (gimp-image-add-layer img bg-layer 0)
@@ -179,7 +179,7 @@
     (gimp-brushes-set-brush old-brush)
     (gimp-patterns-set-pattern old-pattern)
     (gimp-display-new img)
-    (gimp-image-enable-undo img)))
+    (gimp-image-undo-enable img)))
 
 (script-fu-register "script-fu-sota-chrome-it"
 		    "<Image>/Script-Fu/Stencil Ops/Chrome-It"

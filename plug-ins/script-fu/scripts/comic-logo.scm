@@ -30,7 +30,7 @@
 	 (black-layer (car (gimp-layer-copy text-layer 1)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
-    (gimp-image-disable-undo img)
+    (gimp-image-undo-disable img)
     (gimp-image-resize img width height 0 0)
     (gimp-image-add-layer img bg-layer 1)
     (gimp-image-add-layer img white-layer 1)
@@ -74,7 +74,7 @@
     (gimp-image-set-active-layer img text-layer)
     (gimp-palette-set-background old-bg)
     (gimp-palette-set-foreground old-fg)
-    (gimp-image-enable-undo img)
+    (gimp-image-undo-enable img)
     (gimp-display-new img)))
 
 

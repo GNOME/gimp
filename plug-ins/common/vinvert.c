@@ -264,7 +264,7 @@ run (char    *name,
 	    gimp_displays_flush ();
 	}
       else
-	if (gimp_drawable_indexed (drawable->id))
+	if (gimp_drawable_is_indexed (drawable->id))
 	  {
 	    indexed_vinvert (image_ID);
             if (run_mode != RUN_NONINTERACTIVE)

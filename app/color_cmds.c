@@ -91,7 +91,7 @@ brightness_contrast_invoker (Argument *args)
 
   if (success)
     {
-      if (gimp_drawable_indexed (drawable))
+      if (gimp_drawable_is_indexed (drawable))
 	success = FALSE;
       else
 	{
@@ -207,8 +207,8 @@ levels_invoker (Argument *args)
 
   if (success)
     {
-      if (gimp_drawable_indexed (drawable) ||
-	  (gimp_drawable_gray (drawable) && channel != GRAY_LUT))
+      if (gimp_drawable_is_indexed (drawable) ||
+	  (gimp_drawable_is_gray (drawable) && channel != GRAY_LUT))
 	success = FALSE;
       else
 	{
@@ -328,7 +328,7 @@ posterize_invoker (Argument *args)
 
   if (success)
     {
-      if (gimp_drawable_indexed (drawable))
+      if (gimp_drawable_is_indexed (drawable))
 	success = FALSE;
       else
 	{
@@ -447,7 +447,7 @@ equalize_invoker (Argument *args)
 
   if (success)
     {
-      if (! gimp_drawable_indexed (drawable))
+      if (! gimp_drawable_is_indexed (drawable))
 	equalize (drawable_gimage (drawable), drawable, mask_only);
       else
 	success = FALSE;
@@ -498,7 +498,7 @@ invert_invoker (Argument *args)
 
   if (success)
     {
-      if (! gimp_drawable_indexed (drawable))
+      if (! gimp_drawable_is_indexed (drawable))
 	invert (drawable);
       else
 	success = FALSE;
@@ -561,8 +561,8 @@ curves_spline_invoker (Argument *args)
 
   if (success)
     {
-      if (gimp_drawable_indexed (drawable) || (num_points & 1) ||
-	  (gimp_drawable_gray (drawable) && channel != GRAY_LUT))
+      if (gimp_drawable_is_indexed (drawable) || (num_points & 1) ||
+	  (gimp_drawable_is_gray (drawable) && channel != GRAY_LUT))
 	success = FALSE;
       else
 	{
@@ -680,8 +680,8 @@ curves_explicit_invoker (Argument *args)
 
   if (success)
     {
-      if (gimp_drawable_indexed (drawable) || (num_bytes != 256) ||
-	  (gimp_drawable_gray (drawable) && channel != GRAY_LUT))
+      if (gimp_drawable_is_indexed (drawable) || (num_bytes != 256) ||
+	  (gimp_drawable_is_gray (drawable) && channel != GRAY_LUT))
 	success = FALSE;
       else 
 	{
@@ -799,7 +799,7 @@ color_balance_invoker (Argument *args)
 
   if (success)
     {
-      if (gimp_drawable_indexed (drawable))
+      if (gimp_drawable_is_indexed (drawable))
 	success = FALSE;
       else
 	{
@@ -921,8 +921,8 @@ histogram_invoker (Argument *args)
 
   if (success)
     {
-      if (gimp_drawable_indexed (drawable) ||
-	  (gimp_drawable_gray (drawable) && channel != GRAY_LUT))
+      if (gimp_drawable_is_indexed (drawable) ||
+	  (gimp_drawable_is_gray (drawable) && channel != GRAY_LUT))
 	success = FALSE;
       else
 	{
@@ -1089,7 +1089,7 @@ hue_saturation_invoker (Argument *args)
 
   if (success)
     {
-      if (gimp_drawable_indexed (drawable))
+      if (gimp_drawable_is_indexed (drawable))
 	success = FALSE;
       else
 	{
@@ -1197,7 +1197,7 @@ threshold_invoker (Argument *args)
 
   if (success)
     {
-      if (gimp_drawable_indexed (drawable) || (low_threshold >= high_threshold))
+      if (gimp_drawable_is_indexed (drawable) || (low_threshold >= high_threshold))
 	success = FALSE;
       else
 	{

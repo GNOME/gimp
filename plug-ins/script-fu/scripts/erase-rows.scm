@@ -1,7 +1,7 @@
 (define (script-fu-erase-rows img drawable orientation which)
   (let* ((width (car (gimp-drawable-width drawable)))
 	 (height (car (gimp-drawable-height drawable))))
-    (gimp-image-disable-undo img)
+    (gimp-image-undo-disable img)
     (letrec ((loop (lambda (i max)
 		     (if (< i max)
 			 (begin
@@ -17,7 +17,7 @@
 		height
 		width)))
     (gimp-selection-none img)
-    (gimp-image-enable-undo img)
+    (gimp-image-undo-enable img)
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-erase-rows"

@@ -281,7 +281,7 @@ tile (gint32     image_id,
 			  PARAM_INT32, 0,
 			  PARAM_END);
 
-      if (gimp_drawable_layer (drawable_id))
+      if (gimp_drawable_is_layer (drawable_id))
 	gimp_run_procedure ("gimp_layer_resize", &nreturn_vals,
 			    PARAM_LAYER, drawable_id,
 			    PARAM_INT32, tvals.new_width,

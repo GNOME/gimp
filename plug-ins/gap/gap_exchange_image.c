@@ -559,7 +559,7 @@ p_replace_img(gint32 image_id, gint32 src_image_id)
 
    l_old_bg_layer_id = -1;
 
-   gimp_image_disable_undo (image_id);
+   gimp_image_undo_disable (image_id);
    
    /* remove selection (if there is any) */
    p_gimp_selection_none(image_id);
@@ -641,7 +641,7 @@ p_replace_img(gint32 image_id, gint32 src_image_id)
 
    if (l_layers_list) { g_free (l_layers_list); }
 
-   gimp_image_enable_undo (image_id);
+   gimp_image_undo_enable (image_id);
    
    if(gap_debug) printf("GAP-DEBUG: END p_replace_img img_id=%d  rc=%d\n", (int)image_id, l_rc);
 

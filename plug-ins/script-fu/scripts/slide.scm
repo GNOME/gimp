@@ -92,7 +92,7 @@
 	 (numbera (string-append number "A")))
 
 
-  (gimp-image-disable-undo image)
+  (gimp-image-undo-disable image)
 
 ; add an alpha channel to the image
   (gimp-layer-add-alpha pic-layer)
@@ -220,7 +220,7 @@
   (gimp-selection-none image)
   (gimp-palette-set-background old-bg)
   (gimp-palette-set-foreground old-fg)
-  (gimp-image-enable-undo image)
+  (gimp-image-undo-enable image)
   (if (= work-on-copy TRUE) (gimp-display-new image))
   (gimp-displays-flush)))
 

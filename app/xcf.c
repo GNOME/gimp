@@ -1850,7 +1850,7 @@ xcf_load_image_props (XcfInfo *info,
 	   while (info->cp - base < prop_size)
 	   {
 	     p = read_a_parasite(info);
-	     gimp_image_attach_parasite(gimage, p);
+	     gimp_image_parasite_attach(gimage, p);
 	     parasite_free(p);
 	   }
 	   if (info->cp - base != prop_size)
@@ -2013,7 +2013,7 @@ xcf_load_layer_props (XcfInfo *info,
 	   while (info->cp - base < prop_size)
 	   {
 	     p = read_a_parasite(info);
-	     gimp_drawable_attach_parasite(GIMP_DRAWABLE(layer), p);
+	     gimp_drawable_parasite_attach(GIMP_DRAWABLE(layer), p);
 	     parasite_free(p);
 	   }
 	   if (info->cp - base != prop_size)
@@ -2090,7 +2090,7 @@ xcf_load_channel_props (XcfInfo *info,
 	   while ((info->cp - base) < prop_size)
 	   {
 	     p = read_a_parasite(info);
-	     gimp_drawable_attach_parasite(GIMP_DRAWABLE(channel), p);
+	     gimp_drawable_parasite_attach(GIMP_DRAWABLE(channel), p);
 	     parasite_free(p);
 	   }
 	   if (info->cp - base != prop_size)

@@ -351,7 +351,7 @@
 	 (the-layer #f)
 	 (old-paint-mode (car (gimp-brushes-get-paint-mode)))
 	 (old-rgb (car (gimp-palette-get-foreground))))
-    (gimp-image-disable-undo img)
+    (gimp-image-undo-disable img)
     (gimp-image-add-layer img BG-layer 0)
     (gimp-edit-fill BG-layer)
     (if (<= 0 erase-before-draw)	; HDDN FTR (2SLW)
@@ -378,7 +378,7 @@
 			      layer-paint-mode (= 0 erase-before-draw) brush-details))
     (gimp-palette-set-foreground old-rgb)
     (gimp-brushes-set-paint-mode old-paint-mode)
-    (gimp-image-enable-undo img)
+    (gimp-image-undo-enable img)
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-trochoid"

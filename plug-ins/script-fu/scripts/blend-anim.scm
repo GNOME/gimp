@@ -59,7 +59,7 @@
   (if (> num-layers 2)
       (begin
 
-	(gimp-image-disable-undo image)
+	(gimp-image-undo-disable image)
 
 	(if (= looped TRUE)
 	    ; add a copy of the lowest blend layer on top 
@@ -208,7 +208,7 @@
 	      ; remove the topmost layer
 	      (gimp-image-remove-layer image (aref result-layer-array 0))))
 	      
-	(gimp-image-enable-undo image)
+	(gimp-image-undo-enable image)
 	(gimp-display-new image)
 	(gimp-displays-flush))
   (gimp-message "Blend Animation needs at least three source layers"))))

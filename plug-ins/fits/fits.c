@@ -390,7 +390,7 @@ load_image (char *filename)
  {
    for (k = n_images-1; k >= 1; k--)
    {
-     gimp_image_enable_undo (image_list[k]);
+     gimp_image_undo_enable (image_list[k]);
      gimp_image_clean_all (image_list[k]);
      gimp_display_new (image_list[k]);
    }

@@ -437,7 +437,7 @@ run (char    *name,
 
   /*  Render the fractal  */
   if ((status == STATUS_SUCCESS) &&
-      (gimp_drawable_color (active_drawable->id) || gimp_drawable_gray (active_drawable->id)))
+      (gimp_drawable_color (active_drawable->id) || gimp_drawable_is_gray (active_drawable->id)))
     {
       /*  set the tile cache size so that the operation works well  */
       gimp_tile_cache_ntiles (2 * (MAX (active_drawable->width, active_drawable->height) /
@@ -462,7 +462,7 @@ run (char    *name,
 	 parasite = parasite_new (IFSCOMPOSE_PARASITE,
 				  PARASITE_PERSISTENT | PARASITE_UNDOABLE,
 				  strlen(str)+1, str);
-	 gimp_drawable_attach_parasite (active_drawable->id, parasite);
+	 gimp_drawable_parasite_attach (active_drawable->id, parasite);
 	 parasite_free (parasite);
 
 	 g_free (str);

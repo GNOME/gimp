@@ -189,7 +189,7 @@ curves_colour_update (Tool           *tool,
     return;
 
   sample_type = gimp_drawable_type(drawable);
-  is_indexed = gimp_drawable_indexed (drawable);
+  is_indexed = gimp_drawable_is_indexed (drawable);
   has_alpha = TYPE_HAS_ALPHA(sample_type);
 
   curves_dialog->col_value[HISTOGRAM_RED] = color[RED_PIX];

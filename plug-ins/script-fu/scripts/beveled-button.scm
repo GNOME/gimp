@@ -87,7 +87,7 @@
 	 (bumpmap (car (gimp-layer-new img img-width img-height RGBA_IMAGE "Bumpmap" 100 NORMAL)))
 	 (gradient (car (gimp-layer-new img img-width img-height RGBA_IMAGE "Gradient" 100 NORMAL))))
 
-    (gimp-image-disable-undo img)
+    (gimp-image-undo-disable img)
 
     ; Create bumpmap layer
     
@@ -146,7 +146,7 @@
     (gimp-selection-none img)
     (gimp-palette-set-foreground old-fg-color)
     (gimp-palette-set-background old-bg-color)
-    (gimp-image-enable-undo img)
+    (gimp-image-undo-enable img)
     (gimp-display-new img)))
 
 ; Register!

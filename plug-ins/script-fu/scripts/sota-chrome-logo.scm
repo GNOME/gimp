@@ -89,7 +89,7 @@
 	 (old-brush (car (gimp-brushes-get-brush)))
 	 (old-pattern (car (gimp-patterns-get-pattern))))
   
-    (gimp-image-disable-undo img)
+    (gimp-image-undo-disable img)
     (gimp-image-resize img width height 0 0)
     (gimp-image-add-layer img shadow 0)
     (gimp-image-add-layer img layer3 0)
@@ -178,7 +178,7 @@
     (gimp-palette-set-background old-bg)
     (gimp-brushes-set-brush old-brush)
     (gimp-patterns-set-pattern old-pattern)
-    (gimp-image-enable-undo img)
+    (gimp-image-undo-enable img)
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-sota-chrome-logo"

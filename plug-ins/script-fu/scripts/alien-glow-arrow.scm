@@ -84,7 +84,7 @@
 	 (old-bg (car (gimp-palette-get-background))))
     
     
-    (gimp-image-disable-undo img)
+    (gimp-image-undo-disable img)
     ;(gimp-image-resize img (+ length height) (+ height height) 0 0)
     (gimp-image-add-layer img bg-layer 1)
     (gimp-image-add-layer img glow-layer -1)
@@ -117,7 +117,7 @@
 
     (if (= flatten TRUE)
 	(gimp-image-flatten img))
-    (gimp-image-enable-undo img)
+    (gimp-image-undo-enable img)
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-alien-glow-right-arrow"

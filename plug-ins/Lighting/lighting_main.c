@@ -102,7 +102,7 @@ void check_drawables(void)
       /* Check if bump-map is grayscale and of the same size as the input drawable */
       /* ========================================================================= */
       
-      if (!gimp_drawable_gray(mapvals.bumpmap_id) || 
+      if (!gimp_drawable_is_gray(mapvals.bumpmap_id) || 
            gimp_drawable_width(mapvals.drawable_id)!=gimp_drawable_width(mapvals.bumpmap_id) ||
            gimp_drawable_height(mapvals.drawable_id)!=gimp_drawable_height(mapvals.bumpmap_id))
         {
@@ -119,7 +119,7 @@ void check_drawables(void)
       /* Check if env-map is grayscale or has alpha */
       /* ========================================== */
       
-      if (gimp_drawable_gray(mapvals.envmap_id) || 
+      if (gimp_drawable_is_gray(mapvals.envmap_id) || 
           gimp_drawable_has_alpha(mapvals.envmap_id))
         {
           /* If it has then we silently disable env mapping */

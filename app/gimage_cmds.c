@@ -32,7 +32,7 @@
 #include "layer.h"
 #include "layer_pvt.h"
 
-static ProcRecord list_images_proc;
+static ProcRecord image_list_proc;
 static ProcRecord image_new_proc;
 static ProcRecord image_resize_proc;
 static ProcRecord image_scale_proc;
@@ -61,10 +61,10 @@ static ProcRecord image_active_drawable_proc;
 static ProcRecord image_base_type_proc;
 static ProcRecord image_get_cmap_proc;
 static ProcRecord image_set_cmap_proc;
-static ProcRecord image_enable_undo_proc;
-static ProcRecord image_disable_undo_proc;
-static ProcRecord image_freeze_undo_proc;
-static ProcRecord image_thaw_undo_proc;
+static ProcRecord image_undo_enable_proc;
+static ProcRecord image_undo_disable_proc;
+static ProcRecord image_undo_freeze_proc;
+static ProcRecord image_undo_thaw_proc;
 static ProcRecord image_clean_all_proc;
 static ProcRecord image_floating_selection_proc;
 static ProcRecord image_floating_sel_attached_to_proc;
@@ -92,7 +92,7 @@ static ProcRecord image_get_channel_by_tattoo_proc;
 void
 register_gimage_procs (void)
 {
-  procedural_db_register (&list_images_proc);
+  procedural_db_register (&image_list_proc);
   procedural_db_register (&image_new_proc);
   procedural_db_register (&image_resize_proc);
   procedural_db_register (&image_scale_proc);
@@ -121,10 +121,10 @@ register_gimage_procs (void)
   procedural_db_register (&image_base_type_proc);
   procedural_db_register (&image_get_cmap_proc);
   procedural_db_register (&image_set_cmap_proc);
-  procedural_db_register (&image_enable_undo_proc);
-  procedural_db_register (&image_disable_undo_proc);
-  procedural_db_register (&image_freeze_undo_proc);
-  procedural_db_register (&image_thaw_undo_proc);
+  procedural_db_register (&image_undo_enable_proc);
+  procedural_db_register (&image_undo_disable_proc);
+  procedural_db_register (&image_undo_freeze_proc);
+  procedural_db_register (&image_undo_thaw_proc);
   procedural_db_register (&image_clean_all_proc);
   procedural_db_register (&image_floating_selection_proc);
   procedural_db_register (&image_floating_sel_attached_to_proc);
@@ -161,7 +161,7 @@ gimlist_cb (gpointer im,
 }
 
 static Argument *
-list_images_invoker (Argument *args)
+image_list_invoker (Argument *args)
 {
   Argument *return_args;
   gint32 num_images = 0;
@@ -179,7 +179,7 @@ list_images_invoker (Argument *args)
 	image_ids[i] = pdb_image_to_id (GIMP_IMAGE (list->data));
     }
 
-  return_args = procedural_db_return_args (&list_images_proc, TRUE);
+  return_args = procedural_db_return_args (&image_list_proc, TRUE);
 
   return_args[1].value.pdb_int = num_images;
   return_args[2].value.pdb_pointer = image_ids;
@@ -187,7 +187,7 @@ list_images_invoker (Argument *args)
   return return_args;
 }
 
-static ProcArg list_images_outargs[] =
+static ProcArg image_list_outargs[] =
 {
   {
     PDB_INT32,
@@ -201,9 +201,9 @@ static ProcArg list_images_outargs[] =
   }
 };
 
-static ProcRecord list_images_proc =
+static ProcRecord image_list_proc =
 {
-  "gimp_list_images",
+  "gimp_image_list",
   "Returns the list of images currently open.",
   "This procedure returns the list of images currently open in the GIMP.",
   "Spencer Kimball & Peter Mattis",
@@ -213,8 +213,8 @@ static ProcRecord list_images_proc =
   0,
   NULL,
   2,
-  list_images_outargs,
-  { { list_images_invoker } }
+  image_list_outargs,
+  { { image_list_invoker } }
 };
 
 static Argument *
@@ -1911,7 +1911,7 @@ static ProcRecord image_set_cmap_proc =
 };
 
 static Argument *
-image_enable_undo_invoker (Argument *args)
+image_undo_enable_invoker (Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1924,7 +1924,7 @@ image_enable_undo_invoker (Argument *args)
   if (success)
     success = gimage_enable_undo (gimage);
 
-  return_args = procedural_db_return_args (&image_enable_undo_proc, success);
+  return_args = procedural_db_return_args (&image_undo_enable_proc, success);
 
   if (success)
     return_args[1].value.pdb_int = success ? TRUE : FALSE;
@@ -1932,7 +1932,7 @@ image_enable_undo_invoker (Argument *args)
   return return_args;
 }
 
-static ProcArg image_enable_undo_inargs[] =
+static ProcArg image_undo_enable_inargs[] =
 {
   {
     PDB_IMAGE,
@@ -1941,7 +1941,7 @@ static ProcArg image_enable_undo_inargs[] =
   }
 };
 
-static ProcArg image_enable_undo_outargs[] =
+static ProcArg image_undo_enable_outargs[] =
 {
   {
     PDB_INT32,
@@ -1950,24 +1950,24 @@ static ProcArg image_enable_undo_outargs[] =
   }
 };
 
-static ProcRecord image_enable_undo_proc =
+static ProcRecord image_undo_enable_proc =
 {
-  "gimp_image_enable_undo",
+  "gimp_image_undo_enable",
   "Enable the image's undo stack.",
-  "This procedure enables the image's undo stack, allowing subsequent operations to store their undo steps. This is generally called in conjunction with 'gimp_image_disable_undo' to temporarily disable an image undo stack.",
+  "This procedure enables the image's undo stack, allowing subsequent operations to store their undo steps. This is generally called in conjunction with 'gimp_image_undo_disable' to temporarily disable an image undo stack.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
   PDB_INTERNAL,
   1,
-  image_enable_undo_inargs,
+  image_undo_enable_inargs,
   1,
-  image_enable_undo_outargs,
-  { { image_enable_undo_invoker } }
+  image_undo_enable_outargs,
+  { { image_undo_enable_invoker } }
 };
 
 static Argument *
-image_disable_undo_invoker (Argument *args)
+image_undo_disable_invoker (Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1980,7 +1980,7 @@ image_disable_undo_invoker (Argument *args)
   if (success)
     success = gimage_disable_undo (gimage);
 
-  return_args = procedural_db_return_args (&image_disable_undo_proc, success);
+  return_args = procedural_db_return_args (&image_undo_disable_proc, success);
 
   if (success)
     return_args[1].value.pdb_int = success ? TRUE : FALSE;
@@ -1988,7 +1988,7 @@ image_disable_undo_invoker (Argument *args)
   return return_args;
 }
 
-static ProcArg image_disable_undo_inargs[] =
+static ProcArg image_undo_disable_inargs[] =
 {
   {
     PDB_IMAGE,
@@ -1997,7 +1997,7 @@ static ProcArg image_disable_undo_inargs[] =
   }
 };
 
-static ProcArg image_disable_undo_outargs[] =
+static ProcArg image_undo_disable_outargs[] =
 {
   {
     PDB_INT32,
@@ -2006,24 +2006,24 @@ static ProcArg image_disable_undo_outargs[] =
   }
 };
 
-static ProcRecord image_disable_undo_proc =
+static ProcRecord image_undo_disable_proc =
 {
-  "gimp_image_disable_undo",
+  "gimp_image_undo_disable",
   "Disable the image's undo stack.",
-  "This procedure disables the image's undo stack, allowing subsequent operations to ignore their undo steps. This is generally called in conjunction with 'gimp_image_enable_undo' to temporarily disable an image undo stack. This is advantageous because saving undo steps can be time and memory intensive.",
+  "This procedure disables the image's undo stack, allowing subsequent operations to ignore their undo steps. This is generally called in conjunction with 'gimp_image_undo_enable' to temporarily disable an image undo stack. This is advantageous because saving undo steps can be time and memory intensive.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
   PDB_INTERNAL,
   1,
-  image_disable_undo_inargs,
+  image_undo_disable_inargs,
   1,
-  image_disable_undo_outargs,
-  { { image_disable_undo_invoker } }
+  image_undo_disable_outargs,
+  { { image_undo_disable_invoker } }
 };
 
 static Argument *
-image_freeze_undo_invoker (Argument *args)
+image_undo_freeze_invoker (Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -2036,7 +2036,7 @@ image_freeze_undo_invoker (Argument *args)
   if (success)
     success = gimage_freeze_undo (gimage);
 
-  return_args = procedural_db_return_args (&image_freeze_undo_proc, success);
+  return_args = procedural_db_return_args (&image_undo_freeze_proc, success);
 
   if (success)
     return_args[1].value.pdb_int = success ? TRUE : FALSE;
@@ -2044,7 +2044,7 @@ image_freeze_undo_invoker (Argument *args)
   return return_args;
 }
 
-static ProcArg image_freeze_undo_inargs[] =
+static ProcArg image_undo_freeze_inargs[] =
 {
   {
     PDB_IMAGE,
@@ -2053,7 +2053,7 @@ static ProcArg image_freeze_undo_inargs[] =
   }
 };
 
-static ProcArg image_freeze_undo_outargs[] =
+static ProcArg image_undo_freeze_outargs[] =
 {
   {
     PDB_INT32,
@@ -2062,24 +2062,24 @@ static ProcArg image_freeze_undo_outargs[] =
   }
 };
 
-static ProcRecord image_freeze_undo_proc =
+static ProcRecord image_undo_freeze_proc =
 {
-  "gimp_image_freeze_undo",
+  "gimp_image_undo_freeze",
   "Freeze the image's undo stack.",
-  "This procedure freezes the image's undo stack, allowing subsequent operations to ignore their undo steps. This is generally called in conjunction with 'gimp_image_thaw_undo' to temporarily disable an image undo stack. This is advantageous because saving undo steps can be time and memory intensive. 'gimp_image_{freeze,thaw}_undo' and 'gimp_image_{disable,enable}_undo' differ in that the former does not free up all undo steps when undo is thawed, so is more suited to interactive in-situ previews. It is important in this case that the image is back to the same state it was frozen in before thawing, else 'undo' behaviour is undefined.",
+  "This procedure freezes the image's undo stack, allowing subsequent operations to ignore their undo steps. This is generally called in conjunction with 'gimp_image_undo_thaw' to temporarily disable an image undo stack. This is advantageous because saving undo steps can be time and memory intensive. 'gimp_image_undo_{freeze,thaw}' and 'gimp_image_undo_{disable,enable}' differ in that the former does not free up all undo steps when undo is thawed, so is more suited to interactive in-situ previews. It is important in this case that the image is back to the same state it was frozen in before thawing, else 'undo' behaviour is undefined.",
   "Adam D. Moss",
   "Adam D. Moss",
   "1999",
   PDB_INTERNAL,
   1,
-  image_freeze_undo_inargs,
+  image_undo_freeze_inargs,
   1,
-  image_freeze_undo_outargs,
-  { { image_freeze_undo_invoker } }
+  image_undo_freeze_outargs,
+  { { image_undo_freeze_invoker } }
 };
 
 static Argument *
-image_thaw_undo_invoker (Argument *args)
+image_undo_thaw_invoker (Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -2092,7 +2092,7 @@ image_thaw_undo_invoker (Argument *args)
   if (success)
     success = gimage_thaw_undo (gimage);
 
-  return_args = procedural_db_return_args (&image_thaw_undo_proc, success);
+  return_args = procedural_db_return_args (&image_undo_thaw_proc, success);
 
   if (success)
     return_args[1].value.pdb_int = success ? TRUE : FALSE;
@@ -2100,7 +2100,7 @@ image_thaw_undo_invoker (Argument *args)
   return return_args;
 }
 
-static ProcArg image_thaw_undo_inargs[] =
+static ProcArg image_undo_thaw_inargs[] =
 {
   {
     PDB_IMAGE,
@@ -2109,7 +2109,7 @@ static ProcArg image_thaw_undo_inargs[] =
   }
 };
 
-static ProcArg image_thaw_undo_outargs[] =
+static ProcArg image_undo_thaw_outargs[] =
 {
   {
     PDB_INT32,
@@ -2118,20 +2118,20 @@ static ProcArg image_thaw_undo_outargs[] =
   }
 };
 
-static ProcRecord image_thaw_undo_proc =
+static ProcRecord image_undo_thaw_proc =
 {
-  "gimp_image_thaw_undo",
+  "gimp_image_undo_thaw",
   "Thaw the image's undo stack.",
-  "This procedure thaws the image's undo stack, allowing subsequent operations to store their undo steps. This is generally called in conjunction with 'gimp_image_disable_freeze' to temporarily freeze an image undo stack. 'gimp_image_thaw_undo' does NOT free the undo stack as 'gimp_image_enable_undo' does, so is suited for situations where one wishes to leave the undo stack in the same state in which one found it despite non-destructively playing with the image in the meantime. An example would be in-situ plugin previews. Balancing freezes and thaws and ensuring image consistancy is the responsibility of the caller.",
+  "This procedure thaws the image's undo stack, allowing subsequent operations to store their undo steps. This is generally called in conjunction with 'gimp_image_undo_freeze' to temporarily freeze an image undo stack. 'gimp_image_undo_thaw' does NOT free the undo stack as 'gimp_image_undo_enable' does, so is suited for situations where one wishes to leave the undo stack in the same state in which one found it despite non-destructively playing with the image in the meantime. An example would be in-situ plugin previews. Balancing freezes and thaws and ensuring image consistancy is the responsibility of the caller.",
   "Adam D. Moss",
   "Adam D. Moss",
   "1999",
   PDB_INTERNAL,
   1,
-  image_thaw_undo_inargs,
+  image_undo_thaw_inargs,
   1,
-  image_thaw_undo_outargs,
-  { { image_thaw_undo_invoker } }
+  image_undo_thaw_outargs,
+  { { image_undo_thaw_invoker } }
 };
 
 static Argument *

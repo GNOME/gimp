@@ -355,12 +355,12 @@ gimp_image_add_layer_mask (gint32 image_ID,
 }
 
 void
-gimp_image_disable_undo (gint32 image_ID)
+gimp_image_undo_disable (gint32 image_ID)
 {
   GParam *return_vals;
   int nreturn_vals;
 
-  return_vals = gimp_run_procedure ("gimp_image_disable_undo",
+  return_vals = gimp_run_procedure ("gimp_image_undo_disable",
 				    &nreturn_vals,
 				    PARAM_IMAGE, image_ID,
 				    PARAM_END);
@@ -369,12 +369,12 @@ gimp_image_disable_undo (gint32 image_ID)
 }
 
 void
-gimp_image_enable_undo (gint32 image_ID)
+gimp_image_undo_enable (gint32 image_ID)
 {
   GParam *return_vals;
   int nreturn_vals;
 
-  return_vals = gimp_run_procedure ("gimp_image_enable_undo",
+  return_vals = gimp_run_procedure ("gimp_image_undo_enable",
 				    &nreturn_vals,
 				    PARAM_IMAGE, image_ID,
 				    PARAM_END);
@@ -383,12 +383,12 @@ gimp_image_enable_undo (gint32 image_ID)
 }
 
 void
-gimp_image_freeze_undo (gint32 image_ID)
+gimp_image_undo_freeze (gint32 image_ID)
 {
   GParam *return_vals;
   int nreturn_vals;
 
-  return_vals = gimp_run_procedure ("gimp_image_freeze_undo",
+  return_vals = gimp_run_procedure ("gimp_image_undo_freeze",
 				    &nreturn_vals,
 				    PARAM_IMAGE, image_ID,
 				    PARAM_END);
@@ -397,12 +397,12 @@ gimp_image_freeze_undo (gint32 image_ID)
 }
 
 void
-gimp_image_thaw_undo (gint32 image_ID)
+gimp_image_undo_thaw (gint32 image_ID)
 {
   GParam *return_vals;
   int nreturn_vals;
 
-  return_vals = gimp_run_procedure ("gimp_image_thaw_undo",
+  return_vals = gimp_run_procedure ("gimp_image_undo_thaw",
 				    &nreturn_vals,
 				    PARAM_IMAGE, image_ID,
 				    PARAM_END);
@@ -976,13 +976,13 @@ gimp_image_set_filename (gint32  image_ID,
 }
 
 Parasite *
-gimp_image_find_parasite (gint32      image_ID, 
+gimp_image_parasite_find (gint32      image_ID, 
 			  const char *name)
 {
   GParam *return_vals;
   int nreturn_vals;
   Parasite *parasite;
-  return_vals = gimp_run_procedure ("gimp_image_find_parasite",
+  return_vals = gimp_run_procedure ("gimp_image_parasite_find",
 				    &nreturn_vals,
 				    PARAM_IMAGE, image_ID,
 				    PARAM_STRING, name,
@@ -1001,13 +1001,13 @@ gimp_image_find_parasite (gint32      image_ID,
 }
 
 void
-gimp_image_attach_parasite (gint32          image_ID, 
+gimp_image_parasite_attach (gint32          image_ID, 
 			    const Parasite *p)
 {
   GParam *return_vals;
   int nreturn_vals;
 
-  return_vals = gimp_run_procedure ("gimp_image_attach_parasite",
+  return_vals = gimp_run_procedure ("gimp_image_parasite_attach",
 				    &nreturn_vals,
 				    PARAM_IMAGE, image_ID,
 				    PARAM_PARASITE, p,
@@ -1027,7 +1027,7 @@ gimp_image_attach_new_parasite (gint32      image_ID,
   int nreturn_vals;
   Parasite *p = parasite_new(name, flags, size, data);
 
-  return_vals = gimp_run_procedure ("gimp_image_attach_parasite",
+  return_vals = gimp_run_procedure ("gimp_image_parasite_attach",
 				    &nreturn_vals,
 				    PARAM_IMAGE, image_ID,
 				    PARAM_PARASITE, p,
@@ -1038,13 +1038,13 @@ gimp_image_attach_new_parasite (gint32      image_ID,
 }
 
 void
-gimp_image_detach_parasite (gint32      image_ID, 
+gimp_image_parasite_detach (gint32      image_ID, 
 			    const char *name)
 {
   GParam *return_vals;
   int nreturn_vals;
 
-  return_vals = gimp_run_procedure ("gimp_image_detach_parasite",
+  return_vals = gimp_run_procedure ("gimp_image_parasite_detach",
 				    &nreturn_vals,
 				    PARAM_IMAGE, image_ID,
 				    PARAM_STRING, name,

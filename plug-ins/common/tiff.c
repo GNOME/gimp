@@ -265,7 +265,7 @@ run (char    *name,
 
 #ifdef GIMP_HAVE_PARASITES
 
-      parasite = gimp_image_find_parasite (orig_image, "gimp-comment");
+      parasite = gimp_image_parasite_find (orig_image, "gimp-comment");
       if (parasite)
         image_comment = g_strdup (parasite->data);
       parasite_free(parasite);
@@ -280,7 +280,7 @@ run (char    *name,
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_tiff_save", &tsvals);
 #ifdef GIMP_HAVE_PARASITES
-	  parasite = gimp_image_find_parasite (orig_image, "tiff-save-options");
+	  parasite = gimp_image_parasite_find (orig_image, "tiff-save-options");
 	  if (parasite)
 	    {
 	      tsvals.compression = ((TiffSaveVals *)parasite->data)->compression;
@@ -314,7 +314,7 @@ run (char    *name,
 	{
 	  gimp_get_data ("file_tiff_save", &tsvals);
 #ifdef GIMP_HAVE_PARASITES
-	  parasite = gimp_image_find_parasite (orig_image, "tiff-save-options");
+	  parasite = gimp_image_parasite_find (orig_image, "tiff-save-options");
 	  if (parasite)
 	    {
 	      tsvals.compression = ((TiffSaveVals *)parasite->data)->compression;
@@ -464,7 +464,7 @@ load_image (char *filename)
 #ifdef GIMP_HAVE_PARASITES
   parasite = parasite_new("tiff-save-options", 0,
 			  sizeof(save_vals), &save_vals);
-  gimp_image_attach_parasite(image, parasite);
+  gimp_image_parasite_attach(image, parasite);
   parasite_free(parasite);
 #endif /* GIMP_HAVE_PARASITES */
 
@@ -486,7 +486,7 @@ load_image (char *filename)
 
       parasite = parasite_new ("gimp-comment", PARASITE_PERSISTENT,
 			       len, img_desc);
-      gimp_image_attach_parasite (image, parasite);
+      gimp_image_parasite_attach (image, parasite);
       parasite_free (parasite);
     }
   }
@@ -1294,7 +1294,7 @@ static gint save_image (char   *filename,
       TIFFSetField (tif, TIFFTAG_IMAGEDESCRIPTION, image_comment);
       parasite = parasite_new ("gimp-comment", 1,
 			       strlen (image_comment) + 1, image_comment);
-      gimp_image_attach_parasite (orig_image, parasite);
+      gimp_image_parasite_attach (orig_image, parasite);
       parasite_free (parasite);
     }
 #endif /* GIMP_HAVE_PARASITES */

@@ -37,7 +37,7 @@
 	 (darkness (* 255 (/ (- 100 shadow-darkness) 100)))
 	 (img (car (gimp-image-new tile-size tile-size RGB)))
 	 (drawable (car (gimp-layer-new img tile-size tile-size RGB_IMAGE "Weave tile" 100 NORMAL))))
-    (gimp-image-disable-undo img)
+    (gimp-image-undo-disable img)
     (gimp-image-add-layer img drawable 0)
 
     (gimp-palette-set-background '(0 0 0))
@@ -138,7 +138,7 @@
 
     ; Done
 
-    (gimp-image-enable-undo img)
+    (gimp-image-undo-enable img)
 
     (list img drawable)))
 
@@ -161,7 +161,7 @@
   (let* ((tile-size (+ (* 2 ribbon-width) (* 2 ribbon-spacing)))
 	 (img (car (gimp-image-new tile-size tile-size RGB)))
 	 (drawable (car (gimp-layer-new img tile-size tile-size RGB_IMAGE "Mask" 100 NORMAL))))
-    (gimp-image-disable-undo img)
+    (gimp-image-undo-disable img)
     (gimp-image-add-layer img drawable 0)
 
     (gimp-palette-set-background '(0 0 0))
@@ -175,7 +175,7 @@
     (gimp-edit-fill drawable)
     (gimp-selection-none img)
 
-    (gimp-image-enable-undo img)
+    (gimp-image-undo-enable img)
 
     (list img drawable)))
 

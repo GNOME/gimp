@@ -74,6 +74,7 @@ typedef enum
 {
   GRAD_IMPORT = 0,
   IMAGE_IMPORT = 1,
+  INDEXED_IMPORT = 2,
 } ImportType;
 
 typedef struct _ImportDialog ImportDialog;
@@ -87,6 +88,7 @@ struct _ImportDialog
   GtkWidget     *select;
   GtkWidget     *image_list;
   GtkWidget     *image_menu_item_image;
+  GtkWidget     *image_menu_item_indexed;
   GtkWidget     *image_menu_item_gradient;
   GtkWidget     *optionmenu1_menu;
   GtkWidget     *type_option;
@@ -151,6 +153,9 @@ static void     palette_scroll_top_left         (PaletteDialog *palette);
 
 static ImportDialog * palette_import_dialog (PaletteDialog *palette);
 static void  palette_import_dialog_callback (GtkWidget *, gpointer);
+static void  import_palette_create_from_indexed (GImage *gimage,
+					         guchar *pname,
+					         PaletteDialog *palette);
 static void  import_palette_create_from_image (GImage *gimage,
 					       guchar *pname,
 					       PaletteDialog *palette);
@@ -2420,6 +2425,10 @@ import_dialog_import_callback (GtkWidget *widget,
 	  import_palette_create_from_image (import_dialog->gimage,
 					    pname, palette);
 	  break;
+	case INDEXED_IMPORT:
+	  import_palette_create_from_indexed (import_dialog->gimage,
+					      pname, palette);
+	  break;
 	default:
 	  break;
 	}
@@ -2590,6 +2599,19 @@ gimlist_cb (gpointer im,
 }
 
 static void
+gimlist_indexed_cb (gpointer im,
+                    gpointer data)
+{
+  GimpImage *gimage = GIMP_IMAGE (im);
+  GSList** l;
+
+  if (gimage_base_type (gimage) == INDEXED) {
+    l = (GSList**) data;
+    *l = g_slist_prepend (*l, im);
+  }
+}
+
+static void
 import_image_update_image_preview (GimpImage *gimage)
 {
   TempBuf * preview_buf;
@@ -2690,7 +2712,7 @@ import_image_menu_add (GimpImage *gimage)
 
 /* Last Param gives us control over what goes in the menu on a delete oper */
 static void
-import_image_menu_activate (gint       redo,
+import_image_menu_activate (gint       redo, ImportType type,
 			    GimpImage *del_image)
 {
   GSList *list=NULL;
@@ -2701,105 +2723,123 @@ import_image_menu_activate (gint       redo,
   gint count = 0;
   gchar *lab;
 
-  if (import_dialog)
+  if (!import_dialog)
+    return;
+
+  if (import_dialog->import_type == type && !redo)
+    return;
+
+  /* Destroy existing widget if necessary */
+  if (import_dialog->image_list)
     {
-      if (import_dialog->import_type == IMAGE_IMPORT)
-	{
-	  if (!redo)
-	    return;
-	  else
-	    {
-	      if (import_dialog->image_list)
-		{
-		  last_img = import_dialog->gimage;
-		  gtk_widget_hide (import_dialog->image_list);
-		  gtk_widget_destroy (import_dialog->image_list);
-		  import_dialog->image_list = NULL;
-		}
-	    }
-	}
-      import_dialog->import_type = IMAGE_IMPORT;
+      if (redo) /* Preserve settings in this case */
+        last_img = import_dialog->gimage;
+      gtk_widget_hide (import_dialog->image_list);
+      gtk_widget_destroy (import_dialog->image_list);
+      import_dialog->image_list = NULL;
+    }
 
-      /* Get list of images */
+  import_dialog->import_type= type;
+
+  /* Get list of images */
+  if (import_dialog->import_type == INDEXED_IMPORT)
+    {
+      gimage_foreach (gimlist_indexed_cb, &list);
+    }
+  else
+    {
       gimage_foreach (gimlist_cb, &list);
-      num_images = g_slist_length (list);
+    }
+
+  num_images = g_slist_length (list);
       
-      if (num_images)
-	{
-	  gint i;
-	  GtkWidget *optionmenu1;
-	  GtkWidget *optionmenu1_menu;
+  if (num_images)
+    {
+      gint i;
+      GtkWidget *optionmenu1;
+      GtkWidget *optionmenu1_menu;
 
-	  import_dialog->image_list = optionmenu1 = gtk_option_menu_new ();
-	  gtk_widget_set_usize (optionmenu1, IMPORT_PREVIEW_WIDTH, -1);
-	  import_dialog->optionmenu1_menu = optionmenu1_menu = gtk_menu_new ();
+      import_dialog->image_list = optionmenu1 = gtk_option_menu_new ();
+      gtk_widget_set_usize (optionmenu1, IMPORT_PREVIEW_WIDTH, -1);
+      import_dialog->optionmenu1_menu = optionmenu1_menu = gtk_menu_new ();
 
-	  for (i = 0; i < num_images; i++, list = g_slist_next (list))
-	    {
-	      if (GIMP_IMAGE (list->data) != del_image)
-		{
-		  if (first_img == NULL)
-		    first_img = GIMP_IMAGE (list->data);
-		  import_image_menu_add (GIMP_IMAGE (list->data));
-		  if (last_img == GIMP_IMAGE (list->data))
-		    act_num = count;
-		  else
-		    count++;
-		}
-	    }
-
-	  gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu1),
-				    optionmenu1_menu);
-	  gtk_widget_hide (import_dialog->select);
-	  gtk_box_pack_start (GTK_BOX (import_dialog->select_area),
-			      optionmenu1, FALSE, FALSE, 0);
-
-	  if(last_img != NULL && last_img != del_image)
-	      import_image_update_image_preview (last_img);
-	  else if (first_img != NULL)
-	      import_image_update_image_preview (first_img);
-
-	  gtk_widget_show (optionmenu1);
-
-	  /* reset to last one */
-	  if(redo && act_num >= 0)
-	    {
-	      gchar *lab =
-		g_strdup_printf ("%s-%d",
-				 g_basename (gimage_filename (import_dialog->gimage)),
-				 pdb_image_to_id (import_dialog->gimage));
-
-	      gtk_option_menu_set_history (GTK_OPTION_MENU (optionmenu1), act_num);
-	      gtk_entry_set_text (GTK_ENTRY (import_dialog->entry), lab);
+      for (i = 0; i < num_images; i++, list = g_slist_next (list))
+        {
+          if (GIMP_IMAGE (list->data) != del_image)
+            {
+	      if (first_img == NULL)
+	        first_img = GIMP_IMAGE (list->data);
+	      import_image_menu_add (GIMP_IMAGE (list->data));
+	      if (last_img == GIMP_IMAGE (list->data))
+	        act_num = count;
+	      else
+	        count++;
 	    }
 	}
-      g_slist_free (list);
 
-      lab =
-	g_strdup_printf ("%s-%d",
+      gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu1),
+				optionmenu1_menu);
+      gtk_widget_hide (import_dialog->select);
+      gtk_box_pack_start (GTK_BOX (import_dialog->select_area),
+            		  optionmenu1, FALSE, FALSE, 0);
+
+      if(last_img != NULL && last_img != del_image)
+        import_image_update_image_preview (last_img);
+      else if (first_img != NULL)
+	import_image_update_image_preview (first_img);
+
+      gtk_widget_show (optionmenu1);
+
+      /* reset to last one */
+      if (redo && act_num >= 0)
+        {
+           gchar *lab = g_strdup_printf ("%s-%d",
 			 g_basename (gimage_filename (import_dialog->gimage)),
 			 pdb_image_to_id (import_dialog->gimage));
 
-      gtk_entry_set_text (GTK_ENTRY (import_dialog->entry), lab);
+           gtk_option_menu_set_history (GTK_OPTION_MENU (optionmenu1), act_num);
+           gtk_entry_set_text (GTK_ENTRY (import_dialog->entry), lab);
+	}
     }
+  g_slist_free (list);
+
+  lab = g_strdup_printf ("%s-%d",
+			 g_basename (gimage_filename (import_dialog->gimage)),
+			 pdb_image_to_id (import_dialog->gimage));
+
+  gtk_entry_set_text (GTK_ENTRY (import_dialog->entry), lab);
 }
 
 static void
 import_image_callback (GtkWidget *widget,
 		       gpointer   data)
 {
-  import_image_menu_activate (FALSE, NULL);
+  import_image_menu_activate (FALSE, IMAGE_IMPORT, NULL);
   gtk_widget_set_sensitive (import_dialog->threshold_scale, TRUE);
   gtk_widget_set_sensitive (import_dialog->threshold_text, TRUE);
 }
 
+static void
+import_indexed_callback (GtkWidget *widget,
+		       gpointer   data)
+{
+  import_image_menu_activate (FALSE, INDEXED_IMPORT, NULL);
+  gtk_widget_set_sensitive (import_dialog->threshold_scale, FALSE);
+  gtk_widget_set_sensitive (import_dialog->threshold_text, FALSE);
+}
+
 static gint
-image_count ()
+image_count (ImportType type)
 {
   GSList *list=NULL;
   gint num_images = 0;
 
-  gimage_foreach (gimlist_cb, &list);
+  if (type == INDEXED_IMPORT) {
+    gimage_foreach (gimlist_indexed_cb, &list);
+  } else {
+    gimage_foreach (gimlist_cb, &list);
+  }
+
   num_images = g_slist_length (list);
 
   g_slist_free (list);
@@ -2903,9 +2943,18 @@ palette_import_dialog (PaletteDialog *palette)
 		      (gpointer) import_dialog);
   gtk_menu_append (GTK_MENU (optionmenu_menu), menuitem);
   gtk_widget_show (menuitem);
+  gtk_widget_set_sensitive (menuitem, image_count(IMAGE_IMPORT) > 0);
+
+  menuitem = import_dialog->image_menu_item_indexed =
+    gtk_menu_item_new_with_label ("Indexed Palette");
+  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+                      (GtkSignalFunc) import_indexed_callback,
+                      (gpointer) import_dialog);
+  gtk_menu_append (GTK_MENU (optionmenu_menu), menuitem);
+  gtk_widget_show (menuitem);
+  gtk_widget_set_sensitive (menuitem, image_count(INDEXED_IMPORT) > 0);
 
   gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), optionmenu_menu);
-  gtk_widget_set_sensitive (menuitem, image_count() > 0);
   gtk_widget_show (optionmenu);
 
   /*  The sample size  */
@@ -2985,10 +3034,18 @@ palette_import_image_new (GimpImage * gimage)
       return;
     }
 
-  /* Now fill in the names if image menu shown */
-  if (import_dialog->import_type == IMAGE_IMPORT)
+  if (!GTK_WIDGET_IS_SENSITIVE (import_dialog->image_menu_item_indexed) &&
+      gimage_base_type(gimage) == INDEXED)
     {
-      import_image_menu_activate (TRUE, NULL);
+      gtk_widget_set_sensitive (import_dialog->image_menu_item_indexed, TRUE);
+      return;
+    }
+
+  /* Now fill in the names if image menu shown */
+  if (import_dialog->import_type == IMAGE_IMPORT ||
+      import_dialog->import_type == INDEXED_IMPORT)
+    {
+      import_image_menu_activate (TRUE, import_dialog->import_type, NULL);
     }
 }
 
@@ -3000,7 +3057,7 @@ palette_import_image_destroyed (GimpImage* gimage)
   if (!import_dialog)
     return;
 
-  if (image_count() <= 1)
+  if (image_count(import_dialog->import_type) <= 1)
     {
       /* Back to gradient type */
       gtk_option_menu_set_history (GTK_OPTION_MENU (import_dialog->type_option), 0);
@@ -3010,9 +3067,10 @@ palette_import_image_destroyed (GimpImage* gimage)
       return;
     }
 
-  if (import_dialog->import_type == IMAGE_IMPORT)
+  if (import_dialog->import_type == IMAGE_IMPORT ||
+      import_dialog->import_type == INDEXED_IMPORT)
     {
-      import_image_menu_activate (TRUE, gimage);
+      import_image_menu_activate (TRUE, import_dialog->import_type, gimage);
     }
 }
 
@@ -3020,9 +3078,10 @@ void
 palette_import_image_renamed (GimpImage* gimage)
 {
   /* Now fill in the names if image menu shown */
-  if(import_dialog && import_dialog->import_type == IMAGE_IMPORT)
+  if (import_dialog && (import_dialog->import_type == IMAGE_IMPORT ||
+      import_dialog->import_type == INDEXED_IMPORT))
     {
-      import_image_menu_activate (TRUE, NULL);
+      import_image_menu_activate (TRUE, import_dialog->import_type, NULL);
     }
 }
 
@@ -3279,3 +3338,38 @@ import_palette_create_from_image (GImage        *gimage,
   /* Make palette from the store_array */
   import_image_make_palette (store_array, pname, palette);
 }
+
+static void
+import_palette_create_from_indexed (GImage        *gimage,
+				    guchar        *pname,
+				    PaletteDialog *palette)
+{
+  gint samples, count;
+  PaletteEntriesP entries;
+
+  samples = (gint) import_dialog->sample->value;  
+
+  if (gimage == NULL)
+    return;
+
+  if (gimage_base_type (gimage) != INDEXED)
+    return;
+
+  entries= palette_create_entries (palette, pname);
+
+  for (count= 0; count < samples && count < gimage->num_cols; ++count)
+    {
+      palette_add_entry (entries, NULL, gimage->cmap[count*3],
+                                        gimage->cmap[count*3+1],
+                                        gimage->cmap[count*3+2]);
+    }
+
+  /* Redraw with new palette */
+  palette_update_small_preview (palette);
+  redraw_palette (palette);
+  /* Update other selectors on screen */
+  palette_select_clist_insert_all (entries);
+  palette_select2_clist_insert_all (entries);
+  palette_scroll_clist_to_current (palette);
+}
+

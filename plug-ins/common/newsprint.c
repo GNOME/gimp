@@ -657,7 +657,7 @@ run (gchar   *name,
   {
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_color (drawable->id) ||
-	  gimp_drawable_gray (drawable->id))
+	  gimp_drawable_is_gray (drawable->id))
       {
 	  gimp_progress_init("Newsprintifing...");
 

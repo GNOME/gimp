@@ -51,8 +51,8 @@ gboolean         gimp_drawable_has_alpha          (GimpDrawable *);
 GimpImageType    gimp_drawable_type               (GimpDrawable *);
 GimpImageType    gimp_drawable_type_with_alpha    (GimpDrawable *);
 gboolean         gimp_drawable_color              (GimpDrawable *);
-gboolean         gimp_drawable_gray               (GimpDrawable *);
-gboolean         gimp_drawable_indexed            (GimpDrawable *);
+gboolean         gimp_drawable_is_gray               (GimpDrawable *);
+gboolean         gimp_drawable_is_indexed            (GimpDrawable *);
 TileManager *    gimp_drawable_data               (GimpDrawable *);
 TileManager *    gimp_drawable_shadow             (GimpDrawable *);
 gint             gimp_drawable_bytes              (GimpDrawable *);
@@ -69,12 +69,10 @@ void 		 gimp_drawable_set_name	          (GimpDrawable *, gchar *);
 guchar *         gimp_drawable_get_color_at       (GimpDrawable *,
 						   gint x, gint y);
 
-Parasite *       gimp_drawable_find_parasite      (const GimpDrawable *,
-						   const gchar *name);
-void             gimp_drawable_attach_parasite    (GimpDrawable *, Parasite *);
-void             gimp_drawable_detach_parasite    (GimpDrawable *,
+void             gimp_drawable_parasite_attach    (GimpDrawable *, Parasite *);
+void             gimp_drawable_parasite_detach    (GimpDrawable *,
 						   const gchar *);
-Parasite *       gimp_drawable_find_parasite      (const GimpDrawable *,
+Parasite *       gimp_drawable_parasite_find      (const GimpDrawable *,
 						   const gchar *);
 gchar **         gimp_drawable_parasite_list      (GimpDrawable *drawable,
                                                    gint *count);

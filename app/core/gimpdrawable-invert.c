@@ -38,7 +38,7 @@ image_invert (GimpImage *gimage)
 
   drawable = gimage_active_drawable (gimage);
 
-  if (gimp_drawable_indexed (drawable))
+  if (gimp_drawable_is_indexed (drawable))
     {
       g_message (_("Invert does not operate on indexed drawables."));
       return;

@@ -160,12 +160,12 @@ void            gimp_image_add_guide              (GimpImage *, Guide *);
 void            gimp_image_remove_guide           (GimpImage *, Guide *);
 void            gimp_image_delete_guide           (GimpImage *, Guide *);
 
-Parasite *      gimp_image_find_parasite          (const GimpImage *,
+Parasite *      gimp_image_parasite_find          (const GimpImage *,
 						   const gchar *name);
 gchar **        gimp_image_parasite_list          (GimpImage *image,
                                                    gint *count);
-void            gimp_image_attach_parasite        (GimpImage *, Parasite *);
-void            gimp_image_detach_parasite        (GimpImage *, const gchar *);
+void            gimp_image_parasite_attach        (GimpImage *, Parasite *);
+void            gimp_image_parasite_detach        (GimpImage *, const gchar *);
 
 Tattoo          gimp_image_get_new_tattoo         (GimpImage *);
 
@@ -248,10 +248,10 @@ GimpDrawable *     gimp_image_active_drawable      (GimpImage *);
 GimpImageBaseType  gimp_image_base_type            (GimpImage *);
 GimpImageType	   gimp_image_base_type_with_alpha (GimpImage *);
 gchar *            gimp_image_filename             (GimpImage *);
-gboolean           gimp_image_enable_undo          (GimpImage *);
-gboolean           gimp_image_disable_undo         (GimpImage *);
-gboolean           gimp_image_freeze_undo          (GimpImage *);
-gboolean           gimp_image_thaw_undo            (GimpImage *);
+gboolean           gimp_image_undo_enable          (GimpImage *);
+gboolean           gimp_image_undo_disable         (GimpImage *);
+gboolean           gimp_image_undo_freeze          (GimpImage *);
+gboolean           gimp_image_undo_thaw            (GimpImage *);
 void		   gimp_image_undo_event	   (GimpImage *, int);
 gint               gimp_image_dirty                (GimpImage *);
 gint               gimp_image_clean                (GimpImage *);

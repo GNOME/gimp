@@ -77,7 +77,7 @@
  	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background)))
 	 (old-brush (car (gimp-brushes-get-brush))))
-    (gimp-image-disable-undo img)
+    (gimp-image-undo-disable img)
     (gimp-selection-all img)
     (gimp-edit-clear inset-layer)
     (gimp-edit-clear layer1)
@@ -174,7 +174,7 @@
     (gimp-palette-set-background old-bg)
     (gimp-brushes-set-brush old-brush)
     (gimp-display-new img)
-    (gimp-image-enable-undo img)))
+    (gimp-image-undo-enable img)))
 
 (script-fu-register "script-fu-carve-it"
 		    "<Image>/Script-Fu/Stencil Ops/Carve-It"

@@ -48,7 +48,7 @@
       )
     )
 
-    (gimp-image-disable-undo img)
+    (gimp-image-undo-disable img)
     (gimp-image-add-layer img drawable 0)
 
 ; Actual code starts...
@@ -68,7 +68,7 @@
     (gimp-selection-none img)
     (gimp-palette-set-foreground old-fg-color)
     (gimp-palette-set-background old-bg-color)
-    (gimp-image-enable-undo img)
+    (gimp-image-undo-enable img)
     (gimp-image-delete img)
     )
   )
@@ -123,7 +123,7 @@
       )
     )
 
-    (gimp-image-disable-undo img)
+    (gimp-image-undo-disable img)
     (gimp-image-add-layer img drawable 0)
 
 ; Actual code starts...
@@ -146,7 +146,7 @@
     (gimp-selection-none img)
     (gimp-palette-set-foreground old-fg-color)
     (gimp-palette-set-background old-bg-color)
-    (gimp-image-enable-undo img)
+    (gimp-image-undo-enable img)
     (gimp-image-delete img)
     )
   )
@@ -197,7 +197,7 @@
      )
 	  ; End of variables.  Couple of necessary things here.
 
-    (gimp-image-disable-undo img)
+    (gimp-image-undo-disable img)
     (gimp-image-add-layer img drawable 0)
 
 ; Actual code starts...
@@ -217,7 +217,7 @@
     (gimp-selection-none img)
     (gimp-palette-set-foreground old-fg-color)
     (gimp-palette-set-background old-bg-color)
-    (gimp-image-enable-undo img)
+    (gimp-image-undo-enable img)
     (gimp-image-delete img)
     )
   )
@@ -274,7 +274,7 @@
      )
 ; End of variables.  Couple of necessary things here.
 
-    (gimp-image-disable-undo img)
+    (gimp-image-undo-disable img)
     (gimp-image-add-layer img drawable 0)
 
 ; Actual code starts...
@@ -297,7 +297,7 @@
     (gimp-selection-none img)
     (gimp-palette-set-foreground old-fg-color)
     (gimp-palette-set-background old-bg-color)
-    (gimp-image-enable-undo img)
+    (gimp-image-undo-enable img)
     (gimp-image-delete img)
     )
   )

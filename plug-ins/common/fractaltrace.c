@@ -188,7 +188,7 @@ static void run( char *name, int argc, GParam *args, int *retc, GParam **rets )
   pixels_init( drawable );
 
   if( !gimp_drawable_color( drawable->id ) && 
-      !gimp_drawable_gray( drawable->id ) ){
+      !gimp_drawable_is_gray( drawable->id ) ){
     status = STATUS_EXECUTION_ERROR;
   }
 

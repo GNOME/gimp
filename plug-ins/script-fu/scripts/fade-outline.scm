@@ -51,7 +51,7 @@
               )
 
         ; do nothing if the layer is a layer mask
-        (if (= (car (gimp-drawable-layer-mask inLayer)) 0)
+        (if (= (car (gimp-drawable-is-layer-mask inLayer)) 0)
             (begin
 
               (gimp-undo-push-group-start inImage)

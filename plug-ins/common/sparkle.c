@@ -306,7 +306,7 @@ run (char    *name,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   /*  Make sure that the drawable is gray or RGB color  */
-  if (gimp_drawable_color (drawable->id) || gimp_drawable_gray (drawable->id))
+  if (gimp_drawable_color (drawable->id) || gimp_drawable_is_gray (drawable->id))
     {
       gimp_progress_init ("Sparkling...");
       gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
@@ -742,7 +742,7 @@ compute_lum_threshold (GDrawable *drawable,
     values[i] = 0;
 
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
-  gray = gimp_drawable_gray (drawable->id);
+  gray = gimp_drawable_is_gray (drawable->id);
   has_alpha = gimp_drawable_has_alpha (drawable->id);
 
   gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
@@ -792,7 +792,7 @@ sparkle (GDrawable *drawable,
   gint tile_width, tile_height;
 
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
-  gray = gimp_drawable_gray (drawable->id);
+  gray = gimp_drawable_is_gray (drawable->id);
   has_alpha = gimp_drawable_has_alpha (drawable->id);
   alpha = (has_alpha) ? drawable->bpp - 1 : drawable->bpp;
   tile_width  = gimp_tile_width();

@@ -840,7 +840,7 @@ run (char *name,                /* name of plugin */
   gimp_run_procedure ("gimp_undo_push_group_start", &l_nreturn_vals,
                       PARAM_IMAGE, l_image_id, PARAM_END);
   
-  if(!gimp_drawable_layer(l_layer_id))
+  if(!gimp_drawable_is_layer(l_layer_id))
   {
      gimp_message(PLUG_IN_PRINT_NAME " operates on layers only (but was called on channel or mask)");
      printf("Passed drawable is no Layer\n");

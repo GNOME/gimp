@@ -76,7 +76,7 @@
 	 (med-arrow (point-list->double-array (rotate-points (make-arrow size 7) size orientation)))
 	 (small-arrow (point-list->double-array (rotate-points (make-arrow size 8) size orientation))))
 
-    (gimp-image-disable-undo img)
+    (gimp-image-undo-disable img)
     (gimp-image-add-layer img background -1)
     (gimp-image-add-layer img bumpmap -1)
 
@@ -129,7 +129,7 @@
     (gimp-image-flatten img)
 
     (gimp-palette-set-background old-bg-color)
-    (gimp-image-enable-undo img)
+    (gimp-image-undo-enable img)
     (gimp-display-new img)))
 
 

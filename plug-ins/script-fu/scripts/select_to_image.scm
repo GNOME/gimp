@@ -35,7 +35,7 @@
     (set! selection-width (- (cadr (cddr selection-bounds)) select-offset-x))
     (set! selection-height (- (caddr (cddr selection-bounds)) select-offset-y))
 
-    (gimp-image-disable-undo image)
+    (gimp-image-undo-disable image)
     
     (if (= (car (gimp-selection-is-empty image)) TRUE)
 	(begin
@@ -58,7 +58,7 @@
       )
 
     (gimp-palette-set-background old-bg)
-    (gimp-image-enable-undo image)
+    (gimp-image-undo-enable image)
     (gimp-image-set-active-layer image drawable)
     (gimp-display-new brush-image)
     (gimp-displays-flush)

@@ -42,7 +42,7 @@
     (set! selection-width (- (cadr (cddr selection-bounds)) select-offset-x))
     (set! selection-height (- (caddr (cddr selection-bounds)) select-offset-y))
 
-    (gimp-image-disable-undo image)
+    (gimp-image-undo-disable image)
     
     (if (= (car (gimp-selection-is-empty image)) TRUE)
 	(begin
@@ -84,7 +84,7 @@
     ;(set! image_test (gimp-procedural-db-get-data image))
     (print (number->string image))
     (print "this is a test.......test..")
-    (gimp-image-enable-undo image)
+    (gimp-image-undo-enable image)
     (gimp-image-set-active-layer image drawable)
     (gimp-image-delete brush-image)
     (gimp-displays-flush)))

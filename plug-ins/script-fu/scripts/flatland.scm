@@ -39,7 +39,7 @@
 	 (layer-one (car (gimp-layer-new img width height RGB "bottom" 100 NORMAL)))
 	)
 
-  (gimp-image-disable-undo img)
+  (gimp-image-undo-disable img)
   (gimp-image-add-layer img layer-one 0)
  ; (gimp-img-add-layer img layer-two 1)
 
@@ -50,7 +50,7 @@
   (gimp-image-set-active-layer img layer-two)
 
   (plug-in-gradmap 1 img layer-two)
-  (gimp-image-enable-undo img)
+  (gimp-image-undo-enable img)
   (gimp-display-new img)
 ))
 

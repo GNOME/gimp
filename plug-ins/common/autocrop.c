@@ -99,8 +99,8 @@ static void run(char *name, int n_params, GParam * param, int *nreturn_vals,
     
     /*  Make sure that the drawable is gray or RGB color  */
     if (gimp_drawable_color(drawable->id) ||
-	gimp_drawable_gray(drawable->id)  ||
-	gimp_drawable_indexed(drawable->id)) 
+	gimp_drawable_is_gray(drawable->id)  ||
+	gimp_drawable_is_indexed(drawable->id)) 
       {
 	gimp_progress_init(_("Cropping..."));
 	gimp_tile_cache_ntiles(2 * (drawable->width / gimp_tile_width() + 1));

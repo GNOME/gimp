@@ -251,8 +251,8 @@ void run(char *name, int nparams, GParam *param, int *nreturn_vals, GParam **ret
 
   /* works not on INDEXED images */     
 
-  if (gimp_drawable_indexed (Current.drawable->id) ||
-      gimp_drawable_gray (Current.drawable->id) )
+  if (gimp_drawable_is_indexed (Current.drawable->id) ||
+      gimp_drawable_is_gray (Current.drawable->id) )
   {
     status = STATUS_EXECUTION_ERROR;
   }

@@ -102,7 +102,7 @@ void check_drawables(GDrawable *drawable)
         mapvals.boxmap_id[i] = drawable->id;
       else if (mapvals.boxmap_id[i]!=-1 && gimp_drawable_image_id(mapvals.boxmap_id[i])==-1)
         mapvals.boxmap_id[i] = drawable->id;
-      else if (gimp_drawable_gray(mapvals.boxmap_id[i]))
+      else if (gimp_drawable_is_gray(mapvals.boxmap_id[i]))
         mapvals.boxmap_id[i] = drawable->id;
     }
 
@@ -116,7 +116,7 @@ void check_drawables(GDrawable *drawable)
       else if (mapvals.cylindermap_id[i]!=-1 && 
                gimp_drawable_image_id(mapvals.cylindermap_id[i])==-1)
         mapvals.cylindermap_id[i] = drawable->id;
-      else if (gimp_drawable_gray(mapvals.cylindermap_id[i]))
+      else if (gimp_drawable_is_gray(mapvals.cylindermap_id[i]))
         mapvals.cylindermap_id[i] = drawable->id;
     }
 }

@@ -155,7 +155,7 @@ find_parasite_invoker (Argument *args)
 
   name = (gchar *) args[0].value.pdb_pointer;
 
-  parasite = parasite_copy (gimp_find_parasite (name));
+  parasite = parasite_copy (gimp_parasite_find (name));
   success = parasite != NULL;
 
   return_args = procedural_db_return_args (&find_parasite_proc, success);
@@ -211,7 +211,7 @@ attach_parasite_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    gimp_attach_parasite (parasite);
+    gimp_parasite_attach (parasite);
 
   return procedural_db_return_args (&attach_parasite_proc, success);
 }
@@ -252,7 +252,7 @@ detach_parasite_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    gimp_detach_parasite (name);
+    gimp_parasite_detach (name);
 
   return procedural_db_return_args (&detach_parasite_proc, success);
 }
@@ -346,7 +346,7 @@ drawable_find_parasite_invoker (Argument *args)
 
   if (success)
     {
-      parasite = parasite_copy (gimp_drawable_find_parasite (drawable, name));
+      parasite = parasite_copy (gimp_drawable_parasite_find (drawable, name));
       success = parasite != NULL;
     }
 
@@ -413,7 +413,7 @@ drawable_attach_parasite_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    gimp_drawable_attach_parasite (drawable, parasite);
+    gimp_drawable_parasite_attach (drawable, parasite);
 
   return procedural_db_return_args (&drawable_attach_parasite_proc, success);
 }
@@ -464,7 +464,7 @@ drawable_detach_parasite_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    gimp_drawable_detach_parasite (drawable, name);
+    gimp_drawable_parasite_detach (drawable, name);
 
   return procedural_db_return_args (&drawable_detach_parasite_proc, success);
 }
@@ -582,7 +582,7 @@ image_find_parasite_invoker (Argument *args)
 
   if (success)
     {
-      parasite = parasite_copy (gimp_image_find_parasite (gimage, name));
+      parasite = parasite_copy (gimp_image_parasite_find (gimage, name));
       success = parasite != NULL;
     }
 
@@ -649,7 +649,7 @@ image_attach_parasite_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    gimp_image_attach_parasite (gimage, parasite);
+    gimp_image_parasite_attach (gimage, parasite);
 
   return procedural_db_return_args (&image_attach_parasite_proc, success);
 }
@@ -700,7 +700,7 @@ image_detach_parasite_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    gimp_image_detach_parasite (gimage, name);
+    gimp_image_parasite_detach (gimage, name);
 
   return procedural_db_return_args (&image_detach_parasite_proc, success);
 }

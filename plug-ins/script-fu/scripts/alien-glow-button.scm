@@ -86,7 +86,7 @@
 	 (glow-layer (car (gimp-layer-new img img-width img-height RGBA_IMAGE "Glow" 100 NORMAL)))
 	 (button-layer (car (gimp-layer-new img layer-width layer-height RGBA_IMAGE "Button" 100 NORMAL))))
 
-    (gimp-image-disable-undo img)
+    (gimp-image-undo-disable img)
 
     ; Create bumpmap layer
     
@@ -121,7 +121,7 @@
     (gimp-selection-none img)
     (gimp-palette-set-foreground old-fg-color)
     (gimp-palette-set-background old-bg-color)
-    (gimp-image-enable-undo img)
+    (gimp-image-undo-enable img)
     (if (= flatten TRUE)
 	(gimp-image-flatten img))
     (gimp-display-new img)))

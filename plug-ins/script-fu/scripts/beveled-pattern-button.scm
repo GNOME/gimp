@@ -64,7 +64,7 @@
 		 (gimp-text-fontname
 		  img -1 0 0 text 0 TRUE text-size PIXELS font))))
 
-    (gimp-image-disable-undo img)
+    (gimp-image-undo-disable img)
     (gimp-image-add-layer img background 1)
     (gimp-image-add-layer img bumpmap 1)
 
@@ -110,7 +110,7 @@
     (gimp-image-flatten img)
 
     (gimp-palette-set-background old-bg-color)
-    (gimp-image-enable-undo img)
+    (gimp-image-undo-enable img)
     (gimp-display-new img)))
 
 

@@ -344,7 +344,7 @@ run (char    *name,
       else
       {
         values[1].data.d_int32 = image_ID;
-        gimp_image_enable_undo (image_ID);
+        gimp_image_undo_enable (image_ID);
         gimp_image_clean_all (image_ID);
         if (run_mode != RUN_NONINTERACTIVE)
           gimp_display_new (image_ID);

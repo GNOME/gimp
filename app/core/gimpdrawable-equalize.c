@@ -31,7 +31,7 @@ image_equalize (GimpImage *gimage)
 
   drawable = gimage_active_drawable (gimage);
 
-  if (gimp_drawable_indexed (drawable))
+  if (gimp_drawable_is_indexed (drawable))
     {
       g_message (_("Equalize does not operate on indexed drawables."));
       return;

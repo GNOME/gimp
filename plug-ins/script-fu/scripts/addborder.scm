@@ -107,7 +107,7 @@
 	 (height (+ oheight (* 2 ysize)))
 	 (layer (car (gimp-layer-new img width height RGBA_IMAGE "Border-Layer" 100 NORMAL))))
 ;Add this for debugging    (verbose 4)
-    (gimp-image-disable-undo img)
+    (gimp-image-undo-disable img)
     (gimp-drawable-fill layer TRANS-IMAGE-FILL)
     (gimp-image-resize img
 		       width
@@ -154,7 +154,7 @@
     (gimp-edit-fill layer)
     (gimp-selection-none img)
     (gimp-image-add-layer img layer 0)
-    (gimp-image-enable-undo img)
+    (gimp-image-undo-enable img)
     (gimp-palette-set-background old-bg)
     (gimp-displays-flush)
     )

@@ -201,7 +201,7 @@ static void run (gchar   *name,
       /* In order to prepare the dialog I need to know wether it's grayscale or not */
       drawable = gimp_drawable_get (param[2].data.d_drawable);
       thePreview = mw_preview_build_virgin(drawable);
-      if (gimp_drawable_gray (drawable->id))
+      if (gimp_drawable_is_gray (drawable->id))
 	drawable_is_grayscale= TRUE;
       else
 	drawable_is_grayscale= FALSE;
@@ -250,7 +250,7 @@ static void run (gchar   *name,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   /*  Make sure that the drawable is gray or RGB */
-  if (( status == STATUS_SUCCESS) && (gimp_drawable_color (drawable->id) || gimp_drawable_gray (drawable->id)))
+  if (( status == STATUS_SUCCESS) && (gimp_drawable_color (drawable->id) || gimp_drawable_is_gray (drawable->id)))
     {
       gimp_progress_init("Calculating picture...");
       gimp_tile_cache_ntiles( 1 );

@@ -241,7 +241,7 @@ guillotine(gint32 image_ID)
 	      return;
 	    }
 
-	  gimp_image_disable_undo (new_image);
+	  gimp_image_undo_disable (new_image);
 
 	  gimp_run_procedure ("gimp_undo_push_group_start", &nreturn_vals,
 			      PARAM_IMAGE, new_image,
@@ -265,7 +265,7 @@ guillotine(gint32 image_ID)
 			      PARAM_IMAGE, new_image,
 			      PARAM_END);
 
-	  gimp_image_enable_undo (new_image);
+	  gimp_image_undo_enable (new_image);
 
 	  /* show the rough coordinates of the image in the title */
   	  sprintf(filename, "%s-(%i,%i)", gimp_image_get_filename (image_ID), 

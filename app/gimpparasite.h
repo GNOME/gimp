@@ -21,9 +21,9 @@
 #include "libgimp/parasiteF.h"
 
 void       gimp_init_parasites  (void);
-void       gimp_attach_parasite (Parasite *p);
-void       gimp_detach_parasite (const char *name);
-Parasite * gimp_find_parasite   (const char *name);
+void       gimp_parasite_attach (Parasite *p);
+void       gimp_parasite_detach (const char *name);
+Parasite * gimp_parasite_find   (const char *name);
 char **    gimp_parasite_list   (gint *count);
 void       gimp_parasiterc_save (void);
 void       gimp_parasiterc_load (void);

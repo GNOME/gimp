@@ -13,7 +13,7 @@
 	 (glow-layer (car (gimp-layer-new img width height RGBA_IMAGE "Alien Glow" 100 NORMAL)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
-    (gimp-image-disable-undo img)
+    (gimp-image-undo-disable img)
     (gimp-image-resize img width height 0 0)
     (gimp-image-add-layer img bg-layer 1)
     (gimp-image-add-layer img glow-layer 1)
@@ -33,7 +33,7 @@
     (gimp-layer-set-name text-layer text)
     (gimp-palette-set-background old-bg)
     (gimp-palette-set-foreground old-fg)
-    (gimp-image-enable-undo img)
+    (gimp-image-undo-enable img)
     (gimp-display-new img)))
 
 

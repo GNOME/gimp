@@ -251,7 +251,7 @@ run(char   *name,		/* I - Name of filter program. */
   if (status == STATUS_SUCCESS)
   {
     if ((gimp_drawable_color(drawable->id) ||
-	 gimp_drawable_gray(drawable->id)))
+	 gimp_drawable_is_gray(drawable->id)))
     {
      /*
       * Set the tile cache size...

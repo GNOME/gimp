@@ -45,7 +45,7 @@
 	 (img (car (gimp-image-new width height GRAY)))
 	 (drawable (car (gimp-layer-new img width height GRAY_IMAGE
 					"Font List" 100 NORMAL))))
-    (gimp-image-disable-undo img)
+    (gimp-image-undo-disable img)
     (gimp-image-add-layer img drawable 0)
     (gimp-edit-fill drawable)
 
@@ -57,7 +57,7 @@
 	   (set! count (+ count 1))
 	   (gimp-floating-sel-anchor text-fs))
 
-    (gimp-image-enable-undo img)
+    (gimp-image-undo-enable img)
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-font-map"

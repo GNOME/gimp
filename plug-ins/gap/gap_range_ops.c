@@ -1612,7 +1612,7 @@ int gap_anim_sizechange(GRunModeType run_mode, t_gap_asiz asiz_mode, gint32 imag
             * (If the user could undo the sizechange on the current image,
             *  it would not fit to the other frames on disk.)
             */
-           gimp_image_enable_undo(ainfo_ptr->image_id); /* clear undo stack */
+           gimp_image_undo_enable(ainfo_ptr->image_id); /* clear undo stack */
          }
       }
     }

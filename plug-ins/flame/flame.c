@@ -241,7 +241,7 @@ drawable_to_cmap(control_point *cp) {
     g_free(g);
   } else {
     d = gimp_drawable_get(config.cmap_drawable);
-    indexed = gimp_drawable_indexed(config.cmap_drawable);
+    indexed = gimp_drawable_is_indexed(config.cmap_drawable);
     p = (guchar *) g_malloc(d->bpp);
     gimp_pixel_rgn_init(&pr, d, 0, 0,
 			d->width, d->height, FALSE, FALSE);
@@ -767,7 +767,7 @@ static void cmap_callback(gint32 id, gpointer data) {
 static gint
 cmap_constrain (gint32 image_id, gint32 drawable_id, gpointer data) {
   
-  return ! gimp_drawable_indexed (drawable_id);
+  return ! gimp_drawable_is_indexed (drawable_id);
 }
 
 

@@ -35,7 +35,7 @@
         (set! theWidth (car (gimp-image-width inImage)))
 	(set! theHeight (car (gimp-image-height inImage)))
 
-	(gimp-image-disable-undo theImage)
+	(gimp-image-undo-disable theImage)
 
 	(set! theLayer (car (gimp-layer-new 	theImage
 						theWidth
@@ -79,7 +79,7 @@
 	(gimp-selection-layer-alpha theLayer)
 	(gimp-image-remove-layer theImage theLayer)
 ;	(gimp-layer-delete theLayer)
-	(gimp-image-enable-undo theImage)
+	(gimp-image-undo-enable theImage)
 	(gimp-displays-flush)
 )
 

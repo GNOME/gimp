@@ -92,7 +92,7 @@ run (char    *name,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
   mask=gimp_drawable_get(gimp_image_get_selection(param[1].data.d_image));
 
-  if (gimp_drawable_indexed (drawable->id) ||gimp_drawable_gray (drawable->id) ) {
+  if (gimp_drawable_is_indexed (drawable->id) ||gimp_drawable_is_gray (drawable->id) ) {
     ErrorMessage("Convert the image to RGB first!");
     status = STATUS_EXECUTION_ERROR;
   }

@@ -503,7 +503,7 @@ CB_PasteImage (gboolean interactive,
 		{
 			/* create new image */
 			image_ID = gimp_image_new (nWidth, nHeight, nBitsPS <= 8 ? INDEXED : RGB);
-			gimp_image_disable_undo(image_ID);
+			gimp_image_undo_disable(image_ID);
 			drawable_ID = gimp_layer_new (image_ID, "Background", nWidth, nHeight, 
 										  nBitsPS <= 8 ? INDEXED_IMAGE : RGB_IMAGE, 
 										  100, NORMAL_MODE);
@@ -632,7 +632,7 @@ CB_PasteImage (gboolean interactive,
 	CloseClipboard();
 	
 	/* shouldn't this be done by caller?? */
-	gimp_image_enable_undo(image_ID);
+	gimp_image_undo_enable(image_ID);
 	return bRet;
 } /* CB_PasteImage */
 

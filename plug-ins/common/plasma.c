@@ -224,7 +224,7 @@ run (gchar   *name,
   if (status == STATUS_SUCCESS)
     {
       /*  Make sure that the drawable is gray or RGB color  */
-      if (gimp_drawable_color (drawable->id) || gimp_drawable_gray (drawable->id))
+      if (gimp_drawable_color (drawable->id) || gimp_drawable_is_gray (drawable->id))
 	{
 	  gimp_progress_init ("Plasma...");
 	  gimp_tile_cache_ntiles (TILE_CACHE_SIZE);

@@ -237,7 +237,7 @@ run (char	*name,
 	  return;
 	}
       if (!gimp_drawable_color (drawable_id) &&
-	  !gimp_drawable_gray (drawable_id))
+	  !gimp_drawable_is_gray (drawable_id))
 	{
 	  ERROR_DIALOG (1, "RGBA/GRAYA drawable is not selected.");
 	  return;

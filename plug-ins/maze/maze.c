@@ -228,7 +228,7 @@ run    (gchar    *name,
   }
   
   /* color, gray, or indexed... hmm, miss anything?  ;)  */
-  if (gimp_drawable_color (drawable->id) || gimp_drawable_gray (drawable->id) || gimp_drawable_indexed (drawable->id)) {
+  if (gimp_drawable_color (drawable->id) || gimp_drawable_is_gray (drawable->id) || gimp_drawable_is_indexed (drawable->id)) {
 
       maze (drawable);
       

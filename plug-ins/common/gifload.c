@@ -422,7 +422,7 @@ load_image (char *filename)
 #ifdef FACEHUGGERS
       if (comment_parasite != NULL)
 	{
-	  gimp_image_attach_parasite (image_ID, comment_parasite);
+	  gimp_image_parasite_attach (image_ID, comment_parasite);
 	  parasite_free (comment_parasite);
 	  comment_parasite = NULL;
 	}

@@ -110,7 +110,7 @@
 	 (y-position (- cy (/ (cadr text-extents) 2)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
-    (gimp-image-disable-undo img)
+    (gimp-image-undo-disable img)
     (gimp-image-add-layer img drawable 0)
     (gimp-palette-set-foreground sphere-color)
     (gimp-palette-set-background bg-color)
@@ -150,7 +150,7 @@
 
     (gimp-palette-set-background old-bg)
     (gimp-palette-set-foreground old-fg)
-    (gimp-image-enable-undo img)
+    (gimp-image-undo-enable img)
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-test-sphere"

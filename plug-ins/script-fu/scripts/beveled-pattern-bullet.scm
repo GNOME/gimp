@@ -25,7 +25,7 @@
 	 (img (car (gimp-image-new diameter diameter RGB)))
 	 (background (car (gimp-layer-new img diameter diameter RGBA_IMAGE "Bullet" 100 NORMAL)))
 	 (bumpmap (car (gimp-layer-new img diameter diameter RGBA_IMAGE "Bumpmap" 100 NORMAL))))
-    (gimp-image-disable-undo img)
+    (gimp-image-undo-disable img)
     (gimp-image-add-layer img background -1)
     (gimp-image-add-layer img bumpmap -1)
 
@@ -69,7 +69,7 @@
 	(gimp-image-flatten img))
 
     (gimp-palette-set-background old-bg-color)
-    (gimp-image-enable-undo img)
+    (gimp-image-undo-enable img)
     (gimp-display-new img)))
 
 

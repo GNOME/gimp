@@ -102,10 +102,10 @@ void       gimage_foreach               (GFunc              func,
 #define gimage_base_type gimp_image_base_type
 #define gimage_base_type_with_alpha gimp_image_base_type_with_alpha
 #define gimage_filename gimp_image_filename
-#define gimage_enable_undo gimp_image_enable_undo
-#define gimage_disable_undo gimp_image_disable_undo
-#define gimage_thaw_undo gimp_image_thaw_undo
-#define gimage_freeze_undo gimp_image_freeze_undo
+#define gimage_enable_undo gimp_image_undo_enable
+#define gimage_disable_undo gimp_image_undo_disable
+#define gimage_thaw_undo gimp_image_undo_thaw
+#define gimage_freeze_undo gimp_image_undo_freeze
 #define gimage_dirty gimp_image_dirty
 #define gimage_clean gimp_image_clean
 #define gimage_clean_all gimp_image_clean_all

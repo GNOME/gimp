@@ -35,7 +35,7 @@
          (old-fg (car (gimp-palette-get-foreground)))
          (old-bg (car (gimp-palette-get-background))))
 
-    (gimp-image-disable-undo img)
+    (gimp-image-undo-disable img)
     (gimp-image-resize img width height 0 0)
 
     (gimp-layer-set-name grow-me "Grow-me")
@@ -114,7 +114,7 @@
     (gimp-gradients-set-active old-gradient)
     (gimp-palette-set-background old-bg)
     (gimp-palette-set-foreground old-fg)
-    (gimp-image-enable-undo img)
+    (gimp-image-undo-enable img)
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-glossy-logo"

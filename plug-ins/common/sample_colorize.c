@@ -359,7 +359,7 @@ run (gchar   *name,
   p_clear_tables();
   
   /*  Make sure that the dst_drawable is gray or RGB color	*/
-  if (gimp_drawable_color (dst_drawable->id) || gimp_drawable_gray (dst_drawable->id))
+  if (gimp_drawable_color (dst_drawable->id) || gimp_drawable_is_gray (dst_drawable->id))
   {
       gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
       
@@ -522,7 +522,7 @@ p_smp_constrain(gint32 image_id, gint32 drawable_id, gpointer data)
   if(image_id < 0)                         { return (FALSE); }
   
   /* dont accept layers from indexed images */
-  if (gimp_drawable_indexed(drawable_id))     { return (FALSE); } 
+  if (gimp_drawable_is_indexed(drawable_id))     { return (FALSE); } 
   
   return (TRUE);
 } /* end p_smp_constrain */
@@ -3149,7 +3149,7 @@ p_main_colorize(gint mc_flags)
    {
       if(p_is_layer_alive(g_values.dst_id) < 0) { return (-1); }
       dst_drawable = gimp_drawable_get (g_values.dst_id);
-      if(gimp_drawable_gray(g_values.dst_id))
+      if(gimp_drawable_is_gray(g_values.dst_id))
       {
          if(mc_flags & MC_DST_REMAP)
          {

@@ -36,7 +36,7 @@
 	 (layer-one (car (gimp-layer-new img width height RGB "bottom" 100 NORMAL)))
 	)
   (gimp-gradients-set-active gradient)
-  (gimp-image-disable-undo img)
+  (gimp-image-undo-disable img)
   (gimp-image-add-layer img layer-one 0)
 
   (plug-in-solid-noise 1 img layer-one TRUE FALSE seed detail xscale yscale)
@@ -62,7 +62,7 @@
   (gimp-selection-none img)
 
   (gimp-display-new img)
-  (gimp-image-enable-undo img)
+  (gimp-image-undo-enable img)
 ))
 
 (script-fu-register "script-fu-land"

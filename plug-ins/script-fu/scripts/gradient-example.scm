@@ -33,7 +33,7 @@
 	 (fg-color (* 255 (/ 2 3)))
 	 (bg-color (* 255 (/ 1 3))))
 
-    (gimp-image-disable-undo img)
+    (gimp-image-undo-disable img)
     (gimp-image-add-layer img drawable 0)
 
     ; Render background checkerboard
@@ -50,7 +50,7 @@
 
     (gimp-palette-set-foreground old-fg-color)
     (gimp-palette-set-background old-bg-color)
-    (gimp-image-enable-undo img)
+    (gimp-image-undo-enable img)
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-gradient-example"

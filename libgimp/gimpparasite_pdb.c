@@ -1,12 +1,12 @@
 #include "gimp.h"
 
 Parasite *
-gimp_find_parasite (const char *name)
+gimp_parasite_find (const char *name)
 {
   GParam *return_vals;
   int nreturn_vals;
   Parasite *parasite;
-  return_vals = gimp_run_procedure ("gimp_find_parasite",
+  return_vals = gimp_run_procedure ("gimp_parasite_find",
 				    &nreturn_vals,
 				    PARAM_STRING, name,
 				    PARAM_END);
@@ -25,12 +25,12 @@ gimp_find_parasite (const char *name)
 
 
 void
-gimp_attach_parasite (const Parasite *p)
+gimp_parasite_attach (const Parasite *p)
 {
   GParam *return_vals;
   int nreturn_vals;
 
-  return_vals = gimp_run_procedure ("gimp_attach_parasite",
+  return_vals = gimp_run_procedure ("gimp_parasite_attach",
 				    &nreturn_vals,
 				    PARAM_PARASITE, p,
 				    PARAM_END);
@@ -46,7 +46,7 @@ gimp_attach_new_parasite (const char *name, int flags,
   int nreturn_vals;
   Parasite *p = parasite_new(name, flags, size, data);
 
-  return_vals = gimp_run_procedure ("gimp_attach_parasite",
+  return_vals = gimp_run_procedure ("gimp_parasite_attach",
 				    &nreturn_vals,
 				    PARAM_PARASITE, p,
 				    PARAM_END);
@@ -56,12 +56,12 @@ gimp_attach_new_parasite (const char *name, int flags,
 }
 
 void
-gimp_detach_parasite (const char *name)
+gimp_parasite_detach (const char *name)
 {
   GParam *return_vals;
   int nreturn_vals;
 
-  return_vals = gimp_run_procedure ("gimp_detach_parasite",
+  return_vals = gimp_run_procedure ("gimp_parasite_detach",
 				    &nreturn_vals,
 				    PARAM_STRING, name,
 				    PARAM_END);

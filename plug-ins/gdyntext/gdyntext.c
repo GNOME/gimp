@@ -399,7 +399,7 @@ void gdt_set_values(GdtVals *data)
 				| PARASITE_UNDOABLE
 #endif
 				, strlen(lname), lname);
-	gimp_drawable_attach_parasite(data->drawable_id, parasite);
+	gimp_drawable_parasite_attach(data->drawable_id, parasite);
 	parasite_free(parasite);
 
 	if (!data->change_layer_name) {

@@ -193,7 +193,7 @@ run (char    *name,
 
   /*  Make sure that the drawable is gray or RGB color  */
   if ((status == STATUS_SUCCESS) &&
-      (gimp_drawable_color (drawable->id) || gimp_drawable_gray (drawable->id)))
+      (gimp_drawable_color (drawable->id) || gimp_drawable_is_gray (drawable->id)))
     {
       gimp_progress_init (_("Oil Painting..."));
       gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));

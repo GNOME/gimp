@@ -142,7 +142,7 @@ run (gchar   *name,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   /*  Make sure that the drawable is gray or RGB color	*/
-  if (gimp_drawable_color (drawable->id) || gimp_drawable_gray (drawable->id))
+  if (gimp_drawable_color (drawable->id) || gimp_drawable_is_gray (drawable->id))
 	{
 	  gimp_progress_init ("Gradient Map...");
 	  gimp_tile_cache_ntiles (TILE_CACHE_SIZE);

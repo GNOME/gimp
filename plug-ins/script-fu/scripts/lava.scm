@@ -39,7 +39,7 @@
 	 (old-gradient (car (gimp-gradients-get-active)))
 	 (old-bg (car (gimp-palette-get-background))))
     
-    (gimp-image-disable-undo image)
+    (gimp-image-undo-disable image)
     (gimp-layer-add-alpha drawable)
     
     (if (= (car (gimp-selection-is-empty image)) TRUE)
@@ -95,7 +95,7 @@
    
     (gimp-image-set-active-layer image drawable)
     (gimp-image-remove-channel image active-selection)
-    (gimp-image-enable-undo image)
+    (gimp-image-undo-enable image)
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-lava"

@@ -226,9 +226,9 @@ image_new_create_image (const GimpImageNewValues *values)
   if (layer)
     {
       /*  add the new layer to the gimage  */
-      gimp_image_disable_undo (image);
+      gimp_image_undo_disable (image);
       gimp_image_add_layer (image, layer, 0);
-      gimp_image_enable_undo (image);
+      gimp_image_undo_enable (image);
 
       drawable_fill (GIMP_DRAWABLE (layer), values->fill_type);
 

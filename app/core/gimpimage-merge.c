@@ -1079,7 +1079,7 @@ gimp_image_delete_guide (GimpImage *gimage,
 
 
 Parasite *
-gimp_image_find_parasite (const GimpImage *gimage, 
+gimp_image_parasite_find (const GimpImage *gimage, 
 			  const gchar     *name)
 {
   return parasite_list_find (gimage->parasites, name);
@@ -1108,7 +1108,7 @@ gimp_image_parasite_list (GimpImage *image,
 }
 
 void
-gimp_image_attach_parasite (GimpImage *gimage, 
+gimp_image_parasite_attach (GimpImage *gimage, 
 			    Parasite  *parasite)
 {
   /* only set the dirty bit manually if we can be saved and the new
@@ -1117,7 +1117,7 @@ gimp_image_attach_parasite (GimpImage *gimage,
     undo_push_image_parasite (gimage, parasite);
   if (parasite_is_persistent (parasite)
       && !parasite_compare (parasite,
-			    gimp_image_find_parasite(gimage,
+			    gimp_image_parasite_find(gimage,
 						     parasite_name(parasite))))
     undo_push_cantundo (gimage, _("attach parasite to image"));
 
@@ -1126,12 +1126,12 @@ gimp_image_attach_parasite (GimpImage *gimage,
   if (parasite_has_flag (parasite, PARASITE_ATTACH_PARENT))
     {
       parasite_shift_parent (parasite);
-      gimp_attach_parasite (parasite);
+      gimp_parasite_attach (parasite);
     }
 }
 
 void
-gimp_image_detach_parasite (GimpImage   *gimage, 
+gimp_image_parasite_detach (GimpImage   *gimage, 
 			    const gchar *parasite)
 {
   Parasite *p;
@@ -3149,7 +3149,7 @@ gimp_image_filename (GimpImage *gimage)
 }
 
 gboolean
-gimp_image_freeze_undo (GimpImage *gimage)
+gimp_image_undo_freeze (GimpImage *gimage)
 {
   gimage->undo_on = FALSE;
 
@@ -3157,7 +3157,7 @@ gimp_image_freeze_undo (GimpImage *gimage)
 }
 
 gboolean
-gimp_image_thaw_undo (GimpImage *gimage)
+gimp_image_undo_thaw (GimpImage *gimage)
 {
   gimage->undo_on = TRUE;
 
@@ -3165,18 +3165,18 @@ gimp_image_thaw_undo (GimpImage *gimage)
 }
 
 gboolean
-gimp_image_disable_undo (GimpImage *gimage)
+gimp_image_undo_disable (GimpImage *gimage)
 {
-  return gimp_image_freeze_undo (gimage);
+  return gimp_image_undo_freeze (gimage);
 }
 
 gboolean
-gimp_image_enable_undo (GimpImage *gimage)
+gimp_image_undo_enable (GimpImage *gimage)
 {
   /*  Free all undo steps as they are now invalidated  */
   undo_free (gimage);
 
-  return gimp_image_thaw_undo (gimage);
+  return gimp_image_undo_thaw (gimage);
 }
 
 void

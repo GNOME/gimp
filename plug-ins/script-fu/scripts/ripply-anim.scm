@@ -24,19 +24,19 @@
 
  ; this script generates its own displacement map
 
-    (gimp-image-disable-undo ripple-image)
+    (gimp-image-undo-disable ripple-image)
     (gimp-palette-set-background '(127 127 127) )
     (gimp-image-add-layer ripple-image ripple-layer 0)
     (gimp-edit-fill ripple-layer)
     (plug-in-noisify 1 ripple-image ripple-layer FALSE 1.0 1.0 1.0 0.0)
     ; tile noise
     (set! rippletiled-ret (plug-in-tile 1 ripple-image ripple-layer (* width 3) (* height 3) TRUE))
-    (gimp-image-enable-undo ripple-image)
+    (gimp-image-undo-enable ripple-image)
     (gimp-image-delete ripple-image)
 
     (set! rippletiled-image (car rippletiled-ret))
     (set! rippletiled-layer (cadr rippletiled-ret))
-    (gimp-image-disable-undo rippletiled-image)
+    (gimp-image-undo-disable rippletiled-image)
 
     ; process tiled noise into usable displacement map
     (plug-in-gauss-iir 1 rippletiled-image rippletiled-layer 35 TRUE TRUE)
@@ -56,11 +56,11 @@
 
     (let* ((out-imagestack (car (gimp-image-new width height RGB))))
 
-      (gimp-image-disable-undo out-imagestack)
+      (gimp-image-undo-disable out-imagestack)
       
       (while (> remaining-frames 0)
 	     (set! dup-image (car (gimp-channel-ops-duplicate rippletiled-image)))
-	     (gimp-image-disable-undo dup-image)
+	     (gimp-image-undo-disable dup-image)
 	     (gimp-crop dup-image width height xpos ypos)
 	     
 	     (set! layer-name (string-append "Frame "
@@ -77,16 +77,16 @@
 			       displacement displacement
 			       TRUE TRUE dup-layer dup-layer 2)
 	     
-	     (gimp-image-enable-undo dup-image)
+	     (gimp-image-undo-enable dup-image)
 	     (gimp-image-delete dup-image)
 	     
 	     (set! remaining-frames (- remaining-frames 1))
 	     (set! xpos (+ xoffset xpos))
 	     (set! ypos (+ yoffset ypos)))
       
-      (gimp-image-enable-undo rippletiled-image)
+      (gimp-image-undo-enable rippletiled-image)
       (gimp-image-delete rippletiled-image)
-      (gimp-image-enable-undo out-imagestack)
+      (gimp-image-undo-enable out-imagestack)
       (gimp-display-new out-imagestack))))
 
 (script-fu-register "script-fu-ripply-anim"

@@ -18,7 +18,7 @@
 	 (lighter-layer #f))
     (gimp-selection-all img)
     (gimp-edit-copy drw)
-    (gimp-image-disable-undo new-image)
+    (gimp-image-undo-disable new-image)
     (gimp-floating-sel-anchor
      (car (gimp-edit-paste original-layer FALSE)))
     (gimp-image-add-layer new-image original-layer 0)
@@ -54,7 +54,7 @@
     (gimp-layer-set-mode lighter-layer ADDITION)
     (gimp-layer-set-opacity lighter-layer mask-opacity)
     (gimp-layer-set-visible lighter-layer TRUE)
-    (gimp-image-enable-undo new-image)
+    (gimp-image-undo-enable new-image)
     (gimp-displays-flush)))
 
 (script-fu-register

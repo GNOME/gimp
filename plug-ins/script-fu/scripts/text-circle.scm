@@ -56,7 +56,7 @@
 	 (letter "")
 	 (new-layer #f)
 	 (index 0))
-    (gimp-image-disable-undo img)
+    (gimp-image-undo-disable img)
     (gimp-image-add-layer img BG-layer 0)
     (gimp-edit-fill BG-layer)
     ;; change units
@@ -157,7 +157,7 @@
 				   (wrap-string text)
 				   "Text Circle"))))
     (gimp-layer-set-visible BG-layer 1)
-    (gimp-image-enable-undo img)
+    (gimp-image-undo-enable img)
     (gimp-image-clean-all img)
     (gimp-display-new img)
     (gimp-displays-flush)))

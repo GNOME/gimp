@@ -103,7 +103,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  parasite = parasite_copy (gimp_find_parasite (name));
+  parasite = parasite_copy (gimp_parasite_find (name));
   success = parasite != NULL;
 }
 CODE
@@ -124,7 +124,7 @@ HELP
 	  desc => 'The parasite to attach to the gimp' }
     );
 
-    %invoke = ( code => 'gimp_attach_parasite (parasite);' );
+    %invoke = ( code => 'gimp_parasite_attach (parasite);' );
 }
 
 sub detach_parasite {
@@ -141,7 +141,7 @@ HELP
 	  desc => 'The name of the parasite to detach from the gimp.' }
     );
 
-    %invoke = ( code => 'gimp_detach_parasite (name);' );
+    %invoke = ( code => 'gimp_parasite_detach (name);' );
 }
 
 sub parasite_list {
@@ -175,7 +175,7 @@ gimp_attach_new_parasite (const char *name, int flags, int size,
 			  const void *data)
 {
   Parasite *p = parasite_new (name, flags, size, data);
-  gimp_attach_parasite (p);
+  gimp_parasite_attach (p);
   parasite_free (p);
 }
 CODE

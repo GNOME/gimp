@@ -27,19 +27,19 @@ EXPORTS
 	gimp_default_display
 	gimp_destroy_paramdefs
 	gimp_destroy_params
-	gimp_detach_parasite
+	gimp_parasite_detach
 	gimp_directory
 	gimp_display_delete
 	gimp_display_new
 	gimp_displays_flush
 	gimp_drawable_attach_new_parasite
-	gimp_drawable_attach_parasite
+	gimp_drawable_parasite_attach
 	gimp_drawable_bpp
-	gimp_drawable_channel
+	gimp_drawable_is_channel
 	gimp_drawable_color
 	gimp_drawable_delete
 	gimp_drawable_detach
-	gimp_drawable_detach_parasite
+	gimp_drawable_parasite_detach
 	gimp_drawable_fill
 	gimp_drawable_find_parasite
 	gimp_drawable_flush
@@ -47,13 +47,13 @@ EXPORTS
 	gimp_drawable_get_thumbnail_data
 	gimp_drawable_get_tile
 	gimp_drawable_get_tile2
-	gimp_drawable_gray
+	gimp_drawable_is_gray
 	gimp_drawable_has_alpha
 	gimp_drawable_height
 	gimp_drawable_image_id
-	gimp_drawable_indexed
-	gimp_drawable_layer
-	gimp_drawable_layer_mask
+	gimp_drawable_is_indexed
+	gimp_drawable_is_layer
+	gimp_drawable_is_layer_mask
 	gimp_drawable_mask_bounds
 	gimp_drawable_merge_shadow
 	gimp_drawable_name
@@ -66,7 +66,7 @@ EXPORTS
 	gimp_drawable_width
 	gimp_extension_ack
 	gimp_extension_process
-	gimp_find_parasite
+	gimp_parasite_find
 	gimp_gamma
 	gimp_get_data
 	gimp_get_data_size
@@ -82,7 +82,7 @@ EXPORTS
 	gimp_image_add_layer_mask
 	gimp_image_add_vguide
 	gimp_image_attach_new_parasite
-	gimp_image_attach_parasite
+	gimp_image_parasite_attach
 	gimp_image_base_type
 	gimp_image_clean_all
 	gimp_image_convert_grayscale
@@ -90,15 +90,15 @@ EXPORTS
 	gimp_image_convert_rgb
 	gimp_image_delete
 	gimp_image_delete_guide
-	gimp_image_detach_parasite
-	gimp_image_disable_undo
+	gimp_image_parasite_detach
+	gimp_image_undo_disable
 	gimp_image_duplicate
-	gimp_image_enable_undo
+	gimp_image_undo_enable
 	gimp_image_find_next_guide
-	gimp_image_find_parasite
+	gimp_image_parasite_find
 	gimp_image_flatten
 	gimp_image_floating_selection
-	gimp_image_freeze_undo
+	gimp_image_undo_freeze
 	gimp_image_get_active_channel
 	gimp_image_get_active_layer
 	gimp_image_get_channel_by_tattoo
@@ -135,7 +135,7 @@ EXPORTS
 	gimp_image_set_filename
 	gimp_image_set_resolution
 	gimp_image_set_unit
-	gimp_image_thaw_undo
+	gimp_image_undo_thaw
 	gimp_image_width
 	gimp_install_cmap
 	gimp_install_procedure

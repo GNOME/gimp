@@ -407,7 +407,7 @@ gimp_drawable_get_color_at (GimpDrawable *drawable,
   guchar *dest;
 
   if (!drawable ||
-      (!gimp_drawable_gimage (drawable) && gimp_drawable_indexed (drawable)) 
+      (!gimp_drawable_gimage (drawable) && gimp_drawable_is_indexed (drawable)) 
       || x < 0 || y < 0 ||
       x >= drawable->width || y >= drawable->height)
     {
@@ -423,7 +423,7 @@ gimp_drawable_get_color_at (GimpDrawable *drawable,
     dest[3] = src[gimp_drawable_bytes (drawable) - 1];
   else
     dest[3] = 255;
-  if (gimp_drawable_indexed (drawable))
+  if (gimp_drawable_is_indexed (drawable))
     dest[4] = src[0];
   else
     dest[4] = 0;
@@ -432,7 +432,7 @@ gimp_drawable_get_color_at (GimpDrawable *drawable,
 }
 
 Parasite *
-gimp_drawable_find_parasite (const GimpDrawable *drawable,
+gimp_drawable_parasite_find (const GimpDrawable *drawable,
 			     const gchar        *name)
 {
   return parasite_list_find (drawable->parasites, name);
@@ -461,7 +461,7 @@ gimp_drawable_parasite_list (GimpDrawable *drawable,
 }
 
 void
-gimp_drawable_attach_parasite (GimpDrawable *drawable,
+gimp_drawable_parasite_attach (GimpDrawable *drawable,
 			       Parasite     *parasite)
 {
   /* only set the dirty bit manually if we can be saved and the new
@@ -475,7 +475,7 @@ gimp_drawable_attach_parasite (GimpDrawable *drawable,
     }
   else if (parasite_is_persistent(parasite) &&
 	   !parasite_compare( parasite,
-			      gimp_drawable_find_parasite
+			      gimp_drawable_parasite_find
 			      (drawable, parasite_name (parasite))))
     undo_push_cantundo (drawable->gimage, _("parasite attach to drawable"));
 
@@ -483,13 +483,13 @@ gimp_drawable_attach_parasite (GimpDrawable *drawable,
   if (parasite_has_flag (parasite, PARASITE_ATTACH_PARENT))
     {
       parasite_shift_parent (parasite);
-      gimp_image_attach_parasite (drawable->gimage, parasite);
+      gimp_image_parasite_attach (drawable->gimage, parasite);
     }
   else if (parasite_has_flag (parasite, PARASITE_ATTACH_GRANDPARENT))
     {
       parasite_shift_parent (parasite);
       parasite_shift_parent (parasite);
-      gimp_attach_parasite (parasite);
+      gimp_parasite_attach (parasite);
     }
   if (parasite_is_undoable (parasite))
     {
@@ -498,7 +498,7 @@ gimp_drawable_attach_parasite (GimpDrawable *drawable,
 }
 
 void
-gimp_drawable_detach_parasite (GimpDrawable *drawable,
+gimp_drawable_parasite_detach (GimpDrawable *drawable,
 			       const gchar  *parasite)
 {
   Parasite *p;
@@ -532,7 +532,7 @@ gimp_drawable_color (GimpDrawable *drawable)
 }
 
 gboolean
-gimp_drawable_gray (GimpDrawable *drawable)
+gimp_drawable_is_gray (GimpDrawable *drawable)
 {
   if (gimp_drawable_type (drawable) == GRAYA_GIMAGE ||
       gimp_drawable_type (drawable) == GRAY_GIMAGE)
@@ -542,7 +542,7 @@ gimp_drawable_gray (GimpDrawable *drawable)
 }
 
 gboolean
-gimp_drawable_indexed (GimpDrawable *drawable)
+gimp_drawable_is_indexed (GimpDrawable *drawable)
 {
   if (gimp_drawable_type (drawable) == INDEXEDA_GIMAGE ||
       gimp_drawable_type (drawable) == INDEXED_GIMAGE)

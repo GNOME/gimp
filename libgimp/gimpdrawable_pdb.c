@@ -97,7 +97,7 @@ gimp_drawable_delete (GDrawable *drawable)
 {
   if (drawable)
     {
-      if (gimp_drawable_layer (drawable->id))
+      if (gimp_drawable_is_layer (drawable->id))
 	gimp_layer_delete (drawable->id);
       else
 	gimp_channel_delete (drawable->id);
@@ -166,7 +166,7 @@ gimp_drawable_image_id (gint32 drawable_ID)
 char*
 gimp_drawable_name (gint32 drawable_ID)
 {
-  if (gimp_drawable_layer (drawable_ID))
+  if (gimp_drawable_is_layer (drawable_ID))
     return gimp_layer_get_name (drawable_ID);
   return gimp_channel_get_name (drawable_ID);
 }
@@ -258,19 +258,19 @@ gimp_drawable_type (gint32 drawable_ID)
 gint
 gimp_drawable_visible (gint32 drawable_ID)
 {
-  if (gimp_drawable_layer (drawable_ID))
+  if (gimp_drawable_is_layer (drawable_ID))
     return gimp_layer_get_visible (drawable_ID);
   return gimp_channel_get_visible (drawable_ID);
 }
 
 gint
-gimp_drawable_channel (gint32 drawable_ID)
+gimp_drawable_is_channel (gint32 drawable_ID)
 {
   GParam *return_vals;
   int nreturn_vals;
   int result;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_channel",
+  return_vals = gimp_run_procedure ("gimp_drawable_is_channel",
 				    &nreturn_vals,
 				    PARAM_DRAWABLE, drawable_ID,
 				    PARAM_END);
@@ -306,13 +306,13 @@ gimp_drawable_color (gint32 drawable_ID)
 }
 
 gint
-gimp_drawable_gray (gint32 drawable_ID)
+gimp_drawable_is_gray (gint32 drawable_ID)
 {
   GParam *return_vals;
   int nreturn_vals;
   int result;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_gray",
+  return_vals = gimp_run_procedure ("gimp_drawable_is_gray",
 				    &nreturn_vals,
 				    PARAM_DRAWABLE, drawable_ID,
 				    PARAM_END);
@@ -348,13 +348,13 @@ gimp_drawable_has_alpha (gint32 drawable_ID)
 }
 
 gint
-gimp_drawable_indexed (gint32 drawable_ID)
+gimp_drawable_is_indexed (gint32 drawable_ID)
 {
   GParam *return_vals;
   int nreturn_vals;
   int result;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_indexed",
+  return_vals = gimp_run_procedure ("gimp_drawable_is_indexed",
 				    &nreturn_vals,
 				    PARAM_DRAWABLE, drawable_ID,
 				    PARAM_END);
@@ -369,13 +369,13 @@ gimp_drawable_indexed (gint32 drawable_ID)
 }
 
 gint
-gimp_drawable_layer (gint32 drawable_ID)
+gimp_drawable_is_layer (gint32 drawable_ID)
 {
   GParam *return_vals;
   int nreturn_vals;
   int result;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_layer",
+  return_vals = gimp_run_procedure ("gimp_drawable_is_layer",
 				    &nreturn_vals,
 				    PARAM_DRAWABLE, drawable_ID,
 				    PARAM_END);
@@ -390,13 +390,13 @@ gimp_drawable_layer (gint32 drawable_ID)
 }
 
 gint
-gimp_drawable_layer_mask (gint32 drawable_ID)
+gimp_drawable_is_layer_mask (gint32 drawable_ID)
 {
   GParam *return_vals;
   int nreturn_vals;
   int result;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_layer_mask",
+  return_vals = gimp_run_procedure ("gimp_drawable_is_layer_mask",
 				    &nreturn_vals,
 				    PARAM_DRAWABLE, drawable_ID,
 				    PARAM_END);
@@ -483,7 +483,7 @@ void
 gimp_drawable_set_name (gint32  drawable_ID,
 			char   *name)
 {
-  if (gimp_drawable_layer (drawable_ID))
+  if (gimp_drawable_is_layer (drawable_ID))
     gimp_layer_set_name (drawable_ID, name);
   else
     gimp_channel_set_name (drawable_ID, name);
@@ -493,7 +493,7 @@ void
 gimp_drawable_set_visible (gint32 drawable_ID,
 			   gint   visible)
 {
-  if (gimp_drawable_layer (drawable_ID))
+  if (gimp_drawable_is_layer (drawable_ID))
     gimp_layer_set_visible (drawable_ID, visible);
   else
     gimp_channel_set_visible (drawable_ID, visible);
@@ -605,13 +605,13 @@ gimp_drawable_find_parasite (gint32 drawable_ID,
 }
 
 void
-gimp_drawable_attach_parasite (gint32 drawable_ID,
+gimp_drawable_parasite_attach (gint32 drawable_ID,
 			       const Parasite *p)
 {
   GParam *return_vals;
   int nreturn_vals;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_attach_parasite",
+  return_vals = gimp_run_procedure ("gimp_drawable_parasite_attach",
 				    &nreturn_vals,
 				    PARAM_DRAWABLE, drawable_ID,
 				    PARAM_PARASITE, p,
@@ -629,7 +629,7 @@ gimp_drawable_attach_new_parasite (gint32 drawable, const char *name, int flags,
   int nreturn_vals;
   Parasite *p = parasite_new(name, flags, size, data);
 
-  return_vals = gimp_run_procedure ("gimp_drawable_attach_parasite",
+  return_vals = gimp_run_procedure ("gimp_drawable_parasite_attach",
 				    &nreturn_vals,
 				    PARAM_DRAWABLE, drawable,
 				    PARAM_PARASITE, p,
@@ -640,13 +640,13 @@ gimp_drawable_attach_new_parasite (gint32 drawable, const char *name, int flags,
 }
 
 void
-gimp_drawable_detach_parasite (gint32 drawable_ID,
+gimp_drawable_parasite_detach (gint32 drawable_ID,
 			       const char *name)
 {
   GParam *return_vals;
   int nreturn_vals;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_detach_parasite",
+  return_vals = gimp_run_procedure ("gimp_drawable_parasite_detach",
 				    &nreturn_vals,
 				    PARAM_DRAWABLE, drawable_ID,
 				    PARAM_STRING, name,

@@ -37,8 +37,8 @@ void drawable_apply_image (GimpDrawable *, gint, gint, gint, gint,
 #define drawable_has_alpha gimp_drawable_has_alpha
 #define drawable_type_with_alpha gimp_drawable_type_with_alpha
 #define drawable_color gimp_drawable_color
-#define drawable_gray gimp_drawable_gray
-#define drawable_indexed gimp_drawable_indexed
+#define drawable_gray gimp_drawable_is_gray
+#define drawable_indexed gimp_drawable_is_indexed
 #define drawable_data gimp_drawable_data
 #define drawable_shadow gimp_drawable_shadow
 #define drawable_bytes gimp_drawable_bytes

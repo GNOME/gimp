@@ -33,7 +33,7 @@
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
 
-    (gimp-image-disable-undo img)
+    (gimp-image-undo-disable img)
     (gimp-image-add-layer img bg-layer 1)
     (gimp-image-add-layer img text-layer -1)
 
@@ -73,7 +73,7 @@
     (gimp-palette-set-foreground old-fg)
     (gimp-palette-set-background old-bg)
 
-    (gimp-image-enable-undo img)
+    (gimp-image-undo-enable img)
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-speed-text"

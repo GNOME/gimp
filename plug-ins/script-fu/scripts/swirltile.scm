@@ -14,7 +14,7 @@
 	 (cx (/ width 2))
 	 (cy (/ height 2))
 	 (old-bg (car (gimp-palette-get-background))))
-    (gimp-image-disable-undo img)
+    (gimp-image-undo-disable img)
     (gimp-palette-set-background bg-color)
     (gimp-edit-fill layer-one)
     (gimp-image-add-layer img layer-one 0)
@@ -35,7 +35,7 @@
     (plug-in-bump-map 1 img layer-one layer-one azimuth elevation depth 0 0 0 0 FALSE FALSE 0)
 
     (gimp-display-new img)
-    (gimp-image-enable-undo img)))
+    (gimp-image-undo-enable img)))
 
 (script-fu-register "script-fu-swirl-tile"
 		    "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-Tile"

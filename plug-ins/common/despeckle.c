@@ -43,6 +43,9 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.16  1999/10/17 00:07:38  pcg
+ *   API PATCH #2 or so
+ *
  *   Revision 1.15  1999/04/23 06:35:14  asbjoer
  *   use MAIN macro
  *
@@ -394,7 +397,7 @@ run(char   *name,		/* I - Name of filter program. */
   if (status == STATUS_SUCCESS)
   {
     if ((gimp_drawable_color(drawable->id) ||
-	 gimp_drawable_gray(drawable->id)))
+	 gimp_drawable_is_gray(drawable->id)))
     {
      /*
       * Set the tile cache size...

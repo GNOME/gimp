@@ -52,7 +52,7 @@ HELP
 		  'PixelRegion srcPR, destPR', 'int x1, y1, x2, y2' ],
 	code => <<'CODE'
 {
-  if (gimp_drawable_indexed (drawable))
+  if (gimp_drawable_is_indexed (drawable))
     success = FALSE;
   else
     {
@@ -124,8 +124,8 @@ HELP
 		  'GimpLut *lut', 'int i' ],
 	code => <<'CODE'
 {
-  if (gimp_drawable_indexed (drawable) ||
-      (gimp_drawable_gray (drawable) && channel != GRAY_LUT))
+  if (gimp_drawable_is_indexed (drawable) ||
+      (gimp_drawable_is_gray (drawable) && channel != GRAY_LUT))
     success = FALSE;
   else
     {
@@ -196,7 +196,7 @@ HELP
 		  'PixelRegion srcPR, destPR', 'int x1, y1, x2, y2' ],
 	code => <<'CODE'
 {
-  if (gimp_drawable_indexed (drawable))
+  if (gimp_drawable_is_indexed (drawable))
     success = FALSE;
   else
     {
@@ -274,7 +274,7 @@ HELP
 	headers => [ qw("equalize.h") ],
 	code => <<'CODE'
 {
-  if (! gimp_drawable_indexed (drawable))
+  if (! gimp_drawable_is_indexed (drawable))
     equalize (drawable_gimage (drawable), drawable, mask_only);
   else
     success = FALSE;
@@ -300,7 +300,7 @@ HELP
 	headers => [ qw("invert.h") ],
 	code => <<'CODE'
 {
-  if (! gimp_drawable_indexed (drawable))
+  if (! gimp_drawable_is_indexed (drawable))
     invert (drawable);
   else
     success = FALSE;
@@ -340,8 +340,8 @@ HELP
 		  'PixelRegion srcPR, destPR' ],
 	code => <<'CODE'
 {
-  if (gimp_drawable_indexed (drawable) || (num_points & 1) ||
-      (gimp_drawable_gray (drawable) && channel != GRAY_LUT))
+  if (gimp_drawable_is_indexed (drawable) || (num_points & 1) ||
+      (gimp_drawable_is_gray (drawable) && channel != GRAY_LUT))
     success = FALSE;
   else
     {
@@ -420,8 +420,8 @@ HELP
 		  'PixelRegion srcPR, destPR' ],
 	code => <<'CODE'
 {
-  if (gimp_drawable_indexed (drawable) || (num_bytes != 256) ||
-      (gimp_drawable_gray (drawable) && channel != GRAY_LUT))
+  if (gimp_drawable_is_indexed (drawable) || (num_bytes != 256) ||
+      (gimp_drawable_is_gray (drawable) && channel != GRAY_LUT))
     success = FALSE;
   else 
     {
@@ -496,7 +496,7 @@ HELP
 		  'PixelRegion srcPR, destPR', 'int x1, y1, x2, y2' ],
 	code => <<'CODE'
 {
-  if (gimp_drawable_indexed (drawable))
+  if (gimp_drawable_is_indexed (drawable))
     success = FALSE;
   else
     {
@@ -591,8 +591,8 @@ HELP
 		  'gboolean no_mask', 'Channel *mask' ],
 	code => <<'CODE'
 {
-  if (gimp_drawable_indexed (drawable) ||
-      (gimp_drawable_gray (drawable) && channel != GRAY_LUT))
+  if (gimp_drawable_is_indexed (drawable) ||
+      (gimp_drawable_is_gray (drawable) && channel != GRAY_LUT))
     success = FALSE;
   else
     {
@@ -669,7 +669,7 @@ HELP
 		  'PixelRegion srcPR, destPR', 'int x1, y1, x2, y2' ],
 	code => <<'CODE'
 {
-  if (gimp_drawable_indexed (drawable))
+  if (gimp_drawable_is_indexed (drawable))
     success = FALSE;
   else
     {
@@ -731,7 +731,7 @@ HELP
 		  'PixelRegion srcPR, destPR' ],
 	code => <<'CODE'
 {
-  if (gimp_drawable_indexed (drawable) || (low_threshold >= high_threshold))
+  if (gimp_drawable_is_indexed (drawable) || (low_threshold >= high_threshold))
     success = FALSE;
   else
     {

@@ -439,10 +439,10 @@ void       gimp_image_add_layer_mask        (gint32     image_ID,
 					     gint32     layer_ID,
 					     gint32     mask_ID);
 void       gimp_image_clean_all             (gint32     image_ID);
-void       gimp_image_disable_undo          (gint32     image_ID);
-void       gimp_image_enable_undo           (gint32     image_ID);
-void       gimp_image_freeze_undo           (gint32     image_ID);
-void       gimp_image_thaw_undo             (gint32     image_ID);
+void       gimp_image_undo_disable          (gint32     image_ID);
+void       gimp_image_undo_enable           (gint32     image_ID);
+void       gimp_image_undo_freeze           (gint32     image_ID);
+void       gimp_image_undo_thaw             (gint32     image_ID);
 void       gimp_undo_push_group_start       (gint32     image_ID);
 void       gimp_undo_push_group_end         (gint32     image_ID);
 void       gimp_image_clean_all             (gint32     image_ID);
@@ -501,16 +501,16 @@ void       gimp_image_set_component_visible (gint32     image_ID,
 					     gint       visible);
 void       gimp_image_set_filename          (gint32     image_ID,
 					     char      *name);
-Parasite  *gimp_image_find_parasite         (gint32     image_ID,
+Parasite  *gimp_image_parasite_find         (gint32     image_ID,
 					     const char *name);
-void       gimp_image_attach_parasite       (gint32      image_ID,
+void       gimp_image_parasite_attach       (gint32      image_ID,
 					     const Parasite *p);
 void       gimp_image_attach_new_parasite   (gint32      image_ID,
 					     const char *name, 
 					     int         flags,
 					     int         size, 
 					     const void *data);
-void       gimp_image_detach_parasite       (gint32      image_ID,
+void       gimp_image_parasite_detach       (gint32      image_ID,
 					     const char *name);
 void       gimp_image_set_resolution        (gint32     image_ID,
 					     double     xresolution,
@@ -693,13 +693,13 @@ guint         gimp_drawable_height       (gint32     drawable_ID);
 guint         gimp_drawable_bpp          (gint32     drawable_ID);
 GDrawableType gimp_drawable_type         (gint32     drawable_ID);
 gint          gimp_drawable_visible      (gint32     drawable_ID);
-gint          gimp_drawable_channel      (gint32     drawable_ID);
+gint          gimp_drawable_is_channel      (gint32     drawable_ID);
 gint          gimp_drawable_color        (gint32     drawable_ID);
-gint          gimp_drawable_gray         (gint32     drawable_ID);
+gint          gimp_drawable_is_gray         (gint32     drawable_ID);
 gint          gimp_drawable_has_alpha    (gint32     drawable_ID);
-gint          gimp_drawable_indexed      (gint32     drawable_ID);
-gint          gimp_drawable_layer        (gint32     drawable_ID);
-gint          gimp_drawable_layer_mask   (gint32     drawable_ID);
+gint          gimp_drawable_is_indexed      (gint32     drawable_ID);
+gint          gimp_drawable_is_layer        (gint32     drawable_ID);
+gint          gimp_drawable_is_layer_mask   (gint32     drawable_ID);
 gint          gimp_drawable_mask_bounds  (gint32     drawable_ID,
 					  gint      *x1,
 					  gint      *y1,
@@ -724,12 +724,12 @@ GTile*        gimp_drawable_get_tile2    (GDrawable *drawable,
 					  gint       y);
 Parasite  *gimp_drawable_find_parasite   (gint32      drawable,
 					  const char *name);
-void       gimp_drawable_attach_parasite (gint32      drawable,
+void       gimp_drawable_parasite_attach (gint32      drawable,
 					  const Parasite *p);
 void       gimp_layer_attach_new_parasite(gint32      drawable,
 					  const char *name, int flags,
 					  int size, const void *data);
-void       gimp_drawable_detach_parasite (gint32      drawable,
+void       gimp_drawable_parasite_detach (gint32      drawable,
 					  const char *name);
 guchar *   gimp_drawable_get_thumbnail_data (gint32 drawable_ID,
 					     gint  *width,
@@ -847,11 +847,11 @@ gdouble* gimp_gradients_sample_custom  (gint     num_samples,
  *            Parasites                 *
  ****************************************/
 
-Parasite *gimp_find_parasite       (const char *name);
-void      gimp_attach_parasite     (const Parasite *p);
+Parasite *gimp_parasite_find       (const char *name);
+void      gimp_parasite_attach     (const Parasite *p);
 void      gimp_attach_new_parasite (const char *name, int flags,
 				    int size, const void *data);
-void      gimp_detach_parasite     (const char *name);
+void      gimp_parasite_detach     (const char *name);
 
 #ifdef __cplusplus
 }

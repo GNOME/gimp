@@ -598,7 +598,7 @@ MAIN_FUNCTION (gint preview_p)
   drawable = gimp_drawable_get (drawable_id);
   gimp_drawable_mask_bounds (drawable_id, &x1, &y1, &x2, &y2);
   src_has_alpha = dest_has_alpha = gimp_drawable_has_alpha (drawable_id);
-  src_is_gray = dest_is_gray = gimp_drawable_gray (drawable_id);
+  src_is_gray = dest_is_gray = gimp_drawable_is_gray (drawable_id);
   src_bpp = dest_bpp = (src_is_gray ? 1 : 3) + (src_has_alpha ? 1 : 0);
 
   if (preview_p)

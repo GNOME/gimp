@@ -87,7 +87,7 @@ verted to use the *-fontname form.
     
     ; Create image
     
-    (gimp-image-disable-undo img)
+    (gimp-image-undo-disable img)
     (gimp-image-resize img img-width img-height 0 0)
     
     (gimp-image-add-layer img bg-layer -1)
@@ -163,7 +163,7 @@ verted to use the *-fontname form.
 ;    (gimp-image-flatten img)
     (gimp-palette-set-foreground old-fg-color)
     (gimp-palette-set-background old-bg-color)
-    (gimp-image-enable-undo img)
+    (gimp-image-undo-enable img)
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-title-header"

@@ -2446,7 +2446,7 @@ undo_push_image_parasite (GImage *gimage,
       data->gimage   = gimage;
       data->drawable = NULL;
       data->name     = g_strdup (parasite_name (parasite));
-      data->parasite = parasite_copy (gimp_image_find_parasite (gimage, data->name));
+      data->parasite = parasite_copy (gimp_image_parasite_find (gimage, data->name));
 
       return TRUE;
     }
@@ -2474,7 +2474,7 @@ undo_push_image_parasite_remove (GImage      *gimage,
       data->gimage = gimage;
       data->drawable = NULL;
       data->name     = g_strdup (name);
-      data->parasite = parasite_copy (gimp_image_find_parasite (gimage, data->name));
+      data->parasite = parasite_copy (gimp_image_parasite_find (gimage, data->name));
 
       return TRUE;
     }
@@ -2503,7 +2503,7 @@ undo_push_drawable_parasite (GImage       *gimage,
       data->gimage   = NULL;
       data->drawable = drawable;
       data->name     = g_strdup (parasite_name (parasite));
-      data->parasite = parasite_copy (gimp_drawable_find_parasite (drawable, data->name));
+      data->parasite = parasite_copy (gimp_drawable_parasite_find (drawable, data->name));
       return TRUE;
     }
 
@@ -2531,7 +2531,7 @@ undo_push_drawable_parasite_remove (GImage       *gimage,
       data->gimage   = NULL;
       data->drawable = drawable;
       data->name     = g_strdup (name);
-      data->parasite = parasite_copy (gimp_drawable_find_parasite (drawable, data->name));
+      data->parasite = parasite_copy (gimp_drawable_parasite_find (drawable, data->name));
       return TRUE;
     }
 
@@ -2554,7 +2554,7 @@ undo_pop_parasite (GImage    *gimage,
   
   if (data->gimage)
   {
-    data->parasite = parasite_copy (gimp_image_find_parasite (gimage,
+    data->parasite = parasite_copy (gimp_image_parasite_find (gimage,
 							      data->name));
     if (tmp)
       parasite_list_add (data->gimage->parasites, tmp);
@@ -2563,7 +2563,7 @@ undo_pop_parasite (GImage    *gimage,
   }
   else if (data->drawable)
   {
-    data->parasite = parasite_copy (gimp_drawable_find_parasite (data->drawable,
+    data->parasite = parasite_copy (gimp_drawable_parasite_find (data->drawable,
 								 data->name));
     if (tmp)
       parasite_list_add (data->drawable->parasites, tmp);
@@ -2572,11 +2572,11 @@ undo_pop_parasite (GImage    *gimage,
   }
   else
   {
-    data->parasite = parasite_copy (gimp_find_parasite (data->name));
+    data->parasite = parasite_copy (gimp_parasite_find (data->name));
     if (tmp)
-      gimp_attach_parasite (tmp);
+      gimp_parasite_attach (tmp);
     else
-      gimp_detach_parasite (data->name);
+      gimp_parasite_detach (data->name);
   }
     
   if (tmp)

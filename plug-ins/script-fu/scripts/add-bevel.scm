@@ -95,7 +95,7 @@
       (gimp-layer-set-offsets bump-layer (car offsets) (cadr offsets))
       )
 
-    (gimp-image-disable-undo image)
+    (gimp-image-undo-disable image)
 
     ;------------------------------------------------------------
     ;
@@ -151,7 +151,7 @@
 
     ; If they're working on the original, let them undo the filter's effects.
     ; This doesn't work - ideas why not?
-    (if (= work-on-copy FALSE) (gimp-image-enable-undo image))
+    (if (= work-on-copy FALSE) (gimp-image-undo-enable image))
 
     ;
     ; BUMPMAP INVOCATION:
@@ -168,7 +168,7 @@
 	  (gimp-crop image width height 1 1)
 	  )
 
-    (if (= work-on-copy FALSE) (gimp-image-disable-undo image))
+    (if (= work-on-copy FALSE) (gimp-image-undo-disable image))
 
     ;------------------------------------------------------------
     ;
@@ -195,7 +195,7 @@
 
     (if (= work-on-copy TRUE) (gimp-display-new image))
 
-    (gimp-image-enable-undo image)
+    (gimp-image-undo-enable image)
     (gimp-displays-flush)
 
     )

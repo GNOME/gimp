@@ -889,7 +889,7 @@ save_image (char   *filename,
       comment_parasite = parasite_new ("gimp-comment", PARASITE_PERSISTENT,
 				       strlen (globalcomment)+1,
 				       (void*) globalcomment);
-      gimp_image_attach_parasite (orig_image_ID, comment_parasite);
+      gimp_image_parasite_attach (orig_image_ID, comment_parasite);
       parasite_free (comment_parasite);
       comment_parasite = NULL;
     }
@@ -1349,7 +1349,7 @@ save_dialog ( gint32 image_ID )
       g_free(globalcomment);
     }
 #ifdef FACEHUGGERS
-  GIF2_CMNT = gimp_image_find_parasite (image_ID, "gimp-comment");
+  GIF2_CMNT = gimp_image_parasite_find (image_ID, "gimp-comment");
     if (GIF2_CMNT)
       {
 	globalcomment = g_malloc(GIF2_CMNT->size);

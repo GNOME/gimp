@@ -54,7 +54,7 @@
 	   (temp-draw (car (gimp-layer-new temp-img tempSize tempSize RGB_IMAGE "Jabar" 100 NORMAL)))
       	   (temp-draw2 (car (gimp-layer-new temp-img tempSize tempSize RGB_IMAGE "Jabar" 100 NORMAL))))
 
-      (gimp-image-disable-undo temp-img)
+      (gimp-image-undo-disable temp-img)
       (gimp-image-add-layer temp-img temp-draw 0)
       (gimp-image-add-layer temp-img temp-draw2 0)
       (gimp-palette-set-background backcolor)
@@ -118,8 +118,8 @@
 	 (Yindex 0)
 	 )
 
-    (gimp-image-disable-undo img)
-    (gimp-image-disable-undo tile)
+    (gimp-image-undo-disable img)
+    (gimp-image-undo-disable tile)
     
     (gimp-image-add-layer img layer-one 0)
     (gimp-image-add-layer tile tiledraw1 0)
@@ -149,7 +149,7 @@
     
     
     (gimp-image-delete tile)
-    (gimp-image-enable-undo img)
+    (gimp-image-undo-enable img)
     (gimp-display-new img)
     )
   )

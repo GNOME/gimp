@@ -320,7 +320,7 @@ run (char    *name,
 	  for (j = 0; j < num_images; j++)
 	    {
 	      values[j+1].data.d_int32 = image_ID_extract[j];
-	      gimp_image_enable_undo (image_ID_extract[j]);
+	      gimp_image_undo_enable (image_ID_extract[j]);
 	      gimp_image_clean_all (image_ID_extract[j]);
 	      if (run_mode != RUN_NONINTERACTIVE)
 		gimp_display_new (image_ID_extract[j]);

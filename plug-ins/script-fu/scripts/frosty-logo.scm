@@ -20,7 +20,7 @@
 	 (old-bg (car (gimp-palette-get-background)))
 	 (old-brush (car (gimp-brushes-get-brush)))
 	 (old-paint-mode (car (gimp-brushes-get-paint-mode))))
-    (gimp-image-disable-undo img)
+    (gimp-image-undo-disable img)
     (gimp-image-resize img width height 0 0)
     (gimp-image-add-layer img sparkle-layer 2)
     (gimp-image-add-layer img matte-layer 3)
@@ -72,7 +72,7 @@
     (gimp-brushes-set-brush old-brush)
     (gimp-brushes-set-paint-mode old-paint-mode)
     (gimp-layer-translate shadow-layer border border)
-    (gimp-image-enable-undo img)
+    (gimp-image-undo-enable img)
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-frosty-logo"

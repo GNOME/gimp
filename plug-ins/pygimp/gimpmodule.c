@@ -1200,7 +1200,7 @@ img_disable_undo(self, args)
 				     &nreturn_vals, PARAM_IMAGE, self->ID,
 				     PARAM_END);
     gimp_destroy_params(return_vals, nreturn_vals);*/
-    gimp_image_disable_undo(self->ID);
+    gimp_image_undo_disable(self->ID);
     Py_INCREF(Py_None);
     return Py_None;
 }
@@ -1220,7 +1220,7 @@ img_enable_undo(self, args)
 				     &nreturn_vals, PARAM_IMAGE, self->ID,
 				     PARAM_END);
     gimp_destroy_params(return_vals, nreturn_vals);*/
-    gimp_image_enable_undo(self->ID);
+    gimp_image_undo_enable(self->ID);
     Py_INCREF(Py_None);
     return Py_None;
 }
@@ -1457,7 +1457,7 @@ img_find_parasite(self, args)
     char *name;
     if (!PyArg_ParseTuple(args, "s:find_parasite", &name))
 	return NULL;
-    return (PyObject *)newparaobject(gimp_image_find_parasite(self->ID, name));
+    return (PyObject *)newparaobject(gimp_image_parasite_find(self->ID, name));
 }
 
 static PyObject *
@@ -1468,7 +1468,7 @@ img_attach_parasite(self, args)
     paraobject *parasite;
     if (!PyArg_ParseTuple(args, "O!:attach_parasite", &Paratype, &parasite))
 	return NULL;
-    gimp_image_attach_parasite(self->ID, parasite->para);
+    gimp_image_parasite_attach(self->ID, parasite->para);
     Py_INCREF(Py_None);
     return Py_None;
 }
@@ -1496,7 +1496,7 @@ img_detach_parasite(self, args)
     char *name;
     if (!PyArg_ParseTuple(args, "s:detach_parasite", &name))
 	return NULL;
-    gimp_image_detach_parasite(self->ID, name);
+    gimp_image_parasite_detach(self->ID, name);
     Py_INCREF(Py_None);
     return Py_None;
 }
@@ -2098,7 +2098,7 @@ drw_attach_parasite(self, args)
     paraobject *parasite;
     if (!PyArg_ParseTuple(args, "O!:attach_parasite", &Paratype, &parasite))
 	return NULL;
-    gimp_drawable_attach_parasite(self->ID, parasite->para);
+    gimp_drawable_parasite_attach(self->ID, parasite->para);
     Py_INCREF(Py_None);
     return Py_None;
 }
@@ -2126,7 +2126,7 @@ drw_detach_parasite(self, args)
     char *name;
     if (!PyArg_ParseTuple(args, "s:detach_parasite", &name))
 	return NULL;
-    gimp_drawable_detach_parasite(self->ID, name);
+    gimp_drawable_parasite_detach(self->ID, name);
     Py_INCREF(Py_None);
     return Py_None;
 }
@@ -2171,7 +2171,7 @@ newdrwobject(GDrawable *d, gint32 ID)
     if (d != NULL)
 	ID = d->id;
     /* create the appropriate object type */
-    if (gimp_drawable_layer(ID))
+    if (gimp_drawable_is_layer(ID))
 	self = newlayobject(ID);
     else
 	self = newchnobject(ID);
@@ -2400,9 +2400,9 @@ lay_getattr(self, name)
 	return PyInt_FromLong(
 			      gimp_layer_is_floating_selection(self->ID));
     if (!strcmp(name, "is_gray") || !strcmp(name, "is_grey"))
-	return PyInt_FromLong(gimp_drawable_gray(self->ID));
+	return PyInt_FromLong(gimp_drawable_is_gray(self->ID));
     if (!strcmp(name, "is_indexed"))
-	return PyInt_FromLong(gimp_drawable_indexed(self->ID));
+	return PyInt_FromLong(gimp_drawable_is_indexed(self->ID));
     if (!strcmp(name, "mask")) {
 	id = gimp_layer_get_mask_id(self->ID);
 	if (id == -1) {
@@ -2696,9 +2696,9 @@ chn_getattr(self, name)
     if (!strcmp(name, "is_color") || !strcmp(name, "is_colour"))
 	return PyInt_FromLong(gimp_drawable_color(self->ID));
     if (!strcmp(name, "is_gray") || !strcmp(name, "is_grey"))
-	return PyInt_FromLong(gimp_drawable_gray(self->ID));
+	return PyInt_FromLong(gimp_drawable_is_gray(self->ID));
     if (!strcmp(name, "is_indexed"))
-	return PyInt_FromLong(gimp_drawable_indexed(self->ID));
+	return PyInt_FromLong(gimp_drawable_is_indexed(self->ID));
     if (!strcmp(name, "layer")) {
 	id = gimp_channel_get_layer_id(self->ID);
 	if (id == -1) {
@@ -2708,7 +2708,7 @@ chn_getattr(self, name)
 	return (PyObject *)newlayobject(id);
     }
     if (!strcmp(name, "layer_mask"))
-	return PyInt_FromLong(gimp_drawable_layer_mask(self->ID));
+	return PyInt_FromLong(gimp_drawable_is_layer_mask(self->ID));
     if (!strcmp(name, "mask_bounds")) {
 	gint x1, y1, x2, y2;
 	gimp_drawable_mask_bounds(self->ID, &x1, &y1, &x2, &y2);
@@ -4403,7 +4403,7 @@ gimp_Find_parasite(self, args)
     char *name;
     if (!PyArg_ParseTuple(args, "s:find_parasite", &name))
 	return NULL;
-    return (PyObject *)newparaobject(gimp_find_parasite(name));
+    return (PyObject *)newparaobject(gimp_parasite_find(name));
 }
 
 static PyObject *
@@ -4413,7 +4413,7 @@ gimp_Attach_parasite(self, args)
     paraobject *parasite;
     if (!PyArg_ParseTuple(args, "O!:attach_parasite", &Paratype, &parasite))
 	return NULL;
-    gimp_attach_parasite(parasite->para);
+    gimp_parasite_attach(parasite->para);
     Py_INCREF(Py_None);
     return Py_None;
 }
@@ -4439,7 +4439,7 @@ gimp_Detach_parasite(self, args)
     char *name;
     if (!PyArg_ParseTuple(args, "s:detach_parasite", &name))
 	return NULL;
-    gimp_detach_parasite(name);
+    gimp_parasite_detach(name);
     Py_INCREF(Py_None);
     return Py_None;
 }

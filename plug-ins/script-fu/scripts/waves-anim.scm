@@ -44,7 +44,7 @@
          (image (car (gimp-channel-ops-duplicate img)))
 	 (source-layer (car (gimp-image-get-active-layer image))))
    
-  (gimp-image-disable-undo image)
+  (gimp-image-undo-disable image)
 
   (if (= invert TRUE)
       (set! phaseshift (- 0 phaseshift)))
@@ -81,7 +81,7 @@
 		 0
 		 FALSE)
 
-  (gimp-image-enable-undo image)
+  (gimp-image-undo-enable image)
   (gimp-display-new image)))
 
 (script-fu-register "script-fu-waves-anim"

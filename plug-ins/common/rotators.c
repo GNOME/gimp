@@ -168,7 +168,7 @@ static void run(char *name, int n_params, GParam * param, int *nreturn_vals,
     image_id = param[1].data.d_image;
 
     /*  Make sure that the drawable is gray or RGB or indexed  */
-    if (gimp_drawable_color(drawable->id) || gimp_drawable_gray(drawable->id) || gimp_drawable_indexed(drawable->id)) {
+    if (gimp_drawable_color(drawable->id) || gimp_drawable_is_gray(drawable->id) || gimp_drawable_is_indexed(drawable->id)) {
 
 
       gimp_tile_cache_ntiles(7 + 2*(
@@ -251,7 +251,7 @@ static void do_layerrot(GDrawable *drawable,
 
   x_is_longer = (width > height);
 
-  if (gimp_drawable_layer(drawable->id))
+  if (gimp_drawable_is_layer(drawable->id))
     {
       gimp_layer_resize(drawable->id,
 			x_is_longer? width : height,

@@ -470,7 +470,7 @@ gimp_export_image (gint32 *image_ID_ptr,
     {
       *image_ID_ptr = gimp_image_duplicate (*image_ID_ptr);
       *drawable_ID_ptr = gimp_image_get_active_layer (*image_ID_ptr);
-      gimp_image_disable_undo (*image_ID_ptr);
+      gimp_image_undo_disable (*image_ID_ptr);
       for (list = actions; list; list = list->next)
 	{  
 	  action = (ExportAction*)(list->data);

@@ -44,7 +44,7 @@ batch_init ()
 
       /* until --batch-interp=xxx or something similar is implemented 
        * and gimp-1.0 is not extinct use a shortcut to speed up starting the
-       * perl-server tremendously. This is also fully compatible to 1.0.
+       * perl-server tremendously. This is also fully compatible with 1.0.
        */
       {
         int run_mode, flags, extra;

@@ -554,7 +554,7 @@ gimp_query_images (int *nimages)
   int nreturn_vals;
   gint32 *images;
 
-  return_vals = gimp_run_procedure ("gimp_list_images",
+  return_vals = gimp_run_procedure ("gimp_image_list",
 				    &nreturn_vals,
 				    PARAM_END);
 

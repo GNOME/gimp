@@ -320,7 +320,7 @@ image_map_get_color_at (ImageMap image_map, int x, int y)
 
   if (!image_map ||
       (!gimp_drawable_gimage(_image_map->drawable) && 
-       gimp_drawable_indexed(_image_map->drawable)) ||
+       gimp_drawable_is_indexed(_image_map->drawable)) ||
       x < 0 || y < 0 ||
       x >= _image_map->undo_tiles->width ||
       y >= _image_map->undo_tiles->height)
@@ -342,7 +342,7 @@ image_map_get_color_at (ImageMap image_map, int x, int y)
     dest[3] = src[gimp_drawable_bytes (_image_map->drawable) - 1];
   else
     dest[3] = 255;
-  if (gimp_drawable_indexed(_image_map->drawable))
+  if (gimp_drawable_is_indexed(_image_map->drawable))
     dest[4] = src[0];
   else
     dest[4] = 0;

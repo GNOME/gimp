@@ -50,7 +50,7 @@
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background)))
 	 (old-brush (car (gimp-brushes-get-brush))))
-    (gimp-image-disable-undo img)
+    (gimp-image-undo-disable img)
 
     (gimp-layer-set-preserve-trans mask-layer TRUE)
     (gimp-palette-set-background '(255 255 255))
@@ -148,7 +148,7 @@
     (gimp-palette-set-background old-bg)
     (gimp-brushes-set-brush old-brush)
     (gimp-display-new img)
-    (gimp-image-enable-undo img)))
+    (gimp-image-undo-enable img)))
 
 (script-fu-register "script-fu-carved-logo"
 		    "<Toolbox>/Xtns/Script-Fu/Logos/Carved"
