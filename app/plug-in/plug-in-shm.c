@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <sys/types.h>
+
 #ifdef HAVE_IPC_H
 #include <sys/ipc.h>
 #endif

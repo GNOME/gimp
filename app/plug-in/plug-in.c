@@ -68,14 +68,6 @@
 #define _P_NOWAIT P_NOWAIT
 #endif
 
-#ifdef HAVE_IPC_H
-#include <sys/ipc.h>
-#endif
-
-#ifdef HAVE_SHM_H
-#include <sys/shm.h>
-#endif
-
 #include "libgimpbase/gimpbase.h"
 #include "libgimpbase/gimpprotocol.h"
 #include "libgimpbase/gimpwire.h"
