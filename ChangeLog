@@ -11,7 +11,7 @@
 	
 	* app/widgets/gimpenumcombobox.[ch]: added an API that inserts a
 	GtkTreeModelFilter to make items invisible. This is a kludge to
-	workaround bug #.
+	workaround bug #135875.
  
 	* app/tools/gimpcurvestool.c
 	* app/tools/gimplevelstool.c
