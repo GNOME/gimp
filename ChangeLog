@@ -1,5 +1,9 @@
 2002-06-12  Sven Neumann  <sven@gimp.org>
 
+	* app/base/tile-swap.c: use off_t to handle file offsets (#74478).
+
+2002-06-12  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimppreview.c (gimp_preview_size_allocate): center
 	the preview's allocation.
 

@@ -69,14 +69,14 @@ struct _SwapFile
 struct _DefSwapFile
 {
   GList *gaps;
-  glong  swap_file_end;
+  off_t  swap_file_end;
   off_t  cur_position;
 };
 
 struct _Gap
 {
-  glong start;
-  glong end;
+  off_t start;
+  off_t end;
 };
 
 struct _AsyncSwapArgs
@@ -113,12 +113,12 @@ static void    tile_swap_default_delete   (DefSwapFile *def_swap_file,
 					   Tile        *tile);
 static glong   tile_swap_find_offset      (DefSwapFile *def_swap_file,
 					   gint         fd,
-					   gint         bytes);
+					   off_t        bytes);
 static void    tile_swap_resize           (DefSwapFile *def_swap_file,
 					   gint         fd,
-					   glong        new_size);
-static Gap   * tile_swap_gap_new          (glong        start,
-					   glong        end);
+					   off_t        new_size);
+static Gap   * tile_swap_gap_new          (off_t        start,
+					   off_t        end);
 static void    tile_swap_gap_destroy      (Gap         *gap);
 #ifdef USE_PTHREADS
 static gpointer tile_swap_in_thread       (gpointer);
@@ -130,7 +130,7 @@ static GHashTable    * swap_files       = NULL;
 static GList         * open_swap_files  = NULL;
 static gint            nopen_swap_files = 0;
 static gint            next_swap_num    = 1;
-static glong           swap_file_grow   = 16 * TILE_WIDTH * TILE_HEIGHT * 4;
+static off_t           swap_file_grow   = 16 * TILE_WIDTH * TILE_HEIGHT * 4;
 #ifdef USE_PTHREADS
 static pthread_mutex_t swapfile_mutex         = PTHREAD_MUTEX_INITIALIZER;
 
@@ -159,7 +159,8 @@ tile_swap_print_gaps (DefSwapFile *def_swap_file)
       gap = gaps->data;
       gaps = gaps->next;
 
-      g_print ("  %6ld - %6ld\n", gap->start, gap->end);
+      g_print ("  %"G_GINT64_FORMAT" - %"G_GINT64_FORMAT"\n",
+               gap->start, gap->end);
     }
 }
 
@@ -644,8 +645,8 @@ tile_swap_default_delete (DefSwapFile *def_swap_file,
   GList *tmp2;
   Gap   *gap;
   Gap   *gap2;
-  glong  start;
-  glong  end;
+  off_t  start;
+  off_t  end;
 
   if (tile->swap_offset == -1)
     return;
@@ -744,7 +745,7 @@ tile_swap_default_delete (DefSwapFile *def_swap_file,
 static void
 tile_swap_resize (DefSwapFile *def_swap_file,
 		  gint         fd,
-		  glong        new_size)
+		  off_t        new_size)
 {
   if (def_swap_file->swap_file_end > new_size)
     {
@@ -757,11 +758,11 @@ tile_swap_resize (DefSwapFile *def_swap_file,
 static long
 tile_swap_find_offset (DefSwapFile *def_swap_file,
 		       gint         fd,
-		       gint         bytes)
+		       off_t        bytes)
 {
   GList *tmp;
   Gap   *gap;
-  glong  offset;
+  off_t  offset;
 
   tmp = def_swap_file->gaps;
   while (tmp)
@@ -802,8 +803,8 @@ tile_swap_find_offset (DefSwapFile *def_swap_file,
 }
 
 static Gap *
-tile_swap_gap_new (glong start,
-		   glong end)
+tile_swap_gap_new (off_t start,
+		   off_t end)
 {
   Gap *gap;
 
