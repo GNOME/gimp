@@ -2407,6 +2407,7 @@ parse_parasite (gpointer val1p,
   int res = ERROR;
   gchar *identifier = NULL;
   gulong flags = 0;
+  Parasite *parasite;
 
   token = get_next_token ();
   if (token != TOKEN_STRING)
@@ -2424,7 +2425,9 @@ parse_parasite (gpointer val1p,
   if (token != TOKEN_STRING)
     goto error;
 
-  gimp_parasite_attach (parasite_new (identifier, flags, token_int, token_str));
+  parasite = parasite_new (identifier, flags, token_int, token_str);
+  gimp_parasite_attach (parasite);  /* attaches a copy */
+  parasite_free (parasite);
 
   token = get_next_token ();
   if (token != TOKEN_RIGHT_PAREN)

@@ -1,3 +1,8 @@
+Thu Feb 24 02:20:15 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/gimprc.c: gimp_parasite_attach() creates a copy of
+	the parasite, so free it here after attaching it
+
 Thu Feb 24 00:42:12 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/text_tool.c: don't crash if a font couldn't be loaded.
