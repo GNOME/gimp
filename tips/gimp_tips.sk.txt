@@ -1,0 +1,291 @@
+# Tips translated by Zdenko Podobný <zdpo@mailbox.sk>
+#
+# This is a list of tips for the GIMP.  Every time the GIMP is
+# started, one tip will be selected from this file and will be
+# displayed in the "Tip of the day" dialog.
+#
+# - Lines starting with '#' are comments.
+# - Blank lines or comments separate two tips (they are not ignored).
+#   Multiple blank lines are treated as one.  If you want to have a
+#   blank line in a tip, put a space or tab in it.
+# - Text will appear in the dialog as it is in this file.  This is
+#   done on purpose in order to have more freedom in the layout of the
+#   tips than with automatic word-wrapping, but this also means that
+#   you have to avoid excessively long lines in this file.
+# - Tips should be concise: 3 lines or less.
+# - Advice for translators to other languages: keep the original tips
+#   as comments before the translated tips.  It will be easier for
+#   other people to check for changes or additions.
+#
+# Tips in this file have been contributed by Zachary Beane, Mo Oishi,
+# Raphael Quinet, Sven Neumann, Carey Bunks and other people on the
+# gimp mailing lists and newsgroup (comp.graphics.apps.gimp).
+# --------------------------------------------------------------------
+
+# The first tip should be a welcome message, because this is the
+# first thing that a new user will see.
+#
+#                         Welcome to the GIMP !
+                            Vitajte v GIMPe!
+      
+#Nearly all image operations are performed by right-clicking
+#on the image.  And don't worry, you can undo most mistakes...    
+Skoro v¹etky operácie s obrázkami sa spú¹»ajú pomocou kliknutia pravým
+tlaèítkom na obrázok. A nebojte sa, väè¹inu chýb mô¾ete opravi» pomocou 
+funkcie "Vráti» spä»"...
+
+# Tips for beginners start here
+# (for people who are not familiar yet with layers and image formats)
+#
+
+#You can get context-sensitive help for most of the GIMP's features by
+#pressing the F1 key at any time.  This also works inside the menus.
+Pomocou stlaèenia klávesy F1 získate pomocníka citlivého na kontext,
+ktorý popisuje väè¹inu vlastností programu GIMP. Tento pomocník funguje
+aj v ponuke.
+
+#The GIMP uses layers to let you organize your image.  Think of them
+#as a stack of slides or filters, such that looking through them you
+#see a composite of their contents.
+Na vytvorenie obrázka pou¾íva GIMP vrstvy. Mô¾ete si ich predstavi» ako sadu
+fólií alebo filtrov, cez ktoré sa pozeráte, keï chcete vidie» ich kompozíciu.
+
+#You can perform many layer operations by right-clicking on the text
+#label of a layer in the "Layers, Channels and Paths" dialog
+K mnohým operáciám s vrstvami máte prístup pomocou kliknutia pravým tlaèítkom
+my¹i na oznaèenie vrstvy v dialógu "Vrstvy, kanále a cesty".
+
+#When you save an image to work on it again later, try using XCF,
+#the GIMP's native file format (use the file extension ".xcf").
+#This preserves the layers and every aspect of your work-in-progress.
+#Once a project is completed, you can save it as JPEG, PNG, GIF, ...
+Keï ukladáte obrázok, na ktorom budete e¹te pracova», skúste pou¾i»
+natívny formát XCF programu GIMP (pou¾íva príponu ".xcf"),
+ktorý uchová vrstvy a ka¾dý aspekt va¹ej nedokonèenej práce.
+Po dokonèení projektu ho mô¾ete ulo¾i» ako JPEG, PNG, GIF, ...
+
+#The layer named "Background" it special because it lacks transparency.
+#This prevents you from adding a layer mask or moving the layer up in
+#the stack.  You may add transparency to it by right-clicking in the
+#"Layers, Channels and Paths" dialog and selecting "Add Alpha Channel".
+Vrstva pomenovaná ako "Pozadie" je ¹peciálna, lebo neobsahuje priesvitnos».
+To vám zabraòuje, aby ste pridali vrstve masku alebo, aby ste vrstvu
+posunuli vy¹¹ie. Priesvitno» tejto vrstve mô¾ete prida» pomocou 
+pravého tlaèítka my¹i v dialógu "Vrstvy, kanále a cesty" a výberom 
+"Prida» alfa kanál".
+
+#Most plug-ins work on the current layer of the current image.  In
+#some cases, you will have to merge all layers (Layers->Flatten Image)
+Väè¹ina zásuvných modulov pracuje s aktuálnou vrstvou aktuálneho obrázku.
+V niektorých prípadoch bude musie» zlúèi» v¹etky vrstvy (Vrstvy->Do jednej
+vrstvy), ak chcete pracova» s celým obrázkom.
+
+#Not all effects can be applied to all kinds of images.  This is
+#indicated by a grayed-out menu-entry.  You may need to change
+#the image mode to RGB (Image->Mode->RGB), add an alpha-channel
+#(Layers->Add Alpha Channel) or flatten it (Layers->Flatten Image).
+Nie ka¾dý efekt sa dá pou¾i» na v¹etky typy obrázkov. Mô¾ete to zisti»
+podµa ¹edej polo¾ky v ponuke. Mo¾no bude potrebné zmeni» mód obrázku
+na RBG (Obrázok->Farebný mód->RGB), prida» alfa kanál (Vrstvy->Prida» alfa kanál)
+alebo zlúèi» vrstvy (Vrstvy->Do jednej vrstvy).
+
+# Tips for intermediate users start here
+#
+
+#You can drag and drop many things in the GIMP.  For example, dragging
+#a color from the toolbox or from a color palette and dropping it into
+#an image will fill the current image or selection with that color.
+Veµa vecí v GIMPe mô¾ete jednoducho chyti» s my¹ou, potiahnu» a pusti».
+Napríklad ak potiahnete farbu z panela nástrojov alebo z farebnej palety a
+pustíte ju do obrázku, tak aktuálny obrázok alebo výber sa vyplní touto farbou.
+
+#When using a drawing tool (Paintbrush, Airbrush, or Pencil),
+#Shift-click will draw a straight line from your last drawing
+#point to your current cursor position.  If you also press Ctrl,
+#the line will be constrained to 15 degree angles.
+Ak pri pou¾ití kresliace nástroja (¹tetca, rozpra¹ovaèa alebo ceruzky) bude
+stlaèená klávesa Shift, tak po kliknutí sa vytvorí rovná èiara medzi týmto
+bodom a posledným kliknutím. Pokiaµ bude tie¾ stlaèená klávesa Ctrl, tak èiara
+bude kreslená v 15 stupòových krokoch.
+
+#The file selection dialog box has command-line completion with
+#Tab, just like the shell.  Type part of a filename, hit tab, and voila!
+#It's completed.
+Dialóg voµby pou¾íva podobne ako shell klávesu Tab na dokonèovanie názvu
+súboru. Napí¹te len èas» názvu, stlaète Tab a je to! Dokonèené.
+
+#You can reassign shortcut keys on any menu by bringing up the menu,
+#selecting a menu item, and pressing the new shortcut key combination.
+#This is dynamic and is saved when you exit GIMP.
+Klávesové skratky mô¾ete jednoducho zmeni» tak, ¾e oznaèíte v ponuke polo¾ku a
+stlaèíte novú klávesovú skratku. Zmena je dynamická a je ulo¾ená pri ukonèení
+GIMPu.
+
+#You can use the middle mouse button to pan around
+#the image, if it's larger than its display window.
+Ak je obrázok väè¹í ako okno, v ktorom je zobrazený, 
+mô¾ete ho presunú» pomocou prostredného tlaèítka my¹i.
+
+#Click and drag on a ruler to place a Guide on an image.  All
+#dragged selections will snap to the guides.  You can remove
+#guides by dragging them off the image with the Move tool.
+Kliknutím a potiahnutím na pravítko umiestníte do obrázka vodítko.
+V¹etky »ahané výbery budú pritiahnuté k týmto vodítkam. Vodítka mô¾e odstráni»
+tak, ¾e pomocou nástroja Presun ich vytiahnete mimo plochu obrázka.
+
+#You can drag a layer from the "Layers, Channels and Paths" dialog
+#and drop it onto the toolbox.  This will create a new image
+#containing only that layer.
+Vrstvu z dialógu "Vrstvy, kanále a cesty" mô¾ete chyti» a potiahnu» do panela
+nástrojov. To vytvorí nový obrázok, ktorý bude obsahova» iba túto vrstvu.
+
+#A Floating Selection must be anchored to a new layer or to the last
+#active layer before doing other operations on the image.  Click on the
+#New Layer or Anchor Layer buttons in the "Layers, Channels and Paths"
+#dialog, or use the menus to do the same.
+Plávajúci výber musí by» pred pou¾itím v ïal¹ích operáciách ukotvený v novej
+alebo aktívnej vrstve. Kliknite na tlaèítko Nová vrstva alebo Ukotvi» vrstvu v
+dialógu "Vrstvy, kanále a cesty", alebo to urobte pomocou ponuky.
+
+#The GIMP supports gzip compression on the fly.  Just add
+#".gz" (or ".bz2", if you have bzip2 installed) to the filename
+#and your image will be saved compressed.  Of course loading
+#compressed images works too.
+GIMP podporuje priebe¾nú gzip kompresiu. Staèí prida» koncovku
+'.gz' (alebo '.bz2', ak máte nain¹talovaný bzip2) k názvu súboru
+a obrázok bude ulo¾ený komprimovaný. Rovnako to funguje prirodzene
+aj pri naèítavaní obrázkov.
+
+#Pressing and holding the Shift key before making a selection allows
+#you to add to the current selection instead of replacing it.  Using
+#Ctrl before making a selection subtracts from the current one.
+Stlaèením a podr¾aním klávesy Shift pred vytvorením výberu, bude nový 
+výber pridaný k predchádzajúcemu. Naopak, pomocou klávesy Ctrl mô¾ete 
+ubra» z aktuálneho výberu.
+
+#You can press or release the Shift and Ctrl keys while you are
+#making a selection in order to constrain it to a perfect square
+#or circle, or to have it centered on its starting point.
+Stlaèením alebo pustením kláves Shift a Ctrl poèas vytvárania výberu
+mô¾ete vybra» dokonalý ¹tvorec alebo kruh, alebo vybera» od stredu.
+
+#Using Edit->Stroke allows you to draw simple squares or circles by
+#painting the edge of your current selection with the active brush.
+#More complex shapes can be drawn with Filters->Render->Gfig.
+Polo¾ka Úpravy->«ah umo¾òuje kresli» jednoduché ¹tvorce alebo kruhy
+vykreslením èiary aktívnou stopou okolo hraníc aktuálneho výberu.
+Zlo¾itej¹ie tvary je mo¾né kresli» pomocou Filtre->Generovanie->Gfig.
+
+#If you stroke a path (Edit->Stroke), the current drawing tool and its
+#settings are used.  You can use the Paintbrush in gradient mode, the
+#Clone tool with a pattern or even the Eraser or the Smudge tool.
+Ak obtiahnete cestu (Úpravy->«ah), pou¾ije sa pri tom aktuálny kresliaci
+nástroj a jeho nastavenia. Je mo¾né pou¾i» ¹tetec v re¾ime prechodu, 
+razítko so vzorkou alebo dokonca rozmazanie.
+
+#You can create and edit complex selections using the Bezier tool.
+#The "Paths" tab in the "Layers, Channels and Paths" dialog allows
+#you to work on multiple paths and to convert them to selections.
+Mô¾ete vytvori» a upravova» komplexný výber pou¾itím Bézierovho výberu.
+Zlo¾ka "Cesty" v dialógu "Vrstvy, kanále a cesty" umo¾òuje pracova»
+s viacerými cestami a konvertova» ich do výberu.
+
+#You can use the paint tools to change the selection.  Click on the
+#Quick Mask button at the bottom left of an image window.  Change your
+#selection by painting in the image and click on the button again to
+#convert it back to a normal selection.
+Na zmenu výberu mô¾ete pou¾i» kresliace nástroje. Staèí stlaèi» tlaèítko
+Rýchla maska na µavom spodnom okraji okna. Zmena sa uskutoèní kreslením
+do obrázku a opätovné stlaèenie tlaèítka ju skonvertuje spä» na normály výber.
+
+#You can save a selection to a channel (Select->Save to Channel) and
+#then modify this channel with any paint tools.  Using the buttons in
+#the "Channels" tab of the "Layers, Channels and Paths" dialog, you can
+#toggle the visibility of this new channel or convert it to a selection.
+Výber je  mo¾né zapísa» do kanála (Výber->Ulo¾i» do kanála) a potom meni»
+µubovoµným kresliacim nástrojom. Tlaèítka v zlo¾ke "Kanále" v dialógu
+"Vrstvy, kanále a cesty" prepínajú viditeµnos» tohoto nového kanála
+alebo ho konvertujú do výberu.
+
+# Tips for advanced users start here
+# (this is mostly for learning shortcut keys)
+#
+
+#If your screen is too cluttered, you can press Tab multiple times
+#in an image window to hide or show the toolbox and other dialogs.
+Ak je na obrazovke veµký zmätok, opakované stlaèenie klávesy Tab
+v okne obrázka skryje alebo zobrazí panel nástrojov a ostatné dialógy.
+
+#You can adjust the selection range for fuzzy select
+#by clicking and dragging left and right.
+Pri pou¾ití magickej palièky je mo¾né dolaïova» rozsah výberu
+pomocou kliknutia a potiahnutia µavým a pravým tlaèítkom.
+
+#Shift-click on the eye icon in the Layers dialog to hide all
+#layers but that one.  Shift-click again to show all layers.
+Kliknutie na ikonu oka v dialógu Vrstvy so stlaèenou klávesou Shift
+je mo¾né skry» v¹etky vrstvy okrem tej, na ktorú ste klikli. Ïal¹ie kliknutie v¹etky
+vrstvy zobrazí.
+
+#Ctrl-click on the layer mask's preview in the Layers dialog
+#toggles the effect of the layer mask.
+Kliknutie so stlaèenou klávesou Ctrl na náhµad masky vrstvy v dialógu
+Vrstvy prepína efekt masky vrstvy.
+
+#Alt-click on the layer mask's preview in the Layers dialog
+#toggles viewing the mask directly.
+Kliknutie so stlaèenou klávesou Alt na náhµad masky vrstvy v dialógu
+Vrstvy prepína priame zobrazenie masky.
+
+#You can use Alt-Tab to cycle through all layers in an image
+#(if your window manager doesn't trap those keys...).
+Pomocou kláves Alt-Tab mô¾ete prechádza» cez vrstvy v obrázku
+(pokiaµ túto kombináciu nepou¾íva správca okien...).
+
+#Shift-click with the Bucket Fill tool to have it use
+#the background color instead of the foreground color.
+Pri stlaèenej klávese Shift pri pou¾ití Plechovky sa namiesto
+pou¾itia farby pozadia pou¾ije farba popredia.
+
+#Control-drag with the Transform tool in rotation mode
+#will constrain the rotation to 15 degree angles.
+Stlaèenie klávesy Ctrl a »ahanie my¹ou v nástroji Transformácie
+spôsobí otáèanie s 15 stupòovými krokmi.
+
+#You can adjust and re-place a selection by using Alt-drag.
+Výber je mo¾né doladi» a premiestni» pomocou klávesy Alt a »ahom my¹i.
+
+#If your fonts turn out blocky, that's because they're not scalable
+#fonts. Most X servers support scalable Type 1 Postscript fonts.
+#Download and install them.  Some font servers allow you to use
+#TrueType (.ttf) fonts, which are also scalable.
+Pokiaµ sa písma sú hranaté (nemajú pekné oblé tvary), je to preto,
+lebo nie sú vektorové. Väè¹ina X serverov podporuje Postscriptové 
+vektorové písma Type 1. Nahrajte a nain¹talujte si ich. Niektoré 
+servery písiem umo¾òujú pou¾íva» tie¾ TrueType (.ttf) písma, ktoré 
+tie¾ sú vektorové.
+
+#To create a perfect circle, hold Shift while doing an ellipse select. To
+#place a circle precisely, drag horizontal and vertical guides tangent to
+#the circle you want to select, place your cursor at the intersection
+#of the guides, and the resulting selection will just touch the guides.
+Ak chcete vytvori» dokonalý kruh, podr¾te klávesu Shift poèas vytvárania
+elipsového výberu. Na presné umiestnenie kruhu potiahnite vodorovné a zvislé
+vodítka dotýkajúce sa kruhu, ktorý chcete oznaèi», umiestnite kurzor 
+do prieseèníka vodítok a výsledný výber sa bude dotýka» vodítok.
+
+#If some of your scanned photos do not look colorful enough, you can
+#easily improve their tonal range with the "Auto" button in the Levels
+#tool (Image->Colors->Levels).  If there are any color casts, you can
+#correct them with the Curves tool (Image->Colors->Curves).
+Ak niektoré va¹e naskenované fotografie sa vám nezdajú dostatoène farebné,
+mô¾ete zlep¹i» ich celkový úrovòový rozsah tlaèítkom "Automaticky" 
+v dialógu Nástrojov (Obrázok->Farby->Gama korekcia). Ak je na nich akýkoµvek farebný
+nádych, mô¾ete ho upravi» s nástrojom krivky (Obrázok->Farby->Krivky).
+
+#Poznámka prekladateµa
+Pokiaµ máte nejaký dobrý tip pre GIMP, tak ho po¹lite na zdpo@mailbox.sk.
+Na túto adresu mô¾ete posiela» aj prípadné návrhy a oznámenie o chybách
+v preklade.
+# (end of tips)
+

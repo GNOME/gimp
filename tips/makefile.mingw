@@ -49,6 +49,9 @@ install : all
 %.ru.utf8: %.ru.txt
 	iconv -f KOI8-R -t UTF-8 $< >$@
 
+%.sk.utf8: %.sk.txt
+	iconv -f ISO-8859-2 -t UTF-8 $< >$@
+
 %.tr.utf8: %.tr.txt
 	iconv -f ISO-8859-9 -t UTF-8 $< >$@
 
