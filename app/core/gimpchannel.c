@@ -43,7 +43,6 @@
 #include "gimp-utils.h"
 #include "gimpcontainer.h"
 #include "gimpimage.h"
-#include "gimpimage-projection.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimpchannel.h"
@@ -51,6 +50,7 @@
 #include "gimpdrawable-stroke.h"
 #include "gimpmarshal.h"
 #include "gimppaintinfo.h"
+#include "gimpprojection.h"
 #include "gimpstrokeoptions.h"
 
 #include "gimp-intl.h"
@@ -1497,7 +1497,7 @@ gimp_channel_new_from_component (GimpImage       *gimage,
 
   g_return_val_if_fail (pixel != -1, NULL);
 
-  projection = gimp_image_projection (gimage);
+  projection = gimp_projection_get_tiles (gimage->projection);
   width  = tile_manager_width  (projection);
   height = tile_manager_height (projection);
 

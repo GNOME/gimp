@@ -36,7 +36,7 @@
 #include "core/gimpchannel-select.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-projection.h"
+#include "core/gimpprojection.h"
 #include "core/gimpselection.h"
 #include "core/gimptoolinfo.h"
 
@@ -316,7 +316,8 @@ gimp_selection_preview_button_press (GtkWidget           *widget,
           y >= image_editor->gimage->height)
 	return TRUE;
 
-      col = gimp_image_projection_get_color_at (image_editor->gimage, x, y);
+      col = gimp_projection_get_color_at (image_editor->gimage->projection,
+                                          x, y);
     }
   else
     {

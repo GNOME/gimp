@@ -32,7 +32,7 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-projection.h"
+#include "core/gimpprojection.h"
 #include "core/gimptemplate.h"
 #include "core/gimpunit.h"
 
@@ -402,7 +402,7 @@ info_window_update_extended (GimpDisplay *gdisp,
     }
 
   /* fill in color information */
-  color = gimp_image_projection_get_color_at (gdisp->gimage, tx, ty);
+  color = gimp_projection_get_color_at (gdisp->gimage->projection, tx, ty);
 
   if (! color || (tx < 0.0 && ty < 0.0))
     {
@@ -414,7 +414,7 @@ info_window_update_extended (GimpDisplay *gdisp,
       GimpImageType sample_type;
       GimpRGB       rgb;
 
-      sample_type = gimp_image_projection_type (gdisp->gimage);
+      sample_type = gimp_projection_get_image_type (gdisp->gimage->projection);
 
       gimp_rgba_set_uchar (&rgb,
                            color[RED_PIX],

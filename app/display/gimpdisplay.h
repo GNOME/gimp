@@ -23,21 +23,6 @@
 #include "core/gimpobject.h"
 
 
-typedef struct _IdleRenderStruct IdleRenderStruct;
-
-struct _IdleRenderStruct
-{
-  gint    width;
-  gint    height;
-  gint    x;
-  gint    y;
-  gint    basex;
-  gint    basey;
-  guint   idle_id;
-  GSList *update_areas;   /*  flushed update areas */
-};
-
-
 #define GIMP_TYPE_DISPLAY            (gimp_display_get_type ())
 #define GIMP_DISPLAY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DISPLAY, GimpDisplay))
 #define GIMP_DISPLAY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DISPLAY, GimpDisplayClass))
@@ -61,8 +46,6 @@ struct _GimpDisplay
   GtkWidget  *shell;            /*  shell widget for this gdisplay          */
 
   GSList     *update_areas;     /*  Update areas list                       */
-
-  IdleRenderStruct idle_render; /*  state of this gdisplay's render thread  */
 };
 
 struct _GimpDisplayClass
@@ -71,34 +54,31 @@ struct _GimpDisplayClass
 };
 
 
-GType         gimp_display_get_type             (void) G_GNUC_CONST;
+GType         gimp_display_get_type    (void) G_GNUC_CONST;
 
-GimpDisplay * gimp_display_new                  (GimpImage       *gimage,
-                                                 GimpUnit         unit,
-                                                 gdouble          scale,
-                                                 GimpMenuFactory *menu_factory,
-                                                 GimpUIManager   *popup_manager);
-void          gimp_display_delete               (GimpDisplay     *gdisp);
+GimpDisplay * gimp_display_new         (GimpImage       *gimage,
+                                        GimpUnit         unit,
+                                        gdouble          scale,
+                                        GimpMenuFactory *menu_factory,
+                                        GimpUIManager   *popup_manager);
+void          gimp_display_delete      (GimpDisplay     *gdisp);
 
-gint          gimp_display_get_ID               (GimpDisplay     *gdisp);
-GimpDisplay * gimp_display_get_by_ID            (Gimp            *gimp,
-                                                 gint             ID);
+gint          gimp_display_get_ID      (GimpDisplay     *gdisp);
+GimpDisplay * gimp_display_get_by_ID   (Gimp            *gimp,
+                                        gint             ID);
 
-void          gimp_display_reconnect            (GimpDisplay     *gdisp,
-                                                 GimpImage       *gimage);
+void          gimp_display_reconnect   (GimpDisplay     *gdisp,
+                                        GimpImage       *gimage);
 
-void          gimp_display_add_update_area      (GimpDisplay     *gdisp,
-                                                 gint             x,
-                                                 gint             y,
-                                                 gint             w,
-                                                 gint             h);
+void          gimp_display_update_area (GimpDisplay     *gdisp,
+                                        gboolean         now,
+                                        gint             x,
+                                        gint             y,
+                                        gint             w,
+                                        gint             h);
 
-void          gimp_display_flush                (GimpDisplay     *gdisp);
-void          gimp_display_flush_now            (GimpDisplay     *gdisp);
+void          gimp_display_flush       (GimpDisplay     *gdisp);
+void          gimp_display_flush_now   (GimpDisplay     *gdisp);
 
-void          gimp_display_finish_draw          (GimpDisplay     *gdisp);
-
-gboolean gimp_display_coords_in_active_drawable (GimpDisplay      *gdisp,
-                                                 const GimpCoords *coords);
 
 #endif /*  __GIMP_DISPLAY_H__  */

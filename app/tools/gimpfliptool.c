@@ -203,7 +203,7 @@ gimp_flip_tool_cursor_update (GimpTool        *tool,
 
   options = GIMP_FLIP_OPTIONS (tool->tool_info->tool_options);
 
-  if (gimp_display_coords_in_active_drawable (gdisp, coords))
+  if (gimp_image_coords_in_active_drawable (gdisp->gimage, coords))
     {
       GimpChannel *selection = gimp_image_get_mask (gdisp->gimage);
 

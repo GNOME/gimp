@@ -39,7 +39,6 @@
 #include "gimpimage.h"
 #include "gimpimage-colorhash.h"
 #include "gimpimage-merge.h"
-#include "gimpimage-projection.h"
 #include "gimpimage-undo.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"

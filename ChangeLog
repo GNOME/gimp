@@ -1,3 +1,62 @@
+2004-07-13  Michael Natterer  <mitch@gimp.org>
+
+	Added a GimpProjection object which maintains the idle projection
+	logic that was in GimpDisplay and takes care of constructing the
+	projection even without any display open. Makes color picking and
+	other reads from the projection work without display and fixes the
+	major bug that we were constructing the projection n times (!)
+	for n displays.
+
+	* app/core/Makefile.am
+	* app/core/gimpimage-projection.[ch]: removed.
+
+	* app/core/core-types.h
+	* app/core/gimpmarshal.list
+	* app/core/gimparea.[ch]
+	* app/core/gimpprojection.[ch]
+	* app/core/gimpprojection-construct.[ch]: new files assembled from
+	the pieces of gimpdisplay.c and gimpimage-projection.c.
+
+	* app/core/gimpimage.[ch]: create a GimpProjection.
+	Removed explicit projection realloc calls because the projection
+	connects to the relevant GimpImage signals now.
+	Added gimp_image_coords_in_active_drawable().
+
+	* app/display/Makefile.am
+	* app/display/gimpdisplay-area.[ch]: removed.
+
+	* app/display/gimpdisplay.[ch]: stripped away the idle render stuff
+	and just keep a list of update_areas which is painted on flush().
+	Removed gimp_display_coords_in_active_drawable().
+
+	* app/display/gimpdisplay-foreach.[ch]: removed
+	gimp_display_finish_draw().
+
+	* app/core/gimpchannel.c
+	* app/core/gimpimage-contiguous-region.c
+	* app/core/gimpimage-convert.c
+	* app/core/gimpimage-crop.c
+	* app/core/gimpimage-merge.c
+	* app/core/gimpimage-pick-color.c
+	* app/core/gimpimage-scale.c
+	* app/core/gimppalette-import.c
+	* app/display/gimpdisplay-handlers.c
+	* app/display/gimpdisplayshell-render.c
+	* app/display/gimpdisplayshell.c
+	* app/gui/info-window.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpcolortool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpfliptool.c
+	* app/tools/gimpimagemaptool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimpselectiontool.c
+	* app/tools/gimptransformtool.c
+	* app/widgets/gimpselectioneditor.c: changed accordingly.
+
 2004-07-13  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimppixmap.[ch]: declared GimpPixmap as deprecated.
@@ -27,7 +86,7 @@
 
 	* plug-ins/pagecurl/pagecurl.c: undef GIMP_DISABLE_DEPRECATED until
 	GimpPixmap has been replaced here as well.
-	
+
 2004-07-13  Shlomi Fish  <shlomif@iglu.org.il>
 
 	* plug-ins/gimpressionist/presets.c: fixed bug #147483 (gimpressionist 

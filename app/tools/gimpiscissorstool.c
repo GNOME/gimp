@@ -66,7 +66,7 @@
 #include "core/gimpchannel.h"
 #include "core/gimpchannel-select.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-projection.h"
+#include "core/gimpprojection.h"
 #include "core/gimpscanconvert.h"
 #include "core/gimptoolinfo.h"
 
@@ -1732,7 +1732,7 @@ gradmap_tile_validate (TileManager *tm,
   dh = tile_eheight (tile);
 
   /* get corresponding tile in the gimage */
-  srctile = tile_manager_get_tile (gimp_image_projection (gimage),
+  srctile = tile_manager_get_tile (gimp_projection_get_tiles (gimage->projection),
 				   x, y, TRUE, FALSE);
   if (!srctile)
     return;
@@ -1742,7 +1742,7 @@ gradmap_tile_validate (TileManager *tm,
 
   srcPR.w         = MIN (dw, sw);
   srcPR.h         = MIN (dh, sh);
-  srcPR.bytes     = gimp_image_projection_bytes (gimage);
+  srcPR.bytes     = gimp_projection_get_bytes (gimage->projection);
   srcPR.data      = tile_data_pointer (srctile, 0, 0);
   srcPR.rowstride = srcPR.w * srcPR.bytes;
 

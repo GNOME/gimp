@@ -42,6 +42,8 @@ libappcore_a_sources = \
 	gimp-units.h			\
 	gimp-utils.c			\
 	gimp-utils.h			\
+	gimparea.c			\
+	gimparea.h			\
 	gimpbrush.c			\
 	gimpbrush.h			\
 	gimpbrush-header.h		\
@@ -131,8 +133,6 @@ libappcore_a_sources = \
 	gimpimage-pick-color.h		\
 	gimpimage-preview.c		\
 	gimpimage-preview.h		\
-	gimpimage-projection.c		\
-	gimpimage-projection.h		\
 	gimpimage-qmask.c		\
 	gimpimage-qmask.h		\
 	gimpimage-resize.c		\
@@ -182,6 +182,10 @@ libappcore_a_sources = \
 	gimpparasitelist.h		\
 	gimppreviewcache.c		\
 	gimppreviewcache.h		\
+	gimpprojection.c		\
+	gimpprojection.h		\
+	gimpprojection-construct.c	\
+	gimpprojection-construct.h	\
 	gimpscanconvert.c		\
 	gimpscanconvert.h		\
 	gimpselection.c			\

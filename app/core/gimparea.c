@@ -18,11 +18,11 @@
 
 #include "config.h"
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
-#include "display-types.h"
+#include "core-types.h"
 
-#include "gimpdisplay-area.h"
+#include "gimparea.h"
 
 
 #define OVERHEAD 25  /*  in units of pixel area  */
@@ -51,8 +51,8 @@ gimp_area_new (gint x1,
  *  an existing list of GimpAreas, trying to avoid overdraw.  [adam]
  */
 GSList *
-gimp_display_area_list_process (GSList   *list,
-                                GimpArea *area)
+gimp_area_list_process (GSList   *list,
+                        GimpArea *area)
 {
   GSList   *new_list;
   GSList   *l;
@@ -93,7 +93,7 @@ gimp_display_area_list_process (GSList   *list,
 }
 
 GSList *
-gimp_display_area_list_free (GSList *list)
+gimp_area_list_free (GSList *list)
 {
   if (list)
     {

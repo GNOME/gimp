@@ -33,7 +33,7 @@
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-colormap.h"
-#include "core/gimpimage-projection.h"
+#include "core/gimpprojection.h"
 
 #include "gimpcanvas.h"
 #include "gimpdisplay.h"
@@ -322,7 +322,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 
   render_image_init_info (&info, shell, x, y, w, h);
 
-  image_type = gimp_image_projection_type (shell->gdisp->gimage);
+  image_type = gimp_projection_get_image_type (shell->gdisp->gimage->projection);
 
   if ((image_type < GIMP_RGB_IMAGE) || (image_type > GIMP_INDEXEDA_IMAGE))
     {
@@ -786,8 +786,10 @@ render_image_init_info (RenderInfo       *info,
 			gint              w,
 			gint              h)
 {
+  GimpImage *gimage = shell->gdisp->gimage;
+
   info->shell      = shell;
-  info->src_tiles  = gimp_image_projection (shell->gdisp->gimage);
+  info->src_tiles  = gimp_projection_get_tiles (gimage->projection);
   info->x          = x + shell->offset_x;
   info->y          = y + shell->offset_y;
   info->w          = w;
@@ -796,7 +798,7 @@ render_image_init_info (RenderInfo       *info,
   info->scaley     = SCALEFACTOR_Y (shell);
   info->src_x      = (gdouble) info->x / info->scalex;
   info->src_y      = (gdouble) info->y / info->scaley;
-  info->src_bpp    = gimp_image_projection_bytes (shell->gdisp->gimage);
+  info->src_bpp    = gimp_projection_get_bytes (gimage->projection);
   info->dest       = shell->render_buf;
   info->dest_bpp   = 3;
   info->dest_bpl   = info->dest_bpp * GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH;
@@ -806,10 +808,10 @@ render_image_init_info (RenderInfo       *info,
                                                       info->x, info->scalex);
   info->alpha      = NULL;
 
-  if (GIMP_IMAGE_TYPE_HAS_ALPHA (gimp_image_projection_type (shell->gdisp->gimage)))
+  if (GIMP_IMAGE_TYPE_HAS_ALPHA (gimp_projection_get_image_type (gimage->projection)))
     {
       info->alpha =
-	render_image_init_alpha (gimp_image_projection_opacity (shell->gdisp->gimage) * 255.999);
+	render_image_init_alpha (gimp_projection_get_opacity (gimage->projection) * 255.999);
     }
 }
 

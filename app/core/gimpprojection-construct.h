@@ -16,40 +16,15 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_IMAGE_PROJECTION_H__
-#define __GIMP_IMAGE_PROJECTION_H__
+#ifndef __GIMP_PROJECTION_CONSTRUCT_H__
+#define __GIMP_PROJECTION_CONSTRUCT_H__
 
 
-void            gimp_image_projection_allocate     (GimpImage       *gimage);
-void            gimp_image_projection_free         (GimpImage       *gimage);
-
-TileManager   * gimp_image_projection              (GimpImage       *gimage);
-GimpImageType	gimp_image_projection_type         (const GimpImage *gimage);
-gint            gimp_image_projection_bytes        (const GimpImage *gimage);
-gdouble         gimp_image_projection_opacity      (const GimpImage *gimage);
-
-guchar        * gimp_image_projection_get_color_at (GimpImage       *gimage,
-                                                    gint             x,
-                                                    gint             y);
-
-void            gimp_image_invalidate              (GimpImage       *gimage,
-                                                    gint             x,
-                                                    gint             y,
-                                                    gint             w,
-                                                    gint             h,
-                                                    gint             x1,
-                                                    gint             y1,
-                                                    gint             x2,
-                                                    gint             y2);
-void          gimp_image_invalidate_without_render (GimpImage       *gimage,
-                                                    gint             x,
-                                                    gint             y,
-                                                    gint             w,
-                                                    gint             h,
-                                                    gint             x1,
-                                                    gint             y1,
-                                                    gint             x2,
-                                                    gint             y2);
+void   gimp_projection_construct (GimpProjection *proj,
+                                  gint            x,
+                                  gint            y,
+                                  gint            w,
+                                  gint            h);
 
 
-#endif /* __GIMP_IMAGE_PROJECTION_H__ */
+#endif /* __GIMP_PROJECTION_CONSTRUCT_H__ */

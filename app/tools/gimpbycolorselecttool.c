@@ -28,7 +28,7 @@
 #include "core/gimpchannel-select.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-projection.h"
+#include "core/gimpprojection.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -207,15 +207,15 @@ gimp_by_color_select_tool_button_release (GimpTool        *tool,
     {
       if (by_color_sel->x >= 0 &&
 	  by_color_sel->y >= 0 &&
-          by_color_sel->x < gimp_item_width  (GIMP_ITEM (drawable)) && 
+          by_color_sel->x < gimp_item_width  (GIMP_ITEM (drawable)) &&
           by_color_sel->y < gimp_item_height (GIMP_ITEM (drawable)))
 	{
 	  /*  Get the start color  */
 	  if (options->sample_merged)
 	    {
-	      if (!(col = gimp_image_projection_get_color_at (gdisp->gimage,
-                                                              by_color_sel->x,
-                                                              by_color_sel->y)))
+	      if (!(col = gimp_projection_get_color_at (gdisp->gimage->projection,
+                                                        by_color_sel->x,
+                                                        by_color_sel->y)))
 		return;
 	    }
 	  else

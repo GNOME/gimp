@@ -23,7 +23,6 @@
 gboolean        gimp_displays_dirty            (Gimp      *gimp);
 GimpContainer * gimp_displays_get_dirty_images (Gimp      *gimp);
 void            gimp_displays_delete           (Gimp      *gimp);
-void            gimp_displays_finish_draw      (Gimp      *gimp);
 void            gimp_displays_reconnect        (Gimp      *gimp,
                                                 GimpImage *old,
                                                 GimpImage *new);

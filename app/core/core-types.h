@@ -117,10 +117,12 @@ typedef struct _GimpImageMap        GimpImageMap;
 typedef struct _GimpDocumentList    GimpDocumentList;
 typedef struct _GimpEnvironTable    GimpEnvironTable;
 typedef struct _GimpParasiteList    GimpParasiteList;
+typedef struct _GimpProjection      GimpProjection;
 
 
 /*  non-object types  */
 
+typedef struct _GimpArea            GimpArea;
 typedef struct _GimpCoords          GimpCoords;
 typedef struct _GimpGradientSegment GimpGradientSegment;
 typedef struct _GimpGuide           GimpGuide;

@@ -16,11 +16,9 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_DISPLAY_AREA_H__
-#define __GIMP_DISPLAY_AREA_H__
+#ifndef __GIMP_AREA_H__
+#define __GIMP_AREA_H__
 
-
-typedef struct _GimpArea GimpArea;
 
 struct _GimpArea
 {
@@ -28,14 +26,14 @@ struct _GimpArea
 };
 
 
-GimpArea * gimp_area_new                  (gint      x1,
-                                           gint      y1,
-                                           gint      x2,
-                                           gint      y2);
+GimpArea * gimp_area_new          (gint      x1,
+                                   gint      y1,
+                                   gint      x2,
+                                   gint      y2);
 
-GSList   * gimp_display_area_list_process (GSList   *list,
-                                           GimpArea *area);
-GSList   * gimp_display_area_list_free    (GSList   *list);
+GSList   * gimp_area_list_process (GSList   *list,
+                                   GimpArea *area);
+GSList   * gimp_area_list_free    (GSList   *list);
 
 
-#endif /*  __GIMP_DISPLAY_AREA_H__  */
+#endif /*  __GIMP_AREA_H__  */

@@ -18,601 +18,531 @@
 
 #include "config.h"
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
-#include "display-types.h"
-#include "tools/tools-types.h"
+#include "core-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-projection.h"
-#include "core/gimplist.h"
+#include "base/tile.h"
+#include "base/tile-manager.h"
 
-#include "widgets/gimpuimanager.h"
-
-#include "tools/gimptool.h"
-#include "tools/tool_manager.h"
-
-#include "gimpdisplay.h"
-#include "gimpdisplay-area.h"
-#include "gimpdisplay-handlers.h"
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-handlers.h"
-#include "gimpdisplayshell-transform.h"
-
-#include "gimp-intl.h"
+#include "gimp.h"
+#include "gimparea.h"
+#include "gimpimage.h"
+#include "gimpmarshal.h"
+#include "gimpprojection.h"
+#include "gimpprojection-construct.h"
 
 
 enum
 {
-  PROP_0,
-  PROP_ID,
-  PROP_IMAGE
+  UPDATE,
+  LAST_SIGNAL
 };
 
 
 /*  local function prototypes  */
 
-static void       gimp_display_class_init            (GimpDisplayClass *klass);
-static void       gimp_display_init                  (GimpDisplay      *gdisp);
+static void       gimp_projection_class_init       (GimpProjectionClass *klass);
+static void       gimp_projection_init             (GimpProjection      *proj);
 
-static void       gimp_display_set_property          (GObject          *object,
-                                                      guint             property_id,
-                                                      const GValue     *value,
-                                                      GParamSpec       *pspec);
-static void       gimp_display_get_property          (GObject          *object,
-                                                      guint             property_id,
-                                                      GValue           *value,
-                                                      GParamSpec       *pspec);
+static void       gimp_projection_finalize              (GObject        *object);
 
-static void       gimp_display_flush_whenever        (GimpDisplay      *gdisp,
-                                                      gboolean          now);
-static void       gimp_display_idlerender_init       (GimpDisplay      *gdisp);
-static gboolean   gimp_display_idlerender_callback   (gpointer          data);
-static gboolean   gimp_display_idle_render_next_area (GimpDisplay      *gdisp);
-static void       gimp_display_paint_area            (GimpDisplay      *gdisp,
-                                                      gint              x,
-                                                      gint              y,
-                                                      gint              w,
-                                                      gint              h);
+static gint64     gimp_projection_get_memsize           (GimpObject     *object,
+                                                         gint64         *gui_size);
 
+static void       gimp_projection_alloc_tiles           (GimpProjection *proj);
+static void       gimp_projection_flush_whenever        (GimpProjection *proj,
+                                                         gboolean        now);
+static void       gimp_projection_idlerender_init       (GimpProjection *proj);
+static gboolean   gimp_projection_idlerender_callback   (gpointer        data);
+static gboolean   gimp_projection_idle_render_next_area (GimpProjection *proj);
+static void       gimp_projection_paint_area            (GimpProjection *proj,
+                                                         gboolean        now,
+                                                         gint            x,
+                                                         gint            y,
+                                                         gint            w,
+                                                         gint            h);
+static void       gimp_projection_invalidate            (GimpProjection *proj,
+                                                         gint            x,
+                                                         gint            y,
+                                                         gint            w,
+                                                         gint            h);
+static void       gimp_projection_validate_tile         (TileManager    *tm,
+                                                         Tile           *tile);
+
+static void       gimp_projection_image_update          (GimpImage      *gimage,
+                                                         gint            x,
+                                                         gint            y,
+                                                         gint            w,
+                                                         gint            h,
+                                                         GimpProjection *proj);
+static void       gimp_projection_image_size_changed    (GimpImage      *gimage,
+                                                         GimpProjection *proj);
+static void       gimp_projection_image_mode_changed    (GimpImage      *gimage,
+                                                         GimpProjection *proj);
+static void       gimp_projection_image_flush           (GimpImage      *gimage,
+                                                         GimpProjection *proj);
+
+
+static guint projection_signals[LAST_SIGNAL] = { 0 };
 
 static GimpObjectClass *parent_class = NULL;
 
 
 GType
-gimp_display_get_type (void)
+gimp_projection_get_type (void)
 {
-  static GType display_type = 0;
+  static GType projection_type = 0;
 
-  if (! display_type)
+  if (! projection_type)
     {
-      static const GTypeInfo display_info =
+      static const GTypeInfo projection_info =
       {
-        sizeof (GimpDisplayClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_display_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpDisplay),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_display_init,
+        sizeof (GimpProjectionClass),
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_projection_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpProjection),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_projection_init,
       };
 
-      display_type = g_type_register_static (GIMP_TYPE_OBJECT,
-                                             "GimpDisplay",
-                                             &display_info, 0);
+      projection_type = g_type_register_static (GIMP_TYPE_OBJECT,
+                                                "GimpProjection",
+                                                &projection_info, 0);
     }
 
-  return display_type;
+  return projection_type;
 }
 
 static void
-gimp_display_class_init (GimpDisplayClass *klass)
+gimp_projection_class_init (GimpProjectionClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
+  GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->set_property = gimp_display_set_property;
-  object_class->get_property = gimp_display_get_property;
+  projection_signals[UPDATE] =
+    g_signal_new ("update",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpProjectionClass, update),
+		  NULL, NULL,
+		  gimp_marshal_VOID__BOOLEAN_INT_INT_INT_INT,
+		  G_TYPE_NONE, 5,
+                  G_TYPE_BOOLEAN,
+		  G_TYPE_INT,
+		  G_TYPE_INT,
+		  G_TYPE_INT,
+		  G_TYPE_INT);
 
-  g_object_class_install_property (object_class, PROP_ID,
-                                   g_param_spec_int ("id",
-                                                     NULL, NULL,
-                                                     0, G_MAXINT, 0,
-                                                     G_PARAM_READWRITE |
-                                                     G_PARAM_CONSTRUCT_ONLY));
+  object_class->finalize         = gimp_projection_finalize;
 
-  g_object_class_install_property (object_class, PROP_IMAGE,
-                                   g_param_spec_object ("image",
-                                                        NULL, NULL,
-                                                        GIMP_TYPE_IMAGE,
-                                                        G_PARAM_READABLE));
+  gimp_object_class->get_memsize = gimp_projection_get_memsize;
 }
 
 static void
-gimp_display_init (GimpDisplay *gdisp)
+gimp_projection_init (GimpProjection *proj)
 {
-  gdisp->ID                       = 0;
+  proj->gimage                   = NULL;
 
-  gdisp->gimage                   = NULL;
-  gdisp->instance                 = 0;
+  proj->type                     = -1;
+  proj->bytes                    = 0;
+  proj->tiles                    = NULL;
 
-  gdisp->shell                    = NULL;
+  proj->update_areas             = NULL;
 
-  gdisp->update_areas             = NULL;
+  proj->idle_render.idle_id      = 0;
+  proj->idle_render.update_areas = NULL;
 
-  gdisp->idle_render.idle_id      = 0;
-  gdisp->idle_render.update_areas = NULL;
+  proj->construct_flag           = FALSE;
 }
 
 static void
-gimp_display_set_property (GObject      *object,
-                           guint         property_id,
-                           const GValue *value,
-                           GParamSpec   *pspec)
+gimp_projection_finalize (GObject *object)
 {
-  GimpDisplay *gdisp = GIMP_DISPLAY (object);
+  GimpProjection *proj = GIMP_PROJECTION (object);
 
-  switch (property_id)
+  if (proj->idle_render.idle_id)
     {
-    case PROP_ID:
-      gdisp->ID = g_value_get_int (value);
-      break;
-    case PROP_IMAGE:
-      g_assert_not_reached ();
-      break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
+      g_source_remove (proj->idle_render.idle_id);
+      proj->idle_render.idle_id = 0;
     }
-}
 
-static void
-gimp_display_get_property (GObject    *object,
-                           guint       property_id,
-                           GValue     *value,
-                           GParamSpec *pspec)
-{
-  GimpDisplay *gdisp = GIMP_DISPLAY (object);
+  gimp_area_list_free (proj->update_areas);
+  gimp_area_list_free (proj->idle_render.update_areas);
 
-  switch (property_id)
+  if (proj->tiles)
     {
-    case PROP_ID:
-      g_value_set_int (value, gdisp->ID);
-      break;
-    case PROP_IMAGE:
-      g_value_set_object (value, gdisp->gimage);
-      break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
+      tile_manager_unref (proj->tiles);
+      proj->tiles = NULL;
     }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-GimpDisplay *
-gimp_display_new (GimpImage       *gimage,
-                  GimpUnit         unit,
-                  gdouble          scale,
-                  GimpMenuFactory *menu_factory,
-                  GimpUIManager   *popup_manager)
+static gint64
+gimp_projection_get_memsize (GimpObject *object,
+                             gint64     *gui_size)
 {
-  GimpDisplay *gdisp;
+  GimpProjection *projection = GIMP_PROJECTION (object);
+  gint64          memsize = 0;
+
+  if (projection->tiles)
+    memsize += tile_manager_get_memsize (projection->tiles);
+
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+                                                                  gui_size);
+}
+
+GimpProjection *
+gimp_projection_new (GimpImage *gimage)
+{
+  GimpProjection *proj;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
-  /*  If there isn't an interface, never create a gdisplay  */
-  if (gimage->gimp->no_interface)
-    return NULL;
+  proj = g_object_new (GIMP_TYPE_PROJECTION, NULL);
 
-  gdisp = g_object_new (GIMP_TYPE_DISPLAY,
-                        "id", gimage->gimp->next_display_ID++,
-                        NULL);
+  proj->gimage = gimage;
 
-  /*  refs the image  */
-  gimp_display_connect (gdisp, gimage);
+  g_signal_connect_object (gimage, "update",
+                           G_CALLBACK (gimp_projection_image_update),
+                           proj, 0);
+  g_signal_connect_object (gimage, "size_changed",
+                           G_CALLBACK (gimp_projection_image_size_changed),
+                           proj, 0);
+  g_signal_connect_object (gimage, "mode_changed",
+                           G_CALLBACK (gimp_projection_image_mode_changed),
+                           proj, 0);
+  g_signal_connect_object (gimage, "flush",
+                           G_CALLBACK (gimp_projection_image_flush),
+                           proj, 0);
 
-  /*  create the shell for the image  */
-  gdisp->shell = gimp_display_shell_new (gdisp, unit, scale,
-                                         menu_factory, popup_manager);
-
-  gtk_widget_show (gdisp->shell);
-
-  return gdisp;
+  return proj;
 }
 
 void
-gimp_display_delete (GimpDisplay *gdisp)
-{
-  GimpTool *active_tool;
-
-  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
-
-  /* remove the display from the list */
-  gimp_container_remove (gdisp->gimage->gimp->displays,
-                         GIMP_OBJECT (gdisp));
-
-  /*  stop any active tool  */
-  tool_manager_control_active (gdisp->gimage->gimp, HALT, gdisp);
-
-  active_tool = tool_manager_get_active (gdisp->gimage->gimp);
-
-  if (active_tool)
-    {
-      if (active_tool->focus_display == gdisp)
-        tool_manager_focus_display_active (gdisp->gimage->gimp, NULL);
-
-      /*  clear out the pointer to this gdisp from the active tool  */
-      if (active_tool->gdisp == gdisp)
-        {
-          active_tool->drawable = NULL;
-          active_tool->gdisp    = NULL;
-        }
-    }
-
-  /* If this gdisplay was idlerendering at the time when it was deleted,
-   * deactivate the idlerendering thread before deletion!
-   */
-  if (gdisp->idle_render.idle_id)
-    {
-      g_source_remove (gdisp->idle_render.idle_id);
-      gdisp->idle_render.idle_id = 0;
-    }
-
-  /*  free the update area lists  */
-  gimp_display_area_list_free (gdisp->update_areas);
-  gimp_display_area_list_free (gdisp->idle_render.update_areas);
-
-  if (gdisp->shell)
-    {
-      GtkWidget *shell = gdisp->shell;
-
-      /*  set gdisp->shell to NULL *before* destroying the shell.
-       *  all callbacks in gimpdisplayshell-callbacks.c will check
-       *  this pointer and do nothing if the shell is in destruction.
-       */
-      gdisp->shell = NULL;
-      gtk_widget_destroy (shell);
-    }
-
-  /*  unrefs the gimage  */
-  gimp_display_disconnect (gdisp);
-
-  g_object_unref (gdisp);
-}
-
-gint
-gimp_display_get_ID (GimpDisplay *gdisp)
-{
-  g_return_val_if_fail (GIMP_IS_DISPLAY (gdisp), -1);
-
-  return gdisp->ID;
-}
-
-GimpDisplay *
-gimp_display_get_by_ID (Gimp *gimp,
-                        gint  ID)
-{
-  GList *list;
-
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-
-  for (list = GIMP_LIST (gimp->displays)->list;
-       list;
-       list = g_list_next (list))
-    {
-      GimpDisplay *gdisp = list->data;
-
-      if (gdisp->ID == ID)
-	return gdisp;
-    }
-
-  return NULL;
-}
-
-void
-gimp_display_reconnect (GimpDisplay *gdisp,
-                        GimpImage   *gimage)
-{
-  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  if (gdisp->idle_render.idle_id)
-    {
-      g_source_remove (gdisp->idle_render.idle_id);
-      gdisp->idle_render.idle_id = 0;
-    }
-
-  /*  stop any active tool  */
-  tool_manager_control_active (gdisp->gimage->gimp, HALT, gdisp);
-
-  gimp_display_shell_disconnect (GIMP_DISPLAY_SHELL (gdisp->shell));
-
-  gimp_display_disconnect (gdisp);
-
-  gimp_display_connect (gdisp, gimage);
-
-  gimp_display_add_update_area (gdisp,
-                                0, 0,
-                                gdisp->gimage->width,
-                                gdisp->gimage->height);
-
-  gimp_display_shell_reconnect (GIMP_DISPLAY_SHELL (gdisp->shell));
-}
-
-void
-gimp_display_add_update_area (GimpDisplay *gdisp,
-                              gint         x,
-                              gint         y,
-                              gint         w,
-                              gint         h)
+gimp_projection_add_update_area (GimpProjection *proj,
+                                 gint            x,
+                                 gint            y,
+                                 gint            w,
+                                 gint            h)
 {
   GimpArea *area;
 
-  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+  g_return_if_fail (GIMP_IS_PROJECTION (proj));
 
-  area = gimp_area_new (CLAMP (x, 0, gdisp->gimage->width),
-                        CLAMP (y, 0, gdisp->gimage->height),
-                        CLAMP (x + w, 0, gdisp->gimage->width),
-                        CLAMP (y + h, 0, gdisp->gimage->height));
+  area = gimp_area_new (CLAMP (x, 0, proj->gimage->width),
+                        CLAMP (y, 0, proj->gimage->height),
+                        CLAMP (x + w, 0, proj->gimage->width),
+                        CLAMP (y + h, 0, proj->gimage->height));
 
-  gdisp->update_areas = gimp_display_area_list_process (gdisp->update_areas,
-                                                        area);
+  proj->update_areas = gimp_area_list_process (proj->update_areas, area);
 }
 
-void
-gimp_display_flush (GimpDisplay *gdisp)
+TileManager *
+gimp_projection_get_tiles (GimpProjection *proj)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+  g_return_val_if_fail (GIMP_IS_PROJECTION (proj), NULL);
 
-  /* Redraw on idle time */
-  gimp_display_flush_whenever (gdisp, FALSE);
-}
-
-void
-gimp_display_flush_now (GimpDisplay *gdisp)
-{
-  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
-
-  /* Redraw NOW */
-  gimp_display_flush_whenever (gdisp, TRUE);
-}
-
-/* Force all gdisplays to finish their idlerender projection */
-void
-gimp_display_finish_draw (GimpDisplay *gdisp)
-{
-  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
-
-  if (gdisp->idle_render.idle_id)
+  if (proj->tiles == NULL                                      ||
+      tile_manager_width  (proj->tiles) != proj->gimage->width ||
+      tile_manager_height (proj->tiles) != proj->gimage->height)
     {
-      g_source_remove (gdisp->idle_render.idle_id);
-      gdisp->idle_render.idle_id = 0;
-
-      while (gimp_display_idlerender_callback (gdisp));
-    }
-}
-
-/* utility function to check if the cursor is inside the active drawable */
-gboolean
-gimp_display_coords_in_active_drawable (GimpDisplay      *gdisp,
-                                        const GimpCoords *coords)
-{
-  GimpDrawable *drawable;
-
-  g_return_val_if_fail (GIMP_IS_DISPLAY (gdisp), FALSE);
-
-  if (!gdisp->gimage)
-    return FALSE;
-
-  drawable = gimp_image_active_drawable (gdisp->gimage);
-
-  if (drawable)
-    {
-      GimpItem *item;
-      gint      x, y;
-
-      item = GIMP_ITEM (drawable);
-
-      gimp_item_offsets (item, &x, &y);
-
-      x = ROUND (coords->x) - x;
-      y = ROUND (coords->y) - y;
-
-      if (x < 0 || x > gimp_item_width (item))
-        return FALSE;
-
-      if (y < 0 || y > gimp_item_height (item))
-        return FALSE;
-
-      return TRUE;
+      gimp_projection_alloc_tiles (proj);
     }
 
-  return FALSE;
+  return proj->tiles;
 }
+
+GimpImageType
+gimp_projection_get_image_type (const GimpProjection *proj)
+{
+  g_return_val_if_fail (GIMP_IS_PROJECTION (proj), -1);
+
+  return proj->type;
+}
+
+gint
+gimp_projection_get_bytes (const GimpProjection *proj)
+{
+  g_return_val_if_fail (GIMP_IS_PROJECTION (proj), 0);
+
+  return proj->bytes;
+}
+
+gdouble
+gimp_projection_get_opacity (const GimpProjection *proj)
+{
+  g_return_val_if_fail (GIMP_IS_PROJECTION (proj), GIMP_OPACITY_OPAQUE);
+
+  return GIMP_OPACITY_OPAQUE;
+}
+
+guchar *
+gimp_projection_get_color_at (GimpProjection *proj,
+                              gint            x,
+                              gint            y)
+{
+  Tile   *tile;
+  guchar *src;
+  guchar *dest;
+
+  g_return_val_if_fail (GIMP_IS_PROJECTION (proj), NULL);
+
+  if (x < 0 || y < 0 || x >= proj->gimage->width || y >= proj->gimage->height)
+    return NULL;
+
+  dest = g_new (guchar, 5);
+  tile = tile_manager_get_tile (gimp_projection_get_tiles (proj),
+                                x, y, TRUE, FALSE);
+  src = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
+  gimp_image_get_color (proj->gimage, gimp_projection_get_image_type (proj),
+                        src, dest);
+
+  dest[4] = 0;
+  tile_release (tile, FALSE);
+
+  return dest;
+}
+
+void
+gimp_projection_flush (GimpProjection *proj)
+{
+  g_return_if_fail (GIMP_IS_PROJECTION (proj));
+
+  /* Construct on idle time */
+  gimp_projection_flush_whenever (proj, FALSE);
+}
+
+void
+gimp_projection_flush_now (GimpProjection *proj)
+{
+  g_return_if_fail (GIMP_IS_PROJECTION (proj));
+
+  /* Construct NOW */
+  gimp_projection_flush_whenever (proj, TRUE);
+}
+
 
 /*  private functions  */
 
 static void
-gimp_display_flush_whenever (GimpDisplay *gdisp,
-                             gboolean     now)
+gimp_projection_alloc_tiles (GimpProjection *proj)
 {
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+  GimpImageType proj_type  = 0;
+  gint          proj_bytes = 0;
 
-  /*  Flush the items in the displays and updates lists -
-   *  but only if gdisplay has been mapped and exposed
+  g_return_if_fail (GIMP_IS_PROJECTION (proj));
+
+  /*  Find the number of bytes required for the projection.
+   *  This includes the intensity channels and an alpha channel
+   *  if one doesn't exist.
    */
-  if (! shell->select)
+  switch (gimp_image_base_type (proj->gimage))
     {
-      g_warning ("%s: called unrealized", G_STRFUNC);
-      return;
+    case GIMP_RGB:
+    case GIMP_INDEXED:
+      proj_bytes = 4;
+      proj_type  = GIMP_RGBA_IMAGE;
+      break;
+
+    case GIMP_GRAY:
+      proj_bytes = 2;
+      proj_type  = GIMP_GRAYA_IMAGE;
+      break;
+
+    default:
+      g_assert_not_reached ();
     }
 
+  if (proj->tiles)
+    {
+      if (proj_type            != proj->type                       ||
+          proj_bytes           != proj->bytes                      ||
+          proj->gimage->width  != tile_manager_width (proj->tiles) ||
+          proj->gimage->height != tile_manager_height (proj->tiles))
+        {
+          tile_manager_unref (proj->tiles);
+          proj->tiles = NULL;
+        }
+    }
+
+  if (! proj->tiles)
+    {
+      proj->type  = proj_type;
+      proj->bytes = proj_bytes;
+
+      proj->tiles = tile_manager_new (proj->gimage->width,
+                                      proj->gimage->height,
+                                      proj->bytes);
+      tile_manager_set_user_data (proj->tiles, proj);
+      tile_manager_set_validate_proc (proj->tiles,
+                                      gimp_projection_validate_tile);
+    }
+}
+
+static void
+gimp_projection_flush_whenever (GimpProjection *proj,
+                                gboolean        now)
+{
   /*  First the updates...  */
-  if (gdisp->update_areas)
+  if (proj->update_areas)
     {
       if (now)  /* Synchronous */
         {
           GSList *list;
 
-          for (list = gdisp->update_areas; list; list = g_slist_next (list))
+          for (list = proj->update_areas; list; list = g_slist_next (list))
             {
               GimpArea *area = list->data;
 
               if ((area->x1 != area->x2) && (area->y1 != area->y2))
                 {
-                  gimp_display_paint_area (gdisp,
-                                           area->x1,
-                                           area->y1,
-                                           (area->x2 - area->x1),
-                                           (area->y2 - area->y1));
+                  gimp_projection_paint_area (proj,
+                                              FALSE, /* sic! */
+                                              area->x1,
+                                              area->y1,
+                                              (area->x2 - area->x1),
+                                              (area->y2 - area->y1));
                 }
             }
         }
       else  /* Asynchronous */
         {
-          gimp_display_idlerender_init (gdisp);
+          gimp_projection_idlerender_init (proj);
         }
 
       /*  Free the update lists  */
-      gdisp->update_areas = gimp_display_area_list_free (gdisp->update_areas);
+      proj->update_areas = gimp_area_list_free (proj->update_areas);
     }
-  else
+}
+
+void
+gimp_projection_finish_draw (GimpProjection *proj)
+{
+  g_return_if_fail (GIMP_IS_PROJECTION (proj));
+
+  if (proj->idle_render.idle_id)
     {
-      /*  if there was nothing to update, we still need to start the
-       *  selection  --mitch
-       */
-      gimp_display_shell_selection_visibility (shell, GIMP_SELECTION_ON);
-    }
+      g_source_remove (proj->idle_render.idle_id);
+      proj->idle_render.idle_id = 0;
 
-  /*  Next the displays...  */
-  gimp_display_shell_flush (shell, now);
-
-  /*  ensure the consistency of the menus  */
-  if (! now)
-    {
-      GimpContext *user_context;
-
-      gimp_ui_manager_update (shell->menubar_manager, shell);
-
-      user_context = gimp_get_user_context (gdisp->gimage->gimp);
-
-      if (gdisp == gimp_context_get_display (user_context))
-        gimp_ui_manager_update (shell->popup_manager, shell);
+      while (gimp_projection_idlerender_callback (proj));
     }
 }
 
 static void
-gimp_display_idlerender_init (GimpDisplay *gdisp)
+gimp_projection_idlerender_init (GimpProjection *proj)
 {
   GSList   *list;
   GimpArea *area;
 
-  /* We need to merge the IdleRender's and the GimpDisplay's update_areas list
+  /* We need to merge the IdleRender's and the GimpProjection's update_areas list
    * to keep track of which of the updates have been flushed and hence need
    * to be drawn.
    */
-  for (list = gdisp->update_areas; list; list = g_slist_next (list))
+  for (list = proj->update_areas; list; list = g_slist_next (list))
     {
       area = g_memdup (list->data, sizeof (GimpArea));
 
-      gdisp->idle_render.update_areas =
-	gimp_display_area_list_process (gdisp->idle_render.update_areas, area);
+      proj->idle_render.update_areas =
+        gimp_area_list_process (proj->idle_render.update_areas, area);
     }
 
   /* If an idlerender was already running, merge the remainder of its
    * unrendered area with the update_areas list, and make it start work
    * on the next unrendered area in the list.
    */
-  if (gdisp->idle_render.idle_id)
+  if (proj->idle_render.idle_id)
     {
       area =
-        gimp_area_new (gdisp->idle_render.basex,
-                       gdisp->idle_render.y,
-                       gdisp->idle_render.basex + gdisp->idle_render.width,
-                       gdisp->idle_render.y + (gdisp->idle_render.height -
-                                               (gdisp->idle_render.y -
-                                                gdisp->idle_render.basey)));
+        gimp_area_new (proj->idle_render.basex,
+                       proj->idle_render.y,
+                       proj->idle_render.basex + proj->idle_render.width,
+                       proj->idle_render.y + (proj->idle_render.height -
+                                               (proj->idle_render.y -
+                                                proj->idle_render.basey)));
 
-      gdisp->idle_render.update_areas =
-	gimp_display_area_list_process (gdisp->idle_render.update_areas, area);
+      proj->idle_render.update_areas =
+        gimp_area_list_process (proj->idle_render.update_areas, area);
 
-      gimp_display_idle_render_next_area (gdisp);
+      gimp_projection_idle_render_next_area (proj);
     }
   else
     {
-      if (gdisp->idle_render.update_areas == NULL)
-	{
-	  g_warning ("Wanted to start idlerender thread with no update_areas. (+memleak)");
-	  return;
-	}
+      if (proj->idle_render.update_areas == NULL)
+        {
+          g_warning ("Wanted to start idlerender thread with no update_areas. (+memleak)");
+          return;
+        }
 
-      gimp_display_idle_render_next_area (gdisp);
+      gimp_projection_idle_render_next_area (proj);
 
-      gdisp->idle_render.idle_id = g_idle_add_full (G_PRIORITY_LOW,
-                                                    gimp_display_idlerender_callback,
-                                                    gdisp,
-                                                    NULL);
+      proj->idle_render.idle_id = g_idle_add_full (G_PRIORITY_LOW,
+                                                   gimp_projection_idlerender_callback,
+                                                   proj,
+                                                   NULL);
     }
 
-  /* Caller frees gdisp->update_areas */
+  /* Caller frees proj->update_areas */
 }
 
-/* Unless specified otherwise, display re-rendering is organised by
+/* Unless specified otherwise, projection re-rendering is organised by
  * IdleRender, which amalgamates areas to be re-rendered and breaks
  * them into bite-sized chunks which are chewed on in a low- priority
  * idle thread.  This greatly improves responsiveness for many GIMP
  * operations.  -- Adam
  */
 static gboolean
-gimp_display_idlerender_callback (gpointer data)
+gimp_projection_idlerender_callback (gpointer data)
 {
   const gint   CHUNK_WIDTH  = 256;
   const gint   CHUNK_HEIGHT = 128;
   gint         workx, worky, workw, workh;
-  GimpDisplay *gdisp = data;
+  GimpProjection *proj = data;
 
   workw = CHUNK_WIDTH;
   workh = CHUNK_HEIGHT;
-  workx = gdisp->idle_render.x;
-  worky = gdisp->idle_render.y;
+  workx = proj->idle_render.x;
+  worky = proj->idle_render.y;
 
-  if (workx + workw > gdisp->idle_render.basex + gdisp->idle_render.width)
+  if (workx + workw > proj->idle_render.basex + proj->idle_render.width)
     {
-      workw = gdisp->idle_render.basex + gdisp->idle_render.width - workx;
+      workw = proj->idle_render.basex + proj->idle_render.width - workx;
     }
 
-  if (worky + workh > gdisp->idle_render.basey + gdisp->idle_render.height)
+  if (worky + workh > proj->idle_render.basey + proj->idle_render.height)
     {
-      workh = gdisp->idle_render.basey + gdisp->idle_render.height - worky;
+      workh = proj->idle_render.basey + proj->idle_render.height - worky;
     }
 
-  gimp_display_paint_area (gdisp, workx, worky, workw, workh);
+  gimp_projection_paint_area (proj, TRUE, /* sic! */
+                              workx, worky, workw, workh);
 
-  gdisp->idle_render.x += CHUNK_WIDTH;
+  proj->idle_render.x += CHUNK_WIDTH;
 
-  if (gdisp->idle_render.x >=
-      gdisp->idle_render.basex + gdisp->idle_render.width)
+  if (proj->idle_render.x >=
+      proj->idle_render.basex + proj->idle_render.width)
     {
-      gdisp->idle_render.x = gdisp->idle_render.basex;
-      gdisp->idle_render.y += CHUNK_HEIGHT;
+      proj->idle_render.x = proj->idle_render.basex;
+      proj->idle_render.y += CHUNK_HEIGHT;
 
-      if (gdisp->idle_render.y >=
-	  gdisp->idle_render.basey + gdisp->idle_render.height)
-	{
-	  if (! gimp_display_idle_render_next_area (gdisp))
-	    {
-	      /* FINISHED */
-              gdisp->idle_render.idle_id = 0;
+      if (proj->idle_render.y >=
+          proj->idle_render.basey + proj->idle_render.height)
+        {
+          if (! gimp_projection_idle_render_next_area (proj))
+            {
+              /* FINISHED */
+              proj->idle_render.idle_id = 0;
 
-	      return FALSE;
-	    }
-	}
+              return FALSE;
+            }
+        }
     }
 
   /* Still work to do. */
@@ -620,22 +550,22 @@ gimp_display_idlerender_callback (gpointer data)
 }
 
 static gboolean
-gimp_display_idle_render_next_area (GimpDisplay *gdisp)
+gimp_projection_idle_render_next_area (GimpProjection *proj)
 {
   GimpArea *area;
 
-  if (! gdisp->idle_render.update_areas)
+  if (! proj->idle_render.update_areas)
     return FALSE;
 
-  area = (GimpArea *) gdisp->idle_render.update_areas->data;
+  area = (GimpArea *) proj->idle_render.update_areas->data;
 
-  gdisp->idle_render.update_areas =
-    g_slist_remove (gdisp->idle_render.update_areas, area);
+  proj->idle_render.update_areas =
+    g_slist_remove (proj->idle_render.update_areas, area);
 
-  gdisp->idle_render.x      = gdisp->idle_render.basex = area->x1;
-  gdisp->idle_render.y      = gdisp->idle_render.basey = area->y1;
-  gdisp->idle_render.width  = area->x2 - area->x1;
-  gdisp->idle_render.height = area->y2 - area->y1;
+  proj->idle_render.x      = proj->idle_render.basex = area->x1;
+  proj->idle_render.y      = proj->idle_render.basey = area->y1;
+  proj->idle_render.width  = area->x2 - area->x1;
+  proj->idle_render.height = area->y2 - area->y1;
 
   g_free (area);
 
@@ -643,58 +573,103 @@ gimp_display_idle_render_next_area (GimpDisplay *gdisp)
 }
 
 static void
-gimp_display_paint_area (GimpDisplay *gdisp,
-                         gint         x,
-                         gint         y,
-                         gint         w,
-                         gint         h)
+gimp_projection_paint_area (GimpProjection *proj,
+                            gboolean        now,
+                            gint            x,
+                            gint            y,
+                            gint            w,
+                            gint            h)
 {
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-  gint              x1, y1, x2, y2;
-  gdouble           x1_f, y1_f, x2_f, y2_f;
+  gint x1, y1, x2, y2;
 
   /*  Bounds check  */
-  x1 = CLAMP (x,     0, gdisp->gimage->width);
-  y1 = CLAMP (y,     0, gdisp->gimage->height);
-  x2 = CLAMP (x + w, 0, gdisp->gimage->width);
-  y2 = CLAMP (y + h, 0, gdisp->gimage->height);
+  x1 = CLAMP (x,     0, proj->gimage->width);
+  y1 = CLAMP (y,     0, proj->gimage->height);
+  x2 = CLAMP (x + w, 0, proj->gimage->width);
+  y2 = CLAMP (y + h, 0, proj->gimage->height);
   x = x1;
   y = y1;
   w = (x2 - x1);
   h = (y2 - y1);
 
-  /*  calculate the extents of the update as limited by what's visible  */
-  gimp_display_shell_untransform_xy_f (shell,
-                                       0, 0,
-                                       &x1_f, &y1_f,
-                                       FALSE);
-  gimp_display_shell_untransform_xy_f (shell,
-                                       shell->disp_width, shell->disp_height,
-                                       &x2_f, &y2_f,
-                                       FALSE);
+  gimp_projection_invalidate (proj, x, y, w, h);
 
-  /*  make sure to limit the invalidated area to a superset of the
-   *  untransformed sub-pixel display area, not a subset.
-   *  bug #116765. --mitch
-   */
-  x1 = floor (x1_f);
-  y1 = floor (y1_f);
-  x2 = ceil (x2_f);
-  y2 = ceil (y2_f);
-
-  gimp_image_invalidate (gdisp->gimage, x, y, w, h, x1, y1, x2, y2);
-
-  /*  display the area  */
-  gimp_display_shell_transform_xy_f (shell, x, y,         &x1_f, &y1_f, FALSE);
-  gimp_display_shell_transform_xy_f (shell, x + w, y + h, &x2_f, &y2_f, FALSE);
-
-  /*  make sure to expose a superset of the transformed sub-pixel expose
-   *  area, not a subset. bug #126942. --mitch
-   */
-  x1 = floor (x1_f);
-  y1 = floor (y1_f);
-  x2 = ceil (x2_f);
-  y2 = ceil (y2_f);
-
-  gimp_display_shell_expose_area (shell, x1, y1, x2 - x1, y2 - y1);
+  g_signal_emit (proj, projection_signals[UPDATE], 0,
+                 now, x, y, w, h);
 }
+
+static void
+gimp_projection_invalidate (GimpProjection *proj,
+                            gint            x,
+                            gint            y,
+                            gint            w,
+                            gint            h)
+{
+  Tile        *tile;
+  TileManager *tm;
+  gint         i, j;
+
+  tm = gimp_projection_get_tiles (proj);
+
+  for (i = y; i < (y + h); i += (TILE_HEIGHT - (i % TILE_HEIGHT)))
+    for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
+      {
+	tile = tile_manager_get_tile (tm, j, i, FALSE, FALSE);
+
+        tile_invalidate_tile (&tile, tm, j, i);
+      }
+}
+
+static void
+gimp_projection_validate_tile (TileManager *tm,
+                               Tile        *tile)
+{
+  GimpProjection *proj = tile_manager_get_user_data (tm);
+  gint            x, y;
+  gint            w, h;
+
+  /*  Find the coordinates of this tile  */
+  tile_manager_get_tile_coordinates (tm, tile, &x, &y);
+  w = tile_ewidth  (tile);
+  h = tile_eheight (tile);
+
+  gimp_projection_construct (proj, x, y, w, h);
+}
+
+
+/*  image callbacks  */
+
+static void
+gimp_projection_image_update (GimpImage      *gimage,
+                              gint            x,
+                              gint            y,
+                              gint            w,
+                              gint            h,
+                              GimpProjection *proj)
+{
+  gimp_projection_add_update_area (proj, x, y, w, h);
+}
+
+static void
+gimp_projection_image_size_changed (GimpImage      *gimage,
+                                    GimpProjection *proj)
+{
+  gimp_projection_alloc_tiles (proj);
+  gimp_projection_add_update_area (proj, 0, 0, gimage->width, gimage->height);
+}
+
+static void
+gimp_projection_image_mode_changed (GimpImage      *gimage,
+                                    GimpProjection *proj)
+{
+  gimp_projection_alloc_tiles (proj);
+  gimp_projection_add_update_area (proj, 0, 0, gimage->width, gimage->height);
+}
+
+static void
+gimp_projection_image_flush (GimpImage      *gimage,
+                             GimpProjection *proj)
+{
+  gimp_projection_flush (proj);
+}
+

@@ -139,7 +139,6 @@
 #include "gimpdrawable.h"
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
-#include "gimpimage-projection.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimplist.h"

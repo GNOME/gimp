@@ -45,7 +45,6 @@
 #include "gimpimage-colormap.h"
 #include "gimpimage-guides.h"
 #include "gimpimage-preview.h"
-#include "gimpimage-projection.h"
 #include "gimpimage-qmask.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
@@ -55,6 +54,7 @@
 #include "gimplist.h"
 #include "gimpmarshal.h"
 #include "gimpparasitelist.h"
+#include "gimpprojection.h"
 #include "gimpselection.h"
 #include "gimptemplate.h"
 #include "gimpundostack.h"
@@ -116,7 +116,6 @@ static void     gimp_image_invalidate_preview    (GimpViewable   *viewable);
 static void     gimp_image_size_changed          (GimpViewable   *viewable);
 static gchar  * gimp_image_get_description       (GimpViewable   *viewable,
                                                   gchar         **tooltip);
-static void     gimp_image_real_mode_changed     (GimpImage      *gimage);
 static void     gimp_image_real_colormap_changed (GimpImage      *gimage,
 						  gint            color_index);
 static void     gimp_image_real_flush            (GimpImage      *gimage);
@@ -435,7 +434,7 @@ gimp_image_class_init (GimpImageClass *klass)
   viewable_class->get_new_preview     = gimp_image_get_new_preview;
   viewable_class->get_description     = gimp_image_get_description;
 
-  klass->mode_changed                 = gimp_image_real_mode_changed;
+  klass->mode_changed                 = NULL;
   klass->alpha_changed                = NULL;
   klass->floating_selection_changed   = NULL;
   klass->active_layer_changed         = NULL;
@@ -486,9 +485,7 @@ gimp_image_init (GimpImage *gimage)
 
   gimage->shadow                = NULL;
 
-  gimage->construct_flag        = FALSE;
-  gimage->proj_type             = GIMP_RGBA_IMAGE;
-  gimage->projection            = NULL;
+  gimage->projection            = gimp_projection_new (gimage);
 
   gimage->guides                = NULL;
 
@@ -631,7 +628,10 @@ gimp_image_finalize (GObject *object)
     }
 
   if (gimage->projection)
-    gimp_image_projection_free (gimage);
+    {
+      g_object_unref (gimage->projection);
+      gimage->projection = NULL;
+    }
 
   if (gimage->shadow)
     gimp_image_free_shadow (gimage);
@@ -739,7 +739,8 @@ gimp_image_get_memsize (GimpObject *object,
     memsize += tile_manager_get_memsize (gimage->shadow);
 
   if (gimage->projection)
-    memsize += tile_manager_get_memsize (gimage->projection);
+    memsize += gimp_object_get_memsize (GIMP_OBJECT (gimage->projection),
+                                        gui_size);
 
   memsize += gimp_g_list_get_memsize (gimage->guides, sizeof (GimpGuide));
 
@@ -819,8 +820,6 @@ gimp_image_size_changed (GimpViewable *viewable)
     }
 
   gimp_viewable_size_changed (GIMP_VIEWABLE (gimp_image_get_mask (gimage)));
-
-  gimp_image_projection_allocate (gimage);
 }
 
 static gchar *
@@ -844,13 +843,6 @@ gimp_image_get_description (GimpViewable  *viewable,
   g_free (basename);
 
   return retval;
-}
-
-static void
-gimp_image_real_mode_changed (GimpImage *gimage)
-{
-  gimp_image_projection_allocate (gimage);
-  gimp_image_update (gimage, 0, 0, gimage->width, gimage->height);
 }
 
 static void
@@ -3366,6 +3358,38 @@ gimp_image_pick_correlate_layer (const GimpImage *gimage,
     }
 
   return NULL;
+}
+
+gboolean
+gimp_image_coords_in_active_drawable (GimpImage        *gimage,
+                                      const GimpCoords *coords)
+{
+  GimpDrawable *drawable;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+
+  drawable = gimp_image_active_drawable (gimage);
+
+  if (drawable)
+    {
+      GimpItem *item = GIMP_ITEM (drawable);
+      gint      x, y;
+
+      gimp_item_offsets (item, &x, &y);
+
+      x = ROUND (coords->x) - x;
+      y = ROUND (coords->y) - y;
+
+      if (x < 0 || x > gimp_item_width (item))
+        return FALSE;
+
+      if (y < 0 || y > gimp_item_height (item))
+        return FALSE;
+
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 void

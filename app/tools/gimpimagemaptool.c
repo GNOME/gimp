@@ -34,6 +34,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-pick-color.h"
 #include "core/gimpimagemap.h"
+#include "core/gimpprojection.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimppropwidgets.h"
@@ -394,6 +395,7 @@ gimp_image_map_tool_flush (GimpImageMap     *image_map,
 {
   GimpTool *tool = GIMP_TOOL (image_map_tool);
 
+  gimp_projection_flush_now (tool->gdisp->gimage->projection);
   gimp_display_flush_now (tool->gdisp);
 }
 

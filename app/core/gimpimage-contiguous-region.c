@@ -33,7 +33,7 @@
 #include "gimpchannel.h"
 #include "gimpimage.h"
 #include "gimpimage-contiguous-region.h"
-#include "gimpimage-projection.h"
+#include "gimpprojection.h"
 
 
 /*  local function prototypes  */
@@ -104,13 +104,14 @@ gimp_image_contiguous_region_by_seed (GimpImage    *gimage,
 
   if (sample_merged)
     {
-      pixel_region_init (&srcPR, gimp_image_projection (gimage), 0, 0,
-			 gimage->width, gimage->height, FALSE);
+      GimpProjection *projection = gimage->projection;
 
-      src_type  = gimp_image_projection_type (gimage);
-      has_alpha =
-        GIMP_IMAGE_TYPE_HAS_ALPHA (gimp_image_projection_type (gimage));
-      bytes     = gimp_image_projection_bytes (gimage);
+      pixel_region_init (&srcPR, gimp_projection_get_tiles (projection),
+                         0, 0, gimage->width, gimage->height, FALSE);
+
+      src_type  = gimp_projection_get_image_type (projection);
+      has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (src_type);
+      bytes     = gimp_projection_get_bytes (projection);
     }
   else
     {
@@ -216,17 +217,16 @@ gimp_image_contiguous_region_by_color (GimpImage     *gimage,
   /*  Get the image information  */
   if (sample_merged)
     {
-      bytes     = gimp_image_projection_bytes (gimage);
-      d_type    = gimp_image_projection_type (gimage);
+      bytes     = gimp_projection_get_bytes (gimage->projection);
+      d_type    = gimp_projection_get_image_type (gimage->projection);
       has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (d_type);
       indexed   = GIMP_IMAGE_TYPE_IS_INDEXED (d_type);
       width     = gimage->width;
       height    = gimage->height;
 
-      pixel_region_init (&imagePR, gimp_image_projection (gimage),
-			 0, 0,
-                         width, height,
-                         FALSE);
+      pixel_region_init (&imagePR,
+                         gimp_projection_get_tiles (gimage->projection),
+			 0, 0, width, height, FALSE);
     }
   else
     {
@@ -238,9 +238,7 @@ gimp_image_contiguous_region_by_color (GimpImage     *gimage,
       height    = gimp_item_height (GIMP_ITEM (drawable));
 
       pixel_region_init (&imagePR, gimp_drawable_data (drawable),
-			 0, 0,
-                         width, height,
-                         FALSE);
+			 0, 0, width, height, FALSE);
     }
 
   if (has_alpha)

@@ -22,8 +22,6 @@ libappdisplay_a_sources = \
 	gimpdisplay.h				\
 	gimpdisplayoptions.c			\
 	gimpdisplayoptions.h			\
-	gimpdisplay-area.c			\
-	gimpdisplay-area.h			\
 	gimpdisplay-foreach.c			\
 	gimpdisplay-foreach.h			\
 	gimpdisplay-handlers.c			\

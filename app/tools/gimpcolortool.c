@@ -268,7 +268,7 @@ gimp_color_tool_cursor_update (GimpTool        *tool,
           coords->y > 0 && coords->y < gdisp->gimage->height &&
 
           (color_tool->options->sample_merged ||
-           gimp_display_coords_in_active_drawable (gdisp, coords)))
+           gimp_image_coords_in_active_drawable (gdisp->gimage, coords)))
         {
           cursor = GIMP_CURSOR_COLOR_PICKER;
         }

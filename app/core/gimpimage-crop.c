@@ -31,11 +31,11 @@
 #include "gimpimage.h"
 #include "gimpimage-crop.h"
 #include "gimpimage-guides.h"
-#include "gimpimage-projection.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"
 #include "gimplist.h"
+#include "gimpprojection.h"
 
 #include "gimp-intl.h"
 
@@ -293,9 +293,9 @@ gimp_image_crop_auto_shrink (GimpImage *gimage,
   else
     {
       has_alpha      = TRUE;
-      bytes          = gimp_image_projection_bytes (gimage);
-      get_color_obj  = G_OBJECT (gimage);
-      get_color_func = (GetColorFunc) gimp_image_projection_get_color_at;
+      bytes          = gimp_projection_get_bytes (gimage->projection);
+      get_color_obj  = G_OBJECT (gimage->projection);
+      get_color_func = (GetColorFunc) gimp_projection_get_color_at;
    }
 
   switch (gimp_image_crop_guess_bgcolor (get_color_obj, get_color_func,
@@ -320,7 +320,7 @@ gimp_image_crop_auto_shrink (GimpImage *gimage,
     pixel_region_init (&PR, gimp_drawable_data (active_drawable),
 		       x1, y1, width, height, FALSE);
   else
-    pixel_region_init (&PR, gimp_image_projection (gimage),
+    pixel_region_init (&PR, gimp_projection_get_tiles (gimage->projection),
 		       x1, y1, width, height, FALSE);
 
   /* The following could be optimized further by processing

@@ -39,6 +39,7 @@
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimplayer-floating-sel.h"
+#include "core/gimpprojection.h"
 #include "core/gimpselection.h"
 #include "core/gimpundostack.h"
 
@@ -742,7 +743,7 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
 	  }
       }
 
-    gimp_display_flush (gdisp);
+    gimp_projection_flush (gdisp->gimage->projection);
   }
   /********************************************************************/
   /********************************************************************/

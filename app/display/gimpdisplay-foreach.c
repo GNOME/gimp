@@ -102,25 +102,6 @@ gimp_displays_delete (Gimp *gimp)
     }
 }
 
-/* Force all gdisplays to finish their idlerender projection */
-void
-gimp_displays_finish_draw (Gimp *gimp)
-{
-  GList       *list;
-  GimpDisplay *gdisp;
-
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  for (list = GIMP_LIST (gimp->displays)->list;
-       list;
-       list = g_list_next (list))
-    {
-      gdisp = (GimpDisplay *) list->data;
-
-      gimp_display_finish_draw (gdisp);
-    }
-}
-
 void
 gimp_displays_reconnect (Gimp      *gimp,
                          GimpImage *old,

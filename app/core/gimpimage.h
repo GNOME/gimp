@@ -124,12 +124,7 @@ struct _GimpImage
 
   TileManager       *shadow;                /*  shadow buffer tiles          */
 
-  /*  Projection attributes  */
-  gboolean           construct_flag;        /*  flag for construction        */
-  GimpImageType      proj_type;             /*  type of the projection image */
-  gint               proj_bytes;            /*  bpp in projection image      */
-  TileManager       *projection;            /*  The projection--layers &     */
-                                            /*  channels                     */
+  GimpProjection    *projection;            /*  projection layers & channels */
 
   GList             *guides;                /*  guides                       */
   GimpGrid          *grid;                  /*  grid                         */
@@ -493,6 +488,8 @@ gboolean        gimp_image_layer_boundary        (const GimpImage    *gimage,
 GimpLayer     * gimp_image_pick_correlate_layer  (const GimpImage    *gimage,
 						  gint                x,
 						  gint                y);
+gboolean    gimp_image_coords_in_active_drawable (GimpImage          *gimage,
+                                                  const GimpCoords   *coords);
 
 void        gimp_image_invalidate_layer_previews (GimpImage          *gimage);
 void      gimp_image_invalidate_channel_previews (GimpImage          *gimage);

@@ -1255,10 +1255,29 @@ gimp_display_shell_flush (GimpDisplayShell *shell,
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
+  if (! shell->select)
+    {
+      g_warning ("%s: called unrealized", G_STRFUNC);
+      return;
+    }
+
   gimp_display_shell_update_title (shell);
 
   if (now)
-    gdk_window_process_updates (shell->canvas->window, FALSE);
+    {
+      gdk_window_process_updates (shell->canvas->window, FALSE);
+    }
+  else
+    {
+      GimpContext *user_context;
+
+      gimp_ui_manager_update (shell->menubar_manager, shell);
+
+      user_context = gimp_get_user_context (shell->gdisp->gimage->gimp);
+
+      if (shell->gdisp == gimp_context_get_display (user_context))
+        gimp_ui_manager_update (shell->popup_manager, shell);
+    }
 }
 
 void

@@ -16,11 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_DISPLAY_H__
-#define __GIMP_DISPLAY_H__
+#ifndef __GIMP_PROJECTION_H__
+#define __GIMP_PROJECTION_H__
 
 
-#include "core/gimpobject.h"
+#include "gimpobject.h"
 
 
 typedef struct _IdleRenderStruct IdleRenderStruct;
@@ -38,67 +38,60 @@ struct _IdleRenderStruct
 };
 
 
-#define GIMP_TYPE_DISPLAY            (gimp_display_get_type ())
-#define GIMP_DISPLAY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DISPLAY, GimpDisplay))
-#define GIMP_DISPLAY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DISPLAY, GimpDisplayClass))
-#define GIMP_IS_DISPLAY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DISPLAY))
-#define GIMP_IS_DISPLAY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DISPLAY))
-#define GIMP_DISPLAY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DISPLAY, GimpDisplayClass))
+#define GIMP_TYPE_PROJECTION            (gimp_projection_get_type ())
+#define GIMP_PROJECTION(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PROJECTION, GimpProjection))
+#define GIMP_PROJECTION_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PROJECTION, GimpProjectionClass))
+#define GIMP_IS_PROJECTION(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PROJECTION))
+#define GIMP_IS_PROJECTION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PROJECTION))
+#define GIMP_PROJECTION_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PROJECTION, GimpProjectionClass))
 
 
-typedef struct _GimpDisplayClass GimpDisplayClass;
+typedef struct _GimpProjectionClass GimpProjectionClass;
 
-struct _GimpDisplay
+struct _GimpProjection
 {
-  GimpObject  parent_instance;
+  GimpObject        parent_instance;
 
-  gint        ID;               /*  unique identifier for this gdisplay     */
+  GimpImage        *gimage;
 
-  GimpImage  *gimage;	        /*  pointer to the associated gimage        */
-  gint        instance;         /*  the instance # of this gdisplay as      */
-                                /*  taken from the gimage at creation       */
+  GimpImageType     type;
+  gint              bytes;
+  TileManager      *tiles;
 
-  GtkWidget  *shell;            /*  shell widget for this gdisplay          */
+  GSList           *update_areas;
+  IdleRenderStruct  idle_render;
 
-  GSList     *update_areas;     /*  Update areas list                       */
-
-  IdleRenderStruct idle_render; /*  state of this gdisplay's render thread  */
+  gboolean          construct_flag;
 };
 
-struct _GimpDisplayClass
+struct _GimpProjectionClass
 {
   GimpObjectClass  parent_class;
+
+  void (* update) (GimpProjection *gimage,
+                   gboolean        now,
+                   gint            x,
+                   gint            y,
+                   gint            width,
+                   gint            height);
 };
 
 
-GType         gimp_display_get_type             (void) G_GNUC_CONST;
+GType            gimp_projection_get_type       (void) G_GNUC_CONST;
 
-GimpDisplay * gimp_display_new                  (GimpImage       *gimage,
-                                                 GimpUnit         unit,
-                                                 gdouble          scale,
-                                                 GimpMenuFactory *menu_factory,
-                                                 GimpUIManager   *popup_manager);
-void          gimp_display_delete               (GimpDisplay     *gdisp);
+GimpProjection * gimp_projection_new            (GimpImage            *gimage);
 
-gint          gimp_display_get_ID               (GimpDisplay     *gdisp);
-GimpDisplay * gimp_display_get_by_ID            (Gimp            *gimp,
-                                                 gint             ID);
+TileManager    * gimp_projection_get_tiles      (GimpProjection       *proj);
+GimpImageType	 gimp_projection_get_image_type (const GimpProjection *proj);
+gint             gimp_projection_get_bytes      (const GimpProjection *proj);
+gdouble          gimp_projection_get_opacity    (const GimpProjection *proj);
 
-void          gimp_display_reconnect            (GimpDisplay     *gdisp,
-                                                 GimpImage       *gimage);
+guchar         * gimp_projection_get_color_at   (GimpProjection       *proj,
+                                                 gint                  x,
+                                                 gint                  y);
 
-void          gimp_display_add_update_area      (GimpDisplay     *gdisp,
-                                                 gint             x,
-                                                 gint             y,
-                                                 gint             w,
-                                                 gint             h);
+void             gimp_projection_flush          (GimpProjection       *proj);
+void             gimp_projection_flush_now      (GimpProjection       *proj);
 
-void          gimp_display_flush                (GimpDisplay     *gdisp);
-void          gimp_display_flush_now            (GimpDisplay     *gdisp);
 
-void          gimp_display_finish_draw          (GimpDisplay     *gdisp);
-
-gboolean gimp_display_coords_in_active_drawable (GimpDisplay      *gdisp,
-                                                 const GimpCoords *coords);
-
-#endif /*  __GIMP_DISPLAY_H__  */
+#endif /*  __GIMP_PROJECTION_H__  */

@@ -44,8 +44,8 @@
 #include "gimpcontainer.h"
 #include "gimpgradient.h"
 #include "gimpimage.h"
-#include "gimpimage-projection.h"
 #include "gimppalette.h"
+#include "gimpprojection.h"
 
 #include "gimp-intl.h"
 
@@ -290,15 +290,15 @@ gimp_palette_import_from_image (GimpImage   *gimage,
   g_return_val_if_fail (threshold > 0, NULL);
 
   /*  Get the image information  */
-  d_type    = gimp_image_projection_type (gimage);
-  bytes     = gimp_image_projection_bytes (gimage);
+  d_type    = gimp_projection_get_image_type (gimage->projection);
+  bytes     = gimp_projection_get_bytes (gimage->projection);
   has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (d_type);
   indexed   = GIMP_IMAGE_TYPE_IS_INDEXED (d_type);
   width     = gimage->width;
   height    = gimage->height;
 
-  pixel_region_init (&imagePR, gimp_image_projection (gimage), 0, 0,
-		     width, height, FALSE);
+  pixel_region_init (&imagePR, gimp_projection_get_tiles (gimage->projection),
+                     0, 0, width, height, FALSE);
 
   alpha = bytes - 1;
 

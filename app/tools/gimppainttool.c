@@ -35,6 +35,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimppaintinfo.h"
+#include "core/gimpprojection.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimpunit.h"
 
@@ -461,6 +462,7 @@ gimp_paint_tool_button_press (GimpTool        *tool,
       gimp_paint_core_paint (core, drawable, paint_options, MOTION_PAINT, time);
     }
 
+  gimp_projection_flush_now (gdisp->gimage->projection);
   gimp_display_flush_now (gdisp);
 
   gimp_draw_tool_start (draw_tool, gdisp);
@@ -541,6 +543,7 @@ gimp_paint_tool_motion (GimpTool        *tool,
 
   gimp_paint_core_interpolate (core, drawable, paint_options, time);
 
+  gimp_projection_flush_now (gdisp->gimage->projection);
   gimp_display_flush_now (gdisp);
 
   paint_tool->brush_x = coords->x;

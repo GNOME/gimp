@@ -228,7 +228,7 @@ gimp_image_scale_check (const GimpImage *gimage,
     gimp_object_get_memsize (GIMP_OBJECT (gimage->layers), NULL)         +
     gimp_object_get_memsize (GIMP_OBJECT (gimage->channels), NULL)       +
     gimp_object_get_memsize (GIMP_OBJECT (gimage->selection_mask), NULL) +
-    tile_manager_get_memsize (gimage->projection);
+    gimp_object_get_memsize (GIMP_OBJECT (gimage->projection), NULL);
 
   undo_size = gimp_object_get_memsize (GIMP_OBJECT (gimage->undo_stack), NULL);
   redo_size = gimp_object_get_memsize (GIMP_OBJECT (gimage->redo_stack), NULL);

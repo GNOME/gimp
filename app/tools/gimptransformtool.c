@@ -460,6 +460,9 @@ gimp_transform_tool_button_release (GimpTool        *tool,
     {
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
+      /* get rid of preview artifacts left outside the drawable's area */
+      gimp_transform_tool_expose_preview (tr_tool);
+
       /*  Restore the previous transformation info  */
       for (i = 0; i < TRAN_INFO_SIZE; i++)
         tr_tool->trans_info[i] = tr_tool->old_trans_info[i];
@@ -658,7 +661,8 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
                   {
                     cursor = GIMP_CURSOR_BAD;
                   }
-                else if (gimp_display_coords_in_active_drawable (gdisp, coords))
+                else if (gimp_image_coords_in_active_drawable (gdisp->gimage,
+                                                               coords))
                   {
                     if (gimp_channel_is_empty (selection) ||
                         gimp_channel_value (selection, coords->x, coords->y))

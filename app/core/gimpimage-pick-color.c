@@ -27,7 +27,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-pick-color.h"
-#include "core/gimpimage-projection.h"
+#include "core/gimpprojection.h"
 
 
 gboolean
@@ -55,11 +55,11 @@ gimp_image_pick_color (GimpImage     *gimage,
 
   if (sample_merged)
     {
-      my_sample_type = gimp_image_projection_type (gimage);
+      my_sample_type = gimp_projection_get_image_type (gimage->projection);
       is_indexed     = FALSE;
 
-      color_func = (GimpImagePickColorFunc) gimp_image_projection_get_color_at;
-      color_obj  = GIMP_OBJECT (gimage);
+      color_func = (GimpImagePickColorFunc) gimp_projection_get_color_at;
+      color_obj  = GIMP_OBJECT (gimage->projection);
     }
   else
     {
