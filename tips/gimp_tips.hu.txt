@@ -80,50 +80,49 @@ A fájlkiválasztó párbeszédablak kiegészíti a fájlnevet Tab billentyûre,
 pont mint a shell. Írd be a fájlnév elejét, nyomd le a TAB-ot, és láss csodát:
 kiegészül!
 
-You can reassign shortcut keys on any menu by bringing up the menu,
-selecting a menu item, and pressing the new shortcut key combination.
-This is dynamic and is saved when you exit GIMP.
+Megváltoztathatod a menükhöz rendelt gyorsbillentyûket: válassz ki egy menüelemet
+nyomd le az új gyorsbillentyû-kombinációt. A hozzárendelés megváltoztatása dinamikus, az
+új beállításokat a GIMP kilépés után is megjegyzi.
 
-You can use the middle mouse button to pan around
-the image, if it's larger than its display window.
+Az egér középsõ gombja segítségével csúsztathatod a képet az ablakban, 
+ha ez utóbbi kisebb, mint a kép. 
 
-Click and drag on a ruler to place a Guide on an image.  All
-dragged selections will snap to the guides.  You can remove
-guides by dragging them off the image with the Move tool.
+A vonalzóról segédvonalakat húzhatsz a képre. Minden egérrel húzott kijelölés
+a segédvonalakhoz ugrik. Ha már nincs rájuk szükséged, a vonalakat egyszerûen 
+lehúzhatod a képrõl.
 
-You can drag a layer from the "Layers, Channels and Paths" dialog
-and drop it onto the toolbox.  This will create a new image
-containing only that layer.
+A "Rétegek, csatornák és útvonalak" párbeszédablakból kihúzhatsz
+egy réteget és rádobhatot az eszköztárra. Ilyenkor új kép jön létre,
+csak az adott rétegbõl.
 
-A Floating Selection must be anchored to a new layer or to the last
-active layer before doing other operations on the image.  Click on the
-New Layer or Anchor Layer buttons in the "Layers, Channels and Paths"
-dialog, or use the menus to do the same.
+A lebegõ kijelölést egy új - vagy a legutolsó aktív - réteghez kell kötni, mielõtt
+más mûveletet hajthatsz végre a képen. Kattints az Új réteg vagy a Réteg rögzítése
+gombra a "Rétegek, csatornák és útvonalak" ablakban. Ez a két utasítás a menüben 
+is megtalálható.
 
-The GIMP supports gzip compression on the fly.  Just add
-".gz" (or ".bz2", if you have bzip2 installed) to the filename
-and your image will be saved compressed.  Of course loading
-compressed images works too.
+A GIMP támogatja a menet közbeni tömörítést. Csak add hozzá a fájlnévhez a 
+".gz" kiterjesztést (használhatod a ".bz2"-t is, ha van a gépeden bzip2) 
+és a GIMP tömörítve menti el a képet. 
+Természetesen a tömörített képek betöltése is mûködik.
 
-Pressing and holding the Shift key before making a selection allows
-you to add to the current selection instead of replacing it.  Using
-Ctrl before making a selection subtracts from the current one.
+Ha kijelöléskor nyomvatartod a Shift gombot, az új kijelölés hozzáadódik a 
+régihez. Ha a Controlt tartod nyomva, kivonódik a régibõl.
 
-You can press or release the Shift and Ctrl keys while you are
-making a selection in order to constrain it to a perfect square
-or circle, or to have it centered on its starting point.
+Tökéletes négyzet vagy kör alakú kijelölést készíthetsz, ha nyomva tartod a Shift gombot.
+A kijelölés középpontját beállíthatod arra a pontra, ahonnan elkezded húzni a kijelölést,
+a Control gomb lenyomásával.
 
-Using Edit->Stroke allows you to draw simple squares or circles by
-painting the edge of your current selection with the active brush.
-More complex shapes can be drawn with Filters->Render->Gfig.
+A Szerkesztés -> Körberajzolás segítségével egyszerû köröket vagy téglalapokat 
+készíthetsz az éppen bekapcsolt ecsettel. Ha összetettebb alakzatokat szeretnél rajzolni,
+használd a Szûrõk->Megjelenítés->Gfig menüpontot.
 
-If you stroke a path (Edit->Stroke), the current drawing tool and its
-settings are used.  You can use the Paintbrush in gradient mode, the
-Clone tool with a pattern or even the Eraser or the Smudge tool.
+Ha útvonalat rajzolsz körbe (Szerkesztés->Körberajzolás), a program az
+aktuális rajzeszközt és beállításokat használja. Használhatsz ecsetet
+színátmenet módban, másolót mintával, vagy radírt.
 
-You can create and edit complex selections using the Bezier tool.
-The "Paths" tab in the "Layers, Channels and Paths" dialog allows
-you to work on multiple paths and to convert them to selections.
+Összetett kijelöléseket hozhatsz létre a Bezier-kijelöléssel.
+A "Rétegek, csatornák és útvonalak" ablakban az "Útvonalak" fül segítségével
+egyszerre több útvonallal is dolgozhatsz, majd kijelöléssé akalíthatod ezeket.
 
 You can use the paint tools to change the selection.  Click on the
 Quick Mask button at the bottom left of an image window.  Change your

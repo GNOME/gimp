@@ -1,3 +1,7 @@
+2001-08-11  Emese Kovacs <emese@gnome.hu>
+
+	* tips/gimp_tips.hu.txt: Updated Hungarian translation
+
 2001-08-07  Emese Kovacs <emese@gnome.hu>
 
         * tips/Makefile.am|makefile.mingw: Added gimp_tips.hu.txt to the
