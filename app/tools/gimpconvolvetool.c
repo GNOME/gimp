@@ -41,7 +41,6 @@
 
 #include "drawable.h"
 #include "gdisplay.h"
-#include "selection.h"
 
 #include "libgimp/gimpintl.h"
 

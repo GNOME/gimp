@@ -38,7 +38,6 @@
 #include "palette-select.h"
 
 #include "context_manager.h"
-#include "floating_sel.h"
 
 #include "libgimp/gimpintl.h"
 

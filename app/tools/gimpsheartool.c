@@ -35,7 +35,6 @@
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
 #include "gimpprogress.h"
-#include "selection.h"
 #include "undo.h"
 
 #include "gimpsheartool.h"

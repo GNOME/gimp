@@ -45,7 +45,6 @@
 
 #include "context_manager.h"
 #include "dialog_handler.h"
-#include "gimage.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"

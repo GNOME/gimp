@@ -37,10 +37,8 @@
 #include "core/gimpimage-mask.h"
 #include "core/gimplayer.h"
 
-#include "floating_sel.h"
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
-#include "selection.h"
 #include "undo.h"
 #include "path_transform.h"
 

@@ -50,6 +50,9 @@
 #ifdef G_OS_WIN32
 #include <fcntl.h>
 #include <io.h>
+#ifndef S_ISREG
+#define S_ISREG(m) (((m) & _S_IFMT) == _S_IFREG)
+#endif
 #endif
 
 #ifdef G_WITH_CYGWIN
@@ -101,7 +104,6 @@
 #include "appenv.h"
 #include "datafiles.h"
 #include "errors.h"
-#include "general.h"
 #include "gimpprogress.h"
 #include "gimprc.h"
 #include "plug_in.h"
@@ -188,6 +190,8 @@ static void       plug_in_args_destroy   (Argument   *args,
 					  gboolean    full_destroy);
 static void       plug_in_init_shm       (void);
 
+static gchar    * plug_in_search_in_path (gchar      *search_path,
+					  gchar      *filename);
 
 PlugIn *current_plug_in = NULL;
 GSList *proc_defs       = NULL;
@@ -849,10 +853,11 @@ plug_in_new (gchar *name)
   PlugIn *plug_in;
   gchar  *path;
 
-  if (!g_path_is_absolute (name))
+  if (! g_path_is_absolute (name))
     {
-      path = search_in_path (plug_in_path, name);
-      if (!path)
+      path = plug_in_search_in_path (plug_in_path, name);
+
+      if (! path)
 	{
 	  g_message (_("Unable to locate Plug-In: \"%s\""), name);
 	  return NULL;
@@ -3527,4 +3532,42 @@ plug_in_progress_update (PlugIn  *plug_in,
     plug_in_progress_init (plug_in, NULL, -1);
   
   progress_update (plug_in->progress, percentage);
+}
+
+static gchar *
+plug_in_search_in_path (gchar *search_path,
+			gchar *filename)
+{
+  static gchar  path[256];
+  gchar        *local_path;
+  gchar        *token;
+  gchar        *next_token;
+  struct stat   buf;
+  gint          err;
+
+  local_path = g_strdup (search_path);
+  next_token = local_path;
+  token      = strtok (next_token, G_SEARCHPATH_SEPARATOR_S);
+
+  while (token)
+    {
+      sprintf (path, "%s", token);
+
+      if (token[strlen (token) - 1] != G_DIR_SEPARATOR)
+	strcat (path, G_DIR_SEPARATOR_S);
+      strcat (path, filename);
+
+      err = stat (path, &buf);
+      if (!err && S_ISREG (buf.st_mode))
+	{
+	  token = path;
+	  break;
+	}
+
+      token = strtok (NULL, G_SEARCHPATH_SEPARATOR_S);
+    }
+
+  g_free (local_path);
+
+  return token;
 }

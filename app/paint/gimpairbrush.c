@@ -37,7 +37,6 @@
 
 #include "drawable.h"
 #include "gdisplay.h"
-#include "selection.h"
 
 #include "gimpairbrushtool.h"
 #include "paint_options.h"

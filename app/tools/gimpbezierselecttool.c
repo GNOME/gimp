@@ -45,8 +45,6 @@
 
 #include "gui/paths-dialog.h"
 
-#include "floating_sel.h"
-
 #include "gimpeditselectiontool.h"
 #include "gimpbezierselecttool.h"
 #include "selection_options.h"

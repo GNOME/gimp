@@ -53,7 +53,6 @@
 #include "gimpui.h"
 #include "global_edit.h"
 #include "plug_in.h"
-#include "selection.h"
 #include "undo.h"
 
 #include "gimpeditselectiontool.h"

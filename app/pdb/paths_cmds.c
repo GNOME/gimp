@@ -29,7 +29,6 @@
 #include "procedural_db.h"
 
 #include "core/gimpimage.h"
-#include "gimage.h"
 #include "path.h"
 #include "pathP.h"
 

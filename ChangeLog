@@ -1,3 +1,37 @@
+2001-05-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/general.[ch]: removed search_in_path() and the unused
+	xstrsep().
+
+	* app/plug_in.c: added plug_in_search_in_path(), don't include
+	"general.h".
+
+	* app/gimprc.c
+	* app/image_render.c
+	* app/gui/convert-dialog.c
+	* app/gui/palette-editor.c
+	* app/gui/paths-dialog.c
+	* app/pdb/paths_cmds.c
+	* app/tools/gimpairbrushtool.c
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/gimperasertool.c
+	* app/tools/gimpfliptool.c
+	* app/tools/gimppaintbrushtool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimppenciltool.c
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpsheartool.c
+	* app/tools/gimpsmudgetool.c
+	* app/tools/gimptexttool.c
+	* tools/pdbgen/pdb/paths.pdb: removed useless includes.
+
 2001-05-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimpcontextpreview.[ch]: removed (was not used).

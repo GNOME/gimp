@@ -35,7 +35,6 @@
 #include "core/gimpimage.h"
 
 #include "gdisplay.h"
-#include "selection.h"
 
 #include "gimppenciltool.h"
 #include "gimppainttool.h"

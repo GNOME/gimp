@@ -31,11 +31,9 @@
 
 #include "gui/info-dialog.h"
 
-#include "floating_sel.h"
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
 #include "gimpprogress.h"
-#include "selection.h"
 #include "undo.h"
 #include "path_transform.h"
 

@@ -59,7 +59,6 @@
 #include "gimpparasite.h"
 #include "gimprc.h"
 #include "plug_in.h"
-#include "gimage.h"
 
 #include "libgimp/gimpenv.h"
 #include "libgimp/gimputils.h"

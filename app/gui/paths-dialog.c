@@ -44,7 +44,6 @@
 #include "ops_buttons.h"
 #include "paths-dialog.h"
 
-#include "floating_sel.h"
 #include "gimprc.h"
 #include "image_render.h"
 #include "path.h"

@@ -30,7 +30,6 @@
 #include "gdisplay.h"
 #include "gimpprogress.h"
 #include "gui/info-dialog.h"
-#include "selection.h"
 #include "undo.h"
 
 #include "gimpperspectivetool.h"

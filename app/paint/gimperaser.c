@@ -34,7 +34,6 @@
 #include "core/gimpimage.h"
 
 #include "gdisplay.h"
-#include "selection.h"
 
 #include "gimperasertool.h"
 #include "paint_options.h"

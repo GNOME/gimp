@@ -47,7 +47,6 @@
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimpui.h"
-#include "selection.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -35,7 +35,6 @@
 #include "gimprc.h"
 #include "gximage.h"
 #include "image_render.h"
-#include "scale.h"
 
 
 #define MAX_PREVIEW_SIZE 256  /* EEK */

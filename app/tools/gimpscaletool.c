@@ -33,7 +33,6 @@
 
 #include "drawable.h"
 #include "gimpprogress.h"
-#include "selection.h"
 #include "undo.h"
 
 #include "gimpscaletool.h"

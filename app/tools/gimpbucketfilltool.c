@@ -43,7 +43,6 @@
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimprc.h"
-#include "selection.h"
 #include "undo.h"
 
 #include "gimpbucketfilltool.h"

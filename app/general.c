@@ -26,95 +26,32 @@
 #include <time.h>
 
 #ifdef G_OS_WIN32
-#ifndef S_ISREG
-#define S_ISREG(m) (((m) & _S_IFMT) == _S_IFREG)
-#endif
 #endif
 
 #include "general.h"
 
-char*
-search_in_path (char *search_path,
-		char *filename)
-{
-  static char path[256];
-  gchar *local_path;
-  gchar *token;
-  gchar *next_token;
-  struct stat buf;
-  int err;
-
-  local_path = g_strdup (search_path);
-  next_token = local_path;
-  token = strtok (next_token, G_SEARCHPATH_SEPARATOR_S);
-
-  while (token)
-    {
-      sprintf (path, "%s", token);
-
-      if (token[strlen (token) - 1] != G_DIR_SEPARATOR)
-	strcat (path, G_DIR_SEPARATOR_S);
-      strcat (path, filename);
-
-      err = stat (path, &buf);
-      if (!err && S_ISREG (buf.st_mode))
-	{
-	  token = path;
-	  break;
-	}
-
-      token = strtok (NULL, G_SEARCHPATH_SEPARATOR_S);
-    }
-
-  g_free (local_path);
-  return token;
-}
-
 /*****/
 
-/* FIXME: This is straight from the GNU libc sources.  We should use
- * autoconf to test for a system having strsep() and similar
- * stuff... then use HAVE_STRSEP to decide whether to include or not
- * our own functions.
- */
 
-char *
-xstrsep (char **pp,
-	 char  *delim)
-{
-  char *p, *q;
+gchar   *token_str;
+gchar   *token_sym;
+gdouble  token_num;
+gint     token_int;
 
-  if (!(p = *pp))
-    return NULL;
-  if ((q = strpbrk (p, delim))) {
-    *pp = q + 1;
-    *q = '\0';
-  } else
-    *pp = NULL;
-
-  return p;
-} /* xstrsep */
-
-
-char *token_str;
-char *token_sym;
-double token_num;
-int token_int;
-
-int
+gint
 get_token (ParseInfo *info)
 {
-  char *buffer;
-  char *tokenbuf;
-  int tokenpos = 0;
-  int state;
-  int count;
-  int slashed;
+  gchar *buffer;
+  gchar *tokenbuf;
+  gint   tokenpos = 0;
+  gint   state;
+  gint   count;
+  gint   slashed;
 
-  state = 0;
-  buffer = info->buffer;
+  state    = 0;
+  buffer   = info->buffer;
   tokenbuf = info->tokenbuf;
-  slashed = FALSE;
+  slashed  = FALSE;
 
   while (1)
     {
@@ -286,14 +223,14 @@ get_token (ParseInfo *info)
 /* Parse "line" and look for a string of characters without spaces
    following a '(' and copy them into "token_r".  Return the number of
    characters stored, or 0. */
-int
-find_token (char *line,
-	    char *token_r,
-	    int maxlen)
+gint
+find_token (gchar *line,
+	    gchar *token_r,
+	    gint   maxlen)
 {
-  char *sp;
-  char *dp;
-  int   i;
+  gchar *sp;
+  gchar *dp;
+  gint   i;
 
   /* FIXME: This should be replaced by a more intelligent parser which
      checks for '\', '"' and nested parentheses.  See get_token().  */
@@ -329,25 +266,29 @@ find_token (char *line,
    buffer (21 bytes).  If strict is FALSE, the 'T' between the date
    and the time is replaced by a space, which makes the format a bit
    more readable (IMHO). */
-char *
-iso_8601_date_format (char *user_buf, int strict)
+const gchar *
+iso_8601_date_format (gchar *user_buf,
+		      gint   strict)
 {
-  static char static_buf[21];
-  char *buf;
-  time_t clock;
-  struct tm *now;
+  static gchar  static_buf[21];
+  gchar        *buf;
+  time_t        clock;
+  struct tm    *now;
 
   if (user_buf != NULL)
     buf = user_buf;
   else
     buf = static_buf;
+
   clock = time (NULL);
   now = gmtime (&clock);
+
   /* date format derived from ISO 8601:1988 */
-  sprintf(buf, "%04d-%02d-%02d%c%02d:%02d:%02d%c",
-	  now->tm_year + 1900, now->tm_mon + 1, now->tm_mday,
-	  (strict ? 'T' : ' '),
-	  now->tm_hour, now->tm_min, now->tm_sec,
-	  (strict ? 'Z' : '\000'));
+  sprintf (buf, "%04d-%02d-%02d%c%02d:%02d:%02d%c",
+	   now->tm_year + 1900, now->tm_mon + 1, now->tm_mday,
+	   (strict ? 'T' : ' '),
+	   now->tm_hour, now->tm_min, now->tm_sec,
+	   (strict ? 'Z' : '\000'));
+
   return buf;
 }

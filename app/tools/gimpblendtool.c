@@ -49,7 +49,6 @@
 #include "errors.h"
 #include "gdisplay.h"
 #include "gimpprogress.h"
-#include "selection.h"
 #include "undo.h"
 
 #include "gimpblendtool.h"
