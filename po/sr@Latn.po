@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-17 05:41+0200\n"
-"PO-Revision-Date: 2003-09-17 05:40+0200\n"
+"POT-Creation-Date: 2003-09-19 01:02+0200\n"
+"PO-Revision-Date: 2003-09-19 01:02+0200\n"
 "Last-Translator: Branko Ivanović <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@bogus.example.com>\n"
 "MIME-Version: 1.0\n"
@@ -769,7 +769,7 @@ msgid "When enabled, pressing F1 will open the help browser."
 msgstr "Kada je uključeno, pritiskanjem na F1 otvarate čitač za pomoć."
 
 #: app/config/gimpscanner.c:90 app/tools/gimpcurvestool.c:1292
-#: app/tools/gimplevelstool.c:1490 app/vectors/gimpvectors-export.c:75
+#: app/tools/gimplevelstool.c:1490 app/vectors/gimpvectors-export.c:79
 #, c-format
 msgid "Failed to open file: '%s': %s"
 msgstr "Nisam uspeo da otvorim datoteku: „'%s“: %s"
@@ -1176,7 +1176,7 @@ msgstr "Prikači parazita"
 msgid "Remove Parasite"
 msgstr "Odstrani parazita"
 
-#: app/core/core-enums.c:521 app/vectors/gimpvectors-import.c:175
+#: app/core/core-enums.c:521 app/vectors/gimpvectors-import.c:198
 msgid "Import Paths"
 msgstr "Uvezi putanje"
 
@@ -1219,7 +1219,7 @@ msgstr "Podesi povezani predmet"
 
 #: app/core/core-enums.c:537 app/gui/layers-commands.c:633
 #: app/gui/layers-commands.c:665 app/gui/layers-commands.c:697
-#: app/widgets/gimpdrawabletreeview.c:219 app/widgets/gimplayertreeview.c:208
+#: app/widgets/gimpdrawabletreeview.c:219 app/widgets/gimplayertreeview.c:210
 msgid "New Layer"
 msgstr "Novi sloj"
 
@@ -1258,7 +1258,7 @@ msgstr "Podesi očuvanje providnosti"
 
 #: app/core/core-enums.c:546 app/gui/channels-commands.c:312
 #: app/gui/channels-commands.c:343 app/gui/channels-commands.c:380
-#: app/widgets/gimpchanneltreeview.c:119
+#: app/widgets/gimpchanneltreeview.c:121
 msgid "New Channel"
 msgstr "Novi kanal"
 
@@ -1444,7 +1444,7 @@ msgstr "Neispravna UTF-8 reč u datoteci sa četkama „%s“"
 #: app/core/gimpcontext.c:1305 app/core/gimpgradient.c:386
 #: app/core/gimpitem.c:427 app/core/gimppalette.c:441
 #: app/core/gimppattern.c:413 app/gui/templates-commands.c:127
-#: app/tools/gimpvectortool.c:306
+#: app/tools/gimpvectortool.c:320
 msgid "Unnamed"
 msgstr "Neimenovano"
 
@@ -1821,7 +1821,7 @@ msgstr "Ne mogu da poništim %s"
 
 #: app/core/gimpimage.c:1069 app/core/gimppalette-import.c:205
 #: app/core/gimppalette.c:655 app/gui/palette-import-dialog.c:591
-#: app/pdb/image_cmds.c:3754 app/widgets/gimpdatafactoryview.c:281
+#: app/pdb/image_cmds.c:3754 app/widgets/gimpdatafactoryview.c:299
 msgid "Untitled"
 msgstr "Bez naslova"
 
@@ -2251,7 +2251,7 @@ msgid "pixel"
 msgstr "tačka"
 
 #: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:580
-#: app/tools/gimpmeasuretool.c:583 app/tools/gimppainttool.c:662
+#: app/tools/gimpmeasuretool.c:583 app/tools/gimppainttool.c:673
 msgid "pixels"
 msgstr "tačaka"
 
@@ -2617,7 +2617,7 @@ msgstr "Svojstva Kanala"
 msgid "Edit Channel Color"
 msgstr "Izmeni boju kanala"
 
-#: app/gui/channels-commands.c:505 app/widgets/gimpchanneltreeview.c:123
+#: app/gui/channels-commands.c:505 app/widgets/gimpchanneltreeview.c:119
 msgid "Edit Channel Attributes"
 msgstr "Izmeni svojstva kanala"
 
@@ -2887,7 +2887,7 @@ msgid "Channel List"
 msgstr "Lista kanala"
 
 #: app/gui/dialogs-constructors.c:831 app/pdb/internal_procs.c:162
-#: app/tools/gimpvectortool.c:132
+#: app/tools/gimpvectortool.c:142
 msgid "Paths"
 msgstr "Putanje"
 
@@ -3176,7 +3176,7 @@ msgstr "Unesi naziv za ovaj bafer"
 msgid "Copy Named"
 msgstr "Kopiraj imenovano"
 
-#: app/gui/edit-commands.c:272 app/gui/vectors-commands.c:194
+#: app/gui/edit-commands.c:272 app/gui/vectors-commands.c:195
 #: app/widgets/gimpvectorstreeview.c:317
 msgid "There is no active layer or channel to stroke to."
 msgstr "Nema aktivnog sloja ili kanala za crtanje."
@@ -4905,7 +4905,7 @@ msgstr "Tip popunjavanja sloja"
 msgid "Layer Attributes"
 msgstr "Svojstva sloja"
 
-#: app/gui/layers-commands.c:841 app/widgets/gimplayertreeview.c:212
+#: app/gui/layers-commands.c:841 app/widgets/gimplayertreeview.c:208
 msgid "Edit Layer Attributes"
 msgstr "Izmeni svojstva sloja"
 
@@ -6651,7 +6651,7 @@ msgid "Cannot open '%s' for writing: %s"
 msgstr "Ne mogu da otvorim „%s“ za pisanje: %s"
 
 #: app/gui/user-install-dialog.c:1014 app/gui/user-install-dialog.c:1037
-#: app/vectors/gimpvectors-export.c:106
+#: app/vectors/gimpvectors-export.c:114
 #, c-format
 msgid "Error while writing '%s': %s"
 msgstr "Greška pri pisanju u „%s“: %s"
@@ -6742,42 +6742,42 @@ msgstr ""
 msgid "Calibrate"
 msgstr "Kalibriši"
 
-#: app/gui/vectors-commands.c:162 app/pdb/paths_cmds.c:1128
+#: app/gui/vectors-commands.c:163 app/pdb/paths_cmds.c:1128
 #: app/widgets/gimpvectorstreeview.c:271
 msgid "Path to Selection"
 msgstr "Putanja u selekciju"
 
-#: app/gui/vectors-commands.c:407
+#: app/gui/vectors-commands.c:415
 msgid "Empty Vectors Copy"
 msgstr "Isprazni kopiju vektora"
 
-#: app/gui/vectors-commands.c:421 app/gui/vectors-commands.c:467
-#: app/widgets/gimpvectorstreeview.c:126
+#: app/gui/vectors-commands.c:429 app/gui/vectors-commands.c:475
+#: app/widgets/gimpvectorstreeview.c:128
 msgid "New Path"
 msgstr "Nova Putanja"
 
-#: app/gui/vectors-commands.c:423
+#: app/gui/vectors-commands.c:431
 msgid "New Path Options"
 msgstr "Opcije za novu putanju"
 
 #. The name entry hbox, label and entry
-#: app/gui/vectors-commands.c:456 app/gui/vectors-commands.c:571
+#: app/gui/vectors-commands.c:464 app/gui/vectors-commands.c:579
 msgid "Path name:"
 msgstr "Naziv putanje:"
 
-#: app/gui/vectors-commands.c:536
+#: app/gui/vectors-commands.c:544
 msgid "Path Attributes"
 msgstr "Svojstva putanje"
 
-#: app/gui/vectors-commands.c:538 app/widgets/gimpvectorstreeview.c:130
+#: app/gui/vectors-commands.c:546 app/widgets/gimpvectorstreeview.c:126
 msgid "Edit Path Attributes"
 msgstr "Izmeni svojstva putanje"
 
-#: app/gui/vectors-commands.c:631
+#: app/gui/vectors-commands.c:639
 msgid "Import Paths from SVG"
 msgstr "Uvezi putanju iz SVG-a"
 
-#: app/gui/vectors-commands.c:690
+#: app/gui/vectors-commands.c:698
 msgid "Export Path to SVG"
 msgstr "Izvezi putanju u SVG-a"
 
@@ -7279,16 +7279,16 @@ msgid "Transform Active Path"
 msgstr "Transformiši aktivnu putanju"
 
 #: app/tools/tools-enums.c:73
-msgid "Extend Stroke/Move Nodes"
-msgstr "Produženi potezi/pomeranje čvorova"
+msgid "Design"
+msgstr "Dizajn"
 
-#: app/tools/tools-enums.c:74
-msgid "Insert/Delete Nodes"
-msgstr "Unesi/ukloni čvor"
+#: app/tools/tools-enums.c:74 app/widgets/gimpdatafactoryview.c:216
+msgid "Edit"
+msgstr "Izmeni"
 
-#: app/tools/tools-enums.c:75
-msgid "Move Stroke/Path"
-msgstr "Pomeri potez/putanju"
+#: app/tools/tools-enums.c:75 app/tools/gimpmovetool.c:105
+msgid "Move"
+msgstr "Pomeri"
 
 #: app/tools/tools-enums.c:93
 msgid "Don't Show Grid"
@@ -8115,10 +8115,6 @@ msgstr "Pomeri tekući sloj / putanju"
 msgid "Pick a Layer / Path to Move"
 msgstr "Izaberi sloj / putanju za pomeranje"
 
-#: app/tools/gimpmovetool.c:105
-msgid "Move"
-msgstr "Pomeri"
-
 #: app/tools/gimpmovetool.c:106
 msgid "Move layers & selections"
 msgstr "Pomeri slojeve i selekcije"
@@ -8534,57 +8530,61 @@ msgstr "Režim uređivanja"
 msgid "Polygonal"
 msgstr "Poligonski"
 
-#: app/tools/gimpvectortool.c:133
+#: app/tools/gimpvectortool.c:143
 msgid "Create and edit paths"
 msgstr "Napravi i uredi putanje"
 
-#: app/tools/gimpvectortool.c:134
+#: app/tools/gimpvectortool.c:144
 msgid "/Tools/_Paths"
 msgstr "/Alati/Putanje"
 
-#: app/tools/gimpvectortool.c:328
+#: app/tools/gimpvectortool.c:342
 msgid "Add Stroke"
 msgstr "Dodaj poteѕ"
 
-#: app/tools/gimpvectortool.c:344
+#: app/tools/gimpvectortool.c:358
 msgid "Add Anchor"
 msgstr "Dodaj vezu"
 
-#: app/tools/gimpvectortool.c:365
+#: app/tools/gimpvectortool.c:379
 msgid "Insert Anchor"
 msgstr "Ubaci vezu"
 
-#: app/tools/gimpvectortool.c:392
+#: app/tools/gimpvectortool.c:406
 msgid "Drag Handle"
 msgstr "Prevuci ručku"
 
-#: app/tools/gimpvectortool.c:413
+#: app/tools/gimpvectortool.c:428
 msgid "Drag Anchor"
 msgstr "Prevuci vezu"
 
-#: app/tools/gimpvectortool.c:425
-msgid "Connect Strokes"
-msgstr "Poveži poteze"
+#: app/tools/gimpvectortool.c:441
+msgid "Drag Anchors"
+msgstr "Prevuci veze"
 
-#: app/tools/gimpvectortool.c:452
+#: app/tools/gimpvectortool.c:462
 msgid "Drag Curve"
 msgstr "Prevuci krivu"
 
-#: app/tools/gimpvectortool.c:475
+#: app/tools/gimpvectortool.c:484
+msgid "Connect Strokes"
+msgstr "Poveži poteze"
+
+#: app/tools/gimpvectortool.c:522
 msgid "Convert Edge"
 msgstr "Pretvori ivicu"
 
-#: app/tools/gimpvectortool.c:504
+#: app/tools/gimpvectortool.c:551
 msgid "Delete Anchor"
 msgstr "Obriši vezu"
 
-#: app/tools/gimpvectortool.c:525
+#: app/tools/gimpvectortool.c:572
 msgid "Delete Segment"
 msgstr "Obriši segment"
 
-#: app/tools/tool_manager.c:189
-msgid "This tool has no options."
-msgstr "Ova alatka nema opcije."
+#: app/tools/gimpvectortool.c:752
+msgid "Move Anchors"
+msgstr "Premesti veze"
 
 #: app/vectors/gimpvectors.c:217
 msgid "Path"
@@ -8618,11 +8618,11 @@ msgstr "Transformiši putanju"
 msgid "Cannot stroke empty path."
 msgstr "Ne može da crta po praznoj putanji."
 
-#: app/vectors/gimpvectors-import.c:186
+#: app/vectors/gimpvectors-import.c:209
 msgid "Imported Path"
 msgstr "Uvezena putanja"
 
-#: app/vectors/gimpvectors-import.c:208
+#: app/vectors/gimpvectors-import.c:231
 #, c-format
 msgid "No paths found in '%s'"
 msgstr "Putanje nisu nađene u „%s“"
@@ -8711,7 +8711,7 @@ msgstr "Prenesi kao novo"
 msgid "Delete"
 msgstr "Obriši"
 
-#: app/widgets/gimpchanneltreeview.c:121
+#: app/widgets/gimpchanneltreeview.c:123
 msgid "Duplicate Channel"
 msgstr "Dupliraj kanal"
 
@@ -8781,17 +8781,13 @@ msgstr "Sačuvaj"
 msgid "Revert"
 msgstr "Povrati"
 
-#: app/widgets/gimpdatafactoryview.c:216
+#: app/widgets/gimpdatafactoryview.c:224
 msgid "New"
 msgstr "Novo"
 
-#: app/widgets/gimpdatafactoryview.c:224
+#: app/widgets/gimpdatafactoryview.c:232
 msgid "Duplicate"
 msgstr "Dupliraj"
-
-#: app/widgets/gimpdatafactoryview.c:232
-msgid "Edit"
-msgstr "Izmeni"
 
 #: app/widgets/gimpdatafactoryview.c:248
 msgid "Refresh"
@@ -9058,7 +9054,7 @@ msgstr "Obriši ovu sliku"
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpitemtreeview.c:276
+#: app/widgets/gimpitemtreeview.c:285
 #, c-format
 msgid ""
 "%s\n"
@@ -9067,7 +9063,7 @@ msgstr ""
 "%s\n"
 "%s  Na Vrh"
 
-#: app/widgets/gimpitemtreeview.c:290
+#: app/widgets/gimpitemtreeview.c:299
 #, c-format
 msgid ""
 "%s\n"
@@ -9076,11 +9072,11 @@ msgstr ""
 "%s\n"
 "%s  Na Dno"
 
-#: app/widgets/gimpitemtreeview.c:1196
+#: app/widgets/gimpitemtreeview.c:1197
 msgid "Set Item Exclusive Visible"
 msgstr "Postavi isključivu vidljivost stavke"
 
-#: app/widgets/gimplayertreeview.c:210
+#: app/widgets/gimplayertreeview.c:212
 msgid "Duplicate Layer"
 msgstr "Dupliraj sloj"
 
@@ -9105,22 +9101,22 @@ msgid "Columns:"
 msgstr "Kolone:"
 
 #: app/widgets/gimppaletteeditor.c:280
-msgid "New Color"
-msgstr "Nova boja"
-
-#: app/widgets/gimppaletteeditor.c:288
 msgid "Edit Color"
 msgstr "Izmeni boju..."
+
+#: app/widgets/gimppaletteeditor.c:288
+msgid "New Color"
+msgstr "Nova boja"
 
 #: app/widgets/gimppaletteeditor.c:296
 msgid "Delete Color"
 msgstr "Obriši boju"
 
-#: app/widgets/gimppaletteeditor.c:1032
+#: app/widgets/gimppaletteeditor.c:1006
 msgid "Edit Palette Color"
 msgstr "Izmeni boju palete"
 
-#: app/widgets/gimppaletteeditor.c:1034
+#: app/widgets/gimppaletteeditor.c:1008
 msgid "Edit Color Palette Entry"
 msgstr "Izmeni unos boje palete"
 
@@ -9154,27 +9150,27 @@ msgstr "_Ikona:"
 msgid "Too large!"
 msgstr "Preveliko!"
 
-#: app/widgets/gimptemplateview.c:173
-msgid "Create a new template"
-msgstr "Napravi novu mustru"
-
-#: app/widgets/gimptemplateview.c:182
-msgid "Duplicate the selected template"
-msgstr "Dupliraj izabranu mustru"
-
-#: app/widgets/gimptemplateview.c:191
-msgid "Edit the selected template"
-msgstr "Izmeni izabranu mustru"
-
-#: app/widgets/gimptemplateview.c:200
+#: app/widgets/gimptemplateview.c:179
 msgid "Create a new image from the selected template"
 msgstr "Napravi novu sliku prema izabranoj mustri"
 
-#: app/widgets/gimptemplateview.c:209
+#: app/widgets/gimptemplateview.c:188
+msgid "Create a new template"
+msgstr "Napravi novu mustru"
+
+#: app/widgets/gimptemplateview.c:197
+msgid "Duplicate the selected template"
+msgstr "Dupliraj izabranu mustru"
+
+#: app/widgets/gimptemplateview.c:206
+msgid "Edit the selected template"
+msgstr "Izmeni izabranu mustru"
+
+#: app/widgets/gimptemplateview.c:215
 msgid "Delete the selected template"
 msgstr "Obriši izabranu mustru"
 
-#: app/widgets/gimptemplateview.c:378
+#: app/widgets/gimptemplateview.c:384
 #, c-format
 msgid ""
 "Are you sure you want to delete\n"
@@ -9183,7 +9179,7 @@ msgstr ""
 "Da li ste sigurni da želite da obrišete\n"
 "mustru „%s“ sa liste?"
 
-#: app/widgets/gimptemplateview.c:382
+#: app/widgets/gimptemplateview.c:388
 msgid "Delete Template"
 msgstr "Obriši mustru"
 
@@ -9257,7 +9253,7 @@ msgstr "Vrati"
 msgid "[ Base Image ]"
 msgstr "[ Osnovna Slika ]"
 
-#: app/widgets/gimpvectorstreeview.c:128
+#: app/widgets/gimpvectorstreeview.c:130
 msgid "Duplicate Path"
 msgstr "Dupliraj putanju"
 
@@ -9465,6 +9461,18 @@ msgstr "Napravi i uredi slike ili fotografije"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP (unstable)"
 msgstr "GIMP (nestabilna verzija)"
+
+#~ msgid "Extend Stroke/Move Nodes"
+#~ msgstr "Produženi potezi/pomeranje čvorova"
+
+#~ msgid "Insert/Delete Nodes"
+#~ msgstr "Unesi/ukloni čvor"
+
+#~ msgid "Move Stroke/Path"
+#~ msgstr "Pomeri potez/putanju"
+
+#~ msgid "This tool has no options."
+#~ msgstr "Ova alatka nema opcije."
 
 #~ msgid "Move Mode  %s"
 #~ msgstr "Pomeri režim %s"
