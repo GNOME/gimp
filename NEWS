@@ -9,6 +9,14 @@ development takes place on the road to the next stable release.
 
 Overview of Changes in GIMP 1.3.17
 ==================================
+- Allow to transform paths using the transform tools [Mitch]
+- Added a simple CMYK color selector [Sven]
+- Added naive RGB <-> CMYK conversion routines [Sven]
+- Generalized paint tools [Mitch]
+- Finally a brush-shaped cursor for all paint tools [Mitch]
+- Started to integrate new composite functions [Helvetix]
+- Made the style for dockable tabs configurable [Mitch]
+- Some preparations for text transformations [Sven]
 - Store grid settings in XCF [Brix]
 - Redone assembly checks and run-time checks for CPU features [Sven]
 - Added lots of mnemonics to the menus [Jimmac]
@@ -19,7 +27,7 @@ Overview of Changes in GIMP 1.3.17
 - Lots of bug fixes
 
 Other contributors:
-  Eric Pierce
+  Eric Pierce, Joao S. O. Bueno
 
 
 Overview of Changes in GIMP 1.3.16
