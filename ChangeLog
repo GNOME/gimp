@@ -1,3 +1,9 @@
+2001-10-02  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/sobel.c (sobel_dialog): corrected initial setting
+	of toggle button. Thanks to floemker@TechFak.Uni-Bielefeld.DE for
+	spotting this one (bug #61525).
+
 2001-10-01  Sven Neumann  <sven@gimp.org>
 
 	* app/gimpbrush.c (gimp_brush_load): don't crash on invalid brush
