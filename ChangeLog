@@ -1,3 +1,17 @@
+2001-01-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/appenums.h
+	* app/apptypes.h: moved all enums from apptypes.h to the new file
+	appenums.h
+
+	* tools/pdbgen/Makefile.am
+	* tools/pdbgen/app.pl
+	* tools/pdbgen/enums.pl: changed accordingly. Removed some files
+	from the list of files to scan for enums.
+
+	* TODO.xml: added two minor UI issues.
+
 2001-01-18  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/gqbist.c: fixed typo, adjusted coding style

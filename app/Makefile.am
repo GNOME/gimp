@@ -32,6 +32,7 @@ gimp_SOURCES = \
 	airbrush.h		\
 	app_procs.c		\
 	app_procs.h		\
+	appenums.h		\
 	appenv.h		\
 	apptypes.h		\
 	asupsample.c		\

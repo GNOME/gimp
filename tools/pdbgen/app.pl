@@ -675,6 +675,7 @@ GPL
 	foreach (@{$main::grp{$group}->{headers}}) { $out->{headers}->{$_}++ }
 	delete $out->{headers}->{q/"procedural_db.h"/};
 	delete $out->{headers}->{q/"config.h"/};
+	delete $out->{headers}->{q/"appenums.h"/};
 	delete $out->{headers}->{q/"apptypes.h"/};
 
 	my @headers = sort {

@@ -49,11 +49,11 @@ EXTRA_DIST = \
 	$(pdb_sources)
 
 enum_headers = \
+	../../app/appenums.h		\
 	../../app/appenv.h		\
 	../../app/apptypes.h		\
 	../../app/blend.h		\
 	../../app/bucket_fill.h		\
-	../../app/channel.h		\
 	../../app/channel_ops.h		\
 	../../app/clone.h		\
 	../../app/color_balance.h	\
@@ -61,8 +61,6 @@ enum_headers = \
 	../../app/convolve.h		\
 	../../app/dodgeburn.h		\
 	../../app/errors.h		\
-	../../app/eraser.h		\
-	../../app/gimpdrawable.h	\
 	../../app/gimpimage.h		\
 	../../app/hue_saturation.h	\
 	../../app/layer.h		\
@@ -70,8 +68,6 @@ enum_headers = \
 	../../app/paint_core.h		\
 	../../app/paint_funcs.h		\
 	../../app/plug_in.h		\
-	../../app/procedural_db.h	\
-	../../app/shear_tool.h		\
 	../../app/text_tool.h
 
 pdb_scripts = \

@@ -347,6 +347,34 @@
       </contact>
     </entry>
 
+    <entry size="small" difficulty="easy" status="0%" target="1.4">
+      <title>Add an Option to separately switch off the Layer Boundary</title>
+      <description>
+	<p>
+	  Currently the Layer boundary (the yellow dotted line around
+	  the active layer) can only be switched off together with the
+	  selection. This is evil.
+	</p>
+      </description>
+      <contact>
+	GIMP Developer List &lt;gimp-developer@xcf.berkeley.edu&gt;
+      </contact>
+    </entry>
+
+    <entry size="small" difficulty="easy" status="0%" target="1.4">
+      <title>Display the Memory Consumption of the Image</title>
+      <description>
+	<p>
+	  The current memory size of the image should always be
+	  available in the interface. Also show the new size of the
+	  image in the "Resize" and "Set Canvas Size" dialogs.
+	</p>
+      </description>
+      <contact>
+	GIMP Developer List &lt;gimp-developer@xcf.berkeley.edu&gt;
+      </contact>
+    </entry>
+
   </section> <!-- User Interface -->    
   
   <section>

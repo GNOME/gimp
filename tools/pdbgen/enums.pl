@@ -20,17 +20,9 @@
 package Gimp::CodeGen::enums;
 
 %enums = (
-    MessageHandlerType =>
-	{ contig => 1,
-	  header => 'appenv.h',
-	  symbols => [ qw(MESSAGE_BOX CONSOLE ERROR_CONSOLE) ],
-	  mapping => { MESSAGE_BOX => '0',
-		       CONSOLE => '1',
-		       ERROR_CONSOLE => '2' }
-	},
     GimpImageBaseType =>
 	{ contig => 1,
-	  header => 'apptypes.h',
+	  header => 'appenums.h',
 	  symbols => [ qw(RGB GRAY INDEXED) ],
 	  mapping => { RGB => '0',
 		       GRAY => '1',
@@ -38,7 +30,7 @@ package Gimp::CodeGen::enums;
 	},
     GimpImageType =>
 	{ contig => 1,
-	  header => 'apptypes.h',
+	  header => 'appenums.h',
 	  symbols => [ qw(RGB_GIMAGE RGBA_GIMAGE GRAY_GIMAGE GRAYA_GIMAGE
 			  INDEXED_GIMAGE INDEXEDA_GIMAGE) ],
 	  mapping => { RGB_GIMAGE => '0',
@@ -56,7 +48,7 @@ package Gimp::CodeGen::enums;
 	},
     GimpFillType =>
 	{ contig => 1,
-	  header => 'apptypes.h',
+	  header => 'appenums.h',
 	  symbols => [ qw(FOREGROUND_FILL BACKGROUND_FILL WHITE_FILL
 			  TRANSPARENT_FILL NO_FILL) ],
 	  mapping => { FOREGROUND_FILL => '0',
@@ -72,7 +64,7 @@ package Gimp::CodeGen::enums;
 	},
     LayerModeEffects =>
 	{ contig => 1,
-	  header => 'apptypes.h',
+	  header => 'appenums.h',
 	  symbols => [ qw(NORMAL_MODE DISSOLVE_MODE BEHIND_MODE
 			  MULTIPLY_MODE SCREEN_MODE OVERLAY_MODE
 			  DIFFERENCE_MODE ADDITION_MODE SUBTRACT_MODE
@@ -101,7 +93,7 @@ package Gimp::CodeGen::enums;
 	},
     ConvolutionType =>
 	{ contig => 1,
-	  header => 'apptypes.h',
+	  header => 'appenums.h',
 	  symbols => [ qw(NORMAL_CONVOL ABSOLUTE_CONVOL NEGATIVE_CONVOL) ],
 	  mapping => { NORMAL_CONVOL => '0',
 		       ABSOLUTE_CONVOL => '1',
@@ -109,7 +101,7 @@ package Gimp::CodeGen::enums;
 	},
     BrushApplicationMode =>
 	{ contig => 1,
-	  header => 'apptypes.h',
+	  header => 'appenums.h',
 	  symbols => [ qw(HARD SOFT PRESSURE) ],
 	  mapping => { HARD => '0',
 		       SOFT => '1',
@@ -117,7 +109,7 @@ package Gimp::CodeGen::enums;
 	},
     PaintApplicationMode =>
 	{ contig => 1,
-	  header => 'apptypes.h',
+	  header => 'appenums.h',
 	  symbols => [ qw(CONSTANT INCREMENTAL) ],
 	  mapping => { CONSTANT => '0',
 		       INCREMENTAL => '1' },
@@ -125,14 +117,14 @@ package Gimp::CodeGen::enums;
 	},
     MaskApplyMode =>
 	{ contig => 1,
-	  header => 'apptypes.h',
+	  header => 'appenums.h',
 	  symbols => [ qw(APPLY DISCARD) ],
 	  mapping => { APPLY => '0',
 		       DISCARD => '1' }
 	},
     AddMaskType =>
 	{ contig => 1,
-	  header => 'apptypes.h',
+	  header => 'appenums.h',
 	  symbols => [ qw(ADD_WHITE_MASK ADD_BLACK_MASK ADD_ALPHA_MASK) ],
 	  mapping => { ADD_WHITE_MASK => '0',
 		       ADD_BLACK_MASK => '1',
@@ -143,7 +135,7 @@ package Gimp::CodeGen::enums;
 	},
     GradientPaintMode =>
 	{ contig => 1,
-	  header => 'apptypes.h',
+	  header => 'appenums.h',
 	  symbols => [ qw(ONCE_FORWARD ONCE_BACKWARDS LOOP_SAWTOOTH
 			  LOOP_TRIANGLE ONCE_END_COLOR) ],
 	  mapping => { ONCE_FORWARD => '0',
@@ -154,7 +146,7 @@ package Gimp::CodeGen::enums;
 	},
     InterpolationType =>
 	{ contig => 1,
-	  header => 'apptypes.h',
+	  header => 'appenums.h',
 	  symbols => [ qw(LINEAR_INTERPOLATION CUBIC_INTERPOLATION
 			  NEAREST_NEIGHBOR_INTERPOLATION) ],
 	  mapping => { LINEAR_INTERPOLATION => '0',
@@ -163,7 +155,7 @@ package Gimp::CodeGen::enums;
 	},
     OrientationType =>
 	{ contig => 1,
-	  header => 'apptypes.h',
+	  header => 'appenums.h',
 	  symbols => [ qw(HORIZONTAL VERTICAL UNKNOWN) ],
 	  mapping => { HORIZONTAL => '0',
 		       VERTICAL => '1',
@@ -171,7 +163,7 @@ package Gimp::CodeGen::enums;
 	},
     PDBArgType =>
 	{ contig => 1,
-	  header => 'apptypes.h',
+	  header => 'appenums.h',
 	  symbols => [ qw(PDB_INT32 PDB_INT16 PDB_INT8 PDB_FLOAT PDB_STRING
 			  PDB_INT32ARRAY PDB_INT16ARRAY PDB_INT8ARRAY
 			  PDB_FLOATARRAY PDB_STRINGARRAY PDB_COLOR
@@ -205,7 +197,7 @@ package Gimp::CodeGen::enums;
 	},
     PDBStatusType =>
 	{ contig => 1,
-	  header => 'apptypes.h',
+	  header => 'appenums.h',
 	  symbols => [ qw(PDB_EXECUTION_ERROR PDB_CALLING_ERROR
 			  PDB_PASS_THROUGH PDB_SUCCESS PDB_CANCEL) ],
 	  mapping => { PDB_EXECUTION_ERROR => '0',
@@ -216,7 +208,7 @@ package Gimp::CodeGen::enums;
 	},
     PDBProcType =>
 	{ contig => 1,
-	  header => 'apptypes.h',
+	  header => 'appenums.h',
 	  symbols => [ qw(PDB_INTERNAL PDB_PLUGIN PDB_EXTENSION
 			  PDB_TEMPORARY) ],
 	  mapping => { PDB_INTERNAL => '0',
@@ -230,7 +222,7 @@ package Gimp::CodeGen::enums;
 	},
     ChannelOps =>
 	{ contig => 1,
-	  header => 'apptypes.h',
+	  header => 'appenums.h',
 	  symbols => [ qw(CHANNEL_OP_ADD CHANNEL_OP_SUB CHANNEL_OP_REPLACE
 			  CHANNEL_OP_INTERSECT) ],
 	  mapping => { CHANNEL_OP_ADD => '0',
@@ -241,6 +233,14 @@ package Gimp::CodeGen::enums;
 		       CHANNEL_OP_SUB => 'SUB',
 		       CHANNEL_OP_REPLACE => 'REPLACE',
 		       CHANNEL_OP_INTERSECT => 'INTERSECT' }
+	},
+    MessageHandlerType =>
+	{ contig => 1,
+	  header => 'appenv.h',
+	  symbols => [ qw(MESSAGE_BOX CONSOLE ERROR_CONSOLE) ],
+	  mapping => { MESSAGE_BOX => '0',
+		       CONSOLE => '1',
+		       ERROR_CONSOLE => '2' }
 	},
     GradientType =>
 	{ contig => 1,
