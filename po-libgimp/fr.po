@@ -10,10 +10,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp 2.0pre4\n"
+"Project-Id-Version: gimp-libgimp 2.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 23:20+0100\n"
-"PO-Revision-Date: 2004-03-06 14:55+0100\n"
+"POT-Creation-Date: 2004-04-24 19:51+0200\n"
+"PO-Revision-Date: 2004-04-24 19:50+0200\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -158,7 +158,6 @@ msgstr "_Ignorer"
 msgid "_Export"
 msgstr "_Exporter"
 
-#. the headline
 #: libgimp/gimpexport.c:485
 #, c-format
 msgid ""
@@ -417,14 +416,12 @@ msgid "GigaBytes"
 msgstr "Giga-octets"
 
 #: libgimpwidgets/gimppatheditor.c:243
-#, fuzzy
 msgid "Writable"
-msgstr "Triangle"
+msgstr "Modifiable"
 
 #: libgimpwidgets/gimppatheditor.c:252
-#, fuzzy
 msgid "Folder"
-msgstr "Sélectionnez un dossier"
+msgstr "Dossier"
 
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""

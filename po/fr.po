@@ -11,10 +11,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 2.0pre4\n"
+"Project-Id-Version: gimp 2.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:29+0200\n"
-"PO-Revision-Date: 2004-03-24 14:34+0100\n"
+"POT-Creation-Date: 2004-04-24 19:49+0200\n"
+"PO-Revision-Date: 2004-04-24 19:17+0200\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -40,6 +40,9 @@ msgid ""
 "location and permissions of the swap directory defined in your Preferences "
 "(currently \"%s\")."
 msgstr ""
+"Impossible d'ouvrir un fichier d'échanges de test. Pour éviter de perdre des "
+"données, veillez vérifier l'emplacement et les permissions du répertoire "
+"d'échanges défini dans vos préférences (actuellement « %s »)."
 
 #: app/app_procs.c:281
 #, c-format
@@ -887,10 +890,8 @@ msgstr ""
 "annulés."
 
 #: app/config/gimprc-blurbs.h:378
-#, fuzzy
 msgid "Sets the size of the previews in the Undo History."
-msgstr ""
-"Détermine la taille du damier utilisé pour représenter la transparence."
+msgstr "Défini la taille des aperçus dans l'historique d'annulation."
 
 #: app/config/gimprc-blurbs.h:381
 msgid "When enabled, pressing F1 will open the help browser."
@@ -1297,14 +1298,12 @@ msgid "Guide"
 msgstr "Guide"
 
 #: app/core/core-enums.c:594 app/core/core-enums.c:624
-#, fuzzy
 msgid "Drawable"
-msgstr "Décalage du tracé"
+msgstr "Zone de dessin"
 
 #: app/core/core-enums.c:595 app/core/core-enums.c:625
-#, fuzzy
 msgid "Drawable Mod"
-msgstr "Procédures des tracés"
+msgstr "Mode de la zonne de dessin"
 
 #: app/core/core-enums.c:596 app/core/core-enums.c:626
 #: app/core/gimpchannel.c:1617 app/core/gimpselection.c:570
@@ -1328,14 +1327,12 @@ msgid "Move Item"
 msgstr "Déplacement de l'élément"
 
 #: app/core/core-enums.c:601
-#, fuzzy
 msgid "Scale Item"
-msgstr "Étirer l'image"
+msgstr "Étirer l'élément"
 
 #: app/core/core-enums.c:602
-#, fuzzy
 msgid "Resize Item"
-msgstr "Redimensionner l'image"
+msgstr "Redimensionner l'élément"
 
 #: app/core/core-enums.c:603 app/core/core-enums.c:633
 #: app/core/gimplayer.c:1001 app/gui/layers-commands.c:1049
@@ -1360,9 +1357,8 @@ msgid "Anchor Floating Selection"
 msgstr "Ancrer la sélection flottante"
 
 #: app/core/core-enums.c:608 app/core/gimplayer-floating-sel.c:98
-#, fuzzy
 msgid "Remove Floating Selection"
-msgstr "Sélection flottante"
+msgstr "Supprimer la sélection flottante"
 
 #: app/core/core-enums.c:609 app/core/gimp-edit.c:126
 #: app/widgets/gimpbufferview.c:154
@@ -1460,9 +1456,8 @@ msgid "Set Preserve Trans"
 msgstr "Préserver la transparence"
 
 #: app/core/core-enums.c:640
-#, fuzzy
 msgid "Text Modified"
-msgstr "Seulement si modifiée"
+msgstr "Texte modifié"
 
 #: app/core/core-enums.c:641 app/gui/channels-commands.c:318
 #: app/gui/channels-commands.c:348 app/gui/channels-commands.c:387
@@ -2340,7 +2335,6 @@ msgstr ""
 "Chargement de la palette « %s » : nombre de colonnes invalide à la ligne %d. "
 "Utilisation de la valeur par défaut."
 
-#. maybe we should just abort?
 #: app/core/gimppalette.c:493
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
@@ -2486,7 +2480,7 @@ msgstr "La résolution verticale de l'image"
 msgid "pixel"
 msgstr "pixel"
 
-#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:869
+#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:872
 #: app/tools/gimppainttool.c:707
 msgid "pixels"
 msgstr "pixels"
@@ -2597,18 +2591,16 @@ msgstr "Fermer %s ?"
 
 #: app/display/gimpdisplayshell.c:1415
 msgid "_Discard changes"
-msgstr ""
+msgstr "_Abandonner les modifications"
 
 #: app/display/gimpdisplayshell.c:1455
-#, fuzzy, c-format
+#, c-format
 msgid "Changes were made to '%s'."
-msgstr ""
-"Des modifications ont été effectuées sur « %s ». Voulez-vous fermer quand "
-"même ?"
+msgstr "Des modifications ont été effectuées sur « %s »."
 
 #: app/display/gimpdisplayshell.c:1469
 msgid "Unsaved changes will be lost."
-msgstr ""
+msgstr "Les modifications non enregistrées seront perdues."
 
 #: app/display/gimpdisplayshell-dnd.c:87
 msgid "Drop New Layer"
@@ -2825,9 +2817,8 @@ msgid "%s Channel Copy"
 msgstr "Copie du canal %s"
 
 #: app/gui/channels-commands.c:322
-#, fuzzy
 msgid "Empty Channel"
-msgstr "Vider la copie du canal"
+msgstr "Vider le canal"
 
 #: app/gui/channels-commands.c:338
 msgid "New Channel Color"
@@ -2976,7 +2967,7 @@ msgstr ""
 
 #: app/gui/convert-dialog.c:498
 msgid "Cannot convert to a palette with more than 256 colors."
-msgstr ""
+msgstr "Impossible de convertir vers une palette ayant plus de 256 couleurs."
 
 #: app/gui/convert-dialog.c:517
 msgid "Select Custom Palette"
@@ -4079,9 +4070,8 @@ msgid "/Select/_Invert"
 msgstr "/Sélection/_Inverser"
 
 #: app/gui/image-menu.c:292
-#, fuzzy
 msgid "/Select/Fr_om Path"
-msgstr "/Sélection vers che_min"
+msgstr "/Sélection/_Depuis le chemin"
 
 #: app/gui/image-menu.c:297
 msgid "/Select/_Float"
@@ -4977,9 +4967,8 @@ msgid "Layer Mask to Selection"
 msgstr "Masque de calque vers Sélection"
 
 #: app/gui/layers-commands.c:717
-#, fuzzy
 msgid "Empty Layer"
-msgstr "Calque de texte vide"
+msgstr "Vider le calque"
 
 #: app/gui/layers-commands.c:741
 msgid "Create a New Layer"
@@ -5019,9 +5008,8 @@ msgid "Layer _Name"
 msgstr "_Nom du calque :"
 
 #: app/gui/layers-commands.c:1003
-#, fuzzy
 msgid "Set Name from _Text"
-msgstr "Créer un chemin depuis le texte"
+msgstr "Définir le nom depuis le _texte"
 
 #: app/gui/layers-commands.c:1090
 msgid "Add a Mask to the Layer"
@@ -5607,9 +5595,8 @@ msgid "_Navigation Preview Size:"
 msgstr "Taille de l'aperçu de _navigation :"
 
 #: app/gui/preferences-dialog.c:1218
-#, fuzzy
 msgid "_Undo History Preview Size:"
-msgstr "Taille de l'aperçu de _navigation :"
+msgstr "Taille de l'aperçu de l'_historique d'annulation :"
 
 #. Dialog Bahavior
 #: app/gui/preferences-dialog.c:1222
@@ -6377,7 +6364,7 @@ msgstr "/Édit_er le modèle..."
 msgid "/_Delete Template"
 msgstr "/_Supprimer le modèle"
 
-#: app/gui/themes.c:231 app/plug-in/plug-ins.c:224
+#: app/gui/themes.c:231 app/plug-in/plug-ins.c:250
 #, c-format
 msgid "Writing '%s'\n"
 msgstr "Écriture de « %s »\n"
@@ -6449,44 +6436,36 @@ msgid "Enter a new name for the saved options"
 msgstr "Saisissez un nouveau nom pour les options enregistrées"
 
 #: app/gui/tool-options-menu.c:58
-#, fuzzy
 msgid "/_Save Options to"
-msgstr "Options enregistrées"
+msgstr "/_Enregistrer les options vers"
 
 #: app/gui/tool-options-menu.c:60
-#, fuzzy
 msgid "/Save Options to/_New Entry..."
-msgstr "/_Enregistrer les options vers/_Nouvelle entrée..."
+msgstr "/Enregistrer les options vers/_Nouvelle entrée..."
 
 #: app/gui/tool-options-menu.c:71
-#, fuzzy
 msgid "/_Restore Options from"
-msgstr "/_Restaurer les options depuis/(Aucun)"
+msgstr "/_Restaurer les options depuis"
 
 #: app/gui/tool-options-menu.c:73
-#, fuzzy
 msgid "/Restore Options from/(None)"
-msgstr "/_Restaurer les options depuis/(Aucun)"
+msgstr "/Restaurer les options depuis/(Aucun)"
 
 #: app/gui/tool-options-menu.c:79
-#, fuzzy
 msgid "/Re_name Saved Options"
-msgstr "/Re_nommer les options enregistrées/(Aucun)"
+msgstr "/Re_nommer les options enregistrées"
 
 #: app/gui/tool-options-menu.c:81
-#, fuzzy
 msgid "/Rename Saved Options/(None)"
-msgstr "/Re_nommer les options enregistrées/(Aucun)"
+msgstr "/Renommer les options enregistrées/(Aucun)"
 
 #: app/gui/tool-options-menu.c:87
-#, fuzzy
 msgid "/_Delete Saved Options"
-msgstr "/_Supprimer les options enregistrées/(Aucun)"
+msgstr "/_Supprimer les options enregistrées"
 
 #: app/gui/tool-options-menu.c:89
-#, fuzzy
 msgid "/Delete Saved Options/(None)"
-msgstr "/_Supprimer les options enregistrées/(Aucun)"
+msgstr "/Supprimer les options enregistrées/(Aucun)"
 
 #: app/gui/tool-options-menu.c:98
 msgid "/R_eset Tool Options"
@@ -7087,9 +7066,8 @@ msgid "Calibrate"
 msgstr "Calibrer"
 
 #: app/gui/vectors-commands.c:444
-#, fuzzy
 msgid "Empty Path"
-msgstr "Importer des chemins"
+msgstr "Vider le chemin"
 
 #: app/gui/vectors-commands.c:458 app/gui/vectors-commands.c:506
 msgid "New Path"
@@ -7489,12 +7467,12 @@ msgstr "Interrogation des nouveaux greffons"
 msgid "Querying plug-in: '%s'\n"
 msgstr "Interrogation du greffon : « %s »\n"
 
-#. initial the plug-ins
-#: app/plug-in/plug-ins.c:300
+#. initialize the plug-ins
+#: app/plug-in/plug-ins.c:174
 msgid "Initializing Plug-ins"
 msgstr "Initialisation des greffons"
 
-#: app/plug-in/plug-ins.c:316
+#: app/plug-in/plug-ins.c:190
 #, c-format
 msgid "Initializing plug-in: '%s'\n"
 msgstr "Initialisation du greffon : « %s »\n"
@@ -8185,7 +8163,7 @@ msgid "Hue-Saturation operates only on RGB color layers."
 msgstr "Teinte-Saturation opère seulement sur des calques RVB."
 
 #: app/tools/gimphuesaturationtool.c:263
-msgid "_Master"
+msgid "M_aster"
 msgstr "_Maître"
 
 #: app/tools/gimphuesaturationtool.c:264
@@ -8241,7 +8219,7 @@ msgstr "Ajustement"
 msgid "Size:"
 msgstr "Taille :"
 
-#: app/tools/gimpinkoptions.c:277 app/tools/gimpmeasuretool.c:885
+#: app/tools/gimpinkoptions.c:277 app/tools/gimpmeasuretool.c:888
 #: app/tools/gimprotatetool.c:175 app/widgets/gimpbrusheditor.c:169
 msgid "Angle:"
 msgstr "Angle :"
@@ -8398,11 +8376,11 @@ msgid "Add Guides"
 msgstr "Ajouter des guides"
 
 #. tool->gdisp->shell
-#: app/tools/gimpmeasuretool.c:838
+#: app/tools/gimpmeasuretool.c:841
 msgid "Measure Distances and Angles"
 msgstr "Mesure les distances et les angles"
 
-#: app/tools/gimpmeasuretool.c:859
+#: app/tools/gimpmeasuretool.c:862
 msgid "Distance:"
 msgstr "Distance :"
 
@@ -8770,7 +8748,7 @@ msgstr "Éditeur de texte GIMP"
 
 #: app/tools/gimptexttool.c:834 app/tools/gimptexttool.c:837
 msgid "Confirm Text Editing"
-msgstr ""
+msgstr "Confirmer l'édition du texte"
 
 #: app/tools/gimptexttool.c:858
 msgid ""
@@ -8780,6 +8758,12 @@ msgid ""
 "\n"
 "You can edit the layer or create a new text layer from its text attributes."
 msgstr ""
+"Le calque que vous avez sélectionné est un calque de texte mais il a été "
+"modifié en utilisant d'autres outils. L'édition du calque avec l'outil texte "
+"supprimera ces modifications.\n"
+"\n"
+"Vous pouvez éditer le calque ou créer un nouveau calque de texte depuis ses "
+"attributs de texte."
 
 #: app/tools/gimpthresholdtool.c:93
 msgid "Reduce image to two colors using a threshold"
@@ -8807,9 +8791,8 @@ msgid "Transform Direction"
 msgstr "Direction de transformation"
 
 #: app/tools/gimptransformoptions.c:353
-#, fuzzy
 msgid "Supersampling"
-msgstr "Suréchantillonnage adaptatif"
+msgstr "Suréchantillonnage"
 
 #. the clip resulting image toggle button
 #: app/tools/gimptransformoptions.c:358
@@ -9094,11 +9077,13 @@ msgid "Delete"
 msgstr "Supprimer"
 
 #: app/widgets/gimpchanneltreeview.c:121
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "New Channel\n"
 "%s New Channel Dialog"
-msgstr "Nouveau canal de couleur"
+msgstr ""
+"Nouveau canal\n"
+"Dialogue de nouveau canal %s"
 
 #: app/widgets/gimpchanneltreeview.c:123
 msgid "Duplicate Channel"
@@ -9660,6 +9645,8 @@ msgid ""
 "New Layer\n"
 "%s  New Layer Dialog"
 msgstr ""
+"Nouveau calque\n"
+"Dialogue de nouveau calque %s"
 
 #: app/widgets/gimplayertreeview.c:209
 msgid "Duplicate Layer"
@@ -9824,16 +9811,17 @@ msgid ""
 "Click to update preview\n"
 "%s  Click to force update even if preview is up-to-date"
 msgstr ""
+"Cliquer pour mettre à jour l'aperçu\n"
+"%s  Cliquer pour forcer la mise à jour même si l'aperçu est à jour"
 
 #: app/widgets/gimpthumbbox.c:250 app/widgets/gimpthumbbox.c:296
-#, fuzzy
 msgid "No Selection"
-msgstr "Sélection"
+msgstr "Aucune sélection"
 
 #: app/widgets/gimpthumbbox.c:382 app/widgets/gimpthumbbox.c:402
 #, c-format
 msgid "Thumbnail %d of %d"
-msgstr ""
+msgstr "Vignette %d sur %d"
 
 #: app/widgets/gimptoolbox-color-area.c:360
 msgid "Change Foreground Color"
@@ -9927,6 +9915,8 @@ msgid ""
 "New Path\n"
 "%s New Path Dialog"
 msgstr ""
+"Nouveau chemin\n"
+"Dialogue de nouveau chemin %s"
 
 #: app/widgets/gimpvectorstreeview.c:133
 msgid "Duplicate Path"
@@ -10183,33 +10173,3 @@ msgstr "Erreur XCF : Version %d non supportée du format XCF rencontrée"
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
 msgstr "Crée et modifier des images ou des photographies"
-
-#~ msgid ""
-#~ "  -S, --no-splash-image    Do not add an image to the startup window.\n"
-#~ msgstr ""
-#~ "  -S, --no-splash-image    Ne pas utiliser d'image dans l'écran de "
-#~ "démarrage.\n"
-
-#~ msgid "Image Mod"
-#~ msgstr "Image mode"
-
-#~ msgid "Layer Mod"
-#~ msgstr "Calque mode"
-
-#~ msgid "Channel Mod"
-#~ msgstr "Canal mode"
-
-#~ msgid "Paste Transform"
-#~ msgstr "Transformation de perspective"
-
-#~ msgid "Empty Layer Copy"
-#~ msgstr "Copie de calque vide"
-
-#~ msgid "Empty Vectors Copy"
-#~ msgstr "Copie vide de vecteurs"
-
-#~ msgid "Modify letter spacing"
-#~ msgstr "Modifier l'espacement des lettres"
-
-#~ msgid "Could not open"
-#~ msgstr "Impossible d'ouvrir"
