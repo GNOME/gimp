@@ -128,6 +128,7 @@ examples/roundsel
 examples/visual
 examples/billboard
 examples/blended2
+examples/dust
 pxgettext
 po/ChangeLog
 po/Makefile.PL

@@ -167,7 +167,7 @@ sub parse() {
       if ($word eq "(") {
          my $t = $tok; get;
          my @t = &parse;
-         $word eq ")" or die "missing right paranthese (got $word)\n";
+         $word eq ")" or die "missing right parenthesis (got $word)\n";
          push(@toks,[$t,@t,$tok]); get;
       } elsif ($word eq ")") {
          $depth--;

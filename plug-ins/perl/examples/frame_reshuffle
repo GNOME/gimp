@@ -1,4 +1,7 @@
-#!/usr/bin/perl
+#!/usr/app/bin/perl
+
+eval 'exec /usr/app/bin/perl  -S $0 ${1+"$@"}'
+    if 0; # not running under some shell
 
 use Gimp 1.095;
 use Gimp::Fu;

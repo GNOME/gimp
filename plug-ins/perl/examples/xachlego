@@ -1,4 +1,7 @@
-#!/usr/bin/perl
+#!/usr/app/bin/perl
+
+eval 'exec /usr/app/bin/perl  -S $0 ${1+"$@"}'
+    if 0; # not running under some shell
 # This is (hopefully) a demonstration of how pathetically easy it is to script
 # a neato effect you've come up with.  This lil' effect was created by xach,
 # and translated by sjburges (me).  You can consider it released under the GPL
@@ -70,7 +73,7 @@ register "xach_blocks",
 	$img->selection_all;
 	gimp_edit_clear($gridlayer);
 	gimp_palette_set_background([255,255,255]);
-	gimp_edit_fill($gridlayer);
+	gimp_edit_fill($gridlayer, BG_IMAGE_FILL);
 	$gridlayer->plug_in_grid(1, $blocksize, 0, [0,0,0], 255, 1, $blocksize, 0, [0,0,0], 255, 0, 0, 0, [0,0,0], 0);
 	$gridlayer->plug_in_gauss_iir(0.7*$blocksize, 1, 1);
 
@@ -92,7 +95,7 @@ register "xach_blocks",
 	$cleangrid = $img->layer_new($img->width, $img->height, 
                                  RGBA_IMAGE, "Grid 2", 100, 0);
 	$img->add_layer($cleangrid,0);
-	gimp_edit_fill($cleangrid);
+	gimp_edit_fill($cleangrid, BG_IMAGE_FILL);
 	$cleangrid->plug_in_grid(1, $blocksize, 0, [0,0,0], 255, 1, $blocksize, 0, [0,0,0], 255, 0, 0, 0, [0,0,0], 0);
 	gimp_selection_load($selection);
 	$drawable->plug_in_bump_map($cleangrid, 135, 45, 3, 0, 0, 0, 0, 1, 0, 0);

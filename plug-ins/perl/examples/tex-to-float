@@ -1,4 +1,7 @@
-#!/usr/bin/perl
+#!/usr/app/bin/perl
+
+eval 'exec /usr/app/bin/perl  -S $0 ${1+"$@"}'
+    if 0; # not running under some shell
 ######################################################################
 #  A Perl::Fu plugin for converting TeX strings to floating layers.
 #
@@ -116,13 +119,13 @@ sub grey_file_to_float {
     gimp_floating_sel_anchor($floating_layer);
     gimp_invert($mask);
     gimp_palette_set_background(gimp_palette_get_foreground());
-    gimp_edit_fill($grey_layer);
+    gimp_edit_fill($grey_layer, BG_IMAGE_FILL);
     gimp_image_remove_layer_mask($grey_img, $grey_layer, 0);
 
     # Now copy this layer to $img 1
     gimp_edit_copy($grey_layer);
     $floating_layer = gimp_edit_paste($drw1, 0);
-    gimp_edit_fill($floating_layer);
+    gimp_edit_fill($floating_layer, BG_IMAGE_FILL);
 
     print STDERR "Yohoo!\n";
     cleanup();

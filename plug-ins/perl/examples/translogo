@@ -1,4 +1,7 @@
-#!/usr/bin/perl
+#!/usr/app/bin/perl
+
+eval 'exec /usr/app/bin/perl  -S $0 ${1+"$@"}'
+    if 0; # not running under some shell
 
 use Gimp qw(:auto __ N_);
 use Gimp::Fu;
@@ -28,7 +31,7 @@ sub my_code {
 	gimp_selection_layer_alpha ($layer);
 	gimp_selection_invert ($img);
 	gimp_palette_set_background ([255, 255, 255]);
-	gimp_edit_fill ($layer);
+	gimp_edit_fill ($layer, BG_IMAGE_FILL);
 	gimp_selection_none ($img);
 	gimp_invert ($layer);
 	plug_in_gauss_rle ($layer, 2.0, 1, 1);	
@@ -41,7 +44,7 @@ sub my_code {
         	gimp_bucket_fill ($bump_lay, PATTERN_BUCKET_FILL, NORMAL_MODE, 100, 0, 0, 0, 0);
         } else {
         	gimp_palette_set_background ($txt_col);
-        	gimp_edit_fill ($bump_lay);
+        	gimp_edit_fill ($bump_lay, BG_IMAGE_FILL);
         }
         plug_in_bump_map ($img, $bump_lay, $layer, 110.0, 45.0, 4, 0, 0, 0, 0, 1, 0, 0);
         $pattern_mask = gimp_layer_create_mask ($bump_lay, ALPHA_MASK);

@@ -1,4 +1,7 @@
-#!/usr/bin/perl
+#!/usr/app/bin/perl
+
+eval 'exec /usr/app/bin/perl  -S $0 ${1+"$@"}'
+    if 0; # not running under some shell
 
 use Gimp qw(:auto __ N_);
 use Gimp::Fu;
@@ -13,7 +16,7 @@ sub stamps {
 	$layer = gimp_layer_new($img, $size, $size, RGB_IMAGE, "Layer 1", 100, NORMAL_MODE);
 	gimp_image_add_layer($layer, -1);
 	gimp_palette_set_background($hole);
-	$layer->gimp_edit_fill;
+	$layer->gimp_edit_fill(BG_IMAGE_FILL);
 	gimp_selection_none($img);
 
 	my $ncircles = int(($size + $gap) / ($diameter + $gap));
@@ -30,7 +33,7 @@ sub stamps {
 			$x = $x + $diameter + $gap;
 	}
 	gimp_palette_set_background($paper);
-	gimp_edit_fill($layer);
+	gimp_edit_fill($layer, BG_IMAGE_FILL);
 	gimp_selection_none($img);
 
 # here, at last, comes the clever part! :-)

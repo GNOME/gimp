@@ -26,25 +26,17 @@ API generalization
 bugs
   * .pot file -> add to dist.
   * damnit libintl crazy shit
-[DONE]  * alow gimp_selection_shrink with a zero argument.
   * font_text with negative size? bug report #5523
   * gimp-perl list archives.. where and add this to the gimp.html page!
   * g_direct_equal and glin hash, kill in favour of way nicer perl hashes.
   * ping-funktion für JENS.
-[DONE]  * never grayed out = "undef" imagetypes!!!
-[DONE]  * gimp_layer_set_name(4, "(null)") = gimp: fatal error: sigsegv caught
-[KILL]  * ftp://metalab.unc.edu/pub/Linux/X11/gtkbuffet/libs/gtkxmhtml/ into INSTALL
   * gtview_log (perlcc & helpfenster) erste zeile anzeigen + scrollbar
-[DONE]  * make test should not be run without DISPLAY
   * document on_xxx functions and register_callback
   * fix Gimp::Feature::missing => on_query-dir!
-[DONE]  * update logulator
   * on-query => remove gimp::fu parasite(?)
 [????]  * bricks requires disable for pattern(?)
-[KILL]  * better default argument-handlign via a "massage_args" callback from Gimp/UI/interact?
   * installation & Feature system (?)
   * map_to_gradient does not work on GRAYA thingies. Argh.
-[KILL]  * scroll behaviour, use clist instead of list?
   * document Gimp::PDL and rect2, ...2 functions!
   * Kommandozeilenmodus(!). (???)
   * gimp-piddle must be written back automatically on destroy, if changed
@@ -53,11 +45,11 @@ bugs
   
 important issues
 
+  * gimp_default_display -> undef when not available.
   * find_next_guide is a lousy interface. => just do num_guides
   * constant names (RADIO) automatically into help strings!
   * migrate BOOT: into INIT() (forgot why but important for B)
   * gimp_progress_done, gimp_progress_close
-[KILL]  * maybe implement --enable-perl=runtime-only?
   * gimp_default_display (...) for libgimp
   * Gimp::Module for modules (!)
   * gimp for dummies (you don't understand this, harharhar!)
@@ -65,17 +57,12 @@ important issues
   * implement CALLBACKS via the Perl-Server
   * PF_COORDS (just as Light Effects/FlareFX)
   * PF_PREVIEW(!)
-[KILL]  * change set_usize to something else..
   * Gimp::IO (?)
   * install scripts in share/
-[KILL]  * gimp->object_id, drawable_object_id remove!
   * vamp up homepage
   * Gimp::ping
   * allow plug-ins to register with only a drawable argument(!)
   * gradient button
-[KILL]  * weighted movement in drawing tools
-[KILL]  * --function localfunc to select one of the registered scripts
-[KILL]  * create working progress when Net and $verbose
   * default parameters at end(!)
   * try to deduce default parameters
 

@@ -1,4 +1,7 @@
-#!/usr/bin/perl
+#!/usr/app/bin/perl
+
+eval 'exec /usr/app/bin/perl  -S $0 ${1+"$@"}'
+    if 0; # not running under some shell
 # <sjburges@gimp.org>
 # This is adrian's idea - take random blends and difference them.  You're
 # bound to come up w/ something cool eventually.

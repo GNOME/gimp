@@ -30,6 +30,10 @@ Revision history for Gimp-Perl extension.
         - do not register menus when Gtk is needed for dialogs.
         - updated examples/burst.
         - fixed various old-syntax leftovers in Gimp::Util.
+        - modernized examples/example-fu.
+        - added examples/dust.
+        - updated po/Makefile.PL to find the scripts again.
+        - applied edit_fill change. Boy we need default agruments soon!
 
 1.19  Thu Jan  6 00:21:58 CET 2000
         - used N_ to mark all the menu paths, since gimp now tries to

@@ -237,12 +237,12 @@ sub decoration_drop_shadow {
 
 	# why is the selection cleared?
 	$tiled_img->rect_select($xpos, $ypos, $w, $h, 0, 0, 0);
-	$tiled_img->edit_fill($tiled_drw_msk);
+	$tiled_img->edit_fill($tiled_drw_msk, BG_IMAGE_FILL);
 
 	# why is the selection cleared?
 	$tiled_img->rect_select($xpos+$shadow_xoffs,
 				$ypos+$shadow_yoffs, $w, $h, 0, 0, 0);
-	$tiled_img->edit_fill($tiled_shadow_msk);
+	$tiled_img->edit_fill($tiled_shadow_msk, BG_IMAGE_FILL);
 
 	$tiled_img->selection_none();
 
@@ -316,12 +316,12 @@ sub decoration_sunken_windows {
 	$bw = 3;
 	$tiled_img->rect_select($xpos-$bw,
 				$ypos-$bw, $w+2*$bw, $h+2*$bw, 0, 0, 0);
-	$tiled_img->edit_fill($tiled_punch_stencil);
+	$tiled_img->edit_fill($tiled_punch_stencil, BG_IMAGE_FILL);
 
 	# why is the selection cleared?
 	$tiled_img->selection_none();
 	$tiled_img->rect_select($xpos, $ypos, $w, $h, 0, 0, 0);
-	$tiled_img->edit_fill($tiled_punch_mask);
+	$tiled_img->edit_fill($tiled_punch_mask, BG_IMAGE_FILL);
 
 	$tiled_img->selection_none();
     }

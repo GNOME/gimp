@@ -43,7 +43,7 @@ if ($ARGV[0] ne "--writemakefile") {
       repdup centerguide stampify goldenmean triangle mirrorsplit
       layerfuncs randomart1 glowing_steel frame_reshuffle frame_filter
       logulator guide_remove guides_to_selection burst
-      layerfuncs bricks miff
+      layerfuncs bricks miff dust
    );
 @pdl_pins =
    qw(

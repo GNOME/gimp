@@ -9,8 +9,8 @@ register "gimp_fu_example_script",			# fill in a function name
             "scripts. Always remember to put a long".
             "help message here!",
          "Marc Lehmann <pcg\@goof.com>",		# don't forget your name (author)
-         "(c) 1998, 1999 Marc Lehmann",			# and your copyright!
-         "19990316",					# the date this script was written
+         "(c)1998,1999,2000 Marc Lehmann",			# and your copyright!
+         "20000321",					# the date this script was written (YYYYMMDD)
          N_"<Toolbox>/Xtns/Gimp::Fu Example",		# the menu path
          "RGB*, GRAYA",					# image types to accept (RGB, RGAB amnd GRAYA)
          [
@@ -34,19 +34,19 @@ register "gimp_fu_example_script",			# fill in a function name
          sub {
 
    # now do sth. useful with the garbage we got ;)
-   my($width,$height,$text,$font,$fg,$bg,$ignore,$brush,$pattern,$gradient)=@_;
+   my($width,$height,$text,$brd1,$brd2,$font,$fg,$bg,$ignore,$xtraimg,$xtradrw,$effecttype,$brush,$pattern,$gradient)=@_;
 
-   # set tracing
-   Gimp::set_trace(TRACE_ALL);
+   # set tracing, disable this to get rid of the debugging output
+   Gimp::set_trace(TRACE_CALL);
 
-   my $img=new Image($width,$height,RGB);
+   my $img = new Image ($width, $height, RGB);
 
    # put an undo group around any modifications, so that
-   # they can be undone in one step. The eval shields against
-   # gimp-1.0, which does not have this function.
-   eval { $img->undo_push_group_start };
+   # they can be undone in one step.
+   $img->undo_push_group_start;
 
-   my $l=new Layer($img,$width,$height,RGB,"Background",100,NORMAL_MODE);
+   # the __ before the string in the next line indicates text that must be translated
+   my $l = new Layer ($img, $width, $height, RGB, __"Background", 100, NORMAL_MODE);
    $l->add_layer(0);
 
    # now a few syntax examples
@@ -55,13 +55,12 @@ register "gimp_fu_example_script",			# fill in a function name
    Palette->set_background($bg) unless $ignore;
 
    fill $l BG_IMAGE_FILL;
+   $text_layer = $img->text_fontname(-1, 10, 10, $text, 5, 1, xlfd_size($font), $font);
 
-   $text_layer=$img->text_fontname(-1,10,10,$text,5,1,xlfd_size($font),$font);
-
-   gimp_palette_set_foreground("green");
+   Palette->set_foreground("green");
 
    # close the undo push group
-   eval { $img->undo_push_group_end };
+   $img->undo_push_group_end;
 
    $img;	# return the image, or an empty list, i.e. ()
 };

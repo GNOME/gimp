@@ -1,4 +1,7 @@
-#!/usr/bin/perl
+#!/usr/app/bin/perl
+
+eval 'exec /usr/app/bin/perl  -S $0 ${1+"$@"}'
+    if 0; # not running under some shell
 
 eval 'exec /usr/bin/perl  -S $0 ${1+"$@"}'
     if 0; # not running under some shell
@@ -72,7 +75,7 @@ register "xach_shadows",
 	$img->selection_all;
 	gimp_edit_clear($gridlayer);
 	gimp_palette_set_background([255,255,255]);
-	gimp_edit_fill($gridlayer);
+	gimp_edit_fill($gridlayer, BG_IMAGE_FILL);
 	$gridlayer->plug_in_grid((1, $blocksize, 0, [0,0,0], 255) x 3);
 
 	gimp_layer_set_mode($gridlayer, 3);

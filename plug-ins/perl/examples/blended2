@@ -1,4 +1,7 @@
-#!/usr/bin/perl
+#!/usr/app/bin/perl
+
+eval 'exec /usr/app/bin/perl  -S $0 ${1+"$@"}'
+    if 0; # not running under some shell
 
 use Gimp qw(:auto __ N_);
 use Gimp::Fu;
@@ -36,7 +39,7 @@ sub my_innerbevel {
 	$text2_lay=$text1_lay->copy(1);
 	$img->add_layer($text2_lay, -1);
 	gimp_palette_set_background ([255, 255, 255]);
-	$text2_lay->edit_fill;
+	$text2_lay->edit_fill(BG_IMAGE_FILL);
 	$text2_lay->set_preserve_trans(0);
 	$text1_lay->set_preserve_trans(0);
 	plug_in_gauss_rle ($text2_lay, 6, 1, 1);

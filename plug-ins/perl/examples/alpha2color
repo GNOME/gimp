@@ -83,7 +83,7 @@ sub alpha2col {
 	$target_layer->set_active_layer;
 
 	$img->selection_all;
-	$target_layer->edit_fill;
+	$target_layer->edit_fill(BG_IMAGE_FILL);
 	$img->selection_none;
 
 	$foreground = gimp_image_merge_visible_layers($img,0);

@@ -51,7 +51,7 @@ sub Create_Image {
     # Do the fun stuff with the text.
     gimp_palette_set_background($Text_Colour);
     gimp_layer_set_preserve_trans($Text_Layer, TRUE);
-    #gimp_edit_fill($Image, $Text_Layer);
+    #gimp_edit_fill($Image, $Text_Layer, BG_IMAGE_FILL);
 
     # Now figure out the size of $Text_Layer.
     $Width = gimp_drawable_width($Text_Layer);

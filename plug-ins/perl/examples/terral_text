@@ -1,4 +1,7 @@
-#!/usr/bin/perl
+#!/usr/app/bin/perl
+
+eval 'exec /usr/app/bin/perl  -S $0 ${1+"$@"}'
+    if 0; # not running under some shell
 
 # Terral Text
 # by Seth Burgess <sjburges@gimp.org>
@@ -68,7 +71,7 @@ sub {
 		"TextLayer", 100, 0);
 	$img->add_layer($textlayer,1);
 	palette_set_background([255,255,255]);
-	$textlayer->edit_fill();
+	$textlayer->edit_fill(BG_IMAGE_FILL);
 	palette_set_foreground([0,0,0]);
 
 	# Place centered Text - what a PITA!

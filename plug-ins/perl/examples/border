@@ -78,7 +78,7 @@ register "border_average",
        my $layer = new Layer ($image, width $image, height $image, RGB_IMAGE, "bordercolour", 100, NORMAL_MODE);
        add_layer $image $layer,0;
        Palette->set_background([$r,$g,$b]);
-       $layer->edit_fill;
+       $layer->edit_fill(BG_IMAGE_FILL)
        Gimp->message("Added layer with border colour ($r,$g,$b) on top");
      }
 

@@ -16,6 +16,7 @@ use base qw(DynaLoader);
 use Socket; # IO::Socket is _really_ slow, so don't use it!
 
 use Gimp ('croak','__');
+use Fcntl qw(F_SETFD);
 
 require DynaLoader;
 
@@ -158,6 +159,7 @@ sub start_server {
       return $server_fh;
    } elsif ($gimp_pid == 0) {
       close $server_fh;
+      fcntl $gimp_fh, F_SETFD, 0;
       delete $ENV{GIMP_HOST};
       unless ($Gimp::verbose) {
          open STDIN,"</dev/null";

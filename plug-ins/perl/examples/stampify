@@ -1,4 +1,7 @@
-#!/usr/bin/perl
+#!/usr/app/bin/perl
+
+eval 'exec /usr/app/bin/perl  -S $0 ${1+"$@"}'
+    if 0; # not running under some shell
 
 use Gimp qw(:auto __ N_);
 use Gimp::Fu;
@@ -52,7 +55,7 @@ register	"stampify",
 			$pos = $pos + $diameter + $gap;
 		}
 		gimp_palette_set_background($hole);
-		gimp_edit_fill($layer1);
+		gimp_edit_fill($layer1, BG_IMAGE_FILL);
 		gimp_selection_none($img2);
 # here comes the clever part! :-)
 # offset horis and vert holes by half the diameter

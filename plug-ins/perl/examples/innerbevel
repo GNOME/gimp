@@ -1,4 +1,7 @@
-#!/usr/bin/perl 
+#!/usr/app/bin/perl 
+
+eval 'exec /usr/app/bin/perl  -S $0 ${1+"$@"}'
+    if 0; # not running under some shell
 # Effect taken from http://tigert.gimp.org/gimp/tutorials/beveled_text/
 # perl-ified by Seth Burgess <sjburges@gimp.org>
 
@@ -76,7 +79,7 @@ $img->add_layer($layer2, 0);
 $layer2->set_preserve_trans(1);
 $img->selection_all;
 gimp_palette_set_background([255,255,255]);
-$layer2->edit_fill;
+$layer2->edit_fill(BG_IMAGE_FILL);
 # -- step 6 -- 
 $layer2->set_preserve_trans(0);
 $layer2->gauss_rle(6,1,1);     # Defaults would be cool here too :)
