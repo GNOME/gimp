@@ -192,21 +192,22 @@ script_fu_console_interface (void)
 
   dlg = gtk_dialog_new ();
   gtk_window_set_title (GTK_WINDOW (dlg), _("Script-Fu Console"));
+  gimp_help_connect_help_accel (dlg, gimp_plugin_help_func, 
+				"filters/script-fu.html");
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) script_fu_close_callback,
 		      NULL);
-  gtk_signal_connect (GTK_OBJECT (dlg),
-		      "destroy",
+  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      GTK_SIGNAL_FUNC (gtk_widget_destroyed),
 		      &dlg);
   gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), 2);
-  gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
+  gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 0);
 
   /*  Action area  */
   button = gtk_button_new_with_label (_("Close"));
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) script_fu_close_callback,
-                      NULL);
+  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
+			     (GtkSignalFunc) gtk_widget_destroy,
+			     (gpointer)dlg);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
@@ -247,7 +248,9 @@ script_fu_console_interface (void)
   gtk_text_insert (GTK_TEXT (cint.console), cint.font_strong, NULL, NULL,
 		   "The GIMP - GNU Image Manipulation Program\n\n", -1);
   gtk_text_insert (GTK_TEXT (cint.console), cint.font_emphasis, NULL, NULL,
-		   "Copyright (C) 1995 Spencer Kimball and Peter Mattis\n", -1);
+		   "Copyright (C) 1995-2000\n", -1);
+  gtk_text_insert (GTK_TEXT (cint.console), cint.font_emphasis, NULL, NULL,
+		   "Spencer Kimball, Peter Mattis and the GIMP Development Team\n", -1);
   gtk_text_insert (GTK_TEXT (cint.console), cint.font_weak, NULL, NULL,
 		   "\n", -1);
   gtk_text_insert (GTK_TEXT (cint.console), cint.font_weak, NULL, NULL,

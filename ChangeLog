@@ -1,3 +1,11 @@
+2000-03-25  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/script-fu-console.c: only call gtk_main_quit()
+	once when closing the dialog.
+	
+	* plug-ins/script-fu/script-fu-server.c: use a gimp_dialog and
+	other nice things from libgimpui.
+
 Fri Mar 24 14:07:46 CET 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* app/hue_saturation.c: i18n fix.

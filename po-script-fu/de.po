@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.18\n"
-"POT-Creation-Date: 2000-02-28 10:16+0100\n"
-"PO-Revision-Date: 2000-03-06 10:17+0100\n"
+"POT-Creation-Date: 2000-03-25 15:10+0100\n"
+"PO-Revision-Date: 2000-03-25 14:02+01:00\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -15,109 +15,108 @@ msgstr ""
 
 #: plug-ins/script-fu/script-fu-console.c:158
 msgid "Script-Fu console mode allows only interactive invocation"
-msgstr "Interaktive Aufrufe sind in Skript-Fu's Konsolen-Modus nicht möglich"
+msgstr "Skript-Fu's Konsolen-Modus kann nur interaktiv gestartet werden"
 
 #: plug-ins/script-fu/script-fu-console.c:194
 msgid "Script-Fu Console"
 msgstr "Skript-Fu Konsole"
 
 #. Action area
-#: plug-ins/script-fu/script-fu-console.c:206
-#: plug-ins/script-fu/script-fu-scripts.c:1961
+#: plug-ins/script-fu/script-fu-console.c:207
+#: plug-ins/script-fu/script-fu-scripts.c:1867
 msgid "Close"
 msgstr "Schliessen"
 
 #. The info vbox
-#: plug-ins/script-fu/script-fu-console.c:214
+#: plug-ins/script-fu/script-fu-console.c:215
 msgid "SIOD Output"
 msgstr "SIOD Ausgabe"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:291
+#: plug-ins/script-fu/script-fu-console.c:294
 msgid "Current Command"
-msgstr "Kommando"
+msgstr "Aktuelles Kommando"
 
-#: plug-ins/script-fu/script-fu-console.c:312
+#: plug-ins/script-fu/script-fu-console.c:315
 msgid "Browse..."
 msgstr "Durchsuchen..."
 
-#: plug-ins/script-fu/script-fu-console.c:575
+#: plug-ins/script-fu/script-fu-console.c:578
 msgid "Unable to open SIOD output pipe"
 msgstr "Kann SIOD-Ausgabe-Pipe nicht öffnen"
 
-#: plug-ins/script-fu/script-fu-console.c:579
+#: plug-ins/script-fu/script-fu-console.c:582
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "Kann mit dem SIOD-Ausgabe-pipe keinen Stream erstellen"
 
-#: plug-ins/script-fu/script-fu-console.c:626
+#: plug-ins/script-fu/script-fu-console.c:629
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Skript-Fu's Auswerten-Modus ermöglicht nur nicht-interaktive Aufrufe"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1207
-#: plug-ins/script-fu/script-fu-scripts.c:1209
+#: plug-ins/script-fu/script-fu-scripts.c:1113
+#: plug-ins/script-fu/script-fu-scripts.c:1115
 msgid "/Script-Fu/"
 msgstr "/Skript-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1209
-#: plug-ins/script-fu/script-fu-scripts.c:1211
+#: plug-ins/script-fu/script-fu-scripts.c:1115
+#: plug-ins/script-fu/script-fu-scripts.c:1117
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Skript-Fu: %s"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1236
+#: plug-ins/script-fu/script-fu-scripts.c:1142
 msgid "Script Arguments"
 msgstr "Skript-Argumente"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1300
+#: plug-ins/script-fu/script-fu-scripts.c:1206
 msgid "Script-Fu Color Selection"
 msgstr "Skript-Fu Farbauswahl"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1306
+#: plug-ins/script-fu/script-fu-scripts.c:1212
 msgid "Script Toggle"
 msgstr "Skript An/Aus"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1368
+#: plug-ins/script-fu/script-fu-scripts.c:1274
 msgid "Script-Fu File Selection"
 msgstr "Skript-Fu Dateiauswahl"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1400
+#: plug-ins/script-fu/script-fu-scripts.c:1306
 msgid "Script-fu Pattern Selection"
 msgstr "Skript-Fu Musterauswahl"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1407
+#: plug-ins/script-fu/script-fu-scripts.c:1313
 msgid "Script-Fu Gradient Selection"
 msgstr "Skript-Fu Gradientenauswahl"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1415
+#: plug-ins/script-fu/script-fu-scripts.c:1321
 msgid "Script-Fu Brush Selection"
 msgstr "Skript-Fu Pinselauswahl"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1440
+#: plug-ins/script-fu/script-fu-scripts.c:1346
 msgid "Reset to Defaults"
 msgstr "Auf Standardwerte zurücksetzen"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1466
+#: plug-ins/script-fu/script-fu-scripts.c:1372
 msgid "About"
 msgstr "Über"
 
-#. Action area
-#: plug-ins/script-fu/script-fu-scripts.c:1480
-#: plug-ins/script-fu/script-fu-server.c:559
+#: plug-ins/script-fu/script-fu-scripts.c:1386
+#: plug-ins/script-fu/script-fu-server.c:552
 msgid "OK"
 msgstr "OK"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1489
-#: plug-ins/script-fu/script-fu-server.c:568
+#: plug-ins/script-fu/script-fu-scripts.c:1395
+#: plug-ins/script-fu/script-fu-server.c:554
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1594
+#: plug-ins/script-fu/script-fu-scripts.c:1500
 msgid "NOT SET"
 msgstr "NICHT EINGESTELLT"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1665
+#: plug-ins/script-fu/script-fu-scripts.c:1571
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -125,39 +124,37 @@ msgstr ""
 "Mindestens eine Schriftart, die Sie ausgewählt haben, ist ungültig.\n"
 "Bitte überprüfen Sie Ihre Einstellungen.\n"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1932
+#: plug-ins/script-fu/script-fu-scripts.c:1838
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1938
+#: plug-ins/script-fu/script-fu-scripts.c:1844
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1944
+#: plug-ins/script-fu/script-fu-scripts.c:1850
 msgid "Date:"
 msgstr "Datum:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1952
+#: plug-ins/script-fu/script-fu-scripts.c:1858
 msgid "Image Types:"
 msgstr "Bildtypen:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2101
+#: plug-ins/script-fu/script-fu-scripts.c:2007
 msgid "Script-Fu Font Selection"
 msgstr "Skript-Fu Schriftartauswahl"
 
-#: plug-ins/script-fu/script-fu-server.c:551
+#: plug-ins/script-fu/script-fu-server.c:547
 msgid "Script-Fu Server Options"
 msgstr "Skript-Fu Server-Einstellungen"
 
-#. The server port
-#: plug-ins/script-fu/script-fu-server.c:582
-msgid "Server Port: "
-msgstr "Server Port: "
+#: plug-ins/script-fu/script-fu-server.c:574
+msgid "Server Port:"
+msgstr "Server Port:"
 
-#. The server logfile
-#: plug-ins/script-fu/script-fu-server.c:595
-msgid "Server Logfile: "
-msgstr "Server Logdatei: "
+#: plug-ins/script-fu/script-fu-server.c:580
+msgid "Server Logfile:"
+msgstr "Server Logdatei:"
 
 #: plug-ins/script-fu/script-fu.c:165
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."
@@ -175,8 +172,318 @@ msgstr "Alle Skripte neu einlesen"
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Xtns/Skript-Fu/Auffrischen"
 
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Test/Sphere..."
-#~ msgstr "<Toolbox>/Xtns/Skript-Fu/Test/Kugel..."
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D Outline..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/3D Umriß..."
+
+# TODO
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3D Truchet..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/3D Truchet..."
+
+msgid "<Image>/Script-Fu/Decor/Add Bevel..."
+msgstr "<Image>/Skript-Fu/Dekoration/Rand abschrägen..."
+
+msgid "<Image>/Script-Fu/Decor/Add Border..."
+msgstr "<Image>/Skript-Fu/Dekoration/Rand hinzufügen..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Arrow..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Alien Glow/Pfeil..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Alien Glow/Horiz. Linie..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Bullet..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Alien Glow/Kugel..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Alien Glow/Schaltfläche..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Glow..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Alien Glow..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Neon..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Alien Neon..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Hilfsmittel/ASCII zu Bild..."
+
+msgid "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
+msgstr "<Image>/Skript-Fu/Hilfsmittel/ASCII zu Bildebene..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic I..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Einfach I..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic II..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Einfach II..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple Beveled Button..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Schaltflächen/Einfach, abgeschrägt..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Abgeschrägt, gemustert/Pfeil..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Bullet..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Abgeschrägt, gemustert/Kugel..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
+msgstr ""
+"<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Abgeschrägt, gemustert/Schaltfläche..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
+msgstr ""
+"<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Abgeschrägt, gemustert/Überschrift..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
+msgstr ""
+"<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Abgeschrägt, gemustert/Horz. Linie..."
+
+msgid "<Image>/Script-Fu/Animators/Blend..."
+msgstr "<Image>/Skript-Fu/Animationen/Überblenden..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blended..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Farbverlauf..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bovination..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Kuh..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Camouflage..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/Tarnung..."
+
+msgid "<Image>/Script-Fu/Stencil Ops/Carve-It..."
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Geschnitzt..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chalk..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Kreide..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Away..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Zerfressen..."
+
+msgid "<Image>/Script-Fu/Stencil Ops/Chrome-It..."
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chrome..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Chrom..."
+
+msgid "<Image>/Script-Fu/Render/Circuit..."
+msgstr "<Image>/Skript-Fu/Render/Platine..."
+
+msgid "<Image>/Script-Fu/Alchemy/Clothify..."
+msgstr "<Image>/Skript-Fu/Alchemie/Stoffmalerei..."
+
+msgid "<Image>/Script-Fu/Decor/Coffee Stain..."
+msgstr "<Image>/Skript-Fu/Dekoration/Kaffeeflecken..."
+
+msgid "<Image>/Script-Fu/Animators/Color Cycling..."
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Book..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Comic-Heft..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool Metal..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Kaltes Metal..."
+
+msgid "<Image>/Edit/Copy Visible"
+msgstr "<Image>/Bearbeiten/Kopiere Sichtbares"
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Kristall..."
+
+msgid "<Image>/Script-Fu/Selection/Distress Selection..."
+msgstr "<Image>/Skript-Fu/Auswahl/Unruhige Auswahl..."
+
+msgid "<Image>/Script-Fu/Shadow/Drop-Shadow..."
+msgstr "<Image>/Skript-Fu/Schatten/Schlagschatten..."
+
+msgid "<Image>/Script-Fu/Alchemy/Erase every other Row..."
+msgstr "<Image>/Skript-Fu/Alchemie/Jede zweite Zeile löschen..."
+
+msgid "<Image>/Script-Fu/Selection/Fade Outline..."
+msgstr "<Image>/Skript-Fu/Auswahl/Umriß ausblenden..."
+
+# TODO
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Flatland..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/Flaches Land..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Hilfsmittel/Schriften-Liste..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Frosty..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Frostig..."
+
+msgid "<Image>/Script-Fu/Decor/Fuzzy Border..."
+msgstr "<Image>/Skript-Fu/Dekoration/Rand ausblenden..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Große Überschrift..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Kleine Überschrift..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Button Label..."
+msgstr ""
+
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
+msgstr ""
+
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button "
+"Label..."
+msgstr ""
+
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glossy..."
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glowing Hot..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Glühend Heiß..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Bevel..."
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Hilfsmittel/Farbverlauf Vorschau..."
+
+msgid "<Image>/Script-Fu/Render/Make Grid System..."
+msgstr "<Image>/Skript-Fu/Render/Gitter erzeugen..."
+
+msgid "<Image>/Script-Fu/Utils/Draw HSV Graph..."
+msgstr "<Image>/Skript-Fu/Hilfsmittel/HSV Analyse-Grafik..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
+msgstr ""
+
+msgid "<Image>/Script-Fu/Utils/Show Image Structure..."
+msgstr "<Image>/Skript-Fu/Hilfsmittel/Bildaufbau darstellen..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Land..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/Land..."
+
+msgid "<Image>/Script-Fu/Render/Lava..."
+msgstr "<Image>/Skript-Fu/Render/Lava..."
+
+msgid "<Image>/Script-Fu/Render/Line Nova..."
+msgstr "<Image>/Skript-Fu/Render/Linienexplosion..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Pinsel erstellen/Rechteckig..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular, Feathered..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Pinsel erstellen/Rechteckig, weich..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Pinsel erstellen/Rund..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical, Feathered..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Pinsel erstellen/Rund, weich..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Neon..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Neon..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Zeitungsdruck..."
+
+msgid "<Image>/Script-Fu/Decor/Old Photo..."
+msgstr "<Image>/Skript-Fu/Dekoration/Altes Foto..."
+
+msgid "<Image>/Script-Fu/Shadow/Perspective..."
+msgstr "<Image>/Skript-Fu/Schatten/Perspektivisch..."
+
+msgid "<Image>/Script-Fu/Alchemy/Predator..."
+msgstr "<Image>/Skript-Fu/Alchemie/Predator..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Round Button..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Schaltflächen/Rund..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render Map..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/Landkarte..."
+
+msgid "<Image>/Script-Fu/Animators/Rippling..."
+msgstr "<Image>/Script-Fu/Animation/Flattern..."
+
+msgid "<Image>/Script-Fu/Decor/Round Corners..."
+msgstr "<Image>/Skript-Fu/Dekoration/Runde Ecken..."
+
+msgid "<Image>/Script-Fu/Selection/To Brush..."
+msgstr "<Image>/Skript-Fu/Auswahl/Zu Pinsel..."
+
+msgid "<Image>/Script-Fu/Selection/To Image"
+msgstr "<Image>/Skript-Fu/Auswahl/Zu Bild"
+
+msgid "<Image>/Script-Fu/Selection/Round..."
+msgstr "<Image>/Skript-Fu/Auswahl/Abrunden..."
+
+msgid "<Image>/Script-Fu/Decor/Slide..."
+msgstr "<Image>/Skript-Fu/Dekoration/Dia..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/SOTA Chrom..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Schneller Text..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Misc/Sphere..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Test/Kugel..."
+
+msgid "<Image>/Script-Fu/Animators/Spinning Globe..."
+msgstr "<Image>/Script-Fu/Animation/Drehender Globus..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starburst..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Sternexplosion..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starscape..."
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-Tile..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/Strudel-Kachel..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirly (tileable)..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/Quirlige Kacheln..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Particle Trace..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Partikelspur..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Test/Sphere..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Test/Kugel..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Text im Kreis..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Textured..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Texturiert..."
+
+# TODO
+msgid "<Image>/Filters/Blur/Tileable Blur..."
+msgstr "<Image>/Filters/Weichzeichnen/Kachelbarer Weichzeichner..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Web-Seiten Überschrift..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
+msgstr ""
+
+msgid "<Image>/Script-Fu/Alchemy/Unsharp Mask..."
+msgstr "<Image>/Skript-Fu/Alchemie/Unsharf maskieren..."
+
+msgid "<Image>/Script-Fu/Animators/Waves..."
+msgstr "<Image>/Skript-Fu/Animation/Wellen..."
+
+msgid "<Image>/Script-Fu/Alchemy/Weave..."
+msgstr "<Image>/Skript-Fu/Alchemie/Weben..."
+
+msgid "<Image>/Script-Fu/Shadow/Xach-Effect..."
+msgstr "<Image>/Skript-Fu/Schatten/Xach-Effekt..."
+
+msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
+msgstr "<Image>/Skript-Fu/Animation/Auswahl zu Animation..."
 
 #~ msgid "Shadow"
 #~ msgstr "Schatten"

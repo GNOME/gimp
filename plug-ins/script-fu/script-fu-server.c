@@ -37,6 +37,7 @@
 #endif /* HAVE_SYS_SELECT_H */
 
 #include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
 
 #include "script-fu-intl.h"
 
@@ -124,8 +125,6 @@ static void   server_quit        (void);
 
 static gint   server_interface   (void);
 static void   ok_callback        (GtkWidget *widget,
-				  gpointer   data);
-static void   cancel_callback    (GtkWidget *widget,
 				  gpointer   data);
 
 /*
@@ -531,8 +530,6 @@ static gint
 server_interface ()
 {
   GtkWidget *dlg;
-  GtkWidget *button;
-  GtkWidget *label;
   GtkWidget *table;
   gchar **argv;
   gint argc;
@@ -547,61 +544,41 @@ server_interface ()
 
   INIT_I18N_UI();
 
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), _("Script-Fu Server Options"));
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
+  dlg = gimp_dialog_new (_("Script-Fu Server Options"), argv[0],
+			 gimp_plugin_help_func, "filters/script-fu.html", 
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
+			 
+			 _("OK"), ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
+
+			 NULL);
+
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) cancel_callback,
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
-  gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-
-  /*  Action area  */
-  button = gtk_button_new_with_label (_("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) ok_callback,
-                      dlg);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
 
   /*  The table to hold port & logfile entries  */
   table = gtk_table_new (2, 2, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_container_border_width (GTK_CONTAINER (table), 4);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
 
   /*  The server port  */
-  label = gtk_label_new (_("Server Port: "));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 1);
-  gtk_widget_show (label);
-
   sint.port_entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), sint.port_entry, 1, 2, 0, 1,
-		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_SHRINK, 1, 1);
   gtk_entry_set_text (GTK_ENTRY (sint.port_entry), "10008");
-  gtk_widget_show (sint.port_entry);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0, 
+			     _("Server Port:"), 1.0, 0.5,
+			     sint.port_entry, 1, TRUE);
 
   /*  The server logfile  */
-  label = gtk_label_new (_("Server Logfile: "));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 1);
-  gtk_widget_show (label);
-
   sint.log_entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), sint.log_entry, 1, 2, 1, 2,
-		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_SHRINK, 1, 1);
-  gtk_widget_show (sint.log_entry);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1, 
+			     _("Server Logfile:"), 1.0, 0.5,
+			     sint.log_entry, 1, TRUE);
 
   gtk_widget_show (table);
   gtk_widget_show (dlg);
@@ -622,11 +599,4 @@ ok_callback (GtkWidget *widget,
   sint.run = TRUE;
 
   gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
-cancel_callback (GtkWidget *widget,
-		 gpointer   data)
-{
-  gtk_main_quit ();
 }
