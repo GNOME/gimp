@@ -484,16 +484,7 @@ object_on_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 ObjectList_t*
 make_object_list(void)
 {
-   ObjectList_t *list = g_new(ObjectList_t, 1);
-   list->list = NULL;
-   list->changed = FALSE;
-   list->changed_cb.list = NULL;
-   list->update_cb.list = NULL;
-   list->add_cb.list = NULL;
-   list->remove_cb.list = NULL;
-   list->select_cb.list = NULL;
-   list->move_cb.list = NULL;
-   return list;
+  return g_new0 (ObjectList_t, 1);
 }
 
 void
