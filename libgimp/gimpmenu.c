@@ -19,6 +19,8 @@
  * Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
+
 #include <string.h>
 
 #ifdef __GNUC__
@@ -29,6 +31,7 @@
 #include "gimp.h"
 #include "gimpui.h"
 
+#include "libgimp-intl.h"
 
 #define MENU_THUMBNAIL_WIDTH   24
 #define MENU_THUMBNAIL_HEIGHT  24
@@ -120,8 +123,7 @@ gimp_image_menu_new (GimpConstraintFunc constraint,
 {
   GtkWidget *menu;
   GtkWidget *menuitem;
-  gchar     *filename;
-  gchar     *basename;
+  gchar     *name;
   gchar     *label;
   gint32    *images;
   gint       nimages;
@@ -135,13 +137,11 @@ gimp_image_menu_new (GimpConstraintFunc constraint,
   for (i = 0, k = 0; i < nimages; i++)
     if (!constraint || (* constraint) (images[i], -1, data))
       {
-	filename = gimp_image_get_filename (images[i]);
-	basename = g_path_get_basename (filename);
-	g_free (filename);
+	name = gimp_image_get_name (images[i]);
 
-	label = g_strdup_printf ("%s-%d", basename, images[i]);
+	label = g_strdup_printf ("%s-%d", name, images[i]);
 
-	g_free (basename);
+	g_free (name);
 
 	menuitem = gtk_menu_item_new_with_label (label);
 	g_signal_connect (G_OBJECT (menuitem), "activate",
@@ -160,7 +160,7 @@ gimp_image_menu_new (GimpConstraintFunc constraint,
 
   if (k == 0)
     {
-      menuitem = gtk_menu_item_new_with_label ("none");
+      menuitem = gtk_menu_item_new_with_label (_("None"));
       gtk_widget_set_sensitive (menuitem, FALSE);
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
       gtk_widget_show (menuitem);
@@ -186,7 +186,6 @@ gimp_layer_menu_new (GimpConstraintFunc constraint,
   GtkWidget *menu;
   GtkWidget *menuitem;
   gchar     *name;
-  gchar     *basename;
   gchar     *image_label;
   gchar     *label;
   gint32    *images;
@@ -206,13 +205,11 @@ gimp_layer_menu_new (GimpConstraintFunc constraint,
   for (i = 0, k = 0; i < nimages; i++)
     if (!constraint || (* constraint) (images[i], -1, data))
       {
-	name = gimp_image_get_filename (images[i]);
-	basename = g_path_get_basename (name);
+	name = gimp_image_get_name (images[i]);
+
+	image_label = g_strdup_printf ("%s-%d", name, images[i]);
+
 	g_free (name);
-
-	image_label = g_strdup_printf ("%s-%d", basename, images[i]);
-
-	g_free (basename);
 
 	layers = gimp_image_get_layers (images[i], &nlayers);
 	for (j = 0; j < nlayers; j++)
@@ -241,7 +238,8 @@ gimp_layer_menu_new (GimpConstraintFunc constraint,
 	      gtk_widget_show(vbox);
 	      
 	      wcolor_box = gtk_preview_new(GTK_PREVIEW_COLOR);
-	      gtk_preview_set_dither (GTK_PREVIEW (wcolor_box), GDK_RGB_DITHER_MAX);
+	      gtk_preview_set_dither (GTK_PREVIEW (wcolor_box),
+                                      GDK_RGB_DITHER_MAX);
 
 	      fill_preview_with_thumb (wcolor_box,
 				       layers[j],
@@ -282,7 +280,7 @@ gimp_layer_menu_new (GimpConstraintFunc constraint,
 
   if (k == 0)
     {
-      menuitem = gtk_menu_item_new_with_label ("none");
+      menuitem = gtk_menu_item_new_with_label (_("None"));
       gtk_widget_set_sensitive (menuitem, FALSE);
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
       gtk_widget_show (menuitem);
@@ -303,7 +301,6 @@ gimp_channel_menu_new (GimpConstraintFunc constraint,
   GtkWidget *menu;
   GtkWidget *menuitem;
   gchar     *name;
-  gchar     *basename;
   gchar     *image_label;
   gchar     *label;
   gint32    *images;
@@ -323,13 +320,11 @@ gimp_channel_menu_new (GimpConstraintFunc constraint,
   for (i = 0, k = 0; i < nimages; i++)
     if (!constraint || (* constraint) (images[i], -1, data))
       {
-	name = gimp_image_get_filename (images[i]);
-	basename = g_path_get_basename (name);
+	name = gimp_image_get_name (images[i]);
+
+	image_label = g_strdup_printf ("%s-%d", name, images[i]);
+
 	g_free (name);
-
-	image_label = g_strdup_printf ("%s-%d", basename, images[i]);
-
-	g_free (basename);
 
 	channels = gimp_image_get_channels (images[i], &nchannels);
 	for (j = 0; j < nchannels; j++)
@@ -400,7 +395,7 @@ gimp_channel_menu_new (GimpConstraintFunc constraint,
 
   if (k == 0)
     {
-      menuitem = gtk_menu_item_new_with_label ("none");
+      menuitem = gtk_menu_item_new_with_label (_("None"));
       gtk_widget_set_sensitive (menuitem, FALSE);
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
       gtk_widget_show (menuitem);
@@ -421,7 +416,6 @@ gimp_drawable_menu_new (GimpConstraintFunc constraint,
   GtkWidget *menu;
   GtkWidget *menuitem;
   gchar     *name;
-  gchar     *basename;
   gchar     *image_label;
   gchar     *label;
   gint32    *images;
@@ -444,13 +438,11 @@ gimp_drawable_menu_new (GimpConstraintFunc constraint,
   for (i = 0, k = 0; i < nimages; i++)
     if (!constraint || (* constraint) (images[i], -1, data))
       {
-	name = gimp_image_get_filename (images[i]);
-	basename = g_path_get_basename (name);
+	name = gimp_image_get_name (images[i]);
+
+	image_label = g_strdup_printf ("%s-%d", name, images[i]);
+
 	g_free (name);
-
-	image_label = g_strdup_printf ("%s-%d", basename, images[i]);
-
-	g_free (basename);
 
 	layers = gimp_image_get_layers (images[i], &nlayers);
 
@@ -585,7 +577,7 @@ gimp_drawable_menu_new (GimpConstraintFunc constraint,
 
   if (k == 0)
     {
-      menuitem = gtk_menu_item_new_with_label ("none");
+      menuitem = gtk_menu_item_new_with_label (_("None"));
       gtk_widget_set_sensitive (menuitem, FALSE);
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
       gtk_widget_show (menuitem);

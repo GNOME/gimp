@@ -1,5 +1,12 @@
 2002-05-13  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpmenu.c: use gimp_image_get_name().
+
+	* plug-ins/common/deinterlace.c: don't use 'O' as mnemonic, it's
+	already taken by the _OK button.
+
+2002-05-13  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpwidgets.c: documentation fix.
 
 2002-05-13  Michael Natterer  <mitch@gimp.org>

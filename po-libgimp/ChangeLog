@@ -1,10 +1,16 @@
+2002-05-13  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added libgimp/gimpmenu.c.
+
+	* de.po: updated german translation.
+
 2002-05-06  Pablo Saratxaga  <pablo@mandrakesoft.com>
 
-	* vi.po: Added Vietnamese file
+	* vi.po: Added Vietnamese file.
 
 2002-04-30  Duarte Loreto <happyguy_pt@hotmail.com>
 
-        * pt.po: Converted Portuguese translation to UTF-8.
+	* pt.po: Converted Portuguese translation to UTF-8.
 
 2002-04-15  Christophe Merlet  <redfox@eikonex.org>
 

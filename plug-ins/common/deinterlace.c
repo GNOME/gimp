@@ -288,7 +288,7 @@ deinterlace_dialog (void)
                                  &DeinterlaceValue,
                                  GINT_TO_POINTER (DeinterlaceValue),
 
-                                 _("Keep _Odd Fields"),
+                                 _("Keep O_dd Fields"),
                                  GINT_TO_POINTER (ODD_FIELDS), NULL,
 
                                  _("Keep _Even Fields"),

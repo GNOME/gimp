@@ -2,6 +2,7 @@
 # marked to allow runtime translation of messages
 
 libgimp/gimpexport.c
+libgimp/gimpmenu.c
 libgimp/gimpunit.c
 libgimpwidgets/gimpcolorbutton.c
 libgimpwidgets/gimpfileselection.c

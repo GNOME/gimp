@@ -6,9 +6,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.24\n"
-"POT-Creation-Date: 2002-03-28 14:51+0100\n"
-"PO-Revision-Date: 2002-02-28 11:20+0100\n"
+"Project-Id-Version: GIMP 1.3.6\n"
+"POT-Creation-Date: 2002-05-13 15:12+0200\n"
+"PO-Revision-Date: 2002-05-13 15:15+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -24,9 +24,8 @@ msgid "Merge Visible Layers"
 msgstr "Sichtbare Ebenen vereinen"
 
 #: libgimp/gimpexport.c:179
-#, fuzzy
 msgid "can't handle layer offsets, size or opacity"
-msgstr "kennt keine Ebenen"
+msgstr "kennt keine Ebeneneigenschaften wie Versatz, Grösse und Transparenz"
 
 #: libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
 msgid "can only handle layers as animation frames"
@@ -115,6 +114,8 @@ msgid ""
 "You are about to save %s as %s.\n"
 "This will not save the visible layers."
 msgstr ""
+"Sie sichern %s als %s.\n"
+"Die sichtbaren Ebenen werden dabei nicht gesichert."
 
 #.
 #. *  Plug-ins must have called gtk_init () before calling gimp_export ().
@@ -146,11 +147,16 @@ msgstr "Dieser Vorgang wird das Originalbild nicht verändern."
 
 #: libgimp/gimpexport.c:571
 msgid "a layer mask"
-msgstr ""
+msgstr "eine Ebenenmaske"
 
 #: libgimp/gimpexport.c:573
 msgid "a channel (saved selection)"
-msgstr ""
+msgstr "einen Kanal (gesicherte Selektion)"
+
+#: libgimp/gimpmenu.c:163 libgimp/gimpmenu.c:283 libgimp/gimpmenu.c:398
+#: libgimp/gimpmenu.c:580
+msgid "None"
+msgstr "Keine"
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
@@ -212,19 +218,19 @@ msgstr "_Rücksetzen"
 msgid "Visible"
 msgstr "Sichtbar"
 
-#: libgimpwidgets/gimpstock.c:155
+#: libgimpwidgets/gimpstock.c:159
 msgid "Transform"
 msgstr "Transformation"
 
-#: libgimpwidgets/gimpstock.c:158
+#: libgimpwidgets/gimpstock.c:162
 msgid "Rotate"
 msgstr "Rotieren"
 
-#: libgimpwidgets/gimpstock.c:159
+#: libgimpwidgets/gimpstock.c:163
 msgid "Scale"
 msgstr "Skalieren"
 
-#: libgimpwidgets/gimpstock.c:160
+#: libgimpwidgets/gimpstock.c:164
 msgid "Shear"
 msgstr "Scheren"
 
@@ -244,7 +250,7 @@ msgstr "Einheit"
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:842
+#: libgimpwidgets/gimpwidgets.c:845
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -253,11 +259,11 @@ msgstr ""
 "Zufallsgenerator - dies ermgöglicht es \"zufällige\" Funktionen zu "
 "wiederholen"
 
-#: libgimpwidgets/gimpwidgets.c:847
+#: libgimpwidgets/gimpwidgets.c:850
 msgid "Time"
 msgstr "Zeit"
 
-#: libgimpwidgets/gimpwidgets.c:856
+#: libgimpwidgets/gimpwidgets.c:859
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
@@ -265,17 +271,14 @@ msgstr ""
 "Speise Zufallsgenerator mit der aktuellen Zeit - dies garantiert eine "
 "vernünftige Wahrscheinlichkeit"
 
-#: libgimpwidgets/gimpwidgets.c:1170
+#: libgimpwidgets/gimpwidgets.c:1173
 msgid "Bytes"
 msgstr "Byte"
 
-#: libgimpwidgets/gimpwidgets.c:1171
+#: libgimpwidgets/gimpwidgets.c:1174
 msgid "KiloBytes"
 msgstr "KiloByte"
 
-#: libgimpwidgets/gimpwidgets.c:1172
+#: libgimpwidgets/gimpwidgets.c:1175
 msgid "MegaBytes"
 msgstr "MegaByte"
-
-#~ msgid "Paste"
-#~ msgstr "Einfügen"
