@@ -35,6 +35,8 @@
 #include "core/gimpdata.h"
 #include "core/gimpdatafactory.h"
 
+#include "config/gimpconfig-path.h"
+
 #include "gimpdataeditor.h"
 #include "gimpdocked.h"
 #include "gimpitemfactory.h"
@@ -373,7 +375,7 @@ gimp_data_editor_save_clicked (GtkWidget      *widget,
       g_free (path);
       path = tmp;
 
-      data = editor>data;
+      data = editor->data;
 
       if (! data->filename)
         gimp_data_create_filename (data, GIMP_OBJECT (data)->name, path);

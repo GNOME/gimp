@@ -1,5 +1,10 @@
 2003-11-10  Dave Neary  <bolsh@gimp.org>
 
+	* app/widgets/gimpdataeditor.c: Fix warnings and one error in 
+	last commit.
+
+2003-11-10  Dave Neary  <bolsh@gimp.org>
+
 	* app/widgets/gimpdataeditor.c: Implement save button. Partially
 	addresses bug #116606.
 
