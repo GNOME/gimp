@@ -101,6 +101,9 @@ elif (automake-1.8 --version) < /dev/null > /dev/null 2>&1; then
    AUTOMAKE=automake-1.8
    ACLOCAL=aclocal-1.8
    AUTOMAKE_REQUIRED_VERSION=1.8.3
+elif (automake-1.9 --version) < /dev/null > /dev/null 2>&1; then
+   AUTOMAKE=automake-1.9
+   ACLOCAL=aclocal-1.9
 elif (automake-1.6 --version) < /dev/null > /dev/null 2>&1; then
    AUTOMAKE=automake-1.6
    ACLOCAL=aclocal-1.6
@@ -112,6 +115,8 @@ else
     echo
     DIE=1
 fi
+AUTOMAKE=automake-1.9
+ACLOCAL=aclocal-1.9
 
 if test x$AUTOMAKE != x; then
     VER=`$AUTOMAKE --version \
@@ -248,6 +253,7 @@ if test -z "$ACLOCAL_FLAGS"; then
     done
 fi
 
+rm -rf autom4te.cache
 
 $ACLOCAL $ACLOCAL_FLAGS
 RC=$?

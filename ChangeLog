@@ -1,3 +1,8 @@
+2004-10-16  Manish Singh  <yosh@gimp.org>
+
+	* autogen.sh: Add support for automake 1.9. Also rm autom4te.cache,
+	since it might interfere with differing autoconf versions.
+
 2004-10-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpuimanager.[ch]: added utility function
