@@ -57,12 +57,13 @@ struct _gradient_t
 struct _grad_segment_t
 {
   gdouble      left, middle, right; /* Left pos, midpoint, right pos */
-  gdouble      r0, g0, b0, a0;      /* Left color */
-  gdouble      r1, g1, b1, a1;      /* Right color */
+  GimpRGB      left_color;
+  GimpRGB      right_color;
   grad_type_t  type;                /* Segment's blending function */
   grad_color_t color;               /* Segment's coloring type */
 
-  struct _grad_segment_t *prev, *next; /* For linked list of segments */
+  grad_segment_t *prev;
+  grad_segment_t *next; /* For linked list of segments */
 };
 
 #endif  /*  __GRADIENT_HEADER_H__  */

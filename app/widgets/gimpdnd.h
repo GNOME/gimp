@@ -93,12 +93,12 @@ typedef enum
 
 /*  color dnd functions  */
 
-typedef void (* GimpDndDropColorFunc) (GtkWidget *widget,
-				       GimpRGB   *color,
-				       gpointer   data);
-typedef void (* GimpDndDragColorFunc) (GtkWidget *widget,
-				       GimpRGB   *color,
-				       gpointer   data);
+typedef void (* GimpDndDropColorFunc) (GtkWidget     *widget,
+				       const GimpRGB *color,
+				       gpointer       data);
+typedef void (* GimpDndDragColorFunc) (GtkWidget     *widget,
+				       GimpRGB       *color,
+				       gpointer       data);
 
 void  gimp_dnd_color_source_set    (GtkWidget            *widget,
 				    GimpDndDragColorFunc  get_color_func,

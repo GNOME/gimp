@@ -128,7 +128,7 @@ static GtkWidget * color_select_widget_new   (ColorSelect    *csp,
 					      const GimpRGB  *color);
 
 static void   color_select_drop_color        (GtkWidget      *widget,
-					      GimpRGB        *color,
+					      const GimpRGB  *color,
 					      gpointer        data);
 static void   color_select_update            (ColorSelect    *csp,
 					      ColorSelectUpdateType);
@@ -305,9 +305,9 @@ color_select_widget_new (ColorSelect   *csp,
 }
 
 static void
-color_select_drop_color (GtkWidget *widget,
-			 GimpRGB   *color,
-			 gpointer   data)
+color_select_drop_color (GtkWidget     *widget,
+			 const GimpRGB *color,
+			 gpointer       data)
 {
   ColorSelect *csp;
 

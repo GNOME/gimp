@@ -224,7 +224,7 @@ void               gimp_palette_get_foreground     (guchar          *r,
 						    guchar          *g,
 						    guchar          *b);
 void               gimp_context_set_foreground     (GimpContext     *context,
-						    GimpRGB         *color);
+						    const GimpRGB   *color);
 void               gimp_context_foreground_changed (GimpContext     *context);
 
 /*  background color  */
@@ -235,7 +235,7 @@ void               gimp_palette_get_background     (guchar          *r,
 						    guchar          *g,
 						    guchar          *b);
 void               gimp_context_set_background     (GimpContext     *context,
-						    GimpRGB         *color);
+						    const GimpRGB   *color);
 void               gimp_context_background_changed (GimpContext     *context);
 
 /*  color utility functions  */

@@ -37,10 +37,11 @@
 #define COLORMAP_SIZE    768
 
 
-#define GIMP_TYPE_IMAGE         (gimp_image_get_type ())
-#define GIMP_IMAGE(obj)         (GTK_CHECK_CAST (obj, GIMP_TYPE_IMAGE, GimpImage))
-#define GIMP_IS_IMAGE(obj)      (GTK_CHECK_TYPE (obj, GIMP_TYPE_IMAGE))
-#define GIMP_IMAGE_CLASS(klass) (GTK_CHECK_CLASS_CAST (klass, GIMP_TYPE_IMAGE, GimpImageClass))
+#define GIMP_TYPE_IMAGE            (gimp_image_get_type ())
+#define GIMP_IMAGE(obj)            (GTK_CHECK_CAST (obj, GIMP_TYPE_IMAGE, GimpImage))
+#define GIMP_IS_IMAGE(obj)         (GTK_CHECK_TYPE (obj, GIMP_TYPE_IMAGE))
+#define GIMP_IMAGE_CLASS(klass)    (GTK_CHECK_CLASS_CAST (klass, GIMP_TYPE_IMAGE, GimpImageClass))
+#define GIMP_IS_IMAGE_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_IMAGE))
 
 typedef struct _GimpImageClass GimpImageClass;
 

@@ -99,7 +99,7 @@ static guint n_by_color_select_targets = (sizeof (by_color_select_targets) /
 
 
 static void   by_color_select_color_drop      (GtkWidget      *widget,
-					       GimpRGB        *color,
+					       const GimpRGB  *color,
 					       gpointer        data);
 
 /*  by_color select action functions  */
@@ -1229,9 +1229,9 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
 }
 
 static void
-by_color_select_color_drop (GtkWidget *widget,
-                            GimpRGB   *color,
-                            gpointer   data)
+by_color_select_color_drop (GtkWidget     *widget,
+                            const GimpRGB *color,
+                            gpointer       data)
 
 {
   GimpDrawable  *drawable;

@@ -76,13 +76,13 @@ static void gimp_context_copy_tool           (GimpContext      *src,
 
 /*  foreground  */
 static void gimp_context_real_set_foreground (GimpContext      *context,
-					      GimpRGB          *color);
+					      const GimpRGB    *color);
 static void gimp_context_copy_foreground     (GimpContext      *src,
 					      GimpContext      *dest);
 
 /*  background  */
 static void gimp_context_real_set_background (GimpContext      *context,
-					      GimpRGB          *color);
+					      const GimpRGB    *color);
 static void gimp_context_copy_background     (GimpContext      *src,
 					      GimpContext      *dest);
 
@@ -1046,8 +1046,8 @@ gimp_context_get_foreground (GimpContext *context,
 }
 
 void
-gimp_context_set_foreground (GimpContext *context,
-			     GimpRGB     *color)
+gimp_context_set_foreground (GimpContext   *context,
+			     const GimpRGB *color)
 {
   context_check_current (context);
   context_return_if_fail (context);
@@ -1070,8 +1070,8 @@ gimp_context_foreground_changed (GimpContext *context)
 }
 
 static void
-gimp_context_real_set_foreground (GimpContext *context,
-				  GimpRGB     *color)
+gimp_context_real_set_foreground (GimpContext   *context,
+				  const GimpRGB *color)
 {
   if (gimp_rgba_distance (&context->foreground, color) < 0.0001)
     return;
@@ -1104,8 +1104,8 @@ gimp_context_get_background (GimpContext *context,
 }
 
 void
-gimp_context_set_background (GimpContext *context,
-			     GimpRGB     *color)
+gimp_context_set_background (GimpContext   *context,
+			     const GimpRGB *color)
 {
   context_check_current (context);
   context_return_if_fail (context);
@@ -1128,8 +1128,8 @@ gimp_context_background_changed (GimpContext *context)
 }
 
 static void
-gimp_context_real_set_background (GimpContext *context,
-				  GimpRGB     *color)
+gimp_context_real_set_background (GimpContext   *context,
+				  const GimpRGB *color)
 {
   if (gimp_rgba_distance (&context->background, color) < 0.0001)
     return;

@@ -991,9 +991,9 @@ gdisplay_bucket_fill (GtkWidget      *widget,
 }
 
 void
-gdisplay_drop_color (GtkWidget *widget,
-		     GimpRGB   *drop_color,
-		     gpointer   data)
+gdisplay_drop_color (GtkWidget     *widget,
+		     const GimpRGB *drop_color,
+		     gpointer       data)
 {
   guchar color[4];
 

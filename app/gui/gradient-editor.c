@@ -207,10 +207,7 @@ typedef struct
   gint replicate_times;
 
   /*  Saved colors  */
-  struct
-  {
-    gdouble r, g, b, a;
-  } saved_colors[GRAD_NUM_COLORS];
+  GimpRGB saved_colors[GRAD_NUM_COLORS];
 
   GtkWidget *left_load_color_boxes[GRAD_NUM_COLORS + 3];
   GtkWidget *left_load_labels[GRAD_NUM_COLORS + 3];
@@ -254,10 +251,6 @@ static GtkWidget * ed_create_button               (gchar           *label,
 						   GtkSignalFunc    signal_func,
 						   gpointer         data);
 
-static void      ed_fetch_foreground              (gdouble         *fg_r,
-						   gdouble         *fg_g,
-						   gdouble         *fg_b,
-						   gdouble         *fg_a);
 static void      ed_update_editor                 (gint             flags);
 
 static void      ed_set_hint                      (gchar           *str);
@@ -415,10 +408,7 @@ static void      cpopup_check_selection_params    (gint            *equal_blendi
 						   gint            *equal_coloring);
 
 static void      cpopup_render_color_box          (GtkPreview      *preview,
-						   gdouble          r,
-						   gdouble          g,
-						   gdouble          b,
-						   gdouble          a);
+						   GimpRGB         *color);
 
 static GtkWidget * cpopup_create_load_menu        (GtkWidget      **color_boxes,
 						   GtkWidget      **labels,
@@ -436,10 +426,7 @@ static GtkWidget * cpopup_create_save_menu        (GtkWidget      **color_boxes,
 						   GtkSignalFunc    callback);
 
 static void      cpopup_update_saved_color        (gint             n,
-						   gdouble          r,
-						   gdouble          g,
-						   gdouble          b,
-						   gdouble          a);
+						   GimpRGB         *color);
 
 static void      cpopup_load_left_callback        (GtkWidget       *widget,
 						   gpointer         data);
@@ -451,15 +438,9 @@ static void      cpopup_save_right_callback       (GtkWidget       *widget,
 						   gpointer         data);
 
 static void      cpopup_set_color_selection_color (GtkColorSelection *cs,
-						   gdouble            r,
-						   gdouble            g,
-						   gdouble            b,
-						   gdouble            a);
+						   GimpRGB           *color);
 static void      cpopup_get_color_selection_color (GtkColorSelection *cs,
-						   gdouble           *r,
-						   gdouble           *g,
-						   gdouble           *b,
-						   gdouble           *a);
+						   GimpRGB           *color);
 
 static grad_segment_t * cpopup_save_selection     (void);
 static void             cpopup_free_selection     (grad_segment_t  *seg);
@@ -468,10 +449,7 @@ static void             cpopup_replace_selection  (grad_segment_t  *replace_seg)
 /* ----- */
 
 static void   cpopup_create_color_dialog          (gchar           *title,
-						   double           r,
-						   double           g,
-						   double           b,
-						   double           a,
+						   GimpRGB         *color,
 						   GtkSignalFunc    color_changed_callback,
 						   GtkSignalFunc    ok_callback,
 						   GtkSignalFunc    cancel_callback,
@@ -561,14 +539,8 @@ static void      cpopup_blend_opacity             (GtkWidget       *widget,
 
 /* Blend function */
 
-static void      cpopup_blend_endpoints           (gdouble          r0,
-						   gdouble          g0,
-						   gdouble          b0,
-						   gdouble          a0,
-						   gdouble          r1,
-						   gdouble          g1,
-						   gdouble          b1,
-						   gdouble          a1,
+static void      cpopup_blend_endpoints           (GimpRGB         *left,
+						   GimpRGB         *right,
 						   gint             blend_colors,
 						   gint             blend_opacity);
 
@@ -746,9 +718,9 @@ gradient_get_color_at (gradient_t *gradient,
 {
   gdouble         factor = 0.0;
   grad_segment_t *seg;
-  gdouble         seg_len, middle;
-  gdouble         h0, s0, v0;
-  gdouble         h1, s1, v1;
+  gdouble         seg_len;
+  gdouble         middle;
+  GimpRGB         rgb;
 
   /* if there is no gradient return a totally transparent black */
   if (gradient == NULL) 
@@ -808,55 +780,52 @@ gradient_get_color_at (gradient_t *gradient,
 
   /* Calculate color components */
 
-  *a = seg->a0 + (seg->a1 - seg->a0) * factor;
+  *a = seg->left_color.a + (seg->right_color.a - seg->left_color.a) * factor;
 
   if (seg->color == GRAD_RGB)
     {
-      *r = seg->r0 + (seg->r1 - seg->r0) * factor;
-      *g = seg->g0 + (seg->g1 - seg->g0) * factor;
-      *b = seg->b0 + (seg->b1 - seg->b0) * factor;
+      *r = seg->left_color.r + (seg->right_color.r - seg->left_color.r) * factor;
+      *g = seg->left_color.g + (seg->right_color.g - seg->left_color.g) * factor;
+      *b = seg->left_color.b + (seg->right_color.b - seg->left_color.b) * factor;
     }
   else
     {
-      h0 = seg->r0;
-      s0 = seg->g0;
-      v0 = seg->b0;
+      GimpHSV left_hsv;
+      GimpHSV right_hsv;
 
-      h1 = seg->r1;
-      s1 = seg->g1;
-      v1 = seg->b1;
+      gimp_rgb_to_hsv (&seg->left_color,  &left_hsv);
+      gimp_rgb_to_hsv (&seg->right_color, &right_hsv);
 
-      gimp_rgb_to_hsv_double (&h0, &s0, &v0);
-      gimp_rgb_to_hsv_double (&h1, &s1, &v1);
-
-      s0 = s0 + (s1 - s0) * factor;
-      v0 = v0 + (v1 - v0) * factor;
+      left_hsv.s = left_hsv.s + (right_hsv.s - left_hsv.s) * factor;
+      left_hsv.v = left_hsv.v + (right_hsv.v - left_hsv.v) * factor;
 
       switch (seg->color)
 	{
 	case GRAD_HSV_CCW:
-	  if (h0 < h1)
+	  if (left_hsv.h < right_hsv.h)
 	    {
-	      h0 = h0 + (h1 - h0) * factor;
+	      left_hsv.h += (right_hsv.h - left_hsv.h) * factor;
 	    }
 	  else
 	    {
-	      h0 = h0 + (1.0 - (h0 - h1)) * factor;
-	      if (h0 > 1.0)
-		h0 -= 1.0;
+	      left_hsv.h += (1.0 - (left_hsv.h - right_hsv.h)) * factor;
+
+	      if (left_hsv.h > 1.0)
+		left_hsv.h -= 1.0;
 	    }
 	  break;
 
 	case GRAD_HSV_CW:
-	  if (h1 < h0)
+	  if (right_hsv.h < left_hsv.h)
 	    {
-	      h0 = h0 - (h0 - h1) * factor;
+	      left_hsv.h -= (left_hsv.h - right_hsv.h) * factor;
 	    }
 	  else
 	    {
-	      h0 = h0 - (1.0 - (h1 - h0)) * factor;
-	      if (h0 < 0.0)
-		h0 += 1.0;
+	      left_hsv.h -= (1.0 - (right_hsv.h - left_hsv.h)) * factor;
+
+	      if (left_hsv.h < 0.0)
+		left_hsv.h += 1.0;
 	    }
 	  break;
 
@@ -867,11 +836,11 @@ gradient_get_color_at (gradient_t *gradient,
 	  break;
 	}
 
-      *r = h0;
-      *g = s0;
-      *b = v0;
+      gimp_hsv_to_rgb (&left_hsv, &rgb);
 
-      gimp_hsv_to_rgb_double (r, g, b);
+      *r = rgb.r;
+      *g = rgb.g;
+      *b = rgb.b;
     }
 }
 
@@ -1322,24 +1291,6 @@ gradient_editor_drop_gradient (GtkWidget  *widget,
 			       gpointer    data)
 {
   gradient_editor_set_gradient (gradient);
-}
-
-/*****/
-
-static void
-ed_fetch_foreground (gdouble *fg_r,
-		     gdouble *fg_g,
-		     gdouble *fg_b,
-		     gdouble *fg_a)
-{
-  GimpRGB color;
-
-  gimp_context_get_foreground (gimp_context_get_user (), &color);
-
-  *fg_r = color.r;
-  *fg_g = color.g;
-  *fg_b = color.b;
-  *fg_a = 1.0;                 /* opacity 100 % */
 }
 
 /*****/
@@ -1997,20 +1948,26 @@ ed_do_save_pov_callback (GtkWidget *widget,
 	  /* Left */
 	  fprintf (file, "\t[%f color rgbt <%f, %f, %f, %f>]\n",
 		   seg->left,
-		   seg->r0, seg->g0, seg->b0, 1.0 - seg->a0);
+		   seg->left_color.r,
+		   seg->left_color.g,
+		   seg->left_color.b,
+		   1.0 - seg->left_color.a);
 
 	  /* Middle */
 	  fprintf (file, "\t[%f color rgbt <%f, %f, %f, %f>]\n",
 		   seg->middle,
-		   (seg->r0 + seg->r1) / 2.0,
-		   (seg->g0 + seg->g1) / 2.0,
-		   (seg->b0 + seg->b1) / 2.0,
-		   1.0 - (seg->a0 + seg->a1) / 2.0);
+		   (seg->left_color.r + seg->right_color.r) / 2.0,
+		   (seg->left_color.g + seg->right_color.g) / 2.0,
+		   (seg->left_color.b + seg->right_color.b) / 2.0,
+		   1.0 - (seg->left_color.a + seg->right_color.a) / 2.0);
 
 	  /* Right */
 	  fprintf (file, "\t[%f color rgbt <%f, %f, %f, %f>]\n",
 		   seg->right,
-		   seg->r1, seg->g1, seg->b1, 1.0 - seg->a1);
+		   seg->right_color.r,
+		   seg->right_color.g,
+		   seg->right_color.b,
+		   1.0 - seg->right_color.a);
 	}
 
       fprintf (file, "} /* color_map */\n");
@@ -3746,21 +3703,14 @@ cpopup_adjust_menus (void)
 {
   grad_segment_t *seg;
   gint            i;
-  gdouble         fg_r, fg_g, fg_b;
-  gdouble         fg_a;
+  GimpRGB         fg;
 
   /* Render main menu color boxes */
   cpopup_render_color_box (GTK_PREVIEW (g_editor->left_color_preview),
-			   g_editor->control_sel_l->r0,
-			   g_editor->control_sel_l->g0,
-			   g_editor->control_sel_l->b0,
-			   g_editor->control_sel_l->a0);
+			   &g_editor->control_sel_l->left_color);
 
   cpopup_render_color_box (GTK_PREVIEW (g_editor->right_color_preview),
-			   g_editor->control_sel_r->r1,
-			   g_editor->control_sel_r->g1,
-			   g_editor->control_sel_r->b1,
-			   g_editor->control_sel_r->a1);
+			   &g_editor->control_sel_r->right_color);
 
   /* Render load color from endpoint color boxes */
 
@@ -3770,16 +3720,10 @@ cpopup_adjust_menus (void)
     seg = seg_get_last_segment (g_editor->control_sel_l);
 
   cpopup_render_color_box (GTK_PREVIEW (g_editor->left_load_color_boxes[0]),
-			   seg->r1,
-			   seg->g1,
-			   seg->b1,
-			   seg->a1);
+			   &seg->right_color);
 
   cpopup_render_color_box (GTK_PREVIEW (g_editor->left_load_color_boxes[1]),
-			   g_editor->control_sel_r->r1,
-			   g_editor->control_sel_r->g1,
-			   g_editor->control_sel_r->b1,
-			   g_editor->control_sel_r->a1);
+			   &g_editor->control_sel_r->right_color);
 
   if (g_editor->control_sel_r->next != NULL)
     seg = g_editor->control_sel_r->next;
@@ -3787,41 +3731,25 @@ cpopup_adjust_menus (void)
     seg = curr_gradient->segments;
 
   cpopup_render_color_box (GTK_PREVIEW (g_editor->right_load_color_boxes[0]),
-			   seg->r0,
-			   seg->g0,
-			   seg->b0,
-			   seg->a0);
+			   &seg->left_color);
 
   cpopup_render_color_box (GTK_PREVIEW (g_editor->right_load_color_boxes[1]),
-			   g_editor->control_sel_l->r0,
-			   g_editor->control_sel_l->g0,
-			   g_editor->control_sel_l->b0,
-			   g_editor->control_sel_l->a0);
+			   &g_editor->control_sel_l->left_color);
 
   /* Render Foreground color boxes */
 
-  ed_fetch_foreground (&fg_r, &fg_g, &fg_b, &fg_a);
+  gimp_context_get_foreground (gimp_context_get_user (), &fg);
 
   cpopup_render_color_box (GTK_PREVIEW (g_editor->left_load_color_boxes[2]),
-			   fg_r,
-			   fg_g,
-			   fg_b,
-			   fg_a);
+			   &fg);
 
   cpopup_render_color_box (GTK_PREVIEW (g_editor->right_load_color_boxes[2]),
-			   fg_r,
-			   fg_g,
-			   fg_b,
-			   fg_a);
+			   &fg);
 	
   /* Render saved color boxes */
 
   for (i = 0; i < GRAD_NUM_COLORS; i++)
-    cpopup_update_saved_color (i,
-			       g_editor->saved_colors[i].r,
-			       g_editor->saved_colors[i].g,
-			       g_editor->saved_colors[i].b,
-			       g_editor->saved_colors[i].a);
+    cpopup_update_saved_color (i, &g_editor->saved_colors[i]);
 
   /* Adjust labels */
 
@@ -4001,27 +3929,24 @@ cpopup_check_selection_params (gint *equal_blending,
 
 static void
 cpopup_render_color_box (GtkPreview *preview,
-			 double      r,
-			 double      g,
-			 double      b,
-			 double      a)
+			 GimpRGB    *color)
 {
   guchar  rows[3][GRAD_COLOR_BOX_WIDTH * 3];
-  int     x, y;
-  int     r0, g0, b0;
-  int     r1, g1, b1;
+  gint    x, y;
+  gint    r0, g0, b0;
+  gint    r1, g1, b1;
   guchar *p0, *p1, *p2;
 
   /* Fill rows */
 
-  r0 = (GIMP_CHECK_DARK + (r - GIMP_CHECK_DARK) * a) * 255.0;
-  r1 = (GIMP_CHECK_LIGHT + (r - GIMP_CHECK_LIGHT) * a) * 255.0;
+  r0 = (GIMP_CHECK_DARK + (color->r - GIMP_CHECK_DARK) * color->a) * 255.0;
+  r1 = (GIMP_CHECK_LIGHT + (color->r - GIMP_CHECK_LIGHT) * color->a) * 255.0;
 
-  g0 = (GIMP_CHECK_DARK + (g - GIMP_CHECK_DARK) * a) * 255.0;
-  g1 = (GIMP_CHECK_LIGHT + (g - GIMP_CHECK_LIGHT) * a) * 255.0;
+  g0 = (GIMP_CHECK_DARK + (color->g - GIMP_CHECK_DARK) * color->a) * 255.0;
+  g1 = (GIMP_CHECK_LIGHT + (color->g - GIMP_CHECK_LIGHT) * color->a) * 255.0;
 
-  b0 = (GIMP_CHECK_DARK + (b - GIMP_CHECK_DARK) * a) * 255.0;
-  b1 = (GIMP_CHECK_LIGHT + (b - GIMP_CHECK_LIGHT) * a) * 255.0;
+  b0 = (GIMP_CHECK_DARK + (color->b - GIMP_CHECK_DARK) * color->a) * 255.0;
+  b1 = (GIMP_CHECK_LIGHT + (color->b - GIMP_CHECK_LIGHT) * color->a) * 255.0;
 
   p0 = rows[0];
   p1 = rows[1];
@@ -4161,7 +4086,7 @@ cpopup_create_save_menu (GtkWidget     **color_boxes,
 {
   GtkWidget *menu;
   GtkWidget *menuitem;
-  gint i;
+  gint       i;
 
   menu = gtk_menu_new ();
 
@@ -4180,24 +4105,25 @@ cpopup_create_save_menu (GtkWidget     **color_boxes,
 /*****/
 
 static void
-cpopup_update_saved_color (int    n,
-			   double r,
-			   double g,
-			   double b,
-			   double a)
+cpopup_update_saved_color (gint     n,
+			   GimpRGB *color)
 {
   gchar *str;
 
   cpopup_render_color_box (GTK_PREVIEW (g_editor->left_load_color_boxes[n + 3]),
-			   r, g, b, a);
+			   color);
   cpopup_render_color_box (GTK_PREVIEW (g_editor->left_save_color_boxes[n]),
-			   r, g, b, a);
+			   color);
   cpopup_render_color_box (GTK_PREVIEW (g_editor->right_load_color_boxes[n + 3]),
-			   r, g, b, a);
+			   color);
   cpopup_render_color_box (GTK_PREVIEW (g_editor->right_save_color_boxes[n]),
-			   r, g, b, a);
+			   color);
 
-  str = g_strdup_printf (_("RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"), r, g, b, a);
+  str = g_strdup_printf (_("RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"),
+			 color->r,
+			 color->g,
+			 color->b,
+			 color->a);
 
   gtk_label_set_text (GTK_LABEL (g_editor->left_load_labels[n + 3]), str);
   gtk_label_set_text (GTK_LABEL (g_editor->left_save_labels[n]), str);
@@ -4206,10 +4132,7 @@ cpopup_update_saved_color (int    n,
 
   g_free (str);
 
-  g_editor->saved_colors[n].r = r;
-  g_editor->saved_colors[n].g = g;
-  g_editor->saved_colors[n].b = b;
-  g_editor->saved_colors[n].a = a;
+  g_editor->saved_colors[n] = *color;
 }
 
 /*****/
@@ -4219,8 +4142,7 @@ cpopup_load_left_callback (GtkWidget *widget,
 			   gpointer   data)
 {
   grad_segment_t *seg;
-  double          fg_r, fg_g, fg_b;
-  double          fg_a;
+  GimpRGB         fg;
 
   switch ((long) data)
     {
@@ -4230,48 +4152,27 @@ cpopup_load_left_callback (GtkWidget *widget,
       else
 	seg = seg_get_last_segment (g_editor->control_sel_l);
 
-      cpopup_blend_endpoints (seg->r1, seg->g1, seg->b1, seg->a1,
-			      g_editor->control_sel_r->r1,
-			      g_editor->control_sel_r->g1,
-			      g_editor->control_sel_r->b1,
-			      g_editor->control_sel_r->a1,
+      cpopup_blend_endpoints (&seg->right_color,
+			      &g_editor->control_sel_r->right_color,
 			      TRUE, TRUE);
       break;
 
     case 1: /* Fetch from right endpoint */
-      cpopup_blend_endpoints (g_editor->control_sel_r->r1,
-			      g_editor->control_sel_r->g1,
-			      g_editor->control_sel_r->b1,
-			      g_editor->control_sel_r->a1,
-			      g_editor->control_sel_r->r1,
-			      g_editor->control_sel_r->g1,
-			      g_editor->control_sel_r->b1,
-			      g_editor->control_sel_r->a1,
+      cpopup_blend_endpoints (&g_editor->control_sel_r->right_color,
+			      &g_editor->control_sel_r->right_color,
 			      TRUE, TRUE);
       break;
 
     case 2: /* Fetch from FG color */
-      ed_fetch_foreground (&fg_r, &fg_g, &fg_b, &fg_a);
-      cpopup_blend_endpoints (fg_r,
-			      fg_g,
-			      fg_b,
-			      fg_a,
-			      g_editor->control_sel_r->r1,
-			      g_editor->control_sel_r->g1,
-			      g_editor->control_sel_r->b1,
-			      g_editor->control_sel_r->a1,
+      gimp_context_get_foreground (gimp_context_get_user (), &fg);
+      cpopup_blend_endpoints (&fg,
+			      &g_editor->control_sel_r->right_color,
 			      TRUE, TRUE);
       break;
 
     default: /* Load a color */
-      cpopup_blend_endpoints (g_editor->saved_colors[(long) data - 3].r,
-			      g_editor->saved_colors[(long) data - 3].g,
-			      g_editor->saved_colors[(long) data - 3].b,
-			      g_editor->saved_colors[(long) data - 3].a,
-			      g_editor->control_sel_r->r1,
-			      g_editor->control_sel_r->g1,
-			      g_editor->control_sel_r->b1,
-			      g_editor->control_sel_r->a1,
+      cpopup_blend_endpoints (&g_editor->saved_colors[(long) data - 3],
+			      &g_editor->control_sel_r->right_color,
 			      TRUE, TRUE);
       break;
     }
@@ -4284,10 +4185,7 @@ static void
 cpopup_save_left_callback (GtkWidget *widget,
 			   gpointer   data)
 {
-  g_editor->saved_colors[(long) data].r = g_editor->control_sel_l->r0;
-  g_editor->saved_colors[(long) data].g = g_editor->control_sel_l->g0;
-  g_editor->saved_colors[(long) data].b = g_editor->control_sel_l->b0;
-  g_editor->saved_colors[(long) data].a = g_editor->control_sel_l->a0;
+  g_editor->saved_colors[(long) data] = g_editor->control_sel_l->left_color;
 }
 
 static void
@@ -4295,8 +4193,7 @@ cpopup_load_right_callback (GtkWidget *widget,
 			    gpointer   data)
 {
   grad_segment_t *seg;
-  double          fg_r, fg_g, fg_b;
-  double          fg_a;
+  GimpRGB         fg;
 
   switch ((long) data)
     {
@@ -4306,48 +4203,27 @@ cpopup_load_right_callback (GtkWidget *widget,
       else
 	seg = curr_gradient->segments;
 
-      cpopup_blend_endpoints (g_editor->control_sel_r->r0,
-			      g_editor->control_sel_r->g0,
-			      g_editor->control_sel_r->b0,
-			      g_editor->control_sel_r->a0,
-			      seg->r0, seg->g0, seg->b0, seg->a0,
+      cpopup_blend_endpoints (&g_editor->control_sel_r->left_color,
+			      &seg->left_color,
 			      TRUE, TRUE);
       break;
 
     case 1: /* Fetch from left endpoint */
-      cpopup_blend_endpoints (g_editor->control_sel_l->r0,
-			      g_editor->control_sel_l->g0,
-			      g_editor->control_sel_l->b0,
-			      g_editor->control_sel_l->a0,
-			      g_editor->control_sel_l->r0,
-			      g_editor->control_sel_l->g0,
-			      g_editor->control_sel_l->b0,
-			      g_editor->control_sel_l->a0,
+      cpopup_blend_endpoints (&g_editor->control_sel_l->left_color,
+			      &g_editor->control_sel_l->left_color,
 			      TRUE, TRUE);
       break;
 
     case 2: /* Fetch from FG color */
-      ed_fetch_foreground (&fg_r, &fg_g, &fg_b, &fg_a);
-      cpopup_blend_endpoints (g_editor->control_sel_l->r0,
-			      g_editor->control_sel_l->g0,
-			      g_editor->control_sel_l->b0,
-			      g_editor->control_sel_l->a0,
-			      fg_r,
-			      fg_g,
-			      fg_b,
-			      fg_a,
+      gimp_context_get_foreground (gimp_context_get_user (), &fg);
+      cpopup_blend_endpoints (&g_editor->control_sel_l->left_color,
+			      &fg,
 			      TRUE, TRUE);
       break;
 
     default: /* Load a color */
-      cpopup_blend_endpoints (g_editor->control_sel_l->r0,
-			      g_editor->control_sel_l->g0,
-			      g_editor->control_sel_l->b0,
-			      g_editor->control_sel_l->a0,
-			      g_editor->saved_colors[(long) data - 3].r,
-			      g_editor->saved_colors[(long) data - 3].g,
-			      g_editor->saved_colors[(long) data - 3].b,
-			      g_editor->saved_colors[(long) data - 3].a,
+      cpopup_blend_endpoints (&g_editor->control_sel_l->left_color,
+			      &g_editor->saved_colors[(long) data - 3],
 			      TRUE, TRUE);
       break;
     }
@@ -4360,46 +4236,34 @@ static void
 cpopup_save_right_callback (GtkWidget *widget,
 			    gpointer   data)
 {
-  g_editor->saved_colors[(long) data].r = g_editor->control_sel_r->r1;
-  g_editor->saved_colors[(long) data].g = g_editor->control_sel_r->g1;
-  g_editor->saved_colors[(long) data].b = g_editor->control_sel_r->b1;
-  g_editor->saved_colors[(long) data].a = g_editor->control_sel_r->a1;
+  g_editor->saved_colors[(long) data] = g_editor->control_sel_r->right_color;
 }
 
 /*****/
 
 static void
 cpopup_set_color_selection_color (GtkColorSelection *cs,
-				  double             r,
-				  double             g,
-				  double             b,
-				  double             a)
+				  GimpRGB           *color)
 {
-  gdouble color[4];
+  gdouble col[4];
 
-  color[0] = r;
-  color[1] = g;
-  color[2] = b;
-  color[3] = a;
+  col[0] = color->r;
+  col[1] = color->g;
+  col[2] = color->b;
+  col[3] = color->a;
 
-  gtk_color_selection_set_color (cs, color);
+  gtk_color_selection_set_color (cs, col);
 }
 
 static void
 cpopup_get_color_selection_color (GtkColorSelection *cs,
-				  double            *r,
-				  double            *g,
-				  double            *b,
-				  double            *a)
+				  GimpRGB           *color)
 {
-  gdouble color[4];
+  gdouble col[4];
 
-  gtk_color_selection_get_color (cs, color);
+  gtk_color_selection_get_color (cs, col);
 
-  *r = color[0];
-  *g = color[1];
-  *b = color[2];
-  *a = color[3];
+  gimp_rgba_set (color, col[0], col[1], col[2], col[3]);
 }
 
 /*****/
@@ -4490,10 +4354,7 @@ cpopup_replace_selection (grad_segment_t *replace_seg)
 
 static void
 cpopup_create_color_dialog (gchar         *title,
-			    double         r,
-			    double         g,
-			    double         b,
-			    double         a,
+			    GimpRGB       *color,
 			    GtkSignalFunc  color_changed_callback,
 			    GtkSignalFunc  ok_callback,
 			    GtkSignalFunc  cancel_callback,
@@ -4522,8 +4383,8 @@ cpopup_create_color_dialog (gchar         *title,
   /* FIXME: this is a hack; we set the color twice so that the
    * color selector remembers it as its "old" color, too
    */
-  cpopup_set_color_selection_color (cs, r, g, b, a);
-  cpopup_set_color_selection_color (cs, r, g, b, a);
+  cpopup_set_color_selection_color (cs, color);
+  cpopup_set_color_selection_color (cs, color);
 
   gtk_signal_connect (GTK_OBJECT (csd), "delete_event",
 		     delete_callback, window);
@@ -4551,10 +4412,7 @@ cpopup_set_left_color_callback (GtkWidget *widget,
   g_editor->left_saved_segments = cpopup_save_selection ();
 
   cpopup_create_color_dialog (_("Left endpoint's color"),
-			      g_editor->control_sel_l->r0,
-			      g_editor->control_sel_l->g0,
-			      g_editor->control_sel_l->b0,
-			      g_editor->control_sel_l->a0,
+			      &g_editor->control_sel_l->left_color,
 			      (GtkSignalFunc) cpopup_left_color_changed,
 			      (GtkSignalFunc) cpopup_left_color_dialog_ok,
 			      (GtkSignalFunc) cpopup_left_color_dialog_cancel,
@@ -4568,17 +4426,14 @@ cpopup_left_color_changed (GtkWidget *widget,
 			   gpointer   data)
 {
   GtkColorSelection *cs;
-  double             r, g, b, a;
+  GimpRGB            color;
 
   cs = GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (data)->colorsel);
 
-  cpopup_get_color_selection_color (cs, &r, &g, &b, &a);
+  cpopup_get_color_selection_color (cs, &color);
 
-  cpopup_blend_endpoints (r, g, b, a,
-			  g_editor->control_sel_r->r1,
-			  g_editor->control_sel_r->g1,
-			  g_editor->control_sel_r->b1,
-			  g_editor->control_sel_r->a1,
+  cpopup_blend_endpoints (&color,
+			  &g_editor->control_sel_r->right_color,
 			  TRUE, TRUE);
 
   ed_update_editor (GRAD_UPDATE_GRADIENT);
@@ -4629,10 +4484,7 @@ cpopup_set_right_color_callback (GtkWidget *widget,
   g_editor->right_saved_segments = cpopup_save_selection ();
 
   cpopup_create_color_dialog (_("Right endpoint's color"),
-			      g_editor->control_sel_r->r1,
-			      g_editor->control_sel_r->g1,
-			      g_editor->control_sel_r->b1,
-			      g_editor->control_sel_r->a1,
+			      &g_editor->control_sel_r->right_color,
 			      (GtkSignalFunc) cpopup_right_color_changed,
 			      (GtkSignalFunc) cpopup_right_color_dialog_ok,
 			      (GtkSignalFunc) cpopup_right_color_dialog_cancel,
@@ -4646,17 +4498,14 @@ cpopup_right_color_changed (GtkWidget *widget,
 			    gpointer   data)
 {
   GtkColorSelection *cs;
-  double             r, g, b, a;
+  GimpRGB            color;
 
   cs = GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (data)->colorsel);
 
-  cpopup_get_color_selection_color (cs, &r, &g, &b, &a);
+  cpopup_get_color_selection_color (cs, &color);
 
-  cpopup_blend_endpoints (g_editor->control_sel_l->r0,
-			  g_editor->control_sel_l->g0,
-			  g_editor->control_sel_l->b0,
-			  g_editor->control_sel_l->a0,
-			  r, g, b, a,
+  cpopup_blend_endpoints (&g_editor->control_sel_l->left_color,
+			  &color,
 			  TRUE, TRUE);
 
   ed_update_editor (GRAD_UPDATE_GRADIENT);
@@ -4895,15 +4744,12 @@ cpopup_split_midpoint (grad_segment_t  *lseg,
 
   /* Set colors of both segments */
 
-  newseg->r1 = lseg->r1;
-  newseg->g1 = lseg->g1;
-  newseg->b1 = lseg->b1;
-  newseg->a1 = lseg->a1;
+  newseg->right_color = lseg->right_color;
 
-  lseg->r1 = newseg->r0 = r;
-  lseg->g1 = newseg->g0 = g;
-  lseg->b1 = newseg->b0 = b;
-  lseg->a1 = newseg->a0 = a;
+  lseg->right_color.r = newseg->left_color.r = r;
+  lseg->right_color.g = newseg->left_color.g = g;
+  lseg->right_color.b = newseg->left_color.b = b;
+  lseg->right_color.a = newseg->left_color.a = a;
 
   /* Set parameters of new segment */
 
@@ -5059,9 +4905,15 @@ cpopup_split_uniform (grad_segment_t  *lseg,
       seg->middle = (seg->left + seg->right) / 2.0;
 
       gradient_get_color_at (curr_gradient, seg->left,
-			     &seg->r0, &seg->g0, &seg->b0, &seg->a0);
+			     &seg->left_color.r,
+			     &seg->left_color.g,
+			     &seg->left_color.b,
+			     &seg->left_color.a);
       gradient_get_color_at (curr_gradient, seg->right,
-			     &seg->r1, &seg->g1, &seg->b1, &seg->a1);
+			     &seg->right_color.r,
+			     &seg->right_color.g,
+			     &seg->right_color.b,
+			     &seg->right_color.a);
 
       seg->type  = lseg->type;
       seg->color = lseg->color;
@@ -5077,15 +4929,9 @@ cpopup_split_uniform (grad_segment_t  *lseg,
 
   /* Fix edges */
 
-  tmp->r0 = lseg->r0;
-  tmp->g0 = lseg->g0;
-  tmp->b0 = lseg->b0;
-  tmp->a0 = lseg->a0;
+  tmp->left_color = lseg->left_color;
 
-  seg->r1 = lseg->r1;
-  seg->g1 = lseg->g1;
-  seg->b1 = lseg->b1;
-  seg->a1 = lseg->a1;
+  seg->right_color = lseg->right_color;
 
   tmp->left  = lseg->left;
   seg->right = lseg->right; /* To squish accumulative error */
@@ -5382,15 +5228,9 @@ cpopup_flip_callback (GtkWidget *widget,
       seg->middle = left + right - oseg->middle;
       seg->right  = left + right - oseg->left;
 
-      seg->r0 = oseg->r1;
-      seg->g0 = oseg->g1;
-      seg->b0 = oseg->b1;
-      seg->a0 = oseg->a1;
+      seg->left_color = oseg->right_color;
 
-      seg->r1 = oseg->r0;
-      seg->g1 = oseg->g0;
-      seg->b1 = oseg->b0;
-      seg->a1 = oseg->a0;
+      seg->right_color = oseg->left_color;
 
       switch (oseg->type)
 	{
@@ -5600,15 +5440,9 @@ cpopup_do_replicate_callback (GtkWidget *widget,
 	  seg->middle = new_left + factor * (oseg->middle - sel_left);
 	  seg->right  = new_left + factor * (oseg->right - sel_left);
 
-	  seg->r0 = oseg->r0;
-	  seg->g0 = oseg->g0;
-	  seg->b0 = oseg->b0;
-	  seg->a0 = oseg->a0;
+	  seg->left_color = oseg->right_color;
 
-	  seg->r1 = oseg->r1;
-	  seg->g1 = oseg->g1;
-	  seg->b1 = oseg->b1;
-	  seg->a1 = oseg->a1;
+	  seg->right_color = oseg->right_color;
 
 	  seg->type  = oseg->type;
 	  seg->color = oseg->color;
@@ -5685,14 +5519,8 @@ static void
 cpopup_blend_colors (GtkWidget *widget,
 		     gpointer   data)
 {
-  cpopup_blend_endpoints (g_editor->control_sel_l->r0,
-			  g_editor->control_sel_l->g0,
-			  g_editor->control_sel_l->b0,
-			  g_editor->control_sel_l->a0,
-			  g_editor->control_sel_r->r1,
-			  g_editor->control_sel_r->g1,
-			  g_editor->control_sel_r->b1,
-			  g_editor->control_sel_r->a1,
+  cpopup_blend_endpoints (&g_editor->control_sel_l->left_color,
+			  &g_editor->control_sel_r->right_color,
 			  TRUE, FALSE);
 
   curr_gradient->dirty = TRUE;
@@ -5703,14 +5531,8 @@ static void
 cpopup_blend_opacity (GtkWidget *widget,
 		      gpointer   data)
 {
-  cpopup_blend_endpoints (g_editor->control_sel_l->r0,
-			  g_editor->control_sel_l->g0,
-			  g_editor->control_sel_l->b0,
-			  g_editor->control_sel_l->a0,
-			  g_editor->control_sel_r->r1,
-			  g_editor->control_sel_r->g1,
-			  g_editor->control_sel_r->b1,
-			  g_editor->control_sel_r->a1,
+  cpopup_blend_endpoints (&g_editor->control_sel_l->left_color,
+			  &g_editor->control_sel_r->right_color,
 			  FALSE, TRUE);
 
   curr_gradient->dirty = TRUE;
@@ -5720,19 +5542,20 @@ cpopup_blend_opacity (GtkWidget *widget,
 /***** Main blend function *****/
 
 static void
-cpopup_blend_endpoints (double r0, double g0, double b0, double a0,
-			double r1, double g1, double b1, double a1,
-			int blend_colors,
-			int blend_opacity)
+cpopup_blend_endpoints (GimpRGB  *rgb1,
+			GimpRGB  *rgb2,
+			gboolean  blend_colors,
+			gboolean  blend_opacity)
 {
-  double          dr, dg, db, da;
-  double          left, len;
-  grad_segment_t *seg, *aseg;
+  GimpRGB         d;
+  gdouble         left, len;
+  grad_segment_t *seg;
+  grad_segment_t *aseg;
 
-  dr = r1 - r0;
-  dg = g1 - g0;
-  db = b1 - b0;
-  da = a1 - a0;
+  d.r = rgb2->r - rgb1->r;
+  d.g = rgb2->g - rgb1->g;
+  d.b = rgb2->b - rgb1->b;
+  d.a = rgb2->a - rgb1->a;
 
   left  = g_editor->control_sel_l->left;
   len   = g_editor->control_sel_r->right - left;
@@ -5743,19 +5566,19 @@ cpopup_blend_endpoints (double r0, double g0, double b0, double a0,
     {
       if (blend_colors)
 	{
-	  seg->r0 = r0 + (seg->left - left) / len * dr;
-	  seg->g0 = g0 + (seg->left - left) / len * dg;
-	  seg->b0 = b0 + (seg->left - left) / len * db;
+	  seg->left_color.r  = rgb1->r + (seg->left - left) / len * d.r;
+	  seg->left_color.g  = rgb1->g + (seg->left - left) / len * d.g;
+	  seg->left_color.b  = rgb1->b + (seg->left - left) / len * d.b;
 
-	  seg->r1 = r0 + (seg->right - left) / len * dr;
-	  seg->g1 = g0 + (seg->right - left) / len * dg;
-	  seg->b1 = b0 + (seg->right - left) / len * db;
+	  seg->right_color.r = rgb1->r + (seg->right - left) / len * d.r;
+	  seg->right_color.g = rgb1->g + (seg->right - left) / len * d.g;
+	  seg->right_color.b = rgb1->b + (seg->right - left) / len * d.b;
 	}
 
       if (blend_opacity)
 	{
-	  seg->a0 = a0 + (seg->left - left) / len * da;
-	  seg->a1 = a0 + (seg->right - left) / len * da;
+	  seg->left_color.a  = rgb1->a + (seg->left - left) / len * d.a;
+	  seg->right_color.a = rgb1->a + (seg->right - left) / len * d.a;
 	}
 
       aseg = seg;
@@ -5897,8 +5720,14 @@ grad_load_gradient (const gchar *filename)
 
       if (sscanf (line, "%lf%lf%lf%lf%lf%lf%lf%lf%lf%lf%lf%d%d",
 		  &(seg->left), &(seg->middle), &(seg->right),
-		  &(seg->r0), &(seg->g0), &(seg->b0), &(seg->a0),
-		  &(seg->r1), &(seg->g1), &(seg->b1), &(seg->a1),
+		  &(seg->left_color.r),
+		  &(seg->left_color.g),
+		  &(seg->left_color.b),
+		  &(seg->left_color.a),
+		  &(seg->right_color.r),
+		  &(seg->right_color.g),
+		  &(seg->right_color.b),
+		  &(seg->right_color.a),
 		  &type, &color) != 13)
 	{
 	  g_message ("grad_load_gradient(): badly formatted "
@@ -5972,8 +5801,14 @@ grad_save_gradient (gradient_t  *grad,
   for (seg = grad->segments; seg; seg = seg->next)
     fprintf (file, "%f %f %f %f %f %f %f %f %f %f %f %d %d\n",
 	     seg->left, seg->middle, seg->right,
-	     seg->r0, seg->g0, seg->b0, seg->a0,
-	     seg->r1, seg->g1, seg->b1, seg->a1,
+	     seg->left_color.r,
+	     seg->left_color.g,
+	     seg->left_color.b,
+	     seg->left_color.a,
+	     seg->right_color.r,
+	     seg->right_color.g,
+	     seg->right_color.b,
+	     seg->right_color.a,
 	     (int) seg->type, (int) seg->color);
 
   fclose(file);
@@ -6122,8 +5957,14 @@ grad_dump_gradient (gradient_t *grad,
 	       (seg == grad->last_visited) ? '>' : ' ',
 	       seg,
 	       seg->left, seg->middle, seg->right,
-	       seg->r0, seg->g0, seg->b0, seg->a0,
-	       seg->r1, seg->g1, seg->b1, seg->a1,
+	       seg->left_color.r,
+	       seg->left_color.g,
+	       seg->left_color.b,
+	       seg->left_color.a,
+	       seg->right_color.r,
+	       seg->right_color.g,
+	       seg->right_color.b,
+	       seg->right_color.a,
 	       (int) seg->type,
 	       (int) seg->color,
 	       seg->prev, seg->next);
@@ -6143,8 +5984,8 @@ seg_new_segment (void)
   seg->middle = 0.5;
   seg->right  = 1.0;
 
-  seg->r0 = seg->g0 = seg->b0 = 0.0;
-  seg->r1 = seg->g1 = seg->b1 = seg->a0 = seg->a1 = 1.0;
+  gimp_rgba_set (&seg->left_color,  0.0, 0.0, 0.0, 1.0);
+  gimp_rgba_set (&seg->right_color, 1.0, 1.0, 1.0, 1.0);
 
   seg->type  = GRAD_LINEAR;
   seg->color = GRAD_RGB;

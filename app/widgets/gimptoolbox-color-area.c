@@ -49,15 +49,15 @@ typedef enum
 } ColorAreaTarget;
 
 /*  local function prototypes  */
-static void color_area_drop_color    (GtkWidget   *widget,
-				      GimpRGB     *color,
-				      gpointer     data);
-static void color_area_drag_color    (GtkWidget   *widget,
-				      GimpRGB     *color,
-				      gpointer     data);
-static void color_area_color_changed (GimpContext *context,
-				      GimpRGB     *color,
-				      gpointer     data);
+static void color_area_drop_color    (GtkWidget     *widget,
+				      const GimpRGB *color,
+				      gpointer       data);
+static void color_area_drag_color    (GtkWidget     *widget,
+				      GimpRGB       *color,
+				      gpointer       data);
+static void color_area_color_changed (GimpContext   *context,
+				      GimpRGB       *color,
+				      gpointer       data);
 
 /*  Global variables  */
 gint      active_color     = FOREGROUND;
@@ -273,7 +273,7 @@ color_area_draw (void)
 }
 
 static void
-color_area_select_callback (GimpRGB            *color,
+color_area_select_callback (const GimpRGB      *color,
 			    ColorNotebookState  state,
 			    gpointer            client_data)
 {
@@ -323,7 +323,7 @@ color_area_edit (void)
 
   if (! color_notebook)
     {
-      color_notebook = color_notebook_new (&color,
+      color_notebook = color_notebook_new ((const GimpRGB *) &color,
 					   color_area_select_callback,
 					   NULL, TRUE, FALSE);
       color_notebook_active = TRUE;
@@ -537,9 +537,9 @@ color_area_drag_color (GtkWidget *widget,
 }
 
 static void
-color_area_drop_color (GtkWidget *widget,
-		       GimpRGB   *color,
-		       gpointer   data)
+color_area_drop_color (GtkWidget     *widget,
+		       const GimpRGB *color,
+		       gpointer       data)
 {
   if (color_notebook_active &&
       active_color == edit_color)

@@ -56,7 +56,7 @@ gboolean   gdisplay_drag_drop           (GtkWidget      *widget,
 					 guint           time,
 					 gpointer        data);
 void       gdisplay_drop_color          (GtkWidget      *widget,
-					 GimpRGB        *color,
+					 const GimpRGB  *color,
 					 gpointer        data);
 void       gdisplay_drop_pattern        (GtkWidget      *widget,
 					 GPattern       *pattern,

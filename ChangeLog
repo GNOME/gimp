@@ -1,5 +1,27 @@
 2001-01-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/color_notebook.[ch]
+	* app/gimpcontext.[ch]
+	* app/gimpdnd.h: made the _set_color() and _drop_color() functions
+	take a "const GimpRGB *" parameter.
+
+	* app/by_color_select.c
+	* app/channels_dialog.c
+	* app/color_area.c
+	* app/color_panel.c
+	* app/color_picker.c
+	* app/color_select.c
+	* app/colormap_dialog.c
+	* app/disp_callbacks.[ch]
+	* app/gimpimage.h
+	* app/palette.c: changed accordingly.
+
+	* app/gradient.c
+	* app/gradientP.h
+	* app/gradient_header.h: use GimpRGB internally.
+
+2001-01-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/gimpdrawable.[ch]: made gimp_drawable_fill() use GimpRGB,
 	added some "const", delete unused function, reordered some
 	functions.

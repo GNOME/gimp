@@ -172,7 +172,7 @@ static gboolean  color_history_initialized = FALSE;
 
 
 ColorNotebook *
-color_notebook_new (GimpRGB               *color,
+color_notebook_new (const GimpRGB         *color,
 		    ColorNotebookCallback  callback,
 		    gpointer               client_data,
 		    gboolean               wants_updates,
@@ -590,7 +590,7 @@ color_notebook_free (ColorNotebook *cnp)
 
 void
 color_notebook_set_color (ColorNotebook *cnp,
-			  GimpRGB       *color)
+			  const GimpRGB *color)
 {
   g_return_if_fail (cnp != NULL);
   g_return_if_fail (color != NULL);

@@ -87,7 +87,7 @@ static void   ipal_edit_callback         (GtkWidget          *widget,
 					  gpointer            data);
 static void   ipal_close_callback        (GtkWidget          *widget,
 					  gpointer            data);
-static void   ipal_select_callback       (GimpRGB            *color,
+static void   ipal_select_callback       (const GimpRGB      *color,
 					  ColorNotebookState  state,
 					  gpointer            data);
 
@@ -128,7 +128,7 @@ static void   palette_drag_color         (GtkWidget          *widget,
 					  GimpRGB            *color,
 					  gpointer            data);
 static void   palette_drop_color         (GtkWidget          *widget,
-					  GimpRGB            *color,
+					  const GimpRGB      *color,
 					  gpointer            data);
 
 
@@ -429,9 +429,9 @@ palette_drag_color (GtkWidget *widget,
 }
 
 static void
-palette_drop_color (GtkWidget *widget,
-		    GimpRGB   *color,
-		    gpointer   data)
+palette_drop_color (GtkWidget     *widget,
+		    const GimpRGB *color,
+		    gpointer       data)
 {
   GimpColormapDialog *ipal = (GimpColormapDialog *) data;
 
@@ -931,7 +931,7 @@ ipal_edit_callback (GtkWidget *widget,
   if (! ipal->color_notebook)
     {
       ipal->color_notebook
-	= color_notebook_new (&color,
+	= color_notebook_new ((const GimpRGB *) &color,
 			      ipal_select_callback, ipal, FALSE, FALSE);
     }
   else
@@ -953,7 +953,7 @@ ipal_close_callback (GtkWidget *widget,
 }
 
 static void
-ipal_select_callback (GimpRGB            *color,
+ipal_select_callback (const GimpRGB      *color,
 		      ColorNotebookState  state,
 		      gpointer            data)
 {

@@ -182,7 +182,7 @@ static void channel_widget_drag_indicator_callback
 						  gpointer        data);
 
 static void channel_widget_drop_color            (GtkWidget      *widget,
-						  GimpRGB        *color,
+						  const GimpRGB  *color,
 						  gpointer        data);
 static void channel_widget_draw_drop_indicator   (ChannelWidget  *cw,
 						  GimpDropType    drop_type);
@@ -1755,9 +1755,9 @@ channel_widget_drag_indicator_callback (GtkWidget *widget,
 }
 
 static void
-channel_widget_drop_color (GtkWidget *widget,
-			   GimpRGB   *color,
-			   gpointer   data)
+channel_widget_drop_color (GtkWidget     *widget,
+			   const GimpRGB *color,
+			   gpointer       data)
 {
   ChannelWidget *channel_widget;
   Channel       *channel;

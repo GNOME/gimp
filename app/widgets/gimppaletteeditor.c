@@ -1015,12 +1015,12 @@ palette_create_edit (PaletteEntries *entries)
 }
 
 static void
-palette_select_callback (GimpRGB            *callback_color,
+palette_select_callback (const GimpRGB      *callback_color,
 			 ColorNotebookState  state,
-			 void               *data)
+			 gpointer            data)
 {
   PaletteDialog *palette;
-  guchar *color;
+  guchar        *color;
   
   palette = data;
 
@@ -1109,7 +1109,7 @@ palette_dialog_edit_entry_callback (GtkWidget *widget,
       if (!palette->color_notebook)
 	{
 	  palette->color_notebook =
-	    color_notebook_new (&color,
+	    color_notebook_new ((const GimpRGB *) &color,
 				palette_select_callback, palette,
 				FALSE, FALSE);
 	  palette->color_notebook_active = TRUE;
@@ -2018,9 +2018,9 @@ palette_dialog_drag_color (GtkWidget *widget,
 }
 
 static void
-palette_dialog_drop_color (GtkWidget *widget,
-			   GimpRGB   *color,
-			   gpointer   data)
+palette_dialog_drop_color (GtkWidget     *widget,
+			   const GimpRGB *color,
+			   gpointer       data)
 {
   PaletteDialog *palette;
   guchar         r, g, b;

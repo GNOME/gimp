@@ -15,8 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __GRADIENT_P_H__
 #define __GRADIENT_P_H__
+
 
 void      gradient_editor_create       (void);
 void      gradient_editor_free         (void);

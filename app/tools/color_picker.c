@@ -502,7 +502,11 @@ color_picker_control (Tool       *tool,
     }
 }
 
-typedef guchar * (*GetColorFunc) (GtkObject *, int, int);
+
+typedef guchar * (*GetColorFunc) (GimpObject *object,
+				  gint        x,
+				  gint        y);
+
 
 static gboolean
 pick_color_do (GimpImage    *gimage,
@@ -520,7 +524,7 @@ pick_color_do (GimpImage    *gimage,
   gint          has_alpha;
   gint          is_indexed;
   GetColorFunc  get_color_func;
-  GtkObject    *get_color_obj;
+  GimpObject   *get_color_obj;
 
 
   if (!drawable && !sample_merged) 
@@ -536,7 +540,7 @@ pick_color_do (GimpImage    *gimage,
       is_indexed = gimp_drawable_is_indexed (drawable);
 
       get_color_func = (GetColorFunc) gimp_drawable_get_color_at;
-      get_color_obj = GTK_OBJECT (drawable);
+      get_color_obj = GIMP_OBJECT (drawable);
     }
   else
     {
@@ -544,7 +548,7 @@ pick_color_do (GimpImage    *gimage,
       is_indexed = FALSE;
 
       get_color_func = (GetColorFunc) gimp_image_get_color_at;
-      get_color_obj = GTK_OBJECT (gimage);
+      get_color_obj = GIMP_OBJECT (gimage);
     }
 
   has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (sample_type);
@@ -554,11 +558,11 @@ pick_color_do (GimpImage    *gimage,
 
   if (sample_average)
     {
-      gint i, j;
-      gint count = 0;
-      gint color_avg[4] = { 0, 0, 0, 0 };
+      gint    i, j;
+      gint    count = 0;
+      gint    color_avg[4] = { 0, 0, 0, 0 };
       guchar *tmp_color;
-      gint radius = (gint) average_radius;
+      gint    radius = (gint) average_radius;
 
       for (i = x - radius; i <= x + radius; i++)
 	for (j = y - radius; j <= y + radius; j++)
@@ -570,7 +574,7 @@ pick_color_do (GimpImage    *gimage,
 	      color_avg[GREEN_PIX] += tmp_color[GREEN_PIX];
 	      color_avg[BLUE_PIX]  += tmp_color[BLUE_PIX];
 	      if (has_alpha)
-		color_avg[ALPHA_PIX] += tmp_color[3];
+		color_avg[ALPHA_PIX] += tmp_color[ALPHA_PIX];
 
 	      g_free (tmp_color);
 	    }
@@ -579,7 +583,7 @@ pick_color_do (GimpImage    *gimage,
       color[GREEN_PIX] = (guchar) (color_avg[GREEN_PIX] / count);
       color[BLUE_PIX]  = (guchar) (color_avg[BLUE_PIX] / count);
       if (has_alpha)
-	color[ALPHA_PIX] = (guchar) (color_avg[3] / count);
+	color[ALPHA_PIX] = (guchar) (color_avg[ALPHA_PIX] / count);
 
       is_indexed = FALSE;
     }
@@ -588,7 +592,7 @@ pick_color_do (GimpImage    *gimage,
   col_value[GREEN_PIX] = color[GREEN_PIX];
   col_value[BLUE_PIX]  = color[BLUE_PIX];
   if (has_alpha)
-    col_value[ALPHA_PIX] = color[3];
+    col_value[ALPHA_PIX] = color[ALPHA_PIX];
   if (is_indexed)
     col_value[4] = color[4];
 
