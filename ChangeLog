@@ -1,3 +1,10 @@
+Sun May 17 17:31:05 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/maze: updated maze plugin
+
+	* plug-ins/script-fu/scripts/circuit.scm: reflected maze pdb
+	interface change
+
 Sun May 17 14:44:32 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/gimage.c: fix for merging indexed and indexed-alpha

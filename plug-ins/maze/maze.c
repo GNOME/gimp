@@ -1,4 +1,4 @@
-/* maze.c, version 0.6.2, March 7, 1998.
+/* maze.c
  * This is a plug-in for the GIMP.
  * It draws mazes...
  * 
@@ -6,66 +6,17 @@
  * Kevin Turner <kevint@poboxes.com>
  * http://www.poboxes.com/kevint/gimp/maze.html
  * 
- * mazegen code from rec.games.programmer's maze-faq:
- * * maz.c - generate a maze
- * *
- * * algorithm posted to rec.games.programmer by jallen@ic.sunysb.edu
- * * program cleaned and reorganized by mzraly@ldbvax.dnet.lotus.com
- * *
- * * don't make people pay for this, or I'll jump up and down and
- * * yell and scream and embarass you in front of your friends...
- *
  * Code generously borrowed from assorted GIMP plugins
  * and used as a template to get me started on this one.  :)
  * 
- * Revision history:
- * 0.6.2  - drawbox rewritten with memcpy and a row buffer.  By the way, Maze is now
- *          faster than Checkerboard.
- *        - Added Help button using extension_web_browser.
- *        - Added DIVBOX_LOOKS_LIKE_SPINBUTTON flag.  Doesn't look too hot, set to
- *          FALSE by default.
- * 0.6.1  - Made use-time-for-random-seed a toggle button that remembers
- *          its state, and moved seed to the second notebook page.
- * 0.6.0  - Width and height are now seperate options.  
- *          ^^ Note this changed the PDB interface. ^^
- *        
- *        - Added interface for selecting sizes by "divisions".
- *        - Added "Time" button for random seed.
- *        - Turned out that GParam shouldn't have been "fixed".
- * 0.5.0  - Added the long-awaited "tileable" option.
- *           Required a change to PDB parameters.
- *        - fixed some stuff with GParam values in run();
- * 0.4.2  - Applied Adrian Likins' patch to fix non-interactive stuff.
- *        - -ansi and -pedantic-errors clean.  Woo-hoo?
- * 0.4.1  - get_colors() now works properly for grayscale images.
- *          I'd still like it to do indexed too, but I don't know
- *          if that's worth breaking a sweat over.
- *        - We're -Wall clean now.  Woohoo!
- * 0.4.0  - Code for the painting of the maze has been almost completely rebuilt.
- *            Hopefully it's a more sane and speedier approach.
- *            Utilizes a new function, drawbox, which colors a solid rectangle.
- *            (Good excercise, in any case.)
- *        - Order of paramaters changed, defaults are used if not given.
- *        - Discovery made that that was an utterly useless thing to do.
- * 0.3.0  - Maze is centered with dead space around outside
- *        - Width slider works...  And does stuff!  
- *        - Allows partial mazes to be generated with "broken" multiple
- *             and offset values.
- * 0.1.99 - Has dialog box with seed, multiple, and offset.
- * 0.1.0  - First release.  It works!  :)
- *
  * TO DO:
- *   Rework the divboxes to be more like spinbuttons.
+ *   maze_face.c: Rework the divboxes to be more like spinbuttons.
  *
- *   Add an option to kill the outer border.
+ *   Maybe add an option to kill the outer border.
  * 
  *   Fix that stray line down there between maze wall and dead space border...
  *
- *   Make get_colors() work with indexed.  * HELP! *
- *
- * Also someday:
- * Maybe make it work with irregularly shaped selections?
- * Add different generation algorythms.
+ *   handy.c: Make get_colors() work with indexed.  * HELP! *
  *
  */
 
@@ -82,13 +33,14 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
 #ifdef MAZE_DEBUG
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #endif
 
 #include <time.h>  /* For random seeding */
@@ -103,21 +55,37 @@ static void      run    (gchar    *name,
 			 gint     *nreturn_vals,
 			 GParam  **return_vals);
 static void      maze   (GDrawable * drawable);
-static gint      mazegen(gint     pos,
-			 gchar   *maz,
+
+static void      mask_maze(gint32 selection_ID, guchar *maz, guint mw, guint mh, 
+			   gint x1, gint x2, gint y1, gint y2, gint deadx, gint deady);
+
+/* In algorithms.c */
+extern void      mazegen(gint     pos,
+			 guchar   *maz,
 			 gint     x,
                          gint     y,
 			 gint     rnd);
-static gint      mazegen_tileable(gint     pos,
-				  gchar   *maz,
+extern void      mazegen_tileable(gint     pos,
+				  guchar   *maz,
 				  gint     x,
 				  gint     y,
 				  gint     rnd);
-static void      get_colors (GDrawable * drawable,
+extern void      prim(guint pos,
+		      guchar *maz, 
+		      guint x, 
+		      guint y, 
+		      gint rnd);
+extern void      prim_tileable(guchar *maz, 
+			       guint x, 
+			       guint y, 
+			       gint rnd);
+
+/* In handy.c */
+extern void      get_colors (GDrawable * drawable,
 			     guint8 *fg,
 			     guint8 *bg);
 
-static void      drawbox (GPixelRgn *dest_rgn, 
+extern void      drawbox (GPixelRgn *dest_rgn, 
 			  guint x, 
 			  guint y,
 			  guint w,
@@ -141,6 +109,7 @@ MazeValues mvals =
     FALSE, /* Tileable? */
     57,    /* multiple * These two had "Experiment with this?" comments */
     1,     /* offset   * in the maz.c source, so, lets expiriment.  :) */
+    DEPTH_FIRST, /* Algorithm */
     /* Interface options */
     TRUE /* Time seed? */
 };
@@ -155,26 +124,28 @@ query ()
   static GParamDef args[] =
   {
     { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
+    { PARAM_IMAGE, "image_ID", "(unused)" },
+    { PARAM_DRAWABLE, "drawable_ID", "ID of drawable" },
     /* If we did have parameters, these be them: */
-    { PARAM_INT32, "mazep_width", "Width of the passages" },
-    { PARAM_INT32, "mazep_height", "Height of the passages"},
-    { PARAM_INT8, "maze_tile", "Tileable maze?"},
-    { PARAM_INT32, "maze_rseed", "Random Seed"},
-    { PARAM_INT32, "maze_multiple", "Multiple (use 57)" },
-    { PARAM_INT32, "maze_offset", "Offset (use 1)" }
+    { PARAM_INT16, "width", "Width of the passages" },
+    { PARAM_INT16, "height", "Height of the passages"},
+    { PARAM_INT8, "tileable", "Tileable maze?"},
+    { PARAM_INT8, "algorithm", "Generation algorithm" 
+                              "(0=DEPTH FIRST, 1=PRIM'S ALGORITHM)" },
+    { PARAM_INT32, "seed", "Random Seed"},
+    { PARAM_INT16, "multiple", "Multiple (use 57)" },
+    { PARAM_INT16, "offset", "Offset (use 1)" }
   };
   static GParamDef *return_vals = NULL;
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
   gimp_install_procedure ("plug_in_maze",
-			  "Generates a maze.",
-			  "Generates a maze using the depth-first search method.",
+			  "Draws a maze.",
+			  "Generates a maze using either the depth-first search method or Prim's algorithm.  Can make tileable mazes too.  See " MAZE_URL " for more help.",
 			  "Kevin Turner <kevint@poboxes.com>",
 			  "Kevin Turner",
-			  "1997",
+			  "1997, 1998",
 			  "<Image>/Filters/Render/Maze",
 			  "RGB*, GRAY*, INDEXED*",
 			  PROC_PLUG_IN,
@@ -226,18 +197,19 @@ run    (gchar    *name,
       break;
       
     case RUN_NONINTERACTIVE:
-      if (nparams != 9)
+      if (nparams != 10)
 	{
 	  status = STATUS_CALLING_ERROR;
 	}
       if (status == STATUS_SUCCESS)
 	{
-	  mvals.width = (gint) param[3].data.d_int32;
-	  mvals.height = (gint) param[4].data.d_int32;
-	  mvals.seed = (gint) param[5].data.d_int32;
-	  mvals.tile = (gboolean) param[6].data.d_int32;
-	  mvals.multiple = (gint) param[7].data.d_int32;
-	  mvals.offset = (gint) param[8].data.d_int32;
+	  mvals.width = (gint16)    param[3].data.d_int32;
+	  mvals.height = (gint16)   param[4].data.d_int32;
+	  mvals.tile = (gint8)      param[5].data.d_int32;
+          mvals.algorithm = (gint8) param[6].data.d_int32;
+	  mvals.seed = (gint32)     param[7].data.d_int32;
+	  mvals.multiple = (gint16) param[8].data.d_int32;
+	  mvals.offset = (gint16)   param[9].data.d_int32;
 	}
       break;
     case RUN_WITH_LAST_VALS:
@@ -251,7 +223,6 @@ run    (gchar    *name,
   
   /* color, gray, or indexed... hmm, miss anything?  ;)  */
   if (gimp_drawable_color (drawable->id) || gimp_drawable_gray (drawable->id) || gimp_drawable_indexed (drawable->id)) {
-      gimp_progress_init ("Drawing Maze...");
 
       maze (drawable);
       
@@ -270,34 +241,56 @@ run    (gchar    *name,
   gimp_drawable_detach (drawable);
 }
 
+#ifdef MAZE_DEBUG
+void
+maze_dump(guchar *maz, gint mw, gint mh)
+{
+     short xx, yy;
+     int foo=0;
+
+     for(yy=0;yy<mh;yy++) {
+	  for(xx=0;xx<mw;xx++)
+	       g_print("%3d ",maz[foo++]);
+	  g_print("\n");
+     }
+}
+
+void
+maze_dumpX(guchar *maz, gint mw, gint mh)
+{
+     short xx, yy;
+     int foo=0;
+
+     for(yy=0;yy<mh;yy++) {
+	  for(xx=0;xx<mw;xx++)
+	       g_print("%c",maz[foo++] ? 'X' : '.');
+	  g_print("\n");
+     }
+}
+#endif
+
 static void
 maze( GDrawable * drawable)
 {
   GPixelRgn dest_rgn;
-  gint mw, mh;
+  guint mw, mh;
   gint deadx, deady;
-  gint progress, max_progress;
+  guint progress, max_progress;
   gint x1, y1, x2, y2, x, y;
   gint dx, dy, xx, yy;
-  gint foo, bar, baz;
+  gint maz_x, maz_xx, maz_row, maz_yy;
   guint8 fg[4],bg[4];
   gpointer pr;
+  gboolean active_selection;
 
-  gchar *maz;
+  guchar *maz;
+  guint pos;
 
   /* Gets the input area... */
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  active_selection = gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
 
-  /* Initialize pixel region (?) */
-  gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
+  /***************** Maze Stuff Happens Here ***************/
 
-  progress = 0;
-  max_progress = (x2 - x1) * (y2 - y1);
-
-  /* Get the foreground and background colors */
-  get_colors(drawable,fg,bg);
-
-  /* Maze Stuff Happens Here */
   mw = (x2-x1) / mvals.width;
   mh = (y2-y1) / mvals.height;
 
@@ -314,7 +307,7 @@ maze( GDrawable * drawable)
   deadx = ((x2-x1) - mw * mvals.width)/2;
   deady = ((y2-y1) - mh * mvals.height)/2;
 
-  maz = g_malloc0(mw * mh);
+  maz = g_new0(guchar, mw * mh);
 
 #ifdef MAZE_DEBUG
   printf("x:  %d\ty:  %d\nmw: %d\tmh: %d\ndx: %d\tdy: %d\nwidth:%d\theight: %d\n",
@@ -324,13 +317,75 @@ maze( GDrawable * drawable)
   if (mvals.timeseed)
        mvals.seed = time(NULL);
 
-  if (mvals.tile) {
-       (void) mazegen_tileable((mw+1), maz, mw, mh, mvals.seed);
-  } else {
-       (void) mazegen((mw+1), maz, mw, mh, mvals.seed);
-       /* (void) mazegen(((x2-x1)+1), maz, (x2-x1), (y2-y1), rnd); */
+  /* Sanity check: */
+  switch (mvals.algorithm) {
+  case DEPTH_FIRST:
+       break;
+  case PRIMS_ALGORITHM:
+       break;
+  default:
+       g_warning("maze: Invalid algorithm choice %d", mvals.algorithm);
   }
-  /* It's done happening.  Now go through and color dem pixels...  */
+
+  if (mvals.tile) {
+       switch (mvals.algorithm) {
+       case DEPTH_FIRST:
+	    mazegen_tileable(0, maz, mw, mh, mvals.seed);
+	    break;
+       case PRIMS_ALGORITHM:
+	    prim_tileable(maz, mw, mh, mvals.seed);
+	    break;
+       default:
+	    ;
+       }
+  } else { /* not tileable */
+       if (active_selection) { /* Mask and draw mazes until there's no 
+				* more room left. */
+	    mask_maze(drawable->id,
+		      maz, mw, mh, x1, x2, y1, y2, deadx, deady);
+	    for(maz_yy=mw; maz_yy < (mh*mw); maz_yy += 2*mw) {
+		 for(maz_xx=1; maz_xx < mw; maz_xx += 2) {
+		      if(maz[maz_yy+maz_xx] == 0) {
+			   switch(mvals.algorithm) {
+			   case DEPTH_FIRST:
+				mazegen(maz_yy+maz_xx, maz, mw, mh, mvals.seed);
+				break;
+			   case PRIMS_ALGORITHM:
+				prim(maz_yy+maz_xx, maz, mw, mh, mvals.seed);
+				break;
+			   default:
+				;
+			   } /* switch */
+		      } /* if maz[] == 0 */
+		 } /* next maz_xx */
+	    } /* next maz_yy */
+       } else { /* No active selection. */
+	    pos=mw+1;
+	    switch(mvals.algorithm) {
+	    case DEPTH_FIRST:
+		 mazegen(pos, maz, mw, mh, mvals.seed);
+		 break;
+	    case PRIMS_ALGORITHM:
+		 prim(pos, maz, mw, mh, mvals.seed);
+		 break;
+	    default:
+		 ;
+	    } /* switch */
+       } /* no active selection */
+  } /* not tileable */
+
+  /************** Begin Drawing *********************/
+
+  /* Initialize pixel region (?) */
+  gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
+
+  progress = 0;
+  max_progress = (x2 - x1) * (y2 - y1);
+
+  /* Get the foreground and background colors */
+  get_colors(drawable,fg,bg);
+
+  gimp_progress_init ("Drawing Maze...");
 
   for (pr = gimp_pixel_rgns_register (1, &dest_rgn); 
        pr != NULL; 
@@ -345,375 +400,276 @@ maze( GDrawable * drawable)
 
 	  dx = mvals.width - (x % mvals.width);
 	  dy = mvals.height - (y % mvals.height);
-	  foo = x/mvals.width;
-	  bar = mw * (y/mvals.height);
+	  maz_x = x/mvals.width;
+	  maz_row = mw * (y/mvals.height);
 
 	  /* Draws the upper-left [split] box */
 	  drawbox(&dest_rgn,0,0,dx,dy,
-		  maz[foo+bar] ? fg : bg);
+		  (maz[maz_row+maz_x]==IN) ? fg : bg);
 
-	  baz=foo+1;
+	  maz_xx=maz_x+1;
 	  /* Draw the top row [split] boxes */
 	  for(xx=dx; xx < dest_rgn.w; xx+=mvals.width)
 	      { drawbox(&dest_rgn,xx,0,mvals.width,dy,
-			maz[bar + baz++] ? fg : bg ); }
+			(maz[maz_row + maz_xx++]==IN) ? fg : bg ); }
 
-	  baz=bar+mw;
+	  maz_yy=maz_row+mw;
 	  /* Left column */
 	  for(yy=dy; yy < dest_rgn.h; yy+=mvals.height) {
 	      drawbox(&dest_rgn,0,yy,dx,mvals.height,
-		      maz[foo + baz] ? fg : bg );
-	      baz += mw;
+		      (maz[maz_yy + maz_x]==IN) ? fg : bg );
+	      maz_yy += mw;
 	  }
 	  
-	  foo++;
+	  maz_x++;
 	  /* Everything else */
 	  for(yy=dy; yy < dest_rgn.h; yy+=mvals.height) {
-	      baz = foo; bar+=mw;
+	      maz_xx = maz_x; maz_row+=mw;
 	      for(xx=dx; xx < dest_rgn.w; xx+=mvals.width)
 		  { 
 		      drawbox(&dest_rgn,xx,yy,mvals.width,mvals.height,
-			    maz[bar + baz++] ? fg : bg ); }
+			    (maz[maz_row + maz_xx++]==IN) ? fg : bg ); }
 	  }
 
 	  progress += dest_rgn.w * dest_rgn.h;
 	  gimp_progress_update ((double) progress / (double) max_progress);
-	  /* Note the progess indicator doesn't indicate how much of the maze
-	     has been built...  It just indicates how much has been drawn
-	     *after* building...  Thing is, that's what takes longer.  */
+	  /* Indicate progress in drawing. */
       }
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->id, TRUE);
   gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
 }
 
-/* Draws a solid color box in a GPixelRgn. */
-/* Optimization assumptions:
- * (Or, "Why Maze is Faster Than Checkerboard.")
+/* Shaped mazes: */
+/* With
+ * Depth first: Nonzero cells will not be connected to or visited.
+ * Prim's Algorithm: 
+ *  Cells that are not IN will not be connected to.
+ *  Cells that are not OUT will not be converted to FRONTIER.
  * 
- * Assuming calling memcpy is faster than using loops.
- * Row buffers are nice...
+ * So we'll put unavailable cells in a non-zero non-in non-out class 
+ * called MASKED.
+ */ 
+
+/* But first...  A little discussion about cells. */
+
+/* In the eyes of the generation algorithms, the world is made up of
+ * two sorts of things: Cells, and the walls between them.  Walls can
+ * be knocked out, and then you have a passage between cells.  The
+ * drawing routine has a simpler view of life...  Everything is a
+ * pixel.  Or a block of pixels.  It makes no distinction between
+ * passages, walls, and cells.
  *
- * Assume allocating memory for row buffers takes a significant amount 
- * of time.  Assume drawbox will be called many times.
- * Only allocate memory once.
+ *  We may also make the distinction between two different types of
+ * passages: horizontal and vertical.  With that in mind, a
+ * part of the world looks something like this:
+ * 
+ * @-@-@-@-  Where @ is a cell, | is a vertical passage, and - is a
+ * | | | |   horizontal passsage.
+ * @-@-@-@-
+ * | | | |   Remember, the maze generation routines will not rest
+ *          until the maze is full, that is, every cell is connected
+ * to another.  Already, we can determine a few things about the final 
+ * maze.  We know which blocks will be cells, which blocks may become
+ * passages (and we know what sort), and we also notice that there are
+ * some blocks that will never be either cells or passages.
  *
- * Do not assume the row buffer will always be the same size.  Allow
- * for reallocating to make it bigger if needed.  However, I don't see 
- * reason to bother ever shrinking it again.
- * (Under further investigation, assuming the row buffer never grows
- * may be a safe assumption in this case.)
- *
- * Also assume that the program calling drawbox is short-lived, so
- * memory leaks aren't of particular concern-- the memory allocated to 
- * the row buffer is never set free.
+ * Now, back to our masking routine...  To save a little time, lets
+ * just take sample points from the block.  We'll sample a point from
+ * the top and the bottom of vertical passages, left/right for
+ * horizontal, and, hmm, left/right/top/bottom for cells.  And of
+ * course, we needn't concern ourselves with the others.  We could
+ * also sample the midpoint of each...
+ * Then what we'll do is see if the average is higher than some magic 
+ * threshold number, and if so, we let maze happen there.  Otherwise
+ * we mask it out.
  */
 
-/* Further optimizations that could be made...
- *  Currently, the row buffer is re-filled with every call.  However,
- *  plug-ins such as maze and checkerboard only use two colors, and
- *  for the most part, have rows of the same size with every call.
- *  We could keep a row of each color on hand so we wouldn't have to
- *  re-fill it every time...  */
-
-
-static void 
-drawbox( GPixelRgn *dest_rgn, 
-	 guint x, guint y, guint w, guint h, 
-	 guint8 clr[4])
+/* And, uh, that's on the TODO list.  Looks like I spent so much time
+ * writing comments I haven't left enough to implement the code.  :)
+ * Right now we only sample one point. */
+static void
+mask_maze(gint32 drawable_ID, guchar *maz, guint mw, guint mh, 
+	  gint x1, gint x2, gint y1, gint y2, gint deadx, gint deady)
 {
-     guint xx, yy, y_max, x_min /*, x_max */;
-     static guint8 *rowbuf;
-     guint rowsize;
-     static guint high_size=0;
-  
-     /* The maximum [xy] value is that of the far end of the box, or
-      * the edge of the region, whichever comes first. */
-     
-     y_max = dest_rgn->rowstride * MIN(dest_rgn->h, (y + h));
-/*   x_max = dest_rgn->bpp * MIN(dest_rgn->w, (x + w)); */
-     
-     x_min = x * dest_rgn->bpp;
-     
-     /* rowsize = x_max - x_min */
-     rowsize = dest_rgn->bpp * MIN(dest_rgn->w, (x + w)) - x_min;
-     
-     /* Does the row buffer need to be (re)allocated? */
-     if (high_size == 0) {
-	  rowbuf = g_new(guint8, rowsize);
-     } else if (rowsize > high_size) {
-	  g_realloc(rowbuf, rowsize * sizeof(guint8) );
-     }
-     
-     high_size = MAX(high_size, rowsize);
-     
-     /* Fill the row buffer with the color. */
-     for (xx= 0;
-	  xx < rowsize;
-	  xx+= dest_rgn->bpp) {
-	  memcpy (&rowbuf[xx], clr, dest_rgn->bpp);
-     } /* next xx */
-     
-     /* Fill in the box in the region with rows... */
-     for (yy = dest_rgn->rowstride * y; 
-	  yy < y_max; 
-	  yy += dest_rgn->rowstride ) {
-	  memcpy (&dest_rgn->data[yy+x_min], rowbuf, rowsize);
-     } /* next yy */
-}
+     gint32 selection_ID;
+     GPixelRgn sel_rgn;  
+     gint xx0=0, yy0=0, xoff, yoff;
+     guint xx=0, yy=0;
+     guint foo=0;
 
-/* The old drawbox code, preserved here 'just in case' something
-   doesn't go right. */
+     gint cur_row, cur_col;
+     gint x1half, x2half, y1half, y2half;
+     guchar *linebuf;
 
+     if ((selection_ID = 
+	  gimp_image_get_selection(gimp_drawable_image_id(drawable_ID))) 
+	 == -1)
+	  return;
+
+     gimp_pixel_rgn_init(&sel_rgn, gimp_drawable_get(selection_ID),
+			 x1, y1, (x2-x1), (y2-y1),
+			 FALSE, FALSE);
+     gimp_drawable_offsets(drawable_ID, &xoff, &yoff);
+
+     /* Special cases:  If mw or mh < 3 */
+     /* FIXME (Currently works, but inefficiently.) */
+   
+     /* mw && mh => 3 */
+
+     linebuf = g_new(guchar, sel_rgn.w * sel_rgn.bpp);
+
+     xx0 = x1 + deadx + mvals.width  + xoff;
+     yy0 = y1 + deady + mvals.height + yoff; 
+
+     x1half = mvals.width/2;
+     x2half = mvals.width - 1;
+
+     y1half = mvals.height/2;
+     y2half = mvals.height - 1;
+
+     /* Here, yy is with respect to the drawable (or something),
+        whereas xx is with respect to the row buffer. */
+
+     yy=yy0 + y1half;
+     for(cur_row=1; cur_row < mh; cur_row += 2) {
+
+	  gimp_pixel_rgn_get_row(&sel_rgn, linebuf, x1+xoff, yy, (x2-x1));
+
+	  cur_col=1; xx=mvals.width;
+	  while(cur_col < mw) {
+
+	       /* Cell: */
+	       maz[cur_row * mw + cur_col] = 
+		    (linebuf[xx] + linebuf[xx + x1half] + linebuf[xx+x2half]) / 5;
+
+	       cur_col += 1;
+	       xx += mvals.width;
+
+	       /* Passage: */
+	       if (cur_col < mw) 
+		    maz[cur_row * mw + cur_col] =
+			 (linebuf[xx] + linebuf[xx + x1half] + linebuf[xx+x2half]) / 3;
+
+	       cur_col += 1;
+	       xx += mvals.width;
+
+	  } /* next col */
+
+	  yy += 2 * mvals.height;
+
+     } /* next cur_row += 2 */
+
+     /* Done doing horizontal scans, change this from a row buffer to
+        a column buffer. */
+     g_free(linebuf);
+     linebuf = g_new(guchar, sel_rgn.h * sel_rgn.bpp);
+
+     /* Now xx is with respect to the drawable (or whatever),
+        and yy is with respect to the row buffer. */
+
+     xx=xx0 + x1half;
+     for(cur_col=1; cur_col < mw; cur_col += 2) {
+
+	  gimp_pixel_rgn_get_col(&sel_rgn, linebuf, xx, y1, (y2-y1));
+	  
+	  cur_row=1; yy=mvals.height;
+	  while(cur_row < mh) {
+
+	       /* Cell: */
+	       maz[cur_row * mw + cur_col] +=
+		    (linebuf[yy] + linebuf[yy+y2half]) / 5;
+
+	       cur_row += 1;
+	       yy += mvals.height;
+
+	       /* Passage: */
+	       if (cur_row < mh) 
+		    maz[cur_row * mw + cur_col] =
+			 (linebuf[yy] + linebuf[yy + y1half] + linebuf[yy+y2half]) / 3;
+
+	       cur_row += 1;
+	       yy += mvals.height;
+	  } /* next cur_row */
+
+	  xx += 2 * mvals.width;
+
+     } /* next cur_col */
+
+     g_free(linebuf);
+
+     /* Do the alpha -> masked conversion. */
+
+     for(yy=0;yy<mh;yy++) {
+	  for(xx=0;xx<mw;xx++) {
+	       maz[foo] = ( maz[foo] < MAZE_ALPHA_THRESHOLD ) ? MASKED : OUT;
+	       foo++;
+	  } /* next xx */
+     } /* next yy*/
+
+} /* mask_maze */
+
+/* The attempt to implement this with tiles: (it wasn't fun) */
 #if 0
-	for (xx= x * dest_rgn->bpp;
-	     xx < bar;
-	     xx+= dest_rgn->bpp) {
-#if 0
-	    for (bp=0; bp < dest_rgn->bpp; bp++) {
-		dest_rgn->data[yy+xx+bp]=clr[bp];
-	    } /* next bp */
-#else
-		memcpy (&dest_rgn->data[yy+xx], clr, dest_rgn->bpp);
-#endif
-	} /* next xx */
-    } /* next yy */
-}
-#endif 
 
-/* The Incredible Recursive Maze Generation Routine */
-/* Ripped from rec.programmers.games maze-faq       */
-/* Modified and commented by me, Kevin Turner. */
-gint mazegen(pos, maz, x, y, rnd)
-gint pos, x, y, rnd;
-gchar *maz;
-{
-    gchar d, i;
-    gint c=0, j=1;
+     /* Tiles make my life decidedly difficult here.  There are too
+      * many special cases...  "What if a tile starts less/more than
+      * halfway through a block?  What if we get a narrow edge-tile
+      * that..." etc, etc.  I shall investigate other options.
+      * Possibly a row buffer, or can we use something other than this 
+      * black-magic gimp_pixel_rgns_register call to get tiles of
+      * different sizes?  Now that'd be nice...  */
 
-    /* Punch a hole here...  */
-    maz[pos] = 1;
+     for (pr = gimp_pixel_rgns_register (1, &sel_rgn); 
+	  pr != NULL; 
+	  pr = gimp_pixel_rgns_process (pr)) {
 
-    /* If there is a wall two rows above us, bit 1 is 1. */
-    while((d= (pos <= (x * 2) ? 0 : (maz[pos - x - x ] ? 0 : 1))
-	  /* If there is a wall two rows below us, bit 2 is 1. */
-	  | (pos >= x * (y - 2) ? 0 : (maz[pos + x + x] ? 0 : 2))
-	  /* If there is a wall two columns to the right, bit 3 is 1. */
-	  | (pos % x == x - 2 ? 0 : (maz[pos + 2] ? 0 : 4))
-	  /* If there is a wall two colums to the left, bit 4 is 1.  */
-	  | ((pos % x == 1 ) ? 0 : (maz[pos-2] ? 0 : 8)))) {
+	  /* This gives us coordinates relative to the starting point
+	   * of the maze grid.  Negative values happen here if there
+	   * is dead space. */
+	  x = sel_rgn.x - x1 - deadx;
+	  y = sel_rgn.y - y1 - deady;
 
-	/* Note if all bits are 0, d is false, we don't do this
-	   while loop, we don't call ourselves again, so this branch
-           is done.  */
+	  /* These coordinates are relative to the current tile. */
+	  /* This starts us off at the first block boundary in the
+	   * tile. */
 
-	/* I see what this loop does (more or less), but I don't know
-	   _why_ it does it this way...  I also haven't figured out exactly
-	   which values of multiple will work and which won't.  */
-	do {
-	    rnd = (rnd * mvals.multiple + mvals.offset);
-	    i = 3 & (rnd / d);
-	    if (++c > 100) {  /* Break and try to salvage something */
-		i=99;         /* if it looks like we're going to be */
-		break;        /* here forever...                    */
-	    }
-	} while ( !(d & ( 1 << i) ) );
-	/* ...While there's *not* a wall in direction i. */
-        /* (stop looping when there is) */
+/* e.g. with x=16 and width=10.
+ * 16 % 10 = 6
+ * 10 - 6 = 4
 
-	switch (i) {  /* This is simple enough. */
-	case 0:       /* Go in the direction we just figured . . . */
-	    j= -x;   
-	    break;
-	case 1:
-	    j = x;
-	    break;
-	case 2:
-	    j=1;
-	    break;
-	case 3:
-	    j= -1;
-	    break;
-	case 99:
-	    return 1;  /* Hey neat, broken mazes! */
-	    break;     /* (Umm... Wow... Yeah, neat.) */
-	default:
-	    break;
-	}
+  x: 6789!123456789!123456789!12
+     ....|.........|.........|..
+ xx: 0123456789!123456789!123456
 
-	/* And punch a hole there. */
-	maz[pos + j] = 1;
+ So to start on the boundary, begin at 4.
 
-        /* Now, start again just past where we punched the hole... */
-	mazegen(pos + 2 * j, maz, x, y, rnd);
+ For the case x=0, 10-0=10. So xx0 will always between 1 and width. */
 
-    } /* End while(d=...) Loop */
+	  xx0 = mvals.width  - (x % mvals.width);
+	  yy0 = mvals.height - (y % mvals.height);
 
-    return 0;
-}
+	  /* Find the corresponding row and column in the maze. */
+	  maz_x = (x+xx0)/mvals.width;
+	  maz_row = mw * ((y + yy0)/mvals.height);
+	  
+	  for (yy=yy0*sel_rgn.rowstride;
+	       yy < sel_rgn.h*sel_rgn.rowstride;
+	       yy+=(mvals.height * sel_rgn.rowstride)) {
+	       maz_xx = maz_x;
+	       for(xx=xx0*sel_rgn.bpp; 
+		   xx < sel_rgn.w; 
+		   xx+=mvals.width*sel_rgn.bpp) {
+		    if (sel_rgn.data[yy+xx] < MAZE_ALPHA_THRESHOLD)
+			 maz[maz_row+maz_xx]=MASKED;
+		    maz_xx++;
+	       } /* next xx */
+	       maz_row+=mw;
+	  } /* next yy */	    
 
-#define ABSMOD(A,B) ( ((A) < 0) ? (((B) + (A)) % (B)) : ((A) % (B)) )
-
-/* Tileable mazes are my creation, based on the routine above. */
-static gint mazegen_tileable(gint pos, gchar *maz, gint x, gint y, gint rnd)
-{
-    gchar d, i;
-    gint c=0, j=1, npos=2;
-
-    /* Punch a hole here...  */
-    maz[pos] = 1;
-
-    /* If there is a wall two rows above us, bit 1 is 1. */
-    while((d= (pos < (x*2) ? (maz[x*(y-2)+pos] ? 0 : 1) : (maz[pos - x - x ] ? 0 : 1))
-	  /* If there is a wall two rows below us, bit 2 is 1. */
-	  | (pos >= x * (y-2) ? (maz[pos - x*(y-2)] ? 0 : 2) : (maz[pos +x+x] ? 0 : 2))
-	  /* If there is a wall two columns to the right, bit 3 is 1. */
-	  | (pos % x >= x - 2 ? (maz[pos + 2 - x] ? 0 : 4) : (maz[pos + 2] ? 0 : 4))
-	  /* If there is a wall two colums to the left, bit 4 is 1.  */
-	  | ((pos % x <= 1 ) ? (maz[pos + x - 2] ? 0 : 8) : (maz[pos-2] ? 0 : 8)))) {
-
-	/* Note if all bits are 0, d is false, we don't do this
-	   while loop, we don't call ourselves again, so this branch
-           is done.  */
-
-	/* I see what this loop does (more or less), but I don't know
-	   _why_ it does it this way...  I also haven't figured out exactly
-	   which values of multiple will work and which won't.  */
-	do {
-	    rnd = (rnd * mvals.multiple + mvals.offset);
-	    i = 3 & (rnd / d);
-	    if (++c > 100) {  /* Break and try to salvage something */
-		i=99;         /* if it looks like we're going to be */
-		break;        /* here forever...                    */
-	    }
-	} while ( !(d & ( 1 << i) ) );
-	/* ...While there's *not* a wall in direction i. */
-        /* (stop looping when there is) */
-
-	switch (i) {  /* This is simple enough. */
-	case 0:       /* Go in the direction we just figured . . . */
-	     j = pos < x ? x*(y-1)+pos : pos - x;
-	     npos = pos < (x*2) ? x*(y-2)+pos : pos - x - x;
-	     break;
-	case 1:
-	     j = pos >= x*(y-1) ? pos - x * (y-1) : pos + x;
-	     npos = pos >= x*(y-2) ? pos - x*(y-2) : pos + x + x; 
-	     break;
-	case 2:
-	     j = (pos % x) == (x - 1) ? pos + 1 - x : pos + 1;
-	     npos = (pos % x) >= (x - 2) ? pos + 2 - x : pos + 2;
-	     break;
-	case 3:
-	     j= (pos % x) == 0 ? pos + x - 1 : pos - 1;
-	     npos = (pos % x) <= 1 ? pos + x - 2 : pos - 2;
-	     break;
-	case 99:
-	     return 1;  /* Hey neat, broken mazes! */
-	     break;     /* (Umm... Wow... Yeah, neat.) */
-	default:
-	     break;
-	}
-
-	/* And punch a hole there. */
-	maz[j] = 1;
-
-        /* Now, start again just past where we punched the hole... */
-	mazegen_tileable(npos, maz, x, y, rnd);
-
-    } /* End while(d=...) Loop */
-
-    return 0;
-}
-
-static void 
-get_colors (GDrawable *drawable, guint8 *fg, guint8 *bg) 
-{
-  GParam *return_vals;
-  gint nreturn_vals;
-
-  switch ( gimp_drawable_type (drawable->id) )
-    {
-    case RGBA_IMAGE:   /* ASSUMPTION: Assuming the user wants entire */
-      fg[3] = 255;                 /* area to be fully opaque.       */
-      bg[3] = 255;
-    case RGB_IMAGE:
-
-      return_vals = gimp_run_procedure ("gimp_palette_get_foreground",
-					&nreturn_vals,
-					PARAM_END);
-
-      if (return_vals[0].data.d_status == STATUS_SUCCESS)
-	{
-	  fg[0] = return_vals[1].data.d_color.red;
-	  fg[1] = return_vals[1].data.d_color.green;
-	  fg[2] = return_vals[1].data.d_color.blue;
-	}
-      else
-	{
-	  fg[0] = 255;
-	  fg[1] = 255;
-	  fg[2] = 255;
-	}
-      return_vals = gimp_run_procedure ("gimp_palette_get_background",
-					&nreturn_vals,
-					PARAM_END);
-
-      if (return_vals[0].data.d_status == STATUS_SUCCESS)
-	{
-	  bg[0] = return_vals[1].data.d_color.red;
-	  bg[1] = return_vals[1].data.d_color.green;
-	  bg[2] = return_vals[1].data.d_color.blue;
-	}
-      else
-	{
-	  bg[0] = 0;
-	  bg[1] = 0;
-	  bg[2] = 0;
-	}
-      break;
-    case GRAYA_IMAGE:       /* and again */
-      fg[1] = 255;
-      bg[1] = 255;
-    case GRAY_IMAGE:       
-
-	return_vals = gimp_run_procedure ("gimp_palette_get_foreground",
-					&nreturn_vals,
-					PARAM_END);
-
-	if (return_vals[0].data.d_status == STATUS_SUCCESS)
-	    {
-		fg[0] = 0.30 * return_vals[1].data.d_color.red + 
-		    0.59 * return_vals[1].data.d_color.green + 
-		    0.11 * return_vals[1].data.d_color.blue;
-	    }
-	else
-	    {
-		fg[0] = 255;
-	    }
-
-	return_vals = gimp_run_procedure ("gimp_palette_get_background",
-					  &nreturn_vals,
-					  PARAM_END);
-	
-	if (return_vals[0].data.d_status == STATUS_SUCCESS)
-	    {
-		bg[0] = 0.30 * return_vals[1].data.d_color.red + 
-		    0.59 * return_vals[1].data.d_color.green + 
-		    0.11 * return_vals[1].data.d_color.blue;
-	    }
-	else
-	    {
-		bg[0] = 0;
-	    }
-	
-	break;
-    case INDEXEDA_IMAGE:
-    case INDEXED_IMAGE:     /* FIXME: Should use current fg/bg colors.  */
-	g_warning("maze: get_colors: Indexed image.  Using colors 15 and 0.\n");
-	fg[0] = 15;        /* As a plugin, I protest.  *I* shouldn't be the */
-	bg[0] = 0;       /* one who has to deal with this colormapcrap.   */
-	break;
-    default:
-      break;
-    }
-}
+     } /* next pr sel_rgn tile thing */
+  /* #ifdef MAZE_DEBUG
+     maze_dump(maz,mw,mh);
+     #endif */
+} /* mask_maze */
+#endif /* 0 */

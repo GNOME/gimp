@@ -1,4 +1,4 @@
-/* maze_face.c, version 0.6.2, March 7, 1998.
+/* maze_face.c
  * User interface for plug-in-maze.
  * 
  * Implemented as a GIMP 0.99 Plugin by 
@@ -19,7 +19,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -29,7 +29,6 @@
 #endif /* MAZE_DEBUG */
 
 #include "maze.h"
-
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
 
@@ -113,6 +112,8 @@ static void div_button_callback (GtkWidget *button, GtkWidget *entry);
 static void div_entry_callback (GtkWidget *entry, GtkWidget *friend);
 static void height_width_callback (gint width, GtkWidget **div_entry);
 static void toggle_callback (GtkWidget *widget, gboolean *data);
+static void alg_radio_callback (GtkWidget *widget, gpointer data);
+
 static GtkWidget* divbox_new (guint *max,
 			      GtkWidget *friend, 
 			      GtkWidget **div_entry);
@@ -125,7 +126,7 @@ static void div_buttonr_callback (GtkObject *object);
 /* entscale stuff begin */
 static GtkWidget*   entscale_int_new ( GtkWidget *table, gint x, gint y,
 				       gchar *caption, gint *intvar, 
-				       gint min, gint max, gint constraint,
+				       gint min, gint max, gboolean constraint,
 				       EntscaleIntCallbackFunc callback,
 				       gpointer data );
 
@@ -167,6 +168,8 @@ gint maze_dialog()
   GtkWidget *seed_hbox, *seed_entry, *time_button;
   GtkWidget *div_x_hbox, *div_y_hbox;
   GtkWidget *div_x_label, *div_y_label, *div_x_entry, *div_y_entry;
+
+  GtkWidget *alg_box, *alg_button;
 
   gchar **argv;
   gint  argc;
@@ -238,7 +241,6 @@ gint maze_dialog()
 	  gdk_string_measure (GTK_WIDGET(msg_frame)->style->font, 
 			      GTK_FRAME(msg_frame)->label) + 7);
 #endif
-
 
   /*  Set up Options page  */
   frame = gtk_frame_new ("Maze Options");
@@ -321,8 +323,6 @@ gint maze_dialog()
 
   gtk_widget_show (div_y_hbox);
 
-
-
   /* Add Options page to notebook */
   gtk_widget_show (frame);
   gtk_widget_show (table);
@@ -331,11 +331,10 @@ gint maze_dialog()
 			    gtk_label_new ("Options"));
 
   /* Set up other page */
-  frame = gtk_frame_new ("Don't change these");
+  frame = gtk_frame_new ("At Your Own Risk");
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
-  /* gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0); */
-  table = gtk_table_new (3, 2, FALSE);
+  table = gtk_table_new (4, 2, FALSE);
   gtk_container_border_width (GTK_CONTAINER (table), 10);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
@@ -398,6 +397,35 @@ gint maze_dialog()
   gtk_box_pack_end (GTK_BOX (seed_hbox), time_button, FALSE, FALSE, 0);
   gtk_widget_show (time_button);
   gtk_widget_show (seed_hbox);
+
+  label = gtk_label_new("Algorithm");
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4, 
+		    GTK_FILL, 0, 5, 5);
+  gtk_widget_show (label);
+
+  alg_box=gtk_vbox_new(FALSE, 5);
+  gtk_table_attach (GTK_TABLE (table), alg_box, 1, 2, 3, 4, 
+		    GTK_FILL, 0, 5, 5);
+  gtk_widget_show (alg_box);
+
+  alg_button=gtk_radio_button_new_with_label (NULL,"Depth First");
+  gtk_signal_connect(GTK_OBJECT(alg_button),"toggled",
+		     GTK_SIGNAL_FUNC(alg_radio_callback), (gpointer)DEPTH_FIRST);
+  if(mvals.algorithm==DEPTH_FIRST)
+       gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(alg_button), TRUE);
+  gtk_container_add(GTK_CONTAINER(alg_box),alg_button);
+  gtk_widget_show(alg_button);
+
+  alg_button=gtk_radio_button_new_with_label (gtk_radio_button_group(
+       GTK_RADIO_BUTTON(alg_button)), "Prim's Algorithm");
+  gtk_signal_connect(GTK_OBJECT(alg_button),"toggled",
+		     GTK_SIGNAL_FUNC(alg_radio_callback), (gpointer)PRIMS_ALGORITHM);
+  if(mvals.algorithm==PRIMS_ALGORITHM)
+       gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(alg_button), TRUE);
+
+  gtk_container_add(GTK_CONTAINER(alg_box),alg_button);
+  gtk_widget_show(alg_button);
 
    /* Add Advanced page to notebook */
   gtk_widget_show (frame);
@@ -633,21 +661,25 @@ maze_close_callback (GtkWidget *widget,
 static void
 maze_help (GtkWidget *widget, gpointer foo)
 {
-     void *bar=(void *)NULL;
+     char *proc_blurb, *proc_help, *proc_author, *proc_copyright, *proc_date;
+     int proc_type, nparams, nreturn_vals;
+     GParamDef *params, *return_vals;
      gint baz;
 
-     if (gimp_query_procedure("extension_web_browser", 
-			      bar, bar, bar, bar, bar, 
-			      bar, bar, bar, bar, bar)) {
-	  maze_msg("Opening " MAZE_URL);
-	  gimp_run_procedure("extension_web_browser", &baz,
-			     PARAM_INT32, RUN_NONINTERACTIVE, 
-			     PARAM_STRING, MAZE_URL, 
-			     PARAM_INT32, HELP_OPENS_NEW_WINDOW, 
-			     PARAM_END);
+     if (gimp_query_procedure("extension_web_browser",
+                              &proc_blurb, &proc_help, 
+			      &proc_author, &proc_copyright, &proc_date,
+			      &proc_type, &nparams, &nreturn_vals,
+			      &params, &return_vals)) {
+          maze_msg("Opening " MAZE_URL);
+          gimp_run_procedure("extension_web_browser", &baz,
+                             PARAM_INT32, RUN_NONINTERACTIVE,
+                             PARAM_STRING, MAZE_URL,
+                             PARAM_INT32, HELP_OPENS_NEW_WINDOW,
+                             PARAM_END);
      } else {
-	  maze_msg("See " MAZE_URL);
-     }
+          maze_msg("See " MAZE_URL);
+     }                                            
 }
 
 static void
@@ -681,6 +713,12 @@ toggle_callback (GtkWidget *widget, gboolean *data)
     *data = GTK_TOGGLE_BUTTON (widget)->active;
 }
 
+static void
+alg_radio_callback (GtkWidget *widget, gpointer data)
+{
+     mvals.algorithm=(MazeAlgoType)data;
+}
+
 /* ==================================================================== */
 /* As found in pixelize.c, 
  * hacked to return a pointer to the entry widget. */
@@ -710,7 +748,7 @@ toggle_callback (GtkWidget *widget, gboolean *data)
 static GtkWidget*
 entscale_int_new ( GtkWidget *table, gint x, gint y,
 		   gchar *caption, gint *intvar,
-		   gint min, gint max, gint constraint,
+		   gint min, gint max, gboolean constraint,
 		   EntscaleIntCallbackFunc callback,
 		   gpointer call_data)
 {

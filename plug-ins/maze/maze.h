@@ -1,5 +1,5 @@
-#define MAZE_TITLE "Maze 0.6.2"
-#define MAZE_URL "http://www.poboxes.com/kevint/gimp/maze.html"
+#define MAZE_TITLE "Maze 1.2.1"
+#define MAZE_URL "http://www.poboxes.com/kevint/gimp/maze-help.html"
 
 #define HELP_OPENS_NEW_WINDOW FALSE
 
@@ -8,15 +8,36 @@
   latter leaves much to be desired. */
 #define DIVBOX_LOOKS_LIKE_SPINBUTTON FALSE
 
-#include "gtk/gtk.h"
+/* Don't update the progress for every cell when creating a maze.
+   Instead, update every . . . */
+#define PRIMS_PROGRESS_UPDATE 256
+
+/* Don't draw in anything that has less than 
+   this value in the selection channel. */
+#define MAZE_ALPHA_THRESHOLD 127
+
+#include "glib.h"
+
+typedef enum {
+     DEPTH_FIRST,
+     PRIMS_ALGORITHM
+} MazeAlgoType;
 
 typedef struct {
      gint width;
      gint height;
-     gint seed;
+     guint seed;
      gboolean tile;
      gint multiple;
      gint offset;
+     MazeAlgoType algorithm;
      /* Interface options. */
      gboolean timeseed;
 } MazeValues;
+
+enum CellTypes {
+     OUT,
+     IN,
+     FRONTIER,
+     MASKED
+};
