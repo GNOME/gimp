@@ -480,10 +480,10 @@ pack_pb_line (guchar *start, guchar *end,
       else       /* Look for characters different from the previous */
         {
           i = 0;
-          while ((i < 128) &&
-                 (start + i + 1 <= end) &&
-                 (start[i] != start[i + 1] || 
-		  start + i + 2 >= end || start[i] != start[i+2]))
+          while ((i < 128)             &&
+                 (start + i + 1 < end) &&
+                 (start[i] != start[i + 1] ||
+                  start + i + 2 >= end     || start[i] != start[i+2]))
             i++;
 
           /* If there's only 1 remaining, the previous WHILE stmt doesn't
@@ -1002,7 +1002,7 @@ save_channel_data (FILE *fd,
   IFDBG printf ("        Saving data (RLE)\n");
 
   write_gshort (fd, 1, "Compression (RLE)"); /* Write compression type */
-      
+
   length_table_pos = ftell(fd);
 
   for (i = 0; i < channel_rows; i++) /* write dummy length table */
@@ -1237,7 +1237,8 @@ save_layer_and_mask (FILE *fd, gint32 image_id)
 
           if (gimp_drawable_has_alpha (PSDImageData.lLayers[i]))
             {
-              RGBA_to_chans (data, ChanSize * nChannelsLayer, &red, &green, &blue, &alpha);
+              RGBA_to_chans (data, ChanSize * nChannelsLayer,
+                             &red, &green, &blue, &alpha);
               IFDBG printf ("        Writing alpha channel...\n");
 
               save_channel_data (fd, alpha, PSDImageData.layersDim[i].width,
@@ -1247,7 +1248,10 @@ save_layer_and_mask (FILE *fd, gint32 image_id)
 	      g_free(alpha);
             }
           else
-            RGB_to_chans (data, ChanSize * nChannelsLayer, &red, &green, &blue);
+            {
+              RGB_to_chans (data, ChanSize * nChannelsLayer,
+                            &red, &green, &blue);
+            }
 
           IFDBG printf ("        Writing red channel...\n");
           save_channel_data (fd, red,PSDImageData.layersDim[i].width,
@@ -1413,6 +1417,10 @@ save_data (FILE *fd, gint32 image_id)
       IFDBG printf ("        Compressed length of blue channel: %ld\n",
                     CompressDataSize[nChannel]);
       nChannel++;
+
+      g_free (red);
+      g_free (green);
+      g_free (blue);
       break;
 
     case GIMP_GRAY:
@@ -1520,6 +1528,8 @@ save_data (FILE *fd, gint32 image_id)
           xfwrite (fd, data, ChanSize, "channel data");
         }
     }
+
+  g_free (data);
 }
 
 
@@ -1579,7 +1589,7 @@ save_image (const gchar *filename,
                  gimp_filename_to_utf8 (filename));
       return FALSE;
     }
-  
+
  /* Need to check each of the layers size individually also */
   layers = gimp_image_get_layers (image_id, &nlayers);
   for (i = 0; i < nlayers; i++)
