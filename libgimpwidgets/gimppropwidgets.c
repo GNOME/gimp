@@ -312,9 +312,9 @@ static void   gimp_prop_int_combo_box_notify   (GObject     *config,
 
 /**
  * gimp_prop_int_combo_box_new:
- * @config:            Object to which property is attached.
- * @property_name:     Name of Int property controlled by combo box.
- * @store:             #GimpIntStore holding list of labels, values, etc.
+ * @config:         Object to which property is attached.
+ * @property_name:  Name of Int property controlled by combo box.
+ * @store:          #GimpIntStore holding list of labels, values, etc.
  *
  * Creates a #GimpIntComboBox widget to display and set the specified
  * property.  The contents of the widget are determined by @store,
@@ -376,10 +376,10 @@ gimp_prop_int_combo_box_new (GObject      *config,
 
 /**
  * gimp_prop_enum_combo_box_new:
- * @config:            Object to which property is attached.
- * @property_name:     Name of Enum property controlled by combo box.
- * @minimum_value:     Smallest allowed value of enum.
- * @maximum_value:     Largest allowed value of enum.
+ * @config:         Object to which property is attached.
+ * @property_name:  Name of Enum property controlled by combo box.
+ * @minimum:        Smallest allowed value of enum.
+ * @maximum:        Largest allowed value of enum.
  *
  * Creates a #GimpIntComboBox widget to display and set the specified
  * Enum property.  The @mimimum_value and @maximum_value give the
@@ -633,7 +633,7 @@ static void  gimp_prop_radio_button_notify   (GObject     *config,
  * gimp_prop_enum_radio_frame_new:
  * @config:            Object to which property is attached.
  * @property_name:     Name of Enum property controlled by the radio buttons.
- * @label:             Label for the frame holding the buttons
+ * @title:             Label for the frame holding the buttons
  * @minimum:           Smallest value of enum to be included.
  * @maximum:           Largest value of enum to be included.
  *
@@ -649,7 +649,7 @@ static void  gimp_prop_radio_button_notify   (GObject     *config,
 GtkWidget *
 gimp_prop_enum_radio_frame_new (GObject     *config,
                                 const gchar *property_name,
-                                const gchar *label,
+                                const gchar *title,
                                 gint         minimum,
                                 gint         maximum)
 {
@@ -671,7 +671,7 @@ gimp_prop_enum_radio_frame_new (GObject     *config,
     {
       frame = gimp_enum_radio_frame_new_with_range (param_spec->value_type,
                                                     minimum, maximum,
-                                                    gtk_label_new (label),
+                                                    gtk_label_new (title),
                                                     G_CALLBACK (gimp_prop_radio_button_callback),
                                                     config,
                                                     &button);
@@ -679,7 +679,7 @@ gimp_prop_enum_radio_frame_new (GObject     *config,
   else
     {
       frame = gimp_enum_radio_frame_new (param_spec->value_type,
-                                         gtk_label_new (label),
+                                         gtk_label_new (title),
                                          G_CALLBACK (gimp_prop_radio_button_callback),
                                          config,
                                          &button);

@@ -1,3 +1,7 @@
+2005-02-05  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimppropwidgets.[ch]: documentation fixes.
+
 2005-02-05  Dave Neary  <bolsh@gimp.org>
 
 	* tools/gimp-remote.c: Added locale.h to the headers
