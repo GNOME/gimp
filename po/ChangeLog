@@ -1,3 +1,9 @@
+2000-01-28  Tor Lillqvist  <tml@iki.fi>
+
+	* fi.po: Updates. Remove fuzzies, add a few more
+	translations. Many strings still untranslated. I wish some native
+	Finnish speaker would have a go at it. Ville?
+
 2000-01-27  Kjartan Maraas  <kmaraas@online.no>
 
 	* no.po: Updated Norwegian translation.

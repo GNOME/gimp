@@ -215,7 +215,7 @@ msgstr "Adaptiivinen ylinäytteistys"
 
 #: app/blend.c:407
 msgid "Max Depth:"
-msgstr "Maksimisyvyys:"
+msgstr "Enimmäissyvyys:"
 
 #: app/blend.c:420 app/bucket_fill.c:130 app/fuzzy_select.c:641
 msgid "Threshold:"
@@ -750,7 +750,7 @@ msgstr "Pienennä valintaa:"
 
 #: app/commands.c:377
 msgid "Shrink from image border"
-msgstr ""
+msgstr "Pienennä kuvan rajoista"
 
 #: app/commands.c:399
 msgid "Grow Selection"
@@ -770,15 +770,15 @@ msgstr "Tee reuna valinnalle"
 
 #: app/commands.c:1298
 msgid "Resize Error: Both width and height must be greater than zero."
-msgstr ""
+msgstr "Virhe: Sekä leveyden että korkeuden pitää olla nollaa suurempia."
 
 #: app/commands.c:1360
 msgid "Scale Error: Both width and height must be greater than zero."
-msgstr ""
+msgstr "Virhe: Sekä leveyden että korkeuden pitää olla nollaa suurempia."
 
 #: app/convert.c:492
 msgid "Indexed Color Conversion"
-msgstr ""
+msgstr "Muunnos indeksoiduksi"
 
 #: app/convert.c:511
 msgid "General Palette Options"
@@ -983,23 +983,23 @@ msgstr "Tallenna"
 
 #: app/docindex.c:574
 msgid "This file cannot be moved up."
-msgstr ""
+msgstr "Tätä tiedostoa ei voi siirtää ylöspäin."
 
 #: app/docindex.c:578
 msgid "There's no selection to move up."
-msgstr ""
+msgstr "Ei valintaa siirrettäväksi ylöspäin."
 
 #: app/docindex.c:592
 msgid "This file cannot be moved down."
-msgstr ""
+msgstr "Tätä tiedostoa ei voi siirtää alaspäin."
 
 #: app/docindex.c:596
 msgid "There's no selection to move down."
-msgstr ""
+msgstr "Ei valintaa siirrettäväksi alaspäin."
 
 #: app/docindex.c:612
 msgid "There's no selection to remove."
-msgstr ""
+msgstr "Ei valintaa poistettavaksi."
 
 #: app/docindexif.c:84
 msgid "Open"
@@ -1011,19 +1011,19 @@ msgstr "Avaa tiedosto"
 
 #: app/docindexif.c:89 app/gdisplay_color_ui.c:115
 msgid "Up"
-msgstr ""
+msgstr "Ylös"
 
 #: app/docindexif.c:89
 msgid "Move the selected entry up in the index"
-msgstr ""
+msgstr "Siirrä valittu ylöspäin"
 
 #: app/docindexif.c:94 app/gdisplay_color_ui.c:116
 msgid "Down"
-msgstr ""
+msgstr "Alas"
 
 #: app/docindexif.c:94
 msgid "Move the selected entry down in the index"
-msgstr ""
+msgstr "Siirrä valittu alaspäin"
 
 #: app/docindexif.c:99 app/gdisplay_color_ui.c:114
 msgid "Remove"
@@ -1031,7 +1031,7 @@ msgstr "Poista"
 
 #: app/docindexif.c:99
 msgid "Remove the selected entry from the index"
-msgstr ""
+msgstr "Poista valittu"
 
 #: app/docindexif.c:104
 msgid "Close the Document Index"
@@ -1044,7 +1044,7 @@ msgstr "Kuvahaluettelo"
 
 #: app/docindexif.c:244
 msgid "GTK successfully started"
-msgstr ""
+msgstr "GTK käynnistyi ongelmitta"
 
 #: app/dodgeburn.c:123
 msgid "Dodge"
@@ -1061,29 +1061,29 @@ msgstr "Valotus:"
 #. the type (dodge or burn)
 #: app/dodgeburn.c:171 app/ink.c:418
 msgid "Type"
-msgstr ""
+msgstr "Tyyppi"
 
 #. mode (highlights, midtones, or shadows)
 #: app/dodgeburn.c:182
 msgid "Mode"
-msgstr ""
+msgstr "Tapa"
 
 #: app/edit_selection.c:168
 msgid "Move: 0, 0"
-msgstr ""
+msgstr "Siirrä: 0, 0"
 
 #: app/edit_selection.c:393 app/edit_selection.c:403
 msgid "Move: "
-msgstr ""
+msgstr "Siirrä: "
 
 #: app/equalize.c:36
 msgid "Equalize does not operate on indexed drawables."
-msgstr ""
+msgstr "Ekvalistointi ei toimi indeksoiduilla kuvilla"
 
 #. the hard toggle
 #: app/eraser.c:107
 msgid "Hard Edge"
-msgstr ""
+msgstr "Kova reuna"
 
 #. the anti_erase toggle
 #: app/eraser.c:117 app/paint_funcs.c:101
@@ -1097,15 +1097,15 @@ msgstr "Virhe tiedoston %s avauksessa: %s"
 
 #: app/errorconsole.c:187
 msgid "Can't save, nothing selected!"
-msgstr ""
+msgstr "Tallennus ei onnistu, ei valintaa!"
 
 #: app/errorconsole.c:191
 msgid "Save error log to file..."
-msgstr ""
+msgstr "Tallenna virheloki tiedostoon..."
 
 #: app/errorconsole.c:273
 msgid "GIMP Error Console"
-msgstr ""
+msgstr "GIMP-virheilmoitukset"
 
 #: app/errorconsole.c:279
 msgid "Clear"
@@ -1113,11 +1113,11 @@ msgstr "Tyhjennä"
 
 #: app/errorconsole.c:302
 msgid "Write all errors to file..."
-msgstr ""
+msgstr "Kirjoita kaikki virheilmoitukset tiedostoon..."
 
 #: app/errorconsole.c:309
 msgid "Write selection to file..."
-msgstr ""
+msgstr "Kirjoita valittu osa tiedostoon..."
 
 #: app/file_new_dialog.c:191
 msgid "Confirm Image Size"
@@ -1138,6 +1138,16 @@ msgid ""
 "setting (currently %s) in the\n"
 "preferences dialog."
 msgstr ""
+"Yrität luoda kuvaa jonka\n"
+"koko alunperis olisi %s.\n"
+"\n"
+"Valitse OK luodaksesi kuva silti.\n"
+"Valitse Peru jos et tarkoittanut\n"
+"luoda näin isoa kuvaa.\n"
+"\n"
+"Estääksesi tätä dialogia esiintymästä,\n"
+"kasvata \"Kuvan enimmäiskoko\" -asetusta\n"
+"(tällä hetkellä %s) Asetukset-dialogissa."
 
 #: app/file_new_dialog.c:315
 #, c-format
@@ -1146,7 +1156,7 @@ msgstr "Kuvan koko: %s"
 
 #: app/file_new_dialog.c:373
 msgid "New Image"
-msgstr ""
+msgstr "Uusi kuva"
 
 #: app/file_new_dialog.c:479 app/preferences_dialog.c:1428
 msgid "Pixels"
@@ -1172,15 +1182,16 @@ msgstr "Lataa kuva"
 
 #. format-chooser frame
 #: app/fileops.c:288
-#, fuzzy
 msgid "Determine file type"
-msgstr "Määrittele tiedoston tyyppi:"
+msgstr "Määrittele tiedoston tyyppi"
 
 #: app/fileops.c:382
 msgid ""
 "generate\n"
 "preview"
 msgstr ""
+"tee esi-\n"
+"katselukuva"
 
 #: app/fileops.c:417
 msgid "No selection."
@@ -1210,7 +1221,7 @@ msgstr "Palautus epäonnistui."
 
 #: app/fileops.c:1255
 msgid "(this thumbnail may be out of date)"
-msgstr ""
+msgstr "(tämä esikatselukuva saattaa olla vanhentunut)"
 
 #: app/fileops.c:1256
 msgid "(no information)"
@@ -1218,15 +1229,15 @@ msgstr "(ei tietoa)"
 
 #: app/fileops.c:1266
 msgid "(thumbnail saving is disabled)"
-msgstr ""
+msgstr "(esikatselukuvien tallennus ei käytössä)"
 
 #: app/fileops.c:1270
 msgid "(could not write thumbnail file)"
-msgstr ""
+msgstr "(esikatselukuvan tallennus epäonnistui)"
 
 #: app/fileops.c:1274
 msgid "(thumbnail file not written)"
-msgstr ""
+msgstr "(esikatselukuvaa ei tallennettu)"
 
 #: app/fileops.c:1291
 msgid "no preview available"
@@ -1243,7 +1254,7 @@ msgstr "Avaus epäonnistui: "
 #: app/fileops.c:1618
 #, c-format
 msgid "%s is an irregular file (%s)"
-msgstr "%s on epäsäännöllinen tiedosto"
+msgstr "%s ei ole tavallinen tiedosto (%s)"
 
 #: app/fileops.c:1632 app/fileops.c:1734
 msgid "Save failed: "
@@ -1285,6 +1296,8 @@ msgid ""
 "Cannot anchor this layer because\n"
 "it is not a floating selection."
 msgstr ""
+"Tason ankkurointi epäonnistui\n"
+"koska se ei ole kelluva valinta."
 
 #: app/floating_sel.c:179
 msgid ""
@@ -1292,10 +1305,13 @@ msgid ""
 "selection because it belongs to a\n"
 "layer mask or channel."
 msgstr ""
+"En voi tehdä kelluvasta valinnasta\n"
+"uutta tasoa koska se on osa\n"
+"tasomaskia tai kanavaa."
 
 #: app/gdisplay.c:217
 msgid "RGB-empty"
-msgstr ""
+msgstr "RGB-tyhjä"
 
 #: app/gdisplay.c:217 app/image_new.c:54 app/preferences_dialog.c:1523
 msgid "RGB"
@@ -1303,7 +1319,7 @@ msgstr ""
 
 #: app/gdisplay.c:220
 msgid "grayscale-empty"
-msgstr ""
+msgstr "harmaasävy-tyhjä"
 
 #: app/gdisplay.c:220
 msgid "grayscale"
@@ -1311,11 +1327,11 @@ msgstr "harmaasävy"
 
 #: app/gdisplay.c:223
 msgid "indexed-empty"
-msgstr ""
+msgstr "indeksoitu-tyhjä"
 
 #: app/gdisplay.c:223
 msgid "indexed"
-msgstr ""
+msgstr "indeksoitu"
 
 #: app/gdisplay_color_ui.c:117
 msgid "Configure"
@@ -1347,10 +1363,12 @@ msgid ""
 "Unable to cut/copy because the selected\n"
 "region is empty."
 msgstr ""
+"Leikkaus tai kopiointi epäonnistui\n"
+"koska valittu alue on tyhjä."
 
 #: app/gimage_mask.c:336
 msgid "Float Selection: No selection to float."
-msgstr ""
+msgstr "Kelluta valinta: Ei valintaa kellutettavaksi."
 
 #: app/gimage_mask.c:348
 msgid "Floated Layer"
@@ -1361,20 +1379,24 @@ msgid ""
 "The active layer has no alpha channel\n"
 "to convert to a selection."
 msgstr ""
+"Aktiivisella tasolla ei ole alfakanavaa\n"
+"jota voisi muuntaa valinnaksi."
 
 #: app/gimage_mask.c:503
 msgid ""
 "The active layer has no mask\n"
 "to convert to a selection."
 msgstr ""
+"Aktiivisella tasolla ei ole maskia\n"
+"jota voisi muuntaa valinnaksi."
 
 #: app/gimage_mask.c:554
 msgid "No selection to stroke!"
-msgstr ""
+msgstr "Ei valintaa jota pitkin voisi piirtää!"
 
 #: app/gimpbrush.c:262
 msgid "Error in GIMP brush file...aborting."
-msgstr ""
+msgstr "Virheellinen sivellintiedosto"
 
 #: app/gimpbrush.c:269 app/patterns.c:212
 msgid "Unnamed"
@@ -1382,16 +1404,16 @@ msgstr "Nimetön"
 
 #: app/gimpbrush.c:287
 msgid "GIMP brush file appears to be truncated."
-msgstr ""
+msgstr "Sivellintiedosto on liian lyhyt."
 
 #: app/gimpbrush.c:290
 #, c-format
 msgid "Unknown brush format version #%d in \"%s\"\n"
-msgstr ""
+msgstr "Tuntematon formaatin versio #%s sivellintiedostossa \"%s\"\n"
 
 #: app/gimpdrawable.c:167
 msgid "Can't fill unknown image type."
-msgstr ""
+msgstr "Tuntemattoman kuvatyypin täyttö ei mahdollista."
 
 #: app/gimpdrawable.c:481
 msgid "parasite attach to drawable"
@@ -1408,7 +1430,7 @@ msgstr "nimetön"
 #: app/gimpdrawable.c:723
 #, c-format
 msgid "Layer type %d not supported."
-msgstr ""
+msgstr "Taso tyyppiä %d ei tuettu."
 
 #: app/gimpimage.c:1134
 msgid "attach parasite to image"
@@ -1420,67 +1442,75 @@ msgstr ""
 
 #: app/gimpimage.c:2121
 msgid "Layer cannot be raised any further"
-msgstr ""
+msgstr "Tasoa ei voi nostaa enempää"
 
 #: app/gimpimage.c:2147
 msgid "Layer cannot be lowered any further"
-msgstr ""
+msgstr "Tasoa ei voi laskea enempää"
 
 #: app/gimpimage.c:2171
 msgid "Layer is already on top"
-msgstr ""
+msgstr "Taso on jo päällimmäisenä"
 
 #: app/gimpimage.c:2177
 msgid "Can't raise Layer without alpha"
-msgstr ""
+msgstr "Tasoa ilman alfakanavaa ei voi nostaa"
 
 #: app/gimpimage.c:2204
 msgid "Layer is already on bottom"
-msgstr ""
+msgstr "Taso on jo pohjimmaisena"
 
 #: app/gimpimage.c:2259
 msgid "BG has no alpha, layer was placed above"
-msgstr ""
+msgstr "Taustalla ei ole alfakanavaa, taso sijoitettiin yläpuolelle"
 
 #: app/gimpimage.c:2328
 msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
 msgstr ""
+"Ei ole tarpeeksi näkyviä tasoja yhdisteltäväksi.\n"
+"Vähintään kaksi tarvitaan."
 
 #: app/gimpimage.c:2408
 msgid "There are not enough visible layers for a merge down."
-msgstr ""
+msgstr "Ei ole tarpeeksi näkyviä tasola alaspäin yhdisteltäväksi."
 
 #: app/gimpimage.c:2811
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
 msgstr ""
+"Tasomaskin lisäys ei onnistu\n"
+"koska tasolla on jo maski."
 
 #: app/gimpimage.c:2815
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
 msgstr ""
+"Tasomaskin lisäys indeksoidun kuvan\n"
+"tasoon ei onnistu."
 
 #: app/gimpimage.c:2819
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
 msgstr ""
+"Tasomaski lisäys tasoon jolla\n"
+"ei ole alfakanavaa ei onnistu."
 
 #: app/gimpimage.c:2826
 msgid "Cannot add layer mask of different dimensions than specified layer."
-msgstr ""
+msgstr "Erikokoisen tasomaskin lisäys ei onnistu."
 
 #: app/gimpimage.c:2929
 msgid "Channel cannot be raised any further"
-msgstr ""
+msgstr "Kanavaa ei voi nostaa enempää"
 
 #: app/gimpimage.c:2978
 msgid "Channel cannot be lowered any further"
-msgstr ""
+msgstr "Kanavaa ei voi laskea enempää"
 
 #: app/gimpimage.c:3181 app/palette.c:379 app/palette.c:956 app/palette.c:1092
 #: app/palette.c:2063 app/palette.c:2810 app/palette.c:2942
@@ -1496,11 +1526,11 @@ msgstr ""
 
 #: app/gimpprogress.c:109
 msgid "Progress"
-msgstr ""
+msgstr "Työn edistys"
 
 #: app/gimprc.c:399 app/plug_in.c:305
 msgid "Resource configuration"
-msgstr ""
+msgstr "Resurssien konfigurointi"
 
 #: app/gimprc.c:449
 #, c-format
@@ -1510,49 +1540,49 @@ msgstr "virhe tiedostoa \"%s\" luettaessa\n"
 #: app/gimprc.c:450
 #, c-format
 msgid "  at line %d column %d\n"
-msgstr ""
+msgstr "  rivillä %d sarakkeessa %d\n"
 
 #: app/gimprc.c:451
 #, c-format
 msgid "  unexpected token: %s\n"
-msgstr ""
+msgstr "  odottamaton alkio: %s\n"
 
 #: app/gimprc.c:1450
 msgid "error parsing pluginrc"
-msgstr ""
+msgstr "virhe pluginrc-tiedostoa luettaessa"
 
 #: app/gimprc.c:2783
 #, c-format
 msgid "Can't open %s; %s"
-msgstr ""
+msgstr "Tiedostoa %s ei saada avattua: %s"
 
 #: app/gimprc.c:2802
 #, c-format
 msgid "Can't rename %s to %s.old; %s"
-msgstr ""
+msgstr "Tiedonston %s uudelleennimeäminen %s.old:ksi epäonnistui; %s"
 
 #: app/gimprc.c:2808
 #, c-format
 msgid "Couldn't reopen %s\n"
-msgstr ""
+msgstr "Tiedoston %s uudelleen avaus epäonnistui\n"
 
 #: app/gimprc.c:2820
 #, c-format
 msgid "Can't write to %s; %s"
-msgstr ""
+msgstr "Kirjoittaminen tiedostoon %s epäonnistui; %s"
 
 #: app/gimpui.c:452
 msgid "GIMP Message"
-msgstr ""
+msgstr "GIMP-ilmoitus"
 
 #. pseudo unit
 #: app/gimpunit.c:58
 msgid "pixel"
-msgstr ""
+msgstr "pikseli"
 
 #: app/gimpunit.c:58 app/measure.c:430 app/measure.c:434 app/paint_core.c:494
 msgid "pixels"
-msgstr ""
+msgstr "pikseleitä"
 
 #. standard units
 #: app/gimpunit.c:61
@@ -1747,11 +1777,13 @@ msgid ""
 "Are you sure you want to delete\n"
 "\"%s\" from the list and from disk?"
 msgstr ""
+"Oletko varma että haluat poistaa\n"
+"listasta ja levyltä \"%s\"?"
 
 #: app/gradient.c:2043
 #, c-format
 msgid "Zoom factor: %d:1    Displaying [%0.6f, %0.6f]"
-msgstr ""
+msgstr "Zoom: %d:1  Näytetään [%0.6f, %0.6f]"
 
 #: app/gradient.c:2294
 #, c-format
@@ -1759,16 +1791,18 @@ msgid ""
 "Position: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
 "Opacity: %0.3f"
 msgstr ""
+"Sijainti: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
+"Peitto: %0.3f"
 
 #: app/gradient.c:2319
 #, c-format
 msgid "Foreground color set to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
-msgstr ""
+msgstr "Edustaväriksi asetettu RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 
 #: app/gradient.c:2343
 #, c-format
 msgid "Background color to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
-msgstr ""
+msgstr "Taustaväriksi asetettu RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 
 #: app/gradient.c:2649
 msgid "Drag: move    Shift+drag: move & compress"
@@ -1796,43 +1830,43 @@ msgstr ""
 #: app/gradient.c:2940
 #, c-format
 msgid "Distance: %0.6f"
-msgstr ""
+msgstr "Etäisyys: %0.6f"
 
 #: app/gradient.c:3427 app/gradient.c:4485
 msgid "Left endpoint's color"
-msgstr ""
+msgstr "Vasemmanpuoleisen päätypisteen väri"
 
 #: app/gradient.c:3438 app/gradient.c:3480
 msgid "Load from"
-msgstr ""
+msgstr "Latauksen lähde"
 
 #: app/gradient.c:3442
 msgid "Left neighbor's right endpoint"
-msgstr ""
+msgstr "Vasemmanpuoleisen naapurin oikea päätypiste"
 
 #: app/gradient.c:3443
 msgid "Right endpoint"
-msgstr ""
+msgstr "Oikea päätypiste"
 
 #: app/gradient.c:3453 app/gradient.c:3495
 msgid "Save to"
-msgstr ""
+msgstr "Tallennuksen kohde"
 
 #: app/gradient.c:3469 app/gradient.c:4563
 msgid "Right endpoint's color"
-msgstr ""
+msgstr "Oikeanpuoleisen päätypisteen väri"
 
 #: app/gradient.c:3484
 msgid "Right neighbor's left endpoint"
-msgstr ""
+msgstr "Oikeanpuoleisen naapurin vasen päätypiste"
 
 #: app/gradient.c:3485
 msgid "Left endpoint"
-msgstr ""
+msgstr "Vasemmanpuolinen päätypiste"
 
 #: app/gradient.c:3596
 msgid "Selection operations"
-msgstr ""
+msgstr "Valinta-operaatiot"
 
 #: app/gradient.c:3768
 msgid "Blending function for segment"
@@ -2623,9 +2657,8 @@ msgid "Gimprc procedures"
 msgstr "Gimprc-proseduurit"
 
 #: app/internal_procs.c:110
-#, fuzzy
 msgid "Help procedures"
-msgstr "Tekstiproseduurit"
+msgstr "Apuproseduurit"
 
 #: app/internal_procs.c:116
 msgid "Gradient UI"
@@ -4234,25 +4267,24 @@ msgid "Enter a name for new palette"
 msgstr ""
 
 #: app/palette.c:1844
-#, fuzzy
 msgid "Delete Palette"
-msgstr "Poista polku"
+msgstr "Poista paletti"
 
 #: app/palette.c:1941
 msgid "Merge Palette"
-msgstr ""
+msgstr "Yhdistä paletti"
 
 #: app/palette.c:1944
 msgid "Enter a name for merged palette"
-msgstr ""
+msgstr "Anna nimi yhdistetylle paletille"
 
 #: app/palette.c:2107
 msgid "Color Palette Edit"
-msgstr ""
+msgstr "Väripaletin muokkaus"
 
 #: app/palette.c:2125
 msgid "Color Palette"
-msgstr ""
+msgstr "Väripaletti"
 
 #: app/palette.c:2262 app/palette.c:3314
 msgid "Select"
@@ -4524,9 +4556,8 @@ msgid "Error: Image title format must not be NULL."
 msgstr ""
 
 #: app/preferences_dialog.c:356
-#, fuzzy
 msgid "Save Preferences ?"
-msgstr "Asetukset"
+msgstr "Tallennetaanko asetukset?"
 
 #: app/preferences_dialog.c:372
 msgid ""
@@ -4716,14 +4747,12 @@ msgid "Context Sensitive Help with \"F1\""
 msgstr "Yhteysriippuvaa avustusta \"F1\":llä"
 
 #: app/preferences_dialog.c:1749
-#, fuzzy
 msgid "Help Browser"
-msgstr "/Lisäykset/Webbiselain"
+msgstr "Selain avustuksille"
 
 #: app/preferences_dialog.c:1761
-#, fuzzy
 msgid "Internal"
-msgstr "Käyttöliittymä"
+msgstr "Sisäinen"
 
 #: app/preferences_dialog.c:1762
 msgid "Netscape"
@@ -4731,7 +4760,7 @@ msgstr ""
 
 #: app/preferences_dialog.c:1766
 msgid "Help Browser to Use:"
-msgstr ""
+msgstr "Käytettävä selain avustuksille"
 
 #: app/preferences_dialog.c:1771
 msgid "Image Windows Settings"
@@ -6076,45 +6105,38 @@ msgstr ""
 
 #. flow slider
 #: app/xinput_airbrush.c:322
-#, fuzzy
 msgid "Flow Relation:"
-msgstr "Kasvata valintaa"
+msgstr "Virtauksen suhde:"
 
 #. flow sens slider
 #: app/xinput_airbrush.c:341
-#, fuzzy
 msgid "Flow Sensitivity:"
-msgstr "Paineherkkyys"
+msgstr "Virtauksen herkkyys"
 
 #. base tilt slider
 #: app/xinput_airbrush.c:361
-#, fuzzy
 msgid "Base Tilt:"
-msgstr "Heksana:"
+msgstr "Kallistus::"
 
 #. tilt sens slider
 #: app/xinput_airbrush.c:384
-#, fuzzy
 msgid "Tilt Sensitivity:"
-msgstr "Paineherkkyys"
+msgstr "Kallistusherkkyys"
 
 #. velocity sens slider
 #: app/xinput_airbrush.c:410
-#, fuzzy
 msgid "Speed Sensitivity:"
-msgstr "Paineherkkyys"
+msgstr "Nopeusherkkyys"
 
 #. min height slider
 #: app/xinput_airbrush.c:437
-#, fuzzy
 msgid "Min Height:"
-msgstr "Korkeus:"
+msgstr "Vähimmäiskorkeus:"
 
 #. max height slider
 #: app/xinput_airbrush.c:458
-#, fuzzy
 msgid "Max Height:"
-msgstr "Korkeus:"
+msgstr "Enimmäiskorkeus:"
 
 #: modules/cdisplay_gamma.c:326
 msgid "Gamma"
