@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-02 21:01+0100\n"
-"PO-Revision-Date: 2004-07-08 18:35+0200\n"
+"PO-Revision-Date: 2004-12-21 00:51+0100\n"
 "Last-Translator: Sigurd Gartmann <sigurd-translate@brogar.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -515,7 +515,7 @@ msgstr ""
 
 #: libgimpwidgets/gimpwidgets.c:1295
 msgid "_New Seed"
-msgstr "_Nytt frø"
+msgstr "_Ny utgangsverdi"
 
 #: libgimpwidgets/gimpwidgets.c:1308
 msgid "Seed random number generator with a generated random number"
@@ -523,7 +523,7 @@ msgstr "Gi generatoren for tilfeldige tall et tilfeldig tall"
 
 #: libgimpwidgets/gimpwidgets.c:1312
 msgid "_Randomize"
-msgstr "_Randomisér"
+msgstr "Gjø_r tilfeldig"
 
 #: modules/cdisplay_colorblind.c:124
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
