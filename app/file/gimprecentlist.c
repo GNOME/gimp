@@ -376,7 +376,7 @@ gimp_recent_list_write_raw (gint         fd,
     {
       gssize  written = write (fd, content, remaining);
 
-      if (written < 0)
+      if (written < 0 && errno != EINTR)
         return FALSE;
 
       remaining -= written;
