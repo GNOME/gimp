@@ -105,7 +105,7 @@ sub make_arg_recs {
 	my @args = @{$proc->{$_}} if exists $proc->{$_};
 
 	if (scalar @args) {
-	    $result .= "\nstatic ProcArg $proc->{name}_${_}[] =\n{\n";
+	    $result .= "\nstatic ProcArg $proc->{name}_${_}\[] =\n{\n";
 
 	    foreach $arg (@{$proc->{$_}}) {
 		my ($type, $name, @remove) = &arg_parse($arg->{type});
