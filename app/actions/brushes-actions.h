@@ -20,8 +20,7 @@
 #define __BRUSHES_ACTIONS_H__
 
 
-void   brushes_actions_setup  (GimpActionGroup *group,
-                               gpointer         data);
+void   brushes_actions_setup  (GimpActionGroup *group);
 void   brushes_actions_update (GimpActionGroup *group,
                                gpointer         data);
 

@@ -66,12 +66,12 @@ GimpActionFactory * gimp_action_factory_new      (Gimp              *gimp);
 
 void          gimp_action_factory_group_register (GimpActionFactory *factory,
                                                   const gchar       *identifier,
-                                                  GimpActionGroupSetupFunc setup_func,
+                                                  GimpActionGroupSetupFunc  setup_func,
                                                   GimpActionGroupUpdateFunc update_func);
 
 GimpActionGroup * gimp_action_factory_group_new  (GimpActionFactory *factory,
                                                   const gchar       *identifier,
-                                                  gpointer           setup_data);
+                                                  gpointer           user_data);
 
 
 #endif  /*  __GIMP_ACTION_FACTORY_H__  */

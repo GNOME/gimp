@@ -133,45 +133,38 @@ static GimpRadioActionEntry dockable_view_type_actions[] =
 
 
 void
-dockable_actions_setup (GimpActionGroup *group,
-                        gpointer         data)
+dockable_actions_setup (GimpActionGroup *group)
 {
   gimp_action_group_add_actions (group,
                                  dockable_actions,
-                                 G_N_ELEMENTS (dockable_actions),
-                                 data);
+                                 G_N_ELEMENTS (dockable_actions));
 
   gimp_action_group_add_toggle_actions (group,
                                         dockable_toggle_actions,
-                                        G_N_ELEMENTS (dockable_toggle_actions),
-                                        data);
+                                        G_N_ELEMENTS (dockable_toggle_actions));
 
   gimp_action_group_add_string_actions (group,
                                         dialogs_dockable_actions,
                                         n_dialogs_dockable_actions,
-                                        G_CALLBACK (dockable_add_tab_cmd_callback),
-                                        data);
+                                        G_CALLBACK (dockable_add_tab_cmd_callback));
 
   gimp_action_group_add_radio_actions (group,
                                        dockable_preview_size_actions,
                                        G_N_ELEMENTS (dockable_preview_size_actions),
                                        GIMP_PREVIEW_SIZE_MEDIUM,
-                                       G_CALLBACK (dockable_preview_size_cmd_callback),
-                                       data);
+                                       G_CALLBACK (dockable_preview_size_cmd_callback));
 
   gimp_action_group_add_radio_actions (group,
                                        dockable_tab_style_actions,
                                        G_N_ELEMENTS (dockable_tab_style_actions),
                                        GIMP_TAB_STYLE_PREVIEW,
-                                       G_CALLBACK (dockable_tab_style_cmd_callback),
-                                       data);
+                                       G_CALLBACK (dockable_tab_style_cmd_callback));
 
   gimp_action_group_add_radio_actions (group,
                                        dockable_view_type_actions,
                                        G_N_ELEMENTS (dockable_view_type_actions),
                                        GIMP_VIEW_TYPE_LIST,
-                                       G_CALLBACK (dockable_toggle_view_cmd_callback),
-                                       data);
+                                       G_CALLBACK (dockable_toggle_view_cmd_callback));
 }
 
 void

@@ -51,13 +51,11 @@ static GimpActionEntry help_actions[] =
 
 
 void
-help_actions_setup (GimpActionGroup *group,
-                    gpointer         data)
+help_actions_setup (GimpActionGroup *group)
 {
   gimp_action_group_add_actions (group,
                                  help_actions,
-                                 G_N_ELEMENTS (help_actions),
-                                 data);
+                                 G_N_ELEMENTS (help_actions));
 }
 
 void

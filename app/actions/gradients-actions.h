@@ -20,8 +20,7 @@
 #define __GRADIENTS_ACTIONS_H__
 
 
-void   gradients_actions_setup  (GimpActionGroup *group,
-                                 gpointer         data);
+void   gradients_actions_setup  (GimpActionGroup *group);
 void   gradients_actions_update (GimpActionGroup *group,
                                  gpointer         user_data);
 

@@ -290,7 +290,7 @@ toolbox_menu_setup2 (GimpUIManager *manager,
                      const gchar   *ui_path)
 {
   menus_open_recent_add (manager, ui_path);
-  plug_in_menus_create2 (manager, ui_path);
+  plug_in_menus_setup (manager, ui_path);
 }
 
 void

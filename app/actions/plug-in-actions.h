@@ -20,8 +20,7 @@
 #define __PLUG_IN_ACTIONS_H__
 
 
-void   plug_in_actions_setup       (GimpActionGroup *group,
-                                    gpointer         data);
+void   plug_in_actions_setup       (GimpActionGroup *group);
 void   plug_in_actions_update      (GimpActionGroup *group,
                                     gpointer         data);
 

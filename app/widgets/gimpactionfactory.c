@@ -149,7 +149,7 @@ gimp_action_factory_group_register (GimpActionFactory         *factory,
 GimpActionGroup *
 gimp_action_factory_group_new (GimpActionFactory *factory,
                                const gchar       *identifier,
-                               gpointer           setup_data)
+                               gpointer           user_data)
 {
   GList *list;
 
@@ -166,10 +166,11 @@ gimp_action_factory_group_new (GimpActionFactory *factory,
 
           group = gimp_action_group_new (factory->gimp,
                                          entry->identifier,
+                                         user_data,
                                          entry->update_func);
 
           if (entry->setup_func)
-            entry->setup_func (group, setup_data);
+            entry->setup_func (group);
 
           return group;
         }

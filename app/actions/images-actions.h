@@ -20,8 +20,7 @@
 #define __IMAGES_ACTIONS_H__
 
 
-void   images_actions_setup  (GimpActionGroup *group,
-                              gpointer         data);
+void   images_actions_setup  (GimpActionGroup *group);
 void   images_actions_update (GimpActionGroup *group,
                               gpointer         data);
 

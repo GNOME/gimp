@@ -62,19 +62,16 @@ static GimpEnumActionEntry colormap_editor_add_color_actions[] =
 
 
 void
-colormap_editor_actions_setup (GimpActionGroup *group,
-                               gpointer         data)
+colormap_editor_actions_setup (GimpActionGroup *group)
 {
   gimp_action_group_add_actions (group,
                                  colormap_editor_actions,
-                                 G_N_ELEMENTS (colormap_editor_actions),
-                                 data);
+                                 G_N_ELEMENTS (colormap_editor_actions));
 
   gimp_action_group_add_enum_actions (group,
                                       colormap_editor_add_color_actions,
                                       G_N_ELEMENTS (colormap_editor_add_color_actions),
-                                      G_CALLBACK (colormap_editor_add_color_cmd_callback),
-                                      data);
+                                      G_CALLBACK (colormap_editor_add_color_cmd_callback));
 }
 
 void

@@ -36,6 +36,7 @@ typedef struct _GimpMenuFactory              GimpMenuFactory;
 typedef struct _GimpActionFactory            GimpActionFactory;
 typedef struct _GimpActionGroup              GimpActionGroup;
 typedef struct _GimpEnumAction               GimpEnumAction;
+typedef struct _GimpPlugInAction             GimpPlugInAction;
 typedef struct _GimpStringAction             GimpStringAction;
 typedef struct _GimpUIManager                GimpUIManager;
 
@@ -145,9 +146,8 @@ typedef struct _GimpSessionInfoAux      GimpSessionInfoAux;
 
 /*  function types  */
 
-typedef void (* GimpActionGroupSetupFunc)   (GimpActionGroup *factory,
-                                             gpointer         data);
-typedef void (* GimpActionGroupUpdateFunc)  (GimpActionGroup *factory,
+typedef void (* GimpActionGroupSetupFunc)   (GimpActionGroup *group);
+typedef void (* GimpActionGroupUpdateFunc)  (GimpActionGroup *group,
                                              gpointer         data);
 
 typedef void (* GimpUIManagerSetupFunc)     (GimpUIManager   *manager,

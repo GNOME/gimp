@@ -87,13 +87,11 @@ static GimpActionEntry tool_options_actions[] =
         gimp_action_group_set_action_important (group, action, (condition) != 0)
 
 void
-tool_options_actions_setup (GimpActionGroup *group,
-                            gpointer         data)
+tool_options_actions_setup (GimpActionGroup *group)
 {
   gimp_action_group_add_actions (group,
                                  tool_options_actions,
-                                 G_N_ELEMENTS (tool_options_actions),
-                                 data);
+                                 G_N_ELEMENTS (tool_options_actions));
 
   SET_IMPORTANT ("tool-options-restore-menu", FALSE);
   SET_IMPORTANT ("tool-options-rename-menu",  FALSE);

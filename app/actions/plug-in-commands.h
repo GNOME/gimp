@@ -20,12 +20,11 @@
 #define __PLUG_IN_COMMANDS_H__
 
 
-void   plug_in_run_cmd_callback       (GtkWidget *widget,
-                                       gpointer   data,
-                                       guint      action);
-void   plug_in_repeat_cmd_callback    (GtkWidget *widget,
-				       gpointer   data,
-				       guint      action);
+void   plug_in_run_cmd_callback    (GtkWidget *widget,
+                                    gpointer   data);
+void   plug_in_repeat_cmd_callback (GtkWidget *widget,
+                                    gpointer   data,
+                                    guint      action);
 
 
 #endif /* __PLUG_IN_COMMANDS_H__ */

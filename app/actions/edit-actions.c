@@ -148,22 +148,19 @@ static GimpEnumActionEntry edit_fill_actions[] =
 
 
 void
-edit_actions_setup (GimpActionGroup *group,
-                    gpointer         data)
+edit_actions_setup (GimpActionGroup *group)
 {
   GimpContext *user_context;
   GimpRGB      color;
 
   gimp_action_group_add_actions (group,
                                  edit_actions,
-                                 G_N_ELEMENTS (edit_actions),
-                                 data);
+                                 G_N_ELEMENTS (edit_actions));
 
   gimp_action_group_add_enum_actions (group,
                                       edit_fill_actions,
                                       G_N_ELEMENTS (edit_fill_actions),
-                                      G_CALLBACK (edit_fill_cmd_callback),
-                                      data);
+                                      G_CALLBACK (edit_fill_cmd_callback));
 
   g_signal_connect_object (group->gimp, "buffer_changed",
                            G_CALLBACK (edit_actions_buffer_changed),

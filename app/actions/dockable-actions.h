@@ -20,8 +20,7 @@
 #define __DOCKABLE_ACTIONS_H__
 
 
-void   dockable_actions_setup  (GimpActionGroup *group,
-                                gpointer         data);
+void   dockable_actions_setup  (GimpActionGroup *group);
 void   dockable_actions_update (GimpActionGroup *group,
                                 gpointer         data);
 

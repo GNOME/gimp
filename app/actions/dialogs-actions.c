@@ -202,25 +202,21 @@ static GimpStringActionEntry dialogs_toplevel_actions[] =
 
 
 void
-dialogs_actions_setup (GimpActionGroup *group,
-                       gpointer         data)
+dialogs_actions_setup (GimpActionGroup *group)
 {
   gimp_action_group_add_actions (group,
                                  dialogs_actions,
-                                 G_N_ELEMENTS (dialogs_actions),
-                                 data);
+                                 G_N_ELEMENTS (dialogs_actions));
 
   gimp_action_group_add_string_actions (group,
                                         dialogs_dockable_actions,
                                         G_N_ELEMENTS (dialogs_dockable_actions),
-                                        G_CALLBACK (dialogs_create_dockable_cmd_callback),
-                                        data);
+                                        G_CALLBACK (dialogs_create_dockable_cmd_callback));
 
   gimp_action_group_add_string_actions (group,
                                         dialogs_toplevel_actions,
                                         G_N_ELEMENTS (dialogs_toplevel_actions),
-                                        G_CALLBACK (dialogs_create_toplevel_cmd_callback),
-                                        data);
+                                        G_CALLBACK (dialogs_create_toplevel_cmd_callback));
 }
 
 void

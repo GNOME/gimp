@@ -40,6 +40,7 @@
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemtreeview.h"
+#include "widgets/gimppluginaction.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -101,21 +102,18 @@ static GimpEnumActionEntry plug_in_repeat_actions[] =
 /*  public functions  */
 
 void
-plug_in_actions_setup (GimpActionGroup *group,
-                       gpointer         data)
+plug_in_actions_setup (GimpActionGroup *group)
 {
   GSList *list;
 
   gimp_action_group_add_actions (group,
                                  plug_in_actions,
-                                 G_N_ELEMENTS (plug_in_actions),
-                                 data);
+                                 G_N_ELEMENTS (plug_in_actions));
 
   gimp_action_group_add_enum_actions (group,
                                       plug_in_repeat_actions,
                                       G_N_ELEMENTS (plug_in_repeat_actions),
-                                      G_CALLBACK (plug_in_repeat_cmd_callback),
-                                      data);
+                                      G_CALLBACK (plug_in_repeat_cmd_callback));
 
   for (list = group->gimp->plug_in_proc_defs;
        list;
@@ -289,22 +287,24 @@ plug_in_actions_add_proc (GimpActionGroup *group,
 
   if (p1 && p2)
     {
-      gchar     *label;
-      GtkAction *action;
+      gchar            *label;
+      GimpPlugInAction *action;
 
       label = p2 + 1;
 
       g_print ("adding plug-in action '%s' (%s)\n",
                proc_def->db_info.name, label);
 
-      action = gtk_action_new (proc_def->db_info.name, label, NULL, NULL);
+      action = gimp_plug_in_action_new (proc_def->db_info.name,
+                                        label, NULL, NULL,
+                                        proc_def);
 
-      g_signal_connect (action, "activate",
+      g_signal_connect (action, "selected",
                         G_CALLBACK (plug_in_run_cmd_callback),
-                        &proc_def->db_info);
+                        group->user_data);
 
       gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
-                                              action,
+                                              GTK_ACTION (action),
                                               proc_def->accelerator);
 
       g_object_unref (action);

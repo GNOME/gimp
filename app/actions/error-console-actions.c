@@ -56,13 +56,11 @@ static GimpActionEntry error_console_actions[] =
 
 
 void
-error_console_actions_setup (GimpActionGroup *group,
-                             gpointer         data)
+error_console_actions_setup (GimpActionGroup *group)
 {
   gimp_action_group_add_actions (group,
                                  error_console_actions,
-                                 G_N_ELEMENTS (error_console_actions),
-                                 data);
+                                 G_N_ELEMENTS (error_console_actions));
 }
 
 void

@@ -235,6 +235,7 @@ gimp_action_group_get_property (GObject    *object,
 GimpActionGroup *
 gimp_action_group_new (Gimp                      *gimp,
                        const gchar               *name,
+                       gpointer                   user_data,
                        GimpActionGroupUpdateFunc  update_func)
 {
   GimpActionGroup *group;
@@ -247,6 +248,7 @@ gimp_action_group_new (Gimp                      *gimp,
                         "name", name,
                         NULL);
 
+  group->user_data   = user_data;
   group->update_func = update_func;
 
   return group;
@@ -282,8 +284,7 @@ gimp_action_group_update (GimpActionGroup *group,
 void
 gimp_action_group_add_actions (GimpActionGroup *group,
                                GimpActionEntry *entries,
-                               guint            n_entries,
-                               gpointer         user_data)
+                               guint            n_entries)
 {
   gint i;
 
@@ -304,7 +305,7 @@ gimp_action_group_add_actions (GimpActionGroup *group,
       if (entries[i].callback)
         g_signal_connect (action, "activate",
                           entries[i].callback,
-                          user_data);
+                          group->user_data);
 
       gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
 					      action,
@@ -316,8 +317,7 @@ gimp_action_group_add_actions (GimpActionGroup *group,
 void
 gimp_action_group_add_toggle_actions (GimpActionGroup       *group,
                                       GimpToggleActionEntry *entries,
-                                      guint                  n_entries,
-                                      gpointer               user_data)
+                                      guint                  n_entries)
 {
   gint i;
 
@@ -340,7 +340,7 @@ gimp_action_group_add_toggle_actions (GimpActionGroup       *group,
       if (entries[i].callback)
         g_signal_connect (action, "toggled",
                           entries[i].callback,
-                          user_data);
+                          group->user_data);
 
       gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
 					      GTK_ACTION (action),
@@ -354,8 +354,7 @@ gimp_action_group_add_radio_actions (GimpActionGroup      *group,
                                      GimpRadioActionEntry *entries,
                                      guint                 n_entries,
                                      gint                  value,
-                                     GCallback             callback,
-                                     gpointer              user_data)
+                                     GCallback             callback)
 {
   GtkRadioAction *first_action = NULL;
   GSList         *radio_group  = NULL;
@@ -394,15 +393,14 @@ gimp_action_group_add_radio_actions (GimpActionGroup      *group,
   if (callback && first_action)
     g_signal_connect (first_action, "changed",
                       callback,
-                      user_data);
+                      group->user_data);
 }
 
 void
 gimp_action_group_add_enum_actions (GimpActionGroup     *group,
                                     GimpEnumActionEntry *entries,
                                     guint                n_entries,
-                                    GCallback            callback,
-                                    gpointer             user_data)
+                                    GCallback            callback)
 {
   gint i;
 
@@ -424,7 +422,7 @@ gimp_action_group_add_enum_actions (GimpActionGroup     *group,
       if (callback)
         g_signal_connect (action, "selected",
                           callback,
-                          user_data);
+                          group->user_data);
 
       gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
 					      GTK_ACTION (action),
@@ -437,8 +435,7 @@ void
 gimp_action_group_add_string_actions (GimpActionGroup       *group,
                                       GimpStringActionEntry *entries,
                                       guint                  n_entries,
-                                      GCallback              callback,
-                                      gpointer               user_data)
+                                      GCallback              callback)
 {
   gint i;
 
@@ -460,7 +457,7 @@ gimp_action_group_add_string_actions (GimpActionGroup       *group,
       if (callback)
         g_signal_connect (action, "selected",
                           callback,
-                          user_data);
+                          group->user_data);
 
       gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
 					      GTK_ACTION (action),

@@ -72,25 +72,21 @@ static GimpRadioActionEntry qmask_invert_actions[] =
 
 
 void
-qmask_actions_setup (GimpActionGroup *group,
-                     gpointer         data)
+qmask_actions_setup (GimpActionGroup *group)
 {
   gimp_action_group_add_actions (group,
                                  qmask_actions,
-                                 G_N_ELEMENTS (qmask_actions),
-                                 data);
+                                 G_N_ELEMENTS (qmask_actions));
 
   gimp_action_group_add_toggle_actions (group,
                                         qmask_toggle_actions,
-                                        G_N_ELEMENTS (qmask_toggle_actions),
-                                        data);
+                                        G_N_ELEMENTS (qmask_toggle_actions));
 
   gimp_action_group_add_radio_actions (group,
                                        qmask_invert_actions,
                                        G_N_ELEMENTS (qmask_invert_actions),
                                        FALSE,
-                                       G_CALLBACK (qmask_invert_cmd_callback),
-                                       data);
+                                       G_CALLBACK (qmask_invert_cmd_callback));
 }
 
 void

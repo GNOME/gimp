@@ -20,8 +20,7 @@
 #define __PATTERNS_ACTIONS_H__
 
 
-void   patterns_actions_setup  (GimpActionGroup *group,
-                                gpointer         data);
+void   patterns_actions_setup  (GimpActionGroup *group);
 void   patterns_actions_update (GimpActionGroup *group,
                                 gpointer         user_data);
 

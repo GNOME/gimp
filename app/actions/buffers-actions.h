@@ -20,8 +20,7 @@
 #define __BUFFERS_ACTIONS_H__
 
 
-void   buffers_actions_setup  (GimpActionGroup *group,
-                               gpointer         data);
+void   buffers_actions_setup  (GimpActionGroup *group);
 void   buffers_actions_update (GimpActionGroup *group,
                                gpointer         data);
 

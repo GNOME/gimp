@@ -1,5 +1,30 @@
 2004-04-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimppluginaction.[ch]: new GtkAction subclass which
+	remembers the PlugInProcDef.
+
+	* app/widgets/gimpactiongroup.[ch]: added "gpointer user_data" to
+	the GimpActionGroup struct and to gimp_action_group_new(). Removed
+	the user_data parameter from gimp_action_group_add_*_actions().
+
+	* app/widgets/gimpactionfactory.[ch]: changed accordingly.
+
+	* app/actions/*-actions.[ch]: removed user_data from all setup_funcs.
+
+	* app/actions/plug-in-actions.c: use a GimpPlugInAction and
+	finally use the right user_data for the callback so plug-in
+	callbacks have a proper context.
+
+	* app/gui/plug-in-menus.[ch]: renamed plug_in_menus_create2() to
+	plug_in_menus_setup().
+
+	* app/gui/image-menu.c
+	* app/gui/toolbox-menu.c: changed accordingly.
+
+2004-04-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpactiongroup.[ch]: removed "translation-domain"
 	property and simply use gettext(). Plug-In domains are handled
 	by plug-in-actions.c

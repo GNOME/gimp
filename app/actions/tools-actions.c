@@ -60,15 +60,13 @@ static GimpActionEntry tools_actions[] =
 
 
 void
-tools_actions_setup (GimpActionGroup *group,
-                     gpointer         data)
+tools_actions_setup (GimpActionGroup *group)
 {
   GList *list;
 
   gimp_action_group_add_actions (group,
                                  tools_actions,
-                                 G_N_ELEMENTS (tools_actions),
-                                 data);
+                                 G_N_ELEMENTS (tools_actions));
 
   for (list = GIMP_LIST (group->gimp->tool_info_list)->list;
        list;
@@ -101,8 +99,7 @@ tools_actions_setup (GimpActionGroup *group,
 
           gimp_action_group_add_string_actions (group,
                                                 &entry, 1,
-                                                G_CALLBACK (tools_select_cmd_callback),
-                                                data);
+                                                G_CALLBACK (tools_select_cmd_callback));
 
           g_free (name);
         }

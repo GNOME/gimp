@@ -20,8 +20,7 @@
 #define __QMASK_ACTIONS_H__
 
 
-void   qmask_actions_setup  (GimpActionGroup *group,
-                             gpointer         data);
+void   qmask_actions_setup  (GimpActionGroup *group);
 void   qmask_actions_update (GimpActionGroup *group,
                              gpointer         data);
 

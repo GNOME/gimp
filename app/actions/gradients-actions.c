@@ -42,7 +42,7 @@
 
 static GimpActionEntry gradients_actions[] =
 {
-  { "gradients-popup", NULL, N_("Gradients Menu") },
+  { "gradients-popup", GIMP_STOCK_GRADIENT, N_("Gradients Menu") },
 
   { "gradients-edit", GIMP_STOCK_EDIT,
     N_("_Edit Gradient..."), NULL, NULL,
@@ -77,13 +77,11 @@ static GimpActionEntry gradients_actions[] =
 
 
 void
-gradients_actions_setup (GimpActionGroup *group,
-                         gpointer         data)
+gradients_actions_setup (GimpActionGroup *group)
 {
   gimp_action_group_add_actions (group,
                                  gradients_actions,
-                                 G_N_ELEMENTS (gradients_actions),
-                                 data);
+                                 G_N_ELEMENTS (gradients_actions));
 }
 
 void

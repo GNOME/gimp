@@ -59,13 +59,11 @@ static GimpActionEntry images_actions[] =
 
 
 void
-images_actions_setup (GimpActionGroup *group,
-                      gpointer         data)
+images_actions_setup (GimpActionGroup *group)
 {
   gimp_action_group_add_actions (group,
                                  images_actions,
-                                 G_N_ELEMENTS (images_actions),
-                                 data);
+                                 G_N_ELEMENTS (images_actions));
 }
 
 void

@@ -20,8 +20,7 @@
 #define __SELECT_ACTIONS_H__
 
 
-void   select_actions_setup  (GimpActionGroup *group,
-                              gpointer         data);
+void   select_actions_setup  (GimpActionGroup *group);
 void   select_actions_update (GimpActionGroup *group,
                               gpointer         data);
 

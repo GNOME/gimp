@@ -109,8 +109,7 @@ static GimpActionEntry file_actions[] =
 
 
 void
-file_actions_setup (GimpActionGroup *group,
-                    gpointer         data)
+file_actions_setup (GimpActionGroup *group)
 {
   GimpEnumActionEntry *entries;
   gint                 n_entries;
@@ -118,8 +117,7 @@ file_actions_setup (GimpActionGroup *group,
 
   gimp_action_group_add_actions (group,
                                  file_actions,
-                                 G_N_ELEMENTS (file_actions),
-                                 data);
+                                 G_N_ELEMENTS (file_actions));
 
   n_entries = GIMP_GUI_CONFIG (group->gimp->config)->last_opened_size;
 
@@ -143,8 +141,7 @@ file_actions_setup (GimpActionGroup *group,
     }
 
   gimp_action_group_add_enum_actions (group, entries, n_entries,
-                                      G_CALLBACK (file_last_opened_cmd_callback),
-                                      data);
+                                      G_CALLBACK (file_last_opened_cmd_callback));
 
   for (i = 0; i < n_entries; i++)
     {

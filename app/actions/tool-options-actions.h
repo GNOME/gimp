@@ -20,8 +20,7 @@
 #define __TOOL_OPTIONS_ACTIONS_H__
 
 
-void   tool_options_actions_setup  (GimpActionGroup *group,
-                                    gpointer         data);
+void   tool_options_actions_setup  (GimpActionGroup *group);
 void   tool_options_actions_update (GimpActionGroup *group,
                                     gpointer         data);
 

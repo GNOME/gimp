@@ -20,8 +20,7 @@
 #define __EDIT_ACTIONS_H__
 
 
-void   edit_actions_setup  (GimpActionGroup *group,
-                            gpointer         data);
+void   edit_actions_setup  (GimpActionGroup *group);
 void   edit_actions_update (GimpActionGroup *group,
                             gpointer         data);
 

@@ -20,8 +20,7 @@
 #define __COLORMAP_EDITOR_ACTIONS_H__
 
 
-void   colormap_editor_actions_setup  (GimpActionGroup *group,
-                                       gpointer         data);
+void   colormap_editor_actions_setup  (GimpActionGroup *group);
 void   colormap_editor_actions_update (GimpActionGroup *group,
                                        gpointer         data);
 

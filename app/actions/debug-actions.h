@@ -20,8 +20,7 @@
 #define __DEBUG_ACTIONS_H__
 
 
-void   debug_actions_setup  (GimpActionGroup *group,
-                             gpointer         data);
+void   debug_actions_setup  (GimpActionGroup *group);
 void   debug_actions_update (GimpActionGroup *group,
                              gpointer         data);
 

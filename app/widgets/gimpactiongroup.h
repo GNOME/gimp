@@ -40,6 +40,7 @@ struct _GimpActionGroup
   GtkActionGroup  parent_instance;
 
   Gimp           *gimp;
+  gpointer        user_data;
 
   GimpActionGroupUpdateFunc  update_func;
 };
@@ -116,6 +117,7 @@ struct _GimpStringActionEntry
 GType            gimp_action_group_get_type (void);
 GimpActionGroup *gimp_action_group_new      (Gimp                  *gimp,
                                              const gchar           *name,
+                                             gpointer               user_data,
                                              GimpActionGroupUpdateFunc update_func);
 
 GList *gimp_action_groups_from_name         (const gchar           *name);
@@ -125,29 +127,24 @@ void   gimp_action_group_update             (GimpActionGroup       *group,
 
 void   gimp_action_group_add_actions        (GimpActionGroup       *group,
                                              GimpActionEntry       *entries,
-                                             guint                  n_entries,
-                                             gpointer               user_data);
+                                             guint                  n_entries);
 void   gimp_action_group_add_toggle_actions (GimpActionGroup       *group,
                                              GimpToggleActionEntry *entries,
-                                             guint                  n_entries,
-                                             gpointer               user_data);
+                                             guint                  n_entries);
 void   gimp_action_group_add_radio_actions  (GimpActionGroup       *group,
                                              GimpRadioActionEntry  *entries,
                                              guint                  n_entries,
                                              gint                   value,
-                                             GCallback              on_change,
-                                             gpointer               user_data);
+                                             GCallback              on_change);
 
 void   gimp_action_group_add_enum_actions   (GimpActionGroup       *group,
                                              GimpEnumActionEntry   *entries,
                                              guint                  n_entries,
-                                             GCallback              callback,
-                                             gpointer               user_data);
+                                             GCallback              callback);
 void   gimp_action_group_add_string_actions (GimpActionGroup       *group,
                                              GimpStringActionEntry *entries,
                                              guint                  n_entries,
-                                             GCallback              callback,
-                                             gpointer               user_data);
+                                             GCallback              callback);
 
 void   gimp_action_group_set_action_visible   (GimpActionGroup     *group,
                                                const gchar         *action_name,

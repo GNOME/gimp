@@ -108,19 +108,16 @@ static GimpEnumActionEntry channels_to_selection_actions[] =
 
 
 void
-channels_actions_setup (GimpActionGroup *group,
-                        gpointer         data)
+channels_actions_setup (GimpActionGroup *group)
 {
   gimp_action_group_add_actions (group,
                                  channels_actions,
-                                 G_N_ELEMENTS (channels_actions),
-                                 data);
+                                 G_N_ELEMENTS (channels_actions));
 
   gimp_action_group_add_enum_actions (group,
                                       channels_to_selection_actions,
                                       G_N_ELEMENTS (channels_to_selection_actions),
-                                      G_CALLBACK (channels_to_selection_cmd_callback),
-                                      data);
+                                      G_CALLBACK (channels_to_selection_cmd_callback));
 }
 
 void

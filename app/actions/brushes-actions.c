@@ -71,13 +71,11 @@ static GimpActionEntry brushes_actions[] =
 
 
 void
-brushes_actions_setup (GimpActionGroup *group,
-                       gpointer         data)
+brushes_actions_setup (GimpActionGroup *group)
 {
   gimp_action_group_add_actions (group,
                                  brushes_actions,
-                                 G_N_ELEMENTS (brushes_actions),
-                                 data);
+                                 G_N_ELEMENTS (brushes_actions));
 }
 
 void

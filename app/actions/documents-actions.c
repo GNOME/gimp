@@ -79,13 +79,11 @@ static GimpActionEntry documents_actions[] =
 
 
 void
-documents_actions_setup (GimpActionGroup *group,
-                         gpointer         data)
+documents_actions_setup (GimpActionGroup *group)
 {
   gimp_action_group_add_actions (group,
                                  documents_actions,
-                                 G_N_ELEMENTS (documents_actions),
-                                 data);
+                                 G_N_ELEMENTS (documents_actions));
 }
 
 void

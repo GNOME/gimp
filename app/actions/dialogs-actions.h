@@ -24,8 +24,7 @@ extern GimpStringActionEntry dialogs_dockable_actions[];
 extern gint                  n_dialogs_dockable_actions;
 
 
-void   dialogs_actions_setup  (GimpActionGroup *group,
-                               gpointer         data);
+void   dialogs_actions_setup  (GimpActionGroup *group);
 void   dialogs_actions_update (GimpActionGroup *group,
                                gpointer         data);
 

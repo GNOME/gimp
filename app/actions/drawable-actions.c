@@ -98,25 +98,21 @@ static GimpEnumActionEntry drawable_rotate_actions[] =
 
 
 void
-drawable_actions_setup (GimpActionGroup *group,
-                        gpointer         data)
+drawable_actions_setup (GimpActionGroup *group)
 {
   gimp_action_group_add_actions (group,
                                  drawable_actions,
-                                 G_N_ELEMENTS (drawable_actions),
-                                 data);
+                                 G_N_ELEMENTS (drawable_actions));
 
   gimp_action_group_add_enum_actions (group,
                                       drawable_flip_actions,
                                       G_N_ELEMENTS (drawable_flip_actions),
-                                      G_CALLBACK (drawable_flip_cmd_callback),
-                                      data);
+                                      G_CALLBACK (drawable_flip_cmd_callback));
 
   gimp_action_group_add_enum_actions (group,
                                       drawable_rotate_actions,
                                       G_N_ELEMENTS (drawable_rotate_actions),
-                                      G_CALLBACK (drawable_rotate_cmd_callback),
-                                      data);
+                                      G_CALLBACK (drawable_rotate_cmd_callback));
 }
 
 void

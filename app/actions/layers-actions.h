@@ -20,8 +20,7 @@
 #define __LAYERS_ACTIONS_H__
 
 
-void   layers_actions_setup (GimpActionGroup *group,
-                             gpointer         data);
+void   layers_actions_setup (GimpActionGroup *group);
 void   layers_actions_update (GimpActionGroup *group,
                               gpointer         data);
 

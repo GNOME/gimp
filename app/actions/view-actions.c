@@ -232,25 +232,21 @@ static GimpRadioActionEntry view_zoom_actions[] =
 
 
 void
-view_actions_setup (GimpActionGroup *group,
-                    gpointer         data)
+view_actions_setup (GimpActionGroup *group)
 {
   gimp_action_group_add_actions (group,
                                  view_actions,
-                                 G_N_ELEMENTS (view_actions),
-                                 data);
+                                 G_N_ELEMENTS (view_actions));
 
   gimp_action_group_add_toggle_actions (group,
                                         view_toggle_actions,
-                                        G_N_ELEMENTS (view_toggle_actions),
-                                        data);
+                                        G_N_ELEMENTS (view_toggle_actions));
 
   gimp_action_group_add_radio_actions (group,
                                        view_zoom_actions,
                                        G_N_ELEMENTS (view_zoom_actions),
                                        10000,
-                                       G_CALLBACK (view_zoom_cmd_callback),
-                                       data);
+                                       G_CALLBACK (view_zoom_cmd_callback));
 }
 
 void

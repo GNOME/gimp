@@ -76,13 +76,11 @@ static GimpActionEntry palette_editor_actions[] =
 
 
 void
-palette_editor_actions_setup (GimpActionGroup *group,
-                              gpointer         data)
+palette_editor_actions_setup (GimpActionGroup *group)
 {
   gimp_action_group_add_actions (group,
                                  palette_editor_actions,
-                                 G_N_ELEMENTS (palette_editor_actions),
-                                 data);
+                                 G_N_ELEMENTS (palette_editor_actions));
 }
 
 void

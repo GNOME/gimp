@@ -137,25 +137,21 @@ static GimpEnumActionEntry image_rotate_actions[] =
 
 
 void
-image_actions_setup (GimpActionGroup *group,
-                     gpointer         data)
+image_actions_setup (GimpActionGroup *group)
 {
   gimp_action_group_add_actions (group,
                                  image_actions,
-                                 G_N_ELEMENTS (image_actions),
-                                 data);
+                                 G_N_ELEMENTS (image_actions));
 
   gimp_action_group_add_enum_actions (group,
                                       image_flip_actions,
                                       G_N_ELEMENTS (image_flip_actions),
-                                      G_CALLBACK (image_flip_cmd_callback),
-                                      data);
+                                      G_CALLBACK (image_flip_cmd_callback));
 
   gimp_action_group_add_enum_actions (group,
                                       image_rotate_actions,
                                       G_N_ELEMENTS (image_rotate_actions),
-                                      G_CALLBACK (image_rotate_cmd_callback),
-                                      data);
+                                      G_CALLBACK (image_rotate_cmd_callback));
 }
 
 void

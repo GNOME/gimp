@@ -300,52 +300,44 @@ static GimpRadioActionEntry gradient_editor_coloring_actions[] =
 
 
 void
-gradient_editor_actions_setup (GimpActionGroup *group,
-                               gpointer         data)
+gradient_editor_actions_setup (GimpActionGroup *group)
 {
   gimp_action_group_add_actions (group,
                                  gradient_editor_actions,
-                                 G_N_ELEMENTS (gradient_editor_actions),
-                                 data);
+                                 G_N_ELEMENTS (gradient_editor_actions));
 
   gimp_action_group_add_enum_actions (group,
                                       gradient_editor_load_left_actions,
                                       G_N_ELEMENTS (gradient_editor_load_left_actions),
-                                      G_CALLBACK (gradient_editor_load_left_cmd_callback),
-                                      data);
+                                      G_CALLBACK (gradient_editor_load_left_cmd_callback));
 
   gimp_action_group_add_enum_actions (group,
                                       gradient_editor_save_left_actions,
                                       G_N_ELEMENTS (gradient_editor_save_left_actions),
-                                      G_CALLBACK (gradient_editor_save_left_cmd_callback),
-                                      data);
+                                      G_CALLBACK (gradient_editor_save_left_cmd_callback));
 
   gimp_action_group_add_enum_actions (group,
                                       gradient_editor_load_right_actions,
                                       G_N_ELEMENTS (gradient_editor_load_right_actions),
-                                      G_CALLBACK (gradient_editor_load_right_cmd_callback),
-                                      data);
+                                      G_CALLBACK (gradient_editor_load_right_cmd_callback));
 
 
   gimp_action_group_add_enum_actions (group,
                                       gradient_editor_save_right_actions,
                                       G_N_ELEMENTS (gradient_editor_save_right_actions),
-                                      G_CALLBACK (gradient_editor_save_right_cmd_callback),
-                                      data);
+                                      G_CALLBACK (gradient_editor_save_right_cmd_callback));
 
   gimp_action_group_add_radio_actions (group,
                                        gradient_editor_blending_actions,
                                        G_N_ELEMENTS (gradient_editor_blending_actions),
                                        0,
-                                       G_CALLBACK (gradient_editor_blending_func_cmd_callback),
-                                       data);
+                                       G_CALLBACK (gradient_editor_blending_func_cmd_callback));
 
   gimp_action_group_add_radio_actions (group,
                                        gradient_editor_coloring_actions,
                                        G_N_ELEMENTS (gradient_editor_coloring_actions),
                                        0,
-                                       G_CALLBACK (gradient_editor_coloring_type_cmd_callback),
-                                       data);
+                                       G_CALLBACK (gradient_editor_coloring_type_cmd_callback));
 }
 
 void

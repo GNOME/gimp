@@ -233,25 +233,21 @@ static GimpEnumActionEntry layers_alpha_to_selection_actions[] =
 };
 
 void
-layers_actions_setup (GimpActionGroup *group,
-                      gpointer         data)
+layers_actions_setup (GimpActionGroup *group)
 {
   gimp_action_group_add_actions (group,
                                  layers_actions,
-                                 G_N_ELEMENTS (layers_actions),
-                                 data);
+                                 G_N_ELEMENTS (layers_actions));
 
   gimp_action_group_add_enum_actions (group,
                                       layers_mask_to_selection_actions,
                                       G_N_ELEMENTS (layers_mask_to_selection_actions),
-                                      G_CALLBACK (layers_mask_to_selection_cmd_callback),
-                                      data);
+                                      G_CALLBACK (layers_mask_to_selection_cmd_callback));
 
   gimp_action_group_add_enum_actions (group,
                                       layers_alpha_to_selection_actions,
                                       G_N_ELEMENTS (layers_alpha_to_selection_actions),
-                                      G_CALLBACK (layers_alpha_to_selection_cmd_callback),
-                                      data);
+                                      G_CALLBACK (layers_alpha_to_selection_cmd_callback));
 }
 
 void

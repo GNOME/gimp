@@ -20,8 +20,7 @@
 #define __FONTS_ACTIONS_H__
 
 
-void   fonts_actions_setup  (GimpActionGroup *group,
-                             gpointer         data);
+void   fonts_actions_setup  (GimpActionGroup *group);
 void   fonts_actions_update (GimpActionGroup *group,
                              gpointer         data);
 

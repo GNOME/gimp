@@ -148,19 +148,16 @@ static GimpEnumActionEntry vectors_to_selection_actions[] =
 
 
 void
-vectors_actions_setup (GimpActionGroup *group,
-                       gpointer         data)
+vectors_actions_setup (GimpActionGroup *group)
 {
   gimp_action_group_add_actions (group,
                                  vectors_actions,
-                                 G_N_ELEMENTS (vectors_actions),
-                                 data);
+                                 G_N_ELEMENTS (vectors_actions));
 
   gimp_action_group_add_enum_actions (group,
                                       vectors_to_selection_actions,
                                       G_N_ELEMENTS (vectors_to_selection_actions),
-                                      G_CALLBACK (vectors_to_selection_cmd_callback),
-                                      data);
+                                      G_CALLBACK (vectors_to_selection_cmd_callback));
 }
 
 void

@@ -123,19 +123,16 @@ static GimpStringActionEntry select_tool_actions[] =
 
 
 void
-select_actions_setup (GimpActionGroup *group,
-                      gpointer         data)
+select_actions_setup (GimpActionGroup *group)
 {
   gimp_action_group_add_actions (group,
                                  select_actions,
-                                 G_N_ELEMENTS (select_actions),
-                                 data);
+                                 G_N_ELEMENTS (select_actions));
 
   gimp_action_group_add_string_actions (group,
                                         select_tool_actions,
                                         G_N_ELEMENTS (select_tool_actions),
-                                        G_CALLBACK (tools_select_cmd_callback),
-                                        data);
+                                        G_CALLBACK (tools_select_cmd_callback));
 }
 
 void

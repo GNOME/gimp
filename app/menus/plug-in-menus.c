@@ -123,8 +123,8 @@ plug_in_menus_init (Gimp        *gimp,
 }
 
 void
-plug_in_menus_create2 (GimpUIManager *manager,
-                       const gchar   *ui_path)
+plug_in_menus_setup (GimpUIManager *manager,
+                     const gchar   *ui_path)
 {
   GTree  *menu_entries;
   GSList *list;

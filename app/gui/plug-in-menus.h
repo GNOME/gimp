@@ -24,7 +24,7 @@ void   plug_in_menus_init         (Gimp            *gimp,
                                    GSList          *plug_in_defs,
                                    const gchar     *std_plugins_domain);
 
-void   plug_in_menus_create2      (GimpUIManager   *manager,
+void   plug_in_menus_setup        (GimpUIManager   *manager,
                                    const gchar     *ui_path);
 void   plug_in_menus_add_proc     (GimpUIManager   *manager,
                                    const gchar     *ui_path,

@@ -71,13 +71,11 @@ static GimpActionEntry patterns_actions[] =
 
 
 void
-patterns_actions_setup (GimpActionGroup *group,
-                        gpointer         data)
+patterns_actions_setup (GimpActionGroup *group)
 {
   gimp_action_group_add_actions (group,
                                  patterns_actions,
-                                 G_N_ELEMENTS (patterns_actions),
-                                 data);
+                                 G_N_ELEMENTS (patterns_actions));
 }
 
 void

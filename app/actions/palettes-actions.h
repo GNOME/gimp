@@ -20,8 +20,7 @@
 #define __PALETTES_ACTIONS_H__
 
 
-void   palettes_actions_setup  (GimpActionGroup *group,
-                                gpointer         data);
+void   palettes_actions_setup  (GimpActionGroup *group);
 void   palettes_actions_update (GimpActionGroup *group,
                                 gpointer         user_data);
 

@@ -58,8 +58,7 @@
 
 void
 plug_in_run_cmd_callback (GtkWidget *widget,
-                          gpointer   data,
-                          guint      action)
+                          gpointer   data)
 {
   GtkItemFactory *item_factory;
   Gimp           *gimp;
