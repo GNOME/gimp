@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-22 23:00-0400\n"
-"PO-Revision-Date: 2004-10-22 20:02-0400\n"
+"POT-Creation-Date: 2004-10-23 19:32-0400\n"
+"PO-Revision-Date: 2004-10-23 20:02-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -364,7 +364,7 @@ msgstr "Not loaded"
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Failed to create thumbnail folder '%s'."
 
-#: libgimpthumb/gimpthumbnail.c:875
+#: libgimpthumb/gimpthumbnail.c:917
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Could not create thumbnail for %s: %s"
@@ -542,6 +542,10 @@ msgstr "_Reset"
 #: libgimpwidgets/gimpstock.c:120
 msgid "Visible"
 msgstr "Visible"
+
+#: libgimpwidgets/gimpstock.c:153 libgimpwidgets/gimpstock.c:157
+msgid "_Stroke"
+msgstr "_Stroke"
 
 #: libgimpwidgets/gimpstock.c:169
 msgid "L_etter Spacing"
