@@ -611,6 +611,10 @@ gimp_imagefile_save_thumb (GimpImagefile  *imagefile,
   pixbuf = gimp_viewable_get_new_preview_pixbuf (GIMP_VIEWABLE (gimage),
                                                  width, height);
 
+  /*  when layer previews are disabled, we won't get a pixbuf  */
+  if (! pixbuf)
+    return TRUE;
+
   success = gimp_thumbnail_save_thumb (imagefile->thumbnail,
                                        pixbuf,
                                        "The GIMP " GIMP_VERSION,
