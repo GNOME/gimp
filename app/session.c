@@ -48,6 +48,7 @@
 
 #include <gtk/gtk.h>
 
+#include "app_procs.h"
 #include "appenv.h"
 #include "commands.h"
 #include "gimprc.h"
@@ -167,6 +168,7 @@ session_init (void)
   if (gimp_dir)
     {
       sprintf (filename, "%s/sessionrc", gimp_dir);
+      app_init_update_status(NULL, filename, -1);
       parse_gimprc_file (filename);
     }
 }
