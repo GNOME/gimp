@@ -1,40 +1,41 @@
 # Irish Translations for gimp po script fu 
-# Copyright (C) 2000 Free Software Foundation, Inc.
+# Copyright (C) 2000,2004 Free Software Foundation, Inc.
 # Seán Ó Ceallaigh <s_oceallaigh@yahoo.com>, 2000.
+# Alastair McKinstry <mckinstry@computer.org>, 2004.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu VERSION\n"
+"Project-Id-Version: gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-04 02:50+0100\n"
-"PO-Revision-Date: 2000-08-27 00:36+0000\n"
-"Last-Translator: Seán Ó Ceallaigh <s_oceallaigh@yahoo.com>\n"
+"POT-Creation-Date: 2003-12-17 03:46+0100\n"
+"PO-Revision-Date: 2004-01-20 0740+0000\n"
+"Last-Translator: Alastair McKinstry <mckinstry@computer.org>\n"
 "Language-Team: Gaeilge <gaeilge-a@listserv.heanet.ie>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/script-fu/script-fu-console.c:141
+#: plug-ins/script-fu/script-fu-console.c:144
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-console.c:168
+#: plug-ins/script-fu/script-fu-console.c:171
 msgid "Script-Fu Console"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-console.c:191
+#: plug-ins/script-fu/script-fu-console.c:193
 msgid "SIOD Output"
 msgstr "Aschur SIOD"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:264
+#: plug-ins/script-fu/script-fu-console.c:266
 msgid "Current Command"
 msgstr "Ordú Reatha"
 
-#: plug-ins/script-fu/script-fu-console.c:283
+#: plug-ins/script-fu/script-fu-console.c:285
 msgid "Browse..."
-msgstr ""
+msgstr "Brábhsáil...."
 
 #: plug-ins/script-fu/script-fu-console.c:582
 msgid "Unable to open a stream on the SIOD output pipe"
@@ -49,80 +50,80 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1115
-#: plug-ins/script-fu/script-fu-scripts.c:1117
+#: plug-ins/script-fu/script-fu-scripts.c:1119
+#: plug-ins/script-fu/script-fu-scripts.c:1121
 msgid "/Script-Fu/"
-msgstr ""
+msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1129
+#: plug-ins/script-fu/script-fu-scripts.c:1133
 #, c-format
 msgid "Script-Fu: %s"
-msgstr ""
+msgstr "Script-Fu: %s"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1164
+#: plug-ins/script-fu/script-fu-scripts.c:1168
 msgid "About"
-msgstr ""
+msgstr "Faoi"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1174
+#: plug-ins/script-fu/script-fu-scripts.c:1178
 msgid "Script Arguments"
 msgstr ""
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1202
+#: plug-ins/script-fu/script-fu-scripts.c:1206
 #, c-format
 msgid "%s:"
-msgstr ""
+msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1246
+#: plug-ins/script-fu/script-fu-scripts.c:1250
 msgid "Script-Fu Color Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1319
+#: plug-ins/script-fu/script-fu-scripts.c:1323
 msgid "Script-Fu File Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1323
+#: plug-ins/script-fu/script-fu-scripts.c:1327
 msgid "Script-Fu Folder Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1337
+#: plug-ins/script-fu/script-fu-scripts.c:1341
 msgid "Script-Fu Font Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1344
+#: plug-ins/script-fu/script-fu-scripts.c:1348
 msgid "Script-fu Pattern Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1350
+#: plug-ins/script-fu/script-fu-scripts.c:1354
 msgid "Script-Fu Gradient Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1357
+#: plug-ins/script-fu/script-fu-scripts.c:1361
 msgid "Script-Fu Brush Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1942
+#: plug-ins/script-fu/script-fu-scripts.c:1947
 #: plug-ins/dbbrowser/dbbrowser_utils.c:486
 msgid "Author:"
-msgstr ""
+msgstr "Údar:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1948
+#: plug-ins/script-fu/script-fu-scripts.c:1953
 #: plug-ins/dbbrowser/dbbrowser_utils.c:502
 msgid "Copyright:"
-msgstr ""
+msgstr "Cóipcheart:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1954
+#: plug-ins/script-fu/script-fu-scripts.c:1959
 #: plug-ins/dbbrowser/dbbrowser_utils.c:494
 msgid "Date:"
-msgstr ""
+msgstr "Dáta:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1962
+#: plug-ins/script-fu/script-fu-scripts.c:1967
 msgid "Image Types:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1991
+#: plug-ins/script-fu/script-fu-scripts.c:1996
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -130,15 +131,15 @@ msgid ""
 "%s"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-server.c:602
+#: plug-ins/script-fu/script-fu-server.c:601
 msgid "Script-Fu Server Options"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-server.c:629
+#: plug-ins/script-fu/script-fu-server.c:628
 msgid "Server Port:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-server.c:635
+#: plug-ins/script-fu/script-fu-server.c:634
 msgid "Server Logfile:"
 msgstr ""
 
@@ -179,7 +180,7 @@ msgstr ""
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:345
 msgid "Name:"
-msgstr ""
+msgstr "Ainm:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:354
 msgid "Blurb:"
@@ -187,15 +188,15 @@ msgstr ""
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:366
 msgid "In:"
-msgstr ""
+msgstr "Isteach:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:414
 msgid "Out:"
-msgstr ""
+msgstr "Amach:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:468
 msgid "Help:"
-msgstr ""
+msgstr "Cuidiú"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:579
 msgid "Searching by name - please wait"
@@ -269,7 +270,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:6
 #: plug-ins/script-fu/scripts/title-header.scm.h:2
 msgid "Font"
-msgstr ""
+msgstr "Clófhoireann"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:6
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
@@ -308,7 +309,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:7
 #: plug-ins/script-fu/scripts/title-header.scm.h:3
 msgid "Font Size (pixels)"
-msgstr ""
+msgstr "Méid Clófhoireann (picsil)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:7
 msgid "Outline Blur Radius"
@@ -379,7 +380,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:14
 #: plug-ins/script-fu/scripts/title-header.scm.h:5
 msgid "Text"
-msgstr ""
+msgstr "Teacs"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3_D Truchet..."
@@ -416,7 +417,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:3
 #: plug-ins/script-fu/scripts/truchet.scm.h:2
 msgid "Background Color"
-msgstr ""
+msgstr "Dath Cúlra"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:3
 #: plug-ins/script-fu/scripts/truchet.scm.h:3
@@ -498,7 +499,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
 msgid "Down"
-msgstr ""
+msgstr "Síos"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:4
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:5
@@ -518,35 +519,34 @@ msgstr ""
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:8
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:6
-#, fuzzy
 msgid "Glow Color"
-msgstr "Druid"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:6
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:3
 msgid "Left"
-msgstr ""
+msgstr "Clé"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:7
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:4
 msgid "Orientation"
-msgstr ""
+msgstr "Treosuíomh"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:8
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:6
 msgid "Right"
-msgstr ""
+msgstr "Deis"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:9
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:7
 #: plug-ins/script-fu/scripts/lava.scm.h:7
 msgid "Size"
-msgstr ""
+msgstr "Méid"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:10
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:8
 msgid "Up"
-msgstr ""
+msgstr "Suas"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Hrule..."
@@ -603,9 +603,8 @@ msgstr ""
 #: plug-ins/script-fu/scripts/news-text.scm.h:10
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:14
 #: plug-ins/script-fu/scripts/speed-text.scm.h:8
-#, fuzzy
 msgid "Text Color"
-msgstr "Druid"
+msgstr "Dath Theacs"
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:1
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:1
@@ -651,7 +650,7 @@ msgid "Width of Gaps"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:1
-msgid "<Image>/Script-Fu/Utils/_ASCII to Layer..."
+msgid "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:2
@@ -665,9 +664,8 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:6
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:6
-#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:5
 msgid "Filename"
-msgstr ""
+msgstr "Ainm Chomhad"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:10
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
@@ -883,19 +881,16 @@ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Camouflage..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/camo.scm.h:2
-#, fuzzy
 msgid "Color 1"
-msgstr "Druid"
+msgstr "Dath 1"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:3
-#, fuzzy
 msgid "Color 2"
-msgstr "Druid"
+msgstr "Dath 2"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:4
-#, fuzzy
 msgid "Color 3"
-msgstr "Druid"
+msgstr "Dath 3"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:6
 #: plug-ins/script-fu/scripts/rendermap.scm.h:6
@@ -931,7 +926,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:2
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:2
 msgid "Background Image"
-msgstr ""
+msgstr "Íomha na Chúlra"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:3
 msgid "Carve Raised Text"
@@ -950,9 +945,8 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Chalk..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/chalk.scm.h:4
-#, fuzzy
 msgid "Chalk Color"
-msgstr "Druid"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Chip Awa_y..."
@@ -1192,9 +1186,8 @@ msgstr ""
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:5
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:5
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:5
-#, fuzzy
 msgid "Color"
-msgstr "Druid"
+msgstr "Dath"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:5
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:11
@@ -1322,9 +1315,8 @@ msgid "<Toolbox>/Xtns/Script-Fu/Utils/_Font Map..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
-#, fuzzy
 msgid "Active Colors"
-msgstr "Druid"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:3
 msgid "Black on White"
@@ -1340,12 +1332,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:6
 msgid "_Border (pixels)"
-msgstr ""
+msgstr "_Teorainn (picsil)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:7
-#, fuzzy
 msgid "_Color Scheme"
-msgstr "Druid"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:8
 msgid "_Filter (regexp)"
@@ -1357,7 +1348,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:10
 msgid "_Text"
-msgstr ""
+msgstr "_Teacs"
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/_Frosty..."
@@ -1397,9 +1388,8 @@ msgid "AutoCrop"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:4
-#, fuzzy
 msgid "Dark Color"
-msgstr "Druid"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:7
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:7
@@ -1591,9 +1581,8 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
-#, fuzzy
 msgid "Frame Color"
-msgstr "Druid"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:5
 msgid "Frame Size"
@@ -1624,9 +1613,8 @@ msgid "Outer Border"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:8
-#, fuzzy
 msgid "Pad Color"
-msgstr "Druid"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:9
 msgid "Pad Opacity"
@@ -1830,9 +1818,8 @@ msgid "<Toolbox>/Xtns/Script-Fu/Buttons/_Round Button..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:5
-#, fuzzy
 msgid "Lower Color"
-msgstr "Druid"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:6
 msgid "Lower Color (Active)"
@@ -1863,9 +1850,8 @@ msgid "Text Color (Active)"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:16
-#, fuzzy
 msgid "Upper Color"
-msgstr "Druid"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:17
 msgid "Upper Color (Active)"
@@ -1893,7 +1879,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:2
 msgid "Black"
-msgstr ""
+msgstr "Dubh"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:3
 msgid "Edge Behaviour"
@@ -1951,21 +1937,6 @@ msgstr ""
 msgid "<Image>/Script-Fu/Selection/To _Image"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
-msgid ""
-")))\n"
-"  (set! filename2 (string-append data-dir\n"
-"\t\t\t\t "
-msgstr ""
-
-#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
-msgid "<Image>/Script-Fu/Selection/To _Pattern..."
-msgstr ""
-
-#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:6
-msgid "Pattern Name"
-msgstr ""
-
 #: plug-ins/script-fu/scripts/selection-round.scm.h:1
 msgid "<Image>/Script-Fu/Selection/_Round..."
 msgstr ""
@@ -1979,9 +1950,8 @@ msgid "<Image>/Script-Fu/Decor/_Slide..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/slide.scm.h:3
-#, fuzzy
 msgid "Font Color"
-msgstr "Druid"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/slide.scm.h:4
 msgid "Number"
@@ -2041,12 +2011,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:4
 msgid "Circle"
-msgstr ""
+msgstr "Ciorcál"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:6
-#, fuzzy
 msgid "Color Method"
-msgstr "Druid"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
 msgid ""
@@ -2059,9 +2028,8 @@ msgid "Epitrochoid"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:9
-#, fuzzy
 msgid "Frame"
-msgstr "Druid"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:11
 msgid "Gradient: Loop Sawtooth"
@@ -2097,7 +2065,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:19
 msgid "Pencil"
-msgstr ""
+msgstr "Peann Lua"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:20
 msgid "Pentagon"
@@ -2124,9 +2092,8 @@ msgid "Shape"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:26
-#, fuzzy
 msgid "Solid Color"
-msgstr "Druid"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:27
 msgid "Spyrograph"
@@ -2143,7 +2110,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:30
 msgid "Tool"
-msgstr ""
+msgstr "Uirlís"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:31
 msgid "Triangle"
@@ -2151,7 +2118,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:32
 msgid "Type"
-msgstr ""
+msgstr "Saghas"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Starb_urst..."
@@ -2162,9 +2129,8 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starb_urst..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:4
-#, fuzzy
 msgid "Burst Color"
-msgstr "Druid"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:5
 msgid "Effect Size (pixels * 30)"
@@ -2215,9 +2181,8 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Particle Trace..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
-#, fuzzy
 msgid "Base Color"
-msgstr "Druid"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
 msgid "Edge Only"
