@@ -1,3 +1,9 @@
+2004-06-13  Jakub Steiner <jimmac@ximian.com>
+
+	* cursors/gimp-tool-cursors.xcf
+	* cursors/tool-burn.png: the burn tool doesn't really have an
+	  inverted handle
+
 2004-06-13  Sven Neumann  <sven@gimp.org>
 
 	* app/paint-funcs/paint-funcs.[ch] (shapeburst_region): added
