@@ -1,3 +1,12 @@
+2003-10-19  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* Makefile.am
+	* plug-ins/gfig/gfig_*.[ch]: new files split from gfig.c
+	
+	* plug-ins/gfig/gfig.c: fix for #124158 (always show both the Paint 
+	and Select Tab). Also first attempt to split this hug file into
+	smaller pieces to make this plug-in a bit more manageable.
+
 2003-10-19  Sven Neumann  <sven@gimp.org>
 
 	* app/config/Makefile.am

@@ -14,6 +14,23 @@ libexec_PROGRAMS = gfig
 
 gfig_SOURCES = \
 	gfig.c		\
+	gfig.h		\
+	gfig_arc.c	\
+	gfig_arc.h	\
+	gfig_bezier.c	\
+	gfig_bezier.h	\
+	gfig_circle.c	\
+	gfig_circle.h	\
+	gfig_ellipse.c	\
+	gfig_ellipse.h	\
+	gfig_line.c	\
+	gfig_line.h	\
+	gfig_poly.c	\
+	gfig_poly.h	\
+	gfig_spiral.c	\
+	gfig_spiral.h	\
+	gfig_star.c	\
+	gfig_star.h	\
 	gfig-stock.c	\
 	gfig-stock.h	\
 	pix_data.h
