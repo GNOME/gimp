@@ -1,4 +1,9 @@
-Tus Apr 21 01:59:12 EDT 1998 Matthew Wilson <msw@gimp.org>
+Tue Apr 21 15:11:21 EDT 1998 Matthew Wilson <msw@gimp.org>
+
+	* app/disp_callbacks.c: removed the tool reset when changing gdisplays
+	* app/bezier_select.c: stop draw_core when changing gdisplays
+
+Tue Apr 21 01:59:12 EDT 1998 Matthew Wilson <msw@gimp.org>
 
 	* app/iscissors.c: Remove the iscissors outline by stopping the
 	draw_core before bezierifying the selection.  There may be

@@ -248,7 +248,7 @@ bezier_select_button_press (Tool           *tool,
 
   /*  If the tool was being used in another image...reset it  */
   if (tool->state == ACTIVE && gdisp_ptr != tool->gdisp_ptr) {
-    printf("Reset!\n");
+    draw_core_stop(bezier_sel->core, tool);
     bezier_select_reset (bezier_sel);
   }
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, TRUE, 0);

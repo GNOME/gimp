@@ -166,20 +166,24 @@ gdisplay_canvas_events (GtkWidget *canvas,
 		  }
 		
 		/* reset the current tool if we're changing gdisplays */
+		/*
 		if (active_tool->gdisp_ptr) {
 		  tool_gdisp = active_tool->gdisp_ptr;
-		  if (tool_gdisp->ID != gdisp->ID)
+		  if (tool_gdisp->ID != gdisp->ID) {
 		    tools_initialize (active_tool->type, gdisp);
-		  /* Reset the current tool if we're changing drawables... */
+		    active_tool->drawable = gimage_active_drawable(gdisp->gimage);
+		  }
 		} else
+		*/
+		/* reset the current tool if we're changing drawables */
 		  if (active_tool->drawable) {
 		    if ((drawable_ID(gimage_active_drawable(gdisp->gimage)) !=
 			 drawable_ID(GIMP_DRAWABLE(active_tool->drawable))) &&
 			!active_tool->preserve)
 		      tools_initialize (active_tool->type, gdisp);
-		} else
-		  active_tool->drawable = gimage_active_drawable(gdisp->gimage);
-
+		  } else
+		    active_tool->drawable = gimage_active_drawable(gdisp->gimage);
+		
 		(* active_tool->button_press_func) (active_tool, bevent, gdisp);
 	      }
 	  break;
