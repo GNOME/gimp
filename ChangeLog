@@ -1,3 +1,8 @@
+2000-03-31  Sven Neumann  <neo@wintermute.ochsenblut.de>
+
+	* plug-ins/script-fu/scripts/beveled-pattern-heading.scm
+	* plug-ins/script-fu/scripts/title-header.scm: string unification
+
 Fri Mar 31 14:10:02 BST 2000 Adam D. Moss <adam@gimp.org>
 
 	* plug-ins/common/gifload.c: Mildly more useful

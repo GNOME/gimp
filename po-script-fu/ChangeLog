@@ -1,3 +1,7 @@
+2000-03-31  Sven Neumann  <neo@wintermute.ochsenblut.de>
+
+	* de.po: updated german translation
+
 2000-03-30  Tor Lillqvist  <tml@iki.fi>
 
 	* makefile.cygwin: New file, same as in the other ../po* dirs.
