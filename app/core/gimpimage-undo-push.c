@@ -1398,6 +1398,13 @@ undo_pop_layer (GimpUndo            *undo,
 
       if (gimp_layer_is_floating_sel (layer))
 	{
+          /*  invalidate the boundary *before* setting the
+           *  floating_sel pointer to NULL because the selection's
+           *  outline is affected by the floating_sel and won't be
+           *  completely cleared otherwise (bug #160247).
+           */
+          gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
+
 	  undo->gimage->floating_sel = NULL;
 
 	  /*  activate the underlying drawable  */
