@@ -1,3 +1,7 @@
+2004-01-16  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/menus.c (menus_init): fixed typo (bug #131670).
+
 2004-01-16  Dave Neary  <bolsh@gimp.org>
 
 	* NEWS: Update NEWS file again.

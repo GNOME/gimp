@@ -216,7 +216,7 @@ menus_init (Gimp *gimp)
                                    documents_menu_entries);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Templates>",
-                                   _("Templaes Menu"),
+                                   _("Templates Menu"),
                                    GIMP_HELP_TEMPLATE_DIALOG,
                                    NULL, templates_menu_update, TRUE,
                                    n_templates_menu_entries,
