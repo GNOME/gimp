@@ -1,3 +1,11 @@
+2003-01-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdialogfactory.c
+	* app/widgets/gimptoolbox.c: removed GDK_HINT_USER_POS and
+	GDK_HINT_USER_SIZE again because they caused problems with
+	some window managers Instead, set the window's size with
+	gtk_window_parse_geometry().
+
 2003-01-11  Sven Neumann  <sven@gimp.org>
 
 	* app/config/Makefile.am: always build gimpconfig-dump.

@@ -416,8 +416,7 @@ gimp_toolbox_set_geometry (GimpToolbox *toolbox)
       gtk_window_set_geometry_hints (GTK_WINDOW (toolbox),
                                      NULL,
                                      &geometry, 
-                                     GDK_HINT_MIN_SIZE | GDK_HINT_RESIZE_INC |
-                                     GDK_HINT_USER_POS);
+                                     GDK_HINT_MIN_SIZE | GDK_HINT_RESIZE_INC);
     }
 }
 

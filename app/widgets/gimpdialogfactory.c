@@ -1302,7 +1302,7 @@ gimp_dialog_factory_set_window_geometry (GtkWidget       *window,
   static gint screen_width  = 0;
   static gint screen_height = 0;
 
-  gboolean size_set = FALSE;
+  gchar geom[32];
 
   g_return_if_fail (GTK_IS_WINDOW (window));
   g_return_if_fail (GTK_WIDGET_TOPLEVEL (window));
@@ -1317,22 +1317,16 @@ gimp_dialog_factory_set_window_geometry (GtkWidget       *window,
   info->x = CLAMP (info->x, 0, screen_width  - 128);
   info->y = CLAMP (info->y, 0, screen_height - 128);
 
-  gtk_window_move (GTK_WINDOW (window), info->x, info->y);
+  g_snprintf (geom, sizeof (geom), "+%d+%d", info->x, info->y);
+
+  gtk_window_parse_geometry (GTK_WINDOW (window), geom);
 
   if (! info->toplevel_entry || info->toplevel_entry->remember_size)
     {
       if (info->width > 0 && info->height > 0)
-        {
-          gtk_window_set_default_size (GTK_WINDOW (window),
-                                       info->width, info->height);
-          size_set = TRUE;
-        }
+        gtk_window_set_default_size (GTK_WINDOW (window),
+                                     info->width, info->height);
     }
-
-  gtk_window_set_geometry_hints (GTK_WINDOW (window), NULL, NULL,
-                                 size_set ?
-                                 (GDK_HINT_USER_POS | GDK_HINT_USER_SIZE) :
-                                 (GDK_HINT_USER_POS));
 }
 
 static void
