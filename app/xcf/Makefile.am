@@ -2,7 +2,7 @@
 
 noinst_LIBRARIES = libappxcf.a
 
-libappxcf_a_SOURCES = @STRIP_BEGIN@ \
+libappxcf_a_SOURCES = \
 	xcf.c		\
 	xcf.h		\
 	xcf-load.c	\
@@ -15,18 +15,15 @@ libappxcf_a_SOURCES = @STRIP_BEGIN@ \
 	xcf-seek.c	\
 	xcf-seek.h	\
 	xcf-write.c	\
-	xcf-write.h	\
-@STRIP_END@
+	xcf-write.h
 
-AM_CPPFLAGS = @STRIP_BEGIN@ \
+AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-XCF\"	\
 	@GIMP_THREAD_FLAGS@ 		\
-	@GIMP_MP_FLAGS@			\
-@STRIP_END@
+	@GIMP_MP_FLAGS@
 
-INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_srcdir)			\
-	-I$(top_srcdir)/app		\
-	$(GTK_CFLAGS)			\
-	-I$(includedir)			\
-@STRIP_END@
+INCLUDES = \
+	-I$(top_srcdir)		\
+	-I$(top_srcdir)/app	\
+	$(GTK_CFLAGS)		\
+	-I$(includedir)

@@ -71,12 +71,11 @@ stuff_sources = \
 	libgimp_glue.c		\
 	libgimp_glue.h
 
-gimp_1_3_SOURCES = @STRIP_BEGIN@ \
+gimp_1_3_SOURCES = \
 	$(gui_sources)		\
 	$(core_ui_sources)	\
 	$(bye_sources)		\
-	$(stuff_sources)	\
-@STRIP_END@
+	$(stuff_sources)
 
 EXTRA_DIST = \
 	makefile.mingw			\
@@ -96,19 +95,17 @@ endif
 
 gimp_1_3_LDFLAGS = -export-dynamic -export-symbols $(srcdir)/gimp.sym
 
-AM_CPPFLAGS = @STRIP_BEGIN@ \
-	-DG_LOG_DOMAIN=\"Gimp\"		\
-	@GIMP_THREAD_FLAGS@ 		\
-	@GIMP_MP_FLAGS@			\
-@STRIP_END@
+AM_CPPFLAGS = \
+	-DG_LOG_DOMAIN=\"Gimp\"	\
+	@GIMP_THREAD_FLAGS@ 	\
+	@GIMP_MP_FLAGS@
 
-INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_srcdir)			\
-	$(GTK_CFLAGS)			\
-	-I$(includedir)			\
-@STRIP_END@
+INCLUDES = \
+	-I$(top_srcdir)	\
+	$(GTK_CFLAGS)	\
+	-I$(includedir)
 
-gimp_1_3_LDADD = @STRIP_BEGIN@ \
+gimp_1_3_LDADD = \
 	gui/libappgui.a							\
 	display/libappdisplay.a						\
 	tools/libapptools.a						\
@@ -134,8 +131,7 @@ gimp_1_3_LDADD = @STRIP_BEGIN@ \
 	$(GIMP_THREAD_LIBS)						\
 	$(GIMP_MP_LIBS)							\
 	$(INTLLIBS)							\
-	$(REGEXREPL)							\
-@STRIP_END@
+	$(REGEXREPL)
 
 install-exec-hook:
 if DEFAULT_BINARY

@@ -37,7 +37,7 @@ endif
 
 libgimpbaseincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimpbase
 
-AM_CPPFLAGS = @STRIP_BEGIN@ \
+AM_CPPFLAGS = \
 	-DPREFIX=\""$(prefix)"\"		\
 	-DGIMPDIR=\""$(gimpdir)"\"		\
 	-DDATADIR=\""$(gimpdatadir)"\"		\
@@ -45,14 +45,12 @@ AM_CPPFLAGS = @STRIP_BEGIN@ \
 	-DPLUGINDIR=\""$(gimpplugindir)"\"	\
 	-DSYSCONFDIR=\""$(gimpsysconfdir)"\"	\
 	-DG_LOG_DOMAIN=\"LibGimpBase\"		\
-	@GIMP_THREAD_FLAGS@			\
-@STRIP_END@
+	@GIMP_THREAD_FLAGS@
 
-INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_srcdir)		\
-	$(GLIB_CFLAGS)		\
-	-I$(includedir)		\
-@STRIP_END@
+INCLUDES = \
+	-I$(top_srcdir)	\
+	$(GLIB_CFLAGS)	\
+	-I$(includedir)
 
 EXTRA_DIST = \
 	gimpversion.h.in	\
@@ -68,7 +66,7 @@ lib_LTLIBRARIES = libgimpbase-1.3.la
 ../libgimpbase/gimpversion.h: gimpversion.h
 	@:
 
-libgimpbase_1_3_la_SOURCES = @STRIP_BEGIN@ \
+libgimpbase_1_3_la_SOURCES = \
 	gimpbase.h		\
 	gimpbasetypes.h		\
 	gimpenv.c		\
@@ -85,10 +83,9 @@ libgimpbase_1_3_la_SOURCES = @STRIP_BEGIN@ \
 	gimpunit.h		\
 	gimpversion.h		\
 	gimpwire.c		\
-	gimpwire.h		\
-@STRIP_END@
+	gimpwire.h
 
-libgimpbaseinclude_HEADERS = @STRIP_BEGIN@ \
+libgimpbaseinclude_HEADERS = \
 	gimpbase.h		\
 	gimpbasetypes.h		\
 	gimpenv.h		\
@@ -97,16 +94,14 @@ libgimpbaseinclude_HEADERS = @STRIP_BEGIN@ \
 	gimpparasite.h		\
 	gimpparasiteio.h	\
 	gimpunit.h		\
-	gimpversion.h		\
-@STRIP_END@
+	gimpversion.h
 
 EXTRA_HEADERS =
 
-libgimpbase_1_3_la_LDFLAGS = @STRIP_BEGIN@ \
+libgimpbase_1_3_la_LDFLAGS = \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)	\
-	$(no_undefined) \
-	$(libgimpbase_export_symbols) \
-@STRIP_END@
+	$(no_undefined) 					\
+	$(libgimpbase_export_symbols)
 
 libgimpbase_1_3_la_DEPENDENCIES = $(gimpbase_def)
 

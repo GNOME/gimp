@@ -14,12 +14,12 @@ fine GNU mirrors.  Beta software can be found at alpha.gnu.org.
 		
 Available from http://www.freedesktop.org/software/pkgconfig/.
 
-	- intltoolize 0.17 (or newer version)
+	- intltoolize 0.17 (or a newer version)
 
 Available from ftp://ftp.gnome.org/pub/GNOME/stable/sources/intltool/.
 
-These are the additional requirements if you want to compile from CVS.
-The file INSTALL lists the various libraries we depend on.
+These are only the additional requirements if you want to compile from
+CVS.  The file INSTALL lists the various libraries we depend on.
 
 
 Compilation
@@ -65,7 +65,7 @@ server:
    $ cvs -z3 checkout <module>
 
 The interesting module are:  glib, atk, pango, gtk+, libart_lgpl,
-                             intltool, gtk-doc
+                             intltool, gtk-doc, gtkhtml2
 
 
 Patches

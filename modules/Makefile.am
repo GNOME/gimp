@@ -2,16 +2,12 @@
 
 libexecdir = $(gimpplugindir)/modules
 
-CPPFLAGS = @STRIP_BEGIN@ \
-	-DMODULE_COMPILATION	\
-@STRIP_END@
+CPPFLAGS = -DMODULE_COMPILATION
 
-INCLUDES = @STRIP_BEGIN@ \
+INCLUDES = \
         -I$(top_srcdir)		\
-        -I$(top_srcdir)/intl	\
         $(GTK_CFLAGS)		\
-        -I$(includedir)		\
-@STRIP_END@
+        -I$(includedir)
 
 EXTRA_DIST = \
 	makefile.mingw		\
@@ -22,11 +18,10 @@ EXTRA_DIST = \
 	gimpmodregister.h	\
 	colorsel_water.c
 
-libexec_LTLIBRARIES = @STRIP_BEGIN@ \
+libexec_LTLIBRARIES = \
 	libcolorsel_triangle.la		\
 	libcdisplay_gamma.la		\
-	libcdisplay_highcontrast.la	\
-@STRIP_END@
+	libcdisplay_highcontrast.la
 
 ##	libcolorsel_gtk.la		\
 ##	libcolorsel_water.la		\

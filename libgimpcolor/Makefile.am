@@ -42,16 +42,14 @@ endif
 
 libgimpcolorincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimpcolor
 
-AM_CPPFLAGS = @STRIP_BEGIN@ \
+AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"LibGimpColor\"	\
-	@GIMP_THREAD_FLAGS@		\
-@STRIP_END@
+	@GIMP_THREAD_FLAGS@
 
-INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_srcdir)		\
-	$(GLIB_CFLAGS)		\
-	-I$(includedir)		\
-@STRIP_END@
+INCLUDES = \
+	-I$(top_srcdir)	\
+	$(GLIB_CFLAGS)	\
+	-I$(includedir)
 
 EXTRA_DIST = \
 	makefile.mingw		\
@@ -61,7 +59,7 @@ EXTRA_DIST = \
 
 lib_LTLIBRARIES = libgimpcolor-1.3.la
 
-libgimpcolor_1_3_la_SOURCES = @STRIP_BEGIN@ \
+libgimpcolor_1_3_la_SOURCES = \
 	gimpcolor.h			\
 	gimpcolortypes.h		\
 	gimpadaptivesupersample.c	\
@@ -73,30 +71,23 @@ libgimpcolor_1_3_la_SOURCES = @STRIP_BEGIN@ \
 	gimphsv.c			\
 	gimphsv.h			\
 	gimprgb.c			\
-	gimprgb.h			\
-@STRIP_END@
+	gimprgb.h
 
-libgimpcolorinclude_HEADERS = @STRIP_BEGIN@ \
+libgimpcolorinclude_HEADERS = \
 	gimpcolor.h			\
 	gimpcolortypes.h		\
 	gimpadaptivesupersample.h	\
 	gimpbilinear.h			\
 	gimpcolorspace.h		\
 	gimphsv.h			\
-	gimprgb.h			\
-@STRIP_END@
+	gimprgb.h
 
-EXTRA_HEADERS =
-
-libgimpcolor_1_3_la_LDFLAGS = @STRIP_BEGIN@ \
+libgimpcolor_1_3_la_LDFLAGS = \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)	\
-	$(no_undefined) \
-	$(libgimpcolor_export_symbols) \
-@STRIP_END@
+	$(no_undefined) 					\
+	$(libgimpcolor_export_symbols)
 
 libgimpcolor_1_3_la_LIBADD = $(GLIB_LIBS) $(libm)
-
-libgimpcolor_1_3_la_DEPENDENCIES = $(gimpcolor_def)
 
 install-data-local: install-ms-lib install-libtool-import-lib
 

@@ -6,7 +6,7 @@ libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = script-fu
 
-script_fu_SOURCES = @STRIP_BEGIN@ \
+script_fu_SOURCES = \
 	interp_regex.c		\
 	interp_slib.c		\
 	interp_sliba.c		\
@@ -27,14 +27,12 @@ script_fu_SOURCES = @STRIP_BEGIN@ \
 	siod.h			\
 	siodp.h			\
 	siod-wrapper.c		\
-	siod-wrapper.h		\
-@STRIP_END@
+	siod-wrapper.h
 
-INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_srcdir)		\
-	$(GTK_CFLAGS)		\
-	-I$(includedir)		\
-@STRIP_END@
+INCLUDES = \
+	-I$(top_srcdir)	\
+	$(GTK_CFLAGS)	\
+	-I$(includedir)
 
 if HAVE_GLIBC_REGEX
 REGEXREPL =
@@ -42,15 +40,14 @@ else
 REGEXREPL = $(top_builddir)/regexrepl/libregex.a
 endif
 
-LDADD = @STRIP_BEGIN@ \
+LDADD = \
 	$(top_builddir)/plug-ins/dbbrowser/dbbrowser_utils.o		\
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
-	$(GTK_LIBS)	\
-	$(SOCKET_LIBS)	\
-	$(INTLLIBS)	\
-	$(REGEXREPL)	\
-@STRIP_END@
+	$(GTK_LIBS)							\
+	$(SOCKET_LIBS)							\
+	$(INTLLIBS)							\
+	$(REGEXREPL)

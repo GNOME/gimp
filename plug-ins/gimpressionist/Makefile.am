@@ -6,7 +6,7 @@ libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = gimpressionist
 
-gimpressionist_SOURCES = @STRIP_BEGIN@ \
+gimpressionist_SOURCES =\
 	about.c			\
 	brush.c			\
 	general.c		\
@@ -25,28 +25,24 @@ gimpressionist_SOURCES = @STRIP_BEGIN@ \
 	repaint.c		\
 	size.c			\
 	sizemap.c		\
-	color.c			\
-@STRIP_END@
+	color.c
 
-EXTRA_DIST = \
-	README		\
-	ChangeLog
+EXTRA_DIST = README
 
-AM_CPPFLAGS = -DDEFAULTPATH=\""~/$(gimpdir)/gimpressionist:$(gimpdatadir)/gimpressionist"\"
+AM_CPPFLAGS = \
+	-DDEFAULTPATH=\""~/$(gimpdir)/gimpressionist:$(gimpdatadir)/gimpressionist"\"
 
 
-INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_srcdir)		\
-	$(GTK_CFLAGS)		\
-	-I$(includedir)		\
-@STRIP_END@
+INCLUDES = \
+	-I$(top_srcdir)	\
+	$(GTK_CFLAGS)	\
+	-I$(includedir)
 
-LDADD = @STRIP_BEGIN@ \
+LDADD = \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)							\
-@STRIP_END@
+	$(INTLLIBS)

@@ -2,16 +2,14 @@
 
 gimpincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimp
 
-AM_CPPFLAGS = @STRIP_BEGIN@ \
+AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"LibGimp\"	\
-	@GIMP_THREAD_FLAGS@		\
-@STRIP_END@
+	@GIMP_THREAD_FLAGS@
 
-INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_srcdir)		\
-	$(GTK_CFLAGS)		\
-	-I$(includedir)		\
-@STRIP_END@
+INCLUDES = \
+	-I$(top_srcdir)	\
+	$(GTK_CFLAGS)	\
+	-I$(includedir)
 
 EXTRA_DIST = \
 	makefile.mingw		\
@@ -99,90 +97,75 @@ PDB_WRAPPERS_H = \
 	gimpundo_pdb.h			\
 	gimpunit_pdb.h
 
-libgimp_1_3_la_SOURCES = @STRIP_BEGIN@ \
-	gimp.c				\
-	gimp.h				\
-	gimpcompat.h			\
-	gimptypes.h			\
-	${PDB_WRAPPERS_C}		\
-	${PDB_WRAPPERS_H}		\
-	gimpchannel.c			\
-	gimpchannel.h			\
-	gimpdrawable.c			\
-	gimpdrawable.h			\
-	gimphelp.c			\
-	gimpimage.c			\
-	gimpimage.h			\
-	gimplayer.c			\
-	gimplayer.h			\
-	gimppixelrgn.c			\
-	gimppixelrgn.h			\
-	gimpproceduraldb.c		\
-	gimpproceduraldb.h		\
-	gimpselection.c			\
-	gimpselection.h			\
-	gimptile.c			\
-	gimptile.h			\
-	gimpunit.c			\
-	\
-	gimpintl.h			\
-	stdplugins-intl.h		\
-	libgimp-intl.h			\
-@STRIP_END@
+libgimp_1_3_la_SOURCES = \
+	gimp.c			\
+	gimp.h			\
+	gimpcompat.h		\
+	gimptypes.h		\
+	${PDB_WRAPPERS_C}	\
+	${PDB_WRAPPERS_H}	\
+	gimpchannel.c		\
+	gimpchannel.h		\
+	gimpdrawable.c		\
+	gimpdrawable.h		\
+	gimphelp.c		\
+	gimpimage.c		\
+	gimpimage.h		\
+	gimplayer.c		\
+	gimplayer.h		\
+	gimppixelrgn.c		\
+	gimppixelrgn.h		\
+	gimpproceduraldb.c	\
+	gimpproceduraldb.h	\
+	gimpselection.c		\
+	gimpselection.h		\
+	gimptile.c		\
+	gimptile.h		\
+	gimpunit.c		\
+	gimpintl.h		\
+	stdplugins-intl.h	\
+	libgimp-intl.h
 
-libgimpui_1_3_la_SOURCES = @STRIP_BEGIN@ \
+libgimpui_1_3_la_SOURCES = \
 	gimpui.c		\
 	gimpui.h		\
 	gimpuitypes.h		\
-	\
 	gimpmenu.c		\
 	gimpmenu.h		\
 	gimpbrushmenu.c		\
 	gimpgradientmenu.c 	\
 	gimppatternmenu.c	\
-	\
 	gimpexport.c		\
+	gimpexport.h
+
+gimpinclude_HEADERS = \
+	gimpcolordisplay.h	\
+	gimpcolorselector.h	\
+	gimp.h			\
+	gimptypes.h		\
+	${PDB_WRAPPERS_H}	\
+	gimpchannel.h		\
+	gimpdrawable.h		\
+	gimpenums.h		\
+	gimpimage.h		\
+	gimplayer.h		\
+	gimpmodule.h		\
+	gimppixelrgn.h		\
+	gimpproceduraldb.h	\
+	gimpselection.h		\
+	gimptile.h		\
 	gimpexport.h		\
-@STRIP_END@
+	gimpintl.h		\
+	gimpui.h		\
+	gimpuitypes.h		\
+	gimpmenu.h
 
-gimpinclude_HEADERS = @STRIP_BEGIN@ \
-	gimpcolordisplay.h		\
-	gimpcolorselector.h		\
-	\
-	gimp.h				\
-	gimptypes.h			\
-	${PDB_WRAPPERS_H}		\
-	gimpchannel.h			\
-	gimpdrawable.h			\
-	gimpenums.h			\
-	gimpimage.h			\
-	gimplayer.h			\
-	gimpmodule.h			\
-	gimppixelrgn.h			\
-	gimpproceduraldb.h		\
-	gimpselection.h			\
-	gimptile.h			\
-	\
-	gimpexport.h			\
-	\
-	gimpintl.h			\
-	\
-	gimpui.h			\
-	gimpuitypes.h			\
-	\
-	gimpmenu.h			\
-@STRIP_END@
-
-EXTRA_HEADERS =
-
-libgimp_1_3_la_LDFLAGS = @STRIP_BEGIN@ \
-	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)	\
-@STRIP_END@
+libgimp_1_3_la_LDFLAGS = \
+	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
 
 libgimp_1_3_la_LIBADD = $(GLIB_LIBS)
 
-libgimpui_1_3_la_LDFLAGS = @STRIP_BEGIN@ \
-	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)	\
-@STRIP_END@
+libgimpui_1_3_la_LDFLAGS = \
+	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
 
 libgimpui_1_3_la_LIBADD = $(GTK_LIBS)

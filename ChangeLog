@@ -1,3 +1,15 @@
+2002-06-08  Sven Neumann  <sven@gimp.org>
+
+	* app/base/Makefile.am
+	* app/paint-funcs/Makefile.am: automake-1.6 seems to use yet another
+	variable to pass flags to the assembler (bug #84514). Define
+	AM_CCASFLAGS like AM_ASFLAGS to satisfy all versions of automake.
+
+	* configure.in
+	* all Makefiles: removed STRIP_BEGIN and STRIP_END since it's a
+	GNU make extension that we don't really need and newer versions of
+	automake don't seem to like it.
+
 2002-06-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimplist.[ch]: added gimp_list_reverse().

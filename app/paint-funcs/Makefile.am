@@ -8,32 +8,33 @@ else
 mmx_sources =
 endif
 
-libapppaint_funcs_a_SOURCES = @STRIP_BEGIN@ \
+libapppaint_funcs_a_SOURCES = \
 	paint-funcs-types.h	\
 	paint-funcs.c		\
 	paint-funcs.h		\
 	paint-funcs-generic.h	\
 	paint-funcs-mmx.h	\
-	$(mmx_sources)		\
-@STRIP_END@
+	$(mmx_sources)
 
 EXTRA_DIST = \
 	makefile.msc		\
 	paint-funcs-simd.S
 
-AM_CPPFLAGS = @STRIP_BEGIN@ \
+AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-Paint-Funcs\"	\
 	@GIMP_THREAD_FLAGS@ 			\
-	@GIMP_MP_FLAGS@				\
-@STRIP_END@
+	@GIMP_MP_FLAGS@
 
+# for automake-1.5
 AM_ASFLAGS = \
 	-I$(top_srcdir)		\
 	-I$(top_srcdir)/app
 
-INCLUDES = @STRIP_BEGIN@ \
+# for automake-1.6
+AM_CCASFLAGS = AM_ASFLAGS
+
+INCLUDES = \
 	-I$(top_srcdir)		\
 	-I$(top_srcdir)/app	\
 	$(GLIB_CFLAGS)		\
-	-I$(includedir)		\
-@STRIP_END@
+	-I$(includedir)

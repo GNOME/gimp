@@ -2,7 +2,7 @@
 
 noinst_LIBRARIES = libappconfig.a
 
-libappconfig_a_SOURCES = @STRIP_BEGIN@ 	\
+libappconfig_a_SOURCES = \
 	gimpconfig.c			\
 	gimpconfig.h			\
 	gimpconfig-deserialize.c	\
@@ -29,21 +29,18 @@ libappconfig_a_SOURCES = @STRIP_BEGIN@ 	\
 	gimprc.c			\
 	gimprc.h			\
 	gimpscanner.c			\
-	gimpscanner.h			\
-@STRIP_END@
+	gimpscanner.h
 
-AM_CPPFLAGS = @STRIP_BEGIN@ 		\
+AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-Config\"	\
 	@GIMP_THREAD_FLAGS@ 		\
-	@GIMP_MP_FLAGS@			\
-@STRIP_END@
+	@GIMP_MP_FLAGS@
 
-INCLUDES = @STRIP_BEGIN@ 		\
-	-I$(top_srcdir)			\
-	-I$(top_srcdir)/app		\
-	$(GLIB_CFLAGS)			\
-	-I$(includedir)			\
-@STRIP_END@
+INCLUDES = \
+	-I$(top_srcdir)		\
+	-I$(top_srcdir)/app	\
+	$(GLIB_CFLAGS)		\
+	-I$(includedir)
 
 
 #
@@ -54,17 +51,15 @@ TESTS = test-config
 
 EXTRA_PROGRAMS = test-config
 
-test_config_DEPENDENCIES = @STRIP_BEGIN@ 				\
+test_config_DEPENDENCIES = \
 	libappconfig.a							\
         ../base/libappbase.a						\
         ../core/libappcore.a						\
         ../display/libappdisplay.a					\
         ../widgets/libappwidgets.a					\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
-	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
-@STRIP_END@
+	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la
 
-test_config_LDADD = @STRIP_BEGIN@ 	\
+test_config_LDADD = \
 	$(GLIB_LIBS) 			\
-	$(test_config_DEPENDENCIES)	\
-@STRIP_END@
+	$(test_config_DEPENDENCIES)

@@ -2,20 +2,18 @@
 
 libgimpwidgetsincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimpwidgets
 
-AM_CPPFLAGS = @STRIP_BEGIN@ \
+AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"LibGimpWidgets\"	\
-	@GIMP_THREAD_FLAGS@			\
-@STRIP_END@
+	@GIMP_THREAD_FLAGS@
 
-INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_srcdir)		\
-	$(GTK_CFLAGS)		\
-	-I$(includedir)		\
-@STRIP_END@
+INCLUDES = \
+	-I$(top_srcdir)	\
+	$(GTK_CFLAGS)	\
+	-I$(includedir)
 
 lib_LTLIBRARIES = libgimpwidgets-1.3.la
 
-libgimpwidgets_1_3_la_sources = @STRIP_BEGIN@ \
+libgimpwidgets_1_3_la_sources = \
 	gimpwidgets.c		\
 	gimpwidgets.h		\
 	gimpwidgetstypes.h	\
@@ -46,17 +44,13 @@ libgimpwidgets_1_3_la_sources = @STRIP_BEGIN@ \
 	gimpstock.c		\
 	gimpstock.h		\
 	gimpunitmenu.c		\
-	gimpunitmenu.h		\
-@STRIP_END@
+	gimpunitmenu.h
 
-libgimpwidgets_1_3_la_built_sources = @STRIP_BEGIN@ \
+libgimpwidgets_1_3_la_built_sources = \
 	gimpwidgetsmarshal.c	\
-	gimpwidgetsmarshal.h	\
-@STRIP_END@
+	gimpwidgetsmarshal.h
 
-libgimpwidgets_1_3_la_extra_sources = @STRIP_BEGIN@ \
-	gimpwidgetsmarshal.list	\
-@STRIP_END@
+libgimpwidgets_1_3_la_extra_sources = gimpwidgetsmarshal.list
 
 EXTRA_DIST = \
 	makefile.mingw				\
@@ -69,7 +63,7 @@ libgimpwidgets_1_3_la_SOURCES = 		\
 	$(libgimpwidgets_1_3_la_built_sources)	\
 	$(libgimpwidgets_1_3_la_sources)
 
-libgimpwidgetsinclude_HEADERS = @STRIP_BEGIN@ \
+libgimpwidgetsinclude_HEADERS = \
 	gimpwidgets.h		\
 	gimpwidgetstypes.h	\
 	gimpbutton.h		\
@@ -85,14 +79,10 @@ libgimpwidgetsinclude_HEADERS = @STRIP_BEGIN@ \
 	gimpquerybox.h		\
 	gimpsizeentry.h		\
 	gimpstock.h		\
-	gimpunitmenu.h		\
-@STRIP_END@
+	gimpunitmenu.h
 
-EXTRA_HEADERS =
-
-libgimpwidgets_1_3_la_LDFLAGS = @STRIP_BEGIN@ \
-	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)	\
-@STRIP_END@
+libgimpwidgets_1_3_la_LDFLAGS = \
+	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
 
 libgimpwidgets_1_3_la_LIBADD = $(GLIB_LIBS) -lm
 

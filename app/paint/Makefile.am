@@ -2,52 +2,49 @@
 
 noinst_LIBRARIES = libapppaint.a
 
-libapppaint_a_SOURCES = @STRIP_BEGIN@ \
-	paint-enums.h			\
-	paint-enums.c			\
-	paint-types.h			\
-	paint.c				\
-	paint.h				\
-	gimpairbrush.c			\
-	gimpairbrush.h			\
-	gimpclone.c			\
-	gimpclone.h			\
-	gimpconvolve.c			\
-	gimpconvolve.h			\
-	gimpdodgeburn.c			\
-	gimpdodgeburn.h			\
-	gimperaser.c			\
-	gimperaser.h			\
-	gimppaintcore.c			\
-	gimppaintcore.h			\
-	gimppaintcore-kernels.h		\
-	gimppaintcore-stroke.c		\
-	gimppaintcore-stroke.h		\
-	gimppaintoptions.c		\
-	gimppaintoptions.h		\
-	gimppencil.c			\
-	gimppencil.h			\
-	gimppaintbrush.c		\
-	gimppaintbrush.h		\
-	gimpsmudge.c			\
-	gimpsmudge.h			\
-@STRIP_END@
+libapppaint_a_SOURCES = \
+	paint-enums.h		\
+	paint-enums.c		\
+	paint-types.h		\
+	paint.c			\
+	paint.h			\
+	gimpairbrush.c		\
+	gimpairbrush.h		\
+	gimpclone.c		\
+	gimpclone.h		\
+	gimpconvolve.c		\
+	gimpconvolve.h		\
+	gimpdodgeburn.c		\
+	gimpdodgeburn.h		\
+	gimperaser.c		\
+	gimperaser.h		\
+	gimppaintcore.c		\
+	gimppaintcore.h		\
+	gimppaintcore-kernels.h	\
+	gimppaintcore-stroke.c	\
+	gimppaintcore-stroke.h	\
+	gimppaintoptions.c	\
+	gimppaintoptions.h	\
+	gimppencil.c		\
+	gimppencil.h		\
+	gimppaintbrush.c	\
+	gimppaintbrush.h	\
+	gimpsmudge.c		\
+	gimpsmudge.h
 
-AM_CPPFLAGS = @STRIP_BEGIN@ \
+AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-Paint\"	\
 	@GIMP_THREAD_FLAGS@ 		\
-	@GIMP_MP_FLAGS@			\
-@STRIP_END@
+	@GIMP_MP_FLAGS@
 
-INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_builddir)		\
-	-I$(top_srcdir)			\
-	-I$(top_builddir)/app		\
-	-I$(top_srcdir)/app		\
-	$(GTK_CFLAGS)			\
-	$(PANGOFT2_CFLAGS)		\
-	-I$(includedir)			\
-@STRIP_END@
+INCLUDES = \
+	-I$(top_builddir)	\
+	-I$(top_srcdir)		\
+	-I$(top_builddir)/app	\
+	-I$(top_srcdir)/app	\
+	$(GTK_CFLAGS)		\
+	$(PANGOFT2_CFLAGS)	\
+	-I$(includedir)
 
 #
 # rules to generate built sources

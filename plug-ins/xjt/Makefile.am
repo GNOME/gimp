@@ -5,24 +5,22 @@ libexecdir = $(gimpplugindir)/plug-ins
 libexec_PROGRAMS = xjt
 
 EXTRA_DIST = \
-	README		\
+	README	\
 	README_xjt_fileformat.txt
 
-xjt_SOURCES = @STRIP_BEGIN@ \
+xjt_SOURCES = \
 	xjt.c		\
 	xjpeg.c		\
 	xjpeg.h		\
 	xpdb_calls.c	\
-	xpdb_calls.h	\
-@STRIP_END@
+	xpdb_calls.h
 
-INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_srcdir)		\
-	$(GTK_CFLAGS)		\
-	-I$(includedir)		\
-@STRIP_END@
+INCLUDES = \
+	-I$(top_srcdir)	\
+	$(GTK_CFLAGS)	\
+	-I$(includedir)
 
-LDADD = @STRIP_BEGIN@ \
+LDADD = \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
@@ -30,5 +28,4 @@ LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(LIBJPEG)							\
-	$(INTLLIBS)							\
-@STRIP_END@
+	$(INTLLIBS)

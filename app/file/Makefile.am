@@ -2,24 +2,21 @@
 
 noinst_LIBRARIES = libappfile.a
 
-libappfile_a_SOURCES = @STRIP_BEGIN@ \
+libappfile_a_SOURCES = \
 	file-open.c	\
 	file-open.h	\
 	file-save.c	\
 	file-save.h	\
 	file-utils.c	\
-	file-utils.h	\
-@STRIP_END@
+	file-utils.h
 
-AM_CPPFLAGS = @STRIP_BEGIN@ \
+AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-File\"	\
 	@GIMP_THREAD_FLAGS@ 		\
-	@GIMP_MP_FLAGS@			\
-@STRIP_END@
+	@GIMP_MP_FLAGS@
 
-INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_srcdir)			\
-	-I$(top_srcdir)/app		\
-	$(GTK_CFLAGS)			\
-	-I$(includedir)			\
-@STRIP_END@
+INCLUDES = \
+	-I$(top_srcdir)		\
+	-I$(top_srcdir)/app	\
+	$(GTK_CFLAGS)		\
+	-I$(includedir)

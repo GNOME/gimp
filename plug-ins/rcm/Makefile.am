@@ -4,7 +4,7 @@ libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = rcm
 
-rcm_SOURCES = @STRIP_BEGIN@ \
+rcm_SOURCES = \
 	rcm.c		\
 	rcm.h		\
 	rcm_callback.c	\
@@ -14,28 +14,24 @@ rcm_SOURCES = @STRIP_BEGIN@ \
 	rcm_gdk.c	\
 	rcm_gdk.h	\
 	rcm_misc.c	\
-	rcm_misc.h	\
-@STRIP_END@
+	rcm_misc.h
 
-EXTRA_DIST = @STRIP_BEGIN@ \
+EXTRA_DIST = \
 	pixmaps/rcm_360.xpm	\
 	pixmaps/rcm_a_b.xpm	\
 	pixmaps/rcm_ccw.xpm	\
-	pixmaps/rcm_cw.xpm	\
-@STRIP_END@
+	pixmaps/rcm_cw.xpm
 
-INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_srcdir)		\
-	$(GTK_CFLAGS)		\
-	-I$(includedir)		\
-@STRIP_END@
+INCLUDES = \
+	-I$(top_srcdir)	\
+	$(GTK_CFLAGS)	\
+	-I$(includedir)
 
-LDADD = @STRIP_BEGIN@ \
+LDADD = \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)							\
-@STRIP_END@
+	$(INTLLIBS)

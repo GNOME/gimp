@@ -4,7 +4,7 @@ libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = sel2path
 
-sel2path_SOURCES = @STRIP_BEGIN@ \
+sel2path_SOURCES = \
 	bitmap.h		\
 	bounding-box.h		\
 	curve.c			\
@@ -24,25 +24,22 @@ sel2path_SOURCES = @STRIP_BEGIN@ \
 	spline.h		\
 	types.h			\
 	vector.c		\
-	vector.h		\
-@STRIP_END@
+	vector.h
 
 EXTRA_DIST = \
 	README		\
 	README.limn
 
-INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_srcdir)		\
-	$(GTK_CFLAGS)		\
-	-I$(includedir)		\
-@STRIP_END@
+INCLUDES = \
+	-I$(top_srcdir)	\
+	$(GTK_CFLAGS)	\
+	-I$(includedir)
 
-LDADD = @STRIP_BEGIN@ \
+LDADD = \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)							\
-@STRIP_END@
+	$(INTLLIBS)

@@ -8,7 +8,7 @@ else
 mmx_sources =
 endif
 
-libappbase_a_SOURCES = @STRIP_BEGIN@ \
+libappbase_a_SOURCES = \
 	base.c			\
 	base.h			\
 	base-enums.c		\
@@ -47,28 +47,28 @@ libappbase_a_SOURCES = @STRIP_BEGIN@ \
 	tile-manager-crop.c	\
 	tile-manager-crop.h	\
 	tile-swap.c		\
-	tile-swap.h		\
-@STRIP_END@
+	tile-swap.h
 
-EXTRA_DIST = \
-	makefile.msc
+EXTRA_DIST = makefile.msc
 
-AM_CPPFLAGS = @STRIP_BEGIN@ \
+AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-Base\"	\
 	@GIMP_THREAD_FLAGS@ 		\
-	@GIMP_MP_FLAGS@			\
-@STRIP_END@
+	@GIMP_MP_FLAGS@
 
+# for automake-1.5
 AM_ASFLAGS = \
 	-I$(top_srcdir)		\
 	-I$(top_srcdir)/app
 
-INCLUDES = @STRIP_BEGIN@ \
+# for automake-1.6
+AM_CCASFLAGS = AM_ASFLAGS
+
+INCLUDES = \
 	-I$(top_srcdir)		\
 	-I$(top_srcdir)/app	\
 	$(GLIB_CFLAGS)		\
-	-I$(includedir)		\
-@STRIP_END@
+	-I$(includedir)
 
 #
 # rules to generate built sources

@@ -7,43 +7,39 @@ themedatadir = $(gimpdatadir)/themes/Default/images
 
 ## Icons that override GTK+ default stock icons
 
-DIALOG_IMAGES = @STRIP_BEGIN@ \
-	stock-error-64.png			\
-	stock-info-64.png			\
-	stock-question-64.png			\
-	stock-warning-64.png			\
-@STRIP_END@
+DIALOG_IMAGES = \
+	stock-error-64.png	\
+	stock-info-64.png	\
+	stock-question-64.png	\
+	stock-warning-64.png
 
-GTK_STOCK_IMAGES = @STRIP_BEGIN@ \
-	stock-delete-16.png			\
-	stock-lower-16.png			\
-	stock-new-16.png			\
-	stock-paste-16.png			\
-	stock-raise-16.png			\
-	stock-refresh-16.png			\
-@STRIP_END@
+GTK_STOCK_IMAGES = \
+	stock-delete-16.png	\
+	stock-lower-16.png	\
+	stock-new-16.png	\
+	stock-paste-16.png	\
+	stock-raise-16.png	\
+	stock-refresh-16.png
 
 
 ## Wilber icons for the window managaer, compiled in
 
-WILBER_IMAGES = @STRIP_BEGIN@ \
-	stock-wilber-16.png			\
-	stock-wilber-32.png			\
-	stock-wilber-48.png			\
-	stock-wilber-64.png			\
-@STRIP_END@
+WILBER_IMAGES = \
+	stock-wilber-16.png	\
+	stock-wilber-32.png	\
+	stock-wilber-48.png	\
+	stock-wilber-64.png
 
-WILBER_VARIABLES = @STRIP_BEGIN@ \
+WILBER_VARIABLES = \
 	stock_wilber_16  $(srcdir)/stock-wilber-16.png	\
 	stock_wilber_32  $(srcdir)/stock-wilber-32.png	\
 	stock_wilber_48  $(srcdir)/stock-wilber-48.png	\
-	stock_wilber_64  $(srcdir)/stock-wilber-64.png	\
-@STRIP_END@
+	stock_wilber_64  $(srcdir)/stock-wilber-64.png
 
 
 ## Below are compiled in stock icons 
 
-STOCK_BUTTON_IMAGES = @STRIP_BEGIN@ \
+STOCK_BUTTON_IMAGES = \
 	stock-anchor-16.png			\
 	stock-duplicate-16.png			\
 	stock-edit-16.png			\
@@ -64,15 +60,14 @@ STOCK_BUTTON_IMAGES = @STRIP_BEGIN@ \
 	stock-vchain-24.png			\
 	stock-vchain-broken-24.png		\
 	stock-info-24.png			\
-	stock-warning-24.png			\
-@STRIP_END@
+	stock-warning-24.png
 
-STOCK_MENU_IMAGES = @STRIP_BEGIN@ \
+STOCK_MENU_IMAGES = \
 	stock-convert-grayscale-16.png		\
 	stock-convert-indexed-16.png		\
 	stock-convert-rgb-16.png		\
 	stock-merge-down-16.png			\
-	stock-plugin-16.png		\
+	stock-plugin-16.png			\
 	stock-reshow-filter-16.png		\
 	stock-rotate-180-16.png			\
 	stock-rotate-270-16.png			\
@@ -86,14 +81,11 @@ STOCK_MENU_IMAGES = @STRIP_BEGIN@ \
 	stock-tool-options-16.png		\
 	stock-info-16.png			\
 	stock-warning-16.png			\
-	stock-wilber-16.png			\
-@STRIP_END@
+	stock-wilber-16.png
 
-STOCK_WILBER_IMAGES = @STRIP_BEGIN@ \
-	stock-wilber-eek-64.png			\
-@STRIP_END@
+STOCK_WILBER_IMAGES = stock-wilber-eek-64.png
 
-STOCK_TOOL_IMAGES = @STRIP_BEGIN@ \
+STOCK_TOOL_IMAGES = \
 	tools/stock-tool-airbrush-22.png		\
 	tools/stock-tool-bezier-select-22.png		\
 	tools/stock-tool-blend-22.png			\
@@ -131,8 +123,7 @@ STOCK_TOOL_IMAGES = @STRIP_BEGIN@ \
 	tools/stock-tool-smudge-22.png			\
 	tools/stock-tool-text-22.png			\
 	tools/stock-tool-threshold-22.png		\
-	tools/stock-tool-zoom-22.png			\
-@STRIP_END@
+	tools/stock-tool-zoom-22.png
 
 STOCK_IMAGES = \
 	$(STOCK_BUTTON_IMAGES)	\
@@ -159,9 +150,9 @@ stock-icons.list: $(STOCK_IMAGES) Makefile.am
 	    echo "  $(srcdir)/$$image" >> $@; \
 	  done )
 
-gimp-stock-pixbufs.h: stock-icons.list
-	gdk-pixbuf-csource --raw --build-list `cat stock-icons.list` >$(srcdir)/gimp-stock-pixbufs.h
+$(srcdir)/gimp-stock-pixbufs.h: stock-icons.list
+	gdk-pixbuf-csource --raw --build-list `cat stock-icons.list` > $(@F)
 
 
-gimp-wilber-pixbufs.h: $(WILBER_IMAGES)
-	gdk-pixbuf-csource --raw --build-list $(WILBER_VARIABLES) >$(srcdir)/gimp-wilber-pixbufs.h
+$(srcdir)/gimp-wilber-pixbufs.h: $(WILBER_IMAGES)
+	gdk-pixbuf-csource --raw --build-list $(WILBER_VARIABLES) > $(@F)

@@ -2,7 +2,7 @@
 
 noinst_LIBRARIES = libappgui.a
 
-libappgui_a_SOURCES = @STRIP_BEGIN@ \
+libappgui_a_SOURCES = \
 	about-dialog.c			\
 	about-dialog.h			\
 	authors.h			\
@@ -124,24 +124,19 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	vectors-commands.c		\
 	vectors-commands.h		\
 	view-commands.c			\
-	view-commands.h			\
-@STRIP_END@
+	view-commands.h
 
-EXTRA_DIST = @STRIP_BEGIN@ \
-	makefile.msc			\
-@STRIP_END@
+EXTRA_DIST = makefile.msc
 
-AM_CPPFLAGS = @STRIP_BEGIN@ \
+AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-GUI\"	\
 	@GIMP_THREAD_FLAGS@ 		\
-	@GIMP_MP_FLAGS@			\
-@STRIP_END@
+	@GIMP_MP_FLAGS@
 
-INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_builddir)		\
-	-I$(top_srcdir)			\
-	-I$(top_builddir)/app		\
-	-I$(top_srcdir)/app		\
-	$(GTK_CFLAGS)			\
-	-I$(includedir)			\
-@STRIP_END@
+INCLUDES = \
+	-I$(top_builddir)	\
+	-I$(top_srcdir)		\
+	-I$(top_builddir)/app	\
+	-I$(top_srcdir)/app	\
+	$(GTK_CFLAGS)		\
+	-I$(includedir)

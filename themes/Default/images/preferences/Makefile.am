@@ -2,7 +2,7 @@
 
 themedatadir = $(gimpdatadir)/themes/Default/images/preferences
 
-PREFS_IMAGES = @STRIP_BEGIN@ \
+PREFS_IMAGES = \
 	default-comment.png		\
 	display.png			\
 	environment.png			\
@@ -21,8 +21,7 @@ PREFS_IMAGES = @STRIP_BEGIN@ \
 	interface.png			\
 	monitor.png			\
 	new-image.png			\
-	tool-options.png		\
-@STRIP_END@
+	tool-options.png
 
 themedata_DATA = $(PREFS_IMAGES)
 

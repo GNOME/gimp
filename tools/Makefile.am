@@ -22,18 +22,16 @@ EXTRA_PROGRAMS = \
 
 gimp_remote_1_3_SOURCES = gimp-remote.c
 
-gimp_remote_1_3_LDADD = @STRIP_BEGIN@ \
+gimp_remote_1_3_LDADD = \
 	$(GTK_LIBS)	\
-	$(LIBXMU)	\
-@STRIP_END@
+	$(LIBXMU)
 
 kernelgen_SOURCES = kernelgen.c
 
-INCLUDES = @STRIP_BEGIN@ \
+INCLUDES = \
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)	\
-	-I$(includedir)	\
-@STRIP_END@
+	-I$(includedir)
 
 EXTRA_DIST = \
 	gimp-mkenums	\

@@ -39,22 +39,20 @@ extra_files = libgimpwidgets-include.c
 
 # CFLAGS and LDFLAGS for compiling scan program. Only needed
 # if $(DOC_MODULE).types is non-empty.
-GTKDOC_CFLAGS = @STRIP_BEGIN@ 		\
-	@CFLAGS@			\
-	-I$(top_srcdir) 		\
-	-I$(top_builddir) 		\
-	@GTK_CFLAGS@			\
-@STRIP_END@
+GTKDOC_CFLAGS = \
+	@CFLAGS@		\
+	-I$(top_srcdir) 	\
+	-I$(top_builddir) 	\
+	@GTK_CFLAGS@
 
-GTKDOC_LIBS = @STRIP_BEGIN@ 						\
+GTKDOC_LIBS = \
         $(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la        \
         $(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la      \
         $(top_builddir)/libgimpmath/libgimpmath-$(LT_RELEASE).la        \
         $(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la  \
         $(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
         $(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
-	@GTK_LIBS@							\
-@STRIP_END@
+	@GTK_LIBS@
 
 GTKDOC_CC = $(LIBTOOL) --mode=compile $(CC)
 GTKDOC_LD = $(LIBTOOL) --mode=link $(CC)

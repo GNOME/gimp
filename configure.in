@@ -182,21 +182,6 @@ if eval "test x$GCC = xyes"; then
   fi
 fi
 
-AC_MSG_CHECKING(whether make is GNU Make)
-STRIP_BEGIN=
-STRIP_END=
-STRIP_DUMMY=
-if $ac_make --version 2>/dev/null | grep '^GNU Make ' >/dev/null ; then
-	STRIP_BEGIN='$(strip $(STRIP_DUMMY)'
-	STRIP_END=')'
-	AC_MSG_RESULT(yes)
-else
-	AC_MSG_RESULT(no)
-fi
-AC_SUBST(STRIP_DUMMY)
-AC_SUBST(STRIP_BEGIN)
-AC_SUBST(STRIP_END)
-
 
 AC_HEADER_DIRENT
 AC_HEADER_STDC

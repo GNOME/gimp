@@ -4,26 +4,23 @@ libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = dbbrowser
 
-dbbrowser_SOURCES = @STRIP_BEGIN@ \
+dbbrowser_SOURCES = \
 	dbbrowser.c		\
 	dbbrowser_utils.c	\
-	dbbrowser_utils.h	\
-@STRIP_END@
+	dbbrowser_utils.h
 
 EXTRA_DIST = README
 
-INCLUDES = @STRIP_BEGIN@ \
+INCLUDES = \
 	-I$(top_srcdir)		\
 	$(GTK_CFLAGS)		\
-	-I$(includedir)		\
-@STRIP_END@
+	-I$(includedir)
 
-LDADD = @STRIP_BEGIN@ \
+LDADD = \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)							\
-@STRIP_END@
+	$(INTLLIBS)

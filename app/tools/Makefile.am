@@ -2,7 +2,7 @@
 
 noinst_LIBRARIES = libapptools.a
 
-libapptools_a_SOURCES = @STRIP_BEGIN@ \
+libapptools_a_SOURCES = \
 	tools-types.h			\
 	tools.c				\
 	tools.h				\
@@ -105,7 +105,6 @@ libapptools_a_SOURCES = @STRIP_BEGIN@ \
 	gimptransformtool.h		\
 	gimpvectortool.c		\
 	gimpvectortool.h		\
-	\
 	transform_options.c     	\
 	transform_options.h     	\
 	paint_options.c			\
@@ -114,29 +113,25 @@ libapptools_a_SOURCES = @STRIP_BEGIN@ \
 	selection_options.h		\
 	tool_options.c			\
 	tool_options.h			\
-	\
 	tool_manager.c			\
 	tool_manager.h			\
 	path_tool.h			\
 	path_tool.c			\
-	path_toolP.h			\
-@STRIP_END@
+	path_toolP.h
 
-AM_CPPFLAGS = @STRIP_BEGIN@ \
+AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-Tools\"	\
 	@GIMP_THREAD_FLAGS@ 		\
-	@GIMP_MP_FLAGS@			\
-@STRIP_END@
+	@GIMP_MP_FLAGS@
 
-INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_builddir)		\
-	-I$(top_srcdir)			\
-	-I$(top_builddir)/app		\
-	-I$(top_srcdir)/app		\
-	$(GTK_CFLAGS)			\
-	$(PANGOFT2_CFLAGS)		\
-	-I$(includedir)			\
-@STRIP_END@
+INCLUDES = \
+	-I$(top_builddir)	\
+	-I$(top_srcdir)		\
+	-I$(top_builddir)/app	\
+	-I$(top_srcdir)/app	\
+	$(GTK_CFLAGS)		\
+	$(PANGOFT2_CFLAGS)	\
+	-I$(includedir)
 
 #
 # rules to generate built sources

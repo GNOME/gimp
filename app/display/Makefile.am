@@ -1,21 +1,19 @@
 ## Process this file with automake to produce Makefile.in
 
-AM_CPPFLAGS = @STRIP_BEGIN@ \
-	-DG_LOG_DOMAIN=\"Gimp-Display\"		\
-	@GIMP_THREAD_FLAGS@ 			\
-	@GIMP_MP_FLAGS@				\
-@STRIP_END@
+AM_CPPFLAGS = \
+	-DG_LOG_DOMAIN=\"Gimp-Display\"	\
+	@GIMP_THREAD_FLAGS@ 		\
+	@GIMP_MP_FLAGS@
 
-INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_srcdir)				\
-	-I$(top_srcdir)/app			\
-	$(GTK_CFLAGS)				\
-	-I$(includedir)				\
-@STRIP_END@
+INCLUDES = \
+	-I$(top_srcdir)		\
+	-I$(top_srcdir)/app	\
+	$(GTK_CFLAGS)		\
+	-I$(includedir)
 
 noinst_LIBRARIES = libappdisplay.a
 
-libappdisplay_a_sources = @STRIP_BEGIN@ 	\
+libappdisplay_a_sources = \
 	display-enums.h				\
 	display-types.h				\
 	gimpdisplay.c				\
@@ -54,8 +52,7 @@ libappdisplay_a_sources = @STRIP_BEGIN@ 	\
 	gimpprogress.c				\
 	gimpprogress.h				\
 	gimpstatusbar.c				\
-	gimpstatusbar.h				\
-@STRIP_END@
+	gimpstatusbar.h
 
 libappdisplay_a_built_sources = display-enums.c
 

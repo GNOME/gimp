@@ -42,16 +42,14 @@ endif
 
 libgimpmathincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimpmath
 
-AM_CPPFLAGS = @STRIP_BEGIN@ \
+AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"LibGimpMath\"	\
-	@GIMP_THREAD_FLAGS@		\
-@STRIP_END@
+	@GIMP_THREAD_FLAGS@
 
-INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_srcdir)		\
-	$(GLIB_CFLAGS)		\
-	-I$(includedir)		\
-@STRIP_END@
+INCLUDES = \
+	-I$(top_srcdir)	\
+	$(GLIB_CFLAGS)	\
+	-I$(includedir)
 
 EXTRA_DIST = \
 	makefile.mingw		\
@@ -61,7 +59,7 @@ EXTRA_DIST = \
 
 lib_LTLIBRARIES = libgimpmath-1.3.la
 
-libgimpmath_1_3_la_SOURCES = @STRIP_BEGIN@ \
+libgimpmath_1_3_la_SOURCES = \
 	gimpmath.h	\
 	gimpmathtypes.h	\
 	gimpmatrix.c	\
@@ -69,28 +67,22 @@ libgimpmath_1_3_la_SOURCES = @STRIP_BEGIN@ \
 	gimpmd5.c	\
 	gimpmd5.h	\
 	gimpvector.c	\
-	gimpvector.h	\
-@STRIP_END@
+	gimpvector.h
 
-libgimpmathinclude_HEADERS = @STRIP_BEGIN@ \
+libgimpmathinclude_HEADERS = \
 	gimpmath.h	\
 	gimpmathtypes.h	\
 	gimpmatrix.h	\
 	gimpmd5.h	\
-	gimpvector.h	\
-@STRIP_END@
+	gimpvector.h
 
-EXTRA_HEADERS =
-
-libgimpmath_1_3_la_LDFLAGS = @STRIP_BEGIN@ \
+libgimpmath_1_3_la_LDFLAGS = \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)	\
-	$(no_undefined) \
-	$(libgimpmath_export_symbols) \
-@STRIP_END@
+	$(no_undefined)						\
+	$(libgimpmath_export_symbols)
 
 libgimpmath_1_3_la_LIBADD = $(GLIB_LIBS) $(libm)
 
-libgimpmath_1_3_la_DEPENDENCIES = $(gimpmath_def)
 
 #
 # test programs, not to be built by default and never installed
@@ -103,10 +95,9 @@ EXTRA_PROGRAMS = test-md5
 test_md5_DEPENDENCIES = \
 	$(top_builddir)/libgimpmath/libgimpmath-$(LT_RELEASE).la
 
-test_md5_LDADD = @STRIP_BEGIN@ 	\
-	$(GLIB_LIBS) 			\
-	$(test_md5_DEPENDENCIES)	\
-@STRIP_END@
+test_md5_LDADD = \
+	$(GLIB_LIBS) 		\
+	$(test_md5_DEPENDENCIES)
 
 install-data-local: install-ms-lib install-libtool-import-lib
 

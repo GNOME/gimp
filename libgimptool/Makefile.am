@@ -2,20 +2,18 @@
 
 libgimptoolincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimptool
 
-AM_CPPFLAGS = @STRIP_BEGIN@ \
+AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"LibGimpTool\"	\
-	@GIMP_THREAD_FLAGS@		\
-@STRIP_END@
+	@GIMP_THREAD_FLAGS@
 
-INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_srcdir)		\
-	$(GTK_CFLAGS)		\
-	-I$(includedir)		\
-@STRIP_END@
+INCLUDES = \
+	-I$(top_srcdir)	\
+	$(GTK_CFLAGS)	\
+	-I$(includedir)
 
 lib_LTLIBRARIES = libgimptool-1.3.la
 
-libgimptool_1_3_la_sources = @STRIP_BEGIN@ \
+libgimptool_1_3_la_SOURCES = \
 	gimptooltypes.h		\
         gimptoolenums.h         \
         gimptoolenums.c         \
@@ -23,25 +21,16 @@ libgimptool_1_3_la_sources = @STRIP_BEGIN@ \
 	gimptool.h		\
 	gimptoolcontrol.h	\
 	gimptoolmodule.c	\
-	gimptoolmodule.h	\
-@STRIP_END@
+	gimptoolmodule.h
 
-
-libgimptool_1_3_la_SOURCES = 		\
-	$(libgimptool_1_3_la_sources)
-
-libgimptoolinclude_HEADERS = @STRIP_BEGIN@ \
+libgimptoolinclude_HEADERS = \
 	gimptool.h		\
 	gimptooltypes.h		\
 	gimptoolenums.h		\
-	gimptoolmodule.h	\
-@STRIP_END@
+	gimptoolmodule.h
 
-EXTRA_HEADERS =
-
-libgimptool_1_3_la_LDFLAGS = @STRIP_BEGIN@ \
-	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)	\
-@STRIP_END@
+libgimptool_1_3_la_LDFLAGS = \
+	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
 
 libgimptool_1_3_la_LIBADD = $(GLIB_LIBS) 
 

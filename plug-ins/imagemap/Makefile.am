@@ -4,7 +4,7 @@ libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = imagemap
 
-EXTRA_DIST = @STRIP_BEGIN@ \
+EXTRA_DIST = \
 	arrow.xpm	\
 	arrow_down.xpm	\
 	arrow_up.xpm	\
@@ -30,10 +30,9 @@ EXTRA_DIST = @STRIP_BEGIN@ \
 	TODO		\
 	imap_cern.y  	\
 	imap_csim.y  	\
-	imap_ncsa.y	\
-@STRIP_END@
+	imap_ncsa.y
 
-imagemap_SOURCES = @STRIP_BEGIN@ \
+imagemap_SOURCES = \
 	imap_about.c			\
 	imap_about.h			\
 	imap_browse.c			\
@@ -160,22 +159,18 @@ imagemap_SOURCES = @STRIP_BEGIN@ \
 	imap_toolbar.c			\
 	imap_toolbar.h			\
 	imap_tools.c			\
-	imap_tools.h			\
-@STRIP_END@
+	imap_tools.h
 
+INCLUDES = \
+	-I$(top_srcdir)	\
+	$(GTK_CFLAGS)	\
+	-I$(includedir)
 
-INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_srcdir)			\
-	$(GTK_CFLAGS)			\
-	-I$(includedir)			\
-@STRIP_END@
-
-LDADD = @STRIP_BEGIN@ \
+LDADD = \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)							\
-@STRIP_END@
+	$(INTLLIBS)

@@ -12,13 +12,12 @@ webbrowser_SOURCES = webbrowser.c
 
 EXTRA_DIST = $(scriptdata_DATA)
 
-INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_srcdir)		\
-	$(GTK_CFLAGS)		\
-	-I$(includedir)		\
-@STRIP_END@
+INCLUDES = \
+	-I$(top_srcdir)	\
+	$(GTK_CFLAGS)	\
+	-I$(includedir)
 
-LDADD = @STRIP_BEGIN@ \
+LDADD = \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
@@ -26,5 +25,4 @@ LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(LIBXMU)							\
-	$(INTLLIBS)							\
-@STRIP_END@
+	$(INTLLIBS)

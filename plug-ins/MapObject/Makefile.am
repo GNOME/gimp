@@ -4,7 +4,7 @@ libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = MapObject
 
-MapObject_SOURCES = @STRIP_BEGIN@ \
+MapObject_SOURCES = \
 	amb1.xpm		\
 	amb2.xpm		\
 	arcball.c		\
@@ -28,17 +28,15 @@ MapObject_SOURCES = @STRIP_BEGIN@ \
 	mapobject_ui.c		\
 	mapobject_ui.h		\
 	specref1.xpm		\
-	specref2.xpm		\
-@STRIP_END@
+	specref2.xpm
 
-INCLUDES = @STRIP_BEGIN@ \
+INCLUDES = \
 	-I$(top_srcdir)			\
 	-I$(top_srcdir)/plug-ins/libgck	\
 	$(GTK_CFLAGS)			\
-	-I$(includedir)			\
-@STRIP_END@
+	-I$(includedir)
 
-LDADD = @STRIP_BEGIN@ \
+LDADD = \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
@@ -47,5 +45,4 @@ LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(top_builddir)/plug-ins/libgck/gck/libgck-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)							\
-@STRIP_END@
+	$(INTLLIBS)

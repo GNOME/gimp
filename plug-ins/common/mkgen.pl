@@ -42,20 +42,17 @@ print MK <<EOT;
 
 libexecdir = \$(gimpplugindir)/plug-ins
 
-EXTRA_DIST = \@STRIP_BEGIN\@ \\
+EXTRA_DIST = \\
 	mkgen.pl	\\
-	plugin-defs.pl$extra	\\
-\@STRIP_END\@
+	plugin-defs.pl$extra
 
-INCLUDES = \@STRIP_BEGIN\@ \\
+INCLUDES = \\
 	-I\$(top_srcdir)		\\
 	\$(GTK_CFLAGS)		\\
-	-I\$(includedir)		\\
-\@STRIP_END\@
+	-I\$(includedir)
 
-libexec_PROGRAMS = \@STRIP_BEGIN\@ \\
-$bins \\
-\@STRIP_END\@
+libexec_PROGRAMS = \\
+$bins
 
 EXTRA_PROGRAMS = \\
 $opts
@@ -107,15 +104,13 @@ foreach (sort keys %plugins) {
 
     print MK <<EOT;
 
-${_}_SOURCES = \@STRIP_BEGIN\@ \\
-	$_.c	\\
-\@STRIP_END\@
+${_}_SOURCES = \\
+	$_.c
 
-${_}_LDADD = \@STRIP_BEGIN\@ \\
+${_}_LDADD = \\
 	$libgimp	\\$optlib
 	\$(\U$plugins{$_}->{libdep}\E_LIBS)							\\
-	\$(INTLLIBS)							\\
-\@STRIP_END\@
+	\$(INTLLIBS)
 EOT
 
     print IGNORE "$_\n";

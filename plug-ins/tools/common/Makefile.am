@@ -1,19 +1,13 @@
 libexecdir = $(gimpplugindir)/tool-plug-ins
 
-INCLUDES = @STRIP_BEGIN@ \
+INCLUDES = \
 	-I$(top_srcdir)		  \
 	-I$(top_srcdir)/app/      \
 	-I$(top_srcdir)/app/tools \
 	$(GTK_CFLAGS)		  \
-	-I$(includedir)		  \
-@STRIP_END@
+	-I$(includedir)
 
-libexec_LTLIBRARIES = @STRIP_BEGIN@ \
-	libgimpbrushselecttool.la \
-@STRIP_END@
-
-EXTRA_LTLIBRARIES =
-
+libexec_LTLIBRARIES = libgimpbrushselecttool.la
 
 
 ###BEGIN EVIL KLUDGE
@@ -27,8 +21,10 @@ install-exec-hook:
 ###END EVIL KLUDGE	
 
 
+libgimpbrushselecttool_la_SOURCES = \
+	gimpbrushselecttool.c 	\
+	gimpbrushselecttool.h
 
-libgimpbrushselecttool_la_SOURCES = gimpbrushselecttool.c gimpbrushselecttool.h 
 libgimpbrushselecttool_la_LDFLAGS = -avoid-version -module
 libgimpbrushselecttool_la_LIBADD = $(GTK_LIBS)
 

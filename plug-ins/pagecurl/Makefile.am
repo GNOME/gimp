@@ -4,7 +4,7 @@ libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = pagecurl
 
-pagecurl_SOURCES = @STRIP_BEGIN@ \
+pagecurl_SOURCES = \
 	pagecurl.c	\
 	curl0.xpm	\
 	curl1.xpm	\
@@ -13,16 +13,14 @@ pagecurl_SOURCES = @STRIP_BEGIN@ \
 	curl4.xpm	\
 	curl5.xpm	\
 	curl6.xpm	\
-	curl7.xpm	\
-@STRIP_END@
+	curl7.xpm
 
-INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_srcdir)		\
-	$(GTK_CFLAGS)		\
-	-I$(includedir)		\
-@STRIP_END@
+INCLUDES = \
+	-I$(top_srcdir)	\
+	$(GTK_CFLAGS)	\
+	-I$(includedir)
 
-LDADD = @STRIP_BEGIN@ \
+LDADD = \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
@@ -30,5 +28,4 @@ LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimpmath/libgimpmath-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)							\
-@STRIP_END@
+	$(INTLLIBS)

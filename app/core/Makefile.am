@@ -1,23 +1,21 @@
 ## Process this file with automake to produce Makefile.in
 
-AM_CPPFLAGS = @STRIP_BEGIN@ \
+AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-Core\"	\
 	-DGIMP_COMPILATION		\
 	@GIMP_THREAD_FLAGS@ 		\
-	@GIMP_MP_FLAGS@			\
-@STRIP_END@
+	@GIMP_MP_FLAGS@
 
-INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_srcdir)			\
-	-I$(top_srcdir)/app		\
-	$(GTK_CFLAGS)			\
-	$(LIBART_CFLAGS)		\
-	-I$(includedir)			\
-@STRIP_END@
+INCLUDES = \
+	-I$(top_srcdir)		\
+	-I$(top_srcdir)/app	\
+	$(GTK_CFLAGS)		\
+	$(LIBART_CFLAGS)	\
+	-I$(includedir)
 
 noinst_LIBRARIES = libappcore.a
 
-libappcore_a_sources = @STRIP_BEGIN@ \
+libappcore_a_sources = \
 	core-enums.h			\
 	core-types.h			\
 	cpercep.c			\
@@ -161,18 +159,15 @@ libappcore_a_sources = @STRIP_BEGIN@ \
 	gimpundostack.c			\
 	gimpundostack.h			\
 	gimpviewable.c			\
-	gimpviewable.h			\
-@STRIP_END@
+	gimpviewable.h
 
-libappcore_a_built_sources = @STRIP_BEGIN@ \
-	core-enums.c			\
-	gimpmarshal.c			\
-	gimpmarshal.h			\
-@STRIP_END@
+libappcore_a_built_sources = \
+	core-enums.c	\
+	gimpmarshal.c	\
+	gimpmarshal.h
 
-libappcore_a_extra_sources = @STRIP_BEGIN@ \
-	gimpmarshal.list		\
-@STRIP_END@
+libappcore_a_extra_sources = \
+	gimpmarshal.list
 
 libappcore_a_SOURCES = $(libappcore_a_built_sources) $(libappcore_a_sources)
 

@@ -1,24 +1,22 @@
 ## Process this file with automake to produce Makefile.in
 
-AM_CPPFLAGS = @STRIP_BEGIN@ \
+AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-Widgets\"	\
 	@GIMP_THREAD_FLAGS@ 		\
-	@GIMP_MP_FLAGS@			\
-@STRIP_END@
+	@GIMP_MP_FLAGS@
 
-INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_builddir)		\
-	-I$(top_srcdir)			\
-	-I$(top_builddir)/app		\
-	-I$(top_srcdir)/app		\
-	$(GTK_CFLAGS)			\
-	$(PANGOFT2_CFLAGS)		\
-	-I$(includedir)			\
-@STRIP_END@
+INCLUDES = \
+	-I$(top_builddir)	\
+	-I$(top_srcdir)		\
+	-I$(top_builddir)/app	\
+	-I$(top_srcdir)/app	\
+	$(GTK_CFLAGS)		\
+	$(PANGOFT2_CFLAGS)	\
+	-I$(includedir)
 
 noinst_LIBRARIES = libappwidgets.a
 
-libappwidgets_a_sources = @STRIP_BEGIN@ \
+libappwidgets_a_sources = \
 	widgets-enums.h			\
 	widgets-types.h			\
 	gimpbrusheditor.c		\
@@ -152,14 +150,12 @@ libappwidgets_a_sources = @STRIP_BEGIN@ \
 	gtkhwrapbox.c			\
 	gtkhwrapbox.h			\
 	gtkvwrapbox.c			\
-	gtkvwrapbox.h			\
-@STRIP_END@
+	gtkvwrapbox.h
 
-libappwidgets_a_built_sources = @STRIP_BEGIN@ \
-	widgets-enums.c			\
-@STRIP_END@
+libappwidgets_a_built_sources = widgets-enums.c
 
-libappwidgets_a_SOURCES = $(libappwidgets_a_built_sources) $(libappwidgets_a_sources)
+libappwidgets_a_SOURCES = \
+	$(libappwidgets_a_built_sources) $(libappwidgets_a_sources)
 
 #
 # rules to generate built sources

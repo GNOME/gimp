@@ -4,23 +4,20 @@ libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = faxg3
 
-faxg3_SOURCES = @STRIP_BEGIN@ \
+faxg3_SOURCES = \
 	faxg3.c		\
 	g3.c		\
 	g3.h		\
-	run_tbl.c	\
-@STRIP_END@
+	run_tbl.c
 
-INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_srcdir)		\
-	$(GLIB_CFLAGS)		\
-	-I$(includedir)		\
-@STRIP_END@
+INCLUDES = \
+	-I$(top_srcdir)	\
+	$(GLIB_CFLAGS)	\
+	-I$(includedir)
 
-LDADD = @STRIP_BEGIN@ \
+LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
-	$(INTLLIBS)							\
-@STRIP_END@
+	$(INTLLIBS)

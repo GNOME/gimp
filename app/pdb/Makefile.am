@@ -2,7 +2,7 @@
 
 noinst_LIBRARIES = libapppdb.a
 
-libapppdb_a_SOURCES = @STRIP_BEGIN@ \
+libapppdb_a_SOURCES = \
 	internal_procs.c	\
 	internal_procs.h	\
 	procedural_db.c		\
@@ -44,21 +44,18 @@ libapppdb_a_SOURCES = @STRIP_BEGIN@ \
 	text_tool_cmds.c	\
 	transform_tools_cmds.c	\
 	undo_cmds.c		\
-	unit_cmds.c		\
-@STRIP_END@
+	unit_cmds.c
 
 ## This is a truly ugly hack
 libapppdb_a_LIBADD = ../gui/pattern-select.o ../gui/brush-select.o
 
-AM_CPPFLAGS = @STRIP_BEGIN@ \
+AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-PDB\"	\
 	@GIMP_THREAD_FLAGS@ 		\
-	@GIMP_MP_FLAGS@			\
-@STRIP_END@
+	@GIMP_MP_FLAGS@
 
-INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_srcdir)			\
-	-I$(top_srcdir)/app		\
-	$(GTK_CFLAGS)			\
-	-I$(includedir)			\
-@STRIP_END@
+INCLUDES = \
+	-I$(top_srcdir)		\
+	-I$(top_srcdir)/app	\
+	$(GTK_CFLAGS)		\
+	-I$(includedir)

@@ -2,46 +2,33 @@
 
 libgimpproxyincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimpproxy
 
-AM_CPPFLAGS = @STRIP_BEGIN@ \
+AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"LibGimpProxy\"	\
-	@GIMP_THREAD_FLAGS@		\
-@STRIP_END@
+	@GIMP_THREAD_FLAGS@
 
-INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_srcdir)			\
-	$(GTK_CFLAGS)			\
-	-I$(includedir)			\
-	-I$(top_srcdir)/app		\
-	-I$(top_srcdir)/app/core	\
-@STRIP_END@
+INCLUDES = \
+	-I$(top_srcdir)		\
+	$(GTK_CFLAGS)		\
+	-I$(includedir)		\
+	-I$(top_srcdir)/app	\
+	-I$(top_srcdir)/app/core
 
 
 lib_LTLIBRARIES = libgimpproxy-1.3.la
 
-libgimpproxy_1_3_la_sources = @STRIP_BEGIN@ \
+libgimpproxy_1_3_la_SOURCES = \
 	gimpproxytypes.h \
 	gimpobject.h	 \
 	gimpobject.c	 \
-	gimpchannel.h    \
-@STRIP_END@
+	gimpchannel.h
 
-libgimpproxy_1_3_la_SOURCES = 		\
-	$(libgimpproxy_1_3_la_sources)
-
-libgimpproxyinclude_HEADERS = @STRIP_BEGIN@ \
+libgimpproxyinclude_HEADERS = \
 	gimpproxytypes.h	\
 	gimpobject.h		\
-	gimpchannel.h		\
-@STRIP_END@
+	gimpchannel.h
 
-EXTRA_HEADERS = \
-	gimpproxytypes.h	\
-	gimpobject.h		\
-	gimpchannel.h		
-
-libgimpproxy_1_3_la_LDFLAGS = @STRIP_BEGIN@ \
-	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)	\
-@STRIP_END@
+libgimpproxy_1_3_la_LDFLAGS = \
+	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
 
 libgimpproxy_1_3_la_LIBADD = $(GLIB_LIBS) 
 

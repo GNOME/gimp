@@ -4,24 +4,21 @@ libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = helpbrowser
 
-helpbrowser_SOURCES = @STRIP_BEGIN@ \
-	helpbrowser.c		\
-	queue.c			\
-	queue.h			\
-@STRIP_END@
+helpbrowser_SOURCES = \
+	helpbrowser.c	\
+	queue.c		\
+	queue.h
 
-INCLUDES = @STRIP_BEGIN@ \
+INCLUDES = \
 	-I$(top_srcdir)		\
 	$(GTKHTML2_CFLAGS)	\
-	-I$(includedir)		\
-@STRIP_END@
+	-I$(includedir)
 
-LDADD = @STRIP_BEGIN@ \
+LDADD = \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTKHTML2_LIBS)						\
-	$(INTLLIBS)							\
-@STRIP_END@
+	$(INTLLIBS)
