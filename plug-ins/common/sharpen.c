@@ -44,6 +44,14 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.13  1999/11/23 23:49:42  neo
+ *   added dots to all menu entries of interactive plug-ins and did the usual
+ *   action area fixes on lots of them
+ *
+ *
+ *
+ *   --Sven
+ *
  *   Revision 1.12  1999/10/24 20:48:59  pcg
  *   api change #2, fix #1
  *
@@ -259,7 +267,8 @@ query(void)
       "Michael Sweet <mike@easysw.com>",
       "Copyright 1997-1998 by Michael Sweet",
       PLUG_IN_VERSION,
-      "<Image>/Filters/Enhance/Sharpen", "RGB*, GRAY*",
+      "<Image>/Filters/Enhance/Sharpen...",
+      "RGB*, GRAY*",
       PROC_PLUG_IN, nargs, nreturn_vals, args, return_vals);
 }
 
@@ -611,6 +620,7 @@ sharpen_dialog(void)
 		*ptable,	/* Preview table */
 		*frame,		/* Frame for preview */
 		*scrollbar,	/* Horizontal + vertical scroller */
+		*hbbox,	        /* Button_box for OK/Cancel buttons */
 		*button;	/* OK/Cancel buttons */
   gint		argc;		/* Fake argc for GUI */
   gchar		**argv;		/* Fake argv for GUI */
@@ -717,24 +727,29 @@ sharpen_dialog(void)
   * OK, cancel buttons...
   */
 
-  gtk_container_border_width(GTK_CONTAINER(GTK_DIALOG(dialog)->action_area), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 2);
+  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dialog)->action_area), FALSE);
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->action_area), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+ 
+  button = gtk_button_new_with_label ("OK");
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) dialog_ok_callback,
+		      dialog);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gtk_widget_grab_default (button);
+  gtk_widget_show (button);
 
-  button = gtk_button_new_with_label("OK");
-  GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-  gtk_signal_connect(GTK_OBJECT(button), "clicked",
-		     (GtkSignalFunc) dialog_ok_callback,
-		     dialog);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, TRUE, TRUE, 0);
-  gtk_widget_grab_default(button);
-  gtk_widget_show(button);
-
-  button = gtk_button_new_with_label("Cancel");
-  GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-  gtk_signal_connect(GTK_OBJECT(button), "clicked",
-		     (GtkSignalFunc) dialog_cancel_callback,
-		     dialog);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, TRUE, TRUE, 0);
-  gtk_widget_show(button);
+  button = gtk_button_new_with_label ("Cancel");
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) dialog_cancel_callback,
+		      dialog);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
  /*
   * Show it and wait for the user to do something...

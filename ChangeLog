@@ -1,3 +1,68 @@
+Wed Nov 24 00:45:27 MET 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/AlienMap/AlienMap.c
+	* plug-ins/AlienMap2/AlienMap2.c
+	* plug-ins/FractalExplorer/FractalExplorer.c
+	* plug-ins/MapObject/mapobject_main.c
+	* plug-ins/common/blinds.c
+	* plug-ins/common/curve_bend.c
+	* plug-ins/common/deinterlace.c
+	* plug-ins/common/despeckle.c
+	* plug-ins/common/diffraction.c
+	* plug-ins/common/displace.c
+	* plug-ins/common/edge.c
+	* plug-ins/common/emboss.c
+	* plug-ins/common/engrave.c
+	* plug-ins/common/exchange.c
+	* plug-ins/common/flarefx.c
+	* plug-ins/common/fractaltrace.c
+	* plug-ins/common/gauss_iir.c
+	* plug-ins/common/gauss_rle.c
+	* plug-ins/common/gee.c
+	* plug-ins/common/glasstile.c
+	* plug-ins/common/gqbist.c
+	* plug-ins/common/hot.c
+	* plug-ins/common/illusion.c
+	* plug-ins/common/iwarp.c
+	* plug-ins/common/jigsaw.c
+	* plug-ins/common/max_rgb.c
+	* plug-ins/common/mblur.c
+	* plug-ins/common/newsprint.c
+	* plug-ins/common/nlfilt.c
+	* plug-ins/common/noisify.c
+	* plug-ins/common/pixelize.c
+	* plug-ins/common/plasma.c
+	* plug-ins/common/polar.c
+	* plug-ins/common/randomize.c
+	* plug-ins/common/ripple.c
+	* plug-ins/common/sample_colorize.c
+	* plug-ins/common/scatter_hsv.c
+	* plug-ins/common/sel_gauss.c
+	* plug-ins/common/sharpen.c
+	* plug-ins/common/shift.c
+	* plug-ins/common/smooth_palette.c
+	* plug-ins/common/snoise.c
+	* plug-ins/common/sobel.c
+	* plug-ins/common/sparkle.c
+	* plug-ins/common/spheredesigner.c
+	* plug-ins/common/spread.c
+	* plug-ins/common/tile.c
+	* plug-ins/common/tileit.c
+	* plug-ins/common/video.c
+	* plug-ins/common/vpropagate.c
+	* plug-ins/common/warp.c
+	* plug-ins/common/waves.c
+	* plug-ins/common/whirlpinch.c
+	* plug-ins/common/wind.c
+	* plug-ins/flame/flame.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/maze/maze.c
+	* plug-ins/pagecurl/pagecurl.c
+	* plug-ins/unsharp/unsharp.c: added dots to all menu entries of 
+	interactive plug-ins and did the usual action area fixes on lots 
+	of them
+
 Tue Nov 23 22:57:13 MET 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/Lighting/lighting_main.c

@@ -37,7 +37,7 @@
 #define	PLUG_IN_NAME	"plug_in_vpropagate"
 #define SHORT_NAME	"vpropagate"
 #define PROGRESS_NAME	"value propagating..."
-#define MENU_POSITION	"<Image>/Filters/Distorts/Value Propagate"
+#define MENU_POSITION	"<Image>/Filters/Distorts/Value Propagate..."
 
 typedef guchar CH;
 #define	VP_RGB	        (1 << 0)

@@ -296,7 +296,7 @@ static void query (void) {
 			   "Federico Mena Quintero and Simon Budig",
 			   "Federico Mena Quintero and Simon Budig",
 			   PLUG_IN_VERSION,
-			   "<Image>/Filters/Distorts/Pagecurl",
+			   "<Image>/Filters/Distorts/Pagecurl...",
 			   "RGBA*, GRAYA*",
 			   PROC_PLUG_IN,
 			   nargs,
@@ -499,14 +499,15 @@ static void dialog_toggle_update (GtkWidget * widget, gint32 value) {
 
 /*********/
 
-static int do_dialog (void) {
-
+static int do_dialog (void) 
+{
    /* Missing options: Color-dialogs? / own curl layer ? / transparency
       to original drawable / Warp-curl (unsupported yet) */
 
    GtkWidget *dialog;
    GtkWidget *orhbox1, *orhbox2, *vbox, *ivbox, *corner_frame, *orient_frame;
    GtkWidget *shade_button, *gradient_button, *button, *label, *scale;
+   GtkWidget *hbbox;
    GtkStyle *style;
    GtkObject *adjustment;
    gint pixmapindex;
@@ -530,23 +531,31 @@ static int do_dialog (void) {
 		       (GtkSignalFunc) dialog_close_callback,
 		       NULL);
 
+   /*  Action area  */
+   gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 2);
+   gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dialog)->action_area), FALSE);
+   hbbox = gtk_hbutton_box_new ();
+   gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->action_area), hbbox, FALSE, FALSE, 0);
+   gtk_widget_show (hbbox);
+   
    button = gtk_button_new_with_label ("OK");
    GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
    gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		       (GtkSignalFunc) dialog_ok_callback,
 		       dialog);
-   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area), button, TRUE, TRUE, 0);
+   gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
    gtk_widget_grab_default (button);
    gtk_widget_show (button);
-
+   
    button = gtk_button_new_with_label ("Cancel");
    GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
    gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		       (GtkSignalFunc) dialog_cancel_callback,
 		       dialog);
-   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area), button, TRUE, TRUE, 0);
+   gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
    gtk_widget_show (button);
-
+   
    vbox = gtk_vbox_new (FALSE, 5);
    gtk_container_border_width (GTK_CONTAINER (vbox), 5);
    gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),

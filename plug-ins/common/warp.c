@@ -303,7 +303,7 @@ query ()
 			  "John P. Beale",
 			  "John P. Beale",
 			  "1997",
-			  N_("<Image>/Filters/Map/Warp"),
+			  N_("<Image>/Filters/Map/Warp..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

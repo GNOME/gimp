@@ -191,7 +191,7 @@ query ()
         		  "Daniel Cotting (cotting@mygale.org, http://www.mygale.org/~cotting)",
         		  "Daniel Cotting (cotting@mygale.org, http://www.mygale.org/~cotting)",
         		  _("1th May 1997"),
-        		  N_("<Image>/Filters/Colors/Map/Alien Map"),
+        		  N_("<Image>/Filters/Colors/Map/Alien Map..."),
         		  "RGB*",
         		  PROC_PLUG_IN,
         		  nargs, nreturn_vals,

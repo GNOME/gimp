@@ -212,7 +212,7 @@ query(void){
                          "Eric L. Hernes, Alan Wm Paeth",
                          "Eric L. Hernes",
                          "1997",
-                         "<Image>/Filters/Colors/Hot",
+                         "<Image>/Filters/Colors/Hot...",
                          "RGB",
                          PROC_PLUG_IN,
                          nargs, nrets,

@@ -303,7 +303,7 @@ query()
 			  "Wolfgang Hofer",
 			  "hof@hotbot.com",
 			  "07/1999",
-			  "<Image>/Filters/Colors/Map/Sample Colorize",
+			  "<Image>/Filters/Colors/Map/Sample Colorize...",
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

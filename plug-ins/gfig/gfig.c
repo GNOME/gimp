@@ -626,7 +626,7 @@ query ()
 			  "Andy Thomas",
 			  "Andy Thomas",
 			  "1997",
-			  "<Image>/Filters/Render/Gfig",
+			  "<Image>/Filters/Render/Gfig...",
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

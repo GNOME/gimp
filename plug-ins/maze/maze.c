@@ -152,7 +152,7 @@ query ()
 			  "Kevin Turner <kevint@poboxes.com>",
 			  "Kevin Turner",
 			  "1997, 1998",
-			  "<Image>/Filters/Render/Pattern/Maze",
+			  "<Image>/Filters/Render/Pattern/Maze...",
 			  "RGB*, GRAY*, INDEXED*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

@@ -238,7 +238,7 @@ query ()
 			  "Norbert Schmitz",
 			  "Norbert Schmitz",
 			  "1997",
-			  "<Image>/Filters/Distorts/IWarp",
+			  "<Image>/Filters/Distorts/IWarp...",
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -1040,6 +1040,7 @@ iwarp_dialog()
  GtkWidget *pframe;
  GtkWidget *top_table;
  GtkWidget *notebook;
+ GtkWidget *hbbox;
  GtkWidget *button;
  guchar *color_cube; 
  gint argc;
@@ -1070,24 +1071,30 @@ iwarp_dialog()
 		      (GtkSignalFunc) iwarp_close_callback,
 		      NULL);
  
- button = gtk_button_new_with_label ("OK");
- GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
- gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) iwarp_ok_callback,
-                      dlg);
- gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
- gtk_widget_grab_default (button);
- gtk_widget_show (button);
+  /*  Action area  */
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
+  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+ 
+  button = gtk_button_new_with_label ("OK");
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) iwarp_ok_callback,
+		      dlg);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gtk_widget_grab_default (button);
+  gtk_widget_show (button);
 
- button = gtk_button_new_with_label ("Cancel");
- GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
- gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
+  button = gtk_button_new_with_label ("Cancel");
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
 			     GTK_OBJECT (dlg));
-
- gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
- gtk_widget_show (button);
-
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
   
  pframe = gtk_frame_new (NULL);
  gtk_frame_set_shadow_type (GTK_FRAME (pframe), GTK_SHADOW_IN);

@@ -185,7 +185,7 @@ query (void)
 			  "Marcelo de Gomensoro Malheiros",
 			  "Marcelo de Gomensoro Malheiros",
 			  "Apr 1998, v1.03",
-			  "<Image>/Filters/Render/Clouds/Solid Noise",
+			  "<Image>/Filters/Render/Clouds/Solid Noise...",
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs,
@@ -472,6 +472,7 @@ solid_noise_dialog (void)
   GtkWidget *dlg;
   GtkWidget *toggle;
   GtkWidget *table;
+  GtkWidget *hbbox;
   GtkWidget *button;
   GtkWidget *label;
   GtkWidget *entry;
@@ -607,24 +608,29 @@ solid_noise_dialog (void)
 		      (GtkSignalFunc) dialog_scale_callback, &snvals.ysize);
   gtk_widget_show (scale);
 
-  /*  Button #1  */
+  /*  Action area  */
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
+  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+ 
   button = gtk_button_new_with_label ("OK");
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) dialog_ok_callback, dlg);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button,
-                      TRUE, TRUE, 0);
+		      (GtkSignalFunc) dialog_ok_callback,
+		      dlg);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  /*  Button #2  */
   button = gtk_button_new_with_label ("Cancel");
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
-                             GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button,
-                      TRUE, TRUE, 0);
+			     GTK_OBJECT (dlg));
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   gtk_widget_show (table);

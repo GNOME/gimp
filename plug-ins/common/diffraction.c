@@ -174,7 +174,7 @@ query(void)
 			       "Federico Mena Quintero",
 			       "Federico Mena Quintero & David Bleecker",
 			       "April 1997, 0.5",
-			       "<Image>/Filters/Render/Pattern/Diffraction Patterns",
+			       "<Image>/Filters/Render/Pattern/Diffraction Patterns...",
 			       "RGB*",
 			       PROC_PLUG_IN,
 			       nargs,
@@ -514,6 +514,7 @@ diffraction_dialog(void)
 	GtkWidget  *vbox;
 	GtkWidget  *table;
 	GtkWidget  *label;
+	GtkWidget  *hbbox;
 	GtkWidget  *button;
 	gint        argc;
 	gchar     **argv;
@@ -670,27 +671,31 @@ diffraction_dialog(void)
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
 	gtk_widget_show(vbox);
 
-	/* Buttons */
-
-	gtk_container_border_width(GTK_CONTAINER(GTK_DIALOG(dialog)->action_area), 6);
-
-	button = gtk_button_new_with_label("OK");
-	GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-	gtk_signal_connect(GTK_OBJECT(button), "clicked",
-			   (GtkSignalFunc) dialog_ok_callback,
-			   dialog);
-	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, TRUE, TRUE, 0);
-	gtk_widget_grab_default(button);
-	gtk_widget_show(button);
-
-	button = gtk_button_new_with_label("Cancel");
-	GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-	gtk_signal_connect(GTK_OBJECT(button), "clicked",
-			   (GtkSignalFunc) dialog_cancel_callback,
-			   dialog);
-	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, TRUE, TRUE, 0);
-	gtk_widget_show(button);
-
+	/*  Action area  */
+	gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 2);
+	gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dialog)->action_area), FALSE);
+	hbbox = gtk_hbutton_box_new ();
+	gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+	gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->action_area), hbbox, FALSE, FALSE, 0);
+	gtk_widget_show (hbbox);
+	
+	button = gtk_button_new_with_label ("OK");
+	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+	gtk_signal_connect (GTK_OBJECT (button), "clicked",
+			    (GtkSignalFunc) dialog_ok_callback,
+			    dialog);
+	gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+	gtk_widget_grab_default (button);
+	gtk_widget_show (button);
+	
+	button = gtk_button_new_with_label ("Cancel");
+	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+	gtk_signal_connect (GTK_OBJECT (button), "clicked",
+			    (GtkSignalFunc) dialog_cancel_callback,
+			    dialog);
+	gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+	gtk_widget_show (button);
+	
 	/* Done */
 
 	gtk_widget_show(dialog);

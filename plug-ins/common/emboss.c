@@ -121,7 +121,7 @@ query(void){
                          "Eric L. Hernes, John Schlag",
                          "Eric L. Hernes",
                          "1997",
-                         "<Image>/Filters/Distorts/Emboss",
+                         "<Image>/Filters/Distorts/Emboss...",
                          "RGB",
                          PROC_PLUG_IN,
                          nargs, nrets,

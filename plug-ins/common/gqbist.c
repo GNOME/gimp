@@ -291,7 +291,7 @@ void query(void)
                                "Jörn Loviscach, Jens Ch. Restemeier", 
                                "Jörn Loviscach, Jens Ch. Restemeier", 
                                PLUG_IN_VERSION, 
-                               "<Image>/Filters/Render/Pattern/Qbist", 
+                               "<Image>/Filters/Render/Pattern/Qbist...", 
                                "RGB*", 
                                PROC_PLUG_IN, 
                                nargs, 

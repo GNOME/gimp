@@ -132,7 +132,7 @@ static void query()
 			 "Adam D. Moss <adam@gimp.org>",
 			 "Adam D. Moss <adam@gimp.org>",
 			 "1998",
-			 "<Image>/Filters/Toys/The Egg",
+			 "<Image>/Filters/Toys/The Egg...",
 			 /*NULL,*/
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,

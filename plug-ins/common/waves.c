@@ -105,7 +105,7 @@ query(void){
                          "Eric L. Hernes, Stephen Norris",
                          "Stephen Norris",
                          "1997",
-                         "<Image>/Filters/Distorts/Waves",
+                         "<Image>/Filters/Distorts/Waves...",
                          "RGB*, GRAY*",
                          PROC_PLUG_IN,
                          nargs, nrets,

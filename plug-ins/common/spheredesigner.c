@@ -2845,7 +2845,7 @@ static void query (void)
 			  "Vidar Madsen",
                           "Vidar Madsen",
                           "1999",
-                          "<Image>/Filters/Render/SphereDesigner",
+                          "<Image>/Filters/Render/SphereDesigner...",
                           "RGB*, GRAY*",
                           PROC_PLUG_IN,
 			  nargs, nreturn_vals,

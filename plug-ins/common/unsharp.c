@@ -167,7 +167,7 @@ static void query () {
 	                        "Winston Chang <wchang3@students.wisc.edu>",
 	                        "Winston Chang",
 	                        "1999",
-	                        "<Image>/Filters/Enhance/Unsharp Mask",
+	                        "<Image>/Filters/Enhance/Unsharp Mask...",
 	                        "GRAY*, RGB*",
 	                        PROC_PLUG_IN,
 	                        nargs, nreturn_vals,
@@ -711,10 +711,11 @@ static gdouble* gen_lookup_table(gdouble* cmatrix, gint cmatrix_length) {
 
 
 /* ------------------------ unsharp_mask_dialog ----------------------- */
-static gint unsharp_mask_dialog() {
-
+static gint unsharp_mask_dialog() 
+{
 	GtkWidget *window;
 	GtkWidget *table;
+	GtkWidget *hbbox;
 	GtkWidget *button;
 
 
@@ -766,29 +767,30 @@ static gint unsharp_mask_dialog() {
 	gtk_widget_show(table);
 
 
-	/* OK and Cancel buttons */
-	gtk_container_border_width(GTK_CONTAINER(GTK_DIALOG(window)->action_area),2);
-
-		/* Make OK button */
-		button = gtk_button_new_with_label("OK");
-		GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->action_area), button,
-		                    TRUE, TRUE, 0);
-		gtk_signal_connect( GTK_OBJECT(button), "clicked",
-		                    GTK_SIGNAL_FUNC(unsharp_ok_callback), window);
-		gtk_widget_grab_default(button);
-		gtk_widget_show(button);
-
-		/* Make Cancel button */
-		button = gtk_button_new_with_label("Cancel");
-		GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-		
-		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->action_area), button,
-		                    TRUE, TRUE, 0);
-		gtk_signal_connect ( GTK_OBJECT(button), "clicked",
-		                    GTK_SIGNAL_FUNC(unsharp_cancel_callback), NULL);
-		gtk_widget_show(button);
-
+	/*  Action area  */
+	gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (window)->action_area), 2);
+	gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (window)->action_area), FALSE);
+	hbbox = gtk_hbutton_box_new ();
+	gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+	gtk_box_pack_end (GTK_BOX (GTK_DIALOG (window)->action_area), hbbox, FALSE, FALSE, 0);
+	gtk_widget_show (hbbox);
+	
+	button = gtk_button_new_with_label ("OK");
+	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+	gtk_signal_connect (GTK_OBJECT (button), "clicked",
+			    (GtkSignalFunc) unsharp_ok_callback,
+			    window);
+	gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+	gtk_widget_grab_default (button);
+	gtk_widget_show (button);
+	
+	button = gtk_button_new_with_label ("Cancel");
+	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+	gtk_signal_connect (GTK_OBJECT (button), "clicked",
+			    (GtkSignalFunc) unsharp_cancel_callback,
+			    NULL);
+	gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+	gtk_widget_show (button);
 	
 	
 	/* show the window */

@@ -24,7 +24,7 @@
 #define PLUG_IN_NAME     "plug_in_fractal_trace"
 #define PLUG_IN_TITLE    "Fractal Trace"
 #define PLUG_IN_VERSION  "v0.4 test version (Dec. 25 1997)"
-#define PLUG_IN_CATEGORY "<Image>/Filters/Map/Fractal Trace"
+#define PLUG_IN_CATEGORY "<Image>/Filters/Map/Fractal Trace..."
 
 /******************************************************************************/
 
