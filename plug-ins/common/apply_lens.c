@@ -381,6 +381,7 @@ lens_dialog (GimpDrawable *drawable)
   GtkWidget *label;
   GtkWidget *toggle;
   GtkWidget *hbox;
+  GtkWidget *vbox;
   GtkWidget *spinbutton;
   GtkObject *adj;
   gboolean   run;
@@ -408,34 +409,44 @@ lens_dialog (GimpDrawable *drawable)
                             G_CALLBACK (drawlens),
                             drawable);
 
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
   toggle = gtk_radio_button_new_with_mnemonic_from_widget
     (NULL, _("_Keep original surroundings"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), lvals.keep_surr);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &lvals.keep_surr);
+  g_signal_connect_swapped (toggle, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   toggle = gtk_radio_button_new_with_mnemonic_from_widget
     (GTK_RADIO_BUTTON (toggle),
      gimp_drawable_is_indexed (drawable->drawable_id)
      ? _("_Set surroundings to index 0")
      : _("_Set surroundings to background color"));
-  gtk_box_pack_start(GTK_BOX (main_vbox), toggle, FALSE, FALSE, 0);
+  gtk_box_pack_start(GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), lvals.use_bkgr);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &lvals.use_bkgr);
+  g_signal_connect_swapped (toggle, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   if (gimp_drawable_has_alpha (drawable->drawable_id))
     {
       toggle = gtk_radio_button_new_with_mnemonic_from_widget
         (GTK_RADIO_BUTTON (toggle), _("_Make surroundings transparent"));
-      gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                     lvals.set_transparent);
       gtk_widget_show (toggle);
@@ -443,6 +454,9 @@ lens_dialog (GimpDrawable *drawable)
       g_signal_connect (toggle, "toggled",
                         G_CALLBACK (gimp_toggle_button_update),
                         &lvals.set_transparent);
+      g_signal_connect_swapped (toggle, "toggled",
+                                G_CALLBACK (gimp_preview_invalidate),
+                                preview);
   }
 
   hbox = gtk_hbox_new (FALSE, 6);

@@ -124,11 +124,8 @@ gimp_view_get_type (void)
 static void
 gimp_view_class_init (GimpViewClass *klass)
 {
-  GtkObjectClass *object_class;
-  GtkWidgetClass *widget_class;
-
-  object_class = GTK_OBJECT_CLASS (klass);
-  widget_class = GTK_WIDGET_CLASS (klass);
+  GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -199,9 +196,7 @@ gimp_view_init (GimpView *view)
 static void
 gimp_view_destroy (GtkObject *object)
 {
-  GimpView *view;
-
-  view = GIMP_VIEW (object);
+  GimpView *view = GIMP_VIEW (object);
 
   if (view->viewable)
     gimp_view_set_viewable (view, NULL);
@@ -218,11 +213,9 @@ gimp_view_destroy (GtkObject *object)
 static void
 gimp_view_realize (GtkWidget *widget)
 {
-  GimpView      *view;
+  GimpView      *view = GIMP_VIEW (widget);
   GdkWindowAttr  attributes;
   gint           attributes_mask;
-
-  view = GIMP_VIEW (widget);
 
   GTK_WIDGET_CLASS (parent_class)->realize (widget);
 
@@ -290,9 +283,7 @@ static void
 gimp_view_size_request (GtkWidget      *widget,
                         GtkRequisition *requisition)
 {
-  GimpView *view;
-
-  view = GIMP_VIEW (widget);
+  GimpView *view = GIMP_VIEW (widget);
 
   if (view->expand)
     {
@@ -315,11 +306,9 @@ static void
 gimp_view_size_allocate (GtkWidget     *widget,
                          GtkAllocation *allocation)
 {
-  GimpView *view;
+  GimpView *view = GIMP_VIEW (widget);
   gint      width;
   gint      height;
-
-  view = GIMP_VIEW (widget);
 
   if (view->expand)
     {
@@ -429,9 +418,7 @@ static gboolean
 gimp_view_button_press_event (GtkWidget      *widget,
                               GdkEventButton *bevent)
 {
-  GimpView *view;
-
-  view = GIMP_VIEW (widget);
+  GimpView *view = GIMP_VIEW (widget);
 
 #ifdef DEBUG_MEMSIZE
   if (bevent->type == GDK_BUTTON_PRESS && bevent->button == 2)
@@ -499,9 +486,7 @@ static gboolean
 gimp_view_button_release_event (GtkWidget      *widget,
                                 GdkEventButton *bevent)
 {
-  GimpView *view;
-
-  view = GIMP_VIEW (widget);
+  GimpView *view = GIMP_VIEW (widget);
 
   if (! view->clickable &&
       ! view->show_popup)
@@ -531,11 +516,8 @@ static gboolean
 gimp_view_enter_notify_event (GtkWidget        *widget,
                               GdkEventCrossing *event)
 {
-  GimpView  *view;
-  GtkWidget *event_widget;
-
-  view = GIMP_VIEW (widget);
-  event_widget = gtk_get_event_widget ((GdkEvent *) event);
+  GimpView  *view         = GIMP_VIEW (widget);
+  GtkWidget *event_widget = gtk_get_event_widget ((GdkEvent *) event);
 
   if ((event_widget == widget) &&
       (event->detail != GDK_NOTIFY_INFERIOR))
@@ -550,11 +532,8 @@ static gboolean
 gimp_view_leave_notify_event (GtkWidget        *widget,
                               GdkEventCrossing *event)
 {
-  GimpView  *view;
-  GtkWidget *event_widget;
-
-  view = GIMP_VIEW (widget);
-  event_widget = gtk_get_event_widget ((GdkEvent *) event);
+  GimpView  *view         = GIMP_VIEW (widget);
+  GtkWidget *event_widget = gtk_get_event_widget ((GdkEvent *) event);
 
   if ((event_widget == widget) &&
       (event->detail != GDK_NOTIFY_INFERIOR))
@@ -767,11 +746,9 @@ static void
 gimp_view_update_callback (GimpViewRenderer *renderer,
                            GimpView         *view)
 {
-  GtkWidget *widget;
+  GtkWidget *widget = GTK_WIDGET (view);
   gint       width;
   gint       height;
-
-  widget = GTK_WIDGET (view);
 
   width  = renderer->width  + 2 * renderer->border_width;
   height = renderer->height + 2 * renderer->border_width;
