@@ -55,13 +55,15 @@ LDADD = \
 
 escputil_1_2_LDADD =
 
-if DEFAULT_BINARY
 install-exec-hook:
+if DEFAULT_BINARY
 	cd $(DESTDIR)$(bindir) \
 	&& rm -f escputil \
 	&& $(LN_S) escputil-1.2 escputil
+endif
 
 install-data-hook:
+if DEFAULT_BINARY
 	@list='$(man_MANS)'; \
 	for i in $$list; do \
 	  s=`echo $$i | sed -e 's/.*\\(.\\)$$/\1/'`; \
@@ -74,8 +76,10 @@ install-data-hook:
 	  echo "ln -s $$i $$f"; \
 	  ln -s $$i $$f; \
 	done
+endif
 
 uninstall-local:
+if DEFAULT_BINARY
 	@echo " rm -f $(DESTDIR)$(bindir)/escputil"; \
 	rm -f $(DESTDIR)$(bindir)/escputil
 	@list='$(man_MANS)'; \

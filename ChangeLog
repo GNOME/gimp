@@ -1,3 +1,11 @@
+Sat Feb  2 23:55:50 PST 2002 Manish Singh <yosh@gimp.org>
+
+	* Makefile.am
+	* app/Makefile.am
+	* plug-ins/print/Makefile.am
+	* tools/Makefile.am: automake quirk. the -hook and -local targets
+	always need to exist, and must not be in the conditional.
+
 Sat Feb  2 22:50:00 PST 2002 Manish Singh <yosh@gimp.org>
 
 	* Makefile.am: oops, guard the manpage stuff in DEFAULT_BINARY too

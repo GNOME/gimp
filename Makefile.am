@@ -247,8 +247,8 @@ if DEFAULT_BINARY
 endif
 endif
 
-if DEFAULT_BINARY
 install-data-hook:
+if DEFAULT_BINARY
 	@list='$(man_MANS)'; \
 	for i in $$list; do \
 	  s=`echo $$i | sed -e 's/.*\\(.\\)$$/\1/'`; \

@@ -475,13 +475,15 @@ gimp_1_2_LDADD = \
 gimp-win32res.o : gimp.rc
 	$(top_srcdir)/build/win32/compile-resource gimp.rc gimp-win32res.o
 
-if DEFAULT_BINARY
 install-exec-hook:
+if DEFAULT_BINARY
 	cd $(DESTDIR)$(bindir) \
 	&& rm -f gimp \
 	&& $(LN_S) gimp-1.2 gimp
+endif
 
 uninstall-local:
+if DEFAULT_BINARY
 	rm -f $(DESTDIR)$(bindir)/gimp
 endif
 

@@ -39,8 +39,8 @@ SUBDIRS = $(D_pdbgen) $(D_authorgen) #$(D_gcg)
 
 EXTRA_DIST = gimppath2svg.py
 
-if DEFAULT_BINARY
 install-exec-hook:
+if DEFAULT_BINARY
 	@if test -f "$(DESTDIR)$(bindir)/gimp-remote-1.2"; then \
 	  echo "cd $(DESTDIR)$(bindir)"; \
 	  cd $(DESTDIR)$(bindir); \
@@ -49,7 +49,9 @@ install-exec-hook:
 	  echo "$(LN_S) gimp-remote-1.2 gimp-remote"; \
 	  $(LN_S) gimp-remote-1.2 gimp-remote; \
 	fi
+endif
 
 uninstall-local:
+if DEFAULT_BINARY
 	rm -f $(DESTDIR)$(bindir)/gimp-remote
 endif
