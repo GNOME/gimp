@@ -110,6 +110,7 @@ app/core/gimpimage-merge.c
 app/core/gimpimage-new.c
 app/core/gimpimage-qmask.c
 app/core/gimpimage-resize.c
+app/core/gimpimage-sample-points.c
 app/core/gimpimage-scale.c
 app/core/gimpimage-undo-push.c
 app/core/gimpimage.c
@@ -243,6 +244,7 @@ app/tools/gimpcolorizetool.c
 app/tools/gimpcoloroptions.c
 app/tools/gimpcolorpickeroptions.c
 app/tools/gimpcolorpickertool.c
+app/tools/gimpcolortool.c
 app/tools/gimpconvolvetool.c
 app/tools/gimpcropoptions.c
 app/tools/gimpcroptool.c
@@ -274,6 +276,8 @@ app/tools/gimppainttool.c
 app/tools/gimppenciltool.c
 app/tools/gimpperspectivetool.c
 app/tools/gimpposterizetool.c
+app/tools/gimprectangleoptions.c
+app/tools/gimprectangletool.c
 app/tools/gimprectselecttool.c
 app/tools/gimprotatetool.c
 app/tools/gimpscaletool.c
