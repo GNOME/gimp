@@ -74,6 +74,11 @@ gboolean gimp_path_import            (gint32           image_ID,
 				      const gchar     *filename,
 				      gboolean         merge,
 				      gboolean         scale);
+gboolean gimp_path_import_string     (gint32           image_ID,
+				      const gchar     *string,
+				      gint             length,
+				      gboolean         merge,
+				      gboolean         scale);
 
 
 G_END_DECLS

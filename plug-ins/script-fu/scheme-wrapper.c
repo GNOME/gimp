@@ -747,7 +747,6 @@ marshall_proc_db_call (LISP a)
             {
               gint n_elements = args[i - 1].data.d_int32;
               LISP list       = car (a);
-              gint j;
 
               if ((n_elements < 0) || (n_elements > nlength (list)))
                 {

@@ -1,3 +1,18 @@
+2005-03-03  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/paths.pdb: added new PDB function
+	gimp_path_import_string() to allow to easily import dynamically
+	created SVG.
+
+	* app/pdb/internal_procs.c
+	* app/pdb/paths_cmds.c
+	* libgimp/gimppaths_pdb.[ch]: regenerated.
+
+	* libgimp/gimp.def: updated.
+
+	* plug-ins/script-fu/siod-wrapper.c (marshall_proc_db_call):
+	removed unused variable.
+
 2005-03-03  Manish Singh  <yosh@gimp.org>
 
 	* configure.in: Add check for ppc64.
@@ -36,7 +51,7 @@
 2005-03-03  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpdrawablecombobox.c
-	* libgimp/gimpimagecombobox.c: set a width-request on the combo boxes.
+	* libgimp/gimpimagecombobox.c: set a width request on the combo boxes.
 	
 	* plug-ins/common/bumpmap.c (SCALE_WIDTH): set a minimum width on
 	the scales.

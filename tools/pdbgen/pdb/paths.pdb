@@ -682,9 +682,8 @@ sub path_import {
     $blurb = 'Import paths from an SVG file.';
 
     $help = <<'HELP';
-This procedure imports paths from an SVG file. This is a temporary solution
-until the new vectors PDB API is in place. Don't rely on this function
-being available in future GIMP releases.
+This procedure imports paths from an SVG file. SVG elements other than
+paths and basic shapes are ignored.
 HELP
 
     $author = $copyright = 'Sven Neumann';
@@ -706,6 +705,37 @@ HELP
     );
 }
 
+sub path_import_string {
+    $blurb = 'Import paths from an SVG string.';
+
+    $help = <<'HELP';
+This procedure works like gimp_path_import() but takes a string rather
+than reading the SVG from a file. This allows you to write scripts that
+generate SVG and feed it to GIMP.
+HELP
+
+    $author = $copyright = 'Sven Neumann';
+    $date = '2005';
+    $since = '2.4';
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'string', type => 'string', no_validate => 1,
+	  desc => 'A string that must be a complete and valid SVG document.' },
+	{ name => 'length', type => 'int32',
+	  desc => 'Number of bytes in string or -1 if the string is NULL terminated.' },
+	{ name => 'merge', type => 'boolean',
+	  desc => 'Merge paths into a single vectors object.' },
+	{ name => 'scale', type => 'boolean',
+	  desc => 'Scale the SVG to image dimensions.' }
+    );
+
+    %invoke = (
+        headers => [ qw("vectors/gimpvectors-import.h") ],
+	code    => 'success = gimp_vectors_import_buffer (gimage, string, length, merge, scale, -1, NULL);'
+    );
+}
+
 @headers = qw(<string.h> "core/gimp.h" "core/gimplist.h"
               "core/gimpchannel-select.h"
               "vectors/gimpanchor.h" "vectors/gimpbezierstroke.h"
@@ -717,7 +747,7 @@ HELP
             path_stroke_current path_get_point_at_dist
 	    path_get_tattoo path_set_tattoo get_path_by_tattoo
             path_get_locked path_set_locked path_to_selection
-	    path_import);
+	    path_import path_import_string);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Paths';

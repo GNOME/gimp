@@ -54,6 +54,7 @@ static ProcRecord path_get_locked_proc;
 static ProcRecord path_set_locked_proc;
 static ProcRecord path_to_selection_proc;
 static ProcRecord path_import_proc;
+static ProcRecord path_import_string_proc;
 
 void
 register_paths_procs (Gimp *gimp)
@@ -73,6 +74,7 @@ register_paths_procs (Gimp *gimp)
   procedural_db_register (gimp, &path_set_locked_proc);
   procedural_db_register (gimp, &path_to_selection_proc);
   procedural_db_register (gimp, &path_import_proc);
+  procedural_db_register (gimp, &path_import_string_proc);
 }
 
 static Argument *
@@ -1335,7 +1337,7 @@ static ProcRecord path_import_proc =
 {
   "gimp_path_import",
   "Import paths from an SVG file.",
-  "This procedure imports paths from an SVG file. This is a temporary solution until the new vectors PDB API is in place. Don't rely on this function being available in future GIMP releases.",
+  "This procedure imports paths from an SVG file. SVG elements other than paths and basic shapes are ignored.",
   "Sven Neumann",
   "Sven Neumann",
   "2003",
@@ -1346,4 +1348,83 @@ static ProcRecord path_import_proc =
   0,
   NULL,
   { { path_import_invoker } }
+};
+
+static Argument *
+path_import_string_invoker (Gimp         *gimp,
+                            GimpContext  *context,
+                            GimpProgress *progress,
+                            Argument     *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  gchar *string;
+  gint32 length;
+  gboolean merge;
+  gboolean scale;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  string = (gchar *) args[1].value.pdb_pointer;
+  if (string == NULL)
+    success = FALSE;
+
+  length = args[2].value.pdb_int;
+
+  merge = args[3].value.pdb_int ? TRUE : FALSE;
+
+  scale = args[4].value.pdb_int ? TRUE : FALSE;
+
+  if (success)
+    success = gimp_vectors_import_buffer (gimage, string, length, merge, scale, -1, NULL);
+
+  return procedural_db_return_args (&path_import_string_proc, success);
+}
+
+static ProcArg path_import_string_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    GIMP_PDB_STRING,
+    "string",
+    "A string that must be a complete and valid SVG document."
+  },
+  {
+    GIMP_PDB_INT32,
+    "length",
+    "Number of bytes in string or -1 if the string is NULL terminated."
+  },
+  {
+    GIMP_PDB_INT32,
+    "merge",
+    "Merge paths into a single vectors object."
+  },
+  {
+    GIMP_PDB_INT32,
+    "scale",
+    "Scale the SVG to image dimensions."
+  }
+};
+
+static ProcRecord path_import_string_proc =
+{
+  "gimp_path_import_string",
+  "Import paths from an SVG string.",
+  "This procedure works like gimp_path_import() but takes a string rather than a filename. This allows you to write scripts that generate SVG and feed it to GIMP.",
+  "Sven Neumann",
+  "Sven Neumann",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  5,
+  path_import_string_inargs,
+  0,
+  NULL,
+  { { path_import_string_invoker } }
 };
