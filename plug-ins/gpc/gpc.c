@@ -66,21 +66,6 @@ gpc_toggle_update(GtkWidget *widget, gpointer data) {
     else
       *toggle_val = FALSE;
 }
-/*
- *  DESTROY callback - quit this plug-in
- */
-void
-gpc_close_callback(GtkWidget *widget, gpointer data) {
-    gtk_main_quit();
-}
-
-/*
- *  CANCEL BUTTON callback - go away without saving state, etc.
- */
-void
-gpc_cancel_callback(GtkWidget *widget, gpointer data) {
-    gtk_widget_destroy(GTK_WIDGET(data));
-}
 
 /*
  *  SCALE UPDATE callback - update the SCALE widget's data
@@ -151,26 +136,6 @@ gpc_set_tooltip(GtkWidget *widget, const char *tip)
 
 
 /*
- *  ADD ACTION BUTTON to a dialog
- */
-void
-gpc_add_action_button(char *label, GtkSignalFunc callback, GtkWidget *dialog,
-    char *tip)
-{
-    GtkWidget *button;
-
-    button = gtk_button_new_with_label(label);
-    GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-    gtk_signal_connect(GTK_OBJECT(button), "clicked", callback, dialog);
-    gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area),
-	button, TRUE, TRUE, 0);
-    gtk_widget_grab_default(button);
-    gtk_widget_show(button);
-    gpc_set_tooltip(button, tip);
-}
-
-
-/*
  *  ADD RADIO BUTTON to a dialog
  */
 void
@@ -188,23 +153,6 @@ gpc_add_radio_button(GSList **group, char *label, GtkWidget *box,
     gtk_widget_show(toggle);
     gtk_widget_show(box);
     gpc_set_tooltip(toggle, tip);
-}
-
-
-/*
- *  ADD LABEL widget to a dialog at given location
- */
-void
-gpc_add_label(char *value, GtkWidget *table, int left, int right,
-    int top, int bottom)
-{
-    GtkWidget *label;
-
-    label = gtk_label_new(value);
-    gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
-    gtk_table_attach(GTK_TABLE(table), label, left, right, top, bottom,
-        GTK_FILL | GTK_EXPAND, GTK_FILL, 5, 0);
-    gtk_widget_show(label);
 }
 
 

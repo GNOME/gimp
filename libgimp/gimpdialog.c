@@ -141,8 +141,6 @@ gimp_dialog_newv (const gchar       *title,
   /*  prepare the action_area  */
   gimp_dialog_create_action_areav (GTK_DIALOG (dialog), args);
 
-  gimp_dialog_set_icon (dialog);
-
   /*  connect the "F1" help key  */
   if (help_func)
     gimp_help_connect_help_accel (dialog, help_func, help_data);

@@ -31,9 +31,6 @@ enum
   HELP_BROWSER_NETSCAPE
 };
 
-/*  the standard help function  */
-void  gimp_standard_help_func (gchar *help_data);
-
 /*  the main help function  */
 void  gimp_help               (gchar *help_data);
 

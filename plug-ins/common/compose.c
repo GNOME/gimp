@@ -49,8 +49,9 @@ static char ident[] = "@(#) GIMP Compose plug-in v1.03 17-Mar-99";
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 /* Declare local functions
@@ -98,8 +99,6 @@ static gint      check_gray (gint32 image_id,
 static void      image_menu_callback (gint32     id,
                                       gpointer   data);
 
-static void      compose_close_callback      (GtkWidget *widget,
-                                              gpointer   data);
 static void      compose_ok_callback         (GtkWidget *widget,
                                               gpointer   data);
 static void      compose_type_toggle_update  (GtkWidget *widget,
@@ -813,23 +812,22 @@ compose_dialog (char   *compose_type,
 			 NULL);
 
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (compose_close_callback),
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
   /*  parameter settings  */
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 0);
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, TRUE, TRUE, 0);
   gtk_widget_show (hbox);
 
   /* The left frame keeps the compose type toggles */
-  left_frame = gtk_frame_new (_("Compose channels:"));
+  left_frame = gtk_frame_new (_("Compose Channels"));
   gtk_frame_set_shadow_type (GTK_FRAME (left_frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_set_border_width (GTK_CONTAINER (left_frame), 5);
-  gtk_box_pack_start (GTK_BOX (hbox), left_frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), left_frame, FALSE, FALSE, 0);
 
-  left_vbox = gtk_vbox_new (FALSE, 5);
-  gtk_container_set_border_width (GTK_CONTAINER (left_vbox), 5);
+  left_vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (left_vbox), 4);
   gtk_container_add (GTK_CONTAINER (left_frame), left_vbox);
 
   /* The right frame keeps the selection menues for images. */
@@ -837,31 +835,30 @@ compose_dialog (char   *compose_type,
   /* in the left frame is changed, fill in the right part first. */
   /* Otherwise it can occur, that a non-existing label might be changed. */
 
-  right_frame = gtk_frame_new (_("Channel representations:"));
+  right_frame = gtk_frame_new (_("Channel Representations"));
   gtk_frame_set_shadow_type (GTK_FRAME (right_frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_set_border_width (GTK_CONTAINER (right_frame), 5);
   gtk_box_pack_start (GTK_BOX (hbox), right_frame, TRUE, TRUE, 0);
 
-  right_vbox = gtk_vbox_new (FALSE, 5);
-  gtk_container_set_border_width (GTK_CONTAINER (right_vbox), 5);
+  right_vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (right_vbox), 4);
   gtk_container_add (GTK_CONTAINER (right_frame), right_vbox);
 
-  table = gtk_table_new (MAX_COMPOSE_IMAGES, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 5);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 5);
+  table = gtk_table_new (MAX_COMPOSE_IMAGES, 2, FALSE);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_box_pack_start (GTK_BOX (right_vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
   /* Channel names */
   for (j = 0; j < MAX_COMPOSE_IMAGES; j++)
-  {
-    composeint.channel_label[j] = label =
-         gtk_label_new (gettext (compose_dsc[compose_idx].channel_name[j]));
-    gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-    gtk_table_attach (GTK_TABLE (table), label, 1, 2, j, j+1,
-                      GTK_FILL, GTK_FILL, 0, 0);
-    gtk_widget_show (label);
-  }
+    {
+      composeint.channel_label[j] = label =
+	gtk_label_new (gettext (compose_dsc[compose_idx].channel_name[j]));
+      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+      gtk_table_attach (GTK_TABLE (table), label, 0, 1, j, j+1,
+			GTK_FILL, GTK_FILL, 0, 0);
+      gtk_widget_show (label);
+    }
   /* Set sensitivity of last label */
   sensitive = (strcmp (compose_dsc[compose_idx].channel_name[3],
                        CHNL_NA) != 0);
@@ -869,35 +866,36 @@ compose_dialog (char   *compose_type,
 
   /* Menues to select images */
   for (j = 0; j <  MAX_COMPOSE_IMAGES; j++)
-  {
-    composeint.select_ID[j] = drawable_ID;
-    composeint.channel_menu[j] = image_option_menu = gtk_option_menu_new ();
-    image_menu = gimp_drawable_menu_new (check_gray, image_menu_callback,
-                        &(composeint.select_ID[j]), composeint.select_ID[j]);
-    gtk_table_attach (GTK_TABLE (table), image_option_menu, 2, 3, j, j+1,
-                      GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+    {
+      composeint.select_ID[j] = drawable_ID;
+      composeint.channel_menu[j] = image_option_menu = gtk_option_menu_new ();
+      image_menu = gimp_drawable_menu_new (check_gray, image_menu_callback,
+					   &(composeint.select_ID[j]),
+					   composeint.select_ID[j]);
+      gtk_table_attach (GTK_TABLE (table), image_option_menu, 1, 2, j, j+1,
+			GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
-    gtk_widget_show (image_option_menu);
-    gtk_option_menu_set_menu (GTK_OPTION_MENU (image_option_menu), image_menu);
-  }
+      gtk_widget_show (image_option_menu);
+      gtk_option_menu_set_menu (GTK_OPTION_MENU (image_option_menu), image_menu);
+    }
   gtk_widget_set_sensitive (composeint.channel_menu[3], sensitive);
 
   /* Compose types */
   group = NULL;
   for (j = 0; j < MAX_COMPOSE_TYPES; j++)
-  {
-    toggle = gtk_radio_button_new_with_label (group,
-                                              gettext(compose_dsc[j].compose_type));
-    group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-    gtk_box_pack_start (GTK_BOX (left_vbox), toggle, TRUE, TRUE, 0);
-    composeint.compose_flag[j] = (j == compose_idx);
-    gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-                        (GtkSignalFunc) compose_type_toggle_update,
-                        &(composeint.compose_flag[j]));
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                  composeint.compose_flag[j]);
-    gtk_widget_show (toggle);
-  }
+    {
+      toggle = gtk_radio_button_new_with_label (group,
+						gettext(compose_dsc[j].compose_type));
+      group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+      gtk_box_pack_start (GTK_BOX (left_vbox), toggle, TRUE, TRUE, 0);
+      composeint.compose_flag[j] = (j == compose_idx);
+      gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+			  (GtkSignalFunc) compose_type_toggle_update,
+			  &(composeint.compose_flag[j]));
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				    composeint.compose_flag[j]);
+      gtk_widget_show (toggle);
+    }
 
   gtk_widget_show (left_vbox);
   gtk_widget_show (right_vbox);
@@ -1021,17 +1019,10 @@ image_menu_callback (gint32   id,
 
 
 static void
-compose_close_callback (GtkWidget *widget,
-                        gpointer   data)
-{
-  gtk_main_quit ();
-}
-
-
-static void
 compose_ok_callback (GtkWidget *widget,
                      gpointer   data)
-{int j;
+{
+  int j;
 
   composeint.run = TRUE;
   gtk_widget_destroy (GTK_WIDGET (data));

@@ -583,39 +583,40 @@ DIALOG ()
   gtk_widget_show (frame);
   gtk_widget_show (hbox);
 #else
-  frame = gtkW_frame_new (GTK_DIALOG (dlg)->vbox, _("Parameter settings"));
+  frame = gtkW_frame_new (GTK_DIALOG (dlg)->vbox, _("Parameter Settings"));
   table = gtkW_table_new (frame, 7, 2);
-  gtkW_table_add_menu (table, _("Horizontal style"), 0, index++,
+  gtkW_table_add_menu (table, _("Horizontal Style:"), 0, index++,
 		       (GtkSignalFunc) gtkW_menu_update,
 		       &VALS.h_style,
 		       h_style_menu,
 		       sizeof (h_style_menu) / sizeof (h_style_menu[0]));
-  gtkW_table_add_menu (table, _("Horizontal base"), 0, index++,
+  gtkW_table_add_menu (table, _("Horizontal Base:"), 0, index++,
 		       (GtkSignalFunc) gtkW_menu_update,
 		       &VALS.h_base,
 		       h_base_menu,
 		       sizeof (h_base_menu) / sizeof (h_base_menu[0]));
-  gtkW_table_add_menu (table, _("Vertical style"), 0, index++,
+  gtkW_table_add_menu (table, _("Vertical Style:"), 0, index++,
 		       (GtkSignalFunc) gtkW_menu_update,
 		       &VALS.v_style,
 		       v_style_menu,
 		       sizeof (v_style_menu) / sizeof (v_style_menu[0]));
-  gtkW_table_add_menu (table, _("Vertical base"), 0, index++,
+  gtkW_table_add_menu (table, _("Vertical Base:"), 0, index++,
 		       (GtkSignalFunc) gtkW_menu_update,
 		       &VALS.v_base,
 		       v_base_menu,
 		       sizeof (v_base_menu) / sizeof (v_base_menu[0]));
 #endif
 
-  gtkW_table_add_toggle (table, _("Ignore the bottom layer even if visible"),
+  gtkW_table_add_toggle (table, _("Ignore the Bottom Layer even if Visible"),
 			 0, index++,
 			 (GtkSignalFunc) gtkW_toggle_update,
 			 &VALS.ignore_bottom);
-  gtkW_table_add_toggle (table, _("Use the (invisible) bottom layer as the base"),
+  gtkW_table_add_toggle (table,
+			 _("Use the (Invisible) Bottom Layer as the Base"),
 			 0, index++,
 			 (GtkSignalFunc) gtkW_toggle_update,
 			 &VALS.base_is_bottom_layer);
-  gtkW_table_add_iscale_entry (table, _("Grid size"),
+  gtkW_table_add_iscale_entry (table, _("Grid Size:"),
 			       0, index++,
 			       (GtkSignalFunc) gtkW_iscale_update,
 			       (GtkSignalFunc) gtkW_ientry_update,
@@ -753,8 +754,8 @@ gtkW_message_dialog (gint gtk_was_initialized, gchar *message)
   
   dlg = gtkW_message_dialog_new (PLUG_IN_NAME);
   
-  table = gtk_table_new (1,1, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), GTKW_BORDER_WIDTH);
+  table = gtk_table_new (1, 1, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
 
   label = gtk_label_new (message);
@@ -796,7 +797,9 @@ gtkW_table_new (GtkWidget *parent, gint col, gint row)
   GtkWidget	*table;
   
   table = gtk_table_new (col,row, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), GTKW_BORDER_WIDTH);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (parent), table);
   gtk_widget_show (table);
   
@@ -857,9 +860,9 @@ gtkW_frame_new (GtkWidget *parent,
   
   frame = gtk_frame_new (name);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), GTKW_BORDER_WIDTH);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   if (parent != NULL)
-    gtk_box_pack_start (GTK_BOX(parent), frame, FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (parent), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   return frame;
@@ -902,9 +905,9 @@ gtkW_table_add_iscale_entry (GtkWidget	*table,
   GtkWidget *label, *hbox, *scale, *entry;
   
   label = gtk_label_new (name);
-  gtk_misc_set_alignment (GTK_MISC(label), 0.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC(label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE(table), label, x, x+1, y, y+1,
-		    GTK_FILL|GTK_EXPAND, 0 & GTK_FILL, 5, 0);
+		    GTK_FILL|GTK_EXPAND, 0 & GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   hbox = gtk_hbox_new (FALSE, 5);
@@ -917,9 +920,8 @@ gtkW_table_add_iscale_entry (GtkWidget	*table,
   scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
   gtk_widget_set_usize (scale, GTKW_SCALE_WIDTH, 0);
   gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
+  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
   gtk_scale_set_digits (GTK_SCALE (scale), 0);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
 		      (GtkSignalFunc) scale_update, value);
 
@@ -1020,9 +1022,9 @@ gtkW_table_add_menu (GtkWidget *table,
   gint i;
 
   label = gtk_label_new (name);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, x, x + 1, y, y + 1,
-		    GTK_FILL|GTK_EXPAND, 0 & GTK_FILL, GTKW_BORDER_WIDTH, 0);
+		    GTK_FILL|GTK_EXPAND, 0 & GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   menu = gtk_menu_new ();

@@ -27,26 +27,26 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
-#include "gtk/gtk.h"
-#include "config.h"
-#include "libgimp/gimp.h"
-#include "logo.h"
+
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+#include <libgimp/gimpmath.h>
+
 #include "libgimp/stdplugins-intl.h"
 
-/***** Macros *****/
-
-#define ALIEN_MIN(a, b) (((a) < (b)) ? (a) : (b))
-#define ALIEN_MAX(a, b) (((a) > (b)) ? (a) : (b))
-
+#include "logo.h"
 
 /***** Magic numbers *****/
 
 #define PREVIEW_SIZE 128
 #define SCALE_WIDTH  200
-#define ENTRY_WIDTH  45
+#define ENTRY_WIDTH   45
 
 #ifndef M_PI
 #define M_PI  3.14159265358979323846
@@ -58,24 +58,26 @@
 #define HSL_MODEL 1 
 
 /***** Types *****/
-typedef struct {
-        gdouble redfrequency;
-        gdouble redangle;
-        gdouble greenfrequency;
-        gdouble greenangle;
-        gdouble bluefrequency;
-        gdouble blueangle;
-        gint	colormodel;
-        gint    redmode;
-        gint    greenmode;
-        gint    bluemode;
+typedef struct
+{
+  gdouble redfrequency;
+  gdouble redangle;
+  gdouble greenfrequency;
+  gdouble greenangle;
+  gdouble bluefrequency;
+  gdouble blueangle;
+  gint	colormodel;
+  gint    redmode;
+  gint    greenmode;
+  gint    bluemode;
 } alienmap2_vals_t;
 
-typedef struct {
-        GtkWidget *preview;
-        guchar    *image;
-        guchar    *wimage;
-        gint run;
+typedef struct
+{
+  GtkWidget *preview;
+  guchar    *image;
+  guchar    *wimage;
+  gint run;
 } alienmap2_interface_t;
 
 
@@ -89,47 +91,44 @@ static void      run    (char      *name,
         		 int       *nreturn_vals,
         		 GParam   **return_vals);
 
-static void      alienmap2 	    (GDrawable  *drawable);
+static void      alienmap2 	       (GDrawable  *drawable);
 static void      alienmap2_render_row  (const guchar *src_row,
-        			     guchar *dest_row,
-        			     gint row,
-        			     gint row_width,
-        			     gint bytes);
-static void      alienmap2_get_pixel(int x, int y, guchar *pixel);
-void    	 transform           (short int *, short int *, short int *);
+					guchar *dest_row,
+					gint row,
+					gint row_width,
+					gint bytes);
+static void      alienmap2_get_pixel   (int x, int y, guchar *pixel);
+static void    	 transform             (short int *, short int *, short int *);
 
 
-static void      build_preview_source_image(void);
+static void      build_preview_source_image (void);
 
-static gint      alienmap2_dialog(void);
-static void      dialog_update_preview(void);
-static void      dialog_create_value(char *title, GtkTable *table, int row, gdouble *value,
-        			     int left, int right, const char *desc);
-static void      dialog_scale_update(GtkAdjustment *adjustment, gdouble *value);
-static void      dialog_entry_update(GtkWidget *widget, gdouble *value);
-static void      dialog_close_callback(GtkWidget *widget, gpointer data);
-static void      dialog_ok_callback(GtkWidget *widget, gpointer data);
-static void      dialog_cancel_callback(GtkWidget *widget, gpointer data);
-static void      alienmap2_toggle_update    (GtkWidget *widget,
-        				    gpointer   data);
-void             alienmap2_logo_dialog (void);
-static void      rgb_to_hsl            (gdouble    r,
-					gdouble    g,
-					gdouble    b,
-					gdouble *  h,
-					gdouble *  s,
-					gdouble *  l);
-static void      hsl_to_rgb            (gdouble    h,
-					gdouble    sl,
-					gdouble    l,
-					gdouble *  r,
-					gdouble *  g,
-					gdouble *  b);
+static gint      alienmap2_dialog        (void);
+static void      dialog_update_preview   (void);
+static void      dialog_create_value     (char *title, GtkTable *table,
+					  int row, gdouble *value,
+					  int left, int right, const char *desc);
+static void      dialog_scale_update     (GtkAdjustment *adjustment,
+					  gdouble *value);
+static void      dialog_entry_update     (GtkWidget *widget, gdouble *value);
+static void      dialog_ok_callback      (GtkWidget *widget, gpointer data);
+static void      alienmap2_toggle_update (GtkWidget *widget,
+					  gpointer   data);
+static void      alienmap2_logo_dialog   (void);
 
+static void      rgb_to_hsl (gdouble    r,
+			     gdouble    g,
+			     gdouble    b,
+			     gdouble *  h,
+			     gdouble *  s,
+			     gdouble *  l);
+static void      hsl_to_rgb (gdouble    h,
+			     gdouble    sl,
+			     gdouble    l,
+			     gdouble *  r,
+			     gdouble *  g,
+			     gdouble *  b);
 
-
-					    
-					    
 /***** Variables *****/
 
 GtkWidget *maindlg;
@@ -145,25 +144,27 @@ GPlugInInfo PLUG_IN_INFO =
   run,     /* run_proc */
 };
 
-static alienmap2_interface_t wint = {
-        NULL,  /* preview */
-        NULL,  /* image */
-        NULL,  /* wimage */
-        FALSE  /* run */
-}; /* wint */
+static alienmap2_interface_t wint =
+{
+  NULL,  /* preview */
+  NULL,  /* image */
+  NULL,  /* wimage */
+  FALSE  /* run */
+};
 
-static alienmap2_vals_t wvals = {
-        1.0,
-        0.0,
-        1.0,
-        0.0,
-        1.0,
-        0.0,
-        RGB_MODEL,
-        TRUE,
-        TRUE,
-        TRUE,
-}; /* wvals */
+static alienmap2_vals_t wvals =
+{
+  1.0,
+  0.0,
+  1.0,
+  0.0,
+  1.0,
+  0.0,
+  RGB_MODEL,
+  TRUE,
+  TRUE,
+  TRUE,
+};
 
 static GDrawable *drawable;
 static gint   tile_width, tile_height;
@@ -180,11 +181,10 @@ gint use_hsl;
 
 /***** Functions *****/
 
-
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef args[] =
   {
@@ -215,18 +215,16 @@ query ()
         		  "Martin Weber (martin.weber@usa.net, http://diverse.freepage.de/martin.weber",
         		  _("24th April 1998"),
         		  N_("<Image>/Filters/Colors/Map/Alien Map 2..."),
-        		  "RGB_MODEL*",
+        		  "RGB*",
         		  PROC_PLUG_IN,
         		  nargs, nreturn_vals,
         		  args, return_vals);
 }
 
-
-
 void
-transform  (short int *r,
-            short int *g,
-            short int *b)
+transform (short int *r,
+	   short int *g,
+	   short int *b)
 {
   gint red, green, blue;
   gdouble r1, g1, b1, h, s, l;
@@ -241,11 +239,11 @@ transform  (short int *r,
       b1 = (gdouble) blue / 255.0;
       rgb_to_hsl (r1, g1, b1, &h, &s, &l);
       if (wvals.redmode)
-          h    = 0.5*(1.0+sin(((2*h-1.0)*wvals.redfrequency+wvals.redangle/180.0)*M_PI));
+	h = 0.5*(1.0+sin(((2*h-1.0)*wvals.redfrequency+wvals.redangle/180.0)*M_PI));
       if (wvals.greenmode)
-          s    = 0.5*(1.0+sin(((2*s-1.0)*wvals.greenfrequency+wvals.greenangle/180.0)*M_PI));
+	s = 0.5*(1.0+sin(((2*s-1.0)*wvals.greenfrequency+wvals.greenangle/180.0)*M_PI));
       if (wvals.bluemode)
-          l    = 0.5*(1.0+sin(((2*l-1.0)*wvals.bluefrequency+wvals.blueangle/180.0)*M_PI));
+	l = 0.5*(1.0+sin(((2*l-1.0)*wvals.bluefrequency+wvals.blueangle/180.0)*M_PI));
       hsl_to_rgb (h, s, l, &r1, &g1, &b1);
       red = (gint) (255.0 * r1 + 0.5);
       green = (gint) (255.0 * g1 + 0.5);
@@ -254,18 +252,17 @@ transform  (short int *r,
   else if (wvals.colormodel == RGB_MODEL)
     {
       if (wvals.redmode)
-          red    = (int) (127.5*(1.0+sin(((red/127.5-1.0)*wvals.redfrequency+wvals.redangle/180.0)*M_PI))+0.5);
+	red = (int) (127.5*(1.0+sin(((red/127.5-1.0)*wvals.redfrequency+wvals.redangle/180.0)*M_PI))+0.5);
       if (wvals.greenmode)
-          green    = (int) (127.5*(1.0+sin(((green/127.5-1.0)*wvals.greenfrequency+wvals.greenangle/180.0)*M_PI))+0.5);
+	green = (int) (127.5*(1.0+sin(((green/127.5-1.0)*wvals.greenfrequency+wvals.greenangle/180.0)*M_PI))+0.5);
       if (wvals.bluemode)
-          blue    = (int) (127.5*(1.0+sin(((blue/127.5-1.0)*wvals.bluefrequency+wvals.blueangle/180.0)*M_PI))+0.5);
+	blue = (int) (127.5*(1.0+sin(((blue/127.5-1.0)*wvals.bluefrequency+wvals.blueangle/180.0)*M_PI))+0.5);
     }
    
   *r = red;
   *g = green;
   *b = blue;
 }
-
 
 static void
 run (char    *name,
@@ -292,11 +289,9 @@ run (char    *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-
-
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
-/*   image_ID = param[1].data.d_image; */
+  /* image_ID = param[1].data.d_image; */
   tile_width  = gimp_tile_width();
   tile_height = gimp_tile_height();
 
@@ -315,74 +310,79 @@ run (char    *name,
   xhsiz = (double) (sel_width - 1) / 2.0;
   yhsiz = (double) (sel_height - 1) / 2.0;
 
-        if (xhsiz < yhsiz) {
-        	scale_x = yhsiz / xhsiz;
-        	scale_y = 1.0;
-        } else if (xhsiz > yhsiz) {
-        	scale_x = 1.0;
-        	scale_y = xhsiz / yhsiz;
-        } else {
-        	scale_x = 1.0;
-        	scale_y = 1.0;
-        } /* else */
+  if (xhsiz < yhsiz)
+    {
+      scale_x = yhsiz / xhsiz;
+      scale_y = 1.0;
+    }
+  else if (xhsiz > yhsiz)
+    {
+      scale_x = 1.0;
+      scale_y = xhsiz / yhsiz;
+    }
+  else
+    {
+      scale_x = 1.0;
+      scale_y = 1.0;
+    }
 
-        /* Calculate preview size */
-        if (sel_width > sel_height) {
-        	pwidth  = ALIEN_MIN(sel_width, PREVIEW_SIZE);
-        	pheight = sel_height * pwidth / sel_width;
-        } else {
-        	pheight = ALIEN_MIN(sel_height, PREVIEW_SIZE);
-        	pwidth  = sel_width * pheight / sel_height;
-        } /* else */
+  /* Calculate preview size */
+  if (sel_width > sel_height)
+    {
+      pwidth  = MIN(sel_width, PREVIEW_SIZE);
+      pheight = sel_height * pwidth / sel_width;
+    }
+  else
+    {
+      pheight = MIN(sel_height, PREVIEW_SIZE);
+      pwidth  = sel_width * pheight / sel_height;
+    }
 
-        preview_width  = ALIEN_MAX(pwidth, 2);  /* Min size is 2 */
-        preview_height = ALIEN_MAX(pheight, 2);
+  preview_width  = MAX(pwidth, 2);  /* Min size is 2 */
+  preview_height = MAX(pheight, 2);
 
-        /* See how we will run */
-        switch (run_mode) {
-        	case RUN_INTERACTIVE:
-        		/* Possibly retrieve data */
+  /* See how we will run */
+  switch (run_mode)
+    {
+    case RUN_INTERACTIVE:
+      /* Possibly retrieve data */
+      gimp_get_data("plug_in_alienmap2", &wvals);
 
-        		gimp_get_data("plug_in_alienmap2", &wvals);
+      /* Get information from the dialog */
+      if (!alienmap2_dialog())
+	return;
 
-        		/* Get information from the dialog */
+      break;
 
-        		if (!alienmap2_dialog())
-        			return;
+    case RUN_NONINTERACTIVE:
+      /* Make sure all the arguments are present */
+      if (nparams != 13)
+	status = STATUS_CALLING_ERROR;
 
-        		break;
+      if (status == STATUS_SUCCESS)
+	{
+	  wvals.redfrequency = param[3].data.d_float;
+	  wvals.redangle = param[4].data.d_float;
+	  wvals.greenfrequency = param[5].data.d_float;
+	  wvals.greenangle = param[6].data.d_float;
+	  wvals.bluefrequency = param[7].data.d_float;
+	  wvals.blueangle = param[8].data.d_float;
+	  wvals.colormodel = param[9].data.d_int8;
+	  wvals.redmode = param[10].data.d_int8 ? TRUE : FALSE;
+	  wvals.greenmode = param[11].data.d_int8 ? TRUE : FALSE;
+	  wvals.bluemode = param[12].data.d_int8 ? TRUE : FALSE;
+	}
 
-        	case RUN_NONINTERACTIVE:
-        		/* Make sure all the arguments are present */
+      break;
 
-        		if (nparams != 13)
-        			status = STATUS_CALLING_ERROR;
+    case RUN_WITH_LAST_VALS:
+      /* Possibly retrieve data */
+      gimp_get_data("plug_in_alienmap2", &wvals);
+      break;
 
-        		if (status == STATUS_SUCCESS)
-
-        			wvals.redfrequency = param[3].data.d_float;
-        			wvals.redangle = param[4].data.d_float;
-        			wvals.greenfrequency = param[5].data.d_float;
-        			wvals.greenangle = param[6].data.d_float;
-        			wvals.bluefrequency = param[7].data.d_float;
-        			wvals.blueangle = param[8].data.d_float;
-        			wvals.colormodel = param[9].data.d_int8;
-        			wvals.redmode = param[10].data.d_int8 ? TRUE : FALSE;
-        			wvals.greenmode = param[11].data.d_int8 ? TRUE : FALSE;
-        			wvals.bluemode = param[12].data.d_int8 ? TRUE : FALSE;
-
-        		break;
-
-        	case RUN_WITH_LAST_VALS:
-        		/* Possibly retrieve data */
-
-        		gimp_get_data("plug_in_alienmap2", &wvals);
-        		break;
-
-        	default:
-        		break;
-        } /* switch */
-
+    default:
+      break;
+    }
 
   if (status == STATUS_SUCCESS)
     {
@@ -391,27 +391,23 @@ run (char    *name,
         {
           gimp_progress_init (_("AlienMap2: Transforming ..."));
 
-        	/* Set the tile cache size */
+	  /* Set the tile cache size */
+	  gimp_tile_cache_ntiles(2*(drawable->width / gimp_tile_width()+1));
 
-        	gimp_tile_cache_ntiles(2*(drawable->width / gimp_tile_width()+1));
+	  /* Run! */
 
-        	/* Run! */
-
-
-/*          gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width()+1));*/
+	  /* gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width()+1));*/
           alienmap2 (drawable);
-        	if (run_mode != RUN_NONINTERACTIVE)
-        		gimp_displays_flush();
+	  if (run_mode != RUN_NONINTERACTIVE)
+	    gimp_displays_flush();
 
-        	/* Store data */
-
-        	if (run_mode == RUN_INTERACTIVE)
-        		gimp_set_data("plug_in_alienmap2", &wvals, sizeof(alienmap2_vals_t));
-
+	  /* Store data */
+	  if (run_mode == RUN_INTERACTIVE)
+	    gimp_set_data("plug_in_alienmap2", &wvals, sizeof(alienmap2_vals_t));
         }
       else
         {
-/*           gimp_message("This filter only applies on RGB_MODEL-images"); */
+	  /* gimp_message("This filter only applies on RGB_MODEL-images"); */
           status = STATUS_EXECUTION_ERROR;
         }
     }
@@ -421,61 +417,55 @@ run (char    *name,
   gimp_drawable_detach (drawable);
 }
 
-/*****/
-
 static void
-alienmap2_get_pixel(int x, int y, guchar *pixel)
+alienmap2_get_pixel (int     x,
+		     int     y,
+		     guchar *pixel)
 {
-        static gint row  = -1;
-        static gint col  = -1;
+  static gint row  = -1;
+  static gint col  = -1;
 
-        gint    newcol, newrow;
-        gint    newcoloff, newrowoff;
-        guchar *p;
-        int     i;
+  gint    newcol, newrow;
+  gint    newcoloff, newrowoff;
+  guchar *p;
+  int     i;
 
-        if ((x < 0) || (x >= img_width) || (y < 0) || (y >= img_height)) {
-        	pixel[0] = 0;
-        	pixel[1] = 0;
-        	pixel[2] = 0;
-        	pixel[3] = 0;
+  if ((x < 0) || (x >= img_width) || (y < 0) || (y >= img_height))
+    {
+      pixel[0] = 0;
+      pixel[1] = 0;
+      pixel[2] = 0;
+      pixel[3] = 0;
 
-        	return;
-        } /* if */
+      return;
+    }
 
-        newcol    = x / tile_width; /* The compiler should optimize this */
-        newcoloff = x % tile_width;
-        newrow    = y / tile_height;
-        newrowoff = y % tile_height;
+  newcol    = x / tile_width; /* The compiler should optimize this */
+  newcoloff = x % tile_width;
+  newrow    = y / tile_height;
+  newrowoff = y % tile_height;
 
-        if ((col != newcol) || (row != newrow) || (the_tile == NULL)) {
+  if ((col != newcol) || (row != newrow) || (the_tile == NULL))
+    {
+      if (the_tile != NULL)
+	gimp_tile_unref(the_tile, FALSE);
 
-        	if (the_tile != NULL)
-        		gimp_tile_unref(the_tile, FALSE);
-
-        	the_tile = gimp_drawable_get_tile(drawable, FALSE, newrow, newcol);
-        	gimp_tile_ref(the_tile);
-        	col = newcol;
-        	row = newrow;
-        } /* if */
-        p = the_tile->data + the_tile->bpp * (the_tile->ewidth * newrowoff + newcoloff);
-        for (i = img_bpp; i; i--)
-        	*pixel++ = *p++;
-
-} /* alienmap2_get_pixel */
-
-
+      the_tile = gimp_drawable_get_tile(drawable, FALSE, newrow, newcol);
+      gimp_tile_ref(the_tile);
+      col = newcol;
+      row = newrow;
+    }
+  p = the_tile->data + the_tile->bpp * (the_tile->ewidth * newrowoff + newcoloff);
+  for (i = img_bpp; i; i--)
+    *pixel++ = *p++;
+}
 
 static void
 alienmap2_render_row (const guchar *src_row,
-        	  guchar *dest_row,
-        	  gint row,
-        	  gint row_width,
-		  gint bytes)
-
-
-
-
+		      guchar       *dest_row,
+		      gint          row,
+		      gint          row_width,
+		      gint          bytes)
 {
   gint col, bytenum;
 
@@ -500,7 +490,6 @@ alienmap2_render_row (const guchar *src_row,
           }
     }
 }
-
 
 static void
 alienmap2 (GDrawable *drawable)
@@ -532,14 +521,11 @@ alienmap2 (GDrawable *drawable)
   src_row = (guchar *) malloc ((x2 - x1) * bytes);
   dest_row = (guchar *) malloc ((x2 - x1) * bytes);
 
-
   /*  initialize the pixel regions  */
   gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
   gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
 
-
   for (row = y1; row < y2; row++)
-
     {
       gimp_pixel_rgn_get_row (&srcPR, src_row, x1, row, (x2 - x1));
 
@@ -565,463 +551,414 @@ alienmap2 (GDrawable *drawable)
   free (dest_row);
 }
 
-/*****/
-
 static void
-build_preview_source_image(void)
+build_preview_source_image (void)
 {
-        double  left, right, bottom, top;
-        double  px, py;
-        double  dx, dy;
-        int     x, y;
-        guchar *p;
-        guchar  pixel[4];
+  double  left, right, bottom, top;
+  double  px, py;
+  double  dx, dy;
+  int     x, y;
+  guchar *p;
+  guchar  pixel[4];
 
-        wint.image  = g_malloc(preview_width * preview_height * 3 * sizeof(guchar));
-        wint.wimage = g_malloc(preview_width * preview_height * 3 * sizeof(guchar));
+  wint.image  = g_malloc(preview_width * preview_height * 3 * sizeof(guchar));
+  wint.wimage = g_malloc(preview_width * preview_height * 3 * sizeof(guchar));
 
-        left   = sel_x1;
-        right  = sel_x2 - 1;
-        bottom = sel_y2 - 1;
-        top    = sel_y1;
+  left   = sel_x1;
+  right  = sel_x2 - 1;
+  bottom = sel_y2 - 1;
+  top    = sel_y1;
 
-        dx = (right - left) / (preview_width - 1);
-        dy = (bottom - top) / (preview_height - 1);
+  dx = (right - left) / (preview_width - 1);
+  dy = (bottom - top) / (preview_height - 1);
 
-        py = top;
+  py = top;
 
-        p = wint.image;
+  p = wint.image;
 
-        for (y = 0; y < preview_height; y++) {
-        	px = left;
-        	for (x = 0; x < preview_width; x++) {
-        		alienmap2_get_pixel((int) px, (int) py, pixel);
+  for (y = 0; y < preview_height; y++)
+    {
+      px = left;
+      for (x = 0; x < preview_width; x++)
+	{
+	  alienmap2_get_pixel((int) px, (int) py, pixel);
 
-        		*p++ = pixel[0];
-        		*p++ = pixel[1];
-        		*p++ = pixel[2];
+	  *p++ = pixel[0];
+	  *p++ = pixel[1];
+	  *p++ = pixel[2];
 
-        		px += dx;
-        	} /* for */
+	  px += dx;
+	}
 
-        	py += dy;
-        } /* for */
-} /* build_preview_source_image */
-
-
-static void
-set_tooltip (GtkTooltips *tooltips, GtkWidget *widget, const char *desc)
-{
-  if (desc && desc[0])
-    gtk_tooltips_set_tip (tooltips, widget, (char *) desc, NULL);
+      py += dy;
+    }
 }
 
-
-/*****/
-
 static gint
-alienmap2_dialog(void)
+alienmap2_dialog (void)
 {
-        GtkWidget  *dialog;
-        GtkWidget  *top_table;
-        GtkWidget  *frame;
-        GtkWidget  *toggle;
-        GtkWidget  *toggle_vbox;
-        GtkWidget  *table;
-        GtkWidget  *hbbox;
-        GtkWidget  *button;
-        GSList     *mode_group = NULL;
-        gint        argc;
-        gchar     **argv;
-        guchar     *color_cube;
+  GtkWidget  *dialog;
+  GtkWidget  *top_table;
+  GtkWidget  *frame;
+  GtkWidget  *toggle;
+  GtkWidget  *toggle_vbox;
+  GtkWidget  *table;
+  GSList  *mode_group = NULL;
+  gint     argc;
+  gchar  **argv;
+  guchar  *color_cube;
 
+  use_rgb = (wvals.colormodel == RGB_MODEL);
+  use_hsl = (wvals.colormodel == HSL_MODEL);
 
-        use_rgb = (wvals.colormodel == RGB_MODEL);
-        use_hsl = (wvals.colormodel == HSL_MODEL);
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
+  argv[0] = g_strdup ("alienmap2");
 
-        argc    = 1;
-        argv    = g_new(gchar *, 1);
-        argv[0] = g_strdup("alienmap");
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
 
-        gtk_init(&argc, &argv);
-        gtk_rc_parse(gimp_gtkrc());
+  gtk_preview_set_gamma (gimp_gamma ());
+  gtk_preview_set_install_cmap (gimp_install_cmap ());
+  color_cube = gimp_color_cube ();
+  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
+			      color_cube[2], color_cube[3]);
 
-        gtk_preview_set_gamma(gimp_gamma());
-        gtk_preview_set_install_cmap(gimp_install_cmap());
-        color_cube = gimp_color_cube();
-        gtk_preview_set_color_cube(color_cube[0], color_cube[1], color_cube[2], color_cube[3]);
+  gtk_widget_set_default_visual (gtk_preview_get_visual ());
+  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
-        gtk_widget_set_default_visual(gtk_preview_get_visual());
-        gtk_widget_set_default_colormap(gtk_preview_get_cmap());
+  build_preview_source_image ();
 
-        build_preview_source_image();
-        dialog = maindlg = gtk_dialog_new();
-        gtk_window_set_title(GTK_WINDOW(dialog), _("AlienMap2"));
-        gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
-        gtk_container_border_width(GTK_CONTAINER(dialog), 0);
-        gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
-        		   (GtkSignalFunc) dialog_close_callback,
-        		   NULL);
+  dialog = maindlg =
+    gimp_dialog_new (_("AlienMap2"), "alienmap2",
+		     gimp_plugin_help_func, "filters/alienmap2.html",
+		     GTK_WIN_POS_MOUSE,
+		     FALSE, TRUE, FALSE,
 
-        top_table = gtk_table_new(7, 4, FALSE);
-        gtk_container_border_width(GTK_CONTAINER(top_table), 6);
-        gtk_table_set_row_spacings(GTK_TABLE(top_table), 4);
-        gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), top_table, FALSE, FALSE, 0);
-        gtk_widget_show(top_table);
+		     _("About"), alienmap2_logo_dialog,
+		     NULL, NULL, NULL, FALSE, FALSE,
+		     _("OK"), dialog_ok_callback,
+		     NULL, NULL, NULL, TRUE, FALSE,
+		     _("Cancel"), gtk_widget_destroy,
+		     NULL, 1, NULL, FALSE, TRUE,
 
-	/* use black as foreground: */
-        tips = gtk_tooltips_new ();
-        tips_fg.red   = 0;
-        tips_fg.green = 0;
-        tips_fg.blue  = 0;
-       /* postit yellow (khaki) as background: */
-        gdk_color_alloc (gtk_widget_get_colormap (top_table), &tips_fg);
-        tips_bg.red   = 61669;
-        tips_bg.green = 59113;
-        tips_bg.blue  = 35979;
-        gdk_color_alloc (gtk_widget_get_colormap (top_table), &tips_bg);
-        gtk_tooltips_set_colors (tips,&tips_bg,&tips_fg);
+		     NULL);
 
-        /* Preview */
+  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
+		      NULL);
 
-        frame = gtk_frame_new(NULL);
-        gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_IN);
-        gtk_table_attach(GTK_TABLE(top_table), frame, 0, 1, 0, 1, 0, 0, 0, 0);
-        gtk_widget_show(frame);
+  top_table = gtk_table_new (2, 2, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (top_table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (top_table), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (top_table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (top_table), 4);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), top_table,
+		      FALSE, FALSE, 0);
+  gtk_widget_show (top_table);
 
-        wint.preview = gtk_preview_new(GTK_PREVIEW_COLOR);
-        gtk_preview_size(GTK_PREVIEW(wint.preview), preview_width, preview_height);
-        gtk_container_add(GTK_CONTAINER(frame), wint.preview);
-        gtk_widget_show(wint.preview);
-        /* Controls */
+  gimp_help_init ();
 
+  /* Preview */
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_table_attach (GTK_TABLE (top_table), frame, 0, 1, 0, 1, 0, 0, 0, 0);
+  gtk_widget_show (frame);
 
-        table = gtk_table_new(6, 3, FALSE);
-        gtk_container_border_width(GTK_CONTAINER(table), 0);
-        gtk_table_attach(GTK_TABLE(top_table), table, 0, 4, 1, 2, GTK_EXPAND | GTK_FILL, 0, 5, 5);
-        gtk_widget_show(table);
+  wint.preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_size (GTK_PREVIEW (wint.preview), preview_width, preview_height);
+  gtk_container_add (GTK_CONTAINER (frame), wint.preview);
+  gtk_widget_show (wint.preview);
 
-        dialog_create_value(_("R/H-Frequency:"), GTK_TABLE(table), 1, &wvals.redfrequency,0,5.0000000000000, _("Change frequency of the red/hue channel"));
-if (wvals.redfrequency!=1.0) exit;
+  /* Controls */
+  table = gtk_table_new (6, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_attach (GTK_TABLE (top_table), table, 0, 2, 1, 2,
+		    GTK_EXPAND | GTK_FILL, 0, 0, 0);
+  gtk_widget_show(table);
 
-        dialog_create_value(_("R/H-Phaseshift:"), GTK_TABLE(table), 2, &wvals.redangle,0,360.00000000000000, _("Change angle of the red/hue channel"));
+  dialog_create_value (_("R/H-Frequency:"), GTK_TABLE (table), 0,
+		       &wvals.redfrequency, 0, 5.0,
+		       _("Change frequency of the red/hue channel"));
+  if (wvals.redfrequency!=1.0)
+    exit;
 
-        dialog_create_value(_("G/S-Frequency:"), GTK_TABLE(table), 3, &wvals.greenfrequency,0,5.00000000000, _("Change frequeny of the green/saturation channel"));
+  dialog_create_value (_("R/H-Phaseshift:"), GTK_TABLE (table), 1,
+		       &wvals.redangle, 0, 360.0,
+		       _("Change angle of the red/hue channel"));
 
-        dialog_create_value(_("G/S-Phaseshift:"), GTK_TABLE(table), 4, &wvals.greenangle,0,360.00000000000000, _("Change angle of the green/saturation channel"));
-        dialog_create_value(_("B/L-Frequency:"), GTK_TABLE(table), 5, &wvals.bluefrequency,0,5.00000000000, _("Change frequency of the blue/luminance channel"));
+  dialog_create_value (_("G/S-Frequency:"), GTK_TABLE (table), 2,
+		       &wvals.greenfrequency, 0, 5.0,
+		       _("Change frequeny of the green/saturation channel"));
 
-        dialog_create_value(_("B/L-Phaseshift:"), GTK_TABLE(table), 6, &wvals.blueangle,0,360.00000000000, _("Change angle of the blue/luminance channel"));
+  dialog_create_value (_("G/S-Phaseshift:"), GTK_TABLE (table), 3,
+		       &wvals.greenangle, 0, 360.0,
+		       _("Change angle of the green/saturation channel"));
 
+  dialog_create_value (_("B/L-Frequency:"), GTK_TABLE (table), 4,
+		       &wvals.bluefrequency, 0, 5.0,
+		       _("Change frequency of the blue/luminance channel"));
 
-	/*  Mode toggle box  */
-        frame = gtk_frame_new (_("Mode:"));
-        gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-	gtk_table_attach (GTK_TABLE (top_table), frame, 1, 2, 0, 1, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 5, 5);
-	toggle_vbox = gtk_vbox_new (FALSE, 5);
-        gtk_container_border_width (GTK_CONTAINER (toggle_vbox), 5);
-        gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
+  dialog_create_value (_("B/L-Phaseshift:"), GTK_TABLE (table), 5,
+		       &wvals.blueangle, 0, 360.0,
+		       _("Change angle of the blue/luminance channel"));
 
-        toggle = gtk_radio_button_new_with_label (mode_group, _("RGB_MODEL color model"));
-        mode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-        gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-        gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-        		(GtkSignalFunc) alienmap2_toggle_update,
-        		&use_rgb);
-        gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_rgb);
-        gtk_widget_show (toggle);
-   
-        set_tooltip(tips,toggle,_("Use RGB_MODEL color model"));
+  /*  Mode toggle box  */
+  frame = gtk_frame_new (_("Mode"));
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_table_attach (GTK_TABLE (top_table), frame, 1, 2, 0, 1,
+		    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
+  toggle_vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (toggle_vbox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
 
-        toggle = gtk_radio_button_new_with_label (mode_group, _("HSL_MODEL color model"));
-        mode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-        gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-        gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-        		(GtkSignalFunc) alienmap2_toggle_update,
-        		&use_hsl);
-        gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_hsl);
-        gtk_widget_show (toggle);
-        set_tooltip(tips,toggle,_("Use HSL_MODEL color model"));
+  toggle = gtk_radio_button_new_with_label (mode_group,
+					    _("RGB_MODEL Color Model"));
+  mode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      GTK_SIGNAL_FUNC (alienmap2_toggle_update),
+		      &use_rgb);
+  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_rgb);
+  gtk_widget_show (toggle);
+  gimp_help_set_help_data (toggle, _("Use RGB_MODEL color model"), NULL);
 
-        toggle = gtk_check_button_new_with_label (_("Modify red/hue channel"));
-        gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-        gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-           		(GtkSignalFunc) alienmap2_toggle_update,
-        		&wvals.redmode);
-        gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), wvals.redmode);
-        gtk_widget_show (toggle);
-   
-        set_tooltip(tips,toggle,_("Use function for red/hue component"));
+  toggle = gtk_radio_button_new_with_label (mode_group,
+					    _("HSL_MODEL Color Model"));
+  mode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      GTK_SIGNAL_FUNC (alienmap2_toggle_update),
+		      &use_hsl);
+  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_hsl);
+  gtk_widget_show (toggle);
+  gimp_help_set_help_data (toggle, _("Use HSL_MODEL color model"), NULL);
 
-        toggle = gtk_check_button_new_with_label (_("Modify green/saturation channel"));
-        gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-        gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-           		(GtkSignalFunc) alienmap2_toggle_update,
-        		&wvals.greenmode);
-        gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), wvals.greenmode);
-        gtk_widget_show (toggle);
-   
-        set_tooltip(tips,toggle,_("Use function for green/saturation component"));
-
-        toggle = gtk_check_button_new_with_label (_("Modify blue/luminance channel"));
-        gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-        gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-           		(GtkSignalFunc) alienmap2_toggle_update,
-        		&wvals.bluemode);
-        gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), wvals.bluemode);
-        gtk_widget_show (toggle);
-   
-        set_tooltip(tips,toggle,_("Use function for blue/luminance component"));
-
-        gtk_widget_show (toggle_vbox);
-        gtk_widget_show (frame);
-
-
-	/*  Action area  */
-	gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 2);
-	gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dialog)->action_area), FALSE);
-
-	hbbox = gtk_hbutton_box_new ();
-	gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area), hbbox, FALSE, FALSE, 0);
-	gtk_widget_show (hbbox);
-	
-	button = gtk_button_new_with_label (_("About"));
-	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-        gtk_signal_connect(GTK_OBJECT(button), "clicked",
-			   GTK_SIGNAL_FUNC (alienmap2_logo_dialog),
+  toggle = gtk_check_button_new_with_label (_("Modify Red/Hue Channel"));
+  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      GTK_SIGNAL_FUNC (alienmap2_toggle_update),
+		      &wvals.redmode);
+  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), wvals.redmode);
+  gtk_widget_show (toggle);
+  gimp_help_set_help_data (toggle, _("Use function for red/hue component"),
 			   NULL);
-	gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-	gtk_widget_show (button);
-        set_tooltip(tips,button,_("Show information about this plug-in and the author"));
 
-	hbbox = gtk_hbutton_box_new ();
-	gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-	gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->action_area), hbbox, FALSE, FALSE, 0);
-	gtk_widget_show (hbbox);
+  toggle = gtk_check_button_new_with_label (_("Modify Green/Caturation Channel"));
+  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      GTK_SIGNAL_FUNC (alienmap2_toggle_update),
+		      &wvals.greenmode);
+  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), wvals.greenmode);
+  gtk_widget_show (toggle);
+  gimp_help_set_help_data (toggle,
+			   _("Use function for green/saturation component"),
+			   NULL);
 
-	button = gtk_button_new_with_label (_("OK"));
-	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-	gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			    (GtkSignalFunc) dialog_ok_callback,
-			    dialog);
-	gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-	gtk_widget_grab_default (button);
-	gtk_widget_show (button);
-        set_tooltip(tips,button,_("Accept settings and apply filter on image"));
-	
-	button = gtk_button_new_with_label (_("Cancel"));
-	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-        gtk_signal_connect(GTK_OBJECT(button), "clicked",
-        		   (GtkSignalFunc) dialog_cancel_callback,
-        		   dialog);
-	gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-	gtk_widget_show (button);
-        set_tooltip(tips,button,_("Reject any changes and close plug-in"));
+  toggle = gtk_check_button_new_with_label (_("Modify Blue/Luminance Channel"));
+  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      GTK_SIGNAL_FUNC (alienmap2_toggle_update),
+		      &wvals.bluemode);
+  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), wvals.bluemode);
+  gtk_widget_show (toggle);
+  gimp_help_set_help_data (toggle,
+			   _("Use function for blue/luminance component"),
+			   NULL);
 
-        /* Done */
+  gtk_widget_show (toggle_vbox);
+  gtk_widget_show (frame);
 
-        gtk_widget_show(dialog);
-        dialog_update_preview();
+  gtk_widget_show (dialog);
+  dialog_update_preview ();
 
-        gtk_main();
-	gtk_object_unref (GTK_OBJECT (tips));
-        gdk_flush();
-        if (the_tile != NULL) {
-        	gimp_tile_unref(the_tile, FALSE);
-        	the_tile = NULL;
-        } /* if */
+  gtk_main ();
+  gimp_help_free ();
+  gdk_flush ();
 
-        g_free(wint.image);
-        g_free(wint.wimage);
+  if (the_tile != NULL)
+    {
+      gimp_tile_unref (the_tile, FALSE);
+      the_tile = NULL;
+    }
 
-        return wint.run;
-} /* alienmap2_dialog */
+  g_free (wint.image);
+  g_free (wint.wimage);
 
-
-/*****/
+  return wint.run;
+}
 
 static void
-dialog_update_preview(void)
+dialog_update_preview (void)
 {
-        double  left, right, bottom, top;
-        double  dx, dy;
-        int  px, py;
-        int     x, y;
-        short int r,g,b;
-        double  scale_x, scale_y;
-        guchar *p_ul, *i, *p;
+  double  left, right, bottom, top;
+  double  dx, dy;
+  int  px, py;
+  int     x, y;
+  short int r,g,b;
+  double  scale_x, scale_y;
+  guchar *p_ul, *i, *p;
 
-        left   = sel_x1;
-        right  = sel_x2 - 1;
-        bottom = sel_y2 - 1;
-        top    = sel_y1;
-        dx = (right - left) / (preview_width - 1);
-        dy = (bottom - top) / (preview_height - 1);
+  left   = sel_x1;
+  right  = sel_x2 - 1;
+  bottom = sel_y2 - 1;
+  top    = sel_y1;
+  dx = (right - left) / (preview_width - 1);
+  dy = (bottom - top) / (preview_height - 1);
 
-        scale_x = (double) (preview_width - 1) / (right - left);
-        scale_y = (double) (preview_height - 1) / (bottom - top);
+  scale_x = (double) (preview_width - 1) / (right - left);
+  scale_y = (double) (preview_height - 1) / (bottom - top);
 
-        py = 0;
+  py = 0;
 
-        p_ul = wint.wimage;
+  p_ul = wint.wimage;
 
-        for (y = 0; y < preview_height; y++) {
-        	px = 0;
+  for (y = 0; y < preview_height; y++)
+    {
+      px = 0;
 
-        	for (x = 0; x < preview_width; x++) {
-        	       i = wint.image + 3 * (preview_width * py + px);
-        	       r = *i++;
-        	       g = *i++;
-        	       b = *i;
-        	       transform(&r,&g,&b);
-        	       p_ul[0] = r;
-        	       p_ul[1] = g;
-        	       p_ul[2] = b;
-        	       p_ul += 3;
-        	       px += 1; /* dx; */
-        	} /* for */
-        	py +=1; /* dy; */
-        } /* for */
+      for (x = 0; x < preview_width; x++)
+	{
+	  i = wint.image + 3 * (preview_width * py + px);
+	  r = *i++;
+	  g = *i++;
+	  b = *i;
+	  transform (&r, &g, &b);
+	  p_ul[0] = r;
+	  p_ul[1] = g;
+	  p_ul[2] = b;
+	  p_ul += 3;
+	  px += 1; /* dx; */
+	}
+      py +=1; /* dy; */
+    }
 
-        p = wint.wimage;
+  p = wint.wimage;
 
-        for (y = 0; y < preview_height; y++) {
-        	gtk_preview_draw_row(GTK_PREVIEW(wint.preview), p, 0, y, preview_width);
-        	p += preview_width * 3;
-        } /* for */
-        gtk_widget_draw(wint.preview, NULL);
-        gdk_flush();
-} /* dialog_update_preview */
-
-
-/*****/
+  for (y = 0; y < preview_height; y++)
+    {
+      gtk_preview_draw_row (GTK_PREVIEW (wint.preview), p, 0, y, preview_width);
+      p += preview_width * 3;
+    }
+  gtk_widget_draw (wint.preview, NULL);
+  gdk_flush ();
+}
 
 static void
-dialog_create_value(char *title, GtkTable *table, int row, gdouble *value,
-        	    int left, int right, const char *desc)
+dialog_create_value (char       *title,
+		     GtkTable   *table,
+		     int         row,
+		     gdouble    *value,
+		     int         left,
+		     int         right,
+		     const char *desc)
 {
-        GtkWidget *label;
-        GtkWidget *scale;
-        GtkWidget *entry;
-        GtkObject *scale_data;
-        char       buf[256];
+  GtkWidget *label;
+  GtkWidget *scale;
+  GtkWidget *entry;
+  GtkObject *scale_data;
+  gchar      buf[256];
 
-        label = gtk_label_new(title);
-        gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
-        gtk_table_attach(table, label, 0, 1, row, row + 1, GTK_FILL, GTK_FILL, 4, 0);
-        gtk_widget_show(label);
+  label = gtk_label_new(title);
+  gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
+  gtk_table_attach(table, label, 0, 1, row, row + 1, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show(label);
 
+  scale_data = gtk_adjustment_new(*value, left, right,
+				  (right - left) / 128,
+				  (right - left) / 128,
+				  0);
 
-        scale_data = gtk_adjustment_new(*value, left, right,
-        				(right - left) / 128,
-        				(right - left) / 128,
-        				0);
+  gtk_signal_connect(GTK_OBJECT(scale_data), "value_changed",
+		     (GtkSignalFunc) dialog_scale_update,
+		     value);
 
-        gtk_signal_connect(GTK_OBJECT(scale_data), "value_changed",
-        		   (GtkSignalFunc) dialog_scale_update,
-        		   value);
+  scale = gtk_hscale_new(GTK_ADJUSTMENT(scale_data));
+  gtk_widget_set_usize(scale, SCALE_WIDTH, 0);
+  gtk_table_attach(table, scale, 1, 2, row, row + 1,
+		   GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+  gtk_scale_set_draw_value(GTK_SCALE(scale), FALSE);
+  gtk_scale_set_digits(GTK_SCALE(scale), 3);
+  gtk_range_set_update_policy(GTK_RANGE(scale), GTK_UPDATE_CONTINUOUS);
+  gtk_widget_show(scale);
+  gimp_help_set_help_data (scale, desc, NULL);
 
-        scale = gtk_hscale_new(GTK_ADJUSTMENT(scale_data));
-        gtk_widget_set_usize(scale, SCALE_WIDTH, 0);
-        gtk_table_attach(table, scale, 1, 2, row, row + 1, GTK_EXPAND | GTK_FILL, GTK_FILL, 5, 5);
-        gtk_scale_set_draw_value(GTK_SCALE(scale), FALSE);
-        gtk_scale_set_digits(GTK_SCALE(scale), 3);
-        gtk_range_set_update_policy(GTK_RANGE(scale), GTK_UPDATE_CONTINUOUS);
-        gtk_widget_show(scale);
-        set_tooltip(tips,scale,desc);
-
-        entry = gtk_entry_new();
-        gtk_object_set_user_data(GTK_OBJECT(entry), scale_data);
-        gtk_object_set_user_data(scale_data, entry);
-        gtk_widget_set_usize(entry, ENTRY_WIDTH, 0);
-        sprintf(buf, "%0.2f", *value);
-        gtk_entry_set_text(GTK_ENTRY(entry), buf);
-        gtk_signal_connect(GTK_OBJECT(entry), "changed",
-        		   (GtkSignalFunc) dialog_entry_update,
-        		   value);
-        gtk_table_attach(GTK_TABLE(table), entry, 2, 3, row, row + 1, GTK_FILL, GTK_FILL, 4, 0);
-        gtk_widget_show(entry);
-	set_tooltip(tips,entry,desc);
-
-} /* dialog_create_value */
-
-/*****/
+  entry = gtk_entry_new();
+  gtk_object_set_user_data(GTK_OBJECT(entry), scale_data);
+  gtk_object_set_user_data(scale_data, entry);
+  gtk_widget_set_usize(entry, ENTRY_WIDTH, 0);
+  g_snprintf (buf, sizeof (buf), "%0.2f", *value);
+  gtk_entry_set_text(GTK_ENTRY(entry), buf);
+  gtk_signal_connect(GTK_OBJECT(entry), "changed",
+		     (GtkSignalFunc) dialog_entry_update,
+		     value);
+  gtk_table_attach(GTK_TABLE(table), entry, 2, 3, row, row + 1,
+		   GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show(entry);
+  gimp_help_set_help_data (entry, desc, NULL);
+}
 
 static void
-dialog_scale_update(GtkAdjustment *adjustment, gdouble *value)
+dialog_scale_update (GtkAdjustment *adjustment,
+		     gdouble       *value)
 {
-        GtkWidget *entry;
-        char       buf[256];
+  GtkWidget *entry;
+  gchar      buf[256];
 
-        if (*value != adjustment->value) {
-        	*value = adjustment->value;
+  if (*value != adjustment->value)
+    {
+      *value = adjustment->value;
 
-        	entry = gtk_object_get_user_data(GTK_OBJECT(adjustment));
-        	sprintf(buf, "%0.2f", *value);
+      entry = gtk_object_get_user_data(GTK_OBJECT(adjustment));
+      g_snprintf(buf, sizeof (buf), "%0.2f", *value);
 
-        	gtk_signal_handler_block_by_data(GTK_OBJECT(entry), value);
-        	gtk_entry_set_text(GTK_ENTRY(entry), buf);
-        	gtk_signal_handler_unblock_by_data(GTK_OBJECT(entry), value);
+      gtk_signal_handler_block_by_data(GTK_OBJECT(entry), value);
+      gtk_entry_set_text(GTK_ENTRY(entry), buf);
+      gtk_signal_handler_unblock_by_data(GTK_OBJECT(entry), value);
 
-        	dialog_update_preview();
-        } /* if */
-} /* dialog_scale_update */
-/*****/
+      dialog_update_preview();
+    }
+}
 
 static void
-dialog_entry_update(GtkWidget *widget, gdouble *value)
+dialog_entry_update (GtkWidget *widget,
+		     gdouble   *value)
 {
-        GtkAdjustment *adjustment;
-        gdouble        new_value;
+  GtkAdjustment *adjustment;
+  gdouble        new_value;
 
-        new_value = atof(gtk_entry_get_text(GTK_ENTRY(widget)));
+  new_value = atof(gtk_entry_get_text(GTK_ENTRY(widget)));
 
-        if (*value != new_value) {
-        	adjustment = gtk_object_get_user_data(GTK_OBJECT(widget));
+  if (*value != new_value)
+    {
+      adjustment = gtk_object_get_user_data(GTK_OBJECT(widget));
 
-        	if ((new_value >= adjustment->lower) &&
-        	    (new_value <= adjustment->upper)) {
-        		*value  	  = new_value;
-        		adjustment->value = new_value;
+      if ((new_value >= adjustment->lower) &&
+	  (new_value <= adjustment->upper))
+	{
+	  *value  	    = new_value;
+	  adjustment->value = new_value;
 
-        		gtk_signal_emit_by_name(GTK_OBJECT(adjustment), "value_changed");
+	  gtk_signal_emit_by_name(GTK_OBJECT(adjustment), "value_changed");
 
-        		dialog_update_preview();
-        	} /* if */
-        } /* if */
-} /* dialog_entry_update */
-
+	  dialog_update_preview();
+	}
+    }
+}
 
 static void
-dialog_close_callback(GtkWidget *widget, gpointer data)
+dialog_ok_callback (GtkWidget *widget,
+		    gpointer   data)
 {
-        gtk_main_quit();
-} /* dialog_close_callback */
+  wint.run = TRUE;
 
-
-/*****/
-
-static void
-dialog_ok_callback(GtkWidget *widget, gpointer data)
-{
-        wint.run = TRUE;
-        gtk_widget_destroy(GTK_WIDGET(data));
-} /* dialog_ok_callback */
-
-
-/*****/
-
-static void
-dialog_cancel_callback(GtkWidget *widget, gpointer data)
-{
-        gtk_widget_destroy(GTK_WIDGET(data));
-} /* dialog_cancel_callback */
-
+  gtk_widget_destroy (GTK_WIDGET (data));
+}
 
 static void
 alienmap2_toggle_update (GtkWidget *widget,
-        		gpointer   data)
+			 gpointer   data)
 {
   int *toggle_val;
 
@@ -1034,109 +971,104 @@ alienmap2_toggle_update (GtkWidget *widget,
 
   /*  determine colormodel  */
   if (use_rgb)
-      wvals.colormodel = RGB_MODEL;
+    wvals.colormodel = RGB_MODEL;
   else if (use_hsl)
-      wvals.colormodel = HSL_MODEL;
+    wvals.colormodel = HSL_MODEL;
 
-  dialog_update_preview();
-
+  dialog_update_preview ();
 }
 
 void
-alienmap2_logo_dialog()
+alienmap2_logo_dialog (void)
 {
   GtkWidget *xlabel;
-  GtkWidget *xbutton;
   GtkWidget *xlogo_box;
   GtkWidget *xpreview;
-  GtkWidget *xframe,*xframe2;
+  GtkWidget *xframe, *xframe2;
   GtkWidget *xvbox;
   GtkWidget *xhbox;
-  char *text;
-  guchar *temp,*temp2;
+  gchar  *text;
+  guchar *temp, *temp2;
   guchar *datapointer;
-  gint y,x;
+  gint    y,x;
 
   if (!logodlg)
     {
-      logodlg = gtk_dialog_new();
-      gtk_window_set_title(GTK_WINDOW(logodlg), _("About Alien Map 2"));
-      gtk_window_position(GTK_WINDOW(logodlg), GTK_WIN_POS_MOUSE);
-      gtk_signal_connect(GTK_OBJECT(logodlg),
-			 "destroy",
+      logodlg = gimp_dialog_new (_("About AlienMap2"), "alienmap2",
+				 gimp_plugin_help_func, "filters/alienmap2.html",
+				 GTK_WIN_POS_MOUSE,
+				 FALSE, TRUE, FALSE,
+
+				 _("OK"), gtk_widget_hide,
+				 NULL, 1, NULL, TRUE, TRUE,
+
+				 NULL);
+
+      gtk_signal_connect (GTK_OBJECT (logodlg), "destroy",
 			 GTK_SIGNAL_FUNC (gtk_widget_destroyed),
-			 &logodlg);
+			  &logodlg);
+
       gtk_quit_add_destroy (1, GTK_OBJECT (logodlg));
-      gtk_signal_connect(GTK_OBJECT(logodlg),
-			 "delete_event",
-			 GTK_SIGNAL_FUNC (gtk_widget_hide_on_delete),
-			 &logodlg);
-      
-      xbutton = gtk_button_new_with_label(_("OK"));
-      GTK_WIDGET_SET_FLAGS(xbutton, GTK_CAN_DEFAULT);
-      gtk_signal_connect_object (GTK_OBJECT(xbutton), "clicked",
-				 GTK_SIGNAL_FUNC (gtk_widget_hide),
-				 GTK_OBJECT(logodlg));
-      gtk_box_pack_start(GTK_BOX(GTK_DIALOG(logodlg)->action_area),
-			 xbutton, TRUE, TRUE, 0);
-      gtk_widget_grab_default(xbutton);
-      gtk_widget_show(xbutton);
-      set_tooltip(tips,xbutton,_("This closes the information box"));
-      
+
       xframe = gtk_frame_new(NULL);
-      gtk_frame_set_shadow_type(GTK_FRAME(xframe), GTK_SHADOW_ETCHED_IN);
-      gtk_container_border_width(GTK_CONTAINER(xframe), 10);
-      gtk_box_pack_start(GTK_BOX(GTK_DIALOG(logodlg)->vbox), xframe, TRUE, TRUE, 0);
-      xvbox = gtk_vbox_new(FALSE, 5);
-      gtk_container_border_width(GTK_CONTAINER(xvbox), 10);
-      gtk_container_add(GTK_CONTAINER(xframe), xvbox);
+      gtk_frame_set_shadow_type (GTK_FRAME (xframe), GTK_SHADOW_ETCHED_IN);
+      gtk_container_set_border_width (GTK_CONTAINER (xframe), 6);
+      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (logodlg)->vbox), xframe,
+			  TRUE, TRUE, 0);
+      xvbox = gtk_vbox_new (FALSE, 4);
+      gtk_container_border_width (GTK_CONTAINER (xvbox), 4);
+      gtk_container_add (GTK_CONTAINER(xframe), xvbox);
       
       /*  The logo frame & drawing area  */
       xhbox = gtk_hbox_new (FALSE, 5);
       gtk_box_pack_start (GTK_BOX (xvbox), xhbox, FALSE, TRUE, 0);
-      
+
       xlogo_box = gtk_vbox_new (FALSE, 0);
       gtk_box_pack_start (GTK_BOX (xhbox), xlogo_box, FALSE, FALSE, 0);
-      
+
       xframe2 = gtk_frame_new (NULL);
       gtk_frame_set_shadow_type (GTK_FRAME (xframe2), GTK_SHADOW_IN);
       gtk_box_pack_start (GTK_BOX (xlogo_box), xframe2, FALSE, FALSE, 0);
       
       xpreview = gtk_preview_new (GTK_PREVIEW_COLOR);
       gtk_preview_size (GTK_PREVIEW (xpreview), logo_width, logo_height);
-      temp = g_malloc((logo_width+10)*3);
-      datapointer=header_data+logo_width*logo_height-1;
-      for (y = 0; y < logo_height; y++){
-	temp2=temp;
-	for (x = 0; x< logo_width; x++) {
-	  HEADER_PIXEL(datapointer,temp2); temp2+=3;}
-	gtk_preview_draw_row (GTK_PREVIEW (xpreview),
-			      temp,
-			      0, y, logo_width); 
-      }			  
-      g_free(temp);
+      temp = g_malloc ((logo_width + 10) * 3);
+      datapointer = header_data+logo_width*logo_height-1;
+      for (y = 0; y < logo_height; y++)
+	{
+	  temp2=temp;
+	  for (x = 0; x< logo_width; x++)
+	    {
+	      HEADER_PIXEL (datapointer,temp2);
+	      temp2 += 3;
+	    }
+	  gtk_preview_draw_row (GTK_PREVIEW (xpreview),
+				temp,
+				0, y, logo_width); 
+	}			  
+      g_free (temp);
       gtk_container_add (GTK_CONTAINER (xframe2), xpreview);
       gtk_widget_show (xpreview);
       gtk_widget_show (xframe2);
       gtk_widget_show (xlogo_box);
       gtk_widget_show (xhbox);
-      
+
       xhbox = gtk_hbox_new(FALSE, 5);
-      gtk_box_pack_start(GTK_BOX(xvbox), xhbox, TRUE, TRUE, 0);
-      text = "\nMartin Weber\n"
-	"martin.weber@usa.net\n"
-	"http://diverse.freepage.de/martin.weber\n\n"
-	"AlienMap2 Plug-In for the GIMP\n"
-	"Version 1.0\n";
-      xlabel = gtk_label_new(text);
-      gtk_box_pack_start(GTK_BOX(xhbox), xlabel, TRUE, FALSE, 0);
-      gtk_widget_show(xlabel);
-      
-      gtk_widget_show(xhbox);
-      
-      gtk_widget_show(xvbox);
-      gtk_widget_show(xframe);
-      gtk_widget_show(logodlg);
+      gtk_box_pack_start (GTK_BOX (xvbox), xhbox, TRUE, TRUE, 0);
+      text = ("\nMartin Weber\n"
+	      "martin.weber@usa.net\n"
+	      "http://diverse.freepage.de/martin.weber\n\n"
+	      "AlienMap2 Plug-In for the GIMP\n"
+	      "Version 1.0\n");
+      xlabel = gtk_label_new (text);
+      gtk_box_pack_start (GTK_BOX (xhbox), xlabel, TRUE, FALSE, 0);
+      gtk_widget_show (xlabel);
+
+      gtk_widget_show (xhbox);
+
+      gtk_widget_show (xvbox);
+      gtk_widget_show (xframe);
+      gtk_widget_show (logodlg);
     }
   else
     {
@@ -1243,4 +1175,3 @@ hsl_to_rgb (gdouble  h,
 	}
     }
 }
-

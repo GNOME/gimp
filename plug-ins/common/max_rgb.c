@@ -29,8 +29,8 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -45,23 +45,20 @@
 #define OK_CALLBACK	_max_rgbok_callback
 
 static void	query	(void);
-static void	run	(char	*name,
-			 int	nparams,
-			 GParam	*param,
-			 int	*nreturn_vals,
+static void	run	(gchar  *name,
+			 gint    nparams,
+			 GParam *param,
+			 gint   *nreturn_vals,
 			 GParam **return_vals);
-static GStatusType	MAIN_FUNCTION (gint32 drawable_id);
-static gint	DIALOG ();
+static GStatusType MAIN_FUNCTION (gint32 drawable_id);
+static gint	   DIALOG ();
 
-static void
-OK_CALLBACK (GtkWidget *widget, gpointer   data);
+static void        OK_CALLBACK (GtkWidget *widget, gpointer   data);
 
 /* gtkWrapper functions */ 
 #define PROGRESS_UPDATE_NUM	100
 #define ENTRY_WIDTH	100
 #define SCALE_WIDTH	100
-static void
-gtkW_close_callback (GtkWidget *widget, gpointer   data);
 static void
 gtkW_toggle_update (GtkWidget *widget, gpointer   data);
 static GSList *
@@ -70,26 +67,18 @@ gtkW_vbox_add_radio_button (GtkWidget *vbox,
 			    GSList	*group,
 			    GtkSignalFunc	update,
 			    gint	*value);
-GtkWidget *gtkW_check_button_new (GtkWidget	*parent,
-				  gchar	*name,
-				  GtkSignalFunc update,
-				  gint	*value);
-GtkWidget *gtkW_frame_new (GtkWidget *parent, gchar *name);
-GtkWidget *gtkW_table_new (GtkWidget *parent, gint col, gint row);
-GtkWidget *gtkW_hbox_new (GtkWidget *parent);
-GtkWidget *gtkW_vbox_new (GtkWidget *parent);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,				/* init_proc  */
-  NULL,				/* quit_proc */
-  query,			/* query_proc */
-  run,				/* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc */
+  query, /* query_proc */
+  run,   /* run_proc */
 };
 
 typedef struct
 {
-  gint		max_p;		/* gint, gdouble, and so on */
+  gint max_p;  /* gint, gdouble, and so on */
 } ValueType;
 
 static ValueType VALS = 
@@ -104,13 +93,13 @@ typedef struct
 
 static Interface INTERFACE = { FALSE };
 
-gint	hold_max;
-gint	hold_min;
+gint  hold_max;
+gint  hold_min;
 
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef args [] =
   {
@@ -265,17 +254,17 @@ MAIN_FUNCTION (gint32 drawable_id)
 static int
 DIALOG ()
 {
-  GtkWidget	*dlg;
-  GtkWidget	*hbox;
-  GtkWidget	*vbox;
-  GtkWidget	*frame;
-  GSList	*group = NULL;
-  gchar	**argv;
-  gint	argc;
+  GtkWidget *dlg;
+  GtkWidget *vbox;
+  GtkWidget *frame;
+  GSList  *group = NULL;
+  gchar	 **argv;
+  gint	   argc;
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
   argv[0] = g_strdup (PLUG_IN_NAME);
+
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 
@@ -292,24 +281,27 @@ DIALOG ()
 			 NULL);
 
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtkW_close_callback),
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
-  hbox = gtkW_hbox_new ((GTK_DIALOG (dlg)->vbox));
-  frame = gtkW_frame_new (hbox, _("Parameter Settings"));
-  /*
-  table = gtkW_table_new (frame, 2, 2);
-  gtkW_table_add_toggle (table, "Hold the maximal channel", 0, 2, 1,
-			 (GtkSignalFunc) gtkW_toggle_update, &VALS.max_p);
-  gtk_widget_show (table);
-  */
-  vbox = gtkW_vbox_new (frame);
-  group = gtkW_vbox_add_radio_button (vbox, _("Hold the maximal channels"), group,
-				      (GtkSignalFunc) gtkW_toggle_update,
-				      &hold_max);
-  group = gtkW_vbox_add_radio_button (vbox, _("Hold the minimal channels"), group,
-				      (GtkSignalFunc) gtkW_toggle_update,
-				      &hold_min);
+  frame = gtk_frame_new (_("Parameter Settings"));
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), frame);
+  gtk_widget_show (frame);
+
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
+
+  group =
+    gtkW_vbox_add_radio_button (vbox, _("Hold the Maximal Channels"), group,
+				(GtkSignalFunc) gtkW_toggle_update,
+				&hold_max);
+  group =
+    gtkW_vbox_add_radio_button (vbox, _("Hold the Minimal Channels"), group,
+				(GtkSignalFunc) gtkW_toggle_update,
+				&hold_min);
 
   gtk_widget_show (dlg);
 
@@ -332,13 +324,6 @@ OK_CALLBACK (GtkWidget *widget,
 /* VFtext interface functions  */
 
 static void
-gtkW_close_callback (GtkWidget *widget,
-		     gpointer   data)
-{
-  gtk_main_quit ();
-}
-
-static void
 gtkW_toggle_update (GtkWidget *widget,
 		    gpointer   data)
 {
@@ -350,76 +335,6 @@ gtkW_toggle_update (GtkWidget *widget,
     *toggle_val = TRUE;
   else
     *toggle_val = FALSE;
-}
-
-GtkWidget *
-gtkW_table_new (GtkWidget *parent, gint col, gint row)
-{
-  GtkWidget	*table;
-  
-  table = gtk_table_new (col,row, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 10);
-  gtk_container_add (GTK_CONTAINER (parent), table);
-  return table;
-}
-
-GtkWidget *
-gtkW_hbox_new (GtkWidget *parent)
-{
-  GtkWidget	*hbox;
-  
-  hbox = gtk_hbox_new (FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (hbox), 5);
-  gtk_box_pack_start (GTK_BOX (parent), hbox, FALSE, TRUE, 0);
-  gtk_widget_show (hbox);
-
-  return hbox;
-}
-
-GtkWidget *
-gtkW_vbox_new (GtkWidget *parent)
-{
-  GtkWidget *vbox;
-  
-  vbox = gtk_vbox_new (FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 10);
-  /* gtk_box_pack_start (GTK_BOX (parent), vbox, TRUE, TRUE, 0); */
-  gtk_container_add (GTK_CONTAINER (parent), vbox);
-  gtk_widget_show (vbox);
-
-  return vbox;
-}
-
-GtkWidget *
-gtkW_check_button_new (GtkWidget	*parent,
-		       gchar	*name,
-		       GtkSignalFunc update,
-		       gint	*value)
-{
-  GtkWidget *toggle;
-  
-  toggle = gtk_check_button_new_with_label (name);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) update,
-		      value);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), *value);
-  gtk_container_add (GTK_CONTAINER (parent), toggle);
-  gtk_widget_show (toggle);
-  return toggle;
-}
-
-GtkWidget *
-gtkW_frame_new (GtkWidget *parent,
-		gchar *name)
-{
-  GtkWidget *frame;
-  
-  frame = gtk_frame_new (name);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 5);
-  gtk_box_pack_start (GTK_BOX(parent), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-  return frame;
 }
 
 static GSList *
@@ -440,4 +355,3 @@ gtkW_vbox_add_radio_button (GtkWidget *vbox,
   gtk_widget_show (toggle);
   return group;
 }
-/* end of max_rgb.c */

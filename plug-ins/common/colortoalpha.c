@@ -28,45 +28,48 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
 
 #define PRV_WIDTH 40
 #define PRV_HEIGHT 20
 
-typedef struct {
+typedef struct
+{
   guchar color[3];
 } C2AValues;
 
-typedef struct {
+typedef struct
+{
   gint run;
 } C2AInterface;
 
-typedef struct {
-  GtkWidget	*color_button;
+typedef struct
+{
+  GtkWidget *color_button;
 } C2APreview;
 
 /* Declare local functions.
  */
 static void      query  (void);
-static void      run    (char      *name,
-			 int        nparams,
+static void      run    (gchar     *name,
+			 gint       nparams,
 			 GParam    *param,
-			 int       *nreturn_vals,
+			 gint      *nreturn_vals,
 			 GParam   **return_vals);
 
 static void      toalpha            (GDrawable  *drawable);
 
 static void      toalpha_render_row (const guchar *src_row,
-				     guchar *dest_row,
-				     gint row_width,
-				     const gint bytes);
+				     guchar       *dest_row,
+				     gint          row_width,
+				     const gint    bytes);
 /* UI stuff */
-static gint 	colortoalpha_dialog (GDrawable *drawable);
-static void 	C2A_close_callback  (GtkWidget *widget, gpointer data);
-static void 	C2A_ok_callback     (GtkWidget *widget, gpointer data);
+static gint 	colortoalpha_dialog      (GDrawable *drawable);
+static void 	colortoalpha_ok_callback (GtkWidget *widget,
+					  gpointer   data);
 
 static GRunModeType run_mode;
 
@@ -96,7 +99,7 @@ static C2APreview ppreview =
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef args[] =
   {
@@ -125,10 +128,10 @@ query ()
 }
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[1];
@@ -152,33 +155,33 @@ run (char    *name,
   image_ID = param[1].data.d_image;
 
   switch (run_mode)
-  {
-  case RUN_INTERACTIVE:
-   gimp_get_data ("plug_in_colortoalpha", &pvals);
-   if (! colortoalpha_dialog (drawable ))
-    { 
-      gimp_drawable_detach (drawable);
-      return;
-    }
-  break;
- 
-  case RUN_NONINTERACTIVE:
-    if (nparams != 3)
-      status = STATUS_CALLING_ERROR;
-    if (status == STATUS_SUCCESS)
     {
-     pvals.color[0] = param[3].data.d_color.red;
-     pvals.color[1] = param[3].data.d_color.green;
-     pvals.color[2] = param[3].data.d_color.blue;
-    }
-    break;
+    case RUN_INTERACTIVE:
+      gimp_get_data ("plug_in_colortoalpha", &pvals);
+      if (! colortoalpha_dialog (drawable ))
+	{ 
+	  gimp_drawable_detach (drawable);
+	  return;
+	}
+      break;
+ 
+    case RUN_NONINTERACTIVE:
+      if (nparams != 3)
+	status = STATUS_CALLING_ERROR;
+      if (status == STATUS_SUCCESS)
+	{
+	  pvals.color[0] = param[3].data.d_color.red;
+	  pvals.color[1] = param[3].data.d_color.green;
+	  pvals.color[2] = param[3].data.d_color.blue;
+	}
+      break;
 
-  case RUN_WITH_LAST_VALS:
-    gimp_get_data ("plug_in_colortoalpha", &pvals);
-    break;
-  default:
-    break;
-  }  
+    case RUN_WITH_LAST_VALS:
+      gimp_get_data ("plug_in_colortoalpha", &pvals);
+      break;
+    default:
+      break;
+    }  
 
   if (status == STATUS_SUCCESS)
     {
@@ -294,15 +297,15 @@ toalpha_render_row (const guchar *src_data,
 	 However, since v1 < COLOR_RED, for example, all of these
 	 are negative so we have to invert the operator to reduce
 	 the amount of typing to fix the problem.  :) */
-      colortoalpha(&v1, &v2, &v3, &v4, 
-                   (float)pvals.color[0],
-                   (float)pvals.color[1],
-                   (float)pvals.color[2]);
+      colortoalpha (&v1, &v2, &v3, &v4, 
+		    (float)pvals.color[0],
+		    (float)pvals.color[1],
+		    (float)pvals.color[2]);
 
-      dest_data[col*bytes   ] = (int)v1;
-      dest_data[col*bytes +1] = (int)v2;
-      dest_data[col*bytes +2] = (int)v3;
-      dest_data[col*bytes +3] = (int)v4;
+      dest_data[col * bytes    ] = (int) v1;
+      dest_data[col * bytes + 1] = (int) v2;
+      dest_data[col * bytes + 2] = (int) v3;
+      dest_data[col * bytes + 3] = (int) v4;
     }
 }
 
@@ -316,9 +319,10 @@ toalpha_render_region (const GPixelRgn srcPR,
   
   for (row = 0; row < srcPR.h ; row++)
     {
-      if (srcPR.bpp!=4) {
-	gimp_message("Not the proper bpp! \n");
-	exit(1);
+      if (srcPR.bpp!=4)
+	{
+	  gimp_message ("Not the proper bpp! \n");
+	  exit(1);
 	} 
       toalpha_render_row (src_ptr, dest_ptr,
 			  srcPR.w,
@@ -384,12 +388,12 @@ colortoalpha_dialog (GDrawable *drawable)
   GtkWidget *table;
   GtkWidget *label;
 
-  guchar *color_cube;
-  gchar **argv;
-  gint argc;
+  guchar  *color_cube;
+  gchar  **argv;
+  gint     argc;
   
-  argc = 1;
-  argv = g_new (gchar *, 1);
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
   argv[0] = g_strdup ("colortoalpha");
 
   gtk_init (&argc, &argv);
@@ -410,7 +414,7 @@ colortoalpha_dialog (GDrawable *drawable)
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 _("OK"), C2A_ok_callback,
+			 _("OK"), colortoalpha_ok_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,
 			 _("Cancel"), gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
@@ -418,33 +422,33 @@ colortoalpha_dialog (GDrawable *drawable)
 			 NULL);
 
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-                      GTK_SIGNAL_FUNC (C2A_close_callback),
+                      GTK_SIGNAL_FUNC (gtk_main_quit),
                       NULL);
 
   table = gtk_table_new (1, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-
-  label = gtk_label_new (_("From:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach_defaults ( GTK_TABLE(table), label, 0, 1, 0, 1);
-  gtk_widget_show (label);
-  
-  button = gimp_color_button_new (_("Color to Alpha Color Picker"), 
-				  PRV_WIDTH, PRV_HEIGHT,
-				  pvals.color, 3);
-  gtk_table_attach (GTK_TABLE(table), button, 1, 2, 0, 1, 
-		    GTK_FILL, GTK_SHRINK, 4, 4) ; 
-  gtk_widget_show(button);
-  ppreview.color_button = button;
-
-  label = gtk_label_new (_("to alpha"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach_defaults ( GTK_TABLE(table), label, 2, 3, 0, 1);
-  gtk_widget_show (label);
-
+  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
    
+  label = gtk_label_new (_("From:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach_defaults (GTK_TABLE(table), label, 0, 1, 0, 1);
+  gtk_widget_show (label);
+
+  button = gimp_color_button_new (_("Color to Alpha Color Picker"), 
+				  PRV_WIDTH, PRV_HEIGHT,
+				  pvals.color, 3);
+  gtk_table_attach (GTK_TABLE (table), button, 1, 2, 0, 1, 
+		    GTK_FILL, GTK_SHRINK, 4, 4) ; 
+  gtk_widget_show (button);
+  ppreview.color_button = button;
+
+  label = gtk_label_new (_("to Alpha"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_table_attach_defaults (GTK_TABLE(table), label, 2, 3, 0, 1);
+  gtk_widget_show (label);
+
   gtk_widget_show (dlg);
 
   gtk_main ();
@@ -453,18 +457,11 @@ colortoalpha_dialog (GDrawable *drawable)
   return pint.run;
 }
 
-
 static void
-C2A_close_callback (GtkWidget *widget,
-		    gpointer   data)
-{
-  gtk_main_quit ();
-}
-
-static void
-C2A_ok_callback (GtkWidget *widget, 
-                 gpointer   data)
+colortoalpha_ok_callback (GtkWidget *widget, 
+			  gpointer   data)
 {
   pint.run = TRUE;
+
   gtk_widget_destroy (GTK_WIDGET (data));
 }

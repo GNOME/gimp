@@ -39,12 +39,14 @@
 #define TILE_CACHE_SIZE 16
 #define ENTRY_WIDTH 50
 
-typedef struct {
-    gdouble spread_amount_x;
-    gdouble spread_amount_y;
+typedef struct
+{
+  gdouble spread_amount_x;
+  gdouble spread_amount_y;
 } SpreadValues;
 
-typedef struct {
+typedef struct
+{
   gint run;
 } SpreadInterface;
 
@@ -73,12 +75,13 @@ static GTile *   spread_pixel  (GDrawable * drawable,
 			       guchar *    pixel);
 
 static void      spread_ok_callback     (GtkWidget *widget,
-					gpointer   data);
-static void      spread_fentry_callback   (GtkWidget     *widget,
-					     gpointer       data);
+					 gpointer   data);
+static void      spread_fentry_callback (GtkWidget     *widget,
+					 gpointer       data);
 
-static void      spread_fscale_callback   (GtkAdjustment *adjustment,
-					     gpointer       data);
+static void      spread_fscale_callback (GtkAdjustment *adjustment,
+					 gpointer       data);
+
 /***** Local vars *****/
 
 GPlugInInfo PLUG_IN_INFO =
@@ -105,7 +108,7 @@ static SpreadInterface pint =
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef args[] =
   {
@@ -127,7 +130,7 @@ query ()
 			  "Spencer Kimball and Peter Mattis, ported by Brian Degenhardt and Federico Mena Quintero",
 			  "Federico Mena Quintero and Brian Degenhardt",
 			  "1997",
-              N_("<Image>/Filters/Noise/Spread..."),
+			  N_("<Image>/Filters/Noise/Spread..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -200,7 +203,7 @@ run (gchar  *name,
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
 	{
-	  gimp_progress_init ( _("Spreading..."));
+	  gimp_progress_init (_("Spreading..."));
 
 	  /*  set the tile cache size  */
 	  gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
@@ -226,8 +229,6 @@ run (gchar  *name,
 
   gimp_drawable_detach (drawable);
 }
-
-/*****/
 
 static void
 spread (GDrawable *drawable)
@@ -296,13 +297,13 @@ spread (GDrawable *drawable)
      The corners are less sharp with this algorithm.
   */
 
-
-
   /* Spread the image! */
 
-
-  gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
-  for (pr = gimp_pixel_rgns_register (1, &dest_rgn); pr != NULL; pr = gimp_pixel_rgns_process (pr))
+  gimp_pixel_rgn_init (&dest_rgn, drawable,
+		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
+  for (pr = gimp_pixel_rgns_register (1, &dest_rgn);
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr))
     {
       destrow = dest_rgn.data;
 
@@ -351,7 +352,7 @@ spread (GDrawable *drawable)
 
 
 static gint
-spread_dialog ()
+spread_dialog (void)
 {
   GtkWidget *dlg;
   GtkWidget *label;
@@ -390,7 +391,7 @@ spread_dialog ()
 		      NULL);
 
   /*  parameter settings  */
-  frame = gtk_frame_new ( _("Parameter Settings"));
+  frame = gtk_frame_new (_("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -405,7 +406,7 @@ spread_dialog ()
   label = gtk_label_new (_("Horizontal Spread Amount:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
+		    GTK_FILL , GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   hbox = gtk_hbox_new (FALSE, 4);
@@ -440,7 +441,7 @@ spread_dialog ()
   label = gtk_label_new (_("Vertical Spread Amount:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_FILL | GTK_EXPAND, GTK_FILL, 10, 5);
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   hbox = gtk_hbox_new (FALSE, 4);
@@ -482,20 +483,18 @@ spread_dialog ()
   return pint.run;
 }
 
-/*****/
-
 static GTile *
 spread_pixel (GDrawable * drawable,
-	     GTile *     tile,
-	     gint        x1,
-	     gint        y1,
-	     gint        x2,
-	     gint        y2,
-	     gint        x,
-	     gint        y,
-	     gint *      row,
-	     gint *      col,
-	     guchar *    pixel)
+	      GTile *     tile,
+	      gint        x1,
+	      gint        y1,
+	      gint        x2,
+	      gint        y2,
+	      gint        x,
+	      gint        y,
+	      gint *      row,
+	      gint *      col,
+	      guchar *    pixel)
 {
   static guchar empty_pixel[4] = {0, 0, 0, 0};
   guchar *data;
@@ -531,7 +530,7 @@ spread_pixel (GDrawable * drawable,
 
 static void
 spread_ok_callback (GtkWidget *widget,
-		   gpointer   data)
+		    gpointer   data)
 {
   pint.run = TRUE;
   gtk_widget_destroy (GTK_WIDGET (data));

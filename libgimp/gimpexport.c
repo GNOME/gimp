@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 
 #include "gimp.h"
+#include "gimpdialog.h"
 #include "gimpenums.h"
 #include "gimpexport.h"
 #include "gimpintl.h"
@@ -119,8 +120,8 @@ static ExportAction export_action_merge =
 {
   export_merge,
   NULL,
-  N_("can't handle layers"),
-  { N_("Merge visible layers"), NULL },
+  N_("can't Handle Layers"),
+  { N_("Merge Visible Layers"), NULL },
   0
 };
 
@@ -128,8 +129,8 @@ static ExportAction export_action_animate_or_merge =
 {
   NULL,
   export_merge,
-  N_("can only handle layers as animation frames"),
-  { N_("Save as animation"), N_("Merge visible layers") },
+  N_("can only Handle Layers as Animation Frames"),
+  { N_("Save as Animation"), N_("Merge Visible Layers") },
   0
 };
 
@@ -137,7 +138,7 @@ static ExportAction export_action_flatten =
 {
   &export_flatten,
   NULL,
-  N_("can't handle transparency"),
+  N_("can't Handle Transparency"),
   { N_("Flatten Image"), NULL },
   0
 };
@@ -146,7 +147,7 @@ static ExportAction export_action_convert_rgb =
 {
   &export_convert_rgb,
   NULL,
-  N_("can only handle RGB images"),
+  N_("can only Handle RGB Images"),
   { N_("Convert to RGB"), NULL },
   0
 };
@@ -155,8 +156,8 @@ static ExportAction export_action_convert_grayscale =
 {
   &export_convert_grayscale,
   NULL,
-  N_("can only handle grayscale images"),
-  { N_("Convert to grayscale"), NULL },
+  N_("can only Handle Grayscale Images"),
+  { N_("Convert to Grayscale"), NULL },
   0
 };
 
@@ -164,8 +165,9 @@ static ExportAction export_action_convert_indexed =
 {
   &export_convert_indexed,
   NULL,
-  N_("can only handle indexed images"),
-  { N_("Convert to indexed using default settings\n(Do it manually to tune the result)"), NULL },
+  N_("can only Handle Indexed Images"),
+  { N_("Convert to indexed using default settings\n"
+       "(Do it manually to tune the result)"), NULL },
   0
 };
 
@@ -173,8 +175,8 @@ static ExportAction export_action_convert_rgb_or_grayscale =
 {
   &export_convert_rgb,
   &export_convert_grayscale,
-  N_("can only handle RGB or grayscale images"),
-  { N_("Convert to RGB"), N_("Convert to grayscale")},
+  N_("can only Handle RGB or Grayscale Images"),
+  { N_("Convert to RGB"), N_("Convert to Grayscale")},
   0
 };
 
@@ -182,8 +184,9 @@ static ExportAction export_action_convert_rgb_or_indexed =
 {
   &export_convert_rgb,
   &export_convert_indexed,
-  N_("can only handle RGB or indexed images"),
-  { N_("Convert to RGB"), N_("Convert to indexed using default settings\n(Do it manually to tune the result)")},
+  N_("can only Handle RGB or Indexed Images"),
+  { N_("Convert to RGB"), N_("Convert to indexed using default settings\n"
+			     "(Do it manually to tune the result)")},
   0
 };
 
@@ -191,9 +194,10 @@ static ExportAction export_action_convert_indexed_or_grayscale =
 {
   &export_convert_indexed,
   &export_convert_grayscale,
-  N_("can only handle grayscale or indexed images"),
-  { N_("Convert to indexed using default settings\n(Do it manually to tune the result)"), 
-    N_("Convert to grayscale") },
+  N_("can only Handle Grayscale or Indexed Images"),
+  { N_("Convert to indexed using default settings\n"
+       "(Do it manually to tune the result)"), 
+    N_("Convert to Grayscale") },
   0
 };
 
@@ -201,8 +205,8 @@ static ExportAction export_action_add_alpha =
 {
   &export_add_alpha,
   NULL,
-  N_("needs an alpha channel"),
-  { N_("Add alpha channel"), NULL},
+  N_("needs an Alpha Channel"),
+  { N_("Add Alpha Channel"), NULL},
   0
 };
 
@@ -253,14 +257,13 @@ static gint
 export_dialog (GSList *actions,
 	       gchar  *format)
 {
-  GtkWidget *frame;
-  GtkWidget *button;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *hbbox;
-  GtkWidget *label;
-  GSList    *list;
-  gchar     *text;
+  GtkWidget    *frame;
+  GtkWidget    *vbox;
+  GtkWidget    *hbox;
+  GtkWidget    *button;
+  GtkWidget    *label;
+  GSList       *list;
+  gchar        *text;
   ExportAction *action;
 
   dialog_return = EXPORT_CANCEL;
@@ -272,44 +275,23 @@ export_dialog (GSList *actions,
    */
 
   /* the dialog */
-  dialog = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dialog), _("Export File"));
-  gtk_window_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
+  dialog = gimp_dialog_new (_("Export File"), "export_file",
+			    gimp_standard_help_func, "dialogs/export_file.html",
+			    GTK_WIN_POS_MOUSE,
+			    FALSE, FALSE, FALSE,
+
+			    _("Export"), export_export_callback,
+			    NULL, NULL, NULL, TRUE, FALSE,
+			    _("Ignore"), export_skip_callback,
+			    NULL, NULL, NULL, FALSE, FALSE,
+			    _("Cancel"), gtk_widget_destroy,
+			    NULL, 1, NULL, FALSE, TRUE,
+
+			    NULL);
+
   gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-		      (GtkSignalFunc) export_cancel_callback, NULL);
-
-  /*  Action area  */
-  gtk_container_set_border_width
-    (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dialog)->action_area), FALSE);
-
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->action_area), hbbox,
-		    FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
-
-  button = gtk_button_new_with_label (_("Export"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) export_export_callback, NULL);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("Ignore"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) export_skip_callback, NULL);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy, GTK_OBJECT (dialog));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+		      GTK_SIGNAL_FUNC (export_cancel_callback),
+		      NULL);
 
   /* the headline */
   vbox = gtk_vbox_new (FALSE, 6);
@@ -317,7 +299,8 @@ export_dialog (GSList *actions,
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_widget_show (vbox);
 
-  label = gtk_label_new (_("Your image should be exported before it can be saved for the following reasons:"));
+  label = gtk_label_new (_("Your image should be exported before it "
+			   "can be saved for the following reasons:"));
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
@@ -325,14 +308,16 @@ export_dialog (GSList *actions,
 
   for (list = actions; list; list = list->next)
     {
-      action = (ExportAction*)(list->data);
+      action = (ExportAction *) (list->data);
+
       text = g_strdup_printf ("%s %s", format, gettext (action->reason));
       frame = gtk_frame_new (text);
       g_free (text);
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+
       hbox = gtk_hbox_new (FALSE, 4);
       gtk_container_add (GTK_CONTAINER (frame), hbox);
-      gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
+      gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
 
       if (action->possibilities[0] && action->possibilities[1])
 	{
@@ -344,7 +329,8 @@ export_dialog (GSList *actions,
 	  radio_group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
 	  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 	  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-			      (GtkSignalFunc) export_toggle_callback, &action->choice);
+			      GTK_SIGNAL_FUNC (export_toggle_callback),
+			      &action->choice);
 	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	  gtk_widget_show (button);
 
@@ -376,16 +362,16 @@ export_dialog (GSList *actions,
     }
 
   /* the footline */
-  label = gtk_label_new (_("The export conversion won't modify your original image."));
+  label = gtk_label_new (_("The export conversion won't modify "
+			   "your original image."));
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   gtk_widget_show (dialog);
   gtk_main ();
 
-  return (dialog_return);
+  return dialog_return;
 }
-
 
 GimpExportReturnType
 gimp_export_image (gint32 *image_ID_ptr,
@@ -507,12 +493,5 @@ gimp_export_image (gint32 *image_ID_ptr,
     }
   g_slist_free (actions);
 
-  return (dialog_return);
+  return dialog_return;
 }
-
-
-
-
-
-
-

@@ -59,22 +59,25 @@ typedef struct
 
 PluginValues plvals = 
 {
-  { { 0, 0, 0}, { 255, 255, 255 }, { 0, 0, 0 }, { 255, 255, 255 } },
+  {
+    { 0, 0, 0},
+    { 255, 255, 255 },
+    { 0, 0, 0 },
+    { 255, 255, 255 }
+  },
   0
 };
 
-
 gint run_flag = FALSE;
-
 
 /* Declare some local functions.
  */
-static void   query      (void);
-static void   run        (char    *name,
-                          int      nparams,
-                          GParam  *param,
-                          int     *nreturn_vals,
-                          GParam **return_vals);
+static void   query (void);
+static void   run   (char    *name,
+		     gint     nparams,
+		     GParam  *param,
+		     gint    *nreturn_vals,
+		     GParam **return_vals);
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -91,7 +94,8 @@ static void   add_color_button        (int        csel_index,
 				       int        left,
 				       int        top,
 				       GtkWidget *table);
-static void color_mapping             (GDrawable *drawable);
+
+static void   color_mapping           (GDrawable *drawable);
 
 
 /* The run mode */
@@ -106,9 +110,7 @@ static char *csel_title[4] =
 };
 
 
-
 MAIN ()
-
 
 static void
 query (void)
@@ -168,10 +170,10 @@ Other colors are mapped by interpolation."),
 
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 
 {
@@ -193,99 +195,100 @@ run (char    *name,
   values[0].data.d_status = status;
 
   while (status == STATUS_SUCCESS)
-  {
-    if (nparams < 3)
     {
-      status = STATUS_CALLING_ERROR;
-      break;
-    }
+      if (nparams < 3)
+	{
+	  status = STATUS_CALLING_ERROR;
+	  break;
+	}
 
-    /* Make sure the drawable is RGB color */
-    drawable = gimp_drawable_get (param[2].data.d_drawable);
-    if (!gimp_drawable_is_rgb (drawable->id))
-    {
-      gimp_message (_("Color Mapping / Adjust FG/BG:\nCannot operate on grey/indexed images"));
+      /* Make sure the drawable is RGB color */
+      drawable = gimp_drawable_get (param[2].data.d_drawable);
+      if (!gimp_drawable_is_rgb (drawable->id))
+	{
+	  gimp_message (_("Color Mapping / Adjust FG/BG:\nCannot operate on grey/indexed images"));
+	  status = STATUS_EXECUTION_ERROR;
+	  break;
+	}
+
+      if (strcmp (name, "plug_in_color_adjust") == 0)
+	{
+	  if (nparams != 3)  /* Make sure all the arguments are there */
+	    {
+	      status = STATUS_CALLING_ERROR;
+	      break;
+	    }
+
+	  c = &(plvals.colors[0][0]);      /* First source color */
+	  gimp_palette_get_foreground (c, c+1, c+2);
+	  c = &(plvals.colors[1][0]);      /* Second source color */
+	  gimp_palette_get_background (c, c+1, c+2);
+	  c = &(plvals.colors[2][0]);      /* First destination color */
+	  c[0] = c[1] = c[2] = 0;          /* Foreground mapped to black */
+	  c = &(plvals.colors[3][0]);      /* second destination color */
+	  c[0] = c[1] = c[2] = 255;        /* Background mapped to white */
+	  plvals.map_mode = 0;
+
+	  if (run_mode != RUN_NONINTERACTIVE)
+	    gimp_progress_init (_("Adjusting Foreground/Background"));
+
+	  color_mapping (drawable);
+	  break;
+	}
+
+      if (strcmp (name, "plug_in_color_map") == 0)
+	{
+	  if (run_mode == RUN_NONINTERACTIVE)
+	    {
+	      if (nparams != 8)  /* Make sure all the arguments are there */
+		{
+		  status = STATUS_CALLING_ERROR;
+		  break;
+		}
+
+	      for (j = 0; j < 4; j++)
+		{
+		  plvals.colors[j][0] = param[3+j].data.d_color.red;
+		  plvals.colors[j][1] = param[3+j].data.d_color.green;
+		  plvals.colors[j][2] = param[3+j].data.d_color.blue;
+		}
+	      plvals.map_mode = param[7].data.d_int32;
+	    }
+	  else if (run_mode == RUN_INTERACTIVE)
+	    {
+	      gimp_get_data (name, &plvals);
+
+	      c = &(plvals.colors[0][0]);      /* First source color */
+	      gimp_palette_get_foreground (c, c+1, c+2);
+	      c = &(plvals.colors[1][0]);      /* Second source color */
+	      gimp_palette_get_background (c, c+1, c+2);
+
+	      if (!dialog ())
+		break;
+	    }
+	  else if (run_mode == RUN_WITH_LAST_VALS)
+	    {
+	      gimp_get_data (name, &plvals);
+	    }
+	  else
+	    {
+	      status = STATUS_CALLING_ERROR;
+	      break;
+	    }
+
+	  if (run_mode != RUN_NONINTERACTIVE)
+	    gimp_progress_init (_("Mapping colors"));
+
+	  color_mapping (drawable);
+
+	  if (run_mode == RUN_INTERACTIVE)
+	    gimp_set_data (name, &plvals, sizeof (plvals));
+
+	  break;
+	}
+
       status = STATUS_EXECUTION_ERROR;
-      break;
     }
-
-    if (strcmp (name, "plug_in_color_adjust") == 0)
-    {
-      if (nparams != 3)  /* Make sure all the arguments are there */
-      {
-        status = STATUS_CALLING_ERROR;
-        break;
-      }
-
-      c = &(plvals.colors[0][0]);      /* First source color */
-      gimp_palette_get_foreground (c, c+1, c+2);
-      c = &(plvals.colors[1][0]);      /* Second source color */
-      gimp_palette_get_background (c, c+1, c+2);
-      c = &(plvals.colors[2][0]);      /* First destination color */
-      c[0] = c[1] = c[2] = 0;          /* Foreground mapped to black */
-      c = &(plvals.colors[3][0]);      /* second destination color */
-      c[0] = c[1] = c[2] = 255;        /* Background mapped to white */
-      plvals.map_mode = 0;
-
-      if (run_mode != RUN_NONINTERACTIVE)
-        gimp_progress_init (_("Adjusting Foreground/Background"));
-
-      color_mapping (drawable);
-      break;
-    }
-
-    if (strcmp (name, "plug_in_color_map") == 0)
-    {
-      if (run_mode == RUN_NONINTERACTIVE)
-      {
-        if (nparams != 8)  /* Make sure all the arguments are there */
-        {
-          status = STATUS_CALLING_ERROR;
-          break;
-        }
-
-        for (j = 0; j < 4; j++)
-        {
-          plvals.colors[j][0] = param[3+j].data.d_color.red;
-          plvals.colors[j][1] = param[3+j].data.d_color.green;
-          plvals.colors[j][2] = param[3+j].data.d_color.blue;
-        }
-        plvals.map_mode = param[7].data.d_int32;
-      }
-      else if (run_mode == RUN_INTERACTIVE)
-      {
-        gimp_get_data (name, &plvals);
-
-        c = &(plvals.colors[0][0]);      /* First source color */
-        gimp_palette_get_foreground (c, c+1, c+2);
-        c = &(plvals.colors[1][0]);      /* Second source color */
-        gimp_palette_get_background (c, c+1, c+2);
-
-        if (!dialog ()) break;
-      }
-      else if (run_mode == RUN_WITH_LAST_VALS)
-      {
-        gimp_get_data (name, &plvals);
-      }
-      else
-      {
-        status = STATUS_CALLING_ERROR;
-        break;
-      }
-
-      if (run_mode != RUN_NONINTERACTIVE)
-        gimp_progress_init (_("Mapping colors"));
-
-      color_mapping (drawable);
-
-      if (run_mode == RUN_INTERACTIVE)
-        gimp_set_data (name, &plvals, sizeof (plvals));
-
-      break;
-    }
-
-    status = STATUS_EXECUTION_ERROR;
-  }
 
   if ((status == STATUS_SUCCESS) && (run_mode != RUN_NONINTERACTIVE))
     gimp_displays_flush ();
@@ -294,16 +297,15 @@ run (char    *name,
   values[0].data.d_status = status;
 }
 
-
 static gint
-dialog ()
+dialog (void)
 {
   GtkWidget *dlg;
   GtkWidget *hbox;
   GtkWidget *table;
-  guchar *color_cube;
-  gchar **argv;
-  gint argc;
+  guchar  *color_cube;
+  gchar  **argv;
+  gint     argc;
 
   argc    = 1;
   argv    = g_new (gchar *, 1);
@@ -319,6 +321,7 @@ dialog ()
   color_cube = gimp_color_cube ();
   gtk_preview_set_color_cube (color_cube[0], color_cube[1],
 			      color_cube[2], color_cube[3]);
+
   gtk_widget_set_default_visual (gtk_preview_get_visual ());
   gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
@@ -339,21 +342,22 @@ dialog ()
                       NULL);
 
   hbox = gtk_hbox_new (FALSE, 0);
-  gtk_container_border_width (GTK_CONTAINER (hbox), 0);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, TRUE, TRUE, 0);
   gtk_widget_show (hbox);
 
   /* The table keeps the color selections */
-  table = gtk_table_new (4, 2, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 5);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 5);
+  table = gtk_table_new (2, 4, FALSE);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 1, 6);
   gtk_box_pack_start (GTK_BOX (hbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
-  add_color_button (0, 0, 1, table);
-  add_color_button (1, 0, 2, table);
-  add_color_button (2, 2, 1, table);
-  add_color_button (3, 2, 2, table);
+  add_color_button (0, 0, 0, table);
+  add_color_button (1, 2, 0, table);
+  add_color_button (2, 0, 1, table);
+  add_color_button (3, 2, 1, table);
 
   gtk_widget_show (dlg);
 
@@ -363,42 +367,29 @@ dialog ()
   return run_flag;
 }
 
-
 static void
-add_color_button (int csel_index,
-                  int left,
-                  int top,
+add_color_button (gint       csel_index,
+                  gint       left,
+                  gint       top,
                   GtkWidget *table)
 
 {
- GtkWidget *label;
- GtkWidget *button;
- GtkWidget *hbox;
+  GtkWidget *label;
+  GtkWidget *button;
 
- hbox = gtk_hbox_new (FALSE, 0);
- gtk_container_border_width (GTK_CONTAINER (hbox), 5);
- gtk_table_attach (GTK_TABLE (table), hbox, left, left+1, top, top+1,
-                   GTK_FILL, GTK_FILL, 0, 0);
+  label = gtk_label_new ((left == 0) ? _("From:") : _("To:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, left, left+1, top, top+1,
+		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (label);
 
- label = gtk_label_new ((left == 0) ? _("From:") : _("To:"));
- gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
- gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
- gtk_widget_show (label);
- gtk_widget_show (hbox);
-
- hbox = gtk_hbox_new (FALSE, 0);
- gtk_container_border_width (GTK_CONTAINER (hbox), 5);
- gtk_table_attach (GTK_TABLE (table), hbox, left+1, left+2, top, top+1,
-                   GTK_FILL, GTK_FILL, 0, 0);
-
- button = gimp_color_button_new (gettext (csel_title[csel_index]),
-				 PRV_WIDTH, PRV_HEIGHT,
-				 plvals.colors[csel_index], 3);
- gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
- gtk_widget_show (button);
- gtk_widget_show (hbox);
+  button = gimp_color_button_new (gettext (csel_title[csel_index]),
+				  PRV_WIDTH, PRV_HEIGHT,
+				  plvals.colors[csel_index], 3);
+  gtk_table_attach (GTK_TABLE (table), button, left+1, left+2, top, top+1,
+		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (button);
 }
-
 
 static void
 mapcolor_ok_callback (GtkWidget *widget,
@@ -410,7 +401,6 @@ mapcolor_ok_callback (GtkWidget *widget,
   run_flag = TRUE;
   gtk_widget_destroy (GTK_WIDGET (data));
 }
-
 
 static void
 get_mapping (guchar *src_col1,
@@ -428,29 +418,28 @@ get_mapping (guchar *src_col1,
 
   /* Currently we always do a linear mapping */
 
- colormap[0] = redmap;
- colormap[1] = greenmap;
- colormap[2] = bluemap;
+  colormap[0] = redmap;
+  colormap[1] = greenmap;
+  colormap[2] = bluemap;
 
- switch (map_mode)
- {
-   case 0:
-   default:
-     for (rgb = 0; rgb < 3; rgb++)
-     {
-       a = src_col1[rgb];  as = dst_col1[rgb];
-       b = src_col2[rgb];  bs = dst_col2[rgb];
-       for (i = 0; i < 256; i++)
-       {
-         j = ((i - a) * (bs - as)) / (b - a) + as;
-         if (j > 255) j = 255; else if (j < 0) j = 0;
-         colormap[rgb][i] = j;
-       }
-     }
-     break;
- }
+  switch (map_mode)
+    {
+    case 0:
+    default:
+      for (rgb = 0; rgb < 3; rgb++)
+	{
+	  a = src_col1[rgb];  as = dst_col1[rgb];
+	  b = src_col2[rgb];  bs = dst_col2[rgb];
+	  for (i = 0; i < 256; i++)
+	    {
+	      j = ((i - a) * (bs - as)) / (b - a) + as;
+	      if (j > 255) j = 255; else if (j < 0) j = 0;
+	      colormap[rgb][i] = j;
+	    }
+	}
+      break;
+    }
 }
-
 
 static void
 color_mapping (GDrawable *drawable)
@@ -490,31 +479,31 @@ color_mapping (GDrawable *drawable)
   processed = 0;
   progress = 0.0;
   for (; pr != NULL; pr = gimp_pixel_rgns_process (pr))
-  {
-    for (y = 0; y < src_rgn.h; y++)
     {
-      src = src_rgn.data + y * src_rgn.rowstride;
-      dest = dest_rgn.data + y * dest_rgn.rowstride;
-      for (x = 0; x < src_rgn.w; x++)
-      {
-        dest[0] = redmap[src[0]];
-        dest[1] = greenmap[src[1]];
-        dest[2] = bluemap[src[2]];
-	if (bpp > 3) dest[3] = src[3];
-	src += bpp;
-	dest += bpp;
-        processed++;
-      }
+      for (y = 0; y < src_rgn.h; y++)
+	{
+	  src = src_rgn.data + y * src_rgn.rowstride;
+	  dest = dest_rgn.data + y * dest_rgn.rowstride;
+	  for (x = 0; x < src_rgn.w; x++)
+	    {
+	      dest[0] = redmap[src[0]];
+	      dest[1] = greenmap[src[1]];
+	      dest[2] = bluemap[src[2]];
+	      if (bpp > 3) dest[3] = src[3];
+	      src += bpp;
+	      dest += bpp;
+	      processed++;
+	    }
+	}
+      if (l_run_mode != RUN_NONINTERACTIVE)
+	{
+	  if ((double)processed/(double)total - progress > 0.1)
+	    {
+	      progress = (double)processed/(double)total;
+	      gimp_progress_update (progress);
+	    }
+	}
     }
-    if (l_run_mode != RUN_NONINTERACTIVE)
-    {
-      if ((double)processed/(double)total - progress > 0.1)
-      {
-        progress = (double)processed/(double)total;
-        gimp_progress_update (progress);
-      }
-    }
-  }
   if (l_run_mode != RUN_NONINTERACTIVE)
     gimp_progress_update (1.0);
 

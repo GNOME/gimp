@@ -18,14 +18,14 @@
 
 #include "config.h"
 
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+#include <libgimp/gimpmath.h>
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -53,10 +53,10 @@ static void      run    (gchar     *name,
 			 gint      *nreturn_vals,
 			 GParam   **return_vals);
 
-static void      gauss_rle         (GDrawable *drawable,
-				    gint       horizontal,
-				    gint       vertical,
-				    gdouble    std_dev);
+static void      gauss_rle (GDrawable *drawable,
+			    gint       horizontal,
+			    gint       vertical,
+			    gdouble    std_dev);
 
 /*
  * Gaussian blur interface
@@ -279,33 +279,34 @@ gauss_rle_dialog (void)
   /*  parameter settings  */
   frame = gtk_frame_new (_("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-  vbox = gtk_vbox_new (FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 10);
+
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   toggle = gtk_check_button_new_with_label (_("Blur Horizontally"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) gauss_toggle_update,
+		      GTK_SIGNAL_FUNC (gauss_toggle_update),
 		      &bvals.horizontal);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.horizontal);
   gtk_widget_show (toggle);
 
   toggle = gtk_check_button_new_with_label (_("Blur Vertically"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) gauss_toggle_update,
+		      GTK_SIGNAL_FUNC (gauss_toggle_update),
 		      &bvals.vertical);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.vertical);
   gtk_widget_show (toggle);
 
-  hbox = gtk_hbox_new (FALSE, 5);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new (_("Blur Radius: "));
-  gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, FALSE, 0);
+  label = gtk_label_new (_("Blur Radius:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   entry = gtk_entry_new ();
@@ -314,7 +315,7 @@ gauss_rle_dialog (void)
   g_snprintf (buffer, sizeof (buffer), "%f", bvals.radius);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) gauss_entry_callback,
+		      GTK_SIGNAL_FUNC (gauss_entry_callback),
 		      NULL);
   gtk_widget_show (entry);
 

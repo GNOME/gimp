@@ -45,20 +45,10 @@ struct mwPreview {
    guchar *bits;
 };
 
-struct mwColorSel {
-   gdouble *color;
-   gdouble savcolor[4];
-   gint opacity;
-   guchar *name;
-   GtkWidget *window;
-   GtkWidget *preview;
-};
-
 #ifndef PREVIEW_SIZE
 #define PREVIEW_SIZE 100
 #endif
 
-GtkWidget *mw_app_new(gchar *resname, gchar *appname, gint *runpp);
 void mw_fscale_entry_new(GtkWidget *table, char *name,
                          gfloat lorange, gfloat hirange,
                          gfloat st_inc, gfloat pg_inc, gfloat pgsiz,
@@ -84,10 +74,6 @@ GtkWidget *mw_ientry_button_new(GtkWidget *parent, gchar *fname,
                                 gchar *name, gint *varp);
 GtkWidget *mw_fentry_button_new(GtkWidget *parent, gchar *fname,
                                 gchar *name, gdouble *varp);
-struct mwColorSel *mw_color_select_button_create(GtkWidget *parent,
-						 gchar *name,
-						 gdouble *color,
-						 gint opacity);
 
 void mw_ientry_new(GtkWidget *parent, gchar *fname,
 		   gchar *name, gint *varp);
@@ -103,4 +89,3 @@ struct mwPreview *mw_preview_build(GDrawable *drw);
 struct mwPreview *mw_preview_build_virgin(GDrawable *drw);
 
 #endif /* MEGAWIDGET_H */
-/* end of megawidget/megawidget.h */

@@ -21,9 +21,10 @@
  */
 #include "config.h"
 
+#include "gimpdialog.h"
 #include "gimpunitmenu.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimpintl.h"
 
 /*  private functions  */
 static const gchar * gimp_unit_menu_build_string (gchar *format,
@@ -443,23 +444,27 @@ gimp_unit_menu_selection_delete_callback (GtkWidget *widget,
 static void
 gimp_unit_menu_create_selection (GimpUnitMenu *gum)
 {
-  GtkWidget *hbbox;
   GtkWidget *vbox;
   GtkWidget *scrolled_win;
-  GtkWidget *button;
-  gchar     *titles[2];
-  gchar     *row[2];
-  GUnit      unit;
-  gint       num_units;
-  gint       unit_width;
-  gint       factor_width;
+  gchar *titles[2];
+  gchar *row[2];
+  GUnit  unit;
+  gint   num_units;
+  gint   unit_width;
+  gint   factor_width;
 
-  gum->selection = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (gum->selection),
-			  "unit_selection", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (gum->selection), _("Unit Selection"));
-  gtk_window_set_policy (GTK_WINDOW (gum->selection), FALSE, TRUE, FALSE);
-  gtk_window_position (GTK_WINDOW (gum->selection), GTK_WIN_POS_MOUSE);
+  gum->selection =
+    gimp_dialog_new (_("Unit Selection"), "unit_selection",
+		     gimp_standard_help_func, "dialogs/unit_selection.html",
+		     GTK_WIN_POS_MOUSE,
+		     FALSE, TRUE, FALSE,
+
+		     _("Select"), gimp_unit_menu_selection_select_callback,
+		     gum, NULL, NULL, TRUE, FALSE,
+		     _("Close"), gimp_unit_menu_selection_close_callback,
+		     gum, NULL, NULL, FALSE, TRUE,
+
+		     NULL);
 
   gtk_signal_connect (GTK_OBJECT (gum->selection), "delete_event",
                       GTK_SIGNAL_FUNC (gimp_unit_menu_selection_delete_callback),
@@ -525,35 +530,6 @@ gimp_unit_menu_create_selection (GimpUnitMenu *gum)
   gtk_signal_connect (GTK_OBJECT (gum->clist), "destroy",
                       GTK_SIGNAL_FUNC (gtk_widget_destroyed),
                       &gum->clist);
-
-  /*  the action area  */
-  gtk_container_set_border_width
-    (GTK_CONTAINER (GTK_DIALOG (gum->selection)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (gum->selection)->action_area),
-			   FALSE);
-
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (gum->selection)->action_area), hbbox,
-		    FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
-
-  button = gtk_button_new_with_label (_("Select"));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_widget_grab_default (button);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (gimp_unit_menu_selection_select_callback),
-		      gum);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("Close"));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (gimp_unit_menu_selection_close_callback),
-		      gum);
-  gtk_widget_show (button);
 
   gtk_widget_show (vbox);
   gtk_widget_show (gum->selection);

@@ -35,8 +35,8 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -58,10 +58,10 @@ typedef struct
 /* Declare local functions.
  */
 static void      query  (void);
-static void      run    (char      *name,
-			 int        nparams,
+static void      run    (gchar     *name,
+			 gint       nparams,
 			 GParam    *param,
-			 int       *nreturn_vals,
+			 gint      *nreturn_vals,
 			 GParam   **return_vals);
 
 static void      noisify        (GDrawable * drawable);
@@ -106,7 +106,7 @@ static NoisifyInterface noise_int =
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef args[] =
   {
@@ -139,10 +139,10 @@ query ()
 }
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[1];
@@ -202,9 +202,10 @@ run (char    *name,
     }
 
   /*  Make sure that the drawable is gray or RGB color  */
-  if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
+  if (gimp_drawable_is_rgb (drawable->id) ||
+      gimp_drawable_is_gray (drawable->id))
     {
-      gimp_progress_init ( _("Adding Noise..."));
+      gimp_progress_init (_("Adding Noise..."));
       gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
 
       /*  seed the random number generator  */
@@ -248,14 +249,18 @@ noisify (GDrawable *drawable)
   noise = 0;
 
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
-  gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
-  gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
+  gimp_pixel_rgn_init (&src_rgn, drawable,
+		       x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
+  gimp_pixel_rgn_init (&dest_rgn, drawable,
+		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
 
   /* Initialize progress */
   progress = 0;
   max_progress = (x2 - x1) * (y2 - y1);
 
-  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn); pr != NULL; pr = gimp_pixel_rgns_process (pr))
+  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr))
     {
       src_row = src_rgn.data;
       dest_row = dest_rgn.data;
@@ -311,10 +316,10 @@ noisify_dialog (gint channels)
   GtkWidget *toggle;
   GtkWidget *frame;
   GtkWidget *table;
-  gchar *buffer;
+  gchar  *buffer;
   gchar **argv;
-  gint argc;
-  int i;
+  gint    argc;
+  gint    i;
 
   argc    = 1;
   argv    = g_new (gchar *, 1);
@@ -340,88 +345,73 @@ noisify_dialog (gint channels)
 		      NULL);
 
   /*  parameter settings  */
-  frame = gtk_frame_new ( _("Parameter Settings"));
+  frame = gtk_frame_new (_("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+
   table = gtk_table_new (channels + 1, 3, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 10);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  toggle = gtk_check_button_new_with_label ( _("Independent"));
+  toggle = gtk_check_button_new_with_label (_("Independent"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 0, 1, GTK_FILL, 0, 0, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) noisify_toggle_update,
+		      GTK_SIGNAL_FUNC (noisify_toggle_update),
 		      &nvals.independent);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), nvals.independent);
   gtk_widget_show (toggle);
 
-  /*  for (i = 0; i < channels; i++)
-   {
-      sprintf (buffer, "Channel #%d", i);
-      dialog_create_value(buffer, GTK_TABLE(table), i+1, &nvals.noise[i], 0.0, 1.0);
-    }
-    */
-  
   if (channels == 1) 
     {
-      buffer = g_strdup_printf( _("Gray"));
-      dialog_create_value(buffer, GTK_TABLE(table), 1, &nvals.noise[0], 0.0, 1.0);
-      g_free(buffer);
+      dialog_create_value (_("Gray:"), GTK_TABLE (table), 1,
+			   &nvals.noise[0], 0.0, 1.0);
     }
-
   else if (channels == 2)
     {
-      buffer = g_strdup_printf( _("Gray"));
-      dialog_create_value(buffer, GTK_TABLE(table), 1, &nvals.noise[0], 0.0, 1.0);
-      g_free(buffer);
-      buffer  = g_strdup_printf( _("Alpha"));
-      dialog_create_value(buffer, GTK_TABLE(table), 2, &nvals.noise[1], 0.0, 1.0);
-      g_free(buffer);
+      dialog_create_value (_("Gray:"), GTK_TABLE (table), 1,
+			   &nvals.noise[0], 0.0, 1.0);
+      dialog_create_value (_("Alpha:"), GTK_TABLE (table), 2,
+			   &nvals.noise[1], 0.0, 1.0);
     }
   
   else if (channels == 3)
     {
-      buffer = g_strdup_printf( _("Red"));
-      dialog_create_value(buffer, GTK_TABLE(table), 1, &nvals.noise[0], 0.0, 1.0);
-      g_free(buffer);
-      buffer = g_strdup_printf( _("Green"));
-      dialog_create_value(buffer, GTK_TABLE(table), 2, &nvals.noise[1], 0.0, 1.0);
-      g_free(buffer);
-      buffer = g_strdup_printf( _("Blue"));
-      dialog_create_value(buffer, GTK_TABLE(table), 3, &nvals.noise[2], 0.0, 1.0);
-      g_free(buffer);
+      dialog_create_value (_("Red:"), GTK_TABLE (table), 1,
+			   &nvals.noise[0], 0.0, 1.0);
+      dialog_create_value (_("Green:"), GTK_TABLE (table), 2,
+			   &nvals.noise[1], 0.0, 1.0);
+      dialog_create_value (_("Blue:"), GTK_TABLE (table), 3,
+			   &nvals.noise[2], 0.0, 1.0);
     }
 
   else if (channels == 4)
     {
-      buffer = g_strdup_printf( _("Red"));
-      dialog_create_value(buffer, GTK_TABLE(table), 1, &nvals.noise[0], 0.0, 1.0);
-      g_free(buffer);
-      buffer = g_strdup_printf( _("Green"));
-      dialog_create_value(buffer, GTK_TABLE(table), 2, &nvals.noise[1], 0.0, 1.0);
-      g_free(buffer);
-      buffer = g_strdup_printf( _("Blue"));
-      dialog_create_value(buffer, GTK_TABLE(table), 3, &nvals.noise[2], 0.0, 1.0);
-      g_free(buffer);
-      buffer = g_strdup_printf( _("Alpha"));
-      dialog_create_value(buffer, GTK_TABLE(table), 4, &nvals.noise[3], 0.0, 1.0);
-      g_free(buffer);
+      dialog_create_value (_("Red:"), GTK_TABLE (table), 1,
+			   &nvals.noise[0], 0.0, 1.0);
+      dialog_create_value (_("Green:"), GTK_TABLE (table), 2,
+			   &nvals.noise[1], 0.0, 1.0);
+      dialog_create_value (_("Blue:"), GTK_TABLE (table), 3,
+			   &nvals.noise[2], 0.0, 1.0);
+      dialog_create_value (_("Alpha:"), GTK_TABLE (table), 4,
+			   &nvals.noise[3], 0.0, 1.0);
     }
-  
   else
     {
       for (i = 0; i < channels; i++)
 	{
-	  buffer = g_strdup_printf( _("Channel #%d"), i);
-	  dialog_create_value(buffer, GTK_TABLE(table), i+1, &nvals.noise[i], 0.0, 1.0);
-      g_free(buffer);
+	  buffer = g_strdup_printf (_("Channel #%d"), i);
+	  dialog_create_value (buffer, GTK_TABLE(table), i + 1,
+			       &nvals.noise[i], 0.0, 1.0);
+	  g_free (buffer);
 	}
     }
-  
 
   gtk_widget_show (frame);
   gtk_widget_show (table);
+
   gtk_widget_show (dlg);
 
   gtk_main ();
@@ -439,7 +429,7 @@ noisify_dialog (gint channels)
  * Springer Verlag, New York, 1988.
  */
 static gdouble
-gauss ()
+gauss (void)
 {
   gint i;
   gdouble sum = 0.0;
@@ -493,10 +483,10 @@ dialog_create_value (char     *title,
   GtkObject *scale_data;
   gchar      buf[256];
 
-  label = gtk_label_new(title);
-  gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
-  gtk_table_attach(table, label, 0, 1, row, row + 1, GTK_FILL, GTK_FILL, 4, 0);
-  gtk_widget_show(label);
+  label = gtk_label_new (title);
+  gtk_misc_set_alignment (GTK_MISC(label), 1.0, 0.5);
+  gtk_table_attach (table, label, 0, 1, row, row + 1, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (label);
 
   scale_data = gtk_adjustment_new(*value, left, right,
 				  (right - left) / 200.0,
@@ -509,7 +499,8 @@ dialog_create_value (char     *title,
 
   scale = gtk_hscale_new(GTK_ADJUSTMENT(scale_data));
   gtk_widget_set_usize(scale, SCALE_WIDTH, 0);
-  gtk_table_attach(table, scale, 1, 2, row, row + 1, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach(table, scale, 1, 2, row, row + 1,
+		   GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_scale_set_draw_value(GTK_SCALE(scale), FALSE);
   gtk_scale_set_digits(GTK_SCALE(scale), 3);
   gtk_range_set_update_policy(GTK_RANGE(scale), GTK_UPDATE_CONTINUOUS);
@@ -524,7 +515,8 @@ dialog_create_value (char     *title,
   gtk_signal_connect(GTK_OBJECT(entry), "changed",
 		     (GtkSignalFunc) noisify_entry_update,
 		     value);
-  gtk_table_attach(GTK_TABLE(table), entry, 2, 3, row, row + 1, GTK_FILL, GTK_FILL, 4, 0);
+  gtk_table_attach (GTK_TABLE(table), entry, 2, 3, row, row + 1,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(entry);
 }
 

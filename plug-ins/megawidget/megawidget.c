@@ -59,8 +59,6 @@ static void mw_scale_entry_new(GtkWidget *table, gchar *name,
 static void mw_entry_new(GtkWidget *parent, gchar *fname,
 			 gchar *name, gpointer variablep,
 			 guchar *buffer, GtkCallback entry_cb);
-static void ui_ok_callback(GtkWidget *widget, gpointer data);
-static void ui_close_callback(GtkWidget *widget, gpointer data);
 static void ui_fscale_callback(GtkAdjustment *adj, gpointer data);
 static void ui_fentry_callback(GtkWidget *widget, gpointer data);
 static void ui_iscale_callback(GtkAdjustment *adj, gpointer data);
@@ -69,71 +67,11 @@ static void ui_toggle_callback(GtkWidget *widget, gpointer data);
 static void ui_ientry_alone_callback(GtkWidget *widget, gpointer data);
 static void ui_fentry_alone_callback(GtkWidget *widget, gpointer data);
 static void ui_value_toggle_callback(GtkWidget *widget, gpointer data);
-static void create_color_selection (GtkWidget *widget, struct mwColorSel *cs);
-static void color_selection_cancel (GtkWidget  *widget, struct mwColorSel *cs);
-static void color_selection_destroy_window (GtkWidget  *widget, 
-					    GtkWidget **window);
-static void color_selection_changed_cb (GtkWidget *w, struct mwColorSel *cs);
-static void color_selection_ok_cb (GtkWidget *w, struct mwColorSel *cs); 
-static void color_select_fill_button_color(GtkWidget *preview, gdouble *color);
 
 #ifndef NO_PREVIEW
 static mw_preview_t *mw_do_preview = NULL;
 static gint do_preview = 1;
 #endif
-
-GtkWidget *
-mw_app_new(gchar *resname, gchar *appname, gint *runpp){
-   gchar **argv;
-   gint argc;
-   GtkWidget *dlg;
-   GtkWidget *button;
-   GtkWidget *hbbox;
-   
-   argc = 1;
-   argv = g_new(gchar *, 1);
-   *runpp = 0;
-
-   argv[0] = g_strdup(resname);
-   gtk_init(&argc, &argv);
-   gtk_rc_parse(gimp_gtkrc());
-
-   dlg = gtk_dialog_new();
-   gtk_object_set_data(GTK_OBJECT(dlg), "runp", runpp);
-
-   gtk_window_set_title(GTK_WINDOW(dlg), appname);
-   gtk_window_position(GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
-   gtk_signal_connect(GTK_OBJECT(dlg), "destroy",
-                      (GtkSignalFunc) ui_close_callback,
-                      NULL);
-
-   /*  Action area  */
-   gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-   gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-   hbbox = gtk_hbutton_box_new ();
-   gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-   gtk_widget_show (hbbox);
-   
-   button = gtk_button_new_with_label (_("OK"));
-   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-   gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		       (GtkSignalFunc) ui_ok_callback,
-		       dlg);
-   gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-   gtk_widget_grab_default (button);
-   gtk_widget_show (button);
-   
-   button = gtk_button_new_with_label (_("Cancel"));
-   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			      (GtkSignalFunc) gtk_widget_destroy,
-			      GTK_OBJECT (dlg));
-   gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-   gtk_widget_show (button);
-   
-   return dlg;
-}
 
 void
 mw_fscale_entry_new(GtkWidget *table, gchar *name,
@@ -311,42 +249,6 @@ mw_toggle_button_new(GtkWidget *parent, gchar *fname,
      return parent; /* ????? */
    } 
 }
-
-struct mwColorSel * mw_color_select_button_create(
-		       GtkWidget *parent, gchar *name, gdouble *color, 
-		       gint opacity)
-{
-#define COLOR_SAMPLE_SIZE 30
-    GtkWidget *button;
-    struct mwColorSel *cs = g_new(struct mwColorSel,1);
-
-    cs->name = (guchar *)name;
-    cs->color = color;
-    cs->opacity = opacity;
-    cs->window = NULL;
-
-  button = gtk_button_new();
-  gtk_box_pack_start(GTK_BOX(parent),button,FALSE,FALSE,0);
-  gtk_widget_show(button);
-
-  cs->preview = gtk_preview_new(GTK_PREVIEW_COLOR);
-  gtk_preview_size(GTK_PREVIEW(cs->preview),
-                   COLOR_SAMPLE_SIZE,COLOR_SAMPLE_SIZE);
-  gtk_container_add (GTK_CONTAINER(button),cs->preview);
-  gtk_widget_show(cs->preview);
-
-  color_select_fill_button_color(cs->preview,color);
-  
-  gtk_signal_connect(GTK_OBJECT(button),"clicked",
-                     (GtkSignalFunc)create_color_selection,
-                     cs);
-
-  return cs;
-}
-
-
-
-
 
 void mw_ientry_new(GtkWidget *parent, gchar *fname,
                      gchar *name, gint *varp)
@@ -565,19 +467,6 @@ mw_entry_new(GtkWidget *parent, gchar *fname,
 }
 
 static void
-ui_close_callback(GtkWidget *widget, gpointer data){
-   gtk_main_quit();
-}
-
-static void
-ui_ok_callback(GtkWidget *widget, gpointer data){
-   gint *rp;
-   rp = gtk_object_get_data(GTK_OBJECT(data), "runp");
-   *rp=1;
-   gtk_widget_destroy(GTK_WIDGET(data));
-}
-
-static void
 ui_fscale_callback(GtkAdjustment *adj, gpointer data){
   GtkWidget *ent;
   double *nval;
@@ -729,128 +618,3 @@ ui_value_toggle_callback(GtkWidget *widget, gpointer data) {
 #endif
    }
 }
-
-
-
-/*    color_selection_*  stuff        */
-
-static void
-color_selection_ok_cb (GtkWidget *w,
-		    struct mwColorSel *cs)
-{
-  GtkColorSelection *colorsel;
-
-  colorsel=GTK_COLOR_SELECTION(GTK_COLOR_SELECTION_DIALOG(cs->window)->colorsel);
-  gtk_color_selection_get_color(colorsel,cs->color);
-  gtk_widget_destroy(cs->window);
-  color_select_fill_button_color(cs->preview, cs->color);
-#ifndef NO_PREVIEW
-     if (do_preview && mw_do_preview!=NULL) (*mw_do_preview)(NULL);
-#endif
-
-}
-
-static void
-color_selection_changed_cb (GtkWidget *w,
-			    struct mwColorSel *cs)
-{
-  GtkColorSelection *colorsel;
-
-  colorsel=GTK_COLOR_SELECTION(GTK_COLOR_SELECTION_DIALOG(cs->window)->colorsel);
-  gtk_color_selection_get_color(colorsel,cs->color);
-#ifndef NO_PREVIEW
-     if (do_preview && mw_do_preview!=NULL) (*mw_do_preview)(NULL);
-#endif
-}
-
-static void 
-color_selection_destroy_window (GtkWidget  *widget,
-				     GtkWidget **window)
-{
-  *window = NULL;
-}
-
-static void 
-color_selection_cancel (GtkWidget  *widget,
-			struct mwColorSel *cs)
-{
-    (cs->color)[0]=cs->savcolor[0]; 
-    (cs->color)[1]=cs->savcolor[1];
-    (cs->color)[2]=cs->savcolor[2];
-    if (cs->opacity)
-      (cs->color)[3]=cs->savcolor[3];
-    gtk_widget_destroy(cs->window);
-    cs->window = NULL;
-#ifndef NO_PREVIEW
-     if (do_preview && mw_do_preview!=NULL) (*mw_do_preview)(NULL);
-#endif
-}
-
-
-static void
-create_color_selection (GtkWidget *widget,
-			struct mwColorSel *cs)
-{
-  if (!(cs->window)) {    
-    cs->window = gtk_color_selection_dialog_new ((const gchar *)cs->name);
-    cs->savcolor[0]=cs->color[0];    /* For the cancel .... */
-    cs->savcolor[1]=cs->color[1];
-    cs->savcolor[2]=cs->color[2];
-    if (cs->opacity)
-      cs->savcolor[3]=cs->color[3];
-    
-    gtk_color_selection_set_opacity(
-	GTK_COLOR_SELECTION(GTK_COLOR_SELECTION_DIALOG(cs->window)->colorsel),cs->opacity);
-    
-    gtk_color_selection_set_update_policy(
-	GTK_COLOR_SELECTION(GTK_COLOR_SELECTION_DIALOG(cs->window)->colorsel),GTK_UPDATE_DELAYED);
-    gtk_widget_destroy ( GTK_COLOR_SELECTION_DIALOG(cs->window)->help_button );
-
-    gtk_signal_connect (GTK_OBJECT (cs->window), "destroy",
-			(GtkSignalFunc) color_selection_destroy_window,
-			&(cs->window));
-		      
-    gtk_signal_connect (GTK_OBJECT(GTK_COLOR_SELECTION_DIALOG(cs->window)->colorsel),
-			"color_changed",(GtkSignalFunc) color_selection_changed_cb,
-			cs);
-    
-    gtk_signal_connect (GTK_OBJECT (GTK_COLOR_SELECTION_DIALOG (cs->window)->ok_button),
-			"clicked", (GtkSignalFunc) color_selection_ok_cb,
-			cs);
-    gtk_signal_connect (GTK_OBJECT (GTK_COLOR_SELECTION_DIALOG (cs->window)->cancel_button),
-			"clicked", (GtkSignalFunc) color_selection_cancel,
-			cs);
-  }
-
-  gtk_color_selection_set_color(GTK_COLOR_SELECTION(GTK_COLOR_SELECTION_DIALOG(cs->window)->colorsel),cs->color);
-
-  gtk_window_position (GTK_WINDOW (cs->window), GTK_WIN_POS_MOUSE);
-  gtk_widget_show(cs->window);
-
-  
-}
-
-static void 
-color_select_fill_button_color(GtkWidget *preview, gdouble *color)
-{
-  gint i;
-  guchar buf[3*COLOR_SAMPLE_SIZE];
-  
-  for (i=0;i<COLOR_SAMPLE_SIZE;i++)
-    {
-      buf[3*i] = (guchar)(255.999*color[0]);
-      buf[3*i+1] = (guchar)(255.999*color[1]);
-      buf[3*i+2] = (guchar)(255.999*color[2]);
-    }
-  for (i=0;i<COLOR_SAMPLE_SIZE;i++)
-    gtk_preview_draw_row(GTK_PREVIEW(preview),buf,0,i,COLOR_SAMPLE_SIZE);
-
-  gtk_widget_draw (preview, NULL);
-}
-
-
-
-
-/* end of megawidget/megawidget.c */
-
-

@@ -47,12 +47,6 @@
  ****************************************************************************/
 
 void
-gpc_close_callback(GtkWidget *widget, gpointer data);
-
-void
-gpc_cancel_callback(GtkWidget *widget, gpointer data);
-
-void
 gpc_scale_update(GtkAdjustment *adjustment, double *scale_val);
 
 void
@@ -65,16 +59,8 @@ void
 gpc_set_tooltip(GtkWidget *widget, const char *tip);
 
 void
-gpc_add_action_button(char *label, GtkSignalFunc callback, GtkWidget *dialog,
-    char *tip);
-
-void
 gpc_add_radio_button(GSList **group, char *label, GtkWidget *box,
     gint *value, char *tip);
-
-void
-gpc_add_label(char *value, GtkWidget *parent, int left, int right,
-    int top, int bottom);
 
 void
 gpc_add_hscale(GtkWidget *table, int width, float low, float high,

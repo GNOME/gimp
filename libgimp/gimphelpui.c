@@ -22,6 +22,7 @@
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 
+#include "gimpdialog.h"
 #include "gimphelpui.h"
 
 /*  external functions  */
@@ -83,6 +84,12 @@ gimp_help_connect_help_accel (GtkWidget    *widget,
 
   if (!help_func)
     return;
+
+  /*  for convenience we set the wm icon here because
+   *  this function is called for almost all gimp windows
+   */
+  if (GTK_IS_WINDOW (widget))
+    gimp_dialog_set_icon (widget);
 
   /*  set up the help signals and tips query widget  */
   if (!tips_query)
@@ -156,9 +163,9 @@ gimp_help_connect_help_accel (GtkWidget    *widget,
 }
 
 void
-gimp_help_set_help_data (GtkWidget *widget,
-			 gchar     *tooltip,
-			 gchar     *help_data)
+gimp_help_set_help_data (GtkWidget   *widget,
+			 const gchar *tooltip,
+			 gchar       *help_data)
 {
   g_return_if_fail (widget != NULL);
   g_return_if_fail (GTK_IS_WIDGET (widget));

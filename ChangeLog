@@ -1,3 +1,48 @@
+2000-01-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimphelp.h
+	* libgimp/gimp.h
+	* libgimp/gimphelpui.[ch]: declare the gimp_standard_help_func in
+	gimphelpui.h because libgimp widgets must not include libgimp/gimp.h.
+
+	* libgimp/gimpdialog.c
+	* libgimp/gimpexport.c
+	* libgimp/gimpunitmenu.c: use the dialog constructor for the
+	export dialog and the unit selection.
+
+	* plug-ins/gpc/gpc.[ch]
+	* plug-ins/megawidget/megawidget.[ch]: removed unused functions
+	(dialog creation and some other stuff). The rest of these libs is
+	scheduled for removal, too...
+
+	* plug-ins/AlienMap/AlienMap.c
+	* plug-ins/AlienMap/Makefile.am
+	* plug-ins/AlienMap2/AlienMap2.c
+	* plug-ins/AlienMap2/Makefile.am
+	* plug-ins/borderaverage/Makefile.am
+	* plug-ins/borderaverage/borderaverage.c
+	* plug-ins/common/align_layers.c
+	* plug-ins/common/blur.c
+	* plug-ins/common/colortoalpha.c
+	* plug-ins/common/compose.c
+	* plug-ins/common/decompose.c
+	* plug-ins/common/gauss_iir.c
+	* plug-ins/common/gauss_rle.c
+	* plug-ins/common/mapcolor.c
+	* plug-ins/common/max_rgb.c
+	* plug-ins/common/mblur.c
+	* plug-ins/common/noisify.c
+	* plug-ins/common/spread.c
+	* plug-ins/common/xbm.c
+	* plug-ins/common/xpm.c
+	* plug-ins/fp/Makefile.am
+	* plug-ins/fp/fp_gtk.c
+	* plug-ins/rcm/Makefile.am
+	* plug-ins/rcm/rcm_callback.[ch]
+	* plug-ins/rcm/rcm_dialog.c
+	* plug-ins/sinus/sinus.c: standard ui (spacings etc.) for some
+	more plugins. Did some indentation, prototyping and I18N fixes.
+
 Tue Jan 11 13:32:41 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/gap/gap_navigator_dialog.c: some changes to make it use

@@ -38,13 +38,17 @@
 /* #define VERBOSE 2 */
 
 #include "config.h"
-#include <gtk/gtk.h>
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 /* Wear your GIMP with pride! */
@@ -102,8 +106,6 @@ static gint   save_image   (char   *filename,
 			    gint32  image_ID, 
 			    gint32  drawable_ID);
 static gint   save_dialog  (gint32  drawable_ID);
-static void   close_callback         (GtkWidget *widget,
-				      gpointer   data);
 static void   save_ok_callback       (GtkWidget *widget,
 				      gpointer   data);
 static void   save_toggle_update     (GtkWidget *widget,
@@ -695,20 +697,13 @@ load_image (char *filename)
 }
 
 
-static void
-close_callback (GtkWidget *widget,
-		gpointer   data)
-{
-  gtk_main_quit ();
-}
-
 static int gtk_initialized = FALSE;
 
 
 static void
 not_bw_dialog (void)
 {
-  GtkWidget *dlg, *button, *hbbox, *label, *frame, *vbox;
+  GtkWidget *dlg, *label, *frame, *vbox;
 
   if (!gtk_initialized)
     {
@@ -716,40 +711,25 @@ not_bw_dialog (void)
       return;
     }
 
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), _("XBM Warning"));
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) close_callback,
-		      dlg);
-  gtk_signal_connect (GTK_OBJECT (dlg), "delete_event",
-		      (GtkSignalFunc) close_callback,
-		      dlg);
+  dlg = gimp_dialog_new (_("XBM Warning"), "xbm",
+			 gimp_plugin_help_func, "filters/xbm.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
 
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
+			 _("Cancel"), gtk_main_quit,
+			 NULL, NULL, NULL, TRUE, TRUE,
 
-  button = gtk_button_new_with_label (_("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+			 NULL);
 
   /*  the warning message  */
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE,
-		      TRUE, 0);
+  gtk_container_border_width (GTK_CONTAINER (frame), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame,
+		      TRUE, TRUE, 0);
+
   vbox = gtk_vbox_new (FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 5);
+  gtk_container_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   label = gtk_label_new (_("The image which you are trying to save as\n"
@@ -757,12 +737,13 @@ not_bw_dialog (void)
 			   "Please convert it to a black and white\n"
 			   "(1-bit) indexed image and try again."));
   gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, TRUE, 0);
+
   gtk_widget_show (label);
   gtk_widget_show (vbox);
   gtk_widget_show (frame);
   gtk_widget_show (dlg);
+
   gtk_main ();
-  gtk_widget_destroy (GTK_WIDGET (dlg));
   gdk_flush ();
 }
 
@@ -953,7 +934,7 @@ save_image (char   *filename,
 
 
 static void 
-init_gtk ()
+init_gtk (void)
 {
   gchar **argv;
   gint argc;
@@ -968,65 +949,44 @@ init_gtk ()
 }
 
 static gint
-save_dialog (gint32  drawable_ID)
+save_dialog (gint32 drawable_ID)
 {
-  GtkWidget *dlg, *hbbox, *button, *toggle, *label, *entry, *frame, *hbox, *vbox;
+  GtkWidget *dlg, *toggle, *label, *entry, *frame, *hbox, *vbox;
 
   xsint.run = FALSE;
 
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), _("Save as XBM"));
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
+  dlg = gimp_dialog_new (_("Save as XBM"), "xbm",
+			 gimp_plugin_help_func, "filters/xbm.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
+
+			 _("OK"), save_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
+
+			 NULL);
+
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) close_callback,
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
-  gtk_signal_connect (GTK_OBJECT (dlg), "delete_event",
-		      (GtkSignalFunc) close_callback,
-		      dlg);
-
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label (_("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) save_ok_callback,
-		      dlg);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
 
   /* parameter settings */
   frame = gtk_frame_new (_("XBM Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-  vbox = gtk_vbox_new (FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 5);
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   /* comment string. */
-  hbox = gtk_hbox_new(FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (hbox), 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new (_("Description: "));
+  label = gtk_label_new (_("Description:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -1035,27 +995,26 @@ save_dialog (gint32  drawable_ID)
   gtk_widget_set_usize (entry, 240, 0);
   gtk_entry_set_text (GTK_ENTRY (entry), xsvals.comment);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
-                      (GtkSignalFunc) comment_entry_callback,
+                      GTK_SIGNAL_FUNC (comment_entry_callback),
                       NULL);
   gtk_widget_show (entry);
 
   gtk_widget_show (hbox);
 
   /*  X10 format  */
-  toggle = gtk_check_button_new_with_label (_("X10 format bitmap"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
+  toggle = gtk_check_button_new_with_label (_("X10 Format Bitmap"));
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) save_toggle_update,
+		      GTK_SIGNAL_FUNC (save_toggle_update),
 		      &xsvals.x10_format);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), xsvals.x10_format);
   gtk_widget_show (toggle);
 
   /* prefix */
-  hbox = gtk_hbox_new(FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (hbox), 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new (_("Identifier prefix: "));
+  label = gtk_label_new (_("Identifier Prefix:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -1063,7 +1022,7 @@ save_dialog (gint32  drawable_ID)
   gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
   gtk_entry_set_text (GTK_ENTRY (entry), xsvals.prefix);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
-                      (GtkSignalFunc) prefix_entry_callback,
+                      GTK_SIGNAL_FUNC (prefix_entry_callback),
                       NULL);
   gtk_widget_show (entry);
 
@@ -1105,6 +1064,7 @@ save_ok_callback (GtkWidget *widget,
 		  gpointer   data)
 {
   xsint.run = TRUE;
+
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
@@ -1122,21 +1082,3 @@ save_toggle_update (GtkWidget *widget,
   else
     *toggle_val = FALSE;
 }
-
-/*
-Local Variables:
-compile-command:"gcc -Wall -Wmissing-prototypes -g -O -o xbm xbm.c -lgimp -lgtk -lgdk -lglib -lm"
-End:
-*/
-
-
-
-
-
-
-
-
-
-
-
-

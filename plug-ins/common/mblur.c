@@ -68,59 +68,67 @@
 
 #define	    MBLUR_MAX		MBLUR_ZOOM
 
-typedef struct {
+typedef struct
+{
   gint32	mblur_type;
   gint32	length;
   gint32	angle;
 } mblur_vals_t;
 
-typedef struct {
-	gint       col, row;
-	gint       img_width, img_height, img_bpp, img_has_alpha;
-	gint       tile_width, tile_height;
-	guchar     bg_color[4];
-	GDrawable *drawable;
-	GTile     *tile;
+typedef struct
+{
+  gint       col, row;
+  gint       img_width, img_height, img_bpp, img_has_alpha;
+  gint       tile_width, tile_height;
+  guchar     bg_color[4];
+  GDrawable *drawable;
+  GTile     *tile;
 } pixel_fetcher_t;
 
 /***** Prototypes *****/
 
-static void query(void);
-static void run(char    *name,
-		int      nparams,
-		GParam  *param,
-		int     *nreturn_vals,
-		GParam **return_vals);
+static void query (void);
+static void run   (gchar   *name,
+		   gint     nparams,
+		   GParam  *param,
+		   gint    *nreturn_vals,
+		   GParam **return_vals);
 
-static pixel_fetcher_t *pixel_fetcher_new(GDrawable *drawable);
-static void             pixel_fetcher_set_bg_color(pixel_fetcher_t *pf, guchar r, guchar g, guchar b, guchar a);
-static void             pixel_fetcher_get_pixel(pixel_fetcher_t *pf, int x, int y, guchar *pixel);
-static void             pixel_fetcher_destroy(pixel_fetcher_t *pf);
+static pixel_fetcher_t *pixel_fetcher_new          (GDrawable *drawable);
+static void             pixel_fetcher_set_bg_color (pixel_fetcher_t *pf,
+						    guchar r, guchar g,
+						    guchar b, guchar a);
+static void             pixel_fetcher_get_pixel    (pixel_fetcher_t *pf,
+						    int x, int y, guchar *pixel);
+static void             pixel_fetcher_destroy       (pixel_fetcher_t *pf);
 
-static void		mblur(void);
-static void 		mblur_linear(void);
-static void 	        mblur_radial(void);
-static void 	        mblur_zoom(void);
+static void		mblur        (void);
+static void 		mblur_linear (void);
+static void 	        mblur_radial (void);
+static void 	        mblur_zoom   (void);
 
-static void    dialog_ok_callback(GtkWidget *, gpointer);
-static void    dialog_scale_update(GtkAdjustment *, gint32 *);
-static void    dialog_toggle_update(GtkWidget *, gint32);
+static void       dialog_ok_callback   (GtkWidget *, gpointer);
+static void       dialog_scale_update  (GtkAdjustment *, gint32 *);
+static void       dialog_toggle_update (GtkWidget *, gint32);
 
-static gboolean		mblur_dialog(void);
+static gboolean   mblur_dialog         (void);
+
 /***** Variables *****/
 
-GPlugInInfo PLUG_IN_INFO = {
-	NULL,   /* init_proc */
-	NULL,   /* quit_proc */
-	query,  /* query_proc */
-	run     /* run_proc */
-}; /* PLUG_IN_INFO */
+GPlugInInfo PLUG_IN_INFO =
+{
+  NULL,   /* init_proc */
+  NULL,   /* quit_proc */
+  query,  /* query_proc */
+  run     /* run_proc */
+};
 
-static mblur_vals_t mbvals = {
-        MBLUR_LINEAR,	/* mblur_type */
-	5,		/* length */
-	45		/* radius */
-}; /* mb_vals */
+static mblur_vals_t mbvals =
+{
+  MBLUR_LINEAR,	/* mblur_type */
+  5,		/* length */
+  45		/* radius */
+};
 
 static gboolean mb_run = FALSE;
 
@@ -134,16 +142,13 @@ static double cen_x, cen_y;
 
 /***** Functions *****/
 
-/*****/
-
 MAIN()
 
-/*****/
-
 static void
-query(void)
+query (void)
 {
-  static GParamDef args[] = {
+  static GParamDef args[] =
+  {
     { PARAM_INT32,    "run_mode",  "Interactive, non-interactive" },
     { PARAM_IMAGE,    "image",     "Input image" },
     { PARAM_DRAWABLE, "drawable",  "Input drawable" },
@@ -158,29 +163,27 @@ query(void)
 
   INIT_I18N();
 
-  gimp_install_procedure(PLUG_IN_NAME,
-			 _("Motion blur of image"),
-			 _("This plug-in simulates the effect seen when photographing a moving object at a slow shutter speed. Done by adding multiple displaced copies."),
-			 "Torsten Martinsen, Federico Mena Quintero and Daniel Skarda",
-			 "Torsten Martinsen, Federico Mena Quintero and Daniel Skarda",			       
-			 PLUG_IN_VERSION,
-			 N_("<Image>/Filters/Blur/Motion Blur..."),
-			 "RGB*, GRAY*",
-			 PROC_PLUG_IN,
-			 nargs,
-			 nreturn_vals,
-			 args,
-			 return_vals);
-} /* query */
-
-/*****/
+  gimp_install_procedure (PLUG_IN_NAME,
+			  _("Motion blur of image"),
+			  _("This plug-in simulates the effect seen when photographing a moving object at a slow shutter speed. Done by adding multiple displaced copies."),
+			  "Torsten Martinsen, Federico Mena Quintero and Daniel Skarda",
+			  "Torsten Martinsen, Federico Mena Quintero and Daniel Skarda",			       
+			  PLUG_IN_VERSION,
+			  N_("<Image>/Filters/Blur/Motion Blur..."),
+			  "RGB*, GRAY*",
+			  PROC_PLUG_IN,
+			  nargs,
+			  nreturn_vals,
+			  args,
+			  return_vals);
+}
 
 static void
-run(char 	*name,
-    int		nparams,
-    GParam	*param,
-    int		*nreturn_vals,
-    GParam	**return_vals)
+run (gchar   *name,
+     gint     nparams,
+     GParam  *param,
+     gint    *nreturn_vals,
+     GParam **return_vals)
 {
   static GParam values[1];
 
@@ -188,8 +191,8 @@ run(char 	*name,
   GStatusType  status;
 
 #if 0
-  printf("Waiting... (pid %d)\n", getpid());
-  kill(getpid(), SIGSTOP);
+  g_print ("Waiting... (pid %d)\n", getpid ());
+  kill (getpid (), SIGSTOP);
 #endif
 
   status   = STATUS_SUCCESS;
@@ -203,14 +206,14 @@ run(char 	*name,
 
   /* Get the active drawable info */
 
-  drawable = gimp_drawable_get(param[2].data.d_drawable);
+  drawable = gimp_drawable_get (param[2].data.d_drawable);
 
-  img_width     = gimp_drawable_width(drawable->id);
-  img_height    = gimp_drawable_height(drawable->id);
-  img_bpp       = gimp_drawable_bpp(drawable->id);
-  img_has_alpha = gimp_drawable_has_alpha(drawable->id);
+  img_width     = gimp_drawable_width (drawable->id);
+  img_height    = gimp_drawable_height (drawable->id);
+  img_bpp       = gimp_drawable_bpp (drawable->id);
+  img_has_alpha = gimp_drawable_has_alpha (drawable->id);
 
-  gimp_drawable_mask_bounds(drawable->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
+  gimp_drawable_mask_bounds (drawable->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
   /* Calculate scaling parameters */
 
@@ -220,80 +223,79 @@ run(char 	*name,
   cen_x = (double) (sel_x1 + sel_x2 - 1) / 2.0;
   cen_y = (double) (sel_y1 + sel_y2 - 1) / 2.0;
 
-  switch (run_mode) {
-  case RUN_INTERACTIVE:
-    INIT_I18N_UI();
-    /* Possibly retrieve data */
+  switch (run_mode)
+    {
+    case RUN_INTERACTIVE:
+      INIT_I18N_UI();
 
-    gimp_get_data(PLUG_IN_NAME, &mbvals);
+      /* Possibly retrieve data */
+      gimp_get_data (PLUG_IN_NAME, &mbvals);
 
-    /* Get information from the dialog */
+      /* Get information from the dialog */
+      if (!mblur_dialog())
+	return;
+      break;
 
-    if (!mblur_dialog())
-      return;
-    break;
+    case RUN_NONINTERACTIVE:
+      INIT_I18N();
 
-  case RUN_NONINTERACTIVE:
-    INIT_I18N();
-    /* Make sure all the arguments are present */
+      /* Make sure all the arguments are present */
+      if (nparams != 6)
+	status = STATUS_CALLING_ERROR;
 
-    if (nparams != 6)
-      status = STATUS_CALLING_ERROR;
-    
-    if (status == STATUS_SUCCESS) {
-      mbvals.mblur_type = param[3].data.d_int32;
-      mbvals.length	= param[4].data.d_int32;
-      mbvals.angle	= param[5].data.d_int32;
-    } /* if */
+      if (status == STATUS_SUCCESS)
+	{
+	  mbvals.mblur_type = param[3].data.d_int32;
+	  mbvals.length     = param[4].data.d_int32;
+	  mbvals.angle      = param[5].data.d_int32;
+	}
 
     if ((mbvals.mblur_type < 0) && (mbvals.mblur_type > MBLUR_ZOOM))
       status= STATUS_CALLING_ERROR;
     break;
 
-  case RUN_WITH_LAST_VALS:
-    INIT_I18N();
-    /* Possibly retrieve data */
+    case RUN_WITH_LAST_VALS:
+      INIT_I18N();
 
-    gimp_get_data(PLUG_IN_NAME, &mbvals);
-    break;
+      /* Possibly retrieve data */
+      gimp_get_data (PLUG_IN_NAME, &mbvals);
+      break;
 
-  default:
-    break;
-  } /* switch */
+    default:
+      break;
+    }
 
   /* Blur the image */
 
   if ((status == STATUS_SUCCESS) &&
       (gimp_drawable_is_rgb(drawable->id) ||
-       gimp_drawable_is_gray(drawable->id))) {
-    /* Set the tile cache size */
+       gimp_drawable_is_gray(drawable->id)))
+    {
+      /* Set the tile cache size */
+      gimp_tile_cache_ntiles (2 * (drawable->width +
+				   gimp_tile_width () - 1) / gimp_tile_width ());
 
-    gimp_tile_cache_ntiles(2 * (drawable->width + gimp_tile_width() - 1) / gimp_tile_width());
+      /* Run! */
+      mblur ();
 
-    /* Run! */
+      /* If run mode is interactive, flush displays */
+      if (run_mode != RUN_NONINTERACTIVE)
+	gimp_displays_flush ();
 
-    mblur();
-
-    /* If run mode is interactive, flush displays */
-
-    if (run_mode != RUN_NONINTERACTIVE)
-      gimp_displays_flush();
-
-    /* Store data */
-
-    if (run_mode == RUN_INTERACTIVE)
-      gimp_set_data(PLUG_IN_NAME, &mbvals, sizeof(mblur_vals_t));
-  } else if (status == STATUS_SUCCESS)
+      /* Store data */
+      if (run_mode == RUN_INTERACTIVE)
+	gimp_set_data (PLUG_IN_NAME, &mbvals, sizeof(mblur_vals_t));
+    }
+  else if (status == STATUS_SUCCESS)
     status = STATUS_EXECUTION_ERROR;
 
   values[0].data.d_status = status;
 
-  gimp_drawable_detach(drawable);
-} /* run */
+  gimp_drawable_detach (drawable);
+}
 
-/*****/
 static void 
-mblur_linear(void)
+mblur_linear (void)
 {
   GPixelRgn	dest_rgn;
   pixel_fetcher_t *pft;
@@ -309,52 +311,60 @@ mblur_linear(void)
   int 		x, y, i, xx, yy, n;
   int 		dx, dy, px, py, swapdir, err, e, s1, s2;
 
-
-  gimp_pixel_rgn_init(&dest_rgn, drawable, sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
+  gimp_pixel_rgn_init (&dest_rgn, drawable,
+		       sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
   
-  pft 	       = pixel_fetcher_new(drawable);
+  pft = pixel_fetcher_new (drawable);
 
-  gimp_palette_get_background(&bg_color[0], &bg_color[1], &bg_color[2]);
-  pixel_fetcher_set_bg_color(pft, bg_color[0], bg_color[1], bg_color[2], (img_has_alpha ? 0 : 255));
+  gimp_palette_get_background (&bg_color[0], &bg_color[1], &bg_color[2]);
+  pixel_fetcher_set_bg_color (pft, bg_color[0], bg_color[1], bg_color[2],
+			      (img_has_alpha ? 0 : 255));
 
   progress     = 0;
   max_progress = sel_width * sel_height;
 
   n = mbvals.length;
-  px = n*cos(mbvals.angle/180.0*G_PI);
-  py = n*sin(mbvals.angle/180.0*G_PI);
+  px = n * cos (mbvals.angle / 180.0 * G_PI);
+  py = n * sin (mbvals.angle / 180.0 * G_PI);
 
   /*
    * Initialization for Bresenham algorithm:
    * dx = abs(x2-x1), s1 = sign(x2-x1)
    * dy = abs(y2-y1), s2 = sign(y2-y1)
    */
-  if ((dx = px) != 0) {
-    if (dx < 0) {
-      dx = -dx;
-      s1 = -1;
+  if ((dx = px) != 0)
+    {
+      if (dx < 0)
+	{
+	  dx = -dx;
+	  s1 = -1;
+	}
+      else
+	s1 = 1;
     }
-    else
-      s1 = 1;
-  } else
+  else
     s1 = 0;
-    
-  if ((dy = py) != 0) {
-    if (dy < 0) {
-      dy = -dy;
-      s2 = -1;
+
+  if ((dy = py) != 0)
+    {
+      if (dy < 0)
+	{
+	  dy = -dy;
+	  s2 = -1;
+	}
+      else
+	s2 = 1;
     }
-    else
-      s2 = 1;
-  } else
+  else
     s2 = 0;
 
-  if (dy > dx) {
-    swapdir = dx;
-    dx = dy;
-    dy = swapdir;
-    swapdir = 1;
-  }
+  if (dy > dx)
+    {
+      swapdir = dx;
+      dx = dy;
+      dy = swapdir;
+      swapdir = 1;
+    }
   else
     swapdir = 0;
 
@@ -362,60 +372,68 @@ mblur_linear(void)
   err = dy - dx;	/* Initial error term	*/
   dx *= 2;
 
-  for (pr = gimp_pixel_rgns_register (1, &dest_rgn); pr != NULL; pr = gimp_pixel_rgns_process (pr)) {
-    dest = dest_rgn.data;
+  for (pr = gimp_pixel_rgns_register (1, &dest_rgn);
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr))
+    {
+      dest = dest_rgn.data;
 
-    for (y = dest_rgn.y; y < (dest_rgn.y + dest_rgn.h); y++) {
-      d = dest;
+      for (y = dest_rgn.y; y < (dest_rgn.y + dest_rgn.h); y++)
+	{
+	  d = dest;
 
-      for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++) {
+	  for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
+	    {
+	      xx = x; yy = y; e = err;
+	      for (c= 0; c < img_bpp; c++)
+		sum[c]= 0;
 
-	xx = x; yy = y; e = err;
-	for (c= 0; c < img_bpp; c++) sum[c]= 0;
+	      for (i = 0; i < n; )
+		{
+		  pixel_fetcher_get_pixel (pft, xx, yy, pixel);
+		  for (c= 0; c < img_bpp; c++)
+		    sum[c]+= pixel[c];
+		  i++;
 
-	for (i = 0; i < n; ) {
-	  pixel_fetcher_get_pixel(pft,xx,yy,pixel);
-	  for (c= 0; c < img_bpp; c++)
-	    sum[c]+= pixel[c];
-	  i++;
+		  while (e >= 0)
+		    {
+		      if (swapdir)
+			xx += s1;
+		      else
+			yy += s2;
+		      e -= dx;
+		    }
+		  if (swapdir)
+		    yy += s2;
+		  else
+		    xx += s1;
+		  e += dy;
+		  if ((xx < sel_x1) || (xx >= sel_x2) ||
+		      (yy < sel_y1) || (yy >= sel_y2))
+		    break;
+		}
 
-	  while (e >= 0) {
-	    if (swapdir)
-	      xx += s1;
-	    else
-	      yy += s2;
-	    e -= dx;
-	  }
-	  if (swapdir)
-	    yy += s2;
-	  else
-	    xx += s1;
-	  e += dy;
-	  if ((xx < sel_x1)||(xx >= sel_x2)||(yy < sel_y1)||(yy >= sel_y2))
-	    break;
+	      if ( i==0 )
+		{
+		  pixel_fetcher_get_pixel (pft, xx, yy, d); 
+		}
+	      else
+		{
+		  for (c=0; c < img_bpp; c++)
+		    d[c]= sum[c] / i;
+		}
+	      d+= dest_rgn.bpp;
+	    }
+	  dest += dest_rgn.rowstride;
 	}
-
-	if ( i==0 )
-	  {
-	    pixel_fetcher_get_pixel(pft,xx,yy,d); 
-	  }
-	else
-	  {
-	    for (c=0; c < img_bpp; c++)
-	      d[c]= sum[c] / i;
-	  }
-	d+= dest_rgn.bpp;
-      }
-      dest += dest_rgn.rowstride;
+      progress += dest_rgn.w * dest_rgn.h;
+      gimp_progress_update ((double) progress / max_progress);
     }
-    progress += dest_rgn.w * dest_rgn.h;
-    gimp_progress_update((double) progress / max_progress);
-  }
-  pixel_fetcher_destroy(pft);
+  pixel_fetcher_destroy (pft);
 }
 
 static void
-mblur_radial(void)
+mblur_radial (void)
 {
   GPixelRgn	dest_rgn;
   pixel_fetcher_t *pft;
@@ -436,89 +454,99 @@ mblur_radial(void)
   xx = 0.0;
   yy = 0.0;
 
-  gimp_pixel_rgn_init(&dest_rgn, drawable, sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
+  gimp_pixel_rgn_init (&dest_rgn, drawable,
+		       sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
   
-  pft 	       = pixel_fetcher_new(drawable);
+  pft = pixel_fetcher_new (drawable);
 
-  gimp_palette_get_background(&bg_color[0], &bg_color[1], &bg_color[2]);
-  pixel_fetcher_set_bg_color(pft, bg_color[0], bg_color[1], bg_color[2], (img_has_alpha ? 0 : 255));
+  gimp_palette_get_background (&bg_color[0], &bg_color[1], &bg_color[2]);
+  pixel_fetcher_set_bg_color (pft, bg_color[0], bg_color[1], bg_color[2],
+			      (img_has_alpha ? 0 : 255));
 
   progress     = 0;
   max_progress = sel_width * sel_height;
 
-  angle = ((float) mbvals.angle)/180.0*G_PI;
-  w = MAX(img_width-cen_x, cen_x);
-  h = MAX(img_height-cen_y, cen_y);
-  R = sqrt(w*w + h*h);
-  n = 4*angle*sqrt(R)+2;
-  theta = angle/((float) (n-1));
+  angle = ((float) mbvals.angle) / 180.0 * G_PI;
+  w = MAX (img_width-cen_x, cen_x);
+  h = MAX (img_height-cen_y, cen_y);
+  R = sqrt (w * w + h * h);
+  n = 4 * angle * sqrt (R) + 2;
+  theta = angle / ((float) (n - 1));
 
-  if (((ct = malloc(n*sizeof(float))) == NULL) ||
-      ((st = malloc(n*sizeof(float))) == NULL))
+  if (((ct = g_new (float, n)) == NULL) ||
+      ((st = g_new (float, n)) == NULL))
     return;
-  offset = theta*(n-1)/2;
-  for (i = 0; i < n; ++i) {
-    ct[i] = cos(theta*i-offset);
-    st[i] = sin(theta*i-offset);
-  }
-
-  for (pr = gimp_pixel_rgns_register (1, &dest_rgn); pr != NULL; pr = gimp_pixel_rgns_process (pr)) {
-    dest = dest_rgn.data;
-
-    for (y = dest_rgn.y; y < (dest_rgn.y + dest_rgn.h); y++) {
-      d = dest;
-
-      for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++) {
-
-	xr = x-cen_x;
-	yr = y-cen_y;
-	r = sqrt(xr*xr + yr*yr);
-	if (r == 0)
-	  step = 1;
-	else if ((step = R/r) == 0)
-	  step = 1;
-	else if (step > n-1)
-	  step = n-1;
-
-	for (c=0; c < img_bpp; c++) sum[c]=0;
-
-	for (i = 0, count = 0; i < n; i += step) {
-	  xx = cen_x + xr*ct[i] - yr*st[i];
-	  yy = cen_y + xr*st[i] + yr*ct[i];
-	  if ((yy < sel_y1) || (yy >= sel_y2) ||
-	      (xx < sel_x1) || (xx >= sel_x2))
-	    continue;
-
-	  ++count;
-	  pixel_fetcher_get_pixel(pft,xx,yy,pixel);
-	  for (c=0; c < img_bpp; c++) 
-	    sum[c]+= pixel[c];
-	}
-
-	if ( count==0 )
-	  {
-	    pixel_fetcher_get_pixel(pft,xx,yy,d); 
-	  }
-	else
-	  {
-	    for (c=0; c < img_bpp; c++)
-	      d[c]= sum[c] / count;
-	  }
-	d+= dest_rgn.bpp;
-      }
-      dest += dest_rgn.rowstride;
+  offset = theta * (n - 1) / 2;
+  for (i = 0; i < n; ++i)
+    {
+      ct[i] = cos (theta * i - offset);
+      st[i] = sin (theta * i - offset);
     }
-    progress += dest_rgn.w * dest_rgn.h;
-    gimp_progress_update((double) progress / max_progress);
-  }
 
-  pixel_fetcher_destroy(pft);
-  free(ct);
-  free(st);
+  for (pr = gimp_pixel_rgns_register (1, &dest_rgn);
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr))
+    {
+      dest = dest_rgn.data;
+
+      for (y = dest_rgn.y; y < (dest_rgn.y + dest_rgn.h); y++)
+	{
+	  d = dest;
+
+	  for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
+	    {
+	      xr = x-cen_x;
+	      yr = y-cen_y;
+	      r = sqrt (xr * xr + yr * yr);
+	      if (r == 0)
+		step = 1;
+	      else if ((step = R / r) == 0)
+		step = 1;
+	      else if (step > n-1)
+		step = n-1;
+
+	      for (c = 0; c < img_bpp; c++)
+		sum[c] = 0;
+
+	      for (i = 0, count = 0; i < n; i += step)
+		{
+		  xx = cen_x + xr * ct[i] - yr * st[i];
+		  yy = cen_y + xr * st[i] + yr * ct[i];
+		  if ((yy < sel_y1) || (yy >= sel_y2) ||
+		      (xx < sel_x1) || (xx >= sel_x2))
+		    continue;
+
+		  ++count;
+		  pixel_fetcher_get_pixel (pft, xx, yy, pixel);
+		  for (c = 0; c < img_bpp; c++) 
+		    sum[c] += pixel[c];
+		}
+
+	      if (count == 0)
+		{
+		  pixel_fetcher_get_pixel (pft, xx, yy, d); 
+		}
+	      else
+		{
+		  for (c = 0; c < img_bpp; c++)
+		    d[c]= sum[c] / count;
+		}
+	      d += dest_rgn.bpp;
+	    }
+	  dest += dest_rgn.rowstride;
+	}
+      progress += dest_rgn.w * dest_rgn.h;
+      gimp_progress_update ((double) progress / max_progress);
+    }
+
+  pixel_fetcher_destroy (pft);
+
+  g_free (ct);
+  g_free (st);
 }
 
 static void
-mblur_zoom(void)
+mblur_zoom (void)
 {
   GPixelRgn	dest_rgn;
   pixel_fetcher_t *pft;
@@ -537,12 +565,14 @@ mblur_zoom(void)
   xx = 0.0;
   yy = 0.0;
 
-  gimp_pixel_rgn_init(&dest_rgn, drawable, sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
-  
-  pft 	       = pixel_fetcher_new(drawable);
+  gimp_pixel_rgn_init (&dest_rgn, drawable,
+		       sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
 
-  gimp_palette_get_background(&bg_color[0], &bg_color[1], &bg_color[2]);
-  pixel_fetcher_set_bg_color(pft, bg_color[0], bg_color[1], bg_color[2], (img_has_alpha ? 0 : 255));
+  pft = pixel_fetcher_new (drawable);
+
+  gimp_palette_get_background (&bg_color[0], &bg_color[1], &bg_color[2]);
+  pixel_fetcher_set_bg_color (pft, bg_color[0], bg_color[1], bg_color[2],
+			      (img_has_alpha ? 0 : 255));
 
   progress     = 0;
   max_progress = sel_width * sel_height;
@@ -550,96 +580,98 @@ mblur_zoom(void)
   n = mbvals.length;
   f = 0.02;
 
-  for (pr = gimp_pixel_rgns_register (1, &dest_rgn); pr != NULL; pr = gimp_pixel_rgns_process (pr)) 
+  for (pr = gimp_pixel_rgns_register (1, &dest_rgn);
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr)) 
     {
       dest = dest_rgn.data;
 
-      for (y = dest_rgn.y; y < (dest_rgn.y + dest_rgn.h); y++) {
-	d = dest;
+      for (y = dest_rgn.y; y < (dest_rgn.y + dest_rgn.h); y++)
+	{
+	  d = dest;
 
-	for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++) {
-
-	  for (c=0; c < img_bpp; c++) sum[c]=0;
-
-	  for (i = 0; i < n; ++i) {
-	    xx = cen_x + (x-cen_x)*(1.0 + f*i);
-	    yy = cen_y + (y-cen_y)*(1.0 + f*i);
-
-	    if ((yy < sel_y1) || (yy >= sel_y2) ||
-		(xx < sel_x1) || (xx >= sel_x2))
-	      break;
-
-	    pixel_fetcher_get_pixel(pft,xx,yy,pixel);
-	    for (c= 0; c < img_bpp; c++)
-	      sum[c]+= pixel[c];	  
-	  }
-
-
-	  if ( i==0 )
+	  for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
 	    {
-	      pixel_fetcher_get_pixel(pft,xx,yy,d); 
+	      for (c = 0; c < img_bpp; c++)
+		sum[c] = 0;
+
+	      for (i = 0; i < n; ++i)
+		{
+		  xx = cen_x + (x-cen_x) * (1.0 + f * i);
+		  yy = cen_y + (y-cen_y) * (1.0 + f * i);
+
+		  if ((yy < sel_y1) || (yy >= sel_y2) ||
+		      (xx < sel_x1) || (xx >= sel_x2))
+		    break;
+
+		  pixel_fetcher_get_pixel (pft, xx, yy, pixel);
+		  for (c = 0; c < img_bpp; c++)
+		    sum[c] += pixel[c];	  
+		}
+
+	      if (i == 0)
+		{
+		  pixel_fetcher_get_pixel (pft, xx, yy, d); 
+		}
+	      else
+		{
+		  for (c = 0; c < img_bpp; c++)
+		    d[c] = sum[c] / i;
+		}
+	      d += dest_rgn.bpp;
 	    }
-	  else
-	    {
-	      for (c=0; c < img_bpp; c++)
-		d[c]= sum[c] / i;
-	    }
-	  d+= dest_rgn.bpp;
+	  dest += dest_rgn.rowstride;
 	}
-	dest += dest_rgn.rowstride;
-      }
       progress += dest_rgn.w * dest_rgn.h;
-      gimp_progress_update((double) progress / max_progress);
+      gimp_progress_update ((double) progress / max_progress);
     }
-  pixel_fetcher_destroy(pft);
+  pixel_fetcher_destroy (pft);
 }
 
 static void
-mblur(void)
+mblur (void)
 {
-  gimp_progress_init( _("Blurring..."));
+  gimp_progress_init (_("Blurring..."));
 
   switch (mbvals.mblur_type)
     {
     case MBLUR_LINEAR:
-      mblur_linear();
+      mblur_linear ();
       break;
     case MBLUR_RADIAL:
-      mblur_radial();
+      mblur_radial ();
       break;
     case MBLUR_ZOOM:
-      mblur_zoom();
+      mblur_zoom ();
       break;
     default:
-      ;
+      break;
     }
 
-  gimp_drawable_flush(drawable);
-  gimp_drawable_merge_shadow(drawable->id, TRUE);
-  gimp_drawable_update(drawable->id, sel_x1, sel_y1, sel_width, sel_height);
+  gimp_drawable_flush (drawable);
+  gimp_drawable_merge_shadow (drawable->id, TRUE);
+  gimp_drawable_update (drawable->id, sel_x1, sel_y1, sel_width, sel_height);
 }
 
 /*****************************************
- *
  * pixel_fetcher from whirlpinch plug-in 
- *
  ****************************************/
 
 static pixel_fetcher_t *
-pixel_fetcher_new(GDrawable *drawable)
+pixel_fetcher_new (GDrawable *drawable)
 {
   pixel_fetcher_t *pf;
 
-  pf = g_malloc(sizeof(pixel_fetcher_t));
+  pf = g_new (pixel_fetcher_t, 1);
 
   pf->col           = -1;
   pf->row           = -1;
-  pf->img_width     = gimp_drawable_width(drawable->id);
-  pf->img_height    = gimp_drawable_height(drawable->id);
-  pf->img_bpp       = gimp_drawable_bpp(drawable->id);
-  pf->img_has_alpha = gimp_drawable_has_alpha(drawable->id);
-  pf->tile_width    = gimp_tile_width();
-  pf->tile_height   = gimp_tile_height();
+  pf->img_width     = gimp_drawable_width (drawable->id);
+  pf->img_height    = gimp_drawable_height (drawable->id);
+  pf->img_bpp       = gimp_drawable_bpp (drawable->id);
+  pf->img_has_alpha = gimp_drawable_has_alpha (drawable->id);
+  pf->tile_width    = gimp_tile_width ();
+  pf->tile_height   = gimp_tile_height ();
   pf->bg_color[0]   = 0;
   pf->bg_color[1]   = 0;
   pf->bg_color[2]   = 0;
@@ -649,13 +681,14 @@ pixel_fetcher_new(GDrawable *drawable)
   pf->tile        = NULL;
 
   return pf;
-} /* pixel_fetcher_new */
-
-
-/*****/
+}
 
 static void
-pixel_fetcher_set_bg_color(pixel_fetcher_t *pf, guchar r, guchar g, guchar b, guchar a)
+pixel_fetcher_set_bg_color (pixel_fetcher_t *pf,
+			    guchar           r,
+			    guchar           g,
+			    guchar           b,
+			    guchar           a)
 {
   pf->bg_color[0] = r;
   pf->bg_color[1] = g;
@@ -663,13 +696,13 @@ pixel_fetcher_set_bg_color(pixel_fetcher_t *pf, guchar r, guchar g, guchar b, gu
 
   if (pf->img_has_alpha)
     pf->bg_color[pf->img_bpp - 1] = a;
-} /* pixel_fetcher_set_bg_color */
-
-
-/*****/
+}
 
 static void
-pixel_fetcher_get_pixel(pixel_fetcher_t *pf, int x, int y, guchar *pixel)
+pixel_fetcher_get_pixel (pixel_fetcher_t *pf,
+			 int              x,
+			 int              y,
+			 guchar          *pixel)
 {
   gint    col, row;
   gint    coloff, rowoff;
@@ -677,12 +710,13 @@ pixel_fetcher_get_pixel(pixel_fetcher_t *pf, int x, int y, guchar *pixel)
   int     i;
 
   if ((x < sel_x1) || (x >= sel_x2) ||
-      (y < sel_y1) || (y >= sel_y2)) {
-    for (i = 0; i < pf->img_bpp; i++)
-      pixel[i] = pf->bg_color[i];
+      (y < sel_y1) || (y >= sel_y2))
+    {
+      for (i = 0; i < pf->img_bpp; i++)
+	pixel[i] = pf->bg_color[i];
 
-    return;
-  } /* if */
+      return;
+    }
 
   col    = x / pf->tile_width;
   coloff = x % pf->tile_width;
@@ -691,48 +725,48 @@ pixel_fetcher_get_pixel(pixel_fetcher_t *pf, int x, int y, guchar *pixel)
 
   if ((col != pf->col) ||
       (row != pf->row) ||
-      (pf->tile == NULL)) {
-    if (pf->tile != NULL)
-      gimp_tile_unref(pf->tile, FALSE);
+      (pf->tile == NULL))
+    {
+      if (pf->tile != NULL)
+	gimp_tile_unref (pf->tile, FALSE);
 
-    pf->tile = gimp_drawable_get_tile(pf->drawable, FALSE, row, col);
-    gimp_tile_ref(pf->tile);
+      pf->tile = gimp_drawable_get_tile (pf->drawable, FALSE, row, col);
+      gimp_tile_ref (pf->tile);
 
-    pf->col = col;
-    pf->row = row;
-  } /* if */
+      pf->col = col;
+      pf->row = row;
+    }
 
   p = pf->tile->data + pf->img_bpp * (pf->tile->ewidth * rowoff + coloff);
 
   for (i = pf->img_bpp; i; i--)
     *pixel++ = *p++;
-} /* pixel_fetcher_get_pixel */
-
-
-/*****/
+}
 
 static void
-pixel_fetcher_destroy(pixel_fetcher_t *pf)
+pixel_fetcher_destroy (pixel_fetcher_t *pf)
 {
   if (pf->tile != NULL)
-    gimp_tile_unref(pf->tile, FALSE);
+    gimp_tile_unref (pf->tile, FALSE);
 
-  g_free(pf);
-} /* pixel_fetcher_destroy */
+  g_free (pf);
+}
 
 /****************************************
- *
  *                 UI
- *
  ****************************************/
 
 static gboolean
 mblur_dialog (void)
 {
   GtkWidget *dialog;
-  GtkWidget *oframe, *iframe;
-  GtkWidget *evbox, *ovbox, *ivbox;
-  GtkWidget *button, *label;
+  GtkWidget *oframe;
+  GtkWidget *iframe;
+  GtkWidget *ovbox;
+  GtkWidget *ivbox;
+  GtkWidget *table;
+  GtkWidget *button;
+  GtkWidget *label;
 
   GtkWidget *scale;
   GtkObject *adjustment;
@@ -747,7 +781,7 @@ mblur_dialog (void)
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 
-  gdk_set_use_xshm (gimp_use_xshm());
+  gdk_set_use_xshm (gimp_use_xshm ());
 
   dialog = gimp_dialog_new (_("Motion Blur"), "mblur",
 			    gimp_plugin_help_func, "filters/mblur.html",
@@ -765,107 +799,101 @@ mblur_dialog (void)
 		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
-  /********************/
+  oframe = gtk_frame_new (_("Parameter Settings"));
+  gtk_container_set_border_width (GTK_CONTAINER (oframe), 6);
+  gtk_frame_set_shadow_type (GTK_FRAME (oframe), GTK_SHADOW_ETCHED_IN);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), oframe);
 
-  evbox= gtk_vbox_new(FALSE, 5);
-  gtk_container_set_border_width (GTK_CONTAINER (evbox), 5);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox),
-		      evbox, FALSE,FALSE,0);
+  ovbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (ovbox), 4);
+  gtk_container_add (GTK_CONTAINER (oframe), ovbox);
 
-  oframe= gtk_frame_new( _("Options"));
-  gtk_frame_set_shadow_type(GTK_FRAME(oframe), GTK_SHADOW_ETCHED_IN);
-  gtk_box_pack_start(GTK_BOX(evbox),
-		     oframe, TRUE, TRUE, 0);
-  
-  ovbox= gtk_vbox_new(FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (ovbox), 5);
-  gtk_container_add(GTK_CONTAINER(oframe), ovbox);
+  iframe = gtk_frame_new (_("Blur Type"));
+  gtk_frame_set_shadow_type (GTK_FRAME (iframe), GTK_SHADOW_ETCHED_IN);
+  gtk_box_pack_start (GTK_BOX (ovbox), iframe, FALSE, FALSE, 0);
 
-  label=gtk_label_new( _("Length"));
-  gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
-  gtk_box_pack_start(GTK_BOX(ovbox), label, FALSE, FALSE, 0);
-  gtk_widget_show(label);
-  
-  adjustment = gtk_adjustment_new( mbvals.length, 0.0, 256.0,
-				   1.0, 1.0, 1.0);
-  gtk_signal_connect(adjustment,"value_changed",
-		     (GtkSignalFunc) dialog_scale_update,
-		     &(mbvals.length));
+  ivbox= gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (ivbox), 2);
+  gtk_container_add (GTK_CONTAINER (iframe), ivbox);
 
-  scale= gtk_hscale_new( GTK_ADJUSTMENT(adjustment));
-  gtk_widget_set_usize(GTK_WIDGET(scale), 150, 30);
-  gtk_range_set_update_policy(GTK_RANGE(scale), GTK_UPDATE_DELAYED);
-  gtk_scale_set_digits(GTK_SCALE(scale), 0);
-  gtk_scale_set_draw_value(GTK_SCALE(scale), TRUE);
-  gtk_box_pack_start(GTK_BOX(ovbox), scale, FALSE, FALSE,0);
-  gtk_widget_show( scale );
-
-  /*****/
-
-  iframe= gtk_frame_new( _("Blur type"));
-  gtk_frame_set_shadow_type(GTK_FRAME(iframe), GTK_SHADOW_ETCHED_IN);
-  gtk_box_pack_start(GTK_BOX(ovbox),
-		     iframe, FALSE, FALSE, 0);
-
-  ivbox= gtk_vbox_new(FALSE, 5);
-  gtk_container_set_border_width (GTK_CONTAINER (ivbox), 5);
-  gtk_container_add(GTK_CONTAINER(iframe), ivbox);
-  
   {
-    int   i;
-    char * name[3]= { N_("Linear"), N_("Radial"), N_("Zoom")};
+    int    i;
+    gchar *name[3]= { N_("Linear"), N_("Radial"), N_("Zoom")};
 
-    button= NULL;
-    for (i=0; i < 3; i++)
+    button = NULL;
+    for (i = 0; i < 3; i++)
       {
-	button= gtk_radio_button_new_with_label(
-           (button==NULL)? NULL :
-	      gtk_radio_button_group(GTK_RADIO_BUTTON(button)), 
-	   gettext(name[i]));
-	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), 
-				    (mbvals.mblur_type==i));
+	button= gtk_radio_button_new_with_label
+	  ((button == NULL) ? NULL :
+	   gtk_radio_button_group (GTK_RADIO_BUTTON (button)), 
+	   gettext (name[i]));
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), 
+				      (mbvals.mblur_type == i));
 
 	gtk_signal_connect (GTK_OBJECT (button), "toggled",
-			    (GtkSignalFunc) dialog_toggle_update,
+			    GTK_SIGNAL_FUNC (dialog_toggle_update),
 			    (gpointer) i);
 
-	gtk_box_pack_start(GTK_BOX(ivbox), button, FALSE, FALSE,0);
-	gtk_widget_show(button);
+	gtk_box_pack_start (GTK_BOX (ivbox), button, FALSE, FALSE,0);
+	gtk_widget_show (button);
       }
   }
 
-  gtk_widget_show(ivbox);
-  gtk_widget_show(iframe);
+  gtk_widget_show (ivbox);
+  gtk_widget_show (iframe);
 
-  /*****/
+  table = gtk_table_new (2, 2, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_box_pack_start (GTK_BOX (ovbox), table, FALSE, FALSE, 0);
 
-  label=gtk_label_new( _("Angle"));
-  gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
-  gtk_box_pack_start(GTK_BOX(ovbox), label, FALSE, FALSE, 0);
-  gtk_widget_show(label);
-
-  adjustment = gtk_adjustment_new( mbvals.angle, 0.0, 360.0,
+  label = gtk_label_new( _("Length:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 0, 1);
+  gtk_widget_show (label);
+  
+  adjustment = gtk_adjustment_new (mbvals.length, 0.0, 256.0,
 				   1.0, 1.0, 1.0);
-  gtk_signal_connect(adjustment,"value_changed",
-		     (GtkSignalFunc) dialog_scale_update,
-		     &(mbvals.angle));
+  gtk_signal_connect (adjustment, "value_changed",
+		      GTK_SIGNAL_FUNC (dialog_scale_update),
+		      &(mbvals.length));
 
-  scale= gtk_hscale_new( GTK_ADJUSTMENT(adjustment));
-  gtk_widget_set_usize(GTK_WIDGET(scale), 150, 30);
-  gtk_range_set_update_policy(GTK_RANGE(scale), GTK_UPDATE_DELAYED);
-  gtk_scale_set_digits(GTK_SCALE(scale), 0);
-  gtk_scale_set_draw_value(GTK_SCALE(scale), TRUE);
-  gtk_box_pack_start(GTK_BOX(ovbox), scale, FALSE, FALSE,0);
-  gtk_widget_show( scale );
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
+  gtk_widget_set_usize (GTK_WIDGET (scale), 150, -1);
+  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  gtk_scale_set_digits (GTK_SCALE (scale), 0);
+  gtk_scale_set_draw_value (GTK_SCALE (scale), TRUE);
+  gtk_table_attach_defaults (GTK_TABLE (table), scale, 1, 2, 0, 1);
+  gtk_widget_show (scale);
 
-  gtk_widget_show(ovbox);
+  label = gtk_label_new (_("Angle:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 1, 2);
+  gtk_widget_show (label);
 
-  gtk_widget_show(oframe);
-  gtk_widget_show(evbox);
-  gtk_widget_show(dialog);
+  adjustment = gtk_adjustment_new (mbvals.angle, 0.0, 360.0,
+				   1.0, 1.0, 1.0);
+  gtk_signal_connect (adjustment, "value_changed",
+		      GTK_SIGNAL_FUNC (dialog_scale_update),
+		      &(mbvals.angle));
 
-  gtk_main();  
-  gdk_flush();
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
+  gtk_widget_set_usize (GTK_WIDGET (scale), 150, -1);
+  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  gtk_scale_set_digits (GTK_SCALE (scale), 0);
+  gtk_scale_set_draw_value (GTK_SCALE (scale), TRUE);
+  gtk_table_attach_defaults (GTK_TABLE (table), scale, 1, 2, 1, 2);
+  gtk_widget_show (scale);
+
+  gtk_widget_show (table);
+
+  gtk_widget_show (ovbox);
+
+  gtk_widget_show (oframe);
+  gtk_widget_show (dialog);
+
+  gtk_main ();
+  gdk_flush ();
 
   return mb_run;
 }

@@ -17,9 +17,10 @@ AM_CPPFLAGS = \
 	-DLOCALEDIR=\""$(localedir)"\"
 
 LDADD = \
-	$(top_builddir)/plug-ins/megawidget/libmegawidget.a	\
-	$(top_builddir)/libgimp/libgimp.la              	\
 	$(top_builddir)/plug-ins/libgck/gck/libgck.la		\
+	$(top_builddir)/plug-ins/megawidget/libmegawidget.a	\
+	$(top_builddir)/libgimp/libgimpui.la              	\
+	$(top_builddir)/libgimp/libgimp.la              	\
 	$(GTK_LIBS)						\
 	$(INTLLIBS)
 

@@ -41,8 +41,8 @@ static char ident[] = "@(#) GIMP Decompose plug-in v1.01 19-Mar-99";
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -107,8 +107,6 @@ static void extract_yellowk  (unsigned char *src, int bpp, int numpix,
 
 static gint      decompose_dialog (void);
 
-static void      decompose_close_callback (GtkWidget *widget,
-                                           gpointer   data);
 static void      decompose_ok_callback    (GtkWidget *widget,
                                            gpointer   data);
 static void      decompose_toggle_update  (GtkWidget *widget,
@@ -190,7 +188,7 @@ static GRunModeType run_mode;
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef args[] =
   {
@@ -230,12 +228,13 @@ query ()
 			  args, return_vals);
 }
 
-static void show_message (const char *message)
+static void
+show_message (const char *message)
 {
   if (run_mode == RUN_INTERACTIVE)
     gimp_message (message);
   else
-    printf ("%s\n", message);
+    g_print ("%s\n", message);
 }
 
 
@@ -990,35 +989,35 @@ decompose_dialog (void)
 			 NULL);
 
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (decompose_close_callback),
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
   /*  parameter settings  */
   frame = gtk_frame_new (_("Extract channels:"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 5);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
-  vbox = gtk_vbox_new (FALSE, 5);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   group = NULL;
   for (j = 0; j < NUM_EXTRACT_TYPES; j++)
-  {
-    if (!extract[j].dialog) continue;
-    toggle = gtk_radio_button_new_with_label (group, extract[j].type);
-    group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-    gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
-    decoint.extract_flag[j] =
-       (cmp_icase (decovals.extract_type, extract[j].type) == 0);
-    gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-                        (GtkSignalFunc) decompose_toggle_update,
-                        &(decoint.extract_flag[j]));
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-				  decoint.extract_flag[j]);
-    gtk_widget_show (toggle);
-  }
+    {
+      if (!extract[j].dialog) continue;
+      toggle = gtk_radio_button_new_with_label (group, extract[j].type);
+      group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+      gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
+      decoint.extract_flag[j] =
+	(cmp_icase (decovals.extract_type, extract[j].type) == 0);
+      gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+			  GTK_SIGNAL_FUNC (decompose_toggle_update),
+			  &(decoint.extract_flag[j]));
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				    decoint.extract_flag[j]);
+      gtk_widget_show (toggle);
+    }
   gtk_widget_show (vbox);
   gtk_widget_show (frame);
   gtk_widget_show (dlg);
@@ -1029,32 +1028,23 @@ decompose_dialog (void)
   return decoint.run;
 }
 
-
-/*  Decompose interface functions  */
-
-static void
-decompose_close_callback (GtkWidget *widget,
-			  gpointer   data)
-{
-  gtk_main_quit ();
-}
-
 static void
 decompose_ok_callback (GtkWidget *widget,
 		       gpointer   data)
-{int j;
+{
+  int j;
 
   decoint.run = TRUE;
   gtk_widget_destroy (GTK_WIDGET (data));
 
   for (j = 0; j < NUM_EXTRACT_TYPES; j++)
-  {
-    if (decoint.extract_flag[j])
     {
-      strcpy (decovals.extract_type, extract[j].type);
-      break;
+      if (decoint.extract_flag[j])
+	{
+	  strcpy (decovals.extract_type, extract[j].type);
+	  break;
+	}
     }
-  }
 }
 
 static void
