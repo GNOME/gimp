@@ -421,17 +421,17 @@ gimp_preview_set_viewable (GimpPreview  *preview,
 					  G_TYPE_FROM_INSTANCE (preview->viewable));
 	}
 
-      gtk_signal_disconnect_by_func (GTK_OBJECT (preview->viewable),
-				     GTK_SIGNAL_FUNC (gtk_widget_destroyed),
-				     &preview->viewable);
+      g_signal_handlers_disconnect_by_func (G_OBJECT (preview->viewable),
+                                            G_CALLBACK (gtk_widget_destroyed),
+                                            &preview->viewable);
 
-      gtk_signal_disconnect_by_func (GTK_OBJECT (preview->viewable),
-				     GTK_SIGNAL_FUNC (gimp_preview_paint),
-				     preview);
+      g_signal_handlers_disconnect_by_func (G_OBJECT (preview->viewable),
+                                            G_CALLBACK (gimp_preview_paint),
+                                            preview);
 
-      gtk_signal_disconnect_by_func (GTK_OBJECT (preview->viewable),
-				     GTK_SIGNAL_FUNC (gimp_preview_size_changed),
-				     preview);
+      g_signal_handlers_disconnect_by_func (G_OBJECT (preview->viewable),
+                                            G_CALLBACK (gimp_preview_size_changed),
+                                            preview);
 
     }
 
@@ -451,19 +451,19 @@ gimp_preview_set_viewable (GimpPreview  *preview,
 					NULL);
 	}
 
-      gtk_signal_connect (GTK_OBJECT (preview->viewable), "destroy",
-			  GTK_SIGNAL_FUNC (gtk_widget_destroyed),
-			  &preview->viewable);
+      g_signal_connect (G_OBJECT (preview->viewable), "destroy",
+                        G_CALLBACK (gtk_widget_destroyed),
+                        &preview->viewable);
 
-      gtk_signal_connect_object (GTK_OBJECT (preview->viewable),
-				 "invalidate_preview",
-				 GTK_SIGNAL_FUNC (gimp_preview_paint),
-				 GTK_OBJECT (preview));
+      g_signal_connect_swapped (G_OBJECT (preview->viewable),
+                                "invalidate_preview",
+                                G_CALLBACK (gimp_preview_paint),
+                                preview);
 
-      gtk_signal_connect_object (GTK_OBJECT (preview->viewable),
-				 "size_changed",
-				 GTK_SIGNAL_FUNC (gimp_preview_size_changed),
-				 GTK_OBJECT (preview));
+      g_signal_connect_swapped (G_OBJECT (preview->viewable),
+                                "size_changed",
+                                G_CALLBACK (gimp_preview_size_changed),
+                                preview);
 
       if (preview->size != -1)
 	{
@@ -563,7 +563,7 @@ gimp_preview_set_border_color (GimpPreview   *preview,
 void
 gimp_preview_render (GimpPreview *preview)
 {
-  gtk_signal_emit (GTK_OBJECT (preview), preview_signals[RENDER]);
+  g_signal_emit (G_OBJECT (preview), preview_signals[RENDER], 0);
 }
 
 static gint
@@ -595,7 +595,7 @@ gimp_preview_button_press_event (GtkWidget      *widget,
 	}
       else if (bevent->button == 3)
 	{
-	  gtk_signal_emit (GTK_OBJECT (widget), preview_signals[CONTEXT]);
+	  g_signal_emit (G_OBJECT (widget), preview_signals[CONTEXT], 0);
 	}
       else
 	{
@@ -606,7 +606,7 @@ gimp_preview_button_press_event (GtkWidget      *widget,
     {
       if (bevent->button == 1)
 	{
-	  gtk_signal_emit (GTK_OBJECT (widget), preview_signals[DOUBLE_CLICKED]);
+	  g_signal_emit (G_OBJECT (widget), preview_signals[DOUBLE_CLICKED], 0);
 	}
     }
 
@@ -643,13 +643,13 @@ gimp_preview_button_release_event (GtkWidget      *widget,
 	  if (preview->press_state &
 	      (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK))
 	    {
-	      gtk_signal_emit (GTK_OBJECT (widget),
-			       preview_signals[EXTENDED_CLICKED],
-			       preview->press_state);
+	      g_signal_emit (G_OBJECT (widget),
+                             preview_signals[EXTENDED_CLICKED], 0,
+                             preview->press_state);
 	    }
 	  else
 	    {
-	      gtk_signal_emit (GTK_OBJECT (widget), preview_signals[CLICKED]);
+	      g_signal_emit (G_OBJECT (widget), preview_signals[CLICKED], 0);
 	    }
 	}
     }
@@ -728,8 +728,8 @@ gimp_preview_get_size (GimpPreview *preview,
   g_return_if_fail (width != NULL);
   g_return_if_fail (height != NULL);
 
-  gtk_signal_emit (GTK_OBJECT (preview), preview_signals[GET_SIZE],
-		   size, width, height);
+  g_signal_emit (G_OBJECT (preview), preview_signals[GET_SIZE], 0,
+                 size, width, height);
 }
 
 static void
@@ -747,8 +747,8 @@ gimp_preview_needs_popup (GimpPreview *preview)
 {
   gboolean needs_popup = FALSE;
 
-  gtk_signal_emit (GTK_OBJECT (preview), preview_signals[NEEDS_POPUP],
-		   &needs_popup);
+  g_signal_emit (G_OBJECT (preview), preview_signals[NEEDS_POPUP], 0,
+                 &needs_popup);
 
   return needs_popup;
 }
@@ -764,8 +764,8 @@ gimp_preview_create_popup (GimpPreview *preview)
 {
   GtkWidget *popup_preview = NULL;
 
-  gtk_signal_emit (GTK_OBJECT (preview), preview_signals[CREATE_POPUP],
-		   &popup_preview);
+  g_signal_emit (G_OBJECT (preview), preview_signals[CREATE_POPUP], 0,
+                 &popup_preview);
 
   return popup_preview;
 }
@@ -840,8 +840,8 @@ gimp_preview_popup_timeout (GimpPreview *preview)
   gtk_widget_set_uposition (window, x, y);
   gtk_widget_show (window);
 
-  gtk_object_set_data_full (GTK_OBJECT (preview), "preview_popup_window", window,
-			    (GtkDestroyNotify) gtk_widget_destroy);
+  g_object_set_data_full (G_OBJECT (preview), "preview_popup_window", window,
+                          (GDestroyNotify) gtk_widget_destroy);
 
   return FALSE;
 }
@@ -871,7 +871,7 @@ gimp_preview_popup_hide (GimpPreview *preview)
       preview->popup_y  = 0;
     }
 
-  gtk_object_set_data (GTK_OBJECT (preview), "preview_popup_window", NULL);
+  g_object_set_data (G_OBJECT (preview), "preview_popup_window", NULL);
 }
 
 static void

@@ -215,10 +215,10 @@ histogram_widget_events (HistogramWidget *histogram,
 
       gdk_pointer_ungrab (bevent->time);
 
-      gtk_signal_emit (GTK_OBJECT(histogram),
-		       histogram_widget_signals[RANGE_CHANGED],
-		       MIN (histogram->start, histogram->end),
-		       MAX (histogram->start, histogram->end));
+      g_signal_emit (G_OBJECT(histogram),
+                     histogram_widget_signals[RANGE_CHANGED],
+                     MIN (histogram->start, histogram->end),
+                     MAX (histogram->start, histogram->end));
       break;
 
     case GDK_MOTION_NOTIFY:
@@ -250,9 +250,9 @@ histogram_widget_new (gint width,
   gtk_drawing_area_size (GTK_DRAWING_AREA (histogram), width + 2, height + 2);
   gtk_widget_set_events (GTK_WIDGET (histogram), HISTOGRAM_MASK);
 
-  gtk_signal_connect (GTK_OBJECT (histogram), "event",
-		      GTK_SIGNAL_FUNC (histogram_widget_events),
-		      histogram);
+  g_signal_connect (G_OBJECT (histogram), "event",
+                    G_CALLBACK (histogram_widget_events),
+                    histogram);
 
   return histogram;
 }
@@ -273,10 +273,10 @@ histogram_widget_update (HistogramWidget *histogram_widget,
   gtk_widget_draw (GTK_WIDGET (histogram_widget), NULL);
 
   /*  Give a range callback  */
-  gtk_signal_emit (GTK_OBJECT (histogram_widget),
-		   histogram_widget_signals[RANGE_CHANGED],
-		   MIN (histogram_widget->start, histogram_widget->end),
-		   MAX (histogram_widget->start, histogram_widget->end));
+  g_signal_emit (G_OBJECT (histogram_widget),
+                 histogram_widget_signals[RANGE_CHANGED],
+                 MIN (histogram_widget->start, histogram_widget->end),
+                 MAX (histogram_widget->start, histogram_widget->end));
 }
 
 void
@@ -300,10 +300,10 @@ histogram_widget_channel (HistogramWidget *histogram,
   histogram_widget_draw (histogram, ALL);
 
   /*  Give a range callback  */
-  gtk_signal_emit (GTK_OBJECT (histogram),
-		   histogram_widget_signals[RANGE_CHANGED],
-		   MIN (histogram->start, histogram->end),
-		   MAX (histogram->start, histogram->end));
+  g_signal_emit (G_OBJECT (histogram),
+                 histogram_widget_signals[RANGE_CHANGED],
+                 MIN (histogram->start, histogram->end),
+                 MAX (histogram->start, histogram->end));
 }
 
 GimpHistogram *

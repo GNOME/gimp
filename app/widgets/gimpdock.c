@@ -426,8 +426,8 @@ gimp_dock_separator_drag_drop (GtkWidget      *widget,
     {
       GimpDockable *src_dockable;
 
-      src_dockable = (GimpDockable *) gtk_object_get_data (GTK_OBJECT (source),
-							   "gimp-dockable");
+      src_dockable = (GimpDockable *) g_object_get_data (G_OBJECT (source),
+                                                         "gimp-dockable");
 
       if (src_dockable)
 	{
@@ -435,8 +435,8 @@ gimp_dock_separator_drag_drop (GtkWidget      *widget,
 	  GList     *children;
 	  gint       index;
 
-	  gtk_object_set_data (GTK_OBJECT (src_dockable),
-			       "gimp-dock-drag-widget", NULL);
+	  g_object_set_data (G_OBJECT (src_dockable),
+                             "gimp-dock-drag-widget", NULL);
 
 	  children = gtk_container_children (GTK_CONTAINER (widget->parent));
 	  index    = g_list_index (children, widget) / 2;
@@ -445,12 +445,12 @@ gimp_dock_separator_drag_drop (GtkWidget      *widget,
 
 	  gimp_dock_add_book (dock, GIMP_DOCKBOOK (dockbook), index);
 
-	  gtk_object_ref (GTK_OBJECT (src_dockable));
+	  g_object_ref (G_OBJECT (src_dockable));
 
 	  gimp_dockbook_remove (src_dockable->dockbook, src_dockable);
 	  gimp_dockbook_add (GIMP_DOCKBOOK (dockbook), src_dockable, -1);
 
-	  gtk_object_unref (GTK_OBJECT (src_dockable));
+	  g_object_unref (G_OBJECT (src_dockable));
 
 	  return TRUE;
 	}

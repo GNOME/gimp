@@ -242,8 +242,8 @@ gimp_navigation_preview_move_to (GimpNavigationPreview *nav_preview,
   x = RINT (tx / ratiox);
   y = RINT (ty / ratioy);
 
-  gtk_signal_emit (GTK_OBJECT (preview), preview_signals[MARKER_CHANGED],
-		   x, y);
+  g_signal_emit (GTK_OBJECT (preview), preview_signals[MARKER_CHANGED], 0,
+                 x, y);
 }
 
 static void

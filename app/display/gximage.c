@@ -67,7 +67,7 @@ delete_gximage (GXImage *gximage)
 {
   g_free (gximage->data);
   if (gximage->gc)
-    gdk_gc_destroy (gximage->gc);
+    gdk_gc_unref (gximage->gc);
   g_free (gximage);
 }
 

@@ -438,14 +438,14 @@ gimp_dockbook_tab_button_press (GtkWidget      *widget,
 						   "/Auto Follow Active Image");
       notebook_menu = GTK_NOTEBOOK (dockbook)->menu;
 
-      gtk_object_ref (GTK_OBJECT (notebook_menu));
+      g_object_ref (G_OBJECT (notebook_menu));
       gtk_menu_detach (GTK_MENU (notebook_menu));
 
       GTK_NOTEBOOK (dockbook)->menu = notebook_menu;
 
       gtk_menu_item_set_submenu (GTK_MENU_ITEM (add_widget), notebook_menu);
 
-      gtk_object_unref (GTK_OBJECT (notebook_menu));
+      g_object_unref (G_OBJECT (notebook_menu));
 
       gdk_window_get_origin (widget->window, &origin_x, &origin_y);
 
@@ -461,7 +461,7 @@ gimp_dockbook_tab_button_press (GtkWidget      *widget,
       /*  an item factory callback may destroy the dockbook, so reference
        *  if for gimp_dockbook_menu_end()
        */
-      gtk_object_ref (GTK_OBJECT (dockbook));
+      g_object_ref (G_OBJECT (dockbook));
 
       gtk_check_menu_item_set_active
 	(GTK_CHECK_MENU_ITEM (toggle_widget),
@@ -533,9 +533,9 @@ gimp_dockbook_tab_drag_begin (GtkWidget      *widget,
 
   gtk_widget_show (window);
 
-  gtk_object_set_data_full (GTK_OBJECT (dockable), "gimp-dock-drag-widget",
-			    window,
-			    (GtkDestroyNotify) gtk_widget_destroy);
+  g_object_set_data_full (G_OBJECT (dockable), "gimp-dock-drag-widget",
+                          window,
+                          (GDestroyNotify) gtk_widget_destroy);
 
   gtk_drag_set_icon_widget (context, window,
 			    -8, -8);
@@ -569,12 +569,12 @@ gimp_dockbook_tab_drag_end (GtkWidget      *widget,
 
       gimp_dock_add_book (GIMP_DOCK (dock), GIMP_DOCKBOOK (dockbook), 0);
 
-      gtk_object_ref (GTK_OBJECT (dockable));
+      g_object_ref (G_OBJECT (dockable));
 
       gimp_dockbook_remove (dockable->dockbook, dockable);
       gimp_dockbook_add (GIMP_DOCKBOOK (dockbook), dockable, 0);
 
-      gtk_object_unref (GTK_OBJECT (dockable));
+      g_object_unref (G_OBJECT (dockable));
 
       gtk_widget_show (dock);
     }

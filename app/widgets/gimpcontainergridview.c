@@ -257,17 +257,17 @@ gimp_container_grid_view_insert_item (GimpContainerView *view,
 
   gtk_widget_show (preview);
 
-  gtk_signal_connect (GTK_OBJECT (preview), "clicked",
-		      GTK_SIGNAL_FUNC (gimp_container_grid_view_item_selected),
-		      view);
+  g_signal_connect (G_OBJECT (preview), "clicked",
+                    G_CALLBACK (gimp_container_grid_view_item_selected),
+                    view);
 
-  gtk_signal_connect (GTK_OBJECT (preview), "double_clicked",
-		      GTK_SIGNAL_FUNC (gimp_container_grid_view_item_activated),
-		      view);
+  g_signal_connect (G_OBJECT (preview), "double_clicked",
+                    G_CALLBACK (gimp_container_grid_view_item_activated),
+                    view);
 
-  gtk_signal_connect (GTK_OBJECT (preview), "context",
-		      GTK_SIGNAL_FUNC (gimp_container_grid_view_item_context),
-		      view);
+  g_signal_connect (G_OBJECT (preview), "context",
+                    G_CALLBACK (gimp_container_grid_view_item_context),
+                    view);
 
   return (gpointer) preview;
 }
@@ -285,10 +285,9 @@ gimp_container_grid_view_remove_item (GimpContainerView *view,
 
   if (preview)
     {
-      if (gtk_object_get_data (GTK_OBJECT (view),
-			       "last_selected_item") == preview)
+      if (g_object_get_data (G_OBJECT (view), "last_selected_item") == preview)
 	{
-	  gtk_object_set_data (GTK_OBJECT (view), "last_selected_item", NULL);
+	  g_object_set_data (G_OBJECT (view), "last_selected_item", NULL);
 	}
 
       gtk_container_remove (GTK_CONTAINER (grid_view->wrap_box), preview);
@@ -326,7 +325,7 @@ gimp_container_grid_view_clear_items (GimpContainerView *view)
 
   grid_view = GIMP_CONTAINER_GRID_VIEW (view);
 
-  gtk_object_set_data (GTK_OBJECT (view), "last_selected_item", NULL);
+  g_object_set_data (G_OBJECT (view), "last_selected_item", NULL);
 
   while (GTK_WRAP_BOX (grid_view->wrap_box)->children)
     gtk_container_remove (GTK_CONTAINER (grid_view->wrap_box),
@@ -394,7 +393,7 @@ gimp_container_grid_view_highlight_item (GimpContainerView *view,
 
   grid_view = GIMP_CONTAINER_GRID_VIEW (view);
 
-  preview = gtk_object_get_data (GTK_OBJECT (view), "last_selected_item");
+  preview = g_object_get_data (G_OBJECT (view), "last_selected_item");
 
   if (preview)
     gimp_preview_set_border_color (preview, &white_color);
@@ -454,5 +453,5 @@ gimp_container_grid_view_highlight_item (GimpContainerView *view,
       gtk_label_set_text (GTK_LABEL (grid_view->name_label), _("(None)"));
     }
 
-  gtk_object_set_data (GTK_OBJECT (view), "last_selected_item", preview);
+  g_object_set_data (G_OBJECT (view), "last_selected_item", preview);
 }

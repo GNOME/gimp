@@ -1,3 +1,21 @@
+2001-07-25  Sven Neumann  <sven@gimp.org>
+
+	* app/gximage.c: replaced some deprecated gdk functions.
+	
+	* app/widgets/gimpcontainergridview.c
+	* app/widgets/gimpcontainermenuimpl.c
+	* app/widgets/gimpcursor.c
+	* app/widgets/gimpdialogfactory.c
+	* app/widgets/gimpdnd.c
+	* app/widgets/gimpdock.c
+	* app/widgets/gimpdockbook.c
+	* app/widgets/gimphistogramview.c
+	* app/widgets/gimplistitem.c
+	* app/widgets/gimpmenuitem.c
+	* app/widgets/gimpnavigationpreview.c
+	* app/widgets/gimppreview.c
+	* app/widgets/gimpwidgets-utils.c: more work on porting to GObject.
+
 2001-07-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/dialogs-constructors.c

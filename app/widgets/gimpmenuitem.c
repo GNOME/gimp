@@ -144,8 +144,8 @@ static void
 gimp_menu_item_set_viewable (GimpMenuItem *menu_item,
                              GimpViewable *viewable)
 {
-  gtk_signal_emit (GTK_OBJECT (menu_item), menu_item_signals[SET_VIEWABLE],
-                   viewable);
+  g_signal_emit (GTK_OBJECT (menu_item), menu_item_signals[SET_VIEWABLE], 0,
+                 viewable);
 }
 
 static void
@@ -165,10 +165,9 @@ gimp_menu_item_real_set_viewable (GimpMenuItem *menu_item,
 
   gimp_menu_item_name_changed (viewable, menu_item);
 
-  gtk_signal_connect_while_alive (GTK_OBJECT (viewable), "name_changed",
-                                  GTK_SIGNAL_FUNC (gimp_menu_item_name_changed),
-                                  menu_item,
-                                  GTK_OBJECT (menu_item));
+  g_signal_connect_object (G_OBJECT (viewable), "name_changed",
+                           G_CALLBACK (gimp_menu_item_name_changed),
+                           menu_item, 0);
 
   gimp_gtk_drag_source_set_by_type (GTK_WIDGET (menu_item),
 				    GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,

@@ -181,9 +181,9 @@ gimp_container_menu_impl_insert_item (GimpContainerMenu *menu,
   gimp_menu_item_set_name_func (GIMP_MENU_ITEM (menu_item),
 				menu->get_name_func);
 
-  gtk_signal_connect (GTK_OBJECT (menu_item), "activate",
-		      GTK_SIGNAL_FUNC (gimp_container_menu_impl_item_selected),
-		      menu);
+  g_signal_connect (G_OBJECT (menu_item), "activate",
+                    G_CALLBACK (gimp_container_menu_impl_item_selected),
+                    menu);
 
   gtk_menu_shell_insert (GTK_MENU_SHELL (menu), menu_item, index);
   gtk_widget_show (menu_item);

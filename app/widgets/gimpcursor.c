@@ -548,7 +548,7 @@ gimp_cursor_new (GimpCursorType      cursor_type,
   if (gc == NULL)
     gc = gdk_gc_new (bmcursor->bitmap);
 
-  gdk_window_get_size (bmcursor->bitmap, &width, &height);
+  gdk_drawable_get_size (bmcursor->bitmap, &width, &height);
 
   /*  new bitmap and mask for on-the-fly cursor creation  */
 
@@ -560,43 +560,43 @@ gimp_cursor_new (GimpCursorType      cursor_type,
 
   /*  first draw the bitmap completely ... */
 
-  gdk_draw_pixmap (bitmap, gc, bmcursor->bitmap,
-                   0, 0, 0, 0, width, height);
+  gdk_draw_drawable (bitmap, gc, bmcursor->bitmap,
+                     0, 0, 0, 0, width, height);
 
   if (bmmodifier)
     {
       gdk_gc_set_clip_mask (gc, bmmodifier->bitmap);
-      gdk_draw_pixmap (bitmap, gc, bmmodifier->bitmap,
-		       0, 0, 0, 0, width, height);
+      gdk_draw_drawable (bitmap, gc, bmmodifier->bitmap,
+                         0, 0, 0, 0, width, height);
       gdk_gc_set_clip_mask (gc, NULL);
     }
 
   if (bmtool)
     {
       gdk_gc_set_clip_mask (gc, bmtool->bitmap);
-      gdk_draw_pixmap (bitmap, gc, bmtool->bitmap,
-		       0, 0, 0, 0, width, height);
+      gdk_draw_drawable (bitmap, gc, bmtool->bitmap,
+                         0, 0, 0, 0, width, height);
       gdk_gc_set_clip_mask (gc, NULL);
     }
 
   /*  ... then the mask  */
 
-  gdk_draw_pixmap (mask, gc, bmcursor->mask,
-                   0, 0, 0, 0, width, height);
+  gdk_draw_drawable (mask, gc, bmcursor->mask,
+                     0, 0, 0, 0, width, height);
 
   if (bmmodifier)
     {
       gdk_gc_set_clip_mask (gc, bmmodifier->mask);
-      gdk_draw_pixmap (mask, gc, bmmodifier->mask,
-		       0, 0, 0, 0, width, height);
+      gdk_draw_drawable (mask, gc, bmmodifier->mask,
+                         0, 0, 0, 0, width, height);
       gdk_gc_set_clip_mask (gc, NULL);
     }
 
   if (bmtool)
     {
       gdk_gc_set_clip_mask (gc, bmtool->mask);
-      gdk_draw_pixmap (mask, gc, bmtool->mask,
-		       0, 0, 0, 0, width, height);
+      gdk_draw_drawable (mask, gc, bmtool->mask,
+                         0, 0, 0, 0, width, height);
       gdk_gc_set_clip_mask (gc, NULL);
     }
 
@@ -609,8 +609,8 @@ gimp_cursor_new (GimpCursorType      cursor_type,
 				       bmcursor->x_hot,
 				       bmcursor->y_hot);
 
-  gdk_bitmap_unref (bitmap);
-  gdk_bitmap_unref (mask);
+  gdk_drawable_unref (bitmap);
+  gdk_drawable_unref (mask);
 
   return cursor;
 }

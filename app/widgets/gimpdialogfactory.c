@@ -730,10 +730,9 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 
   factory->open_dialogs = g_list_prepend (factory->open_dialogs, dialog);
 
-  gtk_signal_connect_object_while_alive
-    (GTK_OBJECT (dialog), "destroy",
-     GTK_SIGNAL_FUNC (gimp_dialog_factory_remove_dialog),
-     GTK_OBJECT (factory));
+  g_signal_connect_object (G_OBJECT (dialog), "destroy",
+                           G_CALLBACK (gimp_dialog_factory_remove_dialog),
+                           factory, G_CONNECT_SWAPPED);
 }
 
 void
@@ -757,8 +756,8 @@ gimp_dialog_factory_remove_dialog (GimpDialogFactory *factory,
 
   factory->open_dialogs = g_list_remove (factory->open_dialogs, dialog);
 
-  dialog_factory = gtk_object_get_data (GTK_OBJECT (dialog),
-					"gimp-dialog-factory");
+  dialog_factory = g_object_get_data (G_OBJECT (dialog), 
+                                      "gimp-dialog-factory");
 
   if (! dialog_factory)
     {
@@ -991,8 +990,8 @@ gimp_dialog_factories_save_foreach (gchar             *name,
 
 		  dockable = (GimpDockable *) pages->data;
 
-		  entry = gtk_object_get_data (GTK_OBJECT (dockable),
-					       "gimp-dialog-factory-entry");
+		  entry = g_object_get_data (G_OBJECT (dockable),
+                                             "gimp-dialog-factory-entry");
 
 		  if (entry)
 		    fprintf (fp, "\"%s\"%s",
@@ -1225,9 +1224,9 @@ gimp_dialog_factories_hide_foreach (gchar             *name,
 	      visibility = GIMP_DIALOG_VISIBILITY_INVISIBLE;
 	    }
 
-	  gtk_object_set_data (GTK_OBJECT (list->data),
-			       "gimp-dialog-visibility",
-			       GINT_TO_POINTER (visibility));
+	  g_object_set_data (G_OBJECT (list->data),
+                             "gimp-dialog-visibility",
+                             GINT_TO_POINTER (visibility));
 	}
     }
 }
@@ -1246,8 +1245,8 @@ gimp_dialog_factories_show_foreach (gchar             *name,
 	  GimpDialogVisibilityState visibility;
 
 	  visibility =
-	    GPOINTER_TO_INT (gtk_object_get_data (GTK_OBJECT (list->data),
-						  "gimp-dialog-visibility"));
+	    GPOINTER_TO_INT (g_object_get_data (G_OBJECT (list->data),
+                                                "gimp-dialog-visibility"));
 
 	  if (! GTK_WIDGET_VISIBLE (list->data) &&
 	      visibility == GIMP_DIALOG_VISIBILITY_VISIBLE)

@@ -320,8 +320,8 @@ gimp_list_item_set_viewable (GimpListItem *list_item,
   g_return_if_fail (list_item != NULL);
   g_return_if_fail (GIMP_IS_LIST_ITEM (list_item));
 
-  gtk_signal_emit (GTK_OBJECT (list_item), list_item_signals[SET_VIEWABLE],
-                   viewable);
+  g_signal_emit (G_OBJECT (list_item), list_item_signals[SET_VIEWABLE], 0,
+                 viewable);
 }
 
 static void
@@ -341,10 +341,9 @@ gimp_list_item_real_set_viewable (GimpListItem *list_item,
 
   gimp_list_item_name_changed (viewable, list_item);
 
-  gtk_signal_connect_while_alive (GTK_OBJECT (viewable), "name_changed",
-                                  GTK_SIGNAL_FUNC (gimp_list_item_name_changed),
-                                  list_item,
-                                  GTK_OBJECT (list_item));
+  g_signal_connect_object (G_OBJECT (viewable), "name_changed",
+                           G_CALLBACK (gimp_list_item_name_changed),
+                           list_item, 0);
 
   gimp_gtk_drag_source_set_by_type (GTK_WIDGET (list_item),
 				    GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
@@ -366,7 +365,7 @@ gimp_list_item_set_preview_size (GimpListItem *list_item,
 
   list_item->preview_size = preview_size;
 
-  gtk_signal_emit (GTK_OBJECT (list_item), list_item_signals[SET_PREVIEW_SIZE]);
+  g_signal_emit (G_OBJECT (list_item), list_item_signals[SET_PREVIEW_SIZE], 0);
 }
 
 static void

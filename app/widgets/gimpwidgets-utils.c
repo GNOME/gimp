@@ -241,8 +241,8 @@ gimp_window_accel_key_press (GtkWidget            *widget,
   accel_context =
     context_data->get_context_func (context_data->get_context_data);
 
-  gtk_object_set_data (GTK_OBJECT (context_data->item_factory),
-		       "gimp-accel-context", accel_context);
+  g_object_set_data (G_OBJECT (context_data->item_factory),
+                     "gimp-accel-context", accel_context);
 
   return FALSE;
 }
@@ -252,8 +252,8 @@ gimp_window_accel_key_release (GtkWidget            *widget,
 			       GdkEvent             *event,
 			       GimpAccelContextData *context_data)
 {
-  gtk_object_set_data (GTK_OBJECT (context_data->item_factory),
-		       "gimp-accel-context", NULL);
+  g_object_set_data (G_OBJECT (context_data->item_factory),
+                     "gimp-accel-context", NULL);
 
   return FALSE;
 }
@@ -274,16 +274,16 @@ gimp_window_add_accel_group (GtkWindow               *window,
       context_data->get_context_func = get_context_func;
       context_data->get_context_data = get_context_data;
 
-      gtk_object_set_data_full (GTK_OBJECT (window), "gimp-accel-conext-data",
-				context_data,
-				(GtkDestroyNotify) g_free);
+      g_object_set_data_full (G_OBJECT (window), "gimp-accel-conext-data",
+                              context_data,
+                              (GDestroyNotify) g_free);
 
-      gtk_signal_connect (GTK_OBJECT (window), "key_press_event",
-			  GTK_SIGNAL_FUNC (gimp_window_accel_key_press),
-			  context_data);
-      gtk_signal_connect (GTK_OBJECT (window), "key_release_event",
-			  GTK_SIGNAL_FUNC (gimp_window_accel_key_release),
-			  context_data);
+      g_signal_connect (G_OBJECT (window), "key_press_event",
+                        G_CALLBACK (gimp_window_accel_key_press),
+                        context_data);
+      g_signal_connect (G_OBJECT (window), "key_release_event",
+                        G_CALLBACK (gimp_window_accel_key_release),
+                        context_data);
     }
 
   gtk_window_add_accel_group (window, item_factory->accel_group);
@@ -295,19 +295,19 @@ gimp_window_remove_accel_group (GtkWindow      *window,
 {
   GimpAccelContextData *context_data;
 
-  context_data = gtk_object_get_data (GTK_OBJECT (window),
-				      "gimp-accel-conext-data");
+  context_data = g_object_get_data (G_OBJECT (window),
+                                    "gimp-accel-conext-data");
 
   if (context_data)
     {
-      gtk_signal_disconnect_by_func (GTK_OBJECT (window),
-				     GTK_SIGNAL_FUNC (gimp_window_accel_key_press),
-				     context_data);
-      gtk_signal_disconnect_by_func (GTK_OBJECT (window),
-				     GTK_SIGNAL_FUNC (gimp_window_accel_key_release),
-				     context_data);
+      g_signal_handlers_disconnect_by_func (G_OBJECT (window),
+                                            G_CALLBACK (gimp_window_accel_key_press),
+                                            context_data);
+      g_signal_handlers_disconnect_by_func (G_OBJECT (window),
+                                            G_CALLBACK (gimp_window_accel_key_release),
+                                            context_data);
 
-      gtk_object_set_data (GTK_OBJECT (window), "gimp-accel-conext-data", NULL);
+      g_object_set_data (G_OBJECT (window), "gimp-accel-conext-data", NULL);
     }
 
   gtk_window_remove_accel_group (window, item_factory->accel_group);
@@ -325,8 +325,8 @@ gimp_widget_get_callback_context (GtkWidget *widget)
   popup_context = gtk_item_factory_popup_data_from_widget (widget);
 
   if (ifactory)
-    accel_context = gtk_object_get_data (GTK_OBJECT (ifactory),
-					 "gimp-accel-context");
+    accel_context = g_object_get_data (G_OBJECT (ifactory), 
+                                       "gimp-accel-context");
 
   if (popup_context)
     return popup_context;
