@@ -1,3 +1,8 @@
+1998-08-07  Raja R Harinath  <harinath@cs.umn.edu>
+
+	* plug-ins/script-fu/Makefile.am (INCLUDES): 
+	List $(top_srcdir) before $(GTK_CFLAGS).
+
 Thu Aug  6 15:12:16 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* acinclude.m4: for people without the gettext macros
