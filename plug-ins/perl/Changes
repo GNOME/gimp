@@ -13,6 +13,11 @@ Revision history for Gimp-Perl extension.
         - some minor Gimp::UI streamlining & bugfixes.
         - more (undocumented) on_xxx hooks.
         - got rid of the old & crufty callback system (who uses it anyways?).
+        - added Gimp::basewidget "pragma" and made Gimp::UI use it. Also
+          sent a bugreport to the Gtk maintainer who will hopefully make
+          a gtk-perl release soon.
+        - the :auto import tag is no longer the default. neither with nor without
+          warning.
 
 1.17  Wed Nov 24 21:25:19 CET 1999
         - re-fitted i18n translation for most plug-ins.

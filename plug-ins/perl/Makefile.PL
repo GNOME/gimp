@@ -320,6 +320,7 @@ WriteMakefile(
     		    'Gimp/Fu.pm'	=> '$(INST_LIBDIR)/Gimp/Fu.pm',
     		    'Gimp/Lib.pm'	=> '$(INST_LIBDIR)/Gimp/Lib.pm',
     		    'UI/UI.pm'		=> '$(INST_LIBDIR)/Gimp/UI.pm',
+    		    'UI/basewidget.pm'	=> '$(INST_LIBDIR)/Gimp/basewidget.pm',
     		    'Net/Net.pm'	=> '$(INST_LIBDIR)/Gimp/Net.pm',
     		    'Gimp/PDL.pm'	=> '$(INST_LIBDIR)/Gimp/PDL.pm',
     		    'Gimp/Util.pm'	=> '$(INST_LIBDIR)/Gimp/Util.pm',

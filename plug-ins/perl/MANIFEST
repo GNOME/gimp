@@ -56,6 +56,7 @@ Net/Net.pm
 UI/Makefile.PL
 UI/UI.pm
 UI/UI.xs
+UI/basewidget.pm
 examples/PDB
 examples/alpha2color.pl
 examples/tex-to-float

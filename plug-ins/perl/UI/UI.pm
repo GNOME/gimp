@@ -93,23 +93,14 @@ sub new($$$$) {
    $menu;
 }
 
-Gimp::gtk_init_hook {
-   register_subtype Gtk::Button 'Gimp::UI::PreviewSelect';
-   register_subtype Gtk::Button 'Gimp::UI::PatternSelect';
-   register_subtype Gtk::Button 'Gimp::UI::BrushSelect';
-   register_subtype Gtk::Button 'Gimp::UI::GradientSelect';
-   register_subtype Gtk::Button 'Gimp::UI::ColorSelectButton';
-};
-
 package Gimp::UI::PreviewSelect;
 
 use Gtk;
 use Gimp '__';
-use base 'Gtk::Button';
 
 sub GTK_CLASS_INIT {
    my $class = shift;
-   add_arg_type $class "active","GtkString",3;
+   add_arg_type $class "active", "GtkString", 3;
 }
 
 sub GTK_OBJECT_SET_ARG {
@@ -136,7 +127,7 @@ sub GTK_OBJECT_GET_ARG {
 }
 
 sub GTK_OBJECT_INIT {
-   my $self=shift;
+   my $self = shift;
    (my $label = new Gtk::Label "")->show;
    $self->add($label);
    $self->{label}=$label;
@@ -198,7 +189,8 @@ package Gimp::UI::PatternSelect;
 
 use Gtk;
 use Gimp '__';
-use base 'Gimp::UI::PreviewSelect';
+use base Gimp::UI::PreviewSelect;
+use Gimp::basewidget Gtk::Button;
 
 sub get_title { __"Pattern Selection Dialog" }
 sub get_list { Gimp->patterns_list }
@@ -238,15 +230,12 @@ sub set_preview {
    $name;
 }
 
-sub new {
-   Gtk::Object::new @_;
-}
-
 package Gimp::UI::BrushSelect;
 
 use Gtk;
 use Gimp '__';
-use base 'Gimp::UI::PreviewSelect';
+use base Gimp::UI::PreviewSelect;
+use Gimp::basewidget Gtk::Button;
 
 sub get_title { __"Brush Selection Dialog" }
 sub get_list { Gimp->brushes_list }
@@ -281,15 +270,12 @@ sub set_preview {
    $name;
 }
 
-sub new {
-   Gtk::Object::new @_;
-}
-
 package Gimp::UI::GradientSelect;
 
 use Gtk;
-use base 'Gimp::UI::PreviewSelect';
 use Gimp '__';
+use base Gimp::UI::PreviewSelect;
+use Gimp::basewidget Gtk::Button;
 
 sub get_title { __"Gradient Selection Dialog" }
 sub get_list { keys %gradients }
@@ -314,24 +300,16 @@ sub new {
 
 package Gimp::UI::ColorSelectButton;
 
-use strict;
-use vars qw($VERSION @ISA);
-use Gimp '__';
 use Gtk;
-
-@ISA = qw(Gtk::Button);
+use Gimp '__';
+use Gimp::basewidget Gtk::Button;
 
 # Class defaults data
 my @class_def_color = (255,175,0);
 
 sub GTK_CLASS_INIT {
 	my($class) = shift;
-	
-	if (Gtk->major_version < 1 or (Gtk->major_version == 1 and Gtk->minor_version < 1)) {
-		add_arg_type $class "color", "string", 3; #R/W
-	} else {
-		add_arg_type $class "color", "GtkString", 3; #R/W
-	}
+	add_arg_type $class "color", "GtkString", 3; #R/W
 }
 
 sub GTK_OBJECT_INIT {
@@ -424,10 +402,6 @@ sub cb_color_button {
     $cs_window->cancel_button->signal_connect("clicked",
 					      sub { $cs_window->destroy; delete $color_button->{_cs_window} });
     $color_button->{_cs_window} = $cs_window;
-}
-
-sub new {
-    Gtk::Object::new @_;
 }
 
 1;

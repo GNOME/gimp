@@ -128,7 +128,8 @@ sub croak {
 }
 
 my @_procs = ('main', 'xlfd_size', '__', 'N_');
-my @_default = (@_procs, ':consts' ,':_auto2');
+#my @_default = (@_procs, ':consts' ,':_auto2');
+my @_default = (@_procs, ':consts');
    
 # we really abuse the import facility..
 sub import($;@) {
@@ -212,6 +213,9 @@ sub gtk_init() {
 
 sub gtk_init_hook(&) {
    push @init_functions, @_;
+   unless ($gtk_init) {
+      &{shift @init_functions} while @init_functions;
+   }
 }
 
 # internal utility function for Gimp::Fu and others
