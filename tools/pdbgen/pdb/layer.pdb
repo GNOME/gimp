@@ -71,7 +71,7 @@ CODE
 sub layer_dim_proc {
     my ($op, $morehelp, @args) = @_;
 
-    $blurb = ucfirst($op) . ' the layer to the specified extents.';
+    $blurb = "\u$op the layer to the specified extents.";
 
     my $ops = $op =~ /e$/ ? "${op}s" : "${op}es";
     $help = <<HELP;
@@ -97,7 +97,7 @@ HELP
 	$args .= $_->{name};
     }
 
-    &layer_change_invoke("LAYER_@{[ uc($op) ]}",
+    &layer_change_invoke("LAYER_\U$op\E",
 			 "layer_$op (layer, new_width, new_height, $args);");
 }
 

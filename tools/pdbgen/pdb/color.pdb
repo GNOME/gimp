@@ -44,7 +44,7 @@ HELP
     @inargs = ( &drawable_arg );
     foreach (qw( brightness contrast)) {
 	push @inargs, { name => $_, type => '-127 <= int32 <= 127',
-			desc => "@{[ ucfirst $_ ]} adjustment: (%%desc%%)" }
+			desc => "\u$_ adjustment: (%%desc%%)" }
     }
 
     %invoke = (
@@ -562,8 +562,7 @@ HELP
 
     foreach (qw(start end)) {
 	push @inargs, { name => "${_}_range", type => '0 <= int32 < 256',
-			desc => ucfirst $_ . ' of the intensity measurement
-					       range' }
+			desc => "\u$_ of the intensity measurement range" }
     }
 
     @outargs = (

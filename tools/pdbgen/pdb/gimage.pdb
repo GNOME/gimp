@@ -86,7 +86,7 @@ sub type_move {
     my $layer = "";
     $layer = ', or the layer has no alpha channel' if $type eq 'layer';
 
-    $blurb = ucfirst($op) . " the specified $type in the image's $type stack";
+    $blurb = "\u$op the specified $type in the image's $type stack";
     $blurb .= " $extra of stack" if $extra;
 
     $help = <<HELP;

@@ -421,4 +421,4 @@ AC_DEFUN(AM_PROG_LD, [indir([AC_PROG_LD])])dnl
 AC_DEFUN(AM_PROG_NM, [indir([AC_PROG_NM])])dnl
 
 dnl This is just to quiet aclocal about the macro not being used
-if(a,b,[AC_DISABLE_FAST_INSTALL])dnl
+ifelse(a,b,[AC_DISABLE_FAST_INSTALL])dnl

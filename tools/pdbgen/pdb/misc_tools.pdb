@@ -790,7 +790,7 @@ HELP
 	    	 { name => "$_$pos", type => 'float',
 		   desc => "The new $_ coordinate of $where corner of original
 			    bounding box",
-		   alias => "trans_info[@{[ uc ]}$pos]", no_declare => 1 }
+		   alias => "trans_info[\U$_\E$pos]", no_declare => 1 }
 	}
 	$pos++;
     }
@@ -996,7 +996,7 @@ HELP
 	    	 { name => "$_$pos", type => 'float',
 		   desc => "The new $_ coordinate of $where corner of newly
 			    scaled region",
-		   alias => "trans_info[@{[ uc ]}$pos]", no_declare => 1 }
+		   alias => "trans_info[\U$_\E$pos]", no_declare => 1 }
 	}
 	$pos++;
     }

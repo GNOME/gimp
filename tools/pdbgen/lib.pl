@@ -391,7 +391,7 @@ LGPL
 
 	open HFILE, "> $hfile" or die "Can't open $cfile: $!\n";
 	print HFILE $lgpl;
-	my $guard = "__GIMP_@{[uc $group]}_H__";
+	my $guard = "__GIMP_\U$group\E_H__";
 	print HFILE <<HEADER;
 #ifndef $guard
 #define $guard

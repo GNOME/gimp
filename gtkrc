@@ -16,5 +16,10 @@ style "default"
   font = "-adobe-helvetica-medium-r-normal--*-100-*-*-*-*-*-*"
 }
 
+style "tooltips"
+{
+  bg[NORMAL] = { 0.94, 0.90, 0.54 }
+}
+
 widget_class "*Ruler*" style "ruler"
 widget_class "*" style "default"
