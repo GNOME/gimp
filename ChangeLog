@@ -1,5 +1,10 @@
 2005-02-28  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpdrawable-blend.c: major speedup for dithering code
+	thanks to a suggestion from Jay Cox.
+
+2005-02-28  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimphelp.c (gimp_help_get_locales): use
 	g_get_language_names().
 

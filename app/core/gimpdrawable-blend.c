@@ -178,17 +178,6 @@ static PixelRegion distR =
 };
 
 
-#define  gradient_dither(dest, rng, value) G_STMT_START { \
-  gdouble ftmp = (value) * 255.0;        \
-  gint    itmp = ftmp;                   \
-                                         \
-  if (g_rand_double (rng) > ftmp - itmp) \
-    *dest++ = itmp;                      \
-  else                                   \
-    *dest++ = MIN (itmp + 1, 255);       \
-} G_STMT_END
-
-
 /*  public functions  */
 
 void
@@ -813,10 +802,12 @@ gradient_put_pixel (gint      x,
     {
       if (ppd->dither_rand)
         {
-          gradient_dither (dest, ppd->dither_rand, color->r);
-          gradient_dither (dest, ppd->dither_rand, color->g);
-          gradient_dither (dest, ppd->dither_rand, color->b);
-          gradient_dither (dest, ppd->dither_rand, color->a);
+          gint i = g_rand_int (ppd->dither_rand);
+
+          *dest++ = color->r * 255.0 + (gdouble) (i & 0xff) / 256.0; i >>= 8;
+          *dest++ = color->g * 255.0 + (gdouble) (i & 0xff) / 256.0; i >>= 8;
+          *dest++ = color->b * 255.0 + (gdouble) (i & 0xff) / 256.0; i >>= 8;
+          *dest++ = color->a * 255.0 + (gdouble) (i & 0xff) / 256.0;
         }
       else
         {
@@ -833,8 +824,10 @@ gradient_put_pixel (gint      x,
 
       if (ppd->dither_rand)
         {
-          gradient_dither (dest, ppd->dither_rand, gray);
-          gradient_dither (dest, ppd->dither_rand, color->a);
+          gint i = g_rand_int (ppd->dither_rand);
+
+          *dest++ = gray     * 255.0 + (gdouble) (i & 0xff) / 256.0; i >>= 8;
+          *dest++ = color->a * 255.0 + (gdouble) (i & 0xff) / 256.0;
         }
       else
         {
@@ -1056,13 +1049,14 @@ gradient_fill_single_region_rgb_dither (RenderBlendData *rbd,
     for (x = PR->x; x < endx; x++)
       {
         GimpRGB  color;
+        gint     i = g_rand_int (dither_rand);
 
         gradient_render_pixel (x, y, &color, rbd);
 
-        gradient_dither (dest, dither_rand, color.r);
-        gradient_dither (dest, dither_rand, color.g);
-        gradient_dither (dest, dither_rand, color.b);
-        gradient_dither (dest, dither_rand, color.a);
+        *dest++ = color.r * 255.0 + (gdouble) (i & 0xff) / 256.0; i >>= 8;
+        *dest++ = color.g * 255.0 + (gdouble) (i & 0xff) / 256.0; i >>= 8;
+        *dest++ = color.b * 255.0 + (gdouble) (i & 0xff) / 256.0; i >>= 8;
+        *dest++ = color.a * 255.0 + (gdouble) (i & 0xff) / 256.0;
       }
 
   g_rand_free (dither_rand);
@@ -1103,11 +1097,15 @@ gradient_fill_single_region_gray_dither (RenderBlendData *rbd,
     for (x = PR->x; x < endx; x++)
       {
         GimpRGB  color;
+        gdouble  gray;
+        gint     i = g_rand_int (dither_rand);
 
         gradient_render_pixel (x, y, &color, rbd);
 
-        gradient_dither (dest, dither_rand, gimp_rgb_intensity (&color));
-        gradient_dither (dest, dither_rand, color.a);
+        gray = gimp_rgb_intensity (&color);
+
+        *dest++ = gray    * 255.0 + (gdouble) (i & 0xff) / 256.0; i >>= 8;
+        *dest++ = color.a * 255.0 + (gdouble) (i & 0xff) / 256.0;
       }
 
   g_rand_free (dither_rand);
