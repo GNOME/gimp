@@ -50,6 +50,7 @@
     'gifload' => { libdep => 'gtk' },
     'gih' => { libdep => 'gtk', ui => 1 },
     'glasstile' => { libdep => 'gtk', ui => 1, libsupp => 'gimpoldpreview' },
+    'glob' => { libdep => 'glib' },
     'gqbist' => { libdep => 'gtk', ui => 1 },
     'gradmap' => { libdep => 'glib', ui => 1 },
     'grid' => { libdep => 'gtk', ui => 1, libsupp => 'gimpoldpreview' },

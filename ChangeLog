@@ -1,5 +1,14 @@
 2004-06-05  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/glob.c: added a simple glob plug-in based on
+	some old code by George Hartz. This plug-in is very useful when
+	you need to do batch processing, especially from Script-Fu.
+	Fixes bug #143661.
+
+2004-06-05  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpgradienteditor.c: applied a patch from David
 	Gowers that makes the gradient editor display the perceptual
 	intensity of the color under the cursor (bug #135037).

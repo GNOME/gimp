@@ -79,6 +79,7 @@ libexec_PROGRAMS = \
 	gifload \
 	gih \
 	glasstile \
+	glob \
 	gqbist \
 	gradmap \
 	grid \
@@ -844,6 +845,17 @@ glasstile_LDADD = \
 	$(libgimpcolor)							\
 	$(libgimpbase)							\
 	$(GTK_LIBS)							\
+	$(RT_LIBS)							\
+	$(INTLLIBS)
+
+glob_SOURCES = \
+	glob.c
+
+glob_LDADD = \
+	$(libgimp)							\
+	$(libgimpcolor)							\
+	$(libgimpbase)							\
+	$(GLIB_LIBS)							\
 	$(RT_LIBS)							\
 	$(INTLLIBS)
 
