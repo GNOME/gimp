@@ -27,9 +27,6 @@
 /* Define if you can safely include both <sys/time.h> and <time.h>.  */
 #undef TIME_WITH_SYS_TIME
 
-/* Define if the X Window System is missing or not being used.  */
-#undef X_DISPLAY_MISSING
-
 #undef HAVE_DIRENT_H
 #undef HAVE_DOPRNT
 #undef HAVE_IPC_H
@@ -49,6 +46,9 @@
 
 #undef RETSIGTYPE
 #undef TIME_WITH_SYS_TIME
+
+#undef RAND_FUNC
+#undef SRAND_FUNC
 
 /* #undef PACKAGE */
 /* #undef VERSION */

@@ -215,6 +215,13 @@ fi
 dnl TVM: check for compiler characteristics
 AC_C_INLINE
 
+dnl Check for random number functions
+AC_CHECK_FUNC(random,
+  AC_DEFINE(RAND_FUNC, random) AC_DEFINE(SRAND_FUNC, srandom),
+  AC_CHECK_FUNC(lrand48,
+    AC_DEFINE(RAND_FUNC, lrand48) AC_DEFINE(SRAND_FUNC, srand48),
+    AC_DEFINE(RAND_FUNC, rand) AC_DEFINE(SRAND_FUNC, srand)))
+
 CFLAGS="$gimp_save_CFLAGS"
 LIBS="$gimp_save_LIBS"
 

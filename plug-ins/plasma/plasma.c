@@ -52,6 +52,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>  /* For random seeding */
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
@@ -66,6 +67,8 @@
 typedef struct {
     gint seed;
     gdouble turbulence;
+     /* Interface only */
+    gboolean timeseed;
 } PlasmaValues;
 
 typedef struct {
@@ -92,7 +95,7 @@ static void     plasma_entry_callback  (GtkWidget *widget,
 					  gpointer   data);
 static void     plasma_scale_update    (GtkAdjustment *adjustment,
 					  gpointer   data);
-
+static void     toggle_callback (GtkWidget *widget, gboolean *data);
 static void	plasma	(GDrawable *drawable);
 static void     random_rgb (guchar *d);
 static void     add_random (guchar *d, gint amnt);
@@ -117,7 +120,8 @@ GPlugInInfo PLUG_IN_INFO =
 static PlasmaValues pvals =
 {
     0,     /* seed */
-    1.0    /* turbulence */
+    1.0,   /* turbulence */
+    TRUE   /* Time seed? */
 };
 
 static PlasmaInterface pint =
@@ -231,7 +235,8 @@ run (gchar   *name,
 	    gimp_displays_flush ();
 
 	  /*  Store data  */
-	  if (run_mode == RUN_INTERACTIVE)
+	  if (run_mode == RUN_INTERACTIVE || 
+	      (pvals.timeseed && run_mode == RUN_WITH_LAST_VALS))
 	    gimp_set_data ("plug_in_plasma", &pvals, sizeof (PlasmaValues));
 	}
       else
@@ -255,6 +260,8 @@ plasma_dialog()
   GtkWidget *button;
   GtkWidget *label;
   GtkWidget *entry;
+  GtkWidget *seed_hbox;
+  GtkWidget *time_button;
   GtkWidget *scale;
   GtkObject *scale_data;
   gchar **argv;
@@ -306,8 +313,14 @@ plasma_dialog()
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL, 0, 5, 0 );
   gtk_widget_show (label);
+
+  seed_hbox = gtk_hbox_new(FALSE, 2);
+  gtk_table_attach (GTK_TABLE (table), seed_hbox, 1, 2, 0, 1, 
+		    GTK_FILL, GTK_FILL, 0, 0 );
+  gtk_widget_show (seed_hbox);
+  
   entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 0, 1, GTK_FILL, GTK_FILL, 0, 0 );
+  gtk_box_pack_start(GTK_BOX(seed_hbox), entry, TRUE, TRUE, 0);
   gtk_widget_set_usize( entry, ENTRY_WIDTH, 0 );
   sprintf( (char *)buffer, "%d", pvals.seed );
   gtk_entry_set_text (GTK_ENTRY (entry), (gchar *)buffer );
@@ -315,6 +328,15 @@ plasma_dialog()
 		      (GtkSignalFunc) plasma_entry_callback,
 		      &pvals.seed);
   gtk_widget_show (entry);
+
+  time_button = gtk_toggle_button_new_with_label ("Time");
+  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(time_button),pvals.timeseed);
+  gtk_signal_connect (GTK_OBJECT (time_button), "clicked",
+		      (GtkSignalFunc) toggle_callback,
+		      &pvals.timeseed);
+  gtk_box_pack_end (GTK_BOX (seed_hbox), time_button, FALSE, FALSE, 0);
+  gtk_widget_show (time_button);
+  gtk_widget_show (seed_hbox);
 
   label = gtk_label_new ("Turbulence");
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
@@ -382,7 +404,11 @@ plasma_scale_update (GtkAdjustment *adjustment,
   *dptr = adjustment->value;
 }
 
-
+static void 
+toggle_callback (GtkWidget *widget, gboolean *data)
+{
+    *data = GTK_TOGGLE_BUTTON (widget)->active;
+}
 
 #define AVE(n, v1, v2) n[0] = ((gint)v1[0] + (gint)v2[0]) / 2;\
 	n[1] = ((gint)v1[1] + (gint)v2[1]) / 2;\
@@ -433,6 +459,9 @@ plasma(GDrawable *drawable)
 static void
 init_plasma( GDrawable *drawable )
 {
+     if (pvals.timeseed)
+	  pvals.seed = time(NULL);
+
     srand( pvals.seed );
     turbulence = pvals.turbulence;
 

@@ -39,6 +39,9 @@
 #undef RETSIGTYPE
 #undef TIME_WITH_SYS_TIME
 
+#undef RAND_FUNC
+#undef SRAND_FUNC
+
 /* #undef PACKAGE */
 /* #undef VERSION */
 

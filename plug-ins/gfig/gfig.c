@@ -12421,6 +12421,7 @@ object_operation_start(GdkPoint *pnt,gint shift_down)
 	      d_star2lines(operation_obj);
 	      break;
 	    default:
+	      break;
 	    }
 	  /* Re calc which object point we are lookin at */
 	  scan_obj_points(operation_obj->points,pnt);

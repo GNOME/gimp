@@ -45,7 +45,7 @@ typedef struct {
   GtkWidget* descr_scroll;
   GtkWidget* descr_table;
 
-  GtkWidget* list;
+  GtkWidget* clist;
 
   /* the currently selected procedure */
   gchar *selected_proc_name;
@@ -82,9 +82,12 @@ static void
 dialog_apply_callback(GtkWidget *, gpointer );
 
 static gint
-dialog_list_button (GtkWidget      *widget,
-		    GdkEventButton *event,
-		    gpointer        data);
+procedure_select_callback (GtkWidget *widget,
+			   gint row, 
+			   gint column, 
+			   GdkEventButton * bevent,
+			   gpointer data);
+
 
 static void
 dialog_search_callback(GtkWidget *, 
@@ -98,12 +101,11 @@ static void
 dialog_close_callback(GtkWidget *, 
 		      gpointer);
 
-static void 
-dialog_selection_free_filename (GtkWidget *widget,
-				gpointer   client_data);
-
 static void      
 convert_string (gchar *str);
+
+static void
+unconvert_string (char *str);
 
 static gchar* 
 GParamType2char(GParamType t);
