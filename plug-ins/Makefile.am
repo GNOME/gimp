@@ -31,6 +31,7 @@ SUBDIRS = 			\
 	print			\
 	rcm			\
 	sgi			\
+	sel2path		\
 	sinus			\
 	struc			\
 	unsharp			\

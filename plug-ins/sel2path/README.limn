@@ -1,0 +1,56 @@
+This program converts bitmap fonts to a homegrown outline format, bezier
+(BZR).  The program `bzrto' converts that format to something usable for
+typesetting.
+
+We used two main sources in writing the program:
+
+@mastersthesis{Schneider:PIC-88,
+  author = "Philip J. Schneider",
+  title = "Phoenix: An Interactive Curve Design System Based on the
+           Automatic Fitting of Hand-Sketched Curves",
+  school = inst-u-wash,
+  year = 1988,
+}
+
+@article{Plass:CG-17-229,
+  author = "Michael Plass and Maureen Stone",
+  title = "Curve-fitting with Piecewise Parametric Cubics",
+  journal = j-comp-graphics,
+  year = 1983,
+  volume = 17,
+  number = 3,
+  month = jul,
+  pages = "229-239",
+}
+
+We had access to the code for Phoenix, thanks to Philip, but none of our
+code is based on his (mostly because his task was allow interactive
+sketching, and ours to fit bitmap characters, and the two require
+different data structures).  The general outline of the fitting
+algorithm does come from Phoenix.
+
+We also found this article helpful:
+
+@Inproceedings{Gonczarowski:RIDT91-1,
+  author =       "Jakob Gonczarowski",
+  title =        "A Fast Approach to Auto-tracing (with Parametric
+                 Cubics)",
+  pages =        "1--15",
+  crossref =     "Morris:RIDT91",
+  acknowledgement = ack-kb,
+}
+
+@String{proc-RIDT91 = "Raster Imaging and Digital Typography II"}
+
+@Proceedings{Morris:RIDT91,
+  title =        proc-RIDT91,
+  booktitle =    proc-RIDT91,
+  year =         "1991",
+  editor =       "Robert A. Morris and Jacques Andr{\'e}",
+  publisher =    pub-CUP,
+  address =      pub-CUP:adr,
+  acknowledgement = ack-kb,
+}
+
+(These BibTeX entries are from the type.bib and ep.bib files on
+math.utah.edu:pub/tex/bib.)

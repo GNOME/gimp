@@ -1,3 +1,18 @@
+
+Fri Jul  9 22:24:53 BST 1999 Andy Thomas <alt@gimp.org>
+
+	* configure.in
+	* plug-ins/Makefile.am
+	* plug-ins/sel2path/* <- New directory
+	* app/paths_dialog.c
+	* pixmap/topath.xpm
+
+	New function implemented by a plugin.
+	Will convert a selection into a path. Please
+	see the README in sel2path directory for more
+	details (especially where the underlying algorithms/code
+	were obtained from).
+
 Fri Jul  9 20:12:12 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/app_procs.c: applied a (modified) patch from  

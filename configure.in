@@ -655,6 +655,7 @@ plug-ins/mosaic/Makefile
 plug-ins/pagecurl/Makefile
 plug-ins/print/Makefile
 plug-ins/rcm/Makefile
+plug-ins/sel2path/Makefile
 plug-ins/sgi/Makefile
 plug-ins/sinus/Makefile
 plug-ins/struc/Makefile

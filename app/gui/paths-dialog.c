@@ -31,9 +31,11 @@
 #include "drawable.h"
 #include "errors.h"
 #include "floating_sel.h"
-#include "gdisplay.h"
 #include "gimage.h"
+#include "gimpimage.h"
+#include "gimpdrawable.h"
 #include "gimage_mask.h"
+#include "gdisplay.h"
 #include "gimprc.h"
 #include "gimpset.h"
 #include "general.h"
@@ -52,6 +54,7 @@
 #include "session.h"
 #include "undo.h"
 
+#include "drawable_pvt.h"
 #include "libgimp/gimpintl.h"
 
 #include "pixmaps/new.xpm"
@@ -63,6 +66,7 @@
 #include "pixmaps/penedit.xpm"
 #include "pixmaps/penstroke.xpm"
 #include "pixmaps/toselection.xpm"
+#include "pixmaps/topath.xpm"
 #include "pixmaps/path.xbm"
 #include "pixmaps/locked.xbm"
 
@@ -143,6 +147,10 @@ static void paths_dialog_new_point_callback    (GtkWidget *, gpointer);
 static void paths_dialog_add_point_callback    (GtkWidget *, gpointer);
 static void paths_dialog_delete_point_callback (GtkWidget *, gpointer);
 static void paths_dialog_edit_point_callback   (GtkWidget *, gpointer);
+static void paths_dialog_sel_to_path_callback  (GtkWidget *, gpointer);
+static void paths_dialog_advanced_to_path_callback (GtkWidget *, gpointer);
+static void paths_dialog_null_callback        (GtkWidget *, gpointer);
+
 static void path_close(PATHP);
 
 #define NEW_PATH_BUTTON    1
@@ -153,11 +161,21 @@ static void path_close(PATHP);
 #define COPY_PATH_BUTTON   8
 #define PASTE_PATH_BUTTON  9
 
+/*  the ops buttons  */
+static OpsButtonCallback to_path_ext_callbacks[] = 
+{ 
+  paths_dialog_advanced_to_path_callback,          /* SHIFT */
+  paths_dialog_null_callback,                      /* CTRL  */
+  paths_dialog_null_callback,                      /* MOD1  */
+  paths_dialog_null_callback,                      /* SHIFT + CTRL */
+};
+
 static OpsButton paths_ops_buttons[] =
 {
   { new_xpm, paths_dialog_new_path_callback, NULL, N_("New Path"), NULL, 0 },
   { duplicate_xpm, paths_dialog_dup_path_callback, NULL, N_("Duplicate Path"), NULL, 0 },
   { toselection_xpm, paths_dialog_path_to_sel_callback, NULL, N_("Path to Selection"), NULL, 0 },
+  { topath_xpm, paths_dialog_sel_to_path_callback, to_path_ext_callbacks, N_("Selection to Path"), NULL, 0 },
   { penstroke_xpm, paths_dialog_stroke_path_callback, NULL, N_("Stroke Path"), NULL, 0 },
   { delete_xpm, paths_dialog_delete_path_callback, NULL, N_("Delete Path"), NULL, 0 },
   { NULL, NULL, NULL, NULL, NULL, 0 }
@@ -197,11 +215,11 @@ paths_ops_button_set_sensitive (gint     but,
       break;
     case STROKE_PATH_BUTTON:
       menus_set_sensitive_locale ("<Paths>", N_("/Stroke Path"), sensitive);
-      gtk_widget_set_sensitive(paths_ops_buttons[3].widget,sensitive);
+      gtk_widget_set_sensitive(paths_ops_buttons[4].widget,sensitive);
       break;
     case DEL_PATH_BUTTON:
       menus_set_sensitive_locale ("<Paths>", N_("/Delete Path"), sensitive);
-      gtk_widget_set_sensitive(paths_ops_buttons[4].widget,sensitive);
+      gtk_widget_set_sensitive(paths_ops_buttons[5].widget,sensitive);
       break;
     case COPY_PATH_BUTTON:
       menus_set_sensitive_locale ("<Paths>", N_("/Copy Path"), sensitive);
@@ -1510,6 +1528,75 @@ paths_dialog_dup_path_callback (GtkWidget * widget, gpointer udata)
   beziersel_free(bezier_sel);
   paths_dialog->current_path_list->last_selected_row = tmprow;
 }
+
+static void paths_dialog_advanced_to_path_callback (GtkWidget *widget, 
+						    gpointer udata)
+{
+  ProcRecord *proc_rec;
+  Argument   *args;
+  GimpImage *gimage;
+
+  /*  find the sel2path PDB record  */
+  if ((proc_rec = procedural_db_lookup ("plug_in_sel2path_advanced")) == NULL)
+    {
+      g_message (_("Selection to path (advanced) procedure lookup failed"));
+      return;
+    }
+
+  gimage = paths_dialog->gimage;
+
+  /*  plug-in arguments as if called by <Image>/Filters/...  */
+  args = g_new (Argument, 3);
+  args[0].arg_type = PDB_INT32;
+  args[0].value.pdb_int = RUN_INTERACTIVE;
+  args[1].arg_type = PDB_IMAGE;
+  args[1].value.pdb_int = (gint32) pdb_image_to_id (gimage);
+  args[2].arg_type = PDB_DRAWABLE;
+  args[2].value.pdb_int = (gint32) (gimage_active_drawable (gimage))->ID;
+
+  plug_in_run (proc_rec, args, 3, FALSE, TRUE, (gimage_active_drawable (gimage))->ID);
+
+  g_free (args);
+
+}
+
+static void paths_dialog_null_callback (GtkWidget *widget, 
+					gpointer udata)
+{
+  /* Maybe some more here later? */
+}
+
+
+void 
+paths_dialog_sel_to_path_callback (GtkWidget * widget, gpointer udata)
+{
+  ProcRecord *proc_rec;
+  Argument   *args;
+  GimpImage *gimage;
+
+  /*  find the sel2path PDB record  */
+  if ((proc_rec = procedural_db_lookup ("plug_in_sel2path")) == NULL)
+    {
+      g_message (_("Selection to path procedure lookup failed"));
+      return;
+    }
+
+  gimage = paths_dialog->gimage;
+
+  /*  plug-in arguments as if called by <Image>/Filters/...  */
+  args = g_new (Argument, 3);
+  args[0].arg_type = PDB_INT32;
+  args[0].value.pdb_int = RUN_INTERACTIVE;
+  args[1].arg_type = PDB_IMAGE;
+  args[1].value.pdb_int = (gint32) pdb_image_to_id (gimage);
+  args[2].arg_type = PDB_DRAWABLE;
+  args[2].value.pdb_int = (gint32) (gimage_active_drawable (gimage))->ID;
+
+  plug_in_run (proc_rec, args, 3, FALSE, TRUE, (gimage_active_drawable (gimage))->ID);
+
+  g_free (args);
+}
+
 
 void 
 paths_dialog_path_to_sel_callback (GtkWidget * widget, gpointer udata)
