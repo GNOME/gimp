@@ -39,7 +39,6 @@ GCG = ..\tools\gcg\gcg -I. -I ..\tools\gcg\gh
 
 all : \
 	..\config.h	\
-	..\libgimp\gimpfeatures.h \
 	gimpim.lib	\
 	colormap_dialog.c \
 	gimp.exe
@@ -49,9 +48,6 @@ install : gimp.exe
 
 ..\config.h : ..\config.h.win32
 	copy ..\config.h.win32 $@
-
-..\libgimp\gimpfeatures.h : ..\libgimp\gimpfeatures.h.win32
-	copy ..\libgimp\gimpfeatures.h.win32 $@
 
 gimpim_OBJECTS = \
 	gimpdrawable.obj\

@@ -30,13 +30,14 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 spline_type
 new_spline ()
 {
+  real_coordinate_type coord = { -100.0, -100.0 };
   spline_type spline;
 
   START_POINT (spline)
     = CONTROL1 (spline)
     = CONTROL2 (spline)
     = END_POINT (spline)
-    = (real_coordinate_type) { -100.0, -100.0 };
+    = coord;
   SPLINE_DEGREE (spline) = -1;
 
   return spline;
@@ -84,9 +85,23 @@ evaluate_spline (spline_type s, real t)
   for (j = 1; j <= degree; j++)
     for (i = 0; i <= degree - j; i++)
       {
+#if defined (__GNUC__)
         real_coordinate_type t1 = Pmult_scalar (V[j - 1].v[i], one_minus_t);
         real_coordinate_type t2 = Pmult_scalar (V[j - 1].v[i + 1], t);
         V[j].v[i] = Padd (t1, t2);
+#else
+	/* //HB: the above is really nice, but is there any other compiler
+	 * supporting this ??
+	 */
+        real_coordinate_type t1;
+        real_coordinate_type t2;
+        t1.x = V[j - 1].v[i].x * one_minus_t;
+        t1.y = V[j - 1].v[i].y * one_minus_t;
+        t2.x = V[j - 1].v[i + 1].x * t;
+        t2.y = V[j - 1].v[i + 1].y * t;
+        V[j].v[i].x = t1.x + t2.x;
+        V[j].v[i].y = t1.y + t2.y;
+#endif
       }
 
   return V[degree].v[0];

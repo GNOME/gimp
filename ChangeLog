@@ -1,3 +1,14 @@
+1999-08-16  Tor Lillqvist  <tml@iki.fi>
+
+	* app/transform_core.c: Use RINT instead of rint.
+
+	* plug-ins/common/curve_bend.c
+	* plug-ins/sel2path/spline.c: Workarounds for gccisms, thanks to
+	Hans Breuer.
+
+	* app/makefile.msc
+	* plug-ins/makefile.msc: Misc fixes.
+
 Mon Aug 16 03:46:43 1999  Jay Cox  (jaycox@earthlink.net)
 
 	* app/transform_core.c: put the gimp_matrix_is_simple 

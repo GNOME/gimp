@@ -393,6 +393,10 @@ EXTRALIBS = user32.lib
 EXTRALIBS = user32.lib gdi32.lib comdlg32.lib
 !endif
 
+!IFDEF EXTRA_winclipboard
+EXTRALIBS = user32.lib
+!endif
+
 !IFDEF EXTRA_winsnap
 HAVE_RESOURCE = YES
 EXTRALIBS = user32.lib gdi32.lib

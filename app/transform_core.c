@@ -1329,7 +1329,7 @@ transform_core_do (GImage          *gimage,
 		      else
 			{
 			  a_recip = 1.0 / a_val;
-                          d[alpha] = rint(a_val);
+                          d[alpha] = RINT(a_val);
 			}
 
                       /* for colour channels c, 
@@ -1337,7 +1337,7 @@ transform_core_do (GImage          *gimage,
 	               */
                       for (i = -alpha; i < 0; ++i) {
                         start = &data[alpha];
-                        newval = rint(a_recip * cubic (dy,
+                        newval = RINT(a_recip * cubic (dy,
 	                             CUBIC_SCALED_ROW (dx, start, bytes, i),
 		                     CUBIC_SCALED_ROW (dx, start + row, bytes, i),
 		                     CUBIC_SCALED_ROW (dx, start + row + row, bytes, i),
@@ -1401,7 +1401,7 @@ transform_core_do (GImage          *gimage,
                         d[alpha] = 255;
 		      } else {
                         a_recip = 1.0 / a_val;
-                        d[alpha] = rint(a_val);
+                        d[alpha] = RINT(a_val);
 		      }
 
 		      /* for colour channels c,
@@ -1409,7 +1409,7 @@ transform_core_do (GImage          *gimage,
 		       */
                       for (i = -alpha; i < 0; ++i) {
                         chan = &data[alpha];
-                        newval = rint(a_recip * 
+                        newval = RINT(a_recip * 
                           BILINEAR (chan[0] * chan[i],
                                     chan[bytes] * chan[bytes+i],
                                     chan[row] * chan[row+i],
@@ -1438,8 +1438,8 @@ transform_core_do (GImage          *gimage,
 	    }
           else  /*  no interpolation  */
             {
-              itx = rint(ttx);
-              ity = rint(tty);
+              itx = RINT(ttx);
+              ity = RINT(tty);
 
               if (itx >= x1 && itx < x2 &&
                   ity >= y1 && ity < y2 )

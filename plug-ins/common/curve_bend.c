@@ -2052,7 +2052,7 @@ static void
 bender_swap_callback (GtkWidget *widget,
 		       gpointer   client_data)
 {
-#define SWAP_VALUE(a, b, h) ({ h=a; a=b; b=h; })
+#define SWAP_VALUE(a, b, h) { h=a; a=b; b=h; }
   BenderDialog *cd;
   int i;
   int other;
@@ -2212,7 +2212,7 @@ bender_load_callback (GtkWidget *w,
   if(cd->filesel != NULL)
      return;   /* filesel is already open */
   
-  filesel = gtk_file_selection_new ("Save Curve Points to file");
+  filesel = gtk_file_selection_new ("Load Curve Points from file");
   cd->filesel = filesel;
   
   gtk_window_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
