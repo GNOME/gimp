@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: gimp.HEAD.ru\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-04-14 00:29+0200\n"
-"PO-Revision-Date: 2004-05-10 20:35+0400\n"
+"PO-Revision-Date: 2004-05-16 14:46+0400\n"
 "Last-Translator: AnatolyA. Yakushin <jaa@altlinux.ru>\n"
 "Language-Team: russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -8609,7 +8609,7 @@ msgstr "Цвет:"
 
 #: app/tools/gimptextoptions.c:476
 msgid "Justify:"
-msgstr "Форматирование:"
+msgstr "Выравнивание:"
 
 #: app/tools/gimptextoptions.c:482
 msgid "Indent:"
