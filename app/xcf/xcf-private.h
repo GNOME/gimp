@@ -22,58 +22,58 @@
 
 typedef enum
 {
-  PROP_END = 0,
-  PROP_COLORMAP = 1,
-  PROP_ACTIVE_LAYER = 2,
-  PROP_ACTIVE_CHANNEL = 3,
-  PROP_SELECTION = 4,
-  PROP_FLOATING_SELECTION = 5,
-  PROP_OPACITY = 6,
-  PROP_MODE = 7,
-  PROP_VISIBLE = 8,
-  PROP_LINKED = 9,
+  PROP_END                   =  0,
+  PROP_COLORMAP              =  1,
+  PROP_ACTIVE_LAYER          =  2,
+  PROP_ACTIVE_CHANNEL        =  3,
+  PROP_SELECTION             =  4,
+  PROP_FLOATING_SELECTION    =  5,
+  PROP_OPACITY               =  6,
+  PROP_MODE                  =  7,
+  PROP_VISIBLE               =  8,
+  PROP_LINKED                =  9,
   PROP_PRESERVE_TRANSPARENCY = 10,
-  PROP_APPLY_MASK = 11,
-  PROP_EDIT_MASK = 12,
-  PROP_SHOW_MASK = 13,
-  PROP_SHOW_MASKED = 14,
-  PROP_OFFSETS = 15,
-  PROP_COLOR = 16,
-  PROP_COMPRESSION = 17,
-  PROP_GUIDES = 18,
-  PROP_RESOLUTION = 19,
-  PROP_TATTOO = 20,
-  PROP_PARASITES = 21,
-  PROP_UNIT = 22,
-  PROP_PATHS = 23,
-  PROP_USER_UNIT = 24
+  PROP_APPLY_MASK            = 11,
+  PROP_EDIT_MASK             = 12,
+  PROP_SHOW_MASK             = 13,
+  PROP_SHOW_MASKED           = 14,
+  PROP_OFFSETS               = 15,
+  PROP_COLOR                 = 16,
+  PROP_COMPRESSION           = 17,
+  PROP_GUIDES                = 18,
+  PROP_RESOLUTION            = 19,
+  PROP_TATTOO                = 20,
+  PROP_PARASITES             = 21,
+  PROP_UNIT                  = 22,
+  PROP_PATHS                 = 23,
+  PROP_USER_UNIT             = 24
 } PropType;
 
 typedef enum
 {
-  COMPRESS_NONE = 0,
-  COMPRESS_RLE = 1,
-  COMPRESS_ZLIB = 2,
-  COMPRESS_FRACTAL = 3  /* Unused. */
-} CompressionType;
+  COMPRESS_NONE              =  0,
+  COMPRESS_RLE               =  1,
+  COMPRESS_ZLIB              =  2,  /* unused */
+  COMPRESS_FRACTAL           =  3   /* unused */
+} XcfCompressionType;
 
 
 typedef struct _XcfInfo  XcfInfo;
 
 struct _XcfInfo
 {
-  FILE         *fp;
-  guint         cp;
-  gchar        *filename;
-  GimpLayer    *active_layer;
-  GimpChannel  *active_channel;
-  GimpDrawable *floating_sel_drawable;
-  GimpLayer    *floating_sel;
-  guint         floating_sel_offset;
-  gint          swap_num;
-  gint         *ref_count;
-  gint          compression;
-  gint          file_version;
+  FILE               *fp;
+  guint               cp;
+  gchar              *filename;
+  GimpLayer          *active_layer;
+  GimpChannel        *active_channel;
+  GimpDrawable       *floating_sel_drawable;
+  GimpLayer          *floating_sel;
+  guint               floating_sel_offset;
+  gint                swap_num;
+  gint               *ref_count;
+  XcfCompressionType  compression;
+  gint                file_version;
 };
 
 

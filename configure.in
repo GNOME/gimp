@@ -439,7 +439,7 @@ AC_MSG_CHECKING([fd_set and sys/select])
 AC_TRY_COMPILE([#include <sys/types.h>],
         [fd_set readMask, writeMask;], gimp_ok=yes, gimp_ok=no)
 if test $gimp_ok = no; then
-    AC_HEADER_EGREP(fd_mask, sys/select.h, gimp_ok=yes)
+    AC_EGREP_HEADER(fd_mask, sys/select.h, gimp_ok=yes)
     if test $gimp_ok = yes; then
         AC_DEFINE(HAVE_SYS_SELECT_H)
     fi

@@ -1,3 +1,11 @@
+2001-07-19  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: ran autoupdate on this file
+	
+	* app/xcf/xcf-load.c
+	* app/xcf/xcf-private.h
+	* app/xcf/xcf-save.c: code cleanup, no changes
+
 2001-07-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/batch.c: bahave like the old batch code and call

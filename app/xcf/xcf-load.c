@@ -94,7 +94,7 @@ static gboolean        xcf_swap_func          (gint         fd,
 
 
 static GimpParasite *
-read_a_parasite (XcfInfo *info)
+xcf_load_parasite (XcfInfo *info)
 {
   GimpParasite *p;
 
@@ -109,7 +109,7 @@ read_a_parasite (XcfInfo *info)
 }
 
 static PathPoint* 
-v1read_bz_point (XcfInfo *info)
+xcf_load_bz_point_version1 (XcfInfo *info)
 {
   PathPoint *ptr;
   guint32    type;
@@ -126,7 +126,7 @@ v1read_bz_point (XcfInfo *info)
 }
 
 static PathPoint * 
-read_bz_point (XcfInfo *info)
+xcf_load_bz_point (XcfInfo *info)
 {
   PathPoint *ptr;
   guint32    type;
@@ -143,7 +143,7 @@ read_bz_point (XcfInfo *info)
 }
 
 static Path *
-read_one_path (GimpImage *gimage,
+xcf_load_path (GimpImage *gimage,
 	       XcfInfo   *info)
 {
   Path     *bzp;
@@ -171,7 +171,7 @@ read_one_path (GimpImage *gimage,
       {
         PathPoint *bpt;
         /* Read in a path */
-        bpt = v1read_bz_point (info);
+        bpt = xcf_load_bz_point_version1 (info);
         pts_list = g_slist_append (pts_list, bpt);
       }
     }
@@ -183,7 +183,7 @@ read_one_path (GimpImage *gimage,
       {
         PathPoint *bpt;
         /* Read in a path */
-        bpt = read_bz_point (info);
+        bpt = xcf_load_bz_point (info);
         pts_list = g_slist_append (pts_list, bpt);
       }
     }
@@ -196,7 +196,7 @@ read_one_path (GimpImage *gimage,
 	{
 	  PathPoint *bpt;
 	  /* Read in a path */
-	  bpt = read_bz_point (info);
+	  bpt = xcf_load_bz_point (info);
 	  pts_list = g_slist_append (pts_list, bpt);
 	}
     }
@@ -205,14 +205,15 @@ read_one_path (GimpImage *gimage,
       g_warning ("Unknown path type. Possibly corrupt XCF file");
     }
   
-  bzp = path_new (gimage, ptype, pts_list, closed, (gint)state, locked, tattoo, name);
+  bzp = path_new (gimage, 
+                  ptype, pts_list, closed, (gint)state, locked, tattoo, name);
 
   return bzp;
 }
 
 static PathList *
-read_bzpaths (GimpImage *gimage, 
-	      XcfInfo   *info)
+xcf_load_bzpaths (GimpImage *gimage, 
+                  XcfInfo   *info)
 {
   guint32   num_paths;
   guint32   last_selected_row;
@@ -226,7 +227,7 @@ read_bzpaths (GimpImage *gimage,
     {
       Path *bzp;
       /* Read in a path */
-      bzp = read_one_path (gimage, info);
+      bzp = xcf_load_path (gimage, info);
       bzp_list = g_slist_append (bzp_list, bzp);
     }
 
@@ -389,7 +390,8 @@ xcf_load_image_props (XcfInfo   *info,
 	      g_message (_("XCF warning: version 0 of XCF file format\n"
 			   "did not save indexed colormaps correctly.\n"
 			   "Substituting grayscale map."));
-	      info->cp += xcf_read_int32 (info->fp, (guint32*) &gimage->num_cols, 1);
+	      info->cp += 
+                xcf_read_int32 (info->fp, (guint32*) &gimage->num_cols, 1);
 	      gimage->cmap = g_new (guchar, gimage->num_cols*3);
 	      xcf_seek_pos (info, info->cp + gimage->num_cols);
 	      for (i = 0; i<gimage->num_cols; i++) 
@@ -401,9 +403,12 @@ xcf_load_image_props (XcfInfo   *info,
 	    }
 	  else 
 	    {
-	      info->cp += xcf_read_int32 (info->fp, (guint32*) &gimage->num_cols, 1);
+	      info->cp += 
+                xcf_read_int32 (info->fp, (guint32*) &gimage->num_cols, 1);
 	      gimage->cmap = g_new (guchar, gimage->num_cols*3);
-	      info->cp += xcf_read_int8 (info->fp, (guint8*) gimage->cmap, gimage->num_cols*3);
+	      info->cp += 
+                xcf_read_int8 (info->fp, 
+                               (guint8*) gimage->cmap, gimage->num_cols*3);
 	    }
 	  break;
 
@@ -436,8 +441,10 @@ xcf_load_image_props (XcfInfo   *info,
 	    nguides = prop_size / (4 + 1);
 	    for (i = 0; i < nguides; i++)
 	      {
-		info->cp += xcf_read_int32 (info->fp, (guint32 *) &position, 1);
-		info->cp += xcf_read_int8 (info->fp, (guint8 *) &orientation, 1);
+		info->cp += 
+                  xcf_read_int32 (info->fp, (guint32 *) &position, 1);
+		info->cp += 
+                  xcf_read_int8 (info->fp, (guint8 *) &orientation, 1);
 
 		switch (orientation)
 		  {
@@ -496,7 +503,7 @@ xcf_load_image_props (XcfInfo   *info,
 
 	    while (info->cp - base < prop_size)
 	      {
-		p = read_a_parasite (info);
+		p = xcf_load_parasite (info);
 		gimp_image_parasite_attach (gimage, p);
 		gimp_parasite_free (p);
 	      }
@@ -514,7 +521,8 @@ xcf_load_image_props (XcfInfo   *info,
 	    if ((unit <= GIMP_UNIT_PIXEL) ||
 		(unit >= _gimp_unit_get_number_of_built_in_units (gimage->gimp)))
 	      {
-		g_message ("Warning, unit out of range in XCF file, falling back to inches");
+		g_message ("Warning, unit out of range in XCF file, "
+                           "falling back to inches");
 		unit = GIMP_UNIT_INCH;
 	      }
 	    
@@ -524,7 +532,7 @@ xcf_load_image_props (XcfInfo   *info,
 
 	case PROP_PATHS:
 	  {
-	    PathList *paths = read_bzpaths (gimage, info);
+	    PathList *paths = xcf_load_bzpaths (gimage, info);
 	    /* add to gimage */
 	    gimp_image_set_paths (gimage, paths);
 	  }
@@ -584,7 +592,8 @@ xcf_load_image_props (XcfInfo   *info,
 	 break;
 
 	default:
-	  g_message ("unexpected/unknown image property: %d (skipping)", prop_type);
+	  g_message ("unexpected/unknown image property: %d (skipping)", 
+                     prop_type);
 
 	  {
 	    guint8 buf[16];
@@ -629,10 +638,13 @@ xcf_load_layer_props (XcfInfo   *info,
 	  break;
 	case PROP_FLOATING_SELECTION:
 	  info->floating_sel = layer;
-	  info->cp += xcf_read_int32 (info->fp, (guint32*) &info->floating_sel_offset, 1);
+	  info->cp += 
+            xcf_read_int32 (info->fp, 
+                            (guint32*) &info->floating_sel_offset, 1);
 	  break;
 	case PROP_OPACITY:
-	  info->cp += xcf_read_int32 (info->fp, (guint32*) &layer->opacity, 1);
+	  info->cp += 
+            xcf_read_int32 (info->fp, (guint32*) &layer->opacity, 1);
 	  break;
 	case PROP_VISIBLE:
 	  {
@@ -647,7 +659,8 @@ xcf_load_layer_props (XcfInfo   *info,
 	  info->cp += xcf_read_int32 (info->fp, (guint32*) &layer->linked, 1);
 	  break;
 	case PROP_PRESERVE_TRANSPARENCY:
-	  info->cp += xcf_read_int32 (info->fp, (guint32*) &layer->preserve_trans, 1);
+	  info->cp += 
+            xcf_read_int32 (info->fp, (guint32*) &layer->preserve_trans, 1);
 	  break;
 	case PROP_APPLY_MASK:
 	  info->cp += xcf_read_int32 (info->fp, (guint32*) apply_mask, 1);
@@ -659,8 +672,12 @@ xcf_load_layer_props (XcfInfo   *info,
 	  info->cp += xcf_read_int32 (info->fp, (guint32*) show_mask, 1);
 	  break;
 	case PROP_OFFSETS:
-	  info->cp += xcf_read_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(layer)->offset_x, 1);
-	  info->cp += xcf_read_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(layer)->offset_y, 1);
+	  info->cp += 
+            xcf_read_int32 (info->fp, 
+                            (guint32*) &GIMP_DRAWABLE(layer)->offset_x, 1);
+	  info->cp += 
+            xcf_read_int32 (info->fp, 
+                            (guint32*) &GIMP_DRAWABLE(layer)->offset_y, 1);
 	  break;
 	case PROP_MODE:
 	  info->cp += xcf_read_int32 (info->fp, (guint32*) &layer->mode, 1);
@@ -676,7 +693,7 @@ xcf_load_layer_props (XcfInfo   *info,
 	   GimpParasite *p;
 	   while (info->cp - base < prop_size)
 	   {
-	     p = read_a_parasite(info);
+	     p = xcf_load_parasite(info);
 	     gimp_drawable_parasite_attach(GIMP_DRAWABLE(layer), p);
 	     gimp_parasite_free(p);
 	   }
@@ -685,7 +702,8 @@ xcf_load_layer_props (XcfInfo   *info,
 	 }
 	 break;
 	default:
-	  g_message ("unexpected/unknown layer property: %d (skipping)", prop_type);
+	  g_message ("unexpected/unknown layer property: %d (skipping)", 
+                     prop_type);
 
 	  {
 	    guint8 buf[16];
@@ -749,7 +767,8 @@ xcf_load_channel_props (XcfInfo     *info,
 	  }
 	  break;
 	case PROP_SHOW_MASKED:
-	  info->cp += xcf_read_int32 (info->fp, (guint32*) &channel->show_masked, 1);
+	  info->cp += 
+            xcf_read_int32 (info->fp, (guint32*) &channel->show_masked, 1);
 	  break;
 	case PROP_COLOR:
 	  {
@@ -762,8 +781,8 @@ xcf_load_channel_props (XcfInfo     *info,
 	  }
 	  break;
 	case PROP_TATTOO:
-	  info->cp += xcf_read_int32 (info->fp, &GIMP_DRAWABLE(channel)->tattoo,
-				      1);
+	  info->cp += 
+            xcf_read_int32 (info->fp, &GIMP_DRAWABLE(channel)->tattoo, 1);
 	  break;
 	 case PROP_PARASITES:
 	 {
@@ -771,7 +790,7 @@ xcf_load_channel_props (XcfInfo     *info,
 	   GimpParasite *p;
 	   while ((info->cp - base) < prop_size)
 	     {
-	       p = read_a_parasite(info);
+	       p = xcf_load_parasite(info);
 	       gimp_drawable_parasite_attach(GIMP_DRAWABLE(channel), p);
 	       gimp_parasite_free(p);
 	     }
@@ -780,7 +799,8 @@ xcf_load_channel_props (XcfInfo     *info,
 	 }
 	 break;
 	default:
-	  g_message ("unexpected/unknown channel property: %d (skipping)", prop_type);
+	  g_message ("unexpected/unknown channel property: %d (skipping)", 
+                     prop_type);
 
 	  {
 	    guint8 buf[16];
@@ -1381,7 +1401,8 @@ xcf_swap_func (gint      fd,
 
 	  if (err <= 0)
 	    {
-	      g_message ("unable to read tile data from xcf file: %d ( %d ) bytes read", err, nleft);
+	      g_message ("unable to read tile data from xcf file: "
+                         "%d ( %d ) bytes read", err, nleft);
 	      return FALSE;
 	    }
 

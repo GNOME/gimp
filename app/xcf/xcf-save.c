@@ -252,7 +252,8 @@ xcf_save_image_props (XcfInfo   *info,
 {
   /* check and see if we should save the colormap property */
   if (gimage->cmap)
-    xcf_save_prop (info, gimage, PROP_COLORMAP, gimage->num_cols, gimage->cmap);
+    xcf_save_prop (info, gimage, 
+                   PROP_COLORMAP, gimage->num_cols, gimage->cmap);
 
   if (info->compression != COMPRESS_NONE)
     xcf_save_prop (info, gimage, PROP_COMPRESSION, info->compression);
@@ -358,27 +359,25 @@ xcf_save_channel_props (XcfInfo     *info,
 }
 
 static void 
-write_a_parasite (gchar        *key, 
-		  GimpParasite *p, 
-		  XcfInfo      *info)
+xcf_save_parasite (gchar        *key, 
+                   GimpParasite *parasite, 
+                   XcfInfo      *info)
 {
-  if ((p->flags & GIMP_PARASITE_PERSISTENT))
+  if (gimp_parasite_is_persistent (parasite))
     {
-      info->cp += xcf_write_string (info->fp, &p->name, 1);
-      info->cp += xcf_write_int32 (info->fp, &p->flags, 1);
-      info->cp += xcf_write_int32 (info->fp, &p->size, 1);
-      info->cp += xcf_write_int8 (info->fp, p->data, p->size);
+      info->cp += xcf_write_string (info->fp, &parasite->name, 1);
+      info->cp += xcf_write_int32 (info->fp, &parasite->flags, 1);
+      info->cp += xcf_write_int32 (info->fp, &parasite->size, 1);
+      info->cp += xcf_write_int8 (info->fp, parasite->data, parasite->size);
     }
 }
 
 static void 
-write_bz_point (gpointer pptr, 
-		gpointer iptr)
+xcf_save_bz_point (PathPoint *bpt, 
+                   XcfInfo   *info)
 {
-  PathPoint *bpt = (PathPoint*)pptr;
-  XcfInfo *info = (XcfInfo *)iptr;
-  gfloat xfloat = (gfloat)bpt->x;
-  gfloat yfloat = (gfloat)bpt->y;
+  gfloat xfloat = bpt->x;
+  gfloat yfloat = bpt->y;
 
   /* (all gint)
    * type
@@ -392,12 +391,10 @@ write_bz_point (gpointer pptr,
 }
 
 static void 
-write_one_path (gpointer pptr, 
-		gpointer iptr)
+xcf_save_path (Path    *bzp, 
+               XcfInfo *info)
 {
-  Path *bzp = (Path*)pptr;
-  XcfInfo *info = (XcfInfo *)iptr;
-  guint8 state = (gchar)bzp->state;
+  guint8 state = bzp->state;
   guint32 num_points;
   guint32 closed;
   guint32 version;
@@ -423,12 +420,12 @@ write_one_path (gpointer pptr,
   info->cp += xcf_write_int32 (info->fp, &version, 1);
   info->cp += xcf_write_int32 (info->fp, &bzp->pathtype, 1);
   info->cp += xcf_write_int32 (info->fp, &bzp->tattoo, 1); 
-  g_slist_foreach (bzp->path_details, write_bz_point, info);
+  g_slist_foreach (bzp->path_details, (GFunc) xcf_save_bz_point, info);
 }
 
-static void 
-write_bzpaths (PathList *paths, 
-	       XcfInfo  *info)
+static void
+xcf_save_bzpaths (PathList *paths, 
+                  XcfInfo  *info)
 {
   guint32 num_paths;
   /* Write out the following:-
@@ -439,10 +436,11 @@ write_bzpaths (PathList *paths,
    * then each path:-
    */
   
-  info->cp += xcf_write_int32 (info->fp, (guint32*)&paths->last_selected_row, 1);
+  info->cp += 
+    xcf_write_int32 (info->fp, (guint32*) &paths->last_selected_row, 1);
   num_paths = g_slist_length (paths->bz_paths);
-  info->cp += xcf_write_int32(info->fp, &num_paths, 1);
-  g_slist_foreach( paths->bz_paths, write_one_path, info);  
+  info->cp += xcf_write_int32 (info->fp, &num_paths, 1);
+  g_slist_foreach (paths->bz_paths, (GFunc) xcf_save_path, info);  
 }
 
 static void
@@ -678,7 +676,8 @@ xcf_save_prop (XcfInfo   *info,
       {
 	gfloat xresolution, yresolution;
 
-	/* we pass in floats, but they are promoted to double by the compiler */
+	/* we pass in floats, 
+           but they are promoted to double by the compiler */
 	xresolution =  va_arg (args, double);
 	yresolution =  va_arg (args, double);
 	
@@ -717,15 +716,16 @@ xcf_save_prop (XcfInfo   *info,
 	    /* because we don't know how much room the parasite list will take
 	     * we save the file position and write the length later
 	     */
-	    pos = ftell (info->fp);
+            pos = info->cp;
 	    info->cp += xcf_write_int32 (info->fp, &length, 1);
 	    base = info->cp;
-	    gimp_parasite_list_foreach (list, (GHFunc) write_a_parasite, info);
+	    gimp_parasite_list_foreach (list, 
+                                        (GHFunc) xcf_save_parasite, info);
 	    length = info->cp - base;
 	    /* go back to the saved position and write the length */
-	    fseek (info->fp, pos, SEEK_SET);
+            xcf_seek_pos (info, pos);
 	    xcf_write_int32 (info->fp, &length, 1);
-	    fseek (info->fp, 0, SEEK_END);
+            xcf_seek_end (info);
 	  }
       }
       break;
@@ -747,24 +747,25 @@ xcf_save_prop (XcfInfo   *info,
 	PathList *paths_list;
 	guint32 base, length;
 	long pos;
+
 	paths_list =  va_arg (args, PathList *);
+
 	if (paths_list)
-	{
- 	  info->cp += xcf_write_int32 (info->fp, (guint32*) &prop_type, 1);
-	  /* because we don't know how much room the paths list will take
-	     we save the file position and write the length later 
-	     ALT. OK I copied the code from above...
-	  */
-	  pos = ftell(info->fp);
- 	  info->cp += xcf_write_int32 (info->fp, &length, 1);
-	  base = info->cp;
-	  write_bzpaths(paths_list,info);
-	  length = info->cp - base;
-	  /* go back to the saved position and write the length */
-	  fseek(info->fp, pos, SEEK_SET);
-	  xcf_write_int32 (info->fp, &length, 1);
-	  fseek(info->fp, 0, SEEK_END);
-	}
+          {
+            info->cp += xcf_write_int32 (info->fp, (guint32*) &prop_type, 1);
+            /* because we don't know how much room the paths list will take
+               we save the file position and write the length later 
+             */
+            pos = info->cp;
+            info->cp += xcf_write_int32 (info->fp, &length, 1);
+            base = info->cp;
+            xcf_save_bzpaths (paths_list, info);
+            length = info->cp - base;
+            /* go back to the saved position and write the length */
+            xcf_seek_pos (info, pos);
+            xcf_write_int32 (info->fp, &length, 1);
+            xcf_seek_end (info);
+          }
       }
       break;
     case PROP_USER_UNIT:
@@ -825,9 +826,12 @@ xcf_save_layer (XcfInfo   *info,
     }
 
   /* write out the width, height and image type information for the layer */
-  info->cp += xcf_write_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(layer)->width, 1);
-  info->cp += xcf_write_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(layer)->height, 1);
-  info->cp += xcf_write_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(layer)->type, 1);
+  info->cp += 
+    xcf_write_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(layer)->width, 1);
+  info->cp += 
+    xcf_write_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(layer)->height, 1);
+  info->cp += 
+    xcf_write_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(layer)->type, 1);
 
   /* write out the layers name */
   info->cp += xcf_write_string (info->fp, &GIMP_OBJECT (layer)->name, 1);
@@ -876,7 +880,7 @@ xcf_save_channel (XcfInfo     *info,
   /* check and see if this is the drawable that the floating
    *  selection is attached to.
    */
-  if (GIMP_DRAWABLE(channel) == info->floating_sel_drawable)
+  if (GIMP_DRAWABLE (channel) == info->floating_sel_drawable)
     {
       saved_pos = info->cp;
       xcf_seek_pos (info, info->floating_sel_offset);
@@ -885,8 +889,10 @@ xcf_save_channel (XcfInfo     *info,
     }
 
   /* write out the width and height information for the channel */
-  info->cp += xcf_write_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(channel)->width, 1);
-  info->cp += xcf_write_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(channel)->height, 1);
+  info->cp += 
+    xcf_write_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(channel)->width, 1);
+  info->cp += 
+    xcf_write_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(channel)->height, 1);
 
   /* write out the channels name */
   info->cp += xcf_write_string (info->fp, &GIMP_OBJECT (channel)->name, 1);
@@ -903,7 +909,7 @@ xcf_save_channel (XcfInfo     *info,
   xcf_seek_pos (info, info->cp + 4);
   offset = info->cp;
 
-  xcf_save_hierarchy (info, GIMP_DRAWABLE(channel)->tiles);
+  xcf_save_hierarchy (info, GIMP_DRAWABLE (channel)->tiles);
 
   xcf_seek_pos (info, saved_pos);
   info->cp += xcf_write_int32 (info->fp, &offset, 1);
@@ -1023,7 +1029,8 @@ xcf_save_level (XcfInfo     *info,
 
   /* allocate a temporary buffer to store the rle data before it is
      written to disk */
-  rlebuf = g_malloc (TILE_WIDTH * TILE_HEIGHT * tile_manager_bpp (level) * 1.5);
+  rlebuf = 
+    g_malloc (TILE_WIDTH * TILE_HEIGHT * tile_manager_bpp (level) * 1.5);
 
   if (level->tiles)
     {
@@ -1152,6 +1159,7 @@ xcf_save_tile_rle (XcfInfo *info,
 	      else if ((length == 1) && (last != *data))
 		state = 1;
 	      break;
+
 	    case 1:
 	      /* in state 1 we try and find a long sequence of
 	       *  non-matching values.
