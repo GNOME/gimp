@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.24\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-02 16:17-0400\n"
-"PO-Revision-Date: 2004-05-02 16:18-0400\n"
+"POT-Creation-Date: 2004-05-03 21:35-0400\n"
+"PO-Revision-Date: 2004-05-03 21:35-0400\n"
 "Last-Translator: Gareth Owen <gowen72@yahoo.com>\n"
 "Language-Team: English, British\n"
 "MIME-Version: 1.0\n"
@@ -281,6 +281,18 @@ msgstr "Midtones"
 #: app/base/base-enums.c:159
 msgid "Highlights"
 msgstr "Highlights"
+
+#: app/base/tile-swap.c:451
+msgid ""
+"Unable to open swap file. The Gimp has run out of memory and cannot use the "
+"swap file. Some parts of your images may be corrupted. Try to save your work "
+"using different filenames, restart the Gimp and check the location of the "
+"swap directory in your Preferences."
+msgstr ""
+"Unable to open swap file. The Gimp has run out of memory and cannot use the "
+"swap file. Some parts of your images may be corrupted. Try to save your work "
+"using different filenames, restart the Gimp and check the location of the "
+"swap directory in your Preferences."
 
 #: app/config/gimpconfig-deserialize.c:204 app/config/gimpconfig.c:424
 #: app/config/gimpconfig.c:437 app/config/gimpscanner.c:399
