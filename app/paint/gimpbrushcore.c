@@ -692,10 +692,35 @@ gimp_brush_core_paste_canvas (GimpBrushCore            *core,
                                                         core->scale);
 
   if (brush_mask)
-    gimp_paint_core_paste (GIMP_PAINT_CORE (core), brush_mask, drawable,
-                           brush_opacity,
-                           image_opacity, paint_mode,
-                           mode);
+    {
+      GimpPaintCore *paint_core = GIMP_PAINT_CORE (core);
+      PixelRegion    brush_maskPR;
+      gint           x;
+      gint           y;
+      gint           xoff;
+      gint           yoff;
+
+      x = (gint) floor (paint_core->cur_coords.x) - (brush_mask->width  >> 1);
+      y = (gint) floor (paint_core->cur_coords.y) - (brush_mask->height >> 1);
+
+      xoff = (x < 0) ? -x : 0;
+      yoff = (y < 0) ? -y : 0;
+
+      brush_maskPR.bytes     = 1;
+      brush_maskPR.x         = 0;
+      brush_maskPR.y         = 0;
+      brush_maskPR.w         = paint_core->canvas_buf->width;
+      brush_maskPR.h         = paint_core->canvas_buf->height;
+      brush_maskPR.rowstride = brush_maskPR.bytes * brush_mask->width;
+      brush_maskPR.data      = (mask_buf_data (brush_mask) +
+                                yoff * brush_maskPR.rowstride +
+                                xoff * brush_maskPR.bytes);
+
+      gimp_paint_core_paste (paint_core, &brush_maskPR, drawable,
+                             brush_opacity,
+                             image_opacity, paint_mode,
+                             mode);
+    }
 }
 
 /* Similar to gimp_paint_core_paste_canvas, but replaces the alpha channel
@@ -715,9 +740,35 @@ gimp_brush_core_replace_canvas (GimpBrushCore            *core,
                                                         core->scale);
 
   if (brush_mask)
-    gimp_paint_core_replace (GIMP_PAINT_CORE (core), brush_mask, drawable,
-                             brush_opacity,
-                             image_opacity, mode);
+    {
+      GimpPaintCore *paint_core = GIMP_PAINT_CORE (core);
+      PixelRegion    brush_maskPR;
+      gint           x;
+      gint           y;
+      gint           xoff;
+      gint           yoff;
+
+      x = (gint) floor (paint_core->cur_coords.x) - (brush_mask->width  >> 1);
+      y = (gint) floor (paint_core->cur_coords.y) - (brush_mask->height >> 1);
+
+      xoff = (x < 0) ? -x : 0;
+      yoff = (y < 0) ? -y : 0;
+
+      brush_maskPR.bytes     = 1;
+      brush_maskPR.x         = 0;
+      brush_maskPR.y         = 0;
+      brush_maskPR.w         = paint_core->canvas_buf->width;
+      brush_maskPR.h         = paint_core->canvas_buf->height;
+      brush_maskPR.rowstride = brush_maskPR.bytes * brush_mask->width;
+      brush_maskPR.data      = (mask_buf_data (brush_mask) +
+                                yoff * brush_maskPR.rowstride +
+                                xoff * brush_maskPR.bytes);
+
+      gimp_paint_core_replace (paint_core, &brush_maskPR, drawable,
+                               brush_opacity,
+                               image_opacity,
+                               mode);
+    }
 }
 
 

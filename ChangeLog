@@ -1,5 +1,24 @@
 2004-05-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimppaintcore.[ch] (gimp_paint_core_paste)
+	(gimp_paint_core_replace): replaced the "MaskBuf *paint_mask"
+	parameters by "PixelRegion *mask_bufPR", so subclasses can pass in
+	any kind of paint_mask buffer and are not restricted to MaskBufs.
+
+	Also removes implicit knowledge about the MaskBuf originating from
+	a brush in paint_mask_to_canvas_buf() and _to_canvas_tiles() which
+	don't need to offset the mask by width/2 height/2 any more.
+
+	Made gimp_paint_core_validate_undo_tiles() and
+	gimp_paint_core_validate_canvas_tiles() protected functions.
+
+	* app/paint/gimpbrushcore.c (gimp_brush_core_paste_canvas)
+	(gimp_brush_core_replace_canvas): create correctly positioned
+	PixelRegions from the MaskBufs before passing them to the
+	paint_core.
+
+2004-05-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimppaintcore.[ch]: removed "gdouble scale" parameter
 	and added "GimpPaintOptions" in GimpPaintCore::get_paint_area().
 	Check if virtual functions exist befoe calling them.
@@ -23,7 +42,7 @@
 2004-05-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimppainttool.c (gimp_paint_tool_button_press): check
-	if the GimpPaintCore really is a GimpBrushCore before catsting and
+	if the GimpPaintCore really is a GimpBrushCore before casting and
 	fiddling with internaly.
 
 2004-05-25  Michael Natterer  <mitch@gimp.org>

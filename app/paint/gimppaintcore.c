@@ -53,24 +53,12 @@ static void   gimp_paint_core_init       (GimpPaintCore      *core);
 static void   gimp_paint_core_finalize   (GObject          *object);
 
 static void   paint_mask_to_canvas_tiles (GimpPaintCore    *core,
-                                          MaskBuf          *paint_mask,
+                                          PixelRegion      *paint_maskPR,
                                           gdouble           paint_opacity);
 static void   paint_mask_to_canvas_buf   (GimpPaintCore    *core,
-                                          MaskBuf          *paint_mask,
+                                          PixelRegion      *paint_maskPR,
                                           gdouble           paint_opacity);
 static void   canvas_tiles_to_canvas_buf (GimpPaintCore    *core);
-
-static void   set_undo_tiles             (GimpPaintCore    *core,
-                                          GimpDrawable     *drawable,
-                                          gint              x,
-                                          gint              y,
-                                          gint              w,
-                                          gint              h);
-static void   set_canvas_tiles           (GimpPaintCore    *core,
-                                          gint              x,
-                                          gint              y,
-                                          gint              w,
-                                          gint              h);
 
 
 static GimpObjectClass *parent_class = NULL;
@@ -566,7 +554,7 @@ gimp_paint_core_get_orig_image (GimpPaintCore *core,
 
 void
 gimp_paint_core_paste (GimpPaintCore            *core,
-		       MaskBuf                  *paint_mask,
+		       PixelRegion              *paint_maskPR,
 		       GimpDrawable             *drawable,
 		       gdouble                   paint_opacity,
 		       gdouble                   image_opacity,
@@ -582,26 +570,32 @@ gimp_paint_core_paste (GimpPaintCore            *core,
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   /*  set undo blocks  */
-  set_undo_tiles (core,
-                  drawable,
-		  core->canvas_buf->x,
-                  core->canvas_buf->y,
-		  core->canvas_buf->width,
-                  core->canvas_buf->height);
+  gimp_paint_core_validate_undo_tiles (core, drawable,
+                                       core->canvas_buf->x,
+                                       core->canvas_buf->y,
+                                       core->canvas_buf->width,
+                                       core->canvas_buf->height);
 
   /*  If the mode is CONSTANT:
    *   combine the canvas buf, the paint mask to the canvas tiles
    */
   if (mode == GIMP_PAINT_CONSTANT)
     {
-      /*  initialize any invalid canvas tiles  */
-      set_canvas_tiles (core,
-                        core->canvas_buf->x,
-                        core->canvas_buf->y,
-			core->canvas_buf->width,
-                        core->canvas_buf->height);
+      /* Some tools (ink) paint the mask to paint_core->canvas_tiles
+       * directly. Don't need to copy it in this case.
+       */
+      if (paint_maskPR->tiles != core->canvas_tiles)
+        {
+          /*  initialize any invalid canvas tiles  */
+          gimp_paint_core_validate_canvas_tiles (core,
+                                                 core->canvas_buf->x,
+                                                 core->canvas_buf->y,
+                                                 core->canvas_buf->width,
+                                                 core->canvas_buf->height);
 
-      paint_mask_to_canvas_tiles (core, paint_mask, paint_opacity);
+          paint_mask_to_canvas_tiles (core, paint_maskPR, paint_opacity);
+        }
+
       canvas_tiles_to_canvas_buf (core);
       alt = core->undo_tiles;
     }
@@ -610,7 +604,7 @@ gimp_paint_core_paste (GimpPaintCore            *core,
    */
   else
     {
-      paint_mask_to_canvas_buf (core, paint_mask, paint_opacity);
+      paint_mask_to_canvas_buf (core, paint_maskPR, paint_opacity);
     }
 
   /*  intialize canvas buf source pixel regions  */
@@ -658,7 +652,7 @@ gimp_paint_core_paste (GimpPaintCore            *core,
  */
 void
 gimp_paint_core_replace (GimpPaintCore            *core,
-			 MaskBuf                  *paint_mask,
+			 PixelRegion              *paint_maskPR,
 			 GimpDrawable             *drawable,
 			 gdouble                   paint_opacity,
 			 gdouble                   image_opacity,
@@ -666,14 +660,12 @@ gimp_paint_core_replace (GimpPaintCore            *core,
 {
   GimpImage   *gimage;
   PixelRegion  srcPR;
-  PixelRegion  maskPR;
-  TileManager *alt = NULL;
   gint         offx;
   gint         offy;
 
   if (! gimp_drawable_has_alpha (drawable))
     {
-      gimp_paint_core_paste (core, paint_mask, drawable,
+      gimp_paint_core_paste (core, paint_maskPR, drawable,
 			     paint_opacity,
                              image_opacity, GIMP_NORMAL_MODE,
 			     mode);
@@ -683,46 +675,41 @@ gimp_paint_core_replace (GimpPaintCore            *core,
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   /*  set undo blocks  */
-  set_undo_tiles (core,
-                  drawable,
-		  core->canvas_buf->x,
-                  core->canvas_buf->y,
-		  core->canvas_buf->width,
-                  core->canvas_buf->height);
+  gimp_paint_core_validate_undo_tiles (core, drawable,
+                                       core->canvas_buf->x,
+                                       core->canvas_buf->y,
+                                       core->canvas_buf->width,
+                                       core->canvas_buf->height);
 
   if (mode == GIMP_PAINT_CONSTANT)
     {
-      /*  initialize any invalid canvas tiles  */
-      set_canvas_tiles (core,
-                        core->canvas_buf->x,
-                        core->canvas_buf->y,
-			core->canvas_buf->width,
-                        core->canvas_buf->height);
+      /* Some tools (ink) paint the mask to paint_core->canvas_tiles
+       * directly. Don't need to copy it in this case.
+       */
+      if (paint_maskPR->tiles != core->canvas_tiles)
+        {
+          /*  initialize any invalid canvas tiles  */
+          gimp_paint_core_validate_canvas_tiles (core,
+                                                 core->canvas_buf->x,
+                                                 core->canvas_buf->y,
+                                                 core->canvas_buf->width,
+                                                 core->canvas_buf->height);
 
-      /* combine the paint mask and the canvas tiles */
-      paint_mask_to_canvas_tiles (core, paint_mask, paint_opacity);
+          /* combine the paint mask and the canvas tiles */
+          paint_mask_to_canvas_tiles (core, paint_maskPR, paint_opacity);
 
-      /* set the alt source as the unaltered undo_tiles */
-      alt = core->undo_tiles;
-
-      /* initialize the maskPR from the canvas tiles */
-      pixel_region_init (&maskPR, core->canvas_tiles,
-			 core->canvas_buf->x,
-                         core->canvas_buf->y,
-			 core->canvas_buf->width,
-                         core->canvas_buf->height,
-                         FALSE);
+          /* initialize the maskPR from the canvas tiles */
+          pixel_region_init (paint_maskPR, core->canvas_tiles,
+                             core->canvas_buf->x,
+                             core->canvas_buf->y,
+                             core->canvas_buf->width,
+                             core->canvas_buf->height,
+                             FALSE);
+        }
     }
   else
     {
-      /* The mask is just the paint mask */
-      maskPR.bytes     = 1;
-      maskPR.x         = 0;
-      maskPR.y         = 0;
-      maskPR.w         = core->canvas_buf->width;
-      maskPR.h         = core->canvas_buf->height;
-      maskPR.rowstride = maskPR.bytes * paint_mask->width;
-      maskPR.data      = mask_buf_data (paint_mask);
+      /* The mask is just the paint_maskPR */
     }
 
   /*  intialize canvas buf source pixel regions  */
@@ -738,7 +725,7 @@ gimp_paint_core_replace (GimpPaintCore            *core,
   gimp_drawable_replace_region (drawable, &srcPR,
                                 FALSE, NULL,
                                 image_opacity,
-                                &maskPR,
+                                paint_maskPR,
                                 core->canvas_buf->x,
                                 core->canvas_buf->y);
 
@@ -788,15 +775,10 @@ canvas_tiles_to_canvas_buf (GimpPaintCore *core)
 
 static void
 paint_mask_to_canvas_tiles (GimpPaintCore *core,
-                            MaskBuf       *paint_mask,
+                            PixelRegion   *paint_maskPR,
                             gdouble        paint_opacity)
 {
   PixelRegion srcPR;
-  PixelRegion maskPR;
-  gint        x;
-  gint        y;
-  gint        xoff;
-  gint        yoff;
 
   /*   combine the paint mask and the canvas tiles  */
   pixel_region_init (&srcPR, core->canvas_tiles,
@@ -806,43 +788,16 @@ paint_mask_to_canvas_tiles (GimpPaintCore *core,
                      core->canvas_buf->height,
                      TRUE);
 
-  x = (gint) floor (core->cur_coords.x) - (paint_mask->width  >> 1);
-  y = (gint) floor (core->cur_coords.y) - (paint_mask->height >> 1);
-
-  xoff = (x < 0) ? -x : 0;
-  yoff = (y < 0) ? -y : 0;
-
-  maskPR.bytes     = 1;
-  maskPR.x         = 0;
-  maskPR.y         = 0;
-  maskPR.w         = srcPR.w;
-  maskPR.h         = srcPR.h;
-  maskPR.rowstride = maskPR.bytes * paint_mask->width;
-  maskPR.data      = (mask_buf_data (paint_mask) +
-                      yoff * maskPR.rowstride +
-                      xoff * maskPR.bytes);
-
   /*  combine the mask to the canvas tiles  */
-  combine_mask_and_region (&srcPR, &maskPR, paint_opacity * 255.999);
+  combine_mask_and_region (&srcPR, paint_maskPR, paint_opacity * 255.999);
 }
 
 static void
 paint_mask_to_canvas_buf (GimpPaintCore *core,
-                          MaskBuf       *paint_mask,
+                          PixelRegion   *paint_maskPR,
                           gdouble        paint_opacity)
 {
   PixelRegion srcPR;
-  PixelRegion maskPR;
-  gint        x;
-  gint        y;
-  gint        xoff;
-  gint        yoff;
-
-  x = (gint) floor (core->cur_coords.x) - (paint_mask->width  >> 1);
-  y = (gint) floor (core->cur_coords.y) - (paint_mask->height >> 1);
-
-  xoff = (x < 0) ? -x : 0;
-  yoff = (y < 0) ? -y : 0;
 
   /*  combine the canvas buf and the paint mask to the canvas buf  */
   srcPR.bytes     = core->canvas_buf->bytes;
@@ -853,27 +808,17 @@ paint_mask_to_canvas_buf (GimpPaintCore *core,
   srcPR.rowstride = core->canvas_buf->width * core->canvas_buf->bytes;
   srcPR.data      = temp_buf_data (core->canvas_buf);
 
-  maskPR.bytes     = 1;
-  maskPR.x         = 0;
-  maskPR.y         = 0;
-  maskPR.w         = srcPR.w;
-  maskPR.h         = srcPR.h;
-  maskPR.rowstride = maskPR.bytes * paint_mask->width;
-  maskPR.data      = (mask_buf_data (paint_mask) +
-                      yoff * maskPR.rowstride +
-                      xoff * maskPR.bytes);
-
   /*  apply the mask  */
-  apply_mask_to_region (&srcPR, &maskPR, paint_opacity * 255.999);
+  apply_mask_to_region (&srcPR, paint_maskPR, paint_opacity * 255.999);
 }
 
-static void
-set_undo_tiles (GimpPaintCore *core,
-                GimpDrawable  *drawable,
-		gint           x,
-		gint           y,
-		gint           w,
-		gint           h)
+void
+gimp_paint_core_validate_undo_tiles (GimpPaintCore *core,
+                                     GimpDrawable  *drawable,
+                                     gint           x,
+                                     gint           y,
+                                     gint           w,
+                                     gint           h)
 {
   gint  i;
   gint  j;
@@ -904,12 +849,12 @@ set_undo_tiles (GimpPaintCore *core,
     }
 }
 
-static void
-set_canvas_tiles (GimpPaintCore *core,
-                  gint           x,
-		  gint           y,
-		  gint           w,
-		  gint           h)
+void
+gimp_paint_core_validate_canvas_tiles (GimpPaintCore *core,
+                                       gint           x,
+                                       gint           y,
+                                       gint           w,
+                                       gint           h)
 {
   gint  i;
   gint  j;

@@ -166,18 +166,30 @@ TempBuf * gimp_paint_core_get_orig_image (GimpPaintCore            *core,
                                           gint                      y2);
 
 void      gimp_paint_core_paste          (GimpPaintCore            *core,
-                                          MaskBuf	           *paint_mask,
+                                          PixelRegion              *paint_maskPR,
                                           GimpDrawable	           *drawable,
                                           gdouble	            paint_opacity,
                                           gdouble	            image_opacity,
                                           GimpLayerModeEffects      paint_mode,
                                           GimpPaintApplicationMode  mode);
 void      gimp_paint_core_replace        (GimpPaintCore            *core,
-                                          MaskBuf                  *paint_mask,
+                                          PixelRegion              *paint_maskPR,
                                           GimpDrawable	           *drawable,
                                           gdouble	            paint_opacity,
                                           gdouble                   image_opacity,
                                           GimpPaintApplicationMode  mode);
+
+void   gimp_paint_core_validate_undo_tiles   (GimpPaintCore *core,
+                                              GimpDrawable  *drawable,
+                                              gint           x,
+                                              gint           y,
+                                              gint           w,
+                                              gint           h);
+void   gimp_paint_core_validate_canvas_tiles (GimpPaintCore *core,
+                                              gint           x,
+                                              gint           y,
+                                              gint           w,
+                                              gint           h);
 
 
 #endif  /*  __GIMP_PAINT_CORE_H__  */
