@@ -245,9 +245,9 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
                         FALSE, FALSE, 0);
       gtk_widget_show (toggle);
 
-      g_signal_connect (tool_info->tool_options, "notify::preview",
-                        G_CALLBACK (gimp_image_map_tool_notify_preview),
-                        image_map_tool);
+      g_signal_connect_object (tool_info->tool_options, "notify::preview",
+                               G_CALLBACK (gimp_image_map_tool_notify_preview),
+                               image_map_tool, 0);
 
       if (klass->load_dialog_title)
         {

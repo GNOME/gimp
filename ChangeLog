@@ -1,3 +1,9 @@
+2004-03-11  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpimagemaptool.c (gimp_image_map_tool_initialize):
+	connect to notify::preview using g_signal_connect_object().
+	Fixes bug #136850.
+
 2004-03-10  Manish Singh  <yosh@gimp.org>
 
 	* data/misc/gimp.applications.in: GIMP_VISIBLE_NAME doesn't exist
