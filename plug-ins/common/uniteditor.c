@@ -30,9 +30,6 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#include "pixmaps/new.xpm"
-#include "pixmaps/duplicate.xpm"
-
 
 enum
 {
@@ -649,7 +646,7 @@ unit_editor_dialog (void)
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  button = gimp_pixmap_button_new (new_xpm, _("_New Unit"));
+  button = gtk_button_new_from_stock (GTK_STOCK_NEW);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -659,7 +656,7 @@ unit_editor_dialog (void)
 
   gimp_help_set_help_data (button, _("Create a new unit from scratch."), NULL);
 
-  button = gimp_pixmap_button_new (duplicate_xpm, _("_Duplicate Unit"));
+  button = gtk_button_new_from_stock (GIMP_STOCK_DUPLICATE);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 

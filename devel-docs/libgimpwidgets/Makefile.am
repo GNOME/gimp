@@ -30,9 +30,8 @@ IGNORE_HFILES =
 
 
 # Images to copy into HTML directory
-IMAGES_DIR = $(top_srcdir)/themes/Default/images/
+IMAGES_DIR = $(top_srcdir)/themes/Default/images
 HTML_IMAGES = \
-	$(IMAGES_DIR)/stock-all-16.png				\
 	$(IMAGES_DIR)/stock-anchor-16.png			\
 	$(IMAGES_DIR)/stock-char-picker-22.png			\
 	$(IMAGES_DIR)/stock-color-picker-black-18.png		\
@@ -46,10 +45,10 @@ HTML_IMAGES = \
 	$(IMAGES_DIR)/stock-duplicate-16.png			\
 	$(IMAGES_DIR)/stock-edit-16.png				\
 	$(IMAGES_DIR)/stock-eye-20.png				\
-	$(IMAGES_DIR)/stock-grow-16.png				\
+	$(IMAGES_DIR)/stock-selection-grow-16.png		\
 	$(IMAGES_DIR)/stock-hchain-24.png			\
 	$(IMAGES_DIR)/stock-hchain-broken-24.png		\
-	$(IMAGES_DIR)/stock-info-24.png				\
+	$(IMAGES_DIR)/stock-info-64.png				\
 	$(IMAGES_DIR)/stock-invert-16.png			\
 	$(IMAGES_DIR)/stock-layer-to-imagesize-16.png		\
 	$(IMAGES_DIR)/stock-letter-spacing-22.png		\
@@ -57,7 +56,6 @@ HTML_IMAGES = \
 	$(IMAGES_DIR)/stock-linked-20.png			\
 	$(IMAGES_DIR)/stock-merge-down-16.png			\
 	$(IMAGES_DIR)/stock-navigation-16.png			\
-	$(IMAGES_DIR)/stock-none-16.png				\
 	$(IMAGES_DIR)/stock-paste-as-new-16.png			\
 	$(IMAGES_DIR)/stock-paste-into-16.png			\
 	$(IMAGES_DIR)/stock-path-stroke-16.png			\
@@ -72,19 +70,21 @@ HTML_IMAGES = \
 	$(IMAGES_DIR)/stock-rotate-90-16.png			\
 	$(IMAGES_DIR)/stock-scale-16.png			\
 	$(IMAGES_DIR)/stock-selection-add-16.png		\
+	$(IMAGES_DIR)/stock-selection-all-16.png		\
 	$(IMAGES_DIR)/stock-selection-intersect-16.png		\
+	$(IMAGES_DIR)/stock-selection-none-16.png		\
 	$(IMAGES_DIR)/stock-selection-replace-16.png		\
+	$(IMAGES_DIR)/stock-selection-shrink-16.png		\
 	$(IMAGES_DIR)/stock-selection-stroke-16.png		\
 	$(IMAGES_DIR)/stock-selection-subtract-16.png		\
 	$(IMAGES_DIR)/stock-selection-to-channel-16.png		\
 	$(IMAGES_DIR)/stock-selection-to-path-16.png		\
-	$(IMAGES_DIR)/stock-shrink-16.png			\
 	$(IMAGES_DIR)/stock-swap-colors-12.png			\
 	$(IMAGES_DIR)/stock-tool-options-16.png			\
 	$(IMAGES_DIR)/stock-vchain-24.png			\
 	$(IMAGES_DIR)/stock-vchain-broken-24.png		\
-	$(IMAGES_DIR)/stock-warning-24.png			\
-	$(IMAGES_DIR)/stock-wilber-16.png			\
+	$(IMAGES_DIR)/stock-warning-64.png			\
+	$(IMAGES_DIR)/stock-wilber-64.png			\
 	$(IMAGES_DIR)/stock-wilber-eek-64.png			\
 	$(IMAGES_DIR)/tools/stock-tool-airbrush-22.png		\
 	$(IMAGES_DIR)/tools/stock-tool-bezier-select-22.png	\

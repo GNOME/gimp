@@ -61,6 +61,7 @@ STOCK_BUTTON_IMAGES = \
 	stock-selection-subtract-16.png		\
 	stock-selection-intersect-16.png	\
 	stock-selection-stroke-16.png		\
+	stock-selection-to-channel-16.png	\
 	stock-selection-to-path-16.png		\
 	stock-path-stroke-16.png		\
 	stock-hchain-24.png			\
@@ -75,10 +76,6 @@ STOCK_MENU_IMAGES = \
 	stock-convert-indexed-16.png		\
 	stock-convert-rgb-16.png		\
 	stock-invert-16.png			\
-	stock-all-16.png			\
-	stock-none-16.png			\
-	stock-grow-16.png			\
-	stock-shrink-16.png			\
 	stock-merge-down-16.png			\
 	stock-layer-to-imagesize-16.png		\
 	stock-plugin-16.png			\
@@ -88,7 +85,10 @@ STOCK_MENU_IMAGES = \
 	stock-rotate-90-16.png			\
 	stock-resize-16.png			\
 	stock-scale-16.png			\
-	stock-selection-to-channel-16.png	\
+	stock-selection-all-16.png		\
+	stock-selection-none-16.png		\
+	stock-selection-grow-16.png		\
+	stock-selection-shrink-16.png		\
 	stock-navigation-16.png			\
 	stock-qmask-off-16.png			\
 	stock-qmask-on-16.png			\
@@ -99,7 +99,11 @@ STOCK_MENU_IMAGES = \
 	stock-warning-16.png			\
 	stock-wilber-16.png
 
-STOCK_WILBER_IMAGES = stock-wilber-eek-64.png
+STOCK_DIALOG_IMAGES = \
+	stock-info-64.png			\
+	stock-warning-64.png			\
+	stock-wilber-64.png			\
+	stock-wilber-eek-64.png
 
 STOCK_TOOL_IMAGES = \
 	tools/stock-tool-airbrush-22.png		\
@@ -144,8 +148,8 @@ STOCK_TOOL_IMAGES = \
 STOCK_IMAGES = \
 	$(STOCK_BUTTON_IMAGES)	\
 	$(STOCK_MENU_IMAGES) 	\
-	$(STOCK_TOOL_IMAGES)	\
-	$(STOCK_WILBER_IMAGES)
+	$(STOCK_DIALOG_IMAGES)	\
+	$(STOCK_TOOL_IMAGES)
 
 themedata_DATA = $(DIALOG_IMAGES) $(STOCK_IMAGES) $(GTK_STOCK_IMAGES)
 

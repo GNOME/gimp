@@ -1,5 +1,18 @@
 2003-01-10  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpstock.[ch]: prefixed ALL, NONE, GROW and
+	SHRINK with SELECTION_ since they should only be used for in a
+	selection context. Register a few icons in dialog size as well.
+
+	* app/gui/menus.c
+	* app/widgets/gimpselectioneditor.c: changed accordingly.
+
+	* themes/Default/images: renamed icons accordingly.
+
+	* plug-ins/common/uniteditor.c: use stock items.
+
+2003-01-10  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpstatusbar.c: fixed a compiler warning.
 
 	* plug-ins/gfig/gfig.c: fixed preview code so that the plug-in is

@@ -86,8 +86,8 @@ add_sized_with_same_fallback (GtkIconFactory *factory,
 static GtkStockItem gimp_stock_items[] =
 {
   { GIMP_STOCK_ANCHOR,         N_("Anchor"),          0, 0, "gimp14-libgimp" },
-  { GIMP_STOCK_DUPLICATE,      N_("Duplicate"),       0, 0, "gimp14-libgimp" },
-  { GIMP_STOCK_EDIT,           N_("Edit"),            0, 0, "gimp14-libgimp" },
+  { GIMP_STOCK_DUPLICATE,      N_("_Duplicate"),      0, 0, "gimp14-libgimp" },
+  { GIMP_STOCK_EDIT,           N_("_Edit"),           0, 0, "gimp14-libgimp" },
   { GIMP_STOCK_LINKED,         N_("Linked"),          0, 0, "gimp14-libgimp" },
   { GIMP_STOCK_PASTE_AS_NEW,   N_("Paste as New"),    0, 0, "gimp14-libgimp" },
   { GIMP_STOCK_PASTE_INTO,     N_("Paste Into"),      0, 0, "gimp14-libgimp" },
@@ -98,6 +98,11 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_HCHAIN_BROKEN,            NULL,        0, 0, "gimp14-libgimp" },
   { GIMP_STOCK_VCHAIN,                   NULL,        0, 0, "gimp14-libgimp" },
   { GIMP_STOCK_VCHAIN_BROKEN,            NULL,        0, 0, "gimp14-libgimp" },
+
+  { GIMP_STOCK_SELECTION_ALL,            NULL,        0, 0, "gimp14-libgimp" },
+  { GIMP_STOCK_SELECTION_NONE,           NULL,        0, 0, "gimp14-libgimp" },
+  { GIMP_STOCK_SELECTION_GROW,           NULL,        0, 0, "gimp14-libgimp" },
+  { GIMP_STOCK_SELECTION_SHRINK,         NULL,        0, 0, "gimp14-libgimp" },
 
   { GIMP_STOCK_SELECTION_REPLACE,        NULL,        0, 0, "gimp14-libgimp" },
   { GIMP_STOCK_SELECTION_ADD,            NULL,        0, 0, "gimp14-libgimp" },
@@ -113,10 +118,6 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_CONVERT_GRAYSCALE,        NULL,        0, 0, "gimp14-libgimp" },
   { GIMP_STOCK_CONVERT_INDEXED,          NULL,        0, 0, "gimp14-libgimp" },
   { GIMP_STOCK_INVERT,                   NULL,        0, 0, "gimp14-libgimp" },
-  { GIMP_STOCK_ALL,                      NULL,        0, 0, "gimp14-libgimp" },
-  { GIMP_STOCK_NONE,                     NULL,        0, 0, "gimp14-libgimp" },
-  { GIMP_STOCK_GROW,                     NULL,        0, 0, "gimp14-libgimp" },
-  { GIMP_STOCK_SHRINK,                   NULL,        0, 0, "gimp14-libgimp" },
   { GIMP_STOCK_MERGE_DOWN,               NULL,        0, 0, "gimp14-libgimp" },
   { GIMP_STOCK_LAYER_TO_IMAGESIZE,       NULL,        0, 0, "gimp14-libgimp" },
   { GIMP_STOCK_PLUGIN,                   NULL,        0, 0, "gimp14-libgimp" },
@@ -220,6 +221,7 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_SELECTION_SUBTRACT,       stock_selection_subtract_16       },
   { GIMP_STOCK_SELECTION_INTERSECT,      stock_selection_intersect_16      },
   { GIMP_STOCK_SELECTION_STROKE,         stock_selection_stroke_16         },
+  { GIMP_STOCK_SELECTION_TO_CHANNEL,     stock_selection_to_channel_16     },
   { GIMP_STOCK_SELECTION_TO_PATH,        stock_selection_to_path_16        },
 
   { GIMP_STOCK_PATH_STROKE,              stock_path_stroke_16              },
@@ -264,8 +266,7 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_TOOL_ZOOM,                stock_tool_zoom_22                },
 
   { GIMP_STOCK_INFO,                     stock_info_24                     },
-  { GIMP_STOCK_WARNING,                  stock_warning_24                  },
-  { GIMP_STOCK_WILBER_EEK,               stock_wilber_eek_64               }
+  { GIMP_STOCK_WARNING,                  stock_warning_24                  }
 };
 
 static struct
@@ -279,10 +280,6 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_CONVERT_GRAYSCALE,    stock_convert_grayscale_16    },
   { GIMP_STOCK_CONVERT_INDEXED,      stock_convert_indexed_16      },
   { GIMP_STOCK_INVERT,               stock_invert_16               },
-  { GIMP_STOCK_ALL,                  stock_all_16                  },
-  { GIMP_STOCK_NONE,                 stock_none_16                 },
-  { GIMP_STOCK_GROW,                 stock_grow_16                 },
-  { GIMP_STOCK_SHRINK,               stock_shrink_16               },
   { GIMP_STOCK_MERGE_DOWN,           stock_merge_down_16           },
   { GIMP_STOCK_LAYER_TO_IMAGESIZE,   stock_layer_to_imagesize_16   },
   { GIMP_STOCK_PLUGIN,               stock_plugin_16               },
@@ -292,7 +289,11 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_ROTATE_270,           stock_rotate_270_16           },
   { GIMP_STOCK_RESIZE,               stock_resize_16               },
   { GIMP_STOCK_SCALE,                stock_scale_16                },
-  { GIMP_STOCK_SELECTION_TO_CHANNEL, stock_selection_to_channel_16 },
+
+  { GIMP_STOCK_SELECTION_ALL,        stock_selection_all_16        },
+  { GIMP_STOCK_SELECTION_NONE,       stock_selection_none_16       },
+  { GIMP_STOCK_SELECTION_GROW,       stock_selection_grow_16       },
+  { GIMP_STOCK_SELECTION_SHRINK,     stock_selection_shrink_16     },
 
   { GIMP_STOCK_NAVIGATION,           stock_navigation_16           },
   { GIMP_STOCK_QMASK_OFF,            stock_qmask_off_16            },
@@ -302,11 +303,24 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_SWAP_COLORS,          stock_swap_colors_12          },
 
   { GIMP_STOCK_TOOL_OPTIONS,         stock_tool_options_16         },
+
   { GIMP_STOCK_INFO,                 stock_info_16                 },
   { GIMP_STOCK_WARNING,              stock_warning_16              },
   { GIMP_STOCK_WILBER,               stock_wilber_16               }
 };
 
+static struct
+{
+  const gchar   *stock_id;
+  gconstpointer  inline_data;
+}
+gimp_stock_dialog_pixbufs[] =
+{
+  { GIMP_STOCK_INFO,                 stock_info_64                 },
+  { GIMP_STOCK_WARNING,              stock_warning_64              },
+  { GIMP_STOCK_WILBER,               stock_wilber_64               },
+  { GIMP_STOCK_WILBER_EEK,           stock_wilber_eek_64           }
+};
 
 void
 gimp_stock_init (void)
@@ -334,6 +348,14 @@ gimp_stock_init (void)
 				    gimp_stock_menu_pixbufs[i].inline_data,
 				    GTK_ICON_SIZE_MENU,
 				    gimp_stock_menu_pixbufs[i].stock_id);
+    }
+
+  for (i = 0; i < G_N_ELEMENTS (gimp_stock_menu_pixbufs); i++)
+    {
+      add_sized_with_same_fallback (gimp_stock_factory,
+				    gimp_stock_dialog_pixbufs[i].inline_data,
+				    GTK_ICON_SIZE_DIALOG,
+				    gimp_stock_dialog_pixbufs[i].stock_id);
     }
 
   gtk_icon_factory_add_default (gimp_stock_factory);

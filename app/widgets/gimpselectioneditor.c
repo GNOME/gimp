@@ -173,7 +173,7 @@ gimp_selection_editor_init (GimpSelectionEditor *selection_editor)
 
   selection_editor->all_button =
     gimp_editor_add_button (GIMP_EDITOR (selection_editor),
-                            GIMP_STOCK_ALL,
+                            GIMP_STOCK_SELECTION_ALL,
                             _("Select All"), NULL,
                             G_CALLBACK (gimp_selection_editor_all_clicked),
                             NULL,
@@ -181,7 +181,7 @@ gimp_selection_editor_init (GimpSelectionEditor *selection_editor)
 
   selection_editor->none_button =
     gimp_editor_add_button (GIMP_EDITOR (selection_editor),
-                            GIMP_STOCK_NONE,
+                            GIMP_STOCK_SELECTION_NONE,
                             _("Select None"), NULL,
                             G_CALLBACK (gimp_selection_editor_none_clicked),
                             NULL,

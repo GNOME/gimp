@@ -28,7 +28,7 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-/*  only in button size:  */
+/*  in button size:  */
 
 #define GIMP_STOCK_ANCHOR               "gimp-anchor"
 #define GIMP_STOCK_DUPLICATE            "gimp-duplicate"
@@ -44,6 +44,10 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_VCHAIN               "gimp-vchain"
 #define GIMP_STOCK_VCHAIN_BROKEN        "gimp-vchain-broken"
 
+#define GIMP_STOCK_SELECTION_ALL        "gimp-selection-all"
+#define GIMP_STOCK_SELECTION_NONE       "gimp-selection-none"
+#define GIMP_STOCK_SELECTION_GROW       "gimp-selection-grow"
+#define GIMP_STOCK_SELECTION_SHRINK     "gimp-selection-shrink"
 #define GIMP_STOCK_SELECTION_REPLACE    "gimp-selection-replace"
 #define GIMP_STOCK_SELECTION_ADD        "gimp-selection-add"
 #define GIMP_STOCK_SELECTION_SUBTRACT   "gimp-selection-subtract"
@@ -62,16 +66,12 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_LETTER_SPACING       "gimp-letter-spacing"
 #define GIMP_STOCK_LINE_SPACING         "gimp-line-spacing"
 
-/*  only in menu size:  */
+/*  in menu size:  */
 
 #define GIMP_STOCK_CONVERT_RGB          "gimp-convert-rgb"
 #define GIMP_STOCK_CONVERT_GRAYSCALE    "gimp-convert-grayscale"
 #define GIMP_STOCK_CONVERT_INDEXED      "gimp-convert-indexed"
 #define GIMP_STOCK_INVERT               "gimp-invert"
-#define GIMP_STOCK_ALL                  "gimp-all"
-#define GIMP_STOCK_NONE                 "gimp-none"
-#define GIMP_STOCK_GROW                 "gimp-grow"
-#define GIMP_STOCK_SHRINK               "gimp-shrink"
 #define GIMP_STOCK_MERGE_DOWN           "gimp-merge-down"
 #define GIMP_STOCK_LAYER_TO_IMAGESIZE   "gimp-layer-to-imagesize"
 #define GIMP_STOCK_PLUGIN               "gimp-plugin"
@@ -95,8 +95,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_WARNING              "gimp-warning"
 #define GIMP_STOCK_WILBER               "gimp-wilber"
 
-
-/*  only in button size:  */
+/*  in button size:  */
 
 #define GIMP_STOCK_TOOL_AIRBRUSH            "gimp-tool-airbrush"
 #define GIMP_STOCK_TOOL_BEZIER_SELECT       "gimp-tool-bezier-select"
@@ -137,8 +136,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_TOOL_THRESHOLD           "gimp-tool-threshold"
 #define GIMP_STOCK_TOOL_ZOOM                "gimp-tool-zoom"
 
-
-/*  only in dialog size:  */
+/*  in dialog size:  */
 
 #define GIMP_STOCK_WILBER_EEK               "gimp-wilber-eek"
 
