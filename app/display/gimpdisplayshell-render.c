@@ -35,7 +35,6 @@
 #include "core/gimpimage-projection.h"
 
 #include "gimpdisplay.h"
-#include "gimpdisplay-foreach.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-filter.h"
 #include "gimpdisplayshell-render.h"
@@ -251,8 +250,6 @@ render_setup_notify (gpointer    config,
       render_empty_buf = NULL;
       render_temp_buf  = NULL;
     }
-
-  gimp_displays_invalidate (gimp);
 }
 
 

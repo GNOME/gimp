@@ -384,6 +384,8 @@ gimp_display_shell_check_notify_handler (GObject          *config,
     default:
       break;
     }
+
+  gimp_display_shell_expose_full (shell);
 }
 
 static void

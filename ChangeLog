@@ -1,3 +1,15 @@
+2003-02-24  Michael Natterer  <mitch@convergence.de>
+
+	* app/display/gimpdisplay-foreach.[ch]: removed
+	gimp_displays_invalidate() again.
+
+	* app/display/gimpdisplayshell-render.c: don't call it.
+
+	* app/display/gimpdisplayshell-handlers.c
+	(gimp_display_shell_check_notify_handler): put the call to
+	gimp_display_shell_expose_full() back I "optimized" away a few
+	days ago.
+
 2003-02-24  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/spheredesigner.c: some code cleanup, fixed
@@ -84,11 +96,11 @@
 
 	* app/widgets/Makefile.am
 	* app/widgets/widgets-types.h
-	* app/widgets/gimpcontainertreeview.[ch]; new GimpContainerView
+	* app/widgets/gimpcontainertreeview.[ch]: new GimpContainerView
 	subclass using GtkListStore/GtkTreeView.
 
 	* app/widgets/widgets-enums.h: added GIMP_VIEW_TYPE_TREE to
-	thje GimpViewType enum.
+	the GimpViewType enum.
 
 	* app/widgets/gimpcontainereditor.c: added GimpContainerTreeView
 	to the switch() which selects the view type.
