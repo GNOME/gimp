@@ -1,3 +1,10 @@
+2001-06-06  Adam D. Moss  <adam@gimp.org>
+
+	* tools/pdbgen/pdb/image.pdb: gimp_image_list(),
+	gimp_image_get_layers() and gimp_image_get_channels() via
+	pdb were eventually crashing due to prepending to an
+	uninitialised GList*...
+
 2001-06-06  Dave Neary  <dneary@eircom.net>
 
 	* plug-ins/gap/gap_lib.c

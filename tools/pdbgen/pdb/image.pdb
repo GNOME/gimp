@@ -57,7 +57,7 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GList *list', 'int i' ],
+	vars => [ 'GList *list = NULL', 'int i' ],
 	code => <<CODE
 {
   list = GIMP_LIST (gimage->${type}s)->list;

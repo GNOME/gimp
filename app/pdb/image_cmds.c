@@ -190,7 +190,7 @@ image_list_invoker (Argument *args)
   Argument *return_args;
   gint32 num_images = 0;
   gint32 *image_ids = NULL;
-  GList *list;
+  GList *list = NULL;
   int i;
 
   gimp_container_foreach (image_context, gimlist_cb, &list);
@@ -552,7 +552,7 @@ image_get_layers_invoker (Argument *args)
   GimpImage *gimage;
   gint32 num_layers = 0;
   gint32 *layer_ids = NULL;
-  GList *list;
+  GList *list = NULL;
   int i;
 
   gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
@@ -630,7 +630,7 @@ image_get_channels_invoker (Argument *args)
   GimpImage *gimage;
   gint32 num_channels = 0;
   gint32 *channel_ids = NULL;
-  GList *list;
+  GList *list = NULL;
   int i;
 
   gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
