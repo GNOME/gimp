@@ -93,10 +93,11 @@ all-yes: cat-id-tbl.c $(CATALOGS)
 all-no:
 
 $(srcdir)/$(GETTEXT_PACKAGE).pot: $(POTFILES) $(POTSCRIPTS)
-        $(XGETTEXT) --default-domain=$(PACKAGE) --directory=$(top_srcdir) \
-          --add-comments --keyword=_ --keyword=N_ \
-          --files-from=$(srcdir)/POTFILES.in \
-        && $(SXGETTEXT) $(POTSCRIPTS) >> $(PACKAGE).po \
+	$(XGETTEXT) --default-domain=$(GETTEXT_PACKAGE) \
+	  --directory=$(top_srcdir) \
+	  --add-comments --keyword=_ --keyword=N_ \
+	  --files-from=$(srcdir)/POTFILES.in \
+	&& $(SXGETTEXT) $(POTSCRIPTS) >> $(GETTEXT_PACKAGE).po \
 	&& test ! -f $(GETTEXT_PACKAGE).po \
 	   || ( rm -f $(srcdir)/$(GETTEXT_PACKAGE).pot \
 		&& mv $(GETTEXT_PACKAGE).po $(srcdir)/$(GETTEXT_PACKAGE).pot )
@@ -209,7 +210,7 @@ maintainer-clean: distclean
 	@echo "it deletes files that may require special tools to rebuild."
 	rm -f $(GMOFILES)
 
-distdir = ../$(GETTEXT_PACKAGE)-$(VERSION)/$(subdir)
+distdir = ../$(PACKAGE)-$(VERSION)/$(subdir)
 dist distdir: update-po $(DISTFILES)
 	dists="$(DISTFILES)"; \
 	for file in $$dists; do \
