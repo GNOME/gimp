@@ -1,3 +1,7 @@
+Wed Sep 29 13:34:26 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/gap: updated iterator procedure for paper_tile
+
 Tue Sep 28 20:54:45 CDT 1999 James Mitchell <mitchell@gimp.org>
 
 	* plug-ins/perl/po/it.po: Added from Daniele Medri <madrid@linux.it>

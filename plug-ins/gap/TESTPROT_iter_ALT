@@ -130,7 +130,8 @@ State Procedure_name                  Testnotes
 +  *  plug_in_nova                                                
 +  *  plug_in_oilify                 (interface changed)                                     
 -  *  plug_in_pagecurl               ERROR: no stored data found for Key plug_in_pagecurl                     
--     plug_in_paper_tile             OK Button disappeared at 1.st press ?????
+-Del  plug_in_paper_tile             OK Button disappeared at 1.st press ?????
++  *  plug_in_papertile
 +     plug_in_pixelize                             
 +  *  plug_in_plasma                                 
 +  *  plug_in_polar_coords           (interface changed)            

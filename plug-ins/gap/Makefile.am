@@ -37,7 +37,6 @@ EXTRA_DIST = \
 	iter_ALT/gen/plug_in_mosaic_iter_ALT.inc		\
 	iter_ALT/gen/plug_in_newsprint_iter_ALT.inc		\
 	iter_ALT/gen/plug_in_noisify_iter_ALT.inc		\
-	iter_ALT/gen/plug_in_paper_tile_iter_ALT.inc		\
 	iter_ALT/gen/plug_in_pixelize_iter_ALT.inc		\
 	iter_ALT/gen/plug_in_randomize_hurl_iter_ALT.inc	\
 	iter_ALT/gen/plug_in_randomize_pick_iter_ALT.inc	\
@@ -70,6 +69,7 @@ EXTRA_DIST = \
 	iter_ALT/mod/plug_in_nova_iter_ALT.inc			\
 	iter_ALT/mod/plug_in_oilify_iter_ALT.inc		\
 	iter_ALT/mod/plug_in_pagecurl_iter_ALT.inc		\
+	iter_ALT/mod/plug_in_papertile_iter_ALT.inc		\
 	iter_ALT/mod/plug_in_plasma_iter_ALT.inc		\
 	iter_ALT/mod/plug_in_polar_coords_iter_ALT.inc		\
 	iter_ALT/mod/plug_in_sample_colorize_iter_ALT.inc	\
