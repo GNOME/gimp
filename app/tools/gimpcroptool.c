@@ -953,7 +953,7 @@ crop_start (GimpCropTool *crop)
   old_gdisp = tool->gdisp;
 
   /* initialize the statusbar display */
-  gimp_tool_push_status (tool, _("Crop: 0 x 0"));
+  gimp_tool_push_status_coords (tool, _("Crop: "), 0, " x ", 0);
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), tool->gdisp);
 }

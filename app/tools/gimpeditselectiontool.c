@@ -364,7 +364,8 @@ init_edit_selection (GimpTool    *tool,
   gimp_display_shell_selection_visibility (shell, GIMP_SELECTION_PAUSE);
 
   /* initialize the statusbar display */
-  gimp_tool_push_status (tool, _("Move: 0, 0"));
+  gimp_tool_push_status_coords (GIMP_TOOL (edit_select),
+                                _("Move: "), 0, ", ", 0);
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (edit_select), gdisp);
 }
@@ -519,7 +520,7 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
                                         gdisp,
                                         motion_x,
                                         motion_y);
-
+  
   /******************************************* adam's live move *******/
   /********************************************************************/
   {
