@@ -1,6 +1,8 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * Copyright (C) 2003  Henrik Brix Andersen <brix@gimp.org>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -33,6 +35,8 @@
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-grid.h"
+#include "core/gimpimage-undo.h"
+#include "core/gimpimage-undo-push.h"
 #include "core/gimpgrid.h"
 
 #include "display/gimpdisplay.h"
@@ -52,6 +56,8 @@
 /*  local functions  */
 
 
+static void grid_changed_cb (GtkWidget *widget,
+                             gpointer   data);
 static void reset_callback  (GtkWidget  *widget,
                              GtkWidget  *dialog);
 static void remove_callback (GtkWidget  *widget,
@@ -70,10 +76,11 @@ grid_dialog_new (GimpDisplay *gdisp)
 {
   GimpImage        *gimage;
   GimpDisplayShell *shell;
-  GimpGrid         *grid_orig;
   GimpGrid         *grid;
+  GimpGrid         *grid_backup = NULL;
 
   GtkWidget *dialog;
+  GtkWidget *remove_button;
   GtkWidget *main_vbox;
   GtkWidget *frame;
   GtkWidget *hbox;
@@ -84,13 +91,24 @@ grid_dialog_new (GimpDisplay *gdisp)
 
   g_return_val_if_fail (GIMP_IS_DISPLAY (gdisp), NULL);
 
-  gimage    = GIMP_IMAGE (gdisp->gimage);
-  shell     = GIMP_DISPLAY_SHELL (gdisp->shell);
+  gimage = GIMP_IMAGE (gdisp->gimage);
+  shell  = GIMP_DISPLAY_SHELL (gdisp->shell);
+  grid   = gimp_image_get_grid (GIMP_IMAGE (gimage));
 
-  grid_orig = gimp_image_get_grid (GIMP_IMAGE (gimage));
-  grid      = g_object_new (GIMP_TYPE_GRID, NULL);
-
-  g_object_ref (G_OBJECT (grid));
+  if (grid)
+    {
+      grid_backup = g_object_new (GIMP_TYPE_GRID, NULL);
+      gimp_config_copy_properties (G_OBJECT (grid),
+                                   G_OBJECT (grid_backup));
+      g_object_ref (G_OBJECT (grid_backup));
+    }
+  else
+    {
+      grid = g_object_new (GIMP_TYPE_GRID, NULL);
+      gimp_image_set_grid (GIMP_IMAGE (gimage),
+                           GIMP_GRID (grid),
+                           FALSE);
+    }
 
   /* the dialog */
   dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (gimage),
@@ -103,7 +121,7 @@ grid_dialog_new (GimpDisplay *gdisp)
                                      NULL, NULL, NULL, FALSE, FALSE,
 
                                      GTK_STOCK_REMOVE, remove_callback,
-                                     NULL, NULL, NULL, FALSE, FALSE,
+                                     NULL, NULL, &remove_button, FALSE, FALSE,
 
                                      GTK_STOCK_CANCEL, cancel_callback,
                                      NULL, NULL, NULL, FALSE, TRUE,
@@ -112,6 +130,9 @@ grid_dialog_new (GimpDisplay *gdisp)
                                      NULL, NULL, NULL, TRUE, FALSE,
 
                                      NULL);
+
+  if (! grid_backup)
+    gtk_widget_set_sensitive (GTK_WIDGET (remove_button), FALSE);
 
   /* the main vbox */
   main_vbox = gtk_vbox_new (FALSE, 4);
@@ -133,6 +154,9 @@ grid_dialog_new (GimpDisplay *gdisp)
   type = gimp_prop_enum_option_menu_new (G_OBJECT (grid), "type",
                                          GIMP_GRID_TYPE_DOTS,
                                          GIMP_GRID_TYPE_SOLID);
+  g_signal_connect (type, "changed",
+                    G_CALLBACK (grid_changed_cb),
+                    gimage);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Line _Style:"), 1.0, 0.5,
                              type, 1, TRUE);
@@ -141,6 +165,9 @@ grid_dialog_new (GimpDisplay *gdisp)
                                              _("Change Grid Foreground Color"),
                                              GRID_COLOR_SIZE, GRID_COLOR_SIZE,
                                              GIMP_COLOR_AREA_FLAT);
+  g_signal_connect (color_button, "color-changed",
+                    G_CALLBACK (grid_changed_cb),
+                    gimage);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("_Foreground Color:"), 1.0, 0.5,
                              color_button, 1, TRUE);
@@ -149,6 +176,9 @@ grid_dialog_new (GimpDisplay *gdisp)
                                              _("Change Grid Background Color"),
                                              GRID_COLOR_SIZE, GRID_COLOR_SIZE,
                                              GIMP_COLOR_AREA_FLAT);
+  g_signal_connect (color_button, "color-changed",
+                    G_CALLBACK (grid_changed_cb),
+                    gimage);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
                              _("_Background Color:"), 1.0, 0.5,
                              color_button, 1, TRUE);
@@ -188,6 +218,16 @@ grid_dialog_new (GimpDisplay *gdisp)
 				_("Height"), 0, 2, 0.0);
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry),
 				_("Pixels"), 1, 4, 0.0);
+
+  g_signal_connect (sizeentry, "refval-changed",
+                    G_CALLBACK (grid_changed_cb),
+                    gimage);
+  g_signal_connect (sizeentry, "unit-changed",
+                    G_CALLBACK (grid_changed_cb),
+                    gimage);
+  g_signal_connect (sizeentry, "value-changed",
+                    G_CALLBACK (grid_changed_cb),
+                    gimage);
 
   gtk_box_pack_start (GTK_BOX (hbox), sizeentry, FALSE, FALSE, 0);
   gtk_widget_show (sizeentry);
@@ -230,18 +270,30 @@ grid_dialog_new (GimpDisplay *gdisp)
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry),
 				_("Pixels"), 1, 4, 0.0);
 
+  g_signal_connect (sizeentry, "refval-changed",
+                    G_CALLBACK (grid_changed_cb),
+                    gimage);
+  g_signal_connect (sizeentry, "unit-changed",
+                    G_CALLBACK (grid_changed_cb),
+                    gimage);
+  g_signal_connect (sizeentry, "value-changed",
+                    G_CALLBACK (grid_changed_cb),
+                    gimage);
+
   gtk_box_pack_start (GTK_BOX (hbox), sizeentry, FALSE, FALSE, 0);
   gtk_widget_show (sizeentry);
 
   gtk_widget_show (hbox);
 
-  if (grid_orig)
+  if (grid_backup)
     {
-      gimp_config_copy_properties (G_OBJECT (grid_orig), G_OBJECT (grid));
+      gimp_config_copy_properties (G_OBJECT (grid_backup),
+                                   G_OBJECT (grid));
     }
   else
     {
       gimp_config_reset_properties (G_OBJECT (grid));
+
       g_object_set (G_OBJECT (grid),
                     "spacing-unit", gimage->unit,
                     NULL);
@@ -254,8 +306,9 @@ grid_dialog_new (GimpDisplay *gdisp)
 
   g_object_set_data (G_OBJECT (dialog), "gimage", gimage);
   g_object_set_data (G_OBJECT (dialog), "shell", shell);
+  g_object_set_data (G_OBJECT (dialog), "grid", grid);
 
-  g_object_set_data_full (G_OBJECT (dialog), "grid", grid,
+  g_object_set_data_full (G_OBJECT (dialog), "grid-backup", grid_backup,
                           (GDestroyNotify) g_object_unref);
 
   return dialog;
@@ -266,25 +319,32 @@ grid_dialog_new (GimpDisplay *gdisp)
 
 
 static void
+grid_changed_cb (GtkWidget *widget,
+                 gpointer   data)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (data));
+
+  gimp_image_grid_changed (GIMP_IMAGE (data));
+}
+
+
+static void
 reset_callback (GtkWidget  *widget,
                 GtkWidget  *dialog)
 {
-  GimpImage        *gimage;
-  GimpDisplayShell *shell;
-  GimpGrid         *grid_orig;
-  GimpGrid         *grid;
-  GimpUnit          unit_orig;
+  GimpImage *gimage;
+  GimpImage *grid;
+  GimpGrid  *grid_backup;
+  GimpUnit  unit;
 
   gimage      = g_object_get_data (G_OBJECT (dialog), "gimage");
   grid        = g_object_get_data (G_OBJECT (dialog), "grid");
-  shell       = g_object_get_data (G_OBJECT (dialog), "shell");
+  grid_backup = g_object_get_data (G_OBJECT (dialog), "grid-backup");
+  unit        = gimp_image_get_unit (GIMP_IMAGE (gimage));
 
-  grid_orig   = gimp_image_get_grid (GIMP_IMAGE (gimage));
-  unit_orig   = gimp_image_get_unit (GIMP_IMAGE (gimage));
-
-  if (grid_orig)
+  if (grid_backup)
     {
-      gimp_config_copy_properties (G_OBJECT (grid_orig),
+      gimp_config_copy_properties (G_OBJECT (grid_backup),
                                    G_OBJECT (grid));
     }
   else
@@ -293,15 +353,18 @@ reset_callback (GtkWidget  *widget,
       gimp_config_reset_properties (G_OBJECT (grid));
 
       g_object_set (G_OBJECT (grid),
-                    "spacing-unit", unit_orig,
+                    "spacing-unit", unit,
                     NULL);
       g_object_set (G_OBJECT (grid),
-                    "offset-unit", unit_orig,
+                    "offset-unit", unit,
                     NULL);
 
       g_object_thaw_notify (G_OBJECT (grid));
     }
+
+  gimp_image_grid_changed (GIMP_IMAGE (gimage));
 }
+
 
 static void
 remove_callback (GtkWidget  *widget,
@@ -309,11 +372,16 @@ remove_callback (GtkWidget  *widget,
 {
   GimpImage        *gimage;
   GimpDisplayShell *shell;
+  GimpGrid         *grid_backup;
 
-  gimage = g_object_get_data (G_OBJECT (dialog), "gimage");
-  shell  = g_object_get_data (G_OBJECT (dialog), "shell");
+  gimage      = g_object_get_data (G_OBJECT (dialog), "gimage");
+  shell       = g_object_get_data (G_OBJECT (dialog), "shell");
+  grid_backup = g_object_get_data (G_OBJECT (dialog), "grid-backup");
 
-  gimp_image_set_grid (gimage, NULL, TRUE);
+  gimp_image_undo_push_image_grid (GIMP_IMAGE (gimage),
+                                   _("Remove Grid"),
+                                   GIMP_GRID (grid_backup));
+  gimp_image_set_grid (GIMP_IMAGE (gimage), NULL, FALSE);
 
   gtk_widget_destroy (dialog);
 }
@@ -323,27 +391,30 @@ static void
 cancel_callback (GtkWidget  *widget,
                  GtkWidget  *dialog)
 {
+  GimpImage *gimage;
+  GimpGrid  *grid_backup;
+
+  gimage      = g_object_get_data (G_OBJECT (dialog), "gimage");
+  grid_backup = g_object_get_data (G_OBJECT (dialog), "grid-backup");
+
+  gimp_image_set_grid (GIMP_IMAGE (gimage), grid_backup, FALSE);
+
   gtk_widget_destroy (dialog);
 }
+
 
 static void
 ok_callback (GtkWidget  *widget,
              GtkWidget  *dialog)
 {
-  GimpImage        *gimage;
-  GimpDisplayShell *shell;
-  GimpGrid         *grid;
-  GimpGrid         *grid_orig;
+  GimpImage *gimage;
+  GimpGrid  *grid_backup;
 
   gimage      = g_object_get_data (G_OBJECT (dialog), "gimage");
-  grid        = g_object_get_data (G_OBJECT (dialog), "grid");
-  shell       = g_object_get_data (G_OBJECT (dialog), "shell");
+  grid_backup = g_object_get_data (G_OBJECT (dialog), "grid-backup");
 
-  grid_orig   = gimp_image_get_grid (GIMP_IMAGE (gimage));
-
-  if (grid_orig == NULL || ! gimp_config_is_equal_to (G_OBJECT (grid_orig),
-                                                      G_OBJECT (grid)))
-    gimp_image_set_grid (GIMP_IMAGE (gimage), grid, TRUE);
+  gimp_image_undo_push_image_grid (gimage, _("Grid"), grid_backup);
+  gimp_image_grid_changed (GIMP_IMAGE (gimage));
 
   gtk_widget_destroy (dialog);
 }

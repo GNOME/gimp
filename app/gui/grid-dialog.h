@@ -1,6 +1,8 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * Copyright (C) 2003  Henrik Brix Andersen <brix@gimp.org>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -19,6 +21,8 @@
 #ifndef __GRID_DIALOG_H__
 #define __GRID_DIALOG_H__
 
+
 GtkWidget * grid_dialog_new (GimpDisplay *gdisp);
+
 
 #endif  /*  __GRID_DIALOG_H__  */

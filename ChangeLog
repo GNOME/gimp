@@ -1,3 +1,8 @@
+2003-08-12  Henrik Brix Andersen  <brix@gimp.org>
+
+	* app/gui/grid-dialog.c (grid_dialog_new): made changes to the
+	grid apply instantly
+
 2003-08-11  Henrik Brix Andersen  <brix@gimp.org>
 
 	* gimp/app/widgets/gimpwidgets-utils.[ch]: removed function
