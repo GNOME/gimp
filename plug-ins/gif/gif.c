@@ -7,7 +7,7 @@
  *      Based around original GIF code by David Koblas.
  *
  *
- * Version 2.0.5 - 98/09/28
+ * Version 2.1.0 - 98/10/09
  *                        Adam D. Moss - <adam@gimp.org> <adam@foxbox.org>
  */
 /*
@@ -23,6 +23,12 @@
 /*
  * REVISION HISTORY
  *
+ * 98/10/09
+ * 2.01.00 - Added support for persistant GIF Comments through
+ *           the GIMP 1.1 Parasite mechanism where available.
+ *           Did some user-interface tweaks.
+ *           Fixed a bug when trying to save a GIF smaller
+ *           than five pixels high as interlaced.
  *
  * 98/09/28
  * 2.00.05 - Fixed TigerT's Infinite GIF Bug.  Icky one.
@@ -226,7 +232,7 @@
  *
  */
 
-/* Copyright notice for code which this plugin was derived from - */
+/* Copyright notice for code which this plugin was long ago derived from */
 /* +-------------------------------------------------------------------+ */
 /* | Copyright 1990, 1991, 1993, David Koblas.  (koblas@netcom.com)    | */
 /* |   Permission to use, copy, modify, and distribute this software   | */
@@ -247,8 +253,21 @@
 #include "libgimp/gimp.h"
 
 
+/* uncomment the line below for a little debugging info */
+/* #define GIFDEBUG yesplease */
+
+
 /* Wear your GIMP with pride! */
 #define DEFAULT_COMMENT "Made with GIMP"
+
+
+/* Does the version of GIMP we're compiling for support
+   data attachments to images?  ('Parasites') */
+#ifdef _GIMPPARASITE_H_
+#define FACEHUGGERS aieee
+#endif
+/* PS: I know that technically facehuggers aren't parasites,
+   the pupal-forms are.  But facehuggers are cute. */
 
 
 typedef struct
@@ -304,6 +323,8 @@ static void   save_cancel_callback     (GtkWidget *widget,
 					gpointer   data);
 static void   save_windelete_callback     (GtkWidget *widget,
 					   gpointer   data);
+static void   disposal_select_callback (GtkWidget *widget,
+					gpointer   data);
 static void   save_toggle_update   (GtkWidget *widget,
 				    gpointer   data);
 static void   save_entry_callback  (GtkWidget *widget,
@@ -318,9 +339,14 @@ static gint     radio_pressed[3];
 static guchar   used_cmap[3][256];
 static gboolean can_crop;
 static guchar   highest_used_index;
-static gboolean promote_to_rgb = FALSE;
+static gboolean promote_to_rgb   = FALSE;
 static guchar   gimp_cmap[768];
+#ifdef FACEHUGGERS
+GParasite*      comment_parasite = NULL;
+#endif
 
+/* For compression code */
+static int Interlace;
 
 
 
@@ -372,7 +398,7 @@ query ()
     { PARAM_DRAWABLE, "drawable", "Drawable to save" },
     { PARAM_STRING, "filename", "The name of the file to save the image in" },
     { PARAM_STRING, "raw_filename", "The name entered" },
-    { PARAM_INT32, "interlace", "Save as interlaced" },
+    { PARAM_INT32, "interlace", "Try to save as interlaced" },
     { PARAM_INT32, "loop", "(animated gif) loop infinitely" },
     { PARAM_INT32, "default_delay", "(animated gif) Default delay between framese in milliseconds" },
     { PARAM_INT32, "default_dispose", "(animated gif) Default disposal type (0=`don't care`, 1=combine, 2=replace)" }
@@ -443,7 +469,9 @@ run (char    *name,
        *  or trim down the number of GIMP colours at load-time.  We do the
        *  latter for now.
        */
+#ifdef GIFDEBUG
       g_print ("GIF: Highest used index is %d\n", highest_used_index);
+#endif
       if (!promote_to_rgb)
 	{
 	  gimp_image_set_cmap (image_ID, gimp_cmap, highest_used_index+1);
@@ -764,6 +792,15 @@ load_image (char *filename)
 				);
 	}
 
+#ifdef FACEHUGGERS
+      if (comment_parasite != NULL)
+	{
+	  gimp_image_attach_parasite (image_ID, comment_parasite);
+	  gparasite_free (comment_parasite);
+	  comment_parasite = NULL;
+	}
+#endif
+
     }
 
   return image_ID;
@@ -845,10 +882,21 @@ DoExtension (FILE *fd,
       str = "Comment Extension";
       while (GetDataBlock (fd, (unsigned char *) buf) != 0)
 	{
+#ifdef FACEHUGGERS
+	  if (comment_parasite != NULL)
+	    {
+	      gparasite_free (comment_parasite);
+	    }
+	    
+	  comment_parasite = gparasite_new ("GIF2","CMNT",TRUE,
+					    strlen(buf)+1, (void*)buf);
+#else
 	  if (showComment)
 	    g_print ("GIF: gif comment: %s\n", buf);
+#endif
 	}
-      return FALSE;
+      return TRUE;
+      break;
     case 0xf9:			/* Graphic Control Extension */
       str = "Graphic Control Extension";
       (void) GetDataBlock (fd, (unsigned char *) buf);
@@ -863,13 +911,16 @@ DoExtension (FILE *fd,
       while (GetDataBlock (fd, (unsigned char *) buf) != 0)
 	;
       return FALSE;
+      break;
     default:
       str = (char *)buf;
       sprintf ((char *)buf, "UNKNOWN (0x%02x)", label);
       break;
     }
 
-  g_print ("GIF: got a '%s' extension\n", str);
+#ifdef GIFDEBUG
+  g_print ("GIF: got a '%s'\n", str);
+#endif
 
   while (GetDataBlock (fd, (unsigned char *) buf) != 0)
     ;
@@ -1184,7 +1235,9 @@ ReadImage (FILE *fd,
 		  promote_to_rgb = TRUE;
 		  
 		  /* Promote everything we have so far into RGB(A) */
+#ifdef GIFDEBUG
 		  g_print ("GIF: Promoting image to RGB...\n");
+#endif
 		  gimp_run_procedure("gimp_convert_rgb", &nreturn_vals,
 				     PARAM_IMAGE, image_ID,
 				     PARAM_END);
@@ -1282,7 +1335,7 @@ ReadImage (FILE *fd,
 	  *temp = (guchar) v;
 	}
 
-      ++xpos;
+      xpos++;
       if (xpos == len)
 	{
 	  xpos = 0;
@@ -1304,7 +1357,7 @@ ReadImage (FILE *fd,
 
 	      if (ypos >= height)
 		{
-		  ++pass;
+		  pass++;
 		  switch (pass)
 		    {
 		    case 1:
@@ -1323,7 +1376,7 @@ ReadImage (FILE *fd,
 	    }
 	  else
 	    {
-	      ++ypos;
+	      ypos++;
 	    }
 
 	  cur_progress++;
@@ -1409,17 +1462,16 @@ static int GetPixel (int, int);
 static void BumpPixel (void);
 static int GIFNextPixel (ifunptr);
 
-static void GIFEncodeHeader (FILE *, gboolean, int, int, int, int, int, int,
+static void GIFEncodeHeader (FILE *, gboolean, int, int, int, int,
 			     int *, int *, int *, ifunptr);
-static void GIFEncodeGraphicControlExt (FILE *, int, int, int, int, int, int,
+static void GIFEncodeGraphicControlExt (FILE *, int, int, int, int, int,
 					int, int, int, int *, int *, int *,
 					ifunptr);
 static void GIFEncodeImageData (FILE *, int, int, int, int, int, int,
 				int *, int *, int *, ifunptr, gint, gint);
 static void GIFEncodeClose (FILE *, int, int, int, int, int, int,
 			    int *, int *, int *, ifunptr);
-static void GIFEncodeLoopExt (FILE *, int, int, int, int, int, int,
-			      int *, int *, int *, ifunptr, guint);
+static void GIFEncodeLoopExt (FILE *, guint);
 static void GIFEncodeCommentExt (FILE *, char *);
 
 int rowstride;
@@ -1447,8 +1499,10 @@ static int find_unused_ia_colour (guchar *pixels,
   int i;
   gboolean ix_used[256];
 
+#ifdef GIFDEBUG
   g_print ("GIF: fuiac: Image claims to use %d/%d indices - finding free "
 	   "index...\n", (int)(*colors),(int)num_indices);
+#endif
 
   for (i=0; i<256; i++)
     {
@@ -1464,7 +1518,9 @@ static int find_unused_ia_colour (guchar *pixels,
     {
       if (ix_used[i] == (gboolean)FALSE)
 	{
+#ifdef GIFDEBUG
 	  g_print ("GIF: Found unused colour index %d.\n",(int)i);
+#endif
 	  return i;
 	}
     }
@@ -1514,9 +1570,6 @@ special_flatten_indexed_alpha (guchar *pixels,
 	      pixels[i] = pixels[i*2];
 	    }
 	}
-      /* commented out - this is now done in find_unused.. where neces. */
-      /*  if ((*colors) < 256)
-	  (*colors) += 1; */
     }
 
 
@@ -1770,15 +1823,15 @@ save_image (char   *filename,
 
   cols = gimp_image_width(image_ID);
   rows = gimp_image_height(image_ID);
-  GIFEncodeHeader (outfile, is_gif89, cols, rows, gsvals.interlace, 0,
-		   transparent, BitsPerPixel, Red, Green, Blue, GetPixel);
+  Interlace = gsvals.interlace;
+  GIFEncodeHeader (outfile, is_gif89, cols, rows, 0,
+		   BitsPerPixel, Red, Green, Blue, GetPixel);
 
 
   /* If the image has multiple layers it'll be made into an
      animated GIF, so write out the infinite-looping extension */
   if ((nlayers > 1) && (gsvals.loop))
-    GIFEncodeLoopExt (outfile, cols, rows, gsvals.interlace, 0, transparent,
-		      BitsPerPixel, Red, Green, Blue, GetPixel, 0);
+    GIFEncodeLoopExt (outfile, 0);
 
   /* Write comment extension - mustn't be written before the looping ext. */
   if (globalusecomment)
@@ -1845,10 +1898,12 @@ save_image (char   *filename,
 	  /* We were able to re-use an index within the existing bitspace,
 	     whereas the estimate in the header was pessimistic but still
 	     needs to be upheld... */
-	  g_warning("Promised %d bpp, pondered writing chunk with %d bpp!\n"
-		    "Transparent colour may be incorrect on viewers which"
-		    " don't support transparency.\n",
+#ifdef GIFDEBUG
+	  g_warning("Promised %d bpp, pondered writing chunk with %d bpp!\n",
 		    liberalBPP, BitsPerPixel);
+#endif
+	  g_warning("Transparent colour may be incorrect on viewers which"
+		    " don't support transparency.\n");
 	}
       useBPP = (BitsPerPixel > liberalBPP) ? BitsPerPixel : liberalBPP;
 
@@ -1874,15 +1929,16 @@ save_image (char   *filename,
 	    Delay89 /= 10;
 
 	  GIFEncodeGraphicControlExt (outfile, Disposal, Delay89, nlayers,
-				      cols, rows, gsvals.interlace, 0,
+				      cols, rows, 0,
 				      transparent,
 				      useBPP,
 				      Red, Green,
 				      Blue, GetPixel);
 	}
 
-      GIFEncodeImageData (outfile, cols, rows, gsvals.interlace, 0,
-			  transparent,
+      GIFEncodeImageData (outfile, cols, rows,
+			  (rows>4) ? gsvals.interlace : 0,
+			  0, transparent,
 			  useBPP,
 			  Red, Green, Blue, GetPixel,
 			  offset_x, offset_y);
@@ -2000,9 +2056,12 @@ save_dialog ( gint32 image_ID )
   GtkWidget *frame;
   GtkWidget *vbox;
   GtkWidget *hbox;
-  GtkWidget *innerframe;
-  GtkWidget *innervbox;
-  GSList *group = NULL;
+  GtkWidget *menu;
+  GtkWidget *disposal_option_menu;
+#ifdef FACEHUGGERS
+  GParasite* GIF2_CMNT;
+#endif
+
 
   gchar buffer[10];
   gint32 nlayers;
@@ -2077,9 +2136,27 @@ save_dialog ( gint32 image_ID )
   entry = gtk_entry_new ();
   gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
   gtk_widget_set_usize (entry, 240, 0);
-  if (globalcomment!=NULL) g_free(globalcomment);
-  globalcomment = g_malloc(1+strlen(DEFAULT_COMMENT));
-  strcpy(globalcomment, DEFAULT_COMMENT);
+  if (globalcomment!=NULL)
+    {
+      g_free(globalcomment);
+    }
+#ifdef FACEHUGGERS
+    GIF2_CMNT = gimp_image_find_parasite (image_ID, "GIF2", "CMNT");
+    if (!gparasite_is_error(GIF2_CMNT))
+      {
+	globalcomment = g_malloc(GIF2_CMNT->size);
+	strcpy(globalcomment, GIF2_CMNT->data);
+      }
+    else
+      {
+#endif
+	globalcomment = g_malloc(1+strlen(DEFAULT_COMMENT));
+	strcpy(globalcomment, DEFAULT_COMMENT);
+#ifdef FACEHUGGERS
+      }
+    gparasite_free (GIF2_CMNT);
+#endif
+
   gtk_entry_set_text (GTK_ENTRY (entry), globalcomment);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
                       (GtkSignalFunc) comment_entry_callback,
@@ -2095,13 +2172,13 @@ save_dialog ( gint32 image_ID )
   /*  additional animated gif parameter settings  */
   frame = gtk_frame_new ("Animated GIF Options");
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
+  gtk_container_border_width (GTK_CONTAINER (frame), 8);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-  vbox = gtk_vbox_new (FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 5);
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
-  toggle = gtk_check_button_new_with_label ("Loop");
+  toggle = gtk_check_button_new_with_label ("Loop forever");
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) save_toggle_update,
@@ -2111,10 +2188,10 @@ save_dialog ( gint32 image_ID )
 
 
   /* default_delay entry field */
-  hbox = gtk_hbox_new (FALSE, 5);
+  hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, FALSE, 0);
 
-  label = gtk_label_new ("Default delay between frames where unspecified: ");
+  label = gtk_label_new ("Delay between frames where unspecified: ");
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -2136,46 +2213,46 @@ save_dialog ( gint32 image_ID )
 
 
   /* Disposal selector */
-  innerframe = gtk_frame_new ("Default disposal where unspecified");
-  gtk_frame_set_shadow_type (GTK_FRAME (innerframe), GTK_SHADOW_IN);
-  gtk_container_border_width (GTK_CONTAINER (innerframe), 10);
-  gtk_box_pack_start (GTK_BOX (vbox), innerframe, TRUE, TRUE, 0);
-  innervbox = gtk_vbox_new (FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (innervbox), 5);
-  gtk_container_add (GTK_CONTAINER (innerframe), innervbox);
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, FALSE, 0);
 
-  toggle = gtk_radio_button_new_with_label (group,"Don't care");
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (innervbox), toggle, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-                      (GtkSignalFunc) save_toggle_update,
-                      &radio_pressed[0]);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), radio_pressed[0]);
-  gtk_widget_show (toggle);
+  label = gtk_label_new ("Frame disposal where unspecified: ");
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
-  toggle = gtk_radio_button_new_with_label (group,"One frame per layer (replace)");
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (innervbox), toggle, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-                      (GtkSignalFunc) save_toggle_update,
-                      &radio_pressed[2]);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), radio_pressed[2]);
-  gtk_widget_show (toggle);
+  disposal_option_menu = gtk_option_menu_new();
+  {
+    GtkWidget *menu_item;
 
-  toggle = gtk_radio_button_new_with_label (group,"Make frame from cumulative layers (combine)");
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (innervbox), toggle, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-                      (GtkSignalFunc) save_toggle_update,
-                      &radio_pressed[1]);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), radio_pressed[1]);
-  gtk_widget_show (toggle);
-  
-  gtk_widget_show (innervbox);
-  gtk_widget_show (innerframe);
+    menu = gtk_menu_new();
+    {
+      menu_item = gtk_menu_item_new_with_label ("I don't care");
+      gtk_signal_connect( GTK_OBJECT(menu_item), "activate",
+			  (GtkSignalFunc) disposal_select_callback,
+			  &radio_pressed[0]);
+      gtk_container_add(GTK_CONTAINER(menu), menu_item);
+      gtk_widget_show(menu_item);
+      menu_item = gtk_menu_item_new_with_label ("Cumulative layers (combine)");
+      gtk_signal_connect( GTK_OBJECT(menu_item), "activate",
+			  (GtkSignalFunc) disposal_select_callback,
+			  &radio_pressed[1]);
+      gtk_container_add(GTK_CONTAINER(menu), menu_item);
+      gtk_widget_show(menu_item);
+      menu_item = gtk_menu_item_new_with_label ("One frame per layer (replace)");
+      gtk_signal_connect( GTK_OBJECT(menu_item), "activate",
+			  (GtkSignalFunc) disposal_select_callback,
+			  &radio_pressed[2]);
+      gtk_container_add(GTK_CONTAINER(menu), menu_item);
+      gtk_widget_show(menu_item);
+    }
+  }
+  gtk_option_menu_set_menu (GTK_OPTION_MENU(disposal_option_menu), menu);
+  gtk_option_menu_set_history(GTK_OPTION_MENU(disposal_option_menu),
+			      gsvals.default_dispose);
+  gtk_widget_show(disposal_option_menu);
+  gtk_box_pack_start(GTK_BOX(hbox), disposal_option_menu, TRUE, TRUE, 2);
 
-
-
+  gtk_widget_show (hbox);
   gtk_widget_show (vbox);
 
   /* If the image has only one layer it can't be animated, so
@@ -2219,7 +2296,7 @@ colorstobpp (int colors)
     bpp = 8;
   else
     {
-      g_warning ("GIF: colorstobpp - Eep! too many colors: %d\n", colors);
+      g_warning ("GIF: colorstobpp - Eep! too many colours: %d\n", colors);
       return 8;
     }
 
@@ -2240,7 +2317,6 @@ bpptocolors (int bpp)
     }
   
   colors = 1 << bpp;
-  /*  printf(">> %dbpp is %d colours <<\n", bpp, colors); */
 
   return (colors);
 }
@@ -2268,7 +2344,6 @@ static int Width, Height;
 static int curx, cury;
 static long CountDown;
 static int Pass = 0;
-static int Interlace;
 
 /*
  * Bump the 'curx' and 'cury' to point to the next pixel
@@ -2279,7 +2354,7 @@ BumpPixel ()
   /*
    * Bump the current X position
    */
-  ++curx;
+  curx++;
 
   /*
    * If we are at the end of a scan line, set curx back to the beginning
@@ -2305,7 +2380,7 @@ BumpPixel ()
 	      cury += 8;
 	      if (cury >= Height)
 		{
-		  ++Pass;
+		  Pass++;
 		  cury = 4;
 		}
 	      break;
@@ -2314,7 +2389,7 @@ BumpPixel ()
 	      cury += 8;
 	      if (cury >= Height)
 		{
-		  ++Pass;
+		  Pass++;
 		  cury = 2;
 		}
 	      break;
@@ -2323,7 +2398,7 @@ BumpPixel ()
 	      cury += 4;
 	      if (cury >= Height)
 		{
-		  ++Pass;
+		  Pass++;
 		  cury = 1;
 		}
 	      break;
@@ -2363,9 +2438,7 @@ GIFEncodeHeader (FILE    *fp,
 		 gboolean gif89,
 		 int      GWidth,
 		 int      GHeight,
-		 int      GInterlace,
 		 int      Background,
-		 int      Transparent,
 		 int      BitsPerPixel,
 		 int      Red[],
 		 int      Green[],
@@ -2379,8 +2452,6 @@ GIFEncodeHeader (FILE    *fp,
   int ColorMapSize;
   int InitCodeSize;
   int i;
-
-  Interlace = GInterlace;
 
   ColorMapSize = 1 << BitsPerPixel;
 
@@ -2457,7 +2528,7 @@ GIFEncodeHeader (FILE    *fp,
   /*
    * Write out the Global Colour Map
    */
-  for (i = 0; i < ColorMapSize; ++i)
+  for (i = 0; i < ColorMapSize; i++)
     {
       fputc (Red[i], fp);
       fputc (Green[i], fp);
@@ -2473,7 +2544,6 @@ GIFEncodeGraphicControlExt (FILE    *fp,
 			    int      NumFramesInImage,
 			    int      GWidth,
 			    int      GHeight,
-			    int      GInterlace,
 			    int      Background,
 			    int      Transparent,
 			    int      BitsPerPixel,
@@ -2487,8 +2557,6 @@ GIFEncodeGraphicControlExt (FILE    *fp,
   int Resolution;
   int ColorMapSize;
   int InitCodeSize;
-
-  Interlace = GInterlace;
 
   ColorMapSize = 1 << BitsPerPixel;
 
@@ -2742,16 +2810,6 @@ GIFEncodeClose (FILE    *fp,
 
 static void
 GIFEncodeLoopExt (FILE    *fp,
-		  int      GWidth,
-		  int      GHeight,
-		  int      GInterlace,
-		  int      Background,
-		  int      Transparent,
-		  int      BitsPerPixel,
-		  int      Red[],
-		  int      Green[],
-		  int      Blue[],
-		  ifunptr  GetPixel,
 		  guint    num_loops)
 {
   fputc(0x21,fp);
@@ -3280,6 +3338,18 @@ save_windelete_callback (GtkWidget *widget,
 			 gpointer   data)
 {
   gsint.run = FALSE;
+}
+
+static void
+disposal_select_callback (GtkWidget *widget,
+			  gpointer   data)
+{
+  int* valptr;
+
+  valptr = (int*) data;
+
+  radio_pressed[0] = radio_pressed[1] = radio_pressed[2] = 0;
+  *valptr = 1;
 }
 
 static void

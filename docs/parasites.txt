@@ -1,0 +1,31 @@
+
+PARASITE REGISTRY - 1998/10/09
+=================
+
+This document is designed for the convenience of GIMP developers.
+It does not need to concern users.
+
+If your plugin or script writes parasites, please amend this file.
+
+
+------------------------------------------------------------------
+*** CREATORS:
+
+"GIF2" : The standard GIMP GIF plugin
+"tiff" : The standard GIMP TIFF plugin
+
+
+------------------------------------------------------------------
+*** CREATOR / TYPE:
+
+"GIF2" / "CMNT" : Standard GIF-style comments.  This parasite is
+                  human-readable text in unspecified 8-bit ASCII.  It
+                  includes a trailing \0 string terminator.  The size
+                  of the parasite data may not exceed 241 bytes.
+                  This parasite attaches to images only.
+
+"tiff" / "sopt" : The TiffSaveVals structure from the TIFF plugin.
+                  This parasite attaches to images only.
+
+
+------------------------------------------------------------------
