@@ -1,5 +1,9 @@
 2003-11-21  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/makefile.msc: s/gimpfileselection/gimpfileentry/ 
+
+2003-11-21  Sven Neumann  <sven@gimp.org>
+
 	* modules/cdisplay_proof.c: use a table to align the widgets.
 
 2003-11-21  Sven Neumann  <sven@gimp.org>

@@ -49,7 +49,7 @@ OBJECTS = \
 	gimpcolorselection.obj \
 	gimpcolorselector.obj \
 	gimpdialog.obj \
-	gimpfileselection.obj \
+	gimpfileentry.obj \
 	gimphelpui.obj \
 	gimpmemsizeentry.obj \
 	gimpoffsetarea.obj \
