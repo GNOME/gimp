@@ -132,7 +132,7 @@ ProcArg drawable_fill_args[] =
   },
   { PDB_INT32,
     "fill_type",
-    "type of fill: { BG-IMAGE-FILL (0), WHITE-IMAGE-FILL (1), TRANS-IMAGE-FILL (2) }"
+    "type of fill: { FG-IMAGE-FILL (0), BG-IMAGE-FILL (1), WHITE-IMAGE-FILL (2), TRANS-IMAGE-FILL (3), NO-IMAGE-FILL (4) }"
   }
 };
 

@@ -1,3 +1,11 @@
+Sat Oct 31 01:37:23 CET 1998 Marc Lehmann <pcg@goof.com>
+
+        * configure.in: make perl use the GLIB_CFLAGS/LIBS vars properly.
+
+Tue Oct  6 11:07:56 CEST 1998 Marc Lehmann <pcg@goof.com>
+
+        * app/drawable_cmds.c: corrected documentation for gimp_drawable_fill.
+        
 Fri Oct 30 01:53:56 1998  Jay Cox  (jaycox@earthlink.net)
 
 	* app/parasitelist.c
