@@ -61,10 +61,10 @@ gimpressionist_sources = \
 	utils.c
 
 gimpressionist_built_sources = logo-pixbuf.h
-gimpressionist.c: logo-pixbuf.h
+gimpressionist.c: $(gimpressionist_built_sources)
 
 gimpressionist_SOURCES = \
-	$(gimppessionist_built_sources) $(gimpressionist_sources)
+	$(gimpressionist_built_sources) $(gimpressionist_sources)
 
 
 LDADD = \

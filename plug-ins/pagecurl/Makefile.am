@@ -17,16 +17,14 @@ libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = pagecurl
 
+pagecurl_sources = pagecurl.c
+
+pagecurl_built_sources = pagecurl-icons.h
+pagecurl.c: $(pagecurl_built_sources)
+
 pagecurl_SOURCES = \
-	pagecurl.c	\
-	curl0.xpm	\
-	curl1.xpm	\
-	curl2.xpm	\
-	curl3.xpm	\
-	curl4.xpm	\
-	curl5.xpm	\
-	curl6.xpm	\
-	curl7.xpm
+	$(pagecurl_built_sources) $(pagecurl_sources)
+
 
 INCLUDES = \
 	-I$(top_srcdir)	\
@@ -43,3 +41,29 @@ LDADD = \
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
+
+
+PAGECURL_IMAGES = \
+	curl0.png	\
+	curl1.png	\
+	curl2.png	\
+	curl3.png	\
+	curl4.png	\
+	curl5.png	\
+	curl6.png	\
+	curl7.png
+
+EXTRA_DIST = $(PAGECURL_IMAGES)
+
+CLEANFILES = $(pagecurl_built_sources) pagecurl-icons.list
+
+pagecurl-icons.list: $(PAGECURL_IMAGES) Makefile.am
+	( rm -f $@; \
+          for image in $(PAGECURL_IMAGES); do \
+            echo $$image | \
+              sed -e 's|.*/||' -e 's|-|_|g' -e 's|\.png$$||' >> $@; \
+	    echo "  $(srcdir)/$$image" >> $@; \
+	  done )
+
+$(srcdir)/pagecurl-icons.h: pagecurl-icons.list
+	gdk-pixbuf-csource --raw --build-list `cat pagecurl-icons.list` > $(@F)

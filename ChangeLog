@@ -1,3 +1,12 @@
+2004-11-14  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/gimpressionist/Makefile.am: fixed typo.
+
+	* plug-ins/pagecurl/Makefile.am
+	* plug-ins/pagecurl/curl[0-7].png: added PNG versions of the XPM
+	icons used by the PageCurl plug-in. Added rules to build a header
+	file that can be used to get rid of the XPM files (bug #140202).
+
 2004-11-14  Philip Lafleur  <plafleur@cvs.gnome.org>
 
 	* app/display/gimpdisplayshell-preview.c: Eliminated about 96
