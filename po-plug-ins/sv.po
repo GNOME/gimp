@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2003-05-31 11:57+0200\n"
-"PO-Revision-Date: 2003-04-31 12:02+0200\n"
+"POT-Creation-Date: 2003-06-06 11:20+0200\n"
+"PO-Revision-Date: 2003-06-06 11:22+0200\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -29,7 +29,7 @@ msgstr "Om"
 #: plug-ins/MapObject/mapobject_ui.c:1402 plug-ins/common/CML_explorer.c:1191
 #: plug-ins/common/blinds.c:339 plug-ins/common/curve_bend.c:1378
 #: plug-ins/common/destripe.c:578 plug-ins/common/emboss.c:722
-#: plug-ins/common/fractaltrace.c:776 plug-ins/common/grid.c:664
+#: plug-ins/common/fractaltrace.c:776 plug-ins/common/grid.c:671
 #: plug-ins/common/iwarp.c:1208 plug-ins/common/mapcolor.c:578
 #: plug-ins/common/nlfilt.c:466 plug-ins/common/polar.c:821
 #: plug-ins/common/sharpen.c:557 plug-ins/common/sinus.c:2047
@@ -1124,7 +1124,7 @@ msgstr "%s: felaktig färgkarta"
 #. must check file size
 #: plug-ins/bmp/bmpread.c:93 plug-ins/common/CEL.c:256
 #: plug-ins/common/gbr.c:294 plug-ins/common/gih.c:623
-#: plug-ins/common/gifload.c:296 plug-ins/common/hrz.c:331
+#: plug-ins/common/gifload.c:300 plug-ins/common/hrz.c:331
 #: plug-ins/common/jpeg.c:738 plug-ins/common/pat.c:262
 #: plug-ins/common/pcx.c:297 plug-ins/common/pix.c:327
 #: plug-ins/common/png.c:480 plug-ins/common/png.c:482
@@ -1133,7 +1133,7 @@ msgstr "%s: felaktig färgkarta"
 #: plug-ins/common/xbm.c:738 plug-ins/common/xpm.c:334
 #: plug-ins/common/xwd.c:434 plug-ins/faxg3/faxg3.c:195
 #: plug-ins/gfli/gfli.c:451 plug-ins/sgi/sgi.c:323 plug-ins/sgi/sgi.c:325
-#: plug-ins/xjt/xjt.c:3263
+#: plug-ins/xjt/xjt.c:3324
 #, c-format
 msgid "Loading %s:"
 msgstr "Läser in %s:"
@@ -1162,8 +1162,8 @@ msgstr "%s: fel vid läsning av BMP-filhuvud"
 #: plug-ins/bmp/bmpread.c:331 plug-ins/bmp/bmpread.c:338
 #: plug-ins/bmp/bmpread.c:345 plug-ins/common/CEL.c:294
 #: plug-ins/common/blinds.c:376 plug-ins/common/compose.c:604
-#: plug-ins/common/decompose.c:501 plug-ins/common/film.c:983
-#: plug-ins/common/gifload.c:841 plug-ins/common/hrz.c:372
+#: plug-ins/common/decompose.c:501 plug-ins/common/film.c:984
+#: plug-ins/common/gifload.c:857 plug-ins/common/hrz.c:372
 #: plug-ins/common/jpeg.c:892 plug-ins/common/pat.c:337
 #: plug-ins/common/pcx.c:328 plug-ins/common/pcx.c:334
 #: plug-ins/common/pix.c:371 plug-ins/common/png.c:607
@@ -1174,7 +1174,7 @@ msgstr "%s: fel vid läsning av BMP-filhuvud"
 #: plug-ins/common/wmf.c:2140 plug-ins/common/xbm.c:876
 #: plug-ins/faxg3/faxg3.c:447 plug-ins/fits/fits.c:514
 #: plug-ins/gfig/gfig.c:2728 plug-ins/gfig/gfig.c:3085 plug-ins/sgi/sgi.c:371
-#: plug-ins/twain/twain.c:742 plug-ins/winsnap/winsnap.c:1235
+#: plug-ins/twain/twain.c:742 plug-ins/winsnap/winsnap.c:1233
 msgid "Background"
 msgstr "Bakgrund"
 
@@ -1199,7 +1199,7 @@ msgstr "Kan inte öppna %s"
 #: plug-ins/common/tga.c:1013 plug-ins/common/tiff.c:1394
 #: plug-ins/common/xbm.c:986 plug-ins/common/xpm.c:595
 #: plug-ins/common/xwd.c:538 plug-ins/fits/fits.c:465 plug-ins/gfli/gfli.c:673
-#: plug-ins/sgi/sgi.c:541 plug-ins/sgi/sgi.c:543 plug-ins/xjt/xjt.c:1645
+#: plug-ins/sgi/sgi.c:541 plug-ins/sgi/sgi.c:543 plug-ins/xjt/xjt.c:1706
 #, c-format
 msgid "Saving %s:"
 msgstr "Sparar %s:"
@@ -1707,7 +1707,7 @@ msgstr "Mä_ttnad"
 msgid "_Value"
 msgstr "_Värde"
 
-#: plug-ins/common/CML_explorer.c:1287 plug-ins/common/film.c:1318
+#: plug-ins/common/CML_explorer.c:1287
 msgid "_Advanced"
 msgstr "_Avancerat"
 
@@ -1954,7 +1954,7 @@ msgstr "Justera synliga lager"
 #: plug-ins/common/destripe.c:639 plug-ins/common/edge.c:434
 #: plug-ins/common/emboss.c:542 plug-ins/common/engrave.c:234
 #: plug-ins/common/gauss_iir.c:368 plug-ins/common/gauss_rle.c:362
-#: plug-ins/common/glasstile.c:265 plug-ins/common/grid.c:709
+#: plug-ins/common/glasstile.c:265 plug-ins/common/grid.c:699
 #: plug-ins/common/illusion.c:422 plug-ins/common/jpeg.c:1659
 #: plug-ins/common/lic.c:771 plug-ins/common/max_rgb.c:285
 #: plug-ins/common/nlfilt.c:376 plug-ins/common/noisify.c:337
@@ -1971,7 +1971,7 @@ msgstr "Justera synliga lager"
 #: plug-ins/common/vpropagate.c:1085 plug-ins/common/waves.c:359
 #: plug-ins/common/whirlpinch.c:695 plug-ins/common/wind.c:912
 #: plug-ins/common/xpm.c:763 plug-ins/maze/maze_face.c:205
-#: plug-ins/mosaic/mosaic.c:672 plug-ins/xjt/xjt.c:818
+#: plug-ins/mosaic/mosaic.c:672 plug-ins/xjt/xjt.c:872
 msgid "Parameter Settings"
 msgstr "Parameterinställningar"
 
@@ -3323,7 +3323,7 @@ msgstr "Gravera"
 msgid "_Limit Line Width"
 msgstr "_Begränsa linjebredd"
 
-#: plug-ins/common/engrave.c:255 plug-ins/common/film.c:1194
+#: plug-ins/common/engrave.c:255 plug-ins/common/film.c:1198
 #: plug-ins/common/gtm.c:578 plug-ins/common/ps.c:2670
 #: plug-ins/common/ps.c:2846 plug-ins/common/smooth_palette.c:452
 #: plug-ins/common/tile.c:430 plug-ins/imagemap/imap_cmd_guides.c:169
@@ -3380,126 +3380,119 @@ msgstr "Blått tröskelvärde:"
 msgid "Lock Thresholds"
 msgstr "Lås tröskelvärden"
 
-#: plug-ins/common/film.c:256
+#: plug-ins/common/film.c:257
 msgid "<Image>/Filters/Combine/Film..."
 msgstr "<Image>/Filter/Kombinera/Film..."
 
-#: plug-ins/common/film.c:342
+#: plug-ins/common/film.c:343
 msgid "Composing Images..."
 msgstr "Kombinerar bilder..."
 
-#: plug-ins/common/film.c:453 plug-ins/common/guillotine.c:176
+#: plug-ins/common/film.c:454 plug-ins/common/guillotine.c:176
 msgid "Untitled"
 msgstr "Namnlös"
 
 #. ** Get a RGB copy of the source region **
-#: plug-ins/common/film.c:721
+#: plug-ins/common/film.c:722
 msgid "Temporary"
 msgstr "Tillfällig"
 
-#: plug-ins/common/film.c:1092
+#: plug-ins/common/film.c:1094
 msgid "Available Images:"
 msgstr "Tillgängliga bilder:"
 
-#: plug-ins/common/film.c:1093
+#: plug-ins/common/film.c:1095
 msgid "On Film:"
 msgstr "På film:"
 
-#: plug-ins/common/film.c:1124
-msgid "Add >>"
-msgstr "Lägg till >>"
-
-#: plug-ins/common/film.c:1124
-msgid "Remove"
-msgstr "Ta bort"
-
-#: plug-ins/common/film.c:1158
+#: plug-ins/common/film.c:1162
 msgid "_Selection"
 msgstr "_Markering"
 
 #. Film height/colour
-#: plug-ins/common/film.c:1166 plug-ins/common/film.c:1436
+#: plug-ins/common/film.c:1170 plug-ins/common/film.c:1453
 msgid "Film"
 msgstr "Film"
 
 #. Keep maximum image height
-#: plug-ins/common/film.c:1176
+#: plug-ins/common/film.c:1180
 msgid "_Fit Height to Images"
 msgstr "_Anpassa höjden till bilderna"
 
 #. Film color
-#: plug-ins/common/film.c:1210
+#: plug-ins/common/film.c:1214
 msgid "Select Film Color"
 msgstr "Välj filmfärg"
 
-#: plug-ins/common/film.c:1215 plug-ins/common/nova.c:365
+#: plug-ins/common/film.c:1219 plug-ins/common/film.c:1268
+#: plug-ins/common/nova.c:365
 msgid "Co_lor:"
 msgstr "F_ärg:"
 
 #. Film numbering: Startindex/Font/colour
-#: plug-ins/common/film.c:1223
+#: plug-ins/common/film.c:1227
 msgid "Numbering"
 msgstr "Numrering"
 
-#: plug-ins/common/film.c:1242
-msgid "St_art Index:"
+#: plug-ins/common/film.c:1246
+msgid "Start _Index:"
 msgstr "S_tartindex:"
 
-#: plug-ins/common/film.c:1254
+#: plug-ins/common/film.c:1259
 msgid "_Font:"
 msgstr "_Typsnitt:"
 
 #. Numbering color
-#: plug-ins/common/film.c:1258
+#: plug-ins/common/film.c:1263
 msgid "Select Number Color"
 msgstr "Välj färgnummer"
 
-#: plug-ins/common/film.c:1263
-msgid "Colo_r:"
-msgstr "Fä_rg:"
-
-#: plug-ins/common/film.c:1273
+#: plug-ins/common/film.c:1277
 msgid "At _Bottom"
 msgstr "I _botten"
 
-#: plug-ins/common/film.c:1274
+#: plug-ins/common/film.c:1278
 msgid "At _Top"
 msgstr "På _topp"
 
 #. ** The right frame keeps the image selection **
-#: plug-ins/common/film.c:1287
+#: plug-ins/common/film.c:1291
 msgid "Image Selection"
 msgstr "Bildval"
 
 #: plug-ins/common/film.c:1321
-msgid "Advanced Settings (All Values are Fractions of the Film Height)"
-msgstr "Avancerade inställningar (alla värden är andelar av filmhöjden)"
+msgid "All Values are Fractions of the Film Heigh"
+msgstr "Alla värden är i delar av filmhöjden"
 
-#: plug-ins/common/film.c:1337
+#: plug-ins/common/film.c:1324
+msgid "Ad_vanced"
+msgstr "A_vancerat"
+
+#: plug-ins/common/film.c:1342
 msgid "Image _Height:"
 msgstr "Bild_höjd:"
 
-#: plug-ins/common/film.c:1348
+#: plug-ins/common/film.c:1353
 msgid "Image Spac_ing:"
 msgstr "Bild_mellanrum:"
 
-#: plug-ins/common/film.c:1366
+#: plug-ins/common/film.c:1371
 msgid "_Hole Offset:"
 msgstr "_Håloffset:"
 
-#: plug-ins/common/film.c:1377
+#: plug-ins/common/film.c:1382
 msgid "Ho_le Width:"
 msgstr "H_ålbredd:"
 
-#: plug-ins/common/film.c:1388
+#: plug-ins/common/film.c:1393
 msgid "Hol_e Height:"
 msgstr "Hå_lhöjd:"
 
-#: plug-ins/common/film.c:1399
+#: plug-ins/common/film.c:1404
 msgid "Hole Sp_acing:"
 msgstr "Hål_avstånd:"
 
-#: plug-ins/common/film.c:1417
+#: plug-ins/common/film.c:1422
 msgid "_Number Height:"
 msgstr "_Sifferhöjd:"
 
@@ -3869,18 +3862,18 @@ msgstr "Ranger:"
 msgid "Selection:"
 msgstr "Markering:"
 
-#: plug-ins/common/gifload.c:843
+#: plug-ins/common/gifload.c:859
 #, c-format
 msgid "Background (%dms)"
 msgstr "Bakgrund (%d ms)"
 
-#: plug-ins/common/gifload.c:891 plug-ins/common/iwarp.c:766
+#: plug-ins/common/gifload.c:907 plug-ins/common/iwarp.c:766
 #: plug-ins/common/iwarp.c:791
 #, c-format
 msgid "Frame %d"
 msgstr "Bildruta %d"
 
-#: plug-ins/common/gifload.c:893
+#: plug-ins/common/gifload.c:909
 #, c-format
 msgid "Frame %d (%dms)"
 msgstr "Bildruta %d (%d ms)"
@@ -3941,52 +3934,48 @@ msgstr "<Image>/Filter/Rendera/Mönster/Rutnät..."
 msgid "Drawing Grid..."
 msgstr "Ritar rutnät..."
 
-#: plug-ins/common/grid.c:638 plug-ins/gfig/gfig.c:3291
+#: plug-ins/common/grid.c:644 plug-ins/gfig/gfig.c:3291
 #: plug-ins/imagemap/imap_menu.c:382 plug-ins/imagemap/imap_popup.c:153
 #: plug-ins/imagemap/imap_stock.c:47 plug-ins/imagemap/imap_toolbar.c:162
 msgid "Grid"
 msgstr "Rutnät"
 
-#: plug-ins/common/grid.c:695
-msgid "Update Preview"
-msgstr "Uppdatera förhandsgranskning"
-
 #. attach labels
-#: plug-ins/common/grid.c:759 plug-ins/pagecurl/pagecurl.c:594
+#: plug-ins/common/grid.c:748 plug-ins/pagecurl/pagecurl.c:594
 msgid "Horizontal"
 msgstr "Horisontell"
 
-#: plug-ins/common/grid.c:761 plug-ins/pagecurl/pagecurl.c:595
+#: plug-ins/common/grid.c:750 plug-ins/pagecurl/pagecurl.c:595
 msgid "Vertical"
 msgstr "Vertikal"
 
-#: plug-ins/common/grid.c:763
+#: plug-ins/common/grid.c:752
 msgid "Intersection"
 msgstr "Skärningspunkt"
 
-#: plug-ins/common/grid.c:765
+#: plug-ins/common/grid.c:754
 msgid "Width: "
 msgstr "Bredd: "
 
 #. attach labels
-#: plug-ins/common/grid.c:826
+#: plug-ins/common/grid.c:814
 msgid "Spacing: "
 msgstr "Mellanrum: "
 
 #. attach labels
-#: plug-ins/common/grid.c:891
+#: plug-ins/common/grid.c:878
 msgid "Offset: "
 msgstr "Offset: "
 
-#: plug-ins/common/grid.c:930
+#: plug-ins/common/grid.c:917
 msgid "Horizontal Color"
 msgstr "Horisontell färg"
 
-#: plug-ins/common/grid.c:949
+#: plug-ins/common/grid.c:935
 msgid "Vertical Color"
 msgstr "Vertikal färg"
 
-#: plug-ins/common/grid.c:967
+#: plug-ins/common/grid.c:953
 msgid "Intersection Color"
 msgstr "Skärningspunktsfärg"
 
@@ -4382,11 +4371,11 @@ msgstr "Förhandsgranska bild"
 msgid "Preview (in image window, will modify image's undo history!)"
 msgstr "Förhandsgranska (i bildfönstret; ändrar bildens ångrahistorik!)"
 
-#: plug-ins/common/jpeg.c:1669 plug-ins/xjt/xjt.c:851
+#: plug-ins/common/jpeg.c:1669 plug-ins/xjt/xjt.c:905
 msgid "Quality:"
 msgstr "Kvalitet:"
 
-#: plug-ins/common/jpeg.c:1692 plug-ins/xjt/xjt.c:860
+#: plug-ins/common/jpeg.c:1692 plug-ins/xjt/xjt.c:914
 msgid "Smoothing:"
 msgstr "Utjämnande:"
 
@@ -4398,7 +4387,7 @@ msgstr "Omstartsmarkörer"
 msgid "Restart frequency (rows):"
 msgstr "Omstartsfrekvens (rader):"
 
-#: plug-ins/common/jpeg.c:1758 plug-ins/xjt/xjt.c:829
+#: plug-ins/common/jpeg.c:1758 plug-ins/xjt/xjt.c:883
 msgid "Optimize"
 msgstr "Optimera"
 
@@ -5773,7 +5762,7 @@ msgstr "_Mättnad:"
 msgid "_Value:"
 msgstr "_Värde:"
 
-#: plug-ins/common/screenshot.c:135 plug-ins/winsnap/winsnap.c:1074
+#: plug-ins/common/screenshot.c:135 plug-ins/winsnap/winsnap.c:1072
 msgid "<Toolbox>/File/Acquire/Screen Shot..."
 msgstr "<Toolbox>/Arkiv/Inhämta/Skärmdump..."
 
@@ -5783,7 +5772,7 @@ msgid "Screen Shot"
 msgstr "Skärmdump"
 
 #. single window
-#: plug-ins/common/screenshot.c:406 plug-ins/winsnap/winsnap.c:903
+#: plug-ins/common/screenshot.c:406 plug-ins/winsnap/winsnap.c:901
 msgid "Grab"
 msgstr "Fånga"
 
@@ -5803,7 +5792,7 @@ msgstr "_Hela skärmen"
 msgid "_after"
 msgstr "_efter"
 
-#: plug-ins/common/screenshot.c:484 plug-ins/winsnap/winsnap.c:1020
+#: plug-ins/common/screenshot.c:484 plug-ins/winsnap/winsnap.c:1018
 msgid "Seconds Delay"
 msgstr "sekunders fördröjning"
 
@@ -11332,102 +11321,114 @@ msgstr "Fönster:"
 msgid "Current"
 msgstr "Nuvarande"
 
-#: plug-ins/winsnap/winsnap.c:946
+#: plug-ins/winsnap/winsnap.c:944
 msgid "Grab a single window"
 msgstr "Fånga ett fönster"
 
-#: plug-ins/winsnap/winsnap.c:957
+#: plug-ins/winsnap/winsnap.c:955
 msgid "Include decorations"
 msgstr "Ta med fönsterkanten"
 
-#: plug-ins/winsnap/winsnap.c:993
+#: plug-ins/winsnap/winsnap.c:991
 msgid "Grab the whole screen"
 msgstr "Fånga hela skärmbilden"
 
-#: plug-ins/winsnap/winsnap.c:1011
+#: plug-ins/winsnap/winsnap.c:1009
 msgid "after"
 msgstr "efter"
 
-#: plug-ins/winsnap/winsnap.c:1222
+#: plug-ins/winsnap/winsnap.c:1220
 msgid "No data captured"
 msgstr "Inga data fångade"
 
-#: plug-ins/xjt/xjt.c:670
+#: plug-ins/xjt/xjt.c:724
 #, c-format
 msgid "XJT file contains unknown layermode %d"
 msgstr "XJT-fil innehåller okänt lagerläge %d"
 
-#: plug-ins/xjt/xjt.c:707
+#: plug-ins/xjt/xjt.c:761
 #, c-format
 msgid "Warning: unsupported layermode %d saved to XJT"
 msgstr "Varning: lagerläge %d, som inte stöds, sparad till XJT"
 
-#: plug-ins/xjt/xjt.c:723
+#: plug-ins/xjt/xjt.c:777
 #, c-format
 msgid "XJT file contains unknown pathtype %d"
 msgstr "XJT-fil innehåller okänd slingtyp %d"
 
-#: plug-ins/xjt/xjt.c:739
+#: plug-ins/xjt/xjt.c:793
 #, c-format
 msgid "Warning: unsupported pathtype %d saved to XJT"
 msgstr "Varning: slingväg %d, som inte stöds, sparad till XJT"
 
-#: plug-ins/xjt/xjt.c:759
+#: plug-ins/xjt/xjt.c:813
 #, c-format
 msgid "XJT file contains unknown unittype %d"
 msgstr "XJT-fil innehåller okänd enhetstyp %d"
 
-#: plug-ins/xjt/xjt.c:780
+#: plug-ins/xjt/xjt.c:834
 #, c-format
 msgid "Warning: unsupported unittype %d saved to XJT"
 msgstr "Varning: ej stödd enhetstyp %d sparad till XJT"
 
-#: plug-ins/xjt/xjt.c:801
+#: plug-ins/xjt/xjt.c:855
 msgid "Save as XJT"
 msgstr "Spara som XJT"
 
-#: plug-ins/xjt/xjt.c:839
+#: plug-ins/xjt/xjt.c:893
 msgid "Clear Transparent"
 msgstr "Rensa transparent"
 
-#: plug-ins/xjt/xjt.c:1235
+#: plug-ins/xjt/xjt.c:1296
 #, c-format
 msgid "Can't open (write): %s"
 msgstr "Kan ej öppna (skriva): %s"
 
-#: plug-ins/xjt/xjt.c:1636
+#: plug-ins/xjt/xjt.c:1697
 msgid "xjt: cannot operate on indexed color images"
 msgstr "xjt: kan inte arbeta med indexerade färgbilder"
 
-#: plug-ins/xjt/xjt.c:1640
+#: plug-ins/xjt/xjt.c:1701
 msgid "xjt: cannot operate on unknown image types"
 msgstr "xjt: Kan inte arbeta med okända bildtyper"
 
-#: plug-ins/xjt/xjt.c:1655 plug-ins/xjt/xjt.c:3273
+#: plug-ins/xjt/xjt.c:1716 plug-ins/xjt/xjt.c:3334
 #, c-format
 msgid "Can't create working dir: %s"
 msgstr "Kan inte skapa arbetskatalog: %s"
 
-#: plug-ins/xjt/xjt.c:1664
+#: plug-ins/xjt/xjt.c:1725
 #, c-format
 msgid "Can't open: %s"
 msgstr "Kan ej öppna: %s"
 
 #. stat error (file does not exist)
-#: plug-ins/xjt/xjt.c:2485 plug-ins/xjt/xjt.c:2492
+#: plug-ins/xjt/xjt.c:2546 plug-ins/xjt/xjt.c:2553
 #, c-format
 msgid "Can't open (read): %s"
 msgstr "Kan ej öppna (läsa): %s"
 
-#: plug-ins/xjt/xjt.c:3136
+#: plug-ins/xjt/xjt.c:3197
 #, c-format
 msgid "Error: Can't read XJT propertyfile %s"
 msgstr "Fel: Kan ej läsa XJT egenskapsfil %s"
 
-#: plug-ins/xjt/xjt.c:3141
+#: plug-ins/xjt/xjt.c:3202
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Fel: XJT egenskapsfil %s är tom"
+
+#~ msgid "Add >>"
+#~ msgstr "Lägg till >>"
+
+#~ msgid "Remove"
+#~ msgstr "Ta bort"
+
+#~ msgid "Colo_r:"
+#~ msgstr "Fä_rg:"
+
+#~ msgid "Update Preview"
+#~ msgstr "Uppdatera förhandsgranskning"
 
 #~ msgid ""
 #~ "C_reate\n"
