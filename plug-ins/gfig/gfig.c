@@ -710,7 +710,8 @@ run (gchar    *name,
   tile_height = gimp_tile_height ();
 
   /* TMP Hack - clear any selections */
-  gimp_selection_clear (gfig_image);
+  if (! gimp_selection_is_empty (gfig_image))
+    gimp_selection_clear (gfig_image);
 
   gimp_drawable_mask_bounds (drawable->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
@@ -4727,6 +4728,8 @@ gfig_paint_callback (GtkWidget *widget,
   if (bdesc)
     mygimp_brush_set (bdesc->bname);
 
+  gimp_undo_push_group_start (gfig_image);
+
   while (objs)
     {
 
@@ -4784,6 +4787,8 @@ gfig_paint_callback (GtkWidget *widget,
       && selopt.fill_when == FILL_AFTER)
     paint_layer_fill ();
 
+  gimp_undo_push_group_end (gfig_image);
+  
   gimp_displays_flush ();
 }
 
