@@ -77,7 +77,6 @@ typedef struct
   gdouble  intsteps;
   gdouble  minv;
   gdouble  maxv;
-  gboolean create_new_image;
   gint     effect_channel;
   gint     effect_operator;
   gint     effect_convolve;
@@ -620,26 +619,7 @@ compute_lic (gboolean rotate)
 static void
 compute_image (void)
 {
-  gint32 new_image_id = -1, new_layer_id = -1;
   GimpDrawable *effect;
-
-  if (licvals.create_new_image)
-    {
-      /* Create a new image */
-      /* ================== */
-
-      new_image_id = gimp_image_new (width, height, GIMP_RGB);
-      gimp_image_undo_disable (new_image_id);
-      
-      /* Create a "normal" layer */
-      /* ======================= */
-
-      new_layer_id = gimp_layer_new (new_image_id, _("Background"),
-				     width, height, GIMP_RGB_IMAGE,
-				     100.0, GIMP_NORMAL_MODE);
-      gimp_image_add_layer (new_image_id, new_layer_id, 0);
-      output_drawable = gimp_drawable_get (new_layer_id);
-    }
 
   gimp_pixel_rgn_init (&dest_region, output_drawable,
 		       0, 0, width, height, TRUE, TRUE);
@@ -680,13 +660,6 @@ compute_image (void)
   gimp_drawable_flush (output_drawable);
   gimp_drawable_merge_shadow (output_drawable->drawable_id, TRUE);
   gimp_drawable_update (output_drawable->drawable_id, 0, 0, width, height);
-
-  if (new_image_id != -1)
-    {
-      gimp_display_new (new_image_id);
-      gimp_drawable_detach (output_drawable);
-      gimp_image_undo_enable (new_image_id);
-    }
 
   gimp_displays_flush ();
 }
@@ -734,7 +707,6 @@ create_main_dialog (void)
   GtkWidget *table;
   GtkWidget *option_menu;
   GtkWidget *menu;
-  GtkWidget *button;
   GtkObject *scale_data;
   gint       row;
   
@@ -758,26 +730,6 @@ create_main_dialog (void)
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
-
-  frame = gtk_frame_new (_("Options"));
-  gtk_container_add (GTK_CONTAINER (hbox), frame);
-  gtk_widget_show (frame);
-
-  vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
-  
-  button = gtk_check_button_new_with_mnemonic (_("C_reate\nNew Image"));
-  gtk_label_set_justify (GTK_LABEL (GTK_BIN (button)->child), GTK_JUSTIFY_LEFT);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                licvals.create_new_image);
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &licvals.create_new_image);
 
   frame = gimp_radio_group_new2 (TRUE, _("Effect Channel"),
 				 G_CALLBACK (gimp_radio_button_update),
@@ -919,7 +871,6 @@ set_default_settings (void)
   licvals.intsteps         = 25;
   licvals.minv             = -25;
   licvals.maxv             = 25;
-  licvals.create_new_image = TRUE;  
   licvals.effect_channel   = 2;
   licvals.effect_operator  = 1;
   licvals.effect_convolve  = 1;

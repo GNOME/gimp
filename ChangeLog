@@ -1,3 +1,8 @@
+2003-05-30  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/lic.c: removed the possibility to let the
+	plug-in create a new image (see bug #113615).
+
 2003-05-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/main.c (main): removed the calls to g_log_set_handler().
