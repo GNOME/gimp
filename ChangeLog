@@ -1,5 +1,23 @@
 2001-05-01  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimpdnd.[ch]: Made file/url DND work like the other DND types.
+	The drop callback gets passed a GList of filenames.
+	Provide a default callback which calls file_open_with_display()
+	for each filename.
+
+	* app/docindex.c: changed accordingly.
+
+	* app/gui/toolbox.c: same file DND changes and made dropping
+	drawables work again with the new DND system.
+
+	* app/widgets/gimpdrawablelistview.c: properly disconnect from the
+	image in "destroy".
+
+	* app/widgets/gimplayerlistitem.c: gtk_signal_connect_while_alive()
+	to the layer's "mask_changed" signal.
+
+2001-05-01  Michael Natterer  <mitch@gimp.org>
+
 	* app/app_procs.c: removed more GUI initialisation code.
 
 	* app/color_transfer.c: removed useless includes.
@@ -12,9 +30,14 @@
 	* app/gui/dialogs.h: removed "extern" declaration of non-existant
 	variable.
 
-	* app/gui/gui.[ch]
-	* app/gui/tips-dialog.c
-	* app/gui/toolbox.[ch]
+	* app/gui/gui.[ch]: new function gui_post_init() which shows the
+	tips dialog.
+
+	* app/gui/tips-dialog.c: made signal handling nicer (clean up in a
+	"destroy" handler).
+
+	* app/gui/toolbox.[ch]: removed toolbox_raise(), removed the help
+	system (de)initialisation code which is now in gui.c, cleanup.
 
 2001-04-30  Dave Neary  <dneary@eircom.net>
 

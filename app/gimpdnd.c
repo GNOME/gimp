@@ -62,6 +62,11 @@
 typedef enum
 {
   GIMP_DND_DATA_NONE,
+  GIMP_DND_DATA_FIRST,
+
+  GIMP_DND_DATA_FILE_URI_LIST = GIMP_DND_DATA_FIRST,
+  GIMP_DND_DATA_FILE_TEXT_PLAIN,
+  GIMP_DND_DATA_FILE_NETSCAPE_URL,
   GIMP_DND_DATA_COLOR,
   GIMP_DND_DATA_IMAGE,
   GIMP_DND_DATA_LAYER,
@@ -72,6 +77,7 @@ typedef enum
   GIMP_DND_DATA_GRADIENT,
   GIMP_DND_DATA_PALETTE,
   GIMP_DND_DATA_TOOL,
+
   GIMP_DND_DATA_LAST = GIMP_DND_DATA_TOOL
 } GimpDndDataType;
 
@@ -140,6 +146,12 @@ static guchar    * gimp_dnd_get_tool_data     (GtkWidget     *widget,
 					       gint          *format,
 					       gint          *length);
 
+static void        gimp_dnd_set_file_data     (GtkWidget     *widget,
+					       GtkSignalFunc  set_color_func,
+					       gpointer       set_color_data,
+					       guchar        *vals,
+					       gint           format,
+					       gint           length);
 static void        gimp_dnd_set_color_data    (GtkWidget     *widget,
 					       GtkSignalFunc  set_color_func,
 					       gpointer       set_color_data,
@@ -201,6 +213,39 @@ static GimpDndDataDef dnd_data_defs[] =
     NULL,
     NULL,
     NULL
+  },
+
+  {
+    GIMP_TARGET_URI_LIST,
+
+    "gimp_dnd_set_file_func",
+    "gimp_dnd_set_file_data",
+
+    NULL,
+    NULL,
+    gimp_dnd_set_file_data
+  },
+
+  {
+    GIMP_TARGET_TEXT_PLAIN,
+
+    "gimp_dnd_set_file_func",
+    "gimp_dnd_set_file_data",
+
+    NULL,
+    NULL,
+    gimp_dnd_set_file_data
+  },
+
+  {
+    GIMP_TARGET_NETSCAPE_URL,
+
+    "gimp_dnd_set_file_func",
+    "gimp_dnd_set_file_data",
+
+    NULL,
+    NULL,
+    gimp_dnd_set_file_data
   },
 
   {
@@ -450,7 +495,7 @@ gimp_dnd_data_drop_handle (GtkWidget        *widget,
   if (selection_data->length < 0)
     return;
 
-  for (data_type = GIMP_DND_DATA_COLOR;
+  for (data_type = GIMP_DND_DATA_FIRST;
        data_type <= GIMP_DND_DATA_LAST;
        data_type++)
     {
@@ -580,6 +625,114 @@ gimp_dnd_data_dest_unset (GimpDndDataType  data_type,
   gtk_object_set_data (GTK_OBJECT (widget),
 		       dnd_data_defs[data_type].set_data_data_name,
 		       NULL);
+}
+
+
+/************************/
+/*  file dnd functions  */
+/************************/
+
+static void
+gimp_dnd_set_file_data (GtkWidget     *widget,
+			GtkSignalFunc  set_file_func,
+			gpointer       set_file_data,
+			guchar        *vals,
+			gint           format,
+			gint           length)
+{
+  GList *files = NULL;
+  gchar *buffer;
+
+  if (format != 8)
+    {
+      g_warning ("Received invalid file data\n");
+      return;
+    }
+
+  buffer = (gchar *) vals;
+
+  {
+    gchar  name_buffer[1024];
+    const gchar *data_type = "file:";
+    const gint   sig_len = strlen (data_type);
+
+    while (*buffer)
+      {
+	gchar *name = name_buffer;
+	gint len = 0;
+
+	while ((*buffer != 0) && (*buffer != '\n') && len < 1024)
+	  {
+	    *name++ = *buffer++;
+	    len++;
+	  }
+	if (len == 0)
+	  break;
+
+	if (*(name - 1) == 0xd)   /* gmc uses RETURN+NEWLINE as delimiter */
+	  *(name - 1) = '\0';
+	else
+	  *name = '\0';
+
+	name = name_buffer;
+
+	if ((sig_len < len) && (! strncmp (name, data_type, sig_len)))
+	  name += sig_len;
+
+	if (name && strlen (name) > 2)
+	  files = g_list_append (files, name);
+
+	if (*buffer)
+	  buffer++;
+      }
+  }
+
+  if (files)
+    {
+      (* (GimpDndDropFileFunc) set_file_func) (widget, files,
+					       set_file_data);
+
+      g_list_free (files);
+    }
+}
+
+void
+gimp_dnd_file_dest_set (GtkWidget           *widget,
+			GimpDndDropFileFunc  set_file_func,
+			gpointer             data)
+{
+  gimp_dnd_data_dest_set (GIMP_DND_DATA_FILE_URI_LIST, widget,
+			  GTK_SIGNAL_FUNC (set_file_func),
+			  data);
+  gimp_dnd_data_dest_set (GIMP_DND_DATA_FILE_TEXT_PLAIN, widget,
+			  GTK_SIGNAL_FUNC (set_file_func),
+			  data);
+  gimp_dnd_data_dest_set (GIMP_DND_DATA_FILE_NETSCAPE_URL, widget,
+			  GTK_SIGNAL_FUNC (set_file_func),
+			  data);
+}
+
+void
+gimp_dnd_file_dest_unset (GtkWidget *widget)
+{
+  gimp_dnd_data_dest_unset (GIMP_DND_DATA_FILE_URI_LIST, widget);
+  gimp_dnd_data_dest_unset (GIMP_DND_DATA_FILE_TEXT_PLAIN, widget);
+  gimp_dnd_data_dest_unset (GIMP_DND_DATA_FILE_NETSCAPE_URL, widget);
+}
+
+void
+gimp_dnd_open_files (GtkWidget *widget,
+		     GList     *files,
+		     gpointer   data)
+{
+  GList *list;
+
+  for (list = files; list; list = g_list_next (list))
+    {
+      gchar *filename = (gchar *) list->data;
+
+      file_open_with_display (filename, filename);
+    }
 }
 
 
@@ -1446,77 +1599,4 @@ gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
 
   gtk_drag_set_icon_widget (context, window,
 			    DRAG_ICON_OFFSET, DRAG_ICON_OFFSET);
-}
-
-
-/******************************/
-/*  file / url dnd functions  */
-/******************************/
-
-static void
-gimp_dnd_file_open_files (gchar *buffer)
-{
-  gchar  name_buffer[1024];
-  const gchar *data_type = "file:";
-  const gint   sig_len = strlen (data_type);
-
-  while (*buffer)
-    {
-      gchar *name = name_buffer;
-      gint len = 0;
-
-      while ((*buffer != 0) && (*buffer != '\n') && len < 1024)
-        {
-          *name++ = *buffer++;
-          len++;
-        }
-      if (len == 0)
-        break;
-
-      if (*(name - 1) == 0xd)   /* gmc uses RETURN+NEWLINE as delimiter */
-        *(name - 1) = '\0';
-      else
-        *name = '\0';
-      name = name_buffer;
-      if ((sig_len < len) && (! strncmp (name, data_type, sig_len)))
-        name += sig_len;
-
-      if (name && strlen (name) > 2)
-	file_open_with_display (name, name);
-
-      if (*buffer)
-        buffer++;
-    }
-}
-
-static void
-gimp_dnd_file_drag_data_received (GtkWidget        *widget,
-				  GdkDragContext   *context,
-				  gint              x,
-				  gint              y,
-				  GtkSelectionData *data,
-				  guint             info,
-				  guint             time)
-{
-  switch (context->action)
-    {
-    case GDK_ACTION_DEFAULT:
-    case GDK_ACTION_COPY:
-    case GDK_ACTION_MOVE:
-    case GDK_ACTION_LINK:
-    case GDK_ACTION_ASK:
-    default:
-      gimp_dnd_file_open_files ((gchar *) data->data);
-      gtk_drag_finish (context, TRUE, FALSE, time);
-      break;
-    }
-  return;
-}
-
-void
-gimp_dnd_file_dest_set (GtkWidget *widget)
-{
-  gtk_signal_connect (GTK_OBJECT (widget), "drag_data_received",
-                      GTK_SIGNAL_FUNC (gimp_dnd_file_drag_data_received),
-                      widget);
 }

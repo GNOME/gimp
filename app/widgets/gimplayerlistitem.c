@@ -220,9 +220,11 @@ gimp_layer_list_item_set_viewable (GimpListItem *list_item,
       gimp_layer_list_item_mask_changed (layer, layer_item);
     }
 
-  gtk_signal_connect (GTK_OBJECT (layer), "mask_changed",
-                      GTK_SIGNAL_FUNC (gimp_layer_list_item_mask_changed),
-                      list_item);
+  gtk_signal_connect_while_alive
+    (GTK_OBJECT (layer), "mask_changed",
+     GTK_SIGNAL_FUNC (gimp_layer_list_item_mask_changed),
+     list_item,
+     GTK_OBJECT (list_item));
 }
 
 static gboolean
@@ -423,7 +425,7 @@ gimp_layer_list_item_mask_changed (GimpLayer         *layer,
       gtk_box_pack_start (GTK_BOX (list_item->hbox), layer_item->mask_preview,
                           FALSE, FALSE, 0);
       gtk_box_reorder_child (GTK_BOX (list_item->hbox),
-                             layer_item->mask_preview, 2);
+                             layer_item->mask_preview, 3);
       gtk_widget_show (layer_item->mask_preview);
 
       gtk_signal_connect (GTK_OBJECT (layer_item->mask_preview), "clicked",

@@ -792,7 +792,7 @@ open_idea_window (void)
                      drag_types, n_drag_types,
                      GDK_ACTION_COPY);
 
-  gimp_dnd_file_dest_set (ideas->window);
+  gimp_dnd_file_dest_set (ideas->window, gimp_dnd_open_files, NULL);
 
   dialog_register (ideas->window);
 

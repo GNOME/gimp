@@ -49,6 +49,7 @@
 #include "gimage.h"
 #include "gimpcontext.h"
 #include "gimplayer.h"
+#include "gimplayermask.h"
 #include "gimplist.h"
 #include "gimprc.h"
 #include "pixel_region.h"
@@ -61,31 +62,29 @@
 
 
 /*  local functions  */
-static void       toolbox_tool_button_toggled (GtkWidget      *widget,
-					       gpointer        data);
-static gint       toolbox_tool_button_press   (GtkWidget      *widget,
-					       GdkEventButton *bevent,
-					       gpointer        data);
+static void   toolbox_tool_button_toggled (GtkWidget      *widget,
+					   gpointer        data);
+static gint   toolbox_tool_button_press   (GtkWidget      *widget,
+					   GdkEventButton *bevent,
+					   gpointer        data);
 
-static void        toolbox_destroy            (void);
-static gint        toolbox_delete             (GtkWidget      *widget,
-					       GdkEvent       *event,
-					       gpointer        data);
-static gint        toolbox_check_device       (GtkWidget      *widget,
-					       GdkEvent       *event,
-					       gpointer        data);
+static void   toolbox_destroy            (void);
+static gint   toolbox_delete             (GtkWidget      *widget,
+					  GdkEvent       *event,
+					  gpointer        data);
+static gint   toolbox_check_device       (GtkWidget      *widget,
+					  GdkEvent       *event,
+					  gpointer        data);
 
-static void        toolbox_style_set_callback (GtkWidget      *window,
-					       GtkStyle       *previous_style,
-					       gpointer        data);
-static gboolean    toolbox_drag_drop          (GtkWidget      *widget,
-					       GdkDragContext *context,
-					       gint            x,
-					       gint            y,
-					       guint           time);
-static void        toolbox_drop_tool          (GtkWidget      *widget,
-					       GimpViewable   *viewable,
-					       gpointer        data);
+static void   toolbox_style_set_callback (GtkWidget      *window,
+					  GtkStyle       *previous_style,
+					  gpointer        data);
+static void   toolbox_drop_drawable      (GtkWidget      *widget,
+					  GimpViewable   *viewable,
+					  gpointer        data);
+static void   toolbox_drop_tool          (GtkWidget      *widget,
+					  GimpViewable   *viewable,
+					  gpointer        data);
 
 
 #define COLUMNS 3
@@ -418,11 +417,14 @@ toolbox_create (void)
 		     toolbox_target_table, toolbox_n_targets,
 		     GDK_ACTION_COPY);
 
-  gimp_dnd_file_dest_set (window);
+  gimp_dnd_file_dest_set (window, gimp_dnd_open_files, NULL);
 
-  gtk_signal_connect (GTK_OBJECT (window), "drag_drop",
-		      GTK_SIGNAL_FUNC (toolbox_drag_drop),
-		      NULL);
+  gimp_dnd_viewable_dest_set (window, GIMP_TYPE_LAYER,
+			      toolbox_drop_drawable, NULL);
+  gimp_dnd_viewable_dest_set (window, GIMP_TYPE_LAYER_MASK,
+			      toolbox_drop_drawable, NULL);
+  gimp_dnd_viewable_dest_set (window, GIMP_TYPE_CHANNEL,
+			      toolbox_drop_drawable, NULL);
 
   gimp_dnd_viewable_dest_set (window, GIMP_TYPE_TOOL_INFO,
 			      toolbox_drop_tool, NULL);
@@ -465,161 +467,96 @@ toolbox_style_set_callback (GtkWidget *window,
 				 GDK_HINT_MIN_SIZE | GDK_HINT_RESIZE_INC);
 }
 
-static gboolean
-toolbox_drag_drop (GtkWidget      *widget,
-		   GdkDragContext *context,
-		   gint            x,
-		   gint            y,
-		   guint           time)
+static void
+toolbox_drop_drawable (GtkWidget    *widget,
+		       GimpViewable *viewable,
+		       gpointer      data)
 {
-  GtkWidget *src_widget;
-  gboolean return_val = FALSE;
+  GimpDrawable      *drawable;
+  GimpImage         *gimage;
+  GimpImage         *new_gimage;
+  GimpLayer         *new_layer;
+  gint               width, height;
+  gint               off_x, off_y;
+  gint               bytes;
+  GimpImageBaseType  type;
 
-  if ((src_widget = gtk_drag_get_source_widget (context)))
+  drawable = GIMP_DRAWABLE (viewable);
+
+  gimage = gimp_drawable_gimage (drawable);
+  width  = gimp_drawable_width  (drawable);
+  height = gimp_drawable_height (drawable);
+  bytes  = gimp_drawable_bytes  (drawable);
+
+  switch (gimp_drawable_type (drawable))
     {
-      GimpDrawable  *drawable       = NULL;
-      GimpLayer     *layer          = NULL;
-      GimpChannel   *channel        = NULL;
-      GimpLayerMask *layer_mask     = NULL;
-      GimpImage     *component      = NULL;
-      ChannelType    component_type = -1;
-
-      layer = (GimpLayer *) gtk_object_get_data (GTK_OBJECT (src_widget),
-						 "gimp_layer");
-      channel = (GimpChannel *) gtk_object_get_data (GTK_OBJECT (src_widget),
-						     "gimp_channel");
-      layer_mask = (GimpLayerMask *) gtk_object_get_data (GTK_OBJECT (src_widget),
-							  "gimp_layer_mask");
-      component = (GimpImage *) gtk_object_get_data (GTK_OBJECT (src_widget),
-						     "gimp_component");
-
-      if (layer)
-	{
-	  drawable = GIMP_DRAWABLE (layer);
-	}
-      else if (channel)
-	{
-	  drawable = GIMP_DRAWABLE (channel);
-	}
-      else if (layer_mask)
-	{
-	  drawable = GIMP_DRAWABLE (layer_mask);
-	}
-      else if (component)
-	{
-	  component_type =
-	    (ChannelType) gtk_object_get_data (GTK_OBJECT (src_widget),
-					       "gimp_component_type");
-	}
-
-      if (drawable)
-	{
-          GimpImage *gimage;
-	  GimpImage *new_gimage;
-	  GimpLayer *new_layer;
-          gint       width, height;
-	  gint       off_x, off_y;
-	  gint       bytes;
-
-	  GimpImageBaseType type;
-
-	  gimage = gimp_drawable_gimage (drawable);
-          width  = gimp_drawable_width  (drawable);
-          height = gimp_drawable_height (drawable);
-	  bytes  = gimp_drawable_bytes  (drawable);
-
-	  switch (gimp_drawable_type (drawable))
-	    {
-	    case RGB_GIMAGE: case RGBA_GIMAGE:
-	      type = RGB; break;
-	    case GRAY_GIMAGE: case GRAYA_GIMAGE:
-	      type = GRAY; break;
-	    case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
-	      type = INDEXED; break;
-	    default:
-	      type = RGB; break;
-	    }
-
-	  new_gimage = gimage_new (width, height, type);
-	  gimp_image_undo_disable (new_gimage);
-
-	  if (type == INDEXED) /* copy the colormap */
-	    {
-	      new_gimage->num_cols = gimage->num_cols;
-	      memcpy (new_gimage->cmap, gimage->cmap, COLORMAP_SIZE);
-	    }
-
-	  gimp_image_set_resolution (new_gimage,
-				     gimage->xresolution, gimage->yresolution);
-	  gimp_image_set_unit (new_gimage, gimage->unit);
-
-	  if (layer)
-	    {
-	      new_layer = gimp_layer_copy (layer, FALSE);
-	    }
-	  else
-	    {
-	      /*  a non-layer drawable can't have an alpha channel,
-	       *  so add one
-	       */
-	      PixelRegion  srcPR, destPR;
-	      TileManager *tiles;
-
-	      tiles = tile_manager_new (width, height, bytes + 1);
-
-	      pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-				 0, 0, width, height, FALSE);
-	      pixel_region_init (&destPR, tiles,
-				 0, 0, width, height, TRUE);
-
-	      add_alpha_region (&srcPR, &destPR);
-
-	      new_layer =
-		gimp_layer_new_from_tiles (new_gimage, 
-					   gimp_image_base_type_with_alpha (new_gimage), 
-					   tiles,
-					   "", OPAQUE_OPACITY, NORMAL_MODE);
-
-	      tile_manager_destroy (tiles);
-	    }
-
-	  gimp_drawable_set_gimage (GIMP_DRAWABLE (new_layer), new_gimage);
-
-	  gimp_object_set_name (GIMP_OBJECT (new_layer),
-				gimp_object_get_name (GIMP_OBJECT (drawable)));
-
-	  if (layer)
-	    {
-	      GimpLayerMask *mask;
-	      GimpLayerMask *new_mask;
-
-	      mask     = gimp_layer_get_mask (layer);
-	      new_mask = gimp_layer_get_mask (new_layer);
-
-	      if (new_mask)
-		{
-		  gimp_object_set_name (GIMP_OBJECT (new_mask),
-					gimp_object_get_name (GIMP_OBJECT (mask)));
-		}
-	    }
-
-	  gimp_drawable_offsets (GIMP_DRAWABLE (new_layer), &off_x, &off_y);
-	  gimp_layer_translate (new_layer, -off_x, -off_y);
-
-	  gimp_image_add_layer (new_gimage, new_layer, 0);
-
-	  gimp_context_set_display (gimp_context_get_user (),
-				    gdisplay_new (new_gimage, 0x0101));
-
-	  gimp_image_undo_enable (new_gimage);
-
-	  return_val = TRUE;
-	}
+    case RGB_GIMAGE: case RGBA_GIMAGE:
+      type = RGB; break;
+    case GRAY_GIMAGE: case GRAYA_GIMAGE:
+      type = GRAY; break;
+    case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
+      type = INDEXED; break;
+    default:
+      type = RGB; break;
     }
 
-  gtk_drag_finish (context, return_val, FALSE, time);
+  new_gimage = gimage_new (width, height, type);
+  gimp_image_undo_disable (new_gimage);
 
-  return return_val;
+  if (type == INDEXED) /* copy the colormap */
+    {
+      new_gimage->num_cols = gimage->num_cols;
+      memcpy (new_gimage->cmap, gimage->cmap, COLORMAP_SIZE);
+    }
+
+  gimp_image_set_resolution (new_gimage,
+			     gimage->xresolution, gimage->yresolution);
+  gimp_image_set_unit (new_gimage, gimage->unit);
+
+  if (GIMP_IS_LAYER (drawable))
+    {
+      new_layer = gimp_layer_copy (GIMP_LAYER (drawable), FALSE);
+    }
+  else
+    {
+      /*  a non-layer drawable can't have an alpha channel,
+       *  so add one
+       */
+      PixelRegion  srcPR, destPR;
+      TileManager *tiles;
+
+      tiles = tile_manager_new (width, height, bytes + 1);
+
+      pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+			 0, 0, width, height, FALSE);
+      pixel_region_init (&destPR, tiles,
+			 0, 0, width, height, TRUE);
+
+      add_alpha_region (&srcPR, &destPR);
+
+      new_layer =
+	gimp_layer_new_from_tiles (new_gimage, 
+				   gimp_image_base_type_with_alpha (new_gimage), 
+				   tiles,
+				   "", OPAQUE_OPACITY, NORMAL_MODE);
+
+      tile_manager_destroy (tiles);
+    }
+
+  gimp_drawable_set_gimage (GIMP_DRAWABLE (new_layer), new_gimage);
+
+  gimp_object_set_name (GIMP_OBJECT (new_layer),
+			gimp_object_get_name (GIMP_OBJECT (drawable)));
+
+  gimp_drawable_offsets (GIMP_DRAWABLE (new_layer), &off_x, &off_y);
+  gimp_layer_translate (new_layer, -off_x, -off_y);
+
+  gimp_image_add_layer (new_gimage, new_layer, 0);
+
+  gimp_context_set_display (gimp_context_get_user (),
+			    gdisplay_new (new_gimage, 0x0101));
+
+  gimp_image_undo_enable (new_gimage);
 }
 
 static void

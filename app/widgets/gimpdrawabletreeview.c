@@ -288,7 +288,10 @@ gimp_drawable_list_view_destroy (GtkObject *object)
 
   view = GIMP_DRAWABLE_LIST_VIEW (object);
 
+  gimp_drawable_list_view_set_image (view, NULL);
+
   g_free (view->signal_name);
+  view->signal_name = NULL;
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);

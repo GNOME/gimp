@@ -97,6 +97,25 @@ typedef enum
         { "GIMP_DIALOG", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_DIALOG }
 
 
+
+
+/*  file / url dnd functions  */
+
+typedef void (* GimpDndDropFileFunc) (GtkWidget *widget,
+				      GList     *files,
+				      gpointer   data);
+
+void  gimp_dnd_file_dest_set   (GtkWidget           *widget,
+				GimpDndDropFileFunc  set_file_func,
+				gpointer             data);
+void  gimp_dnd_file_dest_unset (GtkWidget           *widget);
+
+/*  standard callback  */
+void  gimp_dnd_open_files      (GtkWidget           *widget,
+				GList               *files,
+				gpointer             data);
+
+
 /*  color dnd functions  */
 
 typedef void (* GimpDndDropColorFunc) (GtkWidget     *widget,
@@ -153,11 +172,6 @@ GimpViewable * gimp_dnd_get_drag_data  (GtkWidget               *widget);
 void  gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
 					  GdkDragContext *context,
 					  GimpDrawable   *drawable);
-
-
-/*  file / url dnd functions  */
-
-void  gimp_dnd_file_dest_set (GtkWidget *widget);
 
 
 #endif /* __GIMP_DND_H__ */
