@@ -180,7 +180,6 @@ gimp_tools_init (Gimp *gimp)
     {
       const gchar *identifier = gimp_object_get_name (list->data);
 
-
       default_order = g_list_prepend (default_order, g_strdup (identifier));
     }
 
@@ -210,9 +209,47 @@ gimp_tools_exit (Gimp *gimp)
 void
 gimp_tools_restore (Gimp *gimp)
 {
-  GList        *list;
+  GimpContainer *gimp_list;
+  gchar         *filename;
+  GList         *list;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  gimp_list = gimp_list_new (GIMP_TYPE_TOOL_INFO, GIMP_CONTAINER_POLICY_STRONG);
+  filename = gimp_personal_rc_file ("toolrc");
+
+  if (gimp_config_deserialize_file (GIMP_CONFIG (gimp_list), filename,
+                                    NULL, NULL))
+    {
+      gint i;
+
+      gimp_list_reverse (GIMP_LIST (gimp_list));
+
+      for (list = GIMP_LIST (gimp_list)->list, i = 0;
+           list;
+           list = g_list_next (list), i++)
+        {
+          const gchar *name;
+          GimpObject  *object;
+
+          name = gimp_object_get_name (list->data);
+
+          object = gimp_container_get_child_by_name (gimp->tool_info_list,
+                                                     name);
+
+          if (object)
+            {
+              g_object_set (object,
+                            "visible", GIMP_TOOL_INFO (list->data)->visible,
+                            NULL);
+
+              gimp_container_reorder (gimp->tool_info_list, object, i);
+            }
+        }
+    }
+
+  g_free (filename);
+  g_object_unref (gimp_list);
 
   for (list = GIMP_LIST (gimp->tool_info_list)->list;
        list;
@@ -274,7 +311,8 @@ gimp_tools_restore (Gimp *gimp)
 void
 gimp_tools_save (Gimp *gimp)
 {
-  GList        *list;
+  GList *list;
+  gchar *filename;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -309,6 +347,14 @@ gimp_tools_save (Gimp *gimp)
           g_free (footer);
         }
     }
+
+  filename = gimp_personal_rc_file ("toolrc");
+  gimp_config_serialize_to_file (GIMP_CONFIG (gimp->tool_info_list),
+                                 filename,
+                                 "GIMP toolrc",
+                                 "end of toolrc",
+                                 NULL, NULL);
+  g_free (filename);
 }
 
 GList *

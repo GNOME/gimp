@@ -26,6 +26,8 @@
 
 #include "base/temp-buf.h"
 
+#include "config/gimpconfig-params.h"
+
 #include "gimp.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
@@ -103,11 +105,8 @@ gimp_tool_info_class_init (GimpToolInfoClass *klass)
 
   viewable_class->get_description = gimp_tool_info_get_description;
 
-  g_object_class_install_property (object_class, PROP_VISIBLE,
-                                   g_param_spec_boolean ("visible",
-                                                         NULL, NULL,
-                                                         TRUE,
-                                                         G_PARAM_READWRITE));
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_VISIBLE, "visible",
+                                    NULL, TRUE, 0);
 }
 
 static void
