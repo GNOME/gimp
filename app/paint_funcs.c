@@ -3977,50 +3977,82 @@ void expand_line(double *dest, double *src, int bytes,
 }
 
 
-static void shrink_line(double *dest, double *src, int bytes,
-			int old_width, int width, InterpolationType interp)
+static void
+shrink_line (double *dest, double *src, int bytes,
+             int old_width, int width, InterpolationType interp)
 {
-  int x, b;
-  double *source, *destp;
-  register double accum;
-  register unsigned int max;
-  register double mant, tmp;
-  register const double step = old_width/(double)width;
-  register const double inv_step = 1.0/step;
-  double position;
+  gint          x;
+  gint          b;
+  gdouble      *srcp;
+  gdouble      *destp;
+  gdouble       accum[4];
+  gdouble       slice;
+  const gdouble avg_ratio = (gdouble) width / old_width;
+  const gdouble inv_width = 1.0 / width;
+  gint          slicepos;      /* slice position relative to width */
+
+  /* Protect against buffer overflow */
+  g_return_if_fail (bytes <= 4);
+
+  /* This algorithm calculates the weighted average of pixel data that
+     each output pixel must receive, taking into account that it always
+     scales down, i.e. there's always more than one input pixel per each
+     output pixel.  */
+
+  srcp = src;
+  destp = dest;
+
+  slicepos = 0;
+
+  /* Initialize accum to the first pixel slice.  As there is no partial
+     pixel at start, that value is 0.  The source data is interleaved, so
+     we maintain BYTES accumulators at the same time to deal with that
+     many channels simultaneously.  */
   for (b = 0; b < bytes; b++)
-  {
-    
-    source = &src[b];
-    destp = &dest[b];
-    position = -1;
+    accum[b] = 0.0;
 
-    mant = *source;
-
-    for (x = 0; x < width; x++)
+  for (x = 0; x < width; x++)
     {
-      source+= bytes;
-      accum = 0;
-      max = ((int)(position+step)) - ((int)(position));
-      max--;
-      while (max)
-      {
-	accum += *source;
-	source += bytes;
-	max--;
-      }
-      tmp = accum + mant;
-      mant = ((position+step) - (int)(position + step));
-      mant *= *source;
-      tmp += mant;
-      tmp *= inv_step;
-      mant = *source - mant;
-      *(destp) = tmp;
-      destp += bytes;
-      position += step;
-	
+      /* Accumulate whole pixels.  */
+      do
+        {
+          for (b = 0; b < bytes; b++)
+            accum[b] += *srcp++;
+
+          slicepos += width;
+        }
+      while (slicepos < old_width);
+      slicepos -= old_width;
+
+      if (slicepos == 0)
+        {
+          /* Simplest case: we have reached a whole pixel boundary.  Store
+             the average value per channel and reset the accumulators for
+             the next round.
+
+             The main reason to treat this case separately is to avoid an
+             access to out-of-bounds memory for the first pixel.  */
+          for (b = 0; b < bytes; b++)
+            {
+              *destp++ = accum[b] * avg_ratio;
+              accum[b] = 0.0;
+            }
+        }
+      else
+        {
+          for (b = 0; b < bytes; b++)
+            {
+              /* We have accumulated a whole pixel per channel where just a
+                 slice of it was needed.  Subtract now the previous pixel's
+                 extra slice.  */
+              slice = srcp[- bytes + b] * slicepos * inv_width;
+              *destp++ = (accum[b] - slice) * avg_ratio;
+
+              /* That slice is the initial value for the next round.  */
+              accum[b] = slice;
+            }
+        }
     }
-  }
 }
 
 static void
@@ -4048,6 +4080,7 @@ get_scaled_row(void **src, int y, int new_width, PixelRegion *srcPR, double *row
   else
     memcpy(src[3], src[2], sizeof (double) * new_width * srcPR->bytes);
 }
+
 void
 scale_region (PixelRegion *srcPR,
 	      PixelRegion *destPR)

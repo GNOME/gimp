@@ -1,3 +1,8 @@
+2003-05-21  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* app/paint_funcs.c (shrink_line): Ported back fix for bug #104693
+	from HEAD branch (new algorithm for downscaling).
+
 2003-05-21  Raphael Quinet  <quinet@gamers.org>
 
 	* tools/gimp-remote.c: include X11/Xmu/WinUtil.h after including
