@@ -5,7 +5,7 @@
  * macros that code uses.  This lets the same code operate on two different
  * representations for state sets.
  */
-#include <regex.h>
+#include "regex.h"
 
 #include "utils.h"
 #include "regex2.h"

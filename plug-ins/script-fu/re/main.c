@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
-#include <regex.h>
 #include <assert.h>
 #include <stdlib.h>
+#include "regex.h"
 
 #include "main.ih"
 

@@ -1,4 +1,4 @@
-#include <regex.h>
+#include "regex.h"
 
 #include "utils.h"
 #include "regerror.ih"
