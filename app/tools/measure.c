@@ -208,6 +208,11 @@ measure_tool_button_press (Tool           *tool,
 		{
 		  Guide *guide;
 
+		  if (bevent->state & GDK_CONTROL_MASK &&
+		      bevent->state & GDK_MOD1_MASK &&
+		      (measure_tool->y[i] == CLAMP (measure_tool->y[i], 0, gdisp->gimage->height)))
+		    undo_push_group_start (gdisp->gimage, GUIDE_UNDO);
+
 		  if (bevent->state & GDK_CONTROL_MASK && 
 		      (measure_tool->y[i] == CLAMP (measure_tool->y[i], 0, gdisp->gimage->height)))
 		    {
@@ -224,6 +229,12 @@ measure_tool_button_press (Tool           *tool,
 		      guide->position = measure_tool->x[i];
 		      gdisplays_expose_guide (gdisp->gimage, guide);
 		    }
+
+		  if (bevent->state & GDK_CONTROL_MASK &&
+		      bevent->state & GDK_MOD1_MASK &&
+		      (measure_tool->y[i] == CLAMP (measure_tool->y[i], 0, gdisp->gimage->height)))
+		    undo_push_group_end (gdisp->gimage);
+
 		  gdisplays_flush ();
 		  measure_tool->function = GUIDING;
 		  break;
