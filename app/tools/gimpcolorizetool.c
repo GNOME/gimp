@@ -204,7 +204,7 @@ gimp_colorize_tool_initialize (GimpTool    *tool,
 
   gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
 
-  return FALSE;
+  return TRUE;
 }
 
 static void

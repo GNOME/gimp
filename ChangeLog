@@ -1,3 +1,11 @@
+2004-07-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpcolorizetool.c (gimp_colorize_tool_initialize):
+	return TRUE if initialization was successful. Makes the
+	tool->drawable pointer being set correctly by the calling code and
+	fixes bugs where colorize was leaving the drawable in a modified
+	but non-undoable state when cancelling or changing images.
+
 2004-07-05  Sven Neumann  <sven@gimp.org>
 
 	* modules/cdisplay_proof.c: use object properties for the
