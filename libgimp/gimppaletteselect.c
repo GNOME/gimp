@@ -128,10 +128,9 @@ gimp_palette_select_destroy (const gchar *palette_callback)
     }
 
   if (palette_data->idle_id)
-    {
-      g_source_remove (palette_data->idle_id);
-      g_free (palette_data->palette_name);
-    }
+    g_source_remove (palette_data->idle_id);
+
+  g_free (palette_data->palette_name);
 
   if (palette_data->palette_callback)
     gimp_palettes_close_popup (palette_data->palette_callback);

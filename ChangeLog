@@ -1,5 +1,21 @@
 2004-07-28  Michael Natterer  <mitch@gimp.org>
 
+	* libgimp/gimpbrushselect.c
+	* libgimp/gimpfontselect.c
+	* libgimp/gimpgradientselect.c
+	* libgimp/gimppalettemenu.c
+	* libgimp/gimppaletteselect.c
+	* libgimp/gimppatternselect.c (gimp_*_select_destroy): don't
+	leak the selected object's name and its data (brush mask etc).
+
+	* libgimp/gimpfontmenu.c: moved the icon to the left side of the
+	button.
+
+	* libgimp/gimppalettemenu.c: ditto. Added "Since: GIMP 2.2" to
+	API docs.
+
+2004-07-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpactiongroup.c
 	(gimp_action_group_set_action_label): forgot to strip mnemonics
 	here.

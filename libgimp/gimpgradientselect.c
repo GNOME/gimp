@@ -136,11 +136,10 @@ gimp_gradient_select_destroy (const gchar *gradient_callback)
     }
 
   if (gradient_data->idle_id)
-    {
-      g_source_remove (gradient_data->idle_id);
-      g_free (gradient_data->gradient_name);
-      g_free (gradient_data->gradient_data);
-    }
+    g_source_remove (gradient_data->idle_id);
+
+  g_free (gradient_data->gradient_name);
+  g_free (gradient_data->gradient_data);
 
   if (gradient_data->gradient_callback)
     gimp_gradients_close_popup (gradient_data->gradient_callback);

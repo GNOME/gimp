@@ -144,11 +144,10 @@ gimp_brush_select_destroy (const gchar *brush_callback)
     }
 
   if (brush_data->idle_id)
-    {
-      g_source_remove (brush_data->idle_id);
-      g_free (brush_data->brush_name);
-      g_free (brush_data->brush_mask_data);
-    }
+    g_source_remove (brush_data->idle_id);
+
+  g_free (brush_data->brush_name);
+  g_free (brush_data->brush_mask_data);
 
   if (brush_data->brush_callback)
     gimp_brushes_close_popup (brush_data->brush_callback);

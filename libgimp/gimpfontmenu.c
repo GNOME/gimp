@@ -109,13 +109,13 @@ gimp_font_select_widget_new (const gchar         *title,
   gtk_container_add (GTK_CONTAINER (font_sel->button), hbox);
   gtk_widget_show (hbox);
 
+  image = gtk_image_new_from_stock (GIMP_STOCK_FONT, GTK_ICON_SIZE_BUTTON);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  gtk_widget_show (image);
+
   font_sel->label = gtk_label_new (font_name);
   gtk_box_pack_start (GTK_BOX (hbox), font_sel->label, TRUE, TRUE, 4);
   gtk_widget_show (font_sel->label);
-
-  image = gtk_image_new_from_stock (GIMP_STOCK_FONT, GTK_ICON_SIZE_BUTTON);
-  gtk_box_pack_end (GTK_BOX (hbox), image, FALSE, FALSE, 4);
-  gtk_widget_show (image);
 
   g_object_set_data (G_OBJECT (font_sel->button),
                      FONT_SELECT_DATA_KEY, font_sel);

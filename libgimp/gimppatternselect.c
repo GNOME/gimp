@@ -138,11 +138,10 @@ gimp_pattern_select_destroy (const gchar *pattern_callback)
     }
 
   if (pattern_data->idle_id)
-    {
-      g_source_remove (pattern_data->idle_id);
-      g_free (pattern_data->pattern_name);
-      g_free (pattern_data->pattern_mask_data);
-    }
+    g_source_remove (pattern_data->idle_id);
+
+  g_free (pattern_data->pattern_name);
+  g_free (pattern_data->pattern_mask_data);
 
   if (pattern_data->pattern_callback)
     gimp_patterns_close_popup (pattern_data->pattern_callback);

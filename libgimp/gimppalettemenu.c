@@ -72,6 +72,8 @@ static void   gimp_palette_select_widget_destroy  (GtkWidget     *widget,
  * plug-in dialog.
  *
  * Returns: A #GtkWidget that you can use in your UI.
+ *
+ * Since: GIMP 2.2
  */
 GtkWidget *
 gimp_palette_select_widget_new (const gchar            *title,
@@ -109,13 +111,13 @@ gimp_palette_select_widget_new (const gchar            *title,
   gtk_container_add (GTK_CONTAINER (palette_sel->button), hbox);
   gtk_widget_show (hbox);
 
+  image = gtk_image_new_from_stock (GIMP_STOCK_PALETTE, GTK_ICON_SIZE_BUTTON);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  gtk_widget_show (image);
+
   palette_sel->label = gtk_label_new (palette_name);
   gtk_box_pack_start (GTK_BOX (hbox), palette_sel->label, TRUE, TRUE, 4);
   gtk_widget_show (palette_sel->label);
-
-  image = gtk_image_new_from_stock (GIMP_STOCK_PALETTE, GTK_ICON_SIZE_BUTTON);
-  gtk_box_pack_end (GTK_BOX (hbox), image, FALSE, FALSE, 4);
-  gtk_widget_show (image);
 
   g_object_set_data (G_OBJECT (palette_sel->button),
                      PALETTE_SELECT_DATA_KEY, palette_sel);
@@ -128,6 +130,8 @@ gimp_palette_select_widget_new (const gchar            *title,
  * @widget: A palette select widget.
  *
  * Closes the popup window associated with @widget.
+ *
+ * Since: GIMP 2.2
  */
 void
 gimp_palette_select_widget_close (GtkWidget *widget)
@@ -153,6 +157,8 @@ gimp_palette_select_widget_close (GtkWidget *widget)
  * Sets the current palette for the palette select widget.  Calls the
  * callback function if one was supplied in the call to
  * gimp_palette_select_widget_new().
+ *
+ * Since: GIMP 2.2
  */
 void
 gimp_palette_select_widget_set (GtkWidget   *widget,

@@ -127,10 +127,9 @@ gimp_font_select_destroy (const gchar *font_callback)
     }
 
   if (font_data->idle_id)
-    {
-      g_source_remove (font_data->idle_id);
-      g_free (font_data->font_name);
-    }
+    g_source_remove (font_data->idle_id);
+
+  g_free (font_data->font_name);
 
   if (font_data->font_callback)
     gimp_fonts_close_popup (font_data->font_callback);
