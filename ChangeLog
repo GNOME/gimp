@@ -1,3 +1,13 @@
+2000-07-30  Michael Natterer  <mitch@gimp.org>
+
+	* gimp_splash.ppm: while trying to confuse ChangeLog readers
+	with his log below, Tigert thought that GIMP thought that the
+	.ppm extension determined the image's format. OTOH, GIMP thought
+	that Tigert thought that he wanted to save the image as .png but
+	with a broken extension. This can be considered either GIMP's
+	bug or a bug of <tigert>/dev/brain. We can make a poll on this,
+	but I suspect the broken "Save as..." to be the one to blame.
+
 2000-07-30  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/gdyntext/graphics/layer_align_[0-9].xpm
