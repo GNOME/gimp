@@ -1,5 +1,10 @@
 2005-03-22  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/colortoalpha.c: unset "Keep transparency", it is
+	not what the user wants if this plug-in is being used.
+
+2005-03-22  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/screenshot.c: removed global variables; added a
 	short delay after destroying the dialog so that the root window
 	gets redrawn; moved camera icon to the action button.
