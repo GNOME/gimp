@@ -596,7 +596,8 @@ color_balance_create_lookup_tables (ColorBalanceDialog *cbd)
   double *cyan_red_transfer[3];
   double *magenta_green_transfer[3];
   double *yellow_blue_transfer[3];
-  int i, r_n, g_n, b_n;
+  int i;
+  gint32 r_n, g_n, b_n;
   /*  Set the transfer arrays  (for speed)  */
   cyan_red_transfer[SHADOWS] = (cbd->cyan_red[SHADOWS] > 0) ? shadows_add : shadows_sub;
   cyan_red_transfer[MIDTONES] = (cbd->cyan_red[MIDTONES] > 0) ? midtones_add : midtones_sub;

@@ -1,3 +1,16 @@
+Sun Feb  7 22:06:04 GMT 1999 Adam D. Moss <adam@gimp.org>
+
+	* app/dialog_handler.c
+	* app/fileops.c: Various bugfixes and speedups w.r.t.
+	thumbnail loading.  Now has a 'generate thumbnail' button.
+
+	* app/brightness_contrast.c
+	* app/color_balance.c
+	* app/curves.c
+	* app/hue_saturation.c: Changed some gint to gint32.  It
+	doesn't matter right now, but it might if the optimized
+	CLAMP0255 gets fixed.
+
 Sun Feb  7 18:29:26 GMT 1999 Adam D. Moss <adam@gimp.org>
 
 	* app/fileops.c: A unidirectional error-spread makes

@@ -28,6 +28,7 @@
 
 #include "appenv.h"
 #include "actionarea.h"
+#include "cursorutil.h"
 #include "gdisplay.h"
 #include "general.h"
 #include "gimage.h"
@@ -71,6 +72,9 @@ static gint file_overwrite_delete_callback  (GtkWidget *w,
 static GimpImage* file_open_image   (char *filename,
 				     char *raw_filename);
 
+static void genbutton_callback (GtkWidget *w,
+				gpointer   client_data);
+
 static void file_open_clistrow_callback (GtkWidget *w,
 				         int        client_data);
 static void file_open_ok_callback   (GtkWidget *w,
@@ -110,15 +114,19 @@ static void      file_update_menus      (GSList *procs,
 					 int     image_type);
 
 
-static GtkWidget *fileload = NULL;
-static GtkWidget *filesave = NULL;
-static GtkWidget *open_options = NULL;
-static GtkWidget *save_options = NULL;
+GtkWidget  *fileload = NULL; /* Shared with dialog_handler.c */
+static GtkWidget  *filesave = NULL;
+static GtkWidget  *open_options = NULL;
+static GtkWidget  *save_options = NULL;
 /* widgets for the open_options menu */
 static GtkPreview *open_options_preview = NULL;
 static GtkWidget  *open_options_fixed = NULL;
 static GtkWidget  *open_options_label = NULL;
 static GtkWidget  *open_options_frame = NULL;
+static GtkWidget  *open_options_genbutton = NULL;
+/* Some state for the thumbnailer */
+static gchar      *preview_fullname = NULL;
+
 
 /* Load by extension.
  */
@@ -590,9 +598,21 @@ file_open_callback (GtkWidget *w,
 	    gtk_container_set_border_width (GTK_CONTAINER (hbox), 0);
 	    gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
+	    open_options_genbutton = gtk_button_new_with_label
+	      ("generate\npreview");
+	    {
+	      gtk_signal_connect (GTK_OBJECT (open_options_genbutton),
+				  "clicked",
+				  (GtkSignalFunc) genbutton_callback,
+				  open_options_genbutton);
+	      gtk_box_pack_end (GTK_BOX (hbox), open_options_genbutton,
+				FALSE, FALSE, 0);
+	    }
+	    gtk_widget_show (open_options_genbutton);	
+	    
 	    open_options_fixed = gtk_fixed_new ();
 	    {
-	      gtk_widget_set_usize (open_options_fixed, 1, 1);
+	      gtk_widget_set_usize (open_options_fixed, 80, 60);
 	      gtk_box_pack_start (GTK_BOX (hbox), open_options_fixed,
 				  FALSE, FALSE, 0);
 	      
@@ -610,13 +630,10 @@ file_open_callback (GtkWidget *w,
 
 	  open_options_label = gtk_label_new ("");
 	  {
-	    /*	    gtk_label_set_justify (GTK_LABEL (open_options_label),
-		    GTK_JUSTIFY_LEFT);
-		    gtk_label_set_line_wrap (GTK_LABEL (open_options_label), TRUE);*/
 	    gtk_box_pack_end (GTK_BOX (vbox), open_options_label,
 			      FALSE, TRUE, 0);
 	  }
-	  gtk_widget_show (open_options_label);
+	  gtk_widget_show (open_options_label); 
 	}
 	gtk_widget_show (vbox);
       }
@@ -629,7 +646,8 @@ file_open_callback (GtkWidget *w,
 
   gtk_frame_set_label (GTK_FRAME(open_options_frame), _("Preview"));
   gtk_label_set_text (GTK_LABEL(open_options_label), "No selection.");
-  gtk_widget_hide (open_options_fixed);
+  gtk_widget_set_sensitive (GTK_WIDGET(open_options_genbutton), FALSE);
+  gtk_widget_hide (GTK_WIDGET(open_options_preview));
   gtk_widget_show (open_options);
 
   file_dialog_show (fileload);
@@ -895,35 +913,39 @@ file_open (char *filename, char *raw_filename)
   return FALSE;
 }
 
+
 static gboolean
 file_save_thumbnail (GimpImage* gimage,
-		     char *filename,
-		     char *raw_filename)
+		     const char *full_source_filename)
 {
   TempBuf* tempbuf;
   gint i,j;
   unsigned char* tbd;
-  gchar* pname;
-  gchar* xpname;
-  gchar* fname;
+  gchar* pathname;
+  gchar* filename;
+  gchar* xvpathname;
+  gchar* thumbnailname;
   gint w,h;
   GimpImageBaseType basetype;
   FILE* fp;
 
   if (gimp_image_preview_valid (gimage, Gray))
     {
-      printf("(gimage already has valid preview - %dx%d)\n",
+      /* just for debugging */
+      printf("(incidentally, gimage already has a valid preview - %dx%d)\n",
 	     gimage->comp_preview->width,
 	     gimage->comp_preview->height);
     }
 
-  pname = g_dirname(filename);
-  xpname = g_strconcat(pname,G_DIR_SEPARATOR_S,".xvpics",
-		       NULL);
+  pathname = g_dirname(full_source_filename);
+  filename = g_basename(full_source_filename); /* Don't free! */
 
-  fname = g_strconcat (xpname,G_DIR_SEPARATOR_S,
-		       raw_filename,
-		       NULL);
+  xvpathname = g_strconcat(pathname, G_DIR_SEPARATOR_S, ".xvpics",
+			   NULL);
+
+  thumbnailname = g_strconcat (xvpathname, G_DIR_SEPARATOR_S,
+			       filename,
+			       NULL);
 
   if (gimage->width<=80 && gimage->height<=60)
     {
@@ -958,12 +980,12 @@ file_save_thumbnail (GimpImage* gimage,
   h = tempbuf->height;
   printf("tn: %d x %d\n", w, h);fflush(stdout);
 
-  mkdir (xpname, 0755);
+  mkdir (xvpathname, 0755);
 
-  fp = fopen(fname,"wb");
-  g_free(pname);
-  g_free(xpname);
-  g_free(fname);
+  fp = fopen(thumbnailname,"wb");
+  g_free(pathname);
+  g_free(xvpathname);
+  g_free(thumbnailname);
 
   if (fp)
     {
@@ -1097,16 +1119,17 @@ file_save (GimpImage* gimage,
       /* these calls must come before the call to gimage_set_filename */
       idea_add (filename);
       menus_last_opened_add (filename);
-      
-      /*  set the image title  */
-      gimp_image_set_filename (gimage, filename);
 
       /*  use the same plug-in for this image next time  */
       /* DISABLED - gets stuck on first saved format... needs
 	 attention --Adam */
       /* gimage_set_save_proc(gimage, file_proc); */
 
-      file_save_thumbnail (gimage, filename, raw_filename);
+      file_save_thumbnail (gimage, filename);
+      
+      /*  set the image title  */
+      gimp_image_set_filename (gimage, filename);
+      /* note: 'filename' may have been free'd by above call! */
     }
 
   g_free (return_vals);
@@ -1205,10 +1228,8 @@ readXVThumb(const gchar *fnam,
 
 
 static void
-file_open_clistrow_callback (GtkWidget *w,
-			     int client_data)
+set_preview (const gchar* fullfname)
 {
-  gchar  *rawfname = NULL;
   guchar *thumb_rgb;
   guchar *raw_thumb;
   gint    tnw,tnh;
@@ -1219,37 +1240,38 @@ file_open_clistrow_callback (GtkWidget *w,
   struct stat file_stat;
   struct stat thumb_stat;
   gboolean thumb_may_be_outdated = FALSE;
+  gboolean show_generate_button = FALSE;
+  
 
-  rawfname = gtk_file_selection_get_filename(GTK_FILE_SELECTION(fileload));
-
-  pname = g_dirname (rawfname);
-  fname = g_basename (rawfname); /* Don't free this! */
+  pname = g_dirname (fullfname);
+  fname = g_basename (fullfname); /* Don't free this! */
   tname = g_strconcat (pname, G_DIR_SEPARATOR_S, ".xvpics", G_DIR_SEPARATOR_S,
 		       fname,
 		       NULL);
 
   g_free (pname);
 
-  /*g_warning ("clique! %s", fname);*/
-  /*gtk_clist_get_text(GTK_CLIST(w), client_data, 0, &txt);
-    g_warning ("clique! %p %d %s [%s]", w, client_data, txt, fname);*/
-
   /* If the file is newer than its thumbnail, the thumbnail may
      be out of date. */
-  if ((stat(tname,    &thumb_stat)==0) &&
-      (stat(rawfname, &file_stat )==0))
+  if ((stat(tname,     &thumb_stat)==0) &&
+      (stat(fullfname, &file_stat )==0))
     {
       if ((thumb_stat.st_mtime) < (file_stat.st_mtime))
 	{
 	  thumb_may_be_outdated = TRUE;
+	  show_generate_button = TRUE;
 	}
     }
 
   raw_thumb = readXVThumb(tname, &tnw, &tnh, &imginfo);
+
   g_free (tname);
 
   gtk_frame_set_label (GTK_FRAME(open_options_frame),
 		       fname);
+  if (preview_fullname)
+    g_free (preview_fullname);
+  preview_fullname = g_strdup (fullfname);
 
   if (raw_thumb)
     {
@@ -1264,22 +1286,20 @@ file_open_clistrow_callback (GtkWidget *w,
 	}
       
       gtk_preview_size (open_options_preview, tnw, tnh);
-      gtk_widget_set_usize (open_options_fixed, tnw, tnh);
-      gtk_widget_show (open_options_fixed);
 
       for (i=0; i<tnh; i++)
 	{
 	  gtk_preview_draw_row(open_options_preview, &thumb_rgb[3*i*tnw],
 			       0, i,
 			       tnw);
-
-	  gtk_label_set_text (GTK_LABEL(open_options_label),
-			      thumb_may_be_outdated ?
-			      "(this thumbnail may be out of date)" :
-			      imginfo);
-	  gtk_widget_show (open_options_fixed);
-	  gtk_widget_queue_draw (GTK_WIDGET(open_options_preview));
 	}
+
+      gtk_label_set_text (GTK_LABEL(open_options_label),
+			  thumb_may_be_outdated ?
+			  "(this thumbnail may be out of date)" :
+			  (imginfo ? imginfo : "(no information)"));
+      gtk_widget_show (GTK_WIDGET(open_options_preview));
+      gtk_widget_queue_draw (GTK_WIDGET(open_options_preview));
       
       g_free (thumb_rgb);
       g_free (raw_thumb);
@@ -1289,10 +1309,55 @@ file_open_clistrow_callback (GtkWidget *w,
       if (imginfo)
 	g_free(imginfo);
 
-      gtk_widget_hide (open_options_fixed);
+      show_generate_button = TRUE;
+
+      gtk_widget_hide (GTK_WIDGET(open_options_preview));
       gtk_label_set_text (GTK_LABEL(open_options_label),
 			  "no preview available");
     }
+
+  if (show_generate_button)
+    gtk_widget_set_sensitive (GTK_WIDGET(open_options_genbutton), TRUE);
+  else
+    gtk_widget_set_sensitive (GTK_WIDGET(open_options_genbutton), FALSE);  
+}
+
+
+static void
+file_open_clistrow_callback (GtkWidget *w,
+			     int client_data)
+{
+  gchar  *fullfname = NULL;
+
+  fullfname = gtk_file_selection_get_filename(GTK_FILE_SELECTION(fileload));
+
+  set_preview (fullfname);
+}
+
+
+static void
+genbutton_callback (GtkWidget *w,
+		    gpointer   client_data)
+{
+  GimpImage* gimage_to_be_thumbed;
+
+  if (!preview_fullname)
+    {
+      g_warning ("Tried to generate thumbnail for NULL filename.");
+      return;
+    }
+
+  gimp_add_busy_cursors();
+  gtk_widget_set_sensitive (GTK_WIDGET (fileload), FALSE);
+  if ((gimage_to_be_thumbed = file_open_image (preview_fullname,
+ 					       g_basename(preview_fullname))))
+    {
+      file_save_thumbnail (gimage_to_be_thumbed, preview_fullname);
+      gimage_delete (gimage_to_be_thumbed);
+    }
+  set_preview(preview_fullname);
+  gtk_widget_set_sensitive (GTK_WIDGET (fileload), TRUE);
+  gimp_remove_busy_cursors(NULL);
 }
 
 
@@ -1417,7 +1482,9 @@ file_open_ok_callback (GtkWidget *w,
 		    if (err)
 		      {
 			g_free (mfilename);
-			mfilename = g_strconcat (filedirname, "/", temp, NULL);
+			mfilename = g_strconcat (filedirname,
+						 G_DIR_SEPARATOR_S,
+						 temp, NULL);
 
 			/*printf(">>> %s\n", mfilename);*/
 			/*fflush (stdout);*/

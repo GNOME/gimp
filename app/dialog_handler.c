@@ -37,6 +37,8 @@ static gint doing_update = FALSE;  /* Prevent multiple keypresses
 				      from unsetting me.
 				   */
 
+extern GtkWidget * fileload;   /* It's in fileops.c       */
+
 /* State of individual dialogs */
 
 typedef struct _dialog_state DIALOGSTATE,*DIALOGSTATEP;
@@ -165,6 +167,11 @@ dialog_idle_all()
     {
       change_win_cursor (toolbox_shell->d->window, GDK_WATCH);
     }
+
+  if (fileload && GTK_WIDGET_VISIBLE (fileload))
+    {
+      change_win_cursor (fileload->window, GDK_WATCH);
+    }
 }
 
 /* And remove the hourglass again. */
@@ -189,6 +196,11 @@ dialog_unidle_all()
   if (toolbox_shell && GTK_WIDGET_VISIBLE(toolbox_shell->d))
     {
       unset_win_cursor (toolbox_shell->d->window);
+    }
+
+  if (fileload && GTK_WIDGET_VISIBLE (fileload))
+    {
+      unset_win_cursor (fileload->window);
     }
 }
 

@@ -693,7 +693,7 @@ curves_plot_curve (CurvesDialog *cd,
   double y, dy, dy2, dy3;
   double d, d2, d3;
   int lastx, lasty;
-  int newx, newy;
+  gint32 newx, newy;
   int i;
 
   /* construct the geometry matrix from the segment */
@@ -905,7 +905,8 @@ curves_smooth_callback (GtkWidget *w,
 			gpointer   client_data)
 {
   CurvesDialog *cd;
-  int i, index;
+  int i;
+  gint32 index;
 
   cd = (CurvesDialog *) client_data;
 

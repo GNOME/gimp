@@ -110,7 +110,7 @@ brightness_contrast (PixelRegion *srcPR,
   int has_alpha;
   int alpha;
   int w, h, b;
-  int value;
+  gint32 value;
   int i;
 
   bcd = (BrightnessContrastDialog *) user_data;
