@@ -727,8 +727,8 @@ static void check_for_typoe (char *croak_str, char *p)
   g_snprintf (b, sizeof b, "SELECTION_%s", p);	if (perl_get_cv (b, 0)) goto gotit;
   g_snprintf (b, sizeof b, "%s_IMAGE", p);	if (perl_get_cv (b, 0)) goto gotit;
 
-  strcpy (b, "1"); if (strEQ (b, "TRUE" )) goto gotit;
-  strcpy (b, "0"); if (strEQ (b, "FALSE")) goto gotit;
+  strcpy (b, "1"); if (strEQ (p, "TRUE" )) goto gotit;
+  strcpy (b, "0"); if (strEQ (p, "FALSE")) goto gotit;
   
   return;
 

@@ -55,8 +55,8 @@ static void need_pdl (void)
 
 static void sv2net (SV *s, SV *sv)
 {
-  if (SvLEN(sv)-SvCUR(sv) < 96)
-    SvGROW (sv, SvLEN(sv) + PV_INC);
+  if (SvLEN(s)-SvCUR(s) < 96)
+    SvGROW (s, SvLEN(s) + PV_INC);
 
   if (SvROK(sv))
     {
@@ -86,7 +86,7 @@ static void sv2net (SV *s, SV *sv)
     }
   else if (SvOK(sv))
     {
-      if (SvTYPE(sv) == SVt_IV)
+      if (SvIOK(sv))
         sv_catpvf (s,"i%ld:", (long)SvIV(sv));
       else
         {
@@ -177,6 +177,7 @@ args2net(...)
 	for (index = 0; index < items; index++)
           sv2net (RETVAL, ST(index));
 
+        /*printf (">>>>%s\n",SvPV_nolen(RETVAL));*/
         OUTPUT:
         RETVAL
 
@@ -184,6 +185,7 @@ void
 net2args(s)
 	char *	s
         PPCODE:
+        /*printf ("<<<<%s\n",s);*/
         /* this depends on a trailing zero! */
         while (*s)
 	  XPUSHs (sv_2mortal (net2sv (&s)));

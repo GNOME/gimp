@@ -6,6 +6,8 @@ Revision history for Gimp-Perl extension.
         - new, faster and leaner protocol (bumped protocol version number).
         - added SvPV_nolen to ppport.h and made use of it everywhere.
         - renamed nolib => Module.
+        - streamlined warning messages as not to scare the people away.
+        - fixed a bug in check_for_typoe (correct TRUE and FALSE).
 
 1.089 Tue May 18 19:55:25 CEST 1999
 	- added colourtoalpha.
