@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2\n"
-"POT-Creation-Date: 2002-08-20 15:07+0200\n"
+"POT-Creation-Date: 2002-10-10 23:16+0200\n"
 "PO-Revision-Date: 2002-03-13 18:33+0900\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -15,33 +15,33 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:289
-#: plug-ins/FractalExplorer/Dialogs.c:1386 plug-ins/common/AlienMap.c:1388
+#: plug-ins/FractalExplorer/Dialogs.c:1392 plug-ins/common/AlienMap.c:1387
 #: plug-ins/common/AlienMap2.c:1367 plug-ins/gfig/gfig.c:3374
-#: plug-ins/imagemap/imap_about.c:43 plug-ins/print/gimp_main_window.c:361
+#: plug-ins/imagemap/imap_about.c:38 plug-ins/print/gimp_main_window.c:358
 #: plug-ins/webbrowser/webbrowser.c:278
 msgid "About"
 msgstr "このプラグインについて"
 
 #. Preview
-#: plug-ins/FractalExplorer/Dialogs.c:314 plug-ins/Lighting/lighting_ui.c:1165
-#: plug-ins/MapObject/mapobject_ui.c:1438 plug-ins/common/CML_explorer.c:1206
-#: plug-ins/common/blinds.c:347 plug-ins/common/curve_bend.c:1509
+#: plug-ins/FractalExplorer/Dialogs.c:314 plug-ins/Lighting/lighting_ui.c:1152
+#: plug-ins/MapObject/mapobject_ui.c:1434 plug-ins/common/CML_explorer.c:1197
+#: plug-ins/common/blinds.c:347 plug-ins/common/curve_bend.c:1385
 #: plug-ins/common/destripe.c:578 plug-ins/common/emboss.c:723
 #: plug-ins/common/fractaltrace.c:750 plug-ins/common/glasstile.c:287
-#: plug-ins/common/grid.c:686 plug-ins/common/illusion.c:596
-#: plug-ins/common/iwarp.c:1190 plug-ins/common/jigsaw.c:2515
-#: plug-ins/common/mapcolor.c:578 plug-ins/common/max_rgb.c:368
+#: plug-ins/common/grid.c:687 plug-ins/common/illusion.c:596
+#: plug-ins/common/iwarp.c:1186 plug-ins/common/jigsaw.c:2514
+#: plug-ins/common/mapcolor.c:578 plug-ins/common/max_rgb.c:369
 #: plug-ins/common/nlfilt.c:559 plug-ins/common/noisify.c:508
 #: plug-ins/common/plasma.c:343 plug-ins/common/polar.c:943
-#: plug-ins/common/ps.c:2955 plug-ins/common/sharpen.c:558
-#: plug-ins/common/sinus.c:2113 plug-ins/common/tileit.c:415
+#: plug-ins/common/ps.c:2965 plug-ins/common/sharpen.c:558
+#: plug-ins/common/sinus.c:2112 plug-ins/common/tileit.c:414
 #: plug-ins/common/waves.c:557 plug-ins/common/whirlpinch.c:827
 #: plug-ins/common/wind.c:1028 plug-ins/flame/flame.c:950
-#: plug-ins/gfig/gfig.c:3961 plug-ins/gflare/gflare.c:2557
-#: plug-ins/gflare/gflare.c:3573 plug-ins/gimpressionist/orientmap.c:511
+#: plug-ins/gfig/gfig.c:3961 plug-ins/gflare/gflare.c:2559
+#: plug-ins/gflare/gflare.c:3571 plug-ins/gimpressionist/orientmap.c:511
 #: plug-ins/gimpressionist/preview.c:113 plug-ins/gimpressionist/sizemap.c:412
 #: plug-ins/ifscompose/ifscompose.c:912 plug-ins/print/gimp_main_window.c:409
-#: plug-ins/rcm/rcm_dialog.c:124 plug-ins/rcm/rcm_dialog.c:674
+#: plug-ins/rcm/rcm_dialog.c:124 plug-ins/rcm/rcm_dialog.c:671
 msgid "Preview"
 msgstr "プレビュー"
 
@@ -66,91 +66,75 @@ msgstr "再描画プレビュー"
 msgid "Zoom Options"
 msgstr "拡大オプション"
 
-#: plug-ins/FractalExplorer/Dialogs.c:389
-msgid "Undo Zoom"
-msgstr "拡大アンドゥ"
-
-#: plug-ins/FractalExplorer/Dialogs.c:395
+#: plug-ins/FractalExplorer/Dialogs.c:393
 msgid "Undo last zoom"
 msgstr "最後の拡大をアンドゥ"
-
-#: plug-ins/FractalExplorer/Dialogs.c:397
-msgid "Redo Zoom"
-msgstr "拡大リドゥ"
 
 #: plug-ins/FractalExplorer/Dialogs.c:403
 msgid "Redo last zoom"
 msgstr "最後の拡大をリドゥ"
 
-#: plug-ins/FractalExplorer/Dialogs.c:405
-msgid "Step In"
-msgstr "拡大"
-
-#: plug-ins/FractalExplorer/Dialogs.c:412
-msgid "Step Out"
-msgstr "縮小"
-
 #.
 #. *  Scales
 #.
-#: plug-ins/FractalExplorer/Dialogs.c:429 plug-ins/gflare/gflare.c:2966
-#: plug-ins/gflare/gflare.c:3809 plug-ins/gflare/gflare.c:3919
-#: plug-ins/gflare/gflare.c:4061
+#: plug-ins/FractalExplorer/Dialogs.c:435 plug-ins/gflare/gflare.c:2979
+#: plug-ins/gflare/gflare.c:3807 plug-ins/gflare/gflare.c:3917
+#: plug-ins/gflare/gflare.c:4059
 msgid "Parameters"
 msgstr "パラメータ"
 
-#: plug-ins/FractalExplorer/Dialogs.c:432
+#: plug-ins/FractalExplorer/Dialogs.c:438
 msgid "Fractal Parameters"
 msgstr "フラクタルパラメータ"
 
-#: plug-ins/FractalExplorer/Dialogs.c:446
+#: plug-ins/FractalExplorer/Dialogs.c:452
 msgid "XMIN:"
 msgstr "X最小:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:449
+#: plug-ins/FractalExplorer/Dialogs.c:455
 msgid "Change the first (minimal) x-coordinate delimitation"
 msgstr "第一 X 座標境界 (最小値) を変える"
 
-#: plug-ins/FractalExplorer/Dialogs.c:457
+#: plug-ins/FractalExplorer/Dialogs.c:463
 msgid "XMAX:"
 msgstr "X最大:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:460
+#: plug-ins/FractalExplorer/Dialogs.c:466
 msgid "Change the second (maximal) x-coordinate delimitation"
 msgstr "第二 X 座標境界 (最大値) を変える"
 
-#: plug-ins/FractalExplorer/Dialogs.c:468
+#: plug-ins/FractalExplorer/Dialogs.c:474
 msgid "YMIN:"
 msgstr "Y最小:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:471
+#: plug-ins/FractalExplorer/Dialogs.c:477
 msgid "Change the first (minimal) y-coordinate delimitation"
 msgstr "第一 Y 座標境界 (最小値) を変える"
 
-#: plug-ins/FractalExplorer/Dialogs.c:479
+#: plug-ins/FractalExplorer/Dialogs.c:485
 msgid "YMAX:"
 msgstr "Y最大:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:482
+#: plug-ins/FractalExplorer/Dialogs.c:488
 msgid "Change the second (maximal) y-coordinate delimitation"
 msgstr "第二 Y 座標境界 (最大値) を変える"
 
-#: plug-ins/FractalExplorer/Dialogs.c:490
+#: plug-ins/FractalExplorer/Dialogs.c:496
 msgid "ITER:"
 msgstr "繰り返し:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:493
+#: plug-ins/FractalExplorer/Dialogs.c:499
 msgid ""
 "Change the iteration value. The higher it is, the more details will be "
 "calculated, which will take more time"
 msgstr ""
 "繰り返し回数を変える. 大きくすると詳細に計算するが, 当然余計に時間がかかる."
 
-#: plug-ins/FractalExplorer/Dialogs.c:502
+#: plug-ins/FractalExplorer/Dialogs.c:508
 msgid "CX:"
 msgstr "CX:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:505
+#: plug-ins/FractalExplorer/Dialogs.c:511
 msgid ""
 "Change the CX value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
@@ -158,11 +142,11 @@ msgstr ""
 "CX 値を変える. (マンデルブローとシエルピンスキを除く, 全てのフラクタルのアス"
 "ペクト比が変わる.)"
 
-#: plug-ins/FractalExplorer/Dialogs.c:514
+#: plug-ins/FractalExplorer/Dialogs.c:520
 msgid "CY:"
 msgstr "CY:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:517
+#: plug-ins/FractalExplorer/Dialogs.c:523
 msgid ""
 "Change the CY value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
@@ -170,217 +154,212 @@ msgstr ""
 "CY 値を変える. (マンデルブローとシエルピンスキを除く, 全てのフラクタルのアス"
 "ペクト比が変わる.)"
 
-#: plug-ins/FractalExplorer/Dialogs.c:528 plug-ins/common/CML_explorer.c:1234
-#: plug-ins/gfig/gfig.c:3548
-msgid "Load"
-msgstr "読み込み"
-
-#: plug-ins/FractalExplorer/Dialogs.c:534
+#: plug-ins/FractalExplorer/Dialogs.c:540
 msgid "Load a fractal from file"
 msgstr "フラクタルをファイルから読み込み"
 
-#: plug-ins/FractalExplorer/Dialogs.c:542
+#: plug-ins/FractalExplorer/Dialogs.c:548
 msgid "Reset parameters to default values"
 msgstr "パラメータを初期値に戻す"
 
-#: plug-ins/FractalExplorer/Dialogs.c:551
+#: plug-ins/FractalExplorer/Dialogs.c:557
 msgid "Save active fractal to file"
 msgstr "アクティブなフラクタルをファイルに保存"
 
 #. Fractal type toggle box
-#: plug-ins/FractalExplorer/Dialogs.c:554
+#: plug-ins/FractalExplorer/Dialogs.c:560
 msgid "Fractal Type"
 msgstr "フラクタルの種類"
 
-#: plug-ins/FractalExplorer/Dialogs.c:567
+#: plug-ins/FractalExplorer/Dialogs.c:573
 msgid "Mandelbrot"
 msgstr "マンデルブロー"
 
-#: plug-ins/FractalExplorer/Dialogs.c:569
+#: plug-ins/FractalExplorer/Dialogs.c:575
 msgid "Julia"
 msgstr "ジュリア"
 
-#: plug-ins/FractalExplorer/Dialogs.c:571
+#: plug-ins/FractalExplorer/Dialogs.c:577
 msgid "Barnsley 1"
 msgstr "バーンスレイ 1"
 
-#: plug-ins/FractalExplorer/Dialogs.c:573
+#: plug-ins/FractalExplorer/Dialogs.c:579
 msgid "Barnsley 2"
 msgstr "バーンスレイ 2"
 
-#: plug-ins/FractalExplorer/Dialogs.c:575
+#: plug-ins/FractalExplorer/Dialogs.c:581
 msgid "Barnsley 3"
 msgstr "バーンスレイ 3"
 
-#: plug-ins/FractalExplorer/Dialogs.c:577
+#: plug-ins/FractalExplorer/Dialogs.c:583
 msgid "Spider"
 msgstr "蜘蛛"
 
-#: plug-ins/FractalExplorer/Dialogs.c:579
+#: plug-ins/FractalExplorer/Dialogs.c:585
 msgid "Man'o'war"
 msgstr "マンオーウォー"
 
-#: plug-ins/FractalExplorer/Dialogs.c:581
+#: plug-ins/FractalExplorer/Dialogs.c:587
 msgid "Lambda"
 msgstr "ラムダ"
 
-#: plug-ins/FractalExplorer/Dialogs.c:583
+#: plug-ins/FractalExplorer/Dialogs.c:589
 msgid "Sierpinski"
 msgstr "シエルピンスキ"
 
-#: plug-ins/FractalExplorer/Dialogs.c:633 plug-ins/common/sinus.c:1856
-#: plug-ins/common/sinus.c:1874
+#: plug-ins/FractalExplorer/Dialogs.c:639 plug-ins/common/sinus.c:1855
+#: plug-ins/common/sinus.c:1873
 msgid "Colors"
 msgstr "カラー"
 
 #. Number of Colors frame
-#: plug-ins/FractalExplorer/Dialogs.c:637 plug-ins/common/borderaverage.c:416
+#: plug-ins/FractalExplorer/Dialogs.c:643 plug-ins/common/borderaverage.c:416
 msgid "Number of Colors"
 msgstr "色数"
 
-#: plug-ins/FractalExplorer/Dialogs.c:650
+#: plug-ins/FractalExplorer/Dialogs.c:656
 msgid "Number of Colors:"
 msgstr "色数:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:653
+#: plug-ins/FractalExplorer/Dialogs.c:659
 msgid "Change the number of colors in the mapping"
 msgstr "マッピクングする色数を変える"
 
-#: plug-ins/FractalExplorer/Dialogs.c:660
+#: plug-ins/FractalExplorer/Dialogs.c:666
 msgid "Use loglog Smoothing"
 msgstr "loglog スムージングする"
 
-#: plug-ins/FractalExplorer/Dialogs.c:667
+#: plug-ins/FractalExplorer/Dialogs.c:673
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
 msgstr "結果に\"すじ\"が見えにくいように log log スムージングする"
 
 #. Color Density frame
-#: plug-ins/FractalExplorer/Dialogs.c:671
+#: plug-ins/FractalExplorer/Dialogs.c:677
 msgid "Color Density"
 msgstr "色密度"
 
 #. These values are translated for the GUI but also used internally
 #. to figure out which button the user pushed, etc.
 #. Not my design, please don't blame me -- njl
-#: plug-ins/FractalExplorer/Dialogs.c:685 plug-ins/common/compose.c:120
+#: plug-ins/FractalExplorer/Dialogs.c:691 plug-ins/common/compose.c:120
 #: plug-ins/common/compose.c:124 plug-ins/common/exchange.c:420
 #: plug-ins/fp/fp_gtk.c:25
 msgid "Red:"
 msgstr "赤:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:688
+#: plug-ins/FractalExplorer/Dialogs.c:694
 msgid "Change the intensity of the red channel"
 msgstr "赤チャンネルの強度を変える"
 
-#: plug-ins/FractalExplorer/Dialogs.c:695 plug-ins/common/compose.c:121
+#: plug-ins/FractalExplorer/Dialogs.c:701 plug-ins/common/compose.c:121
 #: plug-ins/common/compose.c:125 plug-ins/common/exchange.c:464
 #: plug-ins/fp/fp_gtk.c:26
 msgid "Green:"
 msgstr "緑:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:698
+#: plug-ins/FractalExplorer/Dialogs.c:704
 msgid "Change the intensity of the green channel"
 msgstr "緑チャンネルの強度を変える"
 
-#: plug-ins/FractalExplorer/Dialogs.c:705 plug-ins/common/compose.c:122
+#: plug-ins/FractalExplorer/Dialogs.c:711 plug-ins/common/compose.c:122
 #: plug-ins/common/compose.c:126 plug-ins/common/exchange.c:508
 #: plug-ins/fp/fp_gtk.c:27
 msgid "Blue:"
 msgstr "青:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:708
+#: plug-ins/FractalExplorer/Dialogs.c:714
 msgid "Change the intensity of the blue channel"
 msgstr "青チャンネルの強度を変える"
 
 #. Color Function frame
-#: plug-ins/FractalExplorer/Dialogs.c:714
+#: plug-ins/FractalExplorer/Dialogs.c:720
 msgid "Color Function"
 msgstr "色関数"
 
 #. Redmode radio frame
-#: plug-ins/FractalExplorer/Dialogs.c:725 plug-ins/common/AlienMap.c:1460
+#: plug-ins/FractalExplorer/Dialogs.c:731 plug-ins/common/AlienMap.c:1459
 #: plug-ins/common/decompose.c:117
 msgid "Red"
 msgstr "赤"
 
-#: plug-ins/FractalExplorer/Dialogs.c:729
-#: plug-ins/FractalExplorer/Dialogs.c:770
-#: plug-ins/FractalExplorer/Dialogs.c:811
+#: plug-ins/FractalExplorer/Dialogs.c:735
+#: plug-ins/FractalExplorer/Dialogs.c:776
+#: plug-ins/FractalExplorer/Dialogs.c:817
 msgid "Sine"
 msgstr "Sin"
 
-#: plug-ins/FractalExplorer/Dialogs.c:731
-#: plug-ins/FractalExplorer/Dialogs.c:772
-#: plug-ins/FractalExplorer/Dialogs.c:813
+#: plug-ins/FractalExplorer/Dialogs.c:737
+#: plug-ins/FractalExplorer/Dialogs.c:778
+#: plug-ins/FractalExplorer/Dialogs.c:819
 msgid "Cosine"
 msgstr "Cos"
 
-#: plug-ins/FractalExplorer/Dialogs.c:733
-#: plug-ins/FractalExplorer/Dialogs.c:774
-#: plug-ins/FractalExplorer/Dialogs.c:815 plug-ins/Lighting/lighting_ui.c:571
+#: plug-ins/FractalExplorer/Dialogs.c:739
+#: plug-ins/FractalExplorer/Dialogs.c:780
+#: plug-ins/FractalExplorer/Dialogs.c:821 plug-ins/Lighting/lighting_ui.c:564
 #: plug-ins/common/CML_explorer.c:172 plug-ins/common/align_layers.c:443
-#: plug-ins/common/align_layers.c:476 plug-ins/common/ps.c:2727
-#: plug-ins/common/ps.c:2740 plug-ins/common/psp.c:444
+#: plug-ins/common/align_layers.c:476 plug-ins/common/ps.c:2737
+#: plug-ins/common/ps.c:2750 plug-ins/common/psp.c:444
 #: plug-ins/common/tiff.c:1599 plug-ins/fits/fits.c:1030
 msgid "None"
 msgstr "なし"
 
-#: plug-ins/FractalExplorer/Dialogs.c:738
-#: plug-ins/FractalExplorer/Dialogs.c:779
-#: plug-ins/FractalExplorer/Dialogs.c:820
-msgid "Use sine-function for this color component"
-msgstr "この色要素に対して Sin 関数を使用する"
-
-#: plug-ins/FractalExplorer/Dialogs.c:741
-#: plug-ins/FractalExplorer/Dialogs.c:782
-#: plug-ins/FractalExplorer/Dialogs.c:823
-msgid "Use cosine-function for this color component"
-msgstr "この色要素に対して Cos 関数を使用する"
-
 #: plug-ins/FractalExplorer/Dialogs.c:744
 #: plug-ins/FractalExplorer/Dialogs.c:785
 #: plug-ins/FractalExplorer/Dialogs.c:826
+msgid "Use sine-function for this color component"
+msgstr "この色要素に対して Sin 関数を使用する"
+
+#: plug-ins/FractalExplorer/Dialogs.c:747
+#: plug-ins/FractalExplorer/Dialogs.c:788
+#: plug-ins/FractalExplorer/Dialogs.c:829
+msgid "Use cosine-function for this color component"
+msgstr "この色要素に対して Cos 関数を使用する"
+
+#: plug-ins/FractalExplorer/Dialogs.c:750
+#: plug-ins/FractalExplorer/Dialogs.c:791
+#: plug-ins/FractalExplorer/Dialogs.c:832
 msgid ""
 "Use linear mapping instead of any trigonometrical function for this color "
 "channel"
 msgstr "この色チャンネルに対して三角関数ではなく線形マッピングを使用する"
 
-#: plug-ins/FractalExplorer/Dialogs.c:753
-#: plug-ins/FractalExplorer/Dialogs.c:794
-#: plug-ins/FractalExplorer/Dialogs.c:835
+#: plug-ins/FractalExplorer/Dialogs.c:759
+#: plug-ins/FractalExplorer/Dialogs.c:800
+#: plug-ins/FractalExplorer/Dialogs.c:841
 msgid "Inversion"
 msgstr "反転"
 
-#: plug-ins/FractalExplorer/Dialogs.c:761
-#: plug-ins/FractalExplorer/Dialogs.c:802
-#: plug-ins/FractalExplorer/Dialogs.c:843
+#: plug-ins/FractalExplorer/Dialogs.c:767
+#: plug-ins/FractalExplorer/Dialogs.c:808
+#: plug-ins/FractalExplorer/Dialogs.c:849
 msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
 msgstr "このオプションを有効にすると, 高い色値と低い色値が逆転される."
 
 #. Greenmode radio frame
-#: plug-ins/FractalExplorer/Dialogs.c:766 plug-ins/common/AlienMap.c:1483
+#: plug-ins/FractalExplorer/Dialogs.c:772 plug-ins/common/AlienMap.c:1482
 #: plug-ins/common/decompose.c:118
 msgid "Green"
 msgstr "緑"
 
 #. Bluemode radio frame
-#: plug-ins/FractalExplorer/Dialogs.c:807 plug-ins/common/AlienMap.c:1506
+#: plug-ins/FractalExplorer/Dialogs.c:813 plug-ins/common/AlienMap.c:1505
 #: plug-ins/common/decompose.c:123
 msgid "Blue"
 msgstr "青"
 
 #. Colormode toggle box
-#: plug-ins/FractalExplorer/Dialogs.c:848
+#: plug-ins/FractalExplorer/Dialogs.c:854
 msgid "Color Mode"
 msgstr "カラーモード"
 
-#: plug-ins/FractalExplorer/Dialogs.c:859
+#: plug-ins/FractalExplorer/Dialogs.c:865
 msgid "As Specified above"
 msgstr "上の指定通り"
 
-#: plug-ins/FractalExplorer/Dialogs.c:871
+#: plug-ins/FractalExplorer/Dialogs.c:877
 msgid ""
 "Create a color-map with the options you specified above (color density/"
 "function). The result is visible in the preview image"
@@ -388,76 +367,76 @@ msgstr ""
 "上で指定したとおりのカラーマップを作る (色密度/関数). 結果はプレビュー画像の"
 "通り."
 
-#: plug-ins/FractalExplorer/Dialogs.c:881
+#: plug-ins/FractalExplorer/Dialogs.c:887
 msgid "Apply Active Gradient to Final Image"
 msgstr "最終画像にアクティブなグラデーションを適用する"
 
-#: plug-ins/FractalExplorer/Dialogs.c:893
+#: plug-ins/FractalExplorer/Dialogs.c:899
 msgid "Create a color-map using a gradient from the gradient editor"
 msgstr "グラデーションエディタからグラデーションカラーマップを取得する"
 
-#: plug-ins/FractalExplorer/Dialogs.c:898
+#: plug-ins/FractalExplorer/Dialogs.c:904
 msgid "FractalExplorer Gradient"
 msgstr "フラクタルエクスプローラグラデーション"
 
-#: plug-ins/FractalExplorer/Dialogs.c:930
+#: plug-ins/FractalExplorer/Dialogs.c:936
 msgid "Fractals"
 msgstr "フラクタル"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1581 plug-ins/gfig/gfig.c:1457
+#: plug-ins/FractalExplorer/Dialogs.c:1587 plug-ins/gfig/gfig.c:1457
 #, c-format
 msgid "Error opening: %s"
 msgstr "%s を開く際にエラー発生"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1583 plug-ins/gfig/gfig.c:1459
+#: plug-ins/FractalExplorer/Dialogs.c:1589 plug-ins/gfig/gfig.c:1459
 msgid "Could not save."
 msgstr "保存できません."
 
-#: plug-ins/FractalExplorer/Dialogs.c:1599
+#: plug-ins/FractalExplorer/Dialogs.c:1605
 msgid "Failed to write file\n"
 msgstr "ファイル書き込み失敗\n"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1619
+#: plug-ins/FractalExplorer/Dialogs.c:1625
 msgid "Save: No filename given"
 msgstr "保存: ファイル名が指定されていません"
 
 #. Can't save to directory
-#: plug-ins/FractalExplorer/Dialogs.c:1626
+#: plug-ins/FractalExplorer/Dialogs.c:1632
 #, fuzzy
 msgid "Save: Can't save to a folder."
 msgstr "保存: ディレクトリには保存できません"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1671
+#: plug-ins/FractalExplorer/Dialogs.c:1677
 msgid "Load Fractal Parameters"
 msgstr "フラクタルパラメータ読み込み"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1683
+#: plug-ins/FractalExplorer/Dialogs.c:1689
 msgid "Click here to load your file"
 msgstr "個人ファイルを読み込みます"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1690
+#: plug-ins/FractalExplorer/Dialogs.c:1696
 msgid "Click here to cancel load procedure"
 msgstr "読み込みをキャンセルします"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1708
+#: plug-ins/FractalExplorer/Dialogs.c:1714
 msgid "Save Fractal Parameters"
 msgstr "フラクタルパラメータを保存"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1720
+#: plug-ins/FractalExplorer/Dialogs.c:1726
 msgid "Click here to save your file"
 msgstr "個人ファイルに保存します"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1727
+#: plug-ins/FractalExplorer/Dialogs.c:1733
 msgid "Click here to cancel save procedure"
 msgstr "保存をキャンセルします"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1993
+#: plug-ins/FractalExplorer/Dialogs.c:1999
 #: plug-ins/FractalExplorer/FractalExplorer.c:1259
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
 msgstr "'%s' はフラクタルエクスプローラの形式ではありません"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1998
+#: plug-ins/FractalExplorer/Dialogs.c:2004
 #: plug-ins/FractalExplorer/FractalExplorer.c:1267
 #, c-format
 msgid ""
@@ -476,7 +455,7 @@ msgid "Rendering Fractal..."
 msgstr "フラクタルを描いています..."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:735 plug-ins/gfig/gfig.c:5015
-#: plug-ins/gflare/gflare.c:3438
+#: plug-ins/gflare/gflare.c:3436
 #, c-format
 msgid ""
 "Are you sure you want to delete\n"
@@ -527,33 +506,21 @@ msgstr "初めてのフラクタル"
 msgid "Choose Fractal by double-clicking on it"
 msgstr "フラクタルをダブルクリックして選んで下さい"
 
-#. Put buttons in
-#: plug-ins/FractalExplorer/FractalExplorer.c:1387 plug-ins/gfig/gfig.c:3537
-msgid "Rescan"
-msgstr "再スキャン"
-
-#: plug-ins/FractalExplorer/FractalExplorer.c:1394
+#: plug-ins/FractalExplorer/FractalExplorer.c:1393
 #, fuzzy
 msgid "Select folder and rescan collection"
 msgstr "ディレクトリを選んでコレクションを再スキャンする"
-
-#: plug-ins/FractalExplorer/FractalExplorer.c:1397
-#: plug-ins/gimpressionist/presets.c:679
-#: plug-ins/imagemap/imap_cmd_delete.c:58
-#: plug-ins/imagemap/imap_selection.c:183 plug-ins/imagemap/imap_tools.c:172
-msgid "Delete"
-msgstr "削除"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1405
 msgid "Delete currently selected fractal"
 msgstr "現在選択中のフラクタルを削除する"
 
 #. the dialog
-#: plug-ins/FractalExplorer/FractalExplorer.c:1457
+#: plug-ins/FractalExplorer/FractalExplorer.c:1461
 msgid "Rescan for Fractals"
 msgstr "フラクタルを再スキャン"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1476
+#: plug-ins/FractalExplorer/FractalExplorer.c:1480
 msgid "Add FractalExplorer Path"
 msgstr "フラクタルエクスプローラパスを追加"
 
@@ -620,333 +587,316 @@ msgstr "高品位プレビュー"
 msgid "Enable/disable high quality preview"
 msgstr "高品位プレビューの有効/無効"
 
-#. Antialiasing options
-#: plug-ins/Lighting/lighting_ui.c:467 plug-ins/MapObject/mapobject_ui.c:636
-msgid "Antialiasing Options"
-msgstr "アンチエイリアシングオプション"
-
-#: plug-ins/Lighting/lighting_ui.c:476
+#: plug-ins/Lighting/lighting_ui.c:471
 #, fuzzy
 msgid "E_nable Antialiasing"
 msgstr "アンチエイリアシングする"
 
-#: plug-ins/Lighting/lighting_ui.c:486 plug-ins/MapObject/mapobject_ui.c:656
-msgid "Enable/disable jagged edges removal (antialiasing)"
-msgstr "ギザギザした縁を滑らかにするかどうか (アンチエイリアシング)"
-
-#: plug-ins/Lighting/lighting_ui.c:499 plug-ins/common/bumpmap.c:1058
-#: plug-ins/common/emboss.c:573 plug-ins/common/fractaltrace.c:835
-#: plug-ins/common/struc.c:1330
+#: plug-ins/Lighting/lighting_ui.c:492 plug-ins/MapObject/mapobject_ui.c:665
+#: plug-ins/common/bumpmap.c:1058 plug-ins/common/emboss.c:573
+#: plug-ins/common/fractaltrace.c:835 plug-ins/common/struc.c:1330
 #, fuzzy
 msgid "_Depth:"
 msgstr "深度:"
 
-#: plug-ins/Lighting/lighting_ui.c:502 plug-ins/MapObject/mapobject_ui.c:672
+#: plug-ins/Lighting/lighting_ui.c:495 plug-ins/MapObject/mapobject_ui.c:668
 msgid "Antialiasing quality. Higher is better, but slower"
 msgstr "アンチアエイリアシングの品位. 高い程綺麗だが遅い."
 
-#: plug-ins/Lighting/lighting_ui.c:509
+#: plug-ins/Lighting/lighting_ui.c:502
 #, fuzzy
 msgid "T_hreshold:"
 msgstr "閾値:"
 
-#: plug-ins/Lighting/lighting_ui.c:512 plug-ins/MapObject/mapobject_ui.c:689
+#: plug-ins/Lighting/lighting_ui.c:505 plug-ins/MapObject/mapobject_ui.c:685
 msgid "Stop when pixel differences are smaller than this value"
 msgstr "ピクセル値がこの値よりも小さくなったら止まる"
 
-#: plug-ins/Lighting/lighting_ui.c:555 plug-ins/MapObject/mapobject_ui.c:715
+#: plug-ins/Lighting/lighting_ui.c:548 plug-ins/MapObject/mapobject_ui.c:711
 msgid "Light Settings"
 msgstr "光源設定"
 
-#: plug-ins/Lighting/lighting_ui.c:573
+#: plug-ins/Lighting/lighting_ui.c:566
 msgid "Directional"
 msgstr "指向性光源"
 
-#: plug-ins/Lighting/lighting_ui.c:575
+#: plug-ins/Lighting/lighting_ui.c:568
 msgid "Point"
 msgstr "点光源"
 
-#: plug-ins/Lighting/lighting_ui.c:577
+#: plug-ins/Lighting/lighting_ui.c:570
 msgid "Spot"
 msgstr "スポット"
 
-#: plug-ins/Lighting/lighting_ui.c:582
+#: plug-ins/Lighting/lighting_ui.c:575
 #, fuzzy
 msgid "L_ight Type:"
 msgstr "光源種:"
 
-#: plug-ins/Lighting/lighting_ui.c:585 plug-ins/MapObject/mapobject_ui.c:742
+#: plug-ins/Lighting/lighting_ui.c:578 plug-ins/MapObject/mapobject_ui.c:738
 msgid "Type of light source to apply"
 msgstr "適用する光源の種類"
 
-#: plug-ins/Lighting/lighting_ui.c:587 plug-ins/MapObject/mapobject_ui.c:744
+#: plug-ins/Lighting/lighting_ui.c:580 plug-ins/MapObject/mapobject_ui.c:740
 msgid "Select Lightsource Color"
 msgstr "光源色選択"
 
-#: plug-ins/Lighting/lighting_ui.c:595
+#: plug-ins/Lighting/lighting_ui.c:588
 #, fuzzy
 msgid "Lig_ht Color:"
 msgstr "光源色:"
 
-#: plug-ins/Lighting/lighting_ui.c:599 plug-ins/MapObject/mapobject_ui.c:757
+#: plug-ins/Lighting/lighting_ui.c:592 plug-ins/MapObject/mapobject_ui.c:753
 msgid "Set light source color"
 msgstr "光源色設定"
 
-#: plug-ins/Lighting/lighting_ui.c:601 plug-ins/MapObject/mapobject_ui.c:759
-#: plug-ins/MapObject/mapobject_ui.c:1068
+#: plug-ins/Lighting/lighting_ui.c:594 plug-ins/MapObject/mapobject_ui.c:755
+#: plug-ins/MapObject/mapobject_ui.c:1064
 #: plug-ins/print/gimp_main_window.c:460
 msgid "Position"
 msgstr "位置"
 
-#: plug-ins/Lighting/lighting_ui.c:618 plug-ins/common/flarefx.c:794
+#: plug-ins/Lighting/lighting_ui.c:611 plug-ins/common/flarefx.c:794
 #: plug-ins/common/nova.c:637 plug-ins/common/papertile.c:285
-#: plug-ins/flame/flame.c:1208 plug-ins/gflare/gflare.c:2945
+#: plug-ins/flame/flame.c:1208 plug-ins/gflare/gflare.c:2958
 #, fuzzy
 msgid "_X:"
 msgstr "X:"
 
-#: plug-ins/Lighting/lighting_ui.c:625 plug-ins/MapObject/mapobject_ui.c:784
+#: plug-ins/Lighting/lighting_ui.c:618 plug-ins/MapObject/mapobject_ui.c:780
 msgid "Light source X position in XYZ space"
 msgstr "XYZ 空間中の光源の X 位置"
 
-#: plug-ins/Lighting/lighting_ui.c:631 plug-ins/common/flarefx.c:815
+#: plug-ins/Lighting/lighting_ui.c:624 plug-ins/common/flarefx.c:815
 #: plug-ins/common/nova.c:658 plug-ins/common/papertile.c:294
-#: plug-ins/flame/flame.c:1222 plug-ins/gflare/gflare.c:2949
+#: plug-ins/flame/flame.c:1222 plug-ins/gflare/gflare.c:2962
 #, fuzzy
 msgid "_Y:"
 msgstr "Y:"
 
-#: plug-ins/Lighting/lighting_ui.c:638 plug-ins/MapObject/mapobject_ui.c:798
+#: plug-ins/Lighting/lighting_ui.c:631 plug-ins/MapObject/mapobject_ui.c:794
 msgid "Light source Y position in XYZ space"
 msgstr "XYZ 空間中の光源の Y 位置"
 
-#: plug-ins/Lighting/lighting_ui.c:644
+#: plug-ins/Lighting/lighting_ui.c:637
 #, fuzzy
 msgid "_Z:"
 msgstr "Z:"
 
-#: plug-ins/Lighting/lighting_ui.c:651 plug-ins/MapObject/mapobject_ui.c:812
+#: plug-ins/Lighting/lighting_ui.c:644 plug-ins/MapObject/mapobject_ui.c:808
 msgid "Light source Z position in XYZ space"
 msgstr "XYZ 空間中の光源の Z 位置"
 
-#: plug-ins/Lighting/lighting_ui.c:654 plug-ins/MapObject/mapobject_ui.c:815
+#: plug-ins/Lighting/lighting_ui.c:647 plug-ins/MapObject/mapobject_ui.c:811
 msgid "Direction Vector"
 msgstr "方向ベクトル"
 
 #. X
-#: plug-ins/Lighting/lighting_ui.c:670 plug-ins/MapObject/mapobject_ui.c:776
-#: plug-ins/MapObject/mapobject_ui.c:831
-#: plug-ins/MapObject/mapobject_ui.c:1080
-#: plug-ins/MapObject/mapobject_ui.c:1127 plug-ins/ifscompose/ifscompose.c:536
+#: plug-ins/Lighting/lighting_ui.c:663 plug-ins/MapObject/mapobject_ui.c:772
+#: plug-ins/MapObject/mapobject_ui.c:827
+#: plug-ins/MapObject/mapobject_ui.c:1076
+#: plug-ins/MapObject/mapobject_ui.c:1123 plug-ins/ifscompose/ifscompose.c:536
 msgid "X:"
 msgstr "X:"
 
-#: plug-ins/Lighting/lighting_ui.c:677 plug-ins/MapObject/mapobject_ui.c:839
+#: plug-ins/Lighting/lighting_ui.c:670 plug-ins/MapObject/mapobject_ui.c:835
 msgid "Light source X direction in XYZ space"
 msgstr "XYZ 空間中での光源の向きの X 方向要素"
 
 #. Y
-#: plug-ins/Lighting/lighting_ui.c:682 plug-ins/MapObject/mapobject_ui.c:790
-#: plug-ins/MapObject/mapobject_ui.c:844
-#: plug-ins/MapObject/mapobject_ui.c:1092
-#: plug-ins/MapObject/mapobject_ui.c:1137
-#: plug-ins/MapObject/mapobject_ui.c:1236 plug-ins/common/xbm.c:1244
+#: plug-ins/Lighting/lighting_ui.c:675 plug-ins/MapObject/mapobject_ui.c:786
+#: plug-ins/MapObject/mapobject_ui.c:840
+#: plug-ins/MapObject/mapobject_ui.c:1088
+#: plug-ins/MapObject/mapobject_ui.c:1133
+#: plug-ins/MapObject/mapobject_ui.c:1232 plug-ins/common/xbm.c:1244
 #: plug-ins/ifscompose/ifscompose.c:550
 msgid "Y:"
 msgstr "Y:"
 
-#: plug-ins/Lighting/lighting_ui.c:689 plug-ins/MapObject/mapobject_ui.c:852
+#: plug-ins/Lighting/lighting_ui.c:682 plug-ins/MapObject/mapobject_ui.c:848
 msgid "Light source Y direction in XYZ space"
 msgstr "XYZ 空間中での光源の向きの Y 方向要素"
 
-#: plug-ins/Lighting/lighting_ui.c:694 plug-ins/MapObject/mapobject_ui.c:804
-#: plug-ins/MapObject/mapobject_ui.c:857
-#: plug-ins/MapObject/mapobject_ui.c:1104
-#: plug-ins/MapObject/mapobject_ui.c:1147
-#: plug-ins/MapObject/mapobject_ui.c:1248
+#: plug-ins/Lighting/lighting_ui.c:687 plug-ins/MapObject/mapobject_ui.c:800
+#: plug-ins/MapObject/mapobject_ui.c:853
+#: plug-ins/MapObject/mapobject_ui.c:1100
+#: plug-ins/MapObject/mapobject_ui.c:1143
+#: plug-ins/MapObject/mapobject_ui.c:1244
 msgid "Z:"
 msgstr "Z:"
 
-#: plug-ins/Lighting/lighting_ui.c:701 plug-ins/MapObject/mapobject_ui.c:865
+#: plug-ins/Lighting/lighting_ui.c:694 plug-ins/MapObject/mapobject_ui.c:861
 msgid "Light source Z direction in XYZ space"
 msgstr "XYZ 空間中での光源の向きの Z 方向要素"
 
-#: plug-ins/Lighting/lighting_ui.c:727 plug-ins/MapObject/mapobject_ui.c:890
+#: plug-ins/Lighting/lighting_ui.c:720 plug-ins/MapObject/mapobject_ui.c:886
 msgid "Intensity Levels"
 msgstr "強度レベル"
 
-#: plug-ins/Lighting/lighting_ui.c:745
+#: plug-ins/Lighting/lighting_ui.c:738
 #, fuzzy
 msgid "_Ambient:"
 msgstr "飽和度:"
 
-#: plug-ins/Lighting/lighting_ui.c:759 plug-ins/MapObject/mapobject_ui.c:922
+#: plug-ins/Lighting/lighting_ui.c:752 plug-ins/MapObject/mapobject_ui.c:918
 msgid "Amount of original color to show where no direct light falls"
 msgstr "直接光が当たっていない場合に見える元の色の量"
 
-#: plug-ins/Lighting/lighting_ui.c:771
+#: plug-ins/Lighting/lighting_ui.c:764
 #, fuzzy
 msgid "_Diffuse:"
 msgstr "拡散:"
 
-#: plug-ins/Lighting/lighting_ui.c:785 plug-ins/MapObject/mapobject_ui.c:948
+#: plug-ins/Lighting/lighting_ui.c:778 plug-ins/MapObject/mapobject_ui.c:944
 msgid "Intensity of original color when lit by a light source"
 msgstr "光源に照らされた場合の元の色の強度"
 
-#: plug-ins/Lighting/lighting_ui.c:793 plug-ins/MapObject/mapobject_ui.c:956
+#: plug-ins/Lighting/lighting_ui.c:786 plug-ins/MapObject/mapobject_ui.c:952
 msgid "Reflectivity"
 msgstr "反射性"
 
-#: plug-ins/Lighting/lighting_ui.c:811
+#: plug-ins/Lighting/lighting_ui.c:804
 #, fuzzy
 msgid "D_iffuse:"
 msgstr "拡散:"
 
-#: plug-ins/Lighting/lighting_ui.c:825 plug-ins/MapObject/mapobject_ui.c:988
+#: plug-ins/Lighting/lighting_ui.c:818 plug-ins/MapObject/mapobject_ui.c:984
 msgid "Higher values makes the object reflect more light (appear lighter)"
 msgstr "大きな値にすると物体がより光を反射する (明るく見える)"
 
-#: plug-ins/Lighting/lighting_ui.c:837
+#: plug-ins/Lighting/lighting_ui.c:830
 #, fuzzy
 msgid "_Specular:"
 msgstr "反射:"
 
-#: plug-ins/Lighting/lighting_ui.c:851 plug-ins/MapObject/mapobject_ui.c:1014
+#: plug-ins/Lighting/lighting_ui.c:844 plug-ins/MapObject/mapobject_ui.c:1010
 msgid "Controls how intense the highlights will be"
 msgstr "ハイライトの強度を制御する"
 
-#: plug-ins/Lighting/lighting_ui.c:863
+#: plug-ins/Lighting/lighting_ui.c:856
 #, fuzzy
 msgid "_Highlight:"
 msgstr "ハイライト:"
 
-#: plug-ins/Lighting/lighting_ui.c:877 plug-ins/MapObject/mapobject_ui.c:1040
+#: plug-ins/Lighting/lighting_ui.c:870 plug-ins/MapObject/mapobject_ui.c:1036
 msgid "Higher values makes the highlights more focused"
 msgstr "大きな値にするとハイライトがくっきりする"
 
-#: plug-ins/Lighting/lighting_ui.c:907
-msgid "Bumpmap Settings"
-msgstr "バンプマップ設定"
-
-#: plug-ins/Lighting/lighting_ui.c:916
+#: plug-ins/Lighting/lighting_ui.c:904
 #, fuzzy
 msgid "E_nable Bump Mapping"
 msgstr "バンプマップを使う"
 
-#: plug-ins/Lighting/lighting_ui.c:926
+#: plug-ins/Lighting/lighting_ui.c:915
 msgid "Enable/disable bump-mapping (image depth)"
 msgstr "バンプマップの有効/無効 (画像深度)"
 
-#: plug-ins/Lighting/lighting_ui.c:943
+#: plug-ins/Lighting/lighting_ui.c:933
 #, fuzzy
 msgid "Bumpm_ap Image:"
 msgstr "バンプマップ画像:"
 
-#: plug-ins/Lighting/lighting_ui.c:952 plug-ins/flame/flame.c:726
+#: plug-ins/Lighting/lighting_ui.c:942 plug-ins/flame/flame.c:726
 msgid "Linear"
 msgstr "線形"
 
-#: plug-ins/Lighting/lighting_ui.c:953
+#: plug-ins/Lighting/lighting_ui.c:943
 msgid "Logarithmic"
 msgstr "対数型"
 
-#: plug-ins/Lighting/lighting_ui.c:954 plug-ins/flame/flame.c:727
+#: plug-ins/Lighting/lighting_ui.c:944 plug-ins/flame/flame.c:727
 msgid "Sinusoidal"
 msgstr "波状"
 
-#: plug-ins/Lighting/lighting_ui.c:955 plug-ins/flame/flame.c:728
+#: plug-ins/Lighting/lighting_ui.c:945 plug-ins/flame/flame.c:728
 msgid "Spherical"
 msgstr "球面"
 
-#: plug-ins/Lighting/lighting_ui.c:959
+#: plug-ins/Lighting/lighting_ui.c:949
 #, fuzzy
 msgid "Cu_rve:"
 msgstr "カーブ:"
 
-#: plug-ins/Lighting/lighting_ui.c:965
+#: plug-ins/Lighting/lighting_ui.c:955
 #, fuzzy
 msgid "Ma_ximum Height:"
 msgstr "最大の高さ:"
 
-#: plug-ins/Lighting/lighting_ui.c:972
+#: plug-ins/Lighting/lighting_ui.c:962
 msgid "Maximum height for bumps"
 msgstr "バンプマップの最大の高さ:"
 
-#: plug-ins/Lighting/lighting_ui.c:978
+#: plug-ins/Lighting/lighting_ui.c:968
 #, fuzzy
 msgid "M_inimum Height:"
 msgstr "最小の高さ:"
 
-#: plug-ins/Lighting/lighting_ui.c:985
+#: plug-ins/Lighting/lighting_ui.c:975
 msgid "Minimum height for bumps"
 msgstr "バンプマップの最小の高さ:"
 
-#: plug-ins/Lighting/lighting_ui.c:988
+#: plug-ins/Lighting/lighting_ui.c:978
 #, fuzzy
 msgid "Auto_stretch to Fit Value Range"
 msgstr "明度域を自動的に調整する"
 
-#: plug-ins/Lighting/lighting_ui.c:998
+#: plug-ins/Lighting/lighting_ui.c:988
 msgid "Fit into value range"
 msgstr "明度域を合わせる"
 
-#: plug-ins/Lighting/lighting_ui.c:1019
-msgid "Environment Settings"
-msgstr "環境設定"
-
-#: plug-ins/Lighting/lighting_ui.c:1028
+#: plug-ins/Lighting/lighting_ui.c:1013
 #, fuzzy
 msgid "E_nable Environment Mapping"
 msgstr "環境マップを使う"
 
-#: plug-ins/Lighting/lighting_ui.c:1038
+#: plug-ins/Lighting/lighting_ui.c:1024
 msgid "Enable/disable environment-mapping (reflection)"
 msgstr "環境マップの有効/無効 (反射)"
 
-#: plug-ins/Lighting/lighting_ui.c:1055
+#: plug-ins/Lighting/lighting_ui.c:1042
 #, fuzzy
 msgid "En_vironment Image:"
 msgstr "環境画像:"
 
-#: plug-ins/Lighting/lighting_ui.c:1059
+#: plug-ins/Lighting/lighting_ui.c:1046
 msgid "Environment image to use"
 msgstr "使用する環境画像"
 
-#: plug-ins/Lighting/lighting_ui.c:1082
+#: plug-ins/Lighting/lighting_ui.c:1069
 #, fuzzy
 msgid "Op_tions"
 msgstr "オプション"
 
-#: plug-ins/Lighting/lighting_ui.c:1086
+#: plug-ins/Lighting/lighting_ui.c:1073 plug-ins/MapObject/mapobject_ui.c:1365
 #, fuzzy
 msgid "_Light"
 msgstr "光源"
 
-#: plug-ins/Lighting/lighting_ui.c:1090
+#: plug-ins/Lighting/lighting_ui.c:1077 plug-ins/MapObject/mapobject_ui.c:1369
 #, fuzzy
 msgid "_Material"
 msgstr "物質"
 
-#: plug-ins/Lighting/lighting_ui.c:1094
+#: plug-ins/Lighting/lighting_ui.c:1081
 #, fuzzy
 msgid "_Bump Map"
 msgstr "バンプマップ"
 
-#: plug-ins/Lighting/lighting_ui.c:1098
+#: plug-ins/Lighting/lighting_ui.c:1085
 #, fuzzy
 msgid "_Environment Map"
 msgstr "環境マップ"
 
-#: plug-ins/Lighting/lighting_ui.c:1140
+#: plug-ins/Lighting/lighting_ui.c:1127
 msgid "Lighting Effects"
 msgstr "ライト効果"
 
-#: plug-ins/Lighting/lighting_ui.c:1200
+#: plug-ins/Lighting/lighting_ui.c:1187
 #, fuzzy
 msgid "_Update Preview"
 msgstr "プレビュー更新"
 
-#: plug-ins/Lighting/lighting_ui.c:1208 plug-ins/MapObject/mapobject_ui.c:1481
+#: plug-ins/Lighting/lighting_ui.c:1195 plug-ins/MapObject/mapobject_ui.c:1477
 msgid "Recompute preview image"
 msgstr "プレビュー画像を再計算する"
 
@@ -954,14 +904,16 @@ msgstr "プレビュー画像を再計算する"
 msgid "<Image>/Filters/Map/Map Object..."
 msgstr "<Image>/フィルタ/マップ/マップオブジェクト..."
 
-#: plug-ins/MapObject/mapobject_ui.c:270 plug-ins/MapObject/mapobject_ui.c:573
-#: plug-ins/MapObject/mapobject_ui.c:1383
-msgid "Box"
+#: plug-ins/MapObject/mapobject_ui.c:270
+#: plug-ins/MapObject/mapobject_ui.c:1379
+#, fuzzy
+msgid "_Box"
 msgstr "直方体"
 
-#: plug-ins/MapObject/mapobject_ui.c:288 plug-ins/MapObject/mapobject_ui.c:574
-#: plug-ins/MapObject/mapobject_ui.c:1389
-msgid "Cylinder"
+#: plug-ins/MapObject/mapobject_ui.c:288
+#: plug-ins/MapObject/mapobject_ui.c:1385
+#, fuzzy
+msgid "C_ylinder"
 msgstr "円柱"
 
 #: plug-ins/MapObject/mapobject_ui.c:561
@@ -975,6 +927,14 @@ msgstr "面"
 #: plug-ins/MapObject/mapobject_ui.c:572
 msgid "Sphere"
 msgstr "球"
+
+#: plug-ins/MapObject/mapobject_ui.c:573
+msgid "Box"
+msgstr "直方体"
+
+#: plug-ins/MapObject/mapobject_ui.c:574
+msgid "Cylinder"
+msgstr "円柱"
 
 #: plug-ins/MapObject/mapobject_ui.c:580
 msgid "Type of object to map to"
@@ -1008,201 +968,204 @@ msgstr "簡易説明を表示する"
 msgid "Enable/disable tooltip messages"
 msgstr "簡易説明の有効/無効"
 
-#: plug-ins/MapObject/mapobject_ui.c:645
-msgid "Enable Antialiasing"
+#: plug-ins/MapObject/mapobject_ui.c:640
+#, fuzzy
+msgid "Enable _Antialiasing"
 msgstr "アンチエイリアシングする"
 
-#: plug-ins/MapObject/mapobject_ui.c:669
-msgid "Depth:"
-msgstr "深度:"
+#: plug-ins/MapObject/mapobject_ui.c:647
+msgid "Enable/disable jagged edges removal (antialiasing)"
+msgstr "ギザギザした縁を滑らかにするかどうか (アンチエイリアシング)"
 
-#: plug-ins/MapObject/mapobject_ui.c:681 plug-ins/common/threshold_alpha.c:295
-msgid "Threshold:"
+#: plug-ins/MapObject/mapobject_ui.c:677 plug-ins/common/unsharp.c:831
+#: plug-ins/common/wind.c:1155 plug-ins/imagemap/imap_preferences.c:533
+#, fuzzy
+msgid "_Threshold:"
 msgstr "閾値:"
 
-#: plug-ins/MapObject/mapobject_ui.c:730
+#: plug-ins/MapObject/mapobject_ui.c:726
 msgid "Point Light"
 msgstr "点光源"
 
-#: plug-ins/MapObject/mapobject_ui.c:732
+#: plug-ins/MapObject/mapobject_ui.c:728
 msgid "Directional Light"
 msgstr "指向性光源"
 
-#: plug-ins/MapObject/mapobject_ui.c:734
+#: plug-ins/MapObject/mapobject_ui.c:730
 msgid "No Light"
 msgstr "光源無し"
 
-#: plug-ins/MapObject/mapobject_ui.c:739
+#: plug-ins/MapObject/mapobject_ui.c:735
 msgid "Lightsource Type:"
 msgstr "光源種:"
 
-#: plug-ins/MapObject/mapobject_ui.c:749
+#: plug-ins/MapObject/mapobject_ui.c:745
 msgid "Lightsource Color:"
 msgstr "光源色:"
 
-#: plug-ins/MapObject/mapobject_ui.c:908
+#: plug-ins/MapObject/mapobject_ui.c:904
 msgid "Ambient:"
 msgstr "飽和度:"
 
-#: plug-ins/MapObject/mapobject_ui.c:934 plug-ins/MapObject/mapobject_ui.c:974
+#: plug-ins/MapObject/mapobject_ui.c:930 plug-ins/MapObject/mapobject_ui.c:970
 msgid "Diffuse:"
 msgstr "拡散:"
 
-#: plug-ins/MapObject/mapobject_ui.c:1000
+#: plug-ins/MapObject/mapobject_ui.c:996
 msgid "Specular:"
 msgstr "反射:"
 
-#: plug-ins/MapObject/mapobject_ui.c:1026
+#: plug-ins/MapObject/mapobject_ui.c:1022
 msgid "Highlight:"
 msgstr "ハイライト:"
 
-#: plug-ins/MapObject/mapobject_ui.c:1083
+#: plug-ins/MapObject/mapobject_ui.c:1079
 msgid "Object X position in XYZ space"
 msgstr "XYZ 空間中のオブジェクトの X 位置"
 
-#: plug-ins/MapObject/mapobject_ui.c:1095
+#: plug-ins/MapObject/mapobject_ui.c:1091
 msgid "Object Y position in XYZ space"
 msgstr "XYZ 空間中のオブジェクトの Y 位置"
 
-#: plug-ins/MapObject/mapobject_ui.c:1107
+#: plug-ins/MapObject/mapobject_ui.c:1103
 msgid "Object Z position in XYZ space"
 msgstr "XYZ 空間中のオブジェクトの Z 位置"
 
 #. Rotation
-#: plug-ins/MapObject/mapobject_ui.c:1115 plug-ins/common/ps.c:2913
+#: plug-ins/MapObject/mapobject_ui.c:1111 plug-ins/common/ps.c:2923
 msgid "Rotation"
 msgstr "回転"
 
-#: plug-ins/MapObject/mapobject_ui.c:1130
+#: plug-ins/MapObject/mapobject_ui.c:1126
 msgid "Rotation angle about X axis"
 msgstr "X 軸中心の回転角"
 
-#: plug-ins/MapObject/mapobject_ui.c:1140
+#: plug-ins/MapObject/mapobject_ui.c:1136
 msgid "Rotation angle about Y axis"
 msgstr "Y 軸中心の回転角"
 
-#: plug-ins/MapObject/mapobject_ui.c:1150
+#: plug-ins/MapObject/mapobject_ui.c:1146
 msgid "Rotation angle about Z axis"
 msgstr "Z 軸中心の回転角"
 
-#: plug-ins/MapObject/mapobject_ui.c:1175
+#: plug-ins/MapObject/mapobject_ui.c:1171
 msgid "Front:"
 msgstr "前:"
 
-#: plug-ins/MapObject/mapobject_ui.c:1175
+#: plug-ins/MapObject/mapobject_ui.c:1171
 msgid "Back:"
 msgstr "後:"
 
-#: plug-ins/MapObject/mapobject_ui.c:1176
-#: plug-ins/MapObject/mapobject_ui.c:1275
+#: plug-ins/MapObject/mapobject_ui.c:1172
 #: plug-ins/print/gimp_main_window.c:522
 msgid "Top:"
 msgstr "上:"
 
-#: plug-ins/MapObject/mapobject_ui.c:1176
-#: plug-ins/MapObject/mapobject_ui.c:1275
+#: plug-ins/MapObject/mapobject_ui.c:1172
 #: plug-ins/print/gimp_main_window.c:563
 msgid "Bottom:"
 msgstr "下:"
 
-#: plug-ins/MapObject/mapobject_ui.c:1177
+#: plug-ins/MapObject/mapobject_ui.c:1173
 #: plug-ins/print/gimp_main_window.c:509
 msgid "Left:"
 msgstr "左:"
 
-#: plug-ins/MapObject/mapobject_ui.c:1177
+#: plug-ins/MapObject/mapobject_ui.c:1173
 #: plug-ins/print/gimp_main_window.c:535
 msgid "Right:"
 msgstr "右:"
 
-#: plug-ins/MapObject/mapobject_ui.c:1183
+#: plug-ins/MapObject/mapobject_ui.c:1179
 msgid "Map Images to Box Faces"
 msgstr "画像を直方体の表面にマップ"
 
-#: plug-ins/MapObject/mapobject_ui.c:1224
+#: plug-ins/MapObject/mapobject_ui.c:1220
 msgid "Scale X:"
 msgstr "拡大縮小 X:"
 
-#: plug-ins/MapObject/mapobject_ui.c:1227
+#: plug-ins/MapObject/mapobject_ui.c:1223
 msgid "X scale (size)"
 msgstr "X 拡大縮小 (サイズ)"
 
-#: plug-ins/MapObject/mapobject_ui.c:1239
+#: plug-ins/MapObject/mapobject_ui.c:1235
 msgid "Y scale (size)"
 msgstr "Y 拡大縮小 (サイズ)"
 
-#: plug-ins/MapObject/mapobject_ui.c:1251
+#: plug-ins/MapObject/mapobject_ui.c:1247
 msgid "Z scale (size)"
 msgstr "Z 拡大縮小 (サイズ)"
 
-#: plug-ins/MapObject/mapobject_ui.c:1280
+#: plug-ins/MapObject/mapobject_ui.c:1271
+#, fuzzy
+msgid "_Top:"
+msgstr "上:"
+
+#: plug-ins/MapObject/mapobject_ui.c:1271
+#, fuzzy
+msgid "_Bottom:"
+msgstr "下:"
+
+#: plug-ins/MapObject/mapobject_ui.c:1276
 msgid "Images for the Cap Faces"
 msgstr "表面に被せる画像"
 
-#: plug-ins/MapObject/mapobject_ui.c:1309 plug-ins/gimpressionist/size.c:55
+#: plug-ins/MapObject/mapobject_ui.c:1305 plug-ins/gimpressionist/size.c:55
 #: plug-ins/gimpressionist/size.c:60 plug-ins/print/gimp_main_window.c:1111
 msgid "Size"
 msgstr "サイズ"
 
-#: plug-ins/MapObject/mapobject_ui.c:1321 plug-ins/gfig/gfig.c:3175
-msgid "Radius:"
+#: plug-ins/MapObject/mapobject_ui.c:1317
+#, fuzzy
+msgid "R_adius:"
 msgstr "半径:"
 
-#: plug-ins/MapObject/mapobject_ui.c:1325
+#: plug-ins/MapObject/mapobject_ui.c:1321
 msgid "Cylinder radius"
 msgstr "円柱半径"
 
-#: plug-ins/MapObject/mapobject_ui.c:1334
-msgid "Length:"
+#: plug-ins/MapObject/mapobject_ui.c:1330 plug-ins/common/mblur.c:809
+#, fuzzy
+msgid "L_ength:"
 msgstr "長さ:"
 
-#: plug-ins/MapObject/mapobject_ui.c:1338
+#: plug-ins/MapObject/mapobject_ui.c:1334
 msgid "Cylinder length"
 msgstr "円柱長さ"
 
-#. Options section
-#: plug-ins/MapObject/mapobject_ui.c:1365 plug-ins/common/lic.c:840
-#: plug-ins/common/ripple.c:603 plug-ins/gfig/gfig.c:4015
-#: plug-ins/mosaic/mosaic.c:602
-msgid "Options"
+#: plug-ins/MapObject/mapobject_ui.c:1361
+#, fuzzy
+msgid "O_ptions"
 msgstr "オプション"
 
-#: plug-ins/MapObject/mapobject_ui.c:1369
-msgid "Light"
-msgstr "光源"
-
 #: plug-ins/MapObject/mapobject_ui.c:1373
-msgid "Material"
-msgstr "物質"
-
-#. Orientation toggle box
-#: plug-ins/MapObject/mapobject_ui.c:1377 plug-ins/common/blinds.c:373
-#: plug-ins/common/ripple.c:634 plug-ins/gimpressionist/orientation.c:60
-#: plug-ins/gimpressionist/orientation.c:65
-msgid "Orientation"
+#, fuzzy
+msgid "O_rientation"
 msgstr "向き"
 
-#: plug-ins/MapObject/mapobject_ui.c:1414
+#: plug-ins/MapObject/mapobject_ui.c:1410
 msgid "Map to Object"
 msgstr "オブジェクトにマップ"
 
-#: plug-ins/MapObject/mapobject_ui.c:1472
-msgid "Preview!"
+#: plug-ins/MapObject/mapobject_ui.c:1468 plug-ins/common/diffraction.c:579
+#, fuzzy
+msgid "_Preview!"
 msgstr "プレビュー!"
 
-#: plug-ins/MapObject/mapobject_ui.c:1495
+#: plug-ins/MapObject/mapobject_ui.c:1491
 msgid "Zoom out (make image smaller)"
 msgstr "縮小 (画像を小さくする)"
 
-#: plug-ins/MapObject/mapobject_ui.c:1509
+#: plug-ins/MapObject/mapobject_ui.c:1505
 msgid "Zoom in (make image bigger)"
 msgstr "拡大 (画像を大きくする)"
 
-#: plug-ins/MapObject/mapobject_ui.c:1511
-msgid "Show Preview Wireframe"
+#: plug-ins/MapObject/mapobject_ui.c:1507
+#, fuzzy
+msgid "Show Preview _Wireframe"
 msgstr "ワイヤフレームでプレビュー表示"
 
-#: plug-ins/MapObject/mapobject_ui.c:1520
+#: plug-ins/MapObject/mapobject_ui.c:1516
 msgid "Show/hide preview wireframe"
 msgstr "プレビューワイヤーフレームの表示/非表示"
 
@@ -1213,7 +1176,7 @@ msgstr "プレビューワイヤーフレームの表示/非表示"
 #: plug-ins/common/gih.c:630 plug-ins/common/hrz.c:332
 #: plug-ins/common/jpeg.c:731 plug-ins/common/pat.c:263
 #: plug-ins/common/pcx.c:298 plug-ins/common/pix.c:328
-#: plug-ins/common/png.c:424 plug-ins/common/png.c:426
+#: plug-ins/common/png.c:478 plug-ins/common/png.c:480
 #: plug-ins/common/pnm.c:408 plug-ins/common/psd.c:1732
 #: plug-ins/common/sunras.c:439 plug-ins/common/tga.c:429
 #: plug-ins/common/tiff.c:443 plug-ins/common/xbm.c:734
@@ -1258,7 +1221,7 @@ msgstr "%s: 不正なカラーマップです"
 #: plug-ins/common/jpeg.c:903 plug-ins/common/lic.c:713
 #: plug-ins/common/pat.c:338 plug-ins/common/pcx.c:329
 #: plug-ins/common/pcx.c:335 plug-ins/common/pix.c:372
-#: plug-ins/common/png.c:545 plug-ins/common/pnm.c:496
+#: plug-ins/common/png.c:599 plug-ins/common/pnm.c:496
 #: plug-ins/common/psd.c:2115 plug-ins/common/smooth_palette.c:246
 #: plug-ins/common/sunras.c:929 plug-ins/common/tga.c:915
 #: plug-ins/common/tiff.c:660 plug-ins/common/tile.c:279
@@ -1285,9 +1248,9 @@ msgstr "%s が開けません"
 #: plug-ins/common/gih.c:1229 plug-ins/common/gtm.c:245
 #: plug-ins/common/hrz.c:470 plug-ins/common/jpeg.c:1214
 #: plug-ins/common/pat.c:381 plug-ins/common/pcx.c:544
-#: plug-ins/common/pix.c:515 plug-ins/common/png.c:773
-#: plug-ins/common/png.c:775 plug-ins/common/pnm.c:780
-#: plug-ins/common/ps.c:995 plug-ins/common/sunras.c:522
+#: plug-ins/common/pix.c:515 plug-ins/common/png.c:827
+#: plug-ins/common/png.c:829 plug-ins/common/pnm.c:780
+#: plug-ins/common/ps.c:996 plug-ins/common/sunras.c:522
 #: plug-ins/common/tga.c:1014 plug-ins/common/tiff.c:1336
 #: plug-ins/common/xbm.c:982 plug-ins/common/xpm.c:598
 #: plug-ins/common/xwd.c:540 plug-ins/fits/fits.c:469 plug-ins/gfli/gfli.c:677
@@ -1309,108 +1272,108 @@ msgstr "保存オプション"
 msgid "RLE encoded"
 msgstr "RLE エンコード"
 
-#: plug-ins/common/AlienMap.c:968
+#: plug-ins/common/AlienMap.c:967
 msgid "<Image>/Filters/Colors/Map/Alien Map..."
 msgstr "<Image>/フィルタ/色/マップ/エイリアンマップ..."
 
-#: plug-ins/common/AlienMap.c:1166
+#: plug-ins/common/AlienMap.c:1165
 msgid "AlienMap: Transforming..."
 msgstr "エイリアンマップ: 変換しています..."
 
-#: plug-ins/common/AlienMap.c:1383
+#: plug-ins/common/AlienMap.c:1382
 msgid "AlienMap"
 msgstr "エイリアンマップ"
 
-#: plug-ins/common/AlienMap.c:1433 plug-ins/common/diffraction.c:605
+#: plug-ins/common/AlienMap.c:1432 plug-ins/common/diffraction.c:605
 #: plug-ins/common/diffraction.c:643 plug-ins/common/diffraction.c:681
 #: plug-ins/common/noisify.c:599 plug-ins/common/noisify.c:644
 #, fuzzy
 msgid "_Red:"
 msgstr "赤:"
 
-#: plug-ins/common/AlienMap.c:1436
+#: plug-ins/common/AlienMap.c:1435
 msgid "Change intensity of the red channel"
 msgstr "赤チャンネルの強度を変える"
 
-#: plug-ins/common/AlienMap.c:1442 plug-ins/common/diffraction.c:614
+#: plug-ins/common/AlienMap.c:1441 plug-ins/common/diffraction.c:614
 #: plug-ins/common/diffraction.c:652 plug-ins/common/diffraction.c:690
 #: plug-ins/common/noisify.c:613 plug-ins/common/noisify.c:658
 #, fuzzy
 msgid "_Green:"
 msgstr "緑:"
 
-#: plug-ins/common/AlienMap.c:1445
+#: plug-ins/common/AlienMap.c:1444
 msgid "Change intensity of the green channel"
 msgstr "緑チャンネルの強度を変える"
 
-#: plug-ins/common/AlienMap.c:1451 plug-ins/common/diffraction.c:623
+#: plug-ins/common/AlienMap.c:1450 plug-ins/common/diffraction.c:623
 #: plug-ins/common/diffraction.c:661 plug-ins/common/diffraction.c:699
 #: plug-ins/common/noisify.c:627 plug-ins/common/noisify.c:672
 #, fuzzy
 msgid "_Blue:"
 msgstr "青:"
 
-#: plug-ins/common/AlienMap.c:1454
+#: plug-ins/common/AlienMap.c:1453
 msgid "Change intensity of the blue channel"
 msgstr "青チャンネルの強度を変える"
 
-#: plug-ins/common/AlienMap.c:1464 plug-ins/common/AlienMap.c:1487
-#: plug-ins/common/AlienMap.c:1510
+#: plug-ins/common/AlienMap.c:1463 plug-ins/common/AlienMap.c:1486
+#: plug-ins/common/AlienMap.c:1509
 #, fuzzy
 msgid "_Sine"
 msgstr "Sin"
 
-#: plug-ins/common/AlienMap.c:1465 plug-ins/common/AlienMap.c:1488
-#: plug-ins/common/AlienMap.c:1511
+#: plug-ins/common/AlienMap.c:1464 plug-ins/common/AlienMap.c:1487
+#: plug-ins/common/AlienMap.c:1510
 #, fuzzy
 msgid "Cos_ine"
 msgstr "Cos"
 
-#: plug-ins/common/AlienMap.c:1466 plug-ins/common/AlienMap.c:1489
-#: plug-ins/common/AlienMap.c:1512
+#: plug-ins/common/AlienMap.c:1465 plug-ins/common/AlienMap.c:1488
+#: plug-ins/common/AlienMap.c:1511
 #, fuzzy
 msgid "_None"
 msgstr "なし"
 
-#: plug-ins/common/AlienMap.c:1471
+#: plug-ins/common/AlienMap.c:1470
 msgid "Use sine-function for red component."
 msgstr "赤の要素に対して Sin 関数を使用する."
 
-#: plug-ins/common/AlienMap.c:1473
+#: plug-ins/common/AlienMap.c:1472
 msgid "Use cosine-function for red component."
 msgstr "赤の要素に対して Cos 関数を使用する."
 
-#: plug-ins/common/AlienMap.c:1475
+#: plug-ins/common/AlienMap.c:1474
 msgid "Red channel: use linear mapping instead of any trigonometrical function"
 msgstr "赤チャンネル: 三角関数ではなく線形マッピングを使用する"
 
-#: plug-ins/common/AlienMap.c:1494
+#: plug-ins/common/AlienMap.c:1493
 msgid "Use sine-function for green component."
 msgstr "緑の要素に対して Sin 関数を使用する."
 
-#: plug-ins/common/AlienMap.c:1496
+#: plug-ins/common/AlienMap.c:1495
 msgid "Use cosine-function for green component."
 msgstr "緑の要素に対して Cos 関数を使用する."
 
-#: plug-ins/common/AlienMap.c:1498
+#: plug-ins/common/AlienMap.c:1497
 msgid ""
 "Green channel: use linear mapping instead of any trigonometrical function"
 msgstr "緑チャンネル: 三角関数ではなく線形マッピングを使用する"
 
-#: plug-ins/common/AlienMap.c:1517
+#: plug-ins/common/AlienMap.c:1516
 msgid "Use sine-function for blue component."
 msgstr "青の要素に対して Sin 関数を使用する."
 
-#: plug-ins/common/AlienMap.c:1519
+#: plug-ins/common/AlienMap.c:1518
 msgid "Use cosine-function for blue component."
 msgstr "青の要素に対して Cos 関数を使用する."
 
-#: plug-ins/common/AlienMap.c:1521
+#: plug-ins/common/AlienMap.c:1520
 msgid ""
 "Blue channel: use linear mapping instead of any trigonometrical function"
 msgstr "青チャンネル: 三角関数ではなく線形マッピングを使用する"
 
-#: plug-ins/common/AlienMap.c:1651
+#: plug-ins/common/AlienMap.c:1650
 msgid "About AlienMap"
 msgstr "エイリアンマップについて"
 
@@ -1483,7 +1446,7 @@ msgstr "青/発光-チャンネルの回転角を変える"
 #. * Gray: Operation-Mode *
 #: plug-ins/common/AlienMap2.c:1474 plug-ins/common/deinterlace.c:286
 #: plug-ins/common/hot.c:612 plug-ins/common/waves.c:364
-#: plug-ins/rcm/rcm_dialog.c:503
+#: plug-ins/rcm/rcm_dialog.c:501
 msgid "Mode"
 msgstr "モード"
 
@@ -1753,104 +1716,99 @@ msgstr "種を元にした乱数"
 msgid "Randoms from seed (shared)"
 msgstr "共通種を元にした乱数"
 
-#: plug-ins/common/CML_explorer.c:304 plug-ins/common/CML_explorer.c:1291
-#: plug-ins/common/decompose.c:127 plug-ins/fp/fp_gtk.c:292
-#: plug-ins/fp/fp_gtk.c:426 plug-ins/gimpressionist/orientation.c:196
+#: plug-ins/common/CML_explorer.c:304 plug-ins/common/decompose.c:127
+#: plug-ins/fp/fp_gtk.c:292 plug-ins/fp/fp_gtk.c:426
+#: plug-ins/gimpressionist/orientation.c:196
 #: plug-ins/gimpressionist/size.c:190
 msgid "Hue"
 msgstr "色相"
 
-#: plug-ins/common/CML_explorer.c:305 plug-ins/common/CML_explorer.c:1296
-#: plug-ins/common/decompose.c:128 plug-ins/fp/fp_gtk.c:296
-#: plug-ins/fp/fp_gtk.c:430 plug-ins/fp/fp_gtk.c:494
-#: plug-ins/rcm/rcm_dialog.c:545
+#: plug-ins/common/CML_explorer.c:305 plug-ins/common/decompose.c:128
+#: plug-ins/fp/fp_gtk.c:296 plug-ins/fp/fp_gtk.c:430 plug-ins/fp/fp_gtk.c:494
+#: plug-ins/rcm/rcm_dialog.c:543
 msgid "Saturation"
 msgstr "彩度"
 
-#: plug-ins/common/CML_explorer.c:306 plug-ins/common/CML_explorer.c:1301
-#: plug-ins/common/decompose.c:129 plug-ins/fp/fp_gtk.c:300
-#: plug-ins/fp/fp_gtk.c:434 plug-ins/gimpressionist/orientation.c:139
+#: plug-ins/common/CML_explorer.c:306 plug-ins/common/decompose.c:129
+#: plug-ins/fp/fp_gtk.c:300 plug-ins/fp/fp_gtk.c:434
+#: plug-ins/gimpressionist/orientation.c:139
 #: plug-ins/gimpressionist/size.c:134
 msgid "Value"
 msgstr "明度"
 
-#: plug-ins/common/CML_explorer.c:477
+#: plug-ins/common/CML_explorer.c:476
 msgid "<Image>/Filters/Render/Pattern/CML Explorer..."
 msgstr "<Image>/フィルタ/下塗り/パターン/CML エクスプローラ..."
 
-#: plug-ins/common/CML_explorer.c:771
+#: plug-ins/common/CML_explorer.c:764
 msgid "CML_explorer: evoluting..."
 msgstr "CML_explorer: 展開しています..."
 
-#: plug-ins/common/CML_explorer.c:1175
+#: plug-ins/common/CML_explorer.c:1168
 msgid "Coupled-Map-Lattice Explorer"
 msgstr "Coupled-Map-Lattice エクスプローラ"
 
-#: plug-ins/common/CML_explorer.c:1246
+#: plug-ins/common/CML_explorer.c:1237
 msgid "Random Seed"
 msgstr "乱数種"
 
-#: plug-ins/common/CML_explorer.c:1257
+#: plug-ins/common/CML_explorer.c:1248
 msgid "Fix Seed"
 msgstr "固定種"
 
-#: plug-ins/common/CML_explorer.c:1268
+#: plug-ins/common/CML_explorer.c:1259
 msgid "New Seed"
 msgstr "新しい種"
 
-#: plug-ins/common/CML_explorer.c:1288
-msgid "Hue Settings"
-msgstr "色相設定"
+#: plug-ins/common/CML_explorer.c:1281 plug-ins/common/lic.c:861
+#, fuzzy
+msgid "_Hue"
+msgstr "色相"
+
+#: plug-ins/common/CML_explorer.c:1285
+#, fuzzy
+msgid "Sat_uration"
+msgstr "彩度"
+
+#: plug-ins/common/CML_explorer.c:1289
+#, fuzzy
+msgid "_Value"
+msgstr "明度:"
 
 #: plug-ins/common/CML_explorer.c:1293
-msgid "Saturation Settings"
-msgstr "彩度設定"
-
-#: plug-ins/common/CML_explorer.c:1298
-msgid "Value (Gray Image) Settings"
-msgstr "明度(グレー画像)設定"
-
-#: plug-ins/common/CML_explorer.c:1303
-msgid "Advanced Settings"
-msgstr "詳細設定"
-
-#: plug-ins/common/CML_explorer.c:1305 plug-ins/fp/fp_gtk.c:304
-msgid "Advanced"
+#, fuzzy
+msgid "_Advanced"
 msgstr "詳細"
 
-#: plug-ins/common/CML_explorer.c:1315
-msgid "Other Parameter Settings"
-msgstr "他のパラメータ設定"
-
-#: plug-ins/common/CML_explorer.c:1324
+#: plug-ins/common/CML_explorer.c:1306
 msgid "Channel Independed Parameters"
 msgstr "チャンネルによらないパラメータ"
 
-#: plug-ins/common/CML_explorer.c:1375
+#: plug-ins/common/CML_explorer.c:1357
 msgid "Initial Value:"
 msgstr "初期値:"
 
-#: plug-ins/common/CML_explorer.c:1379
+#: plug-ins/common/CML_explorer.c:1361
 msgid "Zoom Scale:"
 msgstr "拡大スケール:"
 
-#: plug-ins/common/CML_explorer.c:1387
+#: plug-ins/common/CML_explorer.c:1369
 msgid "Start Offset:"
 msgstr "開始オフセット:"
 
-#: plug-ins/common/CML_explorer.c:1395
+#: plug-ins/common/CML_explorer.c:1377
 msgid "Seed of Random (only for \"From Seed\" Modes)"
 msgstr "乱数の種 (\"種を元に\"モードでのみ有効)"
 
-#: plug-ins/common/CML_explorer.c:1407 plug-ins/maze/maze_face.c:299
+#: plug-ins/common/CML_explorer.c:1389 plug-ins/maze/maze_face.c:299
 msgid "Seed:"
 msgstr "種:"
 
-#: plug-ins/common/CML_explorer.c:1419
+#: plug-ins/common/CML_explorer.c:1401
 msgid "Switch to \"From Seed\" with the last Seed"
 msgstr "最後の種を用いて \"種を元に\" モードに移る"
 
-#: plug-ins/common/CML_explorer.c:1431
+#: plug-ins/common/CML_explorer.c:1413
 msgid ""
 "\"Fix seed\" button is an alias of me.\n"
 "The same seed produces the same image, if (1) the widths of images are same "
@@ -1861,132 +1819,130 @@ msgstr ""
 "(1) 画像の幅が同じで (描画対象に描かれるものとプレビューが違う原因)\n"
 "(2) 変化度が 0 になっている場合には, 同じ種は同じ画像を生成します."
 
-#: plug-ins/common/CML_explorer.c:1439
-msgid "Others"
+#: plug-ins/common/CML_explorer.c:1421
+#, fuzzy
+msgid "O_thers"
 msgstr "その他"
 
-#: plug-ins/common/CML_explorer.c:1448
-msgid "Misc Operations"
-msgstr "雑多な操作"
-
-#: plug-ins/common/CML_explorer.c:1457
+#: plug-ins/common/CML_explorer.c:1433
 msgid "Copy Settings"
 msgstr "設定コピー"
 
-#: plug-ins/common/CML_explorer.c:1481
+#: plug-ins/common/CML_explorer.c:1457
 msgid "Source Channel:"
 msgstr "元チャンネル:"
 
-#: plug-ins/common/CML_explorer.c:1498 plug-ins/common/CML_explorer.c:1556
+#: plug-ins/common/CML_explorer.c:1474 plug-ins/common/CML_explorer.c:1532
 msgid "Destination Channel:"
 msgstr "先チャンネル:"
 
-#: plug-ins/common/CML_explorer.c:1501
+#: plug-ins/common/CML_explorer.c:1477
 msgid "Copy Parameters"
 msgstr "パラメータコピー"
 
-#: plug-ins/common/CML_explorer.c:1510
+#: plug-ins/common/CML_explorer.c:1486
 msgid "Selective Load Settings"
 msgstr "選択可能な設定読み込み"
 
-#: plug-ins/common/CML_explorer.c:1526 plug-ins/common/CML_explorer.c:1545
+#: plug-ins/common/CML_explorer.c:1502 plug-ins/common/CML_explorer.c:1521
 msgid "NULL"
 msgstr "NULL"
 
-#: plug-ins/common/CML_explorer.c:1537
+#: plug-ins/common/CML_explorer.c:1513
 msgid "Source Channel in File:"
 msgstr "ファイル中の元チャンネル:"
 
-#: plug-ins/common/CML_explorer.c:1560
-msgid "Misc Ops."
+#: plug-ins/common/CML_explorer.c:1536
+#, fuzzy
+msgid "_Misc Ops."
 msgstr "その他の操作"
 
-#: plug-ins/common/CML_explorer.c:1654
+#: plug-ins/common/CML_explorer.c:1623
 msgid "Function Type:"
 msgstr "関数種:"
 
-#: plug-ins/common/CML_explorer.c:1711
+#: plug-ins/common/CML_explorer.c:1680
 msgid "Composition:"
 msgstr "合成:"
 
-#: plug-ins/common/CML_explorer.c:1753
+#: plug-ins/common/CML_explorer.c:1722
 msgid "Misc Arrange:"
 msgstr "その他のアレンジ:"
 
-#: plug-ins/common/CML_explorer.c:1757
+#: plug-ins/common/CML_explorer.c:1726
 msgid "Use Cyclic Range"
 msgstr "回帰値域を使う:"
 
-#: plug-ins/common/CML_explorer.c:1767
+#: plug-ins/common/CML_explorer.c:1736
 msgid "Mod. Rate:"
 msgstr "変化度:"
 
-#: plug-ins/common/CML_explorer.c:1776
+#: plug-ins/common/CML_explorer.c:1745
 msgid "Env. Sensitivity:"
 msgstr "環境感度:"
 
-#: plug-ins/common/CML_explorer.c:1785
+#: plug-ins/common/CML_explorer.c:1754
 msgid "Diffusion Dist.:"
 msgstr "拡散域:"
 
-#: plug-ins/common/CML_explorer.c:1794
+#: plug-ins/common/CML_explorer.c:1763
 msgid "# of Subranges:"
 msgstr "サブレンジ数:"
 
-#: plug-ins/common/CML_explorer.c:1803
+#: plug-ins/common/CML_explorer.c:1772
 msgid "P(ower Factor):"
 msgstr "乗数(P):"
 
-#: plug-ins/common/CML_explorer.c:1812
+#: plug-ins/common/CML_explorer.c:1781
 msgid "Parameter k:"
 msgstr "パラメータ K:"
 
-#: plug-ins/common/CML_explorer.c:1821
+#: plug-ins/common/CML_explorer.c:1790
 msgid "Range Low:"
 msgstr "値域下限:"
 
-#: plug-ins/common/CML_explorer.c:1830
+#: plug-ins/common/CML_explorer.c:1799
 msgid "Range High:"
 msgstr "値域上限:"
 
-#: plug-ins/common/CML_explorer.c:1842
+#: plug-ins/common/CML_explorer.c:1811
 msgid "Plot the Graph of the Settings"
 msgstr "設定のグラフを描く"
 
-#: plug-ins/common/CML_explorer.c:1897
+#: plug-ins/common/CML_explorer.c:1857
 msgid "Ch. Sensitivity:"
 msgstr "チャンネル感度"
 
-#: plug-ins/common/CML_explorer.c:1907
+#: plug-ins/common/CML_explorer.c:1867
 msgid "Mutation Rate:"
 msgstr "変化度:"
 
-#: plug-ins/common/CML_explorer.c:1917
+#: plug-ins/common/CML_explorer.c:1877
 msgid "Mutation Dist.:"
 msgstr "変化域:"
 
-#: plug-ins/common/CML_explorer.c:1946
+#: plug-ins/common/CML_explorer.c:1906
 msgid "Graph of the current settings"
 msgstr "現在の設定のグラフ"
 
-#: plug-ins/common/CML_explorer.c:1960
+#: plug-ins/common/CML_explorer.c:1920
 msgid "The Graph"
 msgstr "グラフ"
 
-#: plug-ins/common/CML_explorer.c:2066
+#: plug-ins/common/CML_explorer.c:2026
 msgid "Warning: the source and the destination are the same channel."
 msgstr "警告: 元と先のチャンネルが同じです."
 
-#: plug-ins/common/CML_explorer.c:2132
+#: plug-ins/common/CML_explorer.c:2092
 msgid "Save Parameters to"
 msgstr "パラメータを保存"
 
-#: plug-ins/common/CML_explorer.c:2204 plug-ins/common/CML_explorer.c:2405
+#: plug-ins/common/CML_explorer.c:2164 plug-ins/common/CML_explorer.c:2365
 #, c-format
 msgid "Error: could not open \"%s\""
 msgstr "エラー: \"%s\" が開けません"
 
-#: plug-ins/common/CML_explorer.c:2245
+#: plug-ins/common/CML_explorer.c:2205
 #, c-format
 msgid ""
 "Parameters were Saved to\n"
@@ -1995,11 +1951,11 @@ msgstr ""
 "パラメータを \"%s\"\n"
 "に保存しました"
 
-#: plug-ins/common/CML_explorer.c:2263
+#: plug-ins/common/CML_explorer.c:2223
 msgid "CML File Operation Warning"
 msgstr "CML ファイル操作警告"
 
-#: plug-ins/common/CML_explorer.c:2283
+#: plug-ins/common/CML_explorer.c:2243
 #, c-format
 msgid ""
 "%s\n"
@@ -2008,28 +1964,28 @@ msgstr ""
 "%s\n"
 "は存在します, 上書きしますか?"
 
-#: plug-ins/common/CML_explorer.c:2320
+#: plug-ins/common/CML_explorer.c:2280
 msgid "Load Parameters from"
 msgstr "パラメータ読み込み"
 
-#: plug-ins/common/CML_explorer.c:2322
+#: plug-ins/common/CML_explorer.c:2282
 msgid "Selective Load from"
 msgstr "選択的読み込み"
 
-#: plug-ins/common/CML_explorer.c:2426
+#: plug-ins/common/CML_explorer.c:2386
 msgid "Error: it's not CML parameter file."
 msgstr "エラー: これは CML パラメータファイルではありません."
 
-#: plug-ins/common/CML_explorer.c:2433
+#: plug-ins/common/CML_explorer.c:2393
 msgid "Warning: it's an old format file."
 msgstr "警告: 古い形式のファイルです."
 
-#: plug-ins/common/CML_explorer.c:2435
+#: plug-ins/common/CML_explorer.c:2395
 msgid "Warning: Hmmm, it's a parameter file for newer CML_explorer than me."
 msgstr ""
 "警告: ふむ, この CML explorer よりも新しい版のためのパラメータファイルです."
 
-#: plug-ins/common/CML_explorer.c:2496
+#: plug-ins/common/CML_explorer.c:2456
 msgid "Error: failed to load parameters"
 msgstr "エラー: パラメータファイル読み込み失敗"
 
@@ -2064,26 +2020,26 @@ msgstr "可視レイヤーの整列"
 #.
 #: plug-ins/common/align_layers.c:427 plug-ins/common/apply_lens.c:403
 #: plug-ins/common/blinds.c:409 plug-ins/common/blur.c:620
-#: plug-ins/common/bumpmap.c:999 plug-ins/common/checkerboard.c:387
+#: plug-ins/common/bumpmap.c:999 plug-ins/common/checkerboard.c:392
 #: plug-ins/common/cubism.c:332 plug-ins/common/despeckle.c:737
 #: plug-ins/common/destripe.c:639 plug-ins/common/edge.c:661
 #: plug-ins/common/emboss.c:543 plug-ins/common/engrave.c:235
 #: plug-ins/common/gauss_iir.c:377 plug-ins/common/gauss_rle.c:372
-#: plug-ins/common/glasstile.c:305 plug-ins/common/grid.c:729
-#: plug-ins/common/illusion.c:616 plug-ins/common/jpeg.c:1659
-#: plug-ins/common/lic.c:893 plug-ins/common/max_rgb.c:385
+#: plug-ins/common/glasstile.c:307 plug-ins/common/grid.c:730
+#: plug-ins/common/illusion.c:615 plug-ins/common/jpeg.c:1659
+#: plug-ins/common/lic.c:893 plug-ins/common/max_rgb.c:388
 #: plug-ins/common/nlfilt.c:399 plug-ins/common/noisify.c:526
 #: plug-ins/common/nova.c:500 plug-ins/common/oilify.c:469
-#: plug-ins/common/pixelize.c:339 plug-ins/common/plasma.c:365
-#: plug-ins/common/png.c:1061 plug-ins/common/polar.c:963
+#: plug-ins/common/pixelize.c:339 plug-ins/common/plasma.c:367
+#: plug-ins/common/png.c:1178 plug-ins/common/polar.c:963
 #: plug-ins/common/randomize.c:722 plug-ins/common/ripple.c:681
-#: plug-ins/common/scatter_hsv.c:433 plug-ins/common/sel_gauss.c:254
+#: plug-ins/common/scatter_hsv.c:434 plug-ins/common/sel_gauss.c:255
 #: plug-ins/common/sharpen.c:618 plug-ins/common/shift.c:390
 #: plug-ins/common/smooth_palette.c:424 plug-ins/common/snoise.c:528
-#: plug-ins/common/sobel.c:263 plug-ins/common/sparkle.c:364
+#: plug-ins/common/sobel.c:263 plug-ins/common/sparkle.c:365
 #: plug-ins/common/struc.c:1292 plug-ins/common/threshold_alpha.c:283
-#: plug-ins/common/unsharp.c:798 plug-ins/common/video.c:2170
-#: plug-ins/common/vpropagate.c:1056 plug-ins/common/waves.c:390
+#: plug-ins/common/unsharp.c:799 plug-ins/common/video.c:2170
+#: plug-ins/common/vpropagate.c:1086 plug-ins/common/waves.c:390
 #: plug-ins/common/whirlpinch.c:849 plug-ins/common/wind.c:1045
 #: plug-ins/common/xpm.c:752 plug-ins/maze/maze_face.c:206
 #: plug-ins/mosaic/mosaic.c:682 plug-ins/xjt/xjt.c:802
@@ -2117,7 +2073,7 @@ msgid "Left Edge"
 msgstr "左端"
 
 #: plug-ins/common/align_layers.c:464 plug-ins/common/align_layers.c:497
-#: plug-ins/gflare/gflare.c:2933
+#: plug-ins/gflare/gflare.c:2946
 msgid "Center"
 msgstr "中央"
 
@@ -2309,14 +2265,21 @@ msgstr "ブラインドを追加しています..."
 msgid "Blinds"
 msgstr "ブラインド"
 
+#. Orientation toggle box
+#: plug-ins/common/blinds.c:373 plug-ins/common/ripple.c:634
+#: plug-ins/gimpressionist/orientation.c:60
+#: plug-ins/gimpressionist/orientation.c:65
+msgid "Orientation"
+msgstr "向き"
+
 #: plug-ins/common/blinds.c:377 plug-ins/common/ripple.c:639
-#: plug-ins/common/tileit.c:458
+#: plug-ins/common/tileit.c:457
 #, fuzzy
 msgid "_Horizontal"
 msgstr "水平"
 
 #: plug-ins/common/blinds.c:378 plug-ins/common/ripple.c:642
-#: plug-ins/common/tileit.c:468
+#: plug-ins/common/tileit.c:467
 #, fuzzy
 msgid "_Vertical"
 msgstr "鉛直"
@@ -2345,11 +2308,11 @@ msgstr "<Image>/フィルタ/ぼかし/ぼかし..."
 #. *  JUST DO IT!
 #.
 #: plug-ins/common/blur.c:323 plug-ins/common/mblur.c:612
-#: plug-ins/common/unsharp.c:290
+#: plug-ins/common/unsharp.c:291
 msgid "Blurring..."
 msgstr "ぼかしています..."
 
-#: plug-ins/common/blur.c:637 plug-ins/common/plasma.c:380
+#: plug-ins/common/blur.c:637 plug-ins/common/plasma.c:382
 #: plug-ins/common/randomize.c:739 plug-ins/common/sinus.c:1803
 #: plug-ins/common/snoise.c:545
 #, fuzzy
@@ -2517,13 +2480,12 @@ msgstr "格子模様を付加中..."
 msgid "Checkerboard"
 msgstr "格子模様"
 
-#: plug-ins/common/checkerboard.c:396
+#: plug-ins/common/checkerboard.c:402
 #, fuzzy
 msgid "_Psychobilly"
 msgstr "歪みをいれる"
 
-#. attach labels
-#: plug-ins/common/checkerboard.c:430 plug-ins/common/papertile.c:305
+#: plug-ins/common/checkerboard.c:435 plug-ins/common/papertile.c:305
 #, fuzzy
 msgid "_Size:"
 msgstr "サイズ:"
@@ -2550,9 +2512,9 @@ msgid "Colorify"
 msgstr "単色塗り"
 
 #: plug-ins/common/colorify.c:324 plug-ins/common/colortoalpha.c:415
-#: plug-ins/common/ps.c:2711 plug-ins/common/xpm.c:431
+#: plug-ins/common/ps.c:2721 plug-ins/common/xpm.c:431
 #: plug-ins/gimpressionist/color.c:54 plug-ins/gimpressionist/color.c:59
-#: plug-ins/imagemap/imap_menu.c:303 plug-ins/print/gimp_main_window.c:1412
+#: plug-ins/imagemap/imap_menu.c:310 plug-ins/print/gimp_main_window.c:1412
 msgid "Color"
 msgstr "カラー"
 
@@ -2621,7 +2583,7 @@ msgstr "色相:"
 
 #. Gray: Circle: Spinbutton 2
 #: plug-ins/common/compose.c:129 plug-ins/print/gimp_color_window.c:327
-#: plug-ins/rcm/rcm_dialog.c:483
+#: plug-ins/rcm/rcm_dialog.c:482
 msgid "Saturation:"
 msgstr "彩度:"
 
@@ -2851,8 +2813,8 @@ msgstr "1 Byte Run-Length-Encoding を使う"
 msgid "Save Alpha Channel (RGBA/RGB)"
 msgstr "アルファチャンネルも保存する (RGBA/RGB)"
 
-#: plug-ins/common/csource.c:765 plug-ins/gflare/gflare.c:3675
-#: plug-ins/gflare/gflare.c:3705 plug-ins/gflare/gflare.c:3735
+#: plug-ins/common/csource.c:765 plug-ins/gflare/gflare.c:3673
+#: plug-ins/gflare/gflare.c:3703 plug-ins/gflare/gflare.c:3733
 msgid "Opacity:"
 msgstr "不透明度:"
 
@@ -2883,108 +2845,153 @@ msgstr "タイルサイズ:"
 msgid "T_ile Saturation:"
 msgstr "タイル彩度:"
 
-#: plug-ins/common/curve_bend.c:356
+#: plug-ins/common/curve_bend.c:357
 msgid "Upper"
 msgstr "上"
 
-#: plug-ins/common/curve_bend.c:357
+#: plug-ins/common/curve_bend.c:358
 msgid "Lower"
 msgstr "下"
 
-#: plug-ins/common/curve_bend.c:363
+#: plug-ins/common/curve_bend.c:364
 msgid "Smooth"
 msgstr "滑らか"
 
-#: plug-ins/common/curve_bend.c:364
+#: plug-ins/common/curve_bend.c:365
 msgid "Free"
 msgstr "自由"
 
-#: plug-ins/common/curve_bend.c:681
+#: plug-ins/common/curve_bend.c:682
 msgid "<Image>/Filters/Distorts/CurveBend..."
 msgstr "<Image>/フィルタ/歪み/ひん曲げる..."
 
-#: plug-ins/common/curve_bend.c:815
+#: plug-ins/common/curve_bend.c:816
 msgid "CurveBend operates on layers only (but was called on channel or mask)"
 msgstr ""
 "ひん曲げることができるのはレイヤーだけです (チャンネルやマスクに対して呼び出"
 "されました)"
 
 #. The shell and main vbox
-#: plug-ins/common/curve_bend.c:1355
+#: plug-ins/common/curve_bend.c:1360
 msgid "Curve Bend"
 msgstr "ひん曲げる"
 
-#: plug-ins/common/curve_bend.c:1366 plug-ins/gfig/gfig.c:2835
-#: plug-ins/gfig/gfig.c:5285 plug-ins/imagemap/imap_cmd_copy.c:59
-#: plug-ins/imagemap/imap_cmd_copy_object.c:55
-#: plug-ins/imagemap/imap_toolbar.c:126
-msgid "Copy"
-msgstr "コピー"
-
-#: plug-ins/common/curve_bend.c:1369
-msgid "CopyInv"
-msgstr "反転コピー"
-
-#: plug-ins/common/curve_bend.c:1372
-msgid "Swap"
-msgstr "入れ換え"
-
-#. The Load button
-#: plug-ins/common/curve_bend.c:1390
-msgid "LoadCurve"
-msgstr "カーブ読込み"
-
-#. The Save button
-#: plug-ins/common/curve_bend.c:1399
-msgid "SaveCurve"
-msgstr "カーブ保存"
-
-#. Rotate label & spinbutton
-#: plug-ins/common/curve_bend.c:1408
-msgid "Rotate: "
-msgstr "回転: "
-
-#: plug-ins/common/curve_bend.c:1424
-msgid "Curve for Border: "
-msgstr "曲げ操作する端: "
-
-#. The option menu for selecting the drawing method
-#: plug-ins/common/curve_bend.c:1437
-msgid "Curve Type: "
-msgstr "カーブ種: "
-
 #. The preview button
-#: plug-ins/common/curve_bend.c:1500
-msgid "PreviewOnce"
+#: plug-ins/common/curve_bend.c:1419
+#, fuzzy
+msgid "_Preview Once"
 msgstr "一回プレビュー"
 
+#. The preview toggle
+#: plug-ins/common/curve_bend.c:1428
+#, fuzzy
+msgid "Automatic Pre_view"
+msgstr "プレビュー自動更新:"
+
+#. Options area, bottom of column
+#: plug-ins/common/curve_bend.c:1438 plug-ins/common/lic.c:840
+#: plug-ins/common/ripple.c:603 plug-ins/gfig/gfig.c:4015
+#: plug-ins/mosaic/mosaic.c:602
+msgid "Options"
+msgstr "オプション"
+
+#. Rotate spinbutton
+#: plug-ins/common/curve_bend.c:1453
+#, fuzzy
+msgid "R_otate:"
+msgstr "回転:"
+
 #. The smoothing toggle
-#: plug-ins/common/curve_bend.c:1519
-msgid "Smoothing"
+#: plug-ins/common/curve_bend.c:1471
+#, fuzzy
+msgid "Sm_oothing"
 msgstr "スムージング"
 
 #. The antialiasing toggle
-#: plug-ins/common/curve_bend.c:1529 plug-ins/common/newsprint.c:1448
-#: plug-ins/gfig/gfig.c:3148
-msgid "Antialiasing"
+#: plug-ins/common/curve_bend.c:1481 plug-ins/common/gqbist.c:857
+#: plug-ins/common/ripple.c:612 plug-ins/mosaic/mosaic.c:610
+#, fuzzy
+msgid "_Antialiasing"
 msgstr "アンチエイリアシング"
 
 #. The wor_on_copy toggle
-#: plug-ins/common/curve_bend.c:1539
-msgid "Work on Copy"
+#: plug-ins/common/curve_bend.c:1491
+#, fuzzy
+msgid "Work on Cop_y"
 msgstr "コピーを操作"
 
+#. The curves graph
+#: plug-ins/common/curve_bend.c:1502
+#, fuzzy
+msgid "Modify Curves"
+msgstr "カーブ読込み"
+
+#: plug-ins/common/curve_bend.c:1537
+#, fuzzy
+msgid "Curve for _Border:"
+msgstr "曲げ操作する端: "
+
+#: plug-ins/common/curve_bend.c:1545
+#, fuzzy
+msgid "Curve _Type:"
+msgstr "カーブ種: "
+
+#. The Copy button
+#: plug-ins/common/curve_bend.c:1555
+#, fuzzy
+msgid "_Copy"
+msgstr "コピー"
+
+#: plug-ins/common/curve_bend.c:1560
+msgid "Copy the active curve to the other border"
+msgstr ""
+
+#. The CopyInv button
+#: plug-ins/common/curve_bend.c:1567
+#, fuzzy
+msgid "_Mirror"
+msgstr "エラー"
+
+#: plug-ins/common/curve_bend.c:1572
+msgid "Mirror the active curve to the other border"
+msgstr ""
+
+#. The Swap button
+#: plug-ins/common/curve_bend.c:1579
+#, fuzzy
+msgid "S_wap"
+msgstr "入れ換え"
+
+#: plug-ins/common/curve_bend.c:1584
+#, fuzzy
+msgid "Swap the two curves"
+msgstr "画面全体を取り込む"
+
+#: plug-ins/common/curve_bend.c:1596
+msgid "Reset the active curve"
+msgstr ""
+
+#: plug-ins/common/curve_bend.c:1613
+#, fuzzy
+msgid "Load the curves from a file"
+msgstr "カーブ点をファイルから読み込み"
+
+#: plug-ins/common/curve_bend.c:1625
+#, fuzzy
+msgid "Save the curves to a file"
+msgstr "カーブ点をファイルに保存"
+
 #. filesel is already open
-#: plug-ins/common/curve_bend.c:2170
+#: plug-ins/common/curve_bend.c:2256
 msgid "Load Curve Points from file"
 msgstr "カーブ点をファイルから読み込み"
 
 #. filesel is already open
-#: plug-ins/common/curve_bend.c:2203
+#: plug-ins/common/curve_bend.c:2289
 msgid "Save Curve Points to file"
 msgstr "カーブ点をファイルに保存"
 
-#: plug-ins/common/curve_bend.c:3343
+#: plug-ins/common/curve_bend.c:3429
 msgid "Curve Bend..."
 msgstr "ひん曲げています..."
 
@@ -3210,8 +3217,8 @@ msgid "R_ecursive"
 msgstr "再帰的"
 
 #: plug-ins/common/despeckle.c:753 plug-ins/common/nlfilt.c:420
-#: plug-ins/common/nova.c:530 plug-ins/common/unsharp.c:812
-#: plug-ins/common/whirlpinch.c:879 plug-ins/gflare/gflare.c:2980
+#: plug-ins/common/nova.c:530 plug-ins/common/unsharp.c:813
+#: plug-ins/common/whirlpinch.c:879 plug-ins/gflare/gflare.c:2993
 #: plug-ins/imagemap/imap_circle.c:279
 #, fuzzy
 msgid "_Radius:"
@@ -3245,7 +3252,7 @@ msgid "Create _Histogram"
 msgstr "ヒストグラム作成"
 
 #: plug-ins/common/destripe.c:674 plug-ins/common/smooth_palette.c:440
-#: plug-ins/common/tile.c:427 plug-ins/imagemap/imap_cmd_guides.c:168
+#: plug-ins/common/tile.c:427 plug-ins/imagemap/imap_cmd_guides.c:163
 #: plug-ins/imagemap/imap_rectangle.c:401
 #, fuzzy
 msgid "_Width:"
@@ -3262,11 +3269,6 @@ msgstr "回折模様を生成しています..."
 #: plug-ins/common/diffraction.c:533
 msgid "Diffraction Patterns"
 msgstr "回折模様"
-
-#: plug-ins/common/diffraction.c:579
-#, fuzzy
-msgid "_Preview!"
-msgstr "プレビュー!"
 
 #: plug-ins/common/diffraction.c:631
 #, fuzzy
@@ -3363,7 +3365,7 @@ msgstr "輪郭を抽出しています..."
 msgid "Edge Detection"
 msgstr "輪郭抽出"
 
-#: plug-ins/common/edge.c:674 plug-ins/common/unsharp.c:821
+#: plug-ins/common/edge.c:674 plug-ins/common/unsharp.c:822
 #, fuzzy
 msgid "_Amount:"
 msgstr "量:"
@@ -3395,7 +3397,7 @@ msgstr "エンボス"
 msgid "E_levation:"
 msgstr "持ち上げ:"
 
-#: plug-ins/common/emboss.c:743 plug-ins/common/sinus.c:2133
+#: plug-ins/common/emboss.c:743 plug-ins/common/sinus.c:2132
 #, fuzzy
 msgid "Do _Preview"
 msgstr "プレビューする"
@@ -3417,8 +3419,8 @@ msgid "Limit Line Width"
 msgstr "線幅を制限する"
 
 #: plug-ins/common/engrave.c:256 plug-ins/common/film.c:1238
-#: plug-ins/common/gtm.c:581 plug-ins/common/ps.c:2676
-#: plug-ins/common/ps.c:2854 plug-ins/print/gimp_main_window.c:1017
+#: plug-ins/common/gtm.c:581 plug-ins/common/ps.c:2686
+#: plug-ins/common/ps.c:2864 plug-ins/print/gimp_main_window.c:1017
 #: plug-ins/print/gimp_main_window.c:1229
 msgid "Height:"
 msgstr "高さ:"
@@ -3691,13 +3693,13 @@ msgid "Blur Radius"
 msgstr "ぼかし半径"
 
 #: plug-ins/common/gauss_iir.c:479 plug-ins/common/gauss_rle.c:474
-#: plug-ins/common/jigsaw.c:2549 plug-ins/common/spread.c:409
+#: plug-ins/common/jigsaw.c:2548 plug-ins/common/spread.c:408
 #, fuzzy
 msgid "_Horizontal:"
 msgstr "水平"
 
 #: plug-ins/common/gauss_iir.c:483 plug-ins/common/gauss_rle.c:478
-#: plug-ins/common/jigsaw.c:2562 plug-ins/common/spread.c:413
+#: plug-ins/common/jigsaw.c:2561 plug-ins/common/spread.c:412
 #, fuzzy
 msgid "_Vertical:"
 msgstr "鉛直:"
@@ -3986,12 +3988,12 @@ msgstr "ガラスタイルにしています..."
 msgid "Glass Tile"
 msgstr "ガラスタイル"
 
-#: plug-ins/common/glasstile.c:318
+#: plug-ins/common/glasstile.c:321
 #, fuzzy
 msgid "Tile _Width:"
 msgstr "タイル幅:"
 
-#: plug-ins/common/glasstile.c:332 plug-ins/mosaic/mosaic.c:702
+#: plug-ins/common/glasstile.c:335 plug-ins/mosaic/mosaic.c:702
 #, fuzzy
 msgid "Tile _Height:"
 msgstr "タイル高:"
@@ -4018,12 +4020,6 @@ msgstr "変形経過を QBE ファイルとして保存..."
 msgid "G-Qbist 1.12"
 msgstr "G-Qビスト 1.10"
 
-#: plug-ins/common/gqbist.c:857 plug-ins/common/ripple.c:612
-#: plug-ins/mosaic/mosaic.c:610
-#, fuzzy
-msgid "_Antialiasing"
-msgstr "アンチエイリアシング"
-
 #: plug-ins/common/gradmap.c:122
 msgid "<Image>/Filters/Colors/Map/Gradient Map"
 msgstr "<Image>/フィルタ/色/マップ/グラデーションマップ..."
@@ -4032,60 +4028,60 @@ msgstr "<Image>/フィルタ/色/マップ/グラデーションマップ..."
 msgid "Gradient Map..."
 msgstr "グラデーションマップしています..."
 
-#: plug-ins/common/grid.c:164
+#: plug-ins/common/grid.c:165
 msgid "<Image>/Filters/Render/Pattern/Grid..."
 msgstr "<Image>/フィルタ/下塗り/パターン/格子..."
 
-#: plug-ins/common/grid.c:251
+#: plug-ins/common/grid.c:252
 msgid "Drawing Grid..."
 msgstr "格子を描いています..."
 
-#: plug-ins/common/grid.c:660 plug-ins/gfig/gfig.c:3396
-#: plug-ins/imagemap/imap_menu.c:380 plug-ins/imagemap/imap_popup.c:153
+#: plug-ins/common/grid.c:661 plug-ins/gfig/gfig.c:3396
+#: plug-ins/imagemap/imap_menu.c:387 plug-ins/imagemap/imap_popup.c:153
 #: plug-ins/imagemap/imap_toolbar.c:162
 msgid "Grid"
 msgstr "格子"
 
-#: plug-ins/common/grid.c:715
+#: plug-ins/common/grid.c:716
 msgid "Update Preview"
 msgstr "プレビュー更新"
 
 #. attach labels
-#: plug-ins/common/grid.c:779 plug-ins/pagecurl/pagecurl.c:597
+#: plug-ins/common/grid.c:780 plug-ins/pagecurl/pagecurl.c:597
 msgid "Horizontal"
 msgstr "水平"
 
-#: plug-ins/common/grid.c:780 plug-ins/pagecurl/pagecurl.c:598
+#: plug-ins/common/grid.c:782 plug-ins/pagecurl/pagecurl.c:598
 msgid "Vertical"
 msgstr "鉛直"
 
-#: plug-ins/common/grid.c:781
+#: plug-ins/common/grid.c:784
 msgid "Intersection"
 msgstr "交点"
 
-#: plug-ins/common/grid.c:782
+#: plug-ins/common/grid.c:786
 msgid "Width: "
 msgstr "幅: "
 
 #. attach labels
-#: plug-ins/common/grid.c:841
+#: plug-ins/common/grid.c:847
 msgid "Spacing: "
 msgstr "間隔: "
 
 #. attach labels
-#: plug-ins/common/grid.c:905
+#: plug-ins/common/grid.c:912
 msgid "Offset: "
 msgstr "オフセット: "
 
-#: plug-ins/common/grid.c:943
+#: plug-ins/common/grid.c:951
 msgid "Horizontal Color"
 msgstr "水平色"
 
-#: plug-ins/common/grid.c:962
+#: plug-ins/common/grid.c:970
 msgid "Vertical Color"
 msgstr "鉛直色"
 
-#: plug-ins/common/grid.c:980
+#: plug-ins/common/grid.c:988
 msgid "Intersection Color"
 msgstr "交点色"
 
@@ -4191,8 +4187,8 @@ msgstr "縁:"
 msgid "The number of pixels in the table border."
 msgstr "表枠のピクセル幅."
 
-#: plug-ins/common/gtm.c:565 plug-ins/common/ps.c:2667
-#: plug-ins/common/ps.c:2845 plug-ins/print/gimp_main_window.c:1000
+#: plug-ins/common/gtm.c:565 plug-ins/common/ps.c:2677
+#: plug-ins/common/ps.c:2855 plug-ins/print/gimp_main_window.c:1000
 #: plug-ins/print/gimp_main_window.c:1216
 msgid "Width:"
 msgstr "幅:"
@@ -4283,17 +4279,17 @@ msgstr "幻を描いています..."
 msgid "Illusion"
 msgstr "幻"
 
-#: plug-ins/common/illusion.c:631
+#: plug-ins/common/illusion.c:629
 #, fuzzy
 msgid "_Division:"
 msgstr "分割:"
 
-#: plug-ins/common/illusion.c:641
+#: plug-ins/common/illusion.c:639
 #, fuzzy
 msgid "Mode _1"
 msgstr "モード1"
 
-#: plug-ins/common/illusion.c:656
+#: plug-ins/common/illusion.c:654
 #, fuzzy
 msgid "Mode _2"
 msgstr "モード2"
@@ -4315,7 +4311,7 @@ msgstr "%d番目のフレームを歪めています..."
 msgid "Ping Pong"
 msgstr "ピンポン"
 
-#: plug-ins/common/iwarp.c:932
+#: plug-ins/common/iwarp.c:936
 #, fuzzy
 msgid "A_nimate"
 msgstr "動画化"
@@ -4389,105 +4385,105 @@ msgstr "渦巻 CW"
 msgid "_Bilinear"
 msgstr "双線形"
 
-#: plug-ins/common/iwarp.c:1105
+#: plug-ins/common/iwarp.c:1100
 #, fuzzy
 msgid "Adaptive S_upersample"
 msgstr "適応型スーパーサンプリング"
 
-#: plug-ins/common/iwarp.c:1125
+#: plug-ins/common/iwarp.c:1121
 #, fuzzy
 msgid "Ma_x Depth:"
 msgstr "最大深度:"
 
-#: plug-ins/common/iwarp.c:1135
+#: plug-ins/common/iwarp.c:1131
 #, fuzzy
 msgid "Thresho_ld:"
 msgstr "閾値:"
 
-#: plug-ins/common/iwarp.c:1148 plug-ins/common/sinus.c:1845
-#: plug-ins/gflare/gflare.c:3110
+#: plug-ins/common/iwarp.c:1144 plug-ins/common/sinus.c:1844
+#: plug-ins/gflare/gflare.c:3106
 #, fuzzy
 msgid "_Settings"
 msgstr "設定"
 
-#: plug-ins/common/iwarp.c:1165
+#: plug-ins/common/iwarp.c:1161
 msgid "IWarp"
 msgstr "対話型歪め"
 
-#: plug-ins/common/jigsaw.c:398
+#: plug-ins/common/jigsaw.c:397
 msgid "<Image>/Filters/Render/Pattern/Jigsaw..."
 msgstr "<Image>/フィルタ/下塗り/パターン/ジグソーパズル..."
 
-#: plug-ins/common/jigsaw.c:454
+#: plug-ins/common/jigsaw.c:453
 msgid "Assembling Jigsaw"
 msgstr "ジグソーパズルを描く"
 
-#: plug-ins/common/jigsaw.c:2485
+#: plug-ins/common/jigsaw.c:2484
 msgid "Jigsaw"
 msgstr "ジグソーパズル"
 
-#: plug-ins/common/jigsaw.c:2537
+#: plug-ins/common/jigsaw.c:2536
 msgid "Number of Tiles"
 msgstr "タイル数"
 
-#: plug-ins/common/jigsaw.c:2552
+#: plug-ins/common/jigsaw.c:2551
 msgid "Number of pieces going across"
 msgstr "横方向のピース数"
 
-#: plug-ins/common/jigsaw.c:2565
+#: plug-ins/common/jigsaw.c:2564
 msgid "Number of pieces going down"
 msgstr "縦方向のピース数"
 
-#: plug-ins/common/jigsaw.c:2576
+#: plug-ins/common/jigsaw.c:2575
 msgid "Bevel Edges"
 msgstr "斜角端"
 
-#: plug-ins/common/jigsaw.c:2588
+#: plug-ins/common/jigsaw.c:2587
 #, fuzzy
 msgid "_Bevel Width:"
 msgstr "斜角幅:"
 
-#: plug-ins/common/jigsaw.c:2592
+#: plug-ins/common/jigsaw.c:2591
 msgid "Degree of slope of each piece's edge"
 msgstr "それぞれのピースの傾斜角度"
 
-#: plug-ins/common/jigsaw.c:2602
+#: plug-ins/common/jigsaw.c:2601
 #, fuzzy
 msgid "H_ighlight:"
 msgstr "ハイライト:"
 
-#: plug-ins/common/jigsaw.c:2606
+#: plug-ins/common/jigsaw.c:2605
 msgid "The amount of highlighting on the edges of each piece"
 msgstr "それぞれのピースの端のハイライトの量"
 
-#: plug-ins/common/jigsaw.c:2623
+#: plug-ins/common/jigsaw.c:2622
 msgid "Jigsaw Style"
 msgstr "ジグソースタイル"
 
-#: plug-ins/common/jigsaw.c:2628
+#: plug-ins/common/jigsaw.c:2627
 #, fuzzy
 msgid "_Square"
 msgstr "四角"
 
-#: plug-ins/common/jigsaw.c:2631
+#: plug-ins/common/jigsaw.c:2630
 #, fuzzy
 msgid "C_urved"
 msgstr "カーブ"
 
-#: plug-ins/common/jigsaw.c:2636
+#: plug-ins/common/jigsaw.c:2635
 msgid "Each piece has straight sides"
 msgstr "それぞれのピースの端はまっすぐ"
 
-#: plug-ins/common/jigsaw.c:2637
+#: plug-ins/common/jigsaw.c:2636
 msgid "Each piece has curved sides"
 msgstr "それぞれのピースの端が丸めてある"
 
-#: plug-ins/common/jigsaw.c:2645
+#: plug-ins/common/jigsaw.c:2644
 #, fuzzy
 msgid "_Disable Tooltips"
 msgstr "簡易説明をしない"
 
-#: plug-ins/common/jigsaw.c:2651
+#: plug-ins/common/jigsaw.c:2650
 msgid "Toggle Tooltips on/off"
 msgstr "簡易説明のオン/オフ"
 
@@ -4605,11 +4601,6 @@ msgstr "新規画像作成"
 msgid "Effect Channel"
 msgstr "対象チャンネル"
 
-#: plug-ins/common/lic.c:861
-#, fuzzy
-msgid "_Hue"
-msgstr "色相"
-
 #: plug-ins/common/lic.c:862
 #, fuzzy
 msgid "_Saturation"
@@ -4703,7 +4694,7 @@ msgid "Subject:"
 msgstr "題名:"
 
 #: plug-ins/common/mail.c:542 plug-ins/gfig/gfig.c:3749
-#: plug-ins/imagemap/imap_settings.c:105
+#: plug-ins/imagemap/imap_settings.c:98
 msgid "Filename:"
 msgstr "ファイル名:"
 
@@ -4797,12 +4788,12 @@ msgstr "RGB 値最大: 走査しています..."
 msgid "Max RGB"
 msgstr "RGB 値最大"
 
-#: plug-ins/common/max_rgb.c:390
+#: plug-ins/common/max_rgb.c:393
 #, fuzzy
 msgid "_Hold the Maximal Channels"
 msgstr "最大値チャンネルを残す"
 
-#: plug-ins/common/max_rgb.c:393
+#: plug-ins/common/max_rgb.c:396
 #, fuzzy
 msgid "Ho_ld the Minimal Channels"
 msgstr "最小値チャンネルを残す"
@@ -4837,11 +4828,6 @@ msgstr "拡大"
 #: plug-ins/common/mblur.c:797
 msgid "Blur Parameters"
 msgstr "ぼかしパラメータ"
-
-#: plug-ins/common/mblur.c:809
-#, fuzzy
-msgid "L_ength:"
-msgstr "長さ:"
 
 #: plug-ins/common/mblur.c:818 plug-ins/common/newsprint.c:1059
 #, fuzzy
@@ -4976,6 +4962,11 @@ msgstr "チャンネル固定"
 #, fuzzy
 msgid "_Factory Defaults"
 msgstr "初期値に戻す"
+
+#. anti-alias control
+#: plug-ins/common/newsprint.c:1448 plug-ins/gfig/gfig.c:3148
+msgid "Antialiasing"
+msgstr "アンチエイリアシング"
 
 #: plug-ins/common/newsprint.c:1458
 #, fuzzy
@@ -5252,7 +5243,7 @@ msgstr "プラズマ..."
 msgid "Plasma"
 msgstr "プラズマ"
 
-#: plug-ins/common/plasma.c:395
+#: plug-ins/common/plasma.c:397
 #, fuzzy
 msgid "T_urbulence:"
 msgstr "乱れ:"
@@ -5298,18 +5289,18 @@ msgstr "メニューパス:"
 
 #. show the name
 #: plug-ins/common/plugindetails.c:357
-#: plug-ins/dbbrowser/dbbrowser_utils.c:340
+#: plug-ins/dbbrowser/dbbrowser_utils.c:343
 msgid "Name:"
 msgstr "名称:"
 
 #. show the description
 #: plug-ins/common/plugindetails.c:379
-#: plug-ins/dbbrowser/dbbrowser_utils.c:349
+#: plug-ins/dbbrowser/dbbrowser_utils.c:352
 msgid "Blurb:"
 msgstr "説明:"
 
 #: plug-ins/common/plugindetails.c:401
-#: plug-ins/dbbrowser/dbbrowser_utils.c:463
+#: plug-ins/dbbrowser/dbbrowser_utils.c:466
 msgid "Help:"
 msgstr "ヘルプ:"
 
@@ -5360,7 +5351,14 @@ msgstr "ツリー表示"
 msgid "Search:"
 msgstr "検索:"
 
-#: plug-ins/common/png.c:401
+#: plug-ins/common/png.c:187
+#, fuzzy
+msgid ""
+"PNG: Couldn't simply reduce colors further.\n"
+"Saving as opaque.\n"
+msgstr "GIF: これ以上単純には減色できません. 不透明として保存します.\n"
+
+#: plug-ins/common/png.c:455
 #, c-format
 msgid ""
 "%s\n"
@@ -5370,7 +5368,7 @@ msgstr ""
 "PNG エラー. ファイルが壊れているようです."
 
 #. Aie! Unknown type
-#: plug-ins/common/png.c:530
+#: plug-ins/common/png.c:584
 #, c-format
 msgid ""
 "%s\n"
@@ -5379,7 +5377,7 @@ msgstr ""
 "%s\n"
 "PNG 不明な色モデル"
 
-#: plug-ins/common/png.c:756
+#: plug-ins/common/png.c:810
 #, c-format
 msgid ""
 "%s\n"
@@ -5388,7 +5386,7 @@ msgstr ""
 "%s\n"
 "PNG エラー. 画像を保存できませんでした"
 
-#: plug-ins/common/png.c:766
+#: plug-ins/common/png.c:820
 #, c-format
 msgid ""
 "%s\n"
@@ -5397,41 +5395,47 @@ msgstr ""
 "%s\n"
 "ファイルが作成できませんでした"
 
-#: plug-ins/common/png.c:1045
+#. Inform the user that we couldn't losslessly save the
+#. * transparency & just use the full palette
+#: plug-ins/common/png.c:1141
+msgid "Couldn't losslessly save transparency, saving opacity instead.\n"
+msgstr ""
+
+#: plug-ins/common/png.c:1162
 msgid "Save as PNG"
 msgstr "PNM 形式で保存する"
 
-#: plug-ins/common/png.c:1074
+#: plug-ins/common/png.c:1191
 #, fuzzy
 msgid "_Interlacing (Adam7)"
 msgstr "インターレース (Adam7)"
 
-#: plug-ins/common/png.c:1084
+#: plug-ins/common/png.c:1201
 #, fuzzy
 msgid "Save _background color"
 msgstr "背景色を保存"
 
-#: plug-ins/common/png.c:1094
+#: plug-ins/common/png.c:1211
 #, fuzzy
 msgid "Save _gamma"
 msgstr "ガンマ値を保存"
 
-#: plug-ins/common/png.c:1104
+#: plug-ins/common/png.c:1221
 #, fuzzy
 msgid "Save _layer offset"
 msgstr "レイヤーオフセットを保存"
 
-#: plug-ins/common/png.c:1114
+#: plug-ins/common/png.c:1231
 #, fuzzy
 msgid "Save _resolution"
 msgstr "解像度を保存"
 
-#: plug-ins/common/png.c:1124
+#: plug-ins/common/png.c:1241
 #, fuzzy
 msgid "Save creation _time"
 msgstr "製作日時を保存"
 
-#: plug-ins/common/png.c:1142
+#: plug-ins/common/png.c:1259
 #, fuzzy
 msgid "Co_mpression Level:"
 msgstr "圧縮レベル:"
@@ -5547,113 +5551,113 @@ msgstr ""
 "チェックしてない場合には極座標から直交座標への変換, チェックした場合には直交"
 "座標から極座標へ変換されます."
 
-#: plug-ins/common/ps.c:867
+#: plug-ins/common/ps.c:868
 msgid "PS: can't open file for reading"
 msgstr "PS: 読み込みファイルが開けない"
 
-#: plug-ins/common/ps.c:874
+#: plug-ins/common/ps.c:875
 #, c-format
 msgid "Interpreting and Loading %s:"
 msgstr "%s を解釈読み込み中:"
 
-#: plug-ins/common/ps.c:882
+#: plug-ins/common/ps.c:883
 msgid "PS: can't interprete file"
 msgstr "PS: ファイルが解釈できない"
 
-#: plug-ins/common/ps.c:969
+#: plug-ins/common/ps.c:970
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr "PostScript による保存はアルファチャンネルを取り扱えない"
 
-#: plug-ins/common/ps.c:980
+#: plug-ins/common/ps.c:981
 msgid "PS: cannot operate on unknown image types"
 msgstr "PS: 不明な画像種は取り扱えない"
 
-#: plug-ins/common/ps.c:989
+#: plug-ins/common/ps.c:990
 msgid "PS: can't open file for writing"
 msgstr "PS: 書き出しファイルが開けない"
 
-#: plug-ins/common/ps.c:2196 plug-ins/common/ps.c:2322
-#: plug-ins/common/ps.c:2466 plug-ins/common/ps.c:2588
+#: plug-ins/common/ps.c:2206 plug-ins/common/ps.c:2332
+#: plug-ins/common/ps.c:2476 plug-ins/common/ps.c:2598
 msgid "write error occured"
 msgstr "書き出しエラー発生"
 
-#: plug-ins/common/ps.c:2613
+#: plug-ins/common/ps.c:2623
 msgid "Load PostScript"
 msgstr "PostScript 読み込み"
 
 #. Rendering
-#: plug-ins/common/ps.c:2640
+#: plug-ins/common/ps.c:2650
 msgid "Rendering"
 msgstr "レンダリング"
 
-#: plug-ins/common/ps.c:2658 plug-ins/print/gimp_main_window.c:1095
+#: plug-ins/common/ps.c:2668 plug-ins/print/gimp_main_window.c:1095
 msgid "Resolution:"
 msgstr "解像度:"
 
-#: plug-ins/common/ps.c:2686
+#: plug-ins/common/ps.c:2696
 msgid "Pages:"
 msgstr "ページ:"
 
-#: plug-ins/common/ps.c:2692
+#: plug-ins/common/ps.c:2702
 msgid "Try Bounding Box"
 msgstr "境界枠を調べる"
 
 #. Colouring
-#: plug-ins/common/ps.c:2705
+#: plug-ins/common/ps.c:2715
 msgid "Coloring"
 msgstr "カラーリング"
 
-#: plug-ins/common/ps.c:2709
+#: plug-ins/common/ps.c:2719
 msgid "B/W"
 msgstr "白黒"
 
 #. * Gray *
-#: plug-ins/common/ps.c:2710 plug-ins/rcm/rcm_dialog.c:418
+#: plug-ins/common/ps.c:2720 plug-ins/rcm/rcm_dialog.c:418
 msgid "Gray"
 msgstr "グレー"
 
-#: plug-ins/common/ps.c:2712 plug-ins/fits/fits.c:1018
+#: plug-ins/common/ps.c:2722 plug-ins/fits/fits.c:1018
 msgid "Automatic"
 msgstr "自動"
 
-#: plug-ins/common/ps.c:2722
+#: plug-ins/common/ps.c:2732
 msgid "Text Antialiasing"
 msgstr "文字アンチエイリアシング"
 
-#: plug-ins/common/ps.c:2728 plug-ins/common/ps.c:2741
+#: plug-ins/common/ps.c:2738 plug-ins/common/ps.c:2751
 msgid "Weak"
 msgstr "少し"
 
-#: plug-ins/common/ps.c:2729 plug-ins/common/ps.c:2742
+#: plug-ins/common/ps.c:2739 plug-ins/common/ps.c:2752
 msgid "Strong"
 msgstr "強く"
 
-#: plug-ins/common/ps.c:2735
+#: plug-ins/common/ps.c:2745
 msgid "Graphic Antialiasing"
 msgstr "グラフィックアンチエイリアシング"
 
-#: plug-ins/common/ps.c:2797
+#: plug-ins/common/ps.c:2807
 msgid "Save as PostScript"
 msgstr "PostScript 形式で保存"
 
 #. Image Size
-#: plug-ins/common/ps.c:2827
+#: plug-ins/common/ps.c:2837
 msgid "Image Size"
 msgstr "画像サイズ"
 
-#: plug-ins/common/ps.c:2863
+#: plug-ins/common/ps.c:2873
 msgid "X-Offset:"
 msgstr "X オフセット:"
 
-#: plug-ins/common/ps.c:2872
+#: plug-ins/common/ps.c:2882
 msgid "Y-Offset:"
 msgstr "Y オフセット:"
 
-#: plug-ins/common/ps.c:2878
+#: plug-ins/common/ps.c:2888
 msgid "Keep Aspect Ratio"
 msgstr "アスペクト比を保つ"
 
-#: plug-ins/common/ps.c:2884
+#: plug-ins/common/ps.c:2894
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -5662,32 +5666,32 @@ msgstr ""
 "うに調整されて出力されます."
 
 #. Unit
-#: plug-ins/common/ps.c:2893
+#: plug-ins/common/ps.c:2903
 msgid "Unit"
 msgstr "単位"
 
-#: plug-ins/common/ps.c:2898 plug-ins/print/gimp_main_window.c:1261
+#: plug-ins/common/ps.c:2908 plug-ins/print/gimp_main_window.c:1261
 msgid "Inch"
 msgstr "インチ"
 
-#: plug-ins/common/ps.c:2901
+#: plug-ins/common/ps.c:2911
 msgid "Millimeter"
 msgstr "ミリメートル"
 
 #. Format
-#: plug-ins/common/ps.c:2929
+#: plug-ins/common/ps.c:2939
 msgid "Output"
 msgstr "出力"
 
-#: plug-ins/common/ps.c:2937
+#: plug-ins/common/ps.c:2947
 msgid "PostScript Level 2"
 msgstr "PostScript レベル 2"
 
-#: plug-ins/common/ps.c:2946
+#: plug-ins/common/ps.c:2956
 msgid "Encapsulated PostScript"
 msgstr "EPS 形式"
 
-#: plug-ins/common/ps.c:2976
+#: plug-ins/common/ps.c:2986
 msgid "Preview Size:"
 msgstr "プレビューサイズ:"
 
@@ -5822,141 +5826,141 @@ msgstr "<Image>/画像/変形/回転/270度回転"
 msgid "You can not rotate the whole image if there's a selection."
 msgstr "選択領域がある場合には画像全体を回転させることができません."
 
-#: plug-ins/common/rotate.c:530
+#: plug-ins/common/rotate.c:531
 msgid "You can not rotate the whole image if there's a floating selection."
 msgstr "フロート選択がある場合には画像全体を回転させることができません."
 
-#: plug-ins/common/rotate.c:540
+#: plug-ins/common/rotate.c:541
 msgid "Sorry, channels and masks can not be rotated."
 msgstr "残念ですがチャンネルやマスクを回転させることはできません."
 
-#: plug-ins/common/rotate.c:546
+#: plug-ins/common/rotate.c:547
 msgid "Rotating..."
 msgstr "回転しています..."
 
-#: plug-ins/common/sample_colorize.c:310
+#: plug-ins/common/sample_colorize.c:309
 msgid "<Image>/Filters/Colors/Map/Sample Colorize..."
 msgstr "<Image>/フィルタ/色/マップ/サンプル色付け..."
 
-#: plug-ins/common/sample_colorize.c:1364
+#: plug-ins/common/sample_colorize.c:1363
 msgid "Sample Colorize"
 msgstr "サンプル色付け"
 
-#: plug-ins/common/sample_colorize.c:1375
+#: plug-ins/common/sample_colorize.c:1371
 msgid "Get Sample Colors"
 msgstr "サンプル色取得"
 
 #. gtk_container_set_border_width (GTK_CONTAINER (box2), 5);
-#: plug-ins/common/sample_colorize.c:1378
+#: plug-ins/common/sample_colorize.c:1377
 #: plug-ins/gimpressionist/presets.c:671 plug-ins/gimpressionist/sizemap.c:502
 msgid "Apply"
 msgstr "適用"
 
 #. parameter settings
-#: plug-ins/common/sample_colorize.c:1388 plug-ins/gfig/gfig.c:3972
+#: plug-ins/common/sample_colorize.c:1387 plug-ins/gfig/gfig.c:3972
 msgid "Settings"
 msgstr "設定"
 
 #. layer optionmenu (Dst)
-#: plug-ins/common/sample_colorize.c:1408
+#: plug-ins/common/sample_colorize.c:1407
 msgid "Destination:"
 msgstr "先:"
 
 #. layer optionmenu (Sample)
-#: plug-ins/common/sample_colorize.c:1427
+#: plug-ins/common/sample_colorize.c:1426
 msgid "Sample:"
 msgstr "サンプル:"
 
 #. Add extra menu items for Gradient
-#: plug-ins/common/sample_colorize.c:1446
+#: plug-ins/common/sample_colorize.c:1445
 msgid "** From GRADIENT **"
 msgstr "** グラデーションから **"
 
 #. Add extra menu items for Inverted Gradient
-#: plug-ins/common/sample_colorize.c:1455
+#: plug-ins/common/sample_colorize.c:1454
 msgid "** From INVERSE GRADIENT **"
 msgstr "** 反転グラデーションから **"
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1471
-#: plug-ins/common/sample_colorize.c:1498
+#: plug-ins/common/sample_colorize.c:1470
+#: plug-ins/common/sample_colorize.c:1497
 msgid "Show Selection"
 msgstr "選択表示"
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1482
-#: plug-ins/common/sample_colorize.c:1509
+#: plug-ins/common/sample_colorize.c:1481
+#: plug-ins/common/sample_colorize.c:1508
 msgid "Show Color"
 msgstr "色表示"
 
-#: plug-ins/common/sample_colorize.c:1620
+#: plug-ins/common/sample_colorize.c:1619
 msgid "In Level:"
 msgstr "入力レベル: "
 
-#: plug-ins/common/sample_colorize.c:1673
+#: plug-ins/common/sample_colorize.c:1669
 msgid "Out Level:"
 msgstr "出力レベル: "
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1715
+#: plug-ins/common/sample_colorize.c:1709
 msgid "Hold Intensity"
 msgstr "強度保持"
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1726
+#: plug-ins/common/sample_colorize.c:1720
 msgid "Original Intensity"
 msgstr "オリジナル強度"
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1744
+#: plug-ins/common/sample_colorize.c:1738
 msgid "Use Subcolors"
 msgstr "サブカラー使用"
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1755
+#: plug-ins/common/sample_colorize.c:1749
 msgid "Smooth Samplecolors"
 msgstr "滑らかなサンプルカラー"
 
-#: plug-ins/common/sample_colorize.c:2755
+#: plug-ins/common/sample_colorize.c:2749
 msgid "Sample Analyze..."
 msgstr "サンプルを解析しています..."
 
-#: plug-ins/common/sample_colorize.c:3120
+#: plug-ins/common/sample_colorize.c:3114
 msgid "Remap Colorized..."
 msgstr "再マップ色付けしています..."
 
-#: plug-ins/common/scatter_hsv.c:147
+#: plug-ins/common/scatter_hsv.c:148
 msgid "<Image>/Filters/Noise/Scatter HSV..."
 msgstr "<Image>/フィルタ/ノイズ/HSV 散乱..."
 
-#: plug-ins/common/scatter_hsv.c:234
+#: plug-ins/common/scatter_hsv.c:235
 msgid "Scatter HSV: Scattering..."
 msgstr "Scatter_HSV: 散乱させています..."
 
-#: plug-ins/common/scatter_hsv.c:374
+#: plug-ins/common/scatter_hsv.c:375
 msgid "Scatter HSV"
 msgstr "HSV 散乱"
 
-#: plug-ins/common/scatter_hsv.c:394
+#: plug-ins/common/scatter_hsv.c:395
 msgid "Preview (1:4) - Right Click to Jump"
 msgstr "プレビュー (1:4) - 右クリックでジャンプします"
 
-#: plug-ins/common/scatter_hsv.c:446
+#: plug-ins/common/scatter_hsv.c:447
 #, fuzzy
 msgid "_Holdness:"
 msgstr "保存度:"
 
-#: plug-ins/common/scatter_hsv.c:455
+#: plug-ins/common/scatter_hsv.c:456
 #, fuzzy
 msgid "H_ue:"
 msgstr "色相:"
 
-#: plug-ins/common/scatter_hsv.c:464
+#: plug-ins/common/scatter_hsv.c:465
 #, fuzzy
 msgid "_Saturation:"
 msgstr "彩度:"
 
-#: plug-ins/common/scatter_hsv.c:473
+#: plug-ins/common/scatter_hsv.c:474
 #, fuzzy
 msgid "_Value:"
 msgstr "明度:"
@@ -6000,29 +6004,29 @@ msgstr "秒後"
 msgid "<Image>/Filters/Blur/Selective Gaussian Blur..."
 msgstr "<Image>/フィルタ/ぼかし/選択的ガウシアンぼかし..."
 
-#: plug-ins/common/sel_gauss.c:200 plug-ins/common/sel_gauss.c:236
+#: plug-ins/common/sel_gauss.c:201 plug-ins/common/sel_gauss.c:237
 msgid "Selective Gaussian Blur"
 msgstr "選択的ガウシアンぼかし"
 
-#: plug-ins/common/sel_gauss.c:217
+#: plug-ins/common/sel_gauss.c:218
 msgid "sel_gauss: Cannot operate on indexed color images"
 msgstr "sel_gauss: インデックス画像には適用できません"
 
-#: plug-ins/common/sel_gauss.c:270
+#: plug-ins/common/sel_gauss.c:271
 #, fuzzy
 msgid "_Blur Radius:"
 msgstr "ぼかし半径:"
 
-#: plug-ins/common/sel_gauss.c:277
+#: plug-ins/common/sel_gauss.c:278
 #, fuzzy
 msgid "_Max. Delta:"
 msgstr "最大 Δ:"
 
-#: plug-ins/common/semiflatten.c:88
+#: plug-ins/common/semiflatten.c:87
 msgid "<Image>/Filters/Colors/Semi-Flatten"
 msgstr "<Image>/フィルタ/色/半統合"
 
-#: plug-ins/common/semiflatten.c:125
+#: plug-ins/common/semiflatten.c:124
 msgid "Semi-Flatten..."
 msgstr "半統合しています..."
 
@@ -6111,97 +6115,97 @@ msgstr "複雑度:"
 msgid "Calculation Settings"
 msgstr "演算設定"
 
-#: plug-ins/common/sinus.c:1819
+#: plug-ins/common/sinus.c:1818
 #, fuzzy
 msgid "_Force Tiling?"
 msgstr "強制的に並べる?"
 
-#: plug-ins/common/sinus.c:1833
+#: plug-ins/common/sinus.c:1832
 #, fuzzy
 msgid "_Ideal"
 msgstr "典型"
 
-#: plug-ins/common/sinus.c:1836
+#: plug-ins/common/sinus.c:1835
 #, fuzzy
 msgid "_Distorted"
 msgstr "ゆがめる"
 
 #. if in grey scale, the colors are necessarily black and white
-#: plug-ins/common/sinus.c:1867
+#: plug-ins/common/sinus.c:1866
 msgid "The colors are white and black."
 msgstr "色は白黒です."
 
-#: plug-ins/common/sinus.c:1878
+#: plug-ins/common/sinus.c:1877
 #, fuzzy
 msgid "Bl_ack & White"
 msgstr "白黒"
 
-#: plug-ins/common/sinus.c:1880
+#: plug-ins/common/sinus.c:1879
 #, fuzzy
 msgid "_Foreground & Background"
 msgstr "前景/背景"
 
-#: plug-ins/common/sinus.c:1882
+#: plug-ins/common/sinus.c:1881
 #, fuzzy
 msgid "C_hoose here:"
 msgstr "ここで選択:"
 
-#: plug-ins/common/sinus.c:1896
+#: plug-ins/common/sinus.c:1895
 msgid "First Color"
 msgstr "第一色"
 
-#: plug-ins/common/sinus.c:1906
+#: plug-ins/common/sinus.c:1905
 msgid "Second Color"
 msgstr "第二色"
 
-#: plug-ins/common/sinus.c:1919
+#: plug-ins/common/sinus.c:1918
 msgid "Alpha Channels"
 msgstr "アルファチャンネル"
 
-#: plug-ins/common/sinus.c:1931
+#: plug-ins/common/sinus.c:1930
 #, fuzzy
 msgid "F_irst Color:"
 msgstr "第一色:"
 
-#: plug-ins/common/sinus.c:1946
+#: plug-ins/common/sinus.c:1945
 #, fuzzy
 msgid "S_econd Color:"
 msgstr "第二色:"
 
-#: plug-ins/common/sinus.c:1962 plug-ins/imagemap/imap_preferences.c:511
+#: plug-ins/common/sinus.c:1961 plug-ins/imagemap/imap_preferences.c:511
 #, fuzzy
 msgid "Co_lors"
 msgstr "カラー"
 
-#: plug-ins/common/sinus.c:1971
+#: plug-ins/common/sinus.c:1970
 msgid "Blend Settings"
 msgstr "混色設定"
 
-#: plug-ins/common/sinus.c:1982
+#: plug-ins/common/sinus.c:1981
 msgid "Gradient"
 msgstr "勾配/グラデーション"
 
-#: plug-ins/common/sinus.c:1986
+#: plug-ins/common/sinus.c:1985
 #, fuzzy
 msgid "L_inear"
 msgstr "線形"
 
-#: plug-ins/common/sinus.c:1987
+#: plug-ins/common/sinus.c:1986
 #, fuzzy
 msgid "Bili_near"
 msgstr "双線形"
 
-#: plug-ins/common/sinus.c:1988
+#: plug-ins/common/sinus.c:1987
 #, fuzzy
 msgid "Sin_usoidal"
 msgstr "波状"
 
-#: plug-ins/common/sinus.c:2000
+#: plug-ins/common/sinus.c:1999
 #, fuzzy
 msgid "_Exponent:"
 msgstr "ベキ指数"
 
-#: plug-ins/common/sinus.c:2010
+#: plug-ins/common/sinus.c:2009
 #, fuzzy
 msgid "_Blend"
 msgstr "混色"
@@ -6219,7 +6223,7 @@ msgid "Smooth Palette"
 msgstr "滑らかなパレット"
 
 #: plug-ins/common/smooth_palette.c:449 plug-ins/common/tile.c:431
-#: plug-ins/imagemap/imap_cmd_guides.c:178
+#: plug-ins/imagemap/imap_cmd_guides.c:173
 #: plug-ins/imagemap/imap_rectangle.c:408
 #, fuzzy
 msgid "_Height:"
@@ -6299,167 +6303,167 @@ msgstr "ソーベル輪郭を抽出しています..."
 
 #. don't translate '<Image>', it's a special
 #. * keyword for the gtk toolkit
-#: plug-ins/common/sparkle.c:191
+#: plug-ins/common/sparkle.c:192
 msgid "<Image>/Filters/Light Effects/Sparkle..."
 msgstr "<Image>/フィルタ/ライト効果/きらめき..."
 
-#: plug-ins/common/sparkle.c:295
+#: plug-ins/common/sparkle.c:296
 msgid "Sparkling..."
 msgstr "きらめかせています..."
 
-#: plug-ins/common/sparkle.c:344
+#: plug-ins/common/sparkle.c:345
 msgid "Sparkle"
 msgstr "きらめき"
 
-#: plug-ins/common/sparkle.c:383
+#: plug-ins/common/sparkle.c:384
 #, fuzzy
 msgid "Luminosity _Threshold:"
 msgstr "光度閾値:"
 
-#: plug-ins/common/sparkle.c:386
+#: plug-ins/common/sparkle.c:387
 msgid "Adjust the Luminosity Threshold"
 msgstr "光度閾値を調節する"
 
-#: plug-ins/common/sparkle.c:393
+#: plug-ins/common/sparkle.c:394
 #, fuzzy
 msgid "F_lare Intensity:"
 msgstr "フレア強度:"
 
-#: plug-ins/common/sparkle.c:396
+#: plug-ins/common/sparkle.c:397
 msgid "Adjust the Flare Intensity"
 msgstr "フレア強度を調節する"
 
-#: plug-ins/common/sparkle.c:403
+#: plug-ins/common/sparkle.c:404
 #, fuzzy
 msgid "_Spike Length:"
 msgstr "尖りの長さ:"
 
-#: plug-ins/common/sparkle.c:406
+#: plug-ins/common/sparkle.c:407
 msgid "Adjust the Spike Length"
 msgstr "尖りの長さを調節する"
 
-#: plug-ins/common/sparkle.c:413
+#: plug-ins/common/sparkle.c:414
 #, fuzzy
 msgid "Sp_ike Points:"
 msgstr "尖りの数:"
 
-#: plug-ins/common/sparkle.c:416
+#: plug-ins/common/sparkle.c:417
 msgid "Adjust the Number of Spikes"
 msgstr "尖りの数を調節する"
 
-#: plug-ins/common/sparkle.c:423
+#: plug-ins/common/sparkle.c:424
 #, fuzzy
 msgid "Spi_ke Angle (-1: Random):"
 msgstr "尖りの角度 (-1: 乱数):"
 
-#: plug-ins/common/sparkle.c:426
+#: plug-ins/common/sparkle.c:427
 msgid "Adjust the Spike Angle (-1 means a Random Angle is choosen)"
 msgstr "尖りの角度を調節する (-1 を指定するとランダムに角度が設定されます)"
 
-#: plug-ins/common/sparkle.c:434
+#: plug-ins/common/sparkle.c:435
 #, fuzzy
 msgid "Spik_e Density:"
 msgstr "尖り密度:"
 
-#: plug-ins/common/sparkle.c:437
+#: plug-ins/common/sparkle.c:438
 msgid "Adjust the Spike Density"
 msgstr "尖りの密度を調節する"
 
-#: plug-ins/common/sparkle.c:444
+#: plug-ins/common/sparkle.c:445
 #, fuzzy
 msgid "Op_acity:"
 msgstr "不透明度:"
 
-#: plug-ins/common/sparkle.c:447
+#: plug-ins/common/sparkle.c:448
 msgid "Adjust the Opacity of the Spikes"
 msgstr "尖りの不透明度を調節する"
 
-#: plug-ins/common/sparkle.c:454
+#: plug-ins/common/sparkle.c:455
 #, fuzzy
 msgid "_Random Hue:"
 msgstr "乱数色相:"
 
-#: plug-ins/common/sparkle.c:457
+#: plug-ins/common/sparkle.c:458
 msgid "Adjust the Value how much the Hue should be changed randomly"
 msgstr "色相をどの程度ランダムに変えるか調節する"
 
-#: plug-ins/common/sparkle.c:465
+#: plug-ins/common/sparkle.c:466
 #, fuzzy
 msgid "Rando_m Saturation:"
 msgstr "乱数彩度:"
 
-#: plug-ins/common/sparkle.c:468
+#: plug-ins/common/sparkle.c:469
 msgid "Adjust the Value how much the Saturation should be changed randomly"
 msgstr "彩度をどの程度ランダムに変えるか調節する"
 
-#: plug-ins/common/sparkle.c:486
+#: plug-ins/common/sparkle.c:487
 #, fuzzy
 msgid "_Preserve Luminosity"
 msgstr "光度を保存する"
 
-#: plug-ins/common/sparkle.c:492
+#: plug-ins/common/sparkle.c:493
 msgid "Should the Luminosity be preserved?"
 msgstr "光度を保存するかどうか"
 
-#: plug-ins/common/sparkle.c:499
+#: plug-ins/common/sparkle.c:500
 #, fuzzy
 msgid "In_verse"
 msgstr "反転"
 
-#: plug-ins/common/sparkle.c:504
+#: plug-ins/common/sparkle.c:505
 msgid "Should an Inverse Effect be done?"
 msgstr "反転効果にするかどうか"
 
-#: plug-ins/common/sparkle.c:510
+#: plug-ins/common/sparkle.c:511
 #, fuzzy
 msgid "A_dd Border"
 msgstr "縁付加"
 
-#: plug-ins/common/sparkle.c:516
+#: plug-ins/common/sparkle.c:517
 msgid "Draw a Border of Spikes around the Image"
 msgstr "尖りの縁を画像につけるかどうか"
 
-#: plug-ins/common/sparkle.c:533
+#: plug-ins/common/sparkle.c:534
 #, fuzzy
 msgid "_Natural Color"
 msgstr "自然色"
 
-#: plug-ins/common/sparkle.c:536
+#: plug-ins/common/sparkle.c:537
 #, fuzzy
 msgid "_Foreground Color"
 msgstr "前景色"
 
-#: plug-ins/common/sparkle.c:539
+#: plug-ins/common/sparkle.c:540
 #, fuzzy
 msgid "_Background Color"
 msgstr "背景色"
 
-#: plug-ins/common/sparkle.c:548
+#: plug-ins/common/sparkle.c:549
 msgid "Use the Color of the Image"
 msgstr "画像の色を使う"
 
-#: plug-ins/common/sparkle.c:549
+#: plug-ins/common/sparkle.c:550
 msgid "Use the Foreground Color"
 msgstr "前景色を使う"
 
-#: plug-ins/common/sparkle.c:550
+#: plug-ins/common/sparkle.c:551
 msgid "Use the Background Color"
 msgstr "背景色を使う"
 
-#: plug-ins/common/spread.c:132
+#: plug-ins/common/spread.c:131
 msgid "<Image>/Filters/Noise/Spread..."
 msgstr "<Image>/フィルタ/ノイズ/拡散..."
 
-#: plug-ins/common/spread.c:211
+#: plug-ins/common/spread.c:210
 msgid "Spreading..."
 msgstr "拡散させています..."
 
-#: plug-ins/common/spread.c:376
+#: plug-ins/common/spread.c:375
 msgid "Spread"
 msgstr "拡散"
 
 #. parameter settings
-#: plug-ins/common/spread.c:393
+#: plug-ins/common/spread.c:392
 msgid "Spread Amount"
 msgstr "拡散量"
 
@@ -6616,6 +6620,10 @@ msgstr "アルファチャンネル閾値: 半透明部分を切り分けてい�
 msgid "Threshold Alpha"
 msgstr "アルファチャンネル閾値"
 
+#: plug-ins/common/threshold_alpha.c:295
+msgid "Threshold:"
+msgstr "閾値:"
+
 #: plug-ins/common/tiff.c:669
 msgid "TIFF Channel"
 msgstr "TIFF チャンネル"
@@ -6649,7 +6657,7 @@ msgstr "JPEG"
 msgid "<Image>/Filters/Map/Tile..."
 msgstr "<Image>/フィルタ/マップ/並べる..."
 
-#: plug-ins/common/tile.c:206 plug-ins/common/tileit.c:341
+#: plug-ins/common/tile.c:206 plug-ins/common/tileit.c:340
 msgid "Tiling..."
 msgstr "並べています..."
 
@@ -6667,62 +6675,62 @@ msgstr "新しい大きさにならべる"
 msgid "C_reate New Image"
 msgstr "新規画像作成"
 
-#: plug-ins/common/tileit.c:239
+#: plug-ins/common/tileit.c:238
 msgid "<Image>/Filters/Map/Small Tiles..."
 msgstr "<Image>/フィルタ/マップ/小さくして並べる..."
 
 #. Get the preview image
 #. Start buildng the dialog up
-#: plug-ins/common/tileit.c:389
+#: plug-ins/common/tileit.c:388
 msgid "TileIt"
 msgstr "それを並べる"
 
 #. Area for buttons etc
-#: plug-ins/common/tileit.c:444
+#: plug-ins/common/tileit.c:443
 msgid "Flipping"
 msgstr "ひっくり返し"
 
-#: plug-ins/common/tileit.c:486
+#: plug-ins/common/tileit.c:485
 msgid "Applied to Tile"
 msgstr "適用するタイル"
 
-#: plug-ins/common/tileit.c:500
+#: plug-ins/common/tileit.c:499
 #, fuzzy
 msgid "A_ll Tiles"
 msgstr "全てのタイル"
 
-#: plug-ins/common/tileit.c:514
+#: plug-ins/common/tileit.c:513
 #, fuzzy
 msgid "Al_ternate Tiles"
 msgstr "一つおきのタイル"
 
-#: plug-ins/common/tileit.c:528
+#: plug-ins/common/tileit.c:527
 #, fuzzy
 msgid "_Explicit Tile"
 msgstr "明示したタイル"
 
-#: plug-ins/common/tileit.c:534
+#: plug-ins/common/tileit.c:533
 #, fuzzy
 msgid "Ro_w:"
 msgstr "列:"
 
-#: plug-ins/common/tileit.c:559
+#: plug-ins/common/tileit.c:557
 #, fuzzy
 msgid "Col_umn:"
 msgstr "行:"
 
-#: plug-ins/common/tileit.c:591
+#: plug-ins/common/tileit.c:588
 #, fuzzy
 msgid "_Apply"
 msgstr "適用"
 
-#: plug-ins/common/tileit.c:616
+#: plug-ins/common/tileit.c:613
 #, fuzzy
 msgid "O_pacity:"
 msgstr "不透明度:"
 
 #. Lower frame saying howmany segments
-#: plug-ins/common/tileit.c:627
+#: plug-ins/common/tileit.c:624
 msgid "Segment Setting"
 msgstr "分割設定"
 
@@ -6887,23 +6895,17 @@ msgstr "単位を保存"
 msgid "Save the currently selected unit before GIMP exits."
 msgstr "GIMP 終了前に現在選択中の単位を保存する."
 
-#: plug-ins/common/unsharp.c:185
+#: plug-ins/common/unsharp.c:186
 msgid "<Image>/Filters/Enhance/Unsharp Mask..."
 msgstr "<Image>/フィルタ/強調/非シャープ化マスク..."
 
-#: plug-ins/common/unsharp.c:396
+#: plug-ins/common/unsharp.c:397
 msgid "Merging..."
 msgstr "混ぜ合わせています..."
 
-#: plug-ins/common/unsharp.c:782
+#: plug-ins/common/unsharp.c:783
 msgid "Unsharp Mask"
 msgstr "非シャープ化マスク"
-
-#: plug-ins/common/unsharp.c:830 plug-ins/common/wind.c:1155
-#: plug-ins/gflare/gflare.c:3093 plug-ins/imagemap/imap_preferences.c:533
-#, fuzzy
-msgid "_Threshold:"
-msgstr "閾値:"
 
 #: plug-ins/common/video.c:49
 #, fuzzy
@@ -6986,98 +6988,98 @@ msgstr "<Image>/フィルタ/色/明度反転"
 msgid "Value Invert..."
 msgstr "明度を伝搬させています..."
 
-#: plug-ins/common/vpropagate.c:163
+#: plug-ins/common/vpropagate.c:192
 msgid "More White (Larger Value)"
 msgstr "より白く (明度大)"
 
-#: plug-ins/common/vpropagate.c:166
+#: plug-ins/common/vpropagate.c:195
 msgid "More Black (Smaller Value)"
 msgstr "より黒く (明度小)"
 
-#: plug-ins/common/vpropagate.c:169
+#: plug-ins/common/vpropagate.c:198
 msgid "Middle Value to Peaks"
 msgstr "中間明度をピークに"
 
-#: plug-ins/common/vpropagate.c:172
+#: plug-ins/common/vpropagate.c:201
 msgid "Foreground to Peaks"
 msgstr "前景をピークに"
 
-#: plug-ins/common/vpropagate.c:175
+#: plug-ins/common/vpropagate.c:204
 msgid "Only Foreground"
 msgstr "前景のみ"
 
-#: plug-ins/common/vpropagate.c:178
+#: plug-ins/common/vpropagate.c:207
 msgid "Only Background"
 msgstr "背景のみ"
 
-#: plug-ins/common/vpropagate.c:181
+#: plug-ins/common/vpropagate.c:210
 msgid "More Opaque"
 msgstr "より不透明に"
 
-#: plug-ins/common/vpropagate.c:184
+#: plug-ins/common/vpropagate.c:213
 msgid "More Transparent"
 msgstr "より透明に"
 
-#: plug-ins/common/vpropagate.c:220
+#: plug-ins/common/vpropagate.c:249
 msgid "<Image>/Filters/Distorts/Value Propagate..."
 msgstr "<Image>/フィルタ/歪み/明度伝搬..."
 
-#: plug-ins/common/vpropagate.c:232
+#: plug-ins/common/vpropagate.c:261
 #, fuzzy
-msgid "<Image>/Filters/Generic/Erode..."
+msgid "<Image>/Filters/Generic/Erode"
 msgstr "<Image>/フィルタ/輪郭抽出/輪郭..."
 
-#: plug-ins/common/vpropagate.c:244
+#: plug-ins/common/vpropagate.c:273
 #, fuzzy
-msgid "<Image>/Filters/Generic/Dilate..."
+msgid "<Image>/Filters/Generic/Dilate"
 msgstr "<Image>/フィルタ/下塗り/Gfig..."
 
-#: plug-ins/common/vpropagate.c:433
+#: plug-ins/common/vpropagate.c:463
 msgid "Value propagating..."
 msgstr "明度を伝搬させています..."
 
-#: plug-ins/common/vpropagate.c:1004
+#: plug-ins/common/vpropagate.c:1034
 msgid "Value Propagate"
 msgstr "明度伝搬"
 
 #. Propagate Mode
-#: plug-ins/common/vpropagate.c:1026
+#: plug-ins/common/vpropagate.c:1056
 msgid "Propagate Mode"
 msgstr "伝搬モード"
 
-#: plug-ins/common/vpropagate.c:1066
+#: plug-ins/common/vpropagate.c:1096
 msgid "Lower Threshold:"
 msgstr "下限:"
 
-#: plug-ins/common/vpropagate.c:1075
+#: plug-ins/common/vpropagate.c:1105
 msgid "Upper Threshold:"
 msgstr "上限:"
 
-#: plug-ins/common/vpropagate.c:1084
+#: plug-ins/common/vpropagate.c:1114
 msgid "Propagating Rate:"
 msgstr "伝搬量:"
 
-#: plug-ins/common/vpropagate.c:1096
+#: plug-ins/common/vpropagate.c:1126
 msgid "To Left"
 msgstr "左へ"
 
-#: plug-ins/common/vpropagate.c:1099
+#: plug-ins/common/vpropagate.c:1129
 msgid "To Right"
 msgstr "右へ"
 
-#: plug-ins/common/vpropagate.c:1102
+#: plug-ins/common/vpropagate.c:1132
 msgid "To Top"
 msgstr "上へ"
 
-#: plug-ins/common/vpropagate.c:1105
+#: plug-ins/common/vpropagate.c:1135
 msgid "To Bottom"
 msgstr "下へ"
 
-#: plug-ins/common/vpropagate.c:1118
+#: plug-ins/common/vpropagate.c:1148
 msgid "Propagating Alpha Channel"
 msgstr "アルファチャンネルを伝搬"
 
-#: plug-ins/common/vpropagate.c:1128
+#: plug-ins/common/vpropagate.c:1158
 msgid "Propagating Value Channel"
 msgstr "明度チャンネルを伝搬"
 
@@ -7639,41 +7641,41 @@ msgstr "説明で検索"
 msgid "_Search:"
 msgstr "検索:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:361
+#: plug-ins/dbbrowser/dbbrowser_utils.c:364
 msgid "In:"
 msgstr "入力:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:409
+#: plug-ins/dbbrowser/dbbrowser_utils.c:412
 msgid "Out:"
 msgstr "出力:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:481
+#: plug-ins/dbbrowser/dbbrowser_utils.c:484
 msgid "Author:"
 msgstr "作者:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:489
+#: plug-ins/dbbrowser/dbbrowser_utils.c:492
 msgid "Date:"
 msgstr "日付:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:497
+#: plug-ins/dbbrowser/dbbrowser_utils.c:500
 msgid "Copyright:"
 msgstr "著作権表示:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:599
+#: plug-ins/dbbrowser/dbbrowser_utils.c:602
 #, fuzzy
 msgid "Searching by name - please wait"
 msgstr "DB ブラウザ (名前で - お待ち下さい)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:622
+#: plug-ins/dbbrowser/dbbrowser_utils.c:625
 #, fuzzy
 msgid "Searching by blurb - please wait"
 msgstr "DB ブラウザ (説明で - お待ち下さい)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:632
+#: plug-ins/dbbrowser/dbbrowser_utils.c:635
 msgid "Searching - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:671
+#: plug-ins/dbbrowser/dbbrowser_utils.c:674
 msgid "No matches"
 msgstr ""
 
@@ -7804,21 +7806,6 @@ msgstr "炎保存"
 msgid "Flame"
 msgstr "炎"
 
-#: plug-ins/flame/flame.c:982
-#, fuzzy
-msgid "_Edit Flame"
-msgstr "炎を編集"
-
-#: plug-ins/flame/flame.c:990
-#, fuzzy
-msgid "_Load Flame"
-msgstr "炎読込"
-
-#: plug-ins/flame/flame.c:998
-#, fuzzy
-msgid "_Save Flame"
-msgstr "炎保存"
-
 #: plug-ins/flame/flame.c:1013
 #, fuzzy
 msgid "_Rendering"
@@ -7937,6 +7924,10 @@ msgstr "ハイライト"
 #: plug-ins/fp/fp_gtk.c:282
 msgid "Windows"
 msgstr "ウィンドウ"
+
+#: plug-ins/fp/fp_gtk.c:304
+msgid "Advanced"
+msgstr "詳細"
 
 #: plug-ins/fp/fp_gtk.c:352
 msgid "Value Variations"
@@ -8222,7 +8213,7 @@ msgstr "描画:"
 
 #. Create selection
 #: plug-ins/gfig/gfig.c:2791 plug-ins/imagemap/imap_selection.c:369
-#: plug-ins/rcm/rcm_dialog.c:712
+#: plug-ins/rcm/rcm_dialog.c:709
 msgid "Selection"
 msgstr "選択"
 
@@ -8249,6 +8240,13 @@ msgstr "透明"
 #: plug-ins/gfig/gfig.c:2833 plug-ins/gfig/gfig.c:3184
 msgid "Foreground"
 msgstr "前景"
+
+#: plug-ins/gfig/gfig.c:2835 plug-ins/gfig/gfig.c:5285
+#: plug-ins/imagemap/imap_cmd_copy.c:59
+#: plug-ins/imagemap/imap_cmd_copy_object.c:55
+#: plug-ins/imagemap/imap_toolbar.c:126
+msgid "Copy"
+msgstr "コピー"
 
 #: plug-ins/gfig/gfig.c:2839
 msgid ""
@@ -8339,6 +8337,10 @@ msgstr "選択種:"
 msgid "Feather"
 msgstr "ぼかす"
 
+#: plug-ins/gfig/gfig.c:3175
+msgid "Radius:"
+msgstr "半径:"
+
 #: plug-ins/gfig/gfig.c:3189
 msgid "Fill Type:"
 msgstr "塗り種:"
@@ -8380,7 +8382,7 @@ msgstr "画像表示"
 msgid "Reload Image"
 msgstr "画像再読み込み"
 
-#: plug-ins/gfig/gfig.c:3304 plug-ins/imagemap/imap_menu.c:364
+#: plug-ins/gfig/gfig.c:3304 plug-ins/imagemap/imap_menu.c:371
 #: plug-ins/imagemap/imap_popup.c:137 plug-ins/imagemap/imap_tools.c:154
 msgid "Rectangle"
 msgstr "矩形"
@@ -8450,10 +8452,19 @@ msgstr "格子間隔"
 msgid "Object"
 msgstr "オブジェクト"
 
+#. Put buttons in
+#: plug-ins/gfig/gfig.c:3537
+msgid "Rescan"
+msgstr "再スキャン"
+
 #: plug-ins/gfig/gfig.c:3542
 #, fuzzy
 msgid "Select folder and rescan Gfig object collection"
 msgstr "ディレクトリを選んで Gfig オブジェクトを再スキャンする"
+
+#: plug-ins/gfig/gfig.c:3548
+msgid "Load"
+msgstr "読み込み"
 
 #: plug-ins/gfig/gfig.c:3553
 msgid "Load a single Gfig object collection"
@@ -8685,150 +8696,135 @@ msgstr "\"%s\" を開けません"
 msgid "error reading GFlare folder \"%s\""
 msgstr "GFlare ディレクトリ \"%s\" 読み込み中にエラー発生"
 
-#: plug-ins/gflare/gflare.c:2524
+#: plug-ins/gflare/gflare.c:2526
 msgid "GFlare"
 msgstr "Gフレア"
 
-#: plug-ins/gflare/gflare.c:2642
-msgid "`Default' is created."
-msgstr "'Default' が作成されました."
-
-#: plug-ins/gflare/gflare.c:2643
-msgid "Default"
-msgstr "デフォルト"
-
-#: plug-ins/gflare/gflare.c:2993
-#, fuzzy
-msgid "Ro_tation:"
-msgstr "回転:"
-
-#: plug-ins/gflare/gflare.c:3005
-#, fuzzy
-msgid "_Hue Rotation:"
-msgstr "色相回転:"
-
-#: plug-ins/gflare/gflare.c:3017
-#, fuzzy
-msgid "Vector _Angle:"
-msgstr "ベクトル角度:"
-
-#: plug-ins/gflare/gflare.c:3029
-#, fuzzy
-msgid "Vector _Length:"
-msgstr "ベクトル長:"
-
-#: plug-ins/gflare/gflare.c:3055
-#, fuzzy
-msgid "A_daptive Supersampling"
-msgstr "適応型スーパーサンプリング"
-
-#: plug-ins/gflare/gflare.c:3081
-#, fuzzy
-msgid "_Max Depth:"
-msgstr "最大深度:"
-
-#: plug-ins/gflare/gflare.c:3098
+#: plug-ins/gflare/gflare.c:2588
 #, fuzzy
 msgid "A_uto Update Preview"
 msgstr "プレビュー自動更新:"
 
-#: plug-ins/gflare/gflare.c:3168
-#, fuzzy
-msgid "_New"
-msgstr "新規"
+#: plug-ins/gflare/gflare.c:2657
+msgid "`Default' is created."
+msgstr "'Default' が作成されました."
 
-#: plug-ins/gflare/gflare.c:3169 plug-ins/imagemap/imap_menu.c:257
-#, fuzzy
-msgid "_Edit"
-msgstr "編集"
+#: plug-ins/gflare/gflare.c:2658
+msgid "Default"
+msgstr "デフォルト"
 
-#: plug-ins/gflare/gflare.c:3170
+#: plug-ins/gflare/gflare.c:3006
 #, fuzzy
-msgid "Co_py"
-msgstr "コピー"
+msgid "Ro_tation:"
+msgstr "回転:"
 
-#: plug-ins/gflare/gflare.c:3171
+#: plug-ins/gflare/gflare.c:3018
 #, fuzzy
-msgid "_Delete"
-msgstr "削除"
+msgid "_Hue Rotation:"
+msgstr "色相回転:"
 
-#: plug-ins/gflare/gflare.c:3222
+#: plug-ins/gflare/gflare.c:3030
+#, fuzzy
+msgid "Vector _Angle:"
+msgstr "ベクトル角度:"
+
+#: plug-ins/gflare/gflare.c:3042
+#, fuzzy
+msgid "Vector _Length:"
+msgstr "ベクトル長:"
+
+#: plug-ins/gflare/gflare.c:3063
+#, fuzzy
+msgid "A_daptive Supersampling"
+msgstr "適応型スーパーサンプリング"
+
+#: plug-ins/gflare/gflare.c:3083
+#, fuzzy
+msgid "_Max Depth:"
+msgstr "最大深度:"
+
+#: plug-ins/gflare/gflare.c:3093
+#, fuzzy
+msgid "_Threshold"
+msgstr "閾値:"
+
+#: plug-ins/gflare/gflare.c:3220
 #, fuzzy
 msgid "S_elector"
 msgstr "選択"
 
-#: plug-ins/gflare/gflare.c:3311
+#: plug-ins/gflare/gflare.c:3309
 msgid "New GFlare"
 msgstr "新規Gフレア"
 
-#: plug-ins/gflare/gflare.c:3314
+#: plug-ins/gflare/gflare.c:3312
 msgid "Enter a Name for the New GFlare:"
 msgstr "新しい Gフレアの名前を入力して下さい:"
 
-#: plug-ins/gflare/gflare.c:3315
+#: plug-ins/gflare/gflare.c:3313
 msgid "untitled"
 msgstr "名称未設定"
 
-#: plug-ins/gflare/gflare.c:3333
+#: plug-ins/gflare/gflare.c:3331
 #, c-format
 msgid "The name '%s' is used already!"
 msgstr "`%s' という名前は既に使用されています!"
 
-#: plug-ins/gflare/gflare.c:3382
+#: plug-ins/gflare/gflare.c:3380
 msgid "Copy GFlare"
 msgstr "コピー Gフレア"
 
-#: plug-ins/gflare/gflare.c:3385
+#: plug-ins/gflare/gflare.c:3383
 msgid "Enter a Name for the Copied GFlare:"
 msgstr "コピーした Gフレアの名前を入力して下さい:"
 
-#: plug-ins/gflare/gflare.c:3406
+#: plug-ins/gflare/gflare.c:3404
 #, c-format
 msgid "The name `%s' is used already!"
 msgstr "`%s' という名前は既に使用されています!"
 
-#: plug-ins/gflare/gflare.c:3432
+#: plug-ins/gflare/gflare.c:3430
 msgid "Cannot delete!! There must be at least one GFlare."
 msgstr "削除できません!! 一つ以上 Gフレアがなくてはなりません."
 
-#: plug-ins/gflare/gflare.c:3442
+#: plug-ins/gflare/gflare.c:3440
 msgid "Delete GFlare"
 msgstr "Gフレア削除"
 
-#: plug-ins/gflare/gflare.c:3499
+#: plug-ins/gflare/gflare.c:3497
 #, c-format
 msgid "not found %s in gflares_list"
 msgstr "%s が gflares_list 中に見付かりません"
 
-#: plug-ins/gflare/gflare.c:3539
+#: plug-ins/gflare/gflare.c:3537
 msgid "GFlare Editor"
 msgstr "Gフレア エディタ"
 
-#: plug-ins/gflare/gflare.c:3547
+#: plug-ins/gflare/gflare.c:3545
 msgid "Rescan Gradients"
 msgstr "グラデーション再読み込み"
 
 #. Glow
-#: plug-ins/gflare/gflare.c:3663
+#: plug-ins/gflare/gflare.c:3661
 msgid "Glow Paint Options"
 msgstr "輝き描画オプション"
 
-#: plug-ins/gflare/gflare.c:3688 plug-ins/gflare/gflare.c:3718
-#: plug-ins/gflare/gflare.c:3748
+#: plug-ins/gflare/gflare.c:3686 plug-ins/gflare/gflare.c:3716
+#: plug-ins/gflare/gflare.c:3746
 msgid "Paint Mode:"
 msgstr "描画モード:"
 
 #. Rays
-#: plug-ins/gflare/gflare.c:3693
+#: plug-ins/gflare/gflare.c:3691
 msgid "Rays Paint Options"
 msgstr "光線描画オプション"
 
 #. Rays
-#: plug-ins/gflare/gflare.c:3723
+#: plug-ins/gflare/gflare.c:3721
 msgid "Second Flares Paint Options"
 msgstr "二次フレア描画オプション"
 
-#: plug-ins/gflare/gflare.c:3755 plug-ins/gimpressionist/general.c:138
+#: plug-ins/gflare/gflare.c:3753 plug-ins/gimpressionist/general.c:138
 #: plug-ins/gimpressionist/general.c:143
 msgid "General"
 msgstr "一般"
@@ -8836,93 +8832,93 @@ msgstr "一般"
 #.
 #. *  Gradient Menus
 #.
-#: plug-ins/gflare/gflare.c:3781 plug-ins/gflare/gflare.c:3889
-#: plug-ins/gflare/gflare.c:4033
+#: plug-ins/gflare/gflare.c:3779 plug-ins/gflare/gflare.c:3887
+#: plug-ins/gflare/gflare.c:4031
 msgid "Gradients"
 msgstr "グラデーション"
 
-#: plug-ins/gflare/gflare.c:3793 plug-ins/gflare/gflare.c:3903
-#: plug-ins/gflare/gflare.c:4045
+#: plug-ins/gflare/gflare.c:3791 plug-ins/gflare/gflare.c:3901
+#: plug-ins/gflare/gflare.c:4043
 msgid "Radial Gradient:"
 msgstr "半径方向グラデーション:"
 
-#: plug-ins/gflare/gflare.c:3797 plug-ins/gflare/gflare.c:3907
+#: plug-ins/gflare/gflare.c:3795 plug-ins/gflare/gflare.c:3905
 msgid "Angular Gradient:"
 msgstr "角度方向グラデーション:"
 
-#: plug-ins/gflare/gflare.c:3801 plug-ins/gflare/gflare.c:3911
+#: plug-ins/gflare/gflare.c:3799 plug-ins/gflare/gflare.c:3909
 msgid "Angular Size Gradient:"
 msgstr "角度方向大きさグラデーション:"
 
-#: plug-ins/gflare/gflare.c:3822 plug-ins/gflare/gflare.c:3932
-#: plug-ins/gflare/gflare.c:4074
+#: plug-ins/gflare/gflare.c:3820 plug-ins/gflare/gflare.c:3930
+#: plug-ins/gflare/gflare.c:4072
 msgid "Size (%):"
 msgstr "大きさ (%):"
 
-#: plug-ins/gflare/gflare.c:3834 plug-ins/gflare/gflare.c:3944
-#: plug-ins/gflare/gflare.c:4086
+#: plug-ins/gflare/gflare.c:3832 plug-ins/gflare/gflare.c:3942
+#: plug-ins/gflare/gflare.c:4084
 msgid "Rotation:"
 msgstr "回転:"
 
-#: plug-ins/gflare/gflare.c:3846 plug-ins/gflare/gflare.c:3957
-#: plug-ins/gflare/gflare.c:4099
+#: plug-ins/gflare/gflare.c:3844 plug-ins/gflare/gflare.c:3955
+#: plug-ins/gflare/gflare.c:4097
 msgid "Hue Rotation:"
 msgstr "色相回転:"
 
-#: plug-ins/gflare/gflare.c:3863
+#: plug-ins/gflare/gflare.c:3861
 msgid "Glow"
 msgstr "輝き"
 
-#: plug-ins/gflare/gflare.c:3969
+#: plug-ins/gflare/gflare.c:3967
 msgid "# of Spikes:"
 msgstr "尖りの数:"
 
-#: plug-ins/gflare/gflare.c:3981
+#: plug-ins/gflare/gflare.c:3979
 msgid "Spike Thickness:"
 msgstr "尖りの太さ:"
 
-#: plug-ins/gflare/gflare.c:3998
+#: plug-ins/gflare/gflare.c:3996
 msgid "Rays"
 msgstr "光線"
 
-#: plug-ins/gflare/gflare.c:4049
+#: plug-ins/gflare/gflare.c:4047
 msgid "Size Factor Gradient:"
 msgstr "大きさ倍率グラデーション:"
 
-#: plug-ins/gflare/gflare.c:4053
+#: plug-ins/gflare/gflare.c:4051
 msgid "Probability Gradient:"
 msgstr "確率グラデーション:"
 
 #.
 #. *	Shape Radio Button Frame
 #.
-#: plug-ins/gflare/gflare.c:4116
+#: plug-ins/gflare/gflare.c:4114
 msgid "Shape of Second Flares"
 msgstr "二次フレアの形状"
 
-#: plug-ins/gflare/gflare.c:4125 plug-ins/imagemap/imap_menu.c:367
+#: plug-ins/gflare/gflare.c:4123 plug-ins/imagemap/imap_menu.c:374
 #: plug-ins/imagemap/imap_popup.c:140 plug-ins/imagemap/imap_tools.c:158
 msgid "Circle"
 msgstr "円"
 
-#: plug-ins/gflare/gflare.c:4141 plug-ins/imagemap/imap_menu.c:369
+#: plug-ins/gflare/gflare.c:4139 plug-ins/imagemap/imap_menu.c:376
 #: plug-ins/imagemap/imap_popup.c:143 plug-ins/imagemap/imap_tools.c:162
 msgid "Polygon"
 msgstr "ポリゴン"
 
-#: plug-ins/gflare/gflare.c:4173
+#: plug-ins/gflare/gflare.c:4171
 msgid "Random Seed:"
 msgstr "乱数種:"
 
-#: plug-ins/gflare/gflare.c:4200
+#: plug-ins/gflare/gflare.c:4198
 msgid "Second Flares"
 msgstr "二次フレア"
 
-#: plug-ins/gflare/gflare.c:4813
+#: plug-ins/gflare/gflare.c:4811
 msgid "none"
 msgstr "なし"
 
-#: plug-ins/gflare/gflare.c:4826
+#: plug-ins/gflare/gflare.c:4824
 #, c-format
 msgid "Not found \"%s\": used \"%s\" instead"
 msgstr "\"%s\" が見つかりません: \"%s\" を使用します"
@@ -9443,6 +9439,14 @@ msgstr "中央寄せ"
 msgid "Focus the brush strokes around the center of the image"
 msgstr "画像の中心周りにブラシストロークを集中させる"
 
+#: plug-ins/gimpressionist/ppmtool.c:498
+#, fuzzy, c-format
+msgid ""
+"GIMPressionist:\n"
+"Failed to save PPM file '%s':\n"
+"%s"
+msgstr "GIMPressionist: 描画対象のみ保存できます!\n"
+
 #: plug-ins/gimpressionist/presets.c:605 plug-ins/gimpressionist/presets.c:610
 msgid "Presets"
 msgstr "プリセット"
@@ -9458,6 +9462,12 @@ msgstr "現在の設定を特定のファイルの保存します"
 #: plug-ins/gimpressionist/presets.c:677
 msgid "Reads the selected Preset into memory"
 msgstr "メモリに選択したプリセットを読み込みます"
+
+#: plug-ins/gimpressionist/presets.c:679
+#: plug-ins/imagemap/imap_cmd_delete.c:58
+#: plug-ins/imagemap/imap_selection.c:183 plug-ins/imagemap/imap_tools.c:172
+msgid "Delete"
+msgstr "削除"
 
 #: plug-ins/gimpressionist/presets.c:685
 msgid "Deletes the selected Preset"
@@ -9630,15 +9640,15 @@ msgstr ""
 "違っています. あなたがこれをバグとして報告する前に慎重に調べて下さい</"
 "small></body></html>"
 
-#: plug-ins/helpbrowser/helpbrowser.c:340 plug-ins/imagemap/imap_main.c:608
+#: plug-ins/helpbrowser/helpbrowser.c:340 plug-ins/imagemap/imap_main.c:609
 msgid "<Untitled>"
 msgstr "<名称未設定>"
 
-#: plug-ins/helpbrowser/helpbrowser.c:585
+#: plug-ins/helpbrowser/helpbrowser.c:587
 msgid "GIMP Help Browser"
 msgstr "GIMP ヘルプブラウザ"
 
-#: plug-ins/helpbrowser/helpbrowser.c:898
+#: plug-ins/helpbrowser/helpbrowser.c:900
 #, c-format
 msgid ""
 "GIMP Help Browser Error.\n"
@@ -9790,19 +9800,19 @@ msgstr "IFS 描画しています (%d/%d)..."
 msgid "Copying IFS to image (%d/%d)..."
 msgstr "IFS を画像にコピーしています (%d/%d)..."
 
-#: plug-ins/imagemap/imap_about.c:47
+#: plug-ins/imagemap/imap_about.c:42
 msgid "Imagemap plug-in 2.0"
 msgstr ""
 
-#: plug-ins/imagemap/imap_about.c:49
-msgid "Copyright(c) 1999 by Maurits Rijk"
+#: plug-ins/imagemap/imap_about.c:44
+msgid "Copyright(c) 1999-2002 by Maurits Rijk"
 msgstr ""
 
-#: plug-ins/imagemap/imap_about.c:50
+#: plug-ins/imagemap/imap_about.c:45
 msgid "lpeek.mrijk@consunet.nl"
 msgstr ""
 
-#: plug-ins/imagemap/imap_about.c:52
+#: plug-ins/imagemap/imap_about.c:47
 msgid "  Released under the GNU General Public License  "
 msgstr ""
 
@@ -9817,8 +9827,8 @@ msgid "Center _x:"
 msgstr "中心 X:"
 
 #: plug-ins/imagemap/imap_circle.c:270 plug-ins/imagemap/imap_circle.c:277
-#: plug-ins/imagemap/imap_circle.c:283 plug-ins/imagemap/imap_grid.c:260
-#: plug-ins/imagemap/imap_grid.c:266 plug-ins/imagemap/imap_polygon.c:446
+#: plug-ins/imagemap/imap_circle.c:283 plug-ins/imagemap/imap_grid.c:255
+#: plug-ins/imagemap/imap_grid.c:261 plug-ins/imagemap/imap_polygon.c:446
 #: plug-ins/imagemap/imap_polygon.c:454 plug-ins/imagemap/imap_rectangle.c:392
 #: plug-ins/imagemap/imap_rectangle.c:399
 #: plug-ins/imagemap/imap_rectangle.c:406
@@ -9876,51 +9886,51 @@ msgstr ""
 "の共通イメージマップ型-コレクション画像をあなたが素早く作成することを\n"
 "可能にします."
 
-#: plug-ins/imagemap/imap_cmd_guides.c:173
+#: plug-ins/imagemap/imap_cmd_guides.c:168
 #, fuzzy
 msgid "_Left Start at:"
 msgstr "左開始位置"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:183
+#: plug-ins/imagemap/imap_cmd_guides.c:178
 #, fuzzy
 msgid "_Top Start at:"
 msgstr "上開始位置"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:188
+#: plug-ins/imagemap/imap_cmd_guides.c:183
 #, fuzzy
-msgid "_Horz. Spacing"
+msgid "_Horz. Spacing:"
 msgstr "水平間隔"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:194
+#: plug-ins/imagemap/imap_cmd_guides.c:189
 #, fuzzy
 msgid "_No. Across:"
 msgstr "横の数"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:200
+#: plug-ins/imagemap/imap_cmd_guides.c:195
 #, fuzzy
 msgid "_Vert. Spacing:"
 msgstr "垂直間隔"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:206
+#: plug-ins/imagemap/imap_cmd_guides.c:201
 #, fuzzy
-msgid "No. _Down"
+msgid "No. _Down:"
 msgstr "縦の数"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:214
+#: plug-ins/imagemap/imap_cmd_guides.c:209
 #, fuzzy
 msgid "Base _URL:"
 msgstr "基準 URL:"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:231
+#: plug-ins/imagemap/imap_cmd_guides.c:226
 #, c-format
 msgid "Image dimensions: %d x %d"
 msgstr "画像寸法: %d x %d"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:236
+#: plug-ins/imagemap/imap_cmd_guides.c:231
 msgid "Resulting Guide Bounds: 0,0 to 0,0 (0 areas)"
 msgstr "ガイド範囲の結果: 0,0 (0 マス)"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:271
+#: plug-ins/imagemap/imap_cmd_guides.c:266
 msgid "Guides"
 msgstr "ガイド"
 
@@ -9984,7 +9994,7 @@ msgstr "非選択"
 msgid "Unselect All"
 msgstr "選択無し"
 
-#: plug-ins/imagemap/imap_default_dialog.c:143
+#: plug-ins/imagemap/imap_default_dialog.c:145
 msgid "Help..."
 msgstr "ヘルプ..."
 
@@ -10107,80 +10117,76 @@ msgstr ""
 msgid "Save Imagemap"
 msgstr "イメージマップ保存"
 
-#: plug-ins/imagemap/imap_file.c:146
-msgid "Error"
-msgstr "エラー"
-
-#: plug-ins/imagemap/imap_grid.c:199
+#: plug-ins/imagemap/imap_grid.c:201
 msgid "Grid Settings"
 msgstr "格子設定"
 
-#: plug-ins/imagemap/imap_grid.c:210
+#: plug-ins/imagemap/imap_grid.c:205
 #, fuzzy
 msgid "_Snap-To Grid Enabled"
 msgstr "格子に付ける"
 
-#: plug-ins/imagemap/imap_grid.c:216
+#: plug-ins/imagemap/imap_grid.c:211
 msgid "Grid Visibility and Type"
 msgstr "格子の表示方法"
 
-#: plug-ins/imagemap/imap_grid.c:223
+#: plug-ins/imagemap/imap_grid.c:218
 #, fuzzy
 msgid "_Hidden"
 msgstr "非表示"
 
-#: plug-ins/imagemap/imap_grid.c:231
+#: plug-ins/imagemap/imap_grid.c:226
 #, fuzzy
 msgid "_Lines"
 msgstr "直線"
 
-#: plug-ins/imagemap/imap_grid.c:240
+#: plug-ins/imagemap/imap_grid.c:235
 #, fuzzy
 msgid "C_rosses"
 msgstr "十字"
 
-#: plug-ins/imagemap/imap_grid.c:248
+#: plug-ins/imagemap/imap_grid.c:243
 msgid "Grid Granularity"
 msgstr "格子間隔"
 
-#: plug-ins/imagemap/imap_grid.c:256
+#: plug-ins/imagemap/imap_grid.c:251
 #, fuzzy
 msgid "_Width"
 msgstr "幅:"
 
-#: plug-ins/imagemap/imap_grid.c:262
+#: plug-ins/imagemap/imap_grid.c:257
 #, fuzzy
 msgid "_Height"
 msgstr "高さ:"
 
-#: plug-ins/imagemap/imap_grid.c:276
+#: plug-ins/imagemap/imap_grid.c:271
 msgid "Grid Offset"
 msgstr "格子オフセット"
 
-#: plug-ins/imagemap/imap_grid.c:284
+#: plug-ins/imagemap/imap_grid.c:279
 #, fuzzy
 msgid "pixels from l_eft"
 msgstr "ピクセル左へ"
 
-#: plug-ins/imagemap/imap_grid.c:289
+#: plug-ins/imagemap/imap_grid.c:284
 #, fuzzy
 msgid "pixels from _top"
 msgstr "ピクセル下へ"
 
-#: plug-ins/imagemap/imap_grid.c:300
+#: plug-ins/imagemap/imap_grid.c:295
 #, fuzzy
 msgid "_Preview"
 msgstr "プレビュー"
 
-#: plug-ins/imagemap/imap_main.c:152
+#: plug-ins/imagemap/imap_main.c:153
 msgid "<Image>/Filters/Web/ImageMap..."
 msgstr "<Image>/フィルタ/Web/イメージマップ..."
 
-#: plug-ins/imagemap/imap_main.c:759
+#: plug-ins/imagemap/imap_main.c:760
 msgid "Data changed"
 msgstr "データが変更されました"
 
-#: plug-ins/imagemap/imap_main.c:763
+#: plug-ins/imagemap/imap_main.c:764
 #, fuzzy
 msgid ""
 "Some data has been changed.\n"
@@ -10189,20 +10195,20 @@ msgstr ""
 "データがいくつか変更されました.\n"
 "このまま作業を続けますか?"
 
-#: plug-ins/imagemap/imap_main.c:972
+#: plug-ins/imagemap/imap_main.c:973
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "ファイル \"%s\" を保存しました."
 
-#: plug-ins/imagemap/imap_main.c:976
+#: plug-ins/imagemap/imap_main.c:977
 msgid "Couldn't save file:"
 msgstr "ファイルが保存できません:"
 
-#: plug-ins/imagemap/imap_main.c:1001
+#: plug-ins/imagemap/imap_main.c:1002
 msgid "Image size changed"
 msgstr "画像サイズが変更されました"
 
-#: plug-ins/imagemap/imap_main.c:1005
+#: plug-ins/imagemap/imap_main.c:1006
 msgid ""
 "Image size has changed.\n"
 "Resize Area's?"
@@ -10210,16 +10216,16 @@ msgstr ""
 "画像サイズが変更されました.\n"
 "領域の大きさを変更しますか?"
 
-#: plug-ins/imagemap/imap_main.c:1036
+#: plug-ins/imagemap/imap_main.c:1037
 msgid "Couldn't read file:"
 msgstr "ファイルが読めません:"
 
-#: plug-ins/imagemap/imap_main.c:1082
+#: plug-ins/imagemap/imap_main.c:1083
 #, c-format
 msgid "URL: %s"
 msgstr "URL: %s"
 
-#: plug-ins/imagemap/imap_menu.c:185
+#: plug-ins/imagemap/imap_menu.c:186
 #, fuzzy
 msgid "_File"
 msgstr "ファイル"
@@ -10234,69 +10240,84 @@ msgstr "アンドゥ %s"
 msgid "_Redo %s"
 msgstr "リドゥ %s"
 
-#: plug-ins/imagemap/imap_menu.c:272
+#: plug-ins/imagemap/imap_menu.c:257
+#, fuzzy
+msgid "_Edit"
+msgstr "編集"
+
+#: plug-ins/imagemap/imap_menu.c:275
 #, fuzzy
 msgid "Select _All"
 msgstr "全てを選択"
 
-#: plug-ins/imagemap/imap_menu.c:279
+#: plug-ins/imagemap/imap_menu.c:278
+#, fuzzy
+msgid "Deselect _All"
+msgstr "全てを選択"
+
+#: plug-ins/imagemap/imap_menu.c:283
 msgid "Edit Area Info..."
 msgstr "領域情報を編集..."
 
-#: plug-ins/imagemap/imap_menu.c:291
+#: plug-ins/imagemap/imap_menu.c:298
 #, fuzzy
 msgid "_View"
 msgstr "表示"
 
-#: plug-ins/imagemap/imap_menu.c:295
+#: plug-ins/imagemap/imap_menu.c:302
 msgid "Area List"
 msgstr "領域一覧"
 
-#: plug-ins/imagemap/imap_menu.c:299
+#: plug-ins/imagemap/imap_menu.c:306
 msgid "Source..."
 msgstr "ソース..."
 
-#: plug-ins/imagemap/imap_menu.c:307 plug-ins/print/gimp_main_window.c:1423
+#: plug-ins/imagemap/imap_menu.c:314 plug-ins/print/gimp_main_window.c:1423
 msgid "Grayscale"
 msgstr "グレースケール"
 
-#: plug-ins/imagemap/imap_menu.c:325
+#: plug-ins/imagemap/imap_menu.c:332
 msgid "Zoom To"
 msgstr "拡大率"
 
-#: plug-ins/imagemap/imap_menu.c:355
+#: plug-ins/imagemap/imap_menu.c:362
 #, fuzzy
 msgid "_Mapping"
 msgstr "マッピング"
 
-#: plug-ins/imagemap/imap_menu.c:358 plug-ins/imagemap/imap_popup.c:134
+#: plug-ins/imagemap/imap_menu.c:365 plug-ins/imagemap/imap_popup.c:134
 msgid "Arrow"
 msgstr "矢印"
 
-#: plug-ins/imagemap/imap_menu.c:361
+#: plug-ins/imagemap/imap_menu.c:368
 #, fuzzy
 msgid "Select Contiguous Region"
 msgstr "領域選択"
 
-#: plug-ins/imagemap/imap_menu.c:379
+#: plug-ins/imagemap/imap_menu.c:386
 #, fuzzy
-msgid "_Goodies"
-msgstr "格子とガイド"
+msgid "_Tools"
+msgstr "道具"
 
-#: plug-ins/imagemap/imap_menu.c:381 plug-ins/imagemap/imap_popup.c:154
+#: plug-ins/imagemap/imap_menu.c:388 plug-ins/imagemap/imap_popup.c:154
 msgid "Grid Settings..."
 msgstr "格子設定..."
 
-#: plug-ins/imagemap/imap_menu.c:383
+#: plug-ins/imagemap/imap_menu.c:391
+#, fuzzy
+msgid "Use GIMP Guides..."
+msgstr "格子とガイド..."
+
+#: plug-ins/imagemap/imap_menu.c:393
 msgid "Create Guides..."
 msgstr "ガイド作成..."
 
-#: plug-ins/imagemap/imap_menu.c:390
+#: plug-ins/imagemap/imap_menu.c:400
 #, fuzzy
 msgid "_Help"
 msgstr "ヘルプ"
 
-#: plug-ins/imagemap/imap_menu.c:393
+#: plug-ins/imagemap/imap_menu.c:403
 msgid "About ImageMap..."
 msgstr "ImageMap プラグインについて..."
 
@@ -10459,35 +10480,35 @@ msgstr "コメント"
 msgid "Settings for this Mapfile"
 msgstr "このマップファイルに対する設定"
 
-#: plug-ins/imagemap/imap_settings.c:108
+#: plug-ins/imagemap/imap_settings.c:101
 msgid "Image name:"
 msgstr "画像名:"
 
-#: plug-ins/imagemap/imap_settings.c:109
+#: plug-ins/imagemap/imap_settings.c:102
 msgid "Select Image File"
 msgstr "画像ファイル選択"
 
-#: plug-ins/imagemap/imap_settings.c:113
+#: plug-ins/imagemap/imap_settings.c:106
 #, fuzzy
 msgid "_Title:"
 msgstr "タイトル:"
 
-#: plug-ins/imagemap/imap_settings.c:115
+#: plug-ins/imagemap/imap_settings.c:108
 #, fuzzy
 msgid "Aut_hor:"
 msgstr "作者:"
 
-#: plug-ins/imagemap/imap_settings.c:117
+#: plug-ins/imagemap/imap_settings.c:110
 #, fuzzy
 msgid "Default _URL:"
 msgstr "デフォルト URL:"
 
-#: plug-ins/imagemap/imap_settings.c:119
+#: plug-ins/imagemap/imap_settings.c:112
 #, fuzzy
 msgid "_Description:"
 msgstr "説明:"
 
-#: plug-ins/imagemap/imap_settings.c:134
+#: plug-ins/imagemap/imap_settings.c:127
 msgid "Map file format"
 msgstr "マップファイル形式"
 
@@ -10863,13 +10884,13 @@ msgstr ""
 msgid "%s -- Print v%s"
 msgstr "%s -- 印刷 v%s"
 
-#: plug-ins/print/gimp_main_window.c:364
+#: plug-ins/print/gimp_main_window.c:361
 msgid ""
 "Save\n"
 "Settings"
 msgstr "設定を保存"
 
-#: plug-ins/print/gimp_main_window.c:367
+#: plug-ins/print/gimp_main_window.c:364
 msgid ""
 "Print and\n"
 "Save Settings"
@@ -11383,64 +11404,64 @@ msgid "To"
 msgstr "終り"
 
 #. Gray: Operation-Mode: two radio buttons
-#: plug-ins/rcm/rcm_dialog.c:512
+#: plug-ins/rcm/rcm_dialog.c:510
 msgid "Treat as this"
 msgstr "この色として扱う"
 
-#: plug-ins/rcm/rcm_dialog.c:524
+#: plug-ins/rcm/rcm_dialog.c:522
 msgid "Change to this"
 msgstr "この色にする"
 
 #. * Gray: What is gray? *
-#: plug-ins/rcm/rcm_dialog.c:537
+#: plug-ins/rcm/rcm_dialog.c:535
 msgid "What is Gray?"
 msgstr "グレーとは?"
 
 #. * Misc: Used unit selection *
-#: plug-ins/rcm/rcm_dialog.c:627
+#: plug-ins/rcm/rcm_dialog.c:624
 msgid "Units"
 msgstr "単位"
 
 #. Misc: Used unit selection: 3 radio buttons
-#: plug-ins/rcm/rcm_dialog.c:636
+#: plug-ins/rcm/rcm_dialog.c:633
 msgid "Radians"
 msgstr "ラジアン"
 
-#: plug-ins/rcm/rcm_dialog.c:648
+#: plug-ins/rcm/rcm_dialog.c:645
 msgid "Radians/Pi"
 msgstr "ラジアン/π"
 
-#: plug-ins/rcm/rcm_dialog.c:660
+#: plug-ins/rcm/rcm_dialog.c:657
 msgid "Degrees"
 msgstr "度"
 
-#: plug-ins/rcm/rcm_dialog.c:682
+#: plug-ins/rcm/rcm_dialog.c:679
 msgid "Continuous update"
 msgstr "逐次更新"
 
-#: plug-ins/rcm/rcm_dialog.c:696
+#: plug-ins/rcm/rcm_dialog.c:693
 msgid "Area:"
 msgstr "領域:"
 
-#: plug-ins/rcm/rcm_dialog.c:703
+#: plug-ins/rcm/rcm_dialog.c:700
 #, fuzzy
 msgid "Entire Layer"
 msgstr "画像全体"
 
-#: plug-ins/rcm/rcm_dialog.c:721
+#: plug-ins/rcm/rcm_dialog.c:718
 msgid "Context"
 msgstr "コンテキスト"
 
 #. Create dialog
-#: plug-ins/rcm/rcm_dialog.c:774
+#: plug-ins/rcm/rcm_dialog.c:771
 msgid "Colormap Rotation"
 msgstr "カラーマップ回転"
 
-#: plug-ins/rcm/rcm_dialog.c:826
+#: plug-ins/rcm/rcm_dialog.c:823
 msgid "Main"
 msgstr "メイン"
 
-#: plug-ins/rcm/rcm_dialog.c:829
+#: plug-ins/rcm/rcm_dialog.c:826
 msgid "Misc"
 msgstr "その他"
 
@@ -11459,25 +11480,9 @@ msgid "No selection to convert"
 msgstr "変換する選択領域がありません"
 
 #: plug-ins/sel2path/sel2path.c:327
-msgid "Sel2Path Advanced Settings"
+#, fuzzy
+msgid "Selection To Path Advanced Settings"
 msgstr "Sel2Path 詳細設定"
-
-#: plug-ins/sel2path/sel2path.c:537
-#, c-format
-msgid "print_spline: strange degree (%d)"
-msgstr "print_spline: 不正な角度 (%d)"
-
-#: plug-ins/sel2path/sel2path.c:546
-msgid "selection_to_path"
-msgstr "選択領域からされたパス"
-
-#: plug-ins/sel2path/sel2path.c:574
-msgid "gimp_image_get_selection failed"
-msgstr "gimp_image_get_selection 失敗"
-
-#: plug-ins/sel2path/sel2path.c:582
-msgid "Internal error. Selection bpp > 1"
-msgstr "内部エラー. 選択領域の bpp > 1"
 
 #: plug-ins/sgi/sgi.c:630
 msgid "Save as SGI"
@@ -11624,6 +11629,109 @@ msgstr "エラー: XJT プロパティファイル %s が読めません"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "エラー: XJT プロパティファイル %s が空です"
+
+#~ msgid "Undo Zoom"
+#~ msgstr "拡大アンドゥ"
+
+#~ msgid "Redo Zoom"
+#~ msgstr "拡大リドゥ"
+
+#~ msgid "Step In"
+#~ msgstr "拡大"
+
+#~ msgid "Step Out"
+#~ msgstr "縮小"
+
+#~ msgid "Antialiasing Options"
+#~ msgstr "アンチエイリアシングオプション"
+
+#~ msgid "Bumpmap Settings"
+#~ msgstr "バンプマップ設定"
+
+#~ msgid "Environment Settings"
+#~ msgstr "環境設定"
+
+#~ msgid "Depth:"
+#~ msgstr "深度:"
+
+#~ msgid "Length:"
+#~ msgstr "長さ:"
+
+#~ msgid "Light"
+#~ msgstr "光源"
+
+#~ msgid "Material"
+#~ msgstr "物質"
+
+#~ msgid "Preview!"
+#~ msgstr "プレビュー!"
+
+#~ msgid "Hue Settings"
+#~ msgstr "色相設定"
+
+#~ msgid "Saturation Settings"
+#~ msgstr "彩度設定"
+
+#~ msgid "Value (Gray Image) Settings"
+#~ msgstr "明度(グレー画像)設定"
+
+#~ msgid "Advanced Settings"
+#~ msgstr "詳細設定"
+
+#~ msgid "Other Parameter Settings"
+#~ msgstr "他のパラメータ設定"
+
+#~ msgid "Misc Operations"
+#~ msgstr "雑多な操作"
+
+#~ msgid "CopyInv"
+#~ msgstr "反転コピー"
+
+#~ msgid "SaveCurve"
+#~ msgstr "カーブ保存"
+
+#~ msgid "Rotate: "
+#~ msgstr "回転: "
+
+#, fuzzy
+#~ msgid "_Edit Flame"
+#~ msgstr "炎を編集"
+
+#, fuzzy
+#~ msgid "_Load Flame"
+#~ msgstr "炎読込"
+
+#, fuzzy
+#~ msgid "_Save Flame"
+#~ msgstr "炎保存"
+
+#, fuzzy
+#~ msgid "_New"
+#~ msgstr "新規"
+
+#, fuzzy
+#~ msgid "Co_py"
+#~ msgstr "コピー"
+
+#, fuzzy
+#~ msgid "_Delete"
+#~ msgstr "削除"
+
+#, fuzzy
+#~ msgid "_Goodies"
+#~ msgstr "格子とガイド"
+
+#~ msgid "print_spline: strange degree (%d)"
+#~ msgstr "print_spline: 不正な角度 (%d)"
+
+#~ msgid "selection_to_path"
+#~ msgstr "選択領域からされたパス"
+
+#~ msgid "gimp_image_get_selection failed"
+#~ msgstr "gimp_image_get_selection 失敗"
+
+#~ msgid "Internal error. Selection bpp > 1"
+#~ msgstr "内部エラー. 選択領域の bpp > 1"
 
 #~ msgid "Repeat:"
 #~ msgstr "繰り返し:"
@@ -12672,9 +12780,6 @@ msgstr "エラー: XJT プロパティファイル %s が空です"
 
 #~ msgid "SrcLayer's Opacity in percent"
 #~ msgstr "％で元レイヤーの不透明度"
-
-#~ msgid "Rotate:"
-#~ msgstr "回転:"
 
 #~ msgid "Rotate SrcLayer (in degree)"
 #~ msgstr "元レイヤーの回転 (角度)"

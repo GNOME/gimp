@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp /gnome-cvs\n"
-"POT-Creation-Date: 2002-08-20 15:07+0200\n"
+"POT-Creation-Date: 2002-10-10 23:16+0200\n"
 "PO-Revision-Date: 2002-08-16 23:01+0200\n"
 "Last-Translator: Andras TIMAR <timar@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
@@ -120,35 +120,35 @@ msgstr ""
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:414
+#: libgimp/gimpexport.c:416
 msgid "Export File"
 msgstr "Fájl exportálása"
-
-#: libgimp/gimpexport.c:419
-msgid "Export"
-msgstr "Exportálás"
 
 #: libgimp/gimpexport.c:421
 msgid "Ignore"
 msgstr "Figyelmen kívül hagy"
 
-#: libgimp/gimpexport.c:438
+#: libgimp/gimpexport.c:427
+msgid "Export"
+msgstr "Exportálás"
+
+#: libgimp/gimpexport.c:453
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
 msgstr "A képet exportálni kellene mentés előtt a következő okból:"
 
 #. the footline
-#: libgimp/gimpexport.c:503
+#: libgimp/gimpexport.c:527
 msgid "The export conversion won't modify your original image."
 msgstr ""
 "Az exportáláshoz szükséges átalakítások nem módosítják az eredeti képet."
 
-#: libgimp/gimpexport.c:571
+#: libgimp/gimpexport.c:595
 msgid "a layer mask"
 msgstr "egy rétegmaszk"
 
-#: libgimp/gimpexport.c:573
+#: libgimp/gimpexport.c:597
 msgid "a channel (saved selection)"
 msgstr "egy csatorna (mentett kijelölés)"
 
@@ -217,20 +217,41 @@ msgstr "_Alapértékek"
 msgid "Visible"
 msgstr "Látható"
 
-#: libgimpwidgets/gimpstock.c:163
-msgid "Transform"
-msgstr "Átalakítás"
+#: libgimpwidgets/gimpstock.c:127
+#, fuzzy
+msgid "_Resize"
+msgstr "_Alapértékek"
 
-#: libgimpwidgets/gimpstock.c:166
-msgid "Rotate"
-msgstr "Forgatás"
-
-#: libgimpwidgets/gimpstock.c:167
-msgid "Scale"
+#: libgimpwidgets/gimpstock.c:128 libgimpwidgets/gimpstock.c:175
+#, fuzzy
+msgid "_Scale"
 msgstr "Átméretezés"
 
-#: libgimpwidgets/gimpstock.c:168
-msgid "Shear"
+#: libgimpwidgets/gimpstock.c:131
+msgid "L_etter Spacing"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:132
+msgid "L_ine Spacing"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:153
+msgid "Crop"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:171
+#, fuzzy
+msgid "_Transform"
+msgstr "Átalakítás"
+
+#: libgimpwidgets/gimpstock.c:174
+#, fuzzy
+msgid "_Rotate"
+msgstr "Forgatás"
+
+#: libgimpwidgets/gimpstock.c:176
+#, fuzzy
+msgid "_Shear"
 msgstr "Nyírás"
 
 #: libgimpwidgets/gimpunitmenu.c:265
@@ -249,7 +270,7 @@ msgstr "Mértékegység"
 msgid "Factor"
 msgstr "Szorzó"
 
-#: libgimpwidgets/gimpwidgets.c:845
+#: libgimpwidgets/gimpwidgets.c:879
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -258,11 +279,11 @@ msgstr ""
 "generálás kiindulópontjaként. Így az adott \"véletlen\" sorozat "
 "megismételhető."
 
-#: libgimpwidgets/gimpwidgets.c:850
+#: libgimpwidgets/gimpwidgets.c:884
 msgid "_Time"
 msgstr "_Idő"
 
-#: libgimpwidgets/gimpwidgets.c:859
+#: libgimpwidgets/gimpwidgets.c:893
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
@@ -270,19 +291,19 @@ msgstr ""
 "A véletlenszám-generálás kiindulópontja a pontos idő, ez garantálja a "
 "megfelelő véletlenséget."
 
-#: libgimpwidgets/gimpwidgets.c:1175
+#: libgimpwidgets/gimpwidgets.c:1219
 msgid "Bytes"
 msgstr "bájt"
 
-#: libgimpwidgets/gimpwidgets.c:1176
+#: libgimpwidgets/gimpwidgets.c:1220
 msgid "KiloBytes"
 msgstr "kilobájt"
 
-#: libgimpwidgets/gimpwidgets.c:1177
+#: libgimpwidgets/gimpwidgets.c:1221
 msgid "MegaBytes"
 msgstr "megabájt"
 
-#: libgimpwidgets/gimpwidgets.c:1178
+#: libgimpwidgets/gimpwidgets.c:1222
 msgid "GigaBytes"
 msgstr "gigabájt"
 

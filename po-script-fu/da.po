@@ -19,7 +19,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu\n"
-"POT-Creation-Date: 2002-08-20 15:18+0200\n"
+"POT-Creation-Date: 2002-10-10 23:19+0200\n"
 "PO-Revision-Date: 2002-06-18 00:20+0200\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -61,56 +61,55 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu evalueringstilstand kan kun startes ikke-interaktivt"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
+#: plug-ins/script-fu/script-fu-scripts.c:1190
 #: plug-ins/script-fu/script-fu-scripts.c:1192
-#: plug-ins/script-fu/script-fu-scripts.c:1195
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1194
-#: plug-ins/script-fu/script-fu-scripts.c:1197
+#: plug-ins/script-fu/script-fu-scripts.c:1200
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1235
+#: plug-ins/script-fu/script-fu-scripts.c:1238
 msgid "About"
 msgstr "Om"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1245
+#: plug-ins/script-fu/script-fu-scripts.c:1248
 msgid "Script Arguments"
 msgstr "Programparametre"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1268
+#: plug-ins/script-fu/script-fu-scripts.c:1271
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1315
+#: plug-ins/script-fu/script-fu-scripts.c:1318
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu-farvevælger"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1398
+#: plug-ins/script-fu/script-fu-scripts.c:1399
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu-filvælger"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1403
+#: plug-ins/script-fu/script-fu-scripts.c:1404
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu-mappevælger"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1438
+#: plug-ins/script-fu/script-fu-scripts.c:1439
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu-mønstervælger"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1445
+#: plug-ins/script-fu/script-fu-scripts.c:1446
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu-farveovergangsvælger"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1453
+#: plug-ins/script-fu/script-fu-scripts.c:1454
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu-penselvælger"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1661
+#: plug-ins/script-fu/script-fu-scripts.c:1662
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -118,30 +117,30 @@ msgstr ""
 "En eller flere af de skrifttyper du har valgt\n"
 "er ugyldige. Tjek venligst indstillingerne.\n"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:481
-#: plug-ins/script-fu/script-fu-scripts.c:1961
+#: plug-ins/dbbrowser/dbbrowser_utils.c:484
+#: plug-ins/script-fu/script-fu-scripts.c:1962
 msgid "Author:"
 msgstr "Udvikler:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:497
-#: plug-ins/script-fu/script-fu-scripts.c:1967
+#: plug-ins/dbbrowser/dbbrowser_utils.c:500
+#: plug-ins/script-fu/script-fu-scripts.c:1968
 msgid "Copyright:"
 msgstr "Ophavsret:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:489
-#: plug-ins/script-fu/script-fu-scripts.c:1973
+#: plug-ins/dbbrowser/dbbrowser_utils.c:492
+#: plug-ins/script-fu/script-fu-scripts.c:1974
 msgid "Date:"
 msgstr "Dato:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1981
+#: plug-ins/script-fu/script-fu-scripts.c:1982
 msgid "Image Types:"
 msgstr "Billedtyper:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2122
+#: plug-ins/script-fu/script-fu-scripts.c:2123
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu-skrifttypevælger"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2192
+#: plug-ins/script-fu/script-fu-scripts.c:2193
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -152,15 +151,15 @@ msgstr ""
 " %s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:568
+#: plug-ins/script-fu/script-fu-server.c:569
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu-tjenesteindstillinger"
 
-#: plug-ins/script-fu/script-fu-server.c:595
+#: plug-ins/script-fu/script-fu-server.c:596
 msgid "Server Port:"
 msgstr "Tjenesteport: "
 
-#: plug-ins/script-fu/script-fu-server.c:601
+#: plug-ins/script-fu/script-fu-server.c:602
 msgid "Server Logfile:"
 msgstr "Tjenestelogfil:"
 
@@ -199,39 +198,39 @@ msgstr "Søg efter _beskrivelse"
 msgid "_Search:"
 msgstr "_Søg:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:340
+#: plug-ins/dbbrowser/dbbrowser_utils.c:343
 msgid "Name:"
 msgstr "Navn:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:349
+#: plug-ins/dbbrowser/dbbrowser_utils.c:352
 msgid "Blurb:"
 msgstr "Beskrivelse:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:361
+#: plug-ins/dbbrowser/dbbrowser_utils.c:364
 msgid "In:"
 msgstr "Ind:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:409
+#: plug-ins/dbbrowser/dbbrowser_utils.c:412
 msgid "Out:"
 msgstr "Ud:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:463
+#: plug-ins/dbbrowser/dbbrowser_utils.c:466
 msgid "Help:"
 msgstr "Hjælp:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:599
+#: plug-ins/dbbrowser/dbbrowser_utils.c:602
 msgid "Searching by name - please wait"
 msgstr "Søger efter navn - vent venligst"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:622
+#: plug-ins/dbbrowser/dbbrowser_utils.c:625
 msgid "Searching by blurb - please wait"
 msgstr "Søger efter beskrivelse - vent venligst"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:632
+#: plug-ins/dbbrowser/dbbrowser_utils.c:635
 msgid "Searching - please wait"
 msgstr "Søger - vent venligst"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:671
+#: plug-ins/dbbrowser/dbbrowser_utils.c:674
 msgid "No matches"
 msgstr "Ingen fundet"
 

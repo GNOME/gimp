@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
-"POT-Creation-Date: 2002-08-31 16:57+0200\n"
+"POT-Creation-Date: 2002-10-10 23:19+0200\n"
 "PO-Revision-Date: 2002-08-31 17:24+0100\n"
 "Last-Translator: Christian Neumair <christian-neumair@web.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -48,85 +48,86 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Der Skript-Fu Auswerte-Modus ermöglicht nur nicht-interaktive Aufrufe"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
+#: plug-ins/script-fu/script-fu-scripts.c:1190
 #: plug-ins/script-fu/script-fu-scripts.c:1192
-#: plug-ins/script-fu/script-fu-scripts.c:1195
 msgid "/Script-Fu/"
 msgstr "/Skript-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1194
-#: plug-ins/script-fu/script-fu-scripts.c:1197
+#: plug-ins/script-fu/script-fu-scripts.c:1200
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Skript-Fu: %s"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1235
+#: plug-ins/script-fu/script-fu-scripts.c:1238
 msgid "About"
 msgstr "Info"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1245
+#: plug-ins/script-fu/script-fu-scripts.c:1248
 msgid "Script Arguments"
 msgstr "Skript-Argumente"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1268
+#: plug-ins/script-fu/script-fu-scripts.c:1271
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1315
+#: plug-ins/script-fu/script-fu-scripts.c:1318
 msgid "Script-Fu Color Selection"
 msgstr "Skript-Fu Farbauswahl"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1398
+#: plug-ins/script-fu/script-fu-scripts.c:1399
 msgid "Script-Fu File Selection"
 msgstr "Skript-Fu Dateiauswahl"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1403
+#: plug-ins/script-fu/script-fu-scripts.c:1404
 msgid "Script-Fu Folder Selection"
 msgstr "Skript-Fu Verzeichnisauswahl"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1438
+#: plug-ins/script-fu/script-fu-scripts.c:1439
 msgid "Script-fu Pattern Selection"
 msgstr "Skript-Fu Musterauswahl"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1445
+#: plug-ins/script-fu/script-fu-scripts.c:1446
 msgid "Script-Fu Gradient Selection"
 msgstr "Skript-Fu Farbverlaufsauswahl"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1453
+#: plug-ins/script-fu/script-fu-scripts.c:1454
 msgid "Script-Fu Brush Selection"
 msgstr "Skript-Fu Pinselauswahl"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1661
-msgid "At least one font you've choosen is invalid.\n"
+#: plug-ins/script-fu/script-fu-scripts.c:1662
+msgid ""
+"At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
-msgstr "Mindestens eine Schriftart, die Sie ausgewählt haben, ist ungültig.\n"
+msgstr ""
+"Mindestens eine Schriftart, die Sie ausgewählt haben, ist ungültig.\n"
 "Bitte überprüfen Sie Ihre Einstellungen.\n"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1961
-#: plug-ins/dbbrowser/dbbrowser_utils.c:481
+#: plug-ins/dbbrowser/dbbrowser_utils.c:484
+#: plug-ins/script-fu/script-fu-scripts.c:1962
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1967
-#: plug-ins/dbbrowser/dbbrowser_utils.c:497
+#: plug-ins/dbbrowser/dbbrowser_utils.c:500
+#: plug-ins/script-fu/script-fu-scripts.c:1968
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1973
-#: plug-ins/dbbrowser/dbbrowser_utils.c:489
+#: plug-ins/dbbrowser/dbbrowser_utils.c:492
+#: plug-ins/script-fu/script-fu-scripts.c:1974
 msgid "Date:"
 msgstr "Datum:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1981
+#: plug-ins/script-fu/script-fu-scripts.c:1982
 msgid "Image Types:"
 msgstr "Bildtypen:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2122
+#: plug-ins/script-fu/script-fu-scripts.c:2123
 msgid "Script-Fu Font Selection"
 msgstr "Skript-Fu Schriftartauswahl"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2192
+#: plug-ins/script-fu/script-fu-scripts.c:2193
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -157,8 +158,7 @@ msgstr "<Toolbox>/Xtns/Skript-Fu/Konsole..."
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
 msgstr "<Toolbox>/Xtns/Skript-Fu/Server..."
 
-#: plug-ins/script-fu/script-fu.c:276
-#: plug-ins/script-fu/script-fu.c:277
+#: plug-ins/script-fu/script-fu.c:276 plug-ins/script-fu/script-fu.c:277
 msgid "Re-read all available scripts"
 msgstr "Alle Skripte neu einlesen"
 
@@ -185,39 +185,39 @@ msgstr "Nach _Beschreibung suchen"
 msgid "_Search:"
 msgstr "_Suche:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:340
+#: plug-ins/dbbrowser/dbbrowser_utils.c:343
 msgid "Name:"
 msgstr "Name:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:349
+#: plug-ins/dbbrowser/dbbrowser_utils.c:352
 msgid "Blurb:"
 msgstr "Beschreibung:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:361
+#: plug-ins/dbbrowser/dbbrowser_utils.c:364
 msgid "In:"
 msgstr "Eingabe:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:409
+#: plug-ins/dbbrowser/dbbrowser_utils.c:412
 msgid "Out:"
 msgstr "Ausgabe:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:463
+#: plug-ins/dbbrowser/dbbrowser_utils.c:466
 msgid "Help:"
 msgstr "Hilfe:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:599
+#: plug-ins/dbbrowser/dbbrowser_utils.c:602
 msgid "Searching by name - please wait"
 msgstr "Suche nach Name läuft - bitte warten"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:622
+#: plug-ins/dbbrowser/dbbrowser_utils.c:625
 msgid "Searching by blurb - please wait"
 msgstr "Suche nach Beschreibung läuft - bitte warten"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:632
+#: plug-ins/dbbrowser/dbbrowser_utils.c:635
 msgid "Searching - please wait"
 msgstr "Suche läuft - bitte warten"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:671
+#: plug-ins/dbbrowser/dbbrowser_utils.c:674
 msgid "No matches"
 msgstr "Keine Treffer"
 
@@ -739,15 +739,18 @@ msgstr "Durchmesser"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Abgeschrägt, gemustert/Schaltfläche..."
+msgstr ""
+"<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Abgeschrägt, gemustert/Schaltfläche..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Abgeschrägt, gemustert/Überschrift..."
+msgstr ""
+"<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Abgeschrägt, gemustert/Überschrift..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Abgeschrägt, gemustert/Horz. Linie..."
+msgstr ""
+"<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Abgeschrägt, gemustert/Horz. Linie..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
@@ -1092,9 +1095,11 @@ msgid "<Image>/Script-Fu/Decor/Coffee Stain..."
 msgstr "<Image>/Skript-Fu/Dekoration/Kaffeeflecken..."
 
 #: plug-ins/script-fu/scripts/coffee.scm.h:2
-msgid "Darken Only\n"
+msgid ""
+"Darken Only\n"
 "(Better, but only for Images with alot of White)"
-msgstr "Dunkle Farbe\n"
+msgstr ""
+"Dunkle Farbe\n"
 "(Besser, aber nur für Bilder mit viel Weiß)"
 
 #: plug-ins/script-fu/scripts/coffee.scm.h:3
@@ -1392,20 +1397,28 @@ msgid "Shadow Color"
 msgstr "Schattenfarbe"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Allgemeine Tube Beschriftung..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
+msgstr ""
+"<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Allgemeine Tube Beschriftung..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Button Label..."
 msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Tube Button Beschriftung"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Tube Sub-Button Beschriftung"
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
+msgstr ""
+"<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Tube Sub-Button Beschriftung"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button Label..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Tube Sub-Sub-Button Beschriftung..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button "
+"Label..."
+msgstr ""
+"<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Tube Sub-Sub-Button "
+"Beschriftung..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Glossy..."
@@ -2264,4 +2277,3 @@ msgstr "<Toolbox>/Xtns/Web-Browser/Plugin Registrierung"
 #: plug-ins/webbrowser/web-browser.scm.h:17
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 msgstr "<Toolbox>/Xtns/Web-Browser/Benutzer FAQ"
-

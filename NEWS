@@ -10,6 +10,7 @@ dubbed GIMP 1.4.
 
 Overview of Changes in GIMP 1.3.9
 =================================
+- Some minor improvements to the text tool [Sven]
 - Started to cleanup DND code [Mitch]
 - Added GimpViewableDialog [Mitch]
 - Improved UI of color adjustment tools [Mitch]

@@ -80,7 +80,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP /gnome-cvs\n"
-"POT-Creation-Date: 2002-09-29 18:33+0200\n"
+"POT-Creation-Date: 2002-10-10 23:12+0200\n"
 "PO-Revision-Date: 2002-09-29 18:33+0200\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -279,7 +279,7 @@ msgstr "<<ugyldig>>"
 
 # denne og følgende er i forbindelse med fortrydelse så det er
 # nødvendigt med navneord 
-#: app/undo.c:3599 app/gui/resize-dialog.c:200
+#: app/gui/resize-dialog.c:200 app/undo.c:3599
 msgid "Scale Image"
 msgstr "Skalering af billede"
 
@@ -295,7 +295,7 @@ msgstr "Konvertering af billede"
 msgid "Crop Image"
 msgstr "Tilskæring af lag"
 
-#: app/undo.c:3603 app/gui/image-commands.c:298
+#: app/gui/image-commands.c:298 app/undo.c:3603
 msgid "Merge Layers"
 msgstr "Forenelse af lag"
 
@@ -311,7 +311,7 @@ msgstr "Hjælpelinje"
 msgid "Layer Properties"
 msgstr "Lagegenskaber"
 
-#: app/undo.c:3607 app/gui/resize-dialog.c:192
+#: app/gui/resize-dialog.c:192 app/undo.c:3607
 msgid "Scale Layer"
 msgstr "Skalering af lag"
 
@@ -371,8 +371,7 @@ msgstr "Parasitfjernelse"
 msgid "Plug-In"
 msgstr "Udvidelsesmodul"
 
-#: app/undo.c:3623 app/gui/palette-import-dialog.c:441
-#: app/pdb/internal_procs.c:124
+#: app/pdb/internal_procs.c:124 app/undo.c:3623
 msgid "Image"
 msgstr "Billede"
 
@@ -380,12 +379,12 @@ msgstr "Billede"
 msgid "Image Mod"
 msgstr "Billedændring"
 
-#: app/undo.c:3625 app/gui/file-new-dialog.c:374
+#: app/gui/file-new-dialog.c:374 app/undo.c:3625
 msgid "Image Type"
 msgstr "Billedtype"
 
 #. Image size frame
-#: app/undo.c:3626 app/gui/file-new-dialog.c:144
+#: app/gui/file-new-dialog.c:144 app/undo.c:3626
 msgid "Image Size"
 msgstr "Billedstørrelse"
 
@@ -393,7 +392,7 @@ msgstr "Billedstørrelse"
 msgid "Resolution Change"
 msgstr "Opløsningsændring"
 
-#: app/undo.c:3630 app/core/gimpchannel.c:505
+#: app/core/gimpchannel.c:505 app/undo.c:3630
 msgid "Selection Mask"
 msgstr "Markeringsmaske"
 
@@ -401,7 +400,7 @@ msgstr "Markeringsmaske"
 msgid "Rename Item"
 msgstr "Omdøbelse af element"
 
-#: app/undo.c:3632 app/gui/layers-commands.c:601 app/gui/layers-commands.c:633
+#: app/gui/layers-commands.c:601 app/gui/layers-commands.c:633 app/undo.c:3632
 msgid "New Layer"
 msgstr "Nyt lag"
 
@@ -413,7 +412,7 @@ msgstr "Sletning af lag"
 msgid "Layer Mod"
 msgstr "Ændring af lag"
 
-#: app/undo.c:3635 app/gui/layers-commands.c:888
+#: app/gui/layers-commands.c:888 app/undo.c:3635
 msgid "Add Layer Mask"
 msgstr "Tilføjelse af lagmaske"
 
@@ -430,8 +429,8 @@ msgstr "Repositionering af lag"
 msgid "Layer Move"
 msgstr "Flytning af lag"
 
-#: app/undo.c:3639 app/gui/channels-commands.c:314
-#: app/gui/channels-commands.c:351
+#: app/gui/channels-commands.c:314 app/gui/channels-commands.c:351
+#: app/undo.c:3639
 msgid "New Channel"
 msgstr "Ny kanal"
 
@@ -925,7 +924,7 @@ msgstr "Ugyldig UTF-8-streng i penselfilen '%s'."
 
 #: app/core/gimpbrush.c:547 app/core/gimpbrushpipe.c:332
 #: app/core/gimpcontext.c:1212 app/core/gimpgradient.c:354
-#: app/core/gimppalette.c:343 app/core/gimppattern.c:346
+#: app/core/gimppalette.c:345 app/core/gimppattern.c:346
 msgid "Unnamed"
 msgstr "Unavngiven"
 
@@ -1083,8 +1082,12 @@ msgstr "%.2f Mb"
 msgid "%.1f MB"
 msgstr "%.1f Mb"
 
-#: app/core/gimpimage.c:1040 app/core/gimppalette-import.c:206
-#: app/core/gimppalette.c:534 app/gui/palette-import-dialog.c:306
+#: app/core/gimpimage-text.c:167
+msgid "Text Layer"
+msgstr "Tekstlag"
+
+#: app/core/gimpimage.c:1040 app/core/gimppalette-import.c:203
+#: app/core/gimppalette.c:536 app/gui/palette-import-dialog.c:598
 #: app/pdb/image_cmds.c:3632 app/widgets/gimpdatafactoryview.c:260
 msgid "Untitled"
 msgstr "Unavngiven"
@@ -1286,12 +1289,12 @@ msgstr "indlæser modul: '%s'\n"
 msgid "skipping module: '%s'\n"
 msgstr "springer over modul: '%s'\n"
 
-#: app/core/gimppalette.c:291
+#: app/core/gimppalette.c:293
 #, c-format
 msgid "Failed to open palette file '%s': %s"
 msgstr "Kunne ikke åbne paletfilen '%s': %s"
 
-#: app/core/gimppalette.c:305
+#: app/core/gimppalette.c:307
 #, c-format
 msgid ""
 "Loading palette '%s':\n"
@@ -1302,7 +1305,7 @@ msgstr ""
 "Ødelagt palet: mangler magisk hoved.\n"
 "Har denne fil behov for at blive konverteret fra DOS?"
 
-#: app/core/gimppalette.c:309
+#: app/core/gimppalette.c:311
 #, c-format
 msgid ""
 "Loading palette '%s':\n"
@@ -1311,8 +1314,8 @@ msgstr ""
 "Indlæser paletten %s:\n"
 "Ødelagt palet: mangler magisk hoved"
 
-#: app/core/gimppalette.c:323 app/core/gimppalette.c:348
-#: app/core/gimppalette.c:377 app/core/gimppalette.c:448
+#: app/core/gimppalette.c:325 app/core/gimppalette.c:350
+#: app/core/gimppalette.c:379 app/core/gimppalette.c:450
 #, c-format
 msgid ""
 "Loading palette '%s':\n"
@@ -1321,12 +1324,12 @@ msgstr ""
 "Indlæser paletten %s:\n"
 "Læsefejl ved linje %d."
 
-#: app/core/gimppalette.c:342
+#: app/core/gimppalette.c:344
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "Ugyldig UTF-8-streng i paletfil '%s'."
 
-#: app/core/gimppalette.c:366
+#: app/core/gimppalette.c:368
 #, c-format
 msgid ""
 "Loading palette '%s':\n"
@@ -1336,7 +1339,7 @@ msgstr ""
 "Ugyldigt antal kolonner på linje %d."
 
 #. maybe we should just abort?
-#: app/core/gimppalette.c:408
+#: app/core/gimppalette.c:410
 #, c-format
 msgid ""
 "Loading palette '%s':\n"
@@ -1345,7 +1348,7 @@ msgstr ""
 "Indlæser paletten %s:\n"
 "Manglende rød komponent på linje %d."
 
-#: app/core/gimppalette.c:415
+#: app/core/gimppalette.c:417
 #, c-format
 msgid ""
 "Loading palette '%s':\n"
@@ -1354,7 +1357,7 @@ msgstr ""
 "Indlæser paletten %s:\n"
 "Manglende grøn komponent på linje %d."
 
-#: app/core/gimppalette.c:422
+#: app/core/gimppalette.c:424
 #, c-format
 msgid ""
 "Loading palette '%s':\n"
@@ -1363,7 +1366,7 @@ msgstr ""
 "Indlæser paletten %s:\n"
 "Manglende blå komponent på linje %d."
 
-#: app/core/gimppalette.c:431
+#: app/core/gimppalette.c:433
 #, c-format
 msgid ""
 "Loading palette '%s':\n"
@@ -1372,7 +1375,7 @@ msgstr ""
 "Indlæser paletten %s:\n"
 "RGB-værdi uden for det gyldige interval på linje %d."
 
-#: app/core/gimppalette.c:486
+#: app/core/gimppalette.c:488
 #, c-format
 msgid ""
 "Cannot save palette '%s':\n"
@@ -1381,7 +1384,7 @@ msgstr ""
 "Kan ikke gemme paletten '%s'\n"
 "%s"
 
-#: app/core/gimppalette.c:580
+#: app/core/gimppalette.c:582
 msgid "Black"
 msgstr "Sort"
 
@@ -2184,7 +2187,6 @@ msgid "Y:"
 msgstr "y:"
 
 #: app/gui/file-new-dialog.c:324 app/gui/resize-dialog.c:638
-#, c-format
 msgid "pixels/%a"
 msgstr "punkter/%a"
 
@@ -2235,7 +2237,8 @@ msgstr ""
 "<Ctrl> Klik for at gennemtvinge opdatering også selvom miniaturen er "
 "opdateret"
 
-#: app/gui/file-open-dialog.c:256
+#. The preview toggle
+#: app/gui/file-open-dialog.c:256 app/tools/gimpimagemaptool.c:225
 msgid "_Preview"
 msgstr "_Miniature"
 
@@ -4134,55 +4137,71 @@ msgstr "Redigér paletfarve"
 msgid "Edit Color Palette Entry"
 msgstr "Redigér farvepaletselement"
 
-#: app/gui/palette-import-dialog.c:106
-msgid "Select a Gradient to Create a Palette from"
-msgstr "Vælg en farveovergang at oprette en palet fra"
-
-#: app/gui/palette-import-dialog.c:374
+#: app/gui/palette-import-dialog.c:173
 msgid "Import Palette"
 msgstr "Importér palet"
 
-#. The "Import" frame
-#: app/gui/palette-import-dialog.c:383 app/gui/palette-import-dialog.c:396
-msgid "Import"
+#: app/gui/palette-import-dialog.c:175
+#, fuzzy
+msgid "Import a New Palette"
+msgstr "Importér palet"
+
+#: app/gui/palette-import-dialog.c:182
+#, fuzzy
+msgid "_Import"
 msgstr "Importér"
 
-#. The source's name
-#: app/gui/palette-import-dialog.c:412
-msgid "Name:"
-msgstr "Navn:"
+#. The "Source" frame
+#: app/gui/palette-import-dialog.c:208
+#, fuzzy
+msgid "Select Source"
+msgstr "Markér intet"
 
-#: app/gui/palette-import-dialog.c:422
-msgid "new_import"
-msgstr "ny_importering"
-
-#. The source type
-#: app/gui/palette-import-dialog.c:426
-msgid "Source:"
-msgstr "Kilde:"
-
-#: app/gui/palette-import-dialog.c:435
-msgid "Gradient"
+#: app/gui/palette-import-dialog.c:220
+#, fuzzy
+msgid "_Gradient"
 msgstr "Farveovergang"
 
-#. The sample size
-#: app/gui/palette-import-dialog.c:457
-msgid "Sample Size:"
-msgstr "Eksempelstørrelse:"
+#: app/gui/palette-import-dialog.c:232
+#, fuzzy
+msgid "I_mage"
+msgstr "Billede"
 
-#. The interval
-#: app/gui/palette-import-dialog.c:470
-msgid "Interval:"
+#. The "Import" frame
+#: app/gui/palette-import-dialog.c:290
+#, fuzzy
+msgid "Import Options"
+msgstr "Værktøjsindstillinger"
+
+#: app/gui/palette-import-dialog.c:304
+#, fuzzy
+msgid "New Import"
+msgstr "Importér"
+
+#: app/gui/palette-import-dialog.c:306
+#, fuzzy
+msgid "Palette _Name:"
+msgstr "_Navn på lag:"
+
+#: app/gui/palette-import-dialog.c:312
+#, fuzzy
+msgid "N_umber of Colors:"
+msgstr "Maks. antal farver:"
+
+#: app/gui/palette-import-dialog.c:325
+#, fuzzy
+msgid "C_olumns:"
+msgstr "Kolonner:"
+
+#: app/gui/palette-import-dialog.c:337
+#, fuzzy
+msgid "I_nterval:"
 msgstr "Interval:"
 
-#. The preview frame
-#: app/gui/palette-import-dialog.c:491
+#. The "Preview" frame
+#: app/gui/palette-import-dialog.c:349
 msgid "Preview"
 msgstr "Eksempel"
-
-#: app/gui/palette-import-dialog.c:507
-msgid "Select"
-msgstr "Vælg"
 
 #: app/gui/palette-select.c:259
 msgid ""
@@ -6504,7 +6523,6 @@ msgid "Adjustment"
 msgstr "Justering"
 
 #: app/tools/gimpinktool.c:1457 app/tools/gimpinktool.c:1493
-#: app/tools/gimptexttool.c:615
 msgid "Size:"
 msgstr "Størrelse:"
 
@@ -6912,37 +6930,44 @@ msgstr "Udtvær billede"
 msgid "/Tools/Paint Tools/Smudge"
 msgstr "/Værktøjer/Tegning/Udtvær"
 
-#: app/tools/gimptexttool.c:133
+#: app/tools/gimptexttool.c:139
 msgid "Text Tool"
 msgstr "Tekstværktøj"
 
-#: app/tools/gimptexttool.c:134
+#: app/tools/gimptexttool.c:140
 msgid "Add text to the image"
 msgstr "Tilføj tekst til billedet"
 
-#: app/tools/gimptexttool.c:135
+#: app/tools/gimptexttool.c:141
 msgid "/Tools/Text"
 msgstr "/Værktøjer/Tekst"
 
-#: app/tools/gimptexttool.c:334
+#: app/tools/gimptexttool.c:341
 msgid "No font chosen or font invalid."
 msgstr "Ingen skrifttype valgt eller skrifttypen er ugyldig."
 
-#: app/tools/gimptexttool.c:472
-msgid "Text Layer"
-msgstr "Tekstlag"
-
-#: app/tools/gimptexttool.c:611
+#: app/tools/gimptexttool.c:436
 msgid "Font:"
 msgstr "Skrifttype:"
 
-#: app/tools/gimptexttool.c:628
-msgid "Border:"
+#: app/tools/gimptexttool.c:440
+#, fuzzy
+msgid "_Size:"
+msgstr "Størrelse:"
+
+#: app/tools/gimptexttool.c:453
+#, fuzzy
+msgid "_Border:"
 msgstr "Kant:"
 
-#: app/tools/gimptexttool.c:644 app/tools/selection_options.c:428
+#: app/tools/gimptexttool.c:469 app/tools/selection_options.c:428
 msgid "Unit:"
 msgstr "Enhed:"
+
+#: app/tools/gimptexttool.c:554
+#, fuzzy
+msgid "GIMP Text Editor"
+msgstr "Paletredigering"
 
 #: app/tools/gimpthresholdtool.c:85
 msgid "Threshold"
@@ -7673,6 +7698,24 @@ msgstr "Opret og redigér billeder eller fotografier"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP (unstable)"
 msgstr "Gimp'en (udviklingsversion)"
+
+#~ msgid "Select a Gradient to Create a Palette from"
+#~ msgstr "Vælg en farveovergang at oprette en palet fra"
+
+#~ msgid "Name:"
+#~ msgstr "Navn:"
+
+#~ msgid "new_import"
+#~ msgstr "ny_importering"
+
+#~ msgid "Source:"
+#~ msgstr "Kilde:"
+
+#~ msgid "Sample Size:"
+#~ msgstr "Eksempelstørrelse:"
+
+#~ msgid "Select"
+#~ msgstr "Vælg"
 
 #~ msgid "Replicate segment"
 #~ msgstr "Kopiér segment"

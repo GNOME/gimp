@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"POT-Creation-Date: 2002-08-20 15:07+0200\n"
+"POT-Creation-Date: 2002-10-10 23:16+0200\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
 "Language-Team: Românã <ro@li.org>\n"
@@ -130,14 +130,9 @@ msgstr ""
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:414
+#: libgimp/gimpexport.c:416
 #, fuzzy
 msgid "Export File"
-msgstr "Expunere:"
-
-#: libgimp/gimpexport.c:419
-#, fuzzy
-msgid "Export"
 msgstr "Expunere:"
 
 #: libgimp/gimpexport.c:421
@@ -145,23 +140,28 @@ msgstr "Expunere:"
 msgid "Ignore"
 msgstr "nimic"
 
-#: libgimp/gimpexport.c:438
+#: libgimp/gimpexport.c:427
+#, fuzzy
+msgid "Export"
+msgstr "Expunere:"
+
+#: libgimp/gimpexport.c:453
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
 msgstr ""
 
 #. the footline
-#: libgimp/gimpexport.c:503
+#: libgimp/gimpexport.c:527
 msgid "The export conversion won't modify your original image."
 msgstr ""
 
-#: libgimp/gimpexport.c:571
+#: libgimp/gimpexport.c:595
 #, fuzzy
 msgid "a layer mask"
 msgstr "adauga strat mascã"
 
-#: libgimp/gimpexport.c:573
+#: libgimp/gimpexport.c:597
 #, fuzzy
 msgid "a channel (saved selection)"
 msgstr "/Canal -> Selecþie"
@@ -241,20 +241,43 @@ msgstr "Iniþializeazã"
 msgid "Visible"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:163
-msgid "Transform"
-msgstr "Transformare"
+#: libgimpwidgets/gimpstock.c:127
+#, fuzzy
+msgid "_Resize"
+msgstr "Redimensionare"
 
-#: libgimpwidgets/gimpstock.c:166
-msgid "Rotate"
-msgstr "Rotire"
-
-#: libgimpwidgets/gimpstock.c:167
-msgid "Scale"
+#: libgimpwidgets/gimpstock.c:128 libgimpwidgets/gimpstock.c:175
+#, fuzzy
+msgid "_Scale"
 msgstr "Scalare"
 
-#: libgimpwidgets/gimpstock.c:168
-msgid "Shear"
+#: libgimpwidgets/gimpstock.c:131
+#, fuzzy
+msgid "L_etter Spacing"
+msgstr "Spaþiere:"
+
+#: libgimpwidgets/gimpstock.c:132
+#, fuzzy
+msgid "L_ine Spacing"
+msgstr "Salvare de fiºiere"
+
+#: libgimpwidgets/gimpstock.c:153
+msgid "Crop"
+msgstr "Decupare"
+
+#: libgimpwidgets/gimpstock.c:171
+#, fuzzy
+msgid "_Transform"
+msgstr "Transformare"
+
+#: libgimpwidgets/gimpstock.c:174
+#, fuzzy
+msgid "_Rotate"
+msgstr "Rotire"
+
+#: libgimpwidgets/gimpstock.c:176
+#, fuzzy
+msgid "_Shear"
 msgstr "Decupare"
 
 #: libgimpwidgets/gimpunitmenu.c:265
@@ -276,37 +299,37 @@ msgstr "Unitate de masurã:"
 msgid "Factor"
 msgstr "Panã"
 
-#: libgimpwidgets/gimpwidgets.c:845
+#: libgimpwidgets/gimpwidgets.c:879
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:850
+#: libgimpwidgets/gimpwidgets.c:884
 #, fuzzy
 msgid "_Time"
 msgstr "imagine"
 
-#: libgimpwidgets/gimpwidgets.c:859
+#: libgimpwidgets/gimpwidgets.c:893
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:1175
+#: libgimpwidgets/gimpwidgets.c:1219
 #, fuzzy
 msgid "Bytes"
 msgstr "%d Octeþi"
 
-#: libgimpwidgets/gimpwidgets.c:1176
+#: libgimpwidgets/gimpwidgets.c:1220
 msgid "KiloBytes"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:1177
+#: libgimpwidgets/gimpwidgets.c:1221
 msgid "MegaBytes"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:1178
+#: libgimpwidgets/gimpwidgets.c:1222
 #, fuzzy
 msgid "GigaBytes"
 msgstr "%d Octeþi"
@@ -437,9 +460,6 @@ msgstr "%d Octeþi"
 
 #~ msgid "Mode:"
 #~ msgstr "Mod:"
-
-#~ msgid "Spacing:"
-#~ msgstr "Spaþiere:"
 
 #~ msgid "Sorry, this brush can't be edited."
 #~ msgstr "Îmi pare rãu, aceastã pensulã nu poate fi modificatã"
@@ -2812,9 +2832,6 @@ msgstr "%d Octeþi"
 #~ msgid "Interpolation Type:"
 #~ msgstr "Tip de interpolare:"
 
-#~ msgid "File Saving"
-#~ msgstr "Salvare de fiºiere"
-
 #~ msgid "Always"
 #~ msgstr "Totdeauna"
 
@@ -3940,12 +3957,6 @@ msgstr "%d Octeþi"
 
 #~ msgid "Tool Toggle"
 #~ msgstr "Comutator unelte"
-
-#~ msgid "Crop"
-#~ msgstr "Decupare"
-
-#~ msgid "Resize"
-#~ msgstr "Redimensionare"
 
 #~ msgid "Crop: "
 #~ msgstr "Decupare:"

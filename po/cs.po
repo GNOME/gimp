@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.0\n"
-"POT-Creation-Date: 2002-10-10 05:35+0200\n"
+"POT-Creation-Date: 2002-10-10 23:12+0200\n"
 "PO-Revision-Date: 2002-10-10 16:05+0200\n"
 "Last-Translator: Stanislav Brabec <sbrabec@suse.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -23,10 +23,12 @@ msgstr "GIMP není pro aktuálního uživatele řádně nainstalován\n"
 msgid ""
 "User installation was skipped because the '--nointerface' flag was "
 "encountered\n"
-msgstr "Uživatelská instalace byla přeskočena, protože bylo použito '--nointerface'\n"
+msgstr ""
+"Uživatelská instalace byla přeskočena, protože bylo použito '--nointerface'\n"
 
 #: app/app_procs.c:110
-msgid "To perform user installation, run the GIMP without the '--nointerface' flag\n"
+msgid ""
+"To perform user installation, run the GIMP without the '--nointerface' flag\n"
 msgstr ""
 "Abyste provedli uživatelskou instalaci, spusťte GIMP bez volby '--"
 "nointerface'\n"
@@ -165,8 +167,10 @@ msgid "  --no-mmx                 Do not use MMX routines.\n"
 msgstr "  --no-mmx                 Nepoužije rutiny používající MMX.\n"
 
 #: app/main.c:349
-msgid "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
-msgstr "  --debug-handlers         Povolí ladicí obsluhu nefatálních signálů.\n"
+msgid ""
+"  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
+msgstr ""
+"  --debug-handlers         Povolí ladicí obsluhu nefatálních signálů.\n"
 
 #: app/main.c:350
 msgid "  --display <display>      Use the designated X display.\n"
@@ -174,7 +178,8 @@ msgstr "  --display <displej>      Použije zvolený X displej.\n"
 
 #: app/main.c:351
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
-msgstr "  --system-gimprc <gimprc> Použije alternativní systémový gimprc soubor.\n"
+msgstr ""
+"  --system-gimprc <gimprc> Použije alternativní systémový gimprc soubor.\n"
 
 #: app/main.c:353
 msgid ""
@@ -197,7 +202,7 @@ msgstr "Nelze vrátit %s"
 msgid "<<invalid>>"
 msgstr "<<neplatné>>"
 
-#: app/undo.c:3599 app/gui/resize-dialog.c:200
+#: app/gui/resize-dialog.c:200 app/undo.c:3599
 msgid "Scale Image"
 msgstr "Velikost obrázku"
 
@@ -213,7 +218,7 @@ msgstr "Převést obrázek"
 msgid "Crop Image"
 msgstr "Ořezat obrázek"
 
-#: app/undo.c:3603 app/gui/image-commands.c:298
+#: app/gui/image-commands.c:298 app/undo.c:3603
 msgid "Merge Layers"
 msgstr "Sloučit vrstvy"
 
@@ -229,7 +234,7 @@ msgstr "Vodítko"
 msgid "Layer Properties"
 msgstr "Vlastnosti vrstvy"
 
-#: app/undo.c:3607 app/gui/resize-dialog.c:192
+#: app/gui/resize-dialog.c:192 app/undo.c:3607
 msgid "Scale Layer"
 msgstr "Velikost vrstvy"
 
@@ -289,7 +294,7 @@ msgstr "Odstranění parazita"
 msgid "Plug-In"
 msgstr "Zásuvný modul"
 
-#: app/undo.c:3623 app/pdb/internal_procs.c:124
+#: app/pdb/internal_procs.c:124 app/undo.c:3623
 msgid "Image"
 msgstr "Obrázek"
 
@@ -297,12 +302,12 @@ msgstr "Obrázek"
 msgid "Image Mod"
 msgstr "Změna obrázku"
 
-#: app/undo.c:3625 app/gui/file-new-dialog.c:374
+#: app/gui/file-new-dialog.c:374 app/undo.c:3625
 msgid "Image Type"
 msgstr "Typ obrázku"
 
 #. Image size frame
-#: app/undo.c:3626 app/gui/file-new-dialog.c:144
+#: app/gui/file-new-dialog.c:144 app/undo.c:3626
 msgid "Image Size"
 msgstr "Velikost obrázku"
 
@@ -310,7 +315,7 @@ msgstr "Velikost obrázku"
 msgid "Resolution Change"
 msgstr "Změna rozlišení"
 
-#: app/undo.c:3630 app/core/gimpchannel.c:505
+#: app/core/gimpchannel.c:505 app/undo.c:3630
 msgid "Selection Mask"
 msgstr "Maska výběru"
 
@@ -318,7 +323,7 @@ msgstr "Maska výběru"
 msgid "Rename Item"
 msgstr "Přejmenování položky"
 
-#: app/undo.c:3632 app/gui/layers-commands.c:601 app/gui/layers-commands.c:633
+#: app/gui/layers-commands.c:601 app/gui/layers-commands.c:633 app/undo.c:3632
 msgid "New Layer"
 msgstr "Nová vrstva"
 
@@ -330,7 +335,7 @@ msgstr "Smazat vrstvu"
 msgid "Layer Mod"
 msgstr "Změna vrstvy"
 
-#: app/undo.c:3635 app/gui/layers-commands.c:888
+#: app/gui/layers-commands.c:888 app/undo.c:3635
 msgid "Add Layer Mask"
 msgstr "Přidat masku vrstvy"
 
@@ -346,8 +351,8 @@ msgstr "Převrstvení"
 msgid "Layer Move"
 msgstr "Přesun vrstvy"
 
-#: app/undo.c:3639 app/gui/channels-commands.c:314
-#: app/gui/channels-commands.c:351
+#: app/gui/channels-commands.c:314 app/gui/channels-commands.c:351
+#: app/undo.c:3639
 msgid "New Channel"
 msgstr "Nový kanál"
 
@@ -504,7 +509,9 @@ msgstr "Světla"
 #: app/config/gimpconfig-deserialize.c:391
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
-msgstr "očekávána hodnota 'yes' nebo 'no' pro prvek typu boolean %s, obdržena hodnota '%s'"
+msgstr ""
+"očekávána hodnota 'yes' nebo 'no' pro prvek typu boolean %s, obdržena "
+"hodnota '%s'"
 
 #: app/config/gimpconfig-deserialize.c:447
 #, c-format
@@ -991,6 +998,10 @@ msgstr "%.2f MB"
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f MB"
+
+#: app/core/gimpimage-text.c:167
+msgid "Text Layer"
+msgstr "Textová vrstva"
 
 #: app/core/gimpimage.c:1040 app/core/gimppalette-import.c:203
 #: app/core/gimppalette.c:536 app/gui/palette-import-dialog.c:598
@@ -2089,7 +2100,6 @@ msgid "Y:"
 msgstr "Y:"
 
 #: app/gui/file-new-dialog.c:324 app/gui/resize-dialog.c:638
-#, c-format
 msgid "pixels/%a"
 msgstr "pixelů/%a"
 
@@ -2139,7 +2149,8 @@ msgstr ""
 "Aktualizujte náhled kliknutím\n"
 "Klávesou <Ctrl> vynutíte aktualizaci, i když je náhled aktuální"
 
-#: app/gui/file-open-dialog.c:256
+#. The preview toggle
+#: app/gui/file-open-dialog.c:256 app/tools/gimpimagemaptool.c:225
 msgid "_Preview"
 msgstr "_Náhled"
 
@@ -4042,8 +4053,9 @@ msgid "Import Options"
 msgstr "Volby importu"
 
 #: app/gui/palette-import-dialog.c:304
-msgid "new_import"
-msgstr "nový_import"
+#, fuzzy
+msgid "New Import"
+msgstr "_Importovat"
 
 #: app/gui/palette-import-dialog.c:306
 msgid "Palette _Name:"
@@ -4834,8 +4846,8 @@ msgid ""
 "Your GIMP tips file appears to be missing! There should be a file called '%"
 "s'. Please check your installation."
 msgstr ""
-"Soubor s tipy programu GIMP zřejmě chybí! Měl by to být soubor se jménem '%s'."
-"Prosím zkontrolujte svou instalaci."
+"Soubor s tipy programu GIMP zřejmě chybí! Měl by to být soubor se jménem '%"
+"s'.Prosím zkontrolujte svou instalaci."
 
 #. This is a special string to specify the language identifier to
 #. look for in the gimp-tips.xml file. Please translate the C in it
@@ -5134,7 +5146,8 @@ msgstr ""
 
 #: app/gui/user-install-dialog.c:685
 msgid "Click \"Continue\" to enter the GIMP user installation."
-msgstr "Klepnutím na \"Pokračovat\" započne uživatelská instalace programu GIMP."
+msgstr ""
+"Klepnutím na \"Pokračovat\" započne uživatelská instalace programu GIMP."
 
 #: app/gui/user-install-dialog.c:689
 msgid ""
@@ -6739,37 +6752,42 @@ msgstr "Poskvrnění obrázku"
 msgid "/Tools/Paint Tools/Smudge"
 msgstr "/Nástroje/Nástroje kreslení/Šmouha"
 
-#: app/tools/gimptexttool.c:134
+#: app/tools/gimptexttool.c:139
 msgid "Text Tool"
 msgstr "Textový nástroj"
 
-#: app/tools/gimptexttool.c:135
+#: app/tools/gimptexttool.c:140
 msgid "Add text to the image"
 msgstr "Přidání textu do obrázku"
 
-#: app/tools/gimptexttool.c:136
+#: app/tools/gimptexttool.c:141
 msgid "/Tools/Text"
 msgstr "/Nástroje/Text"
 
-#: app/tools/gimptexttool.c:335
+#: app/tools/gimptexttool.c:341
 msgid "No font chosen or font invalid."
 msgstr "Není vybráno žádné písmo nebo je písmo neplatné."
 
-#: app/tools/gimptexttool.c:418
+#: app/tools/gimptexttool.c:436
 msgid "Font:"
 msgstr "Písmo:"
 
-#: app/tools/gimptexttool.c:422
+#: app/tools/gimptexttool.c:440
 msgid "_Size:"
 msgstr "Veliko_st:"
 
-#: app/tools/gimptexttool.c:435
+#: app/tools/gimptexttool.c:453
 msgid "_Border:"
 msgstr "O_bvod:"
 
-#: app/tools/gimptexttool.c:451 app/tools/selection_options.c:428
+#: app/tools/gimptexttool.c:469 app/tools/selection_options.c:428
 msgid "Unit:"
 msgstr "Jednotky:"
+
+#: app/tools/gimptexttool.c:554
+#, fuzzy
+msgid "GIMP Text Editor"
+msgstr "Editor palety"
 
 #: app/tools/gimpthresholdtool.c:85
 msgid "Threshold"
@@ -7494,6 +7512,9 @@ msgstr "Vytváření a úpravy obrázků a fotografií"
 msgid "The GIMP (unstable)"
 msgstr "GIMP (nestabilní)"
 
+#~ msgid "new_import"
+#~ msgstr "nový_import"
+
 #~ msgid "Replicate segment"
 #~ msgstr "Replikovat segment"
 
@@ -7547,9 +7568,6 @@ msgstr "GIMP (nestabilní)"
 
 #~ msgid "Load/Save Levels"
 #~ msgstr "Načíst/Zapsat úrovně"
-
-#~ msgid "Text Layer"
-#~ msgstr "Textová vrstva"
 
 #~ msgid "Color Selection"
 #~ msgstr "Výběr barvy"
@@ -8092,4 +8110,3 @@ msgstr "GIMP (nestabilní)"
 
 #~ msgid "Shearing"
 #~ msgstr "Naklápění"
-

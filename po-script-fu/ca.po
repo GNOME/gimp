@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.2.3\n"
-"POT-Creation-Date: 2002-08-20 15:18+0200\n"
+"POT-Creation-Date: 2002-10-10 23:19+0200\n"
 "PO-Revision-Date: 2001-10-28 01:08+0200\n"
 "Last-Translator: Softcatalà <tradgnome@softcatala.org>\n"
 "Language-Team: Catalan\n"
@@ -49,57 +49,56 @@ msgstr ""
 "El mode d'avaluació de l'Script-Fu només permet la invocació no interactiva"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
+#: plug-ins/script-fu/script-fu-scripts.c:1190
 #: plug-ins/script-fu/script-fu-scripts.c:1192
-#: plug-ins/script-fu/script-fu-scripts.c:1195
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1194
-#: plug-ins/script-fu/script-fu-scripts.c:1197
+#: plug-ins/script-fu/script-fu-scripts.c:1200
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1235
+#: plug-ins/script-fu/script-fu-scripts.c:1238
 msgid "About"
 msgstr "Quant a..."
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1245
+#: plug-ins/script-fu/script-fu-scripts.c:1248
 msgid "Script Arguments"
 msgstr "Arguments de la seqüència"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1268
+#: plug-ins/script-fu/script-fu-scripts.c:1271
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1315
+#: plug-ins/script-fu/script-fu-scripts.c:1318
 msgid "Script-Fu Color Selection"
 msgstr "Selecció del color de l'Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1398
+#: plug-ins/script-fu/script-fu-scripts.c:1399
 msgid "Script-Fu File Selection"
 msgstr "Selecció del fitxer de l'Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1403
+#: plug-ins/script-fu/script-fu-scripts.c:1404
 #, fuzzy
 msgid "Script-Fu Folder Selection"
 msgstr "Selecció del fitxer de l'Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1438
+#: plug-ins/script-fu/script-fu-scripts.c:1439
 msgid "Script-fu Pattern Selection"
 msgstr "Selecció del patró de l'Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1445
+#: plug-ins/script-fu/script-fu-scripts.c:1446
 msgid "Script-Fu Gradient Selection"
 msgstr "Selecció de la gradació de l'Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1453
+#: plug-ins/script-fu/script-fu-scripts.c:1454
 msgid "Script-Fu Brush Selection"
 msgstr "Selecció del pinzell de l'Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1661
+#: plug-ins/script-fu/script-fu-scripts.c:1662
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -107,30 +106,30 @@ msgstr ""
 "Com a mínim un dels tipus de lletra que heu triat no és vàlid.\n"
 "Si us plau, reviseu els paràmetres.\n"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:481
-#: plug-ins/script-fu/script-fu-scripts.c:1961
+#: plug-ins/dbbrowser/dbbrowser_utils.c:484
+#: plug-ins/script-fu/script-fu-scripts.c:1962
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:497
-#: plug-ins/script-fu/script-fu-scripts.c:1967
+#: plug-ins/dbbrowser/dbbrowser_utils.c:500
+#: plug-ins/script-fu/script-fu-scripts.c:1968
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:489
-#: plug-ins/script-fu/script-fu-scripts.c:1973
+#: plug-ins/dbbrowser/dbbrowser_utils.c:492
+#: plug-ins/script-fu/script-fu-scripts.c:1974
 msgid "Date:"
 msgstr "Data:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1981
+#: plug-ins/script-fu/script-fu-scripts.c:1982
 msgid "Image Types:"
 msgstr "Tipus d'imatge:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2122
+#: plug-ins/script-fu/script-fu-scripts.c:2123
 msgid "Script-Fu Font Selection"
 msgstr "Selecció de tipus de lletra de l'Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2192
+#: plug-ins/script-fu/script-fu-scripts.c:2193
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -141,15 +140,15 @@ msgstr ""
 " %s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:568
+#: plug-ins/script-fu/script-fu-server.c:569
 msgid "Script-Fu Server Options"
 msgstr "Opcions del servidor de l'Script-Fu"
 
-#: plug-ins/script-fu/script-fu-server.c:595
+#: plug-ins/script-fu/script-fu-server.c:596
 msgid "Server Port:"
 msgstr "Port del servidor:"
 
-#: plug-ins/script-fu/script-fu-server.c:601
+#: plug-ins/script-fu/script-fu-server.c:602
 msgid "Server Logfile:"
 msgstr "Fitxer de registre del servidor:"
 
@@ -191,42 +190,42 @@ msgstr "Cerca per anunci de portada"
 msgid "_Search:"
 msgstr "Cerca:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:340
+#: plug-ins/dbbrowser/dbbrowser_utils.c:343
 msgid "Name:"
 msgstr "Nom:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:349
+#: plug-ins/dbbrowser/dbbrowser_utils.c:352
 msgid "Blurb:"
 msgstr "Anunci de portada:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:361
+#: plug-ins/dbbrowser/dbbrowser_utils.c:364
 msgid "In:"
 msgstr "Entrada:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:409
+#: plug-ins/dbbrowser/dbbrowser_utils.c:412
 msgid "Out:"
 msgstr "Sortida:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:463
+#: plug-ins/dbbrowser/dbbrowser_utils.c:466
 msgid "Help:"
 msgstr "Ajuda:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:599
+#: plug-ins/dbbrowser/dbbrowser_utils.c:602
 #, fuzzy
 msgid "Searching by name - please wait"
 msgstr "Navegador de la base de dades (per nom; si us plau, espereu)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:622
+#: plug-ins/dbbrowser/dbbrowser_utils.c:625
 #, fuzzy
 msgid "Searching by blurb - please wait"
 msgstr ""
 "Navegador de la base de dades (per anunci de portada; si us plau, espereu)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:632
+#: plug-ins/dbbrowser/dbbrowser_utils.c:635
 msgid "Searching - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:671
+#: plug-ins/dbbrowser/dbbrowser_utils.c:674
 msgid "No matches"
 msgstr ""
 

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.2.3\n"
-"POT-Creation-Date: 2002-08-20 15:07+0200\n"
+"POT-Creation-Date: 2002-10-10 23:16+0200\n"
 "PO-Revision-Date: 2001-12-04 17:49+0100\n"
 "Last-Translator: Stanislav Brabec <utx@penguin.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -120,34 +120,34 @@ msgstr ""
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:414
+#: libgimp/gimpexport.c:416
 msgid "Export File"
 msgstr "Exportovat soubor"
-
-#: libgimp/gimpexport.c:419
-msgid "Export"
-msgstr "Exportovat"
 
 #: libgimp/gimpexport.c:421
 msgid "Ignore"
 msgstr "Ignorovat"
 
-#: libgimp/gimpexport.c:438
+#: libgimp/gimpexport.c:427
+msgid "Export"
+msgstr "Exportovat"
+
+#: libgimp/gimpexport.c:453
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
 msgstr "Pøed zápisem je tøeba obrázek exportovat z následujících dùvodù:"
 
 #. the footline
-#: libgimp/gimpexport.c:503
+#: libgimp/gimpexport.c:527
 msgid "The export conversion won't modify your original image."
 msgstr "Exportní konverze by nemìla zmìnit pùvodní obrázek."
 
-#: libgimp/gimpexport.c:571
+#: libgimp/gimpexport.c:595
 msgid "a layer mask"
 msgstr "masku vrstvy"
 
-#: libgimp/gimpexport.c:573
+#: libgimp/gimpexport.c:597
 msgid "a channel (saved selection)"
 msgstr "kanál (zapsaný výbìr)"
 
@@ -221,20 +221,36 @@ msgstr ""
 msgid "Visible"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:163
-msgid "Transform"
+#: libgimpwidgets/gimpstock.c:127
+msgid "_Resize"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:166
-msgid "Rotate"
+#: libgimpwidgets/gimpstock.c:128 libgimpwidgets/gimpstock.c:175
+msgid "_Scale"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:167
-msgid "Scale"
+#: libgimpwidgets/gimpstock.c:131
+msgid "L_etter Spacing"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:168
-msgid "Shear"
+#: libgimpwidgets/gimpstock.c:132
+msgid "L_ine Spacing"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:153
+msgid "Crop"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:171
+msgid "_Transform"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:174
+msgid "_Rotate"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:176
+msgid "_Shear"
 msgstr ""
 
 #: libgimpwidgets/gimpunitmenu.c:265
@@ -253,7 +269,7 @@ msgstr "Jednotka"
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:845
+#: libgimpwidgets/gimpwidgets.c:879
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -261,31 +277,31 @@ msgstr ""
 "Pokud tlaèítko \"Èas\" není stisknuto, pou¾ije se této hodnoty pro hnízdo "
 "náhodného generátoru - umo¾òuje to zopakovat zadanou \"náhodnou\" operaci"
 
-#: libgimpwidgets/gimpwidgets.c:850
+#: libgimpwidgets/gimpwidgets.c:884
 #, fuzzy
 msgid "_Time"
 msgstr "Èas"
 
-#: libgimpwidgets/gimpwidgets.c:859
+#: libgimpwidgets/gimpwidgets.c:893
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
 msgstr ""
 "Hnízdo náhodného generátoru z aktuálního èasu - zaruèuje pøimìøenou náhodnost"
 
-#: libgimpwidgets/gimpwidgets.c:1175
+#: libgimpwidgets/gimpwidgets.c:1219
 msgid "Bytes"
 msgstr "bajtù"
 
-#: libgimpwidgets/gimpwidgets.c:1176
+#: libgimpwidgets/gimpwidgets.c:1220
 msgid "KiloBytes"
 msgstr "kilobajtù"
 
-#: libgimpwidgets/gimpwidgets.c:1177
+#: libgimpwidgets/gimpwidgets.c:1221
 msgid "MegaBytes"
 msgstr "megabajtù"
 
-#: libgimpwidgets/gimpwidgets.c:1178
+#: libgimpwidgets/gimpwidgets.c:1222
 #, fuzzy
 msgid "GigaBytes"
 msgstr "megabajtù"

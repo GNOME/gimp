@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.9\n"
-"POT-Creation-Date: 2002-10-10 16:51+0200\n"
+"POT-Creation-Date: 2002-10-10 23:12+0200\n"
 "PO-Revision-Date: 2002-10-10 16:52+0200\n"
 "Last-Translator: Christian Neumair <chris@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -1007,7 +1007,7 @@ msgstr "%.2f MB"
 msgid "%.1f MB"
 msgstr "%.1f MB"
 
-#: app/core/gimpimage-text.c:145
+#: app/core/gimpimage-text.c:167
 msgid "Text Layer"
 msgstr "Textebene"
 
@@ -6778,37 +6778,42 @@ msgstr "Bild verschmieren"
 msgid "/Tools/Paint Tools/Smudge"
 msgstr "/Werkzeuge/Malwerkzeuge/Verschmieren"
 
-#: app/tools/gimptexttool.c:134
+#: app/tools/gimptexttool.c:139
 msgid "Text Tool"
 msgstr "Textwerkzeug"
 
-#: app/tools/gimptexttool.c:135
+#: app/tools/gimptexttool.c:140
 msgid "Add text to the image"
 msgstr "Text zum Bild hinzufügen"
 
-#: app/tools/gimptexttool.c:136
+#: app/tools/gimptexttool.c:141
 msgid "/Tools/Text"
 msgstr "/Werkzeuge/Text"
 
-#: app/tools/gimptexttool.c:335
+#: app/tools/gimptexttool.c:341
 msgid "No font chosen or font invalid."
 msgstr "Keine Schrift gewählt oder ungültige Schrift."
 
-#: app/tools/gimptexttool.c:418
+#: app/tools/gimptexttool.c:436
 msgid "Font:"
 msgstr "Schrift:"
 
-#: app/tools/gimptexttool.c:422
+#: app/tools/gimptexttool.c:440
 msgid "_Size:"
 msgstr "_Größe:"
 
-#: app/tools/gimptexttool.c:435
+#: app/tools/gimptexttool.c:453
 msgid "_Border:"
 msgstr "_Rand:"
 
-#: app/tools/gimptexttool.c:451 app/tools/selection_options.c:428
+#: app/tools/gimptexttool.c:469 app/tools/selection_options.c:428
 msgid "Unit:"
 msgstr "Einheit:"
+
+#: app/tools/gimptexttool.c:554
+#, fuzzy
+msgid "GIMP Text Editor"
+msgstr "Farbpaletteneditor"
 
 #: app/tools/gimpthresholdtool.c:85
 msgid "Threshold"

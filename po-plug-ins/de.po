@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.x\n"
-"POT-Creation-Date: 2002-09-13 12:46+0200\n"
+"POT-Creation-Date: 2002-10-10 23:16+0200\n"
 "PO-Revision-Date: 2002-09-13 12:46+0100\n"
 "Last-Translator: Christian Neumair <chris@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 #: plug-ins/FractalExplorer/Dialogs.c:289
 #: plug-ins/FractalExplorer/Dialogs.c:1392 plug-ins/common/AlienMap.c:1387
 #: plug-ins/common/AlienMap2.c:1367 plug-ins/gfig/gfig.c:3374
-#: plug-ins/imagemap/imap_about.c:38 plug-ins/print/gimp_main_window.c:361
+#: plug-ins/imagemap/imap_about.c:38 plug-ins/print/gimp_main_window.c:358
 #: plug-ins/webbrowser/webbrowser.c:278
 msgid "About"
 msgstr "Info"
@@ -35,7 +35,7 @@ msgstr "Info"
 #: plug-ins/common/mapcolor.c:578 plug-ins/common/max_rgb.c:369
 #: plug-ins/common/nlfilt.c:559 plug-ins/common/noisify.c:508
 #: plug-ins/common/plasma.c:343 plug-ins/common/polar.c:943
-#: plug-ins/common/ps.c:2955 plug-ins/common/sharpen.c:558
+#: plug-ins/common/ps.c:2965 plug-ins/common/sharpen.c:558
 #: plug-ins/common/sinus.c:2112 plug-ins/common/tileit.c:414
 #: plug-ins/common/waves.c:557 plug-ins/common/whirlpinch.c:827
 #: plug-ins/common/wind.c:1028 plug-ins/flame/flame.c:950
@@ -303,8 +303,8 @@ msgstr "Kosinus"
 #: plug-ins/FractalExplorer/Dialogs.c:780
 #: plug-ins/FractalExplorer/Dialogs.c:821 plug-ins/Lighting/lighting_ui.c:564
 #: plug-ins/common/CML_explorer.c:172 plug-ins/common/align_layers.c:443
-#: plug-ins/common/align_layers.c:476 plug-ins/common/ps.c:2727
-#: plug-ins/common/ps.c:2740 plug-ins/common/psp.c:444
+#: plug-ins/common/align_layers.c:476 plug-ins/common/ps.c:2737
+#: plug-ins/common/ps.c:2750 plug-ins/common/psp.c:444
 #: plug-ins/common/tiff.c:1599 plug-ins/fits/fits.c:1030
 msgid "None"
 msgstr "Kein"
@@ -1013,7 +1013,7 @@ msgid "Object Z position in XYZ space"
 msgstr "Z-Koordinate des Objektes im XYZ-Raum"
 
 #. Rotation
-#: plug-ins/MapObject/mapobject_ui.c:1111 plug-ins/common/ps.c:2913
+#: plug-ins/MapObject/mapobject_ui.c:1111 plug-ins/common/ps.c:2923
 msgid "Rotation"
 msgstr "Rotation"
 
@@ -1145,8 +1145,8 @@ msgstr "Zeige/Verberge Vorschau-Drahtgitter"
 #. memory mapped file data
 #. must check file size
 #: plug-ins/bmp/bmpread.c:52 plug-ins/common/CEL.c:263
-#: plug-ins/common/gbr.c:294 plug-ins/common/gih.c:630
-#: plug-ins/common/gifload.c:302 plug-ins/common/hrz.c:332
+#: plug-ins/common/gbr.c:294 plug-ins/common/gifload.c:302
+#: plug-ins/common/gih.c:630 plug-ins/common/hrz.c:332
 #: plug-ins/common/jpeg.c:731 plug-ins/common/pat.c:263
 #: plug-ins/common/pcx.c:298 plug-ins/common/pix.c:328
 #: plug-ins/common/png.c:478 plug-ins/common/png.c:480
@@ -1223,7 +1223,7 @@ msgstr "Kann %s nicht öffnen"
 #: plug-ins/common/pat.c:381 plug-ins/common/pcx.c:544
 #: plug-ins/common/pix.c:515 plug-ins/common/png.c:827
 #: plug-ins/common/png.c:829 plug-ins/common/pnm.c:780
-#: plug-ins/common/ps.c:995 plug-ins/common/sunras.c:522
+#: plug-ins/common/ps.c:996 plug-ins/common/sunras.c:522
 #: plug-ins/common/tga.c:1014 plug-ins/common/tiff.c:1336
 #: plug-ins/common/xbm.c:982 plug-ins/common/xpm.c:598
 #: plug-ins/common/xwd.c:540 plug-ins/fits/fits.c:469 plug-ins/gfli/gfli.c:677
@@ -2424,7 +2424,7 @@ msgid "Colorify"
 msgstr "Einfärben"
 
 #: plug-ins/common/colorify.c:324 plug-ins/common/colortoalpha.c:415
-#: plug-ins/common/ps.c:2711 plug-ins/common/xpm.c:431
+#: plug-ins/common/ps.c:2721 plug-ins/common/xpm.c:431
 #: plug-ins/gimpressionist/color.c:54 plug-ins/gimpressionist/color.c:59
 #: plug-ins/imagemap/imap_menu.c:310 plug-ins/print/gimp_main_window.c:1412
 msgid "Color"
@@ -3275,8 +3275,8 @@ msgid "Limit Line Width"
 msgstr "Beschränke Linienbreite"
 
 #: plug-ins/common/engrave.c:256 plug-ins/common/film.c:1238
-#: plug-ins/common/gtm.c:581 plug-ins/common/ps.c:2676
-#: plug-ins/common/ps.c:2854 plug-ins/print/gimp_main_window.c:1017
+#: plug-ins/common/gtm.c:581 plug-ins/common/ps.c:2686
+#: plug-ins/common/ps.c:2864 plug-ins/print/gimp_main_window.c:1017
 #: plug-ins/print/gimp_main_window.c:1229
 msgid "Height:"
 msgstr "Höhe:"
@@ -4043,8 +4043,8 @@ msgstr "Rand:"
 msgid "The number of pixels in the table border."
 msgstr "Die Anzahl der Pixel im Tabellenrand."
 
-#: plug-ins/common/gtm.c:565 plug-ins/common/ps.c:2667
-#: plug-ins/common/ps.c:2845 plug-ins/print/gimp_main_window.c:1000
+#: plug-ins/common/gtm.c:565 plug-ins/common/ps.c:2677
+#: plug-ins/common/ps.c:2855 plug-ins/print/gimp_main_window.c:1000
 #: plug-ins/print/gimp_main_window.c:1216
 msgid "Width:"
 msgstr "Breite:"
@@ -5063,18 +5063,18 @@ msgstr "Menupfad:"
 
 #. show the name
 #: plug-ins/common/plugindetails.c:357
-#: plug-ins/dbbrowser/dbbrowser_utils.c:340
+#: plug-ins/dbbrowser/dbbrowser_utils.c:343
 msgid "Name:"
 msgstr "Name:"
 
 #. show the description
 #: plug-ins/common/plugindetails.c:379
-#: plug-ins/dbbrowser/dbbrowser_utils.c:349
+#: plug-ins/dbbrowser/dbbrowser_utils.c:352
 msgid "Blurb:"
 msgstr "Beschreibung:"
 
 #: plug-ins/common/plugindetails.c:401
-#: plug-ins/dbbrowser/dbbrowser_utils.c:463
+#: plug-ins/dbbrowser/dbbrowser_utils.c:466
 msgid "Help:"
 msgstr "Hilfe:"
 
@@ -5319,113 +5319,113 @@ msgstr ""
 "Wenn angeklickt, wird das Bild kreisförmig auf ein Rechteck abgebildet. Wenn "
 "nicht, wird das Bild auf einen Kreis abgebildet."
 
-#: plug-ins/common/ps.c:867
+#: plug-ins/common/ps.c:868
 msgid "PS: can't open file for reading"
 msgstr "PS: kann Datei nicht zum Lesen öffnen"
 
-#: plug-ins/common/ps.c:874
+#: plug-ins/common/ps.c:875
 #, c-format
 msgid "Interpreting and Loading %s:"
 msgstr "Interpretiere und lade %s:"
 
-#: plug-ins/common/ps.c:882
+#: plug-ins/common/ps.c:883
 msgid "PS: can't interprete file"
 msgstr "PS: kann Datei nicht interpretieren"
 
-#: plug-ins/common/ps.c:969
+#: plug-ins/common/ps.c:970
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr "Bildern mit Alpha-Kanal können nicht in Postscript gespeichert werden"
 
-#: plug-ins/common/ps.c:980
+#: plug-ins/common/ps.c:981
 msgid "PS: cannot operate on unknown image types"
 msgstr "PS: Kann nicht mit unbekanntem Bildtyp arbeiten"
 
-#: plug-ins/common/ps.c:989
+#: plug-ins/common/ps.c:990
 msgid "PS: can't open file for writing"
 msgstr "PS: Kann Datei nicht zum Lesen öffnen"
 
-#: plug-ins/common/ps.c:2196 plug-ins/common/ps.c:2322
-#: plug-ins/common/ps.c:2466 plug-ins/common/ps.c:2588
+#: plug-ins/common/ps.c:2206 plug-ins/common/ps.c:2332
+#: plug-ins/common/ps.c:2476 plug-ins/common/ps.c:2598
 msgid "write error occured"
 msgstr "Ein Schreibfehler ist aufgetreten"
 
-#: plug-ins/common/ps.c:2613
+#: plug-ins/common/ps.c:2623
 msgid "Load PostScript"
 msgstr "Lade Postscript"
 
 #. Rendering
-#: plug-ins/common/ps.c:2640
+#: plug-ins/common/ps.c:2650
 msgid "Rendering"
 msgstr "Rendere"
 
-#: plug-ins/common/ps.c:2658 plug-ins/print/gimp_main_window.c:1095
+#: plug-ins/common/ps.c:2668 plug-ins/print/gimp_main_window.c:1095
 msgid "Resolution:"
 msgstr "Auflösung:"
 
-#: plug-ins/common/ps.c:2686
+#: plug-ins/common/ps.c:2696
 msgid "Pages:"
 msgstr "Seiten:"
 
-#: plug-ins/common/ps.c:2692
+#: plug-ins/common/ps.c:2702
 msgid "Try Bounding Box"
 msgstr "versuche BoundingBox"
 
 #. Colouring
-#: plug-ins/common/ps.c:2705
+#: plug-ins/common/ps.c:2715
 msgid "Coloring"
 msgstr "Farben"
 
-#: plug-ins/common/ps.c:2709
+#: plug-ins/common/ps.c:2719
 msgid "B/W"
 msgstr "S&W"
 
 #. * Gray *
-#: plug-ins/common/ps.c:2710 plug-ins/rcm/rcm_dialog.c:418
+#: plug-ins/common/ps.c:2720 plug-ins/rcm/rcm_dialog.c:418
 msgid "Gray"
 msgstr "Grau"
 
-#: plug-ins/common/ps.c:2712 plug-ins/fits/fits.c:1018
+#: plug-ins/common/ps.c:2722 plug-ins/fits/fits.c:1018
 msgid "Automatic"
 msgstr "Automatisch"
 
-#: plug-ins/common/ps.c:2722
+#: plug-ins/common/ps.c:2732
 msgid "Text Antialiasing"
 msgstr "Kantenglättung des Textes"
 
-#: plug-ins/common/ps.c:2728 plug-ins/common/ps.c:2741
+#: plug-ins/common/ps.c:2738 plug-ins/common/ps.c:2751
 msgid "Weak"
 msgstr "Schwach"
 
-#: plug-ins/common/ps.c:2729 plug-ins/common/ps.c:2742
+#: plug-ins/common/ps.c:2739 plug-ins/common/ps.c:2752
 msgid "Strong"
 msgstr "Stark"
 
-#: plug-ins/common/ps.c:2735
+#: plug-ins/common/ps.c:2745
 msgid "Graphic Antialiasing"
 msgstr "Kantenglättung der Grafiken"
 
-#: plug-ins/common/ps.c:2797
+#: plug-ins/common/ps.c:2807
 msgid "Save as PostScript"
 msgstr "Speichere als Postscript"
 
 #. Image Size
-#: plug-ins/common/ps.c:2827
+#: plug-ins/common/ps.c:2837
 msgid "Image Size"
 msgstr "Bildgrösse"
 
-#: plug-ins/common/ps.c:2863
+#: plug-ins/common/ps.c:2873
 msgid "X-Offset:"
 msgstr "X-Versatz:"
 
-#: plug-ins/common/ps.c:2872
+#: plug-ins/common/ps.c:2882
 msgid "Y-Offset:"
 msgstr "Y-Versatz:"
 
-#: plug-ins/common/ps.c:2878
+#: plug-ins/common/ps.c:2888
 msgid "Keep Aspect Ratio"
 msgstr "Seitenverhältnis beibehalten"
 
-#: plug-ins/common/ps.c:2884
+#: plug-ins/common/ps.c:2894
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -5434,32 +5434,32 @@ msgstr ""
 "ändern."
 
 #. Unit
-#: plug-ins/common/ps.c:2893
+#: plug-ins/common/ps.c:2903
 msgid "Unit"
 msgstr "Einheit"
 
-#: plug-ins/common/ps.c:2898 plug-ins/print/gimp_main_window.c:1261
+#: plug-ins/common/ps.c:2908 plug-ins/print/gimp_main_window.c:1261
 msgid "Inch"
 msgstr "Zoll"
 
-#: plug-ins/common/ps.c:2901
+#: plug-ins/common/ps.c:2911
 msgid "Millimeter"
 msgstr "Millimeter"
 
 #. Format
-#: plug-ins/common/ps.c:2929
+#: plug-ins/common/ps.c:2939
 msgid "Output"
 msgstr "Ausgabe"
 
-#: plug-ins/common/ps.c:2937
+#: plug-ins/common/ps.c:2947
 msgid "PostScript Level 2"
 msgstr "Postscript Level 2"
 
-#: plug-ins/common/ps.c:2946
+#: plug-ins/common/ps.c:2956
 msgid "Encapsulated PostScript"
 msgstr "Encapsulated PostScript"
 
-#: plug-ins/common/ps.c:2976
+#: plug-ins/common/ps.c:2986
 msgid "Preview Size:"
 msgstr "Grösse der Vorschau:"
 
@@ -5606,7 +5606,7 @@ msgstr "<Image>/Filter/Farben/Abbilden/Ähnlich einfärben..."
 msgid "Sample Colorize"
 msgstr "Ähnlich einfärben"
 
-#: plug-ins/common/sample_colorize.c:1374
+#: plug-ins/common/sample_colorize.c:1371
 msgid "Get Sample Colors"
 msgstr "Farbverlauf ermitteln"
 
@@ -7310,41 +7310,41 @@ msgstr "Nach _Beschreibung suchen"
 msgid "_Search:"
 msgstr "_Suchen:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:361
+#: plug-ins/dbbrowser/dbbrowser_utils.c:364
 msgid "In:"
 msgstr "Eingabe:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:409
+#: plug-ins/dbbrowser/dbbrowser_utils.c:412
 msgid "Out:"
 msgstr "Ausgabe:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:481
+#: plug-ins/dbbrowser/dbbrowser_utils.c:484
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:489
+#: plug-ins/dbbrowser/dbbrowser_utils.c:492
 msgid "Date:"
 msgstr "Datum:"
 
 # Urheberrecht?
-#: plug-ins/dbbrowser/dbbrowser_utils.c:497
+#: plug-ins/dbbrowser/dbbrowser_utils.c:500
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:599
+#: plug-ins/dbbrowser/dbbrowser_utils.c:602
 msgid "Searching by name - please wait"
 msgstr "Nach Name wird gesucht - bitte warten"
 
 # blurb ?
-#: plug-ins/dbbrowser/dbbrowser_utils.c:622
+#: plug-ins/dbbrowser/dbbrowser_utils.c:625
 msgid "Searching by blurb - please wait"
 msgstr "Nach Beschreibung wird gesucht - bitte warten"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:632
+#: plug-ins/dbbrowser/dbbrowser_utils.c:635
 msgid "Searching - please wait"
 msgstr "Suche läuft - bitte warten"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:671
+#: plug-ins/dbbrowser/dbbrowser_utils.c:674
 msgid "No matches"
 msgstr "Keine Treffer"
 
@@ -9347,11 +9347,11 @@ msgstr ""
 msgid "<Untitled>"
 msgstr "<Unbenannt>"
 
-#: plug-ins/helpbrowser/helpbrowser.c:585
+#: plug-ins/helpbrowser/helpbrowser.c:587
 msgid "GIMP Help Browser"
 msgstr "GIMP Hilfe Browser"
 
-#: plug-ins/helpbrowser/helpbrowser.c:898
+#: plug-ins/helpbrowser/helpbrowser.c:900
 #, c-format
 msgid ""
 "GIMP Help Browser Error.\n"
@@ -10527,7 +10527,7 @@ msgstr ""
 msgid "%s -- Print v%s"
 msgstr "%s -- Drucken v%s"
 
-#: plug-ins/print/gimp_main_window.c:364
+#: plug-ins/print/gimp_main_window.c:361
 msgid ""
 "Save\n"
 "Settings"
@@ -10535,7 +10535,7 @@ msgstr ""
 "Einstellungen\n"
 "speichern"
 
-#: plug-ins/print/gimp_main_window.c:367
+#: plug-ins/print/gimp_main_window.c:364
 msgid ""
 "Print and\n"
 "Save Settings"

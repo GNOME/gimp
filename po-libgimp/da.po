@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp /gnome-cvs\n"
-"POT-Creation-Date: 2002-09-03 20:53+0200\n"
+"POT-Creation-Date: 2002-10-10 23:16+0200\n"
 "PO-Revision-Date: 2002-09-03 20:57+0200\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -125,34 +125,34 @@ msgstr ""
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:414
+#: libgimp/gimpexport.c:416
 msgid "Export File"
 msgstr "Eksportér fil"
-
-#: libgimp/gimpexport.c:419
-msgid "Export"
-msgstr "Eksportér"
 
 #: libgimp/gimpexport.c:421
 msgid "Ignore"
 msgstr "Ignorér"
 
-#: libgimp/gimpexport.c:438
+#: libgimp/gimpexport.c:427
+msgid "Export"
+msgstr "Eksportér"
+
+#: libgimp/gimpexport.c:453
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
 msgstr "Af følgende årsager skal billedet eksporteres før det kan gemmes:"
 
 #. the footline
-#: libgimp/gimpexport.c:503
+#: libgimp/gimpexport.c:527
 msgid "The export conversion won't modify your original image."
 msgstr "Eksportkonverteringen vil ikke ændre det oprindelige billede."
 
-#: libgimp/gimpexport.c:571
+#: libgimp/gimpexport.c:595
 msgid "a layer mask"
 msgstr "en lagmaske"
 
-#: libgimp/gimpexport.c:573
+#: libgimp/gimpexport.c:597
 msgid "a channel (saved selection)"
 msgstr "en kanal (gemt markering)"
 
@@ -222,27 +222,40 @@ msgid "Visible"
 msgstr "Synlig"
 
 #: libgimpwidgets/gimpstock.c:127
-msgid "Resize"
+#, fuzzy
+msgid "_Resize"
 msgstr "Ændr størrelse"
 
-#: libgimpwidgets/gimpstock.c:128 libgimpwidgets/gimpstock.c:171
-msgid "Scale"
+#: libgimpwidgets/gimpstock.c:128 libgimpwidgets/gimpstock.c:175
+#, fuzzy
+msgid "_Scale"
 msgstr "Skalér"
 
-#: libgimpwidgets/gimpstock.c:149
+#: libgimpwidgets/gimpstock.c:131
+msgid "L_etter Spacing"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:132
+msgid "L_ine Spacing"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:153
 msgid "Crop"
 msgstr "Beskær"
 
-#: libgimpwidgets/gimpstock.c:167
-msgid "Transform"
+#: libgimpwidgets/gimpstock.c:171
+#, fuzzy
+msgid "_Transform"
 msgstr "Transformér"
 
-#: libgimpwidgets/gimpstock.c:170
-msgid "Rotate"
+#: libgimpwidgets/gimpstock.c:174
+#, fuzzy
+msgid "_Rotate"
 msgstr "Rotér"
 
-#: libgimpwidgets/gimpstock.c:172
-msgid "Shear"
+#: libgimpwidgets/gimpstock.c:176
+#, fuzzy
+msgid "_Shear"
 msgstr "Trapezér"
 
 #: libgimpwidgets/gimpunitmenu.c:265
@@ -261,7 +274,7 @@ msgstr "Enhed"
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:845
+#: libgimpwidgets/gimpwidgets.c:879
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -270,11 +283,11 @@ msgstr ""
 "generatoren af tilfældige tal - dette tillader dig at gentage en given "
 "\"tilfældig\" operation"
 
-#: libgimpwidgets/gimpwidgets.c:850
+#: libgimpwidgets/gimpwidgets.c:884
 msgid "_Time"
 msgstr "_Tid"
 
-#: libgimpwidgets/gimpwidgets.c:859
+#: libgimpwidgets/gimpwidgets.c:893
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
@@ -282,19 +295,19 @@ msgstr ""
 "Start generatoren af tilfældige tal med den aktuelle tid - dette garanterer "
 "en god tilfældighed"
 
-#: libgimpwidgets/gimpwidgets.c:1175
+#: libgimpwidgets/gimpwidgets.c:1219
 msgid "Bytes"
 msgstr "Byte"
 
-#: libgimpwidgets/gimpwidgets.c:1176
+#: libgimpwidgets/gimpwidgets.c:1220
 msgid "KiloBytes"
 msgstr "Kilobyte"
 
-#: libgimpwidgets/gimpwidgets.c:1177
+#: libgimpwidgets/gimpwidgets.c:1221
 msgid "MegaBytes"
 msgstr "Megabyte"
 
-#: libgimpwidgets/gimpwidgets.c:1178
+#: libgimpwidgets/gimpwidgets.c:1222
 msgid "GigaBytes"
 msgstr "Gigabyte"
 

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"POT-Creation-Date: 2002-08-20 15:07+0200\n"
+"POT-Creation-Date: 2002-10-10 23:16+0200\n"
 "PO-Revision-Date: 2002-03-27 23:12+0800\n"
 "Last-Translator: Xie Yuheng <phycommusyee@263.net>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -121,34 +121,34 @@ msgstr ""
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:414
+#: libgimp/gimpexport.c:416
 msgid "Export File"
 msgstr "导出文件"
-
-#: libgimp/gimpexport.c:419
-msgid "Export"
-msgstr "导出"
 
 #: libgimp/gimpexport.c:421
 msgid "Ignore"
 msgstr "忽略"
 
-#: libgimp/gimpexport.c:438
+#: libgimp/gimpexport.c:427
+msgid "Export"
+msgstr "导出"
+
+#: libgimp/gimpexport.c:453
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
 msgstr "你的图像在保存之前应该先进行导出，因为："
 
 #. the footline
-#: libgimp/gimpexport.c:503
+#: libgimp/gimpexport.c:527
 msgid "The export conversion won't modify your original image."
 msgstr "导出转换不会改变你原来的图像。"
 
-#: libgimp/gimpexport.c:571
+#: libgimp/gimpexport.c:595
 msgid "a layer mask"
 msgstr ""
 
-#: libgimp/gimpexport.c:573
+#: libgimp/gimpexport.c:597
 msgid "a channel (saved selection)"
 msgstr "通道(已保存的选择)"
 
@@ -217,20 +217,41 @@ msgstr "重置(_R)"
 msgid "Visible"
 msgstr "可见"
 
-#: libgimpwidgets/gimpstock.c:163
-msgid "Transform"
-msgstr "变换"
+#: libgimpwidgets/gimpstock.c:127
+#, fuzzy
+msgid "_Resize"
+msgstr "重置(_R)"
 
-#: libgimpwidgets/gimpstock.c:166
-msgid "Rotate"
-msgstr "旋转"
-
-#: libgimpwidgets/gimpstock.c:167
-msgid "Scale"
+#: libgimpwidgets/gimpstock.c:128 libgimpwidgets/gimpstock.c:175
+#, fuzzy
+msgid "_Scale"
 msgstr "缩放"
 
-#: libgimpwidgets/gimpstock.c:168
-msgid "Shear"
+#: libgimpwidgets/gimpstock.c:131
+msgid "L_etter Spacing"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:132
+msgid "L_ine Spacing"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:153
+msgid "Crop"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:171
+#, fuzzy
+msgid "_Transform"
+msgstr "变换"
+
+#: libgimpwidgets/gimpstock.c:174
+#, fuzzy
+msgid "_Rotate"
+msgstr "旋转"
+
+#: libgimpwidgets/gimpstock.c:176
+#, fuzzy
+msgid "_Shear"
 msgstr "剪取"
 
 #: libgimpwidgets/gimpunitmenu.c:265
@@ -249,7 +270,7 @@ msgstr "单位"
 msgid "Factor"
 msgstr "因子"
 
-#: libgimpwidgets/gimpwidgets.c:845
+#: libgimpwidgets/gimpwidgets.c:879
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -257,30 +278,30 @@ msgstr ""
 "如果“时间”按钮没有按下，将使用这个值作为随机数生成种子 - 这将允许你重复一个指"
 "定的“随机”操作"
 
-#: libgimpwidgets/gimpwidgets.c:850
+#: libgimpwidgets/gimpwidgets.c:884
 #, fuzzy
 msgid "_Time"
 msgstr "时间"
 
-#: libgimpwidgets/gimpwidgets.c:859
+#: libgimpwidgets/gimpwidgets.c:893
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
 msgstr "以当前时间作为随机数生成器的种子 - 这保证了一定程度的随机性"
 
-#: libgimpwidgets/gimpwidgets.c:1175
+#: libgimpwidgets/gimpwidgets.c:1219
 msgid "Bytes"
 msgstr "字节"
 
-#: libgimpwidgets/gimpwidgets.c:1176
+#: libgimpwidgets/gimpwidgets.c:1220
 msgid "KiloBytes"
 msgstr "K 字节"
 
-#: libgimpwidgets/gimpwidgets.c:1177
+#: libgimpwidgets/gimpwidgets.c:1221
 msgid "MegaBytes"
 msgstr "M 字节"
 
-#: libgimpwidgets/gimpwidgets.c:1178
+#: libgimpwidgets/gimpwidgets.c:1222
 #, fuzzy
 msgid "GigaBytes"
 msgstr "M 字节"

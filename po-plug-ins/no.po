@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: achtung 1.2.2\n"
-"POT-Creation-Date: 2002-09-23 22:46+0200\n"
+"POT-Creation-Date: 2002-10-10 23:16+0200\n"
 "PO-Revision-Date: 2002-09-23 23:01+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -32,7 +32,7 @@ msgstr "Om"
 #: plug-ins/common/mapcolor.c:578 plug-ins/common/max_rgb.c:369
 #: plug-ins/common/nlfilt.c:559 plug-ins/common/noisify.c:508
 #: plug-ins/common/plasma.c:343 plug-ins/common/polar.c:943
-#: plug-ins/common/ps.c:2955 plug-ins/common/sharpen.c:558
+#: plug-ins/common/ps.c:2965 plug-ins/common/sharpen.c:558
 #: plug-ins/common/sinus.c:2112 plug-ins/common/tileit.c:414
 #: plug-ins/common/waves.c:557 plug-ins/common/whirlpinch.c:827
 #: plug-ins/common/wind.c:1028 plug-ins/flame/flame.c:950
@@ -292,8 +292,8 @@ msgstr "Kosinus"
 #: plug-ins/FractalExplorer/Dialogs.c:780
 #: plug-ins/FractalExplorer/Dialogs.c:821 plug-ins/Lighting/lighting_ui.c:564
 #: plug-ins/common/CML_explorer.c:172 plug-ins/common/align_layers.c:443
-#: plug-ins/common/align_layers.c:476 plug-ins/common/ps.c:2727
-#: plug-ins/common/ps.c:2740 plug-ins/common/psp.c:444
+#: plug-ins/common/align_layers.c:476 plug-ins/common/ps.c:2737
+#: plug-ins/common/ps.c:2750 plug-ins/common/psp.c:444
 #: plug-ins/common/tiff.c:1599 plug-ins/fits/fits.c:1030
 msgid "None"
 msgstr "Ingen"
@@ -987,7 +987,7 @@ msgid "Object Z position in XYZ space"
 msgstr "Objektets Z-posisjon i XYZ-rommet"
 
 #. Rotation
-#: plug-ins/MapObject/mapobject_ui.c:1111 plug-ins/common/ps.c:2913
+#: plug-ins/MapObject/mapobject_ui.c:1111 plug-ins/common/ps.c:2923
 msgid "Rotation"
 msgstr "Rotasjon"
 
@@ -1197,7 +1197,7 @@ msgstr "Kan ikke åpne %s"
 #: plug-ins/common/pat.c:381 plug-ins/common/pcx.c:544
 #: plug-ins/common/pix.c:515 plug-ins/common/png.c:827
 #: plug-ins/common/png.c:829 plug-ins/common/pnm.c:780
-#: plug-ins/common/ps.c:995 plug-ins/common/sunras.c:522
+#: plug-ins/common/ps.c:996 plug-ins/common/sunras.c:522
 #: plug-ins/common/tga.c:1014 plug-ins/common/tiff.c:1336
 #: plug-ins/common/xbm.c:982 plug-ins/common/xpm.c:598
 #: plug-ins/common/xwd.c:540 plug-ins/fits/fits.c:469 plug-ins/gfli/gfli.c:677
@@ -2396,7 +2396,7 @@ msgid "Colorify"
 msgstr "Colorify"
 
 #: plug-ins/common/colorify.c:324 plug-ins/common/colortoalpha.c:415
-#: plug-ins/common/ps.c:2711 plug-ins/common/xpm.c:431
+#: plug-ins/common/ps.c:2721 plug-ins/common/xpm.c:431
 #: plug-ins/gimpressionist/color.c:54 plug-ins/gimpressionist/color.c:59
 #: plug-ins/imagemap/imap_menu.c:310 plug-ins/print/gimp_main_window.c:1412
 msgid "Color"
@@ -3243,8 +3243,8 @@ msgid "Limit Line Width"
 msgstr "Begrens linjebredde"
 
 #: plug-ins/common/engrave.c:256 plug-ins/common/film.c:1238
-#: plug-ins/common/gtm.c:581 plug-ins/common/ps.c:2676
-#: plug-ins/common/ps.c:2854 plug-ins/print/gimp_main_window.c:1017
+#: plug-ins/common/gtm.c:581 plug-ins/common/ps.c:2686
+#: plug-ins/common/ps.c:2864 plug-ins/print/gimp_main_window.c:1017
 #: plug-ins/print/gimp_main_window.c:1229
 msgid "Height:"
 msgstr "Høyde:"
@@ -3989,8 +3989,8 @@ msgstr "Kant:"
 msgid "The number of pixels in the table border."
 msgstr "Antall piksler i tabellkanten."
 
-#: plug-ins/common/gtm.c:565 plug-ins/common/ps.c:2667
-#: plug-ins/common/ps.c:2845 plug-ins/print/gimp_main_window.c:1000
+#: plug-ins/common/gtm.c:565 plug-ins/common/ps.c:2677
+#: plug-ins/common/ps.c:2855 plug-ins/print/gimp_main_window.c:1000
 #: plug-ins/print/gimp_main_window.c:1216
 msgid "Width:"
 msgstr "Bredde:"
@@ -5242,145 +5242,145 @@ msgid ""
 "checked the image will be mapped onto a circle."
 msgstr ""
 
-#: plug-ins/common/ps.c:867
+#: plug-ins/common/ps.c:868
 msgid "PS: can't open file for reading"
 msgstr ""
 
-#: plug-ins/common/ps.c:874
+#: plug-ins/common/ps.c:875
 #, c-format
 msgid "Interpreting and Loading %s:"
 msgstr ""
 
-#: plug-ins/common/ps.c:882
+#: plug-ins/common/ps.c:883
 msgid "PS: can't interprete file"
 msgstr ""
 
-#: plug-ins/common/ps.c:969
+#: plug-ins/common/ps.c:970
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr ""
 
-#: plug-ins/common/ps.c:980
+#: plug-ins/common/ps.c:981
 msgid "PS: cannot operate on unknown image types"
 msgstr ""
 
-#: plug-ins/common/ps.c:989
+#: plug-ins/common/ps.c:990
 msgid "PS: can't open file for writing"
 msgstr ""
 
-#: plug-ins/common/ps.c:2196 plug-ins/common/ps.c:2322
-#: plug-ins/common/ps.c:2466 plug-ins/common/ps.c:2588
+#: plug-ins/common/ps.c:2206 plug-ins/common/ps.c:2332
+#: plug-ins/common/ps.c:2476 plug-ins/common/ps.c:2598
 msgid "write error occured"
 msgstr "feil under skriving"
 
-#: plug-ins/common/ps.c:2613
+#: plug-ins/common/ps.c:2623
 msgid "Load PostScript"
 msgstr ""
 
 #. Rendering
-#: plug-ins/common/ps.c:2640
+#: plug-ins/common/ps.c:2650
 msgid "Rendering"
 msgstr ""
 
-#: plug-ins/common/ps.c:2658 plug-ins/print/gimp_main_window.c:1095
+#: plug-ins/common/ps.c:2668 plug-ins/print/gimp_main_window.c:1095
 msgid "Resolution:"
 msgstr "Oppløsning:"
 
-#: plug-ins/common/ps.c:2686
+#: plug-ins/common/ps.c:2696
 msgid "Pages:"
 msgstr "Sider:"
 
-#: plug-ins/common/ps.c:2692
+#: plug-ins/common/ps.c:2702
 msgid "Try Bounding Box"
 msgstr ""
 
 #. Colouring
-#: plug-ins/common/ps.c:2705
+#: plug-ins/common/ps.c:2715
 msgid "Coloring"
 msgstr "Farger"
 
-#: plug-ins/common/ps.c:2709
+#: plug-ins/common/ps.c:2719
 msgid "B/W"
 msgstr "S/HV"
 
 #. * Gray *
-#: plug-ins/common/ps.c:2710 plug-ins/rcm/rcm_dialog.c:418
+#: plug-ins/common/ps.c:2720 plug-ins/rcm/rcm_dialog.c:418
 msgid "Gray"
 msgstr "Grå"
 
-#: plug-ins/common/ps.c:2712 plug-ins/fits/fits.c:1018
+#: plug-ins/common/ps.c:2722 plug-ins/fits/fits.c:1018
 msgid "Automatic"
 msgstr "Automatisk"
 
-#: plug-ins/common/ps.c:2722
+#: plug-ins/common/ps.c:2732
 msgid "Text Antialiasing"
 msgstr "Antialiasing av tekst"
 
-#: plug-ins/common/ps.c:2728 plug-ins/common/ps.c:2741
+#: plug-ins/common/ps.c:2738 plug-ins/common/ps.c:2751
 msgid "Weak"
 msgstr "Svak"
 
-#: plug-ins/common/ps.c:2729 plug-ins/common/ps.c:2742
+#: plug-ins/common/ps.c:2739 plug-ins/common/ps.c:2752
 msgid "Strong"
 msgstr "Sterk"
 
-#: plug-ins/common/ps.c:2735
+#: plug-ins/common/ps.c:2745
 msgid "Graphic Antialiasing"
 msgstr "Antialiasing av grafikk"
 
-#: plug-ins/common/ps.c:2797
+#: plug-ins/common/ps.c:2807
 msgid "Save as PostScript"
 msgstr "Lagre som PostScript"
 
 #. Image Size
-#: plug-ins/common/ps.c:2827
+#: plug-ins/common/ps.c:2837
 msgid "Image Size"
 msgstr "Bildestørrelse"
 
-#: plug-ins/common/ps.c:2863
+#: plug-ins/common/ps.c:2873
 msgid "X-Offset:"
 msgstr "X-avstand:"
 
-#: plug-ins/common/ps.c:2872
+#: plug-ins/common/ps.c:2882
 msgid "Y-Offset:"
 msgstr "Y-avstand:"
 
-#: plug-ins/common/ps.c:2878
+#: plug-ins/common/ps.c:2888
 msgid "Keep Aspect Ratio"
 msgstr "Behold aspektrate"
 
-#: plug-ins/common/ps.c:2884
+#: plug-ins/common/ps.c:2894
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
 msgstr ""
 
 #. Unit
-#: plug-ins/common/ps.c:2893
+#: plug-ins/common/ps.c:2903
 msgid "Unit"
 msgstr "Enhet"
 
-#: plug-ins/common/ps.c:2898 plug-ins/print/gimp_main_window.c:1261
+#: plug-ins/common/ps.c:2908 plug-ins/print/gimp_main_window.c:1261
 msgid "Inch"
 msgstr "Tomme"
 
-#: plug-ins/common/ps.c:2901
+#: plug-ins/common/ps.c:2911
 msgid "Millimeter"
 msgstr "Millimeter"
 
 #. Format
-#: plug-ins/common/ps.c:2929
+#: plug-ins/common/ps.c:2939
 msgid "Output"
 msgstr "Utskrift"
 
-#: plug-ins/common/ps.c:2937
+#: plug-ins/common/ps.c:2947
 msgid "PostScript Level 2"
 msgstr ""
 
-#: plug-ins/common/ps.c:2946
+#: plug-ins/common/ps.c:2956
 msgid "Encapsulated PostScript"
 msgstr "Encapsulated PostScript"
 
-#: plug-ins/common/ps.c:2976
+#: plug-ins/common/ps.c:2986
 msgid "Preview Size:"
 msgstr "Størrelse på forhåndsvisning:"
 
@@ -9142,11 +9142,11 @@ msgstr ""
 msgid "<Untitled>"
 msgstr "<Uten navn>"
 
-#: plug-ins/helpbrowser/helpbrowser.c:585
+#: plug-ins/helpbrowser/helpbrowser.c:587
 msgid "GIMP Help Browser"
 msgstr ""
 
-#: plug-ins/helpbrowser/helpbrowser.c:898
+#: plug-ins/helpbrowser/helpbrowser.c:900
 #, c-format
 msgid ""
 "GIMP Help Browser Error.\n"
