@@ -1,3 +1,8 @@
+2001-03-04  Sven Neumann  <sven@gimp.org>
+
+	* app/preferences_dialog.c (prefs_save_callback): applied a patch
+	from David Odin <David.Odin@bigfoot.com> that fixes a typo in the code.
+
 2001-03-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am

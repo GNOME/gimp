@@ -684,7 +684,7 @@ prefs_save_callback (GtkWidget *widget,
   if (trust_dirty_flag != old_trust_dirty_flag)
     {
       update = g_list_append (update, "trust-dirty-flag");
-      remove = g_list_append (update, "dont-trust-dirty-flag");
+      remove = g_list_append (remove, "dont-trust-dirty-flag");
     }
   if (use_help != old_use_help)
     {
