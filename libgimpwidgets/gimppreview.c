@@ -764,8 +764,8 @@ gimp_preview_nav_popup_event (GtkWidget   *widget,
         y = (motion_event->y *
              (vadj->upper - vadj->lower) / widget->allocation.height);
 
-        gtk_adjustment_set_value (hadj, x + hadj->lower);
-        gtk_adjustment_set_value (vadj, y + vadj->lower);
+        gtk_adjustment_set_value (hadj, x + hadj->lower - hadj->page_size / 2);
+        gtk_adjustment_set_value (vadj, y + vadj->lower - vadj->page_size / 2);
 
         gtk_widget_queue_draw (widget);
       }
