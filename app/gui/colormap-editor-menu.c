@@ -59,6 +59,7 @@ colormap_editor_menu_update (GtkItemFactory *factory,
 {
   GimpColormapEditor *editor;
   GimpImage          *gimage;
+  gboolean            indexed    = FALSE;
   gint                num_colors = 0;
 
   editor = GIMP_COLORMAP_EDITOR (data);
@@ -66,14 +67,15 @@ colormap_editor_menu_update (GtkItemFactory *factory,
 
   if (gimage)
     {
+      indexed    = gimp_image_base_type (gimage) == GIMP_INDEXED;
       num_colors = gimage->num_cols;
     }
 
 #define SET_SENSITIVE(menu,condition) \
         gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
-  SET_SENSITIVE ("/Edit Color...", gimage);
-  SET_SENSITIVE ("/Add Color",     gimage && num_colors < 256);
+  SET_SENSITIVE ("/Edit Color...", gimage && indexed);
+  SET_SENSITIVE ("/Add Color",     gimage && indexed && num_colors < 256);
 
 #undef SET_SENSITIVE
 }

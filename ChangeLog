@@ -1,5 +1,17 @@
 2003-09-24  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/dialogs-constructors.c (dialogs_get_view_menu_func):
+	using gimp_container_view_get_by_dockable() was a bad idea since
+	not all our GimpEditor subclasses actually are GimpContainerViews.
+	Find the right GimpEditor manually instead (fixes missing popup
+	menus).
+
+	* app/gui/colormap-editor-menu.c (colormap_editor_menu_update):
+	make the menu entries insensitive if the image is not indexed.
+	fixes bug #123066.
+
+2003-09-24  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpwidgets-utils.c (gimp_menu_position)
 	* app/widgets/gimpcontainerpopup.c (gimp_container_popup_show):
 	more menus which pop up correctly with RTL languages.

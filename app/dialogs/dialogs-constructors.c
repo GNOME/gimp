@@ -1328,12 +1328,20 @@ static GimpItemFactory *
 dialogs_get_view_menu_func (GimpDockable *dockable,
                             gpointer     *item_factory_data)
 {
-  GimpContainerView *view = gimp_container_view_get_by_dockable (dockable);
+  GtkWidget  *widget = GTK_BIN (dockable)->child;
+  GimpEditor *editor = NULL;
 
-  if (view)
+  if (GIMP_IS_EDITOR (widget))
     {
-      GimpEditor *editor = GIMP_EDITOR (view);
+      editor = GIMP_EDITOR (widget);
+    }
+  else if (GIMP_IS_CONTAINER_EDITOR (widget))
+    {
+      editor = GIMP_EDITOR (GIMP_CONTAINER_EDITOR (widget)->view);
+    }
 
+  if (editor)
+    {
       if (item_factory_data)
         *item_factory_data = editor->item_factory_data;
 
