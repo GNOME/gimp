@@ -1,0 +1,64 @@
+Gimp Pixmap Brush File Format
+
+The current format for gpb files, the pixmap
+bnrush format is very simple. What it essentially
+boils down to is a greyscale gbr (gimp brush) and
+a rgb pat (gimp pattern) concatented into the same file.
+
+The gbr is first, and is used for the greyscale mask for
+the brush. The pat is second and is used for the rgb info in
+the file.
+
+The name and spacing info for the greyscale portion
+is used for the name and spacing of the pixmap
+brush.
+
+The greyscale mask and the rgb data need to be of
+the same height and width.
+
+At the time of writing this, there isnt a gpb file
+loader or saver plugin, so the easiest way to
+create gpb's is:
+
+	1. Create a rgb image of some sort. The best
+	images seem to be something on a black background,
+	but thats not required. 
+
+	2. Generate a mask for all the parts of the image
+	that should be transparent in the final product. There
+	are several ways to do this but quickmask, or select
+	by color, selection to channel seem to be a good way to 
+	do it. This mask needs to be greyscale. So I usually
+	make it a selection, and then use "save selection 
+	as channel"
+
+	3. Take that mask, select all, and cut it. Then
+	open a new greyscale image, and paste it into the
+	image. This is the easiest way to insure the images
+	are the same size and are aligned. The white portions
+	of this image will be what is opaque in the pixmap
+	brush.
+	
+	 Take the above mask, and save it as a .gbr file. 
+	It doesnt need to be in the brushes dir.
+
+	5. Take the original rgb image, remove any mask layers,
+	and flatten the image. Setting background color to black
+	and flattening to a black background seems to work
+	a little better. 
+
+	Take this image, and save it as a .pat file. This does
+	not need to be in the patterns directory.
+
+	6. Go to a shell, and concatenate the files together
+	into a .gpb. Ie, for a mask named foo.gbr, and a
+	rgb pat name foo.pat:
+
+		cat foo.gbr foo.pat > foo.gpb
+
+	7. Copy that foo.gpb to your brushes dir
+
+
+Adrian Likins
+aug 18, 1999
+

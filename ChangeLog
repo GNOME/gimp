@@ -1,3 +1,16 @@
+Thu Aug 19 00:18:32 1999 Adrian Likins <alikins@redhat.com>
+	
+	* data/brushes/vine.gih
+	* data/brushes/pepper.gpb: new files, a sample hose
+	and a sample pixmap brush
+
+	* docs/gpb.txt
+	* docs/gih.txt: vague description of the current pixmap
+	brush and hose formats
+
+	* app/gimpbrushhose.c
+	* app/gimpbrushpicmap.c: use the brush spacing info now
+
 Wed Aug 18 22:49:31 1999 Adrian Likins <alikins@redhat.com>
 	
 	* app/apptypes.h: add GradientPaintMode enum

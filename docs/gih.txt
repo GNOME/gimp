@@ -1,0 +1,53 @@
+Gimp I* Hose Format
+
+	The gih format is use to store a series of pixmap brushes,
+and some extra info for how to use them. 
+
+Basically, the format is real simple. It is a text header, followed
+by a series of gpb files, all concatenated together.
+
+The header format
+================
+
+First line is the name of the hose.
+Second line is the number of brushes in file
+
+ie
+===========================
+Fire
+6
+===========================
+
+The rest is just gpb files catted in.
+
+Making a gih file:
+
+	1. Create a series of gpb files. Note these do not
+	need to be the same size.
+
+	2. Create a text header like above.
+
+	3. Combine them all together:
+
+		cat header brush1.gpb brush2.gpb brush3.gpb > foo.gih
+
+
+Thats about it for now.
+
+
+Other bits:
+==========
+
+The spacing for the hose is currently based on the spacing
+for the last brush in the hose. 
+
+WARNING:
+=======
+
+The header file format, and possible the entire file format
+is likely to change.
+
+
+Adrian Likins
+aug 18, 1999
+

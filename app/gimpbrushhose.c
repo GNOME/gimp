@@ -194,6 +194,13 @@ gimp_brush_hose_load (char *file_name)
 						  header.height,
 						  header.bytes,
 						  0, 0, NULL);
+
+	  GIMP_BRUSH(brush)->spacing = header.spacing;
+	  /* set up spacing axis */
+	  GIMP_BRUSH(brush)->x_axis.x = header.width  / 2.0;
+	  GIMP_BRUSH(brush)->x_axis.y = 0.0;
+	  GIMP_BRUSH(brush)->y_axis.x = 0.0;
+	  GIMP_BRUSH(brush)->y_axis.y = header.height / 2.0;
 	  /*  Read the brush mask data  */
 	  
 	  if ((fread (temp_buf_data (GIMP_BRUSH(brush)->mask),

@@ -153,8 +153,13 @@ gimp_brush_pixmap_load (char *file_name)
        /*  Get a new brush mask  */
        GIMP_BRUSH(brush)->mask = temp_buf_new (header.width, header.height, header.bytes,
 					       0, 0, NULL);
-       /*  Read the brush mask data  */
-  
+           GIMP_BRUSH(brush)->spacing = header.spacing;
+     /* set up spacing axis */
+	   GIMP_BRUSH(brush)->x_axis.x = header.width  / 2.0;
+	   GIMP_BRUSH(brush)->x_axis.y = 0.0;
+	   GIMP_BRUSH(brush)->y_axis.x = 0.0;
+	   GIMP_BRUSH(brush)->y_axis.y = header.height / 2.0;
+	   /*  Read the brush mask data  */
        if ((fread (temp_buf_data (GIMP_BRUSH(brush)->mask), 1, header.width * header.height,
 		   fp)) <	 header.width * header.height)
        g_message ("GIMP brush file appears to be truncated.");
