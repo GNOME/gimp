@@ -72,13 +72,11 @@ tips_dialog_create (void)
       temp = g_strdup_printf ("%s" G_DIR_SEPARATOR_S TIPS_DIR_NAME
                               G_DIR_SEPARATOR_S "%s",
 			      gimp_data_directory (),
-      /* 
-       *  The string "gimp_tips.txt" needs special handling by
-       *  translators. It is used to identify the tips file to
-       *  be used for the current locale. Please translate it
-       *  accordingly. For example for the german locale that
-       *  would be "gimp_tips.de.txt".
-       */
+      /*  The string "gimp_tips.txt" needs special handling by
+          translators. It is used to identify the tips file to
+          be used for the current locale. Please translate it
+          accordingly. For example for the german locale that
+          would be "gimp_tips.de.txt". */
                               _("gimp_tips.txt"));
 
       read_tips_file (temp);
@@ -91,8 +89,10 @@ tips_dialog_create (void)
   if (!tips_dialog)
     {
       tips_dialog = gtk_window_new (GTK_WINDOW_DIALOG);
-      gtk_window_set_wmclass (GTK_WINDOW (tips_dialog), "tip_of_the_day", "Gimp");
-      gtk_window_set_title (GTK_WINDOW (tips_dialog), _("GIMP Tip of the Day"));
+      gtk_window_set_wmclass (GTK_WINDOW (tips_dialog),
+                              "tip_of_the_day", "Gimp");
+      gtk_window_set_title (GTK_WINDOW (tips_dialog),
+                            _("GIMP Tip of the Day"));
       gtk_window_set_position (GTK_WINDOW (tips_dialog), GTK_WIN_POS_CENTER);
       gtk_window_set_policy (GTK_WINDOW (tips_dialog), FALSE, TRUE, FALSE);
 

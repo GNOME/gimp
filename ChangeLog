@@ -1,3 +1,15 @@
+2002-05-07  Sven Neumann  <sven@gimp.org>
+
+	* app/tips_dialog.c: reformat the comment for translators in such
+	a way that the stupid gettext tools make it end up in the po files.
+	
+2002-05-07  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: added sl to LINGUAS.
+
+	* tips/Makefile.am
+	* tips/gimp_tips.sl.txt: added slovenian tips file.
+
 2002-05-06  Sven Neumann  <sven@gimp.org>
 
 	* app/text_tool.c (text_render): enabled some code that was supposed
