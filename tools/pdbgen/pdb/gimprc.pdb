@@ -56,10 +56,7 @@ HELP
 	vars => [ 'gchar *value = NULL' ],
 	code => <<'CODE'
 {
-  /*  use edit_config so we get the values back we have set using
-   *  gimprc_set() before
-   */
-  success = (value = gimp_rc_query (GIMP_RC (gimp->edit_config), token)) != NULL;
+  success = (value = gimp_rc_query (GIMP_RC (gimp->config), token)) != NULL;
 }
 CODE
     );
@@ -90,11 +87,7 @@ HELP
 	headers => [ qw("config/gimpconfig.h") ],
 	code =>  <<'CODE'
 {
-  /*  set the value in edit_config so we don't accidentially set
-   *  GIMP_PARAM_RESTART values via the PDB
-   */
-  gimp_config_add_unknown_token (GIMP_CONFIG (gimp->edit_config),
-                                 token, value);
+  gimp_config_add_unknown_token (GIMP_CONFIG (gimp->config), token, value);
   success = TRUE;
 }
 CODE

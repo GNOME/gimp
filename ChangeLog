@@ -1,5 +1,12 @@
 2004-01-06  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/gimprc.pdb: use gimp->config; edit_config is
+	just for the prefs dialog. This should fix gimp_gimprc_set().
+
+	* app/pdb/gimprc_cmds.c: regenerated.
+
+2004-01-06  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/png.c: use a global parasite to store the default
 	values. Such uglyness doesn't belong into gimprc.
 
