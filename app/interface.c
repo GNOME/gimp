@@ -226,7 +226,7 @@ tools_button_press (GtkWidget      *w,
 
 static gint
 toolbox_delete (GtkWidget *w, GdkEvent *e, gpointer data)
- {
+{
   app_exit (FALSE);
 
   return FALSE;
@@ -234,8 +234,8 @@ toolbox_delete (GtkWidget *w, GdkEvent *e, gpointer data)
 
 static void
 toolbox_destroy ()
- {
-  app_exit (TRUE);
+{
+  app_exit_finish ();
 }
 
 static void
@@ -548,6 +548,21 @@ create_toolbox ()
 
   gtk_widget_show (window);
   toolbox_shell = window;
+}
+
+void
+toolbox_free ()
+{
+  int i;
+
+  gtk_widget_destroy (toolbox_shell);
+  for (i = 21; i < NUM_TOOLS; i++)
+    {
+      gtk_object_sink    (GTK_OBJECT (tool_widgets[i]));
+      gtk_widget_destroy (GTK_WIDGET (tool_widgets[i]));
+    }			  
+  gtk_object_destroy (GTK_OBJECT (tool_tips));
+  gtk_object_unref   (GTK_OBJECT (tool_tips));
 }
 
 void

@@ -56,7 +56,6 @@
 #include <gtk/gtk.h>
 
 /*  Function prototype for affirmation dialog when exiting application  */
-static void      app_exit_finish    (void);
 static void      really_quit_dialog (void);
 static Argument* quit_invoker       (Argument *args);
 static void make_initialization_status_window(void);
@@ -284,9 +283,13 @@ app_init ()
 
 }
 
-static void
+void
 app_exit_finish ()
 {
+  static gint once = 0;
+  if (once) return;
+  once = 1;
+
   lc_dialog_free ();
   gdisplays_delete ();
   global_edit_free ();
@@ -315,8 +318,8 @@ app_exit_finish ()
       render_free ();
       tools_options_dialog_free ();
     }
-
-  gtk_exit (0);
+  /*  gtk_exit (0); */
+  gtk_main_quit();
 }
 
 void
@@ -326,7 +329,7 @@ app_exit (int kill_it)
   if (kill_it == 0 && gdisplays_dirty () && no_interface == FALSE)
     really_quit_dialog ();
   else
-    app_exit_finish ();
+    toolbox_free ();
 }
 
 /********************************************************
@@ -338,7 +341,7 @@ really_quit_callback (GtkButton *button,
 		      GtkWidget *dialog)
 {
   gtk_widget_destroy (dialog);
-  app_exit_finish ();
+  toolbox_free ();
 }
 
 static void

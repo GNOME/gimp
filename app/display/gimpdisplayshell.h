@@ -29,6 +29,7 @@ extern GtkTooltips *tool_tips;
 /* function declarations */
 GtkWidget *  create_pixmap_widget (GdkWindow *, char **, int, int);
 void         create_toolbox (void);
+void	     toolbox_free (void);
 void         toolbox_raise_callback (GtkWidget *, gpointer);
 void         create_display_shell (int, int, int, char *, int);
 void         position_dialog (GtkWidget *, gpointer, gpointer);
