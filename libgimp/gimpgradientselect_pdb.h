@@ -31,17 +31,13 @@ extern "C" {
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_gradients_popup              (gchar    *gradients_callback,
-					    gchar    *popup_title,
-					    gchar    *initial_gradient,
-					    gint      sample_size);
-gboolean gimp_gradients_close_popup        (gchar    *gradients_callback);
-gboolean gimp_gradients_set_popup          (gchar    *gradients_callback,
-					    gchar    *gradient_name);
-gchar*   _gimp_gradients_get_gradient_data (gchar    *name,
-					    gint      sample_size,
-					    gint     *width,
-					    gdouble **grad_data);
+gboolean gimp_gradients_popup       (gchar *gradients_callback,
+				     gchar *popup_title,
+				     gchar *initial_gradient,
+				     gint   sample_size);
+gboolean gimp_gradients_close_popup (gchar *gradients_callback);
+gboolean gimp_gradients_set_popup   (gchar *gradients_callback,
+				     gchar *gradient_name);
 
 
 #ifdef __cplusplus

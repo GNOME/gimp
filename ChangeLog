@@ -1,3 +1,31 @@
+2001-10-26  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/gradient_select.pdb: removed
+	gradients_get_gradient_data() here...
+
+	* tools/pdbgen/pdb/gradients.pdb: ...and added it here.
+
+	* app/pdb/gradient_select_cmds.c
+	* app/pdb/gradients_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimpgradients_pdb.[ch]
+	* libgimp/gimpgradientselect_pdb.[ch]: regenerated.
+
+	* app/core/gimpgradient.h: added GIMP_GRADIENT_DEFAULT_SAMPLE_SIZE
+	here...
+
+	* app/gui/gradient-select.h: ...removed it here.
+
+	* libgimp/Makefile.am
+	* libgimp/gimp.h
+	* libgimp/gimpgradientselect.[ch]: removed. We don't wrap
+	_gradients_get_gradient_data() with gradients_get_gradient_data()
+	any more but call the PDB wrapper directly.
+
+	API CHANGE: Arguments 2 and 3 are swapped now!
+
+	* plug-ins/FractalExplorer/Dialogs.c: changed accordingly.
+
 2001-10-25  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: generate app/file/Makefile

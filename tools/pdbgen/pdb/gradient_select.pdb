@@ -27,7 +27,7 @@ sub sample_size_arg {{
     type => '0 < int32 <= 10000',
     desc => 'Size of the sample to return when the gradient is changed
 	    (%%desc%%)',
-    on_fail => 'sample_size = GRADIENT_SAMPLE_SIZE;',
+    on_fail => 'sample_size = GIMP_GRADIENT_DEFAULT_SAMPLE_SIZE;',
     no_success => 1
 }}
 
@@ -144,90 +144,12 @@ CODE
     );
 }
 
-sub gradients_get_gradient_data {
-    $blurb = <<'BLURB';
-Retrieve information about the specified gradient (including data).
-BLURB
-
-    $help = <<'HELP';
-This procedure retrieves information about the gradient. This includes the
-gradient name, and the sample data for the gradient.
-HELP
-
-    &pdb_misc;
-
-    @inargs = (
-	{ name => 'name', type => 'string',
-	  desc => 'The gradient name ("" means current active gradient)' },
-	&sample_size_arg
-    );
-
-    @outargs = (
-	{ name => 'name', type => 'string',
-	  desc => 'The gradient name',
-	  alias => 'g_strdup (GIMP_OBJECT (gradient)->name)', no_declare => 1 },
-	{ name => 'grad_data', type => 'floatarray', alias => 'values',
-	  desc => 'The gradient sample data', init => 1, wrap => 1,
-	  array => { name => 'width',
-		     desc => 'The gradient sample width (r,g,b,a)',
-		     alias => 'sample_size * 4', no_declare => 1 } }
-    );
-
-    %invoke = (
-	vars => [ 'GimpGradient *gradient = NULL' ],
-	code => <<'CODE'
-{
-  if (strlen (name))
-    {
-      success = FALSE;
-
-      gradient = (GimpGradient *)
-        gimp_container_get_child_by_name (gimp->gradient_factory->container,
-                                          name);
-
-      if (gradient)
-        success = TRUE;
-    }
-  else
-    success = (gradient = gimp_context_get_gradient (gimp_get_current_context (gimp))) != NULL;
-
-  if (success)
-    {
-      gdouble *pv;
-      gdouble  pos, delta;
-      GimpRGB  color;
-      gint     i;
-
-      i     = sample_size;
-      pos   = 0.0;
-      delta = 1.0 / (i - 1);
-
-      pv = values = g_new (gdouble, i * 4);
-
-      while (i--)
-	{
-	  gimp_gradient_get_color_at (gradient, pos, &color);
-
-	  *pv++ = color.r;
-	  *pv++ = color.g;
-	  *pv++ = color.b;
-	  *pv++ = color.a;
-
-	  pos += delta;
-	}
-    }
-}
-CODE
-    );
-}
-
 @headers = qw(<string.h> "core/gimp.h" "core/gimpcontext.h"
 	      "core/gimpcontainer.h" "core/gimpdatafactory.h"
               "core/gimpgradient.h"
 	      "gui/gui-types.h" "gui/gradient-select.h");
 
-@procs = qw(gradients_popup gradients_close_popup gradients_set_popup
-	    gradients_get_gradient_data);
+@procs = qw(gradients_popup gradients_close_popup gradients_set_popup);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Gradient UI';

@@ -40,6 +40,7 @@ static ProcRecord gradients_get_active_proc;
 static ProcRecord gradients_set_active_proc;
 static ProcRecord gradients_sample_uniform_proc;
 static ProcRecord gradients_sample_custom_proc;
+static ProcRecord gradients_get_gradient_data_proc;
 
 void
 register_gradients_procs (Gimp *gimp)
@@ -49,6 +50,7 @@ register_gradients_procs (Gimp *gimp)
   procedural_db_register (gimp, &gradients_set_active_proc);
   procedural_db_register (gimp, &gradients_sample_uniform_proc);
   procedural_db_register (gimp, &gradients_sample_custom_proc);
+  procedural_db_register (gimp, &gradients_get_gradient_data_proc);
 }
 
 static Argument *
@@ -406,4 +408,127 @@ static ProcRecord gradients_sample_custom_proc =
   2,
   gradients_sample_custom_outargs,
   { { gradients_sample_custom_invoker } }
+};
+
+static Argument *
+gradients_get_gradient_data_invoker (Gimp     *gimp,
+                                     Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gchar *name;
+  gint32 sample_size;
+  gdouble *values = NULL;
+  GimpGradient *gradient = NULL;
+
+  name = (gchar *) args[0].value.pdb_pointer;
+  if (name == NULL)
+    success = FALSE;
+
+  sample_size = args[1].value.pdb_int;
+  if (sample_size <= 0 || sample_size > 10000)
+    sample_size = GIMP_GRADIENT_DEFAULT_SAMPLE_SIZE;
+
+  if (success)
+    {
+      if (strlen (name))
+	{
+	  success = FALSE;
+    
+	  gradient = (GimpGradient *)
+	    gimp_container_get_child_by_name (gimp->gradient_factory->container,
+					      name);
+    
+	  if (gradient)
+	    success = TRUE;
+	}
+      else
+	success = (gradient = gimp_context_get_gradient (gimp_get_current_context (gimp))) != NULL;
+    
+      if (success)
+	{
+	  gdouble *pv;
+	  gdouble  pos, delta;
+	  GimpRGB  color;
+	  gint     i;
+    
+	  i     = sample_size;
+	  pos   = 0.0;
+	  delta = 1.0 / (i - 1);
+    
+	  pv = values = g_new (gdouble, i * 4);
+    
+	  while (i--)
+	    {
+	      gimp_gradient_get_color_at (gradient, pos, &color);
+    
+	      *pv++ = color.r;
+	      *pv++ = color.g;
+	      *pv++ = color.b;
+	      *pv++ = color.a;
+    
+	      pos += delta;
+	    }
+	}
+    }
+
+  return_args = procedural_db_return_args (&gradients_get_gradient_data_proc, success);
+
+  if (success)
+    {
+      return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (gradient)->name);
+      return_args[2].value.pdb_int = sample_size * 4;
+      return_args[3].value.pdb_pointer = values;
+    }
+
+  return return_args;
+}
+
+static ProcArg gradients_get_gradient_data_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The gradient name (\"\" means current active gradient)"
+  },
+  {
+    GIMP_PDB_INT32,
+    "sample_size",
+    "Size of the sample to return when the gradient is changed (0 < sample_size <= 10000)"
+  }
+};
+
+static ProcArg gradients_get_gradient_data_outargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The gradient name"
+  },
+  {
+    GIMP_PDB_INT32,
+    "width",
+    "The gradient sample width (r,g,b,a)"
+  },
+  {
+    GIMP_PDB_FLOATARRAY,
+    "grad_data",
+    "The gradient sample data"
+  }
+};
+
+static ProcRecord gradients_get_gradient_data_proc =
+{
+  "gimp_gradients_get_gradient_data",
+  "Retrieve information about the specified gradient (including data).",
+  "This procedure retrieves information about the gradient. This includes the gradient name, and the sample data for the gradient.",
+  "Federico Mena Quintero",
+  "Federico Mena Quintero",
+  "1997",
+  GIMP_INTERNAL,
+  2,
+  gradients_get_gradient_data_inargs,
+  3,
+  gradients_get_gradient_data_outargs,
+  { { gradients_get_gradient_data_invoker } }
 };

@@ -212,3 +212,49 @@ gimp_gradients_sample_custom (gint     num_samples,
 
   return color_samples;
 }
+
+/**
+ * gimp_gradients_get_gradient_data:
+ * @name: The gradient name (\"\" means current active gradient).
+ * @sample_size: Size of the sample to return when the gradient is changed.
+ * @width: The gradient sample width (r,g,b,a).
+ * @grad_data: The gradient sample data.
+ *
+ * Retrieve information about the specified gradient (including data).
+ *
+ * This procedure retrieves information about the gradient. This
+ * includes the gradient name, and the sample data for the gradient.
+ *
+ * Returns: The gradient name.
+ */
+gchar *
+gimp_gradients_get_gradient_data (gchar    *name,
+				  gint      sample_size,
+				  gint     *width,
+				  gdouble **grad_data)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *ret_name = NULL;
+
+  return_vals = gimp_run_procedure ("gimp_gradients_get_gradient_data",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_INT32, sample_size,
+				    GIMP_PDB_END);
+
+  *width = 0;
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    {
+      ret_name = g_strdup (return_vals[1].data.d_string);
+      *width = return_vals[2].data.d_int32;
+      *grad_data = g_new (gdouble, *width);
+      memcpy (*grad_data, return_vals[3].data.d_floatarray,
+	      *width * sizeof (gdouble));
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return ret_name;
+}

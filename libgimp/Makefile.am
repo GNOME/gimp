@@ -104,8 +104,6 @@ libgimp_1_3_la_SOURCES = @STRIP_BEGIN@ \
 	gimpchannel.h			\
 	gimpdrawable.c			\
 	gimpdrawable.h			\
-	gimpgradientselect.c		\
-	gimpgradientselect.h		\
 	gimphelp.c			\
 	gimpimage.c			\
 	gimpimage.h			\
@@ -151,7 +149,6 @@ gimpinclude_HEADERS = @STRIP_BEGIN@ \
 	gimpchannel.h			\
 	gimpdrawable.h			\
 	gimpenums.h			\
-	gimpgradientselect.h		\
 	gimpimage.h			\
 	gimplayer.h			\
 	gimpmodule.h			\

@@ -31,12 +31,16 @@ extern "C" {
 /* For information look into the C source or the html documentation */
 
 
-gchar**  gimp_gradients_get_list       (gint    *num_gradients);
-gchar*   gimp_gradients_get_active     (void);
-gboolean gimp_gradients_set_active     (gchar   *name);
-gdouble* gimp_gradients_sample_uniform (gint     num_samples);
-gdouble* gimp_gradients_sample_custom  (gint     num_samples,
-					gdouble *positions);
+gchar**  gimp_gradients_get_list          (gint     *num_gradients);
+gchar*   gimp_gradients_get_active        (void);
+gboolean gimp_gradients_set_active        (gchar    *name);
+gdouble* gimp_gradients_sample_uniform    (gint      num_samples);
+gdouble* gimp_gradients_sample_custom     (gint      num_samples,
+					   gdouble  *positions);
+gchar*   gimp_gradients_get_gradient_data (gchar    *name,
+					   gint      sample_size,
+					   gint     *width,
+					   gdouble **grad_data);
 
 
 #ifdef __cplusplus

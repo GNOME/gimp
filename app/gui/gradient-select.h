@@ -20,9 +20,6 @@
 #define __GRADIENT_SELECT_H__
 
 
-#define GRADIENT_SAMPLE_SIZE 40
-
-
 typedef struct _GradientSelect GradientSelect;
 
 struct _GradientSelect

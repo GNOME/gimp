@@ -108,7 +108,7 @@ internal_procs_init (Gimp               *gimp,
   (* status_callback) (NULL, _("Gradients"), 0.291);
   register_gradients_procs (gimp);
 
-  (* status_callback) (NULL, _("Gradient UI"), 0.307);
+  (* status_callback) (NULL, _("Gradient UI"), 0.31);
   register_gradient_select_procs (gimp);
 
   (* status_callback) (NULL, _("Guide procedures"), 0.319);
