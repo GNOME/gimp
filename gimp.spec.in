@@ -7,7 +7,7 @@
 
 Summary: The GNU Image Manipulation Program
 Name: 		gimp
-Epoch:		1
+Epoch:		2
 Version: 	%{ver}
 Release: 	1
 Copyright: 	GPL, LGPL
@@ -241,6 +241,9 @@ cat gimp-plugin-files gimp-tips-files > gimp.files
 %{prefix}/share/gtk-doc/html/libgimpwidgets
 
 %changelog
+* Sat Jan 10 2004 Ville Pätsi <drc@gimp.org>
+- Changed epoch to 2
+
 * Thu Jan 08 2004 Sven Neumann <sven@gimp.org>
 - gimptool and pkg-config files changed names
 
@@ -250,7 +253,7 @@ cat gimp-plugin-files gimp-tips-files > gimp.files
 * Mon Sep 08 2003 Ville Pätsi <drc@gimp.org>
 - Remove *gck* since that is no longer installed by the source
 
-* Wed Sep 03 2003 Ville PÄtsi <drc@gimp.org>
+* Wed Sep 03 2003 Ville Pätsi <drc@gimp.org>
 - Move /etc/gimp/* from the devel package to the main one. 
 
 * Tue Aug 12 2003 Ville Pätsi <drc@gimp.org>
