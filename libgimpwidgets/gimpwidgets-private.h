@@ -24,13 +24,13 @@
 #define __GIMP_WIDGETS_PRIVATE_H__
 
 
+typedef gboolean (* GimpGetColorFunc) (GimpRGB *color);
+
+
 typedef struct _GimpWidgetsVTable GimpWidgetsVTable;
 
 struct _GimpWidgetsVTable
 {
-  gboolean      (* palette_get_background)            (GimpRGB  *background);
-  gboolean      (* palette_get_foreground)            (GimpRGB  *background);
- 
   gint          (* unit_get_number_of_units)          (void);
   gint          (* unit_get_number_of_built_in_units) (void);
   gdouble       (* unit_get_factor)                   (GimpUnit  unit);
@@ -47,14 +47,20 @@ struct _GimpWidgetsVTable
   void          (* _reserved_4)                       (void);
 };
 
+
 extern GimpWidgetsVTable _gimp_eek;
+extern GimpHelpFunc      _gimp_standard_help_func;
+extern GimpGetColorFunc  _gimp_get_foreground_func;
+extern GimpGetColorFunc  _gimp_get_background_func;
 
 
 G_BEGIN_DECLS
 
 
 void  gimp_widgets_init (GimpWidgetsVTable *vtable,
-                         GimpHelpFunc       standard_help_func);
+                         GimpHelpFunc       standard_help_func,
+                         GimpGetColorFunc   get_foreground_func,
+                         GimpGetColorFunc   get_background_func);
 
 
 G_END_DECLS

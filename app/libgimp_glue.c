@@ -18,61 +18,16 @@
 
 #include "config.h"
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
-#include "libgimpcolor/gimpcolor.h"
+#include "core/core-types.h"
 
-#include "widgets/widgets-types.h"
-
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
 #include "core/gimpunit.h"
 
 #include "app_procs.h"
 
 #define __LIBGIMP_GLUE_C__
 #include "libgimp_glue.h"
-
-
-gboolean
-gimp_palette_set_foreground (const GimpRGB *color)
-{
-  g_return_val_if_fail (color != NULL, FALSE);
-
-  gimp_context_set_foreground (gimp_get_user_context (the_gimp), color);
-
-  return TRUE;
-}
-
-gboolean
-gimp_palette_get_foreground (GimpRGB *color)
-{
-  g_return_val_if_fail (color != NULL, FALSE);
-
-  gimp_context_get_foreground (gimp_get_user_context (the_gimp), color);
-
-  return TRUE;
-}
-
-gboolean
-gimp_palette_set_background (const GimpRGB *color)
-{
-  g_return_val_if_fail (color != NULL, FALSE);
-
-  gimp_context_set_background (gimp_get_user_context (the_gimp), color);
-
-  return TRUE;
-}
-
-gboolean
-gimp_palette_get_background (GimpRGB *color)
-{
-  g_return_val_if_fail (color != NULL, FALSE);
-
-  gimp_context_get_background (gimp_get_user_context (the_gimp), color);
-
-  return TRUE;
-}
 
 
 gint

@@ -90,8 +90,6 @@ gimp_ui_init (const gchar *prog_name,
     gtk_preview_set_gamma (gimp_gamma ());
 
   /*  Initialize the eeky vtable needed by libgimpwidgets  */
-  vtable.palette_get_background   = gimp_palette_get_background;
-  vtable.palette_get_foreground   = gimp_palette_get_foreground;
   vtable.unit_get_number_of_units = gimp_unit_get_number_of_units;
   vtable.unit_get_number_of_built_in_units = gimp_unit_get_number_of_built_in_units;
   vtable.unit_get_factor          = gimp_unit_get_factor;
@@ -102,7 +100,10 @@ gimp_ui_init (const gchar *prog_name,
   vtable.unit_get_singular        = gimp_unit_get_singular;
   vtable.unit_get_plural          = gimp_unit_get_plural;
 
-  gimp_widgets_init (&vtable, gimp_ui_help_func);
+  gimp_widgets_init (&vtable,
+                     gimp_ui_help_func,
+                     gimp_palette_get_foreground,
+                     gimp_palette_get_background);
 
   if (! gimp_show_tool_tips ())
     gimp_help_disable_tooltips ();

@@ -66,6 +66,8 @@
 /*  local function prototypes  */
 
 static void         gui_help_func               (const gchar      *help_data);
+static gboolean     gui_get_background_func     (GimpRGB          *color);
+static gboolean     gui_get_foreground_func     (GimpRGB          *color);
 
 static void         gui_threads_enter           (Gimp             *gimp);
 static void         gui_threads_leave           (Gimp             *gimp);
@@ -103,10 +105,6 @@ static GHashTable *themes_hash = NULL;
 static GimpItemFactory *toolbox_item_factory = NULL;
 static GimpItemFactory *image_item_factory   = NULL;
 
-/*  forward declarations to avoid inclusion of libgimp-glue.h  */
-gboolean gimp_palette_get_background (GimpRGB *color);
-gboolean gimp_palette_get_foreground (GimpRGB *color);
-
 
 /*  public functions  */
 
@@ -123,9 +121,6 @@ gui_libs_init (gint    *argc,
     return FALSE;
 
   /*  Initialize the eeky vtable needed by libgimpwidgets  */
-  vtable.palette_get_background   = gimp_palette_get_background;
-  vtable.palette_get_foreground   = gimp_palette_get_foreground;
-
   vtable.unit_get_number_of_units = gimp_unit_get_number_of_units;
   vtable.unit_get_number_of_built_in_units = gimp_unit_get_number_of_built_in_units;
   vtable.unit_get_factor          = gimp_unit_get_factor;
@@ -136,7 +131,10 @@ gui_libs_init (gint    *argc,
   vtable.unit_get_singular        = gimp_unit_get_singular;
   vtable.unit_get_plural          = gimp_unit_get_plural;
 
-  gimp_widgets_init (&vtable, gui_help_func);
+  gimp_widgets_init (&vtable,
+                     gui_help_func,
+                     gui_get_foreground_func,
+                     gui_get_background_func);
 
   g_type_class_ref (GIMP_TYPE_COLOR_SELECT);
   
@@ -404,6 +402,26 @@ static void
 gui_help_func (const gchar *help_data)
 {
   gimp_help (the_gimp, NULL, help_data);
+}
+
+static gboolean
+gui_get_foreground_func (GimpRGB *color)
+{
+  g_return_val_if_fail (color != NULL, FALSE);
+
+  gimp_context_get_foreground (gimp_get_user_context (the_gimp), color);
+
+  return TRUE;
+}
+
+static gboolean
+gui_get_background_func (GimpRGB *color)
+{
+  g_return_val_if_fail (color != NULL, FALSE);
+
+  gimp_context_get_background (gimp_get_user_context (the_gimp), color);
+
+  return TRUE;
 }
 
 static void

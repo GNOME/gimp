@@ -1,5 +1,24 @@
 2003-05-25  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimphelpui.[ch] (_gimp_help_init): changed again
+	to take no paramaters and use _gimp_standard_help_func from
+	gimpwidgets-private.
+
+	* libgimpwidgets/gimpwidgets-private.[ch]: removed the palette
+	functions from GimpWidgetVTable. Instead, pass them as
+	GimpGetColorFunc to gimp_widgets_init() and make them available as
+	_gimp_get_foreground_func and _gimp_get_background_func.
+
+	* libgimpwidgets/gimpcolorbutton.c
+	* libgimp/gimpui.c: changed accordingly.
+
+	* app/libgimp_glue.[ch]: removed the palette functions.
+
+	* app/gui/gui.c: added gui_get_foreground_func() and
+	gui_get_background_func() and pass them to gimp_widgets_init().
+
+2003-05-25  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimphelpui.[ch]: added a GimpHelpFunc parameter to
 	_gimp_help_init(). Implement gimp_standard_help_func() here and
 	use the function pointer passed to _gimp_help_init().

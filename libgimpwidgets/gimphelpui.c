@@ -39,6 +39,7 @@
 
 #include "gimpdialog.h"
 #include "gimphelpui.h"
+#include "gimpwidgets-private.h"
 
 
 typedef enum
@@ -66,9 +67,8 @@ static gboolean gimp_help_tips_query_idle_start      (gpointer        tips_query
 
 /*  local variables  */
 
-static GimpHelpFunc  the_help_func = NULL;
-static GtkTooltips  *tool_tips     = NULL;
-static GtkWidget    *tips_query    = NULL;
+static GtkTooltips *tool_tips     = NULL;
+static GtkWidget   *tips_query    = NULL;
 
 
 /*  public functions  */
@@ -84,14 +84,13 @@ static GtkWidget    *tips_query    = NULL;
  * Nota that this function is called automatically by gimp_widgets_init().
  **/
 void
-_gimp_help_init (GimpHelpFunc standard_help_func)
+_gimp_help_init (void)
 {
-  g_return_if_fail (standard_help_func != NULL);
-
-  if (the_help_func)
-    g_error ("_gimp_help_init() must only be called once!");
-
-  the_help_func = standard_help_func;
+  if (tool_tips)
+    {
+      g_warning ("_gimp_help_init() must only be called once!");
+      return;
+    }
 
   tool_tips = gtk_tooltips_new ();
 
@@ -125,14 +124,14 @@ gimp_help_disable_tooltips (void)
 void
 gimp_standard_help_func (const gchar *help_data)
 {
-  if (! the_help_func)
+  if (! _gimp_standard_help_func)
     {
-      g_warning ("gimp_standard_help_func(): you must call _gimp_help_init() "
+      g_warning ("gimp_standard_help_func(): you must call gimp_widgets_init() "
                  "before using the help system");
       return;
     }
 
-  (* the_help_func) (help_data);
+  (* _gimp_standard_help_func) (help_data);
 }
 
 /**

@@ -207,9 +207,8 @@ gimp_color_button_destroy (GtkObject *object)
       gtk_widget_destroy (button->color_area);
       button->color_area = NULL;
     }
-  
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+
+  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static gboolean
@@ -464,10 +463,12 @@ gimp_color_button_use_color (gpointer   callback_data,
   switch (type)
     {
     case GIMP_COLOR_BUTTON_COLOR_FG:
-      _gimp_eek.palette_get_foreground (&color);
+      if (_gimp_get_foreground_func)
+        _gimp_get_foreground_func (&color);
       break;
     case GIMP_COLOR_BUTTON_COLOR_BG:
-      _gimp_eek.palette_get_background (&color);
+      if (_gimp_get_background_func)
+        _gimp_get_background_func (&color);
       break;
     case GIMP_COLOR_BUTTON_COLOR_BLACK:
       gimp_rgb_set (&color, 0.0, 0.0, 0.0);

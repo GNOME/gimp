@@ -30,11 +30,6 @@
  */
 
 
-gboolean      gimp_palette_set_foreground            (const GimpRGB *color);
-gboolean      gimp_palette_get_foreground            (GimpRGB       *color);
-gboolean      gimp_palette_set_background            (const GimpRGB *color);
-gboolean      gimp_palette_get_background            (GimpRGB       *color);
-
 gint          gimp_unit_get_number_of_units          (void);
 gint          gimp_unit_get_number_of_built_in_units (void) G_GNUC_CONST;
 GimpUnit      gimp_unit_new                          (gchar         *identifier,
