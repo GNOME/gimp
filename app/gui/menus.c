@@ -1965,10 +1965,10 @@ menus_last_opened_update_labels (void)
 
   for (i = 1; i <= num_entries; i++)
     {
-      g_string_sprintf (entry_filename, "%d. %s", i,
-			g_basename (((GString *) filename_slist->data)->str));
+      g_string_printf (entry_filename, "%d. %s", i,
+                       g_basename (((GString *) filename_slist->data)->str));
 
-      g_string_sprintf (path, "/File/MRU%02d", i);
+      g_string_printf (path, "/File/MRU%02d", i);
 
       widget = gtk_item_factory_get_widget (toolbox_factory, path->str);
       if (widget)

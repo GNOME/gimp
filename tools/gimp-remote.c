@@ -191,7 +191,7 @@ start_new_gimp (GString *file_list)
 
   for (i = 1; argv[i]; i++)
     {
-      if (g_strncasecmp ("file:", argv[i], 5) == 0)
+      if (g_ascii_strncasecmp ("file:", argv[i], 5) == 0)
 	argv[i] += 5;
     }
   execvp ("gimp", argv);
@@ -274,9 +274,9 @@ main (gint    argc,
 	  }
 
 	/* If not already a valid URI */
-        if (g_strncasecmp ("file:", argv[i], 5) &&
-            g_strncasecmp ("ftp:",  argv[i], 4) &&
-            g_strncasecmp ("http:", argv[i], 5))
+        if (g_ascii_strncasecmp ("file:", argv[i], 5) &&
+            g_ascii_strncasecmp ("ftp:",  argv[i], 4) &&
+            g_ascii_strncasecmp ("http:", argv[i], 5))
 	  {
 	    if (g_path_is_absolute (argv[i]))
 		file_uri = g_strconcat ("file:", argv[i], NULL);

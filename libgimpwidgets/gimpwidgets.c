@@ -338,7 +338,7 @@ gimp_radio_group_new (gboolean            in_frame,
       else
 	button = gtk_radio_button_new (group);
 
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+      group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
       if (user_data)
@@ -436,7 +436,7 @@ gimp_radio_group_new2 (gboolean         in_frame,
       else
 	button = gtk_radio_button_new (group);
 
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+      group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
       if (user_data)

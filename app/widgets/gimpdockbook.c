@@ -362,7 +362,7 @@ gimp_dockbook_menu_switch_page (GtkWidget    *widget,
   page_num = gtk_notebook_page_num (GTK_NOTEBOOK (dockable->dockbook),
 				    GTK_WIDGET (dockable));
 
-  gtk_notebook_set_page (GTK_NOTEBOOK (dockable->dockbook), page_num);
+  gtk_notebook_set_current_page (GTK_NOTEBOOK (dockable->dockbook), page_num);
 }
 
 static void
@@ -416,7 +416,7 @@ gimp_dockbook_tab_button_press (GtkWidget      *widget,
   page_num = gtk_notebook_page_num (GTK_NOTEBOOK (dockbook),
 				    GTK_WIDGET (dockable));
 
-  gtk_notebook_set_page (GTK_NOTEBOOK (dockbook), page_num);
+  gtk_notebook_set_current_page (GTK_NOTEBOOK (dockbook), page_num);
 
   if (bevent->button == 3)
     {

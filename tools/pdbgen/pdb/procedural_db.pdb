@@ -529,7 +529,7 @@ procedural_db_print_entry (gpointer key,
 
       if (list || num != 1)
         {
-          g_string_sprintf (buf, "%s <%d>", procedure->name, num);
+          g_string_printf (buf, "%s <%d>", procedure->name, num);
           output_string (buf->str);
         }
       else

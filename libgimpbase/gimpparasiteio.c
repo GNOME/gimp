@@ -152,17 +152,17 @@ gimp_pixpipe_params_build (GimpPixPipeParams *params)
 
   gint i;
 
-  g_string_sprintf (s, "ncells:%d cellwidth:%d cellheight:%d "
-		    "step:%d dim:%d cols:%d rows:%d placement:%s",
-		    params->ncells, params->cellwidth, params->cellheight,
-		    params->step, params->dim,
-		    params->cols, params->rows,
-		    params->placement);
+  g_string_printf (s, "ncells:%d cellwidth:%d cellheight:%d "
+                   "step:%d dim:%d cols:%d rows:%d placement:%s",
+                   params->ncells, params->cellwidth, params->cellheight,
+                   params->step, params->dim,
+                   params->cols, params->rows,
+                   params->placement);
 
   for (i = 0; i < params->dim; i++)
     {
-      g_string_sprintfa (s, " rank%d:%d", i, params->rank[i]);
-      g_string_sprintfa (s, " sel%d:%s", i, params->selection[i]);
+      g_string_printfa (s, " rank%d:%d", i, params->rank[i]);
+      g_string_printfa (s, " sel%d:%s", i, params->selection[i]);
     }
 
   str = s->str;

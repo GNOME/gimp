@@ -822,7 +822,7 @@ text_render (GimpImage    *gimage,
       text_gdk_image_to_region (image, antialias, &maskPR);
 
       /* free the image */
-      gdk_image_destroy (image);
+      gdk_image_unref (image);
     }
 
   /*  Crop the mask buffer  */

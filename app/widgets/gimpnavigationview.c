@@ -267,7 +267,7 @@ gimp_navigation_preview_grab_pointer (GimpNavigationPreview *nav_preview)
 		    GDK_EXTENSION_EVENTS_ALL,
 		    widget->window, cursor, 0);
 
-  gdk_cursor_destroy (cursor);
+  gdk_cursor_unref (cursor);
 }
 
 static gboolean

@@ -119,8 +119,8 @@ toast_old_temp_files (void)
 	    /*  On Windows, you can't remove open files anyhow,
 	     *  so no harm trying.
 	     */
-	    g_string_sprintf (filename, "%s" G_DIR_SEPARATOR_S "%s",
-			      base_config->swap_path, entry->d_name);
+	    g_string_printf (filename, "%s" G_DIR_SEPARATOR_S "%s",
+                             base_config->swap_path, entry->d_name);
 	    unlink (filename->str);
 	  }
       }

@@ -917,7 +917,7 @@ explorer_dialog (void)
 			    gtk_label_new (_("Fractals")));
   gtk_widget_show (frame);
 
-  gtk_notebook_set_page (GTK_NOTEBOOK (notebook), 1);
+  gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), 1);
 
   /* Done */
 

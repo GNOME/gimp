@@ -86,28 +86,28 @@ static const LayerMode layer_modes[] =
 		         	* in the LayerModeEffects enumeration.
 				*/
 {
-  { TRUE,  TRUE,  FALSE, },  /*  NORMAL_MODE        */
-  { TRUE,  TRUE,  FALSE, },  /*  DISSOLVE_MODE      */
-  { TRUE,  TRUE,  FALSE, },  /*  BEHIND_MODE        */
-  { FALSE, FALSE, FALSE, },  /*  MULTIPLY_MODE      */
-  { FALSE, FALSE, FALSE, },  /*  SCREEN_MODE        */
-  { FALSE, FALSE, FALSE, },  /*  OVERLAY_MODE       */
-  { FALSE, FALSE, FALSE, },  /*  DIFFERENCE_MODE    */
-  { FALSE, FALSE, FALSE, },  /*  ADDITION_MODE      */
-  { FALSE, FALSE, FALSE, },  /*  SUBTRACT_MODE      */
-  { FALSE, FALSE, FALSE, },  /*  DARKEN_ONLY_MODE   */
-  { FALSE, FALSE, FALSE, },  /*  LIGHTEN_ONLY_MODE  */
-  { FALSE, FALSE, FALSE, },  /*  HUE_MODE           */
-  { FALSE, FALSE, FALSE, },  /*  SATURATION_MODE    */
-  { FALSE, FALSE, FALSE, },  /*  COLOR_MODE         */
-  { FALSE, FALSE, FALSE, },  /*  VALUE_MODE         */
-  { FALSE, FALSE, FALSE, },  /*  DIVIDE_MODE        */
-  { FALSE, FALSE, FALSE, },  /*  DODGE_MODE         */
-  { FALSE, FALSE, FALSE, },  /*  BURN_MODE          */
-  { FALSE, FALSE, FALSE, },  /*  HARDLIGHT_MODE     */
-  { TRUE,  FALSE, TRUE,  },  /*  ERASE_MODE         */
-  { TRUE,  TRUE,  TRUE,  },  /*  REPLACE_MODE       */
-  { TRUE,  FALSE, TRUE,  }   /*  ANTI_ERASE_MODE    */
+  { TRUE,  TRUE,  FALSE },  /*  NORMAL_MODE        */
+  { TRUE,  TRUE,  FALSE },  /*  DISSOLVE_MODE      */
+  { TRUE,  TRUE,  FALSE },  /*  BEHIND_MODE        */
+  { FALSE, FALSE, FALSE },  /*  MULTIPLY_MODE      */
+  { FALSE, FALSE, FALSE },  /*  SCREEN_MODE        */
+  { FALSE, FALSE, FALSE },  /*  OVERLAY_MODE       */
+  { FALSE, FALSE, FALSE },  /*  DIFFERENCE_MODE    */
+  { FALSE, FALSE, FALSE },  /*  ADDITION_MODE      */
+  { FALSE, FALSE, FALSE },  /*  SUBTRACT_MODE      */
+  { FALSE, FALSE, FALSE },  /*  DARKEN_ONLY_MODE   */
+  { FALSE, FALSE, FALSE },  /*  LIGHTEN_ONLY_MODE  */
+  { FALSE, FALSE, FALSE },  /*  HUE_MODE           */
+  { FALSE, FALSE, FALSE },  /*  SATURATION_MODE    */
+  { FALSE, FALSE, FALSE },  /*  COLOR_MODE         */
+  { FALSE, FALSE, FALSE },  /*  VALUE_MODE         */
+  { FALSE, FALSE, FALSE },  /*  DIVIDE_MODE        */
+  { FALSE, FALSE, FALSE },  /*  DODGE_MODE         */
+  { FALSE, FALSE, FALSE },  /*  BURN_MODE          */
+  { FALSE, FALSE, FALSE },  /*  HARDLIGHT_MODE     */
+  { TRUE,  FALSE, TRUE  },  /*  ERASE_MODE         */
+  { TRUE,  TRUE,  TRUE  },  /*  REPLACE_MODE       */
+  { TRUE,  FALSE, TRUE  }   /*  ANTI_ERASE_MODE    */
 };
 
 /*  ColorHash structure  */

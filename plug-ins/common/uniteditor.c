@@ -672,8 +672,8 @@ unit_editor_dialog (void)
   gimp_help_free ();
   gdk_flush ();
 
-  gdk_pixmap_unref (yes_pixmap);
-  gdk_bitmap_unref (yes_mask);
-  gdk_pixmap_unref (no_pixmap);
-  gdk_bitmap_unref (no_mask);
+  gdk_drawable_unref (yes_pixmap);
+  gdk_drawable_unref (yes_mask);
+  gdk_drawable_unref (no_pixmap);
+  gdk_drawable_unref (no_mask);
 }

@@ -1,3 +1,38 @@
+2001-08-01  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: added GTK_DISABLE_COMPAT_H back to CPPFLAGS.
+	
+	* app/user_install.c
+	* app/base/base.c
+	* app/gui/info-window.c
+	* app/gui/menus.c
+	* app/gui/preferences-dialog.c
+	* app/pdb/procedural_db_cmds.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimptransformtool.c
+	* app/widgets/gimpdialogfactory.c
+	* app/widgets/gimpdockbook.c
+	* app/widgets/gimpdrawablelistview.c
+	* app/widgets/gimpnavigationpreview.c
+	* libgimpbase/gimpparasiteio.c
+	* libgimpwidgets/gimpwidgets.c
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/common/animationplay.c
+	* plug-ins/common/newsprint.c
+	* plug-ins/common/uniteditor.c
+	* plug-ins/dbbrowser/dbbrowser_utils.c
+	* plug-ins/gap/gap_navigator_dialog.c
+	* plug-ins/gdyntext/gdyntext_ui.c
+	* plug-ins/helpbrowser/helpbrowser.c
+	* plug-ins/ifscompose/ifscompose_storage.c
+	* plug-ins/print/gimp_main_window.c
+	* tools/gimp-remote.c
+	* tools/pdbgen/pdb/procedural_db.pdb: replaced lots of deprecated 
+	glib, gdk and gtk+ functions using the new API.
+
+	* app/paint-funcs/paint-funcs-rgb.c: removed trailing commas.
+
 2001-08-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/base/base.c: g_strdup (g_get_temp_dir ()), may fix an unseen

@@ -790,7 +790,7 @@ gimp_create_main_window (void)
         memcpy (buf + 1, plist[i].name, 17);
         item = gtk_menu_item_new_with_label (gettext (buf));
       }
-    gtk_menu_append (GTK_MENU (menu), item);
+    gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
     gtk_signal_connect (GTK_OBJECT (item), "activate",
                         GTK_SIGNAL_FUNC (gimp_plist_callback),
                         (gpointer) i);
@@ -1070,12 +1070,12 @@ gimp_scaling_callback (GtkWidget *widget)
  *
  ****************************************************************************/
 void 
-gimp_plist_build_combo (GtkWidget      *combo,       /* I - Combo widget */
-			gint            num_items,   /* I - Number of items */
-			gchar         **items,       /* I - Menu items */
-			gchar          *cur_item,    /* I - Current item */
-			GtkSignalFunc   callback,    /* I - Callback */
-			gint           *callback_id) /* IO - Callback ID (init to -1) */
+gimp_plist_build_combo (GtkWidget  *combo,       /* I - Combo widget */
+			gint        num_items,   /* I - Number of items */
+			gchar     **items,       /* I - Menu items */
+			gchar      *cur_item,    /* I - Current item */
+			GCallback   callback,    /* I - Callback */
+			gint       *callback_id) /* IO - Callback ID (init to -1) */
 {
   gint      i; /* Looping var */
   GList    *list = 0;
@@ -1361,7 +1361,7 @@ gimp_plist_callback (GtkWidget *widget,
 			  num_media_sizes,
 			  media_sizes,
 			  p->v.media_size,
-			  gimp_media_size_callback,
+			  G_CALLBACK (gimp_media_size_callback),
 			  &media_size_callback_id);
 
   for (i = 0; i < num_media_sizes; i ++)
@@ -1380,7 +1380,7 @@ gimp_plist_callback (GtkWidget *widget,
 			  num_media_types,
 			  media_types,
 			  p->v.media_type,
-			  gimp_media_type_callback,
+			  G_CALLBACK (gimp_media_type_callback),
 			  &media_type_callback_id);
 
   if (num_media_types > 0)
@@ -1402,7 +1402,7 @@ gimp_plist_callback (GtkWidget *widget,
 			  num_media_sources,
 			  media_sources,
 			  p->v.media_source,
-			  gimp_media_source_callback,
+			  G_CALLBACK (gimp_media_source_callback),
 			  &media_source_callback_id);
 
   if (num_media_sources > 0)
@@ -1423,7 +1423,7 @@ gimp_plist_callback (GtkWidget *widget,
 			  num_ink_types,
 			  ink_types,
 			  p->v.ink_type,
-			  gimp_ink_type_callback,
+			  G_CALLBACK (gimp_ink_type_callback),
 			  &ink_type_callback_id);
 
   if (num_ink_types > 0)
@@ -1445,7 +1445,7 @@ gimp_plist_callback (GtkWidget *widget,
 			  num_resolutions,
 			  resolutions,
 			  p->v.resolution,
-			  gimp_resolution_callback,
+			  G_CALLBACK (gimp_resolution_callback),
 			  &resolution_callback_id);
 
   if (num_resolutions > 0)

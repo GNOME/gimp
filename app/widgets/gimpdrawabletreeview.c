@@ -461,7 +461,6 @@ void
 gimp_drawable_list_view_set_image (GimpDrawableListView *view,
 				   GimpImage            *gimage)
 {
-  g_return_if_fail (view != NULL);
   g_return_if_fail (GIMP_IS_DRAWABLE_LIST_VIEW (view));
   g_return_if_fail (! gimage || GIMP_IS_IMAGE (gimage));
 
@@ -473,7 +472,6 @@ static void
 gimp_drawable_list_view_real_set_image (GimpDrawableListView *view,
 					GimpImage            *gimage)
 {
-  g_return_if_fail (view != NULL);
   g_return_if_fail (GIMP_IS_DRAWABLE_LIST_VIEW (view));
   g_return_if_fail (! gimage || GIMP_IS_IMAGE (gimage));
 

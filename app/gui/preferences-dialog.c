@@ -1155,7 +1155,7 @@ prefs_default_resolution_callback (GtkWidget *widget,
   new_xres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
   new_yres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
 
-  size_sizeentry = gtk_object_get_data (GTK_OBJECT (widget), "size_sizeentry");
+  size_sizeentry = g_object_get_data (G_OBJECT (widget), "size_sizeentry");
 
   if (gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (data)))
     {
@@ -1213,7 +1213,7 @@ prefs_res_source_callback (GtkWidget *widget,
   else
     {
       monitor_resolution_sizeentry =
-	gtk_object_get_data (GTK_OBJECT (widget), "monitor_resolution_sizeentry");
+	g_object_get_data (G_OBJECT (widget), "monitor_resolution_sizeentry");
       
       if (monitor_resolution_sizeentry)
 	{
@@ -1336,10 +1336,10 @@ prefs_tree_select_callback (GtkWidget    *widget,
   if (! GTK_CLIST (widget)->selection)
     return;
 
-  notebook = (GtkNotebook*) gtk_object_get_user_data (GTK_OBJECT (widget));
+  notebook = g_object_get_data (G_OBJECT (widget), "notebook");
   page = (gint) gtk_ctree_node_get_row_data (GTK_CTREE (widget), node);
 
-  gtk_notebook_set_page (notebook, page);
+  gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), page);
 }
 
 /*  create a frame with title and a vbox  */
@@ -1369,11 +1369,11 @@ prefs_help_func (const gchar *help_data)
   GtkWidget *event_box;
   gint       page_num;
 
-  notebook  = gtk_object_get_user_data (GTK_OBJECT (prefs_dlg));
+  notebook  = g_object_get_data (G_OBJECT (prefs_dlg), "notebook");
   page_num  = gtk_notebook_get_current_page (GTK_NOTEBOOK (notebook));
   event_box = gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), page_num);
 
-  help_data = gtk_object_get_data (GTK_OBJECT (event_box), "gimp_help_data");
+  help_data = g_object_get_data (G_OBJECT (event_box), "gimp_help_data");
   gimp_standard_help_func (help_data);
 }
 
@@ -1560,8 +1560,8 @@ preferences_dialog_create (void)
   gtk_notebook_set_show_border (GTK_NOTEBOOK (notebook), FALSE);
   gtk_container_add (GTK_CONTAINER (frame), notebook);
 
-  gtk_object_set_user_data (GTK_OBJECT (prefs_dlg), notebook);
-  gtk_object_set_user_data (GTK_OBJECT (ctree), notebook);
+  g_object_set_data (G_OBJECT (prefs_dlg), "notebook", notebook);
+  g_object_set_data (G_OBJECT (ctree), "notebook", notebook);
 
   g_signal_connect (G_OBJECT (ctree), "tree_select_row",
 		    G_CALLBACK (prefs_tree_select_callback),
@@ -1663,7 +1663,7 @@ preferences_dialog_create (void)
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry2),
 				_("dpi"), 1, 4, 0.0);
 
-  gtk_object_set_data (GTK_OBJECT (sizeentry2), "size_sizeentry", sizeentry);
+  g_object_set_data (G_OBJECT (sizeentry2), "size_sizeentry", sizeentry);
 
   gimp_size_entry_set_refval_boundaries
     (GIMP_SIZE_ENTRY (sizeentry2), 0, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
@@ -2518,7 +2518,7 @@ preferences_dialog_create (void)
   button = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
   if (ABS (gimprc.monitor_xres - gimprc.monitor_yres) < GIMP_MIN_RESOLUTION)
     gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (button), TRUE);
-  gtk_object_set_data (GTK_OBJECT (sizeentry), "chain_button", button); 
+  g_object_set_data (G_OBJECT (sizeentry), "chain_button", button); 
   gtk_table_attach_defaults (GTK_TABLE (sizeentry), button, 1, 3, 3, 4);
   gtk_widget_show (button);
 
@@ -2571,14 +2571,14 @@ preferences_dialog_create (void)
   g_signal_connect (G_OBJECT (button), "toggled",
 		    G_CALLBACK (prefs_res_source_callback),
 		    NULL);
-  gtk_object_set_data (GTK_OBJECT (button), "monitor_resolution_sizeentry",
-		       sizeentry);
-  gtk_object_set_data (GTK_OBJECT (button), "set_sensitive",
-		       label);
-  gtk_object_set_data (GTK_OBJECT (button), "inverse_sensitive",
-		       sizeentry);
-  gtk_object_set_data (GTK_OBJECT (sizeentry), "inverse_sensitive",
-		       calibrate_button);
+  g_object_set_data (G_OBJECT (button), "monitor_resolution_sizeentry",
+                     sizeentry);
+  g_object_set_data (G_OBJECT (button), "set_sensitive",
+                     label);
+  g_object_set_data (G_OBJECT (button), "inverse_sensitive",
+                     sizeentry);
+  g_object_set_data (G_OBJECT (sizeentry), "inverse_sensitive",
+                     calibrate_button);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
   gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);

@@ -1673,7 +1673,7 @@ curves_graph_events (GtkWidget    *widget,
 				    GIMP_TOOL_CURSOR_NONE,
 				    GIMP_CURSOR_MODIFIER_NONE);
 	  gdk_window_set_cursor (cd->graph->window, cursor);
-	  gdk_cursor_destroy (cursor);
+	  gdk_cursor_unref (cursor);
 	}
 
       curve_print_loc (cd, x, 255 - y);

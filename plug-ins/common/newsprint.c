@@ -1492,7 +1492,7 @@ newsprint_cspace_update (GtkWidget *widget,
       /* show the new channels */
       gtk_widget_show (st->channel_notebook[new_cs]);
 
-      gtk_notebook_set_page (GTK_NOTEBOOK (st->channel_notebook[new_cs]), 0);
+      gtk_notebook_set_current_page (GTK_NOTEBOOK (st->channel_notebook[new_cs]), 0);
     }
 }
 

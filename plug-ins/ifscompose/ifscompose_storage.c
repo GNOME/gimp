@@ -422,7 +422,8 @@ ifsvals_parse_string (char *str, IfsComposeVals *vals, AffElement ***elements)
   scanner->input_name = "IfsCompose Saved Data";
   
   for (i = 0; i < nsymbols; i++)
-    g_scanner_add_symbol (scanner, symbols[i].name, GINT_TO_POINTER (symbols[i].token));
+    g_scanner_add_symbol (scanner, 
+                          symbols[i].name, GINT_TO_POINTER (symbols[i].token));
   
   g_scanner_input_text (scanner, str, strlen (str));
       
@@ -448,55 +449,54 @@ ifsvals_stringify (IfsComposeVals *vals, AffElement **elements)
 {
   gint i;
   GString *result = g_string_new (NULL);
-  char *res_str;
 
-  g_string_sprintfa (result, "iterations %d\n", vals->iterations);
-  g_string_sprintfa (result, "max_memory %d\n", vals->max_memory);
-  g_string_sprintfa (result, "subdivide %d\n", vals->subdivide);
-  g_string_sprintfa (result, "radius %f\n", vals->radius);
-  g_string_sprintfa (result, "aspect_ratio %f\n", vals->aspect_ratio);
-  g_string_sprintfa (result, "center_x %f\n", vals->center_x);
-  g_string_sprintfa (result, "center_y %f\n", vals->center_y);
+  g_string_printfa (result, "iterations %d\n", vals->iterations);
+  g_string_printfa (result, "max_memory %d\n", vals->max_memory);
+  g_string_printfa (result, "subdivide %d\n", vals->subdivide);
+  g_string_printfa (result, "radius %f\n", vals->radius);
+  g_string_printfa (result, "aspect_ratio %f\n", vals->aspect_ratio);
+  g_string_printfa (result, "center_x %f\n", vals->center_x);
+  g_string_printfa (result, "center_y %f\n", vals->center_y);
 
   for (i=0; i<vals->num_elements; i++)
     {
       g_string_append (result, "element {\n");
-      g_string_sprintfa (result, "    x %f\n", elements[i]->v.x);
-      g_string_sprintfa (result, "    y %f\n", elements[i]->v.y);
-      g_string_sprintfa (result, "    theta %f\n", elements[i]->v.theta);
-      g_string_sprintfa (result, "    scale %f\n", elements[i]->v.scale);
-      g_string_sprintfa (result, "    asym %f\n", elements[i]->v.asym);
-      g_string_sprintfa (result, "    shear %f\n", elements[i]->v.shear);
-      g_string_sprintfa (result, "    flip %d\n", elements[i]->v.flip);
-      g_string_sprintfa (result, "    red_color { %f,%f,%f }\n",
-			 elements[i]->v.red_color.r,
-			 elements[i]->v.red_color.g,
-			 elements[i]->v.red_color.b);
-      g_string_sprintfa (result, "    green_color { %f,%f,%f }\n",
-			 elements[i]->v.green_color.r,
-			 elements[i]->v.green_color.g,
-			 elements[i]->v.green_color.b);
-      g_string_sprintfa (result, "    blue_color { %f,%f,%f }\n",
-			 elements[i]->v.blue_color.r,
-			 elements[i]->v.blue_color.g,
-			 elements[i]->v.blue_color.b);
-      g_string_sprintfa (result, "    black_color { %f,%f,%f }\n",
-			 elements[i]->v.black_color.r,
-			 elements[i]->v.black_color.g,
-			 elements[i]->v.black_color.b);
-      g_string_sprintfa (result, "    target_color { %f,%f,%f }\n",
-			 elements[i]->v.target_color.r,
-			 elements[i]->v.target_color.g,
-			 elements[i]->v.target_color.b);
-      g_string_sprintfa (result, "    hue_scale %f\n", elements[i]->v.hue_scale);
-      g_string_sprintfa (result, "    value_scale %f\n", elements[i]->v.value_scale);
-      g_string_sprintfa (result, "    simple_color %d\n", elements[i]->v.simple_color);
-      g_string_sprintfa (result, "    prob %f\n", elements[i]->v.prob);
+      g_string_printfa (result, "    x %f\n", elements[i]->v.x);
+      g_string_printfa (result, "    y %f\n", elements[i]->v.y);
+      g_string_printfa (result, "    theta %f\n", elements[i]->v.theta);
+      g_string_printfa (result, "    scale %f\n", elements[i]->v.scale);
+      g_string_printfa (result, "    asym %f\n", elements[i]->v.asym);
+      g_string_printfa (result, "    shear %f\n", elements[i]->v.shear);
+      g_string_printfa (result, "    flip %d\n", elements[i]->v.flip);
+      g_string_printfa (result, "    red_color { %f,%f,%f }\n",
+                        elements[i]->v.red_color.r,
+                        elements[i]->v.red_color.g,
+                        elements[i]->v.red_color.b);
+      g_string_printfa (result, "    green_color { %f,%f,%f }\n",
+                        elements[i]->v.green_color.r,
+                        elements[i]->v.green_color.g,
+                        elements[i]->v.green_color.b);
+      g_string_printfa (result, "    blue_color { %f,%f,%f }\n",
+                        elements[i]->v.blue_color.r,
+                        elements[i]->v.blue_color.g,
+                        elements[i]->v.blue_color.b);
+      g_string_printfa (result, "    black_color { %f,%f,%f }\n",
+                        elements[i]->v.black_color.r,
+                        elements[i]->v.black_color.g,
+                        elements[i]->v.black_color.b);
+      g_string_printfa (result, "    target_color { %f,%f,%f }\n",
+                        elements[i]->v.target_color.r,
+                        elements[i]->v.target_color.g,
+                        elements[i]->v.target_color.b);
+      g_string_printfa (result, "    hue_scale %f\n", 
+                        elements[i]->v.hue_scale);
+      g_string_printfa (result, "    value_scale %f\n", 
+                        elements[i]->v.value_scale);
+      g_string_printfa (result, "    simple_color %d\n", 
+                        elements[i]->v.simple_color);
+      g_string_printfa (result, "    prob %f\n", elements[i]->v.prob);
       g_string_append (result, "}\n");
     }
 
-  res_str = result->str;
-  g_string_free (result, FALSE);
-
-  return res_str;
+  return g_string_free (result, FALSE);
 }

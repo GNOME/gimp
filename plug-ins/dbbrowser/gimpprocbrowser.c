@@ -580,7 +580,7 @@ dialog_search_callback (GtkWidget *widget,
   dbbrowser_t  *dbbrowser = data;
   gchar        *func_name;
   gchar        *label;
-  gchar        *query_text;
+  const gchar  *query_text;
   GString      *query;
 
   gtk_clist_freeze (GTK_CLIST (dbbrowser->clist));

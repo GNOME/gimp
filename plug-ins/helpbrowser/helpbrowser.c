@@ -466,8 +466,8 @@ load_page (HelpPage *source_page,
       else
 	new_ref = g_strconcat (old_dir, G_DIR_SEPARATOR_S, ref, NULL);
 
-      g_string_sprintf (file_contents, gettext (dir_not_found_format_string),
-			eek_png_tag, new_dir, new_ref);
+      g_string_printf (file_contents, gettext (dir_not_found_format_string),
+                       eek_png_tag, new_dir, new_ref);
       html_source (dest_page, new_ref, 0, file_contents->str, add_to_queue, FALSE);
 
       goto FINISH;
@@ -527,8 +527,8 @@ load_page (HelpPage *source_page,
   if (strlen (file_contents->str) <= 0)
     {
       chdir (old_dir);
-      g_string_sprintf (file_contents, gettext (doc_not_found_format_string),
-			eek_png_tag, ref);
+      g_string_printf (file_contents, gettext (doc_not_found_format_string),
+                       eek_png_tag, ref);
     }
   else
     page_valid = TRUE;

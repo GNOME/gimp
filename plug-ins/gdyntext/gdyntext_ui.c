@@ -193,8 +193,8 @@ create_about_dialog (void)
   glade_pixmap = gdk_pixmap_create_from_xpm_d(window->window, &glade_mask,
 		&window->style->bg[GTK_STATE_NORMAL], gdyntext_logo_xpm);
   pixmap = gtk_pixmap_new(glade_pixmap, glade_mask);
-  gdk_pixmap_unref(glade_pixmap);
-  gdk_bitmap_unref(glade_mask);
+  gdk_drawable_unref(glade_pixmap);
+  gdk_drawable_unref(glade_mask);
   gtk_widget_show(pixmap);
   gtk_box_pack_start(GTK_BOX(hbox1), pixmap, FALSE, TRUE, 0);
   

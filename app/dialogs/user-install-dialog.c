@@ -309,7 +309,7 @@ user_install_notebook_set_page (GtkNotebook *notebook,
       gimp_pixmap_set (GIMP_PIXMAP (title_pixmap), eek_xpm);
     }
   
-  gtk_notebook_set_page (notebook, index);
+  gtk_notebook_set_current_page (notebook, index);
 }
 
 static void
@@ -498,7 +498,7 @@ user_install_ctree_select_row (GtkWidget      *widget,
 
   notebook = (GtkNotebook*) data;
 
-  gtk_notebook_set_page (notebook, row);
+  gtk_notebook_set_current_page (notebook, row);
 }
 
 void

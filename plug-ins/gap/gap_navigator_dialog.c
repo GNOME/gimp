@@ -2283,7 +2283,7 @@ frame_widget_preview_redraw (FrameWidget *frame_widget)
 			 naviD->image_width + 4, naviD->image_height + 4);
     if(*pixmap)
     {
-       gdk_pixmap_unref(*pixmap);
+       gdk_drawable_unref(*pixmap);
        *pixmap = NULL;
     }
   }
@@ -2815,7 +2815,7 @@ frame_widget_create (gint32 image_id, gint32 frame_nr)
   gtk_widget_show (vbox);
   gtk_widget_show (list_item);
 
-  gtk_widget_ref (frame_widget->list_item);
+  g_object_ref (frame_widget->list_item);
 
   if(gap_debug) printf("frame_widget_create END image_id:%d, nr:%d\n", (int)image_id, (int)frame_nr);
 
@@ -2831,7 +2831,7 @@ frame_widget_delete (FrameWidget *fw)
                         );
    if(fw->frame_pixmap)
    {
-      gdk_pixmap_unref(fw->frame_pixmap);
+      gdk_drawable_unref(fw->frame_pixmap);
    }
 
    if(fw->thumb_filename) g_free(fw->thumb_filename);
@@ -2840,7 +2840,7 @@ frame_widget_delete (FrameWidget *fw)
    naviD->frame_widgets = g_slist_remove (naviD->frame_widgets, fw);
  
    /*  Release the widget  */
-   gtk_widget_unref(fw->list_item);
+   g_object_unref(fw->list_item);
    g_free(fw);
 }
 

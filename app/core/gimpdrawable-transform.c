@@ -1046,10 +1046,7 @@ gimp_transform_tool_grid_recalc (GimpTransformTool *tr_tool)
     }
 
   if (gimp_transform_tool_show_grid ())
-    {
-      /* EEEEEEK!!! */ 
-      gimp_transform_tool_setup_grid (GIMP_TRANSFORM_TOOL (tool_manager_get_active (the_gimp)));
-    }
+    gimp_transform_tool_setup_grid (tr_tool);
 }
 
 static void
@@ -1697,14 +1694,12 @@ gimp_transform_tool_cubic (gdouble dx,
   result = ((( ( - 7 * jm1 + 21 * j - 21 * jp1 + 7 * jp2 ) * dx +
                ( 15 * jm1 - 36 * j + 27 * jp1 - 6 * jp2 ) ) * dx +
                ( - 9 * jm1 + 9 * jp1 ) ) * dx + (jm1 + 16 * j + jp1) ) / 18.0;
-#else
+#endif
 
   /* Catmull-Rom - not bad */
   result = ((( ( - jm1 + 3 * j - 3 * jp1 + jp2 ) * dx +
                ( 2 * jm1 - 5 * j + 4 * jp1 - jp2 ) ) * dx +
                ( - jm1 + jp1 ) ) * dx + (j + j) ) / 2.0;
-
-#endif
 
   return result;
 }

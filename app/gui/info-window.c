@@ -288,13 +288,13 @@ info_window_create_extended (InfoDialog *info_win)
   gtk_widget_show (hbox);
 
 
-  gtk_notebook_append_page (GTK_NOTEBOOK(info_win->info_notebook),
+  gtk_notebook_append_page (GTK_NOTEBOOK (info_win->info_notebook),
 			    main_table, gtk_label_new (_("Extended")));
   gtk_widget_show (main_table);
 
 
   /* Set back to first page */
-  gtk_notebook_set_page (GTK_NOTEBOOK(info_win->info_notebook), 0);
+  gtk_notebook_set_current_page (GTK_NOTEBOOK (info_win->info_notebook), 0);
 
   gtk_object_set_user_data (GTK_OBJECT (info_win->info_notebook),
 			    (gpointer)info_win);

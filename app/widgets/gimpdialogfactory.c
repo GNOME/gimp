@@ -453,8 +453,8 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
 		{
 		  GtkWidget *toplevel;
 
-		  gtk_notebook_set_page (GTK_NOTEBOOK (dockable->dockbook),
-					 page_num);
+		  gtk_notebook_set_current_page (GTK_NOTEBOOK (dockable->dockbook),
+                                                 page_num);
 
 		  toplevel = gtk_widget_get_toplevel (dialog);
 
@@ -1274,7 +1274,7 @@ gimp_dialog_factories_idle_foreach (gchar             *name,
 	}
     }
 
-  gdk_cursor_destroy (cursor);
+  gdk_cursor_unref (cursor);
 }
 
 static void

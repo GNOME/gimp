@@ -392,7 +392,7 @@ reshape_from_bitmap (gchar* bitmap)
 					       bitmap,
 					       width, height);
       gtk_widget_shape_combine_mask (shape_window, shape_mask, 0, 0);
-      gdk_bitmap_unref (shape_mask);
+      gdk_drawable_unref (shape_mask);
 
       if (!prev_bitmap)
 	{
