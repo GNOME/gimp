@@ -1,5 +1,13 @@
 2001-11-23  Sven Neumann  <sven@gimp.org>
 
+	* app/gimprc.c: don't include gimputils.h, it's gone.
+
+	* libgimpbase/Makefile.am: removed stale reference to gimputils.h.
+
+	* libgimpwidgets/gimpcolorbutton.h: wanted to type G_END_DECLS here.
+
+2001-11-23  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: bumped version number to 1.3.1. 
 	Require Glib/GTK+-1.3.11 and Pango-0.22. Removed GDK_DISABLE_COMPAT_H
 	and GTK_DISABLE_COMPAT_H from our default CFLAGS since they don't

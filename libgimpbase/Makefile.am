@@ -56,7 +56,6 @@ libgimpbaseinclude_HEADERS = @STRIP_BEGIN@ \
 	gimpenv.h		\
 	gimplimits.h		\
 	gimpsignal.h            \
-	gimputils.h		\
 	gimpparasite.h		\
 	gimpparasiteio.h	\
 	gimpunit.h		\

@@ -34,7 +34,6 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
-#include "libgimpbase/gimputils.h"
 #include "libgimpcolor/gimpcolor.h"
 
 #include "gui/gui-types.h"

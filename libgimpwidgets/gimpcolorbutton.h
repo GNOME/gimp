@@ -80,6 +80,6 @@ void        gimp_color_button_set_type   (GimpColorButton   *gcb,
 					  GimpColorAreaType  type);
 
 
-G_GNUC_CONST
+G_END_DECLS
 
 #endif /* __GIMP_COLOR_BUTTON_H__ */
