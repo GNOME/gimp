@@ -20,7 +20,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- * 
+ *
  */
 
 #include "config.h"
@@ -120,14 +120,14 @@ d_draw_spiral (Dobject *obj)
   ang_grid = 2.0*G_PI/(gdouble)180;
 
 
-  for (loop = 0 ; loop <= abs (obj->type_data * 180) + 
+  for (loop = 0 ; loop <= abs (obj->type_data * 180) +
          clock_wise * (gint)RINT (offset_angle/ang_grid) ; loop++)
     {
       gdouble lx, ly;
       GdkPoint calc_pnt;
 
       ang_loop = (gdouble)loop * ang_grid;
-        
+
       lx = sp_cons * ang_loop * cos (ang_loop)*clock_wise;
       ly = sp_cons * ang_loop * sin (ang_loop);
 
@@ -212,7 +212,7 @@ d_paint_spiral (Dobject *obj)
       GdkPoint calc_pnt;
 
       ang_loop = (gdouble)loop * ang_grid;
-        
+
       lx = sp_cons * ang_loop * cos (ang_loop)*clock_wise;
       ly = sp_cons * ang_loop * sin (ang_loop);
 
@@ -297,7 +297,7 @@ d_update_spiral (GdkPoint *pnt)
 
   /* Undraw last one then draw new one */
   center_pnt = obj_creating->points;
-  
+
   if (!center_pnt)
     return; /* No points */
 
@@ -306,7 +306,7 @@ d_update_spiral (GdkPoint *pnt)
    * Only undraw if already have edge point.
    */
 
-  /* Hack - turn off cnt points in draw routine 
+  /* Hack - turn off cnt points in draw routine
    * Looking back over the other update routines I could
    * use this trick again and cut down on code size!
    */

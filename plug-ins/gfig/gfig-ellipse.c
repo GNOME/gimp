@@ -20,7 +20,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- * 
+ *
  */
 
 #include "config.h"
@@ -73,7 +73,7 @@ d_draw_ellipse (Dobject * obj)
     top_x = 2 * center_pnt->pnt.x - edge_pnt->pnt.x;
   else
     top_x = edge_pnt->pnt.x;
-  
+
   if (edge_pnt->pnt.y > center_pnt->pnt.y)
     top_y = 2 * center_pnt->pnt.y - edge_pnt->pnt.y;
   else
@@ -218,7 +218,7 @@ d_paint_ellipse (Dobject *obj)
     {
       d_paint_approx_ellipse (obj);
       return;
-    }      
+    }
 
   center_pnt = obj->points;
 
@@ -239,7 +239,7 @@ d_paint_ellipse (Dobject *obj)
     top_x = 2*center_pnt->pnt.x - edge_pnt->pnt.x;
   else
     top_x = edge_pnt->pnt.x;
-  
+
   if (edge_pnt->pnt.y > center_pnt->pnt.y)
     top_y = 2*center_pnt->pnt.y - edge_pnt->pnt.y;
   else
@@ -265,7 +265,7 @@ d_paint_ellipse (Dobject *obj)
                        selopt.feather_radius);
 
   paint_layer_fill ();
-          
+
   gimp_edit_stroke (gfig_context->drawable_id);
 }
 
@@ -305,29 +305,28 @@ d_update_ellipse (GdkPoint *pnt)
 
   /* Undraw last one then draw new one */
   center_pnt = obj_creating->points;
-  
+
   if (!center_pnt)
     return; /* No points */
 
-  
   if ((edge_pnt = center_pnt->next))
     {
       /* Undraw current */
       bound_wx = abs (center_pnt->pnt.x - edge_pnt->pnt.x)*2;
       bound_wy = abs (center_pnt->pnt.y - edge_pnt->pnt.y)*2;
-      
+
       if (edge_pnt->pnt.x > center_pnt->pnt.x)
         top_x = 2*center_pnt->pnt.x - edge_pnt->pnt.x;
       else
         top_x = edge_pnt->pnt.x;
-      
+
       if (edge_pnt->pnt.y > center_pnt->pnt.y)
         top_y = 2*center_pnt->pnt.y - edge_pnt->pnt.y;
       else
         top_y = edge_pnt->pnt.y;
 
       draw_circle (&edge_pnt->pnt);
-      
+
       gdk_draw_arc (gfig_context->preview->window,
                     gfig_gc,
                     0,
@@ -350,12 +349,12 @@ d_update_ellipse (GdkPoint *pnt)
     top_x = 2*center_pnt->pnt.x - edge_pnt->pnt.x;
   else
     top_x = edge_pnt->pnt.x;
-  
+
   if (edge_pnt->pnt.y > center_pnt->pnt.y)
     top_y = 2* center_pnt->pnt.y - edge_pnt->pnt.y;
   else
     top_y = edge_pnt->pnt.y;
-  
+
   gdk_draw_arc (gfig_context->preview->window,
                 gfig_gc,
                 0,
@@ -365,7 +364,7 @@ d_update_ellipse (GdkPoint *pnt)
                 bound_wy,
                 0,
                 360*64);
-  
+
   center_pnt->next = edge_pnt;
 }
 

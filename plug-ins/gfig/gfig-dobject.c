@@ -70,7 +70,7 @@ d_save_object (Dobject *obj,
                GString *string)
 {
   do_save_obj (obj, string);
-  
+
   switch (obj->type)
     {
     case BEZIER:
@@ -151,7 +151,7 @@ d_load_object (gchar *desc,
               /* Go around and read the last line */
               continue;
             }
-          else 
+          else
             return new_obj;
         }
 
@@ -193,7 +193,7 @@ d_new_object (DobjType    type,
     {
       nobj->type_data = 3;  /* default to 3 sides 6 points */
     }
-    
+
   return nobj;
 }
 
@@ -232,7 +232,7 @@ new_dobjpoint (gint x, gint y)
 
   npnt->pnt.x = x;
   npnt->pnt.y = y;
-  
+
   return npnt;
 }
 
@@ -384,7 +384,7 @@ object_operation_start (GdkPoint *pnt,
           d_draw_bezier (operation_obj);
         }
       /* If shift is down the break into sep lines */
-      if ((operation_obj->type == POLY  
+      if ((operation_obj->type == POLY
           || operation_obj->type == STAR)
          && shift_down)
         {
@@ -436,7 +436,7 @@ void
 object_operation_end (GdkPoint *pnt,
                       gint      shift_down)
 {
-  if (selvals.otype != DEL_OBJ && operation_obj && 
+  if (selvals.otype != DEL_OBJ && operation_obj &&
       operation_obj->type == BEZIER)
     {
       d_draw_bezier (operation_obj);
@@ -553,7 +553,7 @@ remove_obj_from_list (GFigObj *obj,
   /* Nearest object to given point or NULL */
   DAllObjs *entry;
   DAllObjs *prev_entry = NULL;
-  
+
   g_assert (del_obj != NULL);
 
   entry = obj->obj_list;
@@ -595,30 +595,30 @@ do_move_all_obj (GdkPoint *to_pnt)
   /* Undraw/then draw in new pos */
   gint xdiff = move_all_pnt->x - to_pnt->x;
   gint ydiff = move_all_pnt->y - to_pnt->y;
-  
+
   if (xdiff || ydiff)
     {
       DAllObjs *all;
-  
+
       for (all = gfig_context->current_obj->obj_list; all; all = all->next)
         {
           Dobject *obj = all->obj;
-          
+
           /* undraw ! */
           draw_one_obj (obj);
-          
+
           update_pnts (obj, xdiff, ydiff);
-          
+
           /* Draw in new pos */
           draw_one_obj (obj);
         }
-      
+
       *move_all_pnt = *to_pnt;
     }
 }
 
 void
-do_save_obj (Dobject *obj, 
+do_save_obj (Dobject *obj,
              GString *string)
 {
   DobjPoints *spnt;
@@ -637,16 +637,16 @@ do_move_obj (Dobject  *obj,
   /* Then draw in new pos */
   gint xdiff = 0;
   gint ydiff = 0;
-  
+
   get_diffs (obj, &xdiff, &ydiff, to_pnt);
-  
+
   if (xdiff || ydiff)
-    {  
+    {
       /* undraw ! */
       draw_one_obj (obj);
-      
+
       update_pnts (obj, xdiff, ydiff);
-      
+
       /* Draw in new pos */
       draw_one_obj (obj);
     }
@@ -661,18 +661,18 @@ do_move_obj_pnt (Dobject  *obj,
   DobjPoints *spnt;
   gint xdiff = 0;
   gint ydiff = 0;
-  
+
   spnt = get_diffs (obj, &xdiff, &ydiff, to_pnt);
-  
+
   if ((!xdiff && !ydiff) || !spnt)
     return;
-  
+
   /* undraw ! */
   draw_one_obj (obj);
 
   spnt->pnt.x = spnt->pnt.x - xdiff;
   spnt->pnt.y = spnt->pnt.y - ydiff;
-  
+
   /* Draw in new pos */
   draw_one_obj (obj);
 }
@@ -718,7 +718,7 @@ void
 draw_objects (DAllObjs *objs,
               gint      show_single)
 {
-  /* Show_single - only one object to draw Unless shift 
+  /* Show_single - only one object to draw Unless shift
    * is down in which case show all.
    */
 
@@ -728,7 +728,7 @@ draw_objects (DAllObjs *objs,
     {
       if (!show_single || count == obj_show_single || obj_show_single == -1)
         draw_one_obj (objs->obj);
-      
+
       objs = objs->next;
       count++;
     }
@@ -776,7 +776,7 @@ add_to_all_obj (GFigObj *fobj,
                 Dobject *obj)
 {
   DAllObjs *nobj;
-  
+
   nobj = g_new0 (DAllObjs, 1);
 
   nobj->obj = obj;
@@ -797,7 +797,7 @@ add_to_all_obj (GFigObj *fobj,
  * button panel.  It is activated by a button press, and causes
  * a small square to be drawn at the initial point.  The style of
  * the new object is set to values taken from the style control
- * widgets. 
+ * widgets.
  */
 void
 object_start (GdkPoint *pnt,
@@ -864,7 +864,7 @@ object_start (GdkPoint *pnt,
     }
 
 }
-  
+
 void
 object_end (GdkPoint *pnt,
             gint      shift_down)

@@ -59,7 +59,7 @@ add_stock_icon (const gchar  *stock_id,
   GtkIconSource *source;
   GtkIconSet    *set;
   GdkPixbuf     *pixbuf;
-  
+
   source = gtk_icon_source_new ();
 
   gtk_icon_source_set_size (source, size);

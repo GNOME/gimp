@@ -105,15 +105,15 @@ find_grid_pos (GdkPoint *p,
   static gdouble cons_radius;
   static gdouble cons_ang;
   static gboolean cons_center;
-  
+
   if (selvals.opts.gridtype == RECT_GRID)
     {
       if (p->x % selvals.opts.gridspacing > selvals.opts.gridspacing/2)
         x += selvals.opts.gridspacing;
-      
+
       if (p->y % selvals.opts.gridspacing > selvals.opts.gridspacing/2)
         y += selvals.opts.gridspacing;
-      
+
       gp->x = (x/selvals.opts.gridspacing)*selvals.opts.gridspacing;
       gp->y = (y/selvals.opts.gridspacing)*selvals.opts.gridspacing;
 
@@ -131,7 +131,7 @@ find_grid_pos (GdkPoint *p,
         }
     }
   else if (selvals.opts.gridtype == POLAR_GRID)
-    { 
+    {
       gdouble ang_grid;
       gdouble ang_radius;
       gdouble real_radius;
@@ -203,10 +203,10 @@ find_grid_pos (GdkPoint *p,
       /*
        * This really needs a picture to show the math...
        *
-       * Consider an isometric grid with one of the sets of lines parallel to the 
-       * y axis (vertical alignment). Further define that the origin of a Cartesian 
+       * Consider an isometric grid with one of the sets of lines parallel to the
+       * y axis (vertical alignment). Further define that the origin of a Cartesian
        * grid is at a isometric vertex.  For simplicity consider the first quadrant only.
-       * 
+       *
        *  - Let one line segment between vertices be r
        *  - Define the value of r as the grid spacing
        *  - Assign an integer n identifier to each vertical grid line along the x axis.
@@ -214,7 +214,7 @@ find_grid_pos (GdkPoint *p,
        *  - Let m to be any integer
        *  - Let h be the spacing between vertical grid lines measured along the x axis.
        *    It follows from the isometric grid that h has a value of r * COS(1/6 Pi Rad)
-       * 
+       *
        *  Consider a Vertex V at the Cartesian location [Xv, Yv]
        *
        *   It follows that vertices belong to the set...
@@ -226,13 +226,13 @@ find_grid_pos (GdkPoint *p,
        * Consider an arbitrary point P[Xp,Yp], find the closest vertex in the set V.
        *
        * Restated this problem is "find values for m and n that are drive V closest to P"
-       * 
+       *
        * A Solution method (there may be a better one?):
-       * 
+       *
        * Step 1) bound n to the two closest values for Xp
-       *         n_lo = (int) (Xp / h) 
+       *         n_lo = (int) (Xp / h)
        *         n_hi = n_lo + 1
-       * 
+       *
        * Step 2) Consider the two closes vertices for each n_lo and n_hi. The further of
        *         the vertices in each pair can readily be discarded.
        *         m_lo_n_lo = (int) ( (Yp / r) - 0.5 (n_lo % 2) )
@@ -240,7 +240,7 @@ find_grid_pos (GdkPoint *p,
        *
        *         m_lo_n_hi = (int) ( (Yp / r) - 0.5 (n_hi % 2) )
        *         m_hi_n_hi = m_hi_n_hi
-       * 
+       *
        * Step 3) compute the distance from P to V1 and V2. Snap to the closer point.
        */
       gint n_lo;
@@ -257,13 +257,13 @@ find_grid_pos (GdkPoint *p,
       gint x2;
       gint y1;
       gint y2;
-      
+
       r = selvals.opts.gridspacing;
       h = COS_1o6PI_RAD * r;
-      
+
       n_lo = (gint) x / h;
       n_hi = n_lo + 1;
-      
+
       /* evaluate m candidates for n_lo */
       m_lo_n_lo = (gint) ( (y / r) - 0.5 * (n_lo % 2) );
       m_hi_n_lo = m_lo_n_lo + 1;
@@ -275,7 +275,7 @@ find_grid_pos (GdkPoint *p,
       else {
         m_n_lo = m_hi_n_lo;
       }
-      
+
       /* evaluate m candidates for n_hi */
       m_lo_n_hi = (gint) ( (y / r) - 0.5 * (n_hi % 2) );
       m_hi_n_hi = m_lo_n_hi + 1;
@@ -287,16 +287,16 @@ find_grid_pos (GdkPoint *p,
       else {
         m_n_hi = m_hi_n_hi;
       }
-      
-      /* Now, which is closer to [x,y]? we can use a somewhat abbreviated form of the 
+
+      /* Now, which is closer to [x,y]? we can use a somewhat abbreviated form of the
        * distance formula since we only care about relative values. */
 
       x1 = (gint) (n_lo * h);
       y1 = (gint) (m_n_lo * r + (0.5 * r * (n_lo % 2)));
       x2 = (gint) (n_hi * h);
       y2 = (gint) (m_n_hi * r + (0.5 * r * (n_hi % 2)));
-      
-      if (((x - x1) * (x - x1) + (y - y1) * (y - y1)) < 
+
+      if (((x - x1) * (x - x1) + (y - y1) * (y - y1)) <
           ((x - x2) * (x - x2) + (y - y2) * (y - y2))) {
         gp->x =  x1;
         gp->y =  y1;
@@ -305,7 +305,7 @@ find_grid_pos (GdkPoint *p,
         gp->x =  x2;
         gp->y =  y2;
       }
-      
+
     }
 }
 
@@ -353,7 +353,7 @@ draw_grid_polar (GdkGC *drawgc)
       gint lx, ly;
 
       ang_loop = loop * ang_grid;
-        
+
       lx = RINT (ang_radius * cos (ang_loop));
       ly = RINT (ang_radius * sin (ang_loop));
 
@@ -402,18 +402,18 @@ static void
 draw_grid_iso (GdkGC *drawgc)
 {
   /* vstep is an int since it's defined from grid size */
-  gint vstep; 
+  gint vstep;
   gdouble loop;
   gdouble hstep;
-  
+
   gdouble diagonal_start;
   gdouble diagonal_end;
   gdouble diagonal_width;
   gdouble diagonal_height;
-  
+
   vstep = selvals.opts.gridspacing;
   hstep = selvals.opts.gridspacing * COS_1o6PI_RAD;
-  
+
   /* Draw the vertical lines - These are easy */
   for (loop = 0 ; loop < preview_width ; loop += hstep){
     gdk_draw_line (gfig_context->preview->window,
@@ -423,17 +423,17 @@ draw_grid_iso (GdkGC *drawgc)
                    (gint)loop,
                    (gint)preview_height);
   }
-  
+
   /* draw diag lines at a Theta of +/- 1/6 Pi Rad */
-  
+
   diagonal_start = -(((int)preview_width * TAN_1o6PI_RAD) - (((int)(preview_width * TAN_1o6PI_RAD)) % vstep));
-  
+
   diagonal_end = preview_height + (preview_width * TAN_1o6PI_RAD);
   diagonal_end -= ((int)diagonal_end) % vstep;
-  
+
   diagonal_width = preview_width;
   diagonal_height = preview_width * TAN_1o6PI_RAD;
-  
+
   /* Draw diag lines */
   for (loop = diagonal_start ; loop < diagonal_end ; loop += vstep)
     {
@@ -443,7 +443,7 @@ draw_grid_iso (GdkGC *drawgc)
                      (gint)loop,
                      (gint)diagonal_width,
                      (gint)loop + diagonal_height);
-      
+
       gdk_draw_line (gfig_context->preview->window,
                      drawgc,
                      (gint)0,
@@ -509,7 +509,7 @@ draw_grid (void)
     draw_grid_iso (drawgc);
 }
 
-static gint 
+static gint
 get_num_radials (void)
 {
   gint gridsp = MAX_GRID + MIN_GRID;

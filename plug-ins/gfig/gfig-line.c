@@ -20,7 +20,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- * 
+ *
  */
 
 #include "config.h"
@@ -46,7 +46,7 @@ d_copy_line (Dobject *obj)
 
   g_assert (obj->type == LINE);
 
-  nl = d_new_object (LINE, obj->points->pnt.x, obj->points->pnt.y);  
+  nl = d_new_object (LINE, obj->points->pnt.x, obj->points->pnt.y);
   nl->points->next = d_copy_dobjpoints (obj->points->next);
 
   return nl;
@@ -76,7 +76,7 @@ d_draw_line (Dobject *obj)
   draw_sqr (&spnt->pnt);
 }
 
-void 
+void
 d_paint_line (Dobject *obj)
 {
   DobjPoints * spnt;
@@ -91,7 +91,7 @@ d_paint_line (Dobject *obj)
     return; /* no-line */
 
   line_pnts = g_new0 (gdouble, 2 * seg_count + 1);
-  
+
   /* Go around all the points drawing a line from one to the next */
   for (spnt = obj->points; spnt; spnt = spnt->next)
     {
@@ -116,7 +116,7 @@ d_paint_line (Dobject *obj)
                   gfig_context->drawable_id,
                   seg_count * 2, line_pnts);
     }
-  else 
+  else
     {
       gimp_free_select (gfig_context->image_id,
                         seg_count * 2, line_pnts,
@@ -129,7 +129,7 @@ d_paint_line (Dobject *obj)
   g_free (line_pnts);
 }
 
-/* Create a new line object. starting at the x, y point might add styles 
+/* Create a new line object. starting at the x, y point might add styles
  * later.
  */
 
@@ -162,7 +162,7 @@ d_delete_line (Dobject *obj)
  * pos = -1 = tail
  * 0 < pos = nth position
  */
- 
+
 void
 d_pnt_add_line (Dobject *obj,
                 gint     x,
@@ -212,7 +212,7 @@ d_update_line (GdkPoint *pnt)
 
   /* Get start of segments */
   spnt = obj_creating->points;
-  
+
   if (!spnt)
     return; /* No points */
 
@@ -221,7 +221,7 @@ d_update_line (GdkPoint *pnt)
       /* undraw  current */
       /* Draw square on point */
       draw_circle (&epnt->pnt);
-      
+
       gdk_draw_line (gfig_context->preview->window,
                      /*gfig_context->preview->style->bg_gc[GTK_STATE_NORMAL],*/
                      gfig_gc,

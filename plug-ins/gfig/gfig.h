@@ -119,7 +119,7 @@ typedef enum
     BRUSH_PATTERN_TYPE
   } BrushType;
 
-typedef struct 
+typedef struct
 {
   gchar        *name;
   gchar        *brush_name;
@@ -168,7 +168,7 @@ typedef struct DobjPoints
   gint               found_me;
 } DobjPoints;
 
-typedef struct 
+typedef struct
 {
   DobjType      type;       /* the object type for this class */
   gchar        *name;
@@ -192,7 +192,7 @@ typedef struct Dobject
 
 typedef struct DAllObjs
 {
-  struct DAllObjs *next; 
+  struct DAllObjs *next;
   Dobject         *obj; /* Object on list */
 } DAllObjs;
 
@@ -209,7 +209,7 @@ void d_pnt_add_line (Dobject *obj,
                      gint     pos);
 
 DobjPoints     *new_dobjpoint           (gint x, gint y);
-void            do_save_obj             (Dobject *obj, 
+void            do_save_obj             (Dobject *obj,
                                          GString *to);
 
 DobjPoints     *d_copy_dobjpoints       (DobjPoints * pnts);

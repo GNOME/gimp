@@ -20,7 +20,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- * 
+ *
  */
 
 #include "config.h"
@@ -114,7 +114,7 @@ d_draw_poly (Dobject *obj)
       GdkPoint calc_pnt;
 
       ang_loop = (gdouble)loop * ang_grid + offset_angle;
-        
+
       lx = radius * cos (ang_loop);
       ly = radius * sin (ang_loop);
 
@@ -172,7 +172,7 @@ d_paint_poly (Dobject *obj)
     return; /* no-line */
 
   line_pnts = g_new0 (gdouble, 2 * seg_count + 1);
-  
+
   /* Go around all the points drawing a line from one to the next */
 
   radius_pnt = center_pnt->next; /* this defines the vetices */
@@ -191,9 +191,9 @@ d_paint_poly (Dobject *obj)
     {
       gdouble lx, ly;
       GdkPoint calc_pnt;
-      
+
       ang_loop = (gdouble)loop * ang_grid + offset_angle;
-        
+
       lx = radius * cos (ang_loop);
       ly = radius * sin (ang_loop);
 
@@ -276,7 +276,7 @@ d_poly2lines (Dobject *obj)
   if (!center_pnt)
     return; /* no-line */
 
-  /* Undraw it to start with - removes control points */ 
+  /* Undraw it to start with - removes control points */
   obj->class->drawfunc (obj);
 
   /* NULL out these points free later */
@@ -300,9 +300,9 @@ d_poly2lines (Dobject *obj)
     {
       gdouble lx, ly;
       GdkPoint calc_pnt;
-      
+
       ang_loop = (gdouble)loop * ang_grid + offset_angle;
-        
+
       lx = radius * cos (ang_loop);
       ly = radius * sin (ang_loop);
 
@@ -370,7 +370,7 @@ d_star2lines (Dobject *obj)
   if (!center_pnt)
     return; /* no-line */
 
-  /* Undraw it to start with - removes control points */ 
+  /* Undraw it to start with - removes control points */
   obj->class->drawfunc (obj);
 
   /* NULL out these points free later */
@@ -416,7 +416,7 @@ d_star2lines (Dobject *obj)
     {
       gdouble lx, ly;
       GdkPoint calc_pnt;
-      
+
       ang_loop = (gdouble)loop * ang_grid + offset_angle;
 
       if (loop%2)
@@ -498,7 +498,7 @@ d_update_poly (GdkPoint *pnt)
 
   /* Undraw last one then draw new one */
   center_pnt = obj_creating->points;
-  
+
   if (!center_pnt)
     return; /* No points */
 
@@ -507,7 +507,7 @@ d_update_poly (GdkPoint *pnt)
    * Only undraw if already have edge point.
    */
 
-  /* Hack - turn off cnt points in draw routine 
+  /* Hack - turn off cnt points in draw routine
    * Looking back over the other update routines I could
    * use this trick again and cut down on code size!
    */
