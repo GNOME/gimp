@@ -156,18 +156,7 @@ dialogs_show_toolbox (void)
     }
   else
     {
-      GList *list;
-
-      for (list = global_toolbox_factory->open_dialogs;
-           list;
-           list = g_list_next (list))
-        {
-          if (GTK_WIDGET_TOPLEVEL (list->data))
-            {
-              gtk_window_present (GTK_WINDOW (list->data));
-              break;
-            }
-        }
+      gimp_dialog_factories_toggle (global_toolbox_factory, TRUE);
     }
 }
 

@@ -1,3 +1,16 @@
+2004-09-11  Simon Budig  <simon@gimp.org>
+
+	* app/widgets/gimpdialogfactory.[ch]: Added boolean parameter to
+	gimp_dialog_factories_toggle to make it possible to ensure a visible
+	toolbox.
+	
+	* app/actions/dialogs-commands.c: Use the new parameter to ensure
+	toolbox visibility after the last image window closes.
+
+	* app/display/gimpdisplayshell-callbacks.c: Changed accordingly.
+
+	Fixes bug #137057 (the discussion is in bug #152285)
+
 2004-09-11  DindinX  <david@dindinx.org>
 
 	* plug-ins/common/edge.c: ported to GimpPreviewArea. 100 less lines of

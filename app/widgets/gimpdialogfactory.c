@@ -1044,7 +1044,8 @@ gimp_dialog_factories_session_clear (void)
 }
 
 void
-gimp_dialog_factories_toggle (GimpDialogFactory *toolbox_factory)
+gimp_dialog_factories_toggle (GimpDialogFactory *toolbox_factory,
+                              gboolean           ensure_visibility)
 {
   static GimpDialogShowState toggle_state = GIMP_DIALOG_SHOW_ALL;
   static gboolean            doing_update = FALSE;
@@ -1052,6 +1053,9 @@ gimp_dialog_factories_toggle (GimpDialogFactory *toolbox_factory)
   GimpDialogFactoryClass *factory_class;
 
   if (doing_update)
+    return;
+
+  if (ensure_visibility && toggle_state != GIMP_DIALOG_HIDE_ALL)
     return;
 
   doing_update = TRUE;

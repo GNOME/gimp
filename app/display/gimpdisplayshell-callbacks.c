@@ -1255,7 +1255,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                 dialog_factory = gimp_dialog_factory_from_name ("toolbox");
 
                 /*  Hide or show all dialogs  */
-                gimp_dialog_factories_toggle (dialog_factory);
+                gimp_dialog_factories_toggle (dialog_factory, FALSE);
               }
             else if (! gimp_image_is_empty (gimage))
               {
