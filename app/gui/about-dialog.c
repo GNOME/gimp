@@ -61,6 +61,7 @@ static char *scroll_text[] =
   "Tim Janik",
   "Tuomas Kuosmanen",
   "Peter Kirchgessner", 
+  "Nick Lamb",
   "Karl LaRocca",
   "Jens Lautenbacher",
   "Laramie Leavitt",
