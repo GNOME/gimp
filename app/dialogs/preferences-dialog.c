@@ -1125,9 +1125,9 @@ prefs_dialog_new (Gimp       *gimp,
                            GTK_TABLE (table), 1);
 
 
-  /*********************************/
-  /*  New Image / Default Grid  */
-  /*********************************/
+  /******************/
+  /*  Default Grid  */
+  /******************/
   vbox = prefs_notebook_append_page (gimp,
                                      GTK_NOTEBOOK (notebook),
 				     _("Default Image Grid"),
@@ -1135,8 +1135,8 @@ prefs_dialog_new (Gimp       *gimp,
 				     GTK_TREE_STORE (tree),
 				     _("Default Grid"),
 				     GIMP_HELP_PREFS_NEW_IMAGE_GRID,
+				     NULL,
 				     &top_iter,
-				     &child_iter,
 				     page_index++);
 
   /*  Grid  */
