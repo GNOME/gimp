@@ -102,13 +102,20 @@ domain_map (HelpDomain  *domain,
     {
       GError *error = NULL;
 
-      if (! domain_parse (domain, &error))
+      if (! domain_parse (domain, &error) || error)
         {
-          g_message ("Failed to open help domain:\n\n%s", error->message);
-          g_clear_error (&error);
+          if (! domain->help_id_mapping)
+            g_message ("Failed to open help domain:\n\n%s", error->message);
+          else
+            g_message ("Parse error in help domain:\n\n%s\n\n"
+                       "(Added entires before error anyway)", error->message);
 
-          return NULL;
+          if (error)
+            g_clear_error (&error);
         }
+
+      if (! domain->help_id_mapping)
+        return NULL;
     }
 
   ref = g_hash_table_lookup (domain->help_id_mapping, help_id);
@@ -134,7 +141,7 @@ domain_new (const gchar *domain_name,
             const gchar *domain_uri)
 {
   HelpDomain *domain;
- 
+
   domain = g_new0 (HelpDomain, 1);
 
   domain->help_domain = g_strdup (domain_name);
@@ -264,7 +271,7 @@ domain_parse (HelpDomain  *domain,
 
   g_free (filename);
 
-  return TRUE;
+  return (domain->help_id_mapping != NULL);
 }
 
 static void

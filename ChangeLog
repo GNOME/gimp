@@ -1,3 +1,7 @@
+2003-09-01  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/helpbrowser/domain.c: fixed help domain parsing.
+
 2003-09-01  Helvetix Victorinox  <helvetix@gimp.org>
 
 	* app/composite/gimp-composite-mmx.c
