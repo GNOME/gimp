@@ -1,3 +1,7 @@
+2004-03-18  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimptexttool.[ch]: cleaned up text tool logic.
+
 2004-03-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpitemtreeview.c: simplified visibility and linked
