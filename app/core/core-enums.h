@@ -355,7 +355,6 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_GROUP_EDIT_PASTE,         /*< desc="Paste"                       >*/
   GIMP_UNDO_GROUP_EDIT_CUT,           /*< desc="Cut"                         >*/
   GIMP_UNDO_GROUP_TEXT,               /*< desc="Text"                        >*/
-  GIMP_UNDO_GROUP_SHAPE,              /*< desc="Shape"                       >*/
   GIMP_UNDO_GROUP_TRANSFORM,          /*< desc="Transform"                   >*/
   GIMP_UNDO_GROUP_PAINT,              /*< desc="Paint"                       >*/
   GIMP_UNDO_GROUP_PARASITE_ATTACH,    /*< desc="Attach parasite"             >*/
@@ -385,17 +384,12 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_LAYER_REMOVE,             /*< desc="Delete layer"              >*/
   GIMP_UNDO_LAYER_MASK_ADD,           /*< desc="Add layer mask"            >*/
   GIMP_UNDO_LAYER_MASK_REMOVE,        /*< desc="Delete layer mask"         >*/
-  GIMP_UNDO_LAYER_MASK_APPLY,         /*< desc="Apply layer mask"          >*/
-  GIMP_UNDO_LAYER_MASK_EDIT,          /*< desc="Edit layer mask"           >*/
-  GIMP_UNDO_LAYER_MASK_SHOW,          /*< desc="Show layer mask"           >*/
   GIMP_UNDO_LAYER_REPOSITION,         /*< desc="Reposition layer"          >*/
   GIMP_UNDO_LAYER_MODE,               /*< desc="Set layer mode"            >*/
   GIMP_UNDO_LAYER_OPACITY,            /*< desc="Set layer opacity"         >*/
   GIMP_UNDO_LAYER_PRESERVE_TRANS,     /*< desc="Set preserve trans"        >*/
   GIMP_UNDO_TEXT_LAYER,               /*< desc="Text"                      >*/
   GIMP_UNDO_TEXT_LAYER_MODIFIED,      /*< desc="Text modified"             >*/
-  GIMP_UNDO_SHAPE_LAYER,              /*< desc="Shape"                     >*/
-  GIMP_UNDO_SHAPE_LAYER_MODIFIED,     /*< desc="Shape modified"            >*/
   GIMP_UNDO_CHANNEL_ADD,              /*< desc="New channel"               >*/
   GIMP_UNDO_CHANNEL_REMOVE,           /*< desc="Delete channel"            >*/
   GIMP_UNDO_CHANNEL_REPOSITION,       /*< desc="Reposition channel"        >*/

@@ -1,3 +1,10 @@
+2005-03-24  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/layers-commands.c
+	* app/core/core-enums.[ch]
+	* app/core/gimpimage-undo-push.[ch]
+	* app/pdb/pdb_glue.h: reverted Bill's changes to fix the build.
+
 2005-03-23  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/core/core-enums.[ch]
