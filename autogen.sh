@@ -59,17 +59,24 @@ esac
 
 echo -n "checking for libtool >= $LIBTOOL_REQUIRED_VERSION ... "
 if (libtoolize --version) < /dev/null > /dev/null 2>&1; then
-    VER=`libtoolize --version \
-         | grep libtool | sed "s/.* \([0-9.]*\)[-a-z0-9]*$/\1/"`
-    check_version $VER $LIBTOOL_REQUIRED_VERSION
+   LIBTOOLIZE=libtoolize
+elif (glibtoolize --version) < /dev/null > /dev/null 2>&1; then
+   LIBTOOLIZE=glibtoolize
 else
     echo
     echo "  You must have libtool installed to compile $PROJECT."
     echo "  Install the appropriate package for your distribution,"
     echo "  or get the source tarball at ftp://ftp.gnu.org/pub/gnu/"
     echo
-    DIE=1;
+    DIE=1
 fi
+
+if test x$LIBTOOLIZE != x; then
+    VER=`$LIBTOOLIZE --version \
+         | grep libtool | sed "s/.* \([0-9.]*\)[-a-z0-9]*$/\1/"`
+    check_version $VER $LIBTOOL_REQUIRED_VERSION
+fi
+
 
 echo -n "checking for autoconf >= $AUTOCONF_REQUIRED_VERSION ... "
 if (autoconf --version) < /dev/null > /dev/null 2>&1; then
@@ -84,6 +91,7 @@ else
     echo
     DIE=1;
 fi
+
 
 echo -n "checking for automake >= $AUTOMAKE_REQUIRED_VERSION ... "
 if (automake-1.7 --version) < /dev/null > /dev/null 2>&1; then
@@ -111,6 +119,7 @@ if test x$AUTOMAKE != x; then
     check_version $VER $AUTOMAKE_REQUIRED_VERSION
 fi
 
+
 echo -n "checking for glib-gettextize >= $GLIB_REQUIRED_VERSION ... "
 if (glib-gettextize --version) < /dev/null > /dev/null 2>&1; then
     VER=`glib-gettextize --version \
@@ -124,6 +133,7 @@ else
     echo
     DIE=1
 fi
+
 
 echo -n "checking for intltool >= $INTLTOOL_REQUIRED_VERSION ... "
 if (intltoolize --version) < /dev/null > /dev/null 2>&1; then
@@ -150,7 +160,7 @@ if (intltoolize --version) < /dev/null > /dev/null 2>&1; then
          | grep intltoolize | sed "s/.* \([0-9.]*\)/\1/"`
     if expr $VER \>= $INTLTOOL_BUG_MIN_VERSION > /dev/null; then
         if expr $VER \<= $INTLTOOL_BUG_MAX_VERSION > /dev/null; then
-            echo "no (found version $VER)"
+            echo "no"
             echo
             echo "  Versions of intltool between 0.28 and 0.31 are known to"
             echo "  generate incorrect XML output.  Please consider using an"
@@ -168,6 +178,7 @@ if (intltoolize --version) < /dev/null > /dev/null 2>&1; then
 else
     echo "not found"
 fi
+
 
 echo -n "checking for xsltproc ... "
 if (xsltproc --version) < /dev/null > /dev/null 2>&1; then
@@ -216,6 +227,7 @@ if test -z "$*"; then
     fi
 fi
 
+
 if test -z "$ACLOCAL_FLAGS"; then
 
     acdir=`$ACLOCAL --print-ac-dir`
@@ -236,6 +248,7 @@ if test -z "$ACLOCAL_FLAGS"; then
     done
 fi
 
+
 $ACLOCAL $ACLOCAL_FLAGS
 RC=$?
 if test $RC -ne 0; then
@@ -243,7 +256,7 @@ if test $RC -ne 0; then
    exit $RC
 fi
 
-libtoolize --force || exit $?
+$LIBTOOLIZE --force || exit $?
 
 # optionally feature autoheader
 (autoheader --version)  < /dev/null > /dev/null 2>&1 && autoheader || exit 1
@@ -253,6 +266,7 @@ autoconf || exit $?
 
 glib-gettextize --copy --force || exit $?
 intltoolize --copy --force --automake || exit $?
+
 
 cd $ORIGDIR
 
