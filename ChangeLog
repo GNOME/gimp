@@ -1,5 +1,10 @@
 2002-04-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimagefile.c: oops, thumbnails were created in the
+	wrong directory since my last commit.
+
+2002-04-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/file-open-dialog.c: added a progress bar to the preview
 	frame to show the progress when creating many previews. Also added
 	some more ugly static variables...

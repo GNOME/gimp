@@ -833,7 +833,7 @@ gimp_imagefile_png_thumb_path (const gchar *uri,
         }
     }
 
-  thumb_name = g_build_filename (thumb_dir, name, NULL);
+  thumb_name = g_build_filename (thumb_subdirs[i], name, NULL);
 
   return thumb_name;
 }
