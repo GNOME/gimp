@@ -193,6 +193,14 @@ gimp_aspect_preview_draw_buffer (GimpPreview  *preview,
     }
 }
 
+static void
+gimp_aspect_preview_notify_update (GimpPreview *preview,
+                                   GParamSpec  *pspec,
+                                   gboolean    *toggle)
+{
+  *toggle = gimp_preview_get_update (preview);
+}
+
 GtkWidget *
 gimp_aspect_preview_new (GimpDrawable *drawable,
                          gboolean     *toggle)
@@ -223,6 +231,16 @@ gimp_aspect_preview_new (GimpDrawable *drawable,
   g_object_set (GIMP_PREVIEW (preview)->frame,
                 "ratio", (gdouble) width / (gdouble) height,
                 NULL);
+
+  if (toggle)
+    {
+      gimp_preview_set_update (GIMP_PREVIEW (preview), *toggle);
+
+      g_signal_connect (preview, "notify::update",
+                        G_CALLBACK (gimp_aspect_preview_notify_update),
+                        toggle);
+    }
+
 
   return GTK_WIDGET (preview);
 }

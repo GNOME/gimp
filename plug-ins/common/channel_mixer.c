@@ -163,7 +163,7 @@ static CmParamsType mix =
   FALSE,
   FALSE,
   CM_RED_CHANNEL,
-  NULL
+  TRUE
 };
 
 MAIN ()

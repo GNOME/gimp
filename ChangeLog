@@ -1,3 +1,14 @@
+2004-10-27  DindinX  <dindinx@gimp.org>
+
+	* libgimp/gimpaspectpreview.c: really use the second parameter of
+	gimp_aspect_preview_new (), so plug-ins can now really remember the
+	state of the preview between invocations.
+
+	* libgimpwidgets/gimpscrolledpreview.c: fix a little typo
+
+	* plug-ins/common/channel_mixer.c: fix a warning by using TRUE for a
+	boolean value (initial state of the preview) instead of a weird NULL.
+
 2004-10-27  Michael Natterer  <mitch@gimp.org>
 
 	* modules/controller_linux_input.c
