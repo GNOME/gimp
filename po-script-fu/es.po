@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.29\n"
-"POT-Creation-Date: 2000-12-09 11:20-0800\n"
+"POT-Creation-Date: 2000-12-18 23:30-0800\n"
 "PO-Revision-Date: 2000-10-23 18:59+02:00\n"
 "Last-Translator: Óscar Cebellán Ramos <cebaman@bigfoot.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -1237,6 +1237,14 @@ msgid "Erase before Draw"
 msgstr "Borrar antes de Dibujar"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
+msgid "Erase"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:0
+msgid "Erase/Fill"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Even"
 msgstr "Pares"
 
@@ -1287,6 +1295,11 @@ msgstr "Rellenar Fondo con Patrón"
 
 #: plug-ins/gap/sel-to-anim-img.scm:0
 msgid "Fill with BG Color"
+msgstr "Rellenar con Color de Fondo"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:0
+#, fuzzy
+msgid "Fill with BG"
 msgstr "Rellenar con Color de Fondo"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0

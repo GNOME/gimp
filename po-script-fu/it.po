@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.18\n"
-"POT-Creation-Date: 2000-12-09 11:20-0800\n"
+"POT-Creation-Date: 2000-12-18 23:30-0800\n"
 "PO-Revision-Date: sab giu 10 03:02:00 EDT 2000\n"
 "Last-Translator: Daniele Medri <madrid@linux.it>\n"
 "Language-Team: gimp.linux.it\n"
@@ -1191,6 +1191,14 @@ msgid "Erase before Draw"
 msgstr "Elimina prima di disegnare"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
+msgid "Erase"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:0
+msgid "Erase/Fill"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Even"
 msgstr "Pari"
 
@@ -1241,6 +1249,11 @@ msgstr "Riempimento sfondo con pattern"
 
 #: plug-ins/gap/sel-to-anim-img.scm:0
 msgid "Fill with BG Color"
+msgstr "Riempi con colore sfondo"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:0
+#, fuzzy
+msgid "Fill with BG"
 msgstr "Riempi con colore sfondo"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0

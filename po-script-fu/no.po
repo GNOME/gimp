@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: achtung 1.1.25\n"
-"POT-Creation-Date: 2000-12-15 15:11+0100\n"
+"POT-Creation-Date: 2000-12-18 23:30-0800\n"
 "PO-Revision-Date: 2000-12-15 15:26+01:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -647,7 +647,8 @@ msgstr "<Toolbox>/Utvd/Script-Fu/Webside tema/Gimp.Org/Stor topptekst..."
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
-msgstr "<Toolbox>/Utvd/Script-Fu/Webside tema/Gimp.Org/Vanlige tubeetiketter..."
+msgstr ""
+"<Toolbox>/Utvd/Script-Fu/Webside tema/Gimp.Org/Vanlige tubeetiketter..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
@@ -1199,6 +1200,14 @@ msgid "Erase before Draw"
 msgstr "Slett før tegning"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
+msgid "Erase"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:0
+msgid "Erase/Fill"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Even"
 msgstr "Lik"
 
@@ -1249,6 +1258,11 @@ msgstr "Fyll BG med mønster"
 
 #: plug-ins/gap/sel-to-anim-img.scm:0
 msgid "Fill with BG Color"
+msgstr "Fyll med BG-farge"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:0
+#, fuzzy
+msgid "Fill with BG"
 msgstr "Fyll med BG-farge"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0

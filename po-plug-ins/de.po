@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.30\n"
-"POT-Creation-Date: 2000-12-19 13:50+0100\n"
+"POT-Creation-Date: 2000-12-19 11:26-0800\n"
 "PO-Revision-Date: 2000-12-19 13:47+01:00\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
@@ -3733,18 +3733,42 @@ msgstr "Abstand:"
 msgid "Description:"
 msgstr "Beschreibung:"
 
+# TODO
+#: plug-ins/common/gee.c:112
+#, fuzzy
+msgid "<Image>/Filters/Toys/Gee-Slime"
+msgstr "<Image>/Filter/Rauschen/Schmelzen..."
+
 #: plug-ins/common/gee.c:186
 msgid "GEE-SLIME"
 msgstr "GEE-SLIME"
 
 #. Action area - 'close' button only.
-#: plug-ins/common/gee.c:197
+#: plug-ins/common/gee.c:197 plug-ins/common/gee_zoom.c:214
 msgid "** Thank you for choosing GIMP **"
 msgstr "** Viel Spass mit GIMP **"
 
 #: plug-ins/common/gee.c:209
 msgid ""
 "A less-obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
+"1998-2000"
+msgstr ""
+"A less-obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
+"1998-2000"
+
+#: plug-ins/common/gee_zoom.c:139
+#, fuzzy
+msgid "<Image>/Filters/Toys/Gee-Zoom"
+msgstr "<Image>/Filter/Farben/Heiﬂ..."
+
+#: plug-ins/common/gee_zoom.c:203
+msgid "GEE-ZOOM: The Plug-In Formerly Known As \"The GIMP E'er Egg\""
+msgstr ""
+
+#: plug-ins/common/gee_zoom.c:226
+#, fuzzy
+msgid ""
+"An obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
 msgstr ""
 "A less-obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
@@ -8270,9 +8294,9 @@ msgid "Framesequence shift"
 msgstr "Verschiebung der Frame-Reihenfolge"
 
 #: plug-ins/gap/gap_lib.c:2922
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"Cant execute more than 1 Video Function\n"
+"Can't execute more than 1 Video Function\n"
 "on the same AnimFrame Image at the same time\n"
 "LOCK ID:%s\n"
 msgstr ""

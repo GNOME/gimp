@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.1.18\n"
-"POT-Creation-Date: 2000-12-09 11:20-0800\n"
+"POT-Creation-Date: 2000-12-18 23:30-0800\n"
 "PO-Revision-Date: 2000-07-20 17:47+00:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -1196,6 +1196,14 @@ msgid "Erase before Draw"
 msgstr "Очистить перед рисованием"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
+msgid "Erase"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:0
+msgid "Erase/Fill"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Even"
 msgstr "Четные"
 
@@ -1246,6 +1254,11 @@ msgstr "Заболнить фон шаблоном"
 
 #: plug-ins/gap/sel-to-anim-img.scm:0
 msgid "Fill with BG Color"
+msgstr "Заполнить фон цветом"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:0
+#, fuzzy
+msgid "Fill with BG"
 msgstr "Заполнить фон цветом"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
-"POT-Creation-Date: 2000-12-09 11:20-0800\n"
+"POT-Creation-Date: 2000-12-18 23:30-0800\n"
 "PO-Revision-Date: 2000-11-09 00:34+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -1190,6 +1190,14 @@ msgid "Erase before Draw"
 msgstr "Czyszczenie przed rysowaniem"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
+msgid "Erase"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:0
+msgid "Erase/Fill"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Even"
 msgstr "Parzyste"
 
@@ -1240,6 +1248,11 @@ msgstr "Wype³nienie t³a deseniem"
 
 #: plug-ins/gap/sel-to-anim-img.scm:0
 msgid "Fill with BG Color"
+msgstr "Wype³nienie kolorem t³a"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:0
+#, fuzzy
+msgid "Fill with BG"
 msgstr "Wype³nienie kolorem t³a"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0

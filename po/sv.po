@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
-"POT-Creation-Date: 2000-12-19 01:04+0100\n"
+"POT-Creation-Date: 2000-12-19 09:35-0800\n"
 "PO-Revision-Date: 2000-12-19 01:35+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -120,7 +120,7 @@ msgstr "Avsluta"
 #: app/app_procs.c:767 app/brightness_contrast.c:230 app/channel_ops.c:99
 #: app/channels_dialog.c:2541 app/channels_dialog.c:2704
 #: app/color_balance.c:286 app/color_notebook.c:128 app/convert.c:517
-#: app/curves.c:574 app/file_new_dialog.c:212 app/file_new_dialog.c:362
+#: app/curves.c:571 app/file_new_dialog.c:212 app/file_new_dialog.c:362
 #: app/gdisplay_color_ui.c:160 app/gdisplay_ops.c:310 app/gimphelp.c:196
 #: app/gimpprogress.c:120 app/global_edit.c:779 app/gradient.c:1773
 #: app/gradient.c:4845 app/gradient.c:5406 app/hue_saturation.c:383
@@ -281,7 +281,7 @@ msgstr "Ljusstyrka-Kontrast går inte att använda på indexerade bilder."
 #: app/brightness_contrast.c:226 app/channel_ops.c:97
 #: app/channels_dialog.c:2539 app/channels_dialog.c:2702
 #: app/color_balance.c:282 app/color_notebook.c:125 app/convert.c:515
-#: app/curves.c:570 app/file_new_dialog.c:212 app/file_new_dialog.c:358
+#: app/curves.c:567 app/file_new_dialog.c:212 app/file_new_dialog.c:358
 #: app/gdisplay_color_ui.c:158 app/gimpui.c:126 app/hue_saturation.c:379
 #: app/layers_dialog.c:3553 app/layers_dialog.c:3737 app/layers_dialog.c:3832
 #: app/layers_dialog.c:4093 app/levels.c:346 app/module_db.c:319
@@ -293,7 +293,7 @@ msgid "OK"
 msgstr "OK"
 
 #: app/brightness_contrast.c:228 app/by_color_select.c:725
-#: app/color_balance.c:284 app/curves.c:572 app/file_new_dialog.c:360
+#: app/color_balance.c:284 app/curves.c:569 app/file_new_dialog.c:360
 #: app/hue_saturation.c:381 app/levels.c:348 app/posterize.c:210
 #: app/resize.c:222 app/threshold.c:283 app/tools.c:1547
 #: app/transform_core.c:411 modules/colorsel_water.c:634
@@ -311,7 +311,7 @@ msgid "Contrast:"
 msgstr "Kontrast:"
 
 #. The preview toggle
-#: app/brightness_contrast.c:312 app/color_balance.c:452 app/curves.c:694
+#: app/brightness_contrast.c:312 app/color_balance.c:452 app/curves.c:691
 #: app/fileops.c:415 app/hue_saturation.c:571 app/levels.c:579
 #: app/palette.c:3222 app/posterize.c:249 app/threshold.c:358
 msgid "Preview"
@@ -326,7 +326,7 @@ msgstr "Penseleditor"
 #: app/color_notebook.c:125 app/color_picker.c:303 app/colormap_dialog.i.c:173
 #: app/crop.c:1074 app/devices.c:760 app/docindex.c:776 app/errorconsole.c:284
 #: app/gdisplay_ops.c:310 app/gradient.c:805 app/gradient_select.c:160
-#: app/histogram_tool.c:279 app/info_window.c:261 app/lc_dialog.c:217
+#: app/histogram_tool.c:281 app/info_window.c:261 app/lc_dialog.c:217
 #: app/measure.c:326 app/nav_window.c:1426 app/palette.c:2057
 #: app/palette.c:2073 app/palette.c:3104 app/palette_select.c:70
 #: app/pattern_select.c:178 app/preferences_dialog.c:386 app/tips_dialog.c:163
@@ -559,17 +559,17 @@ msgid "Empty Channel Copy"
 msgstr "Töm kanalkopia"
 
 #: app/channels_dialog.c:1440 app/color_balance.c:354 app/color_select.c:254
-#: app/curves.c:595 app/histogram_tool.c:307 app/levels.c:379
+#: app/curves.c:592 app/histogram_tool.c:309 app/levels.c:379
 msgid "Red"
 msgstr "Röd"
 
 #: app/channels_dialog.c:1444 app/color_balance.c:379 app/color_select.c:255
-#: app/curves.c:596 app/histogram_tool.c:308 app/levels.c:380
+#: app/curves.c:593 app/histogram_tool.c:310 app/levels.c:380
 msgid "Green"
 msgstr "Grön"
 
 #: app/channels_dialog.c:1448 app/color_balance.c:404 app/color_select.c:256
-#: app/curves.c:597 app/histogram_tool.c:309 app/levels.c:381
+#: app/curves.c:594 app/histogram_tool.c:311 app/levels.c:381
 msgid "Blue"
 msgstr "Blå"
 
@@ -725,7 +725,7 @@ msgstr "Index:"
 msgid "Hex Triplet"
 msgstr "Hex-triplett"
 
-#: app/color_picker.c:278 app/histogram_tool.c:263
+#: app/color_picker.c:278 app/histogram_tool.c:265
 msgid "Intensity:"
 msgstr "Intensitet:"
 
@@ -773,7 +773,7 @@ msgstr "Nyans"
 msgid "Saturation"
 msgstr "Mättnad"
 
-#: app/color_select.c:253 app/curves.c:594 app/histogram_tool.c:306
+#: app/color_select.c:253 app/curves.c:591 app/histogram_tool.c:308
 #: app/layers_dialog.c:392 app/levels.c:378 app/paint_funcs.c:102
 #: app/tool_options.c:937
 msgid "Value"
@@ -990,7 +990,7 @@ msgid "Auto Shrink"
 msgstr "Autokrymp"
 
 #. The shell and main vbox
-#: app/curves.c:401 app/curves.c:565 app/tools.c:1166
+#: app/curves.c:401 app/curves.c:562 app/tools.c:1166
 msgid "Curves"
 msgstr "Kurvor"
 
@@ -998,49 +998,49 @@ msgstr "Kurvor"
 msgid "Curves for indexed drawables cannot be adjusted."
 msgstr "Kurvor för indexerade bilder kan inte justeras."
 
-#: app/curves.c:587
+#: app/curves.c:584
 msgid "Modify Curves for Channel:"
 msgstr "Modifiera kurvor för kanal:"
 
-#: app/curves.c:598 app/levels.c:382
+#: app/curves.c:595 app/levels.c:382
 msgid "Alpha"
 msgstr "Alfa"
 
 #. The option menu for selecting the drawing method
-#: app/curves.c:677
+#: app/curves.c:674
 msgid "Curve Type:"
 msgstr "Kurvtyp:"
 
-#: app/curves.c:684
+#: app/curves.c:681
 msgid "Smooth"
 msgstr "Mjuk"
 
-#: app/curves.c:685
+#: app/curves.c:682
 msgid "Free"
 msgstr "Frihand"
 
-#: app/curves.c:711 app/levels.c:607 app/module_db.c:878
+#: app/curves.c:708 app/levels.c:607 app/module_db.c:878
 msgid "Load"
 msgstr "Läs in"
 
-#: app/curves.c:719 app/devices.c:758 app/levels.c:617 app/palette.c:2053
+#: app/curves.c:716 app/devices.c:758 app/levels.c:617 app/palette.c:2053
 #: app/preferences_dialog.c:384 app/preferences_dialog.c:1483
 msgid "Save"
 msgstr "Spara"
 
-#: app/curves.c:1318
+#: app/curves.c:1315
 msgid "Load Curves"
 msgstr "Läs in kurvor"
 
-#: app/curves.c:1333
+#: app/curves.c:1330
 msgid "Save Curves"
 msgstr "Spara kurvor"
 
-#: app/curves.c:1624
+#: app/curves.c:1621
 msgid "Load/Save Curves"
 msgstr "Läs in/spara kurvor"
 
-#: app/curves.c:1669 app/curves.c:1687 app/levels.c:1485 app/levels.c:1503
+#: app/curves.c:1666 app/curves.c:1684 app/levels.c:1485 app/levels.c:1503
 #: app/paths_dialog.c:1908
 #, c-format
 msgid "Unable to open file %s"
@@ -1556,7 +1556,7 @@ msgstr "Okänt penselformat version #%d i \"%s\"."
 msgid "Error in GIMP brush file \"%s\"."
 msgstr "Fel i GIMP-penselfilen \"%s\"."
 
-#: app/gimpbrush.c:321 app/patterns.c:231
+#: app/gimpbrush.c:321 app/patterns.c:232
 msgid "Unnamed"
 msgstr "Namnlös"
 
@@ -2215,39 +2215,39 @@ msgid "Gradient Selection"
 msgstr "Färgskalemarkering"
 
 #. The shell and main vbox
-#: app/histogram_tool.c:169 app/histogram_tool.c:273 app/tools.c:1222
+#: app/histogram_tool.c:171 app/histogram_tool.c:275 app/tools.c:1222
 msgid "Histogram"
 msgstr "Histogram"
 
-#: app/histogram_tool.c:207
+#: app/histogram_tool.c:209
 msgid "Histogram does not operate on indexed drawables."
 msgstr "Kan inte använda histogram på indexerade bilder."
 
-#: app/histogram_tool.c:259
+#: app/histogram_tool.c:261
 msgid "Mean:"
 msgstr "Medel:"
 
-#: app/histogram_tool.c:260
+#: app/histogram_tool.c:262
 msgid "Std Dev:"
 msgstr "Med. avvik:"
 
-#: app/histogram_tool.c:261
+#: app/histogram_tool.c:263
 msgid "Median:"
 msgstr "Median:"
 
-#: app/histogram_tool.c:262
+#: app/histogram_tool.c:264
 msgid "Pixels:"
 msgstr "Pixlar:"
 
-#: app/histogram_tool.c:264
+#: app/histogram_tool.c:266
 msgid "Count:"
 msgstr "Antal:"
 
-#: app/histogram_tool.c:265
+#: app/histogram_tool.c:267
 msgid "Percentile:"
 msgstr "Procentuellt:"
 
-#: app/histogram_tool.c:298
+#: app/histogram_tool.c:300
 msgid "Information on Channel:"
 msgstr "Information om kanal:"
 
@@ -4178,17 +4178,17 @@ msgstr "Mönsterval"
 msgid "No Patterns available"
 msgstr "Inga mönster tillgängliga"
 
-#: app/patterns.c:205
+#: app/patterns.c:206
 #, c-format
 msgid "Unknown pattern format version #%d in \"%s\"."
 msgstr "Okänt mönsterformat version #%d i \"%s\"."
 
-#: app/patterns.c:224
+#: app/patterns.c:225
 #, c-format
 msgid "Error in GIMP pattern file \"%s\"."
 msgstr "Fel i GIMP-mönsterfilen \"%s\"."
 
-#: app/patterns.c:240
+#: app/patterns.c:241
 #, c-format
 msgid "GIMP pattern file appears to be truncated: \"%s\"."
 msgstr "GIMP-mönsterfilen verkar vara trunkerad: \"%s\"."

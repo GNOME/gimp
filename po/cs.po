@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.30\n"
-"POT-Creation-Date: 2000-12-18 11:04+0100\n"
+"POT-Creation-Date: 2000-12-19 09:35-0800\n"
 "PO-Revision-Date: 2000-12-18 13:52+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -31,11 +31,11 @@ msgstr "Verzi %s pro vás napsali"
 msgid "Please visit http://www.gimp.org/ for more info"
 msgstr "Více se dozvíte, nav¹tívíte-li http://www.gimp.org/"
 
-#: app/airbrush.c:146 app/convolve.c:170 app/smudge.c:121
+#: app/airbrush.c:145 app/convolve.c:170 app/smudge.c:121
 msgid "Rate:"
 msgstr "Pøebìh:"
 
-#: app/airbrush.c:159 modules/colorsel_water.c:691
+#: app/airbrush.c:158 modules/colorsel_water.c:691
 msgid "Pressure:"
 msgstr "Tlak:"
 
@@ -115,9 +115,9 @@ msgstr "Konec"
 
 #. the cancel button
 #: app/app_procs.c:767 app/brightness_contrast.c:230 app/channel_ops.c:99
-#: app/channels_dialog.c:2540 app/channels_dialog.c:2703
+#: app/channels_dialog.c:2541 app/channels_dialog.c:2704
 #: app/color_balance.c:286 app/color_notebook.c:128 app/convert.c:517
-#: app/curves.c:574 app/file_new_dialog.c:212 app/file_new_dialog.c:362
+#: app/curves.c:571 app/file_new_dialog.c:212 app/file_new_dialog.c:362
 #: app/gdisplay_color_ui.c:160 app/gdisplay_ops.c:310 app/gimphelp.c:196
 #: app/gimpprogress.c:120 app/global_edit.c:779 app/gradient.c:1773
 #: app/gradient.c:4845 app/gradient.c:5406 app/hue_saturation.c:383
@@ -276,9 +276,9 @@ msgid "Brightness-Contrast does not operate on indexed drawables."
 msgstr "Jas-kontrast nefunguje na indexovaných obrazovkách."
 
 #: app/brightness_contrast.c:226 app/channel_ops.c:97
-#: app/channels_dialog.c:2538 app/channels_dialog.c:2701
+#: app/channels_dialog.c:2539 app/channels_dialog.c:2702
 #: app/color_balance.c:282 app/color_notebook.c:125 app/convert.c:515
-#: app/curves.c:570 app/file_new_dialog.c:212 app/file_new_dialog.c:358
+#: app/curves.c:567 app/file_new_dialog.c:212 app/file_new_dialog.c:358
 #: app/gdisplay_color_ui.c:158 app/gimpui.c:126 app/hue_saturation.c:379
 #: app/layers_dialog.c:3553 app/layers_dialog.c:3737 app/layers_dialog.c:3832
 #: app/layers_dialog.c:4093 app/levels.c:346 app/module_db.c:319
@@ -290,7 +290,7 @@ msgid "OK"
 msgstr "OK"
 
 #: app/brightness_contrast.c:228 app/by_color_select.c:725
-#: app/color_balance.c:284 app/curves.c:572 app/file_new_dialog.c:360
+#: app/color_balance.c:284 app/curves.c:569 app/file_new_dialog.c:360
 #: app/hue_saturation.c:381 app/levels.c:348 app/posterize.c:210
 #: app/resize.c:222 app/threshold.c:283 app/tools.c:1547
 #: app/transform_core.c:411 modules/colorsel_water.c:634
@@ -308,7 +308,7 @@ msgid "Contrast:"
 msgstr "Kontrast:"
 
 #. The preview toggle
-#: app/brightness_contrast.c:312 app/color_balance.c:452 app/curves.c:694
+#: app/brightness_contrast.c:312 app/color_balance.c:452 app/curves.c:691
 #: app/fileops.c:415 app/hue_saturation.c:571 app/levels.c:579
 #: app/palette.c:3222 app/posterize.c:249 app/threshold.c:358
 msgid "Preview"
@@ -319,11 +319,11 @@ msgid "Brush Editor"
 msgstr "Editor stop"
 
 #. The close button
-#: app/brush_edit.c:233 app/brush_select.c:288 app/by_color_select.c:727
+#: app/brush_edit.c:233 app/brush_select.c:287 app/by_color_select.c:727
 #: app/color_notebook.c:125 app/color_picker.c:303 app/colormap_dialog.i.c:173
-#: app/crop.c:1074 app/devices.c:760 app/docindex.c:774 app/errorconsole.c:284
+#: app/crop.c:1074 app/devices.c:760 app/docindex.c:776 app/errorconsole.c:284
 #: app/gdisplay_ops.c:310 app/gradient.c:805 app/gradient_select.c:160
-#: app/histogram_tool.c:279 app/info_window.c:261 app/lc_dialog.c:217
+#: app/histogram_tool.c:281 app/info_window.c:261 app/lc_dialog.c:217
 #: app/measure.c:326 app/nav_window.c:1426 app/palette.c:2057
 #: app/palette.c:2073 app/palette.c:3104 app/palette_select.c:70
 #: app/pattern_select.c:178 app/preferences_dialog.c:386 app/tips_dialog.c:163
@@ -349,54 +349,54 @@ msgid "Angle:"
 msgstr "Úhel:"
 
 #. The shell
-#: app/brush_select.c:279
+#: app/brush_select.c:278
 msgid "Brush Selection"
 msgstr "Výbìr stopy"
 
-#: app/brush_select.c:286 app/gradient.c:803 app/module_db.c:359
+#: app/brush_select.c:285 app/gradient.c:803 app/module_db.c:359
 #: app/palette.c:2055 app/pattern_select.c:176
 msgid "Refresh"
 msgstr "Zaktualizovat"
 
-#: app/brush_select.c:414
+#: app/brush_select.c:413
 msgid "No Brushes available"
 msgstr "®ádná stopa není k dispozici"
 
-#: app/brush_select.c:455 app/layers_dialog.c:420 app/tool_options.c:531
+#: app/brush_select.c:454 app/layers_dialog.c:420 app/tool_options.c:531
 msgid "Opacity:"
 msgstr "Krytí:"
 
-#: app/brush_select.c:463 app/layers_dialog.c:371 app/tool_options.c:555
+#: app/brush_select.c:462 app/layers_dialog.c:371 app/tool_options.c:555
 msgid "Mode:"
 msgstr "Re¾im:"
 
-#: app/brush_select.c:474 app/palette.c:1170 app/palette.c:2225
+#: app/brush_select.c:473 app/palette.c:1170 app/palette.c:2225
 #: modules/colorsel_water.c:629
 msgid "New"
 msgstr "Nový"
 
-#: app/brush_select.c:480 app/colormap_dialog.i.c:139
+#: app/brush_select.c:479 app/colormap_dialog.i.c:139
 #: app/gradient_select.c:158 app/palette.c:1177 app/palette.c:2071
 #: app/palette_select.c:68
 msgid "Edit"
 msgstr "Úpravy"
 
-#: app/brush_select.c:486 app/global_edit.c:777 app/gradient.c:1773
+#: app/brush_select.c:485 app/global_edit.c:777 app/gradient.c:1773
 #: app/palette.c:1187 app/palette.c:1824 app/palette.c:2236
 msgid "Delete"
 msgstr "Smazat"
 
-#: app/brush_select.c:517
+#: app/brush_select.c:516
 msgid "Spacing:"
 msgstr "Rozestup:"
 
 #. this should never happen
-#: app/brush_select.c:1857
+#: app/brush_select.c:1860
 msgid "Sorry, this brush can't be edited."
 msgstr "Bohu¾el, tuto stopu nelze editovat."
 
 #. this should never happen
-#: app/brush_select.c:1886
+#: app/brush_select.c:1889
 msgid "Sorry, this brush can't be deleted."
 msgstr "Bohu¾el, tuto stopu nelze smazat."
 
@@ -523,23 +523,23 @@ msgstr "Prùhledný"
 msgid "Offset by (x/2),(y/2)"
 msgstr "Posun o (x/2),(y/2)"
 
-#: app/channels_dialog.c:230 app/channels_dialog.c:2576
+#: app/channels_dialog.c:231 app/channels_dialog.c:2577
 msgid "New Channel"
 msgstr "Nový kanál"
 
-#: app/channels_dialog.c:234
+#: app/channels_dialog.c:235
 msgid "Raise Channel"
 msgstr "Kanál vý¹"
 
-#: app/channels_dialog.c:238
+#: app/channels_dialog.c:239
 msgid "Lower Channel"
 msgstr "Kanál ní¾"
 
-#: app/channels_dialog.c:242
+#: app/channels_dialog.c:243
 msgid "Duplicate Channel"
 msgstr "Duplikovat kanál"
 
-#: app/channels_dialog.c:247
+#: app/channels_dialog.c:248
 msgid ""
 "Channel to Selection \n"
 "<Shift> Add          <Ctrl> Subtract      <Shift><Ctrl> Intersect"
@@ -547,52 +547,52 @@ msgstr ""
 "Kanál do výbìru\n"
 "<Pøeøaïovaè> Sjednocení   <Ctrl> Rozdíl   <Pøeøaïovaè><Ctrl> Prùnik"
 
-#: app/channels_dialog.c:254
+#: app/channels_dialog.c:255
 msgid "Delete Channel"
 msgstr "Smazat kanál"
 
-#: app/channels_dialog.c:1210
+#: app/channels_dialog.c:1211
 msgid "Empty Channel Copy"
 msgstr "Kopie prázdného kanálu"
 
-#: app/channels_dialog.c:1439 app/color_balance.c:354 app/color_select.c:254
-#: app/curves.c:595 app/histogram_tool.c:307 app/levels.c:379
+#: app/channels_dialog.c:1440 app/color_balance.c:354 app/color_select.c:254
+#: app/curves.c:592 app/histogram_tool.c:309 app/levels.c:379
 msgid "Red"
 msgstr "Èervená"
 
-#: app/channels_dialog.c:1443 app/color_balance.c:379 app/color_select.c:255
-#: app/curves.c:596 app/histogram_tool.c:308 app/levels.c:380
+#: app/channels_dialog.c:1444 app/color_balance.c:379 app/color_select.c:255
+#: app/curves.c:593 app/histogram_tool.c:310 app/levels.c:380
 msgid "Green"
 msgstr "Zelená"
 
-#: app/channels_dialog.c:1447 app/color_balance.c:404 app/color_select.c:256
-#: app/curves.c:597 app/histogram_tool.c:309 app/levels.c:381
+#: app/channels_dialog.c:1448 app/color_balance.c:404 app/color_select.c:256
+#: app/curves.c:594 app/histogram_tool.c:311 app/levels.c:381
 msgid "Blue"
 msgstr "Modrá"
 
-#: app/channels_dialog.c:1451
+#: app/channels_dialog.c:1452
 msgid "Gray"
 msgstr "©edá"
 
-#: app/channels_dialog.c:1455
+#: app/channels_dialog.c:1456
 msgid "Indexed"
 msgstr "Indexovaná"
 
-#: app/channels_dialog.c:2532
+#: app/channels_dialog.c:2533
 msgid "New Channel Options"
 msgstr "Volby nového kanálu"
 
 #. The name entry hbox, label and entry
-#: app/channels_dialog.c:2565 app/channels_dialog.c:2728
+#: app/channels_dialog.c:2566 app/channels_dialog.c:2729
 msgid "Channel name:"
 msgstr "Jméno kanálu:"
 
 #. The opacity scale
-#: app/channels_dialog.c:2580 app/channels_dialog.c:2743
+#: app/channels_dialog.c:2581 app/channels_dialog.c:2744
 msgid "Fill Opacity:"
 msgstr "Krytí vyplòování:"
 
-#: app/channels_dialog.c:2695
+#: app/channels_dialog.c:2696
 msgid "Edit Channel Attributes"
 msgstr "Úpravy vlastností kanálu"
 
@@ -722,7 +722,7 @@ msgstr "Index:"
 msgid "Hex Triplet"
 msgstr "Hex trojice"
 
-#: app/color_picker.c:278 app/histogram_tool.c:263
+#: app/color_picker.c:278 app/histogram_tool.c:265
 msgid "Intensity:"
 msgstr "Intenzita:"
 
@@ -770,7 +770,7 @@ msgstr "Odstín"
 msgid "Saturation"
 msgstr "Sytost"
 
-#: app/color_select.c:253 app/curves.c:594 app/histogram_tool.c:306
+#: app/color_select.c:253 app/curves.c:591 app/histogram_tool.c:308
 #: app/layers_dialog.c:392 app/levels.c:378 app/paint_funcs.c:102
 #: app/tool_options.c:937
 msgid "Value"
@@ -987,7 +987,7 @@ msgid "Auto Shrink"
 msgstr "Automaticky zmen¹it"
 
 #. The shell and main vbox
-#: app/curves.c:401 app/curves.c:565 app/tools.c:1166
+#: app/curves.c:401 app/curves.c:562 app/tools.c:1166
 msgid "Curves"
 msgstr "Køivky"
 
@@ -995,49 +995,49 @@ msgstr "Køivky"
 msgid "Curves for indexed drawables cannot be adjusted."
 msgstr "Køivky nemohou být nastaveny v indexovaných obrazovkách."
 
-#: app/curves.c:587
+#: app/curves.c:584
 msgid "Modify Curves for Channel:"
 msgstr "Upravit køivky pro kanál:"
 
-#: app/curves.c:598 app/levels.c:382
+#: app/curves.c:595 app/levels.c:382
 msgid "Alpha"
 msgstr "Alfa"
 
 #. The option menu for selecting the drawing method
-#: app/curves.c:677
+#: app/curves.c:674
 msgid "Curve Type:"
 msgstr "Typ køivky:"
 
-#: app/curves.c:684
+#: app/curves.c:681
 msgid "Smooth"
 msgstr "Plynulá"
 
-#: app/curves.c:685
+#: app/curves.c:682
 msgid "Free"
 msgstr "Volná"
 
-#: app/curves.c:711 app/levels.c:607 app/module_db.c:878
+#: app/curves.c:708 app/levels.c:607 app/module_db.c:878
 msgid "Load"
 msgstr "Naèíst"
 
-#: app/curves.c:719 app/devices.c:758 app/levels.c:617 app/palette.c:2053
+#: app/curves.c:716 app/devices.c:758 app/levels.c:617 app/palette.c:2053
 #: app/preferences_dialog.c:384 app/preferences_dialog.c:1483
 msgid "Save"
 msgstr "Zapsat"
 
-#: app/curves.c:1318
+#: app/curves.c:1315
 msgid "Load Curves"
 msgstr "Naèíst køivky"
 
-#: app/curves.c:1333
+#: app/curves.c:1330
 msgid "Save Curves"
 msgstr "Zapsat køivky"
 
-#: app/curves.c:1624
+#: app/curves.c:1621
 msgid "Load/Save Curves"
 msgstr "Naèíst/Zapsat køivky"
 
-#: app/curves.c:1669 app/curves.c:1687 app/levels.c:1485 app/levels.c:1503
+#: app/curves.c:1666 app/curves.c:1684 app/levels.c:1485 app/levels.c:1503
 #: app/paths_dialog.c:1908
 #, c-format
 msgid "Unable to open file %s"
@@ -1056,7 +1056,7 @@ msgstr "Stav zaøízení"
 msgid "Pasted Layer"
 msgstr "Vlo¾ená vrstva"
 
-#: app/docindex.c:114
+#: app/docindex.c:116
 msgid ""
 "Open the selected entry\n"
 "<Shift> Raise window if already open\n"
@@ -1066,7 +1066,7 @@ msgstr ""
 "<Pøeøaïovaè> Vyzvednout polo¾ku, je-li ji¾ otevøena\n"
 "<Ctrl> Naèíst dialog obrázku"
 
-#: app/docindex.c:119
+#: app/docindex.c:121
 msgid ""
 "Move the selected entry up in the index\n"
 "<Shift> To top"
@@ -1074,7 +1074,7 @@ msgstr ""
 "Pøesun zvolené polo¾ky vý¹ v seznamu\n"
 "<Pøeøaïovaè> Navrch"
 
-#: app/docindex.c:123
+#: app/docindex.c:125
 msgid ""
 "Move the selected entry down in the index\n"
 "<Shift> To bottom"
@@ -1082,11 +1082,11 @@ msgstr ""
 "Pøesun zvolené polo¾ky ní¾ v seznamu\n"
 "<Pøeøaïovaè> Dospod"
 
-#: app/docindex.c:127
+#: app/docindex.c:129
 msgid "Remove the selected entry from the index"
 msgstr "Odstranìní zvolené polo¾ky ze seznamu"
 
-#: app/docindex.c:768
+#: app/docindex.c:770
 msgid "Document Index"
 msgstr "Seznam dokumentù"
 
@@ -1542,24 +1542,31 @@ msgstr ""
 msgid "No selection to stroke!"
 msgstr "Pro tah není výbìr!"
 
-#: app/gimpbrush.c:287
-msgid "Error in GIMP brush file...aborting."
-msgstr "Chyba v souboru GIMP stopy... ru¹í se."
+#: app/gimpbrush.c:294
+#, fuzzy, c-format
+msgid "Unknown brush format version #%d in \"%s\"."
+msgstr "Neznámý formát stopy verze #%d v \"%s\"\n"
 
-#: app/gimpbrush.c:295 app/patterns.c:214
+#: app/gimpbrush.c:314
+#, fuzzy, c-format
+msgid "Error in GIMP brush file \"%s\"."
+msgstr "Chyba v souboru GIMP vzorku \"%s\""
+
+#: app/gimpbrush.c:321 app/patterns.c:232
 msgid "Unnamed"
 msgstr "Beze jména"
 
-#: app/gimpbrush.c:315
-msgid "GIMP brush file appears to be truncated."
+#: app/gimpbrush.c:334 app/gimpbrush.c:379
+#, fuzzy, c-format
+msgid "GIMP brush file appears to be truncated: \"%s\"."
 msgstr "Soubor GIMP stopy je zøejmì useknutý."
 
-#: app/gimpbrush.c:319
-#, c-format
-msgid "Unknown brush format version #%d in \"%s\"\n"
-msgstr "Neznámý formát stopy verze #%d v \"%s\"\n"
+#: app/gimpbrush.c:359
+#, fuzzy, c-format
+msgid "GIMP brush file appears to be corrupted: \"%s\"."
+msgstr "Soubor GIMP stopy je zøejmì useknutý."
 
-#: app/gimpbrushlist.c:200 app/gimpbrushlist.c:211
+#: app/gimpbrushlist.c:200 app/gimpbrushlist.c:209
 #, c-format
 msgid ""
 "Warning: Failed to load brush\n"
@@ -1568,53 +1575,46 @@ msgstr ""
 "Varování: Nepodaøilo se naèíst stopu\n"
 "\"%s\""
 
-#: app/gimpbrushlist.c:222
-#, c-format
+#: app/gimpbrushlist.c:218
+#, fuzzy, c-format
 msgid ""
-"Warning: Failed to load pixmap brush\n"
+"Warning: Failed to load brush pipe\n"
 "\"%s\""
 msgstr ""
-"Varování: Nepodaøilo se naèíst pixelovì mapovanou stopu\n"
+"Varování: Nepodaøilo se naèíst stopu\n"
 "\"%s\""
 
-#: app/gimpbrushlist.c:233
-#, c-format
+#: app/gimpbrushpipe.c:292
+#, fuzzy, c-format
 msgid ""
-"Warning: Failed to load pixmap pipe\n"
+"Brush pipes should have at least one brush:\n"
 "\"%s\""
-msgstr ""
-"Varování: Nepodaøilo se naèíst pixelovì mapovanou kolonu\n"
-"\"%s\""
-
-#: app/gimpbrushpipe.c:317
-msgid "Brush pipes should have at least one brush."
 msgstr "Kolony stop by mìly mít alespoò jednu stopu."
 
-#: app/gimpbrushpipe.c:418 app/gimpbrushpipe.c:426
-msgid "Failed to load one of the brushes in the brush pipe."
+#: app/gimpbrushpipe.c:383
+#, fuzzy, c-format
+msgid ""
+"Failed to load one of the brushes in the brush pipe\n"
+"\"%s\""
 msgstr "Nepodaøilo se naèíst jednu ze stop v obrázkové kolonì."
 
-#: app/gimpbrushpipe.c:488 app/gimpbrushpipe.c:496
-msgid "Failed to load pixmap brush."
-msgstr "Nepodaøilo se naèíst pixelovì mapovanou stopu."
-
-#: app/gimpdrawable.c:175
+#: app/gimpdrawable.c:176
 msgid "Can't fill unknown image type."
 msgstr "Nelze vyplnit neznámý typ obrázku."
 
-#: app/gimpdrawable.c:508
+#: app/gimpdrawable.c:509
 msgid "parasite attach to drawable"
 msgstr "parazit pøipojen k obrazovce"
 
-#: app/gimpdrawable.c:543
+#: app/gimpdrawable.c:544
 msgid "detach parasite from drawable"
 msgstr "parazit odpojen od obrazovky"
 
-#: app/gimpdrawable.c:751
+#: app/gimpdrawable.c:752
 msgid "unnamed"
 msgstr "beze jména"
 
-#: app/gimpdrawable.c:768
+#: app/gimpdrawable.c:769
 #, c-format
 msgid "Layer type %d not supported."
 msgstr "Typ vrstvy %d není podporován."
@@ -1637,31 +1637,31 @@ msgstr ""
 msgid "Use Netscape instead"
 msgstr "Nahradit programem Netscape"
 
-#: app/gimpimage.c:2327
+#: app/gimpimage.c:2324
 msgid "Layer cannot be raised any further"
 msgstr "Vrstva nemù¾e být je¹tì vý¹"
 
-#: app/gimpimage.c:2355
+#: app/gimpimage.c:2352
 msgid "Layer cannot be lowered any further"
 msgstr "Vrstva nemù¾e být je¹tì ní¾"
 
-#: app/gimpimage.c:2381
+#: app/gimpimage.c:2378
 msgid "Layer is already on top"
 msgstr "Vrstva je ji¾ navrch"
 
-#: app/gimpimage.c:2387
+#: app/gimpimage.c:2384
 msgid "Can't raise Layer without alpha"
 msgstr "Nelze dát vý¹ vrstvu bez alfa"
 
-#: app/gimpimage.c:2415
+#: app/gimpimage.c:2412
 msgid "Layer is already on bottom"
 msgstr "Vrstva je ji¾ vespod"
 
-#: app/gimpimage.c:2470
+#: app/gimpimage.c:2467
 msgid "BG has no alpha, layer was placed above"
 msgstr "Pozadí nemá alfa, vrstva byla umístìna nad nìj"
 
-#: app/gimpimage.c:2542
+#: app/gimpimage.c:2539
 msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
@@ -1669,11 +1669,11 @@ msgstr ""
 "Není dostatek viditelných vrstev.\n"
 "Ke slouèení jsou nutné alespoò dvì."
 
-#: app/gimpimage.c:2626
+#: app/gimpimage.c:2623
 msgid "There are not enough visible layers for a merge down."
 msgstr "Ke slouèení dolù není dostatek viditelných vrstev."
 
-#: app/gimpimage.c:3076
+#: app/gimpimage.c:3073
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
@@ -1681,7 +1681,7 @@ msgstr ""
 "Nelze pøidat masku vrstvy, pokud\n"
 "vrstva ji¾ masku má."
 
-#: app/gimpimage.c:3082
+#: app/gimpimage.c:3079
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
@@ -1689,7 +1689,7 @@ msgstr ""
 "Nelze pøidat masku do vrstvy\n"
 "indexovaného obrázku."
 
-#: app/gimpimage.c:3088
+#: app/gimpimage.c:3085
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
@@ -1697,19 +1697,19 @@ msgstr ""
 "Nelze pøidat masku do vrstvy\n"
 "bez alfa kanálu."
 
-#: app/gimpimage.c:3097
+#: app/gimpimage.c:3094
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Nelze pøidat masku jiných rozmìrù ne¾ je vrstva."
 
-#: app/gimpimage.c:3205
+#: app/gimpimage.c:3202
 msgid "Channel cannot be raised any further"
 msgstr "Kanál nemù¾e být je¹tì vý¹"
 
-#: app/gimpimage.c:3256
+#: app/gimpimage.c:3253
 msgid "Channel cannot be lowered any further"
 msgstr "Kanál nemù¾e být je¹tì ní¾"
 
-#: app/gimpimage.c:3477 app/palette.c:358 app/palette.c:935 app/palette.c:1071
+#: app/gimpimage.c:3474 app/palette.c:358 app/palette.c:935 app/palette.c:1071
 #: app/palette.c:2013 app/palette.c:2735 app/palette.c:2867
 msgid "Untitled"
 msgstr "Bez názvu"
@@ -1789,7 +1789,7 @@ msgstr "Zpráva programu GIMP"
 msgid "pixel"
 msgstr "pixel"
 
-#: app/gimpunit.c:63 app/measure.c:512 app/measure.c:516 app/paint_core.c:534
+#: app/gimpunit.c:63 app/measure.c:512 app/measure.c:516 app/paint_core.c:544
 msgid "pixels"
 msgstr "pixelù"
 
@@ -1895,7 +1895,7 @@ msgstr "HSV (odstín ve smìru hodinových ruèièek)"
 msgid "Gradient Editor"
 msgstr "Editor pøechodù"
 
-#: app/gradient.c:828 app/gradient_select.c:214 app/paintbrush.c:271
+#: app/gradient.c:828 app/gradient_select.c:214 app/paintbrush.c:270
 #: app/palette.c:3160
 msgid "Gradient"
 msgstr "Pøechod"
@@ -2205,39 +2205,39 @@ msgid "Gradient Selection"
 msgstr "Výbìr pøechodu"
 
 #. The shell and main vbox
-#: app/histogram_tool.c:169 app/histogram_tool.c:273 app/tools.c:1222
+#: app/histogram_tool.c:171 app/histogram_tool.c:275 app/tools.c:1222
 msgid "Histogram"
 msgstr "Histogram"
 
-#: app/histogram_tool.c:207
+#: app/histogram_tool.c:209
 msgid "Histogram does not operate on indexed drawables."
 msgstr "Histogram nefunguje na indexovaných obrazovkách."
 
-#: app/histogram_tool.c:259
+#: app/histogram_tool.c:261
 msgid "Mean:"
 msgstr "Prùmìr:"
 
-#: app/histogram_tool.c:260
+#: app/histogram_tool.c:262
 msgid "Std Dev:"
 msgstr "Rozptyl:"
 
-#: app/histogram_tool.c:261
+#: app/histogram_tool.c:263
 msgid "Median:"
 msgstr "Medián:"
 
-#: app/histogram_tool.c:262
+#: app/histogram_tool.c:264
 msgid "Pixels:"
 msgstr "Pixelù:"
 
-#: app/histogram_tool.c:264
+#: app/histogram_tool.c:266
 msgid "Count:"
 msgstr "Poèet:"
 
-#: app/histogram_tool.c:265
+#: app/histogram_tool.c:267
 msgid "Percentile:"
 msgstr "Procento:"
 
-#: app/histogram_tool.c:298
+#: app/histogram_tool.c:300
 msgid "Information on Channel:"
 msgstr "Informace o kanálu:"
 
@@ -3858,7 +3858,7 @@ msgstr "Navigace: %s-%d.%d"
 msgid "Navigation: No Image"
 msgstr "Navigace: Bez obrázku"
 
-#: app/paint_core.c:795
+#: app/paint_core.c:805
 msgid "No brushes available for use with this tool."
 msgstr "Nejsou dostupné ¾ádné stopy pro pou¾ití s tímto nástrojem."
 
@@ -3874,28 +3874,28 @@ msgstr "Odèítání"
 msgid "Erase"
 msgstr "Smazat"
 
-#: app/paintbrush.c:225
+#: app/paintbrush.c:224
 msgid "Fade Out"
 msgstr "Dobìh"
 
 #. the gradient type
-#: app/paintbrush.c:304
+#: app/paintbrush.c:303
 msgid "Type:"
 msgstr "Typ:"
 
-#: app/paintbrush.c:318
+#: app/paintbrush.c:317
 msgid "Once Forward"
 msgstr "Jednou dopøedu"
 
-#: app/paintbrush.c:319
+#: app/paintbrush.c:318
 msgid "Once Backward"
 msgstr "Jednou zpìt"
 
-#: app/paintbrush.c:320
+#: app/paintbrush.c:319
 msgid "Loop Sawtooth"
 msgstr "Cyklická pila"
 
-#: app/paintbrush.c:321
+#: app/paintbrush.c:320
 msgid "Loop Triangle"
 msgstr "Cyklický trojúhelník"
 
@@ -4165,25 +4165,20 @@ msgstr "Výbìr vzorku"
 msgid "No Patterns available"
 msgstr "®ádné vzorky nejsou k dispozici"
 
-#: app/patterns.c:190
-#, c-format
-msgid "Unknown GIMP pattern version #%d in \"%s\"\n"
-msgstr "Neznámá verze #%d vzorku GIMP v \"%s\"\n"
+#: app/patterns.c:206
+#, fuzzy, c-format
+msgid "Unknown pattern format version #%d in \"%s\"."
+msgstr "Neznámý formát stopy verze #%d v \"%s\"\n"
 
-#: app/patterns.c:207
-#, c-format
-msgid "Error in GIMP pattern file \"%s\""
+#: app/patterns.c:225
+#, fuzzy, c-format
+msgid "Error in GIMP pattern file \"%s\"."
 msgstr "Chyba v souboru GIMP vzorku \"%s\""
 
-#: app/patterns.c:222
-#, c-format
-msgid "GIMP pattern file \"%s\" appears to be truncated."
+#: app/patterns.c:241
+#, fuzzy, c-format
+msgid "GIMP pattern file appears to be truncated: \"%s\"."
 msgstr "Soubor GIMP vzorku \"%s\" je zøejmì useknutý."
-
-#: app/patterns.c:281
-#, c-format
-msgid "Error loading pattern \"%s\""
-msgstr "Chyba pøi otvírání vzorku \"%s\""
 
 #: app/perspective_tool.c:65
 msgid "Perspective Transform Information"
@@ -6422,3 +6417,29 @@ msgstr "Vodové barvy"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Historie barev"
+
+#~ msgid "Error in GIMP brush file...aborting."
+#~ msgstr "Chyba v souboru GIMP stopy... ru¹í se."
+
+#~ msgid ""
+#~ "Warning: Failed to load pixmap brush\n"
+#~ "\"%s\""
+#~ msgstr ""
+#~ "Varování: Nepodaøilo se naèíst pixelovì mapovanou stopu\n"
+#~ "\"%s\""
+
+#~ msgid ""
+#~ "Warning: Failed to load pixmap pipe\n"
+#~ "\"%s\""
+#~ msgstr ""
+#~ "Varování: Nepodaøilo se naèíst pixelovì mapovanou kolonu\n"
+#~ "\"%s\""
+
+#~ msgid "Failed to load pixmap brush."
+#~ msgstr "Nepodaøilo se naèíst pixelovì mapovanou stopu."
+
+#~ msgid "Unknown GIMP pattern version #%d in \"%s\"\n"
+#~ msgstr "Neznámá verze #%d vzorku GIMP v \"%s\"\n"
+
+#~ msgid "Error loading pattern \"%s\""
+#~ msgstr "Chyba pøi otvírání vzorku \"%s\""

@@ -3,6 +3,10 @@
 	* app/gradient.c: couldn't resist to heavily indent all function
 	prototypes before starting to fix the rename-bug. Nothing changed.
 
+Tue Dec 19 12:37:55 PST 2000 Manish Singh <yosh@gimp.org>
+
+	* Made 1.1.31 release (1.2final)
+
 2000-12-19  Stanislav Brabec  <utx@penguin.cz>
 
 	* plug-ins/gap/gap_lib.c: Typo fixes.
