@@ -129,7 +129,7 @@ gradient_select_new (Gimp        *gimp,
                                           gimp->gradient_factory,
                                           dialogs_edit_gradient_func,
                                           gsp->context,
-                                          GIMP_PREVIEW_SIZE_EXTRA_SMALL,
+                                          GIMP_PREVIEW_SIZE_MEDIUM,
                                           6, 6,
                                           global_menu_factory, "<Gradients>");
 

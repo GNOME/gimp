@@ -17,6 +17,7 @@ libapppdb_a_SOURCES = \
 	edit_cmds.c		\
 	fileops_cmds.c		\
 	floating_sel_cmds.c	\
+	font_select_cmds.c	\
 	gimprc_cmds.c		\
 	gradient_select_cmds.c	\
 	gradients_cmds.c	\
@@ -47,7 +48,7 @@ libapppdb_a_SOURCES = \
 	unit_cmds.c
 
 ## This is a truly ugly hack
-libapppdb_a_LIBADD = ../gui/pattern-select.o ../gui/brush-select.o
+libapppdb_a_LIBADD = ../gui/pattern-select.o ../gui/brush-select.o ../gui/font-select.o
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-PDB\"	\

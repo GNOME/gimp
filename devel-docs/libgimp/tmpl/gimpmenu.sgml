@@ -161,69 +161,55 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 @w: 
 
 
-<!-- ##### FUNCTION gimp_interactive_selection_pattern ##### -->
+<!-- ##### FUNCTION gimp_interactive_selection_font ##### -->
 <para>
 
 </para>
 
 @dialogtitle: 
-@pattern_name: 
+@font_name: 
 @callback: 
 @data: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@udata: 
 
 
-<!-- ##### FUNCTION gimp_pattern_select_widget ##### -->
+<!-- ##### FUNCTION gimp_font_select_widget ##### -->
 <para>
 
 </para>
 
 @dname: 
-@ipattern: 
+@ifont: 
 @cback: 
 @data: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@Param4: 
 
 
-<!-- ##### USER_FUNCTION GimpRunPatternCallback ##### -->
+<!-- ##### USER_FUNCTION GimpRunFontCallback ##### -->
 <para>
 
 </para>
 
 @name: 
-@width: 
-@height: 
-@bpp: 
-@mask_data: 
 @dialog_closing: 
 @user_data: 
 
 
-<!-- ##### FUNCTION gimp_pattern_select_widget_close_popup ##### -->
-<para>
-
-</para>
-
-@widget: 
-<!-- # Unused Parameters # -->
-@Returns: 
-@w: 
-
-
-<!-- ##### FUNCTION gimp_pattern_select_widget_set_popup ##### -->
+<!-- ##### FUNCTION gimp_font_select_widget_set_popup ##### -->
 <para>
 
 </para>
 
 @widget: 
 @pname: 
-<!-- # Unused Parameters # -->
-@Returns: 
-@w: 
+
+
+<!-- ##### FUNCTION gimp_font_select_widget_close_popup ##### -->
+<para>
+
+</para>
+
+@widget: 
 
 
 <!-- ##### FUNCTION gimp_interactive_selection_gradient ##### -->
@@ -287,6 +273,71 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 @gname: 
 <!-- # Unused Parameters # -->
 @pname: 
+@Returns: 
+@w: 
+
+
+<!-- ##### FUNCTION gimp_interactive_selection_pattern ##### -->
+<para>
+
+</para>
+
+@dialogtitle: 
+@pattern_name: 
+@callback: 
+@data: 
+@Returns: 
+<!-- # Unused Parameters # -->
+@udata: 
+
+
+<!-- ##### FUNCTION gimp_pattern_select_widget ##### -->
+<para>
+
+</para>
+
+@dname: 
+@ipattern: 
+@cback: 
+@data: 
+@Returns: 
+<!-- # Unused Parameters # -->
+@Param4: 
+
+
+<!-- ##### USER_FUNCTION GimpRunPatternCallback ##### -->
+<para>
+
+</para>
+
+@name: 
+@width: 
+@height: 
+@bpp: 
+@mask_data: 
+@dialog_closing: 
+@user_data: 
+
+
+<!-- ##### FUNCTION gimp_pattern_select_widget_close_popup ##### -->
+<para>
+
+</para>
+
+@widget: 
+<!-- # Unused Parameters # -->
+@Returns: 
+@w: 
+
+
+<!-- ##### FUNCTION gimp_pattern_select_widget_set_popup ##### -->
+<para>
+
+</para>
+
+@widget: 
+@pname: 
+<!-- # Unused Parameters # -->
 @Returns: 
 @w: 
 

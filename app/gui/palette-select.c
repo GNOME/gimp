@@ -131,8 +131,8 @@ palette_select_new (Gimp        *gimp,
                                           gimp->palette_factory,
                                           dialogs_edit_palette_func,
                                           psp->context,
-                                          32,
-                                          5, 3,
+                                          GIMP_PREVIEW_SIZE_MEDIUM,
+                                          5, 8,
                                           global_menu_factory, "<Palettes>");
 
   gtk_container_set_border_width (GTK_CONTAINER (psp->view), 4);

@@ -1,3 +1,32 @@
+2003-03-28  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/Makefile.am
+	* app/gui/font-select.[ch]: added font selection GUI to be used
+	through the PDB.
+
+	* app/gui/brush-select.c
+	* app/gui/gradient-select.c
+	* app/gui/palette-select.c
+	* app/gui/pattern-select.c: unified preview and dialog sizes.
+
+	* tools/pdbgen/Makefile.am
+	* tools/pdbgen/pdb/font_select.pdb: added new file that provides
+	PDB accessors to the font selection GUI.
+
+	* app/pdb/font_select_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimp_pdb.h
+	* libgimp/gimpfontselect_pdb.[ch]
+	* tools/pdbgen/groups.pl: regenerated.
+	
+	* libgimp/Makefile.am
+	* libgimp/gimpfontmenu.c
+	* libgimp/gimpmenu.[ch]: added a simple font selection widget to
+	be used by plug-ins and scripts.
+
+	* plug-ins/script-fu/script-fu-scripts.c: use the new font
+	selection widget. Fixes bug #105610.
+
 2003-03-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage-guides.[ch]: added "position" and "push_undo"

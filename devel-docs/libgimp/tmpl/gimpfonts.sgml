@@ -1,0 +1,48 @@
+<!-- ##### SECTION Title ##### -->
+gimpfonts
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION gimp_fonts_popup ##### -->
+<para>
+
+</para>
+
+@font_callback: 
+@popup_title: 
+@initial_font: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_fonts_close_popup ##### -->
+<para>
+
+</para>
+
+@font_callback: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_fonts_set_popup ##### -->
+<para>
+
+</para>
+
+@font_callback: 
+@font_name: 
+@Returns: 
+
+

@@ -27,6 +27,8 @@ dialogs_sources = \
 	file-open-dialog.h		\
 	file-save-dialog.c		\
 	file-save-dialog.h		\
+	font-select.c			\
+	font-select.h			\
 	gradient-select.c		\
 	gradient-select.h		\
 	info-dialog.c			\

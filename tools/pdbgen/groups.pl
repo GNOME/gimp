@@ -10,6 +10,7 @@
     edit
     fileops
     floating_sel
+    font_select
     gimprc
     gradient_select
     gradients

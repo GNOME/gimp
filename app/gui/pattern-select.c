@@ -127,8 +127,8 @@ pattern_select_new (Gimp        *gimp,
                                           gimp->pattern_factory,
                                           NULL,
                                           psp->context,
-                                          GIMP_PREVIEW_SIZE_SMALL,
-                                          5, 5,
+                                          GIMP_PREVIEW_SIZE_MEDIUM,
+                                          6, 6,
                                           global_menu_factory, "<Patterns>");
 
   gtk_container_set_border_width (GTK_CONTAINER (psp->view), 4);

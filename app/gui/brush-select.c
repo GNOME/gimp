@@ -154,15 +154,14 @@ brush_select_new (Gimp                 *gimp,
 				NULL);
 
   /*  The Brush Grid  */
-  bsp->view =
-    gimp_brush_factory_view_new (GIMP_VIEW_TYPE_GRID,
-                                 gimp->brush_factory,
-                                 dialogs_edit_brush_func,
-                                 bsp->context,
-                                 FALSE,
-                                 GIMP_PREVIEW_SIZE_EXTRA_SMALL,
-                                 5, 5,
-                                 global_menu_factory);
+  bsp->view = gimp_brush_factory_view_new (GIMP_VIEW_TYPE_GRID,
+                                           gimp->brush_factory,
+                                           dialogs_edit_brush_func,
+                                           bsp->context,
+                                           FALSE,
+                                           GIMP_PREVIEW_SIZE_MEDIUM,
+                                           5, 5,
+                                           global_menu_factory);
 
   gtk_container_set_border_width (GTK_CONTAINER (bsp->view), 4);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (bsp->shell)->vbox), bsp->view);

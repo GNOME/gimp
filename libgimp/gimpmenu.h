@@ -32,7 +32,6 @@ typedef void (* GimpMenuCallback)     (gint32    any_id,
 				       gpointer  data);
 
 
-/* Popup the brush dialog interactively */
 typedef void (* GimpRunBrushCallback)    (gchar    *name,
 					  gdouble   opacity,
 					  gint      spacing,
@@ -43,7 +42,16 @@ typedef void (* GimpRunBrushCallback)    (gchar    *name,
 					  gboolean  dialog_closing,
 					  gpointer  user_data);
 
-/* Popup the pattern dialog */
+typedef void (* GimpRunFontCallback)     (gchar    *name,
+					  gboolean  dialog_closing,
+					  gpointer  user_data);
+
+typedef void (* GimpRunGradientCallback) (gchar    *name,
+					  gint      width,
+					  gdouble  *grad_data,
+					  gboolean  dialog_closing,
+					  gpointer  user_data);
+
 typedef void (* GimpRunPatternCallback)  (gchar    *name,
 					  gint      width,
 					  gint      height,
@@ -52,13 +60,6 @@ typedef void (* GimpRunPatternCallback)  (gchar    *name,
 					  gboolean  dialog_closing,
 					  gpointer  user_data);
   
-/* Popup the gradient dialog */
-typedef void (* GimpRunGradientCallback) (gchar    *name,
-					  gint      width,
-					  gdouble  *grad_data,
-					  gboolean  dialog_closing,
-					  gpointer  user_data);
-
 
 GtkWidget * gimp_image_menu_new    (GimpConstraintFunc constraint,
 				    GimpMenuCallback   callback,
@@ -101,19 +102,21 @@ void      gimp_brush_select_widget_set_popup   (GtkWidget *widget,
 						gint       paint_mode);
 void      gimp_brush_select_widget_close_popup (GtkWidget *widget);
   
-gchar   * gimp_interactive_selection_pattern      (gchar     *dialogtitle,
-						   gchar     *pattern_name,
-						   GimpRunPatternCallback  callback,
-						   gpointer   data);
 
-GtkWidget * gimp_pattern_select_widget            (gchar     *dname,
-						   gchar     *ipattern, 
-						   GimpRunPatternCallback  cback,
-						   gpointer    data);
+gchar   * gimp_interactive_selection_font      (gchar     *dialogtitle,
+                                                gchar     *font_name,
+                                                GimpRunFontCallback  callback,
+                                                gpointer   data);
+
+GtkWidget * gimp_font_select_widget            (gchar     *dname,
+                                                gchar     *ifont, 
+                                                GimpRunFontCallback  cback,
+                                                gpointer    data);
   
-void      gimp_pattern_select_widget_close_popup  (GtkWidget *widget);
-void      gimp_pattern_select_widget_set_popup    (GtkWidget *widget,
-						   gchar     *pname);
+void      gimp_font_select_widget_close_popup  (GtkWidget *widget);
+void      gimp_font_select_widget_set_popup    (GtkWidget *widget,
+                                                gchar     *fname);
+
 
 gchar   * gimp_interactive_selection_gradient     (gchar      *dialogtitle,
 						   gchar      *gradient_name,
@@ -129,6 +132,21 @@ GtkWidget * gimp_gradient_select_widget           (gchar      *gname,
 void      gimp_gradient_select_widget_close_popup (GtkWidget  *widget);
 void      gimp_gradient_select_widget_set_popup   (GtkWidget  *widget,
 						   gchar      *gname);
+
+
+gchar   * gimp_interactive_selection_pattern      (gchar     *dialogtitle,
+						   gchar     *pattern_name,
+						   GimpRunPatternCallback  callback,
+						   gpointer   data);
+
+GtkWidget * gimp_pattern_select_widget            (gchar     *dname,
+						   gchar     *ipattern, 
+						   GimpRunPatternCallback  cback,
+						   gpointer    data);
+  
+void      gimp_pattern_select_widget_close_popup  (GtkWidget *widget);
+void      gimp_pattern_select_widget_set_popup    (GtkWidget *widget,
+						   gchar     *pname);
 
 
 G_END_DECLS

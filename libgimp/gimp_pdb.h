@@ -34,6 +34,7 @@
 #include <libgimp/gimpedit_pdb.h>
 #include <libgimp/gimpfileops_pdb.h>
 #include <libgimp/gimpfloatingsel_pdb.h>
+#include <libgimp/gimpfontselect_pdb.h>
 #include <libgimp/gimpgimprc_pdb.h>
 #include <libgimp/gimpgradients_pdb.h>
 #include <libgimp/gimpgradientselect_pdb.h>

@@ -1,0 +1,141 @@
+# The GIMP -- an image manipulation program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub pdb_misc {
+    $author = 'Sven Neumann  <sven@gimp.org>';
+    $copyright = 'Sven Neumann';
+    $date = '2003';
+}
+
+sub fonts_popup {
+    $blurb = 'Invokes the Gimp font selection.';
+
+    $help = 'This procedure popups the font selection dialog.';
+
+    &pdb_misc;
+
+    @inargs = (
+	{ name => 'font_callback', type => 'string',
+	  desc => 'The callback PDB proc to call when font selection is
+		   made' },
+	{ name => 'popup_title', type => 'string',
+	  desc => 'Title to give the font popup window' },
+	{ name => 'initial_font', type => 'string',
+	  desc => 'The name of the font to set as the first selected',
+	  no_success => 1 }
+    );
+
+    %invoke = (
+	vars => [ 'ProcRecord *proc' ],
+	code => <<'CODE'
+{
+  if (! gimp->no_interface &&
+      (proc = procedural_db_lookup (gimp, font_callback)))
+    {
+      font_select_new (gimp, popup_title, initial_font, font_callback);
+    }
+  else
+    {
+      success = FALSE;
+    }
+}
+CODE
+    );
+}
+
+sub fonts_close_popup {
+    $blurb = 'Popdown the Gimp font selection.';
+
+    $help = 'This procedure closes an opened font selection dialog.';
+
+    &pdb_misc;
+
+    @inargs = (
+	{ name => 'font_callback', type => 'string',
+	  desc => 'The name of the callback registered for this popup' }
+    );
+
+    %invoke = (
+	vars => [ 'ProcRecord *proc', 'FontSelect *font_select' ],
+	code => <<'CODE'
+{
+  if (! gimp->no_interface &&
+      (proc = procedural_db_lookup (gimp, font_callback)) &&
+      (font_select = font_select_get_by_callback (font_callback)))
+    {
+      font_select_free (font_select);
+    }
+  else
+    {
+      success = FALSE;
+    }
+}
+CODE
+    );
+}
+
+sub fonts_set_popup {
+    $blurb = 'Sets the current font selection in a popup.';
+
+    $help = $blurb;
+
+    &pdb_misc;
+
+    @inargs = (
+	{ name => 'font_callback', type => 'string',
+	  desc => 'The name of the callback registered for this popup' },
+	{ name => 'font_name', type => 'string',
+	  desc => 'The name of the font to set as selected' }
+    );
+
+    %invoke = (
+	vars => [ 'ProcRecord *proc', 'FontSelect *font_select' ],
+	code => <<'CODE'
+{
+  if (! gimp->no_interface &&
+      (proc = procedural_db_lookup (gimp, font_callback)) &&
+      (font_select = font_select_get_by_callback (font_callback)))
+    {
+      GimpFont *active = (GimpFont *)
+        gimp_container_get_child_by_name (gimp->fonts, font_name);
+
+      success = (active != NULL);
+
+      if (success)
+	{
+	  gimp_context_set_font (font_select->context, active);
+	}
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+@headers = qw("core/gimp.h" "core/gimpcontext.h"
+	      "core/gimpcontainer.h"
+              "gui/gui-types.h" "gui/font-select.h");
+
+@procs = qw(fonts_popup fonts_close_popup fonts_set_popup);
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Font UI';
+
+1;

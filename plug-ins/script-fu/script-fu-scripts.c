@@ -45,9 +45,6 @@
 #define COLOR_SAMPLE_WIDTH   100
 #define COLOR_SAMPLE_HEIGHT   15
 #define SLIDER_WIDTH         100
-#define FONT_PREVIEW_WIDTH   100
-
-#define DEFAULT_FONT_SIZE    240
 
 #define MAX_STRING_LENGTH   4096
 
@@ -63,13 +60,6 @@ typedef struct
   gint              digits;
   SFAdjustmentType  type;
 } SFAdjustment;
-
-typedef struct
-{
-  GtkWidget *preview;
-  GtkWidget *dialog;
-  gchar     *fontname;
-} SFFont;
 
 typedef struct
 {
@@ -101,10 +91,10 @@ typedef union
   gint32         sfa_toggle;
   gchar         *sfa_value;
   SFAdjustment   sfa_adjustment;
-  SFFont         sfa_font;
   SFFilename     sfa_file;
-  gchar         *sfa_pattern;
+  gchar         *sfa_font;
   gchar         *sfa_gradient;
+  gchar         *sfa_pattern;
   SFBrush        sfa_brush;
   SFOption       sfa_option;
 } SFArgValue;
@@ -179,19 +169,6 @@ static void       script_fu_menu_callback           (gint32     id,
 static void       script_fu_file_selection_callback (GtkWidget *widget,
 						     gpointer   data);
 
-static void       script_fu_font_preview_callback   (GtkWidget *widget,
-						     gpointer   data);
-
-static void       script_fu_font_dialog_ok          (GtkWidget *widget,
-						     gpointer   data);
-static void       script_fu_font_dialog_cancel      (GtkWidget *widget,
-						     gpointer   data);
-static gboolean   script_fu_font_dialog_delete      (GtkWidget *widget,
-						     GdkEvent  *event,
-						     gpointer   data);
-
-static void       script_fu_font_preview            (GtkWidget *preview,
-						     gchar     *fontname);
 static void       script_fu_pattern_preview         (gchar     *name,
 						     gint       width,
 						     gint       height,
@@ -204,6 +181,9 @@ static void       script_fu_gradient_preview        (gchar     *name,
 						     gdouble   *mask_data,
 						     gboolean   closing,
 						     gpointer   data);
+static void       script_fu_font_preview            (gchar     *name,
+                                                     gboolean   closing,
+                                                     gpointer   data);
 static void       script_fu_brush_preview           (gchar     *name,
 						     gdouble    opacity,
 						     gint       spacing,
@@ -629,12 +609,10 @@ script_fu_add_script (LISP a)
 		case SF_FONT:
 		  if (!TYPEP (car (a), tc_string))
 		    return my_err ("script-fu-register: font defaults must be string values", NIL);
-		  script->arg_defaults[i].sfa_font.fontname = 
-		    g_strdup (get_c_string (car (a)));
-		  script->arg_values[i].sfa_font.fontname =  
-		    g_strdup (script->arg_defaults[i].sfa_font.fontname);
-		  script->arg_values[i].sfa_font.preview = NULL;
-		  script->arg_values[i].sfa_font.dialog = NULL;
+		  script->arg_defaults[i].sfa_font =
+                    g_strdup (get_c_string (car (a)));
+		  script->arg_values[i].sfa_font =
+                    g_strdup (script->arg_defaults[i].sfa_font);
 		  
 		  args[i + 1].type = GIMP_PDB_STRING;
 		  args[i + 1].name = "font";
@@ -1104,8 +1082,8 @@ script_fu_free_script (SFScript *script)
 	      break;
 
 	    case SF_FONT:
-	      g_free (script->arg_defaults[i].sfa_font.fontname);
-	      g_free (script->arg_values[i].sfa_font.fontname);
+	      g_free (script->arg_defaults[i].sfa_font);
+	      g_free (script->arg_values[i].sfa_font);
 	      break;
 
 	    case SF_PATTERN:
@@ -1409,21 +1387,11 @@ script_fu_interface (SFScript *script)
 	case SF_FONT:
 	  widget_leftalign = FALSE;
 
-	  sf_interface->args_widgets[i] = gtk_button_new ();
-	  script->arg_values[i].sfa_font.preview = gtk_label_new ("");
-	  script->arg_values[i].sfa_font.dialog = NULL;
-	  gtk_widget_set_size_request (sf_interface->args_widgets[i], 
-                                       FONT_PREVIEW_WIDTH, -1);
-	  gtk_container_add (GTK_CONTAINER (sf_interface->args_widgets[i]),
-			     script->arg_values[i].sfa_font.preview);
-	  gtk_widget_show (script->arg_values[i].sfa_font.preview);
-
-	  script_fu_font_preview (script->arg_values[i].sfa_font.preview,
-				  script->arg_values[i].sfa_font.fontname);
-
-	  g_signal_connect (sf_interface->args_widgets[i], "clicked",
-			    G_CALLBACK (script_fu_font_preview_callback),
-			    &script->arg_values[i].sfa_font);	  
+	  sf_interface->args_widgets[i] = 
+	    gimp_font_select_widget (_("Script-Fu Font Selection"),
+                                     script->arg_values[i].sfa_font,
+                                     script_fu_font_preview,
+                                     &script->arg_values[i].sfa_font);
 	  break;
 
 	case SF_PATTERN:
@@ -1524,11 +1492,7 @@ script_fu_interface_quit (SFScript *script)
     switch (script->arg_types[i])
       {
       case SF_FONT:
-	if (script->arg_values[i].sfa_font.dialog != NULL)
-	  {
-	    gtk_widget_destroy (script->arg_values[i].sfa_font.dialog);
-	    script->arg_values[i].sfa_font.dialog = NULL;
-	  }
+  	gimp_font_select_widget_close_popup (sf_interface->args_widgets[i]);
 	break;
 
       case SF_PATTERN:
@@ -1594,6 +1558,19 @@ script_fu_gradient_preview (gchar    *name,
   *gname = g_strdup (name);
 }
 
+static void
+script_fu_font_preview (gchar    *name,
+                        gboolean  closing,
+                        gpointer  data)
+{
+  gchar **fname;
+
+  fname = (gchar **) data;
+
+  g_free (*fname);
+  *fname = g_strdup (name);
+}
+
 static void      
 script_fu_brush_preview (gchar    *name,
 			 gdouble   opacity,
@@ -1618,14 +1595,6 @@ script_fu_brush_preview (gchar    *name,
 }
 
 static void
-script_fu_font_preview (GtkWidget *preview,
-			gchar     *data)
-{
-  /* FIXME: here should be a check if the fontname is valid and the font is present */
-  gtk_label_set_text (GTK_LABEL (preview), data);
-}
-
-static void
 script_fu_ok_callback (GtkWidget *widget,
 		       gpointer   data)
 {
@@ -1640,25 +1609,6 @@ script_fu_ok_callback (GtkWidget *widget,
   gint       i;
 
   SFScript  *script = (SFScript *) data;
-  
-#if 0
-  GdkFont   *font;
-
-  /* Check if choosen fonts are there */
-  for (i = 0; i < script->num_args; i++)
-    if (script->arg_types[i] == SF_FONT)
-      {
-	font = gdk_font_load (script->arg_values[i].sfa_font.fontname);
-	if (font == NULL)
-	  {
-	    g_message (_("At least one font you've choosen is invalid.\n"
-			 "Please check your settings.\n"));
-	    return;
-	  }
-	else
-	  gdk_font_unref (font);
-      }
-#endif
   
   length = strlen (script->script_name) + 3;
 
@@ -1702,7 +1652,7 @@ script_fu_ok_callback (GtkWidget *widget,
 	break;
 
       case SF_FONT:
-	length += strlen (script->arg_values[i].sfa_font.fontname) + 3;
+	length += strlen (script->arg_values[i].sfa_font) + 3;
 	break;
 
       case SF_PATTERN:
@@ -1807,7 +1757,7 @@ script_fu_ok_callback (GtkWidget *widget,
 
 	case SF_FONT:
 	  g_snprintf (buffer, sizeof (buffer), "\"%s\"",
-		      script->arg_values[i].sfa_font.fontname);
+		      script->arg_values[i].sfa_font);
 	  text = buffer;
 	  break;
 
@@ -2041,17 +1991,8 @@ script_fu_reset_callback (GtkWidget *widget,
 	break;
 
       case SF_FONT:
-	g_free (script->arg_values[i].sfa_font.fontname);
-	script->arg_values[i].sfa_font.fontname =
-	  g_strdup (script->arg_defaults[i].sfa_font.fontname);
-	if (script->arg_values[i].sfa_font.dialog)
-	  {
-	    gtk_font_selection_dialog_set_font_name
-	      (GTK_FONT_SELECTION_DIALOG (script->arg_values[i].sfa_font.dialog),
-	       script->arg_values[i].sfa_font.fontname);
-	  }	
-	script_fu_font_preview (script->arg_values[i].sfa_font.preview,
-				script->arg_values[i].sfa_font.fontname);
+  	gimp_font_select_widget_set_popup
+	  (sf_interface->args_widgets[i], script->arg_defaults[i].sfa_font);  
 	break;
 
       case SF_PATTERN:
@@ -2104,85 +2045,6 @@ script_fu_file_selection_callback (GtkWidget *widget,
 
   file->filename = 
     gimp_file_selection_get_filename (GIMP_FILE_SELECTION (file->fileselection));
-}
-
-static void
-script_fu_font_preview_callback (GtkWidget *widget,
-				 gpointer   data)
-{
-  GtkFontSelectionDialog *fsd;
-  SFFont                 *font;
-
-  font = (SFFont *) data;
-
-  if (! font->dialog)
-    {
-      font->dialog =
-	gtk_font_selection_dialog_new (_("Script-Fu Font Selection"));
-      fsd = GTK_FONT_SELECTION_DIALOG (font->dialog);
-
-      g_signal_connect (fsd->ok_button, "clicked",
-			G_CALLBACK (script_fu_font_dialog_ok),
-			font);
-      g_signal_connect (fsd, "delete_event",
-			G_CALLBACK (script_fu_font_dialog_delete),
-			font);
-      g_signal_connect (fsd, "destroy",
-			G_CALLBACK (gtk_widget_destroyed),
-			&font->dialog);
-      g_signal_connect (fsd->cancel_button, "clicked",
-			G_CALLBACK (script_fu_font_dialog_cancel),
-			font);
-    }
-  else
-    {
-      fsd = GTK_FONT_SELECTION_DIALOG (font->dialog);
-    }
-
-  gtk_font_selection_dialog_set_font_name (fsd, font->fontname);
-  gtk_window_set_position (GTK_WINDOW (font->dialog), GTK_WIN_POS_MOUSE);
-  gtk_widget_show (font->dialog);
-}
-
-static void
-script_fu_font_dialog_ok (GtkWidget *widget,
-			  gpointer   data)
-{
-  SFFont *font;
-  gchar  *fontname;
-
-  font = (SFFont *) data;
-
-  fontname = 
-    gtk_font_selection_dialog_get_font_name (GTK_FONT_SELECTION_DIALOG (font->dialog));
-  if (fontname != NULL)
-    {
-      g_free (font->fontname);
-      font->fontname = fontname;
-    }
-  gtk_widget_hide (font->dialog);
-
-  script_fu_font_preview (font->preview, font->fontname);
-}
-
-static void
-script_fu_font_dialog_cancel (GtkWidget *widget,
-			      gpointer   data)
-{
-  SFFont *font;
-
-  font = (SFFont *) data;
-
-  gtk_widget_hide (font->dialog);
-}
-
-static gboolean
-script_fu_font_dialog_delete (GtkWidget *widget,
-			      GdkEvent  *event,
-			      gpointer   data)
-{
-  script_fu_font_dialog_cancel (widget, data);
-  return TRUE;
 }
 
 static void
