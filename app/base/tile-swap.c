@@ -449,6 +449,9 @@ tile_swap_default_in_async (DefSwapFile *def_swap_file,
  * I'm not sure that it is worthwhile to try to pull out common
  * bits; I think the two functions are (at least for now) different
  * enough to keep as two functions.
+ *
+ * N.B. the mutex on the tile must already have been locked on entry
+ * to this function.  DO NOT LOCK IT HERE.
  */
 static void
 tile_swap_default_in (DefSwapFile *def_swap_file,
@@ -462,10 +465,8 @@ tile_swap_default_in (DefSwapFile *def_swap_file,
 
   err = -1;
 
-  TILE_MUTEX_LOCK (tile);
   if (tile->data)
     {
-      TILE_MUTEX_UNLOCK (tile);
       return;
     }
 
@@ -508,9 +509,6 @@ tile_swap_default_in (DefSwapFile *def_swap_file,
 
   /*  Do not delete the swap from the file  */
   /*  tile_swap_default_delete (def_swap_file, fd, tile);  */
-
-  /* FIXME: can this be moved upwards? */
-  TILE_MUTEX_UNLOCK (tile);
 
   read_err_msg = seek_err_msg = TRUE;
 }

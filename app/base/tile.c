@@ -87,13 +87,14 @@ tile_lock (Tile *tile)
 	  /* remove from cache, move to main store */
 	  tile_cache_flush (tile);
 	}
-      if (tile->data == NULL)
-	{
-	  /* There is no data, so the tile must be swapped out */
-	  tile_swap_in (tile);
-	}
       tile_active_count ++;
     }
+  if (tile->data == NULL)
+    {
+      /* There is no data, so the tile must be swapped out */
+      tile_swap_in (tile);
+    }
+
   TILE_MUTEX_UNLOCK (tile);
 
   /* Call 'tile_manager_validate' if the tile was invalid.
@@ -103,6 +104,8 @@ tile_lock (Tile *tile)
       /* an invalid tile should never be shared, so this should work */
       tile_manager_validate ((TileManager*) tile->tlink->tm, tile);
     }
+
+
 }
 
 

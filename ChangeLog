@@ -1,3 +1,7 @@
+Tue Jul 21 18:32:19 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
+
+	* app/tile.c app/tile_swap.c: Squashed a deadlock.  I hope.
+
 Tue Jul 21 02:11:47 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/app_procs.c
