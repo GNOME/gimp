@@ -42,6 +42,7 @@
 #include "gimpconfig.h"
 #include "gimpconfig-serialize.h"
 #include "gimpconfig-deserialize.h"
+#include "gimpconfig-substitute.h"
 #include "gimpconfig-utils.h"
 #include "gimpscanner.h"
 
@@ -479,9 +480,12 @@ gimp_config_add_unknown_token (GObject     *object,
   GSList          *unknown_tokens;
   GSList          *last;
   GSList          *list;
+  gchar           *dup_value;
 
   g_return_if_fail (G_IS_OBJECT (object));
   g_return_if_fail (key != NULL);
+
+  dup_value = value ? gimp_config_substitute_path (object, value, TRUE) : NULL;
 
   unknown_tokens = (GSList *) g_object_get_data (object, 
                                                  GIMP_CONFIG_UNKNOWN_TOKENS);
@@ -495,9 +499,10 @@ gimp_config_add_unknown_token (GObject     *object,
       if (strcmp (token->key, key) == 0)
         {
           g_free (token->value);
+
           if (value)
             {
-              token->value = g_strdup (value);
+              token->value = dup_value;
             }
           else
             {
@@ -508,13 +513,17 @@ gimp_config_add_unknown_token (GObject     *object,
                                       unknown_tokens, 
                      (GDestroyNotify) gimp_config_destroy_unknown_tokens);
             }
+
           return;
         }
     }
 
+  if (!value)
+    return;
+
   token = g_new (GimpConfigToken, 1);
   token->key   = g_strdup (key);
-  token->value = g_strdup (value); 
+  token->value = dup_value; 
 
   if (last)
     {
