@@ -1,7 +1,12 @@
+2004-06-27  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/tools/gimplevelstool.c: removed two small chunks of code.
+	Fixes bug #141930.  Possibly unfixes bug #132322.
+	
 2004-06-27  Michael Schumacher <schumaml@cvs.gnome.org>
 
 	* libgimp/gimp.def: added _gimp_tile_cache_flush_drawable because
-	it is used in a plug-in. See bug 145051.
+	it is used in a plug-in. See bug #145051.
 
 2004-06-26  Philip Lafleur  <plafleur@cvs.gnome.org>
 
