@@ -20,12 +20,14 @@
  * Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
+
 #include "gimphelpui.h"
 #include "gimpunitmenu.h"
 #include "gimpwidgets.h"
 #include "gimpmath.h"
 
-#include "gimpintl.h"
+#include "libgimp-intl.h"
 
 /*
  *  Forward declarations

@@ -24,7 +24,7 @@
 #include "gimpdialog.h"
 #include "gimpunitmenu.h"
 
-#include "gimpintl.h"
+#include "libgimp-intl.h"
 
 /*  private functions  */
 static const gchar * gimp_unit_menu_build_string (gchar     *format,

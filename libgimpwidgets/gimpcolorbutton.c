@@ -31,8 +31,9 @@
 
 #include "gimp.h"
 #include "gimpcolorbutton.h"
-#include "gimpintl.h"
 #include "gimplimits.h"
+
+#include "libgimp-intl.h"
 
 
 /* DND -- remove as soon as gimpdnd is in libgimp */

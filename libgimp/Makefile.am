@@ -103,7 +103,8 @@ libgimp_la_SOURCES = \
 	parasiteP.h		\
 	parasiteio.c		\
 	parasiteio.h		\
-	stdplugins-intl.h
+	stdplugins-intl.h	\
+	libgimp-intl.h
 
 libgimpui_la_SOURCES = \
 	gimpmenu.c		\

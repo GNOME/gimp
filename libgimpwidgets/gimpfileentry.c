@@ -32,7 +32,7 @@
 
 #include "gimpfileselection.h"
 
-#include "libgimp/gimpintl.h"
+#include "libgimp-intl.h"
 
 #include "pixmaps/yes.xpm"
 #include "pixmaps/no.xpm"

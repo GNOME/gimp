@@ -21,9 +21,11 @@
  */
 
 #include "config.h"
+
 #include "gimp.h"
 #include "gimpunit.h"
-#include "libgimp/gimpintl.h"
+
+#include "libgimp-intl.h"
 
 /*  internal structures  */
 

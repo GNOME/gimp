@@ -24,7 +24,8 @@
 #include "gimpdialog.h"
 #include "gimpenums.h"
 #include "gimpexport.h"
-#include "gimpintl.h"
+
+#include "libgimp-intl.h"
 
 typedef void (* ExportFunc) (gint32 imageID, gint32 *drawable_ID);
 

@@ -1,5 +1,21 @@
 2000-01-28  Michael Natterer  <mitch@gimp.org>
 
+	* libgimp/Makefile.am
+	* libgimp/libgimp-intl.h: new file to be included by libgimp files
+	only. Re-defines _() and gettext() as dgettext() and N_() as
+	dgettext_noop().
+	This way the translations of the various widgets which are used in
+	both the app and plugins are searched in the correct catalog.
+
+	* libgimp/gimpcolorbutton.c
+	* libgimp/gimpexport.c
+	* libgimp/gimpfileselection.c
+	* libgimp/gimpunit.c
+	* libgimp/gimpunitmenu.c
+	* libgimp/gimpwidgets.c: #include "libgimp-intl.h"
+
+2000-01-28  Michael Natterer  <mitch@gimp.org>
+
 	* libgimp/gimpwidgets.[ch]: added one more option menu constructor
 	and made the namespace more consistent, minor fixes.
 
