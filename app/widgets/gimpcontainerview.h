@@ -84,6 +84,9 @@ struct _GimpContainerViewClass
 				 gpointer           insert_data);
   void     (* clear_items)      (GimpContainerView *view);
   void     (* set_preview_size) (GimpContainerView *view);
+
+  /*  the destroy notifier for view->hash_table's values  */
+  GDestroyNotify  insert_data_free;
 };
 
 

@@ -48,6 +48,8 @@ struct _GimpContainerTreeView
 
   GQuark             invalidate_preview_handler_id;
   GQuark             name_changed_handler_id;
+
+  GimpViewable      *dnd_viewable;
 };
 
 struct _GimpContainerTreeViewClass

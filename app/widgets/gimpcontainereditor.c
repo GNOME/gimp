@@ -34,7 +34,6 @@
 #include "gimpcontainergridview.h"
 #include "gimpcontainerlistview.h"
 #include "gimpcontainertreeview.h"
-#include "gimpdnd.h"
 #include "gimpitemfactory.h"
 #include "gimpmenufactory.h"
 #include "gimppreview.h"
@@ -191,13 +190,13 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
 							   min_items_x,
 							   min_items_y));
       break;
+
     default:
       g_warning ("%s(): unknown GimpViewType passed", G_GNUC_FUNCTION);
       return FALSE;
     }
 
-  gtk_container_add (GTK_CONTAINER (editor),
-		     GTK_WIDGET (editor->view));
+  gtk_container_add (GTK_CONTAINER (editor), GTK_WIDGET (editor->view));
   gtk_widget_show (GTK_WIDGET (editor->view));
 
   g_signal_connect_object (editor->view, "select_item",

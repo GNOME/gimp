@@ -1,3 +1,16 @@
+2003-02-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainerview.[ch]: added "GDestroyNotify
+	insert_data_free" to the GimpContainerViewClass struct. Pass it as
+	"value_destroy_func" to g_hash_table_new_full().
+
+	* app/widgets/gimpcontainertreeview.[ch]: set g_free() as
+	insert_data_free, so we don't leak the GtkTreeIters used as
+	insert_data. Added DND stuff (you can drag any item without
+	selecting it using mouse button 2). Lots of cleanup and changes.
+
+	* app/widgets/gimpcontainereditor.c: cosmetic.
+
 2003-02-24  Sven Neumann  <sven@gimp.org>
 
 	* app/text/gimptext.[ch]

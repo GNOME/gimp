@@ -48,7 +48,8 @@ enum
 
 
 static void   gimp_container_view_class_init  (GimpContainerViewClass *klass);
-static void   gimp_container_view_init        (GimpContainerView      *panel);
+static void   gimp_container_view_init        (GimpContainerView      *view,
+                                               GimpContainerViewClass *klass);
 
 static void   gimp_container_view_destroy     (GtkObject              *object);
 
@@ -169,15 +170,20 @@ gimp_container_view_class_init (GimpContainerViewClass *klass)
   klass->reorder_item     = NULL;
   klass->clear_items      = gimp_container_view_real_clear_items;
   klass->set_preview_size = NULL;
+
+  klass->insert_data_free = NULL;
 }
 
 static void
-gimp_container_view_init (GimpContainerView *view)
+gimp_container_view_init (GimpContainerView      *view,
+                          GimpContainerViewClass *klass)
 {
   view->container     = NULL;
   view->context       = NULL;
 
-  view->hash_table    = g_hash_table_new (g_direct_hash, g_direct_equal);
+  view->hash_table    = g_hash_table_new_full (g_direct_hash, g_direct_equal,
+                                               NULL,
+                                               klass->insert_data_free);
 
   view->preview_size  = 0;
   view->reorderable   = FALSE;
@@ -229,6 +235,8 @@ gimp_container_view_real_set_container (GimpContainerView *view,
 {
   if (view->container)
     {
+      GimpContainerViewClass *view_class;
+
       gimp_container_view_select_item (view, NULL);
 
       gimp_container_view_clear_items (view);
@@ -243,9 +251,13 @@ gimp_container_view_real_set_container (GimpContainerView *view,
 					    gimp_container_view_reorder,
 					    view);
 
-      g_hash_table_destroy (view->hash_table);
+        g_hash_table_destroy (view->hash_table);
 
-      view->hash_table = g_hash_table_new (g_direct_hash, g_direct_equal);
+      view_class = GIMP_CONTAINER_VIEW_GET_CLASS (view);
+
+      view->hash_table = g_hash_table_new_full (g_direct_hash, g_direct_equal,
+                                                NULL,
+                                                view_class->insert_data_free);
 
       if (view->context)
 	{
