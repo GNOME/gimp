@@ -36,6 +36,47 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+static gint32 
+ToL (guchar *puffer)
+{
+  return (puffer[0] | puffer[1]<<8 | puffer[2]<<16 | puffer[3]<<24);
+}
+
+static gint16 
+ToS (guchar *puffer)
+{
+  return (puffer[0] | puffer[1]<<8);
+}
+
+static gboolean
+ReadColorMap (FILE   *fd, 
+	      guchar  buffer[256][3], 
+	      gint    number, 
+	      gint    size, 
+	      gint   *grey)
+{
+  gint i;
+  guchar rgb[4];
+  
+  *grey=(number>2);
+  for (i = 0; i < number ; i++)
+    {
+      if (!ReadOK (fd, rgb, size))
+	{
+	  g_message (_("%s: bad colormap"), prog_name);
+	  return FALSE;
+	}
+      
+      /* Bitmap save the colors in another order! But change only once! */
+
+      buffer[i][0] = rgb[2];
+      buffer[i][1] = rgb[1];
+      buffer[i][2] = rgb[0];
+      *grey = ((*grey) && (rgb[0]==rgb[1]) && (rgb[1]==rgb[2]));
+    }
+  return TRUE;
+}
+
 gint32 
 ReadBMP (gchar *name)
 {
@@ -219,7 +260,7 @@ ReadBMP (gchar *name)
   
   /* Get the Colormap */
   
-  if (ReadColorMap (fd, ColorMap, ColormapSize, Maps, &Grey) == -1)
+  if (!ReadColorMap (fd, ColorMap, ColormapSize, Maps, &Grey))
     return -1;
   
 #ifdef DEBUG
@@ -257,35 +298,6 @@ ReadBMP (gchar *name)
     }
 
   return (image_ID);
-}
-
-gint 
-ReadColorMap (FILE   *fd, 
-	      guchar  buffer[256][3], 
-	      gint    number, 
-	      gint    size, 
-	      gint   *grey)
-{
-  gint i;
-  guchar rgb[4];
-  
-  *grey=(number>2);
-  for (i = 0; i < number ; i++)
-    {
-      if (!ReadOK (fd, rgb, size))
-	{
-	  g_message (_("%s: bad colormap"), prog_name);
-	  return -1;
-	}
-      
-      /* Bitmap save the colors in another order! But change only once! */
-
-      buffer[i][0] = rgb[2];
-      buffer[i][1] = rgb[1];
-      buffer[i][2] = rgb[0];
-      *grey = ((*grey) && (rgb[0]==rgb[1]) && (rgb[1]==rgb[2]));
-    }
-  return 0;
 }
 
 Image 

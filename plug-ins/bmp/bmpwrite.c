@@ -45,10 +45,8 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-guchar *pixels;
-gint    cur_progress;
-
-gint    max_progress;
+static gint    cur_progress;
+static gint    max_progress;
 
 typedef struct
 {
@@ -60,12 +58,51 @@ static BMPSaveInterface gsint =
   FALSE   /*  run  */
 };
 
-gint encoded = 0;
+static gint encoded = 0;
 
 
 static gint  save_dialog      (void);
 static void  save_ok_callback (GtkWidget *widget,
 			       gpointer   data);
+
+static void 
+FromL (gint32  wert, 
+       guchar *bopuffer)
+{
+  bopuffer[0] = (wert & 0x000000ff)>>0x00;
+  bopuffer[1] = (wert & 0x0000ff00)>>0x08;
+  bopuffer[2] = (wert & 0x00ff0000)>>0x10;
+  bopuffer[3] = (wert & 0xff000000)>>0x18;
+}
+
+static void  
+FromS (gint16  wert, 
+       guchar *bopuffer)
+{
+  bopuffer[0] = (wert & 0x00ff)>>0x00;
+  bopuffer[1] = (wert & 0xff00)>>0x08;
+}
+
+static void 
+WriteColorMap (FILE *f, 
+	       gint  red[MAXCOLORS], 
+	       gint  green[MAXCOLORS],
+	       gint  blue[MAXCOLORS], 
+	       gint  size)
+{
+  gchar trgb[4];
+  gint i;
+
+  size /= 4;
+  trgb[3] = 0;
+  for (i = 0; i < size; i++)
+    {
+      trgb[0] = (guchar) blue[i];
+      trgb[1] = (guchar) green[i];
+      trgb[2] = (guchar) red[i];
+      Write (f, trgb, 4);
+    }
+}
 
 GimpPDBStatusType
 WriteBMP (gchar  *filename,
@@ -94,16 +131,10 @@ WriteBMP (gchar  *filename,
   drawable_type = gimp_drawable_type(drawable_ID);
   gimp_pixel_rgn_init (&pixel_rgn, drawable,
 		       0, 0, drawable->width, drawable->height, FALSE, FALSE);
-  switch (drawable_type)
+  if (gimp_drawable_has_alpha(drawable_ID))
     {
-    case GIMP_RGB_IMAGE:
-    case GIMP_GRAY_IMAGE:
-    case GIMP_INDEXED_IMAGE:
-      break;
-    default:
       g_message(_("BMP: cannot operate on unknown image types or alpha images"));
       return GIMP_PDB_EXECUTION_ERROR;
-      break;
     }
 
   /* We can save it. So what colors do we use? */
@@ -297,28 +328,7 @@ WriteBMP (gchar  *filename,
   return GIMP_PDB_SUCCESS;
 }
 
-void 
-WriteColorMap (FILE *f, 
-	       gint  red[MAXCOLORS], 
-	       gint  green[MAXCOLORS],
-	       gint  blue[MAXCOLORS], 
-	       gint  size)
-{
-  gchar trgb[4];
-  gint i;
-
-  size /= 4;
-  trgb[3] = 0;
-  for (i = 0; i < size; i++)
-    {
-      trgb[0] = (guchar) blue[i];
-      trgb[1] = (guchar) green[i];
-      trgb[2] = (guchar) red[i];
-      Write (f, trgb, 4);
-    }
-}
-
-void 
+static void 
 WriteImage (FILE   *f, 
 	    guchar *src, 
 	    gint    width, 
@@ -413,7 +423,6 @@ WriteImage (FILE   *f,
 	    ketten = (guchar *) g_malloc (width / (8 / bpp) + 10);
 	    for (ypos = height - 1; ypos >= 0; ypos--)
 	      {	/* each row separately */
-		/*printf("Line: %i\n",ypos); */
 		j = 0;
 		/* first copy the pixels to a buffer,
 		 * making one byte from two 4bit pixels
@@ -443,10 +452,8 @@ WriteImage (FILE   *f,
 		      j++;
 
 		    ketten[i] = j;
-		    /*printf("%i:",ketten[i]); */
 		    i += j;
 		  }
-		/*printf("\n"); */
 
 		/* then write the strings and the other pixels to the file */
 		for (i = 0; i < breite;)
@@ -475,16 +482,12 @@ WriteImage (FILE   *f,
 			    Write (f, &n, 1);
 			    laenge += 2;
 			    Write (f, &Zeile[i], j);
-			    /*printf("0.%i.",n); */
-			    /*for (k=j;k;k--) printf("#"); */
 			    laenge += j;
 			    if ((j) % 2)
 			      {
 				Write (f, &buf[12], 1);
 				laenge++;
-				/*printf("0"); */
 			      }
-			    /*printf("|"); */
 			  }
 			else
 			  {
@@ -509,12 +512,10 @@ WriteImage (FILE   *f,
 			  n--;
 			Write (f, &n, 1);
 			Write (f, &Zeile[i], 1);
-			/*printf("%i.#|",n); */
 			i += ketten[i];
 			laenge += 2;
 		      }
 		  }
-		/*printf("\n"); */
 		Write (f, &buf[14], 2);		 /* End of row */
 		laenge += 2;
 
@@ -578,7 +579,7 @@ save_dialog (void)
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
-  toggle = gtk_check_button_new_with_label (_("RLE encoded"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_RLE encoded"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), encoded);
   gtk_widget_show (toggle);

@@ -9,21 +9,10 @@
 #define Write(file,buffer,len)   fwrite(buffer, len, 1, file)
 #define WriteOK(file,buffer,len) (Write(buffer, len, file) != 0)
 
-extern gint32       ToL           (guchar *);
-extern void         FromL         (gint32,
-				   guchar *);
-extern gint16       ToS           (guchar *);
-extern void         FromS         (gint16,
-				   guchar *);
 extern gint32       ReadBMP       (gchar *);
 extern GimpPDBStatusType  WriteBMP      (gchar *,
 				   gint32,
 				   gint32);
-extern gint         ReadColorMap  (FILE *,
-				   guchar[256][3],
-				   gint,
-				   gint,
-				   gint *);
 extern Image        ReadImage     (FILE *,
 				   gint,
 				   gint,
@@ -32,11 +21,6 @@ extern Image        ReadImage     (FILE *,
 				   gint,
 				   gint,
 				   gint,
-				   gint);
-extern void         WriteColorMap (FILE *,
-				   gint *,
-				   gint *,
-				   gint *,
 				   gint);
 extern void         WriteImage    (FILE *,
 				   guchar *,
@@ -48,10 +32,9 @@ extern void         WriteImage    (FILE *,
 				   gint,
 				   gint);
 
-extern gint   interactive_bmp;
+extern gboolean   interactive_bmp;
 extern gchar *prog_name;
 extern gchar *filename;
-extern FILE  *errorfile;
 
 extern struct Bitmap_File_Head_Struct
 {

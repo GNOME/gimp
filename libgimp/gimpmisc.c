@@ -197,8 +197,8 @@ gimp_pixel_fetcher_get_pixel2 (GimpPixelFetcher *pf,
 	  }
 	break;
       case PIXEL_SMEAR:
-	x = CLAMP (x, 0, pf->img_width);
-	y = CLAMP (y, 0, pf->img_height);
+	x = CLAMP (x, 0, pf->img_width - 1);
+	y = CLAMP (y, 0, pf->img_height - 1);
 	break;
       case PIXEL_BLACK:
 	if (x < 0 || x >= pf->img_width || 

@@ -1,3 +1,9 @@
+2003-01-05  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* libgimp/gimpmisc.c (gimp_pixel_fetcher_get_pixel2): x and y
+	coordinates have to be clamped on image width/height - 1. Fixes
+	#102562
+
 2003-01-05  Sven Neumann  <sven@gimp.org>
 
         * libgimpwidgets/gimpchainbutton.[ch]
@@ -62,6 +68,13 @@
 	* app/base/tile-swap.c (tile_swap_find_offset): use off_t to
 	return the offset. Finally allows to handle swap files larger than
 	2 GB (fixes bug #74478).
+
+2003-01-03  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/bmp/bmpread.c
+	* plug-ins/bmp/bmpwrite.c 
+	* plug-ins/bmp/bmp.[ch]: added mnemonics to save dialog. Minor code
+	clean-up.
 
 2003-01-03  Sven Neumann  <sven@gimp.org>
 

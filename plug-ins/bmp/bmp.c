@@ -63,10 +63,9 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-FILE  *errorfile;
 gchar *prog_name = "bmp";
 gchar *filename;
-gint   interactive_bmp;
+gboolean   interactive_bmp;
 
 struct Bitmap_File_Head_Struct Bitmap_File_Head;
 struct Bitmap_Head_Struct Bitmap_Head;
@@ -271,32 +270,3 @@ run (gchar   *name,
   values[0].data.d_status = status;
 }
 
-gint32 
-ToL (guchar *puffer)
-{
-  return (puffer[0] | puffer[1]<<8 | puffer[2]<<16 | puffer[3]<<24);
-}
-
-gint16 
-ToS (guchar *puffer)
-{
-  return (puffer[0] | puffer[1]<<8);
-}
-
-void 
-FromL (gint32  wert, 
-       guchar *bopuffer)
-{
-  bopuffer[0] = (wert & 0x000000ff)>>0x00;
-  bopuffer[1] = (wert & 0x0000ff00)>>0x08;
-  bopuffer[2] = (wert & 0x00ff0000)>>0x10;
-  bopuffer[3] = (wert & 0xff000000)>>0x18;
-}
-
-void  
-FromS (gint16  wert, 
-       guchar *bopuffer)
-{
-  bopuffer[0] = (wert & 0x00ff)>>0x00;
-  bopuffer[1] = (wert & 0xff00)>>0x08;
-}
