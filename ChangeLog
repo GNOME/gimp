@@ -1,3 +1,8 @@
+1999-05-31  Tuomas Kuosmanen  <tigert@gimp.org>
+
+	* gimp1_1_splash.ppm: Guess what? We now have an important indicator
+	that reminds of the RIGHT MOUSEBUTTON MENU!! :)
+
 1999-05-31  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/commands.c
