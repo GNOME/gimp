@@ -1,5 +1,15 @@
 2004-04-22  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpintstore.[ch]: automatically add an "(Empty)"
+	item if the store is empty and remove it as soon as other items
+	are being added.
+
+	* libgimp/gimpdrawablecombobox.c
+	* libgimp/gimpimagecombobox.c: removed handling of the empty list;
+	the store does this for us now.
+
+2004-04-22  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpintcombobox.c (gimp_int_combo_box_new):
 	removed the check for first_label != NULL. Passing a NULL label
 	makes a perfect empty combo_box.

@@ -56,6 +56,9 @@ struct _GimpIntStoreClass
 struct _GimpIntStore
 {
   GtkListStore       parent_instance;
+
+  /*< private >*/
+  GtkTreeIter       *empty_iter;
 };
 
 

@@ -1,5 +1,6 @@
 2004-04-22  Sven Neumann  <sven@gimp.org>
 
+	* POTFILES.in: removed some files again, added another one instead.
 	* de.po: updated.
 
 2004-04-22  Sigurd Gartmann  <sigurd-translate@brogar.org>

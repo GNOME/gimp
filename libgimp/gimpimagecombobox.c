@@ -31,18 +31,15 @@
 #include "gimpimagecombobox.h"
 #include "gimppixbuf.h"
 
-#include "libgimp-intl.h"
-
 
 #define MENU_THUMBNAIL_SIZE  24
 
 
-static void  gimp_image_combo_box_model_add       (GtkListStore            *store,
-                                                   gint                     num_images,
-                                                   gint32                  *images,
-                                                   GimpImageConstraintFunc  constraint,
-                                                   gpointer                 data);
-static void  gimp_image_combo_box_model_add_empty (GtkListStore            *store);
+static void  gimp_image_combo_box_model_add (GtkListStore            *store,
+                                             gint                     num_images,
+                                             gint32                  *images,
+                                             GimpImageConstraintFunc  constraint,
+                                             gpointer                 data);
 
 
 /**
@@ -79,13 +76,9 @@ gimp_image_combo_box_new (GimpImageConstraintFunc constraint,
 
   images = gimp_image_list (&num_images);
 
-  if (num_images > 0)
-    gimp_image_combo_box_model_add (GTK_LIST_STORE (model),
-                                    num_images, images,
-                                    constraint, data);
-  else
-    gimp_image_combo_box_model_add_empty (GTK_LIST_STORE (model));
-
+  gimp_image_combo_box_model_add (GTK_LIST_STORE (model),
+                                  num_images, images,
+                                  constraint, data);
   g_free (images);
 
   if (gtk_tree_model_get_iter_first (model, &iter))
@@ -134,16 +127,4 @@ gimp_image_combo_box_model_add (GtkListStore            *store,
           g_free (label);
         }
     }
-}
-
-static void
-gimp_image_combo_box_model_add_empty (GtkListStore *store)
-{
-  GtkTreeIter  iter;
-
-  gtk_list_store_append (store, &iter);
-  gtk_list_store_set (store, &iter,
-                      GIMP_INT_STORE_VALUE, -1,
-                      GIMP_INT_STORE_LABEL, _("(Empty)"),
-                      -1);
 }

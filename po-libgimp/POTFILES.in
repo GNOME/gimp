@@ -2,11 +2,9 @@
 # marked to allow runtime translation of messages
 
 libgimp/gimpbrushmenu.c
-libgimp/gimpdrawablecombobox.c
 libgimp/gimpexport.c
 libgimp/gimpfontmenu.c
 libgimp/gimpgradientmenu.c
-libgimp/gimpimagecombobox.c
 libgimp/gimpmenu.c
 libgimp/gimppatternmenu.c
 libgimp/gimpunitcache.c
@@ -23,6 +21,7 @@ libgimpwidgets/gimpcolorscales.c
 libgimpwidgets/gimpcolorselect.c
 libgimpwidgets/gimpcolorselection.c
 libgimpwidgets/gimpfileentry.c
+libgimpwidgets/gimpintstore.c
 libgimpwidgets/gimpmemsizeentry.c
 libgimpwidgets/gimppatheditor.c
 libgimpwidgets/gimppickbutton.c

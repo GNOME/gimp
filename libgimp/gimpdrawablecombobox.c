@@ -31,19 +31,16 @@
 #include "gimpdrawablecombobox.h"
 #include "gimppixbuf.h"
 
-#include "libgimp-intl.h"
-
 
 #define MENU_THUMBNAIL_SIZE  24
 
 
-static gint  gimp_drawable_combo_box_model_add       (GtkListStore               *store,
-                                                      gint32                      image,
-                                                      gint                        num_drawables,
-                                                      gint32                     *drawables,
-                                                      GimpDrawableConstraintFunc  constraint,
-                                                      gpointer                    data);
-static void  gimp_drawable_combo_box_model_add_empty (GtkListStore               *store);
+static gint  gimp_drawable_combo_box_model_add (GtkListStore               *store,
+                                                gint32                      image,
+                                                gint                        num_drawables,
+                                                gint32                     *drawables,
+                                                GimpDrawableConstraintFunc  constraint,
+                                                gpointer                    data);
 
 
 /**
@@ -73,7 +70,6 @@ gimp_drawable_combo_box_new (GimpDrawableConstraintFunc constraint,
   GtkTreeIter   iter;
   gint32       *images;
   gint          num_images;
-  gint          added = 0;
   gint          i;
 
   combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL);
@@ -88,24 +84,21 @@ gimp_drawable_combo_box_new (GimpDrawableConstraintFunc constraint,
       gint    num_drawables;
 
       drawables = gimp_image_get_layers (images[i], &num_drawables);
-      added += gimp_drawable_combo_box_model_add (GTK_LIST_STORE (model),
-                                                  images[i],
-                                                  num_drawables, drawables,
-                                                  constraint, data);
+      gimp_drawable_combo_box_model_add (GTK_LIST_STORE (model),
+                                         images[i],
+                                         num_drawables, drawables,
+                                         constraint, data);
       g_free (drawables);
 
       drawables = gimp_image_get_channels (images[i], &num_drawables);
-      added += gimp_drawable_combo_box_model_add (GTK_LIST_STORE (model),
-                                                  images[i],
-                                                  num_drawables, drawables,
-                                                  constraint, data);
+      gimp_drawable_combo_box_model_add (GTK_LIST_STORE (model),
+                                         images[i],
+                                         num_drawables, drawables,
+                                         constraint, data);
       g_free (drawables);
     }
 
   g_free (images);
-
-  if (! added)
-    gimp_drawable_combo_box_model_add_empty (GTK_LIST_STORE (model));
 
   if (gtk_tree_model_get_iter_first (model, &iter))
     gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo_box), &iter);
@@ -134,7 +127,6 @@ gimp_channel_combo_box_new (GimpDrawableConstraintFunc constraint,
   GtkTreeIter   iter;
   gint32       *images;
   gint          num_images;
-  gint          added = 0;
   gint          i;
 
   combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL);
@@ -149,17 +141,14 @@ gimp_channel_combo_box_new (GimpDrawableConstraintFunc constraint,
       gint    num_drawables;
 
       drawables = gimp_image_get_channels (images[i], &num_drawables);
-      added += gimp_drawable_combo_box_model_add (GTK_LIST_STORE (model),
-                                                  images[i],
-                                                  num_drawables, drawables,
-                                                  constraint, data);
+      gimp_drawable_combo_box_model_add (GTK_LIST_STORE (model),
+                                         images[i],
+                                         num_drawables, drawables,
+                                         constraint, data);
       g_free (drawables);
     }
 
   g_free (images);
-
-  if (! added)
-    gimp_drawable_combo_box_model_add_empty (GTK_LIST_STORE (model));
 
   if (gtk_tree_model_get_iter_first (model, &iter))
     gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo_box), &iter);
@@ -188,7 +177,6 @@ gimp_layer_combo_box_new (GimpDrawableConstraintFunc constraint,
   GtkTreeIter   iter;
   gint32       *images;
   gint          num_images;
-  gint          added = 0;
   gint          i;
 
   combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL);
@@ -203,17 +191,14 @@ gimp_layer_combo_box_new (GimpDrawableConstraintFunc constraint,
       gint    num_drawables;
 
       drawables = gimp_image_get_layers (images[i], &num_drawables);
-      added += gimp_drawable_combo_box_model_add (GTK_LIST_STORE (model),
-                                                  images[i],
-                                                  num_drawables, drawables,
-                                                  constraint, data);
+      gimp_drawable_combo_box_model_add (GTK_LIST_STORE (model),
+                                         images[i],
+                                         num_drawables, drawables,
+                                         constraint, data);
       g_free (drawables);
     }
 
   g_free (images);
-
-  if (! added)
-    gimp_drawable_combo_box_model_add_empty (GTK_LIST_STORE (model));
 
   if (gtk_tree_model_get_iter_first (model, &iter))
     gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo_box), &iter);
@@ -270,16 +255,4 @@ gimp_drawable_combo_box_model_add (GtkListStore               *store,
     }
 
   return added;
-}
-
-static void
-gimp_drawable_combo_box_model_add_empty (GtkListStore *store)
-{
-  GtkTreeIter  iter;
-
-  gtk_list_store_append (store, &iter);
-  gtk_list_store_set (store, &iter,
-                      GIMP_INT_STORE_VALUE, -1,
-                      GIMP_INT_STORE_LABEL, _("(Empty)"),
-                      -1);
 }
