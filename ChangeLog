@@ -1,5 +1,11 @@
 2003-11-02  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdockable.c (gimp_dockable_realize): set a hand
+	cursor on the title area to indicate that the dockable can be
+	dragged here.
+
+2003-11-02  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/dialogs-menu.c
 	* app/gui/image-menu.c
 	* app/gui/toolbox-menu.c: added Histogram to the dialog menus.

@@ -401,8 +401,9 @@ gimp_dockable_realize (GtkWidget *widget)
 
   if (! dockable->title_window)
     {
-      GdkWindowAttr attributes;
-      GdkRectangle  area;
+      GdkWindowAttr  attributes;
+      GdkRectangle   area;
+      GdkCursor     *cursor;
 
       gimp_dockable_get_title_area (dockable, &area);
 
@@ -425,6 +426,11 @@ gimp_dockable_realize (GtkWidget *widget)
                                                 GDK_WA_NOREDIR));
 
       gdk_window_set_user_data (dockable->title_window, widget);
+
+      cursor = gdk_cursor_new_for_display (gtk_widget_get_display (widget),
+                                           GDK_HAND2);
+      gdk_window_set_cursor (dockable->title_window, cursor);
+      gdk_cursor_unref (cursor);
     }
 }
 
