@@ -101,7 +101,7 @@ patterns_menu_update (GtkItemFactory *factory,
   SET_SENSITIVE ("/Duplicate Pattern",
 		 pattern && GIMP_DATA_GET_CLASS (data)->duplicate);
   SET_SENSITIVE ("/Delete Pattern...",
-		 pattern && data->writeable && !data->internal);
+		 pattern && data->deletable);
 
 #undef SET_SENSITIVE
 }

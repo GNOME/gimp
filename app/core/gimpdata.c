@@ -137,7 +137,8 @@ static void
 gimp_data_init (GimpData *data)
 {
   data->filename  = NULL;
-  data->writeable = FALSE;
+  data->writable  = FALSE;
+  data->deletable = FALSE;
   data->dirty     = TRUE;
   data->internal  = FALSE;
 }
@@ -273,7 +274,8 @@ gimp_data_set_filename (GimpData    *data,
     }
 
   data->filename  = g_strdup (filename);
-  data->writeable = FALSE;
+  data->writable  = FALSE;
+  data->deletable = FALSE;
 
   /*  if the data is supposed to be writable, still check if it really is  */
   if (writable)
@@ -281,14 +283,19 @@ gimp_data_set_filename (GimpData    *data,
       gchar *dirname = g_path_get_dirname (filename);
 
       if ((access (filename, F_OK) == 0 &&  /* check if the file exists    */
-           access (filename, W_OK) == 0) || /* and is writeable            */
+           access (filename, W_OK) == 0) || /* and is writable             */
           (access (filename, F_OK) != 0 &&  /* OR doesn't exist            */
            access (dirname,  W_OK) == 0))   /* and we can write to its dir */
         {
-          data->writeable = TRUE;
+          data->writable  = TRUE;
+          data->deletable = TRUE;
         }
 
       g_free (dirname);
+
+      /*  if we can't save, we are not writable  */
+      if (! GIMP_DATA_GET_CLASS (data)->save)
+        data->writable = FALSE;
     }
 }
 

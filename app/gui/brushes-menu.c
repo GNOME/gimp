@@ -101,7 +101,7 @@ brushes_menu_update (GtkItemFactory *factory,
   SET_SENSITIVE ("/Duplicate Brush",
 		 brush && GIMP_DATA_GET_CLASS (data)->duplicate);
   SET_SENSITIVE ("/Delete Brush",
-		 brush && data->writeable && !data->internal);
+		 brush && data->deletable);
 
 #undef SET_SENSITIVE
 }

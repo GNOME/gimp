@@ -1,5 +1,35 @@
 2004-02-05  Michael Natterer  <mitch@gimp.org>
 
+	Disallow editing of data objects which have no save functionality.
+	Also fixed the misassumption that "deletable" is always equal to
+	"writable". Fixes bug #133456.
+
+	* app/core/gimpdata.[ch]: added a "deletable" property which is
+	always equal to "writable" except when the data class does not
+	implement GimpData::save() (then deletable may be TRUE but
+	writable is always FALSE).
+
+	* app/gui/brushes-menu.c
+	* app/gui/gradients-menu.c
+	* app/gui/palettes-menu.c
+	* app/gui/patterns-menu.c
+	* app/widgets/gimpdatafactoryview.c: look at data->deletable when
+	setting the sensitivity of the "Delete" buttons and menu items.
+
+	* app/widgets/gimpdatafactoryview.c
+	(gimp_data_factory_view_tree_name_edited): rename the data
+	only if it's writable and restore the old name otherwise.
+
+	* app/widgets/gimpdataeditor.c: no need to look at data->internal
+	for figuring if the data is editable, data->editable is enough.
+
+	All files above: s/writeable/writable/g
+
+	* app/widgets/gimpbrusheditor.c (gimp_brush_editor_set_data):
+	simplified.
+
+2004-02-05  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/edit.pdb (edit_paste): don't call
 	gimp_edit_paste() with a NULL buffer. Instead, return an execution
 	error if there is no global buffer to paste. Fixes the warning

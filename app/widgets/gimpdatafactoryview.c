@@ -450,7 +450,7 @@ gimp_data_factory_view_select_item (GimpContainerEditor *editor,
 
       edit_sensitive      = (view->data_edit_func != NULL);
       duplicate_sensitive = (GIMP_DATA_GET_CLASS (data)->duplicate != NULL);
-      delete_sensitive    = data->writeable && !data->internal;
+      delete_sensitive    = data->deletable;
     }
 
   gtk_widget_set_sensitive (view->edit_button,      edit_sensitive);
@@ -503,8 +503,19 @@ gimp_data_factory_view_tree_name_edited (GtkCellRendererText *cell,
 
       data = GIMP_DATA (renderer->viewable);
 
-      if (data->writeable && !data->internal)
-        gimp_object_set_name (GIMP_OBJECT (data), new_name);
+      if (data->writable)
+        {
+          gimp_object_set_name (GIMP_OBJECT (data), new_name);
+        }
+      else
+        {
+          gchar *name = gimp_viewable_get_description (renderer->viewable, NULL);
+
+          gtk_list_store_set (GTK_LIST_STORE (tree_view->model), &iter,
+                              tree_view->model_column_name, name,
+                              -1);
+          g_free (name);
+        }
 
       g_object_unref (renderer);
     }

@@ -113,7 +113,7 @@ palettes_menu_update (GtkItemFactory *factory,
   SET_SENSITIVE ("/Merge Palettes...",
 		 FALSE); /* FIXME palette && GIMP_IS_CONTAINER_LIST_VIEW (editor->view)); */
   SET_SENSITIVE ("/Delete Palette",
-		 palette && data->writeable && !data->internal);
+		 palette && data->deletable);
 
 #undef SET_SENSITIVE
 }

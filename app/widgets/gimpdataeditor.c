@@ -263,9 +263,7 @@ gimp_data_editor_real_set_data (GimpDataEditor *editor,
       gtk_entry_set_text (GTK_ENTRY (editor->name_entry), "");
     }
 
-  editor->data_editable = (editor->data            &&
-                           editor->data->writeable &&
-                           ! editor->data->internal);
+  editor->data_editable = (editor->data && editor->data->writable);
 
   gtk_widget_set_sensitive (editor->name_entry, editor->data_editable);
 }

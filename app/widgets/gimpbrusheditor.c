@@ -203,14 +203,10 @@ gimp_brush_editor_set_data (GimpDataEditor *editor,
       hardness = gimp_brush_generated_get_hardness (brush);
       ratio    = gimp_brush_generated_get_aspect_ratio (brush);
       angle    = gimp_brush_generated_get_angle (brush);
+    }
 
-      gtk_widget_set_sensitive (brush_editor->options_table,
-                                editor->data_editable);
-    }
-  else
-    {
-      gtk_widget_set_sensitive (brush_editor->options_table, FALSE);
-    }
+  gtk_widget_set_sensitive (brush_editor->options_table,
+                            editor->data_editable);
 
   gtk_adjustment_set_value (brush_editor->radius_data, radius);
   gtk_adjustment_set_value (brush_editor->hardness_data, hardness);

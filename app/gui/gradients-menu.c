@@ -109,7 +109,7 @@ gradients_menu_update (GtkItemFactory *factory,
   SET_SENSITIVE ("/Save as POV-Ray...",
 		 gradient);
   SET_SENSITIVE ("/Delete Gradient...",
-		 gradient && data->writeable && !data->internal);
+		 gradient && data->deletable);
 
 #undef SET_SENSITIVE
 }
