@@ -1,3 +1,15 @@
+Mon Aug 10 16:20:33 MEST 1998 Sven Neumann <sven@gimp.org>
+	
+	* app/internal_procs.c
+	* app/text_tool.[ch]: Wrappers for gimp-text and
+	gimp-text-get-extents.
+	
+	* plug-ins/script-fu/script-fu-enums.h
+	* plug-ins/script-fu/script-fu-scripts.c
+	* plug-ins/script-fu/script-fu.c
+	* plug-ins/script-fu/scripts/test-sphere.scm: A font-selector
+	for the script-fu dialog. See documentation in test-sphere.scm.	
+
 Sun Aug  9 14:15:42 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* plug-ins/script-fu/script-fu-scripts.c: The scripf-fu dialog

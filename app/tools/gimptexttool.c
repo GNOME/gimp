@@ -159,10 +159,12 @@ static Layer *    text_render             (GImage *, GimpDrawable *, int, int, c
 
 static int        font_compare_func (gpointer, gpointer);
 
-static Argument * text_tool_invoker                  (Argument *);
-static Argument * text_tool_invoker_ext              (Argument *);
-static Argument * text_tool_get_extents_invoker      (Argument *);
-static Argument * text_tool_get_extents_invoker_ext  (Argument *);
+static Argument * text_tool_invoker                      (Argument *);
+static Argument * text_tool_invoker_ext                  (Argument *);
+static Argument * text_tool_invoker_fontname             (Argument *);
+static Argument * text_tool_get_extents_invoker          (Argument *);
+static Argument * text_tool_get_extents_invoker_ext      (Argument *);
+static Argument * text_tool_get_extents_invoker_fontname (Argument *);
 
 static ActionAreaItem action_items[] =
 {
@@ -2197,6 +2199,84 @@ ProcRecord text_tool_proc_ext =
   { { text_tool_invoker_ext } },
 };
 
+/*************************************************/
+/*  The text_tool_fontname procedure definition  */
+ProcArg text_tool_args_fontname[] =
+{
+  { PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  { PDB_DRAWABLE,
+    "drawable",
+    "The affected drawable: (-1 for a new text layer)"
+  },
+  { PDB_FLOAT,
+    "x",
+    "the x coordinate for the left side of text bounding box"
+  },
+  { PDB_FLOAT,
+    "y",
+    "the y coordinate for the top of text bounding box"
+  },
+  { PDB_STRING,
+    "text",
+    "the text to generate"
+  },
+  { PDB_INT32,
+    "border",
+    "the size of the border: border >= 0"
+  },
+  { PDB_INT32,
+    "antialias",
+    "generate antialiased text"
+  },
+  { PDB_FLOAT,
+    "size",
+    "the size of text in either pixels or points"
+  },
+  { PDB_INT32,
+    "size_type",
+    "the units of the specified size: { PIXELS (0), POINTS (1) }"
+  },
+  { PDB_STRING,
+    "fontname",
+    "the fontname (conforming to the X Logical Font Description Conventions)"
+  }
+};
+
+ProcArg text_tool_out_args_fontname[] =
+{
+  { PDB_LAYER,
+    "text_layer",
+    "the new text layer"
+  }
+};
+
+ProcRecord text_tool_proc_fontname =
+{
+  "gimp_text_fontname",
+  "Add text at the specified location as a floating selection or a new layer.",
+  "This tool requires font information as a fontname conforming to the 'X Logical Font Description Conventions'. You can specify the fontsize in units of pixels or points, and the appropriate metric is specified using the size_type argument. The fontsize specified in the fontname is silently ignored."
+  "The x and y parameters together control the placement of the new text by specifying the upper left corner of the text bounding box.  If the antialias parameter is non-zero, the generated text will blend more smoothly with underlying layers.  "
+  "This option requires more time and memory to compute than non-antialiased text; the resulting floating selection or layer, however, will require the same amount of memory with or without antialiasing.  If the specified drawable parameter is valid, the "
+  "text will be created as a floating selection attached to the drawable.  If the drawable parameter is not valid (-1), the text will appear as a new layer.  Finally, a border can be specified around the final rendered text.  The border is measured in pixels.",
+  "Martin Edlman, Sven Neumann",
+  "Spencer Kimball & Peter Mattis",
+  "1998",
+  PDB_INTERNAL,
+    
+  /*  Input arguments  */
+  10,
+  text_tool_args_fontname,
+
+  /*  Output arguments  */
+  1,
+  text_tool_out_args_fontname,
+
+  /*  Exec method  */
+  { { text_tool_invoker_fontname } },
+};
 
 /**********************/
 /*  TEXT_GET_EXTENTS  */
@@ -2375,6 +2455,70 @@ ProcRecord text_tool_get_extents_proc_ext =
   { { text_tool_get_extents_invoker_ext } },
 };
 
+/*******************************/
+/*  TEXT_GET_EXTENTS_FONTNAME  */
+ProcArg text_tool_get_extents_args_fontname[] =
+{
+  { PDB_STRING,
+    "text",
+    "the text to generate"
+  },
+  { PDB_FLOAT,
+    "size",
+    "the size of text in either pixels or points"
+  },
+  { PDB_INT32,
+    "size_type",
+    "the units of the specified size: { PIXELS (0), POINTS (1) }"
+  },
+  { PDB_STRING,
+    "fontname",
+    "the fontname (conforming to the X Logical Font Description Conventions)"
+  }  
+};
+
+ProcArg text_tool_get_extents_out_args_fontname[] =
+{
+  { PDB_INT32,
+    "width",
+    "the width of the specified text"
+  },
+  { PDB_INT32,
+    "height",
+    "the height of the specified text"
+  },
+  { PDB_INT32,
+    "ascent",
+    "the ascent of the specified font"
+  },
+  { PDB_INT32,
+    "descent",
+    "the descent of the specified font"
+  }
+};
+
+ProcRecord text_tool_get_extents_proc_fontname =
+{
+  "gimp_text_get_extents_fontname",
+  "Get extents of the bounding box for the specified text",
+  "This tool returns the width and height of a bounding box for the specified text string with the specified font information.  Ascent and descent for the specified font are returned as well.",
+  "Martin Edlman, Sven Neumann",
+  "Spencer Kimball & Peter Mattis",
+  "1998",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  4,
+  text_tool_get_extents_args_fontname,
+
+  /*  Output arguments  */
+  4,
+  text_tool_get_extents_out_args_fontname,
+
+  /*  Exec method  */
+  { { text_tool_get_extents_invoker_fontname } },
+};
+
 
 static Argument *
 text_tool_invoker (Argument *args)
@@ -2388,6 +2532,43 @@ text_tool_invoker (Argument *args)
   argv[15].value.pdb_pointer = (gpointer)"*";
   argv[16].arg_type = PDB_STRING;
   argv[16].value.pdb_pointer = (gpointer)"*";
+  return text_tool_invoker_ext (argv);
+}
+
+static Argument *
+text_tool_invoker_fontname (Argument *args)
+{
+  int i;
+  char *fontname;
+  Argument argv[17];
+  
+  for (i=0; i<9; i++)
+    argv[i] = args[i];
+
+  fontname = (char *) args[9].value.pdb_pointer;
+
+  /*
+    Should check for a valid fontname here, probably using
+     if (!text_is_xlfd_font_name (fontname)) return
+  */
+
+  argv[9].arg_type = PDB_STRING;
+  argv[9].value.pdb_pointer = text_get_field (fontname, FOUNDRY);
+  argv[10].arg_type = PDB_STRING;
+  argv[10].value.pdb_pointer = text_get_field (fontname, FAMILY);
+  argv[11].arg_type = PDB_STRING;
+  argv[11].value.pdb_pointer = text_get_field (fontname, WEIGHT);
+  argv[12].arg_type = PDB_STRING;
+  argv[12].value.pdb_pointer = text_get_field (fontname, SLANT);
+  argv[13].arg_type = PDB_STRING;
+  argv[13].value.pdb_pointer = text_get_field (fontname, SET_WIDTH);
+  argv[14].arg_type = PDB_STRING;
+  argv[14].value.pdb_pointer = text_get_field (fontname, SPACING);
+  argv[15].arg_type = PDB_STRING;
+  argv[15].value.pdb_pointer = text_get_field (fontname, REGISTRY);
+  argv[16].arg_type = PDB_STRING;
+  argv[16].value.pdb_pointer = text_get_field (fontname, ENCODING);
+
   return text_tool_invoker_ext (argv);
 }
 
@@ -2542,6 +2723,38 @@ text_tool_get_extents_invoker (Argument *args)
   argv[9].value.pdb_pointer = (gpointer)"*";
   argv[10].arg_type = PDB_STRING;
   argv[10].value.pdb_pointer = (gpointer)"*";
+  return text_tool_get_extents_invoker_ext (argv);
+}
+
+static Argument *
+text_tool_get_extents_invoker_fontname (Argument *args)
+{
+  int i;
+  gchar *fontname;
+  Argument argv[17];
+  
+  for (i=0; i<3; i++)
+    argv[i] = args[i];
+
+  fontname = args[3].value.pdb_pointer;
+
+  argv[3].arg_type = PDB_STRING;
+  argv[3].value.pdb_pointer = text_get_field (fontname, FOUNDRY);
+  argv[4].arg_type = PDB_STRING;
+  argv[4].value.pdb_pointer = text_get_field (fontname, FAMILY);
+  argv[5].arg_type = PDB_STRING;
+  argv[5].value.pdb_pointer = text_get_field (fontname, WEIGHT);
+  argv[6].arg_type = PDB_STRING;
+  argv[6].value.pdb_pointer = text_get_field (fontname, SLANT);
+  argv[7].arg_type = PDB_STRING;
+  argv[7].value.pdb_pointer = text_get_field (fontname, SET_WIDTH);
+  argv[8].arg_type = PDB_STRING;
+  argv[8].value.pdb_pointer = text_get_field (fontname, SPACING);
+  argv[9].arg_type = PDB_STRING;
+  argv[9].value.pdb_pointer = text_get_field (fontname, REGISTRY);
+  argv[10].arg_type = PDB_STRING;
+  argv[10].value.pdb_pointer = text_get_field (fontname, ENCODING);
+
   return text_tool_get_extents_invoker_ext (argv);
 }
 

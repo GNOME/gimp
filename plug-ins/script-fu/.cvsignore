@@ -4,4 +4,3 @@ Makefile
 _libs
 .libs
 script-fu
-convert-script

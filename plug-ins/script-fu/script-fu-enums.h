@@ -31,7 +31,8 @@ typedef enum
   SF_TOGGLE,
   SF_VALUE,
   SF_STRING,
-  SF_ADJUSTMENT
+  SF_ADJUSTMENT,
+  SF_FONT
 } SFArgType;
 
 typedef enum

@@ -1,16 +1,36 @@
 ; This is a slightly modified copy of the sphere script to show and test 
 ; the possibilities of the new Script-Fu API extensions.
 ;
-; SF-ADJUSTMENT is only useful in interactive mode, if you call a script from
+; ----------------------------------------------------------------------
+; SF-ADJUSTMENT 
+; is only useful in interactive mode, if you call a script from
 ; the console, it acts just like a normal SF-VALUE
 ; In interactive mode it creates an adjustment widget in the dialog.
 ;
 ; Usage: 
 ; SF-ADJUSTMENT "label" '(value, lower, upper, step_inc, page_inc, digits, type) 
 ;
-; type is one of: SLIDER(0), SPINNER(1)
+; type is one of: SF-SLIDER(0), SF-SPINNER(1)
+; ----------------------------------------------------------------------
+; SF-FONT
+; creates a font-selection widget in the dialog. It returns a fontname as
+; a string. There are two new gimp-text procedures to ease the use of this
+; return parameter:
 ;
-(define (script-fu-test-sphere radius light shadow bg-color sphere-color)
+;  (gimp-text-fontname image drawable x-pos y-pos text border antialias size unit font)
+;  (gimp-text-get-extents-fontname text size unit font))
+;
+; where font is the fontname you get. The size specified in the fontname 
+; is silently ignored. It is only used in the font-selector. So you are asked to
+; set it to a useful value (24 pixels is a good choice) when using SF-FONT.
+;
+; Usage:
+; SF-FONT "label" "fontname"		
+; ----------------------------------------------------------------------
+
+
+;
+(define (script-fu-test-sphere radius light shadow bg-color sphere-color text font size)
   (let* ((width (* radius 3.75))
 	 (height (* radius 2.5))
 	 (img (car (gimp-image-new width height RGB)))
@@ -23,6 +43,9 @@
 	 (light-end-x (+ cx (* radius (cos (+ *pi* radians)))))
 	 (light-end-y (- cy (* radius (sin (+ *pi* radians)))))
 	 (offset (* radius 0.1))
+	 (text-extents (gimp-text-get-extents-fontname text size PIXELS font))
+	 (x-position (- cx (/ (car text-extents) 2)))
+	 (y-position (- cy (/ (cadr text-extents) 2)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
     (gimp-image-disable-undo img)
@@ -47,6 +70,15 @@
     (gimp-blend img drawable FG-BG-RGB NORMAL RADIAL 100 offset REPEAT-NONE
 		FALSE 0 0 light-x light-y light-end-x light-end-y)
     (gimp-selection-none img)
+
+    (gimp-palette-set-foreground '(0 0 0))
+    (gimp-floating-sel-anchor (car (gimp-text-fontname img drawable 
+						       x-position y-position
+						       text
+						       0 TRUE 
+						       size PIXELS 
+						       font)))
+
     (gimp-palette-set-background old-bg)
     (gimp-palette-set-foreground old-fg)
     (gimp-image-enable-undo img)
@@ -54,13 +86,18 @@
 
 (script-fu-register "script-fu-test-sphere"
 		    "<Toolbox>/Xtns/Script-Fu/Test/Sphere"
-		    "Simple spheres with drop shadows"
+		    "Simple script to test and show the usage of the new Script-Fu API extensions"
+		    "Spencer Kimball, Sven Neumann"
 		    "Spencer Kimball"
-		    "Spencer Kimball"
-		    "1996"
+		    "1996, 1998"
 		    ""
 		    SF-ADJUSTMENT "Radius (in pixels)" '(100 1 5000 1 10 0 1)
 		    SF-ADJUSTMENT "Lighting (degrees)" '(45 0 360 1 10 1 0)
 		    SF-TOGGLE "Shadow" TRUE
 		    SF-COLOR "Background Color" '(255 255 255)
-		    SF-COLOR "Sphere Color" '(255 0 0))
+		    SF-COLOR "Sphere Color" '(255 0 0)
+		    SF-STRING "Text" "Script-Fu rocks!"
+		    SF-FONT "Font" "-freefont-agate-normal-r-normal-*-24-*-*-*-p-*-*-*"
+                    SF-ADJUSTMENT "Font size (in pixels)" '(50 1 1000 1 10 0 1))
+
+

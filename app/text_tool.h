@@ -27,7 +27,9 @@ void     tools_free_text (Tool *);
 /*  Procedure definition and marshalling function  */
 extern ProcRecord text_tool_proc;
 extern ProcRecord text_tool_proc_ext;
+extern ProcRecord text_tool_proc_fontname;
 extern ProcRecord text_tool_get_extents_proc;
 extern ProcRecord text_tool_get_extents_proc_ext;
+extern ProcRecord text_tool_get_extents_proc_fontname;
 
 #endif /* __TEXT_TOOL_H__ */
