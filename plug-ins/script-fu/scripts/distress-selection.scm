@@ -96,10 +96,10 @@
     "RGB RGBA"
     SF-IMAGE "The Image" 0
     SF-DRAWABLE "The Layer" 0
-    SF-VALUE "Threshold: bigger 1<-->255 smaller" "127"
-    SF-VALUE "Spread:" "8"
-    SF-VALUE "Granularity: (1 is low)" "4"
+    SF-VALUE "Threshold (bigger 1<-->255 smaller)" "127"
+    SF-VALUE "Spread" "8"
+    SF-VALUE "Granularity (1 is low)" "4"
     SF-VALUE "Smooth" "2"
-    SF-TOGGLE "Smooth Horizontally" TRUE
-    SF-TOGGLE "Smooth Vertically" TRUE
+    SF-TOGGLE "Smooth Horizontally?" TRUE
+    SF-TOGGLE "Smooth Vertically?" TRUE
 )

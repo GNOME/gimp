@@ -166,24 +166,7 @@
 		    SF-COLOR "Background Color" '(255 255 255)
 		    SF-COLOR "Begin Blend" '(0 0 0)
 		    SF-COLOR "End Blend" '(255 255 255)
-		    SF-VALUE "Supersample" "TRUE"
+		    SF-TOGGLE "Supersample?" TRUE
 		    SF-VALUE "Number of Xtiles" "5"
 		    SF-VALUE "Number of Ytiles" "5"
 		    )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

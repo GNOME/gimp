@@ -369,9 +369,9 @@
     (gimp-display-new img)
     (gimp-displays-flush)
     (if (or (= base-radius 0) (= wheel-radius 0))
-	(gimp-text img -1 0 0
+	(gimp-text-fontname img -1 0 0
 		   "`Base-radius'\n and\n`Rad.;hyp<0<epi'\n require\n non zero values."
-		   1 1 18 PIXELS "*" "helvetica" "*" "*" "*" "*")
+		   1 1 18 PIXELS "-*-helvetica-*-r-*-*-*-*-*-*-p-*-*-*")
 	(trochoid-rotate-gear total-step-num img the-layer
 			      (/ drawable-size 2) (/ drawable-size 2)
 			      base-radius wheel-radius pen-pos hue-rate

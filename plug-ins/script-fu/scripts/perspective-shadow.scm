@@ -192,30 +192,5 @@
 		    SF-ADJUSTMENT "Blur Radius" '(3 0 64 1 10 0 0)
 		    SF-COLOR "Color" '(0 0 0)
 		    SF-ADJUSTMENT "Opacity" '(80 0 100 1 10 0 0)
-		    SF-TOGGLE "Interpolate" TRUE
-		    SF-TOGGLE "Allow Resizing" FALSE) 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		    SF-TOGGLE "Interpolate?" TRUE
+		    SF-TOGGLE "Allow Resizing?" FALSE) 

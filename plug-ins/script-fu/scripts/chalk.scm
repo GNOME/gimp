@@ -24,7 +24,7 @@
 (define (script-fu-chalk-logo text size font bg-color chalk-color)
   (let* ((img (car (gimp-image-new 256 256 RGB)))
 	 (border (/ size 4))
-	 (text-layer (car (gimp-text img -1 0 0 text border TRUE size PIXELS "*" font "*" "*" "*" "*")))
+	 (text-layer (car (gimp-text-fontname img -1 0 0 text border TRUE size PIXELS font)))
 	 (width (car (gimp-drawable-width text-layer)))
 	 (height (car (gimp-drawable-height text-layer)))
 	 (bg-layer (car (gimp-layer-new img width height RGB_IMAGE "Background" 100 NORMAL)))
@@ -42,7 +42,7 @@
     ; is there any other way to do this?
     ; the sobel edge detect won't work with the methods in other scripts
     (gimp-palette-set-foreground chalk-color)
-    (set! float-layer (car (gimp-text img text-layer 0 0 text border TRUE size PIXELS "*" font "*" "*" "*" "*")))
+    (set! float-layer (car (gimp-text-fontname img text-layer 0 0 text border TRUE size PIXELS font)))
     (gimp-floating-sel-anchor float-layer)
 
     ; the actual effect
@@ -74,7 +74,7 @@
                     "October 1997"
                     ""
                     SF-STRING "Text String" "CHALK"
-                    SF-VALUE "Font Size (in pixels)" "150"
-                    SF-STRING "Font" "Cooper"
+                    SF-ADJUSTMENT "Font Size (pixels)" '(150 2 1000 1 10 0 1)
+                    SF-FONT "Font" "-*-Cooper-*-r-*-*-24-*-*-*-p-*-*-*"
                     SF-COLOR "Background Color" '(0 0 0)
                     SF-COLOR "Chalk Color" '(255 255 255))

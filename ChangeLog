@@ -1,3 +1,18 @@
+Sun Nov  8 17:51:52 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* Makefile.am
+	* README.i18n: new file, explains i18n stuff
+
+	* plug-ins/script-fu/scripts/(lots of files): applied
+	gimp-ruth-981108-0, use nice SF-FONT and SF-FILENAME stuff
+
+	* plug-ins/png/png.c: applied gimp-ruth-981108-1, fixes loader for
+	some indexed pngs. Also default to level 6 compression, level 9
+	compression is cpu hungry and isn't much of a win compared to 6.
+
+	* plug-ins/tiff/tiff.c: applied gimp-ruth-981108-2, major tiff
+	rework
+
 1998-11-08  Raja R Harinath  <harinath@cs.umn.edu>
 
 	* configure.in (sendmail_path): Prefer /usr/sbin/sendmail to

@@ -37,6 +37,22 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.10  1998/11/09 02:04:34  yosh
+ *           * Makefile.am
+ *           * README.i18n: new file, explains i18n stuff
+ *
+ *           * plug-ins/script-fu/scripts/(lots of files): applied
+ *           gimp-ruth-981108-0, use nice SF-FONT and SF-FILENAME stuff
+ *
+ *           * plug-ins/png/png.c: applied gimp-ruth-981108-1, fixes loader for
+ *           some indexed pngs. Also default to level 6 compression, level 9
+ *           compression is cpu hungry and isn't much of a win compared to 6.
+ *
+ *           * plug-ins/tiff/tiff.c: applied gimp-ruth-981108-2, major tiff
+ *           rework
+ *
+ *   -Yosh
+ *
  *   Revision 1.9  1998/07/20 18:19:20  neo
  *   The new "Fixed Size" option now works with
  *   ellipse_select too. Made the entries use spinbuttons. Minor change
@@ -169,7 +185,7 @@ GPlugInInfo	PLUG_IN_INFO =
 PngSaveVals	pngvals = 
 {
   FALSE,
-  9
+  6
 };
 
 int		runme = FALSE;
@@ -424,13 +440,20 @@ load_image(char *filename)	/* I - File to load */
 
   png_read_info(pp, info);
 
-  if (info->bit_depth < 8)
+ /*
+  * I have no idea why this used to be the way it was, luckily
+  * most people don't use 2bit or 4bit indexed images with PNG
+  */
+
+  if (info->bit_depth < 8) 
   {
     png_set_packing(pp);
-    png_set_expand(pp);
+    if (info->color_type != PNG_COLOR_TYPE_PALETTE) {
+      png_set_expand(pp);
 
-    if (info->valid & PNG_INFO_sBIT)
-      png_set_shift(pp, &(info->sig_bit));
+      if (info->valid & PNG_INFO_sBIT)
+        png_set_shift(pp, &(info->sig_bit));
+    }
   }
   else if (info->bit_depth == 16)
     png_set_strip_16(pp);

@@ -182,4 +182,4 @@
 		    SF-COLOR "Text color" '(0 0 0)
 		    SF-VALUE "Padding" "2"
 		    SF-VALUE "Bevel width" "4"
-		    SF-VALUE "Pressed?" "FALSE")
+		    SF-TOGGLE "Pressed?" FALSE)

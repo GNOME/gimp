@@ -22,7 +22,7 @@
 (define (script-fu-comic-logo text size font gradient ol-width)
   (let* ((img (car (gimp-image-new 256 256 RGB)))
          (border (/ size 4))
-	 (text-layer (car (gimp-text img -1 0 0 text border TRUE size PIXELS "*" font "*" "*" "*" "*")))
+	 (text-layer (car (gimp-text-fontname img -1 0 0 text border TRUE size PIXELS font)))
 	 (width (car (gimp-drawable-width text-layer)))
 	 (height (car (gimp-drawable-height text-layer)))
 	 (bg-layer (car (gimp-layer-new img width height RGBA_IMAGE "Background" 100 NORMAL)))
@@ -86,7 +86,7 @@
 		    "April 1998"
 		    ""
 		    SF-STRING "Text String" "Moo"
-		    SF-VALUE "Font Size (in pixels)" "85"
-		    SF-STRING "Font" "tribeca"
+		    SF-ADJUSTMENT "Font Size (pixels)" '(85 2 1000 1 10 0 1)
+		    SF-FONT "Font" "-*-tribeca-*-i-*-*-24-*-*-*-p-*-*-*"
 		    SF-GRADIENT "Gradient" "Incandescent"
 		    SF-VALUE "Outline width" "5")

@@ -20,7 +20,7 @@
 
 
 (define (script-fu-speed-text string font font-size density)
-  (let* ((text-ext (gimp-text-get-extents string font-size PIXELS "*" font "*" "*" "*" "*"))
+  (let* ((text-ext (gimp-text-get-extents-fontname string font-size PIXELS font))
 	 (wid (+ (car text-ext) 20))
 	 (hi  (+ (nth 1 text-ext) 20))
 	 (img (car (gimp-image-new wid hi RGB)))
@@ -40,7 +40,7 @@
     (gimp-edit-clear img bg-layer)
     (gimp-edit-clear img text-layer)
 
-    (gimp-floating-sel-anchor (car (gimp-text img text-layer 10 10 string 0 TRUE font-size PIXELS "*" font "*" "*" "*" "*")))
+    (gimp-floating-sel-anchor (car (gimp-text-fontname img text-layer 10 10 string 0 TRUE font-size PIXELS font)))
 
     ; save the selection for later
     (gimp-selection-layer-alpha img text-layer)
@@ -83,7 +83,7 @@
 		    "Austin Donnelly"
 		    "1998"
 		    ""
-		    SF-VALUE "Text String" "\"Speed!\""
-		    SF-VALUE "Font" "\"Charter\""
-		    SF-VALUE "Font Size (in pixels)" "100"
-		    SF-VALUE "Density (percent)" "80")
+		    SF-STRING "Text String" "Speed!"
+		    SF-FONT "Font" "-*-Charter-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-ADJUSTMENT "Font Size (pixels)" '(100 2 1000 1 10 0 1)
+		    SF-ADJUSTMENT "Density (%)" '(80 0 100 1 10 0 0))

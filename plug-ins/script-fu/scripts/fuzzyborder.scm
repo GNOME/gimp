@@ -156,12 +156,12 @@
     "RGB RGBA GRAY GRAYA"
     SF-IMAGE "The Image" 0
     SF-DRAWABLE "The Layer" 0
-    SF-COLOR "Color:"      '(255 255 255)
-    SF-VALUE "Border Size:" "16"
+    SF-COLOR "Color"      '(255 255 255)
+    SF-VALUE "Border Size" "16"
     SF-TOGGLE "Blur Border?" TRUE
-    SF-VALUE "Granularity: (1 is low)" "4"
+    SF-VALUE "Granularity (1 is low)" "4"
     SF-TOGGLE "Add Shadow?" FALSE
-    SF-VALUE "Shadow-Weight (%):" "100"
+    SF-ADJUSTMENT "Shadow-Weight (%)" '(100 0 100 1 10 0 0)
     SF-TOGGLE "Work on Copy?" TRUE
     SF-TOGGLE "Flatten Layers?" TRUE
 )

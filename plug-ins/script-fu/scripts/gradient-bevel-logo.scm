@@ -22,7 +22,7 @@
 (define (script-fu-gradient-bevel-logo text size font bevel-height bevel-width)
   (let* ((img (car (gimp-image-new 256 256 RGB)))
          (border (/ size 4))
-	 (text-layer (car (gimp-text img -1 0 0 text border TRUE size PIXELS "*" font "*" "*" "*" "*")))
+	 (text-layer (car (gimp-text-fontname img -1 0 0 text border TRUE size PIXELS font)))
 	 (width (car (gimp-drawable-width text-layer)))
 	 (height (car (gimp-drawable-height text-layer)))
          (indentX (+ border 12))
@@ -78,7 +78,7 @@
 		    "April 1998"
 		    ""
 		    SF-STRING "Text String" "Moo"
-		    SF-VALUE "Font Size (in pixels)" "90"
-		    SF-STRING "Font" "futura_poster"
+		    SF-ADJUSTMENT "Font Size (pixels)" '(90 2 1000 1 10 0 1)
+		    SF-FONT "Font" "-*-futura_poster-*-r-*-*-24-*-*-*-p-*-*-*"
 		    SF-VALUE "Bevel Height (sharpness)" "40"
 		    SF-VALUE "Bevel Width" "2.5")

@@ -89,8 +89,8 @@
 		    SF-STRING "Text" "The GIMP"
 		    SF-COLOR "Text Color" '(255 0 0)
 		    SF-COLOR "Frame Color" '(0 34 255)
-		    SF-STRING "Font" "Becker"
-		    SF-VALUE "Font Size" "100"
+		    SF-FONT "Font" "-*-Becker-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-ADJUSTMENT "Font Size (pixels)" '(100 2 1000 1 10 0 1)
 		    SF-VALUE "Frame Size" "2")
 
 ;;; i26-gunya2.scm ends here

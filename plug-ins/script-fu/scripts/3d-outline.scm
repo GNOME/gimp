@@ -23,7 +23,7 @@
 
 (define (script-fu-3d-outline-logo text-pattern text size font outline-blur-radius shadow-blur-radius bump-map-blur-radius noninteractive s-offset-x s-offset-y)
   (let* ((img (car (gimp-image-new 256 256 RGB)))
-         (text-layer (car (gimp-text img -1 0 0 text 30 TRUE size PIXELS "*" font "*" "*" "*" "*")))
+         (text-layer (car (gimp-text-fontname img -1 0 0 text 30 TRUE size PIXELS font)))
          (width (car (gimp-drawable-width text-layer)))
          (height (car (gimp-drawable-height text-layer)))
          (bg-layer (car (gimp-layer-new img width height RGB_IMAGE "Background" 100 NORMAL)))
@@ -83,8 +83,8 @@
                     ""
 		    SF-PATTERN "Pattern" "Parque #1"
                     SF-STRING "Text String" "The Gimp"
-                    SF-VALUE "Font Size (in pixels)" "100"
-                    SF-STRING "Font" "Roostheavy"
+                    SF-ADJUSTMENT "Font Size (pixels)" '(100 2 1000 1 10 0 1)
+                    SF-FONT "Font" "-*-Roostheavy-*-r-*-*-24-*-*-*-p-*-*-*"
                     SF-VALUE "Outline blur radius" "5"
                     SF-VALUE "Shadow blur radius" "10"
                     SF-VALUE "Bump-map (alpha layer) blur radius" "5"

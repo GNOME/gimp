@@ -8,7 +8,7 @@
 	 (feather1 (/ size 3))
 	 (feather2 (/ size 7))
 	 (feather3 (/ size 10))
-	 (text-layer (car (gimp-text img -1 0 0 text border TRUE size PIXELS "*" font "*" "*" "*" "*")))
+	 (text-layer (car (gimp-text-fontname img -1 0 0 text border TRUE size PIXELS font)))
 	 (width (car (gimp-drawable-width text-layer)))
 	 (height (car (gimp-drawable-height text-layer)))
 	 (glow-layer (car (gimp-layer-copy text-layer TRUE)))
@@ -65,6 +65,6 @@
 		    "1997"
 		    ""
 		    SF-STRING "Text String" "GLOWING"
-		    SF-VALUE "Font Size (in pixels)" "150"
-		    SF-STRING "Font" "Slogan"
+		    SF-ADJUSTMENT "Font Size (pixels)" '(150 2 1000 1 10 0 1)
+		    SF-FONT "Font" "-*-Slogan-*-r-*-*-24-*-*-*-p-*-*-*"
 		    SF-COLOR "Background Color" '(7 0 20))

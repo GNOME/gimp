@@ -49,7 +49,7 @@
     (gimp-selection-grow img (/ edge-size 2.0))
     (gimp-selection-invert img)
     (gimp-edit-clear img sparkle-layer)
-    (if (= 1 edge-only)
+    (if (= edge-only TRUE)
 	(begin
 	  (gimp-selection-load img selection)
 	  (gimp-selection-shrink img (/ edge-size 2.0))
@@ -90,7 +90,7 @@
 		    SF-FONT "Font" "-*-becker-*-r-*-*-24-*-*-*-p-*-*-*"
                     SF-ADJUSTMENT  "Hit Rate [0.0,1.0]" '(0.2 0 1 .01 .01 2 0)
                     SF-ADJUSTMENT "Edge Width" '(2 0 128 1 1 0 0)
-		    SF-VALUE "Edge Only [0/1]" "0"
+		    SF-TOGGLE "Edge Only?" FALSE
 		    SF-COLOR "Base Color" '(0 40 0)
 		    SF-COLOR "Background Color" '(255 255 255))
 

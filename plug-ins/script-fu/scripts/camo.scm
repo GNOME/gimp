@@ -90,11 +90,11 @@
  "28th April 1998"
  "Chris Gutteridge / ECS @ University of Southampton, England"
  ""
- SF-VALUE "Image Size:" "256"
- SF-VALUE "Granularity (0 - 15):" "7"
- SF-COLOR "Color 1:"      '(33 100 58)
- SF-COLOR "Color 2:"      '(170 170 60)
- SF-COLOR "Color 3:"      '(150 115 100)
+ SF-VALUE "Image Size" "256"
+ SF-ADJUSTMENT "Granularity (0 - 15)" '(7 0 15 1 1 0 0)
+ SF-COLOR "Color 1"      '(33 100 58)
+ SF-COLOR "Color 2"      '(170 170 60)
+ SF-COLOR "Color 3"      '(150 115 100)
  SF-TOGGLE "Smooth?" FALSE
  SF-TOGGLE "Flatten?" TRUE
 )

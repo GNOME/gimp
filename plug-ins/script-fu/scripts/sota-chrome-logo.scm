@@ -188,18 +188,12 @@
 		    "Spencer Kimball"
 		    "1997"
 		    ""
-;		    SF-VALUE "Chrome Saturation" "-80"
 		    SF-ADJUSTMENT "Chrome Saturation" '(-80 -100 100 1 10 0 0)
-;		    SF-VALUE "Chrome Lightness" "-47"
 		    SF-ADJUSTMENT "Chrome Lightness" '(-47 -100 100 1 10 0 0)
-;		    SF-VALUE "Chrome Factor" "0.75"
 		    SF-ADJUSTMENT  "Chrome Factor" '(.75 0 1 .1 .01 2 0)
 		    SF-STRING "Text String" "The GIMP"
-;		    SF-VALUE "Font Size (in pixels)" "150"
-		    SF-ADJUSTMENT "Font size (in pixels)" '(150 1 1000 1 10 0 1)
-;		    SF-STRING "Font" "RoostHeavy"
-		    SF-FONT "Font" "-*-roostheavy-*-r-*-*-24-*-*-*-p-*-*-*"
-;		    SF-STRING "Environment Map" (string-append "" gimp-data-dir "/scripts/beavis.jpg")
+		    SF-ADJUSTMENT "Font Size (pixels)" '(150 2 1000 1 10 0 1)
+		    SF-FONT "Font" "-*-RoostHeavy-*-r-*-*-24-*-*-*-p-*-*-*"
 		    SF-FILENAME "Environment Map" (string-append "" gimp-data-dir "/scripts/beavis.jpg")
 		    SF-COLOR "Highlight Balance" '(211 95 0)
 		    SF-COLOR "Chrome Balance" '(0 0 0))

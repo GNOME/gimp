@@ -228,9 +228,9 @@
                     SF-VALUE  "Red color mode (sin:0/cos:1/none:2)" "0"
                     SF-VALUE  "Green color mode (sin:0/cos:1/none:2)" "0"
                     SF-VALUE  "Blue color mode (sin:0/cos:1/none:2)" "0"
-                    SF-VALUE  "Red inversion before transformation" "FALSE"
-                    SF-VALUE  "Green inversion before transformation" "FALSE"
-                    SF-VALUE  "Blue inversion before transformation" "FALSE"
+                    SF-TOGGLE "Red inversion before transformation" FALSE
+                    SF-TOGGLE "Green inversion before transformation" FALSE
+                    SF-TOGGLE "Blue inversion before transformation" FALSE
                     SF-VALUE  "Start: red phase displacement (RAD)" "0"
                     SF-VALUE  "Start: green phase displacement (RAD)" "0"
                     SF-VALUE  "Start: blue phase displacement (RAD)" "0"
@@ -243,7 +243,7 @@
                     SF-VALUE  "End: red frequency (> 0)" "1"
                     SF-VALUE  "End: green frequency (> 0)" "1"
                     SF-VALUE  "End: blue frequency (> 0)" "1"
-                    SF-VALUE  "Red inversion after transformation" "FALSE"
-                    SF-VALUE  "Green inversion after transformation" "FALSE"
-                    SF-VALUE  "Blue inversion after transformation" "FALSE")
+                    SF-TOGGLE "Red inversion after transformation" FALSE
+                    SF-TOGGLE "Green inversion after transformation" FALSE
+                    SF-TOGGLE "Blue inversion after transformation" FALSE)
 

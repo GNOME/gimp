@@ -5,6 +5,7 @@ SUBDIRS = po intl libgimp plug-ins app data
 bin_SCRIPTS = gimptool
 
 EXTRA_DIST = \
+	README.i18n		\
 	MAINTAINERS		\
 	TODO			\
 	gtkrc			\

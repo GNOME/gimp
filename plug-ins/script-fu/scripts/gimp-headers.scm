@@ -135,8 +135,8 @@
 		    "1997"
 		    ""
 		    SF-STRING "Text String" "gimp.org"
-		    SF-STRING "Font" "times"
-		    SF-VALUE "Font size" "50"
+		    SF-FONT "Font" "-*-times-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-ADJUSTMENT "Font Size (pixels)" '(50 2 1000 1 10 0 1)
 		    SF-COLOR "Text Color" '(82 108 159)
 		    SF-COLOR "Higlight Color" '(190 220 250)
 		    SF-COLOR "Dark Color" '(46 74 92)
@@ -154,8 +154,8 @@
 		    "1997"
 		    ""
 		    SF-STRING "Text String" "gimp.org"
-		    SF-STRING "Font" "helvetica"
-		    SF-VALUE "Font size" "24"
+		    SF-FONT "Font" "-*-helvetica-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-ADJUSTMENT "Font Size (pixels)" '(24 2 1000 1 10 0 1)
 		    SF-COLOR "Text Color" '(135 220 220)
 		    SF-COLOR "Higlight Color" '(210 240 245)
 		    SF-COLOR "Dark Color" '(46 74 92)

@@ -58,6 +58,6 @@
 		    ""
 		    SF-VALUE "Radius (in pixels)" "100"
 		    SF-VALUE "Lighting (degrees)" "45"
-		    SF-VALUE "Shadow?" "TRUE"
+		    SF-TOGGLE "Shadow?" TRUE
 		    SF-COLOR "Background Color" '(255 255 255)
 		    SF-COLOR "Sphere Color" '(255 0 0))

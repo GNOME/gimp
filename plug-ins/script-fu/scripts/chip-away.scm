@@ -38,9 +38,8 @@
 
 (define (script-fu-logo-chip-away text font font-size spread-amount blur-amount invert drop-shadow keep-bump bg-fill keep-back pattern)
   (let* ((img (car (gimp-image-new 256 256 RGB)))
-	 (text-layer (car (gimp-text img -1 0 0
-				     text 30 TRUE font-size PIXELS
-				     "*" font "*" "*" "*" "*")))
+	 (text-layer (car (gimp-text-fontname img -1 0 0
+				     text 30 TRUE font-size PIXELS font)))
 	 (width (car (gimp-drawable-width text-layer)))
 	 (height (car (gimp-drawable-height text-layer)))
 	 (bg-layer (car (gimp-layer-new img width height RGB_IMAGE "Background" 100 NORMAL)))
@@ -120,8 +119,8 @@
 		    "1997"
 		    ""
 		    SF-STRING "Text String" "Sloth"
-		    SF-STRING "Font" "roostheavy"
-		    SF-VALUE "Font size" "200"
+		    SF-FONT "Font" "-*-roostheavy-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-ADJUSTMENT "Font Size (pixels)" '(200 2 1000 1 10 0 1)
 		    SF-VALUE "Chip Amount" "30"
 		    SF-VALUE "Blur Amount" "3"
 		    SF-TOGGLE "Invert?" FALSE

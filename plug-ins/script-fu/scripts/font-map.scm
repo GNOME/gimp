@@ -68,6 +68,6 @@
 		    "1997"
 		    ""
 		    SF-VALUE "Fonts" "'(\"Agate\" \"AlfredDrake\" \"Becker\" \"Blippo\" \"Bodoni\" \"Dragonwick\" \"Engraver\" \"Futura_Poster\" \"RoostHeavy\")"
-		    SF-VALUE "Font Size" "32"
+		    SF-ADJUSTMENT "Font Size (pixels)" '(32 2 1000 1 10 0 1)
 		    SF-VALUE "Border" "10"
 )

@@ -146,7 +146,7 @@
     "RGB RGBA GRAY GRAYA"
     SF-IMAGE "The Image" 0
     SF-DRAWABLE "The Layer" 0
-    SF-VALUE "Border Size:" "10"
+    SF-VALUE "Border Size" "10"
     SF-TOGGLE "Apply generated Layermask?" FALSE
     SF-TOGGLE "Clear unselected Maskarea?" TRUE
 )

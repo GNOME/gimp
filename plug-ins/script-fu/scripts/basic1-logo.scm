@@ -3,7 +3,7 @@
 
 (define (script-fu-basic1-logo text size font bg-color text-color)
   (let* ((img (car (gimp-image-new 256 256 RGB)))
-	 (text-layer (car (gimp-text img -1 0 0 text 10 TRUE size PIXELS "*" font "*" "*" "*" "*")))
+	 (text-layer (car (gimp-text-fontname img -1 0 0 text 10 TRUE size PIXELS font)))
 	 (width (car (gimp-drawable-width text-layer)))
 	 (height (car (gimp-drawable-height text-layer)))
 	 (bg-layer (car (gimp-layer-new img width height RGB_IMAGE "Background" 100 NORMAL)))
@@ -42,7 +42,7 @@
 		    "1996"
 		    ""
 		    SF-STRING "Text String" "The Gimp"
-		    SF-VALUE "Font Size (in pixels)" "100"
-		    SF-STRING "Font" "Dragonwick"
+		    SF-ADJUSTMENT "Font Size (pixels)" '(100 2 1000 1 10 0 1)
+		    SF-FONT "Font" "-*-Dragonwick-*-r-*-*-24-*-*-*-p-*-*-*"
 		    SF-COLOR "Background Color" '(255 255 255)
 		    SF-COLOR "Text Color" '(6 6 206))

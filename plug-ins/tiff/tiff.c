@@ -48,6 +48,14 @@ typedef struct
   gint  run;
 } TiffSaveInterface;
 
+typedef struct {
+  gint32 ID;
+  GDrawable *drawable;
+  GPixelRgn pixel_rgn;
+  guchar *pixels;
+  guchar *pixel;
+} channel_data;
+
 /* Declare some local functions.
  */
 static void   query      (void);
@@ -57,6 +65,18 @@ static void   run        (char    *name,
                           int     *nreturn_vals,
                           GParam **return_vals);
 static gint32 load_image (char   *filename);
+static void   load_separate (TIFF *tif, GDrawable *drawable,
+                             channel_data *channel,
+                             unsigned short bps, unsigned short photomet,
+                             int rows, int cols, int alpha, int extra);
+static void   load_8bit (TIFF *tif, GDrawable *drawable,
+                         channel_data *channel,
+                         unsigned short bps, unsigned short photomet,
+                         int rows, int cols, int alpha, int extra);
+static void   load_default (TIFF *tif, GDrawable *drawable,
+                            channel_data *channel,
+                            unsigned short bps, unsigned short photomet,
+                            int rows, int cols, int alpha, int extra);
 static gint   save_image (char   *filename,
 			  gint32  image,
 			  gint32  drawable);
@@ -93,7 +113,7 @@ static TiffSaveInterface tsint =
   FALSE                /*  run  */
 };
 
-static char *image_comment;
+static char *image_comment= NULL;
 
 MAIN ()
 
@@ -167,6 +187,9 @@ run (char    *name,
   static GParam values[2];
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
+#ifdef GIMP_HAVE_PARASITES
+  Parasite *parasite;
+#endif /* GIMP_HAVE_PARASITES */
   gint32 image;
 
   run_mode = param[0].data.d_int32;
@@ -194,29 +217,28 @@ run (char    *name,
     }
   else if (strcmp (name, "file_tiff_save") == 0)
     {
+
+/* Do this right this time, if POSSIBLE query for parasites, otherwise
+   or if there isn't one, choose the DEFAULT_COMMENT */
+
+#ifdef GIMP_HAVE_PARASITES
       int image = param[1].data.d_int32;
 
-      /* get the image comment either from a parasite, or from our
-       * compiled-in default */
-      {
-	Parasite *parasite;
+      parasite = gimp_image_find_parasite(image, "gimp-comment");
+      if (!parasite_is_error(parasite))
+        image_comment = g_strdup(parasite->data);
+      parasite_free(parasite);
+#endif /* GIMP_HAVE_PARASITES */
 
-	image_comment = NULL;
-	parasite = gimp_image_find_parasite(image, "gimp-comment");
-	if (!parasite_is_error(parasite))
-	  image_comment = g_strdup(parasite->data);
-	parasite_free(parasite);
-	if (!image_comment)
-	  image_comment = g_strdup(DEFAULT_COMMENT);	  
-      }
+      if (!image_comment) image_comment = g_strdup(DEFAULT_COMMENT);	  
 
       switch (run_mode)
 	{
 	case RUN_INTERACTIVE:
 	{
-	  Parasite *parasite;
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_tiff_save", &tsvals);
+#ifdef GIMP_HAVE_PARASITES
 	  parasite = gimp_image_find_parasite(image, "tiff-save-options");
 	  if (!parasite_is_error(parasite))
 	  {
@@ -224,6 +246,7 @@ run (char    *name,
 	    tsvals.fillorder   = ((TiffSaveVals *)parasite->data)->fillorder;
 	  }
 	  parasite_free(parasite);
+#endif /* GIMP_HAVE_PARASITES */
 
 	  /*  First acquire information with a dialog  */
 	  if (! save_dialog ())
@@ -254,8 +277,8 @@ run (char    *name,
 	case RUN_WITH_LAST_VALS:
 	  /*  Possibly retrieve data  */
 	{
-	  Parasite *parasite;
 	  gimp_get_data ("file_tiff_save", &tsvals);
+#ifdef GIMP_HAVE_PARASITES
 	  parasite = gimp_image_find_parasite(image, "tiff-save-options");
 	  if (!parasite_is_error(parasite))
 	  {
@@ -263,6 +286,7 @@ run (char    *name,
 	    tsvals.fillorder   = ((TiffSaveVals *)parasite->data)->fillorder;
 	  }
 	  parasite_free(parasite);
+#endif /* GIMP_HAVE_PARASITES */
 	}
 	  break;
 
@@ -285,42 +309,31 @@ run (char    *name,
 
 static gint32 load_image (char *filename) {
   TIFF *tif;
-  unsigned short bps, spp, photomet;
-  int cols, rows, maxval, alpha;
+  unsigned short bps, spp, photomet, planar;
+  int cols, rows, alpha;
   int image, layer, tile_height;
   unsigned short *redmap, *greenmap, *bluemap;
   guchar cmap[768];
   int image_type= 0, layer_type= 0;
   unsigned short extra, *extra_types;
 
-  int col, row, start, i, j;
-  unsigned char sample;
-  int bitsleft;
-  int gray_val, red_val, green_val, blue_val, alpha_val;
+  int i, j;
 
-  guchar *source, *s, *dest, *d;
   GDrawable *drawable;
-  GPixelRgn pixel_rgn;
   char *name;
 
   guchar colors[3]= {0, 0, 0};
 
-  typedef struct {
-    gint32 ID;
-    GDrawable *drawable;
-    GPixelRgn pixel_rgn;
-    guchar *pixels;
-    guchar *pixel;
-  } channel_data;
-
   channel_data *channel= NULL;
 
   TiffSaveVals save_vals;
+#ifdef GIMP_HAVE_PARASITES
   Parasite *parasite;
+#endif /* GIMP_HAVE_PARASITES */
   guint16 tmp;
   tif = TIFFOpen (filename, "r");
   if (!tif) {
-    g_message("TIFF Can't open \n%s", filename);
+    g_message("TIFF Can't open %s\n", filename);
     gimp_quit ();
   }
 
@@ -333,10 +346,12 @@ static gint32 load_image (char *filename) {
     bps = 1;
 
   if (bps > 8) {
-    g_message("TIFF Can't handle samples wider than 8-bit");
+    g_message("TIFF Can't handle samples wider than 8-bit\n");
     gimp_quit();
   }
 
+  if (!TIFFGetField (tif, TIFFTAG_PLANARCONFIG, &planar))
+    planar = PLANARCONFIG_SEPARATE;
   if (!TIFFGetField (tif, TIFFTAG_SAMPLESPERPIXEL, &spp))
     spp = 1;
   if (!TIFFGetField (tif, TIFFTAG_EXTRASAMPLES, &extra, &extra_types))
@@ -364,19 +379,18 @@ static gint32 load_image (char *filename) {
   /* test if the extrasample represents an associated alpha channel... */
   if (extra > 0 && (extra_types[0] == EXTRASAMPLE_ASSOCALPHA)) {
     alpha = 1;
+    --extra;
   } else {
     alpha = 0;
   }
 
-  if (photomet == PHOTOMETRIC_RGB && spp > extra + 3) {
-    extra= spp - 3; 
+  if (photomet == PHOTOMETRIC_RGB && spp > 3 + extra) {
     alpha= 1;
-  } else if (photomet != PHOTOMETRIC_RGB && spp > extra + 1) {
-    extra= spp - 1;
+    extra= spp - 4; 
+  } else if (photomet != PHOTOMETRIC_RGB && spp > 1 + extra) {
     alpha= 1;
+    extra= spp - 2;
   }
-
-  maxval = (1 << bps) - 1;
 
   switch (photomet) {
     case PHOTOMETRIC_MINISBLACK:
@@ -419,15 +433,18 @@ static gint32 load_image (char *filename) {
     save_vals.fillorder = FILLORDER_LSB2MSB;
   else
     save_vals.fillorder = tmp;
+#ifdef GIMP_HAVE_PARASITES
   parasite = parasite_new("tiff-save-options", 0,
 			  sizeof(save_vals), &save_vals);
   gimp_image_attach_parasite(image, parasite);
   parasite_free(parasite);
+#endif /* GIMP_HAVE_PARASITES */
 
 
   /* Attach a parasite containing the image description.  Pretend to
    * be a gimp comment so other plugins will use this description as
    * an image comment where appropriate. */
+#ifdef GIMP_HAVE_PARASITES
   {
     char *img_desc;
 
@@ -444,8 +461,10 @@ static gint32 load_image (char *filename) {
       parasite_free(parasite);
     }
   }
+#endif /* GIMP_HAVE_PARASITES */
 
   /* any resolution info in the file? */
+#ifdef GIMP_HAVE_RESOLUTION_INFO
   {
     float xres=0, yres=0;
     unsigned short units;
@@ -508,7 +527,7 @@ static gint32 load_image (char *filename) {
        should feel free to shoot the author of the broken program
        that produced the damaged TIFF file in the first place. */
   }
-
+#endif /* GIMP_HAVE_RESOLUTION_INFO */
 
 
   /* Install colormap for INDEXED images only */
@@ -518,12 +537,12 @@ static gint32 load_image (char *filename) {
       gimp_quit ();
     }
 
-    for (i = 0, j = 0; i <= maxval; i++) {
+    for (i = 0, j = 0; i < (1 << bps); i++) {
       cmap[j++] = redmap[i] >> 8;
       cmap[j++] = greenmap[i] >> 8;
       cmap[j++] = bluemap[i] >> 8;
     }
-    gimp_image_set_cmap (image, cmap, maxval + 1);
+    gimp_image_set_cmap (image, cmap, (1 << bps));
   }
 
   layer = gimp_layer_new (image, "Background", cols, rows, layer_type,
@@ -531,25 +550,153 @@ static gint32 load_image (char *filename) {
   gimp_image_add_layer (image, layer, 0);
   drawable = gimp_drawable_get (layer);
 
-  source= g_new (guchar, TIFFScanlineSize (tif));
   tile_height = gimp_tile_height ();
+
+  if (extra > 0) {
+    channel = g_new (channel_data, extra);
+
+    /* Add alpha channels as appropriate */
+    for (i= 0; i < extra; ++i) {
+      channel[i].ID= gimp_channel_new(image, "TIFF Channel", cols, rows,
+                                                            100.0, colors);
+      gimp_image_add_channel(image, channel[i].ID, 0);
+      channel[i].drawable= gimp_drawable_get (channel[i].ID);
+      channel[i].pixels= g_new(guchar, tile_height * cols);
+
+      gimp_pixel_rgn_init (&(channel[i].pixel_rgn), channel[i].drawable, 0, 0,
+  			   cols, rows, TRUE, FALSE);
+    }
+  }
+
+  if (planar == PLANARCONFIG_SEPARATE) {
+    load_separate(tif, drawable, channel, bps, photomet,
+                  rows, cols, alpha, extra);
+  } else if (bps == 8) {
+    load_8bit(tif, drawable, channel, bps, photomet, rows, cols, alpha, extra);
+  } else {
+    load_default(tif, drawable, channel, bps, photomet,
+                 rows, cols, alpha, extra);
+  }
+
+  gimp_drawable_flush (drawable);
+  gimp_drawable_detach (drawable);
+
+  for (i= 0; i < extra; ++i) {
+    gimp_drawable_flush (channel[i].drawable);
+    gimp_drawable_detach (channel[i].drawable);
+  }
+
+  return image;
+}
+
+static void
+load_8bit(TIFF *tif, GDrawable *drawable,
+             channel_data *channel,
+             unsigned short bps, unsigned short photomet,
+             int rows, int cols, int alpha, int extra)
+{
+  guchar *source, *dest, *s, *d;
+  GPixelRgn pixel_rgn;
+  int gray_val, red_val, green_val, blue_val, alpha_val;
+  int col, row, start, i;
+  int tile_height = gimp_tile_height ();
+
+  source= g_new (guchar, TIFFScanlineSize (tif));
   dest = g_new (guchar, tile_height * cols * drawable->bpp);
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, cols, rows, TRUE, FALSE);
 
-  if (extra - alpha > 0)
-    channel = g_new (channel_data, extra - alpha);
+  for (start= 0, row = 0; row < rows; ++row) {
+    d= dest + cols * (row % tile_height) * drawable->bpp;
 
-  /* Add alpha channels as appropriate */
-  for (i= 0; alpha + i < extra; ++i) {
-    channel[i].ID= gimp_channel_new(image, "TIFF Channel", cols, rows,
-                                                          100.0, colors);
-    gimp_image_add_channel(image, channel[i].ID, 0);
-    channel[i].drawable= gimp_drawable_get (channel[i].ID);
-    channel[i].pixels= g_new(guchar, tile_height * cols);
+    if (TIFFReadScanline (tif, source, row, 0) < 0) {
+      g_message("TIFF Bad data read on line %d\n", row);
+      gimp_quit ();
+    }
 
-    gimp_pixel_rgn_init (&(channel[i].pixel_rgn), channel[i].drawable, 0, 0,
-			   cols, rows, TRUE, FALSE);
+    for (i= 0; i < extra; ++i) {
+      channel[i].pixel= channel[i].pixels + cols * (row % tile_height);
+    }
+
+    s= source;
+
+    for (col = 0; col < cols; col++) {
+      switch (photomet) {
+        case PHOTOMETRIC_MINISBLACK:
+          if (alpha) {
+            gray_val= *s++;
+            alpha_val= *s++;
+            if (alpha_val)
+              *d++ = gray_val * 255 / alpha_val;
+            else
+              *d++ = 0;
+            *d++ = alpha_val;
+          } else {
+            *d++ = *s++;
+          }
+          break;
+
+        case PHOTOMETRIC_MINISWHITE:
+          if (alpha) {
+            gray_val= *s++;
+            alpha_val= *s++;
+            if (alpha_val)
+              *d++ = ((255 - gray_val) * 255) / alpha_val;
+            else
+              *d++ = 0;
+            *d++ = alpha_val;
+          } else {
+            *d++ = ~(*s++);
+          }
+          break;
+
+        case PHOTOMETRIC_PALETTE:
+          *d++= *s++;
+          if (alpha) *d++= *s++;
+          break;
+  
+        case PHOTOMETRIC_RGB:
+          if (alpha) {
+            red_val= *s++;
+            green_val= *s++;
+            blue_val= *s++;
+            alpha_val= *s++;
+            if (alpha_val) {
+              *d++ = (red_val * 255) / alpha_val;
+              *d++ = (green_val * 255) / alpha_val;
+              *d++ = (blue_val * 255) / alpha_val;
+            } else {
+              *d++ = 0;
+              *d++ = 0;
+              *d++ = 0;
+	    }
+	    *d++ = alpha_val;
+	  } else {
+	    *d++ = *s++;
+	    *d++ = *s++;
+	    *d++ = *s++;
+	  }
+          break;
+
+        default:
+          /* This case was handled earlier */
+          g_assert_not_reached();
+      }
+      for (i= 0; i < extra; ++i) {
+        *channel[i].pixel++ = *s++;
+      }
+    }
+    
+    if (((row + 1) % tile_height) == 0 || row + 1 == rows) {
+      gimp_pixel_rgn_set_rect (&pixel_rgn, dest, 0, start, cols, 1+row-start);
+      for (i= 0; alpha + i < extra; ++i) {
+	gimp_pixel_rgn_set_rect(&(channel[i].pixel_rgn), channel[i].pixels,
+                                0, start, cols, 1+row-start);
+      }
+      gimp_progress_update ((double) row / (double) rows);
+      start= row + 1;
+    }
   }
+}
 
 /* Step through all <= 8-bit samples in an image */
 
@@ -564,121 +711,109 @@ static gint32 load_image (char *filename) {
       var = ( *s >> bitsleft ) & maxval;      \
   }
 
+static void
+load_default(TIFF *tif, GDrawable *drawable,
+             channel_data *channel,
+             unsigned short bps, unsigned short photomet,
+             int rows, int cols, int alpha, int extra)
+{
+  guchar *source, *dest, *s, *d;
+  GPixelRgn pixel_rgn;
+  int gray_val, red_val, green_val, blue_val, alpha_val;
+  int col, row, start, i;
+  int bitsleft, maxval = (1 << bps) - 1;
+  int tile_height = gimp_tile_height ();
+
+  source= g_new (guchar, TIFFScanlineSize (tif));
+  dest = g_new (guchar, tile_height * cols * drawable->bpp);
+  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, cols, rows, TRUE, FALSE);
+
   for (start= 0, row = 0; row < rows; ++row) {
     d= dest + cols * (row % tile_height) * drawable->bpp;
 
-    /* Special cases: Scanline is compatible with GIMP storage */
-    if (extra == 0 && bps == 8) {  
-      if (TIFFReadScanline (tif, d, row, 0) < 0) {
-        g_message("TIFF Bad data read on line %d", row);
-        gimp_quit ();
-      }
+    if (TIFFReadScanline (tif, source, row, 0) < 0) {
+      g_message("TIFF Bad data read on line %d\n", row);
+      gimp_quit ();
+    }
 
-    /* Or read in and process each sample -- slower */
-    } else {
-      if (TIFFReadScanline (tif, source, row, 0) < 0) {
-        g_message("TIFF Bad data read on line %d\n", row);
-        gimp_quit ();
-      }
+    for (i= 0; i < extra; ++i) {
+      channel[i].pixel= channel[i].pixels + cols * (row % tile_height);
+    }
 
-      for (i= 0; alpha + i < extra; ++i) {
-        channel[i].pixel= channel[i].pixels + cols * (row % tile_height);
-      }
+    /* Set s/bitsleft ready to use NEXTSAMPLE macro */
 
-      /* Set s/bitleft ready to use NEXTSAMPLE macro */
+    s= source;
+    bitsleft= 8;
 
-      s= source;
-      bitsleft= 8;
-
+    for (col = 0; col < cols; col++) {
       switch (photomet) {
         case PHOTOMETRIC_MINISBLACK:
-          for (col = 0; col < cols; col++) {
-            NEXTSAMPLE(gray_val);
-            if (alpha) {
-              NEXTSAMPLE(alpha_val);
-              if (alpha_val)
-                *d++ = (gray_val * 65025) / (alpha_val * maxval);
-              else
-                *d++ = 0;
-              *d++ = alpha_val;
-            } else {
-              *d++ = (gray_val * 255) / maxval;
-            }
-            for (i= 0; alpha + i < extra; ++i) {
-              NEXTSAMPLE(sample);
-              *channel[i].pixel++ = sample;
-            }
-	  }
-	  break;
+          NEXTSAMPLE(gray_val);
+          if (alpha) {
+            NEXTSAMPLE(alpha_val);
+            if (alpha_val)
+              *d++ = (gray_val * 65025) / (alpha_val * maxval);
+            else
+              *d++ = 0;
+            *d++ = alpha_val;
+          } else {
+            *d++ = (gray_val * 255) / maxval;
+          }
+          break;
 
         case PHOTOMETRIC_MINISWHITE:
-	  for (col = 0; col < cols; col++) {
-            NEXTSAMPLE(gray_val);
-            if (alpha) {
-              NEXTSAMPLE(alpha_val);
-              if (alpha_val)
-                *d++ = ((maxval - gray_val) * 65025) / (alpha_val * maxval);
-              else
-                *d++ = 0;
-              *d++ = alpha_val;
-            } else {
-              *d++ = ((maxval - gray_val) * 255) / maxval;
-            }
-            for (i= 0; alpha + i < extra; ++i) {
-              NEXTSAMPLE(sample);
-              *channel[i].pixel++ = sample;
-            }
+          NEXTSAMPLE(gray_val);
+          if (alpha) {
+            NEXTSAMPLE(alpha_val);
+            if (alpha_val)
+              *d++ = ((maxval - gray_val) * 65025) / (alpha_val * maxval);
+            else
+              *d++ = 0;
+            *d++ = alpha_val;
+          } else {
+            *d++ = ((maxval - gray_val) * 255) / maxval;
           }
           break;
 
         case PHOTOMETRIC_PALETTE:
-          for (col = 0; col < cols; col++) {
+          NEXTSAMPLE(*d++);
+          if (alpha) {
             NEXTSAMPLE(*d++);
-            if (alpha) {
-              NEXTSAMPLE(*d++);
-            }
-            for (i= 0; alpha + i < extra; ++i) {
-              NEXTSAMPLE(sample);
-              *channel[i].pixel++ = sample;
-            }
           }
           break;
   
         case PHOTOMETRIC_RGB:
-          for (col = 0; col < cols; col++) {
-            NEXTSAMPLE(red_val)
-            NEXTSAMPLE(green_val)
-            NEXTSAMPLE(blue_val)
-            if (alpha) {
-              NEXTSAMPLE(alpha_val)
-              if (alpha_val) {
-                *d++ = (red_val * 255) / alpha_val;
-                *d++ = (green_val * 255) / alpha_val;
-                *d++ = (blue_val * 255) / alpha_val;
-              } else {
-                *d++ = 0;
-                *d++ = 0;
-                *d++ = 0;
-	      }
-	      *d++ = alpha_val;
-	    } else {
-	      *d++ = red_val;
-	      *d++ = green_val;
-	      *d++ = blue_val;
+          NEXTSAMPLE(red_val)
+          NEXTSAMPLE(green_val)
+          NEXTSAMPLE(blue_val)
+          if (alpha) {
+            NEXTSAMPLE(alpha_val)
+            if (alpha_val) {
+              *d++ = (red_val * 255) / alpha_val;
+              *d++ = (green_val * 255) / alpha_val;
+              *d++ = (blue_val * 255) / alpha_val;
+            } else {
+              *d++ = 0;
+              *d++ = 0;
+              *d++ = 0;
 	    }
-	    for (i= 0; alpha + i < extra; ++i) {
-              NEXTSAMPLE(sample);
-	      *channel[i].pixel++ = sample;
-            }
-          }
+	    *d++ = alpha_val;
+	  } else {
+	    *d++ = red_val;
+	    *d++ = green_val;
+	    *d++ = blue_val;
+	  }
           break;
 
         default:
           /* This case was handled earlier */
           g_assert_not_reached();
       }
+      for (i= 0; i < extra; ++i) {
+        NEXTSAMPLE(alpha_val);
+        *channel[i].pixel++ = alpha_val;
+      }
     }
-
     
     if (((row + 1) % tile_height) == 0 || row + 1 == rows) {
       gimp_pixel_rgn_set_rect (&pixel_rgn, dest, 0, start, cols, 1+row-start);
@@ -690,11 +825,155 @@ static gint32 load_image (char *filename) {
       start= row + 1;
     }
   }
+}
 
-  gimp_drawable_flush (drawable);
-  gimp_drawable_detach (drawable);
+static void
+load_separate(TIFF *tif, GDrawable *drawable,
+              channel_data *channel,
+              unsigned short bps, unsigned short photomet,
+              int rows, int cols, int alpha, int extra)
+{
+  guchar *source, *dest, *s, *d;
+  GPixelRgn pixel_rgn;
+  int col, row, start;
+  int bitsleft, maxval = (1 << bps) - 1;
+  int tile_height = gimp_tile_height ();
 
-  return image;
+  TIFFPrintDirectory(tif, stdout, 0);
+  if (photomet != PHOTOMETRIC_RGB) {
+    g_message("So far PLANARCONFIG_SEPARATE only supports RGB images");
+    gimp_quit();
+  }
+
+  source= g_new (guchar, TIFFScanlineSize (tif));
+  dest = g_new (guchar, tile_height * cols * drawable->bpp);
+  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, cols, rows, TRUE, FALSE);
+
+  /* RED channel */
+  for (start= 0, row = 0; row < rows; ++row) {
+    d= dest + cols * (row % tile_height) * drawable->bpp;
+
+    if (TIFFReadScanline (tif, source, row, 0) < 0) {
+      g_message("TIFF Bad data read on line %d\n", row);
+      gimp_quit ();
+    }
+
+    /* Set s/bitsleft ready to use NEXTSAMPLE macro */
+
+    s= source;
+    bitsleft= 8;
+
+    for (col = 0; col < cols; col++) {
+      NEXTSAMPLE(d[col * (3 + alpha)])
+    }
+    
+    if (((row + 1) % tile_height) == 0 || row + 1 == rows) {
+      gimp_pixel_rgn_set_rect (&pixel_rgn, dest, 0, start, cols, 1+row-start);
+      gimp_progress_update ((double) row / (double) rows);
+      start= row + 1;
+    }
+  }
+
+  /* GREEN channel */
+  for (start= 0, row = 0; row < rows; ++row) {
+    d= dest + cols * (row % tile_height) * drawable->bpp;
+
+    if ((row % tile_height) == 0) {
+      if (rows - row < tile_height)
+        gimp_pixel_rgn_get_rect(&pixel_rgn, dest, 0, start, cols, rows - row);
+      else
+        gimp_pixel_rgn_get_rect(&pixel_rgn, dest, 0, start, cols, tile_height);
+      gimp_progress_update ((double) row / (double) rows);
+    }
+
+    if (TIFFReadScanline (tif, source, row, 1) < 0) {
+      g_message("TIFF Bad data read on line %d\n", row);
+      gimp_quit ();
+    }
+
+    /* Set s/bitsleft ready to use NEXTSAMPLE macro */
+
+    s= source;
+    bitsleft= 8;
+
+    for (col = 0; col < cols; col++) {
+      NEXTSAMPLE(d[col * (3 + alpha) + 1])
+    }
+    
+    if (((row + 1) % tile_height) == 0 || row + 1 == rows) {
+      gimp_pixel_rgn_set_rect (&pixel_rgn, dest, 0, start, cols, 1+row-start);
+      gimp_progress_update ((double) row / (double) rows);
+      start= row + 1;
+    }
+  }
+
+  /* BLUE channel */
+  for (start= 0, row = 0; row < rows; ++row) {
+    d= dest + cols * (row % tile_height) * drawable->bpp;
+
+    if ((row % tile_height) == 0) {
+      if (rows - row < tile_height)
+        gimp_pixel_rgn_get_rect(&pixel_rgn, dest, 0, start, cols, rows - row);
+      else
+        gimp_pixel_rgn_get_rect(&pixel_rgn, dest, 0, start, cols, tile_height);
+      gimp_progress_update ((double) row / (double) rows);
+    }
+
+    if (TIFFReadScanline (tif, source, row, 2) < 0) {
+      g_message("TIFF Bad data read on line %d\n", row);
+      gimp_quit ();
+    }
+
+    /* Set s/bitsleft ready to use NEXTSAMPLE macro */
+
+    s= source;
+    bitsleft= 8;
+
+    for (col = 0; col < cols; col++) {
+      NEXTSAMPLE(d[col * (3 + alpha) + 2])
+    }
+    
+    if (((row + 1) % tile_height) == 0 || row + 1 == rows) {
+      gimp_pixel_rgn_set_rect (&pixel_rgn, dest, 0, start, cols, 1+row-start);
+      gimp_progress_update ((double) row / (double) rows);
+      start= row + 1;
+    }
+  }
+
+  /* ALPHA channel */
+  if (alpha) {
+    for (start= 0, row = 0; row < rows; ++row) {
+      d= dest + cols * (row % tile_height) * drawable->bpp;
+
+      if ((row % tile_height) == 0) {
+        if (rows - row < tile_height)
+          gimp_pixel_rgn_get_rect(&pixel_rgn, dest, 0, start, cols, rows - row);
+        else
+          gimp_pixel_rgn_get_rect(&pixel_rgn, dest, 0, start, cols, tile_height);
+        gimp_progress_update ((double) row / (double) rows);
+      }
+
+      if (TIFFReadScanline (tif, source, row, 3) < 0) {
+        g_message("TIFF Bad data read on line %d\n", row);
+        gimp_quit ();
+      }
+
+      /* Set s/bitsleft ready to use NEXTSAMPLE macro */
+  
+      s= source;
+      bitsleft= 8;
+
+      for (col = 0; col < cols; col++) {
+        NEXTSAMPLE(d[col * 4 + 3])
+      }
+    
+      if (((row + 1) % tile_height) == 0 || row + 1 == rows) {
+        gimp_pixel_rgn_set_rect (&pixel_rgn, dest, 0, start, cols, 1+row-start);
+        gimp_progress_update ((double) row / (double) rows);
+        start= row + 1;
+      }
+    }
+  }
 }
 
 /*
@@ -851,6 +1130,7 @@ static gint save_image (char *filename, gint32 image, gint32 layer) {
   /* TIFFSetField( tif, TIFFTAG_STRIPBYTECOUNTS, rows / rowsperstrip ); */
   TIFFSetField (tif, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
 
+#ifdef GIMP_HAVE_RESOLUTION_INFO
   /* resolution fields */
   {
       float resolution = gimp_image_get_resolution(image);
@@ -861,10 +1141,12 @@ static gint save_image (char *filename, gint32 image, gint32 layer) {
 	  TIFFSetField (tif, TIFFTAG_RESOLUTIONUNIT, RESUNIT_INCH);
       }
   }
+#endif GIMP_HAVE_RESOLUTION_INFO
 
   /* do we have a comment?  If so, create a new parasite to hold it,
    * and attach it to the image. The attach function automatically
    * detaches a previous incarnation of the parasite. */
+#ifdef GIMP_HAVE_PARASITES
   if (image_comment && *image_comment != '\000')
   {
     Parasite *parasite;
@@ -875,6 +1157,7 @@ static gint save_image (char *filename, gint32 image, gint32 layer) {
     gimp_image_attach_parasite (image, parasite);
     parasite_free (parasite);
   }
+#endif /* GIMP_HAVE_PARASITES */
 
   if (drawable_type == INDEXED_IMAGE)
     TIFFSetField (tif, TIFFTAG_COLORMAP, red, grn, blu);

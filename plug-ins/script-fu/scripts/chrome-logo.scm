@@ -8,7 +8,7 @@
 	 (offx2 (* size (- 0.04)))
 	 (offy2 (* size (- 0.03)))
 	 (feather (* size 0.05))
-	 (text-layer (car (gimp-text img -1 0 0 text b-size TRUE size PIXELS "*" font "*" "*" "*" "*")))
+	 (text-layer (car (gimp-text-fontname img -1 0 0 text b-size TRUE size PIXELS font)))
 	 (width (car (gimp-drawable-width text-layer)))
 	 (height (car (gimp-drawable-height text-layer)))
 	 (layer1 (car (gimp-layer-new img width height RGBA_IMAGE "Layer 1" 100 DIFFERENCE)))
@@ -74,6 +74,6 @@
 		    "1997"
 		    ""
 		    SF-STRING "Text String" "The GIMP"
-		    SF-VALUE "Font Size (in pixels)" "100"
-		    SF-STRING "Font" "Bodoni"
+		    SF-ADJUSTMENT "Font Size (pixels)" '(100 2 1000 1 10 0 1)
+		    SF-FONT "Font" "-*-Bodoni-*-r-*-*-24-*-*-*-p-*-*-*"
 		    SF-COLOR "Background Color" '(191 191 191))

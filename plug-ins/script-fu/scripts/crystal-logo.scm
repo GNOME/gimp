@@ -77,7 +77,7 @@
 	 (blur (sota-scale size 0.5 chrome-factor))
 	 (displace (sota-scale size 0.25 chrome-factor))
 	 (brush-size (sota-scale size 0.5 chrome-factor))
-	 (text-layer (car (gimp-text img -1 0 0 text b-size TRUE size PIXELS "*" font "*" "*" "*" "*")))
+	 (text-layer (car (gimp-text-fontname img -1 0 0 text b-size TRUE size PIXELS font)))
 	 (width (car (gimp-drawable-width text-layer)))
 	 (height (car (gimp-drawable-height text-layer)))
 	 (tile-ret (plug-in-tile 1 back-img back-layer width height TRUE))
@@ -195,8 +195,8 @@
 		    ""
 		    SF-VALUE "Chrome Factor" "1.0"
 		    SF-STRING "Text String" "Crystal"
-		    SF-VALUE "Font Size (in pixels)" "150"
-		    SF-STRING "Font" "Engraver"
+		    SF-ADJUSTMENT "Font Size (pixels)" '(150 2 1000 1 10 0 1)
+		    SF-FONT "Font" "-*-Engraver-*-r-*-*-24-*-*-*-p-*-*-*"
 ;		    SF-STRING "Background Img" (string-append "" gimp-data-dir "/scripts/texture1.jpg")
 		    SF-FILENAME "Background Img" (string-append "" gimp-data-dir "/scripts/texture1.jpg")
 ;		    SF-STRING "Environment Map" (string-append "" gimp-data-dir "/scripts/beavis.jpg"))

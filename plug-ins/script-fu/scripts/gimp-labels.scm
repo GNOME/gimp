@@ -140,8 +140,8 @@
 		    "1997"
 		    ""
 		    SF-STRING "Text String" "Gimp.Org"
-		    SF-STRING "Font" "helvetica"
-		    SF-VALUE "Font Size" "18"
+		    SF-FONT "Font" "-*-helvetica-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-ADJUSTMENT "Font Size (pixels)" '(18 2 1000 1 10 0 1)
 		    SF-STRING "Weight" "medium"
 		    SF-STRING "Slant" "r"
 		    SF-STRING "Width" "normal"

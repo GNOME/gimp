@@ -73,9 +73,9 @@
 		    "1997"
 		    ""
 		    SF-STRING "Text String" "GIMP"
-;		    SF-VALUE "Font Size (in pixels)" "150"
+;		    SF-ADJUSTMENT "Font Size (pixels)" '(150 2 1000 1 10 0 1)
 		    SF-ADJUSTMENT "Font Size (pixels)" '(150 0 512 1 10 0 1)
-;		    SF-STRING "Font" "Blippo"
+;		    SF-FONT "Font" "-*-Blippo-*-r-*-*-24-*-*-*-p-*-*-*"
 		    SF-FONT "Font" "-*-blippo-*-r-*-*-24-*-*-*-p-*-*-*"
 		    SF-COLOR "Burst Color" '(60 196 33)
 		    SF-COLOR "BG Color" '(255 255 255))

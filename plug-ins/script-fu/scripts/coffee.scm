@@ -64,6 +64,6 @@
     "RGBA RGB"
     SF-IMAGE "The Image" 0
     SF-DRAWABLE "The Layer" 0
-    SF-VALUE "Stains:" "3"
-    SF-TOGGLE "Darken Only: (better but only for images with alot of white)" TRUE
+    SF-VALUE "Stains" "3"
+    SF-TOGGLE "Darken Only? (better but only for images with alot of white)" TRUE
 )

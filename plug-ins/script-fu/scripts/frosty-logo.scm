@@ -7,7 +7,7 @@
 (define (script-fu-frosty-logo text size font bg-color)
   (let* ((img (car (gimp-image-new 256 256 RGB)))
 	 (border (/ size 5))
-	 (text-layer (car (gimp-text img -1 0 0 text (* border 2) TRUE size PIXELS "*" font "*" "*" "*" "*")))
+	 (text-layer (car (gimp-text-fontname img -1 0 0 text (* border 2) TRUE size PIXELS font)))
 	 (width (car (gimp-drawable-width text-layer)))
 	 (height (car (gimp-drawable-height text-layer)))
 	 (text-layer-mask (car (gimp-layer-create-mask text-layer BLACK-MASK)))
@@ -83,6 +83,6 @@
 		    "1997"
 		    ""
 		    SF-STRING "Text String" "The GIMP"
-		    SF-VALUE "Font Size (in pixels)" "100"
-		    SF-STRING "Font" "Becker"
+		    SF-ADJUSTMENT "Font Size (pixels)" '(100 2 1000 1 10 0 1)
+		    SF-FONT "Font" "-*-Becker-*-r-*-*-24-*-*-*-p-*-*-*"
 		    SF-COLOR "Background Color" '(255 255 255))

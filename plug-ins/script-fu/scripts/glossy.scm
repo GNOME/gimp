@@ -24,7 +24,7 @@
 
 (define (script-fu-glossy-logo text size font blend-gradient-text blend-gradient-outline grow-size bg-color use-pattern-text pattern-text use-pattern-outline pattern-outline use-pattern-overlay pattern-overlay noninteractive shadow-toggle s-offset-x s-offset-y flatten-toggle)
   (let* ((img (car (gimp-image-new 256 256 RGB)))
-         (text-layer (car (gimp-text img -1 0 0 text 30 TRUE size PIXELS "*" font "*" "*" "*" "*")))
+         (text-layer (car (gimp-text-fontname img -1 0 0 text 30 TRUE size PIXELS font)))
          (width (car (gimp-drawable-width text-layer)))
          (height (car (gimp-drawable-height text-layer)))
          (bg-layer (car (gimp-layer-new img width height RGBA_IMAGE "Background" 100 NORMAL)))
@@ -126,8 +126,8 @@
                     "14/04/1998"
                     ""
                     SF-STRING "Text String" "Galaxy"
-                    SF-VALUE "Font Size (in pixels)" "100"
-                    SF-STRING "Font" "Eras"
+                    SF-ADJUSTMENT "Font Size (pixels)" '(100 2 1000 1 10 0 1)
+                    SF-FONT "Font" "-*-Eras-*-r-*-*-24-*-*-*-p-*-*-*"
                     SF-GRADIENT "Blend Gradient (text)" "Shadows_2"
                     SF-GRADIENT "Blend Gradient (outline)" "Shadows_2"
                     SF-VALUE "How big outline?" "5"

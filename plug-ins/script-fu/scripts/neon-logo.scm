@@ -159,10 +159,8 @@
 		    "1997"
 		    ""
 		    SF-STRING "Text String" "NEON"
-;		    SF-VALUE "Font Size (in pixels)" "150"
-		    SF-ADJUSTMENT "Font Size" '(150 2 256 1 10 0 0)
-;		    SF-STRING "Font" "Blippo"
-		    SF-FONT "Font" "-*-blippo-*-*-*-*-*-*-*-*-*-*-*-*"
+		    SF-ADJUSTMENT "Font Size (pixels)" '(150 2 1000 1 10 0 1)
+		    SF-FONT "Font" "-*-Blippo-*-*-*-*-24-*-*-*-*-*-*-*"
 		    SF-COLOR "Background Color" '(0 0 0)
 		    SF-COLOR "Glow Color" '(38 211 255)
-		    SF-TOGGLE "Create Shadow" FALSE)
+		    SF-TOGGLE "Create Shadow?" FALSE)

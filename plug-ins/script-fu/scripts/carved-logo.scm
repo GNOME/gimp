@@ -31,7 +31,7 @@
 	 (brush-size (carve-scale size 0.3))
 	 (b-size (carve-scale size 1.5))
 	 (layer1 (car (gimp-image-active-drawable img)))
-	 (mask-layer (car (gimp-text img -1 0 0 text b-size TRUE size PIXELS "*" font "*" "*" "*" "*")))
+	 (mask-layer (car (gimp-text-fontname img -1 0 0 text b-size TRUE size PIXELS font)))
 	 (width (car (gimp-drawable-width mask-layer)))
 	 (height (car (gimp-drawable-height mask-layer)))
 	 (mask-fs 0)
@@ -158,8 +158,8 @@
 		    "1997"
 		    ""
 		    SF-STRING "Text String" "Marble"
-		    SF-VALUE "Font Size (in pixels)" "100"
-		    SF-STRING "Font" "Engraver"
+		    SF-ADJUSTMENT "Font Size (pixels)" '(100 2 1000 1 10 0 1)
+		    SF-FONT "Font" "-*-Engraver-*-r-*-*-24-*-*-*-p-*-*-*"
 ;		    SF-STRING "Background Img" (string-append "" gimp-data-dir "/scripts/texture3.jpg")
 		    SF-FILENAME "Background Img" (string-append "" gimp-data-dir "/scripts/texture3.jpg")
 		    SF-TOGGLE "Carve Raised Text" FALSE)

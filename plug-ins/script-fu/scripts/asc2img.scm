@@ -153,7 +153,7 @@
 			)
 		)
 
-  (set! theText (car (gimp-text theImage 
+  (set! theText (car (gimp-text-fontname theImage 
 				-1 
 				0 
 				0 
@@ -162,12 +162,7 @@
 				TRUE
 				inFontSize
 				PIXELS 
-				"*" 
-				inFont
-				"*" 
-				"*"
-				"*" 
-				"*")))
+				inFont)))
  	(set! theCharWidth (car (gimp-drawable-width  theText) ))
 	(gimp-edit-cut theImage theText)
 
@@ -196,7 +191,7 @@
 	  (if 	(equal? "" theLine)
 		()
 		(begin 
-		  (set! theText (car (gimp-text theImage 
+		  (set! theText (car (gimp-text-fontname theImage 
 						-1 
 						0 
 						0 
@@ -205,12 +200,7 @@
 						TRUE 
 						inFontSize
 						PIXELS
-						"*" 
-						inFont 
-						"*" 
-						"*" 
-						"*"
-						"*")))
+						inFont)))
 		  (set! theLineHeight (car (gimp-drawable-height  theText) ) )
 		  (gimp-layer-set-offsets theText 
 					  (* theCharWidth theIndent)  
@@ -242,13 +232,13 @@
  "8th April 1998"
  "Chris Gutteridge / ECS @ University of Southampton, England"
  "bar"
- SF-STRING "File Name:"       "afile"
- SF-STRING "Font:"       "Charter"
- SF-VALUE "Font size:"  "45"
- SF-COLOR "Text Color:"      '(0 0 0)
+ SF-FILENAME "File Name"       "afile"
+ SF-FONT "Font"       "-*-Charter-*-r-*-*-24-*-*-*-p-*-*-*"
+ SF-ADJUSTMENT "Font Size (pixels)" '(45 2 1000 1 10 0 1)
+ SF-COLOR "Text Color"      '(0 0 0)
  SF-TOGGLE "Transparent BG?" FALSE
- SF-COLOR "Background Color:"      '(255 255 255)
- SF-VALUE "Buffer amount (% height of text):" "35"
+ SF-COLOR "Background Color"      '(255 255 255)
+ SF-ADJUSTMENT "Buffer amount (% height of text)" '(35 0 100 1 10 0 0)
  SF-TOGGLE "Flatten Image?" TRUE
 )
 
@@ -262,9 +252,9 @@
  "bar"
  SF-IMAGE "Image" 0
  SF-DRAWABLE "Layer" 0
- SF-STRING "File Name:"       "afile"
- SF-STRING "Font:"       "Charter"
- SF-VALUE "Font size:"  "45"
- SF-COLOR "Text Color:"      '(0 0 0)
+ SF-FILENAME "File Name"       "afile"
+ SF-FONT "Font"       "-*-Charter-*-r-*-*-24-*-*-*-p-*-*-*"
+ SF-ADJUSTMENT "Font Size (pixels)" '(45 2 1000 1 10 0 1)
+ SF-COLOR "Text Color"      '(0 0 0)
  SF-TOGGLE "Flatten Image?" TRUE
 )

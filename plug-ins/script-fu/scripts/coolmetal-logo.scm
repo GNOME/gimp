@@ -12,7 +12,7 @@
 	 (amplitude (/ size 40))
 	 (shrink (+ 1 (/ size 30)))
 	 (depth (/ size 20))
-	 (text-layer (car (gimp-text img -1 0 0 text 0 TRUE size PIXELS "*" font "*" "*" "*" "*")))
+	 (text-layer (car (gimp-text-fontname img -1 0 0 text 0 TRUE size PIXELS font)))
 	 (width (car (gimp-drawable-width text-layer)))
 	 (height (car (gimp-drawable-height text-layer)))
 	 (img-width (+ width (* 0.15 height) 10))
@@ -107,7 +107,7 @@
 		    "1997"
 		    ""
 		    SF-STRING "Text String" "Cool Metal"
-		    SF-VALUE "Font Size (in pixels)" "100"
-		    SF-STRING "Font" "Crillee"
+		    SF-ADJUSTMENT "Font Size (pixels)" '(100 2 1000 1 10 0 1)
+		    SF-FONT "Font" "-*-Crillee-*-r-*-*-24-*-*-*-p-*-*-*"
 		    SF-COLOR "Background Color" '(255 255 255)
 		    SF-TOGGLE "Seascape" FALSE)

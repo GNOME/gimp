@@ -22,7 +22,7 @@
 (define (script-fu-bovinated-logo text size font)
   (let* ((img (car (gimp-image-new 256 256 RGB)))
          (border (/ size 4))
-	 (text-layer (car (gimp-text img -1 0 0 text border TRUE size PIXELS "*" font "*" "*" "*" "*")))
+	 (text-layer (car (gimp-text-fontname img -1 0 0 text border TRUE size PIXELS font)))
 	 (width (car (gimp-drawable-width text-layer)))
 	 (height (car (gimp-drawable-height text-layer)))
 	 (bg-layer (car (gimp-layer-new img width height RGBA_IMAGE "Background" 100 NORMAL)))
@@ -76,5 +76,5 @@
 		    "April 1998"
 		    ""
 		    SF-STRING "Text String" "Fear the Cow"
-		    SF-VALUE "Font Size (in pixels)" "80"
-		    SF-STRING "Font" "roostheavy")
+		    SF-ADJUSTMENT "Font Size (pixels)" '(80 2 1000 1 10 0 1)
+		    SF-FONT "Font" "-*-roostheavy-*-r-*-*-24-*-*-*-p-*-*-*")

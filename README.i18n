@@ -1,0 +1,141 @@
+This document exists to document the important things to care for
+because of locale support. 
+Actually this one is maintained by me, that is Daniel Egger 
+(Daniel.Egger@t-online.de). 
+
+1. Why localisation?
+
+ Many persons from many countries start to get used to Linux.
+ Unfortunately not everyone is able to understand English. But
+ even those people some times like to use good software without
+ needing a dictionary beneath them.
+ So why not simply localise the software to make it available to 
+ the mass which isn't wholly English native?
+
+2. How?
+
+ GNU provides a very nice package called gettext. This one offers
+ the possibility to translate chosen messages from the native language
+ of the program into that one of the users if a necessary catalog is
+ provided. Gettext therefor provides some easy tools to create and maintain
+ such catalogs and a few functions which can be called by the program to
+ enable automatic translation. The program gets linked to gettext and
+ everything is fine.
+ By the way: gettext is a fixed part of glibc2 but will be shipped with
+ GIMP and so can be automatically compiled on every platform GIMP itself
+ runs on.
+
+3. Deep inside...
+
+ GIMP provides a header file called gimpintl.h in the libgimp directory this
+ one checks whether gettext is available on the system and will deactivate
+ language support if it's not.
+ If it is useable it will define 3 functions which will be described below.
+
+3.1 _() [more correctly: char * _( char * )]
+
+ This one is a macro for the function gettext(). With it every text may be 
+ wrapped that is directly called directly in a function. If you use it the
+ given string will be tried to get translated in the native language of the
+ user according to his/her environmental settings. 
+ The gettext function will do a lookup in the hashed gimp.mo which contains 
+ all the translated texts.
+
+ - If it is found a pointer to the string will be returned to the caller.
+ - If not the caller will receive a pointer to the original string.
+
+ This way it is ensured that there isn't any harm caused to the program 
+ (i.e. The GIMP) if no catalog isn't installed. 
+
+ Please note that it is important to use _() directly (and not gettext())
+ for simple messages because of reasons that will be mentioned below.
+
+3.2 N_() [more correctly: void ( void ) ]
+
+ This one is a macro for the function gettext_noop(). As you can see and
+ guess it doesn't really anything in the programm i.e. it is a dummy
+ function but nevertheless important. As it isn't possible to call functions
+ in a structure as seen here:
+
+ struct blurb
+ {
+  _("This won't work\n");
+ }
+
+ you have to do it in some other way. In GIMP such structures are often used 
+ to create menues or similar things very simply. Here you have to use the
+ dummy to allow the generation of a template which will be described below.
+ This one doesn't do anything but it marks the text as important to the 
+ gettext extractor.
+
+ The text has to be translated "by hand" with the next function.  
+ 
+3.3 gettext()
+
+ This function is the same as that mcaro in 3.1. But there is one big
+ difference: It is ignored by the gettext program which will create message
+ templates for us. 
+ If you have strings that should be translated but are unfortunately in a
+ structure you have to do that on your own which means that you have to
+ parse the fields with the messages in a loop and translate the texts with
+ this gettext() function.
+
+ Please note that it may be necessary to free or allocate memory in this
+ case!      
+
+4. Some magic...
+
+ As you have seen we only did the programming part until now but this isn't
+ all by far. 
+ To use catalogs we'll have to create them. Now there are 3 different files
+ which are importart:
+
+ gimp.pot:
+ 
+ This one is the so called template. It contains the messages which are
+ extracted from the sources and empty fields which have to get filled by the
+ author. It is used to start a new catalog or to update the an already
+ available one. 
+
+ The Makefile will automatically call the program gettext which will extract
+ all messages that are wrapped by a _() or a N_() (but NOT gettext()) and
+ concat them to this template.
+
+ [language].po: 
+
+ This file has to be an edited gimp.pot and contains the original messages 
+ plus the translated ones. This file will be delivered together with GIMP
+ and is the base for the final catalog.
+
+ [language].mo:
+
+ This file is a compiled version of [language.po] which will be
+ automatically compiled by the Makefile and installed in the locale
+ directory of the system. It contains everything that the .po file
+ contains except not translated messages, comments and other overhead.
+ For maximum speed it is also hashed to allow gettext a faster search.
+
+5. Tools and how to use them...
+
+ As mentioned the to get translated string are extracted directly from the
+ source and written to the template. 
+ I guess many of you will now ask if it is necessary to add new strings
+ directly from the template or if there's a tool to achieve that. 
+ I think I can calm down those one who fear of lots of had work just to
+ update the language files. There's a program called msgmerge which will 
+ add all strings that are in the template but not in the uncompiled catalog 
+ to it. Msgmerge does this job very nicely and also tries to apply some kind
+ of fuzzy search method for already translated string for possible
+ programmers work reduction: If a original string seems similar to a new one 
+ and it already has a translation, it will be taken over to the new catalog
+ together with a remark that this one mustn't necessarily fit.
+ 
+6. And more?
+
+ I hope I mentioned everything that is worth it and hope that this document
+ will clarify some things. If it doesn't please write me a mail and tell me
+ what you want to know. This text may contain errors, so if you find one
+ tell it to me, too....
+
+Happy Gimping. Yours,
+                     Daniel Egger

@@ -96,29 +96,4 @@
 		    SF-ADJUSTMENT "Amplitude"        '(10  1  101 1 10 1 0)
 		    SF-ADJUSTMENT "Wavelength"       '(10 .10 100 1 10 1 0)
 		    SF-ADJUSTMENT "Number of Frames" '(6  1   512 1 10 1 1)
-		    SF-TOGGLE "Invert direction" FALSE)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		    SF-TOGGLE "Invert direction?" FALSE)

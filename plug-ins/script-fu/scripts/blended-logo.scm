@@ -14,7 +14,7 @@
 	 (f-size (scale size 0.075))
 	 (ds-size (scale size 0.05))
 	 (ts-size (- b-size-2 3))
-	 (text-layer (car (gimp-text img -1 0 0 text b-size TRUE size PIXELS "*" font "*" "*" "*" "*")))
+	 (text-layer (car (gimp-text-fontname img -1 0 0 text b-size TRUE size PIXELS font)))
 	 (width (car (gimp-drawable-width text-layer)))
 	 (height (car (gimp-drawable-height text-layer)))
 	 (blend-layer (car (gimp-layer-new img width height RGBA_IMAGE "Blend" 100 NORMAL)))
@@ -82,8 +82,8 @@
 		    ""
 		    SF-VALUE "Blend Mode" "FG-BG-RGB"
 		    SF-STRING "Text String" "The GIMP"
-		    SF-VALUE "Font Size (in pixels)" "150"
-		    SF-STRING "Font" "Crillee"
+		    SF-ADJUSTMENT "Font Size (pixels)" '(150 2 1000 1 10 0 1)
+		    SF-FONT "Font" "-*-Crillee-*-r-*-*-24-*-*-*-p-*-*-*"
 		    SF-COLOR "Background Color" '(255 255 255)
 		    SF-COLOR "Text Color" '(124 174 255)
 		    SF-COLOR "Starting Blend" '(22 9 129)
