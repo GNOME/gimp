@@ -44,7 +44,7 @@
 #include "libgimp/libgimp-intl.h"
 
 
-/*  #define GIMP_THUMB_DEBUG  */
+/*  #define GIMP_THUMB_DEBUG   */
 
 #if defined (GIMP_THUMB_DEBUG) && defined (__GNUC__)
 #define GIMP_THUMB_DEBUG_CALL(t) \
@@ -761,6 +761,8 @@ gimp_thumbnail_load_thumb (GimpThumbnail  *thumbnail,
   if (! pixbuf)
     return NULL;
 
+  g_object_freeze_notify (G_OBJECT (thumbnail));
+
   /* URI and mtime from the thumbnail need to match our file */
   option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_URI);
   if (!option || strcmp (option, thumbnail->image_uri))
@@ -792,7 +794,8 @@ gimp_thumbnail_load_thumb (GimpThumbnail  *thumbnail,
     gimp_thumbnail_set_info_from_pixbuf (thumbnail, pixbuf);
 
  finish:
-  if (state != GIMP_THUMB_STATE_OLD && state != GIMP_THUMB_STATE_OK)
+  if (thumbnail->thumb_size == GIMP_THUMB_SIZE_FAIL ||
+      (state != GIMP_THUMB_STATE_OLD && state != GIMP_THUMB_STATE_OK))
     {
       g_object_unref (pixbuf);
       pixbuf = NULL;
@@ -801,6 +804,8 @@ gimp_thumbnail_load_thumb (GimpThumbnail  *thumbnail,
   g_object_set (thumbnail,
                 "thumb-state", state,
                 NULL);
+
+  g_object_thaw_notify (G_OBJECT (thumbnail));
 
   return pixbuf;
 }
@@ -896,7 +901,9 @@ gimp_thumbnail_save_thumb (GimpThumbnail  *thumbnail,
     {
       success = (chmod (name, 0600) == 0);
 
-      if (! success)
+      if (success)
+        g_object_set (thumbnail, "thumb-state", GIMP_THUMB_STATE_OK, NULL);
+      else
         g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                      "Could not set permissions of thumbnail for %s: %s",
                      thumbnail->image_uri, g_strerror (errno));
@@ -972,7 +979,9 @@ gimp_thumbnail_save_failure (GimpThumbnail  *thumbnail,
     {
       success = (chmod (name, 0600) == 0);
 
-      if (! success)
+      if (success)
+        g_object_set (thumbnail, "thumb-state", GIMP_THUMB_STATE_FAILED, NULL);
+      else
         g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                      "Could not set permissions of thumbnail '%s': %s",
                      name, g_strerror (errno));
