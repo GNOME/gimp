@@ -1,3 +1,8 @@
+2002-06-24  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/dbbrowser/dbbrowser_utils.c (dialog_search_callback):
+	cleaned up after myself. There's no need to sort the store twice.
+
 2002-06-23  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* libgimpcolor/gimprgb.c (gimp_rgb_min)

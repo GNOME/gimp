@@ -655,15 +655,12 @@ dialog_search_callback (GtkWidget   *widget,
       g_free (proc_list[i]);
     }
 
+  g_free (proc_list);
+
   /* now sort the store */ 
   gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (dbbrowser->store),
                                         0, GTK_SORT_ASCENDING);
   
-  g_free (proc_list);
-
-  gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (dbbrowser->store),
-                                        0, GTK_SORT_ASCENDING);
-
   if (num_procs > 0)
     {
       gtk_tree_model_get_iter_root (GTK_TREE_MODEL (dbbrowser->store), &iter);
