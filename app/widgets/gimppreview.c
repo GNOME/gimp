@@ -85,6 +85,7 @@ static gboolean    gimp_preview_enter_notify_event   (GtkWidget        *widget,
 static gboolean    gimp_preview_leave_notify_event   (GtkWidget        *widget,
 						      GdkEventCrossing *event);
 
+static gboolean    gimp_preview_idle_update          (GimpPreview      *preview);
 static void        gimp_preview_render               (GimpPreview      *preview);
 static void        gimp_preview_real_render          (GimpPreview      *preview);
 static void        gimp_preview_get_size             (GimpPreview      *preview,
@@ -235,6 +236,7 @@ gimp_preview_init (GimpPreview *preview)
 
   preview->size              = -1;
   preview->in_button         = FALSE;
+  preview->idle_id           = 0;
   preview->needs_render      = TRUE;
   preview->popup_id          = 0;
   preview->popup_x           = 0;
@@ -249,6 +251,12 @@ gimp_preview_destroy (GtkObject *object)
   GimpPreview *preview;
 
   preview = GIMP_PREVIEW (object);
+
+  if (preview->idle_id)
+    {
+      g_source_remove (preview->idle_id);
+      preview->idle_id = 0;
+    }
 
   gimp_preview_popup_hide (preview);
 
@@ -659,8 +667,7 @@ gimp_preview_set_viewable (GimpPreview  *preview,
 				 preview->border_width);
 	}
 
-      preview->needs_render = TRUE;
-      gtk_widget_queue_draw (GTK_WIDGET (preview));
+      gimp_preview_update (preview);
     }
 }
 
@@ -738,8 +745,7 @@ gimp_preview_set_dot_for_dot (GimpPreview *preview,
 				 preview->border_width);
 	}
 
-      preview->needs_render = TRUE;
-      gtk_widget_queue_draw (GTK_WIDGET (preview));
+      gimp_preview_update (preview);
     }
 }
 
@@ -754,8 +760,7 @@ gimp_preview_set_border_color (GimpPreview   *preview,
     {
       preview->border_color = *color;
 
-      preview->needs_render = TRUE;
-      gtk_widget_queue_draw (GTK_WIDGET (preview));
+      gimp_preview_update (preview);
     }
 }
 
@@ -764,12 +769,33 @@ gimp_preview_update (GimpPreview *preview)
 {
   g_return_if_fail (GIMP_IS_PREVIEW (preview));
 
-  preview->needs_render = TRUE;
-  gtk_widget_queue_draw (GTK_WIDGET (preview));
+  if (preview->idle_id)
+    {
+      g_source_remove (preview->idle_id);
+    }
+
+  preview->idle_id =
+    g_idle_add_full (G_PRIORITY_LOW,
+                     (GSourceFunc) gimp_preview_idle_update, preview,
+                     NULL);
 }
 
 
 /*  private functions  */
+
+static gboolean
+gimp_preview_idle_update (GimpPreview *preview)
+{
+  preview->idle_id = 0;
+
+  if (! preview->viewable)
+    return FALSE;
+
+  preview->needs_render = TRUE;
+  gtk_widget_queue_draw (GTK_WIDGET (preview));
+
+  return FALSE;
+}
 
 static void
 gimp_preview_render (GimpPreview *preview)
@@ -963,8 +989,7 @@ gimp_preview_size_changed (GimpPreview  *preview,
     }
   else
     {
-      preview->needs_render = TRUE;
-      gtk_widget_queue_draw (GTK_WIDGET (preview));
+      gimp_preview_update (preview);
     }
 }
 

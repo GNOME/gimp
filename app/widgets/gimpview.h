@@ -66,6 +66,7 @@ struct _GimpPreview
   gint            size;
   gboolean        in_button;
   guint           press_state;
+  guint           idle_id;
   gboolean        needs_render;
   guint           popup_id;
   gint            popup_x;
