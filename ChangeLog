@@ -1,3 +1,9 @@
+2005-01-10  Manish Singh  <yosh@gimp.org>
+
+        * modules/controller_midi.c: #include <time.h> to make sure all
+	the types are there for the alsa headers. Should address bug
+	#163593.
+
 2005-01-10  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/text_tool.pdb: explicitely mention the encoding.
