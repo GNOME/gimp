@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.1.18\n"
-"POT-Creation-Date: 2000-04-30 11:43-0700\n"
-"PO-Revision-Date: 2000-05-01 17:29+00:00\n"
+"POT-Creation-Date: 2000-05-01 17:10+0000\n"
+"PO-Revision-Date: 2000-05-02 09:28+00:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -42,16 +42,16 @@ msgstr "Просмотр..."
 
 #: plug-ins/script-fu/script-fu-console.c:571
 msgid "Unable to open SIOD output pipe"
-msgstr ""
+msgstr "Не удалось открыть канал вывода SIOD"
 
 #: plug-ins/script-fu/script-fu-console.c:575
 msgid "Unable to open a stream on the SIOD output pipe"
-msgstr ""
+msgstr "Не удалось открыть поток в канал вывода SIOD"
 
 #: plug-ins/script-fu/script-fu-console.c:622
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
-"Режим выполнения Скрипт-Фу допускает только неинтерактивное взаимодействие"
+"Режим выполнения Скрипт-Фу допускает только неинтерактивную работу"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1075
 #, c-format
@@ -213,7 +213,7 @@ msgstr "<Image>/Скрипт-Фу/Алхимия/Weave..."
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
 msgid "<Image>/Script-Fu/Animators/Blend..."
-msgstr "<Image>/Скрипт-Фу/Аниматоры/Blend..."
+msgstr "<Image>/Скрипт-Фу/Аниматоры/Смесь..."
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 msgid "<Image>/Script-Fu/Animators/Rippling..."
@@ -233,7 +233,7 @@ msgstr "<Image>/Скрипт-Фу/Аниматры/Волны..."
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:0
 msgid "<Image>/Script-Fu/Decor/Add Bevel..."
-msgstr "<Image>/Скрипт-Фу/Декор/Add Bevel..."
+msgstr "<Image>/Скрипт-Фу/Декор/Добавить фаску..."
 
 #: plug-ins/script-fu/scripts/addborder.scm:0
 msgid "<Image>/Script-Fu/Decor/Add Border..."
@@ -277,11 +277,11 @@ msgstr "<Image>/Скрипт-Фу/Визуализация/Сделать сетчатую систему..."
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "<Image>/Script-Fu/Selection/Distress Selection..."
-msgstr "<Image>/Скрипт-Фу/Выделение/Distress Selection..."
+msgstr "<Image>/Скрипт-Фу/Выделение/Исказить выделение..."
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "<Image>/Script-Fu/Selection/Fade Outline..."
-msgstr "<Image>/Скрипт-Фу/Выделение/Fade Outline..."
+msgstr "<Image>/Скрипт-Фу/Выделение/Увести контур..."
 
 #: plug-ins/script-fu/scripts/selection-round.scm:0
 msgid "<Image>/Script-Fu/Selection/Round..."
@@ -309,11 +309,11 @@ msgstr "<Image>/Скрипт-Фу/Тень/Xach-эффект..."
 
 #: plug-ins/script-fu/scripts/carve-it.scm:0
 msgid "<Image>/Script-Fu/Stencil Ops/Carve-It..."
-msgstr "<Image>/Скрипт-Фу/Stencil Ops/Carve-It..."
+msgstr "<Image>/Скрипт-Фу/Парметры трафарета/Вырезать..."
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 msgid "<Image>/Script-Fu/Stencil Ops/Chrome-It..."
-msgstr "<Image>/Скрипт-Фу/Stencil Ops/Chrome-It..."
+msgstr "<Image>/Скрипт-Фу/Параметры трафарета/Chrome-It..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 msgid "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
@@ -337,7 +337,7 @@ msgstr "<Toolbox>/Расш./Скрипт-Фу/Кнопки/Простая выпуклая кнопка..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D Outline..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/3D Outline..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Объемный контур..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Glow..."
@@ -357,15 +357,15 @@ msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Основа II..."
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blended..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Blended..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Смешанная..."
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bovination..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Bovination..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Пятнистая корова..."
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Carved..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Вырезанная..."
 
 #: plug-ins/script-fu/scripts/chalk.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chalk..."
@@ -385,7 +385,7 @@ msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Комикс..."
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool Metal..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Cool Metal..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Прохладный метал..."
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
@@ -393,19 +393,19 @@ msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Кристалл..."
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Frosty..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Frosty..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Ледяная..."
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glossy..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Глянец..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Глянцевая..."
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glowing Hot..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Glowing Hot..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Горячее свечение..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Bevel..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Gradient Bevel..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Выпуклый градиент..."
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
@@ -433,11 +433,11 @@ msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Скоростной текст..."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starburst..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Starburst..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Звездная вспышка..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starscape..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Starscape..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Звездный фон..."
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
@@ -449,11 +449,11 @@ msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Текстура..."
 
 #: plug-ins/script-fu/scripts/title-header.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Web Title Header..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Заголовок Web-страницы..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical, Feathered..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Создать кисть/Эллипс, Feathered..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Создать кисть/Размытый эллипс..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical..."
@@ -461,7 +461,7 @@ msgstr "<Toolbox>/Расш./Скрипт-Фу/Создать кисть/Эллипс..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular, Feathered..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Создать кисть/Прямоугольник, Feathered..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Создать кисть/Размытый прямоугольник..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular..."
@@ -489,7 +489,7 @@ msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/Земля..."
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render Map..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/Render Map..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/Визуализация карты..."
 
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-Tile..."
@@ -525,7 +525,7 @@ msgstr "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Чужое свечение/Стрелка..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Bullet..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Чужое свечение/Bullet..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Чужое свечение/Маркер..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
@@ -538,25 +538,25 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Beveled Pattern/Arrow..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Выпуклый шаблон/Стрелка..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Bullet..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Beveled Pattern/Bullet..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Выпуклый шаблон/Маркер..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Beveled Pattern/Кнопка..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Выпуклый шаблон/Кнопка..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
 msgstr ""
-"<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Beveled Pattern/Заголовок..."
+"<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Выпуклый шаблон/Заголовок..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
 msgstr ""
-"<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Beveled Pattern/Гор.линейка..."
+"<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Выпуклый шаблон/Гор.линейка..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
@@ -567,7 +567,7 @@ msgstr ""
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
 msgstr ""
-"<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/General Tube Labels..."
+"<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/Метки главной трубы..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
@@ -577,21 +577,20 @@ msgstr ""
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Button Label..."
 msgstr ""
-"<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/Tube Button Label..."
+"<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/Метки кнопок трубы..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
 msgstr ""
-"<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/Tube Sub-Button Label..."
+"<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/Метки доп.кнопок трубы..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button "
 "Label..."
 msgstr ""
-"<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/Tube Sub-Sub-Button "
-"Label..."
+"<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/Дважды вложенные кнопки..."
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
@@ -960,7 +959,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Default Bumpmap Settings"
-msgstr ""
+msgstr "Исходная настройка рельефа"
 
 #: plug-ins/script-fu/scripts/old_photo.scm:0
 msgid "Defocus"
@@ -1093,7 +1092,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 msgid "Feathering"
-msgstr ""
+msgstr "Размывание"
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 #: plug-ins/script-fu/scripts/select_to_brush.scm:0
@@ -1368,7 +1367,7 @@ msgstr "Сохранить фон"
 #: plug-ins/script-fu/scripts/add-bevel.scm:0
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Keep Bump Layer"
-msgstr ""
+msgstr "Сохранить слой рельефа"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 #: plug-ins/script-fu/scripts/lava.scm:0
@@ -1669,7 +1668,7 @@ msgstr "Шероховатость"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Round Ratio"
-msgstr ""
+msgstr "Отношение радиусов"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Rows"
@@ -1751,9 +1750,8 @@ msgid "Sharpness (degrees)"
 msgstr "Резкость (градусы)"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
-#, fuzzy
 msgid "Shear Length"
-msgstr "Длина строки"
+msgstr "Длина сдвига"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
