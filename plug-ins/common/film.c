@@ -42,6 +42,7 @@ static char ident[] = "@(#) GIMP Film plug-in v1.04 1999-10-08";
 
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
 #include "libgimp/stdplugins-intl.h"
 
 /* Maximum number of pictures per film */
@@ -61,7 +62,7 @@ static void      run    (char      *name,
 /* to film_height (i.e. it should be a value from 0.0 to 1.0) */
 typedef struct {
   int film_height;                 /* height of the film */
-  unsigned char film_color[3];     /* color of film */
+  guchar film_color[3];            /* color of film */
   double picture_height;           /* height of picture (r) */
   double picture_space;            /* space between pictures (r) */
   double hole_offset;              /* distance from hole to edge of film (r) */
@@ -70,7 +71,7 @@ typedef struct {
   double hole_space;               /* distance of holes (r) */
   double number_height;            /* height of picture numbering (r) */
   int number_start;                /* number for first picture */
-  unsigned char number_color[3];   /* color of number */
+  guchar number_color[3];          /* color of number */
   char number_fontf[256];          /* font family to use for numbering */
   int number_pos[2];               /* flags where to draw numbers (top/bottom) */
   int keep_height;                 /* flag if to keep max. image height */
@@ -79,14 +80,6 @@ typedef struct {
 } FilmVals;
 
 
-/* Handling for color selection dialogs */
-typedef struct
-{
-  GtkWidget *activate;   /* The button that activates the color sel. dialog */
-  GtkWidget *colselect;  /* The colour selection dialog itself */
-  GtkWidget *preview;    /* The colour preview */
-  unsigned char color[3];/* The selected colour */
-} CSEL;
 
 /* Data to use for the dialog */
 typedef struct
@@ -96,7 +89,6 @@ typedef struct
   GtkWidget *image_list_all;
   GtkWidget *image_list_film;
   int       prv_width, prv_height;
-  CSEL      csel[2];
   int       number_pos[2];
   int       keep_height;
   gint run;
@@ -147,20 +139,12 @@ static GtkWidget *add_image_list (int add_box_flag, int n, gint32 *image_id,
 static gint      film_dialog         (gint32 image_ID);
 static void      film_close_callback (GtkWidget *widget,
                                       gpointer data);
-static void      film_color_button_callback (GtkWidget *widget,
-                                      gpointer data);
 static void      film_ok_callback    (GtkWidget *widget,
                                       gpointer data);
 static void      numbering_toggle_update (GtkWidget *widget,
                                       gpointer data);
 static void      keepheight_toggle_update (GtkWidget *widget,
                                       gpointer data);
-static void      color_select_ok_callback (GtkWidget *widget,
-                                      gpointer data);
-static void      color_select_cancel_callback (GtkWidget *widget,
-                                      gpointer data);
-static void      color_preview_show (GtkWidget *widget,
-                                     unsigned char *color);
 
 
 GPlugInInfo PLUG_IN_INFO =
@@ -198,10 +182,6 @@ static FilmInterface filmint =
   { NULL },   /* left entries */
   NULL, NULL, /* image list widgets */
   50, 20,     /* size of preview */
-  {
-    { NULL, NULL, NULL, { 0 } },  /* Color selection dialogs */
-    { NULL, NULL, NULL, { 0 } }
-  },
   { 0 },
   FALSE       /* run */
 };
@@ -1055,7 +1035,6 @@ add_color_button (int csel_index,
 {
  GtkWidget *label;
  GtkWidget *button;
- GtkWidget *preview;
 
  label = gtk_label_new (_("Color:"));
  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
@@ -1063,22 +1042,22 @@ add_color_button (int csel_index,
                    GTK_FILL, GTK_FILL, 0, 0);
  gtk_widget_show (label);
 
- button = filmint.csel[csel_index].activate = gtk_button_new ();
-
- memcpy (&(filmint.csel[csel_index].color[0]),
-         (csel_index == 0) ? filmvals.film_color : filmvals.number_color, 3);
-
- preview = filmint.csel[csel_index].preview = gtk_preview_new(GTK_PREVIEW_COLOR);
- gtk_preview_size (GTK_PREVIEW (preview), filmint.prv_width,
-                   filmint.prv_height);
- gtk_container_add (GTK_CONTAINER (button), preview);
- gtk_widget_show (preview);
-
- color_preview_show (preview, &(filmint.csel[csel_index].color[0]));
-
- gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                     (GtkSignalFunc) film_color_button_callback,
-                     (gpointer)csel_index);
+ switch (csel_index)
+   {
+   case 0:
+     button = gimp_color_button_new (_("Film color Color Picker"),
+				     filmint.prv_width, filmint.prv_height,
+				     filmvals.film_color, 3);
+     break;
+   case 1:
+     button = gimp_color_button_new (_("Number color Color Picker"),
+				     filmint.prv_width, filmint.prv_height,
+				     filmvals.number_color, 3);
+     break;
+   default:
+     button = NULL;
+     break;
+   }
  gtk_table_attach (GTK_TABLE (table), button, 1, 2, tab_index, tab_index+1,
                    0, 0, 0, 0);
  gtk_widget_show (button);
@@ -1210,6 +1189,7 @@ film_dialog (gint32 image_ID)
 {
   GtkWidget *dlg;
   GtkWidget *button;
+  GtkWidget *hbbox;
   GtkWidget *hbox, *h0box;
   GtkWidget *table;
   GtkWidget *frame;
@@ -1248,22 +1228,28 @@ film_dialog (gint32 image_ID)
                       NULL);
 
   /*  Action area  */
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
+  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+ 
   button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) film_ok_callback, dlg);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button,
-                      TRUE, TRUE, 0);
+		      (GtkSignalFunc) film_ok_callback,
+		      dlg);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
   button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-                             (GtkSignalFunc) gtk_widget_destroy,
-                             GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button,
-                      TRUE, TRUE, 0);
+			     (GtkSignalFunc) gtk_widget_destroy,
+			     GTK_OBJECT (dlg));
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   /* parameter settings */
@@ -1406,50 +1392,11 @@ film_close_callback (GtkWidget *widget,
 
 
 static void
-film_color_button_callback (GtkWidget *widget,
-                            gpointer data)
-
-{int idx, j;
- GtkColorSelectionDialog *csd;
- GtkWidget *dialog;
- gdouble colour[3];
-
- idx = (int)data;
-
- /* Is the colour selection dialog already running ? */
- if (filmint.csel[idx].colselect != NULL) return;
-
- for (j = 0; j < 3; j++)
-   colour[j] = filmint.csel[idx].color[j] / 255.0;
-
- dialog = filmint.csel[idx].colselect = gtk_color_selection_dialog_new (
-           (idx == 0) ? _("Films color Color Picker")
-                      : _("Numbers color Color Picker"));
- csd = GTK_COLOR_SELECTION_DIALOG (dialog);
-
- gtk_widget_destroy (csd->help_button);
-
- gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-                      (GtkSignalFunc) color_select_cancel_callback, data);
- gtk_signal_connect (GTK_OBJECT (csd->ok_button), "clicked",
-                     (GtkSignalFunc) color_select_ok_callback, data);
- gtk_signal_connect (GTK_OBJECT (csd->cancel_button), "clicked",
-                     (GtkSignalFunc) color_select_cancel_callback, data);
-
- gtk_color_selection_set_color (GTK_COLOR_SELECTION (csd->colorsel), colour);
-
- gtk_window_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
- gtk_widget_show (dialog);
-}
-
-
-static void
 film_ok_callback (GtkWidget *widget,
                   gpointer data)
 
 {int v, num_images;
  char *s;
- GtkWidget *dialog;
  GtkWidget *label;
  GList *tmp_list;
  gint32 image_ID;
@@ -1471,12 +1418,6 @@ film_ok_callback (GtkWidget *widget,
     strncpy (filmvals.number_fontf, s, sizeof (filmvals.number_fontf));
     filmvals.number_fontf[sizeof (filmvals.number_fontf)-1] = '\0';
   }
-
-  /* Read film color */
-  memcpy (filmvals.film_color, &(filmint.csel[0].color[0]), 3);
-
-  /* Read numbers color */
-  memcpy (filmvals.number_color, &(filmint.csel[1].color[0]), 3);
 
   /* Read positioning of numbers */
   filmvals.number_pos[0] = filmint.number_pos[0];
@@ -1501,15 +1442,6 @@ film_ok_callback (GtkWidget *widget,
       tmp_list = tmp_list->next;
     }
     filmvals.num_images = num_images;
-  }
-
-  for (v = 0; v < sizeof(filmint.csel)/sizeof (filmint.csel[0]); v++)
-  {
-    if ((dialog = filmint.csel[v].colselect) != NULL)
-    {
-      filmint.csel[v].colselect = NULL;
-      gtk_widget_destroy (GTK_WIDGET (dialog));
-    }
   }
 
   filmint.run = TRUE;
@@ -1543,72 +1475,4 @@ keepheight_toggle_update (GtkWidget *widget,
 
   if (filmint.left_entry[0] != NULL)
     gtk_widget_set_sensitive (filmint.left_entry[0], *toggle_val == 0);
-}
-
-
-static void
-color_select_ok_callback (GtkWidget *widget,
-                          gpointer data)
-
-{gdouble color[3];
- int idx, j;
- GtkWidget *dialog;
-
- idx = (int)data;
- if ((dialog = filmint.csel[idx].colselect) == NULL) return;
-
- gtk_color_selection_get_color (
-   GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (dialog)->colorsel),
-   color);
-
- for (j = 0; j < 3; j++)
-   filmint.csel[idx].color[j] = (unsigned char)(color[j]*255.0);
-
- color_preview_show (filmint.csel[idx].preview, &(filmint.csel[idx].color[0]));
-
- filmint.csel[idx].colselect = NULL;
- gtk_widget_destroy (dialog);
-}
-
-
-static void
-color_select_cancel_callback (GtkWidget *widget,
-                              gpointer data)
-
-{int idx;
- GtkWidget *dialog;
-
- idx = (int)data;
- if ((dialog = filmint.csel[idx].colselect) == NULL) return;
-
- filmint.csel[idx].colselect = NULL;
- gtk_widget_destroy (dialog);
-}
-
-
-static void
-color_preview_show (GtkWidget *widget,
-                    unsigned char *rgb)
-
-{guchar *buf, *bp;
- int j, width, height;
-
- width = filmint.prv_width;
- height = filmint.prv_height;
-
- bp = buf = g_malloc (width*3);
- if (buf == NULL) return;
-
- for (j = 0; j < width; j++)
- {
-   *(bp++) = rgb[0];
-   *(bp++) = rgb[1];
-   *(bp++) = rgb[2];
- }
- for (j = 0; j < height; j++)
-   gtk_preview_draw_row (GTK_PREVIEW (widget), buf, 0, j, width);
-
- gtk_widget_draw (widget, NULL);
-
- g_free (buf);
 }

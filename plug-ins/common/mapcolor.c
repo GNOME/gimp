@@ -34,6 +34,8 @@ static char ident[] = "@(#) GIMP mapcolor plug-in v1.00  26-Oct-98";
 #include <time.h>
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
+#include "libgimp/stdplugins-intl.h"
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
@@ -46,37 +48,16 @@ typedef struct
 {
  guchar colors[4][3];
  gint32 map_mode;
-} PLVALS;
+} PluginValues;
 
-typedef struct
+PluginValues plvals = 
 {
-  GtkWidget *activate;   /* The button that activates the color sel. dialog */
-  GtkWidget *colselect;  /* The colour selection dialog itself */
-  GtkWidget *preview;    /* The colour preview */
-  unsigned char color[3];/* The selected colour */
-} CSEL;
-
-
-typedef struct
-{
-  GtkWidget *dialog;
-  CSEL       csel[4];
-  PLVALS    *plvals;
-  gint  run;  /*  run  */
-} RunInterface;
-
-static RunInterface runint =
-{
-  NULL,     /* dialog */
-  {
-    { NULL, NULL, NULL, { 0 } },  /* Color selection dialogs */
-    { NULL, NULL, NULL, { 0 } },
-    { NULL, NULL, NULL, { 0 } },
-    { NULL, NULL, NULL, { 0 } }
-  },
-  NULL,     /* plug-in values */
-  FALSE     /* run */
+  { { 0, 0, 0}, { 255, 255, 255 }, { 0, 0, 0 }, { 255, 255, 255 } },
+  0
 };
+
+
+gint run_flag = FALSE;
 
 
 /* Declare some local functions.
@@ -96,25 +77,29 @@ GPlugInInfo PLUG_IN_INFO =
   run,     /* run_proc */
 };
 
-static gint   dialog (PLVALS *plvals);
+static gint   dialog                  (void);
 static void   mapcolor_close_callback (GtkWidget *widget,
-                                gpointer data);
-static void   mapcolor_ok_callback (GtkWidget *widget,
-                                gpointer data);
-static void   add_color_button (int csel_index, int left, int top,
-                                GtkWidget *table, PLVALS *plvals);
-static void   color_select_ok_callback (GtkWidget *widget,
-                                gpointer data);
-static void   color_select_cancel_callback (GtkWidget *widget,
-                                gpointer data);
-static void   color_preview_show (GtkWidget *widget,
-                                 unsigned char *color);
-
-static void color_mapping (GDrawable *drawable, PLVALS *plvals);
+				       gpointer   data);
+static void   mapcolor_ok_callback    (GtkWidget *widget,
+				       gpointer   data);
+static void   add_color_button        (int        csel_index,
+				       int        left,
+				       int        top,
+				       GtkWidget *table);
+static void color_mapping             (GDrawable *drawable);
 
 
 /* The run mode */
 static GRunModeType l_run_mode;
+
+static char *csel_title[4] = 
+{ 
+  N_("First source color"), 
+  N_("Second source color"),
+  N_("First destination color"), 
+  N_("Second destination color") 
+};
+
 
 
 MAIN ()
@@ -189,11 +174,6 @@ run (char    *name,
   GStatusType status = STATUS_SUCCESS;
   guchar *c = (guchar *)ident;
   int j;
-  static PLVALS plvals =
-  {
-    { { 0, 0, 0}, { 255, 255, 255 }, { 0, 0, 0 }, { 255, 255, 255 } },
-    0
-  };
 
   l_run_mode = run_mode = param[0].data.d_int32;
 
@@ -215,8 +195,7 @@ run (char    *name,
     drawable = gimp_drawable_get (param[2].data.d_drawable);
     if (!gimp_drawable_is_rgb (drawable->id))
     {
-      gimp_message ("color_adjust/color_map: cannot operate on grey/indexed\
- images");
+      gimp_message (_("Color Mapping / Adjust FG/BG:\nCannot operate on grey/indexed images"));
       status = STATUS_EXECUTION_ERROR;
       break;
     }
@@ -240,9 +219,9 @@ run (char    *name,
       plvals.map_mode = 0;
 
       if (run_mode != RUN_NONINTERACTIVE)
-        gimp_progress_init ("Adjust Foreground/Background");
+        gimp_progress_init ("Adjusting Foreground/Background");
 
-      color_mapping (drawable, &plvals);
+      color_mapping (drawable);
       break;
     }
 
@@ -273,7 +252,7 @@ run (char    *name,
         c = &(plvals.colors[1][0]);      /* Second source color */
         gimp_palette_get_background (c, c+1, c+2);
 
-        if (!dialog (&plvals)) break;
+        if (!dialog ()) break;
       }
       else if (run_mode == RUN_WITH_LAST_VALS)
       {
@@ -288,7 +267,7 @@ run (char    *name,
       if (run_mode != RUN_NONINTERACTIVE)
         gimp_progress_init ("Mapping colors");
 
-      color_mapping (drawable, &plvals);
+      color_mapping (drawable);
 
       if (run_mode == RUN_INTERACTIVE)
         gimp_set_data (name, &plvals, sizeof (plvals));
@@ -308,12 +287,12 @@ run (char    *name,
 
 
 static gint
-dialog (PLVALS *plvals)
-
+dialog ()
 {
-  GtkWidget *button;
   GtkWidget *dlg;
+  GtkWidget *hbbox;
   GtkWidget *hbox;
+  GtkWidget *button;
   GtkWidget *table;
   guchar *color_cube;
   gchar **argv;
@@ -336,7 +315,7 @@ dialog (PLVALS *plvals)
   gtk_widget_set_default_visual(gtk_preview_get_visual());
   gtk_widget_set_default_colormap(gtk_preview_get_cmap());
 
-  runint.dialog = dlg = gtk_dialog_new ();
+  dlg = gtk_dialog_new ();
   gtk_window_set_title (GTK_WINDOW (dlg), "Map colors");
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
@@ -344,26 +323,29 @@ dialog (PLVALS *plvals)
                       NULL);
 
   /*  Action area  */
-  button = gtk_button_new_with_label ("OK");
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
+  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+ 
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) mapcolor_ok_callback, dlg);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button,
-                      TRUE, TRUE, 0);
+		      (GtkSignalFunc) mapcolor_ok_callback,
+		      dlg);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-                             (GtkSignalFunc) gtk_widget_destroy,
-                             GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button,
-                      TRUE, TRUE, 0);
+			     (GtkSignalFunc) gtk_widget_destroy,
+			     GTK_OBJECT (dlg));
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
-
-  /* parameter settings */
-  runint.plvals = plvals;
 
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_container_border_width (GTK_CONTAINER (hbox), 0);
@@ -377,125 +359,17 @@ dialog (PLVALS *plvals)
   gtk_box_pack_start (GTK_BOX (hbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
-  add_color_button (0, 0, 1, table, plvals);
-  add_color_button (1, 0, 2, table, plvals);
-  add_color_button (2, 2, 1, table, plvals);
-  add_color_button (3, 2, 2, table, plvals);
+  add_color_button (0, 0, 1, table);
+  add_color_button (1, 0, 2, table);
+  add_color_button (2, 2, 1, table);
+  add_color_button (3, 2, 2, table);
 
   gtk_widget_show (dlg);
 
   gtk_main ();
   gdk_flush ();
 
-  return runint.run;
-}
-
-
-static void
-color_preview_show (GtkWidget *widget,
-                    unsigned char *rgb)
-
-{guchar *buf, *bp;
- int j, width, height;
-
- width = PRV_WIDTH;
- height = PRV_HEIGHT;
-
- bp = buf = g_malloc (width*3);
- if (buf == NULL) return;
-
- for (j = 0; j < width; j++)
- {
-   *(bp++) = rgb[0];
-   *(bp++) = rgb[1];
-   *(bp++) = rgb[2];
- }
- for (j = 0; j < height; j++)
-   gtk_preview_draw_row (GTK_PREVIEW (widget), buf, 0, j, width);
-
- gtk_widget_draw (widget, NULL);
-
- g_free (buf);
-}
-
-
-static void
-color_select_ok_callback (GtkWidget *widget,
-                          gpointer data)
-
-{gdouble color[3];
- int idx, j;
- GtkWidget *dialog;
-
- idx = (int)data;
- if ((dialog = runint.csel[idx].colselect) == NULL) return;
-
- gtk_color_selection_get_color (
-   GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (dialog)->colorsel),
-   color);
-
- for (j = 0; j < 3; j++)
-   runint.csel[idx].color[j] = (unsigned char)(color[j]*255.0);
-
- color_preview_show (runint.csel[idx].preview, &(runint.csel[idx].color[0]));
-
- runint.csel[idx].colselect = NULL;
- gtk_widget_destroy (dialog);
-}
-
-
-static void
-color_select_cancel_callback (GtkWidget *widget,
-                              gpointer data)
-
-{int idx;
- GtkWidget *dialog;
-
- idx = (int)data;
- if ((dialog = runint.csel[idx].colselect) == NULL) return;
-
- runint.csel[idx].colselect = NULL;
- gtk_widget_destroy (dialog);
-}
-
-
-static void
-mapcolor_color_button_callback (GtkWidget *widget,
-                                gpointer data)
-
-{int idx, j;
- GtkColorSelectionDialog *csd;
- GtkWidget *dialog;
- gdouble colour[3];
- static char *label[4] = { "First source color", "Second source color",
-                 "First destination color", "Second destination color" };
-
- idx = (int)data;
-
- /* Is the colour selection dialog already running ? */
- if (runint.csel[idx].colselect != NULL) return;
-
- for (j = 0; j < 3; j++)
-   colour[j] = runint.csel[idx].color[j] / 255.0;
-
- dialog = runint.csel[idx].colselect = gtk_color_selection_dialog_new (
-            label[idx]);
-
- csd = GTK_COLOR_SELECTION_DIALOG (dialog);
-
- gtk_widget_destroy (csd->help_button);
-
- gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-                      (GtkSignalFunc) color_select_cancel_callback, data);
- gtk_signal_connect (GTK_OBJECT (csd->ok_button), "clicked",
-                     (GtkSignalFunc) color_select_ok_callback, data);
- gtk_signal_connect (GTK_OBJECT (csd->cancel_button), "clicked",
-                     (GtkSignalFunc) color_select_cancel_callback, data);
-
- gtk_color_selection_set_color (GTK_COLOR_SELECTION (csd->colorsel), colour);
-
- gtk_window_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
- gtk_widget_show (dialog);
+  return run_flag;
 }
 
 
@@ -503,13 +377,11 @@ static void
 add_color_button (int csel_index,
                   int left,
                   int top,
-                  GtkWidget *table,
-                  PLVALS *plvals)
+                  GtkWidget *table)
 
 {
  GtkWidget *label;
  GtkWidget *button;
- GtkWidget *preview;
  GtkWidget *hbox;
 
  hbox = gtk_hbox_new (FALSE, 0);
@@ -528,20 +400,9 @@ add_color_button (int csel_index,
  gtk_table_attach (GTK_TABLE (table), hbox, left+1, left+2, top, top+1,
                    GTK_FILL, GTK_FILL, 0, 0);
 
- button = runint.csel[csel_index].activate = gtk_button_new ();
-
- memcpy (&(runint.csel[csel_index].color[0]),
-         &(plvals->colors[csel_index][0]), 3);
- preview = runint.csel[csel_index].preview = gtk_preview_new(GTK_PREVIEW_COLOR);
- gtk_preview_size (GTK_PREVIEW (preview), PRV_WIDTH, PRV_HEIGHT);
- gtk_container_add (GTK_CONTAINER (button), preview);
- gtk_widget_show (preview);
-
- color_preview_show (preview, &(runint.csel[csel_index].color[0]));
-
- gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                     (GtkSignalFunc) mapcolor_color_button_callback,
-                     (gpointer)csel_index);
+ button = gimp_color_button_new (gettext (csel_title[csel_index]),
+				 PRV_WIDTH, PRV_HEIGHT,
+				 plvals.colors[csel_index], 3);
  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
  gtk_widget_show (button);
  gtk_widget_show (hbox);
@@ -550,7 +411,7 @@ add_color_button (int csel_index,
 
 static void
 mapcolor_close_callback (GtkWidget *widget,
-                         gpointer data)
+                         gpointer   data)
 
 {
   gtk_main_quit ();
@@ -559,29 +420,13 @@ mapcolor_close_callback (GtkWidget *widget,
 
 static void
 mapcolor_ok_callback (GtkWidget *widget,
-                      gpointer data)
+                      gpointer   data)
 
-{int j;
- GtkWidget *dialog;
- PLVALS *plvals = runint.plvals;
+{
+  plvals.map_mode = 0;  /* Currently always linear mapping */
 
- for (j = 0; j < 4; j++)
-   memcpy (&(plvals->colors[j][0]), &(runint.csel[j].color[0]), 3);
-
- /* Destroy color selection dialogs if still running */
- for (j = 0; j < 4; j++)
- {
-   dialog = runint.csel[j].colselect;
-   if (dialog != NULL)
-   {
-     runint.csel[j].colselect = NULL;
-     gtk_widget_destroy (GTK_WIDGET (dialog));
-   }
- }
- plvals->map_mode = 0;  /* Currently always linear mapping */
-
- runint.run = TRUE;
- gtk_widget_destroy (GTK_WIDGET (data));
+  run_flag = TRUE;
+  gtk_widget_destroy (GTK_WIDGET (data));
 }
 
 
@@ -590,13 +435,14 @@ get_mapping (guchar *src_col1,
              guchar *src_col2,
              guchar *dst_col1,
              guchar *dst_col2,
-             gint32 map_mode,
+             gint32  map_mode,
              guchar *redmap,
              guchar *greenmap,
              guchar *bluemap)
 
-{int rgb, i, j, a, as, b, bs;
- guchar *colormap[3];
+{
+  int rgb, i, j, a, as, b, bs;
+  guchar *colormap[3];
 
   /* Currently we always do a linear mapping */
 
@@ -625,8 +471,7 @@ get_mapping (guchar *src_col1,
 
 
 static void
-color_mapping (GDrawable *drawable,
-               PLVALS *plvals)
+color_mapping (GDrawable *drawable)
 
 {
   int processed, total;
@@ -636,10 +481,10 @@ color_mapping (GDrawable *drawable,
   gpointer pr;
   double progress;
   unsigned char redmap[256], greenmap[256], bluemap[256];
-  unsigned char *src_col1 = plvals->colors[0];
-  unsigned char *src_col2 = plvals->colors[1];
-  unsigned char *dst_col1 = plvals->colors[2];
-  unsigned char *dst_col2 = plvals->colors[3];
+  unsigned char *src_col1 = plvals.colors[0];
+  unsigned char *src_col2 = plvals.colors[1];
+  unsigned char *dst_col1 = plvals.colors[2];
+  unsigned char *dst_col2 = plvals.colors[3];
 
   if (   (src_col1[0] == src_col2[0])
       || (src_col1[1] == src_col2[1])
@@ -657,7 +502,7 @@ color_mapping (GDrawable *drawable,
 
   pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
 
-  get_mapping (src_col1, src_col2, dst_col1, dst_col2, plvals->map_mode,
+  get_mapping (src_col1, src_col2, dst_col1, dst_col2, plvals.map_mode,
                redmap, greenmap, bluemap);
 
   processed = 0;

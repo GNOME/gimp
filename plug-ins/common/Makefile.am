@@ -444,6 +444,7 @@ film_SOURCES = \
 	film.c
 
 film_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -679,6 +680,7 @@ mapcolor_SOURCES = \
 	mapcolor.c
 
 mapcolor_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)

@@ -1,3 +1,11 @@
+Mon Nov 15 20:43:09 MET 1999  Sven Neumann <sven.gimp.org>
+
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/film.c
+	* plug-ins/common/mapcolor.c: more plug-ins that use the color_button.
+	Whoever feels bored, feel free to continue this mission ...
+
 Mon Nov 15 19:31:13 MET 1999  Sven Neumann <sven.gimp.org>
 
 	* libgimp/gimpcolorbutton.c
