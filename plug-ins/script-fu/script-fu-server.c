@@ -16,6 +16,10 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include <glib.h>		/* For G_OS_WIN32 */
+
+#ifndef G_OS_WIN32
+
 #include <stdarg.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -622,3 +626,5 @@ ok_callback (GtkWidget *widget,
 
   gtk_widget_destroy (GTK_WIDGET (data));
 }
+
+#endif /* G_OS_WIN32 */
