@@ -74,13 +74,12 @@
 
 typedef struct
 {
-  GimpDisplayShell      *shell;
-  GdkEventMotion        *mevent;
-  GdkDevice             *device;
-  guint32               time;
-  GdkModifierType       state;
-  gint                  keep_scrolling;
-  gint                  timeout_id;
+  GimpDisplayShell *shell;
+  GdkEventMotion   *mevent;
+  GdkDevice        *device;
+  guint32           time;
+  GdkModifierType   state;
+  guint             timeout_id;
 } ScrollInfo;
 
 
@@ -466,63 +465,53 @@ gimp_display_shell_check_device_cursor (GimpDisplayShell *shell)
   shell->draw_cursor = ! current_device->has_cursor;
 }
 
+
 #define AUTOSCROLL_DT 20
 #define AUTOSCROLL_DX 5
 
 static gboolean
 autoscroll_timeout (gpointer data)
 {
-  GimpCoords   device_coords, image_coords;
-  GimpDisplay *gdisp;
-  ScrollInfo  *info     = (ScrollInfo *)data;
-  gint         off_x    = 0;
-  gint         off_y    = 0;
-
-  if (!info->keep_scrolling)
-    {
-      info->timeout_id = 0;
-      return (FALSE);
-    }
+  ScrollInfo  *info  = data;
+  GimpDisplay *gdisp = info->shell->gdisp;
+  GimpCoords   device_coords;
+  GimpCoords   image_coords;
+  gint         off_x = 0;
+  gint         off_y = 0;
 
   info->time += AUTOSCROLL_DT;
 
-  gdisp = info->shell->gdisp;
   gimp_display_shell_get_device_coords (info->shell,
-                                        info->device,
-                                        &device_coords);
+                                        info->device, &device_coords);
 
   if (device_coords.x < 0)
-    off_x = -AUTOSCROLL_DX * device_coords.x / 50.0;
+    off_x = AUTOSCROLL_DX * device_coords.x / 50.0;
   else if (device_coords.x > info->shell->disp_width)
     off_x = AUTOSCROLL_DX * (device_coords.x - info->shell->disp_width) / 50.0;
 
   if (device_coords.y < 0)
-    off_y = -AUTOSCROLL_DX * device_coords.y / 50.0;
+    off_y = AUTOSCROLL_DX * device_coords.y / 50.0;
   else if (device_coords.y > info->shell->disp_height)
     off_y = AUTOSCROLL_DX * (device_coords.y - info->shell->disp_height) / 50.0;
 
-  if( off_x == 0 && off_y == 0 )
+  if (off_x == 0 && off_y == 0)
     {
       info->timeout_id = 0;
-      return (FALSE);
+      return FALSE;
     }
-  else
-    {
-      gimp_display_shell_scroll (info->shell, off_x, off_y);
 
-      gimp_display_shell_untransform_coords (info->shell,
-                                             &device_coords,
-                                             &image_coords);
+  gimp_display_shell_scroll (info->shell, off_x, off_y);
 
-      tool_manager_motion_active (gdisp->gimage->gimp,
-                                  &image_coords,
-                                  info->time, info->state,
-                                  gdisp);
+  gimp_display_shell_untransform_coords (info->shell,
+                                         &device_coords, &image_coords);
 
-      return (TRUE);
-    }
+  tool_manager_motion_active (gdisp->gimage->gimp,
+                              &image_coords,
+                              info->time, info->state,
+                              gdisp);
+
+  return TRUE;
 }
-
 
 static void
 begin_autoscrolling (ScrollInfo       *info,
@@ -530,24 +519,25 @@ begin_autoscrolling (ScrollInfo       *info,
                      GdkModifierType   state,
                      GdkEventMotion   *mevent)
 {
-  if(info->timeout_id == 0)
-    {
-      info->shell  = shell;
-      info->mevent = mevent;
-      info->device = mevent->device;
-      info->time   = gdk_event_get_time ((GdkEvent*) mevent);
-      info->state  = state;
-      info->timeout_id = g_timeout_add (AUTOSCROLL_DT,
-                                        autoscroll_timeout, (gpointer) info);
-      info->keep_scrolling = TRUE;
-    }
+  if (info->timeout_id)
+    return;
+
+  info->shell      = shell;
+  info->mevent     = mevent;
+  info->device     = mevent->device;
+  info->time       = gdk_event_get_time ((GdkEvent*) mevent);
+  info->state      = state;
+  info->timeout_id = g_timeout_add (AUTOSCROLL_DT, autoscroll_timeout, info);
 }
 
 static void
 end_autoscrolling (ScrollInfo *info)
 {
-  info->keep_scrolling = FALSE;
-  info->timeout_id     = 0;
+  if (info->timeout_id)
+    {
+      g_source_remove (info->timeout_id);
+      info->timeout_id = 0;
+    }
 }
 
 
@@ -556,19 +546,18 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                        GdkEvent         *event,
                                        GimpDisplayShell *shell)
 {
-  GimpDisplay      *gdisp;
-  GimpImage        *gimage;
-  Gimp             *gimp;
-  GdkDisplay       *gdk_display;
-  GimpTool         *active_tool;
-  GimpCoords        display_coords;
-  GimpCoords        image_coords;
-  GdkModifierType   state;
-  guint32           time;
-  gboolean          return_val    = FALSE;
-  gboolean          update_cursor = FALSE;
-  static ScrollInfo scroll_info   = {NULL, NULL, 0, 0};
-
+  GimpDisplay         *gdisp;
+  GimpImage           *gimage;
+  Gimp                *gimp;
+  GdkDisplay          *gdk_display;
+  GimpTool            *active_tool;
+  GimpCoords           display_coords;
+  GimpCoords           image_coords;
+  GdkModifierType      state;
+  guint32              time;
+  gboolean             return_val        = FALSE;
+  gboolean             update_cursor     = FALSE;
+  static ScrollInfo    scroll_info       = { NULL, NULL, NULL, 0, 0,0 };
   static GimpToolInfo *space_shaded_tool = NULL;
 
   if (! canvas->window)
@@ -1816,7 +1805,6 @@ gimp_display_shell_key_to_state (gint key)
 GdkEvent *
 gimp_display_shell_compress_motion (GimpDisplayShell *shell)
 {
-  GdkEvent *event;
   GList    *requeued_events = NULL;
   GList    *list;
   GdkEvent *last_motion = NULL;
@@ -1826,7 +1814,7 @@ gimp_display_shell_compress_motion (GimpDisplayShell *shell)
    */
   while (gdk_events_pending ())
     {
-      event = gdk_event_get ();
+      GdkEvent *event = gdk_event_get ();
 
       if (!event)
         {
@@ -1853,8 +1841,10 @@ gimp_display_shell_compress_motion (GimpDisplayShell *shell)
 
   for (list = requeued_events; list; list = g_list_next (list))
     {
-      gdk_event_put ((GdkEvent *) list->data);
-      gdk_event_free ((GdkEvent *) list->data);
+      GdkEvent *event = list->data;
+
+      gdk_event_put (event);
+      gdk_event_free (event);
     }
 
   g_list_free (requeued_events);

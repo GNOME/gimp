@@ -1,3 +1,9 @@
+2005-01-02  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c: fixed auto-scrolling
+	for left and bottom display edges. Remove the timeout on
+	button-release event, some minor cleanups.
+
 2005-01-01  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/jpeg/jpeg_load.c
