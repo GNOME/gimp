@@ -1190,18 +1190,15 @@ paths_update_paths (gpointer data,
 
 static void
 do_rename_paths_callback (GtkWidget *widget, 
-			  gpointer   call_data, 
-			  gpointer   client_data)
+			  gchar     *text,
+			  gpointer   data)
 {
-  gchar     *text;
   GdkBitmap *mask;
   guint8     spacing;
   GdkPixmap *pixmap;
 
-  if (!(GTK_CLIST (call_data)->selection))
+  if (!(GTK_CLIST (data)->selection))
     return;
-
-  text = g_strdup (client_data);
 
   gtk_clist_get_pixtext (GTK_CLIST (paths_dialog->paths_list),
 			 paths_dialog->selected_row_num,
@@ -1211,7 +1208,7 @@ do_rename_paths_callback (GtkWidget *widget,
 			 &pixmap,
 			 &mask);
 
-  gtk_clist_set_pixtext (GTK_CLIST (call_data),
+  gtk_clist_set_pixtext (GTK_CLIST (data),
 			 paths_dialog->selected_row_num,
 			 1,
 			 text,

@@ -26,69 +26,8 @@
 #include "gimphelp.h"
 
 #include "libgimp/gimpdialog.h"
-#include "libgimp/gimpunit.h"
+#include "libgimp/gimpquerybox.h"
 #include "libgimp/gimpwidgets.h"
-
-/*  typedefs  */
-typedef void (* GimpQueryFunc) (GtkWidget *, gpointer, gpointer);
-
-/*  some simple query dialogs
- *  if object != NULL then the query boxes will connect their cancel callback
- *  to the provided signal of this object
- *
- *  it's the caller's job to show the returned widgets
- */
-
-GtkWidget * gimp_query_string_box (gchar         *title,
-				   GimpHelpFunc   help_func,
-				   gchar         *help_data,
-				   gchar         *message,
-				   gchar         *initial,
-				   GtkObject     *object,
-				   gchar         *signal,
-				   GimpQueryFunc  callback,
-				   gpointer       data);
-
-GtkWidget * gimp_query_int_box    (gchar         *title,
-				   GimpHelpFunc   help_func,
-				   gchar         *help_data,
-				   char          *message,
-				   gint           initial,
-				   gint           lower,
-				   gint           upper,
-				   GtkObject     *object,
-				   gchar         *signal,
-				   GimpQueryFunc  callback,
-				   gpointer       data);
-
-GtkWidget * gimp_query_double_box (gchar         *title,
-				   GimpHelpFunc   help_func,
-				   gchar         *help_data,
-				   gchar         *message,
-				   gdouble        initial,
-				   gdouble        lower,
-				   gdouble        upper,
-				   gint           digits,
-				   GtkObject     *object,
-				   gchar         *signal,
-				   GimpQueryFunc  callback,
-				   gpointer       data);
-
-GtkWidget * gimp_query_size_box   (gchar         *title,
-				   GimpHelpFunc   help_func,
-				   gchar         *help_data,
-				   gchar         *message,
-				   gdouble        initial,
-				   gdouble        lower,
-				   gdouble        upper,
-				   gint           digits,
-				   GimpUnit       unit,
-				   gdouble        resolution,
-				   gboolean       dot_for_dot,
-				   GtkObject     *object,
-				   gchar         *signal,
-				   GimpQueryFunc  callback,
-				   gpointer       data);
 
 /*  a simple message box  */
 

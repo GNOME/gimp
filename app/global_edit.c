@@ -59,35 +59,35 @@ typedef struct _named_buffer NamedBuffer;
 
 struct _named_buffer
 {
-  TileManager * buf;
-  char *        name;
+  TileManager *buf;
+  gchar       *name;
 };
 
 
 /*  The named buffer list  */
-GSList * named_buffers = NULL;
+static GSList *named_buffers = NULL;
 
 /*  The global edit buffer  */
-TileManager * global_buf = NULL;
+TileManager   *global_buf = NULL;
 
 
 /*  Crop the buffer to the size of pixels with non-zero transparency */
 
 TileManager *
 crop_buffer (TileManager *tiles,
-	     int          border)
+	     gboolean     border)
 {
-  PixelRegion PR;
+  PixelRegion  PR;
   TileManager *new_tiles;
-  int bytes, alpha;
-  unsigned char * data;
-  int empty;
-  int x1, y1, x2, y2;
-  int x, y;
-  int ex, ey;
-  int found;
-  void * pr;
-  unsigned char black[MAX_CHANNELS] = { 0, 0, 0, 0 };
+  gint         bytes, alpha;
+  guchar      *data;
+  gint         empty;
+  gint         x1, y1, x2, y2;
+  gint         x, y;
+  gint         ex, ey;
+  gint         found;
+  void        *pr;
+  guchar       black[MAX_CHANNELS] = { 0, 0, 0, 0 };
 
   bytes = tiles->bpp;
   alpha = bytes - 1;
@@ -175,12 +175,12 @@ crop_buffer (TileManager *tiles,
 }
 
 TileManager *
-edit_cut (GImage *gimage,
+edit_cut (GImage       *gimage,
 	  GimpDrawable *drawable)
 {
   TileManager *cut;
   TileManager *cropped_cut;
-  int empty;
+  gint         empty;
 
   if (!gimage || drawable == NULL)
     return NULL;
@@ -229,12 +229,12 @@ edit_cut (GImage *gimage,
 }
 
 TileManager *
-edit_copy (GImage *gimage,
+edit_copy (GImage       *gimage,
 	   GimpDrawable *drawable)
 {
-  TileManager * copy;
-  TileManager * cropped_copy;
-  int empty;
+  TileManager *copy;
+  TileManager *cropped_copy;
+  gint         empty;
 
   if (!gimage || drawable == NULL)
     return NULL;
@@ -276,24 +276,32 @@ edit_copy (GImage *gimage,
     return NULL;
 }
 
-GimpLayer*
+GimpLayer *
 edit_paste (GImage       *gimage,
 	    GimpDrawable *drawable,
 	    TileManager  *paste,
-	    int           paste_into)
+	    gboolean      paste_into)
 {
-  Layer * layer;
-  int x1, y1, x2, y2;
-  int cx, cy;
+  Layer *layer;
+  gint   x1, y1, x2, y2;
+  gint   cx, cy;
 
-  /*  Make a new layer: iff drawable == NULL, user is pasting into an empty display. */
+  /*  Make a new layer: iff drawable == NULL,
+   *  user is pasting into an empty display.
+   */
 
-  if(drawable != NULL)
-    layer = layer_new_from_tiles (gimage, gimp_drawable_type_with_alpha(drawable), paste, 
-    			    _("Pasted Layer"), OPAQUE_OPACITY, NORMAL_MODE);
+  if (drawable != NULL)
+    layer = layer_new_from_tiles (gimage,
+				  gimp_drawable_type_with_alpha (drawable),
+				  paste, 
+				  _("Pasted Layer"),
+				  OPAQUE_OPACITY, NORMAL_MODE);
   else
-    layer = layer_new_from_tiles (gimage, gimp_image_base_type_with_alpha (gimage), paste, 
-    			    _("Pasted Layer"), OPAQUE_OPACITY, NORMAL_MODE);
+    layer = layer_new_from_tiles (gimage,
+				  gimp_image_base_type_with_alpha (gimage),
+				  paste, 
+				  _("Pasted Layer"),
+				  OPAQUE_OPACITY, NORMAL_MODE);
  
   if (layer)
     {
@@ -314,8 +322,8 @@ edit_paste (GImage       *gimage,
 	  cy = gimage->height >> 1;
 	}
 
-      GIMP_DRAWABLE(layer)->offset_x = cx - (GIMP_DRAWABLE(layer)->width >> 1);
-      GIMP_DRAWABLE(layer)->offset_y = cy - (GIMP_DRAWABLE(layer)->height >> 1);
+      GIMP_DRAWABLE (layer)->offset_x = cx - (GIMP_DRAWABLE (layer)->width >> 1);
+      GIMP_DRAWABLE (layer)->offset_y = cy - (GIMP_DRAWABLE (layer)->height >> 1);
 
       /*  If there is a selection mask clear it--
        *  this might not always be desired, but in general,
@@ -340,18 +348,17 @@ edit_paste (GImage       *gimage,
 
       return layer;
     }
-  else
-    return NULL;
+
+  return NULL;
 }
 
-  
-int
-edit_paste_as_new (GImage       *invoke,
-		   TileManager  *paste)
+gboolean
+edit_paste_as_new (GImage      *invoke,
+		   TileManager *paste)
 {
-  GImage       *gimage;
-  Layer        *layer;
-  GDisplay     *gdisp;
+  GImage   *gimage;
+  Layer    *layer;
+  GDisplay *gdisp;
 
   if (!global_buf)
     return FALSE;
@@ -362,10 +369,13 @@ edit_paste_as_new (GImage       *invoke,
   gimp_image_set_resolution (gimage, invoke->xresolution, invoke->yresolution);
   gimp_image_set_unit (gimage, invoke->unit);
   
-  layer = layer_new_from_tiles (gimage, gimp_image_base_type_with_alpha (gimage), paste, 
-				_("Pasted Layer"), OPAQUE_OPACITY, NORMAL_MODE);
+  layer = layer_new_from_tiles (gimage,
+				gimp_image_base_type_with_alpha (gimage),
+				paste, 
+				_("Pasted Layer"),
+				OPAQUE_OPACITY, NORMAL_MODE);
 
-  if(layer)
+  if (layer)
     {
       /*  add the new layer to the image  */
       gimp_drawable_set_gimage (GIMP_DRAWABLE (layer), gimage);
@@ -378,17 +388,18 @@ edit_paste_as_new (GImage       *invoke,
 
       return TRUE;
     }
-  else return FALSE;			       
+
+  return FALSE;			       
 }
 
 gboolean
-edit_clear (GImage *gimage,
+edit_clear (GImage       *gimage,
 	    GimpDrawable *drawable)
 {
   TileManager *buf_tiles;
-  PixelRegion bufPR;
-  int x1, y1, x2, y2;
-  unsigned char col[MAX_CHANNELS];
+  PixelRegion  bufPR;
+  gint         x1, y1, x2, y2;
+  guchar       col[MAX_CHANNELS];
 
   if (!gimage || drawable == NULL)
     return FALSE;
@@ -420,13 +431,13 @@ edit_clear (GImage *gimage,
 }
 
 gboolean
-edit_fill (GImage *gimage,
+edit_fill (GImage       *gimage,
 	   GimpDrawable *drawable)
 {
   TileManager *buf_tiles;
-  PixelRegion bufPR;
-  int x1, y1, x2, y2;
-  unsigned char col[MAX_CHANNELS];
+  PixelRegion  bufPR;
+  gint         x1, y1, x2, y2;
+  guchar       col[MAX_CHANNELS];
 
   if (!gimage || drawable == NULL)
     return FALSE;
@@ -457,77 +468,62 @@ edit_fill (GImage *gimage,
   return TRUE;
 }
 
-int
-global_edit_cut (void *gdisp_ptr)
+gboolean
+global_edit_cut (GDisplay *gdisp)
 {
-  GDisplay *gdisp;
-
   /*  stop any active tool  */
-  gdisp = (GDisplay *) gdisp_ptr;
-  active_tool_control (HALT, gdisp_ptr);
+  active_tool_control (HALT, gdisp);
 
   if (!edit_cut (gdisp->gimage, gimage_active_drawable (gdisp->gimage)))
     return FALSE;
-  else
-    {
-      /*  flush the display  */
-      gdisplays_flush ();
-      return TRUE;
-    }
+
+  /*  flush the display  */
+  gdisplays_flush ();
+
+  return TRUE;
 }
 
-int
-global_edit_copy (void *gdisp_ptr)
+gboolean
+global_edit_copy (GDisplay *gdisp)
 {
-  GDisplay *gdisp;
-
-  gdisp = (GDisplay *) gdisp_ptr;
-
   if (!edit_copy (gdisp->gimage, gimage_active_drawable (gdisp->gimage)))
     return FALSE;
-  else
-    return TRUE;
+
+  return TRUE;
 }
 
-int
-global_edit_paste (void *gdisp_ptr,
-		   int   paste_into)
+gboolean
+global_edit_paste (GDisplay *gdisp,
+		   gboolean  paste_into)
 {
-  GDisplay *gdisp;
-
   /*  stop any active tool  */
-  gdisp = (GDisplay *) gdisp_ptr;
-  active_tool_control (HALT, gdisp_ptr);
+  active_tool_control (HALT, gdisp);
 
   if (!edit_paste (gdisp->gimage, gimage_active_drawable (gdisp->gimage), 
 		   global_buf, paste_into))
     return FALSE;
-  else
-    {
-      /*  flush the display  */
-      gdisplays_update_title (gdisp->gimage);
-      gdisplays_flush ();
-      return TRUE;
-    }
+
+  /*  flush the display  */
+  gdisplays_update_title (gdisp->gimage);
+  gdisplays_flush ();
+
+  return TRUE;
 }
 
-int
-global_edit_paste_as_new (void *gdisp_ptr)
+gboolean
+global_edit_paste_as_new (GDisplay *gdisp)
 {
-  GDisplay *gdisp;
-
   if (!global_buf)
     return FALSE;
 
   /*  stop any active tool  */
-  gdisp = (GDisplay *) gdisp_ptr;
-  active_tool_control (HALT, gdisp_ptr);
+  active_tool_control (HALT, gdisp);
 
-  return (edit_paste_as_new (gdisp->gimage, global_buf));
+  return edit_paste_as_new (gdisp->gimage, global_buf);
 }
 
 void
-global_edit_free ()
+global_edit_free (void)
 {
   if (global_buf)
     tile_manager_destroy (global_buf);
@@ -541,51 +537,53 @@ global_edit_free ()
 static void
 set_list_of_named_buffers (GtkWidget *list_widget)
 {
-  GSList *list;
+  GSList      *list;
   NamedBuffer *nb;
-  GtkWidget *list_item;
+  GtkWidget   *list_item;
 
   gtk_list_clear_items (GTK_LIST (list_widget), 0, -1);
-  list = named_buffers;
 
-  while (list)
+  for (list = named_buffers; list; list = g_slist_next (list))
     {
       nb = (NamedBuffer *) list->data;
-      list = g_slist_next (list);
 
       list_item = gtk_list_item_new_with_label (nb->name);
       gtk_container_add (GTK_CONTAINER (list_widget), list_item);
-      gtk_widget_show (list_item);
       gtk_object_set_user_data (GTK_OBJECT (list_item), (gpointer) nb);
+      gtk_widget_show (list_item);
     }
 }
 
 static void
-named_buffer_paste_foreach (GtkWidget  *w,
-			    gpointer    client_data)
+named_buffer_paste_foreach (GtkWidget *widget,
+			    gpointer   data)
 {
   PasteNamedDlg *pn_dlg;
-  NamedBuffer *nb;
+  NamedBuffer   *nb;
 
-  if (w->state == GTK_STATE_SELECTED)
+  if (widget->state == GTK_STATE_SELECTED)
     {
-      pn_dlg = (PasteNamedDlg *) client_data;
-      nb = (NamedBuffer *) gtk_object_get_user_data (GTK_OBJECT (w));
+      pn_dlg = (PasteNamedDlg *) data;
+      nb     = (NamedBuffer *) gtk_object_get_user_data (GTK_OBJECT (widget));
+
       switch (pn_dlg->action)
 	{
 	case PASTE:
 	  edit_paste (pn_dlg->gdisp->gimage,
-		    gimage_active_drawable (pn_dlg->gdisp->gimage),
-		    nb->buf, FALSE);
+		      gimage_active_drawable (pn_dlg->gdisp->gimage),
+		      nb->buf, FALSE);
 	  break;
+
 	case PASTE_INTO:
 	  edit_paste (pn_dlg->gdisp->gimage,
-		    gimage_active_drawable (pn_dlg->gdisp->gimage),
-		    nb->buf, TRUE);
+		      gimage_active_drawable (pn_dlg->gdisp->gimage),
+		      nb->buf, TRUE);
 	  break;
+
 	case PASTE_AS_NEW:
 	  edit_paste_as_new (pn_dlg->gdisp->gimage, nb->buf);
 	  break;
+
 	default:
 	  break;
 	}
@@ -593,16 +591,16 @@ named_buffer_paste_foreach (GtkWidget  *w,
 }
 
 static void
-named_buffer_paste_callback (GtkWidget *w,
-			     gpointer   client_data)
+named_buffer_paste_callback (GtkWidget *widget,
+			     gpointer   data)
 {
   PasteNamedDlg *pn_dlg;
 
-  pn_dlg = (PasteNamedDlg *) client_data;
+  pn_dlg = (PasteNamedDlg *) data;
 
   pn_dlg->action = PASTE_INTO;
-  gtk_container_foreach ((GtkContainer*) pn_dlg->list,
-			 named_buffer_paste_foreach, client_data);
+  gtk_container_foreach ((GtkContainer *) pn_dlg->list,
+			 named_buffer_paste_foreach, data);
 
   /*  Destroy the box  */
   gtk_widget_destroy (pn_dlg->shell);
@@ -614,16 +612,16 @@ named_buffer_paste_callback (GtkWidget *w,
 }
 
 static void
-named_buffer_paste_into_callback (GtkWidget *w,
-				  gpointer   client_data)
+named_buffer_paste_into_callback (GtkWidget *widget,
+				  gpointer   data)
 {
   PasteNamedDlg *pn_dlg;
 
-  pn_dlg = (PasteNamedDlg *) client_data;
+  pn_dlg = (PasteNamedDlg *) data;
 
   pn_dlg->action = PASTE_INTO;
-  gtk_container_foreach ((GtkContainer*) pn_dlg->list,
-			 named_buffer_paste_foreach, client_data);
+  gtk_container_foreach ((GtkContainer *) pn_dlg->list,
+			 named_buffer_paste_foreach, data);
 
   /*  Destroy the box  */
   gtk_widget_destroy (pn_dlg->shell);
@@ -635,16 +633,16 @@ named_buffer_paste_into_callback (GtkWidget *w,
 }
 
 static void
-named_buffer_paste_as_new_callback (GtkWidget *w,
-				    gpointer   client_data)
+named_buffer_paste_as_new_callback (GtkWidget *widget,
+				    gpointer   data)
 {
   PasteNamedDlg *pn_dlg;
 
-  pn_dlg = (PasteNamedDlg *) client_data;
+  pn_dlg = (PasteNamedDlg *) data;
 
   pn_dlg->action = PASTE_AS_NEW;
-  gtk_container_foreach ((GtkContainer*) pn_dlg->list,
-			 named_buffer_paste_foreach, client_data);
+  gtk_container_foreach ((GtkContainer *) pn_dlg->list,
+			 named_buffer_paste_foreach, data);
 
   /*  Destroy the box  */
   gtk_widget_destroy (pn_dlg->shell);
@@ -656,16 +654,17 @@ named_buffer_paste_as_new_callback (GtkWidget *w,
 }
 
 static void
-named_buffer_delete_foreach (GtkWidget *w,
-			     gpointer   client_data)
+named_buffer_delete_foreach (GtkWidget *widget,
+			     gpointer   data)
 {
   PasteNamedDlg *pn_dlg;
-  NamedBuffer * nb;
+  NamedBuffer   *nb;
 
-  if (w->state == GTK_STATE_SELECTED)
+  if (widget->state == GTK_STATE_SELECTED)
     {
-      pn_dlg = (PasteNamedDlg *) client_data;
-      nb = (NamedBuffer *) gtk_object_get_user_data (GTK_OBJECT (w));
+      pn_dlg = (PasteNamedDlg *) data;
+      nb     = (NamedBuffer *) gtk_object_get_user_data (GTK_OBJECT (widget));
+
       named_buffers = g_slist_remove (named_buffers, (void *) nb);
       g_free (nb->name);
       tile_manager_destroy (nb->buf);
@@ -674,14 +673,15 @@ named_buffer_delete_foreach (GtkWidget *w,
 }
 
 static void
-named_buffer_delete_callback (GtkWidget *w,
-			      gpointer   client_data)
+named_buffer_delete_callback (GtkWidget *widget,
+			      gpointer   data)
 {
   PasteNamedDlg *pn_dlg;
 
-  pn_dlg = (PasteNamedDlg *) client_data;
+  pn_dlg = (PasteNamedDlg *) data;
+
   gtk_container_foreach ((GtkContainer*) pn_dlg->list,
-			 named_buffer_delete_foreach, client_data);
+			 named_buffer_delete_foreach, data);
   set_list_of_named_buffers (pn_dlg->list);
 }
 
@@ -785,7 +785,7 @@ paste_named_buffer (GDisplay *gdisp)
 
 static void
 new_named_buffer (TileManager *tiles,
-		  char        *name)
+		  gchar       *name)
 {
   PixelRegion srcPR, destPR;
   NamedBuffer *nb;
@@ -805,15 +805,13 @@ new_named_buffer (TileManager *tiles,
 
 static void
 cut_named_buffer_callback (GtkWidget *widget,
-			   gpointer   client_data,
-			   gpointer   call_data)
+			   gchar     *name,
+			   gpointer   data)
 {
   TileManager *new_tiles;
-  GDisplay *gdisp;
-  char *name;
+  GDisplay    *gdisp;
 
-  gdisp = (GDisplay *) client_data;
-  name = g_strdup ((char *) call_data);
+  gdisp = (GDisplay *) data;
   
   new_tiles = edit_cut (gdisp->gimage, gimage_active_drawable (gdisp->gimage));
   if (new_tiles) 
@@ -821,15 +819,13 @@ cut_named_buffer_callback (GtkWidget *widget,
   gdisplays_flush ();
 }
 
-int
-named_edit_cut (void *gdisp_ptr)
+gboolean
+named_edit_cut (GDisplay *gdisp)
 {
   GtkWidget *qbox;
-  GDisplay  *gdisp;
 
   /*  stop any active tool  */
-  gdisp = (GDisplay *) gdisp_ptr;
-  active_tool_control (HALT, gdisp_ptr);
+  active_tool_control (HALT, gdisp);
 
   qbox = gimp_query_string_box (_("Cut Named"),
 				gimp_standard_help_func,
@@ -845,28 +841,23 @@ named_edit_cut (void *gdisp_ptr)
 
 static void
 copy_named_buffer_callback (GtkWidget *widget,
-			    gpointer   client_data,
-			    gpointer   call_data)
+			    gchar     *name,
+			    gpointer   data)
 {
   TileManager *new_tiles;
-  GDisplay *gdisp;
-  char *name;
+  GDisplay    *gdisp;
 
-  gdisp = (GDisplay *) client_data;
-  name = g_strdup ((char *) call_data);
+  gdisp = (GDisplay *) data;
   
   new_tiles = edit_copy (gdisp->gimage, gimage_active_drawable (gdisp->gimage));
   if (new_tiles) 
     new_named_buffer (new_tiles, name);
 }
 
-int
-named_edit_copy (void *gdisp_ptr)
+gboolean
+named_edit_copy (GDisplay *gdisp)
 {
   GtkWidget *qbox;
-  GDisplay  *gdisp;
-
-  gdisp = (GDisplay *) gdisp_ptr;
 
   qbox = gimp_query_string_box (_("Copy Named"),
 				gimp_standard_help_func,
@@ -880,31 +871,29 @@ named_edit_copy (void *gdisp_ptr)
   return TRUE;
 }
 
-int
-named_edit_paste (void *gdisp_ptr)
+gboolean
+named_edit_paste (GDisplay *gdisp)
 {
-  paste_named_buffer ((GDisplay *) gdisp_ptr);
+  paste_named_buffer (gdisp);
 
-  gdisplays_flush();
+  gdisplays_flush ();
 
   return TRUE;
 }
 
 void
-named_buffers_free ()
+named_buffers_free (void)
 {
-  GSList *list;
-  NamedBuffer * nb;
+  GSList      *list;
+  NamedBuffer *nb;
 
-  list = named_buffers;
-
-  while (list)
+  for (list = named_buffers; list; list = g_slist_next (list))
     {
       nb = (NamedBuffer *) list->data;
+
       tile_manager_destroy (nb->buf);
       g_free (nb->name);
       g_free (nb);
-      list = g_slist_next (list);
     }
 
   g_slist_free (named_buffers);

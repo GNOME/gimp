@@ -57,6 +57,8 @@
 #include "undo.h"
 
 #include "config.h"
+
+#include "libgimp/gimpmath.h"
 #include "libgimp/gimpintl.h"
 
 #define return_if_no_display(gdisp) \
@@ -76,10 +78,14 @@ extern void   layers_dialog_layer_merge_query (GImage *, gboolean);
 static void   image_resize_callback        (GtkWidget *, gpointer);
 static void   image_scale_callback         (GtkWidget *, gpointer);
 static void   image_cancel_callback        (GtkWidget *, gpointer);
-static void   gimage_mask_feather_callback (GtkWidget *, gpointer, gpointer);
-static void   gimage_mask_border_callback  (GtkWidget *, gpointer, gpointer);
-static void   gimage_mask_grow_callback    (GtkWidget *, gpointer, gpointer);
-static void   gimage_mask_shrink_callback  (GtkWidget *, gpointer, gpointer);
+static void   gimage_mask_feather_callback (GtkWidget *, gdouble, GimpUnit,
+					    gpointer);
+static void   gimage_mask_border_callback  (GtkWidget *, gdouble, GimpUnit,
+					    gpointer);
+static void   gimage_mask_grow_callback    (GtkWidget *, gdouble, GimpUnit,
+					    gpointer);
+static void   gimage_mask_shrink_callback  (GtkWidget *, gdouble, GimpUnit,
+					    gpointer);
 
 /*  local variables  */
 static gdouble   selection_feather_radius    = 5.0;
@@ -1404,19 +1410,17 @@ image_cancel_callback (GtkWidget *widget,
 
 static void
 gimage_mask_feather_callback (GtkWidget *widget,
-			      gpointer   client_data,
-			      gpointer   call_data)
+			      gdouble    size,
+			      GimpUnit   unit,
+			      gpointer   data)
 {
-  GImage   *gimage;
-  GimpUnit  unit;
-  gdouble   radius_x;
-  gdouble   radius_y;
+  GImage  *gimage;
+  gdouble  radius_x;
+  gdouble  radius_y;
 
-  gimage = GIMP_IMAGE (client_data);
+  gimage = GIMP_IMAGE (data);
 
-  selection_feather_radius = *(gdouble *) call_data;
-  g_free (call_data);
-  unit = (GimpUnit) gtk_object_get_data (GTK_OBJECT (widget), "size_query_unit");
+  selection_feather_radius = size;
 
   radius_x = radius_y = selection_feather_radius;
 
@@ -1439,19 +1443,17 @@ gimage_mask_feather_callback (GtkWidget *widget,
 
 static void
 gimage_mask_border_callback (GtkWidget *widget,
-			     gpointer   client_data,
-			     gpointer   call_data)
+			     gdouble    size,
+			     GimpUnit   unit,
+			     gpointer   data)
 {
-  GImage   *gimage;
-  GimpUnit  unit;
-  gdouble   radius_x;
-  gdouble   radius_y;
+  GImage  *gimage;
+  gdouble  radius_x;
+  gdouble  radius_y;
 
-  gimage = GIMP_IMAGE (client_data);
+  gimage = GIMP_IMAGE (data);
 
-  selection_border_radius = (gint) (*(gdouble *) call_data + 0.5);
-  g_free (call_data);
-  unit = (GimpUnit) gtk_object_get_data (GTK_OBJECT (widget), "size_query_unit");
+  selection_border_radius = ROUND (size);
 
   radius_x = radius_y = selection_border_radius;
 
@@ -1474,19 +1476,17 @@ gimage_mask_border_callback (GtkWidget *widget,
 
 static void
 gimage_mask_grow_callback (GtkWidget *widget,
-			   gpointer   client_data,
-			   gpointer   call_data)
+			   gdouble    size,
+			   GimpUnit   unit,
+			   gpointer   data)
 {
-  GImage   *gimage;
-  GimpUnit  unit;
-  gdouble   radius_x;
-  gdouble   radius_y;
+  GImage  *gimage;
+  gdouble  radius_x;
+  gdouble  radius_y;
 
-  gimage = GIMP_IMAGE (client_data);
+  gimage = GIMP_IMAGE (data);
 
-  selection_grow_pixels = (gint) (*(gdouble *) call_data + 0.5);
-  g_free (call_data);
-  unit = (GimpUnit) gtk_object_get_data (GTK_OBJECT (widget), "size_query_unit");
+  selection_grow_pixels = ROUND (size);
 
   radius_x = radius_y = selection_grow_pixels;
 
@@ -1509,19 +1509,17 @@ gimage_mask_grow_callback (GtkWidget *widget,
 
 static void
 gimage_mask_shrink_callback (GtkWidget *widget,
-			     gpointer   client_data,
-			     gpointer   call_data)
+			     gdouble    size,
+			     GimpUnit   unit,
+			     gpointer   data)
 {
-  GImage    *gimage;
-  GimpUnit   unit;
-  gint       radius_x;
-  gint       radius_y;
+  GImage *gimage;
+  gint    radius_x;
+  gint    radius_y;
 
-  gimage = GIMP_IMAGE (client_data);
+  gimage = GIMP_IMAGE (data);
 
-  selection_shrink_pixels = (gint) (*(gdouble *) call_data + 0.5);
-  g_free (call_data);
-  unit = (GimpUnit) gtk_object_get_data (GTK_OBJECT (widget), "size_query_unit");
+  selection_shrink_pixels = ROUND (size);
 
   radius_x = radius_y = selection_shrink_pixels;
 

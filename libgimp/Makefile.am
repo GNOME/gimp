@@ -43,6 +43,8 @@ libgimpi_a_SOURCES = \
 	gimppatheditor.h	\
 	gimpprotocol.c		\
 	gimpprotocol.h		\
+	gimpquerybox.c		\
+	gimpquerybox.h		\
 	gimpsizeentry.c		\
 	gimpsizeentry.h		\
 	gimpunitmenu.c		\
@@ -118,6 +120,7 @@ libgimpui_la_SOURCES = \
 	gimpfileselection.c	\
 	gimphelpui.c		\
 	gimppatheditor.c	\
+	gimpquerybox.c		\
 	gimpsizeentry.c		\
 	gimpunitmenu.c		\
 	gimpwidgets.c
@@ -143,6 +146,7 @@ gimpinclude_HEADERS = \
 	gimpmenu.h		\
 	gimpmodule.h		\
 	gimppatheditor.h	\
+	gimpquerybox.h		\
 	gimpsizeentry.h		\
 	gimpui.h		\
 	gimpunit.h              \

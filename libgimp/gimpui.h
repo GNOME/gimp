@@ -21,16 +21,17 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimpchainbutton.h"
-#include "libgimp/gimpcolorbutton.h"
-#include "libgimp/gimpdialog.h"
-#include "libgimp/gimpexport.h"
-#include "libgimp/gimpfileselection.h"
-#include "libgimp/gimphelpui.h"
-#include "libgimp/gimpmenu.h"
-#include "libgimp/gimppatheditor.h"
-#include "libgimp/gimpsizeentry.h"
-#include "libgimp/gimpunitmenu.h"
-#include "libgimp/gimpwidgets.h"
+#include "gimpchainbutton.h"
+#include "gimpcolorbutton.h"
+#include "gimpdialog.h"
+#include "gimpexport.h"
+#include "gimpfileselection.h"
+#include "gimphelpui.h"
+#include "gimpmenu.h"
+#include "gimppatheditor.h"
+#include "gimpquerybox.h"
+#include "gimpsizeentry.h"
+#include "gimpunitmenu.h"
+#include "gimpwidgets.h"
 
 #endif /* __GIMP_UI_H__ */

@@ -20,25 +20,34 @@
 
 #include "gimage.h"
 
-/*  The interface functions  */
-TileManager *  crop_buffer              (TileManager *, int);
-TileManager *  edit_cut                 (GImage *, GimpDrawable *);
-TileManager *  edit_copy                (GImage *, GimpDrawable *);
-GimpLayer*     edit_paste               (GImage *, GimpDrawable *,
-				         TileManager *, int);
-int            edit_paste_as_new        (GImage *, TileManager *);
-int            edit_clear               (GImage *, GimpDrawable *);
-int            edit_fill                (GImage *, GimpDrawable *);
+TileManager * crop_buffer              (TileManager  *tiles,
+					gint          border);
 
-int            global_edit_cut          (void *);
-int            global_edit_copy         (void *);
-int            global_edit_paste        (void *, int);
-int            global_edit_paste_as_new (void *);
-void           global_edit_free         (void);
+TileManager * edit_cut                 (GImage       *gimage,
+					GimpDrawable *drawable);
+TileManager * edit_copy                (GImage       *gimage,
+					GimpDrawable *drawable);
+GimpLayer   * edit_paste               (GImage       *gimage,
+					GimpDrawable *drawable,
+					TileManager  *paste,
+					gboolean      paste_into);
+gboolean      edit_paste_as_new        (GImage       *gimage,
+					TileManager  *tiles);
+gboolean      edit_clear               (GImage       *gimage,
+					GimpDrawable *drawable);
+gboolean      edit_fill                (GImage       *gimage,
+					GimpDrawable *drawable);
 
-int            named_edit_cut           (void *);
-int            named_edit_copy          (void *);
-int            named_edit_paste         (void *);
-void           named_buffers_free       (void);
+gboolean      global_edit_cut          (GDisplay    *gdisp);
+gboolean      global_edit_copy         (GDisplay    *gdisp);
+gboolean      global_edit_paste        (GDisplay    *gdisp,
+					gboolean     paste_into);
+gboolean      global_edit_paste_as_new (GDisplay    *gdisp);
+void          global_edit_free         (void);
+
+gboolean      named_edit_cut           (GDisplay    *gdisp);
+gboolean      named_edit_copy          (GDisplay    *gdisp);
+gboolean      named_edit_paste         (GDisplay    *gdisp);
+void          named_buffers_free       (void);
 
 #endif  /*  __GLOBAL_EDIT_H__  */

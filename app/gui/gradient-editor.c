@@ -264,17 +264,19 @@ static void  ed_initialize_saved_colors (void);
 /* Main dialog button callbacks & functions */
 
 static void  ed_new_gradient_callback       (GtkWidget *, gpointer);
-static void  ed_do_new_gradient_callback    (GtkWidget *, gpointer , gpointer);
+static void  ed_do_new_gradient_callback    (GtkWidget *, gchar *, gpointer);
 
 static void  ed_copy_gradient_callback      (GtkWidget *, gpointer);
-static void  ed_do_copy_gradient_callback   (GtkWidget *, gpointer , gpointer);
+static void  ed_do_copy_gradient_callback   (GtkWidget *, gchar *, gpointer);
 
-static void  ed_delete_gradient_callback        (GtkWidget *, gpointer);
-static void  ed_do_delete_gradient_callback     (GtkWidget *, gpointer);
-static void  ed_cancel_delete_gradient_callback (GtkWidget *, gpointer);
+static void  ed_delete_gradient_callback        (GtkWidget *widget,
+						 gpointer   data);
+static void  ed_do_delete_gradient_callback     (GtkWidget *widget,
+						 gboolean   delete,
+						 gpointer   data);
 
 static void  ed_rename_gradient_callback    (GtkWidget *, gpointer);
-static void  ed_do_rename_gradient_callback (GtkWidget *, gpointer, gpointer);
+static void  ed_do_rename_gradient_callback (GtkWidget *, gchar *, gpointer);
 
 static void  ed_save_pov_callback           (GtkWidget *, gpointer);
 static void  ed_do_save_pov_callback        (GtkWidget *, gpointer);
@@ -1569,14 +1571,11 @@ ed_new_gradient_callback (GtkWidget *widget,
 
 static void
 ed_do_new_gradient_callback (GtkWidget *widget,
-			     gpointer   data,
-			     gpointer   call_data)
+			     gchar     *gradient_name,
+			     gpointer   data)
 {
   gradient_t *grad;
-  gchar      *gradient_name;
   gint        pos;
-
-  gradient_name = (gchar *) call_data;
 
   if (!gradient_name)
     {
@@ -1613,7 +1612,7 @@ ed_copy_gradient_callback (GtkWidget *widget,
 			   gpointer   data)
 {
   GtkWidget *qbox;
-  gchar *name;
+  gchar     *name;
 
   if (curr_gradient == NULL) 
     return;
@@ -1634,15 +1633,12 @@ ed_copy_gradient_callback (GtkWidget *widget,
 
 static void
 ed_do_copy_gradient_callback (GtkWidget *widget,
-			      gpointer   data,
-			      gpointer   call_data)
+			      gchar     *gradient_name,
+			      gpointer   data)
 {
   gradient_t     *grad;
-  gchar          *gradient_name;
   gint            pos;
   grad_segment_t *head, *prev, *cur, *orig;
-
-  gradient_name = (gchar *) call_data;
 
   if (!gradient_name)
     {
@@ -1719,16 +1715,13 @@ ed_rename_gradient_callback (GtkWidget *widget,
 
 static void
 ed_do_rename_gradient_callback (GtkWidget *widget,
-				gpointer   data,
-				gpointer   call_data)
+				gchar     *gradient_name,
+				gpointer   data)
 {
   gradient_t *grad = (gradient_t *) data;
   gradient_t *grad_list = NULL;
-  gchar      *gradient_name;
   GSList     *tmp;
   gint        n;
-
-  gradient_name = (char *) call_data;
 
   if (!gradient_name)
     {
@@ -1776,48 +1769,35 @@ ed_delete_gradient_callback (GtkWidget *widget,
 			     gpointer   data)
 {
   GtkWidget *dialog;
-  GtkWidget *vbox;
-  GtkWidget *label;
   gchar     *str;
 
   if (num_gradients <= 1)
     return;
 
-  dialog = gimp_dialog_new (_("Delete gradient"), "delete_gradient",
-			    gimp_standard_help_func,
-			    "dialogs/gradient_editor/delete_gradient.html",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, FALSE, FALSE,
-
-			    _("Delete"), ed_do_delete_gradient_callback,
-			    NULL, NULL, NULL, FALSE, FALSE,
-			    _("Cancel"), ed_cancel_delete_gradient_callback,
-			    NULL, NULL, NULL, TRUE, TRUE,
-
-			    NULL);
-
-  /*  The main vbox  */
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_sensitive (g_editor->shell, FALSE);
 
   str = g_strdup_printf (_("Are you sure you want to delete\n"
 			   "\"%s\" from the list and from disk?"),
 			 curr_gradient->name);
 
-  label = gtk_label_new (str);
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  dialog =
+    gimp_query_boolean_box (_("Delete Gradient"),
+			    gimp_standard_help_func,
+			    "dialogs/gradient_editor/delete_gradient.html",
+			    str,
+			    _("Delete"), _("Cancel"),
+			    NULL, NULL,
+			    ed_do_delete_gradient_callback,
+			    NULL);
 
   g_free (str);
 
   gtk_widget_show (dialog);
-  gtk_widget_set_sensitive (g_editor->shell, FALSE);
 }
 
 static void
 ed_do_delete_gradient_callback (GtkWidget *widget,
+				gboolean   delete,
 				gpointer   data)
 {
   GSList     *tmp;
@@ -1825,8 +1805,10 @@ ed_do_delete_gradient_callback (GtkWidget *widget,
   gint        real_pos;
   gradient_t *gradient;
 
-  gtk_widget_destroy (GTK_WIDGET (data));
   gtk_widget_set_sensitive (g_editor->shell, TRUE);
+
+  if (!delete)
+    return;
 
   /* See which gradient we will have to select once the current one is deleted */
 
@@ -1870,14 +1852,6 @@ ed_do_delete_gradient_callback (GtkWidget *widget,
   gradient_select_delete_all (real_pos);
 
   gimp_context_refresh_gradients ();
-}
-
-static void
-ed_cancel_delete_gradient_callback (GtkWidget *widget,
-				    gpointer   data)
-{
-  gtk_widget_destroy (GTK_WIDGET (data));
-  gtk_widget_set_sensitive (g_editor->shell, TRUE);
 }
 
 /***** The "save as pov" dialog functions *****/

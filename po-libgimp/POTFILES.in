@@ -4,5 +4,6 @@
 libgimp/gimpcolorbutton.c
 libgimp/gimpexport.c
 libgimp/gimpfileselection.c
+libgimp/gimpquerybox.c
 libgimp/gimpunit.c
 libgimp/gimpunitmenu.c

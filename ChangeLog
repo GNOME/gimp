@@ -1,3 +1,26 @@
+2000-02-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimpui.[ch]: removed the query boxes.
+
+	* po-libgimp/POTFILES.in
+	* libgimp/Makefile.am
+	* libgimp/gimpui.h
+	* libgimp/gimpquerybox.[ch]: new files. Added a boolean query box
+	to get rid of all those handmade "yes/no" query dialogs. Changed
+	the query box callback prototypes to return the entered value
+	instead of a pointer to it.
+
+	* app/commands.c
+	* app/display_ops.c
+	* app/gradient.c
+	* app/palette.c
+	* app/paths_dialog.c: correctly call the new query box functions
+	and use the boolean query box instead of inventing this wheel over
+	and over again.
+
+	* app/global_edit.[ch]: same as above and cleaned up the public
+	interface.
+
 Thu Feb 10 17:20:05 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/gimage.c

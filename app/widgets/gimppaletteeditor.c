@@ -1763,12 +1763,12 @@ palette_dialog_zoomout_callback (GtkWidget *widget,
 
 static void
 palette_dialog_add_entries_callback (GtkWidget *widget,
-				     gpointer   data,
-				     gpointer   call_data)
+				     gchar     *palette_name,
+				     gpointer   data)
 {
   PaletteEntries *entries;
 
-  entries = palette_entries_new ((gchar *) call_data);
+  entries = palette_entries_new (palette_name);
 
   palette_insert_all (entries);
 }
@@ -1791,12 +1791,18 @@ palette_dialog_new_callback (GtkWidget *widget,
 
 static void
 palette_dialog_do_delete_callback (GtkWidget *widget,
+				   gboolean   delete,
 				   gpointer   data)
 {
   PaletteDialog  *palette;
   PaletteEntries *entries;
 
   palette = (PaletteDialog *) data;
+
+  gtk_widget_set_sensitive (palette->shell, TRUE);
+
+  if (!delete)
+    return;
 
   if (palette && palette->entries)
     {
@@ -1808,21 +1814,6 @@ palette_dialog_do_delete_callback (GtkWidget *widget,
 
       palette_refresh_all ();
     }
-
-  gtk_widget_destroy (gtk_widget_get_toplevel (widget));
-  gtk_widget_set_sensitive (palette->shell, TRUE);
-}
-
-static void
-palette_dialog_cancel_delete_callback (GtkWidget *widget,
-				       gpointer   data)
-{
-  PaletteDialog *palette;
-
-  palette = (PaletteDialog *) data;
-
-  gtk_widget_destroy (gtk_widget_get_toplevel (widget));
-  gtk_widget_set_sensitive (palette->shell, TRUE);
 }
 
 static void
@@ -1832,8 +1823,6 @@ palette_dialog_delete_callback (GtkWidget *widget,
   PaletteDialog *palette;
 
   GtkWidget *dialog;
-  GtkWidget *vbox;
-  GtkWidget *label;
   gchar     *str;
 
   palette = data;
@@ -1841,37 +1830,24 @@ palette_dialog_delete_callback (GtkWidget *widget,
   if (!palette || !palette->entries)
     return;
 
-  dialog = gimp_dialog_new (_("Delete Palette"), "delete_palette",
-                            gimp_standard_help_func,
-                            "dialogs/palette_editor/delete_palette.html",
-                            GTK_WIN_POS_MOUSE,
-                            FALSE, FALSE, FALSE,
-
-                            _("Delete"), palette_dialog_do_delete_callback,
-                            palette, NULL, NULL, FALSE, FALSE,
-                            _("Cancel"), palette_dialog_cancel_delete_callback,
-                            palette, NULL, NULL, TRUE, TRUE,
-
-                            NULL);
-
-  /*  The main vbox  */
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_sensitive (palette->shell, FALSE);
 
   str = g_strdup_printf (_("Are you sure you want to delete\n"
                            "\"%s\" from the list and from disk?"),
                          palette->entries->name);
 
-  label = gtk_label_new (str);
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  dialog = gimp_query_boolean_box (_("Delete Palette"),
+				   gimp_standard_help_func,
+				   "dialogs/palette_editor/delete_palette.html",
+				   str,
+				   _("Delete"), _("Cancel"),
+				   NULL, NULL,
+				   palette_dialog_do_delete_callback,
+				   palette);
 
   g_free (str);
 
   gtk_widget_show (dialog);
-  gtk_widget_set_sensitive (palette->shell, FALSE);
 }
 
 static void
@@ -1891,15 +1867,15 @@ palette_dialog_import_callback (GtkWidget *widget,
 
 static void
 palette_dialog_merge_entries_callback (GtkWidget *widget,
-				       gpointer   data,
-				       gpointer   call_data)
+				       gchar     *palette_name,
+				       gpointer   data)
 {
-  PaletteDialog *palette;
+  PaletteDialog  *palette;
   PaletteEntries *p_entries;
   PaletteEntries *new_entries;
-  GList *sel_list;
+  GList          *sel_list;
 
-  new_entries = palette_entries_new ((gchar *) call_data);
+  new_entries = palette_entries_new (palette_name);
 
   palette = (PaletteDialog *) data;
 
@@ -1907,7 +1883,7 @@ palette_dialog_merge_entries_callback (GtkWidget *widget,
 
   while (sel_list)
     {
-      gint row;
+      gint    row;
       GSList *cols;
 
       row = GPOINTER_TO_INT (sel_list->data);

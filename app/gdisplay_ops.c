@@ -17,6 +17,7 @@
  */
 #include <stdlib.h>
 #include <string.h>
+
 #include "appenv.h"
 #include "colormaps.h"
 #include "cursorutil.h"
@@ -32,9 +33,11 @@
 #include "config.h"
 #include "libgimp/gimpintl.h"
 
-static void gdisplay_close_warning_callback  (GtkWidget *, gpointer);
-static void gdisplay_cancel_warning_callback (GtkWidget *, gpointer);
-static void gdisplay_close_warning_dialog    (char *, GDisplay *);
+static void gdisplay_close_warning_callback  (GtkWidget *widget,
+					      gboolean   close,
+					      gpointer   data);
+static void gdisplay_close_warning_dialog    (gchar     *image_name,
+					      GDisplay  *gdisp);
 
 static GtkWidget *warning_dialog = NULL;
 
@@ -110,14 +113,16 @@ gdisplay_new_view (GDisplay *gdisp)
 
 void
 gdisplay_close_window (GDisplay *gdisp,
-		       int       kill_it)
+		       gboolean  kill_it)
 {
   /*  If the image has been modified, give the user a chance to save
    *  it before nuking it--this only applies if its the last view
    *  to an image canvas.  (a gimage with disp_count = 1)
    */
-  if (!kill_it && (gdisp->gimage->disp_count == 1) &&
-      gdisp->gimage->dirty && confirm_on_close)
+  if (! kill_it &&
+      (gdisp->gimage->disp_count == 1) &&
+      gdisp->gimage->dirty &&
+      confirm_on_close)
     {
       gdisplay_close_warning_dialog
 	(g_basename (gimage_filename (gdisp->gimage)), gdisp);
@@ -143,7 +148,7 @@ gdisplay_shrink_wrap (GDisplay *gdisp)
   gint shell_width, shell_height;
   gint max_auto_width, max_auto_height;
   gint border_x, border_y;
-  int s_width, s_height;
+  gint s_width, s_height;
 
   s_width = gdk_screen_width ();
   s_height = gdk_screen_height ();
@@ -261,11 +266,11 @@ gdisplay_shrink_wrap (GDisplay *gdisp)
 }
 
 
-int
+gint
 gdisplay_resize_image (GDisplay *gdisp)
 {
-  int sx, sy;
-  int width, height;
+  gint sx, sy;
+  gint width, height;
 
   /*  Calculate the width and height of the new canvas  */
   sx = SCALEX (gdisp, gdisp->gimage->width);
@@ -305,46 +310,25 @@ gdisplay_resize_image (GDisplay *gdisp)
 
 static void
 gdisplay_close_warning_callback (GtkWidget *widget,
-				 gpointer   client_data)
+				 gboolean   close,
+				 gpointer   data)
 {
   GDisplay *gdisp;
-  GtkWidget *mbox;
+
+  gdisp = (GDisplay *) data;
 
   menus_set_sensitive ("<Image>/File/Close", TRUE);
-  mbox = (GtkWidget *) client_data;
-  gdisp = (GDisplay *) gtk_object_get_user_data (GTK_OBJECT (mbox));
 
-  gtk_widget_destroy (gdisp->shell);
-  gtk_widget_destroy (mbox);
-}
-
-
-static void
-gdisplay_cancel_warning_callback (GtkWidget *widget,
-				  gpointer   client_data)
-{
-  GtkWidget *mbox;
-
-  menus_set_sensitive ("<Image>/File/Close", TRUE);
-  mbox = (GtkWidget *) client_data;
-  gtk_widget_destroy (mbox);
+  if (close)
+    gtk_widget_destroy (gdisp->shell);
 }
 
 static void
-gdisplay_destroy_warning_callback (GtkWidget *widget,
-				   gpointer   client_data)
-{
-  warning_dialog = NULL;
-}
-
-static void
-gdisplay_close_warning_dialog (char     *image_name,
+gdisplay_close_warning_dialog (gchar    *image_name,
 			       GDisplay *gdisp)
 {
   GtkWidget *mbox;
-  GtkWidget *vbox;
-  GtkWidget *label;
-  gchar *warning_buf;
+  gchar     *warning_buf;
 
   /* FIXUP this will raise any prexsisting close dialogs, which can be a
      a bit confusing if you tried to close a new window because you had
@@ -358,38 +342,24 @@ gdisplay_close_warning_dialog (char     *image_name,
 
   menus_set_sensitive ("<Image>/File/Close", FALSE);
 
+  warning_buf =
+    g_strdup_printf (_("Changes were made to %s.\nClose anyway?"), image_name);
+
   warning_dialog = mbox =
-    gimp_dialog_new (image_name, "really_close",
-		     gimp_standard_help_func,
-		     "dialogs/really_close.html",
-		     GTK_WIN_POS_MOUSE,
-		     FALSE, FALSE, FALSE,
+    gimp_query_boolean_box (image_name,
+			    gimp_standard_help_func,
+			    "dialogs/really_close.html",
+			    warning_buf,
+			    _("Close"), _("Cancel"),
+			    NULL, NULL,
+			    gdisplay_close_warning_callback,
+			    gdisp);
 
-		     _("Close"), gdisplay_close_warning_callback,
-		     NULL, NULL, NULL, FALSE, FALSE,
-		     _("Cancel"), gdisplay_cancel_warning_callback,
-		     NULL, NULL, NULL, TRUE, TRUE,
-
-		     NULL);
-
-  gtk_object_set_user_data (GTK_OBJECT (mbox), gdisp);
+  g_free (warning_buf);
 
   gtk_signal_connect (GTK_OBJECT (mbox), "destroy",
-		      GTK_SIGNAL_FUNC (gdisplay_destroy_warning_callback),
-		      mbox);
-
-  vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (mbox)->vbox), vbox);
-  gtk_widget_show (vbox);
-
-  warning_buf =
-    g_strdup_printf (_("Changes were made to %s.\n"
-		       "Close anyway?"), image_name);
-  label = gtk_label_new (warning_buf);
-  gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, FALSE, 0);
-  gtk_widget_show (label);
-  g_free (warning_buf);
+		      GTK_SIGNAL_FUNC (gtk_widget_destroyed),
+		      &warning_dialog);
 
   gtk_widget_show (mbox);
 }
