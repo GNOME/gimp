@@ -1,109 +1,19 @@
 Developers documentation 
 ------------------------
 
-The goal is to provide useful source documentation. Right 
-now this is limited to libgimp since that is the part that 
-is by third-party coders (plug-in developers). Other parts
-of the code may follow later, but not before libgimp is 
-properly documented.
+This directory holds information that you will find
+useful if you develop a Gimp plug-in or want to work
+on the Gimp core.
 
-
-Principle
----------
-The documentation is extracted out of the source using 
-gtk-doc. We use a combination of comment blocks embedded 
-into the source and additional information added manually 
-into the SGML files. It is planned to extract useful 
-inforamtion about the PDB wrappers out of the PDB 
-(probably using pdbgen).
-
-
-Requirements
-------------
-GIMP releases will contain a complete set of HTML files and
-the SGML files to create other formats. You will only need
-gtk-doc if you want to work on the documentation itself. 
-In that case you will need the following utilities:
-
-Perl v5 - the main scripts are in Perl.
-
-DocBook DTD v3.0 - This is the DocBook SGML DTD.
-    http://www.ora.com/davenport
-
-Jade v1.1 - This is a DSSSL processor for converting SGML 
-    to various formats. 
-    http://www.jclark.com/jade
-
-Modular DocBook Stylesheets (v1.19+ should be OK)
-    This is the DSSSL code to convert DocBook to HTML (and 
-    a few other formats). It's used together with jade.
-    http://nwalsh.com/docbook/dsssl
-
-gtk-doc - This package automatically generates DocBook 
-    documentation for GTK+ and converts the DocBook 
-    documentation into HTML (and man pages in future).
-    http://www.gtk.org/rdp/download.html
-
-
-HOWTO
------
-Carefully read the README that comes with gtk-doc. Then 
-read it again! The following lines will only give you hints
-about how our system works. You should have understood the
-principles of gtk-doc before you touch it.
-
-The system is already set up so unless there are substantial
-changes to the source e.g. new files were added, functions 
-were added, renamed or removed or parameters changed, there
-is no need to repeat the scan step or rebuild the templates.
-
-The Makefile will only work if gtk-doc was successfully
-found when configure was ran. To rerun the scan step you also
-need to have gimp installed (the version you are documenting)
-and the correct version of gimptool should be found in your 
-PATH. If everything was set up correctly running a simple 
-make should do the trick and generate the SGML and HTML files 
-for you.
-
-
-In most cases you will work on the documentation by adding or
-editing comment blocks in the C source and by editing the 
-template SGML files in the tmpl dir. The following steps 
-should rebuild the documentation after a change:
-
-make sgml  - Creates the SGML files from the templates found
-             in the tmpl dir and from the comment blocks found
-             in the source.
-
-make html  - Build HTML pages out of the SGML files.
-
-
-If the source was changed (real changes as described above), 
-you will need to perform the following two steps before you can
-rebuild the sgml and html files:
-
-make scan  -     Scans the header files and builds and runs a 
-                 binary that asks the GtkObjects to describe 
-		 themselves. That way the hierarchy of widgets, 
-		 arguments and signals are determined. If you
-		 have added new objects, you will have to update
-		 the MODULE.types files accordingly before you 
-		 perform this step.
-
-make templates - Merges the changes into the templates. This will 
-                 output warnings about any declarations which have 
-		 been added/removed. Update the MODULE-sections.txt 
-		 to include the new functions etc. in the 
-		 appropriate sections, and delete ones which are 
-		 no longer available. Run "make templates" again 
-		 until there are no warnings output.
-             
-
-More information
-----------------
-Using the system as described above, you can write documentation without 
-any knowledge of SGML and DocBook, but when editing the templates you 
-will sometimes want to do a little extra structuring or markup. The best 
-source for information about DocBook seems to be "DocBook: The Definitive 
-Guide" which is available online at http://www.docbook.org/tdg/html/.
-
+   libgimp  - complete libgimp documentation generated
+              from the source; see README.gtkdoc
+   pdb      - some lisp magic that allows to generate
+              complete PDB information in texinfo format
+	     
+   gih.txt  - description of the GIH format used to 
+              store a series of pixmap brushes
+   gpb.txt  - description of the GPB format used to
+              store pixmap brushes
+   parasites.txt - descriptions of known parasites
+   undo.txt - description of the undo system
+   xcf.txt  - description of Gimp's XCF format 

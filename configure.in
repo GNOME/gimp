@@ -792,9 +792,9 @@ plug-ins/sgi/Makefile
 plug-ins/sinus/Makefile
 plug-ins/struc/Makefile
 modules/Makefile
-docs/Makefile
 devel-docs/Makefile
 devel-docs/libgimp/Makefile
+devel-docs/pdb/Makefile
 data/Makefile
 data/brushes/Makefile
 data/gradients/Makefile

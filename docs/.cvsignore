@@ -1,8 +1,2 @@
-Makefile
-Makefile.in
-pdb.info*
-pdb_dump
-pdb_dump.texi
-*.log
-*.aux
-*.dvi
+Wilber.xcf
+quick_reference

@@ -1,3 +1,9 @@
+2000-06-13  Sven Neumann  <sven@gimp.org>
+
+	Moved various files from the docs directory to
+	devel-docs and devel-docs/pdb. Excluded papers 
+	from being distributed but left them in CVS.
+	
 2000-06-13  Jay Cox  <jaycox@gimp.org>
 
         These files should have been commited in my 2000-05-08 commit

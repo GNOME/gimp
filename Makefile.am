@@ -90,6 +90,13 @@ EXTRA_DIST = \
 	cursors/zoom_out_mask.xbm		\
 	cursors/zoom_small.xbm			\
 	cursors/zoom_small_mask.xbm		\
+	docs/Wilber.xcf.gz			\
+	docs/Wilber.xcf.gz.README		\
+	docs/cheat_sheet.txt			\
+	docs/gimp.txt				\
+	docs/keybindings.txt 			\
+	docs/gimp_quick_reference.ps 		\
+	docs/gimp_quick_reference.tar.gz	\
 	pixmaps/anchor.xpm			\
 	pixmaps/chain.xpm			\
 	pixmaps/channel.xbm			\
