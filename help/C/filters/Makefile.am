@@ -61,6 +61,8 @@ helpdata_DATA = \
         gicon.html \
         gif.html \
         gifload.html \
+	gimp_xcf_load.html \
+	gimp_xcf_save.html \
         gimpressionist.html \
         glasstile.html \
         gpb.html \

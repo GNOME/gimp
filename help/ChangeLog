@@ -1,5 +1,12 @@
 1999-12-19  Michael Natterer  <mitch@gimp.org>
 
+	* C/filters/Makefile.am
+	* C/filters/gimp_xcf_load.html
+	* C/filters/gimp_xcf_save.html
+	* C/filters/index.html: help stubs for the xcf pseudo plug-ins.
+
+1999-12-19  Michael Natterer  <mitch@gimp.org>
+
 	* C/dialogs/palette_editor/Makefile.am
 	* C/dialogs/palette_editor/delete_palette.html
 	* C/dialogs/palette_editor/index.html: a help page for the new
