@@ -79,26 +79,6 @@ static GimpActionEntry layers_actions[] =
     G_CALLBACK (layers_delete_cmd_callback),
     GIMP_HELP_LAYER_DELETE },
 
-  { "layers-select-previous", NULL,
-    N_("Select _Previous Layer"), "Prior", NULL,
-    G_CALLBACK (layers_select_previous_cmd_callback),
-    GIMP_HELP_LAYER_PREVIOUS },
-
-  { "layers-select-top", NULL,
-    N_("Select _Top Layer"), "Home", NULL,
-    G_CALLBACK (layers_select_top_cmd_callback),
-    GIMP_HELP_LAYER_TOP },
-
-  { "layers-select-next", NULL,
-    N_("Select _Next Layer"), "Next", NULL,
-    G_CALLBACK (layers_select_next_cmd_callback),
-    GIMP_HELP_LAYER_NEXT },
-
-  { "layers-select-bottom", NULL,
-    N_("Select _Bottom Layer"), "End", NULL,
-    G_CALLBACK (layers_select_bottom_cmd_callback),
-    GIMP_HELP_LAYER_BOTTOM },
-
   { "layers-raise", GTK_STOCK_GO_UP,
     N_("_Raise Layer"), "", NULL,
     G_CALLBACK (layers_raise_cmd_callback),
@@ -235,6 +215,62 @@ static GimpEnumActionEntry layers_alpha_to_selection_actions[] =
     GIMP_HELP_LAYER_ALPHA_SELECTION_INTERSECT }
 };
 
+static GimpEnumActionEntry layers_select_actions[] =
+{
+  { "layers-select-top", NULL,
+    N_("Select _Top Layer"), "Home", NULL,
+    GIMP_ACTION_SELECT_FIRST,
+    GIMP_HELP_LAYER_TOP },
+
+  { "layers-select-bottom", NULL,
+    N_("Select _Bottom Layer"), "End", NULL,
+    GIMP_ACTION_SELECT_LAST,
+    GIMP_HELP_LAYER_BOTTOM },
+
+  { "layers-select-previous", NULL,
+    N_("Select _Previous Layer"), "Prior", NULL,
+    GIMP_ACTION_SELECT_PREVIOUS,
+    GIMP_HELP_LAYER_PREVIOUS },
+
+  { "layers-select-next", NULL,
+    N_("Select _Next Layer"), "Next", NULL,
+    GIMP_ACTION_SELECT_NEXT,
+    GIMP_HELP_LAYER_NEXT }
+};
+
+static GimpEnumActionEntry layers_opacity_actions[] =
+{
+  { "layers-opacity-set", GIMP_STOCK_TRANSPARENCY,
+    N_("Set Opacity"), NULL, NULL,
+    GIMP_ACTION_SELECT_SET,
+    NULL },
+  { "layers-opacity-transparent", GTK_STOCK_GOTO_FIRST,
+    "Completely Transparent", NULL, NULL,
+    GIMP_ACTION_SELECT_FIRST,
+    NULL },
+  { "layers-opacity-opaque", GTK_STOCK_GOTO_LAST,
+    "Completely Opaque", NULL, NULL,
+    GIMP_ACTION_SELECT_LAST,
+    NULL },
+  { "layers-opacity-decrease", GTK_STOCK_REMOVE,
+    "More Transparent", NULL, NULL,
+    GIMP_ACTION_SELECT_PREVIOUS,
+    NULL },
+  { "layers-opacity-increase", GTK_STOCK_ADD,
+    "More Opaque", NULL, NULL,
+    GIMP_ACTION_SELECT_NEXT,
+    NULL },
+  { "layers-opacity-decrease-skip", GTK_STOCK_REMOVE,
+    "10% More Transparent", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_PREVIOUS,
+    NULL },
+  { "layers-opacity-increase-skip", GTK_STOCK_ADD,
+    "10% More Opaque", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_NEXT,
+    NULL }
+};
+
+
 void
 layers_actions_setup (GimpActionGroup *group)
 {
@@ -256,6 +292,15 @@ layers_actions_setup (GimpActionGroup *group)
                                       layers_alpha_to_selection_actions,
                                       G_N_ELEMENTS (layers_alpha_to_selection_actions),
                                       G_CALLBACK (layers_alpha_to_selection_cmd_callback));
+
+  gimp_action_group_add_enum_actions (group,
+                                      layers_select_actions,
+                                      G_N_ELEMENTS (layers_select_actions),
+                                      G_CALLBACK (layers_select_cmd_callback));
+  gimp_action_group_add_enum_actions (group,
+                                      layers_opacity_actions,
+                                      G_N_ELEMENTS (layers_opacity_actions),
+                                      G_CALLBACK (layers_opacity_cmd_callback));
 }
 
 void
@@ -321,14 +366,14 @@ layers_actions_update (GimpActionGroup *group,
   SET_VISIBLE   ("layers-text-tool",       text_layer && !ac);
   SET_SENSITIVE ("layers-edit-attributes", layer && !fs && !ac);
 
-  SET_SENSITIVE ("layers-new",             gimage);
+  SET_SENSITIVE ("layers-new",          gimage);
   SET_SENSITIVE ("layers-duplicate",    layer && !fs && !ac);
   SET_SENSITIVE ("layers-delete",       layer && !ac);
 
-  SET_SENSITIVE ("layers-select-previous", layer && !fs && !ac && prev);
   SET_SENSITIVE ("layers-select-top",      layer && !fs && !ac && prev);
-  SET_SENSITIVE ("layers-select-next",     layer && !fs && !ac && next);
   SET_SENSITIVE ("layers-select-bottom",   layer && !fs && !ac && next);
+  SET_SENSITIVE ("layers-select-previous", layer && !fs && !ac && prev);
+  SET_SENSITIVE ("layers-select-next",     layer && !fs && !ac && next);
 
   SET_SENSITIVE ("layers-raise",           layer && !fs && !ac && alpha && prev);
   SET_SENSITIVE ("layers-raise-to-top",    layer && !fs && !ac && alpha && prev);

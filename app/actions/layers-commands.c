@@ -34,11 +34,13 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-merge.h"
 #include "core/gimpimage-undo.h"
+#include "core/gimpitemundo.h"
 #include "core/gimplayer.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplayermask.h"
 #include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
+#include "core/gimpundostack.h"
 
 #include "text/gimptext.h"
 #include "text/gimptextlayer.h"
@@ -124,92 +126,25 @@ layers_new_cmd_callback (GtkAction *action,
 }
 
 void
-layers_select_previous_cmd_callback (GtkAction *action,
-                                     gpointer   data)
+layers_select_cmd_callback (GtkAction *action,
+                            gint       value,
+                            gpointer   data)
 {
   GimpImage *gimage;
+  GimpLayer *layer;
   GimpLayer *new_layer;
-  gint       current_layer;
   return_if_no_image (gimage, data);
 
-  current_layer =
-    gimp_image_get_layer_index (gimage, gimp_image_get_active_layer (gimage));
+  layer = gimp_image_get_active_layer (gimage);
 
-  if (current_layer > 0)
-    {
-      new_layer = (GimpLayer *)
-	gimp_container_get_child_by_index (gimage->layers, current_layer - 1);
+  new_layer = (GimpLayer *) action_select_object ((GimpActionSelectType) value,
+                                                  gimage->layers,
+                                                  (GimpObject *) layer);
 
-      if (new_layer)
-	{
-	  gimp_image_set_active_layer (gimage, new_layer);
-	  gimp_image_flush (gimage);
-	}
-    }
-}
-
-void
-layers_select_next_cmd_callback (GtkAction *action,
-                                 gpointer   data)
-{
-  GimpImage *gimage;
-  GimpLayer *new_layer;
-  gint       current_layer;
-  return_if_no_image (gimage, data);
-
-  current_layer =
-    gimp_image_get_layer_index (gimage, gimp_image_get_active_layer (gimage));
-
-  new_layer =
-    GIMP_LAYER (gimp_container_get_child_by_index (gimage->layers,
-						   current_layer + 1));
-
-  if (new_layer)
+  if (new_layer && new_layer != layer)
     {
       gimp_image_set_active_layer (gimage, new_layer);
       gimp_image_flush (gimage);
-    }
-}
-
-void
-layers_select_top_cmd_callback (GtkAction *action,
-                                gpointer   data)
-{
-  GimpImage *gimage;
-  GimpLayer *new_layer;
-  return_if_no_image (gimage, data);
-
-  new_layer = (GimpLayer *)
-    gimp_container_get_child_by_index (gimage->layers, 0);
-
-  if (new_layer)
-    {
-      gimp_image_set_active_layer (gimage, new_layer);
-      gimp_image_flush (gimage);
-    }
-}
-
-void
-layers_select_bottom_cmd_callback (GtkAction *action,
-                                   gpointer   data)
-{
-  GimpImage *gimage;
-  GimpLayer *new_layer;
-  gint       num_layers;
-  return_if_no_image (gimage, data);
-
-  num_layers = gimp_container_num_children (gimage->layers);
-
-  if (num_layers > 0)
-    {
-      new_layer = (GimpLayer *)
-        gimp_container_get_child_by_index (gimage->layers, num_layers - 1);
-
-      if (new_layer)
-        {
-          gimp_image_set_active_layer (gimage, new_layer);
-          gimp_image_flush (gimage);
-        }
     }
 }
 
@@ -501,6 +436,38 @@ layers_alpha_to_selection_cmd_callback (GtkAction *action,
   gimp_channel_select_alpha (gimp_image_get_mask (gimage),
                              GIMP_DRAWABLE (layer),
                              op, FALSE, 0.0, 0.0);
+  gimp_image_flush (gimage);
+}
+
+void
+layers_opacity_cmd_callback (GtkAction *action,
+                             gint       value,
+                             gpointer   data)
+{
+  GimpImage      *gimage;
+  GimpLayer      *layer;
+  gdouble         opacity;
+  gboolean        push_undo = TRUE;
+  return_if_no_layer (gimage, layer, data);
+
+  if (! gimp_undo_stack_peek (gimage->redo_stack))
+    {
+      GimpUndo *undo = gimp_undo_stack_peek (gimage->undo_stack);
+
+      if (GIMP_IS_ITEM_UNDO (undo)                         &&
+          undo->undo_type == GIMP_UNDO_LAYER_OPACITY       &&
+          GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))
+        {
+          push_undo = FALSE;
+        }
+    }
+
+  opacity = gimp_layer_get_opacity (layer);
+  opacity = action_select_value ((GimpActionSelectType) value,
+                                 opacity,
+                                 0.0, 1.0,
+                                 0.01, 0.1, FALSE);
+  gimp_layer_set_opacity (layer, opacity, push_undo);
   gimp_image_flush (gimage);
 }
 

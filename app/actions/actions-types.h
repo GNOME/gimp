@@ -23,4 +23,16 @@
 #include "gui/gui-types.h"
 
 
+typedef enum
+{
+  GIMP_ACTION_SELECT_SET           =  0,
+  GIMP_ACTION_SELECT_FIRST         = -1,
+  GIMP_ACTION_SELECT_LAST          = -2,
+  GIMP_ACTION_SELECT_PREVIOUS      = -3,
+  GIMP_ACTION_SELECT_NEXT          = -4,
+  GIMP_ACTION_SELECT_SKIP_PREVIOUS = -5,
+  GIMP_ACTION_SELECT_SKIP_NEXT     = -6
+} GimpActionSelectType;
+
+
 #endif /* __ACTIONS_TYPES_H__ */

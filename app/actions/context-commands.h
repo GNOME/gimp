@@ -20,18 +20,6 @@
 #define __CONTEXT_COMMANDS_H__
 
 
-typedef enum
-{
-  GIMP_CONTEXT_SELECT_SET           =  0,
-  GIMP_CONTEXT_SELECT_FIRST         = -1,
-  GIMP_CONTEXT_SELECT_LAST          = -2,
-  GIMP_CONTEXT_SELECT_PREVIOUS      = -3,
-  GIMP_CONTEXT_SELECT_NEXT          = -4,
-  GIMP_CONTEXT_SELECT_SKIP_PREVIOUS = -5,
-  GIMP_CONTEXT_SELECT_SKIP_NEXT     = -6
-} GimpContextSelectType;
-
-
 void   context_colors_default_cmd_callback  (GtkAction   *action,
                                              gpointer     data);
 void   context_colors_swap_cmd_callback     (GtkAction   *action,

@@ -1,3 +1,27 @@
+2004-06-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/context-commands.h: removed enum GimpContextSelectType.
+
+	* app/actions/actions-types.h: added enum GimpActionSelectType.
+
+	* app/actions/actions.[ch]: added utility functions
+	action_select_value() and action_select_object().
+
+	* app/actions/context-actions.c
+	* app/actions/context-commands.c: changed accordingly.
+
+	* app/actions/layers-actions.c
+	* app/actions/layers-commands.[ch]: merged the layer select
+	callbacks into one using the GimpActionSelectType functions. Added
+	actions and callbacks for modifying the active layer's opacity.
+
+	* app/menus/menus-types.h: #incude "actions/action-types.h".
+
+	* app/gui/gui-types.h: #incude "menus/menus-types.h".
+
+	* app/gui/preferences-dialog.c: allow to enable/disable input
+	controllers.
+
 2004-06-22  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimpcurvestool.c: try again to revert.

@@ -21,6 +21,7 @@
 
 
 #include "tools/tools-types.h"
+#include "menus/menus-types.h"
 
 
 typedef struct _ColorNotebook    ColorNotebook;

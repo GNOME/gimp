@@ -23,14 +23,25 @@
 extern GimpActionFactory *global_action_factory;
 
 
-void          actions_init            (Gimp     *gimp);
-void          actions_exit            (Gimp     *gimp);
+void          actions_init            (Gimp                 *gimp);
+void          actions_exit            (Gimp                 *gimp);
 
-Gimp        * action_data_get_gimp    (gpointer  data);
-GimpContext * action_data_get_context (gpointer  data);
-GimpImage   * action_data_get_image   (gpointer  data);
-GimpDisplay * action_data_get_display (gpointer  data);
-GtkWidget   * action_data_get_widget  (gpointer  data);
+Gimp        * action_data_get_gimp    (gpointer              data);
+GimpContext * action_data_get_context (gpointer              data);
+GimpImage   * action_data_get_image   (gpointer              data);
+GimpDisplay * action_data_get_display (gpointer              data);
+GtkWidget   * action_data_get_widget  (gpointer              data);
+
+gdouble       action_select_value     (GimpActionSelectType  select_type,
+                                       gdouble               value,
+                                       gdouble               min,
+                                       gdouble               max,
+                                       gdouble               inc,
+                                       gdouble               skip_inc,
+                                       gboolean              wrap);
+GimpObject  * action_select_object    (GimpActionSelectType  select_type,
+                                       GimpContainer        *container,
+                                       GimpObject           *current);
 
 
 #define return_if_no_gimp(gimp,data) \

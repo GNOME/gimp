@@ -1878,6 +1878,10 @@ prefs_dialog_new (Gimp       *gimp,
                                    gtk_label_new (info->controller->name),
                                    1, TRUE);
 
+        prefs_check_button_add (G_OBJECT (info), "enabled",
+                                _("Enable this Controller"),
+                                GTK_BOX (vbox3));
+
         store = gtk_list_store_new (NUM_COLUMNS,
                                     G_TYPE_STRING, G_TYPE_STRING);
         tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));

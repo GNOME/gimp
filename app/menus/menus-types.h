@@ -20,7 +20,7 @@
 #define __MENUS_TYPES_H__
 
 
-#include "gui/gui-types.h"
+#include "actions/actions-types.h"
 
 
 #endif /* __MENUS_TYPES_H__ */
