@@ -1,3 +1,7 @@
+2004-08-01  Shlomi Fish  <shlomif@iglu.org.il>
+
+	* plug-ins/flame/flame.c: ported to GimpPreviewArea.
+
 2004-08-01  Simon Budig  <simon@gimp.org>
 
 	* app/core/core-enums.h

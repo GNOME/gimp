@@ -529,7 +529,7 @@ init_mutants (void)
 static void
 set_edit_preview (void)
 {
-  gint           y, i, j;
+  gint           i, j;
   guchar        *b;
   control_point  pcp;
   gint           nbytes = EDIT_PREVIEW_SIZE * EDIT_PREVIEW_SIZE * 3;
@@ -574,13 +574,19 @@ set_edit_preview (void)
 
 	render_rectangle (&pf, b, EDIT_PREVIEW_SIZE, field_both, 3, NULL);
 
-	for (y = 0; y < EDIT_PREVIEW_SIZE; y++)
-	  gtk_preview_draw_row (GTK_PREVIEW (edit_previews[mut]),
-				b + y * EDIT_PREVIEW_SIZE * 3,
-				0, y, EDIT_PREVIEW_SIZE);
-	gtk_widget_queue_draw (edit_previews[mut]);
+        gimp_preview_area_draw (GIMP_PREVIEW_AREA (edit_previews[mut]),
+                                0, 0, EDIT_PREVIEW_SIZE, EDIT_PREVIEW_SIZE,
+                                GIMP_RGB_IMAGE,
+                                b,
+                                EDIT_PREVIEW_SIZE * 3);
       }
   g_free (b);
+}
+
+static void 
+edit_preview_size_allocate (GtkWidget *widget)
+{
+  set_edit_preview();
 }
 
 static void
@@ -659,20 +665,25 @@ edit_callback (GtkWidget *widget,
 	  {
 	    gint mut = i * 3 + j;
 
-	    edit_previews[mut] = gtk_preview_new (GTK_PREVIEW_COLOR);
-	    gtk_preview_size (GTK_PREVIEW (edit_previews[mut]),
-			      EDIT_PREVIEW_SIZE, EDIT_PREVIEW_SIZE);
+	    edit_previews[mut] = gimp_preview_area_new ();
+	    gtk_widget_set_size_request (edit_previews[mut],
+                                         EDIT_PREVIEW_SIZE,
+                                         EDIT_PREVIEW_SIZE);
 	    button = gtk_button_new ();
 	    gtk_container_add (GTK_CONTAINER(button), edit_previews[mut]);
 	    gtk_table_attach (GTK_TABLE (table), button, i, i+1, j, j+1,
 			      GTK_EXPAND, GTK_EXPAND, 0, 0);
 	    gtk_widget_show (edit_previews[mut]);
+
 	    gtk_widget_show (button);
 
 	    g_signal_connect (button, "clicked",
                               G_CALLBACK (preview_clicked),
                               GINT_TO_POINTER (mut));
 	  }
+      g_signal_connect (edit_previews[0], "size-allocate",
+                        G_CALLBACK (edit_preview_size_allocate), NULL);
+      
 
       frame = gimp_frame_new( _("Controls"));
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
@@ -796,7 +807,6 @@ combo_callback (GtkWidget *widget,
 static void
 set_flame_preview (void)
 {
-  gint    y;
   guchar *b;
   control_point pcp;
 
@@ -821,12 +831,18 @@ set_flame_preview (void)
   pcp.spatial_filter_radius = 0.1;
   render_rectangle (&pf, b, preview_width, field_both, 3, NULL);
 
-  for (y = 0; y < PREVIEW_SIZE; y++)
-    gtk_preview_draw_row (GTK_PREVIEW (flame_preview),
-			  b+y*preview_width*3, 0, y, preview_width);
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (flame_preview),
+                          0, 0, preview_width, PREVIEW_SIZE,
+                          GIMP_RGB_IMAGE,
+                          b,
+                          preview_width * 3);
   g_free (b);
+}
 
-  gtk_widget_queue_draw (flame_preview);
+static void
+flame_preview_size_allocate (GtkWidget *preview)
+{
+  set_flame_preview();
 }
 
 static void
@@ -834,12 +850,15 @@ set_cmap_preview (void)
 {
   gint i, x, y;
   guchar b[96];
+  guchar *cmap_buffer, *ptr;
 
   if (NULL == cmap_preview)
     return;
 
   drawable_to_cmap (&config.cp);
 
+  cmap_buffer = g_new(guchar, 32*32*3);
+  ptr = cmap_buffer;
   for (y = 0; y < 32; y += 4)
     {
       for (x = 0; x < 32; x++)
@@ -850,13 +869,22 @@ set_cmap_preview (void)
 	  for (j = 0; j < 3; j++)
 	    b[x*3+j] = config.cp.cmap[i][j]*255.0;
 	}
-    gtk_preview_draw_row (GTK_PREVIEW (cmap_preview), b, 0, y, 32);
-    gtk_preview_draw_row (GTK_PREVIEW (cmap_preview), b, 0, y+1, 32);
-    gtk_preview_draw_row (GTK_PREVIEW (cmap_preview), b, 0, y+2, 32);
-    gtk_preview_draw_row (GTK_PREVIEW (cmap_preview), b, 0, y+3, 32);
-  }
 
-  gtk_widget_queue_draw (cmap_preview);
+      memcpy (ptr, b, 32*3);
+      ptr += 32*3;
+      memcpy (ptr, b, 32*3);
+      ptr += 32*3;
+      memcpy (ptr, b, 32*3);
+      ptr += 32*3;
+      memcpy (ptr, b, 32*3);
+      ptr += 32*3;
+  }
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (cmap_preview),
+                          0, 0, 32, 32,
+                          GIMP_RGB_IMAGE,
+                          cmap_buffer,
+                          32*3);
+  g_free (cmap_buffer);
 }
 
 static void
@@ -924,7 +952,7 @@ dialog (void)
   gtk_container_add (GTK_CONTAINER (abox), frame);
   gtk_widget_show (frame);
 
-  flame_preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  flame_preview = gimp_preview_area_new ();
   {
     gdouble aspect = config.cp.width / (double) config.cp.height;
 
@@ -939,10 +967,11 @@ dialog (void)
 	preview_height = PREVIEW_SIZE;
       }
   }
-  gtk_preview_size (GTK_PREVIEW (flame_preview),
-                    preview_width, preview_height);
+  gtk_widget_set_size_request (flame_preview, preview_width, preview_height);
   gtk_container_add (GTK_CONTAINER (frame), flame_preview);
   gtk_widget_show (flame_preview);
+  g_signal_connect (flame_preview, "size-allocate",
+                    G_CALLBACK (flame_preview_size_allocate), NULL);
 
   {
     GtkWidget *vbox;
@@ -1138,8 +1167,8 @@ dialog (void)
     gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
     gtk_widget_show (combo);
 
-    cmap_preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-    gtk_preview_size (GTK_PREVIEW (cmap_preview), 32, 32);
+    cmap_preview = gimp_preview_area_new ();
+    gtk_widget_set_size_request (cmap_preview, 32, 32);
 
     gtk_box_pack_end (GTK_BOX (hbox), cmap_preview, FALSE, FALSE, 0);
     gtk_widget_show (cmap_preview);
