@@ -24,9 +24,7 @@ script_fu_SOURCES = \
 	script-fu-server.h	\
 	script-fu-enums.h	\
 	siod.h			\
-	siodp.h			\
-	regex.h			\
-	regex.c
+	siodp.h
 
 INCLUDES = \
 	-I$(top_srcdir)			\
@@ -40,8 +38,7 @@ LDADD = \
 	$(GTK_LIBS)						\
 	$(INTLLIBS)
 
-AM_CPPFLAGS = \
-	-DREGEX_MALLOC
+AM_CPPFLAGS =
 
 .PHONY: files
 

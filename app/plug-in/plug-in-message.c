@@ -68,7 +68,6 @@
 #define _P_NOWAIT P_NOWAIT
 #endif
 
-#include "regex.h"
 #include "libgimp/parasite.h"
 #include "libgimp/parasiteP.h" /* ick */
 #include "libgimp/gimpenv.h"

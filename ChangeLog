@@ -1,3 +1,42 @@
+Thu Jan 17 12:13:01 CET 2000  Daniel Egger <Daniel.Egger@suse.de>
+
+	(applied by pcg@goof.com)
+
+	* PLUGIN_MAINTAINERS: Add Martin Weber for sparkle and gflare.
+
+	* MAINTAINERS: Add myself.      
+
+Thu Jan 15 14:43:23 CET 2000  Daniel Egger <Daniel.Egger@suse.de>
+
+	(applied by pcg@goof.com)
+
+	* app/plug_in.c: Removed unnecessary #include "regex.h".
+
+	* app/regex.c: Removed ... 
+	* libgimp/regex.c: Shamelessly stolen from current glibc because we
+	  want LPGL here. 
+
+	* app/regex.h: Moved to ...
+	* libgimp/gimpregex.h: ... and renamed it.
+
+	* plug-ins/script-fu/regex.c 
+	* plug-ins/script-fu/regex.h: Removed. 
+
+	* libgimp/Makefile.am, 
+	* plug-ins/script-fu/Makefile.am, 
+ 	* app/Makefile.am: Tweak them to match the changes.
+
+	* plug-ins/script-fu/interp_regex.c 
+	* tools/pdbgen/pdb/plug_in.pdb 
+	* tools/pdbgen/pdb/procedural_db.pdb: Include "libgimp/regex.h"
+	  instead of "regex.h".
+ 
+	* config.h.in 
+	* configure.in 
+	* acconfig.h: Check, whether regex is provided by standard libs.
+	  If this is the case avoid compiling it and use the standard one,
+	  thus reducing compile time and code and saveing diskspace.
+    
 Sun Jan 23 23:08:18  2000  Jay Cox  <jaycox@earthlink.net>
 
 	* plug-ins/common/psd.c:  load the resolution info from the psd file.

@@ -5,6 +5,7 @@ gimpincludedir = $(includedir)/libgimp
 AM_CPPFLAGS = \
 	-DGIMPDIR=\""$(gimpdir)"\"	\
 	-DDATADIR=\""$(gimpdatadir)"\"	\
+	-DREGEX_MALLOC			\
 	@GIMP_THREAD_FLAGS@
 
 INCLUDES = \
@@ -43,6 +44,7 @@ libgimpi_a_SOURCES = \
 	gimppatheditor.h	\
 	gimpprotocol.c		\
 	gimpprotocol.h		\
+	gimpregex.h		\
 	gimpsizeentry.c		\
 	gimpsizeentry.h		\
 	gimpunitmenu.c		\
@@ -58,7 +60,8 @@ libgimpi_a_SOURCES = \
 	parasiteF.h		\
 	parasiteP.h		\
 	parasiteio.c		\
-	parasiteio.h
+	parasiteio.h		\
+	regex.c
 
 if STATICLIBS
 ## Evil hack to insure all deps are satisfied on first-run make
@@ -89,6 +92,7 @@ libgimp_la_SOURCES = \
 	gimppixelrgn.c		\
 	gimpprotocol.c		\
 	gimpprotocol.h		\
+	gimpregex.h		\
 	gimpselection.c		\
 	gimptile.c		\
 	gimpunit.c		\
@@ -103,6 +107,7 @@ libgimp_la_SOURCES = \
 	parasiteP.h		\
 	parasiteio.c		\
 	parasiteio.h		\
+	regex.c			\
 	stdplugins-intl.h
 
 libgimpui_la_SOURCES = \
@@ -142,6 +147,7 @@ gimpinclude_HEADERS = \
 	gimpmenu.h		\
 	gimpmodule.h		\
 	gimppatheditor.h	\
+	gimpregex.h		\
 	gimpsizeentry.h		\
 	gimpui.h		\
 	gimpunit.h              \

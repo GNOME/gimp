@@ -59,7 +59,7 @@ Name: Marc Lehmann
 Email: pcg@goof.com
 url: http://gimp.pages.de/
 ircnick: schmorp
-expertise: perl, language binding issues
+expertise: perl, language binding issues, THE PDB, libgimp/gimpcompat.h
 current work: perl-interface, language interface design
 commit access: yes                      
 
@@ -202,3 +202,11 @@ current work: I fell into this rabbit hole by writing highly verbose patch docum
 which just goes to show that succinctness is its own reward. My patch documentation 
 archive is http://idt.net/~gosgood/gimp-patch/
 commit access: yes
+
+Name:  Daniel Egger
+Email: Daniel.Egger@suse.de
+url:
+expertise: Localisation, optimisation, cleanup.
+current work: Cleaning up the code base while trying to find a
+              proper solution for localisation.
+commit access: no

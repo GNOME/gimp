@@ -85,19 +85,19 @@
 #undef HAVE_SYS_SELECT_H
 #undef HAVE_SYS_TIME_H
 #undef HAVE_SYS_TIMES_H
+#undef HAVE_REGEX_H
 #undef HAVE_UNISTD_H
 #undef HAVE_VPRINTF
 #undef HAVE_VSNPRINTF
 
 #undef IPC_RMID_DEFERRED_RELEASE
+#undef HAVE_NATIVE_REGEX
 
 #undef NO_DIFFTIME
 #undef NO_FD_SET
 
 #undef RAND_FUNC
 #undef SRAND_FUNC
-
-#undef USE_PTHREADS
 
 /* Define if you have the __argz_count function.  */
 #undef HAVE___ARGZ_COUNT

@@ -364,7 +364,7 @@ COMMENT    : Could do with a code splitting & UI tidyup.
 -----------
 NAME       : gflare
 AUTHOR     : Eiichi Takamori
-MAINTAINER : 
+MAINTAINER : Martin Weber martweb@gmx.net
 SIZE       : 175.7 kB  in  3 files (only C files counted)
 COMMENT    : 
 -----------
@@ -642,7 +642,7 @@ NAME       : perl
 AUTHOR     : Marc Lehmann <pcg@goof.com> et al.
 MAINTAINER : 
 SIZE       : 105.4 kB  in  5 files (only C files counted)
-COMMENT    : 
+COMMENT    : contact pcg@goof.com when you modify files, so your changes aren't lost
 -----------
 NAME       : pix
 AUTHOR     : Michael Taylor
@@ -826,7 +826,7 @@ COMMENT    :
 -----------
 NAME       : sparkle
 AUTHOR     : John Beale, & (ported to GIMP v0.54) Michael J. Hammel & ted to GIMP v1.0) Spencer Kimball
-MAINTAINER : 
+MAINTAINER : Martin Weber matweb@gmx.net
 SIZE       :  35.6 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
