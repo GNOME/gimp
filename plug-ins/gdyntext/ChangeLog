@@ -1,0 +1,68 @@
+Apr 14 1999
+  * MADE 1.4.0 RELEASE
+  * Added customizable line spacing.
+Mar 17 1999
+  * MADE 1.3.1 RELEASE
+  * With GIMP 1.1 now uses only one parasite called "gdyntext-parasite".
+Feb 20 1999
+  * MADE 1.3.0 RELEASE
+  * With GIMP 1.1 now uses parasites. You can force layer renaming for
+    compatibility with GIMP 1.0 (that hasn't parasites) by holding the
+    Shift key while pressing the "Ok" button.
+  * Some changes into the UI code.
+  * Triggered strings for NLS support (libgimp/gimpintl.h).
+  * If you use GTK+ 1.1 you may need GTK+ 1.1.16 or better for correct button
+    resizing in the CharMap window.
+  * Updated sample scripts:
+      gdyntext_test.scm   -> for GIMP 1.0
+      gdyntext_test11.scm -> for GIMP 1.1
+Jan 21 1999
+  * MADE 1.2.1 RELEASE
+  * Fixed the problem with removed leading spaces.
+Jan 16 1999
+  * MADE 1.2 RELEASE
+  * Text loading from file.
+  * Ui code reorganization.
+  * Some internal changes for better and cleaner support for gimp 1.1 and
+    gtk 1.1 (changed GIMP11 ifdef to GTK_HAVE_FEATURES_1_1_12 and
+    GIMP_HAVE_PARASITES).
+Jan 12 1999
+  * MADE 1.1 RELEASE
+  * Applied some changes for working with gimp 1.1 and gtk+ 1.1.
+  * New charmap window.
+Jan 08 1999
+  * MADE 1.0 RELEASE
+  * Now the plug-in is undoable (except the modified layer name, GIMP fault).
+  * Corrected a bug that always create a new GRAYA_IMAGE layer if called on
+    a layer mask.
+  * PDB support is ok, now also returns the layer_id.
+  * Sample Script-Fu script added to the archive.
+  * Now restores the font preview state from the previous call.
+Jan 07 1999
+  * MADE 0.9 RELEASE
+  * Extended the font preview to the text area widget.
+  * The vertical scrollbar for the text area widget now works.
+  * Added some new error checks and a message window.
+  * Gui source code cleanup and re-organization.
+Dec 29 1998
+  * MADE 0.8 RELEASE
+  * Allows changing text font weight, slant and spacing.
+  * Fixed a bug that made gdyntext crash while rendering if the last line
+    isn't \n terminated.
+  * Fixed the plug-in RUN_WITH_LAST_VALS behaviour, now it re-apply on the
+    current layer (or a new one if the current hasn't alpha channel).
+  * Updated the PDB support, however it's still buggy ...
+Dec 27 1998
+  * MADE 0.7 RELEASE
+  * Text font preview.
+  * Text rotation.
+  * A button for creating a new layer instead of modifying the current one.
+  * About window.
+  * Removed the debug output.
+Dec 25 1998
+  * MADE 0.6 XMAS RELEASE
+  * Allows text alignment.
+Dec 21 1998
+  * MADE 0.5 RELEASE
+
+/* vim: set ts=2 sw=2 tw=79 ai expandtab: */

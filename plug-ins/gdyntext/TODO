@@ -1,0 +1,24 @@
+The GIMP Dynamic Text plug-in "todo"-list:
+==========================================
+
+* fix the problem with the ascent value while rendering text
+* allow only valid sizes for non scalable fonts (use gtkfontselection)
+* add customizable tab expansion
+* disable antialias for non scalable fonts
+* text save
+* charmap window must handle fonts with more than 256 chars.
+* behave more like an editor with font, color and justifcation applied on a
+  selected area only
+* a list of customizable pre-sets (useful for logos)
+* internal text rendering routine
+* transformation window: text path, perspective, color gradients, 3d
+* special effects, like customizable shadow or auto-call of scripts after the
+  text rendered
+* autoconf stuff
+
+If there's anything you would like to add, feel free
+to send me any suggestions for new stuff or improvements.
+
+Marco Lamberto <lm@geocities.com>
+
+/* vim: set ts=2 sw=2 tw=79 ai expandtab: */

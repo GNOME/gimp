@@ -733,6 +733,7 @@ plug-ins/gap/iter_ALT/old/Makefile
 plug-ins/gauss_iir/Makefile
 plug-ins/gauss_rle/Makefile
 plug-ins/gbr/Makefile
+plug-ins/gdyntext/Makefile
 plug-ins/gee/Makefile
 plug-ins/gfig/Makefile
 plug-ins/gfig/gfig-examples/Makefile
