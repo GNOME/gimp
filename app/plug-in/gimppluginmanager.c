@@ -29,6 +29,7 @@
 #include "plug-in-types.h"
 
 #include "config/gimpcoreconfig.h"
+#include "config/gimpconfig-error.h"
 #include "config/gimpconfig-path.h"
 
 #include "core/gimp.h"
@@ -132,7 +133,9 @@ plug_ins_init (Gimp               *gimp,
 
   if (! plug_in_rc_parse (gimp, filename, &error))
     {
-      g_message (error->message);
+      if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
+        g_message (error->message);
+
       g_clear_error (&error);
     }
 

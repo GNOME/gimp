@@ -90,7 +90,7 @@ plug_in_rc_parse (Gimp         *gimp,
   scanner = gimp_scanner_new_file (filename, error);
 
   if (! scanner)
-    return TRUE;
+    return FALSE;
 
   g_scanner_scope_add_symbol (scanner, 0,
                               "protocol-version",
