@@ -1,3 +1,4 @@
+# translation of es.po to Spanish
 # Spanish translation file for Gimp 2.x.
 # Copyright © 1998-2003 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
@@ -5,20 +6,21 @@
 # Francisco Vila <francisco.vila@hispalinux.es>, 2003.
 # Francisco Javier F. Serrador <serrador@arrakis.es>, 2003.
 # Pablo G. del Campo <pablodc@bigfoot.com>, 2003, 2004.
+# Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp.HEAD\n"
+"Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-25 03:37+0100\n"
-"PO-Revision-Date: 2004-02-25 10:02-0300\n"
-"Last-Translator: Pablo G. del Campo <pablodc@bigfoot.com>\n"
+"POT-Creation-Date: 2004-02-27 00:54+0100\n"
+"PO-Revision-Date: 2004-02-27 00:58+0100\n"
+"Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
-"X-Generator: KBabel 1.3\n"
+"X-Generator: KBabel 1.0.2\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: app/app_procs.c:183
@@ -36,7 +38,7 @@ msgstr ""
 #: app/app_procs.c:267
 #, c-format
 msgid "Opening '%s' failed: %s"
-msgstr "La apertura de «%s» ha fallado:%s"
+msgstr "La apertura de «%s» ha fallado: %s"
 
 #: app/main.c:217
 msgid ""
@@ -84,11 +86,11 @@ msgstr "Opciones:\n"
 
 #: app/main.c:509
 msgid "  -h, --help               Output this help.\n"
-msgstr "  -h, --help               Muestra esta ayuda.\n"
+msgstr "  -h, --help               Mostrar esta ayuda.\n"
 
 #: app/main.c:510
 msgid "  -v, --version            Output version information.\n"
-msgstr "  -v, --version            Muestra información sobre la versión.\n"
+msgstr "  -v, --version            Mostrar información sobre la versión.\n"
 
 #: app/main.c:511
 msgid "  --verbose                Show startup messages.\n"
@@ -245,17 +247,17 @@ msgid "Value"
 msgstr "Valor"
 
 #: app/base/base-enums.c:76 app/core/core-enums.c:98
-#: app/tools/gimpcolorbalancetool.c:305
+#: app/tools/gimpcolorbalancetool.c:303
 msgid "Red"
 msgstr "Rojo"
 
 #: app/base/base-enums.c:77 app/core/core-enums.c:99
-#: app/tools/gimpcolorbalancetool.c:312
+#: app/tools/gimpcolorbalancetool.c:310
 msgid "Green"
 msgstr "Verde"
 
 #: app/base/base-enums.c:78 app/core/core-enums.c:100
-#: app/tools/gimpcolorbalancetool.c:319
+#: app/tools/gimpcolorbalancetool.c:317
 msgid "Blue"
 msgstr "Azul"
 
@@ -331,8 +333,8 @@ msgstr "No se puede expandir ${%s}"
 #: app/core/gimpbrush.c:396 app/core/gimpbrushgenerated.c:379
 #: app/core/gimpbrushpipe.c:349 app/core/gimpgradient.c:352
 #: app/core/gimppalette.c:369 app/core/gimppattern.c:328
-#: app/tools/gimpcurvestool.c:1262 app/tools/gimplevelstool.c:1449
-#: app/widgets/gimptexteditor.c:373 app/xcf/xcf.c:273
+#: app/tools/gimpimagemaptool.c:546 app/widgets/gimptexteditor.c:374
+#: app/xcf/xcf.c:273
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "No se ha podido abrir «%s» para lectura: %s"
@@ -340,8 +342,8 @@ msgstr "No se ha podido abrir «%s» para lectura: %s"
 #: app/config/gimpconfig-utils.c:487 app/config/gimpconfigwriter.c:120
 #: app/core/gimpbrushgenerated.c:130 app/core/gimpgradient.c:498
 #: app/core/gimpgradient.c:584 app/core/gimppalette.c:567 app/gui/themes.c:238
-#: app/tools/gimpcurvestool.c:1261 app/tools/gimplevelstool.c:1448
-#: app/vectors/gimpvectors-export.c:83 app/xcf/xcf.c:330
+#: app/tools/gimpimagemaptool.c:545 app/vectors/gimpvectors-export.c:83
+#: app/xcf/xcf.c:330
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "No se ha podido abrir «%s» para escritura: %s"
@@ -464,7 +466,9 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:70
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
-msgstr "Esto es la distancia en píxeles desde donde el ajuste a la rejilla y la guía se activa"
+msgstr ""
+"Esto es la distancia en píxeles desde donde el ajuste a la rejilla y la guía "
+"se activa"
 
 #: app/config/gimprc-blurbs.h:74
 msgid ""
@@ -2132,45 +2136,53 @@ msgstr "La ruta no puede descender más."
 msgid "Lower Path"
 msgstr "Bajar la ruta"
 
-#: app/core/gimpimagefile.c:458
+#: app/core/gimpimagefile.c:478
 msgid "Remote image"
 msgstr "Imagen remota"
 
-#: app/core/gimpimagefile.c:463
+#: app/core/gimpimagefile.c:483 app/gui/preferences-dialog.c:1244
+msgid "Folder"
+msgstr "Carpeta"
+
+#: app/core/gimpimagefile.c:488
+msgid "Special File"
+msgstr "Archivo especial"
+
+#: app/core/gimpimagefile.c:493
 msgid "Could not open"
 msgstr "No se ha podido abrir"
 
-#: app/core/gimpimagefile.c:484
+#: app/core/gimpimagefile.c:514
 msgid "No preview available"
 msgstr "No hay vista previa disponible"
 
-#: app/core/gimpimagefile.c:488
+#: app/core/gimpimagefile.c:518
 msgid "Loading preview ..."
 msgstr "Cargando la vista previa..."
 
-#: app/core/gimpimagefile.c:492
+#: app/core/gimpimagefile.c:522
 msgid "Preview is out of date"
 msgstr "La vista previa está desactualizada"
 
-#: app/core/gimpimagefile.c:496
+#: app/core/gimpimagefile.c:526
 msgid "Cannot create preview"
 msgstr "No se puede crear la vista previa"
 
-#: app/core/gimpimagefile.c:503 app/gui/info-window.c:503
+#: app/core/gimpimagefile.c:533 app/gui/info-window.c:503
 #, c-format
 msgid "%d x %d pixels"
 msgstr "%d x %d píxeles"
 
-#: app/core/gimpimagefile.c:518
+#: app/core/gimpimagefile.c:548
 msgid "1 Layer"
 msgstr "1 capa"
 
-#: app/core/gimpimagefile.c:520
+#: app/core/gimpimagefile.c:550
 #, c-format
 msgid "%d Layers"
 msgstr "%d capas"
 
-#: app/core/gimpimagefile.c:557
+#: app/core/gimpimagefile.c:587
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "No se ha podido abrir la miniatura «%s»: %s"
@@ -2646,7 +2658,7 @@ msgstr "Achicar ajuste"
 msgid "Progress"
 msgstr "Progreso"
 
-#: app/display/gimpprogress.c:157 app/display/gimpprogress.c:219
+#: app/display/gimpprogress.c:157 app/display/gimpprogress.c:217
 msgid "Please wait..."
 msgstr "Por favor, espere..."
 
@@ -2662,11 +2674,11 @@ msgstr "Tipo de archivo desconocido"
 msgid "Not a regular file"
 msgstr "No es un archivo regular"
 
-#: app/file/file-open.c:156
+#: app/file/file-open.c:157
 msgid "Plug-In returned SUCCESS but did not return an image"
 msgstr "El complemento finalizó correctamente pero no ha devuelto una imagen"
 
-#: app/file/file-open.c:164
+#: app/file/file-open.c:165
 msgid "Plug-In could not open image"
 msgstr "El complemento no ha podido abrir la imagen"
 
@@ -3296,7 +3308,7 @@ msgstr "/Gu_ardar todos los errores en un archivo..."
 msgid "/Save _Selection to File..."
 msgstr "/Guardar la _selección en el archivo..."
 
-#: app/gui/file-commands.c:194 app/gui/file-open-dialog.c:692
+#: app/gui/file-commands.c:194 app/gui/file-open-dialog.c:370
 #: app/widgets/gimpdnd.c:1286 app/widgets/gimpdocumentview.c:468
 #, c-format
 msgid ""
@@ -3307,7 +3319,7 @@ msgstr ""
 "La apertura de «%s» ha fallado:\n"
 "%s"
 
-#: app/gui/file-commands.c:255 app/gui/file-save-dialog.c:393
+#: app/gui/file-commands.c:255 app/gui/file-save-dialog.c:383
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -3405,46 +3417,23 @@ msgstr ""
 msgid "Confirm Image Size"
 msgstr "Confirmar el tamaño de la imagen"
 
-#: app/gui/file-open-dialog.c:160 app/gui/file-open-dialog.c:187
+#: app/gui/file-open-dialog.c:127 app/gui/file-open-dialog.c:153
 msgid "Open Image"
 msgstr "Abrir imagen"
-
-#: app/gui/file-open-dialog.c:237
-#, c-format
-msgid ""
-"Click to update preview\n"
-"%s  Click to force update even if preview is up-to-date"
-msgstr ""
-"Pulse para actualizar la vista previa\n"
-"Presione %s veces para forzar la actualización aún si la vista previa está "
-"actualizada"
-
-#: app/gui/file-open-dialog.c:254 app/tools/gimpimagemaptool.c:240
-msgid "_Preview"
-msgstr "Vista _previa"
-
-#: app/gui/file-open-dialog.c:304 app/gui/file-open-dialog.c:412
-msgid "No Selection"
-msgstr "No hay selección"
-
-#: app/gui/file-open-dialog.c:488 app/gui/file-open-dialog.c:519
-#, c-format
-msgid "Thumbnail %d of %d"
-msgstr "Miniatura %d de %d"
 
 #: app/gui/file-open-menu.c:46
 msgid "/Automatic"
 msgstr "/Automático"
 
-#: app/gui/file-save-dialog.c:128 app/gui/file-save-dialog.c:212
+#: app/gui/file-save-dialog.c:120 app/gui/file-save-dialog.c:204
 msgid "Save Image"
 msgstr "Guardar imagen"
 
-#: app/gui/file-save-dialog.c:182
+#: app/gui/file-save-dialog.c:174
 msgid "Save a Copy of the Image"
 msgstr "Guardar una copia de la imagen"
 
-#: app/gui/file-save-dialog.c:312
+#: app/gui/file-save-dialog.c:304
 #, c-format
 msgid ""
 "File '%s' exists.\n"
@@ -3453,7 +3442,7 @@ msgstr ""
 "El archivo «%s» ya existe.\n"
 "¿Desea sobreescribirlo?"
 
-#: app/gui/file-save-dialog.c:317
+#: app/gui/file-save-dialog.c:309
 msgid "File Exists!"
 msgstr "¡El archivo ya existe!"
 
@@ -5595,10 +5584,6 @@ msgstr "Seleccionar un tema"
 msgid "Theme"
 msgstr "Tema"
 
-#: app/gui/preferences-dialog.c:1244
-msgid "Folder"
-msgstr "Carpeta"
-
 #: app/gui/preferences-dialog.c:1282
 msgid "Reload C_urrent Theme"
 msgstr "Recargar el tema act_ual"
@@ -7170,7 +7155,7 @@ msgid "Brightness-Contrast"
 msgstr "Brillo-Contraste"
 
 #: app/pdb/color_cmds.c:266 app/pdb/color_cmds.c:384
-#: app/tools/gimplevelstool.c:165
+#: app/tools/gimplevelstool.c:155
 msgid "Levels"
 msgstr "Niveles"
 
@@ -7179,7 +7164,7 @@ msgid "Posterize"
 msgstr "Posterizar"
 
 #: app/pdb/color_cmds.c:722 app/pdb/color_cmds.c:839
-#: app/tools/gimpcurvestool.c:149
+#: app/tools/gimpcurvestool.c:137
 msgid "Curves"
 msgstr "Curvas"
 
@@ -7656,19 +7641,19 @@ msgstr "Ajusta el brillo y el contraste"
 msgid "/Tools/Color Tools/B_rightness-Contrast..."
 msgstr "/Herramientas/Herramientas de colores/B_rillo y contraste..."
 
-#: app/tools/gimpbrightnesscontrasttool.c:148
+#: app/tools/gimpbrightnesscontrasttool.c:138
 msgid "Adjust Brightness and Contrast"
 msgstr "Ajusta el brillo y el contraste"
 
-#: app/tools/gimpbrightnesscontrasttool.c:183
+#: app/tools/gimpbrightnesscontrasttool.c:181
 msgid "Brightness-Contrast does not operate on indexed layers."
 msgstr "Brillo-Contraste no funciona sobre capas indexadas."
 
-#: app/tools/gimpbrightnesscontrasttool.c:238
+#: app/tools/gimpbrightnesscontrasttool.c:236
 msgid "_Brightness:"
 msgstr "_Brillo:"
 
-#: app/tools/gimpbrightnesscontrasttool.c:253
+#: app/tools/gimpbrightnesscontrasttool.c:251
 msgid "Con_trast:"
 msgstr "Con_traste:"
 
@@ -7762,39 +7747,39 @@ msgstr "Ajustar el balance de colores"
 msgid "/Tools/Color Tools/Color _Balance..."
 msgstr "/Herramientas/Herramientas de colores/_Balance de color..."
 
-#: app/tools/gimpcolorbalancetool.c:159
+#: app/tools/gimpcolorbalancetool.c:149
 msgid "Adjust Color Balance"
 msgstr "Ajustar el balance de colores"
 
-#: app/tools/gimpcolorbalancetool.c:195
+#: app/tools/gimpcolorbalancetool.c:193
 msgid "Color balance operates only on RGB color layers."
 msgstr "Balance de color sólo funciona sobre capas con color RGB."
 
-#: app/tools/gimpcolorbalancetool.c:278
+#: app/tools/gimpcolorbalancetool.c:276
 msgid "Select Range to Modify"
 msgstr "Seleccione el rango para modificar"
 
-#: app/tools/gimpcolorbalancetool.c:287
+#: app/tools/gimpcolorbalancetool.c:285
 msgid "Modify Selected Range's Color Levels"
 msgstr "Modificar los niveles de color en el rango seleccionado"
 
-#: app/tools/gimpcolorbalancetool.c:305
+#: app/tools/gimpcolorbalancetool.c:303
 msgid "Cyan"
 msgstr "Cían"
 
-#: app/tools/gimpcolorbalancetool.c:312
+#: app/tools/gimpcolorbalancetool.c:310
 msgid "Magenta"
 msgstr "Magenta"
 
-#: app/tools/gimpcolorbalancetool.c:319
+#: app/tools/gimpcolorbalancetool.c:317
 msgid "Yellow"
 msgstr "Amarillo"
 
-#: app/tools/gimpcolorbalancetool.c:329
+#: app/tools/gimpcolorbalancetool.c:327
 msgid "R_eset Range"
 msgstr "R_einiciar el rango"
 
-#: app/tools/gimpcolorbalancetool.c:338
+#: app/tools/gimpcolorbalancetool.c:336
 msgid "Preserve _Luminosity"
 msgstr "Conservar la _luminosidad"
 
@@ -7810,27 +7795,27 @@ msgstr "Colorear la imagen"
 msgid "/Tools/Color Tools/Colori_ze..."
 msgstr "/Herramientas/Herramientas de colores/Colori_zar..."
 
-#: app/tools/gimpcolorizetool.c:162
+#: app/tools/gimpcolorizetool.c:152
 msgid "Colorize the Image"
 msgstr "Colorear la imagen"
 
-#: app/tools/gimpcolorizetool.c:197
+#: app/tools/gimpcolorizetool.c:195
 msgid "Colorize operates only on RGB color layers."
 msgstr "Colorear sólo funciona sobre capas de color RGB."
 
-#: app/tools/gimpcolorizetool.c:237
+#: app/tools/gimpcolorizetool.c:235
 msgid "Select Color"
 msgstr "Seleccione un color"
 
-#: app/tools/gimpcolorizetool.c:256 app/tools/gimphuesaturationtool.c:365
+#: app/tools/gimpcolorizetool.c:254 app/tools/gimphuesaturationtool.c:363
 msgid "_Hue:"
 msgstr "_Tono:"
 
-#: app/tools/gimpcolorizetool.c:270 app/tools/gimphuesaturationtool.c:393
+#: app/tools/gimpcolorizetool.c:268 app/tools/gimphuesaturationtool.c:391
 msgid "_Saturation:"
 msgstr "_Saturación:"
 
-#: app/tools/gimpcolorizetool.c:284 app/tools/gimphuesaturationtool.c:379
+#: app/tools/gimpcolorizetool.c:282 app/tools/gimphuesaturationtool.c:377
 msgid "_Lightness:"
 msgstr "_Luminosidad:"
 
@@ -7937,56 +7922,56 @@ msgstr "Desde la selección"
 msgid "Auto Shrink"
 msgstr "Auto encoger"
 
-#: app/tools/gimpcurvestool.c:150
+#: app/tools/gimpcurvestool.c:138
 msgid "Adjust color curves"
 msgstr "Ajustar las curvas de color"
 
-#: app/tools/gimpcurvestool.c:151
+#: app/tools/gimpcurvestool.c:139
 msgid "/Tools/Color Tools/_Curves..."
 msgstr "/Herramientas/Herramientas de colores/_Curvas..."
 
-#: app/tools/gimpcurvestool.c:221
+#: app/tools/gimpcurvestool.c:198
 msgid "Adjust Color Curves"
 msgstr "Ajustar las curvas de color"
 
-#: app/tools/gimpcurvestool.c:284
+#: app/tools/gimpcurvestool.c:200
+msgid "Load Curves"
+msgstr "Cargar curvas"
+
+#: app/tools/gimpcurvestool.c:201
+msgid "Save Curves"
+msgstr "Guardar curvas"
+
+#: app/tools/gimpcurvestool.c:277
 msgid "Curves for indexed layers cannot be adjusted."
 msgstr "Las curvas para capas indexadas no pueden ser ajustadas."
 
-#: app/tools/gimpcurvestool.c:480 app/tools/gimplevelstool.c:416
+#: app/tools/gimpcurvestool.c:473 app/tools/gimplevelstool.c:408
 #: app/widgets/gimphistogrameditor.c:148
 msgid "Channel:"
 msgstr "Canal:"
 
-#: app/tools/gimpcurvestool.c:494 app/tools/gimplevelstool.c:430
+#: app/tools/gimpcurvestool.c:487 app/tools/gimplevelstool.c:422
 msgid "R_eset Channel"
 msgstr "R_einiciar el canal"
 
 #. Horizontal button box for load / save
-#: app/tools/gimpcurvestool.c:592 app/tools/gimplevelstool.c:638
+#: app/tools/gimpcurvestool.c:585 app/tools/gimplevelstool.c:630
 msgid "All Channels"
 msgstr "Todos los canales"
 
-#: app/tools/gimpcurvestool.c:606
+#: app/tools/gimpcurvestool.c:599
 msgid "Read curves settings from file"
 msgstr "Leer configuración de las curvas desde un archivo"
 
-#: app/tools/gimpcurvestool.c:616
+#: app/tools/gimpcurvestool.c:605
 msgid "Save curves settings to file"
 msgstr "Guardar la configuración de curvas en un archivo"
 
 #. The radio box for selecting the curve type
-#: app/tools/gimpcurvestool.c:624
+#: app/tools/gimpcurvestool.c:609
 msgid "Curve Type"
 msgstr "Tipo de curva"
-
-#: app/tools/gimpcurvestool.c:1185
-msgid "Load Curves"
-msgstr "Cargar curvas"
-
-#: app/tools/gimpcurvestool.c:1204
-msgid "Save Curves"
-msgstr "Guardar curvas"
 
 # //R ????
 #: app/tools/gimpdodgeburntool.c:71
@@ -8101,57 +8086,61 @@ msgstr "Ajusta el tono y la saturación"
 msgid "/Tools/Color Tools/Hue-_Saturation..."
 msgstr "/Herramientas/Herramientas de colores/Tono y _saturación..."
 
-#: app/tools/gimphuesaturationtool.c:176
+#: app/tools/gimphuesaturationtool.c:166
 msgid "Adjust Hue / Lightness / Saturation"
 msgstr "Ajustar el tono / luminosidad / saturación"
 
-#: app/tools/gimphuesaturationtool.c:212
+#: app/tools/gimphuesaturationtool.c:210
 msgid "Hue-Saturation operates only on RGB color layers."
 msgstr "Tono-saturación sólo funciona sobre capas de color RGB."
 
-#: app/tools/gimphuesaturationtool.c:265
+#: app/tools/gimphuesaturationtool.c:263
 msgid "_Master"
 msgstr "P_rincipal"
 
-#: app/tools/gimphuesaturationtool.c:266
+#: app/tools/gimphuesaturationtool.c:264
 msgid "_R"
 msgstr "_R"
 
-#: app/tools/gimphuesaturationtool.c:267
+#: app/tools/gimphuesaturationtool.c:265
 msgid "_Y"
 msgstr "_Y"
 
-#: app/tools/gimphuesaturationtool.c:268
+#: app/tools/gimphuesaturationtool.c:266
 msgid "_G"
 msgstr "_G"
 
-#: app/tools/gimphuesaturationtool.c:269
+#: app/tools/gimphuesaturationtool.c:267
 msgid "_C"
 msgstr "_C"
 
-#: app/tools/gimphuesaturationtool.c:270
+#: app/tools/gimphuesaturationtool.c:268
 msgid "_B"
 msgstr "_B"
 
-#: app/tools/gimphuesaturationtool.c:271
+#: app/tools/gimphuesaturationtool.c:269
 msgid "_M"
 msgstr "_M"
 
-#: app/tools/gimphuesaturationtool.c:274
+#: app/tools/gimphuesaturationtool.c:272
 msgid "Select Primary Color to Modify"
 msgstr "Seleccione el color primario para modificar"
 
-#: app/tools/gimphuesaturationtool.c:303
+#: app/tools/gimphuesaturationtool.c:301
 msgid "Modify all colors"
 msgstr "Modificar todos los colores"
 
-#: app/tools/gimphuesaturationtool.c:346
+#: app/tools/gimphuesaturationtool.c:344
 msgid "Modify Selected Color"
 msgstr "Modificar el color seleccionado"
 
-#: app/tools/gimphuesaturationtool.c:409
+#: app/tools/gimphuesaturationtool.c:407
 msgid "R_eset Color"
 msgstr "R_einiciar el color"
+
+#: app/tools/gimpimagemaptool.c:242
+msgid "_Preview"
+msgstr "Vista _previa"
 
 #. adjust sliders
 #: app/tools/gimpinkoptions.c:257
@@ -8213,72 +8202,72 @@ msgstr "Seleccionar formas de la imagen"
 msgid "/Tools/Selection Tools/_Intelligent Scissors"
 msgstr "/Herramientas/Herramientas de selección/Tijeras _inteligentes"
 
-#: app/tools/gimplevelstool.c:166
+#: app/tools/gimplevelstool.c:156
 msgid "Adjust color levels"
 msgstr "Ajusta niveles de color"
 
-#: app/tools/gimplevelstool.c:167
+#: app/tools/gimplevelstool.c:157
 msgid "/Tools/Color Tools/_Levels..."
 msgstr "/Herramientas/Herramientas de colores/Nive_les..."
 
-#: app/tools/gimplevelstool.c:235
+#: app/tools/gimplevelstool.c:215
 msgid "Adjust Color Levels"
 msgstr "Ajusta los niveles de color"
 
-#: app/tools/gimplevelstool.c:286
+#: app/tools/gimplevelstool.c:217
+msgid "Load Levels"
+msgstr "Cargar niveles"
+
+#: app/tools/gimplevelstool.c:218
+msgid "Save Levels"
+msgstr "Guardar niveles"
+
+#: app/tools/gimplevelstool.c:278
 msgid "Levels for indexed layers cannot be adjusted."
 msgstr "Los niveles para capas indexadas no pueden ser ajustados."
 
-#: app/tools/gimplevelstool.c:358
+#: app/tools/gimplevelstool.c:350
 msgid "Pick Black Point"
 msgstr "Seleccione un punto negro"
 
-#: app/tools/gimplevelstool.c:362
+#: app/tools/gimplevelstool.c:354
 msgid "Pick Gray Point"
 msgstr "Seleccione un punto gris"
 
 # Por coherencia con lo anterior. FVD
-#: app/tools/gimplevelstool.c:366
+#: app/tools/gimplevelstool.c:358
 msgid "Pick White Point"
 msgstr "Seleccione un punto blanco"
 
 #. Input levels frame
-#: app/tools/gimplevelstool.c:440
+#: app/tools/gimplevelstool.c:432
 msgid "Input Levels"
 msgstr "Niveles de entrada"
 
-#: app/tools/gimplevelstool.c:536
+#: app/tools/gimplevelstool.c:528
 msgid "Gamma"
 msgstr "Gamma"
 
 #. Output levels frame
-#: app/tools/gimplevelstool.c:566
+#: app/tools/gimplevelstool.c:558
 msgid "Output Levels"
 msgstr "Niveles de salida"
 
-#: app/tools/gimplevelstool.c:657
+#: app/tools/gimplevelstool.c:649
 msgid "Read levels settings from file"
 msgstr "Leer las configuración de los niveles desde un archivo"
 
-#: app/tools/gimplevelstool.c:667
+#: app/tools/gimplevelstool.c:655
 msgid "Save levels settings to file"
 msgstr "Guardar la configuración de niveles en un archivo"
 
-#: app/tools/gimplevelstool.c:680
+#: app/tools/gimplevelstool.c:663
 msgid "_Auto"
 msgstr "_Auto"
 
-#: app/tools/gimplevelstool.c:682
+#: app/tools/gimplevelstool.c:665
 msgid "Adjust levels automatically"
 msgstr "Ajustar los niveles automáticamente"
-
-#: app/tools/gimplevelstool.c:1373
-msgid "Load Levels"
-msgstr "Cargar niveles"
-
-#: app/tools/gimplevelstool.c:1392
-msgid "Save Levels"
-msgstr "Guardar niveles"
 
 #: app/tools/gimpmagnifyoptions.c:225
 msgid "Allow Window Resizing"
@@ -8458,15 +8447,15 @@ msgstr "Reduce la imagen a un número fijo de colores"
 msgid "/Tools/Color Tools/_Posterize..."
 msgstr "/Herramientas/Herramientas de colores/_Posterizar..."
 
-#: app/tools/gimpposterizetool.c:141
+#: app/tools/gimpposterizetool.c:131
 msgid "Posterize (Reduce Number of Colors)"
 msgstr "Posterizar (reducir la cantidad de colores)"
 
-#: app/tools/gimpposterizetool.c:175
+#: app/tools/gimpposterizetool.c:173
 msgid "Posterize does not operate on indexed layers."
 msgstr "Posterizar no funciona sobre capas indexadas."
 
-#: app/tools/gimpposterizetool.c:225
+#: app/tools/gimpposterizetool.c:223
 msgid "Posterize _Levels:"
 msgstr "Nive_les de posterización:"
 
@@ -8677,15 +8666,15 @@ msgstr "Reduce la imagen a dos colores usando un umbral"
 msgid "/Tools/Color Tools/_Threshold..."
 msgstr "/Herramientas/Herramientas de colores/_Umbral..."
 
-#: app/tools/gimpthresholdtool.c:157
+#: app/tools/gimpthresholdtool.c:147
 msgid "Apply Threshold"
 msgstr "Aplicar umbral"
 
-#: app/tools/gimpthresholdtool.c:200
+#: app/tools/gimpthresholdtool.c:198
 msgid "Threshold does not operate on indexed layers."
 msgstr "El umbral no funciona sobre capas indexadas."
 
-#: app/tools/gimpthresholdtool.c:258
+#: app/tools/gimpthresholdtool.c:256
 msgid "Threshold Range:"
 msgstr "Rango del umbral:"
 
@@ -9664,7 +9653,7 @@ msgstr "Borrar todo el texto"
 msgid "Open Text File (UTF-8)"
 msgstr "Abrir archivo de texto (UTF-8)"
 
-#: app/widgets/gimptexteditor.c:402
+#: app/widgets/gimptexteditor.c:403
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Datos UTF-8 inválidos en el archivo «%s»"
@@ -10008,4 +9997,18 @@ msgstr "Error XCF: Se encontró una versión %d de archivo de tipo XCF no soport
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
 msgstr "Cree y edite imágenes o fotografías"
+
+#~ msgid ""
+#~ "Click to update preview\n"
+#~ "%s  Click to force update even if preview is up-to-date"
+#~ msgstr ""
+#~ "Pulse para actualizar la vista previa\n"
+#~ "Presione %s veces para forzar la actualización aún si la vista previa "
+#~ "está actualizada"
+
+#~ msgid "No Selection"
+#~ msgstr "No hay selección"
+
+#~ msgid "Thumbnail %d of %d"
+#~ msgstr "Miniatura %d de %d"
 
