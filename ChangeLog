@@ -1,5 +1,10 @@
 2004-03-13  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimptransformoptions.c (gimp_transform_options_gui): for
+	consistency, changed the label from "Supersample" to "Supersampling".
+
+2004-03-13  Sven Neumann  <sven@gimp.org>
+
 	* app/paint-funcs/paint-funcs.c: use g_printerr() for debug output.
 
 	* app/base/tile-manager.c: cleaned up stone-old debug output.
