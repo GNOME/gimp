@@ -1,22 +1,26 @@
 ## Process this file with automake to produce Makefile.in
 
-if OS_WIN32
-mwindows = -mwindows
-endif
-
-LDFLAGS = $(mwindows)
+LDFLAGS = -mwindows
 
 libexecdir = $(gimpplugindir)/plug-ins
 
-EXTRA_DIST = README.ifscompose
+libexec_PROGRAMS = twain
 
-libexec_PROGRAMS = ifscompose
+twain_SOURCES = \
+	tw_func.c	\
+	tw_func.h	\
+	tw_util.c	\
+	tw_util.h	\
+	twain.c		\
+	twain.h
 
-ifscompose_SOURCES = \
-	ifscompose.c		\
-	ifscompose.h		\
-	ifscompose_utils.c      \
-	ifscompose_storage.c
+EXTRA_DIST = \
+	README		\
+	tw_dump.c	\
+	tw_dump.h	\
+	tw_sess.c	\
+	twain.ico	\
+	twain.rc
 
 INCLUDES = \
 	-I$(top_srcdir)			\
@@ -24,14 +28,15 @@ INCLUDES = \
 	$(GTK_CFLAGS)			\
 	-I$(includedir)
 
+AM_CPPFLAGS = \
+        -DLOCALEDIR=\""$(localedir)"\"
+
 LDADD = \
 	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
-	$(INTLLIBS)
-
-AM_CPPFLAGS = \
-	-DLOCALEDIR=\""$(localedir)"\"
+	$(INTLLIBS)				\
+	-luser32
 
 .PHONY: files
 

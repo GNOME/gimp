@@ -1,5 +1,11 @@
 ## Process this file with automake to produce Makefile.in
 
+if OS_WIN32
+mwindows = -mwindows
+endif
+
+LDFLAGS = $(mwindows)
+
 libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = MapObject

@@ -1,5 +1,9 @@
 ## Process this file with automake to produce Makefile.in
 
+if OS_WIN32
+no_undefined = -no-undefined
+endif
+
 gckincludedir = $(includedir)/gck
 
 lib_LTLIBRARIES = libgck.la
@@ -11,7 +15,7 @@ gckinclude_HEADERS = \
 	gck.h
 
 libgck_la_LDFLAGS = \
-	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) -release $(LT_RELEASE)
+	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) -release $(LT_RELEASE) $(no_undefined)
 
 INCLUDES = \
 	-I..			\

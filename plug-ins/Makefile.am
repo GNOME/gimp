@@ -3,30 +3,21 @@
 EXTRA_DIST = \
 	makefile.mingw		\
 	makefile.mingw.in	\
-	makefile.msc		\
-	twain/README		\
-	twain/tw_dump.c		\
-	twain/tw_dump.h		\
-	twain/tw_func.c		\
-	twain/tw_func.h		\
-	twain/tw_sess.c		\
-	twain/tw_util.c		\
-	twain/tw_util.h		\
-	twain/twain.c		\
-	twain/twain.h		\
-	winsnap/resource.h	\
-	winsnap/select.cur	\
-	winsnap/small.ico	\
-	winsnap/winsnap.c	\
-	winsnap/winsnap.h	\
-	winsnap/winsnap.ico	\
-	winsnap/winsnap.rc
+	makefile.msc
 
 ## if BUILD_PYTHON
 ## pygimp=pygimp
 ## else
 ## pygimp=
 ## endif
+
+if OS_WIN32
+TWAIN = twain
+WINSNAP = winsnap
+XJT =
+else
+PRINT = print
+endif
 
 SUBDIRS = 			\
 	libgck			\
@@ -53,11 +44,13 @@ SUBDIRS = 			\
 	maze			\
 	mosaic			\
 	pagecurl		\
-	print			\
+	$(PRINT)		\
 	rcm			\
 	sgi			\
 	sel2path		\
+	$(TWAIN)		\
 	$(WEBBROWSER)		\
+	$(WINSNAP)		\
 	$(XJT)			\
 	common
 

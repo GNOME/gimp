@@ -1,5 +1,16 @@
 ## Process this file with automake to produce Makefile.in
 
+if OS_WIN32
+mwindows = -mwindows
+endif
+
+LDFLAGS = $(mwindows)
+
+if !OS_WIN32
+GAP_FRONTENDS = gap_frontends
+GAP_NAVIGATOR_DIALOG = gap_navigator_dialog
+endif
+
 libexecdir = $(gimpplugindir)/plug-ins
 
 scriptdatadir = $(gimpdatadir)/scripts
@@ -100,8 +111,8 @@ EXTRA_DIST = \
 libexec_PROGRAMS = \
 	gap_plugins		\
 	gap_filter		\
-	gap_frontends		\
-	gap_navigator_dialog	\
+	$(GAP_FRONTENDS)	\
+	$(GAP_NAVIGATOR_DIALOG)	\
 	$(GAP_DECODE_MPEG)
 
 EXTRA_PROGRAMS = \

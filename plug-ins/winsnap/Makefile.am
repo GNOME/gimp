@@ -1,22 +1,21 @@
 ## Process this file with automake to produce Makefile.in
 
-if OS_WIN32
-mwindows = -mwindows
-endif
-
-LDFLAGS = $(mwindows)
+LDFLAGS = -mwindows
 
 libexecdir = $(gimpplugindir)/plug-ins
 
-EXTRA_DIST = README.ifscompose
+libexec_PROGRAMS = winsnap
 
-libexec_PROGRAMS = ifscompose
+winsnap_SOURCES = \
+	winsnap.c	\
+	winsnap.h
 
-ifscompose_SOURCES = \
-	ifscompose.c		\
-	ifscompose.h		\
-	ifscompose_utils.c      \
-	ifscompose_storage.c
+EXTRA_DIST = \
+	resource.h	\
+	select.cur	\
+	small.ico	\
+	winsnap.ico	\
+	winsnap.rc
 
 INCLUDES = \
 	-I$(top_srcdir)			\
@@ -24,14 +23,14 @@ INCLUDES = \
 	$(GTK_CFLAGS)			\
 	-I$(includedir)
 
+AM_CPPFLAGS = \
+        -DLOCALEDIR=\""$(localedir)"\"
+
 LDADD = \
 	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
-
-AM_CPPFLAGS = \
-	-DLOCALEDIR=\""$(localedir)"\"
 
 .PHONY: files
 

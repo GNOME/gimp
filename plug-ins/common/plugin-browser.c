@@ -215,7 +215,9 @@ details_callback (GtkWidget *widget,
     {
       GTK_PANED (pdesc->paned)->child1_resize = FALSE;
       gtk_paned_set_handle_size (GTK_PANED (pdesc->paned), 10);
+#if !defined (GTK_CHECK_VERSION) || !GTK_CHECK_VERSION (1, 3, 0)
       gtk_paned_set_gutter_size (GTK_PANED (pdesc->paned), 6);
+#endif
       gtk_label_set_text (lab, _("Details <<"));
       gtk_widget_show (pdesc->descr_scroll);
       pdesc->details_showing = TRUE;
@@ -226,7 +228,9 @@ details_callback (GtkWidget *widget,
       GTK_PANED (pdesc->paned)->child1_resize = TRUE;
       GTK_PANED (pdesc->paned)->child2_resize = TRUE;
       gtk_paned_set_handle_size (GTK_PANED (pdesc->paned), 0);
+#if !defined (GTK_CHECK_VERSION) || !GTK_CHECK_VERSION (1, 3, 0)
       gtk_paned_set_gutter_size (GTK_PANED (pdesc->paned), 0);
+#endif
       gtk_label_set_text (lab, _("Details >>"));
       gtk_widget_hide (pdesc->descr_scroll);
       gtk_paned_set_position (GTK_PANED (pdesc->paned),
@@ -1025,8 +1029,9 @@ gimp_plugin_desc (void)
   gtk_widget_show (hbox);
 
   gtk_paned_set_handle_size (GTK_PANED (hbox), 0);
+#if !defined (GTK_CHECK_VERSION) || !GTK_CHECK_VERSION (1, 3, 0)
   gtk_paned_set_gutter_size (GTK_PANED (hbox), 0);
-
+#endif
   /* left = vbox : the list and the search entry */
   
   plugindesc->left_paned = vbox = gtk_vbox_new (FALSE, 0);

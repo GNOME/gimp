@@ -1,5 +1,11 @@
 ## Process this file with automake to produce Makefile.in
 
+if OS_WIN32
+mwindows = -mwindows
+endif
+
+LDFLAGS = $(mwindows)
+
 EXTRA_DIST = \
 	graphics/align_center.xpm		\
 	graphics/align_left.xpm			\
