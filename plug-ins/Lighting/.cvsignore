@@ -4,3 +4,6 @@ Makefile
 _libs
 .libs
 Lighting
+Lighting.prj
+Lighting.pws
+.tm_project.cache

@@ -1,3 +1,18 @@
+2002-10-16  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/imagemap/imap_default_dialog.c (dialog_destroy): function 
+	now correctly returns a value.
+
+2002-10-16  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/Lighting/lighting_image.c
+	* plug-ins/Lighting/lighting_main.[ch]
+	* plug-ins/Lighting/lighting_preview.[ch]
+	* plug-ins/Lighting/lighting_shade.c
+	* plug-ins/Lighting/lighting_ui.c: applied patch from Jeroen Lamain
+	<roccodevinger@yahoo.com> to fix #52896 (Lighting Effects plugin needs 
+	interactive light placement)
+
 2002-10-15  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpeditor.c: changed the default button_icon_size to

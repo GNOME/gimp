@@ -32,13 +32,25 @@ typedef struct
 extern gint        lightx, lighty;
 extern BackBuffer  backbuf;
 extern gdouble    *xpostab, *ypostab;
+extern guint light_hit;
+extern guint left_button_pressed;
+extern GtkWidget * spin_pos_x;
+extern GtkWidget * spin_pos_y;
+extern GtkWidget * spin_pos_z;
 
 /* Externally visible functions */
 
 void draw_preview_image (gint recompute);
-gint check_light_hit    (gint xpos,
+void update_preview_image(void);
+gint preview_events (GtkWidget *area,
+				     GdkEvent  *event);
+
+
+gint check_marker_hit    (gint xpos,
 			 gint ypos);
 void update_light       (gint xpos,
 			 gint ypos);
+
+void preview_callback          (GtkWidget *widget);
 
 #endif  /* __LIGHTING_PREVIEW_H__ */

@@ -44,7 +44,6 @@ static gboolean
 dialog_destroy(GtkWidget *widget, GdkEvent *event, gpointer data)
 {
    dialog_cancel(widget, data);
-
    return TRUE;
 }
 

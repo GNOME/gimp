@@ -61,20 +61,14 @@ GtkWidget *previewarea = NULL;
 
 static GtkWidget *pointlightwid = NULL;
 static GtkWidget *dirlightwid   = NULL;
+
 /*
 static gint bump_page_pos = -1;
 static gint env_page_pos  = -1;
 */
-static guint left_button_pressed = FALSE;
-static guint light_hit           = FALSE;
-
 static gboolean run = FALSE;
 
-
 static void create_main_notebook      (GtkWidget *container);
-
-static gint preview_events            (GtkWidget *area,
-				       GdkEvent  *event);
 
 #ifdef _LIGHTNING_UNUSED_CODE
 static void xyzval_update             (GtkEntry *entry);
@@ -93,7 +87,9 @@ static void toggleenvironment_update  (GtkWidget *widget,
 static void lightmenu_callback        (GtkWidget *widget,
 				       gpointer   data);
 
-static void preview_callback          (GtkWidget *widget);
+static void interactive_preview_timer_callback( void );
+
+
 static void apply_callback            (GtkWidget *widget);
 
 static gint bumpmap_constrain         (gint32   image_id,
@@ -147,6 +143,7 @@ toggle_update (GtkWidget *widget,
 /*****************************/
 /* Toggle bumpmapping update */
 /*****************************/
+
 /*
 static void
 togglebump_update (GtkWidget *widget,
@@ -171,9 +168,11 @@ togglebump_update (GtkWidget *widget,
     }
 }
 */
+
 /*************************************/
 /* Toggle environment mapping update */
 /*************************************/
+
 /*
 static void
 toggleenvironment_update (GtkWidget *widget,
@@ -198,6 +197,8 @@ toggleenvironment_update (GtkWidget *widget,
     }
 }
 */
+
+
 /*****************************************/
 /* Main window light type menu callback. */
 /*****************************************/
@@ -223,6 +224,9 @@ lightmenu_callback (GtkWidget *widget,
       gtk_widget_hide (pointlightwid);
       gtk_widget_hide (dirlightwid);
     }
+
+  update_preview_image();
+
 }
 
 static void
@@ -243,6 +247,9 @@ preview_callback (GtkWidget *widget)
 {
   draw_preview_image (TRUE);
 }
+
+
+
 
 /*********************************************/
 /* Main window "-" (zoom in) button callback */
@@ -287,9 +294,7 @@ bumpmap_constrain (gint32   image_id,
   if (drawable_id == -1)
     return TRUE;
 
-  return (gimp_drawable_is_gray (drawable_id) &&
-	  !gimp_drawable_has_alpha (drawable_id) &&
-          (gimp_drawable_width (drawable_id) ==
+  return  ((gimp_drawable_width (drawable_id) ==
 	   gimp_drawable_width (mapvals.drawable_id)) &&
           (gimp_drawable_height (drawable_id) ==
 	   gimp_drawable_height (mapvals.drawable_id)));
@@ -321,53 +326,6 @@ envmap_drawable_callback (gint32   id,
   mapvals.envmap_id = id;
   env_width = gimp_drawable_width (mapvals.envmap_id);
   env_height = gimp_drawable_height (mapvals.envmap_id);
-}
-
-/******************************/
-/* Preview area event handler */
-/******************************/
-
-static gint
-preview_events (GtkWidget *area,
-		GdkEvent  *event)
-{
-  switch (event->type)
-    {
-      case GDK_EXPOSE:
-
-        /* Is this the first exposure? */
-        /* =========================== */
-
-        if (!gc)
-          {
-            gc = gdk_gc_new (area->window);
-            draw_preview_image (TRUE);
-          }
-        else
-          draw_preview_image (FALSE);
-        break; 
-      case GDK_ENTER_NOTIFY:
-        break;
-      case GDK_LEAVE_NOTIFY:
-        break;
-      case GDK_BUTTON_PRESS:
-        light_hit = check_light_hit (event->button.x, event->button.y);
-        left_button_pressed = TRUE;
-        break;
-      case GDK_BUTTON_RELEASE:
-        if (light_hit == TRUE)
-          draw_preview_image (TRUE);
-        left_button_pressed = FALSE;
-        break;
-      case GDK_MOTION_NOTIFY:
-        if (left_button_pressed == TRUE && light_hit == TRUE)
-          update_light (event->motion.x, event->motion.y);
-        break;
-      default:
-        break;
-    }
-
-  return FALSE;
 }
 
 /***********************/
@@ -567,8 +525,8 @@ create_light_page (void)
 				      (gpointer) DIRECTIONAL_LIGHT, NULL,
 				      _("Point"),
 				      (gpointer) POINT_LIGHT, NULL,
-				      _("Spot"),
-				      (gpointer) SPOT_LIGHT, NULL,
+/*				      _("Spot"),
+				      (gpointer) SPOT_LIGHT, NULL, */
 
 				      NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
@@ -584,6 +542,9 @@ create_light_page (void)
   g_signal_connect (G_OBJECT (colorbutton), "color_changed",
                     G_CALLBACK (gimp_color_button_get_color), 
                     &mapvals.lightsource.color);
+  g_signal_connect(G_OBJECT(colorbutton), "color_changed",
+		   G_CALLBACK (update_preview_image),
+		   NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Lig_ht Color:"), 1.0, 0.5,
 			     colorbutton, 1, TRUE);
@@ -604,43 +565,55 @@ create_light_page (void)
   gtk_container_add (GTK_CONTAINER (pointlightwid), table);
   gtk_widget_show (table);
 
-  spinbutton = gimp_spin_button_new (&adj, mapvals.lightsource.position.x,
+  spin_pos_x = gimp_spin_button_new (&adj, mapvals.lightsource.position.x,
 				     -G_MAXFLOAT, G_MAXFLOAT,
 				     0.1, 1.0, 1.0, 0.0, 2);
+
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("_X:"), 1.0, 0.5,
-			     spinbutton, 1, TRUE);
+			     spin_pos_x, 1, TRUE);
   g_signal_connect (G_OBJECT (adj), "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.lightsource.position.x);
 
-  gimp_help_set_help_data (spinbutton,
+  g_signal_connect(G_OBJECT(adj), "value_changed",
+		   G_CALLBACK (update_preview_image),
+		   NULL);
+
+  gimp_help_set_help_data ( spin_pos_x,
 			   _("Light source X position in XYZ space"), NULL);
 
-  spinbutton = gimp_spin_button_new (&adj, mapvals.lightsource.position.y,
+  spin_pos_y = gimp_spin_button_new (&adj, mapvals.lightsource.position.y,
 				     -G_MAXFLOAT, G_MAXFLOAT,
 				     0.1, 1.0, 1.0, 0.0, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("_Y:"), 1.0, 0.5,
-			     spinbutton, 1, TRUE);
+			      spin_pos_y, 1, TRUE);
   g_signal_connect (G_OBJECT (adj), "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.lightsource.position.y);
+  g_signal_connect(G_OBJECT(adj), "value_changed",
+		   G_CALLBACK (update_preview_image),
+		   NULL);
 
-  gimp_help_set_help_data (spinbutton,
+
+  gimp_help_set_help_data ( spin_pos_y,
 			   _("Light source Y position in XYZ space"), NULL);
 
-  spinbutton = gimp_spin_button_new (&adj, mapvals.lightsource.position.z,
+  spin_pos_z = gimp_spin_button_new (&adj, mapvals.lightsource.position.z,
 				     -G_MAXFLOAT, G_MAXFLOAT,
 				     0.1, 1.0, 1.0, 0.0, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("_Z:"), 1.0, 0.5,
-			     spinbutton, 1, TRUE);
+			      spin_pos_z, 1, TRUE);
   g_signal_connect (G_OBJECT (adj), "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.lightsource.position.z);
+  g_signal_connect(G_OBJECT(adj), "value_changed",
+		   G_CALLBACK (update_preview_image),
+		   NULL);
 
-  gimp_help_set_help_data (spinbutton,
+  gimp_help_set_help_data (  spin_pos_z,
 			   _("Light source Z position in XYZ space"), NULL);
 
 
@@ -665,6 +638,10 @@ create_light_page (void)
   g_signal_connect (G_OBJECT (adj), "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.lightsource.direction.x);
+  g_signal_connect(G_OBJECT(adj), "value_changed",
+		   G_CALLBACK (update_preview_image),
+		   NULL);
+
 
   gimp_help_set_help_data (spinbutton,
 			   _("Light source X direction in XYZ space"), NULL);
@@ -677,6 +654,9 @@ create_light_page (void)
   g_signal_connect (G_OBJECT (adj), "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.lightsource.direction.y);
+  g_signal_connect(G_OBJECT(adj), "value_changed",
+		   G_CALLBACK (update_preview_image),
+		   NULL);
 
   gimp_help_set_help_data (spinbutton,
 			   _("Light source Y direction in XYZ space"), NULL);
@@ -689,6 +669,9 @@ create_light_page (void)
   g_signal_connect (G_OBJECT (adj), "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.lightsource.direction.z);
+  g_signal_connect(G_OBJECT(adj), "value_changed",
+		   G_CALLBACK (update_preview_image),
+		   NULL);
 
   gimp_help_set_help_data (spinbutton,
 			   _("Light source Z direction in XYZ space"), NULL);
@@ -745,6 +728,10 @@ create_material_page (void)
   g_signal_connect (G_OBJECT (adj), "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.material.ambient_int);
+  g_signal_connect(G_OBJECT(adj), "value_changed",
+		   G_CALLBACK (update_preview_image),
+		   NULL);
+
   gtk_widget_show (spinbutton);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
 
@@ -771,6 +758,10 @@ create_material_page (void)
   g_signal_connect (G_OBJECT (adj), "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.material.diffuse_int);
+  g_signal_connect(G_OBJECT(adj), "value_changed",
+		   G_CALLBACK (update_preview_image),
+		   NULL);
+
   gtk_widget_show (spinbutton);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
 
@@ -1116,6 +1107,8 @@ main_dialog (GimpDrawable *drawable)
   GtkWidget *hbox;
   GtkWidget *frame;
   GtkWidget *button;
+  GtkWidget *toggle;
+
   /*
   GtkWidget *image;
   */
@@ -1180,12 +1173,13 @@ main_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (frame), previewarea);
   gtk_widget_show (previewarea);
 
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+
+  /* create preview options, frame and vbox */
+  hbox = gtk_hbox_new (FALSE, 2);
   gtk_widget_show (hbox);
 
-  button = gtk_button_new_with_mnemonic (_("_Update Preview"));
-  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
+
+  button = gtk_button_new_with_mnemonic (_("_Update"));
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   g_signal_connect (G_OBJECT (button), "clicked",
                     G_CALLBACK (preview_callback),
@@ -1193,36 +1187,32 @@ main_dialog (GimpDrawable *drawable)
   gtk_widget_show (button);
 
   gimp_help_set_help_data (button, _("Recompute preview image"), NULL);
- 
-  /*
-  button = gtk_button_new ();
-  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
-  gimp_help_set_help_data (button, _("Zoom out (make image smaller)"), NULL);
+  toggle = gtk_check_button_new_with_mnemonic (_("I_nteractive"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				mapvals.interactive_preview);
+  gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &mapvals.interactive_preview);
+  g_signal_connect(G_OBJECT(toggle), "toggled",
+		   G_CALLBACK (update_preview_image),
+		   NULL);
 
-  image = gtk_image_new_from_stock (GTK_STOCK_ZOOM_OUT, GTK_ICON_SIZE_MENU);
-  gtk_container_add (GTK_CONTAINER (button), image);
-  gtk_widget_show (image);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
-		    G_CALLBACK (zoomout_callback),
-		    NULL);
+  gtk_widget_show (toggle);
 
-  button = gtk_button_new ();
-  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gimp_help_set_help_data (toggle,
+			   _("Enable/disable real time preview of changes"),
+			   NULL);
 
-  gimp_help_set_help_data (button, _("Zoom in (make image bigger)"), NULL);
+  frame = gtk_frame_new ("Preview options");
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (frame);
 
-  image = gtk_image_new_from_stock (GTK_STOCK_ZOOM_IN, GTK_ICON_SIZE_MENU);
-  gtk_container_add (GTK_CONTAINER (button), image);
-  gtk_widget_show (image);
-
-  g_signal_connect (G_OBJECT (button), "clicked",
-		    G_CALLBACK (zoomin_callback),
-		    NULL);
-  */
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   create_main_notebook (main_hbox);
 

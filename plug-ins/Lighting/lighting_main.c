@@ -79,6 +79,7 @@ set_default_settings (void)
   mapvals.env_mapped             = FALSE;
   mapvals.ref_mapped             = FALSE;
   mapvals.previewquality         = FALSE;
+  mapvals.interactive_preview    = TRUE;
 
   mapvals.bumpmap_id = -1;
   mapvals.envmap_id  = -1;

@@ -42,11 +42,21 @@ peek_map (GimpPixelRgn *region,
 	  gint       x,
 	  gint       y)
 {
-  guchar data;
+  guchar data[4];
+  guchar ret_val;
 
-  gimp_pixel_rgn_get_pixel (region, &data, x, y);
 
-  return data;
+  gimp_pixel_rgn_get_pixel (region, data, x, y);
+
+  if (region->bpp == 1)
+  { 
+    ret_val = data[0];
+  } else
+  {
+    ret_val = (guchar)((float)((data[0] + data[1] + data[2])/3.0));
+  }
+
+  return ret_val;
 }
 
 GimpRGB

@@ -186,6 +186,7 @@ precompute_init (gint w,
 		 gint h)
 {
   gint n;
+  gint bpp=1;
 
   xstep = 1.0 / (gdouble) width;
   ystep = 1.0 / (gdouble) height;
@@ -213,8 +214,12 @@ precompute_init (gint w,
       g_free (bumprow);
       bumprow = NULL;
     }
-
-  bumprow = g_new (guchar, w);
+  if (mapvals.bumpmap_id != -1)
+    {
+      bpp = gimp_drawable_bpp(mapvals.bumpmap_id);
+    } 
+  
+  bumprow = g_new (guchar, w * bpp);
 
   triangle_normals[0] = g_new (GimpVector3, (w << 1) + 2);
   triangle_normals[1] = g_new (GimpVector3, (w << 1) + 2);
@@ -249,6 +254,9 @@ precompute_normals (gint x1,
   gdouble     *tmpd;
   gint         n, i, nv;
   guchar      *map = NULL;
+  gint bpp = 1;
+  guchar mapval;
+
 
   /* First, compute the heights */
   /* ========================== */
@@ -267,7 +275,12 @@ precompute_normals (gint x1,
   heights[1] = heights[2];
   heights[2] = tmpd;
 
-/*  printf("Get row (%d,%d,%d) to %p\n",x1,y,x2-x1,bumprow); */
+  if (mapvals.bumpmap_id != -1)
+    {  
+      bpp = gimp_drawable_bpp(mapvals.bumpmap_id);
+    }
+  
+  bpp = gimp_drawable_bpp(mapvals.bumpmap_id);
 
   gimp_pixel_rgn_get_row (&bump_region, bumprow, x1, y, x2 - x1);
 
@@ -287,16 +300,35 @@ precompute_normals (gint x1,
         }
 
       for (n = 0; n < (x2 - x1); n++)
-	heights[2][n] =
-	  (gdouble) mapvals.bumpmax * (gdouble) map[bumprow[n]] / 255.0;
+	{
+	  if (bpp>1)
+	    {
+	      mapval = (guchar)((float)((bumprow[n * bpp] +bumprow[n * bpp +1] + bumprow[n * bpp + 2])/3.0 )) ;
+            } 
+	  else
+	    {
+	      mapval = bumprow[n * bpp];
+	    }
+
+	  heights[2][n] = (gdouble) mapvals.bumpmax * (gdouble) map[mapval] / 255.0;
+	}
     }
   else
     {
       for (n = 0; n < (x2 - x1); n++)
-	heights[2][n] =
-	  (gdouble) mapvals.bumpmax * (gdouble) bumprow[n] / 255.0;
+	{
+	  if (bpp>1)
+	    {
+	      mapval = (guchar)((float)((bumprow[n * bpp] +bumprow[n * bpp +1] + bumprow[n * bpp + 2])/3.0 )) ;
+	    } 
+	  else
+	    {
+	      mapval = bumprow[n * bpp];
+	    }
+	  heights[2][n] = (gdouble) mapvals.bumpmax * (gdouble) mapval / 255.0;
+	}
     }
-
+ 
   /* Compute triangle normals */
   /* ======================== */
 

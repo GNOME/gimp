@@ -85,6 +85,9 @@ typedef struct
   gint ref_mapped;
   gint bumpstretch;
   gint previewquality;
+  gboolean symbols;
+  gboolean interactive_preview;
+
 
   /* Misc */
   /* ==== */
