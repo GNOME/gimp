@@ -1,5 +1,10 @@
 2001-12-30  Sven Neumann  <sven@gimp.org>
 
+	* app/libgimp_glue.[ch]
+	* app/gui/info-window.c: some const fixes.
+
+2001-12-30  Sven Neumann  <sven@gimp.org>
+
 	* app/base/Makefile.am
 	* app/core/Makefile.am
 	* app/display/Makefile.am: nicer output of glib-mkenums.
