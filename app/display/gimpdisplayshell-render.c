@@ -27,6 +27,7 @@
 #include "lookup_tables.h"
 #include "pixel_region.h"
 #include "scale.h"
+#include "canvas.h"
 #include "tag.h"
 
 typedef struct _RenderInfo  RenderInfo;
