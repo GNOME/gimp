@@ -514,7 +514,6 @@ view_actions_update (GimpActionGroup *group,
   if (gdisp)
     view_actions_set_zoom (group, shell);
 
-  SET_SENSITIVE ("view-info-window",       gdisp);
   SET_SENSITIVE ("view-navigation-window", gdisp);
   SET_SENSITIVE ("view-display-filters",   gdisp);
 
