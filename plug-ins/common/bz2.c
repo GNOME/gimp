@@ -171,7 +171,6 @@ run (char    *name,
       else
 	{
 	  values[0].data.d_status = STATUS_EXECUTION_ERROR;
-	  g_assert (FALSE);
 	}
     }
   else if (strcmp (name, "file_bz2_save") == 0)

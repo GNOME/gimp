@@ -274,6 +274,11 @@ static void
 ok_callback (GtkWidget *widget,
 	     gpointer    data)
 {
+  int i;
+
+  for (i = 0; i < PIXPIPE_MAXDIM; i++)
+    gihparms.selection[i] = g_strdup (gihparms.selection[i]);
+
   run_flag = 1;
   gtk_widget_destroy (GTK_WIDGET (data));
 }

@@ -1,3 +1,12 @@
+Tue Oct 19 17:56:29 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/common/bz2.c
+	* plug-ins/common/gz.c: removed some spurious g_asserts, based on
+	gimp-narazaki-990928-0.patch
+
+	* plug-ins/common/gpb.c: applied gimp-narazaki-990925-0, so we
+	don't refer to internal widget data
+
 Tue Oct 19 16:47:40 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* configure.in: add sk to ALL_LINGUAS, remove
