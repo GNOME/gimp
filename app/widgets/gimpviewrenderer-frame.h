@@ -28,5 +28,8 @@ GdkPixbuf * gimp_view_renderer_get_frame_pixbuf (GimpViewRenderer *renderer,
                                                  gint              width,
                                                  gint              height);
 
+void        gimp_view_renderer_get_frame_size   (gint             *width,
+                                                 gint             *height);
+
 
 #endif /* __GIMP_VIEW_RENDERER_FRAME_H__ */

@@ -36,8 +36,9 @@
 #include "file/file-utils.h"
 
 #include "gimpfiledialog.h" /* eek */
-#include "gimpview.h"
 #include "gimpthumbbox.h"
+#include "gimpview.h"
+#include "gimpviewrenderer-frame.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
@@ -277,6 +278,7 @@ gimp_thumb_box_new (Gimp *gimp)
   GtkWidget      *button;
   GtkWidget      *label;
   gchar          *str;
+  gint            h, v;
   GtkRequisition  info_requisition;
   GtkRequisition  thumb_progress_requisition;
   GtkRequisition  progress_requisition;
@@ -343,9 +345,11 @@ gimp_thumb_box_new (Gimp *gimp)
                     G_CALLBACK (gimp_thumb_box_imagefile_info_changed),
                     box);
 
+  gimp_view_renderer_get_frame_size (&h, &v);
+
   box->preview = gimp_view_new (GIMP_VIEWABLE (box->imagefile),
-                                /* add some padding here for the shadow frame */
-                                gimp->config->thumbnail_size + 16,
+                                /* add padding for the shadow frame */
+                                gimp->config->thumbnail_size + MAX (h, v),
                                 0, FALSE);
   gtk_box_pack_start (GTK_BOX (hbox), box->preview, TRUE, FALSE, 10);
   gtk_widget_show (box->preview);

@@ -797,6 +797,10 @@ gimp_thumbnail_load_thumb (GimpThumbnail  *thumbnail,
   if (! pixbuf)
     return NULL;
 
+#ifdef GIMP_THUMB_DEBUG
+  g_printerr ("thumbnail loaded from %s\n", thumbnail->thumb_filename);
+#endif
+
   g_object_freeze_notify (G_OBJECT (thumbnail));
 
   /* URI and mtime from the thumbnail need to match our file */
@@ -970,6 +974,10 @@ gimp_thumbnail_save_thumb (GimpThumbnail  *thumbnail,
 
   if (success)
     {
+#ifdef GIMP_THUMB_DEBUG
+      g_printerr ("thumbnail saved to file %s\n", name);
+#endif
+
       success = (chmod (name, 0600) == 0);
 
       if (success)

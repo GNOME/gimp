@@ -1,3 +1,14 @@
+2004-10-07  Sven Neumann  <sven@gimp.org>
+
+	* libgimpthumb/gimpthumbnail.c: added some (disabled) debug output.
+
+	* app/widgets/gimpviewrenderer-frame.[ch]: added a way to retrieve
+	the size of the frame borders.
+
+	* app/widgets/gimpthumbbox.c: don't set an arbitrary padding but
+	exactly the size of the frame borders. Otherwise we get large
+	thumbnails (scaled down) if we request normal sized ones.
+
 2004-10-07  Kevin Cozens  <kcozens@cvs.gimp.org>
 
 	* plug-ins/script-fu/scripts/selection-round.scm: Changed deprecated

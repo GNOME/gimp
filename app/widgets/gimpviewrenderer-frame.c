@@ -269,3 +269,24 @@ gimp_view_renderer_get_frame_pixbuf (GimpViewRenderer *renderer,
 
   return frame;
 }
+
+
+/* This API is somewhat weird but GimpThumbBox needs these values so
+ * it can request the GimpImageFile view in the proper size.
+ */
+void
+gimp_view_renderer_get_frame_size (gint *horizontal,
+                                   gint *vertical)
+{
+  GimpViewRendererClass *class;
+
+  class = g_type_class_ref (GIMP_TYPE_VIEW_RENDERER);
+
+  if (horizontal)
+    *horizontal = class->frame_left + class->frame_right;
+
+  if (vertical)
+    *vertical = class->frame_top + class->frame_bottom;
+
+  g_type_class_unref (class);
+}
