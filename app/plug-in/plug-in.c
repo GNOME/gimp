@@ -239,7 +239,8 @@ plug_in_new (Gimp        *gimp,
              ProcRecord  *proc_rec,
              const gchar *prog)
 {
-  PlugIn *plug_in;
+  PlugIn          *plug_in;
+  PlugInProcFrame *proc_frame;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -252,8 +253,6 @@ plug_in_new (Gimp        *gimp,
   plug_in->context            = g_object_ref (context);
 
   plug_in->ref_count          = 1;
-
-  plug_in->proc_rec           = proc_rec;
 
   plug_in->open               = FALSE;
   plug_in->query              = FALSE;
@@ -275,16 +274,19 @@ plug_in_new (Gimp        *gimp,
   plug_in->temp_proc_defs     = NULL;
 
   plug_in->ext_main_loop      = NULL;
-  plug_in->recurse_main_loop  = NULL;
 
-  plug_in->temp_main_loops    = NULL;
-  plug_in->temp_proc_recs     = NULL;
+  proc_frame = &plug_in->main_proc_frame;
 
-  plug_in->return_vals        = NULL;
-  plug_in->n_return_vals      = 0;
+  proc_frame->proc_rec        = proc_rec;
+  proc_frame->main_loop       = NULL;
+  proc_frame->return_vals     = NULL;
+  proc_frame->n_return_vals   = 0;
+
+  plug_in->temp_proc_frames   = NULL;
 
   plug_in->progress           = NULL;
   plug_in->progress_created   = FALSE;
+  plug_in->progress_cancel_id = 0;
 
   plug_in->plug_in_def        = NULL;
 
@@ -627,7 +629,7 @@ plug_in_close (PlugIn   *plug_in,
       plug_in->progress = NULL;
     }
 
-  while (plug_in->temp_main_loops)
+  while (plug_in->temp_proc_frames)
     {
 #ifdef GIMP_UNSTABLE
       g_printerr ("plug_in_close: plug-in aborted before sending its "
@@ -636,14 +638,14 @@ plug_in_close (PlugIn   *plug_in,
       plug_in_main_loop_quit (plug_in);
     }
 
-  if (plug_in->recurse_main_loop &&
-      g_main_loop_is_running (plug_in->recurse_main_loop))
+  if (plug_in->main_proc_frame.main_loop &&
+      g_main_loop_is_running (plug_in->main_proc_frame.main_loop))
     {
 #ifdef GIMP_UNSTABLE
       g_printerr ("plug_in_close: plug-in aborted before sending its "
                   "procedure return values\n");
 #endif
-      g_main_loop_quit (plug_in->recurse_main_loop);
+      g_main_loop_quit (plug_in->main_proc_frame.main_loop);
     }
 
   if (plug_in->ext_main_loop &&
@@ -866,61 +868,93 @@ plug_in_pop (Gimp *gimp)
 }
 
 void
-plug_in_main_loop (PlugIn *plug_in)
+plug_in_proc_frame_push (PlugIn     *plug_in,
+                         ProcRecord *proc_rec)
 {
-  GMainLoop *main_loop;
+  PlugInProcFrame *proc_frame;
 
   g_return_if_fail (plug_in != NULL);
+  g_return_if_fail (proc_rec != NULL);
 
-  main_loop = g_main_loop_new (NULL, FALSE);
+  proc_frame = g_new0 (PlugInProcFrame, 1);
 
-  plug_in->temp_main_loops = g_list_prepend (plug_in->temp_main_loops,
-                                             main_loop);
+  proc_frame->proc_rec = proc_rec;
+
+  plug_in->temp_proc_frames = g_list_prepend (plug_in->temp_proc_frames,
+                                              proc_frame);
+}
+
+void
+plug_in_proc_frame_pop (PlugIn *plug_in)
+{
+  PlugInProcFrame *proc_frame;
+
+  g_return_if_fail (plug_in != NULL);
+  g_return_if_fail (plug_in->temp_proc_frames != NULL);
+
+  proc_frame = (PlugInProcFrame *) plug_in->temp_proc_frames->data;
+
+  plug_in->temp_proc_frames = g_list_remove (plug_in->temp_proc_frames,
+                                             proc_frame);
+
+  g_free (proc_frame);
+}
+
+void
+plug_in_main_loop (PlugIn *plug_in)
+{
+  PlugInProcFrame *proc_frame;
+
+  g_return_if_fail (plug_in != NULL);
+  g_return_if_fail (plug_in->temp_proc_frames != NULL);
+
+  proc_frame = (PlugInProcFrame *) plug_in->temp_proc_frames->data;
+
+  g_return_if_fail (proc_frame->main_loop == NULL);
+
+  proc_frame->main_loop = g_main_loop_new (NULL, FALSE);
 
   gimp_threads_leave (plug_in->gimp);
-  g_main_loop_run (main_loop);
+  g_main_loop_run (proc_frame->main_loop);
   gimp_threads_enter (plug_in->gimp);
 
-  g_main_loop_unref (main_loop);
+  g_main_loop_unref (proc_frame->main_loop);
+  proc_frame->main_loop = NULL;
 }
 
 void
 plug_in_main_loop_quit (PlugIn *plug_in)
 {
-  GMainLoop *main_loop;
+  PlugInProcFrame *proc_frame;
 
   g_return_if_fail (plug_in != NULL);
+  g_return_if_fail (plug_in->temp_proc_frames != NULL);
 
-  if (! plug_in->temp_main_loops)
-    {
-      g_warning ("%s: called without a temp main loop running", G_STRFUNC);
-      return;
-    }
+  proc_frame = (PlugInProcFrame *) plug_in->temp_proc_frames->data;
 
-  main_loop = (GMainLoop *) plug_in->temp_main_loops->data;
+  g_return_if_fail (proc_frame->main_loop != NULL);
 
-  g_main_loop_quit (main_loop);
+  proc_frame = (PlugInProcFrame *) plug_in->temp_proc_frames->data;
 
-  plug_in->temp_main_loops = g_list_remove (plug_in->temp_main_loops,
-                                            main_loop);
+  g_main_loop_quit (proc_frame->main_loop);
 }
 
 gchar *
 plug_in_get_undo_desc (PlugIn *plug_in)
 {
-  PlugInProcDef *proc_def;
-  gchar         *undo_desc = NULL;
+  PlugInProcFrame *proc_frame = NULL;
+  PlugInProcDef   *proc_def   = NULL;
+  gchar           *undo_desc  = NULL;
 
   g_return_val_if_fail (plug_in != NULL, NULL);
 
-  if (plug_in->temp_proc_recs)
-    proc_def = plug_ins_proc_def_find (plug_in->gimp,
-                                       plug_in->temp_proc_recs->data);
-  else if (plug_in->proc_rec)
-    proc_def = plug_ins_proc_def_find (plug_in->gimp,
-                                       plug_in->proc_rec);
+  if (plug_in->temp_proc_frames)
+    proc_frame = plug_in->temp_proc_frames->data;
   else
-    proc_def = NULL;
+    proc_frame = &plug_in->main_proc_frame;
+
+  if (proc_frame)
+    proc_def = plug_ins_proc_def_find (plug_in->gimp, proc_frame->proc_rec);
 
   if (proc_def)
     {

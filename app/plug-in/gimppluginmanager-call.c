@@ -49,12 +49,12 @@
 
 /*  local function prototypes  */
 
-static Argument * plug_in_temp_run        (ProcRecord   *proc_rec,
-                                           GimpProgress *progress,
-                                           Argument     *args,
-                                           gint          argc);
-static Argument * plug_in_get_return_vals (PlugIn       *plug_in,
-                                           ProcRecord   *proc_rec);
+static Argument * plug_in_temp_run        (ProcRecord      *proc_rec,
+                                           GimpProgress    *progress,
+                                           Argument        *args,
+                                           gint             argc);
+static Argument * plug_in_get_return_vals (PlugIn          *plug_in,
+                                           PlugInProcFrame *proc_frame);
 
 
 /*  public functions  */
@@ -165,16 +165,17 @@ plug_in_run (Gimp         *gimp,
        */
       if (synchronous)
         {
-          plug_in->recurse_main_loop = g_main_loop_new (NULL, FALSE);
+          plug_in->main_proc_frame.main_loop = g_main_loop_new (NULL, FALSE);
 
           gimp_threads_leave (gimp);
-          g_main_loop_run (plug_in->recurse_main_loop);
+          g_main_loop_run (plug_in->main_proc_frame.main_loop);
           gimp_threads_enter (gimp);
 
-          g_main_loop_unref (plug_in->recurse_main_loop);
-          plug_in->recurse_main_loop = NULL;
+          g_main_loop_unref (plug_in->main_proc_frame.main_loop);
+          plug_in->main_proc_frame.main_loop = NULL;
 
-          return_vals = plug_in_get_return_vals (plug_in, proc_rec);
+          return_vals = plug_in_get_return_vals (plug_in,
+                                                 &plug_in->main_proc_frame);
         }
 
       plug_in_unref (plug_in);
@@ -247,8 +248,7 @@ plug_in_temp_run (ProcRecord   *proc_rec,
     {
       GPProcRun proc_run;
 
-      plug_in->temp_proc_recs = g_list_prepend (plug_in->temp_proc_recs,
-                                                proc_rec);
+      plug_in_proc_frame_push (plug_in, proc_rec);
 
       proc_run.name    = proc_rec->name;
       proc_run.nparams = argc;
@@ -259,8 +259,7 @@ plug_in_temp_run (ProcRecord   *proc_rec,
 	{
 	  return_vals = procedural_db_return_args (proc_rec, FALSE);
 
-          plug_in->temp_proc_recs = g_list_remove (plug_in->temp_proc_recs,
-                                                   proc_rec);
+          plug_in_proc_frame_pop (plug_in);
 
 	  goto done;
 	}
@@ -271,10 +270,10 @@ plug_in_temp_run (ProcRecord   *proc_rec,
 
       plug_in_main_loop (plug_in);
 
-      return_vals = plug_in_get_return_vals (plug_in, proc_rec);
+      return_vals = plug_in_get_return_vals (plug_in,
+                                             plug_in->temp_proc_frames->data);
 
-      plug_in->temp_proc_recs = g_list_remove (plug_in->temp_proc_recs,
-                                               proc_rec);
+      plug_in_proc_frame_pop (plug_in);
 
       plug_in_unref (plug_in);
     }
@@ -284,46 +283,46 @@ plug_in_temp_run (ProcRecord   *proc_rec,
 }
 
 static Argument *
-plug_in_get_return_vals (PlugIn     *plug_in,
-                         ProcRecord *proc_rec)
+plug_in_get_return_vals (PlugIn          *plug_in,
+                         PlugInProcFrame *proc_frame)
 {
   Argument *return_vals;
   gint      nargs;
 
   g_return_val_if_fail (plug_in != NULL, NULL);
-  g_return_val_if_fail (proc_rec != NULL, NULL);
+  g_return_val_if_fail (proc_frame != NULL, NULL);
 
   /* Return the status code plus the current return values. */
-  nargs = proc_rec->num_values + 1;
+  nargs = proc_frame->proc_rec->num_values + 1;
 
-  if (plug_in->return_vals && plug_in->n_return_vals == nargs)
+  if (proc_frame->return_vals && proc_frame->n_return_vals == nargs)
     {
-      return_vals = plug_in->return_vals;
+      return_vals = proc_frame->return_vals;
     }
-  else if (plug_in->return_vals)
+  else if (proc_frame->return_vals)
     {
       /* Allocate new return values of the correct size. */
-      return_vals = procedural_db_return_args (proc_rec, FALSE);
+      return_vals = procedural_db_return_args (proc_frame->proc_rec, FALSE);
 
       /* Copy all of the arguments we can. */
-      memcpy (return_vals, plug_in->return_vals,
-	      sizeof (Argument) * MIN (plug_in->n_return_vals, nargs));
+      memcpy (return_vals, proc_frame->return_vals,
+	      sizeof (Argument) * MIN (proc_frame->n_return_vals, nargs));
 
       /* Free the old argument pointer.  This will cause a memory leak
        * only if there were more values returned than we need (which
        * shouldn't ever happen).
        */
-      g_free (plug_in->return_vals);
+      g_free (proc_frame->return_vals);
     }
   else
     {
       /* Just return a dummy set of values. */
-      return_vals = procedural_db_return_args (proc_rec, FALSE);
+      return_vals = procedural_db_return_args (proc_frame->proc_rec, FALSE);
     }
 
   /* We have consumed any saved values, so clear them. */
-  plug_in->return_vals   = NULL;
-  plug_in->n_return_vals = 0;
+  proc_frame->return_vals   = NULL;
+  proc_frame->n_return_vals = 0;
 
   return return_vals;
 }

@@ -59,7 +59,8 @@ static void plug_in_handle_tile_req         (PlugIn          *plug_in,
 static void plug_in_handle_proc_run         (PlugIn          *plug_in,
                                              GPProcRun       *proc_run);
 static void plug_in_handle_proc_return_priv (PlugIn          *plug_in,
-                                             GPProcReturn    *proc_return);
+                                             GPProcReturn    *proc_return,
+                                             gboolean         temp_proc);
 static void plug_in_handle_proc_return      (PlugIn          *plug_in,
                                              GPProcReturn    *proc_return);
 static void plug_in_handle_temp_proc_return (PlugIn          *plug_in,
@@ -440,14 +441,22 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
 
 static void
 plug_in_handle_proc_return_priv (PlugIn       *plug_in,
-                                 GPProcReturn *proc_return)
+                                 GPProcReturn *proc_return,
+                                 gboolean      temp_proc)
 {
-  if (plug_in->recurse_main_loop || plug_in->temp_main_loops)
+  PlugInProcFrame *proc_frame;
+
+  if (temp_proc)
+    proc_frame = plug_in->temp_proc_frames->data;
+  else
+    proc_frame = &plug_in->main_proc_frame;
+
+  if (proc_frame->main_loop)
     {
-      plug_in->return_vals = plug_in_params_to_args (proc_return->params,
-                                                     proc_return->nparams,
-                                                     TRUE);
-      plug_in->n_return_vals = proc_return->nparams;
+      proc_frame->return_vals = plug_in_params_to_args (proc_return->params,
+                                                        proc_return->nparams,
+                                                        TRUE);
+      proc_frame->n_return_vals = proc_return->nparams;
     }
   else
     {
@@ -484,10 +493,10 @@ static void
 plug_in_handle_proc_return (PlugIn       *plug_in,
                             GPProcReturn *proc_return)
 {
-  plug_in_handle_proc_return_priv (plug_in, proc_return);
+  plug_in_handle_proc_return_priv (plug_in, proc_return, FALSE);
 
-  if (plug_in->recurse_main_loop)
-    g_main_loop_quit (plug_in->recurse_main_loop);
+  if (plug_in->main_proc_frame.main_loop)
+    g_main_loop_quit (plug_in->main_proc_frame.main_loop);
 
   plug_in_close (plug_in, FALSE);
 }
@@ -496,9 +505,9 @@ static void
 plug_in_handle_temp_proc_return (PlugIn       *plug_in,
                                  GPProcReturn *proc_return)
 {
-  if (plug_in->temp_main_loops)
+  if (plug_in->temp_proc_frames)
     {
-      plug_in_handle_proc_return_priv (plug_in, proc_return);
+      plug_in_handle_proc_return_priv (plug_in, proc_return, TRUE);
 
       plug_in_main_loop_quit (plug_in);
     }

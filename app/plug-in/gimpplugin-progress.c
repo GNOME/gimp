@@ -202,13 +202,30 @@ static void
 plug_in_progress_cancel_callback (GimpProgress *progress,
                                   PlugIn       *plug_in)
 {
-  if (plug_in->recurse_main_loop || plug_in->temp_main_loops)
-    {
-      plug_in->return_vals   = g_new (Argument, 1);
-      plug_in->n_return_vals = 1;
+  PlugInProcFrame *proc_frame = &plug_in->main_proc_frame;
+  GList           *list;
 
-      plug_in->return_vals->arg_type      = GIMP_PDB_STATUS;
-      plug_in->return_vals->value.pdb_int = GIMP_PDB_CANCEL;
+  if (proc_frame->main_loop)
+    {
+      proc_frame->return_vals   = g_new (Argument, 1);
+      proc_frame->n_return_vals = 1;
+
+      proc_frame->return_vals->arg_type      = GIMP_PDB_STATUS;
+      proc_frame->return_vals->value.pdb_int = GIMP_PDB_CANCEL;
+    }
+
+  for (list = plug_in->temp_proc_frames; list; list = g_list_next (list))
+    {
+      proc_frame = list->data;
+
+      if (proc_frame->main_loop)
+        {
+          proc_frame->return_vals   = g_new (Argument, 1);
+          proc_frame->n_return_vals = 1;
+
+          proc_frame->return_vals->arg_type      = GIMP_PDB_STATUS;
+          proc_frame->return_vals->value.pdb_int = GIMP_PDB_CANCEL;
+        }
     }
 
   plug_in_close (plug_in, TRUE);

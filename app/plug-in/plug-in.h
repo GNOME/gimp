@@ -26,14 +26,20 @@
 #define WRITE_BUFFER_SIZE  512
 
 
+struct _PlugInProcFrame
+{
+  ProcRecord *proc_rec;
+  GMainLoop  *main_loop;
+  Argument   *return_vals;
+  gint        n_return_vals;
+};
+
 struct _PlugIn
 {
   Gimp         *gimp;
   GimpContext  *context;
 
   gint          ref_count;
-
-  ProcRecord   *proc_rec;         /*  The procedure the plug-in is running    */
 
   guint         open : 1;         /*  Is the plug-in open?                    */
   guint         query : 1;        /*  Are we querying the plug-in?            */
@@ -58,13 +64,10 @@ struct _PlugIn
   GSList       *temp_proc_defs;   /*  Temporary procedures                    */
 
   GMainLoop    *ext_main_loop;    /*  for waiting for extension_ack           */
-  GMainLoop    *recurse_main_loop;/*  for waiting for proc_return             */
 
-  GList        *temp_main_loops;  /*  for waiting for temp_proc_returns       */
-  GList        *temp_proc_recs;   /*  The temp procs the plug-in is busy with */
+  PlugInProcFrame  main_proc_frame;
 
-  Argument     *return_vals;      /*  The return value we wait for            */
-  gint          n_return_vals;
+  GList           *temp_proc_frames;
 
   GimpProgress *progress;         /*  Progress dialog                         */
   gboolean      progress_created; /*  Was the progress created by the plug-in */
@@ -74,36 +77,40 @@ struct _PlugIn
 };
 
 
-void       plug_in_init           (Gimp        *gimp);
-void       plug_in_exit           (Gimp        *gimp);
+void       plug_in_init            (Gimp        *gimp);
+void       plug_in_exit            (Gimp        *gimp);
 
-void       plug_in_call_query     (Gimp        *gimp,
-                                   GimpContext *context,
-                                   PlugInDef   *plug_in_def);
-void       plug_in_call_init      (Gimp        *gimp,
-                                   GimpContext *context,
-                                   PlugInDef   *plug_in_def);
+void       plug_in_call_query      (Gimp        *gimp,
+                                    GimpContext *context,
+                                    PlugInDef   *plug_in_def);
+void       plug_in_call_init       (Gimp        *gimp,
+                                    GimpContext *context,
+                                    PlugInDef   *plug_in_def);
 
-PlugIn   * plug_in_new            (Gimp        *gimp,
-                                   GimpContext *context,
-                                   ProcRecord  *proc_rec,
-                                   const gchar *prog);
+PlugIn   * plug_in_new             (Gimp        *gimp,
+                                    GimpContext *context,
+                                    ProcRecord  *proc_rec,
+                                    const gchar *prog);
 
-void       plug_in_ref            (PlugIn      *plug_in);
-void       plug_in_unref          (PlugIn      *plug_in);
+void       plug_in_ref             (PlugIn      *plug_in);
+void       plug_in_unref           (PlugIn      *plug_in);
 
-gboolean   plug_in_open           (PlugIn      *plug_in);
-void       plug_in_close          (PlugIn      *plug_in,
-                                   gboolean     kill_it);
+gboolean   plug_in_open            (PlugIn      *plug_in);
+void       plug_in_close           (PlugIn      *plug_in,
+                                    gboolean     kill_it);
 
-void       plug_in_push           (Gimp        *gimp,
-                                   PlugIn      *plug_in);
-void       plug_in_pop            (Gimp        *gimp);
+void       plug_in_push            (Gimp        *gimp,
+                                    PlugIn      *plug_in);
+void       plug_in_pop             (Gimp        *gimp);
 
-void       plug_in_main_loop      (PlugIn      *plug_in);
-void       plug_in_main_loop_quit (PlugIn      *plug_in);
+void       plug_in_proc_frame_push (PlugIn      *plug_in,
+                                    ProcRecord  *proc_rec);
+void       plug_in_proc_frame_pop  (PlugIn      *plug_in);
 
-gchar    * plug_in_get_undo_desc  (PlugIn      *plug_in);
+void       plug_in_main_loop       (PlugIn      *plug_in);
+void       plug_in_main_loop_quit  (PlugIn      *plug_in);
+
+gchar    * plug_in_get_undo_desc   (PlugIn      *plug_in);
 
 
 #endif /* __PLUG_IN_H__ */

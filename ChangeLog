@@ -1,3 +1,22 @@
+2004-09-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-in-types.h
+
+	* app/plug-in/plug-in.[ch]: added struct PlugInProcFrame which
+	contains the ProcRecord, the proc's GMainLoop and its return
+	values.
+
+	Use the same struct for the plug-in's main proc and its
+	temp_procs, so we finally have one set of return values per call
+	frame, and not just one per plug-in.
+
+	Added plug_in_proc_frame_push()/pop() and changed
+	plug_in_main_loop[_quit]() accordingly.
+
+	* app/plug-in/plug-in-message.c
+	* app/plug-in/plug-in-progress.c
+	* app/plug-in/plug-in-run.c: changed accordingly.
+
 2004-09-22  Sven Neumann  <sven@gimp.org>
 
 	* app/text/gimptextlayout.c (gimp_text_get_pango_context):
