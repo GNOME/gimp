@@ -183,7 +183,7 @@ mw_preview_build(GDrawable *drw) {
    mwp= mw_preview_build_virgin(drw);
 
    gimp_pixel_rgn_init(&pr, drw, 0, 0, drw->width, drw->height, FALSE, FALSE);
-   drwBits = (guchar *)malloc(drw->width * drw->bpp);
+   drwBits = (guchar *)g_malloc(drw->width * drw->bpp);
 
    mwp->bpp = 3;
    bc = mwp->bits = (guchar *)malloc(mwp->width*mwp->height*mwp->bpp);
@@ -194,7 +194,7 @@ mw_preview_build(GDrawable *drw) {
             *bc++=*(drwBits+((gint)(x*mwp->scale)*drw->bpp)+b);
       }
    }
-   free(drwBits);
+   g_free(drwBits);
    return(mwp);
 }
 

@@ -287,6 +287,11 @@ static void run(gchar   *name,
 
   values[0].data.d_status = status;
   gimp_drawable_detach (drawable);
+
+  if (xpostab)
+      g_free(xpostab);
+  if (ypostab)
+      g_free(ypostab);
 }
 
 GPlugInInfo PLUG_IN_INFO =

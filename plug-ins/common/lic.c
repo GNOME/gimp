@@ -918,15 +918,15 @@ void ok_button_clicked(GtkWidget *widget, gpointer client_data)
   gtk_widget_hide((GtkWidget *)client_data);
   gdk_flush();
   compute_image();
-  gtk_widget_destroy((GtkWidget *)client_data);
+  gtk_main_quit();
 }
 
 void cancel_button_clicked(GtkWidget *widget, gpointer client_data)
 {
-  gtk_widget_destroy((GtkWidget *)client_data);
+  gtk_main_quit();
 }
 
-void dialog_destroy(GtkWidget *widget, gpointer client_data)
+void dialog_destroy(GtkWidget *widget, GdkEvent *ev, gpointer client_data)
 {
   gtk_main_quit();
 }
@@ -989,7 +989,7 @@ void create_main_dialog(void)
   gtk_window_set_title(GTK_WINDOW(dialog), "Van Gogh (LIC)");
   gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
   gtk_container_border_width(GTK_CONTAINER(dialog), 0);
-  gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
+  gtk_signal_connect(GTK_OBJECT(dialog), "delete_event",
     (GtkSignalFunc)dialog_destroy, (gpointer)dialog);
 
   hbox = gtk_hbox_new(FALSE,5);

@@ -2223,9 +2223,6 @@ value_pair_create (gpointer data, gdouble lower, gdouble upper,
 			  "button_release_event",
 			  (GtkSignalFunc) value_pair_button_release,
 			  NULL);
-      gtk_widget_set_events (value_pair->scale,
-		       gtk_widget_get_events(GTK_WIDGET (value_pair->scale))
-			     | GDK_BUTTON_RELEASE_MASK );
     }
   else
     value_pair->scale = NULL;

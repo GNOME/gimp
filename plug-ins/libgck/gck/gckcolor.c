@@ -1027,16 +1027,12 @@ void gck_visualinfo_set_dither(GckVisualInfo * visinfo, GckDitherType method)
 
 void gck_gc_set_foreground(GckVisualInfo *visinfo,GdkGC *gc,
                            guchar r, guchar g, guchar b)
-{
-  GdkColor *color;
-  
+{  
   g_function_enter("gck_gc_set_foreground");
   g_assert(visinfo!=NULL);
   g_assert(gc!=NULL);
 
-  color=gck_rgb_to_gdkcolor(visinfo,r,g,b);
-  gdk_gc_set_foreground(gc,color);
-  free(color);
+  gdk_gc_set_foreground(gc, gck_rgb_to_gdkcolor(visinfo,r,g,b));
 
   g_function_leave("gck_gc_set_foreground");
 }
@@ -1044,15 +1040,11 @@ void gck_gc_set_foreground(GckVisualInfo *visinfo,GdkGC *gc,
 void gck_gc_set_background(GckVisualInfo *visinfo,GdkGC *gc,
                            guchar r, guchar g, guchar b)
 {
-  GdkColor *color;
-  
   g_function_enter("gck_gc_set_background");
   g_assert(visinfo!=NULL);
   g_assert(gc!=NULL);
 
-  color=gck_rgb_to_gdkcolor(visinfo,r,g,b);
-  gdk_gc_set_background(gc,color);
-  free(color);
+  gdk_gc_set_background(gc, gck_rgb_to_gdkcolor(visinfo,r,g,b));
 
   g_function_leave("gck_gc_set_background");
 }
@@ -1061,12 +1053,38 @@ void gck_gc_set_background(GckVisualInfo *visinfo,GdkGC *gc,
 /* RGB to 8 bpp pseudocolor (indexed) functions. */
 /*************************************************/
 
-GdkColor *gck_rgb_to_color8(GckVisualInfo * visinfo, guchar r, guchar g, guchar b)
+/*
+ * Non-reentrant function - GdkColor is a static storage
+ */
+static GdkColor *
+gck_rgb_to_color8(GckVisualInfo * visinfo, guchar r, guchar g, guchar b)
+{
+  static GdkColor color;
+  gint index;
+
+  g_function_enter("gck_rgb_to_color8");
+  g_assert(visinfo!=NULL);
+
+  r = visinfo->map_r[r];
+  g = visinfo->map_g[g];
+  b = visinfo->map_b[b];
+  index = visinfo->indextab[r][g][b];
+  color=visinfo->rgbpalette[index];
+
+  g_function_leave("gck_rgb_to_color8");
+  return (&color);
+}
+
+/*
+ * Reentrant function - GdkColor will be malloc'ed
+ */
+static GdkColor *
+gck_rgb_to_color8_r(GckVisualInfo * visinfo, guchar r, guchar g, guchar b)
 {
   gint index;
   GdkColor *color;
 
-  g_function_enter("gck_rgb_to_color8");
+  g_function_enter("gck_rgb_to_color8_r");
   g_assert(visinfo!=NULL);
 
   color=(GdkColor *)malloc(sizeof(GdkColor));
@@ -1079,7 +1097,7 @@ GdkColor *gck_rgb_to_color8(GckVisualInfo * visinfo, guchar r, guchar g, guchar 
   index = visinfo->indextab[r][g][b];
   *color=visinfo->rgbpalette[index];
 
-  g_function_leave("gck_rgb_to_color8");
+  g_function_leave("gck_rgb_to_color8_r");
   return (color);
 }
 
@@ -1089,8 +1107,9 @@ GdkColor *gck_rgb_to_color8(GckVisualInfo * visinfo, guchar r, guchar g, guchar 
 /* and Steinberg (aka "Floyd-Steinberg dithering") */
 /***************************************************/
 
-void gck_rgb_to_image8_fs_dither(GckVisualInfo * visinfo, guchar * RGB_data, GdkImage * image,
-				 int width, int height)
+static void
+gck_rgb_to_image8_fs_dither(GckVisualInfo * visinfo, guchar * RGB_data, GdkImage * image,
+			    int width, int height)
 {
   guchar *imagedata;
   gint or, og, ob, mr, mg, mb, dr, dg, db;
@@ -1307,10 +1326,11 @@ void gck_rgb_to_image8_fs_dither(GckVisualInfo * visinfo, guchar * RGB_data, Gdk
 /* Plain (no dithering) RGB to 8 bpp pseudocolor (indexed) */
 /***********************************************************/
 
-void gck_rgb_to_image8(GckVisualInfo * visinfo,
-                       guchar * RGB_data,
-                       GdkImage * image,
-                       int width, int height)
+static void
+gck_rgb_to_image8(GckVisualInfo * visinfo,
+		  guchar * RGB_data,
+		  GdkImage * image,
+		  int width, int height)
 {
   guchar *imagedata, r, g, b;
   int xcnt, ycnt, diffx;
@@ -1356,12 +1376,46 @@ void gck_rgb_to_image8(GckVisualInfo * visinfo,
 /* RGB to 16/15 bpp RGB ("HiColor") */
 /************************************/
 
-GdkColor *gck_rgb_to_color16(GckVisualInfo * visinfo, guchar r, guchar g, guchar b)
+/*
+ * Non-reentrant function - GdkColor is a static storage
+ */
+static GdkColor *
+gck_rgb_to_color16(GckVisualInfo * visinfo, guchar r, guchar g, guchar b)
+{
+  static GdkColor color;
+  guint32 red, green, blue;
+
+  g_function_enter("gck_rgb_to_color16");
+  g_assert(visinfo!=NULL);
+
+  color.red = ((guint16) r) << 8;
+  color.green = ((guint16) g) << 8;
+  color.blue = ((guint16) b) << 8;
+
+  red = ((guint32) r) >> (8 - visinfo->visual->red_prec);
+  green = ((guint32) g) >> (8 - visinfo->visual->green_prec);
+  blue = ((guint32) b) >> (8 - visinfo->visual->blue_prec);
+
+  red = red << visinfo->visual->red_shift;
+  green = green << visinfo->visual->green_shift;
+  blue = blue << visinfo->visual->blue_shift;
+
+  color.pixel = red | green | blue;
+
+  g_function_leave("gck_rgb_to_color16");
+  return (&color);
+}
+
+/*
+ * Reentrant function - GdkColor will be malloc'ed
+ */
+static GdkColor *
+gck_rgb_to_color16_r(GckVisualInfo * visinfo, guchar r, guchar g, guchar b)
 {
   guint32 red, green, blue;
   GdkColor *color;
 
-  g_function_enter("gck_rgb_to_color16");
+  g_function_enter("gck_rgb_to_color16_r");
   g_assert(visinfo!=NULL);
 
   color=(GdkColor *)malloc(sizeof(GdkColor));
@@ -1382,7 +1436,7 @@ GdkColor *gck_rgb_to_color16(GckVisualInfo * visinfo, guchar r, guchar g, guchar
 
   color->pixel = red | green | blue;
 
-  g_function_leave("gck_rgb_to_color16");
+  g_function_leave("gck_rgb_to_color16_r");
   return (color);
 }
 
@@ -1392,10 +1446,11 @@ GdkColor *gck_rgb_to_color16(GckVisualInfo * visinfo, guchar r, guchar g, guchar
 /* and Steinberg (aka "Floyd-Steinberg dithering") */
 /***************************************************/
 
-void gck_rgb_to_image16_fs_dither(GckVisualInfo * visinfo,
-                                  guchar * RGB_data,
-                                  GdkImage * image,
-                                  int width, int height)
+static void 
+gck_rgb_to_image16_fs_dither(GckVisualInfo * visinfo,
+			     guchar * RGB_data,
+			     GdkImage * image,
+			     int width, int height)
 {
   guint16 *imagedata, pixel;
   gint16 or, og, ob, dr, dg, db;
@@ -1622,10 +1677,11 @@ void gck_rgb_to_image16_fs_dither(GckVisualInfo * visinfo,
   g_function_leave("gck_rgb_to_image16_fs_dither");
 }
 
-void gck_rgb_to_image16(GckVisualInfo * visinfo,
-                        guchar * RGB_data,
-                        GdkImage * image,
-                        int width, int height)
+static void
+gck_rgb_to_image16(GckVisualInfo * visinfo,
+		   guchar * RGB_data,
+		   GdkImage * image,
+		   int width, int height)
 {
   guint16 *imagedata, pixel, r, g, b;
   int xcnt, ycnt, diffx;
@@ -1672,12 +1728,42 @@ void gck_rgb_to_image16(GckVisualInfo * visinfo,
 /* RGB to RGB (sic!) :) */
 /************************/
 
-GdkColor *gck_rgb_to_color24(GckVisualInfo * visinfo, guchar r, guchar g, guchar b)
+/*
+ * Non-reentrant function - GdkColor is a static storage
+ */
+static GdkColor *
+gck_rgb_to_color24(GckVisualInfo * visinfo, guchar r, guchar g, guchar b)
+{
+  static GdkColor color;
+  guint32 red, green, blue;
+
+  g_function_enter("gck_rgb_to_color24");
+  g_assert(visinfo!=NULL);
+
+  color.red = ((guint16) r) << 8;
+  color.green = ((guint16) g) << 8;
+  color.blue = ((guint16) b) << 8;
+
+  red = ((guint32) r << 16);
+  green = ((guint32) g) << 8;
+  blue = ((guint32) b);
+
+  color.pixel = red | green | blue;
+
+  g_function_leave("gck_rgb_to_color24");
+  return (&color);
+}
+
+/*
+ * Reentrant function - GdkColor will be malloc'ed
+ */
+static GdkColor *
+gck_rgb_to_color24_r(GckVisualInfo * visinfo, guchar r, guchar g, guchar b)
 {
   guint32 red, green, blue;
   GdkColor *color;
 
-  g_function_enter("gck_rgb_to_color24");
+  g_function_enter("gck_rgb_to_color24_r");
   g_assert(visinfo!=NULL);
 
   color=(GdkColor *)malloc(sizeof(GdkColor));
@@ -1694,14 +1780,15 @@ GdkColor *gck_rgb_to_color24(GckVisualInfo * visinfo, guchar r, guchar g, guchar
 
   color->pixel = red | green | blue;
 
-  g_function_leave("gck_rgb_to_color24");
+  g_function_leave("gck_rgb_to_color24_r");
   return (color);
 }
 
-void gck_rgb_to_image24(GckVisualInfo * visinfo,
-                        guchar * RGB_data,
-                        GdkImage * image,
-                        int width, int height)
+static void
+gck_rgb_to_image24(GckVisualInfo * visinfo,
+		   guchar * RGB_data,
+		   GdkImage * image,
+		   int width, int height)
 {
   guchar *imagedata;
   int xcnt, ycnt, diffx;
@@ -1739,12 +1826,42 @@ void gck_rgb_to_image24(GckVisualInfo * visinfo,
 /* RGB to RGBX */
 /***************/
 
-GdkColor *gck_rgb_to_color32(GckVisualInfo * visinfo, guchar r, guchar g, guchar b)
+/*
+ * Non-reentrant function - GdkColor is a static storage
+ */
+static GdkColor *
+gck_rgb_to_color32(GckVisualInfo * visinfo, guchar r, guchar g, guchar b)
+{
+  static GdkColor color;
+  guint32 red, green, blue;
+
+  g_function_enter("gck_rgb_to_color32");
+  g_assert(visinfo!=NULL);
+
+  color.red = ((guint16) r) << 8;
+  color.green = ((guint16) g) << 8;
+  color.blue = ((guint16) b) << 8;
+
+  red = ((guint32) r) << 8;
+  green = ((guint32) g) << 16;
+  blue = ((guint32) b) << 24;
+
+  color.pixel = red | green | blue;
+
+  g_function_leave("gck_rgb_to_color32");
+  return (&color);
+}
+
+/*
+ * Reentrant function - GdkColor will be malloc'ed
+ */
+static GdkColor *
+gck_rgb_to_color32_r(GckVisualInfo * visinfo, guchar r, guchar g, guchar b)
 {
   guint32 red, green, blue;
   GdkColor *color;
 
-  g_function_enter("gck_rgb_to_color32");
+  g_function_enter("gck_rgb_to_color32_r");
   g_assert(visinfo!=NULL);
 
   color=(GdkColor *)malloc(sizeof(GdkColor));
@@ -1761,14 +1878,15 @@ GdkColor *gck_rgb_to_color32(GckVisualInfo * visinfo, guchar r, guchar g, guchar
 
   color->pixel = red | green | blue;
 
-  g_function_leave("gck_rgb_to_color32");
+  g_function_leave("gck_rgb_to_color32_r");
   return (color);
 }
 
-void gck_rgb_to_image32(GckVisualInfo * visinfo,
-                        guchar * RGB_data,
-                        GdkImage * image,
-                        int width, int height)
+static void
+gck_rgb_to_image32(GckVisualInfo * visinfo,
+		   guchar * RGB_data,
+		   GdkImage * image,
+		   int width, int height)
 {
   guint32 *imagedata, pixel, r, g, b;
   int xcnt, ycnt, diffx=0;
@@ -1867,6 +1985,9 @@ void gck_rgb_to_gdkimage(GckVisualInfo * visinfo,
   g_function_leave("gck_rgb_to_gdkimage");
 }
 
+/*
+ * Non-reentrant function - GdkColor is a static storage
+ */
 GdkColor *gck_rgb_to_gdkcolor(GckVisualInfo * visinfo, guchar r, guchar g, guchar b)
 {
   GdkColor *color=NULL;
@@ -1911,6 +2032,56 @@ GdkColor *gck_rgb_to_gdkcolor(GckVisualInfo * visinfo, guchar r, guchar g, gucha
     }
 
   g_function_leave("gck_rgb_to_gdkcolor");
+  return (color);
+}
+
+/*
+ * Reentrant function - GdkColor will be malloc'ed
+ */
+GdkColor *gck_rgb_to_gdkcolor_r(GckVisualInfo * visinfo, guchar r, guchar g, guchar b)
+{
+  GdkColor *color=NULL;
+
+  g_function_enter("gck_rgb_to_gdkcolor_r");
+  g_assert(visinfo!=NULL);
+
+  if (visinfo->visual->type == GDK_VISUAL_PSEUDO_COLOR)
+    {
+      if (visinfo->visual->depth == 8)
+	{
+	  /* Standard 256 color display */
+	  /* ========================== */
+
+	  color=gck_rgb_to_color8_r(visinfo, r, g, b);
+	}
+    }
+  else if (visinfo->visual->type == GDK_VISUAL_TRUE_COLOR ||
+	 visinfo->visual->type == GDK_VISUAL_DIRECT_COLOR)
+    {
+      if (visinfo->visual->depth == 15 || visinfo->visual->depth == 16)
+	{
+	  /* HiColor modes */
+	  /* ============= */
+
+	  color=gck_rgb_to_color16_r(visinfo, r, g, b);
+	}
+      else if (visinfo->visual->depth == 24)
+	{
+	  /* Normal 24 bit mode */
+	  /* ================== */
+
+	  color=gck_rgb_to_color24_r(visinfo, r, g, b);
+	}
+      else if (visinfo->visual->depth == 32)
+	{
+	  /* 32 bpp mode */
+	  /* =========== */
+
+	  color=gck_rgb_to_color32_r(visinfo, r, g, b);
+	}
+    }
+
+  g_function_leave("gck_rgb_to_gdkcolor_r");
   return (color);
 }
 

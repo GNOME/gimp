@@ -236,11 +236,11 @@ drawable_to_cmap(control_point *cp) {
     for (i = 0; i < 256; i++)
       for (j = 0; j < 3; j++)
 	cp->cmap[i][j] = g[i*4 + j];
-    free(g);
+    g_free(g);
   } else {
     d = gimp_drawable_get(config.cmap_drawable);
     indexed = gimp_drawable_indexed(config.cmap_drawable);
-    p = (guchar *) malloc(d->bpp);
+    p = (guchar *) g_malloc(d->bpp);
     gimp_pixel_rgn_init(&pr, d, 0, 0,
 			d->width, d->height, FALSE, FALSE);
     for (i = 0; i < 256; i++) {
@@ -250,7 +250,7 @@ drawable_to_cmap(control_point *cp) {
 	cp->cmap[i][j] =
 	  (d->bpp >= 3) ? (p[j] / 255.0) : (p[0]/255.0);
     }
-    free(p);
+    g_free(p);
   }
 }
 
@@ -269,7 +269,7 @@ static void doit(GDrawable * drawable)
     return;
   }
 
-  tmp = (guchar *) malloc(width * height * 4);
+  tmp = (guchar *) g_malloc(width * height * 4);
   if (tmp == NULL) {
     fprintf(stderr, "cannot malloc %d bytes.\n", width * height * bytes);
     return;
@@ -293,7 +293,7 @@ static void doit(GDrawable * drawable)
   } else if (3 == bytes) {
     int i, j;
     GPixelRgn src_pr, dst_pr;
-    guchar *sl = (guchar *) malloc(3 * width);
+    guchar *sl = (guchar *) g_malloc(3 * width);
     if (sl == NULL) {
       fprintf(stderr, "cannot malloc %d bytes.\n", width * 3);
       return;
@@ -318,10 +318,10 @@ static void doit(GDrawable * drawable)
       }
       gimp_pixel_rgn_set_rect(&dst_pr, sl, 0, i, width, 1);
     }
-    free(sl);
+    g_free(sl);
   } else
     printf("oops\n");
-  free(tmp);
+  g_free(tmp);
   gimp_drawable_flush(drawable);
   gimp_drawable_merge_shadow(drawable->id, TRUE);
   gimp_drawable_update(drawable->id, 0, 0, width, height);
@@ -454,7 +454,7 @@ static void set_edit_preview() {
 
   if (NULL == edit_previews[0]) return;
 
-  b = malloc(nbytes);
+  b = g_malloc(nbytes);
   maybe_init_cp();
   drawable_to_cmap(&edit_cp);
   for (i = 0; i < 3; i++)
@@ -490,7 +490,7 @@ static void set_edit_preview() {
 			     0, y, edit_preview_size);
       gtk_widget_draw (edit_previews[mut], NULL);  
     }
-  free(b);
+  g_free(b);
 }
 
 static void preview_clicked(GtkWidget * widget, gpointer data) {
@@ -705,7 +705,7 @@ static void set_flame_preview() {
   if (NULL == flame_preview)
     return;
 
-  b = malloc(preview_width * preview_height * 3);
+  b = g_malloc(preview_width * preview_height * 3);
 
   maybe_init_cp();
   drawable_to_cmap(&config.cp);
@@ -724,7 +724,7 @@ static void set_flame_preview() {
   for (y = 0; y < preview_size; y++)
     gtk_preview_draw_row(GTK_PREVIEW (flame_preview),
 			 b+y*preview_width*3, 0, y, preview_width);
-  free(b);
+  g_free(b);
 
   gtk_widget_draw (flame_preview, NULL);
 }

@@ -515,8 +515,8 @@ void	real_exchange(gint x1, gint y1, gint x2, gint y2, int dopreview)
 		if (! dopreview && (y % 10) == 0)
 			gimp_progress_update((double) y / (double) height);
 	}
-	free(src_row);
-	free(dest_row);
+	g_free(src_row);
+	g_free(dest_row);
 	if (! dopreview)
 	{
 		/* update the processed region */

@@ -339,8 +339,8 @@ int pluginCore(struct piArgs *argp) {
   gimp_pixel_rgn_init (&src, drw, x1, y1, width, height, FALSE, FALSE);
   gimp_pixel_rgn_init (&dst, drw, x1, y1, width, height, TRUE, TRUE);
 
-  srcbuf=(guchar*)malloc(rowsize*3);
-  dstbuf=(guchar*)malloc(rowsize);
+  srcbuf=(guchar*)g_malloc(rowsize*3);
+  dstbuf=(guchar*)g_malloc(rowsize);
 
   memset(srcbuf,(int)0,(size_t)(rowsize*3));
   memset(dstbuf,(int)0,(size_t)rowsize);
@@ -372,8 +372,8 @@ int pluginCore(struct piArgs *argp) {
      gimp_pixel_rgn_set_row(&dst, dstbuf, x1, y1+y+1, width);
   }
 
-  free(srcbuf);
-  free(dstbuf);
+  g_free(srcbuf);
+  g_free(dstbuf);
 
   gimp_drawable_flush(drw);
   gimp_drawable_merge_shadow (drw->id, TRUE);
@@ -473,8 +473,8 @@ emboss_do_preview(GtkWidget *w) {
    ap->embossp = !mw_radio_result(rgp);
    rowsize=thePreview->width*thePreview->bpp;
 
-   dst = malloc(rowsize);
-   c = malloc(rowsize*3);
+   dst = g_malloc(rowsize);
+   c = g_malloc(rowsize*3);
    memcpy(c, thePreview->bits, rowsize);
    memcpy(c+rowsize, thePreview->bits, rowsize*2);
    EmbossInit(DtoR(ap->azimuth), DtoR(ap->elevation), ap->depth);
@@ -491,7 +491,7 @@ emboss_do_preview(GtkWidget *w) {
              dst, thePreview->width, thePreview->bpp, FALSE);
    gtk_preview_draw_row(GTK_PREVIEW(theWidget),
                         dst, 0, thePreview->height-1, thePreview->width);
-   free(c);
+   g_free(c);
 
    for(y=0, c=thePreview->bits;y<thePreview->height-2; y++, c+=rowsize){
       EmbossRow(c, ap->embossp ? (guchar *)0 : c,
@@ -502,7 +502,7 @@ emboss_do_preview(GtkWidget *w) {
 
    gtk_widget_draw(theWidget, NULL);
    gdk_flush();
-   free(dst);
+   g_free(dst);
 }
 
 /*

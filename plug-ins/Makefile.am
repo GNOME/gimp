@@ -62,6 +62,7 @@ SUBDIRS = 			\
 	gauss_iir		\
 	gauss_rle		\
 	gbr			\
+	gdyntext		\
 	gee			\
 	gfig			\
 	gfli			\

@@ -98,6 +98,16 @@ GtkWidget *fp_create_bna(void)
   return frame;
 }
 
+/* close a sub dialog (from window manager) by simulating toggle click */
+void sub_dialog_destroy(GtkWidget *dialog, GdkEvent *ev, gpointer dummy)
+{
+    GtkWidget *button = GTK_WIDGET(
+	gtk_object_get_data(GTK_OBJECT(dialog), "ctrlButton"));
+
+    gtk_signal_emit_by_name(GTK_OBJECT(button), "clicked", dialog);
+}
+
+
 GtkWidget *fp_create_circle_palette(void)
 {
   GtkWidget *frame, *table;
@@ -158,6 +168,8 @@ GtkWidget *fp_create_circle_palette(void)
   win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
   gtk_window_set_title(GTK_WINDOW(win),"Hue Variations");
   gtk_container_add(GTK_CONTAINER(win),frame);
+  gtk_signal_connect(GTK_OBJECT(win), "delete_event",
+    (GtkSignalFunc)sub_dialog_destroy, NULL);
  
   return win;
 }
@@ -246,19 +258,19 @@ GtkWidget *fp_create_control(void)
   gtk_container_border_width(GTK_CONTAINER(box),5);  
   gtk_widget_show(box);
 
-  Check_Button_In_A_Box(box,"Hue",
+  Frames_Check_Button_In_A_Box(box,"Hue",
 			(GtkSignalFunc) fp_show_hide_frame,
 			fpFrames.palette,
 			Current.VisibleFrames&HUE);
-  Check_Button_In_A_Box(box,"Saturation",
+  Frames_Check_Button_In_A_Box(box,"Saturation",
 			(GtkSignalFunc) fp_show_hide_frame,
 			fpFrames.satur,
 			Current.VisibleFrames&SATURATION);
-  Check_Button_In_A_Box(box,"Value",
+  Frames_Check_Button_In_A_Box(box,"Value",
 			(GtkSignalFunc) fp_show_hide_frame,
 			fpFrames.lnd,
 			Current.VisibleFrames&VALUE);
-  Check_Button_In_A_Box(box,"Advanced",
+  Frames_Check_Button_In_A_Box(box,"Advanced",
 			(GtkSignalFunc) fp_show_hide_frame,
 			AW.window,
 			FALSE); 
@@ -303,6 +315,8 @@ GtkWidget *fp_create_lnd()
   win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
   gtk_window_set_title(GTK_WINDOW(win),"Value Variations");
   gtk_container_add(GTK_CONTAINER(win),frame);
+  gtk_signal_connect(GTK_OBJECT(win), "delete_event",
+    (GtkSignalFunc)sub_dialog_destroy, NULL);
  
   return win;
 }
@@ -345,6 +359,8 @@ GtkWidget *fp_create_msnls()
   win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
   gtk_window_set_title(GTK_WINDOW(win),"Saturation Variations");
   gtk_container_add(GTK_CONTAINER(win),frame);
+  gtk_signal_connect(GTK_OBJECT(win), "delete_event",
+    (GtkSignalFunc)sub_dialog_destroy, NULL);
  
   return win;
 }
@@ -412,6 +428,8 @@ GtkWidget *fp_create_show()
 			 FALSE);
   return frame;
 }
+
+#ifdef __FP_UNUSED_STUFF__
 GtkWidget *fp_create_frame_select()
 {
   GtkWidget *frame, *box;
@@ -436,6 +454,7 @@ GtkWidget *fp_create_frame_select()
 			  fpFrames.satur,FALSE);
   return frame;
 }
+#endif
 
 void Create_A_Preview (GtkWidget  **preview,
 		       GtkWidget  **frame,
@@ -490,6 +509,26 @@ void Check_Button_In_A_Box       (GtkWidget  *vbox,
 		      data);
   gtk_box_pack_start (GTK_BOX(vbox),button, TRUE, TRUE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),clicked);
+
+  gtk_widget_show(button);
+}
+
+void Frames_Check_Button_In_A_Box (GtkWidget  *vbox,
+				   guchar     *label,
+				   GtkSignalFunc function,
+				   GtkWidget  *frame,
+				   int        clicked)
+{
+  GtkWidget *button;
+
+
+  button=gtk_check_button_new_with_label(label);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) function,
+		      frame);
+  gtk_box_pack_start (GTK_BOX(vbox),button, TRUE, TRUE, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),clicked);
+  gtk_object_set_data(GTK_OBJECT(frame), "ctrlButton", (gpointer)button);
 
   gtk_widget_show(button);
 }
@@ -594,7 +633,7 @@ void fp_show_hide_frame (GtkWidget *button,
 {
   int prev=Current.VisibleFrames;
   if (frame == NULL) return;
-  if (GTK_TOGGLE_BUTTON(button)->active)
+  if (GTK_TOGGLE_BUTTON(button)->active) {
     if (!GTK_WIDGET_VISIBLE(frame)) {
       gtk_widget_show(frame);
       if (frame==fpFrames.palette) 
@@ -605,9 +644,8 @@ void fp_show_hide_frame (GtkWidget *button,
 	Current.VisibleFrames |= VALUE;
       refreshPreviews(Current.VisibleFrames & ~prev);
     }
-    else ;
-    
-  else 
+  }    
+  else {
     if (GTK_WIDGET_VISIBLE(frame)) {
       gtk_widget_hide(frame);
       if (frame==fpFrames.palette) 
@@ -617,6 +655,7 @@ void fp_show_hide_frame (GtkWidget *button,
       else if (frame==fpFrames.lnd)
 	Current.VisibleFrames &= ~VALUE;
     }
+  }
 }
 
 void Adjust_Preview_Sizes(int width, int height)
@@ -979,6 +1018,8 @@ gint fp_advanced_dialog()
 
   AW.window=gtk_window_new(GTK_WINDOW_TOPLEVEL);
   gtk_window_set_title(GTK_WINDOW(AW.window),"Advanced Filter Pack Options");
+  gtk_signal_connect(GTK_OBJECT(AW.window), "delete_event",
+    (GtkSignalFunc)sub_dialog_destroy, NULL);
 
   mainvbox=gtk_hbox_new(FALSE,5);
   gtk_container_add(GTK_CONTAINER(AW.window),mainvbox);

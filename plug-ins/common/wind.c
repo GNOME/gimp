@@ -273,7 +273,7 @@ render_blast(GDrawable *drawable, gint threshold, gint strength,
   gimp_pixel_rgn_init(&src_region, drawable, 0, 0, width, height, FALSE, FALSE);
   gimp_pixel_rgn_init(&dest_region, drawable, 0, 0, width, height, TRUE, TRUE);
 
-  buffer = malloc(row_stride);
+  buffer = (guchar *)g_malloc(row_stride);
   
   for (row = y1; row < y2; row++)
     {
@@ -307,7 +307,7 @@ render_blast(GDrawable *drawable, gint threshold, gint strength,
 	  marker = 0;
 	}
     }  /* for */
-  free(buffer);
+  g_free(buffer);
   
   /*  update the region  */
   gimp_drawable_flush(drawable);
@@ -355,7 +355,7 @@ render_wind(GDrawable *drawable, gint threshold, gint strength,
       gimp_pixel_rgn_set_row(&dest_region, sb, x1, row, width);
       gimp_progress_update((gdouble) row / (gdouble) (y2 - y1));
     }
-  free(sb);
+  g_free(sb);
   gimp_drawable_flush(drawable);
   gimp_drawable_merge_shadow(drawable->id, TRUE);
   gimp_drawable_update(drawable->id, x1, y1, x2 - x1, y2 - y1);

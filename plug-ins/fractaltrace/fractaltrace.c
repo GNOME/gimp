@@ -268,11 +268,11 @@ static void pixels_free( void )
 {
   gint y;
   for( y = 0; y < image.height; y++ ){
-    free( spixels[y] );
-    free( dpixels[y] );
+    g_free( spixels[y] );
+    g_free( dpixels[y] );
   }
-  free( spixels );
-  free( dpixels );
+  g_free( spixels );
+  g_free( dpixels );
 }
 
 static void pixels_get( gint x, gint y, pixel_t *pixel )
@@ -750,9 +750,9 @@ static gint dialog_show( void )
     GtkWidget *button;
     
     button = gtk_button_new_with_label( "OK" );
-    gtk_signal_connect_object( GTK_OBJECT( button ), "clicked",
-			       GTK_SIGNAL_FUNC( dialog_ok_callback ),
-			       GTK_OBJECT( dialog ) );
+    gtk_signal_connect( GTK_OBJECT( button ), "clicked",
+			GTK_SIGNAL_FUNC( dialog_ok_callback ),
+			GTK_OBJECT( dialog ) );
     gtk_box_pack_start( GTK_BOX( GTK_DIALOG( dialog )->action_area ),
 			button, TRUE, TRUE, 0 );
     GTK_WIDGET_SET_FLAGS( button, GTK_CAN_DEFAULT );
@@ -760,17 +760,17 @@ static gint dialog_show( void )
     gtk_widget_show( button );
 
     button = gtk_button_new_with_label( "Cancel" );
-    gtk_signal_connect_object( GTK_OBJECT( button ), "clicked",
-			       GTK_SIGNAL_FUNC( dialog_cancel_callback ),
-			       GTK_OBJECT( dialog ) );
+    gtk_signal_connect( GTK_OBJECT( button ), "clicked",
+			GTK_SIGNAL_FUNC( dialog_cancel_callback ),
+			GTK_OBJECT( dialog ) );
     gtk_box_pack_start( GTK_BOX( GTK_DIALOG( dialog )->action_area ),
 			button, TRUE, TRUE, 0 );
     gtk_widget_show( button );
 
     button = gtk_button_new_with_label( "Help" );
-    gtk_signal_connect_object( GTK_OBJECT( button ), "clicked",
-			       GTK_SIGNAL_FUNC( dialog_help_callback ),
-			       GTK_OBJECT( dialog ) );
+    gtk_signal_connect( GTK_OBJECT( button ), "clicked",
+			GTK_SIGNAL_FUNC( dialog_help_callback ),
+			GTK_OBJECT( dialog ) );
     gtk_box_pack_start( GTK_BOX( GTK_DIALOG( dialog )->action_area ),
 			button, TRUE, TRUE, 0 );
     gtk_widget_show( button );

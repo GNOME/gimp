@@ -317,9 +317,9 @@ static int dialog( void )
 
     /* ok button */
     button = gtk_button_new_with_label( "OK" );
-    gtk_signal_connect_object( GTK_OBJECT( button ), "clicked",
-			       GTK_SIGNAL_FUNC( dialog_ok_handler ),
-			       GTK_OBJECT( window ) );
+    gtk_signal_connect( GTK_OBJECT( button ), "clicked",
+			GTK_SIGNAL_FUNC( dialog_ok_handler ),
+			GTK_OBJECT( window ) );
     GTK_WIDGET_SET_FLAGS( button, GTK_CAN_DEFAULT );
     gtk_box_pack_start( GTK_BOX( GTK_DIALOG( window )->action_area ),
 			button, TRUE, TRUE, 0 );
@@ -328,9 +328,9 @@ static int dialog( void )
     
     /* cancel button */
     button = gtk_button_new_with_label( "Cancel" );
-    gtk_signal_connect_object( GTK_OBJECT( button ), "clicked",
-			       GTK_SIGNAL_FUNC( dialog_cancel_handler ),
-			       GTK_OBJECT( window )) ;
+    gtk_signal_connect( GTK_OBJECT( button ), "clicked",
+			GTK_SIGNAL_FUNC( dialog_cancel_handler ),
+			GTK_OBJECT( window )) ;
     gtk_box_pack_start( GTK_BOX( GTK_DIALOG( window )->action_area ),
 			button, TRUE, TRUE, 0 );
     gtk_widget_show( button );

@@ -44,7 +44,11 @@ void      gck_rgb_to_gdkimage       (GckVisualInfo *visinfo,
                                      GdkImage *image,
                                      int width,int height);
 
+/* returns a static storage */
 GdkColor *gck_rgb_to_gdkcolor       (GckVisualInfo *visinfo,guchar r,guchar g,guchar b);
+
+/* returns a malloc'ed area */
+GdkColor *gck_rgb_to_gdkcolor_r     (GckVisualInfo *visinfo,guchar r,guchar g,guchar b);
 
 void      gck_gc_set_foreground     (GckVisualInfo *visinfo,GdkGC *gc,
                                      guchar r, guchar g, guchar b); 

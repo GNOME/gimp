@@ -226,7 +226,7 @@ Image ReadImage (fd, len, height, cmap, ncols, bpp, compression, spzeile, grey)
   name_buf = g_malloc (strlen (filename) + 10);
   sprintf (name_buf, "%s", filename);
   gimp_image_set_filename(image,name_buf);
-  free (name_buf);
+  g_free (name_buf);
   
   gimp_image_add_layer(image,layer,0);
   drawable = gimp_drawable_get(layer);

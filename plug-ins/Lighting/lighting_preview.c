@@ -6,7 +6,12 @@
 
 gint lightx,lighty;
 BackBuffer backbuf={0,0,0,0,NULL};
+
+/* g_free()'ed on exit */ 
 gdouble *xpostab=NULL,*ypostab=NULL;
+
+gint xpostab_size = -1;   /* if preview size change, do realloc */
+gint ypostab_size = -1;
 
 /* Protos */
 /* ====== */
@@ -25,8 +30,33 @@ void compute_preview (gint startx,gint starty,gint w,gint h)
   GckVector3 pos;
   get_ray_func ray_func;
 
-  xpostab = (gdouble *)malloc(sizeof(gdouble)*w);
-  ypostab = (gdouble *)malloc(sizeof(gdouble)*h);
+  if (xpostab_size != w)
+    {
+      if (xpostab)
+	{
+	  g_free(xpostab);
+	  xpostab = NULL;
+	}
+    }
+  if (!xpostab)
+    {
+      xpostab = (gdouble *)g_malloc(sizeof(gdouble)*w);
+      xpostab_size = w;
+    }
+
+  if (ypostab_size != h)
+    {
+      if (ypostab)
+	{
+	  g_free(ypostab);
+	  ypostab = NULL;
+	}
+    }
+  if (!ypostab)
+    {
+      ypostab = (gdouble *)g_malloc(sizeof(gdouble)*h);
+      ypostab_size = h;
+    }
 
   for (xcnt=0;xcnt<w;xcnt++)
     xpostab[xcnt]=(gdouble)width*((gdouble)xcnt/(gdouble)w);
@@ -43,7 +73,7 @@ void compute_preview (gint startx,gint starty,gint w,gint h)
   if (mapvals.bump_mapped==TRUE && mapvals.bumpmap_id!=-1)
     {
       gimp_pixel_rgn_init (&bump_region, gimp_drawable_get(mapvals.bumpmap_id), 
-        0, 0, width, height, FALSE, FALSE);
+			   0, 0, width, height, FALSE, FALSE);
     }
 
   imagey=0;
@@ -51,14 +81,14 @@ void compute_preview (gint startx,gint starty,gint w,gint h)
   if (mapvals.previewquality)
     ray_func = get_ray_color;
   else
-   ray_func = get_ray_color_no_bilinear;
+    ray_func = get_ray_color_no_bilinear;
   
   if (mapvals.env_mapped==TRUE && mapvals.envmap_id!=-1) 
     {
       env_width = gimp_drawable_width(mapvals.envmap_id);
       env_height = gimp_drawable_height(mapvals.envmap_id);
       gimp_pixel_rgn_init (&env_region, gimp_drawable_get(mapvals.envmap_id), 
-        0, 0, env_width, env_height, FALSE, FALSE);
+			   0, 0, env_width, env_height, FALSE, FALSE);
 
       if (mapvals.previewquality)
         ray_func = get_ray_color_ref;
@@ -73,53 +103,53 @@ void compute_preview (gint startx,gint starty,gint w,gint h)
           if ((ycnt>=starty && ycnt<(starty+h)) &&
               (xcnt>=startx && xcnt<(startx+w)))
             {
-               imagex=xpostab[xcnt-startx];
-               imagey=ypostab[ycnt-starty];
-               pos=int_to_posf(imagex,imagey);
-               if (mapvals.bump_mapped==TRUE && mapvals.bumpmap_id!=-1 && xcnt==startx)
-                 {
-                   pos_to_float(pos.x,pos.y,&imagex,&imagey);
-                   precompute_normals(0,width,(gint)(imagey+0.5));
-                 }
+	      imagex=xpostab[xcnt-startx];
+	      imagey=ypostab[ycnt-starty];
+	      pos=int_to_posf(imagex,imagey);
+	      if (mapvals.bump_mapped==TRUE && mapvals.bumpmap_id!=-1 && xcnt==startx)
+		{
+		  pos_to_float(pos.x,pos.y,&imagex,&imagey);
+		  precompute_normals(0,width,(gint)(imagey+0.5));
+		}
 
-               color=(*ray_func)(&pos);
+	      color=(*ray_func)(&pos);
                
-               if (color.a<1.0)
-                 {
-                   f1=((xcnt % 32)<16);
-                   f2=((ycnt % 32)<16);
-                   f1=f1^f2;
+	      if (color.a<1.0)
+		{
+		  f1=((xcnt % 32)<16);
+		  f2=((ycnt % 32)<16);
+		  f1=f1^f2;
     
-                   if (f1)
-                     {
-                       if (color.a==0.0)
-                         color=lightcheck;
-                       else
-                         {
-                           gck_rgb_mul(&color,color.a);
-                           temp=lightcheck;
-                           gck_rgb_mul(&temp,1.0-color.a);
-                           gck_rgb_add(&color,&temp);
-                         }
-                     }
-                   else
-                     {
-                       if (color.a==0.0)
-                         color=darkcheck;
-                       else
-                         {
-                           gck_rgb_mul(&color,color.a);
-                           temp=darkcheck;
-                           gck_rgb_mul(&temp,1.0-color.a);
-                           gck_rgb_add(&color,&temp);
-                         }
-                     }
-                 }
+		  if (f1)
+		    {
+		      if (color.a==0.0)
+			color=lightcheck;
+		      else
+			{
+			  gck_rgb_mul(&color,color.a);
+			  temp=lightcheck;
+			  gck_rgb_mul(&temp,1.0-color.a);
+			  gck_rgb_add(&color,&temp);
+			}
+		    }
+		  else
+		    {
+		      if (color.a==0.0)
+			color=darkcheck;
+		      else
+			{
+			  gck_rgb_mul(&color,color.a);
+			  temp=darkcheck;
+			  gck_rgb_mul(&temp,1.0-color.a);
+			  gck_rgb_add(&color,&temp);
+			}
+		    }
+		}
 
-               preview_rgb_data[index++]=(guchar)(255.0*color.r);
-               preview_rgb_data[index++]=(guchar)(255.0*color.g);
-               preview_rgb_data[index++]=(guchar)(255.0*color.b);
-               imagex++;
+	      preview_rgb_data[index++]=(guchar)(255.0*color.r);
+	      preview_rgb_data[index++]=(guchar)(255.0*color.g);
+	      preview_rgb_data[index++]=(guchar)(255.0*color.b);
+	      imagex++;
             }
           else
             {

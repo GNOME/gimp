@@ -66,21 +66,23 @@ void create_main_notebook (GtkWidget *);
 /**************************/
 
 gint preview_events           (GtkWidget *area, GdkEvent *event);
-void xyzval_update            (GtkWidget *widget, GtkEntry *entry);
-void entry_update             (GtkWidget *widget, GtkEntry *entry);
-void scale_update             (GtkWidget *widget, GtkScale *scale);
-void toggle_update            (GtkWidget *button, gpointer data);
-void toggleanti_update        (GtkWidget *button, gpointer data);
-void toggletips_update        (GtkWidget *button, gpointer data);
-void toggletrans_update       (GtkWidget *button, gpointer data);
-void togglebump_update        (GtkWidget *button, gpointer data);
-void toggleenvironment_update (GtkWidget *button, gpointer data);
-void togglerefraction_update  (GtkWidget *button, gpointer data);
+#ifdef _LIGHTNING_UNUSED_CODE
+void xyzval_update            (GtkEntry *entry);
+#endif
+void entry_update             (GtkEntry *entry);
+void scale_update             (GtkScale *scale);
+void toggle_update            (GtkWidget *button);
+void toggleanti_update        (GtkWidget *button);
+void toggletips_update        (GtkWidget *button);
+void toggletrans_update       (GtkWidget *button);
+void togglebump_update        (GtkWidget *button);
+void toggleenvironment_update (GtkWidget *button);
+void togglerefraction_update  (GtkWidget *button);
 
 void lightmenu_callback       (GtkWidget *widget, gpointer client_data);
-void preview_callback         (GtkWidget *widget, gpointer client_data);
-void apply_callback           (GtkWidget *widget, gpointer client_data);
-void exit_callback            (GtkWidget *widget, gpointer client_data);
+void preview_callback         (GtkWidget *widget);
+void apply_callback           (GtkWidget *widget);
+void exit_callback            (GtkWidget *widget);
 void color_ok_callback        (GtkWidget *widget, gpointer client_data);
 gint color_delete_callback (GtkWidget *widget, GdkEvent *event, gpointer client_data);
 void color_changed_callback   (GtkColorSelection *colorsel, gpointer client_data);
@@ -100,31 +102,33 @@ void envmap_drawable_callback (gint32 id, gpointer data);
 /* Implementation */
 /******************/
 
+#ifdef _LIGHTNING_UNUSED_CODE
 /**********************************************************/
 /* Update entry fields that affect the preview parameters */
 /**********************************************************/
 
-void xyzval_update(GtkWidget *widget, GtkEntry *entry)
+void xyzval_update(GtkEntry *entry)
 {
   gdouble *valueptr;
   gdouble value;
 
-  valueptr=(gdouble *)gtk_object_get_data(GTK_OBJECT(widget),"ValuePtr");
+  valueptr=(gdouble *)gtk_object_get_data(GTK_OBJECT(entry),"ValuePtr");
   value = atof(gtk_entry_get_text(entry));
 
   *valueptr=value;
 }
+#endif
 
 /*********************/
 /* Std. entry update */
 /*********************/
 
-void entry_update(GtkWidget *widget, GtkEntry *entry)
+void entry_update(GtkEntry *entry)
 {
   gdouble *valueptr;
   gdouble value;
 
-  valueptr=(gdouble *)gtk_object_get_data(GTK_OBJECT(widget),"ValuePtr");
+  valueptr=(gdouble *)gtk_object_get_data(GTK_OBJECT(entry),"ValuePtr");
   value = atof(gtk_entry_get_text(entry));
 
   *valueptr=value;
@@ -134,12 +138,12 @@ void entry_update(GtkWidget *widget, GtkEntry *entry)
 /* Std. scale update */
 /*********************/
 
-void scale_update(GtkWidget *widget,GtkScale *scale)
+void scale_update(GtkScale *scale)
 {
   gdouble *valueptr;
   GtkAdjustment *adjustment;
 
-  valueptr=(gdouble *)gtk_object_get_data(GTK_OBJECT(widget),"ValuePtr");
+  valueptr=(gdouble *)gtk_object_get_data(GTK_OBJECT(scale),"ValuePtr");
   adjustment=gtk_range_get_adjustment(GTK_RANGE(scale));
 
   *valueptr=(gdouble)adjustment->value;
@@ -149,7 +153,7 @@ void scale_update(GtkWidget *widget,GtkScale *scale)
 /* Std. toggle update */
 /**********************/
 
-void toggle_update(GtkWidget *button, gpointer data)
+void toggle_update(GtkWidget *button)
 {
   gint *value;
 
@@ -157,7 +161,7 @@ void toggle_update(GtkWidget *button, gpointer data)
   *value=!(*value);
 }
 
-void togglestretch_update(GtkWidget *button, gpointer data)
+void togglestretch_update(GtkWidget *button)
 {
   gint *value;
 
@@ -165,7 +169,7 @@ void togglestretch_update(GtkWidget *button, gpointer data)
   *value=!(*value);
 }
 
-void togglequality_update(GtkWidget *button, gpointer data)
+void togglequality_update(GtkWidget *button)
 {
   gint *value;
 
@@ -179,7 +183,7 @@ void togglequality_update(GtkWidget *button, gpointer data)
 /* Toggle refractive layer update */
 /**********************************/
 
-void togglerefraction_update(GtkWidget *button, gpointer data)
+void togglerefraction_update(GtkWidget *button)
 {
   gint *value;
 
@@ -191,7 +195,7 @@ void togglerefraction_update(GtkWidget *button, gpointer data)
 /* Toggle bumpmapping update */
 /*****************************/
 
-void togglebump_update(GtkWidget *button, gpointer data)
+void togglebump_update(GtkWidget *button)
 {
   gint *value;
 
@@ -219,7 +223,7 @@ void togglebump_update(GtkWidget *button, gpointer data)
 /* Toggle environment mapping update */
 /*************************************/
 
-void toggleenvironment_update(GtkWidget *button, gpointer data)
+void toggleenvironment_update(GtkWidget *button)
 {
   gint *value;
 
@@ -248,7 +252,7 @@ void toggleenvironment_update(GtkWidget *button, gpointer data)
 /* Antialiasing toggle update */
 /******************************/
 
-void toggleanti_update(GtkWidget *button, gpointer data)
+void toggleanti_update(GtkWidget *button)
 {
   gint *value;
 
@@ -260,7 +264,7 @@ void toggleanti_update(GtkWidget *button, gpointer data)
 /* Tooltips toggle update */
 /**************************/
 
-void toggletips_update(GtkWidget *button, gpointer data)
+void toggletips_update(GtkWidget *button)
 {
   gint *value;
 
@@ -280,7 +284,7 @@ void toggletips_update(GtkWidget *button, gpointer data)
 /* Transparent background toggle update */
 /****************************************/
 
-void toggletrans_update(GtkWidget *button, gpointer data)
+void toggletrans_update(GtkWidget *button)
 {
   gint *value;
 
@@ -343,7 +347,7 @@ void mapmenu2_callback(GtkWidget *widget, gpointer client_data)
 /* Main window "Preview!" button callback */
 /******************************************/
 
-void preview_callback(GtkWidget *widget, gpointer client_data)
+void preview_callback(GtkWidget *widget)
 {
   draw_preview_image(TRUE);
 }
@@ -352,7 +356,7 @@ void preview_callback(GtkWidget *widget, gpointer client_data)
 /* Main window "-" (zoom in) button callback */
 /*********************************************/
 
-void zoomout_callback(GtkWidget *widget, gpointer client_data)
+void zoomout_callback(GtkWidget *widget)
 {
   mapvals.preview_zoom_factor*=0.5;
   draw_preview_image(TRUE);
@@ -362,7 +366,7 @@ void zoomout_callback(GtkWidget *widget, gpointer client_data)
 /* Main window "+" (zoom out) button callback */
 /*********************************************/
 
-void zoomin_callback(GtkWidget *widget, gpointer client_data)
+void zoomin_callback(GtkWidget *widget)
 {
   mapvals.preview_zoom_factor*=2.0;
   draw_preview_image(TRUE);
@@ -373,7 +377,7 @@ void zoomin_callback(GtkWidget *widget, gpointer client_data)
 /* Render to GIMP image, close down and exit. */
 /**********************************************/
 
-void apply_callback(GtkWidget *widget, gpointer client_data)
+void apply_callback(GtkWidget *widget)
 {
   if (preview_rgb_data!=NULL)
     free(preview_rgb_data);
@@ -395,7 +399,7 @@ void apply_callback(GtkWidget *widget, gpointer client_data)
 /* Main window "Cancel" button callback. Shut down and exit. */
 /*************************************************************/
 
-void exit_callback(GtkWidget *widget, gpointer client_data)
+void exit_callback(GtkWidget *widget)
 {
   if (preview_rgb_data!=NULL)
     free(preview_rgb_data);

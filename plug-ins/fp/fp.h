@@ -183,6 +183,12 @@ void Check_Button_In_A_Box       (GtkWidget     *,
 				  gpointer      data,
 				  int           clicked);
 
+void Frames_Check_Button_In_A_Box (GtkWidget     *,
+				   guchar        *label,
+				   GtkSignalFunc func,
+				   GtkWidget     *frame,
+				   int           clicked);
+
 void      Adjust_Preview_Sizes     (int width, 
 				    int height   );
 void      refreshPreviews          (int);
