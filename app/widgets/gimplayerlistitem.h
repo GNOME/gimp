@@ -44,6 +44,7 @@ struct _GimpLayerListItem
 {
   GimpDrawableListItem  parent_instance;
 
+  GtkWidget            *linked_button;
   GtkWidget            *mask_preview;
 };
 

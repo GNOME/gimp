@@ -57,6 +57,7 @@ enum
   OPACITY_CHANGED,
   MODE_CHANGED,
   PRESERVE_TRANS_CHANGED,
+  LINKED_CHANGED,
   MASK_CHANGED,
   LAST_SIGNAL
 };
@@ -141,6 +142,15 @@ gimp_layer_class_init (GimpLayerClass *klass)
                     object_class->type,
                     GTK_SIGNAL_OFFSET (GimpLayerClass,
 				       preserve_trans_changed),
+                    gtk_signal_default_marshaller,
+                    GTK_TYPE_NONE, 0);
+
+  layer_signals[LINKED_CHANGED] =
+    gtk_signal_new ("linked_changed",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpLayerClass,
+				       linked_changed),
                     gtk_signal_default_marshaller,
                     GTK_TYPE_NONE, 0);
 
@@ -1481,7 +1491,12 @@ gimp_layer_set_linked (GimpLayer *layer,
   g_return_if_fail (layer != NULL);
   g_return_if_fail (GIMP_IS_LAYER (layer));
 
-  layer->linked = linked ? TRUE : FALSE;
+  if (layer->linked != linked)
+    {
+      layer->linked = linked ? TRUE : FALSE;
+
+      gtk_signal_emit (GTK_OBJECT (layer), layer_signals[LINKED_CHANGED]);
+    }
 }
 
 gboolean

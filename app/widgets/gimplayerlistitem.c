@@ -40,19 +40,21 @@
 #include "gimppreview.h"
 #include "gimpviewable.h"
 
+#include "pixmaps/linked.xpm"
+
 
 static void   gimp_layer_list_item_class_init (GimpLayerListItemClass  *klass);
 static void   gimp_layer_list_item_init       (GimpLayerListItem       *list_item);
 
-static void       gimp_layer_list_item_set_viewable (GimpListItem      *list_item,
+static void      gimp_layer_list_item_set_viewable  (GimpListItem      *list_item,
                                                      GimpViewable      *viewable);
 
-static gboolean   gimp_layer_list_item_drag_motion  (GtkWidget         *widget,
+static gboolean  gimp_layer_list_item_drag_motion   (GtkWidget         *widget,
                                                      GdkDragContext    *context,
                                                      gint               x,
                                                      gint               y,
                                                      guint              time);
-static gboolean   gimp_layer_list_item_drag_drop    (GtkWidget         *widget,
+static gboolean  gimp_layer_list_item_drag_drop     (GtkWidget         *widget,
                                                      GdkDragContext    *context,
                                                      gint               x,
                                                      gint               y,
@@ -60,13 +62,18 @@ static gboolean   gimp_layer_list_item_drag_drop    (GtkWidget         *widget,
 static void      gimp_layer_list_item_state_changed (GtkWidget         *widget,
                                                      GtkStateType       old_state);
 
-static void       gimp_layer_list_item_mask_changed (GimpLayer         *layer,
+static void      gimp_layer_list_item_linked_toggled (GtkWidget        *widget,
+						      gpointer          data);
+static void      gimp_layer_list_item_linked_changed (GimpLayer        *layer,
+						      gpointer          data);
+
+static void      gimp_layer_list_item_mask_changed  (GimpLayer         *layer,
                                                      GimpLayerListItem *layer_item);
-static void       gimp_layer_list_item_update_state (GtkWidget         *widget);
+static void      gimp_layer_list_item_update_state  (GtkWidget         *widget);
 
 static void      gimp_layer_list_item_layer_clicked (GtkWidget         *widget,
                                                      GimpLayer         *layer);
-static void       gimp_layer_list_item_mask_clicked (GtkWidget         *widget,
+static void      gimp_layer_list_item_mask_clicked  (GtkWidget         *widget,
                                                      GimpLayerMask     *mask);
 
 
@@ -132,6 +139,32 @@ gimp_layer_list_item_class_init (GimpLayerListItemClass *klass)
 static void
 gimp_layer_list_item_init (GimpLayerListItem *list_item)
 {
+  GtkWidget *abox;
+  GtkWidget *pixmap;
+
+  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (GIMP_LIST_ITEM (list_item)->hbox), abox,
+                      FALSE, FALSE, 0);
+  gtk_box_reorder_child (GTK_BOX (GIMP_LIST_ITEM (list_item)->hbox), abox, 1);
+  gtk_widget_show (abox);
+
+  list_item->linked_button = gtk_toggle_button_new ();
+  gtk_button_set_relief (GTK_BUTTON (list_item->linked_button), GTK_RELIEF_NONE);
+  gtk_container_add (GTK_CONTAINER (abox), list_item->linked_button);
+  gtk_widget_show (list_item->linked_button);
+
+  gtk_signal_connect (GTK_OBJECT (list_item->linked_button), "realize",
+                      GTK_SIGNAL_FUNC (gimp_drawable_list_item_button_realize),
+                      list_item);
+
+  gtk_signal_connect (GTK_OBJECT (list_item->linked_button), "state_changed",
+                      GTK_SIGNAL_FUNC (gimp_drawable_list_item_button_state_changed),
+                      list_item);
+
+  pixmap = gimp_pixmap_new (linked_xpm);
+  gtk_container_add (GTK_CONTAINER (list_item->linked_button), pixmap);
+  gtk_widget_show (pixmap);
+
   list_item->mask_preview = NULL;
 }
 
@@ -141,6 +174,7 @@ gimp_layer_list_item_set_viewable (GimpListItem *list_item,
 {
   GimpLayerListItem *layer_item;
   GimpLayer         *layer;
+  gboolean           linked;
 
   if (GIMP_LIST_ITEM_CLASS (parent_class)->set_viewable)
     GIMP_LIST_ITEM_CLASS (parent_class)->set_viewable (list_item, viewable);
@@ -150,6 +184,32 @@ gimp_layer_list_item_set_viewable (GimpListItem *list_item,
 
   layer_item = GIMP_LAYER_LIST_ITEM (list_item);
   layer      = GIMP_LAYER (GIMP_PREVIEW (list_item->preview)->viewable);
+  linked     = gimp_layer_get_linked (layer);
+
+  if (! linked)
+    {
+      GtkRequisition requisition;
+
+      gtk_widget_size_request (layer_item->linked_button, &requisition);
+
+      gtk_widget_set_usize (layer_item->linked_button,
+                            requisition.width,
+                            requisition.height);
+      gtk_widget_hide (GTK_BIN (layer_item->linked_button)->child);
+    }
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (layer_item->linked_button),
+                                linked);
+
+  gtk_signal_connect (GTK_OBJECT (layer_item->linked_button), "toggled",
+                      GTK_SIGNAL_FUNC (gimp_layer_list_item_linked_toggled),
+                      list_item);
+
+  gtk_signal_connect_while_alive
+    (GTK_OBJECT (viewable), "linked_changed",
+     GTK_SIGNAL_FUNC (gimp_layer_list_item_linked_changed),
+     list_item,
+     GTK_OBJECT (list_item));
 
   gtk_signal_connect (GTK_OBJECT (list_item->preview), "clicked",
                       GTK_SIGNAL_FUNC (gimp_layer_list_item_layer_clicked),
@@ -262,6 +322,84 @@ gimp_layer_list_item_state_changed (GtkWidget    *widget,
     GTK_WIDGET_CLASS (parent_class)->state_changed (widget, old_state);
 
   gimp_layer_list_item_update_state (widget);
+}
+
+static void
+gimp_layer_list_item_linked_toggled (GtkWidget *widget,
+                                     gpointer   data)
+{
+  GimpListItem *list_item;
+  GimpLayer    *layer;
+  gboolean      linked;
+
+  list_item = GIMP_LIST_ITEM (data);
+  layer     = GIMP_LAYER (GIMP_PREVIEW (list_item->preview)->viewable);
+  linked    = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
+
+  if (linked != gimp_layer_get_linked (layer))
+    {
+      if (! linked)
+        {
+          gtk_widget_set_usize (GTK_WIDGET (widget),
+                                GTK_WIDGET (widget)->allocation.width,
+                                GTK_WIDGET (widget)->allocation.height);
+          gtk_widget_hide (GTK_BIN (widget)->child);
+        }
+      else
+        {
+          gtk_widget_show (GTK_BIN (widget)->child);
+          gtk_widget_set_usize (GTK_WIDGET (widget), -1, -1);
+        }
+
+      gtk_signal_handler_block_by_func (GTK_OBJECT (layer),
+                                        gimp_layer_list_item_linked_changed,
+                                        list_item);
+
+      gimp_layer_set_linked (layer, linked);
+
+      gtk_signal_handler_unblock_by_func (GTK_OBJECT (layer),
+                                          gimp_layer_list_item_linked_changed,
+                                          list_item);
+    }
+}
+
+static void
+gimp_layer_list_item_linked_changed (GimpLayer *layer,
+				     gpointer   data)
+{
+  GimpListItem    *list_item;
+  GtkToggleButton *toggle;
+  gboolean         linked;
+
+  list_item = GIMP_LIST_ITEM (data);
+  toggle    = GTK_TOGGLE_BUTTON (GIMP_LAYER_LIST_ITEM (data)->linked_button);
+  linked    = gimp_layer_get_linked (layer);
+
+  if (linked != toggle->active)
+    {
+      if (! linked)
+        {
+          gtk_widget_set_usize (GTK_WIDGET (toggle),
+                                GTK_WIDGET (toggle)->allocation.width,
+                                GTK_WIDGET (toggle)->allocation.height);
+          gtk_widget_hide (GTK_BIN (toggle)->child);
+        }
+      else
+        {
+          gtk_widget_show (GTK_BIN (toggle)->child);
+          gtk_widget_set_usize (GTK_WIDGET (toggle), -1, -1);
+        }
+
+      gtk_signal_handler_block_by_func (GTK_OBJECT (toggle),
+                                        gimp_layer_list_item_linked_toggled,
+                                        list_item);
+
+      gtk_toggle_button_set_active (toggle, linked);
+
+      gtk_signal_handler_unblock_by_func (GTK_OBJECT (toggle),
+                                          gimp_layer_list_item_linked_toggled,
+                                          list_item);
+    }
 }
 
 static void

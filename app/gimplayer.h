@@ -64,6 +64,7 @@ struct _GimpLayerClass
   void (* opacity_changed)        (GimpLayer *layer);
   void (* mode_changed)           (GimpLayer *layer);
   void (* preserve_trans_changed) (GimpLayer *layer);
+  void (* linked_changed)         (GimpLayer *layer);
   void (* mask_changed)           (GimpLayer *layer);
 };
 

@@ -62,11 +62,6 @@ static void   gimp_drawable_list_item_eye_toggled     (GtkWidget         *widget
 
 static void   gimp_drawable_list_item_visibility_changed (GimpDrawable   *drawable,
                                                           gpointer        data);
-static void   gimp_drawable_list_item_button_realize  (GtkWidget         *widget,
-                                                       gpointer           data);
-static void   gimp_drawable_list_item_button_state_changed (GtkWidget         *widget,
-                                                            GtkStateType       previous_state,
-                                                            gpointer           data);
 
 
 static GimpListItemClass *parent_class = NULL;
@@ -352,14 +347,17 @@ gimp_drawable_list_item_visibility_changed (GimpDrawable *drawable,
     }
 }
 
-static void
+
+/*  protected finctions  */
+
+void
 gimp_drawable_list_item_button_realize (GtkWidget *widget,
                                         gpointer   data)
 {
   gdk_window_set_back_pixmap (widget->window, NULL, TRUE);
 }
 
-static void
+void
 gimp_drawable_list_item_button_state_changed (GtkWidget    *widget,
                                               GtkStateType  previous_state,
                                               gpointer      data)

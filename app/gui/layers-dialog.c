@@ -2462,7 +2462,9 @@ layer_widget_button_events (GtkWidget *widget,
       else if (widget == layer_widget->linked_widget)
 	{
 	  old_state = layer_widget->layer->linked;
-	  layer_widget->layer->linked = !layer_widget->layer->linked;
+
+	  gimp_layer_set_linked (layer_widget->layer, ! old_state);
+
 	  layer_widget_linked_redraw (layer_widget);
 	}
       break;
@@ -2527,7 +2529,9 @@ layer_widget_button_events (GtkWidget *widget,
 	    }
 	  else if (widget == layer_widget->linked_widget)
 	    {
-	      layer_widget->layer->linked = !layer_widget->layer->linked;
+	      gimp_layer_set_linked (layer_widget->layer,
+				     !layer_widget->layer->linked);
+
 	      layer_widget_linked_redraw (layer_widget);
 	    }
 	}

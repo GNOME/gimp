@@ -1,5 +1,17 @@
 2001-04-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimplayer.[ch]: added a "linked_changed" signal and emit it
+	in gimp_layer_set_linked().
+
+	* app/gui/layers-dialog.c: use the accessor when setting "linked".
+
+	* app/widgets/gimpdrawablelistitem.[ch]: made the hacks which make
+	the buttons look nice inside list items available to subclasses.
+
+	* app/widgets/gimplayerlistitem.[ch]: added a "linked" button.
+
+2001-04-29  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontainerview.[ch]: added virtual method
 	context_item() which works like select_item() and activate_item()
 	and a function to trigger the signal from subclasses (marked as

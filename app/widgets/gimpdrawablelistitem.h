@@ -56,6 +56,15 @@ struct _GimpDrawableListItemClass
 GtkType   gimp_drawable_list_item_get_type (void);
 
 
+/*  protected  */
+
+void   gimp_drawable_list_item_button_realize       (GtkWidget    *widget,
+						     gpointer      data);
+void   gimp_drawable_list_item_button_state_changed (GtkWidget    *widget,
+						     GtkStateType  previous_state,
+						     gpointer      data);
+
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
