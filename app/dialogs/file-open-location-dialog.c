@@ -57,7 +57,9 @@ file_open_location_dialog_show (Gimp      *gimp,
                                 GtkWidget *parent)
 {
   GtkWidget          *dialog;
+  GtkWidget          *hbox;
   GtkWidget          *vbox;
+  GtkWidget          *image;
   GtkWidget          *label;
   GtkWidget          *entry;
   GtkEntryCompletion *completion;
@@ -80,10 +82,22 @@ file_open_location_dialog_show (Gimp      *gimp,
                     G_CALLBACK (file_open_location_response),
                     gimp);
 
-  vbox = gtk_vbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
-                      vbox, FALSE, FALSE, 0);
+                      hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
+  image = gtk_image_new_from_stock (GIMP_STOCK_WEB, GTK_ICON_SIZE_BUTTON);
+  gtk_box_pack_start (GTK_BOX (vbox), image, FALSE, FALSE, 0);
+  gtk_widget_show (image);
+
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
   label = gtk_label_new (_("Enter location (URI):"));

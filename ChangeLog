@@ -1,5 +1,11 @@
 2004-07-19  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/file-open-location-dialog.c
+	(file_open_location_dialog_show): added the "web" icon left of
+	label & entry.
+
+2004-07-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimppaintcore.h: removed enum GimpPaintCoreState.
 
 	* app/paint/paint-enums.h: added enum GimpPaintState (with values
