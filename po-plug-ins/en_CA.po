@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-12 17:07-0500\n"
+"POT-Creation-Date: 2004-12-18 01:47+0100\n"
 "PO-Revision-Date: 2004-12-12 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
@@ -387,7 +387,7 @@ msgstr "_Fractals"
 #: plug-ins/common/sunras.c:513 plug-ins/common/tga.c:1030
 #: plug-ins/common/tiff.c:1810 plug-ins/common/xbm.c:996
 #: plug-ins/common/xwd.c:577 plug-ins/fits/fits.c:450
-#: plug-ins/flame/flame.c:443 plug-ins/gfig/gfig.c:793
+#: plug-ins/flame/flame.c:443 plug-ins/gfig/gfig.c:783
 #: plug-ins/gfli/gfli.c:715 plug-ins/ifscompose/ifscompose.c:2395
 #: plug-ins/winicon/icosave.c:243 plug-ins/xjt/xjt.c:1263
 #: plug-ins/xjt/xjt.c:1702
@@ -3450,7 +3450,7 @@ msgid "On Film:"
 msgstr "On Film:"
 
 #. Create selection
-#: plug-ins/common/film.c:1166 plug-ins/imagemap/imap_selection.c:413
+#: plug-ins/common/film.c:1166 plug-ins/imagemap/imap_selection.c:400
 #: plug-ins/rcm/rcm_dialog.c:158
 msgid "Selection"
 msgstr "Selection"
@@ -4145,7 +4145,7 @@ msgstr "Drawing Grid..."
 
 #: plug-ins/common/grid.c:621 plug-ins/gfig/gfig-dialog.c:1355
 #: plug-ins/imagemap/imap_menu.c:385 plug-ins/imagemap/imap_popup.c:153
-#: plug-ins/imagemap/imap_toolbar.c:168
+#: plug-ins/imagemap/imap_toolbar.c:163
 msgid "Grid"
 msgstr "Grid"
 
@@ -4895,6 +4895,8 @@ msgstr "_Angle:"
 msgid "Blur Center"
 msgstr "Blur Centre"
 
+#. Inform the user that we couldn't losslessly save the
+#. * transparency & just use the full palette
 #: plug-ins/common/mng.c:494 plug-ins/common/png.c:1562
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr "Couldn't losslessly save transparency, saving opacity instead."
@@ -7369,7 +7371,7 @@ msgstr "Merging..."
 msgid "Unsharp Mask"
 msgstr "Unsharp Mask"
 
-#: plug-ins/common/url.c:85 plug-ins/imagemap/imap_selection.c:434
+#: plug-ins/common/url.c:85 plug-ins/imagemap/imap_selection.c:421
 msgid "URL"
 msgstr "URL"
 
@@ -7959,6 +7961,7 @@ msgstr ""
 "'%s':\n"
 "No image data type specified"
 
+#. The image is not black-and-white.
 #: plug-ins/common/xbm.c:960
 msgid ""
 "The image which you are trying to save as an XBM contains more than two "
@@ -8595,7 +8598,7 @@ msgstr "Foreground"
 #: plug-ins/gfig/gfig-dialog.c:1289 plug-ins/imagemap/imap_cmd_copy.c:54
 #: plug-ins/imagemap/imap_cmd_copy_object.c:55
 #: plug-ins/imagemap/imap_object_popup.c:113
-#: plug-ins/imagemap/imap_toolbar.c:131
+#: plug-ins/imagemap/imap_toolbar.c:126
 msgid "Copy"
 msgstr "Copy"
 
@@ -8624,7 +8627,7 @@ msgid "Grid spacing:"
 msgstr "Grid spacing:"
 
 #: plug-ins/gfig/gfig-dialog.c:1402 plug-ins/imagemap/imap_menu.c:369
-#: plug-ins/imagemap/imap_popup.c:137 plug-ins/imagemap/imap_tools.c:161
+#: plug-ins/imagemap/imap_popup.c:137 plug-ins/imagemap/imap_tools.c:156
 msgid "Rectangle"
 msgstr "Rectangle"
 
@@ -8677,11 +8680,6 @@ msgstr "Left"
 msgid "Orientation:"
 msgstr "Orientation:"
 
-#: plug-ins/gfig/gfig-dialog.c:1885
-#, c-format
-msgid "Gfig layer %d"
-msgstr "Gfig layer %d"
-
 #: plug-ins/gfig/gfig-dobject.c:585
 msgid "Hey where has the object gone ?"
 msgstr "Hey where has the object gone ?"
@@ -8719,7 +8717,7 @@ msgstr "Star Number of Points"
 msgid "_Gfig..."
 msgstr "_Gfig..."
 
-#: plug-ins/gfig/gfig.c:734
+#: plug-ins/gfig/gfig.c:726
 msgid ""
 "Error trying to save figure as a parasite: can't attach parasite to "
 "drawable.\n"
@@ -8727,7 +8725,7 @@ msgstr ""
 "Error trying to save figure as a parasite: can't attach parasite to "
 "drawable.\n"
 
-#: plug-ins/gfig/gfig.c:755
+#: plug-ins/gfig/gfig.c:747
 #, c-format
 msgid "Error trying to open temp file '%s'for parasite loading.\n"
 msgstr "Error trying to open temp file '%s'for parasite loading.\n"
@@ -8974,12 +8972,12 @@ msgid "Shape of Second Flares"
 msgstr "Shape of Second Flares"
 
 #: plug-ins/gflare/gflare.c:3807 plug-ins/imagemap/imap_menu.c:372
-#: plug-ins/imagemap/imap_popup.c:140 plug-ins/imagemap/imap_tools.c:165
+#: plug-ins/imagemap/imap_popup.c:140 plug-ins/imagemap/imap_tools.c:160
 msgid "Circle"
 msgstr "Circle"
 
 #: plug-ins/gflare/gflare.c:3824 plug-ins/imagemap/imap_menu.c:374
-#: plug-ins/imagemap/imap_popup.c:143 plug-ins/imagemap/imap_tools.c:169
+#: plug-ins/imagemap/imap_popup.c:143 plug-ins/imagemap/imap_tools.c:164
 msgid "Polygon"
 msgstr "Polygon"
 
@@ -9632,6 +9630,7 @@ msgstr ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
 
+#. don't translate the gimprc entry
 #: plug-ins/gimpressionist/utils.c:135
 #, c-format
 msgid ""
@@ -9881,12 +9880,12 @@ msgstr "Create"
 #: plug-ins/imagemap/imap_cmd_cut.c:55
 #: plug-ins/imagemap/imap_cmd_cut_object.c:51
 #: plug-ins/imagemap/imap_object_popup.c:111
-#: plug-ins/imagemap/imap_toolbar.c:128
+#: plug-ins/imagemap/imap_toolbar.c:123
 msgid "Cut"
 msgstr "Cut"
 
 #: plug-ins/imagemap/imap_cmd_delete.c:57
-#: plug-ins/imagemap/imap_selection.c:186 plug-ins/imagemap/imap_tools.c:179
+#: plug-ins/imagemap/imap_selection.c:172 plug-ins/imagemap/imap_tools.c:174
 msgid "Delete"
 msgstr "Delete"
 
@@ -10004,7 +10003,7 @@ msgstr "Insert Point"
 #: plug-ins/imagemap/imap_cmd_move_down.c:53
 #: plug-ins/imagemap/imap_cmd_object_down.c:55
 #: plug-ins/imagemap/imap_object_popup.c:109
-#: plug-ins/imagemap/imap_selection.c:177
+#: plug-ins/imagemap/imap_selection.c:163
 msgid "Move Down"
 msgstr "Move Down"
 
@@ -10017,22 +10016,22 @@ msgid "Move Selected Objects"
 msgstr "Move Selected Objects"
 
 #: plug-ins/imagemap/imap_cmd_move_to_front.c:51
-#: plug-ins/imagemap/imap_toolbar.c:156
+#: plug-ins/imagemap/imap_toolbar.c:151
 msgid "Move To Front"
 msgstr "Move To Front"
 
 #: plug-ins/imagemap/imap_cmd_move_up.c:53
 #: plug-ins/imagemap/imap_cmd_object_up.c:55
 #: plug-ins/imagemap/imap_object_popup.c:107
-#: plug-ins/imagemap/imap_selection.c:173
+#: plug-ins/imagemap/imap_selection.c:159
 msgid "Move Up"
 msgstr "Move Up"
 
-#: plug-ins/imagemap/imap_cmd_paste.c:51 plug-ins/imagemap/imap_toolbar.c:134
+#: plug-ins/imagemap/imap_cmd_paste.c:51 plug-ins/imagemap/imap_toolbar.c:129
 msgid "Paste"
 msgstr "Paste"
 
-#: plug-ins/imagemap/imap_cmd_select.c:53 plug-ins/imagemap/imap_tools.c:149
+#: plug-ins/imagemap/imap_cmd_select.c:53 plug-ins/imagemap/imap_tools.c:144
 msgid "Select"
 msgstr "Select"
 
@@ -10053,7 +10052,7 @@ msgid "Select Region"
 msgstr "Select Region"
 
 #: plug-ins/imagemap/imap_cmd_send_to_back.c:51
-#: plug-ins/imagemap/imap_toolbar.c:162
+#: plug-ins/imagemap/imap_toolbar.c:157
 msgid "Send To Back"
 msgstr "Send To Back"
 
@@ -10482,19 +10481,19 @@ msgstr "Upper left _x:"
 msgid "Upper left _y:"
 msgstr "Upper left _y:"
 
-#: plug-ins/imagemap/imap_selection.c:182 plug-ins/imagemap/imap_tools.c:174
+#: plug-ins/imagemap/imap_selection.c:168 plug-ins/imagemap/imap_tools.c:169
 msgid "Edit"
 msgstr "Edit"
 
-#: plug-ins/imagemap/imap_selection.c:423
+#: plug-ins/imagemap/imap_selection.c:410
 msgid "#"
 msgstr "#"
 
-#: plug-ins/imagemap/imap_selection.c:452
+#: plug-ins/imagemap/imap_selection.c:439
 msgid "ALT Text"
 msgstr "ALT Text"
 
-#: plug-ins/imagemap/imap_selection.c:462
+#: plug-ins/imagemap/imap_selection.c:449
 msgid "Target"
 msgstr "Target"
 
@@ -10542,67 +10541,67 @@ msgstr "View Source"
 msgid "Edit Map Info..."
 msgstr "Edit Map Info..."
 
-#: plug-ins/imagemap/imap_toolbar.c:107
+#: plug-ins/imagemap/imap_toolbar.c:102
 msgid "Open"
 msgstr "Open"
 
-#: plug-ins/imagemap/imap_toolbar.c:109
+#: plug-ins/imagemap/imap_toolbar.c:104
 msgid "Save"
 msgstr "Save"
 
-#: plug-ins/imagemap/imap_toolbar.c:112
+#: plug-ins/imagemap/imap_toolbar.c:107
 msgid "Preferences"
 msgstr "Preferences"
 
-#: plug-ins/imagemap/imap_toolbar.c:117
+#: plug-ins/imagemap/imap_toolbar.c:112
 msgid "Undo"
 msgstr "Undo"
 
-#: plug-ins/imagemap/imap_toolbar.c:121
+#: plug-ins/imagemap/imap_toolbar.c:116
 msgid "Redo"
 msgstr "Redo"
 
-#: plug-ins/imagemap/imap_toolbar.c:142
+#: plug-ins/imagemap/imap_toolbar.c:137
 msgid "Zoom in"
 msgstr "Zoom in"
 
-#: plug-ins/imagemap/imap_toolbar.c:147
+#: plug-ins/imagemap/imap_toolbar.c:142
 msgid "Zoom out"
 msgstr "Zoom out"
 
-#: plug-ins/imagemap/imap_toolbar.c:152
+#: plug-ins/imagemap/imap_toolbar.c:147
 msgid "Edit map info"
 msgstr "Edit map info"
 
-#: plug-ins/imagemap/imap_tools.c:150
+#: plug-ins/imagemap/imap_tools.c:145
 msgid "Select existing area"
 msgstr "Select existing area"
 
-#: plug-ins/imagemap/imap_tools.c:155
+#: plug-ins/imagemap/imap_tools.c:150
 msgid "Fuzzy Select"
 msgstr "Fuzzy Select"
 
-#: plug-ins/imagemap/imap_tools.c:156
+#: plug-ins/imagemap/imap_tools.c:151
 msgid "Select contiguous regions"
 msgstr "Select contiguous regions"
 
-#: plug-ins/imagemap/imap_tools.c:162
+#: plug-ins/imagemap/imap_tools.c:157
 msgid "Define Rectangle area"
 msgstr "Define Rectangle area"
 
-#: plug-ins/imagemap/imap_tools.c:166
+#: plug-ins/imagemap/imap_tools.c:161
 msgid "Define Circle/Oval area"
 msgstr "Define Circle/Oval area"
 
-#: plug-ins/imagemap/imap_tools.c:170
+#: plug-ins/imagemap/imap_tools.c:165
 msgid "Define Polygon area"
 msgstr "Define Polygon area"
 
-#: plug-ins/imagemap/imap_tools.c:175
+#: plug-ins/imagemap/imap_tools.c:170
 msgid "Edit selected area info"
 msgstr "Edit selected area info"
 
-#: plug-ins/imagemap/imap_tools.c:180
+#: plug-ins/imagemap/imap_tools.c:175
 msgid "Delete selected area"
 msgstr "Delete selected area"
 
@@ -11627,3 +11626,6 @@ msgstr "Error: Could not read XJT property file '%s'."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Error: XJT property file '%s' is empty."
+
+#~ msgid "Gfig layer %d"
+#~ msgstr "Gfig layer %d"

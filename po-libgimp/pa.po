@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-17 02:35+0100\n"
+"POT-Creation-Date: 2004-12-18 01:47+0100\n"
 "PO-Revision-Date: 2004-07-20 16:17+0530\n"
 "Last-Translator: Amanpreet Singh Alam <aalam@redhat.com>\n"
 "Language-Team: Punjabi <pa@li.org>\n"
@@ -134,39 +134,40 @@ msgstr "%s ਇੱਕ ਐਲਫਾ ਚੈਨਲ ਲੋਡ਼ਦਾ ਹੈ"
 msgid "Add Alpha Channel"
 msgstr "ਐਲਫਾ ਚੈਨਲ ਜੋਡ਼ੋ"
 
-#: libgimp/gimpexport.c:382
+#: libgimp/gimpexport.c:381
 msgid "Confirm Save"
 msgstr "ਸੰਭਾਲ ਦੀ ਪੁਸ਼ਟੀ"
 
-#: libgimp/gimpexport.c:388
+#: libgimp/gimpexport.c:387
 msgid "Confirm"
 msgstr "ਪੁਸ਼ਟੀ"
 
-#: libgimp/gimpexport.c:457
+#: libgimp/gimpexport.c:454
 msgid "Export File"
 msgstr "ਫਾਇਲ ਭੇਜੋ"
 
-#: libgimp/gimpexport.c:461
+#: libgimp/gimpexport.c:458
 msgid "_Ignore"
 msgstr "ਅਣਡਿੱਠ ਕਰੋ"
 
-#: libgimp/gimpexport.c:463
+#: libgimp/gimpexport.c:460
 msgid "_Export"
 msgstr "ਭੇਜੋ"
 
 #. the headline
-#: libgimp/gimpexport.c:485
+#: libgimp/gimpexport.c:482
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
 msgstr "ਤੁਹਾਡਾ ਚਿੱਤਰ ਹੇਠਲੇ ਕਾਰਨਾਂ ਕਰਕੇ %s ਦੇ ਤੌਰ ਤੇ ਸੰਭਾਲਣ ਤੋਂ ਪਹਿਲਾਂ ਭੇਜਣੀ ਚਾਹੀਦੀ ਹੈ:"
 
-#: libgimp/gimpexport.c:563
+#. the footline
+#: libgimp/gimpexport.c:553
 msgid "The export conversion won't modify your original image."
 msgstr "ਭੇਜ ਪਰਿਵਰਤਨ ਤੁਹਾਡੇ ਮੁੱਢਲੇ ਚਿੱਤਰ ਨੂੰ ਤਬਦੀਲ ਨਹੀ ਕਰੇਗਾ ।"
 
-#: libgimp/gimpexport.c:665
+#: libgimp/gimpexport.c:653
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -175,7 +176,7 @@ msgstr ""
 "ਤੁਸੀ ਪਰਤ ਮਖੌਟਾ %s ਦੇ ਤੌਰ ਤੇ ਸੰਭਾਲ ਰਹੇ ਹੋ ।\n"
 "ਇਹ ਦਿੱਖ ਪਰਤਾਂ ਨੂੰ ਨਹੀ ਸੰਭਾਲੇਗਾ ।"
 
-#: libgimp/gimpexport.c:671
+#: libgimp/gimpexport.c:659
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -329,7 +330,7 @@ msgstr "%.1f ਜੀਬੀ"
 msgid "%d GB"
 msgstr "%d ਜੀਬੀ"
 
-#: libgimpbase/gimputils.c:162 libgimpbase/gimputils.c:167
+#: libgimpbase/gimputils.c:169 libgimpbase/gimputils.c:174
 msgid "(invalid UTF-8 string)"
 msgstr "(ਅਯੋਗ UTF-8 ਸਤਰ)"
 
@@ -371,7 +372,7 @@ msgstr "ਲੋਡ ਨਹੀ ਹੋਇਆ"
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "ਥੰਮਨੇਲ ਫੋਲਡਰ '%s' ਬਣਾਉਣ ਵਿੱਚ ਅਸਫਲ ।"
 
-#: libgimpthumb/gimpthumbnail.c:917
+#: libgimpthumb/gimpthumbnail.c:919
 #, fuzzy, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "ਥੰਮਨੇਲ ਫੋਲਡਰ '%s' ਬਣਾਉਣ ਵਿੱਚ ਅਸਫਲ ।"

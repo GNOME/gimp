@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-17 02:35+0100\n"
+"POT-Creation-Date: 2004-12-18 01:47+0100\n"
 "PO-Revision-Date: 2004-11-24 19:30+0800\n"
 "Last-Translator: Yuheng Xie <elephant@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -132,39 +132,40 @@ msgstr "%s 需要一个 alpha 通道"
 msgid "Add Alpha Channel"
 msgstr "添加 Alpha 通道"
 
-#: libgimp/gimpexport.c:382
+#: libgimp/gimpexport.c:381
 msgid "Confirm Save"
 msgstr "确认保存"
 
-#: libgimp/gimpexport.c:388
+#: libgimp/gimpexport.c:387
 msgid "Confirm"
 msgstr "确认"
 
-#: libgimp/gimpexport.c:457
+#: libgimp/gimpexport.c:454
 msgid "Export File"
 msgstr "导出文件"
 
-#: libgimp/gimpexport.c:461
+#: libgimp/gimpexport.c:458
 msgid "_Ignore"
 msgstr "忽略(_I)"
 
-#: libgimp/gimpexport.c:463
+#: libgimp/gimpexport.c:460
 msgid "_Export"
 msgstr "导出(_E)"
 
 #. the headline
-#: libgimp/gimpexport.c:485
+#: libgimp/gimpexport.c:482
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
 msgstr "您的图像在保存为 %s 之前应该先进行导出，因为："
 
-#: libgimp/gimpexport.c:563
+#. the footline
+#: libgimp/gimpexport.c:553
 msgid "The export conversion won't modify your original image."
 msgstr "导出转换不会改变您原来的图像。"
 
-#: libgimp/gimpexport.c:665
+#: libgimp/gimpexport.c:653
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -173,7 +174,7 @@ msgstr ""
 "您将要把图层蒙板保存为 %s。\n"
 "这将不会保存可见的图层。"
 
-#: libgimp/gimpexport.c:671
+#: libgimp/gimpexport.c:659
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -324,7 +325,7 @@ msgstr "%.1f GB"
 msgid "%d GB"
 msgstr "%d GB"
 
-#: libgimpbase/gimputils.c:162 libgimpbase/gimputils.c:167
+#: libgimpbase/gimputils.c:169 libgimpbase/gimputils.c:174
 msgid "(invalid UTF-8 string)"
 msgstr "(无效的 UTF-8 字符串)"
 
@@ -366,7 +367,7 @@ msgstr "未加载"
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "无法创建缩略图文件夹“%s”。"
 
-#: libgimpthumb/gimpthumbnail.c:917
+#: libgimpthumb/gimpthumbnail.c:919
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "无法为“%s”创建缩略图：%s"

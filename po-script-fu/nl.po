@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-05 11:48+0100\n"
+"POT-Creation-Date: 2004-12-18 01:48+0100\n"
 "PO-Revision-Date: 2004-12-05 22:21+0100\n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
@@ -1249,10 +1249,6 @@ msgstr "Koud _metaal..."
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:4
 msgid "Effect size (pixels)"
 msgstr "Effectgrootte (pixels)"
-
-#: plug-ins/script-fu/scripts/copy-visible.scm.h:1
-msgid "Copy _Visible"
-msgstr "_Zichbare kopiëren"
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:2
 msgid "Background image"
@@ -2568,6 +2564,9 @@ msgstr "Ondoorzichtheid hoge lichten"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "_Xach-effect..."
+
+#~ msgid "Copy _Visible"
+#~ msgstr "_Zichbare kopiëren"
 
 #~ msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 #~ msgstr "<Toolbox>/Xtra/Script-Fu/Scripts vernieuwen"

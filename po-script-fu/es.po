@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-22 21:17+0100\n"
+"POT-Creation-Date: 2004-12-18 01:48+0100\n"
 "PO-Revision-Date: 2004-11-22 23:49+0100\n"
 "Last-Translator: \n"
 "Language-Team:  <es@li.org>\n"
@@ -46,7 +46,8 @@ msgstr "_Examinar..."
 
 #: plug-ins/script-fu/script-fu-console.c:548
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
-msgstr "El modo de evaluación de Script-Fu sólo permite invocación no interactiva"
+msgstr ""
+"El modo de evaluación de Script-Fu sólo permite invocación no interactiva"
 
 #: plug-ins/script-fu/script-fu-interface.c:177
 msgid "Script-Fu cannot process two scripts at the same time."
@@ -140,7 +141,7 @@ msgstr "Fecha:"
 msgid "Image Types:"
 msgstr "Tipos de imagen:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:601
+#: plug-ins/script-fu/script-fu-scripts.c:611
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -1254,10 +1255,6 @@ msgstr "_Metal frío..."
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:4
 msgid "Effect size (pixels)"
 msgstr "Tamaño del efecto (píxeles)"
-
-#: plug-ins/script-fu/scripts/copy-visible.scm.h:1
-msgid "Copy _Visible"
-msgstr "Copiar _visible"
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:2
 msgid "Background image"
@@ -2561,3 +2558,5 @@ msgstr "Opacidad del brillo"
 msgid "_Xach-Effect..."
 msgstr "Efecto  _Xach..."
 
+#~ msgid "Copy _Visible"
+#~ msgstr "Copiar _visible"

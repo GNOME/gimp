@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-17 02:35+0100\n"
+"POT-Creation-Date: 2004-12-18 01:47+0100\n"
 "PO-Revision-Date: 2003-08-13 22:08+0300\n"
 "Last-Translator: Gil 'Dolfin' Osher <dolfin@rpg.org.il>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -136,41 +136,42 @@ msgstr "%s צריך ערוץ אלפא"
 msgid "Add Alpha Channel"
 msgstr "הוספת ערוץ אלפא"
 
-#: libgimp/gimpexport.c:382
+#: libgimp/gimpexport.c:381
 msgid "Confirm Save"
 msgstr "אישור שמירה"
 
-#: libgimp/gimpexport.c:388
+#: libgimp/gimpexport.c:387
 msgid "Confirm"
 msgstr "אישור"
 
-#: libgimp/gimpexport.c:457
+#: libgimp/gimpexport.c:454
 msgid "Export File"
 msgstr "ייצוא קובץ"
 
-#: libgimp/gimpexport.c:461
+#: libgimp/gimpexport.c:458
 #, fuzzy
 msgid "_Ignore"
 msgstr "התעלם"
 
-#: libgimp/gimpexport.c:463
+#: libgimp/gimpexport.c:460
 #, fuzzy
 msgid "_Export"
 msgstr "ייצוא"
 
 #. the headline
-#: libgimp/gimpexport.c:485
+#: libgimp/gimpexport.c:482
 #, fuzzy, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
 msgstr "יש לייצא את התמונה לפני שמירתה עקב הסיבות הבאות:"
 
-#: libgimp/gimpexport.c:563
+#. the footline
+#: libgimp/gimpexport.c:553
 msgid "The export conversion won't modify your original image."
 msgstr "הסבה לייצוא לא תשנה את התמונה המקורית שלך."
 
-#: libgimp/gimpexport.c:665
+#: libgimp/gimpexport.c:653
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -179,7 +180,7 @@ msgstr ""
 "מסיכת השכבה מועדת להישמר כ %s.\n"
 "השכבות הנראות לעין לא יישמרו."
 
-#: libgimp/gimpexport.c:671
+#: libgimp/gimpexport.c:659
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -333,7 +334,7 @@ msgstr "%.1f מ\"ב"
 msgid "%d GB"
 msgstr "%d ק\"ב"
 
-#: libgimpbase/gimputils.c:162 libgimpbase/gimputils.c:167
+#: libgimpbase/gimputils.c:169 libgimpbase/gimputils.c:174
 msgid "(invalid UTF-8 string)"
 msgstr ""
 
@@ -377,7 +378,7 @@ msgstr "לא טעון"
 msgid "Failed to create thumbnail folder '%s'."
 msgstr ""
 
-#: libgimpthumb/gimpthumbnail.c:917
+#: libgimpthumb/gimpthumbnail.c:919
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr ""

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-17 02:35+0100\n"
+"POT-Creation-Date: 2004-12-18 01:47+0100\n"
 "PO-Revision-Date: 2004-11-09 14:54+0100\n"
 "Last-Translator: Miloslav Trmač <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -134,28 +134,28 @@ msgstr "%s vyžaduje alfa kanál"
 msgid "Add Alpha Channel"
 msgstr "Přidat alfa kanál"
 
-#: libgimp/gimpexport.c:382
+#: libgimp/gimpexport.c:381
 msgid "Confirm Save"
 msgstr "Potvrzení zápisu"
 
-#: libgimp/gimpexport.c:388
+#: libgimp/gimpexport.c:387
 msgid "Confirm"
 msgstr "Potvrzení"
 
-#: libgimp/gimpexport.c:457
+#: libgimp/gimpexport.c:454
 msgid "Export File"
 msgstr "Exportovat soubor"
 
-#: libgimp/gimpexport.c:461
+#: libgimp/gimpexport.c:458
 msgid "_Ignore"
 msgstr "_Ignorovat"
 
-#: libgimp/gimpexport.c:463
+#: libgimp/gimpexport.c:460
 msgid "_Export"
 msgstr "_Exportovat"
 
 #. the headline
-#: libgimp/gimpexport.c:485
+#: libgimp/gimpexport.c:482
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -164,11 +164,12 @@ msgstr ""
 "Váš obrázek by měl být před zápisem exportován jako %s z následujících "
 "důvodů:"
 
-#: libgimp/gimpexport.c:563
+#. the footline
+#: libgimp/gimpexport.c:553
 msgid "The export conversion won't modify your original image."
 msgstr "Exportní konverze by neměla změnit původní obrázek."
 
-#: libgimp/gimpexport.c:665
+#: libgimp/gimpexport.c:653
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -177,7 +178,7 @@ msgstr ""
 "Chcete zapsat masku vrstev jako %s.\n"
 "To nezapíše viditelné vrstvy."
 
-#: libgimp/gimpexport.c:671
+#: libgimp/gimpexport.c:659
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -328,7 +329,7 @@ msgstr "%.1f GB"
 msgid "%d GB"
 msgstr "%d GB"
 
-#: libgimpbase/gimputils.c:162 libgimpbase/gimputils.c:167
+#: libgimpbase/gimputils.c:169 libgimpbase/gimputils.c:174
 msgid "(invalid UTF-8 string)"
 msgstr "(neplatný řetězec v UTF-8)"
 
@@ -370,7 +371,7 @@ msgstr "Nenačteno"
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Nemohu vytvořit adresář miniatur '%s'."
 
-#: libgimpthumb/gimpthumbnail.c:917
+#: libgimpthumb/gimpthumbnail.c:919
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Nemohu vytvořit miniaturu %s: %s"

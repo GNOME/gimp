@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-17 02:35+0100\n"
+"POT-Creation-Date: 2004-12-18 01:47+0100\n"
 "PO-Revision-Date: 2004-04-10 16:53+0200\n"
 "Last-Translator: Maxim Dziumanenko <mvd@mylinux.com.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -132,28 +132,28 @@ msgstr "%s необхідний альфа-канал"
 msgid "Add Alpha Channel"
 msgstr "Додати альфа-канал"
 
-#: libgimp/gimpexport.c:382
+#: libgimp/gimpexport.c:381
 msgid "Confirm Save"
 msgstr "Підтвердження збереження"
 
-#: libgimp/gimpexport.c:388
+#: libgimp/gimpexport.c:387
 msgid "Confirm"
 msgstr "Підтвердити"
 
-#: libgimp/gimpexport.c:457
+#: libgimp/gimpexport.c:454
 msgid "Export File"
 msgstr "Експортувати файл"
 
-#: libgimp/gimpexport.c:461
+#: libgimp/gimpexport.c:458
 msgid "_Ignore"
 msgstr "_Ігнорувати"
 
-#: libgimp/gimpexport.c:463
+#: libgimp/gimpexport.c:460
 msgid "_Export"
 msgstr "_Експорт"
 
 #. the headline
-#: libgimp/gimpexport.c:485
+#: libgimp/gimpexport.c:482
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -162,11 +162,12 @@ msgstr ""
 "Ваше зображення має бути експортоване до того, як воно буде збережено у %s з "
 "таких причин:"
 
-#: libgimp/gimpexport.c:563
+#. the footline
+#: libgimp/gimpexport.c:553
 msgid "The export conversion won't modify your original image."
 msgstr "Експортне перетворення не змінить ваше початкове зображення."
 
-#: libgimp/gimpexport.c:665
+#: libgimp/gimpexport.c:653
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -175,7 +176,7 @@ msgstr ""
 "Ви намагаєтесь зберегти маску шару як %s.\n"
 "Видимі шари не будуть збережені."
 
-#: libgimp/gimpexport.c:671
+#: libgimp/gimpexport.c:659
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -329,7 +330,7 @@ msgstr "%.1f ГБ"
 msgid "%d GB"
 msgstr "%d ГБ"
 
-#: libgimpbase/gimputils.c:162 libgimpbase/gimputils.c:167
+#: libgimpbase/gimputils.c:169 libgimpbase/gimputils.c:174
 msgid "(invalid UTF-8 string)"
 msgstr "(неправильний рядок UTF-8)"
 
@@ -371,7 +372,7 @@ msgstr "Не завантажено"
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Не вдається створити каталог файлів попереднього перегляду '%s'."
 
-#: libgimpthumb/gimpthumbnail.c:917
+#: libgimpthumb/gimpthumbnail.c:919
 #, fuzzy, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Не вдається створити каталог файлів попереднього перегляду '%s'."

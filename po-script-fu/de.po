@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-09 17:01+0100\n"
+"POT-Creation-Date: 2004-12-18 01:48+0100\n"
 "PO-Revision-Date: 2004-11-18 02:31+0100\n"
 "Last-Translator: Hendrik Brandt <eru@gmx.li>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -1237,10 +1237,6 @@ msgstr "_Kaltes Metall..."
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:4
 msgid "Effect size (pixels)"
 msgstr "Effektgröße (Pixel)"
-
-#: plug-ins/script-fu/scripts/copy-visible.scm.h:1
-msgid "Copy _Visible"
-msgstr "_Kopiere Sichtbares"
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:2
 msgid "Background image"
@@ -2541,3 +2537,6 @@ msgstr "Glanzlicht Deckkraft"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "_Xach-Effekt..."
+
+#~ msgid "Copy _Visible"
+#~ msgstr "_Kopiere Sichtbares"

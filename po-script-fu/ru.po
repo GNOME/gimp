@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.SCRIPTFU.ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-19 23:21+0100\n"
+"POT-Creation-Date: 2004-12-18 01:48+0100\n"
 "PO-Revision-Date: 2004-07-15 00:10+0400\n"
 "Last-Translator: AnatolyA. Yakushin <jaa@altlinux.ru>\n"
 "Language-Team: russian <ru@li.org>\n"
@@ -140,7 +140,7 @@ msgstr "Дата:"
 msgid "Image Types:"
 msgstr "Типы изображений:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:610
+#: plug-ins/script-fu/script-fu-scripts.c:611
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -1338,10 +1338,6 @@ msgstr ""
 #, fuzzy
 msgid "Effect size (pixels)"
 msgstr "Размер эффекта (точек)"
-
-#: plug-ins/script-fu/scripts/copy-visible.scm.h:1
-msgid "Copy _Visible"
-msgstr ""
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:2
 #, fuzzy

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-17 02:35+0100\n"
+"POT-Creation-Date: 2004-12-18 01:47+0100\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
 "Language-Team: Română <ro@li.org>\n"
@@ -134,50 +134,51 @@ msgstr "Canalul alfa al stratului"
 msgid "Add Alpha Channel"
 msgstr "/Adaugă canal de transparenţa"
 
-#: libgimp/gimpexport.c:382
+#: libgimp/gimpexport.c:381
 #, fuzzy
 msgid "Confirm Save"
 msgstr "Confirmă dimensiunea imaginii"
 
-#: libgimp/gimpexport.c:388
+#: libgimp/gimpexport.c:387
 msgid "Confirm"
 msgstr ""
 
-#: libgimp/gimpexport.c:457
+#: libgimp/gimpexport.c:454
 #, fuzzy
 msgid "Export File"
 msgstr "Expunere:"
 
-#: libgimp/gimpexport.c:461
+#: libgimp/gimpexport.c:458
 #, fuzzy
 msgid "_Ignore"
 msgstr "nimic"
 
-#: libgimp/gimpexport.c:463
+#: libgimp/gimpexport.c:460
 #, fuzzy
 msgid "_Export"
 msgstr "Expunere:"
 
 #. the headline
-#: libgimp/gimpexport.c:485
+#: libgimp/gimpexport.c:482
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
 msgstr ""
 
-#: libgimp/gimpexport.c:563
+#. the footline
+#: libgimp/gimpexport.c:553
 msgid "The export conversion won't modify your original image."
 msgstr ""
 
-#: libgimp/gimpexport.c:665
+#: libgimp/gimpexport.c:653
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
 msgstr ""
 
-#: libgimp/gimpexport.c:671
+#: libgimp/gimpexport.c:659
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -335,7 +336,7 @@ msgstr "%.1f MOcteţi"
 msgid "%d GB"
 msgstr "%d KOcteţi"
 
-#: libgimpbase/gimputils.c:162 libgimpbase/gimputils.c:167
+#: libgimpbase/gimputils.c:169 libgimpbase/gimputils.c:174
 msgid "(invalid UTF-8 string)"
 msgstr ""
 
@@ -378,7 +379,7 @@ msgstr ""
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Nu am reuşit să citesc traseul din %s"
 
-#: libgimpthumb/gimpthumbnail.c:917
+#: libgimpthumb/gimpthumbnail.c:919
 #, fuzzy, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Nu am reuşit să citesc traseul din %s"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.LIBGIMP.ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-09 01:36+0300\n"
+"POT-Creation-Date: 2004-12-18 01:47+0100\n"
 "PO-Revision-Date: 2004-11-13 00:02+0300\n"
 "Last-Translator: AnatolyA. Yakushin <jaa@altlinux.ru>\n"
 "Language-Team: russian <ru@li.org>\n"
@@ -125,7 +125,8 @@ msgstr "%s может обработать только RGB или индекс�
 #: libgimp/gimpexport.c:335
 #, c-format
 msgid "%s can only handle grayscale or indexed images"
-msgstr "%s может обработать только изображения в оттенках серого или индексированные"
+msgstr ""
+"%s может обработать только изображения в оттенках серого или индексированные"
 
 #: libgimp/gimpexport.c:346
 #, c-format
@@ -136,28 +137,28 @@ msgstr "%s требуется альфа канал"
 msgid "Add Alpha Channel"
 msgstr "Добавить альфа-канал"
 
-#: libgimp/gimpexport.c:382
+#: libgimp/gimpexport.c:381
 msgid "Confirm Save"
 msgstr "Подтвердить сохранение"
 
-#: libgimp/gimpexport.c:388
+#: libgimp/gimpexport.c:387
 msgid "Confirm"
 msgstr "Подтвердить"
 
-#: libgimp/gimpexport.c:457
+#: libgimp/gimpexport.c:454
 msgid "Export File"
 msgstr "Экспортировать файл"
 
-#: libgimp/gimpexport.c:461
+#: libgimp/gimpexport.c:458
 msgid "_Ignore"
 msgstr "Игнорировать"
 
-#: libgimp/gimpexport.c:463
+#: libgimp/gimpexport.c:460
 msgid "_Export"
 msgstr "Экспорт"
 
 #. the headline
-#: libgimp/gimpexport.c:485
+#: libgimp/gimpexport.c:482
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -166,11 +167,12 @@ msgstr ""
 "Ваше изображение должно быть экспортировано до того, как оно будет сохранено "
 "%s по следующим причинам:"
 
-#: libgimp/gimpexport.c:563
+#. the footline
+#: libgimp/gimpexport.c:553
 msgid "The export conversion won't modify your original image."
 msgstr "Экспортное преобразование не изменит ваше исходное изображение."
 
-#: libgimp/gimpexport.c:665
+#: libgimp/gimpexport.c:653
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -179,7 +181,7 @@ msgstr ""
 "Вы собираетесь сохранить маску слоя как %s.\n"
 "Видимые слои не будут сохранены."
 
-#: libgimp/gimpexport.c:671
+#: libgimp/gimpexport.c:659
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -196,7 +198,7 @@ msgstr "Выбор шрифта"
 msgid "Gradient Selection"
 msgstr "Выбор градиента"
 
-#: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:182
+#: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:181
 msgid "(Empty)"
 msgstr "(Пусто)"
 
@@ -330,7 +332,7 @@ msgstr "%.1f ГБ"
 msgid "%d GB"
 msgstr "%d ГБ"
 
-#: libgimpbase/gimputils.c:162 libgimpbase/gimputils.c:167
+#: libgimpbase/gimputils.c:169 libgimpbase/gimputils.c:174
 msgid "(invalid UTF-8 string)"
 msgstr "(неверная строка UTF-8)"
 
@@ -374,25 +376,29 @@ msgstr "Не загружен"
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Не удалось создать каталог файлов предварительного просмотра '%s'."
 
-#: libgimpthumb/gimpthumbnail.c:917
+#: libgimpthumb/gimpthumbnail.c:919
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Не удалось создать файлы предварительного просмотра  %s:  %s."
 
-#: libgimpwidgets/gimpcolorbutton.c:93
-msgid "/_Foreground Color"
+#: libgimpwidgets/gimpcolorbutton.c:99
+#, fuzzy
+msgid "_Foreground Color"
 msgstr "/Цвет переднего плана"
 
-#: libgimpwidgets/gimpcolorbutton.c:95
-msgid "/_Background Color"
+#: libgimpwidgets/gimpcolorbutton.c:103
+#, fuzzy
+msgid "_Background Color"
 msgstr "/Цвет фона"
 
-#: libgimpwidgets/gimpcolorbutton.c:98
-msgid "/Blac_k"
+#: libgimpwidgets/gimpcolorbutton.c:107
+#, fuzzy
+msgid "Blac_k"
 msgstr "/Чёрный"
 
-#: libgimpwidgets/gimpcolorbutton.c:100
-msgid "/_White"
+#: libgimpwidgets/gimpcolorbutton.c:111
+#, fuzzy
+msgid "_White"
 msgstr "/Белый"
 
 #: libgimpwidgets/gimpcolorscales.c:133
@@ -504,7 +510,8 @@ msgstr "Каталог"
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
-msgstr "Выберите пипетку, затем укажите цвет где-нибудь на экране, чтобы выбрать его."
+msgstr ""
+"Выберите пипетку, затем укажите цвет где-нибудь на экране, чтобы выбрать его."
 
 #: libgimpwidgets/gimppreviewarea.c:126
 msgid "Check Size"
@@ -524,66 +531,70 @@ msgid "Anchor"
 msgstr "Прикрепить"
 
 #: libgimpwidgets/gimpstock.c:114
+msgid "C_enter"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:115
 msgid "_Duplicate"
 msgstr "Сделать копию"
 
-#: libgimpwidgets/gimpstock.c:115
+#: libgimpwidgets/gimpstock.c:116
 msgid "_Edit"
 msgstr "Исправить"
 
-#: libgimpwidgets/gimpstock.c:116
+#: libgimpwidgets/gimpstock.c:117
 msgid "Linked"
 msgstr "Связанные"
 
-#: libgimpwidgets/gimpstock.c:117
+#: libgimpwidgets/gimpstock.c:118
 msgid "Paste as New"
 msgstr "Вставить как новое"
 
-#: libgimpwidgets/gimpstock.c:118
+#: libgimpwidgets/gimpstock.c:119
 msgid "Paste Into"
 msgstr "Вставить в"
 
-#: libgimpwidgets/gimpstock.c:119
+#: libgimpwidgets/gimpstock.c:120
 msgid "_Reset"
 msgstr "Сбросить"
 
-#: libgimpwidgets/gimpstock.c:120
+#: libgimpwidgets/gimpstock.c:121
 msgid "Visible"
 msgstr "Видимый"
 
-#: libgimpwidgets/gimpstock.c:153 libgimpwidgets/gimpstock.c:157
+#: libgimpwidgets/gimpstock.c:154 libgimpwidgets/gimpstock.c:158
 msgid "_Stroke"
 msgstr "Обвести"
 
-#: libgimpwidgets/gimpstock.c:169
+#: libgimpwidgets/gimpstock.c:170
 msgid "L_etter Spacing"
 msgstr "Расстояние между буквами"
 
-#: libgimpwidgets/gimpstock.c:170
+#: libgimpwidgets/gimpstock.c:171
 msgid "L_ine Spacing"
 msgstr "Расстояние между строками"
 
-#: libgimpwidgets/gimpstock.c:185
+#: libgimpwidgets/gimpstock.c:187
 msgid "_Resize"
 msgstr "Изменить размер"
 
-#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:290
+#: libgimpwidgets/gimpstock.c:188 libgimpwidgets/gimpstock.c:292
 msgid "_Scale"
 msgstr "Масштабировать"
 
-#: libgimpwidgets/gimpstock.c:269
+#: libgimpwidgets/gimpstock.c:271
 msgid "Crop"
 msgstr "Кадрировать"
 
-#: libgimpwidgets/gimpstock.c:286
+#: libgimpwidgets/gimpstock.c:288
 msgid "_Transform"
 msgstr "Преобразовать"
 
-#: libgimpwidgets/gimpstock.c:289
+#: libgimpwidgets/gimpstock.c:291
 msgid "_Rotate"
 msgstr "Повернуть"
 
-#: libgimpwidgets/gimpstock.c:291
+#: libgimpwidgets/gimpstock.c:293
 msgid "_Shear"
 msgstr "Наклонить"
 
@@ -617,7 +628,8 @@ msgstr "Новое зерно"
 
 #: libgimpwidgets/gimpwidgets.c:1018
 msgid "Seed random number generator with a generated random number"
-msgstr "Инициализировать генератор случайных чисел сгенерированным случайным числом"
+msgstr ""
+"Инициализировать генератор случайных чисел сгенерированным случайным числом"
 
 #: libgimpwidgets/gimpwidgets.c:1022
 msgid "_Randomize"
@@ -637,7 +649,8 @@ msgstr "Тританопия (нечувствительность к синем
 
 #: modules/cdisplay_colorblind.c:153
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr "Фильтр моделирующий недостаток цвета (алгоритм Бреттеля-Виенота-Моллона)"
+msgstr ""
+"Фильтр моделирующий недостаток цвета (алгоритм Бреттеля-Виенота-Моллона)"
 
 #: modules/cdisplay_colorblind.c:242
 msgid "Color Deficient Vision"
@@ -797,4 +810,3 @@ msgstr "Давление"
 
 #~ msgid "None (normal vision)"
 #~ msgstr "Нет (нормальное зрение)"
-

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-19 23:21+0100\n"
+"POT-Creation-Date: 2004-12-18 01:48+0100\n"
 "PO-Revision-Date: 2003-06-28 22:05+0700\n"
 "Last-Translator: Mohammad DAMT <mdamt@bisnisweb.com>\n"
 "Language-Team: Indonesian <sukarelawan@gnome.linux.or.id>\n"
@@ -128,7 +128,7 @@ msgstr "Tanggal:"
 msgid "Image Types:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:610
+#: plug-ins/script-fu/script-fu-scripts.c:611
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -1231,10 +1231,6 @@ msgstr ""
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:4
 msgid "Effect size (pixels)"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/copy-visible.scm.h:1
-msgid "Copy _Visible"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:2

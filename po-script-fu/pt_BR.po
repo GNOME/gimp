@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-14 03:52-0200\n"
+"POT-Creation-Date: 2004-12-18 01:48+0100\n"
 "PO-Revision-Date: 2004-12-14 19:22-0200\n"
 "Last-Translator: Joao S. O. Bueno Calligaris <gwidion@mpc.com.br>\n"
 "Language-Team: Brazilian Portuguese <<gnome-l10n-br@listas.cipsga.org.br>>\n"
@@ -40,7 +40,8 @@ msgstr "_Procurar..."
 
 #: plug-ins/script-fu/script-fu-console.c:548
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
-msgstr "O modo de avaliação Script-Fu só pode ser chamado de forma não interativa"
+msgstr ""
+"O modo de avaliação Script-Fu só pode ser chamado de forma não interativa"
 
 #: plug-ins/script-fu/script-fu-interface.c:177
 msgid "Script-Fu cannot process two scripts at the same time."
@@ -2533,4 +2534,3 @@ msgstr "Opacidade dos brilhos"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "Efeito-_Xach..."
-

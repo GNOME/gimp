@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-19 23:21+0100\n"
+"POT-Creation-Date: 2004-12-18 01:48+0100\n"
 "PO-Revision-Date: 2004-08-08 14:24+0200\n"
 "Last-Translator: Бранко Ивановић <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <gnom@prevod.org>\n"
@@ -140,7 +140,7 @@ msgstr "Датум:"
 msgid "Image Types:"
 msgstr "Врсте Слика:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:610
+#: plug-ins/script-fu/script-fu-scripts.c:611
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -1337,10 +1337,6 @@ msgstr ""
 #, fuzzy
 msgid "Effect size (pixels)"
 msgstr "Ефективна величина (тачака)"
-
-#: plug-ins/script-fu/scripts/copy-visible.scm.h:1
-msgid "Copy _Visible"
-msgstr ""
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:2
 #, fuzzy

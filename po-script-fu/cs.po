@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-20 11:08+0100\n"
+"POT-Creation-Date: 2004-12-18 01:48+0100\n"
 "PO-Revision-Date: 2004-11-20 16:09+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -134,7 +134,7 @@ msgstr "Datum:"
 msgid "Image Types:"
 msgstr "Typy obrázku:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:610
+#: plug-ins/script-fu/script-fu-scripts.c:611
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -1238,10 +1238,6 @@ msgstr "Zchladlý _kov..."
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:4
 msgid "Effect size (pixels)"
 msgstr "Velikost efektu (pixely)"
-
-#: plug-ins/script-fu/scripts/copy-visible.scm.h:1
-msgid "Copy _Visible"
-msgstr "Kopírovat _viditelné..."
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:2
 msgid "Background image"
@@ -2539,3 +2535,6 @@ msgstr "Krytí světel"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "Efekt _Xach..."
+
+#~ msgid "Copy _Visible"
+#~ msgstr "Kopírovat _viditelné..."

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-17 20:27-0500\n"
+"POT-Creation-Date: 2004-12-19 03:11+0100\n"
 "PO-Revision-Date: 2004-12-17 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
@@ -6025,15 +6025,15 @@ msgstr "Offset Channel"
 
 #. The offset frame
 #: app/dialogs/offset-dialog.c:108 app/dialogs/offset-dialog.c:136
-#: app/dialogs/resize-dialog.c:187 app/widgets/gimpgrideditor.c:274
+#: app/dialogs/resize-dialog.c:185 app/widgets/gimpgrideditor.c:274
 msgid "Offset"
 msgstr "Offset"
 
-#: app/dialogs/offset-dialog.c:168 app/dialogs/resize-dialog.c:216
+#: app/dialogs/offset-dialog.c:168 app/dialogs/resize-dialog.c:214
 msgid "_X:"
 msgstr "_X:"
 
-#: app/dialogs/offset-dialog.c:170 app/dialogs/resize-dialog.c:217
+#: app/dialogs/offset-dialog.c:170 app/dialogs/resize-dialog.c:215
 msgid "_Y:"
 msgstr "_Y:"
 
@@ -6749,33 +6749,33 @@ msgstr "Theme Folders"
 msgid "Select Theme Folders"
 msgstr "Select Theme Folders"
 
-#: app/dialogs/print-size-dialog.c:130
+#: app/dialogs/print-size-dialog.c:128
 msgid "Print Size"
 msgstr "Print Size"
 
 #. the image size labels
-#: app/dialogs/print-size-dialog.c:157 app/widgets/gimpsizebox.c:241
+#: app/dialogs/print-size-dialog.c:155 app/widgets/gimpsizebox.c:241
 #: app/widgets/gimptemplateeditor.c:236
 msgid "_Width:"
 msgstr "_Width:"
 
-#: app/dialogs/print-size-dialog.c:164 app/widgets/gimpsizebox.c:248
+#: app/dialogs/print-size-dialog.c:162 app/widgets/gimpsizebox.c:248
 #: app/widgets/gimptemplateeditor.c:243
 msgid "H_eight:"
 msgstr "H_eight:"
 
 #. the resolution labels
-#: app/dialogs/print-size-dialog.c:212 app/widgets/gimpsizebox.c:338
+#: app/dialogs/print-size-dialog.c:210 app/widgets/gimpsizebox.c:338
 #: app/widgets/gimptemplateeditor.c:363
 msgid "_X resolution:"
 msgstr "_X resolution:"
 
-#: app/dialogs/print-size-dialog.c:219 app/widgets/gimpsizebox.c:345
+#: app/dialogs/print-size-dialog.c:217 app/widgets/gimpsizebox.c:345
 #: app/widgets/gimptemplateeditor.c:370
 msgid "_Y resolution:"
 msgstr "_Y resolution:"
 
-#: app/dialogs/print-size-dialog.c:230 app/widgets/gimpsizebox.c:357
+#: app/dialogs/print-size-dialog.c:228 app/widgets/gimpsizebox.c:357
 #: app/widgets/gimptemplateeditor.c:383
 #, c-format
 msgid "pixels/%a"
@@ -6797,6 +6797,11 @@ msgstr "There is one image with unsaved changes:"
 #, c-format
 msgid "There are %d images with unsaved changes:"
 msgstr "There are %d images with unsaved changes:"
+
+#: app/dialogs/quit-dialog.c:183
+#, fuzzy
+msgid "_Discard Changes"
+msgstr "_Raise Channel"
 
 #: app/dialogs/resize-dialog.c:115
 msgid "Canvas Size"
@@ -6827,15 +6832,15 @@ msgstr "_Vertical:"
 msgid "Image Size"
 msgstr "Image Size"
 
-#: app/dialogs/scale-dialog.c:168
+#: app/dialogs/scale-dialog.c:166
 msgid "Quality"
 msgstr "Quality"
 
-#: app/dialogs/scale-dialog.c:180
+#: app/dialogs/scale-dialog.c:178
 msgid "I_nterpolation:"
 msgstr "I_nterpolation:"
 
-#: app/dialogs/scale-dialog.c:194
+#: app/dialogs/scale-dialog.c:192
 msgid ""
 "Indexed color layers are always scaled without interpolation. The chosen "
 "interpolation type will affect channels and masks only."
@@ -8995,9 +9000,10 @@ msgstr "Rotation Information"
 msgid "Center X:"
 msgstr "Centre X:"
 
-#: app/tools/gimprotatetool.c:189
-msgid "Y:"
-msgstr "Y:"
+#: app/tools/gimprotatetool.c:190
+#, fuzzy
+msgid "Center Y:"
+msgstr "Centre X:"
 
 #: app/tools/gimpscaletool.c:91
 msgid "Scale"
@@ -10751,3 +10757,6 @@ msgstr "Create and edit images or photographs"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "Image Editor"
 msgstr "Image Editor"
+
+#~ msgid "Y:"
+#~ msgstr "Y:"

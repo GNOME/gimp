@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-21 22:56+0000\n"
+"POT-Creation-Date: 2004-12-18 01:48+0100\n"
 "PO-Revision-Date: 2004-11-21 22:59+0100\n"
 "Last-Translator: David Lodge <dave@cirt.net>\n"
 "Language-Team: English, British\n"
@@ -66,6 +66,7 @@ msgid "Script Arguments"
 msgstr "Script Arguments"
 
 #. we add a colon after the label;
+#. some languages want an extra space here
 #: plug-ins/script-fu/script-fu-interface.c:285
 #, c-format
 msgid "%s:"
@@ -131,7 +132,7 @@ msgstr "Date:"
 msgid "Image Types:"
 msgstr "Image Types:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:601
+#: plug-ins/script-fu/script-fu-scripts.c:611
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -158,8 +159,7 @@ msgstr "Server Logfile:"
 msgid "Script-Fu _Console"
 msgstr "Script-Fu _Console"
 
-#: plug-ins/script-fu/script-fu.c:129
-#: plug-ins/script-fu/script-fu.c:158
+#: plug-ins/script-fu/script-fu.c:129 plug-ins/script-fu/script-fu.c:158
 #: plug-ins/script-fu/script-fu.c:290
 msgid "<Toolbox>/Xtns/Script-Fu"
 msgstr "<Toolbox>/Xtns/Script-Fu"
@@ -1234,10 +1234,6 @@ msgstr "Cool _Metal..."
 msgid "Effect size (pixels)"
 msgstr "Effect size (pixels)"
 
-#: plug-ins/script-fu/scripts/copy-visible.scm.h:1
-msgid "Copy _Visible"
-msgstr "Copy _Visible"
-
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:2
 msgid "Background image"
 msgstr "Background image"
@@ -2171,8 +2167,12 @@ msgid "Color method"
 msgstr "Colour method"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
-msgid "Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://netword.com/*spyrogimp"
-msgstr "Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://netword.com/*spyrogimp"
+msgid ""
+"Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://"
+"netword.com/*spyrogimp"
+msgstr ""
+"Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://"
+"netword.com/*spyrogimp"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:8
 msgid "Epitrochoid"
@@ -2531,3 +2531,5 @@ msgstr "Highlight opacity"
 msgid "_Xach-Effect..."
 msgstr "_Xach-Effect..."
 
+#~ msgid "Copy _Visible"
+#~ msgstr "Copy _Visible"

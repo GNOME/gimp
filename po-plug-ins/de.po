@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-12 18:58+0100\n"
+"POT-Creation-Date: 2004-12-18 01:47+0100\n"
 "PO-Revision-Date: 2004-12-12 19:00+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -397,7 +397,7 @@ msgstr "_Fraktale"
 #: plug-ins/common/sunras.c:513 plug-ins/common/tga.c:1030
 #: plug-ins/common/tiff.c:1810 plug-ins/common/xbm.c:996
 #: plug-ins/common/xwd.c:577 plug-ins/fits/fits.c:450
-#: plug-ins/flame/flame.c:443 plug-ins/gfig/gfig.c:793
+#: plug-ins/flame/flame.c:443 plug-ins/gfig/gfig.c:783
 #: plug-ins/gfli/gfli.c:715 plug-ins/ifscompose/ifscompose.c:2395
 #: plug-ins/winicon/icosave.c:243 plug-ins/xjt/xjt.c:1263
 #: plug-ins/xjt/xjt.c:1702
@@ -1227,7 +1227,7 @@ msgstr "Unbekanntes oder ungültiges BMP-Komprimierungsformat."
 #: plug-ins/bmp/bmpread.c:479 plug-ins/common/CEL.c:357
 #: plug-ins/common/CEL.c:360 plug-ins/common/blinds.c:273
 #: plug-ins/common/compose.c:625 plug-ins/common/decompose.c:594
-#: plug-ins/common/dicom.c:442 plug-ins/common/film.c:949
+#: plug-ins/common/dicom.c:442 plug-ins/common/film.c:946
 #: plug-ins/common/gifload.c:865 plug-ins/common/jpeg.c:1101
 #: plug-ins/common/jpeg.c:2416 plug-ins/common/pcx.c:334
 #: plug-ins/common/pcx.c:340 plug-ins/common/pix.c:374
@@ -3383,7 +3383,7 @@ msgstr "Graviere..."
 msgid "Engrave"
 msgstr "Gravur"
 
-#: plug-ins/common/engrave.c:238 plug-ins/common/film.c:1206
+#: plug-ins/common/engrave.c:238 plug-ins/common/film.c:1203
 #: plug-ins/common/gtm.c:594 plug-ins/common/postscript.c:2967
 #: plug-ins/common/postscript.c:3128 plug-ins/common/raw.c:998
 #: plug-ins/common/smooth_palette.c:434 plug-ins/common/tile.c:421
@@ -3455,114 +3455,114 @@ msgstr "_Film..."
 msgid "Composing Images..."
 msgstr "Kombiniere Bilder..."
 
-#: plug-ins/common/film.c:436 plug-ins/common/guillotine.c:183
+#: plug-ins/common/film.c:438 plug-ins/common/guillotine.c:183
 #: plug-ins/helpbrowser/dialog.c:523
 msgid "Untitled"
 msgstr "Unbenannt"
 
 #. ** Get a RGB copy of the source region **
-#: plug-ins/common/film.c:703
+#: plug-ins/common/film.c:700
 msgid "Temporary"
 msgstr "Temporär"
 
-#: plug-ins/common/film.c:1082
+#: plug-ins/common/film.c:1079
 msgid "Available Images:"
 msgstr "Vorhandene Bilder:"
 
-#: plug-ins/common/film.c:1083
+#: plug-ins/common/film.c:1080
 msgid "On Film:"
 msgstr "Auf dem Film:"
 
 #. Create selection
-#: plug-ins/common/film.c:1169 plug-ins/imagemap/imap_selection.c:413
+#: plug-ins/common/film.c:1166 plug-ins/imagemap/imap_selection.c:400
 #: plug-ins/rcm/rcm_dialog.c:158
 msgid "Selection"
 msgstr "Auswahl"
 
 #. Film height/colour
-#: plug-ins/common/film.c:1179 plug-ins/common/film.c:1452
+#: plug-ins/common/film.c:1176 plug-ins/common/film.c:1449
 msgid "Film"
 msgstr "Film"
 
 #. Keep maximum image height
-#: plug-ins/common/film.c:1188
+#: plug-ins/common/film.c:1185
 msgid "_Fit height to images"
 msgstr "_Höhe an Bilder anpassen"
 
 #. Film color
-#: plug-ins/common/film.c:1224
+#: plug-ins/common/film.c:1221
 msgid "Select Film Color"
 msgstr "Farbe des Films auswählen"
 
-#: plug-ins/common/film.c:1229 plug-ins/common/film.c:1280
+#: plug-ins/common/film.c:1226 plug-ins/common/film.c:1277
 #: plug-ins/common/nova.c:346
 msgid "Co_lor:"
 msgstr "_Farbe:"
 
 #. Film numbering: Startindex/Font/colour
-#: plug-ins/common/film.c:1238
+#: plug-ins/common/film.c:1235
 msgid "Numbering"
 msgstr "Nummerierung"
 
-#: plug-ins/common/film.c:1256
+#: plug-ins/common/film.c:1253
 msgid "Start _index:"
 msgstr "Start_index:"
 
-#: plug-ins/common/film.c:1270
+#: plug-ins/common/film.c:1267
 msgid "_Font:"
 msgstr "_Schrift:"
 
 #. Numbering color
-#: plug-ins/common/film.c:1275
+#: plug-ins/common/film.c:1272
 msgid "Select Number Color"
 msgstr "Farbe der Nummern auswählen"
 
-#: plug-ins/common/film.c:1290
+#: plug-ins/common/film.c:1287
 msgid "At _bottom"
 msgstr "Am _Fuß"
 
-#: plug-ins/common/film.c:1291
+#: plug-ins/common/film.c:1288
 msgid "At _top"
 msgstr "Am _Kopf"
 
 #. ** The right frame keeps the image selection **
-#: plug-ins/common/film.c:1304
+#: plug-ins/common/film.c:1301
 msgid "Image Selection"
 msgstr "Bildauswahl"
 
-#: plug-ins/common/film.c:1332
+#: plug-ins/common/film.c:1329
 msgid "All Values are Fractions of the Film Height"
 msgstr "Alle Werte sind relativ zur Filmhöhe"
 
-#: plug-ins/common/film.c:1335
+#: plug-ins/common/film.c:1332
 msgid "Ad_vanced"
 msgstr "Er_weitert"
 
-#: plug-ins/common/film.c:1354
+#: plug-ins/common/film.c:1351
 msgid "Image _height:"
 msgstr "Bild_höhe:"
 
-#: plug-ins/common/film.c:1365
+#: plug-ins/common/film.c:1362
 msgid "Image spac_ing:"
 msgstr "Bild_abstand:"
 
-#: plug-ins/common/film.c:1376
+#: plug-ins/common/film.c:1373
 msgid "_Hole offset:"
 msgstr "_Lochversatz:"
 
-#: plug-ins/common/film.c:1387
+#: plug-ins/common/film.c:1384
 msgid "Ho_le width:"
 msgstr "Loch_breite:"
 
-#: plug-ins/common/film.c:1398
+#: plug-ins/common/film.c:1395
 msgid "Hol_e height:"
 msgstr "Loch_höhe:"
 
-#: plug-ins/common/film.c:1409
+#: plug-ins/common/film.c:1406
 msgid "Hole sp_acing:"
 msgstr "Loch_abstand:"
 
-#: plug-ins/common/film.c:1420
+#: plug-ins/common/film.c:1417
 msgid "_Number height:"
 msgstr "_Nummernhöhe:"
 
@@ -4173,7 +4173,7 @@ msgstr "Zeichne Gitter..."
 
 #: plug-ins/common/grid.c:621 plug-ins/gfig/gfig-dialog.c:1355
 #: plug-ins/imagemap/imap_menu.c:385 plug-ins/imagemap/imap_popup.c:153
-#: plug-ins/imagemap/imap_toolbar.c:168
+#: plug-ins/imagemap/imap_toolbar.c:163
 msgid "Grid"
 msgstr "Gitter"
 
@@ -7422,7 +7422,7 @@ msgstr "Maskiere..."
 msgid "Unsharp Mask"
 msgstr "Unscharf Maskieren"
 
-#: plug-ins/common/url.c:85 plug-ins/imagemap/imap_selection.c:434
+#: plug-ins/common/url.c:85 plug-ins/imagemap/imap_selection.c:421
 msgid "URL"
 msgstr "URL"
 
@@ -8655,7 +8655,7 @@ msgstr "Vordergrund"
 #: plug-ins/gfig/gfig-dialog.c:1289 plug-ins/imagemap/imap_cmd_copy.c:54
 #: plug-ins/imagemap/imap_cmd_copy_object.c:55
 #: plug-ins/imagemap/imap_object_popup.c:113
-#: plug-ins/imagemap/imap_toolbar.c:131
+#: plug-ins/imagemap/imap_toolbar.c:126
 msgid "Copy"
 msgstr "Kopieren"
 
@@ -8684,7 +8684,7 @@ msgid "Grid spacing:"
 msgstr "Gitter-Abstand:"
 
 #: plug-ins/gfig/gfig-dialog.c:1402 plug-ins/imagemap/imap_menu.c:369
-#: plug-ins/imagemap/imap_popup.c:137 plug-ins/imagemap/imap_tools.c:161
+#: plug-ins/imagemap/imap_popup.c:137 plug-ins/imagemap/imap_tools.c:156
 msgid "Rectangle"
 msgstr "Rechteck"
 
@@ -8738,11 +8738,6 @@ msgstr "Links"
 msgid "Orientation:"
 msgstr "Orientierung:"
 
-#: plug-ins/gfig/gfig-dialog.c:1885
-#, c-format
-msgid "Gfig layer %d"
-msgstr "Gfig Ebene %d"
-
 #: plug-ins/gfig/gfig-dobject.c:585
 msgid "Hey where has the object gone ?"
 msgstr "Hey wohin ist dieses Objekt verschwunden ?"
@@ -8782,7 +8777,7 @@ msgstr "Stern Anzahl der Punkte"
 msgid "_Gfig..."
 msgstr "_Gfig..."
 
-#: plug-ins/gfig/gfig.c:734
+#: plug-ins/gfig/gfig.c:726
 msgid ""
 "Error trying to save figure as a parasite: can't attach parasite to "
 "drawable.\n"
@@ -8790,7 +8785,7 @@ msgstr ""
 "Fehler beim Versuch die Abbildung als Parasit zu speichern: Parasit konnte "
 "nicht mit Bild verbunden werden.\n"
 
-#: plug-ins/gfig/gfig.c:755
+#: plug-ins/gfig/gfig.c:747
 #, c-format
 msgid "Error trying to open temp file '%s'for parasite loading.\n"
 msgstr ""
@@ -9043,12 +9038,12 @@ msgid "Shape of Second Flares"
 msgstr "Form des anderen Flare"
 
 #: plug-ins/gflare/gflare.c:3807 plug-ins/imagemap/imap_menu.c:372
-#: plug-ins/imagemap/imap_popup.c:140 plug-ins/imagemap/imap_tools.c:165
+#: plug-ins/imagemap/imap_popup.c:140 plug-ins/imagemap/imap_tools.c:160
 msgid "Circle"
 msgstr "Kreis"
 
 #: plug-ins/gflare/gflare.c:3824 plug-ins/imagemap/imap_menu.c:374
-#: plug-ins/imagemap/imap_popup.c:143 plug-ins/imagemap/imap_tools.c:169
+#: plug-ins/imagemap/imap_popup.c:143 plug-ins/imagemap/imap_tools.c:164
 msgid "Polygon"
 msgstr "Polygon"
 
@@ -9977,12 +9972,12 @@ msgstr "Erzeugen"
 #: plug-ins/imagemap/imap_cmd_cut.c:55
 #: plug-ins/imagemap/imap_cmd_cut_object.c:51
 #: plug-ins/imagemap/imap_object_popup.c:111
-#: plug-ins/imagemap/imap_toolbar.c:128
+#: plug-ins/imagemap/imap_toolbar.c:123
 msgid "Cut"
 msgstr "Ausschneiden"
 
 #: plug-ins/imagemap/imap_cmd_delete.c:57
-#: plug-ins/imagemap/imap_selection.c:186 plug-ins/imagemap/imap_tools.c:179
+#: plug-ins/imagemap/imap_selection.c:172 plug-ins/imagemap/imap_tools.c:174
 msgid "Delete"
 msgstr "Löschen"
 
@@ -10101,7 +10096,7 @@ msgstr "Punkt hinzufügen"
 #: plug-ins/imagemap/imap_cmd_move_down.c:53
 #: plug-ins/imagemap/imap_cmd_object_down.c:55
 #: plug-ins/imagemap/imap_object_popup.c:109
-#: plug-ins/imagemap/imap_selection.c:177
+#: plug-ins/imagemap/imap_selection.c:163
 msgid "Move Down"
 msgstr "Runter"
 
@@ -10115,22 +10110,22 @@ msgid "Move Selected Objects"
 msgstr "Ausgewählte Objekte bewegen"
 
 #: plug-ins/imagemap/imap_cmd_move_to_front.c:51
-#: plug-ins/imagemap/imap_toolbar.c:156
+#: plug-ins/imagemap/imap_toolbar.c:151
 msgid "Move To Front"
 msgstr "Nach vorne bringen"
 
 #: plug-ins/imagemap/imap_cmd_move_up.c:53
 #: plug-ins/imagemap/imap_cmd_object_up.c:55
 #: plug-ins/imagemap/imap_object_popup.c:107
-#: plug-ins/imagemap/imap_selection.c:173
+#: plug-ins/imagemap/imap_selection.c:159
 msgid "Move Up"
 msgstr "Rauf"
 
-#: plug-ins/imagemap/imap_cmd_paste.c:51 plug-ins/imagemap/imap_toolbar.c:134
+#: plug-ins/imagemap/imap_cmd_paste.c:51 plug-ins/imagemap/imap_toolbar.c:129
 msgid "Paste"
 msgstr "Einfügen"
 
-#: plug-ins/imagemap/imap_cmd_select.c:53 plug-ins/imagemap/imap_tools.c:149
+#: plug-ins/imagemap/imap_cmd_select.c:53 plug-ins/imagemap/imap_tools.c:144
 msgid "Select"
 msgstr "Auswahl"
 
@@ -10151,7 +10146,7 @@ msgid "Select Region"
 msgstr "Bereich auswählen"
 
 #: plug-ins/imagemap/imap_cmd_send_to_back.c:51
-#: plug-ins/imagemap/imap_toolbar.c:162
+#: plug-ins/imagemap/imap_toolbar.c:157
 msgid "Send To Back"
 msgstr "Nach hinten"
 
@@ -10582,19 +10577,19 @@ msgstr "Oben links _x:"
 msgid "Upper left _y:"
 msgstr "Oben links _y:"
 
-#: plug-ins/imagemap/imap_selection.c:182 plug-ins/imagemap/imap_tools.c:174
+#: plug-ins/imagemap/imap_selection.c:168 plug-ins/imagemap/imap_tools.c:169
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: plug-ins/imagemap/imap_selection.c:423
+#: plug-ins/imagemap/imap_selection.c:410
 msgid "#"
 msgstr "Nr. "
 
-#: plug-ins/imagemap/imap_selection.c:452
+#: plug-ins/imagemap/imap_selection.c:439
 msgid "ALT Text"
 msgstr "ALT-Text"
 
-#: plug-ins/imagemap/imap_selection.c:462
+#: plug-ins/imagemap/imap_selection.c:449
 msgid "Target"
 msgstr "Ziel"
 
@@ -10642,67 +10637,67 @@ msgstr "Zeige Quelle"
 msgid "Edit Map Info..."
 msgstr "Bearbeite Map-Info..."
 
-#: plug-ins/imagemap/imap_toolbar.c:107
+#: plug-ins/imagemap/imap_toolbar.c:102
 msgid "Open"
 msgstr "Öffnen"
 
-#: plug-ins/imagemap/imap_toolbar.c:109
+#: plug-ins/imagemap/imap_toolbar.c:104
 msgid "Save"
 msgstr "Speichern"
 
-#: plug-ins/imagemap/imap_toolbar.c:112
+#: plug-ins/imagemap/imap_toolbar.c:107
 msgid "Preferences"
 msgstr "Einstellungen"
 
-#: plug-ins/imagemap/imap_toolbar.c:117
+#: plug-ins/imagemap/imap_toolbar.c:112
 msgid "Undo"
 msgstr "Rückgängig"
 
-#: plug-ins/imagemap/imap_toolbar.c:121
+#: plug-ins/imagemap/imap_toolbar.c:116
 msgid "Redo"
 msgstr "Wiederholen"
 
-#: plug-ins/imagemap/imap_toolbar.c:142
+#: plug-ins/imagemap/imap_toolbar.c:137
 msgid "Zoom in"
 msgstr "Hineinzoomen"
 
-#: plug-ins/imagemap/imap_toolbar.c:147
+#: plug-ins/imagemap/imap_toolbar.c:142
 msgid "Zoom out"
 msgstr "Herauszoomen"
 
-#: plug-ins/imagemap/imap_toolbar.c:152
+#: plug-ins/imagemap/imap_toolbar.c:147
 msgid "Edit map info"
 msgstr "Map-Info bearbeiten"
 
-#: plug-ins/imagemap/imap_tools.c:150
+#: plug-ins/imagemap/imap_tools.c:145
 msgid "Select existing area"
 msgstr "Existierenden Bereich auswählen"
 
-#: plug-ins/imagemap/imap_tools.c:155
+#: plug-ins/imagemap/imap_tools.c:150
 msgid "Fuzzy Select"
 msgstr "Ungenaue Auswahl"
 
-#: plug-ins/imagemap/imap_tools.c:156
+#: plug-ins/imagemap/imap_tools.c:151
 msgid "Select contiguous regions"
 msgstr "Angrenzenden Bereich auswählen"
 
-#: plug-ins/imagemap/imap_tools.c:162
+#: plug-ins/imagemap/imap_tools.c:157
 msgid "Define Rectangle area"
 msgstr "Rechteckigen Bereich festlegen"
 
-#: plug-ins/imagemap/imap_tools.c:166
+#: plug-ins/imagemap/imap_tools.c:161
 msgid "Define Circle/Oval area"
 msgstr "Runden/Ovalen Bereich festlegen"
 
-#: plug-ins/imagemap/imap_tools.c:170
+#: plug-ins/imagemap/imap_tools.c:165
 msgid "Define Polygon area"
 msgstr "Bereich durch Polygon festlegen"
 
-#: plug-ins/imagemap/imap_tools.c:175
+#: plug-ins/imagemap/imap_tools.c:170
 msgid "Edit selected area info"
 msgstr "Informatioen über ausgewählten Bereich laden"
 
-#: plug-ins/imagemap/imap_tools.c:180
+#: plug-ins/imagemap/imap_tools.c:175
 msgid "Delete selected area"
 msgstr "Ausgewälten Bereich löschen"
 
@@ -11723,3 +11718,6 @@ msgstr "Fehler: Konnte XJT Eigenschaften-Datei '%s' nicht lesen."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Fehler: XJT Eigenschaften-Datei '%s' ist leer."
+
+#~ msgid "Gfig layer %d"
+#~ msgstr "Gfig Ebene %d"

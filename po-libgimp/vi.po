@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-libgimp 1.3.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-17 02:35+0100\n"
+"POT-Creation-Date: 2004-12-18 01:47+0100\n"
 "PO-Revision-Date: 2003-01-30 23:28+0700\n"
 "Last-Translator: Trinh Minh Thanh <tmthanh@yahoo.com>\n"
 "Language-Team: Gnome-Vi <Gnomevi-list@lists.sourceforge.net>\n"
@@ -134,41 +134,42 @@ msgstr "%s cần một kênh alpha"
 msgid "Add Alpha Channel"
 msgstr "Thêm Kênh Alpha"
 
-#: libgimp/gimpexport.c:382
+#: libgimp/gimpexport.c:381
 msgid "Confirm Save"
 msgstr "Khẳng định Lưu"
 
-#: libgimp/gimpexport.c:388
+#: libgimp/gimpexport.c:387
 msgid "Confirm"
 msgstr "Khẳng định"
 
-#: libgimp/gimpexport.c:457
+#: libgimp/gimpexport.c:454
 msgid "Export File"
 msgstr "Xuất ra Tập Tin"
 
-#: libgimp/gimpexport.c:461
+#: libgimp/gimpexport.c:458
 #, fuzzy
 msgid "_Ignore"
 msgstr "Lờ Đi"
 
-#: libgimp/gimpexport.c:463
+#: libgimp/gimpexport.c:460
 #, fuzzy
 msgid "_Export"
 msgstr "Xuất Ra"
 
 #. the headline
-#: libgimp/gimpexport.c:485
+#: libgimp/gimpexport.c:482
 #, fuzzy, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
 msgstr "Ảnh nên được xuất ra trước khi nó được lưu lại vì những lý do sau:"
 
-#: libgimp/gimpexport.c:563
+#. the footline
+#: libgimp/gimpexport.c:553
 msgid "The export conversion won't modify your original image."
 msgstr "Chuyển đổi khi xuất ra không làm thay đổi ảnh gốc của bạn."
 
-#: libgimp/gimpexport.c:665
+#: libgimp/gimpexport.c:653
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -177,7 +178,7 @@ msgstr ""
 "Bạn sắp lưu một layer mask thành %s.\n"
 "Việc này sẽ không lưu các layer nhìn được."
 
-#: libgimp/gimpexport.c:671
+#: libgimp/gimpexport.c:659
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -334,7 +335,7 @@ msgstr ""
 msgid "%d GB"
 msgstr "Byte"
 
-#: libgimpbase/gimputils.c:162 libgimpbase/gimputils.c:167
+#: libgimpbase/gimputils.c:169 libgimpbase/gimputils.c:174
 msgid "(invalid UTF-8 string)"
 msgstr ""
 
@@ -378,7 +379,7 @@ msgstr "Không được nạp"
 msgid "Failed to create thumbnail folder '%s'."
 msgstr ""
 
-#: libgimpthumb/gimpthumbnail.c:917
+#: libgimpthumb/gimpthumbnail.c:919
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr ""

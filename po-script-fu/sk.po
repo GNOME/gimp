@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-24 11:05+0100\n"
+"POT-Creation-Date: 2004-12-18 01:48+0100\n"
 "PO-Revision-Date: 2004-11-27 11:58+0100\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
 "Language-Team: Slovak <<sk-i18n@lists.linux.sk>>\n"
@@ -16,7 +16,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.3\n"
-"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: plug-ins/script-fu/script-fu-console.c:129
 #: plug-ins/script-fu/script-fu-text-console.c:66
@@ -69,6 +70,7 @@ msgid "Script Arguments"
 msgstr "Argumenty skriptu"
 
 #. we add a colon after the label;
+#. some languages want an extra space here
 #: plug-ins/script-fu/script-fu-interface.c:285
 #, c-format
 msgid "%s:"
@@ -161,8 +163,7 @@ msgstr "Protokol servera:"
 msgid "Script-Fu _Console"
 msgstr "Script-Fu konzola"
 
-#: plug-ins/script-fu/script-fu.c:129
-#: plug-ins/script-fu/script-fu.c:158
+#: plug-ins/script-fu/script-fu.c:129 plug-ins/script-fu/script-fu.c:158
 #: plug-ins/script-fu/script-fu.c:290
 msgid "<Toolbox>/Xtns/Script-Fu"
 msgstr "<Toolbox>/Rozš./Script-Fu"
@@ -1239,10 +1240,6 @@ msgstr "St_udený kov..."
 msgid "Effect size (pixels)"
 msgstr "Veľkosť efektu (body)"
 
-#: plug-ins/script-fu/scripts/copy-visible.scm.h:1
-msgid "Copy _Visible"
-msgstr "Kopírovať _viditeľné"
-
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:2
 msgid "Background image"
 msgstr "Obrázok pozadia"
@@ -2178,8 +2175,12 @@ msgid "Color method"
 msgstr "Farebná metóda"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
-msgid "Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://netword.com/*spyrogimp"
-msgstr "Kreslí Spirografy, Epitrochoidy a Lissajouské krivky. Viac informácií na http://netword.com/*spyrogimp"
+msgid ""
+"Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://"
+"netword.com/*spyrogimp"
+msgstr ""
+"Kreslí Spirografy, Epitrochoidy a Lissajouské krivky. Viac informácií na "
+"http://netword.com/*spyrogimp"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:8
 msgid "Epitrochoid"
@@ -2538,3 +2539,5 @@ msgstr "Krytie svetiel"
 msgid "_Xach-Effect..."
 msgstr "Efekt _Xach..."
 
+#~ msgid "Copy _Visible"
+#~ msgstr "Kopírovať _viditeľné"

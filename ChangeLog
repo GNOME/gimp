@@ -1,3 +1,7 @@
+2004-12-19  Sven Neumann  <sven@gimp.org>
+
+	* Made 2.2.0 release.
+
 2004-12-18  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimprotatetool.c (gimp_rotate_tool_dialog): fixed label.

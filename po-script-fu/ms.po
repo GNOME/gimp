@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-19 23:21+0100\n"
+"POT-Creation-Date: 2004-12-18 01:48+0100\n"
 "PO-Revision-Date: 2003-10-30 09:35+0800\n"
 "Last-Translator: MIMOS Open Source Development Group <ismas@mimos.my>\n"
 "Language-Team: Projek Gabai <gabai-penyumbang@lists.sf.net>\n"
@@ -135,7 +135,7 @@ msgstr "Tarikh"
 msgid "Image Types:"
 msgstr "Jenis Imej"
 
-#: plug-ins/script-fu/script-fu-scripts.c:610
+#: plug-ins/script-fu/script-fu-scripts.c:611
 #, fuzzy, c-format
 msgid ""
 "Error while executing\n"
@@ -1332,10 +1332,6 @@ msgstr ""
 #, fuzzy
 msgid "Effect size (pixels)"
 msgstr "Saiz yang Terjejas (piksel)"
-
-#: plug-ins/script-fu/scripts/copy-visible.scm.h:1
-msgid "Copy _Visible"
-msgstr ""
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:2
 #, fuzzy

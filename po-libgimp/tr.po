@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-17 02:35+0100\n"
+"POT-Creation-Date: 2004-12-18 01:47+0100\n"
 "PO-Revision-Date: 2001-07-16 06:51+0300\n"
 "Last-Translator: Alper Ersoy <aersoy@tfz.net>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
@@ -133,48 +133,49 @@ msgstr "alfa kanalına ihtiyaç duyar"
 msgid "Add Alpha Channel"
 msgstr "Alfa Kanalı Ekle"
 
-#: libgimp/gimpexport.c:382
+#: libgimp/gimpexport.c:381
 msgid "Confirm Save"
 msgstr ""
 
-#: libgimp/gimpexport.c:388
+#: libgimp/gimpexport.c:387
 msgid "Confirm"
 msgstr ""
 
-#: libgimp/gimpexport.c:457
+#: libgimp/gimpexport.c:454
 msgid "Export File"
 msgstr "Dosyayı Dışarı Aktar"
 
-#: libgimp/gimpexport.c:461
+#: libgimp/gimpexport.c:458
 #, fuzzy
 msgid "_Ignore"
 msgstr "Görmezden Gel"
 
-#: libgimp/gimpexport.c:463
+#: libgimp/gimpexport.c:460
 #, fuzzy
 msgid "_Export"
 msgstr "Dışarı Aktar"
 
 #. the headline
-#: libgimp/gimpexport.c:485
+#: libgimp/gimpexport.c:482
 #, fuzzy, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
 msgstr "Resminiz şu sebepler nedeniyle kaydedilmeden önce dışarı aktarılamadı:"
 
-#: libgimp/gimpexport.c:563
+#. the footline
+#: libgimp/gimpexport.c:553
 msgid "The export conversion won't modify your original image."
 msgstr "Dışarı aktarma işlemi orjinal resimde değişiklik yapmaz."
 
-#: libgimp/gimpexport.c:665
+#: libgimp/gimpexport.c:653
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
 msgstr ""
 
-#: libgimp/gimpexport.c:671
+#: libgimp/gimpexport.c:659
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -328,7 +329,7 @@ msgstr ""
 msgid "%d GB"
 msgstr "Bayt"
 
-#: libgimpbase/gimputils.c:162 libgimpbase/gimputils.c:167
+#: libgimpbase/gimputils.c:169 libgimpbase/gimputils.c:174
 msgid "(invalid UTF-8 string)"
 msgstr ""
 
@@ -370,7 +371,7 @@ msgstr ""
 msgid "Failed to create thumbnail folder '%s'."
 msgstr ""
 
-#: libgimpthumb/gimpthumbnail.c:917
+#: libgimpthumb/gimpthumbnail.c:919
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr ""

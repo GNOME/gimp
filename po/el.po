@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-19 23:18+0100\n"
+"POT-Creation-Date: 2004-12-19 03:11+0100\n"
 "PO-Revision-Date: 2004-11-08 17:04+0200\n"
 "Last-Translator: Nikos Charonitakis <charosn@her.forthnet.gr>\n"
 "Language-Team:  <nls@tux.hellug.gr>\n"
@@ -59,7 +59,7 @@ msgstr ""
 "Σφάλμα ανοίγματος.\n"
 "%s"
 
-#: app/batch.c:85
+#: app/batch.c:84 app/batch.c:101
 #, c-format
 msgid "The batch interpreter '%s' is not available, batch mode disabled."
 msgstr ""
@@ -70,7 +70,7 @@ msgid ""
 "Make sure a proper setup for your display environment exists."
 msgstr ""
 
-#: app/main.c:222 app/widgets/gimptoolbox.c:553
+#: app/main.c:222 app/widgets/gimptoolbox.c:559
 #: data/misc/gimp.desktop.in.in.h:3
 msgid "The GIMP"
 msgstr "Το GIMP"
@@ -206,7 +206,7 @@ msgstr ""
 msgid "  -b, --batch <commands>   Process commands in batch mode.\n"
 msgstr ""
 
-#: app/sanity.c:200
+#: app/sanity.c:194
 #, c-format
 msgid ""
 "The configured filename encoding cannot be converted to UTF-8: %s\n"
@@ -214,7 +214,7 @@ msgid ""
 "Please check the value of the environment variable G_FILENAME_ENCODING."
 msgstr ""
 
-#: app/sanity.c:219
+#: app/sanity.c:213
 #, c-format
 msgid ""
 "The name of the directory holding the GIMP user configuration cannot be "
@@ -227,7 +227,7 @@ msgstr ""
 
 #. initialize the list of gimp brushes
 #: app/actions/actions.c:93 app/core/gimp.c:856 app/dialogs/dialogs.c:138
-#: app/dialogs/preferences-dialog.c:2268 app/pdb/internal_procs.c:92
+#: app/dialogs/preferences-dialog.c:2297 app/pdb/internal_procs.c:92
 msgid "Brushes"
 msgstr "Πινέλα"
 
@@ -291,7 +291,7 @@ msgstr "Αρχείο"
 
 #. initialize the list of gimp fonts
 #: app/actions/actions.c:132 app/core/gimp.c:872 app/dialogs/dialogs.c:146
-#: app/dialogs/preferences-dialog.c:2284 app/pdb/internal_procs.c:128
+#: app/dialogs/preferences-dialog.c:2313 app/pdb/internal_procs.c:128
 msgid "Fonts"
 msgstr "Γραμματοσειρές"
 
@@ -301,7 +301,7 @@ msgstr "Επεξεργαστής Διαβαθμίσεων"
 
 #. initialize the list of gimp gradients
 #: app/actions/actions.c:138 app/core/gimp.c:868 app/dialogs/dialogs.c:142
-#: app/dialogs/preferences-dialog.c:2280 app/pdb/internal_procs.c:140
+#: app/dialogs/preferences-dialog.c:2309 app/pdb/internal_procs.c:140
 msgid "Gradients"
 msgstr "Διαβαθμίσεις"
 
@@ -332,17 +332,17 @@ msgstr "Παλέττα χρωμάτων:"
 
 #. initialize the list of gimp palettes
 #: app/actions/actions.c:156 app/core/gimp.c:864 app/dialogs/dialogs.c:144
-#: app/dialogs/preferences-dialog.c:2276 app/pdb/internal_procs.c:170
+#: app/dialogs/preferences-dialog.c:2305 app/pdb/internal_procs.c:170
 msgid "Palettes"
 msgstr "Παλέττες"
 
 #. initialize the list of gimp patterns
 #: app/actions/actions.c:159 app/core/gimp.c:860 app/dialogs/dialogs.c:140
-#: app/dialogs/preferences-dialog.c:2272 app/pdb/internal_procs.c:185
+#: app/dialogs/preferences-dialog.c:2301 app/pdb/internal_procs.c:185
 msgid "Patterns"
 msgstr "Σχέδια"
 
-#: app/actions/actions.c:162 app/dialogs/preferences-dialog.c:2288
+#: app/actions/actions.c:162 app/dialogs/preferences-dialog.c:2317
 msgid "Plug-Ins"
 msgstr ""
 
@@ -366,8 +366,8 @@ msgid "Text Editor"
 msgstr "Επεξεργαστής Κειμένου GIMP"
 
 #: app/actions/actions.c:177 app/dialogs/dialogs.c:123
-#: app/dialogs/preferences-dialog.c:1556 app/dialogs/preferences-dialog.c:1559
-#: app/gui/gui.c:409
+#: app/dialogs/preferences-dialog.c:1585 app/dialogs/preferences-dialog.c:1588
+#: app/gui/gui.c:410
 msgid "Tool Options"
 msgstr "Επιλογές Εργαλείων"
 
@@ -730,12 +730,12 @@ msgstr "Επεξεργασία διαδικασιών"
 msgid "_Tool"
 msgstr "_Εργαλεία"
 
-#: app/actions/context-actions.c:51 app/dialogs/preferences-dialog.c:1598
+#: app/actions/context-actions.c:51 app/dialogs/preferences-dialog.c:1627
 msgid "_Brush"
 msgstr "_Πινέλο:"
 
 #: app/actions/context-actions.c:52 app/actions/plug-in-actions.c:78
-#: app/dialogs/preferences-dialog.c:1601
+#: app/dialogs/preferences-dialog.c:1630
 #, fuzzy
 msgid "_Pattern"
 msgstr "Σχέδιο"
@@ -745,7 +745,7 @@ msgid "_Palette"
 msgstr "_Παλέττα"
 
 #: app/actions/context-actions.c:54 app/dialogs/palette-import-dialog.c:219
-#: app/dialogs/preferences-dialog.c:1604
+#: app/dialogs/preferences-dialog.c:1633
 #, fuzzy
 msgid "_Gradient"
 msgstr "Διαβάθμιση"
@@ -1251,7 +1251,7 @@ msgid "_Buffer"
 msgstr "Επικολλημένο Στρώμα"
 
 #
-#: app/actions/edit-actions.c:65 app/actions/edit-actions.c:225
+#: app/actions/edit-actions.c:65 app/actions/edit-actions.c:230
 #, fuzzy
 msgid "_Undo"
 msgstr "Ακύρωση ενέργειας"
@@ -1263,7 +1263,7 @@ msgid "Undo"
 msgstr "Ακύρωση ενέργειας"
 
 #
-#: app/actions/edit-actions.c:71 app/actions/edit-actions.c:226
+#: app/actions/edit-actions.c:71 app/actions/edit-actions.c:231
 #, fuzzy
 msgid "_Redo"
 msgstr "Επανεκτέλεση"
@@ -1292,62 +1292,67 @@ msgstr "Απο_κοπή"
 msgid "_Copy"
 msgstr "_Αντιγραφή"
 
-#
+#. GIMP_STOCK_COPY_VISIBLE,
 #: app/actions/edit-actions.c:93
+msgid "Copy _Visible"
+msgstr ""
+
+#
+#: app/actions/edit-actions.c:98
 msgid "_Paste"
 msgstr "_Επικόλληση"
 
-#: app/actions/edit-actions.c:98
+#: app/actions/edit-actions.c:103
 msgid "Paste _Into"
 msgstr "Επικόλληση _Σε"
 
-#: app/actions/edit-actions.c:103
+#: app/actions/edit-actions.c:108
 msgid "Paste as _New"
 msgstr "Επικόλληση ως _Νέο"
 
-#: app/actions/edit-actions.c:108
+#: app/actions/edit-actions.c:113
 #, fuzzy
 msgid "Cu_t Named..."
 msgstr "Αποκοπή Επώνυμου"
 
-#: app/actions/edit-actions.c:113
+#: app/actions/edit-actions.c:118
 #, fuzzy
 msgid "_Copy Named..."
 msgstr "Αντιγραφή Επώνυμου"
 
-#: app/actions/edit-actions.c:118
+#: app/actions/edit-actions.c:123
 #, fuzzy
 msgid "_Paste Named..."
 msgstr "/Επεξεργασία/Ενταμιευτής/Επικόλληση Επώνυμου..."
 
 #
-#: app/actions/edit-actions.c:123
+#: app/actions/edit-actions.c:128
 msgid "Cl_ear"
 msgstr "Κα_θαρισμός"
 
-#: app/actions/edit-actions.c:131
+#: app/actions/edit-actions.c:136
 #, fuzzy
 msgid "Fill with _FG Color"
 msgstr "Γέμισμα με Χρώμα Προσκηνίου"
 
-#: app/actions/edit-actions.c:136
+#: app/actions/edit-actions.c:141
 #, fuzzy
 msgid "Fill with B_G Color"
 msgstr "Γέμισμα με Χρώμα Παρασκηνίου"
 
-#: app/actions/edit-actions.c:141
+#: app/actions/edit-actions.c:146
 #, fuzzy
 msgid "Fill with P_attern"
 msgstr "/Επεξεργασία/Γέμισμα με Χρώμα Προσκηνίου"
 
 #
-#: app/actions/edit-actions.c:209
+#: app/actions/edit-actions.c:214
 #, fuzzy, c-format
 msgid "_Undo %s"
 msgstr "Ακύρωση ενέργειας"
 
 #
-#: app/actions/edit-actions.c:214
+#: app/actions/edit-actions.c:219
 #, fuzzy, c-format
 msgid "_Redo %s"
 msgstr "Επανεκτέλεση"
@@ -1361,27 +1366,27 @@ msgstr "Ιστορικό URL"
 msgid "Really clear image's undo history?"
 msgstr ""
 
-#: app/actions/edit-commands.c:199
+#: app/actions/edit-commands.c:210
 msgid "Cut Named"
 msgstr "Αποκοπή Επώνυμου"
 
-#: app/actions/edit-commands.c:202 app/actions/edit-commands.c:222
+#: app/actions/edit-commands.c:213 app/actions/edit-commands.c:233
 msgid "Enter a name for this buffer"
 msgstr "Εισάγετε ένα όνομα για αυτόν τον ενταμιευτή"
 
-#: app/actions/edit-commands.c:219
+#: app/actions/edit-commands.c:230
 msgid "Copy Named"
 msgstr "Αντιγραφή Επώνυμου"
 
-#: app/actions/edit-commands.c:326
+#: app/actions/edit-commands.c:337
 msgid "There is no active layer or channel to cut from."
 msgstr ""
 
-#: app/actions/edit-commands.c:338 app/actions/edit-commands.c:375
+#: app/actions/edit-commands.c:349 app/actions/edit-commands.c:386
 msgid "(Unnamed Buffer)"
 msgstr "(Ανώνυμος ενταμιευτής)"
 
-#: app/actions/edit-commands.c:363
+#: app/actions/edit-commands.c:374
 msgid "There is no active layer or channel to copy from."
 msgstr ""
 
@@ -3102,7 +3107,7 @@ msgid "Load text from file"
 msgstr "Φόρτωση κειμένου από αρχείο"
 
 #
-#: app/actions/text-editor-actions.c:50 app/core/gimp-edit.c:284
+#: app/actions/text-editor-actions.c:50 app/core/gimp-edit.c:350
 msgid "Clear"
 msgstr "Καθαρισμός"
 
@@ -3132,9 +3137,9 @@ msgstr "Άνοιγμα Αρχείου Κειμένου (UTF-8)"
 
 #: app/actions/text-editor-commands.c:132 app/config/gimpconfig-utils.c:552
 #: app/config/gimpscanner.c:92 app/core/gimpbrush.c:393
-#: app/core/gimpbrushgenerated.c:601 app/core/gimpbrushpipe.c:344
+#: app/core/gimpbrushgenerated.c:601 app/core/gimpbrushpipe.c:338
 #: app/core/gimpgradient-load.c:63 app/core/gimppalette.c:360
-#: app/core/gimppattern.c:328 app/tools/gimpimagemaptool.c:603
+#: app/core/gimppattern.c:328 app/tools/gimpimagemaptool.c:608
 #: app/xcf/xcf.c:291
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -3779,7 +3784,7 @@ msgstr "Ημίτονοι"
 msgid "Highlights"
 msgstr "Υπερτόνιση"
 
-#: app/base/tile-swap.c:451
+#: app/base/tile-swap.c:456
 msgid ""
 "Unable to open swap file. The Gimp has run out of memory and cannot use the "
 "swap file. Some parts of your images may be corrupted. Try to save your work "
@@ -3829,7 +3834,7 @@ msgstr "Αδυναμία ανάπτυξης του ${%s}"
 #: app/config/gimpconfig-utils.c:561 app/config/gimpconfigwriter.c:143
 #: app/core/gimpbrushgenerated.c:255 app/core/gimpgradient-save.c:51
 #: app/core/gimpgradient-save.c:142 app/core/gimppalette.c:567
-#: app/gui/themes.c:238 app/tools/gimpimagemaptool.c:602
+#: app/gui/themes.c:238 app/tools/gimpimagemaptool.c:607
 #: app/vectors/gimpvectors-export.c:83 app/xcf/xcf.c:348
 #, fuzzy, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -4480,7 +4485,7 @@ msgid "White"
 msgstr "Λευκό"
 
 #. Transparency
-#: app/core/core-enums.c:332 app/dialogs/preferences-dialog.c:1889
+#: app/core/core-enums.c:332 app/dialogs/preferences-dialog.c:1918
 #, fuzzy
 msgid "Transparency"
 msgstr "Διαφανές"
@@ -4587,7 +4592,7 @@ msgid "Butt"
 msgstr ""
 
 # Translation of "custom" sucks!  ("kata paraggelia"???  nah!)
-#: app/core/core-enums.c:566 app/dialogs/preferences-dialog.c:1775
+#: app/core/core-enums.c:566 app/dialogs/preferences-dialog.c:1804
 msgid "Custom"
 msgstr "Προσαρμοσμένο"
 
@@ -4658,11 +4663,11 @@ msgstr ""
 msgid "Diamond"
 msgstr ""
 
-#: app/core/core-enums.c:664 app/dialogs/preferences-dialog.c:1921
+#: app/core/core-enums.c:664 app/dialogs/preferences-dialog.c:1950
 msgid "Horizontal"
 msgstr "Οριζόντια"
 
-#: app/core/core-enums.c:665 app/dialogs/preferences-dialog.c:1923
+#: app/core/core-enums.c:665 app/dialogs/preferences-dialog.c:1952
 msgid "Vertical"
 msgstr "Κατακόρυφο"
 
@@ -4879,11 +4884,11 @@ msgid "Remove floating selection"
 msgstr "Επιλογή Γραμματοσειράς"
 
 #
-#: app/core/core-enums.c:1055 app/core/gimp-edit.c:201
+#: app/core/core-enums.c:1055 app/core/gimp-edit.c:267
 msgid "Paste"
 msgstr "Επικόλληση"
 
-#: app/core/core-enums.c:1056 app/core/gimp-edit.c:352
+#: app/core/core-enums.c:1056 app/core/gimp-edit.c:418
 msgid "Cut"
 msgstr "Αποκοπή"
 
@@ -4920,7 +4925,7 @@ msgstr "Αφαίρεση Παρασίτου"
 msgid "Import paths"
 msgstr "Εισαγωγή Διαδρομών"
 
-#: app/core/core-enums.c:1063 app/pdb/drawable_cmds.c:1690
+#: app/core/core-enums.c:1063 app/pdb/drawable_cmds.c:1693
 msgid "Plug-In"
 msgstr "Αρθρώματα"
 
@@ -5044,28 +5049,33 @@ msgstr ""
 msgid "EEK: can't undo"
 msgstr "Ωχ: αδυναμία ακύρωσης προηγούμενης ενέργειας"
 
-#: app/core/gimp-edit.c:129 app/core/gimp-edit.c:253
+#: app/core/gimp-edit.c:109 app/core/gimpselection.c:668
+#, fuzzy
+msgid "Unable to cut or copy because the selected region is empty."
+msgstr "Επιλογή Εικονιδίου"
+
+#: app/core/gimp-edit.c:195 app/core/gimp-edit.c:319
 msgid "Pasted Layer"
 msgstr "Επικολλημένο Στρώμα"
 
-#: app/core/gimp-edit.c:303
+#: app/core/gimp-edit.c:369
 msgid "Fill with FG Color"
 msgstr "Γέμισμα με Χρώμα Προσκηνίου"
 
-#: app/core/gimp-edit.c:307 app/core/gimp-edit.c:328
+#: app/core/gimp-edit.c:373 app/core/gimp-edit.c:394
 #, fuzzy
 msgid "Fill with BG Color"
 msgstr "Γέμισμα με Χρώμα Παρασκηνίου"
 
-#: app/core/gimp-edit.c:311
+#: app/core/gimp-edit.c:377
 msgid "Fill with White"
 msgstr "Γέμισμα με Λευκό"
 
-#: app/core/gimp-edit.c:315
+#: app/core/gimp-edit.c:381
 msgid "Fill with Transparency"
 msgstr "Γέμισμα με Διαφάνεια"
 
-#: app/core/gimp-edit.c:319
+#: app/core/gimp-edit.c:385
 #, fuzzy
 msgid "Fill with Pattern"
 msgstr "/Επεξεργασία/Γέμισμα με Χρώμα Προσκηνίου"
@@ -5111,7 +5121,7 @@ msgid "Documents"
 msgstr "Έγγραφα"
 
 #. initialize the module list
-#: app/core/gimp.c:884 app/dialogs/preferences-dialog.c:2296
+#: app/core/gimp.c:884 app/dialogs/preferences-dialog.c:2325
 msgid "Modules"
 msgstr "Μονάδες"
 
@@ -5138,7 +5148,7 @@ msgstr ""
 "τελειώνει πρόωρα"
 
 #: app/core/gimpbrush.c:603 app/core/gimpbrushgenerated.c:648
-#: app/core/gimpbrushpipe.c:360
+#: app/core/gimpbrushpipe.c:354
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Μη έγκυρη συμβολοσειρά UTF-8 στο αρχείο πινέλων '%s'."
@@ -5190,8 +5200,8 @@ msgstr "Σφάλμα κατά την ανάγνωση του '%s': %s"
 msgid "File is truncated"
 msgstr ""
 
-#: app/core/gimpbrushpipe.c:375 app/core/gimpbrushpipe.c:395
-#: app/core/gimpbrushpipe.c:485
+#: app/core/gimpbrushpipe.c:369 app/core/gimpbrushpipe.c:389
+#: app/core/gimpbrushpipe.c:479
 #, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgstr ""
@@ -5394,7 +5404,7 @@ msgid "Render Stroke"
 msgstr ""
 
 #. Start a transform undo group
-#: app/core/gimpdrawable-transform.c:928 app/tools/gimpfliptool.c:84
+#: app/core/gimpdrawable-transform.c:928 app/tools/gimpfliptool.c:82
 #, fuzzy
 msgid "Flip"
 msgstr "Αναστροφή"
@@ -5448,12 +5458,17 @@ msgstr ""
 msgid "Corrupt segment %d in gradient file '%s'."
 msgstr "Κατεστραμμένο τμήμα %d στο  αρχείο κλιμάκωσεων '%s'."
 
-#: app/core/gimpgradient-load.c:255
+#: app/core/gimpgradient-load.c:183 app/core/gimpgradient-load.c:197
+#, c-format
+msgid "Gradient file '%s' is corrupt: Segments do not span the range 0-1."
+msgstr ""
+
+#: app/core/gimpgradient-load.c:281
 #, c-format
 msgid "No linear gradients found in '%s'"
 msgstr ""
 
-#: app/core/gimpgradient-load.c:265
+#: app/core/gimpgradient-load.c:291
 #, fuzzy, c-format
 msgid "Failed to import gradients from '%s': %s"
 msgstr "Αδυναμία ανάγνωσης %d bytes από το αρχείο '%s': %s"
@@ -5509,24 +5524,24 @@ msgstr "Επαναφορά Εικόνας"
 msgid "Add Color to Colormap"
 msgstr "Φυσικό Χρώμα"
 
-#: app/core/gimpimage-convert.c:780
+#: app/core/gimpimage-convert.c:788
 msgid "Convert Image to RGB"
 msgstr "Μετατροπή Εικόνας σε RGB"
 
-#: app/core/gimpimage-convert.c:784
+#: app/core/gimpimage-convert.c:792
 msgid "Convert Image to Grayscale"
 msgstr "Μετατροπή Εικόνας σε Αποχρώσεις του Γκρι"
 
-#: app/core/gimpimage-convert.c:788
+#: app/core/gimpimage-convert.c:796
 msgid "Convert Image to Indexed"
 msgstr "Μετατροπή Εικόνας σε Εικόνα με Δείκτη"
 
-#: app/core/gimpimage-convert.c:867
+#: app/core/gimpimage-convert.c:875
 #, fuzzy
 msgid "Converting to indexed (stage 2)..."
 msgstr "Μετατροπή Εικόνας σε Εικόνα με Δείκτη"
 
-#: app/core/gimpimage-convert.c:911
+#: app/core/gimpimage-convert.c:919
 #, fuzzy
 msgid "Converting to indexed (stage 3)..."
 msgstr "Μετατροπή Εικόνας σε Εικόνα με Δείκτη"
@@ -5601,7 +5616,7 @@ msgstr "Ενεργοποίηση ΤαχυΜάσκας"
 msgid "Disable Quick Mask"
 msgstr "Απενεργοποίηση ΤαχυΜάσκας"
 
-#: app/core/gimpimage-undo-push.c:3048
+#: app/core/gimpimage-undo-push.c:3055
 #, c-format
 msgid "Can't undo %s"
 msgstr "Αδυναμία ακύρωσης της προηγούμενης ενέργειας %s"
@@ -5786,7 +5801,7 @@ msgstr "Υποβιβασμός Στρώματος στον Πάτο"
 msgid "Remote image"
 msgstr "εικόνα"
 
-#: app/core/gimpimagefile.c:573 app/dialogs/preferences-dialog.c:1443
+#: app/core/gimpimagefile.c:573 app/dialogs/preferences-dialog.c:1472
 msgid "Folder"
 msgstr "Φάκελος"
 
@@ -5812,9 +5827,9 @@ msgid "Cannot create preview"
 msgstr "Αδύνατη η δημιουργία προεπισκόπησης"
 
 #. pixel size
-#: app/core/gimpimagefile.c:624 app/dialogs/info-window.c:540
-#: app/widgets/gimpsizebox.c:533 app/widgets/gimptemplateeditor.c:638
-#: app/widgets/gimptemplateeditor.c:674
+#: app/core/gimpimagefile.c:624 app/dialogs/info-window.c:552
+#: app/widgets/gimpsizebox.c:552 app/widgets/gimptemplateeditor.c:637
+#: app/widgets/gimptemplateeditor.c:673
 #, c-format
 msgid "%d x %d pixels"
 msgstr ""
@@ -6042,7 +6057,7 @@ msgstr ""
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr ""
 
-#: app/core/gimppdbprogress.c:260 app/widgets/gimppdbdialog.c:314
+#: app/core/gimppdbprogress.c:260 app/widgets/gimppdbdialog.c:320
 #, c-format
 msgid "Unable to run %s callback. The corresponding plug-in may have crashed."
 msgstr ""
@@ -6077,11 +6092,6 @@ msgstr "Αντιστροφή Επιλογής"
 #, fuzzy
 msgid "No selection to stroke."
 msgstr "Δεν υπάρχει επιλογή για πινελιά!"
-
-#: app/core/gimpselection.c:668
-#, fuzzy
-msgid "Unable to cut or copy because the selected region is empty."
-msgstr "Επιλογή Εικονιδίου"
 
 #: app/core/gimpselection.c:815
 #, fuzzy
@@ -6219,7 +6229,7 @@ msgid "_Remove unused colors from final palette"
 msgstr "Αφαίρεση Αχρησιμοποίητων Χρωμάτων από την Τελική Παλέττα"
 
 #. dithering
-#: app/dialogs/convert-dialog.c:221 app/tools/gimpblendoptions.c:268
+#: app/dialogs/convert-dialog.c:221 app/tools/gimpblendoptions.c:269
 #, fuzzy
 msgid "Dithering"
 msgstr "Εκκινείται"
@@ -6243,7 +6253,7 @@ msgstr "Μετατροπή Εικόνας σε Εικόνα με Δείκτη"
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr ""
 
-#: app/dialogs/dialogs-constructors.c:164 app/gui/gui.c:160
+#: app/dialogs/dialogs-constructors.c:164 app/gui/gui.c:161
 msgid "GIMP Message"
 msgstr "Μήνυμα GIMP"
 
@@ -6377,7 +6387,7 @@ msgstr ""
 msgid "Create a New Image"
 msgstr "Δημιουργία μιας Νέας Εικόνας"
 
-#: app/dialogs/image-new-dialog.c:130 app/dialogs/preferences-dialog.c:1284
+#: app/dialogs/image-new-dialog.c:130 app/dialogs/preferences-dialog.c:1313
 msgid "_Template:"
 msgstr "_Πρότυπο:"
 
@@ -6422,9 +6432,9 @@ msgstr ""
 
 #
 #. General
-#: app/dialogs/info-dialog.c:363 app/dialogs/preferences-dialog.c:1514
-#: app/dialogs/preferences-dialog.c:1668
-#: app/widgets/gimpcontrollereditor.c:193
+#: app/dialogs/info-dialog.c:363 app/dialogs/preferences-dialog.c:1543
+#: app/dialogs/preferences-dialog.c:1697
+#: app/widgets/gimpcontrollereditor.c:197
 msgid "General"
 msgstr "Γενικά"
 
@@ -6432,7 +6442,7 @@ msgstr "Γενικά"
 msgid "Static Gray"
 msgstr "Στατικό Γκρι"
 
-#: app/dialogs/info-window.c:84 app/dialogs/info-window.c:598
+#: app/dialogs/info-window.c:84 app/dialogs/info-window.c:610
 msgid "Grayscale"
 msgstr "Αποχρώσεις του γκρι"
 
@@ -6459,15 +6469,15 @@ msgid "Cursor"
 msgstr "Δρομέας"
 
 #
-#: app/dialogs/info-window.c:141 app/dialogs/preferences-dialog.c:1903
+#: app/dialogs/info-window.c:141 app/dialogs/preferences-dialog.c:1932
 #: app/widgets/gimpgrideditor.c:267 app/widgets/gimpgrideditor.c:299
 msgid "Pixels"
 msgstr "Εικονοστοιχεία"
 
 #: app/dialogs/info-window.c:151 app/dialogs/info-window.c:157
 #: app/dialogs/info-window.c:173 app/dialogs/info-window.c:179
-#: app/dialogs/info-window.c:413 app/dialogs/info-window.c:414
-#: app/dialogs/info-window.c:415 app/dialogs/info-window.c:416
+#: app/dialogs/info-window.c:425 app/dialogs/info-window.c:426
+#: app/dialogs/info-window.c:427 app/dialogs/info-window.c:428
 #: app/widgets/gimpcolorframe.c:338
 msgid "n/a"
 msgstr ""
@@ -6484,97 +6494,97 @@ msgstr "Ψ"
 msgid "Units"
 msgstr "Μονάδες"
 
-#: app/dialogs/info-window.c:227
+#: app/dialogs/info-window.c:228
 msgid "Comment"
 msgstr "Σχόλιο"
 
-#: app/dialogs/info-window.c:238 app/dialogs/info-window.c:612
+#: app/dialogs/info-window.c:248 app/dialogs/info-window.c:634
 #: app/display/gimpdisplayshell-title.c:337
-#: app/display/gimpdisplayshell-title.c:349
+#: app/display/gimpdisplayshell-title.c:349 app/widgets/gimpactiongroup.c:806
 #, fuzzy
 msgid "(none)"
 msgstr "Κανένα"
 
-#: app/dialogs/info-window.c:263
+#: app/dialogs/info-window.c:275
 #, fuzzy
 msgid "Info Window"
 msgstr "Πληροφορίες Χρήστη"
 
-#: app/dialogs/info-window.c:265
+#: app/dialogs/info-window.c:277
 msgid "Image Information"
 msgstr "Πληροφορίες Εικόνας"
 
 #. add the information fields
-#: app/dialogs/info-window.c:282
+#: app/dialogs/info-window.c:294
 msgid "Pixel dimensions:"
 msgstr "Διαστάσεις εικονοστοχείου:"
 
 #
-#: app/dialogs/info-window.c:284
+#: app/dialogs/info-window.c:296
 msgid "Print size:"
 msgstr "Μέγεθος εκτύπωσης:"
 
 #
-#: app/dialogs/info-window.c:286
+#: app/dialogs/info-window.c:298
 msgid "Resolution:"
 msgstr "Ανάλυση:"
 
-#: app/dialogs/info-window.c:288
+#: app/dialogs/info-window.c:300
 #, fuzzy
 msgid "Scale ratio:"
 msgstr "Βαθμωτή Αναλογία:"
 
-#: app/dialogs/info-window.c:290
+#: app/dialogs/info-window.c:302
 #, fuzzy
 msgid "Number of layers:"
 msgstr "Αριθμός Χρωμάτων"
 
 #
-#: app/dialogs/info-window.c:292
+#: app/dialogs/info-window.c:304
 #, fuzzy
 msgid "Size in memory:"
 msgstr "Κύρια μνήμη"
 
-#: app/dialogs/info-window.c:294
+#: app/dialogs/info-window.c:306
 #, fuzzy
 msgid "Display type:"
 msgstr "Τύπος Εμφάνισης:"
 
-#: app/dialogs/info-window.c:296
+#: app/dialogs/info-window.c:308
 #, fuzzy
 msgid "Visual class:"
 msgstr "Εικονική Κλάση:"
 
-#: app/dialogs/info-window.c:298
+#: app/dialogs/info-window.c:310
 #, fuzzy
 msgid "Visual depth:"
 msgstr "Εικονικό Βάθος:"
 
 #
-#: app/dialogs/info-window.c:563
+#: app/dialogs/info-window.c:575
 #, c-format
 msgid "pixels/%s"
 msgstr "εικονοστοιχεία/%s"
 
-#: app/dialogs/info-window.c:565
+#: app/dialogs/info-window.c:577
 #, c-format
 msgid "%g x %g %s"
 msgstr "%g x %g %s"
 
-#: app/dialogs/info-window.c:568 app/dialogs/preferences-dialog.c:1925
+#: app/dialogs/info-window.c:580 app/dialogs/preferences-dialog.c:1954
 msgid "dpi"
 msgstr "dpi"
 
-#: app/dialogs/info-window.c:595
+#: app/dialogs/info-window.c:607
 msgid "RGB Color"
 msgstr "Χρώμα RGB"
 
-#: app/dialogs/info-window.c:602
+#: app/dialogs/info-window.c:614
 msgid "Indexed Color"
 msgstr "Χρώματος Καταλόγου"
 
 #
-#: app/dialogs/info-window.c:602
+#: app/dialogs/info-window.c:614
 msgid "colors"
 msgstr "χρώματα"
 
@@ -6599,13 +6609,13 @@ msgid "Layer _Name:"
 msgstr "Όνομα στρώματος:"
 
 #. The size labels
-#: app/dialogs/layer-options-dialog.c:127 app/tools/gimpcroptool.c:1026
-#: app/tools/gimpselectionoptions.c:524
+#: app/dialogs/layer-options-dialog.c:127 app/tools/gimpcroptool.c:1046
+#: app/tools/gimpselectionoptions.c:529
 msgid "Width:"
 msgstr "Πλάτος:"
 
-#: app/dialogs/layer-options-dialog.c:133 app/tools/gimpcroptool.c:1030
-#: app/tools/gimpscaletool.c:166 app/tools/gimpselectionoptions.c:532
+#: app/dialogs/layer-options-dialog.c:133 app/tools/gimpcroptool.c:1050
+#: app/tools/gimpscaletool.c:166 app/tools/gimpselectionoptions.c:537
 msgid "Height:"
 msgstr "Ύψος:"
 
@@ -6701,7 +6711,7 @@ msgstr "Τοποθεσία:"
 
 # # FIX? State = Politeia normally, but in Greece we have
 # #      different subdivisions, so...?
-#: app/dialogs/module-dialog.c:505
+#: app/dialogs/module-dialog.c:505 app/widgets/gimpcontrollereditor.c:242
 msgid "State:"
 msgstr "Κατάσταση:"
 
@@ -6731,15 +6741,15 @@ msgstr "Ανασήκωση Καναλιού"
 
 #. The offset frame
 #: app/dialogs/offset-dialog.c:108 app/dialogs/offset-dialog.c:136
-#: app/dialogs/resize-dialog.c:187 app/widgets/gimpgrideditor.c:274
+#: app/dialogs/resize-dialog.c:185 app/widgets/gimpgrideditor.c:274
 msgid "Offset"
 msgstr "Μετατόπιση"
 
-#: app/dialogs/offset-dialog.c:168 app/dialogs/resize-dialog.c:216
+#: app/dialogs/offset-dialog.c:168 app/dialogs/resize-dialog.c:214
 msgid "_X:"
 msgstr "_Χ:"
 
-#: app/dialogs/offset-dialog.c:170 app/dialogs/resize-dialog.c:217
+#: app/dialogs/offset-dialog.c:170 app/dialogs/resize-dialog.c:215
 msgid "_Y:"
 msgstr "_Ψ:"
 
@@ -6849,746 +6859,752 @@ msgstr ""
 "Πρέπει να επανεκκινήσετε το GDict\n"
 "για να ενεργοποιηθούν οι ρυθμίσεις."
 
-#: app/dialogs/preferences-dialog.c:497
+#: app/dialogs/preferences-dialog.c:501
 msgid "Configure Keyboard Shortcuts"
 msgstr "ΡΎθμιση Συντομεύσεων Πληκτρολογίου"
 
-#: app/dialogs/preferences-dialog.c:566
+#: app/dialogs/preferences-dialog.c:551
+msgid ""
+"To edit a shortcut key, click on the corresponding row and type a new "
+"accelerator, or press backspace to clear."
+msgstr ""
+
+#: app/dialogs/preferences-dialog.c:595
 msgid ""
 "Your keyboard shortcuts will be reset to default values the next time you "
 "start GIMP."
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:600
+#: app/dialogs/preferences-dialog.c:629
 msgid ""
 "Your window setup will be reset to default values the next time you start "
 "GIMP."
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:634
+#: app/dialogs/preferences-dialog.c:663
 msgid ""
 "Your input device settings will be reset to default values the next time you "
 "start GIMP."
 msgstr ""
 
 #
-#: app/dialogs/preferences-dialog.c:1053
+#: app/dialogs/preferences-dialog.c:1082
 msgid "Show _menubar"
 msgstr "Εμφάνιση γραμμής _μενού"
 
-#: app/dialogs/preferences-dialog.c:1056
+#: app/dialogs/preferences-dialog.c:1085
 #, fuzzy
 msgid "Show _rulers"
 msgstr "Εμφάνιση _Χαράκων"
 
-#: app/dialogs/preferences-dialog.c:1059
+#: app/dialogs/preferences-dialog.c:1088
 msgid "Show scroll_bars"
 msgstr "Εμφάνιση γραμμών κύ_λισης"
 
 #
-#: app/dialogs/preferences-dialog.c:1062
+#: app/dialogs/preferences-dialog.c:1091
 msgid "Show s_tatusbar"
 msgstr "Εμφάνιση γραμμής _κατάστασης"
 
-#: app/dialogs/preferences-dialog.c:1070
+#: app/dialogs/preferences-dialog.c:1099
 msgid "Show s_election"
 msgstr "Εμφάνιση _επιλογής"
 
-#: app/dialogs/preferences-dialog.c:1073
+#: app/dialogs/preferences-dialog.c:1102
 #, fuzzy
 msgid "Show _layer boundary"
 msgstr "Εμφάνιση ή απόκρυψη μπάρας κατάστασης"
 
-#: app/dialogs/preferences-dialog.c:1076
+#: app/dialogs/preferences-dialog.c:1105
 msgid "Show _guides"
 msgstr "Εμφάνιση _οδηγών"
 
-#: app/dialogs/preferences-dialog.c:1079
+#: app/dialogs/preferences-dialog.c:1108
 msgid "Show gri_d"
 msgstr "Εμφάνιση πλέγμα_τος"
 
-#: app/dialogs/preferences-dialog.c:1085
+#: app/dialogs/preferences-dialog.c:1114
 #, fuzzy
 msgid "Canvas _padding mode:"
 msgstr "Κατάσταση Γεμίσματος Παλέττας:"
 
-#: app/dialogs/preferences-dialog.c:1090
+#: app/dialogs/preferences-dialog.c:1119
 #, fuzzy
 msgid "Custom p_adding color:"
 msgstr "Χρώμα Γεμίσματος:"
 
-#: app/dialogs/preferences-dialog.c:1091
+#: app/dialogs/preferences-dialog.c:1120
 #, fuzzy
 msgid "Select custom canvas padding color"
 msgstr "Επιλογή Χρώματος Γεμίσματος Παλέττας"
 
 #
-#: app/dialogs/preferences-dialog.c:1162
+#: app/dialogs/preferences-dialog.c:1191
 msgid "Preferences"
 msgstr "Προτιμήσεις"
 
 #
-#: app/dialogs/preferences-dialog.c:1265 app/dialogs/preferences-dialog.c:1268
+#: app/dialogs/preferences-dialog.c:1294 app/dialogs/preferences-dialog.c:1297
 msgid "New Image"
 msgstr "Νέα Εικόνα"
 
-#: app/dialogs/preferences-dialog.c:1306
+#: app/dialogs/preferences-dialog.c:1335
 msgid "Default Image Grid"
 msgstr "Προεπιλεγμένο Πλέγμα Εικόνας"
 
-#: app/dialogs/preferences-dialog.c:1309
+#: app/dialogs/preferences-dialog.c:1338
 msgid "Default Grid"
 msgstr "Προεπιλεγμένο Πλέγμα"
 
-#: app/dialogs/preferences-dialog.c:1329
+#: app/dialogs/preferences-dialog.c:1358
 msgid "User Interface"
 msgstr "Διεπαφή Χρήστη"
 
-#: app/dialogs/preferences-dialog.c:1332
+#: app/dialogs/preferences-dialog.c:1361
 msgid "Interface"
 msgstr "Διεπαφή"
 
 #
 #. Previews
-#: app/dialogs/preferences-dialog.c:1339
+#: app/dialogs/preferences-dialog.c:1368
 #, fuzzy
 msgid "Previews"
 msgstr "Προεπισκόπηση"
 
 #
-#: app/dialogs/preferences-dialog.c:1342
+#: app/dialogs/preferences-dialog.c:1371
 #, fuzzy
 msgid "_Enable layer & channel previews"
 msgstr "Μέγεθος σε Εικ/χεία:"
 
 #
-#: app/dialogs/preferences-dialog.c:1348
+#: app/dialogs/preferences-dialog.c:1377
 #, fuzzy
 msgid "Default _layer & channel preview size:"
 msgstr "Μέγεθος σε Εικ/χεία:"
 
 #
-#: app/dialogs/preferences-dialog.c:1351
+#: app/dialogs/preferences-dialog.c:1380
 #, fuzzy
 msgid "Na_vigation preview size:"
 msgstr "Μέγεθος σε Εικ/χεία:"
 
 #. Keyboard Shortcuts
-#: app/dialogs/preferences-dialog.c:1355
+#: app/dialogs/preferences-dialog.c:1384
 msgid "Keyboard Shortcuts"
 msgstr "Συντομεύσεις Πληκτρολογίου"
 
-#: app/dialogs/preferences-dialog.c:1359
+#: app/dialogs/preferences-dialog.c:1388
 msgid "Show menu _mnemonics (access keys)"
 msgstr "Εμφάνιση στα μενού των κλειδιών γρήγορης πρόσβασης."
 
-#: app/dialogs/preferences-dialog.c:1362
+#: app/dialogs/preferences-dialog.c:1391
 #, fuzzy
 msgid "Use _dynamic keyboard shortcuts"
 msgstr "Χρήση Δυναμικών Συντομεύσεων _Πληκτρολογίου"
 
-#: app/dialogs/preferences-dialog.c:1366
+#: app/dialogs/preferences-dialog.c:1395
 msgid "Configure _Keyboard Shortcuts..."
 msgstr "Ρύθμιση Συντομεύσεων _Πληκτρολογίου..."
 
 #
-#: app/dialogs/preferences-dialog.c:1373
+#: app/dialogs/preferences-dialog.c:1402
 msgid "_Save keyboard shortcuts on exit"
 msgstr "_Αποθήκευση συντομεύσεων πληκτρολογίου στην έξοδο"
 
 #
-#: app/dialogs/preferences-dialog.c:1377
+#: app/dialogs/preferences-dialog.c:1406
 msgid "Save Keyboard Shortcuts _Now"
 msgstr "Αποθήκευση Συντομεύσεων Πληκτρολογίου _Τώρα"
 
 #
-#: app/dialogs/preferences-dialog.c:1384
+#: app/dialogs/preferences-dialog.c:1413
 #, fuzzy
 msgid "_Reset Saved Keyboard Shortcuts to Default Values"
 msgstr "Αποθήκευση θέσης παραθύρου"
 
-#: app/dialogs/preferences-dialog.c:1399 app/dialogs/preferences-dialog.c:1402
-#: app/dialogs/preferences-dialog.c:1438
+#: app/dialogs/preferences-dialog.c:1428 app/dialogs/preferences-dialog.c:1431
+#: app/dialogs/preferences-dialog.c:1467
 msgid "Theme"
 msgstr "Θέμα"
 
 #
-#: app/dialogs/preferences-dialog.c:1408
+#: app/dialogs/preferences-dialog.c:1437
 msgid "Select Theme"
 msgstr "Επιλογή Θέματος"
 
-#: app/dialogs/preferences-dialog.c:1490
+#: app/dialogs/preferences-dialog.c:1519
 msgid "Reload C_urrent Theme"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:1502 app/dialogs/preferences-dialog.c:1505
+#: app/dialogs/preferences-dialog.c:1531 app/dialogs/preferences-dialog.c:1534
 msgid "Help System"
 msgstr "Σύστημα Βοήθειας"
 
-#: app/dialogs/preferences-dialog.c:1517
+#: app/dialogs/preferences-dialog.c:1546
 msgid "Show tool _tips"
 msgstr "Εμφάνιση _βοηθημάτων"
 
-#: app/dialogs/preferences-dialog.c:1520
+#: app/dialogs/preferences-dialog.c:1549
 #, fuzzy
 msgid "Show help _buttons"
 msgstr "Επέκταση Επιλογής"
 
-#: app/dialogs/preferences-dialog.c:1523
+#: app/dialogs/preferences-dialog.c:1552
 #, fuzzy
 msgid "Show tips on _startup"
 msgstr "Εμφάνιση Συμβουλών στην _Εκκίνηση"
 
 #. Help Browser
-#: app/dialogs/preferences-dialog.c:1527
+#: app/dialogs/preferences-dialog.c:1556
 msgid "Help Browser"
 msgstr "Πρόγραμμα Βοήθειας"
 
-#: app/dialogs/preferences-dialog.c:1531
+#: app/dialogs/preferences-dialog.c:1560
 #, fuzzy
 msgid "H_elp browser to use:"
 msgstr "Πρόγραμμα βοήθειας"
 
-#: app/dialogs/preferences-dialog.c:1536
+#: app/dialogs/preferences-dialog.c:1565
 msgid "Web Browser"
 msgstr "Περιηγητής Ιστοσελίδων"
 
-#: app/dialogs/preferences-dialog.c:1540
+#: app/dialogs/preferences-dialog.c:1569
 msgid "Select web browser"
 msgstr "Επιλογή περιηγητή ιστοσελίδων"
 
-#: app/dialogs/preferences-dialog.c:1543
+#: app/dialogs/preferences-dialog.c:1572
 #, fuzzy
 msgid "_Web browser to use:"
 msgstr "Πρόγραμμα βοήθειας"
 
 #. Snapping Distance
-#: app/dialogs/preferences-dialog.c:1568
+#: app/dialogs/preferences-dialog.c:1597
 msgid "Guide and Grid Snapping"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:1573
+#: app/dialogs/preferences-dialog.c:1602
 #, fuzzy
 msgid "_Snap distance:"
 msgstr "Απόσταση:"
 
 #. Contiguous Regions
-#: app/dialogs/preferences-dialog.c:1577
+#: app/dialogs/preferences-dialog.c:1606
 msgid "Finding Contiguous Regions"
 msgstr ""
 
 #
-#: app/dialogs/preferences-dialog.c:1582
+#: app/dialogs/preferences-dialog.c:1611
 #, fuzzy
 msgid "Default _threshold:"
 msgstr "Εξ ορισμού ύψος:"
 
 #. Scaling
-#: app/dialogs/preferences-dialog.c:1586
+#: app/dialogs/preferences-dialog.c:1615
 #, fuzzy
 msgid "Scaling"
 msgstr "Δειγματοληψία"
 
-#: app/dialogs/preferences-dialog.c:1590
+#: app/dialogs/preferences-dialog.c:1619
 #, fuzzy
 msgid "Default _interpolation:"
 msgstr "Είδος παρεμβολής"
 
 #. Global Brush, Pattern, ...
-#: app/dialogs/preferences-dialog.c:1594
+#: app/dialogs/preferences-dialog.c:1623
 msgid "Paint Options Shared Between Tools"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:1607
+#: app/dialogs/preferences-dialog.c:1636
 #, fuzzy
 msgid "Move Tool"
 msgstr "Μετακίνηση: "
 
-#: app/dialogs/preferences-dialog.c:1611
+#: app/dialogs/preferences-dialog.c:1640
 #, fuzzy
 msgid "Change current layer or path"
 msgstr "Μόνο το Τρέχον Στρώμα"
 
-#: app/dialogs/preferences-dialog.c:1624 app/dialogs/preferences-dialog.c:1627
+#: app/dialogs/preferences-dialog.c:1653 app/dialogs/preferences-dialog.c:1656
 msgid "Toolbox"
 msgstr "Εργαλειοθήκη"
 
 #. Appearance
-#: app/dialogs/preferences-dialog.c:1634 app/dialogs/preferences-dialog.c:1731
+#: app/dialogs/preferences-dialog.c:1663 app/dialogs/preferences-dialog.c:1760
 #: app/widgets/gimpgrideditor.c:206
 msgid "Appearance"
 msgstr "Εμφάνιση"
 
 #
-#: app/dialogs/preferences-dialog.c:1638
+#: app/dialogs/preferences-dialog.c:1667
 #, fuzzy
 msgid "Show _foreground & background color"
 msgstr "Φόντο"
 
-#: app/dialogs/preferences-dialog.c:1642
+#: app/dialogs/preferences-dialog.c:1671
 #, fuzzy
 msgid "Show active _brush, pattern & gradient"
 msgstr "/Διάλογοι/Στ_ρώματα"
 
-#: app/dialogs/preferences-dialog.c:1646
+#: app/dialogs/preferences-dialog.c:1675
 msgid "Show active _image"
 msgstr "Εμφάνιση ενεργής ει_κόνας"
 
-#: app/dialogs/preferences-dialog.c:1656 app/dialogs/preferences-dialog.c:1659
+#: app/dialogs/preferences-dialog.c:1685 app/dialogs/preferences-dialog.c:1688
 msgid "Image Windows"
 msgstr "Παράθυρα Εικόνων"
 
-#: app/dialogs/preferences-dialog.c:1671
+#: app/dialogs/preferences-dialog.c:1700
 #, fuzzy
 msgid "Use \"_Dot for dot\" by default"
 msgstr "εξ' ορισμού είδος αναζήτησης"
 
-#: app/dialogs/preferences-dialog.c:1677
+#: app/dialogs/preferences-dialog.c:1706
 msgid "Marching _ants speed:"
 msgstr ""
 
 #. Zoom & Resize Behavior
-#: app/dialogs/preferences-dialog.c:1681
+#: app/dialogs/preferences-dialog.c:1710
 msgid "Zoom & Resize Behavior"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:1685
+#: app/dialogs/preferences-dialog.c:1714
 msgid "Resize window on _zoom"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:1688
+#: app/dialogs/preferences-dialog.c:1717
 msgid "Resize window on image _size change"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:1694
+#: app/dialogs/preferences-dialog.c:1723
 #, fuzzy
 msgid "Fit to window"
 msgstr "Πληροφορίες Χρήστη"
 
-#: app/dialogs/preferences-dialog.c:1696
+#: app/dialogs/preferences-dialog.c:1725
 #, fuzzy
 msgid "Initial zoom _ratio:"
 msgstr "Βαθμωτή Αναλογία:"
 
 #. Mouse Cursors
-#: app/dialogs/preferences-dialog.c:1700
+#: app/dialogs/preferences-dialog.c:1729
 msgid "Mouse Cursors"
 msgstr "Δείκτες Ποντικιού"
 
-#: app/dialogs/preferences-dialog.c:1704
+#: app/dialogs/preferences-dialog.c:1733
 msgid "Show _brush outline"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:1707
+#: app/dialogs/preferences-dialog.c:1736
 msgid "Show paint _tool cursor"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:1713
+#: app/dialogs/preferences-dialog.c:1742
 #, fuzzy
 msgid "Cursor _mode:"
 msgstr "Πηγαίος κώδικας C"
 
-#: app/dialogs/preferences-dialog.c:1716
+#: app/dialogs/preferences-dialog.c:1745
 #, fuzzy
 msgid "Cursor re_ndering:"
 msgstr "Πηγαίος κώδικας C"
 
-#: app/dialogs/preferences-dialog.c:1728
+#: app/dialogs/preferences-dialog.c:1757
 msgid "Image Window Appearance"
 msgstr "Εμφάνιση Παράθυρου Εικόνας"
 
-#: app/dialogs/preferences-dialog.c:1739
+#: app/dialogs/preferences-dialog.c:1768
 msgid "Default Appearance in Normal Mode"
 msgstr "Προεπιλεγμένη Εμφάνιση σε Κανονική Κατάσταση"
 
-#: app/dialogs/preferences-dialog.c:1744
+#: app/dialogs/preferences-dialog.c:1773
 msgid "Default Appearance in Fullscreen Mode"
 msgstr "Προεπιλεγμένη Εμφάνιση σε Λειτουργία Πλήρης Οθόνης"
 
-#: app/dialogs/preferences-dialog.c:1753
+#: app/dialogs/preferences-dialog.c:1782
 #, fuzzy
 msgid "Image Title & Statusbar Format"
 msgstr "Αρχείο εικόνας:"
 
-#: app/dialogs/preferences-dialog.c:1756
+#: app/dialogs/preferences-dialog.c:1785
 msgid "Title & Status"
 msgstr "Τίτλος & Κατάσταση"
 
-#: app/dialogs/preferences-dialog.c:1776
+#: app/dialogs/preferences-dialog.c:1805
 msgid "Standard"
 msgstr "Κανονικό"
 
 #
-#: app/dialogs/preferences-dialog.c:1777
+#: app/dialogs/preferences-dialog.c:1806
 msgid "Show zoom percentage"
 msgstr "Εμφάνιση ποσοστό μεγέθυνσης"
 
-#: app/dialogs/preferences-dialog.c:1778
+#: app/dialogs/preferences-dialog.c:1807
 #, fuzzy
 msgid "Show zoom ratio"
 msgstr "Εμφάνιση του λόγου μεγέθυνσης"
 
-#: app/dialogs/preferences-dialog.c:1779
+#: app/dialogs/preferences-dialog.c:1808
 msgid "Show image size"
 msgstr "Εμφάνιση μεγέθους εικόνας"
 
-#: app/dialogs/preferences-dialog.c:1780
+#: app/dialogs/preferences-dialog.c:1809
 msgid "Show memory usage"
 msgstr "Εμφάνιση χρήσης μνήμης"
 
-#: app/dialogs/preferences-dialog.c:1791
+#: app/dialogs/preferences-dialog.c:1820
 #, fuzzy
 msgid "Image Title Format"
 msgstr "Αρχείο εικόνας:"
 
-#: app/dialogs/preferences-dialog.c:1792
+#: app/dialogs/preferences-dialog.c:1821
 #, fuzzy
 msgid "Image Statusbar Format"
 msgstr "Αρχείο εικόνας:"
 
 #
-#: app/dialogs/preferences-dialog.c:1877 app/dialogs/preferences-dialog.c:1880
+#: app/dialogs/preferences-dialog.c:1906 app/dialogs/preferences-dialog.c:1909
 msgid "Display"
 msgstr "Οθόνη"
 
-#: app/dialogs/preferences-dialog.c:1893
+#: app/dialogs/preferences-dialog.c:1922
 msgid "Transparency _type:"
 msgstr "_Τύπος διαφάνειας:"
 
-#: app/dialogs/preferences-dialog.c:1896
+#: app/dialogs/preferences-dialog.c:1925
 #, fuzzy
 msgid "Check _size:"
 msgstr "Μέγεθος Τετραγωνιδίων"
 
-#: app/dialogs/preferences-dialog.c:1899
+#: app/dialogs/preferences-dialog.c:1928
 msgid "Get Monitor Resolution"
 msgstr "Λήψη Ανάλυσης Οθόνης"
 
-#: app/dialogs/preferences-dialog.c:1941
+#: app/dialogs/preferences-dialog.c:1970
 #, c-format
 msgid "From _windowing system (currently %d x %d dpi)"
 msgstr "Από το σύστημα _παραθύρων (τρέχουσα %d x %d dpi)"
 
-#: app/dialogs/preferences-dialog.c:1964
+#: app/dialogs/preferences-dialog.c:1993
 msgid "_Manually"
 msgstr "_Χειρωνακτικά"
 
 #
-#: app/dialogs/preferences-dialog.c:1979
+#: app/dialogs/preferences-dialog.c:2008
 #, fuzzy
 msgid "C_alibrate..."
 msgstr "Κα_λιμπράρισμα"
 
-#: app/dialogs/preferences-dialog.c:1999 app/dialogs/preferences-dialog.c:2002
+#: app/dialogs/preferences-dialog.c:2028 app/dialogs/preferences-dialog.c:2031
 msgid "Input Devices"
 msgstr "Συσκευές Εισόδου"
 
 #. Extended Input Devices
-#: app/dialogs/preferences-dialog.c:2009
+#: app/dialogs/preferences-dialog.c:2038
 msgid "Extended Input Devices"
 msgstr "Εκτεταμένες Συσκευές Εισόδου"
 
-#: app/dialogs/preferences-dialog.c:2013
+#: app/dialogs/preferences-dialog.c:2042
 #, fuzzy
 msgid "Configure E_xtended Input Devices..."
 msgstr "Byte Εισόδου"
 
 #
-#: app/dialogs/preferences-dialog.c:2020
+#: app/dialogs/preferences-dialog.c:2049
 #, fuzzy
 msgid "_Save input device settings on exit"
 msgstr "Αποθήκευση επιλογών και έξοδος"
 
 #
-#: app/dialogs/preferences-dialog.c:2024
+#: app/dialogs/preferences-dialog.c:2053
 #, fuzzy
 msgid "Save Input Device Settings _Now"
 msgstr "Αποθήκευση επιλογών και έξοδος"
 
 #
-#: app/dialogs/preferences-dialog.c:2031
+#: app/dialogs/preferences-dialog.c:2060
 #, fuzzy
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr "Αποθήκευση επιλογών και έξοδος"
 
-#: app/dialogs/preferences-dialog.c:2046
+#: app/dialogs/preferences-dialog.c:2075
 msgid "Additional Input Controllers"
 msgstr "Πρόσθετοι Ελεγκτές Εισόδου"
 
-#: app/dialogs/preferences-dialog.c:2049
+#: app/dialogs/preferences-dialog.c:2078
 msgid "Input Controllers"
 msgstr "Ελεγκτές Εισόδου"
 
-#: app/dialogs/preferences-dialog.c:2090 app/dialogs/preferences-dialog.c:2093
+#: app/dialogs/preferences-dialog.c:2119 app/dialogs/preferences-dialog.c:2122
 msgid "Window Management"
 msgstr "Διαχείριση Παραθύρων"
 
-#: app/dialogs/preferences-dialog.c:2099
+#: app/dialogs/preferences-dialog.c:2128
 #, fuzzy
 msgid "Window Manager Hints"
 msgstr "Διαχείριση Παραθύρων"
 
-#: app/dialogs/preferences-dialog.c:2105
+#: app/dialogs/preferences-dialog.c:2134
 msgid "Hint for the _toolbox:"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2109
+#: app/dialogs/preferences-dialog.c:2138
 msgid "Hint for the _docks:"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2112
+#: app/dialogs/preferences-dialog.c:2141
 #, fuzzy
 msgid "Focus"
 msgstr "στιγμές"
 
-#: app/dialogs/preferences-dialog.c:2116
+#: app/dialogs/preferences-dialog.c:2145
 msgid "Activate the _focused image"
 msgstr ""
 
 #
 #. Window Positions
-#: app/dialogs/preferences-dialog.c:2120
+#: app/dialogs/preferences-dialog.c:2149
 msgid "Window Positions"
 msgstr "Θέσεις Παραθύρων"
 
 #
-#: app/dialogs/preferences-dialog.c:2123
+#: app/dialogs/preferences-dialog.c:2152
 msgid "_Save window positions on exit"
 msgstr "_Αποθήκευση θέσεων παραθύρου στην έξοδο"
 
 #
-#: app/dialogs/preferences-dialog.c:2127
+#: app/dialogs/preferences-dialog.c:2156
 msgid "Save Window Positions _Now"
 msgstr "Αποθήκευση Θέσεων Παραθύρου _Τώρα"
 
 #
-#: app/dialogs/preferences-dialog.c:2134
+#: app/dialogs/preferences-dialog.c:2163
 #, fuzzy
 msgid "_Reset Saved Window Positions to Default Values"
 msgstr "Αποθήκευση θέσης παραθύρου"
 
 #
-#: app/dialogs/preferences-dialog.c:2149 app/dialogs/preferences-dialog.c:2152
-#: app/dialogs/preferences-dialog.c:2300
+#: app/dialogs/preferences-dialog.c:2178 app/dialogs/preferences-dialog.c:2181
+#: app/dialogs/preferences-dialog.c:2329
 msgid "Environment"
 msgstr "Περιβάλλον"
 
-#: app/dialogs/preferences-dialog.c:2160
+#: app/dialogs/preferences-dialog.c:2189
 msgid "Resource Consumption"
 msgstr "Απασχόληση Πόρων"
 
-#: app/dialogs/preferences-dialog.c:2170
+#: app/dialogs/preferences-dialog.c:2199
 #, fuzzy
 msgid "Minimal number of _undo levels:"
 msgstr "Αριθμός Χρωμάτων"
 
 #
-#: app/dialogs/preferences-dialog.c:2173
+#: app/dialogs/preferences-dialog.c:2202
 #, fuzzy
 msgid "Maximum undo _memory:"
 msgstr "Κύρια μνήμη"
 
-#: app/dialogs/preferences-dialog.c:2176
+#: app/dialogs/preferences-dialog.c:2205
 #, fuzzy
 msgid "Tile cache _size:"
 msgstr "Μέγεθος ενταμίευσης"
 
-#: app/dialogs/preferences-dialog.c:2179
+#: app/dialogs/preferences-dialog.c:2208
 #, fuzzy
 msgid "Maximum _new image size:"
 msgstr "Μέγιστος χρόνος αναμονής: "
 
-#: app/dialogs/preferences-dialog.c:2184
+#: app/dialogs/preferences-dialog.c:2213
 #, fuzzy
 msgid "Number of _processors to use:"
 msgstr "Αριθμός κύκλων προς χρήση."
 
 #. Image Thumbnails
-#: app/dialogs/preferences-dialog.c:2189
+#: app/dialogs/preferences-dialog.c:2218
 msgid "Image Thumbnails"
 msgstr "Μικρογραφίες Εικόνων"
 
-#: app/dialogs/preferences-dialog.c:2194
+#: app/dialogs/preferences-dialog.c:2223
 msgid "Size of _thumbnails:"
 msgstr "Μέγεθος των _μικρογραφιών"
 
-#: app/dialogs/preferences-dialog.c:2198
+#: app/dialogs/preferences-dialog.c:2227
 msgid "Maximum _filesize for thumbnailing:"
 msgstr "Μέγιστο μέγε_θος αρχείου για μικρογραφίες"
 
 #. File Saving
-#: app/dialogs/preferences-dialog.c:2202
+#: app/dialogs/preferences-dialog.c:2231
 msgid "Saving Images"
 msgstr "Αποθήκευση Εικόνων"
 
-#: app/dialogs/preferences-dialog.c:2205
+#: app/dialogs/preferences-dialog.c:2234
 msgid "Confirm closing of unsa_ved images"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2216 app/dialogs/preferences-dialog.c:2219
+#: app/dialogs/preferences-dialog.c:2245 app/dialogs/preferences-dialog.c:2248
 msgid "Folders"
 msgstr "Φάκελοι"
 
-#: app/dialogs/preferences-dialog.c:2234
+#: app/dialogs/preferences-dialog.c:2263
 msgid "Temp folder:"
 msgstr "Προσωρινός φάκελος:"
 
 #
-#: app/dialogs/preferences-dialog.c:2234
+#: app/dialogs/preferences-dialog.c:2263
 msgid "Select Temp Folder"
 msgstr "Επιλογή Προσωρινού Φακέλου"
 
-#: app/dialogs/preferences-dialog.c:2235
-#: app/dialogs/user-install-dialog.c:1401
+#: app/dialogs/preferences-dialog.c:2264
+#: app/dialogs/user-install-dialog.c:1403
 msgid "Swap folder:"
 msgstr "Φάκελος Swap:"
 
-#: app/dialogs/preferences-dialog.c:2235
+#: app/dialogs/preferences-dialog.c:2264
 msgid "Select Swap Folder"
 msgstr "Επιλογή Φακέλου Swap"
 
-#: app/dialogs/preferences-dialog.c:2268
+#: app/dialogs/preferences-dialog.c:2297
 msgid "Brush Folders"
 msgstr "Φάκελοι Πινέλων"
 
 #
-#: app/dialogs/preferences-dialog.c:2270
+#: app/dialogs/preferences-dialog.c:2299
 msgid "Select Brush Folders"
 msgstr "Επιλογή Φακέλων για Πινέλα"
 
-#: app/dialogs/preferences-dialog.c:2272
+#: app/dialogs/preferences-dialog.c:2301
 msgid "Pattern Folders"
 msgstr "Φάκελοι Σχεδίων"
 
 #
-#: app/dialogs/preferences-dialog.c:2274
+#: app/dialogs/preferences-dialog.c:2303
 msgid "Select Pattern Folders"
 msgstr "Επιλογή Φακέλων για Σχέδια"
 
-#: app/dialogs/preferences-dialog.c:2276
+#: app/dialogs/preferences-dialog.c:2305
 #, fuzzy
 msgid "Palette Folders"
 msgstr "Παλέττες"
 
 #
-#: app/dialogs/preferences-dialog.c:2278
+#: app/dialogs/preferences-dialog.c:2307
 #, fuzzy
 msgid "Select Palette Folders"
 msgstr "Επιλογή εκτυπωτή"
 
-#: app/dialogs/preferences-dialog.c:2280
+#: app/dialogs/preferences-dialog.c:2309
 #, fuzzy
 msgid "Gradient Folders"
 msgstr "Διαβαθμίσεις"
 
 #
-#: app/dialogs/preferences-dialog.c:2282
+#: app/dialogs/preferences-dialog.c:2311
 #, fuzzy
 msgid "Select Gradient Folders"
 msgstr "Επιλογή εκτυπωτή"
 
-#: app/dialogs/preferences-dialog.c:2284
+#: app/dialogs/preferences-dialog.c:2313
 msgid "Font Folders"
 msgstr "Φάκελοι Γραμματοσειρών"
 
 #
-#: app/dialogs/preferences-dialog.c:2286
+#: app/dialogs/preferences-dialog.c:2315
 msgid "Select Font Folders"
 msgstr "Επιλογή Φακέλων για Γραμματοσειρές"
 
-#: app/dialogs/preferences-dialog.c:2288
+#: app/dialogs/preferences-dialog.c:2317
 #, fuzzy
 msgid "Plug-In Folders"
 msgstr "Αρθρώματα"
 
-#: app/dialogs/preferences-dialog.c:2290
+#: app/dialogs/preferences-dialog.c:2319
 #, fuzzy
 msgid "Select Plug-In Folders"
 msgstr "Επιλογή Καταλόγου Αρθρωμάτων"
 
-#: app/dialogs/preferences-dialog.c:2292
+#: app/dialogs/preferences-dialog.c:2321
 msgid "Scripts"
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:2292
+#: app/dialogs/preferences-dialog.c:2321
 #, fuzzy
 msgid "Script-Fu Folders"
 msgstr "Διαβαθμίσεις"
 
 #
-#: app/dialogs/preferences-dialog.c:2294
+#: app/dialogs/preferences-dialog.c:2323
 #, fuzzy
 msgid "Select Script-Fu Folders"
 msgstr "Επιλογή Διεργασιών"
 
-#: app/dialogs/preferences-dialog.c:2296
+#: app/dialogs/preferences-dialog.c:2325
 #, fuzzy
 msgid "Module Folders"
 msgstr "Κανένα σφάλμα"
 
-#: app/dialogs/preferences-dialog.c:2298
+#: app/dialogs/preferences-dialog.c:2327
 #, fuzzy
 msgid "Select Module Folders"
 msgstr "Επιλογή χρώματος"
 
 #
-#: app/dialogs/preferences-dialog.c:2300
+#: app/dialogs/preferences-dialog.c:2329
 #, fuzzy
 msgid "Environment Folders"
 msgstr "Περιβάλλον"
 
 #
-#: app/dialogs/preferences-dialog.c:2302
+#: app/dialogs/preferences-dialog.c:2331
 #, fuzzy
 msgid "Select Environment Folders"
 msgstr "Επιλογή εκτυπωτή"
 
-#: app/dialogs/preferences-dialog.c:2304
+#: app/dialogs/preferences-dialog.c:2333
 msgid "Themes"
 msgstr "Θέματα"
 
-#: app/dialogs/preferences-dialog.c:2304
+#: app/dialogs/preferences-dialog.c:2333
 msgid "Theme Folders"
 msgstr "Φάκελοι Θεμάτων"
 
 #
-#: app/dialogs/preferences-dialog.c:2306
+#: app/dialogs/preferences-dialog.c:2335
 #, fuzzy
 msgid "Select Theme Folders"
 msgstr "Επιλογή εκτυπωτή"
 
 #
-#: app/dialogs/print-size-dialog.c:129
+#: app/dialogs/print-size-dialog.c:128
 #, fuzzy
 msgid "Print Size"
 msgstr "Μέγεθος εκτύπωσης:"
 
 #. the image size labels
-#: app/dialogs/print-size-dialog.c:156 app/widgets/gimpsizebox.c:240
+#: app/dialogs/print-size-dialog.c:155 app/widgets/gimpsizebox.c:241
 #: app/widgets/gimptemplateeditor.c:236
 msgid "_Width:"
 msgstr "_Πλάτος:"
 
-#: app/dialogs/print-size-dialog.c:163 app/widgets/gimpsizebox.c:247
+#: app/dialogs/print-size-dialog.c:162 app/widgets/gimpsizebox.c:248
 #: app/widgets/gimptemplateeditor.c:243
 msgid "H_eight:"
 msgstr "_Ύψος:"
 
 #
 #. the resolution labels
-#: app/dialogs/print-size-dialog.c:211 app/widgets/gimpsizebox.c:329
+#: app/dialogs/print-size-dialog.c:210 app/widgets/gimpsizebox.c:338
 #: app/widgets/gimptemplateeditor.c:363
 msgid "_X resolution:"
 msgstr "_Χ ανάλυση:"
 
 #
-#: app/dialogs/print-size-dialog.c:218 app/widgets/gimpsizebox.c:336
+#: app/dialogs/print-size-dialog.c:217 app/widgets/gimpsizebox.c:345
 #: app/widgets/gimptemplateeditor.c:370
 msgid "_Y resolution:"
 msgstr "_Ψ ανάλυση:"
 
 #
-#: app/dialogs/print-size-dialog.c:229 app/widgets/gimpsizebox.c:348
+#: app/dialogs/print-size-dialog.c:228 app/widgets/gimpsizebox.c:357
 #: app/widgets/gimptemplateeditor.c:383
 #, c-format
 msgid "pixels/%a"
@@ -7610,6 +7626,11 @@ msgstr "Υπάρχει μια εικόνα με αλλαγές που δεν έ�
 #, c-format
 msgid "There are %d images with unsaved changes:"
 msgstr "Υπάρχουν %d εικόνες με αλλαγές που δεν έχουν αποθηκευθεί:"
+
+#: app/dialogs/quit-dialog.c:183
+#, fuzzy
+msgid "_Discard Changes"
+msgstr "Κανάλι"
 
 #: app/dialogs/resize-dialog.c:115
 msgid "Canvas Size"
@@ -7643,16 +7664,16 @@ msgstr "_Κατακόρυφα:"
 msgid "Image Size"
 msgstr "Μέγεθος Εικόνας"
 
-#: app/dialogs/scale-dialog.c:168
+#: app/dialogs/scale-dialog.c:166
 msgid "Quality"
 msgstr "Ποιότητα"
 
-#: app/dialogs/scale-dialog.c:180
+#: app/dialogs/scale-dialog.c:178
 #, fuzzy
 msgid "I_nterpolation:"
 msgstr "Παρεμβολή:"
 
-#: app/dialogs/scale-dialog.c:194
+#: app/dialogs/scale-dialog.c:192
 msgid ""
 "Indexed color layers are always scaled without interpolation. The chosen "
 "interpolation type will affect channels and masks only."
@@ -7708,20 +7729,20 @@ msgstr "Επόμενη σελίδα"
 msgid "tips-locale:C"
 msgstr ""
 
-#: app/dialogs/user-install-dialog.c:132
+#: app/dialogs/user-install-dialog.c:134
 msgid ""
 "The gimprc is used to store personal preferences that affect GIMP's default "
 "behavior.  Paths to search for brushes, palettes, gradients, patterns, plug-"
 "ins and modules can also configured here."
 msgstr ""
 
-#: app/dialogs/user-install-dialog.c:141
+#: app/dialogs/user-install-dialog.c:143
 msgid ""
 "GIMP uses an additional gtkrc file so you can configure it to look "
 "differently than other GTK apps."
 msgstr ""
 
-#: app/dialogs/user-install-dialog.c:147
+#: app/dialogs/user-install-dialog.c:149
 msgid ""
 "Plug-ins and extensions are external programs run by the GIMP which provide "
 "additional functionality.  These programs are searched for at run-time and "
@@ -7729,7 +7750,7 @@ msgid ""
 "This file is intended to be GIMP-readable only, and should not be edited."
 msgstr ""
 
-#: app/dialogs/user-install-dialog.c:157
+#: app/dialogs/user-install-dialog.c:159
 msgid ""
 "Key shortcuts can be dynamically redefined in The GIMP. The menurc is a dump "
 "of your configuration so it can. be remembered for the next session.  You "
@@ -7737,20 +7758,20 @@ msgid ""
 "from within The GIMP.  Deleting this file will restore the default shortcuts."
 msgstr ""
 
-#: app/dialogs/user-install-dialog.c:167
+#: app/dialogs/user-install-dialog.c:169
 msgid ""
 "The sessionrc is used to store what dialog windows were open the last time "
 "you quit The GIMP.  You can configure The GIMP to reopen these dialogs at "
 "the saved position."
 msgstr ""
 
-#: app/dialogs/user-install-dialog.c:174
+#: app/dialogs/user-install-dialog.c:176
 msgid ""
 "This file holds a collection of standard media sizes that serve as image "
 "templates."
 msgstr ""
 
-#: app/dialogs/user-install-dialog.c:180
+#: app/dialogs/user-install-dialog.c:182
 msgid ""
 "The unitrc is used to store your user units database.  You can define "
 "additional units and use them just like you use the built-in units inches, "
@@ -7758,14 +7779,14 @@ msgid ""
 "the GIMP."
 msgstr ""
 
-#: app/dialogs/user-install-dialog.c:189
+#: app/dialogs/user-install-dialog.c:191
 msgid ""
 "This folder is used to store user defined brushes. The GIMP checks this "
 "folder in addition to the system-wide GIMP brushes installation when "
 "searching for brushes."
 msgstr ""
 
-#: app/dialogs/user-install-dialog.c:197
+#: app/dialogs/user-install-dialog.c:199
 msgid ""
 "This folder is used to store fonts you only want visible in the GIMP. The "
 "GIMP checks this folder in addition to the system-wide GIMP fonts "
@@ -7773,35 +7794,35 @@ msgid ""
 "have GIMP-only fonts, otherwise put things in your global font directory."
 msgstr ""
 
-#: app/dialogs/user-install-dialog.c:207
+#: app/dialogs/user-install-dialog.c:209
 msgid ""
 "This folder is used to store user defined gradients.  The GIMP checks this "
 "folder in addition to the system-wide GIMP gradients installation when "
 "searching for gradients."
 msgstr ""
 
-#: app/dialogs/user-install-dialog.c:214
+#: app/dialogs/user-install-dialog.c:216
 msgid ""
 "This folder is used to store user defined palettes.  The GIMP checks this "
 "folder in addition to the system-wide GIMP palettes installation when "
 "searching for palettes."
 msgstr ""
 
-#: app/dialogs/user-install-dialog.c:221
+#: app/dialogs/user-install-dialog.c:223
 msgid ""
 "This folder is used to store user defined patterns.  The GIMP checks this "
 "folder in addition to the system-wide GIMP patterns installation when "
 "searching for patterns."
 msgstr ""
 
-#: app/dialogs/user-install-dialog.c:228
+#: app/dialogs/user-install-dialog.c:230
 msgid ""
 "This folder is used to store user created, temporary, or otherwise non-"
 "system-supported plug-ins.  The GIMP checks this folder in addition to the "
 "system-wide GIMP plug-in folder when searching for plug-ins."
 msgstr ""
 
-#: app/dialogs/user-install-dialog.c:236
+#: app/dialogs/user-install-dialog.c:238
 msgid ""
 "This folder is used to store user created, temporary, or otherwise non-"
 "system-supported DLL modules.  The GIMP checks this folder in addition to "
@@ -7809,7 +7830,7 @@ msgid ""
 "initialization."
 msgstr ""
 
-#: app/dialogs/user-install-dialog.c:245
+#: app/dialogs/user-install-dialog.c:247
 msgid ""
 "This folder is used to store user created, temporary, or otherwise non-"
 "system-supported additions to the plug-in environment.  The GIMP checks this "
@@ -7817,22 +7838,22 @@ msgid ""
 "for plug-in environment modification files."
 msgstr ""
 
-#: app/dialogs/user-install-dialog.c:255
+#: app/dialogs/user-install-dialog.c:257
 msgid ""
 "This folder is used to store user created and installed scripts.  The GIMP "
 "checks this folder in addition to the systemwide GIMP scripts folder when "
 "searching for scripts."
 msgstr ""
 
-#: app/dialogs/user-install-dialog.c:263
+#: app/dialogs/user-install-dialog.c:265
 msgid "This folder is searched for image templates."
 msgstr ""
 
-#: app/dialogs/user-install-dialog.c:268
+#: app/dialogs/user-install-dialog.c:270
 msgid "This folder is searched for user-installed themes."
 msgstr ""
 
-#: app/dialogs/user-install-dialog.c:273
+#: app/dialogs/user-install-dialog.c:275
 msgid ""
 "This folder is used to temporarily store undo buffers to reduce memory "
 "usage.  If The GIMP is unceremoniously killed, files of the form: gimp<#>."
@@ -7840,23 +7861,23 @@ msgid ""
 "sessions and can be destroyed with impunity."
 msgstr ""
 
-#: app/dialogs/user-install-dialog.c:282
+#: app/dialogs/user-install-dialog.c:284
 msgid "This folder is used to store tool options."
 msgstr ""
 
-#: app/dialogs/user-install-dialog.c:287
+#: app/dialogs/user-install-dialog.c:289
 msgid "This folder is used to store parameter files for the Curves tool."
 msgstr ""
 
-#: app/dialogs/user-install-dialog.c:292
+#: app/dialogs/user-install-dialog.c:294
 msgid "This folder is used to store parameter files for the Levels tool."
 msgstr ""
 
-#: app/dialogs/user-install-dialog.c:389
+#: app/dialogs/user-install-dialog.c:390
 msgid "Installation successful.  Click \"Continue\" to proceed."
 msgstr "Επιτυχημένη εγκατάσταση.  Πατήστε \"Συνέχεια\" για να προχωρήσετε."
 
-#: app/dialogs/user-install-dialog.c:395
+#: app/dialogs/user-install-dialog.c:396
 msgid "Installation failed.  Contact system administrator."
 msgstr "Η εγκατάσταση απέτυχε.  Επικοινωνήστε με το διαχειριστή συστήματος."
 
@@ -8000,19 +8021,19 @@ msgstr "Δημιουργία καταλόγου '%s'..."
 msgid "Cannot create folder '%s': %s"
 msgstr "Αδύνατη η δημιουργία καταλόγου '%s': %s"
 
-#: app/dialogs/user-install-dialog.c:1360
+#: app/dialogs/user-install-dialog.c:1362
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called "
 "\"Tile Cache\".  You should adjust its size to fit into memory.  Consider "
 "the amount of memory used by other running processes."
 msgstr ""
 
-#: app/dialogs/user-install-dialog.c:1373
+#: app/dialogs/user-install-dialog.c:1375
 #, fuzzy
 msgid "Tile cache size:"
 msgstr "Μέγεθος ενταμίευσης"
 
-#: app/dialogs/user-install-dialog.c:1385
+#: app/dialogs/user-install-dialog.c:1387
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be "
 "written to a swap file.  This file should be located on a local filesystem "
@@ -8020,7 +8041,7 @@ msgid ""
 "to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
 msgstr ""
 
-#: app/dialogs/user-install-dialog.c:1396
+#: app/dialogs/user-install-dialog.c:1398
 #, fuzzy
 msgid "Select swap dir"
 msgstr "Επιλογή Χάρτη:"
@@ -8100,11 +8121,11 @@ msgstr "Σκοτεινά τετραγωνίδια"
 msgid "Custom color"
 msgstr "Προσαρμοσμένο χρώμα"
 
-#: app/display/gimpdisplayshell.c:939
+#: app/display/gimpdisplayshell.c:943
 msgid "Zoom image when window size changes"
 msgstr ""
 
-#: app/display/gimpdisplayshell.c:959
+#: app/display/gimpdisplayshell.c:963
 #, fuzzy
 msgid "Toggle Quick Mask"
 msgstr "Αλλαγή Κατάστασης ΤαχυΜάσκας"
@@ -8269,7 +8290,7 @@ msgstr "Αδύνατο το επανάνοιγμα του %s\n"
 msgid "Image doesn't contain any visible layers"
 msgstr ""
 
-#: app/file/file-save.c:213
+#: app/file/file-save.c:220
 #, fuzzy
 msgid "Plug-In could not save image"
 msgstr "Αδύνατο το επανάνοιγμα του %s\n"
@@ -8286,7 +8307,7 @@ msgstr ""
 "%s"
 
 #
-#: app/gui/splash.c:102
+#: app/gui/splash.c:118
 msgid "GIMP Startup"
 msgstr "Εκκίνηση του GIMP"
 
@@ -8397,7 +8418,7 @@ msgstr "Όξυνση"
 msgid "Constant"
 msgstr "Αντίθεση:"
 
-#: app/paint/paint-enums.c:168 app/tools/gimppaintoptions-gui.c:161
+#: app/paint/paint-enums.c:168 app/tools/gimppaintoptions-gui.c:163
 #, fuzzy
 msgid "Incremental"
 msgstr "Ενόργανη μουσική"
@@ -8412,7 +8433,7 @@ msgid "Posterize"
 msgstr "στερεοφωνικό"
 
 #: app/pdb/color_cmds.c:745 app/pdb/color_cmds.c:870
-#: app/tools/gimpcurvestool.c:143
+#: app/tools/gimpcurvestool.c:141
 msgid "Curves"
 msgstr "Καμπύλες"
 
@@ -8462,7 +8483,7 @@ msgstr "Αναζήτηση..."
 msgid "2D Transform..."
 msgstr "Μετασχηματισμός..."
 
-#: app/pdb/edit_cmds.c:608 app/tools/gimpblendtool.c:249
+#: app/pdb/edit_cmds.c:673 app/tools/gimpblendtool.c:249
 msgid "Blending..."
 msgstr "Γίνεται ανάμειξη..."
 
@@ -8490,7 +8511,7 @@ msgid "Brush UI"
 msgstr ""
 
 #
-#: app/pdb/internal_procs.c:98 app/tools/gimppaintoptions-gui.c:282
+#: app/pdb/internal_procs.c:98 app/tools/gimppaintoptions-gui.c:284
 #: app/widgets/gimpwidgets-constructors.c:75
 #: app/widgets/gimpwidgets-constructors.c:108
 msgid "Color"
@@ -8942,31 +8963,31 @@ msgstr "Ρυθμός:"
 msgid "Pressure:"
 msgstr "Πίεση:"
 
-#: app/tools/gimpblendoptions.c:245
+#: app/tools/gimpblendoptions.c:246
 msgid "Offset:"
 msgstr "Μετατόπιση"
 
-#: app/tools/gimpblendoptions.c:254 app/widgets/gimpbrusheditor.c:145
+#: app/tools/gimpblendoptions.c:255 app/widgets/gimpbrusheditor.c:145
 #, fuzzy
 msgid "Shape:"
 msgstr "Σχήμα"
 
-#: app/tools/gimpblendoptions.c:260 app/tools/gimppaintoptions-gui.c:406
+#: app/tools/gimpblendoptions.c:261 app/tools/gimppaintoptions-gui.c:418
 msgid "Repeat:"
 msgstr "Επανάληψη:"
 
 #
-#: app/tools/gimpblendoptions.c:286
+#: app/tools/gimpblendoptions.c:279
 #, fuzzy
 msgid "Adaptive supersampling"
 msgstr "Προσαρμοσμένο υπερδείγμα"
 
-#: app/tools/gimpblendoptions.c:296
+#: app/tools/gimpblendoptions.c:297
 msgid "Max Depth:"
 msgstr "Μέγιστο Βάθος:"
 
-#: app/tools/gimpblendoptions.c:303 app/tools/gimpbucketfilloptions.c:295
-#: app/tools/gimpmagnifyoptions.c:226 app/tools/gimpselectionoptions.c:463
+#: app/tools/gimpblendoptions.c:304 app/tools/gimpbucketfilloptions.c:295
+#: app/tools/gimpmagnifyoptions.c:226 app/tools/gimpselectionoptions.c:466
 msgid "Threshold:"
 msgstr "Κατώφλι:"
 
@@ -9026,7 +9047,7 @@ msgstr ""
 msgid "Base filled area on all visible layers"
 msgstr ""
 
-#: app/tools/gimpbucketfilloptions.c:141 app/tools/gimpselectionoptions.c:160
+#: app/tools/gimpbucketfilloptions.c:141 app/tools/gimpselectionoptions.c:161
 msgid "Maximum color difference"
 msgstr ""
 
@@ -9053,7 +9074,7 @@ msgstr "Επίπλευση Επιλογής"
 msgid "Fill similar colors"
 msgstr "Γέμισμα με Χρώμα Προσκηνίου"
 
-#: app/tools/gimpbucketfilloptions.c:261 app/tools/gimpselectionoptions.c:435
+#: app/tools/gimpbucketfilloptions.c:261 app/tools/gimpselectionoptions.c:438
 msgid "Finding Similar Colors"
 msgstr ""
 
@@ -9063,8 +9084,8 @@ msgid "Fill transparent areas"
 msgstr "FG σε Διαφανές"
 
 #: app/tools/gimpbucketfilloptions.c:283
-#: app/tools/gimpcolorpickeroptions.c:179 app/tools/gimpselectionoptions.c:451
-#: app/tools/gimpselectionoptions.c:497
+#: app/tools/gimpcolorpickeroptions.c:179 app/tools/gimpselectionoptions.c:454
+#: app/tools/gimpselectionoptions.c:502
 #, fuzzy
 msgid "Sample merged"
 msgstr "Μεγέθυνση/Σμίκρυνση Εικόνας"
@@ -9212,7 +9233,7 @@ msgstr "Φωτισμός:"
 msgid "Sample average"
 msgstr "Μεγέθυνση/Σμίκρυνση Εικόνας"
 
-#: app/tools/gimpcoloroptions.c:194 app/tools/gimpselectionoptions.c:413
+#: app/tools/gimpcoloroptions.c:194 app/tools/gimpselectionoptions.c:416
 #: app/widgets/gimpbrusheditor.c:153
 msgid "Radius:"
 msgstr "Ακτίνα:"
@@ -9291,116 +9312,116 @@ msgstr "Επέτρεψε Μεγέθυνση"
 msgid "Keep aspect ratio  %s"
 msgstr "Διατήρηση αναλογιών"
 
-#: app/tools/gimpcroptool.c:163
+#: app/tools/gimpcroptool.c:164
 msgid "Crop & Resize"
 msgstr "Κόψιμο & Τροποποίηση μεγέθους"
 
-#: app/tools/gimpcroptool.c:164
+#: app/tools/gimpcroptool.c:165
 #, fuzzy
 msgid "Crop or Resize an image"
 msgstr "Κλείσιμο συστήματος ή επανεκκίνηση του"
 
-#: app/tools/gimpcroptool.c:165
+#: app/tools/gimpcroptool.c:166
 #, fuzzy
 msgid "_Crop & Resize"
 msgstr "Κόψιμο & Τροποποίηση μεγέθους"
 
 #. initialize the statusbar display
-#: app/tools/gimpcroptool.c:498 app/tools/gimpcroptool.c:957
+#: app/tools/gimpcroptool.c:499 app/tools/gimpcroptool.c:983
 msgid "Crop: "
 msgstr "Κόψιμο: "
 
 # sysdeps/names/sysdeps.c:67 sysdeps/names/sysdeps.c:96
-#: app/tools/gimpcroptool.c:990
+#: app/tools/gimpcroptool.c:1010
 msgid "Crop & Resize Information"
 msgstr ""
 
-#: app/tools/gimpcroptool.c:1009
+#: app/tools/gimpcroptool.c:1029
 msgid "Origin X:"
 msgstr "Προέλευση Χ:"
 
-#: app/tools/gimpcroptool.c:1013
+#: app/tools/gimpcroptool.c:1033
 #, fuzzy
 msgid "Origin Y:"
 msgstr "Προέλευση Χ:"
 
-#: app/tools/gimpcroptool.c:1051 app/widgets/gimpbrusheditor.c:194
+#: app/tools/gimpcroptool.c:1071 app/widgets/gimpbrusheditor.c:194
 #, fuzzy
 msgid "Aspect ratio:"
 msgstr "Λόγος αναλογιών:"
 
 #
-#: app/tools/gimpcroptool.c:1062
+#: app/tools/gimpcroptool.c:1082
 #, fuzzy
 msgid "From selection"
 msgstr "Από Επιλογή"
 
-#: app/tools/gimpcroptool.c:1070
+#: app/tools/gimpcroptool.c:1090
 #, fuzzy
 msgid "Auto shrink"
 msgstr "Αυτόματη ελάττωση:"
 
-#: app/tools/gimpcurvestool.c:144
+#: app/tools/gimpcurvestool.c:142
 #, fuzzy
 msgid "Adjust color curves"
 msgstr "Παραμετροποιημένα χρώματα"
 
-#: app/tools/gimpcurvestool.c:145
+#: app/tools/gimpcurvestool.c:143
 #, fuzzy
 msgid "_Curves..."
 msgstr "Καμπύλες"
 
-#: app/tools/gimpcurvestool.c:204
+#: app/tools/gimpcurvestool.c:202
 #, fuzzy
 msgid "Adjust Color Curves"
 msgstr "Παραμετροποιημένα χρώματα"
 
 #
-#: app/tools/gimpcurvestool.c:206
+#: app/tools/gimpcurvestool.c:204
 msgid "Load Curves"
 msgstr "Φόρτωση Καμπύλων"
 
 #
-#: app/tools/gimpcurvestool.c:207
+#: app/tools/gimpcurvestool.c:205
 #, fuzzy
 msgid "Load curves settings from file"
 msgstr "Αποθήκευση επιλογών και έξοδος"
 
 #
-#: app/tools/gimpcurvestool.c:208
+#: app/tools/gimpcurvestool.c:206
 msgid "Save Curves"
 msgstr "Αποθήκευση Καμπύλων"
 
 #
-#: app/tools/gimpcurvestool.c:209
+#: app/tools/gimpcurvestool.c:207
 #, fuzzy
 msgid "Save curves settings to file"
 msgstr "Αποθήκευση επιλογών και έξοδος"
 
-#: app/tools/gimpcurvestool.c:285
+#: app/tools/gimpcurvestool.c:283
 #, fuzzy
 msgid "Curves for indexed layers cannot be adjusted."
 msgstr "Δε μπορούν να προσαρμοστούν οι καμπύλες σε εικόνες καταλόγου χρώματος."
 
-#: app/tools/gimpcurvestool.c:481 app/tools/gimplevelstool.c:415
-#: app/widgets/gimphistogrameditor.c:160
+#: app/tools/gimpcurvestool.c:479 app/tools/gimplevelstool.c:415
+#: app/widgets/gimphistogrameditor.c:161
 #, fuzzy
 msgid "Channel:"
 msgstr "Κανάλι"
 
-#: app/tools/gimpcurvestool.c:496 app/tools/gimplevelstool.c:430
+#: app/tools/gimpcurvestool.c:494 app/tools/gimplevelstool.c:430
 #, fuzzy
 msgid "R_eset channel"
 msgstr "Ανασήκωση Καναλιού"
 
 #. Horizontal button box for load / save
-#: app/tools/gimpcurvestool.c:598 app/tools/gimplevelstool.c:640
+#: app/tools/gimpcurvestool.c:596 app/tools/gimplevelstool.c:640
 #, fuzzy
 msgid "All Channels"
 msgstr "Κανάλια"
 
 #. The radio box for selecting the curve type
-#: app/tools/gimpcurvestool.c:616
+#: app/tools/gimpcurvestool.c:614
 #, fuzzy
 msgid "Curve Type"
 msgstr "Τύπος καμπύλης:"
@@ -9481,12 +9502,12 @@ msgid "Flip Type  %s"
 msgstr "Τύπος γεμίσματος"
 
 #
-#: app/tools/gimpfliptool.c:85
+#: app/tools/gimpfliptool.c:83
 #, fuzzy
 msgid "Flip the layer or selection"
 msgstr "Αντιγραφή επιλεγμένου"
 
-#: app/tools/gimpfliptool.c:86
+#: app/tools/gimpfliptool.c:84
 #, fuzzy
 msgid "_Flip"
 msgstr "Αναστροφή"
@@ -9610,41 +9631,41 @@ msgid "Quick Save"
 msgstr "ΤαχυΜάσκα"
 
 #. adjust sliders
-#: app/tools/gimpinkoptions-gui.c:58
+#: app/tools/gimpinkoptions-gui.c:59
 msgid "Adjustment"
 msgstr "Προσαρμογή"
 
 #
-#: app/tools/gimpinkoptions-gui.c:70 app/tools/gimpinkoptions-gui.c:94
-#: app/tools/gimptextoptions.c:425
+#: app/tools/gimpinkoptions-gui.c:71 app/tools/gimpinkoptions-gui.c:96
+#: app/tools/gimptextoptions.c:426
 msgid "Size:"
 msgstr "Μέγεθος:"
 
-#: app/tools/gimpinkoptions-gui.c:77 app/tools/gimpmeasuretool.c:891
+#: app/tools/gimpinkoptions-gui.c:79 app/tools/gimpmeasuretool.c:891
 #: app/tools/gimprotatetool.c:169 app/widgets/gimpbrusheditor.c:207
 msgid "Angle:"
 msgstr "Γωνία:"
 
 #. sens sliders
-#: app/tools/gimpinkoptions-gui.c:82
+#: app/tools/gimpinkoptions-gui.c:84
 msgid "Sensitivity"
 msgstr "Ευαισθησία"
 
-#: app/tools/gimpinkoptions-gui.c:101
+#: app/tools/gimpinkoptions-gui.c:103
 msgid "Tilt:"
 msgstr "Γέρσιμο:"
 
-#: app/tools/gimpinkoptions-gui.c:108
+#: app/tools/gimpinkoptions-gui.c:110
 msgid "Speed:"
 msgstr "Ταχύτητα:"
 
 #
-#: app/tools/gimpinkoptions-gui.c:119
+#: app/tools/gimpinkoptions-gui.c:121
 msgid "Type"
 msgstr "Τύπος"
 
 #. Blob shape widget
-#: app/tools/gimpinkoptions-gui.c:149
+#: app/tools/gimpinkoptions-gui.c:151
 msgid "Shape"
 msgstr "Σχήμα"
 
@@ -9866,65 +9887,65 @@ msgid "_Paintbrush"
 msgstr "Πινέλο"
 
 #
-#: app/tools/gimppaintoptions-gui.c:102 app/widgets/gimpbrushselect.c:201
+#: app/tools/gimppaintoptions-gui.c:103 app/widgets/gimpbrushselect.c:201
 #: app/widgets/gimplayertreeview.c:330
 msgid "Opacity:"
 msgstr "Αδιαφάνεια:"
 
-#: app/tools/gimppaintoptions-gui.c:107 app/tools/gimpselectionoptions.c:373
+#: app/tools/gimppaintoptions-gui.c:108 app/tools/gimpselectionoptions.c:374
 #: app/widgets/gimpbrushselect.c:218 app/widgets/gimplayertreeview.c:323
 msgid "Mode:"
 msgstr "Κατάσταση:"
 
-#: app/tools/gimppaintoptions-gui.c:125
+#: app/tools/gimppaintoptions-gui.c:126
 msgid "Brush:"
 msgstr "Πινέλο:"
 
-#: app/tools/gimppaintoptions-gui.c:134 app/tools/gimppaintoptions-gui.c:383
+#: app/tools/gimppaintoptions-gui.c:135 app/tools/gimppaintoptions-gui.c:395
 msgid "Gradient:"
 msgstr "Διαβάθμιση:"
 
-#: app/tools/gimppaintoptions-gui.c:175
+#: app/tools/gimppaintoptions-gui.c:177
 #, fuzzy
 msgid "Hard edge"
 msgstr "Σκληρή Άκρη"
 
-#: app/tools/gimppaintoptions-gui.c:214
+#: app/tools/gimppaintoptions-gui.c:216
 #, fuzzy
 msgid "Pressure sensitivity"
 msgstr "Ευαισ_θησία"
 
 #
-#: app/tools/gimppaintoptions-gui.c:235
+#: app/tools/gimppaintoptions-gui.c:237
 #, fuzzy
 msgid "Opacity"
 msgstr "Διαφάνεια:"
 
-#: app/tools/gimppaintoptions-gui.c:249
+#: app/tools/gimppaintoptions-gui.c:251
 #, fuzzy
 msgid "Hardness"
 msgstr "Υλικό"
 
-#: app/tools/gimppaintoptions-gui.c:260
+#: app/tools/gimppaintoptions-gui.c:262
 msgid "Rate"
 msgstr "Ρυθμός"
 
 #
-#: app/tools/gimppaintoptions-gui.c:273
+#: app/tools/gimppaintoptions-gui.c:275
 msgid "Size"
 msgstr "Μέγεθος"
 
 # sysdeps/names/swap.c:45
-#: app/tools/gimppaintoptions-gui.c:317
+#: app/tools/gimppaintoptions-gui.c:314
 #, fuzzy
 msgid "Fade out"
 msgstr "Εξερχ. Σελίδα"
 
-#: app/tools/gimppaintoptions-gui.c:330 app/tools/gimppaintoptions-gui.c:392
+#: app/tools/gimppaintoptions-gui.c:334 app/tools/gimppaintoptions-gui.c:404
 msgid "Length:"
 msgstr "Μήκος:"
 
-#: app/tools/gimppaintoptions-gui.c:370
+#: app/tools/gimppaintoptions-gui.c:368
 #, fuzzy
 msgid "Use color from gradient"
 msgstr "Προσαρμοσμένη Διαβάθμιση"
@@ -10049,9 +10070,10 @@ msgstr "Περιστροφή Πληροφορίας"
 msgid "Center X:"
 msgstr "Κέντρο X:"
 
-#: app/tools/gimprotatetool.c:189
-msgid "Y:"
-msgstr "Υ:"
+#: app/tools/gimprotatetool.c:190
+#, fuzzy
+msgid "Center Y:"
+msgstr "Κέντρο X:"
 
 #
 #: app/tools/gimpscaletool.c:91
@@ -10100,42 +10122,42 @@ msgstr "Λόγος Μεγένθυνσης Χ:"
 msgid "Aspect Ratio:"
 msgstr "Λόγος αναλογιών:"
 
-#: app/tools/gimpselectionoptions.c:135
+#: app/tools/gimpselectionoptions.c:136
 msgid "Smooth edges"
 msgstr "Ομαλοποίηση ακμών"
 
-#: app/tools/gimpselectionoptions.c:149
+#: app/tools/gimpselectionoptions.c:150
 msgid "Allow completely transparent regions to be selected"
 msgstr "Επιτρέπονται πλήρως διαφανείς περιοχές να επιλέγονται"
 
-#: app/tools/gimpselectionoptions.c:155
+#: app/tools/gimpselectionoptions.c:156
 msgid "Base selection on all visible layers"
 msgstr ""
 
-#: app/tools/gimpselectionoptions.c:170
+#: app/tools/gimpselectionoptions.c:171
 msgid "Use all visible layers when shrinking the selection"
 msgstr ""
 
-#: app/tools/gimpselectionoptions.c:381 app/tools/gimptextoptions.c:446
+#: app/tools/gimpselectionoptions.c:382 app/tools/gimptextoptions.c:447
 msgid "Antialiasing"
 msgstr "Εξομάλυνση"
 
-#: app/tools/gimpselectionoptions.c:403
+#: app/tools/gimpselectionoptions.c:399
 #, fuzzy
 msgid "Feather edges"
 msgstr "Πλούμισμα Ακμών"
 
-#: app/tools/gimpselectionoptions.c:422
+#: app/tools/gimpselectionoptions.c:425
 #, fuzzy
 msgid "Show interactive boundary"
 msgstr "Εμφάνιση ή απόκρυψη μπάρας κατάστασης"
 
-#: app/tools/gimpselectionoptions.c:445
+#: app/tools/gimpselectionoptions.c:448
 #, fuzzy
 msgid "Select transparent areas"
 msgstr "Επιλέξτε εικονίδιο"
 
-#: app/tools/gimpselectionoptions.c:489
+#: app/tools/gimpselectionoptions.c:488
 #, fuzzy
 msgid "Auto shrink selection"
 msgstr "Σμίκρυνσης Επιλογής"
@@ -10183,59 +10205,59 @@ msgstr "εικόνα"
 msgid "_Smudge"
 msgstr "εικόνα"
 
-#: app/tools/gimptextoptions.c:145
+#: app/tools/gimptextoptions.c:146
 msgid ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 
-#: app/tools/gimptextoptions.c:152
+#: app/tools/gimptextoptions.c:153
 msgid ""
 "If available, hints from the font are used but you may prefer to always use "
 "the automatic hinter"
 msgstr ""
 
-#: app/tools/gimptextoptions.c:177
+#: app/tools/gimptextoptions.c:178
 msgid "Indentation of the first line"
 msgstr ""
 
-#: app/tools/gimptextoptions.c:182
+#: app/tools/gimptextoptions.c:183
 msgid "Modify line spacing"
 msgstr ""
 
-#: app/tools/gimptextoptions.c:418
+#: app/tools/gimptextoptions.c:419
 #, fuzzy
 msgid "Font:"
 msgstr "_Γραμματοσειρά:"
 
-#: app/tools/gimptextoptions.c:430
+#: app/tools/gimptextoptions.c:431
 #, fuzzy
 msgid "Hinting"
 msgstr "Εκκινείται"
 
-#: app/tools/gimptextoptions.c:437
+#: app/tools/gimptextoptions.c:438
 msgid "Force auto-hinter"
 msgstr ""
 
-#: app/tools/gimptextoptions.c:452
+#: app/tools/gimptextoptions.c:453
 msgid "Text Color"
 msgstr "Χρώμα Κειμένου"
 
 #
-#: app/tools/gimptextoptions.c:457
+#: app/tools/gimptextoptions.c:458
 msgid "Color:"
 msgstr "Χρώμα:"
 
-#: app/tools/gimptextoptions.c:462
+#: app/tools/gimptextoptions.c:463
 msgid "Justify:"
 msgstr ""
 
-#: app/tools/gimptextoptions.c:468
+#: app/tools/gimptextoptions.c:469
 #, fuzzy
 msgid "Indent:"
 msgstr "Ευρετήριο:"
 
 #
-#: app/tools/gimptextoptions.c:474
+#: app/tools/gimptextoptions.c:475
 #, fuzzy
 msgid ""
 "Line\n"
@@ -10243,7 +10265,7 @@ msgid ""
 msgstr "Διάκενο:"
 
 #
-#: app/tools/gimptextoptions.c:477
+#: app/tools/gimptextoptions.c:478
 #, fuzzy
 msgid "Create path from text"
 msgstr "Δημιουργία Διαδρομής από Κείμενο"
@@ -10258,15 +10280,15 @@ msgstr "Προσθήκη κειμένου στην εικόνα"
 msgid "Te_xt"
 msgstr "_Κείμενο"
 
-#: app/tools/gimptexttool.c:728
+#: app/tools/gimptexttool.c:732
 msgid "GIMP Text Editor"
 msgstr "Επεξεργαστής Κειμένου GIMP"
 
-#: app/tools/gimptexttool.c:838 app/tools/gimptexttool.c:841
+#: app/tools/gimptexttool.c:842 app/tools/gimptexttool.c:845
 msgid "Confirm Text Editing"
 msgstr ""
 
-#: app/tools/gimptexttool.c:862
+#: app/tools/gimptexttool.c:866
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -10343,13 +10365,9 @@ msgstr "Διατήρηση Πλάτους  %s"
 msgid "Keep aspect  %s"
 msgstr "Διατήρηση Ύψους  %s"
 
-#: app/tools/gimptransformtool.c:251
+#: app/tools/gimptransformtool.c:253
 msgid "Transforming..."
 msgstr "Μετασχηματισμός..."
-
-#: app/tools/gimptransformtool.c:357
-msgid "Transformations do not work on layers that contain layer masks."
-msgstr ""
 
 #: app/tools/gimpvectoroptions.c:113
 #, fuzzy
@@ -10595,13 +10613,13 @@ msgstr ""
 msgid "Failed to import paths from '%s': %s"
 msgstr "Αδυναμία ανάγνωσης %d bytes από το αρχείο '%s': %s"
 
-#: app/widgets/gimpactiongroup.c:801
+#: app/widgets/gimpactiongroup.c:803
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr ""
 
 #
-#: app/widgets/gimpactionview.c:292 app/widgets/gimpcontrollereditor.c:337
+#: app/widgets/gimpactionview.c:292 app/widgets/gimpcontrollereditor.c:374
 msgid "Action"
 msgstr "Ενέργεια"
 
@@ -10668,7 +10686,7 @@ msgstr ""
 #: app/widgets/gimpbufferview.c:165 app/widgets/gimpbufferview.c:246
 #: app/widgets/gimpcontainergridview.c:206
 #: app/widgets/gimpcontainergridview.c:657
-#: app/widgets/gimphistogrameditor.c:146 app/widgets/gimphistogrameditor.c:355
+#: app/widgets/gimphistogrameditor.c:147 app/widgets/gimphistogrameditor.c:359
 #, fuzzy
 msgid "(None)"
 msgstr "Κανένα"
@@ -10841,304 +10859,312 @@ msgstr "Προεπισκόπηση"
 msgid "Larger Previews"
 msgstr "Προεπισκόπηση"
 
-#: app/widgets/gimpcontrollereditor.c:206
+#: app/widgets/gimpcontrollereditor.c:210
 msgid "Dump events from this controller"
 msgstr ""
 
-#: app/widgets/gimpcontrollereditor.c:211
+#: app/widgets/gimpcontrollereditor.c:215
 msgid "Enable this controller"
 msgstr ""
 
 #
-#: app/widgets/gimpcontrollereditor.c:232
+#: app/widgets/gimpcontrollereditor.c:236
 msgid "Name:"
 msgstr "Όνομα:"
 
 #
-#: app/widgets/gimpcontrollereditor.c:332
+#: app/widgets/gimpcontrollereditor.c:369
 msgid "Event"
 msgstr "Συμβάν"
 
-#: app/widgets/gimpcontrollereditor.c:513
+#: app/widgets/gimpcontrollereditor.c:550
 msgid "Select Controller Event Action"
 msgstr ""
 
-#: app/widgets/gimpcontrollerkeyboard.c:68
+#: app/widgets/gimpcontrollerkeyboard.c:69
 msgid "Key Up (Shift + Control + Alt)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerkeyboard.c:71
+#: app/widgets/gimpcontrollerkeyboard.c:72
 msgid "Key Up (Control + Alt)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerkeyboard.c:74
+#: app/widgets/gimpcontrollerkeyboard.c:75
 msgid "Key Up (Shift + Alt)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerkeyboard.c:77
+#: app/widgets/gimpcontrollerkeyboard.c:78
 msgid "Key Up (Shift + Control)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerkeyboard.c:80
+#: app/widgets/gimpcontrollerkeyboard.c:81
 msgid "Key Up (Alt)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerkeyboard.c:83
+#: app/widgets/gimpcontrollerkeyboard.c:84
 msgid "Key Up (Control)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerkeyboard.c:86
+#: app/widgets/gimpcontrollerkeyboard.c:87
 msgid "Key Up (Shift)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerkeyboard.c:89
+#: app/widgets/gimpcontrollerkeyboard.c:90
 msgid "Key Up"
 msgstr ""
 
-#: app/widgets/gimpcontrollerkeyboard.c:93
+#: app/widgets/gimpcontrollerkeyboard.c:94
 msgid "Key Down (Shift + Control + Alt)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerkeyboard.c:96
+#: app/widgets/gimpcontrollerkeyboard.c:97
 msgid "Key Down (Control + Alt)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerkeyboard.c:99
+#: app/widgets/gimpcontrollerkeyboard.c:100
 msgid "Key Down (Shift + Alt)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerkeyboard.c:102
+#: app/widgets/gimpcontrollerkeyboard.c:103
 msgid "Key Down (Shift + Control)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerkeyboard.c:105
+#: app/widgets/gimpcontrollerkeyboard.c:106
 msgid "Key Down (Alt)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerkeyboard.c:108
+#: app/widgets/gimpcontrollerkeyboard.c:109
 msgid "Key Down (Control)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerkeyboard.c:111
+#: app/widgets/gimpcontrollerkeyboard.c:112
 msgid "Key Down (Shift)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerkeyboard.c:114
+#: app/widgets/gimpcontrollerkeyboard.c:115
 #, fuzzy
 msgid "Key Down"
 msgstr "Συγχώνευση με το επόμενο"
 
-#: app/widgets/gimpcontrollerkeyboard.c:118
+#: app/widgets/gimpcontrollerkeyboard.c:119
 msgid "Key Left (Shift + Control + Alt)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerkeyboard.c:121
+#: app/widgets/gimpcontrollerkeyboard.c:122
 msgid "Key Left (Control + Alt)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerkeyboard.c:124
+#: app/widgets/gimpcontrollerkeyboard.c:125
 msgid "Key Left (Shift + Alt)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerkeyboard.c:127
+#: app/widgets/gimpcontrollerkeyboard.c:128
 msgid "Key Left (Shift + Control)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerkeyboard.c:130
+#: app/widgets/gimpcontrollerkeyboard.c:131
 msgid "Key Left (Alt)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerkeyboard.c:133
+#: app/widgets/gimpcontrollerkeyboard.c:134
 msgid "Key Left (Control)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerkeyboard.c:136
+#: app/widgets/gimpcontrollerkeyboard.c:137
 msgid "Key Left (Shift)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerkeyboard.c:139
+#: app/widgets/gimpcontrollerkeyboard.c:140
 msgid "Key Left"
 msgstr ""
 
-#: app/widgets/gimpcontrollerkeyboard.c:143
+#: app/widgets/gimpcontrollerkeyboard.c:144
 msgid "Key Right (Shift + Control + Alt)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerkeyboard.c:146
+#: app/widgets/gimpcontrollerkeyboard.c:147
 msgid "Key Right (Control + Alt)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerkeyboard.c:149
+#: app/widgets/gimpcontrollerkeyboard.c:150
 msgid "Key Right (Shift + Alt)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerkeyboard.c:152
+#: app/widgets/gimpcontrollerkeyboard.c:153
 msgid "Key Right (Shift + Control)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerkeyboard.c:155
+#: app/widgets/gimpcontrollerkeyboard.c:156
 msgid "Key Right (Alt)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerkeyboard.c:158
+#: app/widgets/gimpcontrollerkeyboard.c:159
 msgid "Key Right (Control)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerkeyboard.c:161
+#: app/widgets/gimpcontrollerkeyboard.c:162
 msgid "Key Right (Shift)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerkeyboard.c:164
+#: app/widgets/gimpcontrollerkeyboard.c:165
 #, fuzzy
 msgid "Key Right"
 msgstr "Ύψος"
 
-#: app/widgets/gimpcontrollerkeyboard.c:206
+#: app/widgets/gimpcontrollerkeyboard.c:207
 #, fuzzy
 msgid "Keyboard"
 msgstr "Συντομεύσεις Πληκτρολογίου"
 
-#: app/widgets/gimpcontrollerkeyboard.c:227
-msgid "Main Keyboard"
-msgstr ""
+#: app/widgets/gimpcontrollerkeyboard.c:230
+#, fuzzy
+msgid "Keyboard Events"
+msgstr "Συντομεύσεις Πληκτρολογίου"
 
-#: app/widgets/gimpcontrollerwheel.c:67
+#: app/widgets/gimpcontrollerkeyboard.c:231
+#: app/widgets/gimpcontrollerwheel.c:230
+#, fuzzy
+msgid "Ready"
+msgstr "Κόκκινο"
+
+#: app/widgets/gimpcontrollerwheel.c:68
 msgid "Scroll Up (Shift + Control + Alt)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerwheel.c:70
+#: app/widgets/gimpcontrollerwheel.c:71
 msgid "Scroll Up (Control + Alt)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerwheel.c:73
+#: app/widgets/gimpcontrollerwheel.c:74
 msgid "Scroll Up (Shift + Alt)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerwheel.c:76
+#: app/widgets/gimpcontrollerwheel.c:77
 msgid "Scroll Up (Shift + Control)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerwheel.c:79
+#: app/widgets/gimpcontrollerwheel.c:80
 msgid "Scroll Up (Alt)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerwheel.c:82
+#: app/widgets/gimpcontrollerwheel.c:83
 msgid "Scroll Up (Control)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerwheel.c:85
+#: app/widgets/gimpcontrollerwheel.c:86
 msgid "Scroll Up (Shift)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerwheel.c:88
+#: app/widgets/gimpcontrollerwheel.c:89
 msgid "Scroll Up"
 msgstr ""
 
-#: app/widgets/gimpcontrollerwheel.c:92
+#: app/widgets/gimpcontrollerwheel.c:93
 msgid "Scroll Down (Shift + Control + Alt)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerwheel.c:95
+#: app/widgets/gimpcontrollerwheel.c:96
 msgid "Scroll Down (Control + Alt)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerwheel.c:98
+#: app/widgets/gimpcontrollerwheel.c:99
 msgid "Scroll Down (Shift + Alt)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerwheel.c:101
+#: app/widgets/gimpcontrollerwheel.c:102
 msgid "Scroll Down (Shift + Control)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerwheel.c:104
+#: app/widgets/gimpcontrollerwheel.c:105
 msgid "Scroll Down (Alt)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerwheel.c:107
+#: app/widgets/gimpcontrollerwheel.c:108
 msgid "Scroll Down (Control)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerwheel.c:110
+#: app/widgets/gimpcontrollerwheel.c:111
 msgid "Scroll Down (Shift)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerwheel.c:113
+#: app/widgets/gimpcontrollerwheel.c:114
 msgid "Scroll Down"
 msgstr ""
 
-#: app/widgets/gimpcontrollerwheel.c:117
+#: app/widgets/gimpcontrollerwheel.c:118
 msgid "Scroll Left (Shift + Control + Alt)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerwheel.c:120
+#: app/widgets/gimpcontrollerwheel.c:121
 msgid "Scroll Left (Control + Alt)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerwheel.c:123
+#: app/widgets/gimpcontrollerwheel.c:124
 msgid "Scroll Left (Shift + Alt)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerwheel.c:126
+#: app/widgets/gimpcontrollerwheel.c:127
 msgid "Scroll Left (Shift + Control)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerwheel.c:129
+#: app/widgets/gimpcontrollerwheel.c:130
 msgid "Scroll Left (Alt)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerwheel.c:132
+#: app/widgets/gimpcontrollerwheel.c:133
 msgid "Scroll Left (Control)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerwheel.c:135
+#: app/widgets/gimpcontrollerwheel.c:136
 msgid "Scroll Left (Shift)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerwheel.c:138
+#: app/widgets/gimpcontrollerwheel.c:139
 msgid "Scroll Left"
 msgstr ""
 
-#: app/widgets/gimpcontrollerwheel.c:142
+#: app/widgets/gimpcontrollerwheel.c:143
 msgid "Scroll Right (Shift + Control + Alt)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerwheel.c:145
+#: app/widgets/gimpcontrollerwheel.c:146
 msgid "Scroll Right (Control + Alt)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerwheel.c:148
+#: app/widgets/gimpcontrollerwheel.c:149
 msgid "Scroll Right (Shift + Alt)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerwheel.c:151
+#: app/widgets/gimpcontrollerwheel.c:152
 msgid "Scroll Right (Shift + Control)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerwheel.c:154
+#: app/widgets/gimpcontrollerwheel.c:155
 msgid "Scroll Right (Alt)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerwheel.c:157
+#: app/widgets/gimpcontrollerwheel.c:158
 msgid "Scroll Right (Control)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerwheel.c:160
+#: app/widgets/gimpcontrollerwheel.c:161
 msgid "Scroll Right (Shift)"
 msgstr ""
 
-#: app/widgets/gimpcontrollerwheel.c:163
+#: app/widgets/gimpcontrollerwheel.c:164
 #, fuzzy
 msgid "Scroll Right"
 msgstr "Απαλό Φως"
 
-#: app/widgets/gimpcontrollerwheel.c:205
+#: app/widgets/gimpcontrollerwheel.c:206
 #, fuzzy
 msgid "Mouse Wheel"
 msgstr "Μετακίνηση Καναλιού"
 
-#: app/widgets/gimpcontrollerwheel.c:226
-msgid "Main Mouse Wheel"
-msgstr ""
+#: app/widgets/gimpcontrollerwheel.c:229
+#, fuzzy
+msgid "Mouse Wheel Events"
+msgstr "Μετακίνηση Καναλιού"
 
 #
 #: app/widgets/gimpdataeditor.c:205
@@ -11166,7 +11192,26 @@ msgstr "Προσκήνιο: %d, %d, %d"
 msgid "Background: %d, %d, %d"
 msgstr "Παρασκήνιο: %d, %d, %d"
 
-#: app/widgets/gimpdock.c:430
+#
+#: app/widgets/gimpdock.c:348 app/widgets/gimpdock.c:359
+#, fuzzy
+msgid "Close all tabs?"
+msgstr "_Κλείσιμο Καρτέλας"
+
+#
+#: app/widgets/gimpdock.c:354
+#, fuzzy
+msgid "Close all Tabs"
+msgstr "_Κλείσιμο Καρτέλας"
+
+#: app/widgets/gimpdock.c:361
+#, c-format
+msgid ""
+"This window has %d tabs open. Closing the window will also close all its "
+"tabs."
+msgstr ""
+
+#: app/widgets/gimpdock.c:474
 msgid "You can drop dockable dialogs here."
 msgstr ""
 
@@ -11371,28 +11416,28 @@ msgstr "Αδύνατη η εύρεση του Εξερευνητή Βοήθει�
 msgid "Use _web browser instead"
 msgstr "Χρήση _περιηγητή ιστοσελίδων στη θέση του"
 
-#: app/widgets/gimphistogrameditor.c:133
+#: app/widgets/gimphistogrameditor.c:134
 msgid "Mean:"
 msgstr "Μέσο:"
 
-#: app/widgets/gimphistogrameditor.c:134
+#: app/widgets/gimphistogrameditor.c:135
 msgid "Std Dev:"
 msgstr ""
 
-#: app/widgets/gimphistogrameditor.c:135
+#: app/widgets/gimphistogrameditor.c:136
 msgid "Median:"
 msgstr "Ενδιάμεσος:"
 
 #
-#: app/widgets/gimphistogrameditor.c:136
+#: app/widgets/gimphistogrameditor.c:137
 msgid "Pixels:"
 msgstr "Εικονοστοιχεία:"
 
-#: app/widgets/gimphistogrameditor.c:137
+#: app/widgets/gimphistogrameditor.c:138
 msgid "Count:"
 msgstr "Μετρητής:"
 
-#: app/widgets/gimphistogrameditor.c:138
+#: app/widgets/gimphistogrameditor.c:139
 msgid "Percentile:"
 msgstr ""
 
@@ -11405,11 +11450,11 @@ msgid ""
 "When enabled the dialog automatically follows the image you are working on."
 msgstr ""
 
-#: app/widgets/gimpitemtreeview.c:987
+#: app/widgets/gimpitemtreeview.c:996
 msgid "Set Item Exclusive Visible"
 msgstr ""
 
-#: app/widgets/gimpitemtreeview.c:995
+#: app/widgets/gimpitemtreeview.c:1004
 #, fuzzy
 msgid "Set Item Exclusive Linked"
 msgstr "Λιγότερες Επιλογές"
@@ -11453,7 +11498,7 @@ msgstr "Υπογραμμισμένα"
 msgid "Columns:"
 msgstr "Στήλες:"
 
-#: app/widgets/gimppropwidgets.c:1487
+#: app/widgets/gimppropwidgets.c:1537
 #, c-format
 msgid "This text input field is limited to %d characters."
 msgstr ""
@@ -11471,17 +11516,17 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "Μη έγκυρο UTF-8"
 
-#: app/widgets/gimpsizebox.c:289
+#: app/widgets/gimpsizebox.c:290
 #, fuzzy
 msgid "Keep aspect ratio"
 msgstr "Διατήρηση αναλογιών"
 
-#: app/widgets/gimpsizebox.c:555
+#: app/widgets/gimpsizebox.c:574
 #, c-format
 msgid "%d x %d dpi"
 msgstr ""
 
-#: app/widgets/gimpsizebox.c:559
+#: app/widgets/gimpsizebox.c:578
 #, c-format
 msgid "%d dpi"
 msgstr "%d dpi"
@@ -11541,34 +11586,34 @@ msgid "_Advanced Options"
 msgstr "_Ειδικές Επιλογές"
 
 #
-#: app/widgets/gimptemplateeditor.c:438
+#: app/widgets/gimptemplateeditor.c:437
 #, fuzzy
 msgid "Color_space:"
 msgstr "Χρώμα:"
 
-#: app/widgets/gimptemplateeditor.c:446
+#: app/widgets/gimptemplateeditor.c:445
 msgid "_Fill with:"
 msgstr "_Γέμισμα με:"
 
-#: app/widgets/gimptemplateeditor.c:456
+#: app/widgets/gimptemplateeditor.c:455
 msgid "Comme_nt:"
 msgstr "_Σχόλιο:"
 
 #
-#: app/widgets/gimptemplateeditor.c:566
+#: app/widgets/gimptemplateeditor.c:565
 msgid "_Name:"
 msgstr "_Όνομα:"
 
-#: app/widgets/gimptemplateeditor.c:577
+#: app/widgets/gimptemplateeditor.c:576
 msgid "_Icon:"
 msgstr "_Εικονίδιο:"
 
-#: app/widgets/gimptemplateeditor.c:695
+#: app/widgets/gimptemplateeditor.c:694
 #, c-format
 msgid "%d x %d dpi, %s"
 msgstr ""
 
-#: app/widgets/gimptemplateeditor.c:699
+#: app/widgets/gimptemplateeditor.c:698
 #, c-format
 msgid "%d dpi, %s"
 msgstr "%d dpi, %s"
@@ -11631,7 +11676,7 @@ msgid ""
 "Click to open the Gradient Dialog."
 msgstr ""
 
-#: app/widgets/gimptoolbox.c:848
+#: app/widgets/gimptoolbox.c:854
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to open the color selection dialog."
@@ -11648,6 +11693,14 @@ msgstr "Ανάκτηση επιλογών από..."
 #: app/widgets/gimptooloptionseditor.c:201
 msgid "Delete saved options..."
 msgstr "Διαγραφή αποθηκευμένων επιλογών..."
+
+#: app/widgets/gimpuimanager.c:495
+msgid "Your GIMP installation is incomplete:"
+msgstr ""
+
+#: app/widgets/gimpuimanager.c:497
+msgid "Plase make sure the menu XML files are correctly installed."
+msgstr ""
 
 #: app/widgets/gimpundoeditor.c:255
 msgid "[ Base Image ]"
@@ -11958,6 +12011,9 @@ msgstr "Δημιουργία κι επεξεργασία εικόνων ή φω�
 #, fuzzy
 msgid "Image Editor"
 msgstr "Παλέττα χρωμάτων:"
+
+#~ msgid "Y:"
+#~ msgstr "Υ:"
 
 #~ msgid "Resize Error: Both width and height must be greater than zero."
 #~ msgstr ""

@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-16 16:06+0100\n"
+"POT-Creation-Date: 2004-12-19 03:11+0100\n"
 "PO-Revision-Date: 2004-12-16 17:36+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
@@ -2722,7 +2722,7 @@ msgstr "Apri file di testo (UTF-8)"
 #: app/config/gimpscanner.c:92 app/core/gimpbrush.c:393
 #: app/core/gimpbrushgenerated.c:601 app/core/gimpbrushpipe.c:338
 #: app/core/gimpgradient-load.c:63 app/core/gimppalette.c:360
-#: app/core/gimppattern.c:328 app/tools/gimpimagemaptool.c:603
+#: app/core/gimppattern.c:328 app/tools/gimpimagemaptool.c:608
 #: app/xcf/xcf.c:291
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -3320,7 +3320,7 @@ msgstr "Impossibile espandere $(%s)"
 #: app/config/gimpconfig-utils.c:561 app/config/gimpconfigwriter.c:143
 #: app/core/gimpbrushgenerated.c:255 app/core/gimpgradient-save.c:51
 #: app/core/gimpgradient-save.c:142 app/core/gimppalette.c:567
-#: app/gui/themes.c:238 app/tools/gimpimagemaptool.c:602
+#: app/gui/themes.c:238 app/tools/gimpimagemaptool.c:607
 #: app/vectors/gimpvectors-export.c:83 app/xcf/xcf.c:348
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -4923,12 +4923,17 @@ msgstr "Errore di analisi fatale nel file gradiente '%s': il file è errato."
 msgid "Corrupt segment %d in gradient file '%s'."
 msgstr "Segmento errato %d nel file gradiente '%s'."
 
-#: app/core/gimpgradient-load.c:255
+#: app/core/gimpgradient-load.c:183 app/core/gimpgradient-load.c:197
+#, c-format
+msgid "Gradient file '%s' is corrupt: Segments do not span the range 0-1."
+msgstr ""
+
+#: app/core/gimpgradient-load.c:281
 #, c-format
 msgid "No linear gradients found in '%s'"
 msgstr "Non è stato trovato nessun gradiente lineare in '%s'"
 
-#: app/core/gimpgradient-load.c:265
+#: app/core/gimpgradient-load.c:291
 #, c-format
 msgid "Failed to import gradients from '%s': %s"
 msgstr "Impossibile importare gradienti da '%s': %s"
@@ -6116,15 +6121,15 @@ msgstr "Posizione canale"
 
 #. The offset frame
 #: app/dialogs/offset-dialog.c:108 app/dialogs/offset-dialog.c:136
-#: app/dialogs/resize-dialog.c:187 app/widgets/gimpgrideditor.c:274
+#: app/dialogs/resize-dialog.c:185 app/widgets/gimpgrideditor.c:274
 msgid "Offset"
 msgstr "Spostamento"
 
-#: app/dialogs/offset-dialog.c:168 app/dialogs/resize-dialog.c:216
+#: app/dialogs/offset-dialog.c:168 app/dialogs/resize-dialog.c:214
 msgid "_X:"
 msgstr "_X:"
 
-#: app/dialogs/offset-dialog.c:170 app/dialogs/resize-dialog.c:217
+#: app/dialogs/offset-dialog.c:170 app/dialogs/resize-dialog.c:215
 msgid "_Y:"
 msgstr "_Y:"
 
@@ -6221,7 +6226,10 @@ msgstr "Configura i tasti scorciatoia"
 msgid ""
 "To edit a shortcut key, click on the corresponding row and type a new "
 "accelerator, or press backspace to clear."
-msgstr "Per modificare un tasto scorciatoia fare click sulla riga corrispondente e premere il nuovo tasto acceleratore oppure premere il tasto di cancellazione per azzerare."
+msgstr ""
+"Per modificare un tasto scorciatoia fare click sulla riga corrispondente e "
+"premere il nuovo tasto acceleratore oppure premere il tasto di cancellazione "
+"per azzerare."
 
 #: app/dialogs/preferences-dialog.c:595
 msgid ""
@@ -6839,33 +6847,33 @@ msgstr "Cartelle dei temi"
 msgid "Select Theme Folders"
 msgstr "Seleziona cartelle dei temi"
 
-#: app/dialogs/print-size-dialog.c:130
+#: app/dialogs/print-size-dialog.c:128
 msgid "Print Size"
 msgstr "Dimensione di stampa"
 
 #. the image size labels
-#: app/dialogs/print-size-dialog.c:157 app/widgets/gimpsizebox.c:241
+#: app/dialogs/print-size-dialog.c:155 app/widgets/gimpsizebox.c:241
 #: app/widgets/gimptemplateeditor.c:236
 msgid "_Width:"
 msgstr "_Larghezza:"
 
-#: app/dialogs/print-size-dialog.c:164 app/widgets/gimpsizebox.c:248
+#: app/dialogs/print-size-dialog.c:162 app/widgets/gimpsizebox.c:248
 #: app/widgets/gimptemplateeditor.c:243
 msgid "H_eight:"
 msgstr "Alt_ezza:"
 
 #. the resolution labels
-#: app/dialogs/print-size-dialog.c:212 app/widgets/gimpsizebox.c:338
+#: app/dialogs/print-size-dialog.c:210 app/widgets/gimpsizebox.c:338
 #: app/widgets/gimptemplateeditor.c:363
 msgid "_X resolution:"
 msgstr "Risoluzione _X:"
 
-#: app/dialogs/print-size-dialog.c:219 app/widgets/gimpsizebox.c:345
+#: app/dialogs/print-size-dialog.c:217 app/widgets/gimpsizebox.c:345
 #: app/widgets/gimptemplateeditor.c:370
 msgid "_Y resolution:"
 msgstr "Risoluzione _Y:"
 
-#: app/dialogs/print-size-dialog.c:230 app/widgets/gimpsizebox.c:357
+#: app/dialogs/print-size-dialog.c:228 app/widgets/gimpsizebox.c:357
 #: app/widgets/gimptemplateeditor.c:383
 #, c-format
 msgid "pixels/%a"
@@ -6887,6 +6895,11 @@ msgstr "C'è un'immagine con cambiamenti non salvati:"
 #, c-format
 msgid "There are %d images with unsaved changes:"
 msgstr "Ci sono %d immagini con cambiamenti non salvati:"
+
+#: app/dialogs/quit-dialog.c:183
+#, fuzzy
+msgid "_Discard Changes"
+msgstr "Al_za il canale"
 
 #: app/dialogs/resize-dialog.c:115
 msgid "Canvas Size"
@@ -6917,15 +6930,15 @@ msgstr "_Verticale:"
 msgid "Image Size"
 msgstr "Dimensione immagine"
 
-#: app/dialogs/scale-dialog.c:168
+#: app/dialogs/scale-dialog.c:166
 msgid "Quality"
 msgstr "Qualità"
 
-#: app/dialogs/scale-dialog.c:180
+#: app/dialogs/scale-dialog.c:178
 msgid "I_nterpolation:"
 msgstr "I_nterpolazione:"
 
-#: app/dialogs/scale-dialog.c:194
+#: app/dialogs/scale-dialog.c:192
 msgid ""
 "Indexed color layers are always scaled without interpolation. The chosen "
 "interpolation type will affect channels and masks only."
@@ -7719,7 +7732,7 @@ msgid "Posterize"
 msgstr "Posterizza"
 
 #: app/pdb/color_cmds.c:745 app/pdb/color_cmds.c:870
-#: app/tools/gimpcurvestool.c:143
+#: app/tools/gimpcurvestool.c:141
 msgid "Curves"
 msgstr "Curve"
 
@@ -8532,54 +8545,54 @@ msgstr "Dalla selezione"
 msgid "Auto shrink"
 msgstr "Riduzione automatica"
 
-#: app/tools/gimpcurvestool.c:144
+#: app/tools/gimpcurvestool.c:142
 msgid "Adjust color curves"
 msgstr "Regola le curve di colore"
 
-#: app/tools/gimpcurvestool.c:145
+#: app/tools/gimpcurvestool.c:143
 msgid "_Curves..."
 msgstr "_Curve..."
 
-#: app/tools/gimpcurvestool.c:204
+#: app/tools/gimpcurvestool.c:202
 msgid "Adjust Color Curves"
 msgstr "Regola le curve di colore"
 
-#: app/tools/gimpcurvestool.c:206
+#: app/tools/gimpcurvestool.c:204
 msgid "Load Curves"
 msgstr "Apri curve"
 
-#: app/tools/gimpcurvestool.c:207
+#: app/tools/gimpcurvestool.c:205
 msgid "Load curves settings from file"
 msgstr "Lettura impostazioni curve da file"
 
-#: app/tools/gimpcurvestool.c:208
+#: app/tools/gimpcurvestool.c:206
 msgid "Save Curves"
 msgstr "Salva curve"
 
-#: app/tools/gimpcurvestool.c:209
+#: app/tools/gimpcurvestool.c:207
 msgid "Save curves settings to file"
 msgstr "Salvataggio impostazioni curve su file"
 
-#: app/tools/gimpcurvestool.c:285
+#: app/tools/gimpcurvestool.c:283
 msgid "Curves for indexed layers cannot be adjusted."
 msgstr "Le curve per il livelli a colori indicizzati non sono modificabili."
 
-#: app/tools/gimpcurvestool.c:481 app/tools/gimplevelstool.c:415
+#: app/tools/gimpcurvestool.c:479 app/tools/gimplevelstool.c:415
 #: app/widgets/gimphistogrameditor.c:161
 msgid "Channel:"
 msgstr "Canale:"
 
-#: app/tools/gimpcurvestool.c:496 app/tools/gimplevelstool.c:430
+#: app/tools/gimpcurvestool.c:494 app/tools/gimplevelstool.c:430
 msgid "R_eset channel"
 msgstr "R_eimposta canale"
 
 #. Horizontal button box for load / save
-#: app/tools/gimpcurvestool.c:598 app/tools/gimplevelstool.c:640
+#: app/tools/gimpcurvestool.c:596 app/tools/gimplevelstool.c:640
 msgid "All Channels"
 msgstr "Tutti i canali"
 
 #. The radio box for selecting the curve type
-#: app/tools/gimpcurvestool.c:616
+#: app/tools/gimpcurvestool.c:614
 msgid "Curve Type"
 msgstr "Tipo di curva"
 
@@ -9105,9 +9118,10 @@ msgstr "Informazioni sulla rotazione"
 msgid "Center X:"
 msgstr "Centro X:"
 
-#: app/tools/gimprotatetool.c:189
-msgid "Y:"
-msgstr "Y:"
+#: app/tools/gimprotatetool.c:190
+#, fuzzy
+msgid "Center Y:"
+msgstr "Centro X:"
 
 #: app/tools/gimpscaletool.c:91
 msgid "Scale"
@@ -10869,3 +10883,6 @@ msgstr "Crea e modifica immagini o fotografie"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "Image Editor"
 msgstr "Editor immagine"
+
+#~ msgid "Y:"
+#~ msgstr "Y:"

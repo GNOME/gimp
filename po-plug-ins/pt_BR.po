@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-14 00:39-0500\n"
+"POT-Creation-Date: 2004-12-18 01:47+0100\n"
 "PO-Revision-Date: 2004-12-14 03:49-0200\n"
 "Last-Translator: Joao S. O. Bueno Calligaris <gwidion@mpc.com.br>\n"
 "Language-Team: Brazilian Portuguese <<gnome-l10n-br@listas.cipsga.org.br>>\n"
@@ -540,7 +540,8 @@ msgstr "Fundo t_ransparente"
 
 #: plug-ins/Lighting/lighting_ui.c:279
 msgid "Make destination image transparent where bump height is zero"
-msgstr "Tornar a imagem de destino transparente onde a altura do relevo for zero"
+msgstr ""
+"Tornar a imagem de destino transparente onde a altura do relevo for zero"
 
 #: plug-ins/Lighting/lighting_ui.c:282
 msgid "Cre_ate new image"
@@ -966,7 +967,8 @@ msgstr "Limi_te:"
 
 #: plug-ins/MapObject/mapobject_ui.c:622
 msgid "Stop when pixel differences are smaller than this value"
-msgstr "Parar quando as diferenças entre os pixels forem menores do que este valor"
+msgstr ""
+"Parar quando as diferenças entre os pixels forem menores do que este valor"
 
 #: plug-ins/MapObject/mapobject_ui.c:658
 msgid "Point light"
@@ -1238,7 +1240,8 @@ msgstr "Fundo"
 #: plug-ins/bmp/bmpwrite.c:136 plug-ins/common/dicom.c:617
 #: plug-ins/common/pcx.c:579
 msgid "Cannot save images with alpha channel."
-msgstr "Gravação PNM não pode manipular imagens com canal alfa (transparência)."
+msgstr ""
+"Gravação PNM não pode manipular imagens com canal alfa (transparência)."
 
 #: plug-ins/bmp/bmpwrite.c:182 plug-ins/common/dicom.c:632
 #: plug-ins/common/postscript.c:1114 plug-ins/common/xwd.c:568
@@ -1667,7 +1670,8 @@ msgstr "Deslocamento de início:"
 
 #: plug-ins/common/CML_explorer.c:1362
 msgid "Seed of Random (only for \"From Seed\" Modes)"
-msgstr "Semente  dos números aleatórios (somente para modos \"a partir da semente\")"
+msgstr ""
+"Semente  dos números aleatórios (somente para modos \"a partir da semente\")"
 
 #: plug-ins/common/CML_explorer.c:1373 plug-ins/maze/maze_face.c:277
 msgid "Seed:"
@@ -3404,7 +3408,8 @@ msgstr "Troca de Cores"
 
 #: plug-ins/common/exchange.c:308
 msgid "Middle-click inside preview to pick \"From Color\""
-msgstr "Clique com o botão do meio para pegar cor inicial (\"A Partir da Cor\")"
+msgstr ""
+"Clique com o botão do meio para pegar cor inicial (\"A Partir da Cor\")"
 
 #: plug-ins/common/exchange.c:346
 msgid "To Color"
@@ -3465,7 +3470,7 @@ msgid "On Film:"
 msgstr "No Filme:"
 
 #. Create selection
-#: plug-ins/common/film.c:1166 plug-ins/imagemap/imap_selection.c:407
+#: plug-ins/common/film.c:1166 plug-ins/imagemap/imap_selection.c:400
 #: plug-ins/rcm/rcm_dialog.c:158
 msgid "Selection"
 msgstr "Seleção"
@@ -3892,7 +3897,8 @@ msgstr "Imagem GIF"
 
 #: plug-ins/common/gif.c:687
 msgid "Couldn't simply reduce colors further. Saving as opaque."
-msgstr "Simplesmente não foi  possível reduzir mais as cores. Salvando como opaco."
+msgstr ""
+"Simplesmente não foi  possível reduzir mais as cores. Salvando como opaco."
 
 #: plug-ins/common/gif.c:909
 msgid ""
@@ -3903,7 +3909,8 @@ msgstr ""
 "comentário foi salvo."
 
 #: plug-ins/common/gif.c:970
-msgid "Cannot save RGB color images. Convert to indexed color or grayscale first."
+msgid ""
+"Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Não é possível salvar imagens RGB como GIF.  Converter para Cores Indexadas "
 "ou Tons de Cinza antes. "
@@ -4312,11 +4319,13 @@ msgstr "O número de pixels na borda da tabela."
 
 #: plug-ins/common/gtm.c:582
 msgid "The width for each table cell.  Can be a number or a percent."
-msgstr "A largura para cada célula da tabela. Pode ser um número ou uma porcentagem."
+msgstr ""
+"A largura para cada célula da tabela. Pode ser um número ou uma porcentagem."
 
 #: plug-ins/common/gtm.c:598
 msgid "The height for each table cell.  Can be a number or a percent."
-msgstr "A altura para cada célula da tabela. Pode ser um número ou uma porcentagem."
+msgstr ""
+"A altura para cada célula da tabela. Pode ser um número ou uma porcentagem."
 
 #: plug-ins/common/gtm.c:609
 msgid "Cell-_padding:"
@@ -4919,7 +4928,8 @@ msgstr "Centro do Borrão"
 #. * transparency & just use the full palette
 #: plug-ins/common/mng.c:494 plug-ins/common/png.c:1562
 msgid "Couldn't losslessly save transparency, saving opacity instead."
-msgstr "Não foi possível salvar a transparência sem perdas. Salvando opacidade."
+msgstr ""
+"Não foi possível salvar a transparência sem perdas. Salvando opacidade."
 
 #: plug-ins/common/mng.c:1309
 msgid "Save as MNG"
@@ -6158,7 +6168,8 @@ msgstr "Não é possível rotacionar a imagem completa se houver uma seleção."
 
 #: plug-ins/common/rotate.c:428
 msgid "You can not rotate the whole image if there's a floating selection."
-msgstr "Não é possível rotacionar a imagem completa se houver uma seleção flutuante."
+msgstr ""
+"Não é possível rotacionar a imagem completa se houver uma seleção flutuante."
 
 #: plug-ins/common/rotate.c:439
 msgid "Sorry, channels and masks can not be rotated."
@@ -6672,7 +6683,8 @@ msgstr "Matiz _randômica:"
 
 #: plug-ins/common/sparkle.c:440
 msgid "Adjust the Value how much the Hue should be changed randomly"
-msgstr "Ajustar o valor de o quanto a matiz deverá ser modificada aleatoriamente"
+msgstr ""
+"Ajustar o valor de o quanto a matiz deverá ser modificada aleatoriamente"
 
 #: plug-ins/common/sparkle.c:448
 msgid "Rando_m saturation:"
@@ -6680,7 +6692,8 @@ msgstr "Sa_turação aleatória:"
 
 #: plug-ins/common/sparkle.c:451
 msgid "Adjust the Value how much the Saturation should be changed randomly"
-msgstr "Ajustar o valor de quanto a saturação deverá ser modificada aleatoriamente"
+msgstr ""
+"Ajustar o valor de quanto a saturação deverá ser modificada aleatoriamente"
 
 #: plug-ins/common/sparkle.c:465
 msgid "_Preserve luminosity"
@@ -7042,7 +7055,8 @@ msgid "Import _paths"
 msgstr "Importar _vetores"
 
 #: plug-ins/common/svg.c:914
-msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
+msgid ""
+"Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Importa elementos de caminho (path) do SVG de forma que eles possam ser "
 "usados com a Ferramenta de Vetores do GIMP."
@@ -7266,7 +7280,8 @@ msgid "ID"
 msgstr "ID"
 
 #: plug-ins/common/uniteditor.c:96
-msgid "This string will be used to identify a unit in GIMP's configuration files."
+msgid ""
+"This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
 "Esta cadeia de caracteres será usada para identificar uma unidade nos "
 "arquivos de configuração do GIMP."
@@ -7336,7 +7351,8 @@ msgstr "Criar uma nova unidade do zero."
 
 #: plug-ins/common/uniteditor.c:127
 msgid "Create a new unit with the currently selected unit as template."
-msgstr "Criar uma nova unidade com a unidade atualmente selecionada como modelo."
+msgstr ""
+"Criar uma nova unidade com a unidade atualmente selecionada como modelo."
 
 #: plug-ins/common/uniteditor.c:151
 msgid "_Unit Editor"
@@ -7398,7 +7414,7 @@ msgstr "Combinando..."
 msgid "Unsharp Mask"
 msgstr "Máscara de Desaguçar"
 
-#: plug-ins/common/url.c:85 plug-ins/imagemap/imap_selection.c:428
+#: plug-ins/common/url.c:85 plug-ins/imagemap/imap_selection.c:421
 msgid "URL"
 msgstr "URL"
 
@@ -8276,7 +8292,8 @@ msgstr "Imagem de fax G3"
 
 #: plug-ins/fits/fits.c:159 plug-ins/fits/fits.c:178
 msgid "Flexible Image Transport System"
-msgstr "Sistema Flexível de Transporte de Imagens - Flexible Image Transport System"
+msgstr ""
+"Sistema Flexível de Transporte de Imagens - Flexible Image Transport System"
 
 #: plug-ins/fits/fits.c:346
 msgid "Error during open of FITS file"
@@ -9081,7 +9098,8 @@ msgstr "Relevo:"
 
 #: plug-ins/gimpressionist/brush.c:590 plug-ins/gimpressionist/paper.c:192
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
-msgstr "Especifica a quantidade de relevo a ser aplicada à imagem (em porcentagem)"
+msgstr ""
+"Especifica a quantidade de relevo a ser aplicada à imagem (em porcentagem)"
 
 #: plug-ins/gimpressionist/color.c:42
 msgid "Co_lor"
@@ -9183,8 +9201,10 @@ msgid "Shadow depth:"
 msgstr "Profundidade da sombra:"
 
 #: plug-ins/gimpressionist/general.c:243
-msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
-msgstr "A profundidade da sombra, isto é, a distância que ela deve estar do objeto"
+msgid ""
+"The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgstr ""
+"A profundidade da sombra, isto é, a distância que ela deve estar do objeto"
 
 #: plug-ins/gimpressionist/general.c:248
 msgid "Shadow blur:"
@@ -9265,7 +9285,8 @@ msgstr "Raio"
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
-msgstr "A distância a partir do centro da imagem determina a direção da pincelada"
+msgstr ""
+"A distância a partir do centro da imagem determina a direção da pincelada"
 
 #: plug-ins/gimpressionist/orientation.c:147
 msgid "Selects a random direction of each stroke"
@@ -9570,12 +9591,15 @@ msgid "Size:"
 msgstr "Tamanho:"
 
 #: plug-ins/gimpressionist/size.c:142
-msgid "Let the value (brightness) of the region determine the size of the stroke"
+msgid ""
+"Let the value (brightness) of the region determine the size of the stroke"
 msgstr "Deixar o valor (brilho) da região determinar o tamanho da pincelada"
 
 #: plug-ins/gimpressionist/size.c:146
-msgid "The distance from the center of the image determines the size of the stroke"
-msgstr "A distância a partir do centro da imagem determina o tamanho da pincelada"
+msgid ""
+"The distance from the center of the image determines the size of the stroke"
+msgstr ""
+"A distância a partir do centro da imagem determina o tamanho da pincelada"
 
 #: plug-ins/gimpressionist/size.c:150
 msgid "Selects a random size for each stroke"
@@ -9913,7 +9937,7 @@ msgid "Cut"
 msgstr "Cortar"
 
 #: plug-ins/imagemap/imap_cmd_delete.c:57
-#: plug-ins/imagemap/imap_selection.c:180 plug-ins/imagemap/imap_tools.c:174
+#: plug-ins/imagemap/imap_selection.c:172 plug-ins/imagemap/imap_tools.c:174
 msgid "Delete"
 msgstr "Excluir"
 
@@ -10032,7 +10056,7 @@ msgstr "Inserir Ponto"
 #: plug-ins/imagemap/imap_cmd_move_down.c:53
 #: plug-ins/imagemap/imap_cmd_object_down.c:55
 #: plug-ins/imagemap/imap_object_popup.c:109
-#: plug-ins/imagemap/imap_selection.c:171
+#: plug-ins/imagemap/imap_selection.c:163
 msgid "Move Down"
 msgstr "Mover para Baixo"
 
@@ -10052,7 +10076,7 @@ msgstr "Mover para Frente"
 #: plug-ins/imagemap/imap_cmd_move_up.c:53
 #: plug-ins/imagemap/imap_cmd_object_up.c:55
 #: plug-ins/imagemap/imap_object_popup.c:107
-#: plug-ins/imagemap/imap_selection.c:167
+#: plug-ins/imagemap/imap_selection.c:159
 msgid "Move Up"
 msgstr "Mover para Cima"
 
@@ -10510,19 +10534,19 @@ msgstr "_x superior esquerdo:"
 msgid "Upper left _y:"
 msgstr "_y superior esquerdo:"
 
-#: plug-ins/imagemap/imap_selection.c:176 plug-ins/imagemap/imap_tools.c:169
+#: plug-ins/imagemap/imap_selection.c:168 plug-ins/imagemap/imap_tools.c:169
 msgid "Edit"
 msgstr "Editar"
 
-#: plug-ins/imagemap/imap_selection.c:417
+#: plug-ins/imagemap/imap_selection.c:410
 msgid "#"
 msgstr "#"
 
-#: plug-ins/imagemap/imap_selection.c:446
+#: plug-ins/imagemap/imap_selection.c:439
 msgid "ALT Text"
 msgstr "Texto ALT"
 
-#: plug-ins/imagemap/imap_selection.c:456
+#: plug-ins/imagemap/imap_selection.c:449
 msgid "Target"
 msgstr "Alvo"
 
@@ -11344,7 +11368,8 @@ msgid "Adjust output..."
 msgstr "Ajustar saída..."
 
 #: plug-ins/print/gimp_main_window.c:1449
-msgid "Adjust color balance, brightness, contrast, saturation, and dither algorithm"
+msgid ""
+"Adjust color balance, brightness, contrast, saturation, and dither algorithm"
 msgstr ""
 "Ajusta o balanço de cores, brilho, contraste, saturação e algoritmo de "
 "mistura"
@@ -11564,7 +11589,8 @@ msgstr "Ícone nº %i"
 
 #: plug-ins/winicon/icosave.c:940
 msgid "Windows icons cannot be higher or wider than 255 pixels."
-msgstr "Ícones do Windows não podem ser mais altos ou mais largos do que 255 pixels."
+msgstr ""
+"Ícones do Windows não podem ser mais altos ou mais largos do que 255 pixels."
 
 #: plug-ins/winicon/main.c:88 plug-ins/winicon/main.c:107
 msgid "Microsoft Windows icon"
@@ -11658,4 +11684,3 @@ msgstr "Erro: Não é possível ler arquivo de propriedades XJT '%s'."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Erro: o arquivo de propriedades '%s' XJT está vazio"
-
