@@ -69,8 +69,19 @@ HELP
 
     %invoke = (
 	headers => [ qw("paint/gimpairbrush.h") ],
+	vars => [ "GimpAirbrushOptions *options" ],
 	code => <<'CODE'
-success = FALSE; /*airbrush_non_gui (drawable, pressure, num_strokes, strokes);*/
+{
+  options = gimp_airbrush_options_new ();
+
+  options->pressure = pressure;
+
+  success = paint_tools_stroke (gimp,
+                                GIMP_TYPE_AIRBRUSH,
+                                (GimpPaintOptions *) options,
+                                drawable,
+                                num_strokes, strokes);
+}
 CODE
     );
 }
@@ -97,8 +108,17 @@ HELP
 
     %invoke = (
 	headers => [ qw("paint/gimpairbrush.h") ],
+	vars => [ "GimpAirbrushOptions *options" ],
 	code => <<'CODE'
-success = FALSE; /*airbrush_non_gui_default (drawable, num_strokes, strokes);*/
+{
+  options = gimp_airbrush_options_new ();
+
+  success = paint_tools_stroke (gimp,
+                                GIMP_TYPE_AIRBRUSH,
+                                (GimpPaintOptions *) options,
+                                drawable,
+                                num_strokes, strokes);
+}
 CODE
     );
 }
@@ -139,9 +159,27 @@ HELP
 
     %invoke = (
 	headers => [ qw("paint/gimpclone.h") ],
+	vars => [ "GimpCloneOptions *options" ],
 	code => <<'CODE'
-success = FALSE; /*clone_non_gui (drawable, src_drawable, clone_type, src_x, src_y,
-			 num_strokes, strokes);*/
+{
+  options = gimp_clone_options_new ();
+
+  options->type = clone_type;
+
+#if 0
+  FIXME
+
+  core->src_drawable = src_drawable;
+  core->src_x        = srx_x;
+  core->src_y        = src_y;
+#endif
+
+  success = paint_tools_stroke (gimp,
+                                GIMP_TYPE_CLONE,
+                                (GimpPaintOptions *) options,
+                                drawable,
+                                num_strokes, strokes);
+}
 CODE
     );
 }
@@ -169,8 +207,17 @@ HELP
 
     %invoke = (
 	headers => [ qw("paint/gimpclone.h") ],
+	vars => [ "GimpCloneOptions *options" ],
 	code => <<'CODE'
-success = FALSE; /*clone_non_gui_default (drawable, num_strokes, strokes);*/
+{
+  options = gimp_clone_options_new ();
+
+  success = paint_tools_stroke (gimp,
+                                GIMP_TYPE_CLONE,
+                                (GimpPaintOptions *) options,
+                                drawable,
+                                num_strokes, strokes);
+}
 CODE
     );
 }
@@ -197,8 +244,17 @@ HELP
 
     %invoke = (
 	headers => [ qw("paint/gimpconvolve.h") ],
+	vars => [ "GimpConvolveOptions *options" ],
 	code => <<'CODE'
-success = FALSE; /*convolve_non_gui_default (drawable, num_strokes, strokes);*/
+{
+  options = gimp_convolve_options_new ();
+
+  success = paint_tools_stroke (gimp,
+                                GIMP_TYPE_CONVOLVE,
+                                (GimpPaintOptions *) options,
+                                drawable,
+                                num_strokes, strokes);
+}
 CODE
     );
 }
@@ -227,8 +283,20 @@ HELP
 
     %invoke = (
 	headers => [ qw("paint/gimpconvolve.h") ],
+	vars => [ "GimpConvolveOptions *options" ],
 	code => <<'CODE'
-success = FALSE; /*convolve_non_gui (drawable, pressure, convolve_type, num_strokes, strokes);*/
+{
+  options = gimp_convolve_options_new ();
+
+  options->type = convolve_type;
+  options->rate = pressure;
+
+  success = paint_tools_stroke (gimp,
+                                GIMP_TYPE_CONVOLVE,
+                                (GimpPaintOptions *) options,
+                                drawable,
+                                num_strokes, strokes);
+}
 CODE
     );
 }
@@ -253,8 +321,17 @@ HELP
 
     %invoke = (
 	headers => [ qw("paint/gimperaser.h") ],
+	vars => [ "GimpEraserOptions *options" ],
 	code => <<'CODE'
-success = FALSE; /*eraser_non_gui_default (drawable, num_strokes, strokes);*/
+{
+  options = gimp_eraser_options_new ();
+
+  success = paint_tools_stroke (gimp,
+                                GIMP_TYPE_ERASER,
+                                (GimpPaintOptions *) options,
+                                drawable,
+                                num_strokes, strokes);
+}
 CODE
     );
 }
@@ -283,8 +360,21 @@ HELP
 
     %invoke = (
 	headers => [ qw("paint/gimperaser.h") ],
+	vars => [ "GimpEraserOptions *options" ],
 	code => <<'CODE'
-success = FALSE; /*eraser_non_gui (drawable, num_strokes, strokes, hardness, method, TRUE);*/
+{
+  options = gimp_eraser_options_new ();
+
+  options->paint_options.incremental = method;
+
+  options->hard = hardness;
+
+  success = paint_tools_stroke (gimp,
+                                GIMP_TYPE_ERASER,
+                                (GimpPaintOptions *) options,
+                                drawable,
+                                num_strokes, strokes);
+}
 CODE
     );
 }
@@ -313,8 +403,22 @@ HELP
 
     %invoke = (
 	headers => [ qw("paint/gimperaser.h") ],
+	vars => [ "GimpEraserOptions *options" ],
 	code => <<'CODE'
-success = FALSE; /*eraser_non_gui (drawable, num_strokes, strokes, hardness, method, TRUE);*/
+{
+  options = gimp_eraser_options_new ();
+
+  options->paint_options.incremental = method;
+
+  options->hard       = hardness;
+  options->anti_erase = TRUE;
+
+  success = paint_tools_stroke (gimp,
+                                GIMP_TYPE_ERASER,
+                                (GimpPaintOptions *) options,
+                                drawable,
+                                num_strokes, strokes);
+}
 CODE
     );
 }
@@ -351,9 +455,22 @@ HELP
 
     %invoke = (
 	headers => [ qw("paint/gimppaintbrush.h") ],
+	vars => [ "GimpPaintOptions *options" ],
 	code => <<'CODE'
-success = FALSE; /*gimp_paintbrush_tool_non_gui (drawable, num_strokes, strokes, 
-	                                fade_out, method, gradient_length);*/
+{
+  options = gimp_paint_options_new ();
+
+  options->incremental = method;
+
+  options->gradient_options->fade_out        = fade_out;
+  options->gradient_options->gradient_length = gradient_length;
+
+  success = paint_tools_stroke (gimp,
+                                GIMP_TYPE_PAINTBRUSH,
+                                (GimpPaintOptions *) options,
+                                drawable,
+                                num_strokes, strokes);
+}
 CODE
     );
 }
@@ -388,8 +505,17 @@ HELP
 
     %invoke = (
 	headers => [ qw("paint/gimppaintbrush.h") ],
+	vars => [ "GimpPaintOptions *options" ],
 	code => <<'CODE'
-success = FALSE; /*gimp_paintbrush_tool_non_gui_default (drawable, num_strokes, strokes);*/
+{
+  options = gimp_paint_options_new ();
+
+  success = paint_tools_stroke (gimp,
+                                GIMP_TYPE_PAINTBRUSH,
+                                (GimpPaintOptions *) options,
+                                drawable,
+                                num_strokes, strokes);
+}
 CODE
     );
 }
@@ -414,8 +540,17 @@ HELP
 
     %invoke = (
 	headers => [ qw("paint/gimppencil.h") ],
+	vars => [ "GimpPaintOptions *options" ],
 	code => <<'CODE'
-success = FALSE; /*pencil_non_gui (drawable, num_strokes, strokes);'*/
+{
+  options = gimp_paint_options_new ();
+
+  success = paint_tools_stroke (gimp,
+                                GIMP_TYPE_PENCIL,
+                                (GimpPaintOptions *) options,
+                                drawable,
+                                num_strokes, strokes);
+}
 CODE
     );
 }
@@ -441,8 +576,19 @@ HELP
 
     %invoke = (
 	headers => [ qw("paint/gimpsmudge.h") ],
+	vars => [ "GimpSmudgeOptions *options" ],
 	code => <<'CODE'
-success = FALSE; /*gimp_smudge_tool_non_gui (drawable, pressure, num_strokes, strokes);*/
+{
+  options = gimp_smudge_options_new ();
+
+  options->rate = pressure;
+
+  success = paint_tools_stroke (gimp,
+                                GIMP_TYPE_SMUDGE,
+                                (GimpPaintOptions *) options,
+                                drawable,
+                                num_strokes, strokes);
+}
 CODE
     );
 }
@@ -469,8 +615,17 @@ HELP
 
     %invoke = (
 	headers => [ qw("paint/gimpsmudge.h") ],
+	vars => [ "GimpSmudgeOptions *options" ],
 	code => <<'CODE'
-success = FALSE; /*gimp_smudge_tool_non_gui_default (drawable, num_strokes, strokes);*/
+{
+  options = gimp_smudge_options_new ();
+
+  success = paint_tools_stroke (gimp,
+                                GIMP_TYPE_SMUDGE,
+                                (GimpPaintOptions *) options,
+                                drawable,
+                                num_strokes, strokes);
+}
 CODE
     );
 }
@@ -501,8 +656,21 @@ HELP
 
     %invoke = (
 	headers => [ qw("paint/gimpdodgeburn.h") ],
+	vars => [ "GimpDodgeBurnOptions *options" ],
 	code => <<'CODE'
-success = FALSE; /*gimp_dodgeburn_tool_non_gui (drawable, exposure, dodgeburn_type, dodgeburn_mode, num_strokes, strokes);*/
+{
+  options = gimp_dodgeburn_options_new ();
+
+  options->exposure = exposure;
+  options->type     = dodgeburn_type;
+  options->mode     = dodgeburn_mode;
+
+  success = paint_tools_stroke (gimp,
+                                GIMP_TYPE_DODGEBURN,
+                                (GimpPaintOptions *) options,
+                                drawable,
+                                num_strokes, strokes);
+}
 CODE
     );
 }
@@ -528,8 +696,17 @@ HELP
 
     %invoke = (
 	headers => [ qw("paint/gimpdodgeburn.h") ],
+	vars => [ "GimpDodgeBurnOptions *options" ],
 	code => <<'CODE'
-success = FALSE; /*gimp_dodgeburn_tool_non_gui_default (drawable, num_strokes, strokes);*/
+{
+  options = gimp_dodgeburn_options_new ();
+
+  success = paint_tools_stroke (gimp,
+                                GIMP_TYPE_DODGEBURN,
+                                (GimpPaintOptions *) options,
+                                drawable,
+                                num_strokes, strokes);
+}
 CODE
     );
 }
@@ -550,7 +727,31 @@ sub ink {
     );
 }
 
-@headers = qw("libgimpmath/gimpmath.h" "paint/paint-types.h");
+@headers = qw("libgimpmath/gimpmath.h" "paint/paint-types.h"
+              "paint/gimppaintcore-stroke.h");
+
+$extra{app}->{code} = <<'CODE';
+static gboolean
+paint_tools_stroke (Gimp             *gimp,
+                    GType             core_type,
+                    GimpPaintOptions *paint_options,
+                    GimpDrawable     *drawable,
+                    gint              n_strokes,
+                    gdouble          *strokes)
+{
+  GimpPaintCore *core;
+  gboolean       retval;
+
+  core = g_object_new (core_type, NULL);
+
+  retval = gimp_paint_core_stroke (core, drawable, paint_options,
+                                   n_strokes, strokes);
+
+  g_object_unref (G_OBJECT (core));
+
+  return retval;
+}
+CODE
 
 @procs = qw(airbrush airbrush_default
             clone clone_default

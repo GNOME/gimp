@@ -21,6 +21,7 @@
 
 
 #include "gimppaintcore.h"
+#include "gimppaintoptions.h"
 
 
 #define GIMP_TYPE_ERASER            (gimp_eraser_get_type ())
@@ -45,23 +46,25 @@ struct _GimpEraserClass
 };
 
 
-typedef struct _EraserOptions EraserOptions;
+typedef struct _GimpEraserOptions GimpEraserOptions;
 
-struct _EraserOptions
+struct _GimpEraserOptions
 {
-  PaintOptions  paint_options;
+  GimpPaintOptions  paint_options;
 
-  gboolean      hard;
-  gboolean      hard_d;
-  GtkWidget    *hard_w;
+  gboolean          hard;
+  gboolean          hard_d;
+  GtkWidget        *hard_w;
 
-  gboolean	anti_erase;
-  gboolean	anti_erase_d;
-  GtkWidget    *anti_erase_w;
+  gboolean          anti_erase;
+  gboolean          anti_erase_d;
+  GtkWidget        *anti_erase_w;
 };
 
 
-GType   gimp_eraser_get_type (void) G_GNUC_CONST;
+GType               gimp_eraser_get_type    (void) G_GNUC_CONST;
+
+GimpEraserOptions * gimp_eraser_options_new (void);
 
 
 #endif  /*  __GIMP_ERASER_H__  */

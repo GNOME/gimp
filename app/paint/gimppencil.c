@@ -35,6 +35,7 @@
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
 
+#include "gimppaintoptions.h"
 #include "gimppencil.h"
 
 
@@ -43,12 +44,12 @@ static void   gimp_pencil_init       (GimpPencil         *pencil);
 
 static void   gimp_pencil_paint      (GimpPaintCore      *paint_core,
                                       GimpDrawable       *drawable,
-                                      PaintOptions       *paint_options,
+                                      GimpPaintOptions   *paint_options,
                                       GimpPaintCoreState  paint_state);
 
 static void   gimp_pencil_motion     (GimpPaintCore      *paint_core,
                                       GimpDrawable       *drawable,
-                                      PaintOptions       *paint_options);
+                                      GimpPaintOptions   *paint_options);
 
 
 static GimpPaintCoreClass *parent_class = NULL;
@@ -107,7 +108,7 @@ gimp_pencil_init (GimpPencil *pencil)
 static void
 gimp_pencil_paint (GimpPaintCore      *paint_core,
                    GimpDrawable       *drawable,
-                   PaintOptions       *paint_options,
+                   GimpPaintOptions   *paint_options,
                    GimpPaintCoreState  paint_state)
 {
   switch (paint_state)
@@ -128,9 +129,9 @@ gimp_pencil_paint (GimpPaintCore      *paint_core,
 }
 
 static void
-gimp_pencil_motion (GimpPaintCore *paint_core,
-                    GimpDrawable  *drawable,
-                    PaintOptions  *paint_options)
+gimp_pencil_motion (GimpPaintCore    *paint_core,
+                    GimpDrawable     *drawable,
+                    GimpPaintOptions *paint_options)
 {
   GimpImage            *gimage;
   GimpContext          *context;

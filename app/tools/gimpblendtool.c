@@ -35,6 +35,8 @@
 #include "core/gimpimage.h"
 #include "core/gimptoolinfo.h"
 
+#include "paint/gimppaintoptions.h"
+
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 
@@ -55,7 +57,7 @@ typedef struct _BlendOptions BlendOptions;
 
 struct _BlendOptions
 {
-  PaintOptions      paint_options;
+  GimpPaintOptions  paint_options;
 
   gdouble           offset;
   gdouble           offset_d;
@@ -478,7 +480,9 @@ blend_options_new (GimpToolInfo *tool_info)
   /*  the new blend tool options structure  */
   options = g_new0 (BlendOptions, 1);
 
-  paint_options_init ((PaintOptions *) options, tool_info);
+  gimp_paint_options_init ((GimpPaintOptions *) options);
+
+  paint_options_init ((GimpPaintOptions *) options, tool_info);
 
   ((GimpToolOptions *) options)->reset_func = blend_options_reset;
 

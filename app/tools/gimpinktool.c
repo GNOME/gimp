@@ -42,6 +42,8 @@
 #include "core/gimpimage-mask.h"
 #include "core/gimptoolinfo.h"
 
+#include "paint/gimppaintoptions.h"
+
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 
@@ -81,37 +83,37 @@ struct _BrushWidget
 
 struct _InkOptions
 {
-  PaintOptions  paint_options;
+  GimpPaintOptions  paint_options;
 
-  gdouble       size;
-  gdouble       size_d;
-  GtkObject    *size_w;
+  gdouble           size;
+  gdouble           size_d;
+  GtkObject        *size_w;
 
-  gdouble       sensitivity;
-  gdouble       sensitivity_d;
-  GtkObject    *sensitivity_w;
+  gdouble           sensitivity;
+  gdouble           sensitivity_d;
+  GtkObject        *sensitivity_w;
 
-  gdouble       vel_sensitivity;
-  gdouble       vel_sensitivity_d;
-  GtkObject    *vel_sensitivity_w;
+  gdouble           vel_sensitivity;
+  gdouble           vel_sensitivity_d;
+  GtkObject        *vel_sensitivity_w;
 
-  gdouble       tilt_sensitivity;
-  gdouble       tilt_sensitivity_d;
-  GtkObject    *tilt_sensitivity_w;
+  gdouble           tilt_sensitivity;
+  gdouble           tilt_sensitivity_d;
+  GtkObject        *tilt_sensitivity_w;
 
-  gdouble       tilt_angle;
-  gdouble       tilt_angle_d;
-  GtkObject    *tilt_angle_w;
+  gdouble           tilt_angle;
+  gdouble           tilt_angle_d;
+  GtkObject        *tilt_angle_w;
 
-  BlobFunc      function;
-  BlobFunc      function_d;
-  GtkWidget    *function_w[3];  /* 3 radio buttons */
+  BlobFunc          function;
+  BlobFunc          function_d;
+  GtkWidget        *function_w[3];  /* 3 radio buttons */
 
-  gdouble       aspect;
-  gdouble       aspect_d;
-  gdouble       angle;
-  gdouble       angle_d;
-  BrushWidget  *brush_w;
+  gdouble           aspect;
+  gdouble           aspect_d;
+  gdouble           angle;
+  gdouble           angle_d;
+  BrushWidget      *brush_w;
 };
 
 
@@ -1418,7 +1420,9 @@ ink_options_new (GimpToolInfo *tool_info)
 
   options = g_new0 (InkOptions, 1);
 
-  paint_options_init ((PaintOptions *) options, tool_info);
+  gimp_paint_options_init ((GimpPaintOptions *) options);
+
+  paint_options_init ((GimpPaintOptions *) options, tool_info);
 
   ((GimpToolOptions *) options)->reset_func = ink_options_reset;
 

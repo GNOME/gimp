@@ -23,9 +23,10 @@
 #include "core/core-types.h"
 
 
-/*  tools  */
+/*  objects  */
 
-typedef struct _GimpPaintCore GimpPaintCore;
+typedef struct _GimpPaintCore    GimpPaintCore;
+typedef struct _GimpPaintOptions GimpPaintOptions;
 
 
 /*  enums  */

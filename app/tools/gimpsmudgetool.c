@@ -34,9 +34,6 @@
 #include "libgimp/gimpintl.h"
 
 
-#define SMUDGE_DEFAULT_RATE  50.0
-
-
 static void   gimp_smudge_tool_class_init     (GimpSmudgeToolClass *klass);
 static void   gimp_smudge_tool_init           (GimpSmudgeTool      *tool);
 
@@ -119,104 +116,22 @@ gimp_smudge_tool_init (GimpSmudgeTool *smudge)
 }
 
 
-#if 0
-
-static GimpSmudgeTool *non_gui_smudge = NULL;
-
-gboolean
-gimp_smudge_tool_non_gui_default (GimpDrawable *drawable,
-				  gint          num_strokes,
-				  gdouble      *stroke_array)
-{
-  GimpToolInfo  *tool_info;
-  SmudgeOptions *options;
-  gdouble        rate = SMUDGE_DEFAULT_RATE;
-
-  tool_info = tool_manager_get_info_by_type (drawable->gimage->gimp,
-                                             GIMP_TYPE_SMUDGE_TOOL);
-
-  options = (SmudgeOptions *) tool_info->tool_options;
-
-  if (options)
-    rate = options->rate;
-
-  return gimp_smudge_tool_non_gui (drawable, rate, num_strokes, stroke_array);
-}
-
-gboolean
-gimp_smudge_tool_non_gui (GimpDrawable *drawable,
-			  gdouble       rate,
-			  gint          num_strokes,
-			  gdouble      *stroke_array)
-{
-  GimpPaintTool *paint_tool;
-  gint           i;
-
-  if (! non_gui_smudge)
-    {
-      non_gui_smudge = g_object_new (GIMP_TYPE_SMUDGE_TOOL, NULL);
-    }
-
-  paint_tool = GIMP_PAINT_TOOL (non_gui_smudge);
-
-  if (gimp_paint_tool_start (paint_tool, drawable,
-			    stroke_array[0], stroke_array[1]))
-    {
-      gimp_smudge_tool_start (paint_tool, drawable);
-
-      non_gui_rate = rate;
-
-      paint_tool->cur_coords.x = paint_tool->start_coords.x = 
-	paint_tool->last_coords.x = stroke_array[0];
-      paint_tool->cur_coords.y = paint_tool->start_coords.y = 
-	paint_tool->last_coords.y = stroke_array[1];
-
-      gimp_smudge_tool_paint (paint_tool, drawable, 0); 
-
-      for (i = 1; i < num_strokes; i++)
-	{
-	  paint_tool->cur_coords.x = stroke_array[i * 2 + 0];
-	  paint_tool->cur_coords.y = stroke_array[i * 2 + 1];
-
-	  gimp_paint_tool_interpolate (paint_tool, drawable);
-
-	  paint_tool->last_coords.x = paint_tool->cur_coords.x;
-	  paint_tool->last_coords.y = paint_tool->cur_coords.y;
-	}
-
-      gimp_paint_tool_finish (paint_tool, drawable);
-
-      gimp_paint_tool_cleanup (paint_tool);
-
-      gimp_smudge_tool_finish (paint_tool, drawable);
-
-      return TRUE;
-    }
-
-  return FALSE;
-}
-
-#endif
-
-
 /*  tool options stuff  */
 
 static GimpToolOptions *
 smudge_options_new (GimpToolInfo *tool_info)
 {
-  SmudgeOptions *options;
-  GtkWidget     *vbox;
-  GtkWidget     *hbox;
-  GtkWidget     *label;
-  GtkWidget     *scale;
+  GimpSmudgeOptions *options;
+  GtkWidget         *vbox;
+  GtkWidget         *hbox;
+  GtkWidget         *label;
+  GtkWidget         *scale;
 
-  options = g_new0 (SmudgeOptions, 1);
+  options = gimp_smudge_options_new ();
 
-  paint_options_init ((PaintOptions *) options, tool_info);
+  paint_options_init ((GimpPaintOptions *) options, tool_info);
 
   ((GimpToolOptions *) options)->reset_func = smudge_options_reset;
-
-  options->rate = options->rate_d = SMUDGE_DEFAULT_RATE;
 
   /*  the main vbox  */
   vbox = ((GimpToolOptions *) options)->main_vbox;
@@ -248,9 +163,9 @@ smudge_options_new (GimpToolInfo *tool_info)
 static void
 smudge_options_reset (GimpToolOptions *tool_options)
 {
-  SmudgeOptions *options;
+  GimpSmudgeOptions *options;
 
-  options = (SmudgeOptions *) tool_options;
+  options = (GimpSmudgeOptions *) tool_options;
 
   paint_options_reset (tool_options);
 

@@ -38,22 +38,22 @@
 #include "gimpsmudge.h"
 
 
-static void       gimp_smudge_class_init (GimpSmudgeClass      *klass);
-static void       gimp_smudge_init       (GimpSmudge           *smudge);
+static void       gimp_smudge_class_init (GimpSmudgeClass     *klass);
+static void       gimp_smudge_init       (GimpSmudge          *smudge);
 
-static void       gimp_smudge_paint      (GimpPaintCore        *paint_core,
-                                          GimpDrawable         *drawable,
-                                          PaintOptions         *paint_options,
-                                          GimpPaintCoreState    paint_state);
+static void       gimp_smudge_paint      (GimpPaintCore       *paint_core,
+                                          GimpDrawable        *drawable,
+                                          GimpPaintOptions    *paint_options,
+                                          GimpPaintCoreState   paint_state);
 
-static gboolean   gimp_smudge_start      (GimpPaintCore        *paint_core,
-                                          GimpDrawable         *drawable);
-static void       gimp_smudge_motion     (GimpPaintCore        *paint_core,
-                                          GimpDrawable         *drawable,
-                                          PaintPressureOptions *pressure_options,
-                                          gdouble               smudge_rate);
-static void       gimp_smudge_finish     (GimpPaintCore        *paint_core,
-                                          GimpDrawable         *drawable);
+static gboolean   gimp_smudge_start      (GimpPaintCore       *paint_core,
+                                          GimpDrawable        *drawable);
+static void       gimp_smudge_motion     (GimpPaintCore       *paint_core,
+                                          GimpDrawable        *drawable,
+                                          GimpPressureOptions *pressure_options,
+                                          gdouble              smudge_rate);
+static void       gimp_smudge_finish     (GimpPaintCore       *paint_core,
+                                          GimpDrawable        *drawable);
 
 static void  gimp_smudge_nonclipped_painthit_coords (GimpPaintCore *paint_core,
                                                      gint          *x,
@@ -125,15 +125,15 @@ gimp_smudge_init (GimpSmudge *smudge)
 static void
 gimp_smudge_paint (GimpPaintCore      *paint_core,
                    GimpDrawable       *drawable,
-                   PaintOptions       *paint_options,
+                   GimpPaintOptions   *paint_options,
                    GimpPaintCoreState  paint_state)
 {
-  SmudgeOptions *options;
+  GimpSmudgeOptions *options;
 
   /* initialization fails if the user starts outside the drawable */
   static gboolean initialized = FALSE;
 
-  options = (SmudgeOptions *) paint_options;
+  options = (GimpSmudgeOptions *) paint_options;
 
   switch (paint_state)
     {
@@ -162,7 +162,7 @@ gimp_smudge_paint (GimpPaintCore      *paint_core,
 
 static gboolean
 gimp_smudge_start (GimpPaintCore *paint_core,
-			GimpDrawable  *drawable)
+                   GimpDrawable  *drawable)
 {
   GimpImage   *gimage;
   TempBuf     *area;
@@ -242,10 +242,10 @@ gimp_smudge_start (GimpPaintCore *paint_core,
 }
 
 static void
-gimp_smudge_motion (GimpPaintCore        *paint_core,
-                    GimpDrawable         *drawable,
-                    PaintPressureOptions *pressure_options,
-                    gdouble               smudge_rate)
+gimp_smudge_motion (GimpPaintCore       *paint_core,
+                    GimpDrawable        *drawable,
+                    GimpPressureOptions *pressure_options,
+                    gdouble              smudge_rate)
 {
   GimpImage   *gimage;
   GimpContext *context;
@@ -389,3 +389,23 @@ gimp_smudge_allocate_accum_buffer (gint    w,
       color_region (&accumPR, (const guchar*)do_fill);
     }
 }
+
+
+/*  paint options stuff  */
+
+#define SMUDGE_DEFAULT_RATE 50.0
+
+GimpSmudgeOptions *
+gimp_smudge_options_new (void)
+{
+  GimpSmudgeOptions *options;
+
+  options = g_new0 (GimpSmudgeOptions, 1);
+
+  gimp_paint_options_init ((GimpPaintOptions *) options);
+
+  options->rate = options->rate_d = SMUDGE_DEFAULT_RATE;
+
+  return options;
+}
+

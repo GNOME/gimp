@@ -51,10 +51,6 @@
 #define MIN_SHARPEN   -512
 #define MAX_SHARPEN   -64
 
-/* defaults */
-#define DEFAULT_CONVOLVE_RATE  50.0
-#define DEFAULT_CONVOLVE_TYPE  BLUR_CONVOLVE
-
 
 static void   gimp_convolve_tool_class_init     (GimpConvolveToolClass *klass);
 static void   gimp_convolve_tool_init           (GimpConvolveTool      *tool);
@@ -161,9 +157,9 @@ gimp_convolve_tool_modifier_key (GimpTool        *tool,
 				 GdkModifierType  state,
 				 GimpDisplay     *gdisp)
 {
-  ConvolveOptions *options;
+  GimpConvolveOptions *options;
 
-  options = (ConvolveOptions *) tool->tool_info->tool_options;
+  options = (GimpConvolveOptions *) tool->tool_info->tool_options;
 
   if ((key == GDK_CONTROL_MASK) &&
       ! (state & GDK_SHIFT_MASK)) /* leave stuff untouched in line draw mode */
@@ -190,9 +186,9 @@ gimp_convolve_tool_cursor_update (GimpTool        *tool,
 				  GdkModifierType  state,
 				  GimpDisplay     *gdisp)
 {
-  ConvolveOptions *options;
+  GimpConvolveOptions *options;
 
-  options = (ConvolveOptions *) tool->tool_info->tool_options;
+  options = (GimpConvolveOptions *) tool->tool_info->tool_options;
 
   tool->toggled = (options->type == SHARPEN_CONVOLVE);
 
@@ -200,101 +196,23 @@ gimp_convolve_tool_cursor_update (GimpTool        *tool,
 }
 
 
-#if 0
-
-static gpointer
-convolve_non_gui_paint_func (GimpPaintTool    *paint_tool,
-			     GimpDrawable *drawable,
-			     PaintState    state)
-{
-  convolve_motion (paint_tool, drawable, &non_gui_pressure_options,
-		   non_gui_type, non_gui_rate);
-
-  return NULL;
-}
-
-gboolean
-convolve_non_gui_default (GimpDrawable *drawable,
-			  gint          num_strokes,
-			  gdouble      *stroke_array)
-{
-  gdouble          rate    = DEFAULT_CONVOLVE_RATE;
-  ConvolveType     type    = DEFAULT_CONVOLVE_TYPE;
-  ConvolveOptions *options = convolve_options;
-
-  if (options)
-    {
-      rate = options->rate;
-      type = options->type;
-    }
-
-  return convolve_non_gui (drawable, rate, type, num_strokes, stroke_array);
-}
-
-gboolean
-convolve_non_gui (GimpDrawable *drawable,
-    		  gdouble       rate,
-		  ConvolveType  type,
-		  gint          num_strokes,
-		  gdouble      *stroke_array)
-{
-  gint i;
-
-  if (gimp_paint_tool_init (&non_gui_paint_core, drawable,
-			    stroke_array[0], stroke_array[1]))
-    {
-      non_gui_type = type;
-      non_gui_rate = rate;
-
-      non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
-      non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];
-
-      convolve_non_gui_paint_func (&non_gui_paint_core, drawable, 0);
-
-      for (i = 1; i < num_strokes; i++)
-	{
-	  non_gui_paint_core.cur_coords.x = stroke_array[i * 2 + 0];
-	  non_gui_paint_core.cur_coords.y = stroke_array[i * 2 + 1];
-
-	  paint_core_interpolate (&non_gui_paint_core, drawable);
-
-	  non_gui_paint_core.last_coords.x = non_gui_paint_core.cur_coords.x;
-	  non_gui_paint_core.last_coords.y = non_gui_paint_core.cur_coords.y;
-	}
-
-      paint_core_finish (&non_gui_paint_core, drawable, -1);
-
-      paint_core_cleanup ();
-
-      return TRUE;
-    }
-
-  return FALSE;
-}
-
-#endif
-
-
 /*  tool options stuff  */
 
 static GimpToolOptions *
 convolve_options_new (GimpToolInfo *tool_info)
 {
-  ConvolveOptions *options;
-  GtkWidget       *vbox;
-  GtkWidget       *hbox;
-  GtkWidget       *label;
-  GtkWidget       *scale;
-  GtkWidget       *frame;
+  GimpConvolveOptions *options;
+  GtkWidget           *vbox;
+  GtkWidget           *hbox;
+  GtkWidget           *label;
+  GtkWidget           *scale;
+  GtkWidget           *frame;
 
-  options = g_new0 (ConvolveOptions, 1);
+  options = gimp_convolve_options_new ();
 
-  paint_options_init ((PaintOptions *) options, tool_info);
+  paint_options_init ((GimpPaintOptions *) options, tool_info);
 
   ((GimpToolOptions *) options)->reset_func = convolve_options_reset;
-
-  options->type = options->type_d = DEFAULT_CONVOLVE_TYPE;
-  options->rate = options->rate_d = DEFAULT_CONVOLVE_RATE;
 
   /*  the main vbox  */
   vbox = ((GimpToolOptions *) options)->main_vbox;
@@ -344,9 +262,9 @@ convolve_options_new (GimpToolInfo *tool_info)
 static void
 convolve_options_reset (GimpToolOptions *tool_options)
 {
-  ConvolveOptions *options;
+  GimpConvolveOptions *options;
 
-  options = (ConvolveOptions *) tool_options;
+  options = (GimpConvolveOptions *) tool_options;
 
   paint_options_reset (tool_options);
 

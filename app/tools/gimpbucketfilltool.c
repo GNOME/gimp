@@ -33,6 +33,8 @@
 #include "core/gimpimage-mask.h"
 #include "core/gimptoolinfo.h"
 
+#include "paint/gimppaintoptions.h"
+
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 
@@ -49,19 +51,19 @@ typedef struct _BucketOptions BucketOptions;
 
 struct _BucketOptions
 {
-  PaintOptions    paint_options;
+  GimpPaintOptions  paint_options;
 
-  gboolean        fill_transparent;
-  gboolean        fill_transparent_d;
-  GtkWidget      *fill_transparent_w;
+  gboolean          fill_transparent;
+  gboolean          fill_transparent_d;
+  GtkWidget        *fill_transparent_w;
 
-  gboolean        sample_merged;
-  gboolean        sample_merged_d;
-  GtkWidget      *sample_merged_w;
+  gboolean          sample_merged;
+  gboolean          sample_merged_d;
+  GtkWidget        *sample_merged_w;
 
-  gdouble         threshold;
-  /* gdouble      threshold_d; (from gimprc) */
-  GtkObject      *threshold_w;
+  gdouble           threshold;
+  /* gdouble        threshold_d; (from gimprc) */
+  GtkObject        *threshold_w;
 
   BucketFillMode  fill_mode;
   BucketFillMode  fill_mode_d;
@@ -339,7 +341,9 @@ bucket_options_new (GimpToolInfo *tool_info)
 
   options = g_new0 (BucketOptions, 1);
 
-  paint_options_init ((PaintOptions *) options, tool_info);
+  gimp_paint_options_init ((GimpPaintOptions *) options);
+
+  paint_options_init ((GimpPaintOptions *) options, tool_info);
 
   ((GimpToolOptions *) options)->reset_func = bucket_options_reset;
 

@@ -36,17 +36,17 @@
 #include "gimperaser.h"
 
 
-static void   gimp_eraser_class_init    (GimpEraserClass  *klass);
-static void   gimp_eraser_init          (GimpEraser       *eraser);
+static void   gimp_eraser_class_init    (GimpEraserClass    *klass);
+static void   gimp_eraser_init          (GimpEraser         *eraser);
 
-static void   gimp_eraser_paint         (GimpPaintCore        *paint_core,
-                                         GimpDrawable         *drawable,
-                                         PaintOptions         *paint_options,
-                                         GimpPaintCoreState    paint_state);
+static void   gimp_eraser_paint         (GimpPaintCore      *paint_core,
+                                         GimpDrawable       *drawable,
+                                         GimpPaintOptions   *paint_options,
+                                         GimpPaintCoreState  paint_state);
 
-static void   gimp_eraser_motion        (GimpPaintCore        *paint_core,
-                                         GimpDrawable         *drawable,
-                                         PaintOptions         *paint_options);
+static void   gimp_eraser_motion        (GimpPaintCore      *paint_core,
+                                         GimpDrawable       *drawable,
+                                         GimpPaintOptions   *paint_options);
 
 
 static GimpPaintCoreClass *parent_class = NULL;
@@ -105,7 +105,7 @@ gimp_eraser_init (GimpEraser *eraser)
 static void
 gimp_eraser_paint (GimpPaintCore      *paint_core,
                    GimpDrawable       *drawable,
-                   PaintOptions       *paint_options,
+                   GimpPaintOptions   *paint_options,
                    GimpPaintCoreState  paint_state)
 {
   switch (paint_state)
@@ -128,23 +128,23 @@ gimp_eraser_paint (GimpPaintCore      *paint_core,
 }
 
 static void
-gimp_eraser_motion (GimpPaintCore *paint_core,
-                    GimpDrawable  *drawable,
-                    PaintOptions  *paint_options)
+gimp_eraser_motion (GimpPaintCore    *paint_core,
+                    GimpDrawable     *drawable,
+                    GimpPaintOptions *paint_options)
 {
-  EraserOptions        *options;
-  PaintPressureOptions *pressure_options;
-  GimpImage            *gimage;
-  GimpContext          *context;
-  gint                  opacity;
-  TempBuf              *area;
-  guchar                col[MAX_CHANNELS];
-  gdouble               scale;
+  GimpEraserOptions   *options;
+  GimpPressureOptions *pressure_options;
+  GimpImage           *gimage;
+  GimpContext         *context;
+  gint                 opacity;
+  TempBuf             *area;
+  guchar               col[MAX_CHANNELS];
+  gdouble              scale;
 
   if (! (gimage = gimp_drawable_gimage (drawable)))
     return;
 
-  options = (EraserOptions *) paint_options;
+  options = (GimpEraserOptions *) paint_options;
 
   pressure_options = paint_options->pressure_options;
 
@@ -183,4 +183,25 @@ gimp_eraser_motion (GimpPaintCore *paint_core,
 				options->hard ? HARD : (pressure_options->pressure ? PRESSURE : SOFT),
 				scale,
 				paint_options->incremental ? INCREMENTAL : CONSTANT);
+}
+
+
+/*  paint options stuff  */
+
+#define ERASER_DEFAULT_HARD       FALSE
+#define ERASER_DEFAULT_ANTI_ERASE FALSE
+
+GimpEraserOptions *
+gimp_eraser_options_new (void)
+{
+  GimpEraserOptions *options;
+
+  options = g_new0 (GimpEraserOptions, 1);
+
+  gimp_paint_options_init ((GimpPaintOptions *) options);
+
+  options->hard       = options->hard_d       = ERASER_DEFAULT_HARD;
+  options->anti_erase = options->anti_erase_d = ERASER_DEFAULT_ANTI_ERASE; 
+
+  return options;
 }

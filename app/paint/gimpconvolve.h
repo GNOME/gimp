@@ -21,6 +21,7 @@
 
 
 #include "gimppaintcore.h"
+#include "gimppaintoptions.h"
 
 
 #define GIMP_TYPE_CONVOLVE            (gimp_convolve_get_type ())
@@ -45,23 +46,25 @@ struct _GimpConvolveClass
 };
 
 
-typedef struct _ConvolveOptions ConvolveOptions;
+typedef struct _GimpConvolveOptions GimpConvolveOptions;
 
-struct _ConvolveOptions
+struct _GimpConvolveOptions
 {
-  PaintOptions  paint_options;
+  GimpPaintOptions  paint_options;
 
-  ConvolveType  type;
-  ConvolveType  type_d;
-  GtkWidget    *type_w[2];
+  ConvolveType      type;
+  ConvolveType      type_d;
+  GtkWidget        *type_w[2];
 
-  gdouble       rate;
-  gdouble       rate_d;
-  GtkObject    *rate_w;
+  gdouble           rate;
+  gdouble           rate_d;
+  GtkObject        *rate_w;
 };
 
 
-GType   gimp_convolve_get_type (void) G_GNUC_CONST;
+GType                 gimp_convolve_get_type    (void) G_GNUC_CONST;
+
+GimpConvolveOptions * gimp_convolve_options_new (void);
 
 
 #endif  /*  __GIMP_CONVOLVE_H__  */

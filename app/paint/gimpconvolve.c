@@ -53,30 +53,30 @@ typedef enum
 } ConvolveClipType;
 
 
-static void   gimp_convolve_class_init       (GimpConvolveClass    *klass);
-static void   gimp_convolve_init             (GimpConvolve         *convolve);
+static void   gimp_convolve_class_init       (GimpConvolveClass   *klass);
+static void   gimp_convolve_init             (GimpConvolve        *convolve);
 
-static void   gimp_convolve_paint            (GimpPaintCore        *paint_core,
-                                              GimpDrawable         *drawable,
-                                              PaintOptions         *paint_options,
-                                              GimpPaintCoreState    paint_state);
-static void   gimp_convolve_motion           (GimpPaintCore        *paint_core,
-                                              GimpDrawable         *drawable, 
-                                              PaintPressureOptions *pressure_options,
-                                              ConvolveType          type,
-                                              gdouble               rate);
+static void   gimp_convolve_paint            (GimpPaintCore       *paint_core,
+                                              GimpDrawable        *drawable,
+                                              GimpPaintOptions    *paint_options,
+                                              GimpPaintCoreState   paint_state);
+static void   gimp_convolve_motion           (GimpPaintCore       *paint_core,
+                                              GimpDrawable        *drawable, 
+                                              GimpPressureOptions *pressure_options,
+                                              ConvolveType         type,
+                                              gdouble              rate);
 
 
-static void   gimp_convolve_calculate_matrix (ConvolveType          type,
-                                              gdouble               rate);
-static void   gimp_convolve_integer_matrix   (gfloat               *source,
-                                              gint                 *dest,
-                                              gint                  size);
-static void   gimp_convolve_copy_matrix      (gfloat               *src,
-                                              gfloat               *dest,
-                                              gint                  size);
-static gint   gimp_convolve_sum_matrix       (gint                 *matrix,
-                                              gint                  size);
+static void   gimp_convolve_calculate_matrix (ConvolveType         type,
+                                              gdouble              rate);
+static void   gimp_convolve_integer_matrix   (gfloat              *source,
+                                              gint                *dest,
+                                              gint                 size);
+static void   gimp_convolve_copy_matrix      (gfloat              *src,
+                                              gfloat              *dest,
+                                              gint                 size);
+static gint   gimp_convolve_sum_matrix       (gint                *matrix,
+                                              gint                 size);
 
 
 static gint   matrix [25];
@@ -161,12 +161,12 @@ gimp_convolve_init (GimpConvolve *convolve)
 static void
 gimp_convolve_paint (GimpPaintCore      *paint_core,
                      GimpDrawable       *drawable,
-                     PaintOptions       *paint_options,
+                     GimpPaintOptions   *paint_options,
                      GimpPaintCoreState  paint_state)
 {
-  ConvolveOptions *options;
+  GimpConvolveOptions *options;
 
-  options = (ConvolveOptions *) paint_options;
+  options = (GimpConvolveOptions *) paint_options;
 
   switch (paint_state)
     {
@@ -184,11 +184,11 @@ gimp_convolve_paint (GimpPaintCore      *paint_core,
 }
 
 static void
-gimp_convolve_motion (GimpPaintCore        *paint_core,
-                      GimpDrawable         *drawable,
-                      PaintPressureOptions *pressure_options,
-                      ConvolveType          type,
-                      gdouble               rate)
+gimp_convolve_motion (GimpPaintCore       *paint_core,
+                      GimpDrawable        *drawable,
+                      GimpPressureOptions *pressure_options,
+                      ConvolveType         type,
+                      gdouble              rate)
 {
   TempBuf          *area;
   guchar           *temp_data;
@@ -486,4 +486,25 @@ gimp_convolve_sum_matrix (gint *matrix,
     sum += *matrix++;
 
   return sum;
+}
+
+
+/*  paint options stuff  */
+
+#define DEFAULT_CONVOLVE_RATE  50.0
+#define DEFAULT_CONVOLVE_TYPE  BLUR_CONVOLVE
+
+GimpConvolveOptions *
+gimp_convolve_options_new (void)
+{
+  GimpConvolveOptions *options;
+
+  options = g_new0 (GimpConvolveOptions, 1);
+
+  gimp_paint_options_init ((GimpPaintOptions *) options);
+
+  options->type = options->type_d = DEFAULT_CONVOLVE_TYPE;
+  options->rate = options->rate_d = DEFAULT_CONVOLVE_RATE;
+
+  return options;
 }

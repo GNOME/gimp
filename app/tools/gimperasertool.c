@@ -34,11 +34,6 @@
 #include "libgimp/gimpintl.h"
 
 
-#define ERASER_DEFAULT_HARD        FALSE
-#define ERASER_DEFAULT_INCREMENTAL FALSE
-#define ERASER_DEFAULT_ANTI_ERASE  FALSE
-
-
 static void   gimp_eraser_tool_class_init    (GimpEraserToolClass  *klass);
 static void   gimp_eraser_tool_init          (GimpEraserTool       *eraser);
 
@@ -140,9 +135,9 @@ gimp_eraser_tool_modifier_key (GimpTool        *tool,
                                GdkModifierType  state,
                                GimpDisplay     *gdisp)
 {
-  EraserOptions *options;
+  GimpEraserOptions *options;
 
-  options = (EraserOptions *) tool->tool_info->tool_options;
+  options = (GimpEraserOptions *) tool->tool_info->tool_options;
 
   if ((key == GDK_CONTROL_MASK) &&
       ! (state & GDK_SHIFT_MASK)) /* leave stuff untouched in line draw mode */
@@ -158,9 +153,9 @@ gimp_eraser_tool_cursor_update (GimpTool        *tool,
                                 GdkModifierType  state,
                                 GimpDisplay     *gdisp)
 {
-  EraserOptions *options;
+  GimpEraserOptions *options;
 
-  options = (EraserOptions *) tool->tool_info->tool_options;
+  options = (GimpEraserOptions *) tool->tool_info->tool_options;
 
   tool->toggled = options->anti_erase;
 
@@ -168,106 +163,19 @@ gimp_eraser_tool_cursor_update (GimpTool        *tool,
 }
 
 
-#if 0
-
-gboolean
-eraser_non_gui_default (GimpDrawable *drawable,
-			gint          num_strokes,
-			gdouble      *stroke_array)
-{
-  GimpToolInfo  *tool_info;
-  EraserOptions *options;
-  gboolean       hard        = ERASER_DEFAULT_HARD;
-  gboolean       incremental = ERASER_DEFAULT_INCREMENTAL;
-  gboolean       anti_erase  = ERASER_DEFAULT_ANTI_ERASE;
-
-  tool_info = tool_manager_get_info_by_type (drawable->gimage->gimp,
-                                             GIMP_TYPE_ERASER_TOOL);
-
-  options = (EraserOptions *) tool_info->tool_options;
-
-  if (options)
-    {
-      hard        = options->hard;
-      incremental = options->paint_options.incremental;
-      anti_erase  = options->anti_erase;
-    }
-
-  return eraser_non_gui (drawable, num_strokes, stroke_array,
-			 hard, incremental, anti_erase);
-}
-
-gboolean
-eraser_non_gui (GimpDrawable *drawable,
-    		gint          num_strokes,
-		gdouble      *stroke_array,
-		gint          hard,
-		gint          incremental,
-		gboolean      anti_erase)
-{
-  static GimpEraserTool *non_gui_eraser = NULL;
-
-  GimpPaintTool *paint_tool;
-  gint           i;
-  
-  if (! non_gui_eraser)
-    {
-      non_gui_eraser = g_object_new (GIMP_TYPE_ERASER_TOOL, NULL);
-    }
-
-  paint_tool = GIMP_PAINT_TOOL (non_gui_eraser);
-
-  if (gimp_paint_tool_start (paint_tool, drawable,
-			     stroke_array[0],
-			     stroke_array[1]))
-    {
-      non_gui_hard        = hard;
-      non_gui_incremental = incremental;
-      non_gui_anti_erase  = anti_erase;
-
-      paint_tool->start_coords.x = paint_tool->last_coords.x = stroke_array[0];
-      paint_tool->start_coords.y = paint_tool->last_coords.y = stroke_array[1];
-
-      gimp_paint_tool_paint (paint_tool, drawable, MOTION_PAINT);
-
-      for (i = 1; i < num_strokes; i++)
-	{
-          paint_tool->cur_coords.x = stroke_array[i * 2 + 0];
-          paint_tool->cur_coords.y = stroke_array[i * 2 + 1];
-
-          gimp_paint_tool_interpolate (paint_tool, drawable);
-
-          paint_tool->last_coords.x = paint_tool->cur_coords.x;
-          paint_tool->last_coords.y = paint_tool->cur_coords.y;
-	}
-
-      gimp_paint_tool_finish (paint_tool, drawable);
-
-      return TRUE;
-    }
-
-  return FALSE;
-}
-
-#endif
-
-
 /*  tool options stuff  */
 
 static GimpToolOptions *
 gimp_eraser_tool_options_new (GimpToolInfo *tool_info)
 {
-  EraserOptions *options;
-  GtkWidget     *vbox;
+  GimpEraserOptions *options;
+  GtkWidget         *vbox;
 
-  options = g_new0 (EraserOptions, 1);
+  options = gimp_eraser_options_new ();
 
-  paint_options_init ((PaintOptions *) options, tool_info);
+  paint_options_init ((GimpPaintOptions *) options, tool_info);
 
   ((GimpToolOptions *) options)->reset_func = gimp_eraser_tool_options_reset;
-
-  options->hard        = options->hard_d        = ERASER_DEFAULT_HARD;
-  options->anti_erase  = options->anti_erase_d  = ERASER_DEFAULT_ANTI_ERASE;
 
   /*  the main vbox  */
   vbox = ((GimpToolOptions *) options)->main_vbox;
@@ -299,9 +207,9 @@ gimp_eraser_tool_options_new (GimpToolInfo *tool_info)
 static void
 gimp_eraser_tool_options_reset (GimpToolOptions *tool_options)
 {
-  EraserOptions *options;
+  GimpEraserOptions *options;
 
-  options = (EraserOptions *) tool_options;
+  options = (GimpEraserOptions *) tool_options;
 
   paint_options_reset (tool_options);
 

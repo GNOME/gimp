@@ -50,12 +50,12 @@ static void     gimp_dodgeburn_make_luts  (GimpPaintCore      *paint_core,
 
 static void     gimp_dodgeburn_paint      (GimpPaintCore      *paint_core,
                                            GimpDrawable       *drawable,
-                                           PaintOptions       *paint_options,
+                                           GimpPaintOptions   *paint_options,
                                            GimpPaintCoreState  paint_state);
 
 static void     gimp_dodgeburn_motion     (GimpPaintCore      *paint_core,
                                            GimpDrawable       *drawable,
-                                           PaintOptions       *paint_options);
+                                           GimpPaintOptions   *paint_options);
 
 static gfloat   gimp_dodgeburn_highlights_lut_func (gpointer       user_data,
                                                     gint           nchannels,
@@ -166,12 +166,12 @@ gimp_dodgeburn_make_luts (GimpPaintCore     *paint_core,
 static void
 gimp_dodgeburn_paint (GimpPaintCore      *paint_core,
                       GimpDrawable       *drawable,
-                      PaintOptions       *paint_options,
+                      GimpPaintOptions   *paint_options,
                       GimpPaintCoreState  paint_state)
 {
-  DodgeBurnOptions *options;
+  GimpDodgeBurnOptions *options;
 
-  options = (DodgeBurnOptions *) paint_options;
+  options = (GimpDodgeBurnOptions *) paint_options;
 
   switch (paint_state)
     {
@@ -206,12 +206,12 @@ gimp_dodgeburn_paint (GimpPaintCore      *paint_core,
 }
 
 static void
-gimp_dodgeburn_motion (GimpPaintCore *paint_core,
-                       GimpDrawable  *drawable,
-                       PaintOptions  *paint_options)
+gimp_dodgeburn_motion (GimpPaintCore    *paint_core,
+                       GimpDrawable     *drawable,
+                       GimpPaintOptions *paint_options)
 {
-  DodgeBurnOptions     *options;
-  PaintPressureOptions *pressure_options;
+  GimpDodgeBurnOptions *options;
+  GimpPressureOptions  *pressure_options;
   GimpImage            *gimage;
   TempBuf              *area;
   TempBuf              *orig;
@@ -228,7 +228,7 @@ gimp_dodgeburn_motion (GimpPaintCore *paint_core,
       (gimp_drawable_type (drawable) == GIMP_INDEXEDA_IMAGE))
     return;
 
-  options = (DodgeBurnOptions *) paint_options;
+  options = (GimpDodgeBurnOptions *) paint_options;
 
   pressure_options = paint_options->pressure_options;
 
@@ -382,4 +382,28 @@ gimp_dodgeburn_shadows_lut_func (gpointer  user_data,
     }
 
   return new_value; 
+}
+
+
+/*  paint options stuff  */
+
+#define DODGEBURN_DEFAULT_EXPOSURE 50.0
+#define DODGEBURN_DEFAULT_TYPE     DODGE
+#define DODGEBURN_DEFAULT_MODE     GIMP_HIGHLIGHTS
+
+GimpDodgeBurnOptions *
+gimp_dodgeburn_options_new (void)
+{
+  GimpDodgeBurnOptions *options;
+
+  options = g_new0 (GimpDodgeBurnOptions, 1);
+
+  gimp_paint_options_init ((GimpPaintOptions *) options);
+
+  options->type     = options->type_d     = DODGEBURN_DEFAULT_TYPE;
+  options->exposure = options->exposure_d = DODGEBURN_DEFAULT_EXPOSURE;
+  options->mode     = options->mode_d     = DODGEBURN_DEFAULT_MODE;
+  options->lut      = NULL;
+
+  return options;
 }

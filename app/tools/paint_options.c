@@ -29,6 +29,8 @@
 #include "core/gimpcontext.h"
 #include "core/gimptoolinfo.h"
 
+#include "paint/gimppaintoptions.h"
+
 #include "widgets/gimpwidgets-constructors.h"
 #include "widgets/gtkhwrapbox.h"
 
@@ -54,71 +56,49 @@
 #include "libgimp/gimpintl.h"
 
 
-#define DEFAULT_USE_FADE        FALSE
-#define DEFAULT_FADE_OUT        100.0
-#define DEFAULT_FADE_UNIT       GIMP_UNIT_PIXEL
-#define DEFAULT_USE_GRADIENT    FALSE
-#define DEFAULT_GRADIENT_LENGTH 100.0
-#define DEFAULT_GRADIENT_UNIT   GIMP_UNIT_PIXEL
-#define DEFAULT_GRADIENT_TYPE   LOOP_TRIANGLE
+static void   pressure_options_init  (GimpPressureOptions *pressure,
+                                      GimpPaintOptions    *paint_options,
+                                      GType                tool_type);
+static void   pressure_options_reset (GimpPressureOptions *pressure);
 
+static void   gradient_options_init  (GimpGradientOptions *gradient,
+                                      GimpPaintOptions    *paint_options,
+                                      GType                tool_type);
+static void   gradient_options_reset (GimpGradientOptions *gradient);
 
-static PaintPressureOptions * paint_pressure_options_new (GType         tool_type,
-                                                          PaintOptions *paint_options);
-static void   paint_pressure_options_reset (PaintPressureOptions *pressure_options,
-                                            PaintOptions         *paint_options);
-
-static PaintGradientOptions * paint_gradient_options_new (GType         tool_type,
-                                                          PaintOptions *paint_options);
-static void   paint_gradient_options_reset (PaintGradientOptions *gradient_options,
-                                            PaintOptions         *paint_options);
-
-static void   paint_options_opacity_adjustment_update (GtkAdjustment *adjustment,
-						       gpointer       data);
-static void   paint_options_opacity_changed           (GimpContext   *context,
-						       gdouble        opacity,
-						       gpointer       data);
-static void   paint_options_paint_mode_update         (GtkWidget     *widget,
-						       gpointer       data);
-static void   paint_options_paint_mode_changed        (GimpContext   *context,
+static void   paint_options_opacity_adjustment_update (GtkAdjustment    *adjustment,
+						       gpointer          data);
+static void   paint_options_opacity_changed           (GimpContext      *context,
+						       gdouble           opacity,
+						       gpointer          data);
+static void   paint_options_paint_mode_update         (GtkWidget        *widget,
+						       gpointer          data);
+static void   paint_options_paint_mode_changed        (GimpContext      *context,
 						       GimpLayerModeEffects  paint_mode,
-						       gpointer       data);
-
-static void   paint_gradient_options_gradient_toggle_callback (GtkWidget    *widget,
-                                                               PaintOptions *options);
-
-
-/*  declared extern in paint_options.h  */
-PaintPressureOptions non_gui_pressure_options = 
-{
-  NULL,
-  FALSE, FALSE, NULL,
-  FALSE, FALSE, NULL,
-  FALSE, FALSE, NULL,
-  FALSE, FALSE, NULL,
-  FALSE, FALSE, NULL
-};
-
-PaintGradientOptions non_gui_gradient_options = 
-{
-  NULL,
-  DEFAULT_USE_FADE,        DEFAULT_USE_FADE,        NULL,
-  DEFAULT_FADE_OUT,        DEFAULT_FADE_OUT,        NULL,
-  DEFAULT_FADE_UNIT,       DEFAULT_FADE_UNIT,       NULL,
-  DEFAULT_USE_GRADIENT,    DEFAULT_USE_GRADIENT,    NULL,
-  DEFAULT_GRADIENT_LENGTH, DEFAULT_GRADIENT_LENGTH, NULL,
-  DEFAULT_GRADIENT_UNIT,   DEFAULT_GRADIENT_UNIT,   NULL,
-  DEFAULT_GRADIENT_TYPE,   DEFAULT_GRADIENT_TYPE,   NULL
-};
+						       gpointer          data);
+static void   paint_options_gradient_toggle_callback  (GtkWidget        *widget,
+                                                       GimpPaintOptions *options);
 
 
 /*  a list of all PaintOptions  */
 static GSList *paint_options_list = NULL;
 
 
+GimpToolOptions *
+paint_options_new (GimpToolInfo *tool_info)
+{
+  GimpPaintOptions *options;
+
+  options = gimp_paint_options_new ();
+
+  paint_options_init (options, tool_info);
+
+  return (GimpToolOptions *) options;
+}
+
 void
-paint_options_init (PaintOptions *options,
-                    GimpToolInfo *tool_info)
+paint_options_init (GimpPaintOptions *options,
+                    GimpToolInfo     *tool_info)
 {
   GtkWidget *vbox;
   GtkWidget *table;
@@ -129,16 +109,7 @@ paint_options_init (PaintOptions *options,
 
   ((GimpToolOptions *) options)->reset_func = paint_options_reset;
 
-  /*  initialize the paint options structure  */
-  options->global           = NULL;
-  options->opacity_w        = NULL;
-  options->paint_mode_w     = NULL;
-  options->context          = tool_info->context;
-  options->incremental_w    = NULL;
-  options->incremental      = options->incremental_d = FALSE;
-  options->incremental_save = FALSE;
-  options->pressure_options = NULL;
-  options->gradient_options = NULL;
+  options->context = tool_info->context;
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 2);
@@ -229,8 +200,9 @@ paint_options_init (PaintOptions *options,
                         &options->incremental);
     }
 
-  options->pressure_options = paint_pressure_options_new (tool_info->tool_type,
-                                                          options);
+  pressure_options_init (options->pressure_options,
+                         options,
+                         tool_info->tool_type);
 
   if (options->pressure_options->frame)
     {
@@ -239,8 +211,9 @@ paint_options_init (PaintOptions *options,
       gtk_widget_show (options->pressure_options->frame);
     }
 
-  options->gradient_options = paint_gradient_options_new (tool_info->tool_type,
-                                                          options);
+  gradient_options_init (options->gradient_options,
+                         options,
+                         tool_info->tool_type);
 
   if (options->gradient_options->frame)
     {
@@ -251,30 +224,18 @@ paint_options_init (PaintOptions *options,
 
   /*  register this Paintoptions structure  */
   paint_options_list = g_slist_prepend (paint_options_list, options);
-}
-
-GimpToolOptions *
-paint_options_new (GimpToolInfo *tool_info)
-{
-  PaintOptions *options;
-
-  options = g_new0 (PaintOptions, 1);
-
-  paint_options_init (options, tool_info);
 
   if (gimprc.global_paint_options && options->global)
     gtk_widget_show (options->global);
-
-  return (GimpToolOptions *) options;
 }
 
 void
 paint_options_reset (GimpToolOptions *tool_options)
 {
-  PaintOptions *options;
-  GimpContext  *default_context;
+  GimpPaintOptions *options;
+  GimpContext      *default_context;
 
-  options = (PaintOptions *) tool_options;
+  options = (GimpPaintOptions *) tool_options;
 
   default_context = gimp_get_default_context (tool_options->tool_info->gimp);
 
@@ -294,16 +255,15 @@ paint_options_reset (GimpToolOptions *tool_options)
 				    options->incremental_d);
     }
 
-  paint_pressure_options_reset (options->pressure_options, options);
-
-  paint_gradient_options_reset (options->gradient_options, options);
+  pressure_options_reset (options->pressure_options);
+  gradient_options_reset (options->gradient_options);
 }
 
 void
 paint_options_set_global (gboolean global)
 {
-  PaintOptions *options;
-  GSList *list;
+  GimpPaintOptions *options;
+  GSList           *list;
 
   global = global ? TRUE : FALSE;
 
@@ -314,7 +274,7 @@ paint_options_set_global (gboolean global)
 
   for (list = paint_options_list; list; list = list->next)
     {
-      options = (PaintOptions *) list->data;
+      options = (GimpPaintOptions *) list->data;
 
       if (global)
 	{
@@ -336,27 +296,13 @@ paint_options_set_global (gboolean global)
 
 /*  private functions  */
 
-static PaintPressureOptions *
-paint_pressure_options_new (GType         tool_type,
-                            PaintOptions *paint_options)
+static void
+pressure_options_init (GimpPressureOptions *pressure,
+                       GimpPaintOptions    *paint_options,
+                       GType                tool_type)
 {
-  PaintPressureOptions *pressure = NULL;
-  GtkWidget            *frame    = NULL;
-  GtkWidget            *wbox     = NULL;
-
-  pressure = g_new0 (PaintPressureOptions, 1);
-
-  pressure->opacity  = pressure->opacity_d  = TRUE;
-  pressure->pressure = pressure->pressure_d = TRUE;
-  pressure->rate     = pressure->rate_d     = FALSE;
-  pressure->size     = pressure->size_d     = FALSE;
-  pressure->color    = pressure->color_d    = FALSE;
-
-  pressure->opacity_w  = NULL;
-  pressure->pressure_w = NULL;
-  pressure->rate_w     = NULL;
-  pressure->size_w     = NULL;
-  pressure->color_w    = NULL;
+  GtkWidget *frame    = NULL;
+  GtkWidget *wbox     = NULL;
 
   if (tool_type == GIMP_TYPE_AIRBRUSH_TOOL   ||
       tool_type == GIMP_TYPE_CLONE_TOOL      ||
@@ -468,13 +414,10 @@ paint_pressure_options_new (GType         tool_type,
     }
 
   pressure->frame = frame;
-
-  return pressure;
 }
 
 static void
-paint_pressure_options_reset (PaintPressureOptions *pressure,
-                              PaintOptions         *paint_options)
+pressure_options_reset (GimpPressureOptions *pressure)
 {
   if (pressure->opacity_w)
     {
@@ -503,33 +446,15 @@ paint_pressure_options_reset (PaintPressureOptions *pressure,
     }
 }
 
-static PaintGradientOptions *
-paint_gradient_options_new (GType         tool_type,
-                            PaintOptions *paint_options)
+static void
+gradient_options_init (GimpGradientOptions *gradient,
+                       GimpPaintOptions    *paint_options,
+                       GType                tool_type)
 {
-  PaintGradientOptions *gradient   = NULL;
-  GtkWidget            *abox       = NULL;
-  GtkWidget            *table      = NULL;
-  GtkWidget            *type_label = NULL;
-  GtkWidget            *spinbutton = NULL;
-
-  gradient = g_new0 (PaintGradientOptions, 1);
-
-  gradient->use_fade        = gradient->use_fade_d        = DEFAULT_USE_FADE;
-  gradient->fade_out        = gradient->fade_out_d        = DEFAULT_FADE_OUT;
-  gradient->fade_unit       = gradient->fade_unit_d       = DEFAULT_FADE_UNIT;
-  gradient->use_gradient    = gradient->use_gradient_d    = DEFAULT_USE_GRADIENT;
-  gradient->gradient_length = gradient->gradient_length_d = DEFAULT_GRADIENT_LENGTH;
-  gradient->gradient_unit   = gradient->gradient_unit_d   = DEFAULT_GRADIENT_UNIT;
-  gradient->gradient_type   = gradient->gradient_type_d   = DEFAULT_GRADIENT_TYPE;
-
-  gradient->use_fade_w        = NULL;
-  gradient->fade_out_w        = NULL;
-  gradient->fade_unit_w       = NULL;
-  gradient->use_gradient_w    = NULL;
-  gradient->gradient_length_w = NULL;
-  gradient->gradient_unit_w   = NULL;
-  gradient->gradient_type_w   = NULL;
+  GtkWidget *abox       = NULL;
+  GtkWidget *table      = NULL;
+  GtkWidget *type_label = NULL;
+  GtkWidget *spinbutton = NULL;
 
   if (tool_type == GIMP_TYPE_PAINTBRUSH_TOOL)
     {
@@ -607,7 +532,7 @@ paint_gradient_options_new (GType         tool_type,
         gtk_check_button_new_with_label (_("Gradient"));
       gtk_container_add (GTK_CONTAINER (abox), gradient->use_gradient_w);
       g_signal_connect (G_OBJECT (gradient->use_gradient_w), "toggled",
-                        G_CALLBACK (paint_gradient_options_gradient_toggle_callback),
+                        G_CALLBACK (paint_options_gradient_toggle_callback),
                         paint_options);
       gtk_widget_show (gradient->use_gradient_w);
 
@@ -696,13 +621,10 @@ paint_gradient_options_new (GType         tool_type,
                            "inverse_sensitive",
                            paint_options->incremental_w);
     }
-
-  return gradient;
 }
 
 static void
-paint_gradient_options_reset (PaintGradientOptions *gradient,
-                              PaintOptions         *paint_options)
+gradient_options_reset (GimpGradientOptions *gradient)
 {
   GtkWidget *spinbutton;
   gint       digits;
@@ -778,12 +700,12 @@ paint_options_paint_mode_update (GtkWidget *widget,
 				 gpointer   data)
 {
   GimpLayerModeEffects  paint_mode;
-  PaintOptions         *options;
+  GimpPaintOptions     *options;
 
   paint_mode = (GimpLayerModeEffects) g_object_get_data (G_OBJECT (widget), 
                                                          "gimp-item-data");
 
-  options = (PaintOptions *) data;
+  options = (GimpPaintOptions *) data;
 
   g_signal_handlers_block_by_func (G_OBJECT (options->context),
 				   paint_options_paint_mode_changed,
@@ -805,8 +727,8 @@ paint_options_paint_mode_changed (GimpContext          *context,
 }
 
 static void
-paint_gradient_options_gradient_toggle_callback (GtkWidget    *widget,
-                                                 PaintOptions *options)
+paint_options_gradient_toggle_callback (GtkWidget        *widget,
+                                        GimpPaintOptions *options)
 {
   gimp_toggle_button_update (widget, &options->gradient_options->use_gradient);
 

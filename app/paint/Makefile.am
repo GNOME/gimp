@@ -15,6 +15,10 @@ libapppaint_a_SOURCES = @STRIP_BEGIN@ \
 	gimperaser.h			\
 	gimppaintcore.c			\
 	gimppaintcore.h			\
+	gimppaintcore-stroke.c		\
+	gimppaintcore-stroke.h		\
+	gimppaintoptions.c		\
+	gimppaintoptions.h		\
 	gimppencil.c			\
 	gimppencil.h			\
 	gimppaintbrush.c		\

@@ -38,13 +38,17 @@
 #include "gimpairbrush.h"
 
 
+#define AIRBRUSH_DEFAULT_RATE     80.0
+#define AIRBRUSH_DEFAULT_PRESSURE 10.0
+
+
 typedef struct _AirbrushTimeout AirbrushTimeout;
 
 struct _AirbrushTimeout
 {
-  GimpPaintCore *paint_core;
-  GimpDrawable  *drawable;
-  PaintOptions  *paint_options;
+  GimpPaintCore    *paint_core;
+  GimpDrawable     *drawable;
+  GimpPaintOptions *paint_options;
 };
 
 
@@ -55,12 +59,12 @@ static void       gimp_airbrush_finalize   (GObject            *object);
 
 static void       gimp_airbrush_paint      (GimpPaintCore      *paint_core,
                                             GimpDrawable       *drawable,
-                                            PaintOptions       *paint_options,
+                                            GimpPaintOptions   *paint_options,
                                             GimpPaintCoreState  paint_state);
 
 static void       gimp_airbrush_motion     (GimpPaintCore      *paint_core,
                                             GimpDrawable       *drawable,
-                                            PaintOptions       *paint_options);
+                                            GimpPaintOptions   *paint_options);
 static gboolean   gimp_airbrush_timeout    (gpointer            data);
 
 
@@ -139,12 +143,12 @@ gimp_airbrush_finalize (GObject *object)
 static void
 gimp_airbrush_paint (GimpPaintCore      *paint_core,
                      GimpDrawable       *drawable,
-                     PaintOptions       *paint_options,
+                     GimpPaintOptions   *paint_options,
                      GimpPaintCoreState  paint_state)
 {
-  AirbrushOptions *options;
+  GimpAirbrushOptions *options;
 
-  options = (AirbrushOptions *) paint_options;
+  options = (GimpAirbrushOptions *) paint_options;
 
   switch (paint_state)
     {
@@ -213,7 +217,7 @@ gimp_airbrush_timeout (gpointer client_data)
 #endif
   gdisplays_flush ();
 
-  rate = ((AirbrushOptions *) airbrush_timeout.paint_options)->rate;
+  rate = ((GimpAirbrushOptions *) airbrush_timeout.paint_options)->rate;
 
   /*  restart the timer  */
   if (rate != 0.0)
@@ -238,9 +242,9 @@ gimp_airbrush_timeout (gpointer client_data)
 }
 
 static void
-gimp_airbrush_motion (GimpPaintCore *paint_core,
-                      GimpDrawable  *drawable,
-                      PaintOptions  *paint_options)
+gimp_airbrush_motion (GimpPaintCore    *paint_core,
+                      GimpDrawable     *drawable,
+                      GimpPaintOptions *paint_options)
 {
   GimpImage            *gimage;
   GimpContext          *context;
@@ -257,7 +261,7 @@ gimp_airbrush_motion (GimpPaintCore *paint_core,
 
   paint_appl_mode = paint_options->incremental ? INCREMENTAL : CONSTANT;
 
-  pressure = ((AirbrushOptions *) paint_options)->pressure;
+  pressure = ((GimpAirbrushOptions *) paint_options)->pressure;
 
   if (paint_options->pressure_options->size)
     scale = paint_core->cur_coords.pressure;
@@ -312,4 +316,22 @@ gimp_airbrush_motion (GimpPaintCore *paint_core,
 				gimp_context_get_opacity (context) * 255,
 				gimp_context_get_paint_mode (context),
 				SOFT, scale, paint_appl_mode);
+}
+
+
+/*  paint options stuff  */
+
+GimpAirbrushOptions *
+gimp_airbrush_options_new (void)
+{
+  GimpAirbrushOptions *options;
+
+  options = g_new0 (GimpAirbrushOptions, 1);
+
+  gimp_paint_options_init ((GimpPaintOptions *) options);
+
+  options->rate     = options->rate_d     = AIRBRUSH_DEFAULT_RATE;
+  options->pressure = options->pressure_d = AIRBRUSH_DEFAULT_PRESSURE;
+
+  return options;
 }

@@ -298,7 +298,7 @@ gimp_paint_core_finalize (GObject *object)
 void
 gimp_paint_core_paint (GimpPaintCore      *core,
 		       GimpDrawable       *drawable,
-                       PaintOptions       *paint_options,
+                       GimpPaintOptions   *paint_options,
 		       GimpPaintCoreState  paint_state)
 {
   g_return_if_fail (GIMP_IS_PAINT_CORE (core));
@@ -528,9 +528,9 @@ gimp_paint_core_constrain (GimpPaintCore *core)
 }
 
 void
-gimp_paint_core_interpolate (GimpPaintCore *core,
-			     GimpDrawable  *drawable,
-                             PaintOptions  *paint_options)
+gimp_paint_core_interpolate (GimpPaintCore    *core,
+			     GimpDrawable     *drawable,
+                             GimpPaintOptions *paint_options)
 {
   GimpCoords  delta;
   /*   double spacing; */

@@ -38,24 +38,25 @@
 #include "core/gimpimage.h"
 
 #include "gimppaintbrush.h"
+#include "gimppaintoptions.h"
 
 
-static void   gimp_paintbrush_class_init (GimpPaintbrushClass  *klass);
-static void   gimp_paintbrush_init       (GimpPaintbrush       *paintbrush);
+static void   gimp_paintbrush_class_init (GimpPaintbrushClass *klass);
+static void   gimp_paintbrush_init       (GimpPaintbrush      *paintbrush);
 
-static void   gimp_paintbrush_paint      (GimpPaintCore        *paint_core,
-                                          GimpDrawable         *drawable,
-                                          PaintOptions         *paint_options,
-                                          GimpPaintCoreState    paint_state);
+static void   gimp_paintbrush_paint      (GimpPaintCore       *paint_core,
+                                          GimpDrawable        *drawable,
+                                          GimpPaintOptions    *paint_options,
+                                          GimpPaintCoreState   paint_state);
 
-static void   gimp_paintbrush_motion     (GimpPaintCore        *paint_core,
-                                          GimpDrawable         *drawable,
-                                          PaintPressureOptions *pressure_options,
-                                          PaintGradientOptions *gradient_options,
-                                          gdouble               fade_out,
-                                          gdouble               gradient_length,
-                                          gboolean              incremental,
-                                          GradientPaintMode     gradient_type);
+static void   gimp_paintbrush_motion     (GimpPaintCore       *paint_core,
+                                          GimpDrawable        *drawable,
+                                          GimpPressureOptions *pressure_options,
+                                          GimpGradientOptions *gradient_options,
+                                          gdouble              fade_out,
+                                          gdouble              gradient_length,
+                                          gboolean             incremental,
+                                          GradientPaintMode    gradient_type);
 
 
 static GimpPaintCoreClass *parent_class = NULL;
@@ -114,16 +115,16 @@ gimp_paintbrush_init (GimpPaintbrush *paintbrush)
 static void
 gimp_paintbrush_paint (GimpPaintCore      *paint_core,
                        GimpDrawable       *drawable,
-                       PaintOptions       *paint_options,
+                       GimpPaintOptions   *paint_options,
                        GimpPaintCoreState  paint_state)
 {
-  PaintPressureOptions *pressure_options;
-  PaintGradientOptions *gradient_options;
-  gboolean              incremental;
-  GimpImage            *gimage;
-  gdouble               fade_out;
-  gdouble               gradient_length;
-  gdouble               unit_factor;
+  GimpPressureOptions *pressure_options;
+  GimpGradientOptions *gradient_options;
+  gboolean             incremental;
+  GimpImage           *gimage;
+  gdouble              fade_out;
+  gdouble              gradient_length;
+  gdouble              unit_factor;
 
   gimage = gimp_drawable_gimage (drawable);
 
@@ -192,14 +193,14 @@ gimp_paintbrush_paint (GimpPaintCore      *paint_core,
 }
 
 static void
-gimp_paintbrush_motion (GimpPaintCore        *paint_core,
-                        GimpDrawable         *drawable,
-                        PaintPressureOptions *pressure_options,
-                        PaintGradientOptions *gradient_options,
-                        gdouble               fade_out,
-                        gdouble               gradient_length,
-                        gboolean              incremental,
-                        GradientPaintMode     gradient_type)
+gimp_paintbrush_motion (GimpPaintCore       *paint_core,
+                        GimpDrawable        *drawable,
+                        GimpPressureOptions *pressure_options,
+                        GimpGradientOptions *gradient_options,
+                        gdouble              fade_out,
+                        gdouble              gradient_length,
+                        gboolean             incremental,
+                        GradientPaintMode    gradient_type)
 {
   GimpImage            *gimage;
   GimpContext          *context;

@@ -1,3 +1,57 @@
+2002-02-21  Michael Natterer  <mitch@gimp.org>
+
+	Made the paint tool PDB wrappers work again (a bit at least...)
+
+	* app/Makefile.am: changed linking order. libtool sucks.
+
+	* app/undo.c: check if active_tool is a GimpPaintTool before
+	casting it.
+
+	* app/paint/Makefile.am
+	* app/paint/paint-types.h: added new files/types.
+
+	* app/paint/gimppaintoptions.[ch]: new files cut out of
+	tools/paint_options.h. Prefixed everything with "Gimp". There is
+	still GtkWidget* cruft hanging around in the structs...
+
+	* app/paint/gimppaintcore-stroke.[ch]: utility function
+	which paints a stroke array. Needed for the PDB wrappers.
+
+	* app/paint/gimpairbrush.[ch]
+	* app/paint/gimpclone.[ch]
+	* app/paint/gimpconvolve.[ch]
+	* app/paint/gimpdodgeburn.[ch]
+	* app/paint/gimperaser.[ch]
+	* app/paint/gimppaintbrush.c
+	* app/paint/gimppaintcore.[ch]
+	* app/paint/gimppencil.c
+	* app/paint/gimpsmudge.[ch]: added *_options_new() functions which
+	create correctly initialized options structures without widgets.
+
+	* app/tools/paint_options.[ch]: removed the options struct
+	definitions and value initialisations.
+
+	* app/tools/gimpairbrushtool.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/gimperasertool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimppaintbrushtool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimppenciltool.c
+	* app/tools/gimpsmudgetool.c: changed all paint_options functions
+	accordingly, s/PaintOptions/GimpPaintOptions/g etc., removed all
+	#if 0'ed non_gui functions.
+
+	* tools/pdbgen/pdb/paint_tools.pdb: use gimp_paint_core_stroke().
+	We currently leak all paint_options structs created by the PDB
+	wrappers, more stuff to come...
+
+	* app/pdb/paint_tools_cmds.c: regenerated.
+
 2002-02-21  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/glasstile.c: code cleanup based on a patch from

@@ -21,6 +21,7 @@
 
 
 #include "gimppaintcore.h"
+#include "gimppaintoptions.h"
 
 
 #define GIMP_TYPE_SMUDGE            (gimp_smudge_get_type ())
@@ -45,19 +46,21 @@ struct _GimpSmudgeClass
 };
 
 
-typedef struct _SmudgeOptions SmudgeOptions;
+typedef struct _GimpSmudgeOptions GimpSmudgeOptions;
 
-struct _SmudgeOptions
+struct _GimpSmudgeOptions
 {
-  PaintOptions  paint_options;
+  GimpPaintOptions  paint_options;
 
-  gdouble       rate;
-  gdouble       rate_d;
-  GtkObject    *rate_w;
+  gdouble           rate;
+  gdouble           rate_d;
+  GtkObject        *rate_w;
 };
 
 
-GType   gimp_smudge_get_type (void) G_GNUC_CONST;
+GType               gimp_smudge_get_type    (void) G_GNUC_CONST;
+
+GimpSmudgeOptions * gimp_smudge_options_new (void);
 
 
 #endif  /*  __GIMP_SMUDGE_H__  */

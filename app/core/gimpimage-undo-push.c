@@ -1368,7 +1368,7 @@ undo_pop_paint (GimpImage *gimage,
   active_tool = tool_manager_get_active (gimage->gimp);
 
   /* Can't have ANY tool selected - maybe a plugin running */
-  if (active_tool)
+  if (GIMP_IS_PAINT_TOOL (active_tool))
     {
       GimpPaintTool     *pt;
       GimpPaintCoreUndo *pu;

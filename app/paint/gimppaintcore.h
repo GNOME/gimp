@@ -133,7 +133,7 @@ struct _GimpPaintCoreClass
 
   void (* paint) (GimpPaintCore      *core,
 		  GimpDrawable 	     *drawable,
-                  PaintOptions       *options,
+                  GimpPaintOptions   *paint_options,
 		  GimpPaintCoreState  paint_state);
 };
 
@@ -153,7 +153,7 @@ GType     gimp_paint_core_get_type    (void) G_GNUC_CONST;
 
 void      gimp_paint_core_paint       (GimpPaintCore       *core,
                                        GimpDrawable        *drawable,
-                                       PaintOptions        *options,
+                                       GimpPaintOptions    *paint_options,
                                        GimpPaintCoreState   state);
 
 gboolean  gimp_paint_core_start       (GimpPaintCore       *core,
@@ -167,7 +167,7 @@ void      gimp_paint_core_constrain   (GimpPaintCore       *core);
 
 void      gimp_paint_core_interpolate (GimpPaintCore       *core,
                                        GimpDrawable        *drawable,
-                                       PaintOptions        *paint_options);
+                                       GimpPaintOptions    *paint_options);
 
 
 /*  protected functions  */

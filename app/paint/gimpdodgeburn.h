@@ -21,6 +21,7 @@
 
 
 #include "gimppaintcore.h"
+#include "gimppaintoptions.h"
 
 
 #define GIMP_TYPE_DODGEBURN            (gimp_dodgeburn_get_type ())
@@ -44,11 +45,11 @@ struct _GimpDodgeBurnClass
 };
 
 
-typedef struct _DodgeBurnOptions DodgeBurnOptions;
+typedef struct _GimpDodgeBurnOptions GimpDodgeBurnOptions;
 
-struct _DodgeBurnOptions
+struct _GimpDodgeBurnOptions
 {
-  PaintOptions       paint_options;
+  GimpPaintOptions   paint_options;
 
   DodgeBurnType      type;
   DodgeBurnType      type_d;
@@ -66,7 +67,9 @@ struct _DodgeBurnOptions
 };
 
 
-GType   gimp_dodgeburn_get_type (void) G_GNUC_CONST;
+GType                  gimp_dodgeburn_get_type    (void) G_GNUC_CONST;
+
+GimpDodgeBurnOptions * gimp_dodgeburn_options_new (void);
 
 
 #endif  /*  __GIMP_DODGEBURN_H__  */

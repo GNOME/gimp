@@ -21,6 +21,7 @@
 
 
 #include "gimppaintcore.h"
+#include "gimppaintoptions.h"
 
 
 typedef enum /*< skip >*/ /*< pdb-skip >*/
@@ -70,23 +71,25 @@ struct _GimpCloneClass
 };
 
 
-typedef struct _CloneOptions CloneOptions;
+typedef struct _GimpCloneOptions GimpCloneOptions;
 
-struct _CloneOptions
+struct _GimpCloneOptions
 {
-  PaintOptions  paint_options;
+  GimpPaintOptions  paint_options;
 
-  CloneType     type;
-  CloneType     type_d;
-  GtkWidget    *type_w[2];  /* 2 radio buttons */
+  CloneType         type;
+  CloneType         type_d;
+  GtkWidget        *type_w[2];  /* 2 radio buttons */
 
-  AlignType     aligned;
-  AlignType     aligned_d;
-  GtkWidget    *aligned_w[3];  /* 3 radio buttons */
+  AlignType         aligned;
+  AlignType         aligned_d;
+  GtkWidget        *aligned_w[3];  /* 3 radio buttons */
 };
 
 
-GType   gimp_clone_get_type (void) G_GNUC_CONST;
+GType              gimp_clone_get_type    (void) G_GNUC_CONST;
+
+GimpCloneOptions * gimp_clone_options_new (void);
 
 
 #endif  /*  __GIMP_CLONE_H__  */

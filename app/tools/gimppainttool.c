@@ -201,7 +201,7 @@ gimp_paint_tool_control (GimpTool       *tool,
     case HALT:
       gimp_paint_core_paint (paint_tool->core,
                              drawable,
-                             (PaintOptions *) tool->tool_info->tool_options,
+                             (GimpPaintOptions *) tool->tool_info->tool_options,
                              FINISH_PAINT);
       gimp_paint_core_cleanup (paint_tool->core);
 
@@ -245,21 +245,21 @@ gimp_paint_tool_button_press (GimpTool        *tool,
 			      GdkModifierType  state,
 			      GimpDisplay     *gdisp)
 {
-  GimpDrawTool  *draw_tool;
-  GimpPaintTool *paint_tool;
-  GimpPaintCore *core;
-  PaintOptions  *paint_options;
-  GimpBrush     *current_brush;
-  GimpDrawable  *drawable;
-  GimpCoords     curr_coords;
-  gboolean       draw_line = FALSE;
+  GimpDrawTool     *draw_tool;
+  GimpPaintTool    *paint_tool;
+  GimpPaintCore    *core;
+  GimpPaintOptions *paint_options;
+  GimpBrush        *current_brush;
+  GimpDrawable     *drawable;
+  GimpCoords        curr_coords;
+  gboolean          draw_line = FALSE;
 
   draw_tool  = GIMP_DRAW_TOOL (tool);
   paint_tool = GIMP_PAINT_TOOL (tool);
 
   core = paint_tool->core;
 
-  paint_options = (PaintOptions *) tool->tool_info->tool_options;
+  paint_options = (GimpPaintOptions *) tool->tool_info->tool_options;
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
@@ -391,16 +391,16 @@ gimp_paint_tool_button_release (GimpTool        *tool,
 				GdkModifierType  state,
 				GimpDisplay     *gdisp)
 {
-  GimpPaintTool *paint_tool;
-  GimpPaintCore *core;
-  PaintOptions  *paint_options;
-  GimpDrawable  *drawable;
+  GimpPaintTool    *paint_tool;
+  GimpPaintCore    *core;
+  GimpPaintOptions *paint_options;
+  GimpDrawable     *drawable;
 
   paint_tool = GIMP_PAINT_TOOL (tool);
 
   core = paint_tool->core;
 
-  paint_options = (PaintOptions *) tool->tool_info->tool_options;
+  paint_options = (GimpPaintOptions *) tool->tool_info->tool_options;
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
@@ -432,16 +432,16 @@ gimp_paint_tool_motion (GimpTool        *tool,
 			GdkModifierType  state,
 			GimpDisplay     *gdisp)
 {
-  GimpPaintTool *paint_tool;
-  GimpPaintCore *core;
-  PaintOptions  *paint_options;
-  GimpDrawable  *drawable;
+  GimpPaintTool    *paint_tool;
+  GimpPaintCore    *core;
+  GimpPaintOptions *paint_options;
+  GimpDrawable     *drawable;
 
   paint_tool = GIMP_PAINT_TOOL (tool);
 
   core = paint_tool->core;
 
-  paint_options = (PaintOptions *) tool->tool_info->tool_options;
+  paint_options = (GimpPaintOptions *) tool->tool_info->tool_options;
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
