@@ -1164,7 +1164,7 @@ gradient_editor_replicate_response (GtkWidget          *widget,
               seg->middle = new_left + factor * (oseg->middle - sel_left);
               seg->right  = new_left + factor * (oseg->right - sel_left);
 
-              seg->left_color  = oseg->right_color;
+              seg->left_color  = oseg->left_color;
               seg->right_color = oseg->right_color;
 
               seg->type  = oseg->type;
