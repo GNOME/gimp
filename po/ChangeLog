@@ -1,3 +1,7 @@
+2005-01-30  Sven Neumann  <sven@gimp.org>
+
+	* zh_CN.po: marked a broken translation as fuzzy.
+
 2005-01-29  Artur Flinta  <aflinta@cvs.gnome.org>
 
 	* pl.po: Updated Polish translation by GNOME PL Team.

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-01-22 17:32+0100\n"
-"PO-Revision-Date: 2004-11-24 19:30+0800\n"
+"PO-Revision-Date: 2005-01-30 14:37+0100\n"
 "Last-Translator: Yuheng Xie <elephant@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -4801,7 +4801,7 @@ msgid "Fatal parse error in gradient file '%s': File is corrupt."
 msgstr "渐变文件“%s”出现严重解析错误：文件已损坏。"
 
 #: app/core/gimpgradient-load.c:172
-#, c-format
+#, c-format, fuzzy
 msgid "Corrupt segment %d in gradient file '%s'."
 msgstr "渐变文件“%s”中含有损坏的段 %d。"
 
