@@ -23,7 +23,10 @@
 
 # FIXME: re-write this welcome message:
 
-                            Benvenuto in GIMP!
+Benvenuto in GIMP!
+Sito ufficiale italiano: http://gimp.linux.it
+Per segnalare errori di traduzione scrivete a:
+Daniele Medri <madrid@linux.it>
 
 Per accedere ai menù del programma posizionatevi
 sull'immagine e cliccate con il tasto destro.
@@ -32,11 +35,6 @@ annullata successivamente.
 
 # Tips for beginners start here
 #
-
-Per trovare informazioni su Gimp in Italiano si
-consiglia di visitare il sito http://gimp.linux.it
-dove troverete moltissime informazioni per imparare
-e migliorare la propria tecnica.
 
 Gimp utilizza i livelli per organizzare meglio  le
 operazioni  da  compiere  sull'immagine. Utilizzare
