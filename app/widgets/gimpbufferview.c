@@ -109,38 +109,10 @@ gimp_buffer_view_class_init (GimpBufferViewClass *klass)
 static void
 gimp_buffer_view_init (GimpBufferView *view)
 {
-  GimpContainerEditor *editor;
-
-  editor = GIMP_CONTAINER_EDITOR (view);
-
-  view->paste_button =
-    gimp_container_editor_add_button (editor,
-				      GIMP_STOCK_PASTE,
-				      _("Paste"), NULL,
-				      G_CALLBACK (gimp_buffer_view_paste_clicked));
-
-  view->paste_into_button =
-    gimp_container_editor_add_button (editor,
-				      GIMP_STOCK_PASTE_INTO,
-				      _("Paste Into"), NULL,
-				      G_CALLBACK (gimp_buffer_view_paste_into_clicked));
-
-  view->paste_as_new_button =
-    gimp_container_editor_add_button (editor,
-				      GIMP_STOCK_PASTE_AS_NEW,
-				      _("Paste as New"), NULL,
-				      G_CALLBACK (gimp_buffer_view_paste_as_new_clicked));
-
-  view->delete_button =
-    gimp_container_editor_add_button (editor,
-				      GIMP_STOCK_DELETE,
-				      _("Delete"), NULL,
-				      G_CALLBACK (gimp_buffer_view_delete_clicked));
-
-  gtk_widget_set_sensitive (view->paste_button, FALSE);
-  gtk_widget_set_sensitive (view->paste_into_button, FALSE);
-  gtk_widget_set_sensitive (view->paste_as_new_button, FALSE);
-  gtk_widget_set_sensitive (view->delete_button, FALSE);
+  view->paste_button        = NULL;
+  view->paste_into_button   = NULL;
+  view->paste_as_new_button = NULL;
+  view->delete_button       = NULL;
 }
 
 static void
@@ -183,14 +155,55 @@ gimp_buffer_view_new (GimpViewType              view_type,
 
   editor = GIMP_CONTAINER_EDITOR (buffer_view);
 
-  gimp_container_editor_enable_dnd (editor,
-				    GTK_BUTTON (buffer_view->paste_button));
-  gimp_container_editor_enable_dnd (editor,
-				    GTK_BUTTON (buffer_view->paste_into_button));
-  gimp_container_editor_enable_dnd (editor,
-				    GTK_BUTTON (buffer_view->paste_as_new_button));
-  gimp_container_editor_enable_dnd (editor,
-				    GTK_BUTTON (buffer_view->delete_button));
+  buffer_view->paste_button =
+    gimp_container_view_add_button (editor->view,
+				    GIMP_STOCK_PASTE,
+				    _("Paste"), NULL,
+				    G_CALLBACK (gimp_buffer_view_paste_clicked),
+				    NULL,
+				    editor);
+
+  buffer_view->paste_into_button =
+    gimp_container_view_add_button (editor->view,
+				    GIMP_STOCK_PASTE_INTO,
+				    _("Paste Into"), NULL,
+				    G_CALLBACK (gimp_buffer_view_paste_into_clicked),
+				    NULL,
+				    editor);
+
+  buffer_view->paste_as_new_button =
+    gimp_container_view_add_button (editor->view,
+				    GIMP_STOCK_PASTE_AS_NEW,
+				    _("Paste as New"), NULL,
+				    G_CALLBACK (gimp_buffer_view_paste_as_new_clicked),
+				    NULL,
+				    editor);
+
+  buffer_view->delete_button =
+    gimp_container_view_add_button (editor->view,
+				    GIMP_STOCK_DELETE,
+				    _("Delete"), NULL,
+				    G_CALLBACK (gimp_buffer_view_delete_clicked),
+				    NULL,
+				    editor);
+
+  /*  set button sensitivity  */
+  if (GIMP_CONTAINER_EDITOR_GET_CLASS (editor)->select_item)
+    GIMP_CONTAINER_EDITOR_GET_CLASS (editor)->select_item
+      (editor, (GimpViewable *) gimp_context_get_buffer (context));
+
+  gimp_container_view_enable_dnd (editor->view,
+				  GTK_BUTTON (buffer_view->paste_button),
+				  GIMP_TYPE_BUFFER);
+  gimp_container_view_enable_dnd (editor->view,
+				  GTK_BUTTON (buffer_view->paste_into_button),
+				  GIMP_TYPE_BUFFER);
+  gimp_container_view_enable_dnd (editor->view,
+				  GTK_BUTTON (buffer_view->paste_as_new_button),
+				  GIMP_TYPE_BUFFER);
+  gimp_container_view_enable_dnd (editor->view,
+				  GTK_BUTTON (buffer_view->delete_button),
+				  GIMP_TYPE_BUFFER);
 
   return GTK_WIDGET (buffer_view);
 }

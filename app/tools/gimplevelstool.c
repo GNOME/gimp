@@ -438,7 +438,7 @@ levels_dialog_new (void)
 
 			       GTK_STOCK_OK, levels_ok_callback,
 			       ld, NULL, NULL, TRUE, FALSE,
-			       _("Reset"), levels_reset_callback,
+			       GIMP_STOCK_RESET, levels_reset_callback,
 			       ld, NULL, NULL, FALSE, FALSE,
 			       GTK_STOCK_CANCEL, levels_cancel_callback,
 			       ld, NULL, NULL, FALSE, TRUE,
@@ -468,17 +468,17 @@ levels_dialog_new (void)
     gimp_option_menu_new2 (FALSE,
 			   G_CALLBACK (levels_channel_callback),
 			   ld,
-			   (gpointer) ld->channel,
+			   GINT_TO_POINTER (ld->channel),
 
-			   _("Value"), (gpointer) GIMP_HISTOGRAM_VALUE,
+			   _("Value"), GINT_TO_POINTER (GIMP_HISTOGRAM_VALUE),
 			   &color_option_items[0],
-			   _("Red"),   (gpointer) GIMP_HISTOGRAM_RED,
+			   _("Red"),   GINT_TO_POINTER (GIMP_HISTOGRAM_RED),
 			   &color_option_items[1],
-			   _("Green"), (gpointer) GIMP_HISTOGRAM_GREEN,
+			   _("Green"), GINT_TO_POINTER (GIMP_HISTOGRAM_GREEN),
 			   &color_option_items[2],
-			   _("Blue"),  (gpointer) GIMP_HISTOGRAM_BLUE,
+			   _("Blue"),  GINT_TO_POINTER (GIMP_HISTOGRAM_BLUE),
 			   &color_option_items[3],
-			   _("Alpha"), (gpointer) GIMP_HISTOGRAM_ALPHA,
+			   _("Alpha"), GINT_TO_POINTER (GIMP_HISTOGRAM_ALPHA),
 			   &color_option_items[4],
 
 			   NULL);

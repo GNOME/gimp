@@ -5,11 +5,14 @@ STOCK_IMAGES = @STRIP_BEGIN@ \
 	delete.xpm		\
 	duplicate.xpm		\
 	edit.xpm		\
+	eye.xpm			\
+	linked.xpm		\
 	lower.xpm		\
 	new.xpm			\
 	paste.xpm		\
 	paste-as-new.xpm	\
 	paste-into.xpm		\
+	penstroke.xpm		\
 	raise.xpm		\
 	refresh.xpm		\
 	topath.xpm		\
@@ -23,6 +26,8 @@ STOCK_VARIABLES = @STRIP_BEGIN@ \
 	stock_delete_button		$(srcdir)/delete.xpm		\
 	stock_duplicate_button		$(srcdir)/duplicate.xpm		\
 	stock_edit_button		$(srcdir)/edit.xpm		\
+	stock_eye_button		$(srcdir)/eye.xpm		\
+	stock_linked_button		$(srcdir)/linked.xpm		\
 	stock_lower_button		$(srcdir)/lower.xpm		\
 	stock_new_button		$(srcdir)/new.xpm		\
 	stock_paste_button		$(srcdir)/paste.xpm		\
@@ -30,6 +35,7 @@ STOCK_VARIABLES = @STRIP_BEGIN@ \
 	stock_paste_into_button		$(srcdir)/paste-into.xpm	\
 	stock_raise_button		$(srcdir)/raise.xpm		\
 	stock_refresh_button		$(srcdir)/refresh.xpm		\
+	stock_stroke_button		$(srcdir)/penstroke.xpm		\
 	stock_to_path_button		$(srcdir)/topath.xpm		\
 	stock_to_selection_button	$(srcdir)/toselection.xpm	\
 	stock_zoom_in_button		$(srcdir)/zoom_in.xpm		\
@@ -40,11 +46,9 @@ EXTRA_IMAGES = @STRIP_BEGIN@ \
 	chain.xpm		\
 	default.xpm		\
 	eek.xpm			\
-	eye.xpm			\
 	first.xpm		\
 	folder.xpm		\
 	last.xpm		\
-	linked.xpm		\
 	locked.xbm		\
 	navbutton.xpm		\
 	next.xpm		\
@@ -54,7 +58,6 @@ EXTRA_IMAGES = @STRIP_BEGIN@ \
 	pendel.xpm		\
 	penedit.xpm		\
 	pennorm.xpm		\
-	penstroke.xpm		\
 	play.xpm		\
 	prev.xpm		\
 	qmasksel.xpm		\

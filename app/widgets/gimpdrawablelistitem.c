@@ -36,8 +36,6 @@
 
 #include "gdisplay.h"
 
-#include "pixmaps/eye.xpm"
-
 
 static void   gimp_drawable_list_item_class_init (GimpDrawableListItemClass *klass);
 static void   gimp_drawable_list_item_init       (GimpDrawableListItem      *list_item);
@@ -112,7 +110,7 @@ static void
 gimp_drawable_list_item_init (GimpDrawableListItem *list_item)
 {
   GtkWidget *abox;
-  GtkWidget *pixmap;
+  GtkWidget *image;
 
   abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
   gtk_box_pack_start (GTK_BOX (GIMP_LIST_ITEM (list_item)->hbox), abox,
@@ -132,9 +130,10 @@ gimp_drawable_list_item_init (GimpDrawableListItem *list_item)
 		    G_CALLBACK (gimp_list_item_button_state_changed),
 		    list_item);
 
-  pixmap = gimp_pixmap_new (eye_xpm);
-  gtk_container_add (GTK_CONTAINER (list_item->eye_button), pixmap);
-  gtk_widget_show (pixmap);
+  image = gtk_image_new_from_stock (GIMP_STOCK_VISIBLE,
+				    GTK_ICON_SIZE_BUTTON);
+  gtk_container_add (GTK_CONTAINER (list_item->eye_button), image);
+  gtk_widget_show (image);
 }
 
 static void

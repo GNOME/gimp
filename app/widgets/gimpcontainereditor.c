@@ -40,12 +40,6 @@ static void   gimp_container_editor_class_init (GimpContainerEditorClass *klass)
 static void   gimp_container_editor_init       (GimpContainerEditor      *view);
 
 static void   gimp_container_editor_destroy    (GtkObject                *object);
-static void   gimp_container_editor_style_set  (GtkWidget                *widget,
-						GtkStyle                 *prev_style);
-
-static void   gimp_container_editor_viewable_dropped (GtkWidget           *widget,
-						      GimpViewable        *viewable,
-						      gpointer             data);
 
 static void   gimp_container_editor_select_item      (GtkWidget           *widget,
 						      GimpViewable        *viewable,
@@ -102,29 +96,11 @@ gimp_container_editor_class_init (GimpContainerEditorClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->destroy   = gimp_container_editor_destroy;
+  object_class->destroy = gimp_container_editor_destroy;
 
-  widget_class->style_set = gimp_container_editor_style_set;
-
-  klass->select_item      = NULL;
-  klass->activate_item    = NULL;
-  klass->context_item     = gimp_container_editor_real_context_item;
-
-  gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_int ("content_spacing",
-                                                             NULL, NULL,
-                                                             0,
-                                                             G_MAXINT,
-                                                             0,
-                                                             G_PARAM_READABLE));
-
-  gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_int ("button_spacing",
-                                                             NULL, NULL,
-                                                             0,
-                                                             G_MAXINT,
-                                                             0,
-                                                             G_PARAM_READABLE));
+  klass->select_item    = NULL;
+  klass->activate_item  = NULL;
+  klass->context_item   = gimp_container_editor_real_context_item;
 }
 
 static void
@@ -132,12 +108,6 @@ gimp_container_editor_init (GimpContainerEditor *view)
 {
   view->context_func = NULL;
   view->view         = NULL;
-
-  gtk_box_set_spacing (GTK_BOX (view), 2);
-
-  view->button_box = gtk_hbox_new (TRUE, 2);
-  gtk_box_pack_end (GTK_BOX (view), view->button_box, FALSE, FALSE, 0);
-  gtk_widget_show (view->button_box);
 }
 
 static void
@@ -149,28 +119,6 @@ gimp_container_editor_destroy (GtkObject *object)
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
-}
-
-static void
-gimp_container_editor_style_set (GtkWidget *widget,
-				 GtkStyle  *prev_style)
-{
-  gint content_spacing;
-  gint button_spacing;
-
-  gtk_widget_style_get (widget,
-                        "content_spacing",
-                        &content_spacing,
-			"button_spacing",
-			&button_spacing,
-			NULL);
-
-  gtk_box_set_spacing (GTK_BOX (widget), content_spacing);
-  gtk_box_set_spacing (GTK_BOX (GIMP_CONTAINER_EDITOR (widget)->button_box),
-		       button_spacing);
-
-  if (GTK_WIDGET_CLASS (parent_class)->style_set)
-    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 }
 
 gboolean
@@ -237,92 +185,11 @@ gimp_container_editor_construct (GimpContainerEditor      *editor,
 			   G_OBJECT (editor),
 			   0);
 
-  /*  select the active item  */
-  gimp_container_editor_select_item
-    (GTK_WIDGET (editor->view),
-     (GimpViewable *)
-     gimp_context_get_by_type (context, container->children_type),
-     NULL,
-     editor);
-
   return TRUE;
-}
-
-GtkWidget *
-gimp_container_editor_add_button (GimpContainerEditor  *editor,
-				  const gchar          *stock_id,
-				  const gchar          *tooltip,
-				  const gchar          *help_data,
-				  GCallback             callback)
-{
-  GtkWidget *button;
-  GtkWidget *image;
-
-  g_return_val_if_fail (GIMP_IS_CONTAINER_EDITOR (editor), NULL);
-  g_return_val_if_fail (stock_id != NULL, NULL);
-
-  button = gtk_button_new ();
-  gtk_box_pack_start (GTK_BOX (editor->button_box), button,
-		      TRUE, TRUE, 0);
-  gtk_widget_show (button);
-
-  if (tooltip || help_data)
-    gimp_help_set_help_data (button, tooltip, help_data);
-
-  if (callback)
-    g_signal_connect (G_OBJECT (button), "clicked",
-		      callback,
-		      editor);
-
-  image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
-  gtk_container_add (GTK_CONTAINER (button), image);
-  gtk_widget_show (image);
-
-  return button;
-}
-
-void
-gimp_container_editor_enable_dnd (GimpContainerEditor  *editor,
-				  GtkButton            *button)
-{
-  g_return_if_fail (GIMP_IS_CONTAINER_EDITOR (editor));
-  g_return_if_fail (GTK_IS_BUTTON (button));
-
-  g_return_if_fail (editor->view != NULL);
-  g_return_if_fail (editor->view->container != NULL);
-
-  gimp_gtk_drag_dest_set_by_type (GTK_WIDGET (button),
-				  GTK_DEST_DEFAULT_ALL,
-				  editor->view->container->children_type,
-				  GDK_ACTION_COPY);
-  gimp_dnd_viewable_dest_set (GTK_WIDGET (button),
-			      editor->view->container->children_type,
-			      gimp_container_editor_viewable_dropped,
-			      editor);
 }
 
 
 /*  private functions  */
-
-static void
-gimp_container_editor_viewable_dropped (GtkWidget    *widget,
-					GimpViewable *viewable,
-					gpointer      data)
-{
-  GimpContainerEditor *editor;
-
-  editor = (GimpContainerEditor *) data;
-
-  if (viewable && gimp_container_have (editor->view->container,
-				       GIMP_OBJECT (viewable)))
-    {
-      gimp_context_set_by_type (editor->view->context,
-				editor->view->container->children_type,
-				GIMP_OBJECT (viewable));
-
-      gtk_button_clicked (GTK_BUTTON (widget));
-    }
-}
 
 static void
 gimp_container_editor_select_item (GtkWidget           *widget,

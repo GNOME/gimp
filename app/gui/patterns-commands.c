@@ -42,19 +42,12 @@ void
 patterns_show_context_menu (GimpContainerEditor *editor)
 {
   GtkItemFactory *item_factory;
-  gint            x, y;
 
   patterns_menu_set_sensitivity (editor);
 
   item_factory = menus_get_patterns_factory ();
 
-  gimp_menu_position (GTK_MENU (item_factory->widget), &x, &y);
-
-  gtk_item_factory_popup_with_data (item_factory,
-				    editor,
-				    NULL,
-				    x, y,
-				    3, 0);
+  gimp_item_factory_popup_with_data (item_factory, editor);
 }
 
 

@@ -46,13 +46,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps/delete.xpm"
-#include "pixmaps/raise.xpm"
-#include "pixmaps/lower.xpm"
-#include "pixmaps/duplicate.xpm"
-#include "pixmaps/new.xpm"
-#include "pixmaps/edit.xpm"
-
 
 enum
 {
@@ -64,8 +57,6 @@ enum
 static void   gimp_drawable_list_view_class_init (GimpDrawableListViewClass *klass);
 static void   gimp_drawable_list_view_init       (GimpDrawableListView      *view);
 static void   gimp_drawable_list_view_destroy    (GtkObject                 *object);
-static void   gimp_drawable_list_view_style_set  (GtkWidget                 *widget,
-						  GtkStyle                  *prev_style);
 
 static void   gimp_drawable_list_view_real_set_image    (GimpDrawableListView *view,
 							 GimpImage            *gimage);
@@ -104,29 +95,12 @@ static void   gimp_drawable_list_view_lower_extended_clicked
 							 guint                 state,
 							 GimpDrawableListView *view);
 
-static void  gimp_drawable_list_view_duplicate_drawable (GimpDrawableListView *view,
-							 GimpDrawable         *drawable);
 static void   gimp_drawable_list_view_duplicate_clicked (GtkWidget            *widget,
 							 GimpDrawableListView *view);
-static void   gimp_drawable_list_view_duplicate_dropped (GtkWidget            *widget,
-							 GimpViewable         *viewable,
-							 gpointer              drawable);
-
-static void   gimp_drawable_list_view_edit_drawable     (GimpDrawableListView *view,
-							 GimpDrawable         *drawable);
 static void   gimp_drawable_list_view_edit_clicked      (GtkWidget            *widget,
 							 GimpDrawableListView *view);
-static void   gimp_drawable_list_view_edit_dropped      (GtkWidget            *widget,
-							 GimpViewable         *viewable,
-							 gpointer              drawable);
-
-static void   gimp_drawable_list_view_delete_drawable   (GimpDrawableListView *view,
-							 GimpDrawable         *drawable);
 static void   gimp_drawable_list_view_delete_clicked    (GtkWidget            *widget,
 							 GimpDrawableListView *view);
-static void   gimp_drawable_list_view_delete_dropped    (GtkWidget            *widget,
-							 GimpViewable         *viewable,
-							 gpointer              drawable);
 
 static void   gimp_drawable_list_view_drawable_changed  (GimpImage            *gimage,
 							 GimpDrawableListView *view);
@@ -171,11 +145,9 @@ static void
 gimp_drawable_list_view_class_init (GimpDrawableListViewClass *klass)
 {
   GtkObjectClass         *object_class;
-  GtkWidgetClass         *widget_class;
   GimpContainerViewClass *container_view_class;
 
   object_class         = (GtkObjectClass *) klass;
-  widget_class         = (GtkWidgetClass *) klass;
   container_view_class = (GimpContainerViewClass *) klass;
 
   parent_class = g_type_class_peek_parent (klass);
@@ -192,8 +164,6 @@ gimp_drawable_list_view_class_init (GimpDrawableListViewClass *klass)
 
   object_class->destroy               = gimp_drawable_list_view_destroy;
 
-  widget_class->style_set             = gimp_drawable_list_view_style_set;
-
   container_view_class->insert_item   = gimp_drawable_list_view_insert_item;
   container_view_class->select_item   = gimp_drawable_list_view_select_item;
   container_view_class->activate_item = gimp_drawable_list_view_activate_item;
@@ -205,127 +175,63 @@ gimp_drawable_list_view_class_init (GimpDrawableListViewClass *klass)
 static void
 gimp_drawable_list_view_init (GimpDrawableListView *view)
 {
-  GtkWidget *pixmap;
+  GimpContainerView *container_view;
+
+  container_view = GIMP_CONTAINER_VIEW (view);
 
   view->gimage        = NULL;
   view->drawable_type = GTK_TYPE_NONE;
   view->signal_name   = NULL;
 
-  gtk_box_set_spacing (GTK_BOX (view), 2);
+  view->new_button =
+    gimp_container_view_add_button (container_view,
+				    GIMP_STOCK_NEW,
+				    _("New"), NULL,
+				    G_CALLBACK (gimp_drawable_list_view_new_clicked),
+				    NULL,
+				    view);
 
-  view->button_box = gtk_hbox_new (TRUE, 2);
-  gtk_box_pack_end (GTK_BOX (view), view->button_box, FALSE, FALSE, 0);
-  gtk_widget_show (view->button_box);
+  view->raise_button =
+    gimp_container_view_add_button (container_view,
+				    GIMP_STOCK_RAISE,
+				    _("Raise\n"
+				      "<Shift> To Top"), NULL,
+				    G_CALLBACK (gimp_drawable_list_view_raise_clicked),
+				    G_CALLBACK (gimp_drawable_list_view_raise_extended_clicked),
+				    view);
 
-  /* new */
+  view->lower_button =
+    gimp_container_view_add_button (container_view,
+				    GIMP_STOCK_LOWER,
+				    _("Lower\n"
+				      "<Shift> To Bottom"), NULL,
+				    G_CALLBACK (gimp_drawable_list_view_lower_clicked),
+				    G_CALLBACK (gimp_drawable_list_view_lower_extended_clicked),
+				    view);
 
-  view->new_button = gtk_button_new ();
-  gtk_box_pack_start (GTK_BOX (view->button_box), view->new_button,
-		      TRUE, TRUE, 0);
-  gtk_widget_show (view->new_button);
+  view->duplicate_button =
+    gimp_container_view_add_button (container_view,
+				    GIMP_STOCK_DUPLICATE,
+				    _("Duplicate"), NULL,
+				    G_CALLBACK (gimp_drawable_list_view_duplicate_clicked),
+				    NULL,
+				    view);
 
-  gimp_help_set_help_data (view->new_button, _("New"), NULL);
+  view->edit_button =
+    gimp_container_view_add_button (container_view,
+				    GIMP_STOCK_EDIT,
+				    _("Edit"), NULL,
+				    G_CALLBACK (gimp_drawable_list_view_edit_clicked),
+				    NULL,
+				    view);
 
-  g_signal_connect (G_OBJECT (view->new_button), "clicked",
-		    G_CALLBACK (gimp_drawable_list_view_new_clicked),
-		    view);
-
-  pixmap = gimp_pixmap_new (new_xpm);
-  gtk_container_add (GTK_CONTAINER (view->new_button), pixmap);
-  gtk_widget_show (pixmap);
-
-  /* raise */
-
-  view->raise_button = gimp_button_new ();
-  gtk_box_pack_start (GTK_BOX (view->button_box), view->raise_button,
-		      TRUE, TRUE, 0);
-  gtk_widget_show (view->raise_button);
-
-  gimp_help_set_help_data (view->raise_button, _("Raise\n"
-						 "<Shift> To Top"), NULL);
-
-  g_signal_connect (G_OBJECT (view->raise_button), "clicked",
-		    G_CALLBACK (gimp_drawable_list_view_raise_clicked),
-		    view);
-  g_signal_connect (G_OBJECT (view->raise_button), "extended_clicked",
-		    G_CALLBACK (gimp_drawable_list_view_raise_extended_clicked),
-		    view);
-
-  pixmap = gimp_pixmap_new (raise_xpm);
-  gtk_container_add (GTK_CONTAINER (view->raise_button), pixmap);
-  gtk_widget_show (pixmap);
-
-  /* lower */
-
-  view->lower_button = gimp_button_new ();
-  gtk_box_pack_start (GTK_BOX (view->button_box), view->lower_button,
-		      TRUE, TRUE, 0);
-  gtk_widget_show (view->lower_button);
-
-  gimp_help_set_help_data (view->lower_button, _("Lower\n"
-						 "<Shift> To Bottom"), NULL);
-
-  g_signal_connect (G_OBJECT (view->lower_button), "clicked",
-		    G_CALLBACK (gimp_drawable_list_view_lower_clicked),
-		    view);
-  g_signal_connect (G_OBJECT (view->lower_button), "extended_clicked",
-		    G_CALLBACK (gimp_drawable_list_view_lower_extended_clicked),
-		    view);
-
-  pixmap = gimp_pixmap_new (lower_xpm);
-  gtk_container_add (GTK_CONTAINER (view->lower_button), pixmap);
-  gtk_widget_show (pixmap);
-
-  /* duplicate */
-
-  view->duplicate_button = gtk_button_new ();
-  gtk_box_pack_start (GTK_BOX (view->button_box), view->duplicate_button,
-		      TRUE, TRUE, 0);
-  gtk_widget_show (view->duplicate_button);
-
-  gimp_help_set_help_data (view->duplicate_button, _("Duplicate"), NULL);
-
-  g_signal_connect (G_OBJECT (view->duplicate_button), "clicked",
-		    G_CALLBACK (gimp_drawable_list_view_duplicate_clicked),
-		    view);  
-
-  pixmap = gimp_pixmap_new (duplicate_xpm);
-  gtk_container_add (GTK_CONTAINER (view->duplicate_button), pixmap);
-  gtk_widget_show (pixmap);
-
-  /* edit */
-
-  view->edit_button = gtk_button_new ();
-  gtk_box_pack_start (GTK_BOX (view->button_box), view->edit_button,
-		      TRUE, TRUE, 0);
-  gtk_widget_show (view->edit_button);
-
-  gimp_help_set_help_data (view->edit_button, _("Edit"), NULL);
-
-  g_signal_connect (G_OBJECT (view->edit_button), "clicked",
-		    G_CALLBACK (gimp_drawable_list_view_edit_clicked),
-		    view);  
-
-  pixmap = gimp_pixmap_new (edit_xpm);
-  gtk_container_add (GTK_CONTAINER (view->edit_button), pixmap);
-  gtk_widget_show (pixmap);
-
-  /* delete */
-
-  view->delete_button = gtk_button_new ();
-  gtk_box_pack_start (GTK_BOX (view->button_box), view->delete_button,
-		      TRUE, TRUE, 0);
-  gtk_widget_show (view->delete_button);
-
-  gimp_help_set_help_data (view->delete_button, _("Delete"), NULL);
-
-  g_signal_connect (G_OBJECT (view->delete_button), "clicked",
-		    G_CALLBACK (gimp_drawable_list_view_delete_clicked),
-		    view);  
-
-  pixmap = gimp_pixmap_new (delete_xpm);
-  gtk_container_add (GTK_CONTAINER (view->delete_button), pixmap);
-  gtk_widget_show (pixmap);
+  view->delete_button =
+    gimp_container_view_add_button (container_view,
+				    GIMP_STOCK_DELETE,
+				    _("Delete"), NULL,
+				    G_CALLBACK (gimp_drawable_list_view_delete_clicked),
+				    NULL,
+				    view);
 
   gtk_widget_set_sensitive (view->new_button,       FALSE);
   gtk_widget_set_sensitive (view->raise_button,     FALSE);
@@ -353,24 +259,6 @@ gimp_drawable_list_view_destroy (GtkObject *object)
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
-}
-
-static void
-gimp_drawable_list_view_style_set (GtkWidget *widget,
-				   GtkStyle  *prev_style)
-{
-  gint button_spacing;
-
-  gtk_widget_style_get (widget,
-                        "button_spacing",
-                        &button_spacing,
-			NULL);
-
-  gtk_box_set_spacing (GTK_BOX (GIMP_DRAWABLE_LIST_VIEW (widget)->button_box),
-		       button_spacing);
-
-  if (GTK_WIDGET_CLASS (parent_class)->style_set)
-    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 }
 
 GtkWidget *
@@ -436,45 +324,27 @@ gimp_drawable_list_view_new (gint                     preview_size,
   list_view->edit_drawable_func    = edit_drawable_func;
   list_view->drawable_context_func = drawable_context_func;
 
-  /*  drop to "new"  */
-  gimp_gtk_drag_dest_set_by_type (GTK_WIDGET (list_view->new_button),
+  /*  connect "drop to new" manually as it makes a difference whether
+   *  it was clicked or dropped
+   */
+  gimp_gtk_drag_dest_set_by_type (list_view->new_button,
 				  GTK_DEST_DEFAULT_ALL,
 				  drawable_type,
 				  GDK_ACTION_COPY);
-  gimp_dnd_viewable_dest_set (GTK_WIDGET (list_view->new_button),
+  gimp_dnd_viewable_dest_set (list_view->new_button,
 			      drawable_type,
 			      gimp_drawable_list_view_new_dropped,
-			      list_view);
+			      view);
 
-  /*  drop to "duplicate"  */
-  gimp_gtk_drag_dest_set_by_type (GTK_WIDGET (list_view->duplicate_button),
-				  GTK_DEST_DEFAULT_ALL,
-				  drawable_type,
-				  GDK_ACTION_COPY);
-  gimp_dnd_viewable_dest_set (GTK_WIDGET (list_view->duplicate_button),
-			      drawable_type,
-			      gimp_drawable_list_view_duplicate_dropped,
-			      list_view);
-
-  /*  drop to "edit"  */
-  gimp_gtk_drag_dest_set_by_type (GTK_WIDGET (list_view->edit_button),
-				  GTK_DEST_DEFAULT_ALL,
-				  drawable_type,
-				  GDK_ACTION_COPY);
-  gimp_dnd_viewable_dest_set (GTK_WIDGET (list_view->edit_button),
-			      drawable_type,
-			      gimp_drawable_list_view_edit_dropped,
-			      list_view);
-
-  /*  drop to "delete"  */
-  gimp_gtk_drag_dest_set_by_type (GTK_WIDGET (list_view->delete_button),
-				  GTK_DEST_DEFAULT_ALL,
-				  drawable_type,
-				  GDK_ACTION_COPY);
-  gimp_dnd_viewable_dest_set (GTK_WIDGET (list_view->delete_button),
-			      drawable_type,
-			      gimp_drawable_list_view_delete_dropped,
-			      list_view);
+  gimp_container_view_enable_dnd (view,
+				  GTK_BUTTON (list_view->duplicate_button),
+				  drawable_type);
+  gimp_container_view_enable_dnd (view,
+				  GTK_BUTTON (list_view->edit_button),
+				  drawable_type);
+  gimp_container_view_enable_dnd (view,
+				  GTK_BUTTON (list_view->delete_button),
+				  drawable_type);
 
   gimp_drawable_list_view_set_image (list_view, gimage);
 
@@ -636,8 +506,7 @@ gimp_drawable_list_view_activate_item (GimpContainerView *view,
 							     item,
 							     insert_data);
 
-  gimp_drawable_list_view_edit_drawable (GIMP_DRAWABLE_LIST_VIEW (view),
-					 GIMP_DRAWABLE (item));
+  gtk_button_clicked (GTK_BUTTON (GIMP_DRAWABLE_LIST_VIEW (view)->edit_button));
 }
 
 static void
@@ -698,43 +567,18 @@ gimp_drawable_list_view_new_dropped (GtkWidget    *widget,
 /*  "Duplicate" functions  */
 
 static void
-gimp_drawable_list_view_duplicate_drawable (GimpDrawableListView *view,
-					    GimpDrawable         *drawable)
+gimp_drawable_list_view_duplicate_clicked (GtkWidget            *widget,
+					   GimpDrawableListView *view)
 {
+  GimpDrawable *drawable;
   GimpDrawable *new_drawable;
+
+  drawable = view->get_drawable_func (view->gimage);
 
   new_drawable = view->copy_drawable_func (drawable, TRUE);
   view->add_drawable_func (view->gimage, new_drawable, -1);
 
   gdisplays_flush ();
-}
-
-static void
-gimp_drawable_list_view_duplicate_clicked (GtkWidget            *widget,
-					   GimpDrawableListView *view)
-{
-  GimpDrawable *drawable;
-
-  drawable = view->get_drawable_func (view->gimage);
-
-  gimp_drawable_list_view_duplicate_drawable (view, drawable);
-}
-
-static void
-gimp_drawable_list_view_duplicate_dropped (GtkWidget    *widget,
-					   GimpViewable *viewable,
-					   gpointer      data)
-{
-  GimpDrawableListView *view;
-
-  view = (GimpDrawableListView *) data;
-
-  if (viewable && gimp_container_have (GIMP_CONTAINER_VIEW (view)->container,
-				       GIMP_OBJECT (viewable)))
-    {
-      gimp_drawable_list_view_duplicate_drawable (view,
-						  GIMP_DRAWABLE (viewable));
-    }
 }
 
 
@@ -831,13 +675,6 @@ gimp_drawable_list_view_lower_extended_clicked (GtkWidget            *widget,
 /*  "Edit" functions  */
 
 static void
-gimp_drawable_list_view_edit_drawable (GimpDrawableListView *view,
-				       GimpDrawable         *drawable)
-{
-  view->edit_drawable_func (drawable);
-}
-
-static void
 gimp_drawable_list_view_edit_clicked (GtkWidget            *widget,
 				      GimpDrawableListView *view)
 {
@@ -845,36 +682,11 @@ gimp_drawable_list_view_edit_clicked (GtkWidget            *widget,
 
   drawable = view->get_drawable_func (view->gimage);
 
-  gimp_drawable_list_view_edit_drawable (view, drawable);
-}
-
-static void
-gimp_drawable_list_view_edit_dropped (GtkWidget    *widget,
-				      GimpViewable *viewable,
-				      gpointer      data)
-{
-  GimpDrawableListView *view;
-
-  view = (GimpDrawableListView *) data;
-
-  if (viewable && gimp_container_have (GIMP_CONTAINER_VIEW (view)->container,
-				       GIMP_OBJECT (viewable)))
-    {
-      gimp_drawable_list_view_edit_drawable (view, GIMP_DRAWABLE (viewable));
-    }
+  view->edit_drawable_func (drawable);
 }
 
 
 /*  "Delete" functions  */
-
-static void
-gimp_drawable_list_view_delete_drawable (GimpDrawableListView *view,
-					 GimpDrawable         *drawable)
-{
-  view->remove_drawable_func (view->gimage, drawable);
-
-  gdisplays_flush ();
-}
 
 static void
 gimp_drawable_list_view_delete_clicked (GtkWidget            *widget,
@@ -884,23 +696,9 @@ gimp_drawable_list_view_delete_clicked (GtkWidget            *widget,
 
   drawable = view->get_drawable_func (view->gimage);
 
-  gimp_drawable_list_view_delete_drawable (view, drawable);
-}
+  view->remove_drawable_func (view->gimage, drawable);
 
-static void
-gimp_drawable_list_view_delete_dropped (GtkWidget    *widget,
-					GimpViewable *viewable,
-					gpointer      data)
-{
-  GimpDrawableListView *view;
-
-  view = (GimpDrawableListView *) data;
-
-  if (viewable && gimp_container_have (GIMP_CONTAINER_VIEW (view)->container,
-				       GIMP_OBJECT (viewable)))
-    {
-      gimp_drawable_list_view_delete_drawable (view, GIMP_DRAWABLE (viewable));
-    }
+  gdisplays_flush ();
 }
 
 

@@ -150,15 +150,17 @@ gimp_container_grid_view_init (GimpContainerGridView *grid_view)
 				  GTK_POLICY_ALWAYS);
   gtk_box_pack_start (GTK_BOX (grid_view), grid_view->scrolled_win,
 		      TRUE, TRUE, 0);
+  gtk_widget_show (grid_view->scrolled_win);
+
+  GIMP_CONTAINER_VIEW (grid_view)->dnd_widget = grid_view->scrolled_win;
 
   grid_view->wrap_box = gimp_constrained_hwrap_box_new (FALSE);
-
   gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (grid_view->wrap_box),
 				 1.0 / 256.0);
-
   gtk_scrolled_window_add_with_viewport
     (GTK_SCROLLED_WINDOW (grid_view->scrolled_win),
      grid_view->wrap_box);
+  gtk_widget_show (grid_view->wrap_box);
 
   gtk_widget_set_style
     (grid_view->wrap_box->parent,
@@ -174,9 +176,6 @@ gimp_container_grid_view_init (GimpContainerGridView *grid_view)
                           GTK_CAN_FOCUS);
 
   GTK_WIDGET_SET_FLAGS (grid_view->wrap_box->parent, GTK_CAN_FOCUS);
-
-  gtk_widget_show (grid_view->wrap_box);
-  gtk_widget_show (grid_view->scrolled_win);
 }
 
 static void

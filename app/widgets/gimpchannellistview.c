@@ -44,8 +44,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps/toselection.xpm"
-
 
 static void   gimp_channel_list_view_class_init (GimpChannelListViewClass *klass);
 static void   gimp_channel_list_view_init       (GimpChannelListView      *view);
@@ -70,10 +68,6 @@ static void   gimp_channel_list_view_toselection_extended_clicked
                                                     (GtkWidget           *widget,
 						     guint                state,
 						     GimpChannelListView *view);
-static void   gimp_channel_list_view_toselection_dropped
-                                                    (GtkWidget           *widget,
-						     GimpViewable        *viewable,
-						     gpointer             data);
 
 static void   gimp_channel_list_view_create_components
                                                     (GimpChannelListView *view);
@@ -142,9 +136,12 @@ static void
 gimp_channel_list_view_init (GimpChannelListView *view)
 {
   GimpDrawableListView *drawable_view;
-  GtkWidget            *pixmap;
+  GimpContainerView    *container_view;
 
-  drawable_view = GIMP_DRAWABLE_LIST_VIEW (view);
+  drawable_view  = GIMP_DRAWABLE_LIST_VIEW (view);
+  container_view = GIMP_CONTAINER_VIEW (view);
+
+  /*  component frame  */
 
   view->component_frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (view->component_frame), GTK_SHADOW_IN);
@@ -168,38 +165,20 @@ gimp_channel_list_view_init (GimpChannelListView *view)
 
   /*  To Selection button  */
 
-  view->toselection_button = gimp_button_new ();
-  gtk_box_pack_start (GTK_BOX (drawable_view->button_box),
-		      view->toselection_button, TRUE, TRUE, 0);
-  gtk_box_reorder_child (GTK_BOX (drawable_view->button_box),
-			 view->toselection_button, 5);
-  gtk_widget_show (view->toselection_button);
+  view->toselection_button =
+    gimp_container_view_add_button (container_view,
+				    GIMP_STOCK_TO_SELECTION,
+				    _("Channel to Selection\n"
+				      "<Shift> Add\n"
+				      "<Ctrl> Subtract\n"
+				      "<Shift><Ctrl> Intersect"), NULL,
+				    G_CALLBACK (gimp_channel_list_view_toselection_clicked),
+				    G_CALLBACK (gimp_channel_list_view_toselection_extended_clicked),
+				    view);
 
-  gimp_help_set_help_data (view->toselection_button,
-			   _("Channel to Selection\n"
-			     "<Shift> Add\n"
-			     "<Ctrl> Subtract\n"
-			     "<Shift><Ctrl> Intersect"), NULL);
-
-  g_signal_connect (G_OBJECT (view->toselection_button), "clicked",
-		    G_CALLBACK (gimp_channel_list_view_toselection_clicked),
-		    view);
-  g_signal_connect (G_OBJECT (view->toselection_button), "extended_clicked",
-		    G_CALLBACK (gimp_channel_list_view_toselection_extended_clicked),
-		    view);
-
-  pixmap = gimp_pixmap_new (toselection_xpm);
-  gtk_container_add (GTK_CONTAINER (view->toselection_button), pixmap);
-  gtk_widget_show (pixmap);
-
-  gimp_gtk_drag_dest_set_by_type (GTK_WIDGET (view->toselection_button),
-				  GTK_DEST_DEFAULT_ALL,
-				  GIMP_TYPE_CHANNEL,
-				  GDK_ACTION_COPY);
-  gimp_dnd_viewable_dest_set (GTK_WIDGET (view->toselection_button),
-			      GIMP_TYPE_CHANNEL,
-			      gimp_channel_list_view_toselection_dropped,
-			      view);
+  gimp_container_view_enable_dnd (container_view,
+				  GTK_BUTTON (view->toselection_button),
+				  GIMP_TYPE_CHANNEL);
 
   gtk_widget_set_sensitive (view->toselection_button, FALSE);
 }
@@ -279,7 +258,7 @@ gimp_channel_list_view_select_item (GimpContainerView *view,
 
       floating_sel = (gimp_image_floating_sel (drawable_view->gimage) != NULL);
 
-      gtk_widget_set_sensitive (drawable_view->button_box, !floating_sel);
+      gtk_widget_set_sensitive (view->button_box, !floating_sel);
     }
 
   gtk_widget_set_sensitive (list_view->toselection_button, item != NULL);
@@ -392,23 +371,6 @@ gimp_channel_list_view_toselection_extended_clicked (GtkWidget           *widget
 
       gimp_channel_list_view_to_selection (view, GIMP_CHANNEL (drawable),
 					   operation);
-    }
-}
-
-static void
-gimp_channel_list_view_toselection_dropped (GtkWidget    *widget,
-					    GimpViewable *viewable,
-					    gpointer      data)
-{
-  GimpChannelListView *view;
-
-  view = (GimpChannelListView *) data;
-
-  if (viewable && gimp_container_have (GIMP_CONTAINER_VIEW (view)->container,
-				       GIMP_OBJECT (viewable)))
-    {
-      gimp_channel_list_view_to_selection (view, GIMP_CHANNEL (viewable),
-					   CHANNEL_OP_REPLACE);
     }
 }
 

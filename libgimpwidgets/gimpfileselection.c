@@ -39,9 +39,6 @@
 
 #include "libgimp/libgimp-intl.h"
 
-#include "pixmaps/yes.xpm"
-#include "pixmaps/no.xpm"
-
 
 #ifdef G_OS_WIN32
 # ifndef S_ISDIR
@@ -52,15 +49,19 @@
 # endif
 #endif
 
-/*  callbacks  */
-static void gimp_file_selection_realize                  (GtkWidget *widget);
-static void gimp_file_selection_entry_callback           (GtkWidget *widget,
-							  gpointer   data);
-static gint gimp_file_selection_entry_focus_out_callback (GtkWidget *widget,
-							  GdkEvent  *event,
-							  gpointer   data);
-static void gimp_file_selection_browse_callback          (GtkWidget *widget,
-							  gpointer   data);
+
+static void   gimp_file_selection_class_init (GimpFileSelectionClass *klass);
+static void   gimp_file_selection_init       (GimpFileSelection      *gfs);
+
+static void   gimp_file_selection_destroy                  (GtkObject *object);
+
+static void   gimp_file_selection_entry_callback           (GtkWidget *widget,
+							    gpointer   data);
+static gint   gimp_file_selection_entry_focus_out_callback (GtkWidget *widget,
+							    GdkEvent  *event,
+							    gpointer   data);
+static void   gimp_file_selection_browse_callback          (GtkWidget *widget,
+							    gpointer   data);
 
 /*  private functions  */
 static void gimp_file_selection_check_filename (GimpFileSelection *gfs);
@@ -75,63 +76,38 @@ static guint gimp_file_selection_signals[LAST_SIGNAL] = { 0 };
 
 static GtkHBoxClass *parent_class = NULL;
 
-static void
-gimp_file_selection_destroy (GtkObject *object)
+
+GType
+gimp_file_selection_get_type (void)
 {
-  GimpFileSelection *gfs;
+  static GType gfs_type = 0;
 
-  g_return_if_fail (GIMP_IS_FILE_SELECTION (object));
-
-  gfs = GIMP_FILE_SELECTION (object);
-
-  if (gfs->file_selection)
+  if (!gfs_type)
     {
-      gtk_widget_destroy (gfs->file_selection);
-      gfs->file_selection = NULL;
-    }
+      GtkTypeInfo gfs_info =
+      {
+	"GimpFileSelection",
+	sizeof (GimpFileSelection),
+	sizeof (GimpFileSelectionClass),
+	(GtkClassInitFunc) gimp_file_selection_class_init,
+	(GtkObjectInitFunc) gimp_file_selection_init,
+	/* reserved_1 */ NULL,
+	/* reserved_2 */ NULL,
+        (GtkClassInitFunc) NULL
+      };
 
-  if (gfs->title)
-    {
-      g_free (gfs->title);
-      gfs->title = NULL;
+      gfs_type = gtk_type_unique (gtk_hbox_get_type (), &gfs_info);
     }
-
-  if (gfs->yes_pixmap)
-    {
-      gdk_drawable_unref (gfs->yes_pixmap);
-      gfs->yes_pixmap = NULL;
-    }
-
-  if (gfs->yes_mask)
-    {
-      gdk_drawable_unref (gfs->yes_mask);
-      gfs->yes_mask = NULL;
-    }
-
-  if (gfs->no_pixmap)
-    {
-      gdk_drawable_unref (gfs->no_pixmap);
-      gfs->no_pixmap = NULL;
-    }
-
-  if (gfs->no_mask)
-    {
-      gdk_drawable_unref (gfs->no_mask);
-      gfs->no_mask = NULL;
-    }
-
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  
+  return gfs_type;
 }
 
 static void
 gimp_file_selection_class_init (GimpFileSelectionClass *klass)
 {
   GtkObjectClass *object_class;
-  GtkWidgetClass *widget_class;
 
   object_class = (GtkObjectClass *) klass;
-  widget_class = (GtkWidgetClass *) klass;
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -147,8 +123,6 @@ gimp_file_selection_class_init (GimpFileSelectionClass *klass)
 
   object_class->destroy   = gimp_file_selection_destroy;
 
-  widget_class->realize   = gimp_file_selection_realize;
-
   klass->filename_changed = NULL;
 }
 
@@ -160,10 +134,6 @@ gimp_file_selection_init (GimpFileSelection *gfs)
   gfs->check_valid    = FALSE;
 
   gfs->file_exists    = NULL;
-  gfs->yes_pixmap     = NULL;
-  gfs->yes_mask       = NULL;
-  gfs->no_pixmap      = NULL;
-  gfs->no_mask        = NULL;
 
   gtk_box_set_spacing (GTK_BOX (gfs), 2);
   gtk_box_set_homogeneous (GTK_BOX (gfs), FALSE);
@@ -186,29 +156,29 @@ gimp_file_selection_init (GimpFileSelection *gfs)
   gtk_widget_show (gfs->entry);
 }
 
-GtkType
-gimp_file_selection_get_type (void)
+static void
+gimp_file_selection_destroy (GtkObject *object)
 {
-  static GtkType gfs_type = 0;
+  GimpFileSelection *gfs;
 
-  if (!gfs_type)
+  g_return_if_fail (GIMP_IS_FILE_SELECTION (object));
+
+  gfs = GIMP_FILE_SELECTION (object);
+
+  if (gfs->file_selection)
     {
-      GtkTypeInfo gfs_info =
-      {
-	"GimpFileSelection",
-	sizeof (GimpFileSelection),
-	sizeof (GimpFileSelectionClass),
-	(GtkClassInitFunc) gimp_file_selection_class_init,
-	(GtkObjectInitFunc) gimp_file_selection_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
-      };
-
-      gfs_type = gtk_type_unique (gtk_hbox_get_type (), &gfs_info);
+      gtk_widget_destroy (gfs->file_selection);
+      gfs->file_selection = NULL;
     }
-  
-  return gfs_type;
+
+  if (gfs->title)
+    {
+      g_free (gfs->title);
+      gfs->title = NULL;
+    }
+
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 /**
@@ -236,6 +206,14 @@ gimp_file_selection_new (const gchar *title,
   gfs->title       = g_strdup (title);
   gfs->dir_only    = dir_only;
   gfs->check_valid = check_valid;
+
+  if (check_valid)
+    {
+      gfs->file_exists = gtk_image_new_from_stock (GTK_STOCK_NO,
+						   GTK_ICON_SIZE_BUTTON);
+      gtk_box_pack_start (GTK_BOX (gfs), gfs->file_exists, FALSE, FALSE, 0);
+      gtk_widget_show (gfs->file_exists);
+    }
 
   gimp_file_selection_set_filename (gfs, filename);
 
@@ -279,37 +257,6 @@ gimp_file_selection_set_filename (GimpFileSelection *gfs,
   /*  update everything
    */
   gimp_file_selection_entry_callback (gfs->entry, (gpointer) gfs);
-}
-
-static void
-gimp_file_selection_realize (GtkWidget *widget)
-{
-  GimpFileSelection *gfs;
-  GtkStyle          *style;
-
-  gfs = GIMP_FILE_SELECTION (widget);
-  if (! gfs->check_valid)
-    return;
-
-  if (GTK_WIDGET_CLASS (parent_class)->realize)
-    GTK_WIDGET_CLASS (parent_class)->realize (widget);
-
-  style = gtk_widget_get_style (widget);
-
-  gfs->yes_pixmap = gdk_pixmap_create_from_xpm_d (widget->window,
-						  &gfs->yes_mask,
-						  &style->bg[GTK_STATE_NORMAL],
-						  yes_xpm);
-  gfs->no_pixmap = gdk_pixmap_create_from_xpm_d (widget->window,
-						 &gfs->no_mask,
-						 &style->bg[GTK_STATE_NORMAL],
-						 no_xpm);
-
-  gfs->file_exists = gtk_pixmap_new (gfs->no_pixmap, gfs->no_mask);
-  gtk_box_pack_start (GTK_BOX (gfs), gfs->file_exists, FALSE, FALSE, 0);
-
-  gimp_file_selection_check_filename (gfs);
-  gtk_widget_show (gfs->file_exists);
 }
 
 static void
@@ -467,16 +414,17 @@ gimp_file_selection_check_filename (GimpFileSelection *gfs)
     return;
 
   filename = gtk_editable_get_chars (GTK_EDITABLE (gfs->entry), 0, -1);
+
   if ((stat (filename, &statbuf) == 0) &&
       (gfs->dir_only ? S_ISDIR (statbuf.st_mode) : S_ISREG (statbuf.st_mode)))
     {
-      gtk_pixmap_set (GTK_PIXMAP (gfs->file_exists),
-		      gfs->yes_pixmap, gfs->yes_mask);
+      gtk_image_set_from_stock (GTK_IMAGE (gfs->file_exists),
+				GTK_STOCK_YES, GTK_ICON_SIZE_BUTTON);
     }
   else
     {
-      gtk_pixmap_set (GTK_PIXMAP (gfs->file_exists),
-		      gfs->no_pixmap, gfs->no_mask);
+      gtk_image_set_from_stock (GTK_IMAGE (gfs->file_exists),
+				GTK_STOCK_NO, GTK_ICON_SIZE_BUTTON);
     }
 
   g_free (filename);

@@ -23,27 +23,31 @@
 #define __GIMP_WIDGETS_UTILS_H__
 
 
-void  gimp_message_box   (gchar        *message,
-			  GtkCallback   callback,
-			  gpointer      data);
-
-void  gimp_dialog_hide   (GtkWidget    *dialog);
-
-void  gimp_menu_position (GtkMenu      *menu,
-			  gint         *x,
-			  gint         *y);
-
-
 typedef gpointer (* GimpGetAccelContextFunc) (gpointer data);
 
-void  gimp_window_add_accel_group    (GtkWindow               *window,
-				      GtkItemFactory          *item_factory,
-				      GimpGetAccelContextFunc  get_context_func,
-				      gpointer                 get_context_data);
-void  gimp_window_remove_accel_group (GtkWindow               *window,
-				      GtkItemFactory          *item_factory);
 
-gpointer gimp_widget_get_callback_context (GtkWidget *widget);
+void     gimp_message_box                  (gchar          *message,
+					    GtkCallback     callback,
+					    gpointer        data);
+
+void     gimp_dialog_hide                  (GtkWidget      *dialog);
+
+void     gimp_menu_position                (GtkMenu        *menu,
+					    gint           *x,
+					    gint           *y,
+					    guint          *button,
+					    guint32        *activate_time);
+void     gimp_item_factory_popup_with_data (GtkItemFactory *item_factory,
+					    gpointer        data);
+
+void     gimp_window_add_accel_group       (GtkWindow      *window,
+					    GtkItemFactory *item_factory,
+					    GimpGetAccelContextFunc get_context_func,
+					    gpointer        get_context_data);
+void     gimp_window_remove_accel_group    (GtkWindow      *window,
+					    GtkItemFactory *item_factory);
+
+gpointer gimp_widget_get_callback_context  (GtkWidget *widget);
 
 
 #endif /* __GIMP_WIDGETS_UTILS_H__ */

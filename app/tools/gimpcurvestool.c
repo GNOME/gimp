@@ -676,7 +676,7 @@ curves_dialog_new (void)
 
 			       GTK_STOCK_OK, curves_ok_callback,
 			       cd, NULL, NULL, TRUE, FALSE,
-			       _("Reset"), curves_reset_callback,
+			       GIMP_STOCK_RESET, curves_reset_callback,
 			       cd, NULL, NULL, FALSE, FALSE,
 			       GTK_STOCK_CANCEL, curves_cancel_callback,
 			       cd, NULL, NULL, FALSE, TRUE,

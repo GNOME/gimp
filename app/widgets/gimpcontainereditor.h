@@ -53,7 +53,6 @@ struct _GimpContainerEditor
   GimpContainerContextFunc  context_func;
 
   GimpContainerView        *view;
-  GtkWidget                *button_box;
 };
 
 struct _GimpContainerEditorClass
@@ -82,14 +81,6 @@ gboolean    gimp_container_editor_construct  (GimpContainerEditor  *editor,
 					      gint                  min_items_x,
 					      gint                  min_items_y,
 					      GimpContainerContextFunc  context_func);
-
-GtkWidget * gimp_container_editor_add_button (GimpContainerEditor  *editor,
-					      const gchar          *stock_id,
-					      const gchar          *tooltip,
-					      const gchar          *help_data,
-					      GCallback             callback);
-void        gimp_container_editor_enable_dnd (GimpContainerEditor  *editor,
-					      GtkButton            *button);
 
 
 #endif  /*  __GIMP_CONTAINER_EDITOR_H__  */

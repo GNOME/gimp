@@ -47,6 +47,11 @@ struct _GimpContainerView
   gint                 preview_size;
 
   GimpItemGetNameFunc  get_name_func;
+
+  GtkWidget           *button_box;
+
+  /*  initialized by subclass  */
+  GtkWidget           *dnd_widget;
 };
 
 struct _GimpContainerViewClass
@@ -89,6 +94,17 @@ void      gimp_container_view_set_preview_size (GimpContainerView   *view,
 						gint                 preview_size);
 void      gimp_container_view_set_name_func    (GimpContainerView   *view,
 						GimpItemGetNameFunc  get_name_func);
+
+GtkWidget * gimp_container_view_add_button     (GimpContainerView   *editor,
+						const gchar         *stock_id,
+						const gchar         *tooltip,
+						const gchar         *help_data,
+						GCallback            callback,
+						GCallback            extended_callback,
+						gpointer             callback_data);
+void      gimp_container_view_enable_dnd       (GimpContainerView   *editor,
+						GtkButton           *button,
+						GType                children_type);
 
 void      gimp_container_view_select_item      (GimpContainerView   *view,
 						GimpViewable        *viewable);

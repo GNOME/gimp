@@ -171,9 +171,9 @@ gdisplay_shell_events (GtkWidget *widget,
 
 gint
 gdisplay_canvas_events (GtkWidget *canvas,
-			GdkEvent  *event)
+			GdkEvent  *event,
+			GDisplay  *gdisp)
 {
-  GDisplay        *gdisp;
   GimpTool        *active_tool;
   GdkEventExpose  *eevent;
   GdkEventMotion  *mevent;
@@ -187,9 +187,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
   static guint     key_signal_id = 0;
   gboolean         update_cursor = FALSE;
 
-  gdisp = (GDisplay *) gtk_object_get_user_data (GTK_OBJECT (canvas));
-
-  if (!canvas->window)
+  if (! canvas->window)
     return FALSE;
 
   active_tool = tool_manager_get_active (gdisp->gimage->gimp);
@@ -342,16 +340,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 
 	case 3:
 	  state |= GDK_BUTTON3_MASK;
-	  {
-	    gint x, y;
-
-	    gimp_menu_position (GTK_MENU (gdisp->ifactory->widget), &x, &y);
-
-	    gtk_item_factory_popup_with_data (gdisp->ifactory,
-					      gdisp->gimage, NULL,
-					      x, y,
-					      3, bevent->time);
-	  }
+	  gimp_item_factory_popup_with_data (gdisp->ifactory, gdisp->gimage);
 	  return_val = TRUE;
 	  break;
 

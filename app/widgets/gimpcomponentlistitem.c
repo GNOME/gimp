@@ -39,8 +39,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps/eye.xpm"
-
 
 static void    gimp_component_list_item_class_init (GimpComponentListItemClass *klass);
 static void    gimp_component_list_item_init       (GimpComponentListItem      *list_item);
@@ -110,7 +108,7 @@ static void
 gimp_component_list_item_init (GimpComponentListItem *list_item)
 {
   GtkWidget *abox;
-  GtkWidget *pixmap;
+  GtkWidget *image;
 
   list_item->channel = 0;
 
@@ -132,9 +130,10 @@ gimp_component_list_item_init (GimpComponentListItem *list_item)
 		    G_CALLBACK (gimp_list_item_button_state_changed),
 		    list_item);
 
-  pixmap = gimp_pixmap_new (eye_xpm);
-  gtk_container_add (GTK_CONTAINER (list_item->eye_button), pixmap);
-  gtk_widget_show (pixmap);
+  image = gtk_image_new_from_stock (GIMP_STOCK_VISIBLE,
+				    GTK_ICON_SIZE_BUTTON);
+  gtk_container_add (GTK_CONTAINER (list_item->eye_button), image);
+  gtk_widget_show (image);
 }
 
 GtkWidget *

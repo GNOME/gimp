@@ -71,10 +71,10 @@ static void   gimp_data_factory_view_activate_item     (GimpContainerEditor *edi
 static GimpContainerEditorClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_data_factory_view_get_type (void)
 {
-  static guint view_type = 0;
+  static GType view_type = 0;
 
   if (! view_type)
     {
@@ -105,7 +105,7 @@ gimp_data_factory_view_class_init (GimpDataFactoryViewClass *klass)
   object_class = (GtkObjectClass *) klass;
   editor_class = (GimpContainerEditorClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_CONTAINER_EDITOR);
+  parent_class = g_type_class_peek_parent (klass);
 
   object_class->destroy       = gimp_data_factory_view_destroy;
 
@@ -116,43 +116,11 @@ gimp_data_factory_view_class_init (GimpDataFactoryViewClass *klass)
 static void
 gimp_data_factory_view_init (GimpDataFactoryView *view)
 {
-  GimpContainerEditor *editor;
-
-  editor = GIMP_CONTAINER_EDITOR (view);
-
-  view->new_button =
-    gimp_container_editor_add_button (editor,
-				      GIMP_STOCK_NEW,
-				      _("New"), NULL,
-				      G_CALLBACK (gimp_data_factory_view_new_clicked));
-
-  view->duplicate_button =
-    gimp_container_editor_add_button (editor,
-				      GIMP_STOCK_DUPLICATE,
-				      _("Duplicate"), NULL,
-				      G_CALLBACK (gimp_data_factory_view_duplicate_clicked));
-
-  view->edit_button =
-    gimp_container_editor_add_button (editor,
-				      GIMP_STOCK_EDIT,
-				      _("Edit"), NULL,
-				      G_CALLBACK (gimp_data_factory_view_edit_clicked));
-
-  view->delete_button =
-    gimp_container_editor_add_button (editor,
-				      GIMP_STOCK_DELETE,
-				      _("Delete"), NULL,
-				      G_CALLBACK (gimp_data_factory_view_delete_clicked));
-
-  view->refresh_button =
-    gimp_container_editor_add_button (editor,
-				      GIMP_STOCK_REFRESH,
-				      _("Refresh"), NULL,
-				      G_CALLBACK (gimp_data_factory_view_refresh_clicked));
-
-  gtk_widget_set_sensitive (view->duplicate_button, FALSE);
-  gtk_widget_set_sensitive (view->edit_button, FALSE);
-  gtk_widget_set_sensitive (view->delete_button, FALSE);
+  view->new_button       = NULL;
+  view->duplicate_button = NULL;
+  view->edit_button      = NULL;
+  view->delete_button    = NULL;
+  view->refresh_button   = NULL;
 }
 
 static void
@@ -235,12 +203,62 @@ gimp_data_factory_view_construct (GimpDataFactoryView      *factory_view,
 
   editor = GIMP_CONTAINER_EDITOR (factory_view);
 
-  gimp_container_editor_enable_dnd (editor,
-				    GTK_BUTTON (factory_view->duplicate_button));
-  gimp_container_editor_enable_dnd (editor,
-				    GTK_BUTTON (factory_view->edit_button));
-  gimp_container_editor_enable_dnd (editor,
-				    GTK_BUTTON (factory_view->delete_button));
+  factory_view->new_button =
+    gimp_container_view_add_button (editor->view,
+				    GIMP_STOCK_NEW,
+				    _("New"), NULL,
+				    G_CALLBACK (gimp_data_factory_view_new_clicked),
+				    NULL,
+				    editor);
+
+  factory_view->duplicate_button =
+    gimp_container_view_add_button (editor->view,
+				    GIMP_STOCK_DUPLICATE,
+				    _("Duplicate"), NULL,
+				    G_CALLBACK (gimp_data_factory_view_duplicate_clicked),
+				    NULL,
+				    editor);
+
+  factory_view->edit_button =
+    gimp_container_view_add_button (editor->view,
+				    GIMP_STOCK_EDIT,
+				    _("Edit"), NULL,
+				    G_CALLBACK (gimp_data_factory_view_edit_clicked),
+				    NULL,
+				    editor);
+
+  factory_view->delete_button =
+    gimp_container_view_add_button (editor->view,
+				    GIMP_STOCK_DELETE,
+				    _("Delete"), NULL,
+				    G_CALLBACK (gimp_data_factory_view_delete_clicked),
+				    NULL,
+				    editor);
+
+  factory_view->refresh_button =
+    gimp_container_view_add_button (editor->view,
+				    GIMP_STOCK_REFRESH,
+				    _("Refresh"), NULL,
+				    G_CALLBACK (gimp_data_factory_view_refresh_clicked),
+				    NULL,
+				    editor);
+
+  /*  set button sensitivity  */
+  if (GIMP_CONTAINER_EDITOR_GET_CLASS (editor)->select_item)
+    GIMP_CONTAINER_EDITOR_GET_CLASS (editor)->select_item
+      (editor,
+       (GimpViewable *) gimp_context_get_by_type (context,
+						  factory->container->children_type));
+
+  gimp_container_view_enable_dnd (editor->view,
+				  GTK_BUTTON (factory_view->duplicate_button),
+				  factory->container->children_type);
+  gimp_container_view_enable_dnd (editor->view,
+				  GTK_BUTTON (factory_view->edit_button),
+				  factory->container->children_type);
+  gimp_container_view_enable_dnd (editor->view,
+				  GTK_BUTTON (factory_view->delete_button),
+				  factory->container->children_type);
 
   return TRUE;
 }

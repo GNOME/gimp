@@ -49,11 +49,6 @@ struct _GimpFileSelection
 
   GtkWidget *file_selection;
 
-  GdkPixmap *yes_pixmap;
-  GdkBitmap *yes_mask;
-  GdkPixmap *no_pixmap;
-  GdkBitmap *no_mask;
-
   gchar     *title;
   gboolean   dir_only;
   gboolean   check_valid;
@@ -67,14 +62,14 @@ struct _GimpFileSelectionClass
 };
 
 
-GtkType     gimp_file_selection_get_type    (void);
+GType       gimp_file_selection_get_type    (void);
 
-GtkWidget*  gimp_file_selection_new         (const gchar        *title,
+GtkWidget * gimp_file_selection_new         (const gchar        *title,
 					     const gchar        *filename,
 					     gboolean            dir_only,
 					     gboolean            check_valid);
 
-gchar*      gimp_file_selection_get_filename (GimpFileSelection *gfs);
+gchar     * gimp_file_selection_get_filename (GimpFileSelection *gfs);
 
 void        gimp_file_selection_set_filename (GimpFileSelection *gfs,
 					      const gchar       *filename);

@@ -199,26 +199,78 @@ gimp_dialog_hide (GtkWidget *dialog)
 void
 gimp_menu_position (GtkMenu *menu,
 		    gint    *x,
-		    gint    *y)
+		    gint    *y,
+		    guint   *button,
+		    guint32 *activate_time)
 {
-  GtkRequisition requisition;
-  gint           pointer_x;
-  gint           pointer_y;
-  gint           screen_width;
-  gint           screen_height;
+  GdkEvent       *current_event;
+  GtkRequisition  requisition;
+  gint            pointer_x;
+  gint            pointer_y;
+  gint            screen_width;
+  gint            screen_height;
+
+  g_return_if_fail (menu != NULL);
+  g_return_if_fail (x != NULL);
+  g_return_if_fail (y != NULL);
+  g_return_if_fail (button != NULL);
+  g_return_if_fail (activate_time != NULL);
 
   gdk_window_get_pointer (NULL, &pointer_x, &pointer_y, NULL);
 
   gtk_widget_size_request (GTK_WIDGET (menu), &requisition);
 
-  screen_width  = gdk_screen_width ();
-  screen_height = gdk_screen_height ();
+  screen_width  = gdk_screen_width ()  + 2;
+  screen_height = gdk_screen_height () + 2;
 
-  *x = CLAMP (pointer_x - 2, 0, MAX (0, screen_width  - requisition.width));
-  *y = CLAMP (pointer_y - 2, 0, MAX (0, screen_height - requisition.height));
+  *x = CLAMP (pointer_x, 2, MAX (0, screen_width  - requisition.width));
+  *y = CLAMP (pointer_y, 2, MAX (0, screen_height - requisition.height));
+
+  *x += (pointer_x <= *x) ? 2 : -2;
+  *y += (pointer_y <= *y) ? 2 : -2;
 
   *x = MAX (*x, 0);
   *y = MAX (*y, 0);
+
+  current_event = gtk_get_current_event ();
+
+  if (current_event && current_event->type == GDK_BUTTON_PRESS)
+    {
+      GdkEventButton *bevent;
+
+      bevent = (GdkEventButton *) current_event;
+
+      *button        = bevent->button;
+      *activate_time = bevent->time;
+    }
+  else
+    {
+      *button        = 0;
+      *activate_time = 0;
+    }
+}
+
+void
+gimp_item_factory_popup_with_data (GtkItemFactory *item_factory,
+				   gpointer        data)
+{
+  gint    x, y;
+  guint   button;
+  guint32 activate_time;
+
+  g_return_if_fail (GTK_IS_ITEM_FACTORY (item_factory));
+
+  gimp_menu_position (GTK_MENU (item_factory->widget),
+		      &x, &y,
+		      &button,
+		      &activate_time);
+
+  gtk_item_factory_popup_with_data (item_factory,
+				    data,
+				    NULL,
+				    x, y,
+				    button,
+				    activate_time);
 }
 
 

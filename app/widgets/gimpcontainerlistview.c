@@ -123,14 +123,17 @@ gimp_container_list_view_init (GimpContainerListView *list_view)
 				  GTK_POLICY_AUTOMATIC);
   gtk_box_pack_start (GTK_BOX (list_view), list_view->scrolled_win,
 		      TRUE, TRUE, 0);
+  gtk_widget_show (list_view->scrolled_win);
+
+  GIMP_CONTAINER_VIEW (list_view)->dnd_widget = list_view->scrolled_win;
 
   list_view->gtk_list = gtk_list_new ();
+  gtk_list_set_selection_mode (GTK_LIST (list_view->gtk_list),
+                               GTK_SELECTION_SINGLE);
   gtk_scrolled_window_add_with_viewport
     (GTK_SCROLLED_WINDOW (list_view->scrolled_win),
      list_view->gtk_list);
-
-  gtk_list_set_selection_mode (GTK_LIST (list_view->gtk_list),
-                               GTK_SELECTION_SINGLE);
+  gtk_widget_show (list_view->gtk_list);
 
   gtk_container_set_focus_vadjustment
     (GTK_CONTAINER (list_view->gtk_list),
@@ -146,8 +149,6 @@ gimp_container_list_view_init (GimpContainerListView *list_view)
 			   G_OBJECT (list_view),
 			   0);
 
-  gtk_widget_show (list_view->gtk_list);
-  gtk_widget_show (list_view->scrolled_win);
 }
 
 static void

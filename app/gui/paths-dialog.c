@@ -301,20 +301,19 @@ paths_dialog_create (void)
   gimp_help_set_help_data (paths_dialog->vbox, NULL,
 			   "dialogs/paths/paths.html");
 
-  vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_add (GTK_CONTAINER (paths_dialog->vbox), vbox);
 
   /* The point operations */
   button_box = ops_button_box_new (point_ops_buttons, OPS_BUTTON_RADIO);
-  gtk_box_pack_start (GTK_BOX (vbox), button_box, FALSE, TRUE, 2);
+  gtk_box_pack_start (GTK_BOX (vbox), button_box, FALSE, TRUE, 0);
   gtk_widget_show (button_box);
 
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
 				  GTK_POLICY_AUTOMATIC,
 				  GTK_POLICY_ALWAYS);
-  gtk_box_pack_start (GTK_BOX (vbox), scrolled_win, TRUE, TRUE, 2);
+  gtk_box_pack_start (GTK_BOX (vbox), scrolled_win, TRUE, TRUE, 0);
 
   paths_dialog->paths_list = paths_list = gtk_clist_new (2);
   gtk_signal_connect (GTK_OBJECT (vbox), "destroy",
@@ -356,7 +355,7 @@ paths_dialog_create (void)
 
   /*  The ops buttons  */
   button_box = ops_button_box_new (paths_ops_buttons, OPS_BUTTON_NORMAL);
-  gtk_box_pack_start (GTK_BOX (vbox), button_box, FALSE, FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (vbox), button_box, FALSE, FALSE, 0);
   gtk_widget_show (button_box);
 
   paths_factory = menus_get_paths_factory ();

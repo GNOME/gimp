@@ -34,6 +34,7 @@ extern "C" {
 #define GIMP_STOCK_DELETE       "gimp-delete"
 #define GIMP_STOCK_DUPLICATE    "gimp-duplicate"
 #define GIMP_STOCK_EDIT         "gimp-edit"
+#define GIMP_STOCK_LINKED       "gimp-linked"
 #define GIMP_STOCK_LOWER        "gimp-lower"
 #define GIMP_STOCK_NEW          "gimp-new"
 #define GIMP_STOCK_PASTE        "gimp-paste"
@@ -42,8 +43,10 @@ extern "C" {
 #define GIMP_STOCK_RAISE        "gimp-raise"
 #define GIMP_STOCK_REFRESH      "gimp-refresh"
 #define GIMP_STOCK_RESET        "gimp-reset"
+#define GIMP_STOCK_STROKE       "gimp-stroke"
 #define GIMP_STOCK_TO_PATH      "gimp-to-path"
 #define GIMP_STOCK_TO_SELECTION "gimp-to-selection"
+#define GIMP_STOCK_VISIBLE      "gimp-visible"
 #define GIMP_STOCK_ZOOM_IN      "gimp-zoom-in"
 #define GIMP_STOCK_ZOOM_OUT     "gimp-zoom-out"
 

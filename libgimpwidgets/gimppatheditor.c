@@ -32,11 +32,6 @@
 #include "gimpfileselection.h"
 #include "gimpwidgets.h"
 
-#include "pixmaps/new.xpm"
-#include "pixmaps/delete.xpm"
-#include "pixmaps/raise.xpm"
-#include "pixmaps/lower.xpm"
-
 
 enum
 {
@@ -118,6 +113,7 @@ gimp_path_editor_init (GimpPathEditor *gpe)
 {
   GtkWidget *button_box;
   GtkWidget *button;
+  GtkWidget *image;
   GtkWidget *scrolled_window;
 
   gpe->file_selection  = NULL;
@@ -132,36 +128,56 @@ gimp_path_editor_init (GimpPathEditor *gpe)
   gtk_box_pack_start (GTK_BOX (gpe->upper_hbox), button_box, FALSE, TRUE, 0);
   gtk_widget_show (button_box);
 
-  gpe->new_button = button = gimp_pixmap_button_new (new_xpm, NULL);
+  gpe->new_button = button = gtk_button_new ();
   gtk_box_pack_start (GTK_BOX (button_box), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
+
+  image = gtk_image_new_from_stock (GIMP_STOCK_NEW, GTK_ICON_SIZE_BUTTON);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_show (image);
+
   g_signal_connect (G_OBJECT (button), "clicked",
                     G_CALLBACK (gimp_path_editor_new_callback),
                     gpe);
-  gtk_widget_show (button);
 
-  gpe->up_button = button = gimp_pixmap_button_new (raise_xpm, NULL);
+  gpe->up_button = button = gtk_button_new ();
   gtk_widget_set_sensitive (button, FALSE);
   gtk_box_pack_start (GTK_BOX (button_box), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
+
+  image = gtk_image_new_from_stock (GIMP_STOCK_RAISE, GTK_ICON_SIZE_BUTTON);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_show (image);
+
   g_signal_connect (G_OBJECT (button), "clicked",
                     G_CALLBACK (gimp_path_editor_move_callback),
                     gpe);
-  gtk_widget_show (button);
 
-  gpe->down_button = button = gimp_pixmap_button_new (lower_xpm, NULL);
+  gpe->down_button = button = gtk_button_new ();
   gtk_widget_set_sensitive (button, FALSE);
   gtk_box_pack_start (GTK_BOX (button_box), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
+
+  image = gtk_image_new_from_stock (GIMP_STOCK_LOWER, GTK_ICON_SIZE_BUTTON);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_show (image);
+
   g_signal_connect (G_OBJECT (button), "clicked",
                     G_CALLBACK (gimp_path_editor_move_callback),
                     gpe);
-  gtk_widget_show (button);
 
-  gpe->delete_button = button = gimp_pixmap_button_new (delete_xpm, NULL);
+  gpe->delete_button = button = gtk_button_new ();
   gtk_widget_set_sensitive (button, FALSE);
   gtk_box_pack_start (GTK_BOX (button_box), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
+
+  image = gtk_image_new_from_stock (GIMP_STOCK_DELETE, GTK_ICON_SIZE_BUTTON);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_show (image);
+
   g_signal_connect (G_OBJECT (button), "clicked",
                     G_CALLBACK (gimp_path_editor_delete_callback),
                     gpe);
-  gtk_widget_show (button);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),

@@ -39,8 +39,6 @@
 
 #include "gdisplay.h"
 
-#include "pixmaps/linked.xpm"
-
 
 static void   gimp_layer_list_item_class_init (GimpLayerListItemClass  *klass);
 static void   gimp_layer_list_item_init       (GimpLayerListItem       *list_item);
@@ -145,7 +143,7 @@ static void
 gimp_layer_list_item_init (GimpLayerListItem *list_item)
 {
   GtkWidget *abox;
-  GtkWidget *pixmap;
+  GtkWidget *image;
 
   abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
   gtk_box_pack_start (GTK_BOX (GIMP_LIST_ITEM (list_item)->hbox), abox,
@@ -166,9 +164,10 @@ gimp_layer_list_item_init (GimpLayerListItem *list_item)
 		    G_CALLBACK (gimp_list_item_button_state_changed),
 		    list_item);
 
-  pixmap = gimp_pixmap_new (linked_xpm);
-  gtk_container_add (GTK_CONTAINER (list_item->linked_button), pixmap);
-  gtk_widget_show (pixmap);
+  image = gtk_image_new_from_stock (GIMP_STOCK_LINKED,
+				    GTK_ICON_SIZE_BUTTON);
+  gtk_container_add (GTK_CONTAINER (list_item->linked_button), image);
+  gtk_widget_show (image);
 
   list_item->mask_preview = NULL;
 }

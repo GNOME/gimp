@@ -42,13 +42,13 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps/anchor.xpm"
-
 
 static void   gimp_layer_list_view_class_init (GimpLayerListViewClass *klass);
 static void   gimp_layer_list_view_init       (GimpLayerListView      *view);
 
 static void   gimp_layer_list_view_destroy        (GtkObject         *object);
+static void   gimp_layer_list_view_style_set      (GtkWidget         *widget,
+						   GtkStyle          *prev_style);
 
 static void   gimp_layer_list_view_set_container  (GimpContainerView *view,
 						   GimpContainer     *container);
@@ -56,13 +56,8 @@ static void   gimp_layer_list_view_select_item    (GimpContainerView *view,
 						   GimpViewable      *item,
 						   gpointer           insert_data);
 
-static void   gimp_layer_list_view_anchor_layer   (GimpLayerListView *view,
-						   GimpLayer         *layer);
 static void   gimp_layer_list_view_anchor_clicked (GtkWidget         *widget,
 						   GimpLayerListView *view);
-static void   gimp_layer_list_view_anchor_dropped (GtkWidget         *widget,
-						   GimpViewable      *viewable,
-						   gpointer           data);
 
 static void   gimp_layer_list_view_paint_mode_menu_callback
                                                   (GtkWidget         *widget,
@@ -84,10 +79,10 @@ static void   gimp_layer_list_view_update_options (GimpLayerListView *view,
 static GimpDrawableListViewClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_layer_list_view_get_type (void)
 {
-  static guint view_type = 0;
+  static GType view_type = 0;
 
   if (! view_type)
     {
@@ -113,14 +108,18 @@ static void
 gimp_layer_list_view_class_init (GimpLayerListViewClass *klass)
 {
   GtkObjectClass         *object_class;
+  GtkWidgetClass         *widget_class;
   GimpContainerViewClass *container_view_class;
 
   object_class         = (GtkObjectClass *) klass;
+  widget_class         = (GtkWidgetClass *) klass;
   container_view_class = (GimpContainerViewClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_DRAWABLE_LIST_VIEW);
+  parent_class = g_type_class_peek_parent (klass);
 
   object_class->destroy               = gimp_layer_list_view_destroy;
+
+  widget_class->style_set             = gimp_layer_list_view_style_set;
 
   container_view_class->set_container = gimp_layer_list_view_set_container;
   container_view_class->select_item   = gimp_layer_list_view_select_item;
@@ -134,7 +133,6 @@ gimp_layer_list_view_init (GimpLayerListView *view)
   GtkWidget            *abox;
   GtkWidget            *label;
   GtkWidget            *slider;
-  GtkWidget            *pixmap;
 
   drawable_view = GIMP_DRAWABLE_LIST_VIEW (view);
 
@@ -208,31 +206,20 @@ gimp_layer_list_view_init (GimpLayerListView *view)
 
   /*  Anchor button  */
 
-  view->anchor_button = gtk_button_new ();
-  gtk_box_pack_start (GTK_BOX (drawable_view->button_box), view->anchor_button,
-		      TRUE, TRUE, 0);
-  gtk_box_reorder_child (GTK_BOX (drawable_view->button_box),
+  view->anchor_button =
+    gimp_container_view_add_button (GIMP_CONTAINER_VIEW (view),
+				    GIMP_STOCK_ANCHOR,
+				    _("Anchor"), NULL,
+				    G_CALLBACK (gimp_layer_list_view_anchor_clicked),
+				    NULL,
+				    view);
+
+  gtk_box_reorder_child (GTK_BOX (GIMP_CONTAINER_VIEW (view)->button_box),
 			 view->anchor_button, 5);
-  gtk_widget_show (view->anchor_button);
 
-  gimp_help_set_help_data (view->anchor_button, _("Anchor"), NULL);
-
-  g_signal_connect (G_OBJECT (view->anchor_button), "clicked",
-		    G_CALLBACK (gimp_layer_list_view_anchor_clicked),
-		    view);
-
-  pixmap = gimp_pixmap_new (anchor_xpm);
-  gtk_container_add (GTK_CONTAINER (view->anchor_button), pixmap);
-  gtk_widget_show (pixmap);
-
-  gimp_gtk_drag_dest_set_by_type (GTK_WIDGET (view->anchor_button),
-				  GTK_DEST_DEFAULT_ALL,
-				  GIMP_TYPE_LAYER,
-				  GDK_ACTION_COPY);
-  gimp_dnd_viewable_dest_set (GTK_WIDGET (view->anchor_button),
-			      GIMP_TYPE_LAYER,
-			      gimp_layer_list_view_anchor_dropped,
-			      view);
+  gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (view),
+				  GTK_BUTTON (view->anchor_button),
+				  GIMP_TYPE_LAYER);
 
   gtk_widget_set_sensitive (view->options_box,   FALSE);
   gtk_widget_set_sensitive (view->anchor_button, FALSE);
@@ -251,6 +238,28 @@ gimp_layer_list_view_destroy (GtkObject *object)
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static void
+gimp_layer_list_view_style_set (GtkWidget *widget,
+				GtkStyle  *prev_style)
+{
+  gint content_spacing;
+  gint button_spacing;
+
+  gtk_widget_style_get (widget,
+                        "content_spacing",
+                        &content_spacing,
+                        "button_spacing",
+                        &button_spacing,
+			NULL);
+
+#ifdef __GNUC__
+#warning TODO: gimp_layer_list_view_style_set()
+#endif
+
+  if (GTK_WIDGET_CLASS (parent_class)->style_set)
+    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 }
 
 
@@ -353,14 +362,6 @@ gimp_layer_list_view_select_item (GimpContainerView *view,
 /*  "Anchor" functions  */
 
 static void
-gimp_layer_list_view_anchor_layer (GimpLayerListView *view,
-				   GimpLayer         *layer)
-{
-  if (layer)
-    g_print ("anchor \"%s\"\n", GIMP_OBJECT (layer)->name);
-}
-
-static void
 gimp_layer_list_view_anchor_clicked (GtkWidget         *widget,
 				     GimpLayerListView *view)
 {
@@ -372,23 +373,7 @@ gimp_layer_list_view_anchor_clicked (GtkWidget         *widget,
   drawable = drawable_view->get_drawable_func (drawable_view->gimage);
 
   if (drawable)
-    gimp_layer_list_view_anchor_layer (view, GIMP_LAYER (drawable));
-}
-
-static void
-gimp_layer_list_view_anchor_dropped (GtkWidget    *widget,
-				     GimpViewable *viewable,
-				     gpointer      data)
-{
-  GimpLayerListView *view;
-
-  view = (GimpLayerListView *) data;
-
-  if (viewable && gimp_container_have (GIMP_CONTAINER_VIEW (view)->container,
-				       GIMP_OBJECT (viewable)))
-    {
-      gimp_layer_list_view_anchor_layer (view, GIMP_LAYER (viewable));
-    }
+    g_print ("anchor \"%s\"\n", GIMP_OBJECT (drawable)->name);
 }
 
 

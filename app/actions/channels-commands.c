@@ -590,18 +590,12 @@ void
 channels_show_context_menu (GimpImage *gimage)
 {
   GtkItemFactory *item_factory;
-  gint            x, y;
 
   channels_menu_set_sensitivity (gimage);
 
   item_factory = menus_get_channels_factory ();
 
-  gimp_menu_position (GTK_MENU (item_factory->widget), &x, &y);
-
-  gtk_item_factory_popup_with_data (item_factory,
-				    gimage, NULL,
-				    x, y,
-				    3, 0);
+  gimp_item_factory_popup_with_data (item_factory, gimage);
 }
 
 

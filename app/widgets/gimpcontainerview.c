@@ -23,6 +23,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "widgets-types.h"
 
 #include "core/gimpcontainer.h"
@@ -76,10 +78,13 @@ static void   gimp_container_view_reorder     (GimpContainerView      *view,
 					       gint                    new_index,
 					       GimpContainer          *container);
 
-static void   gimp_container_view_context_changed (GimpContext        *context,
-						   GimpViewable       *viewable,
-						   GimpContainerView  *view);
-static void   gimp_container_view_drop_viewable_callback (GtkWidget    *widget,
+static void   gimp_container_view_context_changed  (GimpContext        *context,
+						    GimpViewable       *viewable,
+						    GimpContainerView  *view);
+static void   gimp_container_view_viewable_dropped (GtkWidget          *widget,
+						    GimpViewable       *viewable,
+						    gpointer            data);
+static void  gimp_container_view_button_viewable_dropped (GtkWidget    *widget,
 							  GimpViewable *viewable,
 							  gpointer      data);
 
@@ -260,6 +265,8 @@ gimp_container_view_init (GimpContainerView *view)
   view->hash_table   = g_hash_table_new (g_direct_hash, g_direct_equal);
 
   view->preview_size = 0;
+
+  view->button_box   = NULL;
 }
 
 static void
@@ -289,14 +296,25 @@ static void
 gimp_container_view_style_set (GtkWidget *widget,
 			       GtkStyle  *prev_style)
 {
-  gint content_spacing;
+  GimpContainerView *view;
+  gint               content_spacing;
+  gint               button_spacing;
+
+  view = GIMP_CONTAINER_VIEW (widget);
 
   gtk_widget_style_get (widget,
                         "content_spacing",
                         &content_spacing,
+			"button_spacing",
+			&button_spacing,
 			NULL);
 
   gtk_box_set_spacing (GTK_BOX (widget), content_spacing);
+
+  if (view->button_box)
+    {
+      gtk_box_set_spacing (GTK_BOX (view->button_box), button_spacing);
+    }
 
   if (GTK_WIDGET_CLASS (parent_class)->style_set)
     GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
@@ -346,9 +364,12 @@ gimp_container_view_real_set_container (GimpContainerView *view,
 						gimp_container_view_context_changed,
 						view);
 
-	  gtk_drag_dest_unset (GTK_WIDGET (view));
-	  gimp_dnd_viewable_dest_unset (GTK_WIDGET (view),
-					view->container->children_type);
+	  if (view->dnd_widget)
+	    {
+	      gtk_drag_dest_unset (GTK_WIDGET (view->dnd_widget));
+	      gimp_dnd_viewable_dest_unset (GTK_WIDGET (view->dnd_widget),
+					    view->container->children_type);
+	    }
 	}
 
       if (view->get_name_func &&
@@ -409,14 +430,17 @@ gimp_container_view_real_set_container (GimpContainerView *view,
 	  gimp_container_view_select_item (view,
 					   object ? GIMP_VIEWABLE (object): NULL);
 
-	  gimp_gtk_drag_dest_set_by_type (GTK_WIDGET (view),
-					  GTK_DEST_DEFAULT_ALL,
+	  if (view->dnd_widget)
+	    {
+	      gimp_gtk_drag_dest_set_by_type (GTK_WIDGET (view->dnd_widget),
+					      GTK_DEST_DEFAULT_ALL,
+					      view->container->children_type,
+					      GDK_ACTION_COPY);
+	      gimp_dnd_viewable_dest_set (GTK_WIDGET (view->dnd_widget),
 					  view->container->children_type,
-					  GDK_ACTION_COPY);
-	  gimp_dnd_viewable_dest_set (GTK_WIDGET (view),
-				      view->container->children_type,
-				      gimp_container_view_drop_viewable_callback,
-				      NULL);
+					  gimp_container_view_viewable_dropped,
+					  view);
+	    }
 	}
     }
 }
@@ -437,9 +461,12 @@ gimp_container_view_set_context (GimpContainerView *view,
 					    gimp_container_view_context_changed,
 					    view);
 
-      gtk_drag_dest_unset (GTK_WIDGET (view));
-      gimp_dnd_viewable_dest_unset (GTK_WIDGET (view),
-				    view->container->children_type);
+      if (view->dnd_widget)
+	{
+	  gtk_drag_dest_unset (GTK_WIDGET (view->dnd_widget));
+	  gimp_dnd_viewable_dest_unset (GTK_WIDGET (view->dnd_widget),
+					view->container->children_type);
+	}
     }
 
   view->context = context;
@@ -463,14 +490,17 @@ gimp_container_view_set_context (GimpContainerView *view,
       gimp_container_view_select_item (view,
 				       object ? GIMP_VIEWABLE (object) : NULL);
 
-      gimp_gtk_drag_dest_set_by_type (GTK_WIDGET (view),
-				      GTK_DEST_DEFAULT_ALL,
+      if (view->dnd_widget)
+	{
+	  gimp_gtk_drag_dest_set_by_type (GTK_WIDGET (view->dnd_widget),
+					  GTK_DEST_DEFAULT_ALL,
+					  view->container->children_type,
+					  GDK_ACTION_COPY);
+	  gimp_dnd_viewable_dest_set (GTK_WIDGET (view->dnd_widget),
 				      view->container->children_type,
-				      GDK_ACTION_COPY);
-      gimp_dnd_viewable_dest_set (GTK_WIDGET (view),
-				  view->container->children_type,
-				  gimp_container_view_drop_viewable_callback,
-				  NULL);
+				      gimp_container_view_viewable_dropped,
+				      view);
+	}
     }
 }
 
@@ -496,6 +526,70 @@ gimp_container_view_set_name_func (GimpContainerView   *view,
     {
       view->get_name_func = get_name_func;
     }
+}
+
+GtkWidget *
+gimp_container_view_add_button (GimpContainerView *view,
+				const gchar       *stock_id,
+				const gchar       *tooltip,
+				const gchar       *help_data,
+				GCallback          callback,
+				GCallback          extended_callback,
+				gpointer           callback_data)
+{
+  GtkWidget *button;
+  GtkWidget *image;
+
+  g_return_val_if_fail (GIMP_IS_CONTAINER_VIEW (view), NULL);
+  g_return_val_if_fail (stock_id != NULL, NULL);
+
+  if (! view->button_box)
+    {
+      view->button_box = gtk_hbox_new (TRUE, 2);
+      gtk_box_pack_end (GTK_BOX (view), view->button_box, FALSE, FALSE, 0);
+      gtk_widget_show (view->button_box);
+    }
+
+  button = gimp_button_new ();
+  gtk_box_pack_start (GTK_BOX (view->button_box), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
+
+  if (tooltip || help_data)
+    gimp_help_set_help_data (button, tooltip, help_data);
+
+  if (callback)
+    g_signal_connect (G_OBJECT (button), "clicked",
+		      callback,
+		      callback_data);
+
+  if (extended_callback)
+    g_signal_connect (G_OBJECT (button), "extended_clicked",
+		      callback,
+		      callback_data);
+
+  image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_show (image);
+
+  return button;
+}
+
+void
+gimp_container_view_enable_dnd (GimpContainerView *view,
+				GtkButton         *button,
+				GType              children_type)
+{
+  g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
+  g_return_if_fail (GTK_IS_BUTTON (button));
+
+  gimp_gtk_drag_dest_set_by_type (GTK_WIDGET (button),
+				  GTK_DEST_DEFAULT_ALL,
+				  children_type,
+				  GDK_ACTION_COPY);
+  gimp_dnd_viewable_dest_set (GTK_WIDGET (button),
+			      children_type,
+			      gimp_container_view_button_viewable_dropped,
+			      view);
 }
 
 void
@@ -672,15 +766,34 @@ gimp_container_view_context_changed (GimpContext       *context,
 }
 
 static void
-gimp_container_view_drop_viewable_callback (GtkWidget    *widget,
-					    GimpViewable *viewable,
-					    gpointer      data)
+gimp_container_view_viewable_dropped (GtkWidget    *widget,
+				      GimpViewable *viewable,
+				      gpointer      data)
 {
   GimpContainerView *view;
 
-  view = GIMP_CONTAINER_VIEW (widget);
+  view = GIMP_CONTAINER_VIEW (data);
 
   gimp_context_set_by_type (view->context,
                             view->container->children_type,
                             GIMP_OBJECT (viewable));
 }
+
+static void
+gimp_container_view_button_viewable_dropped (GtkWidget    *widget,
+					     GimpViewable *viewable,
+					     gpointer      data)
+{
+  GimpContainerView *view;
+
+  view = (GimpContainerView *) data;
+
+  if (viewable && gimp_container_have (view->container,
+				       GIMP_OBJECT (viewable)))
+    {
+      gimp_container_view_item_selected (view, viewable);
+
+      gtk_button_clicked (GTK_BUTTON (widget));
+    }
+}
+

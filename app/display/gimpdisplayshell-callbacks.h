@@ -37,7 +37,8 @@ gboolean   gdisplay_shell_events        (GtkWidget      *widget,
 					 GdkEvent       *event,
 					 GDisplay       *gdisp);
 gboolean   gdisplay_canvas_events       (GtkWidget      *widget,
-					 GdkEvent       *event);
+					 GdkEvent       *event,
+					 GDisplay       *gdisp);
 
 gboolean   gdisplay_hruler_button_press (GtkWidget      *widget,
 					 GdkEventButton *bevent,

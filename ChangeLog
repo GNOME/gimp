@@ -1,3 +1,62 @@
+2001-08-05  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpstock.[ch]: register the button icons with
+	GTK_ICON_SIZE_BUTTON, but set them as scalable fallbacks for
+	themselves so they get scaled for menus.
+
+	* app/gui/menus.c: set stock icons for much more menu entries.
+
+	* app/widgets/gimpwidgets-utils.[ch]: new utility function
+	gimp_item_factory_popup_with_data().
+
+	* app/disp_callbacks.[ch]
+	* app/gui/brushes-commands.c
+	* app/gui/channels-commands.c
+	* app/gui/gradients-commands.c
+	* app/gui/layers-commands.c
+	* app/gui/palettes-commands.c
+	* app/gui/paths-dialog.c
+	* app/gui/patterns-commands.c: use the new function.
+
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpposterizetool.c: s/_("Reset")/GIMP_STOCK_RESET/
+
+	* app/widgets/gimpcontainereditor.[ch]
+	* app/widgets/gimpcontainerview.[ch]: moved the button_box utility
+	functions from the container editor to GimpContainerView itself.
+
+	* app/widgets/gimpbufferview.c
+	* app/widgets/gimpchannellistview.c
+	* app/widgets/gimpcomponentlistitem.c
+	* app/widgets/gimpcontainergridview.[ch]
+	* app/widgets/gimpdatafactoryview.c
+	* app/widgets/gimpdrawablelistitem.c
+	* app/widgets/gimpdrawablelistview.[ch]
+	* app/widgets/gimplayerlistitem.c
+	* app/widgets/gimplayerlistview.c: changed accordingly. Removed
+	lots of duplicated code and use stock images instead of pixmaps.
+
+	* libgimpwidgets/gimpfileselection.[ch]
+	* libgimpwidgets/gimppatheditor.c: use stock images instead of
+	pixmaps.
+
+	* pixmaps/Makefile.am: removed "yes" and "no", added "stroke".
+
+	* pixmaps/anchor.xpm
+	* pixmaps/delete.xpm
+	* pixmaps/lower.xpm
+	* pixmaps/new.xpm
+	* pixmaps/paste-as-new.xpm
+	* pixmaps/paste-into.xpm
+	* pixmaps/paste.xpm
+	* pixmaps/raise.xpm
+	* pixmaps/refresh.xpm
+	* pixmaps/toselection.xpm: made them all 16x16 so they are scaled
+	nicely in menus. Should probably be 18x18.
+
 2001-08-04  Michael Natterer  <mitch@gimp.org>
 
 	* Makefile.am: build pixmaps/ before libgimpwidgets/.

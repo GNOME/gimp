@@ -77,8 +77,6 @@ struct _GimpDrawableListView
   GimpEditDrawableFunc     edit_drawable_func;
   GimpDrawableContextFunc  drawable_context_func;
 
-  GtkWidget               *button_box;
-
   GtkWidget               *new_button;
   GtkWidget               *raise_button;
   GtkWidget               *lower_button;
