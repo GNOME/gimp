@@ -8,7 +8,7 @@
 ;;; Code:
 
 (define (script-fu-trochoid base-radius-f wheel-radius-f pen-pos hue-rate
-			    erase-before-draw)
+			    erase-before-draw brush-details)
   (if 'not-guile (define modulo fmod))
   (define (floor x) (- x (fmod x 1)))
   (define *prime-table* 
@@ -251,7 +251,7 @@
 
   (define (trochoid-rotate-gear total-distance img use-this-drawable center-x
 				center-y base-radius wheel-radius pen-pos hue-rate
-				layer-paint-mode stroke-overwrite)
+				layer-paint-mode stroke-overwrite brush-details)
     (let* ((rad-of-wheel 0)
 	   (steps-for-circle 100.0)
 	   (wheel-spin (/ total-distance (abs wheel-radius)))
@@ -331,6 +331,7 @@
 			background-color
 			stroke-overwrite brush-opacity paint-mode))))
   ;; start of script-fu-trochoid
+  (gimp-brushes-set-brush (car brush-details))
   (let* ((base-radius (floor (abs base-radius-f))) ; to int
 	 (wheel-radius (floor wheel-radius-f)) ; to int
 	 (total-step-num (if (or (= 0 base-radius) (= 0 wheel-radius))
@@ -374,7 +375,7 @@
 	(trochoid-rotate-gear total-step-num img the-layer
 			      (/ drawable-size 2) (/ drawable-size 2)
 			      base-radius wheel-radius pen-pos hue-rate
-			      layer-paint-mode (= 0 erase-before-draw)))
+			      layer-paint-mode (= 0 erase-before-draw) brush-details))
     (gimp-palette-set-foreground old-rgb)
     (gimp-brushes-set-paint-mode old-paint-mode)
     (gimp-image-enable-undo img)
@@ -392,6 +393,7 @@
 		    SF-ADJUSTMENT "Pen rad./wheel rad. [0.0:1.0]" '(0.8 0 1 .01 .01 2 0)
 		    SF-ADJUSTMENT "Hue Rate" '(1.0 0 1 .01 .01 2 0)
 		    SF-VALUE "Erase before draw? [0/1]" "0"
+	            SF-BRUSH "Use brush" '("Circle (05)" 1.0 44 2)
 )
 
 ;;; trochoid.scm ends here

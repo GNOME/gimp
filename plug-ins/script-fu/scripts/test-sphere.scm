@@ -30,7 +30,7 @@
 
 
 ;
-(define (script-fu-test-sphere radius light shadow bg-color sphere-color text pattern font size)
+(define (script-fu-test-sphere radius light shadow bg-color sphere-color brush text pattern font size)
   (let* ((width (* radius 3.75))
 	 (height (* radius 2.5))
 	 (img (car (gimp-image-new width height RGB)))
@@ -97,6 +97,7 @@
 		    SF-TOGGLE "Shadow" TRUE
 		    SF-COLOR "Background Color" '(255 255 255)
 		    SF-COLOR "Sphere Color" '(255 0 0)
+	            SF-BRUSH "Brush" '("Circle (03)" 100.0 44 0)
 		    SF-STRING "Text" "Script-Fu rocks!"
 		    SF-PATTERN "Pattern" "Maple Leaves"
 		    SF-FONT "Font" "-freefont-agate-normal-r-normal-*-24-*-*-*-p-*-*-*"

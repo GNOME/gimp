@@ -81,7 +81,7 @@
                     "Hrvoje Horvat"
                     "07 April, 1998"
                     ""
-		    SF-STRING "Text Pattern" "Parque #1"
+		    SF-PATTERN "Pattern" "Parque #1"
                     SF-STRING "Text String" "The Gimp"
                     SF-VALUE "Font Size (in pixels)" "100"
                     SF-STRING "Font" "Roostheavy"

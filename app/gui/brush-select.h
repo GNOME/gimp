@@ -35,6 +35,7 @@ struct _BrushSelect {
   GtkAdjustment *spacing_data;
   GtkAdjustment *sbar_data;
   GtkWidget *edit_button;
+  GtkWidget *option_menu;
   int width, height;
   int cell_width, cell_height;
   int scroll_offset;
@@ -74,5 +75,8 @@ GtkWidget *   create_paint_mode_menu (MenuItemCallback, gpointer);
 
 /* PDB entry */
 extern ProcRecord brushes_popup_proc;
+extern ProcRecord brushes_close_popup_proc;
+extern ProcRecord brushes_set_popup_proc;
+extern ProcRecord brushes_get_brush_data_proc;
 
 #endif  /*  __BRUSH_SELECT_H__  */

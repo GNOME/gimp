@@ -988,3 +988,126 @@ ProcRecord brushes_list_proc =
   /*  Exec method  */
   { { brushes_list_invoker } },
 };
+
+/*******************************/
+/*  BRUSHES_GET_BRUSH_DATA     */
+
+static Argument *
+brushes_get_brush_data_invoker (Argument *args)
+{
+  GimpBrushP brushp = NULL;
+  GSList *list;
+  char *name;
+  static Argument    *return_args;
+
+  success = (name = (char *) args[0].value.pdb_pointer) != NULL;
+
+  if (!success)
+    {
+      /* No name use active pattern */
+      success = (brushp = get_active_brush ()) != NULL;
+    }
+  else
+    {
+      list = GIMP_LIST(brush_list)->list;
+      success = FALSE;
+
+      while (list)
+	{
+	  brushp = (GimpBrushP) list->data;
+
+	  if (!strcmp (brushp->name, name))
+	    {
+	      success = TRUE;
+	      break;
+	    }
+
+	  list = g_slist_next (list);
+	}
+    }
+
+  return_args = procedural_db_return_args (&brushes_get_brush_data_proc, success);
+
+  if (success)
+    {
+      return_args[1].value.pdb_pointer = g_strdup (brushp->name);
+      return_args[2].value.pdb_float = 1.0; /*opacity_value;*/
+      return_args[3].value.pdb_int = brushp->spacing;
+      return_args[4].value.pdb_int = 0; /* paint_mode; */
+      return_args[5].value.pdb_int = brushp->mask->width;
+      return_args[6].value.pdb_int = brushp->mask->height;
+      return_args[7].value.pdb_int = brushp->mask->height*brushp->mask->width;
+      return_args[8].value.pdb_pointer = g_malloc(return_args[7].value.pdb_int);
+      g_memmove(return_args[8].value.pdb_pointer,
+		temp_buf_data (brushp->mask),
+		return_args[7].value.pdb_int); 
+    }
+
+  return return_args;
+}
+
+/*  The procedure definition  */
+
+ProcArg brushes_get_brush_data_in_args[] =
+{
+  { PDB_STRING,
+    "name",
+    "the brush name (\"\" means current active pattern) "
+  }
+};
+
+ProcArg brushes_get_brush_data_out_args[] =
+{
+  { PDB_STRING,
+    "name",
+    "the brush name"
+  },
+  { PDB_FLOAT,
+    "opacity",
+    "the brush opacity"
+  },
+  { PDB_INT32,
+    "spacing",
+    "the brush spacing"
+  },
+  { PDB_INT32,
+    "paint_mode",
+    "the brush paint mode"
+  },
+  { PDB_INT32,
+    "width",
+    "the brush width"
+  },
+  { PDB_INT32,
+    "height",
+    "the brush height"
+  },
+  { PDB_INT32, 
+    "length",
+    "length of brush mask data"},
+  { PDB_INT8ARRAY,
+    "mask_data",
+    "the brush mask data"},
+};
+
+ProcRecord brushes_get_brush_data_proc =
+{
+  "gimp_brushes_get_brush_data",
+  "Retrieve information about the currently active brush (including data)",
+  "This procedure retrieves information about the currently active brush.  This includes the brush name, and the brush extents (width and height). It also returns the brush data",
+  "Andy Thomas",
+  "Andy Thomas",
+  "1998",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  sizeof(brushes_get_brush_data_in_args) / sizeof(brushes_get_brush_data_in_args[0]),
+  brushes_get_brush_data_in_args,
+
+  /*  Output arguments  */
+  sizeof(brushes_get_brush_data_out_args) / sizeof(brushes_get_brush_data_out_args[0]),
+  brushes_get_brush_data_out_args,
+
+  /*  Exec method  */
+  { { brushes_get_brush_data_invoker } },
+};

@@ -71,10 +71,45 @@ GtkWidget* gimp_drawable_menu_new (GimpConstraintFunc constraint,
 				   gpointer           data,
 				   gint32             active_drawable);
 
-void gimp_interactive_selection_brush (gchar *dialogname,
+void * gimp_interactive_selection_brush (gchar *dialogname,
 				       gchar *brush_name,
+				       gdouble opacity,
+				       gint spacing,
+				       gint paint_mode,
 				       GRunBrushCallback callback,
 				       gpointer udata);
+
+GtkWidget * gimp_brush_select_widget(gchar * dname,
+				     gchar * ibrush, 
+				     gdouble opacity,
+				     gint spacing,
+				     gint paint_mode,
+				     GRunBrushCallback cback,
+				     gpointer);
+
+gint gimp_brush_select_widget_close_popup(GtkWidget *w);
+
+gint gimp_brush_select_widget_set_popup(GtkWidget *w,
+					gchar *pname,
+					gdouble opacity,
+					gint spacing,
+					gint paint_mode);
+
+gchar *gimp_brushes_get_brush_data (gchar *pname,
+				    gdouble *opacity,
+				    gint *spacing,
+				    gint *paint_mode,
+				    gint  *width,
+				    gint  *height,
+				    gchar  **mask_data);
+
+gint gimp_brush_set_popup(void * popup_pnt, 
+			  gchar * pname,
+			  gdouble opacity,
+			  gint spacing,
+			  gint paint_mode);
+
+gint gimp_brush_close_popup(void * popup_pnt);
 
 void * gimp_interactive_selection_pattern (gchar *dialogtitle,
 					 gchar *pattern_name,

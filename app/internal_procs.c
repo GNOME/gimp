@@ -80,7 +80,7 @@ internal_procs_init ()
 {
   gfloat pcount = 0;
   /* grep -c procedural_db_register internal_procs.c */
-  gfloat total_pcount = 237;
+  gfloat total_pcount = 240;
 
   app_init_update_status("Internal Procedures", "Tool procedures",
 			 pcount/total_pcount);
@@ -338,6 +338,9 @@ internal_procs_init ()
   procedural_db_register (&brushes_set_paint_mode_proc); pcount++;
   procedural_db_register (&brushes_list_proc); pcount++;
   procedural_db_register (&brushes_popup_proc); pcount++;
+  procedural_db_register (&brushes_close_popup_proc); pcount++;
+  procedural_db_register (&brushes_set_popup_proc); pcount++;
+  procedural_db_register (&brushes_get_brush_data_proc); pcount++;
   procedural_db_register (&patterns_get_pattern_proc); pcount++;
   procedural_db_register (&patterns_set_pattern_proc); pcount++;
   procedural_db_register (&patterns_list_proc); pcount++;

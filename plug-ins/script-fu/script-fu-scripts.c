@@ -68,6 +68,15 @@ typedef struct
   gchar     *fontname;
 } SFFont;
 
+typedef struct 
+{
+  gchar    *name;
+  gdouble  opacity;
+  gint     spacing;
+  gint     paint_mode;
+} SFBrush;
+
+
 typedef union
 {
   gint32        sfa_image;
@@ -80,6 +89,7 @@ typedef union
   SFAdjustment  sfa_adjustment;
   SFFont        sfa_font;
   gchar *       sfa_pattern;
+  SFBrush       sfa_brush;
 } SFArgValue;
 
 typedef struct
@@ -175,6 +185,15 @@ static void       script_fu_pattern_preview         (gchar    *name,
 						     gint     closing,
 						     gpointer udata);
 
+static void      script_fu_brush_preview            (char *, /* Name */
+						     gdouble, /* opacity */
+						     gint,    /* spacing */
+						     gint,    /* paint_mode */
+						     gint,    /* width */
+						     gint,    /* height */
+						     gchar *, /* mask data */
+						     gint,    /* dialog closing */
+						     gpointer /* user data */);
 
 
 
@@ -339,6 +358,7 @@ script_fu_add_script (LISP a)
   gdouble color[3];
   LISP color_list;
   LISP adj_list;
+  LISP brush_list;
   gchar *menu_path = NULL;
 
   /*  Check the length of a  */
@@ -572,8 +592,30 @@ script_fu_add_script (LISP a)
 		  args[i + 1].description = script->arg_labels[i];
 		  break;
 
+		case SF_BRUSH:
+		  if (!TYPEP (car (a), tc_cons))
+		    return my_err ("script-fu-register: brush defaults must be a list", NIL);
+		  brush_list = car (a);
+		  script->arg_defaults[i].sfa_brush.name = g_strdup (get_c_string (car (brush_list)));
+		  brush_list = cdr (brush_list);
+		  script->arg_defaults[i].sfa_brush.opacity = get_c_double (car (brush_list));
+		  brush_list = cdr (brush_list);
+		  script->arg_defaults[i].sfa_brush.spacing = get_c_long (car (brush_list));
+		  brush_list = cdr (brush_list);
+		  script->arg_defaults[i].sfa_brush.paint_mode = get_c_long (car (brush_list));
+		  script->arg_values[i].sfa_brush = script->arg_defaults[i].sfa_brush;
+		  /* Need this since we need a copy of the string
+		   * in the values area. We could free it later but the
+		   * default one must hang around.
+		   */
+
+		  script->arg_values[i].sfa_brush.name = g_strdup(script->arg_defaults[i].sfa_brush.name);
+
+		  args[i + 1].type = PARAM_STRING;
+		  args[i + 1].name = "brush";
+		  args[i + 1].description = script->arg_labels[i];
 		  break;
-		  
+
 		default:
 		  break;
 		}
@@ -725,6 +767,9 @@ script_fu_script_proc (char     *name,
 		  case SF_PATTERN:
 		    length += strlen (params[i + 1].data.d_string) + 3;
 		    break;
+		  case SF_BRUSH:
+		    length += strlen (params[i + 1].data.d_string) + 3;
+		    break;
 		  default:
 		    break;
 		  }
@@ -772,6 +817,10 @@ script_fu_script_proc (char     *name,
 		      text = buffer;
 		      break;  
 		    case SF_PATTERN:
+		      g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", params[i + 1].data.d_string);
+		      text = buffer;
+		      break;
+		    case SF_BRUSH:
 		      g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", params[i + 1].data.d_string);
 		      text = buffer;
 		      break;
@@ -871,6 +920,11 @@ script_fu_free_script (SFScript *script)
 	    case SF_PATTERN:
 	      g_free (script->arg_defaults[i].sfa_pattern);
 	      g_free (script->arg_values[i].sfa_pattern);
+	      break;
+	    case SF_BRUSH:
+	      g_free (script->arg_defaults[i].sfa_brush.name);
+	      g_free (script->arg_values[i].sfa_brush.name);
+	      break;
 	    default:
 	      break;
 	    }
@@ -1131,6 +1185,16 @@ script_fu_interface (SFScript *script)
 							       script_fu_pattern_preview,
 							       &script->arg_values[i].sfa_pattern);
 	  break;
+	case SF_BRUSH:
+	  script->args_widgets[i] = 
+	    gimp_brush_select_widget("Script-fu brush Selection",
+				     script->arg_values[i].sfa_brush.name, 
+				     script->arg_values[i].sfa_brush.opacity, 
+				     script->arg_values[i].sfa_brush.spacing, 
+				     script->arg_values[i].sfa_brush.paint_mode, 
+				     script_fu_brush_preview,
+				     &script->arg_values[i].sfa_brush);
+	  break;
 
 	default:
 	  break;
@@ -1250,6 +1314,26 @@ script_fu_pattern_preview(gchar    *name,
   *pname = g_strdup(name);
 }
 
+static void      
+script_fu_brush_preview(char * name, /* Name */
+			gdouble opacity, /* opacity */
+			gint spacing,    /* spacing */
+			gint paint_mode,    /* paint_mode */
+			gint width,    /* width */
+			gint height,    /* height */
+			gchar * mask_data, /* mask data */
+			gint closing,    /* dialog closing */
+			gpointer udata/* user data */)
+{
+  SFBrush *brush = (SFBrush *)udata;
+  g_free(brush->name);
+  brush->name = g_strdup(name);
+  brush->opacity = opacity;
+  brush->spacing = spacing;
+  brush->paint_mode = paint_mode;
+}
+
+
 
 static void
 script_fu_font_preview (GtkWidget *preview,
@@ -1320,6 +1404,9 @@ script_fu_cleanup_widgets (SFScript *script)
       case SF_PATTERN:
   	gimp_pattern_select_widget_close_popup(script->args_widgets[i]); 
 	break;
+      case SF_BRUSH:
+  	gimp_brush_select_widget_close_popup(script->args_widgets[i]); 
+	break;
       default:
 	break;
       }
@@ -1386,6 +1473,10 @@ script_fu_ok_callback (GtkWidget *widget,
       case SF_PATTERN:
 	length += strlen (script->arg_values[i].sfa_pattern) + 3;
 	break;
+      case SF_BRUSH:
+	length += strlen (script->arg_values[i].sfa_brush.name) + 3;
+	length += 36; /* Maximum size of three ints for opacity, spacing,mode*/
+	break;
       default:
 	break;
       }
@@ -1450,6 +1541,15 @@ script_fu_ok_callback (GtkWidget *widget,
 	  break;
 	case SF_PATTERN:
 	  g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"",script->arg_values[i].sfa_pattern);
+	  text = buffer;
+	  break;
+	case SF_BRUSH:
+	  g_snprintf (buffer, MAX_STRING_LENGTH, 
+		      "'(\"%s\" %f %d %d)",
+		      script->arg_values[i].sfa_brush.name,
+		      script->arg_values[i].sfa_brush.opacity,
+		      script->arg_values[i].sfa_brush.spacing,
+		      script->arg_values[i].sfa_brush.paint_mode);
 	  text = buffer;
 	  break;
 	default:
@@ -1688,6 +1788,13 @@ script_fu_reset_callback (GtkWidget *widget,
 	break;
       case SF_PATTERN:
   	gimp_pattern_select_widget_set_popup(script->args_widgets[i],script->arg_defaults[i].sfa_pattern);  
+	break;
+      case SF_BRUSH:
+  	gimp_brush_select_widget_set_popup(script->args_widgets[i],
+					   script->arg_defaults[i].sfa_brush.name,
+					   script->arg_defaults[i].sfa_brush.opacity, 
+					   script->arg_defaults[i].sfa_brush.spacing, 
+					   script->arg_defaults[i].sfa_brush.paint_mode);  
 	break;
       default:
 	break;

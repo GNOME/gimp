@@ -270,7 +270,8 @@ brush_select_new (gchar * title,
   label = gtk_label_new (_("Mode:"));
   gtk_box_pack_start (GTK_BOX (util_box), label, FALSE, FALSE, 2);
   menu = create_paint_mode_menu (paint_mode_menu_callback,(gpointer)bsp);
-  option_menu = gtk_option_menu_new ();
+  bsp->option_menu =
+    option_menu = gtk_option_menu_new ();
   gtk_box_pack_start (GTK_BOX (util_box), option_menu, FALSE, FALSE, 2);
 
   gtk_widget_show (label);
@@ -284,7 +285,7 @@ brush_select_new (gchar * title,
   label = gtk_label_new (_("Opacity:"));
   gtk_box_pack_start (GTK_BOX (util_box), label, FALSE, FALSE, 2);
   bsp->opacity_data = 
-    GTK_ADJUSTMENT (gtk_adjustment_new ((active)?init_opacity:100.0, 0.0, 100.0, 1.0, 1.0, 0.0));
+    GTK_ADJUSTMENT (gtk_adjustment_new ((active)?(init_opacity*100.0):100.0, 0.0, 100.0, 1.0, 1.0, 0.0));
   slider = gtk_hscale_new (bsp->opacity_data);
   gtk_box_pack_start (GTK_BOX (util_box), slider, TRUE, TRUE, 0);
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
@@ -1221,7 +1222,7 @@ brushes_popup_invoker (Argument *args)
   gchar * name; 
   gchar * title;
   gchar * initial_brush;
-  gdouble initial_opacity = 100.0;
+  gdouble initial_opacity = 1.0;
   gint initial_spacing = 20;
   gint initial_mode = 0;
   ProcRecord *prec = NULL;
@@ -1315,4 +1316,201 @@ ProcRecord brushes_popup_proc =
 
   /*  Exec method  */
   { { brushes_popup_invoker } },
+};
+
+static BrushSelectP
+brush_get_brushselect(gchar *name)
+{
+  GSList *list;
+  BrushSelectP bsp;
+
+  list = active_dialogs;
+
+  while (list)
+    {
+      bsp = (BrushSelectP) list->data;
+      list = list->next;
+      
+      if(strcmp(name,bsp->callback_name) == 0)
+	{
+	  return bsp;
+	}
+    }
+
+  return NULL;
+}
+
+static Argument *
+brush_close_popup_invoker (Argument *args)
+{
+  gchar * name; 
+  ProcRecord *prec = NULL;
+  BrushSelectP bsp;
+
+  success = (name = (char *) args[0].value.pdb_pointer) != NULL;
+
+  /* Check the proc exists */
+  if(!success || (prec = procedural_db_lookup(name)) == NULL)
+    {
+      success = 0;
+      return procedural_db_return_args (&brushes_close_popup_proc, success);
+    }
+
+  bsp = brush_get_brushselect(name);
+
+  if(bsp)
+    {
+      active_dialogs = g_slist_remove(active_dialogs,bsp);
+      
+      if (GTK_WIDGET_VISIBLE (bsp->shell))
+	gtk_widget_hide (bsp->shell);
+
+      /* Free memory if poping down dialog which is not the main one */
+      if(bsp != brush_select_dialog)
+	{
+	  gtk_widget_destroy(bsp->shell); 
+	  brush_select_free(bsp); 
+	}
+    }
+  else
+    {
+      success = FALSE;
+    }
+
+  return procedural_db_return_args (&brushes_close_popup_proc, success);
+}
+
+/*  The procedure definition  */
+ProcArg brush_close_popup_in_args[] =
+{
+  { PDB_STRING,
+    "callback_PDB_entry_name",
+    N_("The name of the callback registered for this popup"),
+  },
+};
+
+ProcRecord brushes_close_popup_proc =
+{
+  "gimp_brushes_close_popup",
+  N_("Popdown the Gimp brush selection"),
+  N_("This procedure closes an opened brush selection dialog"),
+  "Andy Thomas",
+  "Andy Thomas",
+  "1998",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  sizeof(brush_close_popup_in_args) / sizeof(brush_close_popup_in_args[0]),
+  brush_close_popup_in_args,
+
+  /*  Output arguments  */
+  0,
+  NULL,
+
+  /*  Exec method  */
+  { { brush_close_popup_invoker } },
+};
+
+static Argument *
+brush_set_popup_invoker (Argument *args)
+{
+  gchar * pdbname; 
+  gchar * brush_name;
+  ProcRecord *prec = NULL;
+  BrushSelectP bsp;
+
+  success = (pdbname = (char *) args[0].value.pdb_pointer) != NULL;
+  brush_name = (char *) args[1].value.pdb_pointer;
+
+  /* Check the proc exists */
+  if(!success || (prec = procedural_db_lookup(pdbname)) == NULL)
+    {
+      success = 0;
+      return procedural_db_return_args (&brushes_set_popup_proc, success);
+    }
+
+  bsp = brush_get_brushselect(pdbname);
+
+
+  if(bsp)
+    {
+      GimpBrushP active = gimp_brush_list_get_brush(brush_list,brush_name);
+
+      if(active)
+	{
+	  /* Must alter the wigdets on screen as well */
+
+	  bsp->brush = active;
+	  brush_select_select (bsp, gimp_brush_list_get_brush_index(brush_list, active));
+
+	  bsp->opacity_value = args[2].value.pdb_float;
+	  bsp->spacing_value = args[3].value.pdb_int;
+	  if(args[4].value.pdb_int >= 0 && args[4].value.pdb_int <= VALUE_MODE)
+	    bsp->paint_mode = args[4].value.pdb_int;
+
+	  bsp->spacing_data->value = bsp->spacing_value;
+	  gtk_signal_emit_by_name (GTK_OBJECT (bsp->spacing_data), "value_changed");
+
+	  bsp->opacity_data->value = bsp->opacity_value * 100.0;
+	  gtk_signal_emit_by_name (GTK_OBJECT (bsp->opacity_data), "value_changed");
+	  
+	  gtk_option_menu_set_history(GTK_OPTION_MENU(bsp->option_menu),bsp->paint_mode);
+
+	  /* Can alter active_dialogs list*/
+	  success = TRUE;
+	}
+    }
+  else
+    {
+      success = FALSE;
+    }
+
+  return procedural_db_return_args (&brushes_set_popup_proc, success);
+}
+
+/*  The procedure definition  */
+ProcArg brush_set_popup_in_args[] =
+{
+  { PDB_STRING,
+    "callback_PDB_entry_name",
+    N_("The name of the callback registered for this popup"),
+  },
+  { PDB_STRING,
+    "brushname",
+    N_("The name of the brush to set as selected"),
+  },
+  { PDB_FLOAT,
+    "opacity",
+    N_("The initial opacity of the brush"),
+  },
+  { PDB_INT32,
+    "spacing",
+    N_("The initial spacing of the brush (if < 0 then use brush default spacing)"),
+  },
+  { PDB_INT32,
+    "initial paint mode",
+    N_("The initial paint mode: { NORMAL (0), DISSOLVE (1), BEHIND (2), MULTIPLY/BURN (3), SCREEN (4), OVERLAY (5) DIFFERENCE (6), ADDITION (7), SUBTRACT (8), DARKEN-ONLY (9), LIGHTEN-ONLY (10), HUE (11), SATURATION (12), COLOR (13), VALUE (14), DIVIDE/DODGE (15) }"),
+  },
+};
+
+ProcRecord brushes_set_popup_proc =
+{
+  "gimp_brushes_set_popup",
+  N_("Sets the current brush selection in a popup"),
+  N_("Sets the current brush selection in a popup"),
+  "Andy Thomas",
+  "Andy Thomas",
+  "1998",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  sizeof(brush_set_popup_in_args) / sizeof(brush_set_popup_in_args[0]),
+  brush_set_popup_in_args,
+
+  /*  Output arguments  */
+  0,
+  NULL,
+
+  /*  Exec method  */
+  { { brush_set_popup_invoker } },
 };

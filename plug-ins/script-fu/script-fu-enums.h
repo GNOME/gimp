@@ -33,7 +33,8 @@ typedef enum
   SF_STRING,
   SF_ADJUSTMENT,
   SF_FONT,
-  SF_PATTERN
+  SF_PATTERN,
+  SF_BRUSH
 } SFArgType;
 
 typedef enum

@@ -643,9 +643,12 @@ gen_temp_plugin_name (void)
 /* Can only be used in conjuction with gdk since we need to tie into the input 
  * selection mech.
  */
-void
+void *
 gimp_interactive_selection_brush(gchar *dialogname, 
 				 gchar *brush_name,
+				 gdouble opacity,
+				 gint spacing,
+				 gint paint_mode,
 				 GRunBrushCallback callback,
 				 gpointer udata)
 {
@@ -688,9 +691,9 @@ gimp_interactive_selection_brush(gchar *dialogname,
 		       PARAM_STRING,pdbname,
 		       PARAM_STRING,dialogname,
 		       PARAM_STRING,brush_name,/*name*/
-		       PARAM_FLOAT, 1.0, /*Opacity*/
-		       PARAM_INT32, -1, /*default spacing*/
-		       PARAM_INT32, 0, /*paint mode*/
+		       PARAM_FLOAT, opacity, /*Opacity*/
+		       PARAM_INT32, spacing, /*default spacing*/
+		       PARAM_INT32, paint_mode, /*paint mode*/
 		       PARAM_END);
 
 /*   if (pdbreturn_vals[0].data.d_status != STATUS_SUCCESS) */
@@ -714,7 +717,92 @@ gimp_interactive_selection_brush(gchar *dialogname,
   bdata->callback = callback;
   bdata->udata = udata;
   g_hash_table_insert(gbrush_ht,pdbname,bdata);
+
+  return pdbname;
 }
+
+
+gchar *
+gimp_brushes_get_brush_data (gchar *bname,
+			   gdouble *opacity,
+			   gint  *spacing,
+			   gint  *paint_mode,
+			   gint  *width,
+			   gint  *height,
+			   gchar  **mask_data)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+  gchar *ret_name = NULL;
+
+  return_vals = gimp_run_procedure ("gimp_brushes_get_brush_data",
+				    &nreturn_vals,
+				    PARAM_STRING, bname,
+				    PARAM_END);
+
+  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+    {
+      ret_name = g_strdup(return_vals[1].data.d_string);
+      *opacity = return_vals[2].data.d_float;
+      *spacing = return_vals[3].data.d_int32;
+      *paint_mode = return_vals[4].data.d_int32;
+      *width = return_vals[5].data.d_int32;
+      *height = return_vals[6].data.d_int32;
+      *mask_data = g_new (gchar,return_vals[7].data.d_int32);
+      g_memmove (*mask_data, return_vals[8].data.d_int32array,return_vals[7].data.d_int32);
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return ret_name;
+}
+
+gint 
+gimp_brush_close_popup(void * popup_pnt)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+  gint retval;
+
+  return_vals = gimp_run_procedure ("gimp_brushes_close_popup",
+				    &nreturn_vals,
+				    PARAM_STRING, popup_pnt,
+				    PARAM_END);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  retval = (return_vals[0].data.d_status == STATUS_SUCCESS);
+
+  return retval;
+}
+
+gint 
+gimp_brush_set_popup(void * popup_pnt, 
+		     gchar * pname,
+		     gdouble opacity,
+		     gint spacing,
+		     gint paint_mode)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+  gint retval;
+
+  return_vals = gimp_run_procedure ("gimp_brushes_set_popup",
+				    &nreturn_vals,
+				    PARAM_STRING, popup_pnt,
+				    PARAM_STRING, pname,
+				    PARAM_FLOAT, opacity,
+				    PARAM_INT32, spacing,
+				    PARAM_INT32, paint_mode,
+				    PARAM_END);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  retval = (return_vals[0].data.d_status == STATUS_SUCCESS);
+
+  return retval;
+}
+
 
 
 void *

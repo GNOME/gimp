@@ -477,6 +477,7 @@ init_constants ()
   setvar (cintern ("SF-ADJUSTMENT"), flocons (SF_ADJUSTMENT), NIL);
   setvar (cintern ("SF-FONT"), flocons (SF_FONT), NIL);
   setvar (cintern ("SF-PATTERN"), flocons (SF_PATTERN), NIL);
+  setvar (cintern ("SF-BRUSH"), flocons (SF_BRUSH), NIL);
 
   /* for SF_ADJUSTMENT */
   setvar (cintern ("SF-SLIDER"), flocons (SF_SLIDER), NIL);

@@ -1,3 +1,28 @@
+Tue Oct 20 23:20:40 BST 1998 Andy Thomas <alt@picnic.demon.co.uk>
+	
+	* app/brush_select.h
+	* app/brush_select.c
+	* app/internal_procs.c
+	* app/gimpbrushlist.c
+	* libgimp/Makefile.am
+	* libgimp/gimpmenu.h
+	* libgimp/gimpmenu.c
+	* plug-ins/script-fu/scripts/3d-outline.scm
+	* plug-ins/script-fu/scripts/test-sphere.scm
+	* plug-ins/script-fu/scripts/trochoid.scm
+	* plug-ins/script-fu/script-fu-enums.h
+	* plug-ins/script-fu/script-fu-scripts.c
+	* plug-ins/script-fu/script-fu.c
+
+	New file libgimp/gimpbrushmneu.c.
+
+	Brush dialog can now be fully controlled via the PDB. New widget (not 
+	true widget) type added to libgimpui (gimp_brush_select_widget()). 
+	Plugins should easily be able to control & select brushes. Script-fu
+	updated to use new widget. See the test script for example.
+
+	Started to change some of the scripts to use the new widget types.
+
 1998-10-19  Christopher James Lahey  <clahey@umich.edu>
 
 	* app/docindex.c: New Drag & Drop works now.
