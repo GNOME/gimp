@@ -262,9 +262,11 @@ gimp_color_hex_entry_events (GtkWidget *widget,
       if (g_ascii_strcasecmp (buffer, text) != 0)
         {
           GimpRGB  color;
+          gsize    len = strlen (text);
 
-          if ((strlen (text) == 6 && gimp_rgb_parse_hex (&color, text, 6)) ||
-              (gimp_rgb_parse_name (&color, text, -1)))
+          if (len > 0&&
+              ((len % 3 == 0 && gimp_rgb_parse_hex (&color, text, len)) ||
+               (gimp_rgb_parse_name (&color, text, -1))))
 	    {
               gimp_color_hex_entry_set_color (entry, &color);
 	    }

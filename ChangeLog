@@ -1,3 +1,8 @@
+2004-07-27  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpcolorhexentry.c (gimp_color_hex_entry_events):
+	also accept the short hexadecimal notation (3 hex digits).
+
 2004-07-26  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/Makefile.am (libgimpwidgetsinclude_HEADERS):
