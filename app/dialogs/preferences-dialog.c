@@ -2168,8 +2168,8 @@ file_pref_cmd_callback (GtkWidget *widget,
   optionmenu =
     gimp_option_menu_new (file_prefs_toggle_callback,
 			  (gpointer) thumbnail_mode,
-			  "Always", &thumbnail_mode, (gpointer) 1,
-			  "Never", &thumbnail_mode, (gpointer) 0,
+			  _("Always"), &thumbnail_mode, (gpointer) 1,
+			  _("Never"), &thumbnail_mode, (gpointer) 0,
 			  NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0,
 			     _("Try to Write a Thumbnail File:"), 1.0, 0.5,

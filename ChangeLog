@@ -1,3 +1,7 @@
+1999-07-27  Tomas Ogren  <stric@ing.umu.se>
+
+	* app/preferences_dialog.c: Two more _()'s
+
 Mon Jul 26 20:11:01 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/blend.c: Restrict to horizontal/vertical blend when modifiers
