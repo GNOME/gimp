@@ -1,3 +1,12 @@
+2002-05-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpchannellistview.c
+	* app/widgets/gimpcomponentlistitem.c: kindof fixed the channel
+	dialog's component items. Had to disable keyboard navigation
+	because GtkList is horribly broken with GTK_SELECTION_MULTIPLE.
+	Left in lots of #if 0'ed stuff because this is not the final
+	solution...
+
 2002-05-27  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimagefile.c: "%lld" is not a portable format string,
