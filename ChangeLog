@@ -1,3 +1,41 @@
+2000-01-04  Tor Lillqvist  <tml@iki.fi>
+
+	* libgimp/makefile.{cygwin.msc}: Add gimpcolorspace object.
+
+	* libgimp/gimp.def: Add functions from it.
+	
+	Fixes from Hans Breuer:
+
+	* app/datafiles.c: redefine the executable flag for Win32
+	to _S_IREAD, to get _all_ files from the plug-in dirs as
+	executables (including scripts)
+
+	* app/main.c: Win32-specific changes to allow building Gimp as a
+	console application, with all its benefits (like inheriting the
+	console), but hide it if the user doesn't want it. Also, if stdout
+	goes to a console, give the user a chance to read the help or
+	version messages. (tml: I am not convinced that it is better to
+	build gimp as a console application, but let's try it this way for
+	a while.)
+
+	* app/makefile.{cygwin,msc}: Build as console application, and
+	link with shell32 library.
+
+	* app/paint_core.c (paint_core_motion): Pass the value of a call
+	to the function gimage_active_drawable() to the paint_func,
+	instead of just passing the address of gimage_active_drawable...
+	
+	(tml: This code is only called when the TOOL_TRACES_ON_WINDOW flag
+	is on, and only the clone tool sets that, and the clone tool's
+	paint_func doesn't use the drawable argument, so this hasn't
+	caused any trouble.)
+
+	* app/plug_in.c: On Win32, to support scripts, use new function
+	xspawn() instead of _spawnv. Add some more code to properly kill
+	plug-ins.
+
+	* libgimp/color_display.h: Add G_MODULE_EXPORT declarations.
+
 Tue Jan  4 18:00:40 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/circuit.scm: someone didn't close a 

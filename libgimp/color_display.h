@@ -20,6 +20,7 @@
 #define __GIMP_COLOR_DISPLAY_H__
 
 #include <glib.h>
+#include <gmodule.h>
 
 #include <libgimp/parasiteF.h>
 
@@ -60,8 +61,14 @@ struct _GimpColorDisplayMethods
   GimpColorDisplayConfigureCancel cancel;
 };
 
+/* 
+ * The following two functions are implemted and exported by gimp/app
+ * but need to be marked for it here too ...
+ */
+G_MODULE_EXPORT
 gboolean gimp_color_display_register   (const char              *name,
     				        GimpColorDisplayMethods *methods);
+G_MODULE_EXPORT
 gboolean gimp_color_display_unregister (const char              *name);
 
 #endif /* __GIMP_COLOR_DISPLAY_H__ */

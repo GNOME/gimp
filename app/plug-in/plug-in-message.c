@@ -802,6 +802,59 @@ plug_in_destroy (PlugIn *plug_in)
     }
 }
 
+#ifdef G_OS_WIN32
+/* The Microsoft _spawnv() does not allow to run scripts. But
+ * this is essential to get scripting extension up and running.
+ * Following the replacement function xspawnv().
+ */
+int
+xspawnv (int                mode,
+	 const char        *cmdname,
+	 const char *const *argv )
+{
+  char sExecutable[_MAX_PATH*2];
+  char** sArgsList;
+  char sCmndLine[1024];
+  char* sPath;
+  HINSTANCE hInst;
+  int i;
+  int pid;
+
+  /* only use it if _spawnv fails */
+  pid = _spawnv(mode, cmdname, argv);
+  if (pid != -1) return pid;
+
+  /* stuff parameters into one cmndline */
+  sCmndLine[0] = 0;
+  for (i = 1; argv[i] != NULL; i++)
+    {
+       strcat(sCmndLine, argv[i]);
+       strcat(sCmndLine, " ");
+    }
+  /* remove last blank */
+  sCmndLine[strlen(sCmndLine)-1] = 0;
+
+  /* do we really need _spawnv (ShelExecute seems not to do it)*/
+  if (32 <= (int)FindExecutable (cmdname, 
+				 gimp_directory (),
+				 sExecutable))
+    {
+      //g_print("_spawnlp %s %s %s", sExecutable, cmdname, sCmndLine);
+      
+      pid = _spawnlp(mode, sExecutable, "-c", cmdname, sCmndLine, NULL);
+    }
+  else
+    {
+      g_warning("Execution error for: %s", cmdname);
+      return -1;
+    }
+  return pid;
+}
+#undef _spawnv
+#define _spawnv xspawnv
+
+#endif /* G_OS_WIN32 */
+
 gint
 plug_in_open (PlugIn *plug_in)
 {
@@ -989,7 +1042,26 @@ plug_in_close (PlugIn *plug_in,
         waitpid (plug_in->pid, &status, 0);
 #else
       if (kill_it && plug_in->pid)
-	TerminateProcess ((HANDLE) plug_in->pid, 0);
+	{
+	  /* Trying to avoid TerminateProcess (does mostly work).
+	   * Otherwise some of our needed DLLs may get into an unstable state
+	   * (see Win32 API docs).
+	   */
+	  DWORD dwExitCode = STILL_ACTIVE;
+	  DWORD dwTries  = 10;
+	  while ((STILL_ACTIVE == dwExitCode)
+		 && GetExitCodeProcess((HANDLE) plug_in->pid, &dwExitCode)
+		 && (dwTries > 0))
+	    {
+	      Sleep(10);
+	      dwTries--;
+	    }
+	  if (STILL_ACTIVE == dwExitCode)
+	    {
+	      g_warning("Terminating %s ...", plug_in->args[0]);
+	      TerminateProcess ((HANDLE) plug_in->pid, 0);
+	    }
+	}
 #endif
 
       /* Remove the input handler.

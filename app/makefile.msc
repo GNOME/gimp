@@ -11,17 +11,17 @@ BIN = C:\gimp\bin
 !IFNDEF DEBUG
 # Full optimization:
 OPTIMIZE = -Ox -MD
-LINKDEBUG = /subsystem:windows
+LINKDEBUG = 
 !ELSE
 # Debugging:
 OPTIMIZE = -Zi -MDd
-LINKDEBUG = /subsystem:console /debug
+LINKDEBUG = /debug
 !ENDIF
 
 # cl -? describes the options
 CC = cl -GA -G5 -GF $(OPTIMIZE) -W3 -nologo
 
-LDFLAGS = /link /machine:ix86 $(LINKDEBUG)
+LDFLAGS = /link /subsystem:console /machine:ix86 $(LINKDEBUG)
 INSTALL = copy
 
 GIMP_VER = 1.1
@@ -275,7 +275,7 @@ gimp.def: gimp.sym
 	copy /y $@+gimp.sym $@
 
 gimp.exe : ..\config.h $(gimp_OBJECTS) gimpim.lib gimp.def gimp.res ..\libgimp\gimpi.lib
-	$(CC) $(CFLAGS) -Fegimp.exe $(gimp_OBJECTS) gimpim.lib ..\libgimp\gimpi.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\gdk-$(GTK_VER).lib $(INTL)\gnu-intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(GLIB)\gmodule-$(GLIB_VER).lib $(LDFLAGS) gimp.res gdi32.lib user32.lib /def:gimp.def
+	$(CC) $(CFLAGS) -Fegimp.exe $(gimp_OBJECTS) gimpim.lib ..\libgimp\gimpi.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\gdk-$(GTK_VER).lib $(INTL)\gnu-intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(GLIB)\gmodule-$(GLIB_VER).lib $(LDFLAGS) gimp.res gdi32.lib user32.lib shell32.lib /def:gimp.def
 
 # General rule for building $(gimp_OBJECTS)
 .c.obj:

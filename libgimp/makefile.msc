@@ -58,6 +58,7 @@ gimpi_OBJECTS = \
 	gimpenv.obj	\
 	gimpchainbutton.obj\
 	gimpcolorbutton.obj\
+	gimpcolorspace.obj \
 	gimpfileselection.obj\
 	gimpmatrix.obj	\
 	gimppatheditor.obj\
@@ -75,6 +76,7 @@ gimpi.lib : $(gimpi_OBJECTS)
 gimp_OBJECTS = \
 	gimp.obj	\
 	gimpchannel.obj	\
+	gimpcolorspace.obj \
 	gimpdisplay.obj	\
 	gimpdrawable.obj\
 	gimpenv.obj	\

@@ -408,10 +408,10 @@ paint_core_motion (Tool           *tool,
   paint_core_interpolate (paint_core, gimage_active_drawable (gdisp->gimage));
 
   if (paint_core->flags & TOOL_TRACES_ON_WINDOW)
-     (* paint_core->paint_func) (paint_core, gimage_active_drawable, PRETRACE_PAINT);
+     (* paint_core->paint_func) (paint_core, gimage_active_drawable (gdisp->gimage), PRETRACE_PAINT);
   gdisplay_flush_now (gdisp);
   if (paint_core->flags & TOOL_TRACES_ON_WINDOW)
-     (* paint_core->paint_func) (paint_core, gimage_active_drawable, POSTTRACE_PAINT);
+     (* paint_core->paint_func) (paint_core, gimage_active_drawable (gdisp->gimage), POSTTRACE_PAINT);
 
   paint_core->lastx = paint_core->curx;
   paint_core->lasty = paint_core->cury;

@@ -39,10 +39,10 @@
 #define S_ISDIR(m) (((m) & _S_IFMT) == _S_IFDIR)
 #define S_ISREG(m) (((m) & _S_IFMT) == _S_IFREG)
 #endif
-#ifndef S_IXUSR
-#define S_IXUSR _S_IEXEC
-#endif
-#endif
+/* (Re)define S_IXUSR as _S_IREAD to get scripts, too. */
+#undef S_IXUSR
+#define S_IXUSR _S_IREAD
+#endif /* G_OS_WIN32 */
 
 #include "datafiles.h"
 #include "errors.h"

@@ -52,6 +52,7 @@ gimpi_OBJECTS = \
 	gimpenv.o	\
 	gimpchainbutton.o \
 	gimpcolorbutton.o \
+	gimpcolorspace.o \
 	gimpfileselection.o\
 	gimpmatrix.o	\
 	gimppatheditor.o\
@@ -69,6 +70,7 @@ libgimpi.a : $(gimpi_OBJECTS)
 gimp_OBJECTS = \
 	gimp.o		\
 	gimpchannel.o	\
+	gimpcolorspace.o \
 	gimpdisplay.o	\
 	gimpdrawable.o	\
 	gimpenv.o	\

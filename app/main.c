@@ -46,7 +46,9 @@
 
 #include "libgimp/gimpintl.h"
 
-#ifndef G_OS_WIN32
+#ifdef G_OS_WIN32
+#include <windows.h>
+#else
 static RETSIGTYPE on_signal (int);
 #ifdef SIGCHLD
 static RETSIGTYPE on_sig_child (int);
@@ -285,6 +287,16 @@ main (int argc, char **argv)
 	}
     }
 
+#ifdef G_OS_WIN32
+  /* Common windoze apps don't have a console at all. So does Gimp 
+   * - if appropiate. This allows to compile as console application
+   * with all it's benfits (like inheriting the console) but hide
+   * it, if the user doesn't want it.
+   */
+  if (!show_help && !show_version && !be_verbose && !console_messages)
+    FreeConsole ();
+#endif
+
   if (show_version)
     g_print ( "%s %s\n", _("GIMP version"), GIMP_VERSION);
 
@@ -311,7 +323,25 @@ main (int argc, char **argv)
     }
 
   if (show_version || show_help)
-    exit (0);
+    {
+#ifdef G_OS_WIN32
+      /* Give them time to read the message if it was printed in a
+       * separate console window. I would really love to have
+       * some way of asking for confirmation to close the console
+       * window.
+       */
+      HANDLE console;
+      DWORD mode;
+
+      console = GetStdHandle (STD_OUTPUT_HANDLE);
+      if (GetConsoleMode (console, &mode) != 0)
+	{
+	  g_print (_("(This console window will close in ten seconds)\n"));
+	  Sleep(10000);
+	}
+#endif
+      exit (0);
+    }
 
   g_set_message_handler ((GPrintFunc) gimp_message_func);
 
@@ -385,7 +415,10 @@ main (int argc, char **argv)
 #endif
 
 int _stdcall
-WinMain (int hInstance, int hPrevInstance, char *lpszCmdLine, int nCmdShow)
+WinMain (struct HINSTANCE__ *hInstance,
+	 struct HINSTANCE__ *hPrevInstance,
+	 char               *lpszCmdLine,
+	 int                 nCmdShow)
 {
   return main (__argc, __argv);
 }

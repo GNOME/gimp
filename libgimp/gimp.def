@@ -37,7 +37,6 @@ EXPORTS
 	gimp_drawable_delete
 	gimp_drawable_detach
 	gimp_drawable_fill
-	gimp_drawable_parasite_find
 	gimp_drawable_flush
 	gimp_drawable_get
 	gimp_drawable_get_thumbnail_data
@@ -58,6 +57,7 @@ EXPORTS
 	gimp_drawable_offsets
 	gimp_drawable_parasite_attach
 	gimp_drawable_parasite_detach
+	gimp_drawable_parasite_find
 	gimp_drawable_set_name
 	gimp_drawable_set_visible
 	gimp_drawable_type
@@ -75,6 +75,11 @@ EXPORTS
 	gimp_gradients_sample_uniform
 	gimp_gradients_set_active
 	gimp_gtkrc
+	gimp_hls_to_rgb
+	gimp_hls_value
+	gimp_hsv_to_rgb
+	gimp_hsv_to_rgb4
+	gimp_hsv_to_rgb_double
 	gimp_image_add_channel
 	gimp_image_add_hguide
 	gimp_image_add_layer
@@ -222,6 +227,11 @@ EXPORTS
 	gimp_register_magic_load_handler
 	gimp_register_save_handler
 	gimp_request_wakeups
+	gimp_rgb_to_hls
+	gimp_rgb_to_hsv
+	gimp_rgb_to_hsv4
+	gimp_rgb_to_hsv_double
+	gimp_rgb_to_l
 	gimp_run_procedure
 	gimp_run_procedure2
 	gimp_run_temp
