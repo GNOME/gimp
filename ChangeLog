@@ -1,3 +1,8 @@
+2002-06-24  Marco Wessel  <marco@phoenix.uzaynet.nl>
+
+	* plug-ins/script-fu/scripts/tileblur.scm: Fix reverse horizontal and
+	vertical blurring, as in HEAD.
+
 2002-06-17  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: added helpbrowser to the DISTMAKE hack.

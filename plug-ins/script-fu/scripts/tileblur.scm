@@ -16,7 +16,7 @@
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 
-(define (script-fu-tile-blur inImage inLayer inRadius inHoriz inVert inType)
+(define (script-fu-tile-blur inImage inLayer inRadius inVert inHoriz inType)
 
    (set! theImage inImage)
    (set! theLayer inLayer)
