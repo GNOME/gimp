@@ -894,11 +894,20 @@ toolbox_area_notify (GimpGuiConfig *config,
       config->toolbox_foo_area   ||
       config->toolbox_image_area)
     {
+      GtkRequisition req;
+
       gtk_widget_show (area->parent);
+
+#ifdef __GNUC__
+#warning FIXME: fix GtkWrapBox child requisition/allocation instead of hacking badly (bug #162500).
+#endif
+      gtk_widget_size_request (area, &req);
+      gtk_widget_set_size_request (area->parent, req.width, req.height);
     }
   else
     {
       gtk_widget_hide (area->parent);
+      gtk_widget_set_size_request (area->parent, -1, -1);
     }
 
   g_object_get (config, pspec->name, &visible, NULL);

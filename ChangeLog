@@ -1,3 +1,10 @@
+2005-02-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimptoolbox.c (toolbox_area_notify): apply evil
+	size_request hacks to the color/image/foo areas' wrapbox because
+	its child requisition/allocation code is apparently broken. Works
+	around bug #162500.
+
 2005-02-21  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/emboss.c: fixed emboss on small images (bug #168022).
