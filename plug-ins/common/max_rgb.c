@@ -82,8 +82,6 @@ static ValueType pvals =
   MAX_CHANNELS
 };
 
-static GimpRunMode     run_mode;
-
 #define PREVIEW_SIZE 128
 static GtkWidget *preview;
 static gint       preview_width, preview_height, preview_bpp;
@@ -131,6 +129,7 @@ run (const gchar      *name,
   GimpDrawable      *drawable;
   static GimpParam   values[1];
   GimpPDBStatusType  status = GIMP_PDB_EXECUTION_ERROR;
+  GimpRunMode        run_mode;
 
   run_mode = param[0].data.d_int32;
   drawable = gimp_drawable_get (param[2].data.d_drawable);
@@ -228,14 +227,15 @@ main_function (GimpDrawable *drawable,
       gint    i;
       guchar *buffer = g_new (guchar,
                               preview_width * preview_height * preview_bpp);
-      for (i=0 ; i<preview_width * preview_height ; i++)
-      {
-        max_rgb_func (preview_cache + i * preview_bpp,
-                      buffer        + i * preview_bpp,
-                      preview_bpp,
-                      &param);
-        
-      }
+
+      for (i = 0; i<preview_width * preview_height; i++)
+        {
+          max_rgb_func (preview_cache + i * preview_bpp,
+                        buffer        + i * preview_bpp,
+                        preview_bpp,
+                        &param);
+        }
+
       gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
                               0, 0, preview_width, preview_height,
                               gimp_drawable_type (drawable->drawable_id),
@@ -247,7 +247,7 @@ main_function (GimpDrawable *drawable,
     {
       gimp_progress_init ( _("Max RGB..."));
 
-      gimp_rgn_iterate2 (drawable, run_mode, max_rgb_func, &param);
+      gimp_rgn_iterate2 (drawable, 0 /* unused */, max_rgb_func, &param);
 
       gimp_drawable_detach (drawable);
     }

@@ -39,7 +39,6 @@ struct _GimpRgnIterator
 {
   GimpDrawable *drawable;
   gint          x1, y1, x2, y2;
-  GimpRunMode   run_mode;
 };
 
 
@@ -71,12 +70,12 @@ static void  gimp_rgn_render_region        (const GimpPixelRgn *srcPR,
  **/
 GimpRgnIterator *
 gimp_rgn_iterator_new (GimpDrawable *drawable,
-                       GimpRunMode   run_mode)
+                       GimpRunMode   unused)
 {
   GimpRgnIterator *iter = g_new (GimpRgnIterator, 1);
 
   iter->drawable = drawable;
-  iter->run_mode = run_mode;
+
   gimp_drawable_mask_bounds (drawable->drawable_id,
                              &iter->x1, &iter->y1,
                              &iter->x2, &iter->y2);
@@ -196,7 +195,7 @@ gimp_rgn_iterator_dest (GimpRgnIterator *iter,
 
 void
 gimp_rgn_iterate1 (GimpDrawable *drawable,
-                   GimpRunMode   run_mode,
+                   GimpRunMode   unused,
                    GimpRgnFunc1  func,
                    gpointer      data)
 {
@@ -247,7 +246,7 @@ gimp_rgn_iterate1 (GimpDrawable *drawable,
 
 void
 gimp_rgn_iterate2 (GimpDrawable *drawable,
-                   GimpRunMode   run_mode,
+                   GimpRunMode   unused,
                    GimpRgnFunc2  func,
                    gpointer      data)
 {

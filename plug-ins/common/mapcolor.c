@@ -29,6 +29,7 @@
  *                        Fix problem with divide by zero
  * V 1.03,neo, 22-May-00: Fixed divide by zero in preview code.
  */
+
 #define VERSIO                                     1.03
 static char dversio[] =                          "v1.03  22-May-00";
 static char ident[] = "@(#) GIMP mapcolor plug-in v1.03  22-May-00";
@@ -131,9 +132,6 @@ static void   add_color_button        (gint       csel_index,
 static void   color_mapping           (GimpDrawable *drawable);
 
 
-/* The run mode */
-static GimpRunMode l_run_mode;
-
 static gchar *csel_title[4] =
 {
   N_("First Source Color"),
@@ -216,15 +214,15 @@ img_preview_create_from_drawable (guint  maxsize,
                                   gint32 drawable_ID)
 {
   GimpDrawable *drw;
-  GimpPixelRgn pixel_rgn;
-  guint drw_width, drw_height;
-  guint prv_width, prv_height;
-  gint  src_x, src_y, x, y;
-  guchar *prv_data, *img_data, *cu_row;
-  gdouble xfactor, yfactor;
-  gint tile_height, row_start, row_end;
-  gint bpp;
-  IMG_PREVIEW *ip;
+  GimpPixelRgn  pixel_rgn;
+  guint         drw_width, drw_height;
+  guint         prv_width, prv_height;
+  gint          src_x, src_y, x, y;
+  guchar       *prv_data, *img_data, *cu_row;
+  gdouble       xfactor, yfactor;
+  gint          tile_height, row_start, row_end;
+  gint          bpp;
+  IMG_PREVIEW  *ip;
 
   drw_width = gimp_drawable_width (drawable_ID);
   drw_height = gimp_drawable_height (drawable_ID);
@@ -300,21 +298,21 @@ query (void)
 {
   static GimpParamDef adjust_args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (not used)" },
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image (not used)" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable to adjust" }
   };
 
   static GimpParamDef map_args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (not used)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable where colors are to map" },
-    { GIMP_PDB_COLOR, "srccolor_1", "First source color" },
-    { GIMP_PDB_COLOR, "srccolor_2", "Second source color" },
-    { GIMP_PDB_COLOR, "dstcolor_1", "First destination color" },
-    { GIMP_PDB_COLOR, "dstcolor_2", "Second destination color" },
-    { GIMP_PDB_INT32, "map_mode", "Mapping mode (0: linear, others reserved)" }
+    { GIMP_PDB_INT32,    "run_mode",   "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",      "Input image (not used)" },
+    { GIMP_PDB_DRAWABLE, "drawable",   "Input drawable where colors are to map" },
+    { GIMP_PDB_COLOR,    "srccolor_1", "First source color" },
+    { GIMP_PDB_COLOR,    "srccolor_2", "Second source color" },
+    { GIMP_PDB_COLOR,    "dstcolor_1", "First destination color" },
+    { GIMP_PDB_COLOR,    "dstcolor_2", "Second destination color" },
+    { GIMP_PDB_INT32,    "map_mode",   "Mapping mode (0: linear, others reserved)" }
   };
 
   gimp_install_procedure ("plug_in_color_adjust",
@@ -368,14 +366,11 @@ run (const gchar      *name,
   GimpRunMode        run_mode;
   GimpDrawable      *drawable = NULL;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  guchar            *c;
   gint               j;
-
-  c = (guchar *) ident;
 
   INIT_I18N ();
 
-  l_run_mode = run_mode = param[0].data.d_int32;
+  run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -474,7 +469,9 @@ run (const gchar      *name,
   if ((status == GIMP_PDB_SUCCESS) && (run_mode != GIMP_RUN_NONINTERACTIVE))
     gimp_displays_flush ();
 
-  if (drawable != NULL) gimp_drawable_detach (drawable);
+  if (drawable != NULL)
+    gimp_drawable_detach (drawable);
+
   values[0].data.d_status = status;
 }
 
@@ -484,10 +481,10 @@ update_img_preview (void)
 {
   IMG_PREVIEW *dst_ip = plinterface.map_preview;
   IMG_PREVIEW *src_ip = plinterface.img_preview;
-  GtkWidget *preview = plinterface.preview;
-  guchar redmap[256], greenmap[256], bluemap[256];
-  guchar *src, *dst;
-  gint j;
+  GtkWidget   *preview = plinterface.preview;
+  guchar       redmap[256], greenmap[256], bluemap[256];
+  guchar      *src, *dst;
+  gint         j;
 
   if ((dst_ip == NULL) || (src_ip == NULL)) return;
 
@@ -716,5 +713,5 @@ color_mapping (GimpDrawable *drawable)
                plvals.map_mode,
                redmap, greenmap, bluemap);
 
-  gimp_rgn_iterate2 (drawable, l_run_mode, mapcolor_func, NULL);
+  gimp_rgn_iterate2 (drawable, 0 /* unused */, mapcolor_func, NULL);
 }

@@ -54,8 +54,6 @@ static GimpPDBStatusType threshold_alpha        (gint32     drawable_id);
 static gboolean          threshold_alpha_dialog (void);
 
 
-static GimpRunMode        run_mode;
-
 GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
@@ -113,6 +111,7 @@ run (const gchar      *name,
 {
   static GimpParam   values[1];
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpRunMode        run_mode;
   gint               drawable_id;
 
   run_mode    = param[0].data.d_int32;
@@ -204,7 +203,7 @@ threshold_alpha (gint32 drawable_id)
 
   gap = (gimp_drawable_is_rgb (drawable_id)) ? 3 : 1;
 
-  gimp_rgn_iterate2 (drawable, run_mode, threshold_alpha_func,
+  gimp_rgn_iterate2 (drawable, 0 /* unused */, threshold_alpha_func,
 		     GINT_TO_POINTER(gap));
 
   gimp_drawable_detach (drawable);

@@ -44,8 +44,6 @@ static void   semiflatten (GimpDrawable     *drawable);
 
 static guchar bgred, bggreen, bgblue;
 
-static GimpRunMode run_mode;
-
 GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
@@ -100,6 +98,7 @@ run (const gchar      *name,
   GimpDrawable      *drawable;
   gint32             image_ID;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpRunMode        run_mode;
 
   *nreturn_vals = 1;
   *return_vals = values;
@@ -137,7 +136,7 @@ run (const gchar      *name,
   gimp_drawable_detach (drawable);
 }
 
-static void 
+static void
 semiflatten_func (const guchar *src,
 		  guchar       *dest,
 		  gint          bpp,
@@ -157,6 +156,6 @@ semiflatten (GimpDrawable *drawable)
   gimp_context_get_background (&background);
   gimp_rgb_get_uchar (&background, &bgred, &bggreen, &bgblue);
 
-  gimp_rgn_iterate2 (drawable, run_mode, semiflatten_func, NULL);
+  gimp_rgn_iterate2 (drawable, 0 /* unused */, semiflatten_func, NULL);
 }
 

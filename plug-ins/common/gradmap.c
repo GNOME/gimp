@@ -32,65 +32,62 @@ static char rcsid[] = "$Id$";
 
 /* Some useful macros */
 
-#define NSAMPLES	256
-#define TILE_CACHE_SIZE 32
-#define LUMINOSITY(X)	(GIMP_RGB_INTENSITY (X[0], X[1], X[2]) + 0.5)
-
-static GimpRunMode run_mode;
+#define NSAMPLES      256
+#define LUMINOSITY(X) (GIMP_RGB_INTENSITY (X[0], X[1], X[2]) + 0.5)
 
 /* Declare a local function.
  */
-static void	 query		(void);
-static void	 run		(const gchar	  *name,
-				 gint	           nparams,
-				 const GimpParam  *param,
-				 gint	          *nreturn_vals,
-				 GimpParam	 **return_vals);
+static void     query       (void);
+static void     run         (const gchar      *name,
+                             gint              nparams,
+                             const GimpParam  *param,
+                             gint             *nreturn_vals,
+                             GimpParam       **return_vals);
 
-static void	 gradmap	(GimpDrawable     *drawable);
-static guchar *	 get_samples	(GimpDrawable     *drawable );
+static void     gradmap     (GimpDrawable     *drawable);
+static guchar * get_samples (GimpDrawable     *drawable);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
-  NULL,	 /* init_proc  */
-  NULL,	 /* quit_proc  */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
   query, /* query_proc */
-  run,	 /* run_proc   */
+  run,   /* run_proc   */
 };
 
 MAIN ()
 
 static void
-query()
+query (void)
 {
   static GimpParamDef args[]=
-    {
-      { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
-      { GIMP_PDB_IMAGE,    "image",    "Input image (unused)"         },
-      { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"               }
-   };
+  {
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image (unused)"         },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"               }
+  };
 
   gimp_install_procedure ("plug_in_gradmap",
                           "Map the contents of the specified drawable with "
-			  "active gradient",
-                          " This plug-in maps the contents of the specified "
-			  "drawable with active gradient. It calculates "
-			  "luminosity of each pixel and replaces the pixel "
-			  "by the sample of active gradient at the position "
-			  "proportional to that luminosity. Complete black "
-			  "pixel becomes the leftmost color of the gradient, "
-			  "and complete white becomes the rightmost. Works on "
-			  "both Grayscale and RGB image with/without alpha "
-			  "channel.",
-			  "Eiichi Takamori",
-			  "Eiichi Takamori",
-			  "1997",
-			  N_("_Gradient Map"),
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "active gradient",
+                          "This plug-in maps the contents of the specified "
+                          "drawable with active gradient. It calculates "
+                          "luminosity of each pixel and replaces the pixel "
+                          "by the sample of active gradient at the position "
+                          "proportional to that luminosity. Complete black "
+                          "pixel becomes the leftmost color of the gradient, "
+                          "and complete white becomes the rightmost. Works on "
+                          "both Grayscale and RGB image with/without alpha "
+                          "channel.",
+                          "Eiichi Takamori",
+                          "Eiichi Takamori",
+                          "1997",
+                          N_("_Gradient Map"),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register ("plug_in_gradmap",
                              N_("<Image>/Filters/Colors/Map"));
@@ -106,6 +103,7 @@ run (const gchar      *name,
   static GimpParam   values[1];
   GimpDrawable      *drawable;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpRunMode        run_mode;
 
   run_mode = param[0].data.d_int32;
 
@@ -120,17 +118,17 @@ run (const gchar      *name,
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
-  /*  Make sure that the drawable is gray or RGB color	*/
+  /*  Make sure that the drawable is gray or RGB color  */
   if (gimp_drawable_is_rgb (drawable->drawable_id) ||
       gimp_drawable_is_gray (drawable->drawable_id))
     {
       gimp_progress_init (_("Gradient Map..."));
-      gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
+      gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
 
       gradmap (drawable);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	gimp_displays_flush ();
+        gimp_displays_flush ();
     }
   else
     {
@@ -143,22 +141,23 @@ run (const gchar      *name,
   gimp_drawable_detach (drawable);
 }
 
-typedef struct {
-  guchar *samples;
-  gboolean is_rgb;
-  gboolean has_alpha;
-} GradMapParam_t;
+typedef struct
+{
+  guchar   *samples;
+  gboolean  is_rgb;
+  gboolean  has_alpha;
+} GradMapParam;
 
 static void
 gradmap_func (const guchar *src,
-	      guchar       *dest,
-	      gint          bpp,
-	      gpointer      data)
+              guchar       *dest,
+              gint          bpp,
+              gpointer      data)
 {
-  GradMapParam_t *param = (GradMapParam_t*) data;
-  gint lum;
-  gint b;
-  guchar *samp;
+  GradMapParam *param = data;
+  gint          lum;
+  gint          b;
+  guchar       *samp;
 
   lum = (param->is_rgb) ? LUMINOSITY (src) : src[0];
   samp = &param->samples[lum * bpp];
@@ -166,26 +165,26 @@ gradmap_func (const guchar *src,
   if (param->has_alpha)
     {
       for (b = 0; b < bpp - 1; b++)
-	dest[b] = samp[b];
+        dest[b] = samp[b];
       dest[b] = ((guint)samp[b] * (guint)src[b]) / 255;
     }
   else
     {
       for (b = 0; b < bpp; b++)
-	dest[b] = samp[b];
+        dest[b] = samp[b];
     }
 }
 
 static void
 gradmap (GimpDrawable *drawable)
 {
-  GradMapParam_t param;
+  GradMapParam param;
 
   param.is_rgb = gimp_drawable_is_rgb (drawable->drawable_id);
   param.has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
   param.samples = get_samples (drawable);
 
-  gimp_rgn_iterate2 (drawable, run_mode, gradmap_func, &param);
+  gimp_rgn_iterate2 (drawable, 0 /* unused */, gradmap_func, &param);
 }
 
 /*
@@ -195,20 +194,20 @@ gradmap (GimpDrawable *drawable)
 static guchar *
 get_samples (GimpDrawable *drawable)
 {
-  gdouble	*f_samples, *f_samp;	/* float samples */
-  guchar	*b_samples, *b_samp;	/* byte samples */
-  gint		bpp, color, has_alpha, alpha;
-  gint		i, j;
+  gdouble *f_samples, *f_samp;  /* float samples */
+  guchar  *b_samples, *b_samp;  /* byte samples */
+  gint     bpp, color, has_alpha, alpha;
+  gint     i, j;
 
 #ifdef __GNUC__
 #warning FIXME: "reverse" hardcoded to FALSE.
 #endif
   f_samples = gimp_gradients_sample_uniform (NSAMPLES, FALSE);
 
-  bpp	    = gimp_drawable_bpp (drawable->drawable_id);
-  color	    = gimp_drawable_is_rgb (drawable->drawable_id);
+  bpp       = gimp_drawable_bpp (drawable->drawable_id);
+  color     = gimp_drawable_is_rgb (drawable->drawable_id);
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
-  alpha	    = (has_alpha ? bpp - 1 : bpp);
+  alpha     = (has_alpha ? bpp - 1 : bpp);
 
   b_samples = g_new (guchar, NSAMPLES * bpp);
 
@@ -217,15 +216,16 @@ get_samples (GimpDrawable *drawable)
       b_samp = &b_samples[i * bpp];
       f_samp = &f_samples[i * 4];
       if (color)
-	for (j = 0; j < 3; j++)
-	  b_samp[j] = f_samp[j] * 255;
+        for (j = 0; j < 3; j++)
+          b_samp[j] = f_samp[j] * 255;
       else
-	b_samp[0] = LUMINOSITY (f_samp) * 255;
+        b_samp[0] = LUMINOSITY (f_samp) * 255;
 
       if (has_alpha)
-	b_samp[alpha] = f_samp[3] * 255;
+        b_samp[alpha] = f_samp[3] * 255;
     }
 
   g_free (f_samples);
+
   return b_samples;
 }

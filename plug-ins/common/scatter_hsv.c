@@ -71,7 +71,6 @@ static void     scatter_hsv_iscale_update  (GtkAdjustment *adjustment,
 static gint preview_width  = PREVIEW_WIDTH;
 static gint preview_height = PREVIEW_HEIGHT;
 
-static GimpRunMode run_mode;
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -150,6 +149,7 @@ run (const gchar      *name,
 {
   static GimpParam  values[1];
   GimpPDBStatusType status = GIMP_PDB_EXECUTION_ERROR;
+  GimpRunMode       run_mode;
 
   INIT_I18N ();
 
@@ -231,7 +231,7 @@ scatter_hsv (gint32 drawable_id)
 
   gimp_progress_init (_("Scattering HSV..."));
 
-  gimp_rgn_iterate2 (drawable, run_mode, scatter_hsv_func, NULL);
+  gimp_rgn_iterate2 (drawable, 0 /* unused */, scatter_hsv_func, NULL);
 
   gimp_drawable_detach (drawable);
 

@@ -28,7 +28,6 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-static GimpRunMode    run_mode;
 
 /* Declare local functions.
  */
@@ -59,8 +58,8 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
   };
 
@@ -98,8 +97,8 @@ run (const gchar      *name,
   static GimpParam   values[1];
   GimpDrawable      *drawable;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-
-  gint32 image_ID;
+  GimpRunMode        run_mode;
+  gint32             image_ID;
 
   INIT_I18N();
 
@@ -285,7 +284,6 @@ Color_Enhance (GimpDrawable *drawable)
   param.vhi = 0.0;
   param.vlo = 1.0;
 
-  gimp_rgn_iterate1 (drawable, run_mode, find_vhi_vlo, &param);
-  gimp_rgn_iterate2 (drawable, run_mode, color_enhance_func, &param);
+  gimp_rgn_iterate1 (drawable, 0 /* unused */, find_vhi_vlo, &param);
+  gimp_rgn_iterate2 (drawable, 0 /* unused */, color_enhance_func, &param);
 }
-

@@ -176,7 +176,6 @@ typedef struct
  * Some globals
  */
 
-static GimpRunMode       run_mode;
 static t_samp_interface  g_di;  /* global dialog interface varables */
 static t_values          g_values = { -1, -1, 1, 1, 0, 1, 0, 255, 1.0, 0, 255, 5.5 };
 static t_samp_table_elem g_lum_tab[256];
@@ -315,6 +314,7 @@ run (const gchar      *name,
   GimpDrawable      *dst_drawable;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   const gchar       *l_env;
+  GimpRunMode        run_mode;
 
   INIT_I18N ();
 
@@ -2992,7 +2992,7 @@ p_colorize_drawable (gint32 drawable_id)
   if (g_show_progress)
     gimp_progress_init (_("Remap Colorized..."));
 
-  gimp_rgn_iterate2 (drawable, run_mode, colorize_func,
+  gimp_rgn_iterate2 (drawable, 0 /* unused */, colorize_func,
                      GINT_TO_POINTER (has_alpha));
 
   if (g_show_progress)

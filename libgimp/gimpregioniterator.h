@@ -56,29 +56,29 @@ typedef void   (* GimpRgnFuncSrcDest) (gint          x,
                                        gint          bpp,
                                        gpointer      data);
 
-GimpRgnIterator * gimp_rgn_iterator_new 	   (GimpDrawable      *drawable,
-						    GimpRunMode        run_mode);
-void 		 gimp_rgn_iterator_free 	   (GimpRgnIterator   *iter);
-void		 gimp_rgn_iterator_src 		   (GimpRgnIterator   *iter,
-						    GimpRgnFuncSrc     func,
-						    gpointer           data);
-void		 gimp_rgn_iterator_dest 	   (GimpRgnIterator   *iter,
-						    GimpRgnFuncDest    func,
-						    gpointer           data);
-void		 gimp_rgn_iterator_src_dest 	   (GimpRgnIterator   *iter,
-						    GimpRgnFuncSrcDest func,
-						    gpointer           data);
+GimpRgnIterator * gimp_rgn_iterator_new      (GimpDrawable      *drawable,
+                                              GimpRunMode        unused);
+void              gimp_rgn_iterator_free     (GimpRgnIterator   *iter);
+void              gimp_rgn_iterator_src      (GimpRgnIterator   *iter,
+                                              GimpRgnFuncSrc     func,
+                                              gpointer           data);
+void              gimp_rgn_iterator_dest     (GimpRgnIterator   *iter,
+                                              GimpRgnFuncDest    func,
+                                              gpointer           data);
+void              gimp_rgn_iterator_src_dest (GimpRgnIterator   *iter,
+                                              GimpRgnFuncSrcDest func,
+                                              gpointer           data);
 
 
-void             gimp_rgn_iterate1                 (GimpDrawable       *drawable,
-                                                    GimpRunMode         run_mode,
-                                                    GimpRgnFunc1        func,
-                                                    gpointer            data);
+void              gimp_rgn_iterate1          (GimpDrawable      *drawable,
+                                              GimpRunMode        unused,
+                                              GimpRgnFunc1       func,
+                                              gpointer           data);
 
-void             gimp_rgn_iterate2                 (GimpDrawable        *drawable,
-                                                    GimpRunMode          run_mode,
-                                                    GimpRgnFunc2         func,
-                                                    gpointer             data);
+void              gimp_rgn_iterate2          (GimpDrawable      *drawable,
+                                              GimpRunMode        unused,
+                                              GimpRgnFunc2       func,
+                                              gpointer           data);
 
 G_END_DECLS
 

@@ -40,7 +40,6 @@ static void   run                     (const gchar      *name,
 static void   autostretch_hsv         (GimpDrawable  *drawable);
 static void   indexed_autostretch_hsv (gint32         image_ID);
 
-static GimpRunMode    run_mode;
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -58,8 +57,8 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
   };
 
@@ -98,6 +97,7 @@ run (const gchar      *name,
   static GimpParam   values[1];
   GimpDrawable      *drawable;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpRunMode        run_mode;
 
   gint32 image_ID;
 
@@ -149,7 +149,7 @@ typedef struct {
   double vlo;
 } AutostretchData;
 
-static void 
+static void
 find_max (guchar *src, gint bpp, AutostretchData *data)
 {
   double h, s, v;
@@ -161,8 +161,8 @@ find_max (guchar *src, gint bpp, AutostretchData *data)
   if (v < data->vlo) data->vlo = v;
 }
 
-static void 
-autostretch_hsv_func (guchar *src, guchar *dest, gint bpp, 
+static void
+autostretch_hsv_func (guchar *src, guchar *dest, gint bpp,
 		      AutostretchData *data)
 {
   double h, s, v;
@@ -173,7 +173,7 @@ autostretch_hsv_func (guchar *src, guchar *dest, gint bpp,
   if (data->vhi != data->vlo)
     v = (v - data->vlo) / (data->vhi - data->vlo);
   gimp_hsv_to_rgb4(dest, h, s, v);
-  
+
   if (bpp == 4)
     dest[3] = src[3];
 }
@@ -211,9 +211,7 @@ autostretch_hsv (GimpDrawable *drawable)
 {
   AutostretchData data = {0.0, 1.0, 0.0, 1.0};
 
-  gimp_rgn_iterate1 (drawable, run_mode, (GimpRgnFunc1) find_max, &data);
-  gimp_rgn_iterate2 (drawable, run_mode, (GimpRgnFunc2) autostretch_hsv_func, 
+  gimp_rgn_iterate1 (drawable, 0 /* unused */, (GimpRgnFunc1) find_max, &data);
+  gimp_rgn_iterate2 (drawable, 0 /* unused */, (GimpRgnFunc2) autostretch_hsv_func,
 		     &data);
 }
-
-

@@ -47,8 +47,6 @@ static void   vinvert_render_row (const guchar     *src,
                                   gint              bpp);
 
 
-static GimpRunMode run_mode;
-
 GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
@@ -104,6 +102,7 @@ run (const gchar      *name,
   GimpDrawable      *drawable;
   gint32             image_ID;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpRunMode        run_mode;
 
   run_mode = param[0].data.d_int32;
 
@@ -208,5 +207,5 @@ vinvert_render_row (const guchar *src,
 static void
 vinvert (GimpDrawable *drawable)
 {
-  gimp_rgn_iterate2 (drawable, run_mode, vinvert_func, NULL);
+  gimp_rgn_iterate2 (drawable, 0 /* unused */, vinvert_func, NULL);
 }

@@ -100,8 +100,6 @@ static void      alienmap2_get_label_size (void);
 
 /***** Variables *****/
 
-static GimpRunMode     run_mode;
-
 #define PREVIEW_SIZE 128
 static GtkWidget *preview;
 static gint       preview_width, preview_height, preview_bpp;
@@ -275,6 +273,7 @@ run (const gchar      *name,
 {
   static GimpParam  values[1];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  GimpRunMode       run_mode;
 
   INIT_I18N ();
 
@@ -391,7 +390,7 @@ alienmap2_func (const guchar *src,
 static void
 alienmap2 (GimpDrawable *drawable)
 {
-  gimp_rgn_iterate2 (drawable, run_mode, alienmap2_func, NULL);
+  gimp_rgn_iterate2 (drawable, 0 /* unused */, alienmap2_func, NULL);
 }
 
 static gint

@@ -106,7 +106,6 @@ static NoisifyInterface noise_int =
   { NULL, NULL, NULL, NULL }
 };
 
-static GimpRunMode     run_mode;
 
 MAIN ()
 
@@ -151,6 +150,7 @@ run (const gchar      *name,
   static GimpParam   values[1];
   GimpDrawable      *drawable;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpRunMode        run_mode;
 
   run_mode = param[0].data.d_int32;
 
@@ -217,7 +217,8 @@ run (const gchar      *name,
       gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
 
       /*  compute the luminosity which exceeds the luminosity threshold  */
-      gimp_rgn_iterate2 (drawable, run_mode, noisify_func, gr);
+      gimp_rgn_iterate2 (drawable, 0 /* unused */, noisify_func, gr);
+
       g_rand_free (gr);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)

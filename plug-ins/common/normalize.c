@@ -58,8 +58,6 @@ GimpPlugInInfo PLUG_IN_INFO =
   run,   /* run_proc   */
 };
 
-static GimpRunMode run_mode;
-
 
 MAIN ()
 
@@ -107,8 +105,8 @@ run (const gchar      *name,
   static GimpParam   values[1];
   GimpDrawable      *drawable;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-
-  gint32 image_ID;
+  GimpRunMode        run_mode;
+  gint32             image_ID;
 
   INIT_I18N ();
 
@@ -197,7 +195,7 @@ typedef struct {
   gboolean has_alpha;
 } NormalizeParam_t;
 
-static void 
+static void
 find_min_max (const guchar *src,
 	      gint          bpp,
 	      gpointer      data)
@@ -217,7 +215,7 @@ find_min_max (const guchar *src,
     }
 }
 
-static void 
+static void
 normalize_func (const guchar *src,
 		guchar       *dest,
 		gint          bpp,
@@ -228,7 +226,7 @@ normalize_func (const guchar *src,
 
   for (b = 0; b < param->alpha; b++)
     dest[b] = param->lut[src[b]];
-  
+
   if (param->has_alpha)
     dest[param->alpha] = src[param->alpha];
 }
@@ -245,7 +243,7 @@ normalize (GimpDrawable *drawable)
   param.has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
   param.alpha = (param.has_alpha) ? drawable->bpp - 1 : drawable->bpp;
 
-  gimp_rgn_iterate1 (drawable, run_mode, find_min_max, &param);
+  gimp_rgn_iterate1 (drawable, 0 /* unused */, find_min_max, &param);
 
   /* Calculate LUT */
 
@@ -257,6 +255,6 @@ normalize (GimpDrawable *drawable)
   else
     param.lut[(gint)param.min] = param.min;
 
-  gimp_rgn_iterate2 (drawable, run_mode, normalize_func, &param);
+  gimp_rgn_iterate2 (drawable, 0 /* unused */, normalize_func, &param);
 }
 

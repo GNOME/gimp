@@ -49,7 +49,6 @@ GimpPlugInInfo PLUG_IN_INFO =
   run,   /* run_proc   */
 };
 
-static GimpRunMode run_mode;
 
 MAIN ()
 
@@ -58,8 +57,8 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
   };
 
@@ -96,8 +95,8 @@ run (const gchar      *name,
   static GimpParam   values[1];
   GimpDrawable      *drawable;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-
-  gint32 image_ID;
+  GimpRunMode        run_mode;
+  gint32             image_ID;
 
   INIT_I18N();
 
@@ -235,7 +234,7 @@ c_astretch (GimpDrawable *drawable)
   param.min[0] = param.min[1] = param.min[2] = 255;
   param.max[0] = param.max[1] = param.max[2] = 0;
 
-  gimp_rgn_iterate1 (drawable, run_mode, find_min_max, &param);
+  gimp_rgn_iterate1 (drawable, 0 /* unused */, find_min_max, &param);
 
   /* Calculate LUTs with stretched contrast */
   for (b = 0; b < param.alpha; b++)
@@ -250,6 +249,6 @@ c_astretch (GimpDrawable *drawable)
         param.lut[param.min[b]][b] = param.min[b];
     }
 
-  gimp_rgn_iterate2 (drawable, run_mode, c_astretch_func, &param);
+  gimp_rgn_iterate2 (drawable, 0 /* unused */, c_astretch_func, &param);
 }
 

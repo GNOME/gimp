@@ -66,8 +66,6 @@ static GimpRGB button_color[] =
   { 1.0, 1.0, 1.0, 1.0 },
 };
 
-static GimpRunMode run_mode;
-
 GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,
@@ -93,10 +91,10 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_COLOR, "color", "Color to apply"}
+    { GIMP_PDB_COLOR,    "color",    "Color to apply"}
   };
 
   gimp_install_procedure (PLUG_IN_NAME,
@@ -126,6 +124,7 @@ run (const gchar      *name,
   GimpPDBStatusType  status;
   static GimpParam   values[1];
   GimpDrawable      *drawable;
+  GimpRunMode        run_mode;
 
   INIT_I18N ();
 
@@ -175,9 +174,7 @@ run (const gchar      *name,
 	gimp_set_data (PLUG_IN_NAME, &cvals, sizeof (ColorifyVals));
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	{
-	  gimp_displays_flush ();
-	}
+        gimp_displays_flush ();
     }
 
   gimp_drawable_detach (drawable);
@@ -219,7 +216,7 @@ colorify (GimpDrawable *drawable)
       final_blue_lookup[i]  = i * cvals.color.b;
     }
 
-  gimp_rgn_iterate2 (drawable, run_mode, colorify_func, NULL);
+  gimp_rgn_iterate2 (drawable, 0 /* unused */, colorify_func, NULL);
 }
 
 static gboolean

@@ -1,3 +1,28 @@
+2004-09-29  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimpregioniterator.[ch]: renamed the "run_mode"
+	parameters to "unused" and remode the rum_mode member from the
+	private GimpRgbIterator struct.
+
+	* plug-ins/common/AlienMap2.c
+	* plug-ins/common/autostretch_hsv.c
+	* plug-ins/common/c_astretch.c
+	* plug-ins/common/color_enhance.c
+	* plug-ins/common/colorify.c
+	* plug-ins/common/colortoalpha.c
+	* plug-ins/common/gradmap.c
+	* plug-ins/common/mapcolor.c
+	* plug-ins/common/max_rgb.c
+	* plug-ins/common/noisify.c
+	* plug-ins/common/normalize.c
+	* plug-ins/common/sample_colorize.c
+	* plug-ins/common/scatter_hsv.c
+	* plug-ins/common/semiflatten.c
+	* plug-ins/common/threshold_alpha.c
+	* plug-ins/common/vinvert.c
+	* plug-ins/fp/fp.c: made "run_mode" a private variable of run()
+	and pass 0 to gimp_rgn_iterate*(). Minor cleanups.
+
 2004-09-29  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimp.def

@@ -284,7 +284,6 @@ static FP_Params Current =
 };
 
 static GimpDrawable *drawable, *mask;
-static GimpRunMode run_mode;
 
 static void      query  (void);
 static void      run    (const gchar      *name,
@@ -340,6 +339,7 @@ run (const gchar      *name,
 {
   GimpParam         values[1];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  GimpRunMode       run_mode;
 
   *nreturn_vals = 1;
   *return_vals = values;
@@ -373,7 +373,8 @@ run (const gchar      *name,
 
 
   values[0].data.d_status = status;
-  if (status==GIMP_PDB_SUCCESS)
+
+  if (status == GIMP_PDB_SUCCESS)
     gimp_drawable_detach (drawable);
 }
 
@@ -456,7 +457,7 @@ fp_func (const guchar *src,
 static void
 fp (GimpDrawable *drawable)
 {
-  gimp_rgn_iterate2 (drawable, run_mode, fp_func, NULL);
+  gimp_rgn_iterate2 (drawable, 0 /* unused */, fp_func, NULL);
 }
 
 /***********************************************************/
