@@ -780,6 +780,7 @@ plug-ins/wind/Makefile
 plug-ins/xbm/Makefile
 plug-ins/xwd/Makefile
 plug-ins/zealouscrop/Makefile
+modules/Makefile
 app/Makefile
 docs/Makefile
 data/Makefile

@@ -1,3 +1,7 @@
+Mon Jan 11 21:35:44 MET 1999 Sven Neumann <sven@gimp.org>
+
+	* configure.in: build the Makefile in the modules directory
+
 1999-01-10  Raja R Harinath  <harinath@cs.umn.edu>
 
 	* configure.in (AC_OUTPUT): Use `test -f' instead of `test -e'.
