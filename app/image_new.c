@@ -208,7 +208,7 @@ image_new_create_image (const GimpImageNewValues *values)
       type = (values->type == RGB) ? RGBA_GIMAGE : GRAYA_GIMAGE;
       break;
     default:
-      type = RGB_IMAGE; 
+      type = RGB_GIMAGE; 
       break;
     }  
 

@@ -1,3 +1,15 @@
+Thu Oct 14 04:59:11 BST 1999 Nick Lamb <njl195@zepler.org>
+
+	* app/plug_in.h
+	* app/fileops.c
+	* app/plug_in.c
+
+	Fixed #2169 and as a side-effect discovered that RGB_IMAGE means
+	something quite different for app vs plug-ins. The one in app is
+	now called RGB_IMAGE_OK to differentiate them.
+
+	* app/image_new.c: Still using RGB_IMAGE instead of GIMAGE (!)
+	
 Mon Oct 18 21:24:47 BST 1999 Andy Thomas <alt@gimp.org>
 
 	* app/bezier_select.c

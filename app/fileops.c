@@ -518,16 +518,25 @@ file_save_as_callback (GtkWidget *widget,
 			save_options, FALSE, FALSE, 5);
     }
 
-  switch (gdisplay->gimage->base_type)
+  switch (gimage_base_type_with_alpha (gdisplay->gimage))
     {
-    case RGB:
-      file_update_menus (save_procs, RGB_IMAGE);
+    case RGB_GIMAGE:
+      file_update_menus (save_procs, RGB_IMAGE_OK);
       break;
-    case GRAY:
-      file_update_menus (save_procs, GRAY_IMAGE);
+    case RGBA_GIMAGE:
+      file_update_menus (save_procs, RGBA_IMAGE_OK);
       break;
-    case INDEXED:
-      file_update_menus (save_procs, INDEXED_IMAGE);
+    case GRAY_GIMAGE:
+      file_update_menus (save_procs, GRAY_IMAGE_OK);
+      break;
+    case GRAYA_GIMAGE:
+      file_update_menus (save_procs, GRAYA_IMAGE_OK);
+      break;
+    case INDEXED_GIMAGE:
+      file_update_menus (save_procs, INDEXED_IMAGE_OK);
+      break;
+    case INDEXEDA_GIMAGE:
+      file_update_menus (save_procs, INDEXEDA_IMAGE_OK);
       break;
     }
 
