@@ -69,6 +69,8 @@ static void   gimp_selection_editor_none_clicked   (GtkWidget           *widget,
                                                     GimpImageEditor     *editor);
 static void   gimp_selection_editor_save_clicked   (GtkWidget           *widget,
                                                     GimpImageEditor     *editor);
+static void   gimp_selection_editor_stroke_clicked (GtkWidget           *widget,
+                                                    GimpImageEditor     *editor);
 
 static gboolean gimp_selection_preview_button_press(GtkWidget           *widget,
                                                     GdkEventButton      *bevent,
@@ -184,6 +186,14 @@ gimp_selection_editor_init (GimpSelectionEditor *selection_editor)
                             NULL,
                             selection_editor);
 
+  selection_editor->stroke_button =
+    gimp_editor_add_button (GIMP_EDITOR (selection_editor),
+			    GIMP_STOCK_SELECTION_STROKE,
+                            _("Stroke Selection"), NULL,
+                            G_CALLBACK (gimp_selection_editor_stroke_clicked),
+                            NULL,
+                            selection_editor);
+
   gtk_widget_set_sensitive (GTK_WIDGET (selection_editor), FALSE);
 }
 
@@ -283,6 +293,21 @@ gimp_selection_editor_save_clicked (GtkWidget       *widget,
   if (editor->gimage)
     {
       gimp_image_mask_save (editor->gimage);
+    }
+}
+
+static void
+gimp_selection_editor_stroke_clicked (GtkWidget       *widget,
+				      GimpImageEditor *editor)
+{
+  if (editor->gimage)
+    {
+      GimpImage *gimage = editor->gimage;
+
+      gimp_image_mask_stroke (gimage,
+			      gimp_image_active_drawable (gimage),
+			      gimp_get_current_context (gimage->gimp));
+      gimp_image_flush (gimage);
     }
 }
 

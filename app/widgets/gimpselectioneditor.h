@@ -43,6 +43,7 @@ struct _GimpSelectionEditor
   GtkWidget       *none_button;
   GtkWidget       *invert_button;
   GtkWidget       *save_button;
+  GtkWidget       *stroke_button;
 };
 
 struct _GimpSelectionEditorClass

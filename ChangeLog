@@ -1,5 +1,10 @@
 2003-05-09  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpselectioneditor.[ch]: added a "Stroke Selection"
+	button to the selection editor as suggested in bug #112448.
+
+2003-05-09  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpmagnifytool.c (gimp_magnify_tool_button_release):
 	initialize scale to please the compiler.
 
