@@ -170,13 +170,13 @@ gimp_image_undo_group_end (GimpImage *gimage)
     {
       gimage->pushing_undo_group = GIMP_UNDO_GROUP_NONE;
 
-      gimp_image_undo_free_space (gimage);
-
       /* Do it here, since undo_push doesn't emit this event while in
        * the middle of a group
        */
       gimp_image_undo_event (gimage, GIMP_UNDO_EVENT_UNDO_PUSHED,
                              gimp_undo_stack_peek (gimage->undo_stack));
+
+      gimp_image_undo_free_space (gimage);
     }
 
   return TRUE;
@@ -245,19 +245,20 @@ gimp_image_undo_push_item (GimpImage        *gimage,
                             pop_func, free_func);
     }
 
-  gimp_image_undo_push_undo (gimage, undo);
+  if (gimp_image_undo_push_undo (gimage, undo))
+    return undo;
 
-  return undo;
+  return NULL;
 }
 
-void
+gboolean
 gimp_image_undo_push_undo (GimpImage *gimage,
                            GimpUndo  *undo)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-  g_return_if_fail (GIMP_IS_UNDO (undo));
-  g_return_if_fail (undo->gimage == gimage);
-  g_return_if_fail (gimage->undo_freeze_count == 0);
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (GIMP_IS_UNDO (undo), FALSE);
+  g_return_val_if_fail (undo->gimage == gimage, FALSE);
+  g_return_val_if_fail (gimage->undo_freeze_count == 0, FALSE);
 
   /*  nuke the redo stack  */
   gimp_image_undo_free_redo (gimage);
@@ -275,9 +276,13 @@ gimp_image_undo_push_undo (GimpImage *gimage,
     {
       gimp_undo_stack_push_undo (gimage->undo_stack, undo);
 
+      gimp_image_undo_event (gimage, GIMP_UNDO_EVENT_UNDO_PUSHED, undo);
+
       gimp_image_undo_free_space (gimage);
 
-      gimp_image_undo_event (gimage, GIMP_UNDO_EVENT_UNDO_PUSHED, undo);
+      /*  freeing undo space may have freed the newly pushed undo  */
+      if (gimp_undo_stack_peek (gimage->undo_stack) == undo)
+        return TRUE;
     }
   else
     {
@@ -286,7 +291,11 @@ gimp_image_undo_push_undo (GimpImage *gimage,
       undo_group = GIMP_UNDO_STACK (gimp_undo_stack_peek (gimage->undo_stack));
 
       gimp_undo_stack_push_undo (undo_group, undo);
+
+      return TRUE;
     }
+
+  return FALSE;
 }
 
 

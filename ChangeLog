@@ -1,3 +1,23 @@
+2004-07-07  Michael Natterer  <mitch@gimp.org>
+
+	Made the undo system robust against the currently pushed undo
+	being too large according to prefs settings. Fixes bug #145379.
+
+	* app/core/gimpimage-undo.[ch] (gimp_image_undo_push_undo)
+	(gimp_image_undo_group_end): emit "undo-event" *before* calling
+	gimp_image_undo_free_space() so the undo history doesn't try to
+	remove an item that has never been added.
+
+	(gimp_image_undo_push_undo): added boolean return value indicating
+	if the undo could be pushed (FALSE means the undo was to large
+	and was discarded right away).
+
+	(gimp_image_undo_push_item): return NULL if the above returned
+	FALSE.
+
+	* app/core/gimpimage-undo-push.c (gimp_image_undo_push_text_layer):
+	changed accordingly.
+
 2004-07-07  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/jpeg.c: Don't try to load EXIF data if any warnings

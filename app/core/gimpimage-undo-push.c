@@ -1762,9 +1762,7 @@ gimp_image_undo_push_text_layer (GimpImage        *gimage,
 
   undo = gimp_text_undo_new (layer, pspec, undo_desc);
 
-  gimp_image_undo_push_undo (gimage, undo);
-
-  return TRUE;
+  return gimp_image_undo_push_undo (gimage, undo);
 }
 
 
