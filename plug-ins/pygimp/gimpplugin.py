@@ -26,30 +26,39 @@
 # A plugin using this module would look something like this:
 #
 #   import gimp, gimpplugin
-#   pdb = gimp.pdb
-#   class myplugin(gimpplugin.plugin):
-#           def query(self):
-#                   gimp.install_procedure("plug_in_mine", ...)
-#           def plug_in_mine(self, par1, par2, par3,...):
-#                   do_something()
 #
-#   if __name__ == '__main__': myplugin().start()
+#   pdb = gimp.pdb
+#
+#   class myplugin(gimpplugin.plugin):
+#       def query(self):
+#           gimp.install_procedure("plug_in_mine", ...)
+#
+#       def plug_in_mine(self, par1, par2, par3,...):
+#           do_something()
+#
+#   if __name__ == '__main__':
+#       myplugin().start()
 
 import gimp
 
 class plugin:
     def start(self):
         gimp.main(self.init, self.quit, self.query, self._run)
+
     def init(self):
         pass
+
     def quit(self):
         pass
+
     def query(self):
         pass
+
     def _run(self, name, params):
         if hasattr(self, name):
             apply(getattr(self, name), params)
         else:
             raise AttributeError, name
 
-if __name__ == '__main__': plugin().start()
+if __name__ == '__main__':
+    plugin().start()

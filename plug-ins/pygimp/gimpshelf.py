@@ -41,16 +41,21 @@ except ImportError:
 import gimp
 
 import copy_reg
+
 def _image_id(obj):
     return gimp._id2image, (obj.ID,)
+
 def _drawable_id(obj):
     return gimp._id2drawable, (obj.ID,)
+
 def _display_id(obj):
     return gimp._id2display, int(obj)
-copy_reg.pickle(gimp.Image, _image_id, gimp._id2image)
-copy_reg.pickle(gimp.Layer, _drawable_id, gimp._id2drawable)
+
+copy_reg.pickle(gimp.Image,   _image_id,    gimp._id2image)
+copy_reg.pickle(gimp.Layer,   _drawable_id, gimp._id2drawable)
 copy_reg.pickle(gimp.Channel, _drawable_id, gimp._id2drawable)
-copy_reg.pickle(gimp.Display, _display_id, gimp._id2display)
+copy_reg.pickle(gimp.Display, _display_id,  gimp._id2display)
+
 del copy_reg, _image_id, _drawable_id, _display_id
 
 class Gimpshelf:
@@ -66,13 +71,16 @@ class Gimpshelf:
             s = gimp.get_data(key)
         except gimp.error:
             raise KeyError, key
+
         f = StringIO.StringIO(s)
         return pickle.Unpickler(f).load()
+
     def __setitem__(self, key, value):
         f = StringIO.StringIO()
         p = pickle.Pickler(f)
         p.dump(value)
         gimp.set_data(key, f.getvalue())
+
     def __delitem__(self, key):
         gimp.set_data(key, '')
 

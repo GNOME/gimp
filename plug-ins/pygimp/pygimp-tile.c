@@ -20,6 +20,7 @@
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
 #endif
+
 #include "pygimp.h"
 #include <structmember.h>
 
@@ -31,7 +32,9 @@ tile_flush(PyGimpTile *self, PyObject *args)
 {
     if (!PyArg_ParseTuple(args, ":flush"))
 	return NULL;
+
     gimp_tile_flush(self->tile);
+
     Py_INCREF(Py_None);
     return Py_None;
 }
@@ -51,9 +54,12 @@ pygimp_tile_new(GimpTile *t, PyGimpDrawable *drw)
     PyGimpTile *self;
 	
     self = PyObject_NEW(PyGimpTile, &PyGimpTile_Type);
+
     if (self == NULL)
 	return NULL;
+
     gimp_tile_ref(t);
+
     self->tile = t;
 
     Py_INCREF(drw);
@@ -67,6 +73,7 @@ static void
 tile_dealloc(PyGimpTile *self)
 {
     gimp_tile_unref(self->tile, FALSE);
+
     Py_DECREF(self->drawable);
     PyObject_DEL(self);
 }
@@ -81,19 +88,20 @@ tile_get_uint_field(PyGimpTile *self, void *closure)
     addr = (gchar *)self->tile;
     addr += offset;
     value = *(guint *)addr;
+
     return PyInt_FromLong(value);
 }
 
 static PyObject *
 tile_get_dirty(PyGimpTile *self, void *closure)
 {
-    return PyInt_FromLong(self->tile->dirty);
+    return PyBool_FromLong(self->tile->dirty);
 }
 
 static PyObject *
 tile_get_shadow(PyGimpTile *self, void *closure)
 {
-    return PyInt_FromLong(self->tile->shadow);
+    return PyBool_FromLong(self->tile->shadow);
 }
 
 static PyObject *
@@ -123,11 +131,14 @@ tile_repr(PyGimpTile *self)
     gchar *name;
 
     name = gimp_drawable_get_name(self->tile->drawable->drawable_id);
+
     if (self->tile->shadow)
 	s = PyString_FromFormat("<gimp.Tile for drawable '%s' (shadow)>", name);
     else
 	s = PyString_FromFormat("<gimp.Tile for drawable '%s'>", name);
+
     g_free(name);
+
     return s;
 }
 
@@ -146,22 +157,28 @@ tile_subscript(PyGimpTile *self, PyObject *sub)
 
     if (PyInt_Check(sub)) {
 	x = PyInt_AsLong(sub);
+
 	if (x < 0 || x >= tile->ewidth * tile->eheight) {
 	    PyErr_SetString(PyExc_IndexError, "index out of range");
 	    return NULL;
 	}
+
 	return PyString_FromStringAndSize(tile->data + bpp * x, bpp);
     }
+
     if (PyTuple_Check(sub)) {
 	if (!PyArg_ParseTuple(sub, "ll", &x, &y))
 	    return NULL;
+
 	if (x < 0 || y < 0 || x >= tile->ewidth || y>=tile->eheight) {
 	    PyErr_SetString(PyExc_IndexError, "index out of range");
 	    return NULL;
 	}
+
 	return PyString_FromStringAndSize(tile->data + bpp * (x +
 							      y * tile->ewidth), bpp);
     }
+
     PyErr_SetString(PyExc_TypeError, "tile subscript not int or 2-tuple");
     return NULL;
 }
@@ -179,36 +196,51 @@ tile_ass_sub(PyGimpTile *self, PyObject *v, PyObject *w)
 			"can not delete pixels in tile");
 	return -1;
     }
+
     if (!PyString_Check(w) && PyString_Size(w) == bpp) {
 	PyErr_SetString(PyExc_TypeError, "invalid subscript");
 	return -1;
     }
+
     pix = PyString_AsString(w);
+
     if (PyInt_Check(v)) {
 	x = PyInt_AsLong(v);
+
 	if (x < 0 || x >= tile->ewidth * tile->eheight) {
 	    PyErr_SetString(PyExc_IndexError, "index out of range");
 	    return -1;
 	}
+
 	data = tile->data + x * bpp;
+
 	for (i = 0; i < bpp; i++)
 	    data[i] = pix[i];
+
 	tile->dirty = TRUE;
+
 	return 0;
     }
+
     if (PyTuple_Check(v)) {
 	if (!PyArg_ParseTuple(v, "ll", &x, &y))
 	    return -1;
+
 	if (x < 0 || y < 0 || x >= tile->ewidth || y>=tile->eheight) {
 	    PyErr_SetString(PyExc_IndexError, "index out of range");
 	    return -1;
 	}
+
 	data = tile->data + bpp * (x + y * tile->ewidth);
+
 	for (i = 0; i < bpp; i++)
 	    data[i] = pix[i];
+
 	tile->dirty = TRUE;
+
 	return 0;
     }
+
     PyErr_SetString(PyExc_TypeError, "tile subscript not int or 2-tuple");
     return -1;
 }
@@ -270,9 +302,12 @@ static PyObject *
 pr_resize(PyGimpPixelRgn *self, PyObject *args)
 {
     int x, y, w, h;
+
     if (!PyArg_ParseTuple(args, "iiii:resize", &x, &y, &w, &h))
 	return NULL;
+
     gimp_pixel_rgn_resize(&(self->pr), x, y, w, h);
+
     Py_INCREF(Py_None);
     return Py_None;
 }
@@ -295,12 +330,16 @@ pygimp_pixel_rgn_new(PyGimpDrawable *drawable, int x, int y,
     PyGimpPixelRgn *self;
 	
     self = PyObject_NEW(PyGimpPixelRgn, &PyGimpPixelRgn_Type);
+
     if (self == NULL)
 	return NULL;
+
     gimp_pixel_rgn_init(&(self->pr), drawable->drawable, x, y, width, height,
 			dirty, shadow);
+
     self->drawable = drawable;
     Py_INCREF(drawable);
+
     return (PyObject *)self;
 }
 
@@ -333,33 +372,37 @@ pr_subscript(PyGimpPixelRgn *self, PyObject *key)
 	PyErr_SetString(PyExc_TypeError, "subscript must be a 2-tuple");
 	return NULL;
     }
+
     if (!PyArg_ParseTuple(key, "OO", &x, &y))
 	return NULL;
+
     if (PyInt_Check(x)) {
 	x1 = PyInt_AsLong(x);
+
 	if (pr->x > x1 || x1 >= pr->x + pr->w) {
-	    PyErr_SetString(PyExc_IndexError,
-			    "x subscript out of range");
+	    PyErr_SetString(PyExc_IndexError, "x subscript out of range");
 	    return NULL;
 	}
+
 	if (PyInt_Check(y)) {
 	    char buf[MAX_BPP];
 			
 	    y1 = PyInt_AsLong(y);
+
 	    if (pr->y > y1 || y1 >= pr->y + pr->h) {
-		PyErr_SetString(PyExc_IndexError,
-				"y subscript out of range");
+		PyErr_SetString(PyExc_IndexError, "y subscript out of range");
 		return NULL;
 	    }
+
 	    gimp_pixel_rgn_get_pixel(pr, buf, x1, y1);
+
 	    return PyString_FromStringAndSize(buf, bpp);
 	} else if (PySlice_Check(y))
 	    if (PySlice_GetIndices((PySliceObject *)y,
 				   pr->y + pr->h, &y1, &y2, &ys) ||
 		(y1 != 0 && pr->y > y1) ||
 		pr->y > y2 || ys != 1) {
-		PyErr_SetString(PyExc_IndexError,
-				"invalid y slice");
+		PyErr_SetString(PyExc_IndexError, "invalid y slice");
 		return NULL;
 	    } else {
 		gchar *buf = g_new(gchar, bpp * (y2 - y1));
@@ -389,8 +432,7 @@ pr_subscript(PyGimpPixelRgn *self, PyObject *key)
 			
 	    y1 = PyInt_AsLong(y);
 	    if (pr->y > y1 || y1 >= pr->y + pr->h) {
-		PyErr_SetString(PyExc_IndexError,
-				"y subscript out of range");
+		PyErr_SetString(PyExc_IndexError, "y subscript out of range");
 		return NULL;
 	    }
 	    buf = g_new(gchar, bpp * (x2 - x1));
@@ -403,8 +445,7 @@ pr_subscript(PyGimpPixelRgn *self, PyObject *key)
 				   pr->y + pr->h, &y1, &y2, &ys) ||
 		(y1 != 0 && pr->y) > y1 ||
 		pr->y > y2 || ys != 1) {
-		PyErr_SetString(PyExc_IndexError,
-				"invalid y slice");
+		PyErr_SetString(PyExc_IndexError, "invalid y slice");
 		return NULL;
 	    } else {
 		gchar *buf = g_new(gchar, bpp * (x2 - x1) * (y2 - y1));
@@ -418,7 +459,7 @@ pr_subscript(PyGimpPixelRgn *self, PyObject *key)
 		return ret;
 	    }
 	else {
-	    PyErr_SetString(PyExc_TypeError,"invalid y subscript");
+	    PyErr_SetString(PyExc_TypeError, "invalid y subscript");
 	    return NULL;
 	}
     } else {
@@ -440,38 +481,44 @@ pr_ass_sub(PyGimpPixelRgn *self, PyObject *v, PyObject *w)
 	PyErr_SetString(PyExc_TypeError, "can't delete subscripts");
 	return -1;
     }
+
     if (!PyString_Check(w)) {
-	PyErr_SetString(PyExc_TypeError,
-			"must assign string to subscript");
+	PyErr_SetString(PyExc_TypeError, "must assign string to subscript");
 	return -1;
     }
+
     if (!PyTuple_Check(v) || PyTuple_Size(v) != 2) {
 	PyErr_SetString(PyExc_TypeError, "subscript must be a 2-tuple");
 	return -1;
     }
+
     if (!PyArg_ParseTuple(v, "OO", &x, &y))
 	return -1;
+
     buf = PyString_AsString(w);
     len = PyString_Size(w);
+
     if (PyInt_Check(x)) {
 	x1 = PyInt_AsLong(x);
+
 	if (pr->x > x1 || x1 >= pr->x + pr->w) {
-	    PyErr_SetString(PyExc_IndexError,
-			    "x subscript out of range");
+	    PyErr_SetString(PyExc_IndexError, "x subscript out of range");
 	    return -1;
 	}
+	
 	if (PyInt_Check(y)) {
 	    y1 = PyInt_AsLong(y);
+	    
 	    if (pr->y > y1 || y1 >= pr->y + pr->h) {
-		PyErr_SetString(PyExc_IndexError,
-				"y subscript out of range");
+		PyErr_SetString(PyExc_IndexError, "y subscript out of range");
 		return -1;
 	    }
+
 	    if (len != bpp) {
-		PyErr_SetString(PyExc_TypeError,
-				"string is wrong length");
+		PyErr_SetString(PyExc_TypeError, "string is wrong length");
 		return -1;
 	    }
+
 	    gimp_pixel_rgn_set_pixel(pr, buf, x1, y1);
 	    return 0;
 	} else if (PySlice_Check(y)) {
@@ -479,14 +526,12 @@ pr_ass_sub(PyGimpPixelRgn *self, PyObject *v, PyObject *w)
 				   pr->y + pr->h, &y1, &y2, &ys) ||
 		(y1 != 0 && pr->y > y1) ||
 		pr->y > y2 || ys != 1) {
-		PyErr_SetString(PyExc_IndexError,
-				"invalid y slice");
+		PyErr_SetString(PyExc_IndexError, "invalid y slice");
 		return -1;
 	    }
 	    if (y1 == 0) y1 = pr->y;
 	    if (len != bpp * (y2 - y1)) {
-		PyErr_SetString(PyExc_TypeError,
-				"string is wrong length");
+		PyErr_SetString(PyExc_TypeError, "string is wrong length");
 		return -1;
 	    }
 	    gimp_pixel_rgn_set_col(pr, buf, x1, y1, y2 - y1);
@@ -506,13 +551,11 @@ pr_ass_sub(PyGimpPixelRgn *self, PyObject *v, PyObject *w)
 	if (PyInt_Check(y)) {
 	    y1 = PyInt_AsLong(y);
 	    if (pr->y > y1 || y1 >= pr->y + pr->h) {
-		PyErr_SetString(PyExc_IndexError,
-				"y subscript out of range");
+		PyErr_SetString(PyExc_IndexError, "y subscript out of range");
 		return -1;
 	    }
 	    if (len != bpp * (x2 - x1)) {
-		PyErr_SetString(PyExc_TypeError,
-				"string is wrong length");
+		PyErr_SetString(PyExc_TypeError, "string is wrong length");
 		return -1;
 	    }
 	    gimp_pixel_rgn_set_row(pr, buf, x1, y1, x2 - x1);
@@ -522,14 +565,12 @@ pr_ass_sub(PyGimpPixelRgn *self, PyObject *v, PyObject *w)
 				   pr->y + pr->h, &y1, &y2, &ys) ||
 		(y1 != 0 && pr->y > y1) ||
 		pr->y > y2 || ys != 1) {
-		PyErr_SetString(PyExc_IndexError,
-				"invalid y slice");
+		PyErr_SetString(PyExc_IndexError, "invalid y slice");
 		return -1;
 	    }
 	    if (y1 == 0) y1 = pr->y;
 	    if (len != bpp * (x2 - x1) * (y2 - y1)) {
-		PyErr_SetString(PyExc_TypeError,
-				"string is wrong length");
+		PyErr_SetString(PyExc_TypeError, "string is wrong length");
 		return -1;
 	    }
 	    gimp_pixel_rgn_set_rect(pr, buf, x1, y1, x2-x1, y2-y1);
@@ -569,19 +610,20 @@ pr_get_uint_field(PyGimpPixelRgn *self, void *closure)
     addr = (gchar *)&self->pr;
     addr += offset;
     value = *(guint *)addr;
+
     return PyInt_FromLong(value);
 }
 
 static PyObject *
 pr_get_dirty(PyGimpPixelRgn *self, void *closure)
 {
-    return PyInt_FromLong(self->pr.dirty);
+    return PyBool_FromLong(self->pr.dirty);
 }
 
 static PyObject *
 pr_get_shadow(PyGimpPixelRgn *self, void *closure)
 {
-    return PyInt_FromLong(self->pr.shadow);
+    return PyBool_FromLong(self->pr.shadow);
 }
 
 #define OFF(x) GINT_TO_POINTER(offsetof(GimpPixelRgn, x))
@@ -608,6 +650,7 @@ pr_repr(PyGimpPixelRgn *self)
     name = gimp_drawable_get_name(self->drawable->drawable->drawable_id);
     s = PyString_FromFormat("<gimp.PixelRgn for drawable '%s'>", name);
     g_free(name);
+
     return s;
 }
 

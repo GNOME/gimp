@@ -131,6 +131,7 @@ def register(func_name, blurb, help, author, copyright, date, menupath,
                  imagetypes, params, results, function,
                  on_query=None, on_run=None):
     '''This is called to register a new plugin.'''
+
     # First perform some sanity checks on the data
     def letterCheck(str):
         allowed = _string.letters + _string.digits + '_'
@@ -139,24 +140,32 @@ def register(func_name, blurb, help, author, copyright, date, menupath,
                     return 0
         else:
             return 1
+
     if not letterCheck(func_name):
         raise error, "function name contains illegal characters"
+
     for ent in params:
         if len(ent) < 4:
             raise error, ("parameter definition must contain at least 4 "
                         "elements (%s given: %s)" % (len(ent), ent))
+
         if type(ent[0]) != type(42):
             raise error, "parameter types must be integers"
+
         if not letterCheck(ent[1]):
             raise error, "parameter name contains illegal characters"
+
     for ent in results:
         if len(ent) < 3:
             raise error, ("result definition must contain at least 3 elements "
                         "(%s given: %s)" % (len(ent), ent))
+
         if type(ent[0]) != type(42):
             raise error, "result types must be integers"
+
         if not letterCheck(ent[1]):
             raise error, "result name contains illegal characters"
+
     if menupath[:8] == '<Image>/' or \
        menupath[:7] == '<Load>/' or \
        menupath[:7] == '<Save>/' or \
@@ -186,11 +195,13 @@ def _query():
          params, results, function,
          on_query, on_run) = _registered_plugins_[plugin]
 
-        fn = lambda x: (_type_mapping[x[0]], x[1], x[2])
-        params = map(fn, params)
+        def make_params(params):
+            return [(_type_mapping[x[0]], x[1], x[2]) for x in params]
+
+        params = make_params(params)
         # add the run mode argument ...
         params.insert(0, (PDB_INT32, "run_mode",
-                                    "Interactive, Non-Interactive"))
+                                     "Interactive, Non-Interactive"))
         if plugin_type == PLUGIN:
             if menupath[:7] == '<Load>/':
                 params[1:1] = file_params
@@ -202,7 +213,7 @@ def _query():
                 if menupath[:7] == '<Save>/':
                     params[3:3] = file_params
 
-        results = map(fn, results)
+        results = make_params(results)
         gimp.install_procedure(plugin, blurb, help, author, copyright,
                                date, menupath, imagetypes, plugin_type,
                                params, results)
@@ -217,11 +228,12 @@ def _get_defaults(func_name):
      on_query, on_run) = _registered_plugins_[func_name]
 
     key = "python-fu-save--" + func_name
+
     if gimpshelf.shelf.has_key(key):
         return gimpshelf.shelf[key]
     else:
         # return the default values
-        return map(lambda x: x[3], params)
+        return [x[3] for x in params]
 
 def _set_defaults(func_name, defaults):
     import gimpshelf
@@ -268,6 +280,7 @@ def _interact(func_name, start_params):
         def __init__(self, default=''):
             gtk.Entry.__init__(self)
             self.set_text(str(default))
+
         def get_value(self):
             return self.get_text()
 
@@ -287,8 +300,9 @@ def _interact(func_name, start_params):
 
             self.set_value(str(default))
             
-        def set_value (self, text):
+        def set_value(self, text):
             self.buffer.set_text(text)
+
         def get_value(self):
             return self.buffer.get_text(self.buffer.get_start_iter(),
                                         self.buffer.get_end_iter())
@@ -299,15 +313,18 @@ def _interact(func_name, start_params):
                 return int(self.get_text())
             except ValueError, e:
                 raise EntryValueError, e.args
+
     class FloatEntry(StringEntry):
             def get_value(self):
                 try:
                     return float(self.get_text())
                 except ValueError, e:
                     raise EntryValueError, e.args
+
 #    class ArrayEntry(StringEntry):
 #            def get_value(self):
 #                return eval(self.get_text(), {}, {})
+
     class SliderEntry(gtk.HScale):
         # bounds is (upper, lower, step)
         def __init__(self, default=0, bounds=(0, 100, 5)):
@@ -315,8 +332,10 @@ def _interact(func_name, start_params):
                                       bounds[1], bounds[2],
                                       bounds[2], 0)
             gtk.HScale.__init__(self, self.adj)
+
         def get_value(self):
             return self.adj.value
+
     class SpinnerEntry(gtk.SpinButton):
         # bounds is (upper, lower, step)
         def __init__(self, default=0, bounds=(0, 100, 5)):
@@ -324,44 +343,57 @@ def _interact(func_name, start_params):
                                         bounds[1], bounds[2],
                                         bounds[2], 0)
             gtk.SpinButton.__init__(self, self.adj, 1, 0)
+
         def get_value(self):
             try:
                 return int(self.get_text())
             except ValueError, e:
                 raise EntryValueError, e.args
+
     class ToggleEntry(gtk.ToggleButton):
         def __init__(self, default=0):
             gtk.ToggleButton.__init__(self)
+
             self.label = gtk.Label("No")
             self.add(self.label)
             self.label.show()
+
             self.connect("toggled", self.changed)
+
             self.set_active(default)
+
         def changed(self, tog):
             if tog.get_active():
                 self.label.set_text("Yes")
             else:
                 self.label.set_text("No")
+
         def get_value(self):
             return self.get_active()
+
     class RadioEntry(gtk.Frame):
         def __init__(self, default=0, items=(("Yes", 1), ("No", 0))):
             gtk.Frame.__init__(self)
-            box = gtk.VBox(gtk.FALSE, 5)
+
+            box = gtk.VBox(False, 5)
             self.add(box)
             box.show()
-            button = None
+
             for (label, value) in items:
                 button = gtk.RadioButton(button, label)
-                button.connect("toggled", self.changed, value)
                 box.pack_start(button)
                 button.show()
+
+                button.connect("toggled", self.changed, value)
+
                 if value == default:
-                    button.set_active(gtk.TRUE)
+                    button.set_active(True)
                     self.active_value = value
+
         def changed(self, radio, value):
             if radio.get_active():
                 self.active_value = value
+
         def get_value(self):
             return self.active_value
 
@@ -408,32 +440,32 @@ def _interact(func_name, start_params):
                         (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
                         gtk.STOCK_OK, gtk.RESPONSE_OK))
 
-    hbox = gtk.HBox(gtk.FALSE, 5)
+    hbox = gtk.HBox(False, 5)
     hbox.set_border_width(5)
-    dialog.vbox.pack_start(hbox, expand=gtk.FALSE)
+    dialog.vbox.pack_start(hbox, expand=False)
     hbox.show()
 
-    table = gtk.Table(len(params), 2, gtk.FALSE)
+    table = gtk.Table(len(params), 2, False)
     table.set_border_width(5)
     table.set_row_spacings(4)
     table.set_col_spacings(10)
-    hbox.pack_end(table, expand=gtk.FALSE)
+    hbox.pack_end(table, expand=False)
     table.show()
 
-    vbox = gtk.VBox(gtk.FALSE, 10)
-    hbox.pack_start(vbox, expand=gtk.FALSE)
+    vbox = gtk.VBox(False, 10)
+    hbox.pack_start(vbox, expand=False)
     vbox.show()
 
     pix = _get_logo()
     if pix:
-        vbox.pack_start(pix, expand=gtk.FALSE)
+        vbox.pack_start(pix, expand=False)
         pix.show()
 
     label = gtk.Label(blurb)
-    label.set_line_wrap(gtk.TRUE)
+    label.set_line_wrap(True)
     label.set_justify(gtk.JUSTIFY_LEFT)
     label.set_size_request(100, -1)
-    vbox.pack_start(label, expand=gtk.FALSE)
+    vbox.pack_start(label, expand=False)
     label.show()
 
     progress_callback = None
@@ -476,6 +508,7 @@ def _interact(func_name, start_params):
             wid = _edit_mapping[pf_type](def_val)
         
         table.attach(wid, 2,3, i,i+1, yoptions=0)
+
         if pf_type != PF_TEXT:
             tooltips.set_tip(wid, desc, None)         
         else:
@@ -492,7 +525,7 @@ def _interact(func_name, start_params):
         dialog.vbox.pack_start(frame)
         frame.show()
 
-        vbox = gtk.VBox(gtk.FALSE, 5)
+        vbox = gtk.VBox(False, 5)
         vbox.set_border_width(5)
         frame.add(vbox)
         vbox.show()

@@ -21,6 +21,11 @@
 #define _PYGIMP_H_
 
 #include <Python.h>
+
+#if PY_VERSION_HEX < 0x020300F0
+#define PyBool_FromLong(v) PyInt_FromLong((v) ? 1L : 0L);
+#endif
+
 #include <libgimp/gimp.h>
 
 G_BEGIN_DECLS

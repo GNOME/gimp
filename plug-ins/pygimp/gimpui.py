@@ -95,11 +95,11 @@ class ImageSelector(gtk.OptionMenu):
         self.menu = ImageMenu(None, self.clicked)
         self.set_menu(self.menu)
         if default == None:
-            self.selected = self.menu.children()[0].get_data("Gimp-ID")
+            self.selected = self.menu.get_children()[0].get_data("Gimp-ID")
             self.set_history (0)
         else:
             self.selected = default
-            children = self.menu.children()
+            children = self.menu.get_children()
             for child in range(len(children)):
                 if children[child].get_data("Gimp-ID") == default:
                     self.set_history(child)
@@ -115,11 +115,11 @@ class LayerSelector(gtk.OptionMenu):
         self.menu = LayerMenu(None, self.clicked)
         self.set_menu(self.menu)
         if default == None:
-            self.selected = self.menu.children()[0].get_data("Gimp-ID")
+            self.selected = self.menu.get_children()[0].get_data("Gimp-ID")
             self.set_history (0)
         else:
             self.selected = default
-            children = self.menu.children()
+            children = self.menu.get_children()
             for child in range(len(children)):
                 if children[child].get_data("Gimp-ID") == default:
                     self.set_history(child)
@@ -135,11 +135,11 @@ class ChannelSelector(gtk.OptionMenu):
         self.menu = ChannelMenu(None, self.clicked)
         self.set_menu(self.menu)
         if default == None:
-            self.selected = self.menu.children()[0].get_data("Gimp-ID")
+            self.selected = self.menu.get_children()[0].get_data("Gimp-ID")
             self.set_history (0)
         else:
             self.selected = default
-            children = self.menu.children()
+            children = self.menu.get_children()
             for child in range(len(children)):
                 if children[child].get_data("Gimp-ID") == default:
                     self.set_history(child)
@@ -155,11 +155,11 @@ class DrawableSelector(gtk.OptionMenu):
         self.menu = DrawableMenu(None, self.clicked)
         self.set_menu(self.menu)
         if default == None:
-            self.selected = self.menu.children()[0].get_data("Gimp-ID")
+            self.selected = self.menu.get_children()[0].get_data("Gimp-ID")
             self.set_history (0)
         else:
             self.selected = default
-            children = self.menu.children()
+            children = self.menu.get_children()
             for child in range(len(children)):
                 if children[child].get_data("Gimp-ID") == default:
                     self.set_history(child)
@@ -203,13 +203,13 @@ class ColourSelector(gtk.Button):
 
 class _Selector(gtk.HBox):
     def __init__(self):
-        gtk.HBox.__init__(self, gtk.FALSE, 5)
+        gtk.HBox.__init__(self, False, 5)
         self.entry = gtk.Entry()
         self.pack_start(self.entry)
         self.entry.show()
         self.button = gtk.Button("Browse...")
         self.button.connect("clicked", self.show_dialog)
-        self.pack_start(self.button, expand=gtk.FALSE)
+        self.pack_start(self.button, expand=False)
         self.button.show()
 
         self.dialog = gtk.Dialog(self.get_title(), None, 0,
@@ -226,7 +226,7 @@ class _Selector(gtk.HBox):
         store = gtk.ListStore(gobject.TYPE_STRING)
         treeview = gtk.TreeView(store)
 
-        treeview.set_headers_visible(gtk.FALSE)
+        treeview.set_headers_visible(False)
         column = gtk.TreeViewColumn('Items', gtk.CellRendererText(), text=0)
         treeview.append_column(column)
 
@@ -319,20 +319,20 @@ class PaletteSelector(_Selector):
     
 class FontSelector(gtk.HBox):
     def __init__(self, default="Sans"):
-        gtk.HBox.__init__(self, gtk.FALSE, 5)
+        gtk.HBox.__init__(self, False, 5)
         self.entry = gtk.Entry()
         self.pack_start(self.entry)
         self.entry.show()
         self.button = gtk.Button("Browse...")
         self.button.connect("clicked", self.show_dialog)
-        self.pack_start(self.button, expand=gtk.FALSE)
+        self.pack_start(self.button, expand=False)
         self.button.show()
 
         self.dialog = gtk.FontSelectionDialog("Fonts")
         self.dialog.set_default_size(400, 300)
         def delete_event(win, event):
             win.hide()
-            return gtk.TRUE
+            return True
         self.dialog.connect("delete_event", delete_event)
 
         self.dialog.set_font_name(default)
@@ -353,20 +353,20 @@ class FontSelector(gtk.HBox):
                 
 class FileSelector(gtk.HBox):
     def __init__(self, default=""):
-        gtk.HBox.__init__(self, gtk.FALSE, 5)
+        gtk.HBox.__init__(self, False, 5)
         self.entry = gtk.Entry()
         self.pack_start(self.entry)
         self.entry.show()
         self.button = gtk.Button("...")
         self.button.connect("clicked", self.show_dialog)
-        self.pack_start(self.button, expand=gtk.FALSE)
+        self.pack_start(self.button, expand=False)
         self.button.show()
 
         self.dialog = gtk.FileSelection("Files")
         self.dialog.set_default_size(400, 300)
         def delete_event(win, event):
             win.hide()
-            return gtk.TRUE
+            return True
         self.dialog.connect("delete_event", delete_event)
 
         self.dialog.set_filename(default)

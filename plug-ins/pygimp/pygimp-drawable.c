@@ -20,6 +20,7 @@
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
 #endif
+
 #include "pygimp.h"
 
 static void
@@ -33,7 +34,9 @@ static PyObject *
 drw_flush(PyGimpDrawable *self)
 {
     ensure_drawable(self);
+
     gimp_drawable_flush(self->drawable);
+
     Py_INCREF(Py_None);
     return Py_None;
 }
@@ -44,9 +47,18 @@ drw_update(PyGimpDrawable *self, PyObject *args)
 {
     int x, y;
     unsigned int w, h;
+
     if (!PyArg_ParseTuple(args, "iiii:update", &x, &y, &w, &h))
 	return NULL;
-    gimp_drawable_update(self->ID, x, y, w, h);
+
+    if (!gimp_drawable_update(self->ID, x, y, w, h)) {
+	PyErr_Format(pygimp_error,
+		     "could not update drawable (ID %d): "
+		     "x=%d, y=%d, w=%d, h=%d",
+		     self->ID, x, y, (int)w, (int)h);
+	return NULL;
+    }
+
     Py_INCREF(Py_None);
     return Py_None;
 }
@@ -56,9 +68,17 @@ static PyObject *
 drw_merge_shadow(PyGimpDrawable *self, PyObject *args)
 {
     int u;
+
     if (!PyArg_ParseTuple(args, "i:merge_shadow", &u))
 	return NULL;
-    gimp_drawable_merge_shadow(self->ID, u);
+
+    if (!gimp_drawable_merge_shadow(self->ID, u)) {
+	PyErr_Format(pygimp_error,
+		     "could not merge the shadow buffer on drawable (ID %d)",
+		     self->ID);
+	return NULL;
+    }
+
     Py_INCREF(Py_None);
     return Py_None;
 }
@@ -68,9 +88,17 @@ static PyObject *
 drw_fill(PyGimpDrawable *self, PyObject *args)
 {
     int f;
+
     if (!PyArg_ParseTuple(args, "i:fill", &f))
 	return NULL;
-    gimp_drawable_fill(self->ID, f);
+
+    if (!gimp_drawable_fill(self->ID, f)) {
+	PyErr_Format(pygimp_error,
+		     "could not fill drawable (ID %d) with fill mode %d",
+		     self->ID, f);
+	return NULL;
+    }
+
     Py_INCREF(Py_None);
     return Py_None;
 }
@@ -81,9 +109,12 @@ drw_get_tile(PyGimpDrawable *self, PyObject *args)
 {
     GimpTile *t;
     int shadow, r, c;
+
     if (!PyArg_ParseTuple(args, "iii:get_tile", &shadow, &r, &c))
 	return NULL;
+
     ensure_drawable(self);
+
     t = gimp_drawable_get_tile(self->drawable, shadow, r, c);
     return pygimp_tile_new(t, self);
 }
@@ -93,9 +124,12 @@ drw_get_tile2(PyGimpDrawable *self, PyObject *args)
 {
     GimpTile *t;
     int shadow, x, y;
+
     if (!PyArg_ParseTuple(args, "iii:get_tile2", &shadow, &x ,&y))
 	return NULL;
+
     ensure_drawable(self);
+
     t = gimp_drawable_get_tile2(self->drawable, shadow, x, y);
     return pygimp_tile_new(t, self);
 }
@@ -104,44 +138,76 @@ static PyObject *
 drw_get_pixel_rgn(PyGimpDrawable *self, PyObject *args)
 {
     int x, y, w, h, dirty = 1, shadow = 0;
-    if (!PyArg_ParseTuple(args, "iiii|ii:get_pixel_rgn", &x,&y,
-			  &w,&h, &dirty,&shadow))
+
+    if (!PyArg_ParseTuple(args, "iiii|ii:get_pixel_rgn", &x, &y, &w, &h,
+			  &dirty, &shadow))
 	return NULL;
+
     ensure_drawable(self);
+
     return pygimp_pixel_rgn_new(self, x, y, w, h, dirty, shadow);
 }
 
 static PyObject *
 drw_offset(PyGimpDrawable *self, PyObject *args)
 {
-    gboolean wrap_around;
+    int wrap_around;
     GimpOffsetType fill_type;
-    gint offset_x, offset_y;
+    int offset_x, offset_y;
 
     if (!PyArg_ParseTuple(args, "iiii:offset", &wrap_around, &fill_type,
 			   &offset_x, &offset_y))
 	return NULL;
-    return PyInt_FromLong(gimp_drawable_offset(self->ID, wrap_around,
-					       fill_type, offset_x, offset_y));
+
+    if (!gimp_drawable_offset(self->ID, wrap_around, fill_type,
+			      offset_x, offset_y)) {
+	PyErr_Format(pygimp_error,
+		     "could not offset drawable (ID %d) by x: %d, y: %d",
+		     self->ID, offset_x, offset_y);
+	return NULL;
+    }
+
+    Py_INCREF(Py_None);
+    return Py_None;
 }
 
 static PyObject *
 drw_parasite_find(PyGimpDrawable *self, PyObject *args)
 {
     char *name;
+    GimpParasite *para;
+
     if (!PyArg_ParseTuple(args, "s:parasite_find", &name))
 	return NULL;
-    return pygimp_parasite_new(gimp_drawable_parasite_find(self->ID, name));
+
+    para = gimp_drawable_parasite_find(self->ID, name);
+
+    if (!para) {
+	PyErr_Format(pygimp_error,
+		     "could not find parasite '%s' on drawable (ID %d)",
+		     name, self->ID);
+	return NULL;
+    }
+
+    return pygimp_parasite_new(para);
 }
 
 static PyObject *
 drw_parasite_attach(PyGimpDrawable *self, PyObject *args)
 {
     PyGimpParasite *parasite;
+
     if (!PyArg_ParseTuple(args, "O!:parasite_attach", &PyGimpParasite_Type,
 			  &parasite))
 	return NULL;
-    gimp_drawable_parasite_attach(self->ID, parasite->para);
+
+    if (!gimp_drawable_parasite_attach(self->ID, parasite->para)) {
+	PyErr_Format(pygimp_error,
+		     "could not attach parasite '%s' on drawable (ID %d)",
+		     gimp_parasite_name(parasite->para), self->ID);
+	return NULL;
+    }
+
     Py_INCREF(Py_None);
     return Py_None;
 }
@@ -151,10 +217,18 @@ drw_attach_new_parasite(PyGimpDrawable *self, PyObject *args)
 {
     char *name, *data;
     int flags, size;
+
     if (!PyArg_ParseTuple(args, "sis#:attach_new_parasite", &name, &flags,
 			  &data, &size))
 	return NULL;
-    gimp_drawable_attach_new_parasite(self->ID, name, flags, size, data);
+
+    if (!gimp_drawable_attach_new_parasite(self->ID, name, flags, size, data)) {
+	PyErr_Format(pygimp_error,
+		     "could not attach new parasite '%s' to drawable (ID %d)",
+		     name, self->ID);
+	return NULL;
+    }
+
     Py_INCREF(Py_None);
     return Py_None;
 }
@@ -165,13 +239,20 @@ drw_parasite_detach(PyGimpDrawable *self, PyObject *args)
     char *name;
     if (!PyArg_ParseTuple(args, "s:detach_parasite", &name))
 	return NULL;
-    gimp_drawable_parasite_detach(self->ID, name);
+
+    if (!gimp_drawable_parasite_detach(self->ID, name)) {
+	PyErr_Format(pygimp_error, 
+		     "could not detach parasite '%s' from drawable (ID %d)",
+		     name, self->ID);
+	return NULL;
+    }
+
     Py_INCREF(Py_None);
     return Py_None;
 }
 
 static PyObject *
-drw_parasite_list(PyGimpImage *self)
+drw_parasite_list(PyGimpDrawable *self)
 {
     gint num_parasites;
     gchar **parasites;
@@ -181,15 +262,147 @@ drw_parasite_list(PyGimpImage *self)
 	gint i;
 
 	ret = PyTuple_New(num_parasites);
+
 	for (i = 0; i < num_parasites; i++) {
 	    PyTuple_SetItem(ret, i, PyString_FromString(parasites[i]));
 	    g_free(parasites[i]);
 	}
+	
 	g_free(parasites);
 	return ret;
     }
-    PyErr_SetString(pygimp_error, "could not list parasites");
+
+    PyErr_Format(pygimp_error, "could not list parasites on drawable (ID %d)",
+		 self->ID);
     return NULL;
+}
+
+static PyObject *
+drw_get_pixel(PyGimpDrawable *self, PyObject *args)
+{
+    int x, y;
+    int num_channels, i;
+    guint8 *pixel;
+    PyObject *ret;
+
+    if (!PyArg_ParseTuple(args, "(ii):get_pixel", &x, &y)) {
+	PyErr_Clear();
+	if (!PyArg_ParseTuple(args, "ii:get_pixel", &x, &y))
+	    return NULL;
+    }
+
+    pixel = gimp_drawable_get_pixel(self->ID, x, y, &num_channels);
+
+    if (!pixel) {
+	PyErr_Format(pygimp_error,
+		     "could not get pixel (%d, %d) on drawable (ID %d)",
+		     x, y, self->ID);
+	return NULL;
+    }
+
+    ret = PyTuple_New(num_channels);
+
+    for (i = 0; i < num_channels; i++)
+	PyTuple_SetItem(ret, i, PyInt_FromLong(pixel[i]));
+
+    g_free(pixel);
+
+    return ret;
+}
+
+static PyObject *
+drw_set_pixel(PyGimpDrawable *self, PyObject *args)
+{
+    int x, y;
+    int num_channels, i, val;
+    guint8 *pixel;
+    PyObject *seq, *item;
+    gboolean is_string, error = TRUE;
+
+    if (!PyArg_ParseTuple(args, "(ii)O:set_pixel", &x, &y, &seq)) {
+	PyErr_Clear();
+	if (!PyArg_ParseTuple(args, "iiO:set_pixel", &x, &y, &seq))
+	    return NULL;
+    }
+
+    if (!PyString_Check(seq)) {
+	if (!PySequence_Check(seq)) {
+	    PyErr_SetString(PyExc_TypeError,
+			    "pixel values must be a sequence");
+	    return NULL;
+	}
+
+	is_string = FALSE;
+
+	num_channels = PySequence_Length(seq);
+	pixel = g_new(guint8, num_channels);
+
+	for (i = 0; i < num_channels; i++) {
+	    item = PySequence_GetItem(seq, i);
+
+	    if (!PyInt_Check(item)) {
+		PyErr_SetString(PyExc_TypeError,
+				"pixel values must be a sequence of ints"); 
+		goto out;
+	    }
+
+	    val = PyInt_AsLong(item);
+
+	    if (val < 0 || val > 255) {
+		PyErr_SetString(PyExc_TypeError,
+				"pixel values must be between 0 and 255"); 
+		goto out;
+	    }
+
+	    pixel[i] = val;
+	}
+    } else {
+	is_string = TRUE;
+
+	num_channels = PyString_Size(seq);
+	pixel = PyString_AsString(seq);
+    }
+
+    error = !gimp_drawable_set_pixel(self->ID, x, y, num_channels, pixel);
+
+    if (error)
+	PyErr_Format(pygimp_error,
+		     "could not set %d-element pixel (%d, %d) on "
+		     "drawable (ID %d)",
+		     num_channels, x, y, self->ID);
+
+out:
+    if (!is_string)
+	g_free(pixel);
+
+    if (!error) {
+	Py_INCREF(Py_None);
+	return Py_None;
+    } else
+	return NULL; 
+}
+
+static PyObject *
+drw_mask_intersect(PyGimpDrawable *self)
+{
+    int x, y, width, height;
+    PyObject *ret;
+
+    if (!gimp_drawable_mask_intersect(self->ID, &x, &y, &width, &height)) {
+	PyErr_Format(pygimp_error,
+		     "could not get selection bounds of drawable (ID %d)",
+		     self->ID);
+	return NULL;
+    }
+
+    ret = PyTuple_New(4);
+
+    PyTuple_SetItem(ret, 0, PyInt_FromLong(x));
+    PyTuple_SetItem(ret, 1, PyInt_FromLong(y));
+    PyTuple_SetItem(ret, 2, PyInt_FromLong(width));
+    PyTuple_SetItem(ret, 3, PyInt_FromLong(height));
+
+    return ret;
 }
 
 /* for inclusion with the methods of layer and channel objects */
@@ -207,6 +420,9 @@ static PyMethodDef drw_methods[] = {
     {"attach_new_parasite",(PyCFunction)drw_attach_new_parasite,METH_VARARGS},
     {"parasite_detach",     (PyCFunction)drw_parasite_detach, METH_VARARGS},
     {"parasite_list",     (PyCFunction)drw_parasite_list, METH_VARARGS},
+    {"get_pixel",	(PyCFunction)drw_get_pixel, METH_VARARGS},
+    {"set_pixel",	(PyCFunction)drw_set_pixel, METH_VARARGS},
+    {"mask_intersect",	(PyCFunction)drw_mask_intersect, METH_NOARGS},
     {NULL, NULL, 0}
 };
 
@@ -229,11 +445,14 @@ drw_set_name(PyGimpDrawable *self, PyObject *value, void *closure)
         PyErr_SetString(PyExc_TypeError, "cannot delete name");
         return -1;
     }
+
     if (!PyString_Check(value)) {
         PyErr_SetString(PyExc_TypeError, "type mismatch");
         return -1;
     }
+
     gimp_drawable_set_name(self->ID, PyString_AsString(value));
+
     return 0;
 }
 
@@ -246,7 +465,7 @@ drw_get_bpp(PyGimpDrawable *self, void *closure)
 static PyObject *
 drw_get_has_alpha(PyGimpDrawable *self, void *closure)
 {
-    return PyInt_FromLong(gimp_drawable_has_alpha(self->ID));
+    return PyBool_FromLong(gimp_drawable_has_alpha(self->ID));
 }
 
 static PyObject *
@@ -264,25 +483,25 @@ drw_get_image(PyGimpDrawable *self, void *closure)
 static PyObject *
 drw_get_is_rgb(PyGimpDrawable *self, void *closure)
 {
-    return PyInt_FromLong(gimp_drawable_is_rgb(self->ID));
+    return PyBool_FromLong(gimp_drawable_is_rgb(self->ID));
 }
 
 static PyObject *
 drw_get_is_gray(PyGimpDrawable *self, void *closure)
 {
-    return PyInt_FromLong(gimp_drawable_is_gray(self->ID));
+    return PyBool_FromLong(gimp_drawable_is_gray(self->ID));
 }
 
 static PyObject *
 drw_get_is_indexed(PyGimpDrawable *self, void *closure)
 {
-    return PyInt_FromLong(gimp_drawable_is_indexed(self->ID));
+    return PyBool_FromLong(gimp_drawable_is_indexed(self->ID));
 }
 
 static PyObject *
 drw_get_is_layer_mask(PyGimpDrawable *self, void *closure)
 {
-    return PyInt_FromLong(gimp_drawable_is_layer_mask(self->ID));
+    return PyBool_FromLong(gimp_drawable_is_layer_mask(self->ID));
 }
 
 static PyObject *
@@ -290,7 +509,11 @@ drw_get_mask_bounds(PyGimpDrawable *self, void *closure)
 {
     gint x1, y1, x2, y2;
 
-    gimp_drawable_mask_bounds(self->ID, &x1, &y1, &x2, &y2);
+    if (!gimp_drawable_mask_bounds(self->ID, &x1, &y1, &x2, &y2)) {
+	Py_INCREF(Py_None);
+	return Py_None;
+    }
+
     return Py_BuildValue("(iiii)", x1, y1, x2, y2);
 }
 
@@ -300,6 +523,7 @@ drw_get_offsets(PyGimpDrawable *self, void *closure)
     gint x, y;
 
     gimp_drawable_offsets(self->ID, &x, &y);
+
     return Py_BuildValue("(ii)", x, y);
 }
 
@@ -324,7 +548,7 @@ drw_get_width(PyGimpDrawable *self, void *closure)
 static PyObject *
 drw_get_linked(PyGimpDrawable *self, void *closure)
 {
-    return PyInt_FromLong(gimp_drawable_get_linked(self->ID));
+    return PyBool_FromLong(gimp_drawable_get_linked(self->ID));
 }
 
 static int
@@ -334,11 +558,14 @@ drw_set_linked(PyGimpDrawable *self, PyObject *value, void *closure)
         PyErr_SetString(PyExc_TypeError, "cannot delete linked");
         return -1;
     }
+
     if (!PyInt_Check(value)) {
 	PyErr_SetString(PyExc_TypeError, "type mismatch");
 	return -1;
     }
+
     gimp_drawable_set_linked(self->ID, PyInt_AsLong(value));
+
     return 0;
 }
 
@@ -355,18 +582,21 @@ drw_set_tattoo(PyGimpDrawable *self, PyObject *value, void *closure)
         PyErr_SetString(PyExc_TypeError, "cannot delete tattoo");
         return -1;
     }
+
     if (!PyInt_Check(value)) {
         PyErr_SetString(PyExc_TypeError, "type mismatch");
         return -1;
     }
+
     gimp_drawable_set_tattoo(self->ID, PyInt_AsLong(value));
+
     return 0;
 }
 
 static PyObject *
 drw_get_visible(PyGimpDrawable *self, void *closure)
 {
-    return PyInt_FromLong(gimp_drawable_get_visible(self->ID));
+    return PyBool_FromLong(gimp_drawable_get_visible(self->ID));
 }
                                                                                 
 static int
@@ -376,11 +606,14 @@ drw_set_visible(PyGimpDrawable *self, PyObject *value, void *closure)
         PyErr_SetString(PyExc_TypeError, "cannot delete visible");
         return -1;
     }
+
     if (!PyInt_Check(value)) {
         PyErr_SetString(PyExc_TypeError, "type mismatch");
         return -1;
     }
+
     gimp_drawable_set_visible(self->ID, PyInt_AsLong(value));
+
     return 0;
 }
 
@@ -412,6 +645,7 @@ drw_dealloc(PyGimpDrawable *self)
 {
     if (self->drawable)
 	gimp_drawable_detach(self->drawable);
+
     PyObject_DEL(self);
 }
 
@@ -422,16 +656,19 @@ drw_repr(PyGimpDrawable *self)
     gchar *name;
 
     name = gimp_drawable_get_name(self->ID);
-    s = PyString_FromFormat("<gimp.Drawable '%s'>", name?name:"(null)");
+    s = PyString_FromFormat("<gimp.Drawable '%s'>", name ? name : "(null)");
     g_free(name);
+
     return s;
 }
 
 static int
 drw_cmp(PyGimpDrawable *self, PyGimpDrawable *other)
 {
-    if (self->ID == other->ID) return 0;
-    if (self->ID > other->ID) return -1;
+    if (self->ID == other->ID)
+	return 0;
+    if (self->ID > other->ID)
+	return -1;
     return 1;
 }
 
@@ -488,8 +725,10 @@ pygimp_drawable_new(GimpDrawable *drawable, gint32 ID)
 	Py_INCREF(Py_None);
 	return Py_None;
     }
+
     if (drawable != NULL)
 	ID = drawable->drawable_id;
+
     /* create the appropriate object type */
     if (gimp_drawable_is_layer(ID))
 	self = pygimp_layer_new(ID);
@@ -513,9 +752,8 @@ lay_copy(PyGimpLayer *self, PyObject *args)
 {
     int add_alpha = 0, nreturn_vals;
     GimpParam *return_vals;
-    gint32 id;
+    gint32 id = -1;
 
-    /* start of long convoluted (working) layer_copy */
     if (!PyArg_ParseTuple(args, "|i:copy", &add_alpha))
 	return NULL;
 
@@ -524,16 +762,15 @@ lay_copy(PyGimpLayer *self, PyObject *args)
 				     GIMP_PDB_LAYER, self->ID,
 				     GIMP_PDB_INT32, add_alpha,
 				     GIMP_PDB_END);
-    if (return_vals[0].data.d_status != GIMP_PDB_SUCCESS) {
-	PyErr_SetString(pygimp_error, "can't create new layer");
-	return NULL;
-    }	
-    id = return_vals[1].data.d_layer;
-    gimp_destroy_params(return_vals, nreturn_vals);
-    return pygimp_layer_new(id);
 
-    /* This simple version of the code doesn't seem to work */
-    /* return (PyObject *)newlayobject(gimp_layer_copy(self->ID));*/
+    if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+	id = return_vals[1].data.d_layer;
+    else
+	PyErr_SetString(pygimp_error, "can't create new layer");
+
+    gimp_destroy_params(return_vals, nreturn_vals);
+
+    return id != -1 ? pygimp_layer_new(id) : NULL;
 }
 
 
@@ -541,6 +778,7 @@ static PyObject *
 lay_add_alpha(PyGimpLayer *self)
 {
     gimp_layer_add_alpha(self->ID);
+
     Py_INCREF(Py_None);
     return Py_None;
 }
@@ -553,6 +791,7 @@ lay_add_mask(PyGimpLayer *self, PyObject *args)
 
     if (!PyArg_ParseTuple(args, "O!:add_mask", &PyGimpChannel_Type, &mask))
 	return NULL;
+
     return PyInt_FromLong(gimp_layer_add_mask(self->ID, mask->ID));
 }
 
@@ -563,6 +802,7 @@ lay_create_mask(PyGimpLayer *self, PyObject *args)
 
     if (!PyArg_ParseTuple(args, "i:create_mask", &type))
 	return NULL;
+
     return pygimp_channel_new(gimp_layer_create_mask(self->ID,type));
 }
 
@@ -573,6 +813,7 @@ lay_remove_mask(PyGimpLayer *self, PyObject *args)
 
     if (!PyArg_ParseTuple(args, "i:remove_mask", &mode))
 	return NULL;
+
     return PyInt_FromLong(gimp_layer_remove_mask(self->ID, mode));
 }
 
@@ -582,10 +823,13 @@ lay_resize(PyGimpLayer *self, PyObject *args)
 {
     unsigned int new_h, new_w;
     int offs_x, offs_y;
+
     if (!PyArg_ParseTuple(args, "iiii:resize", &new_w, &new_h,
 			  &offs_x, &offs_y))
 	return NULL;
+
     gimp_layer_resize(self->ID, new_w, new_h, offs_x, offs_y);
+
     Py_INCREF(Py_None);
     return Py_None;
 }
@@ -596,10 +840,13 @@ lay_scale(PyGimpLayer *self, PyObject *args)
 {
     unsigned int new_w, new_h;
     int local_origin;
+
     if (!PyArg_ParseTuple(args, "iii:scale", &new_w, &new_h,
 			  &local_origin))
 	return NULL;
+
     gimp_layer_scale(self->ID, new_w, new_h, local_origin);
+
     Py_INCREF(Py_None);
     return Py_None;
 }
@@ -609,9 +856,12 @@ static PyObject *
 lay_translate(PyGimpLayer *self, PyObject *args)
 {
     int offs_x, offs_y;
+
     if (!PyArg_ParseTuple(args, "ii:translate", &offs_x, &offs_y))
 	return NULL;
+
     gimp_layer_translate(self->ID, offs_x, offs_y);
+
     Py_INCREF(Py_None);
     return Py_None;
 }
@@ -621,9 +871,12 @@ static PyObject *
 lay_set_offsets(PyGimpLayer *self, PyObject *args)
 {
     int offs_x, offs_y;
+
     if (!PyArg_ParseTuple(args, "ii:set_offsets", &offs_x, &offs_y))
 	return NULL;
+
     gimp_layer_set_offsets(self->ID, offs_x, offs_y);
+
     Py_INCREF(Py_None);
     return Py_None;
 }
@@ -644,24 +897,26 @@ static PyMethodDef lay_methods[] = {
 static PyObject *
 lay_get_is_floating_sel(PyGimpLayer *self, void *closure)
 {
-    return PyInt_FromLong(gimp_layer_is_floating_sel(self->ID));
+    return PyBool_FromLong(gimp_layer_is_floating_sel(self->ID));
 }
 
 static PyObject *
 lay_get_mask(PyGimpLayer *self, void *closure)
 {
     gint32 id = gimp_layer_get_mask(self->ID);
+
     if (id == -1) {
 	Py_INCREF(Py_None);
 	return Py_None;
     }
+
     return pygimp_channel_new(id);
 }
 
 static PyObject *
 lay_get_apply_mask(PyGimpLayer *self, void *closure)
 {
-    return PyInt_FromLong(gimp_layer_get_apply_mask(self->ID));
+    return PyBool_FromLong(gimp_layer_get_apply_mask(self->ID));
 }
 
 static int
@@ -671,18 +926,22 @@ lay_set_apply_mask(PyGimpLayer *self, PyObject *value, void *closure)
         PyErr_SetString(PyExc_TypeError, "cannot delete apply_mask");
         return -1;
     }
+
     if (!PyInt_Check(value)) {
 	PyErr_SetString(PyExc_TypeError, "type mismatch");
 	return -1;
     }
+
     gimp_layer_set_apply_mask(self->ID, PyInt_AsLong(value));
+
     return 0;
 }
 
 static PyObject *
 lay_get_edit_mask(PyGimpLayer *self, void *closure)
 {
-    return PyInt_FromLong(gimp_layer_get_edit_mask(self->ID));}
+    return PyBool_FromLong(gimp_layer_get_edit_mask(self->ID));
+}
 
 static int
 lay_set_edit_mask(PyGimpLayer *self, PyObject *value, void *closure)
@@ -691,11 +950,14 @@ lay_set_edit_mask(PyGimpLayer *self, PyObject *value, void *closure)
         PyErr_SetString(PyExc_TypeError, "cannot delete edit_mask");
         return -1;
     }
+
     if (!PyInt_Check(value)) {
 	PyErr_SetString(PyExc_TypeError, "type mismatch");
 	return -1;
     }
+
     gimp_layer_set_edit_mask(self->ID, PyInt_AsLong(value));
+
     return 0;
 }
 
@@ -712,11 +974,14 @@ lay_set_mode(PyGimpLayer *self, PyObject *value, void *closure)
         PyErr_SetString(PyExc_TypeError, "cannot delete mode");
         return -1;
     }
+
     if (!PyInt_Check(value)) {
 	PyErr_SetString(PyExc_TypeError, "type mismatch");
 	return -1;
     }
+
     gimp_layer_set_mode(self->ID, (GimpLayerModeEffects)PyInt_AsLong(value));
+
     return 0;
 }
 
@@ -733,18 +998,21 @@ lay_set_opacity(PyGimpLayer *self, PyObject *value, void *closure)
         PyErr_SetString(PyExc_TypeError, "cannot delete opacity");
         return -1;
     }
+
     if (!PyFloat_Check(value)) {
 	PyErr_SetString(PyExc_TypeError, "type mismatch");
 	return -1;
     }
+
     gimp_layer_set_opacity(self->ID, PyFloat_AsDouble(value));
+
     return 0;
 }
 
 static PyObject *
 lay_get_preserve_trans(PyGimpLayer *self, void *closure)
 {
-    return PyInt_FromLong(gimp_layer_get_preserve_trans(self->ID));
+    return PyBool_FromLong(gimp_layer_get_preserve_trans(self->ID));
 }
 
 static int
@@ -755,18 +1023,21 @@ lay_set_preserve_trans(PyGimpLayer *self, PyObject *value, void *closure)
 			"cannot delete preserve_transparency");
         return -1;
     }
+
     if (!PyInt_Check(value)) {
 	PyErr_SetString(PyExc_TypeError, "type mismatch");
 	return -1;
     }
+
     gimp_layer_set_preserve_trans(self->ID, PyInt_AsLong(value));
+
     return 0;
 }
 
 static PyObject *
 lay_get_show_mask(PyGimpLayer *self, void *closure)
 {
-    return PyInt_FromLong(gimp_layer_get_show_mask(self->ID));
+    return PyBool_FromLong(gimp_layer_get_show_mask(self->ID));
 }
 
 static int
@@ -776,11 +1047,14 @@ lay_set_show_mask(PyGimpLayer *self, PyObject *value, void *closure)
         PyErr_SetString(PyExc_TypeError, "cannot delete show_mask");
         return -1;
     }
+
     if (!PyInt_Check(value)) {
 	PyErr_SetString(PyExc_TypeError, "type mismatch");
 	return -1;
     }
+
     gimp_layer_set_show_mask(self->ID, PyInt_AsLong(value));
+
     return 0;
 }
 
@@ -806,6 +1080,7 @@ lay_repr(PyGimpLayer *self)
     name = gimp_drawable_get_name(self->ID);
     s = PyString_FromFormat("<gimp.Layer '%s'>", name);
     g_free(name);
+
     return s;
 }
 
@@ -824,13 +1099,17 @@ lay_init(PyGimpLayer *self, PyObject *args, PyObject *kwargs)
 			  &PyGimpImage_Type, &img, &name, &width, &height,
 			  &type, &opacity, &mode))
 	return -1;
+
     self->ID = gimp_layer_new(img->ID, name, width,
 			      height, type, opacity, mode);
+
     self->drawable = NULL;
+
     if (self->ID < 0) {
 	PyErr_SetString(pygimp_error, "could not create layer");
 	return -1;
     }
+
     return 0;
 }
 
@@ -886,11 +1165,15 @@ pygimp_layer_new(gint32 ID)
 	Py_INCREF(Py_None);
 	return Py_None;
     }
+
     self = PyObject_NEW(PyGimpLayer, &PyGimpLayer_Type);
+
     if (self == NULL)
 	return NULL;
+
     self->ID = ID;
     self->drawable = NULL;
+
     return (PyObject *)self;
 }
 
@@ -904,10 +1187,12 @@ chn_copy(PyGimpChannel *self)
     gint32 id;
 	
     id = gimp_channel_copy(self->ID);
+
     if (id == -1) {
 	PyErr_SetString(pygimp_error, "can't copy channel");
 	return NULL;
     }
+
     return pygimp_channel_new(id);
 }
 
@@ -921,6 +1206,7 @@ chn_combine_masks(PyGimpChannel *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "O!iii:combine_masks", &PyGimpChannel_Type,
 			  &channel2, &operation, &offx, &offy))
 	return NULL;
+
     return PyInt_FromLong(gimp_channel_combine_masks(self->ID, channel2->ID,
 						     operation, offx, offy));
 }
@@ -939,6 +1225,7 @@ chn_get_color(PyGimpChannel *self, void *closure)
 
     gimp_channel_get_color(self->ID, &colour);
     gimp_rgb_get_uchar(&colour, &r, &g, &b);
+
     return Py_BuildValue("(iii)", (long)r, (long)g, (long)b);
 }
 
@@ -952,13 +1239,16 @@ chn_set_color(PyGimpChannel *self, PyObject *value, void *closure)
         PyErr_SetString(PyExc_TypeError, "cannot delete colour");
         return -1;
     }
+
     if (!PyTuple_Check(value) || !PyArg_ParseTuple(value, "(BBB)", &r,&g,&b)) {
 	PyErr_Clear();
 	PyErr_SetString(PyExc_TypeError, "type mismatch");
 	return -1;
     }
+
     gimp_rgb_set_uchar(&colour, r, g, b);
     gimp_channel_set_color(self->ID, &colour);
+
     return 0;
 }
 
@@ -975,18 +1265,21 @@ chn_set_opacity(PyGimpLayer *self, PyObject *value, void *closure)
         PyErr_SetString(PyExc_TypeError, "cannot delete opacity");
         return -1;
     }
+
     if (!PyFloat_Check(value)) {
 	PyErr_SetString(PyExc_TypeError, "type mismatch");
 	return -1;
     }
+
     gimp_channel_set_opacity(self->ID, PyFloat_AsDouble(value));
+
     return 0;
 }
 
 static PyObject *
 chn_get_show_masked(PyGimpLayer *self, void *closure)
 {
-    return PyInt_FromLong(gimp_channel_get_show_masked(self->ID));
+    return PyBool_FromLong(gimp_channel_get_show_masked(self->ID));
 }
 
 static int
@@ -996,11 +1289,14 @@ chn_set_show_masked(PyGimpLayer *self, PyObject *value, void *closure)
         PyErr_SetString(PyExc_TypeError, "cannot delete show_masked");
         return -1;
     }
+
     if (!PyInt_Check(value)) {
 	PyErr_SetString(PyExc_TypeError, "type mismatch");
 	return -1;
     }
+
     gimp_channel_set_show_masked(self->ID, PyInt_AsLong(value));
+
     return 0;
 }
 
@@ -1021,6 +1317,7 @@ chn_repr(PyGimpChannel *self)
     name = gimp_drawable_get_name(self->ID);
     s = PyString_FromFormat("<gimp.Channel '%s'>", name);
     g_free(name);
+
     return s;
 }
 
@@ -1037,14 +1334,19 @@ chn_init(PyGimpChannel *self, PyObject *args, PyObject *kwargs)
 			  &PyGimpImage_Type, &img, &name, &width,
 			  &height, &opacity, &r, &g, &b))
 	return -1;
+
     gimp_rgb_set_uchar(&colour, r & 0xff, g & 0xff, b & 0xff);
+
     self->ID = gimp_channel_new(img->ID, name, width, height,
 				opacity, &colour);
+
     self->drawable = NULL;
+
     if (self->ID < 0) {
 	PyErr_SetString(pygimp_error, "could not create layer");
 	return -1;
     }
+
     return 0;
 }
 
@@ -1100,10 +1402,14 @@ pygimp_channel_new(gint32 ID)
 	Py_INCREF(Py_None);
 	return Py_None;
     }
+
     self = PyObject_NEW(PyGimpChannel, &PyGimpChannel_Type);
+
     if (self == NULL)
 	return NULL;
+
     self->ID = ID;
     self->drawable = NULL;
+
     return (PyObject *)self;
 }

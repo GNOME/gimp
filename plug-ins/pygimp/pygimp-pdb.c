@@ -545,14 +545,20 @@ pdb_query(PyGimpPDB *self, PyObject *args)
     int num, i;
     char **names;
     PyObject *ret;
+
     if (!PyArg_ParseTuple(args, "|zzzzzzz:gimp.pdb.query", &n, &b, &h, &a,
 			  &c, &d, &t))
 	return NULL;
+
     gimp_procedural_db_query(n, b, h, a, c, d, t, &num, &names);
+
     ret = PyList_New(num);
+
     for (i = 0; i < num; i++)
 	PyList_SetItem(ret, i, PyString_FromString(names[i]));
+
     g_free(names);
+
     return ret;
 }
 
@@ -700,6 +706,7 @@ static void
 pf_dealloc(PyGimpPDBFunction *self)
 {
     g_free(self->name);
+
     Py_DECREF(self->proc_name);
     Py_DECREF(self->proc_blurb);
     Py_DECREF(self->proc_help);
@@ -709,8 +716,10 @@ pf_dealloc(PyGimpPDBFunction *self)
     Py_DECREF(self->proc_type);
     Py_DECREF(self->py_params);
     Py_DECREF(self->py_return_vals);
+
     gimp_destroy_paramdefs(self->params, self->nparams);
     gimp_destroy_paramdefs(self->return_vals, self->nreturn_vals);
+
     PyObject_DEL(self);
 }
 
@@ -802,7 +811,7 @@ pf_call(PyGimpPDBFunction *self, PyObject *args, PyObject *kwargs)
 	gimp_destroy_params(ret, nret);
 	if (t == NULL) {
 	    PyErr_SetString(pygimp_error,
-			    "couldn't make return value");
+			    "could not make return value");
 	    return NULL;
 	}
 	break;
@@ -885,6 +894,7 @@ pygimp_pdb_function_new(const char *name, const char *blurb, const char *help,
     int i;
 
     self = PyObject_NEW(PyGimpPDBFunction, &PyGimpPDBFunction_Type);
+
     if (self == NULL)
 	return NULL;
 

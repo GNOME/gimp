@@ -20,6 +20,7 @@
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
 #endif
+
 #include "pygimp.h"
 
 static PyMethodDef disp_methods[] = {
@@ -38,6 +39,7 @@ disp_repr(PyGimpDisplay *self)
     PyObject *s;
 
     s = PyString_FromString("<display>");
+
     return s;
 }
 
@@ -49,11 +51,15 @@ disp_init(PyGimpDisplay *self, PyObject *args, PyObject *kwargs)
     if (!PyArg_ParseTuple(args, "O!:gimp.Display.__init__",
 			  &PyGimpImage_Type, &img))
 	return -1;
+
     self->ID = gimp_display_new(img->ID);
+
     if (self->ID < 0) {
-	PyErr_SetString(pygimp_error, "could not create image");
+	PyErr_Format(pygimp_error, "could not create display for image (ID %d)",
+		     img->ID);
 	return -1;
     }
+
     return 0;
 }
 
@@ -106,8 +112,11 @@ pygimp_display_new(gint32 ID)
     PyGimpDisplay *self;
 	
     self = PyObject_NEW(PyGimpDisplay, &PyGimpDisplay_Type);
+
     if (self == NULL)
 	return NULL;
+
     self->ID = ID;
+
     return (PyObject *)self;
 }

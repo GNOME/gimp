@@ -1,3 +1,30 @@
+2005-03-03  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/pygimp.h: Make a compatibility wrapper for
+	PyBool_FromLong for pre-2.3 versions of python.
+
+	* plug-ins/pygimp/gimpfu.py
+	* plug-ins/pygimp/gimpui.py: Update to use some more modern python
+	features.
+
+	* plug-ins/pygimp/gimpmodule.c
+	* plug-ins/pygimp/pygimp-display.c
+	* plug-ins/pygimp/pygimp-drawable.c
+	* plug-ins/pygimp/pygimp-image.c
+	* plug-ins/pygimp/pygimp-parasite.c
+	* plug-ins/pygimp/pygimp-pdb.c
+	* plug-ins/pygimp/pygimp-tile.c: Throw exceptions on failures for
+	libgimp wrappers (fixes bug #160136), and make the exception strings
+	a lot more descriptive to aid debugging. Also return proper Bools when
+	appropriate. Some new API wrapped as well. Still a work in progress.
+
+	* plug-ins/pygimp/gimpplugin.py
+	* plug-ins/pygimp/gimpshelf.py
+	* plug-ins/pygimp/plug-ins/clothify.py
+	* plug-ins/pygimp/plug-ins/foggify.py
+	* plug-ins/pygimp/plug-ins/sphere.py: Add some whitespace to make
+	things more readable.
+
 2005-03-03  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpdrawablecombobox.c

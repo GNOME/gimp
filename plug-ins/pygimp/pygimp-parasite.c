@@ -20,6 +20,7 @@
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
 #endif
+
 #include "pygimp.h"
 
 static PyObject *
@@ -27,6 +28,7 @@ para_copy(PyGimpParasite *self, PyObject *args)
 {
     if (!PyArg_ParseTuple(args, ":copy"))
 	return NULL;
+
     return pygimp_parasite_new(gimp_parasite_copy(self->para));
 }
 
@@ -34,8 +36,10 @@ static PyObject *
 para_is_type(PyGimpParasite *self, PyObject *args)
 {
     char *name;
+
     if (!PyArg_ParseTuple(args, "s:is_type", &name))
 	return NULL;
+
     return PyInt_FromLong(gimp_parasite_is_type(self->para, name));
 }
 
@@ -43,11 +47,12 @@ static PyObject *
 para_has_flag(PyGimpParasite *self, PyObject *args)
 {
     int flag;
+
     if (!PyArg_ParseTuple(args, "i:has_flag", &flag))
 	return NULL;
+
     return PyInt_FromLong(gimp_parasite_has_flag(self->para, flag));
 }
-
 
 
 static PyMethodDef para_methods[] = {
@@ -61,13 +66,13 @@ static PyMethodDef para_methods[] = {
 static PyObject *
 para_get_is_persistent(PyGimpParasite *self, void *closure)
 {
-    return PyInt_FromLong(gimp_parasite_is_persistent(self->para));
+    return PyBool_FromLong(gimp_parasite_is_persistent(self->para));
 }
 
 static PyObject *
 para_get_is_undoable(PyGimpParasite *self, void *closure)
 {
-    return PyInt_FromLong(gimp_parasite_is_undoable(self->para));
+    return PyBool_FromLong(gimp_parasite_is_undoable(self->para));
 }
 
 static PyObject *
@@ -111,6 +116,7 @@ para_repr(PyGimpParasite *self)
     PyObject *s;
 
     s = PyString_FromFormat("<parasite %s>", gimp_parasite_name(self->para));
+
     return s;
 }
 
@@ -130,11 +136,14 @@ para_init(PyGimpParasite *self, PyObject *args, PyObject *kwargs)
     if (!PyArg_ParseTuple(args, "sis#:gimp.Parasite.__init__", &name, &flags,
 			  &data, &size))
 	return -1;
+
     self->para = gimp_parasite_new(name, flags, size, data);
+
     if (!self->para) {
-	PyErr_SetString(pygimp_error, "could not create parasite");
+	PyErr_Format(pygimp_error, "could not create parasite '%s'", name);
 	return -1;
     }
+
     return 0;
 }
 
@@ -191,9 +200,13 @@ pygimp_parasite_new(GimpParasite *para)
 	Py_INCREF(Py_None);
 	return Py_None;
     }
+
     self = PyObject_NEW(PyGimpParasite, &PyGimpParasite_Type);
+
     if (self == NULL)
 	return NULL;
+
     self->para = para;
+
     return (PyObject *)self;
 }
