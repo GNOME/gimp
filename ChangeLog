@@ -1,3 +1,9 @@
+2004-07-09  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimphistogrameditor.c
+	(gimp_histogram_editor_menu_update): reverted my last change.
+	(gimp_histogram_editor_item_visible): fix the problem here instead.
+
 2004-07-08  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpdialog.c: removed "role" property because

@@ -414,43 +414,46 @@ gimp_histogram_editor_item_visible (GtkTreeModel *model,
                                     GtkTreeIter  *iter,
                                     gpointer      data)
 {
-  GimpHistogramEditor  *editor = GIMP_HISTOGRAM_EDITOR (data);
-  GimpHistogramChannel  channel;
+  GimpHistogramEditor *editor = GIMP_HISTOGRAM_EDITOR (data);
 
-  gtk_tree_model_get (model, iter,
-                      GIMP_INT_STORE_VALUE, &channel,
-                      -1);
-
-  switch (channel)
+  if (editor->drawable)
     {
-    case GIMP_HISTOGRAM_VALUE:
-      return TRUE;
+      GimpHistogramChannel  channel;
 
-    case GIMP_HISTOGRAM_RED:
-    case GIMP_HISTOGRAM_GREEN:
-    case GIMP_HISTOGRAM_BLUE:
-    case GIMP_HISTOGRAM_RGB:
-      return editor->drawable && gimp_drawable_is_rgb (editor->drawable);
+      gtk_tree_model_get (model, iter,
+                          GIMP_INT_STORE_VALUE, &channel,
+                          -1);
 
-    case GIMP_HISTOGRAM_ALPHA:
-      return editor->drawable && gimp_drawable_has_alpha (editor->drawable);
+      switch (channel)
+        {
+        case GIMP_HISTOGRAM_VALUE:
+          return TRUE;
+
+        case GIMP_HISTOGRAM_RED:
+        case GIMP_HISTOGRAM_GREEN:
+        case GIMP_HISTOGRAM_BLUE:
+        case GIMP_HISTOGRAM_RGB:
+          return gimp_drawable_is_rgb (editor->drawable);
+
+        case GIMP_HISTOGRAM_ALPHA:
+          return gimp_drawable_has_alpha (editor->drawable);
+        }
+
+      return FALSE;
     }
-
-  return FALSE;
+  else
+    {
+      /*  allow all channels, the menu is insensitive anyway  */
+      return TRUE;
+    }
 }
 
 static void
 gimp_histogram_editor_menu_update (GimpHistogramEditor *editor)
 {
-  GimpHistogramView *view = GIMP_HISTOGRAM_BOX (editor->box)->view;
-  GtkTreeModel      *model;
-
-  model = gtk_combo_box_get_model (GTK_COMBO_BOX (editor->menu));
+  GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (editor->menu));
 
   gtk_tree_model_filter_refilter (GTK_TREE_MODEL_FILTER (model));
-
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (editor->menu),
-                                 gimp_histogram_view_get_channel (view));
 }
 
 static void
