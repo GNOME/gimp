@@ -1,3 +1,21 @@
+2003-06-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpitemfactory.c (gimp_item_factory_set_label):
+	use gtk_label_set_text_with_mnemonic() instead of just
+	gtk_label_set_text().
+
+	* app/gui/image-menu.c
+	* app/gui/toolbox-menu.c: added mnemonics for all sub-menus.
+	Fixes bug #106991.
+
+	* app/gui/image-menu.c: cleaned up the "Layers" menu: moved
+	sub-menus together. Changed the "Stack" menu's labels and
+	accelerators and added "Select Top/Bottom Layer" for consistency
+	(bound to Home/End).
+
+	* app/gui/layers-commands.[ch]: changed accordingly. Added the
+	new select top/bottom callbacks.
+
 2003-06-05  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpcolortool.c: removed unneeded includes.

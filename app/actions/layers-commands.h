@@ -20,10 +20,15 @@
 #define __LAYERS_COMMANDS_H__
 
 
-void   layers_previous_cmd_callback          (GtkWidget *widet,
+void   layers_select_previous_cmd_callback   (GtkWidget *widet,
 					      gpointer   data);
-void   layers_next_cmd_callback              (GtkWidget *widet,
+void   layers_select_next_cmd_callback       (GtkWidget *widet,
 					      gpointer   data);
+void   layers_select_top_cmd_callback        (GtkWidget *widet,
+					      gpointer   data);
+void   layers_select_bottom_cmd_callback     (GtkWidget *widet,
+					      gpointer   data);
+
 void   layers_raise_cmd_callback             (GtkWidget *widet,
 					      gpointer   data);
 void   layers_lower_cmd_callback             (GtkWidget *widet,

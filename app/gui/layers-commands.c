@@ -85,8 +85,8 @@ static void   layers_resize_layer_query   (GimpImage *gimage,
 /*  public functions  */
 
 void
-layers_previous_cmd_callback (GtkWidget *widget,
-			      gpointer   data)
+layers_select_previous_cmd_callback (GtkWidget *widget,
+                                     gpointer   data)
 {
   GimpImage *gimage;
   GimpLayer *new_layer;
@@ -110,8 +110,8 @@ layers_previous_cmd_callback (GtkWidget *widget,
 }
 
 void
-layers_next_cmd_callback (GtkWidget *widget,
-			  gpointer   data)
+layers_select_next_cmd_callback (GtkWidget *widget,
+                                 gpointer   data)
 {
   GimpImage *gimage;
   GimpLayer *new_layer;
@@ -129,6 +129,48 @@ layers_next_cmd_callback (GtkWidget *widget,
     {
       gimp_image_set_active_layer (gimage, new_layer);
       gimp_image_flush (gimage);
+    }
+}
+
+void
+layers_select_top_cmd_callback (GtkWidget *widget,
+                                gpointer   data)
+{
+  GimpImage *gimage;
+  GimpLayer *new_layer;
+  return_if_no_image (gimage, data);
+
+  new_layer = (GimpLayer *)
+    gimp_container_get_child_by_index (gimage->layers, 0);
+
+  if (new_layer)
+    {
+      gimp_image_set_active_layer (gimage, new_layer);
+      gimp_image_flush (gimage);
+    }
+}
+
+void
+layers_select_bottom_cmd_callback (GtkWidget *widget,
+                                   gpointer   data)
+{
+  GimpImage *gimage;
+  GimpLayer *new_layer;
+  gint       num_layers;
+  return_if_no_image (gimage, data);
+
+  num_layers = gimp_container_num_children (gimage->layers);
+
+  if (num_layers > 0)
+    {
+      new_layer = (GimpLayer *)
+        gimp_container_get_child_by_index (gimage->layers, num_layers - 1);
+
+      if (new_layer)
+        {
+          gimp_image_set_active_layer (gimage, new_layer);
+          gimp_image_flush (gimage);
+        }
     }
 }
 

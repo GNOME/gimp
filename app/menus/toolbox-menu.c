@@ -60,6 +60,8 @@ GimpItemFactoryEntry toolbox_menu_entries[] =
 
   /*  <Toolbox>/File/Open Recent  */
 
+  MENU_BRANCH (N_("/File/_Open Recent")),
+
   { { N_("/File/Open Recent/(None)"), NULL, NULL, 0 },
     NULL, NULL, NULL },
 
@@ -73,7 +75,7 @@ GimpItemFactoryEntry toolbox_menu_entries[] =
 
   /*  <Toolbox>/File/Acquire  */
 
-  MENU_BRANCH (N_("/File/Acquire")),
+  MENU_BRANCH (N_("/File/_Acquire")),
 
   MENU_SEPARATOR ("/File/---"),
 
@@ -84,6 +86,8 @@ GimpItemFactoryEntry toolbox_menu_entries[] =
     "file/dialogs/preferences/preferences.html", NULL },
 
   /*  <Toolbox>/File/Dialogs  */
+
+  MENU_BRANCH (N_("/File/_Dialogs")),
 
   { { N_("/File/Dialogs/Layers, Channels & Paths..."), NULL,
       dialogs_create_lc_cmd_callback, 0 },

@@ -568,7 +568,8 @@ gimp_item_factory_set_label (GtkItemFactory *factory,
         widget = gtk_menu_get_attach_widget (GTK_MENU (widget));
 
       if (GTK_IS_LABEL (GTK_BIN (widget)->child))
-        gtk_label_set_text (GTK_LABEL (GTK_BIN (widget)->child), label);
+        gtk_label_set_text_with_mnemonic (GTK_LABEL (GTK_BIN (widget)->child),
+                                          label);
     }
   else
     {

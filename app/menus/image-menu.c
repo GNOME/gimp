@@ -95,6 +95,8 @@ GimpItemFactoryEntry image_menu_entries[] =
 
   /*  <Image>/File/Open Recent  */
 
+  MENU_BRANCH (N_("/File/_Open Recent")),
+
   { { N_("/File/Open Recent/(None)"), NULL, NULL, 0 },
     NULL, NULL, NULL },
 
@@ -191,6 +193,8 @@ GimpItemFactoryEntry image_menu_entries[] =
     "edit/paste_as_new.html", NULL },
 
   /*  <Image>/Edit/Buffer  */
+
+  MENU_BRANCH (N_("/Edit/_Buffer")),
 
   { { N_("/Edit/Buffer/Cut Named..."), "<control><shift>X",
       edit_named_cut_cmd_callback, 0,
@@ -310,6 +314,8 @@ GimpItemFactoryEntry image_menu_entries[] =
     "view/dot_for_dot.html", NULL },
 
   /*  <Image>/View/Zoom  */
+
+  MENU_BRANCH (N_("/View/_Zoom")),
 
   { { N_("/View/Zoom/Zoom Out"), "minus",
       view_zoom_out_cmd_callback, 0,
@@ -446,6 +452,8 @@ GimpItemFactoryEntry image_menu_entries[] =
 
   /*  <Image>/Image/Mode  */
 
+  MENU_BRANCH (N_("/Image/_Mode")),
+
   { { N_("/Image/Mode/RGB"), NULL,
       image_convert_rgb_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_CONVERT_RGB },
@@ -463,6 +471,8 @@ GimpItemFactoryEntry image_menu_entries[] =
     "image/mode/dialogs/convert_to_indexed.html", NULL },
 
   /*  <Image>/Image/Transform  */
+
+  MENU_BRANCH (N_("/Image/_Transform")),
 
   { { N_("/Image/Transform/Flip Horizontally"), NULL,
       image_flip_cmd_callback, GIMP_ORIENTATION_HORIZONTAL,
@@ -559,16 +569,31 @@ GimpItemFactoryEntry image_menu_entries[] =
     NULL,
     "layers/delete_layer.html", NULL },
 
+  MENU_SEPARATOR ("/Layer/---"),
+
   /*  <Image>/Layer/Stack  */
 
-  { { N_("/Layer/Stack/Previous Layer"), "Prior",
-      layers_previous_cmd_callback, 0 },
+  MENU_BRANCH (N_("/Layer/_Stack")),
+
+  { { N_("/Layer/Stack/Select Previous Layer"), "Prior",
+      layers_select_previous_cmd_callback, 0 },
     NULL,
     "layers/stack/stack.html#previous_layer", NULL },
-  { { N_("/Layer/Stack/Next Layer"), "Next",
-      layers_next_cmd_callback, 0 },
+  { { N_("/Layer/Stack/Select Next Layer"), "Next",
+      layers_select_next_cmd_callback, 0 },
     NULL,
     "layers/stack/stack.html#next_layer", NULL },
+  { { N_("/Layer/Stack/Select Top Layer"), "Home",
+      layers_select_top_cmd_callback, 0 },
+    NULL,
+    "layers/stack/stack.html#previous_layer", NULL },
+  { { N_("/Layer/Stack/Select Bottom Layer"), "End",
+      layers_select_bottom_cmd_callback, 0 },
+    NULL,
+    "layers/stack/stack.html#next_layer", NULL },
+
+  MENU_SEPARATOR ("/Layer/Stack/---"),
+
   { { N_("/Layer/Stack/Raise Layer"), "<shift>Prior",
       layers_raise_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_GO_UP },
@@ -579,41 +604,87 @@ GimpItemFactoryEntry image_menu_entries[] =
       "<StockItem>", GTK_STOCK_GO_DOWN },
     NULL,
     "layers/stack/stack.html#lower_layer", NULL },
-  { { N_("/Layer/Stack/Layer to Top"), "<control>Prior",
+  { { N_("/Layer/Stack/Layer to Top"), "<shift>Home",
       layers_raise_to_top_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_GOTO_TOP },
     NULL,
     "layers/stack/stack.html#layer_to_top", NULL },
-  { { N_("/Layer/Stack/Layer to Bottom"), "<control>Next",
+  { { N_("/Layer/Stack/Layer to Bottom"), "<Shift>End",
       layers_lower_to_bottom_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_GOTO_BOTTOM },
     NULL,
     "layers/stack/stack.html#layer_to_bottom", NULL },
 
-  MENU_SEPARATOR ("/Layer/---"),
+  /*  <Image>/Layer/Colors  */
 
-  { { N_("/Layer/Layer Boundary Size..."), NULL,
-      layers_resize_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_RESIZE },
+  MENU_BRANCH (N_("/Layer/_Colors")),
+
+  MENU_SEPARATOR ("/Layer/Colors/---"),
+
+  { { N_("/Layer/Colors/Desaturate"), NULL,
+      drawable_desaturate_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_CONVERT_GRAYSCALE },
     NULL,
-    "layers/dialogs/layer_boundary_size.html", NULL },
-  { { N_("/Layer/Layer to Imagesize"), NULL,
-      layers_resize_to_image_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_LAYER_TO_IMAGESIZE },
+    "layers/colors/desaturate.html", NULL },
+  { { N_("/Layer/Colors/Invert"), NULL,
+      drawable_invert_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_INVERT },
     NULL,
-    "layers/layer_to_image_size.html", NULL },
-  { { N_("/Layer/Scale Layer..."), NULL,
-      layers_scale_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_SCALE },
+    "layers/colors/invert.html", NULL },
+
+  /*  <Image>/Layer/Colors/Auto  */
+
+  MENU_BRANCH (N_("/Layer/Colors/_Auto")),
+
+  { { N_("/Layer/Colors/Auto/Equalize"), NULL,
+      drawable_equalize_cmd_callback, 0 },
     NULL,
-    "layers/dialogs/scale_layer.html", NULL },
-  { { N_("/Layer/Crop Layer"), NULL,
-      layers_crop_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_TOOL_CROP },
+    "layers/colors/auto/equalize.html", NULL },
+
+  MENU_SEPARATOR ("/Layer/Colors/---"),
+
+  /*  <Image>/Layer/Mask  */
+
+  MENU_BRANCH (N_("/Layer/_Mask")),
+
+  { { N_("/Layer/Mask/Add Layer Mask..."), NULL,
+      layers_add_layer_mask_cmd_callback, 0 },
     NULL,
-    "layers/dialogs/scale_layer.html", NULL },
+    "layers/dialogs/add_layer_mask.html", NULL },
+  { { N_("/Layer/Mask/Apply Layer Mask"), NULL,
+      layers_apply_layer_mask_cmd_callback, 0 },
+    NULL,
+    "layers/apply_mask.html", NULL },
+  { { N_("/Layer/Mask/Delete Layer Mask"), NULL,
+      layers_delete_layer_mask_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_DELETE },
+    NULL,
+    "layers/delete_mask.html", NULL },
+  { { N_("/Layer/Mask/Mask to Selection"), NULL,
+      layers_mask_select_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_SELECTION_REPLACE },
+    NULL,
+    "layers/mask_to_selection.html", NULL },
+
+  /*  <Image>/Layer/Transparency  */
+
+  MENU_BRANCH (N_("/Layer/Tr_ansparency")),
+
+  { { N_("/Layer/Transparency/Add Alpha Channel"), NULL,
+      layers_add_alpha_channel_cmd_callback, 0 },
+    NULL,
+    "layers/add_alpha_channel.html", NULL },
+  { { N_("/Layer/Transparency/Alpha to Selection"), NULL,
+      layers_alpha_select_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_SELECTION_REPLACE },
+    NULL,
+    "layers/alpha_to_selection.html", NULL },
+
+  MENU_SEPARATOR ("/Layer/Transparency/---"),
 
   /*  <Image>/Layer/Transform  */
+
+  MENU_BRANCH (N_("/Layer/_Transform")),
 
   { { N_("/Layer/Transform/Flip Horizontally"), NULL,
       drawable_flip_cmd_callback, GIMP_ORIENTATION_HORIZONTAL,
@@ -653,64 +724,26 @@ GimpItemFactoryEntry image_menu_entries[] =
 
   MENU_SEPARATOR ("/Layer/---"),
 
-  /*  <Image>/Layer/Colors  */
-
-  MENU_SEPARATOR ("/Layer/Colors/---"),
-
-  { { N_("/Layer/Colors/Desaturate"), NULL,
-      drawable_desaturate_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_CONVERT_GRAYSCALE },
+  { { N_("/Layer/Layer Boundary Size..."), NULL,
+      layers_resize_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_RESIZE },
     NULL,
-    "layers/colors/desaturate.html", NULL },
-  { { N_("/Layer/Colors/Invert"), NULL,
-      drawable_invert_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_INVERT },
+    "layers/dialogs/layer_boundary_size.html", NULL },
+  { { N_("/Layer/Layer to Imagesize"), NULL,
+      layers_resize_to_image_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_LAYER_TO_IMAGESIZE },
     NULL,
-    "layers/colors/invert.html", NULL },
-
-  /*  <Image>/Layer/Colors/Auto  */
-
-  { { N_("/Layer/Colors/Auto/Equalize"), NULL,
-      drawable_equalize_cmd_callback, 0 },
+    "layers/layer_to_image_size.html", NULL },
+  { { N_("/Layer/Scale Layer..."), NULL,
+      layers_scale_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_SCALE },
     NULL,
-    "layers/colors/auto/equalize.html", NULL },
-
-  MENU_SEPARATOR ("/Layer/Colors/---"),
-
-  /*  <Image>/Layer/Mask  */
-
-  { { N_("/Layer/Mask/Add Layer Mask..."), NULL,
-      layers_add_layer_mask_cmd_callback, 0 },
+    "layers/dialogs/scale_layer.html", NULL },
+  { { N_("/Layer/Crop Layer"), NULL,
+      layers_crop_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_TOOL_CROP },
     NULL,
-    "layers/dialogs/add_layer_mask.html", NULL },
-  { { N_("/Layer/Mask/Apply Layer Mask"), NULL,
-      layers_apply_layer_mask_cmd_callback, 0 },
-    NULL,
-    "layers/apply_mask.html", NULL },
-  { { N_("/Layer/Mask/Delete Layer Mask"), NULL,
-      layers_delete_layer_mask_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_DELETE },
-    NULL,
-    "layers/delete_mask.html", NULL },
-  { { N_("/Layer/Mask/Mask to Selection"), NULL,
-      layers_mask_select_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_SELECTION_REPLACE },
-    NULL,
-    "layers/mask_to_selection.html", NULL },
-
-  /*  <Image>/Layer/Transparency  */
-
-  { { N_("/Layer/Transparency/Add Alpha Channel"), NULL,
-      layers_add_alpha_channel_cmd_callback, 0 },
-    NULL,
-    "layers/add_alpha_channel.html", NULL },
-  { { N_("/Layer/Transparency/Alpha to Selection"), NULL,
-      layers_alpha_select_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_SELECTION_REPLACE },
-    NULL,
-    "layers/alpha_to_selection.html", NULL },
-
-  MENU_SEPARATOR ("/Layer/Transparency/---"),
+    "layers/dialogs/scale_layer.html", NULL },
 
   MENU_SEPARATOR ("/Layer/---"),
 
@@ -735,9 +768,9 @@ GimpItemFactoryEntry image_menu_entries[] =
 
   MENU_SEPARATOR ("/Tools/---"),
 
-  MENU_BRANCH (N_("/Tools/Selection Tools")),
-  MENU_BRANCH (N_("/Tools/Paint Tools")),
-  MENU_BRANCH (N_("/Tools/Transform Tools")),
+  MENU_BRANCH (N_("/Tools/_Selection Tools")),
+  MENU_BRANCH (N_("/Tools/_Paint Tools")),
+  MENU_BRANCH (N_("/Tools/_Transform Tools")),
 
   /*  <Image>/Dialogs  */
 
@@ -880,31 +913,31 @@ GimpItemFactoryEntry image_menu_entries[] =
 
   MENU_SEPARATOR ("/Filters/---"),
 
-  MENU_BRANCH (N_("/Filters/Blur")),
-  MENU_BRANCH (N_("/Filters/Colors")),
-  MENU_BRANCH (N_("/Filters/Noise")),
-  MENU_BRANCH (N_("/Filters/Edge-Detect")),
-  MENU_BRANCH (N_("/Filters/Enhance")),
-  MENU_BRANCH (N_("/Filters/Generic")),
+  MENU_BRANCH (N_("/Filters/_Blur")),
+  MENU_BRANCH (N_("/Filters/_Colors")),
+  MENU_BRANCH (N_("/Filters/_Noise")),
+  MENU_BRANCH (N_("/Filters/_Edge-Detect")),
+  MENU_BRANCH (N_("/Filters/En_hance")),
+  MENU_BRANCH (N_("/Filters/_Generic")),
 
   MENU_SEPARATOR ("/Filters/---"),
 
-  MENU_BRANCH (N_("/Filters/Glass Effects")),
-  MENU_BRANCH (N_("/Filters/Light Effects")),
-  MENU_BRANCH (N_("/Filters/Distorts")),
-  MENU_BRANCH (N_("/Filters/Artistic")),
-  MENU_BRANCH (N_("/Filters/Map")),
-  MENU_BRANCH (N_("/Filters/Render")),
-  MENU_BRANCH (N_("/Filters/Web")),
+  MENU_BRANCH (N_("/Filters/Gla_ss Effects")),
+  MENU_BRANCH (N_("/Filters/_Light Effects")),
+  MENU_BRANCH (N_("/Filters/_Distorts")),
+  MENU_BRANCH (N_("/Filters/_Artistic")),
+  MENU_BRANCH (N_("/Filters/_Map")),
+  MENU_BRANCH (N_("/Filters/_Render")),
+  MENU_BRANCH (N_("/Filters/_Web")),
 
   MENU_SEPARATOR ("/Filters/web-separator"),
 
-  MENU_BRANCH (N_("/Filters/Animation")),
-  MENU_BRANCH (N_("/Filters/Combine")),
+  MENU_BRANCH (N_("/Filters/An_imation")),
+  MENU_BRANCH (N_("/Filters/C_ombine")),
 
   MENU_SEPARATOR ("/Filters/---"),
 
-  MENU_BRANCH (N_("/Filters/Toys"))
+  MENU_BRANCH (N_("/Filters/_Toys"))
 };
 
 gint n_image_menu_entries = G_N_ELEMENTS (image_menu_entries);
@@ -1370,19 +1403,6 @@ image_menu_update (GtkItemFactory *item_factory,
 
   /*  Layer  */
 
-  SET_SENSITIVE ("/Layer/Stack/Previous Layer",
-                 lp && !fs && !aux && lind > 0);
-  SET_SENSITIVE ("/Layer/Stack/Next Layer",
-                 lp && !fs && !aux && lind < (lnum - 1));
-  SET_SENSITIVE ("/Layer/Stack/Raise Layer",
-                 lp && !fs && !aux && alpha && lind > 0);
-  SET_SENSITIVE ("/Layer/Stack/Lower Layer",
-                 lp && !fs && !aux && alpha && lind < (lnum - 1));
-  SET_SENSITIVE ("/Layer/Stack/Layer to Top",
-                 lp && !fs && !aux && alpha && lind > 0);
-  SET_SENSITIVE ("/Layer/Stack/Layer to Bottom",
-                 lp && !fs && !aux && alpha && lind < (lnum - 1));
-
   SET_SENSITIVE ("/Layer/New Layer...",    gdisp);
   SET_SENSITIVE ("/Layer/Duplicate Layer", lp && !fs && !aux);
   SET_SENSITIVE ("/Layer/Anchor Layer",    lp &&  fs && !aux);
@@ -1394,12 +1414,27 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/Layer/Scale Layer...",         lp && !aux);
   SET_SENSITIVE ("/Layer/Crop Layer",             lp && !aux && sel);
 
-  SET_SENSITIVE ("/Layer/Transform/Flip Horizontally", lp);
-  SET_SENSITIVE ("/Layer/Transform/Flip Vertically",   lp);
-  SET_SENSITIVE ("/Layer/Transform/Offset...",         lp);
+  SET_SENSITIVE ("/Layer/Stack/Select Previous Layer",
+                 lp && !fs && !aux && lind > 0);
+  SET_SENSITIVE ("/Layer/Stack/Select Next Layer",
+                 lp && !fs && !aux && lind < (lnum - 1));
+  SET_SENSITIVE ("/Layer/Stack/Select Top Layer",
+                 lp && !fs && !aux && lind > 0);
+  SET_SENSITIVE ("/Layer/Stack/Select Bottom Layer",
+                 lp && !fs && !aux && lind < (lnum - 1));
+
+  SET_SENSITIVE ("/Layer/Stack/Raise Layer",
+                 lp && !fs && !aux && alpha && lind > 0);
+  SET_SENSITIVE ("/Layer/Stack/Lower Layer",
+                 lp && !fs && !aux && alpha && lind < (lnum - 1));
+  SET_SENSITIVE ("/Layer/Stack/Layer to Top",
+                 lp && !fs && !aux && alpha && lind > 0);
+  SET_SENSITIVE ("/Layer/Stack/Layer to Bottom",
+                 lp && !fs && !aux && alpha && lind < (lnum - 1));
 
   SET_SENSITIVE ("/Layer/Colors/Color Balance...",       lp &&   is_rgb);
   SET_SENSITIVE ("/Layer/Colors/Hue-Saturation...",      lp &&   is_rgb);
+  SET_SENSITIVE ("/Layer/Colors/Colorize...",            lp &&   is_rgb);
   SET_SENSITIVE ("/Layer/Colors/Brightness-Contrast...", lp && ! is_indexed);
   SET_SENSITIVE ("/Layer/Colors/Threshold...",           lp && ! is_indexed);
   SET_SENSITIVE ("/Layer/Colors/Levels...",              lp && ! is_indexed);
@@ -1415,8 +1450,12 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/Layer/Mask/Delete Layer Mask", lp && !fs && !aux && lm);
   SET_SENSITIVE ("/Layer/Mask/Mask to Selection", lp && !fs && !aux && lm);
 
-  SET_SENSITIVE ("/Layer/Transparency/Alpha to Selection", lp && !aux && alpha);
   SET_SENSITIVE ("/Layer/Transparency/Add Alpha Channel",  lp && !aux && !fs && !lm && !alpha);
+  SET_SENSITIVE ("/Layer/Transparency/Alpha to Selection", lp && !aux && alpha);
+
+  SET_SENSITIVE ("/Layer/Transform/Flip Horizontally", lp);
+  SET_SENSITIVE ("/Layer/Transform/Flip Vertically",   lp);
+  SET_SENSITIVE ("/Layer/Transform/Offset...",         lp);
 
 #undef SET_ACTIVE
 #undef SET_LABEL
@@ -1493,7 +1532,7 @@ image_menu_set_zoom (GtkItemFactory   *item_factory,
 
   gimp_item_factory_set_active (item_factory, menu, TRUE);
 
-  label = g_strdup_printf (_("Zoom (%d:%d)"), scaledest, scalesrc);
+  label = g_strdup_printf (_("_Zoom (%d:%d)"), scaledest, scalesrc);
   gimp_item_factory_set_label (item_factory, "/View/Zoom", label);
   g_free (label);
 
