@@ -279,7 +279,9 @@ tile_swap_init ()
 				     (GCompareFunc) tile_swap_compare);
 
 #ifdef USE_PTHREADS
+#if 0
       pthread_create (&swapin_thread, NULL, &tile_swap_in_thread, NULL);
+#endif
 #endif
     }
 }
@@ -406,7 +408,8 @@ tile_swap_default_in_async (DefSwapFile *def_swap_file,
 		            int          fd,
 		            Tile        *tile)
 {
-#ifdef HAVE_POSIX_THREADS
+#if 0 /* disable -- broken */
+#ifdef USE_PTHREADS
   AsyncSwapArgs *args;
 
   args = g_new(AsyncSwapArgs, 1);
@@ -431,6 +434,7 @@ tile_swap_default_in_async (DefSwapFile *def_swap_file,
   /* this could be changed to call out to another program that
    * tries to make the OS read the data in from disk.
    */
+#endif
 #endif
 
   return;
@@ -812,11 +816,12 @@ out:
   TILE_MUTEX_UNLOCK (tile);
 }
 
+#if 0
 static void *
 tile_swap_in_thread (void *data)
 {
   AsyncSwapArgs *args;
-  GSList free_item;
+  GSList *free_item;
 
   while (1)
     {
@@ -841,4 +846,5 @@ tile_swap_in_thread (void *data)
       g_free(args);
     }
 }
+#endif
 #endif

@@ -1,3 +1,8 @@
+Sun Jul 12 23:56:35 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
+
+	* app/tile_swap.c: #if 0'd some of mkj's last commit because it's
+	busted.
+
 Sun Jul 12 19:00:15 EDT 1998 Michael K. Johnson <johnsonm@redhat.com>
 
 	* app/tile_swap.c
