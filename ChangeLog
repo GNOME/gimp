@@ -1,5 +1,12 @@
 2001-06-18  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/script-fu-console.c: specify encoding for char
+	cell font and use gdk_fontset_load() instead of gfk_font_load().
+	Fixes bug #50522 for me and hopefully does not break things for you.
+	Please test the Script-Fu console.
+
+2001-06-18  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/newsprint.c: applied patch found in bug-report
 	#52981 that fixes wrong handling of GRAYA drawables in the 
 	Newsprint GUI.
