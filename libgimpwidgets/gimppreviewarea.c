@@ -135,15 +135,16 @@ gimp_preview_area_size_allocate (GtkWidget     *widget,
   if (widget->allocation.width  != area->width ||
       widget->allocation.height != area->height)
     {
+      if (area->buf)
+        {
+          g_free (area->buf);
+
+          area->buf       = NULL;
+          area->rowstride = 0;
+        }
+
       area->width  = widget->allocation.width;
       area->height = widget->allocation.height;
-
-      area->rowstride = ((area->width * 3) + 3) & ~3;
-
-      if (area->buf)
-        g_free (area->buf);
-
-      area->buf = g_new (guchar, area->rowstride * area->height);
     }
 }
 
@@ -161,7 +162,7 @@ gimp_preview_area_expose (GtkWidget      *widget,
   if (! area->buf || ! GTK_WIDGET_DRAWABLE (widget))
     return FALSE;
 
-  buf = area->buf + event->area.x + event->area.y * area->rowstride;
+  buf = area->buf + event->area.x * 3 + event->area.y * area->rowstride;
 
   gdk_draw_rgb_image_dithalign (widget->window,
                                 widget->style->fg_gc[widget->state],
@@ -228,9 +229,6 @@ gimp_preview_area_draw (GimpPreviewArea *area,
   g_return_if_fail (buf != NULL);
   g_return_if_fail (rowstride > 0);
 
-  if (! area->buf)
-    return;
-
   if (x + width < 0 || x >= area->width)
     return;
 
@@ -265,6 +263,12 @@ gimp_preview_area_draw (GimpPreviewArea *area,
       buf += x * bpp;
       width -= x;
       x = 0;
+    }
+
+  if (! area->buf)
+    {
+      area->rowstride = ((area->width * 3) + 3) & ~3;
+      area->buf = g_new (guchar, area->rowstride * area->height);
     }
 
   if (x + width > area->width)
@@ -459,7 +463,7 @@ gimp_preview_area_set_cmap (GimpPreviewArea *area,
 {
   g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
   g_return_if_fail (cmap != NULL || num_colors == 0);
-  g_return_if_fail (num_colors < 0 || num_colors > 256);
+  g_return_if_fail (num_colors >= 0 && num_colors <= 256);
 
   if (num_colors > 0)
     {

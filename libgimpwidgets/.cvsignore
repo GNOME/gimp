@@ -8,3 +8,4 @@ _libs
 *.la
 gimpwidgetsmarshal.h
 gimpwidgetsmarshal.c
+test-preview-area

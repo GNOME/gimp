@@ -214,6 +214,25 @@ $(srcdir)/gimpwidgetsmarshal.c: $(srcdir)/gimpwidgetsmarshal.h
 	&& cp xgen-gwmc $(@F) \
 	&& rm -f xgen-gwmc xgen-gwmc~
 
+
+#
+# test programs, not to be built by default and never installed
+#
+
+noinst_PROGRAMS = test-preview-area
+
+test_preview_area_SOURCES = test-preview-area.c 
+
+test_preview_area_DEPENDENCIES = \
+	$(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la	\
+	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
+
+test_preview_area_LDADD = \
+	$(GTK_LIBS) \
+	$(test_preview_area_DEPENDENCIES)
+
+
+
 install-data-local: install-ms-lib install-libtool-import-lib
 
 uninstall-local: uninstall-ms-lib uninstall-libtool-import-lib

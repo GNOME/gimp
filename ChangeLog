@@ -1,7 +1,17 @@
+2004-07-29  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimppreviewarea.c: only invalidate the buffer
+	on size_allocate; allocate a new one on the next call to
+	gimp_preview_area_draw(). Fixed buffer offset in expose method.
+
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/test-preview-area.c: more a benchmark than a
+	test; quite similar to testrgb from the GTK+ source tree.
+
 2004-07-29  DindinX  <david@dindinx.org>
 
-	* plug-ins/FractalExplorer/Dialogs.c: converted all the GtkPreviews to
-	GimpPreviewArea.
+	* plug-ins/FractalExplorer/Dialogs.c: converted all GtkPreview
+	widgets to GimpPreviewArea.
 
 2004-07-29  Michael Natterer  <mitch@gimp.org>
 
