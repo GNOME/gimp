@@ -23,12 +23,6 @@
 #define __GIMP_CONFIG_TYPES_H__
 
 
-#define GIMP_TYPE_COLOR                 (gimp_color_get_type ())
-#define GIMP_VALUE_HOLDS_COLOR(value)   (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_COLOR))
-
-GType   gimp_color_get_type             (void) G_GNUC_CONST;
-
-
 #define GIMP_TYPE_MATRIX2               (gimp_matrix2_get_type ())
 #define GIMP_VALUE_HOLDS_MATRIX2(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_MATRIX2))
 

@@ -52,15 +52,15 @@
 
 
 /*
- * GIMP_TYPE_PARAM_COLOR
+ * GIMP_TYPE_PARAM_RGB
  */
 
-#define GIMP_TYPE_PARAM_COLOR             (gimp_param_color_get_type ())
-#define GIMP_IS_PARAM_SPEC_COLOR(pspec)   (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_COLOR))
+#define GIMP_TYPE_PARAM_RGB               (gimp_param_rgb_get_type ())
+#define GIMP_IS_PARAM_SPEC_RGB(pspec)     (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_RGB))
 
-GType        gimp_param_color_get_type    (void) G_GNUC_CONST;
+GType        gimp_param_rgb_get_type      (void) G_GNUC_CONST;
 
-GParamSpec * gimp_param_spec_color        (const gchar    *name,
+GParamSpec * gimp_param_spec_rgb          (const gchar    *name,
                                            const gchar    *nick,
                                            const gchar    *blurb,
                                            const GimpRGB  *default_value,
@@ -154,10 +154,10 @@ GParamSpec * gimp_param_spec_unit         (const gchar  *name,
                                    g_param_spec_boolean (name, NULL, blurb,\
                                    default,\
                                    flags | GIMP_CONFIG_PARAM_FLAGS))
-#define GIMP_CONFIG_INSTALL_PROP_COLOR(class, id,\
-                                       name, blurb, default, flags)\
+#define GIMP_CONFIG_INSTALL_PROP_RGB(class, id,\
+                                     name, blurb, default, flags)\
   g_object_class_install_property (class, id,\
-                                   gimp_param_spec_color (name, NULL, blurb,\
+                                   gimp_param_spec_rgb (name, NULL, blurb,\
                                    default,\
                                    flags | GIMP_CONFIG_PARAM_FLAGS))
 #define GIMP_CONFIG_INSTALL_PROP_DOUBLE(class, id,\

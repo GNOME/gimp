@@ -26,6 +26,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
@@ -2552,7 +2553,7 @@ gimp_prop_color_area_new (GObject           *config,
   GimpRGB    *value;
 
   param_spec = check_param_spec (config, property_name,
-                                 GIMP_TYPE_PARAM_COLOR, G_STRFUNC);
+                                 GIMP_TYPE_PARAM_RGB, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -2653,7 +2654,7 @@ gimp_prop_color_button_new (GObject           *config,
   GimpRGB    *value;
 
   param_spec = check_param_spec (config, property_name,
-                                 GIMP_TYPE_PARAM_COLOR, G_STRFUNC);
+                                 GIMP_TYPE_PARAM_RGB, G_STRFUNC);
   if (! param_spec)
     return NULL;
 

@@ -327,13 +327,13 @@ gimp_scanner_parse_color (GScanner *scanner,
 
   if (! g_scanner_scope_lookup_symbol (scanner, scope_id, "color-rgb"))
     {
-      g_scanner_scope_add_symbol (scanner, scope_id, 
+      g_scanner_scope_add_symbol (scanner, scope_id,
                                   "color-rgb", GINT_TO_POINTER (COLOR_RGB));
-      g_scanner_scope_add_symbol (scanner, scope_id, 
+      g_scanner_scope_add_symbol (scanner, scope_id,
                                   "color-rgba", GINT_TO_POINTER (COLOR_RGBA));
-      g_scanner_scope_add_symbol (scanner, scope_id, 
+      g_scanner_scope_add_symbol (scanner, scope_id,
                                   "color-hsv", GINT_TO_POINTER (COLOR_HSV));
-      g_scanner_scope_add_symbol (scanner, scope_id, 
+      g_scanner_scope_add_symbol (scanner, scope_id,
                                   "color-hsva", GINT_TO_POINTER (COLOR_HSVA));
     }
 

@@ -192,10 +192,10 @@ gimp_display_options_class_init (GimpDisplayOptionsClass *klass)
                                  GIMP_TYPE_CANVAS_PADDING_MODE,
                                  GIMP_CANVAS_PADDING_MODE_DEFAULT,
                                  0);
-  GIMP_CONFIG_INSTALL_PROP_COLOR (object_class, PROP_PADDING_COLOR,
-                                  "padding-color", CANVAS_PADDING_COLOR_BLURB,
-                                  &white,
-                                  0);
+  GIMP_CONFIG_INSTALL_PROP_RGB (object_class, PROP_PADDING_COLOR,
+                                "padding-color", CANVAS_PADDING_COLOR_BLURB,
+                                &white,
+                                0);
 }
 
 static void
@@ -246,10 +246,10 @@ gimp_display_options_fs_class_init (GimpDisplayOptionsClass *klass)
                                  GIMP_TYPE_CANVAS_PADDING_MODE,
                                  GIMP_CANVAS_PADDING_MODE_CUSTOM,
                                  0);
-  GIMP_CONFIG_INSTALL_PROP_COLOR (object_class, PROP_PADDING_COLOR,
-                                  "padding-color", CANVAS_PADDING_COLOR_BLURB,
-                                  &black,
-                                  0);
+  GIMP_CONFIG_INSTALL_PROP_RGB (object_class, PROP_PADDING_COLOR,
+                                "padding-color", CANVAS_PADDING_COLOR_BLURB,
+                                &black,
+                                0);
 }
 
 static void

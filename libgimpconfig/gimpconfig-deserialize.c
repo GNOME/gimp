@@ -67,7 +67,7 @@ static GTokenType  gimp_config_deserialize_memsize     (GValue     *value,
 static GTokenType  gimp_config_deserialize_path        (GValue     *value,
                                                         GParamSpec *prop_spec,
                                                         GScanner   *scanner);
-static GTokenType  gimp_config_deserialize_color       (GValue     *value,
+static GTokenType  gimp_config_deserialize_rgb         (GValue     *value,
                                                         GParamSpec *prop_spec,
                                                         GScanner   *scanner);
 static GTokenType  gimp_config_deserialize_matrix2     (GValue     *value,
@@ -351,9 +351,9 @@ gimp_config_deserialize_value (GValue     *value,
     {
       return  gimp_config_deserialize_path (value, prop_spec, scanner);
     }
-  else if (prop_spec->value_type == GIMP_TYPE_COLOR)
+  else if (prop_spec->value_type == GIMP_TYPE_RGB)
     {
-      return gimp_config_deserialize_color (value, prop_spec, scanner);
+      return gimp_config_deserialize_rgb (value, prop_spec, scanner);
     }
   else if (prop_spec->value_type == GIMP_TYPE_MATRIX2)
     {
@@ -622,16 +622,16 @@ gimp_config_deserialize_path (GValue     *value,
 }
 
 static GTokenType
-gimp_config_deserialize_color (GValue     *value,
-                               GParamSpec *prop_spec,
-                               GScanner   *scanner)
+gimp_config_deserialize_rgb (GValue     *value,
+                             GParamSpec *prop_spec,
+                             GScanner   *scanner)
 {
-  GimpRGB color;
+  GimpRGB rgb;
 
-  if (! gimp_scanner_parse_color (scanner, &color))
+  if (! gimp_scanner_parse_color (scanner, &rgb))
     return G_TOKEN_NONE;
 
-  g_value_set_boxed (value, &color);
+  g_value_set_boxed (value, &rgb);
 
   return G_TOKEN_RIGHT_PAREN;
 }

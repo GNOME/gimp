@@ -115,10 +115,10 @@ gimp_action_class_init (GimpActionClass *klass)
   gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
 
   g_object_class_install_property (object_class, PROP_COLOR,
-                                   gimp_param_spec_color ("color",
-                                                          NULL, NULL,
-                                                          &black,
-                                                          G_PARAM_READWRITE));
+                                   gimp_param_spec_rgb ("color",
+                                                        NULL, NULL,
+                                                        &black,
+                                                        G_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_VIEWABLE,
                                    g_param_spec_object ("viewable",

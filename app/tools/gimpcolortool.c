@@ -20,6 +20,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -137,7 +138,7 @@ gimp_color_tool_class_init (GimpColorToolClass *klass)
 		  G_TYPE_NONE, 4,
                   GIMP_TYPE_COLOR_PICK_STATE,
                   GIMP_TYPE_IMAGE_TYPE,
-                  GIMP_TYPE_COLOR | G_SIGNAL_TYPE_STATIC_SCOPE,
+                  GIMP_TYPE_RGB | G_SIGNAL_TYPE_STATIC_SCOPE,
                   G_TYPE_INT);
 
   object_class->finalize     = gimp_color_tool_finalize;

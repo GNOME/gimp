@@ -25,6 +25,8 @@
 #include <glib-object.h>
 #include <gobject/gvaluecollector.h>
 
+#include "libgimpcolor/gimpcolor.h"
+
 #include "core-types.h"
 
 #include "config/gimpconfig-types.h"
@@ -115,7 +117,7 @@ gimp_g_value_get_memsize (GValue *value)
     }
   else if (G_VALUE_HOLDS_BOXED (value))
     {
-      if (GIMP_VALUE_HOLDS_COLOR (value))
+      if (GIMP_VALUE_HOLDS_RGB (value))
         {
           memsize += sizeof (GimpRGB);
         }

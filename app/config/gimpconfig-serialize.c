@@ -403,17 +403,17 @@ gimp_config_serialize_value (const GValue *value,
       return TRUE;
     }
 
-  if (GIMP_VALUE_HOLDS_COLOR (value))
+  if (GIMP_VALUE_HOLDS_RGB (value))
     {
-      GimpRGB *color;
+      GimpRGB *rgb;
       gchar    buf[4][G_ASCII_DTOSTR_BUF_SIZE];
 
-      color = g_value_get_boxed (value);
+      rgb = g_value_get_boxed (value);
 
-      g_ascii_formatd (buf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", color->r);
-      g_ascii_formatd (buf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f", color->g);
-      g_ascii_formatd (buf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f", color->b);
-      g_ascii_formatd (buf[3], G_ASCII_DTOSTR_BUF_SIZE, "%f", color->a);
+      g_ascii_formatd (buf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", rgb->r);
+      g_ascii_formatd (buf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f", rgb->g);
+      g_ascii_formatd (buf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f", rgb->b);
+      g_ascii_formatd (buf[3], G_ASCII_DTOSTR_BUF_SIZE, "%f", rgb->a);
 
       g_string_append_printf (str, "(color-rgba %s %s %s %s)",
                               buf[0], buf[1], buf[2], buf[3]);

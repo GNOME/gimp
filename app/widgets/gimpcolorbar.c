@@ -100,11 +100,11 @@ gimp_color_bar_class_init (GimpColorBarClass *klass)
                                                       G_PARAM_WRITABLE |
                                                       G_PARAM_CONSTRUCT_ONLY));
   g_object_class_install_property (object_class, PROP_COLOR,
-                                   gimp_param_spec_color ("color",
-                                                          NULL, NULL,
-                                                          &white,
-                                                          G_PARAM_WRITABLE |
-                                                          G_PARAM_CONSTRUCT));
+                                   gimp_param_spec_rgb ("color",
+                                                        NULL, NULL,
+                                                        &white,
+                                                        G_PARAM_WRITABLE |
+                                                        G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_ORIENTATION,
                                    g_param_spec_enum ("histogram-channel",
                                                       NULL, NULL,

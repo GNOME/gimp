@@ -193,10 +193,10 @@ gimp_text_class_init (GimpTextClass *klass)
                                  GIMP_TYPE_TEXT_DIRECTION,
                                  GIMP_TEXT_DIRECTION_LTR,
                                  0);
-  GIMP_CONFIG_INSTALL_PROP_COLOR (object_class, PROP_COLOR,
-				  "color", NULL,
-				  &black,
-				  0);
+  GIMP_CONFIG_INSTALL_PROP_RGB (object_class, PROP_COLOR,
+                                "color", NULL,
+                                &black,
+                                0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_OUTLINE,
                                 "outline", NULL,
                                  GIMP_TYPE_TEXT_OUTLINE,

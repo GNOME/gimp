@@ -129,17 +129,17 @@ gimp_grid_class_init (GimpGridClass *klass)
                                  GIMP_TYPE_GRID_STYLE,
                                  GIMP_GRID_INTERSECTIONS,
                                  0);
-  GIMP_CONFIG_INSTALL_PROP_COLOR (object_class, PROP_FGCOLOR,
-				  "fgcolor",
-                                  N_("The foreground color of the grid."),
-				  &black,
-				  0);
-  GIMP_CONFIG_INSTALL_PROP_COLOR (object_class, PROP_BGCOLOR,
-				  "bgcolor",
-                                  N_("The background color of the grid; "
-                                     "only used in double dashed line style."),
-				  &white,
-				  0);
+  GIMP_CONFIG_INSTALL_PROP_RGB (object_class, PROP_FGCOLOR,
+                                "fgcolor",
+                                N_("The foreground color of the grid."),
+                                &black,
+                                0);
+  GIMP_CONFIG_INSTALL_PROP_RGB (object_class, PROP_BGCOLOR,
+                                "bgcolor",
+                                N_("The background color of the grid; "
+                                   "only used in double dashed line style."),
+                                &white,
+                                0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_XSPACING,
 				   "xspacing",
                                    N_("Horizontal spacing of grid lines."),

@@ -1,3 +1,24 @@
+2004-07-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/config/gimpconfig-types.h: removed GIMP_TYPE_COLOR.
+
+	* app/config/gimpconfig-params.[ch]: renamed GimpParamSpecColor
+	to GimpParamSpecRGB.
+
+	* app/config/gimpconfig-deserialize.c
+	* app/config/gimpconfig-dump.c
+	* app/config/gimpconfig-serialize.c
+	* app/config/gimpscanner.c
+	* app/core/gimp-utils.c
+	* app/core/gimpcontext.c
+	* app/core/gimpgrid.c
+	* app/display/gimpdisplayoptions.c
+	* app/text/gimptext.c
+	* app/tools/gimpcolortool.c
+	* app/widgets/gimpaction.c
+	* app/widgets/gimpcolorbar.c
+	* app/widgets/gimppropwidgets.c: changed accordingly.
+
 2004-07-26  Shlomi Fish  <shlomif@iglu.org.il>
 
 	* plug-ins/gimpressionist/: added a de-allocation to the PPM's 

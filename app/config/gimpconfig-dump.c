@@ -30,6 +30,7 @@
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 
 #ifdef G_OS_WIN32
 #include "libgimpbase/gimpwin32-io.h"
@@ -335,7 +336,7 @@ dump_describe_param (GParamSpec *param_spec)
 
   type = param_spec->value_type;
 
-  if (g_type_is_a (type, GIMP_TYPE_COLOR))
+  if (g_type_is_a (type, GIMP_TYPE_RGB))
     {
       values =
 	"The color is specified in the form (color-rgba red green blue alpha) "
