@@ -1,3 +1,8 @@
+2000-07-29  Michael Natterer  <mitch@gimp.org>
+
+	* es.po: fixed. Closes #18014. Remember: NEVER translate the
+	<menu_factory_name>
+
 2000-07-25  Valek Filippov  <frob@df.ru>
 
 	* ru.po: updated russian translation.

@@ -30,7 +30,7 @@ msgstr ""
 
 #: plug-ins/AlienMap/AlienMap.c:180
 msgid "<Image>/Filters/Colors/Map/Alien Map..."
-msgstr "<Imagen>/Filtros/Colores/Mapa/Mapa Alien..."
+msgstr "<Image>/Filtros/Colores/Mapa/Mapa Alien..."
 
 #: plug-ins/AlienMap/AlienMap.c:378
 #, fuzzy
@@ -4457,7 +4457,7 @@ msgstr ""
 #: plug-ins/common/mapcolor.c:361
 #, fuzzy
 msgid "<Image>/Filters/Colors/Map/Color Range Mapping..."
-msgstr "<Imagen>/Filtros/Colores/Mapa/Mapa Alien..."
+msgstr ""
 
 #: plug-ins/common/mapcolor.c:406 plug-ins/common/mapcolor.c:746
 msgid ""
@@ -7867,7 +7867,7 @@ msgstr ""
 #: plug-ins/gap/gap_main.c:422
 #, fuzzy
 msgid "<Image>/Video/Goto/Any Frame..."
-msgstr "/Imagen/Histograma.."
+msgstr ""
 
 #: plug-ins/gap/gap_main.c:434
 msgid "<Image>/Video/Delete Frames..."
