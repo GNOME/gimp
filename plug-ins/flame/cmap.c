@@ -24,6 +24,8 @@
 #include <math.h>
 #include <stdlib.h>
 
+#include <glib.h>		/* Needed on Win32 where RAND_FUNC is from GLib */
+
 #include "config.h"
 
 unsigned char the_cmaps[][256][3] = {

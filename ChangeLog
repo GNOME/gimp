@@ -1,3 +1,10 @@
+2000-12-29  Tor Lillqvist  <tml@iki.fi>
+
+	* config.h.win32: RAND_FUNC must not return negative values. Can't
+	use g_random_int as is, must use g_random_int_range (0, G_MAXINT).
+
+	* plug-ins/flame/cmap.c: Include glib.h for G_MAXINT.
+
 2000-12-29  Simon Budig   <simon@gimp.org>
 
 	* modules/colorsel_triangle.c  Argh - converting 16bit colors
