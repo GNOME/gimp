@@ -1,3 +1,10 @@
+2001-07-26  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: check for X, respect X_LIBS when searching for libxpm.
+	We can't rely on GTK_LIBS including the X_LIBS any longer.
+	
+	* app/errorconsole.[ch]: some const fixes.
+
 2001-07-25  Michael Natterer  <mitch@gimp.org>
 
 	* gtkrc

@@ -95,9 +95,9 @@ error_console_free (void)
     }
 }
 
-gint
-error_console_write_file (gchar *path,
-			  gint   textscope)
+static gboolean
+error_console_write_file (const gchar *path,
+			  gint         textscope)
 {
 #if 0
   gint fd;
@@ -227,7 +227,7 @@ error_console_menu_callback (gint textscope)
 #endif
 }
 
-static gint
+static gboolean
 text_clicked_callback (GtkWidget      *widget,
 		       GdkEventButton *event, 
 		       gpointer	       data)
@@ -357,7 +357,7 @@ error_console_create (void)
 }
 
 void
-error_console_add (gchar *errormsg)
+error_console_add (const gchar *errormsg)
 {
   if (!error_console)
     {

@@ -91,6 +91,8 @@ ALL_LINGUAS="ca cs da de en_GB es fi fr ga gl hu hr it ja ko nl no pl pt_BR ro r
 
 AM_GNU_GETTEXT
 
+AC_PATH_XTRA
+
 dnl Find pkg-config
 AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
 if test x$PKG_CONFIG = xno ; then
@@ -230,8 +232,7 @@ else
 fi
 AM_CONDITIONAL(HAVE_ASM_MMX, test x$have_asm_mmx = xtrue)
 
-
-dnl Check if building for X11
+dnl Check if building for GTK+-X11
 gdk_target=`$PKG_CONFIG --variable=target gtk+-2.0`
 if test "$gdk_target" = x11; then
   dnl Test for Xmu
@@ -248,7 +249,7 @@ if test "$gdk_target" = x11; then
     fi
   else
      AC_MSG_WARN([ 
-*** Not building for X11 (GDK backend is $gdk_target).
+*** Not building for GTK+-X11 (GDK backend is $gdk_target).
 *** Webbrowser plug-in and gimp-remote will not be built.])
   fi
 
@@ -349,15 +350,6 @@ dnl Test for libmpeg
 	MPEG='mpeg'; LIBMPEG='-lmpeg'; GAP_DECODE_MPEG='gap_decode_mpeg',
 	AC_MSG_WARN(*** MPEG plug-in will not be built (MPEG header file not found) ***)),
       AC_MSG_WARN(*** MPEG plug-in will not be built (MPEG library not found) ***))
-  fi
-
-dnl Test for libXpm
-  if test -z "$LIBXPM"; then
-    AC_CHECK_LIB(Xpm, XpmReadFileToXpmImage,
-      AC_CHECK_HEADER(X11/xpm.h,
-	XPM='xpm'; LIBXPM='-lXpm',
-	AC_MSG_WARN(*** XPM plug-in will not be built (XPM header file not found) ***)),
-      AC_MSG_WARN(*** XPM plug-in will not be built (XPM library not found) ***), $X_LIBS)
   fi
 
 dnl Check for shared memory
@@ -544,6 +536,19 @@ dnl fi
 CPPFLAGS="$gimp_save_CPPFLAGS"
 LDFLAGS="$gimp_save_LDFLAGS"
 LIBS="$gimp_save_LIBS"
+
+dnl Test for libXpm
+  gimp_save_LDFLAGS="$LDFLAGS"
+  LDFLAGS="$LDFLAGS $X_LIBS"
+  if test -z "$LIBXPM"; then
+    AC_CHECK_LIB(Xpm, XpmReadFileToXpmImage,
+      AC_CHECK_HEADER(X11/xpm.h,
+	XPM='xpm'; LIBXPM="$X_LIBS $X_PRE_LIBS -lX11 -lXpm",
+	AC_MSG_WARN(*** XPM plug-in will not be built (XPM header file not found) ***)),
+      AC_MSG_WARN(*** XPM plug-in will not be built (XPM library not found) ***), $X_PRE_LIBS -lX11)
+  fi
+  LDFLAGS="$gimp_save_LDFLAGS"
+
 
 dnl Threads
 dnl AC_ARG_WITH(threads, [  --with-threads=[posix]  support threading ])
@@ -753,6 +758,8 @@ AC_SUBST(LT_RELEASE)
 AC_SUBST(LT_CURRENT)
 AC_SUBST(LT_REVISION)
 AC_SUBST(LT_AGE)
+
+AC_SUBST(X_LIBS)
 
 AC_SUBST(GLIB_CFLAGS)
 AC_SUBST(GLIB_LIBS)

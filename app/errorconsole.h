@@ -23,7 +23,7 @@
 #define __ERROR_CONSOLE_H__
 
 
-void   error_console_add  (gchar *errormsg);
+void        error_console_add    (const gchar *errormsg);
 
 GtkWidget * error_console_create (void);
 void        error_console_free   (void);
