@@ -19,16 +19,18 @@
 #define __GDISPLAY_OPS_H__
 
 #include "gdisplay.h"
-#include "temp_buf.h"
 
-gulong  gdisplay_black_pixel  (GDisplay *);
-gulong  gdisplay_gray_pixel   (GDisplay *);
-gulong  gdisplay_white_pixel  (GDisplay *);
-gulong  gdisplay_color_pixel  (GDisplay *);
-void    gdisplay_xserver_resolution (gdouble *, gdouble *);
-void    gdisplay_new_view     (GDisplay *);
-void    gdisplay_close_window (GDisplay *, int);
-void    gdisplay_shrink_wrap  (GDisplay *);
-int     gdisplay_resize_image (GDisplay *);
+gulong  gdisplay_black_pixel        (GDisplay *gdisp);
+gulong  gdisplay_gray_pixel         (GDisplay *gdisp);
+gulong  gdisplay_white_pixel        (GDisplay *gdisp);
+gulong  gdisplay_color_pixel        (GDisplay *gdisp);
+
+void    gdisplay_xserver_resolution (gdouble  *xres,
+				     gdouble  *yres);
+
+void    gdisplay_new_view           (GDisplay *gdisp);
+void    gdisplay_close_window       (GDisplay *gdisp,
+				     gboolean  kill_it);
+void    gdisplay_shrink_wrap        (GDisplay *gdisp);
 
 #endif  /* __GDISPLAY_OPS_H__ */

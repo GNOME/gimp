@@ -55,7 +55,7 @@ resize_display (GDisplay *gdisp,
   bounds_checking (gdisp);
   setup_scale (gdisp);
 
-  if (redisplay)
+  if (resize_window || redisplay)
     {
       gdisplay_expose_full (gdisp);
       gdisplays_flush ();

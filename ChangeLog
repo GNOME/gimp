@@ -1,3 +1,22 @@
+2000-04-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/gdisplay_ops.c (gdisplay_shrink_wrap): block all canvas
+	events while resizing the display so the standard canvas "expose"
+	and "configure" handlers are not called.
+	This optimization is valid because shrink_wrap's caller has to do
+	a full recalculation and expose of the gdisplay anyway.
+	For the same reason, I removed the calls to gdisplay_expose_full()
+	and bounds_checking() from shrink_wrap.
+
+	This should also fix the double exposes Austin reported some time
+	ago. I hope it does not re-break yesterday's fix :)
+
+	* app/gdisplay_ops.[ch]: removed unused function
+	gdisplay_resize_image().
+
+	* app/scale.c (resize_display): do a full expose if one of the
+	"resize_display" or "redisplay" parameters is TRUE.
+
 2000-04-16  Sven Neumann  <sven@gimp.org>
             Jens Lautenbacher  <jtl@gimp.org>
 

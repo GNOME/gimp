@@ -157,6 +157,8 @@ gdisplay_shrink_wrap (GDisplay *gdisp)
   gint border_x, border_y;
   gint s_width, s_height;
 
+  gboolean resize = FALSE;
+
   s_width  = gdk_screen_width ();
   s_height = gdk_screen_height ();
 
@@ -187,19 +189,26 @@ gdisplay_shrink_wrap (GDisplay *gdisp)
       width  = ((width  + border_x) < s_width)  ? width  : max_auto_width;
       height = ((height + border_y) < s_height) ? height : max_auto_height;
 
+      resize = TRUE;
+    }
+  /*  If the projected dimension is greater than current, but less than
+   *  3/4 of the screen size, expand automagically
+   */
+  else if ((width > disp_width || height > disp_height) &&
+	   (disp_width < max_auto_width || disp_height < max_auto_height))
+    {
+      width  = MIN (max_auto_width, width);
+      height = MIN (max_auto_height, height);
+
+      resize = TRUE;
+    }
+
+  if (resize)
+    {
       if (width < gdisp->statusarea->requisition.width) 
         { 
           width = gdisp->statusarea->requisition.width; 
         }
-
-      allocation.width  = width  + border_x;
-      allocation.height = height + border_y;
-
-      gtk_widget_size_allocate (gdisp->shell, &allocation);
-
-      gdk_window_resize (gdisp->shell->window,
-			 allocation.width,
-			 allocation.height);
 
 #undef RESIZE_DEBUG
 #ifdef RESIZE_DEBUG
@@ -210,25 +219,16 @@ gdisplay_shrink_wrap (GDisplay *gdisp)
 	       border_x, border_y);
 #endif /* RESIZE_DEBUG */
 
-      gdisp->disp_width = width;   /* Should this be shell width? */
+      gdisp->disp_width  = width;
       gdisp->disp_height = height;
-    }
-  /*  If the projected dimension is greater than current, but less than
-   *  3/4 of the screen size, expand automagically
-   */
-  else if ((width > disp_width || height > disp_height) &&
-	   (disp_width < max_auto_width || disp_height < max_auto_height))
-    {
-      width  = MIN (max_auto_width, width);
-      height = MIN (max_auto_height, height);
-      
-      if (width < gdisp->statusarea->requisition.width) 
-        { 
-          width = gdisp->statusarea->requisition.width; 
-        }
 
       allocation.width  = width  + border_x;
       allocation.height = height + border_y;
+
+      /*  don't call gdisplay_canvas_events() on any of the following
+       *  changes because our caller has to do a full display update anyway
+       */
+      gtk_signal_handler_block_by_data (GTK_OBJECT (gdisp->canvas), gdisp);
 
       gtk_widget_size_allocate (gdisp->shell, &allocation);
 
@@ -236,36 +236,23 @@ gdisplay_shrink_wrap (GDisplay *gdisp)
 			 allocation.width,
 			 allocation.height);
 
-#ifdef RESIZE_DEBUG
-      g_print ("2w:%d/%d d:%d/%d s:%d/%d b:%d/%d\n",
-	       width, height,
-	       disp_width, disp_height,
-	       shell_width, shell_height,
-	       border_x, border_y);
-#endif /* RESIZE_DEBUG */
+      /*  let Gtk/X/WM position the window  */
+      while (gtk_events_pending ())
+	gtk_main_iteration ();
 
-      /*  Set the new disp_width and disp_height values  */
-      gdisp->disp_width  = width;
-      gdisp->disp_height = height;
-    }
-  /*  Otherwise, reexpose by hand to reflect changes  */
-  else
-    gdisplay_expose_full (gdisp);
+      gdk_window_get_origin (gdisp->shell->window, &shell_x, &shell_y);
 
-  /*  let Gtk/X/WM position the window  */
-  while (gtk_events_pending ())
-    gtk_main_iteration ();
+      /*  if the window is offscreen, center it...  */
+      if (shell_x > s_width || shell_y > s_height ||
+	  (shell_x + width +  border_x) < 0 || (shell_y + height + border_y) < 0)
+	{
+	  shell_x = (s_width  - width  - border_x) >> 1;
+	  shell_y = (s_height - height - border_y) >> 1;
 
-  gdk_window_get_origin (gdisp->shell->window, &shell_x, &shell_y);
+	  gdk_window_move (gdisp->shell->window, shell_x, shell_y);
+	}
 
-  /*  if the window is offscreen, center it...  */
-  if (shell_x > s_width || shell_y > s_height ||
-      (shell_x + width +  border_x) < 0 || (shell_y + height + border_y) < 0)
-    {
-      shell_x = (s_width  - width  - border_x) >> 1;
-      shell_y = (s_height - height - border_y) >> 1;
-
-      gdk_window_move (gdisp->shell->window, shell_x, shell_y);
+      gtk_signal_handler_unblock_by_data (GTK_OBJECT (gdisp->canvas), gdisp);
     }
 
   /*  If the width or height of the display has changed, recalculate
@@ -276,54 +263,8 @@ gdisplay_shrink_wrap (GDisplay *gdisp)
     {
       gdisp->offset_x += (disp_width  - gdisp->disp_width) / 2;
       gdisp->offset_y += (disp_height - gdisp->disp_height) / 2;
-      bounds_checking (gdisp);
     }
 }
-
-gint
-gdisplay_resize_image (GDisplay *gdisp)
-{
-  gint sx, sy;
-  gint width, height;
-
-  /*  Calculate the width and height of the new canvas  */
-  sx = SCALEX (gdisp, gdisp->gimage->width);
-  sy = SCALEY (gdisp, gdisp->gimage->height);
-  width = MIN (sx, gdisp->disp_width);
-  height = MIN (sy, gdisp->disp_height);
-
-  /* if the new dimensions of the ximage are different than the old...resize */
-  if (width != gdisp->disp_width || height != gdisp->disp_height)
-    {
-      /*  adjust the gdisplay offsets -- we need to set them so that the
-       *  center of our viewport is at the center of the image.
-       */
-      gdisp->offset_x = (sx / 2) - (width / 2);
-      gdisp->offset_y = (sy / 2) - (height / 2);
-
-      gdisp->disp_width = width;
-      gdisp->disp_height = height;
-
-#ifdef GDK_WINDOWING_WIN32
-      if (GTK_WIDGET_VISIBLE (gdisp->canvas))
-	  gtk_widget_hide(gdisp->canvas);
-#else
-      while (gtk_events_pending())
-	gtk_main_iteration();
-#endif
-      
-      gtk_widget_set_usize (gdisp->canvas,
-			    gdisp->disp_width,
-			    gdisp->disp_height);
-
-#ifdef GDK_WINDOWING_WIN32
-      gtk_widget_show(gdisp->canvas);
-#endif
-    }
-
-  return 1;
-}
-
 
 /********************************************************
  *   Routines to query before closing a dirty image     *
