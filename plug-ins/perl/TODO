@@ -10,9 +10,10 @@ make test TEST_VERBOSE=1
 
 bugs
 
+  * improve examples/example-*.pl
   * install in /usr/local (???? why? more options??)
   * install even without Gtk? NO!
-  * perl_fu_webify in homepage-logo.pl
+[KILL]  * perl_fu_webify in homepage-logo.pl
   * wait for working gimp_file_load (or do it myself?)
   * get rid of xs_exit. please please fuck me plenty.
   

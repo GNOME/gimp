@@ -49,5 +49,6 @@ register "xachvision",
 	gimp_displays_flush();
 	return();
 };
+
 exit main;
 

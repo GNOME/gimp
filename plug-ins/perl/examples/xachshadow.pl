@@ -79,5 +79,6 @@ register "xach_shadows",
 	gimp_displays_flush();
 	return();
 };
+
 exit main;
 

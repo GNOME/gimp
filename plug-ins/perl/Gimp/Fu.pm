@@ -228,7 +228,7 @@ sub interact($$$@) {
      my $t = new Gtk::Tooltips;
      my $w = new Gtk::Dialog;
 
-     set_title $w $0;
+     set_title $w $Gimp::function;
      
      my $h = new Gtk::HBox 0,2;
      $h->add(new Gtk::Label Gimp::wrap_text($blurb,40));
@@ -889,6 +889,11 @@ sub register($$$$$$$$$;@) {
    *$function = sub {
       $run_mode=shift;	# global!
       my(@pre,@defaults,@lastvals,$input_image);
+
+      Gimp::logger message => "function name contains dashes instead of underscores",
+                   function => $function, fatal => 0
+         if $function =~ y/-//;
+
       if ($menupath=~/^<Image>\//) {
          @_ >= 2 or die "<Image> plug-in called without an image and drawable!\n";
          @pre = (shift,shift);

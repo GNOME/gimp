@@ -8,9 +8,10 @@ $VERSION=$Gimp::VERSION;
 sub find_converters {
    my $path = $Config{installscript};
 
-   $converter{text}="$path/pod2text" if -x "$path/pod2text";
-   $converter{html}="$path/pod2html" if -x "$path/pod2html";
-   $converter{man} ="$path/pod2man"  if -x "$path/pod2man" ;
+   $converter{text} ="$path/pod2text"  if -x "$path/pod2text";
+   $converter{html} ="$path/pod2html"  if -x "$path/pod2html";
+   $converter{man}  ="$path/pod2man"   if -x "$path/pod2man" ;
+   $converter{latex}="$path/pod2latex" if -x "$path/pod2latex" ;
 }
 
 sub find {
@@ -30,6 +31,7 @@ sub cache_doc {
    if (!$self->{doc}{$fmt} && $converter{$fmt}) {
       my $doc = qx($converter{$fmt} $self->{path});
       undef $doc if $?>>8;
+      undef $doc if $doc=~/^[ \t\r\n]*$/;
       $self->{doc}{$fmt}=$doc;
    }
    $self->{doc}{$fmt};
@@ -70,10 +72,14 @@ future versions might have more interesting features.
 
 =item new
 
-return a new pod object representing the current script or undef, if an
-error occured.
+return a new Gimp::Pod object representing the current script or undef, if
+an error occured.
 
 =item format [format]
+
+Returns the embedded pod documentation in the given format, or undef if no
+documentation can be found.  Format can be one of 'text', 'html', 'man' or
+'latex'. If none is specified, 'text' is assumed.
 
 =back
 

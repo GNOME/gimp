@@ -66,12 +66,3 @@ register "plug_in_ditherize",
 
 exit main;
 
-
-
-
-
-
-
-
-
-

@@ -88,12 +88,3 @@ register "border_average",
 
 exit main;
 
-
-
-
-
-
-
-
-
-

@@ -61,4 +61,5 @@ register
 	],
 	\&windify;
 
-exit main();
+exit main;
+

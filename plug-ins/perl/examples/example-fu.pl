@@ -47,12 +47,3 @@ register "my_first_gimp_fu",				# fill in name
 
 exit main;
 
-
-
-
-
-
-
-
-
-

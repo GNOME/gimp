@@ -5,28 +5,30 @@ use Gimp::Feature;
 
 $VERSION='0.0';
 
-$gtk = Gimp::Feature::present 'gtk';
+sub check_gtk {
+   $gtk = Gimp::Feature::present 'gtk';
 
-if($gtk) {
-   # make a relatively extensive check for gtk capabilities
-   # this must be done before initializing Gtk in the main program (thus here)
-   # imagine!! it might even FLICKER!!!
-   unless(open GTK,"-|") {
-      close STDERR;
-      require Gtk;
-      init Gtk;
-      my $w = new Gtk::Dialog;
-      show_all $w;
-      Gtk->idle_add(sub{main_quit Gtk});
-      main Gtk;
-      print "OK";
-      exit;
+   if($gtk) {
+      # make a relatively extensive check for gtk capabilities
+      # this must be done before initializing Gtk in the main program (thus here)
+      # imagine!! it might even FLICKER!!!
+      unless(open GTK,"-|") {
+         close STDERR;
+         require Gtk;
+         init Gtk;
+         my $w = new Gtk::Dialog;
+         show_all $w;
+         Gtk->idle_add(sub{main_quit Gtk});
+         main Gtk;
+         print "OK";
+         exit;
+      }
+      unless (<GTK> eq "OK") {
+         $gtk=0;
+         Gimp::logger(message => 'gtk module present but unusable', function => 'gtktest');
+      }
+      close GTK;
    }
-   unless (<GTK> eq "OK") {
-      $gtk=0;
-      Gimp::logger(message => 'gtk module present but unusable', function => 'gtktest');
-   }
-   close GTK;
 }
 
 sub generate_status {
@@ -91,6 +93,7 @@ sub gtkview_log {
 
 # the extension that's called.
 sub extension_perl_control_center {
+   check_gtk;
    if ($gtk) {
       my($w,$b);
       my($l,$s);

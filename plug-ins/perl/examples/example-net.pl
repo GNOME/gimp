@@ -31,6 +31,3 @@ sub net {
 
 exit main;
 
-
-
-

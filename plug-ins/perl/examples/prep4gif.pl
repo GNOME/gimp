@@ -106,7 +106,5 @@ register
 	],
 	\&prep;
 
-exit main();	
-	
-
+exit main;
 

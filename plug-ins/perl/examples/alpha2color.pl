@@ -110,7 +110,5 @@ register
 	],
 	\&alpha2col;
 
-exit main();	
-	
-
+exit main;	
 

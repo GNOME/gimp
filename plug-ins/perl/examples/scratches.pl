@@ -54,12 +54,3 @@ register "scratches",
 
 exit main;
 
-
-
-
-
-
-
-
-
-

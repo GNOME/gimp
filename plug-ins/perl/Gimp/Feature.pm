@@ -171,13 +171,33 @@ checks for the presense of gimp in at least version 1.1 (1.2).
 
 =item present(feature)
 
+Checks for the presense of the single feature given as the
+argument. Returns true if the feature is present, false otherwise.
+
 =item need(feature,[function-name])
+
+Require a specific feature. If the required feature is not present the
+program will exit gracefully, logging an appropriate message. You can
+optionally supply a function name to further specify the place where this
+feature was missing.
+
+This is the function used when importing symbols from the module.
+
+=item missing(feature-description,[function-name])
+   
+Indicates that a generic feature (described by the first argument) is
+missing. A function name can further be specified. This function will log
+the given message and exit gracefully.
 
 =item describe(feature)
 
-=item missing(feature-description,[function-name])
+Returns a string describing the given feature in more detail, or undef if
+there is no description for this feature.
 
 =item list()
+
+Returns a list of features that can be checked for. This list might not be
+complete.
 
 =back
 

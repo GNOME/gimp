@@ -429,7 +429,7 @@ sub hue_dist {
   
 # Gimp::Fu registration routine for placing this function into gimp's PDB
 register
-  "image-tile",
+  "image_tile",
   "Tile images to form a larger Image",
   "Use Image Tile to take a directory of images and use it to
 	construct a single, existing image, sort of like the
@@ -488,11 +488,6 @@ memory is much more conservative. The assumption being that a lot more people
 have a Gig of disk free than a Gig of RAM. So, expect a large file to be
 created in your .gimp directory (you can select automatic cleanup of this
 file if you wish).
-
-Note that this plug-in now works only with version 1.1 of the GIMP. If you
-wish to make it work with previous versions, you will have to search for
-"1.1" in the code, and put back the first argument to a lot of functions
-(each deletion has been noted).
 
 =head1 PARAMETERS
 

@@ -114,4 +114,6 @@ register "xach_blocks",
         eval { $img->undo_push_group_end };
 	return ();
 };
+
 exit main;
+
