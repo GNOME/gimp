@@ -1,5 +1,10 @@
 2002-10-15  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpinktool.c: using gtk_image_new_from_pixmap() feels
+	kinda lame. Draw the ink blob directly in an expose handler instead.
+
+2002-10-15  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimphistogramtool.c
 	* app/tools/gimplevelstool.[ch]
 	* app/tools/gimpthresholdtool.c

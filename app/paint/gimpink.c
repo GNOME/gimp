@@ -23,7 +23,6 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -175,9 +174,9 @@ static void        ink_cleanup          (void);
 
 static void        ink_type_update      (GtkWidget       *radio_button,
 					 BlobFunc         function);
-static GdkPixmap * blob_pixmap          (GdkColormap     *colormap,
-					 GdkVisual       *visual,
-					 BlobFunc         function);
+static gboolean    blob_button_expose   (GtkWidget       *widget,
+                                         GdkEventExpose  *event,
+                                         BlobFunc         function);
 static void        paint_blob           (GdkDrawable     *drawable, 
 					 GdkGC           *gc,
 					 Blob            *blob);
@@ -205,22 +204,22 @@ static void        ink_set_canvas_tiles (gint             x,
 					 gint             h);
 
 /*  Brush pseudo-widget callbacks  */
-static void   brush_widget_active_rect    (BrushWidget    *brush_widget,
-					   GtkWidget      *widget,
-					   GdkRectangle   *rect);
-static void   brush_widget_realize        (GtkWidget      *widget);
-static void   brush_widget_expose         (GtkWidget      *widget,
-					   GdkEventExpose *event,
-					   BrushWidget    *brush_widget);
-static void   brush_widget_button_press   (GtkWidget      *widget,
-					   GdkEventButton *event,
-					   BrushWidget    *brush_widget);
-static void   brush_widget_button_release (GtkWidget      *widget,
-					   GdkEventButton *event,
-					   BrushWidget    *brush_widget);
-static void   brush_widget_motion_notify  (GtkWidget      *widget,
-					   GdkEventMotion *event,
-					   BrushWidget    *brush_widget);
+static void     brush_widget_active_rect    (BrushWidget    *brush_widget,
+                                             GtkWidget      *widget,
+                                             GdkRectangle   *rect);
+static void     brush_widget_realize        (GtkWidget      *widget);
+static gboolean brush_widget_expose         (GtkWidget      *widget,
+                                             GdkEventExpose *event,
+                                             BrushWidget    *brush_widget);
+static gboolean brush_widget_button_press   (GtkWidget      *widget,
+                                             GdkEventButton *event,
+                                             BrushWidget    *brush_widget);
+static gboolean brush_widget_button_release (GtkWidget      *widget,
+                                             GdkEventButton *event,
+                                             BrushWidget    *brush_widget);
+static gboolean brush_widget_motion_notify  (GtkWidget      *widget,
+                                             GdkEventMotion *event,
+                                             BrushWidget    *brush_widget);
 
 static GimpToolOptions * ink_options_new   (GimpToolInfo    *tool_info);
 static void              ink_options_reset (GimpToolOptions *tool_options);
@@ -611,24 +610,21 @@ brush_widget_draw_brush (BrushWidget *brush_widget,
   g_free (blob);
 }
 
-static void
+static gboolean
 brush_widget_expose (GtkWidget      *widget,
 		     GdkEventExpose *event,
 		     BrushWidget    *brush_widget)
 {
   GdkRectangle rect;
-  int r0;
+  gint         r0;
 
   r0 = MIN (widget->allocation.width, widget->allocation.height) / 2;
 
   if (r0 < 2)
-    return;
+    return TRUE;
 
-  gdk_window_clear_area (widget->window, 0, 0,
-			 widget->allocation.width,
-			 widget->allocation.height);
   brush_widget_draw_brush (brush_widget, widget,
-			   widget->allocation.width / 2,
+			   widget->allocation.width  / 2,
 			   widget->allocation.height / 2,
 			   0.9 * r0);
 
@@ -642,9 +638,11 @@ brush_widget_expose (GtkWidget      *widget,
                     NULL, widget, NULL,
                     rect.x, rect.y,
                     rect.width, rect.height);
+
+  return TRUE;
 }
 
-static void
+static gboolean
 brush_widget_button_press (GtkWidget      *widget,
 			   GdkEventButton *event,
 			   BrushWidget    *brush_widget)
@@ -652,7 +650,7 @@ brush_widget_button_press (GtkWidget      *widget,
   GdkRectangle rect;
 
   brush_widget_active_rect (brush_widget, widget, &rect);
-  
+
   if ((event->x >= rect.x) && (event->x-rect.x < rect.width) &&
       (event->y >= rect.y) && (event->y-rect.y < rect.height))
     {
@@ -660,9 +658,11 @@ brush_widget_button_press (GtkWidget      *widget,
 
       gtk_grab_add (brush_widget->widget);
     }
+
+  return TRUE;
 }
 
-static void
+static gboolean
 brush_widget_button_release (GtkWidget      *widget,
 			     GdkEventButton *event,
 			     BrushWidget    *brush_widget)
@@ -670,9 +670,11 @@ brush_widget_button_release (GtkWidget      *widget,
   brush_widget->state = FALSE;
 
   gtk_grab_remove (brush_widget->widget);
+
+  return TRUE;
 }
 
-static void
+static gboolean
 brush_widget_motion_notify (GtkWidget      *widget,
 			    GdkEventMotion *event,
 			    BrushWidget    *brush_widget)
@@ -704,51 +706,21 @@ brush_widget_motion_notify (GtkWidget      *widget,
 	  gtk_widget_queue_draw (widget);
 	}
     }
+
+  return TRUE;
 }
 
-/*
- * Return a black-on white pixmap in the given colormap and
- * visual that represents the BlobFunc 'function'
- */
-static GdkPixmap *
-blob_pixmap (GdkColormap *colormap,
-	     GdkVisual   *visual,
-	     BlobFunc     function)
+static gboolean
+blob_button_expose (GtkWidget      *widget,
+                    GdkEventExpose *event,
+                    BlobFunc        function)
 {
-  GdkPixmap *pixmap;
-  GdkGC     *black_gc, *white_gc;
-  GdkColor   tmp_color;
-  gboolean   success;
-  Blob      *blob;
-
-  pixmap = gdk_pixmap_new (NULL, 22, 21, visual->depth);
-
-  tmp_color.red   = 0;
-  tmp_color.green = 0;
-  tmp_color.blue  = 0;
-  gdk_colormap_alloc_colors (colormap, &tmp_color, 1, FALSE, TRUE, &success);
-
-  black_gc = gdk_gc_new (pixmap);
-  gdk_gc_set_foreground (black_gc, &tmp_color);
-
-  tmp_color.red   = 255;
-  tmp_color.green = 255;
-  tmp_color.blue  = 255;
-  gdk_colormap_alloc_colors (colormap, &tmp_color, 1, FALSE, TRUE, &success);
-
-  white_gc = gdk_gc_new (pixmap);
-  gdk_gc_set_foreground (white_gc, &tmp_color);
-
-  gdk_draw_rectangle (pixmap, white_gc, TRUE, 0, 0, 21, 20);
-  gdk_draw_rectangle (pixmap, black_gc, FALSE, 0, 0, 21, 20);
-  blob = (*function) (10, 10, 8, 0, 0, 8);
-  paint_blob (pixmap, black_gc, blob);
+  Blob *blob = (*function) (widget->allocation.width  / 2,
+                            widget->allocation.height / 2, 8, 0, 0, 8);
+  paint_blob (widget->window, widget->style->fg_gc[widget->state], blob);
   g_free (blob);
 
-  g_object_unref (white_gc);
-  g_object_unref (black_gc);
-
-  return pixmap;
+  return TRUE;
 }
 
 /*
@@ -759,15 +731,13 @@ paint_blob (GdkDrawable *drawable,
 	    GdkGC       *gc,
 	    Blob        *blob)
 {
-  int i;
+  gint i;
 
-  for (i=0;i<blob->height;i++)
-    {
-      if (blob->data[i].left <= blob->data[i].right)
-	gdk_draw_line (drawable, gc,
-		       blob->data[i].left,i+blob->y,
-		       blob->data[i].right+1,i+blob->y);
-    }
+  for (i = 0; i < blob->height; i++)
+    if (blob->data[i].left <= blob->data[i].right)
+      gdk_draw_line (drawable, gc,
+                     blob->data[i].left,      i + blob->y,
+                     blob->data[i].right + 1, i + blob->y);
 }
 
 
@@ -1412,10 +1382,9 @@ ink_options_new (GimpToolInfo *tool_info)
   GtkWidget  *hbox;
   GtkWidget  *hbox2;
   GtkWidget  *radio_button;
-  GtkWidget  *pixmap_widget;
+  GtkWidget  *blob;
   GtkWidget  *frame;
   GtkWidget  *darea;
-  GdkPixmap  *pixmap;
 
   options = g_new0 (InkOptions, 1);
 
@@ -1542,36 +1511,30 @@ ink_options_new (GimpToolInfo *tool_info)
   gtk_box_pack_start (GTK_BOX (hbox2), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  pixmap = blob_pixmap (gtk_widget_get_colormap (vbox),
-			gtk_widget_get_visual (vbox),
-			blob_ellipse);
-
-  pixmap_widget = gtk_image_new_from_pixmap (pixmap, NULL);
-  g_object_unref (pixmap);
-  gtk_misc_set_padding (GTK_MISC (pixmap_widget), 6, 0);
+  blob = gtk_drawing_area_new ();
+  gtk_widget_set_size_request (blob, 21, 21);
+  g_signal_connect (G_OBJECT (blob), "expose_event",
+                    G_CALLBACK (blob_button_expose),
+                    blob_ellipse);
 
   radio_button = gtk_radio_button_new (NULL);
-  gtk_container_add (GTK_CONTAINER (radio_button), pixmap_widget);
+  gtk_container_add (GTK_CONTAINER (radio_button), blob);
   gtk_box_pack_start (GTK_BOX (vbox), radio_button, FALSE, FALSE, 0);
 
   g_signal_connect (G_OBJECT (radio_button), "toggled",
 		    G_CALLBACK (ink_type_update),
 		    (gpointer) blob_ellipse);
 
-
   options->function_w[0] = radio_button;
 
-  pixmap = blob_pixmap (gtk_widget_get_colormap (vbox),
-			gtk_widget_get_visual (vbox),
-			blob_square);
-
-  pixmap_widget = gtk_image_new_from_pixmap (pixmap, NULL);
-  g_object_unref (pixmap);
-  gtk_misc_set_padding (GTK_MISC (pixmap_widget), 6, 0);
-
+  blob = gtk_drawing_area_new ();
+  gtk_widget_set_size_request (blob, 21, 21);
+  g_signal_connect (G_OBJECT (blob), "expose_event",
+                    G_CALLBACK (blob_button_expose),
+                    blob_square);
   radio_button =
     gtk_radio_button_new_from_widget (GTK_RADIO_BUTTON (radio_button));
-  gtk_container_add (GTK_CONTAINER (radio_button), pixmap_widget);
+  gtk_container_add (GTK_CONTAINER (radio_button), blob);
   gtk_box_pack_start (GTK_BOX (vbox), radio_button, FALSE, FALSE, 0);
 
   g_signal_connect (G_OBJECT (radio_button), "toggled",
@@ -1581,23 +1544,19 @@ ink_options_new (GimpToolInfo *tool_info)
 
   options->function_w[1] = radio_button;
 
-  pixmap = blob_pixmap (gtk_widget_get_colormap (vbox),
-			gtk_widget_get_visual (vbox),
-			blob_diamond);
-
-  pixmap_widget = gtk_image_new_from_pixmap (pixmap, NULL);
-  g_object_unref (pixmap);
-  gtk_misc_set_padding (GTK_MISC (pixmap_widget), 6, 0);
-
+  blob = gtk_drawing_area_new ();
+  gtk_widget_set_size_request (blob, 21, 21);
+  g_signal_connect (G_OBJECT (blob), "expose_event",
+                    G_CALLBACK (blob_button_expose),
+                    blob_diamond);
   radio_button =
     gtk_radio_button_new_from_widget (GTK_RADIO_BUTTON (radio_button));
-  gtk_container_add (GTK_CONTAINER (radio_button), pixmap_widget);
+  gtk_container_add (GTK_CONTAINER (radio_button), blob);
   gtk_box_pack_start (GTK_BOX (vbox), radio_button, FALSE, FALSE, 0);
 
   g_signal_connect (G_OBJECT (radio_button), "toggled",
 		    G_CALLBACK (ink_type_update), 
 		    (gpointer) blob_diamond);
-
 
   options->function_w[2] = radio_button;
 
