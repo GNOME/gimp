@@ -1,5 +1,17 @@
 2004-05-04  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpblendoptions.c
+	* app/tools/gimpbucketfilloptions.c
+	* app/tools/gimpcoloroptions.c
+	* app/tools/gimpinkoptions.c
+	* app/tools/gimppaintoptions-gui.c
+	* app/tools/gimpselectionoptions.c
+	* app/tools/gimptooloptions-gui.c
+	* app/tools/gimptransformoptions.c: use GimpFrames where GtkFrame
+	was used. Put "Pressure Sensitivity" frame into a GtkExpander.
+
+2004-05-04  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpframe.c: added a style property to control
 	boldening of the frame title.
 	

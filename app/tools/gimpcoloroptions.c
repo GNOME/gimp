@@ -171,7 +171,7 @@ gimp_color_options_gui (GimpToolOptions *tool_options)
     vbox = gimp_tool_options_gui (tool_options);
 
   /*  the sample average options  */
-  frame = gtk_frame_new (NULL);
+  frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 

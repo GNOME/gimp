@@ -412,7 +412,7 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
     GtkWidget *frame;
     GtkWidget *table;
 
-    frame = gtk_frame_new (NULL);
+    frame = gimp_frame_new (NULL);
     gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
     gtk_widget_show (frame);
 
@@ -471,7 +471,7 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
       GtkWidget *vbox2;
       GtkWidget *table;
 
-      frame = gtk_frame_new (_("Finding Similar Colors"));
+      frame = gimp_frame_new (_("Finding Similar Colors"));
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
@@ -517,7 +517,7 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
       GtkWidget *width_spinbutton;
       GtkWidget *height_spinbutton;
 
-      frame = gtk_frame_new (NULL);
+      frame = gimp_frame_new (NULL);
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
@@ -539,7 +539,7 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
       gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
 
-      frame = gtk_frame_new (NULL);
+      frame = gimp_frame_new (NULL);
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 

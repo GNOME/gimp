@@ -288,11 +288,18 @@ pressure_options_gui (GimpPressureOptions *pressure,
       tool_type == GIMP_TYPE_ERASER_TOOL                 ||
       tool_type == GIMP_TYPE_SMUDGE_TOOL)
     {
-      frame = gtk_frame_new (_("Pressure Sensitivity"));
+      GtkWidget *inner_frame;
+
+      frame = gtk_expander_new (_("Pressure Sensitivity"));
+      gtk_expander_set_expanded (GTK_EXPANDER (frame), FALSE);
+
+      inner_frame = gimp_frame_new ("<expander>");
+      gtk_container_add (GTK_CONTAINER (frame), inner_frame);
+      gtk_widget_show (inner_frame);
 
       wbox = gtk_hwrap_box_new (FALSE);
       gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (wbox), 7);
-      gtk_container_add (GTK_CONTAINER (frame), wbox);
+      gtk_container_add (GTK_CONTAINER (inner_frame), wbox);
       gtk_widget_show (wbox);
     }
 
@@ -380,7 +387,7 @@ fade_options_gui (GimpFadeOptions  *fade,
       tool_type == GIMP_TYPE_ERASER_TOOL                 ||
       tool_type == GIMP_TYPE_SMUDGE_TOOL)
     {
-      frame = gtk_frame_new (NULL);
+      frame = gimp_frame_new (NULL);
 
       table = gtk_table_new (1, 3, FALSE);
       gtk_container_set_border_width (GTK_CONTAINER (table), 2);
@@ -435,7 +442,7 @@ gradient_options_gui (GimpGradientOptions *gradient,
 
   if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL))
    {
-      frame = gtk_frame_new (NULL);
+      frame = gimp_frame_new (NULL);
 
       table = gtk_table_new (2, 3, FALSE);
       gtk_container_set_border_width (GTK_CONTAINER (table), 2);

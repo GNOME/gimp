@@ -360,7 +360,7 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (button);
 
   /*  the grid frame  */
-  frame = gtk_frame_new (NULL);
+  frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -393,7 +393,7 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
       gchar     *str;
 
       /*  the constraints frame  */
-      frame = gtk_frame_new (_("Constraints"));
+      frame = gimp_frame_new (_("Constraints"));
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 

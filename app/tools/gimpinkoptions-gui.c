@@ -254,7 +254,7 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   vbox = gimp_paint_options_gui (tool_options);
 
   /* adjust sliders */
-  frame = gtk_frame_new (_("Adjustment"));
+  frame = gimp_frame_new (_("Adjustment"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -279,7 +279,7 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
                              FALSE, 0.0, 0.0);
 
   /* sens sliders */
-  frame = gtk_frame_new (_("Sensitivity"));
+  frame = gimp_frame_new (_("Sensitivity"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -349,7 +349,7 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   }
 
   /* Brush shape widget */
-  frame = gtk_frame_new (_("Shape"));
+  frame = gimp_frame_new (_("Shape"));
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
