@@ -16,9 +16,9 @@ Mon Mar 16 17:50:56 EST 1998 Adrian Likins <adrian@gimp.org>
 
 	*app/install.c: comsetic update to show info about .gimp/scripts
 
-	*plugins/sparkle/sparckle.c:
+	*plugins/sparkle/sparkle.c:
 	*plugins/despeckle/despeckle.c: made a local MIN/MAX instead
-	of redefing the normal one (causes problems on some compilers)
+	of redefining the normal one (causes problems on some compilers)
 
 Mon Mar 16 05:12:00 CST 1998  Larry Ewing  <lewing@gimp.org>
 
