@@ -539,11 +539,9 @@ dialog (gint32     image_ID,
   gtk_table_attach_defaults (GTK_TABLE (width), chain_button, 1, 3, 2, 3);
   gtk_widget_show (chain_button);
  
-  /*  connect to the 'value_changed' and "unit_changed" signals because we have to 
-      take care of keeping the entries in sync when the chainbutton is active        */
+  /*  connect to the 'value_changed' signal because we have to take care 
+      of keeping the entries in sync when the chainbutton is active        */
   gtk_signal_connect (GTK_OBJECT (width), "value_changed", 
-		      (GtkSignalFunc) entry_callback, chain_button);
-  gtk_signal_connect (GTK_OBJECT (width), "unit_changed", 
 		      (GtkSignalFunc) entry_callback, chain_button);
 
   gtk_box_pack_end (GTK_BOX (hbox), width, FALSE, FALSE, 4);

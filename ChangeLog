@@ -1,3 +1,9 @@
+Thu Jan 27 22:02:44 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/common/gauss_iir.c
+	* plug-ins/common/gauss_rle.c
+	* plug-ins/common/grid.c: don't connect to the unit_changed signal
+
 2000-01-27  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/newsprint.c: changed the ui to use the libgimp

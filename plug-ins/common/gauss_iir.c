@@ -505,8 +505,6 @@ gauss_iir2_dialog (gint32     image_ID,
 
   gtk_signal_connect (GTK_OBJECT (size), "value_changed", 
 		      (GtkSignalFunc) gauss_entry_callback, chain);
-  gtk_signal_connect (GTK_OBJECT (size), "unit_changed", 
-		      (GtkSignalFunc) gauss_entry_callback, chain);
 
   gtk_container_set_border_width (GTK_CONTAINER (size), 4);
   gtk_container_add (GTK_CONTAINER (frame), size);
