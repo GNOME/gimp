@@ -199,6 +199,7 @@ void        gimp_display_shell_scrolled              (GimpDisplayShell *shell);
 
 void        gimp_display_shell_set_unit              (GimpDisplayShell *shell,
                                                       GimpUnit          unit);
+GimpUnit    gimp_display_shell_get_unit              (GimpDisplayShell *shell);
 
 gboolean    gimp_display_shell_snap_coords           (GimpDisplayShell *shell,
                                                       GimpCoords       *coords,

@@ -1070,6 +1070,14 @@ gimp_display_shell_set_unit (GimpDisplayShell *shell,
     }
 }
 
+GimpUnit
+gimp_display_shell_get_unit (GimpDisplayShell *shell)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), GIMP_UNIT_PIXEL);
+
+  return shell->unit;
+}
+
 gboolean
 gimp_display_shell_snap_coords (GimpDisplayShell *shell,
                                 GimpCoords       *coords,

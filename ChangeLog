@@ -1,7 +1,12 @@
+2005-03-09  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell.[ch]: added
+	gimp_display_shell_get_unit(), for completeness.
+
 2005-03-08  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpgradient.c (gimp_gradient_segment_split_uniform):
-	fixed brokeness introduced I when eliminating gradient->last_visited.
+	fixed brokeness introduced when eliminating gradient->last_visited.
 
 2005-03-08  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
