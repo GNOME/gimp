@@ -654,10 +654,10 @@ channel_bounds (Channel *mask, int *x1, int *y1, int *x2, int *y2)
 		}
 	    }
 	}
-      if (x1 > x2)
-	x2 = x1;
-      if (y1 > y2)
-	y2 = y1;
+      if (*x1 > *x2)
+	*x2 = *x1;
+      if (*y1 > *y2)
+	*y2 = *y1;
     }
 
   *x2 = BOUNDS (*x2 + 1, 0, GIMP_DRAWABLE(mask)->width);

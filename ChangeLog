@@ -1,3 +1,7 @@
+1999-02-22  Jay Cox  <jaycox@earthlink.net>
+
+	* app/channel.c: fixed bug in channel_bounds
+
 Sun Feb 21 22:37:56 MET 1999 Sven Neumann <sven@gimp.org>
 
 	* libgimp/Makefile.am
