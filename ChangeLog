@@ -1,3 +1,9 @@
+2001-01-26  Daniel Egger  <egger@suse.de>
+
+	* libgimpmath/gimpvector.c:
+	* libgimpmath/gimpvector.h: Added pass-by-value functions
+	to allow code simplifications and functionchaining.
+
 Thu Jan 25 10:22:39 PST 2001 Manish Singh <yosh@gimp.org>
 
 	* tools/pdbgen/pdb/channel.pdb: resurrected channel_set_color
