@@ -313,6 +313,7 @@ save_image (gchar  *filename,
   gchar  *tmpname;
   gchar   mailcmdline[512];
   gint    pid;
+  gint    wpid;
   gint    process_status;
   FILE   *mailpipe;
   FILE   *infile;
@@ -401,10 +402,11 @@ save_image (gchar  *filename,
 	}
 #endif
         {
-	  waitpid (pid, &process_status, 0);
+	  wpid = waitpid (pid, &process_status, 0);
 
-	  if (!WIFEXITED (process_status) ||
-	      WEXITSTATUS (process_status) != 0)
+	  if ((wpid < 0)
+	      || !WIFEXITED (process_status)
+	      || (WEXITSTATUS (process_status) != 0))
 	    {
 	      g_message ("mail: mail didnt work or something on file %s\n", tmpname);
 	      g_free (tmpname);

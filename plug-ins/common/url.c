@@ -146,6 +146,7 @@ load_image (gchar             *filename,
   gchar  *ext = strrchr (filename, '.');
   gchar  *tmpname;
   gint    pid;
+  gint    wpid;
   gint    process_status;
   gint    p[2];
 
@@ -190,10 +191,11 @@ load_image (gchar             *filename,
     {
       if (run_mode == GIMP_RUN_NONINTERACTIVE)
 	{
-	  waitpid (pid, &process_status, 0);
+	  wpid = waitpid (pid, &process_status, 0);
 
-	  if (!WIFEXITED (process_status) ||
-	      WEXITSTATUS (process_status) != 0)
+	  if ((wpid < 0)
+	      || !WIFEXITED (process_status)
+	      || (WEXITSTATUS (process_status) != 0))
 	    {
 	      g_message ("url: wget exited abnormally on URL %s", filename);
 	      g_free (tmpname);
@@ -405,10 +407,11 @@ load_image (gchar             *filename,
 	return -1;
       }
 
-    waitpid (pid, &process_status, 0);
+    wpid = waitpid (pid, &process_status, 0);
 
-    if (!WIFEXITED (process_status) ||
-	WEXITSTATUS (process_status) != 0)
+    if ((wpid < 0)
+	|| !WIFEXITED (process_status)
+	|| (WEXITSTATUS (process_status) != 0))
       {
 	g_message ("url: wget exited abnormally on URL %s", filename);
 	g_free (tmpname);

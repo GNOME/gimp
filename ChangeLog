@@ -1,3 +1,21 @@
+2000-11-08  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/bz2.c
+	* plug-ins/common/gz.c
+	* plug-ins/common/mail.c
+	* plug-ins/common/screenshot.c
+	* plug-ins/common/url.c: applied a (modified) version of
+	gimp-quinet-20001108-1.patch which adds proper checking of the
+	return value of waitpid(). Removed the lines adding
+	gimp_signal_private() because of the fix below.
+
+	* libgimp/gimp.c: Don't install a SIGCHLD signal handler but simply
+	call gimp_signal_private(SIGCHLD, SIG_DFL, SA_RESTART) instead.
+
+	This is IMHO the right thing to do because the reason for the
+	introducion of the signal handler was the SA_RESTART feature
+	and not the handler itself.
+
 2000-11-08  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/perspective-shadow.scm: fixed bug 

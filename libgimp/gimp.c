@@ -95,7 +95,6 @@ void gimp_read_expect_msg   (WireMessage *msg,
 
 #ifndef G_OS_WIN32
 static void       gimp_plugin_sigfatal_handler (gint            sig_num);
-static void       gimp_plugin_sigchld_handler  (gint            sig_num);
 #endif
 static gboolean   gimp_plugin_io_error_handler (GIOChannel     *channel,
 						GIOCondition    cond,
@@ -245,7 +244,7 @@ gimp_main (int   argc,
   gimp_signal_private (SIGPIPE, SIG_IGN, 0);
 
   /* Restart syscalls interrupted by SIGCHLD */
-  gimp_signal_private (SIGCHLD, gimp_plugin_sigchld_handler, SA_RESTART);
+  gimp_signal_private (SIGCHLD, SIG_DFL, SA_RESTART);
 #endif
 
   _readchannel  = g_io_channel_unix_new (atoi (argv[2]));
@@ -904,21 +903,6 @@ gimp_plugin_sigfatal_handler (gint sig_num)
     }
 
   gimp_quit ();
-}
-
-static void
-gimp_plugin_sigchld_handler (gint sig_num)
-{
-  gint pid;
-  gint status;
-
-  while (TRUE)
-    {
-      pid = waitpid (WAIT_ANY, &status, WNOHANG);
-
-      if (pid <= 0)
-        break;
-    }
 }
 #endif
 

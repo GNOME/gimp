@@ -310,7 +310,8 @@ save_image (gchar  *filename,
 #ifndef G_OS_WIN32
   FILE  *f;
   gint   pid;
-  gint   status;
+  gint   wpid;
+  gint   process_status;
 #else
   FILE  *in, *out;
   STARTUPINFO         startupinfo;
@@ -376,10 +377,11 @@ save_image (gchar  *filename,
     }
   else
     {
-      waitpid (pid, &status, 0);
+      wpid = waitpid (pid, &process_status, 0);
 
-      if (!WIFEXITED (status) ||
-	  WEXITSTATUS (status) != 0)
+      if ((wpid < 0)
+	  || !WIFEXITED (process_status)
+	  || (WEXITSTATUS (process_status) != 0))
 	{
 	  g_message ("gz: gzip exited abnormally on file %s\n", tmpname);
 	  g_free (tmpname);
@@ -432,6 +434,7 @@ load_image (gchar             *filename,
   gchar  *tmpname;
 #ifndef G_OS_WIN32
   gint    pid;
+  gint    wpid;
   gint    process_status;
 #else
   FILE   *in, *out;
@@ -490,10 +493,11 @@ load_image (gchar             *filename,
     }
   else  /* parent process */
     {
-      waitpid (pid, &process_status, 0);
+      wpid = waitpid (pid, &process_status, 0);
 
-      if (!WIFEXITED (process_status) ||
-	  WEXITSTATUS (process_status) != 0)
+      if ((wpid < 0)
+	  || !WIFEXITED (process_status)
+	  || (WEXITSTATUS (process_status) != 0))
 	{
 	  g_message ("gz: gzip exited abnormally on file %s\n", filename);
 	  g_free (tmpname);

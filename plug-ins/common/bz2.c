@@ -260,7 +260,8 @@ save_image (gchar  *filename,
   gchar *ext;
   gchar *tmpname;
   gint   pid;
-  gint   status;
+  gint   wpid;
+  gint   process_status;
 
   if (NULL == (ext = find_extension (filename)))
     {
@@ -319,10 +320,11 @@ save_image (gchar  *filename,
     }
 #endif
     {
-      waitpid (pid, &status, 0);
+      wpid = waitpid (pid, &process_status, 0);
 
-      if (!WIFEXITED(status) ||
-	  WEXITSTATUS(status) != 0)
+      if ((wpid < 0)
+	  || !WIFEXITED (process_status)
+	  || (WEXITSTATUS (process_status) != 0))
 	{
 	  g_message ("bz2: bzip2 exited abnormally on file %s\n", tmpname);
 	  g_free (tmpname);
@@ -345,6 +347,7 @@ load_image (gchar             *filename,
   gchar  *ext;
   gchar  *tmpname;
   gint    pid;
+  gint    wpid;
   gint    process_status;
 
   if (NULL == (ext = find_extension (filename)))
@@ -397,10 +400,11 @@ load_image (gchar             *filename,
     }
 #endif
     {
-      waitpid (pid, &process_status, 0);
+      wpid = waitpid (pid, &process_status, 0);
 
-      if (!WIFEXITED (process_status) ||
-	  WEXITSTATUS (process_status) != 0)
+      if ((wpid < 0)
+	  || !WIFEXITED (process_status)
+	  || (WEXITSTATUS (process_status) != 0))
 	{
 	  g_message ("bz2: bzip2 exited abnormally on file %s\n", filename);
 	  g_free (tmpname);
