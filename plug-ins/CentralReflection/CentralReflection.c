@@ -28,6 +28,8 @@
 
 #include <stdlib.h>
 #include <math.h>
+#include <signal.h>
+#include <unistd.h>
 
 #include "libgimp/gimp.h"
 #include "gtk/gtk.h"
@@ -171,6 +173,9 @@ run(char *name,
   default:
     break;
   }
+
+  printf("creflect: waiting... (pid %d)\n", getpid());
+  kill(getpid(), SIGSTOP);
 
   gimp_tile_cache_ntiles(2 *(drawable->width / gimp_tile_width() + 1));
   gimp_progress_init("Applying Central-Reflection. Please wait...");
@@ -571,6 +576,9 @@ CentralReflection_dialog(GDrawable *drawable)
   gtk_widget_show(dlg);
 
   gtk_main();
+
+  gtk_object_unref(GTK_OBJECT(tips));
+
   gdk_flush();
 
   return bint.run;

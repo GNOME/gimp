@@ -9,8 +9,6 @@ SUBDIRS = 			\
 	CentralReflection	\
 	Curtain			\
 	Encrypt_Decrypt		\
-	Julia			\
-	Mandelbrot		\
 	DigitalSignature	\
 	dbbrowser		\
 	fuse			\

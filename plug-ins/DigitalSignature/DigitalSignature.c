@@ -172,6 +172,7 @@ run(char *name,
            if (!signature_warning_dialog())
                return;
 	       
+	gtk_object_unref (GTK_OBJECT (tips));
         if (ending==100) {wvals.mode=1;} else {wvals.mode=0;}
 	break;
 

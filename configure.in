@@ -347,8 +347,6 @@ plug-ins/Anamorphose/Makefile
 plug-ins/CentralReflection/Makefile
 plug-ins/Curtain/Makefile
 plug-ins/Encrypt_Decrypt/Makefile
-plug-ins/Julia/Makefile
-plug-ins/Mandelbrot/Makefile
 plug-ins/MapObject/Makefile
 plug-ins/megawidget/Makefile
 plug-ins/libgck/Makefile

@@ -253,6 +253,7 @@ static void set_tooltip(
 );
 
 static void setup_tooltips();
+static GtkTooltips *tips;
 
 /************************************ Guts ***********************************/
 
@@ -934,6 +935,7 @@ randomize_dialog()
     gtk_widget_show(dlg);
 
     gtk_main();
+    gtk_object_unref (GTK_OBJECT (tips));
     gdk_flush();
 /*
  *  Figure out which type of randomization to apply.
@@ -1029,7 +1031,6 @@ randomize_text_update(GtkWidget *widget, gpointer data) {
 /*
  *  TOOLTIPS ROUTINES
  */
-static GtkTooltips *tips;
 
 
 void setup_tooltips(GtkWidget *parent)

@@ -1300,6 +1300,7 @@ DIALOG ()
   GtkWidget	*dlg;
   GtkWidget	*hbox;
   GtkWidget	*button;
+  GtkTooltips *tooltips;
   gchar		**argv;
   gint		argc;
 
@@ -1489,7 +1490,6 @@ DIALOG ()
       random_sensitives[3].logic = FALSE;
       {
 	GtkWidget *button;
-	GtkTooltips *tooltips;
 
 	button = gtkW_vbox_add_button (box, "Switch to \"from seed\" with the last seed",
 				       (GtkSignalFunc) CML_set_or_randomize_seed_callback,
@@ -1605,6 +1605,9 @@ DIALOG ()
   preview_update ();
 
   gtk_main ();
+
+  gtk_object_unref (GTK_OBJECT (tooltips));
+
   gdk_flush ();
 
   return INTERFACE.run;

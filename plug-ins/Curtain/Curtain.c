@@ -403,6 +403,7 @@ curtain_dialog()
   gtk_widget_show(dlg);
 
   gtk_main();
+  gtk_object_unref (GTK_OBJECT (tips));
   gdk_flush();
 
   return bint.run;

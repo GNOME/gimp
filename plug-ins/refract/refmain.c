@@ -422,6 +422,7 @@ refract_dialog()
     gtk_widget_show (dlg);
 
     gtk_main ();
+    gtk_object_unref (GTK_OBJECT (tooltips));
     gdk_flush ();
 
     return refractint.run;

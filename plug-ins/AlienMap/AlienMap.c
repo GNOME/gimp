@@ -909,6 +909,7 @@ gtk_container_border_width(GTK_CONTAINER(GTK_DIALOG(dialog)->action_area), 6);
         dialog_update_preview();
 
         gtk_main();
+	gtk_object_unref (GTK_OBJECT (tips));
         gdk_flush();
         if (the_tile != NULL) {
         	gimp_tile_unref(the_tile, FALSE);
