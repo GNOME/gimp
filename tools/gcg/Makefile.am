@@ -31,6 +31,8 @@ gcg_SOURCES = \
 	output_enum.c \
 	output_flags.c \
 	output_object.c \
+	fp.c \
+	marshall.c \
 	parser.h
 
 gcg_DEPENDS = parser.h

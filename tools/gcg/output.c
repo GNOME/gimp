@@ -38,33 +38,41 @@ PNode* p_c_macro(Id id){
 	return n;
 }
 
-PNode* p_param(Param* p, ParamOptions* opt){
+PNode* p_param(FunParams* p, ParamOptions* opt){
 	return p_lst(opt->first ? p_nil : p_str(", "),
 		     opt->types ? p_type(&p->type) : p_nil,
 		     opt->types && opt->names ? p_str(" ") : p_nil,
-		     opt->names ? p_c_ident(p->name) : p_nil,
+		     opt->names ? p->name : p_nil,
 		     NULL);
 }
 
-PNode* p_params(GSList* args, ParamOptions* opt){
+PNode* p_params(FunParams* args, ParamOptions* opt){
 	ParamOptions o=*opt;
-	
-	return (args
-		? (o.first
-		   ? p_lst(p_param(args->data, opt),
-			   (o.first=FALSE,
-			    p_for(args->next, p_param, &o)),
-			   NULL)
-		   : p_for(args, p_param, &o))
-		: (o.first
-		   ? p_str("void")
-		   : p_nil));
+	PNode* n=p_nil;
+	while(args){
+		n=p_lst(n, p_param(args, &o), NULL);
+		args=args->next;
+		o.first=FALSE;
+	}
+	if(n==p_nil)
+		if(opt->first)
+			return p_str("void");
+		else
+			return p_nil;
+	else
+		return n;
 }
 
 PNode* p_primtype(PrimType* t){
-	return p_lst(p_str(t->name.module),
-		     p_str(t->name.type),
+	return p_lst(p_str(t->module->name),
+		     p_str(t->name),
 		     NULL);
+}
+
+PNode* p_cast(PNode* force_type, PNode* expression){
+	return p_fmt("((~)~)",
+		     force_type,
+		     expression);
 }
 
 PNode* p_type(Type* t){
@@ -88,170 +96,153 @@ PNode* p_self_type(ObjectDef* o, PBool const_self){
 	      p_primtype(DEF(o)->type));
 }
 
-PNode* p_varname(PrimType* t, Id name){
+PNode* p_varname(PrimType* t, PNode* name){
 	return p_fmt("~_~_~",
-		     p_c_ident(t->name.module),
-		     p_c_ident(t->name.type),
-		     p_c_ident(name));
+		     p_c_ident(t->module->name),
+		     p_c_ident(t->name),
+		     name);
 }
 
-PNode* p_internal_varname(PrimType* t, Id name){
+PNode* p_internal_varname(PrimType* t, PNode* name){
 	return p_fmt("_~",
 	   p_varname(t, name));
 }
 
 
-PNode* p_prototype(PrimType* type, Id funcname,
-		   GSList* params, Type* rettype, gboolean internal){
-	ParamOptions o={TRUE, TRUE, TRUE};
-	return p_fmt("~ ~ (~)",
-		     p_type(rettype),
-		     (internal?p_internal_varname:p_varname)(type, funcname),
-		     p_params(params, &o));
-}
 
-PNode* p_type_guard(Param* p){
-	Type* t=&p->type;
+
+PNode* p_type_guard(Type* t, PNode* var){
+	PrimType* p=t->prim;
+	/*
+	if(t->notnull && (p->indirection>1 || p->kind!=GTK_TYPE_OBJECT))
+		return p_fmt("\tg_assert (~);\n", var);
+	else if(p->kind==GTK_TYPE_OBJECT)
+		return p_fmt("\tg_assert (~
 	
+		kind !=
+	*/
 	return p_lst
 	((t->indirection && t->notnull
-	     ? p_fmt("\tg_assert (%s);\n", p->name)
+	     ? p_fmt("\tg_assert (~);\n", var)
 	     : p_nil),
-	 ((t->indirection==1 && t->prim->kind == GTK_TYPE_OBJECT)
+	 ((t->indirection==1 && p->kind == GTK_TYPE_OBJECT)
 	  ? (t->notnull
-		? p_fmt("\tg_assert (%3(%1));\n",
-			p_macro_name(t->prim, "IS", NULL),
-			p_c_ident(p->name))
-		: p_fmt("\tg_assert (!%1 || %3(%s));\n",
-			p_c_ident(p->name),
-			p_macro_name(t->prim, "IS", NULL),
-			p_c_ident(p->name)))
+		? p_fmt("\tg_assert (~(~));\n",
+			p_macro_name(p, "IS", NULL),
+			var)
+	     : p_fmt("\tg_assert (!~ || ~(~));\n",
+		     var,
+		     p_macro_name(p, "IS", NULL),
+		     var))
 	  : (t->indirection==0
-		? ((t->prim->kind == GTK_TYPE_ENUM)
-		   ? p_fmt("\tg_assert (%1 <= %3);\n",
-			   p_c_ident(p->name),
-			   p_macro_name(t->prim, NULL, "LAST"))
-		   : ((t->prim->kind == GTK_TYPE_FLAGS)
-		      ? p_fmt("\tg_assert ((%s << 1) < %3);\n",
-			      p_c_ident(p->name),
-			      p_macro_name(t->prim, NULL, "LAST"))
-		      : p_nil))
-		: p_nil)),
+	     ? ((p->kind == GTK_TYPE_ENUM)
+		? p_fmt("\tg_assert (~ <= ~);\n",
+			var,
+			p_macro_name(p, NULL, "LAST"))
+		: ((p->kind == GTK_TYPE_FLAGS)
+		   ? p_fmt("\tg_assert ((~ << 1) < ~);\n",
+			   var,
+			   p_macro_name(p, NULL, "LAST"))
+		   : p_nil))
+	     : p_nil)),
 	 NULL);
 }
-	
-void output_func(OutCtx* ctx,
-		 PrimType* type, Id funcname, GSList* params, Type* rettype,
-		 Visibility scope, ObjectDef* self, gboolean self_const,
-		 gboolean internal, PNode* body){
-	GSList l;
-	Param p;
-	PRoot* root;
-	
-	if(self){
-		p.type.prim=DEF(self)->type;
-		p.type.indirection=1;
-		p.type.is_const=self_const;
-		p.type.notnull=TRUE;
-		p.name="self";
-		l.data=&p;
-		l.next=params;
-		params=&l;
-	}
 
-	switch(scope){
-	case VIS_PUBLIC:
-		root = ctx->func_hdr;
-		break;
-	case VIS_PROTECTED:
-		root = ctx->prot_hdr;
-		break;
-	case VIS_PRIVATE:
-		root = ctx->pvt_hdr;
-		break;
+PNode* p_type_guards(FunParams* args){
+	PNode* p=p_nil;
+	while(args){
+		p=p_lst(p, p_type_guard(&args->type, args->name), NULL);
+		args=args->next;
 	}
-		
-	pr_add(root, p_fmt("~~;\n",
-			   scope==VIS_PRIVATE
-			   ? p_str("static ")
-			   : p_nil,
-			   p_prototype(type, funcname, params,
-				       rettype, internal)));
-	pr_add(ctx->src, p_fmt("~~{\n"
-			       "~"
-			       "~"
-			       "}\n\n",
-			       scope != VIS_PRIVATE
-			       ? p_nil
-					  : p_str("static "),
-			       p_prototype(type, funcname, params,
-					   rettype, internal),
-			       p_for(params, p_type_guard, p_nil),
-			       body));
+	return p;
+}
+
+PNode* p_prototype(Type* rettype, PNode* name,
+		   PNode* args1,
+		   FunParams* args2){
+	ParamOptions o={(!args1 || args1==p_nil), TRUE, TRUE};
+	return p_fmt("~ ~ (~~)",
+		     p_type(rettype),
+		     name,
+		     args1,
+		     p_params(args2, &o));
+}
+
+void output_func(PRoot* out,
+		 Id tag,
+		 Type* rettype,
+		 PNode* name,
+		 PNode* args1,
+		 FunParams* args2,
+		 PNode* body){
+	pr_add(out, tag ? tag : "source_head",
+	       p_fmt("~~;\n",
+		     tag
+		     ? p_nil
+		     : p_str("static "),
+		     p_prototype(rettype, name, args1, args2)));
+	pr_add(out, "source",
+	       p_fmt("~~{\n"
+		     "~"
+		     "~"
+		     "}\n\n",
+		     tag
+		     ? p_nil
+		     : p_str("static "),
+		     p_prototype(rettype, name, args1, args2),
+		     p_type_guards(args2),
+		     body));
 }
 
 
 PNode* p_macro_name(PrimType* t, Id mid, Id post){
 	return p_fmt("~~_~~",
-		     p_c_macro(t->name.module),
+		     p_c_macro(t->module->name),
 		     mid ? p_lst(p_str("_"), p_c_macro(mid), NULL) : p_nil,
-		     p_c_macro(t->name.type),
+		     p_c_macro(t->name),
 		     post ? p_lst(p_str("_"), p_c_macro(post), NULL) : p_nil);
 }
 
-void output_var(OutCtx* ctx, Def* d, Type* t, Id varname, Visibility scope,
-		gboolean internal){
-	PRoot* root;
-	switch(scope){
-	case VIS_PUBLIC:
-		root = ctx->func_hdr;
-		break;
-	case VIS_PROTECTED:
-		root = ctx->prot_hdr;
-		break;
-	case VIS_PRIVATE:
-		root = ctx->pvt_hdr;
-		break;
-	}
-	
-	pr_add(root, p_fmt("extern ~ ~;\n",
-			    p_type(t),
-			    (internal
-			     ? p_internal_varname
-			     : p_varname) (d->type, varname)));
-	pr_add(ctx->src, p_fmt("~~ ~;\n",
-			       scope == VIS_PRIVATE
-			       ? p_nil
-			       : p_str("static "),
-			       p_type(t),
-			       (internal
-				? p_internal_varname
-				: p_varname) (d->type, varname)));
+void output_var(PRoot* out, Id tag, PNode* type, PNode* name){
+	if(tag)
+		pr_add(out, tag,
+		       p_fmt("extern ~ ~;\n",
+			     type,
+			     name));
+	pr_add(out, "source_head",
+	       p_fmt("~~ ~;\n",
+		     tag?p_nil:p_str("static "),
+		     type,
+		     name));
 }	
 
-void output_def(OutCtx* ctx, Def* d){
+void output_def(PRoot* out, Def* d){
 	PrimType* t=d->type;
+	PNode* type_var=p_internal_varname(t, p_str("type"));
+	
 	/* GTK_TYPE_FOO macro */
-	pr_add(ctx->type_hdr, p_str("\n\n"));
-	pr_add(ctx->src, p_str("\n"));
-	pr_add(ctx->prot_hdr, p_str("\n\n"));
-	pr_add(ctx->pvt_hdr, p_str("\n"));
-	pr_add(ctx->type_hdr, p_fmt("#define ~ \\\n"
-				     " (~ ? ~ : ~())\n",
-				     p_macro_name(t, "TYPE", NULL),
-				     p_internal_varname(t, "type"),
-				     p_internal_varname(t, "type"),
-				     p_internal_varname(t, "init_type")));
-	output_var(ctx, d, type_gtk_type, "type", VIS_PUBLIC, TRUE);
+	pr_add(out, "type", p_str("\n\n"));
+	pr_add(out, "source", p_str("\n"));
+	pr_add(out, "protected", p_str("\n\n"));
+	pr_add(out, "source_head", p_str("\n"));
+	pr_add(out, "type", p_fmt("#define ~ \\\n"
+				  " (~ ? ~ : ~())\n",
+				  p_macro_name(t, "TYPE", NULL),
+				  type_var,
+				  type_var,
+				  p_internal_varname(t, p_str("init_type"))));
+	output_var(out, "type",
+		   p_str("GtkType"),
+		   type_var);
 	switch(d->type->kind){
 	case GTK_TYPE_OBJECT:
-		output_object(ctx, d);
+		output_object(out, d);
 		break;
 	case GTK_TYPE_ENUM:
-		output_enum(ctx, d);
+		output_enum(out, d);
 		break;
 	case GTK_TYPE_FLAGS:
-		output_flags(ctx, d);
+		output_flags(out, d);
 		break;
 	default:
 		;

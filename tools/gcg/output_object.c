@@ -1,11 +1,13 @@
 #include "output.h"
+#include "marshall.h"
 
 PNode* p_object_member(Member* m){
 	DataMember* d;
-	if(m->membertype != MEMBER_DATA
-	   || m->kind != KIND_DIRECT)
+	if(m->membertype != MEMBER_DATA)
 		return p_nil;
 	d=(DataMember*)m;
+	if(d->kind!=DATA_DIRECT)
+		return p_nil;
 	return p_fmt("\t~ ~;\n",
 		     p_type(&d->type),
 		     p_c_ident(m->name));
@@ -35,20 +37,32 @@ PNode* p_object_decl(ObjectDef* o){
 
 PNode* p_class_member(Member* m){
 	ParamOptions o = {FALSE,FALSE,TRUE};
-	if(m->kind != KIND_ABSTRACT)
-		return p_nil;
 	if(m->membertype == MEMBER_DATA){
 		DataMember* d=(DataMember*)m;
-		return p_fmt("\t~ ~;\n",
-			     p_type(&d->type),
-			     p_c_ident(m->name));
+		if(d->kind != DATA_STATIC_VIRTUAL)
+			return p_nil;
+		else
+			return p_fmt("\t~ ~;\n",
+				     p_type(&d->type),
+				     p_c_ident(m->name));
 	}else if (m->membertype == MEMBER_METHOD){
 		Method* d=(Method*)m;
-		return p_fmt("\t~ (*~) (~~);\n",
+		FunParams* p;
+		PNode* parnode;
+		
+		if(d->kind==METH_STATIC ||
+		   d->kind==METH_DIRECT)
+			return p_nil;
+		p=fparams("tp",
+			  &m->my_class->self_type[d->self_const],
+			  p_nil, p_nil,
+			  d->params);
+		parnode=p_params(p, &o);
+		fparams_free(p);
+		return p_fmt("\t~ (*~) (~);\n",
 			     p_type(&d->ret_type),
 			     p_c_ident(m->name),
-			     p_type(&m->my_class->self_type[d->self_const]),
-			     p_params(d->params, &o));
+			     parnode);
 	}else
 		return p_nil;
 }
@@ -79,76 +93,128 @@ PNode* p_class_decl(ObjectDef* o){
 		     p_class_name(DEF(o)->type));
 }
 
-PNode* p_abstract_member(PrimType* t, Id name){
+PNode* p_abstract_member(PrimType* t, PNode* name){
 	return p_fmt("~(GTK_OBJECT(self)->klass)->~",
 		     p_macro_name(t, NULL, "CLASS"),
-		     p_c_ident(name));
+		     name);
 }
 
-PNode* p_real_varname(PrimType* t, Id name){
+PNode* p_real_varname(PrimType* t, PNode* name){
 	return p_fmt("~_real",
 		     p_varname(t, name));
 }	
 
-void output_method(OutCtx* ctx, Method* m){
-	PrimType* t=DEF(MEMBER(m)->my_class)->type;
-	Id name=MEMBER(m)->name;
-	MemberKind k=MEMBER(m)->kind;
-	ParamOptions o={k==KIND_STATIC, TRUE, FALSE};
-	output_func
-	(ctx,t, name, m->params, &m->ret_type, m->prot,
-	 (k == KIND_STATIC) ? NULL : MEMBER(m)->my_class,
-	 m->self_const, FALSE,
-	 p_fmt("\t~~(~~);\n",
-	       m->ret_type.prim ? p_str("return ") : p_nil,
-	       (k == KIND_ABSTRACT
-		? p_abstract_member
-		: p_real_varname)(t, name),
-	       MEMBER(m)->kind != KIND_STATIC
-	       ? p_nil
-	       : p_str("self"),
-	       p_params(m->params, &o)));
+PNode* p_signal_id(Method* s){
+	PrimType* t=DEF(MEMBER(s)->my_class)->type;
+	return p_fmt("_~_~_signal_~",
+		     p_c_ident(t->module->name),
+		     p_c_ident(t->name),
+		     p_c_ident(MEMBER(s)->name));
 }
 
-void output_data_member(OutCtx* ctx, DataMember* m){
+void output_method(PRoot* out, Method* m){
+	PrimType* t=DEF(MEMBER(m)->my_class)->type;
+	PNode* name=p_c_ident(MEMBER(m)->name);
+	MethodKind k=m->kind;
+	ParamOptions o={TRUE, TRUE, FALSE};
+	FunParams* par;
+	PNode* dispatch;
+	
+	if(k == METH_STATIC)
+		par = fparams("p", m->params);
+	else
+		par = fparams("tp",
+			       &MEMBER(m)->my_class->self_type[m->self_const],
+			       p_str("self"),
+			       p_nil,
+			       m->params);
+	switch(k){
+	case METH_EMIT_PRE:
+	case METH_EMIT_POST:
+	case METH_EMIT_BOTH:
+		output_var(out, NULL,
+			   p_str("GtkSignal"),
+			   p_signal_id(m));
+		dispatch=p_fmt("~(~, ~)",
+			       p_signal_marshaller_name(m),
+			       p_signal_id(m),
+			       p_params(par, &o));
+		break;
+	case METH_STATIC:
+	case METH_DIRECT:
+		dispatch=p_fmt("~(~)",
+			       p_real_varname(t, name),
+			       p_params(par, &o));
+		break;
+	case METH_VIRTUAL:
+		dispatch=p_fmt("~(~)",
+			       p_abstract_member(t, name),
+			       p_params(par, &o));
+		break;
+	}
+	output_func
+	(out,
+	 m->prot==METH_PUBLIC?"functions":"protected",
+	 &m->ret_type,
+	 p_varname(t, name),
+	 p_nil,
+	 par, 
+	 p_fmt("\t~~;\n",
+	       m->ret_type.prim ? p_str("return ") : p_nil,
+	       dispatch));
+	 fparams_free(par);
+}
+
+void output_data_member(PRoot* out, DataMember* m){
 	PrimType* t=DEF(MEMBER(m)->my_class)->type;
 	PNode* name = p_c_ident(MEMBER(m)->name);
 	
 	switch(m->prot){
+		FunParams* par;
 	case DATA_READWRITE: {
-		gchar* set_name=g_strconcat("set_", name, NULL);
-		Param p;
-		GSList l;
-		p.type=m->type;
-		p.name=MEMBER(m)->name;
-		l.data=&p;
-		l.next=NULL;
-		output_func(ctx, t, set_name, &l, NULL, VIS_PUBLIC,
-			    MEMBER(m)->my_class, FALSE, FALSE,
-			    p_fmt("\tself->~ = 1~;\n",
+		par=fparams("tt", &MEMBER(m)->my_class->self_type[FALSE],
+			    p_str("self"),
+			    p_nil,
+			    &m->type,
+			    name,
+			    p_nil);
+		output_func(out,
+			    "functions",
+			    NULL,
+			    p_varname(t, p_fmt("set_~", name)),
+			    p_nil,
+			    par,
+			    p_fmt("\tself->~ = ~;\n",
 				  name,
 				  name));
-		g_free(set_name);
+		fparams_free(par);
 	}
 	/* fall through */
 	case DATA_READONLY:
-		output_func(ctx, t, MEMBER(m)->name, NULL, &m->type, VIS_PUBLIC,
-			    MEMBER(m)->my_class, TRUE, FALSE,
+		par=fparams("t", &MEMBER(m)->my_class->self_type[TRUE],
+			    p_str("self"),
+			    p_nil);
+		output_func(out,
+			    "functions",
+			    NULL,
+			    p_varname(t, name),
+			    p_nil,
+			    par,
 			    p_fmt("\treturn self->~;\n",
 				  name));
+		fparams_free(par);
 	case DATA_PROTECTED:
 	}
 }
 
 	
-void output_member(OutCtx* ctx, Member* m){
+void output_member(PRoot* out, Member* m){
 	switch(m->membertype){
 	case MEMBER_METHOD:
-		output_method(ctx, (Method*)m);
+		output_method(out, (Method*)m);
 		break;
 	case MEMBER_DATA:
-		if(m->kind==KIND_DIRECT)
-			output_data_member(ctx, (DataMember*)m);
+		output_data_member(out, (DataMember*)m);
 		break;
 	}
 }
@@ -168,11 +234,16 @@ PNode* p_class_macros(ObjectDef* o ){
 		     p_macro_name(t, "TYPE", NULL));
 }
 
-void output_object_type_init(OutCtx* out, ObjectDef* o){
+void output_object_type_init(PRoot* out, ObjectDef* o){
 	PrimType* t=DEF(o)->type;
-	output_func(out, t, "init_type", NULL, type_gtk_type,
-		    VIS_PUBLIC, NULL, FALSE, TRUE,
-		    p_fmt("\tstatic GtkTypeInfo info = {\n"
+	PNode* type_var=p_internal_varname(t, p_str("type"));
+	output_func(out,
+		    "type",
+		    type_gtk_type,
+		    p_internal_varname(t, p_str("init_type")),
+		    p_nil,
+		    NULL,
+		    p_fmt("\tstatic const GtkTypeInfo info = {\n"
 			  "\t\t\"~\",\n"
 			  "\t\tsizeof (~),\n"
 			  "\t\tsizeof (~),\n"
@@ -182,37 +253,93 @@ void output_object_type_init(OutCtx* out, ObjectDef* o){
 			  "\t\tNULL,\n"
 			  "\t\tNULL,\n"
 			  "\t};\n"
-			  "\t~ = gtk_type_unique (~, &info);\n"
+			  "\tif (!~)\n"
+			  "\t\t~ = gtk_type_unique (~, &info);\n"
 			  "\treturn ~;\n",
 			  p_primtype(t),
 			  p_primtype(t),
-			  p_class_name(DEF(o)->type),
-			  p_varname(t, "class_init"),
-			  p_varname(t, "init"),
-			  p_internal_varname(t, "type"),
+			  p_class_name(t),
+			  p_varname(t, p_str("class_init")),
+			  p_varname(t, p_str("init")),
+			  type_var,
+			  type_var,
 			  p_macro_name(o->parent, "TYPE", NULL),
-			  p_internal_varname(t, "type")));
+			  type_var));
 }
 
+PNode* p_param_marshtype(gpointer p){
+	Param* param=p;
+	return p_fmt(",\n\t\tGTK_TYPE_~",
+		     p_gtype_name(marshalling_type(&param->type), FALSE));
+}
 
-void output_object(OutCtx* out, ObjectDef* o){
+PNode* p_member_class_init(gpointer m, gpointer o){
+	ObjectDef* ob=o;
+	Member* mem=m;
+	Method* meth;
+	if(mem->membertype!=MEMBER_METHOD)
+		return p_nil;
+	meth=m;
+	switch(meth->kind){
+	case METH_EMIT_PRE:
+	case METH_EMIT_POST:
+	case METH_EMIT_BOTH:
+		return p_fmt("\t~ =\n"
+			     "\tgtk_signal_new(\"~\",\n"
+			     "\t\tGTK_RUN_~,\n"
+			     "\t\tobklass->type,\n"
+			     "\t\tGTK_SIGNAL_OFFSET (~, ~),\n"
+			     "\t\t~,\n"
+			     "\t\tGTK_TYPE_~,\n"
+			     "\t\t~"
+			     "~);\n"
+			     "\tgtk_object_class_add_signals(obklass,\n"
+			     "\t\t&~,\n"
+			     "\t\t1);\n",
+			     p_signal_id(meth),
+			     p_str(mem->name),
+			     p_str(meth->kind==METH_EMIT_PRE
+				   ?"FIRST"
+				   :meth->kind==METH_EMIT_POST
+				   ?"LAST"
+				   :"BOTH"),
+			     p_class_name(DEF(ob)->type),
+			     p_c_ident(mem->name),
+			     p_signal_demarshaller_name(m),
+			     p_gtype_name(marshalling_type(&meth->ret_type),
+					  FALSE),
+			     p_prf("%d", g_slist_length(meth->params)),
+			     p_for(meth->params, p_param_marshtype, p_nil),
+			     p_signal_id(meth));
+		break;
+	default:
+		return p_nil;
+		break;
+	}
+}
+			     
+			     
+			     
+
+void output_class_init(PRoot* out, ObjectDef* o){
+	output_func(out, NULL,
+		    NULL,
+		    p_varname(DEF(o)->type, p_str("class_init")),
+		    p_fmt("~* klass",
+			  p_class_name(DEF(o)->type)),
+		    NULL,
+		    p_fmt("\tGtkObjectClass* obklass = \n"
+			  "\t\t(GtkObjectClass*) klass;\n"
+			  "~",
+			  p_for(o->members, p_member_class_init, o)));
+}
+
+void output_object(PRoot* out, ObjectDef* o){
 	output_object_type_init(out, o);
-	pr_add(out->prot_hdr, p_class_body(o));
-	pr_add(out->prot_hdr, p_class_decl(o));
-	pr_add(out->type_hdr, p_object_decl(o));
-	pr_add(out->prot_hdr, p_object_body(o));
+	output_class_init(out, o);
+	pr_add(out, "protected", p_class_decl(o));
+	pr_add(out, "protected", p_class_body(o));
+	pr_add(out, "type", p_object_decl(o));
+	pr_add(out, "protected", p_object_body(o));
 	g_slist_foreach(o->members, output_member_cb, out);
 }
-/*
-PNode* p_gtype(Type* t){
-	if((t->indirection==0 && t->prim->kind==TYPE_TRANSPARENT)
-	   || (t->indirection==1 && t->prim->kind==TYPE_CLASS))
-		p_macro_name(s, t->prim, "TYPE", NULL);
-	else if(t->indirection)
-		return p_fmt( "GTK_TYPE_POINTER");
-	else
-		g_error("Illegal non-pointer type ~~\n",
-			t->prim->name.module,
-			t->prim->name.type);
-}
-*/

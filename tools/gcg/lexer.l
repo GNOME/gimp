@@ -10,6 +10,7 @@ header		<[[:alnum:]/.]+>
 ws		[ \n\t\r] 
 comment		\/\/[^\n]*\n
 string		\"(([^\"]*)|\\\"|\\\\)*\"
+preproc         ^#.*\n
 
 %%
 
@@ -34,7 +35,7 @@ opaque return T_OPAQUE;
 
 void return T_VOID;
 enum return T_ENUM;
-lags return T_FLAGS;
+flags return T_FLAGS;
 @int return T_INT;
 real return T_DOUBLE;
 boxed return T_BOXED;
@@ -49,6 +50,9 @@ boxed return T_BOXED;
 }
 
 {ws} {
+}
+
+{preproc} {
 }
 
 {header} {

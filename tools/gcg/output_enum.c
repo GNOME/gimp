@@ -27,25 +27,29 @@ PNode* p_enum_value(Id i, PrimType* t){
 		     p_str(i));
 }
 
-void output_enum_type_init(OutCtx* out, EnumDef* e){
+void output_enum_type_init(PRoot* out, EnumDef* e){
 	PrimType* t=DEF(e)->type;
-	output_func(out, t, "init_type", NULL, type_gtk_type, TRUE, NULL,
-		    FALSE, TRUE,
+	output_func(out,
+		    "type",
+		    type_gtk_type,
+		    p_internal_varname(t, p_str("init_type")),
+		    p_nil,
+		    NULL,
 		    p_fmt("\tstatic GtkEnumValue values[~] = {\n"
 			  "~"
 			  "\t\t{0, NULL, NULL}\n"
 			  "\t};\n"
-			  "\t%2 = gtk_type_register_enum (\"%1\", values);\n"
-			  "\treturn %2;\n",
+			  "\t~ = gtk_type_register_enum (\"~\", values);\n"
+			  "\treturn ~;\n",
 			  p_prf("%d", g_slist_length(e->alternatives)+1),
 			  p_for(e->alternatives, p_enum_value, t),
-			  p_internal_varname(t, "type"),
+			  p_internal_varname(t, p_str("type")),
 			  p_primtype(t),
-			  p_internal_varname(t, "type")));
+			  p_internal_varname(t, p_str("type"))));
 }
 	   
-void output_enum(OutCtx* out, EnumDef* e){
+void output_enum(PRoot* out, EnumDef* e){
 	output_enum_type_init(out, e);
-	pr_add(out->type_hdr, p_enum_decl(e));
+	pr_add(out, "type", p_enum_decl(e));
 }
 

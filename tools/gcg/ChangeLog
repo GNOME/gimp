@@ -1,3 +1,8 @@
+1998-11-14  Lauri Alanko  <la@iki.fi>
+
+	* Changed lotsa internal stuff. Started work on signal wrappers
+	and marshallers. 
+
 1998-10-24  Lauri Alanko  <la@iki.fi>
 
 	* Redid the backend. It takes more time and memory now, but should 

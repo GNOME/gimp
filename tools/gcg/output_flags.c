@@ -37,10 +37,14 @@ PNode* p_flags_value(Id i, PrimType* t){
 		     p_str(i));
 }
 
-void output_flags_type_init(OutCtx* ctx, FlagsDef* e){
+void output_flags_type_init(PRoot* out, FlagsDef* e){
 	PrimType* t=DEF(e)->type;
-	output_func(ctx, t, "init_type", NULL, type_gtk_type, VIS_PUBLIC,
-		    NULL, FALSE, TRUE,
+	output_func(out,
+		    "type",
+		    NULL,
+		    p_internal_varname(t, p_str("init_type")),
+		    p_nil,
+		    NULL,
 		    p_fmt("\tstatic GtkFlagValue values[~] = {\n"
 			  "~"
 			  "\t\t{0, NULL, NULL}\n"
@@ -49,13 +53,13 @@ void output_flags_type_init(OutCtx* ctx, FlagsDef* e){
 			  "\treturn ~;\n",
 			  p_prf("%d", g_slist_length(e->flags)+1),
 			  p_for(e->flags, p_flags_value, t),
-			  p_internal_varname(t, "type"),
+			  p_internal_varname(t, p_str("type")),
 			  p_primtype(t),
-			  p_internal_varname(t, "type")));
+			  p_internal_varname(t, p_str("type"))));
 }
 	   
-void output_flags(OutCtx* ctx, FlagsDef* e){
-	pr_add(ctx->type_hdr, p_flags_decl(e));
-	output_flags_type_init(ctx, e);
+void output_flags(PRoot* out, FlagsDef* e){
+	pr_add(out, "type", p_flags_decl(e));
+	output_flags_type_init(out, e);
 }
 

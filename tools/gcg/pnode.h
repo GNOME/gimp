@@ -1,9 +1,12 @@
+#ifndef __PNODE_H__
+#define __PNODE_H__
 #include <glib.h>
 #include <stdio.h>
 
 typedef struct _PNode PNode;
 typedef struct _PRoot PRoot;
-PNode* p_nil;
+typedef const gconstpointer Tag;
+extern PNode* p_nil;
 
 typedef void (*PNodeTraverseFunc) (PNode* n, gpointer user_data);
 typedef PNode* (*PNodeCreateFunc) ();
@@ -20,7 +23,9 @@ PNode* p_for(GSList* l, PNodeCreateFunc func, gpointer user_data);
 void p_traverse(PNode* node, PNodeTraverseFunc func, gpointer user_data);
 
 PRoot* pr_new(void);
-void pr_add(PRoot* root, PNode* node);
-void pr_write(PRoot* root, FILE* stream);
+void pr_add(PRoot* root, const gchar* tag, PNode* node);
+void pr_write(PRoot* pr, FILE* stream, const gchar** tags, gint n);
 void pr_free(PRoot* root);
 
+
+#endif

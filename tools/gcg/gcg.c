@@ -5,13 +5,6 @@
 #include <unistd.h>
 #include "output.h"
 
-GHashTable* decl_hash;
-GHashTable* def_hash;
-Id current_module;
-Method* current_method;
-ObjectDef* current_class;
-Id current_header;
-GSList* imports;
 Type* type_gtk_type;
 
 Id func_hdr_name;
@@ -54,30 +47,21 @@ void get_options(int argc, char* argv[]){
 	}while(x!=EOF);
 }
 
-
-guint type_name_hash(gconstpointer c){
-	const TypeName* t=c;
-	return g_str_hash(t->module) ^ g_str_hash(t->type);
-}
-
-gboolean type_name_cmp(gconstpointer a, gconstpointer b){
-	const TypeName *t1=a, *t2=b;
-	return (t1->type == t2->type) && (t1->module == t2->module);
-}
-
-void output_cb(gpointer typename, gpointer def, gpointer ctx){
-	(void)typename; /* Shut off warnings */
-	output_def(ctx, def);
+void output_cb(Def* def, gpointer out){
+	output_def(out, def);
 }
 
 int main(int argc, char* argv[]){
 	/*	target=stdout;*/
-	OutCtx ctx;
+	PRoot* out=pr_new();
+	const gchar* tag_type="type";
+	const gchar* tag_source="source";
+	const gchar* tag_source_head="source_head";
+	const gchar* tag_functions="functions";
+	const gchar* tag_protected="protected";
 	
 	FILE* f;
-	
-	decl_hash=g_hash_table_new(type_name_hash, type_name_cmp);
-	def_hash=g_hash_table_new(type_name_hash, type_name_cmp);
+	init_db();
 	yydebug=0;
 	get_options(argc, argv);
 	yyin=fopen(argv[optind], "r");
@@ -87,24 +71,19 @@ int main(int argc, char* argv[]){
 	type_gtk_type->is_const=FALSE;
 	type_gtk_type->indirection=0;
 	type_gtk_type->notnull=FALSE;
-	type_gtk_type->prim=get_decl(GET_ID("Gtk"), GET_ID("Type"));
+	type_gtk_type->prim=get_type(GET_ID("Gtk"), GET_ID("Type"));
 	g_assert(type_gtk_type->prim);
-	ctx.type_hdr=pr_new();
-	ctx.func_hdr=pr_new();
-	ctx.prot_hdr=pr_new();
-	ctx.pvt_hdr=pr_new();
-	ctx.src=pr_new();
 	
-	g_hash_table_foreach(def_hash, output_cb, &ctx);
+	foreach_def(output_cb, out);
 	f=fopen(type_hdr_name, "w+");
-	pr_write(ctx.type_hdr, f);
+	pr_write(out, f, &tag_type, 1);
 	f=fopen(source_name, "w+");
-	pr_write(ctx.pvt_hdr, f);
-	pr_write(ctx.src, f);
+	pr_write(out, f, &tag_source_head, 1);
+	pr_write(out, f, &tag_source, 1);
 	f=fopen(func_hdr_name, "w+");
-	pr_write(ctx.func_hdr, f);
+	pr_write(out, f, &tag_functions, 1);
 	f=fopen(prot_hdr_name, "w+");
-	pr_write(ctx.prot_hdr, f);
+	pr_write(out, f, &tag_protected, 1);
 	return 0;
 }
 

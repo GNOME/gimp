@@ -12,7 +12,6 @@ typedef const gchar* Id;
 typedef const gchar* Header;
 
 typedef struct _Member Member;
-typedef struct _TypeName TypeName;
 typedef struct _PrimType PrimType;
 typedef struct _Type Type;
 typedef struct _ObjectDef ObjectDef;
@@ -24,17 +23,22 @@ typedef struct _Method Method;
 typedef struct _MemberClass MemberClass;
 typedef struct _DefClass DefClass;
 typedef struct _Param Param;
+typedef struct _Module Module;
 
-struct _TypeName {
-        Id module;
-	Id type;
+
+struct _Module {
+	Id name;
+	Id common_header;
+	GHashTable* decl_hash;
 };
 
 struct _PrimType {
-	TypeName name;
+	Module* module;
+	Id name;
 	GtkFundamentalType kind;
 	Id decl_header;
 	Id def_header;
+	Def* definition;
 };
 
 struct _Type {
@@ -59,6 +63,7 @@ extern DefClass enum_class;
 
 struct _EnumDef {
 	Def def;
+	PrimType* parent;
 	GSList* alternatives; /* list of Id */
 };
 
@@ -66,6 +71,7 @@ extern DefClass flags_class;
 
 struct _FlagsDef {
 	Def def;
+	PrimType* parent; /* flags to extend */
 	GSList* flags; /* list of Id */
 };
 
@@ -79,16 +85,10 @@ struct _ObjectDef {
 };
 
 typedef enum {
-	KIND_DIRECT,
-	KIND_ABSTRACT,
-	KIND_STATIC
-} MemberKind;
-
-typedef enum {
-	VIS_PUBLIC,
-	VIS_PROTECTED,
+	METH_PUBLIC,
+	METH_PROTECTED,
 	VIS_PRIVATE
-} Visibility;
+} MethProtection;
 
 typedef enum {
 	DATA_READWRITE,
@@ -105,13 +105,25 @@ typedef enum _EmitDef{
 typedef enum _MemberType{
 	MEMBER_DATA,
 	MEMBER_METHOD,
-	MEMBER_SIGNAL
 } MemberType;
 
+typedef enum _DataMemberKind{
+	DATA_STATIC,
+	DATA_DIRECT,
+	DATA_STATIC_VIRTUAL
+} DataMemberKind;
+
+typedef enum _MethodKind{
+	METH_STATIC,
+	METH_DIRECT,
+	METH_VIRTUAL,
+	METH_EMIT_PRE,
+	METH_EMIT_POST,
+	METH_EMIT_BOTH
+} MethodKind;
 
 struct _Member{
 	MemberType membertype;
-	MemberKind kind;
 	ObjectDef* my_class;
 	Id name;
 	GString* doc;
@@ -121,18 +133,19 @@ struct _Member{
 
 struct _DataMember {
 	Member member;
+	DataMemberKind kind;
 	DataProtection prot;
 	Type type;
 };
 
 struct _Method {
 	Member member;
-	Visibility prot;
+	MethodKind kind;
+	MethProtection prot;
 	GSList* params; /* list of Param* */
 	gboolean self_const;
 	Type ret_type;
 };
-
 
 struct _Param {
 	Id name;
@@ -141,22 +154,21 @@ struct _Param {
 	Type type;
 };
 
+typedef void (*DefFunc)(Def* def, gpointer user_data);
 
 
+void init_db(void);
 void put_decl(PrimType* t);
 void put_def(Def* d);
-PrimType* get_decl(Id module, Id type);
+PrimType* get_type(Id module, Id type);
 Def* get_def(Id module, Id type);
+Module* get_mod(Id module);
+void foreach_def(DefFunc f, gpointer user_data);
+
+
+
 
 extern Type* type_gtk_type;
-extern Id current_header;
-extern Id current_module;
-extern ObjectDef* current_class;
-extern GSList* imports;
-extern Method* current_method;
-
-extern GHashTable* def_hash;
-extern GHashTable* decl_hash;
 
 
 

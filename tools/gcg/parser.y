@@ -1,17 +1,27 @@
 %{
 #include "gcg.h"
 #define YYDEBUG 1
+
+static Module* current_module;
+static Id current_header;
+static ObjectDef* current_class;
+static GSList* imports;
+static Method* current_method;
+
+static GSList* imports_list;
+	
 %}
 
 %union {
 	GSList* list;
 	Id id;
 	GString* str;
-	TypeName typename;
 	PrimType* primtype;
-	Visibility methprot;
+	MethodKind methkind;
+	DataMemberKind datakind;
+	MethProtection methprot;
 	DataProtection dataprot;
-	MemberKind kind;
+	MethodKind kind;
 	Def* def;
 	ObjectDef* class_def;
 	Member* member;
@@ -33,6 +43,7 @@
 %token T_CLASS
 %token T_PRE_EMIT
 %token T_POST_EMIT
+%token T_DUAL_EMIT
 %token T_SCOPE
 %token T_ABSTRACT
 %token T_EMPTY
@@ -58,6 +69,7 @@
 %token T_INT
 %token T_DOUBLE
 %token T_BOXED
+%token T_SIGNAL
 
 %token<id> T_IDENT
 %token<id> T_HEADERNAME
@@ -68,12 +80,12 @@
 %type<type> type
 %type<type> typeorvoid
 %type<type> semitype
-%type<typename> typename
 %type<primtype> primtype
 %type<primtype> parent
 %type<list> paramlist
 %type<list> idlist
-%type<kind> kinddef
+%type<methkind> methkind
+%type<datakind> datakind
 %type<methprot> methprot
 %type<dataprot> dataprot
 %type<list> classbody
@@ -94,27 +106,29 @@
 
 start_symbol: deffile ;
 
-deffile: /* empty */ | deffile import | deffile modulescope;
+deffile: declarations definitions;
+
+declarations: /* empty */ | declarations modulescope;
+
+definitions: current_module_def deflist;
+
+deflist: /* empty */ | deflist def {
+	put_def($2);
+};
 
 import: T_IMPORT ident T_END {
 	imports=g_slist_prepend(imports, (gpointer)($2));
 }
 
 modulescope: T_MODULE ident T_OPEN_B {
-	current_module=$2;
-} modulebody T_CLOSE_B {
+	current_module=get_mod($2);
+} decllist T_CLOSE_B {
 	current_module=NULL;
 } T_END;
 
-modulebody: /* empty */ | modulebody headerdef | modulebody def {
-	put_def ($2);
-	};
-
-headerdef: T_HEADER T_HEADERNAME T_OPEN_B {
-	current_header=$2;
-} decllist T_CLOSE_B {
-	current_header=NULL;
-} T_END;
+current_module_def: T_MODULE ident T_END {
+	current_module=get_mod($2);
+};
 
 decllist: /* empty */ | decllist decl;
 
@@ -134,41 +148,10 @@ fundtype: T_INT {
 	$$ = GTK_TYPE_FLAGS;
 }
 
-simpledecl: fundtype typename T_END {
-	PrimType* t=g_new(PrimType, 1);
-	g_assert(!get_decl($2.module, $2.type));
-	t->name = $2;
-	t->kind = $1;
-	t->decl_header = current_header;
-	t->def_header = NULL;
-	put_decl(t);
+simpledecl: fundtype primtype T_END {
+	g_assert($2->kind==GTK_TYPE_INVALID);
+	$2->kind = $1;
 };
-
-/*
-protclassdecl: T_PROTECTED T_CLASS typename T_END {
-	PrimType* t;
-	t=get_decl($3.module, $3.type);
-	if(!t){
-		t=g_new(PrimType, 1);
-		t->name=$3;
-		t->kind=TYPE_CLASS;
-		t->decl_header=current_header;
-	}
-	g_assert(t->kind==TYPE_CLASS);
-	t->def_header=current_header;
-	put_decl(t);
-}
-
-opaquedecl: T_OPAQUE typename T_END {
-	PrimType* t=g_new(PrimType, 1);
-	t->name = $2;
-	t->kind=TYPE_OPAQUE;
-	t->decl_header = NULL;
-	t->def_header = current_header;
-	g_assert(!get_decl($2.module, $2.type));
-	put_decl(t);
-};
-*/
 
 semitype: const_def primtype {
 	$$.is_const = $1;
@@ -184,7 +167,8 @@ type: semitype | semitype T_NOTNULLPTR {
 	$$ = $1;
 	$$.indirection++;
 	$$.notnull = TRUE;
-}
+};
+
 
 ident: T_IDENT;
 
@@ -193,20 +177,13 @@ typeorvoid: type | T_VOID {
 	$$.indirection = 0;
 	$$.is_const = FALSE;
 	$$.notnull = FALSE;
-}
-	
-primtype: typename {
-	$$=get_decl($1.module, $1.type);
-	g_assert($$);
 };
 
-typename: ident T_SCOPE ident {
-	$$.module=$1;
-	$$.type=$3;
+	
+primtype: ident T_SCOPE ident {
+	$$ = get_type($1, $3);
 } | ident {
-	g_assert(current_module);
-	$$.module=current_module;
-	$$.type=$1;
+	$$ = get_type(current_module->name, $1);
 };
 
 paramlist: /* empty */ {
@@ -229,20 +206,38 @@ param: type ident docstring {
 	$$->type=$1;
 };
 
-kinddef: T_ABSTRACT {
-	$$ = KIND_ABSTRACT;
+methkind: T_ABSTRACT {
+	$$ = METH_VIRTUAL;
 } | T_DIRECT {
-	$$ = KIND_DIRECT;
+	$$ = METH_DIRECT;
 } | /* empty */ {
-	$$ = KIND_DIRECT;
+	$$ = METH_DIRECT;
 } | T_STATIC {
-	$$ = KIND_STATIC;
+	$$ = METH_STATIC;
+} | T_PRE_EMIT {
+	$$ = METH_EMIT_PRE;
+} | T_POST_EMIT {
+	$$ = METH_EMIT_POST;
+} | T_DUAL_EMIT {
+	$$ = METH_EMIT_BOTH;
 };
 
+
+datakind: T_ABSTRACT {
+	$$ = DATA_STATIC_VIRTUAL;
+} | T_DIRECT {
+	$$ = DATA_DIRECT;
+} | /* empty */ {
+	$$ = DATA_DIRECT;
+} | T_STATIC {
+	$$ = DATA_STATIC;
+};
+
+
 methprot: T_PROTECTED{
-	$$ = VIS_PROTECTED;
+	$$ = METH_PROTECTED;
 } | T_PUBLIC {
-	$$ = VIS_PUBLIC;
+	$$ = METH_PUBLIC;
 };
 
 dataprot: /* empty */ {
@@ -320,29 +315,30 @@ classdef: T_CLASS primtype parent docstring T_OPEN_B {
 member_def: data_member_def | method_def;
 
 
-data_member_def: dataprot kinddef type ident emitdef docstring T_END {
+
+data_member_def: dataprot datakind type ident emitdef docstring T_END {
 	DataMember* m = g_new(DataMember, 1);
 	m->prot = $1;
 	m->type = $3;
+	m->kind = $2;
 	$$ = MEMBER(m);
 	$$->membertype = MEMBER_DATA;
-	$$->kind = $2;
 	$$->name = $4;
 /* 	$$->emit = $5; */
 	$$->doc = $6;
 };
 
-method_def: methprot kinddef typeorvoid ident T_OPEN_P {
+method_def: methprot methkind typeorvoid ident T_OPEN_P {
 	current_method = g_new(Method, 1);
 } paramlist T_CLOSE_P const_def emitdef docstring T_END {
 	current_method->prot = $1;
 	current_method->ret_type = $3;
 	current_method->self_const = $9;
 	current_method->params = $7;
+	current_method->kind = $2;
 	$$=MEMBER(current_method);
 	current_method=NULL;
 	$$->membertype = MEMBER_METHOD;
-	$$->kind = $2;
 	$$->name = $4;
 	/* $$->emit = $10; */
 	$$->doc = $11;
@@ -371,4 +367,5 @@ GHashTable* class_hash;
 
 int yyerror (char* s){
 	g_error ("Parser error: %s", s);
+	return 0;
 }

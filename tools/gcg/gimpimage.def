@@ -1,56 +1,51 @@
 // this is just a simple test input file
 
 module g {
-	header <glib.h> {
-		@int int;
-	};
-	
+	@int int;
 };
 
 module Gtk {
-	header <gtk/gtktypeutils.h> {
-		@int Type;
-	};
+	@int Type;
 };
 
 module Gimp{
-	header <gimpobject.h> {
 		class Object;
-	};
-	header <gimplayer.h> {
 		class Layer;
-	};
-	
-	header <gimpdrawable.h> {
 		class Drawable;
-	};
-	
-	header <gimpimage.h> {
 		class Image;
 		enum ImageType;
 		enum ChannelType;
 		enum BaseType;
-	};
-	enum ImageType{
-		rgb, rgba, gray, graya, indexed, indexeda
-	};
-	enum ChannelType{
-		red, green, blue, gray, indexed, auxillary
-	};
-	enum BaseType{
-		rgb, gray, indexed
-	};
+};
 
-	class Image : Object{
-		read-only g.int width;
-		read-only g.int height;
-		g.int num-cols;
-		read-only BaseType base-type;
-		Layer* active-layer;
-		Layer* floating-sel;
-		
-		public static Image* new(g.int width,
-					 g.int height,
-					 BaseType base-type);
-	};
+
+module Gimp;
+
+enum ImageType{
+	rgb, rgba, gray, graya, indexed, indexeda
+};
+enum ChannelType{
+	red, green, blue, gray, indexed, auxillary
+};
+enum BaseType{
+		rgb, gray, indexed
+};
+
+class Image : Object{
+	read-only g.int width;
+	read-only g.int height;
+	g.int num-cols;
+	read-only BaseType base-type;
+	read-write g.int foobar;
+	Layer* active-layer;
+	Layer* floating-sel;
+	public static Image* new(g.int width,
+				 g.int height,
+				 BaseType base-type);
+	public void add-layer(Layer* l);
+	public static g.int foo-1(Layer* x);
+	public direct g.int foo-2(Layer* x);
+	public abstract void foo-3(g.int x);
+	public pre-emit void foo-4(g.int x) const;
+	public post-emit void foo-5(g.int x, Drawable**& n, Image* z);
 };
