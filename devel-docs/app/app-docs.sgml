@@ -764,21 +764,21 @@
     <chapter id="app-widgets-views">
       <title>Previews</title>
       <xi:include href="xml/gimpview.xml" />
-      <xi:include href="xml/gimppreview-popup.xml" />
+      <xi:include href="xml/gimpview-popup.xml" />
       <xi:include href="xml/gimpnavigationpreview.xml" />
     </chapter>
 
-    <chapter id="app-widgets-preview-renderers">
-      <title>Preview Renderers</title>
-      <xi:include href="xml/gimppreviewrenderer.xml" />
-      <xi:include href="xml/gimppreviewrenderer-utils.xml" />
-      <xi:include href="xml/gimppreviewrendererbrush.xml" />
-      <xi:include href="xml/gimppreviewrendererdrawable.xml" />
-      <xi:include href="xml/gimppreviewrenderergradient.xml" />
-      <xi:include href="xml/gimppreviewrendererimage.xml" />
-      <xi:include href="xml/gimppreviewrendererimagefile.xml" />
-      <xi:include href="xml/gimppreviewrendererlayer.xml" />
-      <xi:include href="xml/gimppreviewrenderervectors.xml" />
+    <chapter id="app-widgets-view-renderers">
+      <title>View Renderers</title>
+      <xi:include href="xml/gimpviewrenderer.xml" />
+      <xi:include href="xml/gimpviewrenderer-utils.xml" />
+      <xi:include href="xml/gimpviewrendererbrush.xml" />
+      <xi:include href="xml/gimpviewrendererdrawable.xml" />
+      <xi:include href="xml/gimpviewrenderergradient.xml" />
+      <xi:include href="xml/gimpviewrendererimage.xml" />
+      <xi:include href="xml/gimpviewrendererimagefile.xml" />
+      <xi:include href="xml/gimpviewrendererlayer.xml" />
+      <xi:include href="xml/gimpviewrenderervectors.xml" />
     </chapter>
 
     <chapter id="app-widgets-cell-renderers">
