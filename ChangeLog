@@ -1,5 +1,10 @@
 2004-05-24  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpscalecombobox.c
+	(gimp_scale_combo_box_mru_remove_last): removed debugging output.
+
+2004-05-24  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimptoolinfo.[ch]: derive GimpToolInfo from
 	GimpViewable, it doesn't make sense for it to be a GimpData.
 
