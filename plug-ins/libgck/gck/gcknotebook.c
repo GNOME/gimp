@@ -423,7 +423,7 @@ void gck_notebook_destroy(GckNoteBook *notebook)
               if (page->tab->image!=NULL)
                 gdk_image_destroy(page->tab->image);
               if (page->tab->pixmap!=NULL)
-                gdk_pixmap_unref(page->tab->pixmap);
+                gdk_pixmap_destroy(page->tab->pixmap);
               free(page->tab);
             }
           free(page);
