@@ -45,8 +45,6 @@ gint      gfig_obj_counts          (DAllObjs   *objs);
 
 void      gfig_init_object_classes (void);
 
-void      raise_selected_obj_to_top (GFigObj   *obj);
-
 #endif /* __GFIG_DOBJECT_H__ */
 
 
