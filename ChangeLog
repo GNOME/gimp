@@ -1,3 +1,13 @@
+2001-03-25 18:16:50  Adam D. Moss <adam@gimp.org>
+
+	* app/convert.c: Define accessor function/macro for histogram
+	reads and writes.  This slows us down a little because we avoid
+	some of the dirty tricks we used when we knew that the histogram
+	was a straight 3d array, so I've recovered some of the speed loss
+	by implementing a 5d accessor function with good locality of
+	reference.  This change is the first step towards quantizing in a
+	more interesting colourspace than frumpy old RGB.
+
 2001-03-24  Nathan Summers <rock@gimp.org>
 
 	* app/tools/gimpscaletool.[ch]: Made the scale tool work again.

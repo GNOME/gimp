@@ -19,12 +19,20 @@
   /*
    * TODO for Convert:
    *
-   *   Use palette of another open INDEXED image
-   *
-   *   Do error-splitting trick for GREY->INDEXED
+   * . Quantize in (for example) CIE L*a*b*
+   * . Use palette of another open INDEXED image
+   * . Do error-splitting trick for GREY->INDEXED
    */
 
 /*
+ * 2001-03-25 - Define accessor function/macro for histogram reads and
+ *  writes.  This slows us down a little because we avoid some of the
+ *  dirty tricks we used when we knew that the histogram was a straight
+ *  3d array, so I've recovered some of the speed loss by implementing
+ *  a 5d accessor function with good locality of reference.  This change
+ *  is the first step towards quantizing in a more interesting colourspace
+ *  than frumpy old RGB.  [Adam]
+ *
  * 2000/01/30 - Use palette_selector instead of option_menu for custom
  *  palette. Use libgimp callback functions.  [Sven]
  * 
@@ -125,28 +133,8 @@
 #include "libgimp/gimpintl.h"
 
 
-#define PRECISION_R 6
-#define PRECISION_G 6
-#define PRECISION_B 6
 
-#define HIST_R_ELEMS (1<<PRECISION_R)
-#define HIST_G_ELEMS (1<<PRECISION_G)
-#define HIST_B_ELEMS (1<<PRECISION_B)
-
-#define MR HIST_G_ELEMS*HIST_B_ELEMS
-#define MG HIST_B_ELEMS
-
-#define BITS_IN_SAMPLE 8
-
-#define R_SHIFT  (BITS_IN_SAMPLE-PRECISION_R)
-#define G_SHIFT  (BITS_IN_SAMPLE-PRECISION_G)
-#define B_SHIFT  (BITS_IN_SAMPLE-PRECISION_B)
-
-/* this has to match the INTENSITY definition in libgimp/gimpcolorspace.h */
-#define R_SCALE 30               /*  scale R distances by this much  */
-#define G_SCALE 59               /*  scale G distances by this much  */
-#define B_SCALE 11               /*  and B by this much              */
-
+/* bleh! */
 static const unsigned char webpal[] =
 {
   255,255,255,255,255,204,255,255,153,255,255,102,255,255,51,255,255,0,255,
@@ -327,6 +315,30 @@ static const guchar DM[128][128] =
   { 51, 14, 61, 29, 59, 20, 55, 31, 0, 49, 11, 60, 3, 26, 22, 56, 0, 40, 12, 43, 41, 8, 36, 0, 17, 57, 24, 2, 46, 26, 61, 18, 0, 38, 12, 59, 6, 49, 3, 57, 19, 63, 5, 33, 18, 54, 28, 56, 0, 43, 26, 46, 63, 27, 56, 22, 27, 54, 38, 28, 63, 24, 10, 45, 0, 31, 42, 21, 12, 25, 44, 49, 59, 6, 26, 50, 3, 34, 27, 59, 0, 35, 62, 16, 4, 58, 47, 0, 43, 24, 37, 2, 54, 20, 46, 31, 0, 56, 34, 5, 55, 45, 60, 37, 0, 40, 10, 38, 63, 46, 15, 20, 0, 53, 21, 62, 30, 11, 24, 27, 40, 0, 57, 26, 3, 45, 27, 35 },
 };
 
+
+#define PRECISION_R 6
+#define PRECISION_G 6
+#define PRECISION_B 6
+
+#define HIST_R_ELEMS (1<<PRECISION_R)
+#define HIST_G_ELEMS (1<<PRECISION_G)
+#define HIST_B_ELEMS (1<<PRECISION_B)
+
+#define MR (HIST_G_ELEMS*HIST_B_ELEMS)
+#define MG HIST_B_ELEMS
+
+#define BITS_IN_SAMPLE 8
+
+#define R_SHIFT  (BITS_IN_SAMPLE-PRECISION_R)
+#define G_SHIFT  (BITS_IN_SAMPLE-PRECISION_G)
+#define B_SHIFT  (BITS_IN_SAMPLE-PRECISION_B)
+
+/* this has to match the INTENSITY definition in libgimp/gimpcolorspace.h */
+#define R_SCALE 30               /*  scale R distances by this much  */
+#define G_SCALE 59               /*  scale G distances by this much  */
+#define B_SCALE 11               /*  and B by this much              */
+
+
 typedef struct _Color Color;
 typedef struct _QuantizeObj QuantizeObj;
 typedef void (* Pass1_Func) (QuantizeObj *);
@@ -335,6 +347,82 @@ typedef void (* Pass2_Func) (QuantizeObj *, GimpLayer *, TileManager *);
 typedef void (* Cleanup_Func) (QuantizeObj *);
 typedef unsigned long ColorFreq;
 typedef ColorFreq *CFHistogram;
+
+
+/* We effectively pull our three-dimensional space into five dimensions
+   such that the most-entropic bits lay in the lowest bits of the resulting
+   array index.  This gives significantly better locality of reference
+   and hence a small speedup despite the extra work involved in calculating
+   the index.
+
+   Why not six dimensions?  The expansion of dimensionality is good for random
+   access such as histogram population and the query pattern typical of
+   dithering but we have some code which iterates in a scanning manner, for
+   which the expansion is suboptimal.  The compromise is to leave the B
+   dimension unmolested in the lower-order bits of the index, since this is
+   the dimension most commonly iterated through in the inner loop of the
+   scans.
+
+   --adam
+
+   RhGhRlGlB
+*/
+#define VOL_GBITS  (PRECISION_G)
+#define VOL_BBITS  (PRECISION_B)
+#define VOL_RBITS  (PRECISION_R)
+#define VOL_GBITSh (VOL_GBITS - 3)
+#define VOL_GBITSl (VOL_GBITS - VOL_GBITSh)
+#define VOL_BBITSh (VOL_BBITS - 4)
+#define VOL_BBITSl (VOL_BBITS - VOL_BBITSh)
+#define VOL_RBITSh (VOL_RBITS - 3)
+#define VOL_RBITSl (VOL_RBITS - VOL_RBITSh)
+#define VOL_GMASKh (((1<<VOL_GBITSh)-1) << VOL_GBITSl)
+#define VOL_GMASKl ((1<<VOL_GBITSl)-1)
+#define VOL_BMASKh (((1<<VOL_BBITSh)-1) << VOL_BBITSl)
+#define VOL_BMASKl ((1<<VOL_BBITSl)-1)
+#define VOL_RMASKh (((1<<VOL_RBITSh)-1) << VOL_RBITSl)
+#define VOL_RMASKl ((1<<VOL_RBITSl)-1)
+/* The 5d compromise thing. */
+#define REF_FUNC(r,g,b) \
+( \
+ (((r) & VOL_RMASKh) << (VOL_BBITS + VOL_GBITS)) | \
+ (((r) & VOL_RMASKl) << (VOL_GBITSl + VOL_BBITS)) | \
+ (((g) & VOL_GMASKh) << (VOL_RBITSl + VOL_BBITS)) | \
+ (((g) & VOL_GMASKl) << (VOL_BBITS)) | \
+ (b) \
+)
+/* The full-on 6d thing. */
+/*
+#define REF_FUNC(r,g,b) \
+( \
+ (((r) & VOL_RMASKh) << (VOL_BBITS + VOL_GBITS)) | \
+ (((r) & VOL_RMASKl) << (VOL_GBITSl + VOL_BBITSl)) | \
+ (((g) & VOL_GMASKh) << (VOL_RBITSl + VOL_BBITS)) | \
+ (((g) & VOL_GMASKl) << (VOL_BBITSl)) | \
+ (((b) & VOL_BMASKh) << (VOL_RBITSl + VOL_GBITSl)) | \
+ ((b) & VOL_BMASKl) \
+)
+*/
+/* The boring old 3d thing. */
+/*
+#define REF_FUNC(r,g,b) (((r)<<(PRECISION_G+PRECISION_B)) | ((g)<<(PRECISION_B)) | (b))
+*/
+
+/* You even get to choose whether you want the accessor function
+   implemented as a macro or an inline function.  Don't say I never
+   give you anything. */
+/*
+#define HIST_RGB(hist_ptr,r,g,b) (&(hist_ptr)[REF_FUNC((r),(g),(b))])
+*/  
+static inline
+ColorFreq * HIST_RGB(const ColorFreq *hist_ptr,
+		     const int r, const int g, const int b)
+{
+  return (&(hist_ptr)[
+		      REF_FUNC(r,g,b)
+  ]);
+}
+
 
 struct _Color
 {
@@ -1608,12 +1696,8 @@ zero_histogram_gray (CFHistogram histogram)
 static void
 zero_histogram_rgb (CFHistogram histogram)
 {
-  int r, g, b;
-
-  for (r = 0; r < HIST_R_ELEMS; r++)
-    for (g = 0; g < HIST_G_ELEMS; g++)
-      for (b = 0; b < HIST_B_ELEMS; b++)
-	histogram[r*MR + g*MG + b] = 0;
+  memset(histogram, 0,
+	 HIST_R_ELEMS * HIST_G_ELEMS * HIST_B_ELEMS * sizeof(ColorFreq));
 }
 
 
@@ -1701,9 +1785,10 @@ generate_histogram_rgb (CFHistogram  histogram,
 		       )
 		      || (!has_alpha))
 		    {
-		      colfreq = & histogram[(data[RED_PIX] >> R_SHIFT) * MR +
-					   (data[GREEN_PIX] >> G_SHIFT) * MG +
-					   (data[BLUE_PIX] >> B_SHIFT)];
+		      colfreq = HIST_RGB(histogram,
+					 data[RED_PIX] >> R_SHIFT,
+					 data[GREEN_PIX] >> G_SHIFT,
+					 data[BLUE_PIX] >> B_SHIFT);
 		      (*colfreq)++;
 		    }
 
@@ -1729,9 +1814,10 @@ generate_histogram_rgb (CFHistogram  histogram,
 		       )
 		      || (!has_alpha))
 		    {
-		      colfreq = & histogram[(data[RED_PIX] >> R_SHIFT) * MR +
-					   (data[GREEN_PIX] >> G_SHIFT) * MG +
-					   (data[BLUE_PIX] >> B_SHIFT)];
+		      colfreq = HIST_RGB(histogram,
+					 data[RED_PIX] >> R_SHIFT,
+					 data[GREEN_PIX] >> G_SHIFT,
+					 data[BLUE_PIX] >> B_SHIFT);
 		      (*colfreq)++;
 		    }
 		  data += srcPR.bytes;
@@ -1751,9 +1837,10 @@ generate_histogram_rgb (CFHistogram  histogram,
 				 ((data[ALPHA_PIX] << 6) > (255 * DM[col&DM_WIDTHMASK][row&DM_HEIGHTMASK])) :
 				 (data[ALPHA_PIX] > 127))) || (!has_alpha))
 		{
-		  colfreq = & histogram[(data[RED_PIX] >> R_SHIFT) * MR +
-				       (data[GREEN_PIX] >> G_SHIFT) * MG +
-				       (data[BLUE_PIX] >> B_SHIFT)];
+		  colfreq = HIST_RGB(histogram,
+				     data[RED_PIX] >> R_SHIFT,
+				     data[GREEN_PIX] >> G_SHIFT,
+				     data[BLUE_PIX] >> B_SHIFT);
 		  (*colfreq)++;
 		      
 		  if (!needs_quantize)
@@ -1894,7 +1981,7 @@ update_box_gray (CFHistogram histogram,
 /* and recompute its volume and population */
 {
   int i, min, max, dist;
-  long ccount;
+  ColorFreq ccount;
 
   min = boxp->Rmin;
   max = boxp->Rmax;
@@ -1945,11 +2032,10 @@ update_box_rgb (CFHistogram histogram,
 /* Shrink the min/max bounds of a box to enclose only nonzero elements, */
 /* and recompute its volume, population and error */
 {
-  ColorFreq * histp;
   int R,G,B;
   int Rmin,Rmax,Gmin,Gmax,Bmin,Bmax;
   int dist0,dist1,dist2;
-  long ccount;
+  ColorFreq ccount;
   guint64 tempRerror;
   guint64 tempGerror;
   guint64 tempBerror;
@@ -1964,78 +2050,84 @@ update_box_rgb (CFHistogram histogram,
     for (R = Rmin; R <= Rmax; R++)
       for (G = Gmin; G <= Gmax; G++)
 	{
-	  histp = histogram + R*MR + G*MG + Bmin;
 	  for (B = Bmin; B <= Bmax; B++)
-	    if (*histp++ != 0)
-	      {
-		boxp->Rmin = Rmin = R;
-		goto have_Rmin;
-	      }
+	    {
+	      if (*HIST_RGB(histogram, R, G, B) != 0)
+		{
+		  boxp->Rmin = Rmin = R;
+		  goto have_Rmin;
+		}
+	    }
 	}
  have_Rmin:
   if (Rmax > Rmin)
     for (R = Rmax; R >= Rmin; R--)
       for (G = Gmin; G <= Gmax; G++)
 	{
-	  histp = histogram + R*MR + G*MG + Bmin;
 	  for (B = Bmin; B <= Bmax; B++)
-	    if (*histp++ != 0)
-	      {
-		boxp->Rmax = Rmax = R;
-		goto have_Rmax;
-	      }
+	    {
+	      if (*HIST_RGB(histogram, R, G, B) != 0)
+		{
+		  boxp->Rmax = Rmax = R;
+		  goto have_Rmax;
+		}
+	    }
 	}
  have_Rmax:
   if (Gmax > Gmin)
     for (G = Gmin; G <= Gmax; G++)
       for (R = Rmin; R <= Rmax; R++)
 	{
-	  histp = histogram + R*MR + G*MG + Bmin;
 	  for (B = Bmin; B <= Bmax; B++)
-	    if (*histp++ != 0)
-	      {
-		boxp->Gmin = Gmin = G;
-		goto have_Gmin;
-	      }
+	    {
+	      if (*HIST_RGB(histogram, R, G, B) != 0)
+		{
+		  boxp->Gmin = Gmin = G;
+		  goto have_Gmin;
+		}
+	    }
 	}
  have_Gmin:
   if (Gmax > Gmin)
     for (G = Gmax; G >= Gmin; G--)
       for (R = Rmin; R <= Rmax; R++)
 	{
-	  histp = histogram + R*MR + G*MG + Bmin;
 	  for (B = Bmin; B <= Bmax; B++)
-	    if (*histp++ != 0)
-	      {
-		boxp->Gmax = Gmax = G;
-		goto have_Gmax;
-	      }
+	    {
+	      if (*HIST_RGB(histogram, R, G, B) != 0)
+		{
+		  boxp->Gmax = Gmax = G;
+		  goto have_Gmax;
+		}
+	    }
 	}
  have_Gmax:
   if (Bmax > Bmin)
     for (B = Bmin; B <= Bmax; B++)
       for (R = Rmin; R <= Rmax; R++)
 	{
-	  histp = histogram + R*MR + Gmin*MG + B;
-	  for (G = Gmin; G <= Gmax; G++, histp += MG)
-	    if (*histp != 0)
-	      {
-		boxp->Bmin = Bmin = B;
-		goto have_Bmin;
-	      }
+	  for (G = Gmin; G <= Gmax; G++)
+	    {
+	      if (*HIST_RGB(histogram, R, G, B) != 0)
+		{
+		  boxp->Bmin = Bmin = B;
+		  goto have_Bmin;
+		}
+	    }
 	}
  have_Bmin:
   if (Bmax > Bmin)
     for (B = Bmax; B >= Bmin; B--)
       for (R = Rmin; R <= Rmax; R++)
 	{
-	  histp = histogram + R*MR + Gmin*MG + B;
-	  for (G = Gmin; G <= Gmax; G++, histp += MG)
-	    if (*histp != 0)
-	      {
-		boxp->Bmax = Bmax = B;
-		goto have_Bmax;
-	      }
+	  for (G = Gmin; G <= Gmax; G++)
+	    {
+	      if (*HIST_RGB(histogram, R, G, B) != 0)
+		{
+		  boxp->Bmax = Bmax = B;
+		  goto have_Bmax;
+		}
+	    }
 	}
  have_Bmax:
 
@@ -2066,32 +2158,35 @@ update_box_rgb (CFHistogram histogram,
   for (R = Rmin; R <= Rmax; R++)
     for (G = Gmin; G <= Gmax; G++)
       {
-	histp = histogram + R*MR + G*MG + Bmin;
-	for (B = Bmin; B <= Bmax; B++, histp++)
-	  if (*histp != 0)
-	    {
-	      int ge, be, re;
-
-	      dummybox.Rmin = dummybox.Rmax = R;
-	      dummybox.Gmin = dummybox.Gmax = G;
-	      dummybox.Bmin = dummybox.Bmax = B;
-	      compute_color_rgb(&dummyqo, histogram, &dummybox, 1);
-
-	      re = dummyqo.cmap[0].red   - dummyqo.cmap[1].red;
-	      ge = dummyqo.cmap[0].green - dummyqo.cmap[1].green;
-	      be = dummyqo.cmap[0].blue  - dummyqo.cmap[1].blue;
-
-	      boxp->rerror += (*histp) * re*re;
-	      boxp->gerror += (*histp) * ge*ge;
-	      boxp->berror += (*histp) * be*be;
-
-	      boxp->error += (*histp) *
-		(
-		 re*re*R_SCALE + ge*ge*G_SCALE + be*be*B_SCALE
-		 );
-
-	      ccount += *histp;
-	    }
+	for (B = Bmin; B <= Bmax; B++)
+	  {
+	    ColorFreq freq_here;
+	    freq_here = *HIST_RGB(histogram, R, G, B);
+	    if (freq_here != 0)
+	      {
+		int ge, be, re;
+		
+		dummybox.Rmin = dummybox.Rmax = R;
+		dummybox.Gmin = dummybox.Gmax = G;
+		dummybox.Bmin = dummybox.Bmax = B;
+		compute_color_rgb(&dummyqo, histogram, &dummybox, 1);
+		
+		re = dummyqo.cmap[0].red   - dummyqo.cmap[1].red;
+		ge = dummyqo.cmap[0].green - dummyqo.cmap[1].green;
+		be = dummyqo.cmap[0].blue  - dummyqo.cmap[1].blue;
+		
+		boxp->rerror += freq_here * re*re;
+		boxp->gerror += freq_here * ge*ge;
+		boxp->berror += freq_here * be*be;
+		
+		boxp->error += freq_here *
+		  (
+		   re*re*R_SCALE + ge*ge*G_SCALE + be*be*B_SCALE
+		   );
+		
+		ccount += freq_here;
+	      }
+	  }
       }
 
   /* Scan again, taking note of halfway error point for red axis */
@@ -2103,23 +2198,26 @@ update_box_rgb (CFHistogram histogram,
       for (G = Gmin; G <= Gmax; G++)
 	{
 	  dummybox.Gmin = dummybox.Gmax = G;
-	  histp = histogram + R*MR + G*MG + Bmin;
-	  for (B = Bmin; B <= Bmax; B++, histp++)
-	    if (*histp != 0)
-	      {
-		int re;
-		dummybox.Bmin = dummybox.Bmax = B;
-		compute_color_rgb(&dummyqo, histogram, &dummybox, 1);
-		
-		re = dummyqo.cmap[0].red   - dummyqo.cmap[1].red;
-		
-		tempRerror += (*histp)*re*re;
-
-		if (tempRerror*2 > boxp->rerror)
-		  goto green_axisscan;
-		else
-		  boxp->Rhalferror = R;
-	      }
+	  for (B = Bmin; B <= Bmax; B++)
+	    {
+	      ColorFreq freq_here;
+	      freq_here = *HIST_RGB(histogram, R, G, B);
+	      if (freq_here != 0)
+		{
+		  int re;
+		  dummybox.Bmin = dummybox.Bmax = B;
+		  compute_color_rgb(&dummyqo, histogram, &dummybox, 1);
+		  
+		  re = dummyqo.cmap[0].red   - dummyqo.cmap[1].red;
+		  
+		  tempRerror += freq_here * re*re;
+		  
+		  if (tempRerror*2 > boxp->rerror)
+		    goto green_axisscan;
+		  else
+		    boxp->Rhalferror = R;
+		}
+	    }
 	}
     }
 
@@ -2133,23 +2231,26 @@ update_box_rgb (CFHistogram histogram,
       for (R = Rmin; R <= Rmax; R++)
 	{
 	  dummybox.Rmin = dummybox.Rmax = R;
-	  histp = histogram + R*MR + G*MG + Bmin;
-	  for (B = Bmin; B <= Bmax; B++, histp++)
-	    if (*histp != 0)
-	      {
-		int ge;
-		dummybox.Bmin = dummybox.Bmax = B;
-		compute_color_rgb(&dummyqo, histogram, &dummybox, 1);
-		
-		ge = dummyqo.cmap[0].green - dummyqo.cmap[1].green;
-				
-		tempGerror += (*histp)*ge*ge;
-
-		if (tempGerror*2 > boxp->gerror)
-		  goto blue_axisscan;
-		else
-		  boxp->Ghalferror = G;
-	      }
+	  for (B = Bmin; B <= Bmax; B++)
+	    {
+	      ColorFreq freq_here;
+	      freq_here = *HIST_RGB(histogram, R, G, B);
+	      if (freq_here != 0)
+		{
+		  int ge;
+		  dummybox.Bmin = dummybox.Bmax = B;
+		  compute_color_rgb(&dummyqo, histogram, &dummybox, 1);
+		  
+		  ge = dummyqo.cmap[0].green - dummyqo.cmap[1].green;
+		  
+		  tempGerror += freq_here * ge*ge;
+		  
+		  if (tempGerror*2 > boxp->gerror)
+		    goto blue_axisscan;
+		  else
+		    boxp->Ghalferror = G;
+		}
+	    }
 	}
     }
 
@@ -2165,8 +2266,9 @@ update_box_rgb (CFHistogram histogram,
 	  dummybox.Rmin = dummybox.Rmax = R;
 	  for (G = Gmin; G <= Gmax; G++)
 	    {
-	      histp = histogram + R*MR + G*MG + B;
-	      if (*histp != 0)
+	      ColorFreq freq_here;
+	      freq_here = *HIST_RGB(histogram, R, G, B);
+	      if (freq_here != 0)
 		{
 		  int be;		  
 		  dummybox.Gmin = dummybox.Gmax = G;
@@ -2174,7 +2276,7 @@ update_box_rgb (CFHistogram histogram,
 		  
 		  be = dummyqo.cmap[0].blue  - dummyqo.cmap[1].blue;
 		  
-		  tempBerror += (*histp)*be*be;
+		  tempBerror += freq_here * be*be;
 
 		  if (tempBerror*2 > boxp->berror)
 		    goto finished_axesscan;
@@ -2402,16 +2504,14 @@ compute_color_rgb (QuantizeObj *quantobj,
 {
   /* Current algorithm: mean weighted by pixels (not colors) */
   /* Note it is important to get the rounding correct! */
-  ColorFreq * histp;
   int R, G, B;
   int Rmin, Rmax;
   int Gmin, Gmax;
   int Bmin, Bmax;
-  long count;
-  long total = 0;
-  long Rtotal = 0;
-  long Gtotal = 0;
-  long Btotal = 0;
+  ColorFreq total = 0;
+  ColorFreq Rtotal = 0;
+  ColorFreq Gtotal = 0;
+  ColorFreq Btotal = 0;
 
   Rmin = boxp->Rmin;  Rmax = boxp->Rmax;
   Gmin = boxp->Gmin;  Gmax = boxp->Gmax;
@@ -2420,24 +2520,24 @@ compute_color_rgb (QuantizeObj *quantobj,
   for (R = Rmin; R <= Rmax; R++)
     for (G = Gmin; G <= Gmax; G++)
       {
-	histp = histogram + R*MR + G*MG + Bmin;
 	for (B = Bmin; B <= Bmax; B++)
 	  {
-	    if ((count = *histp++) != 0)
+	    ColorFreq this_freq = *HIST_RGB(histogram, R, G, B);
+	    if (this_freq != 0)
 	      {
-		total += count;
-		Rtotal += ((R << R_SHIFT) + ((1<<R_SHIFT)>>1)) * count;
-		Gtotal += ((G << G_SHIFT) + ((1<<G_SHIFT)>>1)) * count;
-		Btotal += ((B << B_SHIFT) + ((1<<B_SHIFT)>>1)) * count;
+		total += this_freq;
+		Rtotal += ((R << R_SHIFT) + ((1<<R_SHIFT)>>1)) * this_freq;
+		Gtotal += ((G << G_SHIFT) + ((1<<G_SHIFT)>>1)) * this_freq;
+		Btotal += ((B << B_SHIFT) + ((1<<B_SHIFT)>>1)) * this_freq;
 	      }
 	  }
       }
 
   if (total != 0)
     {
-      quantobj->cmap[icolor].red = (Rtotal + (total>>1)) / total;
+      quantobj->cmap[icolor].red   = (Rtotal + (total>>1)) / total;
       quantobj->cmap[icolor].green = (Gtotal + (total>>1)) / total;
-      quantobj->cmap[icolor].blue = (Btotal + (total>>1)) / total;
+      quantobj->cmap[icolor].blue  = (Btotal + (total>>1)) / total;
     }
   else /* The only situation where total==0 is if the image was null or
 	*  all-transparent.  In that case we just put a dummy value in
@@ -2856,7 +2956,6 @@ fill_inverse_cmap_rgb (QuantizeObj *quantobj,
   int minR, minG, minB;	/* lower left corner of update box */
   int iR, iG, iB;
   int * cptr;   	/* pointer into bestcolor[] array */
-  ColorFreq * cachep;	/* pointer into main cache array */
   /* This array lists the candidate colormap indexes. */
   int colorlist[MAXNUMCOLORS];
   int numcolors;		/* number of candidate colors */
@@ -2892,9 +2991,8 @@ fill_inverse_cmap_rgb (QuantizeObj *quantobj,
   cptr = bestcolor;
   for (iR = 0; iR < BOX_R_ELEMS; iR++) {
     for (iG = 0; iG < BOX_G_ELEMS; iG++) {
-      cachep = & histogram[(R+iR)*MR+(G+iG)*MG+B];
       for (iB = 0; iB < BOX_B_ELEMS; iB++) {
-	*cachep++ = (*cptr++) + 1;
+	*HIST_RGB(histogram, R+iR, G+iG, B+iB) = (*cptr++) + 1;
       }
     }
   }
@@ -3165,7 +3263,7 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
 	      R = (src[red_pix]) >> R_SHIFT;
 	      G = (src[green_pix]) >> G_SHIFT;
 	      B = (src[blue_pix]) >> B_SHIFT;
-	      cachep = &histogram[R*MR + G*MG + B];
+	      cachep = HIST_RGB(histogram,R,G,B);
 	      /* If we have not seen this color before, find nearest
 		 colormap entry and update the cache */
 	      if (*cachep == 0)
@@ -3246,7 +3344,7 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
 	      R = (src[red_pix]) >> R_SHIFT;
 	      G = (src[green_pix]) >> G_SHIFT;
 	      B = (src[blue_pix]) >> B_SHIFT;
-	      cachep = &histogram[R*MR + G*MG + B];
+	      cachep = HIST_RGB(histogram,R,G,B);
 	      /* If we have not seen this color before, find nearest
 		 colormap entry and update the cache */
 	      if (*cachep == 0)
@@ -3271,7 +3369,7 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
 	      G = (CLAMP0255(color->green + ge)) >> G_SHIFT;
 	      B = (CLAMP0255(color->blue + be)) >> B_SHIFT;
 
-	      cachep = &histogram[R*MR + G*MG + B];
+	      cachep = HIST_RGB(histogram,R,G,B);
 	      /* If we have not seen this color before, find nearest
 		 colormap entry and update the cache */
 	      if (*cachep == 0)
@@ -3824,7 +3922,7 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
 	  ge = g >> G_SHIFT;
 	  be = b >> B_SHIFT;
 
-	  cachep = &histogram[re*MR + ge*MG + be];
+	  cachep = HIST_RGB(histogram, re, ge, be);
 	  /* If we have not seen this color before, find nearest
 	     colormap entry and update the cache */
 	  if (*cachep == 0)
