@@ -144,7 +144,6 @@ gimp_memsize_entry_new (gulong  value,
 			gulong  upper)
 {
   GimpMemsizeEntry *entry;
-  GtkWidget        *spinbutton;
   guint             shift;
 
   g_return_val_if_fail (value >= lower && value <= upper, NULL);
@@ -162,17 +161,17 @@ gimp_memsize_entry_new (gulong  value,
   entry->upper = upper;
   entry->shift = shift;
   
-  spinbutton = gimp_spin_button_new ((GtkObject **) &entry->adjustment,
-                                     value >> shift,
-                                     lower >> shift,
-                                     upper >> shift, 1, 8, 0, 1, 0);
+  entry->spinbutton = gimp_spin_button_new ((GtkObject **) &entry->adjustment,
+                                            value >> shift,
+                                            lower >> shift,
+                                            upper >> shift, 1, 8, 0, 1, 0);
 
   g_object_ref (entry->adjustment);
   gtk_object_sink (GTK_OBJECT (entry->adjustment));
 
-  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
-  gtk_box_pack_start (GTK_BOX (entry), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton);
+  gtk_entry_set_width_chars (GTK_ENTRY (entry->spinbutton), 10);
+  gtk_box_pack_start (GTK_BOX (entry), entry->spinbutton, FALSE, FALSE, 0);
+  gtk_widget_show (entry->spinbutton);
 
   g_signal_connect (entry->adjustment, "value_changed",
                     G_CALLBACK (gimp_memsize_entry_adj_callback),

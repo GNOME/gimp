@@ -3,33 +3,34 @@
 #ifndef __GIMP_RC_BLURBS_H__
 #define __GIMP_RC_BLURBS_H__
 
-
-#define RESTORE_SESSION_BLURB \
-"Let GIMP try to restore your last saved session."
+/*  Not all strings defined here are used in the user interface
+ *  and only those that are should be marked for translation.
+ */
 
 #define BRUSH_PATH_BLURB \
 "Sets the brush search path."
 
 #define CANVAS_PADDING_MODE_BLURB \
-"Sets the canvas padding mode."
+N_("Specifies how the area around the image should be drawn.")
 
 #define CANVAS_PADDING_COLOR_BLURB \
-"Sets the canvas padding color."
+N_("Sets the canvas padding color used if the padding mode is set to " \
+   "custom color.")
 
 #define COLORMAP_CYCLING_BLURB \
-"Specify that marching ants for selected regions will be drawn with " \
-"colormap cycling as oposed to redrawing with different stipple masks. " \
-"This color cycling option works only with 8-bit displays."
+N_("Specify that marching ants for selected regions will be drawn with " \
+   "colormap cycling as opposed to be drawn as animated lines.  This color " \
+   "cycling option works only with 8-bit displays.")
 
 #define CONFIRM_ON_CLOSE_BLURB \
-"Ask for confirmation before closing an image without saving."
+N_("Ask for confirmation before closing an image without saving.")
 
 #define CURSOR_MODE_BLURB \
-"Sets the mode of cursor the GIMP will use."
+N_("Sets the mode of cursor the GIMP will use.")
 
 #define CURSOR_UPDATING_BLURB \
-"Context-dependent cursors are cool.  They are enabled by default. " \
-"However, they require overhead that you may want to do without."
+N_("Context-dependent cursors are cool.  They are enabled by default. " \
+   "However, they require overhead that you may want to do without.")
 
 #define DEFAULT_BRUSH_BLURB \
 "Specify a default brush.  The brush is searched for in the " \
@@ -39,8 +40,8 @@
 "Sets the default comment."
 
 #define DEFAULT_DOT_FOR_DOT_BLURB \
-"When set to yes, this will ensure that each pixel of an image gets " \
-"mapped to a pixel on the screen."
+N_("When set to yes, this will ensure that each pixel of an image gets " \
+   "mapped to a pixel on the screen.")
 
 #define DEFAULT_GRADIENT_BLURB \
 "Specify a default gradient.  The gradient is searched for in the " \
@@ -68,11 +69,11 @@
 "File/New dialog."
 
 #define DEFAULT_THRESHOLD_BLURB \
-"Tools such as fuzzy-select and bucket fill find regions based on a " \
-"seed-fill algorithm.  The seed fill starts at the intially selected " \
-"pixel and progresses in all directions until the difference of pixel " \
-"intensity from the original is greater than a specified threshold. " \
-"This value represents the default threshold."
+N_("Tools such as fuzzy-select and bucket fill find regions based on a " \
+   "seed-fill algorithm.  The seed fill starts at the intially selected " \
+   "pixel and progresses in all directions until the difference of pixel " \
+   "intensity from the original is greater than a specified threshold. " \
+   "This value represents the default threshold.")
 
 #define DEFAULT_UNIT_BLURB \
 "Sets the default unit for new images and for the File/New dialog. " \
@@ -118,11 +119,11 @@
 "Sets the gradient search path."
 
 #define HELP_BROWSER_BLURB \
-"Sets the browser gimp-help will use."
+N_("Sets the browser used by the help system.")
 
 #define IMAGE_STATUS_FORMAT_BLURB \
-"Sets the text to appear in image window status bars. See image-title-format " \
-"for the list of possible % sequences."
+"Sets the text to appear in image window status bars. See " \
+"image-title-format for the list of possible % sequences."
 
 #define IMAGE_TITLE_FORMAT_BLURB \
 "Sets the text to appear in image window titles.  Certain % character " \
@@ -150,28 +151,30 @@
 "%U  unit abbreviation\n\n"
 
 #define INFO_WINDOW_PER_DISPLAY_BLURB \
-"When set to yes, the GIMP will use a different info window per image " \
-"view."
+N_("When set to yes, the GIMP will use a different info window per image " \
+   "view.")
 
 #define INSTALL_COLORMAP_BLURB \
-"Install a private colormap; might be useful on pseudocolor visuals."
+N_("Install a private colormap; might be useful on pseudocolor visuals.")
 
 #define INTERPOLATION_TYPE_BLURB \
-"Sets the level of interpolation used for scaling and other transformations."
+N_("Sets the level of interpolation used for scaling and other " \
+   "transformations.")
 
 #define LAST_OPENED_SIZE_BLURB \
-"How many recently opened image filenames to keep on the File menu."
+N_("How many recently opened image filenames to keep on the File menu.")
 
 #define MARCHING_ANTS_SPEED_BLURB \
-"Speed of marching ants in the selection outline.  This value is in " \
-"milliseconds (less time indicates faster marching)."
+N_("Speed of marching ants in the selection outline.  This value is in " \
+   "milliseconds (less time indicates faster marching).")
 
 #define MAX_NEW_IMAGE_SIZE_BLURB  \
-"Sets the max-new-image-size limit."
+N_("GIMP will warn the user if an attempt is made to create an image that " \
+   "would take more memory than the size specified here.")
 
 #define MIN_COLORS_BLURB  \
-"Generally only a concern for 8-bit displays, this sets the minimum " \
-"number of colors."
+N_("Generally only a concern for 8-bit displays, this sets the minimum " \
+   "number of system colors allocated for the GIMP.")
 
 #define MODULE_PATH_BLURB \
 "Sets the module search path."
@@ -194,11 +197,12 @@
 "resolution information."
 
 #define NAVIGATION_PREVIEW_SIZE_BLURB \
-"Sets the navigation preview size."
+N_("Sets the size of the navigation preview available in the lower right " \
+   "corner of the image window.")
 
 #define NUM_PROCESSORS_BLURB \
-"On multiprocessor machines, if GIMP has been compiled with --enable-mp " \
-"this sets how many processors GIMP should use simultaneously."
+N_("On multiprocessor machines, if GIMP has been compiled with --enable-mp " \
+   "this sets how many processors GIMP should use simultaneously.")
 
 #define PALETTE_PATH_BLURB \
 "Sets the palette search path."
@@ -207,11 +211,11 @@
 "Sets the pattern search path."
 
 #define PERFECT_MOUSE_BLURB \
-"When set to yes, the X server is queried for the mouse's current " \
-"position on each motion event, rather than relying on the position " \
-"hint.  This means painting with large brushes should be more accurate, " \
-"but it may be slower.  Perversely, on some X servers turning on this " \
-"option results in faster painting."
+N_("When set to yes, the X server is queried for the mouse's current " \
+   "position on each motion event, rather than relying on the position " \
+   "hint.  This means painting with large brushes should be more accurate, " \
+   "but it may be slower.  Perversely, on some X servers turning on this " \
+   "option results in faster painting.")
 
 #define PLUG_IN_PATH_BLURB \
 "Sets the plug-in search path."
@@ -220,70 +224,69 @@
 "Sets the pluginrc search path."
 
 #define PREVIEW_SIZE_BLURB \
-"Sets the default preview size."
+N_("Sets the default preview size.")
 
 #define RESIZE_WINDOWS_ON_RESIZE_BLURB \
-"When the physical image size changes, setting this option to yes " \
-"enables the automatic resizing of windows."
+N_("When the physical image size changes, setting this option to yes " \
+   "enables the automatic resizing of windows.")
 
 #define RESIZE_WINDOWS_ON_ZOOM_BLURB \
-"When zooming into and out of images, this setting this option to " \
-"yes enables the automatic resizing of windows."
+N_("When zooming into and out of images, setting this option to yes " \
+   "enables the automatic resizing of windows.")
+
+#define RESTORE_SESSION_BLURB \
+N_("Let GIMP try to restore your last saved session on each startup.")
 
 #define SAVE_DEVICE_STATUS_BLURB \
-"Remember the current tool, pattern, color, and brush across GIMP " \
-"sessions."
+N_("Remember the current tool, pattern, color, and brush across GIMP " \
+   "sessions.")
 
 #define SAVE_SESSION_INFO_BLURB \
-"Remember the positions and sizes of the main dialogs and asks your " \
-"window-manager to place them there again the next time you use the " \
-"GIMP."
+N_("Save the positions and sizes of the main dialogs when the GIMP exits.")
 
 #define SCRIPT_FU_PATH_BLURB \
 "This path will be searched for scripts when the Script-Fu plug-in is run."
 
 #define SHOW_MENUBAR_BLURB \
-"Sets the menubar visibility. This can also be toggled with the "\
-"View->Toggle Menubar command."
+N_("Sets the default menubar visibility. This can also be toggled with the "\
+   "View->Toggle Menubar command.")
 
 #define SHOW_RULERS_BLURB \
-"Sets the ruler visibility. This can also be toggled with the " \
-"View->Toggle Rulers command."
+N_("Sets the default ruler visibility. This can also be toggled with the " \
+   "View->Toggle Rulers command.")
 
 #define SHOW_STATUSBAR_BLURB \
-"Set to yes to make the statusbar visible. This can also be toggled "\
-"with the View->Toggle Statusbar command."
+N_("Set to yes to make the statusbar visible by default. This can also be " \
+   "toggled with the View->Toggle Statusbar command.")
 
 #define SHOW_TIPS_BLURB \
-"To display a handy GIMP tip on startup, set to yes."
+N_("To display a handy GIMP tip on startup, set to yes.")
 
 #define SHOW_TOOL_TIPS_BLURB \
-"To display tooltips, set to yes."
+N_("To display tooltips, set to yes.")
 
 #define STINGY_MEMORY_USE_BLURB \
-"There is always a tradeoff between memory usage and speed.  In most " \
-"cases, the GIMP opts for speed over memory.  However, if memory is a " \
-"big issue, set stingy-memory-use to yes."
+N_("There is always a tradeoff between memory usage and speed.  In most " \
+   "cases, the GIMP opts for speed over memory.  However, if memory is a " \
+   "big issue, try to enable this setting.")
 
 #define SWAP_PATH_BLURB \
-"Sets the swap file location. The gimp uses a tile based memory " \
-"allocation scheme. The swap file is used to quickly and easily " \
-"swap tiles out to disk and back in. Be aware that the swap file " \
-"can easily get very large if the GIMP is used with large images. " \
-"Also, things can get horribly slow if the swap file is created on " \
-"a directory that is mounted over NFS.  For these reasons, it may " \
-"be desirable to put your swap file in \"/tmp\"."
+N_("Sets the swap file location. The gimp uses a tile based memory " \
+   "allocation scheme. The swap file is used to quickly and easily " \
+   "swap tiles out to disk and back in. Be aware that the swap file " \
+   "can easily get very large if the GIMP is used with large images. " \
+   "Also, things can get horribly slow if the swap file is created on " \
+   "a directory that is mounted over NFS.  For these reasons, it may " \
+   "be desirable to put your swap file in \"/tmp\".")
 
 #define TEAROFF_MENUS_BLURB  \
-"When set to yes, enables tear off menus." 
+N_("When set to yes, enables tear off menus.")
 
 #define TEMP_PATH_BLURB \
-"Sets the temporary storage directory. Files will appear here " \
-"during the course of running the GIMP.  Most files will disappear " \
-"when the GIMP exits, but some files are likely to remain, " \
-"such as working palette files, so it is best if this directory " \
-"not be one that is shared by other users or is cleared on machine " \
-"reboot such as /tmp."
+N_("Sets the temporary storage directory. Files will appear here " \
+   "during the course of running the GIMP.  Most files will disappear " \
+   "when the GIMP exits, but some files are likely to remain, so it is" \
+   "best if this directory not be one that is shared by other users.")
 
 #define THEME_BLURB  \
 "The name of the theme to use." 
@@ -292,33 +295,33 @@
 "Sets the theme search path."
 
 #define THUMBNAIL_SIZE_BLURB \
-"Sets the thumbnail size."
+N_("Sets the size of the thumbnail saved with each image.")
 
 #define TILE_CACHE_SIZE_BLURB \
-"The tile cache is used to make sure the GIMP doesn't thrash " \
-"tiles between memory and disk. Setting this value higher will " \
-"cause the GIMP to use less swap space, but will also cause " \
-"the GIMP to use more memory. Conversely, a smaller cache size " \
-"causes the GIMP to use more swap space and less memory."
+N_("The tile cache is used to make sure the GIMP doesn't thrash " \
+   "tiles between memory and disk. Setting this value higher will " \
+   "cause the GIMP to use less swap space, but will also cause " \
+   "the GIMP to use more memory. Conversely, a smaller cache size " \
+   "causes the GIMP to use more swap space and less memory.")
 
 #define TOOL_PLUG_IN_PATH_BLURB \
 "Sets the tool-plug-in search path."
 
 #define TRANSPARENCY_TYPE_BLURB \
-"Sets the manner in which transparency is displayed in images."
+N_("Sets the manner in which transparency is displayed in images.")
 
 #define TRANSPARENCY_SIZE_BLURB \
-"Sets the size of the checkerboard used to display transparency."
+N_("Sets the size of the checkerboard used to display transparency.")
 
 #define TRUST_DIRTY_FLAG_BLURB \
-"When set to yes, the GIMP will not save if the image is unchanged since " \
-"opening it."
+N_("When set to yes, the GIMP will not save if the image is unchanged since " \
+   "opening it.")
 
 #define UNDO_LEVELS_BLURB \
-"Sets the number of operations kept on the undo stack."
+N_("Sets the number of operations kept on the undo stack.")
 
 #define USE_HELP_BLURB  \
-"When set to no the F1 help binding will be disabled." 
+N_("When set to no the F1 help binding will be disabled.")
 
 
 #endif  /* __GIMP_RC_BLURBS_H__ */

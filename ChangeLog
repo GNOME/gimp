@@ -1,5 +1,24 @@
 2003-01-25  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimppropwidgets.c: add a tooltip if a param_spec has
+	a non-NULL blurb. Addresses bug #68485.
+
+	* app/config/gimpbaseconfig.c
+	* app/config/gimpcoreconfig.c
+	* app/config/gimpdisplayconfig.c
+	* app/config/gimpguiconfig.c
+	* app/config/gimprc-blurbs.h: marked some blurbs as translatable.
+
+	* Makefile.am
+	* app/config/Makefile.am: added dist-hooks so the system gimprc
+	and gimprc manpage get generated when doing a release.
+	
+	* libgimpwidgets/gimpmemsizeentry.[ch]: added the spinbutton to
+	the GimpMemsizeEntry struct so we can access it in order to add
+	a tooltip.
+
+2003-01-25  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/widgets-enums.h: added a new enum to specify how to
 	display histograms.
 

@@ -49,6 +49,7 @@ struct _GimpMemsizeEntry
   guint              shift;
 
   GtkAdjustment     *adjustment;
+  GtkWidget         *spinbutton;
   GtkWidget         *menu;
 };
 

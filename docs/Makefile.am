@@ -48,10 +48,3 @@ if DEFAULT_BINARY
 	  rm -f $(DESTDIR)$(mandir)/man$$s/$$f; \
 	done
 endif
-
-.PHONY: files
-
-files:
-	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \
-	  echo $$p; \
-	done

@@ -33,6 +33,8 @@
 #include "gimprc-blurbs.h"
 #include "gimpbaseconfig.h"
 
+#include "libgimp/gimpintl.h"
+
 
 static void  gimp_base_config_class_init   (GimpBaseConfigClass *klass);
 static void  gimp_base_config_finalize     (GObject             *object);

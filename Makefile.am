@@ -13,7 +13,6 @@ SUBDIRS = \
 	po-script-fu		\
 	$(GIMP_PERL_PO)		\
 	data			\
-	etc			\
 	tips			\
 	libgimpcolor		\
 	libgimpmath		\
@@ -26,6 +25,7 @@ SUBDIRS = \
 	app			\
 	$(GIMP_MODULES)		\
 	$(GIMP_PLUGINS)		\
+	etc			\
 	docs			\
 	devel-docs
 

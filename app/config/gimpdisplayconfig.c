@@ -35,6 +35,8 @@
 #include "gimprc-blurbs.h"
 #include "gimpdisplayconfig.h"
 
+#include "libgimp/gimpintl.h"
+
 
 static void  gimp_display_config_class_init   (GimpDisplayConfigClass *klass);
 static void  gimp_display_config_finalize     (GObject      *object);

@@ -34,6 +34,8 @@
 #include "gimprc-blurbs.h"
 #include "gimpguiconfig.h"
 
+#include "libgimp/gimpintl.h"
+
 
 static void  gimp_gui_config_class_init   (GimpGuiConfigClass *klass);
 static void  gimp_gui_config_finalize     (GObject            *object);

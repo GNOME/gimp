@@ -44,7 +44,8 @@
 /*  utility function prototypes  */
 
 static void         set_param_spec   (GObject     *object,
-                                      GParamSpec  *value);
+                                      GtkWidget   *widget,
+                                      GParamSpec  *param_spec);
 static GParamSpec * get_param_spec   (GObject     *object);
 
 static GParamSpec * find_param_spec  (GObject     *object,
@@ -76,9 +77,9 @@ gimp_prop_check_button_new (GObject     *config,
                             const gchar *property_name,
                             const gchar *label)
 {
-  GParamSpec *param_spec;
-  GtkWidget  *button;
-  gboolean    value;
+  GParamSpec  *param_spec;
+  GtkWidget   *button;
+  gboolean     value;
 
   param_spec = check_param_spec (config, property_name,
                                  G_TYPE_PARAM_BOOLEAN, G_STRLOC);
@@ -92,7 +93,7 @@ gimp_prop_check_button_new (GObject     *config,
   button = gtk_check_button_new_with_mnemonic (label);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), value);
 
-  set_param_spec (G_OBJECT (button), param_spec);
+  set_param_spec (G_OBJECT (button), button, param_spec);
 
   g_signal_connect (button, "toggled",
 		    G_CALLBACK (gimp_prop_check_button_callback),
@@ -192,7 +193,7 @@ gimp_prop_boolean_option_menu_new (GObject     *config,
 
 			   NULL);
 
-  set_param_spec (G_OBJECT (optionmenu), param_spec);
+  set_param_spec (G_OBJECT (optionmenu), optionmenu, param_spec);
 
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_option_menu_notify),
@@ -294,7 +295,7 @@ gimp_prop_enum_option_menu_new_full (GObject     *config,
   gimp_option_menu_set_history (GTK_OPTION_MENU (optionmenu),
                                 GINT_TO_POINTER (value));
 
-  set_param_spec (G_OBJECT (optionmenu), param_spec);
+  set_param_spec (G_OBJECT (optionmenu), optionmenu, param_spec);
 
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_option_menu_notify),
@@ -429,7 +430,7 @@ gimp_prop_spin_button_new (GObject     *config,
       return NULL;
     }
 
-  set_param_spec (G_OBJECT (adjustment), param_spec);
+  set_param_spec (G_OBJECT (adjustment), spinbutton, param_spec);
 
   g_signal_connect (adjustment, "value_changed",
 		    G_CALLBACK (gimp_prop_adjustment_callback),
@@ -591,7 +592,9 @@ gimp_prop_memsize_entry_new (GObject     *config,
 				  ulong_spec->minimum,
 				  ulong_spec->maximum);
 
-  set_param_spec (G_OBJECT (entry), param_spec);
+  set_param_spec (G_OBJECT (entry),
+                  GIMP_MEMSIZE_ENTRY (entry)->spinbutton,
+                  param_spec);
 
   g_signal_connect (entry, "value_changed",
 		    G_CALLBACK (gimp_prop_memsize_callback),
@@ -686,7 +689,7 @@ gimp_prop_entry_new (GObject     *config,
   if (max_len > 0)
     gtk_entry_set_max_length (GTK_ENTRY (entry), max_len);
 
-  set_param_spec (G_OBJECT (entry), param_spec);
+  set_param_spec (G_OBJECT (entry), entry, param_spec);
 
   g_signal_connect (entry, "changed",
 		    G_CALLBACK (gimp_prop_entry_callback),
@@ -787,7 +790,7 @@ gimp_prop_text_buffer_new (GObject     *config,
     g_object_set_data (G_OBJECT (text_buffer), "max-len",
                        GINT_TO_POINTER (max_len));
 
-  set_param_spec (G_OBJECT (text_buffer), param_spec);
+  set_param_spec (G_OBJECT (text_buffer), NULL, param_spec);
 
   g_signal_connect (text_buffer, "changed",
 		    G_CALLBACK (gimp_prop_text_buffer_callback),
@@ -915,7 +918,9 @@ gimp_prop_file_entry_new (GObject     *config,
   g_free (value);
   g_free (filename);
 
-  set_param_spec (G_OBJECT (entry), param_spec);
+  set_param_spec (G_OBJECT (entry),
+                  GIMP_FILE_SELECTION (entry)->entry,
+                  param_spec);
 
   g_signal_connect (entry, "filename_changed",
 		    G_CALLBACK (gimp_prop_file_entry_callback),
@@ -1009,7 +1014,7 @@ gimp_prop_path_editor_new (GObject     *config,
   g_free (filename);
   g_free (value);
 
-  set_param_spec (G_OBJECT (editor), param_spec);
+  set_param_spec (G_OBJECT (editor), NULL, param_spec);
 
   g_signal_connect (editor, "path_changed",
 		    G_CALLBACK (gimp_prop_path_editor_callback),
@@ -1501,7 +1506,7 @@ gimp_prop_color_button_new (GObject           *config,
 
   g_free (value);
 
-  set_param_spec (G_OBJECT (button), param_spec);
+  set_param_spec (G_OBJECT (button), button, param_spec);
 
   g_signal_connect (button, "color_changed",
 		    G_CALLBACK (gimp_prop_color_button_callback),
@@ -1573,12 +1578,21 @@ static GQuark param_spec_quark = 0;
 
 static void
 set_param_spec (GObject     *object,
-                GParamSpec  *value)
+                GtkWidget   *widget,
+                GParamSpec  *param_spec)
 {
   if (! param_spec_quark)
     param_spec_quark = g_quark_from_static_string ("gimp-config-param-spec");
 
-  g_object_set_qdata (object, param_spec_quark, value);
+  g_object_set_qdata (object, param_spec_quark, param_spec);
+
+  if (widget)
+    {
+      const gchar *blurb = g_param_spec_get_blurb (param_spec);
+
+      if (blurb)
+        gimp_help_set_help_data (widget, blurb, NULL);
+    }
 }
 
 static GParamSpec *
