@@ -18,7 +18,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "appenv.h"
-#include "gimpbrushlist.h"
 #include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"
@@ -26,6 +25,7 @@
 #include "interface.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
+#include "paint_options.h"
 #include "patterns.h"
 #include "clone.h"
 #include "selection.h"
@@ -48,15 +48,15 @@ typedef enum
 typedef struct _CloneOptions CloneOptions;
 struct _CloneOptions
 {
-  ToolOptions  tool_options;
+  PaintOptions  paint_options;
 
-  CloneType    type;
-  CloneType    type_d;
-  GtkWidget   *type_w[2];  /* 2 radio buttons */
+  CloneType     type;
+  CloneType     type_d;
+  GtkWidget    *type_w[2];  /* 2 radio buttons */
 
-  AlignType    aligned;
-  AlignType    aligned_d;
-  GtkWidget   *aligned_w[3];  /* 3 radio buttons */
+  AlignType     aligned;
+  AlignType     aligned_d;
+  GtkWidget    *aligned_w[3];  /* 3 radio buttons */
 };
 
 
@@ -111,6 +111,8 @@ clone_options_reset (void)
 {
   CloneOptions *options = clone_options;
 
+  paint_options_reset ((PaintOptions *) options);
+
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w[options->type_d]), TRUE);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->aligned_w[options->aligned_d]), TRUE);
 }
@@ -141,14 +143,14 @@ clone_options_new (void)
 
   /*  the new clone tool options structure  */
   options = (CloneOptions *) g_malloc (sizeof (CloneOptions));
-  tool_options_init ((ToolOptions *) options,
-		     _("Clone Tool Options"),
-		     clone_options_reset);
+  paint_options_init ((PaintOptions *) options,
+		      CLONE,
+		      clone_options_reset);
   options->type    = options->type_d    = IMAGE_CLONE;
   options->aligned = options->aligned_d = AlignNo;
 
   /*  the main vbox  */
-  vbox = options->tool_options.main_vbox;
+  vbox = ((ToolOptions *) options)->main_vbox;
 
   /*  the radio frame and box  */
   radio_frame = gtk_frame_new (_("Source"));
@@ -541,8 +543,9 @@ clone_motion (PaintCore *paint_core,
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
   paint_core_paste_canvas (paint_core, drawable, OPAQUE_OPACITY,
-			   (int) (gimp_brush_get_opacity () * 255),
-			   gimp_brush_get_paint_mode (), SOFT, CONSTANT);
+			   (int) (PAINT_OPTIONS_GET_OPACITY (clone_options) * 255),
+			   PAINT_OPTIONS_GET_PAINT_MODE (clone_options),
+			   SOFT, CONSTANT);
 }
 
 static void

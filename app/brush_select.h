@@ -18,60 +18,81 @@
 #ifndef  __BRUSH_SELECT_H__
 #define  __BRUSH_SELECT_H__
 
-#include "procedural_db.h"
-#include "buildmenu.h"
+#include <gtk/gtk.h>
+
 #include "gimpbrush.h"
+#include "procedural_db.h"
 
 typedef struct _BrushSelect _BrushSelect, *BrushSelectP;
 
 struct _BrushSelect {
   GtkWidget *shell;
+
+  /* Place holders which enable global<->per-tool paint options switching */
+  GtkWidget *left_box;
+  GtkWidget *right_box;
+  GtkWidget *brush_selection_box;
+  GtkWidget *paint_options_box;
+
   GtkWidget *frame;
   GtkWidget *preview;
   GtkWidget *brush_name;
   GtkWidget *brush_size;
   GtkWidget *options_box;
+
   GtkAdjustment *opacity_data;
   GtkAdjustment *spacing_data;
   GtkAdjustment *sbar_data;
   GtkWidget *edit_button;
   GtkWidget *option_menu;
-  int width, height;
-  int cell_width, cell_height;
-  int scroll_offset;
-  int redraw;
-  /*  Brush preview  */
+
+  /* Brush preview */
   GtkWidget *brush_popup;
   GtkWidget *brush_preview;
+
   /* Call back function name */
-  gchar * callback_name;
-  /* current brush */
+  gchar *callback_name;
+
+  /* Current brush */
   GimpBrushP brush; 
-  /* Stuff for current selection */
-  int old_row;
-  int old_col;
+  gint       spacing_value;
+
+  /* Current paint options */
   gdouble opacity_value;
-  gint spacing_value;
-  gint paint_mode;
-  /* To calc column pos. */
+  gint    paint_mode;
+
+  /* Some variables to keep the GUI consistent */
+  int  width, height;
+  int  cell_width, cell_height;
+  int  scroll_offset;
+  int  redraw;
+  int  old_row;
+  int  old_col;
   gint NUM_BRUSH_COLUMNS;
   gint NUM_BRUSH_ROWS;
 };
 
-BrushSelectP  brush_select_new     (gchar *,
-				    gchar *, /* These are the required initial vals*/
-				    gdouble, /* If init_name == NULL then 
-							   * use current brush 
-							   */
-				    gint,
-				    gint);
-void          brush_select_select  (BrushSelectP, int);
-void          brush_select_free    (BrushSelectP);
-void          brush_change_callbacks (BrushSelectP,gint);
-void          brushes_check_dialogs(void);
+BrushSelectP  brush_select_new (gchar        *title,
+				/*  These are the required initial vals
+				 *  If init_name == NULL then use current brush
+				 */
+				gchar        *init_name,
+				gdouble       init_opacity, 
+				gint          init_spacing,
+				gint          init_mode);
 
-/*  An interface to other dialogs which need to create a paint mode menu  */
-GtkWidget *   create_paint_mode_menu (MenuItemCallback, gpointer);
+void          brush_select_free      (BrushSelectP  bsp);
+
+void          brush_select_select    (BrushSelectP  bsp,
+				      int           index);
+
+void          brush_change_callbacks (BrushSelectP  bsp,
+				      gint          closing);
+void          brushes_check_dialogs  (void);
+
+/*  show/hide paint options (main brush dialog if bsp == NULL)  */
+void          brush_select_show_paint_options (BrushSelectP  bsp,
+					       gboolean      show);
 
 /* PDB entry */
 extern ProcRecord brushes_popup_proc;

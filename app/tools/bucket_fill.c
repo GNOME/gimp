@@ -26,6 +26,7 @@
 #include "gimage_mask.h"
 #include "interface.h"
 #include "paint_funcs.h"
+#include "paint_options.h"
 #include "palette.h"
 #include "patterns.h"
 #include "selection.h"
@@ -47,15 +48,7 @@ struct _BucketTool
 typedef struct _BucketOptions BucketOptions;
 struct _BucketOptions
 {
-  ToolOptions     tool_options;
-
-  double          opacity;
-  double          opacity_d;
-  GtkObject      *opacity_w;
-
-  int             paint_mode;
-  int             paint_mode_d;
-  GtkWidget      *paint_mode_w;
+  PaintOptions    paint_options;
 
   double          threshold;
   double          threshold_d;
@@ -101,22 +94,11 @@ bucket_fill_mode_callback (GtkWidget *widget,
 }
 
 static void
-bucket_fill_paint_mode_callback (GtkWidget *widget,
-				 gpointer   client_data)
-{
-  bucket_options->paint_mode = (long) client_data;
-}
-
-static void
 bucket_options_reset (void)
 {
   BucketOptions *options = bucket_options;
 
-  options->paint_mode = options->paint_mode_d;
-
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->opacity_w),
-			    options->opacity_d);
-  gtk_option_menu_set_history (GTK_OPTION_MENU (options->paint_mode_w), 0);
+  paint_options_reset ((PaintOptions *) options);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
 				options->sample_merged_d);
@@ -134,17 +116,13 @@ bucket_options_new (void)
   BucketOptions *options;
 
   GtkWidget *vbox;
-  GtkWidget *table;
   GtkWidget *hbox;
-  GtkWidget *abox;
   GtkWidget *label;
   GtkWidget *scale;
-  GtkWidget *menu;
   GSList    *group = NULL;
   GtkWidget *radio_frame;
   GtkWidget *radio_box;
   GtkWidget *radio_button;
-  GtkWidget *separator;
 
   int i;
   char *button_names[2] =
@@ -155,69 +133,18 @@ bucket_options_new (void)
 
   /*  the new bucket fill tool options structure  */
   options = (BucketOptions *) g_malloc (sizeof (BucketOptions));
-  tool_options_init ((ToolOptions *) options,
-		     _("Bucket Fill Options"),
-		     bucket_options_reset);
-  options->opacity       = options->opacity_d       = 100.0;
-  options->paint_mode    = options->paint_mode_d    = NORMAL;
+  paint_options_init ((PaintOptions *) options,
+		      BUCKET_FILL,
+		      bucket_options_reset);
   options->sample_merged = options->sample_merged_d = FALSE;
   options->threshold     = options->threshold_d     = 15.0;
   options->fill_mode     = options->fill_mode_d     = FG_BUCKET_FILL;
 
   /*  the main vbox  */
-  vbox = options->tool_options.main_vbox;
-
-  /*  the opacity scale  */
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 6);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-
-  label = gtk_label_new (_("Opacity:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  options->opacity_w =
-    gtk_adjustment_new (options->opacity_d, 0.0, 100.0, 1.0, 1.0, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (options->opacity_w));
-  gtk_table_attach_defaults (GTK_TABLE (table), scale, 1, 2, 0, 1);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (options->opacity_w), "value_changed",
-		      (GtkSignalFunc) tool_options_double_adjustment_update,
-		      &options->opacity);
-  gtk_widget_show (scale);
-
-  /*  the paint mode menu  */
-  label = gtk_label_new (_("Mode:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  abox = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), abox, 1, 2, 1, 2);
-  gtk_widget_show (abox);
-
-  options->paint_mode_w = gtk_option_menu_new ();
-  gtk_container_add (GTK_CONTAINER (abox), options->paint_mode_w);
-  gtk_widget_show (options->paint_mode_w);
-
-  menu = create_paint_mode_menu (bucket_fill_paint_mode_callback, NULL);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (options->paint_mode_w), menu);
-
-  /*  show the table  */
-  gtk_widget_show (table);
-
-  /*  a separator after the paint mode options  */
-  separator = gtk_hseparator_new ();
-  gtk_box_pack_start (GTK_BOX (vbox), separator, FALSE, FALSE, 0);
-  gtk_widget_show (separator);
+  vbox = ((ToolOptions *) options)->main_vbox;
 
   /*  the threshold scale  */
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
   label = gtk_label_new (_("Threshold:"));
@@ -335,8 +262,8 @@ bucket_fill_button_release (Tool           *tool,
 					    &nreturn_vals,
 					    PDB_DRAWABLE, drawable_ID (gimage_active_drawable (gdisp->gimage)),
 					    PDB_INT32, (gint32) fill_mode,
-					    PDB_INT32, (gint32) bucket_options->paint_mode,
-					    PDB_FLOAT, (gdouble) bucket_options->opacity,
+					    PDB_INT32, (gint32) PAINT_OPTIONS_GET_PAINT_MODE (bucket_options),
+					    PDB_FLOAT, (gdouble) PAINT_OPTIONS_GET_OPACITY (bucket_options) * 100,
 					    PDB_FLOAT, (gdouble) bucket_options->threshold,
 					    PDB_INT32, (gint32) bucket_options->sample_merged,
 					    PDB_FLOAT, (gdouble) bucket_tool->target_x,

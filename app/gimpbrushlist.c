@@ -45,6 +45,7 @@
 #include "gimpsignal.h"
 #include "menus.h"
 #include "paint_core.h"
+#include "paint_options.h"
 #include "gimplist.h"
 #include "gimpbrush.h"
 #include "gimplistP.h"
@@ -57,11 +58,7 @@
 GimpBrush     *active_brush = NULL;
 GimpBrushList *brush_list   = NULL;
 
-double              opacity = 1.0;
-int                 paint_mode = 0;
-
-
-BrushSelectP        brush_select_dialog = NULL;
+BrushSelectP   brush_select_dialog = NULL;
 
 
 /*  static variables  */
@@ -555,50 +552,6 @@ ProcRecord brushes_refresh_brush_proc =
   { { brushes_refresh_brush_invoker } },
 };
 
-/* access functions */
-double
-gimp_brush_get_opacity ()
-{
-  return opacity;
-}
-
-int
-gimp_brush_get_spacing ()
-{
-  if (active_brush)
-    return active_brush->spacing;
-  else
-    return 0;
-}
-
-int
-gimp_brush_get_paint_mode ()
-{
-  return paint_mode;
-}
-
-void
-gimp_brush_set_opacity (opac)
-     double opac;
-{
-  opacity = opac;
-}
-
-void
-gimp_brush_set_spacing (spac)
-     int spac;
-{
-  if (active_brush)
-    active_brush->spacing = spac;
-}
-
-void
-gimp_brush_set_paint_mode (pm)
-     int pm;
-{
-  paint_mode = pm;
-}
-
 /****************************/
 /* PDB Interface To Brushes */
 /****************************/
@@ -610,7 +563,7 @@ static Argument *
 brushes_get_opacity_invoker (Argument *args)
 {
   return_args = procedural_db_return_args (&brushes_get_opacity_proc, TRUE);
-  return_args[1].value.pdb_float = gimp_brush_get_opacity () * 100.0;
+  return_args[1].value.pdb_float = paint_options_get_opacity () * 100.0;
 
   return return_args;
 }
@@ -659,7 +612,7 @@ brushes_set_opacity_invoker (Argument *args)
   success = (opacity >= 0.0 && opacity <= 100.0);
 
   if (success)
-    gimp_brush_set_opacity (opacity / 100.0);
+    paint_options_set_opacity (opacity / 100.0);
 
   return procedural_db_return_args (&brushes_set_opacity_proc, success);
 }
@@ -703,7 +656,7 @@ static Argument *
 brushes_get_spacing_invoker (Argument *args)
 {
   return_args = procedural_db_return_args (&brushes_get_spacing_proc, TRUE);
-  return_args[1].value.pdb_int = gimp_brush_get_spacing ();
+  return_args[1].value.pdb_int = gimp_brush_get_spacing (get_active_brush ());
 
   return return_args;
 }
@@ -752,7 +705,7 @@ brushes_set_spacing_invoker (Argument *args)
   success = (spacing >= 0 && spacing <= 1000);
 
   if (success)
-    gimp_brush_set_spacing (spacing);
+    gimp_brush_set_spacing (get_active_brush (), spacing);
 
   return procedural_db_return_args (&brushes_set_spacing_proc, success);
 }
@@ -796,7 +749,7 @@ static Argument *
 brushes_get_paint_mode_invoker (Argument *args)
 {
   return_args = procedural_db_return_args (&brushes_get_paint_mode_proc, TRUE);
-  return_args[1].value.pdb_int = gimp_brush_get_paint_mode ();
+  return_args[1].value.pdb_int = paint_options_get_paint_mode ();
 
   return return_args;
 }
@@ -845,7 +798,7 @@ brushes_set_paint_mode_invoker (Argument *args)
   success = (paint_mode >= NORMAL_MODE && paint_mode <= VALUE_MODE);
 
   if (success)
-    gimp_brush_set_paint_mode (paint_mode);
+    paint_options_set_paint_mode (paint_mode);
 
   return procedural_db_return_args (&brushes_set_paint_mode_proc, success);
 }

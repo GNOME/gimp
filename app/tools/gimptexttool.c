@@ -164,7 +164,7 @@ text_options_new (void)
   gtk_widget_show (options->antialias_w);
 
   /*  the border spinbutton  */
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
   label = gtk_label_new (_("Border:"));

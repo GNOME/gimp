@@ -18,6 +18,8 @@
 #ifndef __BUILDMENU_H__
 #define __BUILDMENU_H__
 
+#include <gtk/gtk.h>
+
 #define PULLDOWN   0
 #define POPUP      1
 #define OPTION     2

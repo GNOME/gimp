@@ -273,6 +273,7 @@ gimp_SOURCES = \
 	paint_core.h		\
 	paint_funcs.c		\
 	paint_funcs.h		\
+	paint_options.h		\
 	paintbrush.c		\
 	paintbrush.h		\
 	parasite_cmds.c		\

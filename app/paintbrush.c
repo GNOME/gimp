@@ -19,7 +19,6 @@
 #include <stdio.h>
 #include <math.h>
 #include "appenv.h"
-#include "gimpbrushlist.h"
 #include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"
@@ -27,6 +26,7 @@
 #include "paint_funcs.h"
 #include "paint_core.h"
 #include "palette.h"
+#include "paint_options.h"
 #include "paintbrush.h"
 #include "selection.h"
 #include "tool_options_ui.h"
@@ -39,34 +39,34 @@
 
 /*  the paintbrush structures  */
 
-typedef struct _PaintOptions PaintOptions;
-struct _PaintOptions
+typedef struct _PaintbrushOptions PaintbrushOptions;
+struct _PaintbrushOptions
 {
-  ToolOptions  tool_options;
+  PaintOptions  paint_options;
 
-  double       fade_out;
-  double       fade_out_d;
-  GtkObject   *fade_out_w;
+  double        fade_out;
+  double        fade_out_d;
+  GtkObject    *fade_out_w;
 
-  int          use_gradient;
-  int          use_gradient_d;
-  GtkWidget   *use_gradient_w;
+  int           use_gradient;
+  int           use_gradient_d;
+  GtkWidget    *use_gradient_w;
 
-  double       gradient_length;
-  double       gradient_length_d;
-  GtkObject   *gradient_length_w;
+  double        gradient_length;
+  double        gradient_length_d;
+  GtkObject    *gradient_length_w;
 
-  int          gradient_type;
-  int          gradient_type_d;
-  GtkWidget   *gradient_type_w[4];  /* 4 radio buttons */
+  int           gradient_type;
+  int           gradient_type_d;
+  GtkWidget    *gradient_type_w[4];  /* 4 radio buttons */
 
-  gboolean     incremental;
-  gboolean     incremental_d;
-  GtkWidget   *incremental_w;
+  gboolean      incremental;
+  gboolean      incremental_d;
+  GtkWidget    *incremental_w;
 };
 
 /*  the paint brush tool options  */
-static PaintOptions *paintbrush_options = NULL;
+static PaintbrushOptions *paintbrush_options = NULL;
 
 /*  local variables  */
 static double        non_gui_fade_out;
@@ -85,7 +85,7 @@ static void
 paintbrush_gradient_toggle_callback (GtkWidget *widget,
 				     gpointer   data)
 {
-  PaintOptions *options = paintbrush_options;
+  PaintbrushOptions *options = paintbrush_options;
 
   static int incremental_save = FALSE;
 
@@ -116,7 +116,9 @@ paintbrush_gradient_type_callback (GtkWidget *widget,
 static void
 paintbrush_options_reset (void)
 {
-  PaintOptions *options = paintbrush_options;
+  PaintbrushOptions *options = paintbrush_options;
+
+  paint_options_reset ((PaintOptions *) options);
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->fade_out_w),
 			    options->fade_out_d);
@@ -130,10 +132,10 @@ paintbrush_options_reset (void)
 				options->incremental_d);
 }
 
-static PaintOptions *
+static PaintbrushOptions *
 paintbrush_options_new (void)
 {
-  PaintOptions *options;
+  PaintbrushOptions *options;
 
   GtkWidget *vbox;
   GtkWidget *abox;
@@ -155,10 +157,10 @@ paintbrush_options_new (void)
   };
 
   /*  the new paint tool options structure  */
-  options = (PaintOptions *) g_malloc (sizeof (PaintOptions));
-  tool_options_init ((ToolOptions *) options,
-		     _("Paintbrush Options"),
-		     paintbrush_options_reset);
+  options = (PaintbrushOptions *) g_malloc (sizeof (PaintbrushOptions));
+  paint_options_init ((PaintOptions *) options,
+		      PAINTBRUSH,
+		      paintbrush_options_reset);
   options->fade_out        = options->fade_out_d        = 0.0;
   options->incremental     = options->incremental_d     = FALSE;
   options->use_gradient    = options->use_gradient_d    = FALSE;
@@ -166,11 +168,11 @@ paintbrush_options_new (void)
   options->gradient_type   = options->gradient_type_d   = LOOP_TRIANGLE;
   
   /*  the main vbox  */
-  vbox = options->tool_options.main_vbox;
+  vbox = ((ToolOptions *) options)->main_vbox;
 
   /*  the fade-out scale  */
   table = gtk_table_new (4, 2, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 6);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
   gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
   gtk_table_set_row_spacing (GTK_TABLE (table), 2, 3);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
@@ -437,8 +439,9 @@ paintbrush_motion (PaintCore *paint_core,
 
       /*  paste the newly painted canvas to the gimage which is being worked on  */
       paint_core_paste_canvas (paint_core, drawable, temp_blend,
-			       (int) (gimp_brush_get_opacity () * 255),
-			       gimp_brush_get_paint_mode (), PRESSURE, 
+			       (int) (PAINT_OPTIONS_GET_OPACITY (paintbrush_options) * 255),
+			       PAINT_OPTIONS_GET_PAINT_MODE (paintbrush_options),
+			       PRESSURE, 
 			       incremental ? INCREMENTAL : CONSTANT);
     }
 }

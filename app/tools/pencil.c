@@ -17,14 +17,14 @@
  */
 #include <stdlib.h>
 #include "appenv.h"
-#include "gimpbrushlist.h"
 #include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
-#include "palette.h"
+#include "paint_options.h"
 #include "paintbrush.h"
+#include "palette.h"
 #include "pencil.h"
 #include "selection.h"
 #include "tools.h"
@@ -33,7 +33,7 @@
 
 
 /*  the pencil tool options  */
-static ToolOptions *  pencil_options = NULL;
+static PaintOptions *  pencil_options = NULL;
 
 
 /*  forward function declarations  */
@@ -66,6 +66,12 @@ pencil_paint_func (PaintCore    *paint_core,
   return NULL;
 }
 
+void
+pencil_options_reset (void)
+{
+  paint_options_reset (pencil_options);
+}
+
 Tool *
 tools_new_pencil (void)
 {
@@ -75,8 +81,8 @@ tools_new_pencil (void)
   /*  The tool options  */
   if (!pencil_options)
     {
-      pencil_options = tool_options_new (_("Pencil Options"));
-      tools_register (PENCIL, pencil_options);
+      pencil_options = paint_options_new (PENCIL, pencil_options_reset);
+      tools_register (PENCIL, (ToolOptions *) pencil_options);
     }
 
   tool = paint_core_new (PENCIL);
@@ -119,8 +125,8 @@ pencil_motion (PaintCore    *paint_core,
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
   paint_core_paste_canvas (paint_core, drawable, OPAQUE_OPACITY,
-			   (int) (gimp_brush_get_opacity () * 255),
-			   gimp_brush_get_paint_mode (), HARD, CONSTANT);
+			   (int) (PAINT_OPTIONS_GET_OPACITY (pencil_options) * 255),
+			   PAINT_OPTIONS_GET_PAINT_MODE (pencil_options), HARD, CONSTANT);
 }
 
 static void *

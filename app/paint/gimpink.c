@@ -22,9 +22,9 @@
 #include "drawable.h"
 #include "draw_core.h"
 #include "gimage_mask.h"
-#include "gimpbrushlist.h"
 #include "gimprc.h"
 #include "ink.h"
+#include "paint_options.h"
 #include "tool_options_ui.h"
 #include "tools.h"
 #include "undo.h"
@@ -80,37 +80,37 @@ struct _BrushWidget
 typedef struct _InkOptions InkOptions;
 struct _InkOptions
 {
-  ToolOptions  tool_options;
+  PaintOptions  paint_options;
 
-  double       size;
-  double       size_d;
-  GtkObject   *size_w;
+  double        size;
+  double        size_d;
+  GtkObject    *size_w;
 
-  double       sensitivity;
-  double       sensitivity_d;
-  GtkObject   *sensitivity_w;
+  double        sensitivity;
+  double        sensitivity_d;
+  GtkObject    *sensitivity_w;
 
-  double       vel_sensitivity;
-  double       vel_sensitivity_d;
-  GtkObject   *vel_sensitivity_w;
+  double        vel_sensitivity;
+  double        vel_sensitivity_d;
+  GtkObject    *vel_sensitivity_w;
 
-  double       tilt_sensitivity;
-  double       tilt_sensitivity_d;
-  GtkObject   *tilt_sensitivity_w;
+  double        tilt_sensitivity;
+  double        tilt_sensitivity_d;
+  GtkObject    *tilt_sensitivity_w;
 
-  double       tilt_angle;
-  double       tilt_angle_d;
-  GtkObject   *tilt_angle_w;
+  double        tilt_angle;
+  double        tilt_angle_d;
+  GtkObject    *tilt_angle_w;
 
-  BlobFunc     function;
-  BlobFunc     function_d;
-  GtkWidget   *function_w[3];  /* 3 radio buttons */
+  BlobFunc      function;
+  BlobFunc      function_d;
+  GtkWidget    *function_w[3];  /* 3 radio buttons */
 
-  double       aspect;
-  double       aspect_d;
-  double       angle;
-  double       angle_d;
-  BrushWidget *brush_w;
+  double        aspect;
+  double        aspect_d;
+  double        angle;
+  double        angle_d;
+  BrushWidget  *brush_w;
 };
 
 
@@ -226,6 +226,8 @@ ink_options_reset (void)
 {
   InkOptions *options = ink_options;
 
+  paint_options_reset ((PaintOptions *) options);
+
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->size_w),
 			    options->size_d);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->sensitivity_w),
@@ -265,9 +267,9 @@ ink_options_new (void)
 
   /*  the new ink tool options structure  */
   options = (InkOptions *) g_malloc (sizeof (InkOptions));
-  tool_options_init ((ToolOptions *) options,
-		     _("Ink Options"),
-		     ink_options_reset);
+  paint_options_init ((PaintOptions *) options,
+		      INK,
+		      ink_options_reset);
   options->size             = options->size_d             = 4.4;
   options->sensitivity      = options->sensitivity_d      = 1.0;
   options->vel_sensitivity  = options->vel_sensitivity_d  = 0.8;
@@ -278,13 +280,14 @@ ink_options_new (void)
   options->angle            = options->angle_d            = 0.0;
 
   /*  the main table  */
-  table = gtk_table_new (8, 2, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 6);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 1);
+  table = gtk_table_new (9, 2, FALSE);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
   gtk_table_set_row_spacing (GTK_TABLE (table), 1, 2);
   gtk_table_set_row_spacing (GTK_TABLE (table), 3, 2);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 5, 6);
-  gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox), table,
+  gtk_table_set_row_spacing (GTK_TABLE (table), 5, 2);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 7, 4);
+  gtk_box_pack_start (GTK_BOX (((ToolOptions *) options)->main_vbox), table,
 		      FALSE, FALSE, 0);
 
   /*  size slider  */
@@ -1413,8 +1416,8 @@ ink_paste (InkTool      *ink_tool,
   /*  apply the paint area to the gimage  */
   gimage_apply_image (gimage, drawable, &srcPR,
 		      FALSE, 
-		      (int) (gimp_brush_get_opacity () * 255),
-		      gimp_brush_get_paint_mode(),
+		      (int) (PAINT_OPTIONS_GET_OPACITY (ink_options) * 255),
+		      PAINT_OPTIONS_GET_PAINT_MODE (ink_options),
 		      undo_tiles,  /*  specify an alternative src1  */
 		      canvas_buf->x, canvas_buf->y);
 

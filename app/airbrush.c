@@ -23,6 +23,7 @@
 #include "gdisplay.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
+#include "paint_options.h"
 #include "palette.h"
 #include "airbrush.h"
 #include "selection.h"
@@ -50,7 +51,7 @@ struct _AirbrushTimeout
 typedef struct _AirbrushOptions AirbrushOptions;
 struct _AirbrushOptions
 {
-  ToolOptions  tool_options;
+  PaintOptions paint_options;
 
   double       rate;
   double       rate_d;
@@ -85,6 +86,8 @@ airbrush_options_reset (void)
 {
   AirbrushOptions *options = airbrush_options;
 
+  paint_options_reset ((PaintOptions *) options);
+
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->rate_w),
 			    options->rate_d);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->pressure_w),
@@ -103,18 +106,18 @@ airbrush_options_new (void)
 
   /*  the new airbrush tool options structure  */
   options = (AirbrushOptions *) g_malloc (sizeof (AirbrushOptions));
-  tool_options_init ((ToolOptions *) options,
-		     _("Airbrush Options"),
-		     airbrush_options_reset);
+  paint_options_init ((PaintOptions *) options,
+		      AIRBRUSH,
+		      airbrush_options_reset);
   options->rate     = options->rate_d     = 80.0;
   options->pressure = options->pressure_d = 10.0;
 
   /*  the main vbox  */
-  vbox = options->tool_options.main_vbox;
+  vbox = ((ToolOptions *) options)->main_vbox;
 
   /*  the rate scale  */
   table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 6);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 1);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
@@ -296,8 +299,8 @@ airbrush_motion (PaintCore *paint_core,
   /*  paste the newly painted area to the image  */
   paint_core_paste_canvas (paint_core, drawable,
 			   opacity,
-			   (int) (gimp_brush_get_opacity () * 255),
-			   gimp_brush_get_paint_mode (),
+			   (int) (PAINT_OPTIONS_GET_OPACITY (airbrush_options) * 255),
+			   PAINT_OPTIONS_GET_PAINT_MODE (airbrush_options),
 			   SOFT, CONSTANT);
 }
 

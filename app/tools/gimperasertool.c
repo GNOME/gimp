@@ -17,12 +17,12 @@
  */
 #include <stdlib.h>
 #include "appenv.h"
-#include "gimpbrushlist.h"
 #include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
+#include "paint_options.h"
 #include "palette.h"
 #include "eraser.h"
 #include "selection.h"
@@ -36,15 +36,15 @@
 typedef struct _EraserOptions EraserOptions;
 struct _EraserOptions
 {
-  ToolOptions  tool_options;
+  PaintOptions  paint_options;
 
-  gboolean     hard;
-  gboolean     hard_d;
-  GtkWidget   *hard_w;
+  gboolean      hard;
+  gboolean      hard_d;
+  GtkWidget    *hard_w;
 
-  gboolean     incremental;
-  gboolean     incremental_d;
-  GtkWidget   *incremental_w;
+  gboolean      incremental;
+  gboolean      incremental_d;
+  GtkWidget    *incremental_w;
 };
 
 
@@ -68,6 +68,8 @@ eraser_options_reset (void)
 {
   EraserOptions *options = eraser_options;
 
+  paint_options_reset ((PaintOptions *) options);
+
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->hard_w),
 				options->hard_d);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->incremental_w),
@@ -83,14 +85,14 @@ eraser_options_new (void)
 
   /*  the new eraser tool options structure  */
   options = (EraserOptions *) g_malloc (sizeof (EraserOptions));
-  tool_options_init ((ToolOptions *) options,
-		     _("Eraser Options"),
-		     eraser_options_reset);
+  paint_options_init ((PaintOptions *) options,
+		      ERASER,
+		      eraser_options_reset);
   options->hard        = options->hard_d        = FALSE;
   options->incremental = options->incremental_d = FALSE;
 
   /*  the main vbox  */
-  vbox = options->tool_options.main_vbox;
+  vbox = ((ToolOptions *) options)->main_vbox;
 
   /* the hard toggle */
   options->hard_w = gtk_check_button_new_with_label (_("Hard edge"));
@@ -196,11 +198,11 @@ eraser_motion (PaintCore    *paint_core,
   /*  color the pixels  */
   color_pixels (temp_buf_data (area), col,
 		area->width * area->height, area->bytes);
-  opacity = 255 * gimp_brush_get_opacity() * (paint_core->curpressure / 0.5);
+  opacity = 255 * paint_options_get_opacity() * (paint_core->curpressure / 0.5);
   if(opacity > OPAQUE_OPACITY) opacity=OPAQUE_OPACITY;
   /*  paste the newly painted canvas to the gimage which is being worked on  */
   paint_core_paste_canvas (paint_core, drawable, opacity,
-			   (int) (gimp_brush_get_opacity () * 255),
+			   (int) (PAINT_OPTIONS_GET_OPACITY (eraser_options) * 255),
 			   ERASE_MODE, hard? HARD : SOFT, incremental ? INCREMENTAL : CONSTANT);
 }
 

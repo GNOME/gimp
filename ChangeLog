@@ -1,3 +1,57 @@
+1999-04-22  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	First version of per-tool paint options. No PDB interface yet.
+	The tool options dialog got rather big when in per-tool mode, so
+	it will probably have to become a notebook.
+
+	It's not yet 100% consistent. If switched off, everything should
+	behave exactly like before.
+
+	* app/Makefile.am
+	* app/paint_options.h: new file
+
+	* app/tool_options.c: PaintOptions gui. Maintain a list of all
+	paint tools' ToolOptions to enable switching between global and
+	per-tool paint options.
+
+	* app/brush_select.[ch]: changed packing boxes, tables, ...
+	The paint options in the brush selection can be hidden now.
+	Moved create_paint_mode_menu() to paint_options.h and
+	tool_options.c and renamed it to paint_mode_menu_new().
+
+	* app/gimage_mask.c
+	* app/gimpbrush.[ch]
+	* app/gimpbrushlist.[ch]
+	* app/paint_core.c: moved gimp_brush_[set|get]_spacing() from
+	gimpbrushlist.[ch] to gimpbrush.[ch].
+	Moved gimp_brush_[get|set]_[opacity|paint_mode]() to
+	paint_options.h and tool_options.c and renamed them to
+	paint_options_*_*().  They are "global paint options" now.
+
+	* app/airbrush.c
+	* app/blend.c
+	* app/bucket_fill.c
+	* app/clone.c
+	* app/convolve.c
+	* app/eraser.c
+	* app/ink.c
+	* app/paintbrush.c
+	* app/pencil.c: all paint tools' options are derived from
+	"PaintOptions" now. Opacity and paint mode are obtained through
+	macros which take into account the current paint options mode.
+
+	* app/buildmenu.h: #include <gtk/gtk.h>
+
+	* app/color_picker.c
+	* app/text_tool.c: changed spacings.
+
+	* app/gimprc.[ch]: new gimprc option "global-paint-options"
+
+	* app/preferences_dialog.c: Added a "Tool Options" page. Code
+	cleanup. Some work on the convenience constructors test site.
+
+	* app/tools.c: fixed "unused variable" warning.
+
 Thu Apr 22 16:05:10 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
 
 	* plug-ins/CEL/CEL.c: 

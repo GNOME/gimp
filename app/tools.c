@@ -722,7 +722,7 @@ void
 tools_options_dialog_new ()
 {
   GtkWidget *frame;
-  GtkWidget *frame2;
+  /* GtkWidget *frame2; */
   GtkWidget *vbox;
 
   ActionAreaItem action_items[2] =

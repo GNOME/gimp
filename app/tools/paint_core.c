@@ -433,10 +433,10 @@ paint_core_init (paint_core, drawable, x, y)
 		     GTK_SIGNAL_FUNC(paint_core_invalidate_cache),
 		     NULL);
 
-  paint_core->spacing = (double) gimp_brush_get_spacing () / 100.0;
+  paint_core->spacing = (double) gimp_brush_get_spacing (brush) / 100.0;
 /*  paint_core->spacing =
     (double) MAXIMUM (brush->mask->width, brush->mask->height) *
-    ((double) gimp_brush_get_spacing () / 100.0);
+    ((double) gimp_brush_get_spacing (brush) / 100.0);
   if (paint_core->spacing < 1.0)
     paint_core->spacing = 1.0; */
   paint_core->brush = brush;

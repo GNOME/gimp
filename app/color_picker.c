@@ -145,7 +145,7 @@ color_picker_options_new (void)
 
   /*  the sample average options  */
   table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 6);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
   options->sample_average_w =

@@ -137,6 +137,25 @@ gimp_brush_set_name (GimpBrush *brush, char *name)
   gtk_signal_emit(GTK_OBJECT(brush), gimp_brush_signals[RENAME]);
 }
 
+int
+gimp_brush_get_spacing (GimpBrush *brush)
+{
+  g_return_val_if_fail (brush != NULL, 0);
+  g_return_val_if_fail (GIMP_IS_BRUSH (brush), 0);
+
+  return brush->spacing;
+}
+
+void
+gimp_brush_set_spacing (GimpBrush *brush,
+			int        spacing)
+{
+  g_return_if_fail (brush != NULL);
+  g_return_if_fail (GIMP_IS_BRUSH (brush));
+
+  brush->spacing = spacing;
+}
+
 void
 gimp_brush_load(GimpBrush *brush, char *filename)
 {

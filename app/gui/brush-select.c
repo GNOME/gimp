@@ -27,11 +27,10 @@
 #include "brush_edit.h"
 #include "brush_select.h"
 #include "brush_select.h"
-#include "buildmenu.h"
 #include "colormaps.h"
 #include "disp_callbacks.h"
 #include "errors.h"
-#include "paint_funcs.h"
+#include "paint_options.h"
 #include "session.h"
 
 #include "libgimp/gimpintl.h"
@@ -85,91 +84,59 @@ static gint brush_select_events          (GtkWidget *, GdkEvent *, BrushSelectP)
 static gint brush_select_resize		 (GtkWidget *, GdkEvent *, BrushSelectP);
 
 static gint brush_select_delete_callback        (GtkWidget *, GdkEvent *, gpointer);
-static void preview_scroll_update        (GtkAdjustment *, gpointer);
-static void opacity_scale_update         (GtkAdjustment *, gpointer);
-static void spacing_scale_update         (GtkAdjustment *, gpointer);
+static void preview_scroll_update         (GtkAdjustment *, gpointer);
+static void opacity_scale_update          (GtkAdjustment *, gpointer);
+static void spacing_scale_update          (GtkAdjustment *, gpointer);
+/* static void paint_options_toggle_callback (GtkWidget *,     gpointer); */
 
-/*  the option menu items -- the paint modes  */
-static MenuItem option_items[] =
-{
-  { N_("Normal"), 0, 0, paint_mode_menu_callback, (gpointer) NORMAL_MODE, NULL, NULL },
-  { N_("Dissolve"), 0, 0, paint_mode_menu_callback, (gpointer) DISSOLVE_MODE, NULL, NULL },
-  { N_("Behind"), 0, 0, paint_mode_menu_callback, (gpointer) BEHIND_MODE, NULL, NULL },
-  { N_("Multiply (Burn)"), 0, 0, paint_mode_menu_callback, (gpointer) MULTIPLY_MODE, NULL, NULL },
-  { N_("Divide (Dodge)"), 0, 0, paint_mode_menu_callback, (gpointer) DIVIDE_MODE, NULL, NULL },
-  { N_("Screen"), 0, 0, paint_mode_menu_callback, (gpointer) SCREEN_MODE, NULL, NULL },
-  { N_("Overlay"), 0, 0, paint_mode_menu_callback, (gpointer) OVERLAY_MODE, NULL, NULL },
-  { N_("Difference"), 0, 0, paint_mode_menu_callback, (gpointer) DIFFERENCE_MODE, NULL, NULL },
-  { N_("Addition"), 0, 0, paint_mode_menu_callback, (gpointer) ADDITION_MODE, NULL, NULL },
-  { N_("Subtract"), 0, 0, paint_mode_menu_callback, (gpointer) SUBTRACT_MODE, NULL, NULL },
-  { N_("Darken Only"), 0, 0, paint_mode_menu_callback, (gpointer) DARKEN_ONLY_MODE, NULL, NULL },
-  { N_("Lighten Only"), 0, 0, paint_mode_menu_callback, (gpointer) LIGHTEN_ONLY_MODE, NULL, NULL },
-  { N_("Hue"), 0, 0, paint_mode_menu_callback, (gpointer) HUE_MODE, NULL, NULL },
-  { N_("Saturation"), 0, 0, paint_mode_menu_callback, (gpointer) SATURATION_MODE, NULL, NULL },
-  { N_("Color"), 0, 0, paint_mode_menu_callback, (gpointer) COLOR_MODE, NULL, NULL },
-  { N_("Value"), 0, 0, paint_mode_menu_callback, (gpointer) VALUE_MODE, NULL, NULL },
-  { NULL, 0, 0, NULL, NULL, NULL, NULL }
-};
 
-/*  the action area structure  */
-static ActionAreaItem action_items[] =
-{
-  { N_("Refresh"), brush_select_refresh_callback, NULL, NULL },
-  { N_("Close"), brush_select_close_callback, NULL, NULL }
-};
+/*  local variables  */
 
+/*  Brush editor dialog (main brush dialog only)  */
 static BrushEditGeneratedWindow *brush_edit_generated_dialog;
 
-/* PDB interface data */
-static int          success;
+/*  PDB interface data  */
+static int success;
 
-static GSList *active_dialogs = NULL; /* List of active dialogs */
+/*  List of active dialogs  */
+static GSList *active_dialogs = NULL;
 
-
-extern BrushSelectP brush_select_dialog; /* The main brush dialog */
-
-
-GtkWidget *
-create_paint_mode_menu (MenuItemCallback callback, gpointer udata)
-{
-  GtkWidget *menu;
-  int i;
-
-  for (i = 0; i <= VALUE_MODE; i++)
-    option_items[i].callback = callback;
-
-  menu = build_menu (option_items, NULL);
-
-  for (i = 0; i <= VALUE_MODE; i++)
-    gtk_object_set_user_data(GTK_OBJECT(option_items[i].widget),udata);
-
-  return menu;
-}
+/*  The main brush dialog  */
+extern BrushSelectP brush_select_dialog;
 
 
-/* If title is null then it is the main brush dialog */
-
+/*  If title is null then it is the main brush dialog  */
 BrushSelectP
-brush_select_new (gchar * title,
-		  gchar *init_name, /* These are the required initial vals*/
-		  gdouble init_opacity, /* If init_name == NULL then 
-					 * use current brush 
-					 */
-		  gint init_spacing,
-		  gint init_mode)
+brush_select_new (gchar   *title,
+		  /*  These are the required initial vals
+		   *  If init_name == NULL then use current brush
+		   */
+		  gchar   *init_name,
+		  gdouble  init_opacity,
+		  gint     init_spacing,
+		  gint     init_mode)
 {
   BrushSelectP bsp;
   GtkWidget *vbox;
   GtkWidget *hbox;
   GtkWidget *sbar;
   GtkWidget *label;
-  GtkWidget *menu;
+  GtkWidget *sep;
+  GtkWidget *table;
+  GtkWidget *abox;
   GtkWidget *util_box;
   GtkWidget *option_menu;
+  GtkWidget *menu;
   GtkWidget *slider;
   GimpBrushP active = NULL;
   GtkWidget *button2;
   gint gotinitbrush = FALSE;
+
+  static ActionAreaItem action_items[] =
+  {
+    { N_("Refresh"), brush_select_refresh_callback, NULL, NULL },
+    { N_("Close"), brush_select_close_callback, NULL, NULL }
+  };
 
   bsp = g_malloc (sizeof (_BrushSelect));
   bsp->redraw = TRUE;
@@ -188,7 +155,8 @@ brush_select_new (gchar * title,
   if(!title)
     {
       gtk_window_set_title (GTK_WINDOW (bsp->shell), _("Brush Selection"));
-      session_set_window_geometry (bsp->shell, &brush_select_session_info, TRUE);
+      session_set_window_geometry (bsp->shell, &brush_select_session_info,
+				   FALSE);
     }
   else
     {
@@ -199,27 +167,37 @@ brush_select_new (gchar * title,
 	gotinitbrush = TRUE;
     }
 
-  gtk_window_set_policy(GTK_WINDOW(bsp->shell), FALSE, TRUE, FALSE);
-  vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (bsp->shell)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_window_set_policy(GTK_WINDOW(bsp->shell), FALSE, TRUE, TRUE);
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (bsp->shell)->vbox), vbox);
 
   /* handle the wm close signal */
   gtk_signal_connect (GTK_OBJECT (bsp->shell), "delete_event",
 		      GTK_SIGNAL_FUNC (brush_select_delete_callback),
 		      bsp);
 
-  /*  The horizontal box containing preview & scrollbar & options box */
+  /*  The horizontal box containing the brush list & options box */
   hbox = gtk_hbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (vbox), hbox);
+
+  /*  A place holder for paint mode switching  */
+  bsp->left_box = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), bsp->left_box, TRUE, TRUE, 0);
+
+  /*  The hbox for the brush list  */
+  bsp->brush_selection_box = gtk_hbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (bsp->left_box), bsp->brush_selection_box);
+
   bsp->frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (bsp->frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (hbox), bsp->frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (bsp->brush_selection_box), bsp->frame,
+		      TRUE, TRUE, 0);
   bsp->sbar_data = GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, MAX_WIN_HEIGHT(bsp), 1, 1, MAX_WIN_HEIGHT(bsp)));
   sbar = gtk_vscrollbar_new (bsp->sbar_data);
   gtk_signal_connect (GTK_OBJECT (bsp->sbar_data), "value_changed",
 		      (GtkSignalFunc) preview_scroll_update, bsp);
-  gtk_box_pack_start (GTK_BOX (hbox), sbar, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (bsp->brush_selection_box), sbar, FALSE, FALSE, 0);
 
 
   /*  Create the brush preview window and the underlying image  */
@@ -246,100 +224,133 @@ brush_select_new (gchar * title,
 
   gtk_widget_show (sbar);
   gtk_widget_show (bsp->frame);
+  gtk_widget_show (bsp->brush_selection_box);
+  gtk_widget_show (bsp->left_box);
 
   /*  options box  */
-  bsp->options_box = gtk_vbox_new (TRUE, 4);
-  gtk_box_pack_start (GTK_BOX (hbox), bsp->options_box, TRUE, TRUE, 0);
+  bsp->options_box = gtk_vbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), bsp->options_box, FALSE, FALSE, 0);
 
   /*  Create the active brush label  */
   util_box = gtk_hbox_new (FALSE, 5);
-  gtk_box_pack_start (GTK_BOX (bsp->options_box), util_box, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (bsp->options_box), util_box, FALSE, FALSE, 2);
 
   bsp->brush_name = gtk_label_new (_("Active"));
   gtk_box_pack_start (GTK_BOX (util_box), bsp->brush_name, FALSE, FALSE, 2);
-  bsp->brush_size = gtk_label_new ("(0x0)");
+  bsp->brush_size = gtk_label_new ("(0 X 0)");
   gtk_box_pack_start (GTK_BOX (util_box), bsp->brush_size, FALSE, FALSE, 2);
 
   gtk_widget_show (bsp->brush_name);
   gtk_widget_show (bsp->brush_size);
   gtk_widget_show (util_box);
 
-  /*  Create the paint mode option menu  */
-  util_box = gtk_hbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (bsp->options_box), util_box, FALSE, FALSE, 0);
-  label = gtk_label_new (_("Mode:"));
-  gtk_box_pack_start (GTK_BOX (util_box), label, FALSE, FALSE, 2);
-  menu = create_paint_mode_menu (paint_mode_menu_callback,(gpointer)bsp);
-  bsp->option_menu =
-    option_menu = gtk_option_menu_new ();
-  gtk_box_pack_start (GTK_BOX (util_box), option_menu, FALSE, FALSE, 2);
+  /*  A place holder for paint mode switching  */
+  bsp->right_box = gtk_vbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (bsp->options_box), bsp->right_box, TRUE, TRUE, 0);
 
-  gtk_widget_show (label);
-  gtk_widget_show (option_menu);
-  gtk_widget_show (util_box);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
+  /*  The vbox for the paint options  */
+  bsp->paint_options_box = gtk_vbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (bsp->right_box), bsp->paint_options_box,
+		      FALSE, FALSE, 0);
+
+  /*  a separator before the paint options  */
+  sep = gtk_hseparator_new ();
+  gtk_box_pack_start (GTK_BOX (bsp->paint_options_box), sep, FALSE, FALSE, 0);
+  gtk_widget_show (sep);
+
+  /*  Create the frame and the table for the options  */
+  table = gtk_table_new (2, 2, FALSE);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_box_pack_start (GTK_BOX (bsp->paint_options_box), table, FALSE, FALSE, 2);
 
   /*  Create the opacity scale widget  */
-  util_box = gtk_hbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (bsp->options_box), util_box, FALSE, FALSE, 0);
   label = gtk_label_new (_("Opacity:"));
-  gtk_box_pack_start (GTK_BOX (util_box), label, FALSE, FALSE, 2);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
   bsp->opacity_data = 
-    GTK_ADJUSTMENT (gtk_adjustment_new ((active)?(init_opacity*100.0):100.0, 0.0, 100.0, 1.0, 1.0, 0.0));
+    GTK_ADJUSTMENT (gtk_adjustment_new ((active)?(init_opacity*100.0):100.0,
+					0.0, 100.0, 1.0, 1.0, 0.0));
   slider = gtk_hscale_new (bsp->opacity_data);
-  gtk_box_pack_start (GTK_BOX (util_box), slider, TRUE, TRUE, 0);
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
+  gtk_table_attach_defaults (GTK_TABLE (table), slider, 1, 2, 0, 1);
   gtk_signal_connect (GTK_OBJECT (bsp->opacity_data), "value_changed",
 		      (GtkSignalFunc) opacity_scale_update, bsp);
-
-  gtk_widget_show (label);
   gtk_widget_show (slider);
-  gtk_widget_show (util_box);
 
-  util_box = gtk_hbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (bsp->options_box), util_box, FALSE, FALSE, 0);
-  label = gtk_label_new (_("Spacing:"));
-  gtk_box_pack_start (GTK_BOX (util_box), label, FALSE, FALSE, 2);
-  bsp->spacing_data = GTK_ADJUSTMENT (gtk_adjustment_new (0.0, 1.0, 1000.0, 1.0, 1.0, 0.0));
-  slider = gtk_hscale_new (bsp->spacing_data);
-  gtk_box_pack_start (GTK_BOX (util_box), slider, TRUE, TRUE, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
-  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (bsp->spacing_data), "value_changed",
-		      (GtkSignalFunc) spacing_scale_update, bsp);
-
+  /*  Create the paint mode option menu  */
+  label = gtk_label_new (_("Mode:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
-  gtk_widget_show (slider);
-  gtk_widget_show (util_box);
+
+  abox = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
+  gtk_table_attach_defaults (GTK_TABLE (table), abox, 1, 2, 1, 2);
+  gtk_widget_show (abox);
+
+  menu = paint_mode_menu_new (paint_mode_menu_callback, (gpointer) bsp);
+  bsp->option_menu = option_menu = gtk_option_menu_new ();
+  gtk_container_add (GTK_CONTAINER (abox), option_menu);
+  gtk_widget_show (option_menu);
+  gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
+
+  gtk_widget_show (table);
+  gtk_widget_show (bsp->paint_options_box);
+  gtk_widget_show (bsp->right_box);
 
   /*  Create the edit/new buttons  */
-  util_box = gtk_hbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (bsp->options_box), util_box, FALSE, FALSE, 0);
+  util_box = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (bsp->options_box), util_box, FALSE, FALSE, 4);
   bsp->edit_button =  gtk_button_new_with_label (_("Edit Brush"));
   gtk_signal_connect (GTK_OBJECT (bsp->edit_button), "clicked",
 		      (GtkSignalFunc) edit_brush_callback,
 		      NULL);
-
-  /* We can only edit in the main window! (for now)*/
-
   gtk_box_pack_start (GTK_BOX (util_box), bsp->edit_button, TRUE, TRUE, 5);
 
   button2 =  gtk_button_new_with_label (_("New Brush"));
   gtk_signal_connect (GTK_OBJECT (button2), "clicked",
 		      (GtkSignalFunc) new_brush_callback,
 		      NULL);
-  gtk_box_pack_start (GTK_BOX (util_box), button2, TRUE, TRUE, 5);
+  gtk_box_pack_start (GTK_BOX (util_box), button2, TRUE, TRUE, 6);
 
   gtk_widget_show (bsp->edit_button);    
   gtk_widget_show (button2);
   gtk_widget_show (util_box);
 
-  if(title)
+  /*  We can only edit in the main window! (for now)  */
+  if (title)
     {
-      gtk_widget_set_sensitive(bsp->edit_button,FALSE);
-      gtk_widget_set_sensitive(button2,FALSE);
+      gtk_widget_set_sensitive (bsp->edit_button, FALSE);
+      gtk_widget_set_sensitive (button2, FALSE);
     }
+
+  /*  Create the spacing scale widget  */
+  table = gtk_table_new (1, 2, FALSE);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
+  gtk_box_pack_end (GTK_BOX (bsp->options_box), table, FALSE, FALSE, 2);
+
+  label = gtk_label_new (_("Spacing:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
+  bsp->spacing_data =
+    GTK_ADJUSTMENT (gtk_adjustment_new (0.0, 1.0, 1000.0, 1.0, 1.0, 0.0));
+  slider = gtk_hscale_new (bsp->spacing_data);
+  gtk_table_attach_defaults (GTK_TABLE (table), slider, 1, 2, 0, 1);
+  gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
+  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
+  gtk_signal_connect (GTK_OBJECT (bsp->spacing_data), "value_changed",
+		      (GtkSignalFunc) spacing_scale_update, bsp);
+  gtk_widget_show (slider);
+
+  gtk_widget_show (table);
 
   /*  The action area  */
   action_items[0].user_data = bsp;
@@ -361,11 +372,10 @@ brush_select_new (gchar * title,
   /*  render the brushes into the newly created image structure  */
   display_brushes (bsp);
 
-  /*  add callbacks to keep the display area current  */
   /* Only for main dialog */
-
   if(!title)
     {
+      /*  add callbacks to keep the display area current  */
       gimp_list_foreach(GIMP_LIST(brush_list), (GFunc)connect_signals_to_brush,
 			bsp);
       gtk_signal_connect (GTK_OBJECT (brush_list), "add",
@@ -374,6 +384,36 @@ brush_select_new (gchar * title,
       gtk_signal_connect (GTK_OBJECT (brush_list), "remove",
 			  (GtkSignalFunc) brush_removed_callback,
 			  bsp);
+
+      /*  if we are in per-toop paint options mode, hide the paint options  */
+      brush_select_show_paint_options (bsp, global_paint_options);
+
+      /*  add a toggle button which switches from global to per-tool
+       *  paint options mode
+       *
+       *  FIXME: a shortcut like this would be nice but must look different
+       */
+
+      /*
+      abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (bsp->shell)->action_area),
+			  abox, FALSE, FALSE, 0);
+
+      button2 = gtk_check_button_new_with_label (_("Global Paint Options"));
+      gtk_container_add (GTK_CONTAINER (abox), button2);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button2),
+				    global_paint_options);
+      gtk_signal_connect (GTK_OBJECT (button2), "toggled",
+			  (GtkSignalFunc) paint_options_toggle_callback, bsp);
+
+      gtk_widget_show (button2);
+      gtk_widget_show (abox);
+
+      sep = gtk_vseparator_new ();
+      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (bsp->shell)->action_area), sep,
+			  FALSE, FALSE, 0);
+      gtk_widget_show (sep);
+      */
     }
   
   /*  update the active selection  */
@@ -391,9 +431,9 @@ brush_select_new (gchar * title,
       bsp->redraw = FALSE;
       if(!gotinitbrush)
 	{
-	  bsp->opacity_value = gimp_brush_get_opacity();
-	  bsp->spacing_value = gimp_brush_get_spacing();
-	  bsp->paint_mode = gimp_brush_get_paint_mode();
+	  bsp->opacity_value = paint_options_get_opacity ();
+	  bsp->spacing_value = gimp_brush_get_spacing (active);
+	  bsp->paint_mode = paint_options_get_paint_mode ();
 	}
       else
 	{
@@ -416,7 +456,6 @@ brush_select_new (gchar * title,
 	gtk_widget_set_sensitive (bsp->edit_button, 0); 
     }
   
-
   return bsp;
 }
 
@@ -459,7 +498,7 @@ brush_select_free (BrushSelectP bsp)
 }
 
 void
-brush_change_callbacks(BrushSelectP bsp, gint closing)
+brush_change_callbacks (BrushSelectP bsp, gint closing)
 {
   gchar * name;
   ProcRecord *prec = NULL;
@@ -501,6 +540,43 @@ brush_change_callbacks(BrushSelectP bsp, gint closing)
       procedural_db_destroy_args (return_vals, nreturn_vals);
     }
   busy = 0;
+}
+
+void
+brush_select_show_paint_options (BrushSelectP  bsp,
+				 gboolean      show)
+{
+  show = show ? TRUE : FALSE;
+
+  if ((bsp == NULL) && ((bsp = brush_select_dialog) == NULL))
+    return;
+
+  if (show)
+    {
+      if (! GTK_WIDGET_VISIBLE (bsp->paint_options_box))
+	gtk_widget_show (bsp->paint_options_box);
+      if (bsp->brush_selection_box->parent != bsp->left_box)
+	gtk_widget_reparent (bsp->brush_selection_box, bsp->left_box);
+      gtk_box_set_child_packing (GTK_BOX (bsp->options_box->parent),
+				 bsp->options_box,
+				 FALSE, FALSE, 0, GTK_PACK_START);
+      gtk_box_set_child_packing (GTK_BOX (bsp->left_box->parent),
+				 bsp->left_box, TRUE, TRUE, 0, GTK_PACK_START);
+      gtk_box_set_spacing (GTK_BOX (bsp->left_box->parent), 2);
+    }
+  else
+    {
+      if (GTK_WIDGET_VISIBLE (bsp->paint_options_box))
+	gtk_widget_hide (bsp->paint_options_box);
+      if (bsp->brush_selection_box->parent != bsp->right_box)
+	gtk_widget_reparent (bsp->brush_selection_box, bsp->right_box);
+      gtk_box_set_child_packing (GTK_BOX (bsp->options_box->parent),
+				 bsp->options_box,
+				 TRUE, TRUE, 0, GTK_PACK_START);
+      gtk_box_set_child_packing (GTK_BOX (bsp->left_box->parent),
+				 bsp->left_box, FALSE, FALSE, 0, GTK_PACK_START);
+      gtk_box_set_spacing (GTK_BOX (bsp->left_box->parent), 0);
+    }
 }
 
 static void
@@ -866,7 +942,7 @@ brush_select_resize (GtkWidget *widget,
  
    /*  update the display  */   
    if (bsp->redraw)
-	gtk_widget_draw (bsp->preview, NULL);
+     gtk_widget_draw (bsp->preview, NULL);
    
    return FALSE;
 }
@@ -894,7 +970,7 @@ update_active_brush_field (BrushSelectP bsp)
 
   /*  Set brush spacing  */
   if(bsp == brush_select_dialog)
-    bsp->spacing_data->value = gimp_brush_get_spacing ();
+    bsp->spacing_data->value = gimp_brush_get_spacing (brush);
   else
     bsp->spacing_data->value = bsp->spacing_value = brush->spacing;
 
@@ -1141,7 +1217,7 @@ paint_mode_menu_callback (GtkWidget *w,
   BrushSelectP bsp = (BrushSelectP)gtk_object_get_user_data(GTK_OBJECT(w));
   
   if(bsp == brush_select_dialog)
-    gimp_brush_set_paint_mode ((int) client_data);
+    paint_options_set_paint_mode ((int) client_data);
   else
     {
       bsp->paint_mode = (int) client_data;
@@ -1157,7 +1233,7 @@ opacity_scale_update (GtkAdjustment *adjustment,
   BrushSelectP bsp = (BrushSelectP)data;
   
   if(bsp == brush_select_dialog)
-    gimp_brush_set_opacity (adjustment->value / 100.0);
+    paint_options_set_opacity (adjustment->value / 100.0);
   else
     {
       bsp->opacity_value = (adjustment->value / 100.0);
@@ -1173,7 +1249,7 @@ spacing_scale_update (GtkAdjustment *adjustment,
   BrushSelectP bsp = (BrushSelectP)data;
   
   if(bsp == brush_select_dialog)
-    gimp_brush_set_spacing ((int) adjustment->value);
+    gimp_brush_set_spacing (get_active_brush(), (int) adjustment->value);
   else
     {
       if(bsp->spacing_value != adjustment->value)
@@ -1183,6 +1259,15 @@ spacing_scale_update (GtkAdjustment *adjustment,
 	}
     }
 }
+
+/* not used
+static void
+paint_options_toggle_callback (GtkWidget *widget,
+			       gpointer   client_data)
+{
+  paint_options_set_global (GTK_TOGGLE_BUTTON (widget)->active);
+}
+*/
 
 /* Close active dialogs that no longer have PDB registered for them */
 

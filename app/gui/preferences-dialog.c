@@ -15,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #include <string.h>
 
 #include "appenv.h"
@@ -26,14 +25,15 @@
 #include "interface.h"
 #include "layers_dialog.h"
 #include "layer_select.h"
+#include "paint_options.h"
 #include "session.h"
 
 #include "config.h"
 #include "libgimp/gimpchainbutton.h"
 #include "libgimp/gimpfileselection.h"
-#include "libgimp/gimpintl.h"
 #include "libgimp/gimppatheditor.h"
 #include "libgimp/gimpsizeentry.h"
+#include "libgimp/gimpintl.h"
 
 /*  preferences local functions  */
 static void file_prefs_ok_callback (GtkWidget *, GtkWidget *);
@@ -44,7 +44,6 @@ static void file_prefs_toggle_callback (GtkWidget *, gpointer);
 static void file_prefs_preview_size_callback (GtkWidget *, gpointer);
 static void file_prefs_mem_size_unit_callback (GtkWidget *, gpointer);
 static void file_prefs_int_adjustment_callback (GtkAdjustment *, gpointer);
-/*static void file_prefs_float_adjustment_callback (GtkAdjustment *, gpointer);*/
 static void file_prefs_string_callback (GtkWidget *, gpointer);
 static void file_prefs_filename_callback (GtkWidget *, gpointer);
 static void file_prefs_path_callback (GtkWidget *, gpointer);
@@ -97,6 +96,7 @@ static   float        old_monitor_yres;
 static   int          old_using_xserver_resolution;
 static   int          old_num_processors;
 static   char *       old_image_title_format;
+static   int          old_global_paint_options;
 
 /*  variables which can't be changed on the fly  */
 static   int          edit_stingy_memory_use;
@@ -498,6 +498,11 @@ file_prefs_save_callback (GtkWidget *widget,
     }
   if (file_prefs_strcmp (image_title_format, old_image_title_format))
     update = g_list_append (update, "image-title-format");
+  if (global_paint_options != old_global_paint_options)
+    {
+      update = g_list_append (update, "global-paint-options");
+      remove = g_list_append (remove, "no-global-paint-options");
+    }
 
   save_gimprc (&update, &remove);
 
@@ -600,6 +605,8 @@ file_prefs_cancel_callback (GtkWidget *widget,
   file_prefs_strset (&edit_gradient_path, old_gradient_path);
 
   file_prefs_strset (&image_title_format, old_image_title_format);
+
+  paint_options_set_global (old_global_paint_options);
 }
 
 static void
@@ -653,6 +660,8 @@ file_prefs_toggle_callback (GtkWidget *widget,
       gdisplays_expose_full ();
       gdisplays_flush ();
     }
+  else if (data == &global_paint_options)
+    paint_options_set_global (GTK_TOGGLE_BUTTON (widget)->active);
 }
 
 static void
@@ -691,18 +700,6 @@ file_prefs_int_adjustment_callback (GtkAdjustment *adj,
   val = data;
   *val = (int) adj->value;
 }
-
-/*  commented out because it's not used 
-static void
-file_prefs_float_adjustment_callback (GtkAdjustment *adj,
-				      gpointer       data)
-{
-  float *val;
-
-  val = data;
-  *val = (float) adj->value;
-}
-*/
 
 static void
 file_prefs_string_callback (GtkWidget *widget,
@@ -931,26 +928,32 @@ gimp_dialog_new (const gchar       *title,
 		 gint               allow_grow,
 		 gint               auto_shrink,
 
-		 /* this is an action_area button */
-		 gchar             *label,
-		 GtkSignalFunc      callback,
-		 gpointer           data,
-		 gboolean           default_action,
-		 gboolean           connect_delete,
+		 /* specify action area buttons as va_list:
+		  *  gchar         *label,
+		  *  GtkSignalFunc  callback,
+		  *  gpointer       data,
+		  *  gboolean       default_action,
+		  *  gboolean       connect_delete,
+		  */
 
-		 /* more action_area buttons */
 		 ...)
 {
   GtkWidget     *dialog;
   GtkWidget     *hbbox;
   GtkWidget     *button;
 
+  /*  action area variables  */
+  gchar         *label;
+  GtkSignalFunc  callback;
+  gpointer       data;
+  gboolean       default_action;
+  gboolean       connect_delete;
+
   va_list        args;
   gboolean       delete_connected = FALSE;
 
   g_return_val_if_fail (title != NULL, NULL);
   g_return_val_if_fail (wmclass_name != NULL, NULL);
-  g_return_val_if_fail (label != NULL, NULL);
 
   dialog = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (dialog), wmclass_name, "Gimp");
@@ -971,9 +974,15 @@ gimp_dialog_new (const gchar       *title,
   gtk_widget_show (hbbox);
 
   /*  the action_area buttons  */
-  va_start (args, connect_delete);
+  va_start (args, auto_shrink);
+  label = va_arg (args, gchar*);
   while (label)
     {
+      callback = va_arg (args, GtkSignalFunc);
+      data = va_arg (args, gpointer);
+      default_action = va_arg (args, gboolean);
+      connect_delete = va_arg (args, gboolean);
+
       button = gtk_button_new_with_label (label);
       GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
       gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
@@ -1006,13 +1015,6 @@ gimp_dialog_new (const gchar       *title,
       gtk_widget_show (button);
 
       label = va_arg (args, gchar*);
-      if (label)
-	{
-	  callback = va_arg (args, GtkSignalFunc);
-	  data = va_arg (args, gpointer);
-	  default_action = va_arg (args, gboolean);
-	  connect_delete = va_arg (args, gboolean);
-	}
     }
   va_end (args);
 
@@ -1034,50 +1036,52 @@ gimp_dialog_new (const gchar       *title,
 
 GtkWidget*
 gimp_option_menu_new (GtkSignalFunc  menu_item_callback,
-		      gpointer       initial,  /* set_data */
+		      gpointer       initial,  /* user_data */
 
-		      /* this is a menu item */
-		      gchar         *label,
-		      gpointer       data,
-		      gpointer       set_data,
+		      /* specify menu items as va_list:
+		       *  gchar     *label,
+		       *  gpointer   data,
+		       *  gpointer   user_data,
+		       */
 
-		      /* more menu items */
 		      ...)
 {
   GtkWidget *menu;
   GtkWidget *menuitem;
   GtkWidget *optionmenu;
 
+  /*  menu item variables  */
+  gchar     *label;
+  gpointer   data;
+  gpointer   user_data;
+
   va_list    args;
   gint       i;
   gint       initial_index;
-
-  g_return_val_if_fail (label != NULL, NULL);
 
   menu = gtk_menu_new ();
 
   /*  create the menu items  */
   initial_index = 0;
-  va_start (args, set_data);
+  va_start (args, initial);
+  label = va_arg (args, gchar*);
   for (i = 0; label; i++)
     {
+      data = va_arg (args, gpointer);
+      user_data = va_arg (args, gpointer);
+
       menuitem = gtk_menu_item_new_with_label (label);
       gtk_menu_append (GTK_MENU (menu), menuitem);
       gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			  menu_item_callback, data);
-      gtk_object_set_user_data (GTK_OBJECT (menuitem), set_data);
+      gtk_object_set_user_data (GTK_OBJECT (menuitem), user_data);
       gtk_widget_show (menuitem);
 
       /*  remember the initial menu item  */
-      if (set_data == initial)
+      if (user_data == initial)
 	initial_index = i;
 
       label = va_arg (args, gchar*);
-      if (label)
-	{
-	  data = va_arg (args, gpointer);
-	  set_data = va_arg (args, gpointer);
-	}
     }
   va_end (args);
 
@@ -1092,52 +1096,54 @@ gimp_option_menu_new (GtkSignalFunc  menu_item_callback,
 
 GtkWidget*
 gimp_radio_group_new (GtkSignalFunc  radio_button_callback,
-		      gpointer       initial,  /* set_data */
+		      gpointer       initial,  /* user_data */
 
-		      /* this is a radio button */
-		      gchar         *label,
-		      gpointer       data,
-		      gpointer       set_data,
+		      /* specify radio buttons as va_list:
+		       *  gchar     *label,
+		       *  gpointer   data,
+		       *  gpointer   user_data,
+		       */
 
-		      /* more radio buttons */
 		      ...)
 {
   GtkWidget *vbox;
   GtkWidget *button;
   GSList    *group;
 
-  va_list    args;
+  /*  radio button variables  */
+  gchar     *label;
+  gpointer   data;
+  gpointer   user_data;
 
-  g_return_val_if_fail (label != NULL, NULL);
+  va_list    args;
 
   vbox = gtk_vbox_new (FALSE, 1);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
   group = NULL;
 
   /*  create the radio buttons  */
-  va_start (args, set_data);
+  va_start (args, initial);
+  label = va_arg (args, gchar*);
   while (label)
     {
+      data = va_arg (args, gpointer);
+      user_data = va_arg (args, gpointer);
+
       button = gtk_radio_button_new_with_label (group, label);
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
 			  (GtkSignalFunc) radio_button_callback,
 			  data);
-      gtk_object_set_user_data (GTK_OBJECT (button), set_data);
+      gtk_object_set_user_data (GTK_OBJECT (button), user_data);
 
       /*  press the initially active radio button  */
-      if (set_data == initial)
+      if (user_data == initial)
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
       gtk_widget_show (button);
 
       label = va_arg (args, gchar*);
-      if (label)
-	{
-	  data = va_arg (args, gpointer);
-	  set_data = va_arg (args, gpointer);
-	}
     }
   va_end (args);
 
@@ -1302,6 +1308,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   GtkWidget     *comboitem;
   GtkWidget     *optionmenu;
   GtkWidget     *table;
+  GtkWidget     *label;
   GSList        *group;
   GtkObject     *adjustment;
 
@@ -1365,6 +1372,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   old_using_xserver_resolution = using_xserver_resolution;
   old_num_processors = num_processors;
   old_image_title_format = file_prefs_strdup (image_title_format);	
+  old_global_paint_options = global_paint_options;
 
   file_prefs_strset (&old_temp_path, edit_temp_path);
   file_prefs_strset (&old_swap_path, edit_swap_path);
@@ -1846,6 +1854,42 @@ file_pref_cmd_callback (GtkWidget *widget,
 		      (GtkSignalFunc) file_prefs_toggle_callback,
 		      &no_cursor_updating);
   gtk_widget_show (button);
+
+  /* Interface / Tool Options */
+  vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+					  _("Tool Options Settings"),
+					  GTK_CTREE (ctree),
+					  _("Tool Options"),
+					  top_insert,
+					  &child_insert,
+					  page_index);
+  gtk_widget_show (vbox);
+  page_index++;
+
+  frame = gtk_frame_new (_("Paint Options"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  vbox2 = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+  gtk_widget_show (vbox2);
+
+  button =
+    gtk_check_button_new_with_label(_("Use Global Paint Options"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				global_paint_options);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      (GtkSignalFunc) file_prefs_toggle_callback,
+		      &global_paint_options);
+  gtk_widget_show (button);
+
+  label =
+    gtk_label_new (_("(Switching this off does not yet work consistently.)"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
   /* Environment */
   vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),

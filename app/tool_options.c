@@ -15,14 +15,26 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#include "brush_select.h"
+#include "gimprc.h"
+#include "paint_funcs.h"
+#include "paint_options.h"
 #include "selection_options.h"
 #include "tool_options_ui.h"
 
-#include "libgimp/gimpintl.h"
 #include "libgimp/gimpunitmenu.h"
+#include "libgimp/gimpintl.h"
 
 
-/*  ui helper functions  */
+/*  the global paint options  */
+static double   global_opacity = 1.0;
+static int      global_paint_mode = 0;
+
+/*  a list of all PaintOptions  */
+static GSList  *paint_options_list = NULL;
+
+
+/*  ui helper functions  ******************************************************/
 
 void
 tool_options_toggle_update (GtkWidget *widget,
@@ -78,6 +90,16 @@ tool_options_double_adjustment_update (GtkWidget *widget,
 }
 
 void
+tool_options_opacity_adjustment_update (GtkWidget *widget,
+					gpointer   data)
+{
+  double *val;
+
+  val = (double *) data;
+  *val = GTK_ADJUSTMENT (widget)->value / 100;
+}
+
+void
 tool_options_unitmenu_update (GtkWidget *widget,
 			      gpointer   data)
 {
@@ -101,8 +123,20 @@ tool_options_unitmenu_update (GtkWidget *widget,
     }
 }
 
+static void
+tool_options_paint_mode_update (GtkWidget *widget,
+				gpointer   data)
+{
+  PaintOptions *options;
 
-/*  tool options functions  */
+  options = (PaintOptions *) gtk_object_get_user_data (GTK_OBJECT (widget));
+
+  if (options)
+    options->paint_mode = (long) data;
+}
+
+
+/*  tool options functions  ***************************************************/
 
 void
 tool_options_init (ToolOptions          *options,
@@ -131,7 +165,7 @@ tool_options_new (gchar *title)
   return options;
 }
 
-/*  selection tool options functions  */
+/*  selection tool options functions  *****************************************/
 
 void
 selection_options_init (SelectionOptions     *options,
@@ -161,7 +195,7 @@ selection_options_init (SelectionOptions     *options,
 			   _("Intelligent Scissors Options") :
 			   ((tool_type == BY_COLOR_SELECT) ?
 			    _("By-Color Select Options") :
-			    _("Unknown Selection Type ???")))))))),
+			    _("ERROR: Unknown Selection Type")))))))),
 		     reset_func);
 
   /*  the main vbox  */
@@ -188,7 +222,7 @@ selection_options_init (SelectionOptions     *options,
 
   /*  the feather toggle button  */
   table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 6);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
   options->feather_w = gtk_check_button_new_with_label (_("Feather"));
@@ -314,7 +348,7 @@ selection_options_init (SelectionOptions     *options,
       gtk_widget_show (alignment);
 
       table = gtk_table_new (3, 2, FALSE);
-      gtk_table_set_col_spacing (GTK_TABLE (table), 0, 6);
+      gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
       gtk_table_set_row_spacings (GTK_TABLE (table), 1);
       gtk_container_add (GTK_CONTAINER (alignment), table);
 
@@ -447,4 +481,281 @@ selection_options_reset (SelectionOptions *options)
 	    gtk_object_get_data (GTK_OBJECT (spinbutton), "set_digits");
 	}
     }
+}
+
+
+/*  paint tool options functions  *********************************************/
+
+void
+paint_options_init (PaintOptions         *options,
+		    ToolType              tool_type,
+		    ToolOptionsResetFunc  reset_func)
+{
+  GtkWidget *vbox;
+  GtkWidget *abox;
+  GtkWidget *table;
+  GtkWidget *label;
+  GtkWidget *scale;
+  GtkWidget *menu;
+  GtkWidget *separator;
+
+  /*  initialize the tool options structure  */
+  tool_options_init ((ToolOptions *) options,
+		     ((tool_type == BUCKET_FILL) ?
+		      _("Bucket Fill Options") :
+		      ((tool_type == BLEND) ?
+		       _("Blend Options") :
+		       ((tool_type == PENCIL) ?
+			_("Pencil Options") :
+			((tool_type == PAINTBRUSH) ?
+			 _("Paintbrush Options") :
+			 ((tool_type == ERASER) ?
+			  _("Erazer Options") :
+			  ((tool_type == AIRBRUSH) ?
+			   _("Airbrush Options") :
+			   ((tool_type == CLONE) ?
+			    _("Clone Tool Options") :
+			    ((tool_type == CONVOLVE) ?
+			     _("Convolver Options") :
+			     ((tool_type == INK) ?
+			      _("Ink Options") :
+			      _("ERROR: Unknown Paint Type")))))))))),
+		     reset_func);
+
+  /*  initialize the paint options structure  */
+  options->opacity      = options->opacity_d    = 1.0;
+  options->paint_mode   = options->paint_mode_d = 0;
+
+  options->global       = NULL;
+  options->opacity_w    = NULL;
+  options->paint_mode_w = NULL;
+
+  /*  the main vbox  */
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox), vbox,
+		      FALSE, FALSE, 0);
+  options->paint_vbox = vbox;
+
+  /*  the main table  */
+  table = gtk_table_new (2, 2, FALSE);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
+  gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
+
+  /*  the opacity scale  */
+  label = gtk_label_new (_("Opacity:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
+  options->opacity_w =
+    gtk_adjustment_new (options->opacity_d * 100, 0.0, 100.0, 1.0, 1.0, 0.0);
+  gtk_signal_connect (GTK_OBJECT (options->opacity_w), "value_changed",
+		      (GtkSignalFunc) tool_options_opacity_adjustment_update,
+		      &options->opacity);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (options->opacity_w));
+  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
+  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  gtk_table_attach_defaults (GTK_TABLE (table), scale, 1, 2, 0, 1);
+  gtk_widget_show (scale);
+
+  /*  the paint mode menu  */
+  switch (tool_type)
+    {
+    case BUCKET_FILL:
+    case BLEND:
+    case PENCIL:
+    case PAINTBRUSH:
+    case AIRBRUSH:
+    case CLONE:
+    case INK:
+      gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
+
+      label = gtk_label_new (_("Mode:"));
+      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
+			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_widget_show (label);
+
+      abox = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
+      gtk_table_attach_defaults (GTK_TABLE (table), abox, 1, 2, 1, 2);
+      gtk_widget_show (abox);
+
+      options->paint_mode_w = gtk_option_menu_new ();
+      gtk_container_add (GTK_CONTAINER (abox), options->paint_mode_w);
+      gtk_widget_show (options->paint_mode_w);
+
+      menu =
+	paint_mode_menu_new (tool_options_paint_mode_update, (gpointer) options);
+      gtk_option_menu_set_menu (GTK_OPTION_MENU (options->paint_mode_w), menu);
+      break;
+    case CONVOLVE:
+    case ERASER:
+      break;
+    default:
+      break;
+    }
+
+  /*  show the main table  */
+  gtk_widget_show (table);
+
+  /*  a separator after the common paint options  */
+  if (tool_type != PENCIL)
+    {
+      separator = gtk_hseparator_new ();
+      gtk_box_pack_start (GTK_BOX (vbox), separator, FALSE, FALSE, 0);
+      gtk_widget_show (separator);
+    }
+
+  if (! global_paint_options)
+    gtk_widget_show (vbox);
+
+  /*  register this Paintoptions structure  */
+  paint_options_list = g_slist_prepend (paint_options_list, options);
+}
+
+PaintOptions *
+paint_options_new (ToolType              tool_type,
+		   ToolOptionsResetFunc  reset_func)
+{
+  PaintOptions *options;
+  GtkWidget *label;
+
+  options = (PaintOptions *) g_malloc (sizeof (PaintOptions));
+  paint_options_init (options, tool_type, reset_func);
+
+  options->global = gtk_vbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox),
+		      options->global, FALSE, FALSE, 0);
+
+  label = gtk_label_new (_("This tool has no options."));
+  gtk_box_pack_start (GTK_BOX (options->global), label, FALSE, FALSE, 6);
+  gtk_widget_show (label);
+
+  if (global_paint_options && options->global)
+    gtk_widget_show (options->global);
+
+  return options;
+}
+
+void
+paint_options_reset (PaintOptions *options)
+{
+  if (options->opacity_w)
+    {
+      gtk_adjustment_set_value (GTK_ADJUSTMENT (options->opacity_w),
+				options->opacity_d * 100);
+    }
+  if (options->paint_mode_w)
+    {
+      options->paint_mode = options->paint_mode_d;
+      gtk_option_menu_set_history (GTK_OPTION_MENU (options->paint_mode_w),
+				   options->paint_mode_d);
+    }
+}
+
+
+/*  global paint options functions  *******************************************/
+
+void
+paint_options_set_global (gboolean global)
+{
+  PaintOptions *options;
+  GSList *list;
+
+  global = global ? TRUE : FALSE;
+
+  if (global_paint_options == global)
+    return;
+
+  global_paint_options = global;
+
+  for (list = paint_options_list; list; list = list->next)
+    {
+      options = (PaintOptions *) list->data;
+
+      if (global)
+	{
+	  if (options->paint_vbox && GTK_WIDGET_VISIBLE (options->paint_vbox))
+	    gtk_widget_hide (options->paint_vbox);
+	  if (options->global && ! GTK_WIDGET_VISIBLE (options->global))
+	    gtk_widget_show (options->global);
+	}
+      else
+	{
+	  if (options->paint_vbox && ! GTK_WIDGET_VISIBLE (options->paint_vbox))
+	    gtk_widget_show (options->paint_vbox);
+	  if (options->global && GTK_WIDGET_VISIBLE (options->global))
+	    gtk_widget_hide (options->global);
+	}
+    }
+
+  /*  NULL means the main brush selection  */
+  brush_select_show_paint_options (NULL, global);
+}
+
+double
+paint_options_get_opacity (void)
+{
+  return global_opacity;
+}
+
+void
+paint_options_set_opacity (double opacity)
+{
+  global_opacity = opacity;
+}
+
+int
+paint_options_get_paint_mode (void)
+{
+  return global_paint_mode;
+}
+
+void
+paint_options_set_paint_mode (int paint_mode)
+{
+  global_paint_mode = paint_mode;
+}
+
+
+/*  create a paint mode menu  *************************************************/
+
+GtkWidget *
+paint_mode_menu_new (MenuItemCallback callback,
+		     gpointer         user_data)
+{
+  GtkWidget *menu;
+  int i;
+
+  static MenuItem option_items[] =
+  {
+    { N_("Normal"), 0, 0, NULL, (gpointer) NORMAL_MODE, NULL, NULL },
+    { N_("Dissolve"), 0, 0, NULL, (gpointer) DISSOLVE_MODE, NULL, NULL },
+    { N_("Behind"), 0, 0, NULL, (gpointer) BEHIND_MODE, NULL, NULL },
+    { N_("Multiply (Burn)"), 0, 0, NULL, (gpointer) MULTIPLY_MODE, NULL, NULL },
+    { N_("Divide (Dodge)"), 0, 0, NULL, (gpointer) DIVIDE_MODE, NULL, NULL },
+    { N_("Screen"), 0, 0, NULL, (gpointer) SCREEN_MODE, NULL, NULL },
+    { N_("Overlay"), 0, 0, NULL, (gpointer) OVERLAY_MODE, NULL, NULL },
+    { N_("Difference"), 0, 0, NULL, (gpointer) DIFFERENCE_MODE, NULL, NULL },
+    { N_("Addition"), 0, 0, NULL, (gpointer) ADDITION_MODE, NULL, NULL },
+    { N_("Subtract"), 0, 0, NULL, (gpointer) SUBTRACT_MODE, NULL, NULL },
+    { N_("Darken Only"), 0, 0, NULL, (gpointer) DARKEN_ONLY_MODE, NULL, NULL },
+    { N_("Lighten Only"), 0, 0, NULL, (gpointer) LIGHTEN_ONLY_MODE, NULL, NULL },
+    { N_("Hue"), 0, 0, NULL, (gpointer) HUE_MODE, NULL, NULL },
+    { N_("Saturation"), 0, 0, NULL, (gpointer) SATURATION_MODE, NULL, NULL },
+    { N_("Color"), 0, 0, NULL, (gpointer) COLOR_MODE, NULL, NULL },
+    { N_("Value"), 0, 0, NULL, (gpointer) VALUE_MODE, NULL, NULL },
+    { NULL, 0, 0, NULL, NULL, NULL, NULL }
+  };
+
+  for (i = 0; i <= VALUE_MODE; i++)
+    option_items[i].callback = callback;
+
+  menu = build_menu (option_items, NULL);
+
+  for (i = 0; i <= VALUE_MODE; i++)
+    gtk_object_set_user_data (GTK_OBJECT (option_items[i].widget), user_data);
+
+  return menu;
 }

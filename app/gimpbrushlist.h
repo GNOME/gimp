@@ -55,16 +55,6 @@ GimpBrushP get_active_brush         (void);
 /* TODO: {re}move this function */
 void       create_brush_dialog      (void);
 
-/*  access functions  */
-/* TODO: move opacity and paint_mode into individual tools? */
-/* TODO: move spacing into gimpbrush */
-double  gimp_brush_get_opacity      (void);
-int     gimp_brush_get_spacing      (void);
-int     gimp_brush_get_paint_mode   (void);
-void    gimp_brush_set_opacity      (double);
-void    gimp_brush_set_spacing      (int);
-void    gimp_brush_set_paint_mode   (int);
-
 /*  Brush procedures  */
 extern ProcRecord brushes_get_opacity_proc;
 extern ProcRecord brushes_set_opacity_proc;

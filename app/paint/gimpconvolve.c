@@ -18,13 +18,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "appenv.h"
-#include "gimpbrushlist.h"
 #include "drawable.h"
 #include "errors.h"
 #include "convolve.h"
 #include "gdisplay.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
+#include "paint_options.h"
 #include "selection.h"
 #include "tool_options_ui.h"
 #include "tools.h"
@@ -43,7 +43,7 @@
 typedef struct _ConvolveOptions ConvolveOptions;
 struct _ConvolveOptions
 {
-  ToolOptions   tool_options;
+  PaintOptions  paint_options;
 
   ConvolveType  type;
   ConvolveType  type_d;
@@ -114,6 +114,8 @@ convolve_options_reset (void)
 {
   ConvolveOptions *options = convolve_options;
 
+  paint_options_reset ((PaintOptions *) options);
+
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->pressure_w),
 			    options->pressure_d);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w[options->type_d]), TRUE);
@@ -143,17 +145,17 @@ convolve_options_new (void)
 
   /*  the new convolve tool options structure  */
   options = (ConvolveOptions *) g_malloc (sizeof (ConvolveOptions));
-  tool_options_init ((ToolOptions *) options,
-		     _("Convolver Options"),
-		     convolve_options_reset);
+  paint_options_init ((PaintOptions *) options,
+		      CONVOLVE,
+		      convolve_options_reset);
   options->type     = options->type_d     = BLUR_CONVOLVE;
   options->pressure = options->pressure_d = 50.0;
 
   /*  the main vbox  */
-  vbox = options->tool_options.main_vbox;
+  vbox = ((ToolOptions *) options)->main_vbox;
 
   /*  the pressure scale  */
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
   label = gtk_label_new (_("Pressure:"));
@@ -346,7 +348,7 @@ convolve_motion (PaintCore *paint_core,
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
   paint_core_replace_canvas (paint_core, drawable, OPAQUE_OPACITY,
-			   (int) (gimp_brush_get_opacity () * 255),
+			   (int) (PAINT_OPTIONS_GET_OPACITY (convolve_options) * 255),
 			   SOFT, INCREMENTAL);
 }
 

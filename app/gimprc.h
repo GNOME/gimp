@@ -73,6 +73,7 @@ extern float     monitor_yres;
 extern int       using_xserver_resolution;
 extern int       num_processors;
 extern char *    image_title_format;
+extern int       global_paint_options;
 
 
 /*  function prototypes  */
