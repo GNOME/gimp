@@ -462,14 +462,17 @@ gimp_file_dialog_add_filters (GimpFileDialog *dialog,
                               Gimp           *gimp,
                               GSList         *file_procs)
 {
-  GtkFileFilter *filter;
+  GtkFileFilter *all;
   GSList        *list;
 
-  filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, _("All Files"));
-  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
-  gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter);
-  gtk_file_filter_add_pattern (filter, "*");
+  all = gtk_file_filter_new ();
+  gtk_file_filter_set_name (all, _("All Files"));
+  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), all);
+  gtk_file_filter_add_pattern (all, "*");
+
+  all = gtk_file_filter_new ();
+  gtk_file_filter_set_name (all, _("All Images"));
+  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), all);
 
   for (list = file_procs; list; list = g_slist_next (list))
     {
@@ -477,11 +480,12 @@ gimp_file_dialog_add_filters (GimpFileDialog *dialog,
 
       if (file_proc->extensions_list)
         {
-          const gchar *domain;
-          gchar       *label;
-          GString     *str;
-          GSList      *ext;
-          gint         i;
+          GtkFileFilter *filter = gtk_file_filter_new ();
+          const gchar   *domain;
+          gchar         *label;
+          GString       *str;
+          GSList        *ext;
+          gint           i;
 
           domain = plug_ins_locale_domain (gimp, file_proc->prog, NULL);
 
@@ -489,8 +493,6 @@ gimp_file_dialog_add_filters (GimpFileDialog *dialog,
 
           str = g_string_new (label);
           g_free (label);
-
-          filter = gtk_file_filter_new ();
 
 /*  an arbitrary limit to keep the file dialog from becoming too wide  */
 #define MAX_EXTENSIONS  4
@@ -504,6 +506,7 @@ gimp_file_dialog_add_filters (GimpFileDialog *dialog,
 
               pattern = gimp_file_dialog_pattern_from_extension (extension);
               gtk_file_filter_add_pattern (filter, pattern);
+              gtk_file_filter_add_pattern (all, pattern);
               g_free (pattern);
 
               if (i == 0)
@@ -537,6 +540,8 @@ gimp_file_dialog_add_filters (GimpFileDialog *dialog,
           gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
         }
     }
+
+  gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), all);
 }
 
 static void

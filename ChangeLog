@@ -1,5 +1,10 @@
 2005-02-07  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpfiledialog.c (gimp_file_dialog_add_filters): add
+	an "All Images" filter and select it by default.
+
+2005-02-07  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpselectiondata.c
 	* plug-ins/help/domain.c
 	* plug-ins/helpbrowser/dialog.c: fixed my latest changes.
