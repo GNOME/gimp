@@ -7,10 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:30+0200\n"
-"PO-Revision-Date: 2004-03-24 16:24+0100\n"
+"POT-Creation-Date: 2004-05-11 19:50+0200\n"
+"PO-Revision-Date: 2004-05-11 21:29+0200\n"
 "Last-Translator: Laszlo Dvornik <dvornikl@mailbox.hu>\n"
-"Language-Team: Hungarian <translation-team-hu@lists.sourceforge.net>\n"
+"Language-Team: Hungarian <gnome@gnome.hu>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -149,11 +149,11 @@ msgstr "Kiszolgáló által használt naplófájl:"
 
 #: plug-ins/script-fu/script-fu.c:122
 msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
-msgstr "<Toolbox>/Kit./Script-Fu/Script-Fu _konzol"
+msgstr "<Toolbox>/Kiterj./Script-Fu/Script-Fu _konzol"
 
 #: plug-ins/script-fu/script-fu.c:147
 msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
-msgstr "<Toolbox>/Kit./Script-Fu/Kiszolgáló _indítása..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Kiszolgáló _indítása..."
 
 #: plug-ins/script-fu/script-fu.c:271 plug-ins/script-fu/script-fu.c:272
 msgid "Re-read all available scripts"
@@ -161,7 +161,7 @@ msgstr "Az összes elérhető szkript újraolvasása"
 
 #: plug-ins/script-fu/script-fu.c:276
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
-msgstr "<Toolbox>/Kit./Script-Fu/Parancsfájlok _frissítése"
+msgstr "<Toolbox>/Kiterj./Script-Fu/Parancsfájlok _frissítése"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:118
 #: plug-ins/dbbrowser/dbbrowser_utils.c:132
@@ -224,7 +224,7 @@ msgstr "<Image>/Script-Fu/Alfából logót/_3D keret..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D _Outline..."
-msgstr "<Toolbox>/Kit./Script-Fu/Logók/_3D keret..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Logók/_3D keret..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:3
 msgid "Bumpmap (Alpha Layer) Blur Radius"
@@ -388,7 +388,7 @@ msgstr "Szöveg"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3_D Truchet..."
-msgstr "<Toolbox>/Kit./Script-Fu/Minták/3_D Truchet..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Minták/3_D Truchet..."
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:2
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
@@ -498,7 +498,7 @@ msgstr "Delta érték a színen"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Arrow..."
-msgstr "<Toolbox>/Kit./Script-Fu/Weblap témák/Idegen ragyogás/_Nyíl..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Weblap témák/Idegen ragyogás/_Nyíl..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
@@ -555,7 +555,7 @@ msgstr "Fel"
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Hrule..."
 msgstr ""
-"<Toolbox>/Kit./Script-Fu/Weblap témák/Idegen ragyogás/_Vízszintes "
+"<Toolbox>/Kiterj./Script-Fu/Weblap témák/Idegen ragyogás/_Vízszintes "
 "elválasztó..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
@@ -568,7 +568,7 @@ msgstr "Oszlop hosszúsága"
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Bullet..."
-msgstr "<Toolbox>/Kit./Script-Fu/Weblap témák/Idegen ragyogás/_Golyó..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Weblap témák/Idegen ragyogás/_Golyó..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
 #: plug-ins/script-fu/scripts/text-circle.scm.h:6
@@ -585,7 +585,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/B_utton..."
-msgstr "<Toolbox>/Kit./Script-Fu/Weblap témák/Idegen ragyogás/G_omb..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Weblap témák/Idegen ragyogás/G_omb..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
 msgid "Glow Radius"
@@ -625,7 +625,7 @@ msgstr "<Image>/Script-Fu/Alfából logót/I_degen ragyogás..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:4
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien _Glow..."
-msgstr "<Toolbox>/Kit./Script-Fu/Logók/I_degen ragyogás..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Logók/I_degen ragyogás..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:8
 msgid "Glow Size (pixels * 4)"
@@ -637,7 +637,7 @@ msgstr "<Image>/Script-Fu/Alfából logót/_Idegen neon..."
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien _Neon..."
-msgstr "<Toolbox>/Kit./Script-Fu/Logók/_Idegen neon..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Logók/_Idegen neon..."
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
 msgid "Fade Away"
@@ -661,7 +661,7 @@ msgstr "<Image>/Script-Fu/Segédeszközök/_ASCII-ból kép réteg..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/_ASCII to Image..."
-msgstr "<Toolbox>/Kit./Script-Fu/Segédeszközök/_ASCII-ból kép réteg..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Segédeszközök/_ASCII-ból kép réteg..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:5
 #, no-c-format
@@ -687,7 +687,7 @@ msgstr "<Image>/Script-Fu/Alfából logót/_Egyszerű I..."
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Basic I..."
-msgstr "<Toolbox>/Kit./Script-Fu/Logók/_Egyszerű I..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Logók/_Egyszerű I..."
 
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:3
 msgid "<Image>/Script-Fu/Alpha to Logo/B_asic II..."
@@ -695,11 +695,11 @@ msgstr "<Image>/Script-Fu/Alfából logót/E_gyszerű II..."
 
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:4
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/B_asic II..."
-msgstr "<Toolbox>/Kit./Script-Fu/Logók/E_gyszerű II..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Logók/E_gyszerű II..."
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple _Beveled Button..."
-msgstr "<Toolbox>/Kit./Script-Fu/Gombok/_Egyszerű 3D..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Gombok/_Egyszerű 3D..."
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:2
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
@@ -723,11 +723,11 @@ msgstr "Bal felső szín"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Arrow..."
-msgstr "<Toolbox>/Kit./Script-Fu/Weblap témák/Lekerekített minta/_Nyíl..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Weblap témák/Lekerekített minta/_Nyíl..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Bullet..."
-msgstr "<Toolbox>/Kit./Script-Fu/Weblap témák/Lekerekített minta/_Golyó..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Weblap témák/Lekerekített minta/_Golyó..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
 msgid "Diameter"
@@ -735,16 +735,16 @@ msgstr "Átmérő"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/B_utton..."
-msgstr "<Toolbox>/Kit./Script-Fu/Weblap témák/Lekerekített minta/G_omb..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Weblap témák/Lekerekített minta/G_omb..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/H_eading..."
-msgstr "<Toolbox>/Kit./Script-Fu/Weblap témák/Lekerekített minta/_Fejléc..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Weblap témák/Lekerekített minta/_Fejléc..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Hrule..."
 msgstr ""
-"<Toolbox>/Kit./Script-Fu/Weblap témák/Lekerekített minta/_Vízszintes "
+"<Toolbox>/Kiterj./Script-Fu/Weblap témák/Lekerekített minta/_Vízszintes "
 "elválasztó..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
@@ -784,7 +784,7 @@ msgstr "<Image>/Script-Fu/Alfából logót/_Színátmenetes..."
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blen_ded..."
-msgstr "<Toolbox>/Kit./Script-Fu/Logók/Színátmenetes..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Logók/_Színátmenetes..."
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:4
 msgid "Blend Mode"
@@ -835,7 +835,7 @@ msgstr "<Image>/Script-Fu/Alfából logót/_Tehenes..."
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bo_vination..."
-msgstr "<Toolbox>/Kit./Script-Fu/Logók/_Tehenes..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Logók/_Tehenes..."
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
 msgid "Spots density X"
@@ -887,7 +887,7 @@ msgstr "Sebesség (pixel/frame)"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Camouflage..."
-msgstr "<Toolbox>/Kit./Script-Fu/Minták/_Kamuflázs..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Minták/_Kamuflázs..."
 
 #: plug-ins/script-fu/scripts/camo.scm.h:2
 msgid "Color 1"
@@ -930,7 +930,7 @@ msgstr "Kivésendő kép"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
-msgstr "<Toolbox>/Kit./Script-Fu/Logók/Vésett..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Logók/Vésett..."
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:2
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:2
@@ -951,7 +951,7 @@ msgstr "<Image>/Script-Fu/Alfából logót/K_réta..."
 
 #: plug-ins/script-fu/scripts/chalk.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Chalk..."
-msgstr "<Toolbox>/Kit./Script-Fu/Logók/K_réta..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Logók/K_réta..."
 
 #: plug-ins/script-fu/scripts/chalk.scm.h:4
 msgid "Chalk Color"
@@ -963,7 +963,7 @@ msgstr "<Image>/Script-Fu/Alfából logót/Morz_solás..."
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Awa_y..."
-msgstr "<Toolbox>/Kit./Script-Fu/Logók/Morz_solás..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Logók/Morz_solás..."
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:3
 msgid "Blur Amount"
@@ -1035,7 +1035,7 @@ msgstr "<Image>/Script-Fu/Alfából logót/Kró_m..."
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/C_hrome..."
-msgstr "<Toolbox>/Kit./Script-Fu/Logók/Kró_m..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Logók/Kró_m..."
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:6
 msgid "Offsets (pixels * 2)"
@@ -1119,7 +1119,7 @@ msgstr "<Image>/Script-Fu/Alfából logót/_Képregény..."
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Boo_k..."
-msgstr "<Toolbox>/Kit./Script-Fu/Logók/_Képregény..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Logók/_Képregény..."
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:8
 msgid "Outline Color"
@@ -1136,7 +1136,7 @@ msgstr "<Image>/Script-Fu/Alfából logót/_Hűvös fém..."
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool _Metal..."
-msgstr "<Toolbox>/Kit./Script-Fu/Logók/_Hűvös fém..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Logók/_Hűvös fém..."
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:4
@@ -1149,7 +1149,7 @@ msgstr "<Image>/Szerkesztés/_Látható másolása"
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
-msgstr "<Toolbox>/Kit./Script-Fu/Logók/Kristály..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Logók/Kristály..."
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:1
 msgid "<Image>/Script-Fu/Selection/_Distress Selection..."
@@ -1289,7 +1289,7 @@ msgstr "Növekvő kijelölés használata"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Flatland..."
-msgstr "<Toolbox>/Kit./Script-Fu/Minták/_Lapos térkép..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Minták/_Lapos térkép..."
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:2
 #: plug-ins/script-fu/scripts/land.scm.h:2
@@ -1323,7 +1323,7 @@ msgstr "Y lépték"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/_Font Map..."
-msgstr "<Toolbox>/Kit./Script-Fu/Segédeszközök/_Font Map..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Segédeszközök/_Font Map..."
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
 msgid "Active Colors"
@@ -1367,7 +1367,7 @@ msgstr "<Image>/Script-Fu/Alfából logót/_Fagyos..."
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Frosty..."
-msgstr "<Toolbox>/Kit./Script-Fu/Logók/_Fagyos..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Logók/_Fagyos..."
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
 msgid "<Image>/Script-Fu/Decor/_Fuzzy Border..."
@@ -1387,12 +1387,16 @@ msgid "Shadow Weight (%)"
 msgstr "Árnyék szélessége (%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Big Header..."
-msgstr "<Toolbox>/Kit./Script-Fu/Weblap témák/Gimp.Org/_Nagy fejléc..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
+msgstr ""
+"<Toolbox>/Kiterj./Script-Fu/Weblap témák/Classic.Gimp.Org/_Nagy fejléc..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Small Header..."
-msgstr "<Toolbox>/Kit./Script-Fu/Weblap témák/Gimp.Org/_Kis fejléc..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
+msgstr ""
+"<Toolbox>/Kiterj./Script-Fu/Weblap témák/Classic.Gimp.Org/_Kis fejléc..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 msgid "AutoCrop"
@@ -1434,25 +1438,35 @@ msgstr "Árnyék színe"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-Button "
+"Label..."
 msgstr ""
-"<Toolbox>/Kit./Script-Fu/Weblap témák/Gimp.Org/T_ube Sub-Button Label..."
+"<Toolbox>/Kiterj./Script-Fu/Weblap témák/Classic.Gimp.Org/T_ube Sub-Button "
+"Label..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tub_e Sub-Sub-Button "
-"Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
+"Button Label..."
 msgstr ""
-"<Toolbox>/Kit./Script-Fu/Weblap témák/Gimp.Org/Tub_e Sub-Sub-Button Label..."
+"<Toolbox>/Kiterj./Script-Fu/Weblap témák/Classic.Gimp.Org/Tub_e Sub-Sub-"
+"Button Label..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
-msgstr "<Toolbox>/Kit./Script-Fu/Weblap témák/Gimp.Org/_General Tube Labels..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
+"Labels..."
+msgstr ""
+"<Toolbox>/Kiterj./Script-Fu/Weblap témák/Classic.Gimp.Org/_General Tube "
+"Labels..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Tube Button Label..."
-msgstr "<Toolbox>/Kit./Script-Fu/Weblap témák/Gimp.Org/_Tube Button Label..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
+"Label..."
+msgstr ""
+"<Toolbox>/Kiterj./Script-Fu/Weblap témák/Classic.Gimp.Org/_Tube Button "
+"Label..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_ssy..."
@@ -1460,7 +1474,7 @@ msgstr "<Image>/Script-Fu/Alfából logót/Fé_nyes..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glo_ssy..."
-msgstr "<Toolbox>/Kit./Script-Fu/Logók/Fé_nyes..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Logók/Fé_nyes..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:4
 msgid "Blend Gradient (Outline)"
@@ -1513,7 +1527,7 @@ msgstr "<Image>/Script-Fu/Alfából logót/I_zzó forró..."
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glo_wing Hot..."
-msgstr "<Toolbox>/Kit./Script-Fu/Logók/I_zzó forró..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Logók/I_zzó forró..."
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:4
 msgid "Effect Size (pixels * 3)"
@@ -1525,7 +1539,7 @@ msgstr "<Image>/Script-Fu/Alfából logót/3_D színátmenet..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Beve_l..."
-msgstr "<Toolbox>/Kit./Script-Fu/Logók/3_D színátmenet..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Logók/3_D színátmenet..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
 msgid "Bevel Height (Sharpness)"
@@ -1539,7 +1553,8 @@ msgstr "Keret mérete (képpont)"
 
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom _Gradient..."
-msgstr "<Toolbox>/Kit./Script-Fu/Segédeszközök/Testreszabott _színátmenet..."
+msgstr ""
+"<Toolbox>/Kiterj./Script-Fu/Segédeszközök/Testreszabott _színátmenet..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:1
 msgid "<Image>/Script-Fu/Render/_Grid..."
@@ -1591,7 +1606,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
-msgstr "<Toolbox>/Kit./Script-Fu/Logók/Imigre-26..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Logók/Imigre-26..."
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
 msgid "Frame Color"
@@ -1647,7 +1662,7 @@ msgstr "Rétegek közötti tér"
 
 #: plug-ins/script-fu/scripts/land.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Land..."
-msgstr "<Toolbox>/Kit./Script-Fu/Minták/_Térkép..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Minták/_Térkép..."
 
 #: plug-ins/script-fu/scripts/land.scm.h:6
 msgid "Land Height"
@@ -1717,19 +1732,19 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:10
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elli_ptical, Feathered..."
-msgstr "<Toolbox>/Kit./Script-Fu/Ecsetkészítés/Elli_ptikus, elmosott..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Ecsetkészítés/Elli_ptikus, elmosott..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:11
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Re_ctangular, Feathered..."
-msgstr "<Toolbox>/Kit./Script-Fu/Ecsetkészítés/Té_glalap, elmosott..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Ecsetkészítés/Té_glalap, elmosott..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:12
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/_Elliptical..."
-msgstr "<Toolbox>/Kit./Script-Fu/Ecsetkészítés/_Elliptikus..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Ecsetkészítés/_Elliptikus..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:13
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/_Rectangular..."
-msgstr "<Toolbox>/Kit./Script-Fu/Ecsetkészítés/_Téglalap..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Ecsetkészítés/_Téglalap..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:14
 msgid "Description"
@@ -1750,7 +1765,7 @@ msgstr "<Image>/Script-Fu/Alfából logót/Ne_on..."
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/N_eon..."
-msgstr "<Toolbox>/Kit./Script-Fu/Logók/Ne_on..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Logók/Ne_on..."
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:4
 msgid "Create Shadow"
@@ -1762,7 +1777,7 @@ msgstr "Hatás mérete (képpont * 5)"
 
 #: plug-ins/script-fu/scripts/news-text.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
-msgstr "<Toolbox>/Kit./Script-Fu/Logók/Newsprint Text..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Logók/Newsprint Text..."
 
 #: plug-ins/script-fu/scripts/news-text.scm.h:4
 msgid "Cell Size (pixels)"
@@ -1828,7 +1843,7 @@ msgstr "Képpontosítás"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/_Round Button..."
-msgstr "<Toolbox>/Kit./Script-Fu/Gombok/_Lekerekített gomb..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Gombok/_Lekerekített gomb..."
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:5
 msgid "Lower Color"
@@ -1872,7 +1887,7 @@ msgstr "Felső szín (aktív)"
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render _Map..."
-msgstr "<Toolbox>/Kit./Script-Fu/Minták/Térkép _megjelenítése..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Minták/Térkép _megjelenítése..."
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:2
 msgid "Behaviour"
@@ -1987,15 +2002,15 @@ msgstr "Szám"
 
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
-msgstr "<Toolbox>/Kit./Script-Fu/Logók/SOTA Chrome..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Logók/SOTA Chrome..."
 
 #: plug-ins/script-fu/scripts/speed-text.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
-msgstr "<Toolbox>/Kit./Script-Fu/Logók/Száguldó szöveg..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Logók/Száguldó szöveg..."
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Misc/_Sphere..."
-msgstr "<Toolbox>/Kit./Script-Fu/Egyéb/_Gömb..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Egyéb/_Gömb..."
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:3
 msgid "Lighting (degrees)"
@@ -2154,7 +2169,7 @@ msgstr "<Image>/Script-Fu/Alfából logót/_Csillagkitörés..."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starb_urst..."
-msgstr "<Toolbox>/Kit./Script-Fu/Logók/_Csillagkitörés..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Logók/_Csillagkitörés..."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:4
 msgid "Burst Color"
@@ -2170,7 +2185,7 @@ msgstr "<Image>/Script-Fu/Alfából logót/S_tarscape..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Sta_rscape..."
-msgstr "<Toolbox>/Kit./Script-Fu/Logók/S_tarscape..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Logók/S_tarscape..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:3
 msgid "Effect Size (pixels * 4)"
@@ -2178,7 +2193,7 @@ msgstr "Hatás mérete (képpont * 4)"
 
 #: plug-ins/script-fu/scripts/swirltile.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-_Tile..."
-msgstr "<Toolbox>/Kit./Script-Fu/Minták/_Örvénycsempe..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Minták/_Örvénycsempe..."
 
 #: plug-ins/script-fu/scripts/swirltile.scm.h:9
 msgid "Whirl Amount"
@@ -2186,7 +2201,7 @@ msgstr "Csavarások száma"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly..."
-msgstr "<Toolbox>/Kit./Script-Fu/Minták/Örvénylő..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Minták/Ö_rvénylő..."
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
 msgid "Number of Times to Whirl"
@@ -2206,7 +2221,7 @@ msgstr "<Image>/Script-Fu/Alfából logót/Részecsken_yom..."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Particle Trace..."
-msgstr "<Toolbox>/Kit./Script-Fu/Logók/Részecsken_yom..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Logók/Részecsken_yom..."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
 msgid "Base Color"
@@ -2226,7 +2241,7 @@ msgstr "Találati arány"
 
 #: plug-ins/script-fu/scripts/text-circle.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
-msgstr "<Toolbox>/Kit./Script-Fu/Logók/Text Circle..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Logók/Text Circle..."
 
 #: plug-ins/script-fu/scripts/text-circle.scm.h:2
 msgid "Antialias"
@@ -2242,7 +2257,7 @@ msgstr "<Image>/Script-Fu/Alfából logót/Te_xtúrás..."
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Textured..."
-msgstr "<Toolbox>/Kit./Script-Fu/Logók/Te_xtúrás..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Logók/Te_xtúrás..."
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:5
 msgid "Ending Blend"
@@ -2298,11 +2313,11 @@ msgstr "RLE"
 
 #: plug-ins/script-fu/scripts/title-header.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
-msgstr "<Toolbox>/Kit./Script-Fu/Logók/Webes fejléc..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Logók/Webes fejléc..."
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/T_ruchet..."
-msgstr "<Toolbox>/Kit./Script-Fu/Minták/T_ruchet..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Minták/T_ruchet..."
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:4
 msgid "Foreground Color"
