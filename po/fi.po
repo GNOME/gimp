@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1\n"
 "POT-Creation-Date: 2000-06-07 12:08+0300\n"
-"PO-Revision-Date: 2000-06-07 12:20+03:00\n"
+"PO-Revision-Date: 2000-06-08 20:47+02:00\n"
 "Last-Translator: Ville Hautam‰ki <villeh@cs.joensuu.fi>\n"
 "Language-Team: fi <fi@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1334,7 +1334,7 @@ msgstr ""
 "%s: Tuntemattoman tiedoston tyyppi."
 
 #: app/fileops.c:1117
-#, c-format
+#, c-format, fuzzy
 msgid ""
 "Save failed.\n"
 "%s is not a regular file."
@@ -4205,7 +4205,7 @@ msgstr ""
 "(%s)\n"
 "\n"
 "Kuoleva liit‰nn‰inen on mahdollisesti sekoittanut gimp:in sis‰isi‰\n"
-"asetuksia. Kannattaa tallentaa kuvat ja k‰ynnist‰‰ GIMP uudelleen\n"
+"asetuksia. Kannattaa tallentaa kuvat ja k‰ynnist‰‰ GIMP uudelleen"
 
 #: app/posterize.c:148
 msgid "Posterize does not operate on indexed drawables."
