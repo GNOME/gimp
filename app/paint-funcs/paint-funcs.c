@@ -85,6 +85,7 @@ static const LayerMode layer_modes[] =
   { FALSE, FALSE, FALSE, },  /*  DODGE_MODE         */
   { FALSE, FALSE, FALSE, },  /*  BURN_MODE          */
   { FALSE, FALSE, FALSE, },  /*  HARDLIGHT_MODE     */
+  { TRUE,  FALSE, TRUE,  },  /*  COLOR_ERASE_MODE   */
   { TRUE,  FALSE, TRUE,  },  /*  ERASE_MODE         */
   { TRUE,  TRUE,  TRUE,  },  /*  REPLACE_MODE       */
   { TRUE,  FALSE, TRUE,  }   /*  ANTI_ERASE_MODE    */
@@ -112,9 +113,10 @@ static LayerModeFunc layer_mode_funcs[] =
   layer_dodge_mode,
   layer_burn_mode,
   layer_hardlight_mode,
+  layer_color_erase_mode,
   layer_erase_mode,
   layer_replace_mode,
-  layer_anti_erase_mode
+  layer_anti_erase_mode,
 };
 
 /*  Local function prototypes  */
@@ -1738,6 +1740,7 @@ anti_erase_inten_pixels (const guchar   *src1,
     }
 }
 
+
 void
 anti_erase_indexed_pixels (const guchar   *src1,
 			   const guchar   *src2,
@@ -1766,6 +1769,127 @@ anti_erase_indexed_pixels (const guchar   *src1,
 
       src2_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
       dest[alpha] = (src2_alpha > 127) ? OPAQUE_OPACITY : src1[alpha];
+
+      if (mask)
+	m++;
+
+      src1 += bytes;
+      src2 += bytes;
+      dest += bytes;
+    }
+}
+
+
+static void
+color_erase_helper (GimpRGB       *src,
+                    const GimpRGB *color)
+{
+  GimpRGB alpha;
+  
+  alpha.a = src->a;
+
+  if (color->r < 0.0001)
+    alpha.r = src->r;
+  else if ( src->r > color->r )
+    alpha.r = (src->r - color->r) / (1.0 - color->r);
+  else if (src->r < color->r)
+    alpha.r = (color->r - src->r) / color->r;
+  else alpha.r = 0.0;
+
+  if (color->g < 0.0001)
+    alpha.g = src->g;
+  else if ( src->g > color->g )
+    alpha.g = (src->g - color->g) / (1.0 - color->g);
+  else if ( src->g < color->g )
+    alpha.g = (color->g - src->g) / (color->g);
+  else alpha.g = 0.0;
+
+  if (color->b < 0.0001)
+    alpha.b = src->b;
+  else if ( src->b > color->b )
+    alpha.b = (src->b - color->b) / (1.0 - color->b);
+  else if ( src->b < color->b )
+    alpha.b = (color->b - src->b) / (color->b);
+  else alpha.b = 0.0;
+
+  if ( alpha.r > alpha.g )
+    {
+      if ( alpha.r > alpha.b )
+        {
+          src->a = alpha.r;
+        }
+      else
+        {
+          src->a = alpha.b;
+        }
+    }
+  else if ( alpha.g > alpha.b )
+    {
+      src->a = alpha.g;
+    }
+  else
+    {
+      src->a = alpha.b;
+    }
+  
+  src->a = (1.0 - color->a) + (src->a * color->a);
+
+  if (src->a < 0.0001)
+    return;
+
+  src->r = (src->r - color->r) / src->a + color->r;
+  src->g = (src->g - color->g) / src->a + color->g;
+  src->b = (src->b - color->b) / src->a + color->b;
+
+  src->a *= alpha.a;
+}
+
+
+void
+color_erase_inten_pixels (const guchar   *src1,
+			  const guchar   *src2,
+			  guchar         *dest,
+			  const guchar   *mask,
+			  gint            opacity,
+			  const gboolean *affect,
+			  gint            length,
+			  gint            bytes)
+{
+  gint          alpha;
+  guchar        src2_alpha;
+  const guchar *m;
+  glong         tmp;
+  GimpRGB       bgcolor, color;
+
+  if (mask)
+    m = mask;
+  else
+    m = &no_mask;
+
+  alpha = bytes - 1;
+  while (length --)
+    {
+      src2_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
+
+      gimp_rgba_set_uchar (&color, 
+                           src1 [0],
+                           src1 [1],
+                           src1 [2],
+                           src1 [3]);
+
+      gimp_rgba_set_uchar (&bgcolor, 
+                           src2 [0],
+                           src2 [1],
+                           src2 [2],
+                           src2_alpha);
+
+      color_erase_helper (&color, &bgcolor);
+
+      gimp_rgba_get_uchar (&color, 
+                           &(dest[0]),
+                           &(dest[1]),
+                           &(dest[2]),
+                           &(dest[3]));
 
       if (mask)
 	m++;
@@ -4430,6 +4554,11 @@ combine_sub_region (struct combine_regions_struct *st,
 	case ANTI_ERASE_INDEXED:
 	  anti_erase_indexed_pixels (s1, s, d, m, opacity,
 				     affect, src1->w, src1->bytes);
+	  break;
+	    
+	case COLOR_ERASE_INTEN:
+	  color_erase_inten_pixels (s1, s, d, m, opacity,
+				    affect, src1->w, src1->bytes);
 	  break;
 	    
 	case NO_COMBINATION:

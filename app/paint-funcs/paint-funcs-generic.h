@@ -1641,6 +1641,14 @@ layer_anti_erase_mode (struct apply_layer_mode_struct *alms)
 }
 
 static void
+layer_color_erase_mode (struct apply_layer_mode_struct *alms)
+{
+  *(alms->dest) = alms->src2;
+  alms->combine = 
+    (HAS_ALPHA (alms->bytes1) && HAS_ALPHA (alms->bytes2)) ? COLOR_ERASE_INTEN : 0;
+}
+
+static void
 layer_dodge_mode (struct apply_layer_mode_struct *alms)
 {
   dodge_pixels (alms->src1, alms->src2, *(alms->dest), alms->length,

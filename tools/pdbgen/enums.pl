@@ -153,7 +153,8 @@ package Gimp::CodeGen::enums;
 			  DIFFERENCE_MODE ADDITION_MODE SUBTRACT_MODE
 			  DARKEN_ONLY_MODE LIGHTEN_ONLY_MODE HUE_MODE
 			  SATURATION_MODE COLOR_MODE VALUE_MODE DIVIDE_MODE
-			  DODGE_MODE BURN_MODE HARDLIGHT_MODE) ],
+			  DODGE_MODE BURN_MODE HARDLIGHT_MODE
+			  COLOR_ERASE_MODE) ],
 	  mapping => { NORMAL_MODE => '0',
 		       DISSOLVE_MODE => '1',
 		       BEHIND_MODE => '2',
@@ -172,7 +173,8 @@ package Gimp::CodeGen::enums;
 		       DIVIDE_MODE => '15',
 		       DODGE_MODE => '16',
 		       BURN_MODE => '17',
-		       HARDLIGHT_MODE => '18' }
+		       HARDLIGHT_MODE => '18',
+		       COLOR_ERASE_MODE => '19' }
 	},
     ConvolutionType =>
 	{ contig => 1,

@@ -145,7 +145,7 @@ layer_new_invoker (Gimp     *gimp,
     success = FALSE;
 
   mode = args[6].value.pdb_int;
-  if (mode < NORMAL_MODE || mode > HARDLIGHT_MODE)
+  if (mode < NORMAL_MODE || mode > COLOR_ERASE_MODE)
     success = FALSE;
 
   if (success)
@@ -200,7 +200,7 @@ static ProcArg layer_new_inargs[] =
   {
     GIMP_PDB_INT32,
     "mode",
-    "The layer combination mode: { NORMAL_MODE (0), DISSOLVE_MODE (1), BEHIND_MODE (2), MULTIPLY_MODE (3), SCREEN_MODE (4), OVERLAY_MODE (5), DIFFERENCE_MODE (6), ADDITION_MODE (7), SUBTRACT_MODE (8), DARKEN_ONLY_MODE (9), LIGHTEN_ONLY_MODE (10), HUE_MODE (11), SATURATION_MODE (12), COLOR_MODE (13), VALUE_MODE (14), DIVIDE_MODE (15), DODGE_MODE (16), BURN_MODE (17), HARDLIGHT_MODE (18) }"
+    "The layer combination mode: { NORMAL_MODE (0), DISSOLVE_MODE (1), BEHIND_MODE (2), MULTIPLY_MODE (3), SCREEN_MODE (4), OVERLAY_MODE (5), DIFFERENCE_MODE (6), ADDITION_MODE (7), SUBTRACT_MODE (8), DARKEN_ONLY_MODE (9), LIGHTEN_ONLY_MODE (10), HUE_MODE (11), SATURATION_MODE (12), COLOR_MODE (13), VALUE_MODE (14), DIVIDE_MODE (15), DODGE_MODE (16), BURN_MODE (17), HARDLIGHT_MODE (18), COLOR_ERASE_MODE (19) }"
   }
 };
 
@@ -1730,7 +1730,7 @@ layer_set_mode_invoker (Gimp     *gimp,
     success = FALSE;
 
   mode = args[1].value.pdb_int;
-  if (mode < NORMAL_MODE || mode > HARDLIGHT_MODE)
+  if (mode < NORMAL_MODE || mode > COLOR_ERASE_MODE)
     success = FALSE;
 
   if (success)

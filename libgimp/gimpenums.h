@@ -227,7 +227,8 @@ typedef enum
   GIMP_DIVIDE_MODE,
   GIMP_DODGE_MODE,
   GIMP_BURN_MODE,
-  GIMP_HARDLIGHT_MODE
+  GIMP_HARDLIGHT_MODE,
+  GIMP_COLOR_ERASE_MODE
 } GimpLayerModeEffects;
 
 typedef enum

@@ -255,7 +255,7 @@ blend_invoker (Gimp     *gimp,
     success = FALSE;
 
   paint_mode = args[2].value.pdb_int;
-  if (paint_mode < NORMAL_MODE || paint_mode > HARDLIGHT_MODE)
+  if (paint_mode < NORMAL_MODE || paint_mode > COLOR_ERASE_MODE)
     success = FALSE;
 
   gradient_type = args[3].value.pdb_int;
@@ -331,7 +331,7 @@ static ProcArg blend_inargs[] =
   {
     GIMP_PDB_INT32,
     "paint_mode",
-    "The paint application mode: { NORMAL_MODE (0), DISSOLVE_MODE (1), BEHIND_MODE (2), MULTIPLY_MODE (3), SCREEN_MODE (4), OVERLAY_MODE (5), DIFFERENCE_MODE (6), ADDITION_MODE (7), SUBTRACT_MODE (8), DARKEN_ONLY_MODE (9), LIGHTEN_ONLY_MODE (10), HUE_MODE (11), SATURATION_MODE (12), COLOR_MODE (13), VALUE_MODE (14), DIVIDE_MODE (15), DODGE_MODE (16), BURN_MODE (17), HARDLIGHT_MODE (18) }"
+    "The paint application mode: { NORMAL_MODE (0), DISSOLVE_MODE (1), BEHIND_MODE (2), MULTIPLY_MODE (3), SCREEN_MODE (4), OVERLAY_MODE (5), DIFFERENCE_MODE (6), ADDITION_MODE (7), SUBTRACT_MODE (8), DARKEN_ONLY_MODE (9), LIGHTEN_ONLY_MODE (10), HUE_MODE (11), SATURATION_MODE (12), COLOR_MODE (13), VALUE_MODE (14), DIVIDE_MODE (15), DODGE_MODE (16), BURN_MODE (17), HARDLIGHT_MODE (18), COLOR_ERASE_MODE (19) }"
   },
   {
     GIMP_PDB_INT32,
@@ -429,7 +429,7 @@ bucket_fill_invoker (Gimp     *gimp,
     success = FALSE;
 
   paint_mode = args[2].value.pdb_int;
-  if (paint_mode < NORMAL_MODE || paint_mode > HARDLIGHT_MODE)
+  if (paint_mode < NORMAL_MODE || paint_mode > COLOR_ERASE_MODE)
     success = FALSE;
 
   opacity = args[3].value.pdb_float;
@@ -478,7 +478,7 @@ static ProcArg bucket_fill_inargs[] =
   {
     GIMP_PDB_INT32,
     "paint_mode",
-    "The paint application mode: { NORMAL_MODE (0), DISSOLVE_MODE (1), BEHIND_MODE (2), MULTIPLY_MODE (3), SCREEN_MODE (4), OVERLAY_MODE (5), DIFFERENCE_MODE (6), ADDITION_MODE (7), SUBTRACT_MODE (8), DARKEN_ONLY_MODE (9), LIGHTEN_ONLY_MODE (10), HUE_MODE (11), SATURATION_MODE (12), COLOR_MODE (13), VALUE_MODE (14), DIVIDE_MODE (15), DODGE_MODE (16), BURN_MODE (17), HARDLIGHT_MODE (18) }"
+    "The paint application mode: { NORMAL_MODE (0), DISSOLVE_MODE (1), BEHIND_MODE (2), MULTIPLY_MODE (3), SCREEN_MODE (4), OVERLAY_MODE (5), DIFFERENCE_MODE (6), ADDITION_MODE (7), SUBTRACT_MODE (8), DARKEN_ONLY_MODE (9), LIGHTEN_ONLY_MODE (10), HUE_MODE (11), SATURATION_MODE (12), COLOR_MODE (13), VALUE_MODE (14), DIVIDE_MODE (15), DODGE_MODE (16), BURN_MODE (17), HARDLIGHT_MODE (18), COLOR_ERASE_MODE (19) }"
   },
   {
     GIMP_PDB_FLOAT,

@@ -380,6 +380,7 @@ typedef enum /*< skip >*/
   ERASE_INDEXED,
   ANTI_ERASE_INTEN,
   ANTI_ERASE_INDEXED,
+  COLOR_ERASE_INTEN,
 } CombinationMode;
 
 /* Opacities */

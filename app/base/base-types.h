@@ -58,6 +58,7 @@ typedef enum
   DODGE_MODE,
   BURN_MODE,
   HARDLIGHT_MODE,
+  COLOR_ERASE_MODE,
   ERASE_MODE,         /*< skip >*/
   REPLACE_MODE,       /*< skip >*/
   ANTI_ERASE_MODE     /*< skip >*/
