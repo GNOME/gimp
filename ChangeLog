@@ -1,5 +1,9 @@
 2004-07-20  Helvetix Victorinox  <helvetix@gimp.org>
 
+	* app/composite/Makefile (regenerate): Updated make-installer.py
+	command line to take advantage of the new compile time method of
+	determining which instruction set to compile.
+
 	* app/composite/gimp-composite.c (gimp_composite_init): Print the
 	list of active instruction sets if the --verbose command line
 	switch is ON (via be_verbose)
