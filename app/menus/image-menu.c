@@ -30,7 +30,6 @@
 #include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-mask.h"
 #include "core/gimplayer.h"
 #include "core/gimplist.h"
 #include "core/gimptoolinfo.h"

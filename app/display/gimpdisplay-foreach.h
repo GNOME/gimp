@@ -25,7 +25,6 @@ GimpDisplay * gdisplays_check_valid             (GimpDisplay *gdisp,
 
 gboolean      gimp_displays_dirty               (Gimp        *gimp);
 void          gimp_displays_delete              (Gimp        *gimp);
-void          gimp_displays_flush               (Gimp        *gimp);
 void          gimp_displays_finish_draw         (Gimp        *gimp);
 void          gimp_displays_reconnect           (Gimp        *gimp,
                                                  GimpImage   *old,

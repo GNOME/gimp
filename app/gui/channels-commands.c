@@ -29,11 +29,10 @@
 
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
+#include "core/gimpchannel-select.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-mask.h"
 #include "core/gimpimage-undo.h"
-#include "core/gimpimage-mask-select.h"
 
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpcomponenteditor.h"
@@ -195,17 +194,18 @@ channels_to_selection_cmd_callback (GtkWidget *widget,
 
       component = GIMP_COMPONENT_EDITOR (data)->clicked_component;
 
-      gimp_image_mask_select_component (gimage, component,
-                                        op, FALSE, 0.0, 0.0);
+      gimp_channel_select_component (gimp_image_get_mask (gimage), component,
+                                     op, FALSE, 0.0, 0.0);
     }
   else
     {
       GimpChannel *channel;
       return_if_no_channel (gimage, channel, data);
 
-      gimp_image_mask_select_channel (gimage, _("Channel to Selection"),
-                                      channel, 0, 0,
-                                      op, FALSE, 0.0, 0.0);
+      gimp_channel_select_channel (gimp_image_get_mask (gimage),
+                                   _("Channel to Selection"),
+                                   channel, 0, 0,
+                                   op, FALSE, 0.0, 0.0);
     }
 
   gimp_image_flush (gimage);

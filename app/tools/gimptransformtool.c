@@ -34,7 +34,6 @@
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable-transform.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-mask.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpitem-linked.h"
@@ -1002,7 +1001,10 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
 
           GIMP_CHANNEL (active_item)->bounds_known = FALSE;
 
-          gimp_image_mask_changed (gdisp->gimage);
+          gimp_drawable_update (GIMP_DRAWABLE (active_item),
+                                0, 0,
+                                gimp_item_width  (active_item),
+                                gimp_item_height (active_item));
         }
 
       tile_manager_unref (tr_tool->original);

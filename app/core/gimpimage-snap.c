@@ -25,6 +25,7 @@
 #include "gimp.h"
 #include "gimpimage.h"
 #include "gimpimage-grid.h"
+#include "gimpimage-guides.h"
 #include "gimpimage-snap.h"
 
 #include "gimp-intl.h"

@@ -38,7 +38,6 @@
 #include "gimpdrawable-bucket-fill.h"
 #include "gimpimage.h"
 #include "gimpimage-contiguous-region.h"
-#include "gimpimage-mask.h"
 #include "gimppattern.h"
 
 #include "gimp-intl.h"

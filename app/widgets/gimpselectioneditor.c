@@ -38,9 +38,9 @@
 
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
+#include "core/gimpchannel-select.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-mask-select.h"
 #include "core/gimpimage-projection.h"
 #include "core/gimpselection.h"
 #include "core/gimptoolinfo.h"
@@ -446,16 +446,17 @@ gimp_selection_preview_button_press (GtkWidget           *widget,
 
   g_free (col);
 
-  gimp_image_mask_select_by_color (image_editor->gimage, drawable,
-                                   options->sample_merged,
-                                   &color,
-                                   options->threshold,
-                                   options->select_transparent,
-                                   operation,
-                                   options->antialias,
-                                   options->feather,
-                                   options->feather_radius,
-                                   options->feather_radius);
+  gimp_channel_select_by_color (gimp_image_get_mask (image_editor->gimage),
+                                drawable,
+                                options->sample_merged,
+                                &color,
+                                options->threshold,
+                                options->select_transparent,
+                                operation,
+                                options->antialias,
+                                options->feather,
+                                options->feather_radius,
+                                options->feather_radius);
   gimp_image_flush (image_editor->gimage);
 
   return TRUE;
@@ -490,16 +491,17 @@ gimp_selection_editor_drop_color (GtkWidget     *widget,
   if (! drawable)
     return;
 
-  gimp_image_mask_select_by_color (editor->gimage, drawable,
-                                   options->sample_merged,
-                                   color,
-                                   options->threshold,
-                                   options->select_transparent,
-                                   options->operation,
-                                   options->antialias,
-                                   options->feather,
-                                   options->feather_radius,
-                                   options->feather_radius);
+  gimp_channel_select_by_color (gimp_image_get_mask (editor->gimage),
+                                drawable,
+                                options->sample_merged,
+                                color,
+                                options->threshold,
+                                options->select_transparent,
+                                options->operation,
+                                options->antialias,
+                                options->feather,
+                                options->feather_radius,
+                                options->feather_radius);
   gimp_image_flush (editor->gimage);
 }
 

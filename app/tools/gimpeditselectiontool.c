@@ -34,11 +34,11 @@
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
-#include "core/gimpimage-mask.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpitem-linked.h"
 #include "core/gimplayer.h"
 #include "core/gimplayer-floating-sel.h"
+#include "core/gimpselection.h"
 #include "core/gimpundostack.h"
 
 #include "vectors/gimpvectors.h"
@@ -650,11 +650,11 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
 
 	  case EDIT_MASK_TO_LAYER_TRANSLATE:
 	  case EDIT_MASK_COPY_TO_LAYER_TRANSLATE:
-	    if (! gimp_image_mask_float (gdisp->gimage,
-                                         GIMP_DRAWABLE (active_item),
-                                         edit_select->edit_type ==
-                                         EDIT_MASK_TO_LAYER_TRANSLATE,
-                                         0, 0))
+	    if (! gimp_selection_float (gimp_image_get_mask (gdisp->gimage),
+                                        GIMP_DRAWABLE (active_item),
+                                        edit_select->edit_type ==
+                                        EDIT_MASK_TO_LAYER_TRANSLATE,
+                                        0, 0))
 	      {
 		/* no region to float, abort safely */
 		gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));

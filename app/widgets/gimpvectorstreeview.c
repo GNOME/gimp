@@ -30,10 +30,10 @@
 
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
+#include "core/gimpchannel-select.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-mask-select.h"
 
 #include "vectors/gimpvectors.h"
 
@@ -266,12 +266,12 @@ gimp_vectors_tree_view_toselection_extended_clicked (GtkWidget           *widget
 	  operation = GIMP_CHANNEL_OP_SUBTRACT;
 	}
 
-      gimp_image_mask_select_vectors (gimage,
-                                      _("Path to Selection"),
-                                      GIMP_VECTORS (item),
-                                      operation,
-                                      TRUE,
-                                      FALSE, 0, 0);
+      gimp_channel_select_vectors (gimp_image_get_mask (gimage),
+                                   _("Path to Selection"),
+                                   GIMP_VECTORS (item),
+                                   operation,
+                                   TRUE,
+                                   FALSE, 0, 0);
       gimp_image_flush (gimage);
     }
 }

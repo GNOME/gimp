@@ -28,11 +28,10 @@
 
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
+#include "core/gimpchannel-select.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-mask.h"
-#include "core/gimpimage-mask-select.h"
 #include "core/gimptoolinfo.h"
 
 #include "pdb/procedural_db.h"
@@ -160,12 +159,10 @@ vectors_to_selection_cmd_callback (GtkWidget *widget,
 
   op = (GimpChannelOps) action;
 
-  gimp_image_mask_select_vectors (gimage,
-                                  _("Path to Selection"),
-                                  active_vectors,
-                                  op,
-                                  TRUE,
-                                  FALSE, 0, 0);
+  gimp_channel_select_vectors (gimp_image_get_mask (gimage),
+                               _("Path to Selection"),
+                               active_vectors,
+                               op, TRUE, FALSE, 0, 0);
   gimp_image_flush (gimage);
 }
 

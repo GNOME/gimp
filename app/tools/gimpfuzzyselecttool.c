@@ -32,9 +32,9 @@
 #include "base/pixel-region.h"
 
 #include "core/gimpchannel.h"
+#include "core/gimpchannel-select.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-contiguous-region.h"
-#include "core/gimpimage-mask-select.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimptoolinfo.h"
 
@@ -296,15 +296,15 @@ gimp_fuzzy_select_tool_button_release (GimpTool        *tool,
           gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
         }
 
-      gimp_image_mask_select_channel (gdisp->gimage,
-                                      tool->tool_info->blurb,
-                                      fuzzy_sel->fuzzy_mask,
-                                      off_x,
-                                      off_y,
-                                      GIMP_SELECTION_TOOL (tool)->op,
-                                      options->feather,
-                                      options->feather_radius,
-                                      options->feather_radius);
+      gimp_channel_select_channel (gimp_image_get_mask (gdisp->gimage),
+                                   tool->tool_info->blurb,
+                                   fuzzy_sel->fuzzy_mask,
+                                   off_x,
+                                   off_y,
+                                   GIMP_SELECTION_TOOL (tool)->op,
+                                   options->feather,
+                                   options->feather_radius,
+                                   options->feather_radius);
 
       g_object_unref (fuzzy_sel->fuzzy_mask);
       fuzzy_sel->fuzzy_mask = NULL;

@@ -49,7 +49,6 @@
 #include "widgets/gimphelp-ids.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-scale.h"
 
@@ -125,13 +124,14 @@ static void   gimp_vector_tool_vectors_freeze  (GimpVectors     *vectors,
 static void   gimp_vector_tool_vectors_thaw    (GimpVectors     *vectors,
                                                 GimpVectorTool  *vector_tool);
 
-static void gimp_vector_tool_move_selected_anchors
+static void   gimp_vector_tool_move_selected_anchors
                                                (GimpVectorTool  *vector_tool,
                                                 gdouble          x,
                                                 gdouble          y);
 static void   gimp_vector_tool_verify_state    (GimpVectorTool  *vector_tool);
 static void   gimp_vector_tool_undo_push       (GimpVectorTool  *vector_tool,
                                                 const gchar     *desc);
+
 
 static GimpDrawToolClass *parent_class = NULL;
 

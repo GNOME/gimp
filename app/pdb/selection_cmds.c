@@ -28,10 +28,9 @@
 #include "pdb-types.h"
 #include "procedural_db.h"
 
+#include "core/gimpchannel-select.h"
 #include "core/gimpchannel.h"
 #include "core/gimpdrawable.h"
-#include "core/gimpimage-mask-select.h"
-#include "core/gimpimage-mask.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "core/gimpselection.h"
@@ -359,7 +358,6 @@ selection_float_invoker (Gimp     *gimp,
   gint32 offx;
   gint32 offy;
   GimpLayer *layer = NULL;
-  GimpImage *gimage;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_DRAWABLE (drawable))
@@ -371,8 +369,11 @@ selection_float_invoker (Gimp     *gimp,
 
   if (success)
     {
+      GimpImage *gimage;
+    
       gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-      layer = gimp_image_mask_float (gimage, drawable, TRUE, offx, offy);
+      layer = gimp_selection_float (gimp_image_get_mask (gimage),
+				    drawable, TRUE, offx, offy);
       success = layer != NULL;
     }
 
@@ -861,8 +862,8 @@ selection_layer_alpha_invoker (Gimp     *gimp,
   if (success)
     {
       gimage = gimp_item_get_image (GIMP_ITEM (layer));
-      gimp_image_mask_select_alpha (gimage, layer,
-				    GIMP_CHANNEL_OP_REPLACE, FALSE, 0.0, 0.0);
+      gimp_channel_select_alpha (gimp_image_get_mask (gimage), layer,
+				 GIMP_CHANNEL_OP_REPLACE, FALSE, 0.0, 0.0);
     }
 
   return procedural_db_return_args (&selection_layer_alpha_proc, success);
@@ -912,11 +913,12 @@ selection_load_invoker (Gimp     *gimp,
       gimage = gimp_item_get_image (GIMP_ITEM (channel));
       gimp_item_offsets (GIMP_ITEM (channel), &off_x, &off_y);
     
-      gimp_image_mask_select_channel (gimage, _("Channel to Selection"),
-				      channel, 
-				      off_x, off_y,
-				      GIMP_CHANNEL_OP_REPLACE,
-				      FALSE, 0.0, 0.0);
+      gimp_channel_select_channel (gimp_image_get_mask (gimage),
+				   _("Channel to Selection"),
+				   channel, 
+				   off_x, off_y,
+				   GIMP_CHANNEL_OP_REPLACE,
+				   FALSE, 0.0, 0.0);
     }
 
   return procedural_db_return_args (&selection_load_proc, success);
@@ -1029,11 +1031,12 @@ selection_combine_invoker (Gimp     *gimp,
       gimage = gimp_item_get_image (GIMP_ITEM (channel));
       gimp_item_offsets (GIMP_ITEM (channel), &off_x, &off_y);
     
-      gimp_image_mask_select_channel (gimage, _("Channel to Selection"),
-				      channel, 
-				      off_x, off_y,
-				      operation,
-				      FALSE, 0.0, 0.0);
+      gimp_channel_select_channel (gimp_image_get_mask (gimage),
+				   _("Channel to Selection"),
+				   channel, 
+				   off_x, off_y,
+				   operation,
+				   FALSE, 0.0, 0.0);
     }
 
   return procedural_db_return_args (&selection_combine_proc, success);

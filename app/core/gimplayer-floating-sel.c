@@ -31,7 +31,6 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "gimpimage.h"
-#include "gimpimage-mask.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"

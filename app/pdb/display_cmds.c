@@ -30,6 +30,7 @@
 #include "procedural_db.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplay.h"
@@ -160,7 +161,7 @@ static Argument *
 displays_flush_invoker (Gimp     *gimp,
                         Argument *args)
 {
-  gimp_displays_flush (gimp);
+  gimp_container_foreach (gimp->images, (GFunc) gimp_image_flush, NULL);
   return procedural_db_return_args (&displays_flush_proc, TRUE);
 }
 

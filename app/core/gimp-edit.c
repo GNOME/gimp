@@ -36,11 +36,11 @@
 #include "gimpchannel.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"
-#include "gimpimage-mask.h"
 #include "gimpimage-undo.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplist.h"
+#include "gimpselection.h"
 
 #include "gimp-intl.h"
 
@@ -63,7 +63,8 @@ gimp_edit_cut (GimpImage    *gimage,
   empty = gimp_channel_is_empty (gimp_image_get_mask (gimage));
 
   /*  Next, cut the mask portion from the gimage  */
-  tiles = gimp_image_mask_extract (gimage, drawable, TRUE, FALSE, TRUE);
+  tiles = gimp_selection_extract (gimp_image_get_mask (gimage),
+                                  drawable, TRUE, FALSE, TRUE);
 
   if (tiles)
     gimage->gimp->have_current_cut_buffer = TRUE;
@@ -120,7 +121,8 @@ gimp_edit_copy (GimpImage    *gimage,
   empty = gimp_channel_is_empty (gimp_image_get_mask (gimage));
 
   /*  First, copy the masked portion of the gimage  */
-  tiles = gimp_image_mask_extract (gimage, drawable, FALSE, FALSE, TRUE);
+  tiles = gimp_selection_extract (gimp_image_get_mask (gimage),
+                                  drawable, FALSE, FALSE, TRUE);
 
   if (tiles)
     gimage->gimp->have_current_cut_buffer = TRUE;

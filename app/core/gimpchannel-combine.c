@@ -144,11 +144,14 @@ gimp_channel_combine_rect (GimpChannel    *mask,
   x2 = CLAMP (x2, 0, GIMP_ITEM (mask)->width);
   y2 = CLAMP (y2, 0, GIMP_ITEM (mask)->height);
 
-  if (x2 - x <= 0 || y2 - y <= 0)
+  w = x2 - x;
+  h = y2 - y;
+
+  if (w <= 0 || h <= 0)
     return;
 
   pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles,
-		     x, y, x2 - x, y2 - y, TRUE);
+		     x, y, w, h, TRUE);
 
   if (op == GIMP_CHANNEL_OP_ADD || op == GIMP_CHANNEL_OP_REPLACE)
     color = OPAQUE_OPACITY;
@@ -184,6 +187,8 @@ gimp_channel_combine_rect (GimpChannel    *mask,
   mask->y1 = CLAMP (mask->y1, 0, GIMP_ITEM (mask)->height);
   mask->x2 = CLAMP (mask->x2, 0, GIMP_ITEM (mask)->width);
   mask->y2 = CLAMP (mask->y2, 0, GIMP_ITEM (mask)->height);
+
+  gimp_drawable_update (GIMP_DRAWABLE (mask), x, y, w, h);
 }
 
 void
@@ -355,6 +360,8 @@ gimp_channel_combine_ellipse (GimpChannel    *mask,
   mask->y1 = CLAMP (mask->y1, 0, GIMP_ITEM (mask)->height);
   mask->x2 = CLAMP (mask->x2, 0, GIMP_ITEM (mask)->width);
   mask->y2 = CLAMP (mask->y2, 0, GIMP_ITEM (mask)->height);
+
+  gimp_drawable_update (GIMP_DRAWABLE (mask), x, y, w, h);
 }
 
 static void
@@ -487,4 +494,6 @@ gimp_channel_combine_mask (GimpChannel    *mask,
     }
 
   mask->bounds_known = FALSE;
+
+  gimp_drawable_update (GIMP_DRAWABLE (mask), x1, y2, w, h);
 }

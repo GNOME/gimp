@@ -30,8 +30,8 @@
 #include "tools-types.h"
 
 #include "core/gimpchannel.h"
+#include "core/gimpchannel-select.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-mask-select.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimptoolinfo.h"
 
@@ -258,15 +258,15 @@ gimp_free_select_tool_button_release (GimpTool        *tool,
 	  return;
 	}
 
-      gimp_image_mask_select_polygon (gdisp->gimage,
-                                      tool->tool_info->blurb,
-                                      free_sel->num_points,
-                                      free_sel->points,
-                                      GIMP_SELECTION_TOOL (tool)->op,
-                                      options->antialias,
-                                      options->feather,
-                                      options->feather_radius,
-                                      options->feather_radius);
+      gimp_channel_select_polygon (gimp_image_get_mask (gdisp->gimage),
+                                   tool->tool_info->blurb,
+                                   free_sel->num_points,
+                                   free_sel->points,
+                                   GIMP_SELECTION_TOOL (tool)->op,
+                                   options->antialias,
+                                   options->feather,
+                                   options->feather_radius,
+                                   options->feather_radius);
 
       gimp_image_flush (gdisp->gimage);
     }

@@ -45,7 +45,6 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-mask.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpmarshal.h"
 #include "core/gimppaintinfo.h"

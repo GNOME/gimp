@@ -946,6 +946,10 @@ gimp_channel_real_feather (GimpChannel *channel,
   gaussian_blur_region (&srcPR, radius_x, radius_y);
 
   channel->bounds_known = FALSE;
+
+  gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0,
+                        gimp_item_width  (GIMP_ITEM (channel)),
+                        gimp_item_height (GIMP_ITEM (channel)));
 }
 
 static void
@@ -973,6 +977,10 @@ gimp_channel_real_sharpen (GimpChannel *channel,
   gimp_lut_free (lut);
 
   channel->bounds_known = FALSE;
+
+  gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0,
+                        gimp_item_width  (GIMP_ITEM (channel)),
+                        gimp_item_height (GIMP_ITEM (channel)));
 }
 
 static void
@@ -1019,6 +1027,10 @@ gimp_channel_real_clear (GimpChannel *channel,
   channel->y1           = 0;
   channel->x2           = GIMP_ITEM (channel)->width;
   channel->y2           = GIMP_ITEM (channel)->height;
+
+  gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0,
+                        gimp_item_width  (GIMP_ITEM (channel)),
+                        gimp_item_height (GIMP_ITEM (channel)));
 }
 
 static void
@@ -1048,6 +1060,10 @@ gimp_channel_real_all (GimpChannel *channel,
   channel->y1           = 0;
   channel->x2           = GIMP_ITEM (channel)->width;
   channel->y2           = GIMP_ITEM (channel)->height;
+
+  gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0,
+                        gimp_item_width  (GIMP_ITEM (channel)),
+                        gimp_item_height (GIMP_ITEM (channel)));
 }
 
 static void
@@ -1082,6 +1098,10 @@ gimp_channel_real_invert (GimpChannel *channel,
       gimp_lut_free (lut);
 
       channel->bounds_known = FALSE;
+
+      gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0,
+                            gimp_item_width  (GIMP_ITEM (channel)),
+                            gimp_item_height (GIMP_ITEM (channel)));
     }
 }
 
@@ -1133,6 +1153,10 @@ gimp_channel_real_border (GimpChannel *channel,
   border_region (&bPR, radius_x, radius_y);
 
   channel->bounds_known = FALSE;
+
+  gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0,
+                        gimp_item_width  (GIMP_ITEM (channel)),
+                        gimp_item_height (GIMP_ITEM (channel)));
 }
 
 static void
@@ -1192,6 +1216,10 @@ gimp_channel_real_grow (GimpChannel *channel,
   fatten_region (&bPR, radius_x, radius_y);
 
   channel->bounds_known = FALSE;
+
+  gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0,
+                        gimp_item_width  (GIMP_ITEM (channel)),
+                        gimp_item_height (GIMP_ITEM (channel)));
 }
 
 static void
@@ -1243,6 +1271,10 @@ gimp_channel_real_shrink (GimpChannel *channel,
   thin_region (&bPR, radius_x, radius_y, edge_lock);
 
   channel->bounds_known = FALSE;
+
+  gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0,
+                        gimp_item_width  (GIMP_ITEM (channel)),
+                        gimp_item_height (GIMP_ITEM (channel)));
 }
 
 static void

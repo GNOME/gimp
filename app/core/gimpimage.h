@@ -67,12 +67,11 @@
                                             GIMP_INDEXED_IMAGE : -1)
 
 
-struct _GimpGuide
+typedef struct _GimpImageFlushAccumulator GimpImageFlushAccumulator;
+
+struct _GimpImageFlushAccumulator
 {
-  gint                 ref_count;
-  gint                 position;
-  GimpOrientationType  orientation;
-  guint32              guide_ID;
+  gboolean mask_changed;
 };
 
 
@@ -153,16 +152,18 @@ struct _GimpImage
   gboolean           qmask_inverted;        /*  TRUE if qmask is inverted    */
   GimpRGB            qmask_color;           /*  rgba triplet of the color    */
 
+  /*  Undo apparatus  */
   GimpUndoStack     *undo_stack;            /*  stack for undo operations    */
   GimpUndoStack     *redo_stack;            /*  stack for redo operations    */
   gint               group_count;           /*  nested undo groups           */
   GimpUndoType       pushing_undo_group;    /*  undo group status flag       */
 
-  /*  New undo apparatus  */
-
   /*  Composite preview  */
   TempBuf           *comp_preview;          /*  the composite preview        */
   gboolean           comp_preview_valid;    /*  preview valid-1/channel      */
+
+  /*  Signal emmision accumulator  */
+  GimpImageFlushAccumulator  flush_accum;
 };
 
 struct _GimpImageClass

@@ -29,9 +29,9 @@
 #include "gui-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpchannel-select.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-mask-select.h"
 #include "core/gimpimage-merge.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimplayer.h"
@@ -428,11 +428,11 @@ layers_mask_to_selection_cmd_callback (GtkWidget *widget,
 
       gimp_item_offsets (GIMP_ITEM (mask), &off_x, &off_y);
 
-      gimp_image_mask_select_channel (gimage,
-                                      _("Layer Mask to Selection"),
-                                      GIMP_CHANNEL (mask),
-                                      off_x, off_y,
-                                      op, FALSE, 0.0, 0.0);
+      gimp_channel_select_channel (gimp_image_get_mask (gimage),
+                                   _("Layer Mask to Selection"),
+                                   GIMP_CHANNEL (mask),
+                                   off_x, off_y,
+                                   op, FALSE, 0.0, 0.0);
       gimp_image_flush (gimage);
     }
 }
@@ -466,8 +466,8 @@ layers_alpha_to_selection_cmd_callback (GtkWidget *widget,
 
   if (gimp_drawable_has_alpha (GIMP_DRAWABLE (active_layer)))
     {
-      gimp_image_mask_select_alpha (gimage, active_layer,
-                                    op, FALSE, 0.0, 0.0);
+      gimp_channel_select_alpha (gimp_image_get_mask (gimage), active_layer,
+                                 op, FALSE, 0.0, 0.0);
       gimp_image_flush (gimage);
     }
 }

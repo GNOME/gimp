@@ -48,13 +48,25 @@ struct _GimpSelectionClass
 
 GType         gimp_selection_get_type   (void) G_GNUC_CONST;
 
-GimpChannel * gimp_selection_new        (GimpImage   *gimage,
-                                         gint         width,
-                                         gint         height);
+GimpChannel * gimp_selection_new        (GimpImage    *gimage,
+                                         gint          width,
+                                         gint          height);
 
-void          gimp_selection_load       (GimpChannel *selection,
-                                         GimpChannel *channel);
-GimpChannel * gimp_selection_save       (GimpChannel *selection);
+void          gimp_selection_load       (GimpChannel  *selection,
+                                         GimpChannel  *channel);
+GimpChannel * gimp_selection_save       (GimpChannel  *selection);
+
+TileManager * gimp_selection_extract    (GimpChannel  *selection,
+                                         GimpDrawable *drawable,
+                                         gboolean      cut_image,
+                                         gboolean      keep_indexed,
+                                         gboolean      add_alpha);
+
+GimpLayer   * gimp_selection_float      (GimpChannel  *selection,
+                                         GimpDrawable *drawable,
+                                         gboolean      cut_image,
+                                         gint          off_x,
+                                         gint          off_y);
 
 
 #endif /* __GIMP_SELECTION_H__ */

@@ -27,9 +27,8 @@
 #include "tools-types.h"
 
 #include "core/gimpchannel.h"
+#include "core/gimpchannel-select.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-mask.h"
-#include "core/gimpimage-mask-select.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -167,11 +166,11 @@ gimp_ellipse_select_tool_rect_select (GimpRectSelectTool *rect_tool,
   sel_tool = GIMP_SELECTION_TOOL (rect_tool);
   options  = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
-  gimp_image_mask_select_ellipse (tool->gdisp->gimage,
-                                  x, y, w, h,
-                                  sel_tool->op,
-                                  options->antialias,
-                                  options->feather,
-                                  options->feather_radius,
-                                  options->feather_radius);
+  gimp_channel_select_ellipse (gimp_image_get_mask (tool->gdisp->gimage),
+                               x, y, w, h,
+                               sel_tool->op,
+                               options->antialias,
+                               options->feather,
+                               options->feather_radius,
+                               options->feather_radius);
 }

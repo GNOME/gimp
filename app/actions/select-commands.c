@@ -29,7 +29,6 @@
 #include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-mask.h"
 #include "core/gimpimage-qmask.h"
 #include "core/gimpselection.h"
 
@@ -135,8 +134,9 @@ select_float_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-  gimp_image_mask_float (gimage, gimp_image_active_drawable (gimage),
-                         TRUE, 0, 0);
+  gimp_selection_float (gimp_image_get_mask (gimage),
+                        gimp_image_active_drawable (gimage),
+                        TRUE, 0, 0);
   gimp_image_flush (gimage);
 }
 

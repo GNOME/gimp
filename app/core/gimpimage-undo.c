@@ -315,9 +315,6 @@ gimp_image_undo_pop_stack (GimpImage     *gimage,
   if (accum.unit_changed)
     gimp_image_unit_changed (gimage);
 
-  if (accum.mask_changed)
-    gimp_image_mask_changed (gimage);
-
   if (accum.qmask_changed)
     gimp_image_qmask_changed (gimage);
 

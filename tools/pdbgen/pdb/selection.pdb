@@ -188,11 +188,13 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GimpImage *gimage' ],
 	code => <<'CODE'
 {
+  GimpImage *gimage;
+
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-  layer = gimp_image_mask_float (gimage, drawable, TRUE, offx, offy);
+  layer = gimp_selection_float (gimp_image_get_mask (gimage),
+                                drawable, TRUE, offx, offy);
   success = layer != NULL;
 }
 CODE
@@ -321,8 +323,8 @@ HELP
 	code => <<'CODE'
 {
   gimage = gimp_item_get_image (GIMP_ITEM (layer));
-  gimp_image_mask_select_alpha (gimage, layer,
-                                GIMP_CHANNEL_OP_REPLACE, FALSE, 0.0, 0.0);
+  gimp_channel_select_alpha (gimp_image_get_mask (gimage), layer,
+                             GIMP_CHANNEL_OP_REPLACE, FALSE, 0.0, 0.0);
 }
 CODE
     );
@@ -348,11 +350,12 @@ HELP
   gimage = gimp_item_get_image (GIMP_ITEM (channel));
   gimp_item_offsets (GIMP_ITEM (channel), &off_x, &off_y);
 
-  gimp_image_mask_select_channel (gimage, _("Channel to Selection"),
-                                  channel, 
-                                  off_x, off_y,
-				  GIMP_CHANNEL_OP_REPLACE,
-                                  FALSE, 0.0, 0.0);
+  gimp_channel_select_channel (gimp_image_get_mask (gimage),
+                               _("Channel to Selection"),
+                               channel, 
+                               off_x, off_y,
+                               GIMP_CHANNEL_OP_REPLACE,
+                               FALSE, 0.0, 0.0);
 }
 CODE
     );
@@ -378,11 +381,12 @@ HELP
   gimage = gimp_item_get_image (GIMP_ITEM (channel));
   gimp_item_offsets (GIMP_ITEM (channel), &off_x, &off_y);
 
-  gimp_image_mask_select_channel (gimage, _("Channel to Selection"),
-                                  channel, 
-                                  off_x, off_y,
-				  operation,
-                                  FALSE, 0.0, 0.0);
+  gimp_channel_select_channel (gimp_image_get_mask (gimage),
+                               _("Channel to Selection"),
+                               channel, 
+                               off_x, off_y,
+                               operation,
+                               FALSE, 0.0, 0.0);
 }
 CODE
     );
@@ -412,8 +416,7 @@ HELP
     );
 }
 
-@headers = qw("core/gimpimage-mask.h" "core/gimpimage-mask-select.h"
-              "gimp-intl.h");
+@headers = qw("core/gimpchannel-select.h" "gimp-intl.h");
 
 @procs = qw(selection_bounds selection_value selection_is_empty
 	    selection_translate selection_float selection_clear

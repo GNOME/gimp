@@ -29,9 +29,9 @@
 #include "widgets-types.h"
 
 #include "core/gimpchannel.h"
+#include "core/gimpchannel-select.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-mask-select.h"
 
 #include "gimpchanneltreeview.h"
 #include "gimpcomponenteditor.h"
@@ -287,12 +287,12 @@ gimp_channel_tree_view_toselection_extended_clicked (GtkWidget           *widget
 	  operation = GIMP_CHANNEL_OP_SUBTRACT;
 	}
 
-      gimp_image_mask_select_channel (gimage,
-                                      _("Channel to Selection"),
-                                      GIMP_CHANNEL (item),
-                                      0, 0,
-                                      operation,
-                                      FALSE, 0.0, 0.0);
+      gimp_channel_select_channel (gimp_image_get_mask (gimage),
+                                   _("Channel to Selection"),
+                                   GIMP_CHANNEL (item),
+                                   0, 0,
+                                   operation,
+                                   FALSE, 0.0, 0.0);
       gimp_image_flush (gimage);
     }
 }

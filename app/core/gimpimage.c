@@ -43,7 +43,6 @@
 #include "gimpimage-colorhash.h"
 #include "gimpimage-colormap.h"
 #include "gimpimage-guides.h"
-#include "gimpimage-mask.h"
 #include "gimpimage-preview.h"
 #include "gimpimage-projection.h"
 #include "gimpimage-undo.h"
@@ -117,7 +116,14 @@ static gchar  * gimp_image_get_description       (GimpViewable   *viewable,
                                                   gchar         **tooltip);
 static void     gimp_image_real_colormap_changed (GimpImage      *gimage,
 						  gint            ncol);
+static void     gimp_image_real_flush            (GimpImage      *gimage);
 
+static void     gimp_image_mask_update           (GimpDrawable   *drawable,
+                                                  gint            x,
+                                                  gint            y,
+                                                  gint            width,
+                                                  gint            height,
+                                                  GimpImage      *gimage);
 static void     gimp_image_drawable_update       (GimpDrawable   *drawable,
                                                   gint            x,
                                                   gint            y,
@@ -445,7 +451,7 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->colormap_changed             = gimp_image_real_colormap_changed;
   klass->undo_start                   = NULL;
   klass->undo_event                   = NULL;
-  klass->flush                        = NULL;
+  klass->flush                        = gimp_image_real_flush;
 
   gimp_image_color_hash_init ();
 }
@@ -546,9 +552,10 @@ gimp_image_init (GimpImage *gimage)
   gimage->group_count           = 0;
   gimage->pushing_undo_group    = GIMP_UNDO_GROUP_NONE;
 
-
   gimage->comp_preview          = NULL;
   gimage->comp_preview_valid    = FALSE;
+
+  gimage->flush_accum.mask_changed = FALSE;
 }
 
 static void
@@ -836,6 +843,27 @@ gimp_image_real_colormap_changed (GimpImage *gimage,
     }
 }
 
+void
+gimp_image_real_flush (GimpImage *gimage)
+{
+  if (gimage->flush_accum.mask_changed)
+    {
+      gimp_image_mask_changed (gimage);
+      gimage->flush_accum.mask_changed = FALSE;
+    }
+}
+
+static void
+gimp_image_mask_update (GimpDrawable *drawable,
+                        gint          x,
+                        gint          y,
+                        gint          width,
+                        gint          height,
+                        GimpImage    *gimage)
+{
+  gimage->flush_accum.mask_changed = TRUE;
+}
+
 static void
 gimp_image_drawable_update (GimpDrawable *drawable,
                             gint          x,
@@ -980,6 +1008,9 @@ gimp_image_new (Gimp              *gimp,
   gimage->selection_mask = gimp_selection_new (gimage,
                                                gimage->width,
                                                gimage->height);
+  g_signal_connect (gimage->selection_mask, "update",
+                    G_CALLBACK (gimp_image_mask_update),
+                    gimage);
 
   g_signal_connect_object (gimp->config, "notify::transparency-type",
                            G_CALLBACK (gimp_image_invalidate_layer_previews),

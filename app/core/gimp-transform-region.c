@@ -40,11 +40,11 @@
 #include "gimpdrawable.h"
 #include "gimpdrawable-transform.h"
 #include "gimpimage.h"
-#include "gimpimage-mask.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
+#include "gimpselection.h"
 
 #include "gimp-intl.h"
 
@@ -74,22 +74,22 @@ static void     sample_adapt      (TileManager *tm,
                                    gint         level,
                                    guchar      *color,
                                    guchar      *bg_color,
-                                   gint         bpp, 
+                                   gint         bpp,
                                    gint         alpha);
 
 
-static void 
-sample_cubic (PixelSurround *surround, 
-              gdouble        u, 
-              gdouble        v, 
+static void
+sample_cubic (PixelSurround *surround,
+              gdouble        u,
+              gdouble        v,
               guchar        *color,
-              gint           bytes, 
+              gint           bytes,
               gint           alpha);
 
-static void 
-sample_linear(PixelSurround *surround, 
+static void
+sample_linear(PixelSurround *surround,
               gdouble        u,
-              gdouble        v, 
+              gdouble        v,
               guchar        *color,
               gint           bytes,
               gint           alpha);
@@ -117,10 +117,10 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
   gint         x1, y1, x2, y2;        /* target bounding box */
   gint         x, y;                  /* target coordinates */
   gint         u1, v1, u2, v2;        /* source bounding box */
-  gdouble      uinc, vinc, winc;      /* increments in source coordinates 
+  gdouble      uinc, vinc, winc;      /* increments in source coordinates
                                          pr horizontal target coordinate */
 
-  gdouble      u[5],v[5];             /* source coordinates,    
+  gdouble      u[5],v[5];             /* source coordinates,
                                   2
                                  / \    0 is sample in the centre of pixel
                                 1 0 3   1..4 is offset 1 pixel in each
@@ -368,7 +368,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
                   for (b = 0; b < bytes; b++)
                     *d++ = bg_color[b];
                 }
-              else 
+              else
                 {
                   guchar color[MAX_CHANNELS];
 
@@ -415,7 +415,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
       /*  set the pixel region row  */
       pixel_region_set_row (&destPR, 0, (y - y1), width, dest);
     }
-  
+
   if (interpolation_type != GIMP_INTERPOLATION_NONE)
     pixel_surround_clear (&surround);
 
@@ -529,7 +529,7 @@ gimp_drawable_transform_tiles_flip (GimpDrawable        *drawable,
           pixel_region_init (&destPR, new_tiles,
                              new_x + new_width - i - 1, new_y,
                              1, new_height, TRUE);
-          copy_region (&srcPR, &destPR); 
+          copy_region (&srcPR, &destPR);
         }
     }
   else
@@ -650,7 +650,7 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
 
   if (clip_result && (new_x != orig_x || new_y != orig_y ||
                       new_width != orig_width || new_height != orig_height))
-      
+
     {
       guchar bg_color[MAX_CHANNELS];
       gint   clip_x, clip_y;
@@ -758,19 +758,19 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
       break;
 
     case GIMP_ROTATE_180:
-      g_assert (new_width == orig_width);      
+      g_assert (new_width == orig_width);
       buf = g_new (guchar, new_width * orig_bpp);
 
       for (i = 0; i < orig_height; i++)
         {
           pixel_region_get_row (&srcPR, orig_x, orig_y + orig_height - 1 - i,
                                 orig_width, buf, 1);
-          
+
           for (j = 0; j < orig_width / 2; j++)
             {
               guchar *left  = buf + j * orig_bpp;
               guchar *right = buf + (orig_width - 1 - j) * orig_bpp;
-              
+
               for (k = 0; k < orig_bpp; k++)
                 {
                   guchar tmp = left[k];
@@ -840,7 +840,7 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
                                                         orig_tiles,
                                                         matrix,
                                                         GIMP_TRANSFORM_FORWARD,
-                                                        interpolation_type, 
+                                                        interpolation_type,
                                                         FALSE,
                                                         NULL, NULL);
 
@@ -1007,16 +1007,19 @@ gimp_drawable_transform_cut (GimpDrawable *drawable,
        * gimp_layer_new_from_tiles() later which assumes that the tiles
        * are either RGB or GRAY.  Eeek!!!              (Sven)
        */
-      tiles = gimp_image_mask_extract (gimage, drawable, TRUE, FALSE, TRUE);
+      tiles = gimp_selection_extract (gimp_image_get_mask (gimage),
+                                      drawable, TRUE, FALSE, TRUE);
 
       *new_layer = TRUE;
     }
   else  /*  otherwise, just copy the layer  */
     {
       if (GIMP_IS_LAYER (drawable))
-        tiles = gimp_image_mask_extract (gimage, drawable, FALSE, TRUE, TRUE);
+        tiles = gimp_selection_extract (gimp_image_get_mask (gimage),
+                                        drawable, FALSE, TRUE, TRUE);
       else
-        tiles = gimp_image_mask_extract (gimage, drawable, FALSE, TRUE, FALSE);
+        tiles = gimp_selection_extract (gimp_image_get_mask (gimage),
+                                        drawable, FALSE, TRUE, FALSE);
 
       *new_layer = FALSE;
     }
@@ -1056,7 +1059,7 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
           return FALSE;
         }
 
-      tile_manager_get_offsets (tiles, 
+      tile_manager_get_offsets (tiles,
                                 &GIMP_ITEM (layer)->offset_x,
                                 &GIMP_ITEM (layer)->offset_y);
 
@@ -1112,7 +1115,7 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
       /*  Fill in the new layer's attributes  */
       GIMP_ITEM (drawable)->width  = tile_manager_width (tiles);
       GIMP_ITEM (drawable)->height = tile_manager_height (tiles);
-      tile_manager_get_offsets (tiles, 
+      tile_manager_get_offsets (tiles,
                                 &GIMP_ITEM (drawable)->offset_x,
                                 &GIMP_ITEM (drawable)->offset_y);
 
@@ -1126,7 +1129,7 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
                             gimp_item_width  (GIMP_ITEM (drawable)),
                             gimp_item_height (GIMP_ITEM (drawable)));
 
-      /*  if we were operating on the floating selection, then it's boundary 
+      /*  if we were operating on the floating selection, then it's boundary
        *  and previews need invalidating
        */
       if (drawable == (GimpDrawable *) floating_layer)
@@ -1145,10 +1148,10 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
    *  We need the two pixel coords around them:
    *  iu to iu + 1, iv to iv + 1
    */
-static void 
-sample_linear (PixelSurround *surround, 
+static void
+sample_linear (PixelSurround *surround,
                gdouble        u,
-               gdouble        v, 
+               gdouble        v,
                guchar        *color,
                gint           bytes,
                gint           alpha)
@@ -1173,7 +1176,7 @@ sample_linear (PixelSurround *surround,
 
   /* calculate alpha value of result pixel */
   alphachan = &data[alpha];
-  a_val = BILINEAR (alphachan[0],   alphachan[bytes], 
+  a_val = BILINEAR (alphachan[0],   alphachan[bytes],
                     alphachan[row], alphachan[row+bytes], du, dv);
   if (a_val <= 0.0)
     {
@@ -1215,7 +1218,7 @@ sample_linear (PixelSurround *surround,
 /*
     bilinear interpolation of a 16.16 pixel
 */
-static void 
+static void
 sample_bi (TileManager *tm,
            gint         x,
            gint         y,
@@ -1228,7 +1231,7 @@ sample_bi (TileManager *tm,
   gint   i;
   gint   xscale = (x & 65535);
   gint   yscale = (y & 65535);
-  
+
   gint   x0 = x >> 16;
   gint   y0 = y >> 16;
   gint   x1 = x0 + 1;
@@ -1238,14 +1241,14 @@ sample_bi (TileManager *tm,
   /*  fill the color with default values, since read_pixel_data_1
    *  does nothing, when accesses are out of bounds.
    */
-  for (i = 0; i < 4; i++) 
+  for (i = 0; i < 4; i++)
     *(guint*) (&C[i]) = *(guint*) (bg_color);
 
   read_pixel_data_1 (tm, x0, y0, C[0]);
   read_pixel_data_1 (tm, x1, y0, C[2]);
   read_pixel_data_1 (tm, x0, y1, C[1]);
   read_pixel_data_1 (tm, x1, y1, C[3]);
-    
+
 #define lerp(v1,v2,r) \
         (((guint)(v1) * (65536 - (guint)(r)) + (guint)(v2)*(guint)(r)) / 65536)
 
@@ -1268,17 +1271,17 @@ sample_bi (TileManager *tm,
     }
   else
     {
-      for (i = 0; i < alpha; i++)     
+      for (i = 0; i < alpha; i++)
         color[i] = 0;
     }
 #undef lerp
 }
 
-/* 
+/*
  * Returns TRUE if one of the deltas of the
  * quad edge is > 1.0 (16.16 fixed values).
  */
-static gboolean       
+static gboolean
 supersample_test (gint x0, gint y0,
                   gint x1, gint y1,
                   gint x2, gint y2,
@@ -1288,7 +1291,7 @@ supersample_test (gint x0, gint y0,
   if (abs (x1 - x2) > 65535) return TRUE;
   if (abs (x2 - x3) > 65535) return TRUE;
   if (abs (x3 - x0) > 65535) return TRUE;
-  
+
   if (abs (y0 - y1) > 65535) return TRUE;
   if (abs (y1 - y2) > 65535) return TRUE;
   if (abs (y2 - y3) > 65535) return TRUE;
@@ -1297,11 +1300,11 @@ supersample_test (gint x0, gint y0,
   return FALSE;
 }
 
-/* 
+/*
  *  Returns TRUE if one of the deltas of the
  *  quad edge is > 1.0 (double values).
  */
-static gboolean   
+static gboolean
 supersample_dtest (gdouble x0, gdouble y0,
                    gdouble x1, gdouble y1,
                    gdouble x2, gdouble y2,
@@ -1311,7 +1314,7 @@ supersample_dtest (gdouble x0, gdouble y0,
   if (fabs (x1 - x2) > 1.0) return TRUE;
   if (fabs (x2 - x3) > 1.0) return TRUE;
   if (fabs (x3 - x0) > 1.0) return TRUE;
-  
+
   if (fabs (y0 - y1) > 1.0) return TRUE;
   if (fabs (y1 - y2) > 1.0) return TRUE;
   if (fabs (y2 - y3) > 1.0) return TRUE;
@@ -1343,7 +1346,7 @@ get_sample (TileManager *tm,
     {
       gint   i;
       guchar C[4];
-      
+
       sample_bi (tm, xc, yc, C, bg_color, bpp, alpha);
 
       for (i = 0; i < bpp; i++)
@@ -1351,13 +1354,13 @@ get_sample (TileManager *tm,
 
       (*cc)++;  /* increase number of samples taken */
     }
-  else 
+  else
     {
       gint tx, lx, rx, bx, tlx, trx, blx, brx;
       gint ty, ly, ry, by, tly, try, bly, bry;
 
       /* calculate subdivided corner coordinates (including centercoords
-         thus using a bilinear interpolation,. almost as good as 
+         thus using a bilinear interpolation,. almost as good as
          doing the perspective transform for each subpixel coordinate*/
 
       tx  = (x0 + x1) / 2;
@@ -1379,7 +1382,7 @@ get_sample (TileManager *tm,
       by  = (y3 + y2) / 2;
 
       get_sample (tm,
-                  tlx,tly,         
+                  tlx,tly,
                   x0,y0, tx,ty, xc,yc, lx,ly,
                   cc, level-1, color, bg_color, bpp, alpha);
 
@@ -1400,7 +1403,7 @@ get_sample (TileManager *tm,
     }
 }
 
-static void 
+static void
 sample_adapt (TileManager *tm,
               gdouble     xc,  gdouble yc,
               gdouble     x0,  gdouble y0,
@@ -1493,10 +1496,10 @@ gimp_drawable_transform_cubic (gdouble dx,
    *  We need the four integer pixel coords around them:
    *  iu to iu + 3, iv to iv + 3
    */
-static void 
-sample_cubic (PixelSurround *surround, 
+static void
+sample_cubic (PixelSurround *surround,
               gdouble        u,
-              gdouble        v, 
+              gdouble        v,
               guchar        *color,
               gint           bytes,
               gint           alpha)

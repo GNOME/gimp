@@ -1,5 +1,93 @@
 2003-10-06  Michael Natterer  <mitch@gimp.org>
 
+	Treat changes to the selection like changes to any other drawable:
+
+	* app/core/gimpchannel.c
+	* app/core/gimpchannel-combine.c: call gimp_drawable_update() after
+	changing the channel.
+
+	* app/core/gimpimage.[ch]: added struct GimpImageFlushAccumulator
+	with one member "gboolean mask_changed". Connect to "update" of
+	the selection and set accum.mask_changed to TRUE in the callback.
+	Added default implementation for GimpImage::flush() and emit
+	"mask_changed" there.
+
+	Unrelated:
+	* app/core/gimpimage.h: removed GimpGuide struct...
+	* app/core/gimpimage-guides.h: ...and added it here.
+
+	* app/core/gimpimage-undo-push.c (undo_pop_mask)
+	(undo_pop_channel_mod): don't distinguish between selection and
+	non-selection channels and just call gimp_drawable_update().
+
+	* app/core/gimpundo.h
+	* app/core/gimpimage-undo.c: removed "gboolean mask_changed" from
+	the GimpUndoAccumulator struct since we don't have to care about
+	that signal explicitly any more.
+
+	* app/display/gimpdisplay-foreach.[ch]: removed gimp_displays_flush().
+
+	* tools/pdbgen/pdb/display.pdb (displays_flush_invoker): call
+	gimp_image_flush() on all images so the flush accumulator is
+	honored.
+
+	This generalization enables the removal of more special purpose
+	code which was needed to treat the selection different:
+
+	* app/core/gimpimage-mask-select.[ch]: removed...
+
+	* app/core/gimpchannel-select.[ch]: ...and added under a new name
+	because it's not selection specific any more.
+
+	* app/core/gimpimage-mask.[ch]: removed...
+
+	* app/core/gimpselection.[ch]: ...added the two remaining
+	functions here. Removed all calls to gimp_image_mask_changed().
+
+	* app/core/Makefile.am
+	* app/core/gimp-edit.c
+	* app/core/gimpdrawable-transform.c
+	* app/core/gimpimage-scale.c
+	* app/core/gimpimage-snap.c
+	* app/display/gimpdisplayshell.c
+	* app/gui/channels-commands.c
+	* app/gui/layers-commands.c
+	* app/gui/select-commands.c
+	* app/gui/vectors-commands.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpellipseselecttool.c
+	* app/tools/gimpfreeselecttool.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimprectselecttool.c
+	* app/tools/gimptransformtool.c
+	* app/widgets/gimpchanneltreeview.c
+	* app/widgets/gimpselectioneditor.c
+	* app/widgets/gimpvectorstreeview.c
+	* app/xcf/xcf-save.c
+	* tools/pdbgen/pdb/paths.pdb
+	* tools/pdbgen/pdb/selection.pdb
+	* tools/pdbgen/pdb/selection_tools.pdb: changed accordingly.
+
+	* app/core/gimpdrawable-bucket-fill.c
+	* app/core/gimpimage-colormap.c
+	* app/core/gimplayer-floating-sel.c
+	* app/core/gimplayer.c
+	* app/gui/image-menu.c
+	* app/paint/gimppaintcore.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpinkoptions.c
+	* app/tools/gimpvectortool.c: removed useless and/or obsolete
+	#includes.
+
+	* app/pdb/display_cmds.c
+	* app/pdb/paths_cmds.c
+	* app/pdb/selection_cmds.c
+	* app/pdb/selection_tools_cmds.c: regenerated.
+
+2003-10-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell-callbacks.c: guard callbacks
 	against being invoked during display destruction. Fixes crashes
 	when closing/opening images. Also fixes the crash reported by

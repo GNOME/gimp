@@ -34,6 +34,7 @@
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"
+#include "gimplayermask.h"
 #include "gimplayer-floating-sel.h"
 #include "gimpselection.h"
 
@@ -118,7 +119,6 @@ static void       gimp_selection_shrink        (GimpChannel     *channel,
                                                 gboolean         edge_lock,
                                                 gboolean         push_undo);
 
-static void       gimp_selection_changed       (GimpChannel     *selection);
 static void       gimp_selection_validate      (TileManager     *tm,
                                                 Tile            *tile);
 
@@ -214,8 +214,6 @@ gimp_selection_translate (GimpItem *item,
 {
   GIMP_ITEM_CLASS (parent_class)->translate (item, offset_x, offset_y,
                                              push_undo);
-
-  gimp_selection_changed (GIMP_CHANNEL (item));
 }
 
 static void
@@ -232,8 +230,6 @@ gimp_selection_scale (GimpItem              *item,
 
   item->offset_x = 0;
   item->offset_y = 0;
-
-  gimp_selection_changed (GIMP_CHANNEL (item));
 }
 
 static void
@@ -248,8 +244,6 @@ gimp_selection_resize (GimpItem *item,
 
   item->offset_x = 0;
   item->offset_y = 0;
-
-  gimp_selection_changed (GIMP_CHANNEL (item));
 }
 
 static void
@@ -259,8 +253,6 @@ gimp_selection_flip (GimpItem            *item,
                      gboolean             clip_result)
 {
   GIMP_ITEM_CLASS (parent_class)->flip (item, flip_type, axis, TRUE);
-
-  gimp_selection_changed (GIMP_CHANNEL (item));
 }
 
 static void
@@ -273,8 +265,6 @@ gimp_selection_rotate (GimpItem        *item,
   GIMP_ITEM_CLASS (parent_class)->rotate (item, rotation_type,
                                           center_x, center_y,
                                           clip_result);
-
-  gimp_selection_changed (GIMP_CHANNEL (item));
 }
 
 static gboolean
@@ -478,8 +468,6 @@ gimp_selection_feather (GimpChannel *channel,
 {
   GIMP_CHANNEL_CLASS (parent_class)->feather (channel, radius_x, radius_y,
                                               push_undo);
-
-  gimp_selection_changed (channel);
 }
 
 static void
@@ -487,8 +475,6 @@ gimp_selection_sharpen (GimpChannel *channel,
                         gboolean     push_undo)
 {
   GIMP_CHANNEL_CLASS (parent_class)->sharpen (channel, push_undo);
-
-  gimp_selection_changed (channel);
 }
 
 static void
@@ -497,8 +483,6 @@ gimp_selection_clear (GimpChannel *channel,
                       gboolean     push_undo)
 {
   GIMP_CHANNEL_CLASS (parent_class)->clear (channel, undo_desc, push_undo);
-
-  gimp_selection_changed (channel);
 }
 
 static void
@@ -506,8 +490,6 @@ gimp_selection_all (GimpChannel *channel,
                     gboolean     push_undo)
 {
   GIMP_CHANNEL_CLASS (parent_class)->all (channel, push_undo);
-
-  gimp_selection_changed (channel);
 }
 
 static void
@@ -515,8 +497,6 @@ gimp_selection_invert (GimpChannel *channel,
                        gboolean     push_undo)
 {
   GIMP_CHANNEL_CLASS (parent_class)->invert (channel, push_undo);
-
-  gimp_selection_changed (channel);
 }
 
 static void
@@ -527,8 +507,6 @@ gimp_selection_border (GimpChannel *channel,
 {
   GIMP_CHANNEL_CLASS (parent_class)->border (channel, radius_x, radius_y,
                                              push_undo);
-
-  gimp_selection_changed (channel);
 }
 
 static void
@@ -539,8 +517,6 @@ gimp_selection_grow (GimpChannel *channel,
 {
   GIMP_CHANNEL_CLASS (parent_class)->grow (channel, radius_x, radius_y,
                                            push_undo);
-
-  gimp_selection_changed (channel);
 }
 
 static void
@@ -552,14 +528,6 @@ gimp_selection_shrink (GimpChannel *channel,
 {
   GIMP_CHANNEL_CLASS (parent_class)->shrink (channel, radius_x, radius_y,
                                              edge_lock, push_undo);
-
-  gimp_selection_changed (channel);
-}
-
-static void
-gimp_selection_changed (GimpChannel *selection)
-{
-  gimp_image_mask_changed (gimp_item_get_image (GIMP_ITEM (selection)));
 }
 
 static void
@@ -635,7 +603,8 @@ gimp_selection_load (GimpChannel *selection,
 
   selection->bounds_known = FALSE;
 
-  gimp_selection_changed (selection);
+  gimp_drawable_update (GIMP_DRAWABLE (selection), 0, 0,
+                        dest_item->width, dest_item->height);
 }
 
 GimpChannel *
@@ -660,4 +629,226 @@ gimp_selection_save (GimpChannel *selection)
   gimp_image_add_channel (gimage, new_channel, -1);
 
   return new_channel;
+}
+
+TileManager *
+gimp_selection_extract (GimpChannel  *selection,
+                        GimpDrawable *drawable,
+                        gboolean      cut_image,
+                        gboolean      keep_indexed,
+                        gboolean      add_alpha)
+{
+  GimpImage         *gimage;
+  TileManager       *tiles;
+  PixelRegion        srcPR, destPR, maskPR;
+  guchar             bg_color[MAX_CHANNELS];
+  GimpImageBaseType  base_type = GIMP_RGB;
+  gint               bytes     = 0;
+  gint               x1, y1, x2, y2;
+  gint               off_x, off_y;
+  gboolean           non_empty;
+
+  g_return_val_if_fail (GIMP_IS_SELECTION (selection), NULL);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+
+  gimage = gimp_item_get_image (GIMP_ITEM (selection));
+
+  /*  If there are no bounds, then just extract the entire image
+   *  This may not be the correct behavior, but after getting rid
+   *  of floating selections, it's still tempting to "cut" or "copy"
+   *  a small layer and expect it to work, even though there is no
+   *  actual selection mask
+   */
+  non_empty = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+  if (non_empty && (!(x2 - x1) || !(y2 - y1)))
+    {
+      g_message (_("Unable to cut or copy because the\n"
+		   "selected region is empty."));
+      return NULL;
+    }
+
+  /*  How many bytes in the temp buffer?  */
+  switch (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable)))
+    {
+    case GIMP_RGB:
+      bytes = add_alpha ? 4 : drawable->bytes;
+      base_type = GIMP_RGB;
+      break;
+
+    case GIMP_GRAY:
+      bytes = add_alpha ? 2 : drawable->bytes;
+      base_type = GIMP_GRAY;
+      break;
+
+    case GIMP_INDEXED:
+      if (keep_indexed)
+	{
+	  bytes = add_alpha ? 2 : drawable->bytes;
+	  base_type = GIMP_GRAY;
+	}
+      else
+	{
+	  bytes = add_alpha ? 4 : drawable->bytes;
+	  base_type = GIMP_INDEXED;
+	}
+      break;
+
+    default:
+      g_assert_not_reached ();
+      break;
+    }
+
+  gimp_image_get_background (gimage, drawable, bg_color);
+
+  /*  If a cut was specified, and the selection mask is not empty,
+   *  push an undo
+   */
+  if (cut_image && non_empty)
+    gimp_drawable_push_undo (drawable, NULL, x1, y1, x2, y2, NULL, FALSE);
+
+  gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+
+  /*  Allocate the temp buffer  */
+  tiles = tile_manager_new (x2 - x1, y2 - y1, bytes);
+  tile_manager_set_offsets (tiles, x1 + off_x, y1 + off_y);
+
+  /* configure the pixel regions  */
+  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+		     x1, y1,
+                     x2 - x1, y2 - y1,
+                     cut_image);
+  pixel_region_init (&destPR, tiles,
+                     0, 0,
+                     x2 - x1, y2 - y1,
+                     TRUE);
+
+  if (non_empty) /*  If there is a selection, extract from it  */
+    {
+      pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (selection)),
+			 (x1 + off_x), (y1 + off_y), (x2 - x1), (y2 - y1),
+			 FALSE);
+
+      extract_from_region (&srcPR, &destPR, &maskPR,
+			   gimp_drawable_cmap (drawable),
+			   bg_color, base_type,
+			   gimp_drawable_has_alpha (drawable), cut_image);
+
+      if (cut_image)
+	{
+	  /*  Clear the region  */
+	  gimp_channel_clear (selection, NULL, TRUE);
+
+	  /*  Update the region  */
+	  gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+	}
+    }
+  else /*  Otherwise, get the entire active layer  */
+    {
+      /*  If the layer is indexed...we need to extract pixels  */
+      if (base_type == GIMP_INDEXED && !keep_indexed)
+	extract_from_region (&srcPR, &destPR, NULL,
+			     gimp_drawable_cmap (drawable),
+			     bg_color, base_type,
+			     gimp_drawable_has_alpha (drawable), FALSE);
+      /*  If the layer doesn't have an alpha channel, add one  */
+      else if (bytes > srcPR.bytes)
+	add_alpha_region (&srcPR, &destPR);
+      /*  Otherwise, do a straight copy  */
+      else
+	copy_region (&srcPR, &destPR);
+
+      /*  If we're cutting, remove either the layer (or floating selection),
+       *  the layer mask, or the channel
+       */
+      if (cut_image)
+	{
+	  if (GIMP_IS_LAYER (drawable))
+	    {
+	      if (gimp_layer_is_floating_sel (GIMP_LAYER (drawable)))
+		floating_sel_remove (GIMP_LAYER (drawable));
+	      else
+		gimp_image_remove_layer (gimage, GIMP_LAYER (drawable));
+	    }
+	  else if (GIMP_IS_LAYER_MASK (drawable))
+	    {
+	      gimp_layer_apply_mask (gimp_layer_mask_get_layer (GIMP_LAYER_MASK (drawable)),
+				     GIMP_MASK_DISCARD, TRUE);
+	    }
+	  else if (GIMP_IS_CHANNEL (drawable))
+	    {
+	      gimp_image_remove_channel (gimage, GIMP_CHANNEL (drawable));
+	    }
+	}
+    }
+
+  return tiles;
+}
+
+GimpLayer *
+gimp_selection_float (GimpChannel  *selection,
+                      GimpDrawable *drawable,
+                      gboolean      cut_image,
+                      gint          off_x,
+                      gint          off_y)
+{
+  GimpImage   *gimage;
+  GimpLayer   *layer;
+  TileManager *tiles;
+  gboolean     non_empty;
+  gint         x1, y1;
+  gint         x2, y2;
+
+  g_return_val_if_fail (GIMP_IS_SELECTION (selection), NULL);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+
+  gimage = gimp_item_get_image (GIMP_ITEM (selection));
+
+  /*  Make sure there is a region to float...  */
+  non_empty = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+  if (! non_empty || (x2 - x1) == 0 || (y2 - y1) == 0)
+    {
+      g_message (_("Cannot float selection because the\n"
+		   "selected region is empty."));
+      return NULL;
+    }
+
+  /*  Start an undo group  */
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_FS_FLOAT,
+                               _("Float Selection"));
+
+  /*  Cut or copy the selected region  */
+  tiles = gimp_selection_extract (selection, drawable, cut_image, FALSE, TRUE);
+
+  /*  Clear the selection as if we had cut the pixels  */
+  if (! cut_image)
+    gimp_channel_clear (selection, NULL, TRUE);
+
+  /* Create a new layer from the buffer, using the drawable's type
+   *  because it may be different from the image's type if we cut from
+   *  a channel or layer mask
+   */
+  layer = gimp_layer_new_from_tiles (tiles,
+                                     gimage,
+                                     gimp_drawable_type_with_alpha (drawable),
+				     _("Floating Selection"),
+				     GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+
+  /*  Set the offsets  */
+  tile_manager_get_offsets (tiles, &x1, &y1);
+  GIMP_ITEM (layer)->offset_x = x1 + off_x;
+  GIMP_ITEM (layer)->offset_y = y1 + off_y;
+
+  /*  Free the temp buffer  */
+  tile_manager_unref (tiles);
+
+  /*  Add the floating layer to the gimage  */
+  floating_sel_attach (layer, drawable);
+
+  /*  End an undo group  */
+  gimp_image_undo_group_end (gimage);
+
+  /*  invalidate the gimage's boundary variables  */
+  selection->boundary_known = FALSE;
+
+  return layer;
 }

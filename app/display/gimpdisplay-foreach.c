@@ -69,11 +69,11 @@ gimp_displays_delete (Gimp *gimp)
 }
 
 GimpDisplay *
-gdisplays_check_valid (GimpDisplay *gtest, 
+gdisplays_check_valid (GimpDisplay *gtest,
 		       GimpImage   *gimage)
 {
   /* Give a gdisp check that it is still valid and points to the required
-   * GimpImage. If not return the first gDisplay that does point to the 
+   * GimpImage. If not return the first gDisplay that does point to the
    * gimage. If none found return NULL;
    */
 
@@ -99,37 +99,6 @@ gdisplays_check_valid (GimpDisplay *gtest,
   return gdisp_found;
 }
 
-void
-gimp_displays_flush (Gimp *gimp)
-{
-  static gboolean flushing = FALSE;
-
-  GList       *list;
-  GimpDisplay *gdisp;
-
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  /*  this prevents multiple recursive calls to this procedure  */
-  if (flushing == TRUE)
-    {
-      g_warning ("gdisplays_flush() called recursively.");
-      return;
-    }
-
-  flushing = TRUE;
-
-  for (list = GIMP_LIST (gimp->displays)->list;
-       list;
-       list = g_list_next (list))
-    {
-      gdisp = (GimpDisplay *) list->data;
-
-      gimp_display_flush (gdisp);
-    }
-
-  flushing = FALSE;
-}
-
 /* Force all gdisplays to finish their idlerender projection */
 void
 gimp_displays_finish_draw (Gimp *gimp)
@@ -144,7 +113,7 @@ gimp_displays_finish_draw (Gimp *gimp)
        list = g_list_next (list))
     {
       gdisp = (GimpDisplay *) list->data;
-      
+
       gimp_display_finish_draw (gdisp);
     }
 }
@@ -160,13 +129,13 @@ gimp_displays_reconnect (Gimp      *gimp,
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_IMAGE (old));
   g_return_if_fail (GIMP_IS_IMAGE (new));
-  
+
   for (list = GIMP_LIST (gimp->displays)->list;
        list;
        list = g_list_next (list))
     {
       gdisp = list->data;
-      
+
       if (gdisp->gimage == old)
 	gimp_display_reconnect (gdisp, new);
     }
@@ -203,7 +172,7 @@ gimp_displays_unset_busy (Gimp *gimp)
        list = g_list_next (list))
     {
       shell = GIMP_DISPLAY_SHELL (GIMP_DISPLAY (list->data)->shell);
-      
+
       gimp_display_shell_unset_override_cursor (shell);
     }
 }

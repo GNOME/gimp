@@ -24,6 +24,7 @@
 
 #include "gimp.h"
 #include "gimpimage.h"
+#include "gimpimage-guides.h"
 #include "gimpimage-projection.h"
 #include "gimpimage-scale.h"
 #include "gimpimage-undo.h"

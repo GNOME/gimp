@@ -25,9 +25,9 @@
 
 #include "tools-types.h"
 
+#include "core/gimpchannel-select.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-mask-select.h"
 #include "core/gimpimage-projection.h"
 #include "core/gimptoolinfo.h"
 
@@ -229,16 +229,17 @@ gimp_by_color_select_tool_button_release (GimpTool        *tool,
           gimp_rgba_set_uchar (&color, col[0], col[1], col[2], col[3]);
 	  g_free (col);
 
-	  gimp_image_mask_select_by_color (gdisp->gimage, drawable,
-                                           options->sample_merged,
-                                           &color,
-                                           options->threshold,
-                                           options->select_transparent,
-                                           sel_tool->op,
-                                           options->antialias,
-                                           options->feather,
-                                           options->feather_radius,
-                                           options->feather_radius);
+	  gimp_channel_select_by_color (gimp_image_get_mask (gdisp->gimage),
+                                        drawable,
+                                        options->sample_merged,
+                                        &color,
+                                        options->threshold,
+                                        options->select_transparent,
+                                        sel_tool->op,
+                                        options->antialias,
+                                        options->feather,
+                                        options->feather_radius,
+                                        options->feather_radius);
 
 	  gimp_image_flush (gdisp->gimage);
 	}

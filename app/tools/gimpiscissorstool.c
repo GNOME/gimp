@@ -64,9 +64,8 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "core/gimpchannel.h"
+#include "core/gimpchannel-select.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-mask.h"
-#include "core/gimpimage-mask-select.h"
 #include "core/gimpimage-projection.h"
 #include "core/gimpscanconvert.h"
 #include "core/gimptoolinfo.h"
@@ -492,14 +491,14 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
 	  iscissors->draw = DRAW_CURVE;
 	  gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
-          gimp_image_mask_select_channel (gdisp->gimage,
-                                          tool->tool_info->blurb,
-                                          iscissors->mask,
-                                          0, 0,
-                                          GIMP_SELECTION_TOOL (tool)->op,
-                                          options->feather,
-                                          options->feather_radius,
-                                          options->feather_radius);
+          gimp_channel_select_channel (gimp_image_get_mask (gdisp->gimage),
+                                       tool->tool_info->blurb,
+                                       iscissors->mask,
+                                       0, 0,
+                                       GIMP_SELECTION_TOOL (tool)->op,
+                                       options->feather,
+                                       options->feather_radius,
+                                       options->feather_radius);
 
 	  gimp_iscissors_tool_reset (iscissors);
 

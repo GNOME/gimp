@@ -39,7 +39,6 @@
 #include "gimpcontainer.h"
 #include "gimpimage.h"
 #include "gimpimage-convert.h"
-#include "gimpimage-mask.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"

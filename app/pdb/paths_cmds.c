@@ -30,8 +30,8 @@
 #include "procedural_db.h"
 
 #include "core/gimp.h"
+#include "core/gimpchannel-select.h"
 #include "core/gimpcontext.h"
-#include "core/gimpimage-mask-select.h"
 #include "core/gimpimage.h"
 #include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
@@ -1127,14 +1127,14 @@ path_to_selection_invoker (Gimp     *gimp,
       vectors = gimp_image_get_vectors_by_name (gimage, name);
     
       if (vectors)
-	gimp_image_mask_select_vectors (gimage,
-					_("Path to Selection"),
-					vectors,
-					op,
-					antialias,
-					feather,
-					feather_radius_x,
-					feather_radius_y);
+	gimp_channel_select_vectors (gimp_image_get_mask (gimage),
+				     _("Path to Selection"),
+				     vectors,
+				     op,
+				     antialias,
+				     feather,
+				     feather_radius_x,
+				     feather_radius_y);
       else
 	success = FALSE;
     }

@@ -83,7 +83,10 @@ HELP
 
     &std_pdb_misc;
 
-    %invoke = ( code => 'gimp_displays_flush (gimp);' );
+    %invoke = (
+        headers => [ qw("core/gimpcontainer.h") ],
+        code => 'gimp_container_foreach (gimp->images, (GFunc) gimp_image_flush, NULL);'
+    );
 }
 
 

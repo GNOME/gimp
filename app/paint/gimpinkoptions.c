@@ -28,8 +28,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-mask.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimppropwidgets.h"

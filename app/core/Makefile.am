@@ -53,6 +53,8 @@ libappcore_a_sources = \
 	gimpchannel.h			\
 	gimpchannel-combine.c		\
 	gimpchannel-combine.h		\
+	gimpchannel-select.c		\
+	gimpchannel-select.h		\
 	gimpcontainer.c			\
 	gimpcontainer.h			\
 	gimpcontainer-filter.c		\
@@ -117,10 +119,6 @@ libappcore_a_sources = \
 	gimpimage-grid.c                \
 	gimpimage-guides.c		\
 	gimpimage-guides.h		\
-	gimpimage-mask.c		\
-	gimpimage-mask.h		\
-	gimpimage-mask-select.c		\
-	gimpimage-mask-select.h		\
 	gimpimage-merge.c		\
 	gimpimage-merge.h		\
 	gimpimage-new.c			\

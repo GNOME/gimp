@@ -28,7 +28,6 @@
 
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
-#include "gimpimage-mask.h"
 #include "gimpimage-undo-push.h"
 
 #include "gimp-intl.h"
