@@ -246,6 +246,7 @@ gimp_error_console_add (GimpErrorConsole *console,
                         const gchar      *message)
 {
   GtkTextIter  end;
+  GtkTextMark *end_mark;
   GdkPixbuf   *pixbuf;
   gchar       *str;
 
@@ -280,6 +281,12 @@ gimp_error_console_add (GimpErrorConsole *console,
                                             NULL);
 
   gtk_text_buffer_insert (console->text_buffer, &end, "\n\n", -1);
+
+  end_mark = gtk_text_buffer_create_mark (console->text_buffer,
+                                          NULL, &end, TRUE);
+  gtk_text_view_scroll_to_mark (GTK_TEXT_VIEW (console->text_view), end_mark,
+                                FALSE, TRUE, 1.0, 0.0);
+  gtk_text_buffer_delete_mark (console->text_buffer, end_mark);
 }
 
 
@@ -413,7 +420,7 @@ gimp_error_console_write_file (GtkTextBuffer *text_buffer,
   gchar	      *text_contents;
 
   fd = open (path, O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
-  
+
   if (fd == -1)
     return FALSE;
 
@@ -430,10 +437,10 @@ gimp_error_console_write_file (GtkTextBuffer *text_buffer,
   if (text_contents && (text_length > 0))
     {
       bytes_written = write (fd, text_contents, text_length);
-      
+
       g_free (text_contents);
       close (fd);
-      
+
       if (bytes_written != text_length)
         return FALSE;
       else
