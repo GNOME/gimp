@@ -2422,7 +2422,7 @@ render_image_tile_fault (RenderInfo *info)
 {
   Tile *tile;
   guchar *data;
-  guchar *dest;
+c  guchar *dest;
   guchar *scale;
   int width;
   int tilex;
