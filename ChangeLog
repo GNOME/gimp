@@ -1,3 +1,9 @@
+2003-05-27  Raphael Quinet  <quinet@gamers.org>
+
+	* NEWS: Include an overview of the changes that took place since
+	1.2.0.  That file had not been updated for a long time on the
+	maintenance branch...
+
 2003-05-27  Tor Lillqvist  <tml@iki.fi>
 
 	* gimptool-win32.c.in: Don't try to execute the COPY or DEL

@@ -1,4 +1,98 @@
-GIMP 1.2 - Hadjaha - New features          -*- text -*-
+Overview of Changes in GIMP 1.2.5
+=================================
+
+- Fixed some build errors affecting mainly the non-Linux platforms
+  (bug #113425).
+- Fixed an error that was preventing the Imagemap plug-in from
+  re-reading its own files (bug #113445).  Support XHTML (bug #87687).
+- Improved the drawing of thin lines (bug #69773).
+- Fixed some incorrect calculations and rounding errors in selection
+  boundaries (bug #17904, bug #110014) and downscaling (bug #104693).
+
+Contributors: Sven Neumann, Raphael Quinet, Tor Lillqvist, Pedro
+Gimeno, Maurits Rijk, Henning Makholm and several others listed in the
+ChangeLog file.
+
+Overview of Changes in GIMP 1.2.4
+=================================
+
+There were many, many bug fixes and improvements in this release. For
+a complete list of changes, see the first 1200 lines of the ChangeLog
+file.  Here is a small selection of some of these changes:
+
+- Updated translations (see the file po/ChangeLog for details).
+- The print plug-in now depends on libgimpprint-4.2.  This is a new
+  dependency if you are upgrading from GIMP 1.2.3 (bug #80941).  It
+  is more stable and more portable than previous versions (bug
+  #87428).  You can get libgimpprint from the Gimp-Print site, or
+  configure the GIMP with --disable-print if you do not need print
+  support.
+- Improvements and cleanups for the Windows build. The Win32 version
+  is now compiled from the common codebase.
+- Fixed crashes in: File->Open dialog (bug #51781), paths dialog,
+  splash screen (bug #81962), initialization (bug #71409), imagemap
+  plug-in (bug #92750), convmatrix plug-in (bug #81345),
+  GIMPressionist (bug #92394), Select->Sharpen (bug #93853) and in the
+  tablet support (bug #91067).
+- Fixed some errors in several file load/save plug-ins: PNG (bug
+  #55700, bug #92395), TIFF (bug #77283, bug #97352), XPM (bug #87588,
+  bug #82763), EPS (bug #75667, bug #81606), JPEG (bug #75398).
+- The JPEG and PNG libraries are now required, unless the user
+  explicitely disables them.
+- Considerable speed-ups in some plug-ins: borderaverage, convmatrix,
+  nlfilt, papertile, vpropagate (bug #78358).
+- Various improvements for the usability of some tools: selection
+  tools (bug #78731), spinbuttons in resize dialog (bug #63741), etc.
+- Fixed several rounding errors in image scaling and selections (bug
+  #17904, bug #17906, bug #109933).
+- Better handling of semi-transparent pixels in some
+  operations. Follow the dependencies from the tracking bug #70335 for
+  a list of affected plug-ins and tools.
+- Several licensing and copyright problems with some plug-ins have
+  been solved (bug #83362).
+
+Contributors: Sven Neumann, Manish Singh, Tor Lilliqvist, Dave Neary,
+Raphael Quinet, Michael Natterer, Pedro Gimeno, Garry R. Osgood and
+several others listed in the ChangeLog file.
+
+Overview of Changes in GIMP 1.2.3
+=================================
+
+- Many improvements to the documentation and help pages.
+- Updated translations.
+- The binaries and manpages are now installed with a -1.2 suffix.  By
+  default, symbolic links are installed for unversioned files so the
+  default "gimp" executable is still available as before.  This allows
+  both 1.2.x and 1.3.x to be installed in the same prefix directory.
+- Never prompt for stack traces by default.  This prevents lock-ups
+  while the pointer is grabbed (bug #68977).
+- An improved Export function prevents incorrect data from being saved
+  in a file when a layer mask or channel is active, or when the layer
+  offset, opacity and size must be taken into account (bug #51114 and
+  many duplicates).
+- Various improvements to the build system and to the installation
+  process, especially for Windows (among others, bug #64491).
+- Several bugs fixed in the file load/save plug-ins: TGA (bug #53278),
+  TIFF (bug #69129), JPEG (bug #69127), gz (bug #67135), xbm, xpm.
+- Several other bugs causing potential crashes have been fixed as
+  well: #33802, #61418, #61894, #64835, #70344.
+
+Contributors: Sven Neumann, Tor Lillqvist, Manish Singh, Abel Cheung,
+Raphael Quinet, Daniel Egger, Nick Lamb and many others.
+
+Overview of Changes in GIMP 1.2.1 and 1.2.2
+===========================================
+
+Several bug fixes were applied to the maintenance branch while most of
+the development work takes place on the 1.3.x branch.  See the
+ChangeLog file for details.
+
+Contributors: Sven Neumann, Michael Natterer, Stanislav Brabec, Manish
+Singh, Tor Lillqvist, Iccii, Daniel Egger, Martin Weber, Peter
+Kirchgessner, Austin Donnelly, Simon Budig and many others.
+
+Overview of Changes in GIMP 1.2.0 and older versions
+====================================================
 
 The following list tries to describe all the new features that are
 already implemented or currently being worked on. I cannot
@@ -795,5 +889,14 @@ entry. I can however guarantee that a few things are missing...
                              file should help track responsibility and
                              expertise for various parts of The GIMP.
 
-
-Copyright 1998-2000 by Sven Neumann <sven@gimp.org>
+Main contributors during the development of 1.1.x and 1.2.0: Sven
+Neumann, Michael Natterer, Manish Singh, Marc Lehmann, Adam D. Moss,
+Andy Thomas, Tor Lillqvist, Jay Cox, Austin Donnelly, Nick Lamb,
+Asbjorn Pettersen, Daniel Egger, Adrian Likins, Seth Burgess, Garry
+R. Osgood, Wolfgang Hofer, Tuomas Kuosmanen, Stanislav Brabec,
+Shirasaki Yasuhiro, Simon Budig, Scott Goehring, Tomas Ogren, Owen
+Taylor, Larry Ewing, Olof S Kylander, Jens Lautenbacher, Vidar Madsen,
+Kelly Lynn Martin, Shuji Narazaki, Raphael Quinet, Zach Beane, Raph
+Levien, David Hodson, TimeCop, Shawn T. Amundson, Kevin Turner, Piers
+Cornwell, Martin Weber, Chris Lahey and many others listed in the file
+ChangeLog.pre-1-2.
