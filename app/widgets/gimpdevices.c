@@ -26,7 +26,6 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpbrush.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpgradient.h"
 #include "core/gimplist.h"
