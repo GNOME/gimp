@@ -38,6 +38,11 @@
  *           would usually entail writing a somewhat larger image file.
  *           + major version bump to indicate 1.3/1.4 branch.
  *
+ * 2002/04/24 - Cameron Gregory, http://www.flamingtext.com/
+ *           Added no compress option
+ *			 Added rlecompress().  Should not be covered by lzw patent,
+ *           but this is not legal advice.
+ *
  * 99/04/25
  * 3.00.02 - Save the comment back onto the image as a persistent
  *           parasite if the comment was edited.
@@ -280,6 +285,15 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
+/* Define only one of these to determine which kind of gif's you would like.
+ * GIF_UN means use uncompressed gifs.  These will be large, but no
+ * patent problems.
+ * GIF_RLE uses Run-length-encoding, which should not be covered by the
+ * patent, but this is not legal advice.
+ */
+/* #define GIF_UN */
+/* #define GIF_RLE */
 
 /* uncomment the line below for a little debugging info */
 /* #define GIFDEBUG yesplease */
@@ -625,6 +639,15 @@ int max_progress;
 
 static void Putword (int, FILE *);
 static void compress (int, FILE *, ifunptr);
+#ifdef GIF_UN
+static void nocompress (int, FILE *, ifunptr);
+#else
+#ifdef GIF_RLE
+static void rlecompress (int, FILE *, ifunptr);
+#else
+static void normalcompress (int, FILE *, ifunptr);
+#endif
+#endif
 static void output (code_int);
 static void cl_block (void);
 static void cl_hash (count_int);
@@ -2143,11 +2166,27 @@ compress (int      init_bits,
 	  FILE    *outfile,
 	  ifunptr  ReadValue)
 {
+#ifdef GIF_UN
+	nocompress(init_bits, outfile, ReadValue);
+#else
+#ifdef GIF_RLE
+	rlecompress(init_bits, outfile, ReadValue);
+#else
+	normalcompress(init_bits, outfile, ReadValue);
+#endif
+#endif
+}
+
+#ifdef GIF_UN
+static void
+nocompress (int      init_bits,
+	  FILE    *outfile,
+	  ifunptr  ReadValue)
+{
   register long fcode;
   register code_int i /* = 0 */ ;
   register int c;
   register code_int ent;
-  register code_int disp;
   register code_int hsize_reg;
   register int hshift;
 
@@ -2209,6 +2248,229 @@ compress (int      init_bits,
       fcode = (long) (((long) c << maxbits) + ent);
       i = (((code_int) c << hshift) ^ ent);	/* xor hashing */
 
+      output ((code_int) ent);
+      ++out_count;
+      ent = c;
+#ifdef SIGNED_COMPARE_SLOW
+      if ((unsigned) free_ent < (unsigned) maxmaxcode)
+	{
+#else /*SIGNED_COMPARE_SLOW */
+      if (free_ent < maxmaxcode)
+	{			/* } */
+#endif /*SIGNED_COMPARE_SLOW */
+	  CodeTabOf (i) = free_ent++;	/* code -> hashtable */
+	  HashTabOf (i) = fcode;
+	}
+      else
+	cl_block ();
+    }
+
+  /*
+   * Put out the final code.
+   */
+  output ((code_int) ent);
+  ++out_count;
+  output ((code_int) EOFCode);
+}
+#else
+#ifdef GIF_RLE
+
+static void
+rlecompress (int      init_bits,
+	  FILE    *outfile,
+	  ifunptr  ReadValue)
+{
+  register long fcode;
+  register code_int i /* = 0 */ ;
+  register int c, last;
+  register code_int ent;
+  register code_int disp;
+  register code_int hsize_reg;
+  register int hshift;
+
+
+  /*
+   * Set up the globals:  g_init_bits - initial number of bits
+   *                      g_outfile   - pointer to output file
+   */
+  g_init_bits = init_bits;
+  g_outfile = outfile;
+
+  cur_bits = 0;
+  cur_accum = 0;
+
+  /*
+   * Set up the necessary values
+   */
+  offset = 0;
+  out_count = 0;
+  clear_flg = 0;
+  in_count = 1;
+
+  ClearCode = (1 << (init_bits - 1));
+  EOFCode = ClearCode + 1;
+  free_ent = ClearCode + 2;
+
+
+  /* Had some problems here... should be okay now.  --Adam */
+  n_bits = g_init_bits;
+  maxcode = MAXCODE (n_bits);
+
+
+
+  char_init ();
+
+  last = ent = GIFNextPixel (ReadValue);
+
+  hshift = 0;
+  for (fcode = (long) hsize; fcode < 65536L; fcode *= 2L)
+    ++hshift;
+  hshift = 8 - hshift;		/* set hash code range bound */
+
+  hsize_reg = hsize;
+  cl_hash ((count_int) hsize_reg);	/* clear hash table */
+
+  output ((code_int) ClearCode);
+
+
+
+#ifdef SIGNED_COMPARE_SLOW
+  while ((c = GIFNextPixel (ReadValue)) != (unsigned) EOF)
+    {
+#else /*SIGNED_COMPARE_SLOW */
+  while ((c = GIFNextPixel (ReadValue)) != EOF)
+    {				/* } */
+#endif /*SIGNED_COMPARE_SLOW */
+
+      ++in_count;
+
+      fcode = (long) (((long) c << maxbits) + ent);
+      i = (((code_int) c << hshift) ^ ent);	/* xor hashing */
+
+
+      if (last == c) {
+        if (HashTabOf (i) == fcode)
+	  {
+	    ent = CodeTabOf (i);
+	    continue;
+	  }
+        else if ((long) HashTabOf (i) < 0)	/* empty slot */
+	  goto nomatch;
+        disp = hsize_reg - i;	/* secondary hash (after G. Knott) */
+        if (i == 0)
+	  disp = 1;
+      probe:
+        if ((i -= disp) < 0)
+	  i += hsize_reg;
+  
+        if (HashTabOf (i) == fcode)
+	  {
+	    ent = CodeTabOf (i);
+	    continue;
+	  }
+        if ((long) HashTabOf (i) > 0)
+	  goto probe;
+        }
+    nomatch:
+      output ((code_int) ent);
+      ++out_count;
+      last = ent = c;
+#ifdef SIGNED_COMPARE_SLOW
+      if ((unsigned) free_ent < (unsigned) maxmaxcode)
+	{
+#else /*SIGNED_COMPARE_SLOW */
+      if (free_ent < maxmaxcode)
+	{			/* } */
+#endif /*SIGNED_COMPARE_SLOW */
+	  CodeTabOf (i) = free_ent++;	/* code -> hashtable */
+	  HashTabOf (i) = fcode;
+	}
+      else
+	cl_block ();
+    }
+
+  /*
+   * Put out the final code.
+   */
+  output ((code_int) ent);
+  ++out_count;
+  output ((code_int) EOFCode);
+}
+
+#else
+
+static void
+normalcompress (int      init_bits,
+	  FILE    *outfile,
+	  ifunptr  ReadValue)
+{
+  register long fcode;
+  register code_int i /* = 0 */ ;
+  register int c;
+  register code_int ent;
+  register code_int disp;
+  register code_int hsize_reg;
+  register int hshift;
+
+
+  /*
+   * Set up the globals:  g_init_bits - initial number of bits
+   *                      g_outfile   - pointer to output file
+   */
+  g_init_bits = init_bits;
+  g_outfile = outfile;
+
+  cur_bits = 0;
+  cur_accum = 0;
+
+  /*
+   * Set up the necessary values
+   */
+  offset = 0;
+  out_count = 0;
+  clear_flg = 0;
+  in_count = 1;
+
+  ClearCode = (1 << (init_bits - 1));
+  EOFCode = ClearCode + 1;
+  free_ent = ClearCode + 2;
+
+
+  /* Had some problems here... should be okay now.  --Adam */
+  n_bits = g_init_bits;
+  maxcode = MAXCODE (n_bits);
+
+
+
+  char_init ();
+
+  ent = GIFNextPixel (ReadValue);
+
+  hshift = 0;
+  for (fcode = (long) hsize; fcode < 65536L; fcode *= 2L)
+    ++hshift;
+  hshift = 8 - hshift;		/* set hash code range bound */
+
+  hsize_reg = hsize;
+  cl_hash ((count_int) hsize_reg);	/* clear hash table */
+
+  output ((code_int) ClearCode);
+
+
+
+#ifdef SIGNED_COMPARE_SLOW
+  while ((c = GIFNextPixel (ReadValue)) != (unsigned) EOF)
+    {
+#else /*SIGNED_COMPARE_SLOW */
+  while ((c = GIFNextPixel (ReadValue)) != EOF)
+    {				/* } */
+#endif /*SIGNED_COMPARE_SLOW */
+
+      ++in_count;
+
+      fcode = (long) (((long) c << maxbits) + ent);
+      i = (((code_int) c << hshift) ^ ent);	/* xor hashing */
+
       if (HashTabOf (i) == fcode)
 	{
 	  ent = CodeTabOf (i);
@@ -2247,6 +2509,7 @@ compress (int      init_bits,
       else
 	cl_block ();
     }
+
   /*
    * Put out the final code.
    */
@@ -2254,6 +2517,10 @@ compress (int      init_bits,
   ++out_count;
   output ((code_int) EOFCode);
 }
+#endif
+#endif
+
+
 
 /*****************************************************************
  * TAG( output )

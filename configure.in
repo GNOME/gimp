@@ -831,6 +831,26 @@ AC_SUBST(LIBMNG)
 
 
 ############################################################
+# GIF compression: Allow builder to specify at compile time
+# which compression style she wants to use for gifs. The default
+# is LZW. The flag is --with-gif-compression=[lzw|rle|none] 
+# LZW: Unisys patented Lempel-Ziff encoding.
+# RLE: Simple runlenght encoding - produces files about twice as
+# big as the LZW compressed equivalent
+# None: Raw data.
+############################################################
+
+AC_ARG_WITH(gif-compression, 
+            [  --with-gif-compression=lzw|rle|none Default: lzw])
+
+if test x$with_gif_compression = xnone; then
+  AC_DEFINE(GIF_UN, 1, [Defined when we will use no compression for GIFs])
+elif test x$with_gif_compression = xrle; then
+  AC_DEFINE(GIF_RLE, 1, [Defined when we will use RLE to compress GIFs])
+fi
+
+
+############################################################
 # libexif: Library to allow exif tags to be read from, and
 # saved to, jpeg files. Currently, this permits exif data to
 # avoid destruction, but no data modification is performed.

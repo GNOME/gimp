@@ -1,3 +1,12 @@
+2003-07-29  Dave Neary  <bolsh@gimp.org>
+
+	* plug-ins/common/gif.c: Include a patch by Cameron Gergory 
+	<cameron@bloke.com> which allows a compile-time choice of the 
+	comression algorithm to be used in the gif plug-in.
+
+	* configure.in: Added --with-gif-compress flag to allow 
+	specification of compression algorithm via configure.
+
 2003-07-28  Helvetix Victorinox  <helvetix@gimp.org>
 
 	* app/composite/Makefile.am:
