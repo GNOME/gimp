@@ -78,6 +78,16 @@ typedef enum
   NEAREST_NEIGHBOR_INTERPOLATION
 } InterpolationType;
 
+typedef enum
+{
+  VALUE_LUT,
+  RED_LUT,
+  GREEN_LUT,
+  BLUE_LUT,
+  ALPHA_LUT,
+  GRAY_LUT = 0  /*< skip >*/
+} ChannelLutType;
+
 /*  Transparency representation  */
 typedef enum /*< skip >*/
 {
@@ -96,11 +106,21 @@ typedef enum /*< skip >*/
   LARGE_CHECKS  = 2
 } GimpCheckSize;
 
+typedef enum /*< skip >*/
+{
+  GIMP_HISTOGRAM_VALUE = 0,
+  GIMP_HISTOGRAM_RED   = 1,
+  GIMP_HISTOGRAM_GREEN = 2,
+  GIMP_HISTOGRAM_BLUE  = 3,
+  GIMP_HISTOGRAM_ALPHA = 4
+} GimpHistogramChannel;
+
 
 /*  types  */
 
 typedef struct _BoundSeg            BoundSeg;
 
+typedef struct _GimpHistogram       GimpHistogram;
 typedef struct _GimpLut             GimpLut;
 
 typedef struct _PixelRegionIterator PixelRegionIterator;

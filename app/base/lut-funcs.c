@@ -24,27 +24,29 @@
 
 #include "libgimpmath/gimpmath.h"
 
-#include "core/core-types.h"
-
-#include "base/gimplut.h"
+#include "base-types.h"
 
 #include "gimphistogram.h"
+#include "gimplut.h"
+#include "lut-funcs.h"
 
 
 /* ---------- Brightness/Contrast -----------*/
 
 typedef struct B_C_struct
 {
-  double brightness;
-  double contrast;
+  gdouble brightness;
+  gdouble contrast;
 } B_C_struct;
 
-static float
-brightness_contrast_lut_func(B_C_struct *data,
-			     int nchannels, int channel, float value)
+static gfloat
+brightness_contrast_lut_func (B_C_struct *data,
+			      gint        nchannels,
+			      gint        channel,
+			      gfloat      value)
 {
-  float nvalue;
-  double power;
+  gfloat  nvalue;
+  gdouble power;
 
   /* return the original value for the alpha channel */
   if ((nchannels == 2 || nchannels == 4) && channel == nchannels -1)
@@ -58,273 +60,344 @@ brightness_contrast_lut_func(B_C_struct *data,
 
   /* apply contrast */
   if (data->contrast < 0.0)
-  {
-    if (value > 0.5)
-      nvalue = 1.0 - value;
-    else
-      nvalue = value;
-    if (nvalue < 0.0)
-      nvalue = 0.0;
-    nvalue = 0.5 * pow (nvalue * 2.0 , (double) (1.0 + data->contrast));
-    if (value > 0.5)
-      value = 1.0 - nvalue;
-    else
-      value = nvalue;
-  }
+    {
+      if (value > 0.5)
+	nvalue = 1.0 - value;
+      else
+	nvalue = value;
+
+      if (nvalue < 0.0)
+	nvalue = 0.0;
+
+      nvalue = 0.5 * pow (nvalue * 2.0 , (double) (1.0 + data->contrast));
+
+      if (value > 0.5)
+	value = 1.0 - nvalue;
+      else
+	value = nvalue;
+    }
   else
-  {
-    if (value > 0.5)
-      nvalue = 1.0 - value;
-    else
-      nvalue = value;
-    if (nvalue < 0.0)
-      nvalue = 0.0;
-    power = (data->contrast == 1.0) ? 127 : 1.0 / (1.0 - data->contrast);
-    nvalue = 0.5 * pow (2.0 * nvalue, power);
-    if (value > 0.5)
-      value = 1.0 - nvalue;
-    else
-      value = nvalue;
-  }
+    {
+      if (value > 0.5)
+	nvalue = 1.0 - value;
+      else
+	nvalue = value;
+
+      if (nvalue < 0.0)
+	nvalue = 0.0;
+
+      power = (data->contrast == 1.0) ? 127 : 1.0 / (1.0 - data->contrast);
+      nvalue = 0.5 * pow (2.0 * nvalue, power);
+
+      if (value > 0.5)
+	value = 1.0 - nvalue;
+      else
+	value = nvalue;
+    }
+
   return value;
 }
 
-void
-brightness_contrast_lut_setup(GimpLut *lut, double brightness, double contrast,
-			      int nchannels)
-{
-  B_C_struct data;
-  data.brightness = brightness;
-  data.contrast = contrast;
-  gimp_lut_setup(lut,  (GimpLutFunc) brightness_contrast_lut_func,
-		 (void *) &data, nchannels);
-}
-
 GimpLut *
-brightness_contrast_lut_new(double brightness, double contrast,
-			    int nchannels)
+brightness_contrast_lut_new (gdouble brightness,
+			     gdouble contrast,
+			     gint    n_channels)
 {
   GimpLut *lut;
-  lut = gimp_lut_new();
-  brightness_contrast_lut_setup(lut, brightness, contrast, nchannels);
+
+  lut = gimp_lut_new ();
+
+  brightness_contrast_lut_setup (lut, brightness, contrast, n_channels);
+
   return lut;
+}
+
+void
+brightness_contrast_lut_setup (GimpLut *lut,
+			       gdouble  brightness,
+			       gdouble  contrast,
+			       gint     n_channels)
+{
+  B_C_struct data;
+
+  data.brightness = brightness;
+  data.contrast   = contrast;
+
+  gimp_lut_setup (lut, (GimpLutFunc) brightness_contrast_lut_func,
+		  (gpointer) &data, n_channels);
 }
 
 /* ---------------- invert ------------------ */
 
-static float
-invert_lut_func(void *unused,
-		int nchannels, int channel, float value)
+static gfloat
+invert_lut_func (gpointer  unused,
+		 gint      n_channels,
+		 gint      channel,
+		 gfloat    value)
 {
   /* don't invert the alpha channel */
-  if ((nchannels == 2 || nchannels == 4) && channel == nchannels -1)
+  if ((n_channels == 2 || n_channels == 4) && channel == n_channels -1)
     return value;
 
   return 1.0 - value;
 }
 
-void
-invert_lut_setup(GimpLut *lut, int nchannels)
-{
-  gimp_lut_setup_exact(lut,  (GimpLutFunc) invert_lut_func,
-		       NULL , nchannels);
-}
-
 GimpLut *
-invert_lut_new(int nchannels)
+invert_lut_new (gint n_channels)
 {
   GimpLut *lut;
-  lut = gimp_lut_new();
-  invert_lut_setup(lut, nchannels);
+
+  lut = gimp_lut_new ();
+
+  invert_lut_setup (lut, n_channels);
+
   return lut;
+}
+
+void
+invert_lut_setup (GimpLut *lut,
+		  gint     n_channels)
+{
+  gimp_lut_setup_exact (lut, (GimpLutFunc) invert_lut_func,
+			NULL , n_channels);
 }
 
 /* ---------------- add (or subract)------------------ */
 
-static float
-add_lut_func(double *ammount,
-	     int nchannels, int channel, float value)
+static gfloat
+add_lut_func (gdouble *amount,
+	      gint     n_channels,
+	      gint     channel,
+	      gfloat   value)
 {
   /* don't change the alpha channel */
-  if ((nchannels == 2 || nchannels == 4) && channel == nchannels -1)
+  if ((n_channels == 2 || n_channels == 4) && channel == n_channels -1)
     return value;
 
-  return (value + *ammount);
-}
-
-void
-add_lut_setup(GimpLut *lut, double ammount, int nchannels)
-{
-  gimp_lut_setup(lut,  (GimpLutFunc) add_lut_func,
-		 (void *) &ammount , nchannels);
+  return (value + *amount);
 }
 
 GimpLut *
-add_lut_new(double ammount, int nchannels)
+add_lut_new (gdouble amount,
+	     gint    n_channels)
 {
   GimpLut *lut;
-  lut = gimp_lut_new();
-  add_lut_setup(lut, ammount, nchannels);
+
+  lut = gimp_lut_new ();
+
+  add_lut_setup (lut, amount, n_channels);
+
   return lut;
+}
+
+void
+add_lut_setup (GimpLut *lut,
+	       gdouble  amount,
+	       gint     n_channels)
+{
+  gimp_lut_setup (lut, (GimpLutFunc) add_lut_func,
+		  (gpointer) &amount, n_channels);
 }
 
 /* ---------------- intersect (MIN (pixel, value)) ------------------ */
 
-static float
-intersect_lut_func(double *min,
-	     int nchannels, int channel, float value)
+static gfloat
+intersect_lut_func (gdouble *min,
+		    gint     n_channels,
+		    gint     channel,
+		    gfloat   value)
 {
   /* don't change the alpha channel */
-  if ((nchannels == 2 || nchannels == 4) && channel == nchannels -1)
+  if ((n_channels == 2 || n_channels == 4) && channel == n_channels -1)
     return value;
 
   return MIN (value, *min);
 }
 
-void
-intersect_lut_setup(GimpLut *lut, double value, int nchannels)
-{
-  gimp_lut_setup_exact(lut,  (GimpLutFunc) intersect_lut_func,
-		       (void *) &value , nchannels);
-}
-
 GimpLut *
-intersect_lut_new(double value, int nchannels)
+intersect_lut_new (gdouble value,
+		   gint    n_channels)
 {
   GimpLut *lut;
-  lut = gimp_lut_new();
-  intersect_lut_setup(lut, value, nchannels);
+
+  lut = gimp_lut_new ();
+
+  intersect_lut_setup (lut, value, n_channels);
+
   return lut;
+}
+
+void
+intersect_lut_setup (GimpLut *lut,
+		     gdouble  value,
+		     gint     n_channels)
+{
+  gimp_lut_setup_exact (lut, (GimpLutFunc) intersect_lut_func,
+			(gpointer) &value , n_channels);
 }
 
 /* ---------------- Threshold ------------------ */
 
-static float
-threshold_lut_func(double *min,
-	     int nchannels, int channel, float value)
+static gfloat
+threshold_lut_func (gdouble *min,
+		    gint     n_channels,
+		    gint     channel,
+		    gfloat   value)
 {
   /* don't change the alpha channel */
-  if ((nchannels == 2 || nchannels == 4) && channel == nchannels -1)
+  if ((n_channels == 2 || n_channels == 4) && channel == n_channels -1)
     return value;
+
   if (value < *min)
     return 0.0;
+
   return 1.0;
 }
 
-void
-threshold_lut_setup(GimpLut *lut, double value, int nchannels)
-{
-  gimp_lut_setup_exact(lut,  (GimpLutFunc) threshold_lut_func,
-		       (void *) &value , nchannels);
-}
-
 GimpLut *
-threshold_lut_new(double value, int nchannels)
+threshold_lut_new (gdouble value,
+		   gint    n_channels)
 {
   GimpLut *lut;
-  lut = gimp_lut_new();
-  threshold_lut_setup(lut, value, nchannels);
+
+  lut = gimp_lut_new ();
+
+  threshold_lut_setup (lut, value, n_channels);
+
   return lut;
+}
+
+void
+threshold_lut_setup (GimpLut *lut,
+		     gdouble  value,
+		     gint     n_channels)
+{
+  gimp_lut_setup_exact (lut, (GimpLutFunc) threshold_lut_func,
+			(gpointer) &value , n_channels);
 }
 
 /* ------------- levels ------------ */
 
 typedef struct 
 {
-  double *gamma;
+  gdouble *gamma;
 
-  int    *low_input;
-  int    *high_input;
+  gint    *low_input;
+  gint    *high_input;
 
-  int    *low_output;
-  int    *high_output;
+  gint    *low_output;
+  gint    *high_output;
 } levels_struct;
 
-static float
-levels_lut_func(levels_struct *data,
-		int nchannels, int channel, float value)
+static gfloat
+levels_lut_func (levels_struct *data,
+		 gint           n_channels,
+		 gint           channel,
+		 gfloat         value)
 {
-  double inten;
-  int j;
+  gdouble inten;
+  gint    j;
 
-  if (nchannels == 1)
+  if (n_channels == 1)
     j = 0;
   else
     j = channel + 1;
+
   inten = value;
+
   /* For color  images this runs through the loop with j = channel +1
-     the first time and j = 0 the second time */
-  /* For bw images this runs through the loop with j = 0 the first and
-     only time  */
+   * the first time and j = 0 the second time
+   *
+   * For bw images this runs through the loop with j = 0 the first and
+   *  only time
+   */
   for (; j >= 0; j -= (channel + 1))
-  {
-    /* don't apply the overall curve to the alpha channel */
-    if (j == 0 && (nchannels == 2 || nchannels == 4)
-	&& channel == nchannels -1)
-      return inten;
+    {
+      /* don't apply the overall curve to the alpha channel */
+      if (j == 0 && (n_channels == 2 || n_channels == 4)
+	  && channel == n_channels -1)
+	return inten;
 
-    /*  determine input intensity  */
-    if (data->high_input[j] != data->low_input[j])
-      inten = (double) (255.0*inten - data->low_input[j]) /
-	(double) (data->high_input[j] - data->low_input[j]);
-    else
-      inten = (double) (255.0*inten - data->low_input[j]);
+      /*  determine input intensity  */
+      if (data->high_input[j] != data->low_input[j])
+	inten = ((gdouble) (255.0 * inten - data->low_input[j]) /
+		 (gdouble) (data->high_input[j] - data->low_input[j]));
+      else
+	inten = (gdouble) (255.0 * inten - data->low_input[j]);
 
-    if (data->gamma[j] != 0.0)
-      {
-	if (inten >= 0.0)
-	  inten =  pow ( inten, (1.0 / data->gamma[j]));
-	else
-	  inten = -pow (-inten, (1.0 / data->gamma[j]));
-      }
+      if (data->gamma[j] != 0.0)
+	{
+	  if (inten >= 0.0)
+	    inten =  pow ( inten, (1.0 / data->gamma[j]));
+	  else
+	    inten = -pow (-inten, (1.0 / data->gamma[j]));
+	}
 
-  /*  determine the output intensity  */
-    if (data->high_output[j] >= data->low_output[j])
-      inten = (double) (inten * (data->high_output[j] - data->low_output[j]) +
-			data->low_output[j]);
-    else if (data->high_output[j] < data->low_output[j])
-      inten = (double) (data->low_output[j] - inten *
-			(data->low_output[j] - data->high_output[j]));
+      /*  determine the output intensity  */
+      if (data->high_output[j] >= data->low_output[j])
+	inten = (gdouble) (inten * (data->high_output[j] - data->low_output[j]) +
+			   data->low_output[j]);
+      else if (data->high_output[j] < data->low_output[j])
+	inten = (gdouble) (data->low_output[j] - inten *
+			   (data->low_output[j] - data->high_output[j]));
 
-    inten /= 255.0;
-  }
+      inten /= 255.0;
+    }
+
   return inten;
 }
 
-void
-levels_lut_setup(GimpLut *lut, double *gamma, int *low_input, int *high_input,
-		 int *low_output, int *high_output, int nchannels)
-{
-  levels_struct data;
-  data.gamma = gamma;
-  data.low_input  = low_input;
-  data.high_input = high_input;
-  data.low_output  = low_output;
-  data.high_output = high_output;
-  gimp_lut_setup(lut,  (GimpLutFunc) levels_lut_func,
-		 (void *) &data, nchannels);
-}
-
 GimpLut *
-levels_lut_new(double *gamma, int *low_input, int *high_input,
-	       int *low_output, int *high_output, int nchannels)
+levels_lut_new (gdouble *gamma,
+		gint    *low_input,
+		gint    *high_input,
+		gint    *low_output,
+		gint    *high_output,
+		gint     n_channels)
 {
   GimpLut *lut;
-  lut = gimp_lut_new();
-  levels_lut_setup(lut, gamma, low_input, high_input,
-		   low_output, high_output, nchannels);
+
+  lut = gimp_lut_new ();
+
+  levels_lut_setup (lut, gamma, low_input, high_input,
+		    low_output, high_output, n_channels);
+
   return lut;
+}
+
+void
+levels_lut_setup (GimpLut *lut,
+		  gdouble *gamma,
+		  gint    *low_input,
+		  gint    *high_input,
+		  gint    *low_output,
+		  gint    *high_output,
+		  gint     n_channels)
+{
+  levels_struct data;
+
+  data.gamma       = gamma;
+  data.low_input   = low_input;
+  data.high_input  = high_input;
+  data.low_output  = low_output;
+  data.high_output = high_output;
+
+  gimp_lut_setup (lut, (GimpLutFunc) levels_lut_func,
+		  (gpointer) &data, n_channels);
 }
 
 /* --------------- posterize ---------------- */
 
-static float
-posterize_lut_func(int *ilevels,
-		   int nchannels, int channel, float value)
+static gfloat
+posterize_lut_func (gint   *ilevels,
+		    gint    n_channels,
+		    gint    channel,
+		    gfloat  value)
 {
-  int levels;
+  gint levels;
+
   /* don't posterize the alpha channel */
-  if ((nchannels == 2 || nchannels == 4) && channel == nchannels -1)
+  if ((n_channels == 2 || n_channels == 4) && channel == n_channels -1)
     return value;
 
   if (*ilevels < 2)
@@ -332,79 +405,109 @@ posterize_lut_func(int *ilevels,
   else
     levels = *ilevels;
 
-  value = RINT(value * (levels - 1.0)) / (levels - 1.0);
+  value = RINT (value * (levels - 1.0)) / (levels - 1.0);
 
   return value;
 }
 
-void
-posterize_lut_setup(GimpLut *lut, int levels, int nchannels)
-{
-  gimp_lut_setup_exact(lut,  (GimpLutFunc) posterize_lut_func,
-		       (void *) &levels , nchannels);
-}
-
 GimpLut *
-posterize_lut_new(int levels, int nchannels)
+posterize_lut_new (gint levels,
+		   gint n_channels)
 {
   GimpLut *lut;
-  lut = gimp_lut_new();
-  posterize_lut_setup(lut, levels, nchannels);
+
+  lut = gimp_lut_new ();
+
+  posterize_lut_setup (lut, levels, n_channels);
+
   return lut;
+}
+
+void
+posterize_lut_setup (GimpLut *lut,
+		     gint     levels,
+		     gint     n_channels)
+{
+  gimp_lut_setup_exact (lut, (GimpLutFunc) posterize_lut_func,
+			(gpointer) &levels , n_channels);
 }
 
 /* --------------- equalize ------------- */
 
-struct hist_lut_struct
+typedef struct
 {
   GimpHistogram *histogram;
-  int part[5][257];
-};
+  gint           part[5][257];
+} hist_lut_struct;
 
-static float
-equalize_lut_func(struct hist_lut_struct *hlut, 
-		  int nchannels, int channel, float value)
+static gfloat
+equalize_lut_func (hist_lut_struct *hlut, 
+		   gint             n_channels,
+		   gint             channel,
+		   gfloat           value)
 {
-  int i = 0, j;
-  j = (int)(value * 255.0 + 0.5);
+  gint i = 0;
+  gint j;
+
+  j = (gint) (value * 255.0 + 0.5);
+
   while (hlut->part[channel][i + 1] <= j)
     i++;
+
   return i / 255.0;
 }
 
-void
-eq_histogram_lut_setup (GimpLut *lut, GimpHistogram *hist, int bytes)
+GimpLut *
+eq_histogram_lut_new (GimpHistogram *histogram,
+		      gint           n_channels)
 {
-  int    i, k, j;
-  struct hist_lut_struct hlut;
-  double pixels_per_value;
-  double desired;
-  double sum, dif;
+  GimpLut *lut;
+
+  lut = gimp_lut_new ();
+
+  eq_histogram_lut_setup (lut, histogram, n_channels);
+
+  return lut;
+}
+
+void
+eq_histogram_lut_setup (GimpLut       *lut,
+			GimpHistogram *hist,
+			gint           n_channels)
+{
+  gint            i, k, j;
+  hist_lut_struct hlut;
+  gdouble         pixels_per_value;
+  gdouble         desired;
+  gdouble         sum, dif;
 
   /* Find partition points */
-  pixels_per_value = gimp_histogram_get_count(hist, 0, 255) / 256.0;
+  pixels_per_value = gimp_histogram_get_count (hist, 0, 255) / 256.0;
 
-  for (k = 0; k < bytes; k++)
+  for (k = 0; k < n_channels; k++)
     {
       /* First and last points in partition */
       hlut.part[k][0]   = 0;
       hlut.part[k][256] = 256;
       
       /* Find intermediate points */
-      j = 0;
-      sum = gimp_histogram_get_channel(hist, k, 0) + 
-	    gimp_histogram_get_channel(hist, k, 1);
+      j   = 0;
+      sum = (gimp_histogram_get_channel (hist, k, 0) + 
+	     gimp_histogram_get_channel (hist, k, 1));
+
       for (i = 1; i < 256; i++)
 	{
 	  desired = i * pixels_per_value;
+
 	  while (sum <= desired)
-	  {
-	    j++;
-	    sum += gimp_histogram_get_channel(hist, k, j + 1);
-	  }
+	    {
+	      j++;
+	      sum += gimp_histogram_get_channel (hist, k, j + 1);
+	    }
 
 	  /* Nearest sum */
-	  dif = sum - gimp_histogram_get_channel(hist, k, j);
+	  dif = sum - gimp_histogram_get_channel (hist, k, j);
+
 	  if ((sum - desired) > (dif / 2.0))
 	    hlut.part[k][i] = j;
 	  else
@@ -412,15 +515,6 @@ eq_histogram_lut_setup (GimpLut *lut, GimpHistogram *hist, int bytes)
 	}
     }
 
-  gimp_lut_setup(lut, (GimpLutFunc) equalize_lut_func,
-		 (void *) &hlut, bytes);
-}
-
-GimpLut *
-eq_histogram_lut_new(GimpHistogram *h, int nchannels)
-{
-  GimpLut *lut;
-  lut = gimp_lut_new();
-  eq_histogram_lut_setup(lut, h, nchannels);
-  return lut;
+  gimp_lut_setup (lut, (GimpLutFunc) equalize_lut_func,
+		  (gpointer) &hlut, n_channels);
 }

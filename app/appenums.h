@@ -119,14 +119,5 @@ typedef enum /*< skip >*/
   CURSOR_MODE_CROSSHAIR
 } CursorMode;
 
-typedef enum /*< skip >*/
-{
-  GIMP_HISTOGRAM_VALUE = 0,
-  GIMP_HISTOGRAM_RED   = 1,
-  GIMP_HISTOGRAM_GREEN = 2,
-  GIMP_HISTOGRAM_BLUE  = 3,
-  GIMP_HISTOGRAM_ALPHA = 4
-} GimpHistogramChannel;
-
 
 #endif /* __APPENUMS_H__ */

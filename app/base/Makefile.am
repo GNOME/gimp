@@ -12,8 +12,12 @@ libappbase_la_SOURCES = \
 	boundary.h		\
 	brush-scale.c		\
 	brush-scale.h		\
+	gimphistogram.c		\
+	gimphistogram.h		\
 	gimplut.c		\
 	gimplut.h		\
+	lut-funcs.c		\
+	lut-funcs.h		\
 	pixel-processor.c	\
 	pixel-processor.h	\
 	pixel-region.c		\

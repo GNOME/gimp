@@ -52,7 +52,6 @@ enum_headers = \
 	../../app/appenums.h			\
 	../../app/appenv.h			\
 	../../app/errors.h			\
-	../../app/lut_funcs.h			\
 	../../app/paint-funcs/paint-funcs.h	\
 	../../app/base/base-types.h		\
 	../../app/core/core-types.h		\

@@ -762,8 +762,8 @@ CODE
 }
 
 @headers = qw("widgets/gimphistogramview.h" "core/gimpimage.h"
-              "core/gimpdrawable.h" "gimphistogram.h" "base/gimplut.h"
-	      "lut_funcs.h" "base/pixel-region.h" "base/pixel-processor.h"
+              "core/gimpdrawable.h" "base/gimphistogram.h" "base/gimplut.h"
+	      "base/lut-funcs.h" "base/pixel-region.h" "base/pixel-processor.h"
 	      "tools/tools-types.h");
 
 @procs = qw(brightness_contrast levels posterize desaturate equalize invert

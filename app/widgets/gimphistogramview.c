@@ -24,9 +24,9 @@
 
 #include "widgets-types.h"
 
-#include "gimphistogramview.h"
+#include "base/gimphistogram.h"
 
-#include "gimphistogram.h"
+#include "gimphistogramview.h"
 
 
 #define WAITING 0

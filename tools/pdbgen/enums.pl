@@ -238,16 +238,6 @@ package Gimp::CodeGen::enums;
 		       STACK_TRACE_QUERY => '1',
 		       STACK_TRACE_ALWAYS => '2' }
 	},
-    ChannelLutType =>
-	{ contig => 1,
-	  header => 'lut_funcs.h',
-	  symbols => [ qw(VALUE_LUT RED_LUT GREEN_LUT BLUE_LUT ALPHA_LUT) ],
-	  mapping => { VALUE_LUT => '0',
-		       RED_LUT => '1',
-		       GREEN_LUT => '2',
-		       BLUE_LUT => '3',
-		       ALPHA_LUT => '4' }
-	},
     LayerModeEffects =>
 	{ contig => 1,
 	  header => 'base/base-types.h',
@@ -293,6 +283,16 @@ package Gimp::CodeGen::enums;
 	  mapping => { LINEAR_INTERPOLATION => '0',
 		       CUBIC_INTERPOLATION => '1',
 		       NEAREST_NEIGHBOR_INTERPOLATION => '2' }
+	},
+    ChannelLutType =>
+	{ contig => 1,
+	  header => 'base/base-types.h',
+	  symbols => [ qw(VALUE_LUT RED_LUT GREEN_LUT BLUE_LUT ALPHA_LUT) ],
+	  mapping => { VALUE_LUT => '0',
+		       RED_LUT => '1',
+		       GREEN_LUT => '2',
+		       BLUE_LUT => '3',
+		       ALPHA_LUT => '4' }
 	},
     GimpImageBaseType =>
 	{ contig => 1,

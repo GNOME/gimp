@@ -22,16 +22,18 @@
 
 #include "core-types.h"
 
+#include "base/gimphistogram.h"
 #include "base/gimplut.h"
+#include "base/lut-funcs.h"
 #include "base/pixel-processor.h"
 #include "base/pixel-region.h"
 
-#include "drawable.h"
 #include "gimpdrawable.h"
 #include "gimpdrawable-equalize.h"
+#include "gimpdrawable-histogram.h"
 #include "gimpimage.h"
-#include "lut_funcs.h"
-#include "gimphistogram.h"
+
+#include "drawable.h"
 
 
 void
@@ -56,7 +58,7 @@ gimp_drawable_equalize (GimpDrawable *drawable,
   alpha     = has_alpha ? (bytes - 1) : bytes;
 
   hist = gimp_histogram_new ();
-  gimp_histogram_calculate_drawable (hist, drawable);
+  gimp_drawable_calculate_histogram (drawable, hist);
 
   /* Build equalization LUT */
   lut = eq_histogram_lut_new (hist, bytes);

@@ -24,11 +24,11 @@
 
 GimpHistogram * gimp_histogram_new             (void);
 void            gimp_histogram_free            (GimpHistogram        *histogram);
+
 void            gimp_histogram_calculate       (GimpHistogram        *historgam, 
 						PixelRegion          *region,
 						PixelRegion          *mask);
-void            gimp_histogram_calculate_drawable (GimpHistogram     *histogram, 
-						   GimpDrawable      *drawable);
+
 gdouble         gimp_histogram_get_maximum     (GimpHistogram        *histogram,
 						GimpHistogramChannel  channel);
 gdouble         gimp_histogram_get_count       (GimpHistogram        *histogram,

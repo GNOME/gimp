@@ -30,6 +30,7 @@
 
 #include "base/boundary.h"
 #include "base/gimplut.h"
+#include "base/lut-funcs.h"
 #include "base/pixel-processor.h"
 #include "base/pixel-region.h"
 #include "base/temp-buf.h"
@@ -44,7 +45,6 @@
 #include "gimpchannel.h"
 #include "gimplayer.h"
 #include "parasitelist.h"
-#include "lut_funcs.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"

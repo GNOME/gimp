@@ -20,51 +20,69 @@
 #define __LUT_FUNCS_H__
 
 
-typedef enum
-{
-  VALUE_LUT,
-  RED_LUT,
-  GREEN_LUT,
-  BLUE_LUT,
-  ALPHA_LUT,
-  GRAY_LUT = 0  /*< skip >*/
-} ChannelLutType;
-
 /* brightness contrast */
-void     brightness_contrast_lut_setup (GimpLut *lut,
-					double brightness, double contrast,
-					int nchannels);
-GimpLut *brightness_contrast_lut_new   (double brightness, double contrast,
-					int nchannels);
+GimpLut * brightness_contrast_lut_new   (gdouble  brightness,
+					 gdouble  contrast,
+					 gint     n_channels);
+void      brightness_contrast_lut_setup (GimpLut *lut,
+					 gdouble  brightness,
+					 gdouble  contrast,
+					 gint     n_channels);
 
 /* invert */
-void     invert_lut_setup (GimpLut *lut, int nchannels);
-GimpLut *invert_lut_new   (int nchannels);
+GimpLut * invert_lut_new                (gint     n_channels);
+void      invert_lut_setup              (GimpLut *lut,
+					 gint     n_channels);
 
 /* add (or subtract) */
-void     add_lut_setup (GimpLut *lut, double ammount, int nchannels);
-GimpLut *add_lut_new   (double ammount, int nchannels);
+GimpLut * add_lut_new                   (gdouble  amount,
+					 gint     n_channels);
+void      add_lut_setup                 (GimpLut *lut,
+					 gdouble  amount,
+					 gint     n_channels);
 
 /* intersect (MIN (pixel, value)) */
-void     intersect_lut_setup (GimpLut *lut, double value, int nchannels);
-GimpLut *intersect_lut_new   (double value, int nchannels);
+GimpLut * intersect_lut_new             (gdouble  value,
+					 gint     n_channels);
+void      intersect_lut_setup           (GimpLut *lut,
+					 gdouble  value,
+					 gint     n_channels);
 
 /* threshold */
-void     threshold_lut_setup (GimpLut *lut, double value, int nchannels);
-GimpLut *threshold_lut_new   (double value, int nchannels);
+GimpLut * threshold_lut_new             (gdouble  value,
+					 gint     n_channels);
+void      threshold_lut_setup           (GimpLut *lut,
+					 gdouble  value,
+					 gint     n_channels);
 
 /* levels */
-void     levels_lut_setup (GimpLut *lut, double *gamma,
-			   int *low_input, int *high_input,
-			   int *low_output, int *high_output, int nchannels);
-GimpLut *levels_lut_new   (double *gamma, int *low_input, int *high_input,
-			   int *low_output, int *high_output, int nchannels);
+GimpLut * levels_lut_new                (gdouble *gamma,
+					 gint    *low_input,
+					 gint    *high_input,
+					 gint    *low_output,
+					 gint    *high_output,
+					 gint     n_channels);
+void      levels_lut_setup              (GimpLut *lut,
+					 gdouble *gamma,
+					 gint    *low_input,
+					 gint    *high_input,
+					 gint    *low_output,
+					 gint    *high_output,
+					 gint     n_channels);
+
 /* posterize */
-void     posterize_lut_setup (GimpLut *lut, int levels, int nchannels);
-GimpLut *posterize_lut_new   (int levels, int nchannels);
+GimpLut * posterize_lut_new             (gint     levels,
+					 gint     n_channels);
+void      posterize_lut_setup           (GimpLut *lut,
+					 gint     levels,
+					 gint     n_channels);
 
 /* equalize histogram */
-void     eq_histogram_lut_setup (GimpLut *lut, GimpHistogram *hist, int bytes);
-GimpLut *eq_histogram_lut_new   (GimpHistogram *h, int nchannels);
+GimpLut * eq_histogram_lut_new          (GimpHistogram *histogram,
+					 gint           n_channels);
+void      eq_histogram_lut_setup        (GimpLut       *lut,
+					 GimpHistogram *histogram,
+					 gint           n_channels);
+
 
 #endif /* __LUT_FUNCS_H__ */

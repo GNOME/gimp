@@ -89,8 +89,6 @@ gimp_SOURCES = \
 	datafiles.h		\
 	floating_sel.c		\
 	floating_sel.h		\
-	gimphistogram.c		\
-	gimphistogram.h		\
 	gimppreviewcache.h	\
 	gimppreviewcache.c	\
 	parasitelist.c		\
@@ -138,8 +136,6 @@ gimp_SOURCES = \
 	image_new.h		\
 	libgimp_glue.c		\
 	libgimp_glue.h		\
-	lut_funcs.c		\
-	lut_funcs.h		\
 	main.c			\
 	path.c			\
 	path.h			\

@@ -29,6 +29,8 @@ libappcore_la_SOURCES = \
 	gimpdrawable-desaturate.h	\
 	gimpdrawable-equalize.c		\
 	gimpdrawable-equalize.h		\
+	gimpdrawable-histogram.c	\
+	gimpdrawable-histogram.h	\
 	gimpdrawable-invert.c		\
 	gimpdrawable-invert.h		\
 	gimpdrawable-offset.c		\

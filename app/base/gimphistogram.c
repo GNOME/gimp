@@ -24,20 +24,15 @@
 #include <pthread.h>
 #endif /* ENABLE_MP */
 
-#include <gtk/gtk.h>
+#include <glib.h>
 
 #include "libgimpmath/gimpmath.h"
 
-#include "core/core-types.h"
-
-#include "base/pixel-processor.h"
-#include "base/pixel-region.h"
-
-#include "core/gimpdrawable.h"
-#include "core/gimpimage.h"
+#include "base-types.h"
 
 #include "gimphistogram.h"
-#include "gimprc.h"
+#include "pixel-processor.h"
+#include "pixel-region.h"
 
 
 struct _GimpHistogram
@@ -345,40 +340,6 @@ gimp_histogram_calculate (GimpHistogram *histogram,
   g_free (histogram->tmp_values);
   g_free (histogram->tmp_slots);
 #endif
-}
-
-
-void
-gimp_histogram_calculate_drawable (GimpHistogram *histogram,
-				   GimpDrawable  *drawable)
-{
-  PixelRegion region;
-  PixelRegion mask;
-  gint        x1, y1, x2, y2;
-  gint        off_x, off_y;
-  gboolean    no_mask;
-
-  no_mask = (gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2) == FALSE);
-  pixel_region_init (&region, gimp_drawable_data (drawable), x1, y1,
-		     (x2 - x1), (y2 - y1), FALSE);
-
-  if (!no_mask)
-    {
-      GimpChannel *sel_mask;
-      GimpImage   *gimage;
-
-      gimage = gimp_drawable_gimage (drawable);
-      sel_mask = gimp_image_get_mask (gimage);
-
-      gimp_drawable_offsets (drawable, &off_x, &off_y);
-      pixel_region_init (&mask, gimp_drawable_data (GIMP_DRAWABLE (sel_mask)),
-			 x1 + off_x, y1 + off_y, (x2 - x1), (y2 - y1), FALSE);
-      gimp_histogram_calculate (histogram, &region, &mask);
-    }
-  else
-    {
-      gimp_histogram_calculate (histogram, &region, NULL);
-    }
 }
 
 gdouble
