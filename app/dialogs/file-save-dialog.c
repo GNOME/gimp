@@ -182,7 +182,7 @@ file_save_dialog_create (Gimp            *gimp,
 {
   GtkWidget *save_dialog;
 
-  save_dialog = gimp_file_dialog_new (gimp,
+  save_dialog = gimp_file_dialog_new (gimp, gimp->save_procs,
                                       menu_factory, "<Save>",
                                       _("Save Image"), "gimp-file-save",
                                       GTK_STOCK_SAVE,

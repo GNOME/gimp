@@ -59,6 +59,7 @@ struct _GimpFileDialogClass
 GType       gimp_file_dialog_get_type      (void) G_GNUC_CONST;
 
 GtkWidget * gimp_file_dialog_new           (Gimp            *gimp,
+                                            GSList          *file_procs,
                                             GimpMenuFactory *menu_factory,
                                             const gchar     *menu_identifier,
                                             const gchar     *title,

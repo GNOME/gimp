@@ -136,6 +136,7 @@ gimp_file_dialog_delete_event (GtkWidget   *widget,
 
 GtkWidget *
 gimp_file_dialog_new (Gimp            *gimp,
+                      GSList          *file_procs,
                       GimpMenuFactory *menu_factory,
                       const gchar     *menu_identifier,
                       const gchar     *title,
@@ -149,6 +150,7 @@ gimp_file_dialog_new (Gimp            *gimp,
   GtkWidget      *label;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (file_procs != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
   g_return_val_if_fail (menu_identifier != NULL, NULL);
   g_return_val_if_fail (title != NULL, NULL);

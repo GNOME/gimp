@@ -137,7 +137,7 @@ file_open_dialog_create (Gimp            *gimp,
 {
   GtkWidget *dialog;
 
-  dialog = gimp_file_dialog_new (gimp,
+  dialog = gimp_file_dialog_new (gimp, gimp->load_procs,
                                  menu_factory, "<Load>",
                                  _("Open Image"), "gimp-file-open",
                                  GTK_STOCK_OPEN,

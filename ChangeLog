@@ -1,3 +1,11 @@
+2004-03-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpfiledialog.[ch] (gimp_file_dialog_new): added
+	unused "GSList *file_procs" parameter.
+
+	* app/gui/file-open-dialog.c: pass gimp->load_procs.
+	* app/gui/file-save-dialog.c: pass gimp->save_procs.
+
 2004-02-29  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpblendoptions.c: changed the upper limit for the
