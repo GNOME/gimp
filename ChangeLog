@@ -2,6 +2,29 @@
 
 	Merged from HEAD branch:
 
+	Splitting GimpItem::convert() into two virtual functions was
+	apparently buggy over-engineering. Reverted that stuff and
+	implement item conversion much simpler:
+
+	* app/core/gimpitem.[ch]: have a single virtual function,
+	GimpItem::convert(), which takes a newly duplicated item and the
+	destination image.
+
+	(gimp_item_convert): simply call GimpItem::convert() on the result
+	of gimp_item_duplicate().
+
+	(gimp_item_real_convert): set the item's new image.
+
+	* app/core/gimplayer.c (gimp_layer_convert)
+	* app/vectors/gimpvectors.c (gimp_vectors_convert): changed
+	accordingly and chain up after, not before doing our own stuff
+	so the old image is still available as item->image for stuff
+	like colormap conversion. Fixes bug #163879.
+
+2005-01-13  Michael Natterer  <mitch@gimp.org>
+
+	Merged from HEAD branch:
+
 	Made the file open and save dialogs use the last used folder
 	instead of defaulting to current directory. Fixes bug #162385.
 
