@@ -431,7 +431,7 @@ gimp_dock_separator_drag_drop (GtkWidget      *widget,
       GimpDockable *src_dockable;
 
       src_dockable = (GimpDockable *) gtk_object_get_data (GTK_OBJECT (source),
-							   "gimp_dockable");
+							   "gimp-dockable");
 
       if (src_dockable)
 	{

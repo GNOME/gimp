@@ -559,10 +559,10 @@ gimp_dialog_factories_session_save_foreach (gchar             *name,
       fprintf (fp, "(session-info \"%s\" \"%s\"\n",
 	       name,
 	       info->toplevel_entry ? info->toplevel_entry->identifier : "dock");
-      fprintf (fp, "    (position %d %d)\n", info->x, info->y);
+      fprintf (fp, "    (position %d %d)", info->x, info->y);
 
       if (info->width > 0 && info->height > 0)
-	fprintf (fp, "    (size %d %d)", info->width, info->height);
+	fprintf (fp, "\n    (size %d %d)", info->width, info->height);
 
       if (info->open)
 	fprintf (fp, "\n    (open-on-exit)");
@@ -743,12 +743,12 @@ gimp_dialog_factory_set_window_geometry (GtkWidget       *window,
 {
   static gint screen_width  = 0;
   static gint screen_height = 0;
-  
+
   g_return_if_fail (window != NULL);
   g_return_if_fail (GTK_IS_WINDOW (window));
   g_return_if_fail (GTK_WIDGET_TOPLEVEL (window));
   g_return_if_fail (info != NULL);
-  
+
   if (screen_width == 0 || screen_height == 0)
     {
       screen_width  = gdk_screen_width ();

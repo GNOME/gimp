@@ -268,7 +268,6 @@ gimp_channel_list_view_select_item (GimpContainerView *view,
 {
   GimpDrawableListView *drawable_view;
   GimpChannelListView  *list_view;
-  gboolean              toselection_sensitive = FALSE;
 
   drawable_view = GIMP_DRAWABLE_LIST_VIEW (view);
   list_view     = GIMP_CHANNEL_LIST_VIEW (view);
@@ -280,19 +279,14 @@ gimp_channel_list_view_select_item (GimpContainerView *view,
 
   if (drawable_view->gimage)
     {
-      gtk_widget_set_sensitive
-	(drawable_view->button_box,
-	 gimp_image_floating_sel (drawable_view->gimage) == NULL);
+      gboolean floating_sel;
 
-      return;
+      floating_sel = (gimp_image_floating_sel (drawable_view->gimage) != NULL);
+
+      gtk_widget_set_sensitive (drawable_view->button_box, !floating_sel);
     }
 
-  if (item)
-    {
-      toselection_sensitive = TRUE;
-    }
-
-  gtk_widget_set_sensitive (list_view->toselection_button, toselection_sensitive);
+  gtk_widget_set_sensitive (list_view->toselection_button, item != NULL);
 }
 
 static void

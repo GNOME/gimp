@@ -1,3 +1,13 @@
+2001-05-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpchannellistview.c: fixed button sensitivity.
+
+	* app/widgets/gimpdialogfactory.c: write out newlines to
+	.sessionrc at the right places.
+
+	* app/widgets/gimpdock.c: s/gimp_dockable/gimp-dockable/ makes DND
+	re-arranging of dialogs work again.
+
 2001-05-10  David Neary  <dneary@eircom.net>
 
         * tools/gimp-remote.c: Got rid of some annoying 
