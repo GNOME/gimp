@@ -499,7 +499,7 @@ app_init ()
 
 }
 
-gint
+int
 app_exit_finish_done (void)
 {
   return is_app_exit_finish_done;
