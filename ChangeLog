@@ -1,3 +1,8 @@
+Fri Mar 31 14:10:02 BST 2000 Adam D. Moss <adam@gimp.org>
+
+	* plug-ins/common/gifload.c: Mildly more useful
+	comments/messages concerning frame disposals.
+
 Fri Mar 31 04:20:27 PST 2000 Manish Singh <yosh@gimp.org>
 
 	* app/by_color_select.c: use the proper local variable on creation,

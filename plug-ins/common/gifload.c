@@ -7,7 +7,7 @@
  *      Based around original GIF code by David Koblas.
  *
  *
- * Version 1.0.2 - 99/11/20
+ * Version 1.0.3 - 2000/03/31
  *                        Adam D. Moss - <adam@gimp.org> <adam@foxbox.org>
  */
 /*
@@ -22,6 +22,10 @@
 
 /*
  * REVISION HISTORY
+ *
+ * 2000/03/31
+ * 1.00.03 - Just mildly more useful comments/messages concerning frame
+ *     disposals.
  *
  * 99/11/20
  * 1.00.02 - Fixed a couple of possible infinite loops where an
@@ -914,20 +918,24 @@ ReadImage (FILE *fd,
 	  framename = g_strconcat (framename, " (replace)", NULL); 
 	  g_free (framename_ptr);
 	  break;
-	case 0x03: 
+	case 0x03:  /* Rarely-used, and unhandled by many
+		       loaders/players (including GIMP: we treat as
+		       'combine' mode). */
 	  framename_ptr = framename;
-	  framename = g_strconcat (framename, " (combine)", NULL); 
+	  framename = g_strconcat (framename, " (combine) (!)", NULL); 
 	  g_free (framename_ptr);
 	  break;
-	case 0x04:
+	case 0x04: /* I've seen a composite of this type. stvo_online_banner2.gif */
 	case 0x05:
-	case 0x06:
+	case 0x06: /* I've seen a composite of this type. bn31.Gif */
 	case 0x07:
 	  framename_ptr = framename;
 	  framename = g_strconcat (framename, " (unknown disposal)", NULL);
 	  g_free (framename_ptr);
-	  g_message ("GIF: Hmm... please forward this GIF to the "
-		     "GIF plugin author!\n  (adam@foxbox.org)\n");
+	  g_message ("GIF: Hmm... Composite type %d.  Interesting.\n"
+                     "Please forward this GIF to the "
+		     "GIF plugin author!\n  (adam@foxbox.org)\n",
+                     previous_disposal);
 	  break;
 	default: 
 	  g_message ("GIF: Something got corrupted.\n");
