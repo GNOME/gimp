@@ -843,6 +843,9 @@ crop_recalc (GimpCropTool *crop)
 {
   GimpTool *tool = GIMP_TOOL (crop);
 
+  if (! tool->gdisp)
+    return;
+
   gimp_display_shell_transform_xy (GIMP_DISPLAY_SHELL (tool->gdisp->shell),
                                    crop->x1, crop->y1,
                                    &crop->dx1, &crop->dy1,
@@ -1066,12 +1069,9 @@ crop_response (GtkWidget    *widget,
   tool    = GIMP_TOOL (crop);
   options = GIMP_CROP_OPTIONS (tool->tool_info->tool_options);
 
-  g_signal_handlers_block_by_func (crop->origin_sizeentry,
-                                   crop_origin_changed,
-                                   crop);
-  g_signal_handlers_block_by_func (crop->size_sizeentry,
-                                   crop_size_changed,
-                                   crop);
+  if (crop->crop_info)
+    info_dialog_popdown (crop->crop_info);
+
   switch (response_id)
     {
     case GIMP_CROP_MODE_CROP:
@@ -1086,9 +1086,6 @@ crop_response (GtkWidget    *widget,
     default:
       break;
     }
-
-  if (crop->crop_info)
-    info_dialog_popdown (crop->crop_info);
 
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (crop)))
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (crop));

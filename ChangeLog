@@ -1,8 +1,13 @@
+2004-01-16  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpcroptool.c (crop_recalc): do a proper fix for bug
+	#131680.
+
 2004-01-15  DindinX  <david@dindinx.org>
 
-	* app/tools/gimpcroptool.c: bloc some signals before destroying the
-	info dialog box, to prevent accessing to freed memory
-	fixes bug #131680
+	* app/tools/gimpcroptool.c: block some signals before destroying
+	the info dialog box, to prevent accessing to freed memory fixes
+	bug #131680
 
 2004-01-16  Sven Neumann  <sven@gimp.org>
 
