@@ -700,7 +700,7 @@ rcm_create_misc (void)
   /* create menu entries */
   menu = gtk_menu_new ();
 
-  item = gtk_radio_menu_item_new_with_label (preview_group, _("Entire Image"));
+  item = gtk_radio_menu_item_new_with_label (preview_group, _("Entire Layer"));
   preview_group = gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM (item));
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
   gtk_widget_show (item);

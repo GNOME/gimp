@@ -191,8 +191,8 @@ rcm_is_gray (float s)
 ReducedImage*
 rcm_reduce_image (GimpDrawable *drawable, 
 		  GimpDrawable *mask, 
-		  gint       LongerSize, 
-		  gint       Slctn)
+		  gint          LongerSize, 
+		  gint          Slctn)
 {
   GimpPixelRgn srcPR, srcMask;
   ReducedImage *temp;
@@ -200,6 +200,7 @@ rcm_reduce_image (GimpDrawable *drawable,
   gint i, j, whichcol, whichrow, x1, x2, y1, y2;
   gint RH, RW, width, height, bytes;
   gint NoSelectionMade;
+  gint offx, offy;
   gdouble *tempHSV, H, S, V;
 
   bytes = drawable->bpp;  
@@ -209,7 +210,7 @@ rcm_reduce_image (GimpDrawable *drawable,
 
   gimp_drawable_mask_bounds(drawable->drawable_id, &x1, &y1, &x2, &y2);
 
-  if ( ((x2-x1) != drawable->width) && ((y2-y1) != drawable->height)) 
+  if (((x2-x1) != drawable->width) || ((y2-y1) != drawable->height)) 
     NoSelectionMade = FALSE;
   else
     NoSelectionMade = TRUE;
@@ -257,7 +258,10 @@ rcm_reduce_image (GimpDrawable *drawable,
   tempmask = g_new (guchar, RW * RH);
 
   gimp_pixel_rgn_init(&srcPR, drawable, x1, y1, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init(&srcMask, mask, x1, y1, width, height, FALSE, FALSE);
+
+  gimp_drawable_offsets (drawable->drawable_id, &offx, &offy);
+  gimp_pixel_rgn_init (&srcMask, mask, 
+                       x1 + offx, y1 + offy, width, height, FALSE, FALSE);
 
   src_row = g_new (guchar, width * bytes);
   src_mask_row = g_new (guchar, width * bytes);
@@ -267,8 +271,9 @@ rcm_reduce_image (GimpDrawable *drawable,
   for (i=0; i<RH; i++)
   {
     whichrow = (float)i * (float)height / (float)RH;
-    gimp_pixel_rgn_get_row (&srcPR, src_row, x1, y1+whichrow, width);   
-    gimp_pixel_rgn_get_row (&srcMask, src_mask_row, x1, y1+whichrow, width);
+    gimp_pixel_rgn_get_row (&srcPR, src_row, x1, y1 + whichrow, width);   
+    gimp_pixel_rgn_get_row (&srcMask, src_mask_row, 
+                            x1 + offx, y1 + offy + whichrow, width);
    
     for (j=0; j<RW; j++)
     {
@@ -334,6 +339,8 @@ rcm_render_preview (GtkWidget *preview,
 
   /* init some variables */
 
+  g_return_if_fail (preview != NULL);
+
   reduced = Current.reduced;
   RW = reduced->width;
   RH = reduced->height;
@@ -343,12 +350,6 @@ rcm_render_preview (GtkWidget *preview,
 
   a = g_new (guchar, bytes * RW);
   
-  if (preview == NULL)
-  {
-    printf("Asked to preview a NULL! Shouldn't happen!\n");
-    return;
-  }
-
   if (version == CURRENT) 
   {
     for (i=0; i<RH; i++)

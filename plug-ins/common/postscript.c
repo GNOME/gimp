@@ -61,10 +61,11 @@
  *         PK, 31-Aug-2000: Load PS: Add checks for space in filename.
  * V 1.12  PK, 19-Jun-2001: Fix problem with command line switch --
  *                          (reported by Ferenc Wagner)
+ * V 1.13  PK, 07-Apr-2002: Fix problem with DOS binary EPS files
  */
-#define VERSIO 1.12
-static char dversio[] = "v1.12  19-Jun-2001";
-static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.12  19-Jun-2001";
+#define VERSIO 1.13
+static char dversio[] = "v1.13  07-Apr-2002";
+static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.13  07-Apr-2002";
 
 #include "config.h"
 
@@ -588,7 +589,7 @@ query (void)
   gimp_register_magic_load_handler ("file_ps_load",
 				    "ps,eps,pdf",
 				    "",
-                                    "0,string,%!,0,string,%PDF");
+                                    "0,string,%!,0,string,%PDF,0,long,0xc5d0d3c6");
   gimp_register_save_handler       ("file_ps_save",
 				    "ps,eps",
 				    "");
@@ -1298,6 +1299,7 @@ ps_open (gchar            *filename,
       if (!is_pdf)  /* Check for EPSF */
       {char *adobe, *epsf;
        int ds = 0;
+       static unsigned char doseps[5] = { 0xc5, 0xd0, 0xd3, 0xc6, 0 };
 
         hdr[sizeof(hdr)-1] = '\0';
         adobe = strstr (hdr, "PS-Adobe-");
@@ -1305,6 +1307,10 @@ ps_open (gchar            *filename,
         if ((adobe != NULL) && (epsf != NULL))
           ds = epsf - adobe;
         *is_epsf = ((ds >= 11) && (ds <= 15));
+
+        /* Check DOS EPS binary file */
+        if ((!*is_epsf) && (strncmp (hdr, (char *)doseps, 4) == 0))
+          *is_epsf = 1;
       }
       fclose (fd_popen);
     }
