@@ -1,3 +1,9 @@
+Thu Mar 30 07:11:26 CEST 2000  Marc Lehmann <pcg@goof.com>
+
+        * Makefile.PL: implemented Sven's suggestions (well, at least some
+        of them). The default target will invoke pxgettext, merges the .po
+        files and creates the .gmo files.
+
 2000-03-28  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
 
 	* ja.po: updated Japanese translation.

@@ -8,10 +8,10 @@ if ($MSGFMT =~ /./) {
       my ($po) = /(.*)\.po$/;
       print " $po";
       $install .= "	@-\$(MKPATH) \$(datadir)/locale/$po/LC_MESSAGES\n".
-                  "	-\$(MSGFMT) -o \$(datadir)/locale/$po/LC_MESSAGES/gimp-perl.mo $po.po\n".
+                  "	-\$(CP) $po.gmo \$(datadir)/locale/$po/LC_MESSAGES/gimp-perl.mo\n".
                   "	@-\$(CHMOD) 644 \$(datadir)/locale/$po/LC_MESSAGES/gimp-perl.mo\n";
       $uninstall .= "	\$(RM_F) \$(datadir)/locale/$po/LC_MESSAGES/gimp-perl.mo\n";
-      $updatepo .= "	msgmerge -w 83 $po.po gimp-perl.pot >$po.po~ && mv $po.po~ $po.po\n";
+      $mofiles   .= " $po.gmo";
    }
 } else {
    print " skipped";
@@ -30,13 +30,27 @@ sub MY::postamble {
 prefix = $prefix
 datadir  = $datadir
 
-all :: update-pot
+%.gmo: %.po
+	$MSGFMT -o \$*.gmo \$*.po
+
+%.po: gimp-perl.pot
+	msgmerge -w 83 \$*.po gimp-perl.pot >\$*.po~
+	if cmp -s \$*.po~ \$*.po; then : ; else mv \$*.po~ \$*.po; fi
+
+all :: update-gmo
+
+update-gmo: $mofiles
 
 update-po: update-pot
 $updatepo
 
-update-pot:
-	\$(PERL) ../pxgettext `find .. -name '*.pm' -o -name '*.xs' -o -path '../examples/*'` ../Perl-Server > gimp-perl.pot
+gimp-perl.pot: update-pot
+
+update-pot: force
+	\$(PERL) ../pxgettext `find .. -name '*.pm' -o -name '*.xs' -o -path '../examples/*'` ../Perl-Server > gimp-perl.pot~
+	if cmp -s gimp-perl.pot~ gimp-perl.pot; then : ; else mv gimp-perl.pot~ gimp-perl.pot; fi
+
+force:
 
 install :: install-po
 

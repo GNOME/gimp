@@ -3,7 +3,6 @@
 eval 'exec /usr/app/bin/perl  -S $0 ${1+"$@"}'
     if 0; # not running under some shell
 
-#
 # you can enable unix sockets, tcp sockets, or both (or neither...)
 #
 # enabling tcp sockets can be a security risk. If you don't understand why,
