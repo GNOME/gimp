@@ -1,14 +1,14 @@
+2003-11-13  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpsessioninfo.c: only save the screen number to
+	the sessionrc if the screen is not the default screen.
+
 2003-11-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/info-window.c: added number of layers and size in
 	memory.  Changed pixel and unit size labels to "Pixel Dimensions"
 	and "Print Size" to be consistent with the scale dialog.
 	Fixes two issues of bug #86276.
-
-2003-11-13  Sven Neumann  <sven@gimp.org>
-
-	* app/widgets/gimpsessioninfo.c: only save the screen number to
-	the sessionrc if the screen is not the default screen.
 
 2003-11-13  Sven Neumann  <sven@gimp.org>
 
