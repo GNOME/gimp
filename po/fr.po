@@ -1,15 +1,15 @@
 # gimp fr.po
-# Copyright (C) 1998-2001 Free Software Foundation, Inc.
+# Copyright (C) 1998-2002 Free Software Foundation, Inc.
 # Vincent Renardias <vincent@ldsol.com>, 1998-2000.
 # David Monniaux <monniaux@brick.ens.fr>, 1999-2000.
 # Daniel Egger <Daniel.Egger@rz.fh-muenchen.de>, 1999.
-# maintainer: Christophe Merlet (RedFox) <redfox@eikonex.org>, 2000-2001.
+# maintainer: Christophe Merlet (RedFox) <redfox@eikonex.org>, 2000-2002.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.3\n"
-"POT-Creation-Date: 2001-11-17 14:51+0100\n"
-"PO-Revision-Date: 2001-11-17 14:44+0100\n"
+"POT-Creation-Date: 2002-01-31 14:03+0100\n"
+"PO-Revision-Date: 2002-01-31 13:55+0100\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@eikonex.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -98,11 +98,22 @@ msgstr "Palettes"
 msgid "Gradients"
 msgstr "Dégradés"
 
-#: app/app_procs.c:767
+#: app/app_procs.c:655
+#, c-format
+msgid ""
+"Unable to open a test swap file.  Please check the\n"
+"location and permissions of the swap directory defined\n"
+"in your Preferences (currently '%s')."
+msgstr ""
+"Impossible d'ouvrir un ficher de test swap. Veuillez vérifier\n"
+"l'emplacement et les permissions du répertoire de swap défini\n"
+"dans vos Préférences (actuellement « %s »)."
+
+#: app/app_procs.c:775
 msgid "Really Quit?"
 msgstr "Vraiment quitter ?"
 
-#: app/app_procs.c:771
+#: app/app_procs.c:779
 msgid ""
 "Some files unsaved.\n"
 "\n"
@@ -112,16 +123,16 @@ msgstr ""
 "\n"
 "Quitter GIMP ?"
 
-#: app/app_procs.c:772
+#: app/app_procs.c:780
 msgid "Quit"
 msgstr "Quitter"
 
 #. the cancel button
-#: app/app_procs.c:772 app/brightness_contrast.c:230 app/channel_ops.c:99
+#: app/app_procs.c:780 app/brightness_contrast.c:230 app/channel_ops.c:99
 #: app/channels_dialog.c:2541 app/channels_dialog.c:2704
 #: app/color_balance.c:286 app/color_notebook.c:128 app/convert.c:517
 #: app/curves.c:573 app/file_new_dialog.c:212 app/file_new_dialog.c:362
-#: app/gdisplay_ops.c:310 app/gimphelp.c:197 app/gimpprogress.c:120
+#: app/gdisplay_ops.c:310 app/gimphelp.c:201 app/gimpprogress.c:120
 #: app/global_edit.c:792 app/gradient.c:1884 app/gradient.c:4944
 #: app/gradient.c:5505 app/hue_saturation.c:383 app/interface.c:1047
 #: app/layers_dialog.c:3563 app/layers_dialog.c:3747 app/layers_dialog.c:3842
@@ -499,7 +510,7 @@ msgstr "Décalage X :"
 
 #: app/channel_ops.c:121 app/crop.c:1082 app/file_new_dialog.c:535
 #: app/resize.c:374 app/resize.c:466 app/resize.c:604 app/rotate_tool.c:111
-#: app/scale_tool.c:108 app/shear_tool.c:90 app/user_install.c:1442
+#: app/scale_tool.c:108 app/shear_tool.c:90 app/user_install.c:1443
 msgid "Y:"
 msgstr "Y :"
 
@@ -1205,7 +1216,7 @@ msgid "New Image"
 msgstr "Nouvelle image"
 
 #: app/file_new_dialog.c:458 app/preferences_dialog.c:1556
-#: app/preferences_dialog.c:1593 app/user_install.c:1429
+#: app/preferences_dialog.c:1593 app/user_install.c:1430
 msgid "Pixels"
 msgstr "Pixels"
 
@@ -1597,14 +1608,14 @@ msgstr "sansnom"
 msgid "Layer type %d not supported."
 msgstr "Type de calque %d non supporté."
 
-#: app/gimphelp.c:191
+#: app/gimphelp.c:195
 msgid "Could not find GIMP Help Browser"
 msgstr "Impossible de trouver le navigateur d'aide de GIMP"
 
 # Est-ce exact ?
 # Je me demande si on ne devrait pas rendre le
 # réglage "navigateur externe" automatique.
-#: app/gimphelp.c:193
+#: app/gimphelp.c:197
 msgid ""
 "Could not find the GIMP Help Browser procedure.\n"
 "It probably was not compiled because\n"
@@ -1618,35 +1629,35 @@ msgstr ""
 "pour accéder à l'aide. Réglez cela dans les\n"
 "préférences."
 
-#: app/gimphelp.c:196
+#: app/gimphelp.c:200
 msgid "Use Netscape instead"
 msgstr "Utilise Netscape à la place"
 
-#: app/gimpimage.c:2324
+#: app/gimpimage.c:2328
 msgid "Layer cannot be raised any further"
 msgstr "Impossible de remonter encore ce calque"
 
-#: app/gimpimage.c:2352
+#: app/gimpimage.c:2356
 msgid "Layer cannot be lowered any further"
 msgstr "Impossible de descendre encore ce calque"
 
-#: app/gimpimage.c:2378
+#: app/gimpimage.c:2382
 msgid "Layer is already on top"
 msgstr "Calque déjà en haut"
 
-#: app/gimpimage.c:2384
+#: app/gimpimage.c:2388
 msgid "Can't raise Layer without alpha"
 msgstr "Impossible de remonter un calque sans alpha"
 
-#: app/gimpimage.c:2412
+#: app/gimpimage.c:2416
 msgid "Layer is already on bottom"
 msgstr "Calque déjà en bas"
 
-#: app/gimpimage.c:2467
+#: app/gimpimage.c:2471
 msgid "BG has no alpha, layer was placed above"
 msgstr "Arrière-plan sans alpha, calque placé par dessus"
 
-#: app/gimpimage.c:2539
+#: app/gimpimage.c:2543
 msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
@@ -1654,11 +1665,11 @@ msgstr ""
 "Il n'y a pas assez de calques visibles pour une\n"
 "fusion. Il en faut au moins deux."
 
-#: app/gimpimage.c:2623
+#: app/gimpimage.c:2627
 msgid "There are not enough visible layers for a merge down."
 msgstr "Il n'y a pas assez de calques visibles pour une fusion."
 
-#: app/gimpimage.c:3073
+#: app/gimpimage.c:3077
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
@@ -1666,7 +1677,7 @@ msgstr ""
 "Impossible d'ajouter un masque au\n"
 "calque car il en a déjà un."
 
-#: app/gimpimage.c:3079
+#: app/gimpimage.c:3083
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
@@ -1674,7 +1685,7 @@ msgstr ""
 "Impossible d'ajouter un masque\n"
 "au calque dans une image indexée."
 
-#: app/gimpimage.c:3085
+#: app/gimpimage.c:3089
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
@@ -1682,21 +1693,21 @@ msgstr ""
 "Impossible d'ajouter un masque\n"
 "dans un calque sans canal alpha."
 
-#: app/gimpimage.c:3094
+#: app/gimpimage.c:3098
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Impossible d'ajouter un masque de calque de dimensions différente du calque "
 "spécifié."
 
-#: app/gimpimage.c:3202
+#: app/gimpimage.c:3206
 msgid "Channel cannot be raised any further"
 msgstr "Le canal ne peut pas être remonté davantage"
 
-#: app/gimpimage.c:3253
+#: app/gimpimage.c:3257
 msgid "Channel cannot be lowered any further"
 msgstr "Le canal ne peut pas être abaissé davantage"
 
-#: app/gimpimage.c:3474 app/palette.c:358 app/palette.c:936 app/palette.c:1072
+#: app/gimpimage.c:3478 app/palette.c:358 app/palette.c:936 app/palette.c:1072
 #: app/palette.c:2014 app/palette.c:2740 app/palette.c:2872
 msgid "Untitled"
 msgstr "SansTitre"
@@ -4629,7 +4640,7 @@ msgstr "Utilisation parcimonieuse de la mémoire"
 msgid "Levels of Undo:"
 msgstr "Niveaux d'annulation :"
 
-#: app/preferences_dialog.c:2218 app/user_install.c:1342
+#: app/preferences_dialog.c:2218 app/user_install.c:1343
 msgid "Tile Cache Size:"
 msgstr "Taille du cache d'image :"
 
@@ -4722,7 +4733,7 @@ msgstr "Obtenir la résolution du moniteur"
 msgid "(Currently %d x %d dpi)"
 msgstr "(actuellement %d x %d ppp)"
 
-#: app/preferences_dialog.c:2431 app/user_install.c:1480
+#: app/preferences_dialog.c:2431 app/user_install.c:1481
 msgid "Calibrate"
 msgstr "Calibrer"
 
@@ -4750,7 +4761,7 @@ msgstr "Sélectionnez un répertoire temporaire"
 msgid "Swap Dir:"
 msgstr "Répertoire d'échange :"
 
-#: app/preferences_dialog.c:2499 app/user_install.c:1362
+#: app/preferences_dialog.c:2499 app/user_install.c:1363
 msgid "Select Swap Dir"
 msgstr "Sélectionnez un répertoire d'échange"
 
@@ -5065,6 +5076,21 @@ msgstr "Le seuil ne fonctionne pas sur les images indexées."
 #: app/threshold.c:298
 msgid "Threshold Range:"
 msgstr "Intervalle de seuil :"
+
+#: app/tile_swap.c:417
+msgid ""
+"Unable to open swap file.  The Gimp has run out of memory\n"
+"and cannot use the swap file.  Some parts of your images\n"
+"may be corrupted.  Try to save your work using different\n"
+"filenames, exit the Gimp and check the location of the\n"
+"swap directory in your Preferences."
+msgstr ""
+"Impossible d'ouvrir un fichier de swap.  Gimp n'a plus de\n"
+"mémoire et ne peut utiliser le fichier de swap.  Quelques\n"
+"parties de vos images vont être corrompues. Essayez\n"
+"d'enregistrer votre travail sous un nom différent, quittez\n"
+"Gimp et vérifiez l'emplacement de votre répertoire de swap\n"
+"dans vos Préférences"
 
 #: app/tips_dialog.c:75
 msgid "gimp_tips.txt"
@@ -6317,14 +6343,24 @@ msgid "Cannot get status of file %s"
 msgstr "Ne peut obtenir l'état du fichier %s"
 
 #: app/user_install.c:1094
-msgid "does not exist.  Cannot install."
-msgstr "n'existe pas.  Impossible d'installer."
+#, c-format
+msgid ""
+"%s does not exist.\n"
+"Cannot install."
+msgstr ""
+"%s n'existe pas.\n"
+"Impossible d'installer."
 
 #: app/user_install.c:1106
-msgid "has invalid permissions.  Cannot install."
-msgstr "a des permissions invalides.  Impossible d'installer."
+#, c-format
+msgid ""
+"%s has invalid permissions.\n"
+"Cannot install."
+msgstr ""
+"%s a des permissions invalides.\n"
+"Impossible d'installer."
 
-#: app/user_install.c:1168
+#: app/user_install.c:1169
 msgid ""
 "Did you notice any error messages in the lines above?\n"
 "If not, installation was successful!\n"
@@ -6334,44 +6370,44 @@ msgstr ""
 "S'il n'y en a pas, c'est que l'installation a réussi !\n"
 "Sinon, quittez et recherchez les causes du problème..."
 
-#: app/user_install.c:1179
+#: app/user_install.c:1180
 msgid "Click \"Continue\" to complete GIMP installation."
 msgstr "Cliquez sur « Continuer » pour compléter l'installation de GIMP."
 
-#: app/user_install.c:1184 app/user_install.c:1305
+#: app/user_install.c:1185 app/user_install.c:1306
 msgid "Installation failed.  Contact system administrator."
 msgstr "Échec de l'installation.  Contactez votre administrateur système."
 
-#: app/user_install.c:1221 app/user_install.c:1242
+#: app/user_install.c:1222 app/user_install.c:1243
 #, c-format
 msgid "Creating directory %s\n"
 msgstr "Création du répertoire %s\n"
 
-#: app/user_install.c:1227 app/user_install.c:1248
+#: app/user_install.c:1228 app/user_install.c:1249
 #, c-format
 msgid "Cannot create directory -- %s"
 msgstr "Ne peut créer le répertoire -- %s"
 
-#: app/user_install.c:1232 app/user_install.c:1293
+#: app/user_install.c:1233 app/user_install.c:1294
 msgid "  Success\n"
 msgstr "  Succès\n"
 
-#: app/user_install.c:1269
+#: app/user_install.c:1270
 #, c-format
 msgid "Populating directory %s from %s\n"
 msgstr "Population du répertoire %s depuis %s\n"
 
-#: app/user_install.c:1279
+#: app/user_install.c:1280
 #, c-format
 msgid "Copying file %s from %s\n"
 msgstr "Copie du fichier %s depuis %s\n"
 
-#: app/user_install.c:1300
+#: app/user_install.c:1301
 #, c-format
 msgid "  Failure -- %s\n"
 msgstr "  Échec -- %s\n"
 
-#: app/user_install.c:1328
+#: app/user_install.c:1329
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
 "\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
@@ -6383,7 +6419,7 @@ msgstr ""
 "Considérez la quantité de mémoire utilisée par les autres processus\n"
 "en cours."
 
-#: app/user_install.c:1353
+#: app/user_install.c:1354
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be\n"
 "written to a swap file. This file should be located on a local filesystem\n"
@@ -6397,11 +6433,11 @@ msgstr ""
 "UNIX, vous pourrez par exemple utiliser le répertoire temporaire\n"
 "commun (« /tmp » ou « /var/tmp »)."
 
-#: app/user_install.c:1367
+#: app/user_install.c:1368
 msgid "Swap Directory:"
 msgstr "Répertoire d'échange :"
 
-#: app/user_install.c:1402
+#: app/user_install.c:1403
 msgid ""
 "GIMP can obtain this information from the windowing system.\n"
 "However, usually this does not give useful values."
@@ -6410,24 +6446,24 @@ msgstr ""
 "de fenêtrage. Toutefois, la plupart des systèmes retournent\n"
 "une valeur inutilisable."
 
-#: app/user_install.c:1409
+#: app/user_install.c:1410
 #, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
 msgstr ""
 "Obtenir la résolution auprès du système de fenêtrage (actuellement %d x %d "
 "ppp)"
 
-#: app/user_install.c:1423
+#: app/user_install.c:1424
 msgid "Alternatively, you can set the monitor resolution manually."
 msgstr ""
 "Autrement vous pouvez définir la résolution de votre moniteur\n"
 "manuellement."
 
-#: app/user_install.c:1436
+#: app/user_install.c:1437
 msgid "Monitor Resolution X:"
 msgstr "Résolution du moniteur X :"
 
-#: app/user_install.c:1473
+#: app/user_install.c:1474
 msgid ""
 "You can also press the \"Calibrate\" button to open a window\n"
 "which lets you determine your monitor resolution interactively."
