@@ -4325,7 +4325,6 @@ app_init
 <SECTION>
 <FILE>appenv</FILE>
 use_debug_handler
-console_messages
 stack_trace_mode
 prog_name
 </SECTION>
