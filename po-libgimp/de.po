@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.10\n"
-"POT-Creation-Date: 2002-12-16 17:54+0100\n"
-"PO-Revision-Date: 2002-12-16 17:58+0100\n"
+"POT-Creation-Date: 2002-12-19 18:42+0100\n"
+"PO-Revision-Date: 2002-12-19 18:47+0100\n"
 "Last-Translator: Christian Neumair <christian-neumair@web.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -214,6 +214,10 @@ msgstr "/Schwarz"
 #: libgimpwidgets/gimpcolorbutton.c:92
 msgid "/White"
 msgstr "/Weiss"
+
+#: libgimpwidgets/gimpcolorscales.c:141
+msgid "Scales"
+msgstr "Schieberegler"
 
 #: libgimpwidgets/gimpcolorscales.c:163 libgimpwidgets/gimpcolorselect.c:353
 msgid "_H"
