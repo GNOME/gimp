@@ -49,7 +49,12 @@ EXTRA_DIST = \
 	ps-menurc		\
 	gimprc.win32		\
 	config.h.win32		\
-	po/po2tbl.sed.in
+	po/po2tbl.sed.in	\
+	po/update.sh		\
+	po/update.pl		\
+	po-libgimp/update.sh	\
+	po-plug-ins/update.sh	\
+	po-script-fu/update.sh
 
 gimpdata_DATA = \
 	gimp_logo.ppm		\

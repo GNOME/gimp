@@ -1,6 +1,7 @@
 2001-11-13  Sven Neumann  <sven@gimp.org>
 
-	* Makefile.am (EXTRA_DIST): added po/po2tbl.sed.in
+	* Makefile.am (EXTRA_DIST): added po/po2tbl.sed.in and the po update
+	scripts.
 
 2001-11-13  Michael Natterer  <mitch@gimp.org>
 
