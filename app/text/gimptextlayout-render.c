@@ -77,8 +77,8 @@ gimp_text_layout_render (GimpTextLayout     *layout,
 
   gimp_text_layout_get_offsets (layout, &x, &y);
 
-  x *= PANGO_SCALE;
-  y *= PANGO_SCALE;
+  x *= -PANGO_SCALE;
+  y *= -PANGO_SCALE;
 
   iter = pango_layout_get_iter (layout->layout);
 

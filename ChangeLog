@@ -1,3 +1,10 @@
+2003-11-08  Sven Neumann  <sven@gimp.org>
+
+	* app/text/gimptextlayout-render.c (gimp_text_layout_render)
+	* app/text/gimptextlayout.c (gimp_text_layout_position): handle
+	the case where the ink rectangle exceeds the logical rectangle.
+	Fixes bug #126480.
+
 2003-11-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimptooloptionseditor.c

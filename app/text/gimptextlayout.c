@@ -287,11 +287,13 @@ gimp_text_layout_position (GimpTextLayout *layout)
   if (ink.width < 1 || ink.height < 1)
     return;
 
-  x1 = MIN (0, logical.x);
-  y1 = MIN (0, logical.y);
+  x1 = MIN (ink.x, logical.x);
+  y1 = MIN (ink.y, logical.y);
   x2 = MAX (ink.x + ink.width,  logical.x + logical.width);
   y2 = MAX (ink.y + ink.height, logical.y + logical.height);
 
+  layout->extents.x      = x1;
+  layout->extents.y      = y1;
   layout->extents.width  = x2 - x1;
   layout->extents.height = y2 - y1;
 
