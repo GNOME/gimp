@@ -28,6 +28,17 @@ Functions for manipulating channels.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_channel_new_from_component ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@component: 
+@name: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_channel_copy ##### -->
 <para>
 
