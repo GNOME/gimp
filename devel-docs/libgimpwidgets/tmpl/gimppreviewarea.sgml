@@ -20,6 +20,16 @@ GimpPreviewArea
 </para>
 
 
+<!-- ##### ARG GimpPreviewArea:check-size ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpPreviewArea:check-type ##### -->
+<para>
+
+</para>
+
 <!-- ##### FUNCTION gimp_preview_area_new ##### -->
 <para>
 

@@ -28,6 +28,11 @@ gimp_image_type_get_type
 </SECTION>
 
 <SECTION>
+<FILE>gimpchecks</FILE>
+gimp_checks_get_shades
+</SECTION>
+
+<SECTION>
 <FILE>gimpenv</FILE>
 gimp_directory
 gimp_personal_rc_file

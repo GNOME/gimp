@@ -262,26 +262,6 @@ gimp_preview_area_get_check_size (GimpPreviewArea *area)
   return (1 << (2 + area->check_size));
 }
 
-static void
-gimp_preview_area_get_check_colors (GimpPreviewArea *area,
-                                    guchar          *light,
-                                    guchar          *dark)
-{
-  GimpCheckType  type = CLAMP (area->check_type, 0, 5);
-
-  const guchar   check_colors[6][2] =
-    {
-      { 204, 255 },  /*  LIGHT_CHECKS  */
-      { 153, 102 },  /*  GRAY_CHECKS   */
-      {   0,  51 },  /*  DARK_CHECKS   */
-      { 255, 255 },  /*  WHITE_ONLY    */
-      { 127, 127 },  /*  GRAY_ONLY     */
-      {   0,   0 }   /*  BLACK_ONLY    */
-    };
-
-  *light = check_colors[type][0];
-  *dark  = check_colors[type][1];
-}
 
 
 /**
@@ -391,8 +371,8 @@ gimp_preview_area_draw (GimpPreviewArea *area,
       area->buf = g_new (guchar, area->rowstride * area->height);
     }
 
-  size = gimp_preview_area_get_check_size (area);
-  gimp_preview_area_get_check_colors (area, &light, &dark);
+  size = 1 << (2 + area->check_size);
+  gimp_checks_get_shades (area->check_type, &light, &dark);
 
 #define CHECK_COLOR(area, row, col)        \
   (((((area)->offset_y + (row)) & size) ^  \

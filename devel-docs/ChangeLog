@@ -1,3 +1,10 @@
+2004-09-03  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/libgimpbase-docs.sgml
+	* libgimpbase/libgimpbase-sections.txt
+	* libgimpbase/tmpl/gimpchecks.sgml
+	* libgimpwidgets/tmpl/gimppreviewarea.sgml: updated.
+
 2004-09-02  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/libgimpbase-sections.txt

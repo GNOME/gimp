@@ -17,25 +17,13 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_BASE_H__
-#define __GIMP_BASE_H__
+#ifndef __GIMP_CHECKS_H__
+#define __GIMP_CHECKS_H__
 
 
-#include <libgimpbase/gimpbasetypes.h>
-
-#include <libgimpbase/gimpchecks.h>
-#include <libgimpbase/gimpdatafiles.h>
-#include <libgimpbase/gimpenv.h>
-#include <libgimpbase/gimplimits.h>
-#include <libgimpbase/gimpmemsize.h>
-#include <libgimpbase/gimpparasite.h>
-#include <libgimpbase/gimpunit.h>
-#include <libgimpbase/gimputils.h>
-#include <libgimpbase/gimpversion.h>
-
-#ifndef G_OS_WIN32
-#include <libgimpbase/gimpsignal.h>
-#endif
+void  gimp_checks_get_shades (GimpCheckType  type,
+                              guchar        *light,
+                              guchar        *dark);
 
 
-#endif  /* __GIMP_BASE_H__ */
+#endif  /* __GIMP_CHECKS_H__ */

@@ -1,3 +1,13 @@
+2004-09-03  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/Makefile.am
+	* libgimpbase/gimpchecks.[ch] added gimp_checks_get_shades().
+
+	* app/base/temp-buf.c
+	* app/display/gimpdisplayshell-render.c
+	* libgimpwidgets/gimppreviewarea.c: use the new function instead
+	of replicating these numbers in three different places.
+
 2004-09-03  DindinX  <david@dindinx.org>
 
 	* plug-ins/gimpressionist/*.c: made the code much more readable by

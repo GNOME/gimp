@@ -244,8 +244,8 @@ temp_buf_new_check (gint           width,
   guchar  *data;
   guchar   check_shift = 0;
   guchar   check_mod   = 0;
-  guchar   fg_color    = 0;
-  guchar   bg_color    = 0;
+  guchar   check_light = 0;
+  guchar   check_dark  = 0;
   gint     x, y;
 
   g_return_val_if_fail (width > 0 && height > 0, NULL);
@@ -266,40 +266,15 @@ temp_buf_new_check (gint           width,
       break;
     }
 
-  switch (check_type)
-    {
-    case GIMP_CHECK_TYPE_LIGHT_CHECKS:
-      fg_color = 204;
-      bg_color = 255;
-      break;
-    case GIMP_CHECK_TYPE_GRAY_CHECKS:
-      fg_color = 102;
-      bg_color = 153;
-      break;
-    case GIMP_CHECK_TYPE_DARK_CHECKS:
-      fg_color = 0;
-      bg_color = 51;
-      break;
-    case GIMP_CHECK_TYPE_WHITE_ONLY:
-      fg_color = 255;
-      bg_color = 255;
-      break;
-    case GIMP_CHECK_TYPE_GRAY_ONLY:
-      fg_color = 127;
-      bg_color = 127;
-      break;
-    case GIMP_CHECK_TYPE_BLACK_ONLY:
-      fg_color = 0;
-      bg_color = 0;
-    }
+  gimp_checks_get_shades (check_type, &check_light, &check_dark);
 
   newbuf = temp_buf_new (width, height, 3, 0, 0, NULL);
   data = temp_buf_data (newbuf);
 
   for (y = 0; y < height; y++)
     {
-      guchar dark  = y >> check_shift;
-      guchar color = (dark & 0x1) ? bg_color : fg_color;
+      guchar check_dark  = y >> check_shift;
+      guchar color = (check_dark & 0x1) ? check_light : check_dark;
 
       for (x = 0; x < width; x++)
 	{
@@ -309,8 +284,8 @@ temp_buf_new_check (gint           width,
 
           if (((x + 1) & check_mod) == 0)
             {
-              dark += 1;
-              color = (dark & 0x1) ? bg_color : fg_color;
+              check_dark += 1;
+              color = (check_dark & 0x1) ? check_light : check_dark;
             }
         }
     }

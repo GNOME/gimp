@@ -23,6 +23,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "display-types.h"
@@ -87,16 +88,6 @@ static guchar *tile_buf           = NULL;
 static guint   tile_shift         = 0;
 static guint   check_mod          = 0;
 static guint   check_shift        = 0;
-
-static const guchar  check_combos[6][2] =
-{
-  { 204, 255 },  /*  LIGHT_CHECKS  */
-  { 153, 102 },  /*  GRAY_CHECKS   */
-  {   0,  51 },  /*  DARK_CHECKS   */
-  { 255, 255 },  /*  WHITE_ONLY    */
-  { 127, 127 },  /*  GRAY_ONLY     */
-  {   0,   0 }   /*  BLACK_ONLY    */
-};
 
 
 void
@@ -180,6 +171,7 @@ render_setup_notify (gpointer    config,
 {
   GimpCheckType check_type;
   GimpCheckSize check_size;
+  guchar        light, dark;
   gint          i, j;
 
   g_object_get (config,
@@ -206,16 +198,17 @@ render_setup_notify (gpointer    config,
   if (! render_blend_white)
     render_blend_white = g_new (guchar, 65536);
 
+  gimp_checks_get_shades (check_type, &light, &dark);
+
   for (i = 0; i < 256; i++)
     for (j = 0; j < 256; j++)
       {
-	render_blend_dark_check [(i << 8) + j] = (guchar)
-	  ((j * i + check_combos[check_type][0] * (255 - i)) / 255);
-	render_blend_light_check [(i << 8) + j] = (guchar)
-	  ((j * i + check_combos[check_type][1] * (255 - i)) / 255);
-
-	render_blend_white [(i << 8) + j] = (guchar)
-	  ((j * i + 255 * (255 - i)) / 255);
+	render_blend_dark_check [(i << 8) + j] =
+	  (guchar) ((j * i + dark * (255 - i)) / 255);
+	render_blend_light_check [(i << 8) + j] =
+          (guchar) ((j * i + light * (255 - i)) / 255);
+	render_blend_white [(i << 8) + j] =
+          (guchar) ((j * i + 255 * (255 - i)) / 255);
       }
 
   switch (check_size)
