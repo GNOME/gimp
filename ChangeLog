@@ -1,3 +1,10 @@
+2003-04-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpundo.h: #define GIMP_UNDO_PREVIEW_SIZE 64
+
+	* app/core/gimpundo.c (gimp_undo_create_preview_private): 
+	* app/widgets/gimpundoeditor.c (gimp_undo_editor_init): use it.
+
 2003-04-04  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpviewable.c: made stock_id a property of the

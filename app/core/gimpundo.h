@@ -23,6 +23,9 @@
 #include "gimpviewable.h"
 
 
+#define GIMP_UNDO_PREVIEW_SIZE GIMP_PREVIEW_SIZE_EXTRA_LARGE
+
+
 struct _GimpUndoAccumulator
 {
   gboolean mode_changed;

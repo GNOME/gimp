@@ -388,7 +388,8 @@ gimp_undo_create_preview_private (GimpUndo *undo)
       break;
     }
 
-  if (undo->gimage->width <= 64 && undo->gimage->height <= 64)
+  if (undo->gimage->width  <= GIMP_UNDO_PREVIEW_SIZE &&
+      undo->gimage->height <= GIMP_UNDO_PREVIEW_SIZE)
     {
       width  = undo->gimage->width;
       height = undo->gimage->height;
@@ -397,13 +398,15 @@ gimp_undo_create_preview_private (GimpUndo *undo)
     {
       if (undo->gimage->width > undo->gimage->height)
         {
-          width  = 64;
-          height = MAX (1, undo->gimage->height * 64 / undo->gimage->width);
+          width  = GIMP_UNDO_PREVIEW_SIZE;
+          height = MAX (1, (undo->gimage->height * GIMP_UNDO_PREVIEW_SIZE /
+                            undo->gimage->width));
         }
       else
         {
-          height = 64;
-          width  = MAX (1, undo->gimage->width * 64 / undo->gimage->height);
+          height = GIMP_UNDO_PREVIEW_SIZE;
+          width  = MAX (1, (undo->gimage->width * GIMP_UNDO_PREVIEW_SIZE /
+                            undo->gimage->height));
         }
     }
 
