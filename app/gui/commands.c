@@ -505,7 +505,6 @@ file_new_units_cm_menu_callback (GtkWidget *widget ,
   gtk_entry_set_text (GTK_ENTRY (vals->width_units_entry), buffer);
   gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->width_units_entry),vals);
 
-  gtk_option_menu_set_history(GTK_OPTION_MENU (widget), 1);
 
 
 }
