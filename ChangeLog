@@ -1,5 +1,9 @@
 2004-08-01  Manish Singh  <yosh@gimp.org>
 
+	* configure.in: Really really fix WINDRES logic.
+
+2004-08-01  Manish Singh  <yosh@gimp.org>
+
 	* configure.in: Really fix WINDRES logic.
 
 2004-08-01  DindinX  <david@dindinx.org>

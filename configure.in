@@ -248,7 +248,7 @@ if test "$os_win32" = "yes"; then
 fi
 
 AM_CONDITIONAL(MS_LIB_AVAILABLE, test x$ms_librarian = xyes)
-AM_CONDITIONAL(HAVE_WINDRES, test "x$windres" != "x:")
+AM_CONDITIONAL(HAVE_WINDRES, test "x$WINDRES" != "x:")
 
 AC_SUBST(WINDRES)
 
