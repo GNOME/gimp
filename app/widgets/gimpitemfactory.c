@@ -123,6 +123,8 @@ static GimpItemFactoryEntry toolbox_entries[] =
   { { N_("/File/Dialogs/Indexed Palette..."), NULL, dialogs_indexed_palette_cmd_callback, 0 },
     "file/dialogs/indexed_palette.html", NULL },
 
+  { { "/File/Dialogs/---", NULL, NULL, 0, "<Separator>" },
+    NULL, NULL },
   { { N_("/File/Dialogs/Input Devices..."), NULL, dialogs_input_devices_cmd_callback, 0 },
     "file/dialogs/input_devices.html", NULL },
   { { N_("/File/Dialogs/Device Status..."), NULL, dialogs_device_status_cmd_callback, 0 },
@@ -215,6 +217,8 @@ static GimpItemFactoryEntry image_entries[] =
     "edit/undo.html", NULL },
   { { N_("/Edit/Redo"), "<control>R", edit_redo_cmd_callback, 0 },
     "edit/redo.html", NULL },
+  { { N_("/Edit/Undo History..."), NULL, edit_undo_history_cmd_callback, 0},
+    "edit/dialogs/undo_history.html", NULL },
 
   { { "/Edit/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
@@ -316,8 +320,6 @@ static GimpItemFactoryEntry image_entries[] =
     "view/dialogs/info_window.html", NULL },
   { { N_("/View/Nav. Window..."), "<control><shift>N", view_nav_window_cmd_callback, 0 },
     "view/dialogs/navigation_window.html", NULL },
-  { { N_("/View/Undo History..."), NULL, view_undo_history_cmd_callback, 0},
-    "view/dialogs/undo_history.html", NULL },
 
   { { "/View/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },

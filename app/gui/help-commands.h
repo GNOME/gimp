@@ -31,6 +31,7 @@ void file_quit_cmd_callback    (GtkWidget *, gpointer);
 
 void edit_undo_cmd_callback         (GtkWidget *, gpointer);
 void edit_redo_cmd_callback         (GtkWidget *, gpointer);
+void edit_undo_history_cmd_callback (GtkWidget *, gpointer);
 void edit_cut_cmd_callback          (GtkWidget *, gpointer);
 void edit_copy_cmd_callback         (GtkWidget *, gpointer);
 void edit_paste_cmd_callback        (GtkWidget *, gpointer);
@@ -68,7 +69,6 @@ void view_zoom_1_16_cmd_callback         (GtkWidget *, gpointer);
 void view_dot_for_dot_cmd_callback       (GtkWidget *, gpointer);
 void view_info_window_cmd_callback       (GtkWidget *, gpointer);
 void view_nav_window_cmd_callback        (GtkWidget *, gpointer);
-void view_undo_history_cmd_callback      (GtkWidget *, gpointer);
 void view_toggle_selection_cmd_callback  (GtkWidget *, gpointer);
 void view_toggle_rulers_cmd_callback     (GtkWidget *, gpointer);
 void view_toggle_statusbar_cmd_callback  (GtkWidget *, gpointer);

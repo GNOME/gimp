@@ -1,3 +1,9 @@
+Thu Mar  9 20:45:13 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/commands.[ch]
+	* app/menus.c: moved Undo History into the Edit menu next to Undo
+	and Redo. The View menu should only hold stuff affecting the View.
+
 Thu Mar  9 12:51:21 CET 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* plug-ins/gap/gap_decode_xanim.c
