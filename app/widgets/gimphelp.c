@@ -76,17 +76,6 @@ static void      gimp_help_netscape (Gimp        *gimp,
 
 /*  public functions  */
 
-/*  The standard help function  */
-void
-_gimp_standard_help_func (Gimp        *gimp,
-                          const gchar *help_data)
-{
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  gimp_help (gimp, NULL, help_data);
-}
-
-/*  the main help function  */
 void
 gimp_help (Gimp        *gimp,
            const gchar *help_path,

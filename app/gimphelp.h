@@ -30,14 +30,13 @@ enum
 };
 
 
-/*  The standard help function  */
-void   _gimp_standard_help_func (Gimp        *gimp,
-                                 const gchar *help_data);
-
-/*  the main help function  */
-void   gimp_help                (Gimp        *gimp,
-                                 const gchar *help_path,
-                                 const gchar *help_data);
+/*  the main help function
+ *
+ *  there should be no need to use it in the common case
+ */
+void   gimp_help (Gimp        *gimp,
+                  const gchar *help_path,
+                  const gchar *help_data);
 
 
 #endif /* __GIMP_HELP_H__ */

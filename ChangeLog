@@ -1,5 +1,14 @@
 2002-04-12  Michael Natterer  <mitch@gimp.org>
 
+	Well, sometimes the most obvious solution is not the first one...
+
+	* app/gimphelp.[ch]: removed _gimp_standard_help_func().
+
+	* app/libgimp_glue.c (gimp_standard_help_func): call gimp_help()
+	directly.
+
+2002-04-12  Michael Natterer  <mitch@gimp.org>
+
 	* app/gimphelp.[ch]: removed usage of "the_gimp" by passing around
 	more "Gimp" pointers. Renamed gimp_standard_help_func() to
 	_gimp_standard_help_func() and declare it in the header.  Don't
