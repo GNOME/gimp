@@ -225,7 +225,7 @@ patterns_set_pattern_invoker (Gimp         *gimp,
       pattern = (GimpPattern *)
         gimp_container_get_child_by_name (gimp->pattern_factory->container, name);
 
-      if (success)
+      if (pattern)
         gimp_context_set_pattern (context, pattern);
       else
         success = FALSE;

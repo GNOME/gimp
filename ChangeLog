@@ -1,3 +1,18 @@
+2004-09-23  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/context.pdb: added accessors for the context's
+	brush, pattern, gradient, palette and brush. Deprecation of old
+	functions will follow. Fixes gimp-context-set-background wrapper.
+	Cleanup.
+
+	* tools/pdbgen/pdb/patterns.pdb
+	* libgimp/gimpbrushes.h: minor fixes.
+
+	* app/pdb/context_cmds.c
+	* app/pdb/internal_procs.c
+	* app/pdb/patterns_cmds.c
+	* libgimp/gimpcontext_pdb.[ch]: regenerated.
+
 2004-09-23  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/bumpmap.c (bumpmap_dialog): cosmetics.

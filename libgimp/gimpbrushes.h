@@ -37,4 +37,4 @@ gboolean             gimp_brushes_set_paint_mode (GimpLayerModeEffects paint_mod
 
 G_END_DECLS
 
-#endif /* __GIMP_BRUSHES_PDB_H__ */
+#endif /* __GIMP_BRUSHES_H__ */

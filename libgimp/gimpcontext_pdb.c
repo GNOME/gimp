@@ -92,7 +92,7 @@ gimp_context_pop (void)
  *
  * Get the current GIMP foreground color.
  *
- * This procedure retrieves the current GIMP foreground color. The
+ * This procedure returns the current GIMP foreground color. The
  * foreground color is used in a variety of tools such as paint tools,
  * blending, and bucket fill.
  *
@@ -156,11 +156,11 @@ gimp_context_set_foreground (const GimpRGB *foreground)
 
 /**
  * gimp_context_get_background:
- * @foreground: The foreground color.
+ * @background: The background color.
  *
  * Get the current GIMP background color.
  *
- * This procedure retrieves the current GIMP background color. The
+ * This procedure returns the current GIMP background color. The
  * background color is used in a variety of tools such as blending,
  * erasing (with non-alpha images), and image filling.
  *
@@ -169,7 +169,7 @@ gimp_context_set_foreground (const GimpRGB *foreground)
  * Since: GIMP 2.2
  */
 gboolean
-gimp_context_get_background (GimpRGB *foreground)
+gimp_context_get_background (GimpRGB *background)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -182,7 +182,7 @@ gimp_context_get_background (GimpRGB *foreground)
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
   if (success)
-    *foreground = return_vals[1].data.d_color;
+    *background = return_vals[1].data.d_color;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
@@ -402,6 +402,338 @@ gimp_context_set_paint_mode (GimpLayerModeEffects paint_mode)
   return_vals = gimp_run_procedure ("gimp_context_set_paint_mode",
 				    &nreturn_vals,
 				    GIMP_PDB_INT32, paint_mode,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_brush:
+ *
+ * Retrieve the currently active brush.
+ *
+ * This procedure returns the nme of the currently active brush. All
+ * paint operations and stroke operations use this brush to control the
+ * application of paint to the image.
+ *
+ * Returns: The name of the active brush.
+ *
+ * Since: GIMP 2.2
+ */
+gchar *
+gimp_context_get_brush (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *name = NULL;
+
+  return_vals = gimp_run_procedure ("gimp_context_get_brush",
+				    &nreturn_vals,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    name = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return name;
+}
+
+/**
+ * gimp_context_set_brush:
+ * @name: The name o the brush.
+ *
+ * Set the specified brush as the active brush.
+ *
+ * This procedure allows the active brush to be set by specifying its
+ * name. The name is simply a string which corresponds to one of the
+ * names of the installed brushes. If there is no matching brush found,
+ * this procedure will return an error. Otherwise, the specified brush
+ * becomes active and will be used in all subsequent paint operations.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.2
+ */
+gboolean
+gimp_context_set_brush (const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_context_set_brush",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_pattern:
+ *
+ * Retrieve the currently active pattern.
+ *
+ * This procedure returns name of the the currently active pattern. All
+ * clone and bucket-fill operations with patterns will use this pattern
+ * to control the application of paint to the image.
+ *
+ * Returns: The name of the active pattern.
+ *
+ * Since: GIMP 2.2
+ */
+gchar *
+gimp_context_get_pattern (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *name = NULL;
+
+  return_vals = gimp_run_procedure ("gimp_context_get_pattern",
+				    &nreturn_vals,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    name = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return name;
+}
+
+/**
+ * gimp_context_set_pattern:
+ * @name: The name of the pattern.
+ *
+ * Set the specified pattern as the active pattern.
+ *
+ * This procedure allows the active pattern to be set by specifying its
+ * name. The name is simply a string which corresponds to one of the
+ * names of the installed patterns. If there is no matching pattern
+ * found, this procedure will return an error. Otherwise, the specified
+ * pattern becomes active and will be used in all subsequent paint
+ * operations.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.2
+ */
+gboolean
+gimp_context_set_pattern (const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_context_set_pattern",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_gradient:
+ *
+ * Retrieve the currently active gradient.
+ *
+ * This procedure returns the name of the currently active gradient.
+ *
+ * Returns: The name of the active gradient.
+ *
+ * Since: GIMP 2.2
+ */
+gchar *
+gimp_context_get_gradient (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *name = NULL;
+
+  return_vals = gimp_run_procedure ("gimp_context_get_gradient",
+				    &nreturn_vals,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    name = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return name;
+}
+
+/**
+ * gimp_context_set_gradient:
+ * @name: The name of the gradient.
+ *
+ * Sets the specified gradient as the active gradient.
+ *
+ * This procedure lets you set the specified gradient as the active or
+ * \"current\" one. The name is simply a string which corresponds to
+ * one of the loaded gradients. If no matching gradient is found, this
+ * procedure will return an error. Otherwise, the specified gradient
+ * will become active and will be used for subsequent custom gradient
+ * operations.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.2
+ */
+gboolean
+gimp_context_set_gradient (const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_context_set_gradient",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_palette:
+ *
+ * Retrieve the currently active palette.
+ *
+ * This procedure returns the name of the the currently active palette.
+ *
+ * Returns: The name of the active palette.
+ *
+ * Since: GIMP 2.2
+ */
+gchar *
+gimp_context_get_palette (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *name = NULL;
+
+  return_vals = gimp_run_procedure ("gimp_context_get_palette",
+				    &nreturn_vals,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    name = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return name;
+}
+
+/**
+ * gimp_context_set_palette:
+ * @name: The name of the palette.
+ *
+ * Set the specified palette as the active palette.
+ *
+ * This procedure allows the active palette to be set by specifying its
+ * name. The name is simply a string which corresponds to one of the
+ * names of the installed palettes. If no matching palette is found,
+ * this procedure will return an error. Otherwise, the specified
+ * palette becomes active and will be used in all subsequent palette
+ * operations.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.2
+ */
+gboolean
+gimp_context_set_palette (const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_context_set_palette",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_font:
+ *
+ * Retrieve the currently active font.
+ *
+ * This procedure returns the name of the currently active font.
+ *
+ * Returns: The name of the active font.
+ *
+ * Since: GIMP 2.2
+ */
+gchar *
+gimp_context_get_font (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *name = NULL;
+
+  return_vals = gimp_run_procedure ("gimp_context_get_font",
+				    &nreturn_vals,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    name = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return name;
+}
+
+/**
+ * gimp_context_set_font:
+ * @name: The name of the font.
+ *
+ * Set the specified font as the active font.
+ *
+ * This procedure allows the active font to be set by specifying its
+ * name. The name is simply a string which corresponds to one of the
+ * names of the installed fonts. If no matching font is found, this
+ * procedure will return an error. Otherwise, the specified font
+ * becomes active and will be used in all subsequent font operations.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.2
+ */
+gboolean
+gimp_context_set_font (const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_context_set_font",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, name,
 				    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
