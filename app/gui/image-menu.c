@@ -56,6 +56,7 @@
 #include "plug-in-menus.h"
 #include "select-commands.h"
 #include "tools-commands.h"
+#include "vectors-commands.h"
 #include "view-commands.h"
 
 #include "gimp-intl.h"
@@ -153,12 +154,12 @@ GimpItemFactoryEntry image_menu_entries[] =
 
   MENU_BRANCH (N_("/_Edit")),
 
-  { { N_("/Edit/Undo"), "<control>Z",
+  { { N_("/Edit/_Undo"), "<control>Z",
       edit_undo_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_UNDO },
     NULL,
     "edit/undo.html", NULL },
-  { { N_("/Edit/Redo"), "<control>R",
+  { { N_("/Edit/_Redo"), "<control>R",
       edit_redo_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_REDO },
     NULL,
@@ -229,14 +230,19 @@ GimpItemFactoryEntry image_menu_entries[] =
       "<StockItem>", GIMP_STOCK_TOOL_BUCKET_FILL },
     NULL,
     "edit/fill.html", NULL },
-  { { N_("/Edit/Fill with Pattern"), NULL,
+  { { N_("/Edit/Fill with P_attern"), NULL,
       edit_fill_cmd_callback, (guint) GIMP_PATTERN_BUCKET_FILL,
       "<StockItem>", GIMP_STOCK_TOOL_BUCKET_FILL },
     NULL,
     "edit/fill.html", NULL },
-  { { N_("/Edit/_Stroke"), NULL,
+  { { N_("/Edit/_Stroke Selection"), NULL,
       edit_stroke_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_SELECTION_STROKE },
+    NULL,
+    "edit/stroke.html", NULL },
+  { { N_("/Edit/St_roke Active Path"), NULL,
+      vectors_stroke_vectors_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_PATH_STROKE },
     NULL,
     "edit/stroke.html", NULL },
 
@@ -1242,6 +1248,7 @@ image_menu_update (GtkItemFactory *item_factory,
   GimpImage                  *gimage        = NULL;
   GimpDrawable               *drawable      = NULL;
   GimpLayer                  *layer         = NULL;
+  GimpVectors                *vectors       = NULL;
   GimpImageType               drawable_type = -1;
   GimpRGB                     fg;
   GimpRGB                     bg;
@@ -1302,6 +1309,8 @@ image_menu_update (GtkItemFactory *item_factory,
 	  lnum = gimp_container_num_children (gimage->layers);
 	}
 
+      vectors = gimp_image_get_active_vectors (gimage);
+
       fullscreen = gimp_display_shell_get_fullscreen (shell);
 
       if (fullscreen)
@@ -1354,8 +1363,8 @@ image_menu_update (GtkItemFactory *item_factory,
                              gimp_object_get_name (GIMP_OBJECT (redo)));
       }
 
-    SET_LABEL ("/Edit/Undo", undo_name ? undo_name : _("Undo"));
-    SET_LABEL ("/Edit/Redo", redo_name ? redo_name : _("Redo"));
+    SET_LABEL ("/Edit/Undo", undo_name ? undo_name : _("_Undo"));
+    SET_LABEL ("/Edit/Redo", redo_name ? redo_name : _("_Redo"));
 
     SET_SENSITIVE ("/Edit/Undo", undo_name);
     SET_SENSITIVE ("/Edit/Redo", redo_name);
@@ -1377,7 +1386,9 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/Edit/Clear",                 lp);
   SET_SENSITIVE ("/Edit/Fill with FG Color",    lp);
   SET_SENSITIVE ("/Edit/Fill with BG Color",    lp);
-  SET_SENSITIVE ("/Edit/Stroke",                lp && sel);
+  SET_SENSITIVE ("/Edit/Fill with Pattern",     lp);
+  SET_SENSITIVE ("/Edit/Stroke Selection",      lp && sel);
+  SET_SENSITIVE ("/Edit/Stroke Active Path",    lp && vectors);
 
   /*  Select  */
 

@@ -1,3 +1,9 @@
+2003-07-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/image-menu.c: renamed "Edit/Stroke" to "Edit/Stroke
+	Selection" and added "Edit/Stroke Active Path". Added some missing
+	mnemonics to the "Edit" menu.
+
 2003-07-24  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimptexttool.c (gimp_text_tool_create_vectors): set
