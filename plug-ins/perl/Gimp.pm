@@ -12,7 +12,7 @@ use subs qw(init end lock unlock canonicalize_color);
 BEGIN {
    require DynaLoader;
    @ISA=qw(DynaLoader);
-   $VERSION = 1.16;
+   $VERSION = 1.18;
    bootstrap Gimp $VERSION;
 }
 

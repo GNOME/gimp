@@ -69,7 +69,8 @@ WARNING: You are using the experimental (and very broken) multithread support.
 EOF
 }
 
-@INC = grep /^\//,@INC;
+@INC = grep /^\//,@INC; # comment out as well?
+if (0) {		# comment out because it breaks
 eval { $Gimp::no_SIG=1; require Gimp };
 unless($@) {
    eval { require Gimp::Config };
@@ -107,6 +108,7 @@ WARNING: I've detected another installation of the Gimp-Perl extension.
 EOF
       }
    }
+}
 }
 
 eval "use Gtk;"; $GTK = $@ eq "";

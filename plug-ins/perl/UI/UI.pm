@@ -7,7 +7,7 @@ use base 'DynaLoader';
 
 BEGIN {
    require DynaLoader;
-   $VERSION = 1.16;
+   $VERSION = 1.18;
    bootstrap Gimp::UI $VERSION;
 }
 

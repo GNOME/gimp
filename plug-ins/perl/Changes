@@ -6,6 +6,10 @@ Revision history for Gimp-Perl extension.
         - patch by Frank Loemker <floemker@TechFak.Uni-Bielefeld.DE> to fix
           many missing :auto tags.
         - Gimp.xs now defines fallback functions for gettext & friends.
+        - I removed the "old prefix" check that I was almost forced to
+          implement. This was not a good idea, is not a good idea, and
+          completely breaks on many occasions. Just do not do that. If
+          only people would trust me sometimes :(
 
 1.17  Wed Nov 24 21:25:19 CET 1999
         - re-fitted i18n translation for most plug-ins.

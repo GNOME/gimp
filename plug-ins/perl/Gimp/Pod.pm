@@ -1,6 +1,6 @@
 package Gimp::Pod;
 
-$VERSION=1.16;
+$VERSION=1.18;
 
 sub myqx(&) {
    local $/;
