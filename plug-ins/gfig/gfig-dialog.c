@@ -628,7 +628,7 @@ load_button_callback (GtkWidget *widget,
 
   window =
     gtk_file_chooser_dialog_new (_("Load Gfig object collection"),
-                                 GTK_WINDOW (gtk_widget_get_toplevel (widget)),
+                                 GTK_WINDOW (gtk_widget_get_toplevel (data)),
                                  GTK_FILE_CHOOSER_ACTION_OPEN,
 
                                  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
