@@ -46,15 +46,12 @@ scriptdata_DATA = \
 	hsv-graph.scm				\
 	i26-gunya2.scm				\
 	image-structure.scm			\
-	kanji-circle.scm			\
-	kanji-neon.scm				\
 	land.scm				\
 	lava.scm				\
 	line-nova.scm				\
 	mkbrush.scm				\
 	neon-logo.scm				\
 	perspective-shadow.scm			\
-	pie-chart.scm				\
 	predator.scm				\
 	ripply-anim.scm				\
 	round-corners.scm			\

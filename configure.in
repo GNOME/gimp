@@ -240,7 +240,7 @@ dnl TVM: check for compiler characteristics
 AC_C_INLINE
 
 gimpdatadir=$datadir/$PACKAGE
-gimpplugindir=$libdir/$PACKAGE/$VERSION
+gimpplugindir=$libdir/$PACKAGE/$GIMP_MAJOR_VERSION_NUMBER.$GIMP_MINOR_VERSION_NUMBER
 
 dnl This is for generating PDB docuemntation.
 AC_PATH_PROG(EMACS, emacs)

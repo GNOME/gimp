@@ -1,3 +1,9 @@
+Sun Dec 14 00:06:00 CST 1997 Shawn T. Amundson <amundson@gimp.org>
+
+	* configure.in: Changed gimp lib dir to lib/gimp/MAJOR.MINOR 
+          instead of lib/gimp/MAJOR.MINOR.MICRO
+	* script-fu/scripts: removed piechart, kanji-circle, kanji-neon 
+
 Sat Dec 13 19:41:35 CST 1997 Shawn T. Amundson <amundson@gimp.org>
 	
 	* plug-ins/fuse/Makefile.am: fuse.c couldn't find gck/gck.h
