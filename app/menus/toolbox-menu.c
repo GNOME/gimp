@@ -134,7 +134,7 @@ GimpItemFactoryEntry toolbox_menu_entries[] =
     NULL, NULL },
   { { N_("/File/Dialogs/_Indexed Palette..."), NULL,
       dialogs_create_dockable_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_SELECT_COLOR },
+      "<StockItem>", GIMP_STOCK_INDEXED_PALETTE },
     "gimp-indexed-palette",
     "file/dialogs/indexed_palette.html", NULL },
   { { N_("/File/Dialogs/_Selection Editor..."), NULL,
@@ -149,7 +149,7 @@ GimpItemFactoryEntry toolbox_menu_entries[] =
     NULL, NULL },
   { { N_("/File/Dialogs/_Undo History..."), NULL,
       dialogs_create_dockable_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_UNDO },
+      "<StockItem>", GIMP_STOCK_UNDO_HISTORY },
     "gimp-undo-history",
     NULL, NULL },
 
