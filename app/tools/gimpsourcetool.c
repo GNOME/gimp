@@ -60,6 +60,11 @@ static void   gimp_clone_tool_motion           (GimpTool        *tool,
                                                 guint32          time,
                                                 GdkModifierType  state,
                                                 GimpDisplay     *gdisp);
+static void   gimp_clone_tool_button_release   (GimpTool        *tool,
+                                                GimpCoords      *coords,
+                                                guint32          time,
+                                                GdkModifierType  state,
+                                                GimpDisplay     *gdisp);
 
 static void   gimp_clone_tool_cursor_update    (GimpTool        *tool,
                                                 GimpCoords      *coords,
@@ -130,6 +135,7 @@ gimp_clone_tool_class_init (GimpCloneToolClass *klass)
 
   tool_class->button_press  = gimp_clone_tool_button_press;
   tool_class->motion        = gimp_clone_tool_motion;
+  tool_class->button_release = gimp_clone_tool_button_release;
   tool_class->cursor_update = gimp_clone_tool_cursor_update;
 
   draw_tool_class->draw     = gimp_clone_tool_draw;
@@ -178,11 +184,45 @@ gimp_clone_tool_motion (GimpTool        *tool,
   GIMP_TOOL_CLASS (parent_class)->motion (tool, coords, time, state, gdisp);
 }
 
+static void
+gimp_clone_tool_button_release (GimpTool        *tool,
+                                GimpCoords      *coords,
+                                guint32          time,
+                                GdkModifierType  state,
+                                GimpDisplay     *gdisp)
+{
+  GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
+  GimpClone *clone;
+
+  clone = GIMP_CLONE (paint_tool->core);
+
+  if ((state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) == GDK_CONTROL_MASK)
+    {}
+  else if (clone->src_drawable && ! clone->first_stroke )
+    {
+      gint off_x;
+      gint off_y;
+      
+      gimp_item_offsets (GIMP_ITEM (clone->src_drawable),
+                         &off_x, &off_y);
+      
+      gimp_draw_tool_draw_handle (GIMP_DRAW_TOOL (tool),
+                                  GIMP_HANDLE_CROSS,
+                                  clone->src_x + off_x,
+                                  clone->src_y + off_y,
+                                  TARGET_WIDTH, TARGET_WIDTH,
+                                  GTK_ANCHOR_CENTER,
+                                  FALSE);
+    }
+
+  GIMP_TOOL_CLASS (parent_class)->button_release (tool, coords, time, state, gdisp);
+}
+
 void
 gimp_clone_tool_cursor_update (GimpTool        *tool,
                                GimpCoords      *coords,
-			       GdkModifierType  state,
-			       GimpDisplay     *gdisp)
+                               GdkModifierType  state,
+                               GimpDisplay     *gdisp)
 {
   GimpCloneOptions *options;
   GimpCursorType    ctype = GIMP_CURSOR_MOUSE;
@@ -205,9 +245,9 @@ gimp_clone_tool_cursor_update (GimpTool        *tool,
   if (options->clone_type == GIMP_IMAGE_CLONE)
     {
       if ((state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) == GDK_CONTROL_MASK)
-	ctype = GIMP_CURSOR_CROSSHAIR_SMALL;
+        ctype = GIMP_CURSOR_CROSSHAIR_SMALL;
       else if (! GIMP_CLONE (GIMP_PAINT_TOOL (tool)->core)->src_drawable)
-	ctype = GIMP_CURSOR_BAD;
+        ctype = GIMP_CURSOR_BAD;
     }
 
   gimp_tool_control_set_cursor (tool->control, ctype);
@@ -231,7 +271,7 @@ gimp_clone_tool_draw (GimpDrawTool *draw_tool)
         {
           GimpClone *clone = GIMP_CLONE (GIMP_PAINT_TOOL (draw_tool)->core);
 
-          if (clone->src_drawable)
+          if (clone->src_drawable && ! clone->first_stroke )
             {
               gint off_x;
               gint off_y;
