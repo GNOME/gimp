@@ -774,13 +774,10 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_widget_show (label);
       
       adj = (GtkAdjustment *) gtk_adjustment_new (default_width, 1.0,
-                                                  65536.0, 1.0, 50.0, 0.0);
+                                                  32767.0, 1.0, 50.0, 0.0);
       spinbutton = gtk_spin_button_new (adj, 1.0, 0.0);
-      gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (spinbutton), TRUE);
       gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(spinbutton), GTK_SHADOW_NONE);      
-      gtk_widget_set_usize (spinbutton, 25, 0);
-      gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (spinbutton),
-                                         GTK_UPDATE_ALWAYS);
+      gtk_widget_set_usize (spinbutton, 50, 0);
       gtk_table_attach (GTK_TABLE (table), spinbutton, 1, 2, 0, 1,
                         GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
       gtk_signal_connect (GTK_OBJECT (spinbutton), "changed",
@@ -789,17 +786,15 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_widget_show (spinbutton);
 
       adj = (GtkAdjustment *) gtk_adjustment_new (default_height, 1.0,
-                                                  65536.0, 1.0, 50.0, 0.0);
+                                                  32767.0, 1.0, 50.0, 0.0);
       spinbutton = gtk_spin_button_new (adj, 1.0, 0.0);
-      gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (spinbutton), TRUE);
       gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(spinbutton), GTK_SHADOW_NONE);      
-      gtk_widget_set_usize (spinbutton, 25, 0);
-      gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (spinbutton),
-                                         GTK_UPDATE_ALWAYS);
+      gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(spinbutton), TRUE);
+      gtk_widget_set_usize (spinbutton, 50, 0);
       gtk_table_attach (GTK_TABLE (table), spinbutton, 1, 2, 1, 2,
 			GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
       gtk_signal_connect (GTK_OBJECT (spinbutton), "changed",
-			                    (GtkSignalFunc) file_prefs_spinbutton_callback,
+			  (GtkSignalFunc) file_prefs_spinbutton_callback,
                           &default_height);
       gtk_widget_show (spinbutton);
 
@@ -944,11 +939,9 @@ file_pref_cmd_callback (GtkWidget *widget,
       adj = (GtkAdjustment *) gtk_adjustment_new (levels_of_undo, 0.0,
                                                   255.0, 1.0, 5.0, 0.0);
       spinbutton = gtk_spin_button_new (adj, 1.0, 0.0);
-      gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (spinbutton), TRUE);
-      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(spinbutton), GTK_SHADOW_NONE);      
+      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(spinbutton), GTK_SHADOW_NONE);
+      gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(spinbutton), TRUE);
       gtk_widget_set_usize (spinbutton, 75, 0);
-      gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (spinbutton),
-                                         GTK_UPDATE_ALWAYS);
       gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (spinbutton), "changed",
                           (GtkSignalFunc) file_prefs_spinbutton_callback,
@@ -1015,11 +1008,9 @@ file_pref_cmd_callback (GtkWidget *widget,
       adj = (GtkAdjustment *) gtk_adjustment_new (marching_speed, 0.0,
                                                   32000.0, 50.0, 100.0, 0.0);
       spinbutton = gtk_spin_button_new (adj, 1.0, 0.0);
-      gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (spinbutton), TRUE);
       gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(spinbutton), GTK_SHADOW_NONE);      
+      gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(spinbutton), TRUE);
       gtk_widget_set_usize (spinbutton, 75, 0);
-      gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (spinbutton),
-                                         GTK_UPDATE_ALWAYS);
       gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (spinbutton), "changed",
                           (GtkSignalFunc) file_prefs_spinbutton_callback,
@@ -1061,10 +1052,9 @@ file_pref_cmd_callback (GtkWidget *widget,
                                                   (4069.0 * 1024 * 1024), 1.0,
                                                   16.0, 0.0);
       tile_cache_size_spinbutton = gtk_spin_button_new (adj, 1.0, 0.0);
-      gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON(tile_cache_size_spinbutton), 
-					 GTK_UPDATE_ALWAYS);
       gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(tile_cache_size_spinbutton), 
 				       GTK_SHADOW_NONE);      
+      gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(tile_cache_size_spinbutton), TRUE);
       gtk_widget_set_usize (tile_cache_size_spinbutton, 75, 0);
       gtk_box_pack_start (GTK_BOX (hbox), tile_cache_size_spinbutton, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (tile_cache_size_spinbutton), "changed",
@@ -1097,6 +1087,8 @@ file_pref_cmd_callback (GtkWidget *widget,
                           (GtkSignalFunc) file_prefs_toggle_callback,
                           &edit_install_cmap);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      if (g_visual->depth != 8)
+	gtk_widget_set_sensitive (GTK_WIDGET(button), FALSE);
       gtk_widget_show (button);
 
       button = gtk_check_button_new_with_label("Colormap cycling (8-bit only)");

@@ -531,7 +531,7 @@ file_new_cmd_callback (GtkWidget           *widget,
 
   gtk_table_attach (GTK_TABLE (table), vals->width_spinbutton, 0, 1, 1, 2,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-    gtk_signal_connect (GTK_ENTRY (vals->width_spinbutton), "changed",
+  gtk_signal_connect (GTK_OBJECT (vals->width_spinbutton), "changed",
  		      (GtkSignalFunc) file_new_width_update_callback, vals);
   gtk_widget_show (vals->width_spinbutton);
  
@@ -543,7 +543,7 @@ file_new_cmd_callback (GtkWidget           *widget,
   gtk_widget_set_usize (vals->height_spinbutton, 75, 0);
   gtk_table_attach (GTK_TABLE (table), vals->height_spinbutton, 1, 2, 1, 2,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_signal_connect (GTK_ENTRY (vals->height_spinbutton), "changed",
+  gtk_signal_connect (GTK_OBJECT (vals->height_spinbutton), "changed",
 		      (GtkSignalFunc) file_new_height_update_callback, vals);
   gtk_widget_show (vals->height_spinbutton);
 
