@@ -1,31 +1,31 @@
 # Copyright (C) 2000 Free Software Foundation, Inc.
-# Artur Polaczyñski <artie@kmfms.com> 1999,2000
 # GNOME PL Team <translators@gnome.pl>, 1999-2001
-#, fuzzy
+# Artur Polaczyñski <artie@kmfms.com> 1999,2000
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl\n"
-"POT-Creation-Date: Sat Dec 30 14:09:58 2000\n"
-"PO-Revision-Date: 2001-01-15 01:47+0100\n"
+"POT-Creation-Date: Mon Jun 25 22:40:28 2001\n"
+"PO-Revision-Date: 2001-06-25 21:12+0200\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: examples/PDB:0
+#: examples/PDB:1
 msgid " (press Tab to complete)"
 msgstr " (naci¶nij Tab aby dokoñczyæ)"
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid " = [argument error]\n"
 msgstr " = [b³±d argumentu]\n"
 
-#: examples/PDB:0
+#: examples/PDB:1
 msgid " matching functions"
 msgstr " pasuj±ce funkcje"
 
-#: Gimp/Fu.pm:0
+#: Gimp/Fu.pm:1
 msgid ""
 "       interface-arguments are\n"
 "           -o | --output <filespec>   write image to disk, don't display\n"
@@ -39,7 +39,7 @@ msgstr ""
 "warto¶ci\n"
 "       argumentami skryptu s±\n"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:1
 msgid ""
 "Usage: $0 [gimp-args..] [interface-args..] [script-args..]\n"
 "       gimp-arguments are\n"
@@ -62,19 +62,19 @@ msgstr ""
 "                                      (aby uzyskaæ wiêcej informacji, zobacz "
 "Gimp::Net(3))\n"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:1
 msgid "$_ is not a valid import tag for package $pkg"
 msgstr "$_ nie jest poprawnym znacznikiem importu dla pakietu $pkg"
 
-#: Gimp/Fu.pm:0
+#: Gimp/Fu.pm:1
 msgid "$_: illegal switch, try $0 --help\n"
 msgstr "$_: niepoprawny prze³±cznik, spróbuj $0 --help\n"
 
-#: Gimp/Fu.pm:0
+#: Gimp/Fu.pm:1
 msgid "$_: unknown/illegal file-save option"
 msgstr "$_: nieznana/niepoprawna opcja zapisu pliku"
 
-#: Gimp/Fu.pm:0
+#: Gimp/Fu.pm:1
 msgid ""
 "$function: argument name '$p->[1]' contains illegal characters, only 0-9, "
 "a-z and _ allowed"
@@ -82,17 +82,17 @@ msgstr ""
 "$function: nazwa argumentu '$p->[1]' zawiera niedozwolone znaki, dozwolone "
 "s± tylko 0-9, a-z i _"
 
-#: Gimp/Fu.pm:0
+#: Gimp/Fu.pm:1
 msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
 msgstr "$function: warto¶æ argumentu '$p->[1]' ma niedozwolony typ '$p->[0]'"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:1
 msgid ""
 "$function: calling $AUTOLOAD without specifying the :auto import tag is "
 "deprecated!\n"
 msgstr ""
 
-#: Gimp/Fu.pm:0
+#: Gimp/Fu.pm:1
 msgid ""
 "$function: function name contains unusual characters, good style is to use "
 "only 0-9, a-z and _"
@@ -100,415 +100,415 @@ msgstr ""
 "$function: nazwa funkcji zawiera niedozwolone znaki, w dobrym stylu jest "
 "u¿ywanie tylko 0-9, a-z i _"
 
-#: Gimp/Fu.pm:0
+#: Gimp/Fu.pm:1
 msgid "$s: not an integer\n"
 msgstr "$s: nie jest liczb± ca³kowit±\n"
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid "%s arguments for function '%s'"
 msgstr "%s argumentów dla funkcji \"%s\""
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid "%s: procedural database execution failed on invalid input arguments"
 msgstr ""
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid "%s: procedural database execution failed"
 msgstr ""
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid "(UNINITIALIZED)"
 msgstr "(NIEZAINICJOWANY)"
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid "(none)"
 msgstr "(brak)"
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid ", %d bytes data]"
 msgstr ", %d bajtów danych]"
 
-#: Perl-Server:0
+#: Perl-Server:1
 msgid ", authorization required"
 msgstr ", wymagana autoryzacja"
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
 msgstr "-*-courier-medium-r-normal--*-120-*-*-*-iso8859-2"
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
 msgstr "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-2"
 
-#: examples/logulator:0
+#: examples/logulator:1
 msgid "/Filters/Logulator"
 msgstr "/Filtry/Logulator"
 
-#: Perl-Server:0
+#: Perl-Server:1
 msgid "/Xtns/Perl"
 msgstr "/Dodatki/Perl"
 
-#: examples/fire:0 examples/glowing_steel:0 examples/innerbevel:0
-#: examples/povray:0 examples/stamps:0
+#: examples/fire:1 examples/glowing_steel:1 examples/innerbevel:1
+#: examples/povray:1 examples/stamps:1
 msgid "/Xtns/Render"
 msgstr "/Dodatki/Renderowanie"
 
-#: examples/fire:0 examples/glowing_steel:0 examples/innerbevel:0
-#: examples/povray:0
+#: examples/fire:1 examples/glowing_steel:1 examples/innerbevel:1
+#: examples/povray:1
 msgid "/Xtns/Render/Logos"
 msgstr "/Dodatki/Renderowanie/Logo"
 
-#: examples/povray:0
+#: examples/povray:1
 msgid "/Xtns/Render/Povray"
 msgstr "/Dodatki/Renderowanie/Povray"
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid "9x15bold"
 msgstr "9x15bold"
 
-#: Gimp/Fu.pm:0
+#: Gimp/Fu.pm:1
 msgid "<Image> plug-in called without both image and drawable arguments!\n"
 msgstr ""
 
-#: examples/repdup:0
+#: examples/repdup:1
 msgid "<Image>/Edit/Repeat & Duplicate..."
 msgstr "<Image>/Edycja/Powtarzaj i duplikuj..."
 
-#: examples/animate_cells:0
+#: examples/animate_cells:1
 msgid "<Image>/Filters/Animation/Animate Cells..."
 msgstr ""
 
-#: examples/blowinout:0
+#: examples/blowinout:1
 msgid "<Image>/Filters/Animation/BlowInOut..."
 msgstr "<Image>/Filtry/Animacja/Rozdmuchiwanie..."
 
-#: examples/frame_filter:0
+#: examples/frame_filter:1
 msgid "<Image>/Filters/Apply Perl Expression..."
 msgstr "<Image>/Filtry/Zastosuj wyra¿enie Perla..."
 
-#: examples/gouge:0
+#: examples/gouge:1
 msgid "<Image>/Filters/Blur/2x2 Blur"
 msgstr "<Image>/Filtry/Rozmywanie/Rozmycie 2x2"
 
-#: examples/colourtoalpha:0
+#: examples/colourtoalpha:1
 msgid "<Image>/Filters/Colors/Colour To Alpha..."
 msgstr "<Image>/Filtry/Kolory/Kolor do alfy..."
 
-#: examples/fire:0
+#: examples/fire:1
 msgid "<Image>/Filters/Colors/Fire..."
 msgstr "<Image>/Filtry/Kolory/Ogieñ..."
 
-#: examples/map_to_gradient:0
+#: examples/map_to_gradient:1
 msgid "<Image>/Filters/Colors/Map To Gradient..."
 msgstr "<Image>/Filtry/Kolory/Odwzorowanie na gradient..."
 
-#: examples/mirrorsplit:0
+#: examples/mirrorsplit:1
 msgid "<Image>/Filters/Distorts/MirrorSplit..."
 msgstr ""
 
-#: examples/scratches:0
+#: examples/scratches:1
 msgid "<Image>/Filters/Distorts/Scratches..."
 msgstr ""
 
-#: examples/windify:0
+#: examples/windify:1
 msgid "<Image>/Filters/Distorts/Windify..."
 msgstr "<Image>/Filtry/Zniekszta³cenia/Windify..."
 
-#: examples/gouge:0
+#: examples/gouge:1
 msgid "<Image>/Filters/Edge-Detect/2x2 Edge Detect"
 msgstr "<Image>/Filtry/Wykrywanie krawêdzi/Wykrywanie krawêdzi 2x2"
 
-#: examples/gouge:0
+#: examples/gouge:1
 msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
 msgstr "<Image>/Filtry/Uwydatnianie/Uwydatnianie kontrastu 2x2"
 
-#: examples/warp-sharp:0
+#: examples/warp-sharp:1
 msgid "<Image>/Filters/Enhance/Warp Sharp..."
 msgstr ""
 
-#: examples/blended2:0
+#: examples/blended2:1
 msgid "<Image>/Filters/Logulator/Blended II..."
 msgstr ""
 
-#: examples/logulator:0
+#: examples/logulator:1
 msgid "<Image>/Filters/Logulator/Carved"
 msgstr ""
 
-#: examples/logulator:0
+#: examples/logulator:1
 msgid "<Image>/Filters/Logulator/Crystal"
 msgstr "<Image>/Filtry/Logulator/Kryszta³"
 
-#: examples/logulator:0
+#: examples/logulator:1
 msgid "<Image>/Filters/Logulator/Imigre-26"
 msgstr ""
 
-#: examples/logulator:0
+#: examples/logulator:1
 msgid "<Image>/Filters/Logulator/Newsprint text"
 msgstr ""
 
-#: examples/logulator:0
+#: examples/logulator:1
 msgid "<Image>/Filters/Logulator/SOTA Chrome"
 msgstr ""
 
-#: examples/logulator:0
+#: examples/logulator:1
 msgid "<Image>/Filters/Logulator/Speed text"
 msgstr ""
 
-#: examples/translogo:0
+#: examples/translogo:1
 msgid "<Image>/Filters/Logulator/Transparent Logo..."
 msgstr "<Image>/Filtry/Logulator/Prze¼roczyste logo..."
 
-#: examples/logulator:0
+#: examples/logulator:1
 msgid "<Image>/Filters/Logulator/Web title header"
 msgstr ""
 
-#: examples/image_tile:0
+#: examples/image_tile:1
 msgid "<Image>/Filters/Map/Image Tile..."
 msgstr ""
 
-#: examples/pixelmap:0
+#: examples/pixelmap:1
 msgid "<Image>/Filters/Map/Pixelmap..."
 msgstr ""
 
-#: examples/xachlego:0
+#: examples/xachlego:1
 msgid "<Image>/Filters/Map/Xach Blocks..."
 msgstr "<Image>/Filtry/Odwzorowanie/Bloki Xacha..."
 
-#: examples/xachshadow:0
+#: examples/xachshadow:1
 msgid "<Image>/Filters/Map/Xach Shadows..."
 msgstr "<Image>/Filtry/Odwzorowanie/Cienie Xacha..."
 
-#: examples/border:0
+#: examples/border:1
 msgid "<Image>/Filters/Misc/Border Average..."
 msgstr "<Image>/Filtry/Ró¿ne/¦rednia krawêdzi..."
 
-#: examples/gimpmagick:0
+#: examples/gimpmagick:1
 msgid "<Image>/Filters/Misc/Magick..."
 msgstr ""
 
-#: examples/ditherize:0
+#: examples/ditherize:1
 msgid "<Image>/Filters/Noise/Ditherize..."
 msgstr ""
 
-#: examples/feedback:0
+#: examples/feedback:1
 msgid "<Image>/Filters/Noise/Feedback..."
 msgstr ""
 
-#: examples/xachvision:0
+#: examples/xachvision:1
 msgid "<Image>/Filters/Noise/Xach Vision..."
 msgstr "<Image>/Filtry/Szum/Wizja Xacha..."
 
-#: examples/dust:0
+#: examples/dust:1
 msgid "<Image>/Filters/Render/Add Dust..."
 msgstr ""
 
-#: examples/glowing_steel:0
+#: examples/glowing_steel:1
 msgid "<Image>/Filters/Render/Add Glow"
 msgstr "<Image>/Filtry/Renderowanie/Dodaj jarzenie"
 
-#: examples/glowing_steel:0
+#: examples/glowing_steel:1
 msgid "<Image>/Filters/Render/Brushed Metal..."
 msgstr ""
 
-#: examples/burst:0
+#: examples/burst:1
 msgid "<Image>/Filters/Render/Burst..."
 msgstr ""
 
-#: examples/fit-text:0
+#: examples/fit-text:1
 msgid "<Image>/Filters/Render/Fit Text..."
 msgstr "<Image>/Filtry/Renderowanie/Zmie¶æ tekst..."
 
-#: examples/glowing_steel:0
+#: examples/glowing_steel:1
 msgid "<Image>/Filters/Render/Highlight Edges..."
 msgstr "<Image>/Filtry/Renderowanie/Pod¶wietlenie krawêdzi..."
 
-#: examples/randomblends:0
+#: examples/randomblends:1
 msgid "<Image>/Filters/Render/Random Blends..."
 msgstr ""
 
-#: examples/stampify:0
+#: examples/stampify:1
 msgid "<Image>/Filters/Render/Stampify..."
 msgstr "<Image>/Filtry/Renderowanie/Znaczek pocztowy..."
 
-#: examples/tex-to-float:0
+#: examples/tex-to-float:1
 msgid "<Image>/Filters/Render/TeX String..."
 msgstr "<Image>/Filtry/Renderowanie/Napis TeX..."
 
-#: examples/terral_text:0
+#: examples/terral_text:1
 msgid "<Image>/Filters/Render/Terral Text..."
 msgstr ""
 
-#: examples/perlotine:0
+#: examples/perlotine:1
 msgid "<Image>/Filters/Web/Perl-o-tine..."
 msgstr "<Image>/Filtry/Sieæ WWW/Perl-o-tine..."
 
-#: examples/prep4gif:0
+#: examples/prep4gif:1
 msgid "<Image>/Filters/Web/Prepare for GIF..."
 msgstr "<Image>/Filtry/Sieæ WWW/Przygotowanie do GIF-a..."
 
-#: examples/webify:0
+#: examples/webify:1
 msgid "<Image>/Filters/Web/Webify..."
 msgstr ""
 
-#: examples/centerguide:0
+#: examples/centerguide:1
 msgid "<Image>/Guides/Center Guide..."
 msgstr "<Image>/Prowadnice/Wy¶rodkowanie prowadnic..."
 
-#: examples/guidegrid:0
+#: examples/guidegrid:1
 msgid "<Image>/Guides/Guide Grid..."
 msgstr "<Image>/Prowadnice/Siatka prowadnic..."
 
-#: examples/guide_remove:0
+#: examples/guide_remove:1
 msgid "<Image>/Guides/Remove Guides"
 msgstr "<Image>/Prowadnice/Usuniêcie prowadnic"
 
-#: examples/guides_to_selection:0
+#: examples/guides_to_selection:1
 msgid "<Image>/Guides/To Selection..."
 msgstr "<Image>/Prowadnice/Do zaznaczenia..."
 
-#: examples/alpha2color:0
+#: examples/alpha2color:1
 msgid "<Image>/Image/Alpha/Alpha2Color..."
 msgstr "<Image>/Obraz/Alfa/Alfa do koloru..."
 
-#: examples/clear_alpha:0
+#: examples/clear_alpha:1
 msgid "<Image>/Image/Alpha/Clear Alpha..."
 msgstr "<Image>/Obraz/Alfa/Wyczy¶æ alfê..."
 
-#: examples/layerfuncs:0
+#: examples/layerfuncs:1
 msgid "<Image>/Layers/Center Layer"
 msgstr "<Image>/Warstwy/Wy¶rodkowanie warstwy"
 
-#: examples/frame_reshuffle:0
+#: examples/frame_reshuffle:1
 msgid "<Image>/Layers/Stack/Reorder Layers..."
 msgstr "<Image>/Warstwy/Stos/Zmiana porz±dku warstw..."
 
-#: examples/roundrectsel:0
+#: examples/roundrectsel:1
 msgid "<Image>/Select/Round Rectangular Selection..."
 msgstr "<Image>/Zaznaczenie/Zaokr±glenie zaznaczenia prostok±tnego..."
 
-#: examples/roundsel:0
+#: examples/roundsel:1
 msgid "<Image>/Select/Round..."
 msgstr "<Image>/Zaznaczenie/Zaokr±glenie..."
 
-#: examples/triangle:0
+#: examples/triangle:1
 msgid "<Image>/Select/Triangle..."
 msgstr "<Image>/Zaznaczenie/Trójk±t..."
 
-#: examples/gap-vcr:0
+#: examples/gap-vcr:1
 msgid "<Image>/Video/VCR Console..."
 msgstr "<Image>/Video/Konsola VCR..."
 
-#: examples/view3d:0
+#: examples/view3d:1
 msgid "<Image>/View/3D Surface..."
 msgstr "<Image>/Video/Powierzchnia 3D..."
 
-#: Gimp/Fu.pm:0
+#: Gimp/Fu.pm:1
 msgid "<Load> plug-in called without the 3 standard arguments!\n"
 msgstr ""
 "Wtyczka <Wczytaj> zosta³a wywo³ana bez trzech standardowych parametrów!\n"
 
-#: Gimp/Fu.pm:0
+#: Gimp/Fu.pm:1
 msgid "<Save> plug-in called without the 5 standard arguments!\n"
 msgstr ""
 "Wtyczka <Zapisz> zosta³a wywo³ana bez piêciu standardowych parametrów!\n"
 
-#: examples/billboard:0
+#: examples/billboard:1
 msgid "<Toolbox>/Xtns/Animation/Billboard..."
 msgstr "<Toolbox>/Dodatki/Animacja/Billboard..."
 
-#: examples/sethspin:0
+#: examples/sethspin:1
 msgid "<Toolbox>/Xtns/Animation/Seth Spin..."
 msgstr "<Toolbox>/Dodatki/Animacja/Obrót p³aszczyzny..."
 
-#: examples/Create_Images:0
+#: examples/Create_Images:1
 msgid "<Toolbox>/Xtns/Create_Images"
 msgstr "<Toolbox>/Dodatki/Tworzenie obrazów"
 
-#: examples/example-fu:0
+#: examples/example-fu:1
 msgid "<Toolbox>/Xtns/Gimp::Fu Example..."
 msgstr "<Toolbox>/Dodatki/Przyk³ad Gimp::Fu..."
 
-#: examples/homepage-logo:0
+#: examples/homepage-logo:1
 msgid "<Toolbox>/Xtns/Homepage-Logo"
 msgstr "<Toolbox>/Dodatki/Logo strony domowej"
 
-#: examples/PDB:0
+#: examples/PDB:1
 msgid "<Toolbox>/Xtns/PDB Explorer..."
 msgstr "<Toolbox>/Dodatki/Przegl±darka PDB..."
 
-#: examples/parasite-editor:0
+#: examples/parasite-editor:1
 msgid "<Toolbox>/Xtns/Parasite Editor..."
 msgstr "<Toolbox>/Dodatki/Edytor danych paso¿ytniczych..."
 
-#: examples/example-oo:0
+#: examples/example-oo:1
 msgid "<Toolbox>/Xtns/Perl Example Plug-in"
 msgstr "<Toolbox>/Dodatki/Przyk³adowa wtyczka w Perlu"
 
-#: examples/perlcc:0
+#: examples/perlcc:1
 msgid "<Toolbox>/Xtns/Perl/Control Center..."
 msgstr "<Toolbox>/Dodatki/Perl/Centrum sterowania..."
 
-#: Perl-Server:0
+#: Perl-Server:1
 msgid "<Toolbox>/Xtns/Perl/Server"
 msgstr "<Toolbox>/Dodatki/Perl/Serwer"
 
-#: examples/bricks:0
+#: examples/bricks:1
 msgid "<Toolbox>/Xtns/Render/Bricks..."
 msgstr "<Toolbox>/Dodatki/Renderowanie/Murek..."
 
-#: examples/font_table:0
+#: examples/font_table:1
 msgid "<Toolbox>/Xtns/Render/Font Table..."
 msgstr "<Toolbox>/Dodatki/Renderowanie/Tablica czcionek..."
 
-#: examples/goldenmean:0
+#: examples/goldenmean:1
 msgid "<Toolbox>/Xtns/Render/Golden Mean..."
 msgstr "<Toolbox>/Dodatki/Renderowanie/Z³oty podzia³..."
 
-#: examples/fire:0
+#: examples/fire:1
 msgid "<Toolbox>/Xtns/Render/Logos/Firetext..."
 msgstr "<Toolbox>/Dodatki/Renderowanie/Logo/P³on±cy tekst..."
 
-#: examples/glowing_steel:0
+#: examples/glowing_steel:1
 msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
 msgstr "<Toolbox>/Dodatki/Renderowanie/Logo/Jarz±ca siê stal"
 
-#: examples/innerbevel:0
+#: examples/innerbevel:1
 msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel..."
 msgstr ""
 
-#: examples/pixelmap:0
+#: examples/pixelmap:1
 msgid "<Toolbox>/Xtns/Render/Pixelgenerator..."
 msgstr "<Toolbox>/Dodatki/Renderowanie/Generator pikseli..."
 
-#: examples/povray:0
+#: examples/povray:1
 msgid "<Toolbox>/Xtns/Render/Povray/Preferences..."
 msgstr "<Toolbox>/Dodatki/Renderowanie/Povray/Preferencje..."
 
-#: examples/povray:0
+#: examples/povray:1
 msgid "<Toolbox>/Xtns/Render/Povray/Texture..."
 msgstr "<Toolbox>/Dodatki/Renderowanie/Povray/Tekstura..."
 
-#: examples/randomart1:0
+#: examples/randomart1:1
 msgid "<Toolbox>/Xtns/Render/Random Art #1..."
 msgstr "<Toolbox>/Dodatki/Renderowanie/Losowa sztuka #1..."
 
-#: examples/stamps:0
+#: examples/stamps:1
 msgid "<Toolbox>/Xtns/Render/Stamps..."
 msgstr "<Toolbox>/Dodatki/Renderowanie/Znaczki..."
 
-#: examples/yinyang:0
+#: examples/yinyang:1
 msgid "<Toolbox>/Xtns/Render/Yin-Yang..."
 msgstr "<Toolbox>/Dodatki/Renderowanie/Yin-Yang..."
 
-#: examples/visual:0
+#: examples/visual:1
 msgid "<Toolbox>/Xtns/Visual Scriptor..."
 msgstr ""
 
-#: examples/PDB:0
+#: examples/PDB:1
 msgid "Accelerator"
 msgstr ""
 
-#: examples/sethspin:0
+#: examples/sethspin:1
 msgid ""
 "An even number of frames is needed for spin back.\n"
 "Adjusted frames up to $frames"
@@ -516,15 +516,15 @@ msgstr ""
 "Do obrotu powrotnego wymagana jest parzysta liczba ramek.\n"
 "Zmodyfikowano ramki do $frames"
 
-#: examples/PDB:0
+#: examples/PDB:1
 msgid "Author"
 msgstr "Autor:"
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid "BG"
 msgstr "BG"
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid ""
 "BLURB:\n"
 "\n"
@@ -542,67 +542,67 @@ msgstr ""
 "\n"
 "$help"
 
-#: examples/example-fu:0
+#: examples/example-fu:1
 msgid "Background"
 msgstr "T³o"
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid "Browse"
 msgstr "Przegl±darka"
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid "Brush Selection Dialog"
 msgstr "Okno wyboru pêdzla"
 
-#: examples/translogo:0
+#: examples/translogo:1
 msgid "Bumpmap"
 msgstr "Mapa wypuk³o¶ci"
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid "Cancel"
 msgstr "Anuluj"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:1
 msgid "Cannot call '$AUTOLOAD' at this time"
 msgstr "Nie mo¿na wywo³aæ \"$AUTOLOAD\""
 
-#: examples/PDB:0
+#: examples/PDB:1
 msgid "Close"
 msgstr "Zamknij"
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid "Color"
 msgstr "Kolor"
 
-#: examples/PDB:0
+#: examples/PDB:1
 msgid "Command"
 msgstr "Polecenie"
 
-#: examples/PDB:0
+#: examples/PDB:1
 msgid "Copyright"
 msgstr "Copyright"
 
-#: examples/PDB:0
+#: examples/PDB:1
 msgid "DESCRIPTION"
 msgstr "OPIS"
 
-#: examples/PDB:0
+#: examples/PDB:1
 msgid "Date/Version"
 msgstr "Data/Wersja"
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid "Defaults"
 msgstr "Domy¶lne"
 
-#: examples/PDB:0
+#: examples/PDB:1
 msgid "Description"
 msgstr "Opis"
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid "Edit"
 msgstr "Edycja"
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid ""
 "Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a "
 "string"
@@ -610,523 +610,527 @@ msgstr ""
 "Oczekiwano warto¶ci typu INT32, lecz otrzymano \"%s\". Dodaj \"*1\" je¶li "
 "rzeczywi¶cie chcesz przekazaæ ³añcuch znaków"
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid ""
 "Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to "
 "'use strict'"
 msgstr ""
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid "FATAL: canonicalize_colour did not return a value!"
 msgstr ""
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid "FATAL: unable to create $tmp: $!\n"
 msgstr "FATAL: nie mo¿na utworzyæ $tmp: $!\n"
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid "FG"
 msgstr "FG"
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid "Fileselector for $name"
 msgstr "Wybór pliku dla $name"
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid "Font Selection Dialog ($desc)"
 msgstr "Okno wyboru czcionki ($desc)"
 
-#: examples/PDB:0
+#: examples/PDB:1
 msgid "Function Info"
 msgstr "Informacje o funkcji"
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid "Gradient Selection Dialog"
 msgstr "Okno wyboru gradientu"
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid "Help for "
 msgstr "Pomoc dla "
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid "Help"
 msgstr "Pomoc"
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid "Illegal default font description for $function: $val\n"
 msgstr ""
 
-#: examples/PDB:0
+#: examples/PDB:1
 msgid "Image Types"
 msgstr "Typy obrazu"
 
-#: examples/PDB:0
+#: examples/PDB:1
 msgid "Last Modified"
 msgstr "Ostatnia modyfikacja"
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid "Load $name"
 msgstr "Wczytaj $name"
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid "Load"
 msgstr "Wczytaj"
 
-#: examples/PDB:0
+#: examples/PDB:1
 msgid "Menu Path"
 msgstr "¦cie¿ka menu"
 
-#: examples/PDB:0
+#: examples/PDB:1
 msgid "More..."
 msgstr "Wiêcej..."
 
-#: examples/PDB:0
+#: examples/PDB:1
 msgid "NAME"
 msgstr "NAZWA"
 
-#: examples/perlotine:0
+#: examples/perlotine:1
 msgid "No horizontal or vertical guides found. Aborted."
 msgstr "Nie odnaleziono poziomych lub pionowych prowadnic. Rezygnacja."
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid "OK"
 msgstr "OK"
 
-#: examples/PDB:0
+#: examples/PDB:1
 msgid "PDB Explorer - the olof edition (yet still an alpha version)"
 msgstr ""
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid "Pattern Selection Dialog"
 msgstr "Okno wyboru desenia"
 
-#: examples/PDB:0
+#: examples/PDB:1
 msgid "Plug-In Path"
 msgstr "¦cie¿ka wtyczki"
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid "Previous"
 msgstr "Poprzednia"
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid "Reset all values to their default"
 msgstr "Przywróæ warto¶ci domy¶lne"
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid "Restore values to the previous ones"
 msgstr "Przywróæ poprzednie warto¶ci"
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid "Save $name"
 msgstr "Zapisz $name"
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid "Save"
 msgstr "Zapisz"
 
-#: examples/colorhtml:0
+#: examples/colorhtml:1
 msgid "Saving '$filename' as COLORHTML..."
 msgstr "Zapisywanie \"$filename\" jako COLORHTML..."
 
-#: examples/dataurl:0
+#: examples/dataurl:1
 msgid "Saving '$filename' as DATAURL..."
 msgstr "Zapisywanie \"$filename\" jako DATAURL..."
 
-#: examples/sethspin:0
+#: examples/sethspin:1
 msgid "Seth Spin..."
 msgstr "Obrót p³aszczyzny..."
 
-#: examples/PDB:0
+#: examples/PDB:1
 msgid "Shortcuts"
-msgstr ""
+msgstr "Skróty"
 
-#: examples/sethspin:0
+#: examples/sethspin:1
 msgid "Spin Layer DEST (250ms)"
 msgstr ""
 
-#: examples/sethspin:0
+#: examples/sethspin:1
 msgid "Spin Layer SRC (250ms)"
 msgstr ""
 
-#: examples/PDB:0
+#: examples/PDB:1
 msgid "Status"
 msgstr "Stan"
 
-#: examples/PDB:0
+#: examples/PDB:1
 msgid "Synopsis"
 msgstr "Opis"
 
-#: examples/PDB:0
+#: examples/PDB:1
 msgid "TYPE"
 msgstr "TYP"
 
-#: examples/translogo:0
+#: examples/translogo:1
 msgid "Text"
 msgstr "Tekst"
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid "This module was built without support for PDL."
 msgstr "Modu³ zosta³ zbudowany bez obs³ugi PDL."
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid "Unable to convert a reference to type '%s'"
 msgstr ""
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:1
 msgid "Unable to grok '%s' as colour specifier"
 msgstr "Nie mo¿na zinterpretowaæ \"%s\" jako opisu koloru"
 
-#: examples/colorhtml:0 examples/dataurl:0
+#: examples/colorhtml:1 examples/dataurl:1
 msgid "Unable to open '$filename' for writing: $!\n"
 msgstr "Nie mo¿na otworzyæ \"$filename\" do zapisu: $!\n"
 
-#: examples/dataurl:0
+#: examples/dataurl:1
 msgid "Unable to read temporary image tile $tmp: $!"
 msgstr "Nie mo¿na odczytaæ pliku tymczasowego $tmp: $!"
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid "Unsupported argumenttype $type"
 msgstr "Nieobs³ugiwany typ argumentu $type"
 
-#: examples/visual:0
+#: examples/visual:1
 msgid "Visual Scriptor"
 msgstr ""
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:1
 msgid "WARNING"
 msgstr "OSTRZE¯ENIE"
 
-#: Gimp/Fu.pm:0
+#: Gimp/Fu.pm:1
 msgid "WARNING: $function returned something that is not an image: \"$img\"\n"
 msgstr ""
 "OSTRZE¯ENIE: warto¶æ zwrócona przez $function nie jest obrazem: \"$img\"\n"
 
-#: Perl-Server:0
+#: Perl-Server:1
 msgid "WARNING: client disconnected while holding an active lock\n"
 msgstr "OSTRZE¯ENIE: klient przerwa³ po³±czenie trzymaj±c aktywn± blokadê\n"
 
-#: Perl-Server:0
+#: Perl-Server:1
 msgid "WARNING: client tried to unlock without holding a lock"
 msgstr "OSTRZE¯ENIE: klient próbowa³ zdj±æ blokadê bez jej otrzymania"
 
-#: Perl-Server:0
+#: Perl-Server:1
 msgid "WARNING: shared locking requested but not implemented"
 msgstr ""
 "OSTRZE¯ENIE: ¿±danie wspó³dzielonej blokady, która nie jest zaimplementowana"
 
-#: examples/translogo:0
+#: examples/translogo:1
 msgid "You can't run this script with an INDEXED image!!"
 msgstr "Nie mo¿na uruchomiæ skryptu na obrazie INDEKSOWANYM!!"
 
-#: examples/translogo:0
+#: examples/translogo:1
 msgid "You can't run this script without an ALPHA CHANNEL!!"
 msgstr "Nie mo¿na uruchomiæ tego skryptu bez kana³u alfa!"
 
-#: examples/prep4gif:0
+#: examples/prep4gif:1
 msgid "You need at least 2 layers to perform prep4gif"
 msgstr "Do wykonania prep4gif potrzebne s± co najmniej dwie warstwy"
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid "[undefined]"
 msgstr "[niezdefiniowany]"
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid "[unfinished]\n"
 msgstr "[niezakoñczony]\n"
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid ""
 "\n"
 "\n"
 "EMBEDDED POD DOCUMENTATION:\n"
 "\n"
 msgstr ""
+"\n"
+"\n"
+"ZAGNIE¯D¯ONA DOKUMENTACJA POD:\n"
+"\n"
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid "a color must have three components (array elements)"
 msgstr "kolor musi zawieraæ trzy sk³adowe (tablica elementów)"
 
-#: Perl-Server:0
+#: Perl-Server:1
 msgid "accepted tcp connection from "
 msgstr "zaakceptowane po³±czenie tcp"
 
-#: Perl-Server:0
+#: Perl-Server:1
 msgid "accepted unix connection"
 msgstr "zaakceptowane po³±czenie lokalne"
 
-#: Perl-Server:0
+#: Perl-Server:1
 msgid "accepting connections in $host"
 msgstr ""
 
-#: Perl-Server:0
+#: Perl-Server:1
 msgid "accepting connections on $unix_path"
 msgstr "akceptowanie po³±czeñ do $unix_path"
 
-#: Perl-Server:0
+#: Perl-Server:1
 msgid "accepting connections on port $Gimp::Net::default_tcp_port"
 msgstr "akceptowanie po³±czeñ do portu $Gimp::Net::default_tcp_port"
 
-#: Perl-Server:0
+#: Perl-Server:1
 msgid "accepting connections on port $port"
 msgstr "akceptowanie po³±czeñ do portu $port"
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid "argument incompatible with type IMAGE"
 msgstr "argument nie jest zgodny z typem IMAGE"
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid "argument is not of type %s"
 msgstr "typem argumentu nie jest %s"
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid "argument type %s expected (not %s)"
 msgstr "oczekiwano argumentu typu %s (nie %s)"
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid "arguments to main not yet supported!"
 msgstr ""
 
-#: Net/Net.pm:0
+#: Net/Net.pm:1
 msgid "authorization failed: $r[1]\n"
 msgstr "autoryzacja nie powiod³a siê: $r[1]\n"
 
-#: Net/Net.pm:0
+#: Net/Net.pm:1
 msgid "authorization ok, but: $r[1]\n"
 msgstr "autoryzacja powiod³a siê, lecz: $r[1]\n"
 
-#: Perl-Server:0
+#: Perl-Server:1
 msgid "authorization required for tcp connections"
 msgstr "wymagana autoryzacja dla po³±czeñ tcp"
 
-#: Perl-Server:0
+#: Perl-Server:1
 msgid "authorization unnecessary"
 msgstr "autoryzacja nie jest wymagana"
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid "being called as '%s', but '%s' not registered in the pdb"
 msgstr ""
 
-#: Perl-Server:0
+#: Perl-Server:1
 msgid "closing connection %d (%d requests in %g seconds)"
 msgstr "zamykanie po³±czenia %d (%d ¿±dañ w ci±gu %g sekund)"
 
-#: Gimp/Fu.pm:0
+#: Gimp/Fu.pm:1
 msgid "conversion to type $pf_type2string{$type} is not yet implemented\n"
 msgstr ""
 
-#: Net/Net.pm:0
+#: Net/Net.pm:1
 msgid "could not connect to the gimp server (make sure Perl-Server is running)"
 msgstr ""
 "nie mo¿na nawi±zaæ po³±czenia z serwerem GIMP-a (upewnij siê, ¿e Perl-Server "
 "jest uruchomiony)"
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid ""
 "dimension mismatch, pdl has dimension %d but at least %d dimensions required"
 msgstr ""
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid ""
 "dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
 msgstr ""
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid "dunno how to pass arg type %d"
 msgstr ""
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid "dunno how to return param type %d"
 msgstr ""
 
-#: Net/Net.pm:0
+#: Net/Net.pm:1
 msgid "expected perl-server at other end of socket, got @r\n"
 msgstr ""
 
-#: Net/Net.pm:0
+#: Net/Net.pm:1
 msgid "expected protocol version $Gimp::_PROT_VERSION, but server uses $r[0]\n"
 msgstr ""
 "oczekiwan± wersj± protoko³u jest $Gimp::_PROT_VERSION, lecz serwer u¿ywa "
 "wersji $r[0]\n"
 
-#: examples/colorhtml:0 examples/dataurl:0
+#: examples/colorhtml:1 examples/dataurl:1
 msgid "export failed"
 msgstr "eksport nie powiód³ siê"
 
-#: Gimp/Fu.pm:0
+#: Gimp/Fu.pm:1
 msgid "function '$exe' not found in this script (must be one of "
 msgstr ""
 
-#: Gimp/Fu.pm:0
+#: Gimp/Fu.pm:1
 msgid "function name contains dashes instead of underscores"
 msgstr ""
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:1
 msgid "function/macro \"$name\" not found in $class"
-msgstr ""
+msgstr "nie odnaleziono funkcji/makra \"$name\" w $class"
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid "get current background colour from the gimp"
 msgstr "Pobiera bie¿±cy kolor t³a GIMP-a"
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid "get current foreground colour from the gimp"
 msgstr "Pobiera bie¿±cy kolor narzêdzia GIMP-a"
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid "gimp procedure '%s' not found"
 msgstr "nie odnaleziono procedury GIMP-a \"%s\""
 
-#: Net/Net.xs:0
+#: Net/Net.xs:1
 msgid "gimp-perl-pixel functions require the PDL::Core module"
 msgstr "Funkcje gimp-perl-pixel wymagaj± modu³u PDL::Core"
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid ""
 "gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to "
 "gimp-1.1 and report this error"
 msgstr ""
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid "gimp_tile_get_data is not yet implemented\n"
 msgstr "gimp_tile_get_data nie jest jeszcze zaimplementowana\n"
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid "gimp_tile_set_data is not yet implemented\n"
 msgstr "gimp_tile_set_data nie jest jeszcze zaimplementowana\n"
 
-#: Perl-Server:0
+#: Perl-Server:1
 msgid "illegal command received, aborting connection"
 msgstr "otrzymano niepoprawne polecenie, po³±czenie przerwane"
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid "illegal parasite specification, arrayref expected"
 msgstr ""
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid "illegal parasite specification, expected three array members"
 msgstr ""
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid "illegal parasite specification, reference expected"
 msgstr ""
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid "illegal type for colour specification"
 msgstr "niepoprawny typ dla okre¶lenia koloru"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:1
 msgid "interface '$interface_type' unsupported."
 msgstr "interfejs '$interface_type' nie jest obs³ugiwany."
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:1
 msgid "interface=... tag is no longer supported\n"
-msgstr ""
+msgstr "znacznik interface=... nie jest ju¿ obs³ugiwany\n"
 
-#: Perl-Server:0
+#: Perl-Server:1
 msgid ""
 "invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
 msgstr ""
 
-#: UI/UI.xs:0
+#: UI/UI.xs:1
 msgid "last argument to gimp_pattern_select_widget must be scalar ref"
 msgstr ""
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid ""
 "malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or "
 "PARAM_TYPE"
 msgstr ""
 
-#: Gimp/Fu.pm:0
+#: Gimp/Fu.pm:1
 msgid ""
 "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
 msgstr ""
 "¶cie¿ka menu MUSI zaczynaæ siê od <Image>, <Toolbox>, <Load>, <Save> lub "
 "<None>!"
 
-#: Gimp/Fu.pm:0
+#: Gimp/Fu.pm:1
 msgid "no additional information available, use --help\n"
 msgstr "dodatkowe informacje nie s± dostêpne, u¿yj --help\n"
 
-#: Gimp/Util.pm:0
+#: Gimp/Util.pm:1
 msgid "no font specified, using default"
 msgstr "nie okre¶lono czcionki, wykorzystanie domy¶lnej"
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid "not enough"
 msgstr "niewystarczaj±ca liczba"
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid "only blessed scalars accepted here"
 msgstr ""
 
-#: Gimp/Fu.pm:0
+#: Gimp/Fu.pm:1
 msgid "parameter '$entry->[1]' is not optional\n"
-msgstr ""
+msgstr "parametr '$entry->[1]' nie jest opcjonalny\n"
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid "params and return_vals must be array refs (even if empty)!"
 msgstr ""
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid "pdl height != region height"
-msgstr ""
+msgstr "wysoko¶æ pdl != wysoko¶æ obszaru"
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid "perl-arrayref required as datatype for a gimp-array"
 msgstr ""
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid ""
 "pixel size mismatch, pdl has %d channel pixels but %d channels are required"
 msgstr ""
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid "plug-in returned %d more values than expected"
 msgstr "wtyczka zwróci³a o %d warto¶ci wiêcej od oczekiwanej liczby"
 
-#: Perl-Server:0
+#: Perl-Server:1
 msgid "received QUIT request"
 msgstr "otrzymano ¿±danie QUIT (zakoñcz)"
 
-#: Gimp/Fu.pm:0
+#: Gimp/Fu.pm:1
 msgid "register called with too many or wrong arguments\n"
 msgstr ""
 "wywo³anie rejestru z niepoprawnymi argumentami lub niew³a¶ciw± ich liczb±\n"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:1
 msgid "required callback 'net' not found\n"
 msgstr ""
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:1
 msgid "required callback 'query' not found\n"
 msgstr ""
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:1
 msgid "required callback 'run' not found\n"
 msgstr ""
 
-#: Gimp/Fu.pm:0
+#: Gimp/Fu.pm:1
 msgid "run_mode must be INTERACTIVE, NONINTERACTIVE or RUN_WITH_LAST_VALS\n"
 msgstr ""
 
-#: Perl-Server:0
+#: Perl-Server:1
 msgid "server going down..."
 msgstr "koñczenie pracy serwera..."
 
-#: Net/Net.pm:0
+#: Net/Net.pm:1
 msgid "server requests authorization, but no authorization available\n"
 msgstr "serwer wymaga autoryzacji, lecz autoryzacja nie jest dostêpna\n"
 
-#: Perl-Server:0
+#: Perl-Server:1
 msgid "server version $Gimp::VERSION started"
 msgstr "serwer w wersji $Gimp::VERSION zosta³ uruchomiony"
 
-#: Gimp/Util.pm:0
+#: Gimp/Util.pm:1
 msgid "text string is empty"
 msgstr "tekst jest pusty"
 
-#: Gimp/Fu.pm:0
+#: Gimp/Fu.pm:1
 msgid ""
 "the gtk perl module is required to open a dialog\n"
 "window, running with default values"
@@ -1134,7 +1138,7 @@ msgstr ""
 "do utworzenia okna potrzebny jest modu³ gtk perl\n"
 "uruchomianie z warto¶ciami domy¶lnymi"
 
-#: Gimp/Fu.pm:0
+#: Gimp/Fu.pm:1
 msgid ""
 "the gtk perl module is required to run\n"
 "this plug-in in interactive mode\n"
@@ -1142,82 +1146,82 @@ msgstr ""
 "do uruchomienia tej wtyczki w trybie interaktywnym\n"
 "potrzebny jest modu³ gtk perl\n"
 
-#: examples/PDB:0
+#: examples/PDB:1
 msgid "too many arguments"
 msgstr "za du¿o argumentów"
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid "too many"
 msgstr "zbyt wiele"
 
-#: Net/Net.pm:0
+#: Net/Net.pm:1
 msgid "trying to start gimp with options \"$opt\"\n"
 msgstr "próba uruchomienia GIMP-a z opcjami \"$opt\"\n"
 
-#: Perl-Server:0
+#: Perl-Server:1
 msgid "unable to accept tcp connection: $!\n"
 msgstr "nie mo¿na zaakceptowaæ po³±czenia tcp: $!\n"
 
-#: Perl-Server:0
+#: Perl-Server:1
 msgid "unable to accept unix connection: $!\n"
 msgstr "nie mo¿na zaakceptowaæ po³±czenia unix: $!\n"
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid "unable to convert Gimp::Drawable into Gimp::GimpDrawable (id %d)"
 msgstr "nie mo¿na przekonwertowaæ Gimp::Drawable na Gimp::GimpDrawable (id %d)"
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid "unable to create '$fn': $!"
 msgstr "nie mo¿na stworzyæ \"$fn\": $!"
 
-#: Perl-Server:0
+#: Perl-Server:1
 msgid "unable to create listening tcp socket: $!\n"
 msgstr "nie mo¿na utworzyæ nas³uchuj±cego na gnie¼dzie tcp: $!\n"
 
-#: Perl-Server:0
+#: Perl-Server:1
 msgid "unable to create listening unix socket: $!\n"
 msgstr "nie mo¿na utworzyæ nas³uchuj±cego na gnie¼dzie lokalnego: $!\n"
 
-#: Net/Net.pm:0
+#: Net/Net.pm:1
 msgid "unable to create socketpair for gimp communications: $!"
 msgstr "nie mo¿na stworzyæ pary gniazd do komunikacji z GIMP-em: $!"
 
-#: Net/Net.pm:0
+#: Net/Net.pm:1
 msgid "unable to fork: $!"
 msgstr "nie mo¿na utworzyæ procesu: $!"
 
-#: Gimp/Lib.xs:0
+#: Gimp/Lib.xs:1
 msgid "unable to grok colour specification"
 msgstr "Nie mo¿na zinterpretowaæ opisu koloru"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:1
 msgid "unable to open $rgb_db_path"
 msgstr "nie mo¿na otworzyæ $rgb_db_path"
 
-#: Perl-Server:0
+#: Perl-Server:1
 msgid "unable to open Gimp::Net communications socket: $!\n"
 msgstr "nie mo¿na otworzyæ gniazda komunikacyjnego Gimp::Net $!\n"
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid "unable to read '$fn': $!"
 msgstr "nie mo¿na odczytaæ \"$fn\": $!"
 
-#: UI/UI.pm:0
+#: UI/UI.pm:1
 msgid "unable to read temporary file $tmp: $!"
 msgstr "nie mo¿na odczytaæ pliku tymczasowego $tmp: $!"
 
-#: Perl-Server:0
+#: Perl-Server:1
 msgid "unauthorized command received, aborting connection"
 msgstr "nieautoryzowane polecenie, po³±czenie przerwane"
 
-#: examples/dataurl:0
+#: examples/dataurl:1
 msgid "url size is too large ($max > 1024)\n"
 msgstr "rozmiar url jest za du¿y ($max > 1024)\n"
 
-#: Perl-Server:0
+#: Perl-Server:1
 msgid "wrong authorization, aborting connection"
 msgstr "niepoprawna autoryzacja, po³±czenie przerwane"
 
-#: Gimp/Compat.pm:0
+#: Gimp/Compat.pm:1
 msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
 msgstr ""
