@@ -25,16 +25,9 @@
 
 #include "apptypes.h"
 
-#include "gimpprogress.h"
-#include "gimprc.h"
 #include "pixel_region.h"
 #include "tile_manager.h"
 #include "tile.h"
-
-
-/*********************/
-/*  Local Variables  */
-
 
 
 /*********************/
@@ -119,13 +112,13 @@ pixel_region_get_row (PixelRegion *PR,
 {
   Tile   *tile;
   guchar *tile_data;
-  gint inc;
-  gint end;
-  gint boundary;
-  gint b;
-  gint npixels;
-  gint tilebpp;
-  
+  gint    inc;
+  gint    end;
+  gint    boundary;
+  gint    b;
+  gint    npixels;
+  gint    tilebpp;
+
   end = x + w;
 
   pixel_region_get_async (PR, x, y, end, y);
@@ -171,8 +164,8 @@ pixel_region_set_row (PixelRegion *PR,
 {
   Tile   *tile;
   guchar *tile_data;
-  gint end;
-  gint npixels;
+  gint    end;
+  gint    npixels;
 
   end = x + w;
 
@@ -208,11 +201,11 @@ pixel_region_get_col (PixelRegion *PR,
 {
   Tile   *tile;
   guchar *tile_data;
-  gint tilebpp;
-  gint inc;
-  gint end;
-  gint boundary;
-  gint b;
+  gint    tilebpp;
+  gint    inc;
+  gint    end;
+  gint    boundary;
+  gint    b;
 
   end = y + h;
 
@@ -250,13 +243,13 @@ pixel_region_set_col (PixelRegion *PR,
 		      gint         h, 
 		      guchar      *data)
 {
-  Tile *tile;
+  Tile   *tile;
   guchar *tile_data;
-  gint tilebpp;
-  gint inc;
-  gint end;
-  gint boundary;
-  gint b;
+  gint    tilebpp;
+  gint    inc;
+  gint    end;
+  gint    boundary;
+  gint    b;
 
   end = y + h;
 
@@ -298,13 +291,13 @@ gpointer
 pixel_regions_register (gint num_regions, 
 			...)
 {
-  PixelRegion *PR;
-  PixelRegionHolder *PRH;
+  PixelRegion         *PR;
+  PixelRegionHolder   *PRH;
   PixelRegionIterator *PRI;
-  gboolean found;
-  va_list ap;
+  gboolean             found;
+  va_list              ap;
 
-  PRI = (PixelRegionIterator *) g_malloc (sizeof (PixelRegionIterator));
+  PRI = g_new (PixelRegionIterator, 1);
   PRI->pixel_regions = NULL;
   PRI->process_count = 0;
   PRI->dirty_tiles   = 1;
@@ -318,7 +311,7 @@ pixel_regions_register (gint num_regions,
   while (num_regions --)
     {
       PR = va_arg (ap, PixelRegion *);
-      PRH = (PixelRegionHolder *) g_malloc (sizeof (PixelRegionHolder));
+      PRH = g_new (PixelRegionHolder, 1);
       PRH->PR = PR;
 
       if (PR != NULL)
@@ -353,8 +346,8 @@ pixel_regions_register (gint num_regions,
 gpointer
 pixel_regions_process (gpointer PRI_ptr)
 {
-  GSList *list;
-  PixelRegionHolder *PRH;
+  GSList              *list;
+  PixelRegionHolder   *PRH;
   PixelRegionIterator *PRI;
 
   PRI = (PixelRegionIterator *) PRI_ptr;
@@ -399,7 +392,7 @@ pixel_regions_process (gpointer PRI_ptr)
 void
 pixel_regions_process_stop (gpointer PRI_ptr)
 {
-  GSList *list;
+  GSList              *list;
   PixelRegionHolder   *PRH;
   PixelRegionIterator *PRI;
 
@@ -446,10 +439,10 @@ pixel_regions_process_stop (gpointer PRI_ptr)
 static gint
 get_portion_height (PixelRegionIterator *PRI)
 {
-  GSList *list;
+  GSList            *list;
   PixelRegionHolder *PRH;
-  gint min_height = G_MAXINT;
-  gint height;
+  gint               min_height = G_MAXINT;
+  gint               height;
 
   /*  Find the minimum height to the next vertical tile 
    *  (in the case of a tile manager) or to the end of the 
@@ -488,10 +481,10 @@ get_portion_height (PixelRegionIterator *PRI)
 static gint
 get_portion_width (PixelRegionIterator *PRI)
 {
-  GSList *list;
+  GSList            *list;
   PixelRegionHolder *PRH;
-  gint min_width = G_MAXINT;
-  gint width;
+  gint               min_width = G_MAXINT;
+  gint               width;
 
   /*  Find the minimum width to the next vertical tile 
    *  (in the case of a tile manager) or to the end of 
@@ -531,7 +524,7 @@ static gpointer
 pixel_regions_configure (PixelRegionIterator *PRI)
 {
   PixelRegionHolder *PRH;
-  GSList *list;
+  GSList            *list;
 
   /*  Determine the portion width and height  */
   PRI->portion_width = get_portion_width (PRI);

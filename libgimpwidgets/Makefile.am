@@ -58,6 +58,7 @@ libgimpwidgets_1_3_la_SOURCES = \
 libgimpwidgetsinclude_HEADERS = \
 	gimpwidgets.h		\
 	gimpwidgetstypes.h	\
+	gimpbutton.h		\
 	gimpchainbutton.h	\
 	gimpcolorarea.h		\
 	gimpcolorbutton.h	\

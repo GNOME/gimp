@@ -24,9 +24,8 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
-#include "errors.h"
 #include "boundary.h"
+#include "errors.h"
 #include "pixel_region.h"
 #include "tile.h"
 #include "tile_manager.h"
@@ -211,7 +210,7 @@ find_empty_segs (PixelRegion  *maskPR,
 	      
 	      last = val;
 	    }
-	} 
+	}
     }
   *num_empty = l_num_empty;
 
@@ -237,7 +236,7 @@ make_seg (gint     x1,
       max_segs += MAX_SEGS_INC;
 
       tmp_segs = (BoundSeg *) g_realloc ((void *) tmp_segs,
-					sizeof (BoundSeg) * max_segs);
+					 sizeof (BoundSeg) * max_segs);
 
       if (!tmp_segs)
 	gimp_fatal_error ("make_seg(): Unable to reallocate segments array for mask boundary.");

@@ -34,3 +34,36 @@ gimpcolortypes
 @v: 
 @a: 
 
+<!-- ##### USER_FUNCTION GimpRenderFunc ##### -->
+<para>
+
+</para>
+
+@x: 
+@y: 
+@color: 
+@data: 
+
+
+<!-- ##### USER_FUNCTION GimpPutPixelFunc ##### -->
+<para>
+
+</para>
+
+@x: 
+@y: 
+@color: 
+@data: 
+
+
+<!-- ##### USER_FUNCTION GimpProgressFunc ##### -->
+<para>
+
+</para>
+
+@min: 
+@max: 
+@current: 
+@data: 
+
+

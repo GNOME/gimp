@@ -25,6 +25,9 @@ gimp_hsv_to_rgb4
 <FILE>gimpcolortypes</FILE>
 GimpRGB
 GimpHSV
+GimpRenderFunc
+GimpPutPixelFunc
+GimpProgressFunc
 </SECTION>
 
 <SECTION>
@@ -65,3 +68,17 @@ INTENSITY_BLUE
 INTENSITY
 </SECTION>
 
+<SECTION>
+<FILE>gimpadaptivesupersample</FILE>
+gimp_adaptive_supersample_area
+</SECTION>
+
+<SECTION>
+<FILE>gimpbilinear</FILE>
+gimp_bilinear
+gimp_bilinear_8
+gimp_bilinear_16
+gimp_bilinear_32
+gimp_bilinear_rgb
+gimp_bilinear_rgba
+</SECTION>

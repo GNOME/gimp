@@ -45,8 +45,6 @@ gimp_SOURCES = \
 	ops_buttons.h		\
 	qmask.c			\
 	qmask.h			\
-	resize.c		\
-	resize.h		\
 	resolution_calibrate.c	\
 	resolution_calibrate.h	\
 	undo_history.c		\
@@ -82,6 +80,8 @@ gimp_SOURCES = \
 	image_map.h		\
 	module_db.c		\
 	module_db.h		\
+	resize.c		\
+	resize.h		\
 	user_install.c		\
 	user_install.h		\
 ##
@@ -92,6 +92,8 @@ gimp_SOURCES = \
 	floating_sel.c		\
 	floating_sel.h		\
 	fsdither.h		\
+	gimphistogram.c		\
+	gimphistogram.h		\
 	gimppreviewcache.h	\
 	gimppreviewcache.c	\
 	parasitelist.c		\
@@ -105,8 +107,7 @@ gimp_SOURCES = \
 	boundary.h		\
 	brush_scale.c		\
 	brush_scale.h		\
-	gimphistogram.c		\
-	gimphistogram.h		\
+	gimpcheck.h		\
 	gimplut.c		\
 	gimplut.h		\
 	lut_funcs.c		\

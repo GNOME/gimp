@@ -86,7 +86,6 @@ Enums and definitions.
 @GIMP_GRAY_CHANNEL: 
 @GIMP_INDEXED_CHANNEL: 
 @GIMP_ALPHA_CHANNEL: 
-@GIMP_AUXILLARY_CHANNEL: 
 
 <!-- ##### ENUM GimpCloneType ##### -->
 <para>

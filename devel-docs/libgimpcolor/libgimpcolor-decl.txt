@@ -1,113 +1,3 @@
-<FUNCTION>
-<NAME>gimp_rgb_to_hsv</NAME>
-<RETURNS>void  </RETURNS>
-const GimpRGB *rgb,GimpHSV       *hsv
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_rgb_to_hsl</NAME>
-<RETURNS>void  </RETURNS>
-const GimpRGB *rgb,gdouble       *hue,gdouble       *saturation,gdouble       *lightness
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_hsv_to_rgb</NAME>
-<RETURNS>void  </RETURNS>
-const GimpHSV *hsv,GimpRGB       *rgb
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_hsl_to_rgb</NAME>
-<RETURNS>void  </RETURNS>
-gdouble        hue,gdouble        saturation,gdouble        lightness,GimpRGB       *rgb
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_rgb_to_hwb</NAME>
-<RETURNS>void  </RETURNS>
-const GimpRGB *rgb,gdouble       *hue,gdouble       *whiteness,gdouble       *blackness
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_hwb_to_rgb</NAME>
-<RETURNS>void  </RETURNS>
-gdouble        hue,gdouble        whiteness,gdouble        blackness,GimpRGB       *rgb
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_rgb_to_hsv_int</NAME>
-<RETURNS>void  </RETURNS>
-gint    *red         ,gint    *green       ,gint    *blue
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_hsv_to_rgb_int</NAME>
-<RETURNS>void  </RETURNS>
-gint    *hue         ,gint    *saturation  ,gint    *value
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_rgb_to_hls_int</NAME>
-<RETURNS>void  </RETURNS>
-gint    *red         ,gint    *green       ,gint    *blue
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_rgb_to_l_int</NAME>
-<RETURNS>gint  </RETURNS>
-gint     red,gint     green,gint     blue
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_hls_to_rgb_int</NAME>
-<RETURNS>void  </RETURNS>
-gint    *hue         ,gint    *lightness   ,gint    *saturation
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_rgb_to_hsv_double</NAME>
-<RETURNS>void  </RETURNS>
-gdouble *red         ,gdouble *green       ,gdouble *blue
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_hsv_to_rgb_double</NAME>
-<RETURNS>void  </RETURNS>
-gdouble *hue         ,gdouble *saturation,gdouble *value
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_rgb_to_hsv4</NAME>
-<RETURNS>void  </RETURNS>
-guchar  *hsv,gdouble *red,gdouble *green,gdouble *blue
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_hsv_to_rgb4</NAME>
-<RETURNS>void  </RETURNS>
-guchar  *rgb,gdouble  hue,gdouble  saturation,gdouble  value
-</FUNCTION>
-<STRUCT>
-<NAME>GimpRGB</NAME>
-</STRUCT>
-<STRUCT>
-<NAME>GimpRGB</NAME>
-struct GimpRGB
-{
-  gdouble r, g, b, a;
-};
-</STRUCT>
-<STRUCT>
-<NAME>GimpHSV</NAME>
-</STRUCT>
-<STRUCT>
-<NAME>GimpHSV</NAME>
-struct GimpHSV
-{
-  gdouble h, s, v, a;
-};
-</STRUCT>
-<FUNCTION>
-<NAME>gimp_hsv_set</NAME>
-<RETURNS>void  </RETURNS>
-GimpHSV       *hsv,gdouble        h,gdouble        s,gdouble        v
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_hsv_clamp</NAME>
-<RETURNS>void  </RETURNS>
-GimpHSV       *hsv
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_hsva_set</NAME>
-<RETURNS>void  </RETURNS>
-GimpHSV       *hsva,gdouble        h,gdouble        s,gdouble        v,gdouble        a
-</FUNCTION>
 <ENUM>
 <NAME>GimpRGBCompositeMode</NAME>
 typedef enum
@@ -245,3 +135,172 @@ const GimpRGB *rgba1,const GimpRGB *rgba2
 			  (g) * INTENSITY_GREEN + \
 			  (b) * INTENSITY_BLUE  + 0.001)
 </MACRO>
+<FUNCTION>
+<NAME>gimp_hsv_set</NAME>
+<RETURNS>void  </RETURNS>
+GimpHSV       *hsv,gdouble        h,gdouble        s,gdouble        v
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_hsv_clamp</NAME>
+<RETURNS>void  </RETURNS>
+GimpHSV       *hsv
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_hsva_set</NAME>
+<RETURNS>void  </RETURNS>
+GimpHSV       *hsva,gdouble        h,gdouble        s,gdouble        v,gdouble        a
+</FUNCTION>
+<STRUCT>
+<NAME>GimpRGB</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GimpRGB</NAME>
+struct GimpRGB
+{
+  gdouble r, g, b, a;
+};
+</STRUCT>
+<STRUCT>
+<NAME>GimpHSV</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GimpHSV</NAME>
+struct GimpHSV
+{
+  gdouble h, s, v, a;
+};
+</STRUCT>
+<USER_FUNCTION>
+<NAME>GimpRenderFunc</NAME>
+<RETURNS>void </RETURNS>
+gdouble   x,
+                                   gdouble   y,
+                                   GimpRGB  *color,
+                                   gpointer  data
+</USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>GimpPutPixelFunc</NAME>
+<RETURNS>void </RETURNS>
+gint      x,
+                                   gint      y,
+                                   GimpRGB  *color,
+                                   gpointer  data
+</USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>GimpProgressFunc</NAME>
+<RETURNS>void </RETURNS>
+gint      min,
+                                   gint      max,
+                                   gint      current,
+                                   gpointer  data
+</USER_FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgb_to_hsv</NAME>
+<RETURNS>void  </RETURNS>
+const GimpRGB *rgb,GimpHSV       *hsv
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgb_to_hsl</NAME>
+<RETURNS>void  </RETURNS>
+const GimpRGB *rgb,gdouble       *hue,gdouble       *saturation,gdouble       *lightness
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_hsv_to_rgb</NAME>
+<RETURNS>void  </RETURNS>
+const GimpHSV *hsv,GimpRGB       *rgb
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_hsl_to_rgb</NAME>
+<RETURNS>void  </RETURNS>
+gdouble        hue,gdouble        saturation,gdouble        lightness,GimpRGB       *rgb
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgb_to_hwb</NAME>
+<RETURNS>void  </RETURNS>
+const GimpRGB *rgb,gdouble       *hue,gdouble       *whiteness,gdouble       *blackness
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_hwb_to_rgb</NAME>
+<RETURNS>void  </RETURNS>
+gdouble        hue,gdouble        whiteness,gdouble        blackness,GimpRGB       *rgb
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgb_to_hsv_int</NAME>
+<RETURNS>void  </RETURNS>
+gint    *red         ,gint    *green       ,gint    *blue
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_hsv_to_rgb_int</NAME>
+<RETURNS>void  </RETURNS>
+gint    *hue         ,gint    *saturation  ,gint    *value
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgb_to_hls_int</NAME>
+<RETURNS>void  </RETURNS>
+gint    *red         ,gint    *green       ,gint    *blue
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgb_to_l_int</NAME>
+<RETURNS>gint  </RETURNS>
+gint     red,gint     green,gint     blue
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_hls_to_rgb_int</NAME>
+<RETURNS>void  </RETURNS>
+gint    *hue         ,gint    *lightness   ,gint    *saturation
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgb_to_hsv_double</NAME>
+<RETURNS>void  </RETURNS>
+gdouble *red         ,gdouble *green       ,gdouble *blue
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_hsv_to_rgb_double</NAME>
+<RETURNS>void  </RETURNS>
+gdouble *hue         ,gdouble *saturation,gdouble *value
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgb_to_hsv4</NAME>
+<RETURNS>void  </RETURNS>
+guchar  *hsv,gdouble *red,gdouble *green,gdouble *blue
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_hsv_to_rgb4</NAME>
+<RETURNS>void  </RETURNS>
+guchar  *rgb,gdouble  hue,gdouble  saturation,gdouble  value
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_adaptive_supersample_area</NAME>
+<RETURNS>gulong  </RETURNS>
+gint              x1,gint              y1,gint              x2,gint              y2,gint              max_depth,gdouble           threshold,GimpRenderFunc    render_func,gpointer          render_data,GimpPutPixelFunc  put_pixel_func,gpointer          put_pixel_data,GimpProgressFunc  progress_func,gpointer          progress_data
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_bilinear</NAME>
+<RETURNS>gdouble  </RETURNS>
+gdouble  x,gdouble  y,gdouble *values
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_bilinear_8</NAME>
+<RETURNS>guchar  </RETURNS>
+gdouble  x,gdouble  y,guchar  *values
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_bilinear_16</NAME>
+<RETURNS>guint16  </RETURNS>
+gdouble  x,gdouble  y,guint16 *values
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_bilinear_32</NAME>
+<RETURNS>guint32  </RETURNS>
+gdouble  x,gdouble  y,guint32 *values
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_bilinear_rgb</NAME>
+<RETURNS>GimpRGB  </RETURNS>
+gdouble  x,gdouble  y,GimpRGB *values
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_bilinear_rgba</NAME>
+<RETURNS>GimpRGB  </RETURNS>
+gdouble  x,gdouble  y,GimpRGB *values
+</FUNCTION>

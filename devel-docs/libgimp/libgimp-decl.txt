@@ -966,8 +966,7 @@ typedef enum
   GIMP_BLUE_CHANNEL,
   GIMP_GRAY_CHANNEL,
   GIMP_INDEXED_CHANNEL,
-  GIMP_ALPHA_CHANNEL,
-  GIMP_AUXILLARY_CHANNEL
+  GIMP_ALPHA_CHANNEL
 } GimpChannelType;
 </ENUM>
 <ENUM>
@@ -3490,63 +3489,4 @@ GIOChannel      *channel,gdouble         *data,gint             count
 <NAME>wire_write_string</NAME>
 <RETURNS>gboolean  </RETURNS>
 GIOChannel      *channel,gchar          **data,gint             count
-</FUNCTION>
-<USER_FUNCTION>
-<NAME>GimpRenderFunc</NAME>
-<RETURNS>void </RETURNS>
-gdouble   x,
-                                   gdouble   y,
-                                   GimpRGB  *color,
-                                   gpointer  data
-</USER_FUNCTION>
-<USER_FUNCTION>
-<NAME>GimpPutPixelFunc</NAME>
-<RETURNS>void </RETURNS>
-gint      x,
-                                   gint      y,
-                                   GimpRGB  *color,
-                                   gpointer  data
-</USER_FUNCTION>
-<USER_FUNCTION>
-<NAME>GimpProgressFunc</NAME>
-<RETURNS>void </RETURNS>
-gint      min,
-                                   gint      max,
-                                   gint      current,
-                                   gpointer  data
-</USER_FUNCTION>
-<FUNCTION>
-<NAME>gimp_adaptive_supersample_area</NAME>
-<RETURNS>gulong  </RETURNS>
-gint              x1,gint              y1,gint              x2,gint              y2,gint              max_depth,gdouble           threshold,GimpRenderFunc    render_func,gpointer          render_data,GimpPutPixelFunc  put_pixel_func,gpointer          put_pixel_data,GimpProgressFunc  progress_func,gpointer          progress_data
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_bilinear</NAME>
-<RETURNS>gdouble  </RETURNS>
-gdouble  x,gdouble  y,gdouble *values
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_bilinear_8</NAME>
-<RETURNS>guchar  </RETURNS>
-gdouble  x,gdouble  y,guchar  *values
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_bilinear_16</NAME>
-<RETURNS>guint16  </RETURNS>
-gdouble  x,gdouble  y,guint16 *values
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_bilinear_32</NAME>
-<RETURNS>guint32  </RETURNS>
-gdouble  x,gdouble  y,guint32 *values
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_bilinear_rgb</NAME>
-<RETURNS>GimpRGB  </RETURNS>
-gdouble  x,gdouble  y,GimpRGB *values
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_bilinear_rgba</NAME>
-<RETURNS>GimpRGB  </RETURNS>
-gdouble  x,gdouble  y,GimpRGB *values
 </FUNCTION>

@@ -33,7 +33,6 @@
 
 #include "pixel_processor.h"
 #include "pixel_region.h"
-#include "gimprc.h"
 
 #ifdef ENABLE_MP
 #include "tile.h"

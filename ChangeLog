@@ -1,3 +1,33 @@
+2001-05-14  Michael Natterer  <mitch@gimp.org>
+
+	* README.patch_xinput_airbrush
+	* patch_xinput_airbrush: removed because GTK+-2.0 will manage the
+	number of valuators dynamically.
+
+	* app/Makefile.am: some more thinking about subdirectories.
+
+	* app/boundary.c
+	* app/pixel_processor.c
+	* app/pixel_region.c: removed #include's, code cleanup.
+
+	* libgimpwidgets/Makefile.am: install gimpbutton.h
+
+	* devel-docs/libgimp/tmpl/gimpadaptivesupersample.sgml
+	* devel-docs/libgimp/tmpl/gimpbilinear.sgml: removed ...
+
+	* devel-docs/libgimpcolor/tmpl/gimpadaptivesupersample.sgml
+	* devel-docs/libgimpcolor/tmpl/gimpbilinear.sgml: ... and added here.
+
+	* devel-docs/libgimp/libgimp-decl.txt
+	* devel-docs/libgimp/libgimp-sections.txt
+	* devel-docs/libgimp/libgimp.hierarchy
+	* devel-docs/libgimp/tmpl/gimpenums.sgml
+	* devel-docs/libgimpcolor/libgimpcolor-decl.txt
+	* devel-docs/libgimpcolor/libgimpcolor-docs.sgml
+	* devel-docs/libgimpcolor/libgimpcolor-sections.txt
+	* devel-docs/libgimpcolor/libgimpcolor.hierarchy
+	* devel-docs/libgimpcolor/tmpl/gimpcolortypes.sgml: regenerated.
+
 2001-05-14  Sven Neumann  <sven@gimp.org>
 
 	* app/Makefile.am
