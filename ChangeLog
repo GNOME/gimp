@@ -1,3 +1,10 @@
+2002-10-29  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpcolornotebook.[ch]: made the color notebook
+	a GimpColorSelector subclass so they have the same API.
+
+	* app/gui/color-notebook.c: changed accordingly.
+
 2002-10-29  Sven Neumann  <sven@gimp.org>
 
 	* libgimpmodule/gimpmodule.c

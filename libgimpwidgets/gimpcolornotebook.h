@@ -26,6 +26,8 @@
 #ifndef __GIMP_COLOR_NOTEBOOK_H__
 #define __GIMP_COLOR_NOTEBOOK_H__
 
+#include <libgimpwidgets/gimpcolorselector.h>
+
 G_BEGIN_DECLS
 
 
@@ -41,42 +43,21 @@ typedef struct _GimpColorNotebookClass GimpColorNotebookClass;
 
 struct _GimpColorNotebook
 {
-  GtkNotebook               parent_instance;
+  GimpColorSelector  parent_instance;
 
-  GimpRGB                   rgb;
-  GimpHSV                   hsv;
+  GtkWidget         *notebook;
 
-  GimpColorSelectorChannel  channel;
-
-  GList                    *selectors;
-  GimpColorSelector        *cur_page;
+  GList             *selectors;
+  GimpColorSelector *cur_page;
 };
 
 struct _GimpColorNotebookClass
 {
-  GtkNotebookClass  parent_class;
-
-  /*  signals  */
-  void (* color_changed) (GimpColorNotebook *notebook,
-                          const GimpRGB     *rgb,
-                          const GimpHSV     *hsv);
+  GimpColorSelectorClass  parent_class;
 };
 
 
-GType       gimp_color_notebook_get_type  (void) G_GNUC_CONST;
-
-GtkWidget * gimp_color_notebook_new       (void);
-
-void        gimp_color_notebook_set_color     (GimpColorNotebook *notebook,
-                                               const GimpRGB     *rgb,
-                                               const GimpHSV     *hsv);
-void        gimp_color_notebook_get_color     (GimpColorNotebook *notebook,
-                                               GimpRGB           *rgb,
-                                               GimpHSV           *hsv);
-void        gimp_color_notebook_color_changed (GimpColorNotebook *notebook);
-
-void        gimp_color_notebook_set_channel   (GimpColorNotebook        *notebook,
-                                               GimpColorSelectorChannel  channel);
+GType   gimp_color_notebook_get_type (void) G_GNUC_CONST;
 
 
 G_END_DECLS
