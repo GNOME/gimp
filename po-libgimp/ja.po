@@ -1,12 +1,12 @@
 # GIMP libgimp message translation table
-# Copyright (C) 2000 Free Software Foundation, Inc.
-# SHIRASAKI Yasuhiro <yasuhiro@gnome.gr.jp>, 2000.
+# Copyright (C) 2000, 2002 Free Software Foundation, Inc.
+# SHIRASAKI Yasuhiro <yasuhiro@gnome.gr.jp>, 2000, 2002.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.0\n"
-"POT-Creation-Date: 2001-11-12 22:34-0800\n"
-"PO-Revision-Date: 2000-11-25 22:01+09:00\n"
+"POT-Creation-Date: 2002-05-05 16:21+0900\n"
+"PO-Revision-Date: 2002-05-05 16:36+0900\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -30,9 +30,8 @@ msgid "Merge Visible Layers"
 msgstr "可視レイヤーの結合"
 
 #: libgimp/gimpexport.c:179
-#, fuzzy
 msgid "can't handle layer offsets, size or opacity"
-msgstr "レイヤーを取り扱えません"
+msgstr "レイヤーオフセット, サイズか不透明度を取り扱えません"
 
 #: libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
 msgid "can only handle layers as animation frames"
@@ -105,11 +104,11 @@ msgstr "アルファチャンネルを追加"
 #. the dialog
 #: libgimp/gimpexport.c:356
 msgid "Confirm Save"
-msgstr ""
+msgstr "保存確認"
 
 #: libgimp/gimpexport.c:360
 msgid "Confirm"
-msgstr ""
+msgstr "確認"
 
 #: libgimp/gimpexport.c:362 libgimp/gimpexport.c:423
 #: libgimp/gimpquerybox.c:204 libgimp/gimpquerybox.c:260
@@ -124,6 +123,8 @@ msgid ""
 "You are about to save %s as %s.\n"
 "This will not save the visible layers."
 msgstr ""
+"%s を %s として保存しようとしています.\n"
+"これは可視レイヤーを保存しません."
 
 #.
 #. *  Plug-ins must have called gtk_init () before calling gimp_export ().
@@ -155,11 +156,11 @@ msgstr "エクスポート変換は元画像には影響を与えません."
 
 #: libgimp/gimpexport.c:569
 msgid "a layer mask"
-msgstr ""
+msgstr "レイヤーマスク"
 
 #: libgimp/gimpexport.c:571
 msgid "a channel (saved selection)"
-msgstr ""
+msgstr "チャンネル (保存された選択領域)"
 
 #: libgimp/gimpfileselection.c:388
 msgid "Select File"

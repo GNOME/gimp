@@ -1,13 +1,13 @@
 # GIMP Script-Fu Japanese message catalog
-# Copyright (C) 2000 Free Software Foundation, Inc.
-# Shirasaki Yasuhiro <yasuhiro@gnome.gr.jp>, 2000
+# Copyright (C) 2000, 2002 Free Software Foundation, Inc.
+# Shirasaki Yasuhiro <yasuhiro@gnome.gr.jp>, 2000, 2002
 # Takashi Kido <yositaka@yd5.so-net.ne.jp>, 2000
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.0\n"
-"POT-Creation-Date: 2002-02-03 17:56-0800\n"
-"PO-Revision-Date: 2000-12-07 00:14+09:00\n"
+"POT-Creation-Date: 2002-05-05 17:13+0900\n"
+"PO-Revision-Date: 2002-05-05 17:12+0900\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -193,68 +193,64 @@ msgstr "<Toolbox>/拡張/Script-Fu/再読み込み"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:148
 #: plug-ins/dbbrowser/dbbrowser_utils.c:167
-#, fuzzy
 msgid "DB Browser (init...)"
-msgstr "場所を指定..."
+msgstr "DB ブラウザ (初期化中...)"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:153
 #: plug-ins/dbbrowser/dbbrowser_utils.c:172
 msgid "Search by Name"
-msgstr ""
+msgstr "名前で検索"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:155
 #: plug-ins/dbbrowser/dbbrowser_utils.c:174
 msgid "Search by Blurb"
-msgstr ""
+msgstr "説明で検索"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:157
 msgid "Apply"
-msgstr ""
+msgstr "適用"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:226
 msgid "Search:"
-msgstr ""
+msgstr "検索:"
 
 #. show the name
 #: plug-ins/dbbrowser/dbbrowser_utils.c:344
-#, fuzzy
 msgid "Name:"
-msgstr "日付:"
+msgstr "名前:"
 
 #. show the description
 #: plug-ins/dbbrowser/dbbrowser_utils.c:360
-#, fuzzy
 msgid "Blurb:"
-msgstr "ぼかし Y"
+msgstr "説明:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:382
 msgid "In:"
-msgstr ""
+msgstr "入力:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:429
 msgid "Out:"
-msgstr ""
+msgstr "出力:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:479
 msgid "Help:"
-msgstr ""
+msgstr "ヘルプ:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:643
 msgid "DB Browser (by name - please wait)"
-msgstr ""
+msgstr "DB ブラウザ (名前で - お待ちください)"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:667
 msgid "DB Browser (by blurb - please wait)"
-msgstr ""
+msgstr "DB ブラウザ (説明で - お待ちください)"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:677
 msgid "DB Browser (please wait)"
-msgstr ""
+msgstr "DB ブラウザ (お待ちください)"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:743
-#, fuzzy
 msgid "DB Browser"
-msgstr "場所を指定..."
+msgstr "DB ブラウザ"
 
 #: plug-ins/script-fu/scripts/copy-visible.scm:0
 msgid "<Image>/Edit/Copy Visible"
@@ -914,7 +910,6 @@ msgid "Base Color"
 msgstr "基本色"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
-#, fuzzy
 msgid "Base Radius (pixels)"
 msgstr "基本半径 (ピクセル)"
 
@@ -1265,11 +1260,11 @@ msgstr "描く前に消去する"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Erase"
-msgstr ""
+msgstr "消去"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Erase/Fill"
-msgstr ""
+msgstr "消去/塗り潰し"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Even"
@@ -1325,7 +1320,6 @@ msgid "Fill with BG Color"
 msgstr "背景色で塗りつぶす"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
-#, fuzzy
 msgid "Fill with BG"
 msgstr "背景色で塗りつぶす"
 
@@ -1507,7 +1501,7 @@ msgstr "高さ"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Hexagons"
-msgstr ""
+msgstr "六角形"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
@@ -1714,7 +1708,7 @@ msgstr "数"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Octagons"
-msgstr ""
+msgstr "八角形"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Odd"
@@ -1932,9 +1926,8 @@ msgid "Scale Y"
 msgstr "Y 拡大縮小"
 
 #: plug-ins/script-fu/scripts/land.scm:0
-#, fuzzy
 msgid "Sea Depth"
-msgstr "影の深さ"
+msgstr "海の深さ"
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 msgid "Seed"
