@@ -32,6 +32,7 @@
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimppaintinfo.h"
 #include "core/gimpstrokeoptions.h"
 #include "core/gimptoolinfo.h"
 
@@ -76,23 +77,42 @@ stroke_dialog_new (GimpItem    *item,
   GtkWidget         *button;
   GSList            *group;
   GtkWidget         *frame;
+  GimpToolInfo      *tool_info;
+  gboolean           libart_stroking = TRUE;
+
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
   g_return_val_if_fail (stock_id != NULL, NULL);
   g_return_val_if_fail (help_id != NULL, NULL);
   g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
 
-  image   = gimp_item_get_image (item);
-  context = gimp_get_user_context (image->gimp);
+  image     = gimp_item_get_image (item);
+  context   = gimp_get_user_context (image->gimp);
+  tool_info = gimp_context_get_tool (context);
 
   options = g_object_new (GIMP_TYPE_STROKE_OPTIONS,
                           "gimp", image->gimp,
                           NULL);
+  g_object_set_data (G_OBJECT (options), "libart-stroking",
+                     GINT_TO_POINTER (libart_stroking));
+  g_object_set_data (G_OBJECT (options), "gimp-paint-info",
+                     gimp_context_get_tool (context)->paint_info);
 
   saved_options = g_object_get_data (G_OBJECT (context),
                                      "saved-stroke-options");
   if (saved_options)
-    gimp_config_sync (GIMP_CONFIG (saved_options), GIMP_CONFIG (options), 0);
+    {
+      gimp_config_sync (GIMP_CONFIG (saved_options), GIMP_CONFIG (options), 0);
+      libart_stroking = GPOINTER_TO_INT (g_object_get_data
+                                             (G_OBJECT (saved_options),
+                                              "libart-stroking"));
+
+      g_object_set_data (G_OBJECT (options), "libart-stroking",
+                         GINT_TO_POINTER (libart_stroking));
+      g_object_set_data (G_OBJECT (options), "gimp-paint-info",
+                         g_object_get_data (G_OBJECT (saved_options),
+                                            "gimp-paint-info"));
+    }
 
   gimp_context_set_parent (GIMP_CONTEXT (options), context);
   gimp_context_define_properties (GIMP_CONTEXT (options),
@@ -158,6 +178,7 @@ stroke_dialog_new (GimpItem    *item,
     g_object_set_data (G_OBJECT (button), "set_sensitive", stroke_editor);
   }
 
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), libart_stroking);
 
   /*  the paint tool frame  */
 
@@ -176,13 +197,11 @@ stroke_dialog_new (GimpItem    *item,
                     NULL);
 
   {
-    GimpToolInfo *tool_info;
-    GtkWidget    *hbox;
-    GtkWidget    *label;
-    GtkWidget    *optionmenu;
-    GtkWidget    *menu;
-
-    tool_info = gimp_context_get_tool (context);
+    GtkWidget     *hbox;
+    GtkWidget     *label;
+    GtkWidget     *optionmenu;
+    GtkWidget     *menu;
+    GimpPaintInfo *paint_info;
 
     hbox = gtk_hbox_new (FALSE, 4);
     gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
@@ -209,13 +228,16 @@ stroke_dialog_new (GimpItem    *item,
                       G_CALLBACK (stroke_dialog_paint_info_selected),
                       dialog);
 
+    paint_info = GIMP_PAINT_INFO (g_object_get_data (G_OBJECT (options),
+                                                     "gimp-paint-info"));
     gimp_container_menu_select_item (GIMP_CONTAINER_MENU (menu),
-                                     GIMP_VIEWABLE (tool_info->paint_info));
+                                     GIMP_VIEWABLE (paint_info));
 
     g_object_set_data (G_OBJECT (dialog), "gimp-tool-menu", menu);
-    g_object_set_data (G_OBJECT (dialog), "gimp-paint-info",
-                       tool_info->paint_info);
+    g_object_set_data (G_OBJECT (dialog), "gimp-paint-info", paint_info);
   }
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), !libart_stroking);
 
   return dialog;
 }
@@ -264,6 +286,7 @@ stroke_dialog_response (GtkWidget  *widget,
       {
         GimpDrawable *drawable;
         GimpObject   *options;
+        GObject      *saved_options;
 
         drawable = gimp_image_active_drawable (image);
 
@@ -273,26 +296,38 @@ stroke_dialog_response (GtkWidget  *widget,
             return;
           }
 
-        if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)))
+        saved_options = g_object_get_data (G_OBJECT (context),
+                                           "saved-stroke-options");
+        options = g_object_get_data (G_OBJECT (dialog),
+                                     "gimp-stroke-options");
+
+        if (saved_options)
           {
-            GObject *saved_options;
-
-            options = g_object_get_data (G_OBJECT (dialog),
-                                         "gimp-stroke-options");
-
-            saved_options = g_object_get_data (G_OBJECT (context),
-                                               "saved-stroke-options");
-            if (saved_options)
-              gimp_config_sync (GIMP_CONFIG (options),
-                                GIMP_CONFIG (saved_options), 0);
-            else
-              g_object_set_data_full (G_OBJECT (context),
-                                      "saved-stroke-options",
-                                      g_object_ref (options),
-                                      (GDestroyNotify) g_object_unref);
+            gimp_config_sync (GIMP_CONFIG (options),
+                              GIMP_CONFIG (saved_options), 0);
           }
         else
           {
+            g_object_set_data_full (G_OBJECT (context),
+                                    "saved-stroke-options",
+                                    g_object_ref (options),
+                                    (GDestroyNotify) g_object_unref);
+            saved_options = G_OBJECT (options);
+          }
+
+        g_object_set_data (saved_options, "gimp-paint-info",
+                           g_object_get_data (G_OBJECT (dialog),
+                                              "gimp-paint-info"));
+
+        if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)))
+          {
+            g_object_set_data (saved_options, "libart-stroking",
+                               GINT_TO_POINTER (TRUE));
+          }
+        else
+          {
+            g_object_set_data (saved_options, "libart-stroking",
+                               GINT_TO_POINTER (FALSE));
             options = g_object_get_data (G_OBJECT (dialog), "gimp-paint-info");
           }
 
