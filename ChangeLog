@@ -1,3 +1,9 @@
+2003-01-06  Sven Neumann  <sven@gimp.org>
+
+	* gimp-1.2.1.in
+	* gimptool-1.2.1.in: removed incorrect copyright clauses and
+	updated information about bug reporting.
+
 2003-01-05  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/starscape-logo.scm: merged fix for
