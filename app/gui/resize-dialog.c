@@ -71,13 +71,15 @@ static void  unit_update                 (GtkWidget *, gpointer);
 static gint  resize_bound_off_x          (Resize *, gint);
 static gint  resize_bound_off_y          (Resize *, gint);
 static void  orig_labels_update          (GtkWidget *, gpointer);
+static void  reset_callback              (GtkWidget *, gpointer);
 static void  size_callback               (GtkWidget *, gpointer);
 static void  ratio_callback              (GtkWidget *, gpointer);
 static void  size_update                 (Resize *, gdouble, gdouble, gdouble, gdouble);
 static void  offset_update               (GtkWidget *, gpointer);
 static gint  resize_events               (GtkWidget *, GdkEvent *);
 static void  printsize_update            (GtkWidget *, gpointer);
-static void  resolution_update           (GtkWidget *, gpointer);
+static void  resolution_callback         (GtkWidget *, gpointer);
+static void  resolution_update           (Resize *, gdouble, gdouble);
 static void  resize_scale_warn_callback  (GtkWidget *, gboolean, gpointer);
 
 Resize *
@@ -191,6 +193,10 @@ resize_widget_new (ResizeType    type,
 
 		       _("OK"), ok_cb,
 		       user_data, NULL, NULL, TRUE, FALSE,
+
+		       _("Reset"), reset_callback,
+		       resize, NULL, NULL, FALSE, TRUE,
+
 		       _("Cancel"), cancel_cb ? cancel_cb : gtk_widget_destroy,
 		       cancel_cb ? user_data : NULL,
 		       cancel_cb ? NULL : (gpointer) 1,
@@ -611,7 +617,7 @@ resize_widget_new (ResizeType    type,
 				  1, resize->resolution_y);
 
       gtk_signal_connect (GTK_OBJECT (private->resolution_se), "value_changed",
-			  (GtkSignalFunc) resolution_update,
+			  (GtkSignalFunc) resolution_callback,
 			  resize);
 
       /*  the resolution chainbutton  */
@@ -839,6 +845,31 @@ offset_update (GtkWidget *widget,
     }
 }
 
+/*
+ * Callback function for "Reset" button.
+ * Data must be a pointer pointer to a Resize structure.
+ */
+static void
+reset_callback (GtkWidget *widget,
+                gpointer data)
+{
+  Resize *resize;
+  ResizePrivate *private;
+
+  resize = (Resize *)data;
+  private = (ResizePrivate *)resize->private_part;
+
+  /* restore size and ratio settings */
+  size_update (resize, private->old_width, private->old_height, 1.0, 1.0);
+
+  if ((resize->type == ScaleWidget) && (resize->target == ResizeImage))
+    {
+      /* restore resolution settings */
+      resolution_update (resize, private->old_res_x, private->old_res_y);
+    }
+
+}
+  
 static void
 size_callback (GtkWidget *widget,
 	       gpointer   data)
@@ -1064,8 +1095,9 @@ printsize_update (GtkWidget *widget,
 				      resize);
 }
 
+/* Callback for resolution change. */
 static void
-resolution_update (GtkWidget *widget,
+resolution_callback (GtkWidget *widget,
 		   gpointer   data)
 {
   Resize *resize;
@@ -1092,6 +1124,17 @@ resolution_update (GtkWidget *widget,
 	  res_x = res_y;
 	}
     }
+
+  resolution_update (resize, res_x, res_y);
+}
+
+/* Update widgets with resolution settings found in given Resize struct. */
+static void
+resolution_update (Resize *resize, gdouble res_x, gdouble res_y)
+{
+  ResizePrivate *private;
+
+  private = (ResizePrivate *) resize->private_part;
 
   resize->resolution_x = res_x;
   resize->resolution_y = res_y;

@@ -1,3 +1,9 @@
+2000-10-18  Daniel Egger  <egger@suse.de>
+
+	* app/resize.c: Add a patch from 
+	Tino Schwarze <tino.schwarze@informatik.tu-chemnitz.de>
+	to add a reset button to the image resize dialog.
+
 2000-10-18  Sven Neumann  <sven@gimp.org>
 
 	* app/cursorutil.c (gtkutil_compress_motion): as Mitch pointed out we
