@@ -1,5 +1,10 @@
 2003-11-23  Sven Neumann  <sven@gimp.org>
 
+	* libgimpbase/gimpdatafiles.[ch]
+	* libgimpbase/gimpenv.[ch]
+	* libgimpbase/gimputils.c
+	* libgimpmodule/gimpmodule.[ch]
+	* libgimpmodule/gimpmoduledb.[ch]
 	* libgimpwidgets/gimpcolordisplay.[ch]
 	* libgimpwidgets/gimpcolordisplaystack.[ch]
 	* libgimpwidgets/gimpcolorselection.[ch]

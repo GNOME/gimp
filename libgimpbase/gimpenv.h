@@ -1,8 +1,7 @@
-/* LIBGIMP - The GIMP Library 
+/* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpenv.h
- *
  * Copyright (C) 1999 Tor Lillqvist <tml@iki.fi>
  *
  * This library is free software; you can redistribute it and/or
