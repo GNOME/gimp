@@ -203,14 +203,14 @@
 
 (script-fu-register "script-fu-add-bevel"
 		    "<Image>/Script-Fu/Decor/Add Bevel"
-		    "Add a bevel to an image."
-		    "Andrew Donkin (ard@cs.waikato.ac.nz)"
+		    "Add a bevel to an image"
+		    "Andrew Donkin <ard@cs.waikato.ac.nz>"
 		    "Andrew Donkin"
 		    "1997/11/06"
 		    "RGB RGBA GRAY GRAYA"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
-		    SF-ADJUSTMENT "Thickness" "5"
+		    SF-ADJUSTMENT "Thickness" '(5 0 30 1 2 0 0)
 		    SF-TOGGLE "Work on copy" TRUE
 		    SF-TOGGLE "Keep bump layer" FALSE
 		    )

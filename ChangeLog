@@ -1,3 +1,8 @@
+Wed Jan 27 12:25:00 CST 1999 Seth Burgess <sbjurges@gimp.org>
+	
+	* plug-ins/script-fu/scripts/add-bevel.scm: fixed the SF-ADJUSTMENT so that
+        it shows up again.
+
 Tue Jan 26 22:17:57 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* app/blob.c: s/(NONE|LEFT|RIGHT)/EDGE_$1/g to clear up namespace
