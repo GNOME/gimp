@@ -1,3 +1,8 @@
+Wed Apr 01 04:07:29 EST 1998 Matthew Wilson <msw@gimp.org>
+
+	* app/disp_callbacks.c: Only destroy the current tool if you change
+	gdisplays and the tool caches image data.
+	
 Wed Apr 01 03:40:15 EST 1998 Matthew Wilson <msw@gimp.org>
 
 	* app/disp_callbacks.c:  If the current gdisp->ID does not match

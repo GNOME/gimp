@@ -150,7 +150,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 		/* Reset the current tool if we're changing displays... */
 		tool_gdisp = active_tool->gdisp_ptr;
 		if (tool_gdisp)
-		  if (tool_gdisp->ID != gdisp->ID)
+		  if (tool_gdisp->ID != gdisp->ID && !active_tool->preserve)
 		    tools_select(active_tool->type);
 		(* active_tool->button_press_func) (active_tool, bevent, gdisp);
 	      }
