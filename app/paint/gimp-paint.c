@@ -52,8 +52,8 @@ gimp_paint_init (Gimp *gimp)
 {
   GimpPaintRegisterFunc register_funcs[] =
   {
-    gimp_smudge_register,
     gimp_dodge_burn_register,
+    gimp_smudge_register,
     gimp_convolve_register,
     gimp_clone_register,
     gimp_airbrush_register,

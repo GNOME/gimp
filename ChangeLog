@@ -1,3 +1,10 @@
+2003-11-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimp-paint.c (gimp_paint_init): reordered
+	GimpDodgeBurn to the end of the paint info list so the paint tool
+	menu in the stroke dialog has same order as the paint tools in the
+	toolbox.
+
 2003-11-29  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpguiconfig.c: set the default window type hint for
