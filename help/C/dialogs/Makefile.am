@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = layers channels paths palette_editor gradient_editor display_filters color_selectors preferences 
+SUBDIRS = layers channels paths palette_editor gradient_editor color_selectors preferences 
 
 helpdatadir = $(gimpdatadir)/help/C/dialogs
 
