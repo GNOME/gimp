@@ -144,9 +144,6 @@ smudge_paint_func (PaintCore    *paint_core,
 
   switch (state)
     {
-    case INIT_PAINT:
-      initialized = smudge_init (paint_core, drawable);
-      break;
     case MOTION_PAINT:
       if (!initialized)
 	initialized = smudge_init (paint_core, drawable);
