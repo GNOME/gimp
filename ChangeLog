@@ -1,3 +1,11 @@
+2004-01-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-dnd.c: some cleanup.
+
+	(gimp_display_shell_bucket_fill): don't use the bucket fill
+	options but behave like "Edit -> Fill" and fill with NORMAL/100%.
+	Fixes bug #132596.
+
 2004-01-26  Manish Singh  <yosh@gimp.org>
 
 	* gimp-zip.in: use new versioning defines.
