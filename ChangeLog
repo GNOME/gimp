@@ -1,3 +1,9 @@
+2004-06-04  Sven Neumann  <sven@gimp.org>
+
+	* app/paint/gimppaintoptions.c (DEFAULT_PRESSURE_PRESSURE):
+	applied a patch by Philip Lafleur that changes the default to
+	FALSE. Fixes bug #143626.
+
 2004-06-03  Michael Natterer  <mitch@gimpmp.org>
 
 	* app/widgets/gimptoolbox.c (gimp_toolbox_size_allocate): use
