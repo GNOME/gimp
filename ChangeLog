@@ -1,3 +1,36 @@
+2003-12-08  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/brushes.pdb
+	* tools/pdbgen/pdb/fonts.pdb
+	* tools/pdbgen/pdb/gradients.pdb
+	* tools/pdbgen/pdb/palettes.pdb
+	* tools/pdbgen/pdb/patterns.pdb: removed comments that
+	gimp_data_factory_data_init() should return a boolean indicating
+	success, since it is highly unclear when to return FALSE. This
+	function just always succeeds. Changed docs accordingly. Cleanup.
+
+	* tools/pdbgen/pdb/brush_select.pdb
+	* tools/pdbgen/pdb/font_select.pdb
+	* tools/pdbgen/pdb/gradient_select.pdb
+	* tools/pdbgen/pdb/palette_select.pdb
+	* tools/pdbgen/pdb/pattern_select.pdb: minor cleanups.
+
+	* app/pdb/brush_select_cmds.c
+	* app/pdb/brushes_cmds.c
+	* app/pdb/font_select_cmds.c
+	* app/pdb/fonts_cmds.c
+	* app/pdb/gradient_select_cmds.c
+	* app/pdb/gradients_cmds.c
+	* app/pdb/palette_select_cmds.c
+	* app/pdb/palettes_cmds.c
+	* app/pdb/pattern_select_cmds.c
+	* app/pdb/patterns_cmds.c
+	* libgimp/gimpbrushes_pdb.c
+	* libgimp/gimpfonts_pdb.c
+	* libgimp/gimpgradients_pdb.c
+	* libgimp/gimppalettes_pdb.c
+	* libgimp/gimppatterns_pdb.c: regenerated.
+
 2003-12-08  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version number to 1.3.24.

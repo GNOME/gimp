@@ -30,7 +30,7 @@
 /**
  * gimp_patterns_refresh:
  *
- * Refresh current patterns.
+ * Refresh current patterns. This function always succeeds.
  *
  * This procedure retrieves all patterns currently in the user's
  * pattern path and updates the pattern dialogs accordingly.
@@ -172,7 +172,7 @@ gimp_patterns_set_pattern (const gchar *name)
 
 /**
  * gimp_patterns_get_pattern_data:
- * @name: the pattern name (\"\" means currently active pattern).
+ * @name: The pattern name (\"\" means currently active pattern).
  * @width: The pattern width.
  * @height: The pattern height.
  * @mask_bpp: Pattern bytes per pixel.

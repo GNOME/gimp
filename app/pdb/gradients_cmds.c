@@ -69,7 +69,7 @@ gradients_refresh_invoker (Gimp     *gimp,
 static ProcRecord gradients_refresh_proc =
 {
   "gimp_gradients_refresh",
-  "Refresh current gradients.",
+  "Refresh current gradients. This function always succeeds.",
   "This procedure retrieves all gradients currently in the user's gradient path and updates the gradient dialogs accordingly.",
   "Michael Natterer",
   "Michael Natterer",
@@ -206,16 +206,12 @@ gradients_set_gradient_invoker (Gimp     *gimp,
   if (success)
     {
       gradient = (GimpGradient *)
-	gimp_container_get_child_by_name (gimp->gradient_factory->container,
-					  name);
-    
-      success = FALSE;
+	gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
     
       if (gradient)
-	{
-	  gimp_context_set_gradient (gimp_get_current_context (gimp), gradient);
-	  success = TRUE;
-	}
+	gimp_context_set_gradient (gimp_get_current_context (gimp), gradient);
+      else
+	success = FALSE;
     }
 
   return procedural_db_return_args (&gradients_set_gradient_proc, success);
@@ -476,21 +472,16 @@ gradients_get_gradient_data_invoker (Gimp     *gimp,
     {
       if (strlen (name))
 	{
-	  success = FALSE;
-    
 	  gradient = (GimpGradient *)
 	    gimp_container_get_child_by_name (gimp->gradient_factory->container,
 					      name);
 	}
       else
 	{
-	   gradient = gimp_context_get_gradient (gimp_get_current_context (gimp));;
+	  gradient = gimp_context_get_gradient (gimp_get_current_context (gimp));;
 	}
     
       if (gradient)
-	success = TRUE;
-    
-      if (success)
 	{
 	  gdouble *pv;
 	  gdouble  pos, delta;
@@ -515,6 +506,8 @@ gradients_get_gradient_data_invoker (Gimp     *gimp,
 	      pos += delta;
 	    }
 	}
+      else
+	success = FALSE;
     }
 
   return_args = procedural_db_return_args (&gradients_get_gradient_data_proc, success);

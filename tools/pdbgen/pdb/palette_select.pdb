@@ -53,9 +53,7 @@ sub palettes_popup {
                           palette_callback);
     }
   else
-    {
-      success = FALSE;
-    }
+    success = FALSE;
 }
 CODE
     );
@@ -74,19 +72,17 @@ sub palettes_close_popup {
     );
 
     %invoke = (
-	vars => [ 'ProcRecord *proc', 'PaletteSelect *psp' ],
+	vars => [ 'ProcRecord *proc', 'PaletteSelect *palette_select' ],
 	code => <<'CODE'
 {
   if (! gimp->no_interface &&
       (proc = procedural_db_lookup (gimp, palette_callback)) &&
-      (psp = palette_select_get_by_callback (palette_callback)))
+      (palette_select = palette_select_get_by_callback (palette_callback)))
     {
-      palette_select_free (psp);
+      palette_select_free (palette_select);
     }
   else
-    {
-      success = FALSE;
-    }
+    success = FALSE;
 }
 CODE
     );
@@ -107,21 +103,25 @@ sub palettes_set_popup {
     );
 
     %invoke = (
-	vars => [ 'ProcRecord *proc', 'PaletteSelect *psp' ],
+	vars => [ 'ProcRecord *proc', 'PaletteSelect *palette_select' ],
 	code => <<'CODE'
 {
   if (! gimp->no_interface &&
       (proc = procedural_db_lookup (gimp, palette_callback)) &&
-      (psp = palette_select_get_by_callback (palette_callback)))
+      (palette_select = palette_select_get_by_callback (palette_callback)))
     {
       GimpPalette *active = (GimpPalette *)
         gimp_container_get_child_by_name (gimp->palette_factory->container,
                                           palette_name);
 
-      success = (active != NULL);
+      if (active)
+        {
+          gimp_context_set_palette (palette_select->context, active);
 
-      if (success)
-	gimp_context_set_palette (psp->context, active);
+          gtk_window_present (GTK_WINDOW (palette_select->shell));
+        }
+      else
+        success = FALSE;
     }
   else
     success = FALSE;

@@ -68,9 +68,7 @@ sub brushes_popup {
                         brush_callback);
     }
   else
-    {
-      success = FALSE;
-    }
+    success = FALSE;
 }
 CODE
     );
@@ -99,9 +97,7 @@ sub brushes_close_popup {
       brush_select_free (brush_select);
     }
   else
-    {
-      success = FALSE;
-    }
+    success = FALSE;
 }
 CODE
     );

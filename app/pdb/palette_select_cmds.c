@@ -79,9 +79,7 @@ palettes_popup_invoker (Gimp     *gimp,
 			      palette_callback);
 	}
       else
-	{
-	  success = FALSE;
-	}
+	success = FALSE;
     }
 
   return procedural_db_return_args (&palettes_popup_proc, success);
@@ -129,7 +127,7 @@ palettes_close_popup_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   gchar *palette_callback;
   ProcRecord *proc;
-  PaletteSelect *psp;
+  PaletteSelect *palette_select;
 
   palette_callback = (gchar *) args[0].value.pdb_pointer;
   if (palette_callback == NULL || !g_utf8_validate (palette_callback, -1, NULL))
@@ -139,14 +137,12 @@ palettes_close_popup_invoker (Gimp     *gimp,
     {
       if (! gimp->no_interface &&
 	  (proc = procedural_db_lookup (gimp, palette_callback)) &&
-	  (psp = palette_select_get_by_callback (palette_callback)))
+	  (palette_select = palette_select_get_by_callback (palette_callback)))
 	{
-	  palette_select_free (psp);
+	  palette_select_free (palette_select);
 	}
       else
-	{
-	  success = FALSE;
-	}
+	success = FALSE;
     }
 
   return procedural_db_return_args (&palettes_close_popup_proc, success);
@@ -185,7 +181,7 @@ palettes_set_popup_invoker (Gimp     *gimp,
   gchar *palette_callback;
   gchar *palette_name;
   ProcRecord *proc;
-  PaletteSelect *psp;
+  PaletteSelect *palette_select;
 
   palette_callback = (gchar *) args[0].value.pdb_pointer;
   if (palette_callback == NULL || !g_utf8_validate (palette_callback, -1, NULL))
@@ -199,16 +195,20 @@ palettes_set_popup_invoker (Gimp     *gimp,
     {
       if (! gimp->no_interface &&
 	  (proc = procedural_db_lookup (gimp, palette_callback)) &&
-	  (psp = palette_select_get_by_callback (palette_callback)))
+	  (palette_select = palette_select_get_by_callback (palette_callback)))
 	{
 	  GimpPalette *active = (GimpPalette *)
 	    gimp_container_get_child_by_name (gimp->palette_factory->container,
 					      palette_name);
     
-	  success = (active != NULL);
+	  if (active)
+	    {
+	      gimp_context_set_palette (palette_select->context, active);
     
-	  if (success)
-	    gimp_context_set_palette (psp->context, active);
+	      gtk_window_present (GTK_WINDOW (palette_select->shell));
+	    }
+	  else
+	    success = FALSE;
 	}
       else
 	success = FALSE;

@@ -63,7 +63,7 @@ sub brush_outargs {
 # The defs
 
 sub brushes_refresh {
-    $blurb = 'Refresh current brushes.';
+    $blurb = 'Refresh current brushes. This function always succeeds.';
 
     $help = <<'HELP';
 This procedure retrieves all brushes currently in the user's brush path
@@ -76,14 +76,6 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  /* FIXME: I've hardcoded success to be 1, because brushes_init() is a 
-   *        void function right now.  It'd be nice if it returned a value at 
-   *        some future date, so we could tell if things blew up when reparsing
-   *        the list (for whatever reason). 
-   *                       - Seth "Yes, this is a kludge" Burgess
-   *                         <sjburges@gimp.org>
-   */
-
   gimp_data_factory_data_save (gimp->brush_factory);
   gimp_data_factory_data_init (gimp->brush_factory, FALSE);
 }
@@ -169,10 +161,10 @@ HELP
   brush = (GimpBrush *)
     gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
-  success = (brush != NULL);
-
   if (brush)
     gimp_context_set_brush (gimp_get_current_context (gimp), brush);
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -293,7 +285,7 @@ HELP
     $date = '1998';
 
     @inargs = ( &brush_arg );
-    $inargs[0]->{desc} = 'the brush name ("" means current active pattern)';
+    $inargs[0]->{desc} = 'The brush name ("" means current active brush)';
 
     @outargs = (
 	&brush_arg,
@@ -328,13 +320,13 @@ HELP
       brush = gimp_context_get_brush (gimp_get_current_context (gimp));
     }
 
-  success = (brush != NULL);
-
-  if (success)
+  if (brush)
     {
       length    = brush->mask->height * brush->mask->width;
       mask_data = g_memdup (temp_buf_data (brush->mask), length);
     }
+  else
+    success = FALSE;
 }
 CODE
     );

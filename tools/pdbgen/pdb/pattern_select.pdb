@@ -52,9 +52,7 @@ sub patterns_popup {
                           pattern_callback);
     }
   else
-    {
-      success = FALSE;
-    }
+    success = FALSE;
 }
 CODE
     );
@@ -83,9 +81,7 @@ sub patterns_close_popup {
       pattern_select_free (pattern_select);
     }
   else
-    {
-      success = FALSE;
-    }
+    success = FALSE;
 }
 CODE
     );

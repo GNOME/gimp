@@ -98,9 +98,7 @@ brushes_popup_invoker (Gimp     *gimp,
 			    brush_callback);
 	}
       else
-	{
-	  success = FALSE;
-	}
+	success = FALSE;
     }
 
   return procedural_db_return_args (&brushes_popup_proc, success);
@@ -178,9 +176,7 @@ brushes_close_popup_invoker (Gimp     *gimp,
 	  brush_select_free (brush_select);
 	}
       else
-	{
-	  success = FALSE;
-	}
+	success = FALSE;
     }
 
   return procedural_db_return_args (&brushes_close_popup_proc, success);

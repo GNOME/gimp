@@ -58,24 +58,15 @@ static Argument *
 palettes_refresh_invoker (Gimp     *gimp,
                           Argument *args)
 {
-  /* FIXME: I've hardcoded success to be TRUE, because brushes_init() is a 
-   *        void function right now.  It'd be nice if it returned a value at 
-   *        some future date, so we could tell if things blew up when reparsing
-   *        the list (for whatever reason). 
-   *                       - Seth "Yes, this is a kludge" Burgess
-   *                         <sjburges@ou.edu>
-   *   -and shamelessly stolen by Adrian Likins for use here...
-   */
-
+  gimp_data_factory_data_save (gimp->palette_factory);
   gimp_data_factory_data_init (gimp->palette_factory, FALSE);
-
   return procedural_db_return_args (&palettes_refresh_proc, TRUE);
 }
 
 static ProcRecord palettes_refresh_proc =
 {
   "gimp_palettes_refresh",
-  "Refreshes current palettes.",
+  "Refreshes current palettes. This function always succeeds.",
   "This procedure incorporates all palettes currently in the users palette path.",
   "Adrian Likins <adrian@gimp.org>",
   "Adrian Likins",
@@ -223,10 +214,10 @@ palettes_set_palette_invoker (Gimp     *gimp,
       palette = (GimpPalette *)
 	gimp_container_get_child_by_name (gimp->palette_factory->container, name);
     
-      success = (palette != NULL);
-    
-      if (success)
+      if (palette)
 	gimp_context_set_palette (gimp_get_current_context (gimp), palette);
+      else
+	success = FALSE;
     }
 
   return procedural_db_return_args (&palettes_set_palette_proc, success);
@@ -287,9 +278,7 @@ palettes_get_palette_entry_invoker (Gimp     *gimp,
 	  palette = gimp_context_get_palette (gimp_get_current_context (gimp));
 	}
     
-      success = (palette != NULL);
-    
-      if (success)
+      if (palette)
 	{
 	  if (entry_num < 0 || entry_num >= palette->n_colors) 
 	    {
@@ -305,6 +294,8 @@ palettes_get_palette_entry_invoker (Gimp     *gimp,
 	      color = entry->color;
 	    }
 	}
+      else
+	success = FALSE;
     }
 
   return_args = procedural_db_return_args (&palettes_get_palette_entry_proc, success);

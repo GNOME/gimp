@@ -65,7 +65,7 @@ patterns_refresh_invoker (Gimp     *gimp,
 static ProcRecord patterns_refresh_proc =
 {
   "gimp_patterns_refresh",
-  "Refresh current patterns.",
+  "Refresh current patterns. This function always succeeds.",
   "This procedure retrieves all patterns currently in the user's pattern path and updates the pattern dialogs accordingly.",
   "Michael Natterer",
   "Michael Natterer",
@@ -219,10 +219,10 @@ patterns_set_pattern_invoker (Gimp     *gimp,
       pattern = (GimpPattern *)
 	gimp_container_get_child_by_name (gimp->pattern_factory->container, name);
     
-      success = (pattern != NULL);
-    
       if (success)
 	gimp_context_set_pattern (gimp_get_current_context (gimp), pattern);
+      else
+	success = FALSE;
     }
 
   return procedural_db_return_args (&patterns_set_pattern_proc, success);
@@ -281,14 +281,14 @@ patterns_get_pattern_data_invoker (Gimp     *gimp,
 	  pattern = gimp_context_get_pattern (gimp_get_current_context (gimp));
 	}
     
-      success = (pattern != NULL);
-    
-      if (success)
+      if (pattern)
 	{
 	  length = pattern->mask->height * pattern->mask->width *
 		   pattern->mask->bytes;
 	  mask_data = g_memdup (temp_buf_data (pattern->mask), length);
 	}
+      else
+	success = FALSE;
     }
 
   return_args = procedural_db_return_args (&patterns_get_pattern_data_proc, success);
@@ -311,7 +311,7 @@ static ProcArg patterns_get_pattern_data_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "the pattern name (\"\" means currently active pattern)"
+    "The pattern name (\"\" means currently active pattern)"
   }
 };
 

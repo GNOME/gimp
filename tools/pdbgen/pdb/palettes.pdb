@@ -61,7 +61,7 @@ sub palette_outargs {
 # The defs
 
 sub palettes_refresh {
-    $blurb = 'Refreshes current palettes.';
+    $blurb = 'Refreshes current palettes. This function always succeeds.';
 
     $help = <<'HELP';
 This procedure incorporates all palettes currently in the users palette path.
@@ -72,15 +72,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  /* FIXME: I've hardcoded success to be TRUE, because brushes_init() is a 
-   *        void function right now.  It'd be nice if it returned a value at 
-   *        some future date, so we could tell if things blew up when reparsing
-   *        the list (for whatever reason). 
-   *                       - Seth "Yes, this is a kludge" Burgess
-   *                         <sjburges@ou.edu>
-   *   -and shamelessly stolen by Adrian Likins for use here...
-   */
-
+  gimp_data_factory_data_save (gimp->palette_factory);
   gimp_data_factory_data_init (gimp->palette_factory, FALSE);
 }
 CODE
@@ -162,10 +154,10 @@ HELP
   palette = (GimpPalette *)
     gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
-  success = (palette != NULL);
-
-  if (success)
+  if (palette)
     gimp_context_set_palette (gimp_get_current_context (gimp), palette);
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -213,9 +205,7 @@ HELP
       palette = gimp_context_get_palette (gimp_get_current_context (gimp));
     }
 
-  success = (palette != NULL);
-
-  if (success)
+  if (palette)
     {
       if (entry_num < 0 || entry_num >= palette->n_colors) 
         {
@@ -231,6 +221,8 @@ HELP
           color = entry->color;
         }
     }
+  else
+    success = FALSE;
 }
 CODE
     );

@@ -51,9 +51,7 @@ sub fonts_popup {
       font_select_new (gimp, popup_title, initial_font, font_callback);
     }
   else
-    {
-      success = FALSE;
-    }
+    success = FALSE;
 }
 CODE
     );
@@ -82,9 +80,7 @@ sub fonts_close_popup {
       font_select_free (font_select);
     }
   else
-    {
-      success = FALSE;
-    }
+    success = FALSE;
 }
 CODE
     );

@@ -63,9 +63,7 @@ sub gradients_popup {
                            sample_size);
     }
   else
-    {
-      success = FALSE;
-    }
+    success = FALSE;
 }
 CODE
     );
@@ -94,9 +92,7 @@ sub gradients_close_popup {
       gradient_select_free (gradient_select);
     }
   else
-    {
-      success = FALSE;
-    }
+    success = FALSE;
 }
 CODE
     );

@@ -28,7 +28,7 @@
 /**
  * gimp_fonts_refresh:
  *
- * Refresh current fonts.
+ * Refresh current fonts. This function always succeeds.
  *
  * This procedure retrieves all fonts currently in the user's font path
  * and updates the font dialogs accordingly.

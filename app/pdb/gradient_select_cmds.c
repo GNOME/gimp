@@ -86,9 +86,7 @@ gradients_popup_invoker (Gimp     *gimp,
 			       sample_size);
 	}
       else
-	{
-	  success = FALSE;
-	}
+	success = FALSE;
     }
 
   return procedural_db_return_args (&gradients_popup_proc, success);
@@ -156,9 +154,7 @@ gradients_close_popup_invoker (Gimp     *gimp,
 	  gradient_select_free (gradient_select);
 	}
       else
-	{
-	  success = FALSE;
-	}
+	success = FALSE;
     }
 
   return procedural_db_return_args (&gradients_close_popup_proc, success);

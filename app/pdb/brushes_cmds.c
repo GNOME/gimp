@@ -69,24 +69,15 @@ static Argument *
 brushes_refresh_invoker (Gimp     *gimp,
                          Argument *args)
 {
-  /* FIXME: I've hardcoded success to be 1, because brushes_init() is a 
-   *        void function right now.  It'd be nice if it returned a value at 
-   *        some future date, so we could tell if things blew up when reparsing
-   *        the list (for whatever reason). 
-   *                       - Seth "Yes, this is a kludge" Burgess
-   *                         <sjburges@gimp.org>
-   */
-
   gimp_data_factory_data_save (gimp->brush_factory);
   gimp_data_factory_data_init (gimp->brush_factory, FALSE);
-
   return procedural_db_return_args (&brushes_refresh_proc, TRUE);
 }
 
 static ProcRecord brushes_refresh_proc =
 {
   "gimp_brushes_refresh",
-  "Refresh current brushes.",
+  "Refresh current brushes. This function always succeeds.",
   "This procedure retrieves all brushes currently in the user's brush path and updates the brush dialog accordingly.",
   "Seth Burgess",
   "Seth Burgess",
@@ -246,10 +237,10 @@ brushes_set_brush_invoker (Gimp     *gimp,
       brush = (GimpBrush *)
 	gimp_container_get_child_by_name (gimp->brush_factory->container, name);
     
-      success = (brush != NULL);
-    
       if (brush)
 	gimp_context_set_brush (gimp_get_current_context (gimp), brush);
+      else
+	success = FALSE;
     }
 
   return procedural_db_return_args (&brushes_set_brush_proc, success);
@@ -544,13 +535,13 @@ brushes_get_brush_data_invoker (Gimp     *gimp,
 	  brush = gimp_context_get_brush (gimp_get_current_context (gimp));
 	}
     
-      success = (brush != NULL);
-    
-      if (success)
+      if (brush)
 	{
 	  length    = brush->mask->height * brush->mask->width;
 	  mask_data = g_memdup (temp_buf_data (brush->mask), length);
 	}
+      else
+	success = FALSE;
     }
 
   return_args = procedural_db_return_args (&brushes_get_brush_data_proc, success);
@@ -575,7 +566,7 @@ static ProcArg brushes_get_brush_data_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "the brush name (\"\" means current active pattern)"
+    "The brush name (\"\" means current active brush)"
   }
 };
 

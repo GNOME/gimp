@@ -76,9 +76,7 @@ fonts_popup_invoker (Gimp     *gimp,
 	  font_select_new (gimp, popup_title, initial_font, font_callback);
 	}
       else
-	{
-	  success = FALSE;
-	}
+	success = FALSE;
     }
 
   return procedural_db_return_args (&fonts_popup_proc, success);
@@ -141,9 +139,7 @@ fonts_close_popup_invoker (Gimp     *gimp,
 	  font_select_free (font_select);
 	}
       else
-	{
-	  success = FALSE;
-	}
+	success = FALSE;
     }
 
   return procedural_db_return_args (&fonts_close_popup_proc, success);

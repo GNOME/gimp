@@ -28,7 +28,7 @@
 /**
  * gimp_palettes_refresh:
  *
- * Refreshes current palettes.
+ * Refreshes current palettes. This function always succeeds.
  *
  * This procedure incorporates all palettes currently in the users
  * palette path.

@@ -79,9 +79,7 @@ patterns_popup_invoker (Gimp     *gimp,
 			      pattern_callback);
 	}
       else
-	{
-	  success = FALSE;
-	}
+	success = FALSE;
     }
 
   return procedural_db_return_args (&patterns_popup_proc, success);
@@ -144,9 +142,7 @@ patterns_close_popup_invoker (Gimp     *gimp,
 	  pattern_select_free (pattern_select);
 	}
       else
-	{
-	  success = FALSE;
-	}
+	success = FALSE;
     }
 
   return procedural_db_return_args (&patterns_close_popup_proc, success);

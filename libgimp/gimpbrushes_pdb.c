@@ -30,7 +30,7 @@
 /**
  * gimp_brushes_refresh:
  *
- * Refresh current brushes.
+ * Refresh current brushes. This function always succeeds.
  *
  * This procedure retrieves all brushes currently in the user's brush
  * path and updates the brush dialog accordingly.
@@ -363,7 +363,7 @@ gimp_brushes_set_paint_mode (GimpLayerModeEffects paint_mode)
 
 /**
  * gimp_brushes_get_brush_data:
- * @name: the brush name (\"\" means current active pattern).
+ * @name: The brush name (\"\" means current active brush).
  * @opacity: The brush opacity.
  * @spacing: The brush spacing.
  * @paint_mode: The paint mode.

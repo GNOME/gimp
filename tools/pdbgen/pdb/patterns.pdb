@@ -49,7 +49,7 @@ sub pattern_outargs {
 # The defs
 
 sub patterns_refresh {
-    $blurb = 'Refresh current patterns.';
+    $blurb = 'Refresh current patterns. This function always succeeds.';
 
     $help = <<'HELP';
 This procedure retrieves all patterns currently in the user's pattern path
@@ -146,10 +146,10 @@ HELP
   pattern = (GimpPattern *)
     gimp_container_get_child_by_name (gimp->pattern_factory->container, name);
 
-  success = (pattern != NULL);
-
   if (success)
     gimp_context_set_pattern (gimp_get_current_context (gimp), pattern);
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -170,7 +170,7 @@ HELP
     $date = '1998';
 
     @inargs = ( &pattern_arg );
-    $inargs[0]->{desc} = 'the pattern name ("" means currently active pattern)';
+    $inargs[0]->{desc} = 'The pattern name ("" means currently active pattern)';
 
     @outargs = (
 	&pattern_arg,
@@ -202,14 +202,14 @@ HELP
       pattern = gimp_context_get_pattern (gimp_get_current_context (gimp));
     }
 
-  success = (pattern != NULL);
-
-  if (success)
+  if (pattern)
     {
       length = pattern->mask->height * pattern->mask->width *
 	       pattern->mask->bytes;
       mask_data = g_memdup (temp_buf_data (pattern->mask), length);
     }
+  else
+    success = FALSE;
 }
 CODE
     );

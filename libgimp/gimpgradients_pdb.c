@@ -30,7 +30,7 @@
 /**
  * gimp_gradients_refresh:
  *
- * Refresh current gradients.
+ * Refresh current gradients. This function always succeeds.
  *
  * This procedure retrieves all gradients currently in the user's
  * gradient path and updates the gradient dialogs accordingly.
