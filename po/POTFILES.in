@@ -116,6 +116,7 @@ app/core/gimplayermask.c
 app/core/gimppalette-import.c
 app/core/gimppalette.c
 app/core/gimppattern.c
+app/core/gimppdbprogress.c
 app/core/gimpprogress.c
 app/core/gimpselection.c
 app/core/gimptemplate.c
@@ -184,6 +185,7 @@ app/paint/paint-enums.c
 
 app/pdb/color_cmds.c
 app/pdb/drawable_cmds.c
+app/pdb/edit_cmds.c
 app/pdb/guides_cmds.c
 app/pdb/image_cmds.c
 app/pdb/internal_procs.c
@@ -193,6 +195,7 @@ app/pdb/procedural_db.c
 app/pdb/procedural_db_cmds.c
 app/pdb/selection_cmds.c
 app/pdb/selection_tools_cmds.c
+app/pdb/transform_tools_cmds.c
 app/pdb/undo_cmds.c
 
 app/plug-in/plug-in.c
