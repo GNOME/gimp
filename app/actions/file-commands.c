@@ -40,6 +40,7 @@
 #include "file/file-utils.h"
 
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpfiledialog.h"
 #include "widgets/gimphelp-ids.h"
 
 #include "display/gimpdisplay.h"
@@ -48,7 +49,6 @@
 #include "menus/menus.h"
 
 #include "dialogs/dialogs.h"
-#include "dialogs/file-open-dialog.h"
 #include "dialogs/file-save-dialog.h"
 
 #include "actions.h"
@@ -76,24 +76,41 @@ void
 file_open_cmd_callback (GtkAction *action,
                         gpointer   data)
 {
-  Gimp      *gimp;
   GtkWidget *widget;
-  return_if_no_gimp (gimp, data);
+  GtkWidget *dialog;
   return_if_no_widget (widget, data);
 
-  file_open_dialog_show (gimp, NULL, NULL, widget);
+  dialog = gimp_dialog_factory_dialog_new (global_dialog_factory,
+                                           gtk_widget_get_screen (widget),
+                                           "gimp-file-open-dialog", -1, FALSE);
+
+  if (dialog)
+    {
+      gimp_file_dialog_set_uri (GIMP_FILE_DIALOG (dialog), NULL, NULL);
+
+      gtk_window_present (GTK_WINDOW (dialog));
+    }
 }
 
 void
 file_open_from_image_cmd_callback (GtkAction *action,
                                    gpointer   data)
 {
-  Gimp      *gimp;
   GtkWidget *widget;
-  return_if_no_gimp (gimp, data);
+  GtkWidget *dialog;
   return_if_no_widget (widget, data);
 
-  file_open_dialog_show (gimp, action_data_get_image (data), NULL, widget);
+  dialog = gimp_dialog_factory_dialog_new (global_dialog_factory,
+                                           gtk_widget_get_screen (widget),
+                                           "gimp-file-open-dialog", -1, FALSE);
+
+  if (dialog)
+    {
+      gimp_file_dialog_set_uri (GIMP_FILE_DIALOG (dialog),
+                                action_data_get_image (data), NULL);
+
+      gtk_window_present (GTK_WINDOW (dialog));
+    }
 }
 
 void
@@ -311,7 +328,18 @@ file_file_open_dialog (Gimp        *gimp,
                        const gchar *uri,
                        GtkWidget   *parent)
 {
-  file_open_dialog_show (gimp, NULL, uri, parent);
+  GtkWidget *dialog;
+
+  dialog = gimp_dialog_factory_dialog_new (global_dialog_factory,
+                                           gtk_widget_get_screen (parent),
+                                           "gimp-file-open-dialog", -1, FALSE);
+
+  if (dialog)
+    {
+      gimp_file_dialog_set_uri (GIMP_FILE_DIALOG (dialog), NULL, uri);
+
+      gtk_window_present (GTK_WINDOW (dialog));
+    }
 }
 
 

@@ -1,5 +1,17 @@
 2004-09-13  Michael Natterer  <mitch@gimp.org>
 
+	* app/dialogs/file-open-dialog.[ch]: removed function
+	file_open_dialog_show() and changed internal function
+	file_open_dialog_create() to file_open_dialog_new().
+
+	* app/dialogs/dialogs.c
+	* app/dialogs/dialogs-constructors.[ch]: made it completely
+	managed by the dialog factory.
+
+	* app/actions/file-commands.c: create it using the dialog factory.
+
+2004-09-13  Michael Natterer  <mitch@gimp.org>
+
 	* configure.in
 	* app/Makefile.am: added new directory app/dialogs and link
 	libappdialogs.c into the gimp binary.

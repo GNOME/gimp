@@ -80,6 +80,7 @@
 #include "about-dialog.h"
 #include "dialogs.h"
 #include "dialogs-constructors.h"
+#include "file-open-dialog.h"
 #include "file-open-location-dialog.h"
 #include "image-new-dialog.h"
 #include "module-dialog.h"
@@ -112,6 +113,14 @@ dialogs_image_new_new (GimpDialogFactory *factory,
                        gint               preview_size)
 {
   return image_new_dialog_new (context->gimp);
+}
+
+GtkWidget *
+dialogs_file_open_new (GimpDialogFactory *factory,
+                       GimpContext       *context,
+                       gint               preview_size)
+{
+  return file_open_dialog_new (context->gimp);
 }
 
 GtkWidget *

@@ -41,8 +41,6 @@ GimpDialogFactory *global_toolbox_factory = NULL;
 static const GimpDialogFactoryEntry toplevel_entries[] =
 {
   /*  foreign toplevels without constructor  */
-  { "gimp-file-open-dialog",
-    NULL, 0, TRUE,  TRUE,  TRUE,  FALSE },
   { "gimp-file-save-dialog",
     NULL, 0, TRUE,  TRUE,  TRUE,  FALSE },
 
@@ -92,6 +90,8 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
   /*  ordinary toplevels  */
   { "gimp-image-new-dialog",          dialogs_image_new_new,
     0, FALSE, TRUE,  FALSE, FALSE },
+  { "gimp-file-open-dialog",          dialogs_file_open_new,
+    0, TRUE,  TRUE,  TRUE,  FALSE },
   { "gimp-file-open-location-dialog", dialogs_file_open_location_new,
     0, FALSE, TRUE,  FALSE, FALSE },
 

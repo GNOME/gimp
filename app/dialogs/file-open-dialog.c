@@ -34,11 +34,9 @@
 #include "file/file-open.h"
 #include "file/file-utils.h"
 
-#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpfiledialog.h"
 #include "widgets/gimphelp-ids.h"
 
-#include "dialogs.h"
 #include "file-open-dialog.h"
 
 #include "gimp-intl.h"
@@ -46,53 +44,20 @@
 
 /*  local function prototypes  */
 
-static GtkWidget * file_open_dialog_create     (Gimp          *gimp);
-static void        file_open_dialog_response   (GtkWidget     *open_dialog,
-                                                gint           response_id,
-                                                Gimp          *gimp);
-static gboolean    file_open_dialog_open_image (GtkWidget     *open_dialog,
-                                                Gimp          *gimp,
-                                                const gchar   *uri,
-                                                const gchar   *entered_filename,
-                                                PlugInProcDef *load_proc);
-
-
-/*  private variables  */
-
-static GtkWidget *fileload  = NULL;
+static void       file_open_dialog_response   (GtkWidget     *open_dialog,
+                                               gint           response_id,
+                                               Gimp          *gimp);
+static gboolean   file_open_dialog_open_image (GtkWidget     *open_dialog,
+                                               Gimp          *gimp,
+                                               const gchar   *uri,
+                                               const gchar   *entered_filename,
+                                               PlugInProcDef *load_proc);
 
 
 /*  public functions  */
 
-void
-file_open_dialog_show (Gimp        *gimp,
-                       GimpImage   *gimage,
-                       const gchar *uri,
-                       GtkWidget   *parent)
-{
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage));
-  g_return_if_fail (parent == NULL || GTK_IS_WIDGET (parent));
-
-  if (! fileload)
-    fileload = file_open_dialog_create (gimp);
-
-  gimp_file_dialog_set_sensitive (GIMP_FILE_DIALOG (fileload), TRUE);
-
-  gimp_file_dialog_set_uri (GIMP_FILE_DIALOG (fileload), gimage, uri);
-
-  if (parent)
-    gtk_window_set_screen (GTK_WINDOW (fileload),
-                           gtk_widget_get_screen (parent));
-
-  gtk_window_present (GTK_WINDOW (fileload));
-}
-
-
-/*  private functions  */
-
-static GtkWidget *
-file_open_dialog_create (Gimp *gimp)
+GtkWidget *
+file_open_dialog_new (Gimp *gimp)
 {
   GtkWidget *dialog;
 
@@ -104,15 +69,15 @@ file_open_dialog_create (Gimp *gimp)
 
   gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (dialog), TRUE);
 
-  gimp_dialog_factory_add_foreign (global_dialog_factory,
-                                   "gimp-file-open-dialog", dialog);
-
   g_signal_connect (dialog, "response",
                     G_CALLBACK (file_open_dialog_response),
                     gimp);
 
   return dialog;
 }
+
+
+/*  private functions  */
 
 static void
 file_open_dialog_response (GtkWidget *open_dialog,

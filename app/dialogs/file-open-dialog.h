@@ -20,10 +20,7 @@
 #define __FILE_OPEN_DIALOG_H__
 
 
-void   file_open_dialog_show (Gimp        *gimp,
-                              GimpImage   *gimage,
-                              const gchar *uri,
-                              GtkWidget   *parent);
+GtkWidget * file_open_dialog_new (Gimp *gimp);
 
 
 #endif /* __FILE_OPEN_DIALOG_H__ */
