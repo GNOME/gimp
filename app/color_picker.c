@@ -25,7 +25,6 @@
 #include "cursorutil.h"
 #include "info_dialog.h"
 #include "palette.h"
-#include "tool_options_ui.h"
 #include "tools.h"
 #include "gimprc.h"
 
@@ -158,7 +157,7 @@ color_picker_options_new (void)
 				options->sample_merged_d);
   gtk_box_pack_start (GTK_BOX (vbox), options->sample_merged_w, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (options->sample_merged_w), "toggled",
-		      (GtkSignalFunc) tool_options_toggle_update,
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &options->sample_merged);
   gtk_widget_show (options->sample_merged_w);
 
@@ -174,7 +173,7 @@ color_picker_options_new (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_average_w),
 				options->sample_average_d);
   gtk_signal_connect (GTK_OBJECT (options->sample_average_w), "toggled",
-		      (GtkSignalFunc) tool_options_toggle_update,
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &options->sample_average);
   gtk_widget_show (options->sample_average_w);
 
@@ -204,7 +203,7 @@ color_picker_options_new (void)
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (options->average_radius_w), "value_changed",
-		      GTK_SIGNAL_FUNC (tool_options_double_adjustment_update),
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &options->average_radius);
   gtk_widget_show (scale);
   gtk_widget_show (table);
@@ -216,7 +215,7 @@ color_picker_options_new (void)
 				options->update_active_d);
   gtk_box_pack_start (GTK_BOX (vbox), options->update_active_w, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (options->update_active_w), "toggled",
-		      GTK_SIGNAL_FUNC (tool_options_toggle_update),
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &options->update_active);
   gtk_widget_show (options->update_active_w);
 

@@ -16,18 +16,19 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
-#include <stdio.h>
-#include "gdk/gdkkeysyms.h"
+
+#include <gdk/gdkkeysyms.h>
+
 #include "appenv.h"
 #include "drawable.h"
 #include "errors.h"
 #include "convolve.h"
 #include "gdisplay.h"
+#include "gimpui.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
 #include "paint_options.h"
 #include "selection.h"
-#include "tool_options_ui.h"
 #include "tools.h"
 #include "gimage.h"
 
@@ -46,6 +47,7 @@
 /*  the convolve structures  */
 
 typedef struct _ConvolveOptions ConvolveOptions;
+
 struct _ConvolveOptions
 {
   PaintOptions  paint_options;
@@ -54,8 +56,8 @@ struct _ConvolveOptions
   ConvolveType  type_d;
   GtkWidget    *type_w[2];
 
-  double        rate;
-  double        rate_d;
+  gdouble       rate;
+  gdouble       rate_d;
   GtkObject    *rate_w;
 };
 
@@ -64,14 +66,14 @@ struct _ConvolveOptions
 static ConvolveOptions * convolve_options = NULL;
 
 /*  local variables  */
-static int          matrix [25];
-static int          matrix_size;
-static int          matrix_divisor;
+static gint         matrix [25];
+static gint         matrix_size;
+static gint         matrix_divisor;
 
 static ConvolveType non_gui_type;
-static double       non_gui_rate;
+static gdouble      non_gui_rate;
 
-static float        custom_matrix [25] =
+static gfloat       custom_matrix [25] =
 {
   0, 0, 0, 0, 0,
   0, 0, 0, 0, 0,
@@ -80,7 +82,7 @@ static float        custom_matrix [25] =
   0, 0, 0, 0, 0,
 };
 
-static float        blur_matrix [25] =
+static gfloat       blur_matrix [25] =
 {
   0, 0, 0, 0, 0,
   0, 1, 1, 1, 0,
@@ -89,7 +91,7 @@ static float        blur_matrix [25] =
   0, 0 ,0, 0, 0,
 };
 
-static float        sharpen_matrix [25] =
+static gfloat       sharpen_matrix [25] =
 {
   0, 0, 0, 0, 0,
   0, 1, 1, 1, 0,
@@ -133,11 +135,9 @@ convolve_options_new (void)
   GtkWidget *label;
   GtkWidget *scale;
   GtkWidget *frame;
-  gchar* type_label[2] = { N_("Blur"), N_("Sharpen") };
-  gint   type_value[2] = { BLUR_CONVOLVE, SHARPEN_CONVOLVE };
 
   /*  the new convolve tool options structure  */
-  options = (ConvolveOptions *) g_malloc (sizeof (ConvolveOptions));
+  options = g_new (ConvolveOptions, 1);
   paint_options_init ((PaintOptions *) options,
 		      CONVOLVE,
 		      convolve_options_reset);
@@ -163,18 +163,22 @@ convolve_options_new (void)
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (options->rate_w), "value_changed",
-		      (GtkSignalFunc) tool_options_double_adjustment_update,
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &options->rate);
   gtk_widget_show (scale);
   gtk_widget_show (hbox);
 
-  frame = tool_options_radio_buttons_new (_("Convolve Type"), 
-					  &options->type,
-					   options->type_w,
-					   type_label,
-					   type_value,
-					   2);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w[options->type_d]), TRUE);
+  frame = gimp_radio_group_new2 (TRUE, _("Convolve Type"),
+				 gimp_radio_button_update,
+				 &options->type, (gpointer) options->type,
+
+				 _("Blur"), (gpointer) BLUR_CONVOLVE,
+				 &options->type_w[0],
+				 _("Sharpen"), (gpointer) SHARPEN_CONVOLVE,
+				 &options->type_w[1],
+
+				 NULL);
+
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 

@@ -17,19 +17,20 @@
  */
 #include <stdlib.h>
 
-#include "gdk/gdkkeysyms.h"
+#include <gdk/gdkkeysyms.h>
+
 #include "appenv.h"
 #include "cursorutil.h"
 #include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
+#include "gimpui.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
 #include "paint_options.h"
 #include "eraser.h"
 #include "selection.h"
-#include "tool_options_ui.h"
 #include "tools.h"
 
 #include "libgimp/gimpintl.h"
@@ -93,7 +94,7 @@ eraser_options_new (void)
   GtkWidget *vbox;
 
   /*  the new eraser tool options structure  */
-  options = (EraserOptions *) g_malloc (sizeof (EraserOptions));
+  options = g_new (EraserOptions, 1);
   paint_options_init ((PaintOptions *) options,
 		      ERASER,
 		      eraser_options_reset);
@@ -107,7 +108,7 @@ eraser_options_new (void)
   options->hard_w = gtk_check_button_new_with_label (_("Hard Edge"));
   gtk_box_pack_start (GTK_BOX (vbox), options->hard_w, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (options->hard_w), "toggled",
-		      (GtkSignalFunc) tool_options_toggle_update,
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &options->hard);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->hard_w),
 				options->hard_d);
@@ -117,7 +118,7 @@ eraser_options_new (void)
   options->anti_erase_w = gtk_check_button_new_with_label (_("Anti Erase"));
   gtk_box_pack_start (GTK_BOX (vbox), options->anti_erase_w, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (options->anti_erase_w), "toggled",
-		      (GtkSignalFunc) tool_options_toggle_update,
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &options->anti_erase);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->anti_erase_w),
 				options->anti_erase_d);

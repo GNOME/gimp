@@ -17,23 +17,23 @@
  */
 #include "config.h"
 
-#include <math.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 
 #include "appenv.h"
+
+#include "airbrush_blob.h"
 #include "drawable.h"
 #include "draw_core.h"
+#include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimprc.h"
-#include "xinput_airbrush.h"
+#include "gimpui.h"
 #include "paint_options.h"
-#include "tool_options_ui.h"
 #include "tools.h"
 #include "undo.h"
-#include "airbrush_blob.h"
-#include "gdisplay.h"
+#include "xinput_airbrush.h"
 
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
@@ -332,7 +332,7 @@ static XinputAirbrushOptions *
     gtk_table_attach_defaults (GTK_TABLE (table), slider, 1, 2, 0, 1);
     gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
     gtk_signal_connect (GTK_OBJECT (options->flow_w), "value_changed",
-                        (GtkSignalFunc) tool_options_double_adjustment_update,
+                        GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
                         &options->flow);
     gtk_widget_show (slider);
     gtk_scale_set_digits (GTK_SCALE (slider), 0);
@@ -351,7 +351,7 @@ static XinputAirbrushOptions *
     gtk_table_attach_defaults (GTK_TABLE (table), slider, 1, 2, 1, 2);
     gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
     gtk_signal_connect (GTK_OBJECT (options->sensitivity_w), "value_changed",
-                        (GtkSignalFunc) tool_options_double_adjustment_update,
+                        GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
                         &options->sensitivity);
     gtk_widget_show (slider);
 
@@ -371,7 +371,7 @@ static XinputAirbrushOptions *
     gtk_table_attach_defaults (GTK_TABLE (table), slider, 1, 2, 2, 3);
     gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
     gtk_signal_connect (GTK_OBJECT (options->starttilt_w), "value_changed",
-                        (GtkSignalFunc) tool_options_double_adjustment_update,
+                        GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
                         &options->starttilt);
     gtk_widget_show (slider);
     gtk_scale_set_digits (GTK_SCALE (slider), 0);
@@ -399,7 +399,7 @@ static XinputAirbrushOptions *
     gtk_container_add (GTK_CONTAINER (abox), slider);
     gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
     gtk_signal_connect (GTK_OBJECT (options->tilt_sensitivity_w), "value_changed",
-                        (GtkSignalFunc) tool_options_double_adjustment_update,
+                        GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
                         &options->tilt_sensitivity);
     gtk_widget_show (slider);
 
@@ -425,7 +425,7 @@ static XinputAirbrushOptions *
     gtk_container_add (GTK_CONTAINER (abox), slider);
     gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
     gtk_signal_connect (GTK_OBJECT (options->vel_sensitivity_w), "value_changed",
-                        (GtkSignalFunc) tool_options_double_adjustment_update,
+                        GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
                         &options->vel_sensitivity);
     gtk_widget_show (slider);
 
@@ -447,7 +447,7 @@ static XinputAirbrushOptions *
     gtk_table_attach_defaults (GTK_TABLE (table), slider, 1, 2, 7, 8);
     gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
     gtk_signal_connect (GTK_OBJECT (options->minheight_w), "value_changed",
-                        (GtkSignalFunc) tool_options_double_adjustment_update,
+                        GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
                         &options->minheight);
     gtk_widget_show (slider);
     gtk_scale_set_digits (GTK_SCALE (slider), 0);
@@ -468,7 +468,7 @@ static XinputAirbrushOptions *
     gtk_table_attach_defaults (GTK_TABLE (table), slider, 1, 2, 9, 10);
     gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
     gtk_signal_connect (GTK_OBJECT (options->maxheight_w), "value_changed",
-                        (GtkSignalFunc) tool_options_double_adjustment_update,
+                        GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
                         &options->maxheight);
     gtk_widget_show (slider);
     gtk_scale_set_digits (GTK_SCALE (slider), 0);
@@ -489,7 +489,7 @@ static XinputAirbrushOptions *
     gtk_table_attach_defaults (GTK_TABLE (table), slider, 1, 2, 7, 8);
     gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
     gtk_signal_connect (GTK_OBJECT (options->height_w), "value_changed",
-                        (GtkSignalFunc) tool_options_double_adjustment_update,
+                        GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
                         &options->height);
     gtk_widget_show (slider);
     gtk_scale_set_digits (GTK_SCALE (slider), 0);

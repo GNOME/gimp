@@ -120,8 +120,8 @@
 #include <jpeglib.h>
 #include <jerror.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -193,19 +193,19 @@ typedef void (*MenuItemCallback) (GtkWidget *widget,
 /* Declare local functions.
  */
 static void   query                     (void);
-static void   run                       (char    *name,
-					 int      nparams,
-					 GParam  *param,
-					 int     *nreturn_vals,
-					 GParam **return_vals);
-static gint32 load_image                (char   *filename, 
-					 GRunModeType runmode, 
-					 int preview);
-static gint   save_image                (char   *filename,
-					 gint32  image_ID,
-					 gint32  drawable_ID,
-					 gint32  orig_image_ID,
-					 int     preview);
+static void   run                       (gchar         *name,
+					 gint           nparams,
+					 GParam        *param,
+					 gint          *nreturn_vals,
+					 GParam       **return_vals);
+static gint32 load_image                (gchar         *filename, 
+					 GRunModeType   runmode, 
+					 gint           preview);
+static gint   save_image                (gchar         *filename,
+					 gint32         image_ID,
+					 gint32         drawable_ID,
+					 gint32         orig_image_ID,
+					 gint           preview);
 
 static void   add_menu_item             (GtkWidget *menu,
 					 char *label,
@@ -1529,11 +1529,14 @@ static gint
 save_dialog (void)
 {
   GtkWidget *dlg;
+  GtkWidget *vbox;
+  GtkWidget *main_vbox;
   GtkWidget *label;
   GtkWidget *scale;
   GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *toggle;
+  GtkWidget *abox;
   GtkObject *scale_data;
 
   GtkWidget *progressive;
@@ -1553,7 +1556,6 @@ save_dialog (void)
   GtkWidget *vscrollbar;
   
   GtkWidget *prv_frame;
-  GtkWidget *prv_table;
   GDrawableType dtype;
 
   dlg = gimp_dialog_new (_("Save as Jpeg"), "jpeg",
@@ -1572,28 +1574,35 @@ save_dialog (void)
 		      GTK_SIGNAL_FUNC (save_close_callback),
 		      NULL);
 
+  main_vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox,
+		      TRUE, TRUE, 0);
+  gtk_widget_show (main_vbox);
+
   /* sg - preview */
   prv_frame = gtk_frame_new (_("Image Preview"));
   gtk_frame_set_shadow_type (GTK_FRAME (prv_frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (prv_frame), 10);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), prv_frame, TRUE, TRUE, 0);
-  prv_table = gtk_table_new (1, 1, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (prv_table), 10);
-  gtk_container_add (GTK_CONTAINER (prv_frame), prv_table);
+  gtk_box_pack_start (GTK_BOX (main_vbox), prv_frame, FALSE, FALSE, 0);
 
-  preview = gtk_check_button_new_with_label(_("Preview (in image window)"));
-  gtk_table_attach(GTK_TABLE(prv_table), preview, 0, 1, 0, 1, GTK_FILL, 0, 0, 0);
-  gtk_signal_connect(GTK_OBJECT(preview), "toggled",
-                     (GtkSignalFunc) save_preview_toggle, NULL);
-  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON (preview), jsvals.preview);
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_add (GTK_CONTAINER (prv_frame), vbox);
+  gtk_widget_show (vbox);
+
+  preview = gtk_check_button_new_with_label (_("Preview (in Image Window)"));
+  gtk_box_pack_start (GTK_BOX (vbox), preview, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (preview), "toggled",
+		      GTK_SIGNAL_FUNC (save_preview_toggle),
+		      NULL);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (preview), jsvals.preview);
   gtk_widget_show (preview);
 
   preview_size = gtk_label_new (_("Size: unknown"));
   gtk_misc_set_alignment (GTK_MISC (preview_size), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (prv_table), preview_size, 0, 1, 1, 2, GTK_FILL | GTK_EXPAND, GTK_FILL, 5, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), preview_size, FALSE, FALSE, 0);
   gtk_widget_show (preview_size);
-  
-  gtk_widget_show (prv_table);
+
   gtk_widget_show (prv_frame);
 
   make_preview ();
@@ -1601,86 +1610,109 @@ save_dialog (void)
   /*  parameter settings  */
   frame = gtk_frame_new (_("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-  table = gtk_table_new (8, 2, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 10);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+
+  table = gtk_table_new (9, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  label = gtk_label_new (_("Quality"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL | GTK_EXPAND, GTK_FILL, 5, 0);
+  label = gtk_label_new (_("Quality:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
+		    GTK_FILL | GTK_SHRINK, GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
   scale_data = gtk_adjustment_new (jsvals.quality, 0.0, 1.0, 0.01, 0.01, 0.0);
   scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
   gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 0, 1, GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), scale, 1, 3, 0, 1,
+		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_scale_set_digits (GTK_SCALE (scale), 2);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      (GtkSignalFunc) save_scale_update,
+		      GTK_SIGNAL_FUNC (save_scale_update),
 		      &jsvals.quality);
-  gtk_widget_show (label);
   gtk_widget_show (scale);
 
-  label = gtk_label_new (_("Smoothing"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_FILL | GTK_EXPAND, GTK_FILL, 5, 0);
+  label = gtk_label_new (_("Smoothing:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
+		    GTK_FILL | GTK_SHRINK, GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
   scale_data = gtk_adjustment_new (jsvals.smoothing, 0.0, 1.0, 0.01, 0.01, 0.0);
   scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
   gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 1, 2, GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), scale, 1, 3, 1, 2,
+		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_scale_set_digits (GTK_SCALE (scale), 2);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      (GtkSignalFunc) save_scale_update,
+		      GTK_SIGNAL_FUNC (save_scale_update),
 		      &jsvals.smoothing);
-  gtk_widget_show (label);
   gtk_widget_show (scale);
 
   /* sg - have to init scale here */
-  scale_data = gtk_adjustment_new ((jsvals.restart == 0) ? 1 : jsvals.restart, 1, 64, 1, 1, 0.0);
+  scale_data = gtk_adjustment_new ((jsvals.restart == 0) ? 1 : jsvals.restart,
+				   1, 64, 1, 1, 0.0);
   restart_markers_scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
 
-  restart = gtk_check_button_new_with_label (_("Restart markers"));
-  gtk_table_attach (GTK_TABLE (table), restart, 0, 2, 2, 3, GTK_FILL, 0, 0, 0);
+  restart = gtk_check_button_new_with_label (_("Restart Markers"));
+  gtk_table_attach (GTK_TABLE (table), restart, 0, 1, 2, 3,
+		    GTK_FILL, 0, 0, 0);
   gtk_signal_connect (GTK_OBJECT (restart), "toggled",
-		      (GtkSignalFunc) save_restart_toggle_update, scale_data);
+		      GTK_SIGNAL_FUNC (save_restart_toggle_update),
+		      scale_data);
   gtk_widget_show (restart);
 
-  restart_markers_label = gtk_label_new (_("Restart frequency (rows)"));
-  gtk_misc_set_alignment (GTK_MISC (restart_markers_label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), restart_markers_label, 0, 1, 3, 4, GTK_FILL | GTK_EXPAND, GTK_FILL, 5, 0);
+  restart_markers_label = gtk_label_new (_("Restart Frequency (Rows):"));
+  gtk_misc_set_alignment (GTK_MISC (restart_markers_label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), restart_markers_label, 0, 1, 3, 4,
+		    GTK_FILL | GTK_SHRINK, GTK_FILL, 0, 0);
+  gtk_widget_show (restart_markers_label);
+
+  abox = gtk_alignment_new (0.5, 1.0, 1.0, 0.0);
+  gtk_table_attach (GTK_TABLE (table), abox, 1, 3, 2, 4,
+		    GTK_EXPAND | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (abox);
 
   gtk_widget_set_usize (restart_markers_scale, SCALE_WIDTH, 0);
-  gtk_table_attach (GTK_TABLE (table), restart_markers_scale, 1, 2, 3, 4, GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
+  gtk_container_add (GTK_CONTAINER (abox), restart_markers_scale);
   gtk_scale_set_value_pos (GTK_SCALE (restart_markers_scale), GTK_POS_TOP);
   gtk_scale_set_digits (GTK_SCALE (restart_markers_scale), 0);
-  gtk_range_set_update_policy (GTK_RANGE (restart_markers_scale), GTK_UPDATE_DELAYED);
+  gtk_range_set_update_policy (GTK_RANGE (restart_markers_scale),
+			       GTK_UPDATE_DELAYED);
 
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-                      (GtkSignalFunc) save_restart_update,
+                      GTK_SIGNAL_FUNC (save_restart_update),
                       restart);
 
-  gtk_widget_set_sensitive (restart_markers_label, (jsvals.restart ? TRUE : FALSE));
-  gtk_widget_set_sensitive (restart_markers_scale, (jsvals.restart ? TRUE : FALSE));
-  
-  gtk_widget_show (restart_markers_label);
+  gtk_widget_set_sensitive (restart_markers_label, 
+			    (jsvals.restart ? TRUE : FALSE));
+  gtk_widget_set_sensitive (restart_markers_scale,
+			    (jsvals.restart ? TRUE : FALSE));
+
   gtk_widget_show (restart_markers_scale);
 
   toggle = gtk_check_button_new_with_label (_("Optimize"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 4, 5, GTK_FILL, 0, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 4, 5,
+		    GTK_FILL, 0, 0, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc)save_optimize_update, NULL);
+		      GTK_SIGNAL_FUNC (save_optimize_update),
+		      NULL);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.optimize);
-  gtk_widget_show(toggle);
+  gtk_widget_show (toggle);
 
   progressive = gtk_check_button_new_with_label (_("Progressive"));
-  gtk_table_attach (GTK_TABLE (table), progressive, 0, 2, 5, 6,
+  gtk_table_attach (GTK_TABLE (table), progressive, 0, 3, 5, 6,
 		    GTK_FILL, 0, 0, 0);
   gtk_signal_connect (GTK_OBJECT (progressive), "toggled",
-		      (GtkSignalFunc)save_progressive_toggle, NULL);
+		      GTK_SIGNAL_FUNC (save_progressive_toggle),
+		      NULL);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (progressive),
 				jsvals.progressive);
   gtk_widget_show (progressive);
@@ -1689,28 +1721,31 @@ save_dialog (void)
   gtk_widget_set_sensitive (progressive, FALSE);
 #endif
   
-  baseline = gtk_check_button_new_with_label (_("Force baseline JPEG (readable by all decoders)"));
-  gtk_table_attach (GTK_TABLE (table), baseline, 0, 2, 6, 7,
+  baseline = gtk_check_button_new_with_label (_("Force Baseline JPEG (Readable by all Decoders)"));
+  gtk_table_attach (GTK_TABLE (table), baseline, 0, 3, 6, 7,
 		    GTK_FILL, 0, 0, 0);
   gtk_signal_connect (GTK_OBJECT (baseline), "toggled",
-		      (GtkSignalFunc)save_baseline_toggle, NULL);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(baseline),
+		      GTK_SIGNAL_FUNC (save_baseline_toggle),
+		      NULL);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (baseline),
 				jsvals.baseline);
-  gtk_widget_show(baseline);
+  gtk_widget_show (baseline);
 
   /* build option menu (code taken from app/buildmenu.c) */
   menu = gtk_menu_new ();
 
-  add_menu_item(menu, "2x2,1x1,1x1", 0, subsmp_callback);
-  add_menu_item(menu, "2x1,1x1,1x1 (4:2:2)", 1, subsmp_callback);
-  add_menu_item(menu, "1x1,1x1,1x1", 2, subsmp_callback);
+  add_menu_item (menu, "2x2,1x1,1x1", 0, subsmp_callback);
+  add_menu_item (menu, "2x1,1x1,1x1 (4:2:2)", 1, subsmp_callback);
+  add_menu_item (menu, "1x1,1x1,1x1", 2, subsmp_callback);
 
   subsmp_menu = gtk_option_menu_new ();
 
-  label = gtk_label_new (_("Subsampling"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 7, 8, GTK_FILL | GTK_EXPAND, GTK_FILL, 5, 0);
-  gtk_table_attach (GTK_TABLE (table), subsmp_menu, 1, 2, 7, 8, GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
+  label = gtk_label_new (_("Subsampling:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 2, 7, 8,
+		    GTK_FILL | GTK_SHRINK, GTK_FILL, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), subsmp_menu, 2, 3, 7, 8,
+		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
   gtk_widget_show (label);
   gtk_widget_show (subsmp_menu);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (subsmp_menu), menu);
@@ -1724,10 +1759,12 @@ save_dialog (void)
 
   dct_menu = gtk_option_menu_new ();
  
-  label = gtk_label_new (_("DCT method (speed/quality tradeoff)"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 8, 9, GTK_FILL | GTK_EXPAND, GTK_FILL, 5, 0);
-  gtk_table_attach (GTK_TABLE (table), dct_menu, 1, 2, 8, 9, GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
+  label = gtk_label_new (_("DCT Method (Speed/Quality Tradeoff):"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 2, 8, 9,
+		    GTK_FILL | GTK_SHRINK, GTK_FILL, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), dct_menu, 2, 3, 8, 9,
+		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
   gtk_widget_show (label);
   gtk_widget_show (dct_menu);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (dct_menu), menu);
@@ -1741,18 +1778,18 @@ save_dialog (void)
 
   com_frame = gtk_frame_new (_("Image Comments"));
   gtk_frame_set_shadow_type (GTK_FRAME (com_frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (com_frame), 10);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), com_frame, TRUE, TRUE, 0);
-  com_table = gtk_table_new (1, 1, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (com_table), 10);
+  gtk_box_pack_start (GTK_BOX (main_vbox), com_frame, TRUE, TRUE, 0);
+
+  com_table = gtk_table_new (1, 2, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (com_table), 4);
   gtk_container_add (GTK_CONTAINER (com_frame), com_table);
 
   text = gtk_text_new (NULL, NULL);
   gtk_text_set_editable (GTK_TEXT (text), TRUE);
-  gtk_widget_set_usize(text,-1,3); /* //HB: restrict to 3 line height 
-                                    * to allow 800x600 mode */
+  gtk_widget_set_usize (text, -1, 3); /* //HB: restrict to 3 line height 
+				       * to allow 800x600 mode */
   if (image_comment) 
-    gtk_text_insert(GTK_TEXT(text),NULL,NULL,NULL,image_comment,-1);
+    gtk_text_insert (GTK_TEXT (text), NULL, NULL, NULL, image_comment, -1);
   gtk_table_attach (GTK_TABLE (com_table), text, 0, 1, 0, 1,
                     GTK_EXPAND | GTK_SHRINK | GTK_FILL,
                     GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
@@ -1785,7 +1822,6 @@ save_dialog (void)
 
   return jsint.run;
 }
-
 
 /*  Save interface functions  */
 
@@ -1850,7 +1886,7 @@ save_restart_update (GtkAdjustment *adjustment,
 
 static void
 save_optimize_update (GtkWidget *widget,
-		      gpointer  data)
+		      gpointer   data)
 {
   jsvals.optimize = GTK_TOGGLE_BUTTON (widget)->active;
   make_preview ();
@@ -1858,7 +1894,7 @@ save_optimize_update (GtkWidget *widget,
 
 static void
 save_progressive_toggle (GtkWidget *widget,
-			 gpointer  data)
+			 gpointer   data)
 {
   jsvals.progressive = GTK_TOGGLE_BUTTON (widget)->active;
   make_preview ();
@@ -1866,7 +1902,7 @@ save_progressive_toggle (GtkWidget *widget,
 
 static void
 save_baseline_toggle (GtkWidget *widget,
-		      gpointer  data)
+		      gpointer   data)
 {
   jsvals.baseline = GTK_TOGGLE_BUTTON (widget)->active;
   make_preview ();
@@ -1874,7 +1910,7 @@ save_baseline_toggle (GtkWidget *widget,
 
 static void
 save_preview_toggle (GtkWidget *widget,
-		     gpointer  data)
+		     gpointer   data)
 {
   jsvals.preview = GTK_TOGGLE_BUTTON (widget)->active;
   make_preview ();
@@ -1882,7 +1918,7 @@ save_preview_toggle (GtkWidget *widget,
 
 static void
 subsmp_callback (GtkWidget *widget,
-		 gpointer  data)
+		 gpointer   data)
 {
   jsvals.subsmp = *((guchar *)data);
   make_preview ();
@@ -1890,7 +1926,7 @@ subsmp_callback (GtkWidget *widget,
 
 static void
 dct_callback (GtkWidget *widget,
-	      gpointer  data)
+	      gpointer   data)
 {
   jsvals.dct = *((guchar *)data);
   make_preview ();

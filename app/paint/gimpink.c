@@ -25,9 +25,9 @@
 #include "draw_core.h"
 #include "gimage_mask.h"
 #include "gimprc.h"
+#include "gimpui.h"
 #include "ink.h"
 #include "paint_options.h"
-#include "tool_options_ui.h"
 #include "tools.h"
 #include "undo.h"
 #include "blob.h"
@@ -45,33 +45,35 @@
 
 /*  the Ink structures  */
 
-typedef Blob *(*BlobFunc) (double, double, double, double, double, double);
+typedef Blob *(*BlobFunc) (gdouble, gdouble, gdouble, gdouble, gdouble, gdouble);
 
 typedef struct _InkTool InkTool;
+
 struct _InkTool
 {
-  DrawCore * core;         /*  Core select object             */
+  DrawCore *core;         /*  Core select object             */
   
-  Blob     * last_blob;	   /*  blob for last cursor position  */
+  Blob     *last_blob;	   /*  blob for last cursor position  */
 
-  int        x1, y1;       /*  image space coordinate         */
-  int        x2, y2;       /*  image space coords             */
+  gint      x1, y1;       /*  image space coordinate         */
+  gint      x2, y2;       /*  image space coords             */
 
   /* circular distance history buffer */
-  gdouble    dt_buffer[DIST_SMOOTHER_BUFFER];
-  gint       dt_index;
+  gdouble   dt_buffer[DIST_SMOOTHER_BUFFER];
+  gint      dt_index;
 
   /* circular timing history buffer */
-  guint32    ts_buffer[TIME_SMOOTHER_BUFFER];
-  gint       ts_index;
+  guint32   ts_buffer[TIME_SMOOTHER_BUFFER];
+  gint      ts_index;
 
-  gdouble    last_time;    /*  previous time of a motion event      */
-  gdouble    lastx, lasty; /*  previous position of a motion event  */
+  gdouble   last_time;    /*  previous time of a motion event      */
+  gdouble   lastx, lasty; /*  previous position of a motion event  */
 
-  gboolean   init_velocity;
+  gboolean  init_velocity;
 };
 
 typedef struct _BrushWidget BrushWidget;
+
 struct _BrushWidget
 {
   GtkWidget   *widget;
@@ -79,44 +81,45 @@ struct _BrushWidget
 };
 
 typedef struct _InkOptions InkOptions;
+
 struct _InkOptions
 {
   PaintOptions  paint_options;
 
-  double        size;
-  double        size_d;
+  gdouble       size;
+  gdouble       size_d;
   GtkObject    *size_w;
 
-  double        sensitivity;
-  double        sensitivity_d;
+  gdouble       sensitivity;
+  gdouble       sensitivity_d;
   GtkObject    *sensitivity_w;
 
-  double        vel_sensitivity;
-  double        vel_sensitivity_d;
+  gdouble       vel_sensitivity;
+  gdouble       vel_sensitivity_d;
   GtkObject    *vel_sensitivity_w;
 
-  double        tilt_sensitivity;
-  double        tilt_sensitivity_d;
+  gdouble       tilt_sensitivity;
+  gdouble       tilt_sensitivity_d;
   GtkObject    *tilt_sensitivity_w;
 
-  double        tilt_angle;
-  double        tilt_angle_d;
+  gdouble       tilt_angle;
+  gdouble       tilt_angle_d;
   GtkObject    *tilt_angle_w;
 
   BlobFunc      function;
   BlobFunc      function_d;
   GtkWidget    *function_w[3];  /* 3 radio buttons */
 
-  double        aspect;
-  double        aspect_d;
-  double        angle;
-  double        angle_d;
+  gdouble       aspect;
+  gdouble       aspect_d;
+  gdouble       angle;
+  gdouble       angle_d;
   BrushWidget  *brush_w;
 };
 
 
 /* the ink tool options  */
-static InkOptions *ink_options = NULL;
+static InkOptions * ink_options = NULL;
 
 /* local variables */
 
@@ -265,7 +268,7 @@ ink_options_new (void)
   GdkPixmap *pixmap;
 
   /*  the new ink tool options structure  */
-  options = (InkOptions *) g_malloc (sizeof (InkOptions));
+  options = g_new (InkOptions, 1);
   paint_options_init ((PaintOptions *) options,
 		      INK,
 		      ink_options_reset);
@@ -303,7 +306,7 @@ ink_options_new (void)
   gtk_table_attach_defaults (GTK_TABLE (table), slider, 1, 2, 0, 1);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (options->size_w), "value_changed",
-		      (GtkSignalFunc) tool_options_double_adjustment_update,
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &options->size);
   gtk_widget_show (slider);
 
@@ -321,7 +324,7 @@ ink_options_new (void)
   gtk_table_attach_defaults (GTK_TABLE (table), slider, 1, 2, 1, 2);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (options->sensitivity_w), "value_changed",
-		      (GtkSignalFunc) tool_options_double_adjustment_update,
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &options->sensitivity);
   gtk_widget_show (slider);
   
@@ -350,7 +353,7 @@ ink_options_new (void)
   gtk_container_add (GTK_CONTAINER (abox), slider);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (options->tilt_sensitivity_w), "value_changed",
-		      (GtkSignalFunc) tool_options_double_adjustment_update,
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &options->tilt_sensitivity);
   gtk_widget_show (slider);
 
@@ -380,7 +383,7 @@ ink_options_new (void)
   gtk_container_add (GTK_CONTAINER (abox), slider);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (options->vel_sensitivity_w), "value_changed",
-		      (GtkSignalFunc) tool_options_double_adjustment_update,
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &options->vel_sensitivity);
   gtk_widget_show (slider);
 
@@ -410,7 +413,7 @@ ink_options_new (void)
   gtk_container_add (GTK_CONTAINER (abox), slider);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (options->tilt_angle_w), "value_changed",
-		      (GtkSignalFunc) tool_options_double_adjustment_update,
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &options->tilt_angle);
 
   /* Brush type radiobuttons */

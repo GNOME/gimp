@@ -1,3 +1,49 @@
+2000-01-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/tool_options_ui.h: removed.
+
+	* app/tool_options.c
+	* libgimp/gimpwidgets.[ch]: moved some more ui utility functions
+	to libgimp.
+
+	* app/airbrush.c
+	* app/blend.c
+	* app/bucket_fill.c
+	* app/channel_ops.c
+	* app/clone.c
+	* app/color_picker.c
+	* app/convolve.c
+	* app/crop.c
+	* app/dodgeburn.c
+	* app/eraser.c
+	* app/file_new_dialog.[ch]
+	* app/flip_tool.c
+	* app/image_new.[ch]
+	* app/ink.c
+	* app/layers_dialog.c
+	* app/magnify.c
+	* app/measure.c
+	* app/paintbrush.c
+	* app/pencil.c
+	* app/smudge.c
+	* app/text_tool.c
+	* app/tool_options.c
+	* app/transform_tool.c
+	* app/xinput_airbrush.c: use the libgimp functions (esp. the radio
+	button group constructor), some code cleanup.
+
+	* plug-ins/common/csource.c
+	* plug-ins/common/despeckle.c
+	* plug-ins/common/diffraction.c
+	* plug-ins/common/jpeg.c
+	* plug-ins/common/png.c
+	* plug-ins/unsharp/unsharp.c: more plugin ui tuning.
+
+	* plug-ins/unsharp/Makefile.am
+	* plug-ins/unsharp/dialog_f.[ch]
+	* plug-ins/unsharp/dialog_i.[ch]: removed.
+
 Thu Jan 13 16:35:44 PST 2000 Manish Singh <yosh@gimp.org>
 
 	* Made 1.1.15 release

@@ -419,7 +419,6 @@ gimp_SOURCES = \
 	tips_dialog.h		\
 	tool_options.c		\
 	tool_options.h		\
-	tool_options_ui.h	\
 	tools.c			\
 	tools.h			\
 	toolsF.h		\

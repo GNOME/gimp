@@ -15,10 +15,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#include "config.h"
+
 #include "appenv.h"
 #include "gdisplay.h"
 #include "gimpui.h"
-#include "tool_options_ui.h"
 #include "tools.h"
 #include "perspective_tool.h"
 #include "rotate_tool.h"
@@ -27,7 +28,6 @@
 #include "transform_core.h"
 #include "transform_tool.h"
 
-#include "config.h"
 #include "libgimp/gimpmath.h"
 #include "libgimp/gimpintl.h"
 
@@ -83,7 +83,7 @@ static void
 transform_show_grid_update (GtkWidget *widget,
 			    gpointer   data)
 {
-  static gboolean first_call = TRUE;  /* eek, this hack avoids a segfult */
+  static gboolean first_call = TRUE;  /* eek, this hack avoids a segfault */
 
   if (first_call)
     {
@@ -91,7 +91,8 @@ transform_show_grid_update (GtkWidget *widget,
       return;
     }
 
-  tool_options_toggle_update (widget, data);
+  gimp_toggle_button_update (widget, data);
+
   transform_core_grid_density_changed ();
 }
 
@@ -99,7 +100,7 @@ static void
 transform_show_path_update (GtkWidget *widget,
 			    gpointer   data)
 {
-  static gboolean first_call = TRUE;  /* eek, this hack avoids a segfult */
+  static gboolean first_call = TRUE;  /* eek, this hack avoids a segfault */
 
   if (first_call)
     {
@@ -108,7 +109,7 @@ transform_show_path_update (GtkWidget *widget,
     }
 
   transform_core_showpath_changed (1); /* pause */
-  tool_options_toggle_update (widget, data);
+  gimp_toggle_button_update (widget, data);
   transform_core_showpath_changed (0); /* resume */
 }
 
@@ -184,7 +185,7 @@ transform_options_new (void)
   GtkWidget *grid_density;
 
   /*  the new transform tool options structure  */
-  options = (TransformOptions *) g_malloc (sizeof (TransformOptions));
+  options = g_new (TransformOptions, 1);
   tool_options_init ((ToolOptions *) options,
 		     _("Transform Tool Options"),
 		     transform_options_reset);
@@ -293,7 +294,7 @@ transform_options_new (void)
   /*  the smoothing toggle button  */
   options->smoothing_w = gtk_check_button_new_with_label (_("Smoothing"));
   gtk_signal_connect (GTK_OBJECT (options->smoothing_w), "toggled",
-		      GTK_SIGNAL_FUNC (tool_options_toggle_update),
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &options->smoothing);
   gtk_table_attach_defaults (GTK_TABLE (table), 
 			     options->smoothing_w, 0, 1, 1, 2);
@@ -313,7 +314,7 @@ transform_options_new (void)
   /*  the clip resulting image toggle button  */
   options->clip_w = gtk_check_button_new_with_label (_("Clip Result"));
   gtk_signal_connect (GTK_OBJECT (options->clip_w), "toggled",
-		      GTK_SIGNAL_FUNC (tool_options_toggle_update),
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &options->clip);
   gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox), 
 		      options->clip_w, FALSE, FALSE, 0);

@@ -16,13 +16,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include "config.h"
+
 #include "brush_select.h"
 #include "gimprc.h"
 #include "gimpui.h"
 #include "paint_funcs.h"
 #include "paint_options.h"
 #include "selection_options.h"
-#include "tool_options_ui.h"
 
 #include "libgimp/gimpunitmenu.h"
 #include "libgimp/gimpintl.h"
@@ -49,60 +49,7 @@ static void                   paint_pressure_options_reset (PaintPressureOptions
 
 /*  ui helper functions  ******************************************************/
 
-void
-tool_options_toggle_update (GtkWidget *widget,
-			    gpointer   data)
-{
-  GtkWidget *set_sensitive;
-  gboolean  *toggle_val;
-
-  toggle_val = (gboolean *) data;
-  *toggle_val = (GTK_TOGGLE_BUTTON (widget)->active) ? TRUE : FALSE;
-
-  /*  a tool options toggle button can set the sensitive state of
-   *  an arbitrary list of widgets
-   */
-
-  set_sensitive =
-    gtk_object_get_data (GTK_OBJECT (widget), "set_sensitive");
-  while (set_sensitive)
-    {
-      gtk_widget_set_sensitive (GTK_WIDGET (set_sensitive), *toggle_val);
-      set_sensitive =
-	gtk_object_get_data (GTK_OBJECT (set_sensitive), "set_sensitive");
-    }
-
-  set_sensitive =
-    gtk_object_get_data (GTK_OBJECT (widget), "inverse_sensitive");
-  while (set_sensitive)
-    {
-      gtk_widget_set_sensitive (GTK_WIDGET (set_sensitive), ! *toggle_val);
-      set_sensitive =
-	gtk_object_get_data (GTK_OBJECT (set_sensitive), "inverse_sensitive");
-    }
-}
-
-void
-tool_options_int_adjustment_update (GtkWidget *widget,
-				    gpointer   data)
-{
-  gint *val;
-
-  val = (gint *) data;
-  *val = GTK_ADJUSTMENT (widget)->value;
-}
-
-void
-tool_options_double_adjustment_update (GtkWidget *widget,
-				       gpointer   data)
-{
-  gdouble *val;
-
-  val = (gdouble *) data;
-  *val = GTK_ADJUSTMENT (widget)->value;
-}
-
-void
+static void
 tool_options_opacity_adjustment_update (GtkWidget *widget,
 					gpointer   data)
 {
@@ -121,82 +68,6 @@ tool_options_paint_mode_update (GtkWidget *widget,
   gimp_context_set_paint_mode (GIMP_CONTEXT (context),
 			       (LayerModeEffects) data);
 }
-
-void
-tool_options_unitmenu_update (GtkWidget *widget,
-			      gpointer   data)
-{
-  GUnit     *val;
-  GtkWidget *spinbutton;
-  gint       digits;
-
-  val = (GUnit *) data;
-  *val = gimp_unit_menu_get_unit (GIMP_UNIT_MENU (widget));
-
-  digits = ((*val == UNIT_PIXEL) ? 0 :
-	    ((*val == UNIT_PERCENT) ? 2 :
-	     (MIN (6, MAX (3, gimp_unit_get_digits (*val))))));
-
-  spinbutton =
-    gtk_object_get_data (GTK_OBJECT (widget), "set_digits");
-  while (spinbutton)
-    {
-      gtk_spin_button_set_digits (GTK_SPIN_BUTTON (spinbutton), digits);
-      spinbutton = gtk_object_get_data (GTK_OBJECT (spinbutton), "set_digits");
-    }
-}
-
-static void
-tool_options_radio_buttons_update (GtkWidget *widget,
-				   gpointer   data)
-{
-  gint *toggle_val;
-
-  toggle_val = (gint *) data;
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = (gint) gtk_object_get_data (GTK_OBJECT (widget),
-					      "toggle_value");
-}
-
-GtkWidget *
-tool_options_radio_buttons_new (gchar*      label,
-				gpointer    toggle_val,
-				GtkWidget*  button_widget[],
-				gchar*      button_label[],
-				gint        button_value[],
-				gint        num)
-{
-  GtkWidget *frame;
-  GtkWidget *vbox;
-  GSList *group = NULL;
-  gint i;
-
-  frame = gtk_frame_new (label);
-
-  g_return_val_if_fail (toggle_val != NULL, frame);
-
-  vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-
-  for (i=0; i<num; i++)
-    {
-      button_widget[i] =
-	gtk_radio_button_new_with_label (group, gettext (button_label[i]));
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (button_widget[i]));
-      gtk_box_pack_start (GTK_BOX (vbox), button_widget[i], FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (button_widget[i]), "toggled",
-			  GTK_SIGNAL_FUNC (tool_options_radio_buttons_update),
-			  toggle_val);
-      gtk_object_set_data (GTK_OBJECT (button_widget[i]), "toggle_value",
-			   (gpointer)button_value[i]);
-      gtk_widget_show (button_widget[i]);
-    }
-  gtk_widget_show (vbox);
-
-  return (frame);
-}
-
 
 /*  tool options functions  ***************************************************/
 
@@ -293,7 +164,7 @@ selection_options_init (SelectionOptions     *options,
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->feather_w),
 				options->feather_d);
   gtk_signal_connect (GTK_OBJECT (options->feather_w), "toggled",
-		      GTK_SIGNAL_FUNC (tool_options_toggle_update),
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &options->feather);
   gtk_widget_show (options->feather_w);
 
@@ -316,7 +187,7 @@ selection_options_init (SelectionOptions     *options,
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (options->feather_radius_w), "value_changed",
-		      GTK_SIGNAL_FUNC (tool_options_double_adjustment_update),
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &options->feather_radius);
   gtk_widget_show (scale);
 
@@ -336,7 +207,7 @@ selection_options_init (SelectionOptions     *options,
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->antialias_w),
 				    options->antialias_d);
       gtk_signal_connect (GTK_OBJECT (options->antialias_w), "toggled",
-			  GTK_SIGNAL_FUNC (tool_options_toggle_update),
+			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 			  &options->antialias);
       gtk_widget_show (options->antialias_w);
     }
@@ -376,7 +247,7 @@ selection_options_init (SelectionOptions     *options,
       gtk_box_pack_start (GTK_BOX (vbox), options->sample_merged_w,
 			  FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (options->sample_merged_w), "toggled",
-			  GTK_SIGNAL_FUNC (tool_options_toggle_update),
+			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 			  &options->sample_merged);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
 				    options->sample_merged_d);
@@ -399,7 +270,7 @@ selection_options_init (SelectionOptions     *options,
       gtk_box_pack_start (GTK_BOX (vbox), options->fixed_size_w,
 			  FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (options->fixed_size_w), "toggled",
-			  GTK_SIGNAL_FUNC (tool_options_toggle_update),
+			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 			  &options->fixed_size);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->fixed_size_w),
 				    options->fixed_size_d);
@@ -429,7 +300,7 @@ selection_options_init (SelectionOptions     *options,
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (width_spinbutton), TRUE);
       gtk_widget_set_usize (width_spinbutton, 75, 0);
       gtk_signal_connect (GTK_OBJECT (options->fixed_width_w), "value_changed",
-                          GTK_SIGNAL_FUNC (tool_options_double_adjustment_update),
+                          GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
                           &options->fixed_width);
       gimp_table_attach_aligned (GTK_TABLE (table), 0,
 				 _("Width:"), 1.0, 0.5,
@@ -445,7 +316,7 @@ selection_options_init (SelectionOptions     *options,
       gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(height_spinbutton), TRUE);
       gtk_widget_set_usize (height_spinbutton, 75, 0);
       gtk_signal_connect (GTK_OBJECT (options->fixed_height_w), "value_changed",
-                          GTK_SIGNAL_FUNC (tool_options_double_adjustment_update),
+                          GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
                           &options->fixed_height);
       gimp_table_attach_aligned (GTK_TABLE (table), 1,
 				 _("Height:"), 1.0, 0.5,
@@ -454,7 +325,7 @@ selection_options_init (SelectionOptions     *options,
       options->fixed_unit_w =
 	gimp_unit_menu_new ("%a", options->fixed_unit_d, TRUE, TRUE, TRUE);
       gtk_signal_connect (GTK_OBJECT (options->fixed_unit_w), "unit_changed",
-                          GTK_SIGNAL_FUNC (tool_options_unitmenu_update),
+                          GTK_SIGNAL_FUNC (gimp_unit_menu_update),
                           &options->fixed_unit);
       gtk_object_set_data (GTK_OBJECT (options->fixed_unit_w), "set_digits",
 			   width_spinbutton);
@@ -685,7 +556,7 @@ paint_options_init (PaintOptions         *options,
       gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox),
 			  options->incremental_w, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (options->incremental_w), "toggled",
-			  GTK_SIGNAL_FUNC (tool_options_toggle_update),
+			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 			  &options->incremental);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->incremental_w),
 				    options->incremental_d);
@@ -813,7 +684,7 @@ paint_pressure_options_new (ToolType tool_type)
 	gtk_check_button_new_with_label (_("Opacity"));
       gtk_container_add (GTK_CONTAINER (hbox), pressure->opacity_w);
       gtk_signal_connect (GTK_OBJECT (pressure->opacity_w), "toggled",
-			  GTK_SIGNAL_FUNC (tool_options_toggle_update),
+			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 			  &pressure->opacity);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->opacity_w),
 				    pressure->opacity_d);
@@ -836,7 +707,7 @@ paint_pressure_options_new (ToolType tool_type)
       pressure->pressure_w = gtk_check_button_new_with_label (_("Pressure"));
       gtk_container_add (GTK_CONTAINER (hbox), pressure->pressure_w);
       gtk_signal_connect (GTK_OBJECT (pressure->pressure_w), "toggled",
-			  GTK_SIGNAL_FUNC (tool_options_toggle_update),
+			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 			  &pressure->pressure);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->pressure_w),
 				    pressure->pressure_d);
@@ -856,7 +727,7 @@ paint_pressure_options_new (ToolType tool_type)
 	gtk_check_button_new_with_label (_("Rate"));
       gtk_container_add (GTK_CONTAINER (hbox), pressure->rate_w);
       gtk_signal_connect (GTK_OBJECT (pressure->rate_w), "toggled",
-			  GTK_SIGNAL_FUNC (tool_options_toggle_update),
+			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 			  &pressure->rate);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->rate_w),
 				    pressure->rate_d);
@@ -880,7 +751,7 @@ paint_pressure_options_new (ToolType tool_type)
 	gtk_check_button_new_with_label (_("Size"));
       gtk_container_add (GTK_CONTAINER (hbox), pressure->size_w);
       gtk_signal_connect (GTK_OBJECT (pressure->size_w), "toggled",
-			  GTK_SIGNAL_FUNC (tool_options_toggle_update),
+			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 			  &pressure->size);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->size_w),
 				    pressure->size_d);
@@ -900,7 +771,7 @@ paint_pressure_options_new (ToolType tool_type)
 	gtk_check_button_new_with_label (_("Color"));
       gtk_container_add (GTK_CONTAINER (hbox), pressure->color_w);
       gtk_signal_connect (GTK_OBJECT (pressure->color_w), "toggled",
-			  GTK_SIGNAL_FUNC (tool_options_toggle_update),
+			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 			  &pressure->color);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->color_w),
 				    pressure->color_d);

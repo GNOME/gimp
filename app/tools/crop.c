@@ -17,7 +17,8 @@
  */
 #include <string.h>
 
-#include "gdk/gdkkeysyms.h"
+#include <gdk/gdkkeysyms.h>
+
 #include "appenv.h"
 #include "crop.h"
 #include "cursorutil.h"
@@ -29,7 +30,6 @@
 #include "gimphelp.h"
 #include "gimpui.h"
 #include "info_dialog.h"
-#include "tool_options_ui.h"
 #include "undo.h"
 
 #include "libgimp/gimpsizeentry.h"
@@ -50,29 +50,31 @@
 /*  the crop structures  */
 
 typedef struct _Crop Crop;
+
 struct _Crop
 {
-  DrawCore * core;       /*  Core select object          */
+  DrawCore *core;       /*  Core select object          */
 
-  int        startx;     /*  starting x coord            */
-  int        starty;     /*  starting y coord            */
+  gint      startx;     /*  starting x coord            */
+  gint      starty;     /*  starting y coord            */
 
-  int        lastx;      /*  previous x coord            */
-  int        lasty;      /*  previous y coord            */
+  gint      lastx;      /*  previous x coord            */
+  gint      lasty;      /*  previous y coord            */
 
-  int        x1, y1;     /*  upper left hand coordinate  */
-  int        x2, y2;     /*  lower right hand coords     */
+  gint      x1, y1;     /*  upper left hand coordinate  */
+  gint      x2, y2;     /*  lower right hand coords     */
 
-  int        srw, srh;   /*  width and height of corners */
+  gint      srw, srh;   /*  width and height of corners */
 
-  int        tx1, ty1;   /*  transformed coords          */
-  int        tx2, ty2;   /*                              */
+  gint      tx1, ty1;   /*  transformed coords          */
+  gint      tx2, ty2;   /*                              */
 
-  int        function;   /*  moving or resizing          */
-  guint      context_id; /*  for the statusbar           */
+  gint      function;   /*  moving or resizing          */
+  guint     context_id; /*  for the statusbar           */
 };
 
 typedef struct _CropOptions CropOptions;
+
 struct _CropOptions
 {
   ToolOptions  tool_options;
@@ -168,11 +170,9 @@ crop_options_new (void)
   CropOptions *options;
   GtkWidget *vbox;
   GtkWidget *frame;
-  gchar* type_label[2] = { N_("Crop"), N_("Resize") };
-  gint   type_value[2] = { CROP_CROP, RESIZE_CROP };
 
   /*  the new crop tool options structure  */
-  options = (CropOptions *) g_malloc (sizeof (CropOptions));
+  options = g_new (CropOptions, 1);
   tool_options_init ((ToolOptions *) options,
 		     _("Crop & Resize Options"),
 		     crop_options_reset);
@@ -189,7 +189,7 @@ crop_options_new (void)
   gtk_box_pack_start (GTK_BOX (vbox), options->layer_only_w,
 		      FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (options->layer_only_w), "toggled",
-		      (GtkSignalFunc) tool_options_toggle_update,
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &options->layer_only);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->layer_only_w),
 				options->layer_only_d);
@@ -200,20 +200,24 @@ crop_options_new (void)
   gtk_box_pack_start (GTK_BOX (vbox), options->allow_enlarge_w,
 		      FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (options->allow_enlarge_w), "toggled",
-		      (GtkSignalFunc) tool_options_toggle_update,
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &options->allow_enlarge);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->allow_enlarge_w),
 				options->allow_enlarge_d);
   gtk_widget_show (options->allow_enlarge_w);
 
   /*  tool toggle  */
-  frame = tool_options_radio_buttons_new (_("Tool Toggle"), 
-					  &options->type,
-					   options->type_w,
-					   type_label,
-					   type_value,
-					   2);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w[options->type_d]), TRUE); 
+  frame = gimp_radio_group_new2 (TRUE, _("Tool Toggle"),
+				 gimp_radio_button_update,
+				 &options->type, (gpointer) options->type,
+
+				 _("Crop"), (gpointer) CROP_CROP,
+				 &options->type_w[0],
+				 _("Resize"), (gpointer) RESIZE_CROP,
+				 &options->type_w[1],
+
+				 NULL);
+
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 

@@ -26,45 +26,48 @@
 extern "C" {
 #endif
 
-typedef struct {
-  GimpImageBaseType type;
-  gchar *name;
+typedef struct
+{
+  GimpImageBaseType  type;
+  gchar             *name;
 } GimpImageBaseTypeName;
 
-typedef struct {
-  GimpFillType type;
-  gchar *name;
+typedef struct
+{
+  GimpFillType  type;
+  gchar        *name;
 } GimpFillTypeName;
 
-typedef struct {
-  gint width;
-  gint height;
-  GUnit unit;
+typedef struct
+{
+  gint               width;
+  gint               height;
+  GUnit              unit;
 
-  gdouble xresolution;
-  gdouble yresolution;
-  GUnit res_unit;
+  gdouble            xresolution;
+  gdouble            yresolution;
+  GUnit              res_unit;
   
-  GimpImageBaseType type;
-  GimpFillType fill_type;
+  GimpImageBaseType  type;
+  GimpFillType       fill_type;
 } GimpImageNewValues;
 
-GList* image_new_get_fill_type_names ();
-GList* image_new_get_image_base_type_names ();
+GList* image_new_get_fill_type_names       (void);
+GList* image_new_get_image_base_type_names (void);
 
-void image_new_create_window (const GimpImageNewValues *values, 
-                              const GimpImage *image);
-void image_new_set_default_values (const GimpImageNewValues *values);
+void image_new_create_window        (const GimpImageNewValues *values, 
+				     const GimpImage          *image);
+void image_new_set_default_values   (const GimpImageNewValues *values);
 
-GimpImageNewValues* image_new_values_new (const GimpImageNewValues *src_vals);
-void                image_new_values_free (GimpImageNewValues *values);
+GimpImageNewValues * image_new_values_new  (const GimpImageNewValues *src_vals);
+void                 image_new_values_free (GimpImageNewValues       *values);
 
-void image_new_create_image (const GimpImageNewValues *values);
+void      image_new_create_image    (const GimpImageNewValues *values);
 
-gdouble image_new_calculate_size (GimpImageNewValues *values);
-gchar* image_new_get_size_string (gdouble size);
+gdouble   image_new_calculate_size  (GimpImageNewValues       *values);
+gchar   * image_new_get_size_string (gdouble                   size);
 
-void image_new_reset_current_cut_buffer ();
+void      image_new_reset_current_cut_buffer (void);
 
 #ifdef __cplusplus
 }

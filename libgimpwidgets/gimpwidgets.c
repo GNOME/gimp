@@ -21,6 +21,7 @@
  */
 
 #include "gimphelpui.h"
+#include "gimpunitmenu.h"
 #include "gimpwidgets.h"
 
 /*
@@ -417,6 +418,30 @@ gimp_double_adjustment_update (GtkAdjustment *adjustment,
 
   val = (gdouble *) data;
   *val = adjustment->value;
+}
+
+void
+gimp_unit_menu_update (GtkWidget *widget,
+		       gpointer   data)
+{
+  GUnit     *val;
+  GtkWidget *spinbutton;
+  gint       digits;
+
+  val = (GUnit *) data;
+  *val = gimp_unit_menu_get_unit (GIMP_UNIT_MENU (widget));
+
+  digits = ((*val == UNIT_PIXEL) ? 0 :
+	    ((*val == UNIT_PERCENT) ? 2 :
+	     (MIN (6, MAX (3, gimp_unit_get_digits (*val))))));
+
+  spinbutton =
+    gtk_object_get_data (GTK_OBJECT (widget), "set_digits");
+  while (spinbutton)
+    {
+      gtk_spin_button_set_digits (GTK_SPIN_BUTTON (spinbutton), digits);
+      spinbutton = gtk_object_get_data (GTK_OBJECT (spinbutton), "set_digits");
+    }
 }
 
 /*

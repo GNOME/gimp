@@ -16,7 +16,9 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
-#include "gdk/gdkkeysyms.h"
+
+#include <gdk/gdkkeysyms.h>
+
 #include "appenv.h"
 #include "bucket_fill.h"
 #include "cursorutil.h"
@@ -24,11 +26,11 @@
 #include "fuzzy_select.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
+#include "gimpui.h"
 #include "interface.h"
 #include "paint_funcs.h"
 #include "paint_options.h"
 #include "selection.h"
-#include "tool_options_ui.h"
 #include "tools.h"
 #include "undo.h"
 
@@ -104,12 +106,6 @@ bucket_options_new (void)
   GtkWidget *label;
   GtkWidget *scale;
   GtkWidget *frame;
-  gchar* fill_mode_label[3] = { N_("FG Color Fill"), 
-				N_("BG Color Fill"),
-				N_("Pattern Fill") };
-  gint   fill_mode_value[3] = { FG_BUCKET_FILL, 
-				BG_BUCKET_FILL, 
-				PATTERN_BUCKET_FILL };
 
   /*  the new bucket fill tool options structure  */
   options = (BucketOptions *) g_malloc (sizeof (BucketOptions));
@@ -139,7 +135,7 @@ bucket_options_new (void)
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (options->threshold_w), "value_changed",
-		      (GtkSignalFunc) tool_options_double_adjustment_update,
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &options->threshold);
   gtk_widget_show (scale);
 
@@ -149,19 +145,29 @@ bucket_options_new (void)
   options->sample_merged_w =
     gtk_check_button_new_with_label (_("Sample Merged"));
   gtk_signal_connect (GTK_OBJECT (options->sample_merged_w), "toggled",
-		      (GtkSignalFunc) tool_options_toggle_update,
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &options->sample_merged);
   gtk_box_pack_start (GTK_BOX (vbox), options->sample_merged_w, FALSE, FALSE, 0);
   gtk_widget_show (options->sample_merged_w);
 
   /*  fill type  */
-  frame = tool_options_radio_buttons_new (_("Fill Type"), 
-					  &options->fill_mode,
-					  options->fill_mode_w,
-					  fill_mode_label,
-					  fill_mode_value,
-					  3);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->fill_mode_w[options->fill_mode_d]), TRUE); 
+  frame =
+    gimp_radio_group_new2 (TRUE, _("Fill Type"),
+			   gimp_radio_button_update,
+			   &options->fill_mode, (gpointer) options->fill_mode,
+
+			   _("FG Color Fill"),
+			   (gpointer) FG_BUCKET_FILL,
+			   &options->fill_mode_w[0],
+			   _("BG Color Fill"),
+			   (gpointer) BG_BUCKET_FILL,
+			   &options->fill_mode_w[1],
+			   _("Pattern Fill"),
+			   (gpointer) PATTERN_BUCKET_FILL,
+			   &options->fill_mode_w[2],
+
+			   NULL);
+
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 

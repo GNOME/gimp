@@ -15,9 +15,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
-
 #include "config.h"
+
 #include "image_new.h"
 
 #include "gimprc.h"
@@ -29,24 +28,24 @@
 
 #include "libgimp/gimpintl.h"
 
-static GList *image_base_type_names = NULL;
-static GList *fill_type_names = NULL;
-static GimpImageNewValues last_values;
-static gboolean current_cut_buffer = FALSE;
+static GList              *image_base_type_names = NULL;
+static GList              *fill_type_names = NULL;
+static GimpImageNewValues  last_values;
+static gboolean            current_cut_buffer = FALSE;
 
-extern TileManager *global_buf;
+extern TileManager        *global_buf;
 
 static void
-image_new_init ()
+image_new_init (void)
 {
-  static gboolean image_new_inited = 0;
+  static gboolean image_new_inited = FALSE;
   GimpImageBaseTypeName *new_type;
   GimpFillTypeName *new_fill_type;
 
   if (image_new_inited)
     return;
   else
-    image_new_inited = 1;
+    image_new_inited = TRUE;
 
   /* Available Image Base Types */
   new_type = g_new (GimpImageBaseTypeName, 1);
@@ -92,7 +91,7 @@ image_new_init ()
 }
 
 GList*
-image_new_get_image_base_type_names ()
+image_new_get_image_base_type_names (void)
 {
   image_new_init ();
 
@@ -100,7 +99,7 @@ image_new_get_image_base_type_names ()
 }
 
 GList*
-image_new_get_fill_type_names ()
+image_new_get_fill_type_names (void)
 {
   image_new_init ();
 
@@ -109,7 +108,7 @@ image_new_get_fill_type_names ()
 
 void
 image_new_create_window (const GimpImageNewValues *create_values,
-                         const GimpImage *image)
+                         const GimpImage          *image)
 {
   GimpImageNewValues *values;
 
@@ -123,9 +122,9 @@ image_new_create_window (const GimpImageNewValues *create_values,
       values->height = gimp_image_get_height (image);
       values->unit = gimp_image_get_unit (image);
       
-      gimp_image_get_resolution(image, 
-                                &values->xresolution, 
-                                &values->yresolution);
+      gimp_image_get_resolution (image, 
+				 &values->xresolution, 
+				 &values->yresolution);
 
       values->type = gimp_image_base_type (image);
 
@@ -256,7 +255,7 @@ image_new_calculate_size (GimpImageNewValues *values)
   return size;
 }
 
-gchar*
+gchar *
 image_new_get_size_string (gdouble size)
 {
   if (size < 4096)
@@ -274,7 +273,7 @@ image_new_get_size_string (gdouble size)
 }
 
 void
-image_new_reset_current_cut_buffer ()
+image_new_reset_current_cut_buffer (void)
 {
   /* This function just changes the status of current_cut_buffer
      if there hass been a cut/copy since the last file new */

@@ -29,7 +29,6 @@
  *   run()                       - Run the plug-in...
  *   load_image()                - Load a PNG image into a new image window.
  *   save_image()                - Save the specified image to a PNG file.
- *   save_close_callback()       - Close the save dialog window.
  *   save_ok_callback()          - Destroy the save dialog and save the image.
  *   save_compression_callback() - Update the image compression level.
  *   save_interlace_update()     - Update the interlacing option.
@@ -81,14 +80,26 @@ typedef struct
  */
 
 static void	query                     (void);
-static void	run                       (char *, int, GParam *, int *, GParam **);
-static gint32	load_image                (char *);
-static gint	save_image                (char *, gint32, gint32, gint32);
+static void	run                       (gchar   *name,
+					   gint     nparams,
+					   GParam  *param,
+					   gint    *nreturn_vals,
+					   GParam **return_vals);
+
+static gint32	load_image                (gchar   *filename);
+static gint	save_image                (gchar   *filename,
+					   gint32   image_ID,
+					   gint32   drawable_ID,
+					   gint32   orig_image_ID);
+
 static void     init_gtk                  (void);
 static gint	save_dialog               (void);
-static void	save_ok_callback          (GtkWidget *, gpointer);
-static void	save_compression_update   (GtkAdjustment *, gpointer);
-static void	save_interlace_update     (GtkWidget *, gpointer);
+static void	save_ok_callback          (GtkWidget     *widget,
+					   gpointer       data);
+static void	save_compression_update   (GtkAdjustment *adjustment,
+					   gpointer       data);
+static void	save_interlace_update     (GtkWidget     *widget,
+					   gpointer       data);
 
 
 /*
@@ -126,7 +137,7 @@ MAIN()
 static void
 query (void)
 {
-  static GParamDef	load_args[] =
+  static GParamDef load_args[] =
   {
     { PARAM_INT32,      "run_mode",     "Interactive, non-interactive" },
     { PARAM_STRING,     "filename",     "The name of the file to load" },
@@ -154,23 +165,31 @@ query (void)
   INIT_I18N ();
 
   gimp_install_procedure ("file_png_load",
-      _("Loads files in PNG file format"),
-      _("This plug-in loads Portable Network Graphics (PNG) files."),
-      "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
-      "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>, Nick Lamb <njl195@zepler.org.uk>",
-      PLUG_IN_VERSION,
-      "<Load>/PNG", NULL, PROC_PLUG_IN, nload_args, nload_return_vals,
-      load_args, load_return_vals);
+			  _("Loads files in PNG file format"),
+			  _("This plug-in loads Portable Network Graphics (PNG) files."),
+			  "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
+			  "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>, Nick Lamb <njl195@zepler.org.uk>",
+			  PLUG_IN_VERSION,
+			  "<Load>/PNG",
+			  NULL,
+			  PROC_PLUG_IN,
+			  nload_args, nload_return_vals,
+			  load_args, load_return_vals);
 
-  gimp_install_procedure ("file_png_save",
-      "Saves files in PNG file format",
-      "This plug-in saves Portable Network Graphics (PNG) files.",
-      "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
-      "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>, Nick Lamb <njl195@zepler.org.uk>",
-      PLUG_IN_VERSION,
-      "<Save>/PNG", "RGB*,GRAY*,INDEXED", PROC_PLUG_IN, nsave_args, 0, save_args, NULL);
+  gimp_install_procedure  ("file_png_save",
+			   "Saves files in PNG file format",
+			   "This plug-in saves Portable Network Graphics (PNG) files.",
+			   "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
+			   "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>, Nick Lamb <njl195@zepler.org.uk>",
+			   PLUG_IN_VERSION,
+			   "<Save>/PNG",
+			   "RGB*,GRAY*,INDEXED",
+			   PROC_PLUG_IN,
+			   nsave_args, 0,
+			   save_args, NULL);
 
-  gimp_register_magic_load_handler ("file_png_load", "png", "", "0,string,\211PNG\r\n\032\n");
+  gimp_register_magic_load_handler ("file_png_load", "png", "",
+				    "0,string,\211PNG\r\n\032\n");
   gimp_register_save_handler       ("file_png_save", "png", "");
 }
 
@@ -180,10 +199,10 @@ query (void)
  */
 
 static void
-run (char    *name,		/* I - Name of filter program. */
-     int      nparams,		/* I - Number of parameters passed in */
+run (gchar   *name,		/* I - Name of filter program. */
+     gint     nparams,		/* I - Number of parameters passed in */
      GParam  *param,		/* I - Parameter values */
-     int     *nreturn_vals,	/* O - Number of return values */
+     gint    *nreturn_vals,	/* O - Number of return values */
      GParam **return_vals)	/* O - Return values */
 {
   gint32	 image_ID;
@@ -209,107 +228,110 @@ run (char    *name,		/* I - Name of filter program. */
   */
 
   if (strcmp (name, "file_png_load") == 0)
-  {
-    INIT_I18N ();
-
-    *nreturn_vals = 2;
-
-    image_ID = load_image (param[1].data.d_string);
-
-    if (image_ID != -1)
     {
-      values[1].type         = PARAM_IMAGE;
-      values[1].data.d_image = image_ID;
+      INIT_I18N ();
+
+      *nreturn_vals = 2;
+
+      image_ID = load_image (param[1].data.d_string);
+
+      if (image_ID != -1)
+	{
+	  values[1].type         = PARAM_IMAGE;
+	  values[1].data.d_image = image_ID;
+	}
+      else
+	values[0].data.d_status = STATUS_EXECUTION_ERROR;
     }
-    else
-      values[0].data.d_status = STATUS_EXECUTION_ERROR;
-  }
   else if (strcmp (name, "file_png_save") == 0)
-  {
-    INIT_I18N_UI();
-
-    run_mode = param[0].data.d_int32;
-    image_ID = orig_image_ID = param[1].data.d_int32;
-    drawable_ID = param[2].data.d_int32;
-    *nreturn_vals = 1;
-    
-    /*  eventually export the image */ 
-    switch (run_mode)
-      {
-      case RUN_INTERACTIVE:
-      case RUN_WITH_LAST_VALS:
-	init_gtk ();
-	export = gimp_export_image (&image_ID, &drawable_ID, "PNG", 
-				    (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_INDEXED | CAN_HANDLE_ALPHA));
-	if (export == EXPORT_CANCEL)
-	  {
-	    *nreturn_vals = 1;
-	    values[0].data.d_status = STATUS_EXECUTION_ERROR;
-	    return;
-	  }
-	break;
-      default:
-	break;
-      }
-
-    switch (run_mode)
     {
-      case RUN_INTERACTIVE :
-         /*
-          * Possibly retrieve data...
-          */
+      INIT_I18N_UI();
 
+      run_mode = param[0].data.d_int32;
+      image_ID = orig_image_ID = param[1].data.d_int32;
+      drawable_ID = param[2].data.d_int32;
+      *nreturn_vals = 1;
+    
+      /*  eventually export the image */ 
+      switch (run_mode)
+	{
+	case RUN_INTERACTIVE:
+	case RUN_WITH_LAST_VALS:
+	  init_gtk ();
+	  export = gimp_export_image (&image_ID, &drawable_ID, "PNG", 
+				      (CAN_HANDLE_RGB |
+				       CAN_HANDLE_GRAY |
+				       CAN_HANDLE_INDEXED |
+				       CAN_HANDLE_ALPHA));
+	  if (export == EXPORT_CANCEL)
+	    {
+	      *nreturn_vals = 1;
+	      values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	      return;
+	    }
+	  break;
+	default:
+	  break;
+	}
+
+      switch (run_mode)
+	{
+	case RUN_INTERACTIVE:
+	  /*
+	   * Possibly retrieve data...
+	   */
           gimp_get_data ("file_png_save", &pngvals);
 
-         /*
-          * Then acquire information with a dialog...
-          */
-
+	  /*
+	   * Then acquire information with a dialog...
+	   */
           if (!save_dialog())
-            return;
+            goto finish;
           break;
 
-      case RUN_NONINTERACTIVE :
-         /*
-          * Make sure all the arguments are there!
-          */
-
+	case RUN_NONINTERACTIVE:
+	  /*
+	   * Make sure all the arguments are there!
+	   */
           if (nparams != 8)
             values[0].data.d_status = STATUS_CALLING_ERROR;
           else
-          {
-            pngvals.interlaced        = param[5].data.d_int32;
-            pngvals.noextras          = param[6].data.d_int32;
-            pngvals.compression_level = param[7].data.d_int32;
+	    {
+	      pngvals.interlaced        = param[5].data.d_int32;
+	      pngvals.noextras          = param[6].data.d_int32;
+	      pngvals.compression_level = param[7].data.d_int32;
 
-            if (pngvals.compression_level < 0 ||
-                pngvals.compression_level > 9)
-              values[0].data.d_status = STATUS_CALLING_ERROR;
-          };
+	      if (pngvals.compression_level < 0 ||
+		  pngvals.compression_level > 9)
+		values[0].data.d_status = STATUS_CALLING_ERROR;
+	    };
           break;
 
-      case RUN_WITH_LAST_VALS :
-         /*
-          * Possibly retrieve data...
-          */
+	case RUN_WITH_LAST_VALS :
+	  /*
+	   * Possibly retrieve data...
+	   */
           gimp_get_data ("file_png_save", &pngvals);
           break;
 
-      default :
+	default:
           break;
-    };
+	};
 
-    if (values[0].data.d_status == STATUS_SUCCESS)
-      {
-	if (save_image (param[3].data.d_string, image_ID, drawable_ID, orig_image_ID))
-	  gimp_set_data ("file_png_save", &pngvals, sizeof (pngvals));
-	else
-	  values[0].data.d_status = STATUS_EXECUTION_ERROR;
-      };
+      if (values[0].data.d_status == STATUS_SUCCESS)
+	{
+	  if (save_image (param[3].data.d_string,
+			  image_ID, drawable_ID, orig_image_ID))
+	    gimp_set_data ("file_png_save", &pngvals, sizeof (pngvals));
+	  else
+	    values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	};
 
-    if (export == EXPORT_EXPORT)
-      gimp_image_delete (image_ID);
-  }
+    finish:
+
+      if (export == EXPORT_EXPORT)
+	gimp_image_delete (image_ID);
+    }
   else
     values[0].data.d_status = STATUS_EXECUTION_ERROR;
 }
@@ -320,7 +342,7 @@ run (char    *name,		/* I - Name of filter program. */
  */
 
 static gint32
-load_image (char *filename)	/* I - File to load */
+load_image (gchar *filename)	/* I - File to load */
 {
   int		i,		/* Looping var */
                 trns = 0,       /* Transparency present */
@@ -632,7 +654,7 @@ load_image (char *filename)	/* I - File to load */
  */
 
 static gint
-save_image (char   *filename,	        /* I - File to save to */
+save_image (gchar  *filename,	        /* I - File to save to */
 	    gint32  image_ID,	        /* I - Image to save */
 	    gint32  drawable_ID,	/* I - Current drawable */
 	    gint32  orig_image_ID)      /* I - Original image before export */
@@ -871,47 +893,32 @@ save_image (char   *filename,	        /* I - File to save to */
   return (1);
 }
 
-
-/*
- * 'save_ok_callback()' - Destroy the save dialog and save the image.
- */
-
 static void
-save_ok_callback (GtkWidget *widget,	/* I - OK button */
-		  gpointer  data)	/* I - Callback data */
+save_ok_callback (GtkWidget *widget,
+		  gpointer  data)
 {
   runme = TRUE;
 
-  gtk_widget_destroy(GTK_WIDGET(data));
+  gtk_widget_destroy (GTK_WIDGET (data));
 }
 
-
-/*
- * 'save_compression_callback()' - Update the image compression level.
- */
-
 static void
-save_compression_update (GtkAdjustment *adjustment,	/* I - Scale adjustment */
-                         gpointer      data)		/* I - Callback data */
+save_compression_update (GtkAdjustment *adjustment,
+                         gpointer      data)
 {
-  pngvals.compression_level = (gint32)adjustment->value;
+  pngvals.compression_level = (gint32) adjustment->value;
 }
 
-
-/*
- * 'save_interlace_update()' - Update the interlacing option.
- */
-
 static void
-save_interlace_update (GtkWidget *widget,	/* I - Interlace toggle button */
-		       gpointer  data)		/* I - Callback data  */
+save_interlace_update (GtkWidget *widget,
+		       gpointer  data)
 {
   pngvals.interlaced = GTK_TOGGLE_BUTTON (widget)->active;
 }
 
 static void
-save_noextras_update (GtkWidget *widget,	/* I - Interlace toggle button */
-		       gpointer  data)		/* I - Callback data  */
+save_noextras_update (GtkWidget *widget,
+		      gpointer   data)
 {
   pngvals.noextras = GTK_TOGGLE_BUTTON (widget)->active;
 }
@@ -922,33 +929,24 @@ init_gtk (void)
   gchar **argv;
   gint argc;
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
   argv[0] = g_strdup ("png");
   
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 }
 
-
-/*
- * 'save_dialog()' - Pop up the save dialog.
- */
-
 static gint
 save_dialog (void)
 {
-  GtkWidget	*dlg,		/* Dialog window */
-		*frame,		/* Frame for dialog */
-		*table,		/* Table for dialog options */
-		*toggle,	/* Interlace toggle button */
-		*label,		/* Label for controls */
-		*scale;		/* Compression level scale */
-  GtkObject	*scale_data;	/* Scale data */
-
- /*
-  * Open a dialog window...
-  */
+  GtkWidget *dlg;
+  GtkWidget *frame;
+  GtkWidget *table;
+  GtkWidget *toggle;
+  GtkWidget *label;
+  GtkWidget *scale;
+  GtkObject *scale_data;
 
   dlg = gimp_dialog_new (_("Save as PNG"), "png",
 			 gimp_plugin_help_func, "filters/png.html",
@@ -966,59 +964,63 @@ save_dialog (void)
 		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
- /*
-  * Compression level, interlacing controls...
-  */
-
   frame = gtk_frame_new (_("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
 
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width(GTK_CONTAINER(table), 4);
-  gtk_container_add (GTK_CONTAINER(frame), table);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
 
-  toggle = gtk_check_button_new_with_label(_("Interlacing (Adam7)"));
-  gtk_table_attach(GTK_TABLE(table), toggle, 0, 2, 0, 1, GTK_FILL, 0, 0, 0);
-  gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
-                     (GtkSignalFunc)save_interlace_update, NULL);
-  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle), pngvals.interlaced);
-  gtk_widget_show(toggle);
+  toggle = gtk_check_button_new_with_label (_("Interlacing (Adam7)"));
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 0, 1,
+		    GTK_FILL, 0, 0, 0);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      GTK_SIGNAL_FUNC (save_interlace_update),
+		      NULL);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.interlaced);
+  gtk_widget_show (toggle);
 
-  toggle = gtk_check_button_new_with_label(_("Skip ancillary chunks"));
-  gtk_table_attach(GTK_TABLE(table), toggle, 0, 2, 1, 2, GTK_FILL, 0, 0, 0);
-  gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
-                     (GtkSignalFunc)save_noextras_update, NULL);
-  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle), pngvals.noextras);
-  gtk_widget_show(toggle);
+  toggle = gtk_check_button_new_with_label (_("Skip Ancillary Chunks"));
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 1, 2,
+		    GTK_FILL, 0, 0, 0);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      GTK_SIGNAL_FUNC (save_noextras_update),
+		      NULL);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.noextras);
+  gtk_widget_show (toggle);
 
   label = gtk_label_new (_("Compression Level:"));
-  gtk_misc_set_alignment(GTK_MISC (label), 1.0, 1.0);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
 		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (label);
 
-  scale_data = gtk_adjustment_new(pngvals.compression_level, 1.0, 9.0, 1.0, 1.0, 0.0);
-  scale      = gtk_hscale_new(GTK_ADJUSTMENT(scale_data));
-  gtk_widget_set_usize(scale, SCALE_WIDTH, 0);
-  gtk_table_attach(GTK_TABLE(table), scale, 1, 2, 2, 3, GTK_FILL, 0, 0, 0);
+  scale_data = gtk_adjustment_new (pngvals.compression_level,
+				   1.0, 9.0, 1.0, 1.0, 0.0);
+  scale      = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
+  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
+  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 2, 3,
+		    GTK_FILL, 0, 0, 0);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_digits(GTK_SCALE (scale), 0);
-  gtk_range_set_update_policy(GTK_RANGE(scale), GTK_UPDATE_DELAYED);
-  gtk_signal_connect(GTK_OBJECT(scale_data), "value_changed",
-                     (GtkSignalFunc)save_compression_update, NULL);
-  gtk_widget_show(label);
-  gtk_widget_show(scale);
-  gtk_widget_show(table);
-  gtk_widget_show(frame);
-  gtk_widget_show(dlg);
+  gtk_scale_set_digits (GTK_SCALE (scale), 0);
+  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
+		      GTK_SIGNAL_FUNC (save_compression_update),
+		      NULL);
+  gtk_widget_show (scale);
 
-  gtk_main();
-  gdk_flush();
+  gtk_widget_show (dlg);
 
-  return (runme);
+  gtk_main ();
+  gdk_flush ();
+
+  return runme;
 }
 
 /*

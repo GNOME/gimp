@@ -1,4 +1,4 @@
- /* The GIMP -- an image manipulation program
+/* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software; you can redistribute it and/or modify
@@ -15,13 +15,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#include "config.h"
+
 #include <stdlib.h>
 #include <string.h>
+
 #include "appenv.h"
 #include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
+#include "gimpui.h"
 #include "interface.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
@@ -50,6 +54,7 @@ typedef enum
 } AlignType;
 
 typedef struct _CloneOptions CloneOptions;
+
 struct _CloneOptions
 {
   PaintOptions  paint_options;
@@ -99,20 +104,6 @@ static void   clone_line_pattern (GImage *, GimpDrawable *, GPattern *,
 /*  functions  */
 
 static void
-clone_type_callback (GtkWidget *widget,
-		     gpointer   data)
-{
-  clone_options->type = (CloneType) data;
-}
-
-static void
-align_type_callback (GtkWidget *widget,
-		     gpointer   data)
-{
-  clone_options->aligned = (AlignType) data;
-}
-
-static void
 clone_options_reset (void)
 {
   CloneOptions *options = clone_options;
@@ -127,31 +118,11 @@ static CloneOptions *
 clone_options_new (void)
 {
   CloneOptions *options;
-
   GtkWidget *vbox;
-  GSList    *group = NULL;
-  GtkWidget *radio_frame;
-  GtkWidget *radio_box;
-  GtkWidget *radio_button;
-  int        i;
-
-  static gchar *source_names[] =
-  {
-    N_("Image Source"),
-    N_("Pattern Source")
-  };
-  static gint n_source_names = sizeof (source_names) / sizeof (source_names[0]);
-
-  static gchar *align_names[] =
-  {
-    N_("Non Aligned"),
-    N_("Aligned"),
-    N_("Registered")
-  };
-  static gint n_align_names = sizeof (align_names) / sizeof (align_names[0]);
+  GtkWidget *frame;
 
   /*  the new clone tool options structure  */
-  options = (CloneOptions *) g_malloc (sizeof (CloneOptions));
+  options = g_new (CloneOptions, 1);
   paint_options_init ((PaintOptions *) options,
 		      CLONE,
 		      clone_options_reset);
@@ -161,56 +132,35 @@ clone_options_new (void)
   /*  the main vbox  */
   vbox = ((ToolOptions *) options)->main_vbox;
 
-  /*  the radio frame and box  */
-  radio_frame = gtk_frame_new (_("Source"));
-  gtk_box_pack_start (GTK_BOX (vbox), radio_frame, FALSE, FALSE, 0);
+  frame = gimp_radio_group_new2 (TRUE, _("Source"),
+				 gimp_radio_button_update,
+				 &options->type, (gpointer) options->type,
 
-  radio_box = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (radio_box), 2);
-  gtk_container_add (GTK_CONTAINER (radio_frame), radio_box);
+				 _("Image Source"), (gpointer) IMAGE_CLONE,
+				 &options->type_w[0],
+				 _("Pattern Source"), (gpointer) PATTERN_CLONE,
+				 &options->type_w[1],
 
-  /*  the radio buttons  */
-  for (i = 0; i < n_source_names; i++)
-    {
-      radio_button = gtk_radio_button_new_with_label (group,
-						      gettext(source_names[i]));
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
-      gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
-			  (GtkSignalFunc) clone_type_callback,
-			  (void *)((long) i));
-      gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
-      gtk_widget_show (radio_button);
+				 NULL);
 
-      options->type_w[i] = radio_button;
-    }
-  gtk_widget_show (radio_box);
-  gtk_widget_show (radio_frame);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-  /*  the radio frame and box  */
-  radio_frame = gtk_frame_new (_("Alignment"));
-  gtk_box_pack_start (GTK_BOX (vbox), radio_frame, FALSE, FALSE, 0);
+  frame = gimp_radio_group_new2 (TRUE, _("Alignment"),
+				 gimp_radio_button_update,
+				 &options->aligned, (gpointer) options->aligned,
 
-  radio_box = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (radio_box), 2);
-  gtk_container_add (GTK_CONTAINER (radio_frame), radio_box);
+				 _("Non Aligned"), (gpointer) ALIGN_NO,
+				 &options->aligned_w[0],
+				 _("Aligned"), (gpointer) ALIGN_YES,
+				 &options->aligned_w[1],
+				 _("Registered"), (gpointer) ALIGN_REGISTERED,
+				 &options->aligned_w[2],
 
-  /*  the radio buttons  */
-  group = NULL;  
-  for (i = 0; i < n_align_names; i++)
-    {
-      radio_button = gtk_radio_button_new_with_label (group,
-						      gettext(align_names[i]));
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
-      gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
-			  (GtkSignalFunc) align_type_callback,
-			  (void *)((long) i));
-      gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
-      gtk_widget_show (radio_button);
+				 NULL);
 
-      options->aligned_w[i] = radio_button;
-    }
-  gtk_widget_show (radio_box);
-  gtk_widget_show (radio_frame);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
   
   return options;
 }
@@ -227,27 +177,25 @@ clone_src_drawable_destroyed_cb (GimpDrawable  *drawable,
 }
 
 static void
-clone_set_src_drawable(GimpDrawable *drawable)
+clone_set_src_drawable (GimpDrawable *drawable)
 {
   if (src_drawable_ == drawable)
     return;
   if (src_drawable_)
-    gtk_signal_disconnect_by_data(GTK_OBJECT (src_drawable_), &src_drawable_);
+    gtk_signal_disconnect_by_data (GTK_OBJECT (src_drawable_), &src_drawable_);
   src_drawable_ = drawable;
   if (drawable)
-  {
-    gtk_signal_connect (GTK_OBJECT (drawable),
-			"destroy",
-			GTK_SIGNAL_FUNC (clone_src_drawable_destroyed_cb),
-			&src_drawable_);
-  }
+    {
+      gtk_signal_connect (GTK_OBJECT (drawable), "destroy",
+			  GTK_SIGNAL_FUNC (clone_src_drawable_destroyed_cb),
+			  &src_drawable_);
+    }
 }
-
 
 void *
 clone_paint_func (PaintCore    *paint_core,
 		  GimpDrawable *drawable,
-		  int           state)
+		  gint          state)
 {
   GDisplay * gdisp;
   GDisplay * src_gdisp;
@@ -258,10 +206,10 @@ clone_paint_func (PaintCore    *paint_core,
 
   switch (state)
     {
-    case PRETRACE_PAINT :
+    case PRETRACE_PAINT:
       draw_core_pause (paint_core->core, active_tool);
       break;
-    case MOTION_PAINT :
+    case MOTION_PAINT:
       x1 = paint_core->curx;
       y1 = paint_core->cury;
       x2 = paint_core->lastx;
@@ -302,7 +250,7 @@ clone_paint_func (PaintCore    *paint_core,
 
       break;
 
-    case INIT_PAINT :
+    case INIT_PAINT:
       if (paint_core->state & GDK_CONTROL_MASK)
 	{
 	  the_src_gdisp = gdisp;
@@ -312,27 +260,27 @@ clone_paint_func (PaintCore    *paint_core,
 	  first = TRUE;
 	}
       else if (clone_options->aligned == ALIGN_NO)
-      {
-	first = TRUE;
-	orig_src_x = src_x;
-	orig_src_y = src_y;
-      }
+	{
+	  first = TRUE;
+	  orig_src_x = src_x;
+	  orig_src_y = src_y;
+	}
       if (clone_options->type == PATTERN_CLONE)
 	if (! gimp_context_get_pattern (NULL))
 	  g_message (_("No patterns available for this operation."));
       break;
 
-    case FINISH_PAINT :
+    case FINISH_PAINT:
       draw_core_stop (paint_core->core, active_tool);
       if (clone_options->aligned == ALIGN_NO && !first)
-      {
-	src_x = orig_src_x;
-	src_y = orig_src_y;
-      } 
+	{
+	  src_x = orig_src_x;
+	  src_y = orig_src_y;
+	} 
       return NULL;
       break;
 
-    default :
+    default:
       break;
     }
 
@@ -350,11 +298,12 @@ clone_paint_func (PaintCore    *paint_core,
 		     src_gdisp->canvas->window,
 		     active_tool);
   else if (state == POSTTRACE_PAINT)
-  {
-    /*  Find the target cursor's location onscreen  */
-    gdisplay_transform_coords (src_gdisp, src_x, src_y, &trans_tx, &trans_ty, 1);
-    draw_core_resume (paint_core->core, active_tool);      
-  }
+    {
+      /*  Find the target cursor's location onscreen  */
+      gdisplay_transform_coords (src_gdisp, src_x, src_y,
+				 &trans_tx, &trans_ty, 1);
+      draw_core_resume (paint_core->core, active_tool);      
+    }
   return NULL;
 }
 
@@ -393,19 +342,18 @@ clone_cursor_update (Tool           *tool,
     }
   
   if (clone_options->type == IMAGE_CLONE)
-  {
-    if (mevent->state & GDK_CONTROL_MASK)
-      ctype = GDK_CROSSHAIR;
-    else if (!src_drawable_)
-      ctype = GIMP_BAD_CURSOR;
-  }
+    {
+      if (mevent->state & GDK_CONTROL_MASK)
+	ctype = GDK_CROSSHAIR;
+      else if (!src_drawable_)
+	ctype = GIMP_BAD_CURSOR;
+    }
 
   gdisplay_install_tool_cursor (gdisp, ctype);
 }
 
-
 Tool *
-tools_new_clone ()
+tools_new_clone (void)
 {
   Tool * tool;
   PaintCore * private;

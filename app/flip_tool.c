@@ -16,15 +16,17 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
-#include "gdk/gdkkeysyms.h"
+
+#include <gdk/gdkkeysyms.h>
+
 #include "appenv.h"
 #include "cursorutil.h"
 #include "drawable.h"
 #include "flip_tool.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
+#include "gimpui.h"
 #include "temp_buf.h"
-#include "tool_options_ui.h"
 #include "paths_dialogP.h"
 
 #include "undo.h"
@@ -72,8 +74,6 @@ flip_options_new (void)
 
   GtkWidget *vbox;
   GtkWidget *frame;
-  gchar* type_label[2] = { N_("Horizontal"), N_("Vertical") };
-  gint   type_value[2] = { ORIENTATION_HORIZONTAL, ORIENTATION_VERTICAL };
  
   /*  the new flip tool options structure  */
   options = g_new (FlipOptions, 1);
@@ -86,13 +86,18 @@ flip_options_new (void)
   vbox = options->tool_options.main_vbox;
 
   /*  tool toggle  */
-  frame = tool_options_radio_buttons_new (_("Tool Toggle"), 
-					  &options->type,
-					   options->type_w,
-					   type_label,
-					   type_value,
-					   2);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w[options->type_d - 1]), TRUE); 
+  frame =
+    gimp_radio_group_new2 (TRUE, _("Tool Toggle"),
+			   gimp_radio_button_update,
+			   &options->type, (gpointer) options->type,
+
+			   _("Horizontal"), (gpointer) ORIENTATION_HORIZONTAL,
+			   &options->type_w[0],
+			   _("Vertical"), (gpointer) ORIENTATION_VERTICAL,
+			   &options->type_w[1],
+
+			   NULL);
+
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 

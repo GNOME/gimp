@@ -41,6 +41,53 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.24  2000/01/14 12:40:59  mitch
+ *   2000-01-14  Michael Natterer  <mitch@gimp.org>
+ *
+ *   	* app/Makefile.am
+ *   	* app/tool_options_ui.h: removed.
+ *
+ *   	* app/tool_options.c
+ *   	* libgimp/gimpwidgets.[ch]: moved some more ui utility functions
+ *   	to libgimp.
+ *
+ *   	* app/airbrush.c
+ *   	* app/blend.c
+ *   	* app/bucket_fill.c
+ *   	* app/channel_ops.c
+ *   	* app/clone.c
+ *   	* app/color_picker.c
+ *   	* app/convolve.c
+ *   	* app/crop.c
+ *   	* app/dodgeburn.c
+ *   	* app/eraser.c
+ *   	* app/file_new_dialog.[ch]
+ *   	* app/flip_tool.c
+ *   	* app/image_new.[ch]
+ *   	* app/ink.c
+ *   	* app/layers_dialog.c
+ *   	* app/magnify.c
+ *   	* app/measure.c
+ *   	* app/paintbrush.c
+ *   	* app/pencil.c
+ *   	* app/smudge.c
+ *   	* app/text_tool.c
+ *   	* app/tool_options.c
+ *   	* app/transform_tool.c
+ *   	* app/xinput_airbrush.c: use the libgimp functions (esp. the radio
+ *   	button group constructor), some code cleanup.
+ *
+ *   	* plug-ins/common/csource.c
+ *   	* plug-ins/common/despeckle.c
+ *   	* plug-ins/common/diffraction.c
+ *   	* plug-ins/common/jpeg.c
+ *   	* plug-ins/common/png.c
+ *   	* plug-ins/unsharp/unsharp.c: more plugin ui tuning.
+ *
+ *   	* plug-ins/unsharp/Makefile.am
+ *   	* plug-ins/unsharp/dialog_f.[ch]
+ *   	* plug-ins/unsharp/dialog_i.[ch]: removed.
+ *
  *   Revision 1.23  2000/01/13 15:39:24  mitch
  *   2000-01-13  Michael Natterer  <mitch@gimp.org>
  *
@@ -304,19 +351,17 @@
  */
 
 static void	query (void);
-static void	run   (gchar *,
-		       gint,
-		       GParam *,
-		       gint *,
-		       GParam **);
+static void	run   (gchar   *name,
+		       gint     nparams,
+		       GParam  *param,
+		       gint    *nreturn_vals,
+		       GParam **return_vals);
 
 static void	despeckle (void);
 
 static gint	despeckle_dialog          (void);
-static void	dialog_create_ivalue      (gchar *, GtkTable *,
-					   gint, gint *, gint, gint);
+
 static void	dialog_iscale_update      (GtkAdjustment *, gint *);
-static void	dialog_ientry_update      (GtkWidget *, gint *);
 static void	dialog_adaptive_callback  (GtkWidget *, gpointer);
 static void	dialog_recursive_callback (GtkWidget *, gpointer);
 static void	dialog_ok_callback        (GtkWidget *, gpointer);
@@ -333,10 +378,10 @@ static void	preview_scroll_callback   (void);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,   /* init_proc */
-  NULL,   /* quit_proc */
-  query,  /* query_proc */
-  run     /* run_proc */
+  NULL,  /* init  */
+  NULL,  /* quit  */
+  query, /* query */
+  run    /* run   */
 };
 
 GtkWidget      *preview;		/* Preview widget */
@@ -826,21 +871,20 @@ despeckle (void)
 static gint
 despeckle_dialog (void)
 {
-  GtkWidget    *dialog,	        /* Dialog window */
-	       *table,		/* Table "container" for controls */
-	       *ptable,	        /* Preview table */
-	       *ftable,	        /* Filter table */
-	       *frame,		/* Frame for preview */
-	       *scrollbar,	/* Horizontal + vertical scroller */
-               *button;         /* Check Button */
-  gint		argc;		/* Fake argc for GUI */
-  gchar	      **argv;		/* Fake argv for GUI */
-  guchar	*color_cube;	/* Preview color cube... */
-  gchar         *plugin_name;
-
-  /*
-   * Initialize the program's display...
-   */
+  GtkWidget *dialog;
+  GtkWidget *main_vbox;
+  GtkWidget *hbox;
+  GtkWidget *vbox;
+  GtkWidget *table;
+  GtkWidget *ptable;
+  GtkWidget *frame;
+  GtkWidget *scrollbar;
+  GtkWidget *button;
+  GtkObject *adj;
+  gint     argc;
+  gchar	 **argv;
+  guchar  *color_cube;
+  gchar   *plugin_name;
 
   argc    = 1;
   argv    = g_new (gchar *, 1);
@@ -858,10 +902,6 @@ despeckle_dialog (void)
 
   gtk_widget_set_default_visual (gtk_preview_get_visual ());
   gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
-
-  /*
-   * Dialog window...
-   */
 
   plugin_name = g_strdup_printf ("%s%s", _("Despeckle "), PLUG_IN_VERSION);
 
@@ -883,25 +923,22 @@ despeckle_dialog (void)
 		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
-  /*
-   * Top-level table for dialog...
-   */
+  main_vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_vbox,
+		      TRUE, TRUE, 0);
+  gtk_widget_show (main_vbox);
 
-  table = gtk_table_new (5, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), table,
-		      FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
   /*
    * Preview window...
    */
 
   ptable = gtk_table_new (2, 2, FALSE);
-  gtk_table_attach (GTK_TABLE (table), ptable, 0, 2, 0, 1, 0, 0, 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), ptable, FALSE, FALSE, 0);
   gtk_widget_show(ptable);
 
   frame = gtk_frame_new (NULL);
@@ -955,14 +992,17 @@ despeckle_dialog (void)
    * Filter type controls...
    */
 
-  ftable = gtk_table_new (6, 1, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (ftable), 4);
-  gtk_table_attach(GTK_TABLE(table), ftable, 2, 3, 0, 1, 0, 0, 0, 0);
-  gtk_widget_show(ftable);
+  frame = gtk_frame_new (_("Type"));
+  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
+
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
 
   button = gtk_check_button_new_with_label (_("Adaptive"));
-  gtk_table_attach (GTK_TABLE (ftable), button, 0, 1, 0, 1,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				(filter_type & FILTER_ADAPTIVE) ? TRUE : FALSE);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
@@ -971,8 +1011,7 @@ despeckle_dialog (void)
   gtk_widget_show (button);
 
   button = gtk_check_button_new_with_label (_("Recursive"));
-  gtk_table_attach (GTK_TABLE (ftable), button, 0, 1, 1, 2,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				(filter_type & FILTER_RECURSIVE) ? TRUE : FALSE);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
@@ -980,26 +1019,47 @@ despeckle_dialog (void)
 		      NULL);
   gtk_widget_show (button);
 
+  table = gtk_table_new (3, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
   /*
    * Box size (radius) control...
    */
 
-  dialog_create_ivalue (_("Radius:"), GTK_TABLE (table), 2,
-			&despeckle_radius, 1, MAX_RADIUS);
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+			      _("Radius:"), 100, 0,
+			      despeckle_radius, 1, MAX_RADIUS, 1, 5, 0,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (dialog_iscale_update),
+		      &despeckle_radius);
 
   /*
    * Black level control...
    */
 
-  dialog_create_ivalue (_("Black Level:"), GTK_TABLE (table), 3,
-			&black_level, 0, 256);
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+			      _("Black Level:"), 100, 0,
+			      black_level, 0, 256, 1, 8, 0,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (dialog_iscale_update),
+		      &black_level);
 
   /*
    * White level control...
    */
 
-  dialog_create_ivalue (_("White Level:"), GTK_TABLE (table), 4,
-			&white_level, 0, 256);
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+			      _("White Level:"), 100, 0,
+			      white_level, 0, 256, 1, 8, 0,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (dialog_iscale_update),
+		      &white_level);
 
   /*
    * Show it and wait for the user to do something...
@@ -1301,11 +1361,6 @@ preview_update (void)
   gdk_flush ();
 }
 
-
-/*
- * 'preview_exit()' - Free all memory used by the preview window...
- */
-
 static void
 preview_exit (void)
 {
@@ -1314,144 +1369,21 @@ preview_exit (void)
   g_free (preview_sort);
 }
 
-
-/*
- * 'dialog_create_ivalue()' - Create an integer value control...
- */
-
 static void
-dialog_create_ivalue (char     *title,	/* I - Label for control */
-		      GtkTable *table,	/* I - Table container to use */
-		      int       row,	/* I - Row # for container */
-		      gint     *value,	/* I - Value holder */
-		      int       left,	/* I - Minimum value for slider */
-		      int       right)	/* I - Maximum value for slider */
+dialog_iscale_update (GtkAdjustment *adjustment,
+		      gint          *value)
 {
-  GtkWidget	*label,		/* Control label */
-		*scale,		/* Scale widget */
-		*entry;		/* Text widget */
-  GtkObject	*scale_data;	/* Scale data */
-  gchar		buf[256];	/* String buffer */
+  *value = adjustment->value;
 
-  /*
-   * Label...
-   */
+  if (value == &despeckle_radius)
+    preview_init ();
 
-  label = gtk_label_new (title);
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (table, label, 0, 1, row, row + 1,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  /*
-   * Scale...
-   */
-
-  scale_data = gtk_adjustment_new (*value, left, right, 1.0, 1.0, 1.0);
-
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      (GtkSignalFunc) dialog_iscale_update,
-		      value);
-
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, -1);
-  gtk_table_attach (table, scale, 1, 2, row, row + 1,
-		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_CONTINUOUS);
-  gtk_widget_show (scale);
-
-  /*
-   * Text entry...
-   */
-
-  entry = gtk_entry_new ();
-  gtk_object_set_user_data (GTK_OBJECT (entry), scale_data);
-  gtk_object_set_user_data (scale_data, entry);
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, -1);
-  g_snprintf (buf, sizeof (buf), "%d", *value);
-  gtk_entry_set_text (GTK_ENTRY (entry), buf);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) dialog_ientry_update,
-		      value);
-  gtk_table_attach (GTK_TABLE (table), entry, 2, 3, row, row + 1,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (entry);
+  preview_update ();
 }
 
-
-/*
- * 'dialog_iscale_update()' - Update the value field using the scale.
- */
-
 static void
-dialog_iscale_update (GtkAdjustment *adjustment, /* I - New value */
-		      gint          *value)	 /* I - Current value */
-{
-  GtkWidget	*entry;		/* Text entry widget */
-  gchar		buf[256];	/* Text buffer */
-
-
-  if (*value != adjustment->value)
-    {
-      *value = adjustment->value;
-
-      entry = gtk_object_get_user_data(GTK_OBJECT(adjustment));
-      g_snprintf (buf, sizeof (buf), "%d", *value);
-
-      gtk_signal_handler_block_by_data (GTK_OBJECT (entry), value);
-      gtk_entry_set_text (GTK_ENTRY (entry), buf);
-      gtk_signal_handler_unblock_by_data (GTK_OBJECT (entry), value);
-
-      if (value == &despeckle_radius)
-	preview_init ();
-
-      preview_update ();
-    };
-}
-
-
-/*
- * 'dialog_ientry_update()' - Update the value field using the text entry.
- */
-
-static void
-dialog_ientry_update (GtkWidget *widget, /* I - Entry widget */
-                      gint      *value)	 /* I - Current value */
-{
-  GtkAdjustment	*adjustment;
-  gint		 new_value;
-
-  new_value = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
-
-  if (*value != new_value)
-    {
-      adjustment = gtk_object_get_user_data (GTK_OBJECT (widget));
-
-      if ((new_value >= adjustment->lower) &&
-	  (new_value <= adjustment->upper))
-	{
-	  *value            = new_value;
-	  adjustment->value = new_value;
-
-	  gtk_signal_emit_by_name (GTK_OBJECT (adjustment), "value_changed");
-
-	  if (value == &despeckle_radius)
-	    preview_init ();
-
-	  preview_update ();
-	};
-    };
-}
-
-
-/*
- * 'dialog_adaptive_callback()' - Update the filter type...
- */
-
-static void
-dialog_adaptive_callback (GtkWidget *widget,	/* I - Toggle button */
-			  gpointer   data)	/* I - Data */
+dialog_adaptive_callback (GtkWidget *widget,
+			  gpointer   data)
 {
   if (GTK_TOGGLE_BUTTON (widget)->active)
     filter_type |= FILTER_ADAPTIVE;
@@ -1461,14 +1393,9 @@ dialog_adaptive_callback (GtkWidget *widget,	/* I - Toggle button */
   preview_update ();
 }
 
-
-/*
- * 'dialog_recursive_callback()' - Update the filter type...
- */
-
 static void
-dialog_recursive_callback (GtkWidget *widget,	/* I - Toggle button */
-			   gpointer  data)	/* I - Data */
+dialog_recursive_callback (GtkWidget *widget,
+			   gpointer  data)
 {
   if (GTK_TOGGLE_BUTTON (widget)->active)
     filter_type |= FILTER_RECURSIVE;
@@ -1478,14 +1405,9 @@ dialog_recursive_callback (GtkWidget *widget,	/* I - Toggle button */
   preview_update ();
 }
 
-
-/*
- * 'dialog_ok_callback()' - Start the filter...
- */
-
 static void
-dialog_ok_callback (GtkWidget *widget,	/* I - OK button widget */
-		    gpointer  data)	/* I - Dialog window */
+dialog_ok_callback (GtkWidget *widget,
+		    gpointer  data)
 {
   run_filter = TRUE;
 

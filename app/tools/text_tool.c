@@ -29,11 +29,11 @@
 #include "errors.h"
 #include "floating_sel.h"
 #include "gimage_mask.h"
+#include "gimpui.h"
 #include "global_edit.h"
 #include "procedural_db.h"
 #include "selection.h"
 #include "text_tool.h"
-#include "tool_options_ui.h"
 #include "tools.h"
 #include "undo.h"
 
@@ -141,7 +141,7 @@ text_options_new (void)
   GtkWidget *sep;
 
   /*  the new text tool options structure  */
-  options = (TextOptions *) g_malloc (sizeof (TextOptions));
+  options = g_new (TextOptions, 1);
   tool_options_init ((ToolOptions *) options,
 		     _("Text Tool Options"),
 		     text_options_reset);
@@ -156,7 +156,7 @@ text_options_new (void)
   options->antialias_w =
     gtk_check_button_new_with_label (_("Antialiasing"));
   gtk_signal_connect (GTK_OBJECT (options->antialias_w), "toggled",
-		      (GtkSignalFunc) tool_options_toggle_update,
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &options->antialias);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->antialias_w),
 				options->antialias_d);
@@ -175,7 +175,7 @@ text_options_new (void)
   options->border_w =
     gtk_adjustment_new (options->border_d, 0.0, 32767.0, 1.0, 50.0, 0.0);
   gtk_signal_connect (GTK_OBJECT (options->border_w), "value_changed",
-		      (GtkSignalFunc) tool_options_int_adjustment_update,
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &options->border);
   spinbutton =
     gtk_spin_button_new (GTK_ADJUSTMENT (options->border_w), 1.0, 0.0);
@@ -196,7 +196,7 @@ text_options_new (void)
   options->use_dyntext_w =
     gtk_check_button_new_with_label (_("Use Dynamic Text"));
   gtk_signal_connect (GTK_OBJECT (options->use_dyntext_w), "toggled",
-		      (GtkSignalFunc) tool_options_toggle_update,
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &options->use_dyntext);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->use_dyntext_w),
 				options->use_dyntext_d);

@@ -25,7 +25,6 @@
 #include "gimpui.h"
 #include "info_dialog.h"
 #include "measure.h"
-#include "tool_options_ui.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
@@ -49,21 +48,23 @@ typedef enum
 
 /*  the measure structure  */
 typedef struct _MeasureTool MeasureTool;
+
 struct _MeasureTool
 {
   DrawCore        *core;        /*  draw core                  */
   MeasureFunction  function;    /*  what are we doing?         */
-  int              point;       /*  what are we manipulating?  */
-  int              num_points;  /*  how many points?           */
-  int              x[3];        /*  three x coordinates        */
-  int              y[3];        /*  three y coordinates        */
-  double           angle1;      /*  first angle                */
-  double           angle2;      /*  second angle               */
+  gint             point;       /*  what are we manipulating?  */
+  gint             num_points;  /*  how many points?           */
+  gint             x[3];        /*  three x coordinates        */
+  gint             y[3];        /*  three y coordinates        */
+  gdouble          angle1;      /*  first angle                */
+  gdouble          angle2;      /*  second angle               */
   guint            context_id;  /*  for the statusbar          */
 };
 
 /*  the measure tool options  */
 typedef struct _MeasureOptions MeasureOptions;
+
 struct _MeasureOptions
 {
   ToolOptions  tool_options;
@@ -128,7 +129,7 @@ measure_tool_options_new (void)
 				options->use_info_window_d);
   gtk_box_pack_start (GTK_BOX (vbox), options->use_info_window_w, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (options->use_info_window_w), "toggled",
-		      (GtkSignalFunc) tool_options_toggle_update,
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &options->use_info_window);
   gtk_widget_show (options->use_info_window_w);
 
@@ -181,7 +182,8 @@ measure_tool_button_press (Tool           *tool,
   if (tool->state == ACTIVE && gdisp_ptr != tool->gdisp_ptr)
     {
       GDisplay *old_gdisp = tool->gdisp_ptr;
-      gtk_statusbar_pop (GTK_STATUSBAR (old_gdisp->statusbar), measure_tool->context_id);
+      gtk_statusbar_pop (GTK_STATUSBAR (old_gdisp->statusbar),
+			 measure_tool->context_id);
       gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), 
 			  measure_tool->context_id, (""));
     } 
@@ -196,15 +198,15 @@ measure_tool_button_press (Tool           *tool,
 	{
 	  gdisplay_transform_coords (gdisp, measure_tool->x[i], measure_tool->y[i], 
 				     &x[i], &y[i], FALSE);      
-	  if (bevent->x == BOUNDS (bevent->x, x[i] - TARGET, x[i] + TARGET) &&
-	      bevent->y == BOUNDS (bevent->y, y[i] - TARGET, y[i] + TARGET))
+	  if (bevent->x == CLAMP (bevent->x, x[i] - TARGET, x[i] + TARGET) &&
+	      bevent->y == CLAMP (bevent->y, y[i] - TARGET, y[i] + TARGET))
 	    {
 	      if (bevent->state & (GDK_CONTROL_MASK | GDK_MOD1_MASK))
 		{
 		  Guide *guide;
 
 		  if (bevent->state & GDK_CONTROL_MASK && 
-		      (measure_tool->y[i] == BOUNDS (measure_tool->y[i], 0, gdisp->gimage->height)))
+		      (measure_tool->y[i] == CLAMP (measure_tool->y[i], 0, gdisp->gimage->height)))
 		    {
 		      guide = gimp_image_add_hguide (gdisp->gimage);
 		      undo_push_guide (gdisp->gimage, guide);
@@ -212,7 +214,7 @@ measure_tool_button_press (Tool           *tool,
 		      gdisplays_expose_guide (gdisp->gimage, guide);
 		    }  
 		  if (bevent->state & GDK_MOD1_MASK &&
-		      (measure_tool->x[i] == BOUNDS (measure_tool->x[i], 0, gdisp->gimage->width)))
+		      (measure_tool->x[i] == CLAMP (measure_tool->x[i], 0, gdisp->gimage->width)))
 		    {
 		      guide = gimp_image_add_vguide (gdisp->gimage);
 		      undo_push_guide (gdisp->gimage, guide);
@@ -258,7 +260,8 @@ measure_tool_button_press (Tool           *tool,
 
   /*  create the info window if necessary  */
    if (!measure_tool_info &&
-       (measure_tool_options->use_info_window || !GTK_WIDGET_VISIBLE (gdisp->statusarea)))
+       (measure_tool_options->use_info_window ||
+	!GTK_WIDGET_VISIBLE (gdisp->statusarea)))
      {
        measure_tool_info = info_dialog_new (_("Measure Tool"),
 					    tools_help_func, NULL);
@@ -274,11 +277,15 @@ measure_tool_button_press (Tool           *tool,
       }
 
   gdk_pointer_grab (gdisp->canvas->window, FALSE,
-		    GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
+		    GDK_POINTER_MOTION_HINT_MASK |
+		    GDK_BUTTON1_MOTION_MASK |
+		    GDK_BUTTON_RELEASE_MASK,
 		    NULL, NULL, bevent->time);
   tool->state = ACTIVE;
 
-  /*  set the pointer to the crosshair, so one actually sees the cursor position  */
+  /*  set the pointer to the crosshair,
+   *  so one actually sees the cursor position
+   */
   gdisplay_install_tool_cursor (gdisp, GDK_TCROSS);
 }
 

@@ -26,13 +26,13 @@
 #include "gdisplay.h"
 #include "gimpbrushlist.h"
 #include "gimpbrushpipe.h"
+#include "gimpui.h"
 #include "gradient.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
 #include "paint_options.h"
 #include "paintbrush.h"
 #include "selection.h"
-#include "tool_options_ui.h"
 #include "tools.h"
 
 #include "libgimp/gimpunitmenu.h"
@@ -91,18 +91,19 @@ struct _PaintbrushOptions
 static PaintbrushOptions * paintbrush_options = NULL;
 
 /*  local variables  */
-static double  non_gui_fade_out;
-static double  non_gui_gradient_length;
-static int     non_gui_gradient_type;
-static double  non_gui_incremental;
-static GUnit   non_gui_fade_unit;
-static GUnit   non_gui_gradient_unit;
+static gdouble  non_gui_fade_out;
+static gdouble  non_gui_gradient_length;
+static gint     non_gui_gradient_type;
+static gdouble  non_gui_incremental;
+static GUnit    non_gui_fade_unit;
+static GUnit    non_gui_gradient_unit;
 
 
 /*  forward function declarations  */
-static void paintbrush_motion (PaintCore *, GimpDrawable *, PaintPressureOptions *,
-			       double, double, PaintApplicationMode, GradientPaintMode);
-
+static void paintbrush_motion (PaintCore *, GimpDrawable *,
+			       PaintPressureOptions *,
+			       double, double, PaintApplicationMode,
+			       GradientPaintMode);
 
 /*  functions  */
 
@@ -114,7 +115,7 @@ paintbrush_gradient_toggle_callback (GtkWidget *widget,
 
   static int incremental_save = FALSE;
 
-  tool_options_toggle_update (widget, data);
+  gimp_toggle_button_update (widget, data);
 
   if (paintbrush_options->use_gradient)
     {
@@ -240,7 +241,7 @@ paintbrush_options_new (void)
     gtk_check_button_new_with_label (_("Fade Out"));
   gtk_container_add (GTK_CONTAINER (abox), options->use_fade_w);
   gtk_signal_connect (GTK_OBJECT (options->use_fade_w), "toggled",
-		      GTK_SIGNAL_FUNC (tool_options_toggle_update),
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &options->use_fade);
   gtk_widget_show (options->use_fade_w);
 
@@ -252,7 +253,7 @@ paintbrush_options_new (void)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_widget_set_usize (spinbutton, 75, 0);
   gtk_signal_connect (GTK_OBJECT (options->fade_out_w), "value_changed",
-		      (GtkSignalFunc) tool_options_double_adjustment_update,
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &options->fade_out);
   gtk_table_attach_defaults (GTK_TABLE (table), spinbutton, 1, 2, 0, 1);
   gtk_widget_show (spinbutton);
@@ -261,7 +262,7 @@ paintbrush_options_new (void)
   options->fade_unit_w = 
     gimp_unit_menu_new ("%a", options->fade_unit_d, TRUE, TRUE, TRUE);
   gtk_signal_connect (GTK_OBJECT (options->fade_unit_w), "unit_changed",
-		      (GtkSignalFunc) tool_options_unitmenu_update,
+		      GTK_SIGNAL_FUNC (gimp_unit_menu_update),
 		      &options->fade_unit);
   gtk_object_set_data (GTK_OBJECT (options->fade_unit_w), "set_digits", spinbutton);
   gtk_table_attach (GTK_TABLE (table), options->fade_unit_w, 2, 3, 0, 1,
@@ -298,7 +299,7 @@ paintbrush_options_new (void)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_widget_set_usize (spinbutton, 75, 0);
   gtk_signal_connect (GTK_OBJECT (options->gradient_length_w), "value_changed",
-		      (GtkSignalFunc) tool_options_double_adjustment_update,
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &options->gradient_length);
   gtk_table_attach_defaults (GTK_TABLE (table), spinbutton, 1, 2, 1, 2);
   gtk_widget_show (spinbutton);
@@ -307,9 +308,10 @@ paintbrush_options_new (void)
   options->gradient_unit_w = 
     gimp_unit_menu_new ("%a", options->gradient_unit_d, TRUE, TRUE, TRUE);
   gtk_signal_connect (GTK_OBJECT (options->gradient_unit_w), "unit_changed",
-		      (GtkSignalFunc) tool_options_unitmenu_update,
+		      GTK_SIGNAL_FUNC (gimp_unit_menu_update),
 		      &options->gradient_unit);
-  gtk_object_set_data (GTK_OBJECT (options->gradient_unit_w), "set_digits", spinbutton);
+  gtk_object_set_data (GTK_OBJECT (options->gradient_unit_w), "set_digits",
+		       spinbutton);
   gtk_table_attach (GTK_TABLE (table), options->gradient_unit_w, 2, 3, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (options->gradient_unit_w);

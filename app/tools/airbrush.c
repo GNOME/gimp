@@ -30,7 +30,6 @@
 #include "paint_core.h"
 #include "paint_options.h"
 #include "selection.h"
-#include "tool_options_ui.h"
 #include "tools.h"
 
 #include "libgimp/gimpintl.h"
@@ -114,7 +113,7 @@ airbrush_options_new (void)
   GtkWidget *scale;
 
   /*  the new airbrush tool options structure  */
-  options = (AirbrushOptions *) g_malloc (sizeof (AirbrushOptions));
+  options = g_new (AirbrushOptions, 1);
   paint_options_init ((PaintOptions *) options,
 		      AIRBRUSH,
 		      airbrush_options_reset);
@@ -136,7 +135,7 @@ airbrush_options_new (void)
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (options->rate_w), "value_changed",
-		      (GtkSignalFunc) tool_options_double_adjustment_update,
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &options->rate);
   gimp_table_attach_aligned (GTK_TABLE (table), 0,
 			     _("Rate:"), 1.0, 1.0,
@@ -149,7 +148,7 @@ airbrush_options_new (void)
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (options->pressure_w), "value_changed",
-		      (GtkSignalFunc) tool_options_double_adjustment_update,
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &options->pressure);
   gimp_table_attach_aligned (GTK_TABLE (table), 1,
 			     _("Pressure:"), 1.0, 1.0,
@@ -200,10 +199,10 @@ airbrush_paint_func (PaintCore    *paint_core,
     case INIT_PAINT :
       /* timer_state = OFF; */
       if (timer_state == ON)
-      {
-	g_warning ("killing stray timer, please report to lewing@gimp.org");
-	gtk_timeout_remove (timer);
-      }
+	{
+	  g_warning ("killing stray timer, please report to lewing@gimp.org");
+	  gtk_timeout_remove (timer);
+	}
       timer_state = OFF;
       break;
 

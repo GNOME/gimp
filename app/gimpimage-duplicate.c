@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <string.h>
-#include <math.h>
+
 #include "appenv.h"
 #include "channel_ops.h"
 #include "cursorutil.h"
@@ -28,6 +28,7 @@
 #include "interface.h"
 
 #include "libgimp/gimpsizeentry.h"
+#include "libgimp/gimpmath.h"
 #include "libgimp/gimpintl.h"
 
 #include "channel_pvt.h"
@@ -43,8 +44,6 @@ struct _OffsetDialog
   GtkWidget         *off_se;
 
   gboolean           wrap_around;
-
-  GtkWidget         *fill_options;
   ChannelOffsetType  fill_type;
 
   GimpImage         *gimage;
@@ -54,8 +53,6 @@ struct _OffsetDialog
 static void  offset_ok_callback         (GtkWidget *, gpointer);
 static void  offset_cancel_callback     (GtkWidget *, gpointer);
 
-static void  offset_wraparound_update   (GtkWidget *, gpointer);
-static void  offset_fill_type_update    (GtkWidget *, gpointer);
 static void  offset_halfheight_callback (GtkWidget *, gpointer);
 
 
@@ -70,9 +67,8 @@ channel_ops_offset (GimpImage* gimage)
   GtkWidget *table;
   GtkObject *adjustment;
   GtkWidget *spinbutton;
-  GtkWidget *radio_box;
+  GtkWidget *frame;
   GtkWidget *radio_button;
-  GSList *group = NULL;
 
   GimpDrawable *drawable;
 
@@ -167,39 +163,22 @@ channel_ops_offset (GimpImage* gimage)
   gtk_widget_show (check);
 
   /*  The fill options  */
-  off_d->fill_options = gtk_frame_new (_("Fill Options"));
-  gtk_box_pack_start (GTK_BOX (vbox), off_d->fill_options, FALSE, FALSE, 0);
+  frame =
+    gimp_radio_group_new2 (TRUE, _("Fill Options"),
+			   gimp_radio_button_update,
+			   &off_d->fill_type, (gpointer) off_d->fill_type,
 
-  radio_box = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (radio_box), 2);
-  gtk_container_add (GTK_CONTAINER (off_d->fill_options), radio_box);
+			   _("Background"), (gpointer) OFFSET_BACKGROUND, NULL,
+			   _("Transparent"), (gpointer) OFFSET_TRANSPARENT,
+			   &radio_button,
 
-  radio_button = gtk_radio_button_new_with_label (group, _("Background"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
-  gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
-  gtk_object_set_data (GTK_OBJECT (radio_button), "fill_type",
-		       (gpointer) OFFSET_BACKGROUND);
-  gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
-		      (GtkSignalFunc) offset_fill_type_update,
-		      off_d);
-  gtk_widget_show (radio_button);
+			   NULL);
 
-  radio_button = gtk_radio_button_new_with_label (group, _("Transparent"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
-  gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
-  gtk_object_set_data (GTK_OBJECT (radio_button), "fill_type",
-		       (gpointer) OFFSET_TRANSPARENT);
-  gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
-		      (GtkSignalFunc) offset_fill_type_update,
-		      off_d);
-  gtk_widget_show (radio_button);
-  if (drawable_has_alpha (drawable))
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio_button), TRUE);
-  else
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  if (!drawable_has_alpha (drawable))
     gtk_widget_set_sensitive (radio_button, FALSE);
-
-  gtk_widget_show (radio_box);
-  gtk_widget_show (off_d->fill_options);
 
   /*  The by half height and half width option */
   push = gtk_button_new_with_label (_("Offset by (x/2),(y/2)"));
@@ -209,8 +188,9 @@ channel_ops_offset (GimpImage* gimage)
 
   /*  Hook up the wrap around  */
   gtk_signal_connect (GTK_OBJECT (check), "toggled",
-		      (GtkSignalFunc) offset_wraparound_update,
-		      off_d);
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+		      &off_d->wrap_around);
+  gtk_object_set_data (GTK_OBJECT (check), "inverse_sensitive", frame);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), off_d->wrap_around);
 
   /*  Hook up the by half  */
@@ -503,32 +483,6 @@ offset_cancel_callback (GtkWidget *widget,
   off_d = (OffsetDialog *) data;
   gtk_widget_destroy (off_d->dlg);
   g_free (off_d);
-}
-
-static void
-offset_wraparound_update (GtkWidget *widget,
-			  gpointer   data)
-{
-  OffsetDialog *off_d;
-
-  off_d = (OffsetDialog *) data;
-
-  off_d->wrap_around =  GTK_TOGGLE_BUTTON (widget)->active ? TRUE : FALSE;
-
-  gtk_widget_set_sensitive (off_d->fill_options, !off_d->wrap_around);
-}
-
-static void
-offset_fill_type_update (GtkWidget *widget,
-			 gpointer   data)
-{
-  OffsetDialog *off_d;
-
-  off_d = (OffsetDialog *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    off_d->fill_type =
-      (ChannelOffsetType) gtk_object_get_data (GTK_OBJECT (widget), "fill_type");
 }
 
 static void

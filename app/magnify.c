@@ -16,14 +16,15 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
+
 #include "appenv.h"
 #include "draw_core.h"
 #include "gdisplay.h"
 #include "gimprc.h"
+#include "gimpui.h"
 #include "info_window.h"
 #include "magnify.h"
 #include "scale.h"
-#include "tool_options_ui.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -34,23 +35,25 @@
 /*  the magnify structures  */
 
 typedef struct _Magnify Magnify;
+
 struct _Magnify
 {
-  DrawCore *      core;       /*  Core select object          */
+  DrawCore *core;       /*  Core select object          */
 
-  int             x, y;       /*  upper left hand coordinate  */
-  int             w, h;       /*  width and height            */
+  gint      x, y;       /*  upper left hand coordinate  */
+  gint      w, h;       /*  width and height            */
 
-  int             op;         /*  magnify operation           */
+  gint      op;         /*  magnify operation           */
 };
 
 typedef struct _MagnifyOptions MagnifyOptions;
+
 struct _MagnifyOptions
 {
   ToolOptions  tool_options;
 
-  /* int       allow_resize_windows; (from gimprc) */
-  int          allow_resize_d;
+  /* gint      allow_resize_windows; (from gimprc) */
+  gint         allow_resize_d;
   GtkWidget   *allow_resize_w;
 };
 
@@ -90,7 +93,7 @@ magnify_options_new (void)
   GtkWidget *vbox;
 
   /*  the new magnify tool options structure  */
-  options = (MagnifyOptions *) g_malloc (sizeof (MagnifyOptions));
+  options = g_new (MagnifyOptions, 1);
   tool_options_init ((ToolOptions *) options,
 		     _("Magnify Options"),
 		     magnify_options_reset);
@@ -103,7 +106,7 @@ magnify_options_new (void)
   options->allow_resize_w =
     gtk_check_button_new_with_label (_("Allow Window Resizing"));
   gtk_signal_connect (GTK_OBJECT (options->allow_resize_w), "toggled",
-		      (GtkSignalFunc) tool_options_toggle_update,
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &allow_resize_windows);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->allow_resize_w),
 				allow_resize_windows);
@@ -117,9 +120,9 @@ magnify_options_new (void)
 /*  magnify utility functions  */
 
 static void
-zoom_in (int *src,
-	 int *dest,
-	 int  scale)
+zoom_in (gint *src,
+	 gint *dest,
+	 gint  scale)
 {
   while (scale--)
     {
@@ -133,9 +136,9 @@ zoom_in (int *src,
 
 
 static void
-zoom_out (int *src,
-	  int *dest,
-	  int  scale)
+zoom_out (gint *src,
+	  gint *dest,
+	  gint  scale)
 {
   while (scale--)
     {
@@ -155,9 +158,9 @@ magnify_button_press (Tool           *tool,
 		      GdkEventButton *bevent,
 		      gpointer        gdisp_ptr)
 {
-  GDisplay * gdisp;
-  Magnify * magnify;
-  int x, y;
+  GDisplay *gdisp;
+  Magnify *magnify;
+  gint x, y;
 
   gdisp = (GDisplay *) gdisp_ptr;
   magnify = (Magnify *) tool->private;
@@ -170,7 +173,9 @@ magnify_button_press (Tool           *tool,
   magnify->h = 0;
 
   gdk_pointer_grab (gdisp->canvas->window, FALSE,
-		    GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
+		    GDK_POINTER_MOTION_HINT_MASK |
+		    GDK_BUTTON1_MOTION_MASK |
+		    GDK_BUTTON_RELEASE_MASK,
 		    NULL, NULL, bevent->time);
 
   tool->state = ACTIVE;
@@ -192,13 +197,13 @@ magnify_button_release (Tool           *tool,
 			GdkEventButton *bevent,
 			gpointer        gdisp_ptr)
 {
-  Magnify * magnify;
-  GDisplay * gdisp;
-  int win_width, win_height;
-  int width, height;
-  int scalesrc, scaledest;
-  int scale;
-  int x1, y1, x2, y2, w, h;
+  Magnify *magnify;
+  GDisplay *gdisp;
+  gint win_width, win_height;
+  gint width, height;
+  gint scalesrc, scaledest;
+  gint scale;
+  gint x1, y1, x2, y2, w, h;
 
   gdisp = (GDisplay *) gdisp_ptr;
   magnify = (Magnify *) tool->private;
@@ -252,7 +257,6 @@ magnify_button_release (Tool           *tool,
 
       /*  resize the image  */
       resize_display (gdisp, allow_resize_windows, TRUE);
-
     }
 }
 
@@ -261,9 +265,9 @@ magnify_motion (Tool           *tool,
 		GdkEventMotion *mevent,
 		gpointer        gdisp_ptr)
 {
-  Magnify * magnify;
-  GDisplay * gdisp;
-  int x, y;
+  Magnify *magnify;
+  GDisplay *gdisp;
+  gint x, y;
 
   if (tool->state != ACTIVE)
     return;
@@ -286,7 +290,7 @@ magnify_cursor_update (Tool           *tool,
 		       GdkEventMotion *mevent,
 		       gpointer        gdisp_ptr)
 {
-  GDisplay * gdisp;
+  GDisplay *gdisp;
 
   gdisp = (GDisplay *) gdisp_ptr;
 
@@ -297,17 +301,17 @@ magnify_cursor_update (Tool           *tool,
 void
 magnify_draw (Tool *tool)
 {
-  GDisplay * gdisp;
-  Magnify * magnify;
-  int x1, y1, x2, y2;
+  GDisplay *gdisp;
+  Magnify *magnify;
+  gint x1, y1, x2, y2;
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
   magnify = (Magnify *) tool->private;
 
-  x1 = MINIMUM (magnify->x, magnify->x + magnify->w);
-  y1 = MINIMUM (magnify->y, magnify->y + magnify->h);
-  x2 = MAXIMUM (magnify->x, magnify->x + magnify->w);
-  y2 = MAXIMUM (magnify->y, magnify->y + magnify->h);
+  x1 = MIN (magnify->x, magnify->x + magnify->w);
+  y1 = MIN (magnify->y, magnify->y + magnify->h);
+  x2 = MAX (magnify->x, magnify->x + magnify->w);
+  y2 = MAX (magnify->y, magnify->y + magnify->h);
 
   gdisplay_transform_coords (gdisp, x1, y1, &x1, &y1, 0);
   gdisplay_transform_coords (gdisp, x2, y2, &x2, &y2, 0);
@@ -322,7 +326,7 @@ magnify_control (Tool       *tool,
 		 ToolAction  action,
 		 gpointer    gdisp_ptr)
 {
-  Magnify * magnify;
+  Magnify *magnify;
 
   magnify = (Magnify *) tool->private;
 
@@ -349,8 +353,8 @@ magnify_control (Tool       *tool,
 Tool *
 tools_new_magnify (void)
 {
-  Tool * tool;
-  Magnify * private;
+  Tool *tool;
+  Magnify *private;
 
   /*  The tool options  */
   if (! magnify_options)
@@ -384,7 +388,7 @@ tools_new_magnify (void)
 void
 tools_free_magnify (Tool *tool)
 {
-  Magnify * magnify;
+  Magnify *magnify;
 
   magnify = (Magnify *) tool->private;
 

@@ -3266,7 +3266,7 @@ new_layer_query_ok_callback (GtkWidget *widget,
 			 layer_name, OPAQUE_OPACITY, NORMAL_MODE);
       if (layer) 
 	{
-	  drawable_fill (GIMP_DRAWABLE(layer), fill_type);
+	  drawable_fill (GIMP_DRAWABLE (layer), fill_type);
 	  gimage_add_layer (gimage, layer, -1);
 	  
 	  /*  End the group undo  */
@@ -3298,18 +3298,6 @@ new_layer_query_cancel_callback (GtkWidget *widget,
 }
 
 static void
-new_layer_query_fill_type_callback (GtkWidget *widget,
-				    gpointer   data)
-{
-  NewLayerOptions *options;
-
-  options = (NewLayerOptions *) data;
-
-  options->fill_type =
-    (GimpFillType) gtk_object_get_data (GTK_OBJECT (widget), "fill_type");
-}
-
-static void
 layers_dialog_new_layer_query (GimpImage* gimage)
 {
   NewLayerOptions *options;
@@ -3318,20 +3306,7 @@ layers_dialog_new_layer_query (GimpImage* gimage)
   GtkWidget *label;
   GtkObject *adjustment;
   GtkWidget *spinbutton;
-  GtkWidget *radio_frame;
-  GtkWidget *radio_box;
-  GtkWidget *radio_button;
-  GSList *group;
-  gint    i;
-
-  static gchar *button_names[] =
-  {
-    N_("Foreground"),
-    N_("Background"),
-    N_("White"),
-    N_("Transparent")
-  };
-  static gint n_buttons = sizeof (button_names) / sizeof (button_names[0]);
+  GtkWidget *frame;
 
   /*  The new options structure  */
   options = g_new (NewLayerOptions, 1);
@@ -3437,36 +3412,21 @@ layers_dialog_new_layer_query (GimpImage* gimage)
 
   gtk_widget_show (table);
 
-  /*  The radio frame and box  */
-  radio_frame = gtk_frame_new (_("Layer Fill Type"));
-  gtk_box_pack_start (GTK_BOX (vbox), radio_frame, FALSE, FALSE, 0);
+  /*  The radio frame  */
+  frame =
+    gimp_radio_group_new2 (TRUE, _("Layer Fill Type"),
+			   gimp_radio_button_update,
+			   &options->fill_type, (gpointer) options->fill_type,
 
-  radio_box = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (radio_box), 2);
-  gtk_container_add (GTK_CONTAINER (radio_frame), radio_box);
+			   _("Foreground"),  (gpointer) FOREGROUND_FILL, NULL,
+			   _("Background"),  (gpointer) BACKGROUND_FILL, NULL,
+			   _("White"),       (gpointer) WHITE_FILL, NULL,
+			   _("Transparent"), (gpointer) TRANSPARENT_FILL, NULL,
 
-  /*  The radio buttons  */
-  group = NULL;
-  for (i = 0; i < n_buttons; i++)
-    {
-      radio_button =
-	gtk_radio_button_new_with_label (group, gettext(button_names[i]));
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
-      gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
-      gtk_object_set_data (GTK_OBJECT (radio_button), "fill_type",
-			   (gpointer) i);
-      gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
-			  (GtkSignalFunc) new_layer_query_fill_type_callback,
-			  options);
+			   NULL);
 
-      /*  Set the correct radio button  */
-      if (i == options->fill_type)
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio_button), TRUE);
-
-      gtk_widget_show (radio_button);
-    }
-  gtk_widget_show (radio_box);
-  gtk_widget_show (radio_frame);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   gtk_widget_show (vbox);
   gtk_widget_show (options->query_box);
@@ -3634,35 +3594,11 @@ add_mask_query_cancel_callback (GtkWidget *widget,
 }
 
 static void
-add_mask_query_fill_type_callback (GtkWidget *widget,
-				   gpointer   data)
-{
-  AddMaskOptions *options;
-
-  options = (AddMaskOptions *) data;
-
-  options->add_mask_type =
-    (AddMaskType) gtk_object_get_data (GTK_OBJECT (widget), "add_mask_type");
-}
-
-static void
 layers_dialog_add_mask_query (Layer *layer)
 {
   AddMaskOptions *options;
   GtkWidget *vbox;
-  GtkWidget *radio_frame;
-  GtkWidget *radio_box;
-  GtkWidget *radio_button;
-  GSList *group = NULL;
-  gint    i;
-
-  static gchar *button_names[] =
-  {
-    N_("White (Full Opacity)"),
-    N_("Black (Full Transparency)"),
-    N_("Layer's Alpha Channel")
-  };
-  static gint n_buttons = sizeof (button_names) / sizeof (button_names[0]);
+  GtkWidget *frame;
 
   /*  The new options structure  */
   options = g_new (AddMaskOptions, 1);
@@ -3691,29 +3627,22 @@ layers_dialog_add_mask_query (Layer *layer)
 		     vbox);
 
   /*  The radio frame and box  */
-  radio_frame = gtk_frame_new (_("Initialize Layer Mask to:"));
-  gtk_box_pack_start (GTK_BOX (vbox), radio_frame, FALSE, FALSE, 0);
+  frame = gimp_radio_group_new2 (TRUE, _("Initialize Layer Mask to:"),
+				 gimp_radio_button_update,
+				 &options->add_mask_type,
+				 (gpointer) options->add_mask_type,
 
-  radio_box = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (radio_box), 2);
-  gtk_container_add (GTK_CONTAINER (radio_frame), radio_box);
+				 _("White (Full Opacity)"),
+				 (gpointer) ADD_WHITE_MASK, NULL,
+				 _("Black (Full Transparency)"),
+				 (gpointer) ADD_BLACK_MASK, NULL,
+				 _("Layer's Alpha Channel"),
+				 (gpointer) ADD_ALPHA_MASK, NULL,
 
-  /*  The radio buttons  */
-  for (i = 0; i < n_buttons; i++)
-    {
-      radio_button =
-	gtk_radio_button_new_with_label (group, gettext (button_names[i]));
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
-      gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
-      gtk_object_set_data (GTK_OBJECT (radio_button), "add_mask_type",
-			   (gpointer) i);
-      gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
-			  (GtkSignalFunc) add_mask_query_fill_type_callback,
-			  options);
-      gtk_widget_show (radio_button);
-    }
-  gtk_widget_show (radio_box);
-  gtk_widget_show (radio_frame);
+				 NULL);
+
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   gtk_widget_show (vbox);
   gtk_widget_show (options->query_box);
@@ -4031,18 +3960,6 @@ layer_merge_query_cancel_callback (GtkWidget *widget,
   g_free (options);
 }
 
-static void
-layer_merge_query_type_callback (GtkWidget *widget,
-				 gpointer   data)
-{
-  LayerMergeOptions *options;
-
-  options = (LayerMergeOptions *) data;
-
-  options->merge_type =
-    (MergeType) gtk_object_get_data (GTK_OBJECT (widget), "merge_type");
-}
-
 void
 layers_dialog_layer_merge_query (GImage   *gimage,
 				 /*  if FALSE, anchor active layer  */
@@ -4050,19 +3967,7 @@ layers_dialog_layer_merge_query (GImage   *gimage,
 {
   LayerMergeOptions *options;
   GtkWidget *vbox;
-  GtkWidget *radio_frame;
-  GtkWidget *radio_box;
-  GtkWidget *radio_button;
-  GSList *group = NULL;
-  gint    i;
-
-  static gchar *button_names[] =
-  {
-    N_("Expanded as necessary"),
-    N_("Clipped to image"),
-    N_("Clipped to bottom layer")
-  };
-  static gint n_buttons = sizeof (button_names) / sizeof (button_names[0]);
+  GtkWidget *frame;
 
   /*  The new options structure  */
   options = g_new (LayerMergeOptions, 1);
@@ -4091,33 +3996,25 @@ layers_dialog_layer_merge_query (GImage   *gimage,
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
 		     vbox);
 
-  /*  The radio frame and box  */
-  if (merge_visible)
-     radio_frame = gtk_frame_new (_("Final, Merged Layer should be:"));
-  else
-     radio_frame = gtk_frame_new (_("Final, Anchored Layer should be:"));
-  gtk_box_pack_start (GTK_BOX (vbox), radio_frame, FALSE, FALSE, 0);
+  frame = gimp_radio_group_new2 (TRUE,
+				 merge_visible ?
+				 _("Final, Merged Layer should be:") :
+				 _("Final, Anchored Layer should be:"),
+				 gimp_radio_button_update,
+				 &options->merge_type,
+				 (gpointer) options->merge_type,
 
-  radio_box = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (radio_box), 2);
-  gtk_container_add (GTK_CONTAINER (radio_frame), radio_box);
+				 _("Expanded as necessary"),
+				 (gpointer) EXPAND_AS_NECESSARY, NULL,
+				 _("Clipped to image"),
+				 (gpointer) CLIP_TO_IMAGE, NULL,
+				 _("Clipped to bottom layer"),
+				 (gpointer) CLIP_TO_BOTTOM_LAYER, NULL,
 
-  /*  The radio buttons  */
-  for (i = 0; i < n_buttons; i++)
-    {
-      radio_button =
-	gtk_radio_button_new_with_label (group, gettext (button_names[i]));
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
-      gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
-      gtk_object_set_data (GTK_OBJECT (radio_button), "merge_type",
-			   (gpointer) i);
-      gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
-			  (GtkSignalFunc) layer_merge_query_type_callback,
-			  options);
-      gtk_widget_show (radio_button);
-    }
-  gtk_widget_show (radio_box);
-  gtk_widget_show (radio_frame);
+				 NULL);
+
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   gtk_widget_show (vbox);
   gtk_widget_show (options->query_box);

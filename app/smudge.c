@@ -28,11 +28,11 @@
 #include "smudge.h"
 #include "gdisplay.h"
 #include "gimplut.h"
+#include "gimpui.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
 #include "paint_options.h"
 #include "selection.h"
-#include "tool_options_ui.h"
 #include "tools.h"
 #include "gimage.h"
 
@@ -47,37 +47,41 @@
 /*  the smudge structures  */
 
 typedef struct _SmudgeOptions SmudgeOptions;
+
 struct _SmudgeOptions
 {
   PaintOptions  paint_options;
 
-  double        rate;
-  double        rate_d;
+  gdouble       rate;
+  gdouble       rate_d;
   GtkObject    *rate_w;
 
 };
 
-static PixelRegion    accumPR;
-static unsigned char *accum_data;
+static PixelRegion  accumPR;
+static guchar      *accum_data;
 
 /*  the smudge tool options  */
-static SmudgeOptions *smudge_options = NULL;
+static SmudgeOptions * smudge_options = NULL;
 
 /*  local variables */
-static gdouble        non_gui_rate;
+static gdouble  non_gui_rate;
 
 /*  function prototypes */
-static void         smudge_motion 	(PaintCore *, PaintPressureOptions *,
-					 gdouble, GimpDrawable *);
-static void 	    smudge_init   	(PaintCore *, GimpDrawable *);
-static void 	    smudge_finish   	(PaintCore *, GimpDrawable *);
+static void   smudge_motion     (PaintCore *, PaintPressureOptions *,
+				 gdouble, GimpDrawable *);
+static void   smudge_init       (PaintCore *, GimpDrawable *);
+static void   smudge_finish     (PaintCore *, GimpDrawable *);
 
-static void         smudge_nonclipped_painthit_coords (PaintCore *paint_core,
-						       gint * x, gint* y, 
-						       gint* w, gint *h);
-static void         smudge_allocate_accum_buffer      (gint w, gint h, 
-						       gint bytes, guchar *do_fill);
-
+static void   smudge_nonclipped_painthit_coords (PaintCore *paint_core,
+						 gint      *x,
+						 gint      *y, 
+						 gint      *w,
+						 gint      *h);
+static void   smudge_allocate_accum_buffer      (gint       w,
+						 gint       h, 
+						 gint       bytes,
+						 guchar    *do_fill);
 
 static void
 smudge_options_reset (void)
@@ -100,7 +104,7 @@ smudge_options_new (void)
   GtkWidget *scale;
 
   /*  the new smudge tool options structure  */
-  options = (SmudgeOptions *) g_malloc (sizeof (SmudgeOptions));
+  options = g_new (SmudgeOptions, 1);
   paint_options_init ((PaintOptions *) options,
 		      SMUDGE,
 		      smudge_options_reset);
@@ -126,7 +130,7 @@ smudge_options_new (void)
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (options->rate_w), "value_changed",
-		      (GtkSignalFunc) tool_options_double_adjustment_update,
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &options->rate);
   gtk_widget_show (scale);
   gtk_widget_show (hbox);
@@ -224,7 +228,9 @@ smudge_init (PaintCore    *paint_core,
      that may enter into the blend */
 
   if (was_clipped)
-    do_fill = gimp_drawable_get_color_at (drawable, (gint)paint_core->curx, (gint) paint_core->cury);
+    do_fill = gimp_drawable_get_color_at (drawable,
+					  (gint)paint_core->curx,
+					  (gint) paint_core->cury);
   
   smudge_allocate_accum_buffer (w, h, drawable_bytes(drawable), do_fill);
 
@@ -279,7 +285,7 @@ smudge_allocate_accum_buffer (gint    w,
 }
 
 Tool *
-tools_new_smudge ()
+tools_new_smudge (void)
 {
   Tool * tool;
   PaintCore * private;
@@ -341,7 +347,7 @@ smudge_motion (PaintCore            *paint_core,
      the drawable*/
 
   pixel_region_init (&srcPR, drawable_data (drawable), 
-	area->x, area->y, area->width, area->height, FALSE);
+		     area->x, area->y, area->width, area->height, FALSE);
 
   /* Enable pressure sensitive rate */
   if (pressure_options->rate)
@@ -356,9 +362,8 @@ smudge_motion (PaintCore            *paint_core,
   tempPR.y = area->y - y;
   tempPR.w = area->width;
   tempPR.h = area->height;
-  tempPR.data = accum_data 
-	+ tempPR.rowstride * tempPR.y 
-	+ tempPR.x * tempPR.bytes;
+  tempPR.data = accum_data +
+    tempPR.rowstride * tempPR.y + tempPR.x * tempPR.bytes;
 
   /* The dest will be the paint area we got above (= canvas_buf) */    
 
@@ -439,7 +444,7 @@ smudge_non_gui (GimpDrawable *drawable,
 		int           num_strokes,
 		double       *stroke_array)
 {
-  int i;
+  gint i;
 
   if (paint_core_init (&non_gui_paint_core, drawable,
 		       stroke_array[0], stroke_array[1]))

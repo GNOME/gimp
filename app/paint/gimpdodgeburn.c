@@ -20,7 +20,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "gdk/gdkkeysyms.h"
+#include <gdk/gdkkeysyms.h>
 
 #include "appenv.h"
 #include "drawable.h"
@@ -28,11 +28,11 @@
 #include "dodgeburn.h"
 #include "gdisplay.h"
 #include "gimplut.h"
+#include "gimpui.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
 #include "paint_options.h"
 #include "selection.h"
-#include "tool_options_ui.h"
 #include "tools.h"
 #include "gimage.h"
 
@@ -42,6 +42,7 @@
 /*  the dodgeburn structures  */
 
 typedef struct _DodgeBurnOptions DodgeBurnOptions;
+
 struct _DodgeBurnOptions
 {
   PaintOptions   paint_options;
@@ -54,8 +55,8 @@ struct _DodgeBurnOptions
   DodgeBurnMode  mode_d;
   GtkWidget     *mode_w[3];
 
-  double         exposure;
-  double         exposure_d;
+  gdouble        exposure;
+  gdouble        exposure_d;
   GtkObject     *exposure_w;
 
   GimpLut       *lut;
@@ -120,19 +121,8 @@ dodgeburn_options_new (void)
   GtkWidget *scale;
   GtkWidget *frame;
 
-  gchar* type_label[2] = { N_("Dodge"), N_("Burn") };
-  gint   type_value[2] = { DODGE, BURN };
-
-  gchar* mode_label[3] = { N_("Highlights"), 
-			   N_("Midtones"),
-			   N_("Shadows") };
-
-  gint   mode_value[3] = { DODGEBURN_HIGHLIGHTS, 
-			   DODGEBURN_MIDTONES, 
-			   DODGEBURN_SHADOWS };
-
   /*  the new dodgeburn tool options structure  */
-  options = (DodgeBurnOptions *) g_malloc (sizeof (DodgeBurnOptions));
+  options = g_new (DodgeBurnOptions, 1);
   paint_options_init ((PaintOptions *) options,
 		      DODGEBURN,
 		      dodgeburn_options_reset);
@@ -161,31 +151,42 @@ dodgeburn_options_new (void)
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
 
   gtk_signal_connect (GTK_OBJECT (options->exposure_w), "value_changed",
-		      (GtkSignalFunc) tool_options_double_adjustment_update,
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &options->exposure);
 
   gtk_widget_show (scale);
   gtk_widget_show (hbox);
 
   /* the type (dodge or burn) */
-  frame = tool_options_radio_buttons_new (_("Type"), 
-					  &options->type,
-					   options->type_w,
-					   type_label,
-					   type_value,
-					   2);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w[options->type_d]), TRUE);
+  frame = gimp_radio_group_new2 (TRUE, _("Type"),
+				 gimp_radio_button_update,
+				 &options->type, (gpointer) options->type,
+
+				 _("Dodge"), (gpointer) DODGE,
+				 &options->type_w[0],
+				 _("Burn"), (gpointer) BURN,
+				 &options->type_w[1],
+
+				 NULL);
+
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   /*  mode (highlights, midtones, or shadows)  */
-  frame = tool_options_radio_buttons_new (_("Mode"), 
-					  &options->mode,
-					   options->mode_w,
-					   mode_label,
-					   mode_value,
-					   3);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->mode_w[options->mode_d]), TRUE); 
+  frame =
+    gimp_radio_group_new2 (TRUE, _("Mode"),
+			   gimp_radio_button_update,
+			   &options->mode, (gpointer) options->mode,
+
+			   _("Highlights"), (gpointer) DODGEBURN_HIGHLIGHTS, 
+			   &options->mode_w[0],
+			   _("Midtones"), (gpointer) DODGEBURN_MIDTONES,
+			   &options->mode_w[1],
+			   _("Shadows"), (gpointer) DODGEBURN_SHADOWS,
+			   &options->mode_w[2],
+
+			   NULL);
+
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 

@@ -34,7 +34,6 @@
 #include "interface.h"
 #include "paint_options.h"
 #include "selection.h"
-#include "tool_options_ui.h"
 #include "tools.h"
 #include "undo.h"
 
@@ -46,35 +45,37 @@
 
 
 /*  target size  */
-#define  TARGET_HEIGHT  15
-#define  TARGET_WIDTH   15
+#define  TARGET_HEIGHT    15
+#define  TARGET_WIDTH     15
 
 #define  STATUSBAR_SIZE  128
 
 /*  the blend structures  */
 
-typedef double (*RepeatFunc)(double);
+typedef gdouble (* RepeatFunc) (gdouble);
 
 typedef struct _BlendTool BlendTool;
+
 struct _BlendTool
 {
-  DrawCore * core;        /*  Core select object   */
+  DrawCore *core;        /*  Core select object   */
 
-  int        startx;      /*  starting x coord     */
-  int        starty;      /*  starting y coord     */
+  gint      startx;      /*  starting x coord     */
+  gint      starty;      /*  starting y coord     */
 
-  int        endx;        /*  ending x coord       */
-  int        endy;        /*  ending y coord       */
-  guint      context_id;  /*  for the statusbar    */
+  gint      endx;        /*  ending x coord       */
+  gint      endy;        /*  ending y coord       */
+  guint     context_id;  /*  for the statusbar    */
 };
 
 typedef struct _BlendOptions BlendOptions;
+
 struct _BlendOptions
 {
   PaintOptions  paint_options;
 
-  double        offset;
-  double        offset_d;
+  gdouble       offset;
+  gdouble       offset_d;
   GtkObject    *offset_w;
 
   BlendMode     blend_mode;
@@ -89,37 +90,37 @@ struct _BlendOptions
   RepeatMode    repeat_d;
   GtkWidget    *repeat_w;
 
-  int           supersample;
-  int           supersample_d;
+  gint          supersample;
+  gint          supersample_d;
   GtkWidget    *supersample_w;
 
-  int           max_depth;
-  int           max_depth_d;
+  gint          max_depth;
+  gint          max_depth_d;
   GtkObject    *max_depth_w;
 
-  double        threshold;
-  double        threshold_d;
+  gdouble       threshold;
+  gdouble       threshold_d;
   GtkObject    *threshold_w;
 };
 
 typedef struct
 {
-  double       offset;
-  double       sx, sy;
+  gdouble      offset;
+  gdouble      sx, sy;
   BlendMode    blend_mode;
   GradientType gradient_type;
   color_t      fg, bg;
-  double       dist;
-  double       vec[2];
+  gdouble      dist;
+  gdouble      vec[2];
   RepeatFunc   repeat_func;
 } RenderBlendData;
 
 typedef struct
 {
-  PixelRegion   *PR;
-  unsigned char *row_data;
-  int            bytes;
-  int            width;
+  PixelRegion *PR;
+  guchar      *row_data;
+  gint         bytes;
+  gint         width;
 } PutPixelData;
 
 
@@ -302,7 +303,7 @@ blend_options_new ()
   };
 
   /*  the new blend tool options structure  */
-  options = (BlendOptions *) g_malloc (sizeof (BlendOptions));
+  options = g_new (BlendOptions, 1);
   paint_options_init ((PaintOptions *) options,
 		      BLEND,
 		      blend_options_reset);
@@ -333,7 +334,7 @@ blend_options_new ()
 			     _("Offset:"), 1.0, 1.0,
 			     scale, FALSE);
   gtk_signal_connect (GTK_OBJECT (options->offset_w), "value_changed",
-		      (GtkSignalFunc) tool_options_double_adjustment_update,
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &options->offset);
 
   /*  the blend mode menu  */
@@ -380,7 +381,7 @@ blend_options_new ()
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->supersample_w),
 				options->supersample_d);
   gtk_signal_connect (GTK_OBJECT (options->supersample_w), "toggled",
-		      (GtkSignalFunc) tool_options_toggle_update,
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &options->supersample);
   gtk_box_pack_start (GTK_BOX (vbox), options->supersample_w, FALSE, FALSE, 0);
   gtk_widget_show (options->supersample_w);
@@ -407,7 +408,7 @@ blend_options_new ()
 			     _("Max Depth:"), 1.0, 1.0,
 			     scale, FALSE);
   gtk_signal_connect (GTK_OBJECT(options->max_depth_w), "value_changed",
-		      (GtkSignalFunc) tool_options_int_adjustment_update,
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &options->max_depth);
 
   /*  threshold scale  */
@@ -420,7 +421,7 @@ blend_options_new ()
 			     _("Threshold:"), 1.0, 1.0,
 			     scale, FALSE);
   gtk_signal_connect (GTK_OBJECT(options->threshold_w), "value_changed",
-		      (GtkSignalFunc) tool_options_double_adjustment_update,
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &options->threshold);
 
   /*  show the table  */

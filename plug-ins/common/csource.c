@@ -26,16 +26,17 @@
 #include <gtk/gtk.h>
 
 
-typedef struct {
-  gchar   *file_name;
-  gchar   *prefixed_name;
-  gchar   *comment;
-  gboolean use_comment;
-  gboolean glib_types;
-  gboolean alpha;
-  gboolean use_macros;
-  gboolean use_rle;
-  gdouble  opacity;
+typedef struct
+{
+  gchar    *file_name;
+  gchar    *prefixed_name;
+  gchar    *comment;
+  gboolean  use_comment;
+  gboolean  glib_types;
+  gboolean  alpha;
+  gboolean  use_macros;
+  gboolean  use_rle;
+  gdouble   opacity;
 } Config;
 
 
@@ -46,6 +47,7 @@ static void	run		(gchar		*name,
 				 GParam		*param,
 				 gint		*nreturn_vals,
 				 GParam	       **return_vals);
+
 static gint	save_image	(Config		*config,
 				 gint32		 image_ID,
 				 gint32		 drawable_ID);
@@ -55,10 +57,10 @@ static gboolean	run_save_dialog	(Config         *config);
 /* --- variables --- */
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init  */
+  NULL,  /* quit  */
+  query, /* query */
+  run,   /* run   */
 };
 
 /* --- implement main (), provided by libgimp --- */
@@ -164,8 +166,6 @@ run (gchar   *name,
 	    }
 
 	  *nreturn_vals = 1;
-
-	  
 
 	  export = gimp_export_image (&image_ID, &drawable_ID, "C Source", 
 				      (CAN_HANDLE_RGB | CAN_HANDLE_ALPHA));
@@ -591,13 +591,28 @@ cb_set_true (gboolean *bool_p)
 static gboolean
 run_save_dialog	(Config *config)
 {
-  GtkWidget *dialog, *vbox, *hbox, *button;
-  GtkWidget *prefixed_name, *centry, *alpha, *use_macros, *use_rle, *gtype, *use_comment, *any;
+  GtkWidget *dialog;
+  GtkWidget *vbox;
+  GtkWidget *hbox;
+  GtkWidget *button;
+  GtkWidget *prefixed_name;
+  GtkWidget *centry;
+  GtkWidget *alpha;
+  GtkWidget *use_macros;
+  GtkWidget *use_rle;
+  GtkWidget *gtype;
+  GtkWidget *use_comment;
+  GtkWidget *any;
   GtkObject *opacity;
   gboolean do_save = FALSE;
-  
-  gtk_init (NULL, NULL);
-  g_set_prgname ("Save");
+  gchar **argv;
+  gint    argc;
+
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
+  argv[0] = g_strdup ("csource");
+
+  gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
   
   dialog = gimp_dialog_new ("Save as C-Source", "csource",
@@ -620,11 +635,10 @@ run_save_dialog	(Config *config)
 			     GTK_SIGNAL_FUNC (gtk_widget_destroy),
 			     GTK_OBJECT (dialog));
 
-  vbox = GTK_DIALOG (dialog)->vbox;
-  gtk_widget_set (vbox,
-		  "border_width", 5,
-		  "spacing", 5,
-		  NULL);
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
+  gtk_widget_show (vbox);
 
   /* Prefixed Name
    */

@@ -5,10 +5,6 @@ libexecdir = $(gimpplugindir)/plug-ins
 libexec_PROGRAMS = unsharp
 
 unsharp_SOURCES = \
-	dialog_f.h	\
-	dialog_f.c	\
-	dialog_i.h	\
-	dialog_i.c	\
 	unsharp.c
 
 AM_CPPFLAGS = \
@@ -20,6 +16,7 @@ INCLUDES = \
 	-I$(includedir)
 
 LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)

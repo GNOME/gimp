@@ -29,13 +29,13 @@
 #include "paintbrush.h"
 #include "pencil.h"
 #include "selection.h"
-#include "tool_options_ui.h"
 #include "tools.h"
 
 #include "libgimp/gimpintl.h"
 
 /*  the pencil tool options  */
 typedef struct _PencilOptions PencilOptions;
+
 struct _PencilOptions
 {
   PaintOptions  paint_options;
@@ -61,19 +61,19 @@ pencil_paint_func (PaintCore    *paint_core,
 {
   switch (state)
     {
-    case INIT_PAINT :
+    case INIT_PAINT:
       break;
 
-    case MOTION_PAINT :
+    case MOTION_PAINT:
       pencil_motion (paint_core, drawable, 
 		     pencil_options->paint_options.pressure_options, 
 		     pencil_options->paint_options.incremental);
       break;
 
-    case FINISH_PAINT :
+    case FINISH_PAINT:
       break;
 
-    default :
+    default:
       break;
     }
 
@@ -85,10 +85,11 @@ pencil_options_new (void)
 {
   PencilOptions *options;
 
-  options = (PencilOptions *) g_malloc (sizeof (PencilOptions));  
+  options = g_new (PencilOptions, 1);
   paint_options_init ((PaintOptions *) options,
 		      PENCIL,
 		      pencil_options_reset);
+
   return options;
 }
 
