@@ -65,16 +65,14 @@ floating_sel_attach (GimpLayer    *layer,
 
   /*  set the drawable and allocate a backing store  */
   gimp_layer_set_preserve_trans (layer, TRUE, FALSE);
-  layer->fs.drawable = drawable;
-  layer->fs.backing_store =
-    tile_manager_new (GIMP_ITEM (layer)->width,
-		      GIMP_ITEM (layer)->height,
-		      gimp_drawable_bytes (drawable));
+  layer->fs.drawable      = drawable;
+  layer->fs.backing_store = tile_manager_new (GIMP_ITEM (layer)->width,
+                                              GIMP_ITEM (layer)->height,
+                                              gimp_drawable_bytes (drawable));
 
-  /*  because setting the sensitivity in the layers_dialog lock call
-   *  redraws the previews, we need to lock the dialogs before the
-   *  floating sel is actually added.  however, they won't lock unless
-   *  we set the gimage's floating sel pointer
+  /*  Set gimage->floating_sel *before* adding the floating layer to
+   *  the image so views can recognize the newly added floating layer
+   *  and treat it accordingly.
    */
   gimage->floating_sel = layer;
 

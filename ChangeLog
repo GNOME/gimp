@@ -1,5 +1,10 @@
 2003-12-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimplayer-floating-sel.c (floating_sel_attach): changed
+	absolutely unclear comment.
+
+2003-12-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimptoolbox-dnd.c (gimp_toolbox_drop_drawable): use
 	gimp_item_convert() instead of gimp_item_duplicate() to create
 	the layer for the new image. Cleanup.
