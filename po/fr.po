@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
-"POT-Creation-Date: 1999-01-17 08:11+0100\n"
+"POT-Creation-Date: 1999-01-18 14:40+0100\n"
 "PO-Revision-Date: 1998-11-07 18:15+0100\n"
 "Last-Translator: Vincent Renardias <vincent@ldsol.com>\n"
 "Language-Team: Vincent Renardias <vincent@ldsol.com>\n"
@@ -110,7 +110,7 @@ msgstr "Non"
 
 #: app/app_procs.c:709
 msgid "Some files unsaved.  Quit the GIMP?"
-msgstr "Certains fichiers n'ont pas été sauvés. Quitter Le GIMP?"
+msgstr "Certains fichiers n'ont pas été sauvés. Quitter The GIMP?"
 
 #: app/batch.c:35
 msgid "script-fu not available: batch mode disabled\n"
@@ -352,7 +352,7 @@ msgid "Max depth:"
 msgstr "Profondeur maximale:"
 
 #. threshold scale
-#: app/blend.c:520
+#: app/blend.c:520 plug-ins/wind/wind.c:884
 msgid "Threshold:"
 msgstr "Réactivité:"
 
@@ -423,11 +423,12 @@ msgstr "Luminosité-Contraste ne peux opérer sur des images indexées."
 #: app/color_balance.c:354 app/color_notebook.c:41 app/color_notebook.c:182
 #: app/color_select.c:153 app/color_select.c:208 app/commands.c:765
 #: app/commands.c:812 app/convert.c:283 app/curves.c:320
-#: app/file_new_dialog.c:496 app/hue_saturation.c:412 app/interface.c:830
-#: app/interface.c:963 app/layers_dialog.c:3135 app/layers_dialog.c:3334
-#: app/layers_dialog.c:3474 app/layers_dialog.c:3742 app/layers_dialog.c:3863
-#: app/layers_dialog.c:3994 app/levels.c:505 app/posterize.c:276
-#: app/preferences_dialog.c:867 app/threshold.c:377
+#: app/file_new_dialog.c:496 app/hue_saturation.c:412 app/interface.c:831
+#: app/interface.c:964 app/layers_dialog.c:3136 app/layers_dialog.c:3337
+#: app/layers_dialog.c:3478 app/layers_dialog.c:3746 app/layers_dialog.c:3867
+#: app/layers_dialog.c:3998 app/levels.c:505 app/posterize.c:276
+#: app/preferences_dialog.c:867 app/threshold.c:377 plug-ins/wind/wind.c:676
+#: plug-ins/wind/wind.c:838
 msgid "OK"
 msgstr "OK"
 
@@ -438,11 +439,12 @@ msgstr "OK"
 #: app/commands.c:813 app/convert.c:284 app/curves.c:321
 #: app/file_new_dialog.c:506 app/gdisplay_ops.c:353 app/gimpprogress.c:135
 #: app/global_edit.c:593 app/gradient.c:1490 app/gradient.c:4569
-#: app/gradient.c:4924 app/hue_saturation.c:413 app/interface.c:739
-#: app/interface.c:839 app/layers_dialog.c:3136 app/layers_dialog.c:3335
-#: app/layers_dialog.c:3475 app/layers_dialog.c:3621 app/layers_dialog.c:3743
-#: app/layers_dialog.c:3864 app/layers_dialog.c:3995 app/levels.c:506
+#: app/gradient.c:4924 app/hue_saturation.c:413 app/interface.c:740
+#: app/interface.c:840 app/layers_dialog.c:3137 app/layers_dialog.c:3338
+#: app/layers_dialog.c:3479 app/layers_dialog.c:3625 app/layers_dialog.c:3747
+#: app/layers_dialog.c:3868 app/layers_dialog.c:3999 app/levels.c:506
 #: app/posterize.c:277 app/preferences_dialog.c:887 app/threshold.c:378
+#: plug-ins/wind/wind.c:847
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -718,11 +720,11 @@ msgid "Fill Options"
 msgstr "Options du remplissage"
 
 #: app/channel_ops.c:173 app/file_new_dialog.c:128 app/file_new_dialog.c:742
-#: app/layers_dialog.c:3151
+#: app/layers_dialog.c:3152
 msgid "Background"
 msgstr "Fond"
 
-#: app/channel_ops.c:184 app/file_new_dialog.c:764 app/layers_dialog.c:3153
+#: app/channel_ops.c:184 app/file_new_dialog.c:764 app/layers_dialog.c:3154
 msgid "Transparent"
 msgstr "Transparent"
 
@@ -1355,11 +1357,11 @@ msgstr "Niveaux de gris"
 msgid "Fill Type"
 msgstr "Type de Remplissage"
 
-#: app/file_new_dialog.c:731 app/layers_dialog.c:3150
+#: app/file_new_dialog.c:731 app/layers_dialog.c:3151
 msgid "Foreground"
 msgstr "Avant-Plan"
 
-#: app/file_new_dialog.c:753 app/layers_dialog.c:3152
+#: app/file_new_dialog.c:753 app/layers_dialog.c:3153
 msgid "White"
 msgstr "Blanc"
 
@@ -1505,197 +1507,184 @@ msgstr "indexé-vide"
 msgid "indexed"
 msgstr "indexé"
 
-#: app/gdisplay.c:214 app/gdisplay.c:1897
-#, c-format
-msgid "Deleted idlerendering gdisp %p...\n"
-msgstr ""
-
-#: app/gdisplay.c:215 app/gdisplay.c:1898
-msgid "\tIdlerender stops now!\n"
-msgstr ""
-
-#: app/gdisplay.c:218 app/gdisplay.c:1901
-msgid "\tDeletion finished.\n"
-msgstr "\tEffacement terminé.\n"
-
-#: app/gdisplay.c:447
+#: app/gdisplay.c:443
 msgid "Wanted to start idlerender thread with no update_areas. (+memleak)"
 msgstr ""
 
-#: app/gdisplay.c:1393
+#: app/gdisplay.c:1408
 msgid "<Image>/Layers/Raise Layer"
 msgstr "<Image>/Calques/Elever Calque"
 
-#: app/gdisplay.c:1394
+#: app/gdisplay.c:1409
 msgid "<Image>/Layers/Lower Layer"
 msgstr "<Image>/Calques/Abaisser Calque"
 
-#: app/gdisplay.c:1395
+#: app/gdisplay.c:1410
 msgid "<Image>/Layers/Anchor Layer"
 msgstr "<Image>/Calques/Ancrer Calque"
 
-#: app/gdisplay.c:1396
+#: app/gdisplay.c:1411
 msgid "<Image>/Layers/Merge Visible Layers"
 msgstr "<Image>/Calques/Fusionner les Calques Visibles"
 
-#: app/gdisplay.c:1397
+#: app/gdisplay.c:1412
 msgid "<Image>/Layers/Flatten Image"
 msgstr "<Image>/Calques/Applatir Image"
 
-#: app/gdisplay.c:1398
+#: app/gdisplay.c:1413
 msgid "<Image>/Layers/Alpha To Selection"
 msgstr "<Image>/Calques/Alpha To Selection"
 
-#: app/gdisplay.c:1399
+#: app/gdisplay.c:1414
 msgid "<Image>/Layers/Mask To Selection"
 msgstr "<Image>/Calques/Mask To Selection"
 
-#: app/gdisplay.c:1400
+#: app/gdisplay.c:1415
 msgid "<Image>/Layers/Add Alpha Channel"
-msgstr "<Image/Calques/Ajouter Canal Alpha"
+msgstr "<Image>/Calques/Ajouter Canal Alpha"
 
-#: app/gdisplay.c:1402
+#: app/gdisplay.c:1417
 msgid "<Image>/Image/RGB"
 msgstr "<Image>/Image/RVB"
 
-#: app/gdisplay.c:1403
+#: app/gdisplay.c:1418
 msgid "<Image>/Image/Grayscale"
 msgstr "<Image>/Image/Niveaux de gris"
 
-#: app/gdisplay.c:1404
+#: app/gdisplay.c:1419
 msgid "<Image>/Image/Indexed"
 msgstr "<Image>/Image/Indéxée"
 
-#: app/gdisplay.c:1406
+#: app/gdisplay.c:1421
 msgid "<Image>/Image/Colors/Threshold"
 msgstr "<Image>/Image/Couleurs/Threshold"
 
-#: app/gdisplay.c:1407
+#: app/gdisplay.c:1422
 msgid "<Image>/Image/Colors/Posterize"
 msgstr "<Image>/Image/Couleurs/Postériser"
 
-#: app/gdisplay.c:1408
+#: app/gdisplay.c:1423
 msgid "<Image>/Image/Colors/Equalize"
 msgstr "<Image>/Image/Couleurs/Egaliser"
 
-#: app/gdisplay.c:1409
+#: app/gdisplay.c:1424
 msgid "<Image>/Image/Colors/Invert"
 msgstr "<Image>/Image/Couleurs/Inverser"
 
-#: app/gdisplay.c:1411
+#: app/gdisplay.c:1426
 msgid "<Image>/Image/Colors/Color Balance"
 msgstr "<Image>/Image/Couleurs/Balance des couleurs"
 
-#: app/gdisplay.c:1412
+#: app/gdisplay.c:1427
 msgid "<Image>/Image/Colors/Brightness-Contrast"
 msgstr "<Image>/Image/Couleurs/Luminosité-Contraste"
 
-#: app/gdisplay.c:1413
+#: app/gdisplay.c:1428
 msgid "<Image>/Image/Colors/Hue-Saturation"
 msgstr "<Image>/Image/Couleurs/Teinte-Saturation"
 
-#: app/gdisplay.c:1414
+#: app/gdisplay.c:1429
 msgid "<Image>/Image/Colors/Curves"
 msgstr "<Image>/Image/Couleurs/Courbes"
 
-#: app/gdisplay.c:1415
+#: app/gdisplay.c:1430
 msgid "<Image>/Image/Colors/Levels"
 msgstr "<Image>/Image/Couleurs/Niveaux"
 
-#: app/gdisplay.c:1417
+#: app/gdisplay.c:1432
 msgid "<Image>/Image/Colors/Desaturate"
 msgstr "<Image>/Image/Couleurs/Désaturer"
 
-#: app/gdisplay.c:1419
+#: app/gdisplay.c:1434
 msgid "<Image>/Image/Alpha/Add Alpha Channel"
 msgstr "<Image>/Image/Alpha/Ajouter Canal Alpha"
 
-#: app/gdisplay.c:1421
+#: app/gdisplay.c:1436
 msgid "<Image>/Select"
 msgstr "<Image>/Sélection"
 
-#: app/gdisplay.c:1422
+#: app/gdisplay.c:1437
 msgid "<Image>/Edit/Cut"
 msgstr "<Image>/Edition/Couper"
 
-#: app/gdisplay.c:1423
+#: app/gdisplay.c:1438
 msgid "<Image>/Edit/Copy"
 msgstr "<Image>/Edition/Copier"
 
-#: app/gdisplay.c:1424
+#: app/gdisplay.c:1439
 msgid "<Image>/Edit/Paste"
 msgstr "<Image>/Edition/Coller"
 
-#: app/gdisplay.c:1425
+#: app/gdisplay.c:1440
 msgid "<Image>/Edit/Paste Into"
 msgstr "<Image>/Edition/Coller dans"
 
-#: app/gdisplay.c:1426
+#: app/gdisplay.c:1441
 msgid "<Image>/Edit/Clear"
 msgstr "<Image>/Edition/Effacer"
 
-#: app/gdisplay.c:1427
+#: app/gdisplay.c:1442
 msgid "<Image>/Edit/Fill"
 msgstr "<Image>/Edition/Remplir"
 
-#: app/gdisplay.c:1428
+#: app/gdisplay.c:1443
 msgid "<Image>/Edit/Stroke"
 msgstr "<Image>/Edition/Stroke"
 
-#: app/gdisplay.c:1429
+#: app/gdisplay.c:1444
 msgid "<Image>/Edit/Cut Named"
 msgstr "<Image>/Edition/Cut Named"
 
-#: app/gdisplay.c:1430
+#: app/gdisplay.c:1445
 msgid "<Image>/Edit/Copy Named"
 msgstr "<Image>/Edition/Copy Named"
 
-#: app/gdisplay.c:1431
+#: app/gdisplay.c:1446
 msgid "<Image>/Edit/Paste Named"
 msgstr "<Image>/Edition/Paste Named"
 
-#: app/gdisplay.c:1432
+#: app/gdisplay.c:1447
 msgid "<Image>/Image/Colors"
 msgstr "<Image>/Image/Couleurs"
 
-#: app/gdisplay.c:1433
+#: app/gdisplay.c:1448
 msgid "<Image>/Image/Channel Ops/Offset"
 msgstr "<Image>/Image/Channel Ops/Décalage"
 
-#: app/gdisplay.c:1434
+#: app/gdisplay.c:1449
 msgid "<Image>/Image/Histogram"
 msgstr "<Image>/Image/Histogramme"
 
-#: app/gdisplay.c:1435
+#: app/gdisplay.c:1450
 msgid "<Image>/Filters"
 msgstr "<Image>/Filtres"
 
 #. save selection to channel
-#: app/gdisplay.c:1438
+#: app/gdisplay.c:1453
 msgid "<Image>/Select/Save To Channel"
 msgstr "<Image>/Sélection/Enregistrer dans le canal"
 
-#: app/gdisplay.c:1440
+#: app/gdisplay.c:1455
 msgid "<Image>/View/Toggle Rulers"
 msgstr "<Image>/Vue/Toggle Rulers"
 
-#: app/gdisplay.c:1441
+#: app/gdisplay.c:1456
 msgid "<Image>/View/Toggle Guides"
 msgstr "<Image>/Vue/Toggle Guides"
 
-#: app/gdisplay.c:1442
+#: app/gdisplay.c:1457
 msgid "<Image>/View/Snap To Guides"
 msgstr "<Image>/Vue/Snap To Guides"
 
-#: app/gdisplay.c:1443
+#: app/gdisplay.c:1458
 msgid "<Image>/View/Toggle Statusbar"
 msgstr "<Image>/Vue/Toggle Statusbar"
 
-#: app/gdisplay.c:1444
+#: app/gdisplay.c:1459
 msgid "<Image>/View/Dot for dot"
 msgstr "<Image>/Vue/Point par point"
 
-#: app/gdisplay.c:1850
+#: app/gdisplay.c:1863
 msgid "gdisplays_flush() called recursively."
 msgstr "gdisplays_flush() appelé récursivement."
 
@@ -1778,45 +1767,45 @@ msgstr "sansnom"
 msgid "Layer type %d not supported."
 msgstr "Type de calque %d non supporté."
 
-#: app/gimpimage.c:550 app/gimpimage.c:644
+#: app/gimpimage.c:572 app/gimpimage.c:666
 msgid "gimp_image_apply_image sent illegal parameters"
 msgstr "gimp_image_apply_image a envoyé des paramétres illégaux"
 
-#: app/gimpimage.c:934
+#: app/gimpimage.c:956
 msgid "Tattoo state has become corrupt (2.1 billion operation limit exceded)"
 msgstr ""
 
-#: app/gimpimage.c:986
+#: app/gimpimage.c:1009
 msgid "Unable to project indexed image."
 msgstr "Impossible de projeter une image indexée."
 
-#: app/gimpimage.c:1748
+#: app/gimpimage.c:1775
 msgid "Layer cannot be raised any further"
 msgstr "Impossible d'élever encore ce calque"
 
-#: app/gimpimage.c:1820
+#: app/gimpimage.c:1849
 msgid "Layer cannot be lowered any further"
 msgstr "Impossible d'abaisser encore ce calque"
 
 #. layer_arg is already the top_layer
-#: app/gimpimage.c:1849
+#: app/gimpimage.c:1878
 msgid "Layer is already on top"
 msgstr "Calque déjà en haut"
 
-#: app/gimpimage.c:1854
+#: app/gimpimage.c:1883
 msgid "Can't raise Layer without alpha"
 msgstr "Impossible d'élever un Calque sans alpha"
 
 #. there is no next layer below layer_arg
-#: app/gimpimage.c:1946
+#: app/gimpimage.c:1977
 msgid "Layer is already on bottom"
 msgstr "Calque déjà en bas"
 
-#: app/gimpimage.c:1959
+#: app/gimpimage.c:1990
 msgid "BG has no alpha, layer was placed above"
 msgstr "Fond sans alpha, calque placé par dessus"
 
-#: app/gimpimage.c:2018
+#: app/gimpimage.c:2052
 msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
@@ -1824,30 +1813,30 @@ msgstr ""
 "Il n'y a pas assez de calques visibles pour une\n"
 "fusion. Il en faut au moins deux."
 
-#: app/gimpimage.c:2096
+#: app/gimpimage.c:2130
 msgid "There are not enough visible layers for a merge down."
 msgstr ""
 
-#: app/gimpimage.c:2207 app/gimpimage.c:2240
+#: app/gimpimage.c:2241 app/gimpimage.c:2274
 msgid "gimp_image_merge_layers: could not allocate merge layer"
 msgstr "gimp_image_merge_layers: impossible d'alouer le calque pour la fusion"
 
-#: app/gimpimage.c:2279
+#: app/gimpimage.c:2313
 msgid "gimp_image_merge_layers attempting to merge incompatible layers\n"
 msgstr ""
 "gimp_image_merge_layers a tenté de fusionner des calques incompatibles\n"
 
-#: app/gimpimage.c:2359
+#: app/gimpimage.c:2393
 msgid "gimp_image_add_layer: attempt to add layer to wrong image"
 msgstr ""
 "gimp_image_add_layer: tentative d'ajouter un calque à la mauvaise image"
 
-#: app/gimpimage.c:2369
+#: app/gimpimage.c:2403
 msgid "gimp_image_add_layer: trying to add layer to image twice"
 msgstr ""
 "gimp_image_add_layer: tentative d'ajouter un calque deux fois à la même image"
 
-#: app/gimpimage.c:2482
+#: app/gimpimage.c:2516
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
@@ -1855,7 +1844,7 @@ msgstr ""
 "Impossible d'ajouter un masque au\n"
 "calque car il en a déjà un."
 
-#: app/gimpimage.c:2486
+#: app/gimpimage.c:2520
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
@@ -1863,7 +1852,7 @@ msgstr ""
 "Impossible d'ajouter un masque\n"
 "au calque dans une image indexée."
 
-#: app/gimpimage.c:2490
+#: app/gimpimage.c:2524
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
@@ -1871,31 +1860,31 @@ msgstr ""
 "Impossible d'ajouter un masque\n"
 "dans un calque sans canal alpha."
 
-#: app/gimpimage.c:2494
+#: app/gimpimage.c:2528
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Impossible d'ajouter un masque de calque de dimensions différente que le "
 "calque spécifié."
 
-#: app/gimpimage.c:2598
+#: app/gimpimage.c:2632
 msgid "Channel cannot be raised any further"
 msgstr "Le canal ne peux pas être élevé plus"
 
-#: app/gimpimage.c:2645
+#: app/gimpimage.c:2679
 msgid "Channel cannot be lowered any further"
 msgstr "Le canal ne peux pas être abaissé plus"
 
-#: app/gimpimage.c:2665
+#: app/gimpimage.c:2699
 msgid "gimp_image_add_channel: attempt to add channel to wrong image"
 msgstr ""
 "gimp_image_add_channel: tentative d'ajouter un canal à la mauvaise image"
 
-#: app/gimpimage.c:2675
+#: app/gimpimage.c:2709
 msgid "gimp_image_add_channel: trying to add channel to image twice"
 msgstr ""
 "gimp_image_add_channel: tentative d'ajouter un canal à l'image deux fois"
 
-#: app/gimpimage.c:2801 app/palette.c:514 app/palette.c:539 app/palette.c:1197
+#: app/gimpimage.c:2835 app/palette.c:514 app/palette.c:539 app/palette.c:1197
 #: app/palette.c:1201 app/palette.c:2568 app/palette.c:3246
 msgid "Untitled"
 msgstr "SansTitre"
@@ -3015,17 +3004,17 @@ msgstr ""
 "\n"
 "Echec de l'installation. Contactez votre administrateur système.\n"
 
-#: app/interface.c:229
+#: app/interface.c:230
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to select a color from a colorrequester."
 msgstr ""
 
-#: app/interface.c:448
+#: app/interface.c:449
 msgid "The GIMP"
-msgstr "Le GIMP"
+msgstr "The GIMP"
 
-#: app/interface.c:956
+#: app/interface.c:957
 msgid "GIMP Message"
 msgstr "Message GIMP"
 
@@ -3067,18 +3056,16 @@ msgid "Drawable procedures"
 msgstr "Procédure GIMP interne"
 
 #: app/internal_procs.c:308
-#, fuzzy
 msgid "Floating selections"
-msgstr "Sélection"
+msgstr "Sélections flottantes"
 
 #: app/internal_procs.c:319
 msgid "Undo"
 msgstr "Défaire"
 
 #: app/internal_procs.c:326 app/palette.c:2389 app/palette_select.c:272
-#, fuzzy
 msgid "Palette"
-msgstr "Nouvelle Image"
+msgstr "Palette"
 
 #: app/internal_procs.c:338
 #, fuzzy
@@ -3144,15 +3131,13 @@ msgid "Edge Detect Threshold: "
 msgstr ""
 
 #: app/iscissors.c:409
-#, fuzzy
 msgid "Elasticity: "
-msgstr "Opacité:"
+msgstr "Elasticité: "
 
 #. the convert to bezier button
 #: app/iscissors.c:427
-#, fuzzy
 msgid "Convert to Bezier Curve"
-msgstr "Charger des courbes de Bezier"
+msgstr "Convertir en courbe de Bezier"
 
 #: app/iscissors.c:957
 msgid "Unable to reallocate segment array in iscissors."
@@ -3192,7 +3177,7 @@ msgstr "Sélection de Calque"
 msgid "Layer"
 msgstr "Calque"
 
-#: app/layers_dialog.c:224 app/layers_dialog.c:287 app/layers_dialog.c:3198
+#: app/layers_dialog.c:224 app/layers_dialog.c:287 app/layers_dialog.c:3199
 msgid "New Layer"
 msgstr "Nouveau Calque"
 
@@ -3209,18 +3194,16 @@ msgid "Duplicate Layer"
 msgstr "Duplique Calque"
 
 #: app/layers_dialog.c:232 app/layers_dialog.c:291
-#, fuzzy
 msgid "Delete Layer"
-msgstr "Effacer"
+msgstr "Effacer Calque"
 
-#: app/layers_dialog.c:234 app/layers_dialog.c:3758
+#: app/layers_dialog.c:234 app/layers_dialog.c:3762
 msgid "Scale Layer"
 msgstr ""
 
-#: app/layers_dialog.c:236 app/layers_dialog.c:3879
-#, fuzzy
+#: app/layers_dialog.c:236 app/layers_dialog.c:3883
 msgid "Resize Layer"
-msgstr "Redimensionner"
+msgstr "Redimensionner Calque"
 
 #: app/layers_dialog.c:238
 msgid "Add Layer Mask"
@@ -3293,112 +3276,110 @@ msgstr ""
 msgid "Unknown layer mode"
 msgstr "Mode de calque inconnu"
 
-#: app/layers_dialog.c:2120 app/layers_dialog.c:2942 app/layers_dialog.c:3371
+#: app/layers_dialog.c:2121 app/layers_dialog.c:2943 app/layers_dialog.c:3375
 msgid "Floating Selection"
 msgstr "Sélection Flottante"
 
-#: app/layers_dialog.c:3059
+#: app/layers_dialog.c:3060
 msgid "new_layer_query_ok_callback: could not allocate new layer"
 msgstr ""
 
-#: app/layers_dialog.c:3171
+#: app/layers_dialog.c:3172
 #, fuzzy
 msgid "New Layer Options"
 msgstr "Options d'enregistrement"
 
 #. the name entry hbox, label and entry
-#: app/layers_dialog.c:3188
+#: app/layers_dialog.c:3189
 msgid "Layer name:"
 msgstr "Nom du calque:"
 
-#: app/layers_dialog.c:3203
-#, fuzzy
+#: app/layers_dialog.c:3204
 msgid "Layer width: "
-msgstr "Nouvelle largeur:"
+msgstr "Largeur du Calque: "
 
-#: app/layers_dialog.c:3217
-#, fuzzy
+#: app/layers_dialog.c:3218
 msgid "Layer height: "
-msgstr "Nouvelle hauteur:"
+msgstr "Hauteur du Calque: "
 
 #. the radio frame and box
-#: app/layers_dialog.c:3232
+#: app/layers_dialog.c:3233
 msgid "Layer Fill Type"
 msgstr ""
 
-#: app/layers_dialog.c:3348
+#: app/layers_dialog.c:3352
 msgid "Edit Layer Attributes"
 msgstr "Editer les Attributs du Calque"
 
-#: app/layers_dialog.c:3364
+#: app/layers_dialog.c:3368
 msgid "Layer name: "
 msgstr "Nom du calque: "
 
-#: app/layers_dialog.c:3487
+#: app/layers_dialog.c:3491
 msgid "White (Full Opacity)"
 msgstr "Blanc (Opacité Complète)"
 
-#: app/layers_dialog.c:3488
+#: app/layers_dialog.c:3492
 msgid "Black (Full Transparency)"
 msgstr "Noir (Transparence Totale)"
 
-#: app/layers_dialog.c:3489
+#: app/layers_dialog.c:3493
 msgid "Layer's Alpha Channel"
 msgstr "Canal Alpha du Calque"
 
-#: app/layers_dialog.c:3506
+#: app/layers_dialog.c:3510
 msgid "Add Mask Options"
 msgstr "Options d'Ajout de masque"
 
 #. the name entry hbox, label and entry
-#: app/layers_dialog.c:3520
+#: app/layers_dialog.c:3524
 msgid "Initialize Layer Mask To:"
 msgstr "Initialiser le masque de calque à:"
 
-#: app/layers_dialog.c:3619
+#: app/layers_dialog.c:3623
 msgid "Apply"
 msgstr "Appliquer"
 
-#: app/layers_dialog.c:3620
+#: app/layers_dialog.c:3624
 msgid "Discard"
 msgstr "Jeter"
 
-#: app/layers_dialog.c:3634
+#: app/layers_dialog.c:3638
 #, fuzzy
 msgid "Layer Mask Options"
 msgstr "Options d'enregistrement"
 
 #. the name entry hbox, label and entry
-#: app/layers_dialog.c:3649
+#: app/layers_dialog.c:3653
 msgid "Apply layer mask?"
 msgstr "Appliquer le masque de calque?"
 
-#: app/layers_dialog.c:3712 app/layers_dialog.c:3833
+#: app/layers_dialog.c:3716 app/layers_dialog.c:3837
 msgid "Invalid width or height.  Both must be positive."
 msgstr "Hauteur ou largeur non Valide. Les deux doivent être positives."
 
-#: app/layers_dialog.c:4007
+#: app/layers_dialog.c:4011
 msgid "Expanded as necessary"
 msgstr ""
 
-#: app/layers_dialog.c:4008
+#: app/layers_dialog.c:4012
 msgid "Clipped to image"
 msgstr ""
 
-#: app/layers_dialog.c:4009
+#: app/layers_dialog.c:4013
 msgid "Clipped to bottom layer"
 msgstr ""
 
-#: app/layers_dialog.c:4027
+#: app/layers_dialog.c:4031
 #, fuzzy
 msgid "Layer Merge Options"
 msgstr "Options de la palette"
 
-#: app/layers_dialog.c:4042
+#: app/layers_dialog.c:4046
 msgid "Final, merged layer should be:"
 msgstr ""
 
-#: app/layers_dialog.c:4044
+#: app/layers_dialog.c:4048
 msgid "Final, anchored layer should be:"
 msgstr ""
 
@@ -3659,9 +3640,8 @@ msgid "/File/Save as"
 msgstr "/Fichier/Enregistrer sous"
 
 #: app/menus.c:79
-#, fuzzy
 msgid "/File/Revert"
-msgstr "/Fichier/Enregistrer"
+msgstr "/Fichier/Revert"
 
 #: app/menus.c:83
 msgid "/File/Close"
@@ -5552,6 +5532,111 @@ msgstr ""
 msgid "unable to read tile data from xcf file: %d ( %d ) bytes read"
 msgstr ""
 
+#: plug-ins/wind/wind.c:132
+msgid "Interactive, non-interactive"
+msgstr "Interactif, non-interactif"
+
+#: plug-ins/wind/wind.c:133
+msgid "Input image (unused)"
+msgstr "Image d'entrée (inutilisée)"
+
+#: plug-ins/wind/wind.c:134
+msgid "Input drawable"
+msgstr ""
+
+#: plug-ins/wind/wind.c:135
+msgid "Controls where blending will be done >= 0"
+msgstr ""
+
+#: plug-ins/wind/wind.c:136
+msgid "Left or Right: 0 or 1"
+msgstr "Gauche ou droite: 0 ou 1"
+
+#: plug-ins/wind/wind.c:137
+msgid "Controls the extent of the blending > 1"
+msgstr ""
+
+#: plug-ins/wind/wind.c:138
+msgid "WIND, BLAST"
+msgstr ""
+
+#: plug-ins/wind/wind.c:139
+msgid "LEADING, TRAILING, or BOTH"
+msgstr ""
+
+#: plug-ins/wind/wind.c:146 plug-ins/wind/wind.c:147
+msgid "Renders a wind effect."
+msgstr ""
+
+#: plug-ins/wind/wind.c:148 plug-ins/wind/wind.c:149
+msgid "Nigel Wetten"
+msgstr "Nigel Wetten"
+
+#: plug-ins/wind/wind.c:150
+msgid "1998"
+msgstr "1998"
+
+#: plug-ins/wind/wind.c:151
+msgid "<Image>/Filters/Distorts/Wind"
+msgstr ""
+
+#: plug-ins/wind/wind.c:242
+#, fuzzy
+msgid "Rendering Wind..."
+msgstr "Mélange en cours..."
+
+#: plug-ins/wind/wind.c:248
+#, fuzzy
+msgid "Rendering Blast..."
+msgstr "Mélange en cours..."
+
+#: plug-ins/wind/wind.c:665
+msgid "Ooops!"
+msgstr "Ooops!"
+
+#. ********************************************************
+#. radio buttons for choosing wind rendering algorithm
+#. *****************************************************
+#: plug-ins/wind/wind.c:972
+msgid "Style"
+msgstr "Style"
+
+#. *****************************************************
+#. radio buttons for choosing LEFT or RIGHT
+#. *************************************************
+#: plug-ins/wind/wind.c:1012
+msgid "Direction"
+msgstr "Direction"
+
+#: plug-ins/wind/wind.c:1022
+msgid "Left"
+msgstr "Gauche"
+
+#: plug-ins/wind/wind.c:1033
+msgid "Right"
+msgstr "Droite"
+
+#. ****************************************************
+#. radio buttons for choosing BOTH, LEADING, TRAILING
+#. **************************************************
+#: plug-ins/wind/wind.c:1050
+msgid "Edge affected"
+msgstr "Coté affecté"
+
+#: plug-ins/wind/wind.c:1060
+#, fuzzy
+msgid "Leading"
+msgstr "lecture de %s\n"
+
+#: plug-ins/wind/wind.c:1071
+#, fuzzy
+msgid "Trailing"
+msgstr "Traditionnel"
+
+#: plug-ins/wind/wind.c:1082
+msgid "Both"
+msgstr "Les Deux"
+
 #: app/regex.c:976
 msgid "Success"
 msgstr "Succés"
@@ -5640,6 +5725,9 @@ msgstr ") ou \\) sans correspondance"
 msgid "No previous regular expression"
 msgstr "Aucune expression régulière antèrieure"
 
+#~ msgid "\tDeletion finished.\n"
+#~ msgstr "\tEffacement terminé.\n"
+
 #~ msgid "/Tools/Default Colors"
 #~ msgstr "/Outils/Couleurs par défaut"
 
@@ -5675,9 +5763,6 @@ msgstr "Aucune expression régulière antèrieure"
 
 #~ msgid "Loads a file by extension"
 #~ msgstr "Charger un fichier par extension"
-
-#~ msgid "Interactive, non-interactive"
-#~ msgstr "Interactif, non-interactif"
 
 #~ msgid "The temp name."
 #~ msgstr "Le nom temporaire."
