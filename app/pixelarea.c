@@ -141,9 +141,6 @@ pixelarea_copy_row (
                     int width, 
                     int subsample
 		   )
-#define FIXME
-/* this doesn't work right for subsampling, and it's holding up
-   channel and layer previews */
 {
   guchar * pr_data = pixelrow_data (pr);
   int bytes = tag_bytes (pixelarea_tag (pa));
@@ -169,9 +166,9 @@ pixelarea_copy_row (
           for (b = 0; b < bytes; b++)
             pr_data[b] = area_data[b];
 
-          cur += subsample;
-          pr_data += bytes * subsample;
-          area_data += bytes * subsample;
+          cur ++;
+          pr_data += bytes;
+          area_data += bytes;
         }
 
       remainder = cur - portion_width;
@@ -248,7 +245,7 @@ pixelarea_write_row (
       guchar *area_data = pixelarea_data (&area);
       int portion_width = pixelarea_width (&area);  
       memcpy(area_data, pr_data, tag_bytes (pa_tag) * portion_width);
-      pr_data += portion_width;
+      pr_data += portion_width * tag_bytes (pa_tag);
     }
 }
 

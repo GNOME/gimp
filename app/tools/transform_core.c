@@ -866,9 +866,9 @@ transform_core_recalc (tool, gdisp_ptr)
 		    dy  * ((1-dx)*jk1 + dx*j1k1))
 
 #define REF_TILE(i,x,y) \
-     tile[i] = tile_manager_get_tile (float_tiles, x, y, 0); \
-     tile_ref (tile[i]); \
-     src[i] = tile[i]->data + tile[i]->bpp * (tile[i]->ewidth * ((y) % TILE_HEIGHT) + ((x) % TILE_WIDTH));
+     tilex[i] = x; tiley[i] = y; \
+     canvas_portion_refro (float_tiles, x, y); \
+     src[i] = canvas_portion_data (float_tiles, x, y);
 
 static Canvas * 
 transform_core_do_u8  (
@@ -879,9 +879,8 @@ transform_core_do_u8  (
                        Matrix matrix
                        )
 {
-#define FIXME
-#if 0
   PixelArea destPR;
+  PixelRow destRow;
   Canvas *tiles;
   Matrix m;
   int itx, ity;
@@ -903,7 +902,8 @@ transform_core_do_u8  (
   unsigned char * dest, * d;
   unsigned char * src[16];
   double src_a[16][MAX_CHANNELS];
-  Tile *tile[16];
+  int tilex[16];
+  int tiley[16];
   int a[16];
   unsigned char bg_col[MAX_CHANNELS];
   int i;
@@ -913,8 +913,13 @@ transform_core_do_u8  (
   alpha = 0;
 
   /*  Get the background color  */
-  gimage_get_background (gimage, drawable, bg_col);
+  {
+    PixelRow color;
+    pixelrow_init (&color, drawable_tag (drawable), bg_col, 1);
+    palette_get_background (&color);
+  }
 
+  
   switch (tag_format (drawable_tag (drawable)))
     {
     case FORMAT_RGB:
@@ -936,10 +941,10 @@ transform_core_do_u8  (
   /*  Find the inverse of the transformation matrix  */
   invert (matrix, m);
 
-  x1 = float_tiles->x;
-  y1 = float_tiles->y;
-  x2 = x1 + float_tiles->levels[0].width;
-  y2 = y1 + float_tiles->levels[0].height;
+  x1 = canvas_fixme_getx (float_tiles);
+  y1 = canvas_fixme_gety (float_tiles);
+  x2 = x1 + canvas_width (float_tiles);
+  y2 = y1 + canvas_height (float_tiles);
 
   transform_point (matrix, x1, y1, &dx1, &dy1);
   transform_point (matrix, x2, y1, &dx2, &dy2);
@@ -961,17 +966,25 @@ transform_core_do_u8  (
   ty2 = MAXIMUM (ty2, dy4);
 
   /*  Get the new temporary buffer for the transformed result  */
-  tiles = tile_manager_new ((tx2 - tx1), (ty2 - ty1), float_tiles->levels[0].bpp);
-  pixelarea_init (&destPR, tiles, 0, 0, (tx2 - tx1), (ty2 - ty1), TRUE);
-  tiles->x = tx1;
-  tiles->y = ty1;
+  tiles = canvas_new (canvas_tag (float_tiles),
+                      (tx2 - tx1), (ty2 - ty1),
+                      STORAGE_TILED);
 
-  width = tiles->levels[0].width;
-  height = tiles->levels[0].height;
-  bytes = tiles->levels[0].bpp;
+  pixelarea_init (&destPR, tiles,
+                  0, 0,
+                  0, 0,
+                  TRUE);
+
+  canvas_fixme_setx (tiles, tx1);
+  canvas_fixme_sety (tiles, ty1);
+
+  width = canvas_width (tiles);
+  height = canvas_height (tiles);
+  bytes = canvas_bytes (tiles);
 
   dest = (unsigned char *) g_malloc (width * bytes);
-
+  pixelrow_init (&destRow, canvas_tag (tiles), dest, width);
+  
   xinc = m[0][0];
   yinc = m[1][0];
   winc = m[2][0];
@@ -1117,7 +1130,7 @@ transform_core_do_u8  (
 		      *d++ = a_val;
 
 		      for (b = 0; b < 16; b++)
-			tile_unref (tile[b], FALSE);
+			canvas_portion_unref (float_tiles, tilex[b], tiley[b]);
 		    }
 		  else  /*  linear  */
 		    {
@@ -1174,7 +1187,7 @@ transform_core_do_u8  (
 		      *d++ = a_val;
 
 		      for (b = 0; b < 4; b++)
-			tile_unref (tile[b], FALSE);
+			canvas_portion_unref (float_tiles, tilex[b], tiley[b]);
 		    }
 		}
 	      else  /*  no interpolation  */
@@ -1184,7 +1197,7 @@ transform_core_do_u8  (
 		  for (b = 0; b < bytes; b++)
 		    *d++ = src[0][b];
 
-		  tile_unref (tile[0], FALSE);
+                  canvas_portion_unref (float_tiles, tilex[b], tiley[b]);
 		}
 	    }
 	  else
@@ -1200,13 +1213,11 @@ transform_core_do_u8  (
 	}
 
       /*  set the pixel region row  */
-      pixelarea_write_row (&destPR, 0, (y - ty1), width, dest);
+      pixelarea_write_row (&destPR, &destRow, 0, (y - ty1), width);
     }
 
   g_free (dest);
   return tiles;
-#endif
-  return NULL;
 }
 
 

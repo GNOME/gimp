@@ -29,6 +29,7 @@ struct _PixelRow;
 void copy_row (struct _PixelRow *, struct _PixelRow *);
 
 #define OPAQUE_OPACITY 1.0
+#define TRANSPARENT_OPACITY 0.0
 
 /*  Color conversion routines  */
 void  rgb_to_hsv            (int *, int *, int *);
