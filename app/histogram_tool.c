@@ -227,9 +227,15 @@ histogram_tool_initialize (GDisplay *gdisp)
       /* Channels can only have value histograms; reconfigure channel menu. */
       /* Note: gimp_histogram_get_mean() in gimphistogram.c. garo 5/7/2001  */ 
       histogram_tool_dialog->channel = GIMP_HISTOGRAM_VALUE;
-      gimp_option_menu_set_history (g_list_nth_data (gtk_container_children (GTK_CONTAINER (histogram_tool_dialog->channel_menu)), 1), GIMP_HISTOGRAM_VALUE);
+      gimp_option_menu_set_history (g_list_nth_data 
+				    (gtk_container_children 
+				     (GTK_CONTAINER 
+				      (histogram_tool_dialog->channel_menu)), 
+				     1), 
+				    GINT_TO_POINTER (GIMP_HISTOGRAM_VALUE));
       gtk_widget_hide (histogram_tool_dialog->channel_menu);
-      histogram_tool_gradient_draw (histogram_tool_dialog->gradient, GIMP_HISTOGRAM_VALUE);
+      histogram_tool_gradient_draw (histogram_tool_dialog->gradient, 
+				    GIMP_HISTOGRAM_VALUE);
     }
 
   /* calculate the histogram */
@@ -312,10 +318,10 @@ histogram_tool_dialog_new (void)
     (FALSE, histogram_tool_channel_callback,
      htd, (gpointer) htd->channel,
 
-     _("Value"), (gpointer) GIMP_HISTOGRAM_VALUE, NULL,
-     _("Red"),   (gpointer) GIMP_HISTOGRAM_RED, NULL,
-     _("Green"), (gpointer) GIMP_HISTOGRAM_GREEN, NULL,
-     _("Blue"),  (gpointer) GIMP_HISTOGRAM_BLUE, NULL,
+     _("Value"), GINT_TO_POINTER (GIMP_HISTOGRAM_VALUE), NULL,
+     _("Red"),   GINT_TO_POINTER (GIMP_HISTOGRAM_RED),   NULL,
+     _("Green"), GINT_TO_POINTER (GIMP_HISTOGRAM_GREEN), NULL,
+     _("Blue"),  GINT_TO_POINTER (GIMP_HISTOGRAM_BLUE),  NULL,
 
      NULL);
   gtk_box_pack_start (GTK_BOX (htd->channel_menu), option_menu, FALSE, FALSE, 0);

@@ -1,3 +1,8 @@
+2001-06-20  Sven Neumann  <sven@gimp.org>
+
+	* app/histogram_tool.c: use GINT_TO_POINTER and GPOINTER_TO_INT 
+	macros for the gimp_option_menu's user_data.
+
 2001-06-20  David Neary  <dneary@eircom.net>
 
 	* configure.in
