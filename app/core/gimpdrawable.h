@@ -84,8 +84,6 @@ struct _GimpDrawableClass
 };
 
 
-/*  drawable access functions  */
-
 GType           gimp_drawable_get_type           (void) G_GNUC_CONST;
 
 void            gimp_drawable_configure          (GimpDrawable       *drawable,
@@ -135,6 +133,7 @@ void            gimp_drawable_push_undo          (GimpDrawable       *drawable,
 						  TileManager        *tiles,
 						  gboolean            sparse);
 
+TileManager   * gimp_drawable_shadow             (GimpDrawable       *drawable);
 void            gimp_drawable_merge_shadow       (GimpDrawable       *drawable,
 						  gboolean            push_undo,
                                                   const gchar        *undo_desc);
@@ -157,10 +156,10 @@ GimpImageType   gimp_drawable_type_with_alpha    (const GimpDrawable *drawable);
 gboolean        gimp_drawable_is_rgb             (const GimpDrawable *drawable);
 gboolean        gimp_drawable_is_gray            (const GimpDrawable *drawable);
 gboolean        gimp_drawable_is_indexed         (const GimpDrawable *drawable);
-TileManager   * gimp_drawable_data               (const GimpDrawable *drawable);
-TileManager   * gimp_drawable_shadow             (GimpDrawable       *drawable);
 gint            gimp_drawable_bytes              (const GimpDrawable *drawable);
 gint            gimp_drawable_bytes_with_alpha   (const GimpDrawable *drawable);
+
+TileManager   * gimp_drawable_data               (const GimpDrawable *drawable);
 
 guchar        * gimp_drawable_cmap               (const GimpDrawable *drawable);
 

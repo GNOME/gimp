@@ -704,6 +704,23 @@ gimp_drawable_push_undo (GimpDrawable *drawable,
                                     tiles, sparse);
 }
 
+TileManager *
+gimp_drawable_shadow (GimpDrawable *drawable)
+{
+  GimpItem  *item;
+  GimpImage *gimage;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+
+  item   = GIMP_ITEM (drawable);
+  gimage = gimp_item_get_image (item);
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+
+  return gimp_image_shadow (gimage, item->width, item->height,
+			    drawable->bytes);
+}
+
 void
 gimp_drawable_merge_shadow (GimpDrawable *drawable,
 			    gboolean      push_undo,
@@ -725,8 +742,8 @@ gimp_drawable_merge_shadow (GimpDrawable *drawable,
    *  them.
    */
   gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-  pixel_region_init (&shadowPR, gimage->shadow, x1, y1,
-		     (x2 - x1), (y2 - y1), FALSE);
+  pixel_region_init (&shadowPR, gimage->shadow,
+                     x1, y1, (x2 - x1), (y2 - y1), FALSE);
   gimp_drawable_apply_region (drawable, &shadowPR,
                               push_undo, undo_desc,
                               GIMP_OPACITY_OPAQUE, GIMP_REPLACE_MODE,
@@ -850,8 +867,9 @@ gimp_drawable_mask_bounds (GimpDrawable *drawable,
 			   gint         *x2,
 			   gint         *y2)
 {
-  GimpItem  *item;
-  GimpImage *gimage;
+  GimpItem    *item;
+  GimpImage   *gimage;
+  GimpChannel *selection;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
   g_return_val_if_fail (x1 != NULL, FALSE);
@@ -864,7 +882,10 @@ gimp_drawable_mask_bounds (GimpDrawable *drawable,
 
   g_return_val_if_fail (gimage != NULL, FALSE);
 
-  if (gimp_channel_bounds (gimp_image_get_mask (gimage), x1, y1, x2, y2))
+  selection = gimp_image_get_mask (gimage);
+
+  if (GIMP_DRAWABLE (selection) != drawable &&
+      gimp_channel_bounds (selection, x1, y1, x2, y2))
     {
       gint off_x, off_y;
 
@@ -874,14 +895,16 @@ gimp_drawable_mask_bounds (GimpDrawable *drawable,
       *y1 = CLAMP (*y1 - off_y, 0, gimp_item_height (item));
       *x2 = CLAMP (*x2 - off_x, 0, gimp_item_width  (item));
       *y2 = CLAMP (*y2 - off_y, 0, gimp_item_height (item));
+
       return TRUE;
     }
-  else
-    {
-      *x2 = gimp_item_width  (item);
-      *y2 = gimp_item_height (item);
-      return FALSE;
-    }
+
+  *x1 = 0;
+  *y1 = 0;
+  *x2 = gimp_item_width  (item);
+  *y2 = gimp_item_height (item);
+
+  return FALSE;
 }
 
 gboolean
@@ -932,31 +955,6 @@ gimp_drawable_is_indexed (const GimpDrawable *drawable)
   return GIMP_IMAGE_TYPE_IS_INDEXED (gimp_drawable_type (drawable));
 }
 
-TileManager *
-gimp_drawable_data (const GimpDrawable *drawable)
-{
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-
-  return drawable->tiles;
-}
-
-TileManager *
-gimp_drawable_shadow (GimpDrawable *drawable)
-{
-  GimpItem  *item;
-  GimpImage *gimage;
-
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-
-  item = GIMP_ITEM (drawable);
-
-  if (! (gimage = gimp_item_get_image (item)))
-    return NULL;
-
-  return gimp_image_shadow (gimage, item->width, item->height,
-			    drawable->bytes);
-}
-
 gint
 gimp_drawable_bytes (const GimpDrawable *drawable)
 {
@@ -975,6 +973,14 @@ gimp_drawable_bytes_with_alpha (const GimpDrawable *drawable)
   type = GIMP_IMAGE_TYPE_WITH_ALPHA (gimp_drawable_type (drawable));
 
   return GIMP_IMAGE_TYPE_BYTES (type);
+}
+
+TileManager *
+gimp_drawable_data (const GimpDrawable *drawable)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+
+  return drawable->tiles;
 }
 
 guchar *
