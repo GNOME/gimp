@@ -235,7 +235,7 @@ static gdouble      animate_deform_value = 1.0;
 static gint32       imageID;
 static gint         animate_num_frames = 2;
 static gint         frame_number;
-static gint         layer_alpha;
+static gboolean     layer_alpha;
 
 
 MAIN ()
@@ -696,7 +696,7 @@ iwarp_frame (void)
 		  progress++;
 		  iwarp_get_deform_vector (img2pre * (col -xl),
 					   img2pre * (row -yl),
-					   &xv ,&yv);
+					   &xv, &yv);
 		  xv *= animate_deform_value;
 		  yv *= animate_deform_value;
 		  if (fabs(xv) > 0.0 || fabs(yv) > 0.0)
@@ -763,6 +763,7 @@ iwarp (void)
 	{
 	  animate_deform_value = 1.0;
 	  delta = -1.0 / (animate_num_frames - 1);
+      gimp_undo_push_group_start (imageID);
 	}
       else
 	{
@@ -800,6 +801,7 @@ iwarp (void)
 	    {
 	      gimp_progress_update ((gdouble) i / (animate_num_frames - 1));
 	      layerID = gimp_layer_copy (animlayers[animate_num_frames-i-1]); 
+      gimp_undo_push_group_end (imageID);
 	      gimp_layer_add_alpha (layerID);
 	      st = g_strdup_printf (_("Frame %d"), i + animate_num_frames);
 	      gimp_layer_set_name (layerID, st);
@@ -1536,8 +1538,7 @@ iwarp_deform (gint    x,
 	      (iwarp_vals.deform_area_radius*2+1) +
 	      xi +
 	      iwarp_vals.deform_area_radius;
-	    deform_vectors[ptr].x = deform_area_vectors[fptr].x;
-	    deform_vectors[ptr].y = deform_area_vectors[fptr].y;
+	    deform_vectors[ptr] = deform_area_vectors[fptr];
 	  }
       }
 
