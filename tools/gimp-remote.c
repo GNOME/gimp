@@ -187,10 +187,10 @@ start_new_gimp (GString *file_list)
       if (g_strncasecmp ("file:", argv[i], 5) == 0)
 	argv[i] += 5;
     }
-  execvp ("gimp-1.3", argv);
+  execvp ("gimp-1.2", argv);
 	  
   /*  if execvp returns, there was an arror  */
-  g_printerr ("Couldn't start gimp-1.3 for the following reason: %s\n",
+  g_printerr ("Couldn't start gimp-1.2 for the following reason: %s\n",
               g_strerror (errno));
   exit (-1);
 }
