@@ -1,5 +1,10 @@
 2002-12-30  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimppluginconfig.[ch]
+	* app/config/gimprc-blurbs.h: added "script-fu-path" back to gimprc.
+
+2002-12-30  Sven Neumann  <sven@gimp.org>
+
 	* app/app_procs.c
 	* app/core/gimp.c
 	* app/gui/gui.c

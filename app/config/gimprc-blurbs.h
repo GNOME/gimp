@@ -72,8 +72,7 @@
 "File/New dialog. This value is always in dpi (dots per inch)."
 
 #define FRACTALEXPLORER_PATH_BLURB \
-"This path will be searched for fractals when you use the "\
-"Fractal Explorer plug-in."
+"Where to search for fractals used by the Fractal Explorer plug-in."
 
 #define GAMMA_CORRECTION_BLURB \
 "This setting is ignored."
@@ -193,6 +192,9 @@
 "Remember the positions and sizes of the main dialogs and asks your " \
 "window-manager to place them there again the next time you use the " \
 "GIMP."
+
+#define SCRIPT_FU_PATH_BLURB \
+"This path will be searched for scripts when the Script-Fu plug-in is run."
 
 #define SHOW_MENUBAR_BLURB \
 "Set the menubar visibility. This can also be toggled with the "\

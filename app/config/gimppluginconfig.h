@@ -44,7 +44,7 @@ struct _GimpPluginConfig
   gchar              *gfig_path;
   gchar              *gflare_path;
   gchar              *gimpressionist_path;
-
+  gchar              *script_fu_path;
 };
 
 struct _GimpPluginConfigClass

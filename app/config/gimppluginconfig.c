@@ -53,6 +53,7 @@ enum
   PROP_GFIG_PATH,
   PROP_GFLARE_PATH,
   PROP_GIMPRESSIONIST_PATH,
+  PROP_SCRIPT_FU_PATH
 };
 
 static GObjectClass *parent_class = NULL;
@@ -101,7 +102,8 @@ gimp_plugin_config_class_init (GimpPluginConfigClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class,
                                  PROP_FRACTALEXPLORER_PATH,
-                                 "fractalexplorer-path", FRACTALEXPLORER_PATH_BLURB,
+                                 "fractalexplorer-path",
+                                 FRACTALEXPLORER_PATH_BLURB,
                                  gimp_config_build_data_path ("fractalexplorer"),
                                  0);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class,
@@ -116,8 +118,15 @@ gimp_plugin_config_class_init (GimpPluginConfigClass *klass)
                                  0);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class,
                                  PROP_GIMPRESSIONIST_PATH,
-                                 "gimpressionist-path", GIMPRESSIONIST_PATH_BLURB,
+                                 "gimpressionist-path",
+                                 GIMPRESSIONIST_PATH_BLURB,
                                  gimp_config_build_data_path ("gimpressionist"),
+                                 0);
+  GIMP_CONFIG_INSTALL_PROP_PATH (object_class,
+                                 PROP_SCRIPT_FU_PATH,
+                                 "script-fu-path",
+                                 SCRIPT_FU_PATH_BLURB,
+                                 gimp_config_build_data_path ("scripts"),
                                  0);
 }
 
@@ -132,6 +141,7 @@ gimp_plugin_config_finalize (GObject *object)
   g_free (plugin_config->gfig_path);
   g_free (plugin_config->gflare_path);
   g_free (plugin_config->gimpressionist_path);
+  g_free (plugin_config->script_fu_path);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -168,6 +178,11 @@ gimp_plugin_config_set_property (GObject      *object,
       plugin_config->gimpressionist_path = g_value_dup_string (value);
       break;
 
+    case PROP_SCRIPT_FU_PATH:
+      g_free (plugin_config->script_fu_path);
+      plugin_config->script_fu_path = g_value_dup_string (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -200,6 +215,10 @@ gimp_plugin_config_get_property (GObject    *object,
 
     case PROP_GIMPRESSIONIST_PATH:
       g_value_set_string (value, plugin_config->gimpressionist_path);
+      break;
+
+    case PROP_SCRIPT_FU_PATH:
+      g_value_set_string (value, plugin_config->script_fu_path);
       break;
 
     default:
