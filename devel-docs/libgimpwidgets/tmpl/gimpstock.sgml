@@ -731,9 +731,23 @@ size).
 
 
 
+<!-- ##### MACRO GIMP_STOCK_ERROR ##### -->
+<para>
+<inlinegraphic fileref="stock-error-64.png" format="png"></inlinegraphic>
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_INFO ##### -->
 <para>
 <inlinegraphic fileref="stock-info-64.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_QUESTION ##### -->
+<para>
+<inlinegraphic fileref="stock-question-64.png" format="png"></inlinegraphic>
 </para>
 
 
