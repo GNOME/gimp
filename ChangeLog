@@ -1,3 +1,7 @@
+2004-10-03  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/common/whirlpinch.c: ported to GimpAspectPreview.
+
 2004-10-03  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/color.pdb: export the Colorize tool to the PDB.

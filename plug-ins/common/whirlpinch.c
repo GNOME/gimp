@@ -67,7 +67,6 @@
 
 /***** Magic numbers *****/
 
-#define PREVIEW_SIZE 128
 #define SCALE_WIDTH  200
 #define ENTRY_WIDTH  60
 
@@ -75,17 +74,11 @@
 
 typedef struct
 {
-  gdouble whirl;
-  gdouble pinch;
-  gdouble radius;
+  gdouble  whirl;
+  gdouble  pinch;
+  gdouble  radius;
+  gboolean preview;
 } whirl_pinch_vals_t;
-
-typedef struct
-{
-  GtkWidget *preview;
-  guchar    *image;
-  guchar    *dimage;
-} whirl_pinch_interface_t;
 
 /***** Prototypes *****/
 
@@ -96,16 +89,17 @@ static void run   (const gchar      *name,
                    gint             *nreturn_vals,
                    GimpParam       **return_vals);
 
-static void      whirl_pinch                (void);
-static int       calc_undistorted_coords    (double wx, double wy,
-                                             double whirl, double pinch,
-                                             double *x, double *y);
-static void      build_preview_source_image (void);
+static void      whirl_pinch                (GimpDrawable *drawable);
+static int       calc_undistorted_coords    (double        wx,
+                                             double        wy,
+                                             double        whirl,
+                                             double        pinch,
+                                             double       *x,
+                                             double       *y);
 
-static gboolean  whirl_pinch_dialog         (void);
-static void      dialog_update_preview      (void);
-static void      dialog_scale_update        (GtkAdjustment *adjustment,
-                                             gdouble       *value);
+static gboolean  whirl_pinch_dialog         (GimpDrawable *drawable);
+static void      dialog_update_preview      (GimpDrawable *drawable,
+                                             GimpPreview  *preview);
 
 
 /***** Variables *****/
@@ -120,29 +114,19 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 static whirl_pinch_vals_t wpvals =
 {
-  90.0, /* whirl */
-  0.0,  /* pinch */
-  1.0   /* radius */
+  90.0, /* whirl   */
+  0.0,  /* pinch   */
+  1.0,  /* radius  */
+  TRUE  /* preview */
 };
 
-static whirl_pinch_interface_t wpint =
-{
-  NULL,  /* preview */
-  NULL,  /* image */
-  NULL   /* dimage */
-};
-
-static GimpDrawable *drawable;
-
-static gint img_width, img_height, img_bpp, img_has_alpha;
+static gint img_bpp, img_has_alpha;
 static gint sel_x1, sel_y1, sel_x2, sel_y2;
 static gint sel_width, sel_height;
-static gint preview_width, preview_height;
 
 static double cen_x, cen_y;
 static double scale_x, scale_y;
 static double radius, radius2;
-
 
 /***** Functions *****/
 
@@ -193,10 +177,10 @@ run (const gchar      *name,
 {
   static GimpParam values[1];
 
-  GimpRunMode run_mode;
+  GimpRunMode        run_mode;
   GimpPDBStatusType  status;
-  double       xhsiz, yhsiz;
-  int          pwidth, pheight;
+  double             xhsiz, yhsiz;
+  GimpDrawable      *drawable;
 
   status   = GIMP_PDB_SUCCESS;
   run_mode = param[0].data.d_int32;
@@ -212,8 +196,6 @@ run (const gchar      *name,
   /* Get the active drawable info */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
-  img_width     = gimp_drawable_width (drawable->drawable_id);
-  img_height    = gimp_drawable_height (drawable->drawable_id);
   img_bpp       = gimp_drawable_bpp (drawable->drawable_id);
   img_has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
@@ -249,22 +231,6 @@ run (const gchar      *name,
 
   radius = MAX(xhsiz, yhsiz);
 
-  /* Calculate preview size */
-
-  if (sel_width > sel_height)
-    {
-      pwidth  = MIN (sel_width, PREVIEW_SIZE);
-      pheight = sel_height * pwidth / sel_width;
-    }
-  else
-    {
-      pheight = MIN (sel_height, PREVIEW_SIZE);
-      pwidth  = sel_width * pheight / sel_height;
-    }
-
-  preview_width  = MAX (pwidth, 2); /* Min size is 2 */
-  preview_height = MAX (pheight, 2);
-
   /* See how we will run */
 
   switch (run_mode)
@@ -274,7 +240,7 @@ run (const gchar      *name,
       gimp_get_data (PLUG_IN_NAME, &wpvals);
 
       /* Get information from the dialog */
-      if (!whirl_pinch_dialog ())
+      if (!whirl_pinch_dialog (drawable))
         return;
 
       break;
@@ -313,7 +279,7 @@ run (const gchar      *name,
                               gimp_tile_width ());
 
       /* Run! */
-      whirl_pinch ();
+      whirl_pinch (drawable);
 
       /* If run mode is interactive, flush displays */
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
@@ -333,7 +299,7 @@ run (const gchar      *name,
 }
 
 static void
-whirl_pinch (void)
+whirl_pinch (GimpDrawable *drawable)
 {
   GimpPixelRgn      dest_rgn;
   gint              progress, max_progress;
@@ -349,8 +315,8 @@ whirl_pinch (void)
   GimpRGB           background;
 
   /* Initialize rows */
-  top_row = g_malloc (img_bpp * sel_width);
-  bot_row = g_malloc (img_bpp * sel_width);
+  top_row = g_new (guchar, img_bpp * sel_width);
+  bot_row = g_new (guchar, img_bpp * sel_width);
   pixel = g_new (guchar *, 4);
   for (i = 0; i < 4; i++)
     pixel[i] = g_new (guchar, 4);
@@ -555,86 +521,17 @@ calc_undistorted_coords (gdouble  wx,
   return inside;
 }
 
-static void
-build_preview_source_image (void)
-{
-  gdouble          left, right, bottom, top;
-  gdouble          px, py;
-  gdouble          dx, dy;
-  gint             x, y;
-  guchar          *p;
-  guchar           pixel[4];
-  GimpPixelFetcher *pf;
-
-  wpint.image       = g_new (guchar, preview_width * preview_height * 4);
-  wpint.dimage      = g_new (guchar, preview_width * preview_height * 4);
-
-  left   = sel_x1;
-  right  = sel_x2 - 1;
-  bottom = sel_y2 - 1;
-  top    = sel_y1;
-
-  dx = (right - left) / (preview_width - 1);
-  dy = (bottom - top) / (preview_height - 1);
-
-  py = top;
-
-  pf = gimp_pixel_fetcher_new (drawable, FALSE);
-
-  p = wpint.image;
-
-  for (y = 0; y < preview_height; y++)
-    {
-      px = left;
-
-      for (x = 0; x < preview_width; x++)
-        {
-          /* Thumbnail image */
-
-          gimp_pixel_fetcher_get_pixel (pf, (int) px, (int) py, pixel);
-
-          if (img_bpp < 3)
-            {
-              if (img_has_alpha)
-                pixel[3] = pixel[1];
-              else
-                pixel[3] = 255;
-
-              pixel[1] = pixel[0];
-              pixel[2] = pixel[0];
-            }
-          else
-            if (!img_has_alpha)
-              pixel[3] = 255;
-
-          *p++ = pixel[0];
-          *p++ = pixel[1];
-          *p++ = pixel[2];
-          *p++ = pixel[3];
-
-          px += dx;
-        }
-
-      py += dy;
-    }
-
-  gimp_pixel_fetcher_destroy (pf);
-}
-
 static gboolean
-whirl_pinch_dialog (void)
+whirl_pinch_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dialog;
-  GtkWidget *vbox;
-  GtkWidget *frame;
-  GtkWidget *abox;
+  GtkWidget *main_vbox;
+  GtkWidget *preview;
   GtkWidget *table;
   GtkObject *adj;
   gboolean   run;
 
   gimp_ui_init ("whirlpinch", TRUE);
-
-  build_preview_source_image ();
 
   dialog = gimp_dialog_new (_("Whirl and Pinch"), "whirlpinch",
                             NULL, 0,
@@ -645,34 +542,23 @@ whirl_pinch_dialog (void)
 
                             NULL);
 
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG(dialog)->vbox), vbox,
-                      FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
 
-  /* Preview */
-  abox = gtk_alignment_new (0.0, 0.0, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (vbox), abox, FALSE, FALSE, 0);
-  gtk_widget_show (abox);
-
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 4);
-  gtk_container_add (GTK_CONTAINER (abox), frame);
-  gtk_widget_show (frame);
-
-  wpint.preview = gimp_preview_area_new ();
-  gtk_widget_set_size_request (wpint.preview,
-                               preview_width, preview_height);
-  gtk_container_add (GTK_CONTAINER (frame), wpint.preview);
-  gtk_widget_show (wpint.preview);
+  preview = gimp_aspect_preview_new (drawable, &wpvals.preview);
+  gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
+  gtk_widget_show (preview);
+  g_signal_connect_swapped (preview, "invalidated",
+                            G_CALLBACK (dialog_update_preview),
+                            drawable);
 
   /* Controls */
   table = gtk_table_new (3, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
@@ -681,8 +567,11 @@ whirl_pinch_dialog (void)
                               TRUE, 0, 0,
                               NULL, NULL);
   g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (dialog_scale_update),
+                    G_CALLBACK (gimp_double_adjustment_update),
                     &wpvals.whirl);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
                               _("_Pinch amount:"), SCALE_WIDTH, 7,
@@ -690,8 +579,11 @@ whirl_pinch_dialog (void)
                               TRUE, 0, 0,
                               NULL, NULL);
   g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (dialog_scale_update),
+                    G_CALLBACK (gimp_double_adjustment_update),
                     &wpvals.pinch);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
                               _("_Radius:"), SCALE_WIDTH, 7,
@@ -699,26 +591,26 @@ whirl_pinch_dialog (void)
                               TRUE, 0, 0,
                               NULL, NULL);
   g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (dialog_scale_update),
+                    G_CALLBACK (gimp_double_adjustment_update),
                     &wpvals.radius);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   /* Done */
 
   gtk_widget_show (dialog);
-  dialog_update_preview ();
 
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dialog);
 
-  g_free (wpint.image);
-  g_free (wpint.dimage);
-
   return run;
 }
 
 static void
-dialog_update_preview (void)
+dialog_update_preview (GimpDrawable *drawable,
+                       GimpPreview  *preview)
 {
   gdouble  left, right, bottom, top;
   gdouble  dx, dy;
@@ -728,9 +620,12 @@ dialog_update_preview (void)
   gint     x, y;
   gdouble  whirl;
   gdouble  scale_x, scale_y;
-  guchar  *p_ul, *p_lr, *i, *p;
+  guchar  *p_ul, *p_lr, *i;
   guchar   outside[4];
   GimpRGB  background;
+  gint     width, height;
+  guchar  *src, *dest;
+  gint     j;
 
   gimp_context_get_background (&background);
 
@@ -764,25 +659,30 @@ dialog_update_preview (void)
   bottom = sel_y2 - 1;
   top    = sel_y1;
 
-  dx = (right - left) / (preview_width - 1);
-  dy = (bottom - top) / (preview_height - 1);
+  gimp_preview_get_size (preview, &width, &height);
+  src = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
+                                          &width, &height, &img_bpp);
+  dest = g_new (guchar, width * height * img_bpp);
+
+  dx = (right - left) / (width - 1);
+  dy = (bottom - top) / (height - 1);
 
   whirl   = wpvals.whirl * G_PI / 180.0;
   radius2 = radius * radius * wpvals.radius;
 
-  scale_x = (double) preview_width / (right - left + 1);
-  scale_y = (double) preview_height / (bottom - top + 1);
+  scale_x = (double) width / (right - left + 1);
+  scale_y = (double) height / (bottom - top + 1);
 
   py = top;
 
-  p_ul = wpint.dimage;
-  p_lr = wpint.dimage + 4 * (preview_width * preview_height - 1);
+  p_ul = dest;
+  p_lr = dest + img_bpp * (width * height - 1);
 
-  for (y = 0; y <= (preview_height / 2); y++)
+  for (y = 0; y <= (height / 2); y++)
     {
       px = left;
 
-      for (x = 0; x < preview_width; x++)
+      for (x = 0; x < width; x++)
         {
           calc_undistorted_coords (px, py, whirl, wpvals.pinch, &cx, &cy);
 
@@ -794,36 +694,32 @@ dialog_update_preview (void)
           ix = (int) (cx + 0.5);
           iy = (int) (cy + 0.5);
 
-          if ((ix >= 0) && (ix < preview_width) &&
-              (iy >= 0) && (iy < preview_height))
-            i = wpint.image + 4 * (preview_width * iy + ix);
+          if ((ix >= 0) && (ix < width) &&
+              (iy >= 0) && (iy < height))
+            i = src + img_bpp * (width * iy + ix);
           else
             i = outside;
 
-          p_ul[0] = i[0];
-          p_ul[1] = i[1];
-          p_ul[2] = i[2];
-          p_ul[3] = i[3];
+          for (j = 0; j < img_bpp; j++)
+            p_ul[j] = i[j];
 
-          p_ul += 4;
+          p_ul += img_bpp;
 
           /* Lower right mirror */
 
-          ix = preview_width - ix - 1;
-          iy = preview_height - iy - 1;
+          ix = width - ix - 1;
+          iy = height - iy - 1;
 
-          if ((ix >= 0) && (ix < preview_width) &&
-              (iy >= 0) && (iy < preview_height))
-            i = wpint.image + 4 * (preview_width * iy + ix);
+          if ((ix >= 0) && (ix < width) &&
+              (iy >= 0) && (iy < height))
+            i = src + img_bpp * (width * iy + ix);
           else
             i = outside;
 
-          p_lr[0] = i[0];
-          p_lr[1] = i[1];
-          p_lr[2] = i[2];
-          p_lr[3] = i[3];
+          for (j = 0; j < img_bpp; j++)
+            p_lr[j] = i[j];
 
-          p_lr -= 4;
+          p_lr -= img_bpp;
 
           px += dx;
         }
@@ -831,20 +727,9 @@ dialog_update_preview (void)
       py += dy;
     }
 
-  p = wpint.dimage;
+  gimp_preview_draw_buffer (preview, dest, width * img_bpp);
 
-  gimp_preview_area_draw (GIMP_PREVIEW_AREA (wpint.preview),
-                          0, 0, preview_width, preview_height,
-                          GIMP_RGBA_IMAGE,
-                          wpint.dimage,
-                          preview_width * 4);
+  g_free (src);
+  g_free (dest);
 }
 
-static void
-dialog_scale_update (GtkAdjustment *adjustment,
-                     gdouble       *value)
-{
-  gimp_double_adjustment_update (adjustment, value);
-
-  dialog_update_preview ();
-}
