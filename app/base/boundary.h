@@ -53,6 +53,10 @@ BoundSeg * find_mask_boundary (PixelRegion    *maskPR,
 BoundSeg * sort_boundary      (const BoundSeg *segs,
 			       gint            num_segs,
 			       gint           *num_groups);
+BoundSeg * simplify_boundary  (const BoundSeg *stroke_segs,
+                               gint            num_groups,
+                               gint           *num_segs);
+
 
 
 #endif  /*  __BOUNDARY_H__  */

@@ -1,3 +1,13 @@
+2003-10-01  Simon Budig  <simon@gimp.org>
+
+	* app/base/boundary.[ch]: Implemented simplify_boundary (),
+	which tries to reduce the number of coordinates to get
+	better interpolation for stroking.
+
+	The results still need tweaking.
+
+	* app/core/gimpdrawable-stroke.c: Use it.
+
 2003-10-01  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpunitmenu.[ch]:

@@ -68,6 +68,7 @@ gimp_drawable_stroke_boundary (GimpDrawable      *drawable,
                                gint               offset_y)
 {
   GimpScanConvert *scan_convert;
+  BoundSeg        *sorted_segs;
   BoundSeg        *stroke_segs;
   gint             n_stroke_segs;
   GimpVector2     *points;
@@ -80,7 +81,10 @@ gimp_drawable_stroke_boundary (GimpDrawable      *drawable,
   g_return_if_fail (bound_segs != NULL);
   g_return_if_fail (n_bound_segs > 0);
 
-  stroke_segs = sort_boundary (bound_segs, n_bound_segs, &n_stroke_segs);
+  sorted_segs = sort_boundary (bound_segs, n_bound_segs, &n_stroke_segs);
+  stroke_segs = simplify_boundary (sorted_segs, n_stroke_segs, &n_bound_segs);
+
+  g_free (sorted_segs);
 
   if (n_stroke_segs == 0)
     return;

@@ -22,6 +22,8 @@
 
 #include <glib-object.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "base-types.h"
 
 #include "boundary.h"
@@ -86,7 +88,10 @@ static void generate_boundary   (PixelRegion  *PR,
 				 gint          x2,
 				 gint          y2,
                                  guchar        threshold);
-
+static void simplify_subdivide  (const         BoundSeg *segs,
+                                 gint          start_idx,
+                                 gint          end_idx,
+                                 GArray      **ret_points);
 
 /*  Function definitions  */
 
@@ -568,3 +573,166 @@ sort_boundary (const BoundSeg *segs,
   /*  Return the new boundary  */
   return new_segs;
 }
+
+/*********************************/
+/* Reducing the number of points */
+/* We expect the Boundary to be  */
+/* sorted.                       */
+
+BoundSeg *
+simplify_boundary (const BoundSeg *stroke_segs,
+                   gint            num_groups,
+                   gint           *num_segs)
+{
+  GArray   *new_bounds;
+  GArray   *points;
+  BoundSeg *ret_bounds;
+  gint      i, j, seg, start, n_points;
+
+  g_return_val_if_fail (num_segs != NULL, NULL);
+
+  new_bounds = g_array_new (FALSE, FALSE, sizeof (BoundSeg));
+
+  seg = 0;
+
+  for (i = 0; i < num_groups; i++)
+    {
+      start = seg;
+      n_points = 0;
+
+      while (stroke_segs[seg].x1 != -1 ||
+             stroke_segs[seg].x2 != -1 ||
+             stroke_segs[seg].y1 != -1 ||
+             stroke_segs[seg].y2 != -1)
+        {
+          n_points++;
+          seg++;
+        }
+
+      if (n_points > 0)
+        {
+          points = g_array_new (FALSE, FALSE, sizeof (gint));
+
+          simplify_subdivide (stroke_segs, start, start + n_points - 1,
+                              &points);
+
+          for (j = 0; j < points->len; j++)
+            g_array_append_val (new_bounds,
+                                stroke_segs [g_array_index (points, gint, j)]);
+
+          if (n_points > 1)
+            g_array_append_val (new_bounds,
+                                stroke_segs [start + n_points - 1]);
+
+          g_array_append_val (new_bounds, stroke_segs[seg]);
+
+          g_array_free (points, TRUE);
+        }
+      seg++;
+    }
+
+  if (new_bounds->len > 0)
+    {
+      ret_bounds = (BoundSeg *) new_bounds->data;
+      *num_segs = new_bounds->len;
+    }
+  else
+    {
+      ret_bounds = NULL;
+      *num_segs = 0;
+    }
+
+  g_array_free (new_bounds, FALSE);
+
+  return ret_bounds;
+}
+
+static void
+simplify_subdivide (const    BoundSeg *segs,
+                    gint     start_idx,
+                    gint     end_idx,
+                    GArray **ret_points)
+{
+  gint    maxdist_idx;
+  gint    dist, maxdist;
+  gint    i, dx, dy;
+  gdouble realdist;
+
+  /* g_printerr ("subdiv %d - %d\n", start_idx, end_idx); */
+
+  if (end_idx - start_idx < 2)
+    {
+      *ret_points = g_array_append_val (*ret_points, start_idx);
+      /* g_printerr ("                               %d\n", start_idx); */
+      return;
+    }
+
+  maxdist = 0;
+  maxdist_idx = -1;
+
+  if (segs[start_idx].x1 == segs[end_idx].x1 &&
+      segs[start_idx].y1 == segs[end_idx].y1)
+    {
+      /* start and endpoint are at the same coordinates */
+      for (i = start_idx + 1; i < end_idx; i++)
+        {
+          /* compare the sqared distances */
+          dist = (SQR (segs[i].x1 - segs[start_idx].x1) +
+                  SQR (segs[i].y1 - segs[start_idx].y1));
+          if (dist > maxdist)
+            {
+              maxdist = dist;
+              maxdist_idx = i;
+            }
+        }
+      realdist = sqrt ((gdouble) maxdist);
+    }
+  else
+    {
+      dx = segs[end_idx].x1 - segs[start_idx].x1;
+      dy = segs[end_idx].y1 - segs[start_idx].y1;
+      
+      /* g_printerr ("dx: %d, dy: %d\n", dx, dy); */
+
+      for (i = start_idx + 1; i < end_idx; i++)
+        {
+          /* this is not really the euclidic distance, but is
+           * proportional for this part of the line
+           * (for the real distance we'd have to divide by
+           * (SQR(dx)+SQR(dy)))
+           */
+          dist = (dx * (segs[start_idx].y1 - segs[i].y1) -
+                  dy * (segs[start_idx].x1 - segs[i].x1));
+
+          if (dist < 0)
+            dist *= -1;
+
+
+          if (dist > maxdist)
+            {
+              maxdist = dist;
+              maxdist_idx = i;
+            }
+        }
+      realdist = ((gdouble) maxdist) / sqrt ((gdouble) (SQR (dx) + SQR (dy)));
+    }
+  
+  /* g_printerr ("Index %d, x: %d, y: %d, distance: %.4f\n", maxdist_idx,
+              segs[maxdist_idx].x1, segs[maxdist_idx].y1, realdist); */
+  /* threshold is chosen to catch 45 degree stairs */
+
+  if (realdist <= 1.0)
+    {
+      *ret_points = g_array_append_val (*ret_points, start_idx);
+      /* g_printerr ("                               %d\n", start_idx); */
+      return;
+    }
+
+  /* Simons hack */
+  maxdist_idx = (start_idx + end_idx) / 2;
+
+  simplify_subdivide (segs, start_idx, maxdist_idx, ret_points);
+  simplify_subdivide (segs, maxdist_idx, end_idx, ret_points);
+
+}
+
