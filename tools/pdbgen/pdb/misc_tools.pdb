@@ -699,6 +699,10 @@ HELP
   /* Cut/Copy from the specified drawable */
   float_tiles = transform_core_cut (gimage, drawable, &new_layer);
 
+  flip_type = flip_type == HORIZONTAL ? ORIENTATION_HORIZONTAL :
+              flip_type == VERTICAL   ? ORIENTATION_VERTICAL   :
+              ORIENTATION_UNKNOWN;
+
   /* flip the buffer */
   switch (flip_type)
     {
@@ -1293,6 +1297,10 @@ HELP
   gimp_matrix_identity  (matrix);
   gimp_matrix_translate (matrix, -cx, -cy);
   /* Shear matrix */
+  shear_type = shear_type == HORIZONTAL ? ORIENTATION_HORIZONTAL :
+               shear_type == VERTICAL   ? ORIENTATION_VERTICAL   :
+               ORIENTATION_UNKNOWN;
+
   if (shear_type == ORIENTATION_HORIZONTAL)
     gimp_matrix_xshear (matrix, magnitude / float_tiles->height);
   else if (shear_type == ORIENTATION_VERTICAL)

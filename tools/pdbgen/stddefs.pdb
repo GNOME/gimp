@@ -36,7 +36,7 @@ sub std_antialias_arg () {{
 }}
 
 sub std_orientation_enum () {
-    'enum OrientationType (no ORIENTATION_UNKNOWN)'
+    'enum OrientationType (no UNKNOWN)'
 }
 
 1;

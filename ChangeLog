@@ -1,3 +1,8 @@
+Tue Sep 14 04:02:06 CEST 1999  Marc Lehmann <pcg@goof.com>
+
+        * tools/pdbgen/stddefs.pdb, tools/pdbgen/pdb/tools.pdb: shear and
+        flip used the wrong orientationtype.
+
 Mon Sep 13 15:29:46 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* app/Makefile.am: -export-symbols only works with -export-dynamic,
@@ -19,7 +24,8 @@ Mon Sep 13 12:58:56 MEST 1999  Sven Neumann <sven@gimp.org>
 	* app/brush_select.c: corrected scrolling in the Brushes Dialog. 
 	Fixes bug #2146.
 
-	* plug-ins/common/curve_bend.c: applied a path from Wolfgang Hofer that 	fixes wrong parameters in PDB calls.
+	* plug-ins/common/curve_bend.c: applied a path from Wolfgang Hofer that
+        fixes wrong parameters in PDB calls.
 
 Mon Sep 13 01:50:29 BST 1999 Nick Lamb <njl195@zepler.org>
 
