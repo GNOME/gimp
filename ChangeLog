@@ -1,3 +1,10 @@
+2003-01-12  Dave Neary  <bolsh@gimp.org>
+
+	* plug-ins/common/plugin-def.pl
+	* plug-ins/common/psd_save.c
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/.cvsignore: Finally added PSD save support 
+
 2003-01-12  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/plugin-def.pl
