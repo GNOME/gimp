@@ -4229,6 +4229,7 @@ gimp_controller_keyboard_get_type
 GIMP_CONTROLLER_KEYBOARD_CLASS
 GIMP_IS_CONTROLLER_KEYBOARD_CLASS
 GIMP_CONTROLLER_KEYBOARD_GET_CLASS
+GIMP_ENABLE_CONTROLLER_UNDER_CONSTRUCTION
 </SECTION>
 
 <SECTION>
@@ -4245,6 +4246,7 @@ gimp_controller_wheel_get_type
 GIMP_CONTROLLER_WHEEL_CLASS
 GIMP_IS_CONTROLLER_WHEEL_CLASS
 GIMP_CONTROLLER_WHEEL_GET_CLASS
+GIMP_ENABLE_CONTROLLER_UNDER_CONSTRUCTION
 </SECTION>
 
 <SECTION>
@@ -4895,8 +4897,8 @@ GimpUIManager
 gimp_ui_manager_new
 gimp_ui_managers_from_name
 gimp_ui_manager_update
+gimp_ui_manager_find_action
 gimp_ui_manager_get_action_group
-gimp_ui_manager_get_action
 gimp_ui_manager_ui_register
 gimp_ui_manager_ui_get
 gimp_ui_manager_ui_popup
@@ -6452,6 +6454,7 @@ gimp_drawable_offset
 <FILE>gimpdrawable-preview</FILE>
 <TITLE>GimpDrawable-preview</TITLE>
 gimp_drawable_get_preview
+gimp_drawable_get_sub_preview
 </SECTION>
 
 <SECTION>
@@ -7722,32 +7725,33 @@ gimp_help_show
 
 <SECTION>
 <FILE>gimppropwidgets</FILE>
-gimp_prop_check_button_new
 gimp_prop_boolean_combo_box_new
 gimp_prop_boolean_radio_frame_new
-gimp_prop_enum_combo_box_new
-gimp_prop_enum_check_button_new
-gimp_prop_enum_radio_frame_new
-gimp_prop_enum_radio_box_new
-gimp_prop_enum_stock_box_new
-gimp_prop_paint_mode_menu_new
-gimp_prop_spin_button_new
-gimp_prop_scale_entry_new
-gimp_prop_opacity_entry_new
-gimp_prop_memsize_entry_new
-gimp_prop_label_new
-gimp_prop_entry_new
-gimp_prop_text_buffer_new
-gimp_prop_file_entry_new
-gimp_prop_path_editor_new
-gimp_prop_coordinates_new
-gimp_prop_size_entry_new
-gimp_prop_coordinates_connect
+gimp_prop_check_button_new
 gimp_prop_color_area_new
 gimp_prop_color_button_new
-gimp_prop_unit_menu_new
+gimp_prop_coordinates_new
+gimp_prop_coordinates_connect
+gimp_prop_entry_new
+gimp_prop_enum_check_button_new
+gimp_prop_enum_combo_box_new
+gimp_prop_enum_radio_box_new
+gimp_prop_enum_radio_frame_new
+gimp_prop_enum_stock_box_new
+gimp_prop_file_entry_new
+gimp_prop_int_combo_box_new
+gimp_prop_label_new
+gimp_prop_memsize_entry_new
+gimp_prop_opacity_entry_new
+gimp_prop_paint_mode_menu_new
+gimp_prop_path_editor_new
 gimp_prop_preview_new
+gimp_prop_scale_entry_new
+gimp_prop_size_entry_new
+gimp_prop_spin_button_new
 gimp_prop_stock_image_new
+gimp_prop_text_buffer_new
+gimp_prop_unit_menu_new
 </SECTION>
 
 <SECTION>
