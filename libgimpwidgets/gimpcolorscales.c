@@ -138,7 +138,7 @@ gimp_color_scales_class_init (GimpColorScalesClass *klass)
 
   object_class->finalize         = gimp_color_scales_finalize;
 
-  selector_class->name                  = "Scales";
+  selector_class->name                  = _("Scales");
   selector_class->help_page             = "scales.html";
   selector_class->stock_id              = GIMP_STOCK_TOOL_OPTIONS;
   selector_class->set_toggles_visible   = gimp_color_scales_togg_visible;

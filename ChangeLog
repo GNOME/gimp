@@ -1,5 +1,9 @@
 2002-12-19  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpcolorscales.c: mark "Scales" for translation.
+
+2002-12-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpwidgets-utils.[ch]: added utility functions
 	gimp_get_mod_name_[shift|control|alt]() and gimp_get_mod_separator()
 	which get the translated strings for "Shift", "Ctrl", "Alt" and "+"
