@@ -1,5 +1,10 @@
 2004-04-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/menus.c (menus_init): fixed some typos in the UI Manager
+	registration code.
+
+2004-04-22  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpactiongroup.[ch]: implemented
 	gimp_action_group_set_action_color() and
 	gimp_action_group_set_action_viewable().

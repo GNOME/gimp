@@ -128,6 +128,8 @@ menus_init (Gimp *gimp)
                                    image_menu_entries);
   gimp_menu_factory_manager_register (global_menu_factory, "<Image>",
                                       "file",
+                                      "debug",
+                                      "help",
                                       "edit",
                                       "select",
                                       "view",
@@ -138,10 +140,14 @@ menus_init (Gimp *gimp)
                                       "tools",
                                       "dialogs",
                                       "plug-in",
+                                      "qmask",
                                       NULL,
-                                      "/toolbox-menubar", "toolbox-menu.xml",
-                                      "/image-menubar",   "image-menu.xml",
-                                      "/qmask-popup",     "qmask-menu.xml",
+                                      "/toolbox-menubar",
+                                      "toolbox-menu.xml",
+                                      "/image-menubar",
+                                      "image-menu.xml",
+                                      "/qmask-popup",
+                                      "qmask-menu.xml",
                                       NULL);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Load>",
@@ -168,7 +174,8 @@ menus_init (Gimp *gimp)
   gimp_menu_factory_manager_register (global_menu_factory, "<Layers>",
                                       "layers",
                                       NULL,
-                                      "/layers-popup", "layers-menu.xml",
+                                      "/layers-popup",
+                                      "layers-menu.xml",
                                       NULL);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Channels>",
@@ -180,7 +187,8 @@ menus_init (Gimp *gimp)
   gimp_menu_factory_manager_register (global_menu_factory, "<Channels>",
                                       "channels",
                                       NULL,
-                                      "/channels-popup", "channels-menu.xml",
+                                      "/channels-popup",
+                                      "channels-menu.xml",
                                       NULL);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Vectors>",
@@ -192,7 +200,8 @@ menus_init (Gimp *gimp)
   gimp_menu_factory_manager_register (global_menu_factory, "<Vectors>",
                                       "vectors",
                                       NULL,
-                                      "/vectors-popup", "vectors-menu.xml",
+                                      "/vectors-popup",
+                                      "vectors-menu.xml",
                                       NULL);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Dialogs>",
@@ -204,7 +213,8 @@ menus_init (Gimp *gimp)
   gimp_menu_factory_manager_register (global_menu_factory, "<Dialogs>",
                                       "dockable",
                                       NULL,
-                                      "/dockable-popup", "dockable-menu.xml",
+                                      "/dockable-popup",
+                                      "dockable-menu.xml",
                                       NULL);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Brushes>",
@@ -216,7 +226,8 @@ menus_init (Gimp *gimp)
   gimp_menu_factory_manager_register (global_menu_factory, "<Brushes>",
                                       "brushes",
                                       NULL,
-                                      "/brushes-popup", "brushes-menu.xml",
+                                      "/brushes-popup",
+                                      "brushes-menu.xml",
                                       NULL);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Patterns>",
@@ -228,7 +239,8 @@ menus_init (Gimp *gimp)
   gimp_menu_factory_manager_register (global_menu_factory, "<Patterns>",
                                       "patterns",
                                       NULL,
-                                      "/patterns-popup", "patterns-menu.xml",
+                                      "/patterns-popup",
+                                      "patterns-menu.xml",
                                       NULL);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Gradients>",
@@ -240,7 +252,8 @@ menus_init (Gimp *gimp)
   gimp_menu_factory_manager_register (global_menu_factory, "<Gradients>",
                                       "gradients",
                                       NULL,
-                                      "/gradients-popup", "gradients-menu.xml",
+                                      "/gradients-popup",
+                                      "gradients-menu.xml",
                                       NULL);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Palettes>",
@@ -252,7 +265,8 @@ menus_init (Gimp *gimp)
   gimp_menu_factory_manager_register (global_menu_factory, "<Palettes>",
                                       "palettes",
                                       NULL,
-                                      "/palettes-popup", "palettes-menu.xml",
+                                      "/palettes-popup",
+                                      "palettes-menu.xml",
                                       NULL);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Fonts>",
@@ -264,7 +278,8 @@ menus_init (Gimp *gimp)
   gimp_menu_factory_manager_register (global_menu_factory, "<Fonts>",
                                       "fonts",
                                       NULL,
-                                      "/fonts-popup", "fonts-menu.xml",
+                                      "/fonts-popup",
+                                      "fonts-menu.xml",
                                       NULL);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Buffers>",
@@ -276,7 +291,8 @@ menus_init (Gimp *gimp)
   gimp_menu_factory_manager_register (global_menu_factory, "<Buffers>",
                                       "buffers",
                                       NULL,
-                                      "/buffers-popup", "buffers-menu.xml",
+                                      "/buffers-popup",
+                                      "buffers-menu.xml",
                                       NULL);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Documents>",
@@ -288,7 +304,8 @@ menus_init (Gimp *gimp)
   gimp_menu_factory_manager_register (global_menu_factory, "<Documents>",
                                       "documents",
                                       NULL,
-                                      "/documents-popup", "documents-menu.xml",
+                                      "/documents-popup",
+                                      "documents-menu.xml",
                                       NULL);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Templates>",
@@ -300,7 +317,8 @@ menus_init (Gimp *gimp)
   gimp_menu_factory_manager_register (global_menu_factory, "<Templates>",
                                       "templates",
                                       NULL,
-                                      "/templates-popup", "templates-menu.xml",
+                                      "/templates-popup",
+                                      "templates-menu.xml",
                                       NULL);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Images>",
@@ -312,7 +330,8 @@ menus_init (Gimp *gimp)
   gimp_menu_factory_manager_register (global_menu_factory, "<Images>",
                                       "images",
                                       NULL,
-                                      "/images-popup", "images-menu.xml",
+                                      "/images-popup",
+                                      "images-menu.xml",
                                       NULL);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<GradientEditor>",
@@ -335,7 +354,7 @@ menus_init (Gimp *gimp)
                                    n_palette_editor_menu_entries,
                                    palette_editor_menu_entries);
   gimp_menu_factory_manager_register (global_menu_factory, "<PaletteEditor>",
-                                      "pelette-editor",
+                                      "palette-editor",
                                       NULL,
                                       "/palette-editor-popup",
                                       "palette-editor-menu.xml",
