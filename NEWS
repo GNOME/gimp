@@ -28,7 +28,11 @@ Overview of Changes in GIMP 2.2-pre2
 - Allow file plug-ins to provide a way to access an image thumbnail if
   the file format provides one or can be rendered at small sizes.
 
+- Load and save EXIF thumbnails in JPEG files.
+
 - Allow to import Photoshop (.act) palette files.
+
+- Added a Print Size dialog to bring back missing functionality from 2.0.
 
 - Lots of bug fixes and some optimizations.
 
@@ -38,7 +42,7 @@ Contributors:
    Michael Natterer, Sven Neumann, David Odin, Manish Singh, Kevin Cozens,
    Joao S. O. Bueno, Geert Jordaens, David Gowers, Øyvind Kolås, Cai Qian,
    Simon Budig, Jakub Steiner, Philip Lafleur, Nickolay V. Shmyrev,
-   Karine Proot
+   Karine Proot, S. Mukund, Dave Neary
 
 
 
