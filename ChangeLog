@@ -1,3 +1,23 @@
+2002-05-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpnavigationview.c: set the view's display to NULL
+	in "destroy". Fixes crash on closing the navigation dialog.
+
+	* app/gui/dialogs-constructors.c
+	* app/gui/menus.c: use GIMP_STOCK_NAVIGATION instead of
+	GIMP_STOCK_TOOL_MOVE. Use the new GIMP_STOCK_WARNING (see below)
+	for the error console.
+
+	* themes/Default/images/*.png
+	* themes/Default/images/tools/*.png: renamed all stock icons to
+	have the pixel size instead of "button" or "menu" in the name.
+	(e.g. stock-menu-scale.png -> stock-scale-16.png).
+
+	* libgimpwidgets/gimpstock.[ch]
+	* themes/Default/gtkrc
+	* themes/Default/imagerc
+	* themes/Default/images/Makefile.am: changed accordingly.
+
 2002-05-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpnavigationview.c: connect to size allocations of

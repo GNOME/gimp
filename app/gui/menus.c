@@ -201,7 +201,7 @@ static GimpItemFactoryEntry toolbox_entries[] =
 
   { { N_("/File/Dialogs/Navigation..."), NULL,
       dialogs_create_dockable_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_TOOL_MOVE },
+      "<StockItem>", GIMP_STOCK_NAVIGATION },
     "gimp-navigation-view",
     NULL, NULL },
   { { N_("/File/Dialogs/Images..."), NULL,
@@ -214,7 +214,8 @@ static GimpItemFactoryEntry toolbox_entries[] =
     "gimp-document-history",
     "file/dialogs/document_index.html", NULL },
   { { N_("/File/Dialogs/Error Console..."), NULL,
-      dialogs_create_dockable_cmd_callback, 0 },
+      dialogs_create_dockable_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_WARNING },
     "gimp-error-console",
     "file/dialogs/error_console.html", NULL },
 
@@ -268,11 +269,13 @@ static GimpItemFactoryEntry toolbox_entries[] =
     NULL,
     "help/context_help.html", NULL },
   { { N_("/Help/Tip of the Day..."), NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
+      dialogs_create_toplevel_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_INFO },
     "gimp-tips-dialog",
     "help/dialogs/tip_of_the_day.html", NULL },
   { { N_("/Help/About..."), NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
+      dialogs_create_toplevel_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_WILBER },
     "gimp-about-dialog",
     "help/dialogs/about.html", NULL }
 };
@@ -559,7 +562,7 @@ static GimpItemFactoryEntry image_entries[] =
     "view/dialogs/info_window.html", NULL },
   { { N_("/View/Navigation Window..."), "<control><shift>N",
       view_navigation_window_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_TOOL_MOVE },
+      "<StockItem>", GIMP_STOCK_NAVIGATION },
     NULL,
     "view/dialogs/navigation_window.html", NULL },
   { { N_("/View/Display Filters..."), NULL,
@@ -910,7 +913,7 @@ static GimpItemFactoryEntry image_entries[] =
 
   { { N_("/Dialogs/Navigation..."), NULL,
       dialogs_create_dockable_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_TOOL_MOVE },
+      "<StockItem>", GIMP_STOCK_NAVIGATION },
     "gimp-navigation-view",
     NULL, NULL },
   { { N_("/Dialogs/Images..."), NULL,
@@ -923,7 +926,8 @@ static GimpItemFactoryEntry image_entries[] =
     "gimp-document-history",
     "dialogs/document_index.html", NULL },
   { { N_("/Dialogs/Error Console..."), NULL,
-      dialogs_create_dockable_cmd_callback, 0 },
+      dialogs_create_dockable_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_WARNING },
     "gimp-error-console",
     "dialogs/error_console.html", NULL },
 
@@ -1388,11 +1392,12 @@ static GimpItemFactoryEntry dialogs_entries[] =
   SEPARATOR ("/Add Tab/---"),
 
   ADD_TAB (N_("/Add Tab/Navigation..."),       "gimp-navigation-view",
-           "<StockItem>",                      GIMP_STOCK_TOOL_MOVE),
+           "<StockItem>",                      GIMP_STOCK_NAVIGATION),
   ADD_TAB (N_("/Add Tab/Images..."),           "gimp-image-list", NULL, NULL),
   ADD_TAB (N_("/Add Tab/Document History..."), "gimp-document-history",
            "<StockItem>",                      GTK_STOCK_OPEN),
-  ADD_TAB (N_("/Add Tab/Error Console..."),    "gimp-error-console", NULL, NULL),
+  ADD_TAB (N_("/Add Tab/Error Console..."),    "gimp-error-console",
+           "<StockItem>",                      GIMP_STOCK_WARNING),
 
   SEPARATOR ("/Add Tab/---"),
 

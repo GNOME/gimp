@@ -315,7 +315,8 @@ dialogs_error_console_get (GimpDialogFactory *factory,
   g_object_add_weak_pointer (G_OBJECT (view), (gpointer *) &view);
 
   return dialogs_dockable_new (view,
-                               _("Error Console"), _("Errors"), NULL,
+                               _("Error Console"), _("Errors"),
+                               GIMP_STOCK_WARNING,
                                NULL,
                                NULL);
 }
@@ -938,7 +939,7 @@ dialogs_navigation_view_new (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (view,
                                _("Display Navigation"), _("Navigation"),
-                               GIMP_STOCK_TOOL_MOVE,
+                               GIMP_STOCK_NAVIGATION,
                                dialogs_stock_text_tab_func,
                                dialogs_set_navigation_context_func);
 }

@@ -8,124 +8,128 @@ themedatadir = $(gimpdatadir)/themes/Default/images
 ## Icons that override GTK+ default stock icons
 
 DIALOG_IMAGES = @STRIP_BEGIN@ \
-	gimp-dialog-error.png			\
-	gimp-dialog-info.png			\
-	gimp-dialog-question.png		\
-	gimp-dialog-warning.png			\
+	stock-error-64.png			\
+	stock-info-64.png			\
+	stock-question-64.png			\
+	stock-warning-64.png			\
 @STRIP_END@
 
 GTK_STOCK_IMAGES = @STRIP_BEGIN@ \
-	stock-button-delete.png			\
-	stock-button-lower.png			\
-	stock-button-new.png			\
-	stock-button-paste.png			\
-	stock-button-raise.png			\
-	stock-button-refresh.png		\
+	stock-delete-16.png			\
+	stock-lower-16.png			\
+	stock-new-16.png			\
+	stock-paste-16.png			\
+	stock-raise-16.png			\
+	stock-refresh-16.png			\
 @STRIP_END@
 
 
 ## Wilber icons for the window managaer, compiled in
 
 WILBER_IMAGES = @STRIP_BEGIN@ \
-	stock-wilber-16x16.png			\
-	stock-wilber-32x32.png			\
-	stock-wilber-48x48.png			\
-	stock-wilber-64x64.png			\
+	stock-wilber-16.png			\
+	stock-wilber-32.png			\
+	stock-wilber-48.png			\
+	stock-wilber-64.png			\
 @STRIP_END@
 
 WILBER_VARIABLES = @STRIP_BEGIN@ \
-	stock_wilber_16_16  $(srcdir)/stock-wilber-16x16.png	\
-	stock_wilber_32_32  $(srcdir)/stock-wilber-32x32.png	\
-	stock_wilber_48_48  $(srcdir)/stock-wilber-48x48.png	\
-	stock_wilber_64_64  $(srcdir)/stock-wilber-64x64.png	\
+	stock_wilber_16  $(srcdir)/stock-wilber-16.png	\
+	stock_wilber_32  $(srcdir)/stock-wilber-32.png	\
+	stock_wilber_48  $(srcdir)/stock-wilber-48.png	\
+	stock_wilber_64  $(srcdir)/stock-wilber-64.png	\
 @STRIP_END@
 
 
 ## Below are compiled in stock icons 
 
 STOCK_BUTTON_IMAGES = @STRIP_BEGIN@ \
-	stock-button-anchor.png			\
-	stock-button-duplicate.png		\
-	stock-button-edit.png			\
-	stock-button-eye.png			\
-	stock-button-linked.png			\
-	stock-button-paste-as-new.png		\
-	stock-button-paste-into.png		\
-	stock-button-reset.png			\
-	stock-button-selection-replace.png	\
-	stock-button-selection-add.png		\
-	stock-button-selection-subtract.png	\
-	stock-button-selection-intersect.png	\
-	stock-button-selection-stroke.png	\
-	stock-button-selection-to-path.png	\
-	stock-button-path-stroke.png		\
-	stock-button-hchain.png			\
-	stock-button-hchain-broken.png		\
-	stock-button-vchain.png			\
-	stock-button-vchain-broken.png		\
+	stock-anchor-16.png			\
+	stock-duplicate-16.png			\
+	stock-edit-16.png			\
+	stock-eye-20.png			\
+	stock-linked-20.png			\
+	stock-paste-as-new-16.png		\
+	stock-paste-into-16.png			\
+	stock-reset-16.png			\
+	stock-selection-replace-16.png		\
+	stock-selection-add-16.png		\
+	stock-selection-subtract-16.png		\
+	stock-selection-intersect-16.png	\
+	stock-selection-stroke-16.png		\
+	stock-selection-to-path-16.png		\
+	stock-path-stroke-16.png		\
+	stock-hchain-24.png			\
+	stock-hchain-broken-24.png		\
+	stock-vchain-24.png			\
+	stock-vchain-broken-24.png		\
+	stock-info-24.png			\
+	stock-warning-24.png			\
 @STRIP_END@
 
 STOCK_MENU_IMAGES = @STRIP_BEGIN@ \
-	stock-menu-convert-grayscale.png	\
-	stock-menu-convert-indexed.png		\
-	stock-menu-convert-rgb.png		\
-	stock-menu-merge-down.png		\
-	stock-menu-reshow-filter.png		\
-	stock-menu-rotate-180.png		\
-	stock-menu-rotate-270.png		\
-	stock-menu-rotate-90.png		\
-	stock-menu-resize.png			\
-	stock-menu-scale.png			\
-	stock-menu-selection-to-channel.png	\
-	\
-	stock-menu-navigation.png		\
-	stock-menu-qmask-off.png		\
-	stock-menu-qmask-on.png			\
+	stock-convert-grayscale-16.png		\
+	stock-convert-indexed-16.png		\
+	stock-convert-rgb-16.png		\
+	stock-merge-down-16.png			\
+	stock-reshow-filter-16.png		\
+	stock-rotate-180-16.png			\
+	stock-rotate-270-16.png			\
+	stock-rotate-90-16.png			\
+	stock-resize-16.png			\
+	stock-scale-16.png			\
+	stock-selection-to-channel-16.png	\
+	stock-navigation-16.png			\
+	stock-qmask-off-16.png			\
+	stock-qmask-on-16.png			\
+	stock-info-16.png			\
+	stock-warning-16.png			\
+	stock-wilber-16.png			\
 @STRIP_END@
 
 STOCK_WILBER_IMAGES = @STRIP_BEGIN@ \
-	stock-wilber-eek.png			\
+	stock-wilber-eek-64.png			\
 @STRIP_END@
 
 STOCK_TOOL_IMAGES = @STRIP_BEGIN@ \
-	tools/stock-tool-button-airbrush.png		\
-	tools/stock-tool-button-bezier-select.png	\
-	tools/stock-tool-button-blend.png		\
-	tools/stock-tool-button-blur.png		\
-	tools/stock-tool-button-brightness-contrast.png	\
-	tools/stock-tool-button-bucket-fill.png		\
-	tools/stock-tool-button-by-color-select.png	\
-	tools/stock-tool-button-clone.png		\
-	tools/stock-tool-button-color-balance.png	\
-	tools/stock-tool-button-color-picker.png	\
-	tools/stock-tool-button-crop.png		\
-	tools/stock-tool-button-curves.png		\
-	tools/stock-tool-button-dodge.png		\
-	tools/stock-tool-button-ellipse-select.png	\
-	tools/stock-tool-button-eraser.png		\
-	tools/stock-tool-button-flip.png		\
-	tools/stock-tool-button-free-select.png		\
-	tools/stock-tool-button-fuzzy-select.png	\
-	tools/stock-tool-button-histogram.png		\
-	tools/stock-tool-button-hue-saturation.png	\
-	tools/stock-tool-button-ink.png			\
-	tools/stock-tool-button-iscissors.png		\
-	tools/stock-tool-button-levels.png		\
-	tools/stock-tool-button-measure.png		\
-	tools/stock-tool-button-move.png		\
-	tools/stock-tool-button-paintbrush.png		\
-	tools/stock-tool-button-path.png		\
-	tools/stock-tool-button-pencil.png		\
-	tools/stock-tool-button-perspective.png		\
-	tools/stock-tool-button-posterize.png		\
-	tools/stock-tool-button-rect-select.png		\
-	tools/stock-tool-button-rotate.png		\
-	tools/stock-tool-button-scale.png		\
-	tools/stock-tool-button-shear.png		\
-	tools/stock-tool-button-smudge.png		\
-	tools/stock-tool-button-text.png		\
-	tools/stock-tool-button-threshold.png		\
-	tools/stock-tool-button-zoom.png		\
+	tools/stock-tool-airbrush-22.png		\
+	tools/stock-tool-bezier-select-22.png		\
+	tools/stock-tool-blend-22.png			\
+	tools/stock-tool-blur-22.png			\
+	tools/stock-tool-brightness-contrast-22.png	\
+	tools/stock-tool-bucket-fill-22.png		\
+	tools/stock-tool-by-color-select-22.png		\
+	tools/stock-tool-clone-22.png			\
+	tools/stock-tool-color-balance-22.png		\
+	tools/stock-tool-color-picker-22.png		\
+	tools/stock-tool-crop-22.png			\
+	tools/stock-tool-curves-22.png			\
+	tools/stock-tool-dodge-22.png			\
+	tools/stock-tool-ellipse-select-22.png		\
+	tools/stock-tool-eraser-22.png			\
+	tools/stock-tool-flip-22.png			\
+	tools/stock-tool-free-select-22.png		\
+	tools/stock-tool-fuzzy-select-22.png		\
+	tools/stock-tool-histogram-22.png		\
+	tools/stock-tool-hue-saturation-22.png		\
+	tools/stock-tool-ink-22.png			\
+	tools/stock-tool-iscissors-22.png		\
+	tools/stock-tool-levels-22.png			\
+	tools/stock-tool-measure-22.png			\
+	tools/stock-tool-move-22.png			\
+	tools/stock-tool-paintbrush-22.png		\
+	tools/stock-tool-path-22.png			\
+	tools/stock-tool-pencil-22.png			\
+	tools/stock-tool-perspective-22.png		\
+	tools/stock-tool-posterize-22.png		\
+	tools/stock-tool-rect-select-22.png		\
+	tools/stock-tool-rotate-22.png			\
+	tools/stock-tool-scale-22.png			\
+	tools/stock-tool-shear-22.png			\
+	tools/stock-tool-smudge-22.png			\
+	tools/stock-tool-text-22.png			\
+	tools/stock-tool-threshold-22.png		\
+	tools/stock-tool-zoom-22.png			\
 @STRIP_END@
 
 STOCK_IMAGES = \

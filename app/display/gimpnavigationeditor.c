@@ -53,8 +53,10 @@
 static void   gimp_navigation_view_class_init (GimpNavigationViewClass *klass);
 static void   gimp_navigation_view_init       (GimpNavigationView      *view);
 
-static GtkWidget * gimp_navigation_view_new_private (GimpDisplayShell      *shell,
-                                                     gboolean               popup);
+static void   gimp_navigation_view_destroy          (GtkObject          *object);
+
+static GtkWidget * gimp_navigation_view_new_private (GimpDisplayShell   *shell,
+                                                     gboolean            popup);
 
 static gboolean gimp_navigation_view_button_release (GtkWidget          *widget,
                                                      GdkEventButton     *bevent,
@@ -128,11 +130,15 @@ gimp_navigation_view_get_type (void)
 static void
 gimp_navigation_view_class_init (GimpNavigationViewClass *klass)
 {
-  GObjectClass *object_class;
+  GObjectClass   *object_class;
+  GtkObjectClass *gtk_object_class;
 
-  object_class = G_OBJECT_CLASS (klass);
+  object_class     = G_OBJECT_CLASS (klass);
+  gtk_object_class = GTK_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
+
+  gtk_object_class->destroy = gimp_navigation_view_destroy;
 }
 
 static void
@@ -177,6 +183,20 @@ gimp_navigation_view_init (GimpNavigationView *view)
                     view);
 
   gtk_widget_set_sensitive (GTK_WIDGET (view), FALSE);
+}
+
+static void
+gimp_navigation_view_destroy (GtkObject *object)
+{
+  GimpNavigationView *view;
+
+  view = GIMP_NAVIGATION_VIEW (object);
+
+  if (view->shell)
+    gimp_navigation_view_set_shell (view, NULL);
+
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 

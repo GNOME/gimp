@@ -72,6 +72,10 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_QMASK_OFF            "gimp-qmask-off"
 #define GIMP_STOCK_QMASK_ON             "gimp-qmask-on"
 
+#define GIMP_STOCK_INFO                 "gimp-info"
+#define GIMP_STOCK_WARNING              "gimp-warning"
+#define GIMP_STOCK_WILBER               "gimp-wilber"
+
 
 /*  only in button size:  */
 
