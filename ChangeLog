@@ -1,3 +1,8 @@
+2004-09-10  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpcolorselect.c: ported to GimpPreviewArea.
+	Destroy the GdkGC in unrealize() instead of in finalize().
+
 2004-09-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontainertreeview-dnd.c

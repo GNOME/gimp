@@ -25,11 +25,6 @@
 
 #include "config.h"
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -41,6 +36,7 @@
 #include "gimpcolorselector.h"
 #include "gimpcolorselect.h"
 #include "gimphelpui.h"
+#include "gimppreviewarea.h"
 #include "gimpstock.h"
 
 #include "libgimp/libgimp-intl.h"
@@ -129,7 +125,7 @@ struct _ColorSelectFill
 static void   gimp_color_select_class_init    (GimpColorSelectClass *klass);
 static void   gimp_color_select_init          (GimpColorSelect      *select);
 
-static void   gimp_color_select_finalize        (GObject            *object);
+static void   gimp_color_select_unrealize       (GtkWidget          *widget);
 
 static void   gimp_color_select_togg_visible    (GimpColorSelector  *selector,
                                                  gboolean            visible);
@@ -251,12 +247,12 @@ gimp_color_select_get_type (void)
 static void
 gimp_color_select_class_init (GimpColorSelectClass *klass)
 {
-  GObjectClass           *object_class   = G_OBJECT_CLASS (klass);
+  GtkWidgetClass         *widget_class   = GTK_WIDGET_CLASS (klass);
   GimpColorSelectorClass *selector_class = GIMP_COLOR_SELECTOR_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize = gimp_color_select_finalize;
+  widget_class->unrealize               = gimp_color_select_unrealize;
 
   selector_class->name                  = "GIMP";
   selector_class->help_id               = "gimp-colorselector-gimp";
@@ -287,11 +283,10 @@ gimp_color_select_init (GimpColorSelect *select)
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  select->xy_color = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_set_dither (GTK_PREVIEW (select->xy_color), GDK_RGB_DITHER_MAX);
-  gtk_preview_size (GTK_PREVIEW (select->xy_color),
-                    GIMP_COLOR_SELECTOR_SIZE, GIMP_COLOR_SELECTOR_SIZE);
-  gtk_preview_set_expand (GTK_PREVIEW (select->xy_color), TRUE);
+  select->xy_color = gimp_preview_area_new ();
+  gtk_widget_set_size_request (select->xy_color,
+                               GIMP_COLOR_SELECTOR_SIZE,
+                               GIMP_COLOR_SELECTOR_SIZE);
   gtk_widget_set_events (select->xy_color, COLOR_AREA_EVENT_MASK);
   gtk_container_add (GTK_CONTAINER (frame), select->xy_color);
   gtk_widget_show (select->xy_color);
@@ -317,11 +312,10 @@ gimp_color_select_init (GimpColorSelect *select)
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  select->z_color = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_set_dither (GTK_PREVIEW (select->z_color), GDK_RGB_DITHER_MAX);
-  gtk_preview_size (GTK_PREVIEW (select->z_color),
-                    GIMP_COLOR_SELECTOR_BAR_SIZE, GIMP_COLOR_SELECTOR_SIZE);
-  gtk_preview_set_expand (GTK_PREVIEW (select->z_color), TRUE);
+  select->z_color = gimp_preview_area_new ();
+  gtk_widget_set_size_request (select->z_color,
+                               GIMP_COLOR_SELECTOR_BAR_SIZE,
+                               GIMP_COLOR_SELECTOR_SIZE);
   gtk_widget_set_events (select->z_color, COLOR_AREA_EVENT_MASK);
   gtk_container_add (GTK_CONTAINER (frame), select->z_color);
   gtk_widget_show (select->z_color);
@@ -390,9 +384,9 @@ gimp_color_select_init (GimpColorSelect *select)
 }
 
 static void
-gimp_color_select_finalize (GObject *object)
+gimp_color_select_unrealize (GtkWidget *widget)
 {
-  GimpColorSelect *select = GIMP_COLOR_SELECT (object);
+  GimpColorSelect *select = GIMP_COLOR_SELECT (widget);
 
   if (select->gc)
     {
@@ -400,7 +394,7 @@ gimp_color_select_finalize (GObject *object)
       select->gc = NULL;
     }
 
-  G_OBJECT_CLASS (parent_class)->finalize (object);
+  GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
 }
 
 static void
@@ -856,8 +850,10 @@ gimp_color_select_image_fill (GtkWidget           *preview,
         if (csf.update)
           (* csf.update) (&csf);
 
-        gtk_preview_draw_row (GTK_PREVIEW (preview),
-                              csf.buffer, 0, csf.y, csf.width);
+        gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                                0, csf.y, csf.width, 1,
+                                GIMP_RGB_IMAGE,
+                                csf.buffer, csf.width * 3);
       }
     }
 }
