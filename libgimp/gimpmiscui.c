@@ -39,8 +39,29 @@
 #include "gimpintl.h"
 
 
-#define PREVIEW_SIZE  128 
+#define PREVIEW_SIZE	128 
+#define PREVIEW_BPP	3
 
+static void
+gimp_fixme_preview_put_in_frame (GimpFixMePreview* preview)
+{
+  GtkWidget *frame, *abox;
+  
+  preview->frame = gtk_frame_new (_("Preview"));
+  gtk_widget_show (preview->frame);
+  
+  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  gtk_container_set_border_width (GTK_CONTAINER (abox), 4);
+  gtk_container_add (GTK_CONTAINER (preview->frame), abox);
+  gtk_widget_show (abox);
+  
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_container_add (GTK_CONTAINER (abox), frame);
+  gtk_widget_show (frame);
+  
+  gtk_container_add (GTK_CONTAINER (frame), preview->widget);
+}
 
 GimpFixMePreview*
 gimp_fixme_preview_new (GimpDrawable *drawable,
@@ -49,29 +70,13 @@ gimp_fixme_preview_new (GimpDrawable *drawable,
   GimpFixMePreview *preview = g_new0 (GimpFixMePreview, 1);
 
   preview->widget = gtk_preview_new (GTK_PREVIEW_COLOR);
+  preview->is_gray = FALSE;
 
   if (drawable)
     gimp_fixme_preview_fill_with_thumb (preview, drawable->drawable_id);
 
   if (has_frame)
-    {
-      GtkWidget *frame, *abox;
-
-      preview->frame = gtk_frame_new (_("Preview"));
-      gtk_widget_show (preview->frame);
-
-      abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-      gtk_container_set_border_width (GTK_CONTAINER (abox), 4);
-      gtk_container_add (GTK_CONTAINER (preview->frame), abox);
-      gtk_widget_show (abox);
-
-      frame = gtk_frame_new (NULL);
-      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-      gtk_container_add (GTK_CONTAINER (abox), frame);
-      gtk_widget_show (frame);
-
-      gtk_container_add (GTK_CONTAINER (frame), preview->widget);
-    }
+    gimp_fixme_preview_put_in_frame (preview);
 
   return preview;
 }
@@ -84,6 +89,107 @@ gimp_fixme_preview_free (GimpFixMePreview *preview)
   g_free (preview->odd);
   g_free (preview->cache);
   g_free (preview);
+}
+
+GimpFixMePreview*
+gimp_fixme_preview_new2 (GimpImageType drawable_type, gboolean has_frame)
+{
+  GimpFixMePreview *preview = g_new0 (GimpFixMePreview, 1);
+  guchar    *buf     = NULL;
+  gint       y;
+
+  switch (drawable_type)
+    {
+    case GIMP_GRAY_IMAGE:
+    case GIMP_GRAYA_IMAGE:
+      preview->widget = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
+      buf     = g_malloc0 (PREVIEW_SIZE);
+      preview->is_gray = TRUE;
+      break;
+
+    case GIMP_RGB_IMAGE:
+    case GIMP_RGBA_IMAGE:
+      preview->widget = gtk_preview_new (GTK_PREVIEW_COLOR);
+      buf     = g_malloc0 (PREVIEW_SIZE * 3);
+      preview->is_gray = FALSE;
+      break;
+
+    default:
+      g_assert_not_reached ();
+      break;
+    }
+
+  gtk_preview_size (GTK_PREVIEW (preview->widget), PREVIEW_SIZE, PREVIEW_SIZE);
+  
+  for (y = 0; y < PREVIEW_SIZE; y++) 
+    gtk_preview_draw_row (GTK_PREVIEW (preview->widget), buf, 0, y, 
+			  PREVIEW_SIZE);
+
+  g_free (buf);
+
+  if (has_frame)
+    gimp_fixme_preview_put_in_frame (preview);
+
+  preview->buffer = GTK_PREVIEW (preview->widget)->buffer;
+  preview->width  = GTK_PREVIEW (preview->widget)->buffer_width;
+  preview->height = GTK_PREVIEW (preview->widget)->buffer_height;
+  preview->rowstride = preview->width * ((preview->is_gray) ? 1 : 3);
+
+  return preview;
+}
+
+void
+gimp_fixme_preview_put_pixel (GimpFixMePreview *preview,
+			      gint x,
+			      gint y,
+			      const guchar *pixel)
+{
+  guchar *dest;
+
+  g_assert (x >= 0 && x < PREVIEW_SIZE);
+  g_assert (y >= 0 && y < PREVIEW_SIZE);
+
+  dest = preview->buffer + y * preview->rowstride;
+
+  if (preview->is_gray)
+    {
+      dest += x;
+      dest[0] = pixel[0];
+    }
+  else
+    {
+      dest += x * 3;
+      dest[0] = pixel[0];
+      dest[1] = pixel[1];
+      dest[2] = pixel[2];
+    }
+}
+
+void
+gimp_fixme_preview_get_pixel (GimpFixMePreview *preview,
+			      gint x,
+			      gint y,
+			      guchar *pixel)
+{
+  guchar *src;
+
+  g_assert (x >= 0 && x < PREVIEW_SIZE);
+  g_assert (y >= 0 && y < PREVIEW_SIZE);
+
+  src = preview->buffer + y * preview->rowstride;
+
+  if (preview->is_gray)
+    {
+      src += x;
+      pixel[0] = src[0];
+    }
+  else
+    {
+      src += x * 3;
+      pixel[0] = src[0];
+      pixel[1] = src[1];
+      pixel[2] = src[2];
+    }
 }
 
 void

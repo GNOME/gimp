@@ -1,3 +1,14 @@
+2003-02-04  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/polar.c (dialog_update_preview): use 
+	gimp_get_bg_guchar routine.
+
+	* libgimp/gimpmiscui.[ch]: extracted a few reusable routines from
+	plasma.c and put them in here.
+
+	* plug-ins/common/plasma.c: fix for #105062 plus the usual code
+	clean-up.
+
 2003-02-04  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpfontselection-dialog.c: use gtk_window_present()

@@ -49,11 +49,12 @@ typedef struct {
   gint	     width;
   gint	     height;
   gint       rowstride;
-  gint       bpp;
+  gint       bpp;		/* bpp of the drawable */
   guchar    *cmap;
   gint       ncolors;
   gdouble    scale_x;
   gdouble    scale_y;
+  gboolean   is_gray;
 } GimpFixMePreview;
 
 typedef void (*GimpFixeMePreviewFunc)(guchar *src, guchar *dest, 
@@ -61,6 +62,8 @@ typedef void (*GimpFixeMePreviewFunc)(guchar *src, guchar *dest,
 
 GimpFixMePreview *gimp_fixme_preview_new (GimpDrawable *drawable,
 					  gboolean has_frame);
+GimpFixMePreview *gimp_fixme_preview_new2 (GimpImageType drawable_type, 
+					   gboolean has_frame);
 void gimp_fixme_preview_free (GimpFixMePreview *preview);
 
 void gimp_fixme_preview_update (GimpFixMePreview *preview,
@@ -77,6 +80,15 @@ void gimp_fixme_preview_do_row (GimpFixMePreview *preview,
 				gint    row,
 				gint    width,
 				guchar *src);
+
+void gimp_fixme_preview_put_pixel (GimpFixMePreview *preview,
+				   gint x,
+				   gint y,
+				   const guchar *pixel);
+void gimp_fixme_preview_get_pixel (GimpFixMePreview *preview,
+				   gint x,
+				   gint y,
+				   guchar *pixel);
 
 GList *gimp_plug_in_parse_path (gchar *path_name, const gchar *dir_name);
 
