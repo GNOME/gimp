@@ -155,10 +155,10 @@ different color spaces.
 
 </para>
 
-@hsv: 
-@red: 
-@green: 
-@blue: 
+@rgb: 
+@hue: 
+@saturation: 
+@value: 
 
 
 <!-- ##### FUNCTION gimp_hsv_to_rgb4 ##### -->
