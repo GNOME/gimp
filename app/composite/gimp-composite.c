@@ -177,7 +177,9 @@ struct {
   char announce_function;
 } gimp_composite_debug;
 
-struct GimpCompositeOptions gimp_composite_options;
+struct GimpCompositeOptions gimp_composite_options = {
+		GIMP_COMPOSITE_OPTION_USE
+};
 
 char *gimp_composite_function_name[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N];
 void (*gimp_composite_function[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N])(GimpCompositeContext *);
@@ -303,41 +305,42 @@ gimp_composite_init (void)
   if ((p = g_getenv ("GIMP_COMPOSITE")))
     {
       gimp_composite_options.bits = strtoul(p, NULL, 16);
-      g_printerr ("gimp_composite_options: %08lx\n", gimp_composite_options.bits);
-      if (gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_USE) {
-        g_printerr ("gimp_composite: yes\n");
-      }
     }
+
+		g_printerr ("gimp_composite: use=%s, verbose=%s\n",
+														(gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_USE) ? "yes" : "no",
+														(gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_VERBOSE) ? "yes" : "no");
 
   if (! (gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_INITIALISED))
     {
 						gimp_composite_generic_install();
+						g_printerr ("gimp-composite:");
 #ifdef ARCH_X86
 #ifdef USE_MMX																		/* USE_MMX here means "use cpu optimisations" XXX */
 						if (cpu_accel() & CPU_ACCEL_X86_MMX) {
-								g_printerr ("gimp-composite: installing mmx optimisations\n");
+								g_printerr (" mmx");
 								gimp_composite_mmx_install();
 						}
 
 						if (cpu_accel() & CPU_ACCEL_X86_SSE) {
-								g_printerr ("gimp-composite: installing sse optimisations\n");
+								g_printerr (" sse");
 								gimp_composite_sse_install();
 						}
 #if 0
 						if (cpu_accel() & CPU_ACCEL_X86_MMXEXT) {
-								g_printerr ("gimp-composite: installing mmxext optimisations\n");
+								g_printerr (" mmxext");
 								gimp_composite_mmxext_install();
 						}
 #endif
 #if 0
 						if (cpu_accel() & CPU_ACCEL_X86_SSE2) {
-								g_printerr ("gimp-composite: installing sse2 optimisations\n");
+								g_printerr (" sse2");
 								gimp_composite_sse2_install();
 						}
 #endif
 #if 0
 						if (cpu_accel() & CPU_ACCEL_X86_3DNOW) {
-								g_printerr ("gimp-composite: installing 3dnow optimisations\n");
+								g_printerr (" 3dnow");
 								gimp_composite_3dnow_install();
 						}
 #endif
@@ -345,12 +348,19 @@ gimp_composite_init (void)
 #ifdef ARCH_PPC
 #if 0
 						if (cpu_accel() & CPU_ACCEL_PPC_ALTIVEC) {
-								g_printerr ("gimp-composite: installing altivec optimisations\n");
+								g_printerr (" altivec");
 								gimp_composite_altivec_install();
 						}
 #endif
 #endif
+#ifdef ARCH_SPARC
+#if 0
+						g_printerr (" vis");
+						gimp_composite_vis_install();
 #endif
+#endif
+#endif
+						g_printerr ("\n");
 
       gimp_composite_options.bits |= GIMP_COMPOSITE_OPTION_INITIALISED;
     }

@@ -1,3 +1,10 @@
+2003-08-17  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/gimp-composite.c (gimp_composite_init): make gimp-composite
+	  functions the default.
+
+	* app/composite/make-installer.py: changed option --n_pixels to --n-pixels
+
 2003-08-17  Manish Singh  <yosh@gimp.org>
 
 	* tools/pdbgen/app.pl: reorg, fix reverse logic for parasite utf8
