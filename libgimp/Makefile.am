@@ -47,6 +47,8 @@ libgimpi_a_SOURCES = \
 	gimpprotocol.h		\
 	gimpquerybox.c		\
 	gimpquerybox.h		\
+	gimpsignal.c            \
+	gimpsignal.h            \
 	gimpsizeentry.c		\
 	gimpsizeentry.h		\
 	gimpunitmenu.c		\

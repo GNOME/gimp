@@ -1,8 +1,28 @@
+2000-04-21 Garry R. Osgood <gosgood@idt.net>
+
+	* app/main.c
+	* libgimp/Makefile.am
+	* libgimp/gimp.c
+	* libgimp/gimpsignal.c (New )
+	* libgimp/gimpsignal.h (New )
+	Patch by Austin Donnelly <austin@gimp.org> to address #2742. (I took
+	the liberty of moving it to libgimp for general consumption, & fixed a
+	typo) SYS5R4 unix's were failing when signals arrived at processes in
+	system calls, a behavior in accordance with POSIX specs. Patch
+	introduces a gimp_signal_private() workalike replacement for
+	signal(2), layered over sigaction(2) which internally requests the
+	signal environment to restart system calls instead of failing. This is
+	POSIX spec 1170 extension behavior, but one that appears to be generally
+	supported. Thanks due to Tim Mooney <mooney@dogbert.cc.ndsu.nodak.edu>
+	for testing this on various flavors of OSF/1 boxes where #2742 seemed
+	especially common.
+
 2000-04-20  Nick Lamb  <njl195@zepler.org.uk>
 
-	* plug-ins/common/png.c: Revert Sven's changes, I am not that
-	silly Sven, read the code more carefully and THINK about it.
-	We do not want to leak Gimp Images.
+	* plug-ins/common/png.c: Revert Sven's changes, I am
+ 	not that silly Sven, read the code more carefully
+ 	and THINK about it.  We do not want to leak Gimp
+ 	Images.
 
 2000-04-20  Sven Neumann  <sven@gimp.org>
 

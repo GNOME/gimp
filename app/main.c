@@ -40,6 +40,10 @@
 #include "libgimp/gimpfeatures.h"
 #include "libgimp/gimpenv.h"
 
+#ifndef  G_OS_WIN32
+#include "libgimp/gimpsignal.h"
+#endif
+
 #include "appenv.h"
 #include "app_procs.h"
 #include "errors.h"
@@ -50,11 +54,10 @@
 #ifdef G_OS_WIN32
 #include <windows.h>
 #else
-static RETSIGTYPE on_signal (gint);
-#ifdef SIGCHLD
-static RETSIGTYPE on_sig_child (gint);
+void              on_signal       (gint);
+void              on_sig_child    (gint);
 #endif
-#endif
+
 static void       init            (void);
 static void	  on_error        (const gchar    *domain,
 				   GLogLevelFlags  flags,
@@ -316,6 +319,7 @@ main (int    argc,
   g_set_message_handler ((GPrintFunc) gimp_message_func);
 
 #ifndef G_OS_WIN32
+
   /* No use catching these on Win32, the user won't get any 
    * stack trace from glib anyhow. It's better to let Windows inform
    * about the program error, and offer debugging (if the use
@@ -324,38 +328,20 @@ main (int    argc,
    */
 
   /* Handle some signals */
-#ifdef SIGHUP
-  signal (SIGHUP, on_signal);
-#endif
-#ifdef SIGINT
-  signal (SIGINT, on_signal);
-#endif
-#ifdef SIGQUIT
-  signal (SIGQUIT, on_signal);
-#endif
-#ifdef SIGABRT
-  signal (SIGABRT, on_signal);
-#endif
-#ifdef SIGBUS
-  signal (SIGBUS, on_signal);
-#endif
-#ifdef SIGSEGV
-  signal (SIGSEGV, on_signal);
-#endif
-#ifdef SIGPIPE
-  signal (SIGPIPE, on_signal);
-#endif
-#ifdef SIGTERM
-  signal (SIGTERM, on_signal);
-#endif
-#ifdef SIGFPE
-  signal (SIGFPE, on_signal);
-#endif
 
-#ifdef SIGCHLD
+  gimp_signal_syscallrestart (SIGHUP,  on_signal);
+  gimp_signal_syscallrestart (SIGINT,  on_signal);
+  gimp_signal_syscallrestart (SIGQUIT, on_signal);
+  gimp_signal_syscallrestart (SIGABRT, on_signal);
+  gimp_signal_syscallrestart (SIGBUS,  on_signal);
+  gimp_signal_syscallrestart (SIGSEGV, on_signal);
+  gimp_signal_syscallrestart (SIGPIPE, on_signal);
+  gimp_signal_syscallrestart (SIGTERM, on_signal);
+  gimp_signal_syscallrestart (SIGFPE,  on_signal);
+
   /* Handle child exits */
-  signal (SIGCHLD, on_sig_child);
-#endif
+
+  gimp_signal_syscallrestart (SIGCHLD, on_sig_child);
 
 #endif
 
@@ -414,11 +400,13 @@ on_error (const gchar    *domain,
   gimp_fatal_error ("%s", msg);
 }
 
-static gboolean caught_fatal_sig = FALSE;
-
 #ifndef G_OS_WIN32
 
-static RETSIGTYPE
+/* gimp core signal handler for fatal signals */
+
+static gboolean caught_fatal_sig = FALSE;
+
+static void
 on_signal (gint sig_num)
 {
   if (caught_fatal_sig)
@@ -427,59 +415,52 @@ on_signal (gint sig_num)
 
   switch (sig_num)
     {
-#ifdef SIGHUP
+
     case SIGHUP:
       gimp_terminate ("sighup caught");
       break;
-#endif
-#ifdef SIGINT
+
     case SIGINT:
       gimp_terminate ("sigint caught");
       break;
-#endif
-#ifdef SIGQUIT
+
     case SIGQUIT:
       gimp_terminate ("sigquit caught");
       break;
-#endif
-#ifdef SIGABRT
+
     case SIGABRT:
       gimp_terminate ("sigabrt caught");
       break;
-#endif
-#ifdef SIGBUS
+
     case SIGBUS:
       gimp_fatal_error ("sigbus caught");
       break;
-#endif
-#ifdef SIGSEGV
+
     case SIGSEGV:
       gimp_fatal_error ("sigsegv caught");
       break;
-#endif
-#ifdef SIGPIPE
+
     case SIGPIPE:
       gimp_terminate ("sigpipe caught");
       break;
-#endif
-#ifdef SIGTERM
+
     case SIGTERM:
       gimp_terminate ("sigterm caught");
       break;
-#endif
-#ifdef SIGFPE
+
     case SIGFPE:
       gimp_fatal_error ("sigfpe caught");
       break;
-#endif
+
     default:
       gimp_fatal_error ("unknown signal");
       break;
     }
 }
 
-#ifdef SIGCHLD
-static RETSIGTYPE
+/* gimp core signal handler for death-of-child signals */
+
+static void
 on_sig_child (gint sig_num)
 {
   gint pid;
@@ -492,6 +473,5 @@ on_sig_child (gint sig_num)
 	break;
     }
 }
-#endif /* SIGCHLD */
 
 #endif /* !G_OS_WIN32 */

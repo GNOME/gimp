@@ -20,9 +20,13 @@
 
 #include <locale.h>
 #include <errno.h>
-#include <signal.h>
 #include <stdarg.h>
 #include <stdio.h>
+#ifndef G_OS_WIN32
+#include "gimpsignal.h"
+#else
+#include <signal.h>
+#endif
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
@@ -73,17 +77,17 @@ void gimp_read_expect_msg   (WireMessage *msg, gint type);
 
 
 #ifndef G_OS_WIN32
-static RETSIGTYPE gimp_signal          (gint signum);
+static void       gimp_plugin_signalhandler (gint signum);
 #endif
-static int        gimp_write           (GIOChannel *channel , guint8 *buf, gulong count);
-static int        gimp_flush           (GIOChannel *channel);
-static void       gimp_loop            (void);
-static void       gimp_config          (GPConfig *config);
-static void       gimp_proc_run        (GPProcRun *proc_run);
-static void       gimp_temp_proc_run   (GPProcRun *proc_run);
-static void       gimp_message_func    (gchar *str);
-static void       gimp_process_message (WireMessage *msg);
-static void       gimp_close           (void);
+static int        gimp_write                (GIOChannel *channel , guint8 *buf, gulong count);
+static int        gimp_flush                (GIOChannel *channel);
+static void       gimp_loop                 (void);
+static void       gimp_config               (GPConfig *config);
+static void       gimp_proc_run             (GPProcRun *proc_run);
+static void       gimp_temp_proc_run        (GPProcRun *proc_run);
+static void       gimp_message_func         (gchar *str);
+static void       gimp_process_message      (WireMessage *msg);
+static void       gimp_close                (void);
 
 
 GIOChannel *_readchannel  = NULL;
@@ -193,26 +197,14 @@ gimp_main (int   argc,
    * about the program error, and offer debugging if the plug-in
    * has been built with MSVC, and the user has MSVC installed.
    */
-#ifdef SIGHUP
-  signal (SIGHUP, gimp_signal);
-#endif
-  signal (SIGINT, gimp_signal);
-#ifdef SIGQUIT
-  signal (SIGQUIT, gimp_signal);
-#endif
-#ifdef SIGBUS
-  signal (SIGBUS, gimp_signal);
-#endif
-#ifdef SIGSEGV
-  signal (SIGSEGV, gimp_signal);
-#endif
-#ifdef SIGPIPE
-  signal (SIGPIPE, gimp_signal);
-#endif
-  signal (SIGTERM, gimp_signal);
-#ifdef SIGFPE
-  signal (SIGFPE, gimp_signal);
-#endif
+  gimp_signal_syscallrestart (SIGHUP,  gimp_plugin_signalhandler);
+  gimp_signal_syscallrestart (SIGINT,  gimp_plugin_signalhandler);
+  gimp_signal_syscallrestart (SIGQUIT, gimp_plugin_signalhandler);
+  gimp_signal_syscallrestart (SIGBUS,  gimp_plugin_signalhandler);
+  gimp_signal_syscallrestart (SIGSEGV, gimp_plugin_signalhandler);
+  gimp_signal_syscallrestart (SIGPIPE, gimp_plugin_signalhandler);
+  gimp_signal_syscallrestart (SIGTERM, gimp_plugin_signalhandler);
+  gimp_signal_syscallrestart (SIGFPE,  gimp_plugin_signalhandler);
 #endif
 
 #ifndef G_OS_WIN32
@@ -1145,8 +1137,8 @@ gimp_request_wakeups (void)
 }
 
 #ifndef G_OS_WIN32
-static RETSIGTYPE
-gimp_signal (gint signum)
+static void
+gimp_plugin_signalhandler (gint signum)
 {
   static gboolean caught_fatal_sig = FALSE;
 
