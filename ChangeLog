@@ -1,3 +1,10 @@
+2004-09-30  Sven Neumann  <sven@gimp.org>
+
+	* README: added missing linebreak.
+
+	* plug-ins/imagemap/imap_about.c (do_about_dialog): should not
+	mark email address for translation.
+
 2004-09-30  Daniel Egger  <degger@fhm.edu>
 
 	* README: Applied proofreading patch from Jonathan Levi

@@ -34,17 +34,16 @@ void
 do_about_dialog(void)
 {
    static DefaultDialog_t *dialog;
-   if (!dialog) {
-      dialog = make_default_dialog(_("About"));
-      default_dialog_hide_cancel_button(dialog);
-      default_dialog_hide_apply_button(dialog);
-      default_dialog_hide_help_button(dialog);
-      default_dialog_set_label(dialog, _("Imagemap plug-in 2.2"));
-      default_dialog_set_label(
-	 dialog, _("Copyright(c) 1999-2004 by Maurits Rijk"));
-      default_dialog_set_label(dialog, _("m.rijk@chello.nl"));
-      default_dialog_set_label(
-	 dialog, _("  Released under the GNU General Public License  "));
-   }
-   default_dialog_show(dialog);
+   if (!dialog)
+     {
+       dialog = make_default_dialog (_("About"));
+       default_dialog_hide_cancel_button (dialog);
+       default_dialog_hide_apply_button (dialog);
+       default_dialog_hide_help_button (dialog);
+       default_dialog_set_label (dialog, _("Imagemap plug-in 2.2"));
+       default_dialog_set_label (dialog, _("Copyright(c) 1999-2004 by Maurits Rijk"));
+       default_dialog_set_label (dialog, "m.rijk@chello.nl");
+       default_dialog_set_label (dialog, _("Released under the GNU General Public License"));
+     }
+   default_dialog_show (dialog);
 }
