@@ -601,7 +601,7 @@ gimp_list_item_name_changed (GimpViewable *viewable,
       gchar *name    = NULL;
       gchar *tooltip = NULL;
 
-      name = list_item->get_name_func (GTK_WIDGET (list_item), &tooltip);
+      name = list_item->get_name_func (G_OBJECT (list_item), &tooltip);
 
       gtk_label_set_text (GTK_LABEL (list_item->name_label), name);
       gimp_help_set_help_data (GTK_WIDGET (list_item), tooltip, NULL);

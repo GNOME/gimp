@@ -46,6 +46,13 @@ static gsize   gimp_viewable_get_memsize        (GimpObject        *object);
 
 static void    gimp_viewable_real_invalidate_preview (GimpViewable *viewable);
 
+static void    gimp_viewable_real_get_preview_size   (GimpViewable *viewable,
+                                                      gint          size,
+                                                      gboolean      popup,
+                                                      gboolean      dot_for_dot,
+                                                      gint         *width,
+                                                      gint         *height);
+
 
 static guint  viewable_signals[LAST_SIGNAL] = { 0 };
 
@@ -120,6 +127,7 @@ gimp_viewable_class_init (GimpViewableClass *klass)
   klass->invalidate_preview      = gimp_viewable_real_invalidate_preview;
   klass->size_changed            = NULL;
 
+  klass->get_preview_size        = gimp_viewable_real_get_preview_size;
   klass->get_preview             = NULL;
   klass->get_new_preview         = NULL;
 }
@@ -165,6 +173,27 @@ gimp_viewable_get_memsize (GimpObject *object)
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
 }
 
+static void
+gimp_viewable_real_invalidate_preview (GimpViewable *viewable)
+{
+  g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
+
+  g_object_set_qdata (G_OBJECT (viewable), quark_preview_temp_buf, NULL);
+  g_object_set_qdata (G_OBJECT (viewable), quark_preview_pixbuf, NULL);
+}
+
+static void
+gimp_viewable_real_get_preview_size (GimpViewable *viewable,
+                                     gint          size,
+                                     gboolean      popup,
+                                     gboolean      dot_for_dot,
+                                     gint         *width,
+                                     gint         *height)
+{
+  *width  = size;
+  *height = size;
+}
+
 void
 gimp_viewable_invalidate_preview (GimpViewable *viewable)
 {
@@ -181,13 +210,65 @@ gimp_viewable_size_changed (GimpViewable *viewable)
   g_signal_emit (viewable, viewable_signals[SIZE_CHANGED], 0);
 }
 
-static void
-gimp_viewable_real_invalidate_preview (GimpViewable *viewable)
+void
+gimp_viewable_calc_preview_size (GimpViewable *viewable,
+                                 gint          aspect_width,
+                                 gint          aspect_height,
+                                 gint          width,
+                                 gint          height,
+                                 gboolean      dot_for_dot,
+                                 gdouble       xresolution,
+                                 gdouble       yresolution,
+                                 gint         *return_width,
+                                 gint         *return_height,
+                                 gboolean     *scaling_up)
 {
+  gdouble xratio;
+  gdouble yratio;
+
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
 
-  g_object_set_qdata (G_OBJECT (viewable), quark_preview_temp_buf, NULL);
-  g_object_set_qdata (G_OBJECT (viewable), quark_preview_pixbuf, NULL);
+  if (aspect_width > aspect_height)
+    {
+      xratio = yratio = (gdouble) width / (gdouble) aspect_width;
+    }
+  else
+    {
+      xratio = yratio = (gdouble) height / (gdouble) aspect_height;
+    }
+
+  if (dot_for_dot && xresolution != yresolution)
+    {
+      yratio *= xresolution / yresolution;
+    }
+
+  width  = RINT (xratio * (gdouble) aspect_width);
+  height = RINT (yratio * (gdouble) aspect_height);
+
+  if (width  < 1) width  = 1;
+  if (height < 1) height = 1;
+
+  if (return_width)  *return_width  = width;
+  if (return_height) *return_height = height;
+  if (scaling_up)    *scaling_up = (xratio > 1.0) || (yratio > 1.0);
+}
+
+void
+gimp_viewable_get_preview_size (GimpViewable *viewable,
+                                gint          size,
+                                gboolean      popup,
+                                gboolean      dot_for_dot,
+                                gint         *width,
+                                gint         *height)
+{
+  g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
+  g_return_if_fail (size > 0);
+  g_return_if_fail (width != NULL);
+  g_return_if_fail (height != NULL);
+
+  GIMP_VIEWABLE_GET_CLASS (viewable)->get_preview_size (viewable, size,
+                                                        popup, dot_for_dot,
+                                                        width, height);
 }
 
 TempBuf *

@@ -273,16 +273,19 @@ gimp_selection_editor_abox_resized (GtkWidget           *widget,
       gint     height;
       gboolean dummy;
 
-      gimp_preview_calc_size (preview,
-                              image_editor->gimage->width,
-                              image_editor->gimage->height,
-                              MIN (allocation->width,  GIMP_PREVIEW_MAX_SIZE),
-                              MIN (allocation->height, GIMP_PREVIEW_MAX_SIZE),
-                              image_editor->gimage->xresolution,
-                              image_editor->gimage->yresolution,
-                              &width,
-                              &height,
-                              &dummy);
+      gimp_viewable_calc_preview_size (preview->viewable,
+                                       image_editor->gimage->width,
+                                       image_editor->gimage->height,
+                                       MIN (allocation->width,
+                                            GIMP_PREVIEW_MAX_SIZE),
+                                       MIN (allocation->height,
+                                            GIMP_PREVIEW_MAX_SIZE),
+                                       preview->dot_for_dot,
+                                       image_editor->gimage->xresolution,
+                                       image_editor->gimage->yresolution,
+                                       &width,
+                                       &height,
+                                       &dummy);
 
       if (width > allocation->width)
         {

@@ -54,6 +54,50 @@ static void      gimp_drawable_preview_scale   (GimpImageBaseType  type,
 
 /*  public functions  */
 
+void
+gimp_drawable_get_preview_size (GimpViewable *viewable,
+                                gint          size,
+                                gboolean      is_popup,
+                                gboolean      dot_for_dot,
+                                gint         *width,
+                                gint         *height)
+{
+  GimpDrawable *drawable;
+  GimpImage    *gimage;
+
+  drawable = GIMP_DRAWABLE (viewable);
+  gimage   = gimp_item_get_image (GIMP_ITEM (drawable));
+
+  if (gimage && ! is_popup)
+    {
+      gimp_viewable_calc_preview_size (viewable,
+                                       gimage->width,
+                                       gimage->height,
+                                       size,
+                                       size,
+                                       dot_for_dot,
+                                       gimage->xresolution,
+                                       gimage->yresolution,
+                                       width,
+                                       height,
+                                       NULL);
+    }
+  else
+    {
+      gimp_viewable_calc_preview_size (viewable,
+                                       drawable->width,
+                                       drawable->height,
+                                       size,
+                                       size,
+                                       dot_for_dot,
+                                       1.0,
+                                       1.0,
+                                       width,
+                                       height,
+                                       NULL);
+    }
+}
+
 TempBuf *
 gimp_drawable_get_preview (GimpViewable *viewable,
 			   gint          width,

@@ -36,10 +36,6 @@ static void   gimp_gradient_preview_class_init (GimpGradientPreviewClass *klass)
 static void   gimp_gradient_preview_init       (GimpGradientPreview      *preview);
 
 static void        gimp_gradient_preview_render       (GimpPreview *preview);
-static void        gimp_gradient_preview_get_size     (GimpPreview *preview,
-                                                       gint         size,
-                                                       gint        *width,
-                                                       gint        *height);
 static gboolean    gimp_gradient_preview_needs_popup  (GimpPreview *preview);
 static GtkWidget * gimp_gradient_preview_create_popup (GimpPreview *preview);
 
@@ -84,7 +80,6 @@ gimp_gradient_preview_class_init (GimpGradientPreviewClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  preview_class->get_size     = gimp_gradient_preview_get_size;
   preview_class->render       = gimp_gradient_preview_render;
   preview_class->needs_popup  = gimp_gradient_preview_needs_popup;
   preview_class->create_popup = gimp_gradient_preview_create_popup;
@@ -93,16 +88,6 @@ gimp_gradient_preview_class_init (GimpGradientPreviewClass *klass)
 static void
 gimp_gradient_preview_init (GimpGradientPreview *gradient_preview)
 {
-}
-
-static void
-gimp_gradient_preview_get_size (GimpPreview *preview,
-				gint         size,
-				gint        *width,
-				gint        *height)
-{
-  *width  = size;
-  *height = size / 2;
 }
 
 static void

@@ -86,10 +86,6 @@ struct _GimpPreviewClass
 
   /*  virtual functions  */
   void        (* render)           (GimpPreview *preview);
-  void        (* get_size)         (GimpPreview *preview,
-				    gint         size,
-				    gint        *width,
-				    gint        *height);
   gboolean    (* needs_popup)      (GimpPreview *preview);
   GtkWidget * (* create_popup)     (GimpPreview *preview);
 };
@@ -136,16 +132,6 @@ void         gimp_preview_update           (GimpPreview   *preview);
 
 /*  protected  */
 
-void         gimp_preview_calc_size        (GimpPreview   *preview,
-					    gint           aspect_width,
-					    gint           aspect_height,
-					    gint           width,
-					    gint           height,
-					    gdouble        xresolution,
-					    gdouble        yresolution,
-					    gint          *return_width,
-					    gint          *return_height,
-					    gboolean      *scaling_up);
 void         gimp_preview_render_and_flush (GimpPreview   *preview,
 					    TempBuf       *temp_buf,
 					    gint           channel);

@@ -109,6 +109,12 @@ static gsize    gimp_image_get_memsize           (GimpObject     *object);
 
 static void     gimp_image_invalidate_preview    (GimpViewable   *viewable);
 static void     gimp_image_size_changed          (GimpViewable   *viewable);
+static void     gimp_image_get_preview_size      (GimpViewable   *viewable,
+                                                  gint            size,
+                                                  gboolean        is_popup,
+                                                  gboolean        dot_for_dot,
+                                                  gint           *width,
+                                                  gint           *height);
 static TempBuf *gimp_image_get_preview           (GimpViewable   *gimage,
 						  gint            width,
 						  gint            height);
@@ -393,6 +399,7 @@ gimp_image_class_init (GimpImageClass *klass)
 
   viewable_class->invalidate_preview  = gimp_image_invalidate_preview;
   viewable_class->size_changed        = gimp_image_size_changed;
+  viewable_class->get_preview_size    = gimp_image_get_preview_size;
   viewable_class->get_preview         = gimp_image_get_preview;
   viewable_class->get_new_preview     = gimp_image_get_new_preview;
 
@@ -675,6 +682,31 @@ gimp_image_size_changed (GimpViewable *viewable)
   gimp_container_foreach (gimage->channels,
 			  (GFunc) gimp_viewable_size_changed,
 			  NULL);
+}
+
+static void
+gimp_image_get_preview_size (GimpViewable *viewable,
+                             gint          size,
+                             gboolean      is_popup,
+                             gboolean      dot_for_dot,
+                             gint         *width,
+                             gint         *height)
+{
+  GimpImage *gimage;
+
+  gimage = GIMP_IMAGE (viewable);
+
+  gimp_viewable_calc_preview_size (viewable,
+                                   gimage->width,
+                                   gimage->height,
+                                   size,
+                                   size,
+                                   dot_for_dot,
+                                   gimage->xresolution,
+                                   gimage->yresolution,
+                                   width,
+                                   height,
+                                   NULL);
 }
 
 static TempBuf *

@@ -35,10 +35,6 @@
 static void   gimp_palette_preview_class_init (GimpPalettePreviewClass *klass);
 static void   gimp_palette_preview_init       (GimpPalettePreview      *preview);
 
-static void        gimp_palette_preview_get_size     (GimpPreview *preview,
-                                                      gint         size,
-                                                      gint        *width,
-                                                      gint        *height);
 static void        gimp_palette_preview_render       (GimpPreview *preview);
 static GtkWidget * gimp_palette_preview_create_popup (GimpPreview *preview);
 static gboolean    gimp_palette_preview_needs_popup  (GimpPreview *preview);
@@ -84,7 +80,6 @@ gimp_palette_preview_class_init (GimpPalettePreviewClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  preview_class->get_size     = gimp_palette_preview_get_size;
   preview_class->render       = gimp_palette_preview_render;
   preview_class->create_popup = gimp_palette_preview_create_popup;
   preview_class->needs_popup  = gimp_palette_preview_needs_popup;
@@ -93,16 +88,6 @@ gimp_palette_preview_class_init (GimpPalettePreviewClass *klass)
 static void
 gimp_palette_preview_init (GimpPalettePreview *palette_preview)
 {
-}
-
-static void
-gimp_palette_preview_get_size (GimpPreview *preview,
-			       gint         size,
-			       gint        *width,
-			       gint        *height)
-{
-  *width  = size;
-  *height = size / 2;
 }
 
 static void

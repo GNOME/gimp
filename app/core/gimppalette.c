@@ -48,6 +48,12 @@ static void       gimp_palette_finalize         (GObject           *object);
 
 static gsize      gimp_palette_get_memsize      (GimpObject        *object);
 
+static void       gimp_palette_get_preview_size (GimpViewable      *viewable,
+                                                 gint               size,
+                                                 gboolean           popup,
+                                                 gboolean           dot_for_dot,
+                                                 gint              *width,
+                                                 gint              *height);
 static TempBuf  * gimp_palette_get_new_preview  (GimpViewable      *viewable,
                                                  gint               width,
                                                  gint               height);
@@ -107,15 +113,16 @@ gimp_palette_class_init (GimpPaletteClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize          = gimp_palette_finalize;
+  object_class->finalize           = gimp_palette_finalize;
 
-  gimp_object_class->get_memsize  = gimp_palette_get_memsize;
+  gimp_object_class->get_memsize   = gimp_palette_get_memsize;
 
-  viewable_class->get_new_preview = gimp_palette_get_new_preview;
+  viewable_class->get_preview_size = gimp_palette_get_preview_size;
+  viewable_class->get_new_preview  = gimp_palette_get_new_preview;
 
-  data_class->dirty               = gimp_palette_dirty;
-  data_class->save                = gimp_palette_save;
-  data_class->get_extension       = gimp_palette_get_extension;
+  data_class->dirty                = gimp_palette_dirty;
+  data_class->save                 = gimp_palette_save;
+  data_class->get_extension        = gimp_palette_get_extension;
 }
 
 static void
@@ -167,6 +174,18 @@ gimp_palette_get_memsize (GimpObject *object)
     }
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+}
+
+static void
+gimp_palette_get_preview_size (GimpViewable *viewable,
+                               gint          size,
+                               gboolean      popup,
+                               gboolean      dot_for_dot,
+                               gint         *width,
+                               gint         *height)
+{
+  *width  = size;
+  *height = size / 2;
 }
 
 static TempBuf *

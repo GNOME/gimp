@@ -108,15 +108,16 @@ gimp_undo_preview_render (GimpPreview *preview)
   if (! render_buf)
     return;
 
-  gimp_preview_calc_size (preview,
-			  render_buf->width,
-			  render_buf->height,
-			  width,
-			  height,
-			  1.0, 1.0,
-			  &preview_width,
-			  &preview_height,
-			  &scaling_up);
+  gimp_viewable_calc_preview_size (preview->viewable,
+                                   render_buf->width,
+                                   render_buf->height,
+                                   width,
+                                   height,
+                                   preview->dot_for_dot,
+                                   1.0, 1.0,
+                                   &preview_width,
+                                   &preview_height,
+                                   &scaling_up);
 
   if (preview_width  != render_buf->width ||
       preview_height != render_buf->height)

@@ -42,22 +42,28 @@
 #define EPSILON 1e-10
 
 
-static void       gimp_gradient_class_init      (GimpGradientClass *klass);
-static void       gimp_gradient_init            (GimpGradient      *gradient);
+static void       gimp_gradient_class_init       (GimpGradientClass *klass);
+static void       gimp_gradient_init             (GimpGradient      *gradient);
 
-static void       gimp_gradient_finalize        (GObject           *object);
+static void       gimp_gradient_finalize         (GObject           *object);
 
-static gsize      gimp_gradient_get_memsize     (GimpObject        *object);
+static gsize      gimp_gradient_get_memsize      (GimpObject        *object);
 
-static TempBuf  * gimp_gradient_get_new_preview (GimpViewable      *viewable,
-						 gint               width,
-						 gint               height);
-static void       gimp_gradient_dirty           (GimpData          *data);
-static gboolean   gimp_gradient_save            (GimpData          *data,
-                                                 GError           **error);
-static gchar    * gimp_gradient_get_extension   (GimpData          *data);
-static GimpData * gimp_gradient_duplicate       (GimpData          *data,
-                                                 gboolean           stingy_memory_use);
+static void       gimp_gradient_get_preview_size (GimpViewable      *viewable,
+                                                  gint               size,
+                                                  gboolean           popup,
+                                                  gboolean           dot_for_dot,
+                                                  gint              *width,
+                                                  gint              *height);
+static TempBuf  * gimp_gradient_get_new_preview  (GimpViewable      *viewable,
+                                                  gint               width,
+                                                  gint               height);
+static void       gimp_gradient_dirty            (GimpData          *data);
+static gboolean   gimp_gradient_save             (GimpData          *data,
+                                                  GError           **error);
+static gchar    * gimp_gradient_get_extension    (GimpData          *data);
+static GimpData * gimp_gradient_duplicate        (GimpData          *data,
+                                                  gboolean           stingy_memory_use);
 
 static gdouble    gimp_gradient_calc_linear_factor            (gdouble  middle,
 							       gdouble  pos);
@@ -117,16 +123,17 @@ gimp_gradient_class_init (GimpGradientClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize          = gimp_gradient_finalize;
+  object_class->finalize           = gimp_gradient_finalize;
 
-  gimp_object_class->get_memsize  = gimp_gradient_get_memsize;
+  gimp_object_class->get_memsize   = gimp_gradient_get_memsize;
 
-  viewable_class->get_new_preview = gimp_gradient_get_new_preview;
+  viewable_class->get_preview_size = gimp_gradient_get_preview_size;
+  viewable_class->get_new_preview  = gimp_gradient_get_new_preview;
 
-  data_class->dirty               = gimp_gradient_dirty;
-  data_class->save                = gimp_gradient_save;
-  data_class->get_extension       = gimp_gradient_get_extension;
-  data_class->duplicate           = gimp_gradient_duplicate;
+  data_class->dirty                = gimp_gradient_dirty;
+  data_class->save                 = gimp_gradient_save;
+  data_class->get_extension        = gimp_gradient_get_extension;
+  data_class->duplicate            = gimp_gradient_duplicate;
 }
 
 static void
@@ -167,6 +174,18 @@ gimp_gradient_get_memsize (GimpObject *object)
     }
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+}
+
+static void
+gimp_gradient_get_preview_size (GimpViewable *viewable,
+                                gint          size,
+                                gboolean      popup,
+                                gboolean      dot_for_dot,
+                                gint         *width,
+                                gint         *height)
+{
+  *width  = size;
+  *height = size / 2;
 }
 
 static TempBuf *

@@ -70,6 +70,7 @@ typedef struct _GimpUndoEditor          GimpUndoEditor;
 typedef struct _GimpContainerView       GimpContainerView;
 typedef struct _GimpContainerListView   GimpContainerListView;
 typedef struct _GimpContainerGridView   GimpContainerGridView;
+typedef struct _GimpContainerTreeView   GimpContainerTreeView;
 
 typedef struct _GimpItemListView        GimpItemListView;
 typedef struct _GimpDrawableListView    GimpDrawableListView;
@@ -116,7 +117,7 @@ typedef struct _GimpItemFactoryEntry    GimpItemFactoryEntry;
 typedef void    (* GimpItemFactorySetupFunc)  (GimpItemFactory *factory);
 typedef void    (* GimpItemFactoryUpdateFunc) (GtkItemFactory  *factory,
                                                gpointer         data);
-typedef gchar * (* GimpItemGetNameFunc)       (GtkWidget       *widget,
+typedef gchar * (* GimpItemGetNameFunc)       (GObject         *object,
                                                gchar          **tooltip);
 
 

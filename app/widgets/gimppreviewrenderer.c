@@ -88,14 +88,6 @@ static gboolean    gimp_preview_leave_notify_event   (GtkWidget        *widget,
 static gboolean    gimp_preview_idle_update          (GimpPreview      *preview);
 static void        gimp_preview_render               (GimpPreview      *preview);
 static void        gimp_preview_real_render          (GimpPreview      *preview);
-static void        gimp_preview_get_size             (GimpPreview      *preview,
-						      gint              size,
-						      gint             *width,
-						      gint             *height);
-static void        gimp_preview_real_get_size        (GimpPreview      *preview,
-						      gint              size,
-						      gint             *width,
-						      gint             *height);
 static gboolean    gimp_preview_needs_popup          (GimpPreview      *preview);
 static gboolean    gimp_preview_real_needs_popup     (GimpPreview      *preview);
 static GtkWidget * gimp_preview_create_popup         (GimpPreview      *preview);
@@ -209,7 +201,6 @@ gimp_preview_class_init (GimpPreviewClass *klass)
   klass->extended_clicked            = NULL;
   klass->context                     = NULL;
   klass->render                      = gimp_preview_real_render;
-  klass->get_size                    = gimp_preview_real_get_size;
   klass->needs_popup                 = gimp_preview_real_needs_popup;
   klass->create_popup                = gimp_preview_real_create_popup;
 }
@@ -696,7 +687,19 @@ gimp_preview_set_size (GimpPreview *preview,
 
   preview->size = preview_size;
 
-  gimp_preview_get_size (preview, preview_size, &width, &height);
+  if (preview->viewable)
+    {
+      gimp_viewable_get_preview_size (preview->viewable,
+                                      preview_size,
+                                      preview->is_popup,
+                                      preview->dot_for_dot,
+                                      &width, &height);
+    }
+  else
+    {
+      width  = preview_size;
+      height = preview_size;
+    }
 
   gimp_preview_set_size_full (preview,
                               width,
@@ -832,32 +835,6 @@ gimp_preview_real_render (GimpPreview *preview)
 				     temp_buf,
 				     -1);
     }
-}
-
-static void
-gimp_preview_get_size (GimpPreview *preview,
-		       gint         size,
-		       gint        *width,
-		       gint        *height)
-{
-  g_return_if_fail (GIMP_IS_PREVIEW (preview));
-  g_return_if_fail (width != NULL);
-  g_return_if_fail (height != NULL);
-
-  if (preview->viewable)
-    GIMP_PREVIEW_GET_CLASS (preview)->get_size (preview, size, width, height);
-  else
-    gimp_preview_real_get_size (preview, size, width, height);
-}
-
-static void
-gimp_preview_real_get_size (GimpPreview *preview,
-			    gint         size,
-			    gint        *width,
-			    gint        *height)
-{
-  *width  = size;
-  *height = size;
 }
 
 static gboolean
@@ -1013,48 +990,6 @@ gimp_preview_drag_viewable (GtkWidget *widget,
 
 
 /*  protected functions  */
-
-void
-gimp_preview_calc_size (GimpPreview *preview,
-			gint         aspect_width,
-			gint         aspect_height,
-			gint         width,
-			gint         height,
-			gdouble      xresolution,
-			gdouble      yresolution,
-			gint        *return_width,
-			gint        *return_height,
-			gboolean    *scaling_up)
-{
-  gdouble xratio;
-  gdouble yratio;
-
-  if (aspect_width > aspect_height)
-    {
-      xratio = yratio = (gdouble) width / (gdouble) aspect_width;
-    }
-  else
-    {
-      xratio = yratio = (gdouble) height / (gdouble) aspect_height;
-    }
-
-  if (! preview->dot_for_dot && xresolution != yresolution)
-    {
-      yratio *= xresolution / yresolution;
-    }
-
-  width  = RINT (xratio * (gdouble) aspect_width);
-  height = RINT (yratio * (gdouble) aspect_height);
-
-  if (width  < 1) width  = 1;
-  if (height < 1) height = 1;
-
-  *return_width  = width;
-  *return_height = height;
-
-  if (scaling_up)
-    *scaling_up = (xratio > 1.0) || (yratio > 1.0);
-}
 
 void
 gimp_preview_render_and_flush (GimpPreview *preview,

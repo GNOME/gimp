@@ -43,6 +43,7 @@
 #include "widgets/gimpcolormapeditor.h"
 #include "widgets/gimpcontainerlistview.h"
 #include "widgets/gimpcontainergridview.h"
+#include "widgets/gimpcontainertreeview.h"
 #include "widgets/gimpdataeditor.h"
 #include "widgets/gimpdatafactoryview.h"
 #include "widgets/gimpdialogfactory.h"
@@ -581,6 +582,154 @@ dialogs_buffer_grid_view_new (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (view,
 			       _("Buffer Grid"), _("Buffers"),
+                               GTK_STOCK_PASTE,
+			       dialogs_stock_text_tab_func,
+			       dialogs_set_editor_context_func);
+}
+
+
+/*****  tree views  *****/
+
+GtkWidget *
+dialogs_image_tree_view_new (GimpDialogFactory *factory,
+			     GimpContext       *context,
+                             gint               preview_size)
+{
+  GtkWidget *view;
+
+  view = gimp_image_view_new (GIMP_VIEW_TYPE_TREE,
+                              context->gimp->images,
+                              context,
+                              preview_size,
+                              5, 3,
+                              factory->menu_factory);
+
+  return dialogs_dockable_new (view,
+			       _("Image Tree"), _("Images"), NULL,
+			       NULL,
+			       dialogs_set_editor_context_func);
+}
+
+GtkWidget *
+dialogs_brush_tree_view_new (GimpDialogFactory *factory,
+			     GimpContext       *context,
+                             gint               preview_size)
+{
+  GtkWidget *view;
+
+  view = gimp_brush_factory_view_new (GIMP_VIEW_TYPE_TREE,
+				      context->gimp->brush_factory,
+				      dialogs_edit_brush_func,
+				      context,
+				      TRUE,
+				      preview_size,
+				      5, 3,
+                                      factory->menu_factory);
+
+  return dialogs_dockable_new (view,
+			       _("Brush Tree"), _("Brushes"), NULL,
+			       dialogs_brush_tab_func,
+			       dialogs_set_editor_context_func);
+}
+
+GtkWidget *
+dialogs_pattern_tree_view_new (GimpDialogFactory *factory,
+			       GimpContext       *context,
+                               gint               preview_size)
+{
+  GtkWidget *view;
+
+  view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_TREE,
+				     context->gimp->pattern_factory,
+				     NULL,
+				     context,
+				     preview_size,
+				     5, 3,
+				     factory->menu_factory, "<Patterns>");
+
+  return dialogs_dockable_new (view,
+			       _("Pattern Tree"), _("Patterns"), NULL,
+			       dialogs_pattern_tab_func,
+			       dialogs_set_editor_context_func);
+}
+
+GtkWidget *
+dialogs_gradient_tree_view_new (GimpDialogFactory *factory,
+				GimpContext       *context,
+                                gint               preview_size)
+{
+  GtkWidget *view;
+
+  view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_TREE,
+				     context->gimp->gradient_factory,
+				     dialogs_edit_gradient_func,
+				     context,
+				     preview_size,
+				     5, 3,
+                                     factory->menu_factory, "<Gradients>");
+
+  return dialogs_dockable_new (view,
+			       _("Gradient Tree"), _("Gradients"), NULL,
+			       dialogs_gradient_tab_func,
+			       dialogs_set_editor_context_func);
+}
+
+GtkWidget *
+dialogs_palette_tree_view_new (GimpDialogFactory *factory,
+			       GimpContext       *context,
+                               gint               preview_size)
+{
+  GtkWidget *view;
+
+  view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_TREE,
+				     context->gimp->palette_factory,
+				     dialogs_edit_palette_func,
+				     context,
+				     preview_size,
+				     5, 3,
+                                     factory->menu_factory, "<Gradients>");
+
+  return dialogs_dockable_new (view,
+			       _("Palette Tree"), _("Palettes"), NULL,
+			       dialogs_palette_tab_func,
+			       dialogs_set_editor_context_func);
+}
+
+GtkWidget *
+dialogs_tool_tree_view_new (GimpDialogFactory *factory,
+			    GimpContext       *context,
+                            gint               preview_size)
+{
+  GtkWidget *view;
+
+  view = gimp_container_tree_view_new (context->gimp->tool_info_list,
+				       context,
+				       preview_size,
+                                       FALSE,
+				       5, 3);
+
+  return dialogs_dockable_new (view,
+			       _("Tool Tree"), _("Tools"), NULL,
+			       dialogs_tool_tab_func,
+			       dialogs_set_view_context_func);
+}
+
+GtkWidget *
+dialogs_buffer_tree_view_new (GimpDialogFactory *factory,
+			      GimpContext       *context,
+                              gint               preview_size)
+{
+  GtkWidget *view;
+
+  view = gimp_buffer_view_new (GIMP_VIEW_TYPE_TREE,
+			       context->gimp->named_buffers,
+			       context,
+			       preview_size,
+			       5, 3,
+                               factory->menu_factory);
+
+  return dialogs_dockable_new (view,
+			       _("Buffer Tree"), _("Buffers"),
                                GTK_STOCK_PASTE,
 			       dialogs_stock_text_tab_func,
 			       dialogs_set_editor_context_func);

@@ -33,16 +33,22 @@
 #include "gimpbuffer.h"
 
 
-static void      gimp_buffer_class_init      (GimpBufferClass *klass);
-static void      gimp_buffer_init            (GimpBuffer      *buffer);
+static void      gimp_buffer_class_init       (GimpBufferClass *klass);
+static void      gimp_buffer_init             (GimpBuffer      *buffer);
 
-static void      gimp_buffer_finalize        (GObject         *object);
+static void      gimp_buffer_finalize         (GObject         *object);
 
-static gsize     gimp_buffer_get_memsize     (GimpObject      *object);
+static gsize     gimp_buffer_get_memsize      (GimpObject      *object);
 
-static TempBuf * gimp_buffer_get_new_preview (GimpViewable    *viewable,
-					      gint             width,
-					      gint             height);
+static void      gimp_buffer_get_preview_size (GimpViewable    *viewable,
+                                               gint             size,
+                                               gboolean         is_popup,
+                                               gboolean         dot_for_dot,
+                                               gint            *width,
+                                               gint            *height);
+static TempBuf * gimp_buffer_get_new_preview  (GimpViewable    *viewable,
+                                               gint             width,
+                                               gint             height);
 
 
 static GimpViewableClass *parent_class = NULL;
@@ -89,11 +95,12 @@ gimp_buffer_class_init (GimpBufferClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize          = gimp_buffer_finalize;
+  object_class->finalize           = gimp_buffer_finalize;
 
-  gimp_object_class->get_memsize  = gimp_buffer_get_memsize;
+  gimp_object_class->get_memsize   = gimp_buffer_get_memsize;
 
-  viewable_class->get_new_preview = gimp_buffer_get_new_preview;
+  viewable_class->get_preview_size = gimp_buffer_get_preview_size;
+  viewable_class->get_new_preview  = gimp_buffer_get_new_preview;
 }
 
 static void
@@ -130,6 +137,29 @@ gimp_buffer_get_memsize (GimpObject *object)
     memsize += tile_manager_get_memsize (buffer->tiles);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+}
+
+static void
+gimp_buffer_get_preview_size (GimpViewable *viewable,
+			      gint          size,
+                              gboolean      is_popup,
+                              gboolean      dot_for_dot,
+			      gint         *width,
+			      gint         *height)
+{
+  GimpBuffer *buffer;
+
+  buffer = GIMP_BUFFER (viewable);
+
+  gimp_viewable_calc_preview_size (viewable,
+                                   gimp_buffer_get_width (buffer),
+                                   gimp_buffer_get_height (buffer),
+                                   size,
+                                   size,
+                                   dot_for_dot, 1.0, 1.0,
+                                   width,
+                                   height,
+                                   NULL);
 }
 
 static TempBuf *

@@ -35,10 +35,6 @@
 static void   gimp_buffer_preview_class_init (GimpBufferPreviewClass *klass);
 static void   gimp_buffer_preview_init       (GimpBufferPreview      *preview);
 
-static void        gimp_buffer_preview_get_size     (GimpPreview *preview,
-						     gint         size,
-						     gint        *width,
-						     gint        *height);
 static void        gimp_buffer_preview_render       (GimpPreview *preview);
 static GtkWidget * gimp_buffer_preview_create_popup (GimpPreview *preview);
 static gboolean    gimp_buffer_preview_needs_popup  (GimpPreview *preview);
@@ -84,7 +80,6 @@ gimp_buffer_preview_class_init (GimpBufferPreviewClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  preview_class->get_size     = gimp_buffer_preview_get_size;
   preview_class->render       = gimp_buffer_preview_render;
   preview_class->create_popup = gimp_buffer_preview_create_popup;
   preview_class->needs_popup  = gimp_buffer_preview_needs_popup;
@@ -93,29 +88,6 @@ gimp_buffer_preview_class_init (GimpBufferPreviewClass *klass)
 static void
 gimp_buffer_preview_init (GimpBufferPreview *buffer_preview)
 {
-}
-
-static void
-gimp_buffer_preview_get_size (GimpPreview *preview,
-			      gint         size,
-			      gint        *width,
-			      gint        *height)
-{
-  GimpBuffer *buffer;
-  gboolean    scaling_up;
-
-  buffer = GIMP_BUFFER (preview->viewable);
-
-  gimp_preview_calc_size (preview,
-			  gimp_buffer_get_width (buffer),
-                          gimp_buffer_get_height (buffer),
-			  size,
-			  size,
-			  1.0,
-			  1.0,
-			  width,
-			  height,
-			  &scaling_up);
 }
 
 static void
@@ -139,16 +111,17 @@ gimp_buffer_preview_render (GimpPreview *preview)
   width  = preview->width;
   height = preview->height;
 
-  gimp_preview_calc_size (preview,
-			  buffer_width,
-			  buffer_height,
-			  width,
-			  height,
-			  1.0,
-			  1.0,
-			  &preview_width,
-			  &preview_height,
-			  &scaling_up);
+  gimp_viewable_calc_preview_size (preview->viewable,
+                                   buffer_width,
+                                   buffer_height,
+                                   width,
+                                   height,
+                                   preview->dot_for_dot,
+                                   1.0,
+                                   1.0,
+                                   &preview_width,
+                                   &preview_height,
+                                   &scaling_up);
 
   if (scaling_up)
     {
@@ -224,16 +197,19 @@ gimp_buffer_preview_create_popup (GimpPreview *preview)
   buffer_width  = gimp_buffer_get_width (buffer);
   buffer_height = gimp_buffer_get_height (buffer);
 
-  gimp_preview_calc_size (preview,
-			  buffer_width,
-			  buffer_height,
-			  MIN (preview->width  * 2, GIMP_PREVIEW_MAX_POPUP_SIZE),
-			  MIN (preview->height * 2, GIMP_PREVIEW_MAX_POPUP_SIZE),
-			  1.0,
-			  1.0,
-			  &popup_width,
-			  &popup_height,
-			  &scaling_up);
+  gimp_viewable_calc_preview_size (preview->viewable,
+                                   buffer_width,
+                                   buffer_height,
+                                   MIN (preview->width  * 2,
+                                        GIMP_PREVIEW_MAX_POPUP_SIZE),
+                                   MIN (preview->height * 2,
+                                        GIMP_PREVIEW_MAX_POPUP_SIZE),
+                                   preview->dot_for_dot,
+                                   1.0,
+                                   1.0,
+                                   &popup_width,
+                                   &popup_height,
+                                   &scaling_up);
 
   if (scaling_up)
     {

@@ -33,6 +33,7 @@
 #include "gimpcontainereditor.h"
 #include "gimpcontainergridview.h"
 #include "gimpcontainerlistview.h"
+#include "gimpcontainertreeview.h"
 #include "gimpdnd.h"
 #include "gimpitemfactory.h"
 #include "gimpmenufactory.h"
@@ -181,6 +182,15 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
 							   min_items_y));
       break;
 
+    case GIMP_VIEW_TYPE_TREE:
+      editor->view =
+	GIMP_CONTAINER_VIEW (gimp_container_tree_view_new (container,
+							   context,
+							   preview_size,
+                                                           reorderable,
+							   min_items_x,
+							   min_items_y));
+      break;
     default:
       g_warning ("%s(): unknown GimpViewType passed", G_GNUC_FUNCTION);
       return FALSE;

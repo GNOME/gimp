@@ -491,16 +491,19 @@ gimp_navigation_view_abox_resized (GtkWidget          *widget,
 
       gimage = GIMP_IMAGE (preview->viewable);
 
-      gimp_preview_calc_size (preview,
-                              gimage->width,
-                              gimage->height,
-                              MIN (allocation->width,  GIMP_PREVIEW_MAX_SIZE),
-                              MIN (allocation->height, GIMP_PREVIEW_MAX_SIZE),
-                              gimage->xresolution,
-                              gimage->yresolution,
-                              &width,
-                              &height,
-                              &dummy);
+      gimp_viewable_calc_preview_size (preview->viewable,
+                                       gimage->width,
+                                       gimage->height,
+                                       MIN (allocation->width,
+                                            GIMP_PREVIEW_MAX_SIZE),
+                                       MIN (allocation->height,
+                                            GIMP_PREVIEW_MAX_SIZE),
+                                       preview->dot_for_dot,
+                                       gimage->xresolution,
+                                       gimage->yresolution,
+                                       &width,
+                                       &height,
+                                       &dummy);
 
       if (width > allocation->width)
         {

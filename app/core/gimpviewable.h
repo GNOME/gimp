@@ -54,6 +54,12 @@ struct _GimpViewableClass
   void      (* size_changed)       (GimpViewable *viewable);
 
   /*  virtual functions  */
+  void      (* get_preview_size)   (GimpViewable *viewable,
+				    gint          size,
+                                    gboolean      is_popup,
+                                    gboolean      dot_for_dot,
+				    gint         *width,
+				    gint         *height);
   TempBuf * (* get_preview)        (GimpViewable *viewable,
 				    gint          width,
 				    gint          height);
@@ -68,6 +74,24 @@ GType       gimp_viewable_get_type               (void) G_GNUC_CONST;
 void        gimp_viewable_invalidate_preview     (GimpViewable *viewable);
 void        gimp_viewable_size_changed           (GimpViewable *viewable);
 
+void        gimp_viewable_calc_preview_size      (GimpViewable *viewable,
+                                                  gint          aspect_width,
+                                                  gint          aspect_height,
+                                                  gint          width,
+                                                  gint          height,
+                                                  gboolean      dot_for_dot,
+                                                  gdouble       xresolution,
+                                                  gdouble       yresolution,
+                                                  gint         *return_width,
+                                                  gint         *return_height,
+                                                  gboolean     *scaling_up);
+
+void        gimp_viewable_get_preview_size       (GimpViewable *viewable,
+                                                  gint          size,
+                                                  gboolean      popup,
+                                                  gboolean      dot_for_dot,
+                                                  gint         *width,
+                                                  gint         *height);
 TempBuf   * gimp_viewable_get_preview            (GimpViewable *viewable,
                                                   gint          width,
                                                   gint          height);

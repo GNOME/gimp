@@ -1,3 +1,57 @@
+2003-02-21  Michael Natterer  <mitch@gimp.org>
+
+	Started migration from GtkList to GtkTreeView:
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpcontainertreeview.[ch]; new GimpContainerView
+	subclass using GtkListStore/GtkTreeView.
+
+	* app/widgets/widgets-enums.h: added GIMP_VIEW_TYPE_TREE to
+	thje GimpViewType enum.
+
+	* app/widgets/gimpcontainereditor.c: added GimpContainerTreeView
+	to the switch() which selects the view type.
+
+	* app/gui/dialogs-commands.c
+	* app/gui/dialogs-constructors.[ch]
+	* app/gui/dialogs-menu.c
+	* app/gui/dialogs.c: added tree view versions of many dialogs.
+
+	* app/widgets/gimppreview.[ch]: removed the get_size() virtual
+	function and gimp_preview_calc_size().
+
+	* app/core/gimpviewable.[ch]: added virtual function
+	get_preview_size() and gimp_viewable_calc_preview_size().
+
+	* app/core/gimpbuffer.c
+	* app/core/gimpdrawable-preview.[ch]
+	* app/core/gimpdrawable.c
+	* app/core/gimpgradient.c
+	* app/core/gimpimage.c
+	* app/core/gimppalette.c: added get_preview_size() implementations.
+
+	* app/widgets/gimpbufferpreview.c
+	* app/widgets/gimpdrawablepreview.c
+	* app/widgets/gimpgradientpreview.c
+	* app/widgets/gimpimagepreview.c
+	* app/widgets/gimppalettepreview.c
+	* app/widgets/gimpselectioneditor.c
+	* app/widgets/gimpundopreview.c
+	* app/display/gimpnavigationview.c: changed accordingly, removed
+	get_size() implementations.
+
+	* app/widgets/widgets-types.h: changed the first param of
+	GimpItemGetNameFunc from GtkWidget to GObject.
+
+	* app/widgets/gimpcontainerview-utils.c: accept a GimpViewable as
+	object in the built-in get_name funcs.
+
+	* app/widgets/gimpcomponentlistitem.c
+	* app/widgets/gimpcontainergridview.c
+	* app/widgets/gimplistitem.c
+	* app/widgets/gimpmenuitem.c: changed accordingly.
+
 2003-02-21  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-scroll.c (gimp_display_shell_scroll):

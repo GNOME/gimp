@@ -190,7 +190,7 @@ gimp_menu_item_name_changed (GimpViewable *viewable,
       gchar *name    = NULL;
       gchar *tooltip = NULL;
 
-      name = menu_item->get_name_func (GTK_WIDGET (menu_item), &tooltip);
+      name = menu_item->get_name_func (G_OBJECT (menu_item), &tooltip);
 
       gtk_label_set_text (GTK_LABEL (menu_item->name_label), name);
       gimp_help_set_help_data (GTK_WIDGET (menu_item), tooltip, NULL);

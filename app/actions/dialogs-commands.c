@@ -172,22 +172,26 @@ dialogs_toggle_view_cmd_callback (GtkWidget *widget,
 
               identifier = g_strdup (entry->identifier);
 
-              if ((substring = strstr (identifier, "grid")) &&
-                  view_type == GIMP_VIEW_TYPE_LIST)
-                {
-                  memcpy (substring, "list", 4);
-                }
-              else if ((substring = strstr (identifier, "list")) &&
-                       view_type == GIMP_VIEW_TYPE_GRID)
-                {
-                  memcpy (substring, "grid", 4);
-                }
+              substring = strstr (identifier, "grid");
+
+              if (! substring)
+                substring = strstr (identifier, "list");
+
+              if (! substring)
+                substring = strstr (identifier, "grid");
 
               if (substring)
                 {
                   GimpContainerView *old_view;
                   GtkWidget         *new_dockable;
                   gint               preview_size = -1;
+
+                  if (view_type == GIMP_VIEW_TYPE_LIST)
+                    memcpy (substring, "list", 4);
+                  else if (view_type == GIMP_VIEW_TYPE_GRID)
+                    memcpy (substring, "grid", 4);
+                  else if (view_type == GIMP_VIEW_TYPE_TREE)
+                    memcpy (substring, "tree", 4);
 
                   old_view = gimp_container_view_get_by_dockable (dockable);
 

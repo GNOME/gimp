@@ -66,7 +66,8 @@ typedef enum
 typedef enum  /*< skip >*/
 {
   GIMP_VIEW_TYPE_GRID,
-  GIMP_VIEW_TYPE_LIST
+  GIMP_VIEW_TYPE_LIST,
+  GIMP_VIEW_TYPE_TREE
 } GimpViewType;
 
 typedef enum  /*< skip >*/

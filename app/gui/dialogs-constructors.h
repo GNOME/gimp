@@ -105,6 +105,28 @@ GtkWidget * dialogs_buffer_grid_view_new   (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);
 
+GtkWidget * dialogs_image_tree_view_new    (GimpDialogFactory *factory,
+					    GimpContext       *context,
+                                            gint               preview_size);
+GtkWidget * dialogs_brush_tree_view_new    (GimpDialogFactory *factory,
+					    GimpContext       *context,
+                                            gint               preview_size);
+GtkWidget * dialogs_pattern_tree_view_new  (GimpDialogFactory *factory,
+					    GimpContext       *context,
+                                            gint               preview_size);
+GtkWidget * dialogs_gradient_tree_view_new (GimpDialogFactory *factory,
+					    GimpContext       *context,
+                                            gint               preview_size);
+GtkWidget * dialogs_palette_tree_view_new  (GimpDialogFactory *factory,
+					    GimpContext       *context,
+                                            gint               preview_size);
+GtkWidget * dialogs_tool_tree_view_new     (GimpDialogFactory *factory,
+					    GimpContext       *context,
+                                            gint               preview_size);
+GtkWidget * dialogs_buffer_tree_view_new   (GimpDialogFactory *factory,
+					    GimpContext       *context,
+                                            gint               preview_size);
+
 GtkWidget * dialogs_layer_list_view_new    (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);

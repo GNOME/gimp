@@ -52,19 +52,19 @@ struct _GimpNameFuncEntry
 };
 
 
-static gchar * gimp_container_view_tool_name_func      (GtkWidget  *widget,
+static gchar * gimp_container_view_tool_name_func      (GObject    *object,
 							gchar     **tooltip);
-static gchar * gimp_container_view_image_name_func     (GtkWidget  *widget,
+static gchar * gimp_container_view_image_name_func     (GObject    *object,
 							gchar     **tooltip);
-static gchar * gimp_container_view_brush_name_func     (GtkWidget  *widget,
+static gchar * gimp_container_view_brush_name_func     (GObject    *object,
 							gchar     **tooltip);
-static gchar * gimp_container_view_pattern_name_func   (GtkWidget  *widget,
+static gchar * gimp_container_view_pattern_name_func   (GObject    *object,
 							gchar     **tooltip);
-static gchar * gimp_container_view_palette_name_func   (GtkWidget  *widget,
+static gchar * gimp_container_view_palette_name_func   (GObject    *object,
 							gchar     **tooltip);
-static gchar * gimp_container_view_buffer_name_func    (GtkWidget  *widget,
+static gchar * gimp_container_view_buffer_name_func    (GObject    *object,
 							gchar     **tooltip);
-static gchar * gimp_container_view_imagefile_name_func (GtkWidget  *widget,
+static gchar * gimp_container_view_imagefile_name_func (GObject    *object,
 							gchar     **tooltip);
 
 
@@ -107,7 +107,7 @@ gimp_container_view_get_by_dockable (GimpDockable *dockable)
 }
 
 GimpItemGetNameFunc
-gimp_container_view_get_built_in_name_func (GType  type)
+gimp_container_view_get_built_in_name_func (GType type)
 {
   gint i;
 
@@ -148,270 +148,251 @@ gimp_container_view_is_built_in_name_func (GimpItemGetNameFunc get_name_func)
 
 /*  private functions  */
 
-static GimpPreview *
-gimp_container_view_get_name_func_preview (GtkWidget *widget)
+static GimpViewable *
+gimp_container_view_get_name_func_viewable (GObject *object)
 {
-  if (GIMP_IS_PREVIEW (widget))
+  if (GIMP_IS_VIEWABLE (object))
     {
-      return GIMP_PREVIEW (widget);
+      return GIMP_VIEWABLE (object);
     }
-  else if (GIMP_IS_LIST_ITEM (widget))
+  if (GIMP_IS_PREVIEW (object))
     {
-      return GIMP_PREVIEW (GIMP_LIST_ITEM (widget)->preview);
+      return GIMP_PREVIEW (object)->viewable;
     }
-  else if (GIMP_IS_MENU_ITEM (widget))
+  else if (GIMP_IS_LIST_ITEM (object))
     {
-      return GIMP_PREVIEW (GIMP_MENU_ITEM (widget)->preview);
+      return GIMP_PREVIEW (GIMP_LIST_ITEM (object)->preview)->viewable;
+    }
+  else if (GIMP_IS_MENU_ITEM (object))
+    {
+      return GIMP_PREVIEW (GIMP_MENU_ITEM (object)->preview)->viewable;
     }
 
-  g_warning ("%s: widget type %s does not contain a GimpPreview",
-             G_STRLOC, g_type_name (G_TYPE_FROM_INSTANCE (widget)));
+  g_warning ("%s: can't figure GimpViewable from type %s",
+             G_STRLOC, g_type_name (G_TYPE_FROM_INSTANCE (object)));
 
   return NULL;
 }
 
 static gchar *
-gimp_container_view_tool_name_func (GtkWidget  *widget,
-				    gchar     **tooltip)
+gimp_container_view_tool_name_func (GObject  *object,
+				    gchar   **tooltip)
 {
-  GimpPreview *preview;
+  GimpViewable *viewable;
 
-  preview = gimp_container_view_get_name_func_preview (widget);
+  viewable = gimp_container_view_get_name_func_viewable (object);
 
-  if (preview)
+  if (viewable)
     {
       GimpToolInfo *tool_info;
 
-      tool_info = GIMP_TOOL_INFO (preview->viewable);
+      tool_info = GIMP_TOOL_INFO (viewable);
 
-      if (tool_info)
-	{
-	  if (tooltip)
-	    *tooltip = NULL;
+      if (tooltip)
+        *tooltip = NULL;
 
-	  return g_strdup (tool_info->blurb);
-	}
+      return g_strdup (tool_info->blurb);
     }
 
   return g_strdup ("EEK");
 }
 
 static gchar *
-gimp_container_view_image_name_func (GtkWidget  *widget,
-				     gchar     **tooltip)
+gimp_container_view_image_name_func (GObject  *object,
+                                     gchar   **tooltip)
 {
-  GimpPreview *preview;
+  GimpViewable *viewable;
 
-  preview = gimp_container_view_get_name_func_preview (widget);
+  viewable = gimp_container_view_get_name_func_viewable (object);
 
-  if (preview)
+  if (viewable)
     {
-      GimpImage *gimage;
+      GimpImage   *gimage;
+      const gchar *uri;
+      gchar       *basename;
+      gchar       *retval;
 
-      gimage = GIMP_IMAGE (preview->viewable);
+      gimage = GIMP_IMAGE (viewable);
 
-      if (gimage)
-	{
-          const gchar *uri;
-	  gchar       *basename;
-	  gchar       *retval;
+      uri = gimp_image_get_uri (GIMP_IMAGE (gimage));
 
-          uri = gimp_image_get_uri (GIMP_IMAGE (gimage));
+      basename = file_utils_uri_to_utf8_basename (uri);
 
-	  basename = file_utils_uri_to_utf8_basename (uri);
+      if (tooltip)
+        {
+          gchar *filename;
 
-          if (tooltip)
-            {
-              gchar *filename;
+          filename = file_utils_uri_to_utf8_filename (uri);
 
-              filename = file_utils_uri_to_utf8_filename (uri);
+          *tooltip = filename;
+        }
 
-              *tooltip = filename;
-            }
+      retval = g_strdup_printf ("%s-%d",
+                                basename,
+                                gimp_image_get_ID (gimage));
 
-	  retval = g_strdup_printf ("%s-%d",
-				    basename,
-				    gimp_image_get_ID (gimage));
+      g_free (basename);
 
-	  g_free (basename);
-
-	  return retval;
-	}
+      return retval;
     }
 
   return g_strdup ("EEK");
 }
 
 static gchar *
-gimp_container_view_brush_name_func (GtkWidget  *widget,
-				     gchar     **tooltip)
+gimp_container_view_brush_name_func (GObject  *object,
+                                     gchar   **tooltip)
 {
-  GimpPreview *preview;
+  GimpViewable *viewable;
 
-  preview = gimp_container_view_get_name_func_preview (widget);
+  viewable = gimp_container_view_get_name_func_viewable (object);
 
-  if (preview)
+  if (viewable)
     {
       GimpBrush *brush;
 
-      brush = GIMP_BRUSH (preview->viewable);
+      brush = GIMP_BRUSH (viewable);
 
-      if (brush)
-	{
-	  if (tooltip)
-	    *tooltip = NULL;
+      if (tooltip)
+        *tooltip = NULL;
 
-	  return g_strdup_printf ("%s (%d x %d)",
-				  GIMP_OBJECT (brush)->name,
-				  brush->mask->width,
-				  brush->mask->height);
-	}
+      return g_strdup_printf ("%s (%d x %d)",
+                              GIMP_OBJECT (brush)->name,
+                              brush->mask->width,
+                              brush->mask->height);
     }
 
   return g_strdup ("EEK");
 }
 
 static gchar *
-gimp_container_view_pattern_name_func (GtkWidget  *widget,
-				       gchar     **tooltip)
+gimp_container_view_pattern_name_func (GObject  *object,
+                                       gchar   **tooltip)
 {
-  GimpPreview *preview;
+  GimpViewable *viewable;
 
-  preview = gimp_container_view_get_name_func_preview (widget);
+  viewable = gimp_container_view_get_name_func_viewable (object);
 
-  if (preview)
+  if (viewable)
     {
       GimpPattern *pattern;
 
-      pattern = GIMP_PATTERN (preview->viewable);
+      pattern = GIMP_PATTERN (viewable);
 
-      if (pattern)
-	{
-	  if (tooltip)
-	    *tooltip = NULL;
+      if (tooltip)
+        *tooltip = NULL;
 
-	  return g_strdup_printf ("%s (%d x %d)",
-				  GIMP_OBJECT (pattern)->name,
-				  pattern->mask->width,
-				  pattern->mask->height);
-	}
+      return g_strdup_printf ("%s (%d x %d)",
+                              GIMP_OBJECT (pattern)->name,
+                              pattern->mask->width,
+                              pattern->mask->height);
     }
 
   return g_strdup ("EEK");
 }
 
 static gchar *
-gimp_container_view_palette_name_func (GtkWidget  *widget,
-				       gchar     **tooltip)
+gimp_container_view_palette_name_func (GObject  *object,
+                                       gchar   **tooltip)
 {
-  GimpPreview *preview;
+  GimpViewable *viewable;
 
-  preview = gimp_container_view_get_name_func_preview (widget);
+  viewable = gimp_container_view_get_name_func_viewable (object);
 
-  if (preview)
+  if (viewable)
     {
       GimpPalette *palette;
 
-      palette = GIMP_PALETTE (preview->viewable);
+      palette = GIMP_PALETTE (viewable);
 
-      if (palette)
-	{
-	  if (tooltip)
-	    *tooltip = NULL;
+      if (tooltip)
+        *tooltip = NULL;
 
-	  return g_strdup_printf ("%s (%d)",
-				  GIMP_OBJECT (palette)->name,
-				  palette->n_colors);
-	}
+      return g_strdup_printf ("%s (%d)",
+                              GIMP_OBJECT (palette)->name,
+                              palette->n_colors);
     }
 
   return g_strdup ("EEK");
 }
 
 static gchar *
-gimp_container_view_buffer_name_func (GtkWidget  *widget,
-				      gchar     **tooltip)
+gimp_container_view_buffer_name_func (GObject  *object,
+                                      gchar   **tooltip)
 {
-  GimpPreview *preview;
+  GimpViewable *viewable;
 
-  preview = gimp_container_view_get_name_func_preview (widget);
+  viewable = gimp_container_view_get_name_func_viewable (object);
 
-  if (preview)
+  if (viewable)
     {
       GimpBuffer *buffer;
 
-      buffer = GIMP_BUFFER (preview->viewable);
+      buffer = GIMP_BUFFER (viewable);
 
-      if (buffer)
-	{
-	  if (tooltip)
-	    *tooltip = NULL;
+      if (tooltip)
+        *tooltip = NULL;
 
-	  return g_strdup_printf ("%s (%d x %d)",
-				  GIMP_OBJECT (buffer)->name,
-				  gimp_buffer_get_width (buffer),
-				  gimp_buffer_get_height (buffer));
-	}
+      return g_strdup_printf ("%s (%d x %d)",
+                              GIMP_OBJECT (buffer)->name,
+                              gimp_buffer_get_width (buffer),
+                              gimp_buffer_get_height (buffer));
     }
 
   return g_strdup ("EEK");
 }
 
 static gchar *
-gimp_container_view_imagefile_name_func (GtkWidget  *widget,
-					 gchar     **tooltip)
+gimp_container_view_imagefile_name_func (GObject  *object,
+                                         gchar   **tooltip)
 {
-  GimpPreview *preview;
+  GimpViewable *viewable;
 
-  preview = gimp_container_view_get_name_func_preview (widget);
+  viewable = gimp_container_view_get_name_func_viewable (object);
 
-  if (preview)
+  if (viewable)
     {
       GimpImagefile *imagefile;
+      const gchar   *uri;
+      gchar         *basename;
 
-      imagefile = GIMP_IMAGEFILE (preview->viewable);
+      imagefile = GIMP_IMAGEFILE (viewable);
 
-      if (imagefile)
-	{
-          const gchar *uri;
-	  gchar       *basename;
+      uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
 
-          uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
+      basename = file_utils_uri_to_utf8_basename (uri);
 
-	  basename = file_utils_uri_to_utf8_basename (uri);
+      if (tooltip)
+        {
+          gchar       *filename;
+          const gchar *desc;
 
-          if (tooltip)
+          filename = file_utils_uri_to_utf8_filename (uri);
+          desc     = gimp_imagefile_get_description (imagefile);
+
+          if (desc)
             {
-              gchar       *filename;
-              const gchar *desc;
-
-              filename = file_utils_uri_to_utf8_filename (uri);
-              desc     = gimp_imagefile_get_description (imagefile);
-
-              if (desc)
-                {
-                  *tooltip = g_strdup_printf ("%s\n%s", filename, desc);
-                  g_free (filename);
-                }
-              else
-                {
-                  *tooltip = filename;
-                }
+              *tooltip = g_strdup_printf ("%s\n%s", filename, desc);
+              g_free (filename);
             }
+          else
+            {
+              *tooltip = filename;
+            }
+        }
 
-	  if (imagefile->width > 0 && imagefile->height > 0)
-	    {
-              gchar *tmp = basename;
+      if (imagefile->width > 0 && imagefile->height > 0)
+        {
+          gchar *tmp = basename;
 
-              basename = g_strdup_printf ("%s (%d x %d)",
-                                          tmp,
-                                          imagefile->width,
-                                          imagefile->height);
-              g_free (tmp);
-	    }
+          basename = g_strdup_printf ("%s (%d x %d)",
+                                      tmp,
+                                      imagefile->width,
+                                      imagefile->height);
+          g_free (tmp);
+        }
 
-          return basename;
-	}
+      return basename;
     }
 
   return g_strdup ("EEK");

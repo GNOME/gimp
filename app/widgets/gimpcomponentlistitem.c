@@ -63,7 +63,7 @@ static void    gimp_component_list_item_active_changed
                                                       GimpChannelType  channel,
                                                       gpointer         data);
 
-static gchar * gimp_component_list_item_get_name     (GtkWidget       *widget,
+static gchar * gimp_component_list_item_get_name     (GObject         *object,
                                                       gchar          **tooltip);
 
 
@@ -466,12 +466,12 @@ gimp_component_list_item_active_changed (GimpImage       *gimage,
 }
 
 static gchar *
-gimp_component_list_item_get_name (GtkWidget  *widget,
-				   gchar     **tooltip)
+gimp_component_list_item_get_name (GObject  *object,
+				   gchar   **tooltip)
 {
   GimpComponentListItem *component_item;
 
-  component_item = GIMP_COMPONENT_LIST_ITEM (widget);
+  component_item = GIMP_COMPONENT_LIST_ITEM (object);
 
   if (tooltip)
     *tooltip = NULL;

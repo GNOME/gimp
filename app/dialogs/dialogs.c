@@ -69,6 +69,14 @@ static const GimpDialogFactoryEntry dock_entries[] =
   { "gimp-tool-grid",        dialogs_tool_grid_view_new,     24, FALSE, FALSE, FALSE, TRUE },
   { "gimp-buffer-grid",      dialogs_buffer_grid_view_new,   32, FALSE, FALSE, FALSE, TRUE },
 
+  { "gimp-image-tree",       dialogs_image_tree_view_new,    32, FALSE, FALSE, FALSE, TRUE },
+  { "gimp-brush-tree",       dialogs_brush_tree_view_new,    32, FALSE, FALSE, FALSE, TRUE },
+  { "gimp-pattern-tree",     dialogs_pattern_tree_view_new,  32, FALSE, FALSE, FALSE, TRUE },
+  { "gimp-gradient-tree",    dialogs_gradient_tree_view_new, 16, FALSE, FALSE, FALSE, TRUE },
+  { "gimp-palette-tree",     dialogs_palette_tree_view_new,  32, FALSE, FALSE, FALSE, TRUE },
+  { "gimp-tool-tree",        dialogs_tool_tree_view_new,     24, FALSE, FALSE, FALSE, TRUE },
+  { "gimp-buffer-tree",      dialogs_buffer_tree_view_new,   32, FALSE, FALSE, FALSE, TRUE },
+
   { "gimp-layer-list",       dialogs_layer_list_view_new,    32, FALSE, FALSE, FALSE, TRUE },
   { "gimp-channel-list",     dialogs_channel_list_view_new,  32, FALSE, FALSE, FALSE, TRUE },
   { "gimp-vectors-list",     dialogs_vectors_list_view_new,  32, FALSE, FALSE, FALSE, TRUE },
