@@ -18,9 +18,9 @@
 	active_tool->motion_mode and perform pointer grabbing and motion
 	compression accordingly. Also, don't request motion hints from
 	XInput devices because the wacom driver sends crap (fixes #6901).
-	This change also brings hints and ordinary motions back in
-	sync albeit compression, so IMHO it also fixes #68542 and #22375,
-	but this needs further investigation.
+	This change also brings hints and ordinary motions back in sync
+	albeit compression, so IMHO it also fixes #68542 and #22375, but
+	this needs further investigation.
 
 2002-03-18  Sven Neumann  <sven@gimp.org>
 
