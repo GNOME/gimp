@@ -130,6 +130,9 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_RESIZE               "gimp-resize"
 #define GIMP_STOCK_SCALE                "gimp-scale"
 
+#define GIMP_STOCK_LAYER                "gimp-layer"
+#define GIMP_STOCK_CHANNEL              "gimp-channel"
+
 #define GIMP_STOCK_IMAGES               "gimp-images"
 #define GIMP_STOCK_LAYERS               "gimp-layers"
 #define GIMP_STOCK_CHANNELS             "gimp-channels"

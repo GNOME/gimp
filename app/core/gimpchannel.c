@@ -99,23 +99,27 @@ gimp_channel_get_type (void)
 static void
 gimp_channel_class_init (GimpChannelClass *klass)
 {
-  GObjectClass    *object_class;
-  GimpObjectClass *gimp_object_class;
-  GimpItemClass   *item_class;
+  GObjectClass      *object_class;
+  GimpObjectClass   *gimp_object_class;
+  GimpViewableClass *viewable_class;
+  GimpItemClass     *item_class;
 
   object_class      = G_OBJECT_CLASS (klass);
   gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  viewable_class    = GIMP_VIEWABLE_CLASS (klass);
   item_class        = GIMP_ITEM_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize         = gimp_channel_finalize;
+  object_class->finalize           = gimp_channel_finalize;
 
-  gimp_object_class->get_memsize = gimp_channel_get_memsize;
+  gimp_object_class->get_memsize   = gimp_channel_get_memsize;
 
-  item_class->duplicate          = gimp_channel_duplicate;
-  item_class->default_name       = _("Channel");
-  item_class->rename_desc        = _("Rename Channel");
+  viewable_class->default_stock_id = "gimp-channel";
+
+  item_class->duplicate            = gimp_channel_duplicate;
+  item_class->default_name         = _("Channel");
+  item_class->rename_desc          = _("Rename Channel");
 }
 
 static void

@@ -38,12 +38,13 @@
 static GtkIconFactory *gimp_stock_factory = NULL;
 
 
-static GtkIconSet *
-sized_with_same_fallback_icon_set_from_inline (const guchar *inline_data,
-					       GtkIconSize   size)
+static void
+icon_set_from_inline (GtkIconSet   *set,
+                      const guchar *inline_data,
+                      GtkIconSize   size,
+                      gboolean      fallback)
 {
   GtkIconSource *source;
-  GtkIconSet    *set;
   GdkPixbuf     *pixbuf;
 
   source = gtk_icon_source_new ();
@@ -59,16 +60,15 @@ sized_with_same_fallback_icon_set_from_inline (const guchar *inline_data,
 
   g_object_unref (pixbuf);
 
-  set = gtk_icon_set_new ();
-
   gtk_icon_set_add_source (set, source);
 
-  gtk_icon_source_set_size_wildcarded (source, TRUE);
-  gtk_icon_set_add_source (set, source);
+  if (fallback)
+    {
+      gtk_icon_source_set_size_wildcarded (source, TRUE);
+      gtk_icon_set_add_source (set, source);
+    }
 
   gtk_icon_source_free (source);
-
-  return set;
 }
 
 static void
@@ -78,13 +78,22 @@ add_sized_with_same_fallback (GtkIconFactory *factory,
 			      const gchar    *stock_id)
 {
   GtkIconSet *set;
-  
-  set = sized_with_same_fallback_icon_set_from_inline (inline_data, size);
-  
-  gtk_icon_factory_add (factory, stock_id, set);
+  gboolean    fallback = FALSE;
 
-  gtk_icon_set_unref (set);
+  set = gtk_icon_factory_lookup (factory, stock_id);
+
+  if (! set)
+    {
+      set = gtk_icon_set_new ();
+      gtk_icon_factory_add (factory, stock_id, set);     
+      gtk_icon_set_unref (set);
+
+      fallback = TRUE;
+    }
+
+  icon_set_from_inline (set, inline_data, size, fallback);
 }
+
 
 static GtkStockItem gimp_stock_items[] =
 {
@@ -154,6 +163,9 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_CHANNELS,                 NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_PATHS,                    NULL,        0, 0, LIBGIMP_DOMAIN },
 
+  { GIMP_STOCK_LAYER,                    NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_CHANNEL,                  NULL,        0, 0, LIBGIMP_DOMAIN },
+
   { GIMP_STOCK_SELECTION_ALL,            NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_SELECTION_NONE,           NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_SELECTION_GROW,           NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -220,11 +232,9 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_ANCHOR,                   stock_anchor_16                   },
   { GIMP_STOCK_DUPLICATE,                stock_duplicate_16                },
   { GIMP_STOCK_EDIT,                     stock_edit_16                     },
-  { GIMP_STOCK_LINKED,                   stock_linked_20                   },
   { GIMP_STOCK_PASTE_AS_NEW,             stock_paste_as_new_16             },
   { GIMP_STOCK_PASTE_INTO,               stock_paste_into_16               },
   { GIMP_STOCK_RESET,                    stock_reset_16                    },
-  { GIMP_STOCK_VISIBLE,                  stock_eye_20                      },
 
   { GIMP_STOCK_GRAVITY_EAST,             stock_gravity_east_24             },
   { GIMP_STOCK_GRAVITY_NORTH,            stock_gravity_north_24            },
@@ -260,6 +270,12 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_CHAR_PICKER,              stock_char_picker_22              },
   { GIMP_STOCK_LETTER_SPACING,           stock_letter_spacing_22           },
   { GIMP_STOCK_LINE_SPACING,             stock_line_spacing_22             },
+
+  { GIMP_STOCK_LAYER,                    stock_layer_24                    },
+  { GIMP_STOCK_CHANNEL,                  stock_channel_24                  },
+
+  { GIMP_STOCK_LINKED,                   stock_linked_20                   },
+  { GIMP_STOCK_VISIBLE,                  stock_eye_20                      },
 
   { GIMP_STOCK_TOOL_AIRBRUSH,            stock_tool_airbrush_22            },
   { GIMP_STOCK_TOOL_BEZIER_SELECT,       stock_tool_bezier_select_22       },
@@ -331,6 +347,12 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_LAYERS,               stock_layers_16               },
   { GIMP_STOCK_CHANNELS,             stock_channels_16             },
   { GIMP_STOCK_PATHS,                stock_paths_16                },
+
+  { GIMP_STOCK_LAYER,                stock_layer_16                },
+  { GIMP_STOCK_CHANNEL,              stock_channel_16              },
+
+  { GIMP_STOCK_LINKED,               stock_linked_12               },
+  { GIMP_STOCK_VISIBLE,              stock_eye_12                  },
 
   { GIMP_STOCK_SELECTION_ALL,        stock_selection_all_16        },
   { GIMP_STOCK_SELECTION_NONE,       stock_selection_none_16       },

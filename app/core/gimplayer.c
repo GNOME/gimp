@@ -180,6 +180,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
 
   gimp_object_class->get_memsize     = gimp_layer_get_memsize;
 
+  viewable_class->default_stock_id   = "gimp-layer";
   viewable_class->invalidate_preview = gimp_layer_invalidate_preview;
 
   item_class->duplicate              = gimp_layer_duplicate;

@@ -346,6 +346,20 @@ size).
 
 
 
+<!-- ##### MACRO GIMP_STOCK_LAYER ##### -->
+<para>
+<inlinegraphic fileref="stock-layer-24.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_CHANNEL ##### -->
+<para>
+<inlinegraphic fileref="stock-channel-24.png" format="png"></inlinegraphic>
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_IMAGES ##### -->
 <para>
 <inlinegraphic fileref="stock-images-16.png" format="png"></inlinegraphic>

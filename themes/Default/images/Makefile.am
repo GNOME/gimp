@@ -24,6 +24,8 @@ WILBER_VARIABLES = \
 
 STOCK_BUTTON_IMAGES = \
 	stock-anchor-16.png			\
+	stock-channel-16.png			\
+	stock-channel-24.png			\
 	stock-char-picker-22.png		\
 	stock-color-picker-black-18.png		\
 	stock-color-picker-gray-18.png		\
@@ -33,6 +35,7 @@ STOCK_BUTTON_IMAGES = \
 	stock-curve-smooth-16.png		\
 	stock-duplicate-16.png			\
 	stock-edit-16.png			\
+	stock-eye-12.png			\
 	stock-eye-20.png			\
 	stock-gravity-east-24.png		\
 	stock-gravity-north-24.png		\
@@ -42,7 +45,10 @@ STOCK_BUTTON_IMAGES = \
 	stock-gravity-south-east-24.png		\
 	stock-gravity-south-west-24.png		\
 	stock-gravity-west-24.png		\
+	stock-layer-16.png			\
+	stock-layer-24.png			\
 	stock-line-spacing-22.png		\
+	stock-linked-12.png			\
 	stock-linked-20.png			\
 	stock-letter-spacing-22.png		\
 	stock-paste-as-new-16.png		\

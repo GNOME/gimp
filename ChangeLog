@@ -1,3 +1,23 @@
+2003-03-22  Sven Neumann  <sven@gimp.org>
+
+	* themes/Default/images/stock-channel-16.png
+	* themes/Default/images/stock-channel-24.png
+	* themes/Default/images/stock-layer-16.png
+	* themes/Default/images/stock-layer-24.png: new icons provided by
+	Jimmac.
+
+	* themes/Default/images/stock-eye-12.png
+	* themes/Default/images/stock-linked-12.png: tiny visibility and
+	linked icons that I created from Jimmac's small versions by
+	scaling them down. Should probably be redone.
+
+	* libgimpwidgets/gimpstock.[ch]: allow to register multiple sizes
+	for the same stock_id. Added new icons.
+
+	* app/core/gimpchannel.c
+	* app/core/gimplayer.c: set default stock_ids so the new icons are
+	used when layer previews are disabled.
+
 2003-03-21  Sven Neumann  <sven@gimp.org>
 
 	* widgets/gimpdockbook.c: renamed "tab_size" style property to
