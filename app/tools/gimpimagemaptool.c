@@ -257,7 +257,7 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
                     image_map_tool);
 
   gimp_display_shell_set_menu_sensitivity (GIMP_DISPLAY_SHELL (gdisp->shell),
-                                           gdisp->gimage->gimp, TRUE);
+                                           gdisp->gimage->gimp, FALSE);
 }
 
 static void
@@ -378,7 +378,7 @@ gimp_image_map_tool_ok_clicked (GtkWidget        *widget,
   gimp_tool_control_set_preserve (tool->control, FALSE);
 
   gimp_display_shell_set_menu_sensitivity (GIMP_DISPLAY_SHELL (tool->gdisp->shell),
-                                           tool->gdisp->gimage->gimp, TRUE);
+                                           tool->gdisp->gimage->gimp, FALSE);
 
   tool->gdisp    = NULL;
   tool->drawable = NULL;

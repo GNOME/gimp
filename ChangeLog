@@ -1,3 +1,11 @@
+2002-12-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/plug-in-commands.c (plug_in_repeat_cmd_callback):
+	use gdisp->gimage->gimp instead of the_gimp.
+
+	* app/tools/gimpimagemaptool.c: pass update_popup == FALSE to
+	gimp_display_shell_set_menu_sensitivity().
+
 2002-12-14  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/plug-in-commands.c (plug_in_repeat_cmd_callback): data
