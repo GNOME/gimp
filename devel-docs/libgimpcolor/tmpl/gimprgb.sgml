@@ -248,6 +248,17 @@ GimpRGB
 @Returns: 
 
 
+<!-- ##### MACRO GIMP_RGB_INTENSITY ##### -->
+<para>
+This macro calculates the intensity of an RGB value based on
+coefficients taken from the NTSC analog television standard.
+</para>
+
+@r: red
+@g: green
+@b: blue
+
+
 <!-- ##### MACRO GIMP_RGB_INTENSITY_RED ##### -->
 <para>
 
@@ -267,16 +278,5 @@ GimpRGB
 
 </para>
 
-
-
-<!-- ##### MACRO GIMP_RGB_INTENSITY ##### -->
-<para>
-This macro calculates the intensity of an RGB value based on
-coefficients taken from the NTSC analog television standard.
-</para>
-
-@r: red
-@g: green
-@b: blue
 
 
