@@ -18,6 +18,7 @@
 
 #include "config.h"
 
+#include <string.h>
 #include <time.h>
 
 #include <glib-object.h>
@@ -106,14 +107,22 @@ gimp_text_undo_get_memsize (GimpObject *object,
   GimpTextUndo *undo    = GIMP_TEXT_UNDO (object);
   gint64        memsize = 0;
 
-  if (undo->pspec)
+  if (undo->value)
     {
-      /*  this is incorrect, but how can it be done better?  */
-      memsize = sizeof (GValue);
+      memsize += sizeof (GValue);
+
+      if (G_VALUE_HOLDS_STRING (undo->value))
+        {
+          const gchar *str = g_value_get_string (undo->value);
+
+          if (str)
+            memsize += strlen (str) + 1;
+        }
     }
-  else if (undo->text)
+
+  if (undo->text)
     {
-      memsize = gimp_object_get_memsize (GIMP_OBJECT (undo->text), NULL);
+      memsize += gimp_object_get_memsize (GIMP_OBJECT (undo->text), NULL);
     }
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,

@@ -1,5 +1,11 @@
 2004-07-13  Sven Neumann  <sven@gimp.org>
 
+	* app/text/gimptextundo.c (gimp_text_undo_get_memsize): merged
+	some code from the HEAD branch that improves the computation of
+	the memory requirements for a text undo step.
+
+2004-07-13  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/jpeg.c: merged fix for bug #145212 (JPEG plug-in
 	crashes on corrupt EXIF data) from HEAD branch.
 
