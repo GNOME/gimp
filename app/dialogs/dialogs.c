@@ -102,7 +102,7 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
     0, TRUE,  TRUE,  FALSE, TRUE  },
   { "gimp-preferences-dialog",     dialogs_preferences_get,
     0, TRUE,  TRUE,  FALSE, FALSE },
-  { "gimp-module-browser-dialog",  dialogs_module_browser_get,
+  { "gimp-module-manager-dialog",  dialogs_module_browser_get,
     0, TRUE,  TRUE,  TRUE,  FALSE },
   { "gimp-tips-dialog",            dialogs_tips_get,
     0, TRUE,  FALSE, FALSE, FALSE },

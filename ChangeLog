@@ -1,3 +1,10 @@
+2003-06-30  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/dialogs.c
+	* app/gui/module-browser.c
+	* app/gui/toolbox-menu.c: changed "Module Browser" to "Module
+	Manager" as suggested in bug #116171.
+
 2003-06-29  Manish Singh  <yosh@gimp.org>
 
 	* tools/gimp-mkenums: handle options with -'s in them

@@ -118,11 +118,11 @@ module_browser_new (Gimp *gimp)
   browser->gimp = gimp;
 
   shell = gimp_viewable_dialog_new (NULL,
-                                    _("Module Browser"), "module_db_dialog",
+                                    _("Module Manager"), "module_db_dialog",
                                     GTK_STOCK_EXECUTE,
-                                    _("Browse & Manage Loadable Modules"),
+                                    _("Manage Loadable Modules"),
                                     gimp_standard_help_func,
-                                    "dialogs/module_browser.html",
+                                    "dialogs/module_manager.html",
 
                                     GTK_STOCK_REFRESH, browser_refresh_callback,
                                     browser, NULL, NULL, FALSE, FALSE,

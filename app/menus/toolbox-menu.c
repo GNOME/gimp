@@ -235,10 +235,10 @@ GimpItemFactoryEntry toolbox_menu_entries[] =
 
   MENU_BRANCH (N_("/_Xtns")),
 
-  { { N_("/Xtns/Module Browser..."), NULL,
+  { { N_("/Xtns/Module Manager..."), NULL,
       dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp-module-browser-dialog",
-    "dialogs/module_browser.html", NULL },
+    "gimp-module-manager-dialog",
+    "dialogs/module_manager.html", NULL },
 
   MENU_SEPARATOR ("/Xtns/---"),
 
@@ -290,7 +290,7 @@ toolbox_menu_setup (GimpItemFactory *factory)
    */
   pos = 1;
   menu_item = gtk_item_factory_get_widget (GTK_ITEM_FACTORY (factory),
-                                           "/Xtns/Module Browser...");
+                                           "/Xtns/Module Manager...");
   if (menu_item && menu_item->parent && GTK_IS_MENU (menu_item->parent))
     {
       menu = menu_item->parent;
