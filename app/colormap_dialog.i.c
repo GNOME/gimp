@@ -14,6 +14,8 @@
 /*#include "gdisplay.h"*/
 #include "general.h"
 #include "gimpdnd.h"
+#include "gimphelp.h"
+
 #include "libgimp/gimpintl.h"
 
 /*  Add these features:
@@ -152,7 +154,7 @@ ipal_create (GimpSet* context)
     { NULL, 0, 0, NULL, NULL, NULL, NULL },
   };
   
-  ipal = gtk_type_new(GIMP_TYPE_COLORMAP_DIALOG);
+  ipal = gtk_type_new (GIMP_TYPE_COLORMAP_DIALOG);
   ipal->image = NULL;
   ipal->context = context;
   ipal->cmap_changed_handler
@@ -164,7 +166,7 @@ ipal_create (GimpSet* context)
 
   accel_group = gtk_accel_group_new ();
   gtk_window_set_wmclass (GTK_WINDOW (ipal), "indexed_color_palette", "Gimp");
-  dialog_register(GTK_WIDGET(ipal));
+  dialog_register (GTK_WIDGET (ipal));
   gtk_window_set_policy (GTK_WINDOW (ipal), TRUE, TRUE, TRUE); 
   gtk_window_set_title (GTK_WINDOW (ipal), _("Indexed Color Palette"));
   gtk_window_add_accel_group (GTK_WINDOW (ipal), accel_group);
@@ -240,7 +242,8 @@ ipal_create (GimpSet* context)
                        GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
                        color_palette_target_table, n_color_palette_targets,
                        GDK_ACTION_COPY | GDK_ACTION_MOVE);
-  gimp_dnd_color_source_set (ipal->palette, palette_drag_color, ipal);
+  gimp_dnd_color_source_set (GTK_WIDGET (ipal->palette),
+			     palette_drag_color, ipal);
 
   gtk_drag_dest_set (GTK_WIDGET(ipal->palette),
                      GTK_DEST_DEFAULT_HIGHLIGHT |
@@ -248,7 +251,8 @@ ipal_create (GimpSet* context)
                      GTK_DEST_DEFAULT_DROP,
                      color_palette_target_table, n_color_palette_targets,
                      GDK_ACTION_COPY);
-  gimp_dnd_color_dest_set (ipal->palette, palette_drop_color, ipal);
+  gimp_dnd_color_dest_set (GTK_WIDGET (ipal->palette),
+			   palette_drop_color, ipal);
   
   /* some helpful hints */
   hbox = gtk_hbox_new(FALSE, 1);
@@ -273,7 +277,12 @@ ipal_create (GimpSet* context)
   for(i=0;i<sizeof(action_items)/sizeof(action_items[0]);i++)
     action_items[i].user_data = ipal;
   build_action_area (GTK_DIALOG (ipal), action_items, 1, 0);
-  
+
+  /*  Connect the "F1" help key  */
+  gimp_help_connect_help_accel (GTK_WIDGET (ipal),
+				gimp_standard_help_func,
+				"dialogs/indexed_palette_dialog.html");
+
   gtk_widget_show_all (vbox);
   /* gtk_widget_show (ipal); */
   

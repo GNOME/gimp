@@ -1,5 +1,9 @@
 1999-09-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/colormap_dialog.i.c: "F1" for the indexed palette dialog.
+
+1999-09-30  Michael Natterer  <mitch@gimp.org>
+
 	* app/gradient.c: made the indentation consistent.
 
 Wed Sep 29 22:48:01 BST 1999 Adam D. Moss <adam@gimp.org>
