@@ -694,18 +694,18 @@ gdisplay_update_cursor (GDisplay *gdisp, int x, int y)
     {
       if (t_x < 0 ||
 	  t_y < 0 ||
-	  t_x > active_drawable->width ||
-	  t_y > active_drawable->height)
+	  t_x >= active_drawable->width ||
+	  t_y >= active_drawable->height)
 	{
-	  gtk_label_set(GTK_LABEL (gdisp->cursor_label), "");
+	  gtk_label_set (GTK_LABEL (gdisp->cursor_label), "");
 	} 
       else 
 	{
-	  g_snprintf(buffer, CURSOR_STR_LENGTH, " %d, %d ", t_x, t_y);
-	  gtk_label_set(GTK_LABEL (gdisp->cursor_label), buffer);
+	  g_snprintf (buffer, CURSOR_STR_LENGTH, " %d, %d ", t_x, t_y);
+	  gtk_label_set (GTK_LABEL (gdisp->cursor_label), buffer);
 	}
     }
-  
+
   gdisp->have_cursor = new_cursor;
   gdisp->cursor_x = x;
   gdisp->cursor_y = y;
