@@ -25,6 +25,7 @@
 
 #include "core/gimpimage.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpchannel.h"
 
 #include "base/tile-manager.h"
 
@@ -39,27 +40,43 @@
 
 /*  local function prototypes  */
 
-static void    gimp_display_shell_draw_quad       (GimpDrawable     *texture,
-                                                   GdkDrawable      *dest,
-                                                   gint             *x,
-                                                   gint             *y,
-                                                   gfloat           *u,
-                                                   gfloat           *v);
-static void    gimp_display_shell_draw_quad_row   (GimpDrawable     *texture,
-                                                   GdkDrawable      *dest,
-                                                   GdkPixbuf        *row,
-                                                   gint              x1,
-                                                   gfloat            u1,
-                                                   gfloat            v1,
-                                                   gint              x2,
-                                                   gfloat            u2,
-                                                   gfloat            v2,
-                                                   gint              y);
-static void    gimp_display_shell_trace_quad_edge (gint             *dest,
-                                                   gint              x1,
-                                                   gint              y1,
-                                                   gint              x2,
-                                                   gint              y2);
+static void    gimp_display_shell_draw_quad          (GimpDrawable *texture,
+                                                      GdkDrawable  *dest,
+                                                      GimpChannel  *mask,
+                                                      gint          mask_offx,
+                                                      gint          mask_offy,
+                                                      gint         *x,
+                                                      gint         *y,
+                                                      gfloat       *u,
+                                                      gfloat       *v);
+static void    gimp_display_shell_draw_quad_row      (GimpDrawable *texture,
+                                                      GdkDrawable  *dest,
+                                                      GdkPixbuf    *row,
+                                                      gint          x1,
+                                                      gfloat        u1,
+                                                      gfloat        v1,
+                                                      gint          x2,
+                                                      gfloat        u2,
+                                                      gfloat        v2,
+                                                      gint          y);
+static void    gimp_display_shell_draw_quad_row_mask (GimpDrawable *texture,
+                                                      GdkDrawable  *dest,
+                                                      GdkPixbuf    *row,
+                                                      GimpChannel  *mask,
+                                                      gint          mask_offx,
+                                                      gint          mask_offy,
+                                                      gint          x1,
+                                                      gfloat        u1,
+                                                      gfloat        v1,
+                                                      gint          x2,
+                                                      gfloat        u2,
+                                                      gfloat        v2,
+                                                      gint          y);
+static void    gimp_display_shell_trace_quad_edge    (gint         *dest,
+                                                      gint          x1,
+                                                      gint          y1,
+                                                      gint          x2,
+                                                      gint          y2);
 
 /*  public functions  */
 
@@ -76,7 +93,8 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell)
 
       tool = tool_manager_get_active (shell->gdisp->gimage->gimp);
 
-      if (! GIMP_IS_TRANSFORM_TOOL (tool))
+      if (! GIMP_IS_TRANSFORM_TOOL (tool) ||
+          ! GIMP_IS_DRAWABLE (tool->drawable))
         return;
 
       tr_tool = GIMP_TRANSFORM_TOOL (tool);
@@ -97,14 +115,14 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell)
 
       if ((z1 * z2 > 0) && (z3 * z4 > 0))
         {      
-          gdouble dx [4];
-          gdouble dy [4];
-          gint    x [4];
-          gint    y [4];
-          gfloat  u [4];
-          gfloat  v [4];
-          gint    mask_x1, mask_y1, mask_x2, mask_y2;
-          gint    i;
+          gdouble      dx [4], dy [4];
+          gint          x [4],  y [4];
+          gfloat        u [4],  v [4];
+          GimpChannel *mask;
+          gint         mask_x1, mask_y1,
+                       mask_x2, mask_y2;
+          gint         mask_offx, mask_offy;
+          gint         i;
 
           gimp_display_shell_transform_xy_f (shell, tr_tool->tx1, tr_tool->ty1,
                                              dx + 0, dy + 0, FALSE);
@@ -121,15 +139,27 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell)
               y [i] = (gint) dy [i];
             }
 
-          gimp_drawable_mask_bounds (tool->drawable, &mask_x1, &mask_y1,
-                                                     &mask_x2, &mask_y2);
+          mask = NULL;
+          mask_offx = mask_offy = 0;
+
+          if (gimp_drawable_mask_bounds (tool->drawable,
+                                         &mask_x1, &mask_y1,
+                                         &mask_x2, &mask_y2))
+            {
+              mask = gimp_image_get_mask (shell->gdisp->gimage);
+
+              gimp_item_offsets (GIMP_ITEM (tool->drawable),
+                                 &mask_offx, &mask_offy);
+            }
+
           u [0] = mask_x1;  v [0] = mask_y1;
           u [1] = mask_x2;  v [1] = mask_y1;
           u [2] = mask_x1;  v [2] = mask_y2;
           u [3] = mask_x2;  v [3] = mask_y2;
-          
+
           gimp_display_shell_draw_quad (tool->drawable,
                               GDK_DRAWABLE (GTK_WIDGET (shell->canvas)->window),
+                              mask, mask_offx, mask_offy,
                               x, y, u, v);
         }
     }
@@ -141,6 +171,9 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell)
 static void
 gimp_display_shell_draw_quad (GimpDrawable *texture,
                               GdkDrawable  *dest,
+                              GimpChannel  *mask,
+                              gint          mask_offx,
+                              gint          mask_offy,
                               gint         *x,
                               gint         *y,
                               gfloat       *u, /* texture coords */
@@ -194,7 +227,8 @@ gimp_display_shell_draw_quad (GimpDrawable *texture,
       return;
   }
 
-  row = gdk_pixbuf_new (GDK_COLORSPACE_RGB, gimp_drawable_has_alpha (texture),
+  row = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
+                        mask ? TRUE : gimp_drawable_has_alpha (texture),
                         8, dwidth, 1);
   g_return_if_fail (row != NULL);
 
@@ -252,17 +286,25 @@ gimp_display_shell_draw_quad (GimpDrawable *texture,
         for (ry = y [a]; ry < y [b]; ry++) \
           { \
             if (ry >= 0 && ry < dheight) \
-              gimp_display_shell_draw_quad_row (texture, dest, row, \
-                                                *left, u_l, v_l, \
-                                                *right, u_r, v_r, \
-                                                ry); \
-            left ++; \
-            right ++; \
-            u_l += dul; \
-            v_l += dvl; \
-            u_r += dur; \
-            v_r += dvr; \
+              { \
+                if (mask) \
+                  gimp_display_shell_draw_quad_row_mask \
+                                                    (texture, dest, row, \
+                                                    mask, mask_offx, mask_offy,\
+                                                    *left, u_l, v_l, \
+                                                    *right, u_r, v_r, \
+                                                    ry); \
+                else \
+                  gimp_display_shell_draw_quad_row (texture, dest, row, \
+                                                    *left, u_l, v_l, \
+                                                    *right, u_r, v_r, \
+                                                    ry); \
+              } \
+            left ++;      right ++; \
+            u_l += dul;   v_l += dvl; \
+            u_r += dur;   v_r += dvr; \
           } \
+
 
   if (((x [0] > x [1]) && (x [3] > x [2])) ||
       ((x [0] < x [1]) && (x [3] < x [2])))
@@ -337,7 +379,7 @@ gimp_display_shell_draw_quad_row (GimpDrawable *texture,
 {
   TileManager *tiles;
   guchar      *pptr;
-  gchar        bytes;
+  guchar       bytes;
   gfloat       u, v;
   gfloat       du, dv;
   gint         dx;
@@ -469,6 +511,201 @@ gimp_display_shell_draw_quad_row (GimpDrawable *texture,
           pptr += bytes;
           u += du;
           v += dv;
+        }
+      break;
+
+    default:
+      return;
+    }
+
+  gdk_draw_pixbuf (dest, NULL, row, 0, 0, x1, y, x2 - x1, 1,
+                   GDK_RGB_DITHER_NONE, 0, 0);
+}
+
+static void
+gimp_display_shell_draw_quad_row_mask (GimpDrawable *texture,
+                                       GdkDrawable  *dest,
+                                       GdkPixbuf    *row,
+                                       GimpChannel  *mask,
+                                       gint          mask_offx,
+                                       gint          mask_offy,
+                                       gint          x1,
+                                       gfloat        u1,
+                                       gfloat        v1,
+                                       gint          x2,
+                                       gfloat        u2,
+                                       gfloat        v2,
+                                       gint          y)
+{
+  TileManager *tiles, *masktiles;
+  guchar      *pptr;
+  guchar       bytes, alpha;
+  gfloat       u, v;
+  gfloat       mu, mv;
+  gfloat       du, dv;
+  gint         dx;
+  guchar       pixel [4], maskval;
+  guchar      *cmap;
+  gint         offset;
+
+  if (! (x2 - x1))
+    return;
+  
+  g_return_if_fail (GIMP_IS_DRAWABLE (texture));
+  g_return_if_fail (GIMP_IS_CHANNEL (mask));
+  g_return_if_fail (GDK_IS_DRAWABLE (dest));
+  g_return_if_fail (GDK_IS_PIXBUF (row));
+  g_return_if_fail (gdk_pixbuf_get_bits_per_sample (row) == 8);
+  g_return_if_fail (gdk_pixbuf_get_colorspace (row) == GDK_COLORSPACE_RGB);
+
+  bytes     = gdk_pixbuf_get_n_channels (row);
+  alpha     = bytes - 1;
+  pptr      = gdk_pixbuf_get_pixels (row);
+  tiles     = gimp_drawable_data (texture);
+  masktiles = gimp_drawable_data (GIMP_DRAWABLE (mask));
+  
+  if (x1 > x2)
+    {
+      gint tmp;
+      gfloat ftmp;
+      
+      tmp  = x2;  x2 = x1;  x1 = tmp;
+      ftmp = u2;  u2 = u1;  u1 = ftmp;
+      ftmp = v2;  v2 = v1;  v1 = ftmp;
+    }
+
+  u = u1;
+  v = v1;
+  du = (u2 - u1) / (x2 - x1);
+  dv = (v2 - v1) / (x2 - x1);
+
+  /* don't calculate unseen pixels */
+  if (x1 < 0)
+    {
+      u += du * (0 - x1);
+      v += dv * (0 - x1);
+      x1 = 0;
+    }
+  else if (x1 > gdk_pixbuf_get_width (row))
+    return;
+  if (x2 < 0)
+    return;
+  else if (x2 > gdk_pixbuf_get_width (row))
+    x2 = gdk_pixbuf_get_width (row);
+
+  mu = u + mask_offx;
+  mv = v + mask_offy;
+  dx = x2 - x1;
+
+  switch (gimp_drawable_type (texture))
+    {
+    case GIMP_INDEXED_IMAGE:
+      cmap = gimp_drawable_cmap (texture);
+      
+      while (dx --)
+        {
+          read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
+          read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, pptr + alpha);
+
+          offset = pixel [0] + pixel [0] + pixel [0];
+          
+          *pptr++ = cmap [offset];
+          *pptr++ = cmap [offset + 1];
+          *pptr++ = cmap [offset + 2];
+
+          pptr ++;
+          u += du;
+          v += dv;
+          mu += du;
+          mv += dv;
+        }
+      break;
+
+    case GIMP_INDEXEDA_IMAGE:
+      cmap = gimp_drawable_cmap (texture);
+      
+      while (dx --)
+        {
+          read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
+          read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
+
+          offset = pixel [0] + pixel [0] + pixel [0];
+          
+          *pptr++ = cmap [offset];
+          *pptr++ = cmap [offset + 1];
+          *pptr++ = cmap [offset + 2];
+          *pptr++ = ((gint) maskval * pixel [1]) >> 8;
+
+          u += du;
+          v += dv;
+          mu += du;
+          mv += dv;
+        }
+      break;
+
+    case GIMP_GRAY_IMAGE:
+      while (dx --)
+        {
+          read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
+          read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, pptr + alpha);
+
+          *pptr++ = pixel [0];
+          *pptr++ = pixel [0];
+          *pptr++ = pixel [0];
+
+          pptr ++;
+          u += du;
+          v += dv;
+          mu += du;
+          mv += dv;
+        }
+      break;
+
+    case GIMP_GRAYA_IMAGE:
+      while (dx --)
+        {
+          read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
+          read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
+          
+          *pptr++ = pixel [0];
+          *pptr++ = pixel [0];
+          *pptr++ = pixel [0];
+          *pptr++ = ((gint) maskval * pixel [1]) >> 8;
+          
+          u += du;
+          v += dv;
+          mu += du;
+          mv += dv;
+        }
+      break;
+
+    case GIMP_RGB_IMAGE:
+      while (dx --)
+        {
+          read_pixel_data_1 (tiles, (gint) u, (gint) v, pptr);
+          read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, pptr + alpha);
+          
+          pptr += bytes;
+          u += du;
+          v += dv;
+          mu += du;
+          mv += dv;
+        }
+      break;
+
+    case GIMP_RGBA_IMAGE:      
+      while (dx --)
+        {
+          read_pixel_data_1 (tiles, (gint) u, (gint) v, pptr);
+          read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
+
+          pptr [alpha] = ((gint) maskval * pptr [alpha]) >> 8;
+
+          pptr += bytes;
+          u += du;
+          v += dv;
+          mu += du;
+          mv += dv;
         }
       break;
 
