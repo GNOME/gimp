@@ -1,3 +1,9 @@
+2004-06-17  Philip Lafleur  <plafleur@cvs.gnome.org>
+
+	* app/core/gimpdrawable-transform.c (gimp_drawable_transform_tiles_affine):
+	Make transforms (most notably perspective transforms) conform exactly
+	to specified edges. Includes a patch by David Gowers. Fixes bug #144352.
+
 2004-06-16  Manish Singh  <yosh@gimp.org>
 
 	* modules/controller_linux_input.c: put BTN_{WHEEL,GEAR_DOWN,GEAR_UP}

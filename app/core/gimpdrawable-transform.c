@@ -306,14 +306,14 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
         (* progress_callback) (y1, y2, y, progress_data);
 
       /* set up inverse transform steps */
-      tu[0] = uinc * (x1 + 0.5) + m.coeff[0][1] * (y + 0.5) + m.coeff[0][2] - 0.5;
-      tv[0] = vinc * (x1 + 0.5) + m.coeff[1][1] * (y + 0.5) + m.coeff[1][2] - 0.5;
-      tw[0] = winc * (x1 + 0.5) + m.coeff[2][1] * (y + 0.5) + m.coeff[2][2];
+      tu[0] = uinc * x1 + m.coeff[0][1] * y + m.coeff[0][2];
+      tv[0] = vinc * x1 + m.coeff[1][1] * y + m.coeff[1][2];
+      tw[0] = winc * x1 + m.coeff[2][1] * y + m.coeff[2][2];
 
       if (interpolation_type != GIMP_INTERPOLATION_NONE)
         {
-          gdouble xx = x1 + 0.5;
-          gdouble yy = y + 0.5;
+          gdouble xx = x1;
+          gdouble yy = y;
 
           tu[1] = uinc * (xx - 1) + m.coeff[0][1] * (yy    ) + m.coeff[0][2];
           tv[1] = vinc * (xx - 1) + m.coeff[1][1] * (yy    ) + m.coeff[1][2];
@@ -388,10 +388,8 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
             {
               gint b;
 
-              if (MAX4 (u[1], u[2], u[3], u[4]) < u1  ||
-                  MAX4 (v[1], v[2], v[3], v[4]) < v1  ||
-                  MIN4 (u[1], u[2], u[3], u[4]) >= u2 ||
-                  MIN4 (v[1], v[2], v[3], v[4]) >= v2)
+              if (u [0] <  u1 || v [0] <  v1 ||
+                  u [0] >= u2 || v [0] >= v2 )
                 {
                   /* not in source range */
                   /* increment the destination pointers  */
@@ -402,6 +400,13 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
               else
                 {
                   guchar color[MAX_CHANNELS];
+
+                  /* clamp texture coordinates */
+                  for (b = 0; b < 5; b++)
+                    {
+                      u[b] = CLAMP (u[b], u1, u2 - 1);
+                      v[b] = CLAMP (v[b], v1, v2 - 1);
+                    }
 
                   if (supersample &&
                       supersample_dtest (u[1], v[1], u[2], v[2],
