@@ -1,6 +1,6 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
- * 
+ *
  * gimp-remote.c
  * Copyright (C) 2000-2003  Sven Neumann <sven@gimp.org>
  *                          Simon Budig <simon@gimp.org>
@@ -69,13 +69,13 @@ gimp_remote_find_window (void)
   gint       i;
 
   if (XQueryTree (gdk_display,
-                  gdk_x11_get_default_root_xwindow (), 
+                  gdk_x11_get_default_root_xwindow (),
                   &root, &parent, &children, &nchildren) == 0)
     return NULL;
-  
+
   if (! (children && nchildren))
     return NULL;
-  
+
   class_atom  = XInternAtom (gdk_display, "WM_CLASS", TRUE);
   string_atom = XInternAtom (gdk_display, "STRING",   TRUE);
 
@@ -113,7 +113,7 @@ gimp_remote_find_window (void)
         {
           if (nitems > 12                        &&
               strcmp (data,     "toolbox") == 0  &&
-              strcmp (data + 8, "Gimp")    == 0) 
+              strcmp (data + 8, "Gimp")    == 0)
             {
               XFree (data);
               result = gdk_window_foreign_new (window);
@@ -123,13 +123,13 @@ gimp_remote_find_window (void)
           XFree (data);
         }
     }
-  
+
   XFree (children);
 
   return result;
 }
 
-static void  
+static void
 source_selection_get (GtkWidget          *widget,
 		      GtkSelectionData   *selection_data,
 		      guint               info,
@@ -153,14 +153,14 @@ toolbox_hidden (gpointer data)
 
   return FALSE;
 }
-  
+
 static void
 usage (const gchar *name)
 {
   g_print ("gimp-remote version %s\n\n", GIMP_VERSION);
   g_print ("Tells a running Gimp to open a (local or remote) image file.\n\n"
 	   "Usage: %s [options] [FILE|URI]...\n\n", name);
-  g_print ("Valid options are:\n" 
+  g_print ("Valid options are:\n"
 	   "  -h --help       Output this help.\n"
 	   "  -v --version    Output version info.\n"
 	   "  -n --new        Start gimp if no active gimp window was found.\n\n");
@@ -170,12 +170,12 @@ usage (const gchar *name)
 
 static void
 start_new_gimp (gchar *argv0, GString *file_list)
-{     
+{
   gint    i;
   gchar **argv;
   gchar  *gimp, *path, *name, *pwd;
   const gchar *spath;
-  
+
   file_list = g_string_prepend (file_list, "gimp\n");
   argv = g_strsplit (file_list->str, "\n", 0);
   g_string_free (file_list, TRUE);
@@ -237,7 +237,7 @@ start_new_gimp (gchar *argv0, GString *file_list)
 
   execv (gimp, argv);
   execvp ("gimp-1.3", argv);
-	  
+
   /*  if execv and execvp return, there was an arror  */
   g_printerr ("Couldn't start gimp-1.3 for the following reason: %s\n",
               g_strerror (errno));
@@ -248,15 +248,15 @@ static void
 parse_option (const gchar *progname,
               const gchar *arg)
 {
-  if (strcmp (arg, "-v") == 0 || 
+  if (strcmp (arg, "-v") == 0 ||
       strcmp (arg, "--version") == 0)
     {
       g_print ("gimp-remote version %s\n", GIMP_VERSION);
       exit (0);
     }
-  else if (strcmp (arg, "-h") == 0 || 
-	   strcmp (arg, "-?") == 0 || 
-	   strcmp (arg, "--help") == 0 || 
+  else if (strcmp (arg, "-h") == 0 ||
+	   strcmp (arg, "-?") == 0 ||
+	   strcmp (arg, "--help") == 0 ||
 	   strcmp (arg, "--usage") == 0)
     {
       usage (progname);
@@ -275,32 +275,32 @@ parse_option (const gchar *progname,
     }
 }
 
-gint 
-main (gint    argc, 
+gint
+main (gint    argc,
       gchar **argv)
 {
   GtkWidget *source;
   GdkWindow *gimp_window;
-    
+
   GdkDragContext  *context;
   GdkDragProtocol  protocol;
-  
+
   GdkAtom   sel_type;
   GdkAtom   sel_id;
   GList    *targetlist;
   guint     timeout;
   gboolean  options = TRUE;
-  
+
   GString  *file_list = g_string_new (NULL);
   gchar    *cwd       = g_get_current_dir ();
   gchar    *file_uri  = "";
   guint    i;
-  
+
   for (i = 1; i < argc; i++)
     {
       if (strlen (argv[i]) == 0)
         continue;
-      
+
       if (options && *argv[i] == '-')
         {
           if (strcmp (argv[i], "--"))
@@ -315,11 +315,12 @@ main (gint    argc,
               continue;
             }
         }
-      
+
       /* If not already a valid URI */
       if (g_ascii_strncasecmp ("file:", argv[i], 5) &&
           g_ascii_strncasecmp ("ftp:",  argv[i], 4) &&
-          g_ascii_strncasecmp ("http:", argv[i], 5))
+          g_ascii_strncasecmp ("http:", argv[i], 5) &&
+          g_ascii_strncasecmp ("https:", argv[i], 6))
         {
           if (g_path_is_absolute (argv[i]))
             file_uri = g_strconcat ("file:", argv[i], NULL);
@@ -327,23 +328,25 @@ main (gint    argc,
             file_uri = g_strconcat ("file:", cwd, "/", argv[i], NULL);
         }
       else
-        file_uri = g_strdup (argv[i]);
-      
+        {
+          file_uri = g_strdup (argv[i]);
+        }
+
       if (file_list->len > 0)
         file_list = g_string_append_c (file_list, '\n');
-      
+
       file_list = g_string_append (file_list, file_uri);
       g_free (file_uri);
     }
 
-  if (file_list->len == 0) 
+  if (file_list->len == 0)
     {
       usage (argv[0]);
       return EXIT_SUCCESS;
     }
 
-  gtk_init (&argc, &argv); 
-  
+  gtk_init (&argc, &argv);
+
   /*  locate Gimp window */
   gimp_window = gimp_remote_find_window ();
 
@@ -351,7 +354,7 @@ main (gint    argc,
     {
       if (start_new)
         start_new_gimp (argv[0], file_list);
-      
+
       g_printerr ("No gimp window found on display %s\n", gdk_get_display ());
       return EXIT_FAILURE;
     }
@@ -361,15 +364,15 @@ main (gint    argc,
     {
       g_printerr ("Gimp Window doesnt use Xdnd-Protocol - huh?\n");
       return EXIT_FAILURE;
-    }	
+    }
 
   /*  Problem: If the Toolbox is hidden via Tab (gtk_widget_hide)
    *  it does not accept DnD-Operations and gtk_main() will not be
    *  terminated. If the Toolbox is simply unmapped (by the Windowmanager)
-   *  DnD works. But in both cases gdk_window_is_visible () == 0.... :-( 
+   *  DnD works. But in both cases gdk_window_is_visible () == 0.... :-(
    *  To work around this add a timeout and abort after 1.5 seconds.
    */
- 
+
   timeout = g_timeout_add (1500, toolbox_hidden, NULL);
 
   /*  set up an DND-source  */
@@ -403,6 +406,6 @@ main (gint    argc,
 
   g_source_remove (timeout);
   g_string_free (file_list, TRUE);
-  
+
   return EXIT_SUCCESS;
 }
