@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.18\n"
-"POT-Creation-Date: 2000-03-16 01:03+0100\n"
-"PO-Revision-Date: 2000-03-16 02:23+0100\n"
+"POT-Creation-Date: 2000-03-23 21:16+0100\n"
+"PO-Revision-Date: 2000-03-23 21:16+0100\n"
 "Last-Translator: Tomas Ögren <stric@ing.umu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -117,7 +117,7 @@ msgstr "Avsluta"
 #: app/channels_dialog.c:2463 app/channels_dialog.c:2637
 #: app/color_balance.c:275 app/color_notebook.c:125 app/convert.c:506
 #: app/curves.c:559 app/file_new_dialog.c:207 app/file_new_dialog.c:357
-#: app/gdisplay_color_ui.c:129 app/gdisplay_ops.c:346 app/gimpprogress.c:112
+#: app/gdisplay_color_ui.c:129 app/gdisplay_ops.c:339 app/gimpprogress.c:112
 #: app/global_edit.c:739 app/gradient.c:1769 app/gradient.c:4841
 #: app/gradient.c:5402 app/hue_saturation.c:377 app/install.c:533
 #: app/install.c:1167 app/interface.c:984 app/layers_dialog.c:3326
@@ -140,7 +140,7 @@ msgstr "Korrupt kurva"
 msgid "Curve not closed!"
 msgstr "Kurva ej stängd!"
 
-#: app/bezier_select.c:3165 app/gimage_mask.c:605
+#: app/bezier_select.c:3165 app/gimage_mask.c:611
 msgid "Paintbrush operation failed."
 msgstr "Målarpensel-operation misslyckades."
 
@@ -318,7 +318,7 @@ msgstr "Penseleditor"
 #: app/brush_edit.c:216 app/brush_select.c:278 app/by_color_select.c:689
 #: app/color_notebook.c:122 app/color_picker.c:297 app/colormap_dialog.i.c:170
 #: app/crop.c:1054 app/devices.c:755 app/docindexif.c:105
-#: app/errorconsole.c:281 app/gdisplay_ops.c:346 app/gradient.c:801
+#: app/errorconsole.c:281 app/gdisplay_ops.c:339 app/gradient.c:801
 #: app/gradient_select.c:153 app/histogram_tool.c:276 app/info_window.c:255
 #: app/lc_dialog.c:195 app/measure.c:286 app/nav_window.c:1345
 #: app/palette.c:2072 app/palette.c:2088 app/palette.c:3118
@@ -881,7 +881,7 @@ msgid "Allow Enlarging"
 msgstr "Tillåt förstoring"
 
 #. tool toggle
-#: app/crop.c:211 app/flip_tool.c:91 app/magnify.c:132
+#: app/crop.c:211 app/flip_tool.c:88 app/magnify.c:132
 msgid "Tool Toggle"
 msgstr "Verktygsläge"
 
@@ -1303,16 +1303,16 @@ msgstr "Ja"
 msgid "No"
 msgstr "Nej"
 
-#: app/flip_tool.c:82
+#: app/flip_tool.c:79
 msgid "Flip Tool"
 msgstr "Vändaverktyget"
 
-#: app/flip_tool.c:95 app/preferences_dialog.c:1556
+#: app/flip_tool.c:92 app/preferences_dialog.c:1556
 #: app/preferences_dialog.c:2284
 msgid "Horizontal"
 msgstr "Horisontell"
 
-#: app/flip_tool.c:97 app/preferences_dialog.c:1558
+#: app/flip_tool.c:94 app/preferences_dialog.c:1558
 #: app/preferences_dialog.c:2286
 msgid "Vertical"
 msgstr "Vertikal"
@@ -1375,7 +1375,7 @@ msgstr "Tillgängliga filter"
 msgid "Active Filters"
 msgstr "Aktiva filter"
 
-#: app/gdisplay_ops.c:338
+#: app/gdisplay_ops.c:331
 #, c-format
 msgid ""
 "Changes were made to %s.\n"
@@ -1384,7 +1384,7 @@ msgstr ""
 "%s har ändrats.\n"
 "Stäng ändå?"
 
-#: app/gimage_mask.c:207
+#: app/gimage_mask.c:210
 msgid ""
 "Unable to cut/copy because the selected\n"
 "region is empty."
@@ -1392,15 +1392,15 @@ msgstr ""
 "Kunde ej kopiera/klippa ut eftersom den markerade\n"
 "regionen är tom."
 
-#: app/gimage_mask.c:337
+#: app/gimage_mask.c:342
 msgid "Float Selection: No selection to float."
 msgstr "Flytande markering: Ingen markering att flyta."
 
-#: app/gimage_mask.c:349
+#: app/gimage_mask.c:354
 msgid "Floated Layer"
 msgstr "Flytande lager"
 
-#: app/gimage_mask.c:485
+#: app/gimage_mask.c:490
 msgid ""
 "The active layer has no alpha channel\n"
 "to convert to a selection."
@@ -1408,7 +1408,7 @@ msgstr ""
 "Det aktiva lagret har ingen alfa-kanal\n"
 "att konvertera till markering."
 
-#: app/gimage_mask.c:504
+#: app/gimage_mask.c:509
 msgid ""
 "The active layer has no mask\n"
 "to convert to a selection."
@@ -1416,7 +1416,7 @@ msgstr ""
 "Det aktiva lagret har ingen mask\n"
 "att konvertera till markering."
 
-#: app/gimage_mask.c:555
+#: app/gimage_mask.c:561
 msgid "No selection to stroke!"
 msgstr "Ingen markering att stryka!"
 
@@ -2714,7 +2714,6 @@ msgstr ""
 "Copyright (C) 1995-2000\n"
 "Spencer Kimball, Peter Mattis och GIMPs utvecklingsteam."
 
-
 #: app/install.c:677
 msgid ""
 "This program is free software; you can redistribute it and/or modify\n"
@@ -2806,8 +2805,8 @@ msgid ""
 "To display images in their natural size, GIMP needs to know your monitor "
 "resolution."
 msgstr ""
-"För att visa bilder i sin naturliga storlek så bör GIMP veta om"
-"upplösningen på din bildskärm."
+"För att visa bilder i sin naturliga storlek så bör GIMP veta omupplösningen "
+"på din bildskärm."
 
 #: app/install.c:853
 msgid "Aborting Installation..."
@@ -4720,7 +4719,7 @@ msgstr "Du måste starta om GIMP för att förändringarna ska ta effekt."
 
 #: app/preferences_dialog.c:1002
 #, c-format
-msgid "The default comments is limited to %d characters."
+msgid "The default comment is limited to %d characters."
 msgstr "Standardkommentaren är begränsad till %d tecken."
 
 #: app/preferences_dialog.c:1424
