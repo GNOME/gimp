@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
-"POT-Creation-Date: 2002-11-25 14:08+0100\n"
-"PO-Revision-Date: 2002-11-25 14:09+0100\n"
+"POT-Creation-Date: 2002-12-17 09:07+0100\n"
+"PO-Revision-Date: 2002-12-17 09:07+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -407,6 +407,30 @@ msgstr "megabyte"
 #: libgimpwidgets/gimpwidgets.c:1292
 msgid "GigaBytes"
 msgstr "gigabyte"
+
+#: modules/cdisplay_colorblind.c:100
+msgid "Colorblind display filter"
+msgstr "Färgblindhetsvisningsfilter"
+
+#: modules/cdisplay_colorblind.c:166
+msgid "Color Deficient Vision"
+msgstr "Färgsynskada"
+
+#: modules/cdisplay_colorblind.c:326
+msgid "Color Deficiency Type:"
+msgstr "Typ av färgbristfällighet:"
+
+#: modules/cdisplay_colorblind.c:336
+msgid "Protonopia (insensitivity to red)"
+msgstr "Protonopi (okänslighet för rött)"
+
+#: modules/cdisplay_colorblind.c:340
+msgid "Deuteranopia (insensitivity to green)"
+msgstr "Deuteranopi (okänslighet för grönt)"
+
+#: modules/cdisplay_colorblind.c:344
+msgid "Tritanopia (insensitivity to blue)"
+msgstr "Tritanopi (okänslighet för blått)"
 
 #: modules/cdisplay_gamma.c:89
 msgid "Gamma color display filter"
