@@ -334,7 +334,7 @@ int	doDialog()
 	GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
 	gtk_signal_connect_object (GTK_OBJECT(button), "clicked",
 				   (GtkSignalFunc) gtk_widget_destroy,
-				   dialog);
+				   GTK_OBJECT(dialog));
 	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area),
 	                   button, TRUE, TRUE, 0);
 	gtk_widget_show(button); 

@@ -276,7 +276,7 @@ load_image (char *filename)
 	 plugin.
 
 	 */
-      moreframes = GetMPEGFrame(data);
+      moreframes = GetMPEGFrame((char *)data);
       if (!moreframes) break;
 
       if (delay > 0)

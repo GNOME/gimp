@@ -188,7 +188,7 @@ GPlugInInfo PLUG_IN_INFO =
 };
 
 
-MAIN ();
+MAIN ()
 
 #ifdef VERBOSE
 static int verbose = VERBOSE;
@@ -1101,7 +1101,7 @@ ReadImage (FILE *fp, struct tga_header *hdr, char *filename)
 }  /*read_image*/
 
 
-gint
+static gint
 save_image (char   *filename,
 	    gint32  image_ID,
 	    gint32  drawable_ID)
@@ -1127,8 +1127,8 @@ save_image (char   *filename,
   height = drawable->height;
 
   name_buf = (guchar *) g_malloc(strlen(filename) + 11);
-  sprintf(name_buf, "Saving %s:", filename);
-  gimp_progress_init(name_buf);
+  sprintf((char *)name_buf, "Saving %s:", filename);
+  gimp_progress_init((char *)name_buf);
   g_free(name_buf);
 
   memset (&hdr, 0, sizeof (hdr));

@@ -2718,7 +2718,7 @@ ifs_compose_preview_callback (GtkWidget *widget,
   guchar *ptr;
 
   if (!ifsD->preview_data)
-    ifsD->preview_data = g_new(gchar,3*width*height);
+    ifsD->preview_data = g_new(guchar,3*width*height);
 
   gimp_palette_get_background ( &rc, &gc, &bc );
 

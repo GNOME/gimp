@@ -457,7 +457,7 @@ load_image (char *filename)
 }
 
 
-void
+static void
 pnm_load_ascii (PNMScanner *scan,
 		PNMInfo    *info,
 		GPixelRgn  *pixel_rgn)
@@ -517,7 +517,7 @@ pnm_load_ascii (PNMScanner *scan,
   g_free (data);
 }
 
-void
+static void
 pnm_load_raw (PNMScanner *scan,
 	      PNMInfo    *info,
 	      GPixelRgn  *pixel_rgn)
@@ -564,7 +564,7 @@ pnm_load_raw (PNMScanner *scan,
 }
 
 void
-pnm_load_rawpbm (PNMScanner *scan,
+static pnm_load_rawpbm (PNMScanner *scan,
 		 PNMInfo    *info,
 		 GPixelRgn  *pixel_rgn)
 {
@@ -936,7 +936,7 @@ save_dialog ()
  *    Creates a new scanner based on a file descriptor.  The
  *    look ahead buffer is one character initially.
  */
-PNMScanner *
+static PNMScanner *
 pnmscanner_create (int fd)
 {
   PNMScanner *s;
@@ -952,7 +952,7 @@ pnmscanner_create (int fd)
 /* pnmscanner_destroy ---
  *    Destroys a scanner and its resources.  Doesn't close the fd.
  */
-void
+static void
 pnmscanner_destroy (PNMScanner *s)
 {
   if (s->inbuf) g_free(s->inbuf);
@@ -962,7 +962,7 @@ pnmscanner_destroy (PNMScanner *s)
 /* pnmscanner_createbuffer ---
  *    Creates a buffer so we can do buffered reads.
  */
-void
+static void
 pnmscanner_createbuffer (PNMScanner *s,
 			 int         bufsize)
 {
@@ -975,7 +975,7 @@ pnmscanner_createbuffer (PNMScanner *s,
 /* pnmscanner_gettoken ---
  *    Gets the next token, eating any leading whitespace.
  */
-void
+static void
 pnmscanner_gettoken (PNMScanner *s,
 		     char       *buf,
 		     int         bufsize)
@@ -994,7 +994,7 @@ pnmscanner_gettoken (PNMScanner *s,
 /* pnmscanner_getchar ---
  *    Reads a character from the input stream
  */
-void
+static void
 pnmscanner_getchar (PNMScanner *s)
 {
   if (s->inbuf)
@@ -1017,7 +1017,7 @@ pnmscanner_getchar (PNMScanner *s)
  *    Eats up whitespace from the input and returns when done or eof.
  *    Also deals with comments.
  */
-void
+static void
 pnmscanner_eatwhitespace (PNMScanner *s)
 {
   int state = 0;

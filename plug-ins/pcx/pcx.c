@@ -366,7 +366,7 @@ static void readline(FILE *fp, guchar *buffer, int bytes) {
   }
 }
 
-gint save_image (char *filename, gint32 image, gint32 layer) {
+static gint save_image (char *filename, gint32 image, gint32 layer) {
   FILE *fp;
   GPixelRgn pixel_rgn;
   GDrawable *drawable;

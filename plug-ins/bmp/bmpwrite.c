@@ -132,7 +132,7 @@ WriteBMP (filename,image,drawable_ID)
   
   /* fetch the image */
   
-  pixels = (guchar *) g_malloc(drawable->width*drawable->height*channels);
+  pixels = (char *) g_malloc(drawable->width*drawable->height*channels);
   gimp_pixel_rgn_get_rect(&pixel_rgn, pixels, 0, 0, drawable->width, drawable->height);
   
   /* And let's begin the progress */

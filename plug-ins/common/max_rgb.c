@@ -110,7 +110,7 @@ static Interface INTERFACE = { FALSE };
 gint	hold_max;
 gint	hold_min;
 
-MAIN ();
+MAIN ()
 
 static void
 query ()
@@ -169,7 +169,7 @@ run (char	*name,
       /* Since a channel might be selected, we must check wheter RGB or not. */
       if (!gimp_drawable_color(drawable_id))
 	{
-	  ERROR_DIALOG (1, "RGB drawable is not selected.");
+	  ERROR_DIALOG (1, (guchar *)"RGB drawable is not selected.");
 	  return;
 	}
       if (! DIALOG ())

@@ -63,7 +63,7 @@ GPlugInInfo PLUG_IN_INFO =
 };
 
 
-MAIN ();
+MAIN ()
 
 static void
 query ()

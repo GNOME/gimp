@@ -133,7 +133,7 @@ static XpmSaveInterface xpmint =
 
 
 
-MAIN ();
+MAIN ()
 
 static void
 query ()

@@ -140,7 +140,7 @@ static TileItVals itvals =
 typedef enum {
   ALL,
   ALT,
-  EXPLICT,
+  EXPLICT
 } AppliedTo;
 
 typedef struct {

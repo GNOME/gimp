@@ -200,7 +200,7 @@ static Interface INTERFACE = { FALSE };
 
 /* gint	link_after_alignment = 0;*/
 
-MAIN ();
+MAIN ()
 
 static void
 query ()

@@ -1,4 +1,4 @@
-#ident "@(#)g3.c	3.1 95/08/30 Copyright (c) Gert Doering"
+/* #ident "@(#)g3.c	3.1 95/08/30 Copyright (c) Gert Doering" */
 
 #include <stdio.h>
 #include <stdlib.h>

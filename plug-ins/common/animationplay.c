@@ -304,7 +304,7 @@ build_dialog(GImageType basetype,
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) window_close_callback,
-		      dlg);
+		      (GtkObject *)dlg);
 
   
   /* Action area - 'close' button only. */

@@ -569,7 +569,7 @@ pluginCoreIA(struct piArgs *argp) {
  * 0 to 1, the signal goes from the pedestal level to 100 IRE.
  * Chroma is always scaled to remain consistent with Y.
  */
-void
+static void
 build_tab(int m) {
   register double f;
   register int pv;
@@ -596,7 +596,7 @@ build_tab(int m) {
   icompos_lim = (int)(compos_lim * SCALE + 0.5);
 }
 
-int
+static int
 hotp(register guint8 r, register guint8 g, register guint8 b) {
   register int	y, i, q;
   register long	y2, c2;

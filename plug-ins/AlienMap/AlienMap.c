@@ -1159,7 +1159,7 @@ alienmap_logo_dialog()
       GTK_WIDGET_SET_FLAGS(xbutton, GTK_CAN_DEFAULT);
       gtk_signal_connect_object (GTK_OBJECT(xbutton), "clicked",
 				 GTK_SIGNAL_FUNC (gtk_widget_hide),
-				 logodlg);
+				 GTK_OBJECT(logodlg));
       gtk_box_pack_start(GTK_BOX(GTK_DIALOG(logodlg)->action_area),
 			 xbutton, TRUE, TRUE, 0);
       gtk_widget_grab_default(xbutton);

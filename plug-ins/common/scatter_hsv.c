@@ -144,7 +144,7 @@ gint	preview_dragging = FALSE;
 gint	preview_drag_start_x = 0;
 gint	preview_drag_start_y = 0;
 
-MAIN ();
+MAIN ()
 
 static void
 query ()
@@ -202,7 +202,7 @@ run (char	*name,
       gimp_get_data (PLUG_IN_NAME, &VALS);
       if (!gimp_drawable_color(drawable_id))
 	{
-	  scatter_hsv_error_dialog (1, "RGB drawable is not selected.");
+	  scatter_hsv_error_dialog (1, (guchar *)"RGB drawable is not selected.");
 	  return;
 	}
       if (! DIALOG ())
@@ -627,7 +627,7 @@ ERROR_DIALOG (gint gtk_was_not_initialized, guchar *message)
   gtk_container_border_width (GTK_CONTAINER (table), 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
 
-  label = gtk_label_new (message);
+  label = gtk_label_new ((char *)message);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL|GTK_EXPAND,
 		    0, 0, 0);
 

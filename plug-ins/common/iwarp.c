@@ -215,7 +215,7 @@ static int frame_number;
 static int layer_alpha;
 
 
-MAIN ();
+MAIN ()
 
 static void
 query ()
@@ -592,7 +592,7 @@ iwarp_layer_copy(gint32 layerID)
                                   
 
 
-void iwarp()
+static void iwarp()
 {
  int i;
  gint32 layerID;

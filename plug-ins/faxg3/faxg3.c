@@ -35,7 +35,7 @@
 /* Declare local functions.
  */
 gint32        emitgimp   (int, int, char *, int, char *);
-static void   query      (void);
+void   query      (void);
 static void   run        (char    *name,
 			  int      nparams,
 			  GParam  *param,
@@ -53,7 +53,7 @@ GPlugInInfo PLUG_IN_INFO =
 
 MAIN ()
 
-static void query ()
+void query ()
 {
   static GParamDef load_args[] =
   {

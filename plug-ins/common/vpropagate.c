@@ -225,7 +225,7 @@ typedef struct
 static VPInterface vpropagate_interface = { FALSE };
 gint	drawable_id;
 
-MAIN ();
+MAIN ()
 
 static void
 query ()

@@ -374,7 +374,7 @@ void run(char *name, int nparams, GParam *param, int *nreturn_vals, GParam **ret
 
 			gimp_progress_init ("Qbist ...");
 			for (row=sel_y1; row<sel_y2; row++) {
-				qbist(qbist_info, row_data, 0, row, sel_x2-sel_x1, sel_x2-sel_x1, sel_y2-sel_y1, img_bpp);
+				qbist(qbist_info, (guchar *)row_data, 0, row, sel_x2-sel_x1, sel_x2-sel_x1, sel_y2-sel_y1, img_bpp);
 				gimp_pixel_rgn_set_row(&imagePR, row_data, sel_x1, row, (sel_x2-sel_x1));
 				if ((row % 5) == 0) 
 					gimp_progress_update((gfloat)(row-sel_y1)/(gfloat)(sel_y2-sel_y1));
@@ -430,7 +430,7 @@ void dialog_update_previews(GtkWidget *widget, gpointer data)
 	for (j=0;j<9;j++) {
 		optimize(info[(j+5) % 9]);
 		for (i = 0; i < PREVIEW_SIZE; i++) {
-			qbist(info[(j+5) % 9], buf, 0, i, PREVIEW_SIZE, PREVIEW_SIZE, PREVIEW_SIZE, 3);
+			qbist(info[(j+5) % 9], (gchar *)buf, 0, i, PREVIEW_SIZE, PREVIEW_SIZE, PREVIEW_SIZE, 3);
 			gtk_preview_draw_row (GTK_PREVIEW (preview[j]), buf, 0, i, PREVIEW_SIZE);
 		}
 		gtk_widget_draw(preview[j], NULL);

@@ -96,7 +96,7 @@ static gint script_fu_base = TRUE;
 extern gint server_mode;
 
 
-MAIN ();
+MAIN ()
 
 static void
 sfquit ()

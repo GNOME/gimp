@@ -309,7 +309,7 @@ struct mwColorSel * mw_color_select_button_create(
     GtkWidget *button;
     struct mwColorSel *cs = g_new(struct mwColorSel,1);
 
-    cs->name = name;
+    cs->name = (guchar *)name;
     cs->color = color;
     cs->opacity = opacity;
     cs->window = NULL;
@@ -344,7 +344,7 @@ void mw_ientry_new(GtkWidget *parent, gchar *fname,
 
    sprintf (buffer, "%d", *varp);
    mw_entry_new(parent, fname, name, 
-		varp, buffer, 
+		varp, (guchar *)buffer, 
 		(GtkCallback)ui_ientry_alone_callback);
 }
 
@@ -355,7 +355,7 @@ void mw_fentry_new(GtkWidget *parent, gchar *fname,
 
    sprintf (buffer, "%f0.3", *varp);
    mw_entry_new(parent, fname, name, 
-		varp, buffer, 
+		varp, (guchar *)buffer, 
 		(GtkCallback)ui_fentry_alone_callback);
 }
 
@@ -545,7 +545,7 @@ mw_entry_new(GtkWidget *parent, gchar *fname,
    entry = gtk_entry_new();
    gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
    gtk_widget_set_usize (entry, 75, 0);
-   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
+   gtk_entry_set_text (GTK_ENTRY (entry), (const gchar *)buffer);
    gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		       (GtkSignalFunc) entry_cb,
 		       variablep);
@@ -781,7 +781,7 @@ create_color_selection (GtkWidget *widget,
 			struct mwColorSel *cs)
 {
   if (!(cs->window)) {    
-    cs->window = gtk_color_selection_dialog_new (cs->name);
+    cs->window = gtk_color_selection_dialog_new ((const gchar *)cs->name);
     cs->savcolor[0]=cs->color[0];    /* For the cancel .... */
     cs->savcolor[1]=cs->color[1];
     cs->savcolor[2]=cs->color[2];

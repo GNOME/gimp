@@ -633,7 +633,7 @@ maze_close_callback (GtkWidget *widget,
 static void
 maze_help (GtkWidget *widget, gpointer foo)
 {
-     void *bar;
+     void *bar=(void *)NULL;
      gint baz;
 
      if (gimp_query_procedure("extension_web_browser", 

@@ -157,7 +157,7 @@ static gint32 load_image(char *file, char *brief) {
 
   fread(header, 4, 1, fp);
 
-  if (strncmp(header, "KiSS", 4)) {
+  if (strncmp((char *)header, "KiSS", 4)) {
     colours= 16;
     width= header[0] + (256 * header[1]);
     height= header[2] + (256 * header[3]);
@@ -273,7 +273,7 @@ static gint save_image(char *file, char *brief, gint32 image, gint32 layer) {
 
  /* Headers */
   memset(header,(int)0,(size_t)32);
-  strcpy(header, "KiSS");
+  strcpy((char *)header, "KiSS");
   header[4]= 0x20;
 
  /* Work out whether to save as 8bit or 4bit */

@@ -39,6 +39,25 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.3  1998/03/19 02:11:42  adrian
+ *    *AlienMap/AlienMap.c CEL/CEL.c CML_explorer/CML_explorer.c
+ *           align_layers/align_layers.c animationplay/animationplay.c
+ *           bmp/bmpwrite.c dbbrowser/dbbrowser.c emboss/emboss.c
+ *           exchange/exchange.c faxg3/faxg3.c faxg3/g3.c gbr/gbr.c
+ *           gif/gif.c gqbist/gqbist.c hot/hot.c ifscompose/ifscompose.c
+ *           iwarp/iwarp.c max_rgb/max_rgb.c maze/maze_face.c
+ *           megawidget/megawidget.c mpeg/mpeg.c nlfilt/nlfilt.c pcx/pcx.c
+ *           plasma/plasma.c pnm/pnm.c print/print-escp2.c
+ *           print/print-pcl.c print/print.c scatter_hsv/scatter_hsv.c
+ *           script-fu/script-fu-scripts.c script-fu/script-fu.c
+ *           sinus/sinus.c tga/tga.c tileit/tileit.c
+ *           vpropagate/vpropagate.c xpm/xpm.c:  More picky picky ansi type
+ *           stuff from gimp-hpux-980316.patch.
+ *
+ *   	isnt big patches fun?
+ *
+ *   -adrian
+ *
  *   Revision 1.2  1998/01/25 09:29:27  yosh
  *   Plugin updates
  *   Properly generated aa Makefile (still not built by default)
@@ -521,7 +540,7 @@ run(char   *name,		/* I - Name of print program. */
  * 'print_dialog()' - Pop up the print dialog...
  */
 
-int
+static int
 print_dialog(void)
 {
   int		i;		/* Looping var */

@@ -309,8 +309,8 @@ plasma_dialog()
   entry = gtk_entry_new ();
   gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 0, 1, GTK_FILL, GTK_FILL, 0, 0 );
   gtk_widget_set_usize( entry, ENTRY_WIDTH, 0 );
-  sprintf( buffer, "%d", pvals.seed );
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer );
+  sprintf( (char *)buffer, "%d", pvals.seed );
+  gtk_entry_set_text (GTK_ENTRY (entry), (gchar *)buffer );
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      (GtkSignalFunc) plasma_entry_callback,
 		      &pvals.seed);

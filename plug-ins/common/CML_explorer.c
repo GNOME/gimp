@@ -464,7 +464,7 @@ gint		mem_chank1_size = 0;
 guchar		*mem_chank2 = NULL;
 gint		mem_chank2_size = 0;
 
-MAIN ();
+MAIN ()
 
 static void
 query ()

@@ -841,8 +841,8 @@ DoExtension (FILE *fd,
 	;
       return FALSE;
     default:
-      str = buf;
-      sprintf (buf, "UNKNOWN (0x%02x)", label);
+      str = (char *)buf;
+      sprintf ((char *)buf, "UNKNOWN (0x%02x)", label);
       break;
     }
 

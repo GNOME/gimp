@@ -596,12 +596,12 @@ int sinus_dialog(void)
   gtk_box_pack_start(GTK_BOX(vbox), logo, TRUE, FALSE, 0);
   gtk_widget_show(logo);
 
-  data= logo_data;
+  data= (guchar *)logo_data;
   for (y=0;y<100; y++) {
     for (x=0; x<100; x++) {
       HEADER_PIXEL(data,(&buf[3*x]));
     }
-    gtk_preview_draw_row(GTK_PREVIEW(logo), buf, 0, y, 100);
+    gtk_preview_draw_row(GTK_PREVIEW(logo), (guchar *)buf, 0, y, 100);
   }
 #endif
 

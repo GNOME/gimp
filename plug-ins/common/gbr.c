@@ -253,7 +253,7 @@ static gint32 load_image (char *filename) {
 			g_free(buffer);
 			return -1;
 		}
-		gimp_pixel_rgn_set_row(&pixel_rgn, buffer, 0, line, ph.width);
+		gimp_pixel_rgn_set_row(&pixel_rgn, (guchar *)buffer, 0, line, ph.width);
 		gimp_progress_update((double) line / (double) ph.height);
 	}
 

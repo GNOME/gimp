@@ -770,12 +770,12 @@ script_fu_interface (SFScript *script)
 
   sf_interface.script = script;
 
-  title = g_new (char, strlen ("Script-Fu: ") + strlen (script->description) + 1);
-  sprintf (title, "Script-Fu: %s", script->description);
+  title = g_new (guchar, strlen ("Script-Fu: ") + strlen (script->description) + 1);
+  sprintf ((char *)title, "Script-Fu: %s", script->description);
 
   dlg = gtk_dialog_new ();
   gtk_quit_add_destroy (1, GTK_OBJECT (dlg));
-  gtk_window_set_title (GTK_WINDOW (dlg), title);
+  gtk_window_set_title (GTK_WINDOW (dlg), (const gchar *)title);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) script_fu_close_callback,
 		      NULL);

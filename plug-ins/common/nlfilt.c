@@ -471,7 +471,7 @@ gint noisevariance;      /* global so that pixel processing code can get at it q
 #define RUNSCALE(x) (((x) + (1 << (SCALEB-1))) >> SCALEB)       /* rounded un-scale */
 #define UNSCALE(x) ((x) >> SCALEB)
 
-void
+static void
 nlfiltRow(guchar *src, guchar *dst, gint width, gint Bpp, gint filtno) {
    gint x, po, no;
    gint pf[9];
@@ -524,7 +524,7 @@ gint AVEDIV[7 * NOCSVAL];              /* divide by 7 to give average value */
 gint SQUARE[2 * NOCSVAL];              /* scaled square lookup table */
 
 /* Table initialisation function - return alpha range */
-gint
+static inline gint
 nlfiltInit(gdouble alpha, gdouble radius, FilterType filter) {
    gint alpharange;                 /* alpha range value 0 - 3 */
    gdouble meanscale;               /* scale for finding mean */

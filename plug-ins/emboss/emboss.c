@@ -210,7 +210,7 @@ run(gchar *name, gint nparam, GParam *param,
 }
 
 #define pixelScale 255.9
-void
+static void
 EmbossInit(gdouble azimuth, gdouble elevation, gushort width45) {
        /*
         * compute the light vector from the input parameters.
@@ -250,7 +250,7 @@ EmbossInit(gdouble azimuth, gdouble elevation, gushort width45) {
  *
  */
 
-void
+static inline void
 EmbossRow(guchar *src, guchar *texture, guchar *dst,
           guint xSize, guint bypp, gint alpha) {
    glong Nx, Ny, NdotL;
