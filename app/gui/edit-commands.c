@@ -295,6 +295,9 @@ cut_named_buffer_callback (GtkWidget *widget,
     {
       GimpBuffer *new_buffer;
 
+      if (! (name && strlen (name)))
+        name = _("(Unnamed Buffer)");
+
       new_buffer = gimp_buffer_new (cut_buffer->tiles, name, TRUE);
 
       gimp_container_add (gimage->gimp->named_buffers,
@@ -320,6 +323,9 @@ copy_named_buffer_callback (GtkWidget *widget,
   if (copy_buffer)
     {
       GimpBuffer *new_buffer;
+
+      if (! (name && strlen (name)))
+        name = _("(Unnamed Buffer)");
 
       new_buffer = gimp_buffer_new (copy_buffer->tiles, name, TRUE);
 

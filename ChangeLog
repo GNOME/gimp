@@ -1,5 +1,10 @@
 2002-02-12  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/edit-commands.c: merged partial fix for #62592 from
+	stable branch.
+
+2002-02-12  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/resize-dialog.c: merged fix for #63741 from stable
 	branch, minor cleanup.
 
