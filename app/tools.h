@@ -72,6 +72,10 @@ struct _Tool
   void      *gdisp_ptr;     /*  pointer to currently active gdisp           */
   void      *drawable;      /*  pointer to the tool's current drawable      */
 
+  gboolean   toggled;       /*  Bad hack to let the paint_core show the     */
+                            /*  right toggle cursors                        */
+
+
   void      *private;       /*  Tool-specific information                   */
 
   /*  Action functions  */

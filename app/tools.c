@@ -1464,6 +1464,8 @@ tools_new_tool (ToolType tool_type)
   tool->gdisp_ptr = NULL;
   tool->drawable  = NULL;
 
+  tool->toggled   = FALSE;
+
   tool->private   = NULL;
 
   tool->button_press_func   = standard_button_press_func;

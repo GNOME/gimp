@@ -219,10 +219,14 @@ convolve_modifier_key_func (Tool        *tool,
 	  switch (convolve_options->type)
 	    {
 	    case BLUR_CONVOLVE:
-	      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (convolve_options->type_w[SHARPEN_CONVOLVE]), TRUE);
+	      gtk_toggle_button_set_active
+		(GTK_TOGGLE_BUTTON (convolve_options->type_w[SHARPEN_CONVOLVE]),
+		 TRUE);
 	      break;
 	    case SHARPEN_CONVOLVE:
-	      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (convolve_options->type_w[BLUR_CONVOLVE]), TRUE);
+	      gtk_toggle_button_set_active
+		(GTK_TOGGLE_BUTTON (convolve_options->type_w[BLUR_CONVOLVE]),
+		 TRUE);
 	      break;
 	    default:
 	      break;
@@ -236,10 +240,14 @@ convolve_modifier_key_func (Tool        *tool,
 	  switch (convolve_options->type)
 	    {
 	    case BLUR_CONVOLVE:
-	      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (convolve_options->type_w[SHARPEN_CONVOLVE]), TRUE);
+	      gtk_toggle_button_set_active
+		(GTK_TOGGLE_BUTTON (convolve_options->type_w[SHARPEN_CONVOLVE]),
+		 TRUE);
 	      break;
 	    case SHARPEN_CONVOLVE:
-	      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (convolve_options->type_w[BLUR_CONVOLVE]), TRUE);
+	      gtk_toggle_button_set_active
+		(GTK_TOGGLE_BUTTON (convolve_options->type_w[BLUR_CONVOLVE]),
+		 TRUE);
 	      break;
 	    default:
 	      break;
@@ -247,6 +255,8 @@ convolve_modifier_key_func (Tool        *tool,
 	}
       break;
     }
+
+  tool->toggled = (convolve_options->type == SHARPEN_CONVOLVE);
 }
 
 Tool *

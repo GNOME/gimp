@@ -565,8 +565,7 @@ paint_core_cursor_update (Tool           *tool,
 	  ctype = GIMP_COLOR_PICKER_CURSOR;
 	}
       /* Set toggle cursors for various paint tools */
-      else if (!(mevent->state & GDK_SHIFT_MASK) &&
-	       (mevent->state & GDK_CONTROL_MASK))
+      else if (tool->toggled)
 	{
 	  switch (tool->type)
 	    {

@@ -296,10 +296,12 @@ dodgeburn_modifier_key_func (Tool        *tool,
 	  switch (dodgeburn_options->type)
 	    {
 	    case BURN:
-	      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dodgeburn_options->type_w[DODGE]), TRUE);
+	      gtk_toggle_button_set_active
+		(GTK_TOGGLE_BUTTON (dodgeburn_options->type_w[DODGE]), TRUE);
 	      break;
 	    case DODGE:
-	      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dodgeburn_options->type_w[BURN]), TRUE);
+	      gtk_toggle_button_set_active
+		(GTK_TOGGLE_BUTTON (dodgeburn_options->type_w[BURN]), TRUE);
 	      break;
 	    default:
 	      break;
@@ -313,10 +315,12 @@ dodgeburn_modifier_key_func (Tool        *tool,
 	  switch (dodgeburn_options->type)
 	    {
 	    case BURN:
-	      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dodgeburn_options->type_w[DODGE]), TRUE);
+	      gtk_toggle_button_set_active
+		(GTK_TOGGLE_BUTTON (dodgeburn_options->type_w[DODGE]), TRUE);
 	      break;
 	    case DODGE:
-	      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dodgeburn_options->type_w[BURN]), TRUE);
+	      gtk_toggle_button_set_active
+		(GTK_TOGGLE_BUTTON (dodgeburn_options->type_w[BURN]), TRUE);
 	      break;
 	    default:
 	      break;
@@ -324,6 +328,8 @@ dodgeburn_modifier_key_func (Tool        *tool,
 	}
       break; 
     }
+
+  tool->toggled = (dodgeburn_options->type == BURN);
 }
 
 Tool *
