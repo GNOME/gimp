@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.16\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-23 12:26+0100\n"
+"POT-Creation-Date: 2004-03-04 00:14+0100\n"
 "PO-Revision-Date: 2004-02-23 12:27+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
@@ -154,6 +154,7 @@ msgstr "_Ignora"
 msgid "_Export"
 msgstr "_Esporta"
 
+#. the headline
 #: libgimp/gimpexport.c:485
 #, c-format
 msgid ""
@@ -292,7 +293,7 @@ msgstr "Caricamento fallito"
 msgid "Not loaded"
 msgstr "Non caricato"
 
-#: libgimpthumb/gimpthumb-utils.c:195
+#: libgimpthumb/gimpthumb-utils.c:196
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Fallita la creazione della cartella miniature '%s'."
@@ -390,11 +391,11 @@ msgstr "Corrente:"
 msgid "Old:"
 msgstr "Vecchio:"
 
-#: libgimpwidgets/gimpfileentry.c:361
+#: libgimpwidgets/gimpfileentry.c:350
 msgid "Select Folder"
 msgstr "Seleziona cartella"
 
-#: libgimpwidgets/gimpfileentry.c:375
+#: libgimpwidgets/gimpfileentry.c:364
 msgid "Select File"
 msgstr "Seleziona file"
 
@@ -490,11 +491,11 @@ msgstr "Altri..."
 msgid "Unit Selection"
 msgstr "Selezione delle unità"
 
-#: libgimpwidgets/gimpunitmenu.c:660
+#: libgimpwidgets/gimpunitmenu.c:657
 msgid "Unit"
 msgstr "Unità"
 
-#: libgimpwidgets/gimpunitmenu.c:664
+#: libgimpwidgets/gimpunitmenu.c:661
 msgid "Factor"
 msgstr "Fattore"
 

@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0pre4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-28 15:41+0100\n"
+"POT-Creation-Date: 2004-03-04 01:58+0100\n"
 "PO-Revision-Date: 2004-02-28 15:32+0100\n"
 "Last-Translator: Raymond Ostertag <r.ostertag@caramail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
@@ -1309,7 +1309,7 @@ msgstr "Redimensionner le calque"
 msgid "Add Layer Mask"
 msgstr "Ajouter un masque de calque"
 
-#: app/core/core-enums.c:602 app/core/gimplayer.c:1270
+#: app/core/core-enums.c:602 app/core/gimplayer.c:1271
 msgid "Apply Layer Mask"
 msgstr "Appliquer le masque de calque"
 
@@ -1412,7 +1412,7 @@ msgstr "Supprime le calque"
 msgid "Layer Mod"
 msgstr "Calque mode"
 
-#: app/core/core-enums.c:632
+#: app/core/core-enums.c:632 app/core/gimplayer.c:1272
 msgid "Delete Layer Mask"
 msgstr "Effacer le masque de calque"
 
@@ -2138,53 +2138,49 @@ msgstr "Le chemin ne pas être plus bas."
 msgid "Lower Path"
 msgstr "Descendre le chemin"
 
-#: app/core/gimpimagefile.c:478
+#: app/core/gimpimagefile.c:453
 msgid "Remote image"
 msgstr "Image distante"
 
-#: app/core/gimpimagefile.c:483 app/gui/preferences-dialog.c:1244
+#: app/core/gimpimagefile.c:458 app/gui/preferences-dialog.c:1244
 msgid "Folder"
 msgstr "Dossier"
 
-#: app/core/gimpimagefile.c:488
+#: app/core/gimpimagefile.c:463
 msgid "Special File"
 msgstr "Fichier spécial"
 
-#: app/core/gimpimagefile.c:493
-msgid "Could not open"
-msgstr "Impossible d'ouvrir"
-
-#: app/core/gimpimagefile.c:514
+#: app/core/gimpimagefile.c:490
 msgid "No preview available"
 msgstr "Aucun aperçu disponible"
 
-#: app/core/gimpimagefile.c:518
+#: app/core/gimpimagefile.c:494
 msgid "Loading preview ..."
 msgstr "Chargement de l'aperçu..."
 
-#: app/core/gimpimagefile.c:522
+#: app/core/gimpimagefile.c:498
 msgid "Preview is out of date"
 msgstr "Prévisualisation périmée"
 
-#: app/core/gimpimagefile.c:526
+#: app/core/gimpimagefile.c:502
 msgid "Cannot create preview"
 msgstr "Impossible de créer l'aperçu."
 
-#: app/core/gimpimagefile.c:533 app/gui/info-window.c:503
+#: app/core/gimpimagefile.c:509 app/gui/info-window.c:503
 #, c-format
 msgid "%d x %d pixels"
 msgstr "%d x %d pixels"
 
-#: app/core/gimpimagefile.c:548
+#: app/core/gimpimagefile.c:524
 msgid "1 Layer"
 msgstr "1 Calque"
 
-#: app/core/gimpimagefile.c:550
+#: app/core/gimpimagefile.c:526
 #, c-format
 msgid "%d Layers"
 msgstr "%d Calques"
 
-#: app/core/gimpimagefile.c:587
+#: app/core/gimpimagefile.c:567
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Impossible d'ouvrir la vignette « %s » : %s"
@@ -2267,11 +2263,11 @@ msgid "Transfer Alpha to Mask"
 msgstr "Transfert de l'alpha vers le masque"
 
 #. Push the layer on the undo stack
-#: app/core/gimplayer.c:1374
+#: app/core/gimplayer.c:1376
 msgid "Add Alpha Channel"
 msgstr "Ajouter un canal alpha"
 
-#: app/core/gimplayer.c:1404
+#: app/core/gimplayer.c:1406
 msgid "Layer to Image Size"
 msgstr "Mettre aux dimensions de l'image"
 
@@ -2315,6 +2311,7 @@ msgstr ""
 "Chargement de la palette « %s » : nombre de colonnes invalide à la ligne %d. "
 "Utilisation de la valeur par défaut."
 
+#. maybe we should just abort?
 #: app/core/gimppalette.c:493
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
@@ -3315,7 +3312,7 @@ msgstr "/Enregistrer toutes les erreurs d_ans un fichier..."
 msgid "/Save _Selection to File..."
 msgstr "/Enregistrer la _sélection dans un fichier..."
 
-#: app/gui/file-commands.c:189 app/gui/file-open-dialog.c:281
+#: app/gui/file-commands.c:189 app/gui/file-open-dialog.c:244
 #: app/widgets/gimpdnd.c:1286 app/widgets/gimpdocumentview.c:468
 #, c-format
 msgid ""
@@ -3327,7 +3324,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/gui/file-commands.c:234 app/gui/file-save-dialog.c:371
+#: app/gui/file-commands.c:234 app/gui/file-save-dialog.c:335
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -3420,7 +3417,7 @@ msgstr ""
 msgid "Confirm Image Size"
 msgstr "Confirmer la taille de l'image"
 
-#: app/gui/file-open-dialog.c:119 app/gui/file-open-dialog.c:142
+#: app/gui/file-open-dialog.c:105
 msgid "Open Image"
 msgstr "Ouvrir image"
 
@@ -3428,22 +3425,22 @@ msgstr "Ouvrir image"
 msgid "/Automatic"
 msgstr "/Automatique"
 
-#: app/gui/file-save-dialog.c:110 app/gui/file-save-dialog.c:187
+#: app/gui/file-save-dialog.c:101 app/gui/file-save-dialog.c:151
 msgid "Save Image"
 msgstr "Enregistrer image"
 
-#: app/gui/file-save-dialog.c:161
+#: app/gui/file-save-dialog.c:132
 msgid "Save a Copy of the Image"
 msgstr "Enregistrer une copie de l'image"
 
-#: app/gui/file-save-dialog.c:293
+#: app/gui/file-save-dialog.c:257
 #, c-format
 msgid ""
 "File '%s' exists.\n"
 "Overwrite it?"
 msgstr "Le fichier « %s » existe, écraser ?"
 
-#: app/gui/file-save-dialog.c:297
+#: app/gui/file-save-dialog.c:261
 msgid "File Exists!"
 msgstr "Le fichier existe !"
 
@@ -6207,15 +6204,15 @@ msgstr ""
 msgid "Calibrate Monitor Resolution"
 msgstr "Calibrer la résolution du moniteur"
 
-#: app/gui/resolution-calibrate-dialog.c:195
+#: app/gui/resolution-calibrate-dialog.c:196
 msgid "Measure the rulers and enter their lengths below."
 msgstr "Mesurez la règle et saisissez sa longueur ci-dessous."
 
-#: app/gui/resolution-calibrate-dialog.c:217
+#: app/gui/resolution-calibrate-dialog.c:218
 msgid "_Horizontal:"
 msgstr "_Horizontale :"
 
-#: app/gui/resolution-calibrate-dialog.c:222
+#: app/gui/resolution-calibrate-dialog.c:223
 msgid "_Vertical:"
 msgstr "_Verticale :"
 
@@ -7546,7 +7543,7 @@ msgstr "Ratio d'aspect fixe"
 msgid "Transform Selection"
 msgstr "Transformer la sélection"
 
-#: app/tools/tools-enums.c:75 app/vectors/gimpvectors.c:529
+#: app/tools/tools-enums.c:75 app/vectors/gimpvectors.c:527
 msgid "Transform Path"
 msgstr "Transformer le chemin"
 
@@ -8908,19 +8905,19 @@ msgstr "Renommer le chemin"
 msgid "Scale Path"
 msgstr "Étirer le chemin"
 
-#: app/vectors/gimpvectors.c:426
+#: app/vectors/gimpvectors.c:425
 msgid "Resize Path"
 msgstr "Redimensionner le chemin"
 
-#: app/vectors/gimpvectors.c:457
+#: app/vectors/gimpvectors.c:455
 msgid "Flip Path"
 msgstr "Retourner le chemin"
 
-#: app/vectors/gimpvectors.c:500
+#: app/vectors/gimpvectors.c:498
 msgid "Rotate Path"
 msgstr "Pivoter le chemin"
 
-#: app/vectors/gimpvectors.c:558
+#: app/vectors/gimpvectors.c:556
 msgid "Cannot stroke empty path."
 msgstr "Impossible de tracer un chemin vide."
 
@@ -8936,6 +8933,11 @@ msgstr "Aucun chemin trouvé dans « %s »"
 #: app/vectors/gimpvectors-import.c:294
 msgid "No paths found in the buffer"
 msgstr "Aucun chemin trouvé dans le tampon"
+
+#: app/vectors/gimpvectors-import.c:304
+#, fuzzy, c-format
+msgid "Failed to import paths from '%s': %s"
+msgstr "Impossible de lire %d octets depuis « %s » : %s"
 
 #: app/widgets/gimpbrusheditor.c:143
 msgid "Hardness:"
@@ -9277,7 +9279,7 @@ msgstr ""
 "Erreur lors de l'écriture du fichier « %s » :\n"
 "%s"
 
-#: app/widgets/gimpfiledialog.c:186
+#: app/widgets/gimpfiledialog.c:189
 msgid "Determine File _Type:"
 msgstr "Déterminer le _type du fichier :"
 
@@ -9464,11 +9466,11 @@ msgstr "Pourcentage :"
 msgid "Intensity Range:"
 msgstr "Intervalle d'intensité :"
 
-#: app/widgets/gimpimagedock.c:203
+#: app/widgets/gimpimagedock.c:211
 msgid "Auto"
 msgstr "Auto"
 
-#: app/widgets/gimpimagedock.c:214
+#: app/widgets/gimpimagedock.c:222
 msgid ""
 "When enabled the dialog automatically follows the image you are working on."
 msgstr ""
@@ -9976,7 +9978,7 @@ msgstr "Fenêtre normale"
 msgid "Utility Window"
 msgstr "Fenêtre utilitaire"
 
-#: app/xcf/xcf-load.c:294
+#: app/xcf/xcf-load.c:295
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -10015,3 +10017,6 @@ msgstr "Erreur XCF : Version %d non supportée du format XCF rencontrée"
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
 msgstr "Crée et modifier des images ou des photographies"
+
+#~ msgid "Could not open"
+#~ msgstr "Impossible d'ouvrir"

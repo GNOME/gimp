@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-20 06:26+0100\n"
+"POT-Creation-Date: 2004-03-04 00:14+0100\n"
 "PO-Revision-Date: 2004-02-20 06:30+0100\n"
 "Last-Translator: Дејан Матијевић <dejan@ns.sympatico.ca>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
@@ -294,7 +294,7 @@ msgstr "Неуспелo учитавање"
 msgid "Not loaded"
 msgstr "Није учитано"
 
-#: libgimpthumb/gimpthumb-utils.c:195
+#: libgimpthumb/gimpthumb-utils.c:196
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Неуспешно прављење директоријума са сличицама „%s“."
@@ -392,11 +392,11 @@ msgstr "Текуће:"
 msgid "Old:"
 msgstr "Старо:"
 
-#: libgimpwidgets/gimpfileentry.c:361
+#: libgimpwidgets/gimpfileentry.c:350
 msgid "Select Folder"
 msgstr "Одаберите директоријум"
 
-#: libgimpwidgets/gimpfileentry.c:375
+#: libgimpwidgets/gimpfileentry.c:364
 msgid "Select File"
 msgstr "Одабери датотеку"
 
@@ -492,11 +492,11 @@ msgstr "Још..."
 msgid "Unit Selection"
 msgstr "Избор јединице"
 
-#: libgimpwidgets/gimpunitmenu.c:660
+#: libgimpwidgets/gimpunitmenu.c:657
 msgid "Unit"
 msgstr "Јединица"
 
-#: libgimpwidgets/gimpunitmenu.c:664
+#: libgimpwidgets/gimpunitmenu.c:661
 msgid "Factor"
 msgstr "Фактор"
 

@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp14-std-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-16 09:48+0100\n"
+"POT-Creation-Date: 2004-03-04 00:14+0100\n"
 "PO-Revision-Date: 2004-02-13 14:44+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -513,7 +513,7 @@ msgstr "<Image>/Filtry/Renderowanie/Przeglądarka _fraktali..."
 msgid "Rendering Fractal..."
 msgstr "Renderowanie fraktala..."
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:763 plug-ins/gfig/gfig.c:3824
+#: plug-ins/FractalExplorer/FractalExplorer.c:763 plug-ins/gfig/gfig.c:3827
 #: plug-ins/gflare/gflare.c:3110
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
@@ -1754,7 +1754,7 @@ msgstr "Stałe ziarno"
 msgid "New Seed"
 msgstr "Nowe ziarno"
 
-#: plug-ins/common/CML_explorer.c:1279 plug-ins/common/lic.c:730
+#: plug-ins/common/CML_explorer.c:1279 plug-ins/common/lic.c:654
 #: plug-ins/fp/fp_gtk.c:290
 msgid "_Hue"
 msgstr "O_dcień"
@@ -2038,7 +2038,7 @@ msgstr "Wyrównaj widoczne warstwy"
 #: plug-ins/common/gauss_iir.c:353 plug-ins/common/gauss_rle.c:347
 #: plug-ins/common/glasstile.c:251 plug-ins/common/grid.c:682
 #: plug-ins/common/illusion.c:415 plug-ins/common/jpeg.c:1720
-#: plug-ins/common/lic.c:762 plug-ins/common/max_rgb.c:271
+#: plug-ins/common/lic.c:686 plug-ins/common/max_rgb.c:271
 #: plug-ins/common/mosaic.c:603 plug-ins/common/nlfilt.c:361
 #: plug-ins/common/noisify.c:331 plug-ins/common/nova.c:328
 #: plug-ins/common/oilify.c:452 plug-ins/common/pixelize.c:319
@@ -2954,7 +2954,7 @@ msgstr "A_utomatyczne odświeżanie podglądu"
 #. the vertical box and its toggle buttons
 #. Options section
 #: plug-ins/common/curve_bend.c:1321 plug-ins/common/mosaic.c:528
-#: plug-ins/common/ripple.c:443 plug-ins/gfig/gfig.c:2989
+#: plug-ins/common/ripple.c:443 plug-ins/gfig/gfig.c:2992
 msgid "Options"
 msgstr "Opcje"
 
@@ -3482,7 +3482,7 @@ msgstr "_Sobel"
 msgid "_Prewitt"
 msgstr "_Prewitt"
 
-#: plug-ins/common/edge.c:652 plug-ins/common/lic.c:744
+#: plug-ins/common/edge.c:652 plug-ins/common/lic.c:668
 msgid "_Gradient"
 msgstr "_Gradient"
 
@@ -4206,11 +4206,11 @@ msgid "Grid"
 msgstr "Siatka"
 
 #. attach labels
-#: plug-ins/common/grid.c:731 plug-ins/pagecurl/pagecurl.c:574
+#: plug-ins/common/grid.c:731 plug-ins/pagecurl/pagecurl.c:573
 msgid "Horizontal"
 msgstr "Poziomo"
 
-#: plug-ins/common/grid.c:733 plug-ins/pagecurl/pagecurl.c:575
+#: plug-ins/common/grid.c:733 plug-ins/pagecurl/pagecurl.c:574
 msgid "Vertical"
 msgstr "Pionowo"
 
@@ -4241,7 +4241,7 @@ msgstr "Kolor skrzyżowania"
 msgid "GIMP Table Magic"
 msgstr "Czarodziej tabel programu GIMP"
 
-#: plug-ins/common/gtm.c:420 plug-ins/gfig/gfig.c:3096
+#: plug-ins/common/gtm.c:420 plug-ins/gfig/gfig.c:3099
 msgid "Warning"
 msgstr "Ostrzeżenie"
 
@@ -4699,71 +4699,71 @@ msgstr "Transformacja Laplace'a..."
 msgid "Cleanup..."
 msgstr "Porządkowanie..."
 
-#: plug-ins/common/lic.c:626
+#: plug-ins/common/lic.c:548
 msgid "Van Gogh (LIC)..."
 msgstr "Van Gogh (LIC)..."
 
-#: plug-ins/common/lic.c:705
+#: plug-ins/common/lic.c:631
 msgid "Van Gogh (LIC)"
 msgstr "Van Gogh (LIC)"
 
-#: plug-ins/common/lic.c:725
+#: plug-ins/common/lic.c:649
 msgid "Effect Channel"
 msgstr "Kanał Efektów"
 
-#: plug-ins/common/lic.c:731 plug-ins/fp/fp_gtk.c:294
+#: plug-ins/common/lic.c:655 plug-ins/fp/fp_gtk.c:294
 msgid "_Saturation"
 msgstr "_Nasycenie"
 
-#: plug-ins/common/lic.c:732
+#: plug-ins/common/lic.c:656
 msgid "_Brightness"
 msgstr "_Jasność"
 
-#: plug-ins/common/lic.c:738
+#: plug-ins/common/lic.c:662
 msgid "Effect Operator"
 msgstr "Operator efektów"
 
-#: plug-ins/common/lic.c:743
+#: plug-ins/common/lic.c:667
 msgid "_Derivative"
 msgstr "_Pochodna"
 
-#: plug-ins/common/lic.c:750
+#: plug-ins/common/lic.c:674
 msgid "Convolve"
 msgstr "Zmieszanie"
 
-#: plug-ins/common/lic.c:755
+#: plug-ins/common/lic.c:679
 msgid "_With White Noise"
 msgstr "Z _białym szumem"
 
-#: plug-ins/common/lic.c:756
+#: plug-ins/common/lic.c:680
 msgid "W_ith Source Image"
 msgstr "Z o_brazem źródłowym"
 
-#: plug-ins/common/lic.c:784
+#: plug-ins/common/lic.c:708
 msgid "_Effect Image:"
 msgstr "Obraz _efektów:"
 
-#: plug-ins/common/lic.c:800
+#: plug-ins/common/lic.c:724
 msgid "_Filter Length:"
 msgstr "Długość fi_ltru:"
 
-#: plug-ins/common/lic.c:809
+#: plug-ins/common/lic.c:733
 msgid "_Noise Magnitude:"
 msgstr "Po_ziom szumu:"
 
-#: plug-ins/common/lic.c:818
+#: plug-ins/common/lic.c:742
 msgid "In_tegration Steps:"
 msgstr "Kroki _integracji:"
 
-#: plug-ins/common/lic.c:827
+#: plug-ins/common/lic.c:751
 msgid "_Minimum Value:"
 msgstr "M_inimalna wartość:"
 
-#: plug-ins/common/lic.c:836
+#: plug-ins/common/lic.c:760
 msgid "M_aximum Value:"
 msgstr "M_aksymalna wartość:"
 
-#: plug-ins/common/lic.c:887
+#: plug-ins/common/lic.c:811
 msgid "<Image>/Filters/Map/_Van Gogh (LIC)..."
 msgstr "<Image>/Filtry/Odwzorowanie/_Van Gogh (LIC)..."
 
@@ -5607,6 +5607,8 @@ msgstr ""
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Błąd przy zapisie pliku \"%s\". Nie można zapisać obrazu."
 
+#. Inform the user that we couldn't losslessly save the
+#. * transparency & just use the full palette
 #: plug-ins/common/png.c:1527
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
@@ -7809,6 +7811,7 @@ msgstr ""
 "\"%s\":\n"
 "Nie podano typu danych obrazu"
 
+#. The image is not black-and-white.
 #: plug-ins/common/xbm.c:959
 msgid ""
 "The image which you are trying to save as an XBM contains more than two "
@@ -8410,7 +8413,7 @@ msgid "Delete an object"
 msgstr "Usuwa obiekt"
 
 #: plug-ins/gfig/gfig.c:1680 plug-ins/gfig/gfig.c:2056
-#: plug-ins/gfig/gfig.c:2975
+#: plug-ins/gfig/gfig.c:2978
 msgid "Brush"
 msgstr "Pędzel"
 
@@ -8731,82 +8734,82 @@ msgstr "Rozmiar:"
 msgid "Gfig"
 msgstr "GFig"
 
-#: plug-ins/gfig/gfig.c:2927 plug-ins/gfig/gfig.c:2970
+#: plug-ins/gfig/gfig.c:2927 plug-ins/gfig/gfig.c:2973
 msgid "Paint"
 msgstr "Malowanie"
 
-#: plug-ins/gfig/gfig.c:2983 plug-ins/imagemap/imap_cmd_select.c:53
+#: plug-ins/gfig/gfig.c:2986 plug-ins/imagemap/imap_cmd_select.c:53
 #: plug-ins/imagemap/imap_tools.c:144
 msgid "Select"
 msgstr "Zaznaczenie"
 
-#: plug-ins/gfig/gfig.c:3093
+#: plug-ins/gfig/gfig.c:3096
 #, c-format
 msgid "%d unsaved Gfig objects. Continue with exiting?"
 msgstr "Nie zapisano %d obiektów Gfiga. Czy rzeczywiście zakończyć?"
 
-#: plug-ins/gfig/gfig.c:3262
+#: plug-ins/gfig/gfig.c:3265
 msgid "Enter Gfig Object Name"
 msgstr "Wprowadź nazwę obiektu Gfiga:"
 
-#: plug-ins/gfig/gfig.c:3287
+#: plug-ins/gfig/gfig.c:3290
 msgid "Gfig Object Name:"
 msgstr "Nazwa obiektu Gfiga:"
 
 #. the dialog
-#: plug-ins/gfig/gfig.c:3342
+#: plug-ins/gfig/gfig.c:3345
 msgid "Rescan for Gfig Objects"
 msgstr "Odświeża listę obiektów Gfiga"
 
-#: plug-ins/gfig/gfig.c:3359
+#: plug-ins/gfig/gfig.c:3362
 msgid "Add Gfig Path"
 msgstr "Dodaj ścieżkę Gfiga"
 
 #. Load a single object
-#: plug-ins/gfig/gfig.c:3430
+#: plug-ins/gfig/gfig.c:3433
 msgid "Load Gfig object collection"
 msgstr "Wczytanie zbioru obiektów Gfiga"
 
-#: plug-ins/gfig/gfig.c:3453
+#: plug-ins/gfig/gfig.c:3456
 msgid "Error in copy layer for onlayers"
 msgstr "Błąd przy kopiowaniu warstwy do malowania"
 
-#: plug-ins/gfig/gfig.c:3566
+#: plug-ins/gfig/gfig.c:3569
 #, c-format
 msgid "Gfig Layer %d"
 msgstr "Warstwa Gfiga %d"
 
-#: plug-ins/gfig/gfig.c:3640
+#: plug-ins/gfig/gfig.c:3643
 msgid "About Gfig"
 msgstr "Informacje o GFig"
 
-#: plug-ins/gfig/gfig.c:3667
+#: plug-ins/gfig/gfig.c:3670
 msgid "Gfig - GIMP plug-in"
 msgstr "Gfig - wtyczka programu GIMP"
 
-#: plug-ins/gfig/gfig.c:3672
+#: plug-ins/gfig/gfig.c:3675
 msgid "Release 2.0"
 msgstr "Wydanie 2.0"
 
-#: plug-ins/gfig/gfig.c:3707
+#: plug-ins/gfig/gfig.c:3710
 msgid "New Gfig Object"
 msgstr "Nowy obiekt gfig"
 
-#: plug-ins/gfig/gfig.c:3828
+#: plug-ins/gfig/gfig.c:3831
 msgid "Delete Gfig Drawing"
 msgstr "Usuń rysunek Gfig"
 
-#: plug-ins/gfig/gfig.c:3880
+#: plug-ins/gfig/gfig.c:3883
 msgid "Editing read-only object - you will not be able to save it"
 msgstr "Modyfikacja obiektu tylko do odczytu - zapis zmian nie będzie możliwy"
 
 #. Create new entry with name + copy at end & copy object into it
-#: plug-ins/gfig/gfig.c:3979
+#: plug-ins/gfig/gfig.c:3982
 #, c-format
 msgid "%s copy"
 msgstr "kopiuj %s"
 
-#: plug-ins/gfig/gfig.c:4351
+#: plug-ins/gfig/gfig.c:4354
 msgid "Error reading file"
 msgstr "Błąd przy odczycie pliku"
 
@@ -9359,6 +9362,7 @@ msgstr "<Image>/Filtry/Artystyczne/_Gimpresjonista..."
 msgid "Painting..."
 msgstr "Malowanie..."
 
+#. don't translate the gimprc entry
 #: plug-ins/gimpressionist/gimpressionist.c:64
 #, c-format
 msgid ""
@@ -10871,43 +10875,43 @@ msgstr "Otwieranie %s"
 msgid "See %s"
 msgstr "Zobacz %s"
 
-#: plug-ins/pagecurl/pagecurl.c:214
+#: plug-ins/pagecurl/pagecurl.c:212
 msgid "<Image>/Filters/Distorts/_Pagecurl..."
 msgstr "<Image>/Filtry/Zniekształcenia/Zawinięcie _strony..."
 
-#: plug-ins/pagecurl/pagecurl.c:491
+#: plug-ins/pagecurl/pagecurl.c:490
 msgid "Pagecurl Effect"
 msgstr "Efekt zawinięcia strony"
 
-#: plug-ins/pagecurl/pagecurl.c:505
+#: plug-ins/pagecurl/pagecurl.c:504
 msgid "Curl Location"
 msgstr "Położenie zawinięcia"
 
-#: plug-ins/pagecurl/pagecurl.c:530
+#: plug-ins/pagecurl/pagecurl.c:529
 msgid "Upper Left"
 msgstr "Górny lewy"
 
-#: plug-ins/pagecurl/pagecurl.c:531
+#: plug-ins/pagecurl/pagecurl.c:530
 msgid "Upper Right"
 msgstr "Górny prawy"
 
-#: plug-ins/pagecurl/pagecurl.c:532
+#: plug-ins/pagecurl/pagecurl.c:531
 msgid "Lower Left"
 msgstr "Dolny lewy"
 
-#: plug-ins/pagecurl/pagecurl.c:533
+#: plug-ins/pagecurl/pagecurl.c:532
 msgid "Lower Right"
 msgstr "Dolny prawy"
 
-#: plug-ins/pagecurl/pagecurl.c:563
+#: plug-ins/pagecurl/pagecurl.c:562
 msgid "Curl Orientation"
 msgstr "Ułożenie zawinięcia"
 
-#: plug-ins/pagecurl/pagecurl.c:601
+#: plug-ins/pagecurl/pagecurl.c:600
 msgid "Shade under Curl"
 msgstr "Cień pod zawinięciem"
 
-#: plug-ins/pagecurl/pagecurl.c:612
+#: plug-ins/pagecurl/pagecurl.c:611
 msgid ""
 "Use Current Gradient\n"
 "instead of FG/BG-Color"
@@ -10915,15 +10919,15 @@ msgstr ""
 "Wykorzystanie bieżącego gradientu\n"
 "zamiast koloru FG/BG"
 
-#: plug-ins/pagecurl/pagecurl.c:625
+#: plug-ins/pagecurl/pagecurl.c:624
 msgid "Curl Opacity"
 msgstr "Krycie zawinięcia"
 
-#: plug-ins/pagecurl/pagecurl.c:756
+#: plug-ins/pagecurl/pagecurl.c:754
 msgid "Curl Layer"
 msgstr "Warstwa zawinięcia"
 
-#: plug-ins/pagecurl/pagecurl.c:998
+#: plug-ins/pagecurl/pagecurl.c:1000
 msgid "Page Curl..."
 msgstr "Zawinięcie strony..."
 

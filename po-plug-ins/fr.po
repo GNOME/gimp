@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins 2.0pre4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-28 16:04+0100\n"
+"POT-Creation-Date: 2004-03-04 00:14+0100\n"
 "PO-Revision-Date: 2004-02-28 15:44+0100\n"
 "Last-Translator: Raymond Ostertag <r.ostertag@caramail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
@@ -5624,6 +5624,8 @@ msgstr ""
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Erreur en écriture de « %s ». Impossible d'enregistrer l'image."
 
+#. Inform the user that we couldn't losslessly save the
+#. * transparency & just use the full palette
 #: plug-ins/common/png.c:1527
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
@@ -7842,6 +7844,7 @@ msgstr ""
 "« %s » :\n"
 "Type d'image non spécifiée"
 
+#. The image is not black-and-white.
 #: plug-ins/common/xbm.c:959
 msgid ""
 "The image which you are trying to save as an XBM contains more than two "
@@ -9403,6 +9406,7 @@ msgstr "<Image>/Filtres/Artistique/_GIMPressionnist..."
 msgid "Painting..."
 msgstr "Peinture..."
 
+#. don't translate the gimprc entry
 #: plug-ins/gimpressionist/gimpressionist.c:64
 #, c-format
 msgid ""

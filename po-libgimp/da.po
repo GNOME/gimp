@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp /gnome-cvs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-10 21:37+0100\n"
+"POT-Creation-Date: 2004-03-04 00:14+0100\n"
 "PO-Revision-Date: 2004-02-10 21:37+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -294,7 +294,7 @@ msgstr "Indlæsning mislykkedes"
 msgid "Not loaded"
 msgstr "Ikke indlæst"
 
-#: libgimpthumb/gimpthumb-utils.c:195
+#: libgimpthumb/gimpthumb-utils.c:196
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Kunne ikke oprette miniaturemappen '%s'."
@@ -392,11 +392,11 @@ msgstr "Nuværende:"
 msgid "Old:"
 msgstr "Tidligere:"
 
-#: libgimpwidgets/gimpfileentry.c:361
+#: libgimpwidgets/gimpfileentry.c:350
 msgid "Select Folder"
 msgstr "Vælg mappe"
 
-#: libgimpwidgets/gimpfileentry.c:375
+#: libgimpwidgets/gimpfileentry.c:364
 msgid "Select File"
 msgstr "Vælg fil"
 
@@ -464,23 +464,23 @@ msgstr "_Linjemellemrum"
 msgid "_Resize"
 msgstr "Æn_dr størrelse"
 
-#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:283
+#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:284
 msgid "_Scale"
 msgstr "_Skalér"
 
-#: libgimpwidgets/gimpstock.c:262
+#: libgimpwidgets/gimpstock.c:263
 msgid "Crop"
 msgstr "Beskær"
 
-#: libgimpwidgets/gimpstock.c:279
+#: libgimpwidgets/gimpstock.c:280
 msgid "_Transform"
 msgstr "_Transformér"
 
-#: libgimpwidgets/gimpstock.c:282
+#: libgimpwidgets/gimpstock.c:283
 msgid "_Rotate"
 msgstr "_Rotér"
 
-#: libgimpwidgets/gimpstock.c:284
+#: libgimpwidgets/gimpstock.c:285
 msgid "_Shear"
 msgstr "T_rapezér"
 
@@ -492,11 +492,11 @@ msgstr "Flere..."
 msgid "Unit Selection"
 msgstr "Enhedsvalg"
 
-#: libgimpwidgets/gimpunitmenu.c:660
+#: libgimpwidgets/gimpunitmenu.c:657
 msgid "Unit"
 msgstr "Enhed"
 
-#: libgimpwidgets/gimpunitmenu.c:664
+#: libgimpwidgets/gimpunitmenu.c:661
 msgid "Factor"
 msgstr "Faktor"
 

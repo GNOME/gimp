@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-26 21:49+0100\n"
+"POT-Creation-Date: 2004-03-04 01:58+0100\n"
 "PO-Revision-Date: 2004-02-26 21:50+0100\n"
 "Last-Translator: Бранко Ивановић <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@bogus.example.com>\n"
@@ -1263,7 +1263,7 @@ msgstr "Промени величину слоја"
 msgid "Add Layer Mask"
 msgstr "Додај маску за слојеве"
 
-#: app/core/core-enums.c:602 app/core/gimplayer.c:1270
+#: app/core/core-enums.c:602 app/core/gimplayer.c:1271
 msgid "Apply Layer Mask"
 msgstr "Примени Маску за слојеве"
 
@@ -1366,7 +1366,7 @@ msgstr "Избриши слој"
 msgid "Layer Mod"
 msgstr "Режим слоја"
 
-#: app/core/core-enums.c:632
+#: app/core/core-enums.c:632 app/core/gimplayer.c:1272
 msgid "Delete Layer Mask"
 msgstr "Избриши маску за слојеве"
 
@@ -2072,56 +2072,51 @@ msgstr "Путања се не може спустити ниже."
 msgid "Lower Path"
 msgstr "Спусти путању"
 
-#: app/core/gimpimagefile.c:478
+#: app/core/gimpimagefile.c:453
 msgid "Remote image"
 msgstr "Удаљена слика"
 
-#: app/core/gimpimagefile.c:483 app/gui/preferences-dialog.c:1244
+#: app/core/gimpimagefile.c:458 app/gui/preferences-dialog.c:1244
 msgid "Folder"
 msgstr "Директоријуми"
 
-#: app/core/gimpimagefile.c:488
+#: app/core/gimpimagefile.c:463
 msgid "Special File"
 msgstr "Нарочита датотека"
 
-# Данило каже: „Мало аориста не шкоди“ :-)
-#: app/core/gimpimagefile.c:493
-msgid "Could not open"
-msgstr "Не могох да отворим"
-
-#: app/core/gimpimagefile.c:514
+#: app/core/gimpimagefile.c:490
 msgid "No preview available"
 msgstr "Преглед није доступан"
 
-#: app/core/gimpimagefile.c:518
+#: app/core/gimpimagefile.c:494
 msgid "Loading preview ..."
 msgstr "Учитавам преглед ..."
 
-#: app/core/gimpimagefile.c:522
+#: app/core/gimpimagefile.c:498
 msgid "Preview is out of date"
 msgstr "Преглед је застарео"
 
-#: app/core/gimpimagefile.c:526
+#: app/core/gimpimagefile.c:502
 msgid "Cannot create preview"
 msgstr "Не могу да направим преглед"
 
-#: app/core/gimpimagefile.c:533 app/gui/info-window.c:503
+#: app/core/gimpimagefile.c:509 app/gui/info-window.c:503
 #, c-format
 msgid "%d x %d pixels"
 msgstr "%d x %d тачака"
 
 # bug: plural-forms
-#: app/core/gimpimagefile.c:548
+#: app/core/gimpimagefile.c:524
 msgid "1 Layer"
 msgstr "1 слој"
 
 # bug: plural-forms
-#: app/core/gimpimagefile.c:550
+#: app/core/gimpimagefile.c:526
 #, c-format
 msgid "%d Layers"
 msgstr "Слојева: %d"
 
-#: app/core/gimpimagefile.c:587
+#: app/core/gimpimagefile.c:567
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Нисам могао да отворим умањени приказ „%s“: %s"
@@ -2195,11 +2190,11 @@ msgid "Transfer Alpha to Mask"
 msgstr "Пренеси провидност у маску"
 
 #. Push the layer on the undo stack
-#: app/core/gimplayer.c:1374
+#: app/core/gimplayer.c:1376
 msgid "Add Alpha Channel"
 msgstr "Додај Алфа канал"
 
-#: app/core/gimplayer.c:1404
+#: app/core/gimplayer.c:1406
 msgid "Layer to Image Size"
 msgstr "Изједначи величину слоја и слике"
 
@@ -3237,7 +3232,7 @@ msgstr "/_Сачувај све грешке у датотеку..."
 msgid "/Save _Selection to File..."
 msgstr "/Сачувај селекцију у датотеку..."
 
-#: app/gui/file-commands.c:194 app/gui/file-open-dialog.c:389
+#: app/gui/file-commands.c:189 app/gui/file-open-dialog.c:244
 #: app/widgets/gimpdnd.c:1286 app/widgets/gimpdocumentview.c:468
 #, c-format
 msgid ""
@@ -3249,7 +3244,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/gui/file-commands.c:255 app/gui/file-save-dialog.c:393
+#: app/gui/file-commands.c:234 app/gui/file-save-dialog.c:335
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -3260,21 +3255,21 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/gui/file-commands.c:296
+#: app/gui/file-commands.c:275
 msgid "Create New Template"
 msgstr "Направи нову мустру"
 
-#: app/gui/file-commands.c:300
+#: app/gui/file-commands.c:279
 msgid "Enter a name for this template"
 msgstr "Унеси име за ову мустру"
 
-#: app/gui/file-commands.c:323
+#: app/gui/file-commands.c:302
 msgid "Revert failed. No file name associated with this image."
 msgstr ""
 "Враћање у првобитан овлик неуспело. Ниједна датотека није повезана са овом "
 "сликом."
 
-#: app/gui/file-commands.c:336
+#: app/gui/file-commands.c:315
 #, c-format
 msgid ""
 "Revert '%s' to\n"
@@ -3287,15 +3282,15 @@ msgstr ""
 "\n"
 "Изгубићете све промене, укључујући информације за поништавање."
 
-#: app/gui/file-commands.c:344
+#: app/gui/file-commands.c:323
 msgid "Revert Image"
 msgstr "Врати слику у првобитни облик"
 
-#: app/gui/file-commands.c:412
+#: app/gui/file-commands.c:391
 msgid "(Unnamed Template)"
 msgstr "(Неименована мустра)"
 
-#: app/gui/file-commands.c:486
+#: app/gui/file-commands.c:465
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -3305,10 +3300,6 @@ msgstr ""
 "Повратак на „%s“ неуспео:\n"
 "\n"
 "%s"
-
-#: app/gui/file-dialog-utils.c:112
-msgid "Determine File _Type:"
-msgstr "Одреди тип датотеке:"
 
 #: app/gui/file-new-dialog.c:96 app/gui/preferences-dialog.c:1084
 #: app/gui/preferences-dialog.c:1087
@@ -3346,7 +3337,7 @@ msgstr ""
 msgid "Confirm Image Size"
 msgstr "Потврди величину слику"
 
-#: app/gui/file-open-dialog.c:146 app/gui/file-open-dialog.c:172
+#: app/gui/file-open-dialog.c:105
 msgid "Open Image"
 msgstr "Отвори слику"
 
@@ -3354,15 +3345,15 @@ msgstr "Отвори слику"
 msgid "/Automatic"
 msgstr "/Аутоматски"
 
-#: app/gui/file-save-dialog.c:128 app/gui/file-save-dialog.c:212
+#: app/gui/file-save-dialog.c:101 app/gui/file-save-dialog.c:151
 msgid "Save Image"
 msgstr "Сачувај слику"
 
-#: app/gui/file-save-dialog.c:182
+#: app/gui/file-save-dialog.c:132
 msgid "Save a Copy of the Image"
 msgstr "Сачувај копију слике"
 
-#: app/gui/file-save-dialog.c:312
+#: app/gui/file-save-dialog.c:257
 #, c-format
 msgid ""
 "File '%s' exists.\n"
@@ -3371,7 +3362,7 @@ msgstr ""
 "Датотека „%s“ постоји.\n"
 "Да пишем преко ње?"
 
-#: app/gui/file-save-dialog.c:317
+#: app/gui/file-save-dialog.c:261
 msgid "File Exists!"
 msgstr "Датотека постоји!"
 
@@ -3799,6 +3790,7 @@ msgstr ""
 "Грешка при мењању величине: И ширина и висина морају бити већи од нуле."
 
 #. <Image>/File
+#. <Toolbox>/File
 #: app/gui/image-menu.c:101 app/gui/toolbox-menu.c:49
 msgid "/_File"
 msgstr "/_Датотека"
@@ -3812,6 +3804,7 @@ msgid "/File/_Open..."
 msgstr "/Датотека/Отвори..."
 
 #. <Image>/File/Open Recent
+#. <Toolbox>/File/Open Recent
 #: app/gui/image-menu.c:116 app/gui/toolbox-menu.c:64
 msgid "/File/Open _Recent"
 msgstr "/Датотека/Отвори ско_рашње"
@@ -4658,30 +4651,30 @@ msgstr "/Филтери/Сједини"
 msgid "/Filters/To_ys"
 msgstr "/Филтери/Играчке"
 
-#: app/gui/image-menu.c:1465
+#: app/gui/image-menu.c:1466
 #, c-format
 msgid "_Undo %s"
 msgstr "Поништи %s"
 
-#: app/gui/image-menu.c:1470
+#: app/gui/image-menu.c:1471
 #, c-format
 msgid "_Redo %s"
 msgstr "Врати %s"
 
-#: app/gui/image-menu.c:1474
+#: app/gui/image-menu.c:1475
 msgid "_Undo"
 msgstr "Поништи"
 
-#: app/gui/image-menu.c:1475
+#: app/gui/image-menu.c:1476
 msgid "_Redo"
 msgstr "Врати"
 
-#: app/gui/image-menu.c:1743
+#: app/gui/image-menu.c:1744
 #, c-format
 msgid "Other (%s) ..."
 msgstr "Остало (%s) ..."
 
-#: app/gui/image-menu.c:1752
+#: app/gui/image-menu.c:1753
 #, c-format
 msgid "_Zoom (%s)"
 msgstr "У_већање (%s)"
@@ -6066,6 +6059,7 @@ msgid "Original Width:"
 msgstr "оригинална ширина:"
 
 #. the new size labels
+#. the print size labels
 #: app/gui/resize-dialog.c:318 app/gui/resize-dialog.c:564
 msgid "New Width:"
 msgstr "Нова ширина:"
@@ -6117,15 +6111,15 @@ msgstr ""
 msgid "Calibrate Monitor Resolution"
 msgstr "Калибрација резолуције монитора"
 
-#: app/gui/resolution-calibrate-dialog.c:195
+#: app/gui/resolution-calibrate-dialog.c:196
 msgid "Measure the rulers and enter their lengths below."
 msgstr "Измерите лењире и унесите њихове дужине испод."
 
-#: app/gui/resolution-calibrate-dialog.c:217
+#: app/gui/resolution-calibrate-dialog.c:218
 msgid "_Horizontal:"
 msgstr "_Водоравно:"
 
-#: app/gui/resolution-calibrate-dialog.c:222
+#: app/gui/resolution-calibrate-dialog.c:223
 msgid "_Vertical:"
 msgstr "_Усправно:"
 
@@ -6877,6 +6871,7 @@ msgid "New Path Options"
 msgstr "Опције за нову путању"
 
 #. The name entry hbox, label and entry
+#. The name entry
 #: app/gui/vectors-commands.c:495 app/gui/vectors-commands.c:613
 msgid "Path name:"
 msgstr "Назив путање:"
@@ -7416,7 +7411,7 @@ msgstr "Фиксна размера"
 msgid "Transform Selection"
 msgstr "Трансформиши селекцију"
 
-#: app/tools/tools-enums.c:75 app/vectors/gimpvectors.c:529
+#: app/tools/tools-enums.c:75 app/vectors/gimpvectors.c:527
 msgid "Transform Path"
 msgstr "Трансформиши путању"
 
@@ -7790,6 +7785,7 @@ msgid "Origin X:"
 msgstr "Полазни Х:"
 
 #. the pixel size labels
+#. the unit size labels
 #: app/tools/gimpcroptool.c:999 app/tools/gimpselectionoptions.c:565
 #: app/widgets/gimptemplateeditor.c:235 app/widgets/gimptemplateeditor.c:253
 msgid "Width:"
@@ -8770,19 +8766,19 @@ msgstr "Промени назив путањи"
 msgid "Scale Path"
 msgstr "Промени величину путање"
 
-#: app/vectors/gimpvectors.c:426
+#: app/vectors/gimpvectors.c:425
 msgid "Resize Path"
 msgstr "Промени величину путање"
 
-#: app/vectors/gimpvectors.c:457
+#: app/vectors/gimpvectors.c:455
 msgid "Flip Path"
 msgstr "Окрени путању"
 
-#: app/vectors/gimpvectors.c:500
+#: app/vectors/gimpvectors.c:498
 msgid "Rotate Path"
 msgstr "Ротирај путању"
 
-#: app/vectors/gimpvectors.c:558
+#: app/vectors/gimpvectors.c:556
 msgid "Cannot stroke empty path."
 msgstr "Не може да црта по празној путањи."
 
@@ -8798,6 +8794,11 @@ msgstr "Путање нису нађене у „%s“"
 #: app/vectors/gimpvectors-import.c:294
 msgid "No paths found in the buffer"
 msgstr "Путање нису нађене у баферу"
+
+#: app/vectors/gimpvectors-import.c:304
+#, fuzzy, c-format
+msgid "Failed to import paths from '%s': %s"
+msgstr "Нисам успео да учитам путању из „%s“."
 
 #: app/widgets/gimpbrusheditor.c:143
 msgid "Hardness:"
@@ -9139,6 +9140,10 @@ msgstr ""
 "Грешка при писању у датотеку „%s“:\n"
 "%s"
 
+#: app/widgets/gimpfiledialog.c:189
+msgid "Determine File _Type:"
+msgstr "Одреди тип датотеке:"
+
 #: app/widgets/gimpfontview.c:133
 msgid "Rescan Font List"
 msgstr "Поново прегледај списак фонтова"
@@ -9319,11 +9324,11 @@ msgstr "Проценат:"
 msgid "Intensity Range:"
 msgstr "Распон интензитета:"
 
-#: app/widgets/gimpimagedock.c:203
+#: app/widgets/gimpimagedock.c:211
 msgid "Auto"
 msgstr "Ауто"
 
-#: app/widgets/gimpimagedock.c:214
+#: app/widgets/gimpimagedock.c:222
 msgid ""
 "When enabled the dialog automatically follows the image you are working on."
 msgstr "Када је укључено, прозорче само прати слику на којој радите."
@@ -9826,7 +9831,7 @@ msgstr "Обичан прозор"
 msgid "Utility Window"
 msgstr "Помоћни прозор"
 
-#: app/xcf/xcf-load.c:294
+#: app/xcf/xcf-load.c:295
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -9864,6 +9869,10 @@ msgstr "XCF грешка: сусрео сам се са неподржаном X
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
 msgstr "Направи и уреди слике или фотографије"
+
+# Данило каже: „Мало аориста не шкоди“ :-)
+#~ msgid "Could not open"
+#~ msgstr "Не могох да отворим"
 
 #~ msgid ""
 #~ "Click to update preview\n"
@@ -10429,9 +10438,6 @@ msgstr "Направи и уреди слике или фотографије"
 
 #~ msgid "Failed to read from '%s'."
 #~ msgstr "Не могу да читам из „%s“"
-
-#~ msgid "Failed to read path from '%s'."
-#~ msgstr "Нисам успео да учитам путању из „%s“."
 
 #~ msgid "No points specified in path file '%s'."
 #~ msgstr "Ниједна тачка није одређена у датотеци „%s“"

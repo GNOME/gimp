@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-05 11:45+0900\n"
+"POT-Creation-Date: 2003-07-21 00:18+0200\n"
 "PO-Revision-Date: 2004-02-10 12:56+0900\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -46,9 +46,10 @@ msgstr ""
 "bakgrundsbilden istället för förgrundsfärgen."
 
 #: tips/gimp-tips.xml.in.h:5
+#, fuzzy
 msgid ""
-"<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
-"degree angles."
+"<tt>Ctrl</tt>-drag with the Transform tool in rotation mode will constrain "
+"the rotation to 15 degree angles."
 msgstr ""
 "<tt>Ctrl</tt>-drag med rotationsverktyget kommer att begränsa rotationen "
 "till 15-gradersvinklar."
@@ -74,11 +75,12 @@ msgstr ""
 "för att utföra samma sak."
 
 #: tips/gimp-tips.xml.in.h:8
+#, fuzzy
 msgid ""
 "After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
 "you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
-"menu item, and pressing the desired key combination. If \"Save Keyboard "
-"Shortcuts\" is enabled, the key bindings are saved when you exit GIMP."
+"menu item, and pressing the desired key combination. This is saved when you "
+"exit GIMP."
 msgstr ""
 "När du har aktiverat \"Dynamiska kortkommandon\" i inställningsdialogen kan "
 "du ställa om snabbtangenter. Detta gör du genom att ta fram menyn, markera "
@@ -110,14 +112,16 @@ msgstr ""
 "Kurvor)."
 
 #: tips/gimp-tips.xml.in.h:11
+#, fuzzy
 msgid ""
-"If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
-"with their current settings. You can use the Paintbrush in gradient mode or "
-"even the Eraser or the Smudge tool."
+"If you stroke a path (Edit-&gt;Stroke), the current drawing tool and its "
+"settings are used. You can use the Paintbrush in gradient mode, the Clone "
+"tool with a pattern or even the Eraser or the Smudge tool."
 msgstr ""
-"Om du stryker en slinga (Redigera-&gt;Stryk markering) kan ritverktygen "
-"användas med deras aktuella inställningar. Du kan använda målarpenseln i "
-"toningsläget eller till och med suddaren eller smetverktyget."
+"Om du stryker en slinga (Redigera->Stryk) används det aktuella ritverktyget "
+"och dess inställningar. Du kan använda målarpenseln i toningsläget, "
+"klonverktyget med ett mönster eller till och med suddaren eller "
+"smetverktyget."
 
 #: tips/gimp-tips.xml.in.h:12
 msgid ""
@@ -128,13 +132,14 @@ msgstr ""
 "ett bildfönster för att dölja eller visa vertygslådan och andra dialoger."
 
 #: tips/gimp-tips.xml.in.h:13
+#, fuzzy
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
-"you will have to merge all layers (Image-&gt;Flatten Image) if you want the "
+"you will have to merge all layers (Layers-&gt;Flatten Image) if you want the "
 "plug-in to work on the whole image."
 msgstr ""
 "De flesta insticksmoduler arbetar med det aktuella lagret på den aktuella "
-"bilden. I en del fall måste du slå samman alla lager (Bild-&gt;Platta till "
+"bilden. I en del fall måste du slå samman alla lager (Lager->Platta till "
 "bilden) om du vill att insticksmodulen ska arbeta på hela bilden."
 
 #: tips/gimp-tips.xml.in.h:14
@@ -146,16 +151,17 @@ msgstr ""
 "dig inte, du kan ångra de flesta misstag..."
 
 #: tips/gimp-tips.xml.in.h:15
+#, fuzzy
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
-"&gt;Mode-&gt;RGB), add an alpha-channel (Layers-&gt;Transparency-&gt;Add "
-"Alpha Channel) or flatten it (Image-&gt;Flatten Image)."
+"&gt;Mode-&gt;RGB), add an alpha-channel (Layers-&gt;Add Alpha Channel) or "
+"flatten it (Layers-&gt;Flatten Image)."
 msgstr ""
 "Alla effekter kan inte tillämpas på alla typer av bilder. Detta visas genom "
-"att menyposten är gråtonad. Du kan behöva ändra bildläget till RGB (Bild-&gt;"
-"Läge-&gt;RGB), lägga till en alfakanal (Lager-&gt;Transparens-&gt;Lägg till "
-"alfakanal) eller platta till den (Bild-&gt;Platta till bild)."
+"att menyposten är inaktiv. Du kan behöva ändra bilden till RGB (Bild->Läge-"
+">RGB), lägga till en alfakanal (Lager->Lägg till alfakanal) eller platta "
+"till den (Lager->Platta till bild)."
 
 #: tips/gimp-tips.xml.in.h:16
 msgid ""
@@ -225,6 +231,17 @@ msgstr ""
 "kommer att endast röra vid hjälplinjerna."
 
 #: tips/gimp-tips.xml.in.h:22
+#, fuzzy
+msgid ""
+"Using Edit-&gt;Stroke allows you to draw simple squares or circles by "
+"painting the edge of your current selection with the active brush. More "
+"complex shapes can be drawn with Filters-&gt;Render-&gt;Gfig."
+msgstr ""
+"Att använda Redigera->Stryk låter dig rita enkla fyrkanter och cirklar genom "
+"att rita hörnet på din aktuella markering med den aktiva penseln. Mer "
+"komplexa figurer kan ritas med Filter->Rendera->Gfig."
+
+#: tips/gimp-tips.xml.in.h:23
 msgid ""
 "When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</tt>-"
 "click will draw a straight line from your last drawing point to your current "
@@ -236,7 +253,7 @@ msgstr ""
 "aktuella markörposition. Om du även trycker <tt>Ctrl</tt> kommer linjen att "
 "begränsas till 15-gradersvinklar."
 
-#: tips/gimp-tips.xml.in.h:23
+#: tips/gimp-tips.xml.in.h:24
 msgid ""
 "When you save an image to work on it again later, try using XCF, the GIMP's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
@@ -248,17 +265,12 @@ msgstr ""
 "lager och alla aspekter av ditt pågående arbete. När ett projekt väl är "
 "färdigt kan du spara det som JPEG, PNG, GIF, ..."
 
-#: tips/gimp-tips.xml.in.h:24
-msgid ""
-"You can adjust and re-place a selection by using <tt>Alt</tt>-drag. If this "
-"makes the window move, your window manager uses the <tt>Alt</tt> key "
-"already. Try pressing <tt>Shift</tt> at the same time."
-msgstr ""
-"Du kan justera och placera om en markering genom att använda <tt>Alt</tt>-"
-"drag. Om detta gör att fönstret flyttar sig använder din fönsterhanterare "
-"redan <tt>Alt</tt>-tangenten. Prova att trycka <tt>Shift</tt> på samma gång."
-
 #: tips/gimp-tips.xml.in.h:25
+msgid "You can adjust and re-place a selection by using <tt>Alt</tt>-drag."
+msgstr ""
+"Du kan justera och flytta en markering genom att använda <tt>Alt</tt>-drag."
+
+#: tips/gimp-tips.xml.in.h:26
 msgid ""
 "You can adjust the selection range for fuzzy select by clicking and dragging "
 "left and right."
@@ -266,9 +278,10 @@ msgstr ""
 "Du kan justera markeringsintervallet för luddig markering genom att klicka "
 "och dra vänster och höger."
 
-#: tips/gimp-tips.xml.in.h:26
+#: tips/gimp-tips.xml.in.h:27
+#, fuzzy
 msgid ""
-"You can create and edit complex selections using the Path tool. The Paths "
+"You can create and edit complex selections using the Bezier tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
 "selections."
 msgstr ""
@@ -276,7 +289,7 @@ msgstr ""
 "slingverktyget. Slingdialogen låter dig arbeta med flera slingor och "
 "konvertera dem till markeringar."
 
-#: tips/gimp-tips.xml.in.h:27
+#: tips/gimp-tips.xml.in.h:28
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -284,7 +297,7 @@ msgstr ""
 "Du kan dra ett lager från lagerdialogen och släppa den på verktygslådan. "
 "Detta skapar en ny bild som innehåller endast det lagret."
 
-#: tips/gimp-tips.xml.in.h:28
+#: tips/gimp-tips.xml.in.h:29
 msgid ""
 "You can drag and drop many things in the GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
@@ -293,16 +306,6 @@ msgstr ""
 "Du kan dra och släppa många saker i GIMP. Att dra en färg från verktygslådan "
 "eller från en färgpalett och släppa den i en bild gör till exempel att den "
 "aktuella bilden eller markeringen fylls med den färgen."
-
-#: tips/gimp-tips.xml.in.h:29
-msgid ""
-"You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
-"strokes the edge of your current selection. More complex shapes can be drawn "
-"using the Path tool or with Filters-&gt;Render-&gt;Gfig."
-msgstr ""
-"Du kan rita enkla fyrkanter och cirklar genom att använda Redigera-&gt;Stryk "
-"markering. Det ritar hörnet på din aktuella markering. Mer komplexa figurer "
-"kan ritas med slingverktyget eller Filter-&gt;Rendera-&gt;Gfig."
 
 #: tips/gimp-tips.xml.in.h:30
 msgid ""
@@ -370,53 +373,54 @@ msgstr ""
 "markering genom att måla i bilden och klicka på knappen igen för att "
 "konvertera den tillbaka till en normal markering."
 
-#, fuzzy
 #~ msgid ""
-#~ "If you stroke a path (Edit-&gt;Stroke), the current drawing tool and its "
-#~ "settings are used. You can use the Paintbrush in gradient mode, the Clone "
-#~ "tool with a pattern or even the Eraser or the Smudge tool."
+#~ "If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
+#~ "with their current settings. You can use the Paintbrush in gradient mode "
+#~ "or even the Eraser or the Smudge tool."
 #~ msgstr ""
-#~ "Om du stryker en slinga (Redigera->Stryk) används det aktuella "
-#~ "ritverktyget och dess inställningar. Du kan använda målarpenseln i "
-#~ "toningsläget, klonverktyget med ett mönster eller till och med suddaren "
-#~ "eller smetverktyget."
+#~ "Om du stryker en slinga (Redigera-&gt;Stryk markering) kan ritverktygen "
+#~ "användas med deras aktuella inställningar. Du kan använda målarpenseln i "
+#~ "toningsläget eller till och med suddaren eller smetverktyget."
 
-#, fuzzy
 #~ msgid ""
 #~ "Most plug-ins work on the current layer of the current image. In some "
-#~ "cases, you will have to merge all layers (Layers-&gt;Flatten Image) if "
-#~ "you want the plug-in to work on the whole image."
+#~ "cases, you will have to merge all layers (Image-&gt;Flatten Image) if you "
+#~ "want the plug-in to work on the whole image."
 #~ msgstr ""
 #~ "De flesta insticksmoduler arbetar med det aktuella lagret på den aktuella "
-#~ "bilden. I en del fall måste du slå samman alla lager (Lager->Platta till "
-#~ "bilden) om du vill att insticksmodulen ska arbeta på hela bilden."
+#~ "bilden. I en del fall måste du slå samman alla lager (Bild-&gt;Platta "
+#~ "till bilden) om du vill att insticksmodulen ska arbeta på hela bilden."
 
-#, fuzzy
 #~ msgid ""
 #~ "Not all effects can be applied to all kinds of images. This is indicated "
 #~ "by a grayed-out menu-entry. You may need to change the image mode to RGB "
-#~ "(Image-&gt;Mode-&gt;RGB), add an alpha-channel (Layers-&gt;Add Alpha "
-#~ "Channel) or flatten it (Layers-&gt;Flatten Image)."
+#~ "(Image-&gt;Mode-&gt;RGB), add an alpha-channel (Layers-&gt;Transparency-"
+#~ "&gt;Add Alpha Channel) or flatten it (Image-&gt;Flatten Image)."
 #~ msgstr ""
 #~ "Alla effekter kan inte tillämpas på alla typer av bilder. Detta visas "
-#~ "genom att menyposten är inaktiv. Du kan behöva ändra bilden till RGB "
-#~ "(Bild->Läge->RGB), lägga till en alfakanal (Lager->Lägg till alfakanal) "
-#~ "eller platta till den (Lager->Platta till bild)."
+#~ "genom att menyposten är gråtonad. Du kan behöva ändra bildläget till RGB "
+#~ "(Bild-&gt;Läge-&gt;RGB), lägga till en alfakanal (Lager-&gt;Transparens-"
+#~ "&gt;Lägg till alfakanal) eller platta till den (Bild-&gt;Platta till "
+#~ "bild)."
 
-#, fuzzy
 #~ msgid ""
-#~ "Using Edit-&gt;Stroke allows you to draw simple squares or circles by "
-#~ "painting the edge of your current selection with the active brush. More "
-#~ "complex shapes can be drawn with Filters-&gt;Render-&gt;Gfig."
+#~ "You can adjust and re-place a selection by using <tt>Alt</tt>-drag. If "
+#~ "this makes the window move, your window manager uses the <tt>Alt</tt> key "
+#~ "already. Try pressing <tt>Shift</tt> at the same time."
 #~ msgstr ""
-#~ "Att använda Redigera->Stryk låter dig rita enkla fyrkanter och cirklar "
-#~ "genom att rita hörnet på din aktuella markering med den aktiva penseln. "
-#~ "Mer komplexa figurer kan ritas med Filter->Rendera->Gfig."
+#~ "Du kan justera och placera om en markering genom att använda <tt>Alt</tt>-"
+#~ "drag. Om detta gör att fönstret flyttar sig använder din fönsterhanterare "
+#~ "redan <tt>Alt</tt>-tangenten. Prova att trycka <tt>Shift</tt> på samma "
+#~ "gång."
 
-#~ msgid "You can adjust and re-place a selection by using <tt>Alt</tt>-drag."
+#~ msgid ""
+#~ "You can draw simple squares or circles using Edit-&gt;Stroke Selection. "
+#~ "It strokes the edge of your current selection. More complex shapes can be "
+#~ "drawn using the Path tool or with Filters-&gt;Render-&gt;Gfig."
 #~ msgstr ""
-#~ "Du kan justera och flytta en markering genom att använda <tt>Alt</tt>-"
-#~ "drag."
+#~ "Du kan rita enkla fyrkanter och cirklar genom att använda Redigera-&gt;"
+#~ "Stryk markering. Det ritar hörnet på din aktuella markering. Mer komplexa "
+#~ "figurer kan ritas med slingverktyget eller Filter-&gt;Rendera-&gt;Gfig."
 
 #~ msgid ""
 #~ "A Floating Selection must be anchored to a new layer or to the last "

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-01 03:39+0100\n"
+"POT-Creation-Date: 2004-03-04 01:58+0100\n"
 "PO-Revision-Date: 2004-03-01 15:20+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -2064,53 +2064,49 @@ msgstr "Cesta nemůže být ještě níž."
 msgid "Lower Path"
 msgstr "Snížit cestu"
 
-#: app/core/gimpimagefile.c:478
+#: app/core/gimpimagefile.c:453
 msgid "Remote image"
 msgstr "Vzdálený obrázek"
 
-#: app/core/gimpimagefile.c:483 app/gui/preferences-dialog.c:1244
+#: app/core/gimpimagefile.c:458 app/gui/preferences-dialog.c:1244
 msgid "Folder"
 msgstr "Adresář"
 
-#: app/core/gimpimagefile.c:488
+#: app/core/gimpimagefile.c:463
 msgid "Special File"
 msgstr "Speciální soubor"
 
-#: app/core/gimpimagefile.c:493
-msgid "Could not open"
-msgstr "Nemohu otevřít"
-
-#: app/core/gimpimagefile.c:514
+#: app/core/gimpimagefile.c:490
 msgid "No preview available"
 msgstr "Náhled není k dispozici"
 
-#: app/core/gimpimagefile.c:518
+#: app/core/gimpimagefile.c:494
 msgid "Loading preview ..."
 msgstr "Načítám náhled..."
 
-#: app/core/gimpimagefile.c:522
+#: app/core/gimpimagefile.c:498
 msgid "Preview is out of date"
 msgstr "Náhled je zastaralý"
 
-#: app/core/gimpimagefile.c:526
+#: app/core/gimpimagefile.c:502
 msgid "Cannot create preview"
 msgstr "Nelze vytvořit náhled"
 
-#: app/core/gimpimagefile.c:533 app/gui/info-window.c:503
+#: app/core/gimpimagefile.c:509 app/gui/info-window.c:503
 #, c-format
 msgid "%d x %d pixels"
 msgstr "%d × %d pixelů"
 
-#: app/core/gimpimagefile.c:548
+#: app/core/gimpimagefile.c:524
 msgid "1 Layer"
 msgstr "1 vrstva"
 
-#: app/core/gimpimagefile.c:550
+#: app/core/gimpimagefile.c:526
 #, c-format
 msgid "%d Layers"
 msgstr "%d vrstvy(ev)"
 
-#: app/core/gimpimagefile.c:587
+#: app/core/gimpimagefile.c:567
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Nemohu otevřít  miniaturu '%s': %s"
@@ -3219,7 +3215,7 @@ msgstr "/Uložit vš_echny chyby do souboru..."
 msgid "/Save _Selection to File..."
 msgstr "/Uložit vý_běr do souboru..."
 
-#: app/gui/file-commands.c:189 app/gui/file-open-dialog.c:281
+#: app/gui/file-commands.c:189 app/gui/file-open-dialog.c:244
 #: app/widgets/gimpdnd.c:1286 app/widgets/gimpdocumentview.c:468
 #, c-format
 msgid ""
@@ -3231,7 +3227,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/gui/file-commands.c:234 app/gui/file-save-dialog.c:371
+#: app/gui/file-commands.c:234 app/gui/file-save-dialog.c:335
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -3322,7 +3318,7 @@ msgstr ""
 msgid "Confirm Image Size"
 msgstr "Potvrdit rozměry plátna"
 
-#: app/gui/file-open-dialog.c:119 app/gui/file-open-dialog.c:142
+#: app/gui/file-open-dialog.c:105
 msgid "Open Image"
 msgstr "Otevřít obrázek"
 
@@ -3330,15 +3326,15 @@ msgstr "Otevřít obrázek"
 msgid "/Automatic"
 msgstr "/Automatické"
 
-#: app/gui/file-save-dialog.c:110 app/gui/file-save-dialog.c:187
+#: app/gui/file-save-dialog.c:101 app/gui/file-save-dialog.c:151
 msgid "Save Image"
 msgstr "Zapsat obrázek"
 
-#: app/gui/file-save-dialog.c:161
+#: app/gui/file-save-dialog.c:132
 msgid "Save a Copy of the Image"
 msgstr "Zapíše kopii obrázku"
 
-#: app/gui/file-save-dialog.c:293
+#: app/gui/file-save-dialog.c:257
 #, c-format
 msgid ""
 "File '%s' exists.\n"
@@ -3347,7 +3343,7 @@ msgstr ""
 "Soubor %s existuje.\n"
 "Přepsat?"
 
-#: app/gui/file-save-dialog.c:297
+#: app/gui/file-save-dialog.c:261
 msgid "File Exists!"
 msgstr "Soubor existuje!"
 
@@ -7394,7 +7390,7 @@ msgstr "Pevný poměr stran"
 msgid "Transform Selection"
 msgstr "Transformovat výběr"
 
-#: app/tools/tools-enums.c:75 app/vectors/gimpvectors.c:529
+#: app/tools/tools-enums.c:75 app/vectors/gimpvectors.c:527
 msgid "Transform Path"
 msgstr "Transformovat cestu"
 
@@ -8749,19 +8745,19 @@ msgstr "Přejmenování cesty"
 msgid "Scale Path"
 msgstr "Škálovat cestu"
 
-#: app/vectors/gimpvectors.c:426
+#: app/vectors/gimpvectors.c:425
 msgid "Resize Path"
 msgstr "Změnit velikost cesty"
 
-#: app/vectors/gimpvectors.c:457
+#: app/vectors/gimpvectors.c:455
 msgid "Flip Path"
 msgstr "Překlopit cestu"
 
-#: app/vectors/gimpvectors.c:500
+#: app/vectors/gimpvectors.c:498
 msgid "Rotate Path"
 msgstr "Rotovat cestu"
 
-#: app/vectors/gimpvectors.c:558
+#: app/vectors/gimpvectors.c:556
 msgid "Cannot stroke empty path."
 msgstr "Nemohu vykreslit prázdnou cestu."
 
@@ -8777,6 +8773,11 @@ msgstr "V '%s' nebyla nalezena žádná cesta"
 #: app/vectors/gimpvectors-import.c:294
 msgid "No paths found in the buffer"
 msgstr "V bufferu nebyla nalezena žádná cesta"
+
+#: app/vectors/gimpvectors-import.c:304
+#, fuzzy, c-format
+msgid "Failed to import paths from '%s': %s"
+msgstr "Nemohu načíst %d bajtů ze '%s': %s"
 
 #: app/widgets/gimpbrusheditor.c:143
 msgid "Hardness:"
@@ -9118,7 +9119,7 @@ msgstr ""
 "Chyba při zapisování souboru '%s':\n"
 "%s"
 
-#: app/widgets/gimpfiledialog.c:186
+#: app/widgets/gimpfiledialog.c:189
 msgid "Determine File _Type:"
 msgstr "Určení _typu souboru:"
 
@@ -9302,11 +9303,11 @@ msgstr "Procento:"
 msgid "Intensity Range:"
 msgstr "Intenzita rozsahu:"
 
-#: app/widgets/gimpimagedock.c:203
+#: app/widgets/gimpimagedock.c:211
 msgid "Auto"
 msgstr "Automaticky"
 
-#: app/widgets/gimpimagedock.c:214
+#: app/widgets/gimpimagedock.c:222
 msgid ""
 "When enabled the dialog automatically follows the image you are working on."
 msgstr ""
@@ -9809,7 +9810,7 @@ msgstr "Normální okno"
 msgid "Utility Window"
 msgstr "Okno nástrojů"
 
-#: app/xcf/xcf-load.c:294
+#: app/xcf/xcf-load.c:295
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -9847,6 +9848,9 @@ msgstr "chyba XCF: nalezena nepodporovaná verze %d XCF souboru"
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
 msgstr "Vytvářet a upravovat obrázky a fotografie"
+
+#~ msgid "Could not open"
+#~ msgstr "Nemohu otevřít"
 
 #~ msgid ""
 #~ "Click to update preview\n"

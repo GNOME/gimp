@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips 2.0pre4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-28 16:08+0100\n"
+"POT-Creation-Date: 2003-07-21 00:18+0200\n"
 "PO-Revision-Date: 2004-02-28 16:07+0100\n"
 "Last-Translator: Raymond Ostertag <r.ostertag@caramail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
@@ -45,9 +45,10 @@ msgstr ""
 "d'arrière-plan au lieu de la couleur de premier-plan."
 
 #: tips/gimp-tips.xml.in.h:5
+#, fuzzy
 msgid ""
-"<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
-"degree angles."
+"<tt>Ctrl</tt>-drag with the Transform tool in rotation mode will constrain "
+"the rotation to 15 degree angles."
 msgstr ""
 "Un <tt>Ctrl</tt>-glissé avec l'outil rotation contraindra la rotation à des "
 "angles multiples de 15 degrés."
@@ -75,11 +76,12 @@ msgstr ""
 "même."
 
 #: tips/gimp-tips.xml.in.h:8
+#, fuzzy
 msgid ""
 "After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
 "you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
-"menu item, and pressing the desired key combination. If \"Save Keyboard "
-"Shortcuts\" is enabled, the key bindings are saved when you exit GIMP."
+"menu item, and pressing the desired key combination. This is saved when you "
+"exit GIMP."
 msgstr ""
 "Après avoir activé les « Raccourcis claviers dynamiques » dans le dialogue "
 "des préférences, vous pouvez réassigner les raccourcis clavier. Faites cela "
@@ -111,10 +113,11 @@ msgstr ""
 "&gt;Couleurs-&gt;Courbes)."
 
 #: tips/gimp-tips.xml.in.h:11
+#, fuzzy
 msgid ""
-"If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
-"with their current settings. You can use the Paintbrush in gradient mode or "
-"even the Eraser or the Smudge tool."
+"If you stroke a path (Edit-&gt;Stroke), the current drawing tool and its "
+"settings are used. You can use the Paintbrush in gradient mode, the Clone "
+"tool with a pattern or even the Eraser or the Smudge tool."
 msgstr ""
 "Si vous tracez un chemin (Édition-&gt;Tracer un chemin), un outil courant de "
 "dessin avec ses réglages peut être utilisé. Vous pouvez utilisez le pinceau "
@@ -130,9 +133,10 @@ msgstr ""
 "d'outils et les autres dialogues."
 
 #: tips/gimp-tips.xml.in.h:13
+#, fuzzy
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
-"you will have to merge all layers (Image-&gt;Flatten Image) if you want the "
+"you will have to merge all layers (Layers-&gt;Flatten Image) if you want the "
 "plug-in to work on the whole image."
 msgstr ""
 "La plupart des filtres travaillent sur le calque courant de l'image "
@@ -149,11 +153,12 @@ msgstr ""
 "mauvaises manipulations..."
 
 #: tips/gimp-tips.xml.in.h:15
+#, fuzzy
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
-"&gt;Mode-&gt;RGB), add an alpha-channel (Layers-&gt;Transparency-&gt;Add "
-"Alpha Channel) or flatten it (Image-&gt;Flatten Image)."
+"&gt;Mode-&gt;RGB), add an alpha-channel (Layers-&gt;Add Alpha Channel) or "
+"flatten it (Layers-&gt;Flatten Image)."
 msgstr ""
 "Tous les effets ne peuvent pas être appliqués sur tous les types d'images. "
 "Ceci est signalé par une entrée de menu grisée. Vous pourriez donc avoir "
@@ -231,6 +236,18 @@ msgstr ""
 "sélection résultante coïncidera avec les guides."
 
 #: tips/gimp-tips.xml.in.h:22
+#, fuzzy
+msgid ""
+"Using Edit-&gt;Stroke allows you to draw simple squares or circles by "
+"painting the edge of your current selection with the active brush. More "
+"complex shapes can be drawn with Filters-&gt;Render-&gt;Gfig."
+msgstr ""
+"Vous pouvez dessiner de simples carrés ou cercles en utilisant Édition-&gt;"
+"Tracer la sélection. Il trace les contours de votre sélection courante. Des "
+"figures géométriques plus complexes sont réalisables avec l'outil chemin ou "
+"avec Filtres-&gt;Rendu-&gt;GFig."
+
+#: tips/gimp-tips.xml.in.h:23
 msgid ""
 "When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</tt>-"
 "click will draw a straight line from your last drawing point to your current "
@@ -242,7 +259,7 @@ msgstr ""
 "jusqu'à la position courante du curseur. Si vous appuyer également sur "
 "<tt>Ctrl</tt> la ligne sera contrainte à des angles multiples de 15°."
 
-#: tips/gimp-tips.xml.in.h:23
+#: tips/gimp-tips.xml.in.h:24
 msgid ""
 "When you save an image to work on it again later, try using XCF, the GIMP's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
@@ -254,18 +271,13 @@ msgstr ""
 "conserve les calques et tous les aspects de votre travail en cours. Une fois "
 "qu'un projet est terminé, vous pouvez l'enregistrer en JPEG, PNG, GIF, ..."
 
-#: tips/gimp-tips.xml.in.h:24
-msgid ""
-"You can adjust and re-place a selection by using <tt>Alt</tt>-drag. If this "
-"makes the window move, your window manager uses the <tt>Alt</tt> key "
-"already. Try pressing <tt>Shift</tt> at the same time."
-msgstr ""
-"Vous pouvez ajuster ou replacer une sélection en utilisant <tt>Alt</tt> "
-"glissé. Si cette action porvoque un déplacement de la fenêtre c'est que "
-"votre gestionnaire utilise déjà la touche <tt>Alt</tt>. Essayer alors "
-"d'appuyer sur <tt>Maj</tt> en même temps."
-
 #: tips/gimp-tips.xml.in.h:25
+msgid "You can adjust and re-place a selection by using <tt>Alt</tt>-drag."
+msgstr ""
+"Vous pouvez ajuster et replacer une sélection en utilisant <tt>Alt</tt>-"
+"glissé."
+
+#: tips/gimp-tips.xml.in.h:26
 msgid ""
 "You can adjust the selection range for fuzzy select by clicking and dragging "
 "left and right."
@@ -273,9 +285,10 @@ msgstr ""
 "Vous pouvez ajuster l'étendue sélectionnée lors d'une sélection contiguë en "
 "cliquant et en vous déplacant à gauche et à droite."
 
-#: tips/gimp-tips.xml.in.h:26
+#: tips/gimp-tips.xml.in.h:27
+#, fuzzy
 msgid ""
-"You can create and edit complex selections using the Path tool. The Paths "
+"You can create and edit complex selections using the Bezier tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
 "selections."
 msgstr ""
@@ -283,7 +296,7 @@ msgstr ""
 "chemin. Le dialogue des chemins vous permet de travailler sur de multiples "
 "chemins et de les convertir en sélections."
 
-#: tips/gimp-tips.xml.in.h:27
+#: tips/gimp-tips.xml.in.h:28
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -292,7 +305,7 @@ msgstr ""
 "mettre dans la boite d'outils. Ceci créera une nouvelle image contenant "
 "uniquement ce calque."
 
-#: tips/gimp-tips.xml.in.h:28
+#: tips/gimp-tips.xml.in.h:29
 msgid ""
 "You can drag and drop many things in the GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
@@ -302,17 +315,6 @@ msgstr ""
 "glisser une couleur depuis la boite à outils ou depuis une palette de "
 "couleurs et la mettre dans une image va remplir l'image courante ou la "
 "sélection avec cette couleur."
-
-#: tips/gimp-tips.xml.in.h:29
-msgid ""
-"You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
-"strokes the edge of your current selection. More complex shapes can be drawn "
-"using the Path tool or with Filters-&gt;Render-&gt;Gfig."
-msgstr ""
-"Vous pouvez dessiner de simples carrés ou cercles en utilisant Édition-&gt;"
-"Tracer la sélection. Il trace les contours de votre sélection courante. Des "
-"figures géométriques plus complexes sont réalisables avec l'outil chemin ou "
-"avec Filtres-&gt;Rendu-&gt;GFig."
 
 #: tips/gimp-tips.xml.in.h:30
 msgid ""
@@ -381,7 +383,12 @@ msgstr ""
 "d'image. Changez votre sélection en dessinant dans l'image et cliquez à "
 "nouveau sur le bouton pour la reconvertir comme une sélection normale."
 
-#~ msgid "You can adjust and re-place a selection by using <tt>Alt</tt>-drag."
+#~ msgid ""
+#~ "You can adjust and re-place a selection by using <tt>Alt</tt>-drag. If "
+#~ "this makes the window move, your window manager uses the <tt>Alt</tt> key "
+#~ "already. Try pressing <tt>Shift</tt> at the same time."
 #~ msgstr ""
-#~ "Vous pouvez ajuster et replacer une sélection en utilisant <tt>Alt</tt>-"
-#~ "glissé."
+#~ "Vous pouvez ajuster ou replacer une sélection en utilisant <tt>Alt</tt> "
+#~ "glissé. Si cette action porvoque un déplacement de la fenêtre c'est que "
+#~ "votre gestionnaire utilise déjà la touche <tt>Alt</tt>. Essayer alors "
+#~ "d'appuyer sur <tt>Maj</tt> en même temps."

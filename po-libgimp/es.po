@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-25 03:42+0100\n"
+"POT-Creation-Date: 2004-03-04 00:14+0100\n"
 "PO-Revision-Date: 2004-02-25 10:04-0300\n"
 "Last-Translator: Pablo G. del Campo <pablodc@bigfoot.com>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
@@ -103,7 +103,8 @@ msgstr ""
 #: libgimp/gimpexport.c:306
 #, c-format
 msgid "%s can only handle bitmap (two color) indexed images"
-msgstr "%s sólo puede manejar imágenes de mapas de bits (de dos colores) o indexadas"
+msgstr ""
+"%s sólo puede manejar imágenes de mapas de bits (de dos colores) o indexadas"
 
 #: libgimp/gimpexport.c:307
 msgid ""
@@ -296,7 +297,7 @@ msgstr "La carga falló"
 msgid "Not loaded"
 msgstr "No cargado"
 
-#: libgimpthumb/gimpthumb-utils.c:195
+#: libgimpthumb/gimpthumb-utils.c:196
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "No se ha podido crear la carpeta de miniaturas «%s»."
@@ -394,11 +395,11 @@ msgstr "Actual:"
 msgid "Old:"
 msgstr "Anterior:"
 
-#: libgimpwidgets/gimpfileentry.c:360
+#: libgimpwidgets/gimpfileentry.c:350
 msgid "Select Folder"
 msgstr "Seleccione carpeta"
 
-#: libgimpwidgets/gimpfileentry.c:374
+#: libgimpwidgets/gimpfileentry.c:364
 msgid "Select File"
 msgstr "Seleccione archivo"
 
@@ -494,11 +495,11 @@ msgstr "Más..."
 msgid "Unit Selection"
 msgstr "Selección de unidad"
 
-#: libgimpwidgets/gimpunitmenu.c:660
+#: libgimpwidgets/gimpunitmenu.c:657
 msgid "Unit"
 msgstr "Unidad"
 
-#: libgimpwidgets/gimpunitmenu.c:664
+#: libgimpwidgets/gimpunitmenu.c:661
 msgid "Factor"
 msgstr "Factor"
 
@@ -673,4 +674,3 @@ msgstr "Acuarela"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Presión"
-

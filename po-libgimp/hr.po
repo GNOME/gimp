@@ -4,7 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 0\n"
-"POT-Creation-Date: 2004-02-01 16:57+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-03-04 00:14+0100\n"
 "PO-Revision-Date: 2004-02-05 23:46+CET\n"
 "Last-Translator: auto\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
@@ -163,6 +164,7 @@ msgid "The export conversion won't modify your original image."
 msgstr "Izvozna konverzija neće modificirati originalnu sliku."
 
 #: libgimp/gimpexport.c:665
+#, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
@@ -171,6 +173,7 @@ msgstr ""
 "Ovo neće sačuvati vidljive slojeve"
 
 #: libgimp/gimpexport.c:671
+#, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
@@ -253,6 +256,7 @@ msgid "%d GB"
 msgstr "%d KB"
 
 #: libgimpmodule/gimpmodule.c:177
+#, c-format
 msgid "Loading module: '%s'\n"
 msgstr "Učitavam modul: „%s“\n"
 
@@ -264,6 +268,7 @@ msgid "Module '%s' load error: %s"
 msgstr "pogreška kod učit. modula: %s: %s"
 
 #: libgimpmodule/gimpmodule.c:283
+#, c-format
 msgid "Skipping module: '%s'\n"
 msgstr "Preskačem modul: '%s'\n"
 
@@ -283,7 +288,7 @@ msgstr "Pogreška kod učitavanja"
 msgid "Not loaded"
 msgstr "Nije učitano"
 
-#: libgimpthumb/gimpthumb-utils.c:195
+#: libgimpthumb/gimpthumb-utils.c:196
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Ne mogu stvoriti mapu sličica '%s'."
@@ -308,27 +313,27 @@ msgstr "/B_ijela"
 msgid "Scales"
 msgstr "Skale"
 
-#: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:353
 msgid "_H"
 msgstr "_H"
 
-#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:353
 msgid "_S"
 msgstr "_S"
 
-#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:353
 msgid "_V"
 msgstr "_V"
 
-#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:353
 msgid "_R"
 msgstr "_R"
 
-#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:353
 msgid "_G"
 msgstr "G"
 
-#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:353
 msgid "_B"
 msgstr "_B"
 
@@ -336,32 +341,32 @@ msgstr "_B"
 msgid "_A"
 msgstr "_A"
 
-#: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:358
+#: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:357
 msgid "Hue"
 msgstr "Nijanse"
 
-#: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:359
+#: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:358
 #: modules/cdisplay_proof.c:323
 msgid "Saturation"
 msgstr "Zasićenje"
 
-#: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:360
+#: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:359
 msgid "Value"
 msgstr "Vrijednost"
 
-#: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:361
+#: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:360
 msgid "Red"
 msgstr "Crvena"
 
-#: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:362
+#: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:361
 msgid "Green"
 msgstr "Zelena"
 
-#: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:363
+#: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:362
 msgid "Blue"
 msgstr "Plava"
 
-#: libgimpwidgets/gimpcolorscales.c:180 libgimpwidgets/gimpcolorselect.c:364
+#: libgimpwidgets/gimpcolorscales.c:180 libgimpwidgets/gimpcolorselect.c:363
 msgid "Alpha"
 msgstr "Alfa"
 
@@ -381,11 +386,11 @@ msgstr "Trenutno:"
 msgid "Old:"
 msgstr "Miješalica:"
 
-#: libgimpwidgets/gimpfileentry.c:361
+#: libgimpwidgets/gimpfileentry.c:350
 msgid "Select Folder"
 msgstr "Označi mapu"
 
-#: libgimpwidgets/gimpfileentry.c:375
+#: libgimpwidgets/gimpfileentry.c:364
 msgid "Select File"
 msgstr "Odaberi Datoteku"
 
@@ -453,23 +458,23 @@ msgstr "Razmak između redaka"
 msgid "_Resize"
 msgstr "_Promjena veličine"
 
-#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:283
+#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:284
 msgid "_Scale"
 msgstr "Uzorak:"
 
-#: libgimpwidgets/gimpstock.c:262
+#: libgimpwidgets/gimpstock.c:263
 msgid "Crop"
 msgstr "Izreži"
 
-#: libgimpwidgets/gimpstock.c:279
+#: libgimpwidgets/gimpstock.c:280
 msgid "_Transform"
 msgstr "_Transformacija"
 
-#: libgimpwidgets/gimpstock.c:282
+#: libgimpwidgets/gimpstock.c:283
 msgid "_Rotate"
 msgstr "_Rotiraj"
 
-#: libgimpwidgets/gimpstock.c:284
+#: libgimpwidgets/gimpstock.c:285
 msgid "_Shear"
 msgstr "_Striženje"
 
@@ -481,11 +486,11 @@ msgstr "Više..."
 msgid "Unit Selection"
 msgstr "Odabir Mjere"
 
-#: libgimpwidgets/gimpunitmenu.c:660
+#: libgimpwidgets/gimpunitmenu.c:657
 msgid "Unit"
 msgstr "Jedinica"
 
-#: libgimpwidgets/gimpunitmenu.c:664
+#: libgimpwidgets/gimpunitmenu.c:661
 msgid "Factor"
 msgstr "Faktor"
 
@@ -496,7 +501,6 @@ msgid ""
 msgstr ""
 "Upotrebite ovu vrijednost za sjeme slučajno generiranog broja -- ovo će vam "
 "omogućiti ponavljanje date  slučajne operacije"
-""
 
 #: libgimpwidgets/gimpwidgets.c:1275
 msgid "_New Seed"
@@ -657,4 +661,3 @@ msgstr "Vodena boja"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Pritisak"
-

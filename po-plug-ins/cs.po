@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-11 03:47+0100\n"
+"POT-Creation-Date: 2004-03-04 00:14+0100\n"
 "PO-Revision-Date: 2004-02-11 06:09+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -420,7 +420,7 @@ msgstr "_Fraktály"
 #: plug-ins/common/bz2.c:250 plug-ins/common/bz2.c:323
 #: plug-ins/common/channel_mixer.c:1235 plug-ins/common/curve_bend.c:859
 #: plug-ins/common/dicom.c:646 plug-ins/common/gbr.c:581
-#: plug-ins/common/gif.c:996 plug-ins/common/gih.c:1218
+#: plug-ins/common/gif.c:995 plug-ins/common/gih.c:1218
 #: plug-ins/common/gtm.c:226 plug-ins/common/gz.c:307 plug-ins/common/gz.c:416
 #: plug-ins/common/hrz.c:468 plug-ins/common/jpeg.c:1298
 #: plug-ins/common/mng.c:506 plug-ins/common/mng.c:838
@@ -471,7 +471,7 @@ msgstr "Zapsat parametry fraktálu"
 #: plug-ins/common/mng.c:1007 plug-ins/common/pat.c:295
 #: plug-ins/common/pcx.c:301 plug-ins/common/pix.c:333
 #: plug-ins/common/png.c:667 plug-ins/common/pnm.c:394
-#: plug-ins/common/postscript.c:872 plug-ins/common/psd.c:1738
+#: plug-ins/common/postscript.c:872 plug-ins/common/psd.c:1768
 #: plug-ins/common/psp.c:1459 plug-ins/common/spheredesigner.c:1990
 #: plug-ins/common/sunras.c:381 plug-ins/common/svg.c:241
 #: plug-ins/common/svg.c:624 plug-ins/common/tga.c:413
@@ -503,7 +503,7 @@ msgstr "<Image>/Filtry/Vyobrazení/Badatel _fraktálů..."
 msgid "Rendering Fractal..."
 msgstr "Počítá se fraktál..."
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:763 plug-ins/gfig/gfig.c:3824
+#: plug-ins/FractalExplorer/FractalExplorer.c:763 plug-ins/gfig/gfig.c:3827
 #: plug-ins/gflare/gflare.c:3110
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
@@ -1191,7 +1191,7 @@ msgstr "Špatná barevná mapa"
 #: plug-ins/common/pat.c:300 plug-ins/common/pcx.c:306
 #: plug-ins/common/pix.c:339 plug-ins/common/png.c:674
 #: plug-ins/common/pnm.c:399 plug-ins/common/postscript.c:878
-#: plug-ins/common/psd.c:1743 plug-ins/common/sunras.c:435
+#: plug-ins/common/psd.c:1773 plug-ins/common/sunras.c:435
 #: plug-ins/common/tga.c:418 plug-ins/common/tiff.c:511
 #: plug-ins/common/wmf.c:401 plug-ins/common/xbm.c:723
 #: plug-ins/common/xpm.c:329 plug-ins/common/xwd.c:434
@@ -1228,7 +1228,7 @@ msgstr "Chyba při čtení hlavičky souboru BMP z '%s'"
 #: plug-ins/common/jpeg.c:926 plug-ins/common/pcx.c:333
 #: plug-ins/common/pcx.c:339 plug-ins/common/pix.c:375
 #: plug-ins/common/png.c:801 plug-ins/common/pnm.c:479
-#: plug-ins/common/psd.c:2130 plug-ins/common/smooth_palette.c:252
+#: plug-ins/common/psd.c:2182 plug-ins/common/smooth_palette.c:252
 #: plug-ins/common/sunras.c:924 plug-ins/common/tga.c:927
 #: plug-ins/common/tiff.c:829 plug-ins/common/tile.c:263
 #: plug-ins/common/winclipboard.c:556 plug-ins/common/xbm.c:866
@@ -1253,7 +1253,7 @@ msgstr "Nemohu pracovat s neznámými typy obrázků."
 #. init the progress meter
 #. Set up progress display
 #: plug-ins/bmp/bmpwrite.c:209 plug-ins/common/CEL.c:582
-#: plug-ins/common/gbr.c:586 plug-ins/common/gif.c:1003
+#: plug-ins/common/gbr.c:586 plug-ins/common/gif.c:1002
 #: plug-ins/common/gih.c:1223 plug-ins/common/gtm.c:246
 #: plug-ins/common/hrz.c:473 plug-ins/common/jpeg.c:1253
 #: plug-ins/common/pat.c:433 plug-ins/common/pcx.c:544
@@ -1732,7 +1732,7 @@ msgstr "Upravit hnízdo"
 msgid "New Seed"
 msgstr "Nové hnízdo"
 
-#: plug-ins/common/CML_explorer.c:1279 plug-ins/common/lic.c:730
+#: plug-ins/common/CML_explorer.c:1279 plug-ins/common/lic.c:654
 #: plug-ins/fp/fp_gtk.c:290
 msgid "_Hue"
 msgstr "_Odstín"
@@ -2016,7 +2016,7 @@ msgstr "Zarovnání viditelných vrstev"
 #: plug-ins/common/gauss_iir.c:353 plug-ins/common/gauss_rle.c:347
 #: plug-ins/common/glasstile.c:251 plug-ins/common/grid.c:682
 #: plug-ins/common/illusion.c:415 plug-ins/common/jpeg.c:1720
-#: plug-ins/common/lic.c:762 plug-ins/common/max_rgb.c:271
+#: plug-ins/common/lic.c:686 plug-ins/common/max_rgb.c:271
 #: plug-ins/common/mosaic.c:603 plug-ins/common/nlfilt.c:361
 #: plug-ins/common/noisify.c:331 plug-ins/common/nova.c:328
 #: plug-ins/common/oilify.c:452 plug-ins/common/pixelize.c:319
@@ -2931,7 +2931,7 @@ msgstr "_Automatická aktualizace náhledu"
 #. the vertical box and its toggle buttons
 #. Options section
 #: plug-ins/common/curve_bend.c:1321 plug-ins/common/mosaic.c:528
-#: plug-ins/common/ripple.c:443 plug-ins/gfig/gfig.c:2989
+#: plug-ins/common/ripple.c:443 plug-ins/gfig/gfig.c:2992
 msgid "Options"
 msgstr "Volby"
 
@@ -3459,7 +3459,7 @@ msgstr "_Sobelův"
 msgid "_Prewitt"
 msgstr "_Prewittův"
 
-#: plug-ins/common/edge.c:652 plug-ins/common/lic.c:744
+#: plug-ins/common/edge.c:652 plug-ins/common/lic.c:668
 msgid "_Gradient"
 msgstr "_Přechod"
 
@@ -3897,11 +3897,11 @@ msgstr "Zapsat jako GIcon"
 msgid "Icon Name:"
 msgstr "Jméno ikony:"
 
-#: plug-ins/common/gif.c:689
+#: plug-ins/common/gif.c:688
 msgid "Couldn't simply reduce colors further. Saving as opaque."
 msgstr "Nemohu jednoduše dále snížit barvy. Ukládám jako neprůhledné."
 
-#: plug-ins/common/gif.c:911
+#: plug-ins/common/gif.c:910
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
@@ -3909,14 +3909,14 @@ msgstr ""
 "Formát GIF podporuje komentáře jen v sedmibitovém kódování ASCII. Komentář "
 "nebyl uložen."
 
-#: plug-ins/common/gif.c:972
+#: plug-ins/common/gif.c:971
 msgid ""
 "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Nemohu ukládat barevné obrázky RGB. Nejdříve jej převeďte na indexovaný nebo "
 "do šedí."
 
-#: plug-ins/common/gif.c:1115
+#: plug-ins/common/gif.c:1114
 msgid ""
 "Warning:\n"
 "Transparent color in written file might be incorrect on viewers which don't "
@@ -3926,15 +3926,15 @@ msgstr ""
 "Průhledná barva v zapisovaném souboru možná nebude správně v prohlížečích, "
 "které nepodporují průhlednost."
 
-#: plug-ins/common/gif.c:1154
+#: plug-ins/common/gif.c:1153
 msgid "Delay inserted to prevent evil CPU-sucking anim."
 msgstr "Pro zabránění ošklivé animaci žeroucí CPU vloženo zpoždění."
 
-#: plug-ins/common/gif.c:1197
+#: plug-ins/common/gif.c:1196
 msgid "GIF Warning"
 msgstr "GIF varování"
 
-#: plug-ins/common/gif.c:1215
+#: plug-ins/common/gif.c:1214
 msgid ""
 "The image which you are trying to save as a GIF\n"
 "contains layers which extend beyond the actual\n"
@@ -3951,61 +3951,61 @@ msgstr ""
 "Lze si zvolit ořez všech vrstev obrázku nebo\n"
 "zrušit zápis."
 
-#: plug-ins/common/gif.c:1262
+#: plug-ins/common/gif.c:1261
 msgid "Save as GIF"
 msgstr "Zapsat jako GIF"
 
 #. regular gif parameter settings
-#: plug-ins/common/gif.c:1277
+#: plug-ins/common/gif.c:1276
 msgid "GIF Options"
 msgstr "Volby GIF"
 
-#: plug-ins/common/gif.c:1284 plug-ins/common/mng.c:1207
+#: plug-ins/common/gif.c:1283 plug-ins/common/mng.c:1207
 msgid "Interlace"
 msgstr "Prokládané řádkování"
 
-#: plug-ins/common/gif.c:1300
+#: plug-ins/common/gif.c:1299
 msgid "GIF Comment:"
 msgstr "Komentář GIF:"
 
 #. additional animated gif parameter settings
-#: plug-ins/common/gif.c:1361
+#: plug-ins/common/gif.c:1360
 msgid "Animated GIF Options"
 msgstr "Volby GIF animace"
 
-#: plug-ins/common/gif.c:1368
+#: plug-ins/common/gif.c:1367
 msgid "Loop forever"
 msgstr "Trvalé cyklování"
 
-#: plug-ins/common/gif.c:1381
+#: plug-ins/common/gif.c:1380
 msgid "Delay between Frames where Unspecified:"
 msgstr "Prodleva mezi políčky, není-li určena:"
 
-#: plug-ins/common/gif.c:1394
+#: plug-ins/common/gif.c:1393
 msgid "Milliseconds"
 msgstr "milisekundy"
 
-#: plug-ins/common/gif.c:1404
+#: plug-ins/common/gif.c:1403
 msgid "Frame Disposal where Unspecified: "
 msgstr "Dispozice políčka, nejsou-li specifikovány: "
 
-#: plug-ins/common/gif.c:1412
+#: plug-ins/common/gif.c:1411
 msgid "I don't Care"
 msgstr "Nestarám se"
 
-#: plug-ins/common/gif.c:1414
+#: plug-ins/common/gif.c:1413
 msgid "Cumulative Layers (Combine)"
 msgstr "Souhrnné vrstvy (kombinace)"
 
-#: plug-ins/common/gif.c:1416
+#: plug-ins/common/gif.c:1415
 msgid "One Frame per Layer (Replace)"
 msgstr "Jedno políčko na vrstvu (nahradit)"
 
-#: plug-ins/common/gif.c:2624
+#: plug-ins/common/gif.c:2623
 msgid "Error writing output file."
 msgstr "Chyba při zápisu výstupního souboru."
 
-#: plug-ins/common/gif.c:2694
+#: plug-ins/common/gif.c:2693
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "Výchozí komentář je omezen na %d znaků."
@@ -4175,11 +4175,11 @@ msgid "Grid"
 msgstr "Mříž"
 
 #. attach labels
-#: plug-ins/common/grid.c:731 plug-ins/pagecurl/pagecurl.c:574
+#: plug-ins/common/grid.c:731 plug-ins/pagecurl/pagecurl.c:573
 msgid "Horizontal"
 msgstr "Vodorovně"
 
-#: plug-ins/common/grid.c:733 plug-ins/pagecurl/pagecurl.c:575
+#: plug-ins/common/grid.c:733 plug-ins/pagecurl/pagecurl.c:574
 msgid "Vertical"
 msgstr "Svisle"
 
@@ -4210,7 +4210,7 @@ msgstr "Barva průsečíků"
 msgid "GIMP Table Magic"
 msgstr "GIMP magie s tabulkami"
 
-#: plug-ins/common/gtm.c:420 plug-ins/gfig/gfig.c:3096
+#: plug-ins/common/gtm.c:420 plug-ins/gfig/gfig.c:3099
 msgid "Warning"
 msgstr "Varování"
 
@@ -4666,71 +4666,71 @@ msgstr "Laplace..."
 msgid "Cleanup..."
 msgstr "Úklid..."
 
-#: plug-ins/common/lic.c:626
+#: plug-ins/common/lic.c:548
 msgid "Van Gogh (LIC)..."
 msgstr "Van Gogh (LIC)..."
 
-#: plug-ins/common/lic.c:705
+#: plug-ins/common/lic.c:631
 msgid "Van Gogh (LIC)"
 msgstr "Van Gogh (LIC)"
 
-#: plug-ins/common/lic.c:725
+#: plug-ins/common/lic.c:649
 msgid "Effect Channel"
 msgstr "Efektový kanál"
 
-#: plug-ins/common/lic.c:731 plug-ins/fp/fp_gtk.c:294
+#: plug-ins/common/lic.c:655 plug-ins/fp/fp_gtk.c:294
 msgid "_Saturation"
 msgstr "_Sytost:"
 
-#: plug-ins/common/lic.c:732
+#: plug-ins/common/lic.c:656
 msgid "_Brightness"
 msgstr "_Jas"
 
-#: plug-ins/common/lic.c:738
+#: plug-ins/common/lic.c:662
 msgid "Effect Operator"
 msgstr "Efektový operátor"
 
-#: plug-ins/common/lic.c:743
+#: plug-ins/common/lic.c:667
 msgid "_Derivative"
 msgstr "_Derivovat"
 
-#: plug-ins/common/lic.c:750
+#: plug-ins/common/lic.c:674
 msgid "Convolve"
 msgstr "Ostrost"
 
-#: plug-ins/common/lic.c:755
+#: plug-ins/common/lic.c:679
 msgid "_With White Noise"
 msgstr "Bílý_m šumem"
 
-#: plug-ins/common/lic.c:756
+#: plug-ins/common/lic.c:680
 msgid "W_ith Source Image"
 msgstr "_Zdrojovým obrázkem"
 
-#: plug-ins/common/lic.c:784
+#: plug-ins/common/lic.c:708
 msgid "_Effect Image:"
 msgstr "_Efektový obrázek:"
 
-#: plug-ins/common/lic.c:800
+#: plug-ins/common/lic.c:724
 msgid "_Filter Length:"
 msgstr "Délka _filtru:"
 
-#: plug-ins/common/lic.c:809
+#: plug-ins/common/lic.c:733
 msgid "_Noise Magnitude:"
 msgstr "St_upeň šumu:"
 
-#: plug-ins/common/lic.c:818
+#: plug-ins/common/lic.c:742
 msgid "In_tegration Steps:"
 msgstr "In_tegrační kroky:"
 
-#: plug-ins/common/lic.c:827
+#: plug-ins/common/lic.c:751
 msgid "_Minimum Value:"
 msgstr "_Nejmenší hodnota:"
 
-#: plug-ins/common/lic.c:836
+#: plug-ins/common/lic.c:760
 msgid "M_aximum Value:"
 msgstr "Největší hodnot_a:"
 
-#: plug-ins/common/lic.c:887
+#: plug-ins/common/lic.c:811
 msgid "<Image>/Filters/Map/_Van Gogh (LIC)..."
 msgstr "<Image>/Filtry/Mapování/_Van Gogh (LIC)..."
 
@@ -5877,7 +5877,7 @@ msgstr "_Náhled"
 msgid "Preview _Size:"
 msgstr "_Velikost náhledu:"
 
-#: plug-ins/common/psd.c:468
+#: plug-ins/common/psd.c:488
 msgid "Invalid UTF-8 string in PSD file"
 msgstr "Neplatný řetězec UTF-8 v souboru PSD"
 
@@ -8381,7 +8381,7 @@ msgid "Delete an object"
 msgstr "Smazat objekt"
 
 #: plug-ins/gfig/gfig.c:1680 plug-ins/gfig/gfig.c:2056
-#: plug-ins/gfig/gfig.c:2975
+#: plug-ins/gfig/gfig.c:2978
 msgid "Brush"
 msgstr "Stopa"
 
@@ -8700,82 +8700,82 @@ msgstr "Velikost:"
 msgid "Gfig"
 msgstr "Gfig"
 
-#: plug-ins/gfig/gfig.c:2927 plug-ins/gfig/gfig.c:2970
+#: plug-ins/gfig/gfig.c:2927 plug-ins/gfig/gfig.c:2973
 msgid "Paint"
 msgstr "Kreslit"
 
-#: plug-ins/gfig/gfig.c:2983 plug-ins/imagemap/imap_cmd_select.c:53
+#: plug-ins/gfig/gfig.c:2986 plug-ins/imagemap/imap_cmd_select.c:53
 #: plug-ins/imagemap/imap_tools.c:144
 msgid "Select"
 msgstr "Výběr"
 
-#: plug-ins/gfig/gfig.c:3093
+#: plug-ins/gfig/gfig.c:3096
 #, c-format
 msgid "%d unsaved Gfig objects. Continue with exiting?"
 msgstr "%d neuložených objektů Gfig. Pokračovat s ukončením?"
 
-#: plug-ins/gfig/gfig.c:3262
+#: plug-ins/gfig/gfig.c:3265
 msgid "Enter Gfig Object Name"
 msgstr "Zadejte jméno Gfig objektu"
 
-#: plug-ins/gfig/gfig.c:3287
+#: plug-ins/gfig/gfig.c:3290
 msgid "Gfig Object Name:"
 msgstr "Jméno Gfig objektu:"
 
 #. the dialog
-#: plug-ins/gfig/gfig.c:3342
+#: plug-ins/gfig/gfig.c:3345
 msgid "Rescan for Gfig Objects"
 msgstr "Zaktualizovat Gfig objekty"
 
-#: plug-ins/gfig/gfig.c:3359
+#: plug-ins/gfig/gfig.c:3362
 msgid "Add Gfig Path"
 msgstr "Přidat Gfig cestu"
 
 #. Load a single object
-#: plug-ins/gfig/gfig.c:3430
+#: plug-ins/gfig/gfig.c:3433
 msgid "Load Gfig object collection"
 msgstr "Načíst souhrn Gfig objektů"
 
-#: plug-ins/gfig/gfig.c:3453
+#: plug-ins/gfig/gfig.c:3456
 msgid "Error in copy layer for onlayers"
 msgstr "Chyba v kopírování vrstvy pro vkládání"
 
-#: plug-ins/gfig/gfig.c:3566
+#: plug-ins/gfig/gfig.c:3569
 #, c-format
 msgid "Gfig Layer %d"
 msgstr "Gfig vrstva %d"
 
-#: plug-ins/gfig/gfig.c:3640
+#: plug-ins/gfig/gfig.c:3643
 msgid "About Gfig"
 msgstr "O programu Gfig"
 
-#: plug-ins/gfig/gfig.c:3667
+#: plug-ins/gfig/gfig.c:3670
 msgid "Gfig - GIMP plug-in"
 msgstr "Gfig - GIMP modul"
 
-#: plug-ins/gfig/gfig.c:3672
+#: plug-ins/gfig/gfig.c:3675
 msgid "Release 2.0"
 msgstr "Vydání 2.0"
 
-#: plug-ins/gfig/gfig.c:3707
+#: plug-ins/gfig/gfig.c:3710
 msgid "New Gfig Object"
 msgstr "Nový objekt Gfig"
 
-#: plug-ins/gfig/gfig.c:3828
+#: plug-ins/gfig/gfig.c:3831
 msgid "Delete Gfig Drawing"
 msgstr "Smazat gfig kresbu"
 
-#: plug-ins/gfig/gfig.c:3880
+#: plug-ins/gfig/gfig.c:3883
 msgid "Editing read-only object - you will not be able to save it"
 msgstr "Úpravy objektu pouze pro čtení - nebude možné je zapsat"
 
 #. Create new entry with name + copy at end & copy object into it
-#: plug-ins/gfig/gfig.c:3979
+#: plug-ins/gfig/gfig.c:3982
 #, c-format
 msgid "%s copy"
 msgstr "%s kopie"
 
-#: plug-ins/gfig/gfig.c:4351
+#: plug-ins/gfig/gfig.c:4354
 msgid "Error reading file"
 msgstr "Chyba při čtení souboru"
 
@@ -10823,43 +10823,43 @@ msgstr "Otvírá se %s"
 msgid "See %s"
 msgstr "Viz %s"
 
-#: plug-ins/pagecurl/pagecurl.c:214
+#: plug-ins/pagecurl/pagecurl.c:212
 msgid "<Image>/Filters/Distorts/_Pagecurl..."
 msgstr "<Image>/Filtry/Zkreslení/Rozčeření _stránky..."
 
-#: plug-ins/pagecurl/pagecurl.c:491
+#: plug-ins/pagecurl/pagecurl.c:490
 msgid "Pagecurl Effect"
 msgstr "Efekt rozčeření stránky"
 
-#: plug-ins/pagecurl/pagecurl.c:505
+#: plug-ins/pagecurl/pagecurl.c:504
 msgid "Curl Location"
 msgstr "Místo rozčeření"
 
-#: plug-ins/pagecurl/pagecurl.c:530
+#: plug-ins/pagecurl/pagecurl.c:529
 msgid "Upper Left"
 msgstr "Zleva odshora"
 
-#: plug-ins/pagecurl/pagecurl.c:531
+#: plug-ins/pagecurl/pagecurl.c:530
 msgid "Upper Right"
 msgstr "Zprava shora"
 
-#: plug-ins/pagecurl/pagecurl.c:532
+#: plug-ins/pagecurl/pagecurl.c:531
 msgid "Lower Left"
 msgstr "Zleva zdola"
 
-#: plug-ins/pagecurl/pagecurl.c:533
+#: plug-ins/pagecurl/pagecurl.c:532
 msgid "Lower Right"
 msgstr "Zprava zdola"
 
-#: plug-ins/pagecurl/pagecurl.c:563
+#: plug-ins/pagecurl/pagecurl.c:562
 msgid "Curl Orientation"
 msgstr "Orientace rozčeření"
 
-#: plug-ins/pagecurl/pagecurl.c:601
+#: plug-ins/pagecurl/pagecurl.c:600
 msgid "Shade under Curl"
 msgstr "Ztmavit pod rozčeřením"
 
-#: plug-ins/pagecurl/pagecurl.c:612
+#: plug-ins/pagecurl/pagecurl.c:611
 msgid ""
 "Use Current Gradient\n"
 "instead of FG/BG-Color"
@@ -10867,15 +10867,15 @@ msgstr ""
 "Použít aktuální přechod\n"
 "namísto barvy popředí/pozadí"
 
-#: plug-ins/pagecurl/pagecurl.c:625
+#: plug-ins/pagecurl/pagecurl.c:624
 msgid "Curl Opacity"
 msgstr "Krytí rozčeření"
 
-#: plug-ins/pagecurl/pagecurl.c:756
+#: plug-ins/pagecurl/pagecurl.c:754
 msgid "Curl Layer"
 msgstr "Rozčeření vrstvy"
 
-#: plug-ins/pagecurl/pagecurl.c:998
+#: plug-ins/pagecurl/pagecurl.c:1000
 msgid "Page Curl..."
 msgstr "Rozčeření stránky..."
 

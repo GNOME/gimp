@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-16 09:46+0100\n"
+"POT-Creation-Date: 2004-03-04 00:14+0100\n"
 "PO-Revision-Date: 2004-02-13 14:50+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -156,6 +156,7 @@ msgstr "Z_ignoruj"
 msgid "_Export"
 msgstr "Wy_eksportuj"
 
+#. the headline
 #: libgimp/gimpexport.c:485
 #, c-format
 msgid ""
@@ -294,7 +295,7 @@ msgstr "Błąd przy ładowaniu"
 msgid "Not loaded"
 msgstr "Niezaładowany"
 
-#: libgimpthumb/gimpthumb-utils.c:195
+#: libgimpthumb/gimpthumb-utils.c:196
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Nie można utworzyć folderu \"%s\" z miniaturkami."
@@ -392,11 +393,11 @@ msgstr "Bieżący:"
 msgid "Old:"
 msgstr "Stary:"
 
-#: libgimpwidgets/gimpfileentry.c:361
+#: libgimpwidgets/gimpfileentry.c:350
 msgid "Select Folder"
 msgstr "Wybór folderu"
 
-#: libgimpwidgets/gimpfileentry.c:375
+#: libgimpwidgets/gimpfileentry.c:364
 msgid "Select File"
 msgstr "Wybór pliku"
 
@@ -464,23 +465,23 @@ msgstr "Odstępy między_wierszowe"
 msgid "_Resize"
 msgstr "Zmień _rozmiar"
 
-#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:283
+#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:284
 msgid "_Scale"
 msgstr "Prze_skaluj"
 
-#: libgimpwidgets/gimpstock.c:262
+#: libgimpwidgets/gimpstock.c:263
 msgid "Crop"
 msgstr "Wykadruj"
 
-#: libgimpwidgets/gimpstock.c:279
+#: libgimpwidgets/gimpstock.c:280
 msgid "_Transform"
 msgstr "_Przekształć"
 
-#: libgimpwidgets/gimpstock.c:282
+#: libgimpwidgets/gimpstock.c:283
 msgid "_Rotate"
 msgstr "O_bróć"
 
-#: libgimpwidgets/gimpstock.c:284
+#: libgimpwidgets/gimpstock.c:285
 msgid "_Shear"
 msgstr "_Zetnij"
 
@@ -492,11 +493,11 @@ msgstr "Więcej..."
 msgid "Unit Selection"
 msgstr "Wybór jednostki"
 
-#: libgimpwidgets/gimpunitmenu.c:660
+#: libgimpwidgets/gimpunitmenu.c:657
 msgid "Unit"
 msgstr "Jednostka"
 
-#: libgimpwidgets/gimpunitmenu.c:664
+#: libgimpwidgets/gimpunitmenu.c:661
 msgid "Factor"
 msgstr "Współczynnik"
 

@@ -110,10 +110,20 @@ Sets the brush search path.  This is a colon-separated list of folders to
 search.
 
 .TP
+(brush-path-writable "${gimp_dir}/brushes")
+
+  This is a colon-separated list of folders to search.
+
+.TP
 (pattern-path "${gimp_dir}/patterns:${gimp_data_dir}/patterns")
 
 Sets the pattern search path.  This is a colon-separated list of folders to
 search.
+
+.TP
+(pattern-path-writable "${gimp_dir}/patterns")
+
+  This is a colon-separated list of folders to search.
 
 .TP
 (palette-path "${gimp_dir}/palettes:${gimp_data_dir}/palettes")
@@ -122,15 +132,30 @@ Sets the palette search path.  This is a colon-separated list of folders to
 search.
 
 .TP
+(palette-path-writable "${gimp_dir}/palettes")
+
+  This is a colon-separated list of folders to search.
+
+.TP
 (gradient-path "${gimp_dir}/gradients:${gimp_data_dir}/gradients")
 
 Sets the gradient search path.  This is a colon-separated list of folders to
 search.
 
 .TP
+(gradient-path-writable "${gimp_dir}/gradients")
+
+  This is a colon-separated list of folders to search.
+
+.TP
 (font-path "${gimp_dir}/fonts:${gimp_data_dir}/fonts")
 
 Where to look for fonts.  This is a colon-separated list of folders to search.
+
+.TP
+(font-path-writable "${gimp_dir}/fonts")
+
+  This is a colon-separated list of folders to search.
 
 .TP
 (default-brush "Circle (11)")
@@ -342,6 +367,8 @@ certain % character sequences are recognised and expanded as follows:
 .br
 %n  the name of the active layer/channel
 .br
+%P  the PDB id of the active layer/channel
+.br
 %w  image width in pixels
 .br
 %W  image width in real-world units
@@ -394,6 +421,8 @@ certain % character sequences are recognised and expanded as follows:
 %m  memory used by the image
 .br
 %n  the name of the active layer/channel
+.br
+%P  the PDB id of the active layer/channel
 .br
 %w  image width in pixels
 .br
@@ -493,6 +522,12 @@ values are small-checks, medium-checks and large-checks.
 Sets the manner in which transparency is displayed in images.  Possible values
 are light-checks, gray-checks, dark-checks, white-only, gray-only and
 black-only.
+
+.TP
+(snap-distance 8)
+
+This is the distance in pixels where Guide and Grid snapping activates.  This
+is an integer value.
 
 .TP
 (default-threshold 15)

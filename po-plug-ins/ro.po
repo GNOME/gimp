@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-04 02:49+0100\n"
+"POT-Creation-Date: 2004-03-04 00:14+0100\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
 "Language-Team: Română <ro@li.org>\n"
@@ -33,9 +33,30 @@ msgid "About"
 msgstr "Automat"
 
 #. Preview
+#. Create the Preview
+#. ==================
+#. Create the Preview
+#. Preview area, top of column
+#.
+#. * Preview window...
+#.
+#. Preview
+#. hbox created and packed into the dialog
+#. make a nice frame
+#. Preview
+#.
+#. * Preview window...
+#.
+#. Preview
+#.
+#. *	Preview
+#.
+#. Previews: frame
+#. * Misc: Preview settings *
+#. Misc: Preview settings: Continuous update ?!
 #: plug-ins/FractalExplorer/Dialogs.c:578 plug-ins/Lighting/lighting_ui.c:1126
 #: plug-ins/MapObject/mapobject_ui.c:1395 plug-ins/common/CML_explorer.c:1195
-#: plug-ins/common/channel_mixer.c:550 plug-ins/common/curve_bend.c:1244
+#: plug-ins/common/channel_mixer.c:550 plug-ins/common/curve_bend.c:1268
 #: plug-ins/common/destripe.c:573 plug-ins/common/emboss.c:705
 #: plug-ins/common/fractaltrace.c:760 plug-ins/common/grid.c:654
 #: plug-ins/common/iwarp.c:1220 plug-ins/common/mapcolor.c:551
@@ -291,6 +312,7 @@ msgid "Color Function"
 msgstr "Selecţie culoare"
 
 #. Redmode radio frame
+#. Redmode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:990 plug-ins/common/AlienMap.c:1218
 #: plug-ins/common/channel_mixer.c:599 plug-ins/common/decompose.c:130
 msgid "Red"
@@ -356,12 +378,14 @@ msgid ""
 msgstr ""
 
 #. Greenmode radio frame
+#. Greenmode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:1031 plug-ins/common/AlienMap.c:1241
 #: plug-ins/common/channel_mixer.c:600 plug-ins/common/decompose.c:131
 msgid "Green"
 msgstr "Verde"
 
 #. Bluemode radio frame
+#. Bluemode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:1072 plug-ins/common/AlienMap.c:1264
 #: plug-ins/common/channel_mixer.c:601 plug-ins/common/decompose.c:136
 msgid "Blue"
@@ -404,9 +428,9 @@ msgstr "Fişier nou"
 #: plug-ins/FractalExplorer/Dialogs.c:1827 plug-ins/bmp/bmpwrite.c:198
 #: plug-ins/common/CEL.c:577 plug-ins/common/CML_explorer.c:2137
 #: plug-ins/common/bz2.c:250 plug-ins/common/bz2.c:323
-#: plug-ins/common/channel_mixer.c:1235 plug-ins/common/curve_bend.c:835
+#: plug-ins/common/channel_mixer.c:1235 plug-ins/common/curve_bend.c:859
 #: plug-ins/common/dicom.c:646 plug-ins/common/gbr.c:581
-#: plug-ins/common/gif.c:996 plug-ins/common/gih.c:1218
+#: plug-ins/common/gif.c:995 plug-ins/common/gih.c:1218
 #: plug-ins/common/gtm.c:226 plug-ins/common/gz.c:307 plug-ins/common/gz.c:416
 #: plug-ins/common/hrz.c:468 plug-ins/common/jpeg.c:1298
 #: plug-ins/common/mng.c:506 plug-ins/common/mng.c:838
@@ -415,7 +439,7 @@ msgstr "Fişier nou"
 #: plug-ins/common/pnm.c:771 plug-ins/common/postscript.c:995
 #: plug-ins/common/psd_save.c:1555 plug-ins/common/spheredesigner.c:2082
 #: plug-ins/common/sunras.c:512 plug-ins/common/tga.c:1028
-#: plug-ins/common/tiff.c:1763 plug-ins/common/xbm.c:995
+#: plug-ins/common/tiff.c:1793 plug-ins/common/xbm.c:995
 #: plug-ins/common/xwd.c:533 plug-ins/fits/fits.c:450
 #: plug-ins/flame/flame.c:434 plug-ins/gfig/gfig.c:1025
 #: plug-ins/gfli/gfli.c:716 plug-ins/ifscompose/ifscompose.c:2592
@@ -448,20 +472,21 @@ msgid "Save Fractal Parameters"
 msgstr ""
 
 #. Do not rely on librsvg setting GError on failure!
+#. stat error (file does not exist)
 #: plug-ins/FractalExplorer/Dialogs.c:2128 plug-ins/bmp/bmpread.c:118
 #: plug-ins/common/CEL.c:305 plug-ins/common/CML_explorer.c:2341
-#: plug-ins/common/channel_mixer.c:1151 plug-ins/common/curve_bend.c:887
+#: plug-ins/common/channel_mixer.c:1151 plug-ins/common/curve_bend.c:911
 #: plug-ins/common/dicom.c:289 plug-ins/common/gbr.c:322
 #: plug-ins/common/gifload.c:295 plug-ins/common/gih.c:629
 #: plug-ins/common/hrz.c:334 plug-ins/common/jpeg.c:761
 #: plug-ins/common/mng.c:1007 plug-ins/common/pat.c:295
 #: plug-ins/common/pcx.c:301 plug-ins/common/pix.c:333
 #: plug-ins/common/png.c:667 plug-ins/common/pnm.c:394
-#: plug-ins/common/postscript.c:872 plug-ins/common/psd.c:1738
+#: plug-ins/common/postscript.c:872 plug-ins/common/psd.c:1768
 #: plug-ins/common/psp.c:1459 plug-ins/common/spheredesigner.c:1990
 #: plug-ins/common/sunras.c:381 plug-ins/common/svg.c:241
 #: plug-ins/common/svg.c:624 plug-ins/common/tga.c:413
-#: plug-ins/common/tiff.c:502 plug-ins/common/xbm.c:718
+#: plug-ins/common/tiff.c:506 plug-ins/common/xbm.c:718
 #: plug-ins/common/xwd.c:383 plug-ins/faxg3/faxg3.c:219
 #: plug-ins/fits/fits.c:337 plug-ins/flame/flame.c:404
 #: plug-ins/gfig/gfig.c:716 plug-ins/gfli/gfli.c:425 plug-ins/gfli/gfli.c:461
@@ -492,7 +517,7 @@ msgstr "/Filtre/Procesare"
 msgid "Rendering Fractal..."
 msgstr ""
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:763 plug-ins/gfig/gfig.c:3824
+#: plug-ins/FractalExplorer/FractalExplorer.c:763 plug-ins/gfig/gfig.c:3827
 #: plug-ins/gflare/gflare.c:3110
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
@@ -1239,6 +1264,11 @@ msgid "Bad colormap"
 msgstr "Instalează harta de culori"
 
 #. Set up progress display
+#. put up a progress bar
+#. max. rows allocated
+#. column, highest column ever used
+#. -1  assume fsel is not available (and not attached to any drawable)
+#. -1  assume there is no floating selection
 #: plug-ins/bmp/bmpread.c:123 plug-ins/common/CEL.c:310
 #: plug-ins/common/dicom.c:294 plug-ins/common/gbr.c:327
 #: plug-ins/common/gifload.c:300 plug-ins/common/gih.c:634
@@ -1246,8 +1276,8 @@ msgstr "Instalează harta de culori"
 #: plug-ins/common/pat.c:300 plug-ins/common/pcx.c:306
 #: plug-ins/common/pix.c:339 plug-ins/common/png.c:674
 #: plug-ins/common/pnm.c:399 plug-ins/common/postscript.c:878
-#: plug-ins/common/psd.c:1743 plug-ins/common/sunras.c:435
-#: plug-ins/common/tga.c:418 plug-ins/common/tiff.c:507
+#: plug-ins/common/psd.c:1773 plug-ins/common/sunras.c:435
+#: plug-ins/common/tga.c:418 plug-ins/common/tiff.c:511
 #: plug-ins/common/wmf.c:401 plug-ins/common/xbm.c:723
 #: plug-ins/common/xpm.c:329 plug-ins/common/xwd.c:434
 #: plug-ins/faxg3/faxg3.c:202 plug-ins/gfli/gfli.c:466 plug-ins/sgi/sgi.c:322
@@ -1285,9 +1315,9 @@ msgstr "Eroare la deschiderea fişierului: %s\n"
 #: plug-ins/common/jpeg.c:926 plug-ins/common/pcx.c:333
 #: plug-ins/common/pcx.c:339 plug-ins/common/pix.c:375
 #: plug-ins/common/png.c:801 plug-ins/common/pnm.c:479
-#: plug-ins/common/psd.c:2130 plug-ins/common/smooth_palette.c:252
+#: plug-ins/common/psd.c:2182 plug-ins/common/smooth_palette.c:252
 #: plug-ins/common/sunras.c:924 plug-ins/common/tga.c:927
-#: plug-ins/common/tiff.c:800 plug-ins/common/tile.c:263
+#: plug-ins/common/tiff.c:829 plug-ins/common/tile.c:263
 #: plug-ins/common/winclipboard.c:556 plug-ins/common/xbm.c:866
 #: plug-ins/faxg3/faxg3.c:464 plug-ins/fits/fits.c:507
 #: plug-ins/gfig/gfig.c:2075 plug-ins/gfig/gfig.c:2443 plug-ins/sgi/sgi.c:368
@@ -1311,15 +1341,17 @@ msgid "Cannot operate on unknown image types."
 msgstr "Nu pot umple un tip necunoscut de imagine."
 
 #. And let's begin the progress
+#. init the progress meter
+#. Set up progress display
 #: plug-ins/bmp/bmpwrite.c:209 plug-ins/common/CEL.c:582
-#: plug-ins/common/gbr.c:586 plug-ins/common/gif.c:1003
+#: plug-ins/common/gbr.c:586 plug-ins/common/gif.c:1002
 #: plug-ins/common/gih.c:1223 plug-ins/common/gtm.c:246
 #: plug-ins/common/hrz.c:473 plug-ins/common/jpeg.c:1253
 #: plug-ins/common/pat.c:433 plug-ins/common/pcx.c:544
 #: plug-ins/common/pix.c:522 plug-ins/common/png.c:1175
 #: plug-ins/common/pnm.c:776 plug-ins/common/postscript.c:1000
 #: plug-ins/common/psd_save.c:1560 plug-ins/common/sunras.c:517
-#: plug-ins/common/tga.c:1033 plug-ins/common/tiff.c:1768
+#: plug-ins/common/tga.c:1033 plug-ins/common/tiff.c:1798
 #: plug-ins/common/xbm.c:1000 plug-ins/common/xpm.c:619
 #: plug-ins/common/xwd.c:538 plug-ins/fits/fits.c:457 plug-ins/gfli/gfli.c:683
 #: plug-ins/sgi/sgi.c:537 plug-ins/xjt/xjt.c:1691
@@ -1404,7 +1436,7 @@ msgid "Cos_ine"
 msgstr "Închide"
 
 #: plug-ins/common/AlienMap.c:1224 plug-ins/common/AlienMap.c:1247
-#: plug-ins/common/AlienMap.c:1270 plug-ins/common/tiff.c:2067
+#: plug-ins/common/AlienMap.c:1270 plug-ins/common/tiff.c:2097
 #, fuzzy
 msgid "_None"
 msgstr "Nimic"
@@ -1815,7 +1847,7 @@ msgstr ""
 msgid "New Seed"
 msgstr "Fişier nou"
 
-#: plug-ins/common/CML_explorer.c:1279 plug-ins/common/lic.c:730
+#: plug-ins/common/CML_explorer.c:1279 plug-ins/common/lic.c:654
 #: plug-ins/fp/fp_gtk.c:290
 #, fuzzy
 msgid "_Hue"
@@ -2079,6 +2111,35 @@ msgstr "/Combină stratele vizibile..."
 #. *
 #. *  First set up the basic containers, label them, etc.
 #.
+#. parameter settings
+#.
+#. * Filter type controls...
+#.
+#. parameter settings
+#. filter routine, initial pass
+#. Parameter settings
+#. left side of the UI is done
+#. right side
+#. parameter settings
+#. preview noisify
+#. parameter settings
+#. Controls
+#.
+#. *  Parameter settings
+#. *
+#. *  First set up the basic containers, label them, etc.
+#.
+#. Parameter Settings
+#. parameter settings
+#.
+#. * Sharpness control...
+#.
+#. parameter settings
+#. Parameter settings
+#. main parameter frame
+#. Parameter settings
+#. Controls
+#. parameter settings
 #: plug-ins/common/align_layers.c:410 plug-ins/common/apply_lens.c:378
 #: plug-ins/common/blinds.c:337 plug-ins/common/blur.c:604
 #: plug-ins/common/bumpmap.c:1011 plug-ins/common/checkerboard.c:322
@@ -2088,7 +2149,7 @@ msgstr "/Combină stratele vizibile..."
 #: plug-ins/common/gauss_iir.c:353 plug-ins/common/gauss_rle.c:347
 #: plug-ins/common/glasstile.c:251 plug-ins/common/grid.c:682
 #: plug-ins/common/illusion.c:415 plug-ins/common/jpeg.c:1720
-#: plug-ins/common/lic.c:762 plug-ins/common/max_rgb.c:271
+#: plug-ins/common/lic.c:686 plug-ins/common/max_rgb.c:271
 #: plug-ins/common/mosaic.c:603 plug-ins/common/nlfilt.c:361
 #: plug-ins/common/noisify.c:331 plug-ins/common/nova.c:328
 #: plug-ins/common/oilify.c:452 plug-ins/common/pixelize.c:319
@@ -3084,154 +3145,161 @@ msgstr "Saturare:"
 msgid "Cubistic Transformation"
 msgstr "Transformare"
 
-#: plug-ins/common/curve_bend.c:568
+#: plug-ins/common/curve_bend.c:577
 #, fuzzy
 msgid "<Image>/Filters/Distorts/_Curve Bend..."
 msgstr "/Filtre/Destorsionări"
 
-#: plug-ins/common/curve_bend.c:699
-msgid "CurveBend operates on layers only (but was called on channel or mask)"
+#: plug-ins/common/curve_bend.c:709
+msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr ""
+
+#: plug-ins/common/curve_bend.c:734
+#, fuzzy
+msgid "Cannot operate on empty selections."
+msgstr "Nu pot umple un tip necunoscut de imagine."
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
-#: plug-ins/common/curve_bend.c:1214
+#: plug-ins/common/curve_bend.c:1238
 #, fuzzy
 msgid "Curve Bend"
 msgstr "Curbat"
 
 #. The preview button
-#: plug-ins/common/curve_bend.c:1278
+#: plug-ins/common/curve_bend.c:1302
 #, fuzzy
 msgid "_Preview Once"
 msgstr "Previzualizare"
 
 #. The preview toggle
-#: plug-ins/common/curve_bend.c:1287
+#: plug-ins/common/curve_bend.c:1311
 #, fuzzy
 msgid "Automatic Pre_view"
 msgstr "Previzualizare"
 
 #. Options area, bottom of column
-#: plug-ins/common/curve_bend.c:1297 plug-ins/common/mosaic.c:528
-#: plug-ins/common/ripple.c:443 plug-ins/gfig/gfig.c:2989
+#. the vertical box and its toggle buttons
+#. Options section
+#: plug-ins/common/curve_bend.c:1321 plug-ins/common/mosaic.c:528
+#: plug-ins/common/ripple.c:443 plug-ins/gfig/gfig.c:2992
 #, fuzzy
 msgid "Options"
 msgstr "Opţiuni:\n"
 
 #. Rotate spinbutton
-#: plug-ins/common/curve_bend.c:1312
+#: plug-ins/common/curve_bend.c:1336
 #, fuzzy
 msgid "Rotat_e:"
 msgstr "Rotire"
 
 #. The smoothing toggle
-#: plug-ins/common/curve_bend.c:1330
+#: plug-ins/common/curve_bend.c:1354
 #, fuzzy
 msgid "Smoo_thing"
 msgstr "Netezire"
 
 #. The antialiasing toggle
-#: plug-ins/common/curve_bend.c:1340 plug-ins/common/gqbist.c:847
+#: plug-ins/common/curve_bend.c:1364 plug-ins/common/gqbist.c:847
 #: plug-ins/common/mosaic.c:535 plug-ins/common/ripple.c:451
 #, fuzzy
 msgid "_Antialiasing"
 msgstr "Antialiasing"
 
 #. The wor_on_copy toggle
-#: plug-ins/common/curve_bend.c:1350
+#: plug-ins/common/curve_bend.c:1374
 msgid "Work on Cop_y"
 msgstr ""
 
 #. The curves graph
-#: plug-ins/common/curve_bend.c:1360
+#: plug-ins/common/curve_bend.c:1384
 #, fuzzy
 msgid "Modify Curves"
 msgstr "Încarcă curbe"
 
-#: plug-ins/common/curve_bend.c:1389
+#: plug-ins/common/curve_bend.c:1413
 #, fuzzy
 msgid "Curve for Border"
 msgstr "Tip cursor:"
 
-#: plug-ins/common/curve_bend.c:1393
+#: plug-ins/common/curve_bend.c:1417
 #, fuzzy
 msgid "_Upper"
 msgstr "Modele"
 
-#: plug-ins/common/curve_bend.c:1394
+#: plug-ins/common/curve_bend.c:1418
 #, fuzzy
 msgid "_Lower"
 msgstr "Strat"
 
-#: plug-ins/common/curve_bend.c:1404
+#: plug-ins/common/curve_bend.c:1428
 #, fuzzy
 msgid "Curve Type"
 msgstr "Tip curbă:"
 
-#: plug-ins/common/curve_bend.c:1408
+#: plug-ins/common/curve_bend.c:1432
 #, fuzzy
 msgid "Smoot_h"
 msgstr "Netezire"
 
-#: plug-ins/common/curve_bend.c:1409
+#: plug-ins/common/curve_bend.c:1433
 #, fuzzy
 msgid "_Free"
 msgstr "Eliberează"
 
 #. The Copy button
-#: plug-ins/common/curve_bend.c:1424
+#: plug-ins/common/curve_bend.c:1448
 #, fuzzy
 msgid "_Copy"
 msgstr "copiere"
 
-#: plug-ins/common/curve_bend.c:1429
+#: plug-ins/common/curve_bend.c:1453
 msgid "Copy the active curve to the other border"
 msgstr ""
 
 #. The CopyInv button
-#: plug-ins/common/curve_bend.c:1436
+#: plug-ins/common/curve_bend.c:1460
 msgid "_Mirror"
 msgstr ""
 
-#: plug-ins/common/curve_bend.c:1441
+#: plug-ins/common/curve_bend.c:1465
 msgid "Mirror the active curve to the other border"
 msgstr ""
 
 #. The Swap button
-#: plug-ins/common/curve_bend.c:1448
+#: plug-ins/common/curve_bend.c:1472
 #, fuzzy
 msgid "S_wap"
 msgstr "Formă"
 
-#: plug-ins/common/curve_bend.c:1453
+#: plug-ins/common/curve_bend.c:1477
 msgid "Swap the two curves"
 msgstr ""
 
-#: plug-ins/common/curve_bend.c:1465
+#: plug-ins/common/curve_bend.c:1489
 msgid "Reset the active curve"
 msgstr ""
 
-#: plug-ins/common/curve_bend.c:1482
+#: plug-ins/common/curve_bend.c:1506
 #, fuzzy
 msgid "Load the curves from a file"
 msgstr "Încarcă din"
 
-#: plug-ins/common/curve_bend.c:1494
+#: plug-ins/common/curve_bend.c:1518
 #, fuzzy
 msgid "Save the curves to a file"
 msgstr "Salvare jurnal de erori în fişier..."
 
-#: plug-ins/common/curve_bend.c:2031
+#: plug-ins/common/curve_bend.c:2055
 msgid "Load Curve Points from file"
 msgstr ""
 
-#: plug-ins/common/curve_bend.c:2058
+#: plug-ins/common/curve_bend.c:2082
 #, fuzzy
 msgid "Save Curve Points to file"
 msgstr "Salvare jurnal de erori în fişier..."
 
-#: plug-ins/common/curve_bend.c:2958
+#: plug-ins/common/curve_bend.c:2980
 #, fuzzy
 msgid "Curve Bend..."
 msgstr "Curbat"
@@ -3726,7 +3794,7 @@ msgstr ""
 msgid "_Prewitt"
 msgstr "Presiune"
 
-#: plug-ins/common/edge.c:652 plug-ins/common/lic.c:744
+#: plug-ins/common/edge.c:652 plug-ins/common/lic.c:668
 #, fuzzy
 msgid "_Gradient"
 msgstr "Gradient"
@@ -4225,38 +4293,38 @@ msgstr "Salvează în"
 msgid "Icon Name:"
 msgstr "Nume:"
 
-#: plug-ins/common/gif.c:689
+#: plug-ins/common/gif.c:688
 msgid "Couldn't simply reduce colors further. Saving as opaque."
 msgstr ""
 
-#: plug-ins/common/gif.c:911
+#: plug-ins/common/gif.c:910
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
 msgstr ""
 
-#: plug-ins/common/gif.c:972
+#: plug-ins/common/gif.c:971
 msgid ""
 "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 
-#: plug-ins/common/gif.c:1115
+#: plug-ins/common/gif.c:1114
 msgid ""
 "Warning:\n"
 "Transparent color in written file might be incorrect on viewers which don't "
 "support transparency."
 msgstr ""
 
-#: plug-ins/common/gif.c:1154
+#: plug-ins/common/gif.c:1153
 msgid "Delay inserted to prevent evil CPU-sucking anim."
 msgstr ""
 
-#: plug-ins/common/gif.c:1197
+#: plug-ins/common/gif.c:1196
 #, fuzzy
 msgid "GIF Warning"
 msgstr "[ Atenţie ]"
 
-#: plug-ins/common/gif.c:1215
+#: plug-ins/common/gif.c:1214
 msgid ""
 "The image which you are trying to save as a GIF\n"
 "contains layers which extend beyond the actual\n"
@@ -4267,66 +4335,66 @@ msgid ""
 "the image borders, or cancel this save."
 msgstr ""
 
-#: plug-ins/common/gif.c:1262
+#: plug-ins/common/gif.c:1261
 #, fuzzy
 msgid "Save as GIF"
 msgstr "Salvează ca fişier POV-Ray"
 
 #. regular gif parameter settings
-#: plug-ins/common/gif.c:1277
+#: plug-ins/common/gif.c:1276
 #, fuzzy
 msgid "GIF Options"
 msgstr "Opţiuni:\n"
 
-#: plug-ins/common/gif.c:1284 plug-ins/common/mng.c:1207
+#: plug-ins/common/gif.c:1283 plug-ins/common/mng.c:1207
 #, fuzzy
 msgid "Interlace"
 msgstr "Interfaţă"
 
-#: plug-ins/common/gif.c:1300
+#: plug-ins/common/gif.c:1299
 msgid "GIF Comment:"
 msgstr ""
 
 #. additional animated gif parameter settings
-#: plug-ins/common/gif.c:1361
+#: plug-ins/common/gif.c:1360
 #, fuzzy
 msgid "Animated GIF Options"
 msgstr "Opţiuni pentru simularea de nuanţe"
 
-#: plug-ins/common/gif.c:1368
+#: plug-ins/common/gif.c:1367
 msgid "Loop forever"
 msgstr ""
 
-#: plug-ins/common/gif.c:1381
+#: plug-ins/common/gif.c:1380
 msgid "Delay between Frames where Unspecified:"
 msgstr ""
 
-#: plug-ins/common/gif.c:1394
+#: plug-ins/common/gif.c:1393
 msgid "Milliseconds"
 msgstr ""
 
-#: plug-ins/common/gif.c:1404
+#: plug-ins/common/gif.c:1403
 msgid "Frame Disposal where Unspecified: "
 msgstr ""
 
-#: plug-ins/common/gif.c:1412
+#: plug-ins/common/gif.c:1411
 msgid "I don't Care"
 msgstr ""
 
-#: plug-ins/common/gif.c:1414
+#: plug-ins/common/gif.c:1413
 msgid "Cumulative Layers (Combine)"
 msgstr ""
 
-#: plug-ins/common/gif.c:1416
+#: plug-ins/common/gif.c:1415
 msgid "One Frame per Layer (Replace)"
 msgstr ""
 
-#: plug-ins/common/gif.c:2624
+#: plug-ins/common/gif.c:2623
 #, fuzzy
 msgid "Error writing output file."
 msgstr "Eroare la deschiderea fişierului: %s\n"
 
-#: plug-ins/common/gif.c:2694
+#: plug-ins/common/gif.c:2693
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "Linia implicită de comentariu este limitată la %d caractere."
@@ -4516,11 +4584,11 @@ msgid "Grid"
 msgstr "Arată grilaj"
 
 #. attach labels
-#: plug-ins/common/grid.c:731 plug-ins/pagecurl/pagecurl.c:574
+#: plug-ins/common/grid.c:731 plug-ins/pagecurl/pagecurl.c:573
 msgid "Horizontal"
 msgstr "Orizontal"
 
-#: plug-ins/common/grid.c:733 plug-ins/pagecurl/pagecurl.c:575
+#: plug-ins/common/grid.c:733 plug-ins/pagecurl/pagecurl.c:574
 msgid "Vertical"
 msgstr "Vertical"
 
@@ -4555,7 +4623,7 @@ msgstr "Intersectează"
 msgid "GIMP Table Magic"
 msgstr ""
 
-#: plug-ins/common/gtm.c:420 plug-ins/gfig/gfig.c:3096
+#: plug-ins/common/gtm.c:420 plug-ins/gfig/gfig.c:3099
 #, fuzzy
 msgid "Warning"
 msgstr "[ Atenţie ]"
@@ -5060,83 +5128,83 @@ msgstr ""
 msgid "Cleanup..."
 msgstr ""
 
-#: plug-ins/common/lic.c:626
+#: plug-ins/common/lic.c:548
 msgid "Van Gogh (LIC)..."
 msgstr ""
 
-#: plug-ins/common/lic.c:705
+#: plug-ins/common/lic.c:631
 msgid "Van Gogh (LIC)"
 msgstr ""
 
-#: plug-ins/common/lic.c:725
+#: plug-ins/common/lic.c:649
 #, fuzzy
 msgid "Effect Channel"
 msgstr "Canal nou"
 
-#: plug-ins/common/lic.c:731 plug-ins/fp/fp_gtk.c:294
+#: plug-ins/common/lic.c:655 plug-ins/fp/fp_gtk.c:294
 #, fuzzy
 msgid "_Saturation"
 msgstr "Saturare:"
 
-#: plug-ins/common/lic.c:732
+#: plug-ins/common/lic.c:656
 #, fuzzy
 msgid "_Brightness"
 msgstr "Luminozitate:"
 
-#: plug-ins/common/lic.c:738
+#: plug-ins/common/lic.c:662
 #, fuzzy
 msgid "Effect Operator"
 msgstr "Operaţii pe fişiere"
 
-#: plug-ins/common/lic.c:743
+#: plug-ins/common/lic.c:667
 #, fuzzy
 msgid "_Derivative"
 msgstr "Imparte"
 
-#: plug-ins/common/lic.c:750
+#: plug-ins/common/lic.c:674
 #, fuzzy
 msgid "Convolve"
 msgstr "Conversie"
 
-#: plug-ins/common/lic.c:755
+#: plug-ins/common/lic.c:679
 msgid "_With White Noise"
 msgstr ""
 
-#: plug-ins/common/lic.c:756
+#: plug-ins/common/lic.c:680
 #, fuzzy
 msgid "W_ith Source Image"
 msgstr "Scalează imaginea"
 
-#: plug-ins/common/lic.c:784
+#: plug-ins/common/lic.c:708
 #, fuzzy
 msgid "_Effect Image:"
 msgstr "Imagine nouă"
 
-#: plug-ins/common/lic.c:800
+#: plug-ins/common/lic.c:724
 #, fuzzy
 msgid "_Filter Length:"
 msgstr "Densitate:"
 
-#: plug-ins/common/lic.c:809
+#: plug-ins/common/lic.c:733
 msgid "_Noise Magnitude:"
 msgstr ""
 
-#: plug-ins/common/lic.c:818
+#: plug-ins/common/lic.c:742
 #, fuzzy
 msgid "In_tegration Steps:"
 msgstr "Tip de interpolare:"
 
-#: plug-ins/common/lic.c:827
+#: plug-ins/common/lic.c:751
 #, fuzzy
 msgid "_Minimum Value:"
 msgstr "Dimensiunea maximă a imaginii:"
 
-#: plug-ins/common/lic.c:836
+#: plug-ins/common/lic.c:760
 #, fuzzy
 msgid "M_aximum Value:"
 msgstr "Dimensiunea maximă a imaginii:"
 
-#: plug-ins/common/lic.c:887
+#: plug-ins/common/lic.c:811
 #, fuzzy
 msgid "<Image>/Filters/Map/_Van Gogh (LIC)..."
 msgstr "/Filtre/Poziţionare"
@@ -5659,6 +5727,7 @@ msgid "_Factory Defaults"
 msgstr "Implicit"
 
 #. anti-alias control
+#. 2
 #: plug-ins/common/newsprint.c:1390 plug-ins/gfig/gfig.c:2406
 msgid "Antialiasing"
 msgstr "Antialiasing"
@@ -6456,7 +6525,7 @@ msgstr "Previzualizare"
 msgid "Preview _Size:"
 msgstr "Dimensiune previzualizare:"
 
-#: plug-ins/common/psd.c:468
+#: plug-ins/common/psd.c:488
 msgid "Invalid UTF-8 string in PSD file"
 msgstr ""
 
@@ -6748,6 +6817,7 @@ msgid "Error obtaining Screen Shot"
 msgstr "Eroare la deschiderea fişierului: %s\n"
 
 #. single window
+#. Action area
 #: plug-ins/common/screenshot.c:524 plug-ins/winsnap/winsnap.c:905
 #, fuzzy
 msgid "Grab"
@@ -7663,17 +7733,17 @@ msgstr "Prag de declanşare"
 msgid "Threshold:"
 msgstr "Prag:"
 
-#: plug-ins/common/tiff.c:802
+#: plug-ins/common/tiff.c:831
 #, fuzzy, c-format
 msgid "Page %d"
 msgstr "Traseu %d"
 
-#: plug-ins/common/tiff.c:816
+#: plug-ins/common/tiff.c:846
 #, fuzzy
 msgid "TIFF Channel"
 msgstr "Canal"
 
-#: plug-ins/common/tiff.c:825
+#: plug-ins/common/tiff.c:855
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
@@ -7681,44 +7751,44 @@ msgid ""
 "this conversion."
 msgstr ""
 
-#: plug-ins/common/tiff.c:1900
+#: plug-ins/common/tiff.c:1930
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
 msgstr ""
 
-#: plug-ins/common/tiff.c:2049
+#: plug-ins/common/tiff.c:2079
 msgid "Save as TIFF"
 msgstr ""
 
 #. compression
-#: plug-ins/common/tiff.c:2063
+#: plug-ins/common/tiff.c:2093
 #, fuzzy
 msgid "Compression"
 msgstr "Sesiune"
 
-#: plug-ins/common/tiff.c:2068
+#: plug-ins/common/tiff.c:2098
 msgid "_LZW"
 msgstr ""
 
-#: plug-ins/common/tiff.c:2069
+#: plug-ins/common/tiff.c:2099
 msgid "_Pack Bits"
 msgstr ""
 
-#: plug-ins/common/tiff.c:2070
+#: plug-ins/common/tiff.c:2100
 #, fuzzy
 msgid "_Deflate"
 msgstr "Sterge"
 
-#: plug-ins/common/tiff.c:2071
+#: plug-ins/common/tiff.c:2101
 msgid "_JPEG"
 msgstr ""
 
-#: plug-ins/common/tiff.c:2080
+#: plug-ins/common/tiff.c:2110
 msgid "Save _color values from transparent pixels"
 msgstr ""
 
-#: plug-ins/common/tiff.c:2095 plug-ins/common/xbm.c:1201
+#: plug-ins/common/tiff.c:2125 plug-ins/common/xbm.c:1201
 #, fuzzy
 msgid "Comment:"
 msgstr "Numar:"
@@ -8428,6 +8498,7 @@ msgstr "Lăţime"
 #. ********************************************************
 #. radio buttons for choosing wind rendering algorithm
 #. *****************************************************
+#. Algorithm Choice
 #: plug-ins/common/wind.c:915 plug-ins/maze/maze_face.c:297
 #, fuzzy
 msgid "Style"
@@ -9281,7 +9352,7 @@ msgid "Delete an object"
 msgstr "Elimină traseul"
 
 #: plug-ins/gfig/gfig.c:1680 plug-ins/gfig/gfig.c:2056
-#: plug-ins/gfig/gfig.c:2975
+#: plug-ins/gfig/gfig.c:2978
 #, fuzzy
 msgid "Brush"
 msgstr "Pensule"
@@ -9619,86 +9690,86 @@ msgstr "Dimensiune:"
 msgid "Gfig"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2927 plug-ins/gfig/gfig.c:2970
+#: plug-ins/gfig/gfig.c:2927 plug-ins/gfig/gfig.c:2973
 #, fuzzy
 msgid "Paint"
 msgstr "desen"
 
-#: plug-ins/gfig/gfig.c:2983 plug-ins/imagemap/imap_cmd_select.c:53
+#: plug-ins/gfig/gfig.c:2986 plug-ins/imagemap/imap_cmd_select.c:53
 #: plug-ins/imagemap/imap_tools.c:144
 msgid "Select"
 msgstr "Selectează"
 
-#: plug-ins/gfig/gfig.c:3093
+#: plug-ins/gfig/gfig.c:3096
 #, c-format
 msgid "%d unsaved Gfig objects. Continue with exiting?"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3262
+#: plug-ins/gfig/gfig.c:3265
 msgid "Enter Gfig Object Name"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3287
+#: plug-ins/gfig/gfig.c:3290
 msgid "Gfig Object Name:"
 msgstr ""
 
 #. the dialog
-#: plug-ins/gfig/gfig.c:3342
+#: plug-ins/gfig/gfig.c:3345
 msgid "Rescan for Gfig Objects"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3359
+#: plug-ins/gfig/gfig.c:3362
 msgid "Add Gfig Path"
 msgstr ""
 
 #. Load a single object
-#: plug-ins/gfig/gfig.c:3430
+#: plug-ins/gfig/gfig.c:3433
 #, fuzzy
 msgid "Load Gfig object collection"
 msgstr "Încarcă din"
 
-#: plug-ins/gfig/gfig.c:3453
+#: plug-ins/gfig/gfig.c:3456
 msgid "Error in copy layer for onlayers"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3566
+#: plug-ins/gfig/gfig.c:3569
 #, c-format
 msgid "Gfig Layer %d"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3640
+#: plug-ins/gfig/gfig.c:3643
 #, fuzzy
 msgid "About Gfig"
 msgstr "Automat"
 
-#: plug-ins/gfig/gfig.c:3667
+#: plug-ins/gfig/gfig.c:3670
 #, fuzzy
 msgid "Gfig - GIMP plug-in"
 msgstr "Modul inserabil GIMP"
 
-#: plug-ins/gfig/gfig.c:3672
+#: plug-ins/gfig/gfig.c:3675
 msgid "Release 2.0"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3707
+#: plug-ins/gfig/gfig.c:3710
 msgid "New Gfig Object"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3828
+#: plug-ins/gfig/gfig.c:3831
 msgid "Delete Gfig Drawing"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3880
+#: plug-ins/gfig/gfig.c:3883
 msgid "Editing read-only object - you will not be able to save it"
 msgstr ""
 
 #. Create new entry with name + copy at end & copy object into it
-#: plug-ins/gfig/gfig.c:3979
+#: plug-ins/gfig/gfig.c:3982
 #, c-format
 msgid "%s copy"
 msgstr "%s copiere"
 
-#: plug-ins/gfig/gfig.c:4351
+#: plug-ins/gfig/gfig.c:4354
 #, fuzzy
 msgid "Error reading file"
 msgstr "Eroare la deschiderea fişierului: %s\n"
@@ -9757,6 +9828,7 @@ msgid "(none)"
 msgstr "nimic"
 
 #: plug-ins/gfig/gfig-preview.c:581 plug-ins/gfig/gfig-preview.c:612
+#, c-format
 msgid "<NONE>"
 msgstr ""
 
@@ -9845,6 +9917,9 @@ msgstr "Implicit"
 
 #.
 #. *  Scales
+#.
+#.
+#. *	Scales
 #.
 #: plug-ins/gflare/gflare.c:2672 plug-ins/gflare/gflare.c:3483
 #: plug-ins/gflare/gflare.c:3590 plug-ins/gflare/gflare.c:3729
@@ -11949,62 +12024,62 @@ msgstr "parcurg şi procesez \"%s\"\n"
 msgid "See %s"
 msgstr ""
 
-#: plug-ins/pagecurl/pagecurl.c:214
+#: plug-ins/pagecurl/pagecurl.c:212
 #, fuzzy
 msgid "<Image>/Filters/Distorts/_Pagecurl..."
 msgstr "/Filtre/Destorsionări"
 
-#: plug-ins/pagecurl/pagecurl.c:491
+#: plug-ins/pagecurl/pagecurl.c:490
 msgid "Pagecurl Effect"
 msgstr ""
 
-#: plug-ins/pagecurl/pagecurl.c:505
+#: plug-ins/pagecurl/pagecurl.c:504
 #, fuzzy
 msgid "Curl Location"
 msgstr "Amplasare:"
 
-#: plug-ins/pagecurl/pagecurl.c:530
+#: plug-ins/pagecurl/pagecurl.c:529
 msgid "Upper Left"
 msgstr ""
 
-#: plug-ins/pagecurl/pagecurl.c:531
+#: plug-ins/pagecurl/pagecurl.c:530
 msgid "Upper Right"
 msgstr ""
 
-#: plug-ins/pagecurl/pagecurl.c:532
+#: plug-ins/pagecurl/pagecurl.c:531
 #, fuzzy
 msgid "Lower Left"
 msgstr "Coboară canalul"
 
-#: plug-ins/pagecurl/pagecurl.c:533
+#: plug-ins/pagecurl/pagecurl.c:532
 msgid "Lower Right"
 msgstr ""
 
-#: plug-ins/pagecurl/pagecurl.c:563
+#: plug-ins/pagecurl/pagecurl.c:562
 msgid "Curl Orientation"
 msgstr ""
 
-#: plug-ins/pagecurl/pagecurl.c:601
+#: plug-ins/pagecurl/pagecurl.c:600
 msgid "Shade under Curl"
 msgstr ""
 
-#: plug-ins/pagecurl/pagecurl.c:612
+#: plug-ins/pagecurl/pagecurl.c:611
 msgid ""
 "Use Current Gradient\n"
 "instead of FG/BG-Color"
 msgstr ""
 
-#: plug-ins/pagecurl/pagecurl.c:625
+#: plug-ins/pagecurl/pagecurl.c:624
 #, fuzzy
 msgid "Curl Opacity"
 msgstr "Opacitate"
 
-#: plug-ins/pagecurl/pagecurl.c:756
+#: plug-ins/pagecurl/pagecurl.c:754
 #, fuzzy
 msgid "Curl Layer"
 msgstr "Scalează stratul"
 
-#: plug-ins/pagecurl/pagecurl.c:998
+#: plug-ins/pagecurl/pagecurl.c:1000
 msgid "Page Curl..."
 msgstr ""
 

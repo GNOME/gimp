@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-23 12:28+0100\n"
+"POT-Creation-Date: 2004-03-04 00:14+0100\n"
 "PO-Revision-Date: 2004-02-23 12:59+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
@@ -2909,7 +2909,9 @@ msgstr "<Image>/Filtri/Distorsione/Piegamento a _curva..."
 
 #: plug-ins/common/curve_bend.c:709
 msgid "Can operate on layers only (but was called on channel or mask)."
-msgstr "Può operare solamente sui livelli (ma è stato chiamato su un canale o una maschera)."
+msgstr ""
+"Può operare solamente sui livelli (ma è stato chiamato su un canale o una "
+"maschera)."
 
 #: plug-ins/common/curve_bend.c:734
 msgid "Cannot operate on empty selections."
@@ -5581,6 +5583,8 @@ msgstr ""
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Errore durante il salvataggio di '%s'. Impossibile salvare l'immagine."
 
+#. Inform the user that we couldn't losslessly save the
+#. * transparency & just use the full palette
 #: plug-ins/common/png.c:1527
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
@@ -7787,6 +7791,7 @@ msgstr ""
 "'%s':\n"
 "Nessun tipo di dati immagini specificato"
 
+#. The image is not black-and-white.
 #: plug-ins/common/xbm.c:959
 msgid ""
 "The image which you are trying to save as an XBM contains more than two "
@@ -9338,6 +9343,7 @@ msgstr "<Image>/Filtri/Artistici/_GIMPressionista..."
 msgid "Painting..."
 msgstr "Pittura..."
 
+#. don't translate the gimprc entry
 #: plug-ins/gimpressionist/gimpressionist.c:64
 #, c-format
 msgid ""

@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.3.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-23 12:12+0100\n"
+"POT-Creation-Date: 2004-03-04 01:58+0100\n"
 "PO-Revision-Date: 2004-02-23 12:23+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
@@ -242,17 +242,17 @@ msgid "Value"
 msgstr "Valore"
 
 #: app/base/base-enums.c:76 app/core/core-enums.c:98
-#: app/tools/gimpcolorbalancetool.c:305
+#: app/tools/gimpcolorbalancetool.c:303
 msgid "Red"
 msgstr "Rosso"
 
 #: app/base/base-enums.c:77 app/core/core-enums.c:99
-#: app/tools/gimpcolorbalancetool.c:312
+#: app/tools/gimpcolorbalancetool.c:310
 msgid "Green"
 msgstr "Verde"
 
 #: app/base/base-enums.c:78 app/core/core-enums.c:100
-#: app/tools/gimpcolorbalancetool.c:319
+#: app/tools/gimpcolorbalancetool.c:317
 msgid "Blue"
 msgstr "Blu"
 
@@ -328,8 +328,8 @@ msgstr "Impossibile espandere $(%s)"
 #: app/core/gimpbrush.c:396 app/core/gimpbrushgenerated.c:379
 #: app/core/gimpbrushpipe.c:349 app/core/gimpgradient.c:352
 #: app/core/gimppalette.c:369 app/core/gimppattern.c:328
-#: app/tools/gimpcurvestool.c:1261 app/tools/gimplevelstool.c:1449
-#: app/widgets/gimptexteditor.c:373 app/xcf/xcf.c:273
+#: app/tools/gimpimagemaptool.c:546 app/widgets/gimptexteditor.c:374
+#: app/xcf/xcf.c:273
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Impossibile aprire '%s' in lettura: %s"
@@ -337,8 +337,8 @@ msgstr "Impossibile aprire '%s' in lettura: %s"
 #: app/config/gimpconfig-utils.c:487 app/config/gimpconfigwriter.c:120
 #: app/core/gimpbrushgenerated.c:130 app/core/gimpgradient.c:498
 #: app/core/gimpgradient.c:584 app/core/gimppalette.c:567 app/gui/themes.c:238
-#: app/tools/gimpcurvestool.c:1260 app/tools/gimplevelstool.c:1448
-#: app/vectors/gimpvectors-export.c:83 app/xcf/xcf.c:330
+#: app/tools/gimpimagemaptool.c:545 app/vectors/gimpvectors-export.c:83
+#: app/xcf/xcf.c:330
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Non è possibile aprire '%s' in scrittura: %s"
@@ -1281,7 +1281,7 @@ msgstr "Ridimensiona Livello"
 msgid "Add Layer Mask"
 msgstr "Aggiungi livello maschera..."
 
-#: app/core/core-enums.c:602 app/core/gimplayer.c:1270
+#: app/core/core-enums.c:602 app/core/gimplayer.c:1271
 msgid "Apply Layer Mask"
 msgstr "Applica livello maschera"
 
@@ -1384,7 +1384,7 @@ msgstr "Cancella livello"
 msgid "Layer Mod"
 msgstr "Mod livello"
 
-#: app/core/core-enums.c:632
+#: app/core/core-enums.c:632 app/core/gimplayer.c:1272
 msgid "Delete Layer Mask"
 msgstr "Elimina livello maschera"
 
@@ -2101,45 +2101,49 @@ msgstr "Il tracciato non può essere abbassato ulteriormente."
 msgid "Lower Path"
 msgstr "Abbassa tracciato"
 
-#: app/core/gimpimagefile.c:458
+#: app/core/gimpimagefile.c:453
 msgid "Remote image"
 msgstr "Immagine remota"
 
-#: app/core/gimpimagefile.c:463
-msgid "Could not open"
-msgstr "Impossibile aprire"
+#: app/core/gimpimagefile.c:458 app/gui/preferences-dialog.c:1244
+msgid "Folder"
+msgstr "Cartella"
 
-#: app/core/gimpimagefile.c:484
+#: app/core/gimpimagefile.c:463
+msgid "Special File"
+msgstr ""
+
+#: app/core/gimpimagefile.c:490
 msgid "No preview available"
 msgstr "Anteprima non disponibile"
 
-#: app/core/gimpimagefile.c:488
+#: app/core/gimpimagefile.c:494
 msgid "Loading preview ..."
 msgstr "Caricamento anteprima ..."
 
-#: app/core/gimpimagefile.c:492
+#: app/core/gimpimagefile.c:498
 msgid "Preview is out of date"
 msgstr "L'anteprima non è aggiornata"
 
-#: app/core/gimpimagefile.c:496
+#: app/core/gimpimagefile.c:502
 msgid "Cannot create preview"
 msgstr "Impossibile creare l'anteprima"
 
-#: app/core/gimpimagefile.c:503 app/gui/info-window.c:503
+#: app/core/gimpimagefile.c:509 app/gui/info-window.c:503
 #, c-format
 msgid "%d x %d pixels"
 msgstr "%d x %d pixel"
 
-#: app/core/gimpimagefile.c:518
+#: app/core/gimpimagefile.c:524
 msgid "1 Layer"
 msgstr "Livello 1"
 
-#: app/core/gimpimagefile.c:520
+#: app/core/gimpimagefile.c:526
 #, c-format
 msgid "%d Layers"
 msgstr "%d livelli"
 
-#: app/core/gimpimagefile.c:557
+#: app/core/gimpimagefile.c:567
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Impossibile aprire la miniatura '%s': %s."
@@ -2221,11 +2225,11 @@ msgid "Transfer Alpha to Mask"
 msgstr "Trasferimento alfa su maschera"
 
 #. Push the layer on the undo stack
-#: app/core/gimplayer.c:1374
+#: app/core/gimplayer.c:1376
 msgid "Add Alpha Channel"
 msgstr "Aggiunta canale alpha"
 
-#: app/core/gimplayer.c:1404
+#: app/core/gimplayer.c:1406
 msgid "Layer to Image Size"
 msgstr "Livello a dimensione dell'immagine"
 
@@ -2268,6 +2272,7 @@ msgstr ""
 "Caricamento file tavolozza '%s': numero di colonne non valido alla riga %d. "
 "Uso il valore predefinito."
 
+#. maybe we should just abort?
 #: app/core/gimppalette.c:493
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
@@ -2511,12 +2516,12 @@ msgstr "/Come in _preferenze"
 msgid "Toggle QuickMask"
 msgstr "Abilita/disabilita quickmask"
 
-#: app/display/gimpdisplayshell.c:1385
+#: app/display/gimpdisplayshell.c:1388
 #, c-format
 msgid "Close %s?"
 msgstr "Chiudere %s?"
 
-#: app/display/gimpdisplayshell.c:1387
+#: app/display/gimpdisplayshell.c:1390
 #, c-format
 msgid "Changes were made to '%s'. Close anyway?"
 msgstr "Sono stati effettuati cambiamenti al file '%s'. Chiudere ugualmente?"
@@ -2615,7 +2620,7 @@ msgstr "Aggiusta cornice"
 msgid "Progress"
 msgstr "Operazione in corso"
 
-#: app/display/gimpprogress.c:157 app/display/gimpprogress.c:219
+#: app/display/gimpprogress.c:157 app/display/gimpprogress.c:217
 msgid "Please wait..."
 msgstr "Attendere..."
 
@@ -2631,11 +2636,11 @@ msgstr "Tipo di file sconosciuto"
 msgid "Not a regular file"
 msgstr "Non è un file regolare"
 
-#: app/file/file-open.c:156
+#: app/file/file-open.c:157
 msgid "Plug-In returned SUCCESS but did not return an image"
 msgstr "Il plug-in è ritornato con successo ma non ha restituito un'immagine"
 
-#: app/file/file-open.c:164
+#: app/file/file-open.c:165
 msgid "Plug-In could not open image"
 msgstr "Il plug-in non può aprire l'immagine"
 
@@ -3263,7 +3268,7 @@ msgstr "/Salva _tutti gli errori in un file..."
 msgid "/Save _Selection to File..."
 msgstr "/Salva la selezione in un file..."
 
-#: app/gui/file-commands.c:194 app/gui/file-open-dialog.c:692
+#: app/gui/file-commands.c:189 app/gui/file-open-dialog.c:244
 #: app/widgets/gimpdnd.c:1286 app/widgets/gimpdocumentview.c:468
 #, c-format
 msgid ""
@@ -3275,7 +3280,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/gui/file-commands.c:255 app/gui/file-save-dialog.c:393
+#: app/gui/file-commands.c:234 app/gui/file-save-dialog.c:335
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -3286,19 +3291,19 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/gui/file-commands.c:296
+#: app/gui/file-commands.c:275
 msgid "Create New Template"
 msgstr "Crea nuovo modello"
 
-#: app/gui/file-commands.c:300
+#: app/gui/file-commands.c:279
 msgid "Enter a name for this template"
 msgstr "Inserire un nome per questo modello"
 
-#: app/gui/file-commands.c:323
+#: app/gui/file-commands.c:302
 msgid "Revert failed. No file name associated with this image."
 msgstr "Recupero fallito. Nessun nome file associato all'immagine"
 
-#: app/gui/file-commands.c:336
+#: app/gui/file-commands.c:315
 #, c-format
 msgid ""
 "Revert '%s' to\n"
@@ -3311,15 +3316,15 @@ msgstr ""
 "\n"
 "Perderai tutti i cambiamenti, incluse le informazioni di annullamento."
 
-#: app/gui/file-commands.c:344
+#: app/gui/file-commands.c:323
 msgid "Revert Image"
 msgstr "Ripristina immagine"
 
-#: app/gui/file-commands.c:412
+#: app/gui/file-commands.c:391
 msgid "(Unnamed Template)"
 msgstr "(template senza nome)"
 
-#: app/gui/file-commands.c:486
+#: app/gui/file-commands.c:465
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -3329,10 +3334,6 @@ msgstr ""
 "Ripristino a '%s' fallito:\n"
 "\n"
 "%s"
-
-#: app/gui/file-dialog-utils.c:112
-msgid "Determine File _Type:"
-msgstr "Determina _tipo file:"
 
 #: app/gui/file-new-dialog.c:96 app/gui/preferences-dialog.c:1084
 #: app/gui/preferences-dialog.c:1087
@@ -3370,45 +3371,23 @@ msgstr ""
 msgid "Confirm Image Size"
 msgstr "Conferma dimensione immagine"
 
-#: app/gui/file-open-dialog.c:160 app/gui/file-open-dialog.c:187
+#: app/gui/file-open-dialog.c:105
 msgid "Open Image"
 msgstr "Apri immagine"
-
-#: app/gui/file-open-dialog.c:237
-#, c-format
-msgid ""
-"Click to update preview\n"
-"%s  Click to force update even if preview is up-to-date"
-msgstr ""
-"Fare clic per aggiornare l'anteprima\n"
-"%s  fare clic per forzare l'aggiornamento anche se l'anteprima è aggiornata"
-
-#: app/gui/file-open-dialog.c:254 app/tools/gimpimagemaptool.c:240
-msgid "_Preview"
-msgstr "Ante_prima"
-
-#: app/gui/file-open-dialog.c:304 app/gui/file-open-dialog.c:412
-msgid "No Selection"
-msgstr "Nessuna selezione"
-
-#: app/gui/file-open-dialog.c:488 app/gui/file-open-dialog.c:519
-#, c-format
-msgid "Thumbnail %d of %d"
-msgstr "Miniatura %d di %d"
 
 #: app/gui/file-open-menu.c:46
 msgid "/Automatic"
 msgstr "/Automatico"
 
-#: app/gui/file-save-dialog.c:128 app/gui/file-save-dialog.c:212
+#: app/gui/file-save-dialog.c:101 app/gui/file-save-dialog.c:151
 msgid "Save Image"
 msgstr "Salva immagine"
 
-#: app/gui/file-save-dialog.c:182
+#: app/gui/file-save-dialog.c:132
 msgid "Save a Copy of the Image"
 msgstr "Salva una copia dell'immagine"
 
-#: app/gui/file-save-dialog.c:312
+#: app/gui/file-save-dialog.c:257
 #, c-format
 msgid ""
 "File '%s' exists.\n"
@@ -3417,7 +3396,7 @@ msgstr ""
 "Il file '%s' esiste.\n"
 "Sovrascriverlo?"
 
-#: app/gui/file-save-dialog.c:317
+#: app/gui/file-save-dialog.c:261
 msgid "File Exists!"
 msgstr "File esistente!"
 
@@ -4713,30 +4692,30 @@ msgstr "/File/C_ombina"
 msgid "/Filters/To_ys"
 msgstr "/Filtri/_Giocattoli"
 
-#: app/gui/image-menu.c:1465
+#: app/gui/image-menu.c:1466
 #, c-format
 msgid "_Undo %s"
 msgstr "Ann_ulla %s"
 
-#: app/gui/image-menu.c:1470
+#: app/gui/image-menu.c:1471
 #, c-format
 msgid "_Redo %s"
 msgstr "_Ripeti %s"
 
-#: app/gui/image-menu.c:1474
+#: app/gui/image-menu.c:1475
 msgid "_Undo"
 msgstr "Ann_ulla"
 
-#: app/gui/image-menu.c:1475
+#: app/gui/image-menu.c:1476
 msgid "_Redo"
 msgstr "_Ripeti"
 
-#: app/gui/image-menu.c:1743
+#: app/gui/image-menu.c:1744
 #, c-format
 msgid "Other (%s) ..."
 msgstr "Altro (%s) ..."
 
-#: app/gui/image-menu.c:1752
+#: app/gui/image-menu.c:1753
 #, c-format
 msgid "_Zoom (%s)"
 msgstr "_Zoom (%s)"
@@ -5557,10 +5536,6 @@ msgstr "Seleziona tema"
 msgid "Theme"
 msgstr "Tema"
 
-#: app/gui/preferences-dialog.c:1244
-msgid "Folder"
-msgstr "Cartella"
-
 #: app/gui/preferences-dialog.c:1282
 msgid "Reload C_urrent Theme"
 msgstr "Ricarica il tema c_orrente"
@@ -6181,15 +6156,15 @@ msgstr ""
 msgid "Calibrate Monitor Resolution"
 msgstr "Calibratura risoluzione monitor"
 
-#: app/gui/resolution-calibrate-dialog.c:195
+#: app/gui/resolution-calibrate-dialog.c:196
 msgid "Measure the rulers and enter their lengths below."
 msgstr "Misura i righelli e inserisci sotto la loro lunghezza."
 
-#: app/gui/resolution-calibrate-dialog.c:217
+#: app/gui/resolution-calibrate-dialog.c:218
 msgid "_Horizontal:"
 msgstr "_Orizzontale:"
 
-#: app/gui/resolution-calibrate-dialog.c:222
+#: app/gui/resolution-calibrate-dialog.c:223
 msgid "_Vertical:"
 msgstr "_Verticale:"
 
@@ -6854,7 +6829,9 @@ msgstr "Fare clic su \"Continua\" per avviare GIMP."
 msgid ""
 "<b>To display images in their natural size, GIMP needs to know your monitor "
 "resolution.</b>"
-msgstr "<b>Per visualizzare le immagini nella loro naturale dimensione, GIMP deve sapere la risoluzione del video.</b>"
+msgstr ""
+"<b>Per visualizzare le immagini nella loro naturale dimensione, GIMP deve "
+"sapere la risoluzione del video.</b>"
 
 #: app/gui/user-install-dialog.c:973
 msgid "Aborting Installation..."
@@ -6906,7 +6883,9 @@ msgstr "Cartella di swap:"
 msgid ""
 "GIMP can obtain this information from the windowing system.  However, "
 "usually this does not give useful values."
-msgstr "GIMP può ottenere queste informazioni dal gestore finestre. Comunque, normalmente non vengono riscontrati valori utili."
+msgstr ""
+"GIMP può ottenere queste informazioni dal gestore finestre. Comunque, "
+"normalmente non vengono riscontrati valori utili."
 
 #: app/gui/user-install-dialog.c:1263
 #, c-format
@@ -6921,7 +6900,9 @@ msgstr "Oppure è possibile impostare la risoluzione del video manualmente."
 msgid ""
 "You can also press the \"Calibrate\" button to open a window which lets you "
 "determine your monitor resolution interactively."
-msgstr "Premendo il pulsante \"Calibratura\" si aprirà una finestra con la quale potrete determinare la risoluzione del video in maniera interattiva."
+msgstr ""
+"Premendo il pulsante \"Calibratura\" si aprirà una finestra con la quale "
+"potrete determinare la risoluzione del video in maniera interattiva."
 
 #: app/gui/user-install-dialog.c:1335
 msgid "Calibrate"
@@ -7114,7 +7095,7 @@ msgid "Brightness-Contrast"
 msgstr "Liminosità-Contrasto"
 
 #: app/pdb/color_cmds.c:266 app/pdb/color_cmds.c:384
-#: app/tools/gimplevelstool.c:165
+#: app/tools/gimplevelstool.c:155
 msgid "Levels"
 msgstr "Livelli"
 
@@ -7123,7 +7104,7 @@ msgid "Posterize"
 msgstr "Posterizza"
 
 #: app/pdb/color_cmds.c:722 app/pdb/color_cmds.c:839
-#: app/tools/gimpcurvestool.c:149
+#: app/tools/gimpcurvestool.c:137
 msgid "Curves"
 msgstr "Curve"
 
@@ -7494,7 +7475,7 @@ msgstr "Rapporto di dimensioni fisse"
 msgid "Transform Selection"
 msgstr "Trasforma la selezione"
 
-#: app/tools/tools-enums.c:75 app/vectors/gimpvectors.c:529
+#: app/tools/tools-enums.c:75 app/vectors/gimpvectors.c:527
 msgid "Transform Path"
 msgstr "Trasforma tracciato"
 
@@ -7601,19 +7582,19 @@ msgstr "Regola luminosità e contrasto"
 msgid "/Tools/Color Tools/B_rightness-Contrast..."
 msgstr "/Strumenti/Strumenti di colore/Luminosità-Cont_rasto..."
 
-#: app/tools/gimpbrightnesscontrasttool.c:148
+#: app/tools/gimpbrightnesscontrasttool.c:138
 msgid "Adjust Brightness and Contrast"
 msgstr "Regola luminosità e contrasto"
 
-#: app/tools/gimpbrightnesscontrasttool.c:183
+#: app/tools/gimpbrightnesscontrasttool.c:181
 msgid "Brightness-Contrast does not operate on indexed layers."
 msgstr "Luminosità e contrasto non operano su livelli indicizzati."
 
-#: app/tools/gimpbrightnesscontrasttool.c:238
+#: app/tools/gimpbrightnesscontrasttool.c:236
 msgid "_Brightness:"
 msgstr "_Luminosità:"
 
-#: app/tools/gimpbrightnesscontrasttool.c:253
+#: app/tools/gimpbrightnesscontrasttool.c:251
 msgid "Con_trast:"
 msgstr "Con_trasto:"
 
@@ -7707,39 +7688,39 @@ msgstr "Regola il bilanciamento colore"
 msgid "/Tools/Color Tools/Color _Balance..."
 msgstr "/Strumenti/Strumenti di colore/_Bilanciamento colore..."
 
-#: app/tools/gimpcolorbalancetool.c:159
+#: app/tools/gimpcolorbalancetool.c:149
 msgid "Adjust Color Balance"
 msgstr "Regola il bilanciamento del colore"
 
-#: app/tools/gimpcolorbalancetool.c:195
+#: app/tools/gimpcolorbalancetool.c:193
 msgid "Color balance operates only on RGB color layers."
 msgstr "Il bilanciamento del colore opera solo su livelli con colore RGB."
 
-#: app/tools/gimpcolorbalancetool.c:278
+#: app/tools/gimpcolorbalancetool.c:276
 msgid "Select Range to Modify"
 msgstr "Seleziona campo di modifica"
 
-#: app/tools/gimpcolorbalancetool.c:287
+#: app/tools/gimpcolorbalancetool.c:285
 msgid "Modify Selected Range's Color Levels"
 msgstr "Modifica il campo di colori selezionato"
 
-#: app/tools/gimpcolorbalancetool.c:305
+#: app/tools/gimpcolorbalancetool.c:303
 msgid "Cyan"
 msgstr "Ciano"
 
-#: app/tools/gimpcolorbalancetool.c:312
+#: app/tools/gimpcolorbalancetool.c:310
 msgid "Magenta"
 msgstr "Magenta"
 
-#: app/tools/gimpcolorbalancetool.c:319
+#: app/tools/gimpcolorbalancetool.c:317
 msgid "Yellow"
 msgstr "Giallo"
 
-#: app/tools/gimpcolorbalancetool.c:329
+#: app/tools/gimpcolorbalancetool.c:327
 msgid "R_eset Range"
 msgstr "R_eimposta campo"
 
-#: app/tools/gimpcolorbalancetool.c:338
+#: app/tools/gimpcolorbalancetool.c:336
 msgid "Preserve _Luminosity"
 msgstr "Preserva _luminosità"
 
@@ -7755,27 +7736,27 @@ msgstr "Colora l'immagine"
 msgid "/Tools/Color Tools/Colori_ze..."
 msgstr "/Strumenti/Strumenti di colore/Colora_zione..."
 
-#: app/tools/gimpcolorizetool.c:162
+#: app/tools/gimpcolorizetool.c:152
 msgid "Colorize the Image"
 msgstr "Colora l'immagine"
 
-#: app/tools/gimpcolorizetool.c:197
+#: app/tools/gimpcolorizetool.c:195
 msgid "Colorize operates only on RGB color layers."
 msgstr "Colora opera solo su livelli a colori RGB."
 
-#: app/tools/gimpcolorizetool.c:237
+#: app/tools/gimpcolorizetool.c:235
 msgid "Select Color"
 msgstr "Selezione colore"
 
-#: app/tools/gimpcolorizetool.c:256 app/tools/gimphuesaturationtool.c:365
+#: app/tools/gimpcolorizetool.c:254 app/tools/gimphuesaturationtool.c:363
 msgid "_Hue:"
 msgstr "_Tonalità:"
 
-#: app/tools/gimpcolorizetool.c:270 app/tools/gimphuesaturationtool.c:393
+#: app/tools/gimpcolorizetool.c:268 app/tools/gimphuesaturationtool.c:391
 msgid "_Saturation:"
 msgstr "_Saturazione:"
 
-#: app/tools/gimpcolorizetool.c:284 app/tools/gimphuesaturationtool.c:379
+#: app/tools/gimpcolorizetool.c:282 app/tools/gimphuesaturationtool.c:377
 msgid "_Lightness:"
 msgstr "_Luminosità:"
 
@@ -7882,56 +7863,56 @@ msgstr "Da selezione"
 msgid "Auto Shrink"
 msgstr "Riduzione automatica"
 
-#: app/tools/gimpcurvestool.c:150
+#: app/tools/gimpcurvestool.c:138
 msgid "Adjust color curves"
 msgstr "Regola le curve di colore"
 
-#: app/tools/gimpcurvestool.c:151
+#: app/tools/gimpcurvestool.c:139
 msgid "/Tools/Color Tools/_Curves..."
 msgstr "/Strumenti/Strumenti di colore/_Curve..."
 
-#: app/tools/gimpcurvestool.c:221
+#: app/tools/gimpcurvestool.c:198
 msgid "Adjust Color Curves"
 msgstr "Regola le curve di colore"
 
-#: app/tools/gimpcurvestool.c:284
+#: app/tools/gimpcurvestool.c:200
+msgid "Load Curves"
+msgstr "Apri curve"
+
+#: app/tools/gimpcurvestool.c:201
+msgid "Save Curves"
+msgstr "Salva curve"
+
+#: app/tools/gimpcurvestool.c:277
 msgid "Curves for indexed layers cannot be adjusted."
 msgstr "Le curve per il livelli a colori indicizzati non sono modificabili."
 
-#: app/tools/gimpcurvestool.c:480 app/tools/gimplevelstool.c:416
+#: app/tools/gimpcurvestool.c:473 app/tools/gimplevelstool.c:408
 #: app/widgets/gimphistogrameditor.c:148
 msgid "Channel:"
 msgstr "Canale:"
 
-#: app/tools/gimpcurvestool.c:494 app/tools/gimplevelstool.c:430
+#: app/tools/gimpcurvestool.c:487 app/tools/gimplevelstool.c:422
 msgid "R_eset Channel"
 msgstr "R_eimposta canale"
 
 #. Horizontal button box for load / save
-#: app/tools/gimpcurvestool.c:592 app/tools/gimplevelstool.c:638
+#: app/tools/gimpcurvestool.c:585 app/tools/gimplevelstool.c:630
 msgid "All Channels"
 msgstr "Tutti i canali"
 
-#: app/tools/gimpcurvestool.c:606
+#: app/tools/gimpcurvestool.c:599
 msgid "Read curves settings from file"
 msgstr "Lettura impostazioni curve da file"
 
-#: app/tools/gimpcurvestool.c:616
+#: app/tools/gimpcurvestool.c:605
 msgid "Save curves settings to file"
 msgstr "Salvataggio impostazioni curve su file"
 
 #. The radio box for selecting the curve type
-#: app/tools/gimpcurvestool.c:624
+#: app/tools/gimpcurvestool.c:609
 msgid "Curve Type"
 msgstr "Tipo di curva"
-
-#: app/tools/gimpcurvestool.c:1185
-msgid "Load Curves"
-msgstr "Apri curve"
-
-#: app/tools/gimpcurvestool.c:1204
-msgid "Save Curves"
-msgstr "Salva curve"
 
 #: app/tools/gimpdodgeburntool.c:71
 msgid "Dodge or Burn strokes"
@@ -8043,57 +8024,61 @@ msgstr "Regola tonalità e saturazione"
 msgid "/Tools/Color Tools/Hue-_Saturation..."
 msgstr "/Strumenti/Strumenti di colore/Tonalità-_Saturazione..."
 
-#: app/tools/gimphuesaturationtool.c:176
+#: app/tools/gimphuesaturationtool.c:166
 msgid "Adjust Hue / Lightness / Saturation"
 msgstr "Regola tonalità / luminosità / saturazione"
 
-#: app/tools/gimphuesaturationtool.c:212
+#: app/tools/gimphuesaturationtool.c:210
 msgid "Hue-Saturation operates only on RGB color layers."
 msgstr "Tonalità-saturazione operano solamente su livelli RGB."
 
-#: app/tools/gimphuesaturationtool.c:265
+#: app/tools/gimphuesaturationtool.c:263
 msgid "_Master"
 msgstr "Principale"
 
-#: app/tools/gimphuesaturationtool.c:266
+#: app/tools/gimphuesaturationtool.c:264
 msgid "_R"
 msgstr "_R"
 
-#: app/tools/gimphuesaturationtool.c:267
+#: app/tools/gimphuesaturationtool.c:265
 msgid "_Y"
 msgstr "_Y"
 
-#: app/tools/gimphuesaturationtool.c:268
+#: app/tools/gimphuesaturationtool.c:266
 msgid "_G"
 msgstr "_G"
 
-#: app/tools/gimphuesaturationtool.c:269
+#: app/tools/gimphuesaturationtool.c:267
 msgid "_C"
 msgstr "_C"
 
-#: app/tools/gimphuesaturationtool.c:270
+#: app/tools/gimphuesaturationtool.c:268
 msgid "_B"
 msgstr "_B"
 
-#: app/tools/gimphuesaturationtool.c:271
+#: app/tools/gimphuesaturationtool.c:269
 msgid "_M"
 msgstr "_M"
 
-#: app/tools/gimphuesaturationtool.c:274
+#: app/tools/gimphuesaturationtool.c:272
 msgid "Select Primary Color to Modify"
 msgstr "Seleziona colore primario da modificare"
 
-#: app/tools/gimphuesaturationtool.c:303
+#: app/tools/gimphuesaturationtool.c:301
 msgid "Modify all colors"
 msgstr "Modifica tutti i colori"
 
-#: app/tools/gimphuesaturationtool.c:346
+#: app/tools/gimphuesaturationtool.c:344
 msgid "Modify Selected Color"
 msgstr "Modifica colore selezionato"
 
-#: app/tools/gimphuesaturationtool.c:409
+#: app/tools/gimphuesaturationtool.c:407
 msgid "R_eset Color"
 msgstr "R_eimposta colore"
+
+#: app/tools/gimpimagemaptool.c:242
+msgid "_Preview"
+msgstr "Ante_prima"
 
 #. adjust sliders
 #: app/tools/gimpinkoptions.c:257
@@ -8155,71 +8140,71 @@ msgstr "Seleziona aree dall'immagine"
 msgid "/Tools/Selection Tools/_Intelligent Scissors"
 msgstr "/Strumenti/Strumenti di selezione/Forbici _intelligenti"
 
-#: app/tools/gimplevelstool.c:166
+#: app/tools/gimplevelstool.c:156
 msgid "Adjust color levels"
 msgstr "Regola i livelli colore"
 
-#: app/tools/gimplevelstool.c:167
+#: app/tools/gimplevelstool.c:157
 msgid "/Tools/Color Tools/_Levels..."
 msgstr "/Strumenti/Strumenti di colore/_Livelli..."
 
-#: app/tools/gimplevelstool.c:235
+#: app/tools/gimplevelstool.c:215
 msgid "Adjust Color Levels"
 msgstr "Regola i livelli colore"
 
-#: app/tools/gimplevelstool.c:286
+#: app/tools/gimplevelstool.c:217
+msgid "Load Levels"
+msgstr "Apri livelli"
+
+#: app/tools/gimplevelstool.c:218
+msgid "Save Levels"
+msgstr "Salva livelli"
+
+#: app/tools/gimplevelstool.c:278
 msgid "Levels for indexed layers cannot be adjusted."
 msgstr "I livelli per i livelli a colori indicizzati non sono modificabili."
 
-#: app/tools/gimplevelstool.c:358
+#: app/tools/gimplevelstool.c:350
 msgid "Pick Black Point"
 msgstr "Prendi il punto nero"
 
-#: app/tools/gimplevelstool.c:362
+#: app/tools/gimplevelstool.c:354
 msgid "Pick Gray Point"
 msgstr "Prendi il punto grigio"
 
-#: app/tools/gimplevelstool.c:366
+#: app/tools/gimplevelstool.c:358
 msgid "Pick White Point"
 msgstr "Prendi punto bianco"
 
 #. Input levels frame
-#: app/tools/gimplevelstool.c:440
+#: app/tools/gimplevelstool.c:432
 msgid "Input Levels"
 msgstr "Livelli di ingresso"
 
-#: app/tools/gimplevelstool.c:536
+#: app/tools/gimplevelstool.c:528
 msgid "Gamma"
 msgstr "Gamma"
 
 #. Output levels frame
-#: app/tools/gimplevelstool.c:566
+#: app/tools/gimplevelstool.c:558
 msgid "Output Levels"
 msgstr "Livelli di uscita"
 
-#: app/tools/gimplevelstool.c:657
+#: app/tools/gimplevelstool.c:649
 msgid "Read levels settings from file"
 msgstr "Leggi i livelli da file"
 
-#: app/tools/gimplevelstool.c:667
+#: app/tools/gimplevelstool.c:655
 msgid "Save levels settings to file"
 msgstr "Salva i livelli all'uscita"
 
-#: app/tools/gimplevelstool.c:680
+#: app/tools/gimplevelstool.c:663
 msgid "_Auto"
 msgstr "_Auto"
 
-#: app/tools/gimplevelstool.c:682
+#: app/tools/gimplevelstool.c:665
 msgid "Adjust levels automatically"
 msgstr "Regola livelli automaticamente"
-
-#: app/tools/gimplevelstool.c:1373
-msgid "Load Levels"
-msgstr "Apri livelli"
-
-#: app/tools/gimplevelstool.c:1392
-msgid "Save Levels"
-msgstr "Salva livelli"
 
 #: app/tools/gimpmagnifyoptions.c:225
 msgid "Allow Window Resizing"
@@ -8397,15 +8382,15 @@ msgstr "Riduci immagine ad un numero fissato di colori"
 msgid "/Tools/Color Tools/_Posterize..."
 msgstr "/Immagine/Colori/_Posterizzazione..."
 
-#: app/tools/gimpposterizetool.c:141
+#: app/tools/gimpposterizetool.c:131
 msgid "Posterize (Reduce Number of Colors)"
 msgstr "Posterizzazione (riduzione numero di colori)"
 
-#: app/tools/gimpposterizetool.c:175
+#: app/tools/gimpposterizetool.c:173
 msgid "Posterize does not operate on indexed layers."
 msgstr "Posterizzazione non possibile su livelli indicizzati."
 
-#: app/tools/gimpposterizetool.c:225
+#: app/tools/gimpposterizetool.c:223
 msgid "Posterize _Levels:"
 msgstr "_Livelli di posterizzazione:"
 
@@ -8613,15 +8598,15 @@ msgstr "Riduci immagine a due colori utilizzando una soglia"
 msgid "/Tools/Color Tools/_Threshold..."
 msgstr "/Strumenti/Strumenti di colore/Soglia..."
 
-#: app/tools/gimpthresholdtool.c:157
+#: app/tools/gimpthresholdtool.c:147
 msgid "Apply Threshold"
 msgstr "Applica soglia"
 
-#: app/tools/gimpthresholdtool.c:200
+#: app/tools/gimpthresholdtool.c:198
 msgid "Threshold does not operate on indexed layers."
 msgstr "La soglia non opera su livelli indicizzati."
 
-#: app/tools/gimpthresholdtool.c:258
+#: app/tools/gimpthresholdtool.c:256
 msgid "Threshold Range:"
 msgstr "Campo soglia: "
 
@@ -8849,19 +8834,19 @@ msgstr "Rinomina tracciato"
 msgid "Scale Path"
 msgstr "Scala tracciato"
 
-#: app/vectors/gimpvectors.c:426
+#: app/vectors/gimpvectors.c:425
 msgid "Resize Path"
 msgstr "Ridimensiona tracciato"
 
-#: app/vectors/gimpvectors.c:457
+#: app/vectors/gimpvectors.c:455
 msgid "Flip Path"
 msgstr "Rifletti tracciato"
 
-#: app/vectors/gimpvectors.c:500
+#: app/vectors/gimpvectors.c:498
 msgid "Rotate Path"
 msgstr "Ruota tracciato"
 
-#: app/vectors/gimpvectors.c:558
+#: app/vectors/gimpvectors.c:556
 msgid "Cannot stroke empty path."
 msgstr "Impossibile tratteggiare un tracciato vuoto."
 
@@ -8877,6 +8862,11 @@ msgstr "Nessun tracciato trovato in '%s'"
 #: app/vectors/gimpvectors-import.c:294
 msgid "No paths found in the buffer"
 msgstr "Nessun tracciato trovato nel buffer"
+
+#: app/vectors/gimpvectors-import.c:304
+#, fuzzy, c-format
+msgid "Failed to import paths from '%s': %s"
+msgstr "Impossibile leggere %d byte da '%s': %s"
 
 #: app/widgets/gimpbrusheditor.c:143
 msgid "Hardness:"
@@ -9218,6 +9208,10 @@ msgstr ""
 "Errore durante la scrittura del file '%s':\n"
 "%s"
 
+#: app/widgets/gimpfiledialog.c:189
+msgid "Determine File _Type:"
+msgstr "Determina _tipo file:"
+
 #: app/widgets/gimpfontview.c:133
 msgid "Rescan Font List"
 msgstr "Scansiona elenco caratteri"
@@ -9398,11 +9392,11 @@ msgstr "Percentile:"
 msgid "Intensity Range:"
 msgstr "Campo di intensità:"
 
-#: app/widgets/gimpimagedock.c:203
+#: app/widgets/gimpimagedock.c:211
 msgid "Auto"
 msgstr "Auto"
 
-#: app/widgets/gimpimagedock.c:214
+#: app/widgets/gimpimagedock.c:222
 msgid ""
 "When enabled the dialog automatically follows the image you are working on."
 msgstr ""
@@ -9603,7 +9597,7 @@ msgstr "Cancella tutto il testo"
 msgid "Open Text File (UTF-8)"
 msgstr "Apri file di testo (UTF-8)"
 
-#: app/widgets/gimptexteditor.c:402
+#: app/widgets/gimptexteditor.c:403
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Dato UTF-8 non valido nel file '%s'"
@@ -9908,7 +9902,7 @@ msgstr "Finestra normale"
 msgid "Utility Window"
 msgstr "Finestra utilità"
 
-#: app/xcf/xcf-load.c:294
+#: app/xcf/xcf-load.c:295
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -9946,3 +9940,20 @@ msgstr "ERRORE XCF: riscontrata versione file XCF %d non supportata"
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
 msgstr "Crea e modifica immagini o fotografie"
+
+#~ msgid "Could not open"
+#~ msgstr "Impossibile aprire"
+
+#~ msgid ""
+#~ "Click to update preview\n"
+#~ "%s  Click to force update even if preview is up-to-date"
+#~ msgstr ""
+#~ "Fare clic per aggiornare l'anteprima\n"
+#~ "%s  fare clic per forzare l'aggiornamento anche se l'anteprima è "
+#~ "aggiornata"
+
+#~ msgid "No Selection"
+#~ msgstr "Nessuna selezione"
+
+#~ msgid "Thumbnail %d of %d"
+#~ msgstr "Miniatura %d di %d"
