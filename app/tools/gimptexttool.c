@@ -1,6 +1,9 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * GimpTextTool
+ * Copyright (C) 2002-2004  Sven Neumann <sven@gimp.org>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -108,6 +111,7 @@ static void      gimp_text_tool_create_layer   (GimpTextTool      *text_tool,
                                                 GimpText          *text);
 
 static void      gimp_text_tool_editor         (GimpTextTool      *text_tool);
+static void      gimp_text_tool_editor_update  (GimpTextTool      *text_tool);
 static void      gimp_text_tool_text_changed   (GimpTextEditor    *editor,
                                                 GimpTextTool      *text_tool);
 
@@ -346,6 +350,9 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
 
   g_return_if_fail (text == NULL || (layer != NULL && layer->text == text));
 
+  if (! text && text_tool->editor)
+    gtk_widget_destroy (text_tool->editor);
+
   if (text_tool->text != text)
     {
       GimpTextOptions *options;
@@ -370,9 +377,6 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
                                                     gimp_text_tool_create_vectors,
                                                     text_tool);
             }
-
-          if (text_tool->editor)
-            gtk_widget_destroy (text_tool->editor);
 
           g_object_unref (text_tool->text);
           text_tool->text = NULL;
@@ -402,6 +406,9 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
                                         text_tool);
               gtk_widget_set_sensitive (button, TRUE);
             }
+
+          if (text_tool->editor)
+            gimp_text_tool_editor_update (text_tool);
         }
     }
 
@@ -462,47 +469,29 @@ gimp_text_tool_text_notify (GimpText     *text,
 {
   g_return_if_fail (text == text_tool->text);
 
-   if ((pspec->flags & G_PARAM_READWRITE) == G_PARAM_READWRITE)
-     {
-       GValue value = { 0, };
-
-       g_value_init (&value, pspec->value_type);
-
-       g_object_get_property (G_OBJECT (text), pspec->name, &value);
-
-       g_signal_handlers_block_by_func (text_tool->proxy,
-                                        gimp_text_tool_proxy_notify,
-                                        text_tool);
-
-       g_object_set_property (G_OBJECT (text_tool->proxy),
-                              pspec->name, &value);
-
-       g_signal_handlers_unblock_by_func (text_tool->proxy,
-                                          gimp_text_tool_proxy_notify,
-                                          text_tool);
-
-       g_value_unset (&value);
-     }
-
-  if (text_tool->editor && strcmp (pspec->name, "text") == 0)
+  if ((pspec->flags & G_PARAM_READWRITE) == G_PARAM_READWRITE)
     {
-      gchar *str;
+      GValue value = { 0, };
 
-      g_object_get (text, "text", &str, NULL);
+      g_value_init (&value, pspec->value_type);
 
-      g_signal_handlers_block_by_func (text_tool->editor,
-                                       gimp_text_tool_text_changed,
+      g_object_get_property (G_OBJECT (text), pspec->name, &value);
+
+      g_signal_handlers_block_by_func (text_tool->proxy,
+                                       gimp_text_tool_proxy_notify,
                                        text_tool);
 
-      gimp_text_editor_set_text (GIMP_TEXT_EDITOR (text_tool->editor),
-                                 str, -1);
+      g_object_set_property (G_OBJECT (text_tool->proxy), pspec->name, &value);
 
-      g_signal_handlers_unblock_by_func (text_tool->editor,
-                                         gimp_text_tool_text_changed,
+      g_signal_handlers_unblock_by_func (text_tool->proxy,
+                                         gimp_text_tool_proxy_notify,
                                          text_tool);
 
-      g_free (str);
+      g_value_unset (&value);
     }
+
+  if (text_tool->editor && strcmp (pspec->name, "text") == 0)
+    gimp_text_tool_editor_update (text_tool);
 }
 
 static gboolean
@@ -709,7 +698,7 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
 
   gimp_image_flush (image);
 
-  gimp_text_tool_set_layer (text_tool, layer);
+  gimp_text_tool_set_drawable (text_tool, GIMP_DRAWABLE (layer), FALSE);
 }
 
 static void
@@ -744,6 +733,29 @@ gimp_text_tool_editor (GimpTextTool *text_tool)
                            text_tool, 0);
 
   gtk_widget_show (text_tool->editor);
+}
+
+static void
+gimp_text_tool_editor_update (GimpTextTool *text_tool)
+{
+  gchar *str = NULL;
+
+  if (! text_tool->editor)
+    return;
+
+  if (text_tool->text)
+    g_object_get (text_tool->text, "text", &str, NULL);
+
+  g_signal_handlers_block_by_func (text_tool->editor,
+                                   gimp_text_tool_text_changed, text_tool);
+
+  gimp_text_editor_set_text (GIMP_TEXT_EDITOR (text_tool->editor),
+                             str, str ? -1 : 0);
+
+  g_signal_handlers_unblock_by_func (text_tool->editor,
+                                     gimp_text_tool_text_changed, text_tool);
+
+  g_free (str);
 }
 
 static void
@@ -787,6 +799,7 @@ gimp_text_tool_confirm_response (GtkWidget    *widget,
 
         case GTK_RESPONSE_OK:
           gimp_text_tool_connect (text_tool, layer, layer->text);
+          gimp_text_tool_editor (text_tool);
           break;
 
         default:
@@ -955,5 +968,6 @@ gimp_text_tool_set_layer (GimpTextTool *text_tool,
   g_return_if_fail (GIMP_IS_TEXT_TOOL (text_tool));
   g_return_if_fail (layer == NULL || GIMP_IS_LAYER (layer));
 
-  gimp_text_tool_set_drawable (text_tool, GIMP_DRAWABLE (layer), TRUE);
+  if (gimp_text_tool_set_drawable (text_tool, GIMP_DRAWABLE (layer), TRUE))
+    gimp_text_tool_editor (text_tool);
 }

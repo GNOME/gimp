@@ -1,5 +1,11 @@
 2004-03-22  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimptexttool.c: keep the text editor open as long as
+	the text tool is connected to a text layer. Open the text editor
+	when a text layer is activated in the layers dialog.
+
+2004-03-22  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimptexttool.[ch]: preserve the text tool on image
 	changes. Instead connect to the text layer's "notify::modified"
 	signal and disconnect from the layer when it is modified.
