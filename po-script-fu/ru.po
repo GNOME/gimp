@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.1.18\n"
-"POT-Creation-Date: 2000-12-18 23:30-0800\n"
-"PO-Revision-Date: 2000-07-20 17:47+00:00\n"
+"POT-Creation-Date: 2000-12-21 19:30+0300\n"
+"PO-Revision-Date: 2000-12-21 19:32+03:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -145,12 +145,15 @@ msgid "Script-Fu Font Selection"
 msgstr "Скрипт-Фу: Выбор шрифта"
 
 #: plug-ins/script-fu/script-fu-scripts.c:2256
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Script-Fu Error while executing\n"
 " %s\n"
 "%s"
-msgstr "Скрипт-Фу: Выбор файла"
+msgstr ""
+"Ошибка Скрипт-Фу во время исполнения\n"
+" %s\n"
+"%s"
 
 #: plug-ins/script-fu/script-fu-server.c:539
 msgid "Script-Fu Server Options"
@@ -1197,11 +1200,11 @@ msgstr "Очистить перед рисованием"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Erase"
-msgstr ""
+msgstr "Очистить"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Erase/Fill"
-msgstr ""
+msgstr "Очистить/Заполнить"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Even"
@@ -1257,9 +1260,8 @@ msgid "Fill with BG Color"
 msgstr "Заполнить фон цветом"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
-#, fuzzy
 msgid "Fill with BG"
-msgstr "Заполнить фон цветом"
+msgstr "Заполнить цветом фона"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
@@ -2182,10 +2184,3 @@ msgstr "Ширина"
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr "Работать с копией"
-
-#~ msgid ""
-#~ "Script-Fu Error\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Ошибка Скрипт-Фу\n"
-#~ "%s"
