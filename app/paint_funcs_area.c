@@ -978,7 +978,7 @@ gaussian_blur_area (
   if (radius == 0.0) return;		
   
   /* get a gaussian  */
-  curve = (*gaussian_curve_funcs) [prec-1](radius, &length ); 
+  curve = (*gaussian_curve_funcs[prec-1])(radius, &length ); 
   
   /* compute a sum for the gaussian */ 
   sum = g_malloc (sizeof (gfloat) * (2 * length + 1));
@@ -2695,7 +2695,7 @@ thin_area (
   pixelrow_init (&next_row, src_tag, next_row_data+1, width);
   
   /* load the first row of src_area into cur_row */
-//pixel_region_get_row (src, src->x, src->y, src->w, cur_row, 1);
+/*pixel_region_get_row (src, src->x, src->y, src->w, cur_row, 1); */
   pixelarea_copy_row (src_area, &cur_row, src_x, src_y, width, 1);      
   
   found_one = FALSE;
