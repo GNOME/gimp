@@ -3106,6 +3106,9 @@ bezier_stroke (BezierSelect *bezier_sel,
   BezierRenderPnts *next_rpnts;
   BezierRenderPnts *rpnts = g_new0(BezierRenderPnts,1);
 
+  /*  Start an undo group  */
+  undo_push_group_start (gdisp->gimage, PAINT_CORE_UNDO);
+
   redraw = bezier_gen_points(bezier_sel,open_path,rpnts);
   do
     {
@@ -3156,12 +3159,8 @@ bezier_stroke (BezierSelect *bezier_sel,
     g_free(rpnts);
     rpnts = next_rpnts;
     } while (rpnts);
-  /* printf ("num_stroke_points: %d\ndone.\n", num_stroke_points); */
-
-/*   rpnts->stroke_points = NULL; */
-/*   rpnts->len_stroke_points = rpnts->num_stroke_points = 0; */
-
-/*   g_free(rpnts); */
+  /*  End an undo group  */
+  undo_push_group_end (gdisp->gimage);
 }
 
 static void

@@ -1,3 +1,11 @@
+
+Mon Nov 22 22:43:59 GMT 1999 Andy Thomas <alt@gimp.org>
+
+        * app/bezier_select.c
+
+        Stroking bezier paths made up of multiple segments 
+        now all get put in a single undo group.
+
 Mon Nov 22 23:29:16 MET 1999  Sven Neumann <sven@gimp.org>
 	
 	* app/airbrush.c
