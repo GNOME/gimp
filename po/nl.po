@@ -3,11 +3,12 @@
 # Wing Tung Leung <tg@skynet.be>, 1998.
 # Gert Dewit <Gert.Dewit@sos.be>, 2000
 # Branko Collin <collin@xs4all.nl>, 2001
+
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.2.1\n"
-"POT-Creation-Date: 2001-07-26 14:09+0200\n"
-"PO-Revision-Date: 2001-04-02 00:13+02:00\n"
+"Project-Id-Version: gimp 1.2.2\n"
+"POT-Creation-Date: 2001-07-29 20:42+0200\n"
+"PO-Revision-Date: 2001-09-17 21:00+0200\n"
 "Last-Translator: Branko Collin <collin@xs4all.nl>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2041,8 +2042,8 @@ msgid ""
 "Click: select    Shift+click: extend selection    Drag: move    Shift+drag: "
 "move & compress"
 msgstr ""
-"Klik: selecteer   Shift+klik: breid selectie uit    Sleep: verplaats    Shift"
-"+sleep: verplaats en comprimeer"
+"Klik: selecteer   Shift+klik: breid selectie uit    Sleep: verplaats    "
+"Shift+sleep: verplaats en comprimeer"
 
 # Is 'handle' a verb or a noun
 #: app/gradient.c:2971 app/gradient.c:2980
@@ -3008,8 +3009,8 @@ msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
 msgstr ""
-"  --no-shm                 Gebruik geen gedeeld geheugen tussen GIMP en plug-"
-"ins.\n"
+"  --no-shm                 Gebruik geen gedeeld geheugen tussen GIMP en "
+"plug-ins.\n"
 
 #: app/main.c:323
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
@@ -3228,7 +3229,7 @@ msgstr "/Bewerken/Buffer/Plak met naam..."
 
 #: app/menus.c:263
 msgid "/Edit/Clear"
-msgstr "/Bewerken/Wis"
+msgstr "/Bewerken/Wissen"
 
 #: app/menus.c:265
 msgid "/Edit/Fill with FG Color"
@@ -5953,8 +5954,8 @@ msgid ""
 "User installation was skipped because the '--nointerface' flag was "
 "encountered\n"
 msgstr ""
-"Installatie van gebruikersinterface werd overgeslagen omdat de optie '--"
-"nointerface' tegengekomen was\n"
+"Installatie van gebruikersinterface werd overgeslagen omdat de optie "
+"'--nointerface' tegengekomen was\n"
 
 #: app/user_install.c:106
 msgid ""
@@ -6542,44 +6543,3 @@ msgstr "Waterverf"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Kleurgeschiedenis"
-
-#~ msgid "Remove"
-#~ msgstr "Verwijderen"
-
-#~ msgid "Up"
-#~ msgstr "Boven"
-
-#~ msgid "Down"
-#~ msgstr "Onder"
-
-# What is the Dutch translation of this phrase?
-#~ msgid "Configure"
-#~ msgstr "Aanpassen"
-
-#~ msgid "Color Display Filters"
-#~ msgstr "Kleurweergavefilters"
-
-#~ msgid "Available Filters"
-#~ msgstr "Beschikbare filters"
-
-#~ msgid "Active Filters"
-#~ msgstr "Actieve filters"
-
-#~ msgid "Gamma color display filter"
-#~ msgstr "Gammakleurweergavefilter"
-
-#~ msgid "Gamma"
-#~ msgstr "Gamma"
-
-#~ msgid "Gamma:"
-#~ msgstr "Gamma:"
-
-#~ msgid "High Contrast color display filter"
-#~ msgstr "Hoogcontrastkleurweergavefilter"
-
-#~ msgid "High Contrast"
-#~ msgstr "Hoog contrast"
-
-# What are 'Contrast Cycles'?
-#~ msgid "Contrast Cycles:"
-#~ msgstr "Contrast-cycles:"
