@@ -21,10 +21,6 @@
  * want to build and install a plug-in from source don't necessarily have
  * any Bourne-compatible shell to run the gimptool script in.
  *
- * TODO: 
- *  - Check CC environment variable and autoconf variable.
- *  - MSVC support: Use cl instead of gcc, pass --msvc-syntax to pkg-config.
- *
  * Yes, this program leaks g_strconcat'ed strings without
  * hesitation. So what, it runs for a couple of milliseconds.
  */
@@ -210,6 +206,8 @@ find_out_env_flags (void)
 
   if ((p = getenv ("CC")) != NULL && *p != '\0')
     env_cc = p;
+  else if (msvc_syntax)
+    env_cc = "cl -MD";
   else
     env_cc = "@CC@";
 
@@ -218,23 +216,19 @@ find_out_env_flags (void)
 
   if ((p = getenv ("CFLAGS")) != NULL)
     env_cflags = p;
+  else if (msvc_syntax && g_strncasecmp ("@CC@", "cl", 2) != 0)
+    /* Don't use CFLAGS for wrong compiler... */
+    env_cflags = "";
   else
     env_cflags = "@CFLAGS@";
 
   if ((p = getenv ("LDFLAGS")) != NULL)
     env_ldflags = p;
+  else if (msvc_syntax && g_strncasecmp ("@CC@", "cl", 2) != 0)
+    /* Ditto for LDFLAGS */
+    env_ldflags = "";
   else
-    {
-      env_ldflags = "@LDFLAGS@";
-      if (msvc_syntax)
-	{
-	  /* If we want an MSVC command line, just ignore any
-	   * Unix-style LDFLAGS configure variable.
-	   */
-	  if (strncmp (env_ldflags, "-L", 2) == 0)
-	    env_ldflags = "";
-	}
-    }
+    env_ldflags = "@LDFLAGS@";
 
   if ((p = getenv ("LIBS")) != NULL && *p != '\0')
     env_libs = p;

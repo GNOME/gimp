@@ -187,6 +187,8 @@ EXTRA_DIST = \
 	ps-menurc				\
 	gimp.m4					\
 	gimp-zip				\
+	gimptool-win32.c			\
+	gimptool-win32.c.in			\
 	config.h.win32				\
 	po/makefile.mingw			\
 	po-libgimp/makefile.mingw		\

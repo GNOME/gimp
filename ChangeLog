@@ -1,3 +1,13 @@
+2002-10-16  Tor Lillqvist  <tml@iki.fi>
+
+	* gimptool-win32.c.in (find_out_env_flags): Fixes for
+	--msvc-syntax handling. Don't try to use configure-time CFLAGS and
+	LDFLAGS intended for gcc if we are asked to do --msvc-syntax.
+
+	* Makefile.am (EXTRA_DIST): Add gimptool-win32.c and .in. No rules
+	to build gimptool-win32.exe on Windows, would require some
+	automake acrobatics that I am too tired to attempt now.
+
 2002-10-08  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/ps.c: applied a patch from Peter Kirchgessner
