@@ -49,7 +49,7 @@ FILES = \
 	galaxy.gbr		\
 	galaxy_big.gbr		\
 	galaxy_small.gbr	\
-	pepper.gpb		\
+	pepper.gbr		\
 	pixel.gbr		\
 	thegimp.gbr		\
 	SketchBrush-16.gih	\

@@ -130,7 +130,7 @@ query (void)
   static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
   gimp_install_procedure ("file_gbr_load",
-                          "Loads GIMP brushes (1 or 4 bpp)",
+                          "Loads GIMP brushes (1 or 4 bpp and old .gpb format)",
                           "FIXME: write help",
                           "Tim Newsome, Jens Lautenbacher, Sven Neumann",
                           "Tim Newsome, Jens Lautenbacher, Sven Neumann",
@@ -154,7 +154,7 @@ query (void)
                           save_args, NULL);
 
   gimp_register_magic_load_handler ("file_gbr_load",
-				    "gbr",
+				    "gbr, gpb",
 				    "",
 				    "20, string, GIMP");
   gimp_register_save_handler       ("file_gbr_save",
@@ -353,6 +353,51 @@ load_image (gchar *filename)
       close (fd);
       g_free (brush_buf);
       return -1;
+    }
+
+
+  if (bh.bytes == 1)
+    {
+      PatternHeader ph;
+
+      /*  For backwards-compatibility, check if a pattern follows.
+	  The obsolete .gpb format did it this way.  */
+
+      if (read (fd, &ph, sizeof(ph)) == sizeof(ph)) 
+	{
+	  /*  rearrange the bytes in each unsigned int  */
+	  ph.header_size  = g_ntohl (ph.header_size);
+	  ph.version      = g_ntohl (ph.version);
+	  ph.width        = g_ntohl (ph.width);
+	  ph.height       = g_ntohl (ph.height);
+	  ph.bytes        = g_ntohl (ph.bytes);
+	  ph.magic_number = g_ntohl (ph.magic_number);
+
+	  if (ph.magic_number == GPATTERN_MAGIC && ph.version == 1 &&
+	      ph.header_size > sizeof (ph) &&
+	      ph.bytes == 3 && ph.width == bh.width && ph.height == bh.height &&
+	      lseek (fd, ph.header_size - sizeof (ph), SEEK_CUR) > 0)
+	    {
+	      guchar *plain_brush = brush_buf;
+	      gint    i;
+
+	      bh.bytes = 4;
+	      brush_buf = g_malloc (4 * bh.width * bh.height);
+	      
+	      for (i = 0; i < ph.width * ph.height; i++)
+		{
+		  if (read (fd, brush_buf + i * 4, 3) != 3)
+		    {
+		      close (fd);
+		      g_free (plain_brush);
+		      g_free (brush_buf);
+		      return -1;
+		    }
+		  brush_buf[i * 4 + 3] = plain_brush[i];
+		}
+	      g_free (plain_brush);
+	    }
+	}
     }
 
   /*

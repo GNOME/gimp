@@ -1,6 +1,13 @@
-2000-12-18  Michael Natterer  <mitch@gimp.org>
+2000-12-18  Sven Neumann  <sven@gimp.org>
+	    Jens Lautenbacher <jtl@gimp.org>
 
-	* po-plug-ins/POTFILES.in: removed gpb.c, added gih.c
+	* data/brushes/Makefile.am
+	* data/brushes/pepper.gpb: removed
+	* data/brushes/pepper.gbr: added (a nicer version of) the Pepper
+	brush in the .gbr format that does support pixmap brushes now.
+	
+	* plug-ins/common/gbr.c: added support for loading obsoleted 
+	Gimp Pixmap Brushes format (.gpb).
 
 2000-12-18  Sven Neumann  <sven@gimp.org>
 	    Jens Lautenbacher <jtl@gimp.org>
