@@ -35,11 +35,30 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_font_list_class_init        (GimpFontListClass *klass);
-static void   gimp_font_list_init              (GimpFontList      *list);
+/* Use fontconfig directly for speed. We can use the pango stuff when/if
+ * fontconfig/pango get more efficient.
+ */
+#define USE_FONTCONFIG_DIRECTLY
 
-static gint   gimp_font_list_font_compare_func (gconstpointer      first,
-                                                gconstpointer      second);
+#ifdef USE_FONTCONFIG_DIRECTLY
+/* PangoFT2 is assumed, so we should have this in our cflags */
+#include <fontconfig/fontconfig.h>
+#endif
+
+
+static void   gimp_font_list_class_init        (GimpFontListClass    *klass);
+static void   gimp_font_list_init              (GimpFontList         *list);
+
+static gint   gimp_font_list_font_compare_func (gconstpointer         first,
+                                                gconstpointer         second);
+
+static void   gimp_font_list_add_font          (GimpFontList         *list,
+                                                PangoContext         *context,
+                                                PangoFontDescription *desc);
+
+static void   gimp_font_list_load_names        (GimpFontList         *list,
+                                                PangoFontMap         *fontmap,
+                                                PangoContext         *context);
 
 
 static GimpListClass *parent_class = NULL;
@@ -109,11 +128,6 @@ gimp_font_list_restore (GimpFontList *list)
 {
   PangoFontMap     *fontmap;
   PangoContext     *context;
-  PangoFontFamily **families;
-  PangoFontFace   **faces;
-  gint              n_families;
-  gint              n_faces;
-  gint              i, j;
 
   g_return_if_fail (GIMP_IS_FONT_LIST (list));
 
@@ -122,38 +136,11 @@ gimp_font_list_restore (GimpFontList *list)
                                      list->xresolution, list->yresolution);
 
   context = pango_ft2_font_map_create_context (PANGO_FT2_FONT_MAP (fontmap));
-
-  pango_font_map_list_families (fontmap, &families, &n_families);
   g_object_unref (fontmap);
 
   gimp_container_freeze (GIMP_CONTAINER (list));
 
-  for (i = 0; i < n_families; i++)
-    {
-      pango_font_family_list_faces (families[i], &faces, &n_faces);
-      
-      for (j = 0; j < n_faces; j++)
-        {
-          PangoFontDescription *desc;
-          GimpFont             *font;
-          gchar                *name;
-
-	  desc = pango_font_face_describe (faces[j]);
-          name = pango_font_description_to_string (desc);
-          pango_font_description_free (desc);
-
-          font = g_object_new (GIMP_TYPE_FONT,
-                               "name",          name,
-                               "pango-context", context,
-                               NULL);
-          g_free (name);
-
-          gimp_container_add (GIMP_CONTAINER (list), GIMP_OBJECT (font));
-          g_object_unref (font);
-        }
-    }
-
-  g_free (families);
+  gimp_font_list_load_names (list, fontmap, context);
   g_object_unref (context);
 
   gimp_list_sort (GIMP_LIST (list), gimp_font_list_font_compare_func);
@@ -165,6 +152,191 @@ static gint
 gimp_font_list_font_compare_func (gconstpointer first,
 				  gconstpointer second)
 {
-  return strcmp (((const GimpObject *) first)->name,
-		 ((const GimpObject *) second)->name);
+  return g_utf8_collate (((const GimpObject *) first)->name,
+		         ((const GimpObject *) second)->name);
 }
+
+static void
+gimp_font_list_add_font (GimpFontList         *list,
+                         PangoContext         *context,
+                         PangoFontDescription *desc)
+{
+  GimpFont *font;
+  gchar    *name;
+
+  if (desc == NULL)
+    return;
+
+  name = pango_font_description_to_string (desc);
+
+  font = g_object_new (GIMP_TYPE_FONT,
+                       "name",          name,
+                       "pango-context", context,
+                       NULL);
+
+  g_free (name);
+
+  gimp_container_add (GIMP_CONTAINER (list), GIMP_OBJECT (font));
+  g_object_unref (font);
+}
+
+#ifdef USE_FONTCONFIG_DIRECTLY
+/* We're really chummy here with the implementation. Oh well. */
+
+/* This is copied straight from make_alias_description in pango, plus
+ * the gimp_font_list_add_font bits. */
+static void
+gimp_font_list_make_alias (GimpFontList *list,
+                           PangoContext *context,
+                           const gchar  *family,
+                           gboolean      bold,
+                           gboolean      italic)
+{
+  PangoFontDescription *desc = pango_font_description_new ();
+
+  pango_font_description_set_family (desc, family);
+  pango_font_description_set_style (desc, italic ? PANGO_STYLE_ITALIC : PANGO_STYLE_NORMAL);
+  pango_font_description_set_variant (desc, PANGO_VARIANT_NORMAL);
+  pango_font_description_set_weight (desc, bold ? PANGO_WEIGHT_BOLD : PANGO_WEIGHT_NORMAL);
+  pango_font_description_set_stretch (desc, PANGO_STRETCH_NORMAL);
+
+  gimp_font_list_add_font (list, context, desc);
+
+  pango_font_description_free (desc);
+}
+
+static void
+gimp_font_list_load_aliases (GimpFontList *list,
+                             PangoContext *context)
+{
+  const gchar *families[] = { "Sans", "Serif", "Monospace" };
+  gint         i;
+
+  for (i = 0; i < 3; i++)
+    {
+      gimp_font_list_make_alias (list, context, families[i], FALSE, FALSE);
+      gimp_font_list_make_alias (list, context, families[i], TRUE,  FALSE);
+      gimp_font_list_make_alias (list, context, families[i], FALSE, TRUE);
+      gimp_font_list_make_alias (list, context, families[i], TRUE,  TRUE);
+    }
+}
+
+/* This is copied straight from _pango_fc_font_desc_from_pattern, minus
+ * the size bits. */
+static PangoFontDescription *
+gimp_font_list_font_desc_from_pattern (FcPattern *pattern)
+{
+  PangoFontDescription *desc;
+  PangoStyle            style;
+  PangoWeight           weight;
+  gchar                *s;
+  gint                  i;
+
+  desc = pango_font_description_new ();
+
+  g_assert (FcPatternGetString (pattern, FC_FAMILY, 0, (FcChar8 **) &s) == FcResultMatch);
+
+  pango_font_description_set_family (desc, s);
+
+  if (FcPatternGetInteger (pattern, FC_SLANT, 0, &i) == FcResultMatch)
+    {
+      if (i == FC_SLANT_ROMAN)
+        style = PANGO_STYLE_NORMAL;
+      else if (i == FC_SLANT_OBLIQUE)
+        style = PANGO_STYLE_OBLIQUE;
+      else
+        style = PANGO_STYLE_ITALIC;
+    }
+  else
+    style = PANGO_STYLE_NORMAL;
+
+  pango_font_description_set_style (desc, style);
+
+  if (FcPatternGetInteger (pattern, FC_WEIGHT, 0, &i) == FcResultMatch)
+    {
+      if (i < FC_WEIGHT_LIGHT)
+        weight = PANGO_WEIGHT_ULTRALIGHT;
+      else if (i < (FC_WEIGHT_LIGHT + FC_WEIGHT_MEDIUM) / 2)
+        weight = PANGO_WEIGHT_LIGHT;
+      else if (i < (FC_WEIGHT_MEDIUM + FC_WEIGHT_DEMIBOLD) / 2)
+        weight = PANGO_WEIGHT_NORMAL;
+      else if (i < (FC_WEIGHT_DEMIBOLD + FC_WEIGHT_BOLD) / 2)
+        weight = 600;
+      else if (i < (FC_WEIGHT_BOLD + FC_WEIGHT_BLACK) / 2)
+        weight = PANGO_WEIGHT_BOLD;
+      else
+        weight = PANGO_WEIGHT_ULTRABOLD;
+    }
+  else
+    weight = PANGO_WEIGHT_NORMAL;
+
+  pango_font_description_set_weight (desc, weight);
+
+  pango_font_description_set_variant (desc, PANGO_VARIANT_NORMAL);
+  pango_font_description_set_stretch (desc, PANGO_STRETCH_NORMAL);
+
+  return desc;
+}
+
+static void
+gimp_font_list_load_names (GimpFontList *list,
+                           PangoFontMap *fontmap,
+                           PangoContext *context)
+{
+  FcObjectSet *os;
+  FcPattern   *pat;
+  FcFontSet   *fontset;
+  gint         i;
+
+  gimp_font_list_load_aliases (list, context);
+
+  os = FcObjectSetBuild (FC_FAMILY, FC_STYLE, FC_SLANT, FC_WEIGHT, NULL);
+  pat = FcPatternCreate ();
+
+  fontset = FcFontList (NULL, pat, os);
+   
+  FcPatternDestroy (pat);
+  FcObjectSetDestroy (os);
+
+  for (i = 0; i < fontset->nfont; i++)
+    {
+      PangoFontDescription *desc;
+
+      desc = gimp_font_list_font_desc_from_pattern (fontset->fonts[i]);
+      gimp_font_list_add_font (list, context, desc);
+      pango_font_description_free (desc);
+    }
+
+  FcFontSetDestroy (fontset);
+}
+#else
+static void
+gimp_font_list_load_names (GimpFontList *list,
+                           PangoFontMap *fontmap,
+                           PangoContext *context)
+{
+  PangoFontFamily **families;
+  PangoFontFace   **faces;
+  gint              n_families;
+  gint              n_faces;
+  gint              i, j;
+
+  pango_font_map_list_families (fontmap, &families, &n_families);
+
+  for (i = 0; i < n_families; i++)
+    {
+      pango_font_family_list_faces (families[i], &faces, &n_faces);
+      
+      for (j = 0; j < n_faces; j++)
+        {
+          PangoFontDescription *desc;
+
+	  desc = pango_font_face_describe (faces[j]);
+          gimp_font_list_add_font (list, context, desc);
+          pango_font_description_free (desc);
+        }
+    }
+
+  g_free (families);
+}
+#endif

@@ -1,3 +1,14 @@
+2003-05-01  Manish Singh  <yosh@gimp.org>
+
+	* app/text/gimpfontlist.c: Query fontconfig directly for the font
+	list, avoiding scanning the internal fontconfig list over and over
+	again. There are differences in the font list that the old and new
+	code produce however. The new code will generate descriptions for
+	more fonts, and some of the styles will be different. Also, pango
+	font description strings aren't specific enough for all cases, so
+	a font name may appear more than once in the list. I'm not sure
+	how to solve this best, but this code is Good Enough (TM) for now.
+
 2003-04-30  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* app/widgets/gimpgradienteditor.c (control_compress_range): Don't
