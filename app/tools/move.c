@@ -450,7 +450,7 @@ tools_new_move_tool ()
   /*  The tool options  */
   if (! move_options)
     {
-      move_options = tool_options_new (_("Move Tool Options"));
+      move_options = tool_options_new (_("Move Tool"));
       tools_register (MOVE, (ToolOptions *) move_options);
     }
 

@@ -1,3 +1,27 @@
+2000-02-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/blend.c
+	* app/brightness_contrast.c
+	* app/color_balance.c
+	* app/color_picker.c
+	* app/crop.c
+	* app/curves.c
+	* app/flip_tool.c
+	* app/histogram_tool.c
+	* app/hue_saturation.c
+	* app/levels.c
+	* app/magnify.c
+	* app/measure.c
+	* app/move.c
+	* app/path_tool.c
+	* app/posterize.c
+	* app/text_tool.c
+	* app/threshold.c
+	* app/tool_options.c
+	* app/transform_tool.c: unify the usage of "Selection" and
+	"<blah> Tool" and removed the word "Options" from all tool option
+	title strings because the dialog title already says "Options".
+
 Tue Feb  1 20:02:47 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/menus.c

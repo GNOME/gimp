@@ -192,7 +192,7 @@ tools_new_levels (void)
   /*  The tool options  */
   if (! levels_options)
     {
-      levels_options = tool_options_new (_("Levels Options"));
+      levels_options = tool_options_new (_("Levels"));
       tools_register (LEVELS, levels_options);
     }
 

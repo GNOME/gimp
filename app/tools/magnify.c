@@ -95,7 +95,7 @@ magnify_options_new (void)
   /*  the new magnify tool options structure  */
   options = g_new (MagnifyOptions, 1);
   tool_options_init ((ToolOptions *) options,
-		     _("Magnify Options"),
+		     _("Magnify Tool"),
 		     magnify_options_reset);
   options->allow_resize_d = allow_resize_windows;
 

@@ -140,7 +140,7 @@ color_picker_options_new (void)
   /*  the new color picker tool options structure  */
   options = g_new (ColorPickerOptions, 1);
   tool_options_init ((ToolOptions *) options,
-		     _("Color Picker Options"),
+		     _("Color Picker"),
 		     color_picker_options_reset);
   options->sample_merged  = options->sample_merged_d  = FALSE;
   options->sample_average = options->sample_average_d = FALSE;

@@ -25,6 +25,7 @@
 #include "selection_options.h"
 
 #include "libgimp/gimpunitmenu.h"
+
 #include "libgimp/gimpintl.h"
 
 
@@ -115,20 +116,20 @@ selection_options_init (SelectionOptions     *options,
   /*  initialize the tool options structure  */
   tool_options_init ((ToolOptions *) options,
 		     ((tool_type == RECT_SELECT) ?
-		      _("Rectangular Select Options") :
+		      _("Rectangular Selection") :
 		      ((tool_type == ELLIPSE_SELECT) ?
-		       _("Elliptical Selection Options") :
+		       _("Elliptical Selection") :
 		       ((tool_type == FREE_SELECT) ?
-			_("Free-hand Selection Options") :
+			_("Free-Hand Selection") :
 			((tool_type == FUZZY_SELECT) ?
-			 _("Fuzzy Selection Options") :
+			 _("Fuzzy Selection") :
 			 ((tool_type == BEZIER_SELECT) ?
-			  _("Bezier Selection Options") :
+			  _("Bezier Selection") :
 			  ((tool_type == ISCISSORS) ?
-			   _("Intelligent Scissors Options") :
+			   _("Intelligent Scissors") :
 			   ((tool_type == BY_COLOR_SELECT) ?
-			    _("By-Color Select Options") :
-			    "ERROR: Unknown Selection Type"))))))),
+			    _("By-Color Selection") :
+			    "ERROR: Unknown Select Tool Type"))))))),
 		     reset_func);
 
   /*  the main vbox  */
@@ -418,30 +419,30 @@ paint_options_init (PaintOptions         *options,
   /*  initialize the tool options structure  */
   tool_options_init ((ToolOptions *) options,
 		     ((tool_type == BUCKET_FILL) ?
-		      _("Bucket Fill Options") :
+		      _("Bucket Fill") :
 		      ((tool_type == BLEND) ?
-		       _("Blend Options") :
+		       _("Blend Tool") :
 		       ((tool_type == PENCIL) ?
-			_("Pencil Options") :
+			_("Pencil") :
 			((tool_type == PAINTBRUSH) ?
-			 _("Paintbrush Options") :
+			 _("Paintbrush") :
 			 ((tool_type == ERASER) ?
-			  _("Eraser Options") :
+			  _("Eraser") :
 			  ((tool_type == AIRBRUSH) ?
-			   _("Airbrush Options") :
+			   _("Airbrush") :
 			   ((tool_type == CLONE) ?
-			    _("Clone Tool Options") :
+			    _("Clone Tool") :
 			    ((tool_type == CONVOLVE) ?
-			     _("Convolver Options") :
+			     _("Convolver") :
 			     ((tool_type == INK) ?
-			      _("Ink Options") :
+			      _("Ink Tool") :
 			      ((tool_type == DODGEBURN) ?
-			       _("Dodge or Burn Options") :
+			       _("Dodge or Burn") :
 			       ((tool_type == SMUDGE) ?
-				_("Smudge Options") :
+				_("Smudge Tool") :
 				((tool_type == XINPUT_AIRBRUSH) ?
-				 _("Xinput Airbrush Options") :
-				 "ERROR: Unknown Paint Type")))))))))))),
+				 _("Xinput Airbrush") :
+				 "ERROR: Unknown Paint Tool Type")))))))))))),
 		     reset_func);
 
   /*  initialize the paint options structure  */

@@ -167,7 +167,7 @@ tools_new_threshold (void)
   /*  The tool options  */
   if (! threshold_options)
     {
-      threshold_options = tool_options_new (_("Threshold Options"));
+      threshold_options = tool_options_new (_("Threshold"));
       tools_register (THRESHOLD, threshold_options);
     }
 

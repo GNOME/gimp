@@ -164,7 +164,7 @@ tools_new_color_balance (void)
   /*  The tool options  */
   if (!color_balance_options)
     {
-      color_balance_options = tool_options_new (_("Color Balance Options"));
+      color_balance_options = tool_options_new (_("Color Balance"));
       tools_register (COLOR_BALANCE, color_balance_options);
     }
 

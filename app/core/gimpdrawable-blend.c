@@ -243,7 +243,7 @@ blend_options_reset ()
 }
 
 static BlendOptions *
-blend_options_new ()
+blend_options_new (void)
 {
   BlendOptions *options;
 

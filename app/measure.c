@@ -94,7 +94,7 @@ static void   measure_tool_cursor_update  (Tool *, GdkEventMotion *, gpointer);
 static void   measure_tool_control	  (Tool *, ToolAction,       gpointer);
 
 static void   measure_tool_info_window_close_callback (GtkWidget *, gpointer);
-static void   measure_tool_info_update                ();
+static void   measure_tool_info_update                (void);
 
 
 static void
@@ -115,7 +115,7 @@ measure_tool_options_new (void)
   /*  the new measure tool options structure  */
   options = g_new (MeasureOptions, 1);
   tool_options_init ((ToolOptions *) options,
-		     _("Measure Options"),
+		     _("Measure Tool"),
 		     measure_tool_options_reset);
   options->use_info_window = options->use_info_window_d  = FALSE;
 

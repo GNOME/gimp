@@ -123,7 +123,7 @@ tools_new_brightness_contrast (void)
   if (!brightness_contrast_options)
     {
       brightness_contrast_options =
-	tool_options_new (_("Brightness-Contrast Options"));
+	tool_options_new (_("Brightness-Contrast"));
       tools_register (BRIGHTNESS_CONTRAST, brightness_contrast_options);
    }
 

@@ -389,7 +389,7 @@ tools_new_curves (void)
   /*  The tool options  */
   if (!curves_options)
     {
-      curves_options = tool_options_new (_("Curves Options"));
+      curves_options = tool_options_new (_("Curves"));
       tools_register (CURVES, curves_options);
     }
 

@@ -1408,7 +1408,7 @@ tools_new_path_tool (void)
    /*  The tool options  */
    if (! path_options)
       {
-         path_options = tool_options_new (_("Path Tool Options"));
+         path_options = tool_options_new (_("Path Tool"));
          tools_register (PATH_TOOL, (ToolOptions *) path_options);
       }
 

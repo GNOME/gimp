@@ -147,7 +147,7 @@ text_options_new (void)
   /*  the new text tool options structure  */
   options = g_new (TextOptions, 1);
   tool_options_init ((ToolOptions *) options,
-		     _("Text Tool Options"),
+		     _("Text Tool"),
 		     text_options_reset);
   options->antialias   = options->antialias_d   = TRUE;
   options->border      = options->border_d      = 0;

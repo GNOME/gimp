@@ -166,7 +166,7 @@ tools_new_histogram_tool (void)
   /*  The tool options  */
   if (! histogram_tool_options)
     {
-      histogram_tool_options = tool_options_new (_("Histogram Options"));
+      histogram_tool_options = tool_options_new (_("Histogram"));
       tools_register (HISTOGRAM, histogram_tool_options);
     }
 

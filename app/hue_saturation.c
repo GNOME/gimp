@@ -244,7 +244,7 @@ tools_new_hue_saturation (void)
   /*  The tool options  */
   if (!hue_saturation_options)
     {
-      hue_saturation_options = tool_options_new (_("Hue-Saturation Options"));
+      hue_saturation_options = tool_options_new (_("Hue-Saturation"));
       tools_register (HUE_SATURATION, hue_saturation_options);
     }
 
