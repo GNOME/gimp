@@ -1,3 +1,9 @@
+2004-04-15  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpcropoptions.[ch]
+	* app/tools/gimpcroptool.[ch]: applied a patch from Jordi Gay that
+	allows to keep the aspect ratio fixed.
+
 2004-04-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimplayermask.c (gimp_layer_mask_class_init): set

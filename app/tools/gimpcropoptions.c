@@ -40,6 +40,7 @@ enum
   PROP_0,
   PROP_LAYER_ONLY,
   PROP_ALLOW_ENLARGE,
+  PROP_KEEP_ASPECT,
   PROP_CROP_MODE
 };
 
@@ -108,6 +109,10 @@ gimp_crop_options_class_init (GimpCropOptionsClass *klass)
                                     "allow-enlarge", NULL,
                                     FALSE,
                                     0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_KEEP_ASPECT,
+                                    "keep-aspect", NULL,
+                                    FALSE,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CROP_MODE,
                                  "crop-mode", NULL,
                                  GIMP_TYPE_CROP_MODE,
@@ -136,6 +141,9 @@ gimp_crop_options_set_property (GObject      *object,
     case PROP_ALLOW_ENLARGE:
       options->allow_enlarge = g_value_get_boolean (value);
       break;
+    case PROP_KEEP_ASPECT:
+      options->keep_aspect = g_value_get_boolean (value);
+      break;
     case PROP_CROP_MODE:
       options->crop_mode = g_value_get_enum (value);
       break;
@@ -160,6 +168,9 @@ gimp_crop_options_get_property (GObject    *object,
       break;
     case PROP_ALLOW_ENLARGE:
       g_value_set_boolean (value, options->allow_enlarge);
+      break;
+    case PROP_KEEP_ASPECT:
+      g_value_set_boolean (value, options->keep_aspect);
       break;
     case PROP_CROP_MODE:
       g_value_set_enum (value, options->crop_mode);
@@ -207,6 +218,12 @@ gimp_crop_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (button);
 
   g_free (str);
+
+  /*  layer toggle  */
+  str = g_strdup_printf (_("Keep Aspect ratio  %s"), gimp_get_mod_name_shift());
+  button = gimp_prop_check_button_new (config, "keep-aspect", str);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   return vbox;
 }

@@ -141,6 +141,8 @@ static void   crop_origin_changed           (GtkWidget       *widget,
 					     GimpCropTool    *crop);
 static void   crop_size_changed             (GtkWidget       *widget,
 					     GimpCropTool    *crop);
+static void   crop_aspect_changed           (GtkWidget       *widget,
+					     GimpCropTool    *crop);
 
 
 static GimpDrawToolClass *parent_class = NULL;
@@ -406,14 +408,24 @@ gimp_crop_tool_motion (GimpTool        *tool,
 	  x2 = CLAMP (x2, min_x, max_x);
 	  y2 = CLAMP (y2, min_y, max_y);
 	}
+      g_object_set (options, "keep-aspect", FALSE, NULL);
+      crop->change_aspect_ratio = TRUE;
       break;
 
     case RESIZING_LEFT:
       x1 = crop->x1 + inc_x;
       y1 = crop->y1 + inc_y;
+     if (options->keep_aspect && crop->aspect_ratio != 0)
+       {
+         y1 = crop->y2 + (gint)((gdouble)(x1 - crop->x2) / crop->aspect_ratio);
+       }
       if (! options->allow_enlarge)
 	{
 	  x1 = CLAMP (x1, min_x, max_x);
+          if ((y1 < CLAMP (y1, min_y, max_y)) && (options->keep_aspect))
+            {
+              x1 = crop->x1;
+            }
 	  y1 = CLAMP (y1, min_y, max_y);
 	}
       x2 = MAX (x1, crop->x2);
@@ -425,9 +437,17 @@ gimp_crop_tool_motion (GimpTool        *tool,
     case RESIZING_RIGHT:
       x2 = crop->x2 + inc_x;
       y2 = crop->y2 + inc_y;
+      if (options->keep_aspect && crop->aspect_ratio != 0)
+        {
+          y2 = crop->y1 + (gint)((gdouble)(x2 - crop->x1) / crop->aspect_ratio);
+        }
       if (! options->allow_enlarge)
 	{
 	  x2 = CLAMP (x2, min_x, max_x);
+          if ((y2 > CLAMP (y2, min_y, max_y)) && (options->keep_aspect))
+            {
+              x2 = crop->x2;
+            }
 	  y2 = CLAMP (y2, min_y, max_y);
 	}
       x1 = MIN (crop->x1, x2);
@@ -610,6 +630,17 @@ gimp_crop_tool_modifier_key (GimpTool        *tool,
     {
       if (options->allow_enlarge)
         g_object_set (options, "allow-enlarge", FALSE, NULL);
+    }
+
+  if (state & GDK_SHIFT_MASK)
+    {
+      if (! options->keep_aspect)
+        g_object_set (options, "keep-aspect", TRUE, NULL);
+    }
+  else
+    {
+      if (options->keep_aspect)
+        g_object_set (options, "keep-aspect", FALSE, NULL);
     }
 
   if (key == GDK_CONTROL_MASK)
@@ -951,6 +982,7 @@ crop_info_create (GimpCropTool *crop)
   GtkWidget        *spinbutton;
   GtkWidget        *bbox;
   GtkWidget        *button;
+  GtkWidget        *widget;
   const gchar      *stock_id;
 
   tool = GIMP_TOOL (crop);
@@ -1020,6 +1052,15 @@ crop_info_create (GimpCropTool *crop)
   gtk_table_set_row_spacing (GTK_TABLE (crop->crop_info->info_table), 1, 6);
   gtk_table_set_row_spacing (GTK_TABLE (crop->crop_info->info_table), 2, 0);
 
+  widget = 
+      info_dialog_add_spinbutton (crop->crop_info, _("Aspect Ratio:"),
+                                  &(crop->aspect_ratio),
+                                  0, 65536, 0.01, 0.1, 1, 1, 2,
+                                  G_CALLBACK (crop_aspect_changed),
+                                  crop);
+  gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (widget), TRUE);
+
+  
   /* Create the area selection buttons */
   bbox = gtk_hbutton_box_new ();
   gtk_button_box_set_layout (GTK_BUTTON_BOX (bbox), GTK_BUTTONBOX_SPREAD);
@@ -1052,6 +1093,26 @@ crop_info_create (GimpCropTool *crop)
 static void
 crop_info_update (GimpCropTool *crop)
 {
+  GimpTool	  *tool;
+  GimpCropOptions *options;
+	
+  tool    = GIMP_TOOL (crop);
+  options = GIMP_CROP_OPTIONS (tool->tool_info->tool_options);
+	  
+  if (!options->keep_aspect)
+    {
+      if ((crop->y2 - crop->y1) != 0)
+      {
+	if (crop->change_aspect_ratio == TRUE)
+	{
+          crop->aspect_ratio = (gdouble)(crop->x2 - crop->x1) / (gdouble)(crop->y2 - crop->y1);
+	}
+      }
+      else
+      {
+        crop->aspect_ratio = 0;
+      }
+    }
   crop->orig_vals[0] = crop->x1;
   crop->orig_vals[1] = crop->y1;
   crop->size_vals[0] = crop->x2 - crop->x1;
@@ -1255,3 +1316,21 @@ crop_size_changed (GtkWidget    *widget,
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (crop));
     }
 }
+
+static void
+crop_aspect_changed (GtkWidget    *widget,
+		   GimpCropTool *crop)
+{
+  crop->aspect_ratio = GTK_ADJUSTMENT (widget)->value;
+
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (crop));
+
+  crop->y2 = (gint)((gdouble)(crop->x2 - crop->x1) / crop->aspect_ratio) + crop->y1;
+
+  crop->change_aspect_ratio = FALSE;
+  crop_recalc (crop);
+  crop->change_aspect_ratio = TRUE;
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (crop));
+}
+

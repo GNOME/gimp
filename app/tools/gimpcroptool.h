@@ -63,6 +63,12 @@ struct _GimpCropTool
 
   gdouble       orig_vals[2];
   gdouble       size_vals[2];
+  gdouble	aspect_ratio;
+  gboolean	change_aspect_ratio; /* Boolean for the crop_info_update function */
+  				     /* aspect_ratio should not be chaget whith   */
+  				     /* crop_info_update when is called from      */
+				     /* crop_aspect_changed, due to the innacurate*/
+  				     /* decimal precision                         */
 
   GtkWidget    *origin_sizeentry;
   GtkWidget    *size_sizeentry;

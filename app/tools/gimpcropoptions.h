@@ -40,6 +40,7 @@ struct _GimpCropOptions
 
   gboolean         layer_only;
   gboolean         allow_enlarge;
+  gboolean         keep_aspect;
   GimpCropMode     crop_mode;
 };
 
