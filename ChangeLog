@@ -1,3 +1,13 @@
+2001-04-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/test_commands.c: fixed the dockable names.
+
+	* app/tools/gimpbezierselecttool.c: applied patch from Dave Neary
+	which fixes some minor stuff that was forgotten to port.
+
+	* app/widgets/gimpdockbook.c: set the tooltip of the notebook tab
+	also if it is a plain label.
+
 2001-04-11  Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimppathtool.[ch]

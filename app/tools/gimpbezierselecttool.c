@@ -355,9 +355,11 @@ static void
 gimp_bezier_select_tool_init (GimpBezierSelectTool *bezier_select)
 {
   GimpTool          *tool;
+  GimpDrawTool      *draw_tool;
   GimpSelectionTool *select_tool;
 
   tool        = GIMP_TOOL (bezier_select);
+  draw_tool   = GIMP_DRAW_TOOL (bezier_select);
   select_tool = GIMP_SELECTION_TOOL (bezier_select);
 
   if (! bezier_options)
@@ -369,8 +371,15 @@ gimp_bezier_select_tool_init (GimpBezierSelectTool *bezier_select)
                                           (ToolOptions *) bezier_options);
     }
 
+  bezier_select->num_points = 0;
+  bezier_select->mask       = NULL;
+
   tool->tool_cursor = GIMP_BEZIER_SELECT_TOOL_CURSOR;
   tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
+
+  curCore = draw_tool;
+  curSel  = bezier_select;
+  curTool = tool;
 
   bezier_select_reset (bezier_select);
 
@@ -909,7 +918,9 @@ bezier_select_load (GDisplay    *gdisp,
   GimpBezierSelectTool *bezier_sel;
 
   /*  select the bezier tool  */
-  gimp_context_set_tool (gimp_context_get_user (), BEZIER_SELECT);
+  gimp_context_set_tool (gimp_context_get_user (), 
+			 tool_manager_get_info_by_type 
+			   ( GIMP_TYPE_BEZIER_SELECT_TOOL));
   tool            = active_tool;
   tool->state     = ACTIVE;
   tool->gdisp     = gdisp;
@@ -3139,7 +3150,9 @@ bezier_paste_bezierselect_to_current (GDisplay     *gdisp,
 	}
     }
 
-  gimp_context_set_tool (gimp_context_get_user (), BEZIER_SELECT);
+  gimp_context_set_tool (gimp_context_get_user (),
+			 tool_manager_get_info_by_type 
+			   ( GIMP_TYPE_BEZIER_SELECT_TOOL));
   active_tool->paused_count = 0;
   active_tool->gdisp        = gdisp;
   active_tool->drawable     = gimp_image_active_drawable (gdisp->gimage);  

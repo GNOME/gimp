@@ -702,7 +702,9 @@ test_dock_new (GimpViewType  view_type,
 
   gimp_dock_add_book (GIMP_DOCK (dock), GIMP_DOCKBOOK (dockbook), 0);
 
-  dockable = gimp_dockable_new ("Brush List", "Brushes",
+  dockable = gimp_dockable_new (view_type == GIMP_VIEW_TYPE_LIST ?
+				"Brush List" : "Brush Grid",
+				"Brushes",
 				test_brush_tab_func);
   view = gimp_data_factory_view_new (view_type,
 				     global_brush_factory,
@@ -715,7 +717,9 @@ test_dock_new (GimpViewType  view_type,
 
   gimp_dock_add (GIMP_DOCK (dock), GIMP_DOCKABLE (dockable), -1, -1);
 
-  dockable = gimp_dockable_new ("Pattern List", "Patterns",
+  dockable = gimp_dockable_new (view_type == GIMP_VIEW_TYPE_LIST ?
+				"Pattern List" : "Pattern Grid",
+				"Patterns",
 				test_pattern_tab_func);
   view = gimp_data_factory_view_new (view_type,
 				     global_pattern_factory,
@@ -728,7 +732,9 @@ test_dock_new (GimpViewType  view_type,
 
   gimp_dock_add (GIMP_DOCK (dock), GIMP_DOCKABLE (dockable), -1, -1);
 
-  dockable = gimp_dockable_new ("Gradient List", "Gradients",
+  dockable = gimp_dockable_new (view_type == GIMP_VIEW_TYPE_LIST ?
+				"Gradient List" : "Gradient Grid",
+				"Gradients",
 				test_gradient_tab_func);
   view = gimp_data_factory_view_new (view_type,
 				     global_gradient_factory,
@@ -741,7 +747,9 @@ test_dock_new (GimpViewType  view_type,
 
   gimp_dock_add (GIMP_DOCK (dock), GIMP_DOCKABLE (dockable), -1, -1);
 
-  dockable = gimp_dockable_new ("Palette List", "Palettes",
+  dockable = gimp_dockable_new (view_type == GIMP_VIEW_TYPE_LIST ?
+				"Palette List" : "Palette Grid",
+				"Palettes",
 				test_palette_tab_func);
   view = gimp_data_factory_view_new (view_type,
 				     global_palette_factory,

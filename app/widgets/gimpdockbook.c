@@ -207,10 +207,8 @@ gimp_dockbook_add (GimpDockbook *dockbook,
 
       tab_widget = event_box;
     }
-  else
-    {
-      gimp_help_set_help_data (tab_widget, dockable->name, NULL);
-    }
+
+  gimp_help_set_help_data (tab_widget, dockable->name, NULL);
 
   gtk_object_set_data (GTK_OBJECT (tab_widget), "gimp_dockable", dockable);
 
