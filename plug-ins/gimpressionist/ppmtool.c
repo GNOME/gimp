@@ -28,12 +28,6 @@ int readline(FILE *f, char *buffer, int len)
   return 0;
 }
 
-void fatal(char *s)
-{
-  fprintf(stderr, "%s\n", s);
-  exit(1);
-}
-
 void ppm_kill(ppm_t *p)
 {
   g_free(p->col);
@@ -270,9 +264,6 @@ void ppm_load(const char *fn, ppm_t *p)
     fprintf(stderr, "ppm_load: Unable to open file \"%s\"!\n", fn);
     ppm_new(p, 10,10);
     return;
-#if 0
-    fatal("Aborting!");
-#endif
   }
 
   readline(f, line, 200);
@@ -282,9 +273,6 @@ void ppm_load(const char *fn, ppm_t *p)
       printf( "ppm_load: File \"%s\" not PPM/PGM? (line=\"%s\")%c\n", fn, line, 7);
       ppm_new(p, 10,10);
       return;
-#if 0
-      fatal("Aborting!");
-#endif
     }
     pgm = 1;
   }
@@ -296,9 +284,6 @@ void ppm_load(const char *fn, ppm_t *p)
     printf ("ppm_load: File \"%s\" not valid PPM/PGM? (line=\"%s\")%c\n", fn, line, 7);
     ppm_new(p, 10,10);
     return;
-#if 0
-    fatal("Aborting!");
-#endif
   }
   p->col = g_malloc(p->height * p->width * 3);
 

@@ -1,3 +1,9 @@
+2004-07-19  Shlomi Fish  <shlomif@iglu.org.il>
+
+	* ChangeLog: Fixed a copy-and-paste error with the dates of my commits.
+	* plug-ins/gimpressionist/ppmtool.c: removed a few commented-out 
+	asserts, and the function that was used to implement them.
+
 2004-07-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/widgets-types.h: reordered and commented to match
@@ -22,12 +28,12 @@
 	* app/core/core-types.h: reordered stuff to match the order in the
 	API docs (makes keeping stuff in sync much easier).
 
-2004-07-17  Shlomi Fish  <shlomif@iglu.org.il>
+2004-07-19  Shlomi Fish  <shlomif@iglu.org.il>
 
 	* plug-ins/gimpressionist/repaint.c: replaced a few if's+destructors
 	pairs for ppm_ with just the destructors.
 
-2004-07-17  Shlomi Fish  <shlomif@iglu.org.il>
+2004-07-19  Shlomi Fish  <shlomif@iglu.org.il>
 
 	* plug-ins/gimpressionist/repaint.c: normalized some identifiers of 
 	repaint.c, and corrected some indentation there.
