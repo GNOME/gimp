@@ -457,6 +457,18 @@ gimp_preview_renderer_set_background (GimpPreviewRenderer *renderer,
 }
 
 void
+gimp_preview_renderer_unrealize (GimpPreviewRenderer *renderer)
+{
+  g_return_if_fail (GIMP_IS_PREVIEW_RENDERER (renderer));
+
+  if (renderer->gc)
+    {
+      g_object_unref (renderer->gc);
+      renderer->gc = NULL;
+    }
+}
+
+void
 gimp_preview_renderer_invalidate (GimpPreviewRenderer *renderer)
 {
   g_return_if_fail (GIMP_IS_PREVIEW_RENDERER (renderer));

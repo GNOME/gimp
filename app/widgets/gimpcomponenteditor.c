@@ -54,6 +54,8 @@ enum
 static void gimp_component_editor_class_init (GimpComponentEditorClass *klass);
 static void gimp_component_editor_init       (GimpComponentEditor      *editor);
 
+static void gimp_component_editor_unrealize         (GtkWidget           *widget);
+
 static void gimp_component_editor_set_image         (GimpImageEditor     *editor,
                                                      GimpImage           *gimage);
 
@@ -119,11 +121,15 @@ gimp_component_editor_get_type (void)
 static void
 gimp_component_editor_class_init (GimpComponentEditorClass *klass)
 {
+  GtkWidgetClass       *widget_class;
   GimpImageEditorClass *image_editor_class;
 
+  widget_class       = GTK_WIDGET_CLASS (klass);
   image_editor_class = GIMP_IMAGE_EDITOR_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
+
+  widget_class->unrealize = gimp_component_editor_unrealize;
 
   image_editor_class->set_image = gimp_component_editor_set_image;
 }
@@ -190,6 +196,30 @@ gimp_component_editor_init (GimpComponentEditor *editor)
   gtk_tree_selection_set_select_function (editor->selection,
                                           gimp_component_editor_select,
                                           editor, NULL);
+}
+
+static void
+gimp_component_editor_unrealize (GtkWidget *widget)
+{
+  GimpComponentEditor *editor = GIMP_COMPONENT_EDITOR (widget);
+  GtkTreeIter          iter;
+  gboolean             iter_valid;
+
+  for (iter_valid = gtk_tree_model_get_iter_first (editor->model, &iter);
+       iter_valid;
+       iter_valid = gtk_tree_model_iter_next (editor->model, &iter))
+    {
+      GimpPreviewRenderer *renderer;
+
+      gtk_tree_model_get (editor->model, &iter,
+                          COLUMN_RENDERER, &renderer,
+                          -1);
+
+      gimp_preview_renderer_unrealize (renderer);
+      g_object_unref (renderer);
+    }
+
+  GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
 }
 
 static void
@@ -297,7 +327,6 @@ gimp_component_editor_set_preview_size (GimpComponentEditor *editor,
                           -1);
 
       gimp_preview_renderer_set_size (renderer, preview_size, 1);
-
       g_object_unref (renderer);
     }
 

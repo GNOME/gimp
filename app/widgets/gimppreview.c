@@ -255,6 +255,9 @@ gimp_preview_unrealize (GtkWidget *widget)
       preview->event_window = NULL;
     }
 
+  if (preview->renderer)
+    gimp_preview_renderer_unrealize (preview->renderer);
+
   GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
 }
 

@@ -1,3 +1,16 @@
+2003-11-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimppreviewrenderer.[ch]: multihead fix: added
+	gimp_preview_renderer_unrealize() which destroys the cached
+	GdkGC. This function must be called whenever the widget owning the
+	renderer is unrealized.
+
+	* app/widgets/gimpcomponenteditor.c
+	* app/widgets/gimpcontainertreeview.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimppreview.c: implement GtkWidget::unrealize() and
+	call gimp_preview_renderer_unrealize() on all renderers.
+
 2003-11-13  Sven Neumann  <sven@gimp.org>
 
 	* app/app_procs.[ch]

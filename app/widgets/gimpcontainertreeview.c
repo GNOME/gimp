@@ -59,6 +59,7 @@ static GObject *gimp_container_tree_view_constructor  (GType                   t
                                                        guint                   n_params,
                                                        GObjectConstructParam  *params);
 
+static void    gimp_container_tree_view_unrealize     (GtkWidget              *widget);
 static void    gimp_container_tree_view_unmap         (GtkWidget              *widget);
 static gboolean  gimp_container_tree_view_popup_menu  (GtkWidget              *widget);
 static void    gimp_container_tree_view_set_container (GimpContainerView      *view,
@@ -140,6 +141,7 @@ gimp_container_tree_view_class_init (GimpContainerTreeViewClass *klass)
 
   object_class->constructor              = gimp_container_tree_view_constructor;
 
+  widget_class->unrealize                = gimp_container_tree_view_unrealize;
   widget_class->unmap                    = gimp_container_tree_view_unmap;
   widget_class->popup_menu               = gimp_container_tree_view_popup_menu;
 
@@ -256,6 +258,30 @@ gimp_container_tree_view_constructor (GType                  type,
   gtk_tree_view_set_enable_search (tree_view->view, TRUE);
 
   return object;
+}
+
+static void
+gimp_container_tree_view_unrealize (GtkWidget *widget)
+{
+  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (widget);
+  GtkTreeIter            iter;
+  gboolean               iter_valid;
+
+  for (iter_valid = gtk_tree_model_get_iter_first (tree_view->model, &iter);
+       iter_valid;
+       iter_valid = gtk_tree_model_iter_next (tree_view->model, &iter))
+    {
+      GimpPreviewRenderer *renderer;
+
+      gtk_tree_model_get (tree_view->model, &iter,
+                          COLUMN_RENDERER, &renderer,
+                          -1);
+
+      gimp_preview_renderer_unrealize (renderer);
+      g_object_unref (renderer);
+    }
+
+  GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
 }
 
 static void
@@ -696,7 +722,6 @@ gimp_container_tree_view_set_preview_size (GimpContainerView *view)
       gimp_preview_renderer_set_size (renderer,
                                       view->preview_size,
                                       view->preview_border_width);
-
       g_object_unref (renderer);
     }
 
