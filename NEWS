@@ -83,7 +83,7 @@ Bugs fixed in GIMP 2.0pre2
 - 128025: Fix behaviour when there is a floating selection (Mitch)
 - 131076: Make fuzzy select tool respect alpha channel in indexed mode (Mitch)
 - 131779: Improve indexed scaling dialog (Mitch)
-- 127673: Overlapping widgets in gradient editor {Mitch)
+- 127673: Overlapping widgets in gradient editor (Mitch)
 
 Other contributions:
   David Odin, Manish Singh, Simon Budig, Michael Natterer, Sven Neumann,
