@@ -20,92 +20,58 @@
 
 #include <glib-object.h>
 
-#include "libgimpbase/gimpbase.h"
-
 #include "core-types.h"
 
-#include "paint-funcs/paint-funcs.h"
-
-#include "config/gimpcoreconfig.h"
+#include "config/gimpconfig.h"
+#include "config/gimpconfig-utils.h"
 
 #include "gimp.h"
 #include "gimpbuffer.h"
-#include "gimpdrawable.h"
 #include "gimpimage.h"
 #include "gimpimage-new.h"
-#include "gimplayer.h"
+#include "gimptemplate.h"
 
 #include "gimp-intl.h"
 
 
-GimpImageNewValues *
-gimp_image_new_values_new (Gimp      *gimp,
-			   GimpImage *gimage)
+GimpTemplate *
+gimp_image_new_template_new (Gimp      *gimp,
+                             GimpImage *gimage)
 {
-  GimpImageNewValues *values;
+  GimpTemplate *template;
 
-  values = g_new0 (GimpImageNewValues, 1);
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage), NULL);
+
+  template = gimp_template_new ("image new values");
 
   if (gimage)
-    {
-      values->width  = gimp_image_get_width (gimage);
-      values->height = gimp_image_get_height (gimage);
-      values->unit   = gimp_image_get_unit (gimage);
-
-      gimp_image_get_resolution (gimage,
-				 &values->xresolution, 
-				 &values->yresolution);
-
-      values->type = gimp_image_base_type (gimage);
-
-      if (values->type == GIMP_INDEXED)
-        values->type = GIMP_RGB; /* no indexed images */
-      
-      values->fill_type = GIMP_BACKGROUND_FILL;
-    }
+    gimp_template_set_from_image (template, gimage);
   else
-    {
-      *values = gimp->image_new_last_values;
-    }
+    gimp_config_copy_properties (G_OBJECT (gimp->image_new_last_template),
+                                 G_OBJECT (template));
 
   if (gimp->global_buffer && gimp->have_current_cut_buffer)
     {
-      values->width  = gimp_buffer_get_width (gimp->global_buffer);
-      values->height = gimp_buffer_get_height (gimp->global_buffer);
+      g_object_set (template,
+                    "width",  gimp_buffer_get_width (gimp->global_buffer),
+                    "height", gimp_buffer_get_height (gimp->global_buffer),
+                    NULL);
     }
 
-  return values;
+  return template;
 }
 
 void
-gimp_image_new_set_default_values (Gimp               *gimp,
-				   GimpImageNewValues *values)
+gimp_image_new_set_last_template (Gimp         *gimp,
+                                  GimpTemplate *template)
 {
-  g_return_if_fail (values != NULL);
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_TEMPLATE (template));
 
-  gimp->image_new_last_values = *values;
-
+  gimp_config_copy_properties (G_OBJECT (template),
+                               G_OBJECT (gimp->image_new_last_template));
   gimp->have_current_cut_buffer = FALSE;
-}
-
-void
-gimp_image_new_values_free (GimpImageNewValues *values)
-{
-  g_return_if_fail (values != NULL);
-
-  g_free (values);
-}
-
-gsize
-gimp_image_new_calculate_memsize (GimpImageNewValues *values)
-{
-  gint channels;
-
-  channels = ((values->type == GIMP_RGB ? 3 : 1)           /* color     */ +
-              (values->fill_type == GIMP_TRANSPARENT_FILL) /* alpha     */ +
-              1                                            /* selection */);
-
-  return channels * values->width * values->height;
 }
 
 gchar *
@@ -138,64 +104,13 @@ gimp_image_new_get_memsize_string (gsize memsize)
 }
 
 GimpImage *
-gimp_image_new_create_image (Gimp               *gimp,
-			     GimpImageNewValues *values)
+gimp_image_new_create_image (Gimp         *gimp,
+			     GimpTemplate *template)
 {
-  GimpImage     *gimage;
-  GimpLayer     *layer;
-  GimpImageType  type;
-  gint           width, height;
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), NULL);
 
-  g_return_val_if_fail (values != NULL, NULL);
+  gimp_image_new_set_last_template (gimp, template);
 
-  gimp_image_new_set_default_values (gimp, values);
-
-  switch (values->fill_type)
-    {
-    case GIMP_FOREGROUND_FILL:
-    case GIMP_BACKGROUND_FILL:
-    case GIMP_WHITE_FILL:
-      type = (values->type == GIMP_RGB) ? GIMP_RGB_IMAGE : GIMP_GRAY_IMAGE;
-      break;
-    case GIMP_TRANSPARENT_FILL:
-      type = (values->type == GIMP_RGB) ? GIMP_RGBA_IMAGE : GIMP_GRAYA_IMAGE;
-      break;
-    default:
-      type = GIMP_RGB_IMAGE;
-      break;
-    }
-
-  gimage = gimp_create_image (gimp,
-			      values->width, values->height,
-			      values->type,
-			      TRUE);
-
-  gimp_image_set_resolution (gimage, values->xresolution, values->yresolution);
-  gimp_image_set_unit (gimage, values->unit);
-
-  width  = gimp_image_get_width (gimage);
-  height = gimp_image_get_height (gimage);
-
-  layer = gimp_layer_new (gimage, width, height,
-			  type, _("Background"),
-			  GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
- 
-  if (layer)
-    {
-      gimp_image_undo_disable (gimage);
-      gimp_image_add_layer (gimage, layer, 0);
-      gimp_image_undo_enable (gimage);
-
-      gimp_drawable_fill_by_type (GIMP_DRAWABLE (layer),
-				  gimp_get_current_context (gimp),
-				  values->fill_type);
-
-      gimp_image_clean_all (gimage);
-
-      gimp_create_display (gimp, gimage, 0x0101);
-
-      g_object_unref (gimage);
-    }
-
-  return gimage;
+  return gimp_template_create_image (gimp, template);
 }

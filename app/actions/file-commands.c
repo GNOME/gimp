@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -31,7 +33,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
-#include "core/gimpobject.h"
+#include "core/gimptemplate.h"
 
 #include "file/file-open.h"
 #include "file/file-save.h"
@@ -77,6 +79,9 @@
 
 /*  local function prototypes  */
 
+static void   file_new_template_callback   (GtkWidget *widget,
+                                            gchar     *name,
+                                            gpointer   data);
 static void   file_revert_confirm_callback (GtkWidget *widget,
 					    gboolean   revert,
 					    gpointer   data);
@@ -265,6 +270,25 @@ file_save_a_copy_cmd_callback (GtkWidget *widget,
 }
 
 void
+file_save_template_cmd_callback (GtkWidget *widget,
+                                 gpointer   data,
+                                 guint      action)
+{
+  GimpDisplay *gdisp;
+  GtkWidget   *qbox;
+  return_if_no_display (gdisp, data);
+
+  qbox = gimp_query_string_box (_("Create New Template"),
+				gimp_standard_help_func,
+				"dialogs/new_template.html",
+				_("Enter a name for this template"),
+				NULL,
+				G_OBJECT (gdisp->gimage), "disconnect",
+				file_new_template_callback, gdisp->gimage);
+  gtk_widget_show (qbox);
+}
+
+void
 file_revert_cmd_callback (GtkWidget *widget,
 			  gpointer   data,
                           guint      action)
@@ -354,7 +378,29 @@ file_file_open_dialog (Gimp        *gimp,
   file_open_dialog_show (gimp, NULL, uri, global_menu_factory);
 }
 
+
 /*  private functions  */
+
+static void
+file_new_template_callback (GtkWidget *widget,
+                            gchar     *name,
+                            gpointer   data)
+{
+  GimpTemplate *template;
+  GimpImage    *gimage;
+
+  gimage = (GimpImage *) data;
+
+  if (! (name && strlen (name)))
+    name = _("(Unnamed Template)");
+
+  template = gimp_template_new (name);
+  gimp_template_set_from_image (template, gimage);
+
+  gimp_container_add (gimage->gimp->templates,
+                      GIMP_OBJECT (template));
+  g_object_unref (template);
+}
 
 static void
 file_revert_confirm_callback (GtkWidget *widget,

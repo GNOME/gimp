@@ -140,6 +140,15 @@ GtkWidget     * gimp_prop_coordinates_new         (GObject     *config,
                                                    gdouble      yresolution,
                                                    gboolean     has_chainbutton);
 
+gboolean        gimp_prop_size_entry_connect      (GObject     *config,
+                                                   const gchar *x_property_name,
+                                                   const gchar *y_property_name,
+                                                   const gchar *unit_property_name,
+                                                   GtkWidget   *sizeentry,
+                                                   GtkWidget   *chainbutton,
+                                                   gdouble      xresolution,
+                                                   gdouble      yresolution);
+
 
 /*  GimpParamColor  */
 

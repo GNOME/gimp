@@ -28,6 +28,8 @@ libappcore_a_sources = \
 	gimp-gradients.h		\
 	gimp-parasites.c		\
 	gimp-parasites.h		\
+	gimp-templates.c		\
+	gimp-templates.h		\
 	gimpbrush.c			\
 	gimpbrush.h			\
 	gimpbrush-header.h		\
@@ -156,6 +158,8 @@ libappcore_a_sources = \
 	gimppreviewcache.h		\
 	gimpscanconvert.c		\
 	gimpscanconvert.h		\
+	gimptemplate.c			\
+	gimptemplate.h			\
 	gimptoolinfo.c			\
 	gimptoolinfo.h			\
 	gimpunit.c			\

@@ -1,5 +1,38 @@
 2003-04-03  Michael Natterer  <mitch@gimp.org>
 
+	Added preliminary support for image templates. Not finished
+	yet. Addresses bug #96059. Now we need a volunteer to create
+	a nice collection of default templates...
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimptemplate.[ch]
+	* app/core/gimp-templates.[ch]: new files implementing the new
+	GimpTemplate object and the list of available image templates.
+
+	* app/core/gimp.[ch]: keep a container of templates around.
+
+	* app/core/gimpimage-new.[ch]: ported to use GimpTemplate. Removed
+	struct GimpImageNewValues.
+
+	* app/widgets/gimpcontainermenuimpl.c: changed to show the
+	"(none)" item for a NULL selection also, not only for an empty
+	container.
+
+	* app/widgets/gimppropwidgets.[ch]: added
+	gimp_prop_size_entry_connect() which connects an externally
+	created GimpSizeEntry to object properties. Fixed the size entry
+	code to actually work.
+
+	* app/gui/image-menu.c
+	* app/gui/file-commands.[ch]: added "Save as Template" which
+	creates a new template from any image's properties.
+
+	* app/gui/file-new-dialog.c: use prop_widgets and GimpTemplate.
+	Offer the available templates in a menu at the top of the dialog.
+
+2003-04-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpmovetool.c (gimp_move_tool_button_release): don't
 	forget to resume the selection after cancelling a guide drag.
 	Spotted by Pedro Gimeno.

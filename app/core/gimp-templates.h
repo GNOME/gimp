@@ -1,6 +1,6 @@
 /* The GIMP -- an image manipulation program
- * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
- * 
+ * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -16,20 +16,12 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_IMAGE_NEW_H__
-#define __GIMP_IMAGE_NEW_H__
+#ifndef __GIMP_TEMPLATES_H__
+#define __GIMP_TEMPLATES_H__
 
 
-GimpTemplate * gimp_image_new_template_new       (Gimp         *gimp,
-                                                  GimpImage    *gimage);
-
-void           gimp_image_new_set_last_template  (Gimp         *gimp,
-                                                  GimpTemplate *template);
-
-gchar        * gimp_image_new_get_memsize_string (gsize         memsize);
-
-GimpImage    * gimp_image_new_create_image       (Gimp         *gimp,
-                                                  GimpTemplate *template);
+void  gimp_templates_load (Gimp *gimp);
+void  gimp_templates_save (Gimp *gimp);
 
 
-#endif /* __GIMP_IMAGE_NEW__ */
+#endif  /*  __GIMP_TEMPLATES_H__  */

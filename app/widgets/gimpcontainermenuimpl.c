@@ -181,9 +181,6 @@ gimp_container_menu_impl_insert_item (GimpContainerMenu *menu,
   gtk_menu_reorder_child (GTK_MENU (menu),
 			  GIMP_CONTAINER_MENU_IMPL (menu)->empty_item, -1);
 
-  if (g_list_length (GTK_MENU_SHELL (menu)->children) == 2)
-    gtk_widget_hide (GIMP_CONTAINER_MENU_IMPL (menu)->empty_item);
-
   return (gpointer) menu_item;
 }
 
@@ -248,6 +245,7 @@ gimp_container_menu_impl_select_item (GimpContainerMenu *menu,
 				      gpointer           insert_data)
 {
   GtkWidget *menu_item;
+  gint      index;
 
   if (insert_data)
     menu_item = GTK_WIDGET (insert_data);
@@ -256,10 +254,18 @@ gimp_container_menu_impl_select_item (GimpContainerMenu *menu,
 
   if (menu_item)
     {
-      gint index;
+      gtk_widget_hide (GIMP_CONTAINER_MENU_IMPL (menu)->empty_item);
 
       index = gimp_container_get_child_index (menu->container,
 					      GIMP_OBJECT (viewable));
+
+      gimp_container_menu_impl_set_history (menu, index);
+    }
+  else
+    {
+      gtk_widget_show (GIMP_CONTAINER_MENU_IMPL (menu)->empty_item);
+
+      index = gimp_container_num_children (menu->container);
 
       gimp_container_menu_impl_set_history (menu, index);
     }

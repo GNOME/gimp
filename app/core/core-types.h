@@ -73,6 +73,8 @@ typedef struct _GimpToolOptions     GimpToolOptions; /*< proxy-include >*/
 typedef struct _GimpImagefile       GimpImagefile;
 typedef struct _GimpDocumentList    GimpDocumentList;
 
+typedef struct _GimpTemplate        GimpTemplate;
+
 
 /*  drawable objects  */
 
@@ -121,8 +123,6 @@ typedef struct _GimpUndoAccumulator GimpUndoAccumulator;
 typedef struct _GimpCoords          GimpCoords; /*< proxy-include >*/
 
 typedef struct _GimpGuide           GimpGuide;
-
-typedef struct _GimpImageNewValues  GimpImageNewValues;
 
 typedef struct _GimpProgress        GimpProgress;
 

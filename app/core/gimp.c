@@ -44,6 +44,7 @@
 #include "gimp-documents.h"
 #include "gimp-gradients.h"
 #include "gimp-parasites.h"
+#include "gimp-templates.h"
 #include "gimpbrush.h"
 #include "gimpbrushgenerated.h"
 #include "gimpbrushpipe.h"
@@ -62,6 +63,7 @@
 #include "gimppalette.h"
 #include "gimppattern.h"
 #include "gimpparasitelist.h"
+#include "gimptemplate.h"
 #include "gimptoolinfo.h"
 #include "gimpunits.h"
 
@@ -251,6 +253,9 @@ gimp_init (Gimp *gimp)
 
   gimp->documents           = gimp_document_list_new (gimp);
 
+  gimp->templates               = gimp_list_new (GIMP_TYPE_TEMPLATE,
+                                                 GIMP_CONTAINER_POLICY_STRONG);
+  gimp->image_new_last_template = NULL;
   gimp->have_current_cut_buffer = FALSE;
 
   gimp->context_list            = NULL;
@@ -297,6 +302,18 @@ gimp_finalize (GObject *object)
     {
       g_object_unref (gimp->standard_context);
       gimp->standard_context = NULL;
+    }
+
+  if (gimp->image_new_last_template)
+    {
+      g_object_unref (gimp->image_new_last_template);
+      gimp->image_new_last_template = NULL;
+    }
+
+  if (gimp->templates)
+    {
+      g_object_unref (gimp->templates);
+      gimp->templates = NULL;
     }
 
   if (gimp->documents)
@@ -466,7 +483,9 @@ gimp_get_memsize (GimpObject *object)
 
   memsize += (gimp_object_get_memsize (GIMP_OBJECT (gimp->tool_info_list)) +
               gimp_object_get_memsize (GIMP_OBJECT (gimp->standard_tool_info)) +
-              gimp_object_get_memsize (GIMP_OBJECT (gimp->documents)));
+              gimp_object_get_memsize (GIMP_OBJECT (gimp->documents)) +
+              gimp_object_get_memsize (GIMP_OBJECT (gimp->templates)) +
+              gimp_object_get_memsize (GIMP_OBJECT (gimp->image_new_last_template)));
 
   memsize += g_list_length (gimp->context_list) * sizeof (GList);
 
@@ -487,6 +506,7 @@ gimp_real_exit (Gimp     *gimp,
   gimp_data_factory_data_save (gimp->gradient_factory);
   gimp_data_factory_data_save (gimp->palette_factory);
   gimp_documents_save (gimp);
+  gimp_templates_save (gimp);
   gimp_parasiterc_save (gimp);
   gimp_unitrc_save (gimp);
 
@@ -690,15 +710,8 @@ gimp_initialize (Gimp               *gimp,
 
   /* Set the last values used to default values. */
 
-  gimp->image_new_last_values.width       = gimp->config->default_image_width;
-  gimp->image_new_last_values.height      = gimp->config->default_image_height;
-  gimp->image_new_last_values.unit        = gimp->config->default_unit;
-  gimp->image_new_last_values.xresolution = gimp->config->default_xresolution;
-  gimp->image_new_last_values.yresolution = gimp->config->default_yresolution;
-  gimp->image_new_last_values.res_unit    = gimp->config->default_resolution_unit;
-  gimp->image_new_last_values.type        = gimp->config->default_image_type;
-  gimp->image_new_last_values.fill_type   = GIMP_BACKGROUND_FILL;
-
+  gimp->image_new_last_template = gimp_template_new ("last values");
+  gimp_template_set_from_config (gimp->image_new_last_template, gimp->config);
   gimp->have_current_cut_buffer = FALSE;
 
   gimp->standard_context = gimp_context_new (gimp, "Standard", NULL);
@@ -762,14 +775,18 @@ gimp_restore (Gimp               *gimp,
   gimp_data_factory_data_init (gimp->gradient_factory, no_data); 
 
   /*  initialize the list of gimp fonts  */
-  (* status_callback) (NULL, _("Fonts"), 0.75);
+  (* status_callback) (NULL, _("Fonts"), 0.70);
   gimp_container_freeze (gimp->fonts);
   gimp_font_list_restore (GIMP_FONT_LIST (gimp->fonts));
   gimp_container_thaw (gimp->fonts);
 
   /*  initialize the document history  */
-  (* status_callback) (NULL, _("Documents"), 0.90);
+  (* status_callback) (NULL, _("Documents"), 0.80);
   gimp_documents_load (gimp);
+
+  /*  initialize the template list  */
+  (* status_callback) (NULL, _("Templates"), 0.90);
+  gimp_templates_load (gimp);
 
   (* status_callback) (NULL, NULL, 1.00);
 

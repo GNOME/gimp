@@ -1645,29 +1645,78 @@ gimp_prop_coordinates_new (GObject                   *config,
                            gdouble                    yresolution,
                            gboolean                   has_chainbutton)
 {
+  GtkWidget *sizeentry;
+  GtkWidget *chainbutton = NULL;
+
+  sizeentry = gimp_size_entry_new (2, GIMP_UNIT_INCH, unit_format,
+                                   FALSE, FALSE, TRUE, 10,
+                                   update_policy);
+
+  if (has_chainbutton)
+    {
+      chainbutton = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
+
+      gtk_table_attach_defaults (GTK_TABLE (sizeentry), chainbutton,
+                                 1, 3, 3, 4);
+      gtk_widget_show (chainbutton);
+    }
+
+  if (! gimp_prop_size_entry_connect (config,
+                                      x_property_name,
+                                      y_property_name,
+                                      unit_property_name,
+                                      sizeentry,
+                                      chainbutton,
+                                      xresolution,
+                                      yresolution))
+    {
+      gtk_widget_destroy (sizeentry);
+      return NULL;
+    }
+
+  return sizeentry;
+}
+
+gboolean
+gimp_prop_size_entry_connect (GObject     *config,
+                              const gchar *x_property_name,
+                              const gchar *y_property_name,
+                              const gchar *unit_property_name,
+                              GtkWidget   *sizeentry,
+                              GtkWidget   *chainbutton,
+                              gdouble      xresolution,
+                              gdouble      yresolution)
+{
   GParamSpec *x_param_spec;
   GParamSpec *y_param_spec;
   GParamSpec *unit_param_spec;
-  GtkWidget  *sizeentry;
   gdouble     x_value;
   gdouble     y_value;
+  gdouble    *old_x_value;
+  gdouble    *old_y_value;
   GimpUnit    unit_value;
   gboolean    chain_checked = FALSE;
 
+  g_return_val_if_fail (GIMP_IS_SIZE_ENTRY (sizeentry), FALSE);
+  g_return_val_if_fail (GIMP_SIZE_ENTRY (sizeentry)->number_of_fields == 2,
+                        FALSE);
+  g_return_val_if_fail (chainbutton == NULL ||
+                        GIMP_IS_CHAIN_BUTTON (chainbutton), FALSE);
+
   x_param_spec = find_param_spec (config, x_property_name, G_STRLOC);
   if (! x_param_spec)
-    return NULL;
+    return FALSE;
 
   y_param_spec = find_param_spec (config, y_property_name, G_STRLOC);
   if (! y_param_spec)
-    return NULL;
+    return FALSE;
 
   if (unit_property_name)
     {
       unit_param_spec = check_param_spec (config, unit_property_name,
                                           GIMP_TYPE_PARAM_UNIT, G_STRLOC);
       if (! unit_param_spec)
-        return NULL;
+        return FALSE;
 
       g_object_get (config,
                     unit_property_name, &unit_value,
@@ -1707,14 +1756,10 @@ gimp_prop_coordinates_new (GObject                   *config,
                  " both int or both double",
                  G_STRLOC, x_property_name, y_property_name,
                  g_type_name (G_TYPE_FROM_INSTANCE (config)));
-      return NULL;
+      return FALSE;
     }
 
-  sizeentry = gimp_size_entry_new (2, unit_value, unit_format,
-                                   FALSE, FALSE, TRUE, 10,
-                                   update_policy);
-
-  switch (update_policy)
+  switch (GIMP_SIZE_ENTRY (sizeentry)->update_policy)
     {
     case GIMP_SIZE_ENTRY_UPDATE_SIZE:
       gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0,
@@ -1760,19 +1805,24 @@ gimp_prop_coordinates_new (GObject                   *config,
   g_object_set_data (G_OBJECT (sizeentry), "gimp-config-param-spec-unit",
                      unit_param_spec);
 
-  if (has_chainbutton)
+  old_x_value  = g_new0 (gdouble, 1);
+  *old_x_value = x_value;
+  g_object_set_data_full (G_OBJECT (sizeentry), "old-x-value",
+                          old_x_value,
+                          (GDestroyNotify) g_free);
+
+  old_y_value  = g_new0 (gdouble, 1);
+  *old_y_value = y_value;
+  g_object_set_data_full (G_OBJECT (sizeentry), "old-y-value",
+                          old_y_value,
+                          (GDestroyNotify) g_free);
+
+  if (chainbutton)
     {
-      GtkWidget *button;
-
-      button = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
-
       if (chain_checked)
-        gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (button), TRUE);
+        gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chainbutton), TRUE);
 
-      gtk_table_attach_defaults (GTK_TABLE (sizeentry), button, 1, 3, 3, 4);
-      gtk_widget_show (button);
-
-      g_object_set_data (G_OBJECT (sizeentry), "chainbutton", button);
+      g_object_set_data (G_OBJECT (sizeentry), "chainbutton", chainbutton);
     }
 
   g_signal_connect (sizeentry, "value_changed",
@@ -1803,7 +1853,7 @@ gimp_prop_coordinates_new (GObject                   *config,
                       sizeentry);
     }
 
-  return sizeentry;
+  return TRUE;
 }
 
 static void
@@ -1834,26 +1884,10 @@ gimp_prop_coordinates_callback (GimpSizeEntry *sizeentry,
   unit_value = gimp_size_entry_get_unit (sizeentry);
 
   old_x_value = g_object_get_data (G_OBJECT (sizeentry), "old-x-value");
-
-  if (! old_x_value)
-    {
-      old_x_value = g_new0 (gdouble, 1);
-      *old_x_value = 0.0;
-      g_object_set_data_full (G_OBJECT (sizeentry), "old-x-value",
-                              old_x_value,
-                              (GDestroyNotify) g_free);
-    }
-
   old_y_value = g_object_get_data (G_OBJECT (sizeentry), "old-y-value");
 
-  if (! old_y_value)
-    {
-      old_y_value = g_new0 (gdouble, 1);
-      *old_y_value = 0.0;
-      g_object_set_data_full (G_OBJECT (sizeentry), "old-y-value",
-                              old_y_value,
-                              (GDestroyNotify) g_free);
-    }
+  if (! old_x_value || ! old_y_value)
+    return;
 
   if (x_value != y_value)
     {
@@ -1865,20 +1899,9 @@ gimp_prop_coordinates_callback (GimpSizeEntry *sizeentry,
           gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (chainbutton)))
         {
           if (x_value != *old_x_value)
-            {
-              *old_x_value = x_value;
-              gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1,
-                                          x_value);
-              return;
-            }
-
-          if (y_value != *old_y_value)
-            {
-              *old_y_value = y_value;
-              gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 0,
-                                          y_value);
-              return;
-            }
+            y_value = x_value;
+          else if (y_value != *old_y_value)
+            x_value = y_value;
         }
     }
 
@@ -1892,8 +1915,8 @@ gimp_prop_coordinates_callback (GimpSizeEntry *sizeentry,
       G_IS_PARAM_SPEC_INT (y_param_spec))
     {
       g_object_set (config,
-                    x_param_spec->name,    (gint) x_value,
-                    y_param_spec->name,    (gint) y_value,
+                    x_param_spec->name, ROUND (x_value),
+                    y_param_spec->name, ROUND (y_value),
 
                     unit_param_spec ?
                     unit_param_spec->name : NULL, unit_value,
@@ -1904,8 +1927,8 @@ gimp_prop_coordinates_callback (GimpSizeEntry *sizeentry,
            G_IS_PARAM_SPEC_DOUBLE (y_param_spec))
     {
       g_object_set (config,
-                    x_param_spec->name,    x_value,
-                    y_param_spec->name,    y_value,
+                    x_param_spec->name, x_value,
+                    y_param_spec->name, y_value,
 
                     unit_param_spec ?
                     unit_param_spec->name : NULL, unit_value,
