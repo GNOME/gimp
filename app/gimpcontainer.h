@@ -50,6 +50,7 @@ struct _GimpContainer
 
   /*  private  */
   GList               *handlers;
+  gint                 freeze_count;
 };
 
 struct _GimpContainerClass
@@ -102,6 +103,7 @@ gint         gimp_container_get_child_index    (const GimpContainer *container,
 
 void         gimp_container_freeze             (GimpContainer       *container);
 void         gimp_container_thaw               (GimpContainer       *container);
+gboolean     gimp_container_frozen             (GimpContainer       *container);
 
 GQuark       gimp_container_add_handler        (GimpContainer       *container,
 						const gchar         *signame,

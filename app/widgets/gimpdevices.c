@@ -29,15 +29,16 @@
 #include "apptypes.h"
 
 #include "appenv.h"
+#include "context_manager.h"
 #include "brushes.h"
 #include "devices.h"
 #include "dialog_handler.h"
 #include "gimpbrush.h"
 #include "gimpcontext.h"
-#include "gimpcontextpreview.h"
 #include "gimpdnd.h"
 #include "gimpgradient.h"
 #include "gimppattern.h"
+#include "gimppreview.h"
 #include "gimplist.h"
 #include "gimprc.h"
 #include "gradients.h"
@@ -751,7 +752,7 @@ device_status_create (void)
   GimpRGB     color;
   GList      *list;
   gint        i;
-  
+
   if (deviceD == NULL)
     {
       deviceD = g_new (DeviceInfoDialog, 1);
@@ -888,23 +889,45 @@ device_status_create (void)
 	  /*  the brush  */
 
 	  deviceD->brushes[i] =
-	    gimp_context_preview_new (GCP_BRUSH, 
-				      CELL_SIZE, CELL_SIZE,
-				      FALSE, TRUE,
-				      GTK_SIGNAL_FUNC (device_status_drop_brush),
-				      GUINT_TO_POINTER (device_info->device));
-	  gtk_table_attach (GTK_TABLE(deviceD->table), deviceD->brushes[i],
+	    gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_brush (device_info->context)),
+				   CELL_SIZE, CELL_SIZE, 0,
+				   FALSE, FALSE, TRUE);
+	  gtk_signal_connect_object_while_alive
+	    (GTK_OBJECT (device_info->context),
+	     "brush_changed",
+	     GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
+	     GTK_OBJECT (deviceD->brushes[i]));
+	  gimp_gtk_drag_dest_set_by_type (deviceD->brushes[i],
+					  GTK_DEST_DEFAULT_ALL,
+					  GIMP_TYPE_BRUSH,
+					  GDK_ACTION_COPY);
+	  gimp_dnd_viewable_dest_set (deviceD->brushes[i],
+				      GIMP_TYPE_BRUSH,
+				      device_status_drop_brush,
+				      NULL);
+	  gtk_table_attach (GTK_TABLE (deviceD->table), deviceD->brushes[i],
 			    4, 5, i, i+1,
 			    0, 0, 2, 2);
 
 	  /*  the pattern  */
 
 	  deviceD->patterns[i] =
-	    gimp_context_preview_new (GCP_PATTERN,
-				      CELL_SIZE, CELL_SIZE, 
-				      FALSE, TRUE,
-				      GTK_SIGNAL_FUNC (device_status_drop_pattern),
-				      GUINT_TO_POINTER (device_info->device));
+	    gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_pattern (device_info->context)),
+				   CELL_SIZE, CELL_SIZE, 0,
+				   FALSE, FALSE, TRUE);
+	  gtk_signal_connect_object_while_alive
+	    (GTK_OBJECT (device_info->context),
+	     "pattern_changed",
+	     GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
+	     GTK_OBJECT (deviceD->patterns[i]));
+	  gimp_gtk_drag_dest_set_by_type (deviceD->patterns[i],
+					  GTK_DEST_DEFAULT_ALL,
+					  GIMP_TYPE_PATTERN,
+					  GDK_ACTION_COPY);
+	  gimp_dnd_viewable_dest_set (deviceD->patterns[i],
+				      GIMP_TYPE_PATTERN,
+				      device_status_drop_pattern,
+				      NULL);
 	  gtk_table_attach (GTK_TABLE(deviceD->table), deviceD->patterns[i],
 			    5, 6, i, i+1,
 			    0, 0, 2, 2);
@@ -912,11 +935,22 @@ device_status_create (void)
 	  /*  the gradient  */
 
 	  deviceD->gradients[i] =
-	    gimp_context_preview_new (GCP_GRADIENT,
-				      CELL_SIZE * 2, CELL_SIZE, 
-				      FALSE, TRUE,
-				      GTK_SIGNAL_FUNC (device_status_drop_gradient),
-				      GUINT_TO_POINTER (device_info->device));
+	    gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_gradient (device_info->context)),
+				   CELL_SIZE * 2, CELL_SIZE, 0,
+				   FALSE, FALSE, TRUE);
+	  gtk_signal_connect_object_while_alive
+	    (GTK_OBJECT (device_info->context),
+	     "gradient_changed",
+	     GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
+	     GTK_OBJECT (deviceD->gradients[i]));
+	  gimp_gtk_drag_dest_set_by_type (deviceD->gradients[i],
+					  GTK_DEST_DEFAULT_ALL,
+					  GIMP_TYPE_GRADIENT,
+					  GDK_ACTION_COPY);
+	  gimp_dnd_viewable_dest_set (deviceD->gradients[i],
+				      GIMP_TYPE_GRADIENT,
+				      device_status_drop_gradient,
+				      NULL);
 	  gtk_table_attach (GTK_TABLE(deviceD->table), deviceD->gradients[i],
 			    6, 7, i, i+1,
 			    0, 0, 2, 2);
@@ -1085,25 +1119,16 @@ device_status_update (guint32 deviceid)
 
       if (gimp_context_get_brush (device_info->context))
 	{
-	  gimp_context_preview_update
-	    (GIMP_CONTEXT_PREVIEW (deviceD->brushes[i]), 
-	     gimp_context_get_brush (device_info->context));
 	  gtk_widget_show (deviceD->brushes[i]);
 	}
 
       if (gimp_context_get_pattern (device_info->context))
 	{
-	  gimp_context_preview_update
-	    (GIMP_CONTEXT_PREVIEW (deviceD->patterns[i]), 
-	     gimp_context_get_pattern (device_info->context));
 	  gtk_widget_show (deviceD->patterns[i]);
 	}
 
       if (gimp_context_get_gradient (device_info->context))
 	{
-	  gimp_context_preview_update
-	    (GIMP_CONTEXT_PREVIEW (deviceD->gradients[i]), 
-	     gimp_context_get_gradient (device_info->context));
 	  gtk_widget_show (deviceD->gradients[i]);
 	}
     }

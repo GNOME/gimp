@@ -64,6 +64,7 @@
 #include "apptypes.h"
 
 #include "color_notebook.h"
+#include "context_manager.h"
 #include "cursorutil.h"
 #include "datafiles.h"
 #include "errors.h"
@@ -924,7 +925,6 @@ gradient_editor_create (void)
 					    GIMP_OBJECT (curr_gradient));
 
       gradient_select_insert_all (pos, curr_gradient);
-      gimp_context_refresh_gradients ();
     }
 
   /* Show everything */
@@ -1508,8 +1508,6 @@ ed_do_rename_gradient_callback (GtkWidget *widget,
 
   gimp_data_dirty (GIMP_DATA (grad));
 
-  gimp_data_set_filename (GIMP_DATA (grad), NULL);
-
   row = gtk_clist_find_row_from_data (GTK_CLIST (g_editor->clist), grad);
   if (row > -1)
     gtk_clist_set_text (GTK_CLIST (g_editor->clist), row, 1,
@@ -1518,8 +1516,6 @@ ed_do_rename_gradient_callback (GtkWidget *widget,
   gradient_select_rename_all (grad);
 
   ed_update_editor (GRAD_UPDATE_PREVIEW | GRAD_RESET_CONTROL);
-	
-  gimp_context_update_gradients (grad);
 }
 
 /***** The "delete gradient" dialog functions *****/
@@ -1581,12 +1577,10 @@ ed_do_delete_gradient_callback (GtkWidget *widget,
   if (row > -1)
     gtk_clist_remove (GTK_CLIST (g_editor->clist), row);
 
-  /* Delete gradient from gradients list */
-  gimp_data_delete_from_disk (GIMP_DATA (delete_gradient));
+  if (GIMP_DATA (delete_gradient)->filename)
+    gimp_data_delete_from_disk (GIMP_DATA (delete_gradient));
 
   gimp_container_remove (global_gradient_list, GIMP_OBJECT (delete_gradient));
-
-  gimp_context_refresh_gradients ();
 }
 
 /***** The "save as pov" dialog functions *****/
@@ -1736,8 +1730,6 @@ ed_refresh_grads_callback (GtkWidget *widget,
       gimp_data_dirty (GIMP_DATA (curr_gradient));
 
       gimp_container_add (global_gradient_list, GIMP_OBJECT (curr_gradient));
-
-      gimp_context_refresh_gradients ();
     }
 
   select_pos = gradient_clist_init (g_editor->shell, g_editor->gc,
@@ -2102,9 +2094,6 @@ gradient_update (void)
 
   /*  Update all selectors that are on screen  */
   gradient_select_update_all (curr_gradient);
-
-  /*  Update all contexts  */
-  gimp_context_update_gradients (curr_gradient);
 }
 
 static void

@@ -1,3 +1,59 @@
+2001-02-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am: took gimpcontextpreview.[ch] out of the build
+	but still left the sources there as reference.
+
+	* app/app_procs.c: initialize the render stuff before creating the
+	toolbox (needed for the previews).
+
+	* app/devices.c
+	* app/indicator_area.c: use GimpPreviews instead of
+	GimpContextPreviews.
+
+	* app/context_manager.[ch]: create the global data lists here
+	because they now must exist before any context is created.
+
+	* app/brushes.[ch]
+	* app/gradients.[ch]
+	* app/palettes.[ch]
+	* app/patterns.[ch]: removed them here.
+
+	* app/gimpcontainer.[ch]: added a "freeze_count" and emit the
+	"freeze" and "thaw" signals accordingly.
+
+	* app/gimpcontext.[ch]: greatly simplified the way how the
+	contexts connect to the data lists (simply keep them connected all
+	the time). Also removed all those ugly explicit update functions
+	because "thaw" callbacks do this job now.
+
+	* app/gimpdata.c: a GimpData object now becomes dirty on
+	"name_changed"; "dirty" now triggers "invalidate_preview" because
+	the context does not dispatch these signals any more soon.
+
+	* app/brush_select.c
+	* app/convert.c
+	* app/gimpdnd.c
+	* app/gradient_editor.c
+	* app/gradient_select.c
+	* app/pattern_select.c
+	* app/gradient_editor.c
+	* app/gradient_select.c
+	* app/gradients.[ch]
+	* app/pdb/brush_select_cmds.c
+	* app/pdb/brushes_cmds.c
+	* app/pdb/convert_cmds.c
+	* app/pdb/gradient_select_cmds.c
+	* app/pdb/gradients_cmds.c
+	* app/pdb/pattern_select_cmds.c
+	* app/pdb/patterns_cmds.c
+	* tools/pdbgen/pdb/brush_select.pdb
+	* tools/pdbgen/pdb/brushes.pdb
+	* tools/pdbgen/pdb/convert.pdb
+	* tools/pdbgen/pdb/gradient_select.pdb
+	* tools/pdbgen/pdb/gradients.pdb
+	* tools/pdbgen/pdb/pattern_select.pdb
+	* tools/pdbgen/pdb/patterns.pdb: changed accordingly.
+
 2001-02-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/apptypes.h: added the datafile loader_func typedefs.

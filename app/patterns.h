@@ -20,9 +20,6 @@
 #define __PATTERNS_H__
 
 
-extern GimpContainer *global_pattern_list;
-
-
 void          patterns_init                 (gboolean  no_data);
 void          patterns_free                 (void);
 

@@ -27,6 +27,7 @@
 
 #include "color_area.h"
 #include "color_notebook.h"
+#include "context_manager.h"
 #include "dialog_handler.h"
 #include "gimage.h"
 #include "gimpcontext.h"

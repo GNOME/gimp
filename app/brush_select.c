@@ -27,6 +27,7 @@
 #include "apptypes.h"
 
 #include "appenv.h"
+#include "context_manager.h"
 #include "brush_scale.h"
 #include "brush_edit.h"
 #include "brush_select.h"
@@ -1879,13 +1880,12 @@ brush_select_delete_brush_callback (GtkWidget *widget,
 
   if (GIMP_IS_BRUSH_GENERATED (brush))
     {
-      gimp_data_delete_from_disk (GIMP_DATA (brush));
+      if (GIMP_DATA (brush)->filename)
+	gimp_data_delete_from_disk (GIMP_DATA (brush));
 
       brush_select_freeze_all ();
 
-      gimp_container_remove (GIMP_CONTAINER (global_brush_list),
-			     GIMP_OBJECT (brush));
-      gimp_context_refresh_brushes ();
+      gimp_container_remove (global_brush_list, GIMP_OBJECT (brush));
 
       brush_select_thaw_all ();
     }

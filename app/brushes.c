@@ -22,18 +22,14 @@
 
 #include "apptypes.h"
 
+#include "context_manager.h"
 #include "brush_select.h"
 #include "brushes.h"
 #include "gimpbrush.h"
 #include "gimpbrushgenerated.h"
 #include "gimpbrushpipe.h"
-#include "gimpcontext.h"
 #include "gimpdatalist.h"
 #include "gimprc.h"
-
-
-/*  global variables  */
-GimpContainer *global_brush_list = NULL;
 
 
 /*  public functions  */
@@ -41,10 +37,7 @@ GimpContainer *global_brush_list = NULL;
 void
 brushes_init (gboolean no_data)
 {
-  if (global_brush_list)
-    brushes_free ();
-  else
-    global_brush_list = GIMP_CONTAINER (gimp_data_list_new (GIMP_TYPE_BRUSH));
+  brushes_free ();
 
   if (brush_path != NULL && !no_data)
     {
@@ -78,14 +71,12 @@ brushes_init (gboolean no_data)
 
       brush_select_thaw_all ();
     }
-
-  gimp_context_refresh_brushes ();
 }
 
 void
 brushes_free (void)
 {
-  if (! global_brush_list)
+  if (gimp_container_num_children (global_brush_list) == 0)
     return;
 
   brush_select_freeze_all ();

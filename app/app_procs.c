@@ -604,6 +604,9 @@ app_init (void)
   /*  Things to do only if there is an interface  */
   if (no_interface == FALSE)
     {
+      gximage_init ();
+      render_setup (transparency_type, transparency_size);
+
       devices_init ();
       session_init ();
 
@@ -636,8 +639,6 @@ app_init (void)
 	g_free (filenames);
       }
 
-      gximage_init ();
-      render_setup (transparency_type, transparency_size);
       tool_options_dialog_new ();
 
       /*  EEK: force signal emission  */

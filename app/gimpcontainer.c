@@ -98,6 +98,7 @@ gimp_container_init (GimpContainer *container)
   container->num_children  = 0;
 
   container->handlers      = NULL;
+  container->freeze_count  = 0;
 }
 
 static void
@@ -466,7 +467,10 @@ gimp_container_freeze (GimpContainer *container)
   g_return_if_fail (container != NULL);
   g_return_if_fail (GIMP_IS_CONTAINER (container));
 
-  gtk_signal_emit (GTK_OBJECT (container), container_signals[FREEZE]);
+  container->freeze_count++;
+
+  if (container->freeze_count == 1)
+    gtk_signal_emit (GTK_OBJECT (container), container_signals[FREEZE]);
 }
 
 void
@@ -475,7 +479,20 @@ gimp_container_thaw (GimpContainer *container)
   g_return_if_fail (container != NULL);
   g_return_if_fail (GIMP_IS_CONTAINER (container));
 
-  gtk_signal_emit (GTK_OBJECT (container), container_signals[THAW]);
+  if (container->freeze_count > 0)
+    container->freeze_count--;
+
+  if (container->freeze_count == 0)
+    gtk_signal_emit (GTK_OBJECT (container), container_signals[THAW]);
+}
+
+gboolean
+gimp_container_frozen (GimpContainer *container)
+{
+  g_return_val_if_fail (container != NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
+
+  return (container->freeze_count > 0) ? TRUE : FALSE;
 }
 
 static void

@@ -27,6 +27,7 @@
 
 #include "apptypes.h"
 
+#include "context_manager.h"
 #include "brushes.h"
 #include "fileops.h"
 #include "gimpimage.h"

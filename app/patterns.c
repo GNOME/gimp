@@ -22,7 +22,7 @@
 
 #include "apptypes.h"
 
-#include "gimpcontext.h"
+#include "context_manager.h"
 #include "gimpdatalist.h"
 #include "gimppattern.h"
 #include "gimprc.h"
@@ -31,20 +31,12 @@
 #include "temp_buf.h"
 
 
-/*  global variables  */
-GimpContainer *global_pattern_list = NULL;
-
-
 /*  public functions  */
 
 void
 patterns_init (gboolean no_data)
 {
-  if (global_pattern_list)
-    patterns_free ();
-  else
-    global_pattern_list =
-      GIMP_CONTAINER (gimp_data_list_new (GIMP_TYPE_PATTERN));
+  patterns_free ();
 
   if (pattern_path != NULL && !no_data)
     {
@@ -60,14 +52,12 @@ patterns_init (gboolean no_data)
 
       pattern_select_thaw_all ();
     }
-
-  gimp_context_refresh_patterns ();
 }
 
 void
 patterns_free (void)
 {
-  if (! global_pattern_list)
+  if (gimp_container_num_children (global_pattern_list) == 0)
     return;
 
   pattern_select_freeze_all ();

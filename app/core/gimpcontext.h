@@ -205,9 +205,11 @@ void          gimp_context_copy_args         (GimpContext        *src,
 					      GimpContext        *dest,
 					      GimpContextArgMask  args_mask);
 
+
 /*  manipulate by GtkType  */
-GimpContextArgType gimp_context_type_to_arg        (GtkType type);
-const gchar     * gimp_context_type_to_signal_name (GtkType type);
+GimpContextArgType   gimp_context_type_to_arg         (GtkType type);
+const gchar        * gimp_context_type_to_signal_name (GtkType type);
+
 GimpObject       * gimp_context_get_by_type        (GimpContext     *context,
 						    GtkType          type);
 void               gimp_context_set_by_type        (GimpContext     *context,
@@ -216,11 +218,13 @@ void               gimp_context_set_by_type        (GimpContext     *context,
 void               gimp_context_changed_by_type    (GimpContext     *context,
 						    GtkType          type);
 
+
 /*  image  */
 GimpImage        * gimp_context_get_image          (GimpContext     *context);
 void               gimp_context_set_image          (GimpContext     *context,
 						    GimpImage       *image);
 void               gimp_context_image_changed      (GimpContext     *context);
+
 
 /*  display  */
 GDisplay         * gimp_context_get_display        (GimpContext     *context);
@@ -228,11 +232,13 @@ void               gimp_context_set_display        (GimpContext     *context,
 						    GDisplay        *display);
 void               gimp_context_display_changed    (GimpContext     *context);
 
+
 /*  tool  */
 ToolType           gimp_context_get_tool           (GimpContext     *context);
 void               gimp_context_set_tool           (GimpContext     *context,
 						    ToolType         tool_type);
 void               gimp_context_tool_changed       (GimpContext     *context);
+
 
 /*  foreground color  */
 void               gimp_context_get_foreground     (GimpContext     *context,
@@ -241,6 +247,7 @@ void               gimp_context_set_foreground     (GimpContext     *context,
 						    const GimpRGB   *color);
 void               gimp_context_foreground_changed (GimpContext     *context);
 
+
 /*  background color  */
 void               gimp_context_get_background     (GimpContext     *context,
 						    GimpRGB         *color);
@@ -248,9 +255,11 @@ void               gimp_context_set_background     (GimpContext     *context,
 						    const GimpRGB   *color);
 void               gimp_context_background_changed (GimpContext     *context);
 
+
 /*  color utility functions  */
 void               gimp_context_set_default_colors (GimpContext     *context);
 void               gimp_context_swap_colors        (GimpContext     *context);
+
 
 /*  opacity  */
 gdouble            gimp_context_get_opacity        (GimpContext     *context);
@@ -258,40 +267,40 @@ void               gimp_context_set_opacity        (GimpContext     *context,
 						    gdouble          opacity);
 void               gimp_context_opacity_changed    (GimpContext     *context);
 
+
 /*  paint mode  */
 LayerModeEffects   gimp_context_get_paint_mode     (GimpContext     *context);
 void               gimp_context_set_paint_mode     (GimpContext     *context,
 						    LayerModeEffects paint_mode);
 void               gimp_context_paint_mode_changed (GimpContext     *context);
 
+
 /*  brush  */
 GimpBrush        * gimp_context_get_brush          (GimpContext     *context);
 void               gimp_context_set_brush          (GimpContext     *context,
 						    GimpBrush       *brush);
 void               gimp_context_brush_changed      (GimpContext     *context);
-void               gimp_context_refresh_brushes    (void);
+
 
 /*  pattern  */
 GimpPattern      * gimp_context_get_pattern        (GimpContext     *context);
 void               gimp_context_set_pattern        (GimpContext     *context,
 						    GimpPattern     *pattern);
 void               gimp_context_pattern_changed    (GimpContext     *context);
-void               gimp_context_refresh_patterns   (void);
+
 
 /*  gradient  */
 GimpGradient     * gimp_context_get_gradient       (GimpContext     *context);
 void               gimp_context_set_gradient       (GimpContext     *context,
 						    GimpGradient    *gradient);
 void               gimp_context_gradient_changed   (GimpContext     *context);
-void               gimp_context_refresh_gradients  (void);
-void               gimp_context_update_gradients   (GimpGradient    *gradient);
+
 
 /*  palette  */
 GimpPalette      * gimp_context_get_palette        (GimpContext     *context);
 void               gimp_context_set_palette        (GimpContext     *context,
 						    GimpPalette     *palette);
 void               gimp_context_palette_changed    (GimpContext     *context);
-void               gimp_context_refresh_palettes   (void);
 
 
 #endif /* __GIMP_CONTEXT_H__ */

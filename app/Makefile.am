@@ -114,8 +114,6 @@ gimp_SOURCES = \
 	gimpcontainer.h		\
 	gimpcontext.c		\
 	gimpcontext.h		\
-	gimpcontextpreview.c	\
-	gimpcontextpreview.h	\
 	gimpdata.c		\
 	gimpdata.h		\
 	gimpdatalist.c		\

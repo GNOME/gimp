@@ -20,9 +20,6 @@
 #define __PALETTES_H__
 
 
-extern GimpContainer *global_palette_list;
-
-
 void          palettes_init                 (gboolean  no_data);
 void          palettes_free                 (void);
 

@@ -22,7 +22,7 @@
 
 #include "apptypes.h"
 
-#include "gimpcontext.h"
+#include "context_manager.h"
 #include "gimpdatalist.h"
 #include "gimppalette.h"
 #include "gimprc.h"
@@ -31,20 +31,12 @@
 #include "palettes.h"
 
 
-/*  global variables  */
-GimpContainer *global_palette_list = NULL;
-
-
 /*  public functions  */
 
 void
 palettes_init (gboolean no_data)
 {
-  if (global_palette_list)
-    palettes_free ();
-  else
-    global_palette_list =
-      GIMP_CONTAINER (gimp_data_list_new (GIMP_TYPE_PALETTE));
+  palettes_free ();
 
   if (palette_path != NULL && !no_data)
     {
@@ -61,14 +53,12 @@ palettes_init (gboolean no_data)
 
       palette_select_thaw_all ();
     }
-
-  gimp_context_refresh_palettes ();
 }
 
 void
 palettes_free (void)
 {
-  if (! global_palette_list)
+  if (gimp_container_num_children (global_palette_list) == 0)
     return;
 
   palette_select_freeze_all ();

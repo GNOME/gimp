@@ -27,6 +27,7 @@
 
 #include "apptypes.h"
 
+#include "context_manager.h"
 #include "gimpcontainer.h"
 #include "gimppalette.h"
 #include "palette_select.h"

@@ -20,9 +20,6 @@
 #define __BRUSHES_H__
 
 
-extern GimpContainer *global_brush_list;
-
-
 void        brushes_init               (gboolean  no_data);
 void        brushes_free               (void);
 

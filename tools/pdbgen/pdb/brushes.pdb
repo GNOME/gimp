@@ -354,8 +354,8 @@ CODE
     );
 }
 
-@headers = qw("brushes.h" "gimplist.h" "gimpbrush.h" "gimpcontext.h"
-              "temp_buf.h");
+@headers = qw("context_manager.h" "brushes.h" "gimplist.h"
+              "gimpbrush.h" "gimpcontext.h" "temp_buf.h");
 
 @procs = qw(brushes_refresh brushes_get_brush brushes_set_brush
 	    brushes_get_opacity brushes_set_opacity brushes_get_spacing

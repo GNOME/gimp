@@ -28,6 +28,7 @@
 #include "procedural_db.h"
 
 #include "brushes.h"
+#include "context_manager.h"
 #include "gimpbrush.h"
 #include "gimpcontext.h"
 #include "gimplist.h"

@@ -20,9 +20,6 @@
 #define __GRADIENTS_H__
 
 
-extern GimpContainer *global_gradient_list;
-
-
 void           gradients_init                   (gboolean  no_data);
 void           gradients_free                   (void);
 

@@ -26,10 +26,15 @@
 #include "cursorutil.h"
 #include "context_manager.h"
 #include "gdisplay.h"
+#include "gimpbrush.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
+#include "gimpdatalist.h"
+#include "gimpgradient.h"
 #include "gimpimage.h"
 #include "gimplist.h"
+#include "gimppalette.h"
+#include "gimppattern.h"
 #include "gimprc.h"
 
 #include "tools/paint_options.h"
@@ -39,7 +44,15 @@
 /*
  *  the list of all images
  */
-GimpContainer *image_context = NULL;
+GimpContainer *image_context        = NULL;
+
+/*
+ *  the global data lists
+ */
+GimpContainer *global_brush_list    = NULL;
+GimpContainer *global_pattern_list  = NULL;
+GimpContainer *global_gradient_list = NULL;
+GimpContainer *global_palette_list  = NULL;
 
 
 static GimpContext *global_tool_context = NULL;
@@ -137,14 +150,28 @@ context_manager_init (void)
   image_context = GIMP_CONTAINER (gimp_list_new (GIMP_TYPE_IMAGE,
 						 GIMP_CONTAINER_POLICY_WEAK));
 
+  /* Create the global data lists */
+  global_brush_list    = GIMP_CONTAINER (gimp_data_list_new (GIMP_TYPE_BRUSH));
+  global_pattern_list  = GIMP_CONTAINER (gimp_data_list_new (GIMP_TYPE_PATTERN));
+  global_gradient_list = GIMP_CONTAINER (gimp_data_list_new (GIMP_TYPE_GRADIENT));
+  global_palette_list  = GIMP_CONTAINER (gimp_data_list_new (GIMP_TYPE_PALETTE));
+
   /*  Implicitly create the standard context  */
   standard_context = gimp_context_get_standard ();
 
   /*  TODO: load from disk  */
   default_context = gimp_context_new ("Default", NULL);
+
+  /*
+  default_context->brush_name    = g_strdup (default_brush);
+  default_context->pattern_name  = g_strdup (default_pattern);
+  default_context->gradient_name = g_strdup (default_gradient);
+  default_context->palette_name  = g_strdup (default_palette);
+  */
+
   gimp_context_set_default (default_context);
 
-  /*  Initialize the user context will with the default context's values  */
+  /*  Initialize the user context with the default context's values  */
   user_context = gimp_context_new ("User", default_context);
   gimp_context_set_user (user_context);
 

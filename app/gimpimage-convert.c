@@ -97,6 +97,7 @@
 
 #include "apptypes.h"
 
+#include "context_manager.h"
 #include "convert.h"
 #include "cursorutil.h"
 #include "floating_sel.h"
@@ -791,9 +792,6 @@ build_palette_button (void)
   gint         default_palette;
 
   UserHasWebPal = FALSE;
-
-  if (! global_palette_list)
-    palettes_init (FALSE);
 
   list = GIMP_LIST (global_palette_list)->list;
 

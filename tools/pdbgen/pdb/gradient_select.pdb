@@ -226,8 +226,9 @@ CODE
     );
 }
 
-@headers = qw(<string.h> "gimpcontext.h" "gimpcontainer.h" "gradients.h"
-              "gimpgradient.h" "gradient_select.h");
+@headers = qw(<string.h> "context_manager.h" "gimpcontext.h"
+	      "gimpcontainer.h" "gradients.h" "gimpgradient.h"
+	      "gradient_select.h");
 
 $extra{app}->{code} = <<'CODE';
 static GradientSelect *

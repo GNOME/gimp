@@ -77,6 +77,9 @@ static void gimp_context_get_arg             (GtkObject        *object,
 					      guint             arg_id);
 
 /*  image  */
+static void gimp_context_image_removed       (GimpContainer    *container,
+					      GimpImage        *image,
+					      GimpContext      *context);
 static void gimp_context_real_set_image      (GimpContext      *context,
 					      GimpImage        *image);
 static void gimp_context_copy_image          (GimpContext      *src,
@@ -124,6 +127,8 @@ static void gimp_context_brush_dirty         (GimpBrush        *brush,
 static void gimp_context_brush_removed       (GimpContainer    *brush_list,
 					      GimpBrush        *brush,
 					      GimpContext      *context);
+static void gimp_context_brush_list_thaw     (GimpContainer    *container,
+					      GimpContext      *context);
 static void gimp_context_real_set_brush      (GimpContext      *context,
 					      GimpBrush        *brush);
 static void gimp_context_copy_brush          (GimpContext      *src,
@@ -135,12 +140,21 @@ static void gimp_context_pattern_dirty       (GimpPattern      *pattern,
 static void gimp_context_pattern_removed     (GimpContainer    *brush_list,
 					      GimpPattern      *pattern,
 					      GimpContext      *context);
+static void gimp_context_pattern_list_thaw   (GimpContainer    *container,
+					      GimpContext      *context);
 static void gimp_context_real_set_pattern    (GimpContext      *context,
 					      GimpPattern      *pattern);
 static void gimp_context_copy_pattern        (GimpContext      *src,
 					      GimpContext      *dest);
 
 /*  gradient  */
+static void gimp_context_gradient_dirty      (GimpGradient     *gradient,
+					      GimpContext      *context);
+static void gimp_context_gradient_removed    (GimpContainer    *container,
+					      GimpGradient     *gradient,
+					      GimpContext      *context);
+static void gimp_context_gradient_list_thaw  (GimpContainer    *container,
+					      GimpContext      *context);
 static void gimp_context_real_set_gradient   (GimpContext      *context,
 					      GimpGradient     *gradient);
 static void gimp_context_copy_gradient       (GimpContext      *src,
@@ -151,6 +165,8 @@ static void gimp_context_palette_dirty       (GimpPalette      *palette,
 					      GimpContext      *context);
 static void gimp_context_palette_removed     (GimpContainer    *brush_list,
 					      GimpPalette      *palatte,
+					      GimpContext      *context);
+static void gimp_context_palette_list_thaw   (GimpContainer    *container,
 					      GimpContext      *context);
 static void gimp_context_real_set_palette    (GimpContext      *context,
 					      GimpPalette      *palatte);
@@ -513,23 +529,8 @@ gimp_context_destroy (GtkObject *object)
   if (context->parent)
     gimp_context_unset_parent (context);
 
-  if (context->image)
-    gtk_signal_disconnect_by_data (GTK_OBJECT (image_context), context);
-
-  if (context->display)
-    gtk_signal_disconnect_by_data (GTK_OBJECT (context->display->shell),
-				   context);
-
   if (context->brush)
-    {
-      gtk_signal_disconnect_by_func (GTK_OBJECT (context->brush),
-				     gimp_context_brush_dirty,
-				     context);
-      gtk_signal_disconnect_by_func (GTK_OBJECT (global_brush_list),
-				     gimp_context_brush_removed,
-				     context);
-      gtk_object_unref (GTK_OBJECT (context->brush));
-    }
+    gtk_object_unref (GTK_OBJECT (context->brush));
 
   if (context->brush_name)
     {
@@ -538,21 +539,16 @@ gimp_context_destroy (GtkObject *object)
     }
 
   if (context->pattern)
-    {
-      gtk_signal_disconnect_by_func (GTK_OBJECT (context->pattern),
-				     gimp_context_pattern_dirty,
-				     context);
-      gtk_signal_disconnect_by_func (GTK_OBJECT (global_pattern_list),
-				     gimp_context_pattern_removed,
-				     context);
-      gtk_object_unref (GTK_OBJECT (context->pattern));
-    }
+    gtk_object_unref (GTK_OBJECT (context->pattern));
 
   if (context->pattern_name)
     {
       g_free (context->pattern_name);
       context->pattern_name = NULL;
     }
+
+  if (context->gradient)
+    gtk_object_unref (GTK_OBJECT (context->gradient));
 
   if (context->gradient_name)
     {
@@ -561,15 +557,7 @@ gimp_context_destroy (GtkObject *object)
     }
 
   if (context->palette)
-    {
-      gtk_signal_disconnect_by_func (GTK_OBJECT (context->palette),
-				     gimp_context_palette_dirty,
-				     context);
-      gtk_signal_disconnect_by_func (GTK_OBJECT (global_palette_list),
-				     gimp_context_palette_removed,
-				     context);
-      gtk_object_unref (GTK_OBJECT (context->palette));
-    }
+    gtk_object_unref (GTK_OBJECT (context->palette));
 
   if (context->palette_name)
     {
@@ -725,6 +713,47 @@ gimp_context_new (const gchar *name,
     name = "Unnamed";
 
   gimp_object_set_name (GIMP_OBJECT (context), name);
+
+  gtk_signal_connect_while_alive (GTK_OBJECT (image_context), "remove",
+				  GTK_SIGNAL_FUNC (gimp_context_image_removed),
+				  context,
+				  GTK_OBJECT (context));
+  
+  gtk_signal_connect_while_alive (GTK_OBJECT (global_brush_list), "remove",
+				  GTK_SIGNAL_FUNC (gimp_context_brush_removed),
+				  context,
+				  GTK_OBJECT (context));
+  gtk_signal_connect_while_alive (GTK_OBJECT (global_brush_list), "thaw",
+				  GTK_SIGNAL_FUNC (gimp_context_brush_list_thaw),
+				  context,
+				  GTK_OBJECT (context));
+
+  gtk_signal_connect_while_alive (GTK_OBJECT (global_pattern_list), "remove",
+				  GTK_SIGNAL_FUNC (gimp_context_pattern_removed),
+				  context,
+				  GTK_OBJECT (context));
+  gtk_signal_connect_while_alive (GTK_OBJECT (global_pattern_list), "thaw",
+				  GTK_SIGNAL_FUNC (gimp_context_pattern_list_thaw),
+				  context,
+				  GTK_OBJECT (context));
+
+  gtk_signal_connect_while_alive (GTK_OBJECT (global_gradient_list), "remove",
+				  GTK_SIGNAL_FUNC (gimp_context_gradient_removed),
+				  context,
+				  GTK_OBJECT (context));
+  gtk_signal_connect_while_alive (GTK_OBJECT (global_gradient_list), "thaw",
+				  GTK_SIGNAL_FUNC (gimp_context_gradient_list_thaw),
+				  context,
+				  GTK_OBJECT (context));
+
+  gtk_signal_connect_while_alive (GTK_OBJECT (global_palette_list), "remove",
+				  GTK_SIGNAL_FUNC (gimp_context_palette_removed),
+				  context,
+				  GTK_OBJECT (context));
+  gtk_signal_connect_while_alive (GTK_OBJECT (global_palette_list), "thaw",
+				  GTK_SIGNAL_FUNC (gimp_context_palette_list_thaw),
+				  context,
+				  GTK_OBJECT (context));
 
   if (template)
     {
@@ -1102,15 +1131,8 @@ gimp_context_real_set_image (GimpContext *context,
   if (context->image == image)
     return;
 
-  if (image == NULL)
-    gtk_signal_disconnect_by_data (GTK_OBJECT (image_context), context);
-
-  if (context->image == NULL)
-    gtk_signal_connect (GTK_OBJECT (image_context), "remove",
-			GTK_SIGNAL_FUNC (gimp_context_image_removed),
-			context);
-
   context->image = image;
+
   gimp_context_image_changed (context);
 }
 
@@ -1176,9 +1198,11 @@ gimp_context_real_set_display (GimpContext *context,
 				   context);
 
   if (display)
-    gtk_signal_connect (GTK_OBJECT (display->shell), "destroy",
-			GTK_SIGNAL_FUNC (gimp_context_display_destroy),
-			context);
+    gtk_signal_connect_while_alive
+      (GTK_OBJECT (display->shell), "destroy",
+       GTK_SIGNAL_FUNC (gimp_context_display_destroy),
+       context,
+       GTK_OBJECT (context));
 
   context->display = display;
 
@@ -1560,9 +1584,34 @@ gimp_context_brush_dirty (GimpBrush   *brush,
   gimp_context_brush_changed (context);
 }
 
+/*  the global brush list is there again after refresh  */
+static void
+gimp_context_brush_list_thaw (GimpContainer *container,
+			      GimpContext   *context)
+{
+  GimpBrush *brush;
+
+  if (! context->brush_name)
+    context->brush_name = g_strdup (default_brush);
+
+  if ((brush = (GimpBrush *)
+       gimp_container_get_child_by_name (container,
+					 context->brush_name)))
+    {
+      gimp_context_real_set_brush (context, brush);
+      return;
+    }
+
+  if (gimp_container_num_children (container))
+    gimp_context_real_set_brush 
+      (context, GIMP_BRUSH (gimp_container_get_child_by_index (container, 0)));
+  else
+    gimp_context_real_set_brush (context, brushes_get_standard_brush ());
+}
+
 /*  the active brush disappeared  */
 static void
-gimp_context_brush_removed (GimpContainer *brush_list,
+gimp_context_brush_removed (GimpContainer *container,
 			    GimpBrush     *brush,
 			    GimpContext   *context)
 {
@@ -1573,10 +1622,10 @@ gimp_context_brush_removed (GimpContainer *brush_list,
       gtk_signal_disconnect_by_func (GTK_OBJECT (brush),
 				     gimp_context_brush_dirty,
 				     context);
-      gtk_signal_disconnect_by_func (GTK_OBJECT (brush_list),
-				     gimp_context_brush_removed,
-				     context);
       gtk_object_unref (GTK_OBJECT (brush));
+
+      if (! gimp_container_frozen (container))
+	gimp_context_brush_list_thaw (container, context);
     }
 }
 
@@ -1611,22 +1660,6 @@ gimp_context_real_set_brush (GimpContext *context,
 				     gimp_context_brush_dirty,
 				     context);
       gtk_object_unref (GTK_OBJECT (context->brush));
-
-      /*  if we don't get a new brush, also disconnect from the brush list  */
-      if (! brush)
-	{
-	  gtk_signal_disconnect_by_func (GTK_OBJECT (global_brush_list),
-					 gimp_context_brush_removed,
-					 context);
-	}
-    }
-  /*  if we get a new brush but didn't have one before...  */
-  else if (brush)
-    {
-      /*  ...connect to the brush list  */
-      gtk_signal_connect (GTK_OBJECT (global_brush_list), "remove",
-			  GTK_SIGNAL_FUNC (gimp_context_brush_removed),
-			  context);
     }
 
   context->brush = brush;
@@ -1669,38 +1702,6 @@ gimp_context_copy_brush (GimpContext *src,
     }
 }
 
-static void
-gimp_context_refresh_brush (GimpContext *context,
-			    gpointer     data)
-{
-  GimpBrush *brush;
-
-  if (! context->brush_name)
-    context->brush_name = g_strdup (default_brush);
-
-  if ((brush = (GimpBrush *)
-       gimp_container_get_child_by_name (global_brush_list,
-					 context->brush_name)))
-    {
-      gimp_context_real_set_brush (context, brush);
-      return;
-    }
-
-  if (gimp_container_num_children (GIMP_CONTAINER (global_brush_list)))
-    gimp_context_real_set_brush 
-      (context, GIMP_BRUSH (gimp_container_get_child_by_index (global_brush_list,
-							       0)));
-  else
-    gimp_context_real_set_brush (context, brushes_get_standard_brush ());
-}
-
-void
-gimp_context_refresh_brushes (void)
-{
-  g_slist_foreach (context_list,
-		   (GFunc) gimp_context_refresh_brush,
-		   NULL);
-}
 
 /*****************************************************************************/
 /*  pattern  *****************************************************************/
@@ -1749,9 +1750,35 @@ gimp_context_pattern_dirty (GimpPattern *pattern,
   gimp_context_pattern_changed (context);
 }
 
+/*  the global pattern list is there again after refresh  */
+static void
+gimp_context_pattern_list_thaw (GimpContainer *container,
+				GimpContext   *context)
+{
+  GimpPattern *pattern;
+
+  if (! context->pattern_name)
+    context->pattern_name = g_strdup (default_pattern);
+
+  if ((pattern = (GimpPattern *)
+       gimp_container_get_child_by_name (container,
+					 context->pattern_name)))
+    {
+      gimp_context_real_set_pattern (context, pattern);
+      return;
+    }
+
+  if (gimp_container_num_children (container))
+    gimp_context_real_set_pattern
+      (context,
+       GIMP_PATTERN (gimp_container_get_child_by_index (container, 0)));
+  else
+    gimp_context_real_set_pattern (context, patterns_get_standard_pattern ());
+}
+
 /*  the active pattern disappeared  */
 static void
-gimp_context_pattern_removed (GimpContainer *pattern_list,
+gimp_context_pattern_removed (GimpContainer *container,
 			      GimpPattern   *pattern,
 			      GimpContext   *context)
 {
@@ -1762,10 +1789,10 @@ gimp_context_pattern_removed (GimpContainer *pattern_list,
       gtk_signal_disconnect_by_func (GTK_OBJECT (pattern),
 				     gimp_context_pattern_dirty,
 				     context);
-      gtk_signal_disconnect_by_func (GTK_OBJECT (pattern_list),
-				     gimp_context_pattern_removed,
-				     context);
       gtk_object_unref (GTK_OBJECT (pattern));
+
+      if (! gimp_container_frozen (container))
+	gimp_context_brush_list_thaw (container, context);
     }
 }
 
@@ -1800,22 +1827,6 @@ gimp_context_real_set_pattern (GimpContext *context,
 				     gimp_context_pattern_dirty,
 				     context);
       gtk_object_unref (GTK_OBJECT (context->pattern));
-
-      /*  if we don't get a new pattern, also disconnect from the pattern list */
-      if (! pattern)
-	{
-	  gtk_signal_disconnect_by_func (GTK_OBJECT (global_pattern_list),
-					 gimp_context_pattern_removed,
-					 context);
-	}
-    }
-  /*  if we get a new pattern but didn't have one before...  */
-  else if (pattern)
-    {
-      /*  ...connect to the pattern list  */
-      gtk_signal_connect (GTK_OBJECT (global_pattern_list), "remove",
-			  GTK_SIGNAL_FUNC (gimp_context_pattern_removed),
-			  context);
     }
 
   context->pattern = pattern;
@@ -1855,39 +1866,6 @@ gimp_context_copy_pattern (GimpContext *src,
     }
 }
 
-static void
-gimp_context_refresh_pattern (GimpContext *context,
-			      gpointer     data)
-{
-  GimpPattern *pattern;
-
-  if (! context->pattern_name)
-    context->pattern_name = g_strdup (default_pattern);
-
-  if ((pattern = (GimpPattern *)
-       gimp_container_get_child_by_name (global_pattern_list,
-					 context->pattern_name)))
-    {
-      gimp_context_real_set_pattern (context, pattern);
-      return;
-    }
-
-  if (gimp_container_num_children (GIMP_CONTAINER (global_pattern_list)))
-    gimp_context_real_set_pattern
-      (context,
-       GIMP_PATTERN (gimp_container_get_child_by_index (global_pattern_list,
-							0)));
-  else
-    gimp_context_real_set_pattern (context, patterns_get_standard_pattern ());
-}
-
-void
-gimp_context_refresh_patterns (void)
-{
-  g_slist_foreach (context_list,
-		   (GFunc) gimp_context_refresh_pattern,
-		   NULL);
-}
 
 /*****************************************************************************/
 /*  gradient  ****************************************************************/
@@ -1925,6 +1903,63 @@ gimp_context_gradient_changed (GimpContext *context)
 		   context->gradient);
 }
 
+/*  the active gradient was modified  */
+static void
+gimp_context_gradient_dirty (GimpGradient *gradient,
+			     GimpContext  *context)
+{
+  g_free (context->gradient_name);
+  context->gradient_name = g_strdup (GIMP_OBJECT (gradient)->name);
+
+  gimp_context_gradient_changed (context);
+}
+
+/*  the global gradient list is there again after refresh  */
+static void
+gimp_context_gradient_list_thaw (GimpContainer *container,
+				 GimpContext   *context)
+{
+  GimpGradient *gradient;
+
+  if (! context->gradient_name)
+    context->gradient_name = g_strdup (default_gradient);
+
+  if ((gradient = (GimpGradient *)
+       gimp_container_get_child_by_name (container,
+					 context->gradient_name)))
+    {
+      gimp_context_real_set_gradient (context, gradient);
+      return;
+    }
+
+  if (gimp_container_num_children (container))
+    gimp_context_real_set_gradient
+      (context,
+       GIMP_GRADIENT (gimp_container_get_child_by_index (container, 0)));
+  else
+    gimp_context_real_set_gradient (context, gradients_get_standard_gradient ());
+}
+
+/*  the active gradient disappeared  */
+static void
+gimp_context_gradient_removed (GimpContainer *container,
+			       GimpGradient  *gradient,
+			       GimpContext   *context)
+{
+  if (gradient == context->gradient)
+    {
+      context->gradient = NULL;
+
+      gtk_signal_disconnect_by_func (GTK_OBJECT (gradient),
+				     gimp_context_gradient_dirty,
+				     context);
+      gtk_object_unref (GTK_OBJECT (gradient));
+
+      if (! gimp_container_frozen (container))
+	gimp_context_brush_list_thaw (container, context);
+    }
+}
+
 static void
 gimp_context_real_set_gradient (GimpContext  *context,
 				GimpGradient *gradient)
@@ -1941,10 +1976,27 @@ gimp_context_real_set_gradient (GimpContext  *context,
       context->gradient_name = NULL;
     }
 
+  /*  disconnect from the old gradient's signals  */
+  if (context->gradient)
+    {
+      gtk_signal_disconnect_by_func (GTK_OBJECT (context->gradient),
+				     gimp_context_gradient_dirty,
+				     context);
+      gtk_object_unref (GTK_OBJECT (context->gradient));
+    }
+
   context->gradient = gradient;
 
-  if (gradient && gradient != standard_gradient)
-    context->gradient_name = g_strdup (GIMP_OBJECT (gradient)->name);
+  if (gradient)
+    {
+      gtk_object_ref (GTK_OBJECT (gradient));
+      gtk_signal_connect (GTK_OBJECT (gradient), "name_changed",
+			  GTK_SIGNAL_FUNC (gimp_context_gradient_dirty),
+			  context);
+
+      if (gradient != standard_gradient)
+	context->gradient_name = g_strdup (GIMP_OBJECT (gradient)->name);
+    }
 
   gimp_context_gradient_changed (context);
 }
@@ -1961,63 +2013,6 @@ gimp_context_copy_gradient (GimpContext *src,
       g_free (dest->gradient_name);
       dest->gradient_name = g_strdup (src->gradient_name);
     }
-}
-
-static void
-gimp_context_refresh_gradient (GimpContext *context,
-			       gpointer     data)
-{
-  GimpGradient *gradient;
-
-  if (! context->gradient_name)
-    context->gradient_name = g_strdup (default_gradient);
-
-  gradient = (GimpGradient *)
-    gimp_container_get_child_by_name (global_gradient_list,
-				      context->gradient_name);
-
-  if (gradient)
-    {
-      gimp_context_real_set_gradient (context, gradient);
-      return;
-    }
-
-  if (gimp_container_num_children (global_gradient_list))
-    gimp_context_real_set_gradient
-      (context,
-       (GimpGradient *)
-       gimp_container_get_child_by_index (global_gradient_list, 0));
-  else
-    gimp_context_real_set_gradient (context, gradients_get_standard_gradient ());
-}
-
-void
-gimp_context_refresh_gradients (void)
-{
-  g_slist_foreach (context_list, (GFunc) gimp_context_refresh_gradient, NULL);
-}
-
-static void
-gimp_context_update_gradient (GimpContext  *context,
-			      GimpGradient *gradient)
-{
-  if (context->gradient == gradient)
-    {
-      if (context->gradient_name)
-	g_free (context->gradient_name);
-
-      context->gradient_name = g_strdup (GIMP_OBJECT (gradient)->name);
-
-      gimp_context_gradient_changed (context);
-    }
-}
-
-
-/*  Temporary functions  */
-void
-gimp_context_update_gradients (GimpGradient *gradient)
-{
-  g_slist_foreach (context_list, (GFunc) gimp_context_update_gradient, gradient);
 }
 
 
@@ -2068,9 +2063,35 @@ gimp_context_palette_dirty (GimpPalette *palette,
   gimp_context_palette_changed (context);
 }
 
+/*  the global gradient list is there again after refresh  */
+static void
+gimp_context_palette_list_thaw (GimpContainer *container,
+				GimpContext   *context)
+{
+  GimpPalette *palette;
+
+  if (! context->palette_name)
+    context->palette_name = g_strdup (default_palette);
+
+  if ((palette = (GimpPalette *)
+       gimp_container_get_child_by_name (container,
+					 context->palette_name)))
+    {
+      gimp_context_real_set_palette (context, palette);
+      return;
+    }
+
+  if (gimp_container_num_children (container))
+    gimp_context_real_set_palette
+      (context,
+       GIMP_PALETTE (gimp_container_get_child_by_index (container, 0)));
+  else
+    gimp_context_real_set_palette (context, palettes_get_standard_palette ());
+}
+
 /*  the active palette disappeared  */
 static void
-gimp_context_palette_removed (GimpContainer *palette_list,
+gimp_context_palette_removed (GimpContainer *container,
 			      GimpPalette   *palette,
 			      GimpContext   *context)
 {
@@ -2081,10 +2102,10 @@ gimp_context_palette_removed (GimpContainer *palette_list,
       gtk_signal_disconnect_by_func (GTK_OBJECT (palette),
 				     gimp_context_palette_dirty,
 				     context);
-      gtk_signal_disconnect_by_func (GTK_OBJECT (palette_list),
-				     gimp_context_palette_removed,
-				     context);
       gtk_object_unref (GTK_OBJECT (palette));
+
+      if (! gimp_container_frozen (container))
+	gimp_context_brush_list_thaw (container, context);
     }
 }
 
@@ -2111,22 +2132,6 @@ gimp_context_real_set_palette (GimpContext *context,
 				     gimp_context_palette_dirty,
 				     context);
       gtk_object_unref (GTK_OBJECT (context->palette));
-
-      /*  if we don't get a new palette, also disconnect from the palette list */
-      if (! palette)
-	{
-	  gtk_signal_disconnect_by_func (GTK_OBJECT (global_palette_list),
-					 gimp_context_palette_removed,
-					 context);
-	}
-    }
-  /*  if we get a new palette but didn't have one before...  */
-  else if (palette)
-    {
-      /*  ...connect to the palette list  */
-      gtk_signal_connect (GTK_OBJECT (global_palette_list), "remove",
-			  GTK_SIGNAL_FUNC (gimp_context_palette_removed),
-			  context);
     }
 
   context->palette = palette;
@@ -2156,38 +2161,4 @@ gimp_context_copy_palette (GimpContext *src,
       g_free (dest->palette_name);
       dest->palette_name = g_strdup (src->palette_name);
     }
-}
-
-static void
-gimp_context_refresh_palette (GimpContext *context,
-			      gpointer     data)
-{
-  GimpPalette *palette;
-
-  if (! context->palette_name)
-    context->palette_name = g_strdup (default_palette);
-
-  if ((palette = (GimpPalette *)
-       gimp_container_get_child_by_name (global_palette_list,
-					 context->palette_name)))
-    {
-      gimp_context_real_set_palette (context, palette);
-      return;
-    }
-
-  if (gimp_container_num_children (GIMP_CONTAINER (global_palette_list)))
-    gimp_context_real_set_palette
-      (context,
-       GIMP_PALETTE (gimp_container_get_child_by_index (global_palette_list,
-							0)));
-  else
-    gimp_context_real_set_palette (context, palettes_get_standard_palette ());
-}
-
-void
-gimp_context_refresh_palettes (void)
-{
-  g_slist_foreach (context_list,
-		   (GFunc) gimp_context_refresh_palette,
-		   NULL);
 }

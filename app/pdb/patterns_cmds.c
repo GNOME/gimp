@@ -27,6 +27,7 @@
 #include "apptypes.h"
 #include "procedural_db.h"
 
+#include "context_manager.h"
 #include "gimpcontext.h"
 #include "gimplist.h"
 #include "gimppattern.h"

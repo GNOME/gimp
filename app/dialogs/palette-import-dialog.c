@@ -37,6 +37,7 @@
 #include "gradient_select.h"
 #include "palette.h"
 #include "palette_import.h"
+#include "paletteP.h"
 #include "pixel_region.h"
 #include "temp_buf.h"
 

@@ -43,10 +43,11 @@ enum
 };
 
 
-static void   gimp_data_class_init (GimpDataClass *klass);
-static void   gimp_data_init       (GimpData      *data);
-static void   gimp_data_destroy    (GtkObject     *object);
-static void   gimp_data_real_dirty (GimpData      *data);
+static void   gimp_data_class_init   (GimpDataClass *klass);
+static void   gimp_data_init         (GimpData      *data);
+static void   gimp_data_destroy      (GtkObject     *object);
+static void   gimp_data_name_changed (GimpObject    *object);
+static void   gimp_data_real_dirty   (GimpData      *data);
 
 
 static guint data_signals[LAST_SIGNAL] = { 0 };
@@ -82,9 +83,11 @@ gimp_data_get_type (void)
 static void
 gimp_data_class_init (GimpDataClass *klass)
 {
-  GtkObjectClass *object_class;
+  GtkObjectClass  *object_class;
+  GimpObjectClass *gimp_object_class;
 
-  object_class = (GtkObjectClass *) klass;
+  object_class      = (GtkObjectClass *) klass;
+  gimp_object_class = (GimpObjectClass *) klass;
 
   parent_class = gtk_type_class (GIMP_TYPE_VIEWABLE);
 
@@ -108,6 +111,8 @@ gimp_data_class_init (GimpDataClass *klass)
 
   object_class->destroy = gimp_data_destroy;
 
+  gimp_object_class->name_changed = gimp_data_name_changed;
+
   klass->dirty = gimp_data_real_dirty;
   klass->save  = NULL;
 }
@@ -130,6 +135,15 @@ gimp_data_destroy (GtkObject *object)
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static void
+gimp_data_name_changed (GimpObject *object)
+{
+  if (GIMP_OBJECT_CLASS (parent_class)->name_changed)
+    GIMP_OBJECT_CLASS (parent_class)->name_changed (object);
+
+  gimp_data_dirty (GIMP_DATA (object));
 }
 
 gboolean
@@ -169,6 +183,8 @@ static void
 gimp_data_real_dirty (GimpData *data)
 {
   data->dirty = TRUE;
+
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (data));
 }
 
 gboolean

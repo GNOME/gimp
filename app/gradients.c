@@ -22,7 +22,7 @@
 
 #include "apptypes.h"
 
-#include "gimpcontext.h"
+#include "context_manager.h"
 #include "gimpdatalist.h"
 #include "gimpgradient.h"
 #include "gimprc.h"
@@ -30,20 +30,12 @@
 #include "gradients.h"
 
 
-/*  global variables  */
-GimpContainer *global_gradient_list = NULL;
-
-
 /*  public functions  */
 
 void
 gradients_init (gint no_data)
 {
-  if (global_gradient_list)
-    gradients_free ();
-  else
-    global_gradient_list =
-      GIMP_CONTAINER (gimp_data_list_new (GIMP_TYPE_GRADIENT));
+  gradients_free ();
 
   if (gradient_path != NULL && !no_data)
     {
@@ -60,14 +52,12 @@ gradients_init (gint no_data)
 
       gradient_select_thaw_all ();
     }
-
-  gimp_context_refresh_gradients ();
 }
 
 void
 gradients_free (void)
 {
-  if (! global_gradient_list)
+  if (gimp_container_num_children (global_gradient_list) == 0)
     return;
 
   gradient_select_freeze_all ();

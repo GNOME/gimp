@@ -26,10 +26,6 @@
 #define COLOR_UPDATE      2
 
 
-/* EEK */
-void   palette_insert_all       (GimpPalette    *palette);
-
-
 void   palette_dialog_create    (void);
 void   palette_dialog_free      (void);
 
@@ -37,9 +33,6 @@ void   palette_set_active_color (gint         r,
 				 gint         g,
 				 gint         b,
 				 gint         state);
-
-
-extern GimpContainer *global_palette_list;
 
 
 #endif /* __PALETTE_H__ */

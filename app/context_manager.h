@@ -25,6 +25,14 @@
  */
 extern GimpContainer *image_context;
 
+/*
+ *  the global data lists
+ */
+extern GimpContainer *global_brush_list;
+extern GimpContainer *global_pattern_list;
+extern GimpContainer *global_gradient_list;
+extern GimpContainer *global_palette_list;
+
 
 void   context_manager_init                     (void);
 void   context_manager_free                     (void);
