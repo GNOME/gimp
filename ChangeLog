@@ -1,3 +1,9 @@
+Tue Apr 14 10:11:04 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* app/global_edit.c: Named cut and copy are now performed after 
+	the user is asked for a name, so cancelling the dialog works 
+	correctly. 
+
 Mon Apr 13 15:17:51 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* moved man page from docs to top-level so it's always installed

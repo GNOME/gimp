@@ -638,15 +638,14 @@ paste_named_buffer (GDisplay *gdisp)
 }
 
 static void
-new_named_buffer_callback (GtkWidget *w,
-			   gpointer   client_data,
-			   gpointer   call_data)
+new_named_buffer (TileManager *tiles,
+		  char        *name)
 {
   PixelRegion srcPR, destPR;
-  TileManager *tiles;
   NamedBuffer *nb;
 
-  tiles = (TileManager *) client_data;
+  if (! tiles) return;
+
   nb = (NamedBuffer *) g_malloc (sizeof (NamedBuffer));
 
   nb->buf = tile_manager_new (tiles->levels[0].width, tiles->levels[0].height, tiles->levels[0].bpp);
@@ -654,56 +653,69 @@ new_named_buffer_callback (GtkWidget *w,
   pixel_region_init (&destPR, nb->buf, 0, 0, tiles->levels[0].width, tiles->levels[0].height, TRUE);
   copy_region (&srcPR, &destPR);
 
-  nb->name = g_strdup ((char *) call_data);
+  nb->name = g_strdup ((char *) name);
   named_buffers = g_slist_append (named_buffers, (void *) nb);
 }
 
 static void
-new_named_buffer (TileManager *new_tiles)
+cut_named_buffer_callback (GtkWidget *w,
+			   gpointer   client_data,
+			   gpointer   call_data)
 {
-  /*  Create the dialog box to ask for a name  */
-  query_string_box ("Named Buffer", "Enter a name for this buffer", NULL,
-		    new_named_buffer_callback, new_tiles);
+  TileManager *new_tiles;
+  GDisplay *gdisp;
+  char *name;
+
+  gdisp = (GDisplay *) client_data;
+  name = g_strdup ((char *) call_data);
+  
+  new_tiles = edit_cut (gdisp->gimage, gimage_active_drawable (gdisp->gimage));
+  if (new_tiles) 
+    new_named_buffer (new_tiles, name);
+  gdisplays_flush ();
 }
 
 int
 named_edit_cut (void *gdisp_ptr)
 {
-  TileManager *new_tiles;
   GDisplay *gdisp;
 
   /*  stop any active tool  */
   gdisp = (GDisplay *) gdisp_ptr;
   active_tool_control (HALT, gdisp_ptr);
 
-  new_tiles = edit_cut (gdisp->gimage, gimage_active_drawable (gdisp->gimage));
+  query_string_box ("Cut Named", "Enter a name for this buffer", NULL,
+		    cut_named_buffer_callback, gdisp);
+  return TRUE;
+}
 
-  if (! new_tiles)
-    return FALSE;
-  else
-    {
-      new_named_buffer (new_tiles);
-      gdisplays_flush ();
-      return TRUE;
-    }
+static void
+copy_named_buffer_callback (GtkWidget *w,
+			    gpointer   client_data,
+			    gpointer   call_data)
+{
+  TileManager *new_tiles;
+  GDisplay *gdisp;
+  char *name;
+
+  gdisp = (GDisplay *) client_data;
+  name = g_strdup ((char *) call_data);
+  
+  new_tiles = edit_copy (gdisp->gimage, gimage_active_drawable (gdisp->gimage));
+  if (new_tiles) 
+    new_named_buffer (new_tiles, name);
 }
 
 int
 named_edit_copy (void *gdisp_ptr)
 {
-  TileManager *new_tiles;
   GDisplay *gdisp;
 
   gdisp = (GDisplay *) gdisp_ptr;
-  new_tiles = edit_copy (gdisp->gimage, gimage_active_drawable (gdisp->gimage));
-
-  if (! new_tiles)
-    return FALSE;
-  else
-    {
-      new_named_buffer (new_tiles);
-      return TRUE;
-    }
+  
+  query_string_box ("Copy Named", "Enter a name for this buffer", NULL,
+		    copy_named_buffer_callback, gdisp);
+  return TRUE;
 }
 
 int
