@@ -13,6 +13,7 @@
 	to dialog.
 
 2002-06-23  Marco Wessel  <marco@phoenix.uzaynet.nl> 
+
 	* plug-ins/script-fu/scripts/tileblur.scm: switch horizontal and
 	vertical blurring. They were reversed. (Tuomas noticed this.)
 	
