@@ -973,16 +973,12 @@ gimp_set_default_context (Gimp        *gimp,
   g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
 
   if (gimp->default_context)
-    {
-      g_object_unref (gimp->default_context);
-    }
+    g_object_unref (gimp->default_context);
 
   gimp->default_context = context;
 
   if (gimp->default_context)
-    {
-      g_object_ref (gimp->default_context);
-    }
+    g_object_ref (gimp->default_context);
 }
 
 GimpContext *
@@ -1001,16 +997,12 @@ gimp_set_user_context (Gimp        *gimp,
   g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
 
   if (gimp->user_context)
-    {
-      g_object_unref (gimp->user_context);
-    }
+    g_object_unref (gimp->user_context);
 
   gimp->user_context = context;
 
   if (gimp->user_context)
-    {
-      g_object_ref (gimp->user_context);
-    }
+    g_object_ref (gimp->user_context);
 }
 
 GimpContext *
@@ -1029,16 +1021,12 @@ gimp_set_current_context (Gimp        *gimp,
   g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
 
   if (gimp->current_context)
-    {
-      g_object_unref (gimp->current_context);
-    }
+    g_object_unref (gimp->current_context);
 
   gimp->current_context = context;
 
   if (gimp->current_context)
-    {
-      g_object_ref (gimp->current_context);
-    }
+    g_object_ref (gimp->current_context);
 }
 
 GimpContext *

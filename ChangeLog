@@ -1,5 +1,9 @@
 2003-04-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimp.c: cosmetic.
+
+2003-04-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontainermenuimpl.c; keep the "(none)" item at
 	the top of the menu, not at the bottom.
 
