@@ -112,6 +112,7 @@ query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static GParamDef *return_vals = NULL;
   static int nreturn_vals = 0;
+  static gchar G_GNUC_UNUSED *dummy_entries = N_("<Toolbox>/Xtns/Web Browser");
 
   INIT_I18N();
 

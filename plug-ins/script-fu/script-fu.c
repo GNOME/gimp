@@ -121,6 +121,26 @@ sfquit (void)
 static void
 query (void)
 {
+  static gchar G_GNUC_UNUSED *dummy_entries[] = {
+      N_("<Toolbox>/Xtns/Script-Fu"),
+      N_("<Toolbox>/Xtns/Script-Fu/Logos"),
+      N_("<Toolbox>/Xtns/Script-Fu/Patterns"),
+      N_("<Toolbox>/Xtns/Script-Fu/Web Page Themes"),
+      N_("<Toolbox>/Xtns/Script-Fu/Utils"),
+      N_("<Toolbox>/Xtns/Script-Fu/Buttons"),
+      N_("<Toolbox>/Xtns/Script-Fu/Make Brush"),
+      N_("<Toolbox>/Xtns/Script-Fu/Misc"),
+      N_("<Toolbox>/Xtns/Script-Fu/Test"),
+      N_("<Image>/Script-Fu/Decor"),
+      N_("<Image>/Script-Fu/Utils"),
+      N_("<Image>/Script-Fu/Animators"),
+      N_("<Image>/Script-Fu/Stencil Ops"),
+      N_("<Image>/Script-Fu/Alchemy"),
+      N_("<Image>/Script-Fu/Selection"),
+      N_("<Image>/Script-Fu/Shadow"),
+      N_("<Image>/Script-Fu/Render"),
+  };
+
   static GParamDef console_args[] =
   {
     { PARAM_INT32, "run_mode", "Interactive, [non-interactive]" }

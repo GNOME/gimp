@@ -1,3 +1,11 @@
+2000-02-26  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
+
+	* app/menus.c
+	* plug-ins/gap/gap_frontends_main.c
+	* plug-ins/script-fu/script-fu.c
+	* plug-ins/webbrowser/webbrowser.c: moved dummy menu entries
+	for menu path translation into plugins.
+
 Sat Feb 26 04:37:44 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* libgimp/Makefile.am: excluded gserialize.[ch] from the build

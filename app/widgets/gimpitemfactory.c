@@ -80,36 +80,16 @@ extern gint   n_plugin_domains;
 /*  for i18n  */
 static gchar G_GNUC_UNUSED *dummy_entries[] =
 {
-  /*  <Toolbox>  */
-  N_("/Xtns/Animation"),
-  N_("/Xtns/Script-Fu"),
-  N_("/Xtns/Script-Fu/Logos"),
-  N_("/Xtns/Script-Fu/Patterns"),
-  N_("/Xtns/Script-Fu/Web Page Themes"),
-  N_("/Xtns/Script-Fu/Utils"),
-  N_("/Xtns/Script-Fu/Buttons"),
-  N_("/Xtns/Script-Fu/Make Brush"),
-  N_("/Xtns/Script-Fu/Misc"),
-  N_("/Xtns/Script-Fu/Test"),
-  N_("/Xtns/Web Browser"),
-
   /*  <Image>  */
   N_("/Filters/Colors/Map"),
   N_("/Filters/Render/Clouds"),
   N_("/Filters/Render/Nature"),
   N_("/Filters/Render/Pattern"),
   N_("/Filters/Misc"),
-  N_("/Script-Fu/Decor"),
-  N_("/Script-Fu/Utils"),
-  N_("/Script-Fu/Animators"),
-  N_("/Script-Fu/Stencil Ops"),
-  N_("/Script-Fu/Alchemy"),
-  N_("/Script-Fu/Selection"),
-  N_("/Script-Fu/Shadow"),
-  N_("/Script-Fu/Render"),
+
+  /* Perl-Fu */
+  N_("/Xtns/Animation"),
   N_("/Guides"),
-  N_("/Video"),
-  N_("/Video/Encode")
 };
 
 #endif  /*  ENABLE_NLS  */
