@@ -509,6 +509,7 @@ randomize (GimpDrawable *drawable,
   gint x1, y1, x2, y2;
   gint cnt;
   gint has_alpha, ind;
+  gint i, j, k;
 
   /*
    *  Get the input area. This is the bounding box of the selection in
@@ -565,7 +566,7 @@ randomize (GimpDrawable *drawable,
 
 	  d = dest;
 	  ind = 0;
-	  for (col = 0; col < (x2 - x1) * bytes; col++)
+	  for (col = 0; col < (x2 - x1); col++)
 	    {
 	      if (g_rand_int_range (gr, 0, 100) <= (gint) pivals.rndm_pct)
 		{
@@ -576,73 +577,87 @@ randomize (GimpDrawable *drawable,
 		       *      Just assign a random value.
 		       */
 		    case RNDM_HURL:
-		      *d++ = g_rand_int_range (gr, 0, 256);
+                      for (j = 0; j < bytes; j++)
+                        *d++ = g_rand_int_range (gr, 0, 256);
                       break;
 		      /*
 		       *  PICK
 		       *      pick at random from a neighboring pixel.
 		       */
 		    case RNDM_PICK:
-		      switch (g_rand_int_range (gr, 0, 9))
-			{
-			case 0:
-			  *d++ = (gint) pr[col - bytes];
-			  break;
-			case 1:
-			  *d++ = (gint) pr[col];
-			  break;
-			case 2:
-			  *d++ = (gint) pr[col + bytes];
-			  break;
-			case 3:
-			  *d++ = (gint) cr[col - bytes];
-			  break;
-			case 4:
-			  *d++ = (gint) cr[col];
-			  break;
-			case 5:
-			  *d++ = (gint) cr[col + bytes];
-			  break;
-			case 6:
-			  *d++ = (gint) nr[col - bytes];
-			  break;
-			case 7:
-			  *d++ = (gint) nr[col];
-			  break;
-			case 8:
-			  *d++ = (gint) nr[col + bytes];
-			  break;
+                      k = g_rand_int_range (gr, 0, 9);
+                      for (j = 0; j < bytes; j++)
+                        {
+                          i = col * bytes + j;
+
+                          switch (k)
+                            {
+                            case 0:
+                              *d++ = (gint) pr[i - bytes];
+                              break;
+                            case 1:
+                              *d++ = (gint) pr[i];
+                              break;
+                            case 2:
+                              *d++ = (gint) pr[i + bytes];
+                              break;
+                            case 3:
+                              *d++ = (gint) cr[i - bytes];
+                              break;
+                            case 4:
+                              *d++ = (gint) cr[i];
+                              break;
+                            case 5:
+                              *d++ = (gint) cr[i + bytes];
+                              break;
+                            case 6:
+                              *d++ = (gint) nr[i - bytes];
+                              break;
+                            case 7:
+                              *d++ = (gint) nr[i];
+                              break;
+                            case 8:
+                              *d++ = (gint) nr[i + bytes];
+                              break;
+                            }
                         }
                       break;
-		      /*
+                      /*
 		       *  SLUR
 		       *      80% chance it's from directly above,
 		       *      10% from above left,
 		       *      10% from above right.
 		       */
 		    case RNDM_SLUR:
-		      switch (g_rand_int_range (gr, 0, 10) )
-			{
-			case 0:
-			  *d++ = (gint) pr[col - bytes];
-			  break;
-			case 9:
-			  *d++ = (gint) pr[col + bytes];
-			  break;
-			default:
-			  *d++ = (gint) pr[col];
-			  break;
+                      k = g_rand_int_range (gr, 0, 10);
+                      for (j = 0; j < bytes; j++)
+                        {
+                          i = col*bytes + j;
+
+                          switch (k )
+                            {
+                            case 0:
+                              *d++ = (gint) pr[i - bytes];
+                              break;
+                            case 9:
+                              *d++ = (gint) pr[i + bytes];
+                              break;
+                            default:
+                              *d++ = (gint) pr[i];
+                              break;
+                            }
                         }
                       break;
                     }
-		  /*
-		   *  Otherwise, this pixel was not selected for randomization,
+                  /*
+                   *  Otherwise, this pixel was not selected for randomization,
 		   *  so use the current value.
 		   */
                 }
 	      else
 		{
-		  *d++ = (gint) cr[col];
+                  for (j = 0; j < bytes; j++)
+                    *d++ = (gint) cr[col*bytes + j];
                 }
             }
 	  /*

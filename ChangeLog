@@ -1,5 +1,11 @@
 2004-12-08  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
+	* plug-ins/common/randomize.c:  Changed algorithm for Pick and
+	Slur to treat all channels within a pixel in the same way;
+	intended to fix bug #72852.
+	
+2004-12-08  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
 	* app/dialogs/print-size-dialog.c (print_size_dialog_size_changed):
 	fixed kludgy use of size entry, seems to fix bug #159273.
 
