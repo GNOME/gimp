@@ -27,6 +27,7 @@
 
 #include "tools-types.h"
 
+#include "core/gimpimage.h"
 #include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
@@ -54,8 +55,10 @@ struct _MagnifyOptions
   GimpZoomType  type;
   GimpZoomType  type_d;
   GtkWidget    *type_w[2];
+
+  gdouble       threshold;
   gdouble       threshold_d;
-  GtkWidget    *threshold_w;
+  GtkObject    *threshold_w;
 };
 
 
@@ -272,7 +275,9 @@ gimp_magnify_tool_button_release (GimpTool        *tool,
       width  = (win_width  * scalesrc) / scaledest;
       height = (win_height * scalesrc) / scaledest;
 
-      if ( (w < options->threshold_d) || (h < options->threshold_d))
+      /* we need to compute the mouse movement in screen coordinates */
+      if ( (SCALEX (gdisp, w) < options->threshold) || 
+           (SCALEY (gdisp, h) < options->threshold) )
 	scale = 1;
       else
 	scale = MIN ((width / w), (height / h));
@@ -386,8 +391,10 @@ static void
 gimp_magnify_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpMagnifyTool *magnify;
+  MagnifyOptions  *options;
 
   magnify = GIMP_MAGNIFY_TOOL (draw_tool);
+  options = (MagnifyOptions *) GIMP_TOOL (draw_tool)->tool_info->tool_options;
 
   gimp_draw_tool_draw_rectangle (draw_tool,
                                  FALSE,
@@ -450,8 +457,8 @@ magnify_options_new (GimpToolInfo *tool_info)
   ((GimpToolOptions *) options)->reset_func = magnify_options_reset;
 
   options->allow_resize_d = gimprc.resize_windows_on_zoom;
-  options->type_d         = options->type = GIMP_ZOOM_IN;
-  options->threshold_d    = 5;
+  options->type_d         = options->type      = GIMP_ZOOM_IN;
+  options->threshold_d    = options->threshold = 5;
 
   /*  the main vbox  */
   vbox = options->tool_options.main_vbox;
@@ -502,7 +509,7 @@ magnify_options_new (GimpToolInfo *tool_info)
   gtk_widget_show (abox);
 
   options->threshold_w =
-          gtk_adjustment_new (options->threshold_d, 1.0, 15.0, 2.0, 2.0, 0.0);
+          gtk_adjustment_new (options->threshold, 1.0, 15.0, 2.0, 2.0, 0.0);
   scale = gtk_hscale_new (GTK_ADJUSTMENT (options->threshold_w));
   gtk_scale_set_digits (GTK_SCALE (scale), 0);
   gtk_container_add (GTK_CONTAINER (abox), scale);
@@ -510,7 +517,7 @@ magnify_options_new (GimpToolInfo *tool_info)
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   g_signal_connect (G_OBJECT (options->threshold_w), "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
-                    &options->threshold_d);
+                    &options->threshold);
   gtk_widget_show (scale);
   gtk_widget_show (hbox);
 
@@ -529,4 +536,7 @@ magnify_options_reset (GimpToolOptions *tool_options)
 
   gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
                                GINT_TO_POINTER (options->type_d));
+
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->threshold_w),
+			    options->threshold_d);
 }
