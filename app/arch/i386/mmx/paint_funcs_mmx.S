@@ -8,28 +8,6 @@ Copyright (C) 1999, 2001 David Monniaux
 .text
 .align 4
 
-.globl intel_cpu_features
-
-intel_cpu_features:
-	pushl	%ebx
-	pushfl
-	popl	%eax
-	xor	$ 0x200000, %eax
-	pushl	%eax
-	popfl
-	pushfl
-	popl	%edx
-	xor	%eax, %edx
-	xor	%eax, %eax
-	test	$ 0x200000, %edx
-	jnz 	.intel_cpu_features_end
-	movl	$ 1, %eax
-	cpuid
-	movl	%edx, %eax
-.intel_cpu_features_end:
-	popl	%ebx
-	ret
-
 .alpha_mask_1a:	.int 0xFF00FF00, 0xFF00FF00
 .mult_shift:	.int 0x00800080, 0x00800080
 .alpha_mask_3a:	.int 0xFF000000, 0xFF000000

@@ -1,3 +1,13 @@
+2001-04-02  Sven Neumann  <sven@gimp.org>
+
+	* app/Makefile.am
+	* app/detect_mmx.S
+	* app/arch/i386/mmx/detect_mmx.S
+	* app/arch/i386/mmx/paint_funcs_mmx.S
+	* app/arch/i386/mmx/paint_funcs_mmx.S.m4: split MMX detection out
+	of paint_funcs_mmx.S and replaced it with a working version (the 
+	old one used to execute an illegal instruction on non-MMX systems).
+
 2001-04-01  Simon Budig  <simon@gimp.org>
 
 	* nearly all files:

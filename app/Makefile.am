@@ -7,11 +7,15 @@ scriptdata =
 if HAVE_GLIBC_REGEX
 regex_sources =
 else
-regex_sources = regexrepl.c regexrepl.h
+regex_sources = \
+	regexrepl.c 		\
+	regexrepl.h
 endif
 
 if HAVE_ASM_MMX
-mmx_sources = paint_funcs_simd.S
+mmx_sources = \
+	detect_mmx.S		\
+	paint_funcs_simd.S
 else
 mmx_sources =
 endif
@@ -355,6 +359,7 @@ EXTRA_DIST = \
 	gimp.rc				\
 	gimp.sym			\
 	wilber.ico			\
+	arch/i386/mmx/detect_mmx.S	\
 	arch/i386/mmx/paint_funcs_mmx.S
 
 
