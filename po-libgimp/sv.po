@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
-"POT-Creation-Date: 2002-11-06 22:59+0100\n"
-"PO-Revision-Date: 2002-11-07 14:34+0100\n"
+"POT-Creation-Date: 2002-11-25 14:08+0100\n"
+"PO-Revision-Date: 2002-11-25 14:09+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -216,67 +216,67 @@ msgstr "/Svart"
 msgid "/White"
 msgstr "/Vit"
 
-#: libgimpwidgets/gimpcolorscales.c:162 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:163 libgimpwidgets/gimpcolorselect.c:353
 msgid "_H"
 msgstr "_N"
 
-#: libgimpwidgets/gimpcolorscales.c:163 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:353
 msgid "_S"
 msgstr "_M"
 
-#: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:353
 msgid "_V"
 msgstr "_V"
 
-#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:353
 msgid "_R"
 msgstr "_R"
 
-#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:353
 msgid "_G"
 msgstr "_G"
 
-#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:353
 msgid "_B"
 msgstr "_B"
 
-#: libgimpwidgets/gimpcolorscales.c:168
+#: libgimpwidgets/gimpcolorscales.c:169
 msgid "_A"
 msgstr "_A"
 
-#: libgimpwidgets/gimpcolorscales.c:172 libgimpwidgets/gimpcolorselect.c:357
+#: libgimpwidgets/gimpcolorscales.c:173 libgimpwidgets/gimpcolorselect.c:357
 msgid "Hue"
 msgstr "Nyans"
 
-#: libgimpwidgets/gimpcolorscales.c:173 libgimpwidgets/gimpcolorselect.c:358
+#: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:358
 msgid "Saturation"
 msgstr "Mättnad"
 
-#: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:359
+#: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:359
 msgid "Value"
 msgstr "Värde"
 
-#: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:360
+#: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:360
 msgid "Red"
 msgstr "Röd"
 
-#: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:361
+#: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:361
 msgid "Green"
 msgstr "Grön"
 
-#: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:362
+#: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:362
 msgid "Blue"
 msgstr "Blå"
 
-#: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:363
+#: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:363
 msgid "Alpha"
 msgstr "Alfa"
 
-#: libgimpwidgets/gimpcolorscales.c:252
+#: libgimpwidgets/gimpcolorscales.c:253
 msgid "Hexadecimal color notation as used in HTML"
 msgstr "Hexadecimal färgnotation som används i HTML"
 
-#: libgimpwidgets/gimpcolorscales.c:266
+#: libgimpwidgets/gimpcolorscales.c:267
 msgid "He_x Triplet:"
 msgstr "He_xadecimal triplett:"
 
@@ -376,39 +376,35 @@ msgstr "Enhet"
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:976
+#: libgimpwidgets/gimpwidgets.c:960
 msgid ""
-"If the \"Time\" button is not pressed, use this value for random number "
-"generator seed - this allows you to repeat a given \"random\" operation"
+"Use this value for random number generator seed - this allows you to repeat "
+"a given \"random\" operation"
 msgstr ""
-"Om du inte trycker \"Tid\"-knappen kan du här ange ett värde för generering "
-"av ett slumptalsfrö - det låter dig upprepa en given \"slumpfunktion\""
+"Använd detta värde för generering av slumptalsfrö - det låter dig upprepa en "
+"given \"slumpfunktion\""
 
-#: libgimpwidgets/gimpwidgets.c:981
-msgid "_Time"
-msgstr "_Tid"
+#: libgimpwidgets/gimpwidgets.c:964
+msgid "_Randomize"
+msgstr "_Slumpa"
 
-#: libgimpwidgets/gimpwidgets.c:990
-msgid ""
-"Seed random number generator from the current time - this guarantees a "
-"reasonable randomization"
-msgstr ""
-"Skapa slumptalsfrö till slumptalsgeneratorn baserat på den aktuella tiden - "
-"detta garanterar en vettig slumpfunktion"
+#: libgimpwidgets/gimpwidgets.c:975
+msgid "Seed random number generator with a generated random number"
+msgstr "Skapa slumptalsfrö till slumptalsgeneratorn med ett genererat slumptal"
 
-#: libgimpwidgets/gimpwidgets.c:1316
+#: libgimpwidgets/gimpwidgets.c:1289
 msgid "Bytes"
 msgstr "byte"
 
-#: libgimpwidgets/gimpwidgets.c:1317
+#: libgimpwidgets/gimpwidgets.c:1290
 msgid "KiloBytes"
 msgstr "kilobyte"
 
-#: libgimpwidgets/gimpwidgets.c:1318
+#: libgimpwidgets/gimpwidgets.c:1291
 msgid "MegaBytes"
 msgstr "megabyte"
 
-#: libgimpwidgets/gimpwidgets.c:1319
+#: libgimpwidgets/gimpwidgets.c:1292
 msgid "GigaBytes"
 msgstr "gigabyte"
 
@@ -455,6 +451,9 @@ msgstr "_Vattenfärg"
 #: modules/colorsel_water.c:250
 msgid "Pressure"
 msgstr "Tryck"
+
+#~ msgid "_Time"
+#~ msgstr "_Tid"
 
 #~ msgid "Unloaded OK"
 #~ msgstr "Glömdes OK"
