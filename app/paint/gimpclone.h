@@ -45,6 +45,10 @@ struct _GimpClone
   gint          src_x;
   gint          src_y;
 
+  gint          offset_x;
+  gint          offset_y;
+  gboolean      first_stroke;
+
   void (* init_callback)      (GimpClone *clone,
                                gpointer   data);
   void (* finish_callback)    (GimpClone *clone,

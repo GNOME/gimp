@@ -35,7 +35,6 @@
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-mask.h"
 #include "core/gimppattern.h"
 
 #include "gimpclone.h"
@@ -43,48 +42,42 @@
 #include "libgimp/gimpintl.h"
 
 
-static void   gimp_clone_class_init   (GimpCloneClass      *klass);
-static void   gimp_clone_init         (GimpClone           *clone);
+static void   gimp_clone_class_init       (GimpCloneClass      *klass);
+static void   gimp_clone_init             (GimpClone           *clone);
 
-static void   gimp_clone_paint        (GimpPaintCore       *paint_core,
-                                       GimpDrawable        *drawable,
-                                       GimpPaintOptions    *paint_options,
-                                       GimpPaintCoreState   paint_state);
-static void   gimp_clone_motion       (GimpPaintCore       *paint_core,
-                                       GimpDrawable        *drawable,
-                                       GimpDrawable        *src_drawable,
-                                       GimpPressureOptions *pressure_options,
-                                       GimpCloneType        type,
-                                       gint                 offset_x,
-                                       gint                 offset_y);
-static void   gimp_clone_line_image   (GimpImage           *dest,
-                                       GimpImage           *src,
-                                       GimpDrawable        *d_drawable,
-                                       GimpDrawable        *s_drawable,
-                                       guchar              *s,
-                                       guchar              *d,
-                                       gint                 has_alpha,
-                                       gint                 src_bytes,
-                                       gint                 dest_bytes,
-                                       gint                 width);
-static void   gimp_clone_line_pattern (GimpImage           *dest,
-                                       GimpDrawable        *drawable,
-                                       GimpPattern         *pattern,
-                                       guchar              *d,
-                                       gint                 x,
-                                       gint                 y,
-                                       gint                 bytes,
-                                       gint                 width);
+static void   gimp_clone_paint            (GimpPaintCore       *paint_core,
+                                           GimpDrawable        *drawable,
+                                           GimpPaintOptions    *paint_options,
+                                           GimpPaintCoreState   paint_state);
+static void   gimp_clone_motion           (GimpPaintCore       *paint_core,
+                                           GimpDrawable        *drawable,
+                                           GimpDrawable        *src_drawable,
+                                           GimpPressureOptions *pressure_options,
+                                           GimpCloneType        type,
+                                           gint                 offset_x,
+                                           gint                 offset_y);
+static void   gimp_clone_line_image       (GimpImage           *dest,
+                                           GimpImage           *src,
+                                           GimpDrawable        *d_drawable,
+                                           GimpDrawable        *s_drawable,
+                                           guchar              *s,
+                                           guchar              *d,
+                                           gint                 has_alpha,
+                                           gint                 src_bytes,
+                                           gint                 dest_bytes,
+                                           gint                 width);
+static void   gimp_clone_line_pattern     (GimpImage           *dest,
+                                           GimpDrawable        *drawable,
+                                           GimpPattern         *pattern,
+                                           guchar              *d,
+                                           gint                 x,
+                                           gint                 y,
+                                           gint                 bytes,
+                                           gint                 width);
 
-static void   gimp_clone_set_src_drawable (GimpClone    *clone,
-                                           GimpDrawable *drawable);
+static void   gimp_clone_set_src_drawable (GimpClone           *clone,
+                                           GimpDrawable        *drawable);
 
-
-static gint   dest_x   = 0;     /*                         */
-static gint   dest_y   = 0;     /*  position of clone src  */
-static gint   offset_x = 0;     /*                         */
-static gint   offset_y = 0;     /*  offset for cloning     */
-static gint   first    = TRUE;
 
 static GimpPaintCoreClass *parent_class = NULL;
 
@@ -152,6 +145,10 @@ gimp_clone_init (GimpClone *clone)
   clone->src_x              = 0.0;
   clone->src_y              = 0.0;
 
+  clone->offset_x           = 0;
+  clone->offset_y           = 0;
+  clone->first_stroke       = TRUE;
+
   clone->init_callback      = NULL;
   clone->finish_callback    = NULL;
   clone->pretrace_callback  = NULL;
@@ -197,35 +194,41 @@ gimp_clone_paint (GimpPaintCore      *paint_core,
 
 	  clone->src_x = paint_core->cur_coords.x;
 	  clone->src_y = paint_core->cur_coords.y;
-	  first = TRUE;
+
+	  clone->first_stroke = TRUE;
 	}
       else
 	{
           /*  otherwise, update the target  */
+
+          gint dest_x;
+          gint dest_y;
 
 	  dest_x = paint_core->cur_coords.x;
 	  dest_y = paint_core->cur_coords.y;
 
           if (options->aligned == GIMP_CLONE_ALIGN_REGISTERED)
             {
-	      offset_x = 0;
-	      offset_y = 0;
+	      clone->offset_x = 0;
+	      clone->offset_y = 0;
             }
-          else if (first)
+          else if (clone->first_stroke)
 	    {
-	      offset_x = clone->src_x - dest_x;
-	      offset_y = clone->src_y - dest_y;
-	      first = FALSE;
+	      clone->offset_x = clone->src_x - dest_x;
+	      clone->offset_y = clone->src_y - dest_y;
+
+	      clone->first_stroke = FALSE;
 	    }
 
-	  clone->src_x = dest_x + offset_x;
-	  clone->src_y = dest_y + offset_y;
+	  clone->src_x = dest_x + clone->offset_x;
+	  clone->src_y = dest_y + clone->offset_y;
 
 	  gimp_clone_motion (paint_core, drawable,
                              clone->src_drawable, 
                              options->paint_options.pressure_options, 
                              options->type,
-                             offset_x, offset_y);
+                             clone->offset_x,
+                             clone->offset_y);
 	}
       break;
 
@@ -236,13 +239,15 @@ gimp_clone_paint (GimpPaintCore      *paint_core,
 
 	  clone->src_x = paint_core->cur_coords.x;
 	  clone->src_y = paint_core->cur_coords.y;
-	  first = TRUE;
+
+	  clone->first_stroke = TRUE;
 	}
       else if (options->aligned == GIMP_CLONE_ALIGN_NO)
 	{
-	  first = TRUE;
 	  orig_src_x = clone->src_x;
 	  orig_src_y = clone->src_y;
+
+	  clone->first_stroke = TRUE;
 	}
 
       if (clone->init_callback)
@@ -257,7 +262,7 @@ gimp_clone_paint (GimpPaintCore      *paint_core,
       if (clone->finish_callback)
         clone->finish_callback (clone, clone->callback_data);
 
-      if (options->aligned == GIMP_CLONE_ALIGN_NO && !first)
+      if (options->aligned == GIMP_CLONE_ALIGN_NO && ! clone->first_stroke)
 	{
 	  clone->src_x = orig_src_x;
 	  clone->src_y = orig_src_y;
@@ -283,7 +288,6 @@ gimp_clone_motion (GimpPaintCore       *paint_core,
   GimpContext *context;
   guchar      *s;
   guchar      *d;
-  TempBuf     *orig;
   TempBuf     *area;
   gpointer     pr;
   gint         y;
@@ -331,6 +335,16 @@ gimp_clone_motion (GimpPaintCore       *paint_core,
       /*  Set the paint area to transparent  */
       temp_buf_data_clear (area);
 
+      x1 = CLAMP (area->x + offset_x, 0, gimp_drawable_width (src_drawable));
+      y1 = CLAMP (area->y + offset_y, 0, gimp_drawable_height (src_drawable));
+      x2 = CLAMP (area->x + offset_x + area->width,
+                  0, gimp_drawable_width (src_drawable));
+      y2 = CLAMP (area->y + offset_y + area->height,
+                  0, gimp_drawable_height (src_drawable));
+
+      if (!(x2 - x1) || !(y2 - y1))
+        return;
+
       /*  If the source gimage is different from the destination,
        *  then we should copy straight from the destination image
        *  to the canvas.
@@ -339,53 +353,39 @@ gimp_clone_motion (GimpPaintCore       *paint_core,
        */
       if (src_drawable != drawable)
 	{
-	  x1 = CLAMP (area->x + offset_x, 0, gimp_drawable_width (src_drawable));
-	  y1 = CLAMP (area->y + offset_y, 0, gimp_drawable_height (src_drawable));
-	  x2 = CLAMP (area->x + offset_x + area->width,
-		      0, gimp_drawable_width (src_drawable));
-	  y2 = CLAMP (area->y + offset_y + area->height,
-		      0, gimp_drawable_height (src_drawable));
-
-	  if (!(x2 - x1) || !(y2 - y1))
-	    return;
-
 	  pixel_region_init (&srcPR, gimp_drawable_data (src_drawable),
 			     x1, y1, (x2 - x1), (y2 - y1), FALSE);
 	}
       else
 	{
-	  x1 = CLAMP (area->x + offset_x, 0, gimp_drawable_width (drawable));
-	  y1 = CLAMP (area->y + offset_y, 0, gimp_drawable_height (drawable));
-	  x2 = CLAMP (area->x + offset_x + area->width,
-		      0, gimp_drawable_width (drawable));
-	  y2 = CLAMP (area->y + offset_y + area->height,
-		      0, gimp_drawable_height (drawable));
-
-	  if (!(x2 - x1) || !(y2 - y1))
-	    return;
+          TempBuf *orig;
 
 	  /*  get the original image  */
-	  orig = gimp_paint_core_get_orig_image (paint_core, drawable, x1, y1, x2, y2);
+	  orig = gimp_paint_core_get_orig_image (paint_core, src_drawable,
+                                                 x1, y1, x2, y2);
 
-	  srcPR.bytes = orig->bytes;
-	  srcPR.x = 0; srcPR.y = 0;
-	  srcPR.w = x2 - x1;
-	  srcPR.h = y2 - y1;
+	  srcPR.bytes     = orig->bytes;
+	  srcPR.x         = 0;
+          srcPR.y         = 0;
+	  srcPR.w         = x2 - x1;
+	  srcPR.h         = y2 - y1;
 	  srcPR.rowstride = srcPR.bytes * orig->width;
-	  srcPR.data = temp_buf_data (orig);
+	  srcPR.data      = temp_buf_data (orig);
 	}
 
       offset_x = x1 - (area->x + offset_x);
       offset_y = y1 - (area->y + offset_y);
 
       /*  configure the destination  */
-      destPR.bytes = area->bytes;
-      destPR.x = 0; destPR.y = 0;
-      destPR.w = srcPR.w;
-      destPR.h = srcPR.h;
+      destPR.bytes     = area->bytes;
+      destPR.x         = 0;
+      destPR.y         = 0;
+      destPR.w         = srcPR.w;
+      destPR.h         = srcPR.h;
       destPR.rowstride = destPR.bytes * area->width;
-      destPR.data = temp_buf_data (area) + offset_y * destPR.rowstride +
-	offset_x * destPR.bytes;
+      destPR.data      = (temp_buf_data (area) +
+                          offset_y * destPR.rowstride +
+                          offset_x * destPR.bytes);
 
       pr = pixel_regions_register (2, &srcPR, &destPR);
       break;
@@ -396,12 +396,14 @@ gimp_clone_motion (GimpPaintCore       *paint_core,
       if (!pattern)
 	return;
 
-      destPR.bytes = area->bytes;
-      destPR.x = 0; destPR.y = 0;
-      destPR.w = area->width;
-      destPR.h = area->height;
+      /*  configure the destination  */
+      destPR.bytes     = area->bytes;
+      destPR.x         = 0;
+      destPR.y         = 0;
+      destPR.w         = area->width;
+      destPR.h         = area->height;
       destPR.rowstride = destPR.bytes * area->width;
-      destPR.data = temp_buf_data (area);
+      destPR.data      = temp_buf_data (area);
 
       pr = pixel_regions_register (1, &destPR);
       break;
@@ -411,6 +413,7 @@ gimp_clone_motion (GimpPaintCore       *paint_core,
     {
       s = srcPR.data;
       d = destPR.data;
+
       for (y = 0; y < destPR.h; y++)
 	{
 	  switch (type)
@@ -422,6 +425,7 @@ gimp_clone_motion (GimpPaintCore       *paint_core,
                                      srcPR.bytes, destPR.bytes, destPR.w);
 	      s += srcPR.rowstride;
 	      break;
+
 	    case GIMP_PATTERN_CLONE:
 	      gimp_clone_line_pattern (gimage, drawable,
                                        pattern, d,
