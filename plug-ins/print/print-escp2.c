@@ -466,6 +466,17 @@ escp2_print(int       model,		/* I - Model */
 	  return;	  
 	}
     }
+  if (!use_softweave)
+    {
+      /*
+       * In microweave mode, correct for the loss of page height that
+       * would happen in softweave mode.  The divide by 10 is to convert
+       * lines into points (Epson printers all have 720 ydpi);
+       */
+      int extra_points = ((escp2_nozzles(model) - 1) *
+			  escp2_nozzle_separation(model) + 5) / 10;
+      top += extra_points;
+    }
 
  /*
   * Compute the output size...
@@ -577,11 +588,13 @@ escp2_print(int       model,		/* I - Model */
 
     x    = top;
     top  = left;
-    left = x;
+    left = page_width - x - out_width;
   }
 
   if (left < 0)
     left = (page_width - out_width) / 2 + page_left;
+  else
+    left = left + page_left;
 
   if (top < 0)
     top  = (page_height + out_height) / 2 + page_bottom;
@@ -770,11 +783,11 @@ escp2_print(int       model,		/* I - Model */
       if (output_type == OUTPUT_GRAY)
       {
         dither_black(out, x, image_height, out_width, black);
-       if (use_softweave)
-         escp2_write_weave(prn, length, ydpi, model, out_width, left, xdpi,
-                           cyan, magenta, yellow, black, lcyan, lmagenta);
-       else
-         escp2_write(prn, black, length, 0, 0, ydpi, model, out_width, left);
+	if (use_softweave)
+	  escp2_write_weave(prn, length, ydpi, model, out_width, left, xdpi,
+			    cyan, magenta, yellow, black, lcyan, lmagenta);
+	else
+	  escp2_write(prn, black, length, 0, 0, ydpi, model, out_width, left);
       }
       else if (escp2_has_cap(model, MODEL_6COLOR_MASK, MODEL_6COLOR_YES))
       {
@@ -862,11 +875,11 @@ escp2_print(int       model,		/* I - Model */
       if (output_type == OUTPUT_GRAY)
       {
         dither_black(out, y, image_width, out_width, black);
-       if (use_softweave)
-         escp2_write_weave(prn, length, ydpi, model, out_width, left, xdpi,
-                           cyan, magenta, yellow, black, lcyan, lmagenta);
-       else
-         escp2_write(prn, black, length, 0, 0, ydpi, model, out_width, left);
+	if (use_softweave)
+	  escp2_write_weave(prn, length, ydpi, model, out_width, left, xdpi,
+			    cyan, magenta, yellow, black, lcyan, lmagenta);
+	else
+	  escp2_write(prn, black, length, 0, 0, ydpi, model, out_width, left);
       }
       else if (escp2_has_cap(model, MODEL_6COLOR_MASK, MODEL_6COLOR_YES))
       {
@@ -1635,14 +1648,13 @@ flush_pass(int passno, int model, int width, int hoffset, int ydpi,
 	      fwrite("\033.\001\012\012\001", 6, 1, prn);
 	      break;
 	    case 720 :
-	      if (escp2_has_cap(model, MODEL_6COLOR_MASK, MODEL_6COLOR_YES))
+	      if (escp2_has_cap(model, MODEL_720DPI_MODE_MASK,
+				MODEL_720DPI_600))
 		fprintf(prn, "\033.%c%c%c%c", 1, 8 * 5, 5,
 			*linecount + pass->missingstartrows);
-	      else if (escp2_has_cap(model, MODEL_720DPI_MODE_MASK,
-				     MODEL_720DPI_600))
-		fwrite("\033.\001\050\005\001", 6, 1, prn);
 	      else
-		fwrite("\033.\001\005\005\001", 6, 1, prn);
+		fprintf(prn, "\033.%c%c%c%c", 1, 5, 5,
+			*linecount + pass->missingstartrows);
 	      break;
 	    }
 

@@ -1,3 +1,14 @@
+Wed Feb 23 14:50:09 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/print/print-escp2.c
+	* plug-ins/print/print-pcl.c
+	* plug-ins/print/print-util.c
+	* plug-ins/print/print.c: 
+	Applied patch from Robert L Krawitz <rlk@alum.mit.edu>.
+	Bumps print plug-in version to 3.0.9 and adds a few nifty
+	little features. Now all we need is a facelift for the 
+	dialog... 
+	
 Wed Feb 23 01:15:12 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/gtm.c: added a warning in the case the user

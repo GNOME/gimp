@@ -429,11 +429,13 @@ pcl_print(int       model,		/* I - Model */
 
     x    = top;
     top  = left;
-    left = x;
+    left = page_width - x - out_width;
   }
 
   if (left < 0)
     left = (page_width - out_width) / 2 + page_left;
+  else
+    left = left + page_left;
 
   if (top < 0)
     top  = (page_height + out_height) / 2 + page_bottom;
