@@ -60,8 +60,8 @@ libapptools_la_SOURCES = \
 	gimprectselecttool.h	\
 ##	gimprotatetool.c	\
 ##	gimprotatetool.h	\
-##	gimpscaletool.c		\
-##	gimpscaletool.h		\
+	gimpscaletool.c		\
+	gimpscaletool.h		\
 	gimpselectiontool.c	\
 	gimpselectiontool.h	\
 ##	gimpsheartool.c		\

@@ -16,20 +16,37 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __SCALE_TOOL_H__
-#define __SCALE_TOOL_H__
+#ifndef __GIMP_SCALE_TOOL_H__
+#define __GIMP_SCALE_TOOL_H__
+
+#include "tools/gimptransformtool.h"
+
+#define GIMP_TYPE_SCALE_TOOL            (gimp_scale_tool_get_type ())
+#define GIMP_SCALE_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_SCALE_TOOL, GimpScaleTool))
+#define GIMP_IS_SCALE_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_SCALE_TOOL))
+#define GIMP_SCALE_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SCALE_TOOL, GimpScaleToolClass))
+
+struct _GimpScaleTool {
+  GimpTransformTool parent_instance;
+};
+
+struct _GimpScaleToolClass {
+  GimpTransformToolClass parent_class;
+};
+
+typedef struct _GimpScaleTool      GimpScaleTool;
+typedef struct _GimpScaleToolClass GimpScaleToolClass;
 
 
-TileManager * scale_tool_scale      (GimpImage      *gimage,
-				     GimpDrawable   *drawable,
-				     GDisplay       *gdisp,
-				     gdouble        *trans_info,
-				     TileManager    *float_tiles,
-				     gboolean        interpolation,
-				     GimpMatrix3     matrix);
+TileManager *    gimp_scale_tool_scale  (GimpImage      *gimage,
+		   		         GimpDrawable   *drawable,
+		   		         GDisplay       *gdisp,
+		   		         gdouble        *trans_info,
+		   		         TileManager    *float_tiles,
+		  		         gboolean        interpolation,
+		 		         GimpMatrix3     matrix);
 
-Tool        * tools_new_scale_tool  (void);
-void          tools_free_scale_tool (Tool           *tool);
+GtkType        gimp_scale_tool_get_type (void);
+GimpTool     * gimp_scale_tool_new      (void);
 
-
-#endif  /*  __SCALE_TOOL_H__  */
+#endif  /*  __GIMP_SCALE_TOOL_H__  */

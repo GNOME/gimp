@@ -20,7 +20,7 @@
 #define __GIMP_TRANSFORM_TOOL_H__
 
 
-#include "tools/gimptool.h"
+#include "tools/gimpdrawtool.h"
 
 #define GIMP_TYPE_TRANSFORM_TOOL            (gimp_transform_tool_get_type ())
 #define GIMP_TRANSFORM_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_TRANSFORM_TOOL, GimpTransformTool))
@@ -29,11 +29,6 @@
 #define GIMP_IS_TRANSFORM_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TRANSFORM_TOOL))
 
 typedef struct _GimpTransformToolClass GimpTransformToolClass;
-
-/*  transform directions  */
-#define TRANSFORM_TRADITIONAL 0
-#define TRANSFORM_CORRECTIVE  1
-
 
 /* buffer sizes for scaling information strings (for the info dialog) */
 #define MAX_INFO_BUF   40
@@ -121,6 +116,10 @@ struct _TransformUndo
   gpointer     path_undo;
 };
 
+/*  transform directions  */
+#define TRANSFORM_TRADITIONAL 0
+#define TRANSFORM_CORRECTIVE  1
+
 
 /*  make this variable available to all  */
 /*  Do we still need to do this?  -- rock */
@@ -159,10 +158,6 @@ gboolean      gimp_transform_tool_paste                 (GimpImage        *gimag
 				                         TileManager      *tiles,
 				                         gboolean          new_layer);
 GtkType       gimp_transform_tool_get_type              (void);
-
-
-/*  FIXME These probably should no longer be global  */
-
 gboolean      gimp_transform_tool_smoothing             (void);
 gboolean      gimp_transform_tool_showpath              (void);
 gboolean      gimp_transform_tool_clip	                (void);

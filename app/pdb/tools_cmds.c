@@ -51,7 +51,7 @@
 #include "tools/gimpscaletool.h"
 #include "tools/gimpsheartool.h"
 #include "tools/gimpsmudgetool.h"
-#include "tools/transform_core.h"
+#include "tools/gimptransformtool.h"
 #include "undo.h"
 
 #include "libgimpcolor/gimpcolor.h"
@@ -1595,7 +1595,7 @@ flip_invoker (Argument *args)
       undo_push_group_start (gimage, TRANSFORM_CORE_UNDO); 
     
       /* Cut/Copy from the specified drawable */
-      float_tiles = transform_core_cut (gimage, drawable, &new_layer);
+      float_tiles = gimp_transform_tool_cut (gimage, drawable, &new_layer);
     
       flip_type = flip_type == HORIZONTAL ? ORIENTATION_HORIZONTAL :
 		  flip_type == VERTICAL   ? ORIENTATION_VERTICAL   :
@@ -1617,7 +1617,7 @@ flip_invoker (Argument *args)
       tile_manager_destroy (float_tiles);
     
       if (new_tiles)
-	success = transform_core_paste (gimage, drawable, new_tiles, new_layer);
+	success = gimp_transform_tool_paste (gimage, drawable, new_tiles, new_layer);
       else
 	success = FALSE;
     
@@ -2152,7 +2152,7 @@ perspective_invoker (Argument *args)
       undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
     
       /* Cut/Copy from the specified drawable */
-      float_tiles = transform_core_cut (gimage, drawable, &new_layer);
+      float_tiles = gimp_transform_tool_cut (gimage, drawable, &new_layer);
     
       /* Determine the perspective transform that maps from
        * the unit cube to the trans_info coordinates
@@ -2184,7 +2184,7 @@ perspective_invoker (Argument *args)
       tile_manager_destroy (float_tiles);
     
       if (new_tiles)
-	success = transform_core_paste (gimage, drawable, new_tiles, new_layer);
+	success = gimp_transform_tool_paste (gimage, drawable, new_tiles, new_layer);
       else
 	success = FALSE;
     
@@ -2415,7 +2415,7 @@ rotate_invoker (Argument *args)
       undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
     
       /* Cut/Copy from the specified drawable */
-      float_tiles = transform_core_cut (gimage, drawable, &new_layer);
+      float_tiles = gimp_transform_tool_cut (gimage, drawable, &new_layer);
     
       tile_manager_get_offsets (float_tiles, &offset_x, &offset_y);        
       cx = offset_x + tile_manager_width (float_tiles) / 2.0;
@@ -2435,7 +2435,7 @@ rotate_invoker (Argument *args)
       tile_manager_destroy (float_tiles);
     
       if (new_tiles)
-	success = transform_core_paste (gimage, drawable, new_tiles, new_layer);
+	success = gimp_transform_tool_paste (gimage, drawable, new_tiles, new_layer);
       else
 	success = FALSE;
     
@@ -2535,7 +2535,7 @@ scale_invoker (Argument *args)
 	  undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
     
 	  /* Cut/Copy from the specified drawable */
-	  float_tiles = transform_core_cut (gimage, drawable, &new_layer);
+	  float_tiles = gimp_transform_tool_cut (gimage, drawable, &new_layer);
     
 	  scalex = scaley = 1.0;
 	  if (tile_manager_width (float_tiles))
@@ -2554,14 +2554,14 @@ scale_invoker (Argument *args)
 	  gimp_matrix3_translate (matrix, trans_info[X0], trans_info[Y0]);
     
 	  /* Scale the buffer */
-	  new_tiles = scale_tool_scale (gimage, drawable, NULL, trans_info,
-					float_tiles, interpolation, matrix);
+	  new_tiles = gimp_scale_tool_scale (gimage, drawable, NULL, trans_info,
+					     float_tiles, interpolation, matrix);
     
 	  /* Free the cut/copied buffer */
 	  tile_manager_destroy (float_tiles);
     
 	  if (new_tiles)
-	    success = transform_core_paste (gimage, drawable, new_tiles, new_layer);
+	    success = gimp_transform_tool_paste (gimage, drawable, new_tiles, new_layer);
 	  else
 	    success = FALSE;
     
@@ -2675,7 +2675,7 @@ shear_invoker (Argument *args)
       undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
     
       /* Cut/Copy from the specified drawable */
-      float_tiles = transform_core_cut (gimage, drawable, &new_layer);
+      float_tiles = gimp_transform_tool_cut (gimage, drawable, &new_layer);
     
       tile_manager_get_offsets (float_tiles, &offset_x, &offset_y);        
     
@@ -2703,7 +2703,7 @@ shear_invoker (Argument *args)
       tile_manager_destroy (float_tiles);
     
       if (new_tiles)
-	success = transform_core_paste (gimage, drawable, new_tiles, new_layer);
+	success = gimp_transform_tool_paste (gimage, drawable, new_tiles, new_layer);
       else
 	success = FALSE;
     
@@ -2947,7 +2947,7 @@ transform_2d_invoker (Argument *args)
       undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
 	
       /* Cut/Copy from the specified drawable */
-      float_tiles = transform_core_cut (gimage, drawable, &new_layer);
+      float_tiles = gimp_transform_tool_cut (gimage, drawable, &new_layer);
     
       /* Assemble the transformation matrix */
       gimp_matrix3_identity  (matrix);
@@ -2957,14 +2957,14 @@ transform_2d_invoker (Argument *args)
       gimp_matrix3_translate (matrix, dest_x, dest_y);
 	
       /* Transform the buffer */
-      new_tiles = transform_core_do (gimage, drawable, float_tiles,
-				     interpolation, matrix, NULL, NULL);
+      new_tiles = gimp_transform_tool_do (gimage, drawable, float_tiles,
+					  interpolation, matrix, NULL, NULL);
 	
       /* Free the cut/copied buffer */
       tile_manager_destroy (float_tiles);
 	
       if (new_tiles)
-	success = transform_core_paste (gimage, drawable, new_tiles, new_layer);
+	success = gimp_transform_tool_paste (gimage, drawable, new_tiles, new_layer);
       else
 	success = FALSE;
     

@@ -521,6 +521,8 @@ STUB(by_color_select_initialize_by_image)
 STUB(path_transform_start_undo)
 STUB(path_transform_do_undo)
 STUB(path_transform_free_undo)
+STUB(path_transform_current_path)
+STUB(path_transform_draw_current)
 STUB(undo_pop_paint)
 STUB(histogram_tool_histogram_range)
 STUB(paths_dialog_create)
@@ -543,7 +545,6 @@ STUB(transform_core_paste)
 STUB(perspective_find_transform)
 STUB(perspective_tool_perspective)
 STUB(rotate_tool_rotate)
-STUB(scale_tool_scale)
 STUB(shear_tool_shear)
 STUB(smudge_non_gui)
 STUB(smudge_non_gui_default)
@@ -591,27 +592,6 @@ ToolInfo tool_info[] =
     }
   },
 
-  {
-    NULL,
-    N_("Transform"),
-    N_("/Tools/Transform Tools/Transform"),
-    "<shift>T",
-    (char **) scale_bits,
-    NULL,
-    NULL,
-    N_("Rotation, scaling, shearing, perspective."),
-    "tools/transform.html",
-    ROTATE,
-    tools_new_transform_tool,
-    tools_free_transform_tool,
-    NULL,
-    NULL,
-    NULL,
-    {
-      rotate_small_bits, rotate_small_mask_bits,
-      rotate_small_width, rotate_small_height,
-      0, 0, NULL, NULL, NULL
-    },
     {
       NULL, NULL,
       0, 0,

@@ -224,7 +224,7 @@ gimp_transform_tool_class_init (GimpTransformToolClass *klass)
 
   gimp_transform_tool_signals[TRANSFORM] =
     gtk_signal_new ("transform",
-    		    GTK_RUN_FIRST,
+    		    GTK_RUN_LAST,
     		    object_class->type,
     		    GTK_SIGNAL_OFFSET (GimpTransformToolClass,
     		    		       transform),
@@ -271,6 +271,23 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
   tool->scroll_lock = TRUE;   /*  Disallow scrolling  */
   tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
 }
+
+TileManager *
+gimp_transform_tool_transform (GimpTransformTool   *tool,
+                               GDisplay            *gdisp,
+			       TransformState       state)
+{
+  TileManager *retval;
+
+  g_return_val_if_fail (tool, NULL);
+  g_return_val_if_fail (GIMP_IS_TRANSFORM_TOOL (tool), NULL);
+
+  gtk_signal_emit (GTK_OBJECT (tool), gimp_transform_tool_signals[TRANSFORM],
+                   gdisp, state, &retval);
+
+  return retval;
+}
+
 
 static void
 pixel_surround_init (PixelSurround *ps,
@@ -1213,7 +1230,7 @@ gimp_transform_tool_setup_grid (GimpTransformTool *tr_tool)
 
   tool = GIMP_TOOL(tr_tool);
 
-  /*  We use the transform_tool_grid_size function only here, even
+  /*  We use the gimp_transform_tool_grid_size function only here, even
    *  if the user changes the grid size in the middle of an
    *  operation, nothing happens.
    */

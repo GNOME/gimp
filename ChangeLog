@@ -1,3 +1,19 @@
+2001-03-24  Nathan Summers <rock@gimp.org>
+
+	* app/tools/gimpscaletool.[ch]: Made the scale tool work again.
+	Doesn't draw on the screen correctly, but works if you set the
+	size in the dialog box.  Fixing the path tool should solve the
+	problem.  Don't you love wierd dependancies?
+	
+	* app/tools/gimptool.c: stubbed some more path tool functions.
+	
+	* app/tools/gimptransformtool.[ch]: fixed some serious problems.
+	I can't believe Gimp linked before!
+
+	* app/tools/Makefile.am
+	* app/tools/tools.c 
+	* tools/pdbgen/pdb/tools.pdb: changed accordingly
+
 2001-03-23  Seth Burgess <sjburges@gimp.org>
 
 	* po-plug-ins/ro.po
