@@ -1,5 +1,16 @@
 2005-03-04  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/pygimp/gimpmodule.c: wrap fonts_refresh and fonts_get_list,
+	clean up some of the other resource list plugins.
+
+	* plug-ins/pygimp/pygimp-drawable.c: more keyword args and better
+	exception messages.
+
+	* plug-ins/pygimp/pygimp-parasite.c: support keyword args for
+	parasite constructor.
+
+2005-03-04  Manish Singh  <yosh@gimp.org>
+
 	* tools/pdbgen/pdb/layer.pdb: fix documentation of edit_mask
 	accessors.
 

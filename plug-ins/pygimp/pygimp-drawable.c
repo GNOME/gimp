@@ -1242,13 +1242,17 @@ pygimp_drawable_new(GimpDrawable *drawable, gint32 ID)
 
 
 static PyObject *
-lay_copy(PyGimpLayer *self, PyObject *args)
+lay_copy(PyGimpLayer *self, PyObject *args, PyObject *kwargs)
 {
-    int add_alpha = 0, nreturn_vals;
+    int nreturn_vals;
     GimpParam *return_vals;
+    gboolean add_alpha = FALSE;
     gint32 id = -1;
 
-    if (!PyArg_ParseTuple(args, "|i:copy", &add_alpha))
+    static char *kwlist[] = { "add_alpha", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "|i:copy", kwlist,
+				     &add_alpha))
 	return NULL;
 
     return_vals = gimp_run_procedure("gimp_layer_copy",
@@ -1260,7 +1264,9 @@ lay_copy(PyGimpLayer *self, PyObject *args)
     if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
 	id = return_vals[1].data.d_layer;
     else
-	PyErr_SetString(pygimp_error, "can't create new layer");
+	PyErr_Format(pygimp_error,
+		     "could not create new layer copy from layer (ID %d)",
+		     self->ID);
 
     gimp_destroy_params(return_vals, nreturn_vals);
 
@@ -1271,7 +1277,11 @@ lay_copy(PyGimpLayer *self, PyObject *args)
 static PyObject *
 lay_add_alpha(PyGimpLayer *self)
 {
-    gimp_layer_add_alpha(self->ID);
+    if (!gimp_layer_add_alpha(self->ID)) {
+	PyErr_Format(pygimp_error, "could not add alpha to layer (ID %d)",
+		     self->ID);
+	return NULL;
+    }
 
     Py_INCREF(Py_None);
     return Py_None;
@@ -1286,18 +1296,36 @@ lay_add_mask(PyGimpLayer *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "O!:add_mask", &PyGimpChannel_Type, &mask))
 	return NULL;
 
-    return PyInt_FromLong(gimp_layer_add_mask(self->ID, mask->ID));
+    if (!gimp_layer_add_mask(self->ID, mask->ID)) {
+	PyErr_Format(pygimp_error,
+		     "could not add mask (ID %d) to layer (ID %d)",
+		     mask->ID, self->ID);
+	return NULL;
+    }
+
+    Py_INCREF(Py_None);
+    return Py_None;
 }
 
 static PyObject *
 lay_create_mask(PyGimpLayer *self, PyObject *args)
 {
     int type;
+    gint32 id;
 
     if (!PyArg_ParseTuple(args, "i:create_mask", &type))
 	return NULL;
 
-    return pygimp_channel_new(gimp_layer_create_mask(self->ID, type));
+    id = gimp_layer_create_mask(self->ID, type);
+
+    if (id == -1) {
+	PyErr_Format(pygimp_error,
+		     "could not create mask of type %d on layer (ID %d)",
+		     type, self->ID);
+	return NULL;
+    }
+
+    return pygimp_channel_new(id);
 }
 
 static PyObject *
@@ -1308,18 +1336,28 @@ lay_remove_mask(PyGimpLayer *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "i:remove_mask", &mode))
 	return NULL;
 
-    return PyInt_FromLong(gimp_layer_remove_mask(self->ID, mode));
+    if (!gimp_layer_remove_mask(self->ID, mode)) {
+	PyErr_Format(pygimp_error,
+		     "could not remove mask from layer (ID %d) with mode %d",
+		      self->ID, mode);
+	return NULL;
+    }
+
+    Py_INCREF(Py_None);
+    return Py_None;
 }
 
 
 static PyObject *
-lay_resize(PyGimpLayer *self, PyObject *args)
+lay_resize(PyGimpLayer *self, PyObject *args, PyObject *kwargs)
 {
     unsigned int new_h, new_w;
-    int offs_x, offs_y;
+    int offs_x = 0, offs_y = 0;
 
-    if (!PyArg_ParseTuple(args, "iiii:resize", &new_w, &new_h,
-			  &offs_x, &offs_y))
+    static char *kwlist[] = { "width", "height", "offset_x", "offset_y", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "ii|ii:resize", kwlist,
+				     &new_w, &new_h, &offs_x, &offs_y))
 	return NULL;
 
     if (!gimp_layer_resize(self->ID, new_w, new_h, offs_x, offs_y)) {
@@ -1349,16 +1387,23 @@ lay_resize_to_image_size(PyGimpLayer *self)
 }
 
 static PyObject *
-lay_scale(PyGimpLayer *self, PyObject *args)
+lay_scale(PyGimpLayer *self, PyObject *args, PyObject *kwargs)
 {
     unsigned int new_w, new_h;
-    int local_origin;
+    gboolean local_origin = FALSE;
 
-    if (!PyArg_ParseTuple(args, "iii:scale", &new_w, &new_h,
-			  &local_origin))
+    static char *kwlist[] = { "width", "height", "local_origin", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "ii|i:scale", kwlist,
+				     &new_w, &new_h, &local_origin))
 	return NULL;
 
-    gimp_layer_scale(self->ID, new_w, new_h, local_origin);
+    if (!gimp_layer_scale(self->ID, new_w, new_h, local_origin)) {
+	PyErr_Format(pygimp_error,
+		     "could not scale layer (ID %d) to size %dx%d",
+		     self->ID, new_w, new_h);
+	return NULL;
+    }
 
     Py_INCREF(Py_None);
     return Py_None;
@@ -1366,14 +1411,22 @@ lay_scale(PyGimpLayer *self, PyObject *args)
 
 
 static PyObject *
-lay_translate(PyGimpLayer *self, PyObject *args)
+lay_translate(PyGimpLayer *self, PyObject *args, PyObject *kwargs)
 {
     int offs_x, offs_y;
 
-    if (!PyArg_ParseTuple(args, "ii:translate", &offs_x, &offs_y))
+    static char *kwlist[] = { "offset_x", "offset_y", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "ii:translate", kwlist,
+				     &offs_x, &offs_y))
 	return NULL;
 
-    gimp_layer_translate(self->ID, offs_x, offs_y);
+    if (!gimp_layer_translate(self->ID, offs_x, offs_y)) {
+	PyErr_Format(pygimp_error,
+		     "could not translate layer (ID %d) to offset %d, %d",
+		     self->ID, offs_x, offs_y);
+	return NULL;
+    }
 
     Py_INCREF(Py_None);
     return Py_None;
@@ -1381,30 +1434,38 @@ lay_translate(PyGimpLayer *self, PyObject *args)
 
 
 static PyObject *
-lay_set_offsets(PyGimpLayer *self, PyObject *args)
+lay_set_offsets(PyGimpLayer *self, PyObject *args, PyObject *kwargs)
 {
     int offs_x, offs_y;
 
-    if (!PyArg_ParseTuple(args, "ii:set_offsets", &offs_x, &offs_y))
+    static char *kwlist[] = { "offset_x", "offset_y", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "ii:set_offsets", kwlist,
+				     &offs_x, &offs_y))
 	return NULL;
 
-    gimp_layer_set_offsets(self->ID, offs_x, offs_y);
+    if (!gimp_layer_set_offsets(self->ID, offs_x, offs_y)) {
+	PyErr_Format(pygimp_error,
+		     "could not set offset %d, %d on layer (ID %d)",
+		     offs_x, offs_y, self->ID);
+	return NULL;
+    }
 
     Py_INCREF(Py_None);
     return Py_None;
 }
 
 static PyMethodDef lay_methods[] = {
-    {"copy",	(PyCFunction)lay_copy,	METH_VARARGS},
+    {"copy",	(PyCFunction)lay_copy,	METH_VARARGS | METH_KEYWORDS},
     {"add_alpha",	(PyCFunction)lay_add_alpha,	METH_NOARGS},
     {"add_mask",        (PyCFunction)lay_add_mask,      METH_VARARGS},
     {"create_mask",	(PyCFunction)lay_create_mask,	METH_VARARGS},
     {"remove_mask",     (PyCFunction)lay_remove_mask,   METH_VARARGS},
-    {"resize",	(PyCFunction)lay_resize,	METH_VARARGS},
+    {"resize",	(PyCFunction)lay_resize,	METH_VARARGS | METH_KEYWORDS},
     {"resize_to_image_size",	(PyCFunction)lay_resize_to_image_size,	METH_NOARGS},
-    {"scale",	(PyCFunction)lay_scale,	METH_VARARGS},
-    {"translate",	(PyCFunction)lay_translate,	METH_VARARGS},
-    {"set_offsets",	(PyCFunction)lay_set_offsets,	METH_VARARGS},
+    {"scale",	(PyCFunction)lay_scale,	METH_VARARGS | METH_KEYWORDS},
+    {"translate",	(PyCFunction)lay_translate,	METH_VARARGS | METH_KEYWORDS},
+    {"set_offsets",	(PyCFunction)lay_set_offsets,	METH_VARARGS | METH_KEYWORDS},
     {NULL,		NULL}		/* sentinel */
 };
 
@@ -1446,7 +1507,12 @@ lay_set_apply_mask(PyGimpLayer *self, PyObject *value, void *closure)
 	return -1;
     }
 
-    gimp_layer_set_apply_mask(self->ID, PyInt_AsLong(value));
+    if (!gimp_layer_set_apply_mask(self->ID, PyInt_AsLong(value))) {
+	PyErr_Format(pygimp_error,
+		     "could not set layer mask on layer (ID %d)",
+		     self->ID);
+	return -1;
+    }
 
     return 0;
 }
@@ -1470,7 +1536,12 @@ lay_set_edit_mask(PyGimpLayer *self, PyObject *value, void *closure)
 	return -1;
     }
 
-    gimp_layer_set_edit_mask(self->ID, PyInt_AsLong(value));
+    if (!gimp_layer_set_edit_mask(self->ID, PyInt_AsLong(value))) {
+	PyErr_Format(pygimp_error,
+		     "could not set layer mask active on layer (ID %d)",
+		     self->ID);
+	return -1;
+    }
 
     return 0;
 }
@@ -1494,7 +1565,11 @@ lay_set_mode(PyGimpLayer *self, PyObject *value, void *closure)
 	return -1;
     }
 
-    gimp_layer_set_mode(self->ID, (GimpLayerModeEffects)PyInt_AsLong(value));
+    if (!gimp_layer_set_mode(self->ID, PyInt_AsLong(value))) {
+	PyErr_Format(pygimp_error, "could not set mode on layer (ID %d)",
+		     self->ID);
+	return -1;
+    }
 
     return 0;
 }
@@ -1518,7 +1593,11 @@ lay_set_opacity(PyGimpLayer *self, PyObject *value, void *closure)
 	return -1;
     }
 
-    gimp_layer_set_opacity(self->ID, PyFloat_AsDouble(value));
+    if (!gimp_layer_set_opacity(self->ID, PyFloat_AsDouble(value))) {
+	PyErr_Format(pygimp_error, "could not set opacity on layer (ID %d)",
+		     self->ID);
+	return -1;
+    }
 
     return 0;
 }
@@ -1543,7 +1622,13 @@ lay_set_preserve_trans(PyGimpLayer *self, PyObject *value, void *closure)
 	return -1;
     }
 
-    gimp_layer_set_preserve_trans(self->ID, PyInt_AsLong(value));
+    if (!gimp_layer_set_preserve_trans(self->ID, PyInt_AsLong(value))) {
+	PyErr_Format(pygimp_error,
+	             "could not set preserve transperancy setting on "
+		     "layer (ID %d)",
+		     self->ID);
+	return -1;
+    }
 
     return 0;
 }
@@ -1567,7 +1652,12 @@ lay_set_show_mask(PyGimpLayer *self, PyObject *value, void *closure)
 	return -1;
     }
 
-    gimp_layer_set_show_mask(self->ID, PyInt_AsLong(value));
+    if (!gimp_layer_set_show_mask(self->ID, PyInt_AsLong(value))) {
+	PyErr_Format(pygimp_error,
+	             "could not set mask visibility on layer (ID %d)",
+		     self->ID);
+	return -1;
+    }
 
     return 0;
 }
@@ -1620,7 +1710,10 @@ lay_init(PyGimpLayer *self, PyObject *args, PyObject *kwargs)
     self->drawable = NULL;
 
     if (self->ID < 0) {
-	PyErr_SetString(pygimp_error, "could not create layer");
+	PyErr_Format(pygimp_error,
+		     "could not create %dx%d layer '%s' of type %d on "
+		     "image (ID %d)",
+		     width, height, name, type, img->ID);
 	return -1;
     }
 
@@ -1703,7 +1796,9 @@ chn_copy(PyGimpChannel *self)
     id = gimp_channel_copy(self->ID);
 
     if (id == -1) {
-	PyErr_SetString(pygimp_error, "can't copy channel");
+	PyErr_Format(pygimp_error,
+		     "could not create new channel copy from channel (ID %d)",
+		     self->ID);
 	return NULL;
     }
 
@@ -1711,18 +1806,32 @@ chn_copy(PyGimpChannel *self)
 }
 
 static PyObject *
-chn_combine_masks(PyGimpChannel *self, PyObject *args)
+chn_combine_masks(PyGimpChannel *self, PyObject *args, PyObject *kwargs)
 {
     PyGimpChannel *channel2;
     GimpChannelOps operation;
-    gint offx, offy;
+    int offx = 0, offy = 0;
 
-    if (!PyArg_ParseTuple(args, "O!iii:combine_masks", &PyGimpChannel_Type,
-			  &channel2, &operation, &offx, &offy))
+    static char *kwlist[] = { "channel", "operation", "offset_x", "offset_y",
+			      NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O!i|ii:combine_masks",
+				     kwlist,
+				     &PyGimpChannel_Type, &channel2,
+				     &operation, &offx, &offy))
 	return NULL;
 
-    return PyInt_FromLong(gimp_channel_combine_masks(self->ID, channel2->ID,
-						     operation, offx, offy));
+    if (!gimp_channel_combine_masks(self->ID, channel2->ID, operation,
+				    offx, offy)) {
+	PyErr_Format(pygimp_error,
+		     "could not combine masks with channels (ID %d and ID %d) "
+		     "with operation %d, offset %d, %d",
+		     self->ID, channel2->ID, operation, offx, offy);
+	return NULL;
+    }
+
+    Py_INCREF(Py_None);
+    return Py_None;
 }
 
 static PyMethodDef chn_methods[] = {
@@ -1737,7 +1846,13 @@ chn_get_color(PyGimpChannel *self, void *closure)
     GimpRGB colour;
     guchar r, g, b;
 
-    gimp_channel_get_color(self->ID, &colour);
+    if (!gimp_channel_get_color(self->ID, &colour)) {
+	PyErr_Format(pygimp_error,
+		     "could not get compositing color of channel (ID %d)",
+		     self->ID);
+	return NULL;
+    }
+
     gimp_rgb_get_uchar(&colour, &r, &g, &b);
 
     return Py_BuildValue("(iii)", (long)r, (long)g, (long)b);
@@ -1754,14 +1869,20 @@ chn_set_color(PyGimpChannel *self, PyObject *value, void *closure)
         return -1;
     }
 
-    if (!PyTuple_Check(value) || !PyArg_ParseTuple(value, "(BBB)", &r,&g,&b)) {
+    if (!PyTuple_Check(value) || !PyArg_ParseTuple(value, "(BBB)", &r, &g, &b)) {
 	PyErr_Clear();
 	PyErr_SetString(PyExc_TypeError, "type mismatch");
 	return -1;
     }
 
     gimp_rgb_set_uchar(&colour, r, g, b);
-    gimp_channel_set_color(self->ID, &colour);
+
+    if (!gimp_channel_set_color(self->ID, &colour)) {
+	PyErr_Format(pygimp_error,
+		     "could not set compositing color on channel (ID %d)",
+		     self->ID);
+	return -1;
+    }
 
     return 0;
 }
@@ -1785,7 +1906,12 @@ chn_set_opacity(PyGimpLayer *self, PyObject *value, void *closure)
 	return -1;
     }
 
-    gimp_channel_set_opacity(self->ID, PyFloat_AsDouble(value));
+    if (!gimp_channel_set_opacity(self->ID, PyFloat_AsDouble(value))) {
+	PyErr_Format(pygimp_error,
+		     "could not set opacity on channel (ID %d)",
+		     self->ID);
+	return -1;
+    }
 
     return 0;
 }
@@ -1809,7 +1935,12 @@ chn_set_show_masked(PyGimpLayer *self, PyObject *value, void *closure)
 	return -1;
     }
 
-    gimp_channel_set_show_masked(self->ID, PyInt_AsLong(value));
+    if (!gimp_channel_set_show_masked(self->ID, PyInt_AsLong(value))) {
+	PyErr_Format(pygimp_error,
+		     "could not set composite method on channel (ID %d)",
+		     self->ID);
+	return -1;
+    }
 
     return 0;
 }
@@ -1857,7 +1988,9 @@ chn_init(PyGimpChannel *self, PyObject *args, PyObject *kwargs)
     self->drawable = NULL;
 
     if (self->ID < 0) {
-	PyErr_SetString(pygimp_error, "could not create layer");
+	PyErr_Format(pygimp_error,
+		     "could not create %dx%d channel '%s' on image (ID %d)",
+		     width, height, name, img->ID);
 	return -1;
     }
 

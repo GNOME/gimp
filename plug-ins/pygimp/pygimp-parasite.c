@@ -130,11 +130,16 @@ para_str(PyGimpParasite *self)
 static int
 para_init(PyGimpParasite *self, PyObject *args, PyObject *kwargs)
 {
-    char *name, *data;
+    char *name;
     int flags, size;
+    guint8 *data;
 
-    if (!PyArg_ParseTuple(args, "sis#:gimp.Parasite.__init__", &name, &flags,
-			  &data, &size))
+    static char *kwlist[] = { "name", "flags", "data", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+				     "sis#:gimp.Parasite.__init__", kwlist,
+				     &name, &flags,
+				     &data, &size))
 	return -1;
 
     self->para = gimp_parasite_new(name, flags, size, data);

@@ -541,6 +541,8 @@ pygimp_image_list(PyObject *self)
     for (i = 0; i < nimgs; i++)
 	PyList_SetItem(ret, i, (PyObject *)pygimp_image_new(imgs[i]));
 
+    g_free(imgs);
+
     return ret;
 }
 
@@ -811,17 +813,27 @@ pygimp_set_foreground(PyObject *self, PyObject *args)
 }
 
 static PyObject *
-pygimp_gradients_get_list(PyObject *self)
+pygimp_gradients_get_list(PyObject *self, PyObject *args, PyObject *kwargs)
 {
-    char **list;
+    char **list, *filter = NULL;
     int num, i;
     PyObject *ret;
 
-    list = gimp_gradients_get_list(NULL, &num);
+    static char *kwlist[] = { "filter", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+				     "|s:gradients_get_list", kwlist,
+				     &filter))
+	return NULL;
+
+    list = gimp_gradients_get_list(filter, &num);
 
     ret = PyList_New(num);
-    for (i = 0; i < num; i++)
+
+    for (i = 0; i < num; i++) {
 	PyList_SetItem(ret, i, PyString_FromString(list[i]));
+	g_free(list[i]);
+    }
 
     g_free(list);
 
@@ -1292,6 +1304,51 @@ pygimp_get_progname(PyObject *self)
 }
 
 static PyObject *
+pygimp_fonts_refresh(PyObject *self)
+{
+    if (!gimp_fonts_refresh()) {
+	PyErr_SetString(pygimp_error, "could not refresh fonts");
+	return NULL;
+    }
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+
+static PyObject *
+pygimp_fonts_get_list(PyObject *self, PyObject *args, PyObject *kwargs)
+{
+    char **list, *filter = NULL;
+    int num, i;
+    PyObject *ret;
+
+    static char *kwlist[] = { "filter", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+				     "|s:fonts_get_list", kwlist,
+				     &filter))
+        return NULL;
+
+    list = gimp_fonts_get_list(filter, &num);
+
+    if (num == 0) {
+	PyErr_SetString(pygimp_error, "could not get font list");
+	return NULL;
+    }
+
+    ret = PyList_New(num);
+
+    for (i = 0; i < num; i++) {
+	PyList_SetItem(ret, i, PyString_FromString(list[i]));
+	g_free(list[i]);
+    }
+
+    g_free(list);
+
+    return ret;
+}
+
+static PyObject *
 id2image(PyObject *self, PyObject *args)
 {
     int id;
@@ -1363,7 +1420,7 @@ static struct PyMethodDef gimp_methods[] = {
     {"get_foreground",	(PyCFunction)pygimp_get_foreground,	METH_NOARGS},
     {"set_background",	(PyCFunction)pygimp_set_background,	METH_VARARGS},
     {"set_foreground",	(PyCFunction)pygimp_set_foreground,	METH_VARARGS},
-    {"gradients_get_list",	(PyCFunction)pygimp_gradients_get_list,	METH_NOARGS},
+    {"gradients_get_list",	(PyCFunction)pygimp_gradients_get_list,	METH_VARARGS | METH_KEYWORDS},
     {"context_get_gradient",	(PyCFunction)pygimp_context_get_gradient,	METH_NOARGS},
     {"context_set_gradient",	(PyCFunction)pygimp_context_set_gradient,	METH_VARARGS},
     {"gradients_get_gradient",	(PyCFunction)pygimp_gradients_get_gradient,	METH_NOARGS},
@@ -1396,6 +1453,8 @@ static struct PyMethodDef gimp_methods[] = {
     {"display_name", (PyCFunction)pygimp_display_name,	METH_NOARGS},
     {"monitor_number", (PyCFunction)pygimp_monitor_number,	METH_NOARGS},
     {"get_progname", (PyCFunction)pygimp_get_progname,	METH_NOARGS},
+    {"fonts_refresh", (PyCFunction)pygimp_fonts_refresh,	METH_NOARGS},
+    {"fonts_get_list", (PyCFunction)pygimp_fonts_get_list,	METH_VARARGS | METH_KEYWORDS},
     {"_id2image", (PyCFunction)id2image, METH_VARARGS},
     {"_id2drawable", (PyCFunction)id2drawable, METH_VARARGS},
     {"_id2display", (PyCFunction)id2display, METH_VARARGS},
