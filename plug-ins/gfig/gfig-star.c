@@ -36,25 +36,31 @@
 
 #include "gfig.h"
 #include "gfig-dobject.h"
+#include "gfig-dialog.h"
 
 #include "libgimp/stdplugins-intl.h"
 
 static gint star_num_sides = 3; /* Default to three sided object */
 
-static void      d_draw_star             (Dobject *obj);
-static void      d_paint_star            (Dobject *obj);
-static Dobject  *d_copy_star             (Dobject * obj);
+static void      d_draw_star  (Dobject *obj);
+static void      d_paint_star (Dobject *obj);
+static Dobject  *d_copy_star  (Dobject * obj);
 
-gboolean
-star_button_press (GtkWidget      *widget,
-                   GdkEventButton *event,
-                   gpointer        data)
+void
+tool_options_star (GtkWidget *notebook,
+                   GtkWidget *button)
 {
-  if ((event->type == GDK_2BUTTON_PRESS) &&
-      (event->button == 1))
-    num_sides_dialog (_("Star Number of Points"),
-                      &star_num_sides, NULL, 3, 200);
-  return FALSE;
+  GtkWidget *sides;
+  gint       page;
+
+  sides = num_sides_widget (_("Star Number of Points"),
+                            &star_num_sides, NULL, 3, 200);
+  page = gtk_notebook_append_page (GTK_NOTEBOOK (notebook), sides, NULL);
+
+  g_object_set_data (G_OBJECT (button), "page", GINT_TO_POINTER (page));
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (tool_option_page_update),
+                    notebook);
 }
 
 static void

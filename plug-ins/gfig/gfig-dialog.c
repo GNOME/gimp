@@ -389,12 +389,8 @@ gfig_dialog (void)
                       TRUE, TRUE, 0);
 
   /* Add buttons beside the preview frame */
-  vbox = gtk_vbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (main_hbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
-
-  gtk_box_pack_start (GTK_BOX (vbox),
-                      draw_buttons (top_level_dlg), FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_hbox), draw_buttons (top_level_dlg),
+                      FALSE, FALSE, 0);
 
   /* Preview itself */
   gtk_box_pack_start (GTK_BOX (main_hbox), make_preview (), FALSE, FALSE, 0);
@@ -411,7 +407,7 @@ gfig_dialog (void)
   gtk_widget_show (vbox);
 
   /* foreground color button in Style frame*/
-  gfig_context->fg_color = (GimpRGB*)g_malloc (sizeof (GimpRGB));
+  gfig_context->fg_color = g_new (GimpRGB, 1);
   gfig_context->fg_color_button = gimp_color_button_new ("Foreground",
                                                     SEL_BUTTON_WIDTH,
                                                     SEL_BUTTON_HEIGHT,
@@ -828,6 +824,32 @@ create_save_file_chooser (GFigObj   *obj,
   gtk_window_present (GTK_WINDOW (window));
 }
 
+void
+tool_option_page_update (GtkWidget *button,
+                         GtkWidget *notebook)
+{
+  gint page = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (button), "page"));
+
+  gtk_notebook_set_page (GTK_NOTEBOOK (notebook), page);
+}
+
+static void
+tool_option_no_option (GtkWidget *notebook,
+                       GtkWidget *button)
+{
+  GtkWidget *label;
+  gint       page;
+
+  label = gtk_label_new (_("This tool has no options"));
+  gtk_widget_show (label);
+  page = gtk_notebook_append_page (GTK_NOTEBOOK (notebook), label, NULL);
+
+  g_object_set_data (G_OBJECT (button), "page", GINT_TO_POINTER (page));
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (tool_option_page_update),
+                    notebook);
+}
+
 #define SKIP_ROW   if (col != 0) {++row; col = 0;} \
                    gtk_table_set_row_spacing (GTK_TABLE (table), row, 12); ++row
 
@@ -840,6 +862,7 @@ create_save_file_chooser (GFigObj   *obj,
 static GtkWidget *
 draw_buttons (GtkWidget *ww)
 {
+  GtkWidget *vbox;
   GtkWidget *button;
   GtkWidget *frame;
   GtkWidget *image;
@@ -847,10 +870,15 @@ draw_buttons (GtkWidget *ww)
   GtkWidget *table;
   gint       col, row;
   gint       ncol;
+  GtkWidget *notebook;
 
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_widget_show (vbox);
 
   /* Create group */
   frame = gimp_frame_new ("Toolbox");
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   table = gtk_table_new (9, 4, FALSE);
   gtk_container_add (GTK_CONTAINER (frame), table);
@@ -859,36 +887,45 @@ draw_buttons (GtkWidget *ww)
   ncol = 4;
   row = col = 0;
 
+  /* Tool options notebook */
+  frame = gimp_frame_new ( _("Tool options"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  notebook = gtk_notebook_new ();
+  gtk_container_add (GTK_CONTAINER (frame), notebook);
+  gtk_notebook_set_show_tabs (GTK_NOTEBOOK (notebook), FALSE);
+  gtk_notebook_set_show_border (GTK_NOTEBOOK (notebook), FALSE);
+  gtk_widget_show (notebook);
+
   /* Put buttons in */
   button = but_with_pix (GFIG_STOCK_LINE, &group, LINE);
   TABLE_APPEND (button, _("Create line"));
+  tool_option_no_option (notebook, button);
 
   button = but_with_pix (GFIG_STOCK_CIRCLE, &group, CIRCLE);
   TABLE_APPEND (button, _("Create circle"));
+  tool_option_no_option (notebook, button);
 
   button = but_with_pix (GFIG_STOCK_ELLIPSE, &group, ELLIPSE);
   TABLE_APPEND (button, _("Create ellipse"));
+  tool_option_no_option (notebook, button);
 
   button = but_with_pix (GFIG_STOCK_CURVE, &group, ARC);
   TABLE_APPEND (button, _("Create arc"));
+  tool_option_no_option (notebook, button);
 
   button = but_with_pix (GFIG_STOCK_POLYGON, &group, POLY);
-  g_signal_connect (button, "button_press_event",
-                    G_CALLBACK (poly_button_press),
-                    NULL);
   TABLE_APPEND (button, _("Create reg polygon"));
+  tool_options_poly (notebook, button);
 
   button = but_with_pix (GFIG_STOCK_STAR, &group, STAR);
-  g_signal_connect (button, "button_press_event",
-                    G_CALLBACK (star_button_press),
-                    NULL);
   TABLE_APPEND (button, _("Create star"));
+  tool_options_star (notebook, button);
 
   button = but_with_pix (GFIG_STOCK_SPIRAL, &group, SPIRAL);
-  g_signal_connect (button, "button_press_event",
-                    G_CALLBACK (spiral_button_press),
-                    NULL);
   TABLE_APPEND (button, _("Create spiral"));
+  tool_options_spiral (notebook, button);
 
   button = but_with_pix (GFIG_STOCK_BEZIER, &group, BEZIER);
   g_signal_connect (button, "button_press_event",
@@ -901,18 +938,23 @@ draw_buttons (GtkWidget *ww)
 
   button = but_with_pix (GFIG_STOCK_MOVE_OBJECT, &group, MOVE_OBJ);
   TABLE_APPEND (button, _("Move an object"));
+  tool_option_no_option (notebook, button);
 
   button = but_with_pix (GFIG_STOCK_MOVE_POINT, &group, MOVE_POINT);
   TABLE_APPEND (button, _("Move a single point"));
+  tool_option_no_option (notebook, button);
 
   button = but_with_pix (GFIG_STOCK_COPY_OBJECT, &group, COPY_OBJ);
   TABLE_APPEND (button, _("Copy an object"));
+  tool_option_no_option (notebook, button);
 
   button = but_with_pix (GFIG_STOCK_DELETE_OBJECT, &group, DEL_OBJ);
   TABLE_APPEND (button, _("Delete an object"));
+  tool_option_no_option (notebook, button);
 
   button = but_with_pix (GIMP_STOCK_TOOL_RECT_SELECT, &group, SELECT_OBJ);
   TABLE_APPEND (button, _("Select an object"));
+  tool_option_no_option (notebook, button);
 
   SKIP_ROW;
 
@@ -982,9 +1024,7 @@ draw_buttons (GtkWidget *ww)
                     GINT_TO_POINTER (OBJ_SELECT_EQ));
   TABLE_APPEND (button, _("Show all objects"));
 
-  gtk_widget_show (frame);
-
-  return frame;
+  return vbox;
 }
 
 static void
@@ -1591,7 +1631,7 @@ but_with_pix (const gchar  *stock_id,
                     G_CALLBACK (toggle_obj_type),
                     GINT_TO_POINTER (baction));
   gtk_widget_show (button);
-
+ 
   *group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
 
   return button;
@@ -1600,39 +1640,24 @@ but_with_pix (const gchar  *stock_id,
 
 /* Special case for now - options on poly/star/spiral button */
 
-void
-num_sides_dialog (gchar *d_title,
+GtkWidget *
+num_sides_widget (gchar *d_title,
                   gint  *num_sides,
                   gint  *which_way,
                   gint   adj_min,
                   gint   adj_max)
 {
-  GtkWidget *window;
   GtkWidget *table;
   GtkObject *size_data;
-
-  window = gimp_dialog_new (d_title, "gfig",
-                            NULL, 0,
-                            gimp_standard_help_func, HELP_ID,
-
-                            GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
-
-                            NULL);
-
-  g_signal_connect (window, "response",
-                    G_CALLBACK (gtk_widget_destroy),
-                    NULL);
 
   table = gtk_table_new (which_way ? 2 : 1, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_set_border_width (GTK_CONTAINER (table), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox), table,
-                      FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                                    _("Number of Sides/Points/Turns:"), 0, 0,
+                                    _("Sides:"), 0, 0,
                                     *num_sides, adj_min, adj_max, 1, 10, 0,
                                     TRUE, 0, 0,
                                     NULL, NULL);
@@ -1656,8 +1681,7 @@ num_sides_dialog (gchar *d_title,
                                  _("Orientation:"), 0.0, 0.5,
                                  combo, 1, FALSE);
     }
-
-  gtk_widget_show (window);
+  return table;
 }
 
 static gint

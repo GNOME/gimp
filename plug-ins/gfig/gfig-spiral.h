@@ -26,14 +26,15 @@
 #ifndef __GFIG_SPIRAL_H__
 #define __GFIG_SPIRAL_H__
 
-gint spiral_button_press (GtkWidget      *widget,
-                          GdkEventButton *event,
-                          gpointer        data);
+void tool_options_spiral        (GtkWidget *notebook,
+                                 GtkWidget *button);
 
-void       d_update_spiral         (GdkPoint *pnt);
-void       d_spiral_start          (GdkPoint *pnt, gint shift_down);
-void       d_spiral_end            (GdkPoint *pnt, gint shift_down);
+void d_update_spiral            (GdkPoint  *pnt);
+void d_spiral_start             (GdkPoint  *pnt,
+                                 gint       shift_down);
+void d_spiral_end               (GdkPoint  *pnt,
+                                 gint       shift_down);
 
-void       d_spiral_object_class_init (void);
+void d_spiral_object_class_init (void);
 
 #endif /* __GFIG_SPIRAL_H__ */

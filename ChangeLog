@@ -1,3 +1,13 @@
+2004-10-27  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/gfig/gfig-dialog.[ch]
+	* plug-ins/gfig/gfig-poly.[ch]
+	* plug-ins/gfig/gfig-spiral.[ch]
+	* plug-ins/gfig/gfig-star.[ch]
+	* plug-ins/gfig/gfig.h: first step of moving all the hidden popup
+	dialogs for the tool options in a GtkNotebook showing the options
+	within one page for each tool.
+
 2004-10-27  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/enumcode.pl: fixed loop control in

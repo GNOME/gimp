@@ -26,14 +26,15 @@
 #ifndef __GFIG_STAR_H__
 #define __GFIG_STAR_H__
 
-gboolean   star_button_press       (GtkWidget      *widget,
-                                    GdkEventButton *event,
-                                    gpointer        data);
+void tool_options_star        (GtkWidget *notebook,
+                               GtkWidget *button);
 
-void       d_update_star           (GdkPoint *pnt);
-void       d_star_start            (GdkPoint *pnt, gint shift_down);
-void       d_star_end              (GdkPoint *pnt, gint shift_down);
+void d_update_star            (GdkPoint  *pnt);
+void d_star_start             (GdkPoint  *pnt,
+                               gint       shift_down);
+void d_star_end               (GdkPoint  *pnt,
+                               gint       shift_down);
 
-void       d_star_object_class_init (void);
+void d_star_object_class_init (void);
 
 #endif /* __GFIG_STAR_H__ */

@@ -26,18 +26,19 @@
 #ifndef __GFIG_POLY_H__
 #define __GFIG_POLY_H__
 
-gboolean poly_button_press (GtkWidget      *widget,
-                            GdkEventButton *event,
-                            gpointer        data);
+void tool_options_poly       (GtkWidget *notebook,
+                              GtkWidget *button);
 
-void    d_update_poly           (GdkPoint *pnt);
-void    d_poly_start            (GdkPoint *pnt, gint shift_down);
-void    d_poly_end              (GdkPoint *pnt, gint shift_down);
+void d_update_poly            (GdkPoint *pnt);
+void d_poly_start             (GdkPoint *pnt,
+                               gint      shift_down);
+void d_poly_end               (GdkPoint *pnt,
+                               gint      shift_down);
 
-void    d_paint_poly            (Dobject *obj);
+void d_paint_poly             (Dobject  *obj);
 
-void    d_poly2lines (Dobject *obj);
-void    d_star2lines (Dobject *obj);
-void    d_poly_object_class_init (void);
+void d_poly2lines             (Dobject  *obj);
+void d_star2lines             (Dobject  *obj);
+void d_poly_object_class_init (void);
 
 #endif /* __GFIG_POLY_H__ */

@@ -37,45 +37,52 @@
 
 #include "gfig.h"
 #include "gfig-dobject.h"
+#include "gfig-dialog.h"
+
 #include "libgimp/stdplugins-intl.h"
 
-static void      d_draw_spiral           (Dobject *obj);
-static void      d_paint_spiral          (Dobject *obj);
-static Dobject  *d_copy_spiral           (Dobject * obj);
+static void     d_draw_spiral  (Dobject *obj);
+static void     d_paint_spiral (Dobject *obj);
+static Dobject *d_copy_spiral  (Dobject * obj);
 
 static gint spiral_num_turns = 4; /* Default to 4 turns */
 static gint spiral_toggle    = 0; /* 0 = clockwise -1 = anti-clockwise */
 
-gint
-spiral_button_press (GtkWidget      *widget,
-                     GdkEventButton *event,
-                     gpointer        data)
+void
+tool_options_spiral (GtkWidget *notebook,
+                     GtkWidget *button)
 {
-  if ((event->type == GDK_2BUTTON_PRESS) &&
-      (event->button == 1))
-    num_sides_dialog (_("Spiral Number of Turns"),
-                      &spiral_num_turns, &spiral_toggle, 1, 20);
-  return FALSE;
+  GtkWidget *sides;
+  gint       page;
+
+  sides = num_sides_widget (_("Spiral Number of Turns"),
+                            &spiral_num_turns, &spiral_toggle, 1, 20);
+  page = gtk_notebook_append_page (GTK_NOTEBOOK (notebook), sides, NULL);
+
+  g_object_set_data (G_OBJECT (button), "page", GINT_TO_POINTER (page));
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (tool_option_page_update),
+                    notebook);
 }
 
 
 static void
 d_draw_spiral (Dobject *obj)
 {
-  DobjPoints * center_pnt;
-  DobjPoints * radius_pnt;
-  gint16 shift_x;
-  gint16 shift_y;
-  gdouble ang_grid;
-  gdouble ang_loop;
-  gdouble radius;
-  gdouble offset_angle;
-  gdouble sp_cons;
-  gint loop;
-  GdkPoint start_pnt;
-  GdkPoint first_pnt;
-  gboolean do_line = FALSE;
-  gint clock_wise = 1;
+  DobjPoints *center_pnt;
+  DobjPoints *radius_pnt;
+  gint16      shift_x;
+  gint16      shift_y;
+  gdouble     ang_grid;
+  gdouble     ang_loop;
+  gdouble     radius;
+  gdouble     offset_angle;
+  gdouble     sp_cons;
+  gint        loop;
+  GdkPoint    start_pnt;
+  GdkPoint    first_pnt;
+  gboolean    do_line = FALSE;
+  gint        clock_wise = 1;
 
   center_pnt = obj->points;
 
@@ -106,24 +113,24 @@ d_draw_spiral (Dobject *obj)
   shift_x = radius_pnt->pnt.x - center_pnt->pnt.x;
   shift_y = radius_pnt->pnt.y - center_pnt->pnt.y;
 
-  radius = sqrt ((shift_x*shift_x) + (shift_y*shift_y));
+  radius = sqrt ((shift_x * shift_x) + (shift_y * shift_y));
 
   offset_angle = atan2 (shift_y, shift_x);
 
   clock_wise = obj->type_data / abs (obj->type_data);
 
   if (offset_angle < 0)
-    offset_angle += 2*G_PI;
+    offset_angle += 2.0 * G_PI;
 
   sp_cons = radius/(obj->type_data * 2 * G_PI + offset_angle);
   /* Lines */
-  ang_grid = 2.0*G_PI/(gdouble)180;
+  ang_grid = 2.0 * G_PI / 180.0;
 
 
   for (loop = 0 ; loop <= abs (obj->type_data * 180) +
          clock_wise * (gint)RINT (offset_angle/ang_grid) ; loop++)
     {
-      gdouble lx, ly;
+      gdouble  lx, ly;
       GdkPoint calc_pnt;
 
       ang_loop = (gdouble)loop * ang_grid;
@@ -156,21 +163,21 @@ d_paint_spiral (Dobject *obj)
 {
   /* first point center */
   /* Next point is radius */
-  gdouble *line_pnts;
-  gint seg_count = 0;
-  gint i = 0;
-  DobjPoints * center_pnt;
-  DobjPoints * radius_pnt;
-  gint16 shift_x;
-  gint16 shift_y;
-  gdouble ang_grid;
-  gdouble ang_loop;
-  gdouble radius;
-  gdouble offset_angle;
-  gdouble sp_cons;
-  gint loop;
-  GdkPoint last_pnt;
-  gint clock_wise = 1;
+  gdouble    *line_pnts;
+  gint        seg_count = 0;
+  gint        i = 0;
+  DobjPoints *center_pnt;
+  DobjPoints *radius_pnt;
+  gint16      shift_x;
+  gint16      shift_y;
+  gdouble     ang_grid;
+  gdouble     ang_loop;
+  gdouble     radius;
+  gdouble     offset_angle;
+  gdouble     sp_cons;
+  gint        loop;
+  GdkPoint    last_pnt;
+  gint        clock_wise = 1;
 
   g_assert (obj != NULL);
 
@@ -187,28 +194,27 @@ d_paint_spiral (Dobject *obj)
   shift_x = radius_pnt->pnt.x - center_pnt->pnt.x;
   shift_y = radius_pnt->pnt.y - center_pnt->pnt.y;
 
-  radius = sqrt ((shift_x*shift_x) + (shift_y*shift_y));
+  radius = sqrt ((shift_x * shift_x) + (shift_y * shift_y));
 
   clock_wise = obj->type_data / abs (obj->type_data);
 
   offset_angle = atan2 (shift_y, shift_x);
 
   if (offset_angle < 0)
-    offset_angle += 2*G_PI;
+    offset_angle += 2.0 * G_PI;
 
-  sp_cons = radius/(obj->type_data * 2 * G_PI + offset_angle);
+  sp_cons = radius/(obj->type_data * 2.0 * G_PI + offset_angle);
   /* Lines */
-  ang_grid = 2.0*G_PI/(gdouble)180;
-
+  ang_grid = 2.0 * G_PI / 180.0;
 
   /* count - */
-  seg_count = abs (obj->type_data * 180) + clock_wise*(gint)RINT (offset_angle/ang_grid);
+  seg_count = abs (obj->type_data * 180.0) + clock_wise * (gint)RINT (offset_angle/ang_grid);
 
   line_pnts = g_new0 (gdouble, 2 * seg_count + 3);
 
   for (loop = 0 ; loop <= seg_count; loop++)
     {
-      gdouble lx, ly;
+      gdouble  lx, ly;
       GdkPoint calc_pnt;
 
       ang_loop = (gdouble)loop * ang_grid;
@@ -235,13 +241,13 @@ d_paint_spiral (Dobject *obj)
 
   /* Reverse line if approp */
   if (selvals.reverselines)
-    reverse_pairs_list (&line_pnts[0], i/2);
+    reverse_pairs_list (&line_pnts[0], i / 2);
 
   /* Scale before drawing */
   if (selvals.scaletoimage)
-    scale_to_original_xy (&line_pnts[0], i/2);
+    scale_to_original_xy (&line_pnts[0], i / 2);
   else
-    scale_to_xy (&line_pnts[0], i/2);
+    scale_to_xy (&line_pnts[0], i / 2);
 
   /* One go */
   if (selvals.painttype == PAINT_BRUSH_TYPE)
@@ -292,8 +298,9 @@ d_spiral_object_class_init ()
 void
 d_update_spiral (GdkPoint *pnt)
 {
-  DobjPoints *center_pnt, *edge_pnt;
-  gint saved_cnt_pnt = selvals.opts.showcontrol;
+  DobjPoints *center_pnt;
+  DobjPoints *edge_pnt;
+  gint        saved_cnt_pnt = selvals.opts.showcontrol;
 
   /* Undraw last one then draw new one */
   center_pnt = obj_creating->points;

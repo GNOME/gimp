@@ -37,4 +37,7 @@ void      update_options            (GFigObj *old_obj);
 gint           undo_water_mark; /* Last slot filled in -1 = no undo */
 DAllObjs      *undo_table[MAX_UNDO];
 
+void     tool_option_page_update (GtkWidget *button,
+                                  GtkWidget *notebook);
+
 #endif /* __GFIG_DIALOG_H__ */

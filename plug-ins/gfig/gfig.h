@@ -346,8 +346,8 @@ void gfig_paint (BrushType brush_type,
 void draw_circle (GdkPoint *p);
 void draw_sqr (GdkPoint *p);
 
-void    list_button_update      (GFigObj *obj);
-void    num_sides_dialog        (gchar *d_title,
+void       list_button_update   (GFigObj *obj);
+GtkWidget *num_sides_widget     (gchar *d_title,
                                  gint  *num_sides,
                                  gint  *which_way,
                                  gint   adj_min,
