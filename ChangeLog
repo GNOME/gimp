@@ -1,5 +1,11 @@
 2004-02-17  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage-scale.c (gimp_image_scale_check): exclude the
+	size of the undo stacks so that the memory size is comparable with
+	the value displayed in the "New Image" dialog. Fixes bug #134512.
+
+2004-02-17  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/gimpprotocol.[ch]: changed wm_name to app_name in
 	the GimpConfig struct; increased GIMP_PROTOCOL_VERSION.
 
