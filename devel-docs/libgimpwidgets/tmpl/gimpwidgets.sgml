@@ -107,8 +107,6 @@ gtk_object_set_user_data().</entry>
 @initial: 
 @Varargs: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@data: 
 
 
 <!-- ##### FUNCTION gimp_option_menu_set_history ##### -->
@@ -118,8 +116,6 @@ gtk_object_set_user_data().</entry>
 
 @option_menu: 
 @item_data: 
-<!-- # Unused Parameters # -->
-@user_data: 
 
 
 <!-- ##### FUNCTION gimp_option_menu_set_sensitive ##### -->
@@ -229,8 +225,6 @@ gtk_object_set_user_data().</entry>
 @initial: 
 @Varargs: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@data: 
 
 
 <!-- ##### FUNCTION gimp_radio_group_set_active ##### -->
@@ -322,9 +316,6 @@ Returns the #GtkAdjustment of the scale_entry's #GtkSpinButton.
 @tooltip: 
 @help_data: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@scale_usize: 
-@spinbutton_usize: 
 
 
 <!-- ##### FUNCTION gimp_scale_entry_set_sensitive ##### -->
@@ -374,23 +365,12 @@ Returns the #GtkAdjustment of the random_seed's #GtkSpinButton.
 @hbox: The #GtkHBox returned by gimp_random_seed_new().
 
 
-<!-- ##### MACRO GIMP_RANDOM_SEED_TOGGLEBUTTON ##### -->
-<para>
-Returns the random_seed's #GtkToggleButton.
-</para>
-
-@hbox: The #GtkHBox returned by gimp_random_seed_new().
-
-
 <!-- ##### FUNCTION gimp_random_seed_new ##### -->
 <para>
 
 </para>
 
 @seed: 
-@use_time: 
-@time_true: 
-@time_false: 
 @Returns: 
 
 
@@ -430,8 +410,6 @@ Returns the #GimpChainButton which is attached to the #GimpSizeEntry.
 @ysize_0: 
 @ysize_100: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@spinbutton_usize: 
 
 
 <!-- ##### MACRO GIMP_MEMSIZE_ENTRY_SPINBUTTON ##### -->

@@ -366,7 +366,6 @@ gimp_scale_entry_set_sensitive
 gimp_color_scale_entry_new
 GIMP_RANDOM_SEED_SPINBUTTON
 GIMP_RANDOM_SEED_SPINBUTTON_ADJ
-GIMP_RANDOM_SEED_TOGGLEBUTTON
 gimp_random_seed_new
 GIMP_COORDINATES_CHAINBUTTON
 gimp_coordinates_new

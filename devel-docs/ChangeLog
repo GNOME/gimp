@@ -1,5 +1,10 @@
 2002-11-24  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/tmpl/gimpwidgets.sgml: updated.
+
+2002-11-24  Sven Neumann  <sven@gimp.org>
+
 	* parasites.txt: updated for removal of gserialize.[ch].
 
 	* libgimp/Makefile.am: ignore gimpmisc.h when generating the
