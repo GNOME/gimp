@@ -627,13 +627,6 @@ gimp_container_tree_view_select_item (GimpContainerView *view,
 
       gtk_tree_view_set_cursor (tree_view->view, path, NULL, FALSE);
 
-#ifdef __GNUC__
-#warning FIXME: remove this hack as soon as we depend on GTK+ 2.2.3
-#endif
-      /*  gtk_tree_view_set_cursor() should be sufficient actually...  */
-      if (gtk_check_version (2, 2, 3) != NULL)
-        gtk_tree_selection_select_iter (tree_view->selection, iter);
-
       g_signal_handlers_unblock_by_func (tree_view->selection,
 					 gimp_container_tree_view_selection_changed,
 					 tree_view);

@@ -389,7 +389,7 @@ gimp_file_dialog_selection_changed (GtkFileChooser *chooser,
 {
   GSList *uris = gtk_file_chooser_get_uris (chooser);
 
-  if (FALSE /* gtk_check_version (2, 4, 1) */)
+  if (gtk_check_version (2, 4, 1))
     {
       if (uris)
         gimp_thumb_box_set_uri (GIMP_THUMB_BOX (dialog->thumb_box), uris->data);

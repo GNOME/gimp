@@ -321,6 +321,9 @@ gimp_menu_position (GtkMenu *menu,
 
   gtk_menu_set_screen (menu, screen);
 
+  if (TRUE /* gtk_check_version (2, 4, 1) */)
+    gtk_menu_set_monitor (menu, monitor);
+
   gtk_widget_size_request (widget, &requisition);
 
   if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
@@ -393,6 +396,9 @@ gimp_button_menu_position (GtkWidget       *button,
   gdk_screen_get_monitor_geometry (screen, monitor, &rect);
 
   gtk_menu_set_screen (menu, screen);
+
+  if (TRUE /* gtk_check_version (2, 4, 1) */)
+    gtk_menu_set_monitor (menu, monitor);
 
   *x += button->allocation.x;
 

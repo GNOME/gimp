@@ -1,5 +1,22 @@
 2004-04-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell.c
+	* app/widgets/gimpcontainertreeview.c: removed runtime version
+	checks and workarounds for bugs which are fixed in GTK+ 2.4.
+
+	* app/widgets/gimpfiledialog.c
+	(gimp_file_dialog_selection_changed): added runtime check for GTK+
+	2.4.1 and work around GtkFileChooser's missing "update_preview"
+	functionality for multiple selections if the dependency is not
+	met.
+
+	* app/widgets/gimpwidgets-utils.c (gimp_menu_position)
+	(gimp_menu_button_position): call gtk_menu_set_monitor() until
+	bug #139187 is fixed.
+
+2004-04-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpfiledialog.[ch]: derive it from GtkFileChooser
 	instead of GtkFileSelection.
 
