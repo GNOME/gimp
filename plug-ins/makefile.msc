@@ -42,8 +42,8 @@ COMMON6 = warp waves whirlpinch winclipboard wind winprint wiredebug xbm xwd zea
 NOTNOW = wmf 
 
 # These have own subdirectories each
-SEPARATE = FractalExplorer Lighting MapObject bmp dbbrowser faxg3 fits flame fp gfig gflare gfli gimpressionist helpbrowser ifscompose imagemap maze mosaic pagecurl rcm sel2path sgi twain webbrowser winsnap xjt
-
+SEPARATE = FractalExplorer Lighting MapObject bmp dbbrowser faxg3 fits flame fp gfig gflare gfli helpbrowser ifscompose imagemap maze mosaic pagecurl rcm sel2path sgi twain webbrowser winicon winsnap xjt
+BROKEN = gimpressionist 
 # These are unofficial, ie not in the CVS. To build these, you should
 # get tml's source snapshot and copy this makefile to the
 # ..\unofficial-plug-ins directory, go there, and do "nmake -f
@@ -433,7 +433,8 @@ OBJECTS = \
 	..\dbbrowser\dbbrowser_utils.obj
 EXTRALIBS = ..\..\regexrepl\regexrepl.lib siod\siod.lib kernel32.lib 
 EXTRACFLAGS = -DREGEX_MALLOC
-HAVE_RESOURCE = YES
+OPTIMIZE =
+#HAVE_RESOURCE = YES
 !ENDIF
 
 !IFDEF EXTRA_sel2path
@@ -565,6 +566,14 @@ EXTRALIBS = user32.lib gdi32.lib comdlg32.lib
 
 !IFDEF EXTRA_winclipboard
 EXTRALIBS = user32.lib
+!ENDIF
+
+!IFDEF EXTRA_winicon
+OBJECTS = \
+	icodialog.obj \
+	icoload.obj \
+	icosave.obj \
+	main.obj
 !ENDIF
 
 !IFDEF EXTRA_winsnap

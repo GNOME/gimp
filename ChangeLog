@@ -1,3 +1,19 @@
+2004-05-09  Hans Breuer  <hans@breuer.org>
+
+	* app/makefile.msc : $(FONTCONFIG_CFLAGS)
+	  app/composite/makefile.msc : don't build dll
+	  app/modules/makefile.msc : ../app/gimp.lib is gone
+	  plug-ins/makefile.msc : somehow the script-fu icon got lost
+	  themes/default/images/makefile.msc : removed a bunch
+	of stock images which are not used anymore.
+	In general : make the whole build process work more out 
+	of the box ;-)
+
+	* plug-ins/common/winclipboard.c : support gray images;
+	fixes bug #141382
+
+	* plug-ins/common/winprint.c : dito; fixes bug #141145
+
 2004-05-06  Manish Singh  <yosh@gimp.org>
 
 	* tools/pdbgen/pdb/paint_tools.pdb: Fix silly "Dodgebure" typo.
