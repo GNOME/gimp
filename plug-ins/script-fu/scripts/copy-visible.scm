@@ -53,10 +53,14 @@
 	     (set! num-layers (- num-layers 1))))
 
     ; if there are several visible layers, merge them
+    ; if there is only one layer and it has a layer mask, apply the mask
     (if (> num-visible-layers 1)
 	(set! visible-layer (car (gimp-image-merge-visible-layers
 				  image
-				  EXPAND-AS-NECESSARY))))
+				  EXPAND-AS-NECESSARY)))
+        (if (= num-visible-layers 1)
+            (if (not (= (car (gimp-layer-get-mask visible-layer)) -1))
+                (car (gimp-layer-remove-mask visible-layer MASK-APPLY)))))
 
     ; copy the visible layer
     (if (> num-visible-layers 0)

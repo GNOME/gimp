@@ -34,7 +34,7 @@
     (gimp-selection-layer-alpha logo-layer)
     (set! selection (car (gimp-selection-save img)))
     (gimp-selection-grow img edge-size)
-    '(plug-in-noisify 1 img sparkle-layer FALSE
+    (plug-in-noisify 1 img sparkle-layer FALSE
 		     (* 0.1 hit-rate) (* 0.1 hit-rate) (* 0.1 hit-rate) 0.0)
     (gimp-selection-border img edge-size)
     (plug-in-noisify 1 img sparkle-layer FALSE hit-rate hit-rate hit-rate 0.0)
