@@ -648,6 +648,8 @@ plugin_icon_register_invoker (Gimp        *gimp,
     success = FALSE;
 
   icon_data_length = args[2].value.pdb_int;
+  if (icon_data_length <= 0)
+    success = FALSE;
 
   icon_data = (guint8 *) args[3].value.pdb_pointer;
 
@@ -716,7 +718,7 @@ static ProcArg plugin_icon_register_inargs[] =
   {
     GIMP_PDB_INT32,
     "icon_data_length",
-    "The length of 'icon_data'"
+    "The length of 'icon_data': 0 < icon_data_length"
   },
   {
     GIMP_PDB_INT8ARRAY,

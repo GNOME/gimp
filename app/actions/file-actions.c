@@ -234,7 +234,7 @@ file_actions_last_opened_update (GimpContainer   *container,
 
               g_free (basename);
 
-              g_object_set (G_OBJECT (action),
+              g_object_set (action,
                             "label",    escaped,
                             "tooltip",  filename,
                             "visible",  TRUE,
@@ -247,7 +247,7 @@ file_actions_last_opened_update (GimpContainer   *container,
         }
       else
         {
-          g_object_set (G_OBJECT (action),
+          g_object_set (action,
                         "visible",  FALSE,
                         "viewable", NULL,
                         NULL);

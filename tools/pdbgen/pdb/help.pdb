@@ -36,7 +36,7 @@ HELP
 	{ name => 'help_domain', type => 'string', null_ok => 1,
 	  desc => "The help domain in which help_id is registered" },
 	{ name => 'help_id', type => 'string',
-	  desc => 'The help page\'s ID' }
+	  desc => "The help page's ID" }
     );
 
     %invoke = (

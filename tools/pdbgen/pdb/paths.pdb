@@ -417,7 +417,7 @@ HELP
 	{ name => 'name', type => 'string',
 	  desc => 'the name of the path whose tattoo should be set' },
         { name => 'tattovalue', type => 'int32',
-	  desc => 'The tattoo associated with the name path. Only values returned from \'path_get_tattoo\' should be used here', init => 1  }
+	  desc => "The tattoo associated with the name path. Only values returned from 'path_get_tattoo' should be used here", init => 1  }
     );
 
     %invoke = (

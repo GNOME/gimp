@@ -1,3 +1,16 @@
+2004-05-19  Manish Singh  <yosh@gimp.org>
+
+	* app/actions/file-actions.c: remove unnecessary G_OBJECT() casts.
+
+	* tools/pdbgen/pdb/help.pdb
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/paths.pdb
+	* tools/pdbgen/pdb/plug_in.pdb: a bit of quoting clean up.
+
+	* tools/pdbgen/pdb/plug_in.pdb: handle icon_data_length properly.
+
+	* app/pdb/plug_in_cmds.c: regenerated.
+
 2004-05-20  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/tga.c
