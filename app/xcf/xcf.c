@@ -328,8 +328,8 @@ xcf_load_invoker (Argument *args)
 	  if (info.file_version < N_xcf_loaders)
 	    {
 	      gimage = (*(xcf_loaders[info.file_version])) (&info);
-	      if (gimage)
-		success = TRUE;
+	      if (!gimage)
+		success = FALSE;
 	    }
 	  else 
 	    {

@@ -1,3 +1,8 @@
+Mon Apr 13 02:12:21 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/xcf.c: fix a tiny bug in the xcf loader that would have
+	caused gimp to crash on a corrupt xcf file
+
 Mon Apr 13 01:47:22 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/flarefx/flarefx.c: applied gimp-timecop-980412-0
