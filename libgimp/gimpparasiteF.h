@@ -1,4 +1,7 @@
-/* parasiteF.h
+/* LIBGIMP - The GIMP Library 
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
+ *
+ * parasiteF.h
  * Copyright (C) 1998 Jay Cox <jaycox@earthlink.net>
  *
  * This library is free software; you can redistribute it and/or
@@ -17,9 +20,9 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef _PARASITEF_H_
-#define _PARASITEF_H_
+#ifndef __PARASITEF_H__
+#define __PARASITEF_H__
 
 typedef struct _Parasite Parasite;
 
-#endif /* _PARASITEF_H_ */
+#endif /* __PARASITEF_H__ */

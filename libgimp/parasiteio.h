@@ -1,4 +1,7 @@
-/* parasite.h
+/* LIBGIMP - The GIMP Library 
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
+ *
+ * parasiteio.h
  * Copyright (C) 1999 Tor Lillqvist <tml@iki.fi>
  *
  * This library is free software; you can redistribute it and/or
@@ -17,8 +20,12 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef _PARASITEIO_H_
-#define _PARASITEIO_H_
+#ifndef __PARASITEIO_H__
+#define __PARASITEIO_H__
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
 /* Data structures for various standard parasites used by plug-ins and
  * the GIMP core, and functions to build and parse their string
@@ -61,4 +68,4 @@ gchar *pixpipeparams_build (PixPipeParams *params);
 }
 #endif /* __cplusplus */
 
-#endif /* _PARASITEIO_H_ */
+#endif /* __PARASITEIO_H__ */

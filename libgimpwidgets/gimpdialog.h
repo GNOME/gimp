@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library                                                   
+/* LIBGIMP - The GIMP Library
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpdialog.h
@@ -7,11 +7,11 @@
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.             
- *                                                                              
- * This library is distributed in the hope that it will be useful,              
- * but WITHOUT ANY WARRANTY; without even the implied warranty of               
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU            
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
@@ -26,6 +26,10 @@
 
 #include "gimphelpui.h"
 #include "gimpunit.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
 GtkWidget * gimp_dialog_new                 (const gchar        *title,
 					     const gchar        *wmclass_name,
@@ -79,4 +83,24 @@ void        gimp_dialog_create_action_area  (GtkDialog          *dialog,
 void        gimp_dialog_create_action_areav (GtkDialog          *dialog,
 					     va_list             args);
 
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
 #endif /* __GIMP_DIALOG_H__ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,5 +1,5 @@
-/* LIBGIMP - The GIMP Library                                                   
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
+/* LIBGIMP - The GIMP Library 
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball 
  *
  * gimpunit.h
  * Copyright (C) 1999 Michael Natterer <mitch@gimp.org>

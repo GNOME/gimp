@@ -1,6 +1,9 @@
 /* LIBGIMP - The GIMP Library 
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
  *
+ * gimpchainbutton.h
+ * Copyright (C) 1999-2000 Sven Neumann <sven@gimp.org> 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -17,11 +20,12 @@
  * Boston, MA 02111-1307, USA.
  */
 
-/* This implements a widget derived from gtk_button that visualizes
-   it's state with two different pixmaps showing a closed and a 
-   broken chain. It's intented to be used with the gimpsizeentry
-   widget. The usage is quite similar to the one the gtk_toggle_button
-   provides. 
+/* 
+ * This implements a widget derived from GtkTable that visualizes
+ * it's state with two different pixmaps showing a closed and a 
+ * broken chain. It's intented to be used with the GimpSizeEntry
+ * widget. The usage is quite similar to the one the GtkToggleButton
+ * provides. 
  */
 
 #ifndef __GIMP_CHAIN_BUTTON_H__
@@ -56,7 +60,7 @@ typedef enum
 
 struct _GimpChainButton
 {
-  GtkTable table;
+  GtkTable           table;
 
   GimpChainPosition  position;
   GtkWidget         *button;

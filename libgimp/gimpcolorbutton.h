@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library 
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
  *
- * Gimp Color Button
+ * gimpcolorbutton.h
  * Copyright (C) 1999 Sven Neumann
  *
  * This library is free software; you can redistribute it and/or

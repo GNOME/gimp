@@ -1,5 +1,5 @@
 /* LIBGIMP - The GIMP Library 
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpfileselection.c
  * Copyright (C) 1999 Michael Natterer <mitch@gimp.org>
@@ -11,7 +11,7 @@
  * 
  * This library is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU  
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
@@ -21,7 +21,7 @@
  */
 #include "config.h"
 
-#include <glib.h>		/* Needed here by Win32 gcc compilation */
+#include <glib.h>         /* Needed here by Win32 gcc compilation */
 
 #include <sys/types.h>
 #include <sys/stat.h>

@@ -1,6 +1,10 @@
 /* LIBGIMP - The GIMP Library 
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
  *
+ * gimpsizeentry.c
+ * Copyright (C) 1999-2000 Sven Neumann <sven@gimp.org>
+ *                         Michael Natterer <mitch@gimp.org> 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either

@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library                                                   
+/* LIBGIMP - The GIMP Library
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimphelpui.h
@@ -7,11 +7,11 @@
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.             
- *                                                                              
- * This library is distributed in the hope that it will be useful,              
- * but WITHOUT ANY WARRANTY; without even the implied warranty of               
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU            
+ * version 2 of the License, or (at your option) any later version.
+ * 
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
@@ -24,8 +24,11 @@
 
 #include <gtk/gtk.h>
 
-typedef void (* GimpHelpFunc) (gchar *help_data);
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
+typedef void (* GimpHelpFunc) (gchar *help_data);
 
 void  gimp_help_init               (void);
 void  gimp_help_free               (void);
@@ -49,4 +52,13 @@ void  gimp_help_set_help_data      (GtkWidget    *widget,
 /*  activate the context help inspector  */
 void  gimp_context_help            (void);
 
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
 #endif /* __GIMP_HELP_UI_H__ */
+
+
+
+
+

@@ -1,4 +1,7 @@
-/* parasite.c
+/* LIBGIMP - The GIMP Library 
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
+ *
+ * parasite.c
  * Copyright (C) 1998 Jay Cox <jaycox@earthlink.net>
  *
  * This library is free software; you can redistribute it and/or

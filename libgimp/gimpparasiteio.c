@@ -1,5 +1,5 @@
-/* Functions for bulding and parsing string representations of
- * various standard parasite types.
+/* LIBGIMP - The GIMP Library 
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * Copyright (C) 1999 Tor Lillqvist <tml@iki.fi>
  *
@@ -17,6 +17,11 @@
  * License along with this library; if not, write to the
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
+ */
+
+/*
+ * Functions for bulding and parsing string representations of
+ * various standard parasite types.
  */
 
 #include "config.h"

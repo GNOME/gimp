@@ -57,8 +57,6 @@ libgimpi_a_SOURCES = \
 	gimpwidgets.h		\
 	gimpwire.c		\
 	gimpwire.h		\
-	gserialize.c		\
-	gserialize.h		\
 	parasite.c		\
 	parasite.h		\
 	parasiteF.h		\
@@ -103,8 +101,6 @@ libgimp_la_SOURCES = \
 	gimpvector.h		\
 	gimpwire.c		\
 	gimpwire.h		\
-	gserialize.c		\
-	gserialize.h		\
 	parasite.c		\
 	parasite.h		\
 	parasiteF.h		\
@@ -162,7 +158,6 @@ gimpinclude_HEADERS = \
 	gimpvector.h		\
 	gimpwidgets.h		\
 	gimpintl.h		\
-	gserialize.h		\
 	parasite.h		\
 	parasiteF.h		\
 	parasiteP.h		\

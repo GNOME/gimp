@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library 
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
  *
- * Gimp Color Button
+ * gimpcolorbutton.c
  * Copyright (C) 1999 Sven Neumann
  *
  * This library is free software; you can redistribute it and/or
@@ -22,9 +22,10 @@
 
 /* TODO:
  *
- * handle bytes != 3|4 -- would we have to provide a special color select dialog
- *                        for that case? Another possibility could be to hide or
- *                        destroy all color-related widgets in the gtk colorselector.
+ * handle bytes != 3|4 -- would we have to provide a special color 
+ *                        select dialog for that case? Another possibility 
+ *                        could be to hide or destroy all color-related 
+ *                        widgets in the gtk colorselector.
  */
 
 #include "config.h"

@@ -1,14 +1,14 @@
-/* 
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
+/* LIBGIMP - The GIMP Library 
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.             
- *                                                                              
- * This library is distributed in the hope that it will be useful,              
- * but WITHOUT ANY WARRANTY; without even the implied warranty of               
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU            
+ * version 2 of the License, or (at your option) any later version.
+ * 
+ * This library is distributed in the hope that it will be useful, 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
@@ -46,16 +46,6 @@ extern "C" {
 #define gimp_image_enable_undo		gimp_image_undo_enable
 #define gimp_image_freeze_undo		gimp_image_undo_freeze
 #define gimp_image_thaw_undo		gimp_image_undo_thaw
-
-/*
-#define gimp_get_data 			gimp_procedural_db_get_data
-#define gimp_get_data_size		gimp_procedural_db_get_data_size
- 
-#define gimp_set_data(id, data, bytes) \
-	(gimp_procedural_db_set_data (id, bytes, data))
-
-#define gimp_query_images		gimp_image_list
-*/
 
 #endif /* GIMP_DISABLE_COMPAT_H */
 

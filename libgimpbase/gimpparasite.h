@@ -1,4 +1,7 @@
-/* parasite.h
+/* LIBGIMP - The GIMP Library 
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
+ *
+ * parasite.h
  * Copyright (C) 1998 Jay Cox <jaycox@earthlink.net>
  *
  * This library is free software; you can redistribute it and/or
@@ -17,8 +20,8 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef _PARASITE_H_
-#define _PARASITE_H_
+#ifndef __PARASITE_H__
+#define __PARASITE_H__
 
 #include <glib.h>
 #include <stdio.h>
@@ -68,4 +71,4 @@ glong        parasite_data_size     (const Parasite *p);
 }
 #endif /* __cplusplus */
 
-#endif /* _PARASITE_H_ */
+#endif /* __PARASITE_H__ */

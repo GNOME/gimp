@@ -1,4 +1,7 @@
-/* parasiteP.h
+/* LIBGIMP - The GIMP Library 
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
+ *
+ * parasiteP.h
  * Copyright (C) 1998 Jay Cox <jaycox@earthlink.net>
  *
  * This library is free software; you can redistribute it and/or
@@ -17,10 +20,14 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef _PARASITEP_H_
-#define _PARASITEP_H_
+#ifndef __PARASITEP_H__
+#define __PARASITEP_H__
 
 #include <glib.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
 struct _Parasite
 {
@@ -31,4 +38,8 @@ struct _Parasite
 			 * responsible for tracking byte order            */
 };
 
-#endif /* _PARASITEP_H_ */
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
+#endif /* __PARASITEP_H__ */
