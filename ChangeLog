@@ -1,3 +1,7 @@
+Sat Sep  4 20:45:02 CEST 1999 Olof S Kylander <olof@frozenriver.com>
+
+	-Fix of cut&paste error in pp/paint_core.c
+
 Sat Sep  4 19:56:55 CEST 1999 Olof S Kylander <olof@frozenriver.com>
 	
 	* app/paint_core.c
