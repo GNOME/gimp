@@ -1,3 +1,12 @@
+2003-09-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/xcf/xcf-load.c
+	* app/xcf/xcf-read.c
+	* app/xcf/xcf-save.c
+	* app/xcf/xcf-seek.c
+	* app/xcf/xcf-write.c
+	* app/xcf/xcf.c: whitespace cleanup.
+
 2003-09-10  Tor Lillqvist  <tml@iki.fi>
 
 	* config.h.win32: Tell it's outdated.

@@ -234,11 +234,11 @@ xcf_load_invoker (Gimp     *gimp,
 	{
 	  success = FALSE;
 	}
-      else if (strcmp (id+9, "file") == 0) 
+      else if (strcmp (id+9, "file") == 0)
 	{
 	  info.file_version = 0;
-	} 
-      else if (id[9] == 'v') 
+	}
+      else if (id[9] == 'v')
 	{
 	  info.file_version = atoi(id + 10);
 	}
@@ -246,7 +246,7 @@ xcf_load_invoker (Gimp     *gimp,
 	{
 	  success = FALSE;
 	}
-      
+
       if (success)
 	{
 	  if (info.file_version < G_N_ELEMENTS (xcf_loaders))
@@ -256,7 +256,7 @@ xcf_load_invoker (Gimp     *gimp,
 	      if (! gimage)
 		success = FALSE;
 	    }
-	  else 
+	  else
 	    {
 	      g_message (_("XCF error: unsupported XCF file version %d "
 			   "encountered"), info.file_version);
@@ -266,7 +266,7 @@ xcf_load_invoker (Gimp     *gimp,
 
       fclose (info.fp);
     }
-  
+
   return_args = procedural_db_return_args (&xcf_plug_in_load_proc.db_info,
 					   success);
 

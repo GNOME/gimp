@@ -35,20 +35,20 @@ xcf_write_int32 (FILE     *fp,
 		 gint      count,
 		 GError  **error)
 {
-  GError *tmp_error = NULL;
-  guint32 tmp;
-  gint i;
+  GError  *tmp_error = NULL;
+  guint32  tmp;
+  gint     i;
 
   if (count > 0)
     {
       for (i = 0; i < count; i++)
         {
           tmp = g_htonl (data[i]);
-          xcf_write_int8 (fp, (guint8*) &tmp, 4, &tmp_error); 
+          xcf_write_int8 (fp, (guint8*) &tmp, 4, &tmp_error);
           if (tmp_error)
             {
               g_propagate_error (error, tmp_error);
-              
+
               return i * 4;
             }
         }
@@ -73,7 +73,7 @@ xcf_write_int8 (FILE     *fp,
 		GError  **error)
 {
   guint total;
-  gint bytes;
+  gint  bytes;
 
   total = count;
   while (count > 0)
@@ -87,7 +87,7 @@ xcf_write_int8 (FILE     *fp,
 
           return total;
         }
-        
+
       count -= bytes;
       data += bytes;
     }
@@ -101,10 +101,10 @@ xcf_write_string (FILE     *fp,
 		  gint      count,
 		  GError  **error)
 {
-  GError *tmp_error = NULL;
-  guint32 tmp;
-  guint total;
-  gint i;
+  GError  *tmp_error = NULL;
+  guint32  tmp;
+  guint    total;
+  gint     i;
 
   total = 0;
   for (i = 0; i < count; i++)
@@ -117,15 +117,15 @@ xcf_write_string (FILE     *fp,
       xcf_write_int32 (fp, &tmp, 1, &tmp_error);
       if (tmp_error)
         {
-          g_propagate_error(error, tmp_error);
+          g_propagate_error (error, tmp_error);
           return total;
         }
-        
+
       if (tmp > 0)
         xcf_write_int8 (fp, (guint8*) data[i], tmp, &tmp_error);
       if (tmp_error)
         {
-          g_propagate_error(error, tmp_error);
+          g_propagate_error (error, tmp_error);
           return total;
         }
 

@@ -1596,7 +1596,7 @@ xcf_load_vector (XcfInfo   *info,
           break;
         default:
           g_printerr ("skipping unknown stroke type\n");
-          xcf_seek_pos (info, 
+          xcf_seek_pos (info,
                         info->cp + 4 * num_axes * num_control_points,
                         NULL);
           continue;

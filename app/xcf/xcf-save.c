@@ -101,8 +101,8 @@ static gboolean xcf_save_tile_rle      (XcfInfo     *info,
                                         Tile        *tile,
                                         guchar      *rlebuf,
                                         GError     **error);
-static void     xcf_save_parasite      (gchar        *key, 
-                                        GimpParasite *parasite, 
+static void     xcf_save_parasite      (gchar        *key,
+                                        GimpParasite *parasite,
                                         XcfInfo      *info);
 static gboolean xcf_save_old_paths     (XcfInfo      *info,
                                         GimpImage    *gimage,
@@ -193,7 +193,7 @@ static gboolean xcf_save_vectors       (XcfInfo      *info,
   if (! (x))                                                  \
     return FALSE;                                             \
   } G_STMT_END
-          
+
 #define xcf_print_error(x) G_STMT_START { \
   if (! (x))                                                  \
     {                                                         \
@@ -213,7 +213,7 @@ xcf_save_choose_format (XcfInfo   *info,
 
   gint save_version = 0;                /* default to oldest */
 
-  if (gimage->cmap) 
+  if (gimage->cmap)
     save_version = 1;                   /* need version 1 for colormaps */
 
   for (list = GIMP_LIST (gimage->layers)->list;
@@ -262,11 +262,11 @@ xcf_save_image (XcfInfo   *info,
     floating_sel_relax (floating_layer, FALSE);
 
   /* write out the tag information for the image */
-  if (info->file_version > 0) 
+  if (info->file_version > 0)
     {
       sprintf (version_tag, "gimp xcf v%03d", info->file_version);
-    } 
-  else 
+    }
+  else
     {
       strcpy (version_tag, "gimp xcf file");
     }
@@ -406,29 +406,29 @@ xcf_save_image_props (XcfInfo   *info,
 
   /* check and see if we should save the colormap property */
   if (gimage->cmap)
-    xcf_check_error (xcf_save_prop (info, gimage, PROP_COLORMAP, error, 
-                                    gimage->num_cols, gimage->cmap)); 
+    xcf_check_error (xcf_save_prop (info, gimage, PROP_COLORMAP, error,
+                                    gimage->num_cols, gimage->cmap));
 
   if (info->compression != COMPRESS_NONE)
     xcf_check_error (xcf_save_prop (info, gimage, PROP_COMPRESSION,
-                                    error, info->compression)); 
+                                    error, info->compression));
 
   if (gimage->guides)
-    xcf_check_error (xcf_save_prop (info, gimage, PROP_GUIDES, 
+    xcf_check_error (xcf_save_prop (info, gimage, PROP_GUIDES,
                                     error, gimage->guides));
 
   xcf_check_error (xcf_save_prop (info, gimage, PROP_RESOLUTION, error,
 		                  gimage->xresolution, gimage->yresolution));
 
-  xcf_check_error (xcf_save_prop (info, gimage, PROP_TATTOO, error, 
+  xcf_check_error (xcf_save_prop (info, gimage, PROP_TATTOO, error,
                                   gimage->tattoo_state));
 
   if (gimp_parasite_list_length (gimage->parasites) > 0)
-    xcf_check_error (xcf_save_prop (info, gimage, PROP_PARASITES, 
+    xcf_check_error (xcf_save_prop (info, gimage, PROP_PARASITES,
                                     error, gimage->parasites));
 
   if (gimage->unit < _gimp_unit_get_number_of_built_in_units (gimage->gimp))
-    xcf_check_error (xcf_save_prop (info, gimage, PROP_UNIT, 
+    xcf_check_error (xcf_save_prop (info, gimage, PROP_UNIT,
                                     error, gimage->unit));
 
 #ifdef NEW_SAVE_CODE
@@ -451,7 +451,7 @@ xcf_save_image_props (XcfInfo   *info,
 #endif
 
   if (gimage->unit >= _gimp_unit_get_number_of_built_in_units (gimage->gimp))
-    xcf_check_error (xcf_save_prop (info, gimage, PROP_USER_UNIT, 
+    xcf_check_error (xcf_save_prop (info, gimage, PROP_USER_UNIT,
                                     error, gimage->unit));
 
   if (GIMP_IS_GRID (gimage->grid))
@@ -480,7 +480,7 @@ xcf_save_image_props (XcfInfo   *info,
   return TRUE;
 }
 
-static gboolean 
+static gboolean
 xcf_save_layer_props (XcfInfo   *info,
 		      GimpImage *gimage,
 		      GimpLayer *layer,
@@ -498,18 +498,18 @@ xcf_save_layer_props (XcfInfo   *info,
                                       error));
     }
 
-  xcf_check_error (xcf_save_prop (info, gimage, PROP_OPACITY, error, 
+  xcf_check_error (xcf_save_prop (info, gimage, PROP_OPACITY, error,
                                   layer->opacity));
   xcf_check_error (xcf_save_prop (info, gimage, PROP_VISIBLE, error,
 		                  gimp_drawable_get_visible (GIMP_DRAWABLE (layer))));
   xcf_check_error (xcf_save_prop (info, gimage, PROP_LINKED, error,
                                   gimp_item_get_linked (GIMP_ITEM (layer))));
-  xcf_check_error (xcf_save_prop (info, gimage, PROP_PRESERVE_TRANSPARENCY, 
+  xcf_check_error (xcf_save_prop (info, gimage, PROP_PRESERVE_TRANSPARENCY,
                                   error, layer->preserve_trans));
 
   if (layer->mask)
     {
-      xcf_check_error (xcf_save_prop (info, gimage, PROP_APPLY_MASK, 
+      xcf_check_error (xcf_save_prop (info, gimage, PROP_APPLY_MASK,
                                       error, layer->mask->apply_mask));
       xcf_check_error (xcf_save_prop (info, gimage, PROP_EDIT_MASK,
                                       error, layer->mask->edit_mask));
@@ -518,7 +518,7 @@ xcf_save_layer_props (XcfInfo   *info,
     }
   else
     {
-      xcf_check_error (xcf_save_prop (info, gimage, PROP_APPLY_MASK, 
+      xcf_check_error (xcf_save_prop (info, gimage, PROP_APPLY_MASK,
                                       error, FALSE));
       xcf_check_error (xcf_save_prop (info, gimage, PROP_EDIT_MASK,
                                       error, FALSE));
@@ -529,9 +529,9 @@ xcf_save_layer_props (XcfInfo   *info,
   xcf_check_error (xcf_save_prop (info, gimage, PROP_OFFSETS, error,
 		                  GIMP_ITEM (layer)->offset_x,
 		                  GIMP_ITEM (layer)->offset_y));
-  xcf_check_error (xcf_save_prop (info, gimage, PROP_MODE, error, 
+  xcf_check_error (xcf_save_prop (info, gimage, PROP_MODE, error,
                                   layer->mode));
-  xcf_check_error (xcf_save_prop (info, gimage, PROP_TATTOO, error, 
+  xcf_check_error (xcf_save_prop (info, gimage, PROP_TATTOO, error,
                                   GIMP_ITEM (layer)->tattoo));
 
   if (GIMP_IS_TEXT_LAYER (layer))
@@ -574,19 +574,19 @@ xcf_save_channel_props (XcfInfo     *info,
   if (channel == gimage->selection_mask)
     xcf_check_error (xcf_save_prop (info, gimage, PROP_SELECTION, error));
 
-  xcf_check_error (xcf_save_prop (info, gimage, PROP_OPACITY, error, 
+  xcf_check_error (xcf_save_prop (info, gimage, PROP_OPACITY, error,
                                   channel->color.a));
   xcf_check_error (xcf_save_prop (info, gimage, PROP_VISIBLE, error,
 		                  gimp_drawable_get_visible (GIMP_DRAWABLE (channel))));
   xcf_check_error (xcf_save_prop (info, gimage, PROP_LINKED, error,
                                   gimp_item_get_linked (GIMP_ITEM (channel))));
-  xcf_check_error (xcf_save_prop (info, gimage, PROP_SHOW_MASKED, error, 
+  xcf_check_error (xcf_save_prop (info, gimage, PROP_SHOW_MASKED, error,
                                   channel->show_masked));
 
   gimp_rgb_get_uchar (&channel->color, &col[0], &col[1], &col[2]);
   xcf_check_error (xcf_save_prop (info, gimage, PROP_COLOR, error, col));
 
-  xcf_check_error (xcf_save_prop (info, gimage, PROP_TATTOO, error, 
+  xcf_check_error (xcf_save_prop (info, gimage, PROP_TATTOO, error,
                    GIMP_ITEM (channel)->tattoo));
 
   if (gimp_parasite_list_length (GIMP_ITEM (channel)->parasites) > 0)
@@ -632,7 +632,7 @@ xcf_save_prop (XcfInfo   *info,
 	xcf_write_int32_check_error (info->fp, (guint32 *) &prop_type, 1);
 	xcf_write_int32_check_error (info->fp, &size, 1);
 	xcf_write_int32_check_error (info->fp, &ncolors, 1);
-	xcf_write_int8_check_error  (info->fp, colors, ncolors * 3); 
+	xcf_write_int8_check_error  (info->fp, colors, ncolors * 3);
       }
       break;
     case PROP_ACTIVE_LAYER:
@@ -640,7 +640,7 @@ xcf_save_prop (XcfInfo   *info,
     case PROP_SELECTION:
       size = 0;
 
-      xcf_write_int32_check_error (info->fp, (guint32 *) &prop_type, 1); 
+      xcf_write_int32_check_error (info->fp, (guint32 *) &prop_type, 1);
       xcf_write_int32_check_error (info->fp, &size, 1);
       break;
     case PROP_FLOATING_SELECTION:
@@ -668,8 +668,8 @@ xcf_save_prop (XcfInfo   *info,
 	size = 4;
 
 	xcf_write_int32_check_error (info->fp, (guint32 *) &prop_type, 1);
-	xcf_write_int32_check_error (info->fp, &size, 1); 
-	xcf_write_int32_check_error (info->fp, &uint_opacity, 1); 
+	xcf_write_int32_check_error (info->fp, &size, 1);
+	xcf_write_int32_check_error (info->fp, &uint_opacity, 1);
       }
       break;
     case PROP_MODE:
@@ -800,8 +800,8 @@ xcf_save_prop (XcfInfo   *info,
 	compression = (guint8) va_arg (args, guint32);
 	size = 1;
 
-	xcf_write_int32_check_error (info->fp, (guint32 *) &prop_type, 1); 
-	xcf_write_int32_check_error (info->fp, &size, 1); 
+	xcf_write_int32_check_error (info->fp, (guint32 *) &prop_type, 1);
+	xcf_write_int32_check_error (info->fp, &size, 1);
 	xcf_write_int8_check_error  (info->fp, &compression, 1);
       }
       break;
@@ -851,15 +851,15 @@ xcf_save_prop (XcfInfo   *info,
       {
 	gfloat xresolution, yresolution;
 
-	/* we pass in floats, 
+	/* we pass in floats,
            but they are promoted to double by the compiler */
 	xresolution =  va_arg (args, double);
 	yresolution =  va_arg (args, double);
-	
+
 	size = 4*2;
 
 	xcf_write_int32_check_error (info->fp, (guint32 *) &prop_type, 1);
-	xcf_write_int32_check_error (info->fp, &size, 1); 
+	xcf_write_int32_check_error (info->fp, &size, 1);
 
 	xcf_write_float_check_error (info->fp, &xresolution, 1);
 	xcf_write_float_check_error (info->fp, &yresolution, 1);
@@ -894,18 +894,18 @@ xcf_save_prop (XcfInfo   *info,
             pos = info->cp;
 	    xcf_write_int32_check_error (info->fp, &length, 1);
 	    base = info->cp;
-	    gimp_parasite_list_foreach (list, 
+	    gimp_parasite_list_foreach (list,
                                         (GHFunc) xcf_save_parasite, info);
 	    length = info->cp - base;
 	    /* go back to the saved position and write the length */
             xcf_check_error (xcf_seek_pos (info, pos, error));
-	    xcf_write_int32 (info->fp, &length, 1, &tmp_error); 
-	    if (tmp_error) 
+	    xcf_write_int32 (info->fp, &length, 1, &tmp_error);
+	    if (tmp_error)
 	      {
 	        g_propagate_error (error, tmp_error);
 	        return FALSE;
 	      }
-	      
+
             xcf_check_error (xcf_seek_end (info, error));
 	  }
       }
@@ -931,7 +931,7 @@ xcf_save_prop (XcfInfo   *info,
         xcf_write_int32_check_error (info->fp, (guint32 *) &prop_type, 1);
 
         /* because we don't know how much room the paths list will take
-           we save the file position and write the length later 
+           we save the file position and write the length later
         */
         pos = info->cp;
         xcf_write_int32_check_error (info->fp, &length, 1);
@@ -944,8 +944,8 @@ xcf_save_prop (XcfInfo   *info,
 
         /* go back to the saved position and write the length */
         xcf_check_error (xcf_seek_pos (info, pos, error));
-        xcf_write_int32 (info->fp, &length, 1, &tmp_error); 
-        if (tmp_error) 
+        xcf_write_int32 (info->fp, &length, 1, &tmp_error);
+        if (tmp_error)
           {
             g_propagate_error (error, tmp_error);
             return FALSE;
@@ -995,7 +995,7 @@ xcf_save_prop (XcfInfo   *info,
         xcf_write_int32_check_error (info->fp, (guint32 *) &prop_type, 1);
 
         /* because we don't know how much room the paths list will take
-           we save the file position and write the length later 
+           we save the file position and write the length later
         */
         pos = info->cp;
         xcf_write_int32_check_error (info->fp, &length, 1);
@@ -1008,8 +1008,8 @@ xcf_save_prop (XcfInfo   *info,
 
         /* go back to the saved position and write the length */
         xcf_check_error (xcf_seek_pos (info, pos, error));
-        xcf_write_int32 (info->fp, &length, 1, &tmp_error); 
-        if (tmp_error) 
+        xcf_write_int32 (info->fp, &length, 1, &tmp_error);
+        if (tmp_error)
           {
             g_propagate_error (error, tmp_error);
             return FALSE;
@@ -1126,7 +1126,7 @@ xcf_save_channel (XcfInfo      *info,
                                (guint32 *) &GIMP_ITEM (channel)->height, 1);
 
   /* write out the channels name */
-  xcf_write_string_check_error (info->fp, &GIMP_OBJECT (channel)->name, 1); 
+  xcf_write_string_check_error (info->fp, &GIMP_OBJECT (channel)->name, 1);
 
   /* write out the channel properties */
   xcf_save_channel_props (info, gimage, channel, error);
@@ -1188,27 +1188,27 @@ xcf_save_hierarchy (XcfInfo     *info,
   bpp    = tile_manager_bpp (tiles);
 
   xcf_write_int32_check_error (info->fp, (guint32 *) &width, 1);
-  xcf_write_int32_check_error (info->fp, (guint32 *) &height, 1); 
+  xcf_write_int32_check_error (info->fp, (guint32 *) &height, 1);
   xcf_write_int32_check_error (info->fp, (guint32 *) &bpp, 1);
 
   saved_pos = info->cp;
-  
+
   tmp1 = xcf_calc_levels (width, TILE_WIDTH);
   tmp2 = xcf_calc_levels (height, TILE_HEIGHT);
   nlevels = MAX (tmp1, tmp2);
 
   xcf_check_error (xcf_seek_pos (info, info->cp + (1 + nlevels) * 4, error));
 
-  for (i = 0; i < nlevels; i++) 
+  for (i = 0; i < nlevels; i++)
     {
       offset = info->cp;
 
-      if (i == 0) 
+      if (i == 0)
 	{
 	  /* write out the level. */
 	  xcf_check_error (xcf_save_level (info, tiles, error));
-	} 
-      else 
+	}
+      else
 	{
 	  /* fake an empty level */
 	  tmp1 = 0;
@@ -1224,12 +1224,12 @@ xcf_save_hierarchy (XcfInfo     *info,
        */
       xcf_check_error (xcf_seek_pos (info, saved_pos, error));
       xcf_write_int32_check_error (info->fp, &offset, 1);
-      
+
       /* increment the location we are to write out the
        *  next offset.
        */
       saved_pos = info->cp;
-  
+
       /* seek to the end of the file which is where
        *  we will write out the next level.
        */
@@ -1271,7 +1271,7 @@ xcf_save_level (XcfInfo     *info,
 
   /* allocate a temporary buffer to store the rle data before it is
      written to disk */
-  rlebuf = 
+  rlebuf =
     g_malloc (TILE_WIDTH * TILE_HEIGHT * tile_manager_bpp (level) * 1.5);
 
   if (level->tiles)
@@ -1293,7 +1293,7 @@ xcf_save_level (XcfInfo     *info,
 	      xcf_check_error(xcf_save_tile (info, level->tiles[i], error));
 	      break;
 	    case COMPRESS_RLE:
-	      xcf_check_error (xcf_save_tile_rle (info, level->tiles[i], 
+	      xcf_check_error (xcf_save_tile_rle (info, level->tiles[i],
 	                       rlebuf, error));
 	      break;
 	    case COMPRESS_ZLIB:
@@ -1332,7 +1332,7 @@ xcf_save_level (XcfInfo     *info,
   xcf_write_int32_check_error (info->fp, &offset, 1);
 
   return TRUE;
-  
+
 }
 
 static gboolean
@@ -1343,7 +1343,7 @@ xcf_save_tile (XcfInfo  *info,
   GError *tmp_error = NULL;
 
   tile_lock (tile);
-  xcf_write_int8_check_error (info->fp, tile_data_pointer (tile, 0, 0), 
+  xcf_write_int8_check_error (info->fp, tile_data_pointer (tile, 0, 0),
 			      tile_size (tile));
   tile_release (tile, FALSE);
 
@@ -1420,7 +1420,7 @@ xcf_save_tile_rle (XcfInfo  *info,
 	       */
 	      if ((length == 32768) ||
 		  ((size - length) == 0) ||
-		  ((length > 0) && (last == *data) && 
+		  ((length > 0) && (last == *data) &&
 		   ((size - length) == 1 || last == data[bpp])))
 		{
 		  count += length;
@@ -1466,9 +1466,9 @@ xcf_save_tile_rle (XcfInfo  *info,
   return TRUE;
 }
 
-static void 
-xcf_save_parasite (gchar        *key, 
-                   GimpParasite *parasite, 
+static void
+xcf_save_parasite (gchar        *key,
+                   GimpParasite *parasite,
                    XcfInfo      *info)
 {
   /* can't fail fast because there is no way to exit g_slist_foreach */
@@ -1553,7 +1553,7 @@ xcf_save_old_paths (XcfInfo    *info,
       version  = 3;
       pathtype = 1;  /* BEZIER  (1.2 compat) */
       tattoo   = gimp_item_get_tattoo (GIMP_ITEM (vectors));
- 
+
       xcf_write_string_check_error (info->fp, &name,       1);
       xcf_write_int32_check_error  (info->fp, &locked,     1);
       xcf_write_int8_check_error   (info->fp, &state,      1);
@@ -1646,7 +1646,7 @@ xcf_save_vectors (XcfInfo    *info,
       locked   = gimp_item_get_linked (GIMP_ITEM (vectors));
       tattoo   = gimp_item_get_tattoo (GIMP_ITEM (vectors));
       num_strokes = g_list_length (vectors->strokes);
- 
+
       xcf_write_string_check_error (info->fp, &name,        1);
       xcf_write_int32_check_error  (info->fp, &locked,      1);
       xcf_write_int32_check_error  (info->fp, &tattoo,      1);
