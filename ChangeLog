@@ -1,5 +1,12 @@
 2004-05-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdock.c (gimp_dock_key_press_event): new function
+	which overrides GtkWindow's default handler in order to block
+	accelearators without any and with <Shift> modifier while a text
+	input widget is active. Thanks to Tim Janik for the code.
+
+2004-05-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/actions.h. added the various return_if_no_foo()
 	macros here.
 
