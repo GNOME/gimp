@@ -33,6 +33,14 @@
 #ifdef G_OS_WIN32
 #define STRICT
 #include <windows.h>		/* For GetModuleFileName */
+#ifndef S_IWGRP
+#define S_IWGRP (_S_IWRITE>>3)
+#define S_IWOTH (_S_IWRITE>>6)
+#endif
+#define uid_t gint
+#define gid_t gint
+#define geteuid() 0
+#define getegid() 0
 #endif
 
 #ifdef __EMX__

@@ -7,6 +7,7 @@ EXPORTS
 	gimp_chain_button_new
 	gimp_chain_button_set_active
 	gimp_channel_menu_new
+	gimp_color_button_double_new
 	gimp_color_button_get_type
 	gimp_color_button_new
 	gimp_color_button_update
@@ -46,12 +47,19 @@ EXPORTS
 	gimp_option_menu_new
 	gimp_option_menu_new2
 	gimp_option_menu_set_history
+	gimp_path_editor_get_path
+	gimp_path_editor_get_type
+	gimp_path_editor_new
 	gimp_pattern_close_popup
 	gimp_pattern_get_pattern_data
 	gimp_pattern_select_widget
 	gimp_pattern_select_widget_close_popup
 	gimp_pattern_select_widget_set_popup
 	gimp_pattern_set_popup
+	gimp_pixmap_button_new
+	gimp_pixmap_get_type
+	gimp_pixmap_new
+	gimp_pixmap_set
 	gimp_query_boolean_box
 	gimp_query_double_box
 	gimp_query_int_box

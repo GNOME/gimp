@@ -200,9 +200,7 @@ gimp_OBJECTS = \
 	paintbrush.o		\
 	parasite_cmds.o		\
 	parasitelist.o		\
-	path_tool.o		\
-	path_bezier.o		\
-	path_curves.o		\
+	path.o			\
 	paths_cmds.o		\
 	paths_dialog.o		\
 	pattern_select.o	\
@@ -250,8 +248,7 @@ gimp_OBJECTS = \
 	undo_cmds.o		\
 	undo_history.o		\
 	unit_cmds.o		\
-	xcf.o			\
-	xinput_airbrush.o
+	xcf.o
 
 # .SUFFIXES: .gc
 

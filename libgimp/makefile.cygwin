@@ -58,6 +58,7 @@ gimpi_OBJECTS = \
 	gimphelpui.o	\
 	gimpmatrix.o	\
 	gimppatheditor.o\
+	gimppixmap.o	\
 	gimpprotocol.o	\
 	gimpquerybox.o	\
 	gimpsizeentry.o	\
@@ -151,7 +152,9 @@ gimpui_OBJECTS = \
 	gimpfileselection.o \
 	gimphelpui.o	\
 	gimpgradientmenu.o \
+	gimppatheditor.o \
 	gimppatternmenu.o \
+	gimppixmap.o	\
 	gimpquerybox.o	\
 	gimpsizeentry.o \
 	gimpunitmenu.o	\

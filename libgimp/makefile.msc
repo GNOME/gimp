@@ -64,6 +64,7 @@ gimpi_OBJECTS = \
 	gimphelpui.obj	\
 	gimpmatrix.obj	\
 	gimppatheditor.obj\
+	gimppixmap.obj	\
 	gimpprotocol.obj\
 	gimpquerybox.obj\
 	gimpsizeentry.obj\
@@ -157,7 +158,9 @@ gimpui_OBJECTS = \
 	gimpfileselection.obj\
 	gimpgradientmenu.obj\
 	gimphelpui.obj	\
+	gimppatheditor.obj\
 	gimppatternmenu.obj\
+	gimppixmap.obj	\
 	gimpquerybox.obj\
 	gimpsizeentry.obj\
 	gimpunitmenu.obj\

@@ -204,6 +204,10 @@ EXPORTS
 	gimp_parasite_attach
 	gimp_parasite_detach
 	gimp_parasite_find
+	gimp_path_free
+	gimp_path_get_user_writable_dir
+	gimp_path_parse
+	gimp_path_to_str
 	gimp_personal_rc_file
 	gimp_pixel_rgn_get_col
 	gimp_pixel_rgn_get_pixel
