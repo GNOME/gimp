@@ -47,6 +47,7 @@ extern SessionInfo gradient_select_session_info;
 extern SessionInfo palette_session_info;
 extern SessionInfo info_dialog_session_info;
 extern SessionInfo error_console_session_info;
+extern SessionInfo document_index_session_info;
 
 extern GList *session_info_updates;  /* This list holds all session_infos
 					that should be written to the

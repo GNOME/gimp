@@ -19,33 +19,18 @@
 
 #include <gtk/gtk.h>
 
-typedef struct idea_manager
+typedef struct
 {
-  /* The scrollbar */
-  GtkWidget *vscrollbar;
-  /* The GTK window */
   GtkWidget *window;
   GtkWidget *tree;
-  /* The window menu widget */
-  GtkWidget *window_menu;
-  /* The status bar widget */
-  GtkWidget *status;
-  /* The main status context id */
-  guint contextid;
-  gboolean changed;
-  gboolean named;
-  gint auto_save;
-  gint long_term_auto_save;
-  gint count;
-} idea_manager;
+} IdeaManager;
 
-void raise_idea_callback   (GtkWidget *widget,
-			    gpointer   data);
+extern IdeaManager *ideas;
 
-void make_idea_window      (gint       x,
-			    gint       y);
-void open_idea_window      (void);
+void document_index_create (void);
+
 void close_idea_window     (void);
+
 void idea_add              (gchar     *label);
 void idea_add_in_position  (gchar     *label,
 			    gint       position);
@@ -60,15 +45,10 @@ gboolean idea_window_delete_event_callback (GtkWidget *widget,
 					    gpointer   data);
 void docindex_configure_drop_on_widget     (GtkWidget *widget);
 
-FILE  * idea_manager_parse_init (gint  *window_x,
-				 gint  *window_y,
-				 gint  *window_width,
-				 gint  *window_height);
+FILE  * idea_manager_parse_init (void);
 gchar * idea_manager_parse_line (FILE  *fp);
 
-void    load_idea_manager       (idea_manager *);
-void    save_idea_manager       (idea_manager *);
-
-extern idea_manager *ideas;
+void    load_idea_manager       (IdeaManager *);
+void    save_idea_manager       (IdeaManager *);
 
 #endif /* __DOCINDEX_H__ */

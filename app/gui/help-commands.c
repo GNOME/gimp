@@ -27,6 +27,7 @@
 #include "convert.h"
 #include "desaturate.h"
 #include "devices.h"
+#include "docindex.h"
 #include "channel_ops.h"
 #include "drawable.h"
 #include "equalize.h"
@@ -1196,6 +1197,13 @@ dialogs_device_status_cmd_callback (GtkWidget *widget,
 				    gpointer   client_data)
 {
   device_status_create ();
+}
+
+void
+dialogs_document_index_cmd_callback (GtkWidget *widget,
+				     gpointer   client_data) 
+{
+  document_index_create ();
 }
 
 void

@@ -156,6 +156,15 @@ SessionInfo error_console_session_info =
   0, FALSE
 };
 
+SessionInfo document_index_session_info =
+{
+  "document-index",
+  (GtkItemFactoryCallback) dialogs_document_index_cmd_callback,
+  LEFT_OFFSET, TOP_OFFSET + 300,
+  400, 150,
+  0, FALSE
+};
+
 
 /* public functions */
 void 

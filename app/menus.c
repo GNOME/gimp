@@ -38,7 +38,6 @@
 #include "scale.h"
 #include "tools.h"
 #include "gdisplay.h"
-#include "docindex.h"
 
 #include "libgimp/gimpenv.h"
 
@@ -135,7 +134,7 @@ static GimpItemFactoryEntry toolbox_entries[] =
 
   { { "/File/Dialogs/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
-  { { N_("/File/Dialogs/Document Index..."), NULL, raise_idea_callback, 0 },
+  { { N_("/File/Dialogs/Document Index..."), NULL, dialogs_document_index_cmd_callback, 0 },
     "file/dialogs/document_index.html", NULL },
   { { N_("/File/Dialogs/Error Console..."), NULL, dialogs_error_console_cmd_callback, 0 },
     "file/dialogs/error_console.html", NULL },
@@ -495,7 +494,7 @@ static GimpItemFactoryEntry image_entries[] =
 
   { { "/Dialogs/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
-  { { N_("/Dialogs/Document Index..."), NULL, raise_idea_callback, 0 },
+  { { N_("/Dialogs/Document Index..."), NULL, dialogs_document_index_cmd_callback, 0 },
     "dialogs/document_index.html", NULL },
   { { N_("/Dialogs/Error Console..."), NULL, dialogs_error_console_cmd_callback, 0 },
     "dialogs/error_console.html", NULL },

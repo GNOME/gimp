@@ -23,18 +23,11 @@ struct bool_char_pair
   gchar    *string;
 };
 
-void             open_or_raise         (gchar    *file_name);
-void             raise_if_match        (gpointer  data,
-					gpointer  user_data);
-void             open_file_in_position (gchar    *filename,
-					gint      position);
-GtkWidget      * create_idea_toolbar   (void);
-void             clear_white           (FILE     *fp);
-int              getinteger            (FILE     *fp);
-gchar          * append2               (gchar    *string1,
-					gboolean  del1,
-					gchar    *string2,
-					gboolean  del2);
-gint             reset_usize           (gpointer  data);
+void   open_idea_window      (void);
+void   open_or_raise         (gchar    *file_name);
+void   open_file_in_position (gchar    *filename,
+			      gint      position);
+void   clear_white           (FILE     *fp);
+gint   getinteger            (FILE     *fp);
 
 #endif /* __DOCINDEXIF_H__ */

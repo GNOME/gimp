@@ -346,7 +346,8 @@ static SessionInfo *session_infos[] =
   &pattern_select_session_info,
   &gradient_select_session_info,
   &device_status_session_info,
-  &error_console_session_info
+  &error_console_session_info,
+  &document_index_session_info
 };
 static int nsession_infos = sizeof (session_infos) / sizeof (session_infos[0]);
 

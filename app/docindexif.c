@@ -12,6 +12,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  */
+#include "config.h"
+
 #include <ctype.h>
 #include <string.h>
 
@@ -23,11 +25,12 @@
 #include "fileops.h"
 #include "gimage.h"
 #include "gimphelp.h"
+#include "session.h"
 
-#include "config.h"
 #include "libgimp/gimpintl.h"
 
-void
+
+static void
 raise_if_match (gpointer data,
 		gpointer user_data)
 {
@@ -59,25 +62,20 @@ open_or_raise (gchar *file_name)
     }
 }
 
-void open_file_in_position (gchar *filename,
-			    gint   position)
+void
+open_file_in_position (gchar *filename,
+		       gint   position)
 {
   file_open (filename, filename);
 }
 
-GtkMenuFactory *create_idea_menu ()
-{
-  return NULL;
-}
-
-GtkWidget *
+static GtkWidget *
 create_idea_toolbar (void)
 {
   GtkWidget *toolbar;
 
   toolbar = gtk_toolbar_new (GTK_ORIENTATION_HORIZONTAL, GTK_TOOLBAR_BOTH);
   gtk_toolbar_set_button_relief (GTK_TOOLBAR (toolbar), GTK_RELIEF_NONE);
-  gtk_widget_show (toolbar);
 
   gtk_toolbar_append_item (GTK_TOOLBAR (toolbar),
 			   _("Open"), _("Open a file"), "Toolbar/Open",
@@ -103,22 +101,8 @@ create_idea_toolbar (void)
 			   _("Close"), _("Close the Document Index"), "Toolbar/Hide",
 			   NULL,
 			   (GtkSignalFunc) idea_hide_callback, NULL );
+
   return toolbar;
-}
-
-gchar *append2 (gchar    *string1,
-		gboolean  del1,
-		gchar    *string2,
-		gboolean  del2)
-{
-  gchar *newstring = g_strconcat (string1, string2, NULL);
-
-  if (del1)
-    g_free (string1);
-  if (del2)
-    g_free (string2);
-
-  return newstring;
 }
 
 gint
@@ -163,87 +147,59 @@ clear_white (FILE *fp)
     ungetc (nextchar, fp);
 }
 
-/* reset_usize
- *  A callback so that the window can be resized smaller. */
-gint
-reset_usize (gpointer data)
-{
-  gtk_widget_set_usize (GTK_WIDGET (data), 0, 0);
-  return FALSE;
-}
-
 void
-make_idea_window (gint x,
-		  gint y)
+open_idea_window (void)
 {
   GtkWidget *main_vbox;
   GtkWidget *scrolled_win;
   GtkWidget *toolbar;
 
-  /* malloc idea_manager */
-  ideas = g_new0 (idea_manager, 1);
+  /* alloc idea_manager */
+  ideas = g_new0 (IdeaManager, 1);
 
-  /* Setup tree */
-  ideas->tree = gtk_tree_new ();
-  gtk_tree_set_selection_mode (GTK_TREE (ideas->tree), GTK_SELECTION_BROWSE);
-
-  /* Setup scrolled window */
-  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
-				  GTK_POLICY_AUTOMATIC, GTK_POLICY_ALWAYS );
-  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win),
-					 ideas->tree);
-  gtk_widget_show (ideas->tree);
-
-  /* allocate the window and attach the menu */
   ideas->window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-  
-  /* Setup the status bar */
-  ideas->status = gtk_statusbar_new ();
-  ideas->contextid =
-    gtk_statusbar_get_context_id (GTK_STATUSBAR (ideas->status),
-				  "main context");
-
-  /* Setup the toolbar */
-  toolbar = create_idea_toolbar ();
-  
-  /* Setup a vbox to contain the menu */
-  main_vbox = gtk_vbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (main_vbox), toolbar, FALSE, FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (main_vbox), scrolled_win, TRUE, TRUE, 0); 
-  gtk_box_pack_start (GTK_BOX (main_vbox), ideas->status, FALSE, FALSE, 0);
-  gtk_widget_show (scrolled_win);
-  gtk_widget_show (ideas->status);
-
-  /* Set the GtkWindow title */
+  gtk_container_set_border_width (GTK_CONTAINER (ideas->window), 0);
   gtk_window_set_title (GTK_WINDOW (ideas->window), _("Document Index"));
-
-  /* Set the initial status message */
-  gtk_statusbar_push (GTK_STATUSBAR (ideas->status), ideas->contextid, "");
 
   /* Connect the signals */
   gtk_signal_connect (GTK_OBJECT (ideas->window), "delete_event",
 		      GTK_SIGNAL_FUNC (idea_window_delete_event_callback),
 		      NULL);
 
-  /* Add the main vbox to the window */
-  gtk_container_set_border_width (GTK_CONTAINER (ideas->window), 0);
+  main_vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (ideas->window), main_vbox);
   gtk_widget_show (main_vbox);
 
+  /* Toolbar */
+  toolbar = create_idea_toolbar ();
+  gtk_box_pack_start (GTK_BOX (main_vbox), toolbar, FALSE, FALSE, 0);
+  gtk_widget_show (toolbar);
+
+  /* Scrolled window */
+  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
+				  GTK_POLICY_AUTOMATIC, GTK_POLICY_ALWAYS );
+  gtk_box_pack_start (GTK_BOX (main_vbox), scrolled_win, TRUE, TRUE, 0); 
+  gtk_widget_show (scrolled_win);
+
+  /* Setup tree */
+  ideas->tree = gtk_tree_new ();
+  gtk_tree_set_selection_mode (GTK_TREE (ideas->tree), GTK_SELECTION_BROWSE);
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win),
+					 ideas->tree);
+  gtk_widget_show (ideas->tree);
+
   docindex_configure_drop_on_widget (ideas->tree);
 
-  /* Load and Show window */
-  load_idea_manager (ideas);
-
-  /* Set the position of the window if it was requested */
-  if (x >= 0 && y >= 0)
-    gtk_widget_set_uposition (ideas->window, x, y);
+  dialog_register (ideas->window);
+  session_set_window_geometry (ideas->window, &document_index_session_info,
+			       TRUE);
 
   /*  Connect the "F1" help key  */
   gimp_help_connect_help_accel (ideas->window,
 				gimp_standard_help_func,
 				"dialogs/document_index.html");
 
-  dialog_register (ideas->window);
+  /* Load and Show window */
+  load_idea_manager (ideas);
 }

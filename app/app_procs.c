@@ -593,11 +593,11 @@ app_init (void)
        *  elements of the docindex
        */
       {
-	FILE *fp;
+	FILE   *fp;
 	gchar **filenames = g_new (gchar *, last_opened_size);
-	gint dummy, i;
+	gint    i;
 
-	if ((fp = idea_manager_parse_init (&dummy, &dummy, &dummy, &dummy)))
+	if ((fp = idea_manager_parse_init ()))
 	  {
 	    /*  read the filenames...  */
 	    for (i = 0; i < last_opened_size; i++)

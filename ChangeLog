@@ -1,5 +1,26 @@
 2000-05-05  Michael Natterer  <mitch@gimp.org>
 
+	Made the document index a bit more like the rest of the dialogs:
+
+	* app/commands.[ch]
+	* app/menus.c: added a cmd_callback instead of calling a function
+	in docindex.c directly.
+
+	* app/gimprc.c
+	* app/session.[ch]: added proper session management.
+
+	* app/app_procs.c
+	* app/docindex.[ch]
+	* app/docindexif.[ch]: removed another bunch of useless variables
+	and functions. Removed the status bar because it was not telling
+	very useful stuff. Removed the window position/size from the
+	"ideas" file.
+
+	Note: you have to either remove your ~/.gimp-1.1/ideas file or
+	remove it's first line or experience a nice endless loop :)
+
+2000-05-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/docindex.[ch]
 	* app/docindexif.[ch]: call dialog_[un]register(). Fixes #10284.
 	Also removed some useless stuff.

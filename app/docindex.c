@@ -12,6 +12,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  */
+#include "config.h"
+
 #include <string.h>
 #include <stdlib.h>
 
@@ -22,14 +24,16 @@
 #include "docindex.h"
 #include "gimpdnd.h"
 #include "gimprc.h"
+#include "session.h"
 
-#include "config.h"
 #include "libgimp/gimpenv.h"
+
 #include "libgimp/gimpintl.h"
 
-idea_manager *ideas = NULL;
+
+IdeaManager *ideas = NULL;
+
 static GList *idea_list = NULL;   /* of gchar *. */
-static gint x = 0, y = 0, width = 0, height = 0;
 
 static GtkTargetEntry drag_types[] =
 {
@@ -38,8 +42,7 @@ static GtkTargetEntry drag_types[] =
 static gint n_drag_types = sizeof (drag_types) / sizeof (drag_types[0]);
 
 static void create_idea_list                       (void);
-void        docindex_configure_drop_on_widget      (GtkWidget * widget);
-void        docindex_cell_configure_drop_on_widget (GtkWidget * widget);
+static void docindex_cell_configure_drop_on_widget (GtkWidget * widget);
 
 
 static void
@@ -180,7 +183,7 @@ void
 idea_hide_callback (GtkWidget *widget,
 		    gpointer   data)
 {
-  if (ideas || idea_list || width || height)
+  if (ideas || idea_list)
     save_idea_manager (ideas);
 
   /* False if exitting */
@@ -188,16 +191,11 @@ idea_hide_callback (GtkWidget *widget,
     {
       create_idea_list ();
       dialog_unregister (ideas->window);
+      session_get_window_info (ideas->window, &document_index_session_info);
       gtk_widget_destroy (ideas->window);
       g_free (ideas);
       ideas = 0;
     }
-}
-
-void
-open_idea_window (void)
-{
-  make_idea_window (-1, -1);
 }
 
 static void
@@ -208,27 +206,14 @@ load_from_list (gpointer data,
 }
 
 FILE *
-idea_manager_parse_init (/* RETURNS: */
-			 gint *window_x,
-			 gint *window_y,
-			 gint *window_width,
-			 gint *window_height)
+idea_manager_parse_init (void)
 {
-  FILE *fp = NULL;
+  FILE  *fp = NULL;
   gchar *desktopfile;
 
   desktopfile = gimp_personal_rc_file ("ideas");
   fp = fopen (desktopfile, "r");
   g_free (desktopfile);
-      
-  /* Read in persistant desktop information. */
-  if (fp)
-    {	  
-      *window_x      = getinteger (fp);
-      *window_y      = getinteger (fp);
-      *window_width  = getinteger (fp);
-      *window_height = getinteger (fp);
-    }
 
   return fp;
 }
@@ -253,24 +238,23 @@ idea_manager_parse_line (FILE * fp)
 }
 
 void
-load_idea_manager (idea_manager *ideas)
+load_idea_manager (IdeaManager *ideas)
 {
   FILE *fp = NULL;
 
-  if ( ! idea_list )
-    fp = idea_manager_parse_init (&x, &y, &width, &height);
+  if (! idea_list)
+    fp = idea_manager_parse_init ();
 
   if (idea_list || fp)
     {
-      gtk_widget_set_usize (ideas->window, width, height);
       gtk_widget_show (ideas->window);
-      gtk_widget_set_uposition (ideas->window, x, y);
-      gtk_idle_add (reset_usize, ideas->window);
+
       if (fp)
 	{
 	  gchar *title;
+
 	  clear_white (fp);
-	  
+
 	  while ((title = idea_manager_parse_line (fp)))
 	    {
 	      idea_add_in_position (title, -1);
@@ -309,7 +293,7 @@ save_list_to_ideas (gpointer data,
 }
 
 void
-save_idea_manager (idea_manager *ideas)
+save_idea_manager (IdeaManager *ideas)
 {
   FILE *fp;
   gchar *desktopfile;
@@ -323,22 +307,12 @@ save_idea_manager (idea_manager *ideas)
     {
       if (ideas)
 	{
-	  gint x, y, width, height;
-	  
-	  gdk_window_get_geometry (ideas->window->window,
-				   &x, &y, &width, &height, NULL);
-	  gdk_window_get_origin (ideas->window->window, &x, &y);
-
-	  fprintf (fp, "%d %d %d %d\n", x, y, width, height);
-
 	  g_list_foreach (GTK_TREE (ideas->tree)->children, save_to_ideas, fp);
 	}
       else
 	{
 	  if (idea_list)
 	    {
-	      fprintf (fp, "%d %d %d %d\n", x, y, width, height);
-
 	      g_list_foreach (idea_list, save_list_to_ideas, fp);
 	    }
 	}
@@ -358,10 +332,6 @@ save_to_list (gpointer data,
 static void
 create_idea_list (void)
 {
-  gdk_window_get_geometry (ideas->window->window,
-			   &x, &y, &width, &height, NULL);
-  gdk_window_get_origin (ideas->window->window, &x, &y);
-
   if (idea_list)
     {
       g_list_foreach (idea_list, (GFunc) g_free, NULL);
@@ -387,8 +357,7 @@ open_or_raise_callback (GtkWidget      *widget,
 } 
 
 void
-raise_idea_callback (GtkWidget *widget,
-		     gpointer   data)
+document_index_create (void)
 {
   if (ideas)
     gdk_window_raise (ideas->window->window);
@@ -475,11 +444,6 @@ idea_add_in_position_with_select (gchar    *title,
 	    {  
 	      gchar *title;
 	      gint length;
-
-	      x      = getinteger (fp);
-	      y      = getinteger (fp);
-	      width  = getinteger (fp);
-	      height = getinteger (fp);
 
 	      clear_white (fp);
 
@@ -569,13 +533,8 @@ idea_up_callback (GtkWidget *widget,
   if (GTK_TREE (ideas->tree)->selection)
     {
       selected = GTK_TREE (ideas->tree)->selection->data;
-      if (idea_move (selected, -1, TRUE) != -1)
-	gtk_statusbar_push (GTK_STATUSBAR (ideas->status), ideas->contextid,
-			    _("This file cannot be moved up."));
+      idea_move (selected, -1, TRUE);
     }
-  else
-    gtk_statusbar_push (GTK_STATUSBAR (ideas->status), ideas->contextid,
-			_("There's no selection to move up."));
 }
 
 void
@@ -587,13 +546,8 @@ idea_down_callback (GtkWidget *widget,
   if (GTK_TREE (ideas->tree)->selection)
     {
       selected = GTK_TREE (ideas->tree)->selection->data;
-      if (idea_move (selected, 1, TRUE) != 1)
-	gtk_statusbar_push (GTK_STATUSBAR (ideas->status), ideas->contextid,
-			    _("This file cannot be moved down."));
+      idea_move (selected, 1, TRUE);
     }
-  else
-    gtk_statusbar_push (GTK_STATUSBAR (ideas->status), ideas->contextid,
-			_("There's no selection to move down."));
 }
 
 void
@@ -607,9 +561,6 @@ idea_remove_callback (GtkWidget *widget,
       selected = GTK_TREE (ideas->tree)->selection->data;
       idea_remove (selected);
     }
-  else
-    gtk_statusbar_push (GTK_STATUSBAR (ideas->status), ideas->contextid,
-			_("There's no selection to remove."));
 }
 
 void
