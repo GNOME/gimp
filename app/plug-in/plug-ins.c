@@ -264,14 +264,6 @@ plug_ins_init (Gimp               *gimp,
   /* add the plug-in procs to the procedure database */
   plug_ins_add_to_db (gimp, context);
 
-  /* sort file procs */
-  gimp->load_procs = g_slist_sort_with_data (gimp->load_procs,
-                                             plug_in_proc_def_compare_menu_path,
-                                             gimp);
-  gimp->save_procs = g_slist_sort_with_data (gimp->save_procs,
-                                             plug_in_proc_def_compare_menu_path,
-                                             gimp);
-
   /* create help_path and locale_domain lists */
   for (list = gimp->plug_in_defs; list; list = list->next)
     {

@@ -241,7 +241,7 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_plugin_menu_register ("file_sunrad_save", "<Save>");
+  gimp_plugin_menu_register ("file_sunras_save", "<Save>");
   gimp_register_file_handler_mime ("file_sunras_save", "image/x-sun-raster");
   gimp_register_save_handler ("file_sunras_save",
                               "im1,im8,im24,im32,rs,ras",

@@ -119,7 +119,7 @@ query (void)
 			  "Michael Sweet <mike@easysw.com>",
 			  "Copyright 1997-1998 by Michael Sweet",
 			  PLUG_IN_VERSION,
-			  "<Load>/SGI",
+			  N_("Silicon Graphics IRIS image"),
 			  NULL,
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (load_args),
@@ -127,13 +127,20 @@ query (void)
 			  load_args,
 			  load_return_vals);
 
+  gimp_plugin_menu_register ("file_sgi_load", "<Load>");
+  gimp_register_file_handler_mime ("file_sgi_load", "image/x-sgi");
+  gimp_register_magic_load_handler ("file_sgi_load",
+				    "sgi,rgb,bw,icon",
+				    "",
+				    "0,short,474");
+
   gimp_install_procedure ("file_sgi_save",
 			  "Saves files in SGI image file format",
 			  "This plug-in saves SGI image files.",
 			  "Michael Sweet <mike@easysw.com>",
 			  "Copyright 1997-1998 by Michael Sweet",
 			  PLUG_IN_VERSION,
-			  "<Save>/SGI",
+			  N_("Silicon Graphics IRIS image"),
 			  "RGB*,GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (save_args),
@@ -141,13 +148,11 @@ query (void)
 			  save_args,
 			  NULL);
 
-  gimp_register_magic_load_handler ("file_sgi_load",
-				    "rgb,bw,sgi,icon",
-				    "",
-				    "0,short,474");
-  gimp_register_save_handler       ("file_sgi_save",
-				    "rgb,bw,sgi,icon",
-				    "");
+  gimp_plugin_menu_register ("file_sgi_save", "<Save>");
+  gimp_register_file_handler_mime ("file_sgi_save", "image/x-sgi");
+  gimp_register_save_handler ("file_sgi_save",
+                              "sgi,rgb,bw,icon",
+                              "");
 }
 
 static void

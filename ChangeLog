@@ -1,3 +1,24 @@
+2004-05-14  Sven Neumann  <sven@gimp.org>
+
+	* app/menus/file-dialog-menu.c: check if the file procedure
+	registered a menu path at all. The menu should probably be created
+	from the registered menu path, not from gimp->[load|save]_procs.
+
+	* app/plug-in/plug-in-proc.[ch]
+	* app/plug-in/plug-ins.c: removed broken code that used to sort
+	the file procedures.
+
+	* plug-ins/common/CEL.c
+	* plug-ins/common/bz2.c
+	* plug-ins/common/gz.c
+	* plug-ins/common/pcx.c
+	* plug-ins/common/pix.c
+	* plug-ins/common/sunras.c
+	* plug-ins/sgi/sgi.c
+	* plug-ins/xjt/xjt.c: register a mimetype, set a translatable
+	action name (mostly taken from shared-mime-info) and register to
+	the <Load> and <Save> menus using gimp_plugin_menu_register().
+
 2004-05-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/pdb/fileops_cmds.c

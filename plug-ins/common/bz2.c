@@ -106,12 +106,19 @@ query (void)
                           "Daniel Risacher",
                           "Daniel Risacher, Spencer Kimball and Peter Mattis",
                           "1995-1997",
-                          "<Load>/bzip2",
+                          N_("bzip archive"),
                           NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
+
+  gimp_plugin_menu_register ("file_bz2_load", "<Load>");
+  gimp_register_file_handler_mime ("file_bz2_load", "application/x-bzip");
+  gimp_register_magic_load_handler ("file_bz2_load",
+                                    "xcf.bz2,bz2,xcfbz2",
+                                    "",
+                                    "0,string,BZh");
 
   gimp_install_procedure ("file_bz2_save",
                           "saves files compressed with bzip2",
@@ -119,16 +126,13 @@ query (void)
                           "Daniel Risacher",
                           "Daniel Risacher, Spencer Kimball and Peter Mattis",
                           "1995-1997",
-                          "<Save>/bzip2",
+                          N_("bzip archive"),
                           "RGB*, GRAY*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_magic_load_handler ("file_bz2_load",
-                                    "xcf.bz2,bz2,xcfbz2",
-                                    "",
-                                    "0,string,BZh");
+  gimp_register_file_handler_mime ("file_bz2_save", "application/x-bzip");
   gimp_register_save_handler ("file_bz2_save",
                               "xcf.bz2,bz2,xcfbz2",
                               "");

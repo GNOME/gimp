@@ -39,6 +39,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 static void query (void);
 static void run   (const gchar      *name,
                    gint              nparams,
@@ -108,12 +109,18 @@ query (void)
                           "Nick Lamb",
                           "Nick Lamb <njl195@zepler.org.uk>",
                           "May 1998",
-                          "<Load>/CEL",
+                          N_("KISS CEL"),
                           NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
+
+  gimp_plugin_menu_register ("file_cel_load", "<Load>");
+  gimp_register_magic_load_handler ("file_cel_load",
+                                    "cel",
+                                    "",
+                                    "0,string,KiSS\\040");
 
   gimp_install_procedure ("file_cel_save",
                           "Saves files in KISS CEL file format",
@@ -121,19 +128,16 @@ query (void)
                           "Nick Lamb",
                           "Nick Lamb <njl195@zepler.org.uk>",
                           "May 1998",
-                          "<Save>/CEL",
+                          N_("KISS CEL"),
 			  "RGB*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_magic_load_handler ("file_cel_load",
-                                    "cel",
-                                    "",
-                                    "0,string,KiSS\\040");
-  gimp_register_save_handler       ("file_cel_save",
-                                    "cel",
-                                    "");
+  gimp_plugin_menu_register ("file_cel_save", "<Save>");
+  gimp_register_save_handler ("file_cel_save",
+                              "cel",
+                              "");
 }
 
 static void

@@ -52,9 +52,5 @@ const gchar      * plug_in_proc_def_get_progname (const PlugInProcDef *proc_def)
 gchar            * plug_in_proc_def_get_help_id  (const PlugInProcDef *proc_def,
                                                   const gchar         *help_domain);
 
-gint          plug_in_proc_def_compare_menu_path (gconstpointer        a,
-                                                  gconstpointer        b,
-                                                  gpointer             user_data);
-
 
 #endif /* __PLUG_IN_PROC_H__ */

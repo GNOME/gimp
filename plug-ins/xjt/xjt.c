@@ -472,12 +472,18 @@ query (void)
                           "Wolfgang Hofer",
                           "Wolfgang Hofer",
                           "2000-Mar-07",
-			  "<Load>/xjt",
+			  N_("GIMP compressed XJT image"),
 			  NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
+
+  gimp_plugin_menu_register ("file_xjt_load", "<Load>");
+  gimp_register_magic_load_handler ("file_xjt_load",
+				    "xjt,xjtgz,xjtbz2",
+				    "",
+				    "");
 
   gimp_install_procedure ("file_xjt_save",
                           "saves files in the jpeg-tar file format",
@@ -485,19 +491,16 @@ query (void)
                           "Wolfgang Hofer",
                           "Wolfgang Hofer",
                           "2000-Mar-07",
-                          "<Save>/xjt",
+			  N_("GIMP compressed XJT image"),
 			  "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_magic_load_handler ("file_xjt_load",
-				    "xjt,xjtgz,xjtbz2",
-				    "",
-				    "");
-  gimp_register_save_handler       ("file_xjt_save",
-				    "xjt,xjtgz,xjtbz2",
-				    "");
+  gimp_plugin_menu_register ("file_xjt_save", "<Save>");
+  gimp_register_save_handler ("file_xjt_save",
+                              "xjt,xjtgz,xjtbz2",
+                              "");
 }
 
 static void

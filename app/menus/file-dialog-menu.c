@@ -47,6 +47,9 @@ file_dialog_menu_setup (GimpUIManager *manager,
       PlugInProcDef *file_proc = list->data;
       gchar         *path;
 
+      if (! file_proc->menu_paths)
+        continue;
+
       if (! strcmp (file_proc->db_info.name, xcf_proc_name))
         path = g_strdup_printf ("%s/%s", ui_path, "Internal");
       else

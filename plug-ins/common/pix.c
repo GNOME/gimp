@@ -138,12 +138,17 @@ query (void)
 			  "Michael Taylor",
 			  "Michael Taylor",
 			  "1997",
-			  "<Load>/PIX",
+                          N_("Alias|Wavefront PIX image"),
 			  NULL,
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
 			  load_args, load_return_vals);
+
+  gimp_plugin_menu_register ("file_pix_load", "<Load>");
+  gimp_register_load_handler ("file_pix_load",
+			      "pix,matte,mask,alpha,als",
+			      "");
 
   gimp_install_procedure ("file_pix_save",
                           "save file in the Alias|Wavefront pix/matte file format",
@@ -151,15 +156,13 @@ query (void)
                           "Michael Taylor",
                           "Michael Taylor",
                           "1997",
-                          "<Save>/PIX",
+                          N_("Alias|Wavefront PIX image"),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_load_handler ("file_pix_load",
-			      "pix,matte,mask,alpha,als",
-			      "");
+  gimp_plugin_menu_register ("file_pix_save", "<Save>");
   gimp_register_save_handler ("file_pix_save",
 			      "pix,matte,mask,alpha,als",
 			      "");
