@@ -1543,14 +1543,9 @@ main_dialog (GimpDrawable *drawable)
 
   gtk_main ();
 
-  if (preview_rgb_data != NULL)
-    g_free (preview_rgb_data);
-  
-  if (image != NULL)
-    g_object_unref (G_OBJECT (image));
-
-  gck_visualinfo_destroy (visinfo);
   gtk_widget_destroy (appwin);
+  g_free (preview_rgb_data);
+  gck_visualinfo_destroy (visinfo);
 
   gimp_help_free ();
 

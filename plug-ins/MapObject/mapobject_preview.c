@@ -319,9 +319,9 @@ draw_light_marker (gint xpos,
       else if ((backbuf.y + backbuf.h) > PREVIEW_HEIGHT)
         backbuf.h = (PREVIEW_WIDTH - backbuf.y);
 
-      backbuf.image = gdk_image_get (previewarea->window,
-				     backbuf.x, backbuf.y,
-				     backbuf.w, backbuf.h);
+      backbuf.image = gdk_drawable_get_image (previewarea->window,
+                                              backbuf.x, backbuf.y,
+                                              backbuf.w, backbuf.h);
 
       gdk_draw_arc (previewarea->window, gc,
 		    TRUE,

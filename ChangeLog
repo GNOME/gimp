@@ -1,3 +1,11 @@
+2002-02-12  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/MapObject/mapobject_preview.c: 
+	s/gdk_image_get/gdk_drawable_get_image/
+
+	* plug-ins/MapObject/mapobject_ui.c: fixed wrong refcounting of 
+	GtkImage.
+
 2002-02-11  Sven Neumann  <sven@gimp.org>
 
 	* libgimpmath/Makefile.am
