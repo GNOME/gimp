@@ -2104,7 +2104,6 @@ layer_widget_create (GImage *gimage,
 		     GTK_DEST_DEFAULT_ALL,
                      layer_target_table, n_layer_targets,
                      GDK_ACTION_MOVE);
-
   gtk_signal_connect (GTK_OBJECT (list_item), "drag_leave",
                       GTK_SIGNAL_FUNC (layer_widget_drag_leave_callback),
 		      NULL);
@@ -2513,14 +2512,19 @@ layer_widget_button_events (GtkWidget *widget,
     case GDK_LEAVE_NOTIFY:
       event_widget = gtk_get_event_widget (event);
 
-      if (button_down && (event_widget == click_widget))
+     if (button_down && (event_widget == click_widget))
 	{
+	  /* the user moved the cursor out of the widget before
+             releasing the button -> cancel the button_press */ 
+	  button_down = FALSE;
+
 	  if (widget == layer_widget->eye_widget)
 	    {
 	      if (exclusive)
 		{
 		  layer_widget_exclusive_visible (layer_widget);
 		}
+
 	      else
 		{
 		  GIMP_DRAWABLE (layer_widget->layer)->visible =

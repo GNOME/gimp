@@ -1608,16 +1608,15 @@ channel_widget_drag_drop_callback (GtkWidget      *widget,
   gint           src_index;
   gint           difference;
 
-  GimpDropType drop_type  = GIMP_DROP_NONE;
-  gboolean     return_val = FALSE;
+  GimpDropType   drop_type  = GIMP_DROP_NONE;
+  gboolean       return_val = FALSE;
 
   dest = (ChannelWidget *) gtk_object_get_user_data (GTK_OBJECT (widget));
 
   if (dest &&
       (src_widget = gtk_drag_get_source_widget (context)))
     {
-      src
-        = (ChannelWidget *) gtk_object_get_user_data (GTK_OBJECT (src_widget));
+      src = (ChannelWidget *) gtk_object_get_user_data (GTK_OBJECT (src_widget));
 
       if (src &&
           src->channel == channelsD->active_channel)
@@ -1903,6 +1902,10 @@ channel_widget_button_events (GtkWidget *widget,
 
       if (button_down && (event_widget == click_widget))
 	{
+	  /* the user moved the cursor out of the widget before
+             releasing the button -> cancel the button_press */ 
+	  button_down = FALSE;
+	  
 	  if (widget == channel_widget->eye_widget)
 	    {
 	      if (exclusive)
