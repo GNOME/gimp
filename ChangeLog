@@ -1,5 +1,9 @@
 2004-10-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/dialogs/dialogs-types.h: removed ColorDialog typedef.
+
+2004-10-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimptooloptions-gui.[ch]: added utility functions
 	which create a GimpViewableButton+GimpContainerEntry combo for
 	brushes, patterns, gradients and fonts and a very ugly utility
