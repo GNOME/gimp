@@ -28,7 +28,7 @@ msgstr "1er mai 1997"
 
 #: plug-ins/AlienMap/AlienMap.c:194
 msgid "<Image>/Filters/Colors/Map/Alien Map..."
-msgstr ""
+msgstr "<Image>/Filtres/Couleurs/Palette/Psychédélique"
 
 #: plug-ins/AlienMap/AlienMap.c:379
 msgid "AlienMap: Transforming ..."
@@ -167,6 +167,7 @@ msgid "OK"
 msgstr "Ok"
 
 #: plug-ins/AlienMap/AlienMap.c:869 plug-ins/AlienMap2/AlienMap2.c:792
+#: plug-ins/AlienMap/AlienMap.c:869 plug-ins/AlienMap2/AlienMap2.c:792
 msgid "Accept settings and apply filter on image"
 msgstr "Accepter les paratétres et appliquer le filtre sur l'image"
 
@@ -269,7 +270,7 @@ msgstr "24 avril 1998"
 
 #: plug-ins/AlienMap2/AlienMap2.c:217
 msgid "<Image>/Filters/Colors/Map/Alien Map 2..."
-msgstr ""
+msgstr "<Image>/Filtres/Couleurs/Palette/Psychédélique 2"
 
 #: plug-ins/AlienMap2/AlienMap2.c:392
 msgid "AlienMap2: Transforming ..."
@@ -334,19 +335,19 @@ msgstr "Mode :"
 
 #: plug-ins/AlienMap2/AlienMap2.c:724
 msgid "RGB_MODEL color model"
-msgstr ""
+msgstr "Modèle RVB"
 
 #: plug-ins/AlienMap2/AlienMap2.c:733
 msgid "Use RGB_MODEL color model"
-msgstr ""
+msgstr "Utiliser le modèle de couleurs en canaux rouge-vert-bleu"
 
 #: plug-ins/AlienMap2/AlienMap2.c:735
 msgid "HSL_MODEL color model"
-msgstr ""
+msgstr "Modèle TSL"
 
 #: plug-ins/AlienMap2/AlienMap2.c:743
 msgid "Use HSL_MODEL color model"
-msgstr ""
+msgstr "Utiliser le modèle de couleurs par canaux teinte-saturation-luminance"
 
 #: plug-ins/AlienMap2/AlienMap2.c:745
 msgid "Modify red/hue channel"
@@ -404,7 +405,7 @@ msgstr "Pas d'aide encore."
 
 #: plug-ins/Lighting/lighting_main.c:177
 msgid "<Image>/Filters/Light Effects/Lighting Effects..."
-msgstr ""
+msgstr "<Image>/Filtres/Jeux de lumières/Jeux d'éclairage"
 
 #: plug-ins/Lighting/lighting_ui.c:34
 msgid "Point light"
@@ -558,7 +559,7 @@ msgstr "Type de la source de lumière:"
 msgid "Lightsource color"
 msgstr "Couleur de la source de lumière"
 
-#: plug-ins/Lighting/lighting_ui.c:690
+#: plug-ins/Lighting/lighting_ui.c:685
 msgid "Type of light source to apply"
 msgstr "Type de la source de lumière a appliquer"
 
@@ -640,7 +641,7 @@ msgstr ""
 msgid "Reflectivity"
 msgstr "Réflexivité"
 
-#: plug-ins/Lighting/lighting_ui.c:814
+#: plug-ins/Lighting/lighting_ui.c:809
 msgid "Specular:"
 msgstr "Spéculaire :"
 
@@ -670,7 +671,7 @@ msgstr "Image portant la carte du relief:"
 
 #: plug-ins/Lighting/lighting_ui.c:917
 msgid "Curve:"
-msgstr ""
+msgstr "Courbe :"
 
 #: plug-ins/Lighting/lighting_ui.c:922
 msgid "Minimum height:"
@@ -835,14 +836,15 @@ msgstr "Options d'enregistrement"
 msgid "RLE encoded"
 msgstr "Compression RLE"
 
+# If somebody knows what this plugin is about exactly...
 #: plug-ins/borderaverage/borderaverage.c:93
 #: plug-ins/borderaverage/borderaverage.c:343
 msgid "Borderaverage"
-msgstr ""
+msgstr "Moyenne du bord"
 
 #: plug-ins/borderaverage/borderaverage.c:98
 msgid "<Image>/Filters/Colors/Border Average..."
-msgstr ""
+msgstr "<Image>/Filtres/Couleurs/Moyenne du bord..."
 
 #: plug-ins/borderaverage/borderaverage.c:350
 msgid "Border Size"
@@ -862,24 +864,24 @@ msgstr "Taille des Cases:"
 
 #: plug-ins/common/CEL.c:96
 msgid "Loads files in KISS CEL file format"
-msgstr ""
+msgstr "Charge des fichiers au format KISS CEL"
 
 #: plug-ins/common/CEL.c:97
 msgid "This plug-in loads individual KISS cell files."
-msgstr ""
+msgstr "Cet appendice charge des fichiers KISS CEL individuels."
 
 #: plug-ins/common/CEL.c:106
 msgid "Saves files in KISS CEL file format"
-msgstr ""
+msgstr "Sauve des fichiers au format KISS CEL"
 
 #: plug-ins/common/CEL.c:107
 msgid "This plug-in saves individual KISS cell files."
-msgstr ""
+msgstr "Cet appendice sauve des fichiers KISS CEL individuels."
 
 #. Let user choose KCF palette (cancel ignores)
 #: plug-ins/common/CEL.c:156
 msgid "Load KISS Palette"
-msgstr ""
+msgstr "Charger une palette KISS"
 
 #: plug-ins/common/CEL.c:211
 #, c-format
@@ -887,19 +889,21 @@ msgid ""
 "%s\n"
 "is not present or is unreadable"
 msgstr ""
+"%s\n"
+"n'existe pas ou est illisible"
 
 #: plug-ins/common/CEL.c:241
 msgid "CEL Can't create a new image"
-msgstr ""
+msgstr "CEL: ne peut créer de nouvelle image"
 
 #: plug-ins/common/CEL.c:301
 #, c-format
 msgid "Unsupported number of colours (%d)"
-msgstr ""
+msgstr "Nombre de couleurs non géré (%d)"
 
 #: plug-ins/common/CEL.c:399
 msgid "Only an indexed-alpha image can be saved in CEL format"
-msgstr ""
+msgstr "Seules les images indexées-alpha peuvent être sauvées au format CEL"
 
 #: plug-ins/common/CEL.c:412
 #, c-format
@@ -907,6 +911,8 @@ msgid ""
 "CEL Couldn't write image to\n"
 "%s"
 msgstr ""
+"CEL n'a pu écrire l'image dans\n"
+"%s"
 
 #: plug-ins/common/CML_explorer.c:220
 msgid "Keep image's values"
@@ -1146,11 +1152,11 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:494
 msgid "<Image>/Filters/Render/Pattern/CML Explorer..."
-msgstr ""
+msgstr "<Image>/Filtres/Synthèse/Motif/Explorateur CML..."
 
 #: plug-ins/common/CML_explorer.c:796
 msgid "CML_explorer: evoluting..."
-msgstr ""
+msgstr "Explorateur CML : évolution..."
 
 #: plug-ins/common/CML_explorer.c:1322
 msgid "Coupled-Map-Lattice Explorer"
@@ -1421,109 +1427,109 @@ msgstr ""
 
 #: plug-ins/common/aa.c:91 plug-ins/common/aa.c:92
 msgid "Saves files in various text formats"
-msgstr ""
+msgstr "Sauve les fichiers dans divers formats texte"
 
 #: plug-ins/common/aa.c:356
 msgid "Save as text"
-msgstr ""
+msgstr "Sauver en tant que texte"
 
 #. file save type
 #: plug-ins/common/aa.c:387
 msgid "Data Formatting"
-msgstr ""
+msgstr "Formatage des données"
 
 #: plug-ins/common/align_layers.c:136 plug-ins/common/align_layers.c:160
 msgid "Collect"
-msgstr ""
+msgstr "Rassembler"
 
 #: plug-ins/common/align_layers.c:138
 msgid "Fill (left to right)"
-msgstr ""
+msgstr "Remplir (de gauche à droite)"
 
 #: plug-ins/common/align_layers.c:140
 msgid "Fill (right to left)"
-msgstr ""
+msgstr "Remplir (de droite à gauche)"
 
 #: plug-ins/common/align_layers.c:142 plug-ins/common/align_layers.c:166
 msgid "Snap to grid"
-msgstr ""
+msgstr "Aligner sur la grille"
 
 #: plug-ins/common/align_layers.c:148
 msgid "Left edge"
-msgstr ""
+msgstr "Bordure gauche"
 
 #: plug-ins/common/align_layers.c:150 plug-ins/common/align_layers.c:174
 #: plug-ins/gap/gap_mov_dialog.c:270
 msgid "Center"
-msgstr ""
+msgstr "Centrer"
 
 #: plug-ins/common/align_layers.c:152
 msgid "Right edge"
-msgstr ""
+msgstr "Bordure droite"
 
 #: plug-ins/common/align_layers.c:162
 msgid "Fill (top to bottom)"
-msgstr ""
+msgstr "Remplir (de haut en bas)"
 
 #: plug-ins/common/align_layers.c:164
 msgid "Fill (bottom to top)"
-msgstr ""
+msgstr "Remplir (de bas en haut)"
 
 #: plug-ins/common/align_layers.c:172
 msgid "Top edge"
-msgstr ""
+msgstr "Bordure haute"
 
 #: plug-ins/common/align_layers.c:176
 msgid "Bottom edge"
-msgstr ""
+msgstr "Bordure basse"
 
 #: plug-ins/common/align_layers.c:224
 msgid "Align visible layers"
-msgstr ""
+msgstr "Aligner les calques visibles"
 
 #: plug-ins/common/align_layers.c:225
 msgid "align visible layers"
-msgstr ""
+msgstr "aligner les calques visibles"
 
 #: plug-ins/common/align_layers.c:229
 msgid "<Image>/Layers/Align Visible Layers..."
-msgstr ""
+msgstr "<Image>/Calques/Aligner les calques visibles..."
 
 #: plug-ins/common/align_layers.c:264
 msgid "Error: there are too few layers."
-msgstr ""
+msgstr "Erreur : il n'y a pas assez de calques."
 
 #: plug-ins/common/align_layers.c:582
 msgid "Parameter settings"
-msgstr ""
+msgstr "Réglage de paramètres"
 
 #: plug-ins/common/align_layers.c:584
 msgid "Horizontal style"
-msgstr ""
+msgstr "Style horizontal"
 
 #: plug-ins/common/align_layers.c:589
 msgid "Horizontal base"
-msgstr ""
+msgstr "Base horizontale"
 
 #: plug-ins/common/align_layers.c:594
 msgid "Vertical style"
-msgstr ""
+msgstr "Style vertical"
 
 #: plug-ins/common/align_layers.c:599
 msgid "Vertical base"
-msgstr ""
+msgstr "Base verticale"
 
 #: plug-ins/common/align_layers.c:606
 msgid "Ignore the bottom layer even if visible"
-msgstr ""
+msgstr "Ignorer le calque du bas même s'il est visible"
 
 #: plug-ins/common/align_layers.c:610
 msgid "Use the (invisible) bottom layer as the base"
-msgstr ""
+msgstr "Utiliser le calque le plus bas (invisible) comme base"
 
 #: plug-ins/common/align_layers.c:614
 msgid "Grid size"
-msgstr ""
+msgstr "Taille de grille"
 
 #: plug-ins/common/animationplay.c:259
 msgid "This plugin allows you to preview a GIMP layer-based animation."
@@ -1533,7 +1539,7 @@ msgstr ""
 
 #: plug-ins/common/animationplay.c:264
 msgid "<Image>/Filters/Animation/Animation Playback..."
-msgstr ""
+msgstr "<Image>/Filtres/Animation/Rejouer l'animation..."
 
 #: plug-ins/common/animationplay.c:692
 msgid "Animation Playback: "
@@ -1599,7 +1605,7 @@ msgstr ""
 
 #: plug-ins/common/animoptimize.c:152
 msgid "<Image>/Filters/Animation/Animation UnOptimize"
-msgstr ""
+msgstr "<Image>/Filtres/Animation/Désoptimiser"
 
 #: plug-ins/common/animoptimize.c:296
 msgid "Optimizing Animation..."
@@ -1625,7 +1631,7 @@ msgstr ""
 
 #: plug-ins/common/apply_lens.c:137
 msgid "<Image>/Filters/Glass Effects/Apply Lens..."
-msgstr ""
+msgstr "<Image>/Filtres/Effets de verre/Lentille optique..."
 
 #: plug-ins/common/apply_lens.c:196
 msgid "Applying lens..."
@@ -1708,7 +1714,7 @@ msgstr ""
 
 #: plug-ins/common/autostretch_hsv.c:87
 msgid "<Image>/Image/Colors/Auto/Stretch HSV"
-msgstr ""
+msgstr "<Image>/Image/Couleurs/Auto/Élargir TSV"
 
 #: plug-ins/common/autostretch_hsv.c:119
 msgid "Auto-Stretching HSV..."
@@ -1718,7 +1724,7 @@ msgstr "Auto-extension TSV"
 msgid ""
 "Adds a blinds effect to the image. Rather like putting the image on a set of "
 "window blinds and the closing or opening the blinds"
-msgstr ""
+msgstr "Opère un effet de « stores » sur l'image, un peu comme si l'on voyait l'image à travers une fenêtre munie d'un store et que l'on fermait ou l'ouvrait le store."
 
 #: plug-ins/common/blinds.c:179
 msgid "More here later"
@@ -1726,41 +1732,41 @@ msgstr ""
 
 #: plug-ins/common/blinds.c:183
 msgid "<Image>/Filters/Distorts/Blinds..."
-msgstr ""
+msgstr "<Image>/Filtres/Distortions/Fenêtre avec store..."
 
 #: plug-ins/common/blinds.c:274
 msgid "Adding Blinds ..."
-msgstr ""
+msgstr "Effet « store sur la fenêtre »..."
 
 #: plug-ins/common/blinds.c:340
 msgid "Blinds"
-msgstr ""
+msgstr "Fenêtre avec store"
 
 #: plug-ins/common/blinds.c:392 plug-ins/gimpressionist/orientation.c:52
 msgid "Orientation"
-msgstr ""
+msgstr "Orientation"
 
 #. attach labels
 #: plug-ins/common/blinds.c:400 plug-ins/common/grid.c:545
 msgid "Horizontal"
-msgstr ""
+msgstr "Horizontal"
 
 #: plug-ins/common/blinds.c:409 plug-ins/common/grid.c:546
 msgid "Vertical"
-msgstr ""
+msgstr "Vertical"
 
 #: plug-ins/common/blinds.c:429 plug-ins/common/papertile.c:487
 #: plug-ins/gimpressionist/general.c:243
 msgid "Transparent"
-msgstr ""
+msgstr "Transparent"
 
 #: plug-ins/common/blinds.c:455
 msgid "Displacement "
-msgstr ""
+msgstr "Déplacement"
 
 #: plug-ins/common/blinds.c:487
 msgid "Num Segments "
-msgstr ""
+msgstr "Nombre de segments"
 
 #: plug-ins/common/blur.c:194
 msgid "Apply a 3x3 blurring convolution kernel to the specified drawable."
@@ -1778,7 +1784,7 @@ msgstr ""
 
 #: plug-ins/common/blur.c:208
 msgid "<Image>/Filters/Blur/Blur..."
-msgstr ""
+msgstr "<Images>/Filtres/Flou/Flou..."
 
 #: plug-ins/common/blur.c:627
 msgid "Accept settings and apply filter to image"
@@ -1877,10 +1883,15 @@ msgid ""
 "takes a grayscale image to be applied as a bump map to another image and "
 "produces a nice embossing effect."
 msgstr ""
+"Cet appendice utilise l'algorithme décrit par John Schlag,\n"
+"\"Fast Embossing Effects on Raster Image Data\" dans\n"
+"Graphics GEMS IV (ISBN 0-12-336155-9).\n"
+"Il donne un charmant effet d'embossage, ou de carte en relief, à une image,\n"
+"en se basant sur le relief donné par une image en tons de gris."
 
 #: plug-ins/common/bumpmap.c:348
 msgid "<Image>/Filters/Map/Bump Map..."
-msgstr ""
+msgstr "<Images>/Filtres/Appliquer/Carte en relief..."
 
 #: plug-ins/common/bumpmap.c:494
 msgid "Bump-mapping..."
@@ -1983,7 +1994,7 @@ msgstr ""
 
 #: plug-ins/common/c_astretch.c:83
 msgid "<Image>/Image/Colors/Auto/Stretch Contrast"
-msgstr ""
+msgstr "<Image>/Image/Couleurs/Auto/Contraste maximal"
 
 #: plug-ins/common/c_astretch.c:115
 msgid "Auto-Stretching Contrast..."
@@ -1999,7 +2010,7 @@ msgstr "Ajouter un damier sur l'image"
 
 #: plug-ins/common/checkerboard.c:102
 msgid "<Image>/Filters/Render/Pattern/Checkerboard..."
-msgstr ""
+msgstr "<Image>/Filtres/Synthèse/Motif/Damier..."
 
 #: plug-ins/common/checkerboard.c:164
 msgid "Adding Checkerboard..."
@@ -2044,7 +2055,7 @@ msgstr ""
 
 #: plug-ins/common/color_enhance.c:89
 msgid "<Image>/Image/Colors/Auto/Color Enhance"
-msgstr ""
+msgstr "<Image>/Image/Couleurs/Auto/Améliorer"
 
 #: plug-ins/common/color_enhance.c:122
 msgid "Color Enhance..."
@@ -2064,7 +2075,7 @@ msgstr "Calcule une moyenne des canaux RVB et l'utilise pour régler la couleur"
 
 #: plug-ins/common/colorify.c:126
 msgid "<Image>/Filters/Colors/Colorify..."
-msgstr ""
+msgstr "<Image>/Filtres/Couleurs/Coloriser..."
 
 #: plug-ins/common/colorify.c:195
 msgid "Colorifying..."
@@ -2090,21 +2101,21 @@ msgstr "Coloriser, couleur personnalisée"
 
 #: plug-ins/common/colortoalpha.c:109
 msgid "Convert the color in an image to alpha"
-msgstr ""
+msgstr "Convertit une couleur de l'image en alpha"
 
 #: plug-ins/common/colortoalpha.c:110
 msgid ""
 "This replaces as much of a given color as possible in each pixel with a "
 "corresponding amount of alpha, then readjusts the color accordingly."
-msgstr ""
+msgstr "Ceci remplace autant que possible d'une couleur donnée dans chaque point de l'image par une quantité correspondante de transparence et ajuste la couleur du pixel en compensation."
 
 #: plug-ins/common/colortoalpha.c:113
 msgid "7th Aug 1999"
-msgstr ""
+msgstr "7 août 1999"
 
 #: plug-ins/common/colortoalpha.c:114
 msgid "<Image>/Filters/Colors/Color to Alpha..."
-msgstr ""
+msgstr "<Image>/Filtres/Couleurs/Couleur vers alpha..."
 
 #: plug-ins/common/colortoalpha.c:404
 msgid "Color To Alpha"
@@ -2722,6 +2733,8 @@ msgid ""
 "This plug-in selectively performs a median or adaptive box filter on an "
 "image."
 msgstr ""
+"Filtre d'élimination des traînées, tente d'éliminer les traînées verticales "
+"produites par les scanners bon marché."
 
 #: plug-ins/common/despeckle.c:298
 msgid "<Image>/Filters/Enhance/Despeckle..."
@@ -3921,6 +3934,8 @@ msgid ""
 "Normalize the contrast of the specified drawable to cover all possible "
 "ranges."
 msgstr ""
+"Étend automatiquement le contraste de l'image spécifiée afin de couvrir tous "
+"les intervalles possibles."
 
 #: plug-ins/common/normalize.c:79
 msgid ""
@@ -4367,6 +4382,8 @@ msgstr ""
 #: plug-ins/common/rotate.c:170 plug-ins/common/rotate.c:171
 msgid "Rotates the given layer 180 degrees."
 msgstr ""
+"Tourne le calque sélectionné de 90 degrés dans le sens des aiguilles d'une "
+"montre."
 
 #: plug-ins/common/rotate.c:175
 msgid "<Image>/Layers/Rotate/180 degrees"
@@ -4393,6 +4410,8 @@ msgstr ""
 #: plug-ins/common/rotate.c:204 plug-ins/common/rotate.c:205
 msgid "Rotates the given image 180 degrees."
 msgstr ""
+"Tourne l'image sélectionnée de 90 degrés dans le sens des aiguilles d'une "
+"montre."
 
 #: plug-ins/common/rotate.c:209
 msgid "<Image>/Image/Transforms/Rotate/180 degrees"
@@ -4401,6 +4420,8 @@ msgstr ""
 #: plug-ins/common/rotate.c:215 plug-ins/common/rotate.c:216
 msgid "Rotates the given image 270 degrees clockwise."
 msgstr ""
+"Tourne l'image sélectionnée de 90 degrés dans le sens des aiguilles d'une "
+"montre."
 
 #: plug-ins/common/rotate.c:220
 msgid "<Image>/Image/Transforms/Rotate/270 degrees"
@@ -5172,11 +5193,11 @@ msgstr "Décalage de séquence calques (%ld/%ld)"
 
 #: plug-ins/gap/gap_lib.c:2118
 msgid "Affected Range starts at this framenumber"
-msgstr ""
+msgstr "La séquence de calques commence à ce numéro"
 
 #: plug-ins/gap/gap_lib.c:2126
 msgid "Affected Range ends at this framenumber"
-msgstr ""
+msgstr "La séquence de calques s'arrête à ce numéro"
 
 #: plug-ins/gap/gap_lib.c:2129
 msgid "N-Shift :"
@@ -5190,7 +5211,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_lib.c:2136
 msgid "Framesequence shift"
-msgstr ""
+msgstr "Décalage de séquence calques (%ld/%ld)"
 
 #: plug-ins/gap/gap_main.c:337
 msgid ""
@@ -5433,7 +5454,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mod_layer.c:98 plug-ins/gap/gap_range_ops.c:566
 msgid "select all visible Layers"
-msgstr ""
+msgstr "Fusionner les calques visibles"
 
 #. action items what to do with the selected layer(s)
 #: plug-ins/gap/gap_mod_layer.c:102
@@ -5473,12 +5494,14 @@ msgid "merge Layer(s) clipped to bg-layer"
 msgstr ""
 
 #: plug-ins/gap/gap_mod_layer.c:111
+#, fuzzy
 msgid "apply filter on Layer(s)"
-msgstr ""
+msgstr "Application du filtre à tous les calques..."
 
 #: plug-ins/gap/gap_mod_layer.c:112
+#, fuzzy
 msgid "duplicate Layer(s)"
-msgstr ""
+msgstr "Dupliquer l'intervalle"
 
 #: plug-ins/gap/gap_mod_layer.c:113
 msgid "delete Layer(s)"
@@ -5514,7 +5537,7 @@ msgstr ""
 #: plug-ins/gap/gap_mpege.c:268 plug-ins/gap/gap_range_ops.c:430
 #: plug-ins/gap/gap_range_ops.c:589
 msgid "last handled frame"
-msgstr ""
+msgstr "je ne peux gérer les calques"
 
 #: plug-ins/gap/gap_mod_layer.c:176 plug-ins/gap/gap_range_ops.c:628
 msgid "Select Layer(s):"
@@ -5522,7 +5545,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mod_layer.c:185 plug-ins/gap/gap_range_ops.c:637
 msgid "Select Pattern:"
-msgstr ""
+msgstr "Sélection du fichier"
 
 #. pixel
 #: plug-ins/gap/gap_mod_layer.c:187 plug-ins/gap/gap_range_ops.c:639
@@ -5578,17 +5601,20 @@ msgid "Settings"
 msgstr ""
 
 #: plug-ins/gap/gap_mod_layer.c:286
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Non-Interactive call of %s\n"
 "(for all selected layers)"
 msgstr ""
+"Appel non interactif de %s\n"
+"(pour tous les calques intermédiaires)"
 
 #. GAP-PDB-Browser Dialog
 #. ----------------------
 #: plug-ins/gap/gap_mod_layer.c:663
+#, fuzzy
 msgid "Select Filter for Animated frames-apply"
-msgstr ""
+msgstr "Sélectionner le filtre à appliquer sur l'animation"
 
 #: plug-ins/gap/gap_mod_layer.c:805
 msgid "GAP Modify: No layer selected in last handled frame\n"
@@ -5856,7 +5882,7 @@ msgstr ""
 #. Loop Stepmode menu
 #: plug-ins/gap/gap_mov_dialog.c:1332
 msgid "Stepmode:"
-msgstr ""
+msgstr "Pas"
 
 #: plug-ins/gap/gap_mov_dialog.c:1350
 msgid ""
@@ -6096,7 +6122,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mpege.c:361
 msgid "P-Search :"
-msgstr ""
+msgstr "Chercher :"
 
 #: plug-ins/gap/gap_mpege.c:362
 msgid "Search Algorithmus used for P-frames"
@@ -6104,7 +6130,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mpege.c:368
 msgid "B-Search :"
-msgstr ""
+msgstr "Chercher :"
 
 #: plug-ins/gap/gap_mpege.c:369
 msgid "Search Algorithmus used for B-frames"
@@ -6116,7 +6142,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mpege.c:375 plug-ins/gap/gap_mpege.c:414
 msgid "Encode Values"
-msgstr ""
+msgstr "Entrer les valeurs"
 
 #: plug-ins/gap/gap_mpege.c:392
 msgid ""
@@ -6319,11 +6345,11 @@ msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:413
 msgid "Conv to RGB"
-msgstr ""
+msgstr "Convertir en RVB"
 
 #: plug-ins/gap/gap_range_ops.c:413
 msgid "Conv to GRAY"
-msgstr ""
+msgstr "Convertir en RVB"
 
 #: plug-ins/gap/gap_range_ops.c:413
 msgid "Conv to INDEXED"
@@ -6368,7 +6394,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:459
 msgid "Flatten  :"
-msgstr ""
+msgstr "Aplatir l'image"
 
 #: plug-ins/gap/gap_range_ops.c:460
 msgid ""
@@ -6465,11 +6491,11 @@ msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:1077
 msgid "Flattening Frames .."
-msgstr ""
+msgstr "Duplication de calques..."
 
 #: plug-ins/gap/gap_range_ops.c:1078
 msgid "Converting Frames .."
-msgstr ""
+msgstr "Duplication de calques..."
 
 #: plug-ins/gap/gap_range_ops.c:1168
 msgid "OVERWRITE frame"
@@ -6728,8 +6754,9 @@ msgid "Changes the gamma (brightness) of the selected brush"
 msgstr ""
 
 #: plug-ins/gimpressionist/brush.c:429
+#, fuzzy
 msgid "Select:"
-msgstr ""
+msgstr "Sélectionner"
 
 #: plug-ins/gimpressionist/brush.c:434
 msgid "Aspect ratio:"
@@ -6902,7 +6929,7 @@ msgstr ""
 msgid ""
 "*** Warning ***\n"
 "No home directory!\n"
-msgstr ""
+msgstr "*** Avertissement ***\nPas de répertoire personnel !\n"
 
 #: plug-ins/gimpressionist/gimpressionist.c:358
 #: plug-ins/gimpressionist/gimpressionist.c:455
@@ -6919,7 +6946,12 @@ msgstr ""
 
 #: plug-ins/gimpressionist/gimpressionist.c:511
 msgid "Show some information about program"
-msgstr ""
+msgstr "Montrer des informations sur cet appendice et son auteur"
+
+#: plug-ins/gimpressionist/orientation.c:52
+#, fuzzy
+msgid "Orientation"
+msgstr "Orientation:"
 
 #: plug-ins/gimpressionist/orientation.c:76
 msgid "Directions:"
@@ -6938,8 +6970,9 @@ msgid "The number of directions (i.e. brushes) to use"
 msgstr ""
 
 #: plug-ins/gimpressionist/orientation.c:108
+#, fuzzy
 msgid "The angle of the first brush to create"
-msgstr ""
+msgstr "Changer l'angle de déphasage du canal vert ou saturation"
 
 #: plug-ins/gimpressionist/orientation.c:117
 msgid "How large an angle-span to use (360 = full circle)"
@@ -7018,8 +7051,9 @@ msgid "Orientation Map Editor"
 msgstr ""
 
 #: plug-ins/gimpressionist/orientmap.c:469
+#, fuzzy
 msgid "Vectors"
-msgstr ""
+msgstr "Facteur"
 
 #: plug-ins/gimpressionist/orientmap.c:479
 msgid ""
@@ -7064,8 +7098,9 @@ msgid "Angle:"
 msgstr ""
 
 #: plug-ins/gimpressionist/orientmap.c:563
+#, fuzzy
 msgid "Change the angle of the selected vector"
-msgstr ""
+msgstr "Changer l'angle de déphasage du canal rouge ou teinte"
 
 #: plug-ins/gimpressionist/orientmap.c:565
 #: plug-ins/gimpressionist/sizemap.c:465
@@ -7115,8 +7150,9 @@ msgstr ""
 
 #: plug-ins/gimpressionist/orientmap.c:665
 #: plug-ins/gimpressionist/sizemap.c:524
+#, fuzzy
 msgid "Change the exponent of the strength"
-msgstr ""
+msgstr "Changer l'intensité du canal vert"
 
 #: plug-ins/gimpressionist/orientmap.c:667
 msgid "Angle offset:"
@@ -7348,8 +7384,9 @@ msgid "Size"
 msgstr ""
 
 #: plug-ins/gimpressionist/size.c:75
+#, fuzzy
 msgid "Sizes:"
-msgstr ""
+msgstr "Sinus"
 
 #: plug-ins/gimpressionist/size.c:79
 msgid "Min size:"
@@ -7432,8 +7469,9 @@ msgid "Delete selected smvector"
 msgstr ""
 
 #: plug-ins/gimpressionist/sizemap.c:463
+#, fuzzy
 msgid "Change the angle of the selected smvector"
-msgstr ""
+msgstr "Changer l'angle de déphasage du canal rouge ou teinte"
 
 #: plug-ins/gimpressionist/sizemap.c:477
 msgid "Change the strength of the selected smvector"

@@ -2333,11 +2333,11 @@ msgstr "Tons de gris:"
 #: app/info_window.c:377
 #, c-format
 msgid "Info: %s-%d.%d"
-msgstr ""
+msgstr "Info: %s-%d.%d"
 
 #: app/info_window.c:575
 msgid "%%d x %%d pixels (%%.%df x %%.%df %s)"
-msgstr ""
+msgstr "%%d × %%d pixels (%%.%df × %%.%df %s)"
 
 #: app/info_window.c:601
 msgid "RGB Color"
@@ -3410,7 +3410,7 @@ msgstr "/Xtns/Perl"
 #: app/menus.c:87
 #, XXX
 msgid "/Xtns/Render"
-msgstr "/Xtns/Render"
+msgstr "/Xtns/Synthèse"
 
 #: app/menus.c:88
 #, XXX
@@ -3420,7 +3420,7 @@ msgstr "/Xtns/Render/Logos"
 #: app/menus.c:89
 #, XXX
 msgid "/Xtns/Render/Povray"
-msgstr "/Xtns/Render/Povray"
+msgstr "/Xtns/Synthèse/Povray"
 
 #: app/menus.c:90
 msgid "/Xtns/Script-Fu"
@@ -3470,17 +3470,17 @@ msgstr "/Filtres/Couleurs/Carte"
 #: app/menus.c:103
 #, XXX
 msgid "/Filters/Render/Clouds"
-msgstr "/Filtres/Render/Nuages"
+msgstr "/Filtres/Synthèse/Nuages"
 
 #: app/menus.c:104
 #, XXX
 msgid "/Filters/Render/Nature"
-msgstr "/Filtres/Render/Nature"
+msgstr "/Filtres/Synthèse/Nature"
 
 #: app/menus.c:105
 #, XXX
 msgid "/Filters/Render/Pattern"
-msgstr "/Filtres/Render/Motif"
+msgstr "/Filtres/Synthèse/Motif"
 
 #: app/menus.c:106
 msgid "/Filters/Misc"
@@ -3503,9 +3503,8 @@ msgid "/Script-Fu/Animators"
 msgstr "/Script-Fu/Animateurs"
 
 #: app/menus.c:111
-#, fuzzy
 msgid "/Script-Fu/Stencil Ops"
-msgstr "/Script-Fu/tearoff1"
+msgstr "/Script-Fu/Opérations sur stencil"
 
 #: app/menus.c:112
 msgid "/Script-Fu/Alchemy"
@@ -3522,7 +3521,7 @@ msgstr "/Script-Fu/Ombre"
 #: app/menus.c:115
 #, XXX
 msgid "/Script-Fu/Render"
-msgstr "/Script-Fu/Render"
+msgstr "/Script-Fu/Synthèse"
 
 #: app/menus.c:116
 msgid "/Guides"
@@ -3652,7 +3651,7 @@ msgid "/File/Save"
 msgstr "/Fichier/Enregistrer"
 
 #: app/menus.c:246
-msgid "/File/Save As..."
+msgid "/File/Save as..."
 msgstr "/Fichier/Enregistrer sous..."
 
 #: app/menus.c:248
@@ -3694,7 +3693,7 @@ msgstr "/Édition/Coller dans"
 
 #: app/menus.c:280
 msgid "/Edit/Paste as New"
-msgstr "/Édition/Coller dans un nouveau"
+msgstr "/Édition/Coller en tant que nouveau"
 
 #. <Image>/Edit/Buffer
 #: app/menus.c:285
@@ -3991,7 +3990,7 @@ msgstr "/Calques/Rotation"
 
 #: app/menus.c:509
 msgid "/Layers/Layer to Imagesize"
-msgstr "/Calques/Aplatir Image"
+msgstr "/Calques/Mettre aux dimensions de l'image"
 
 #: app/menus.c:514
 msgid "/Layers/Anchor Layer"
@@ -4227,9 +4226,8 @@ msgid "/Layer Boundary Size..."
 msgstr "/Taille des bord du calque..."
 
 #: app/menus.c:718
-#, fuzzy
-msgid "/Layer to Imagesize"
-msgstr "/Calques/Aplatir Image"
+msgid "/Resize to Image"
+msgstr "/Mettre calque à la taille de l'image"
 
 #: app/menus.c:720
 msgid "/Scale Layer..."
@@ -4657,9 +4655,8 @@ msgid "Palette Selection"
 msgstr "Sélection de Palette"
 
 #: app/path_tool.c:1411
-#, fuzzy
 msgid "Path Tool Options"
-msgstr "Options des outils"
+msgstr "Options de l'outil chemin"
 
 #: app/paths_dialog.c:169
 msgid "New Path"
@@ -5022,7 +5019,7 @@ msgstr "Fenêtre de navigation par Affichage"
 
 #: app/preferences_dialog.c:1578
 msgid "Info Window Follows Mouse"
-msgstr ""
+msgstr "la fenêtre d'information suit la souris"
 
 #: app/preferences_dialog.c:1589
 msgid "Help System Settings"
@@ -5220,9 +5217,8 @@ msgid "Save Window Positions on Exit"
 msgstr "Enregistrer la position des fenêtres en quittant"
 
 #: app/preferences_dialog.c:1989
-#, fuzzy
 msgid "Clear Saved Window Positions Now"
-msgstr "Effacer les positions de fenêtres sauvées"
+msgstr "Effacer maintenant les positions de fenêtres sauvées"
 
 #: app/preferences_dialog.c:1996
 msgid "Always Try to Restore Session"
@@ -6252,12 +6248,11 @@ msgstr "Rogner le résultat"
 
 #. the show_path toggle button
 #: app/transform_tool.c:355
-#, fuzzy
 msgid "Show Path"
 msgstr "Afficher le chemin"
 
 #: app/undo_history.c:432 app/undo_history.c:753
-#, fuzzy, c-format
+#, c-format
 msgid "Undo History: %s"
 msgstr "%s : historique d'annulation"
 
@@ -6384,9 +6379,8 @@ msgid "cut"
 msgstr "couper"
 
 #: app/undo.c:2881
-#, fuzzy
 msgid "transform core"
-msgstr "Transformer"
+msgstr ""
 
 #: app/undo.c:2882
 msgid "paint core"
@@ -6398,9 +6392,8 @@ msgstr "calque flottant"
 
 #. unused!
 #: app/undo.c:2884
-#, fuzzy
 msgid "linked layer"
-msgstr "Calque Flottant"
+msgstr ""
 
 #: app/undo.c:2885
 msgid "apply layer mask"
@@ -6412,9 +6405,8 @@ msgid "layer merge"
 msgstr "fusionner calques"
 
 #: app/undo.c:2887
-#, fuzzy
 msgid "FS anchor"
-msgstr "Facteur"
+msgstr ""
 
 #: app/undo.c:2888
 msgid "gimage mod"
@@ -6425,9 +6417,8 @@ msgid "crop"
 msgstr "découper"
 
 #: app/undo.c:2890
-#, fuzzy
 msgid "layer scale"
-msgstr "niveaux de gris"
+msgstr ""
 
 #: app/undo.c:2891
 msgid "layer resize"
