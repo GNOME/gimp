@@ -384,11 +384,8 @@ gimp_container_list_view_set_preview_size (GimpContainerView  *view)
        list;
        list = g_list_next (list))
     {
-      GimpPreview *preview;
-
-      preview = GIMP_PREVIEW (GIMP_LIST_ITEM (list->data)->preview);
-
-      gimp_preview_set_size (preview, view->preview_size, preview->border_width);
+      gimp_list_item_set_preview_size (GIMP_LIST_ITEM (list->data),
+				       view->preview_size);
     }
 
   gtk_widget_queue_resize (list_view->gtk_list);

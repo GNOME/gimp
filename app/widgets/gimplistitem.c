@@ -40,6 +40,7 @@
 enum
 {
   SET_VIEWABLE,
+  SET_PREVIEW_SIZE,
   LAST_SIGNAL
 };
 
@@ -49,6 +50,7 @@ static void           gimp_list_item_init          (GimpListItem      *list_item
 
 static void           gimp_list_item_real_set_viewable (GimpListItem  *list_item,
                                                         GimpViewable  *viewable);
+static void       gimp_list_item_real_set_preview_size (GimpListItem  *list_item);
 
 static void           gimp_list_item_draw          (GtkWidget         *widget,
                                                     GdkRectangle      *area);
@@ -123,12 +125,22 @@ gimp_list_item_class_init (GimpListItemClass *klass)
                     GTK_TYPE_NONE, 1,
                     GIMP_TYPE_VIEWABLE);
 
+  list_item_signals[SET_PREVIEW_SIZE] = 
+    gtk_signal_new ("set_preview_size",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpListItemClass,
+                                       set_preview_size),
+                    gtk_marshal_NONE__OBJECT,
+                    GTK_TYPE_NONE, 0);
+
   widget_class->draw        = gimp_list_item_draw;
   widget_class->drag_leave  = gimp_list_item_drag_leave;
   widget_class->drag_motion = gimp_list_item_drag_motion;
   widget_class->drag_drop   = gimp_list_item_drag_drop;
 
   klass->set_viewable       = gimp_list_item_real_set_viewable;
+  klass->set_preview_size   = gimp_list_item_real_set_preview_size;
 }
 
 static void
@@ -292,6 +304,9 @@ void
 gimp_list_item_set_viewable (GimpListItem *list_item,
                              GimpViewable *viewable)
 {
+  g_return_if_fail (list_item != NULL);
+  g_return_if_fail (GIMP_IS_LIST_ITEM (list_item));
+
   gtk_signal_emit (GTK_OBJECT (list_item), list_item_signals[SET_VIEWABLE],
                    viewable);
 }
@@ -326,6 +341,30 @@ gimp_list_item_real_set_viewable (GimpListItem *list_item,
                                 GTK_OBJECT (viewable)->klass->type,
 				gimp_list_item_drag_viewable,
 				NULL);
+}
+
+void
+gimp_list_item_set_preview_size (GimpListItem *list_item,
+				 gint          preview_size)
+{
+  g_return_if_fail (list_item != NULL);
+  g_return_if_fail (GIMP_IS_LIST_ITEM (list_item));
+  g_return_if_fail (preview_size > 0 && preview_size <= 256 /* FIXME: 64 */);
+
+  list_item->preview_size = preview_size;
+
+  gtk_signal_emit (GTK_OBJECT (list_item), list_item_signals[SET_PREVIEW_SIZE]);
+}
+
+static void
+gimp_list_item_real_set_preview_size (GimpListItem *list_item)
+{
+  GimpPreview *preview;
+
+  preview = GIMP_PREVIEW (list_item->preview);
+
+  gimp_preview_set_size (preview,
+			 list_item->preview_size, preview->border_width);
 }
 
 void

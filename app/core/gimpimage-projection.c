@@ -156,6 +156,7 @@ guint32 next_guide_id = 1;  /* For generating guide_ID handles for PDB stuff */
 enum
 {
   MODE_CHANGED,
+  SIZE_CHANGED,
   ACTIVE_LAYER_CHANGED,
   ACTIVE_CHANNEL_CHANGED,
   COMPONENT_VISIBILITY_CHANGED,
@@ -163,7 +164,6 @@ enum
   CLEAN,
   DIRTY,
   REPAINT,
-  RESIZE,
   RESTRUCTURE,
   COLORMAP_CHANGED,
   UNDO_EVENT,
@@ -222,6 +222,15 @@ gimp_image_class_init (GimpImageClass *klass)
                     object_class->type,
                     GTK_SIGNAL_OFFSET (GimpImageClass,
 				       mode_changed),
+                    gtk_signal_default_marshaller,
+                    GTK_TYPE_NONE, 0);
+
+  gimp_image_signals[SIZE_CHANGED] =
+    gtk_signal_new ("size_changed",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpImageClass,
+				       size_changed),
                     gtk_signal_default_marshaller,
                     GTK_TYPE_NONE, 0);
 
@@ -294,15 +303,6 @@ gimp_image_class_init (GimpImageClass *klass)
 		    GTK_TYPE_INT,
 		    GTK_TYPE_INT);
 
-  gimp_image_signals[RESIZE] =
-    gtk_signal_new ("resize",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpImageClass,
-				       resize),
-                    gtk_signal_default_marshaller,
-                    GTK_TYPE_NONE, 0);
-
   gimp_image_signals[RESTRUCTURE] =
     gtk_signal_new ("restructure",
                     GTK_RUN_FIRST,
@@ -342,14 +342,16 @@ gimp_image_class_init (GimpImageClass *klass)
   viewable_class->get_preview         = gimp_image_get_preview;
   viewable_class->get_new_preview     = gimp_image_get_new_preview;
 
+  klass->mode_changed                 = NULL;
+  klass->size_changed                 = NULL;
   klass->active_layer_changed         = NULL;
   klass->active_channel_changed       = NULL;
   klass->component_visibility_changed = NULL;
   klass->component_active_changed     = NULL;
+
   klass->clean                        = NULL;
   klass->dirty                        = NULL;
   klass->repaint                      = NULL;
-  klass->resize                       = NULL;
   klass->restructure                  = NULL;
   klass->colormap_changed             = NULL;
   klass->undo_event                   = NULL;
@@ -798,7 +800,9 @@ gimp_image_resize (GimpImage *gimage,
   if (floating_layer)
     floating_sel_rigor (floating_layer, TRUE);
 
-  gtk_signal_emit (GTK_OBJECT (gimage), gimp_image_signals[RESIZE]);
+  undo_push_group_end (gimage);
+
+  gimp_image_size_changed (gimage);
 
   gimp_remove_busy_cursors (NULL);
 }
@@ -925,7 +929,9 @@ gimp_image_scale (GimpImage *gimage,
   if (floating_layer)
     floating_sel_rigor (floating_layer, TRUE);
 
-  gtk_signal_emit (GTK_OBJECT (gimage), gimp_image_signals[RESIZE]);
+  undo_push_group_end (gimage);
+
+  gimp_image_size_changed (gimage);
 
   gimp_remove_busy_cursors (NULL);
 }
@@ -1629,6 +1635,14 @@ gimp_image_mode_changed (GimpImage *gimage)
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   gtk_signal_emit (GTK_OBJECT (gimage), gimp_image_signals[MODE_CHANGED]);
+}
+
+void
+gimp_image_size_changed (GimpImage *gimage)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  gtk_signal_emit (GTK_OBJECT (gimage), gimp_image_signals[SIZE_CHANGED]);
 }
 
 /************************************************************/

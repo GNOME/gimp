@@ -175,7 +175,7 @@ static Undo        * undo_new           (UndoType     undo_type,
 
 
 static gboolean mode_changed = FALSE;
-static gboolean shrink_wrap  = FALSE;
+static gboolean size_changed = FALSE;
 
 
 static gint
@@ -481,13 +481,12 @@ pop_stack (GimpImage  *gimage,
 	      mode_changed = FALSE;
 	    }
 
-	  /*  If the shrink_wrap flag was set  */
-	  if (shrink_wrap)
+	  /*  If the size_changed flag was set  */
+	  if (size_changed)
 	    {
-	      gdisplays_resize_cursor_label (gimage);
-	      gdisplays_shrink_wrap (gimage);
+	      gimp_image_size_changed (gimage);
 
-	      shrink_wrap = FALSE;
+	      size_changed = FALSE;
 	    }
 
 	  /* let others know that we just popped an action */
@@ -2260,11 +2259,6 @@ undo_pop_gimage_mod (GimpImage *gimage,
   gimp_image_projection_realloc (gimage);
 
   gimage_mask_invalidate (gimage);
-  gimp_image_invalidate_layer_previews (gimage);
-  gimp_image_invalidate_channel_previews (gimage);
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
-  gdisplays_update_full (gimage);
-  gdisplays_update_title (gimage);
 
   gimp_image_colormap_changed (gimage, -1);
 
@@ -2272,7 +2266,7 @@ undo_pop_gimage_mod (GimpImage *gimage,
     mode_changed = TRUE;
 
   if (gimage->width != (int) data[0] || gimage->height != (int) data[1])
-    shrink_wrap = TRUE;
+    size_changed = TRUE;
 
   return TRUE;
 }
@@ -2498,8 +2492,8 @@ undo_pop_resolution (GimpImage *gimage,
       data->unit = tmpunit;
     }
 
-  /* really just want to recalc size and repaint */
-  shrink_wrap = TRUE;
+  /* FIXME: really just want to recalc size and repaint */
+  size_changed = TRUE;
 
   return TRUE;
 }

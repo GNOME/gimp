@@ -53,7 +53,7 @@ static void gimage_cmap_change_handler  (GimpImage *gimage,
 					 gint       ncol,
 					 gpointer   user_data);
 static void gimage_rename_handler       (GimpImage *gimage);
-static void gimage_resize_handler       (GimpImage *gimage);
+static void gimage_size_changed_handler (GimpImage *gimage);
 static void gimage_restructure_handler  (GimpImage *gimage);
 static void gimage_repaint_handler      (GimpImage *gimage,
 					 gint       x,
@@ -78,8 +78,8 @@ gimage_new (gint              width,
   gtk_signal_connect (GTK_OBJECT (gimage), "name_changed",
 		      GTK_SIGNAL_FUNC (gimage_rename_handler),
 		      NULL);
-  gtk_signal_connect (GTK_OBJECT (gimage), "resize",
-		      GTK_SIGNAL_FUNC (gimage_resize_handler),
+  gtk_signal_connect (GTK_OBJECT (gimage), "size_changed",
+		      GTK_SIGNAL_FUNC (gimage_size_changed_handler),
 		      NULL);
   gtk_signal_connect (GTK_OBJECT (gimage), "restructure",
 		      GTK_SIGNAL_FUNC (gimage_restructure_handler),
@@ -159,10 +159,8 @@ gimage_rename_handler (GimpImage *gimage)
 }
 
 static void
-gimage_resize_handler (GimpImage *gimage)
+gimage_size_changed_handler (GimpImage *gimage)
 {
-  undo_push_group_end (gimage);
-
   /*  shrink wrap and update all views  */
   gimp_image_invalidate_layer_previews (gimage);
   gimp_image_invalidate_channel_previews (gimage);

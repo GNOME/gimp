@@ -48,6 +48,7 @@ static void   gimp_layer_list_item_init       (GimpLayerListItem       *list_ite
 
 static void      gimp_layer_list_item_set_viewable  (GimpListItem      *list_item,
                                                      GimpViewable      *viewable);
+static void      gimp_layer_list_item_set_preview_size (GimpListItem   *list_item);
 
 static gboolean  gimp_layer_list_item_drag_motion   (GtkWidget         *widget,
                                                      GdkDragContext    *context,
@@ -128,11 +129,12 @@ gimp_layer_list_item_class_init (GimpLayerListItemClass *klass)
 
   parent_class = gtk_type_class (GIMP_TYPE_DRAWABLE_LIST_ITEM);
 
-  widget_class->drag_motion     = gimp_layer_list_item_drag_motion;
-  widget_class->drag_drop       = gimp_layer_list_item_drag_drop;
-  widget_class->state_changed   = gimp_layer_list_item_state_changed;
+  widget_class->drag_motion         = gimp_layer_list_item_drag_motion;
+  widget_class->drag_drop           = gimp_layer_list_item_drag_drop;
+  widget_class->state_changed       = gimp_layer_list_item_state_changed;
 
-  list_item_class->set_viewable = gimp_layer_list_item_set_viewable;
+  list_item_class->set_viewable     = gimp_layer_list_item_set_viewable;
+  list_item_class->set_preview_size = gimp_layer_list_item_set_preview_size;
 
   gimp_rgba_set (&black_color, 0.0, 0.0, 0.0, 1.0);
   gimp_rgba_set (&white_color, 1.0, 1.0, 1.0, 1.0);
@@ -230,6 +232,28 @@ gimp_layer_list_item_set_viewable (GimpListItem *list_item,
      list_item,
      GTK_OBJECT (list_item));
 }
+
+static void
+gimp_layer_list_item_set_preview_size (GimpListItem *list_item)
+{
+  GimpLayerListItem *layer_item;
+
+  if (GIMP_LIST_ITEM_CLASS (parent_class)->set_preview_size)
+    GIMP_LIST_ITEM_CLASS (parent_class)->set_preview_size (list_item);
+
+  layer_item = GIMP_LAYER_LIST_ITEM (list_item);
+
+  if (layer_item->mask_preview)
+    {
+      GimpPreview *preview;
+
+      preview = GIMP_PREVIEW (layer_item->mask_preview);
+
+      gimp_preview_set_size (preview,
+			     list_item->preview_size, preview->border_width);
+    }
+}
+
 
 static gboolean
 gimp_layer_list_item_drag_motion (GtkWidget      *widget,

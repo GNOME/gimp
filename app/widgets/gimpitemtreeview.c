@@ -120,6 +120,8 @@ static void   gimp_drawable_list_view_delete_dropped    (GtkWidget            *w
 
 static void   gimp_drawable_list_view_drawable_changed  (GimpImage            *gimage,
 							 GimpDrawableListView *view);
+static void   gimp_drawable_list_view_size_changed      (GimpImage            *gimage,
+							 GimpDrawableListView *view);
 
 
 static guint  view_signals[LAST_SIGNAL] = { 0 };
@@ -460,6 +462,9 @@ gimp_drawable_list_view_real_set_image (GimpDrawableListView *view,
       gtk_signal_disconnect_by_func (GTK_OBJECT (view->gimage),
 				     gimp_drawable_list_view_drawable_changed,
 				     view);
+      gtk_signal_disconnect_by_func (GTK_OBJECT (view->gimage),
+				     gimp_drawable_list_view_size_changed,
+				     view);
 
       gimp_container_view_set_container (GIMP_CONTAINER_VIEW (view), NULL);
     }
@@ -476,6 +481,9 @@ gimp_drawable_list_view_real_set_image (GimpDrawableListView *view,
 
       gtk_signal_connect (GTK_OBJECT (view->gimage), view->signal_name,
 			  GTK_SIGNAL_FUNC (gimp_drawable_list_view_drawable_changed),
+			  view);
+      gtk_signal_connect (GTK_OBJECT (view->gimage), "size_changed",
+			  GTK_SIGNAL_FUNC (gimp_drawable_list_view_size_changed),
 			  view);
 
       gimp_drawable_list_view_drawable_changed (view->gimage, view);
@@ -809,4 +817,16 @@ gimp_drawable_list_view_drawable_changed (GimpImage            *gimage,
 
   gimp_container_view_select_item (GIMP_CONTAINER_VIEW (view),
 				   (GimpViewable *) drawable);
+}
+
+static void
+gimp_drawable_list_view_size_changed (GimpImage            *gimage,
+				      GimpDrawableListView *view)
+{
+  gint preview_size;
+
+  preview_size = GIMP_CONTAINER_VIEW (view)->preview_size;
+
+  gimp_container_view_set_preview_size (GIMP_CONTAINER_VIEW (view),
+					preview_size);
 }

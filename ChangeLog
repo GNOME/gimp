@@ -1,5 +1,35 @@
 2001-05-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimpimage.[ch]: renamed the "resize" signal to "size_changed".
+
+	* app/gimage.c: changed accordingly.
+
+	* app/undo.c: renamed the "shrink_wrap" to "size_changed", call
+	gimp_image_size_changed() and let the handlers do the work.
+
+	* app/widgets/gimplistitem.[ch]: added a virtual set_preview_size()
+	method and a default implementation.
+
+	* app/widgets/gimplayerlistitem.c: added an inplementation of
+	set_preview_size() which set's the size of the mask preview.
+
+	* app/widgets/gimpchannellistview.c: implement set_preview_size()
+	and set the size of the component previews.
+
+	* app/widgets/gimpcontainerlistview.c: call
+	gimp_list_item_set_preview_size() instead of resizing the preview
+	manually.
+
+	* app/widgets/gimpcontainerview.c: emit "set_preview_size" even if
+	the size has not changed so we can use it to re-calculate the
+	preview size on image size change.
+
+	* app/widgets/gimpdrawablelistview.c: connect to the image's
+	"size_changed" signal and trigger preview size re-calculation in
+	the callback.
+
+2001-05-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/appenums.h: added GimpDropMode...
 	* app/gimpdnd.h: ...removed from here.
 

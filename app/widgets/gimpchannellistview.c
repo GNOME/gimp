@@ -58,9 +58,10 @@ static void   gimp_channel_list_view_destroy    (GtkObject                *objec
 static void   gimp_channel_list_view_set_image      (GimpDrawableListView *view,
 						     GimpImage            *gimage);
 
-static void   gimp_channel_list_view_select_item    (GimpContainerView *view,
-						     GimpViewable      *item,
-						     gpointer           insert_data);
+static void   gimp_channel_list_view_select_item    (GimpContainerView   *view,
+						     GimpViewable        *item,
+						     gpointer             insert_data);
+static void   gimp_channel_list_view_set_preview_size (GimpContainerView *view);
 
 static void   gimp_channel_list_view_to_selection   (GimpChannelListView *view,
 						     GimpChannel         *channel);
@@ -120,11 +121,12 @@ gimp_channel_list_view_class_init (GimpChannelListViewClass *klass)
 
   parent_class = gtk_type_class (GIMP_TYPE_DRAWABLE_LIST_VIEW);
 
-  object_class->destroy               = gimp_channel_list_view_destroy;
+  object_class->destroy                  = gimp_channel_list_view_destroy;
 
-  container_view_class->select_item   = gimp_channel_list_view_select_item;
+  container_view_class->select_item      = gimp_channel_list_view_select_item;
+  container_view_class->set_preview_size = gimp_channel_list_view_set_preview_size;
 
-  drawable_view_class->set_image      = gimp_channel_list_view_set_image;
+  drawable_view_class->set_image         = gimp_channel_list_view_set_image;
 }
 
 static void
@@ -254,6 +256,28 @@ gimp_channel_list_view_select_item (GimpContainerView *view,
     }
 
   gtk_widget_set_sensitive (list_view->toselection_button, toselection_sensitive);
+}
+
+static void
+gimp_channel_list_view_set_preview_size (GimpContainerView *view)
+{
+  GimpChannelListView *channel_view;
+  GList               *list;
+
+  if (GIMP_CONTAINER_VIEW_CLASS (parent_class)->set_preview_size)
+    GIMP_CONTAINER_VIEW_CLASS (parent_class)->set_preview_size (view);
+
+  channel_view = GIMP_CHANNEL_LIST_VIEW (view);
+
+  for (list = GTK_LIST (channel_view->component_list)->children;
+       list;
+       list = g_list_next (list))
+    {
+      gimp_list_item_set_preview_size (GIMP_LIST_ITEM (list->data),
+				       view->preview_size);
+    }
+
+  gtk_widget_queue_resize (channel_view->component_frame);
 }
 
 

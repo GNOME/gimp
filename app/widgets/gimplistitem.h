@@ -63,22 +63,25 @@ struct _GimpListItemClass
 {
   GtkListItemClass  parent_class;
 
-  void (* set_viewable) (GimpListItem *list_item,
-                         GimpViewable *viewable);
+  void (* set_viewable)     (GimpListItem *list_item,
+			     GimpViewable *viewable);
+  void (* set_preview_size) (GimpListItem *list_item);
 };
 
 
-GtkType     gimp_list_item_get_type        (void);
-GtkWidget * gimp_list_item_new             (GimpViewable        *viewable,
-                                            gint                 preview_size);
+GtkType     gimp_list_item_get_type         (void);
+GtkWidget * gimp_list_item_new              (GimpViewable        *viewable,
+					     gint                 preview_size);
 
-void        gimp_list_item_set_viewable    (GimpListItem        *list_item,
-					    GimpViewable        *viewable);
-void        gimp_list_item_set_reorderable (GimpListItem        *list_item,
-                                            gboolean             reorderable,
-                                            GimpContainer       *container);
-void        gimp_list_item_set_name_func   (GimpListItem        *list_item,
-					    GimpItemGetNameFunc  get_name_func);
+void        gimp_list_item_set_viewable     (GimpListItem        *list_item,
+					     GimpViewable        *viewable);
+void        gimp_list_item_set_preview_size (GimpListItem        *list_item,
+					     gint                 preview_size);
+void        gimp_list_item_set_reorderable  (GimpListItem        *list_item,
+					     gboolean             reorderable,
+					     GimpContainer       *container);
+void        gimp_list_item_set_name_func    (GimpListItem        *list_item,
+					     GimpItemGetNameFunc  get_name_func);
 
 
 /*  protected  */
