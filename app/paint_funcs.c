@@ -2037,17 +2037,17 @@ combine_inten_a_and_inten_a_pixels (const unsigned char *src1,
 		}
 	      else
 		{
-		  src1 += bytes * sizeof(int);
-		  src2 += bytes * sizeof(int);
-		  j = sizeof(int);
+		  j = bytes * sizeof(int);
+		  src2 += j;
 		  while (j--)
 		    {
-		      dest[alpha] = 255;
-		      dest += bytes;
+		      *(dest++) = *(src1++);
 		    }
 		}
 	      mask_ip++;
 	    }
+
+	  m = (const unsigned char*)mask_ip;
 	
 	  /* TAIL */
 	  while (length--)
@@ -2138,7 +2138,7 @@ combine_inten_a_and_inten_a_pixels (const unsigned char *src1,
 			  dest[alpha] = (src1[alpha]) ? src1[alpha] :
 			    (affect[alpha] ? new_alpha : src1[alpha]);
 			}
-			  
+
 		      m++;
 		      src1 += bytes;
 		      src2 += bytes;
@@ -2148,17 +2148,17 @@ combine_inten_a_and_inten_a_pixels (const unsigned char *src1,
 		}
 	      else
 		{
-		  src1 += bytes * sizeof(int);
-		  src2 += bytes * sizeof(int);
-		  j = sizeof(int);
+		  j = bytes * sizeof(int);
+		  src2 += j;
 		  while (j--)
 		    {
-		      dest[alpha] = 255;
-		      dest += bytes;
+		      *(dest++) = *(src1++);
 		    }
 		}
 	      mask_ip++;
 	    }
+
+	  m = (const unsigned char*)mask_ip;
 	
 	  /* TAIL */
 	  while (length--)

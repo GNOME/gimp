@@ -211,11 +211,8 @@ gdisplay_delete (GDisplay *gdisp)
      deactivate the idlerendering thread before deletion! */
   if (gdisp->idle_render.active)
     {
-      printf(_("Deleted idlerendering gdisp %p...\n"), gdisp); fflush(stdout);
-      printf(_("\tIdlerender stops now!\n")); fflush(stdout);
       gtk_idle_remove (gdisp->idle_render.idleid);
       gdisp->idle_render.active = FALSE;
-      printf(_("\tDeletion finished.\n")); fflush(stdout);
     }
   
   if (gdisp->scroll_gc)
