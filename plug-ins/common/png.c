@@ -109,40 +109,43 @@ PngSaveGui;
  * Local functions...
  */
 
-static void query (void);
-static void run   (const gchar      *name,
-                   gint              nparams,
-                   const GimpParam  *param,
-                   gint             *nreturn_vals,
-                   GimpParam       **return_vals);
+static void      query                     (void);
+static void      run                       (const gchar      *name,
+                                            gint              nparams,
+                                            const GimpParam  *param,
+                                            gint             *nreturn_vals,
+                                            GimpParam       **return_vals);
 
-static gint32 load_image (const gchar *filename,
-                          gboolean     interactive);
-static gint   save_image (const gchar *filename,
-                          gint32       image_ID,
-                          gint32       drawable_ID,
-                          gint32       orig_image_ID);
+static gint32    load_image                (const gchar      *filename,
+                                            gboolean          interactive);
+static gint      save_image                (const gchar      *filename,
+                                            gint32            image_ID,
+                                            gint32            drawable_ID,
+                                            gint32            orig_image_ID);
 
-static void respin_cmap (png_structp   pp,
-                         png_infop     info,
-                         guchar       *remap,
-                         gint32        image_ID,
-                         GimpDrawable *drawable);
+static void      respin_cmap               (png_structp       pp,
+                                            png_infop         info,
+                                            guchar           *remap,
+                                            gint32            image_ID,
+                                            GimpDrawable     *drawable);
 
-static gboolean  save_dialog     (gint32     image_ID,
-                                  gboolean   alpha);
+static gboolean  save_dialog               (gint32            image_ID,
+                                            gboolean          alpha);
 
-static void save_dialog_response (GtkWidget  *widget,
-                                  gint        response_id,
-                                  gpointer    data);
+static void      save_dialog_response      (GtkWidget        *widget,
+                                            gint              response_id,
+                                            gpointer          data);
 
-static int find_unused_ia_colour (guchar *pixels,
-                                  gint    numpixels,
-                                  gint   *colors);
+static gboolean  ia_has_transparent_pixels (guchar           *pixels,
+                                            gint              numpixels);
 
-static gboolean load_defaults     (void);
-static void     save_defaults     (void);
-static void     load_gui_defaults (PngSaveGui *pg);
+static int       find_unused_ia_colour     (guchar           *pixels,
+                                            gint              numpixels,
+                                            gint             *colors);
+
+static gboolean  load_defaults             (void);
+static void      save_defaults             (void);
+static void      load_gui_defaults         (PngSaveGui       *pg);
 
 /*
  * Globals...
@@ -1463,6 +1466,19 @@ save_image (const gchar *filename,
   return (1);
 }
 
+static gboolean
+ia_has_transparent_pixels (guchar *pixels,
+                           gint    numpixels)
+{
+  while (numpixels --)
+    {
+      if (pixels [1] <= 127)
+        return TRUE;
+      pixels += 2;
+    }
+  return FALSE;
+}
+
 static void
 respin_cmap (png_structp pp,
              png_infop info,
@@ -1478,6 +1494,7 @@ respin_cmap (png_structp pp,
   gint          cols, rows;
   GimpPixelRgn  pixel_rgn;
   guchar       *pixels;
+  gint          numpixels;
 
   before = gimp_image_get_cmap (image_ID, &colors);
 
@@ -1490,13 +1507,14 @@ respin_cmap (png_structp pp,
       colors = 1;
     }
 
-  cols = drawable->width;
-  rows = drawable->height;
+  cols      = drawable->width;
+  rows      = drawable->height;
+  numpixels = cols * rows;
 
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
                        drawable->width, drawable->height, FALSE, FALSE);
 
-  pixels = (guchar *) g_malloc (drawable->width * drawable->height * 2);
+  pixels = (guchar *) g_malloc (numpixels * 2);
 
   gimp_pixel_rgn_get_rect (&pixel_rgn, pixels, 0, 0,
                            drawable->width, drawable->height);
@@ -1505,48 +1523,52 @@ respin_cmap (png_structp pp,
   /* Try to find an entry which isn't actually used in the
      image, for a transparency index. */
 
-  transparent = find_unused_ia_colour (pixels,
-                                       drawable->width * drawable->height,
-                                       &colors);
-
 #if PNG_LIBPNG_VER > 99
-  if (transparent != -1)        /* we have a winner for a transparent
-                                 * index - do like gif2png and swap
-                                 * index 0 and index transparent */
+  if (ia_has_transparent_pixels (pixels, numpixels))
     {
-      png_color palette[256];
-      gint i;
+      transparent = find_unused_ia_colour (pixels, numpixels, &colors);
 
-      png_set_tRNS (pp, info, (png_bytep) trans, 1, NULL);
-
-      /* Transform all pixels with a value = transparent to
-       * 0 and vice versa to compensate for re-ordering in palette
-       * due to png_set_tRNS() */
-
-      remap[0] = transparent;
-      remap[transparent] = 0;
-
-      /* Copy from index 0 to index transparent - 1 to index 1 to
-       * transparent of after, then from transparent+1 to colors-1
-       * unchanged, and finally from index transparent to index 0. */
-
-      for (i = 0; i < colors; i++)
+      if (transparent != -1)        /* we have a winner for a transparent
+                                     * index - do like gif2png and swap
+                                     * index 0 and index transparent */
         {
-          palette[i].red = before[3 * remap[i]];
-          palette[i].green = before[3 * remap[i] + 1];
-          palette[i].blue = before[3 * remap[i] + 2];
-        }
+          png_color palette[256];
+          gint i;
 
-      png_set_PLTE (pp, info, palette, colors);
+          png_set_tRNS (pp, info, (png_bytep) trans, 1, NULL);
+
+          /* Transform all pixels with a value = transparent to
+           * 0 and vice versa to compensate for re-ordering in palette
+           * due to png_set_tRNS() */
+
+          remap[0] = transparent;
+          remap[transparent] = 0;
+
+          /* Copy from index 0 to index transparent - 1 to index 1 to
+           * transparent of after, then from transparent+1 to colors-1
+           * unchanged, and finally from index transparent to index 0. */
+
+          for (i = 0; i < colors; i++)
+            {
+              palette[i].red = before[3 * remap[i]];
+              palette[i].green = before[3 * remap[i] + 1];
+              palette[i].blue = before[3 * remap[i] + 2];
+            }
+
+          png_set_PLTE (pp, info, palette, colors);
+        }
+      else
+        {
+          /* Inform the user that we couldn't losslessly save the
+           * transparency & just use the full palette */
+          g_message (_("Couldn't losslessly save transparency, "
+                       "saving opacity instead."));
+          png_set_PLTE (pp, info, (png_colorp) before, colors);
+        }
     }
   else
-    {
-      /* Inform the user that we couldn't losslessly save the
-       * transparency & just use the full palette */
-      g_message (_("Couldn't losslessly save transparency, "
-                   "saving opacity instead."));
-      png_set_PLTE (pp, info, (png_colorp) before, colors);
-    }
+    png_set_PLTE (pp, info, (png_colorp) before, colors);
+
 #else
   info->valid |= PNG_INFO_PLTE;
   info->palette = (png_colorp) before;

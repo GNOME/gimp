@@ -347,6 +347,20 @@ find_unused_ia_colour (guchar *pixels,
 }
 
 
+static gboolean
+ia_has_transparent_pixels (guchar *pixels,
+                           gint    numpixels)
+{
+  while (numpixels --)
+    {
+      if (pixels [1] <= 127)
+        return TRUE;
+      pixels += 2;
+    }
+  return FALSE;
+}
+
+
 /* Spins the color map (palette) putting the transparent color at
  * index 0 if there is space. If there isn't any space, warn the user
  * and forget about transparency. Returns TRUE if the colormap has
@@ -363,6 +377,7 @@ respin_cmap (png_structp  png_ptr,
   static guchar  trans[] = { 0 };
   guchar        *before;
   guchar        *pixels;
+  gint           numpixels;
   gint           colors;
   gint           transparent;
   gint           cols, rows;
@@ -379,47 +394,57 @@ respin_cmap (png_structp  png_ptr,
       colors = 1;
     }
 
-  cols = drawable->width;
-  rows = drawable->height;
+  cols      = drawable->width;
+  rows      = drawable->height;
+  numpixels = cols * rows;
 
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
                        drawable->width, drawable->height, FALSE, FALSE);
 
-  pixels = (guchar *) g_malloc (drawable->width * drawable->height * 2);
+  pixels = (guchar *) g_malloc (numpixels * 2);
 
   gimp_pixel_rgn_get_rect (&pixel_rgn, pixels, 0, 0,
                            drawable->width, drawable->height);
 
-  transparent = find_unused_ia_colour (pixels,
-                                       drawable->width * drawable->height,
-                                       &colors);
-
-  if (transparent != -1)
+  if (ia_has_transparent_pixels (pixels, numpixels))
     {
-      png_color palette[256];
-      gint i;
+      transparent = find_unused_ia_colour (pixels, numpixels, &colors);
 
-      png_set_tRNS (png_ptr, png_info_ptr, (png_bytep) trans, 1, NULL);
-
-      remap[0] = transparent;
-      remap[transparent] = 0;
-
-      for (i = 0; i < colors; i++)
+      if (transparent != -1)
         {
-          palette[i].red = before[3 * remap[i]];
-          palette[i].green = before[3 * remap[i] + 1];
-          palette[i].blue = before[3 * remap[i] + 2];
+          png_color palette[256];
+          gint i;
+
+          png_set_tRNS (png_ptr, png_info_ptr, (png_bytep) trans, 1, NULL);
+
+          /* Transform all pixels with a value = transparent to
+           * 0 and vice versa to compensate for re-ordering in palette
+           * due to png_set_tRNS() */
+
+          remap[0] = transparent;
+          remap[transparent] = 0;
+
+          /* Copy from index 0 to index transparent - 1 to index 1 to
+           * transparent of after, then from transparent+1 to colors-1
+           * unchanged, and finally from index transparent to index 0. */
+
+          for (i = 0; i < colors; i++)
+            {
+              palette[i].red = before[3 * remap[i]];
+              palette[i].green = before[3 * remap[i] + 1];
+              palette[i].blue = before[3 * remap[i] + 2];
+            }
+
+          png_set_PLTE (png_ptr, png_info_ptr, (png_colorp) palette, colors);
+
+          return TRUE;
         }
-
-      png_set_PLTE (png_ptr, png_info_ptr, (png_colorp) palette, colors);
-
-      return TRUE;
+      else
+        g_message (_("Couldn't losslessly save transparency, "
+                     "saving opacity instead."));
     }
-  else
-    {
-      g_message ("Couldn't losslessly save transparency, so saving opacity instead.");
-      png_set_PLTE (png_ptr, png_info_ptr, (png_colorp) before, colors);
-    }
+
+  png_set_PLTE (png_ptr, png_info_ptr, (png_colorp) before, colors);
 
   return FALSE;
 }

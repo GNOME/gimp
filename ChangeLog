@@ -1,3 +1,10 @@
+2004-07-14  Philip Lafleur  <plafleur@cvs.gnome.org>
+
+	* plug-ins/common/png.c:
+	* plug-ins/common/mng.c: Fixed erroneously reported warning
+	message when saving indexed layers with an alpha channel but
+	no transparent pixels.
+
 2004-07-14  Sven Neumann  <sven@gimp.org>
 
 	* app/app_procs.c (app_run): register a log handler for the
