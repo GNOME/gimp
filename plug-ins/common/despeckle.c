@@ -27,11 +27,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -840,9 +835,10 @@ preview_update (void)
                 radius,         /* Current radius */
                 hist0,          /* Histogram count for 0 values */
                 hist255;        /* Histogram count for 255 values */
-  guchar        rgba[PREVIEW_SIZE * PREVIEW_SIZE * 4], /* Output image */
-               *rgba_ptr;        /* Pixel pointer for output */
+  guchar       *rgba,           /* Output image */
+               *rgba_ptr;       /* Pixel pointer for output */
 
+  rgba = g_new (guchar, PREVIEW_SIZE * PREVIEW_SIZE * img_bpp);
  /*
   * Setup for filter...
   */
@@ -965,46 +961,7 @@ preview_update (void)
        * Draw this row...
        */
 
-      rgba_ptr = rgba + y * preview_width * 4;
-
-      switch (img_bpp)
-        {
-        case 1:
-          for (x = preview_width, dst_ptr = preview_dst;
-               x > 0;
-               x --, dst_ptr ++, rgba_ptr += 4)
-          {
-            rgba_ptr[0] = rgba_ptr[1] = rgba_ptr[2] = *dst_ptr;
-            rgba_ptr[3] = 255;
-          }
-          break;
-
-        case 2:
-          for (x = preview_width, dst_ptr = preview_dst;
-               x > 0;
-               x --, dst_ptr += 2, rgba_ptr += 4)
-          {
-            rgba_ptr[0] = rgba_ptr[1] = rgba_ptr[2] = dst_ptr[0];
-            rgba_ptr[3] = dst_ptr[1];
-          }
-          break;
-
-        case 3:
-          for (x = preview_width, dst_ptr = preview_dst;
-               x > 0;
-               x --, dst_ptr += 3, rgba_ptr += 4)
-          {
-            rgba_ptr[0] = dst_ptr[0];
-            rgba_ptr[1] = dst_ptr[1];
-            rgba_ptr[2] = dst_ptr[2];
-            rgba_ptr[3] = 255;
-          }
-          break;
-
-        case 4:
-          memcpy (rgba_ptr, preview_dst, preview_width * 4);
-          break;
-        };
+      memcpy (rgba + y * width, preview_dst, width);
     };
 
   /*
@@ -1013,9 +970,10 @@ preview_update (void)
 
   gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
                           0, 0, preview_width, preview_height,
-                          GIMP_RGBA_IMAGE,
+                          gimp_drawable_type (drawable->drawable_id),
                           rgba,
-                          preview_height * 4);
+                          width);
+  g_free (rgba);
 }
 
 static void

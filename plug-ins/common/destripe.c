@@ -27,11 +27,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -271,46 +266,6 @@ run (const gchar      *name,
   gimp_drawable_detach (drawable);
 }
 
-static inline void
-preview_draw_row (gint    x,
-                  gint    y,
-                  gint    w,
-                  guchar *row)
-{
-  guchar *rgb = g_new (guchar, w * 3);
-  guchar *rgb_ptr;
-  gint i;
-
-  switch (img_bpp)
-    {
-    case 1:
-    case 2:
-      for (i = 0, rgb_ptr = rgb; i < w; i++, row += img_bpp, rgb_ptr += 3)
-        rgb_ptr[0] = rgb_ptr[1] = rgb_ptr[2] = *row;
-
-      gtk_preview_draw_row (GTK_PREVIEW (preview), rgb, x, y, w);
-      break;
-
-    case 3:
-      gtk_preview_draw_row (GTK_PREVIEW (preview), row, x, y, w);
-      break;
-
-    case 4:
-      for (i = 0, rgb_ptr = rgb; i < w; i++, row += 4, rgb_ptr += 3)
-        {
-          rgb_ptr[0] = row[0];
-          rgb_ptr[1] = row[1];
-          rgb_ptr[2] = row[2];
-        }
-
-      gtk_preview_draw_row (GTK_PREVIEW (preview), rgb, x, y, w);
-      break;
-    }
-
-  g_free (rgb);
-}
-
-
 static void
 destripe_rect (gint      sel_x1,
                gint      sel_y1,
@@ -318,15 +273,16 @@ destripe_rect (gint      sel_x1,
                gint      sel_y2,
                gboolean  do_preview)
 {
-  GimpPixelRgn src_rgn;        /* source image region */
-  GimpPixelRgn dst_rgn;        /* destination image region */
-  guchar *src_rows;        /* image data */
-  double progress, progress_inc;
-  int sel_width = sel_x2 - sel_x1;
-  int sel_height = sel_y2 - sel_y1;
-  long *hist, *corr;        /* "histogram" data */
-  int tile_width = gimp_tile_width ();
-  int i, x, y, ox, cols;
+  GimpPixelRgn  src_rgn;        /* source image region */
+  GimpPixelRgn  dst_rgn;        /* destination image region */
+  guchar       *src_rows;       /* image data */
+  guchar       *dest_rgba = NULL;
+  double        progress, progress_inc;
+  int           sel_width = sel_x2 - sel_x1;
+  int           sel_height = sel_y2 - sel_y1;
+  long         *hist, *corr;        /* "histogram" data */
+  int           tile_width = gimp_tile_width ();
+  int           i, x, y, ox, cols;
 
   /* initialize */
 
@@ -343,6 +299,9 @@ destripe_rect (gint      sel_x1,
 
       progress = 0;
       progress_inc = 0.5 * tile_width / sel_width;
+    } else
+    {
+      dest_rgba = g_new(guchar, img_bpp * preview_width * preview_height);
     }
 
   /*
@@ -486,7 +445,8 @@ destripe_rect (gint      sel_x1,
               }
 
           if (do_preview)
-            preview_draw_row (ox - sel_x1, y, cols, rows - cols * img_bpp);
+            memcpy (dest_rgba + img_bpp * (y * preview_width+ox-sel_x1),
+                    rows - cols * img_bpp, cols * img_bpp);
         }
 
       if (!do_preview)
@@ -505,7 +465,12 @@ destripe_rect (gint      sel_x1,
 
   if (do_preview)
     {
-      gtk_widget_queue_draw (preview);
+      gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                              0, 0, preview_width, preview_height,
+                              gimp_drawable_type (drawable->drawable_id),
+                              dest_rgba,
+                              img_bpp * preview_width);
+      g_free (dest_rgba);
     }
   else
     {
@@ -576,8 +541,8 @@ destripe_dialog (void)
   preview_width  = MIN (sel_x2 - sel_x1, PREVIEW_SIZE);
   preview_height = MIN (sel_y2 - sel_y1, PREVIEW_SIZE);
 
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (preview), preview_width, preview_height);
+  preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (preview, preview_width, preview_height);
   gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
 
