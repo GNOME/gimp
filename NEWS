@@ -18,7 +18,9 @@ XInput support
 
 Ink tool
    A nice new toy that really comes to life if you have an extended
-   input device as described above.
+   input device as described above. If you don't happen to have a
+   special device, Ink will vary its size based on the speed of your
+   cursor. The results can be remarkably natural-looking.
 
 'File New' dialog
    The new dialog for creating new images allows to use real life
@@ -48,7 +50,7 @@ GUI enhancements
 
 Session management
    GIMP remembers window positions and sizes and restores them on
-   startup. Not currently working.
+   startup.
 
 Selections
    New algorithms are now used to grow and shrink the selection. The
@@ -153,11 +155,6 @@ Internals
    correctly, like objectification and removal of the image ID
    system. Read the ChangeLog yourself to figure this out.
 
-GTK+ compatibility
-   GIMP 1.1 makes use of the development version of GTK+. Therefore a
-   whole lot of work has been put in following the GTK+ development
-   and keeping The GIMP in sync.
-
 Plug-ins and Scripts
    Various plug-ins and scripts not mentioned above have been updated
    or fixed to work with changes in the GIMP core or GTK+. One day I
@@ -178,9 +175,10 @@ Unit representation
    You can now work directly in inches, centimeters, millimeters, and
    other units without having to do pixel math to figure things out.
 
-Paths dialog
+Paths dialog 
    Manipulating paths is much easier, and the Paths dialog is
-   integrated into the Layers & Channels dialog.
+   integrated into the Layers & Channels dialog. Paths are quite
+   flexible and will soon replace the Bezier tool entirely.
 
 Thumbnails
    The Open dialog now displays a thumbnail if it exists, and gives
@@ -195,9 +193,10 @@ Win32 merging
 
 Miscellaneous
    - The painting functions (brush, pencil, airbrush, etc.) have been
-     optimized.
+     optimized, and a new painting option allows you to color with a
+     gradient.
    - The GAP plugin, which has some essential animation features, is
-     being integrated into GIMP.
+     now integrated into GIMP.
    - The font selector has been redesigned.
    - The new, slightly incomplete MAINTAINERS file should help track
      responsibility and expertise for various GIMP parts.
