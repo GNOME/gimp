@@ -25,6 +25,7 @@
 #include "tools-types.h"
 
 #include "config/gimpdisplayconfig.h"
+#include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
@@ -237,7 +238,6 @@ gimp_move_tool_button_press (GimpTool        *tool,
   move->moving_guide       = FALSE;
   move->old_active_layer   = NULL;
   move->old_active_vectors = NULL;
-  move->change_active      = options->change_active;
 
   if (! options->move_current)
     {
@@ -362,8 +362,9 @@ gimp_move_tool_button_release (GimpTool        *tool,
                                GdkModifierType  state,
                                GimpDisplay     *gdisp)
 {
-  GimpMoveTool     *move  = GIMP_MOVE_TOOL (tool);
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+  GimpMoveTool     *move   = GIMP_MOVE_TOOL (tool);
+  GimpDisplayShell *shell  = GIMP_DISPLAY_SHELL (gdisp->shell);
+  GimpGuiConfig    *config = GIMP_GUI_CONFIG (gdisp->gimage->gimp->config);
 
   if (gimp_tool_control_is_active (tool->control))
     gimp_tool_control_halt (tool->control);
@@ -456,24 +457,21 @@ gimp_move_tool_button_release (GimpTool        *tool,
     }
   else
     {
-      if (move->old_active_layer)
+      if (! config->move_tool_changes_active || (state & GDK_BUTTON3_MASK))
         {
-          if ( ! move->change_active)
+          if (move->old_active_layer)
             {
               gimp_image_set_active_layer (gdisp->gimage,
                                            move->old_active_layer);
+              move->old_active_layer = NULL;
             }
-          move->old_active_layer = NULL;
-        }
 
-      if (move->old_active_vectors)
-        {
-          if (! move->change_active)
+          if (move->old_active_vectors)
             {
               gimp_image_set_active_vectors (gdisp->gimage,
                                              move->old_active_vectors);
+              move->old_active_vectors = NULL;
             }
-          move->old_active_vectors = NULL;
         }
 
       /*  Take care of the case where the user "cancels" the action  */

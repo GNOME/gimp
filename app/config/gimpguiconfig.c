@@ -63,6 +63,7 @@ enum
 {
   PROP_0,
   PROP_DEFAULT_THRESHOLD,
+  PROP_MOVE_TOOL_CHANGES_ACTIVE,
   PROP_INFO_WINDOW_PER_DISPLAY,
   PROP_TRUST_DIRTY_FLAG,
   PROP_SAVE_DEVICE_STATUS,
@@ -140,6 +141,11 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                 "default-threshold", DEFAULT_THRESHOLD_BLURB,
                                 0, 255, 15,
                                 0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_MOVE_TOOL_CHANGES_ACTIVE,
+                                    "move-tool-changes-active",
+                                    MOVE_TOOL_CHANGES_ACTIVE_BLURB,
+                                    FALSE,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INFO_WINDOW_PER_DISPLAY,
                                     "info-window-per-display",
                                     INFO_WINDOW_PER_DISPLAY_BLURB,
@@ -292,6 +298,9 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_DEFAULT_THRESHOLD:
       gui_config->default_threshold = g_value_get_int (value);
       break;
+    case PROP_MOVE_TOOL_CHANGES_ACTIVE:
+      gui_config->move_tool_changes_active = g_value_get_boolean (value);
+      break;
     case PROP_INFO_WINDOW_PER_DISPLAY:
       gui_config->info_window_per_display = g_value_get_boolean (value);
       break;
@@ -396,6 +405,9 @@ gimp_gui_config_get_property (GObject    *object,
     {
     case PROP_DEFAULT_THRESHOLD:
       g_value_set_int (value, gui_config->default_threshold);
+      break;
+    case PROP_MOVE_TOOL_CHANGES_ACTIVE:
+      g_value_set_boolean (value, gui_config->move_tool_changes_active);
       break;
     case PROP_INFO_WINDOW_PER_DISPLAY:
       g_value_set_boolean (value, gui_config->info_window_per_display);

@@ -41,6 +41,7 @@ struct _GimpGuiConfig
   GimpDisplayConfig    parent_instance;
 
   gint                 default_threshold;
+  gboolean             move_tool_changes_active;
   gboolean             info_window_per_display;
   gboolean             trust_dirty_flag;
   gboolean             save_device_status;

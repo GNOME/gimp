@@ -40,7 +40,6 @@ struct _GimpMoveOptions
 
   GimpTransformType  move_type;
   gboolean           move_current;
-  gboolean           change_active;
 };
 
 

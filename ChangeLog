@@ -1,5 +1,15 @@
 2004-10-30  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpguiconfig.[ch]
+	* app/config/gimprc-blurbs.h
+	* app/dialogs/preferences-dialog.c
+	* app/tools/gimpmoveoptions.[ch]
+	* app/tools/gimpmovetool.[ch]: reverted changes for bug #156801.
+	Instead added a gimprc option that allows to get the old behaviour
+	back.
+
+2004-10-30  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpmoveoptions.[ch]
 	* app/tools/gimpmovetool.[ch]: applied (cleaned up version of) a
 	patch from Joao S. O. Bueno that adds a tool-option to restore the

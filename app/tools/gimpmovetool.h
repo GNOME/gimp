@@ -49,8 +49,6 @@ struct _GimpMoveTool
 
   GimpLayer           *old_active_layer;
   GimpVectors         *old_active_vectors;
-  
-  gboolean             change_active;
 };
 
 struct _GimpMoveToolClass
