@@ -547,7 +547,7 @@ $#procs--;
 unshift @procs, qw(layer_new layer_copy layer_create_mask layer_scale
 		   layer_resize layer_delete layer_translate layer_add_alpha
 		   layer_set_offsets layer_mask layer_is_floating_sel);
-%exports = (app => [@procs]);
+%exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Layer';
 

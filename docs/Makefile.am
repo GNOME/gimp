@@ -6,7 +6,7 @@ EXTRA_DIST = \
 	architecture.eps	 	logo.eps \
 	net-fu.eps 			timeline.eps \
 	pdb_dump.texi			gimp_quick_reference.ps \
-	gimp_quick_reference.tar.gz
+	gimp_quick_reference.tar.gz	undo.txt
 
 BUILT_SOURCES = pdb_dump.texi
 

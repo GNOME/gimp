@@ -409,9 +409,10 @@ CODE
 @headers = qw("fileops.h" "plug_in.h" "config.h" "libgimp/gimpintl.h"
 	      <unistd.h>);
 
-@procs = qw(file_load file_save file_load_thumbnail file_save_thumbnail temp_name 
-	    register_magic_load_handler register_load_handler register_save_handler);
-%exports = (app => [@procs]);
+@procs = qw(file_load file_save file_load_thumbnail file_save_thumbnail
+	    temp_name register_magic_load_handler register_load_handler
+	    register_save_handler);
+%exports = (app => [@procs], lib => [@procs[5..7]]);
 
 $desc = 'File Operations';
 

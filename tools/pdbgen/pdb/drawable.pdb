@@ -307,7 +307,7 @@ HELP
 
     foreach (qw(x y)) {
 	push @outargs, { name => "offset_$_", type => 'int32',
-			 desc => "$_ offset of drawable" }
+			 desc => "$_ offset of drawable", void_ret => 1 }
     }
 
     %invoke = ( code => 'drawable_offsets (drawable, &offset_x, &offset_y);' );
@@ -466,7 +466,7 @@ HELP
     @outargs = (
 	&dim_args,
         { name => 'thumbnail_data', type => 'int8array',
-	  desc => 'The thumbnail data', init => 1,
+	  desc => 'The thumbnail data', init => 1, retval => 1,
 	  array => { name => 'thumbnail_data_count',
 		     desc => 'The number of pixels in thumbnail data',
 		     alias => 'num_pixels', init => 1 } }
@@ -516,7 +516,7 @@ CODE
 	    drawable_height drawable_offsets drawable_is_layer
 	    drawable_is_layer_mask drawable_is_channel drawable_get_pixel
 	    drawable_set_pixel drawable_set_image drawable_thumbnail);
-%exports = (app => [@procs], lib => [@procs]);
+%exports = (app => [@procs], lib => [@procs[0..17,21]]);
 
 $desc = 'Drawable procedures';
 

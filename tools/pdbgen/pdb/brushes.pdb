@@ -359,7 +359,7 @@ CODE
 	    brushes_get_opacity brushes_set_opacity brushes_get_spacing
 	    brushes_set_spacing brushes_get_paint_mode brushes_set_paint_mode
 	    brushes_list brushes_get_brush_data);
-%exports = (app => [@procs]);
+%exports = (app => [@procs], lib => [$procs[10]]);
 
 $desc = 'Brushes';
 

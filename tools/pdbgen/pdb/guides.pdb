@@ -297,7 +297,7 @@ CODE
 @procs = qw(image_add_hguide image_add_vguide image_delete_guide
 	    image_find_next_guide image_get_guide_orientation
 	    image_get_guide_position);
-%exports = (app => [@procs]);
+%exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Guide procedures';
 

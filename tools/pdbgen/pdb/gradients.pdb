@@ -73,7 +73,8 @@ HELP
     @outargs = (
 	{ name  => 'name', type  => 'string',
 	  desc  => 'The name of the active gradient',
-	  alias => 'g_strdup (gimp_context_get_gradient (NULL)->name)', no_declare => 1 }
+	  alias => 'g_strdup (gimp_context_get_gradient (NULL)->name)',
+	  no_declare => 1 }
     );
 
     %invoke = ( code => 'success = gimp_context_get_gradient (NULL) != NULL;' );

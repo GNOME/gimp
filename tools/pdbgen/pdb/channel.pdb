@@ -229,7 +229,7 @@ $#procs--;
 @headers = qw("channel.h" "channel_pvt.h");
 
 unshift @procs, qw(channel_new channel_copy channel_delete);
-%exports = (app => [@procs]);
+%exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Channel';
 

@@ -32,7 +32,7 @@ HELP
     &pdb_misc;
 
     @inargs = (
-	{ name => 'message', type => 'string',
+	{ name => 'message', type => 'string', const => 1,
 	  desc => 'Message to display in the dialog' }
     );
 
@@ -77,7 +77,7 @@ HELP
 }
 
 @procs = qw(message message_get_handler message_set_handler);
-%exports = (app => [@procs]);
+%exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Interface';
 

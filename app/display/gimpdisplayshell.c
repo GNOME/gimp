@@ -1010,9 +1010,7 @@ create_display_shell (GDisplay* gdisp,
   gtk_widget_show (vbox);
 
   gtk_widget_show (gdisp->shell);
-#ifdef __GNUC__
-#warning DODGY?
-#endif /*__GNUC__ */
+
   gtk_widget_realize (gdisp->canvas);
   gdk_window_set_back_pixmap (gdisp->canvas->window, NULL, 0);
 

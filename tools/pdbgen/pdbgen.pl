@@ -169,6 +169,8 @@ sub arrayexpand {
 		$arg->{type} = '0 < ' . $arg->{type};
 	    }
 
+	    $arg->{void_ret} = 1 if exists $_->{void_ret};
+
 	    $arg->{num} = 1;
 
 	    push @$newargs, $arg;

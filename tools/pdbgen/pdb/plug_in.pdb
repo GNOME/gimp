@@ -40,7 +40,7 @@ HELP
 	{ name => 'gdisplay', type => 'int32',
 	  desc => 'GDisplay to update progressbar in, or -1 for a seperate
 		   window',
-	  no_id_lookup => 1 }
+	  implicit_fill => '_gdisp_ID', no_id_lookup => 1 }
     );
 
     %invoke = (
@@ -253,7 +253,7 @@ match_strings (regex_t *preg,
 CODE
 
 @procs = qw(progress_init progress_update temp_PDB_name plugins_query);
-%exports = (app => [@procs]);
+%exports = (app => [@procs], lib => [@procs[0..2]]);
 
 $desc = 'Plug-in';
 

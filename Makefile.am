@@ -84,7 +84,8 @@ EXTRA_DIST = \
 	gtkrc.forest2		\
 	gimp.m4			\
 	gimprc.win32		\
-	config.h.win32
+	config.h.win32		\
+	gimp.spec
 
 gimpdata_DATA = \
 	gimprc			 \

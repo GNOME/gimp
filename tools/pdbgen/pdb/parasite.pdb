@@ -165,19 +165,24 @@ sub parasite_list {
 	      "gimpimage.h");
 
 $extra{lib}->{protos} = <<'CODE';
-void gimp_attach_new_parasite (const char *name, int flags, int size
-			       const void *data);
+void gimp_parasite_attach_new (const gchar  *name,
+			       guint32       flags,
+			       guint32       size,
+			       gconstpoiner  data);
 CODE
 
 $extra{lib}->{code} = <<'CODE';
 void
-gimp_attach_new_parasite (const char *name, int flags, int size,
-			  const void *data)
+gimp_parasite_attach_new (const gchar   *name,
+			  guint32        flags,
+			  guint32        size,
+			  gconstpointer  data)
 {
   Parasite *p = parasite_new (name, flags, size, data);
   gimp_parasite_attach (p);
   parasite_free (p);
 }
+
 CODE
 
 @procs = qw(parasite_new parasite_find parasite_attach parasite_detach
@@ -187,6 +192,8 @@ CODE
     ['drawable', '&drawable_arg' , 'drawable'],
     ['image'   , '&std_image_arg', 'gimage' ]
 );
+
+my %code;
 
 foreach $type (@types) {
     foreach (@procs[1..4]) {
@@ -213,9 +220,26 @@ SUB
 
 	push @procs, "$type->[0]_$_";
     }
+
+    foreach (qw(protos code)) {
+	my $code = $extra{lib}->{$_};
+	$code =~ s/\t/' ' x 8/eg;
+	$code =~ s/gimp/gimp_$type->[0]/g;
+	$code =~ s/^ {8}/' ' x (length($type->[0]) + 9)/meg;
+	while ($code =~ /^\t* {8}/m) { $code =~ s/^(\t*) {8}/$1\t/mg }
+
+	$code{$_} .= $code;
+    }
 }
 
-%exports = (app => [@procs], lib => [@procs[1..3]]);
+
+foreach (qw(protos code)) {
+    $extra{lib}->{$_} .= $code{$_};
+}
+
+chop $extra{lib}->{code};
+
+%exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Parasite procedures';
 

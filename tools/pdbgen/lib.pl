@@ -34,7 +34,7 @@ sub generate {
 
     sub libtype {
 	my ($arg, $type) = @_;
-	$type =~ s/\d+// unless exists $arg->{keep_size};
+	$type =~ s/int32/int/ unless exists $arg->{keep_size};
 	$type;
     }
 
@@ -52,11 +52,17 @@ sub generate {
 
 	# Find the return argument (defaults to the first arg if not
 	# explicity set
-	my $retarg;
+	my $retarg  = undef; $retvoid = 0;
 	foreach (@outargs) { $retarg = $_, last if exists $_->{retval} }
 	unless ($retarg) {
 	    if (scalar @outargs) {
-		$retarg = exists $outargs[0]->{num} ? $outargs[1] : $outargs[0];
+		if (exists $outargs[0]->{void_ret}) {
+		    $retvoid = 1;
+		}
+		else {
+		    $retarg = exists $outargs[0]->{num} ? $outargs[1]
+							: $outargs[0];
+		}
 	    }
 	}
 
@@ -84,13 +90,16 @@ sub generate {
 	}
 
 	# The parameters to the function
-	my $arglist = ""; my $argpass = ""; my $color = "";
+	my $arglist = ""; my $argpass = ""; my $color = ""; my $privatevars = 0;
 	foreach (@inargs) {
 	    my ($type) = &arg_parse($_->{type});
 	    my $arg = $arg_types{$type};
 	    my $id = exists $arg->{id_func};
 
-	    if ($type ne 'color') {
+	    if (exists $_->{implicit_fill}) {
+		$privatevars++;
+	    }
+	    elsif ($type ne 'color') {
 		$arglist .= do {
 		    if ($id) { 'gint32 '                  }
 		    else     { &libtype($_, $arg->{type}) }
@@ -116,8 +125,16 @@ CODE
 
 	    # This is what's passed into gimp_run_procedure
 	    $argpass .= "\n\t\t\t\t" . ' ' x 4;
-	    $argpass .= "PARAM_$arg->{name}, $_->{name}";
-	    $argpass .= '_ID' if $id;
+	    $argpass .= "PARAM_$arg->{name}, ";
+
+	    if (exists $_->{implicit_fill}) {
+		$argpass .= $_->{implicit_fill};
+	    }
+	    else {
+		$argpass .= "$_->{name}";
+		$argpass .= '_ID' if $id;
+	    }
+
 	    $argpass .= ',';
 	}
 
@@ -126,7 +143,7 @@ CODE
 	my $return_marshal = "gimp_destroy_params (return_vals, nreturn_vals);";
 
 	# We only need to bother with this if we have to return a value
-	if ($rettype ne 'void' || $retcol) {
+	if ($rettype ne 'void' || $retcol || $retvoid) {
 	    my $once = 0;
 	    my $firstvar;
 	    my @arraynums;
@@ -145,10 +162,10 @@ CODE
 			push @arraynums, $_;
 		    }
 		}
-		elsif ($type ne 'color') {
+		elsif (exists $_->{retval} && $type ne 'color') {
 		    $return_args .= "\n" . ' ' x 2;
 		    $return_args .= do {
-			if ($id) { 'gint32 '    }
+			if ($id) { 'gint32 '                  }
 			else     { &libtype($_, $arg->{type}) }
 		    };
 
@@ -195,6 +212,13 @@ CODE
 		    $head = 'g_strdup (';
 		    $foot = ')';
 		}
+		elsif ($type =~ /parasite/) {
+		    $head = 'parasite_copy (&';
+		    $foot = ')';
+		}
+		elsif ($type =~ /boolean|enum/) {
+		    $type = 'int32';
+		}
 
 	        if (exists $_->{num}) {
 		    $numpos = $argc;
@@ -219,7 +243,23 @@ CODE
 		}
 		elsif ($type ne 'color') {
 		    # The return value variable
-		    $var = $_->{name};
+		    $var = "";
+
+		    unless (exists $_->{retval}) {
+			$var .= '*';
+
+			$arglist .= do {
+			    if ($id) { 'gint32 '                  }
+			    else     { &libtype($_, $arg->{type}) }
+			};
+
+			$arglist .= "*$_->{name}";
+			$arglist .= '_ID' if $id;
+			$arglist .= ', ';
+		    }
+
+		    $var = exists $_->{retval} ? "" : '*';
+		    $var .= $_->{name};
 		    $var .= '_ID' if $id;
 
 		    $return_marshal .= ' ' x 2 if $#outargs;
@@ -249,8 +289,12 @@ CODE
   gimp_destroy_params (return_vals, nreturn_vals);
 
 CODE
-	    $return_marshal .= ' ' x 2 . "return $firstvar;" unless $retcol;
-	    $return_marshal =~ s/\n\n$//s if $retcol;
+	    unless ($retcol || $retvoid) {
+		$return_marshal .= ' ' x 2 . "return $firstvar;";
+	    }
+	    else {
+		$return_marshal =~ s/\n\n$//s;
+	    }
 	}
 
 	if ($arglist) {
@@ -317,16 +361,16 @@ CODE
  * Copyright (C) 1995-1999 Peter Mattis and Spencer Kimball                
  *
  * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
+ * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2 of the License, or (at your option) any later version.             
  *                                                                              
  * This library is distributed in the hope that it will be useful,              
  * but WITHOUT ANY WARRANTY; without even the implied warranty of               
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU            
- * Library General Public License for more details.
+ * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Library General Public
+ * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
@@ -341,6 +385,9 @@ LGPL
     while (my($group, $out) = each %out) {
 	my $hfile = "$destdir/gimp${group}.h$FILE_EXT";
 	my $cfile = "$destdir/gimp${group}.c$FILE_EXT";
+
+	$hfile =~ s/_//g;
+	$cfile =~ s/_//g;
 
 	my $extra = {};
 	if (exists $main::grp{$group}->{extra}->{lib}) {
@@ -394,10 +441,9 @@ LGPL
 	my $body;
 	$body = $extra->{decls} if exists $extra->{decls};
 	foreach (@{$out->{proto}}) { $body .= $_ }
-	$body .= $extra->{protos} if exists $extra->{protos};
 	chomp $body;
 
-	open HFILE, "> $hfile" or die "Can't open $cfile: $!\n";
+	open HFILE, "> $hfile" or die "Can't open $hfile: $!\n";
 	print HFILE $lgpl;
 	my $guard = "__GIMP_\U$group\E_H__";
 	print HFILE <<HEADER;
@@ -430,6 +476,7 @@ HEADER
 	open CFILE, "> $cfile" or die "Can't open $cfile: $!\n";
 	print CFILE $lgpl;
 	print CFILE qq/#include "gimp${group}.h"\n/;
+	print CFILE qq/#include "gimpprivate.h"\n/ if $privatevars;
 	print CFILE "\n", $extra->{code} if exists $extra->{code};
 	print CFILE $out->{code};
 	close CFILE;

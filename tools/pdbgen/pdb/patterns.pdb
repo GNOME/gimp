@@ -215,7 +215,7 @@ CODE
 
 @procs = qw(patterns_get_pattern patterns_set_pattern patterns_list
 	    patterns_get_pattern_data);
-%exports = (app => [@procs]);
+%exports = (app => [@procs], lib => [$procs[3]]);
 
 $desc = 'Patterns';
 

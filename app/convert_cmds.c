@@ -163,16 +163,16 @@ convert_indexed_invoker (Argument *args)
 	  GSList *list;
     
 	  switch (dither_type)
-	  {
-	      case NO_DITHER:
-	      case FS_DITHER:
-	      case FSLOWBLEED_DITHER:
-	      case FIXED_DITHER:
+	    {
+	    case NO_DITHER:
+	    case FS_DITHER:
+	    case FSLOWBLEED_DITHER:
+	    case FIXED_DITHER:
 	      break;
 	    default:
 	      success = FALSE;
 	      break;
-	  }
+	    }
 	  
 	  switch (palette_type)
 	    {

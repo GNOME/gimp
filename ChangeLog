@@ -1,3 +1,15 @@
+Sat Dec 25 23:15:46 PST 1999 Manish Singh <yosh@gimp.org>
+
+	* Makefile.am: added spec file to EXTRA_DIST
+
+	* docs/Makefile.am: added undo.txt to EXTRA_DIST
+
+	* app/interface.c: removed the DODGY warning, doesn't look dodgy to me
+
+	* libgimp/*.h: missed an s/Library/Lesser/
+
+	* tools/pdbgen/*: lots of work on the libgimp portion
+
 1999-12-26  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
 
 	* plug-ins/common/gbr.c

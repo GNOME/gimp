@@ -176,7 +176,7 @@ brush_get_brushselect (gchar *name)
 CODE
 
 @procs = qw(brushes_popup brushes_close_popup brushes_set_popup);
-%exports = (app => [@procs]);
+%exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Brush UI';
 

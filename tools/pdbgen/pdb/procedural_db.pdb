@@ -216,7 +216,7 @@ HELP
     @inargs = ( &proc_name_arg );
 
     @outargs = (
-	{ name => 'blurb', type => 'string',
+	{ name => 'blurb', type => 'string', void_ret => 1,
 	  desc => 'A short blurb' },
 	{ name => 'help', type => 'string',
 	  desc => 'Detailed procedure help' },

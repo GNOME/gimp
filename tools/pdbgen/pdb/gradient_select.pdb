@@ -259,7 +259,7 @@ CODE
 
 @procs = qw(gradients_popup gradients_close_popup gradients_set_popup
 	    gradients_get_gradient_data);
-%exports = (app => [@procs]);
+%exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Gradient UI';
 

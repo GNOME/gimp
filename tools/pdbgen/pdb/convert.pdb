@@ -106,16 +106,16 @@ HELP
       GSList *list;
 
       switch (dither_type)
-      {
-	  case NO_DITHER:
-	  case FS_DITHER:
-	  case FSLOWBLEED_DITHER:
-	  case FIXED_DITHER:
+        {
+	case NO_DITHER:
+	case FS_DITHER:
+	case FSLOWBLEED_DITHER:
+	case FIXED_DITHER:
 	  break;
 	default:
 	  success = FALSE;
 	  break;
-      }
+        }
       
       switch (palette_type)
 	{
@@ -166,7 +166,7 @@ CODE
 @headers = qw("gimage.h" "convert.h");
 
 @procs = qw(convert_rgb convert_grayscale convert_indexed);
-%exports = (app => [@procs]);
+%exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Convert';
 
