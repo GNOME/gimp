@@ -39,6 +39,12 @@ gdouble       action_select_value     (GimpActionSelectType  select_type,
                                        gdouble               inc,
                                        gdouble               skip_inc,
                                        gboolean              wrap);
+void          action_select_property  (GimpActionSelectType  select_type,
+                                       GObject              *object,
+                                       const gchar          *property_name,
+                                       gdouble               inc,
+                                       gdouble               skip_inc,
+                                       gboolean              wrap);
 GimpObject  * action_select_object    (GimpActionSelectType  select_type,
                                        GimpContainer        *container,
                                        GimpObject           *current);

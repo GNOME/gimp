@@ -42,5 +42,28 @@ void   tools_color_average_radius_cmd_callback (GtkAction   *action,
                                                 gint         value,
                                                 gpointer     data);
 
+void   tools_ink_blob_size_cmd_callback        (GtkAction   *action,
+                                                gint         value,
+                                                gpointer     data);
+void   tools_ink_blob_aspect_cmd_callback      (GtkAction   *action,
+                                                gint         value,
+                                                gpointer     data);
+void   tools_ink_blob_angle_cmd_callback       (GtkAction   *action,
+                                                gint         value,
+                                                gpointer     data);
+
+void   tools_value_1_cmd_callback              (GtkAction   *action,
+                                                gint         value,
+                                                gpointer     data);
+void   tools_value_2_cmd_callback              (GtkAction   *action,
+                                                gint         value,
+                                                gpointer     data);
+void   tools_value_3_cmd_callback              (GtkAction   *action,
+                                                gint         value,
+                                                gpointer     data);
+void   tools_value_4_cmd_callback              (GtkAction   *action,
+                                                gint         value,
+                                                gpointer     data);
+
 
 #endif /* __TOOLS_COMMANDS_H__ */

@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "actions-types.h"
@@ -27,9 +29,15 @@
 #include "core/gimpcontext.h"
 #include "core/gimptoolinfo.h"
 
+#include "paint/gimpinkoptions.h"
+
+#include "widgets/gimpenumaction.h"
+#include "widgets/gimpuimanager.h"
+
 #include "tools/gimp-tools.h"
 #include "tools/gimpcoloroptions.h"
 #include "tools/gimpimagemaptool.h"
+#include "tools/gimptoolcontrol.h"
 #include "tools/tool_manager.h"
 
 #include "actions.h"
@@ -231,21 +239,193 @@ tools_color_average_radius_cmd_callback (GtkAction *action,
 
   if (tool_info && GIMP_IS_COLOR_OPTIONS (tool_info->tool_options))
     {
-      GimpToolOptions *options = tool_info->tool_options;
-      GParamSpec      *pspec;
-      gdouble          radius;
+      action_select_property ((GimpActionSelectType) value,
+                              G_OBJECT (tool_info->tool_options),
+                              "average-radius",
+                              1.0, 10.0, FALSE);
+    }
+}
 
-      g_object_get (options, "average-radius", &radius, NULL);
+void
+tools_ink_blob_size_cmd_callback (GtkAction *action,
+                                  gint       value,
+                                  gpointer   data)
+{
+  GimpContext  *context;
+  GimpToolInfo *tool_info;
+  return_if_no_context (context, data);
 
-      pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (options),
-                                            "average-radius");
+  tool_info = gimp_context_get_tool (context);
 
-      radius = action_select_value ((GimpActionSelectType) value,
-                                    radius,
-                                    G_PARAM_SPEC_DOUBLE (pspec)->minimum,
-                                    G_PARAM_SPEC_DOUBLE (pspec)->maximum,
-                                    1.0, 10.0, FALSE);
+  if (tool_info && GIMP_IS_INK_OPTIONS (tool_info->tool_options))
+    {
+      action_select_property ((GimpActionSelectType) value,
+                              G_OBJECT (tool_info->tool_options),
+                              "size",
+                              1.0, 10.0, FALSE);
+    }
+}
 
-      g_object_set (options, "average-radius", radius, NULL);
+void
+tools_ink_blob_aspect_cmd_callback (GtkAction *action,
+                                    gint       value,
+                                    gpointer   data)
+{
+  GimpContext  *context;
+  GimpToolInfo *tool_info;
+  return_if_no_context (context, data);
+
+  tool_info = gimp_context_get_tool (context);
+
+  if (tool_info && GIMP_IS_INK_OPTIONS (tool_info->tool_options))
+    {
+      action_select_property ((GimpActionSelectType) value,
+                              G_OBJECT (tool_info->tool_options),
+                              "blob-aspect",
+                              0.1, 1.0, FALSE);
+    }
+}
+
+void
+tools_ink_blob_angle_cmd_callback (GtkAction *action,
+                                   gint       value,
+                                   gpointer   data)
+{
+  GimpContext  *context;
+  GimpToolInfo *tool_info;
+  return_if_no_context (context, data);
+
+  tool_info = gimp_context_get_tool (context);
+
+  if (tool_info && GIMP_IS_INK_OPTIONS (tool_info->tool_options))
+    {
+      action_select_property ((GimpActionSelectType) value,
+                              G_OBJECT (tool_info->tool_options),
+                              "blob-angle",
+                              1.0, 15.0, TRUE);
+    }
+}
+
+static void
+tools_activate_value_action (const gchar *action_desc,
+                             gint         value)
+{
+  gchar *group_name;
+  gchar *action_name;
+
+  group_name  = g_strdup (action_desc);
+  action_name = strchr (group_name, '/');
+
+  if (action_name)
+    {
+      GList     *managers;
+      GtkAction *action;
+
+      *action_name++ = '\0';
+
+      managers = gimp_ui_managers_from_name ("<Image>");
+
+      action = gimp_ui_manager_find_action (managers->data,
+                                            group_name, action_name);
+
+      if (GIMP_IS_ENUM_ACTION (action))
+        {
+          gint old_value;
+
+          old_value = GIMP_ENUM_ACTION (action)->value;
+          GIMP_ENUM_ACTION (action)->value = value;
+          gtk_action_activate (action);
+          GIMP_ENUM_ACTION (action)->value = old_value;
+        }
+    }
+
+  g_free (group_name);
+}
+
+void
+tools_value_1_cmd_callback (GtkAction *action,
+                            gint       value,
+                            gpointer   data)
+{
+  GimpContext *context;
+  GimpTool    *tool;
+  return_if_no_context (context, data);
+
+  tool = tool_manager_get_active (context->gimp);
+
+  if (tool)
+    {
+      const gchar *action_desc;
+
+      action_desc = gimp_tool_control_get_action_value_1 (tool->control);
+
+      if (action_desc)
+        tools_activate_value_action (action_desc, value);
+    }
+}
+
+void
+tools_value_2_cmd_callback (GtkAction *action,
+                            gint       value,
+                            gpointer   data)
+{
+  GimpContext *context;
+  GimpTool    *tool;
+  return_if_no_context (context, data);
+
+  tool = tool_manager_get_active (context->gimp);
+
+  if (tool)
+    {
+      const gchar *action_desc;
+
+      action_desc = gimp_tool_control_get_action_value_2 (tool->control);
+
+      if (action_desc)
+        tools_activate_value_action (action_desc, value);
+    }
+}
+
+void
+tools_value_3_cmd_callback (GtkAction *action,
+                            gint       value,
+                            gpointer   data)
+{
+  GimpContext *context;
+  GimpTool    *tool;
+  return_if_no_context (context, data);
+
+  tool = tool_manager_get_active (context->gimp);
+
+  if (tool)
+    {
+      const gchar *action_desc;
+
+      action_desc = gimp_tool_control_get_action_value_3 (tool->control);
+
+      if (action_desc)
+        tools_activate_value_action (action_desc, value);
+    }
+}
+
+void
+tools_value_4_cmd_callback (GtkAction *action,
+                            gint       value,
+                            gpointer   data)
+{
+  GimpContext *context;
+  GimpTool    *tool;
+  return_if_no_context (context, data);
+
+  tool = tool_manager_get_active (context->gimp);
+
+  if (tool)
+    {
+      const gchar *action_desc;
+
+      action_desc = gimp_tool_control_get_action_value_4 (tool->control);
+
+      if (action_desc)
+        tools_activate_value_action (action_desc, value);
     }
 }

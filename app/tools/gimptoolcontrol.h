@@ -64,6 +64,11 @@ struct _GimpToolControl
   GimpCursorModifier toggle_cursor_modifier;
 
   gboolean           toggled;
+
+  gchar             *action_value_1;
+  gchar             *action_value_2;
+  gchar             *action_value_3;
+  gchar             *action_value_4;
 };
 
 struct _GimpToolControlClass
@@ -145,6 +150,19 @@ GimpCursorModifier gimp_tool_control_get_toggle_cursor_modifier (GimpToolControl
 
 void               gimp_tool_control_set_toggle_cursor_modifier (GimpToolControl    *control,
                                                                  GimpCursorModifier  cmodifier);
+
+void               gimp_tool_control_set_action_value_1         (GimpToolControl    *control,
+                                                                 const gchar        *action_name);
+const gchar      * gimp_tool_control_get_action_value_1         (GimpToolControl    *control);
+void               gimp_tool_control_set_action_value_2         (GimpToolControl    *control,
+                                                                 const gchar        *action_name);
+const gchar      * gimp_tool_control_get_action_value_2         (GimpToolControl    *control);
+void               gimp_tool_control_set_action_value_3         (GimpToolControl    *control,
+                                                                 const gchar        *action_name);
+const gchar      * gimp_tool_control_get_action_value_3         (GimpToolControl    *control);
+void               gimp_tool_control_set_action_value_4         (GimpToolControl    *control,
+                                                                 const gchar        *action_name);
+const gchar      * gimp_tool_control_get_action_value_4         (GimpToolControl    *control);
 
 
 #endif /* __GIMP_TOOL_CONTROL_H__ */

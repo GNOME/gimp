@@ -412,6 +412,36 @@ action_select_value (GimpActionSelectType  select_type,
   return value;
 }
 
+void
+action_select_property (GimpActionSelectType  select_type,
+                        GObject              *object,
+                        const gchar          *property_name,
+                        gdouble               inc,
+                        gdouble               skip_inc,
+                        gboolean              wrap)
+{
+  GParamSpec *pspec;
+  gdouble     value;
+
+  g_return_if_fail (G_IS_OBJECT (object));
+  g_return_if_fail (property_name != NULL);
+
+  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (object),
+                                        property_name);
+
+  g_return_if_fail (G_IS_PARAM_SPEC_DOUBLE (pspec));
+
+  g_object_get (object, property_name, &value, NULL);
+
+  value = action_select_value (select_type,
+                               value,
+                               G_PARAM_SPEC_DOUBLE (pspec)->minimum,
+                               G_PARAM_SPEC_DOUBLE (pspec)->maximum,
+                               inc, skip_inc, wrap);
+
+  g_object_set (object, property_name, value, NULL);
+}
+
 GimpObject *
 action_select_object (GimpActionSelectType  select_type,
                       GimpContainer        *container,

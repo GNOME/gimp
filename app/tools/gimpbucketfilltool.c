@@ -55,22 +55,22 @@ static void   gimp_bucket_fill_tool_init       (GimpBucketFillTool      *bucket_
 static void   gimp_bucket_fill_tool_button_press    (GimpTool        *tool,
                                                      GimpCoords      *coords,
                                                      guint32          time,
-						     GdkModifierType  state,
-						     GimpDisplay     *gdisp);
+                                                     GdkModifierType  state,
+                                                     GimpDisplay     *gdisp);
 static void   gimp_bucket_fill_tool_button_release  (GimpTool        *tool,
                                                      GimpCoords      *coords,
                                                      guint32          time,
-						     GdkModifierType  state,
-						     GimpDisplay     *gdisp);
+                                                     GdkModifierType  state,
+                                                     GimpDisplay     *gdisp);
 static void   gimp_bucket_fill_tool_modifier_key    (GimpTool        *tool,
                                                      GdkModifierType  key,
                                                      gboolean         press,
-						     GdkModifierType  state,
-						     GimpDisplay     *gdisp);
+                                                     GdkModifierType  state,
+                                                     GimpDisplay     *gdisp);
 static void   gimp_bucket_fill_tool_cursor_update   (GimpTool        *tool,
                                                      GimpCoords      *coords,
-						     GdkModifierType  state,
-						     GimpDisplay     *gdisp);
+                                                     GdkModifierType  state,
+                                                     GimpDisplay     *gdisp);
 
 
 /*  public functions  */
@@ -106,18 +106,18 @@ gimp_bucket_fill_tool_get_type (void)
       static const GTypeInfo tool_info =
       {
         sizeof (GimpBucketFillToolClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_bucket_fill_tool_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpBucketFillTool),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_bucket_fill_tool_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_bucket_fill_tool_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpBucketFillTool),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_bucket_fill_tool_init,
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_TOOL,
-					  "GimpBucketFillTool",
+                                          "GimpBucketFillTool",
                                           &tool_info, 0);
     }
 
@@ -130,9 +130,7 @@ gimp_bucket_fill_tool_get_type (void)
 static void
 gimp_bucket_fill_tool_class_init (GimpBucketFillToolClass *klass)
 {
-  GimpToolClass *tool_class;
-
-  tool_class = GIMP_TOOL_CLASS (klass);
+  GimpToolClass *tool_class = GIMP_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -145,27 +143,26 @@ gimp_bucket_fill_tool_class_init (GimpBucketFillToolClass *klass)
 static void
 gimp_bucket_fill_tool_init (GimpBucketFillTool *bucket_fill_tool)
 {
-  GimpTool *tool;
+  GimpTool *tool = GIMP_TOOL (bucket_fill_tool);
 
-  tool = GIMP_TOOL (bucket_fill_tool);
-
-  gimp_tool_control_set_scroll_lock (tool->control, TRUE);
-  gimp_tool_control_set_tool_cursor (tool->control,
-				     GIMP_TOOL_CURSOR_BUCKET_FILL);
+  gimp_tool_control_set_scroll_lock    (tool->control, TRUE);
+  gimp_tool_control_set_tool_cursor    (tool->control,
+                                        GIMP_TOOL_CURSOR_BUCKET_FILL);
+  gimp_tool_control_set_action_value_1 (tool->control,
+                                        "context/context-opacity-set");
 }
 
 static void
 gimp_bucket_fill_tool_button_press (GimpTool        *tool,
                                     GimpCoords      *coords,
                                     guint32          time,
-				    GdkModifierType  state,
-				    GimpDisplay     *gdisp)
+                                    GdkModifierType  state,
+                                    GimpDisplay     *gdisp)
 {
-  GimpBucketFillTool    *bucket_tool;
+  GimpBucketFillTool    *bucket_tool = GIMP_BUCKET_FILL_TOOL (tool);
   GimpBucketFillOptions *options;
 
-  bucket_tool = GIMP_BUCKET_FILL_TOOL (tool);
-  options     = GIMP_BUCKET_FILL_OPTIONS (tool->tool_info->tool_options);
+  options = GIMP_BUCKET_FILL_OPTIONS (tool->tool_info->tool_options);
 
   bucket_tool->target_x = coords->x;
   bucket_tool->target_y = coords->y;
@@ -189,16 +186,15 @@ static void
 gimp_bucket_fill_tool_button_release (GimpTool        *tool,
                                       GimpCoords      *coords,
                                       guint32          time,
-				      GdkModifierType  state,
-				      GimpDisplay     *gdisp)
+                                      GdkModifierType  state,
+                                      GimpDisplay     *gdisp)
 {
-  GimpBucketFillTool    *bucket_tool;
+  GimpBucketFillTool    *bucket_tool = GIMP_BUCKET_FILL_TOOL (tool);
   GimpBucketFillOptions *options;
   GimpContext           *context;
 
-  bucket_tool = GIMP_BUCKET_FILL_TOOL (tool);
-  options     = GIMP_BUCKET_FILL_OPTIONS (tool->tool_info->tool_options);
-  context     = GIMP_CONTEXT (options);
+  options = GIMP_BUCKET_FILL_OPTIONS (tool->tool_info->tool_options);
+  context = GIMP_CONTEXT (options);
 
   /*  if the 3rd button isn't pressed, fill the selected region  */
   if (! (state & GDK_BUTTON3_MASK))
@@ -257,8 +253,8 @@ gimp_bucket_fill_tool_modifier_key (GimpTool        *tool,
 static void
 gimp_bucket_fill_tool_cursor_update (GimpTool        *tool,
                                      GimpCoords      *coords,
-				     GdkModifierType  state,
-				     GimpDisplay     *gdisp)
+                                     GdkModifierType  state,
+                                     GimpDisplay     *gdisp)
 {
   GimpBucketFillOptions *options;
   GimpCursorModifier     cmodifier = GIMP_CURSOR_MODIFIER_NONE;

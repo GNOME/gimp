@@ -1,3 +1,30 @@
+2005-03-04  Michael Natterer  <mitch@gimp.org>
+
+	Fixed bug #165618:
+
+	* app/tools/gimptoolcontrol.[ch]: added new functions
+	gimp_tool_control_set/get_action_value_1/2/3/4() which allow tools
+	to specify their primary, secondary etc. "values" using
+	action-identifying strings like "context/context-brush-radius-set".
+
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpcolortool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimppainttool.c: set actions where appropriate. Still
+	needs some way to document the mapping in a user-visible way.
+
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbucketfilltool.c: tab removal and minor cleanups.
+
+	* app/actions/actions.[ch]: added utility function
+	action_select_property().
+
+	* app/actions/tools-actions.c
+	* app/actions/tools-commands.[ch]: added actions and callbacks for
+	setting the ink blob size, aspect and angle. Also added actions
+	and callbacks for the new generic tool values.
+
 2005-03-03  Helvetix Victorinox  <helvetix@gimp.org>
 
 	* app/composite/make-installer.py:Applied patch from

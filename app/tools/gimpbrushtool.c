@@ -184,6 +184,14 @@ gimp_paint_tool_init (GimpPaintTool *paint_tool)
   GimpTool *tool = GIMP_TOOL (paint_tool);
 
   gimp_tool_control_set_motion_mode (tool->control, GIMP_MOTION_MODE_EXACT);
+  gimp_tool_control_set_action_value_1 (tool->control,
+                                        "context/context-opacity-set");
+  gimp_tool_control_set_action_value_2 (tool->control,
+                                        "context/context-brush-radius-set");
+  gimp_tool_control_set_action_value_3 (tool->control,
+                                        "context/context-brush-aspect-set");
+  gimp_tool_control_set_action_value_4 (tool->control,
+                                        "context/context-brush-angle-set");
 
   paint_tool->pick_colors = FALSE;
   paint_tool->draw_line   = FALSE;
