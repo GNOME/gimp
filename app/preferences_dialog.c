@@ -1617,7 +1617,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 
   optionmenu =
     gimp_option_menu_new (file_prefs_toggle_callback,
-			  &transparency_type, (gpointer) transparency_size,
+			  &transparency_size, (gpointer) transparency_size,
 
 			  _("Small"),  (gpointer) SMALL_CHECKS, NULL,
 			  _("Medium"), (gpointer) MEDIUM_CHECKS, NULL,
