@@ -1,5 +1,11 @@
 2000-12-19  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/exchange.c: applied (a modified version of)
+	gimp-timecop-20001213-17. Delayed update for the sliders and
+	and a "click preview to pick color" function.
+
+2000-12-19  Sven Neumann  <sven@gimp.org>
+
 	* app/gimpbrushpipe.c (gimp_brush_pipe_load): set the spacing and
 	other info from the first brush just as the old code used to do.
 
