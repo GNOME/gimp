@@ -88,8 +88,8 @@ libgimpwidgets_1_3_la_sources = \
 	gimpcolorselection.h	\
 	gimpdialog.c		\
 	gimpdialog.h		\
-	gimpfileselection.c	\
-	gimpfileselection.h	\
+	gimpfileentry.c		\
+	gimpfileentry.h		\
 	gimphelpui.c		\
 	gimphelpui.h		\
 	gimpmemsizeentry.c	\
@@ -143,7 +143,7 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpcolorselect.h	\
 	gimpcolorselection.h	\
 	gimpdialog.h		\
-	gimpfileselection.h	\
+	gimpfileentry.h		\
 	gimphelpui.h		\
 	gimpmemsizeentry.h	\
 	gimpoffsetarea.h	\

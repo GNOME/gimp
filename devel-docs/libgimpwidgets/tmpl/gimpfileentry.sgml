@@ -1,5 +1,5 @@
 <!-- ##### SECTION Title ##### -->
-GimpFileSelection
+GimpFileEntry
 
 <!-- ##### SECTION Short_Description ##### -->
 Widget for entering a filename.
@@ -17,7 +17,7 @@ You can restrict the #GimpFileSelection to directories. In this case
 the filename listbox of the #GtkFileSelection dialog will be hidden.
 </para>
 <para>
-If you specify @check_valid as #TRUE in gimp_file_selection_new()
+If you specify @check_valid as #TRUE in gimp_file_entry_new()
 the entered filename will be checked for validity and a pixmap will be
 shown which indicates if the file exists or not.
 </para>
@@ -31,13 +31,14 @@ will be emitted.
 #GimpPathEditor
 </para>
 
-<!-- ##### STRUCT GimpFileSelection ##### -->
+
+<!-- ##### STRUCT GimpFileEntry ##### -->
 <para>
 
 </para>
 
 
-<!-- ##### FUNCTION gimp_file_selection_new ##### -->
+<!-- ##### FUNCTION gimp_file_entry_new ##### -->
 <para>
 
 </para>
@@ -49,28 +50,28 @@ will be emitted.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_file_selection_get_filename ##### -->
+<!-- ##### FUNCTION gimp_file_entry_get_filename ##### -->
 <para>
 
 </para>
 
-@selection: 
+@entry: 
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_file_selection_set_filename ##### -->
+<!-- ##### FUNCTION gimp_file_entry_set_filename ##### -->
 <para>
 
 </para>
 
-@selection: 
+@entry: 
 @filename: 
 
 
-<!-- ##### SIGNAL GimpFileSelection::filename-changed ##### -->
+<!-- ##### SIGNAL GimpFileEntry::filename-changed ##### -->
 <para>
-This signal is emitted whenever the user changes the filename.
+
 </para>
 
-@gimpfileselection: the object which received the signal.
+@gimpfileentry: the object which received the signal.
 

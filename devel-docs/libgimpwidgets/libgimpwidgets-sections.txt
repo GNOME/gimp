@@ -104,21 +104,21 @@ GIMP_COLOR_SELECTION_GET_CLASS
 </SECTION>
 
 <SECTION>
-<FILE>gimpfileselection</FILE>
-<TITLE>GimpFileSelection</TITLE>
-GimpFileSelection
-gimp_file_selection_new
-gimp_file_selection_get_filename
-gimp_file_selection_set_filename
+<FILE>gimpfileentry</FILE>
+<TITLE>GimpFileEntry</TITLE>
+GimpFileEntry
+gimp_file_entry_new
+gimp_file_entry_get_filename
+gimp_file_entry_set_filename
 <SUBSECTION Standard>
-GIMP_FILE_SELECTION
-GIMP_IS_FILE_SELECTION
-GIMP_TYPE_FILE_SELECTION
-gimp_file_selection_get_type
-GimpFileSelectionClass
-GIMP_FILE_SELECTION_CLASS
-GIMP_IS_FILE_SELECTION_CLASS
-GIMP_FILE_SELECTION_GET_CLASS
+GIMP_FILE_ENTRY
+GIMP_IS_FILE_ENTRY
+GIMP_TYPE_FILE_ENTRY
+gimp_file_entry_get_type
+GimpFileEntryClass
+GIMP_FILE_ENTRY_CLASS
+GIMP_IS_FILE_ENTRY_CLASS
+GIMP_FILE_ENTRY_GET_CLASS
 </SECTION>
 
 <SECTION>

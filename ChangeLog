@@ -1,3 +1,18 @@
+2003-11-21  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpfileselection.[ch]: removed...
+
+	* libgimpwidgets/gimpfileentry.[ch]: ...and added under a new name.
+
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpwidgets.h
+	* libgimpwidgets/gimpwidgetstypes.h
+	* libgimpwidgets/gimppatheditor.[ch]
+	* app/widgets/gimppropwidgets.c
+	* plug-ins/script-fu/script-fu-scripts.c: changed accordingly.
+
+	* libgimp/gimpcompat.h: added compat #defines.
+
 2003-11-21  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: added a check for little cms.

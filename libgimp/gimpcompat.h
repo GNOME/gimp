@@ -69,10 +69,17 @@ G_BEGIN_DECLS
 #define gimp_pattern_select_widget              gimp_pattern_select_widget_new
 #define gimp_pattern_select_widget_set_popup    gimp_pattern_select_widget_set
 #define gimp_pattern_select_widget_close_popup  gimp_pattern_select_widget_close
+
 #define INTENSITY(r,g,b)                        GIMP_RGB_INTENSITY(r,g,b)
 #define INTENSITY_RED                           GIMP_RGB_INTENSITY_RED
 #define INTENSITY_GREEN                         GIMP_RGB_INTENSITY_GREEN
 #define INTENSITY_BLUE                          GIMP_RGB_INTENSITY_BLUE
+
+#define gimp_file_selection_                    gimp_file_entry_
+#define GimpFileSelection                       GimpFileEntry
+#define GIMP_TYPE_FILE_SELECTION                GIMP_TYPE_FILE_ENTRY
+#define GIMP_FILE_SELECTION                     GIMP_FILE_ENTRY
+#define GIMP_IS_FILE_SELECTION                  GIMP_IS_FILE_ENTRY
 
 
 enum

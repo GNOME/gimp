@@ -1,3 +1,15 @@
+2003-11-21  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/tmpl/gimpfileselection.sgml: removed.
+
+	* libgimpwidgets/tmpl/gimpfileentry.sgml: added.
+
+	* libgimpwidgets/libgimpwidgets-docs.sgml
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/libgimpwidgets.types
+	* libgimpwidgets/tmpl/gimpdialog.sgml
+	* libgimpwidgets/tmpl/gimppatheditor.sgml: updated.
+
 2003-11-19  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/tmpl/gimphelpui.sgml: updated.

@@ -1302,11 +1302,11 @@ gimp_prop_text_buffer_notify (GObject       *config,
 /****************/
 
 
-static void   gimp_prop_file_entry_callback (GimpFileSelection *entry,
-                                             GObject           *config);
-static void   gimp_prop_file_entry_notify   (GObject           *config,
-                                             GParamSpec        *param_spec,
-                                             GimpFileSelection *entry);
+static void   gimp_prop_file_entry_callback (GimpFileEntry *entry,
+                                             GObject       *config);
+static void   gimp_prop_file_entry_notify   (GObject       *config,
+                                             GParamSpec    *param_spec,
+                                             GimpFileEntry *entry);
 
 GtkWidget *
 gimp_prop_file_entry_new (GObject     *config,
@@ -1331,14 +1331,13 @@ gimp_prop_file_entry_new (GObject     *config,
 
   filename = value ? gimp_config_path_expand (value, FALSE, NULL) : NULL;
 
-  entry = gimp_file_selection_new (filesel_title,
-                                   filename, dir_only, check_valid);
+  entry = gimp_file_entry_new (filesel_title, filename, dir_only, check_valid);
 
   g_free (value);
   g_free (filename);
 
   set_param_spec (G_OBJECT (entry),
-                  GIMP_FILE_SELECTION (entry)->entry,
+                  GIMP_FILE_ENTRY (entry)->entry,
                   param_spec);
 
   g_signal_connect (entry, "filename_changed",
@@ -1353,8 +1352,8 @@ gimp_prop_file_entry_new (GObject     *config,
 }
 
 static void
-gimp_prop_file_entry_callback (GimpFileSelection *entry,
-                               GObject           *config)
+gimp_prop_file_entry_callback (GimpFileEntry *entry,
+                               GObject       *config)
 {
   GParamSpec *param_spec;
   gchar      *value;
@@ -1363,7 +1362,7 @@ gimp_prop_file_entry_callback (GimpFileSelection *entry,
   if (! param_spec)
     return;
 
-  value = gimp_file_selection_get_filename (entry);
+  value = gimp_file_entry_get_filename (entry);
 
   g_object_set (config,
                 param_spec->name, value,
@@ -1373,9 +1372,9 @@ gimp_prop_file_entry_callback (GimpFileSelection *entry,
 }
 
 static void
-gimp_prop_file_entry_notify (GObject           *config,
-                             GParamSpec        *param_spec,
-                             GimpFileSelection *entry)
+gimp_prop_file_entry_notify (GObject       *config,
+                             GParamSpec    *param_spec,
+                             GimpFileEntry *entry)
 {
   gchar *value;
 
@@ -1387,7 +1386,7 @@ gimp_prop_file_entry_notify (GObject           *config,
                                    gimp_prop_file_entry_callback,
                                    config);
 
-  gimp_file_selection_set_filename (entry, value);
+  gimp_file_entry_set_filename (entry, value);
 
   g_signal_handlers_unblock_by_func (entry,
                                      gimp_prop_file_entry_callback,

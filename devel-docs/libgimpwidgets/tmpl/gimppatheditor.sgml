@@ -11,7 +11,7 @@ This widget is used to edit file search paths.
 <para>
 It shows a list of all directories which are in the search path. You
 can click a directory to select it. The widget provides a
-#GimpFileSelection to change the currently selected directory.
+#GimpFileEntry to change the currently selected directory.
 </para>
 <para>
 There are buttons to add or delete directories as well as "up" and "down"
@@ -24,7 +24,7 @@ the search path, the "path_changed" signal will be emitted.
 
 <!-- ##### SECTION See_Also ##### -->
 <para>
-#GimpFileSelection
+#GimpFileEntry
 </para>
 <para>
 #G_SEARCHPATH_SEPARATOR

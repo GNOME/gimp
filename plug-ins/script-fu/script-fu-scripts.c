@@ -67,7 +67,7 @@ typedef struct
 
 typedef struct
 {
-  GtkWidget *fileselection;
+  GtkWidget *file_entry;
   gchar     *filename;
 } SFFilename;
 
@@ -143,63 +143,63 @@ extern long  nlength (LISP obj);
  *  Local Functions
  */
 
-static void       script_fu_load_script (const GimpDatafileData *file_data,
-                                         gpointer                user_data);
-static gboolean   script_fu_install_script   (gpointer           foo,
-					      SFScript          *script,
-					      gpointer           bar);
-static gboolean   script_fu_remove_script    (gpointer           foo,
-					      SFScript          *script,
-					      gpointer           bar);
-static void       script_fu_script_proc      (const gchar       *name,
-					      gint               nparams,
-					      const GimpParam   *params,
-					      gint              *nreturn_vals,
-					      GimpParam        **return_vals);
+static void       script_fu_load_script (const GimpDatafileData   *file_data,
+                                         gpointer                  user_data);
+static gboolean   script_fu_install_script      (gpointer          foo,
+                                                 SFScript         *script,
+                                                 gpointer          bar);
+static gboolean   script_fu_remove_script       (gpointer          foo,
+                                                 SFScript         *script,
+                                                 gpointer          bar);
+static void       script_fu_script_proc         (const gchar      *name,
+                                                 gint              nparams,
+                                                 const GimpParam  *params,
+                                                 gint             *nreturn_vals,
+                                                 GimpParam       **return_vals);
 
-static SFScript * script_fu_find_script      (const gchar       *script_name);
-static void       script_fu_free_script      (SFScript          *script);
-static void       script_fu_interface        (SFScript          *script);
-static void       script_fu_interface_quit   (SFScript          *script);
-static void       script_fu_error_msg        (const gchar       *command);
+static SFScript * script_fu_find_script         (const gchar      *script_name);
+static void       script_fu_free_script         (SFScript         *script);
+static void       script_fu_interface           (SFScript         *script);
+static void       script_fu_interface_quit      (SFScript         *script);
+static void       script_fu_error_msg           (const gchar      *command);
 
-static void       script_fu_response                (GtkWidget *widget,
-                                                     gint       response_id,
-						     SFScript  *script);
-static void       script_fu_ok                      (SFScript  *script);
-static void       script_fu_reset                   (SFScript  *script);
-static void       script_fu_about_callback          (GtkWidget *widget,
-						     gpointer   data);
-static void       script_fu_menu_callback           (gint32     id,
-						     gpointer   data);
+static void       script_fu_response            (GtkWidget        *widget,
+                                                 gint              response_id,
+                                                 SFScript         *script);
+static void       script_fu_ok                  (SFScript         *script);
+static void       script_fu_reset               (SFScript         *script);
+static void       script_fu_about_callback      (GtkWidget        *widget,
+                                                 SFScript         *script);
+static void       script_fu_menu_callback       (gint32            id,
+                                                 gpointer          data);
 
-static void       script_fu_file_selection_callback (GtkWidget *widget,
-						     gpointer   data);
+static void       script_fu_file_entry_callback (GtkWidget        *widget,
+                                                 SFFilename       *fil);
 
-static void       script_fu_pattern_preview         (const gchar   *name,
-						     gint           width,
-						     gint           height,
-						     gint           bytes,
-						     const guchar  *mask_data,
-						     gboolean       closing,
-						     gpointer       data);
-static void       script_fu_gradient_preview        (const gchar   *name,
-						     gint           width,
-						     const gdouble *mask_data,
-						     gboolean       closing,
-						     gpointer       data);
-static void       script_fu_font_preview            (const gchar   *name,
-                                                     gboolean       closing,
-                                                     gpointer       data);
-static void       script_fu_brush_preview           (const gchar   *name,
-						     gdouble        opacity,
-						     gint           spacing,
-						     GimpLayerModeEffects  paint_mode,
-						     gint           width,
-						     gint           height,
-						     const guchar  *mask_data,
-						     gboolean       closing,
-						     gpointer       data);
+static void       script_fu_pattern_callback    (const gchar      *name,
+                                                 gint              width,
+                                                 gint              height,
+                                                 gint              bytes,
+                                                 const guchar     *mask_data,
+                                                 gboolean          closing,
+                                                 gpointer          data);
+static void       script_fu_gradient_callback   (const gchar      *name,
+                                                 gint              width,
+                                                 const gdouble    *mask_data,
+                                                 gboolean          closing,
+                                                 gpointer          data);
+static void       script_fu_font_callback       (const gchar      *name,
+                                                 gboolean          closing,
+                                                 gpointer          data);
+static void       script_fu_brush_callback      (const gchar      *name,
+                                                 gdouble           opacity,
+                                                 gint              spacing,
+                                                 GimpLayerModeEffects  paint_mode,
+                                                 gint              width,
+                                                 gint              height,
+                                                 const guchar     *mask_data,
+                                                 gboolean          closing,
+                                                 gpointer          data);
 
 
 /*
@@ -519,7 +519,7 @@ script_fu_add_script (LISP a)
 #endif
 		  script->arg_values[i].sfa_file.filename =
 		    g_strdup (script->arg_defaults[i].sfa_file.filename);
-		  script->arg_values[i].sfa_file.fileselection = NULL;
+		  script->arg_values[i].sfa_file.file_entry = NULL;
 
 		  args[i + 1].type = GIMP_PDB_STRING;
 		  args[i + 1].name = (script->arg_types[i] == SF_FILENAME ?
@@ -1319,18 +1319,18 @@ script_fu_interface (SFScript *script)
 	  widget_leftalign = FALSE;
 
           if (script->arg_types[i] == SF_FILENAME)
-            widget = gimp_file_selection_new (_("Script-Fu File Selection"),
-                                              script->arg_values[i].sfa_file.filename,
-                                              FALSE, TRUE);
+            widget = gimp_file_entry_new (_("Script-Fu File Selection"),
+                                          script->arg_values[i].sfa_file.filename,
+                                          FALSE, TRUE);
           else
-            widget = gimp_file_selection_new (_("Script-Fu Folder Selection"),
-                                              script->arg_values[i].sfa_file.filename,
-                                              TRUE, TRUE);
+            widget = gimp_file_entry_new (_("Script-Fu Folder Selection"),
+                                          script->arg_values[i].sfa_file.filename,
+                                          TRUE, TRUE);
 
-	  script->arg_values[i].sfa_file.fileselection = widget;
+	  script->arg_values[i].sfa_file.file_entry = widget;
 
 	  g_signal_connect (widget, "filename_changed",
-			    G_CALLBACK (script_fu_file_selection_callback),
+			    G_CALLBACK (script_fu_file_entry_callback),
 			    &script->arg_values[i].sfa_file);
 	  break;
 
@@ -1339,20 +1339,20 @@ script_fu_interface (SFScript *script)
 
 	  widget = gimp_font_select_widget_new (_("Script-Fu Font Selection"),
                                                 script->arg_values[i].sfa_font,
-                                                script_fu_font_preview,
+                                                script_fu_font_callback,
                                                 &script->arg_values[i].sfa_font);
 	  break;
 
 	case SF_PATTERN:
 	  widget = gimp_pattern_select_widget_new (_("Script-fu Pattern Selection"),
                                                    script->arg_values[i].sfa_pattern,
-                                                   script_fu_pattern_preview,
+                                                   script_fu_pattern_callback,
                                                    &script->arg_values[i].sfa_pattern);
 	  break;
 	case SF_GRADIENT:
 	  widget = gimp_gradient_select_widget_new (_("Script-Fu Gradient Selection"),
                                                     script->arg_values[i].sfa_gradient,
-                                                    script_fu_gradient_preview,
+                                                    script_fu_gradient_callback,
                                                     &script->arg_values[i].sfa_gradient);
 	  break;
 
@@ -1362,7 +1362,7 @@ script_fu_interface (SFScript *script)
                                                  script->arg_values[i].sfa_brush.opacity,
                                                  script->arg_values[i].sfa_brush.spacing,
                                                  script->arg_values[i].sfa_brush.paint_mode,
-                                                 script_fu_brush_preview,
+                                                 script_fu_brush_callback,
                                                  &script->arg_values[i].sfa_brush);
 	  break;
 
@@ -1461,64 +1461,56 @@ script_fu_interface_quit (SFScript *script)
 }
 
 static void
-script_fu_pattern_preview (const gchar  *name,
-			   gint          width,
-			   gint          height,
-			   gint          bytes,
-			   const guchar *mask_data,
-			   gboolean      closing,
-			   gpointer      data)
+script_fu_pattern_callback (const gchar  *name,
+                            gint          width,
+                            gint          height,
+                            gint          bytes,
+                            const guchar *mask_data,
+                            gboolean      closing,
+                            gpointer      data)
 {
-  gchar **pname;
-
-  pname = (gchar **) data;
+  gchar **pname = data;
 
   g_free (*pname);
   *pname = g_strdup (name);
 }
 
 static void
-script_fu_gradient_preview (const gchar   *name,
-			    gint           width,
-			    const gdouble *mask_data,
-			    gboolean       closing,
-			    gpointer       data)
+script_fu_gradient_callback (const gchar   *name,
+                             gint           width,
+                             const gdouble *mask_data,
+                             gboolean       closing,
+                             gpointer       data)
 {
-  gchar **gname;
-
-  gname = (gchar **) data;
+  gchar **gname = data;
 
   g_free (*gname);
   *gname = g_strdup (name);
 }
 
 static void
-script_fu_font_preview (const gchar *name,
-                        gboolean     closing,
-                        gpointer     data)
+script_fu_font_callback (const gchar *name,
+                         gboolean     closing,
+                         gpointer     data)
 {
-  gchar **fname;
-
-  fname = (gchar **) data;
+  gchar **fname = data;
 
   g_free (*fname);
   *fname = g_strdup (name);
 }
 
 static void
-script_fu_brush_preview (const gchar          *name,
-			 gdouble               opacity,
-			 gint                  spacing,
-			 GimpLayerModeEffects  paint_mode,
-			 gint                  width,
-			 gint                  height,
-			 const guchar         *mask_data,
-			 gboolean              closing,
-			 gpointer              data)
+script_fu_brush_callback (const gchar          *name,
+                          gdouble               opacity,
+                          gint                  spacing,
+                          GimpLayerModeEffects  paint_mode,
+                          gint                  width,
+                          gint                  height,
+                          const guchar         *mask_data,
+                          gboolean              closing,
+                          gpointer              data)
 {
-  SFBrush *brush;
-
-  brush = (SFBrush *) data;
+  SFBrush *brush = data;
 
   g_free (brush->name);
 
@@ -1541,8 +1533,7 @@ script_fu_response (GtkWidget *widget,
 
     case GTK_RESPONSE_OK:
       script_fu_ok (script);
-      gtk_widget_destroy (sf_interface->dialog);
-      break;
+      /* fallthru */
 
     default:
       gtk_widget_destroy (sf_interface->dialog);
@@ -1826,8 +1817,8 @@ script_fu_reset (SFScript *script)
           g_free (script->arg_values[i].sfa_file.filename);
           script->arg_values[i].sfa_file.filename =
             g_strdup (script->arg_defaults[i].sfa_file.filename);
-          gimp_file_selection_set_filename
-            (GIMP_FILE_SELECTION (script->arg_values[i].sfa_file.fileselection),
+          gimp_file_entry_set_filename
+            (GIMP_FILE_ENTRY (script->arg_values[i].sfa_file.file_entry),
              script->arg_values[i].sfa_file.filename);
           break;
 
@@ -1868,7 +1859,7 @@ script_fu_reset (SFScript *script)
 
 static void
 script_fu_about_callback (GtkWidget *widget,
-			  gpointer   data)
+                          SFScript  *script)
 {
   GtkWidget     *dialog;
   GtkWidget     *frame;
@@ -1878,8 +1869,6 @@ script_fu_about_callback (GtkWidget *widget,
   GtkWidget     *table;
   GtkWidget     *text_view;
   GtkTextBuffer *text_buffer;
-
-  SFScript  *script = (SFScript *) data;
 
   if (sf_interface->about_dialog == NULL)
     {
@@ -1990,23 +1979,19 @@ script_fu_menu_callback (gint32   id,
 }
 
 static void
-script_fu_file_selection_callback (GtkWidget *widget,
-				   gpointer   data)
+script_fu_file_entry_callback (GtkWidget  *widget,
+                               SFFilename *file)
 {
-  SFFilename *file;
-
-  file = (SFFilename *) data;
-
   if (file->filename)
     g_free (file->filename);
 
   file->filename =
-    gimp_file_selection_get_filename (GIMP_FILE_SELECTION (file->fileselection));
+    gimp_file_entry_get_filename (GIMP_FILE_ENTRY(file->file_entry));
 }
 
 static void
 script_fu_error_msg (const gchar *command)
 {
-  g_message (_("Script-Fu Error while executing\n %s\n%s"),
+  g_message (_("Error while executing\n%s\n%s"),
 	     command, siod_err_msg);
 }

@@ -1,8 +1,8 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpfileselection.c
- * Copyright (C) 1999-2000 Michael Natterer <mitch@gimp.org>
+ * gimpfileentry.c
+ * Copyright (C) 1999-2003 Michael Natterer <mitch@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -35,7 +35,7 @@
 
 #include "gimpwidgetstypes.h"
 
-#include "gimpfileselection.h"
+#include "gimpfileentry.h"
 
 #include "libgimp/libgimp-intl.h"
 
@@ -47,212 +47,209 @@ enum
 };
 
 
-static void   gimp_file_selection_class_init  (GimpFileSelectionClass *klass);
-static void   gimp_file_selection_init        (GimpFileSelection      *selection);
+static void   gimp_file_entry_class_init      (GimpFileEntryClass *klass);
+static void   gimp_file_entry_init            (GimpFileEntry      *entry);
 
-static void   gimp_file_selection_destroy         (GtkObject         *object);
+static void   gimp_file_entry_destroy         (GtkObject          *object);
 
-static void   gimp_file_selection_entry_activate  (GtkWidget         *widget,
-                                                   GimpFileSelection *selection);
-static gint   gimp_file_selection_entry_focus_out (GtkWidget         *widget,
-                                                   GdkEvent          *event,
-                                                   GimpFileSelection *selection);
-static void   gimp_file_selection_browse_clicked  (GtkWidget         *widget,
-                                                   GimpFileSelection *selection);
-static void   gimp_file_selection_check_filename  (GimpFileSelection *selection);
+static void   gimp_file_entry_entry_activate  (GtkWidget          *widget,
+                                               GimpFileEntry      *entry);
+static gint   gimp_file_entry_entry_focus_out (GtkWidget          *widget,
+                                               GdkEvent           *event,
+                                               GimpFileEntry      *entry);
+static void   gimp_file_entry_browse_clicked  (GtkWidget          *widget,
+                                               GimpFileEntry      *entry);
+static void   gimp_file_entry_check_filename  (GimpFileEntry      *entry);
 
 
-static guint gimp_file_selection_signals[LAST_SIGNAL] = { 0 };
+static guint gimp_file_entry_signals[LAST_SIGNAL] = { 0 };
 
 static GtkHBoxClass *parent_class = NULL;
 
 
 GType
-gimp_file_selection_get_type (void)
+gimp_file_entry_get_type (void)
 {
-  static GType selection_type = 0;
+  static GType entry_type = 0;
 
-  if (! selection_type)
+  if (! entry_type)
     {
-      static const GTypeInfo selection_info =
+      static const GTypeInfo entry_info =
       {
-        sizeof (GimpFileSelectionClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_file_selection_class_init,
-	NULL,		/* class_finalize */
-	NULL,		/* class_data     */
-	sizeof (GimpFileSelection),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_file_selection_init,
+        sizeof (GimpFileEntryClass),
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_file_entry_class_init,
+        NULL,		/* class_finalize */
+        NULL,		/* class_data     */
+        sizeof (GimpFileEntry),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_file_entry_init,
       };
 
-      selection_type = g_type_register_static (GTK_TYPE_HBOX,
-					       "GimpFileSelection",
-					       &selection_info, 0);
+      entry_type = g_type_register_static (GTK_TYPE_HBOX,
+                                           "GimpFileEntry",
+                                           &entry_info, 0);
     }
 
-  return selection_type;
+  return entry_type;
 }
 
 static void
-gimp_file_selection_class_init (GimpFileSelectionClass *klass)
+gimp_file_entry_class_init (GimpFileEntryClass *klass)
 {
   GtkObjectClass *object_class;
 
-  object_class = (GtkObjectClass *) klass;
+  object_class = GTK_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  gimp_file_selection_signals[FILENAME_CHANGED] =
+  gimp_file_entry_signals[FILENAME_CHANGED] =
     g_signal_new ("filename_changed",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpFileSelectionClass, filename_changed),
+		  G_STRUCT_OFFSET (GimpFileEntryClass, filename_changed),
 		  NULL, NULL,
 		  g_cclosure_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
-  object_class->destroy = gimp_file_selection_destroy;
+  object_class->destroy   = gimp_file_entry_destroy;
 
   klass->filename_changed = NULL;
 }
 
 static void
-gimp_file_selection_init (GimpFileSelection *selection)
+gimp_file_entry_init (GimpFileEntry *entry)
 {
-  selection->title          = NULL;
-  selection->file_selection = NULL;
-  selection->check_valid    = FALSE;
+  entry->title          = NULL;
+  entry->file_selection = NULL;
+  entry->check_valid    = FALSE;
 
-  selection->file_exists    = NULL;
+  entry->file_exists    = NULL;
 
-  gtk_box_set_spacing (GTK_BOX (selection), 2);
-  gtk_box_set_homogeneous (GTK_BOX (selection), FALSE);
+  gtk_box_set_spacing (GTK_BOX (entry), 4);
+  gtk_box_set_homogeneous (GTK_BOX (entry), FALSE);
 
-  selection->browse_button = gtk_button_new_with_label (" ... ");
-  gtk_box_pack_end (GTK_BOX (selection),
-		    selection->browse_button, FALSE, FALSE, 0);
-  gtk_widget_show (selection->browse_button);
+  entry->browse_button = gtk_button_new_with_label (" ... ");
+  gtk_box_pack_end (GTK_BOX (entry), entry->browse_button, FALSE, FALSE, 0);
+  gtk_widget_show (entry->browse_button);
 
-  g_signal_connect (selection->browse_button, "clicked",
-                    G_CALLBACK (gimp_file_selection_browse_clicked),
-                    selection);
+  g_signal_connect (entry->browse_button, "clicked",
+                    G_CALLBACK (gimp_file_entry_browse_clicked),
+                    entry);
 
-  selection->entry = gtk_entry_new ();
-  gtk_box_pack_end (GTK_BOX (selection), selection->entry, TRUE, TRUE, 0);
-  gtk_widget_show (selection->entry);
+  entry->entry = gtk_entry_new ();
+  gtk_box_pack_end (GTK_BOX (entry), entry->entry, TRUE, TRUE, 0);
+  gtk_widget_show (entry->entry);
 
-  g_signal_connect (selection->entry, "activate",
-                    G_CALLBACK (gimp_file_selection_entry_activate),
-                    selection);
-  g_signal_connect (selection->entry, "focus_out_event",
-                    G_CALLBACK (gimp_file_selection_entry_focus_out),
-                    selection);
+  g_signal_connect (entry->entry, "activate",
+                    G_CALLBACK (gimp_file_entry_entry_activate),
+                    entry);
+  g_signal_connect (entry->entry, "focus_out_event",
+                    G_CALLBACK (gimp_file_entry_entry_focus_out),
+                    entry);
 }
 
 static void
-gimp_file_selection_destroy (GtkObject *object)
+gimp_file_entry_destroy (GtkObject *object)
 {
-  GimpFileSelection *selection = GIMP_FILE_SELECTION (object);
+  GimpFileEntry *entry = GIMP_FILE_ENTRY (object);
 
-  if (selection->file_selection)
+  if (entry->file_selection)
     {
-      gtk_widget_destroy (selection->file_selection);
-      selection->file_selection = NULL;
+      gtk_widget_destroy (entry->file_selection);
+      entry->file_selection = NULL;
     }
 
-  if (selection->title)
+  if (entry->title)
     {
-      g_free (selection->title);
-      selection->title = NULL;
+      g_free (entry->title);
+      entry->title = NULL;
     }
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 /**
- * gimp_file_selection_new:
- * @title: The title of the #GtkFileSelection dialog.
- * @filename: The initial filename.
- * @dir_only: %TRUE if the file selection should accept directories only.
+ * gimp_file_entry_new:
+ * @title:       The title of the #GtkFileEntry dialog.
+ * @filename:    The initial filename.
+ * @dir_only:    %TRUE if the file entry should accept directories only.
  * @check_valid: %TRUE if the widget should check if the entered file
  *               really exists.
  *
- * Creates a new #GimpFileSelection widget.
+ * Creates a new #GimpFileEntry widget.
  *
- * Returns: A pointer to the new #GimpFileSelection widget.
+ * Returns: A pointer to the new #GimpFileEntry widget.
  **/
 GtkWidget *
-gimp_file_selection_new (const gchar *title,
-			 const gchar *filename,
-			 gboolean     dir_only,
-			 gboolean     check_valid)
+gimp_file_entry_new (const gchar *title,
+                     const gchar *filename,
+                     gboolean     dir_only,
+                     gboolean     check_valid)
 {
-  GimpFileSelection *selection;
+  GimpFileEntry *entry;
 
-  selection = g_object_new (GIMP_TYPE_FILE_SELECTION, NULL);
+  entry = g_object_new (GIMP_TYPE_FILE_ENTRY, NULL);
 
-  selection->title       = g_strdup (title);
-  selection->dir_only    = dir_only;
-  selection->check_valid = check_valid;
+  entry->title       = g_strdup (title);
+  entry->dir_only    = dir_only;
+  entry->check_valid = check_valid;
 
   if (check_valid)
     {
-      selection->file_exists = gtk_image_new_from_stock (GTK_STOCK_NO,
-							 GTK_ICON_SIZE_BUTTON);
-      gtk_box_pack_start (GTK_BOX (selection),
-			  selection->file_exists, FALSE, FALSE, 0);
-      gtk_widget_show (selection->file_exists);
+      entry->file_exists = gtk_image_new_from_stock (GTK_STOCK_NO,
+                                                     GTK_ICON_SIZE_BUTTON);
+      gtk_box_pack_start (GTK_BOX (entry), entry->file_exists, FALSE, FALSE, 0);
+      gtk_widget_show (entry->file_exists);
     }
 
-  gimp_file_selection_set_filename (selection, filename);
+  gimp_file_entry_set_filename (entry, filename);
 
-  return GTK_WIDGET (selection);
+  return GTK_WIDGET (entry);
 }
 
 /**
- * gimp_file_selection_get_filename:
- * @selection: The file selection you want to know the filename from.
+ * gimp_file_entry_get_filename:
+ * @entry: The file entry you want to know the filename from.
  *
  * Note that you have to g_free() the returned string.
  *
  * Returns: The file or directory the user has entered.
  **/
 gchar *
-gimp_file_selection_get_filename (GimpFileSelection *selection)
+gimp_file_entry_get_filename (GimpFileEntry *entry)
 {
-  g_return_val_if_fail (GIMP_IS_FILE_SELECTION (selection), NULL);
+  g_return_val_if_fail (GIMP_IS_FILE_ENTRY (entry), NULL);
 
-  return gtk_editable_get_chars (GTK_EDITABLE (selection->entry), 0, -1);
+  return gtk_editable_get_chars (GTK_EDITABLE (entry->entry), 0, -1);
 }
 
 /**
- * gimp_file_selection_set_filename:
- * @selection: The file selection you want to set the filename for.
+ * gimp_file_entry_set_filename:
+ * @entry:    The file entry you want to set the filename for.
  * @filename: The new filename.
  *
- * If you specified @check_valid as %TRUE in gimp_file_selection_new()
- * the #GimpFileSelection will immediately check the validity of the file
+ * If you specified @check_valid as %TRUE in gimp_file_entry_new()
+ * the #GimpFileEntry will immediately check the validity of the file
  * name.
- *
- */
+ **/
 void
-gimp_file_selection_set_filename (GimpFileSelection *selection,
-				  const gchar       *filename)
+gimp_file_entry_set_filename (GimpFileEntry *entry,
+                              const gchar   *filename)
 {
-  g_return_if_fail (GIMP_IS_FILE_SELECTION (selection));
+  g_return_if_fail (GIMP_IS_FILE_ENTRY (entry));
 
-  gtk_entry_set_text (GTK_ENTRY (selection->entry), filename ? filename : "");
+  gtk_entry_set_text (GTK_ENTRY (entry->entry), filename ? filename : "");
 
   /*  update everything
    */
-  gimp_file_selection_entry_activate (selection->entry, selection);
+  gimp_file_entry_entry_activate (entry->entry, entry);
 }
 
 static void
-gimp_file_selection_entry_activate (GtkWidget         *widget,
-				    GimpFileSelection *selection)
+gimp_file_entry_entry_activate (GtkWidget     *widget,
+                                GimpFileEntry *entry)
 {
   gchar *filename;
   gint   len;
@@ -267,41 +264,41 @@ gimp_file_selection_entry_activate (GtkWidget         *widget,
 	 (filename[len - 1] == G_DIR_SEPARATOR))
     filename[len - 1] = '\0';
 
-  g_signal_handlers_block_by_func (selection->entry,
-                                   gimp_file_selection_entry_activate,
-                                   selection);
-  gtk_entry_set_text (GTK_ENTRY (selection->entry), filename);
-  g_signal_handlers_unblock_by_func (selection->entry,
-                                     gimp_file_selection_entry_activate,
-                                     selection);
+  g_signal_handlers_block_by_func (entry->entry,
+                                   gimp_file_entry_entry_activate,
+                                   entry);
+  gtk_entry_set_text (GTK_ENTRY (entry->entry), filename);
+  g_signal_handlers_unblock_by_func (entry->entry,
+                                     gimp_file_entry_entry_activate,
+                                     entry);
 
-  if (selection->file_selection)
-    gtk_file_selection_set_filename (GTK_FILE_SELECTION (selection->file_selection),
+  if (entry->file_selection)
+    gtk_file_selection_set_filename (GTK_FILE_SELECTION (entry->file_selection),
 				     filename);
   g_free (filename);
 
-  gimp_file_selection_check_filename (selection);
+  gimp_file_entry_check_filename (entry);
 
-  gtk_editable_set_position (GTK_EDITABLE (selection->entry), -1);
+  gtk_editable_set_position (GTK_EDITABLE (entry->entry), -1);
 
-  g_signal_emit (selection, gimp_file_selection_signals[FILENAME_CHANGED], 0);
+  g_signal_emit (entry, gimp_file_entry_signals[FILENAME_CHANGED], 0);
 }
 
 static gboolean
-gimp_file_selection_entry_focus_out (GtkWidget         *widget,
-                                     GdkEvent          *event,
-                                     GimpFileSelection *selection)
+gimp_file_entry_entry_focus_out (GtkWidget     *widget,
+                                 GdkEvent      *event,
+                                 GimpFileEntry *entry)
 {
-  gimp_file_selection_entry_activate (widget, selection);
+  gimp_file_entry_entry_activate (widget, entry);
 
   return FALSE;
 }
 
-/*  local callback of gimp_file_selection_browse_clicked()  */
+/*  local callback of gimp_file_entry_browse_clicked()  */
 static void
-gimp_file_selection_filesel_response (GtkWidget         *dialog,
-                                      gint               response_id,
-                                      GimpFileSelection *selection)
+gimp_file_entry_filesel_response (GtkWidget     *dialog,
+                                  gint           response_id,
+                                  GimpFileEntry *entry)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
@@ -309,96 +306,95 @@ gimp_file_selection_filesel_response (GtkWidget         *dialog,
 
       filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (dialog));
 
-      gimp_file_selection_set_filename (selection, filename);
+      gimp_file_entry_set_filename (entry, filename);
     }
 
-  gtk_widget_hide (selection->file_selection);
-
+  gtk_widget_hide (dialog);
 }
 
 static void
-gimp_file_selection_browse_clicked (GtkWidget         *widget,
-                                    GimpFileSelection *selection)
+gimp_file_entry_browse_clicked (GtkWidget     *widget,
+                                GimpFileEntry *entry)
 {
   gchar *filename;
 
-  filename = gtk_editable_get_chars (GTK_EDITABLE (selection->entry), 0, -1);
+  filename = gtk_editable_get_chars (GTK_EDITABLE (entry->entry), 0, -1);
 
-  if (! selection->file_selection)
+  if (! entry->file_selection)
     {
       GtkFileSelection *filesel;
 
-      if (selection->dir_only)
+      if (entry->dir_only)
 	{
-          selection->file_selection =
-            gtk_file_selection_new (selection->title ?
-                                    selection->title : _("Select Folder"));
+          entry->file_selection = gtk_file_selection_new (entry->title ?
+                                                          entry->title :
+                                                          _("Select Folder"));
 
 	  /*  hiding these widgets uses internal gtk+ knowledge, but it's
 	   *  easier than creating my own directory browser -- michael
 	   */
 	  gtk_widget_hide
-	    (GTK_FILE_SELECTION (selection->file_selection)->fileop_del_file);
+	    (GTK_FILE_SELECTION (entry->file_selection)->fileop_del_file);
 	  gtk_widget_hide
-	    (GTK_FILE_SELECTION (selection->file_selection)->file_list->parent);
+	    (GTK_FILE_SELECTION (entry->file_selection)->file_list->parent);
 	}
       else
         {
-          selection->file_selection =
-            gtk_file_selection_new (selection->title ?
-                                    selection->title : _("Select File"));
+          entry->file_selection = gtk_file_selection_new (entry->title ?
+                                                          entry->title :
+                                                          _("Select File"));
         }
 
-      filesel = GTK_FILE_SELECTION (selection->file_selection);
+      filesel = GTK_FILE_SELECTION (entry->file_selection);
 
-      gtk_window_set_position (GTK_WINDOW (selection->file_selection),
+      gtk_window_set_position (GTK_WINDOW (entry->file_selection),
 			       GTK_WIN_POS_MOUSE);
-      gtk_window_set_role (GTK_WINDOW (selection->file_selection),
+      gtk_window_set_role (GTK_WINDOW (entry->file_selection),
                            "gimp-file-entry-file-selection");
 
       gtk_container_set_border_width (GTK_CONTAINER (filesel), 6);
       gtk_container_set_border_width (GTK_CONTAINER (filesel->button_area), 4);
 
       g_signal_connect (filesel, "response",
-                        G_CALLBACK (gimp_file_selection_filesel_response),
-                        selection);
+                        G_CALLBACK (gimp_file_entry_filesel_response),
+                        entry);
       g_signal_connect (filesel, "delete_event",
                         G_CALLBACK (gtk_true),
                         NULL);
 
-      g_signal_connect_swapped (selection, "unmap",
+      g_signal_connect_swapped (entry, "unmap",
                                 G_CALLBACK (gtk_widget_hide),
                                 filesel);
     }
 
-  gtk_file_selection_set_filename
-    (GTK_FILE_SELECTION (selection->file_selection), filename);
+  gtk_file_selection_set_filename (GTK_FILE_SELECTION (entry->file_selection),
+                                   filename);
 
-  gtk_window_set_screen (GTK_WINDOW (selection->file_selection),
+  gtk_window_set_screen (GTK_WINDOW (entry->file_selection),
                          gtk_widget_get_screen (widget));
 
-  gtk_window_present (GTK_WINDOW (selection->file_selection));
+  gtk_window_present (GTK_WINDOW (entry->file_selection));
 }
 
 static void
-gimp_file_selection_check_filename (GimpFileSelection *selection)
+gimp_file_entry_check_filename (GimpFileEntry *entry)
 {
   gchar    *filename;
   gboolean  exists;
 
-  if (! selection->check_valid || ! selection->file_exists)
+  if (! entry->check_valid || ! entry->file_exists)
     return;
 
-  filename = gtk_editable_get_chars (GTK_EDITABLE (selection->entry), 0, -1);
+  filename = gtk_editable_get_chars (GTK_EDITABLE (entry->entry), 0, -1);
 
-  if (selection->dir_only)
+  if (entry->dir_only)
     exists = g_file_test (filename, G_FILE_TEST_IS_DIR);
   else
     exists = g_file_test (filename, G_FILE_TEST_IS_REGULAR);
 
   g_free (filename);
 
-  gtk_image_set_from_stock (GTK_IMAGE (selection->file_exists),
+  gtk_image_set_from_stock (GTK_IMAGE (entry->file_exists),
                             exists ? GTK_STOCK_YES : GTK_STOCK_NO,
                             GTK_ICON_SIZE_BUTTON);
 }
