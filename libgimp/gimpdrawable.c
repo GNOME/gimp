@@ -288,6 +288,38 @@ gimp_drawable_get_thumbnail_data (gint32  drawable_ID,
   return image_data;
 }
 
+guchar *
+gimp_drawable_get_sub_thumbnail_data (gint32  drawable_ID,
+                                      gint    src_x,
+                                      gint    src_y,
+                                      gint    src_width,
+                                      gint    src_height,
+                                      gint   *dest_width,
+                                      gint   *dest_height,
+                                      gint   *bpp)
+{
+  gint    ret_width;
+  gint    ret_height;
+  guchar *image_data;
+  gint    data_size;
+
+  _gimp_drawable_sub_thumbnail (drawable_ID,
+                                src_x, src_y,
+                                src_width, src_height,
+                                *dest_width,
+                                *dest_height,
+                                &ret_width,
+                                &ret_height,
+                                bpp,
+                                &data_size,
+                                &image_data);
+
+  *dest_width  = ret_width;
+  *dest_height = ret_height;
+
+  return image_data;
+}
+
 /**
  * gimp_drawable_attach_new_parasite:
  * @drawable_ID: the ID of the #GimpDrawable to attach the #GimpParasite to.

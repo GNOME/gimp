@@ -1219,3 +1219,82 @@ _gimp_drawable_thumbnail (gint32   drawable_ID,
 
   return success;
 }
+
+/**
+ * _gimp_drawable_sub_thumbnail:
+ * @drawable_ID: The drawable.
+ * @src_x: The x coordinate of the area.
+ * @src_y: The y coordinate of the area.
+ * @src_width: The width of the area.
+ * @src_height: The height of the area.
+ * @dest_width: The thumbnail width.
+ * @dest_height: The thumbnail height.
+ * @width: The previews width.
+ * @height: The previews height.
+ * @bpp: The previews bpp.
+ * @thumbnail_data_count: The number of bytes in thumbnail data.
+ * @thumbnail_data: The thumbnail data.
+ *
+ * Get a thumbnail of a sub-area of a drawable drawable.
+ *
+ * This function gets data from which a thumbnail of a drawable preview
+ * can be created. Maximum x or y dimension is 512 pixels. The pixels
+ * are returned in RGB[A] or GRAY[A] format. The bpp return value gives
+ * the number of bytes in the image.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.2
+ */
+gboolean
+_gimp_drawable_sub_thumbnail (gint32   drawable_ID,
+			      gint     src_x,
+			      gint     src_y,
+			      gint     src_width,
+			      gint     src_height,
+			      gint     dest_width,
+			      gint     dest_height,
+			      gint    *width,
+			      gint    *height,
+			      gint    *bpp,
+			      gint    *thumbnail_data_count,
+			      guint8 **thumbnail_data)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_drawable_sub_thumbnail",
+				    &nreturn_vals,
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, src_x,
+				    GIMP_PDB_INT32, src_y,
+				    GIMP_PDB_INT32, src_width,
+				    GIMP_PDB_INT32, src_height,
+				    GIMP_PDB_INT32, dest_width,
+				    GIMP_PDB_INT32, dest_height,
+				    GIMP_PDB_END);
+
+  *width = 0;
+  *height = 0;
+  *bpp = 0;
+  *thumbnail_data_count = 0;
+  *thumbnail_data = NULL;
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
+    {
+      *width = return_vals[1].data.d_int32;
+      *height = return_vals[2].data.d_int32;
+      *bpp = return_vals[3].data.d_int32;
+      *thumbnail_data_count = return_vals[4].data.d_int32;
+      *thumbnail_data = g_new (guint8, *thumbnail_data_count);
+      memcpy (*thumbnail_data, return_vals[5].data.d_int8array,
+	      *thumbnail_data_count * sizeof (guint8));
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}

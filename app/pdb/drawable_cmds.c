@@ -32,6 +32,7 @@
 #include "config/gimpcoreconfig.h"
 #include "core/gimp.h"
 #include "core/gimpdrawable-offset.h"
+#include "core/gimpdrawable-preview.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
@@ -72,6 +73,7 @@ static ProcRecord drawable_set_pixel_proc;
 static ProcRecord drawable_fill_proc;
 static ProcRecord drawable_offset_proc;
 static ProcRecord drawable_thumbnail_proc;
+static ProcRecord drawable_sub_thumbnail_proc;
 
 void
 register_drawable_procs (Gimp *gimp)
@@ -109,6 +111,7 @@ register_drawable_procs (Gimp *gimp)
   procedural_db_register (gimp, &drawable_fill_proc);
   procedural_db_register (gimp, &drawable_offset_proc);
   procedural_db_register (gimp, &drawable_thumbnail_proc);
+  procedural_db_register (gimp, &drawable_sub_thumbnail_proc);
 }
 
 static Argument *
@@ -2309,4 +2312,190 @@ static ProcRecord drawable_thumbnail_proc =
   5,
   drawable_thumbnail_outargs,
   { { drawable_thumbnail_invoker } }
+};
+
+static Argument *
+drawable_sub_thumbnail_invoker (Gimp         *gimp,
+                                GimpContext  *context,
+                                GimpProgress *progress,
+                                Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpDrawable *drawable;
+  gint32 src_x;
+  gint32 src_y;
+  gint32 src_width;
+  gint32 src_height;
+  gint32 dest_width;
+  gint32 dest_height;
+  gint32 width = 0;
+  gint32 height = 0;
+  gint32 bpp = 0;
+  gint32 num_bytes = 0;
+  guint8 *thumbnail_data = NULL;
+
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
+    success = FALSE;
+
+  src_x = args[1].value.pdb_int;
+  if (src_x < 0)
+    success = FALSE;
+
+  src_y = args[2].value.pdb_int;
+  if (src_y < 0)
+    success = FALSE;
+
+  src_width = args[3].value.pdb_int;
+  if (src_width <= 0)
+    success = FALSE;
+
+  src_height = args[4].value.pdb_int;
+  if (src_height <= 0)
+    success = FALSE;
+
+  dest_width = args[5].value.pdb_int;
+  if (dest_width <= 0 || dest_width > 512)
+    success = FALSE;
+
+  dest_height = args[6].value.pdb_int;
+  if (dest_height <= 0 || dest_height > 512)
+    success = FALSE;
+
+  if (success)
+    {
+      success = ((src_x + src_width)  <= gimp_item_width  (GIMP_ITEM (drawable)) &&
+                 (src_y + src_height) <= gimp_item_height (GIMP_ITEM (drawable)));
+
+      if (success)
+        {
+          GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+          TempBuf   *buf;
+
+          if (gimage->gimp->config->layer_previews)
+            buf = gimp_drawable_get_sub_preview (drawable,
+                                                 src_x, src_y,
+                                                 src_width, src_height,
+                                                 dest_width, dest_height);
+          else
+            buf = gimp_viewable_get_dummy_preview (GIMP_VIEWABLE (drawable),
+                                                   dest_width, dest_height,
+                                                   gimp_drawable_has_alpha (drawable) ?
+                                                   4 : 3);
+
+          if (buf)
+            {
+              num_bytes      = buf->height * buf->width * buf->bytes;
+              thumbnail_data = g_memdup (temp_buf_data (buf), num_bytes);
+              width          = buf->width;
+              height         = buf->height;
+              bpp            = buf->bytes;
+
+              temp_buf_free (buf);
+            }
+          else
+            {
+              success = FALSE;
+            }
+        }
+    }
+
+  return_args = procedural_db_return_args (&drawable_sub_thumbnail_proc, success);
+
+  if (success)
+    {
+      return_args[1].value.pdb_int = width;
+      return_args[2].value.pdb_int = height;
+      return_args[3].value.pdb_int = bpp;
+      return_args[4].value.pdb_int = num_bytes;
+      return_args[5].value.pdb_pointer = thumbnail_data;
+    }
+
+  return return_args;
+}
+
+static ProcArg drawable_sub_thumbnail_inargs[] =
+{
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The drawable"
+  },
+  {
+    GIMP_PDB_INT32,
+    "src_x",
+    "The x coordinate of the area"
+  },
+  {
+    GIMP_PDB_INT32,
+    "src_y",
+    "The y coordinate of the area"
+  },
+  {
+    GIMP_PDB_INT32,
+    "src_width",
+    "The width of the area"
+  },
+  {
+    GIMP_PDB_INT32,
+    "src_height",
+    "The height of the area"
+  },
+  {
+    GIMP_PDB_INT32,
+    "dest_width",
+    "The thumbnail width"
+  },
+  {
+    GIMP_PDB_INT32,
+    "dest_height",
+    "The thumbnail height"
+  }
+};
+
+static ProcArg drawable_sub_thumbnail_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "width",
+    "The previews width"
+  },
+  {
+    GIMP_PDB_INT32,
+    "height",
+    "The previews height"
+  },
+  {
+    GIMP_PDB_INT32,
+    "bpp",
+    "The previews bpp"
+  },
+  {
+    GIMP_PDB_INT32,
+    "thumbnail_data_count",
+    "The number of bytes in thumbnail data"
+  },
+  {
+    GIMP_PDB_INT8ARRAY,
+    "thumbnail_data",
+    "The thumbnail data"
+  }
+};
+
+static ProcRecord drawable_sub_thumbnail_proc =
+{
+  "gimp_drawable_sub_thumbnail",
+  "Get a thumbnail of a sub-area of a drawable drawable.",
+  "This function gets data from which a thumbnail of a drawable preview can be created. Maximum x or y dimension is 512 pixels. The pixels are returned in RGB[A] or GRAY[A] format. The bpp return value gives the number of bytes in the image.",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer <mitch@gimp.org>",
+  "2004",
+  NULL,
+  GIMP_INTERNAL,
+  7,
+  drawable_sub_thumbnail_inargs,
+  5,
+  drawable_sub_thumbnail_outargs,
+  { { drawable_sub_thumbnail_invoker } }
 };

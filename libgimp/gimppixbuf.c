@@ -114,8 +114,64 @@ gimp_drawable_get_thumbnail (gint32                  drawable_ID,
     return gimp_pixbuf_from_data (data,
                                   thumb_width, thumb_height, thumb_bpp,
                                   alpha);
-  else
-    return NULL;
+
+  return NULL;
+}
+
+/**
+ * gimp_drawable_get_sub_thumbnail:
+ * @drawable_ID: the drawable ID
+ * @src_x:       the x coordinate of the area
+ * @src_y:       the y coordinate of the area
+ * @src_width:   the width of the area
+ * @src_height:  the height of the area
+ * @dest_width:  the requested thumbnail width  (<= 512 pixels)
+ * @dest_height: the requested thumbnail height (<= 512 pixels)
+ * @alpha:       how to handle an alpha channel
+ *
+ * Retrieves a thumbnail pixbuf for the drawable identified by
+ * @drawable_ID. The thumbnail will be not larger than the requested
+ * size.
+ *
+ * Return value: a new #GdkPixbuf
+ *
+ * Since: GIMP 2.2
+ **/
+GdkPixbuf *
+gimp_drawable_get_sub_thumbnail (gint32                  drawable_ID,
+                                 gint                    src_x,
+                                 gint                    src_y,
+                                 gint                    src_width,
+                                 gint                    src_height,
+                                 gint                    dest_width,
+                                 gint                    dest_height,
+                                 GimpPixbufTransparency  alpha)
+{
+  gint    thumb_width  = dest_width;
+  gint    thumb_height = dest_height;
+  gint    thumb_bpp;
+  guchar *data;
+
+  g_return_val_if_fail (src_x >= 0, NULL);
+  g_return_val_if_fail (src_y >= 0, NULL);
+  g_return_val_if_fail (src_width  > 0, NULL);
+  g_return_val_if_fail (src_height > 0, NULL);
+  g_return_val_if_fail (dest_width  > 0 && dest_width  <= 512, NULL);
+  g_return_val_if_fail (dest_height > 0 && dest_height <= 512, NULL);
+
+  data = gimp_drawable_get_sub_thumbnail_data (drawable_ID,
+                                               src_x, src_y,
+                                               src_width, src_height,
+                                               &thumb_width,
+                                               &thumb_height,
+                                               &thumb_bpp);
+
+  if (data)
+    return gimp_pixbuf_from_data (data,
+                                  thumb_width, thumb_height, thumb_bpp,
+                                  alpha);
+
+  return NULL;
 }
 
 static GdkPixbuf *

@@ -103,6 +103,7 @@ EXPORTS
 	gimp_drawable_get_linked
 	gimp_drawable_get_name
 	gimp_drawable_get_pixel
+	gimp_drawable_get_sub_thumbnail_data
 	gimp_drawable_get_tattoo
 	gimp_drawable_get_thumbnail_data
 	gimp_drawable_get_tile

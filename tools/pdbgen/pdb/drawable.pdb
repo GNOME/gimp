@@ -685,6 +685,89 @@ CODE
     );
 }
 
+sub drawable_sub_thumbnail {
+    $blurb = 'Get a thumbnail of a sub-area of a drawable drawable.';
+
+    $help = <<'HELP';
+This function gets data from which a thumbnail of a drawable preview
+can be created. Maximum x or y dimension is 512 pixels. The pixels are
+returned in RGB[A] or GRAY[A] format. The bpp return value gives the
+number of bytes in the image.
+HELP
+
+    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
+    $date   = '2004';
+    $since  = '2.2';
+
+    @inargs = (
+	&drawable_arg,
+        { name => 'src_x', type => '0 <= int32',
+          desc => 'The x coordinate of the area' },
+        { name => 'src_y', type => '0 <= int32',
+          desc => 'The y coordinate of the area' },
+        { name => 'src_width', type => '0 < int32',
+          desc => 'The width of the area' },
+        { name => 'src_height', type => '0 < int32',
+          desc => 'The height of the area' },
+	{ name => 'dest_width', type => '0 < int32 <= 512',
+	  desc => 'The thumbnail width' },
+	{ name => 'dest_height', type => '0 < int32 <= 512',
+	  desc => 'The thumbnail height' }
+    );
+
+    @outargs = (
+	&dim_args,
+        { name => 'thumbnail_data', type => 'int8array',
+	  desc => 'The thumbnail data', init => 1, wrap => 1,
+	  array => { name => 'thumbnail_data_count',
+		     desc => 'The number of bytes in thumbnail data',
+		     alias => 'num_bytes', init => 1 } }
+    );
+    $outargs[0]->{void_ret} = 1;
+
+    %invoke = (
+	headers => [ qw("core/gimpdrawable-preview.h") ],
+        code    => <<'CODE'
+{
+  success = ((src_x + src_width)  <= gimp_item_width  (GIMP_ITEM (drawable)) &&
+             (src_y + src_height) <= gimp_item_height (GIMP_ITEM (drawable)));
+
+  if (success)
+    {
+      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+      TempBuf   *buf;
+
+      if (gimage->gimp->config->layer_previews)
+        buf = gimp_drawable_get_sub_preview (drawable,
+                                             src_x, src_y,
+                                             src_width, src_height,
+                                             dest_width, dest_height);
+      else
+        buf = gimp_viewable_get_dummy_preview (GIMP_VIEWABLE (drawable),
+                                               dest_width, dest_height,
+                                               gimp_drawable_has_alpha (drawable) ?
+                                               4 : 3);
+
+      if (buf)
+        {
+          num_bytes      = buf->height * buf->width * buf->bytes;
+          thumbnail_data = g_memdup (temp_buf_data (buf), num_bytes);
+          width          = buf->width;
+          height         = buf->height;
+          bpp            = buf->bytes;
+
+          temp_buf_free (buf);
+        }
+      else
+        {
+          success = FALSE;
+        }
+    }
+}
+CODE
+    );
+}
+
 sub drawable_offset {
     $blurb = <<'BLURB';
 Offset the drawable by the specified amounts in the X and Y directions
@@ -773,7 +856,7 @@ CODE
             drawable_merge_shadow drawable_update
             drawable_get_pixel drawable_set_pixel
 	    drawable_fill drawable_offset
-            drawable_thumbnail);
+            drawable_thumbnail drawable_sub_thumbnail);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Drawable procedures';

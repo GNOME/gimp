@@ -37,14 +37,22 @@ typedef enum
 } GimpPixbufTransparency;
 
 
-GdkPixbuf * gimp_image_get_thumbnail    (gint32                  image_ID,
-                                         gint                    width,
-                                         gint                    height,
-                                         GimpPixbufTransparency  alpha);
-GdkPixbuf * gimp_drawable_get_thumbnail (gint32                  drawable_ID,
-                                         gint                    width,
-                                         gint                    height,
-                                         GimpPixbufTransparency  alpha);
+GdkPixbuf * gimp_image_get_thumbnail        (gint32                  image_ID,
+                                             gint                    width,
+                                             gint                    height,
+                                             GimpPixbufTransparency  alpha);
+GdkPixbuf * gimp_drawable_get_thumbnail     (gint32                  drawable_ID,
+                                             gint                    width,
+                                             gint                    height,
+                                             GimpPixbufTransparency  alpha);
+GdkPixbuf * gimp_drawable_get_sub_thumbnail (gint32                  drawable_ID,
+                                             gint                    src_x,
+                                             gint                    src_y,
+                                             gint                    src_width,
+                                             gint                    src_height,
+                                             gint                    dest_width,
+                                             gint                    dest_height,
+                                             GimpPixbufTransparency  alpha);
 
 
 G_END_DECLS

@@ -1,3 +1,19 @@
+2004-12-14  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/drawable.pdb: added gimp_drawable_sub_thumbnail()
+	to enable plug-ins avoiding #142074-alike bugs if they need to.
+
+	* app/pdb/drawable_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimpdrawable_pdb.[ch]: regenerated.
+
+	* libgimp/gimpdrawable.[ch]
+	* libgimp/gimppixbuf.[ch]: wrap it with the same convenience
+	APIs as gimp_drawable_thumbnail().
+
+	* libgimp/gimp.def
+	* libgimp/gimpui.def: changed accordingly.
+
 2004-12-13  Sven Neumann  <sven@gimp.org>
 
 	* HACKING

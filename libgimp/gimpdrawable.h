@@ -40,32 +40,40 @@ struct _GimpDrawable
 };
 
 
-GimpDrawable * gimp_drawable_get                 (gint32         drawable_ID);
-void           gimp_drawable_detach              (GimpDrawable  *drawable);
-void           gimp_drawable_flush               (GimpDrawable  *drawable);
-GimpTile     * gimp_drawable_get_tile            (GimpDrawable  *drawable,
-                                                  gint           shadow,
-                                                  gint           row,
-                                                  gint           col);
-GimpTile     * gimp_drawable_get_tile2           (GimpDrawable  *drawable,
-                                                  gint           shadow,
-                                                  gint           x,
-                                                  gint           y);
+GimpDrawable * gimp_drawable_get                    (gint32         drawable_ID);
+void           gimp_drawable_detach                 (GimpDrawable  *drawable);
+void           gimp_drawable_flush                  (GimpDrawable  *drawable);
+GimpTile     * gimp_drawable_get_tile               (GimpDrawable  *drawable,
+                                                     gint           shadow,
+                                                     gint           row,
+                                                     gint           col);
+GimpTile     * gimp_drawable_get_tile2              (GimpDrawable  *drawable,
+                                                     gint           shadow,
+                                                     gint           x,
+                                                     gint           y);
 
-void           gimp_drawable_get_color_uchar     (gint32         drawable_ID,
-                                                  const GimpRGB *color,
-                                                  guchar        *color_uchar);
+void           gimp_drawable_get_color_uchar        (gint32         drawable_ID,
+                                                     const GimpRGB *color,
+                                                     guchar        *color_uchar);
 
-guchar       * gimp_drawable_get_thumbnail_data  (gint32         drawable_ID,
-                                                  gint          *width,
-                                                  gint          *height,
-                                                  gint          *bpp);
+guchar       * gimp_drawable_get_thumbnail_data     (gint32         drawable_ID,
+                                                     gint          *width,
+                                                     gint          *height,
+                                                     gint          *bpp);
+guchar       * gimp_drawable_get_sub_thumbnail_data (gint32         drawable_ID,
+                                                     gint           src_x,
+                                                     gint           src_y,
+                                                     gint           src_width,
+                                                     gint           src_height,
+                                                     gint          *dest_width,
+                                                     gint          *dest_height,
+                                                     gint          *bpp);
 
-void           gimp_drawable_attach_new_parasite (gint32         drawable_ID,
-                                                  const gchar   *name,
-                                                  gint           flags,
-                                                  gint           size,
-                                                  gconstpointer  data);
+void           gimp_drawable_attach_new_parasite    (gint32         drawable_ID,
+                                                     const gchar   *name,
+                                                     gint           flags,
+                                                     gint           size,
+                                                     gconstpointer  data);
 
 G_END_DECLS
 

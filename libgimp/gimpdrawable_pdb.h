@@ -103,6 +103,18 @@ gboolean      _gimp_drawable_thumbnail      (gint32           drawable_ID,
 					     gint            *bpp,
 					     gint            *thumbnail_data_count,
 					     guint8         **thumbnail_data);
+gboolean      _gimp_drawable_sub_thumbnail  (gint32           drawable_ID,
+					     gint             src_x,
+					     gint             src_y,
+					     gint             src_width,
+					     gint             src_height,
+					     gint             dest_width,
+					     gint             dest_height,
+					     gint            *width,
+					     gint            *height,
+					     gint            *bpp,
+					     gint            *thumbnail_data_count,
+					     guint8         **thumbnail_data);
 
 
 G_END_DECLS
