@@ -60,13 +60,14 @@ struct _GimpTransformTool
 
   gint            x1, y1;         /*  upper left hand coordinate       */
   gint            x2, y2;         /*  lower right hand coords          */
-  gdouble	  cx, cy;	  /*  center point (for rotation)      */
+  gdouble         cx, cy;         /*  center point (for rotation)      */
+  gdouble         aspect_ratio;   /*  aspect ratio (for scaling)       */
 
   gdouble         tx1, ty1;       /*  transformed coords               */
   gdouble         tx2, ty2;
   gdouble         tx3, ty3;
   gdouble         tx4, ty4;
-  gdouble	  tcx, tcy;
+  gdouble         tcx, tcy;
 
   GimpMatrix3     transform;      /*  transformation matrix            */
   TransInfo       trans_info;     /*  transformation info              */
@@ -80,14 +81,14 @@ struct _GimpTransformTool
   gboolean        use_grid;       /*  does the tool use the grid       */
   gboolean        use_center;     /*  use the center handle            */
 
-  gint		  ngx, ngy;	  /*  number of grid lines in original
+  gint            ngx, ngy;       /*  number of grid lines in original
                                    *  x and y directions
                                    */
-  gdouble	 *grid_coords;	  /*  x and y coordinates of the grid
+  gdouble        *grid_coords;    /*  x and y coordinates of the grid
                                    *  endpoints (a total of (ngx+ngy)*2
                                    *  coordinate pairs)
                                    */
-  gdouble	 *tgrid_coords;   /*  transformed grid_coords          */
+  gdouble        *tgrid_coords;   /*  transformed grid_coords          */
 
   GimpTransformType       type;
   GimpTransformDirection  direction;
@@ -121,5 +122,6 @@ GType   gimp_transform_tool_get_type               (void) G_GNUC_CONST;
 
 void    gimp_transform_tool_transform_bounding_box (GimpTransformTool *tr_tool);
 void    gimp_transform_tool_expose_preview         (GimpTransformTool *tr_tool);
+
 
 #endif  /*  __GIMP_TRANSFORM_TOOL_H__  */

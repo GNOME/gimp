@@ -966,7 +966,6 @@ crop_info_create (GimpCropTool *crop)
   GtkWidget        *spinbutton;
   GtkWidget        *bbox;
   GtkWidget        *button;
-  GtkWidget        *widget;
   const gchar      *stock_id;
 
   stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool->tool_info));
@@ -1036,14 +1035,11 @@ crop_info_create (GimpCropTool *crop)
   gtk_table_set_row_spacing (GTK_TABLE (crop->crop_info->info_table), 1, 6);
   gtk_table_set_row_spacing (GTK_TABLE (crop->crop_info->info_table), 2, 0);
 
-  widget =
-      info_dialog_add_spinbutton (crop->crop_info, _("Aspect ratio:"),
-                                  &(crop->aspect_ratio),
-                                  0, 65536, 0.01, 0.1, 1, 1, 2,
-                                  G_CALLBACK (crop_aspect_changed),
-                                  crop);
-  gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (widget), TRUE);
-
+  spinbutton = info_dialog_add_spinbutton (crop->crop_info, _("Aspect ratio:"),
+                                           &(crop->aspect_ratio),
+                                           0, 65536, 0.01, 0.1, 1, 0.5, 2,
+                                           G_CALLBACK (crop_aspect_changed),
+                                           crop);
 
   /* Create the area selection buttons */
   bbox = gtk_hbutton_box_new ();

@@ -1,5 +1,17 @@
 2004-08-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpscaletool.c
+	* app/tools/gimptransformtool.h: applied patch from Jordi Gay
+	(attached to bug #131111) which adds an aspect ratio spinbutton to
+	the scale dialog and keeps the aspect ratio intact when with or
+	height are changed using the dialog. Fixes bug #132274.
+
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpscaletool.c: don't set the aspect spinbuttons to
+	"wrap" and decrease their climb_rate.
+
+2004-08-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/context-actions.c
 	* app/actions/context-commands.[ch]
 	* menus/image-menu.xml.in: added actions, callbacks and menu items
