@@ -92,6 +92,11 @@
 #
 # (gradient-path "${gimp_dir}/gradients:${gimp_data_dir}/gradients")
 
+# Where to look for fonts.  This is a colon-separated list of folders to
+# search.
+#
+# (font-path "${gimp_dir}/fonts:${gimp_data_dir}/fonts")
+
 # Specify a default brush.  The brush is searched for in the specified brush
 # path.  This is a string value.
 #
@@ -178,10 +183,6 @@
 # Sets the pluginrc search path.  This is a single filename.
 #
 # (pluginrc-path "${gimp_dir}/pluginrc")
-
-# To inhibit loading of a module, add its name here.  This is a string value.
-#
-# (module-load-inhibit "foo")
 
 # Sets whether GIMP should create previews of layers and channels. Previews
 # in the layers and channels dialog are nice to have but they can slow things

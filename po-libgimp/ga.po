@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-08-27 00:16+0200\n"
+"POT-Creation-Date: 2003-09-07 22:53+0200\n"
 "PO-Revision-Date: 2000-12-18 23:30-0800\n"
 "Last-Translator: Nobody\n"
 "Language-Team: Irish\n"
@@ -412,23 +412,23 @@ msgstr ""
 msgid "_Resize"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:257
+#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:258
 msgid "_Scale"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:235
+#: libgimpwidgets/gimpstock.c:236
 msgid "Crop"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:253
+#: libgimpwidgets/gimpstock.c:254
 msgid "_Transform"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:256
+#: libgimpwidgets/gimpstock.c:257
 msgid "_Rotate"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:258
+#: libgimpwidgets/gimpstock.c:259
 msgid "_Shear"
 msgstr ""
 
@@ -514,44 +514,48 @@ msgstr ""
 msgid "Contrast Cycles:"
 msgstr ""
 
-#: modules/colorsel_cmyk.c:70
+#: modules/colorsel_cmyk.c:73
 msgid "CMYK color selector"
 msgstr ""
 
-#: modules/colorsel_cmyk.c:129
+#: modules/colorsel_cmyk.c:132
 msgid "CMYK"
 msgstr ""
 
-#: modules/colorsel_cmyk.c:143
+#: modules/colorsel_cmyk.c:149
 msgid "_C"
 msgstr ""
 
-#: modules/colorsel_cmyk.c:144
+#: modules/colorsel_cmyk.c:150
 msgid "_M"
 msgstr ""
 
-#: modules/colorsel_cmyk.c:145
+#: modules/colorsel_cmyk.c:151
 msgid "_Y"
 msgstr ""
 
-#: modules/colorsel_cmyk.c:146
+#: modules/colorsel_cmyk.c:152
 msgid "_K"
 msgstr ""
 
-#: modules/colorsel_cmyk.c:150
+#: modules/colorsel_cmyk.c:156
 msgid "Cyan"
 msgstr ""
 
-#: modules/colorsel_cmyk.c:151
+#: modules/colorsel_cmyk.c:157
 msgid "Magenta"
 msgstr ""
 
-#: modules/colorsel_cmyk.c:152
+#: modules/colorsel_cmyk.c:158
 msgid "Yellow"
 msgstr ""
 
-#: modules/colorsel_cmyk.c:153
+#: modules/colorsel_cmyk.c:159
 msgid "Black"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:193
+msgid "Black Pullout (%):"
 msgstr ""
 
 #: modules/colorsel_triangle.c:110

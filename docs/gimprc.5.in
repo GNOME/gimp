@@ -128,6 +128,11 @@ Sets the gradient search path.  This is a colon-separated list of folders to
 search.
 
 .TP
+(font-path "${gimp_dir}/fonts:${gimp_data_dir}/fonts")
+
+Where to look for fonts.  This is a colon-separated list of folders to search.
+
+.TP
 (default-brush "Circle (11)")
 
 Specify a default brush.  The brush is searched for in the specified brush
@@ -227,11 +232,6 @@ specified in kilobytes.
 (pluginrc-path "${gimp_dir}/pluginrc")
 
 Sets the pluginrc search path.  This is a single filename.
-
-.TP
-(module-load-inhibit "foo")
-
-To inhibit loading of a module, add its name here.  This is a string value.
 
 .TP
 (layer-previews yes)

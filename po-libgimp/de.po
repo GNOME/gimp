@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.17\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-08-27 00:16+0200\n"
+"POT-Creation-Date: 2003-09-07 22:53+0200\n"
 "PO-Revision-Date: 2003-07-15 02:18+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -423,23 +423,23 @@ msgstr "Z_eilenabstand"
 msgid "_Resize"
 msgstr "_Größe ändern"
 
-#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:257
+#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:258
 msgid "_Scale"
 msgstr "_Skalieren"
 
-#: libgimpwidgets/gimpstock.c:235
+#: libgimpwidgets/gimpstock.c:236
 msgid "Crop"
 msgstr "Zuschneiden"
 
-#: libgimpwidgets/gimpstock.c:253
+#: libgimpwidgets/gimpstock.c:254
 msgid "_Transform"
 msgstr "_Transformation"
 
-#: libgimpwidgets/gimpstock.c:256
+#: libgimpwidgets/gimpstock.c:257
 msgid "_Rotate"
 msgstr "_Rotieren"
 
-#: libgimpwidgets/gimpstock.c:258
+#: libgimpwidgets/gimpstock.c:259
 msgid "_Shear"
 msgstr "_Scheren"
 
@@ -528,46 +528,50 @@ msgstr "Kontrast"
 msgid "Contrast Cycles:"
 msgstr "Kontrastverstärkung:"
 
-#: modules/colorsel_cmyk.c:70
+#: modules/colorsel_cmyk.c:73
 msgid "CMYK color selector"
 msgstr "CMYK Farbmischer"
 
-#: modules/colorsel_cmyk.c:129
+#: modules/colorsel_cmyk.c:132
 #, fuzzy
 msgid "CMYK"
 msgstr "_CMYK"
 
-#: modules/colorsel_cmyk.c:143
+#: modules/colorsel_cmyk.c:149
 msgid "_C"
 msgstr "_C"
 
-#: modules/colorsel_cmyk.c:144
+#: modules/colorsel_cmyk.c:150
 msgid "_M"
 msgstr "_M"
 
-#: modules/colorsel_cmyk.c:145
+#: modules/colorsel_cmyk.c:151
 msgid "_Y"
 msgstr "_Y"
 
-#: modules/colorsel_cmyk.c:146
+#: modules/colorsel_cmyk.c:152
 msgid "_K"
 msgstr "_K"
 
-#: modules/colorsel_cmyk.c:150
+#: modules/colorsel_cmyk.c:156
 msgid "Cyan"
 msgstr "Cyan"
 
-#: modules/colorsel_cmyk.c:151
+#: modules/colorsel_cmyk.c:157
 msgid "Magenta"
 msgstr "Magenta"
 
-#: modules/colorsel_cmyk.c:152
+#: modules/colorsel_cmyk.c:158
 msgid "Yellow"
 msgstr "Gelb (Yellow)"
 
-#: modules/colorsel_cmyk.c:153
+#: modules/colorsel_cmyk.c:159
 msgid "Black"
 msgstr "Schwarz (Key)"
+
+#: modules/colorsel_cmyk.c:193
+msgid "Black Pullout (%):"
+msgstr ""
 
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"

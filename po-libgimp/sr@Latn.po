@@ -8,7 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"POT-Creation-Date: 2003-09-02 16:46+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-09-07 22:53+0200\n"
 "PO-Revision-Date: 2003-09-02 16:47+0200\n"
 "Last-Translator: Dejan Matijević <dejan@ns.sympatico.ca>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
@@ -428,23 +429,23 @@ msgstr "Razmak redova"
 msgid "_Resize"
 msgstr "_Promeni veličinu"
 
-#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:257
+#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:258
 msgid "_Scale"
 msgstr "_Skala"
 
-#: libgimpwidgets/gimpstock.c:235
+#: libgimpwidgets/gimpstock.c:236
 msgid "Crop"
 msgstr "Iseci"
 
-#: libgimpwidgets/gimpstock.c:253
+#: libgimpwidgets/gimpstock.c:254
 msgid "_Transform"
 msgstr "_Transformiši"
 
-#: libgimpwidgets/gimpstock.c:256
+#: libgimpwidgets/gimpstock.c:257
 msgid "_Rotate"
 msgstr "_Rotiraj"
 
-#: libgimpwidgets/gimpstock.c:258
+#: libgimpwidgets/gimpstock.c:259
 msgid "_Shear"
 msgstr "_Deli"
 
@@ -532,45 +533,49 @@ msgstr "Kontrast"
 msgid "Contrast Cycles:"
 msgstr "Kontrast ciklus:"
 
-#: modules/colorsel_cmyk.c:70
+#: modules/colorsel_cmyk.c:73
 msgid "CMYK color selector"
 msgstr "Izbor CMYK boje"
 
-#: modules/colorsel_cmyk.c:129
+#: modules/colorsel_cmyk.c:132
 msgid "CMYK"
 msgstr "CMYK"
 
-#: modules/colorsel_cmyk.c:143
+#: modules/colorsel_cmyk.c:149
 msgid "_C"
 msgstr "_C"
 
-#: modules/colorsel_cmyk.c:144
+#: modules/colorsel_cmyk.c:150
 msgid "_M"
 msgstr "_M"
 
-#: modules/colorsel_cmyk.c:145
+#: modules/colorsel_cmyk.c:151
 msgid "_Y"
 msgstr "_Y"
 
-#: modules/colorsel_cmyk.c:146
+#: modules/colorsel_cmyk.c:152
 msgid "_K"
 msgstr "_K"
 
-#: modules/colorsel_cmyk.c:150
+#: modules/colorsel_cmyk.c:156
 msgid "Cyan"
 msgstr "Cijan"
 
-#: modules/colorsel_cmyk.c:151
+#: modules/colorsel_cmyk.c:157
 msgid "Magenta"
 msgstr "Magenta"
 
-#: modules/colorsel_cmyk.c:152
+#: modules/colorsel_cmyk.c:158
 msgid "Yellow"
 msgstr "Žuta"
 
-#: modules/colorsel_cmyk.c:153
+#: modules/colorsel_cmyk.c:159
 msgid "Black"
 msgstr "Crna"
+
+#: modules/colorsel_cmyk.c:193
+msgid "Black Pullout (%):"
+msgstr ""
 
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 1.3.X\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-03 11:49+0200\n"
+"POT-Creation-Date: 2003-09-07 22:53+0200\n"
 "PO-Revision-Date: 2003-07-25 10:51-0300\n"
 "Last-Translator: Pablo G. del Campo <pablodc@bigfoot.com>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
@@ -430,23 +430,23 @@ msgstr "Espaciado de la l_ínea"
 msgid "_Resize"
 msgstr "_Redimensionar"
 
-#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:257
+#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:258
 msgid "_Scale"
 msgstr "_Escala"
 
-#: libgimpwidgets/gimpstock.c:235
+#: libgimpwidgets/gimpstock.c:236
 msgid "Crop"
 msgstr "Recortar"
 
-#: libgimpwidgets/gimpstock.c:253
+#: libgimpwidgets/gimpstock.c:254
 msgid "_Transform"
 msgstr "_Transformar"
 
-#: libgimpwidgets/gimpstock.c:256
+#: libgimpwidgets/gimpstock.c:257
 msgid "_Rotate"
 msgstr "_Rotar"
 
-#: libgimpwidgets/gimpstock.c:258
+#: libgimpwidgets/gimpstock.c:259
 msgid "_Shear"
 msgstr "_Cizallar"
 
@@ -636,4 +636,3 @@ msgstr "Presión"
 
 #~ msgid "OK"
 #~ msgstr "Aceptar"
-

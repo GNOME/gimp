@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-08-27 00:16+0200\n"
+"POT-Creation-Date: 2003-09-07 22:53+0200\n"
 "PO-Revision-Date: 2003-02-28 03:15-0300\n"
 "Last-Translator: Alexandre Folle de Menezes <afmenez@terra.com.br>\n"
 "Language-Team: Brazilian Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
@@ -429,23 +429,23 @@ msgstr "Espaçamento das L_inhas"
 msgid "_Resize"
 msgstr "_Redimensionar"
 
-#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:257
+#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:258
 msgid "_Scale"
 msgstr "E_scalar"
 
-#: libgimpwidgets/gimpstock.c:235
+#: libgimpwidgets/gimpstock.c:236
 msgid "Crop"
 msgstr "Aparar"
 
-#: libgimpwidgets/gimpstock.c:253
+#: libgimpwidgets/gimpstock.c:254
 msgid "_Transform"
 msgstr "_Transformar"
 
-#: libgimpwidgets/gimpstock.c:256
+#: libgimpwidgets/gimpstock.c:257
 msgid "_Rotate"
 msgstr "_Rotacionar"
 
-#: libgimpwidgets/gimpstock.c:258
+#: libgimpwidgets/gimpstock.c:259
 msgid "_Shear"
 msgstr "_Inclinar"
 
@@ -534,48 +534,52 @@ msgstr "Contraste"
 msgid "Contrast Cycles:"
 msgstr "Ciclos de Contraste"
 
-#: modules/colorsel_cmyk.c:70
+#: modules/colorsel_cmyk.c:73
 #, fuzzy
 msgid "CMYK color selector"
 msgstr "Seletor de cores estilo watercolor"
 
-#: modules/colorsel_cmyk.c:129
+#: modules/colorsel_cmyk.c:132
 msgid "CMYK"
 msgstr ""
 
-#: modules/colorsel_cmyk.c:143
+#: modules/colorsel_cmyk.c:149
 msgid "_C"
 msgstr ""
 
-#: modules/colorsel_cmyk.c:144
+#: modules/colorsel_cmyk.c:150
 msgid "_M"
 msgstr ""
 
-#: modules/colorsel_cmyk.c:145
+#: modules/colorsel_cmyk.c:151
 msgid "_Y"
 msgstr ""
 
-#: modules/colorsel_cmyk.c:146
+#: modules/colorsel_cmyk.c:152
 msgid "_K"
 msgstr ""
 
-#: modules/colorsel_cmyk.c:150
+#: modules/colorsel_cmyk.c:156
 #, fuzzy
 msgid "Cyan"
 msgstr "Cancelar"
 
-#: modules/colorsel_cmyk.c:151
+#: modules/colorsel_cmyk.c:157
 msgid "Magenta"
 msgstr ""
 
-#: modules/colorsel_cmyk.c:152
+#: modules/colorsel_cmyk.c:158
 msgid "Yellow"
 msgstr ""
 
-#: modules/colorsel_cmyk.c:153
+#: modules/colorsel_cmyk.c:159
 #, fuzzy
 msgid "Black"
 msgstr "/Preto"
+
+#: modules/colorsel_cmyk.c:193
+msgid "Black Pullout (%):"
+msgstr ""
 
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"

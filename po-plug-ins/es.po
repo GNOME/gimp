@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.HEAD.es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-03 11:49+0200\n"
+"POT-Creation-Date: 2003-09-08 00:27+0200\n"
 "PO-Revision-Date: 2003-08-28 15:06-0300\n"
 "Last-Translator: Pablo G. del Campo <pablodc@bigfoot.com>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
@@ -389,7 +389,7 @@ msgstr "Fractales"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1599 plug-ins/bmp/bmpwrite.c:199
 #: plug-ins/common/CEL.c:497 plug-ins/common/CML_explorer.c:2165
-#: plug-ins/common/gbr.c:494 plug-ins/common/gif.c:1014
+#: plug-ins/common/gbr.c:490 plug-ins/common/gif.c:1014
 #: plug-ins/common/gih.c:1228 plug-ins/common/gtm.c:238
 #: plug-ins/common/jpeg.c:1300 plug-ins/common/pat.c:385
 #: plug-ins/common/pcx.c:579 plug-ins/common/pix.c:514
@@ -450,7 +450,7 @@ msgstr "Pulse aquí para cancelar procedimiento de guardar"
 
 #: plug-ins/FractalExplorer/Dialogs.c:2008 plug-ins/bmp/bmpread.c:97
 #: plug-ins/common/CEL.c:253 plug-ins/common/CML_explorer.c:2391
-#: plug-ins/common/gbr.c:299 plug-ins/common/gih.c:628
+#: plug-ins/common/gbr.c:298 plug-ins/common/gih.c:628
 #: plug-ins/common/hrz.c:337 plug-ins/common/jpeg.c:771
 #: plug-ins/common/pat.c:269 plug-ins/common/pcx.c:301
 #: plug-ins/common/pix.c:333 plug-ins/common/png.c:487
@@ -644,7 +644,8 @@ msgstr "U_mbral:"
 
 #: plug-ins/Lighting/lighting_ui.c:460 plug-ins/MapObject/mapobject_ui.c:655
 msgid "Stop when pixel differences are smaller than this value"
-msgstr "Parar cuando las diferencias entre píxeles sean más pequeñas que este valor"
+msgstr ""
+"Parar cuando las diferencias entre píxeles sean más pequeñas que este valor"
 
 #: plug-ins/Lighting/lighting_ui.c:502 plug-ins/MapObject/mapobject_ui.c:681
 msgid "Light Settings"
@@ -1176,7 +1177,7 @@ msgstr "Mapa de colores malo"
 
 #. Set up progress display
 #: plug-ins/bmp/bmpread.c:102 plug-ins/common/CEL.c:257
-#: plug-ins/common/gbr.c:304 plug-ins/common/gih.c:632
+#: plug-ins/common/gbr.c:303 plug-ins/common/gih.c:632
 #: plug-ins/common/gifload.c:300 plug-ins/common/hrz.c:341
 #: plug-ins/common/jpeg.c:775 plug-ins/common/pat.c:273
 #: plug-ins/common/pcx.c:305 plug-ins/common/pix.c:338
@@ -1338,7 +1339,8 @@ msgstr "Usar función coseno para componente roja."
 
 #: plug-ins/common/AlienMap.c:1245
 msgid "Red channel: use linear mapping instead of any trigonometrical function"
-msgstr "Canal rojo: usar un mapeo lineal en lugar de cualquier función trigonométrica"
+msgstr ""
+"Canal rojo: usar un mapeo lineal en lugar de cualquier función trigonométrica"
 
 #: plug-ins/common/AlienMap.c:1264
 msgid "Use sine-function for green component."
@@ -1349,7 +1351,8 @@ msgid "Use cosine-function for green component."
 msgstr "Usar función coseno para componente verde."
 
 #: plug-ins/common/AlienMap.c:1268
-msgid "Green channel: use linear mapping instead of any trigonometrical function"
+msgid ""
+"Green channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
 "Canal verde: usar un mapeo lineal en lugar de cualquier función "
 "trigonométrica"
@@ -1363,8 +1366,10 @@ msgid "Use cosine-function for blue component."
 msgstr "Usar función coseno para componente azul."
 
 #: plug-ins/common/AlienMap.c:1291
-msgid "Blue channel: use linear mapping instead of any trigonometrical function"
-msgstr "Canal azul: usar un mapeo lineal en lugar de cualquier función trigonométrica"
+msgid ""
+"Blue channel: use linear mapping instead of any trigonometrical function"
+msgstr ""
+"Canal azul: usar un mapeo lineal en lugar de cualquier función trigonométrica"
 
 #: plug-ins/common/AlienMap.c:1357
 msgid "About AlienMap"
@@ -1957,12 +1962,12 @@ msgid "Error: failed to load parameters"
 msgstr "Error: Fallo al leer parámetros"
 
 #. Create the actual window.
-#: plug-ins/common/aa.c:340
+#: plug-ins/common/aa.c:342
 msgid "Save as Text"
 msgstr "Guardar como texto"
 
 #. file save type
-#: plug-ins/common/aa.c:358 plug-ins/common/pnm.c:937
+#: plug-ins/common/aa.c:360 plug-ins/common/pnm.c:937
 #: plug-ins/common/sunras.c:1602
 msgid "Data Formatting"
 msgstr "Formateado de datos"
@@ -2397,59 +2402,59 @@ msgstr "<Image>/Capa/Colores/Auto/E_stirar contraste"
 msgid "Auto-Stretching Contrast..."
 msgstr "Auto-estirando contraste..."
 
-#: plug-ins/common/ccanalyze.c:189
+#: plug-ins/common/ccanalyze.c:191
 msgid "<Image>/Filters/Colors/Colorcube A_nalysis..."
 msgstr "<Image>/Filtros/Colores/A_nálisis del cubo de color..."
 
-#: plug-ins/common/ccanalyze.c:269
+#: plug-ins/common/ccanalyze.c:277
 msgid "Colorcube Analysis..."
 msgstr "Análisis del cubo de color..."
 
 #. set up the dialog
-#: plug-ins/common/ccanalyze.c:509
+#: plug-ins/common/ccanalyze.c:554
 msgid "Colorcube Analysis"
 msgstr "Análisis del cubo de color"
 
 #. set up frame
-#: plug-ins/common/ccanalyze.c:524
+#: plug-ins/common/ccanalyze.c:569
 msgid "Results"
 msgstr "Resultados"
 
 #. output results
-#: plug-ins/common/ccanalyze.c:548
+#: plug-ins/common/ccanalyze.c:593
 #, c-format
 msgid "Image dimensions: %dx%d"
 msgstr "Dimensiones de la imagen: %dx%d"
 
-#: plug-ins/common/ccanalyze.c:549
+#: plug-ins/common/ccanalyze.c:594
 #, c-format
 msgid "Uncompressed size in bytes: %d"
 msgstr "Tamaño descomprimido en bytes: %d"
 
-#: plug-ins/common/ccanalyze.c:552
+#: plug-ins/common/ccanalyze.c:597
 msgid "No colors (?)"
 msgstr "Sin colores (¿?)"
 
-#: plug-ins/common/ccanalyze.c:554
+#: plug-ins/common/ccanalyze.c:599
 msgid "Only one unique color"
 msgstr "Sólo un único color"
 
-#: plug-ins/common/ccanalyze.c:556
+#: plug-ins/common/ccanalyze.c:601
 #, c-format
 msgid "Number of unique colors: %d"
 msgstr "Número de colores únicos: %d"
 
-#: plug-ins/common/ccanalyze.c:560
+#: plug-ins/common/ccanalyze.c:605
 #, c-format
 msgid "Filename: %s"
 msgstr "Nombre del archivo: %s"
 
-#: plug-ins/common/ccanalyze.c:564
+#: plug-ins/common/ccanalyze.c:609
 #, c-format
 msgid "Compressed size in bytes: %u"
 msgstr "Tamaño comprimido en bytes: %u"
 
-#: plug-ins/common/ccanalyze.c:565
+#: plug-ins/common/ccanalyze.c:610
 #, c-format
 msgid "Compression ratio (approx.): %d to 1"
 msgstr "Porcentaje de compresión (aprox.): %d a 1"
@@ -3766,7 +3771,7 @@ msgstr "Debe especificar horizontal o vertical (o ambos)"
 msgid "RLE Gaussian Blur"
 msgstr "Desenfoque gaussiano RLE"
 
-#: plug-ins/common/gbr.c:348
+#: plug-ins/common/gbr.c:344
 #, c-format
 msgid ""
 "Error in GIMP brush file\n"
@@ -3776,29 +3781,29 @@ msgstr ""
 "«%s»."
 
 # # //R ¿Con subrayado?
-#: plug-ins/common/gbr.c:356 plug-ins/common/gih.c:480
+#: plug-ins/common/gbr.c:352 plug-ins/common/gih.c:480
 #: plug-ins/common/gih.c:1128
 msgid "Unnamed"
 msgstr "Sin nombre"
 
-#: plug-ins/common/gbr.c:486
+#: plug-ins/common/gbr.c:482
 msgid "GIMP brushes are either GRAYSCALE or RGBA\n"
 msgstr "Las brochas de El GIMP son EN TONOS DE GRIS o bien en RGBA\n"
 
-#: plug-ins/common/gbr.c:499
+#: plug-ins/common/gbr.c:495
 #, c-format
 msgid "Saving %s:"
 msgstr "Guardando %s:"
 
-#: plug-ins/common/gbr.c:565
+#: plug-ins/common/gbr.c:561
 msgid "Save as Brush"
 msgstr "Guardar como brocha"
 
-#: plug-ins/common/gbr.c:592
+#: plug-ins/common/gbr.c:588
 msgid "Spacing:"
 msgstr "Espaciado:"
 
-#: plug-ins/common/gbr.c:603 plug-ins/common/gih.c:886
+#: plug-ins/common/gbr.c:599 plug-ins/common/gih.c:886
 #: plug-ins/common/pat.c:479 plug-ins/gimpressionist/presets.c:376
 msgid "Description:"
 msgstr "Descripción:"
@@ -3867,7 +3872,8 @@ msgstr ""
 "codificación ASCII de 7 bits. No se guardará ningún comentario."
 
 #: plug-ins/common/gif.c:990
-msgid "Sorry, can't save RGB images as GIFs. Convert to Indexed or Grayscale first."
+msgid ""
+"Sorry, can't save RGB images as GIFs. Convert to Indexed or Grayscale first."
 msgstr ""
 "Lo siento, no se pueden guardar imágenes RGB como GIFs - convierta a "
 "INDEXADA o TONOS DE GRIS primero."
@@ -3884,7 +3890,8 @@ msgstr ""
 
 #: plug-ins/common/gif.c:1171
 msgid "Delay inserted to prevent evil CPU-sucking anim."
-msgstr "Retardo insertado para evitar la maldita animación de chupadora de CPU."
+msgstr ""
+"Retardo insertado para evitar la maldita animación de chupadora de CPU."
 
 #: plug-ins/common/gif.c:1215
 msgid "GIF Warning"
@@ -4259,7 +4266,8 @@ msgstr "El número de píxeles en el borde de la tabla."
 
 #: plug-ins/common/gtm.c:610
 msgid "The width for each table cell.  Can be a number or a percent."
-msgstr "La anchura de cada celda de tabla. Puede ser un número o un porcentaje."
+msgstr ""
+"La anchura de cada celda de tabla. Puede ser un número o un porcentaje."
 
 #: plug-ins/common/gtm.c:626
 msgid "The height for each table cell.  Can be a number or a percent."
@@ -4894,7 +4902,8 @@ msgstr "Nivel de compresión de PNG:"
 
 #: plug-ins/common/mng.c:1346 plug-ins/common/png.c:1388
 msgid "Choose a high compression level for small file size"
-msgstr "Seleccione un nivel de compresión alto para achicar el tamaño del archivo"
+msgstr ""
+"Seleccione un nivel de compresión alto para achicar el tamaño del archivo"
 
 #: plug-ins/common/mng.c:1360
 msgid "JPEG Compression Quality:"
@@ -5966,44 +5975,50 @@ msgid "<Toolbox>/File/Acquire/_Screen Shot..."
 msgstr "<Toolbox>/Archivo/Adquirir/Ca_ptura de pantalla..."
 
 #: plug-ins/common/screenshot.c:268
-msgid "Screen Shot: Error grabbing the pointer"
+#, fuzzy
+msgid "Error grabbing the pointer"
 msgstr "Captura de pantalla: Ocurrió un error al grabar el puntero."
 
-#: plug-ins/common/screenshot.c:359
+#: plug-ins/common/screenshot.c:361
 msgid "Loading Screen Shot..."
 msgstr "Cargando la captura de pantalla..."
 
-#: plug-ins/common/screenshot.c:434
-msgid "Screen Shot: Specified window not found"
+#: plug-ins/common/screenshot.c:436
+#, fuzzy
+msgid "Specified window not found"
 msgstr "Captura de pantalla: No se ha encontrado la ventana especificada"
 
-#: plug-ins/common/screenshot.c:466
-msgid "Screen Shot: Error obtaining screenshot"
-msgstr "Captura de pantalla: Ocurrió un error al obtener la captura de pantalla"
+#: plug-ins/common/screenshot.c:468
+#, fuzzy
+msgid "Error obtaining screenshot"
+msgstr ""
+"Captura de pantalla: Ocurrió un error al obtener la captura de pantalla"
 
 #. main dialog
-#: plug-ins/common/screenshot.c:508
+#: plug-ins/common/screenshot.c:510
 msgid "Screen Shot"
 msgstr "Captura de pantalla"
 
 #. single window
-#: plug-ins/common/screenshot.c:531 plug-ins/winsnap/winsnap.c:906
+#: plug-ins/common/screenshot.c:534 plug-ins/winsnap/winsnap.c:906
 msgid "Grab"
 msgstr "Capturar"
 
-#: plug-ins/common/screenshot.c:540
-msgid "_Single Window"
+#: plug-ins/common/screenshot.c:543
+#, fuzzy
+msgid "a _Single Window"
 msgstr "Una _sola ventana"
 
-#: plug-ins/common/screenshot.c:555
-msgid "_Whole Screen"
+#: plug-ins/common/screenshot.c:558
+#, fuzzy
+msgid "the _Whole Screen"
 msgstr "Pantalla e_ntera"
 
-#: plug-ins/common/screenshot.c:574
+#: plug-ins/common/screenshot.c:577
 msgid "_after"
 msgstr "de_spués de"
 
-#: plug-ins/common/screenshot.c:587 plug-ins/winsnap/winsnap.c:1023
+#: plug-ins/common/screenshot.c:590 plug-ins/winsnap/winsnap.c:1023
 msgid "Seconds Delay"
 msgstr "segundos de espera"
 
@@ -6361,7 +6376,8 @@ msgstr "Saturació_n aleatoria:"
 
 #: plug-ins/common/sparkle.c:467
 msgid "Adjust the Value how much the Saturation should be changed randomly"
-msgstr "Ajusta el valor de cuánto debe cambiarse la saturación de forma aleatoria"
+msgstr ""
+"Ajusta el valor de cuánto debe cambiarse la saturación de forma aleatoria"
 
 #: plug-ins/common/sparkle.c:485
 msgid "_Preserve Luminosity"
@@ -6863,7 +6879,8 @@ msgid "ID"
 msgstr "Identificador"
 
 #: plug-ins/common/uniteditor.c:83
-msgid "This string will be used to identify a unit in GIMP's configuration files."
+msgid ""
+"This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
 "Esta cadena será usada para identificar una unidad en los archivos de "
 "configuración de El GIMP."
@@ -8181,7 +8198,8 @@ msgstr "Crear una espiral"
 
 #: plug-ins/gfig/gfig.c:2011
 msgid "Create bezier curve. Shift + Button ends object creation."
-msgstr "Crear una curva de Bezier. Mays + botón termina la creación del objeto."
+msgstr ""
+"Crear una curva de Bezier. Mays + botón termina la creación del objeto."
 
 #: plug-ins/gfig/gfig.c:2017
 msgid "Move an object"
@@ -8931,7 +8949,8 @@ msgstr "Cuadro (%i)"
 
 #: plug-ins/gfli/gfli.c:676
 msgid "Sorry, I can save only INDEXED and GRAY images."
-msgstr "Lo siento, sólo se pueden guardar imágenes INDEXADAS y en TONOS DE GRIS."
+msgstr ""
+"Lo siento, sólo se pueden guardar imágenes INDEXADAS y en TONOS DE GRIS."
 
 #: plug-ins/gfli/gfli.c:818
 msgid "GFLI 1.3 - Load framestack"
@@ -8988,7 +9007,8 @@ msgstr "Relieve:"
 
 #: plug-ins/gimpressionist/brush.c:460 plug-ins/gimpressionist/paper.c:165
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
-msgstr "Especifica la cantidad de relieve a aplicar a la imagen (en porcentaje)"
+msgstr ""
+"Especifica la cantidad de relieve a aplicar a la imagen (en porcentaje)"
 
 #: plug-ins/gimpressionist/color.c:34
 msgid "Co_lor"
@@ -9004,7 +9024,8 @@ msgstr "C_entro de la brocha"
 
 #: plug-ins/gimpressionist/color.c:57
 msgid "Color is computed from the average of all pixels under the brush"
-msgstr "Se calcula el color con el promedio de todos los píxeles bajo la brocha"
+msgstr ""
+"Se calcula el color con el promedio de todos los píxeles bajo la brocha"
 
 #: plug-ins/gimpressionist/color.c:59
 msgid "Samples the color from the pixel in the center of the brush"
@@ -9044,7 +9065,8 @@ msgstr "Fondo con color sólido"
 
 #: plug-ins/gimpressionist/general.c:124
 msgid "Use a transparent background; Only the strokes painted will be visible"
-msgstr "Usar un fondo transparente; sólo las pinceladas pintadas serán visibles"
+msgstr ""
+"Usar un fondo transparente; sólo las pinceladas pintadas serán visibles"
 
 #: plug-ins/gimpressionist/general.c:139
 msgid "Paint edges"
@@ -9052,7 +9074,8 @@ msgstr "Pintar bordes"
 
 #: plug-ins/gimpressionist/general.c:143
 msgid "Selects if to place strokes all the way out to the edges of the image"
-msgstr "Seleccione si se colocarán pinceladas a lo largo de los bordes de la imagen"
+msgstr ""
+"Seleccione si se colocarán pinceladas a lo largo de los bordes de la imagen"
 
 #. Tileable checkbox
 #: plug-ins/gimpressionist/general.c:147 plug-ins/maze/maze_face.c:283
@@ -9061,7 +9084,8 @@ msgstr "Convertible en mosaico"
 
 #: plug-ins/gimpressionist/general.c:150
 msgid "Selects if the resulting image should be seamlessly tileable"
-msgstr "Selecciona si la imagen resultante debería ser enlosable «sin costuras»"
+msgstr ""
+"Selecciona si la imagen resultante debería ser enlosable «sin costuras»"
 
 #: plug-ins/gimpressionist/general.c:154
 msgid "Drop Shadow"
@@ -9092,7 +9116,8 @@ msgid "Shadow depth:"
 msgstr "Profundidad de sombras:"
 
 #: plug-ins/gimpressionist/general.c:191
-msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgid ""
+"The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr ""
 "La profundidad de las sombras arrojadas, es decir, cómo de apartada del "
 "objeto debería estar"
@@ -9187,7 +9212,8 @@ msgstr "Radio"
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
-msgstr "La distancia al centro de la imagen determina la dirección de la pincelada"
+msgstr ""
+"La distancia al centro de la imagen determina la dirección de la pincelada"
 
 #: plug-ins/gimpressionist/orientation.c:136
 msgid "Selects a random direction of each stroke"
@@ -9200,7 +9226,8 @@ msgstr "Radial"
 
 #: plug-ins/gimpressionist/orientation.c:147
 msgid "Let the direction from the center determine the direction of the stroke"
-msgstr "Hace que la dirección desde el centro determine la dirección de la pincelada"
+msgstr ""
+"Hace que la dirección desde el centro determine la dirección de la pincelada"
 
 #: plug-ins/gimpressionist/orientation.c:156
 #: plug-ins/gimpressionist/size.c:138
@@ -9370,7 +9397,8 @@ msgstr "Aplica el papel como está (sin darle relieve)"
 
 #: plug-ins/gimpressionist/paper.c:153
 msgid "Specifies the scale of the texture (in percent of original file)"
-msgstr "Especifica la escala de la textura (en porcentaje con el archivo original)"
+msgstr ""
+"Especifica la escala de la textura (en porcentaje con el archivo original)"
 
 #: plug-ins/gimpressionist/placement.c:36
 msgid "Pl_acement"
@@ -9508,12 +9536,16 @@ msgid "The largest brush to create"
 msgstr "La mayor brocha a crear"
 
 #: plug-ins/gimpressionist/size.c:111
-msgid "Let the value (brightness) of the region determine the size of the stroke"
-msgstr "Hace que el valor (brillo) de la región determine el tamaño de la pincelada"
+msgid ""
+"Let the value (brightness) of the region determine the size of the stroke"
+msgstr ""
+"Hace que el valor (brillo) de la región determine el tamaño de la pincelada"
 
 #: plug-ins/gimpressionist/size.c:118
-msgid "The distance from the center of the image determines the size of the stroke"
-msgstr "La distancia al centro de la imagen determina el tamaño de la pincelada"
+msgid ""
+"The distance from the center of the image determines the size of the stroke"
+msgstr ""
+"La distancia al centro de la imagen determina el tamaño de la pincelada"
 
 #: plug-ins/gimpressionist/size.c:125
 msgid "Selects a random size for each stroke"
@@ -9529,7 +9561,8 @@ msgstr "El tono de la región determina el tamaño de la pincelada"
 
 #: plug-ins/gimpressionist/size.c:157
 msgid "The brush-size that matches the original image the closest is selected"
-msgstr "Selecciona el tamaño de la pincelada que más se parece a la imagen original"
+msgstr ""
+"Selecciona el tamaño de la pincelada que más se parece a la imagen original"
 
 #: plug-ins/gimpressionist/size.c:168
 msgid "Manually specify the stroke size"
@@ -11317,7 +11350,8 @@ msgid "Adjust Output..."
 msgstr "Ajustar la salida..."
 
 #: plug-ins/print/gimp_main_window.c:1462
-msgid "Adjust color balance, brightness, contrast, saturation, and dither algorithm"
+msgid ""
+"Adjust color balance, brightness, contrast, saturation, and dither algorithm"
 msgstr ""
 "Ajustar el balance de color, brillo, contraste, saturación y el algoritmo de "
 "entramado"
@@ -11837,4 +11871,3 @@ msgstr "Error: El archivo de propiedades XJT %s está vacío"
 #~ msgstr ""
 #~ "por Vidar Madsen\n"
 #~ "Septiembre 1999"
-

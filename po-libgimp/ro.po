@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-08-27 00:16+0200\n"
+"POT-Creation-Date: 2003-09-07 22:53+0200\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
 "Language-Team: Română <ro@li.org>\n"
@@ -446,26 +446,26 @@ msgstr "Salvare de fişiere"
 msgid "_Resize"
 msgstr "Redimensionare"
 
-#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:257
+#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:258
 #, fuzzy
 msgid "_Scale"
 msgstr "Scalare"
 
-#: libgimpwidgets/gimpstock.c:235
+#: libgimpwidgets/gimpstock.c:236
 msgid "Crop"
 msgstr "Decupare"
 
-#: libgimpwidgets/gimpstock.c:253
+#: libgimpwidgets/gimpstock.c:254
 #, fuzzy
 msgid "_Transform"
 msgstr "Transformare"
 
-#: libgimpwidgets/gimpstock.c:256
+#: libgimpwidgets/gimpstock.c:257
 #, fuzzy
 msgid "_Rotate"
 msgstr "Rotire"
 
-#: libgimpwidgets/gimpstock.c:258
+#: libgimpwidgets/gimpstock.c:259
 #, fuzzy
 msgid "_Shear"
 msgstr "Decupare"
@@ -559,50 +559,54 @@ msgstr "Contrast:"
 msgid "Contrast Cycles:"
 msgstr "Contrast:"
 
-#: modules/colorsel_cmyk.c:70
+#: modules/colorsel_cmyk.c:73
 #, fuzzy
 msgid "CMYK color selector"
 msgstr "Selecţie după culoare"
 
-#: modules/colorsel_cmyk.c:129
+#: modules/colorsel_cmyk.c:132
 msgid "CMYK"
 msgstr ""
 
-#: modules/colorsel_cmyk.c:143
+#: modules/colorsel_cmyk.c:149
 #, fuzzy
 msgid "_C"
 msgstr "C"
 
-#: modules/colorsel_cmyk.c:144
+#: modules/colorsel_cmyk.c:150
 #, fuzzy
 msgid "_M"
 msgstr "M"
 
-#: modules/colorsel_cmyk.c:145
+#: modules/colorsel_cmyk.c:151
 #, fuzzy
 msgid "_Y"
 msgstr "Y"
 
-#: modules/colorsel_cmyk.c:146
+#: modules/colorsel_cmyk.c:152
 msgid "_K"
 msgstr ""
 
-#: modules/colorsel_cmyk.c:150
+#: modules/colorsel_cmyk.c:156
 msgid "Cyan"
 msgstr "Bleu"
 
-#: modules/colorsel_cmyk.c:151
+#: modules/colorsel_cmyk.c:157
 msgid "Magenta"
 msgstr "Violet"
 
-#: modules/colorsel_cmyk.c:152
+#: modules/colorsel_cmyk.c:158
 msgid "Yellow"
 msgstr "Galben"
 
-#: modules/colorsel_cmyk.c:153
+#: modules/colorsel_cmyk.c:159
 #, fuzzy
 msgid "Black"
 msgstr "Numai negru"
+
+#: modules/colorsel_cmyk.c:193
+msgid "Black Pullout (%):"
+msgstr ""
 
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"

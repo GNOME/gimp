@@ -10,8 +10,16 @@ GIMP version 2.0.
 
 Overview of Changes in GIMP 1.3.20
 ==================================
+- Improved documentation of the app directory [Mitch, Sven]
+- Image update optimizations [Mitch]
+- font-map script improvements [Sven]
+- PDB API to access fonts [Sven]
+- Portability fixes for x86-64 [Yosh]
+- Enabled SSE and SSE2 compositing code [Helvetix]
+- GimpSelection class added [Mitch]
+- Pullout parameter added to RGB->CMYK conversions [Sven] 
 - Basic framework for future help system in place [Mitch]
-- Screenshot plug-in replaced [Brix]
+- Screenshot plug-in rewritten [Brix]
 - Font list updates on the fly [Yosh]
 - Generic interface for stroking selections and paths [Mitch]
 - Further improvements to the path tool [Simon]
@@ -19,10 +27,11 @@ Overview of Changes in GIMP 1.3.20
 - Lots of bug fixes
 
 Other contributors: 
-  Maurits Rijk, Sven Neumann, Ville Pätsi, Manish Singh, Larry
-  Ewing, Dmitry G. Mastrukov, Pedro Gimeno, Raphael Quinet, S.
-  Mukund, Andy Wallis, Carl Adams, Tino Schwarz, Tor Lillqvist,
-  Emmet Caulfield
+  Maurits Rijk, Ville Pätsi, Larry Ewing, Dmitry G. Mastrukov,
+  Pedro Gimeno, Raphael Quinet, S. Mukund, Andy Wallis, Carl Adams,
+  Tino Schwarz, Tor Lillqvist, Emmet Caulfield, Guillermo S. Romero,
+  Dave Neary, Wolfgang Hofer
+
 
 Overview of Changes in GIMP 1.3.19
 ==================================

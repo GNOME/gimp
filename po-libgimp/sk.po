@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD \n"
-"Report-Msgid-Bugs-To: zdpo@mailbox.sk\n"
-"POT-Creation-Date: 2003-07-16 04:03+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-09-07 22:53+0200\n"
 "PO-Revision-Date: 2003-09-01 11:34+0100\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -140,7 +140,8 @@ msgstr "Export"
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
-msgstr "Váš obrázok by mal byť pred uložením exportovaný z nasledovných dôvodov:"
+msgstr ""
+"Váš obrázok by mal byť pred uložením exportovaný z nasledovných dôvodov:"
 
 #. the footline
 #: libgimp/gimpexport.c:541
@@ -169,12 +170,11 @@ msgstr ""
 msgid "Font Selection"
 msgstr "Výber písma"
 
-#: libgimp/gimpgradientmenu.c:102
+#: libgimp/gimpgradientmenu.c:103
 msgid "Gradient Selection"
 msgstr "Výber prechodu"
 
-#: libgimp/gimpmenu.c:93 libgimp/gimpmenu.c:217 libgimp/gimpmenu.c:334
-#: libgimp/gimpmenu.c:517
+#: libgimp/gimpmenu.c:401
 msgid "None"
 msgstr "Nič"
 
@@ -182,7 +182,7 @@ msgstr "Nič"
 msgid "Preview"
 msgstr "Náhľad"
 
-#: libgimp/gimpmiscui.c:537
+#: libgimp/gimpmiscui.c:536
 #, c-format
 msgid ""
 "No %s in gimprc:\n"
@@ -426,23 +426,23 @@ msgstr "Riadkovanie"
 msgid "_Resize"
 msgstr "Zmeniť _veľkosť"
 
-#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:256
+#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:258
 msgid "_Scale"
 msgstr "_Mierka"
 
-#: libgimpwidgets/gimpstock.c:234
+#: libgimpwidgets/gimpstock.c:236
 msgid "Crop"
 msgstr "Orezanie"
 
-#: libgimpwidgets/gimpstock.c:252
+#: libgimpwidgets/gimpstock.c:254
 msgid "_Transform"
 msgstr "_Transformovanie"
 
-#: libgimpwidgets/gimpstock.c:255
+#: libgimpwidgets/gimpstock.c:257
 msgid "_Rotate"
 msgstr "_Otočenie"
 
-#: libgimpwidgets/gimpstock.c:257
+#: libgimpwidgets/gimpstock.c:259
 msgid "_Shear"
 msgstr "_Skosenie"
 
@@ -530,52 +530,58 @@ msgstr "Kontrast"
 msgid "Contrast Cycles:"
 msgstr "Cykly kontrastu:"
 
-#: modules/colorsel_cmyk.c:70
+#: modules/colorsel_cmyk.c:73
 msgid "CMYK color selector"
 msgstr "Výber farieb CMYK"
 
-#: modules/colorsel_cmyk.c:129
-msgid "_CMYK"
+#: modules/colorsel_cmyk.c:132
+#, fuzzy
+msgid "CMYK"
 msgstr "_CMYK"
 
-#: modules/colorsel_cmyk.c:143
+#: modules/colorsel_cmyk.c:149
 msgid "_C"
 msgstr "_C"
 
-#: modules/colorsel_cmyk.c:144
+#: modules/colorsel_cmyk.c:150
 msgid "_M"
 msgstr "_M"
 
-#: modules/colorsel_cmyk.c:145
+#: modules/colorsel_cmyk.c:151
 msgid "_Y"
 msgstr "_Y"
 
-#: modules/colorsel_cmyk.c:146
+#: modules/colorsel_cmyk.c:152
 msgid "_K"
 msgstr "_K"
 
-#: modules/colorsel_cmyk.c:150
+#: modules/colorsel_cmyk.c:156
 msgid "Cyan"
 msgstr "Azúrová"
 
-#: modules/colorsel_cmyk.c:151
+#: modules/colorsel_cmyk.c:157
 msgid "Magenta"
 msgstr "Purpurová"
 
-#: modules/colorsel_cmyk.c:152
+#: modules/colorsel_cmyk.c:158
 msgid "Yellow"
 msgstr "Žltá"
 
-#: modules/colorsel_cmyk.c:153
+#: modules/colorsel_cmyk.c:159
 msgid "Black"
 msgstr "Čierna"
+
+#: modules/colorsel_cmyk.c:193
+msgid "Black Pullout (%):"
+msgstr ""
 
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
 msgstr "Výber farieb t maliarskeho trojuholníka"
 
 #: modules/colorsel_triangle.c:182
-msgid "_Triangle"
+#, fuzzy
+msgid "Triangle"
 msgstr "_Trojuholník"
 
 #: modules/colorsel_water.c:104
@@ -583,7 +589,8 @@ msgid "Watercolor style color selector"
 msgstr "Výber farieb v štýle vodových farieb"
 
 #: modules/colorsel_water.c:176
-msgid "_Watercolor"
+#, fuzzy
+msgid "Watercolor"
 msgstr "_Vodné farby"
 
 #: modules/colorsel_water.c:251
@@ -599,4 +606,3 @@ msgstr "Tlak"
 #, fuzzy
 #~ msgid "_Time"
 #~ msgstr "Čas"
-
