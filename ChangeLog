@@ -1,4 +1,4 @@
-2003-04-17  Pedro Gimeno  <usr352@wanadoo.es>
+2003-04-21  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* configure.in: Removed the plug-ins/tools/Makefile line that was
 	left over when the tool plug-ins were removed.
@@ -348,7 +348,7 @@
 2003-04-12  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/siod-wrapper.c (marshall_proc_db_call):
-	applied a patch from Pedro Gimero that plugs a memleak in Script-Fu.
+	applied a patch from Pedro Gimeno that plugs a memleak in Script-Fu.
 
 2003-04-11  Sven Neumann  <sven@gimp.org>
 
@@ -561,7 +561,7 @@
 
 2003-04-08  Michael Natterer  <mitch@gimp.org>
 
-	* app/core/gimpviewable.[ch]: added vitrual function
+	* app/core/gimpviewable.[ch]: added virtual function
 	GimpViewable::get_description() which returns the string that
 	should be presented to the user plus an optional tooltip with more
 	information. The default implementation just returns the object's
@@ -587,7 +587,7 @@
 
 	* app/widgets/widgets-types.h: removed GimpItemGetNameFunc typedef.
 
-	* app/widgets/gimpcontainerview-utils.[ch]: removed the the actual
+	* app/widgets/gimpcontainerview-utils.[ch]: removed the actual
 	get_name_funcs. They now live in the core as
 	GimpViewable::get_description() implementations.
 
@@ -938,7 +938,7 @@
 	* app/display/gimpdisplayshell-scale.[ch]
 	* app/display/gimpdisplayshell.[ch]
 	* app/gui/image-menu.c
-	* app/gui/view-commands.[ch]: added a dialog to menually enter the
+	* app/gui/view-commands.[ch]: added a dialog to manually enter the
 	zoom ratio. Fixes bug #65057.
 
 2003-04-03  Michael Natterer  <mitch@gimp.org>
@@ -1188,7 +1188,7 @@
 2003-03-31  Jakub Steiner <jimmac@ximian.com>
 
 	* themes/Default/images/stock-list-16.png:
-	* themes/Default/images/stock-grid-16.png: make more aparent
+	* themes/Default/images/stock-grid-16.png: make more apparent
 
 2003-03-31  Michael Natterer  <mitch@gimp.org>
 
@@ -1672,7 +1672,7 @@
 	* app/core/gimp.[ch]: keep a GimpFontList around.
 
 	* app/core/gimpcontext.[ch]: added a GimpFont and all needed
-	fonctions to let it work like brush, pattern etc.
+	functions to let it work like brush, pattern etc.
 
 	* app/core/gimpdatalist.c: cosmetic.
 
@@ -1975,7 +1975,7 @@
 	editing on double-click only. Use gtk_tree_view_set_cursor()
 	instead of gtk_tree_selection_select_path() to avoid
 	selected/focus confusion when the focus enters the widget. Be
-	prepeared to be destroyed as a result of item selection.
+	prepared to be destroyed as a result of item selection.
 
 	* app/widgets/Makefile.am
 	* app/widgets/widgets-types.h
@@ -17466,8 +17466,8 @@
 	identical to other functions.
 
 	* app/tools/gimpselectiontool.c: use the GimpEditSelectionTool's
-	"arrow_key_func" so it's now possible to keyboad-move the current
-	layer and selection with all selection tool. Needs some more
+	"arrow_key_func" so it's now possible to keyboard-move the current
+	layer and selection with all selection tools. Needs some more
 	tweaking...
 
 	* app/tools/gimpiscissorstool.[ch]
@@ -17486,7 +17486,7 @@
 	* HACKING
 	* INSTALL
 	* NEWS
-	* README: udpated.
+	* README: updated.
 
 	* data/misc/Makefile.am: fixed dependencies.
 
