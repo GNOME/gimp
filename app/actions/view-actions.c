@@ -74,18 +74,6 @@ static GimpActionEntry view_actions[] =
     G_CALLBACK (view_close_view_cmd_callback),
     GIMP_HELP_FILE_CLOSE },
 
-  { "view-zoom-out", GTK_STOCK_ZOOM_OUT,
-    N_("Zoom _Out"), "minus",
-    N_("Zoom out"),
-    G_CALLBACK (view_zoom_out_cmd_callback),
-    GIMP_HELP_VIEW_ZOOM_OUT },
-
-  { "view-zoom-in", GTK_STOCK_ZOOM_IN,
-    N_("Zoom _In"), "plus",
-    N_("Zoom in"),
-    G_CALLBACK (view_zoom_in_cmd_callback),
-    GIMP_HELP_VIEW_ZOOM_IN },
-
   { "view-zoom-fit-in", GTK_STOCK_ZOOM_FIT,
     N_("_Fit Image in Window"), "<control><shift>E",
     N_("Fit image in window"),
@@ -200,7 +188,45 @@ static GimpToggleActionEntry view_toggle_actions[] =
     GIMP_HELP_VIEW_FULLSCREEN }
 };
 
-static GimpRadioActionEntry view_zoom_actions[] =
+static GimpEnumActionEntry view_zoom_actions[] =
+{
+  { "view-zoom", NULL,
+    "Set zoom factor", NULL, NULL,
+    GIMP_ACTION_SELECT_SET,
+    NULL },
+  { "view-zoom-minimum", NULL,
+    "Zoom out as far as possible", NULL, NULL,
+    GIMP_ACTION_SELECT_FIRST,
+    NULL },
+  { "view-zoom-maximum", NULL,
+    "Zoom in as far as possible", NULL, NULL,
+    GIMP_ACTION_SELECT_LAST,
+    NULL },
+  { "view-zoom-out", GTK_STOCK_ZOOM_OUT,
+    N_("Zoom _Out"), "minus",
+    N_("Zoom out"),
+    GIMP_ACTION_SELECT_PREVIOUS,
+    GIMP_HELP_VIEW_ZOOM_OUT },
+  { "view-zoom-in", GTK_STOCK_ZOOM_IN,
+    N_("Zoom _In"), "plus",
+    N_("Zoom in"),
+    GIMP_ACTION_SELECT_NEXT,
+    GIMP_HELP_VIEW_ZOOM_IN },
+  { "view-zoom-in", NULL,
+    "Zoom out", NULL, NULL,
+    GIMP_ACTION_SELECT_NEXT,
+    NULL },
+  { "view-zoom-out-skip", NULL,
+    "Zoom in a lot", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_PREVIOUS,
+    NULL },
+  { "view-zoom-in-skip", NULL,
+    "Zoom out a lot", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_NEXT,
+    NULL }
+};
+
+static GimpRadioActionEntry view_zoom_explicit_actions[] =
 {
   { "view-zoom-16-1", NULL,
     N_("16:1  (1600%)"), NULL, NULL,
@@ -360,11 +386,16 @@ view_actions_setup (GimpActionGroup *group)
                                         view_toggle_actions,
                                         G_N_ELEMENTS (view_toggle_actions));
 
+  gimp_action_group_add_enum_actions (group,
+                                      view_zoom_actions,
+                                      G_N_ELEMENTS (view_zoom_actions),
+                                      G_CALLBACK (view_zoom_cmd_callback));
+
   gimp_action_group_add_radio_actions (group,
-                                       view_zoom_actions,
-                                       G_N_ELEMENTS (view_zoom_actions),
+                                       view_zoom_explicit_actions,
+                                       G_N_ELEMENTS (view_zoom_explicit_actions),
                                        10000,
-                                       G_CALLBACK (view_zoom_cmd_callback));
+                                       G_CALLBACK (view_zoom_explicit_cmd_callback));
 
   gimp_action_group_add_enum_actions (group,
                                       view_padding_color_actions,

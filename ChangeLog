@@ -1,3 +1,17 @@
+2004-10-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/view-actions.c: changed zoom actions to be
+	GimpEnumActions using the GimpActionSelectType enum. Enables
+	keyboard shortcuts for useless stuff like "zoom out a lot", and
+	makes them better accessible for external controllers.
+
+	* app/actions/view-commands.[ch]: renamed view_zoom_cmd_callback()
+	to view_zoom_explicit_cmd_callback(), removed the zoom_in and
+	zoom_out callbacks and added a new view_zoom_cmd_callback() for
+	the new GimpActionSelectType-based actions. The implementation of
+	the new zoom types is questionable but now there is a place where
+	nomis can fill in nice formulas...
+
 2004-10-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpeditselectiontool.[ch]: added new parameter

@@ -106,28 +106,6 @@ view_close_view_cmd_callback (GtkAction *action,
 }
 
 void
-view_zoom_out_cmd_callback (GtkAction *action,
-                            gpointer   data)
-{
-  GimpDisplay *gdisp;
-  return_if_no_display (gdisp, data);
-
-  gimp_display_shell_scale (GIMP_DISPLAY_SHELL (gdisp->shell),
-                            GIMP_ZOOM_OUT, 0.0);
-}
-
-void
-view_zoom_in_cmd_callback (GtkAction *action,
-                           gpointer   data)
-{
-  GimpDisplay *gdisp;
-  return_if_no_display (gdisp, data);
-
-  gimp_display_shell_scale (GIMP_DISPLAY_SHELL (gdisp->shell),
-                            GIMP_ZOOM_IN, 0.0);
-}
-
-void
 view_zoom_fit_in_cmd_callback (GtkAction *action,
                                gpointer   data)
 {
@@ -149,8 +127,73 @@ view_zoom_fit_to_cmd_callback (GtkAction *action,
 
 void
 view_zoom_cmd_callback (GtkAction *action,
-                        GtkAction *current,
-			gpointer   data)
+                        gint       value,
+                        gpointer   data)
+{
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
+  gdouble           scale;
+  return_if_no_display (gdisp, data);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  scale = shell->scale;
+
+  switch ((GimpActionSelectType) value)
+    {
+    case GIMP_ACTION_SELECT_FIRST:
+      gimp_display_shell_scale (shell, GIMP_ZOOM_TO, 1.0 / 256.0);
+      break;
+
+    case GIMP_ACTION_SELECT_LAST:
+      gimp_display_shell_scale (shell, GIMP_ZOOM_TO, 256.0);
+      break;
+
+    case GIMP_ACTION_SELECT_PREVIOUS:
+      gimp_display_shell_scale (shell, GIMP_ZOOM_OUT, 0.0);
+      break;
+
+    case GIMP_ACTION_SELECT_NEXT:
+      gimp_display_shell_scale (shell, GIMP_ZOOM_IN, 0.0);
+      break;
+
+    case GIMP_ACTION_SELECT_SKIP_PREVIOUS:
+      scale = gimp_display_shell_scale_zoom_step (GIMP_ZOOM_OUT, scale);
+      scale = gimp_display_shell_scale_zoom_step (GIMP_ZOOM_OUT, scale);
+      scale = gimp_display_shell_scale_zoom_step (GIMP_ZOOM_OUT, scale);
+      gimp_display_shell_scale (shell, GIMP_ZOOM_TO, scale);
+      break;
+
+    case GIMP_ACTION_SELECT_SKIP_NEXT:
+      scale = gimp_display_shell_scale_zoom_step (GIMP_ZOOM_IN, scale);
+      scale = gimp_display_shell_scale_zoom_step (GIMP_ZOOM_IN, scale);
+      scale = gimp_display_shell_scale_zoom_step (GIMP_ZOOM_IN, scale);
+      gimp_display_shell_scale (shell, GIMP_ZOOM_TO, scale);
+      break;
+
+    default:
+      scale = (scale >= 1) ? (scale + 256.0) : (scale * 256.0);
+
+      scale = action_select_value ((GimpActionSelectType) value,
+                                   scale,
+                                   1.0, 512.0,
+                                   1.0, 16.0,
+                                   FALSE);
+
+      if (scale > 256.0)
+        scale -= 256.0;
+      else
+        scale /= 256.0;
+
+      gimp_display_shell_scale (shell, GIMP_ZOOM_TO, scale);
+      break;
+    }
+}
+
+void
+view_zoom_explicit_cmd_callback (GtkAction *action,
+                                 GtkAction *current,
+                                 gpointer   data)
 {
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
