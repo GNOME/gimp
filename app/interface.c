@@ -558,11 +558,9 @@ create_display_shell (GDisplay* gdisp,
   int s_width, s_height;
   int scalesrc, scaledest;
   int contextid;
-  char buffer[CURSOR_STR_LENGTH];
-  int cursor_label_width;
 
-  /*  adjust the initial scale -- so that window fits on screen */
   {
+    /*  adjust the initial scale -- so that window fits on screen */
     s_width = gdk_screen_width ();
     s_height = gdk_screen_height ();
 
@@ -711,11 +709,7 @@ create_display_shell (GDisplay* gdisp,
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (gdisp->statusarea), frame, FALSE, TRUE, 0);
 
-  gdisp->cursor_label = gtk_label_new (" 0000, 0000 ");
-
-  g_snprintf (buffer, sizeof(buffer), " %d, %d ", width, height);
-  cursor_label_width = gdk_string_measure ( gtk_widget_get_style(gdisp->cursor_label)->font, buffer );
-  gtk_widget_set_usize (gdisp->cursor_label, cursor_label_width, -1);
+  gdisp->cursor_label = gtk_label_new (" ");
   gtk_container_add (GTK_CONTAINER (frame), gdisp->cursor_label);
 
   gdisp->statusbar = gtk_statusbar_new ();
@@ -768,6 +762,8 @@ create_display_shell (GDisplay* gdisp,
     }
   gtk_widget_show (vbox);
   gtk_widget_show (gdisp->shell);
+
+  gdisplay_resize_cursor_label (gdisp);
 
 #ifdef __GNUC__
 #warning DODGY?

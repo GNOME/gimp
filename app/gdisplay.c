@@ -896,7 +896,7 @@ gdisplay_update_cursor (GDisplay *gdisp, int x, int y)
 	} 
       else 
 	{
-	  g_snprintf (buffer, CURSOR_STR_LENGTH, " %d, %d ", t_x, t_y);
+	  g_snprintf (buffer, CURSOR_STR_LENGTH, "%d, %d", t_x, t_y);
 	  gtk_label_set (GTK_LABEL (gdisp->cursor_label), buffer);
 	}
     }
@@ -907,6 +907,20 @@ gdisplay_update_cursor (GDisplay *gdisp, int x, int y)
   
   if (new_cursor)
     gdisplay_flush (gdisp);
+}
+
+void
+gdisplay_resize_cursor_label (GDisplay *gdisp)
+{
+  /* Set a proper size for the coordinates display in the statusbar. */
+  char buffer[CURSOR_STR_LENGTH];
+  int cursor_label_width;
+ 
+  g_snprintf (buffer, sizeof(buffer), " %d,%d ", gdisp->gimage->width, gdisp->gimage->height);
+  cursor_label_width = 
+    gdk_string_width ( gtk_widget_get_style(gdisp->cursor_label)->font, buffer );
+  gtk_widget_set_usize (gdisp->cursor_label, cursor_label_width, -1);
+  gtk_widget_queue_resize (gdisp->statusarea);
 }
 
 void
@@ -1408,6 +1422,7 @@ gdisplay_expose_full (GDisplay *gdisp)
   gdisplay_add_display_area (gdisp, 0, 0,
 			     gdisp->disp_width,
 			     gdisp->disp_height);
+  gdisplay_resize_cursor_label (gdisp);
 }
 
 /**************************************************/

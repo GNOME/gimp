@@ -146,6 +146,7 @@ Guide*     gdisplay_find_guide             (GDisplay *, int, int);
 void       gdisplay_snap_point             (GDisplay *, double , double, double *, double *);
 void       gdisplay_snap_rectangle         (GDisplay *, int, int, int, int, int *, int *);
 void	   gdisplay_update_cursor	   (GDisplay *, int, int);
+void       gdisplay_resize_cursor_label    (GDisplay *);
 
 /*  function declarations  */
 

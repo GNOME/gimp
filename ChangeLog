@@ -1,3 +1,9 @@
+Thu Nov 19 21:17:19 MET 1998 Sven Neumann <sven@gimp.org>
+
+	* app/gdisplay.[ch]
+	* app/interface.c: set a proper size for the coordinates display 
+	in the statusbar 
+
 Wed Nov 18 17:35:38 MET 1998 Sven Neumann <sven@gimp.org>
 
 	* app/app_procs.c: fixed a longstanding bug in the splash-screen.
