@@ -1,3 +1,9 @@
+2003-09-23  Jakub Steiner <jimmac@ximian.com>
+
+	* themes/Default/images/stock-close-12.png
+	* themes/Default/images/stock-menu-12.png: nicer, but hopefully
+	  still theme indepenedent somehow
+
 2003-09-22  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/gimprc.pdb: UTF-8 validate the value set using
