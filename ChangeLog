@@ -1,3 +1,13 @@
+2004-03-23  Simon Budig  <simon@gimp.org>
+
+	* plug-ins/script-fu/scripts/alien-glow-arrow.scm: fixed
+	utility function rotate-points. Only worked sometimes by
+	accident, probably because beveled-pattern-arrow.scm implemented
+	a function of the same name correctly and all scripts share
+	a common namespace.
+
+	Fixes bug #136868.
+
 2004-03-23  Michael Natterer  <mitch@gimp.org>
 
 	The floating_sel code is really from the stone age:

@@ -24,8 +24,7 @@
 ; along with this program; if not, write to the Free Software
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-(define (make-point x
-		    y)
+(define (make-point x y)
   (cons x y))
 
 (define (point-x p)
@@ -37,61 +36,57 @@
 (define (point-list->double-array point-list)
   (define (convert points array pos)
     (if (not (null? points))
-	(begin
-	  (aset array (* 2 pos) (point-x (car points)))
-	  (aset array (+ 1 (* 2 pos)) (point-y (car points)))
-	  (convert (cdr points) array (+ pos 1)))))
+        (begin
+          (aset array (* 2 pos) (point-x (car points)))
+          (aset array (+ 1 (* 2 pos)) (point-y (car points)))
+          (convert (cdr points) array (+ pos 1)))))
 
   (let* ((how-many (length point-list))
-	 (a (cons-array (* 2 how-many) 'double)))
+         (a (cons-array (* 2 how-many) 'double)))
     (convert point-list a 0)
     a))
 
 (define (make-arrow size
-		    offset)
+                    offset)
   (list (make-point offset offset)
-	(make-point (- size offset) (/ size 2))
-	(make-point offset (- size offset))))
+        (make-point (- size offset) (/ size 2))
+        (make-point offset (- size offset))))
 
 
-(define (rotate-points points
-		       size
-		       orientation)
-  (if (null? points)
-      '()
-      (let* ((p (car points))
-	     (px (point-x p))
-	     (py (point-y p)))
-	(cons (cond (= orientation 0) (make-point px py))           ; right
-	      (= orientation 1) (make-point (- size px) py))  ; left
-		    (= orientation 2) (make-point py (- size px)))  ; up
-		    (= orientation 3) (make-point py px))           ; down
-  (rotate-points (cdr points) size orientation))
+(define (rotate-points points size orientation)
+  (map (lambda (p)
+         (let ((px (point-x p))
+               (py (point-y p)))
+           (cond ((= orientation 0) (make-point px py))           ; right
+                 ((= orientation 1) (make-point (- size px) py))  ; left
+                 ((= orientation 2) (make-point py (- size px)))  ; up
+                 ((= orientation 3) (make-point py px)))))        ; down
+       points))
 
 
 (define (script-fu-alien-glow-right-arrow size
-					  orientation
-					  glow-color
-					  bg-color
-					  flatten)
+                                          orientation
+                                          glow-color
+                                          bg-color
+                                          flatten)
   (let* ((img (car (gimp-image-new size size RGB)))
-	 (grow-amount (/ size 12))
-	 (blur-radius (/ size 3))
-	 (offset (/ size 6))
-	 (ruler-layer (car (gimp-layer-new img
-					   size size RGBA-IMAGE
-					   "Ruler" 100 NORMAL-MODE)))
-	 (glow-layer (car (gimp-layer-new img
-					  size size RGBA-IMAGE
-					  "Alien Glow" 100 NORMAL-MODE)))
-	 (bg-layer (car (gimp-layer-new img
-					size size RGB-IMAGE
-					"Background" 100 NORMAL-MODE)))
-	 (big-arrow (point-list->double-array
-		     (rotate-points (make-arrow size offset)
-				    size orientation)))
-	 (old-fg (car (gimp-palette-get-foreground)))
-	 (old-bg (car (gimp-palette-get-background))))
+         (grow-amount (/ size 12))
+         (blur-radius (/ size 3))
+         (offset (/ size 6))
+         (ruler-layer (car (gimp-layer-new img
+                                           size size RGBA-IMAGE
+                                           "Ruler" 100 NORMAL-MODE)))
+         (glow-layer (car (gimp-layer-new img
+                                          size size RGBA-IMAGE
+                                          "Alien Glow" 100 NORMAL-MODE)))
+         (bg-layer (car (gimp-layer-new img
+                                        size size RGB-IMAGE
+                                        "Background" 100 NORMAL-MODE)))
+         (big-arrow (point-list->double-array
+                     (rotate-points (make-arrow size offset)
+                                     size orientation)))
+         (old-fg (car (gimp-palette-get-foreground)))
+         (old-bg (car (gimp-palette-get-background))))
 
 
     (gimp-image-undo-disable img)
@@ -109,9 +104,9 @@
     (gimp-palette-set-background '(0 0 0))
 
     (gimp-edit-blend ruler-layer FG-BG-RGB-MODE NORMAL-MODE
-		     GRADIENT-SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
-		     FALSE 0 0 TRUE
-		     0 0 size size)
+                     GRADIENT-SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
+                     FALSE 0 0 TRUE
+                     0 0 size size)
     
     (gimp-selection-grow img grow-amount)
     (gimp-palette-set-foreground glow-color)
@@ -129,22 +124,22 @@
     (gimp-palette-set-foreground old-fg)
 
     (if (= flatten TRUE)
-	(gimp-image-flatten img))
+        (gimp-image-flatten img))
     (gimp-image-undo-enable img)
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-alien-glow-right-arrow"
-		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Arrow..."
-		    "Create an X-file deal"
-		    "Adrian Likins"
-		    "Adrian Likins"
-		    "1997"
-		    ""
-		    SF-ADJUSTMENT _"Size"            '(32 5 150 1 10 0 1)
-		    SF-OPTION     _"Orientation"     '(_"Right" 
-							_"Left" 
-							_"Up" 
-							_"Down")
-		    SF-COLOR      _"Glow Color"       '(63 252 0)
-		    SF-COLOR      _"Background Color" '(0 0 0)
-		    SF-TOGGLE     _"Flatten Image"    TRUE)
+                    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Arrow..."
+                    "Create an X-file deal"
+                    "Adrian Likins"
+                    "Adrian Likins"
+                    "1997"
+                    ""
+                    SF-ADJUSTMENT _"Size"            '(32 5 150 1 10 0 1)
+                    SF-OPTION     _"Orientation"     '(_"Right" 
+                                                       _"Left" 
+                                                       _"Up" 
+                                                       _"Down")
+                    SF-COLOR      _"Glow Color"       '(63 252 0)
+                    SF-COLOR      _"Background Color" '(0 0 0)
+                    SF-TOGGLE     _"Flatten Image"    TRUE)
