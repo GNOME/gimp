@@ -1,3 +1,10 @@
+2005-02-03  Michael Natterer  <mitch@gimp.org>
+
+	Merged from HEAD branch:
+
+	* app/dialogs/image-scale-dialog.c (image_scale_dialog_new): use
+	the passed parent widget instead of display->shell.
+
 2005-02-02  Michael Natterer  <mitch@gimp.org>
 
 	Merged from HEAD branch:
