@@ -117,8 +117,7 @@ static void       gimp_channel_transform     (GimpItem         *item,
 static gboolean   gimp_channel_stroke        (GimpItem         *item,
                                               GimpDrawable     *drawable,
                                               GimpContext      *context,
-                                              GimpObject       *stroke_desc,
-                                              gboolean          use_default_values);
+                                              GimpObject       *stroke_desc);
 
 static void gimp_channel_invalidate_boundary   (GimpDrawable       *drawable);
 static void gimp_channel_get_active_components (const GimpDrawable *drawable,
@@ -594,8 +593,7 @@ static gboolean
 gimp_channel_stroke (GimpItem     *item,
                      GimpDrawable *drawable,
                      GimpContext  *context,
-                     GimpObject   *stroke_desc,
-                     gboolean      use_default_values)
+                     GimpObject   *stroke_desc)
 
 {
   GimpChannel    *channel = GIMP_CHANNEL (item);

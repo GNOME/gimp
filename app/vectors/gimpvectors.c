@@ -115,11 +115,8 @@ static void       gimp_vectors_transform    (GimpItem         *item,
 static gboolean   gimp_vectors_stroke       (GimpItem         *item,
                                              GimpDrawable     *drawable,
                                              GimpContext      *context,
-                                             GimpObject       *stroke_desc,
-                                             gboolean          use_default_values);
+                                             GimpObject       *stroke_desc);
 
-
-#
 static void       gimp_vectors_real_thaw            (GimpVectors       *vectors);
 static void       gimp_vectors_real_stroke_add      (GimpVectors       *vectors,
                                                      GimpStroke        *stroke);
@@ -563,8 +560,7 @@ static gboolean
 gimp_vectors_stroke (GimpItem     *item,
                      GimpDrawable *drawable,
                      GimpContext  *context,
-                     GimpObject   *stroke_desc,
-                     gboolean      use_default_values)
+                     GimpObject   *stroke_desc)
 {
   GimpVectors *vectors = GIMP_VECTORS (item);
   gboolean     retval  = FALSE;
@@ -582,7 +578,7 @@ gimp_vectors_stroke (GimpItem     *item,
                                     vectors);
       retval = TRUE;
     }
-  else if (GIMP_IS_PAINT_INFO (stroke_desc))
+  else if (GIMP_IS_PAINT_OPTIONS (stroke_desc))
     {
       GimpPaintOptions *paint_options = GIMP_PAINT_OPTIONS (stroke_desc);
       GimpPaintCore    *core;

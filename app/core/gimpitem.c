@@ -1052,8 +1052,7 @@ gimp_item_stroke (GimpItem      *item,
           stroke_desc = GIMP_OBJECT (paint_options);
         }
 
-      retval = item_class->stroke (item, drawable, context,
-                                   stroke_desc, use_default_values);
+      retval = item_class->stroke (item, drawable, context, stroke_desc);
 
       g_object_unref (stroke_desc);
 

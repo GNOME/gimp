@@ -115,8 +115,7 @@ struct _GimpItemClass
   gboolean   (* stroke)      (GimpItem               *item,
                               GimpDrawable           *drawable,
                               GimpContext            *context,
-                              GimpObject             *stroke_desc,
-                              gboolean                use_default_values);
+                              GimpObject             *stroke_desc);
 
   const gchar *default_name;
   const gchar *rename_desc;

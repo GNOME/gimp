@@ -77,8 +77,7 @@ static void       gimp_selection_rotate        (GimpItem        *item,
 static gboolean   gimp_selection_stroke        (GimpItem        *item,
                                                 GimpDrawable    *drawable,
                                                 GimpContext     *context,
-                                                GimpObject      *stroke_desc,
-                                                gboolean         use_default_values);
+                                                GimpObject      *stroke_desc);
 
 static void gimp_selection_invalidate_boundary (GimpDrawable    *drawable);
 
@@ -291,8 +290,7 @@ static gboolean
 gimp_selection_stroke (GimpItem     *item,
                        GimpDrawable *drawable,
                        GimpContext  *context,
-                       GimpObject   *stroke_desc,
-                       gboolean      use_default_values)
+                       GimpObject   *stroke_desc)
 {
   GimpSelection  *selection = GIMP_SELECTION (item);
   const BoundSeg *dummy_in;
@@ -313,8 +311,7 @@ gimp_selection_stroke (GimpItem     *item,
   selection->stroking = TRUE;
 
   retval = GIMP_ITEM_CLASS (parent_class)->stroke (item, drawable, context,
-                                                   stroke_desc,
-                                                   use_default_values);
+                                                   stroke_desc);
 
   selection->stroking = FALSE;
 
