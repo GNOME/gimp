@@ -137,7 +137,7 @@ msgstr "Виб╕р файлу"
 #: libgimp/gimpquerybox.c:290 libgimp/gimpquerybox.c:353
 #: libgimp/gimpunitmenu.c:495
 msgid "OK"
-msgstr ""
+msgstr "Гаразд"
 
 #. pseudo unit
 #: libgimp/gimpunit.c:47
@@ -210,7 +210,7 @@ msgstr ""
 
 #: libgimp/gimpwidgets.c:709
 msgid "Time"
-msgstr ""
+msgstr "Час"
 
 #: libgimp/gimpwidgets.c:718
 msgid ""

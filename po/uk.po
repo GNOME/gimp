@@ -19,9 +19,8 @@ msgstr "Про GIMP"
 
 #. this is a font, provide only one single font definition
 #: app/about_dialog.c:243
-#, fuzzy
 msgid "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
-msgstr "-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*,*"
+msgstr "-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*"
 
 #: app/about_dialog.c:252
 #, c-format
@@ -42,9 +41,8 @@ msgstr "Натиск:"
 
 #. this is a font, provide only one single font definition
 #: app/app_procs.c:267
-#, fuzzy
 msgid "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
-msgstr "-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*,*"
+msgstr "-*-helvetica-bold-r-normal-*-*-100-*-*-*-*-*-*"
 
 #: app/app_procs.c:273 app/app_procs.c:275 app/interface.c:528
 msgid "The GIMP"
@@ -52,14 +50,12 @@ msgstr "GIMP"
 
 #. this is a fontset, e.g. multiple comma-separated font definitions
 #: app/app_procs.c:279
-#, fuzzy
 msgid "-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*,*"
 msgstr "-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*,*"
 
 #: app/app_procs.c:289 app/app_procs.c:291
-#, fuzzy
 msgid "brought to you by"
-msgstr "Верс╕ю %s створено для вас"
+msgstr ""
 
 #: app/app_procs.c:360
 msgid "GIMP Startup"
@@ -743,16 +739,14 @@ msgid "Feather Selection"
 msgstr "Виб╕р пера"
 
 #: app/commands.c:333
-#, fuzzy
 msgid "Feather Selection by:"
-msgstr "Вибрати перо за:"
+msgstr "Виб╕р пера за:"
 
 #: app/commands.c:366
 msgid "Shrink Selection"
 msgstr "Зменшення вид╕лення"
 
 #: app/commands.c:369
-#, fuzzy
 msgid "Shrink Selection by:"
 msgstr "Зменшити вид╕лення за:"
 
@@ -765,7 +759,6 @@ msgid "Grow Selection"
 msgstr "Зб╕льшення вид╕лення"
 
 #: app/commands.c:403
-#, fuzzy
 msgid "Grow Selection by:"
 msgstr "Зб╕льшити вид╕лення за:"
 
@@ -774,7 +767,6 @@ msgid "Border Selection"
 msgstr "Виб╕р облям╕вки"
 
 #: app/commands.c:426
-#, fuzzy
 msgid "Border Selection by:"
 msgstr "Вибрати облям╕вку за:"
 
@@ -880,7 +872,6 @@ msgid "Crop & Resize"
 msgstr "Кадрування та зм╕на розм╕ру"
 
 #: app/crop.c:189
-#, fuzzy
 msgid "Current Layer only"
 msgstr "Лише поточний шар"
 
@@ -1452,6 +1443,8 @@ msgid ""
 "Warning: Failed to load brush\n"
 "\"%s\""
 msgstr ""
+"Увага: Не вдалося завантажити пензель\n"
+"\"%s\""
 
 #: app/gimpbrushlist.c:206
 #, c-format
@@ -1601,7 +1594,7 @@ msgstr "Поступ"
 
 #: app/gimpprogress.c:123 app/gimpprogress.c:170
 msgid "Please wait..."
-msgstr ""
+msgstr "Будь ласка, зачекайте..."
 
 #: app/gimprc.c:401 app/plug_in.c:304
 msgid "Resource configuration"
@@ -1656,7 +1649,6 @@ msgid "Message repeated once"
 msgstr "Пов╕домлення повторено один раз"
 
 #: app/gimpui.c:110
-#, fuzzy
 msgid ""
 "WARNING:\n"
 "Too many open message dialogs.\n"
@@ -1664,7 +1656,7 @@ msgid ""
 msgstr ""
 "УВАГА:\n"
 "В╕дкрито надто багато в╕кон пов╕домлень.\n"
-"Пов╕домлення перенаправлено у stderr.\n"
+"Пов╕домлення перенаправлено у stderr."
 
 #: app/gimpui.c:117
 msgid "GIMP Message"
@@ -1673,11 +1665,11 @@ msgstr "Пов╕домлення GIMP"
 #. pseudo unit
 #: app/gimpunit.c:59
 msgid "pixel"
-msgstr "п╕ксел"
+msgstr "п╕ксель"
 
 #: app/gimpunit.c:59 app/measure.c:454 app/measure.c:458 app/paint_core.c:498
 msgid "pixels"
-msgstr "п╕ксели"
+msgstr "п╕ксел╕"
 
 #. standard units
 #: app/gimpunit.c:62
@@ -2328,15 +2320,15 @@ msgid "Info: %s-%d.%d"
 msgstr "╤нформац╕я: %s-%d.%d"
 
 #: app/info_window.c:508
-#, fuzzy, c-format
+#, c-format
 msgid "%d x %d pixels"
-msgstr "п╕ксели"
+msgstr "%d x %d п╕ксел╕в"
 
 #. image resolution
 #: app/info_window.c:520
-#, fuzzy, c-format
+#, c-format
 msgid "%g x %g dpi"
-msgstr "п╕ксели"
+msgstr "%g x %g т/д"
 
 #: app/info_window.c:532
 msgid "RGB Color"
@@ -2347,9 +2339,8 @@ msgid "Indexed Color"
 msgstr "╤ндексований кол╕р"
 
 #: app/info_window.c:537
-#, fuzzy
 msgid "colors"
-msgstr "Кол╕р"
+msgstr "кольор╕в"
 
 #. size slider
 #: app/ink.c:296
@@ -2654,9 +2645,8 @@ msgstr "-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*,*"
 
 #. this is a font, provide only one single font definition
 #: app/install.c:298
-#, fuzzy
 msgid "-*-helvetica-medium-o-normal-*-*-100-*-*-*-*-*-*"
-msgstr "-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*,*"
+msgstr "-*-helvetica-medium-o-normal-*-*-100-*-*-*-*-*-*"
 
 #. this is a fontset, e.g. multiple comma-separated font definitions
 #: app/install.c:301
@@ -3033,9 +3023,8 @@ msgid "Clipped to bottom layer"
 msgstr "В╕дсикати по нижньому шару"
 
 #: app/lc_dialog.c:99
-#, fuzzy
 msgid "Layers, Channels & Paths"
-msgstr "Шари та канали"
+msgstr "Шари, канали та контури"
 
 #. The Auto-button
 #: app/lc_dialog.c:147 app/levels.c:588
@@ -3092,14 +3081,12 @@ msgid "Allow Window Resizing"
 msgstr "Дозволити зм╕ну розм╕р╕в в╕кна"
 
 #: app/magnify.c:136
-#, fuzzy
 msgid "Zoom in"
-msgstr "Зб╕льшення та зменшення"
+msgstr "Зб╕льшити"
 
 #: app/magnify.c:138
-#, fuzzy
 msgid "Zoom out"
-msgstr "Зб╕льшення та зменшення"
+msgstr "Зменшити"
 
 #: app/main.c:271
 msgid "GIMP version"
@@ -3221,7 +3208,6 @@ msgstr "градуси"
 
 #. <Toolbox>/File
 #: app/menus.c:82
-#, fuzzy
 msgid "/_File"
 msgstr "/Файл"
 
@@ -3246,13 +3232,12 @@ msgid "/File/Dialogs"
 msgstr "/Файл/Д╕алоги"
 
 #: app/menus.c:107
-#, fuzzy
 msgid "/File/Dialogs/Layers, Channels & Paths..."
-msgstr "/Файл/Д╕алоги/Шари та Канали..."
+msgstr "/Файл/Д╕алоги/Шари, канали та контури..."
 
 #: app/menus.c:109
 msgid "/File/Dialogs/Tool Options..."
-msgstr "/Файли/Д╕алоги/Параметри ╕нструменту..."
+msgstr "/Файл/Д╕алоги/Параметри ╕нструменту..."
 
 #: app/menus.c:114
 msgid "/File/Dialogs/Brushes..."
@@ -3300,7 +3285,6 @@ msgstr "/Файл/Вийти"
 
 #. <Toolbox>/Xtns
 #: app/menus.c:153
-#, fuzzy
 msgid "/_Xtns"
 msgstr "/Розширення"
 
@@ -3310,7 +3294,6 @@ msgstr "/Розширення/Перегляд модул╕в..."
 
 #. <Toolbox>/Help
 #: app/menus.c:163
-#, fuzzy
 msgid "/_Help"
 msgstr "/Дов╕дка"
 
@@ -3644,9 +3627,8 @@ msgid "/Layers"
 msgstr "/Шари"
 
 #: app/menus.c:433
-#, fuzzy
 msgid "/Layers/Layers, Channels & Paths..."
-msgstr "/Шари/Шари та Канали..."
+msgstr "/Шари/Шари, канали та контури..."
 
 #. <Image>/Layers/Stack
 #: app/menus.c:438
@@ -3745,9 +3727,8 @@ msgid "/Dialogs"
 msgstr "/Д╕алоги"
 
 #: app/menus.c:512
-#, fuzzy
 msgid "/Dialogs/Layers, Channels & Paths..."
-msgstr "/Д╕алоги/Шари та Канали..."
+msgstr "/Д╕алоги/Шари, канали та контури..."
 
 #: app/menus.c:514
 msgid "/Dialogs/Tool Options..."
@@ -3949,14 +3930,12 @@ msgid "/Add Layer Mask..."
 msgstr "/Додати маску шару"
 
 #: app/menus.c:693
-#, fuzzy
 msgid "/Apply Layer Mask"
 msgstr "/Застосувати маску шару..."
 
 #: app/menus.c:695
-#, fuzzy
 msgid "/Delete Layer Mask"
-msgstr "/Видалити шар"
+msgstr "/Стерти маску шару"
 
 #: app/menus.c:697
 msgid "/Mask to Selection"
@@ -4527,9 +4506,9 @@ msgid "Extensions"
 msgstr "Розширення"
 
 #: app/plug_in.c:775
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to locate plug-in: \"%s\""
-msgstr "не вдалося знайти доповнення: \"%s\""
+msgstr "Не вдалося знайти доповнення: \"%s\""
 
 #: app/posterize.c:147
 msgid "Posterize does not operate on indexed drawables."
@@ -5159,7 +5138,7 @@ msgstr "Масштабувати зображення"
 
 #: app/resize.c:162
 msgid "Pixel Dimensions"
-msgstr "Розм╕ри п╕ксела"
+msgstr "Розм╕ри п╕кселя"
 
 #: app/resize.c:172
 msgid "Set Layer Boundary Size"
@@ -5206,7 +5185,7 @@ msgstr ""
 
 #: app/resize.c:1338
 msgid "Layer Too Small"
-msgstr ""
+msgstr "Шар надто малий"
 
 #: app/rotate_tool.c:83
 msgid "Rotation Information"
@@ -5266,9 +5245,9 @@ msgid "Use Dynamic Text"
 msgstr "Використовувати динам╕чний текст"
 
 #: app/text_tool.c:603
-#, fuzzy, c-format
+#, c-format
 msgid "Font '%s' not found."
-msgstr "Шрифт \"%s\" не знайдено.%s"
+msgstr "Шрифт \"%s\" не знайдено."
 
 #: app/text_tool.c:622
 #, c-format
@@ -5524,9 +5503,8 @@ msgid "Magnify"
 msgstr "Лупа"
 
 #: app/tools.c:215
-#, fuzzy
 msgid "/Tools/Magnify"
-msgstr "Лупа"
+msgstr "/╤нструменти/Лупа"
 
 #: app/tools.c:220
 msgid "Zoom in & out"
@@ -6068,9 +6046,8 @@ msgstr ""
 "Зам╕щення на мапу градац╕й с╕рого."
 
 #: modules/cdisplay_gamma.c:91
-#, fuzzy
 msgid "Gamma color display filter"
-msgstr "Ф╕льтри в╕дображення кольор╕в"
+msgstr ""
 
 #: modules/cdisplay_gamma.c:326
 msgid "Gamma"
@@ -6103,162 +6080,3 @@ msgstr ""
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr ""
-
-#~ msgid "Fill Options"
-#~ msgstr "Параметри заповнення"
-
-#~ msgid "Operations"
-#~ msgstr "Операц╕╖"
-
-#~ msgid ""
-#~ "# GIMP parasiterc\n"
-#~ "# This file will be entirely rewritten every time you quit the gimp.\n"
-#~ "\n"
-#~ msgstr ""
-#~ "# GIMP parasiterc\n"
-#~ "# Цей файл буде повн╕стю переписано кожного разу при виход╕ з gimp.\n"
-#~ "\n"
-
-#~ msgid "Layer Mask Options"
-#~ msgstr "Параметри маски шару"
-
-#~ msgid "Apply"
-#~ msgstr "Застосувати"
-
-#~ msgid "Discard"
-#~ msgstr "Скасувати"
-
-#~ msgid "Apply layer mask?"
-#~ msgstr "Застосувати маски шару?"
-
-#~ msgid "/Xtns/Animation"
-#~ msgstr "/Розширення/Ан╕мац╕я"
-
-#~ msgid "/Xtns/Script-Fu"
-#~ msgstr "/Розширення/Script-Fu"
-
-#~ msgid "/Xtns/Script-Fu/Logos"
-#~ msgstr "/Розширення/Script-Fu/Логотипи"
-
-#~ msgid "/Xtns/Script-Fu/Patterns"
-#~ msgstr "/Розширення/Script-Fu/Шаблони"
-
-#~ msgid "/Xtns/Script-Fu/Web Page Themes"
-#~ msgstr "/Розширення/Script-Fu/Теми стор╕нок WWW"
-
-#~ msgid "/Xtns/Script-Fu/Utils"
-#~ msgstr "/Розширення/Script-Fu/Утил╕ти"
-
-#~ msgid "/Xtns/Script-Fu/Buttons"
-#~ msgstr "/Розширення/Script-Fu/Кнопки"
-
-#~ msgid "/Xtns/Script-Fu/Make Brush"
-#~ msgstr "/Розширення/Script-Fu/Зробити пензля"
-
-#~ msgid "/Xtns/Script-Fu/Misc"
-#~ msgstr "/Розширення/Script-Fu/Р╕зне"
-
-#~ msgid "/Xtns/Script-Fu/Test"
-#~ msgstr "/Розширення/Script-Fu/Тест"
-
-#~ msgid "/Xtns/Web Browser"
-#~ msgstr "/Розширення/Нав╕гатор WWW"
-
-#~ msgid "/Filters/Colors/Map"
-#~ msgstr "/Ф╕льтри/Кольори/Карта"
-
-#~ msgid "/Filters/Render/Clouds"
-#~ msgstr "/Ф╕льтри/В╕зуал╕зац╕я/Хмари"
-
-#~ msgid "/Filters/Render/Nature"
-#~ msgstr "/Ф╕льтри/В╕зуал╕зац╕я/Природа"
-
-#~ msgid "/Filters/Render/Pattern"
-#~ msgstr "/Ф╕льтри/В╕зуал╕зац╕я/Шаблон"
-
-#~ msgid "/Filters/Misc"
-#~ msgstr "/Ф╕льтри/Р╕зне"
-
-#~ msgid "/Script-Fu/Decor"
-#~ msgstr "/Script-Fu/Декор"
-
-#~ msgid "/Script-Fu/Utils"
-#~ msgstr "/Script-Fu/╤нструменти"
-
-#~ msgid "/Script-Fu/Animators"
-#~ msgstr "/Script-Fu/Ан╕матори"
-
-#~ msgid "/Script-Fu/Stencil Ops"
-#~ msgstr "/Script-Fu/Параметри трафарету"
-
-#~ msgid "/Script-Fu/Alchemy"
-#~ msgstr "/Script-Fu/Алх╕м╕я"
-
-#~ msgid "/Script-Fu/Selection"
-#~ msgstr "/Script-Fu/Вид╕лення"
-
-#~ msgid "/Script-Fu/Shadow"
-#~ msgstr "/Script-Fu/Т╕нь"
-
-#~ msgid "/Script-Fu/Render"
-#~ msgstr "/Script-Fu/В╕зуал╕зац╕я"
-
-#~ msgid "/Guides"
-#~ msgstr "/Напрвляюч╕"
-
-#~ msgid "/Video"
-#~ msgstr "/В╕део"
-
-#~ msgid "/Video/Encode"
-#~ msgstr "/В╕део/Кодування"
-
-#~ msgid "Path Tool"
-#~ msgstr "Контур"
-
-#~ msgid "Xinput Airbrush"
-#~ msgstr "Аерограф Xinput"
-
-#~ msgid "/Tools/Transform Tools/Magnify"
-#~ msgstr "/╤нструменти/Перетворення/Лупа"
-
-#~ msgid "/Tools/Paint Tools/XinputAirbrush"
-#~ msgstr "/╤нструменти/Малювання/Аерограф Xinput"
-
-#~ msgid "Natural Airbrush"
-#~ msgstr "Натуральний аерограф"
-
-#~ msgid "Path"
-#~ msgstr "Контур"
-
-#~ msgid "/Tools/Path"
-#~ msgstr "/╤нструменти/Контур"
-
-#~ msgid "Manipulate paths"
-#~ msgstr "Ман╕пулювати контурами"
-
-#~ msgid "Base Tilt:"
-#~ msgstr "Нахил основи:"
-
-#~ msgid "Tilt Sensitivity:"
-#~ msgstr "Чутлив╕сть до нахилу:"
-
-#~ msgid "Speed Sensitivity:"
-#~ msgstr "Чутлив╕сть до швидкост╕:"
-
-#~ msgid "Min Height:"
-#~ msgstr "М╕н╕мальна висота:"
-
-#~ msgid "Max Height:"
-#~ msgstr "Максимальна висота:"
-
-#~ msgid "Delete gradient"
-#~ msgstr "Видалення град╕╓нту"
-
-#~ msgid "Shades of Color:"
-#~ msgstr "В╕дт╕нк╕в кольор╕в:"
-
-#~ msgid "Shades of Gray:"
-#~ msgstr "В╕дт╕нк╕в с╕рого:"
-
-#~ msgid "%%d x %%d pixels (%%.%df x %%.%df %s)"
-#~ msgstr "%%d x %%d п╕ксел╕в (%%.%df x %%.%df %s)"
