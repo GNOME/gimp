@@ -244,7 +244,7 @@ gimp_init (Gimp *gimp)
 
   gimp->standard_tool_info  = NULL;
 
-  gimp->documents           = gimp_document_list_new ();
+  gimp->documents           = gimp_document_list_new (gimp);
 
   gimp->have_current_cut_buffer = FALSE;
 

@@ -363,7 +363,7 @@ file_save_thumbnail_invoker (Gimp     *gimp,
     
 	      if (success)
 		{
-		  imagefile = gimp_imagefile_new (uri);
+		  imagefile = gimp_imagefile_new (gimp, uri);
 		  success = gimp_imagefile_save_thumbnail (imagefile, gimage);
 		  g_object_unref (imagefile);
 		}

@@ -273,7 +273,7 @@ file_open_dialog_create (Gimp            *gimp,
       gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
       
-      open_options_imagefile = gimp_imagefile_new (NULL);
+      open_options_imagefile = gimp_imagefile_new (gimp, NULL);
       
       open_options_preview =
         gimp_preview_new (GIMP_VIEWABLE (open_options_imagefile),
@@ -415,7 +415,8 @@ file_open_selchanged_callback (GtkTreeSelection *sel,
 }
 
 static void
-file_open_create_thumbnail (const gchar       *filename,
+file_open_create_thumbnail (Gimp              *gimp,
+                            const gchar       *filename,
                             GimpThumbnailSize  size,
                             gboolean           always_create)
 {
@@ -427,7 +428,7 @@ file_open_create_thumbnail (const gchar       *filename,
 
       uri = g_filename_to_uri (filename, NULL, NULL);
 
-      imagefile = gimp_imagefile_new (uri);
+      imagefile = gimp_imagefile_new (gimp, uri);
 
       if (always_create)
         {
@@ -505,7 +506,8 @@ file_open_create_thumbnails (GtkWidget *open_dialog,
                 g_main_context_iteration (NULL, FALSE);
             }
 
-          file_open_create_thumbnail (selections[i],
+          file_open_create_thumbnail (gimp,
+                                      selections[i],
                                       gimp->config->thumbnail_size,
                                       always_create);
 
@@ -535,7 +537,8 @@ file_open_create_thumbnails (GtkWidget *open_dialog,
                 g_main_context_iteration (NULL, FALSE);
            }
 
-          file_open_create_thumbnail (selections[0],
+          file_open_create_thumbnail (gimp,
+                                      selections[0],
                                       gimp->config->thumbnail_size,
                                       always_create);
 

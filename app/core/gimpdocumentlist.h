@@ -29,11 +29,23 @@
 #define GIMP_IS_DOCUMENT_LIST_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DOCUMENT_LIST))
 
 
-typedef struct _GimpListClass GimpDocumentListClass;
+typedef struct _GimpDocumentListClass GimpDocumentListClass;
+
+struct _GimpDocumentList
+{
+  GimpList  parent_instance;
+
+  Gimp     *gimp;
+};
+
+struct _GimpDocumentListClass
+{
+  GimpListClass  parent_class;
+};
 
 
 GType           gimp_document_list_get_type (void) G_GNUC_CONST; 
-GimpContainer * gimp_document_list_new      (void);
+GimpContainer * gimp_document_list_new      (Gimp             *gimp);
 
 GimpImagefile * gimp_document_list_add_uri  (GimpDocumentList *document_list,
                                              const gchar      *uri);

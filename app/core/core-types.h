@@ -125,7 +125,7 @@ typedef struct _GimpPaintInfo       GimpPaintInfo;
 typedef struct _GimpToolInfo        GimpToolInfo; /*< proxy-include >*/
 
 typedef struct _GimpImagefile       GimpImagefile;
-typedef struct _GimpList            GimpDocumentList;
+typedef struct _GimpDocumentList    GimpDocumentList;
 
 
 /*  drawable objects  */

@@ -1,3 +1,16 @@
+2003-01-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdocumentlist.[ch]
+	* app/core/gimpimagefile.[ch]: added "Gimp" pointers so we don't
+	need to use "the_gimp" from "app_procs.h".
+
+	* app/core/core-types.h
+	* app/core/gimp.c
+	* app/gui/file-open-dialog.c
+	* tools/pdbgen/pdb/fileops.pdb: changed accordingly.
+
+	* app/pdb/fileops_cmds.c: regenerated.
+
 2003-01-23  Sven Neumann  <sven@gimp.org>
 
 	* modules/cdisplay_colorblind.c: use bpl (line pitch) when

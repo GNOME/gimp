@@ -34,17 +34,18 @@
 #include "config/gimpconfig.h"
 #include "config/gimpscanner.h"
 
+#include "gimp.h"
 #include "gimpdocumentlist.h"
 #include "gimpimagefile.h"
 
 
 static void     gimp_document_list_config_iface_init (gpointer  iface,
                                                       gpointer  iface_data);
-static gboolean gimp_document_list_serialize         (GObject  *list,
+static gboolean gimp_document_list_serialize         (GObject  *object,
                                                       gint      fd,
                                                       gint      indent_level,
                                                       gpointer  data);
-static gboolean gimp_document_list_deserialize       (GObject  *list,
+static gboolean gimp_document_list_deserialize       (GObject  *object,
                                                       GScanner *scanner,
                                                       gint      nest_level,
                                                       gpointer  data);
@@ -102,7 +103,7 @@ gimp_document_list_config_iface_init (gpointer  iface,
 }
 
 static gboolean
-gimp_document_list_serialize (GObject *document_list,
+gimp_document_list_serialize (GObject *object,
                               gint     fd,
                               gint     indent_level,
                               gpointer data)
@@ -112,7 +113,7 @@ gimp_document_list_serialize (GObject *document_list,
 
   str = g_string_new (NULL);
 
-  for (list = GIMP_LIST (document_list)->list; list; list = list->next)
+  for (list = GIMP_LIST (object)->list; list; list = list->next)
     {
       gchar *escaped;
 
@@ -130,13 +131,16 @@ gimp_document_list_serialize (GObject *document_list,
 }
 
 static gboolean
-gimp_document_list_deserialize (GObject  *document_list,
+gimp_document_list_deserialize (GObject  *object,
                                 GScanner *scanner,
                                 gint      nest_level,
                                 gpointer  data)
 {
-  GTokenType  token;
-  gint        size;
+  GimpDocumentList *document_list;
+  GTokenType        token;
+  gint              size;
+
+  document_list = GIMP_DOCUMENT_LIST (object);
 
   size = GPOINTER_TO_INT (data);
 
@@ -168,7 +172,7 @@ gimp_document_list_deserialize (GObject  *document_list,
                   break;
                 }
 
-              imagefile = gimp_imagefile_new (uri);
+              imagefile = gimp_imagefile_new (document_list->gimp, uri);
 
               if (size > 0)
                 gimp_imagefile_update (imagefile, size);
@@ -197,16 +201,20 @@ gimp_document_list_deserialize (GObject  *document_list,
 }
 
 GimpContainer *
-gimp_document_list_new (void)
+gimp_document_list_new (Gimp *gimp)
 {
-  GObject *document_list;
+  GimpDocumentList *document_list;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   document_list = g_object_new (GIMP_TYPE_DOCUMENT_LIST,
                                 "name",          "document_list",
                                 "children_type", GIMP_TYPE_IMAGEFILE,
                                 "policy",        GIMP_CONTAINER_POLICY_STRONG,
                                 NULL);
-  
+
+  document_list->gimp = gimp;
+
   return GIMP_CONTAINER (document_list);
 }
 
@@ -231,7 +239,7 @@ gimp_document_list_add_uri (GimpDocumentList *document_list,
     }
   else
     {
-      imagefile = gimp_imagefile_new (uri);
+      imagefile = gimp_imagefile_new (document_list->gimp, uri);
       gimp_container_add (container, GIMP_OBJECT (imagefile));
       g_object_unref (imagefile);
     }

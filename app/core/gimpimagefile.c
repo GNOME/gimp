@@ -63,8 +63,6 @@
 
 #include "file/file-open.h"
 
-#include "app_procs.h"
-
 #include "libgimp/gimpintl.h"
 
 
@@ -227,6 +225,7 @@ gimp_imagefile_class_init (GimpImagefileClass *klass)
 static void
 gimp_imagefile_init (GimpImagefile *imagefile)
 {
+  imagefile->gimp        = NULL;
   imagefile->state       = GIMP_IMAGEFILE_STATE_UNKNOWN;
   imagefile->image_mtime = 0;
   imagefile->image_size  = -1;
@@ -251,14 +250,19 @@ gimp_imagefile_finalize (GObject *object)
 }
 
 GimpImagefile *
-gimp_imagefile_new (const gchar *uri)
+gimp_imagefile_new (Gimp        *gimp,
+                    const gchar *uri)
 {
   GimpImagefile *imagefile;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   imagefile = GIMP_IMAGEFILE (g_object_new (GIMP_TYPE_IMAGEFILE, NULL));
 
   if (uri)
     gimp_object_set_name (GIMP_OBJECT (imagefile), uri);
+
+  imagefile->gimp = gimp;
 
   return imagefile;
 }
@@ -327,7 +331,7 @@ gimp_imagefile_update (GimpImagefile *imagefile,
       GimpImagefile *documents_imagefile;
 
       documents_imagefile = (GimpImagefile *)
-        gimp_container_get_child_by_name (the_gimp->documents, uri);
+        gimp_container_get_child_by_name (imagefile->gimp->documents, uri);
 
       if (GIMP_IS_IMAGEFILE (documents_imagefile) &&
           (documents_imagefile != imagefile))
@@ -376,7 +380,7 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
       if (! file_exists)
         return;
 
-      gimage = file_open_image (the_gimp,
+      gimage = file_open_image (imagefile->gimp,
                                 uri,
                                 uri,
                                 NULL,
@@ -484,9 +488,8 @@ gimp_imagefile_save_thumbnail (GimpImagefile *imagefile,
 
   g_return_val_if_fail (GIMP_IS_IMAGEFILE (imagefile), FALSE);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-  g_return_val_if_fail (GIMP_IS_GIMP (gimage->gimp), FALSE);
 
-  thumb_size = gimage->gimp->config->thumbnail_size;
+  thumb_size = imagefile->gimp->config->thumbnail_size;
 
   g_return_val_if_fail (thumb_size <= 256, FALSE);
 
