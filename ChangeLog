@@ -1,3 +1,7 @@
+Fri Jan 28 10:48:55 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* libgimp/libgimp-intl.h: bind gimp-libgimp domain
+
 Fri Jan 28 00:37:10 PST 2000 Manish Singh <yosh@gimp.org>
 
 	* configure.in

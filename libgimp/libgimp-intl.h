@@ -23,11 +23,11 @@
 
 #ifdef ENABLE_NLS
 #    include <libintl.h>
-#    define _(String) dgettext ("gimp-std-plugins", String)
+#    define _(String) dgettext ("gimp-libgimp", String)
 #    undef gettext
-#    define gettext(String) dgettext ("gimp-std-plugins", String)
+#    define gettext(String) dgettext ("gimp-libgimp", String)
 #    ifdef gettext_noop
-#        define N_(String) dgettext_noop ("gimp-std_plugins", String)
+#        define N_(String) dgettext_noop ("gimp-libgimp", String)
 #    else
 #        define N_(String) (String)
 #    endif
@@ -39,3 +39,18 @@
 #endif
 
 #endif /* __LIBGIMP_INTL_H__ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
