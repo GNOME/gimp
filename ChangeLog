@@ -1,3 +1,12 @@
+2000-03-27  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/gap/gap_*.c: corrected spelling and punctuation of many
+	strings so they adhere better to our standards.
+
+	* plug-ins/FractalExplorer/FractalExplorer.c
+	* plug-ins/gflare/gflare.c: do not hardcode ~/.gimp-1.1 into the
+	message strings.
+
 2000-03-27  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
 
 	* plug-ins/common/xpm.c: INIT_I18N_UI() instead of INIT_I18N()

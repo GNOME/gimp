@@ -458,7 +458,7 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ( _("UpdPreview"));
+  button = gtk_button_new_with_label ( _("Update Preview"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) mov_upvw_callback,
@@ -504,6 +504,8 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
   
   /* table with 5 rows */
   table = gtk_table_new (5, 3, FALSE);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_attach(GTK_TABLE(hbox_table), table, 0, 1, 0, 1, GTK_FILL|GTK_EXPAND, GTK_FILL, 4, 0);
 
   /* the start frame scale_entry */
@@ -621,7 +623,8 @@ mov_ok_callback (GtkWidget *widget,
     {
 
        p_msg_win(RUN_INTERACTIVE,
-                 _("No Source Image was selected\n(Please open a 2nd Image of the same type before opening Move Path)\n"));
+                 _("No Source Image was selected\n"
+		   "(Please open a 2nd Image of the same type before opening Move Path)"));
        return;
     }
   }
@@ -1380,11 +1383,11 @@ mov_src_sel_create()
   table = gtk_table_new ( 2, 4, FALSE );
   gtk_container_border_width (GTK_CONTAINER (table), 2);
   gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 3);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 5);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
 
   /* Source Layer menu */
-  label = gtk_label_new( _("SourceImage/Layer:"));
+  label = gtk_label_new( _("Source Image/Layer:"));
   gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
   gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1, GTK_FILL, GTK_FILL, 4, 0);
   gtk_widget_show(label);
@@ -1544,8 +1547,8 @@ mov_path_prevw_create ( GDrawable *drawable, t_mov_path_preview *path_ptr)
   /* the table (3 rows) */
   table = gtk_table_new ( 3, 6, FALSE );
   gtk_container_border_width (GTK_CONTAINER (table), 2 );
-  gtk_table_set_row_spacings (GTK_TABLE (table), 3);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 5);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
 
 
@@ -1595,7 +1598,7 @@ mov_path_prevw_create ( GDrawable *drawable, t_mov_path_preview *path_ptr)
 			  0,                                  /* digits */
 			  FALSE,                              /* constrain */
 			  (gfloat)1, (gfloat)1000,            /* lower, upper (unconstrained) */
-			  _("Scale SrcLayer's Width\nin percent"),
+			  _("Scale Source Layer's Width in percent"),
 			  NULL);    /* tooltip privatetip */
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
@@ -1662,8 +1665,8 @@ mov_path_prevw_create ( GDrawable *drawable, t_mov_path_preview *path_ptr)
   /* the preview table (1 rows) */
   pv_table = gtk_table_new ( 1, 1, FALSE );
   gtk_container_border_width (GTK_CONTAINER (pv_table), 2 );
-  gtk_table_set_row_spacings (GTK_TABLE (pv_table), 3);
-  gtk_table_set_col_spacings (GTK_TABLE (pv_table), 5);
+  gtk_table_set_row_spacings (GTK_TABLE (pv_table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (pv_table), 4);
   gtk_box_pack_start (GTK_BOX (hbox), pv_table, TRUE, TRUE, 0);
 
   /* frame (shadow_in) that contains preview */

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.18\n"
 "POT-Creation-Date: 2000-03-25 15:10+0100\n"
-"PO-Revision-Date: 2000-03-25 14:02+01:00\n"
+"PO-Revision-Date: 2000-03-27 13:45+02:00\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -173,11 +173,10 @@ msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Xtns/Skript-Fu/Auffrischen"
 
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D Outline..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/3D Umriß..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/3-D Umriß..."
 
-# TODO
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3D Truchet..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/3D Truchet..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/3-D Truchet..."
 
 msgid "<Image>/Script-Fu/Decor/Add Bevel..."
 msgstr "<Image>/Skript-Fu/Dekoration/Rand abschrägen..."
@@ -249,7 +248,7 @@ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Camouflage..."
 msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/Tarnung..."
 
 msgid "<Image>/Script-Fu/Stencil Ops/Carve-It..."
-msgstr ""
+msgstr "<Image>/Skript-Fu/Schablone/Schnitzen..."
 
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
 msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Geschnitzt..."
@@ -261,7 +260,7 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Away..."
 msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Zerfressen..."
 
 msgid "<Image>/Script-Fu/Stencil Ops/Chrome-It..."
-msgstr ""
+msgstr "<Image>/Skript-Fu/Schablone/Chrom..."
 
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chrome..."
 msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Chrom..."
@@ -276,7 +275,7 @@ msgid "<Image>/Script-Fu/Decor/Coffee Stain..."
 msgstr "<Image>/Skript-Fu/Dekoration/Kaffeeflecken..."
 
 msgid "<Image>/Script-Fu/Animators/Color Cycling..."
-msgstr ""
+msgstr "<Image>/Skript-Fu/Animation/Farben rotieren..."
 
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Book..."
 msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Comic-Heft..."
@@ -302,7 +301,6 @@ msgstr "<Image>/Skript-Fu/Alchemie/Jede zweite Zeile löschen..."
 msgid "<Image>/Script-Fu/Selection/Fade Outline..."
 msgstr "<Image>/Skript-Fu/Auswahl/Umriß ausblenden..."
 
-# TODO
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Flatland..."
 msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/Flaches Land..."
 
@@ -322,29 +320,29 @@ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
 msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Kleine Überschrift..."
 
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Button Label..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Tube Button Beschriftung"
 
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Tube Sub-Button Beschriftung"
 
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button "
 "Label..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Tube Sub-Sub-Button Beschriftung..."
 
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Allgemeine Tube Beschriftung..."
 
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glossy..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Glatt..."
 
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glowing Hot..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Glühend Heiß..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Glühend Heiß..."
 
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Bevel..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Farbverlauf..."
 
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
 msgstr "<Toolbox>/Xtns/Skript-Fu/Hilfsmittel/Farbverlauf Vorschau..."
@@ -356,7 +354,7 @@ msgid "<Image>/Script-Fu/Utils/Draw HSV Graph..."
 msgstr "<Image>/Skript-Fu/Hilfsmittel/HSV Analyse-Grafik..."
 
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Imigre-26..."
 
 msgid "<Image>/Script-Fu/Utils/Show Image Structure..."
 msgstr "<Image>/Skript-Fu/Hilfsmittel/Bildaufbau darstellen..."
@@ -437,7 +435,7 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starburst..."
 msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Sternexplosion..."
 
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starscape..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Starscape..."
 
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-Tile..."
 msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/Strudel-Kachel..."
@@ -457,7 +455,6 @@ msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Text im Kreis..."
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Textured..."
 msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Texturiert..."
 
-# TODO
 msgid "<Image>/Filters/Blur/Tileable Blur..."
 msgstr "<Image>/Filters/Weichzeichnen/Kachelbarer Weichzeichner..."
 
@@ -465,10 +462,10 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
 msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Web-Seiten Überschrift..."
 
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/Trochoid..."
 
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/Truchet..."
 
 msgid "<Image>/Script-Fu/Alchemy/Unsharp Mask..."
 msgstr "<Image>/Skript-Fu/Alchemie/Unsharf maskieren..."

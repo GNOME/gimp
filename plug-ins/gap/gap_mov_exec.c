@@ -217,7 +217,8 @@ long   p_mov_execute(t_mov_data *mov_ptr)
    if(mov_ptr->val_ptr->src_image_id < 0)
    {
       p_msg_win(mov_ptr->dst_ainfo_ptr->run_mode,
-        _("No Source Image was selected\n(Please open a 2nd Image of the same type before opening Move Path)"));
+        _("No Source Image was selected.\n"
+	  "Please open a 2nd Image of the same type before opening Move Path."));
       return -1;
    }
 
@@ -225,7 +226,7 @@ long   p_mov_execute(t_mov_data *mov_ptr)
   l_percentage = 0.0;  
   if(mov_ptr->dst_ainfo_ptr->run_mode == RUN_INTERACTIVE)
   { 
-    gimp_progress_init( _("Copying Layers into Frames .."));
+    gimp_progress_init( _("Copying Layers into Frames..."));
   }
 
   if(gap_debug)

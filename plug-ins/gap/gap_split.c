@@ -97,7 +97,7 @@ p_split_image(t_anim_info *ainfo_ptr,
   l_run_mode  = ainfo_ptr->run_mode;
   if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
   { 
-    gimp_progress_init( _("Splitting into Frames .."));
+    gimp_progress_init( _("Splitting into Frames..."));
   }
  
   l_new_image_id = -1;
@@ -172,7 +172,9 @@ p_split_image(t_anim_info *ainfo_ptr,
           l_rc = p_save_named_image(l_new_image_id, l_sav_name, l_run_mode);
           if(l_rc < 0)
           {
-            p_msg_win(ainfo_ptr->run_mode, _("Split Frames: SAVE operation FAILED\n- desired save plugin can't handle type\n- or desired save plugin not available\n"));
+            p_msg_win(ainfo_ptr->run_mode, _("Split Frames: SAVE operation FAILED.\n"
+					     "desired save plugin can't handle type\n"
+					     "or desired save plugin not available."));
             break;
           }
 
@@ -230,23 +232,23 @@ p_split_dialog(t_anim_info *ainfo_ptr, gint *inverse_order, gint *no_alpha, char
 
   p_init_arr_arg(&argv[1], WGT_TEXT);
   argv[1].label_txt = _("Extension:");
-  argv[1].help_txt  = _("extension of resulting frames       \n(is also used to define Fileformat)");
+  argv[1].help_txt  = _("extension of resulting frames (is also used to define Fileformat)");
   argv[1].text_buf_len = len_ext;
   argv[1].text_buf_ret = extension;
 
   p_init_arr_arg(&argv[2], WGT_TOGGLE);
-  argv[2].label_txt = _("Inverse Order :");
+  argv[2].label_txt = _("Inverse Order:");
   argv[2].help_txt  = _("Start frame 0001 at Top Layer");
   argv[2].int_ret   = 0;
 
   p_init_arr_arg(&argv[3], WGT_TOGGLE);
-  argv[3].label_txt = _("Flatten :");
-  argv[3].help_txt  = _("Remove Alpha Channel in resulting Frames,    \ntransparent parts are filled with BG color");
+  argv[3].label_txt = _("Flatten:");
+  argv[3].help_txt  = _("Remove Alpha Channel in resulting Frames. Transparent parts are filled with BG color.");
   argv[3].int_ret   = 0;
 
   if(TRUE == p_array_dialog( _("Split Image into Frames"),
-                                 _("Split Settings :"), 
-                                  4, argv))
+			     _("Split Settings"), 
+			     4, argv))
   {
     g_free (buf);
     *inverse_order = argv[2].int_ret;
@@ -292,7 +294,9 @@ int gap_split_image(GRunModeType run_mode,
       if(ainfo_ptr->frame_cnt != 0)
       {
          p_msg_win(run_mode,
-           _("OPERATION CANCELLED\nThis image is already an AnimFrame\nTry again on a Duplicate\n(image/duplicate)"));
+           _("OPERATION CANCELLED.\n"
+	     "This image is already an AnimFrame.\n"
+	     "Try again on a Duplicate (Image/Duplicate)."));
          return -1;
       }
       else

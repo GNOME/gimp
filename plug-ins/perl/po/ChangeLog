@@ -1,3 +1,11 @@
+2000-03-27  Sven Neumann  <sven@gimp.org>
+
+	* de.po: updated german translation
+
+	I've updated the pot-file and it seems that lots of strings have
+	vanished. Looks like something's wrong with my setup. The missing
+	strings are included as comments. Don't remove them!
+
 Wed Mar  8 22:51:30 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* fr.po: s/<Images>/<Image>/   

@@ -41,7 +41,7 @@
  * - BUGFIX or workaround needed: list widget can't handle large lists
  *          (test failed at 1093 items maybe there is a limit of 1092 ??)
  *
- * - start of a 2.nd navigator should pop up the 1.st one and exit.
+ * - start of a 2.nd navigator should pop up the 1st one and exit.
  * x- scroll the listbox (active image should always be in the visible (exposed) area
  *     problem: 1092 limit !
  * x- implement the unfinished callback procedures
@@ -70,7 +70,7 @@
 
 
 /* revision history:
- * version 1.1.14a; 2000.01.08   hof: 1.st release
+ * version 1.1.14a; 2000.01.08   hof: 1st release
  */
 
 static char *gap_navigator_version = "1.1.14a; 2000/01/08";
@@ -373,7 +373,7 @@ static OpsButton frames_ops_buttons[] =
 static OpsButton vcr_ops_buttons[] =
 {
   { first_xpm, navi_dialog_vcr_goto_first_callback, NULL,
-    N_("Goto 1.st Frame"),
+    N_("Goto 1st Frame"),
     "#goto_first",
     NULL, 0 },
   { prev_xpm, navi_dialog_vcr_goto_prev_callback, navi_dialog_vcr_goto_prev_ext_callbacks,
@@ -508,7 +508,7 @@ run (char    *name,
         */
       if (0 == kill(l_navid_pid, 0))
       {
-         p_msg_win(RUN_INTERACTIVE, "Cant open 2 or more Video Navigator Windows");
+         p_msg_win(RUN_INTERACTIVE, _("Cant open two or more Video Navigator Windows."));
          l_rc = -1;    
       }
     }
@@ -689,7 +689,7 @@ void navi_reload_ainfo_force(gint32 image_id)
   && (global_old_active_imageid != image_id))
   {
      /* for other frameformats than xcf
-      * save the frame a 1.st time (to set filetype specific save paramters)
+      * save the frame a 1st time (to set filetype specific save paramters)
       * this also is a workaround for a BUG that causes an X11 deadlock
       * when the save dialog pops up from the double-click callback in the frames listbox
       */

@@ -115,7 +115,7 @@ p_anim_sizechange_dialog(t_anim_info *ainfo_ptr, t_gap_asiz asiz_mode,
   l_height = gimp_image_height(ainfo_ptr->image_id);
  
   p_init_arr_arg(&argv[0], WGT_INT_PAIR);
-  argv[0].label_txt = _("New Width :");
+  argv[0].label_txt = _("New Width:");
   argv[0].constraint = FALSE;
   argv[0].int_min   = 1;
   argv[0].int_max   = 1024;
@@ -124,7 +124,7 @@ p_anim_sizechange_dialog(t_anim_info *ainfo_ptr, t_gap_asiz asiz_mode,
   argv[0].int_ret   = l_width;
   
   p_init_arr_arg(&argv[1], WGT_INT_PAIR);
-  argv[1].label_txt = _("New Height :");
+  argv[1].label_txt = _("New Height:");
   argv[1].constraint = FALSE;
   argv[1].int_min    = 1;
   argv[1].int_max    = 1024;
@@ -133,7 +133,7 @@ p_anim_sizechange_dialog(t_anim_info *ainfo_ptr, t_gap_asiz asiz_mode,
   argv[1].int_ret   = l_height;
   
   p_init_arr_arg(&argv[2], WGT_INT_PAIR);
-  argv[2].label_txt = _("Offest X :");
+  argv[2].label_txt = _("Offset X:");
   argv[2].constraint = FALSE;
   argv[2].int_min    = 0;
   argv[2].int_max    = l_width;
@@ -142,7 +142,7 @@ p_anim_sizechange_dialog(t_anim_info *ainfo_ptr, t_gap_asiz asiz_mode,
   argv[2].int_ret   = 0;
   
   p_init_arr_arg(&argv[3], WGT_INT_PAIR);
-  argv[3].label_txt = _("Offest Y :");
+  argv[3].label_txt = _("Offset Y:");
   argv[3].constraint = FALSE;
   argv[3].int_min    = 0;
   argv[3].int_max    = l_height;
@@ -248,21 +248,21 @@ p_range_dialog(t_anim_info *ainfo_ptr,
   if(cnt != 3)  cnt = 2;
 
   p_init_arr_arg(&argv[0], WGT_INT_PAIR);
-  argv[0].label_txt = _("From :");
+  argv[0].label_txt = _("From:");
   argv[0].constraint = TRUE;
   argv[0].int_min   = (gint)ainfo_ptr->first_frame_nr;
   argv[0].int_max   = (gint)ainfo_ptr->last_frame_nr;
   argv[0].int_ret   = (gint)ainfo_ptr->curr_frame_nr;
   
   p_init_arr_arg(&argv[1], WGT_INT_PAIR);
-  argv[1].label_txt = _("To :");
+  argv[1].label_txt = _("To:");
   argv[1].constraint = TRUE;
   argv[1].int_min   = (gint)ainfo_ptr->first_frame_nr;
   argv[1].int_max   = (gint)ainfo_ptr->last_frame_nr;
   argv[1].int_ret   = (gint)ainfo_ptr->last_frame_nr;
   
   p_init_arr_arg(&argv[2], WGT_INT_PAIR);
-  argv[2].label_txt = _("Layerstack :");
+  argv[2].label_txt = _("Layerstack:");
   argv[2].constraint = FALSE;
   argv[2].int_min   = 0;
   argv[2].int_max   = 99;
@@ -361,7 +361,7 @@ p_convert_indexed_dialog(gint32 *dest_colors, gint32 *dest_dither,
   argv[5].int_ret   = 0;
 
   if(TRUE == p_array_dialog( _("Convert Frames to Indexed"),
-                                 _("Palette and Dither Settings :"), 
+                                 _("Palette and Dither Settings"), 
                                   ARGC_INDEXED, argv))
   {
       switch(argv[0].radio_ret)
@@ -425,7 +425,12 @@ p_convert_dialog(t_anim_info *ainfo_ptr,
                       char *palette,   gint len_palette)
 {
   static t_arr_arg  argv[7];
-  static char *radio_args[4]  = { N_("KEEP_TYPE"), N_("Conv to RGB"), N_("Conv to GRAY"), N_("Conv to INDEXED") };
+  static char *radio_args[4]  = { 
+    N_("Keep Type"), 
+    N_("Convert to RGB"), 
+    N_("Convert to Gray"), 
+    N_("Convert to Indexed") 
+  };
   static int gettextize_loop = 0;
 
   for (;gettextize_loop < 4; gettextize_loop++)
@@ -441,7 +446,7 @@ p_convert_dialog(t_anim_info *ainfo_ptr,
   
   p_init_arr_arg(&argv[1], WGT_INT_PAIR);
   argv[1].constraint = TRUE;
-  argv[1].label_txt = _("To   Frame:");
+  argv[1].label_txt = _("To Frame:");
   argv[1].help_txt  = _("last handled frame");
   argv[1].int_min   = (gint)ainfo_ptr->first_frame_nr;
   argv[1].int_max   = (gint)ainfo_ptr->last_frame_nr;
@@ -464,21 +469,21 @@ p_convert_dialog(t_anim_info *ainfo_ptr,
   
 
   p_init_arr_arg(&argv[5], WGT_OPTIONMENU);
-  argv[5].label_txt = _("Imagetype :");
+  argv[5].label_txt = _("Imagetype:");
   argv[5].help_txt  = _("Convert to, or keep imagetype           \n(most fileformats can't handle all types)");
   argv[5].radio_argc  = 4;
   argv[5].radio_argv = radio_args;
   argv[5].radio_ret  = 0;
 
   p_init_arr_arg(&argv[6], WGT_TOGGLE);
-  argv[6].label_txt = _("Flatten  :");
+  argv[6].label_txt = _("Flatten:");
   argv[6].help_txt  = _("Flatten all resulting frames               \n(most fileformats need flattened frames)");
   argv[6].int_ret   = 1;
 
   if(0 != p_chk_framerange(ainfo_ptr))   return -1;
 
   if(TRUE == p_array_dialog( _("Convert Frames to other Formats"),
-                                 _("Convert Settings :"), 
+                                 _("Convert Settings"), 
                                   7, argv))
   {
       *range_from  = (long)(argv[0].int_ret);
@@ -592,7 +597,7 @@ p_range_to_multilayer_dialog(t_anim_info *ainfo_ptr,
 
   p_init_arr_arg(&argv[0], WGT_INT_PAIR);
   argv[0].constraint = TRUE;
-  argv[0].label_txt = _("From :");
+  argv[0].label_txt = _("From:");
   argv[0].help_txt  = _("first handled frame");
   argv[0].int_min   = (gint)ainfo_ptr->first_frame_nr;
   argv[0].int_max   = (gint)ainfo_ptr->last_frame_nr;
@@ -600,7 +605,7 @@ p_range_to_multilayer_dialog(t_anim_info *ainfo_ptr,
   
   p_init_arr_arg(&argv[1], WGT_INT_PAIR);
   argv[1].constraint = TRUE;
-  argv[1].label_txt = _("To :");
+  argv[1].label_txt = _("To:");
   argv[1].help_txt  = _("last handled frame");
   argv[1].int_min   = (gint)ainfo_ptr->first_frame_nr;
   argv[1].int_max   = (gint)ainfo_ptr->last_frame_nr;
@@ -626,7 +631,7 @@ p_range_to_multilayer_dialog(t_anim_info *ainfo_ptr,
   argv[3].label_txt = " ";
   
   p_init_arr_arg(&argv[4], WGT_RADIO);
-  argv[4].label_txt = _("Layer Mergemode :");
+  argv[4].label_txt = _("Layer Mergemode:");
   argv[4].radio_argc = 4;
   argv[4].radio_argv = radio_args;
   argv[4].radio_help_argv = radio_help;
@@ -738,7 +743,7 @@ p_frames_to_multilayer(t_anim_info *ainfo_ptr,
   l_nlayers_result = 0;
   if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
   { 
-    gimp_progress_init( _("Creating Layer-Animated Image .."));
+    gimp_progress_init( _("Creating Layer-Animated Image..."));
   }
  
   l_tmp_layer_id = -1;
@@ -1101,8 +1106,8 @@ p_frames_convert(t_anim_info *ainfo_ptr,
   l_run_mode  = ainfo_ptr->run_mode;
   if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
   { 
-    if(save_proc_name == NULL) gimp_progress_init( _("Flattening Frames .."));
-    else                       gimp_progress_init( _("Converting Frames .."));
+    if(save_proc_name == NULL) gimp_progress_init( _("Flattening Frames..."));
+    else                       gimp_progress_init( _("Converting Frames..."));
   }
  
 
@@ -1192,11 +1197,11 @@ p_frames_convert(t_anim_info *ainfo_ptr,
           {
             if (l_overwrite_mode < 1)
             {
-               l_argv[0].but_txt  = _("OVERWRITE frame");
+               l_argv[0].but_txt  = _("Overwrite Frame");
                l_argv[0].but_val  = 0;
-               l_argv[1].but_txt  = _("OVERWRITE all");
+               l_argv[1].but_txt  = _("Overwrite All");
                l_argv[1].but_val  = 1;
-               l_argv[2].but_txt  = _("CANCEL");
+               l_argv[2].but_txt  = _("Cancel");
                l_argv[2].but_val  = -1;
 
                l_overwrite_mode =  p_buttons_dialog  ( _("GAP Question"), l_sav_name, 3, l_argv, -1);
@@ -1213,7 +1218,9 @@ p_frames_convert(t_anim_info *ainfo_ptr,
              l_rc = p_save_named_image(l_tmp_image_id, l_sav_name, l_run_mode);
              if(l_rc < 0)
              {
-               p_msg_win(ainfo_ptr->run_mode, _("Convert Frames: SAVE operation FAILED\n- desired save plugin can't handle type\n- or desired save plugin not available\n"));
+               p_msg_win(ainfo_ptr->run_mode, _("Convert Frames: SAVE operation FAILED.\n"
+						"Desired save plugin can't handle type\n"
+						"or desired save plugin not available."));
              }
           }
           if(l_run_mode == RUN_INTERACTIVE)
@@ -1319,13 +1326,13 @@ gint32 p_anim_sizechange(t_anim_info *ainfo_ptr,
     switch(asiz_mode)
     {
       case ASIZ_CROP:
-        gimp_progress_init( _("Cropping all Animation Frames .."));
+        gimp_progress_init( _("Cropping all Animation Frames..."));
         break;
       case ASIZ_RESIZE:
-        gimp_progress_init( _("Resizing all Animation Frames .."));
+        gimp_progress_init( _("Resizing all Animation Frames..."));
         break;
       default:
-        gimp_progress_init( _("Scaling all Animation Frames .."));
+        gimp_progress_init( _("Scaling all Animation Frames..."));
         break;
     }
   }
@@ -1467,7 +1474,7 @@ p_frames_layer_del(t_anim_info *ainfo_ptr,
   l_percentage = 0.0;  
   if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
   {
-    l_buff = g_strdup_printf (_("Removing Layer (pos:%ld) from Frames .."), position); 
+    l_buff = g_strdup_printf (_("Removing Layer (pos:%ld) from Frames..."), position); 
     gimp_progress_init(l_buff);
     g_free (l_buff);
   }

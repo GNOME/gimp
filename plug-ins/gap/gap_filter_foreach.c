@@ -150,11 +150,11 @@ static gint p_pitstop(GRunModeType run_mode, char *plugin_name, gint text_flag,
       }
       if(text_flag == 0)
       {
-         l_msg = g_strdup_printf (_("2.nd call of %s\n(define end-settings)"), plugin_name);
+         l_msg = g_strdup_printf (_("2nd call of %s\n(define end-settings)"), plugin_name);
       }
       else
       {
-         l_msg = g_strdup_printf (_("Non-Interactive call of %s\n(for all layers inbetween)"), plugin_name);
+         l_msg = g_strdup_printf (_("Non-Interactive call of %s\n(for all layers in between)"), plugin_name);
          l_but_argc = 3;
          l_argc = 1;
       }

@@ -463,7 +463,7 @@ radio_create_value(char *title, GtkTable *table, int row, t_arr_arg *arr_ptr)
 
 
   label = gtk_label_new(title);
-  gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
+  gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.0);
   gtk_table_attach( GTK_TABLE (table), label, 0, 1, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(label);
 
@@ -780,7 +780,7 @@ gint p_array_std_dialog(char *title_txt,
   if(b_argc < 1)
   {
      /* if no buttons are specified use one CLOSE button per default */
-     button = gtk_button_new_with_label ( _("CLOSE"));
+     button = gtk_button_new_with_label ( _("Close"));
      GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
      gtk_signal_connect (GTK_OBJECT (button), "clicked",
                          (GtkSignalFunc) but_array_callback,
@@ -794,21 +794,23 @@ gint p_array_std_dialog(char *title_txt,
   if (frame_txt == NULL)   frame = gtk_frame_new ( _("Enter Values"));
   else                     frame = gtk_frame_new (frame_txt);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 4);
+  gtk_container_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (g_arrint.dlg)->vbox), frame, TRUE, TRUE, 0);
 
   if(argc > 0)
   {
     /* table (one row per argv) */
     table = gtk_table_new (argc +1, 3, FALSE);
-    gtk_container_border_width (GTK_CONTAINER (table), 2);
+    gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+    gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+    gtk_container_set_border_width (GTK_CONTAINER (table), 4);
     gtk_container_add (GTK_CONTAINER (frame), table);
 
     for(l_idx = 0; l_idx < argc; l_idx++)
     {
        arr_ptr = &argv[l_idx];
 
-       if(arr_ptr->label_txt == NULL)  l_label_txt = _("Value: ");
+       if(arr_ptr->label_txt == NULL)  l_label_txt = _("Value:");
        else                            l_label_txt = arr_ptr->label_txt;
 
        switch(arr_ptr->widget_type)

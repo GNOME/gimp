@@ -212,7 +212,7 @@ void p_msg_win(GRunModeType run_mode, char *msg)
   static t_but_arg  l_argv[1];
   int               l_argc;  
   
-  l_argv[0].but_txt  = "CANCEL";
+  l_argv[0].but_txt  = _("OK");
   l_argv[0].but_val  = 0;
   l_argc             = 1;
 
@@ -223,7 +223,7 @@ void p_msg_win(GRunModeType run_mode, char *msg)
        fwrite(msg, 1, strlen(msg), stderr);
        fputc('\n', stderr);
 
-       if(run_mode == RUN_INTERACTIVE) p_buttons_dialog  ("GAP Message", msg, l_argc, l_argv, -1);
+       if(run_mode == RUN_INTERACTIVE) p_buttons_dialog  (_("GAP Message"), msg, l_argc, l_argv, -1);
     }
   }
 }    /* end  p_msg_win */
@@ -886,7 +886,8 @@ int p_chk_framechange(t_anim_info *ainfo_ptr)
     else
     {
        p_msg_win(ainfo_ptr->run_mode,
-         "OPERATION CANCELLED\n(current frame changed while dialog was open)\n");
+         _("OPERATION CANCELLED.\n"
+	   "Current frame changed while dialog was open."));
     }
     p_free_ainfo(&l_ainfo_ptr);
   }
@@ -907,7 +908,10 @@ int p_chk_framerange(t_anim_info *ainfo_ptr)
   if(ainfo_ptr->frame_cnt == 0)
   {
      p_msg_win(ainfo_ptr->run_mode,
-       "OPERATION CANCELLED\nGAP-plugins works only with filenames\nthat ends with _0001.xcf\n==> rename your image, then try again");
+	       _("OPERATION CANCELLED.\n"
+		 "GAP-plugins works only with filenames\n"
+		 "that end with _0001.xcf.\n"
+		 "==> Rename your image, then try again."));
      return -1;
   }
   return 0;
@@ -991,7 +995,9 @@ int p_decide_save_as(gint32 image_id, char *sav_name)
   int               l_save_as_mode;
   GRunModeType      l_run_mode;  
 
-  l_msg = _("You are using a file format != xcf\nSave Operations may result\nin loss of layer information");
+  l_msg = _("You are using a file format != xcf\n"
+	    "Save Operations may result\n"
+	    "in loss of layer information.");
   /* check if there are SAVE_AS_MODE settings (from privious calls within one gimp session) */
   l_save_as_mode = -1;
   /* g_snprintf(l_save_as_name, sizeof(l_save_as_name), "plug_in_gap_plugins_SAVE_AS_MODE_%d", (int)image_id);*/
@@ -1003,11 +1009,11 @@ int p_decide_save_as(gint32 image_id, char *sav_name)
     /* no defined value found (this is the 1.st call for this image_id)
      * ask what to do with a 3 Button dialog
      */
-    l_argv[0].but_txt  = _("CANCEL");
+    l_argv[0].but_txt  = _("Cancel");
     l_argv[0].but_val  = -1;
-    l_argv[1].but_txt  = _("SAVE Flattened");
+    l_argv[1].but_txt  = _("Save Flattened");
     l_argv[1].but_val  = 1;
-    l_argv[2].but_txt  = _("SAVE As Is");
+    l_argv[2].but_txt  = _("Save As Is");
     l_argv[2].but_val  = 0;
     l_argc             = 3;
 
@@ -1477,8 +1483,7 @@ int p_del(t_anim_info *ainfo_ptr, long cnt)
      {
         gchar *tmp_errtxt;
 	
-        tmp_errtxt = g_strdup_printf(_("Error: could not rename frame %ld to %ld\n")
-               , l_hi, l_lo);
+        tmp_errtxt = g_strdup_printf(_("Error: could not rename frame %ld to %ld") ,l_hi, l_lo);
         p_msg_win(ainfo_ptr->run_mode, tmp_errtxt);
 	g_free(tmp_errtxt);
         return -1;
@@ -1583,7 +1588,7 @@ int p_dup(t_anim_info *ainfo_ptr, long cnt, long range_from, long range_to)
    l_percentage = 0.0;  
    if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
    { 
-     gimp_progress_init( _("Duplicating frames .."));
+     gimp_progress_init( _("Duplicating frames..."));
    }
 
    /* rename (renumber) all frames with number greater than current
@@ -1595,7 +1600,7 @@ int p_dup(t_anim_info *ainfo_ptr, long cnt, long range_from, long range_to)
      if(0 != p_rename_frame(ainfo_ptr, l_lo, l_hi))
      {
         gchar *tmp_errtxt;
-        tmp_errtxt = g_strdup_printf(_("Error: could not rename frame %ld to %ld\n"), l_lo, l_hi);
+        tmp_errtxt = g_strdup_printf(_("Error: could not rename frame %ld to %ld"), l_lo, l_hi);
         p_msg_win(ainfo_ptr->run_mode, tmp_errtxt);
 	g_free(tmp_errtxt);
         return -1;
@@ -1674,21 +1679,21 @@ int p_exchg(t_anim_info *ainfo_ptr, long dest)
    /* rename (renumber) frames */
    if(0 != p_rename_frame(ainfo_ptr, dest, l_tmp_nr))
    {
-        tmp_errtxt = g_strdup_printf(_("Error: could not rename frame %ld to %ld\n"), dest, l_tmp_nr);
+        tmp_errtxt = g_strdup_printf(_("Error: could not rename frame %ld to %ld"), dest, l_tmp_nr);
         p_msg_win(ainfo_ptr->run_mode, tmp_errtxt);
 	g_free(tmp_errtxt);
         return -1;
    }
    if(0 != p_rename_frame(ainfo_ptr, ainfo_ptr->curr_frame_nr, dest))
    {
-        tmp_errtxt = g_strdup_printf(_("Error: could not rename frame %ld to %ld\n"), ainfo_ptr->curr_frame_nr, dest);
+        tmp_errtxt = g_strdup_printf(_("Error: could not rename frame %ld to %ld"), ainfo_ptr->curr_frame_nr, dest);
         p_msg_win(ainfo_ptr->run_mode, tmp_errtxt);
 	g_free(tmp_errtxt);
         return -1;
    }
    if(0 != p_rename_frame(ainfo_ptr, l_tmp_nr, ainfo_ptr->curr_frame_nr))
    {
-        tmp_errtxt = g_strdup_printf(_("Error: could not rename frame %ld to %ld\n"), l_tmp_nr, ainfo_ptr->curr_frame_nr);
+        tmp_errtxt = g_strdup_printf(_("Error: could not rename frame %ld to %ld"), l_tmp_nr, ainfo_ptr->curr_frame_nr);
         p_msg_win(ainfo_ptr->run_mode, tmp_errtxt);
 	g_free(tmp_errtxt);
         return -1;
@@ -1759,7 +1764,7 @@ p_shift(t_anim_info *ainfo_ptr, long cnt, long range_from, long range_to)
    l_percentage = 0.0;  
    if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
    { 
-     gimp_progress_init( _("Renumber Framesequence .."));
+     gimp_progress_init( _("Renumber Framesequence..."));
    }
 
    /* rename (renumber) all frames (using high numbers)
@@ -1771,7 +1776,7 @@ p_shift(t_anim_info *ainfo_ptr, long cnt, long range_from, long range_to)
    {
      if(0 != p_rename_frame(ainfo_ptr, l_curr, l_curr + l_upper))
      {
-        tmp_errtxt = g_strdup_printf(_("Error: could not rename frame %ld to %ld\n"), l_lo, l_hi);
+        tmp_errtxt = g_strdup_printf(_("Error: could not rename frame %ld to %ld"), l_lo, l_hi);
         p_msg_win(ainfo_ptr->run_mode, tmp_errtxt);
 	g_free(tmp_errtxt);
         return -1;
@@ -1793,7 +1798,7 @@ p_shift(t_anim_info *ainfo_ptr, long cnt, long range_from, long range_to)
      if (l_dst > l_hi) { l_dst = l_lo; }
      if(0 != p_rename_frame(ainfo_ptr, l_curr, l_dst))
      {
-        tmp_errtxt = g_strdup_printf(_("Error: could not rename frame %ld to %ld\n"), l_lo, l_hi);
+        tmp_errtxt = g_strdup_printf(_("Error: could not rename frame %ld to %ld"), l_lo, l_hi);
         p_msg_win(ainfo_ptr->run_mode, tmp_errtxt);
 	g_free(tmp_errtxt);
         return -1;
@@ -1952,7 +1957,7 @@ int gap_goto(GRunModeType run_mode, gint32 image_id, int nr)
 				    , ainfo_ptr->first_frame_nr
 				    , ainfo_ptr->last_frame_nr);
 
-        l_dest = p_slider_dialog(l_title, l_hline, _("Number :"), NULL
+        l_dest = p_slider_dialog(l_title, l_hline, _("Number:"), NULL
                 , ainfo_ptr->first_frame_nr
                 , ainfo_ptr->last_frame_nr
                 , ainfo_ptr->curr_frame_nr
@@ -2016,7 +2021,7 @@ int gap_del(GRunModeType run_mode, gint32 image_id, int nr)
         l_title = g_strdup_printf (_("Delete Frames (%ld/%ld)")
 				   , ainfo_ptr->curr_frame_nr
 				   , ainfo_ptr->frame_cnt);
-        l_hline = g_strdup_printf (_("Delete Frames from %ld to (Number)")
+        l_hline = g_strdup_printf (_("Delete Frames from %ld to (number)")
 				   , ainfo_ptr->curr_frame_nr);
 
         l_max = ainfo_ptr->last_frame_nr;
@@ -2029,7 +2034,7 @@ int gap_del(GRunModeType run_mode, gint32 image_id, int nr)
           l_max++;
         }
         
-        l_cnt = p_slider_dialog(l_title, l_hline, _("Number :"), NULL
+        l_cnt = p_slider_dialog(l_title, l_hline, _("Number:"), NULL
               , ainfo_ptr->curr_frame_nr
               , l_max
               , ainfo_ptr->curr_frame_nr
@@ -2084,7 +2089,7 @@ int p_dup_dialog(t_anim_info *ainfo_ptr, long *range_from, long *range_to)
 			     , ainfo_ptr->frame_cnt);
 
   p_init_arr_arg(&argv[0], WGT_INT_PAIR);
-  argv[0].label_txt = _("From :");
+  argv[0].label_txt = _("From:");
   argv[0].constraint = TRUE;
   argv[0].int_min   = (gint)ainfo_ptr->first_frame_nr;
   argv[0].int_max   = (gint)ainfo_ptr->last_frame_nr;
@@ -2092,7 +2097,7 @@ int p_dup_dialog(t_anim_info *ainfo_ptr, long *range_from, long *range_to)
   argv[0].help_txt  = _("Source Range starts at this framenumber");
 
   p_init_arr_arg(&argv[1], WGT_INT_PAIR);
-  argv[1].label_txt = _("To :");
+  argv[1].label_txt = _("To:");
   argv[1].constraint = TRUE;
   argv[1].int_min   = (gint)ainfo_ptr->first_frame_nr;
   argv[1].int_max   = (gint)ainfo_ptr->last_frame_nr;
@@ -2100,7 +2105,7 @@ int p_dup_dialog(t_anim_info *ainfo_ptr, long *range_from, long *range_to)
   argv[1].help_txt  = _("Source Range ends at this framenumber");
     
   p_init_arr_arg(&argv[2], WGT_INT_PAIR);
-  argv[2].label_txt = _("N-Times :");
+  argv[2].label_txt = _("N times:");
   argv[2].constraint = FALSE;
   argv[2].int_min   = 0;
   argv[2].int_max   = 99;
@@ -2215,7 +2220,9 @@ int gap_exchg(GRunModeType run_mode, gint32 image_id, int nr)
          l_title = g_strdup_printf (_("Exchange current Frame (%ld)")
 				    , ainfo_ptr->curr_frame_nr);
 
-         l_dest = p_slider_dialog(l_title, _("With Frame (Number)"), _("Number :"), NULL
+         l_dest = p_slider_dialog(l_title, 
+				  _("With Frame (number)"), 
+				  _("Number:"), NULL
 				  , ainfo_ptr->first_frame_nr 
 				  , ainfo_ptr->last_frame_nr
 				  , l_initial
@@ -2261,7 +2268,7 @@ int p_shift_dialog(t_anim_info *ainfo_ptr, long *range_from, long *range_to)
 			     , ainfo_ptr->frame_cnt);
 
   p_init_arr_arg(&argv[0], WGT_INT_PAIR);
-  argv[0].label_txt = _("From :");
+  argv[0].label_txt = _("From:");
   argv[0].constraint = TRUE;
   argv[0].int_min   = (gint)ainfo_ptr->first_frame_nr;
   argv[0].int_max   = (gint)ainfo_ptr->last_frame_nr;
@@ -2269,7 +2276,7 @@ int p_shift_dialog(t_anim_info *ainfo_ptr, long *range_from, long *range_to)
   argv[0].help_txt  = _("Affected Range starts at this framenumber");
 
   p_init_arr_arg(&argv[1], WGT_INT_PAIR);
-  argv[1].label_txt = _("To :");
+  argv[1].label_txt = _("To:");
   argv[1].constraint = TRUE;
   argv[1].int_min   = (gint)ainfo_ptr->first_frame_nr;
   argv[1].int_max   = (gint)ainfo_ptr->last_frame_nr;
@@ -2277,7 +2284,7 @@ int p_shift_dialog(t_anim_info *ainfo_ptr, long *range_from, long *range_to)
   argv[1].help_txt  = _("Affected Range ends at this framenumber");
     
   p_init_arr_arg(&argv[2], WGT_INT_PAIR);
-  argv[2].label_txt = _("N-Shift :");
+  argv[2].label_txt = _("N-Shift:");
   argv[2].constraint = TRUE;
   argv[2].int_min   = -1 * (gint)ainfo_ptr->last_frame_nr;
   argv[2].int_max   = (gint)ainfo_ptr->last_frame_nr;

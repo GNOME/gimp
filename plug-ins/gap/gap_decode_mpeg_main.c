@@ -143,7 +143,7 @@ query ()
     { PARAM_DRAWABLE, "drawable", "(unused)"},
     { PARAM_STRING, "filename", "The name of the file to load" },
     { PARAM_STRING, "raw_filename", "The name entered" },
-    { PARAM_INT32, "first_frame", "1.st frame to extract (starting at number 1)" },
+    { PARAM_INT32, "first_frame", "1st frame to extract (starting at number 1)" },
     { PARAM_INT32, "last_frame", "last frame to extract (use 0 to load all remaining frames)" },
     { PARAM_STRING, "animframe_basename", "The name for the single frames _0001.xcf is added" },
     { PARAM_INT32, "autoload", "TRUE: load 1.st extracted frame on success" },
@@ -160,7 +160,7 @@ query ()
     { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
     { PARAM_STRING, "filename", "The name of the file to load" },
     { PARAM_STRING, "raw_filename", "The name entered" },
-    { PARAM_INT32, "first_frame", "1.st frame to extract (starting at number 1)" },
+    { PARAM_INT32, "first_frame", "1st frame to extract (starting at number 1)" },
     { PARAM_INT32, "last_frame", "last frame to extract (use 0 to load all remaining frames)" },
     { PARAM_STRING, "animframe_basename", "The name for the single frames _0001.xcf is added" },
     { PARAM_INT32, "autoload", "TRUE: load 1.st extracted frame on success" },
@@ -329,18 +329,18 @@ p_overwrite_dialog(char *filename, gint overwrite_mode)
   {
     if (overwrite_mode < 1)
     {
-       l_argv[0].but_txt  = _("OVERWRITE frame");
+       l_argv[0].but_txt  = _("Overwrite Frame");
        l_argv[0].but_val  = 0;
-       l_argv[1].but_txt  = _("OVERWRITE all");
+       l_argv[1].but_txt  = _("Overwrite All");
        l_argv[1].but_val  = 1;
-       l_argv[2].but_txt  = _("CANCEL");
+       l_argv[2].but_txt  = _("Cancel");
        l_argv[2].but_val  = -1;
 
        p_init_arr_arg(&argv[0], WGT_LABEL);
        argv[0].label_txt = filename;
     
        return(p_array_std_dialog ( _("GAP Question"),
-                                   _("File already exists:"),
+                                   _("File already exists"),
 				   1, argv,
 				   3, l_argv, -1));
     }
@@ -434,7 +434,7 @@ load_image (char   *filename,
 
 
   
-  gimp_progress_init (_("Decoding MPEG movie..."));
+  gimp_progress_init (_("Decoding MPEG Movie..."));
 
   fp = fopen(filename,"rb");
   if (fp == NULL)
@@ -529,7 +529,7 @@ load_image (char   *filename,
        }
     
        if (delay > 0)
-         layername = g_strdup_printf("Frame %d (%dms)",
+         layername = g_strdup_printf("Frame %d (%dms)"),
                  framenumber, delay);
        else
          layername = g_strdup_printf("Frame %d",
@@ -640,17 +640,17 @@ load_range_dialog(gint32 *first_frame,
 
   p_init_arr_arg(&argv[0], WGT_FILESEL);
   argv[0].label_txt = _("Video");
-  argv[0].help_txt  = _("Name of the MPEG1 videofile to READ\n"
-                        "frames are extracted from the videofile\n"
-			"and written to seprate diskfiles\n"
-			"Audiotracks in the videofile are ignored");
+  argv[0].help_txt  = _("Name of the MPEG1 videofile to READ.\n"
+                        "Frames are extracted from the videofile\n"
+			"and written to seperate diskfiles.\n"
+			"Audiotracks in the videofile are ignored.");
   argv[0].text_buf_len = len_filename;
   argv[0].text_buf_ret = filename;
   argv[0].entry_width = 250;
 
   p_init_arr_arg(&argv[1], WGT_INT_PAIR);
-  argv[1].label_txt = _("From");
-  argv[1].help_txt  = _("Framenumber of 1.st frame to extract");
+  argv[1].label_txt = _("From:");
+  argv[1].help_txt  = _("Framenumber of 1st frame to extract");
   argv[1].constraint = FALSE;
   argv[1].int_min    = 1;
   argv[1].int_max    = 9999;
@@ -659,7 +659,7 @@ load_range_dialog(gint32 *first_frame,
   argv[1].entry_width = 80;
   
   p_init_arr_arg(&argv[2], WGT_INT_PAIR);
-  argv[2].label_txt = _("To");
+  argv[2].label_txt = _("To:");
   argv[2].help_txt  = _("Framenumber of last frame to extract");
   argv[2].constraint = FALSE;
   argv[2].int_min    = 1;
@@ -669,7 +669,7 @@ load_range_dialog(gint32 *first_frame,
   argv[2].entry_width = 80;
   
   p_init_arr_arg(&argv[3], WGT_FILESEL);
-  argv[3].label_txt = _("Framenames");
+  argv[3].label_txt = _("Framenames:");
   argv[3].help_txt  = _("Basename for the AnimFrames to write on disk\n"
                         "(framenumber and .xcf is added)");
   argv[3].text_buf_len = len_basename;
@@ -678,14 +678,16 @@ load_range_dialog(gint32 *first_frame,
   
   p_init_arr_arg(&argv[4], WGT_TOGGLE);
   argv[4].label_txt = _("Open");
-  argv[4].help_txt  = _("Open the 1.st one of the extracted frames");
+  argv[4].help_txt  = _("Open the 1st one of the extracted frames");
   argv[4].int_ret    = 1;
   
   p_init_arr_arg(&argv[5], WGT_LABEL_LEFT);
-  argv[5].label_txt = _("\nWARNING: do not attempt to split other files than MPEG1 videos\n"
-                         "before you proceed, you should save all open images");
+  argv[5].label_txt = _("\nWARNING: Do not attempt to split other files than MPEG1 videos.\n"
+                         "Before you proceed, you should save all open images.");
   
-  if(TRUE == p_array_dialog("Split MPEG1 Video to Frames", "Select Framerange", ARGC_DIALOG, argv))
+  if(TRUE == p_array_dialog (_("Split MPEG1 Video to Frames"), 
+			     _("Select Framerange"), 
+			     ARGC_DIALOG, argv))
   {
      *first_frame = (long)(argv[1].int_ret);
      *last_frame  = (long)(argv[2].int_ret);

@@ -1153,7 +1153,7 @@ plug_in_parse_fractalexplorer_path (void)
       g_message (_("No fractalexplorer-path in gimprc:\n"
 		   "You need to add an entry like\n"
 		   "(fractalexplorer-path \"${gimp_dir}/fractalexplorer:${gimp_data_dir}/fractalexplorer\")\n"
-		   "to your ~/.gimp-1.1/gimprc file\n"));
+		   "to your %s/gimprc file."), gimp_directory ());
       gimp_destroy_params (return_vals, nreturn_vals);
       return;
     }

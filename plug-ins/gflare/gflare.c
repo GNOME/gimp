@@ -989,10 +989,11 @@ plug_in_parse_gflare_path (void)
   if (return_vals[0].data.d_status != STATUS_SUCCESS ||
       return_vals[1].data.d_string == NULL)
     {
-      g_message ("No gflare-path in gimprc:\n\n"
-		 "You need to add an entry like\n"
-		 "(gfig-path \"${gimp_dir}/gfig:${gimp_data_dir}/gfig\n"
-		 "to your ~/.gimp/gimprc file\n");
+      g_message (_("No gflare-path in gimprc:\n\n"
+		   "You need to add an entry like\n"
+		   "(gfig-path \"${gimp_dir}/gfig:${gimp_data_dir}/gfig\n"
+		   "to your %s/gimprc file."), 
+		 gimp_directory ());
       gimp_destroy_params (return_vals, nreturn_vals);
       return;
     }
@@ -1518,19 +1519,19 @@ gflare_save (GFlare *gflare)
 {
   FILE	*fp;
   gchar *path;
-  static int  message_ok = FALSE;
-  char *message =
-    _("GFlare `%s' is not saved.	If you add a new entry in gimprc, like:\n"
-    "(gflare-path \"${gimp_dir}/gflare\")\n"
-    "and make a directory ~/.gimp-1.1/gflare, then you can save your own GFlare's\n"
-    "into that directory.");
+  static gboolean message_ok = FALSE;
 
   if (gflare->filename == NULL)
     {
       if (gflare_path_list == NULL)
 	{
 	  if (!message_ok)
-	    g_message (message, gflare->name);
+	    g_message (_("GFlare `%s' is not saved.\n"
+			 "If you add a new entry in gimprc, like:\n"
+			 "(gflare-path \"${gimp_dir}/gflare\")\n"
+			 "and make a directory %s/gflare,\n"
+			 "then you can save your own GFlare's into that directory."), 
+		       gflare->name, gimp_directory ());
 	  message_ok = TRUE;
 	  return;
 	}
@@ -3266,7 +3267,7 @@ dlg_selector_new_ok_callback (GtkWidget *widget,
 
   if (gflares_list_lookup (new_name))
     {
-      g_message (_("The name `%s' is used already!"), new_name);
+      g_message (_("The name '%s' is used already!"), new_name);
       return;
     }
 
