@@ -39,10 +39,10 @@ A GIMP a kép szerkesztéséhez rétegeket használ. A rétegeket úgy kell
 elképzelni, mint egymásra helyezhetõ diákat vagy pauszpapírokat.
 Akkor látod a kép egészét, ha átnézel az egymásra helyezett rétegeken. 
 
-Sok rétekmûveletet vihetsz véghez, ha jobb gombbal kattintassz a réteg 
+Sok rétegmûveletet vihetsz véghez, ha jobb gombbal kattintasz a réteg 
 nevére a "Rétegek, csatornák és útvonalak" párbeszédablakban.
 
-Ha egy képen a késöbbiekben is szeretnél dolgozni, érdemes azt XCF 
+Ha egy képen a késõbbiekben is szeretnél dolgozni, érdemes azt XCF 
 formátumban, a GIMP saját formátumában elmenteni (használd a ".xcf" 
 kiterjesztést). 
 Így megmaradnak a rétegek és a folyamatban lévõ munkád részletei.
@@ -54,7 +54,7 @@ A "Háttér" réteg különleges, mert nem átlátszó.
 gombbal kattints a "Rétegek, csatornák és útvonalak" párbeszédablakra és 
 válaszd ki az "Alfa csatorna hozzáadása" menüpontot.
 
-A legtöbb bõvitmény (plug-in) csak az éppen kijelölt rétegen mûködik. 
+A legtöbb bõvítmény (plug-in) csak az éppen kijelölt rétegen mûködik. 
 Esetenként össze kell fésülni a rétegeket (Rétegek->Egy réteggé lapítás) 
 ahhoz, hogy a bõvítmény hatását az egész képre kifejtse.
 
@@ -76,7 +76,7 @@ Shift-kattintással egyenes vonalat húzhatsz az utolsó rajzponttól az aktuális
 kurzorpozícióhoz. Ha a Controlt is nyomva tartod, a vonal meredeksége 15 
 fokonként változik.
 
-A fájlkiválasztó párbeszédablak kiegészíti a fájlnevet Tab billentyûre, 
+A fájlkiválasztó párbeszédablak kiegészíti a fájlnevet TAB billentyûre, 
 pont mint a shell. Írd be a fájlnév elejét, nyomd le a TAB-ot, és láss csodát:
 kiegészül!
 
@@ -105,7 +105,7 @@ A GIMP támogatja a menet közbeni tömörítést. Csak add hozzá a fájlnévhez a
 és a GIMP tömörítve menti el a képet. 
 Természetesen a tömörített képek betöltése is mûködik.
 
-Ha kijelöléskor nyomvatartod a Shift gombot, az új kijelölés hozzáadódik a 
+Ha kijelöléskor nyomva tartod a Shift gombot, az új kijelölés hozzáadódik a 
 régihez. Ha a Controlt tartod nyomva, kivonódik a régibõl.
 
 Tökéletes négyzet vagy kör alakú kijelölést készíthetsz, ha nyomva tartod a Shift gombot.
