@@ -10,8 +10,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2002-06-17 23:29+0100\n"
-"PO-Revision-Date: 2002-06-17 23:30+0100\n"
+"POT-Creation-Date: 2002-08-17 18:20+0100\n"
+"PO-Revision-Date: 2002-08-17 18:30+0100\n"
 "Last-Translator: Filipe Maia <fmaia@gmx.net>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -565,7 +565,7 @@ msgstr ""
 "Erro ao parsear '%s' na linha %d:\n"
 "%s"
 
-#: app/core/core-enums.c:13
+#: app/core/core-enums.c:13 app/core/gimp-gradients.c:68
 msgid "FG to BG (RGB)"
 msgstr "Frente para Fundo (RGB) "
 
@@ -573,7 +573,7 @@ msgstr "Frente para Fundo (RGB) "
 msgid "FG to BG (HSV)"
 msgstr "Frente para Fundo (HSV)"
 
-#: app/core/core-enums.c:15
+#: app/core/core-enums.c:15 app/core/gimp-gradients.c:83
 msgid "FG to Transparent"
 msgstr "Frente para Transparente"
 
@@ -672,12 +672,12 @@ msgid "Spiral (anticlockwise)"
 msgstr "Espiral (anti-horário)"
 
 #: app/core/core-enums.c:148 app/core/core-enums.c:168
-#: app/display/gimpdisplayshell.c:2162
+#: app/display/gimpdisplayshell.c:2304
 msgid "RGB"
 msgstr "RGB"
 
 #: app/core/core-enums.c:149 app/core/core-enums.c:170
-#: app/gui/info-window.c:81 app/gui/info-window.c:660
+#: app/gui/info-window.c:81 app/gui/info-window.c:663
 msgid "Grayscale"
 msgstr "Escalas de cinza"
 
@@ -808,6 +808,14 @@ msgstr "Gradientes"
 #: app/core/gimp.c:552
 msgid "Documents"
 msgstr "Documentos"
+
+#: app/core/gimp-gradients.c:73
+msgid "FG to BG (HSV counter-clockwise)"
+msgstr "Frente para Fundo (HSV no sentido anti-horário)"
+
+#: app/core/gimp-gradients.c:78
+msgid "FG to BG (HSV clockwise hue)"
+msgstr "Frente para Fundo (matiz HSV no sentido horário)"
 
 #: app/core/gimpbrush.c:510
 #, c-format
@@ -1075,7 +1083,7 @@ msgstr "Pré-visualização está desactualizada"
 msgid "Cannot create preview"
 msgstr "Não é possível criar pré-visualização"
 
-#: app/core/gimpimagefile.c:710 app/gui/info-window.c:630
+#: app/core/gimpimagefile.c:710 app/gui/info-window.c:633
 #, c-format
 msgid "%d x %d pixels"
 msgstr "%d x %d pixeis"
@@ -1330,8 +1338,8 @@ msgstr ""
 msgid "pixel"
 msgstr "pixel"
 
-#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:573
-#: app/tools/gimpmeasuretool.c:576 app/tools/gimppainttool.c:565
+#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:576
+#: app/tools/gimpmeasuretool.c:579 app/tools/gimppainttool.c:565
 msgid "pixels"
 msgstr "pixels"
 
@@ -1402,50 +1410,50 @@ msgstr "/Cor Padrão"
 msgid "Toggle QuickMask"
 msgstr "Alternar MárcaraRápida"
 
-#: app/display/gimpdisplayshell.c:975
+#: app/display/gimpdisplayshell.c:1116
 #, c-format
 msgid "Undo %s"
 msgstr "Desfazer %s"
 
-#: app/display/gimpdisplayshell.c:978
+#: app/display/gimpdisplayshell.c:1119
 #, c-format
 msgid "Redo %s"
 msgstr "Refazer %s"
 
-#: app/display/gimpdisplayshell.c:980 app/pdb/internal_procs.c:181
+#: app/display/gimpdisplayshell.c:1121 app/pdb/internal_procs.c:181
 msgid "Undo"
 msgstr "Desfazer"
 
-#: app/display/gimpdisplayshell.c:981
+#: app/display/gimpdisplayshell.c:1122
 msgid "Redo"
 msgstr "Refazer"
 
-#: app/display/gimpdisplayshell.c:2162
+#: app/display/gimpdisplayshell.c:2304
 msgid "RGB-empty"
 msgstr "RGB-vazio"
 
-#: app/display/gimpdisplayshell.c:2165
+#: app/display/gimpdisplayshell.c:2307
 msgid "grayscale-empty"
 msgstr "escala de cinza vazia"
 
-#: app/display/gimpdisplayshell.c:2165
+#: app/display/gimpdisplayshell.c:2307
 msgid "grayscale"
 msgstr "escala de cinza"
 
-#: app/display/gimpdisplayshell.c:2168
+#: app/display/gimpdisplayshell.c:2310
 msgid "indexed-empty"
 msgstr "índice vazio"
 
-#: app/display/gimpdisplayshell.c:2168
+#: app/display/gimpdisplayshell.c:2310
 msgid "indexed"
 msgstr "indexado"
 
-#: app/display/gimpdisplayshell.c:2375
+#: app/display/gimpdisplayshell.c:2517
 #, c-format
 msgid "Close %s?"
 msgstr "Fechar %s?"
 
-#: app/display/gimpdisplayshell.c:2377
+#: app/display/gimpdisplayshell.c:2519
 #, c-format
 msgid ""
 "Changes were made to %s.\n"
@@ -1518,7 +1526,7 @@ msgstr "Progresso"
 msgid "Please wait..."
 msgstr "Por favor aguarde..."
 
-#: app/display/gimpstatusbar.c:132
+#: app/display/gimpstatusbar.c:133
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -2037,15 +2045,15 @@ msgstr "Nova imagem"
 
 #. the pixel size labels
 #: app/gui/file-new-dialog.c:159 app/gui/file-new-dialog.c:177
-#: app/tools/gimpcroptool.c:1000 app/tools/selection_options.c:403
+#: app/tools/gimpcroptool.c:1006 app/tools/selection_options.c:403
 msgid "Width:"
 msgstr "Largura:"
 
 #: app/gui/file-new-dialog.c:165 app/gui/file-new-dialog.c:183
 #: app/gui/layers-commands.c:631 app/gui/resize-dialog.c:279
 #: app/gui/resize-dialog.c:304 app/gui/resize-dialog.c:543
-#: app/tools/gimpcroptool.c:1003 app/tools/gimpscaletool.c:186
-#: app/tools/gimpscaletool.c:195 app/tools/selection_options.c:416
+#: app/tools/gimpcroptool.c:1009 app/tools/gimpscaletool.c:187
+#: app/tools/gimpscaletool.c:196 app/tools/selection_options.c:416
 msgid "Height:"
 msgstr "Altura:"
 
@@ -2062,8 +2070,8 @@ msgstr "Resolução X:"
 #: app/gui/file-new-dialog.c:298 app/gui/info-window.c:200
 #: app/gui/offset-dialog.c:128 app/gui/resize-dialog.c:367
 #: app/gui/resize-dialog.c:459 app/gui/resize-dialog.c:604
-#: app/gui/user-install-dialog.c:1250 app/tools/gimpcroptool.c:986
-#: app/tools/gimprotatetool.c:207 app/tools/gimpscaletool.c:213
+#: app/gui/user-install-dialog.c:1250 app/tools/gimpcroptool.c:992
+#: app/tools/gimprotatetool.c:208 app/tools/gimpscaletool.c:214
 #: app/tools/gimpsheartool.c:185
 msgid "Y:"
 msgstr "Y:"
@@ -2320,44 +2328,44 @@ msgstr ""
 msgid "Adding theme '%s' (%s)\n"
 msgstr "A adicionar tema '%s' (%s)\n"
 
-#: app/gui/image-commands.c:196 app/gui/layers-commands.c:288
+#: app/gui/image-commands.c:197 app/gui/layers-commands.c:288
 msgid "Cannot crop because the current selection is empty."
 msgstr "Incapaz de cortar pois a região seleccionada está vazia."
 
-#: app/gui/image-commands.c:288
+#: app/gui/image-commands.c:289
 msgid "Layers Merge Options"
 msgstr "Opções de Mescla de Camadas"
 
-#: app/gui/image-commands.c:314
+#: app/gui/image-commands.c:315
 msgid "Final, Merged Layer should be:"
 msgstr "A Camada Mesclada Final será:"
 
-#: app/gui/image-commands.c:315
+#: app/gui/image-commands.c:316
 msgid "Final, Anchored Layer should be:"
 msgstr "A Camada Fixada Final será:"
 
-#: app/gui/image-commands.c:320
+#: app/gui/image-commands.c:321
 msgid "Expanded as necessary"
 msgstr "Expandida segundo necessidades"
 
-#: app/gui/image-commands.c:322
+#: app/gui/image-commands.c:323
 msgid "Clipped to image"
 msgstr "Ajustada à imagem"
 
-#: app/gui/image-commands.c:324
+#: app/gui/image-commands.c:325
 msgid "Clipped to bottom layer"
 msgstr "Ajustada à camada de fundo"
 
-#: app/gui/image-commands.c:364
+#: app/gui/image-commands.c:365
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr ""
 "Erro de Redimensionamento: largura e altura devem ser maiores que zero."
 
-#: app/gui/image-commands.c:397
+#: app/gui/image-commands.c:398
 msgid "Layer Too Small"
 msgstr "Camada Muito Pequena"
 
-#: app/gui/image-commands.c:401
+#: app/gui/image-commands.c:402
 msgid ""
 "The chosen image size will shrink\n"
 "some layers completely away.\n"
@@ -2367,11 +2375,11 @@ msgstr ""
 "diminuir completamente algumas camadas.\n"
 "É isso que você quer fazer?"
 
-#: app/gui/image-commands.c:484 app/tools/gimpscaletool.c:283
+#: app/gui/image-commands.c:485 app/tools/gimpscaletool.c:285
 msgid "Scaling..."
 msgstr "A dimensionar..."
 
-#: app/gui/image-commands.c:499
+#: app/gui/image-commands.c:500
 msgid "Scale Error: Both width and height must be greater than zero."
 msgstr "Erro de Escala: largura e altura devem ser maiores que zero."
 
@@ -2406,12 +2414,12 @@ msgstr "X:"
 
 #: app/gui/info-window.c:208 app/gui/info-window.c:285
 #: app/gui/info-window.c:502 app/gui/info-window.c:548
-#: app/gui/info-window.c:564 app/tools/gimpcolorpickertool.c:584
-#: app/tools/gimpcolorpickertool.c:585 app/tools/gimpcolorpickertool.c:586
-#: app/tools/gimpcolorpickertool.c:587 app/tools/gimpcolorpickertool.c:588
+#: app/gui/info-window.c:564 app/tools/gimpcolorpickertool.c:588
 #: app/tools/gimpcolorpickertool.c:589 app/tools/gimpcolorpickertool.c:590
-#: app/tools/gimpcolorpickertool.c:606 app/tools/gimpcolorpickertool.c:613
-#: app/tools/gimpcolorpickertool.c:631 app/tools/gimpcolorpickertool.c:652
+#: app/tools/gimpcolorpickertool.c:591 app/tools/gimpcolorpickertool.c:592
+#: app/tools/gimpcolorpickertool.c:593 app/tools/gimpcolorpickertool.c:594
+#: app/tools/gimpcolorpickertool.c:610 app/tools/gimpcolorpickertool.c:617
+#: app/tools/gimpcolorpickertool.c:635 app/tools/gimpcolorpickertool.c:656
 msgid "N/A"
 msgstr "N/D"
 
@@ -2470,20 +2478,20 @@ msgid "Info: %s-%d.%d"
 msgstr "Info: %s-%d.%d"
 
 #. image resolution
-#: app/gui/info-window.c:643
+#: app/gui/info-window.c:646
 #, c-format
 msgid "%g x %g dpi"
 msgstr "%g x %g dpi"
 
-#: app/gui/info-window.c:657
+#: app/gui/info-window.c:660
 msgid "RGB Color"
 msgstr "Cor RGB"
 
-#: app/gui/info-window.c:664
+#: app/gui/info-window.c:667
 msgid "Indexed Color"
 msgstr "Cor Indexada"
 
-#: app/gui/info-window.c:664
+#: app/gui/info-window.c:667
 msgid "colors"
 msgstr "cores"
 
@@ -4597,7 +4605,7 @@ msgid "Set Canvas Size"
 msgstr "Ajustar Tamanho de Tela"
 
 #. the original width & height labels
-#: app/gui/resize-dialog.c:273 app/tools/gimpscaletool.c:183
+#: app/gui/resize-dialog.c:273 app/tools/gimpscaletool.c:184
 msgid "Original Width:"
 msgstr "Largura Original:"
 
@@ -4643,39 +4651,39 @@ msgstr "Horizontal:"
 msgid "Vertical:"
 msgstr "Vertical:"
 
-#: app/gui/select-commands.c:130
+#: app/gui/select-commands.c:131
 msgid "Feather Selection"
 msgstr "Selecção de Difusão"
 
-#: app/gui/select-commands.c:133
+#: app/gui/select-commands.c:134
 msgid "Feather Selection by:"
 msgstr "Selecção de Difusão por:"
 
-#: app/gui/select-commands.c:165
+#: app/gui/select-commands.c:166
 msgid "Shrink Selection"
 msgstr "Selecção de Encolhimento"
 
-#: app/gui/select-commands.c:168
+#: app/gui/select-commands.c:169
 msgid "Shrink Selection by:"
 msgstr "Selecção de Encolhimento por:"
 
-#: app/gui/select-commands.c:177
+#: app/gui/select-commands.c:178
 msgid "Shrink from image border"
 msgstr "Encolher a imagem a partir do limite"
 
-#: app/gui/select-commands.c:198
+#: app/gui/select-commands.c:199
 msgid "Grow Selection"
 msgstr "Selecção de Crescimento"
 
-#: app/gui/select-commands.c:201
+#: app/gui/select-commands.c:202
 msgid "Grow Selection by:"
 msgstr "Selecção de Crescimento por:"
 
-#: app/gui/select-commands.c:220
+#: app/gui/select-commands.c:221
 msgid "Border Selection"
 msgstr "Selecção de Limites"
 
-#: app/gui/select-commands.c:223
+#: app/gui/select-commands.c:224
 msgid "Border Selection by:"
 msgstr "Selecção de Limites por:"
 
@@ -5511,11 +5519,11 @@ msgstr "Inicializando extensões: "
 msgid "Extensions"
 msgstr "Extensões"
 
-#: app/tools/tools-enums.c:13 app/tools/gimpcroptool.c:977
+#: app/tools/tools-enums.c:13 app/tools/gimpcroptool.c:983
 msgid "Crop"
 msgstr "Recorta"
 
-#: app/tools/tools-enums.c:14 app/tools/gimpcroptool.c:974
+#: app/tools/tools-enums.c:14 app/tools/gimpcroptool.c:980
 msgid "Resize"
 msgstr "Redimensiona"
 
@@ -5540,31 +5548,31 @@ msgstr "Taxa:"
 msgid "Pressure:"
 msgstr "Pressão:"
 
-#: app/tools/gimpbezierselecttool.c:282
+#: app/tools/gimpbezierselecttool.c:283
 msgid "Bezier Select"
 msgstr "Selecção Bezier"
 
-#: app/tools/gimpbezierselecttool.c:283
+#: app/tools/gimpbezierselecttool.c:284
 msgid "Select regions using Bezier curves"
 msgstr "Seleccionar regiões utilizando curvas Bezier"
 
-#: app/tools/gimpbezierselecttool.c:284
+#: app/tools/gimpbezierselecttool.c:285
 msgid "/Tools/Selection Tools/Bezier Select"
 msgstr "/Ferramentas/Ferramentas de Selecção/Selecção Bezier"
 
-#: app/tools/gimpbezierselecttool.c:1207
+#: app/tools/gimpbezierselecttool.c:1211
 msgid "Bezier path already closed."
 msgstr "Caminho Bezier já fechado."
 
-#: app/tools/gimpbezierselecttool.c:1229
+#: app/tools/gimpbezierselecttool.c:1233
 msgid "Corrupt curve"
 msgstr "Curva corrompida"
 
-#: app/tools/gimpbezierselecttool.c:3176
+#: app/tools/gimpbezierselecttool.c:3185
 msgid "Curve not closed!"
 msgstr "A curva não foi fechada!"
 
-#: app/tools/gimpbezierselecttool.c:3460
+#: app/tools/gimpbezierselecttool.c:3469
 msgid "Paintbrush operation failed."
 msgstr "A operação de pintura falhou."
 
@@ -5681,7 +5689,7 @@ msgstr "Encher Áreas Transparentes"
 msgid "Allow completely transparent regions to be filled"
 msgstr "Permitir encher regiões completamente transparentes"
 
-#: app/tools/gimpbucketfilltool.c:396 app/tools/gimpcolorpickertool.c:710
+#: app/tools/gimpbucketfilltool.c:396 app/tools/gimpcolorpickertool.c:714
 #: app/tools/selection_options.c:294 app/tools/selection_options.c:362
 msgid "Sample Merged"
 msgstr "Amostra Mesclada"
@@ -5826,16 +5834,16 @@ msgstr "Índice:"
 msgid "Hex Triplet"
 msgstr "Trio Hex."
 
-#: app/tools/gimpcolorpickertool.c:733
+#: app/tools/gimpcolorpickertool.c:737
 msgid "Sample Average"
 msgstr "Média de Amostra"
 
-#: app/tools/gimpcolorpickertool.c:749 app/tools/selection_options.c:211
+#: app/tools/gimpcolorpickertool.c:753 app/tools/selection_options.c:211
 #: app/widgets/gimpbrusheditor.c:149
 msgid "Radius:"
 msgstr "Raio:"
 
-#: app/tools/gimpcolorpickertool.c:761
+#: app/tools/gimpcolorpickertool.c:765
 msgid "Update Active Color"
 msgstr "Actualizar Cor Activa"
 
@@ -5872,39 +5880,39 @@ msgid "Crop: "
 msgstr "Recorta: "
 
 #. initialize the statusbar display
-#: app/tools/gimpcroptool.c:944
+#: app/tools/gimpcroptool.c:948
 msgid "Crop: 0 x 0"
 msgstr "Recorta: 0 x 0"
 
 #. create the info dialog
-#: app/tools/gimpcroptool.c:965
+#: app/tools/gimpcroptool.c:971
 msgid "Crop & Resize Information"
 msgstr "Informações sobre Recorte & Redimensionamento"
 
 #. add the information fields
-#: app/tools/gimpcroptool.c:983
+#: app/tools/gimpcroptool.c:989
 msgid "Origin X:"
 msgstr "Origem X:"
 
-#: app/tools/gimpcroptool.c:1026
+#: app/tools/gimpcroptool.c:1032
 msgid "From Selection"
 msgstr "A Partir da Selecção"
 
-#: app/tools/gimpcroptool.c:1033
+#: app/tools/gimpcroptool.c:1039
 msgid "Auto Shrink"
 msgstr "Auto-Encolhimento"
 
 #. tool toggle
-#: app/tools/gimpcroptool.c:1359 app/tools/gimpfliptool.c:302
-#: app/tools/gimpmagnifytool.c:463 app/tools/gimpmovetool.c:687
+#: app/tools/gimpcroptool.c:1365 app/tools/gimpfliptool.c:302
+#: app/tools/gimpmagnifytool.c:463 app/tools/gimpmovetool.c:691
 msgid "Tool Toggle (<Ctrl>)"
 msgstr "Alternar Ferramenta (<Ctrl>)"
 
-#: app/tools/gimpcroptool.c:1372
+#: app/tools/gimpcroptool.c:1378
 msgid "Current Layer only"
 msgstr "Somente na Camada Actual"
 
-#: app/tools/gimpcroptool.c:1384
+#: app/tools/gimpcroptool.c:1390
 msgid "Allow Enlarging (<Alt>)"
 msgstr "Permitir Aumento (<Alt>)"
 
@@ -6045,15 +6053,15 @@ msgstr "Seleccionar regiões manualmente"
 msgid "/Tools/Selection Tools/Free Select"
 msgstr "/Ferramentas/Ferramentas de Selecção/Selecção Livre"
 
-#: app/tools/gimpfuzzyselecttool.c:100
+#: app/tools/gimpfuzzyselecttool.c:96
 msgid "Fuzzy Select"
 msgstr "Selecção Mágica"
 
-#: app/tools/gimpfuzzyselecttool.c:101
+#: app/tools/gimpfuzzyselecttool.c:97
 msgid "Select contiguous regions"
 msgstr "Seleccionar regiões adjuntas"
 
-#: app/tools/gimpfuzzyselecttool.c:102
+#: app/tools/gimpfuzzyselecttool.c:98
 msgid "/Tools/Selection Tools/Fuzzy Select"
 msgstr "/Ferramentas/Ferramentas de Selecção/Selecção Mágica"
 
@@ -6177,7 +6185,7 @@ msgid "Size:"
 msgstr "Tamanho:"
 
 #: app/tools/gimpinktool.c:1469 app/tools/gimpmeasuretool.c:394
-#: app/tools/gimprotatetool.c:186 app/widgets/gimpbrusheditor.c:188
+#: app/tools/gimprotatetool.c:187 app/widgets/gimpbrusheditor.c:188
 msgid "Angle:"
 msgstr "Ângulo:"
 
@@ -6293,12 +6301,12 @@ msgstr "/Ferramentas/Medição"
 msgid "Distance:"
 msgstr "Distância:"
 
-#: app/tools/gimpmeasuretool.c:573 app/tools/gimpmeasuretool.c:578
-#: app/tools/gimpmeasuretool.c:586 app/tools/gimpmeasuretool.c:616
+#: app/tools/gimpmeasuretool.c:576 app/tools/gimpmeasuretool.c:581
+#: app/tools/gimpmeasuretool.c:589 app/tools/gimpmeasuretool.c:619
 msgid "degrees"
 msgstr "graus"
 
-#: app/tools/gimpmeasuretool.c:867
+#: app/tools/gimpmeasuretool.c:873
 msgid "Use Info Window"
 msgstr "Usar Janela Informativa"
 
@@ -6314,24 +6322,24 @@ msgstr "Move camadas & selecções"
 msgid "/Tools/Transform Tools/Move"
 msgstr "/Ferramentas/Ferramentas de Transformação/Mover"
 
-#: app/tools/gimpmovetool.c:692
+#: app/tools/gimpmovetool.c:696
 msgid "Pick a Layer to Move"
 msgstr "Seleccione Camada a Mover"
 
-#: app/tools/gimpmovetool.c:696
+#: app/tools/gimpmovetool.c:700
 msgid "Move Current Layer"
 msgstr "Mover Camada Actual"
 
 #. move mask
-#: app/tools/gimpmovetool.c:706
+#: app/tools/gimpmovetool.c:710
 msgid "Move Mode (<Alt>)"
 msgstr "Modo Movimento (<Alt>)"
 
-#: app/tools/gimpmovetool.c:711
+#: app/tools/gimpmovetool.c:715
 msgid "Move Pixels"
 msgstr "Mover Pixels"
 
-#: app/tools/gimpmovetool.c:715
+#: app/tools/gimpmovetool.c:719
 msgid "Move Selection Outline"
 msgstr "Mover Selecção de Margens"
 
@@ -6347,15 +6355,15 @@ msgstr "Pinta com traços fracos"
 msgid "/Tools/Paint Tools/Paintbrush"
 msgstr "/Ferramentas/Ferramentas de Pintura/Pincel"
 
-#: app/tools/gimppathtool.c:115
+#: app/tools/gimppathtool.c:116 app/tools/path_tool.c:1413
 msgid "Path Tool"
 msgstr "Ferramenta de Caminho"
 
-#: app/tools/gimppathtool.c:116
+#: app/tools/gimppathtool.c:117
 msgid "Path tool prototype"
 msgstr "Protótipo de ferramenta de caminho"
 
-#: app/tools/gimppathtool.c:117
+#: app/tools/gimppathtool.c:118
 msgid "/Tools/Path"
 msgstr "/Ferramentas/Caminho"
 
@@ -6447,51 +6455,51 @@ msgstr "Selecção: SUBSTITUIR"
 msgid "Selection: "
 msgstr "Selecção: "
 
-#: app/tools/gimprotatetool.c:99
+#: app/tools/gimprotatetool.c:100
 msgid "Rotate Tool"
 msgstr "Ferramenta Rodar"
 
-#: app/tools/gimprotatetool.c:100
+#: app/tools/gimprotatetool.c:101
 msgid "Rotate the layer or selection"
 msgstr "Roda a camada ou selecção"
 
-#: app/tools/gimprotatetool.c:101
+#: app/tools/gimprotatetool.c:102
 msgid "/Tools/Transform Tools/Rotate"
 msgstr "/Ferramentas/Ferramentas de Transformação/Rodar"
 
-#: app/tools/gimprotatetool.c:178
+#: app/tools/gimprotatetool.c:179
 msgid "Rotation Information"
 msgstr "Informação de Rotação"
 
-#: app/tools/gimprotatetool.c:203
+#: app/tools/gimprotatetool.c:204
 msgid "Center X:"
 msgstr "Centro X:"
 
-#: app/tools/gimprotatetool.c:278
+#: app/tools/gimprotatetool.c:280
 msgid "Rotating..."
 msgstr "A Rodar..."
 
-#: app/tools/gimpscaletool.c:94
+#: app/tools/gimpscaletool.c:95
 msgid "Scale Tool"
 msgstr "Ferramenta de Escala"
 
-#: app/tools/gimpscaletool.c:95
+#: app/tools/gimpscaletool.c:96
 msgid "Scale the layer or selection"
 msgstr "Escalar a camada ou selecção"
 
-#: app/tools/gimpscaletool.c:96
+#: app/tools/gimpscaletool.c:97
 msgid "/Tools/Transform Tools/Scale"
 msgstr "/Ferramentas/Ferramentas de Transformação/Escalar"
 
-#: app/tools/gimpscaletool.c:175
+#: app/tools/gimpscaletool.c:176
 msgid "Scaling Information"
 msgstr "Informação de Escala"
 
-#: app/tools/gimpscaletool.c:191
+#: app/tools/gimpscaletool.c:192
 msgid "Current Width:"
 msgstr "Largura Actual:"
 
-#: app/tools/gimpscaletool.c:210
+#: app/tools/gimpscaletool.c:211
 msgid "Scale Ratio X:"
 msgstr "Taxa de Escala X:"
 
@@ -6591,15 +6599,15 @@ msgstr ""
 "Transformações não funcionam nas\n"
 "camadas que contêm máscaras."
 
-#: app/tools/gimpvectortool.c:116
+#: app/tools/gimpvectortool.c:115
 msgid "Vector Tool"
 msgstr "Ferramenta de Vectores"
 
-#: app/tools/gimpvectortool.c:117
+#: app/tools/gimpvectortool.c:116
 msgid "Vector angles and lengths"
 msgstr "Ângulos e comprimentos dos vectores"
 
-#: app/tools/gimpvectortool.c:118
+#: app/tools/gimpvectortool.c:117
 msgid "/Tools/Vector"
 msgstr "/Ferramentas/Vector"
 
