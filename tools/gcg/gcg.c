@@ -113,13 +113,13 @@ int main(int argc, char* argv[]){
 		source_name = p_to_str(p_fmt("~.c",
 					     p_c_ident(current_module->name)),
 				       NULL);
-	if(!header_root)
+	if(!header_root) {
 		if(!current_module->package->headerbase
 		   || current_module->package->headerbase[0])
 			header_root = "..";
 		else
 			header_root = ".";
-		   
+	}
 	foreach_def(output_cb, out);
 
 	f=fopen(source_name, "w+");

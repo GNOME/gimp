@@ -1,3 +1,10 @@
+Wed Jan 20 20:46:39 PST 1999 Manish Singh <yosh@gimp.org>
+
+	* AUTHORS
+	* NEWS: satisfy automake
+
+	* gcg.c: braces around ambiguous if
+
 Wed Jan 13 16:03:47 PST 1999 Manish Singh <yosh@gimp.org>
 
         * Makefile.am: grr, some cc's barf if the search dir doesn't
