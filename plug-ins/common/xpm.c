@@ -162,7 +162,7 @@ query (void)
                           "included in C source code. XLib provides utility "
                           "functions to read this format. Newer code should "
                           "however be using gdk-pixbuf-csource instead. "
-                          "XPM supports coloured images, unlike the XBM "
+                          "XPM supports colored images, unlike the XBM "
                           "format which XPM was designed to replace.",
                           "Spencer Kimball & Peter Mattis & Ray Lehtiniemi",
                           "Spencer Kimball & Peter Mattis",
@@ -188,7 +188,7 @@ query (void)
                           "included in C source code. XLib provides utility "
                           "functions to read this format. Newer code should "
                           "however be using gdk-pixbuf-csource instead. "
-                          "XPM supports coloured images, unlike the XBM "
+                          "XPM supports colored images, unlike the XBM "
                           "format which XPM was designed to replace.",
                           "Spencer Kimball & Peter Mattis & Ray Lehtiniemi & Nathan Summers",
                           "Spencer Kimball & Peter Mattis",
