@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-23 16:10+0100\n"
-"PO-Revision-Date: 2004-03-22 10:09+0100\n"
+"POT-Creation-Date: 2004-03-29 14:46+0200\n"
+"PO-Revision-Date: 2004-03-29 16:21+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1237,16 +1237,16 @@ msgstr "Sloučit vektory"
 msgid "QuickMask"
 msgstr "Rychlá maska"
 
-#: app/core/core-enums.c:592 app/core/core-enums.c:618
+#: app/core/core-enums.c:592 app/core/core-enums.c:619
 #: app/core/gimpimage-grid.c:59 app/gui/grid-dialog.c:143
 msgid "Grid"
 msgstr "Mřížka"
 
-#: app/core/core-enums.c:593 app/core/core-enums.c:619
+#: app/core/core-enums.c:593 app/core/core-enums.c:620
 msgid "Guide"
 msgstr "Vodítko"
 
-#: app/core/core-enums.c:594 app/core/core-enums.c:623
+#: app/core/core-enums.c:594 app/core/core-enums.c:624
 #: app/core/gimpchannel.c:1636 app/core/gimpselection.c:570
 msgid "Selection Mask"
 msgstr "Maska výběru"
@@ -1255,11 +1255,11 @@ msgstr "Maska výběru"
 msgid "Item Properties"
 msgstr "Vlastnosti položky"
 
-#: app/core/core-enums.c:596 app/core/core-enums.c:625
+#: app/core/core-enums.c:596 app/core/core-enums.c:626
 msgid "Move Item"
 msgstr "Přesunout položku"
 
-#: app/core/core-enums.c:597 app/core/core-enums.c:626
+#: app/core/core-enums.c:597 app/core/core-enums.c:627
 msgid "Item Visibility"
 msgstr "Viditelnost položky"
 
@@ -1279,7 +1279,7 @@ msgstr "Velikost vrstvy"
 msgid "Resize Layer"
 msgstr "Změnit velikost vrstvy"
 
-#: app/core/core-enums.c:601 app/core/core-enums.c:630
+#: app/core/core-enums.c:601 app/core/core-enums.c:631
 #: app/core/gimplayer.c:1023 app/gui/layers-commands.c:1055
 #: app/gui/layers-commands.c:1094
 msgid "Add Layer Mask"
@@ -1289,7 +1289,7 @@ msgstr "Přidat masku vrstvy"
 msgid "Apply Layer Mask"
 msgstr "Použít masku vrstvy"
 
-#: app/core/core-enums.c:603 app/core/gimplayer-floating-sel.c:224
+#: app/core/core-enums.c:603 app/core/gimplayer-floating-sel.c:229
 msgid "Floating Selection to Layer"
 msgstr "Plovoucí výběr do vrstvy"
 
@@ -1297,159 +1297,163 @@ msgstr "Plovoucí výběr do vrstvy"
 msgid "Float Selection"
 msgstr "Plovoucí výběr"
 
-#: app/core/core-enums.c:605 app/core/gimplayer-floating-sel.c:130
+#: app/core/core-enums.c:605 app/core/gimplayer-floating-sel.c:135
 msgid "Anchor Floating Selection"
 msgstr "Ukotvit plovoucí výběr"
 
-#: app/core/core-enums.c:606 app/core/gimp-edit.c:126
+#: app/core/core-enums.c:606 app/core/gimplayer-floating-sel.c:98
+msgid "Remove Floating Selection"
+msgstr "Odstranit plovoucí výběr"
+
+#: app/core/core-enums.c:607 app/core/gimp-edit.c:126
 #: app/widgets/gimpbufferview.c:154
 msgid "Paste"
 msgstr "Vložit"
 
-#: app/core/core-enums.c:607 app/core/gimp-edit.c:321
+#: app/core/core-enums.c:608 app/core/gimp-edit.c:321
 msgid "Cut"
 msgstr "Vyjmout"
 
-#: app/core/core-enums.c:608 app/core/core-enums.c:636
+#: app/core/core-enums.c:609 app/core/core-enums.c:637
 #: app/tools/gimptexttool.c:141 app/widgets/widgets-enums.c:94
 msgid "Text"
 msgstr "Text"
 
-#: app/core/core-enums.c:609 app/core/core-enums.c:648
-#: app/core/gimpdrawable-transform.c:823
+#: app/core/core-enums.c:610 app/core/core-enums.c:649
+#: app/core/gimpdrawable-transform.c:827
 msgid "Transform"
 msgstr "Transformace"
 
-#: app/core/core-enums.c:610 app/core/core-enums.c:649
+#: app/core/core-enums.c:611 app/core/core-enums.c:650
 #: app/paint/gimppaintcore.c:475
 msgid "Paint"
 msgstr "Kreslení"
 
-#: app/core/core-enums.c:611 app/core/core-enums.c:650 app/core/gimpitem.c:923
+#: app/core/core-enums.c:612 app/core/core-enums.c:651 app/core/gimpitem.c:934
 msgid "Attach Parasite"
 msgstr "Připojení parazita"
 
-#: app/core/core-enums.c:612 app/core/core-enums.c:651
+#: app/core/core-enums.c:613 app/core/core-enums.c:652
 msgid "Remove Parasite"
 msgstr "Odstranění parazita"
 
-#: app/core/core-enums.c:613 app/vectors/gimpvectors-import.c:257
+#: app/core/core-enums.c:614 app/vectors/gimpvectors-import.c:257
 msgid "Import Paths"
 msgstr "Importovat cesty"
 
-#: app/core/core-enums.c:614 app/pdb/drawable_cmds.c:1516
+#: app/core/core-enums.c:615 app/pdb/drawable_cmds.c:1516
 msgid "Plug-In"
 msgstr "Zásuvný modul"
 
-#: app/core/core-enums.c:615 app/widgets/gimptemplateeditor.c:461
+#: app/core/core-enums.c:616 app/widgets/gimptemplateeditor.c:461
 msgid "Image Type"
 msgstr "Typ obrázku"
 
 #. Image size frame
-#: app/core/core-enums.c:616 app/widgets/gimptemplateeditor.c:216
+#: app/core/core-enums.c:617 app/widgets/gimptemplateeditor.c:216
 msgid "Image Size"
 msgstr "Velikost obrázku"
 
-#: app/core/core-enums.c:617
+#: app/core/core-enums.c:618
 msgid "Resolution Change"
 msgstr "Změna rozlišení"
 
-#: app/core/core-enums.c:620
+#: app/core/core-enums.c:621
 msgid "Change Indexed Palette"
 msgstr "Změnit indexovanou paletu"
 
-#: app/core/core-enums.c:621
+#: app/core/core-enums.c:622
 msgid "Drawable"
 msgstr "Obrazovka"
 
-#: app/core/core-enums.c:622
+#: app/core/core-enums.c:623
 msgid "Drawable Mod"
 msgstr "Změna obrazovky"
 
-#: app/core/core-enums.c:624
+#: app/core/core-enums.c:625
 msgid "Rename Item"
 msgstr "Přejmenování položky"
 
-#: app/core/core-enums.c:627
+#: app/core/core-enums.c:628
 msgid "Set Item Linked"
 msgstr "Nastavit spojení položky"
 
-#: app/core/core-enums.c:628 app/gui/layers-commands.c:717
+#: app/core/core-enums.c:629 app/gui/layers-commands.c:717
 #: app/gui/layers-commands.c:745 app/gui/layers-commands.c:779
 #: app/widgets/gimpdrawabletreeview.c:219
 msgid "New Layer"
 msgstr "Nová vrstva"
 
-#: app/core/core-enums.c:629 app/widgets/gimplayertreeview.c:211
+#: app/core/core-enums.c:630 app/widgets/gimplayertreeview.c:211
 msgid "Delete Layer"
 msgstr "Odstranit vrstvu"
 
-#: app/core/core-enums.c:631 app/core/gimplayer.c:1265
+#: app/core/core-enums.c:632 app/core/gimplayer.c:1265
 msgid "Delete Layer Mask"
 msgstr "Odstranit masku vrstvy"
 
-#: app/core/core-enums.c:632
+#: app/core/core-enums.c:633
 msgid "Reposition Layer"
 msgstr "Změnit umístění vrstvy"
 
-#: app/core/core-enums.c:633
+#: app/core/core-enums.c:634
 msgid "Set Layer Mode"
 msgstr "Nastavit režim vrstvy"
 
-#: app/core/core-enums.c:634
+#: app/core/core-enums.c:635
 msgid "Set Layer Opacity"
 msgstr "Nastavit krytí vrstvy"
 
-#: app/core/core-enums.c:635
+#: app/core/core-enums.c:636
 msgid "Set Preserve Trans"
 msgstr "Nastavit Zachovat změny"
 
-#: app/core/core-enums.c:637 app/gui/channels-commands.c:318
+#: app/core/core-enums.c:638 app/gui/channels-commands.c:318
 #: app/gui/channels-commands.c:348 app/gui/channels-commands.c:387
 msgid "New Channel"
 msgstr "Nový kanál"
 
-#: app/core/core-enums.c:638 app/widgets/gimpchanneltreeview.c:125
+#: app/core/core-enums.c:639 app/widgets/gimpchanneltreeview.c:125
 msgid "Delete Channel"
 msgstr "Odstranit kanál"
 
-#: app/core/core-enums.c:639
+#: app/core/core-enums.c:640
 msgid "Reposition Channel"
 msgstr "Změnit umístění kanálu"
 
-#: app/core/core-enums.c:640
+#: app/core/core-enums.c:641
 msgid "Channel Color"
 msgstr "Barva kanálu"
 
-#: app/core/core-enums.c:641
+#: app/core/core-enums.c:642
 msgid "New Vectors"
 msgstr "Nové vektory"
 
-#: app/core/core-enums.c:642
+#: app/core/core-enums.c:643
 msgid "Delete Vectors"
 msgstr "Odstranit vektory"
 
-#: app/core/core-enums.c:643
+#: app/core/core-enums.c:644
 msgid "Vectors Mod"
 msgstr "Změna vektorů"
 
-#: app/core/core-enums.c:644
+#: app/core/core-enums.c:645
 msgid "Reposition Vectors"
 msgstr "Změnit umístění vektorů"
 
-#: app/core/core-enums.c:645
+#: app/core/core-enums.c:646
 msgid "FS to Layer"
 msgstr "výběr do vrstvy"
 
-#: app/core/core-enums.c:646
+#: app/core/core-enums.c:647
 msgid "FS Rigor"
 msgstr "upevnění výběru"
 
-#: app/core/core-enums.c:647
+#: app/core/core-enums.c:648
 msgid "FS Relax"
 msgstr "uvolnění výběru"
 
-#: app/core/core-enums.c:652
+#: app/core/core-enums.c:653
 msgid "EEK: can't undo"
 msgstr "EEK: nemohu vrátit zpět"
 
@@ -1588,7 +1592,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Neplatný řetězec v kódování UTF-8 v souboru se stopou '%s'."
 
 #: app/core/gimpbrush.c:613 app/core/gimpcontext.c:1302
-#: app/core/gimpitem.c:446 app/core/gimppattern.c:400
+#: app/core/gimpitem.c:457 app/core/gimppattern.c:400
 #: app/gui/templates-commands.c:150 app/tools/gimpvectortool.c:338
 msgid "Unnamed"
 msgstr "Beze jména"
@@ -1681,7 +1685,7 @@ msgstr "Překlopit kanál"
 msgid "Rotate Channel"
 msgstr "Rotovat kanál"
 
-#: app/core/gimpchannel.c:570 app/core/gimpdrawable-transform.c:1048
+#: app/core/gimpchannel.c:570 app/core/gimpdrawable-transform.c:1052
 msgid "Transform Channel"
 msgstr "Transformovat kanál"
 
@@ -1737,11 +1741,11 @@ msgstr ""
 "'%s'"
 
 #: app/core/gimpdatafactory.c:410 app/core/gimpdatafactory.c:413
-#: app/core/gimpitem.c:294 app/core/gimpitem.c:297
+#: app/core/gimpitem.c:295 app/core/gimpitem.c:298
 msgid "copy"
 msgstr "kopie"
 
-#: app/core/gimpdatafactory.c:422 app/core/gimpitem.c:306
+#: app/core/gimpdatafactory.c:422 app/core/gimpitem.c:307
 #, c-format
 msgid "%s copy"
 msgstr "%s kopie"
@@ -1793,21 +1797,21 @@ msgid "Render Stroke"
 msgstr "Vykreslit"
 
 #. Start a transform undo group
-#: app/core/gimpdrawable-transform.c:879 app/tools/gimpfliptool.c:84
+#: app/core/gimpdrawable-transform.c:883 app/tools/gimpfliptool.c:84
 msgid "Flip"
 msgstr "Překlopení"
 
 #. Start a transform undo group
-#: app/core/gimpdrawable-transform.c:945 app/tools/gimprotatetool.c:103
+#: app/core/gimpdrawable-transform.c:949 app/tools/gimprotatetool.c:103
 msgid "Rotate"
 msgstr "Rotovat"
 
-#: app/core/gimpdrawable-transform.c:1046 app/core/gimplayer.c:750
+#: app/core/gimpdrawable-transform.c:1050 app/core/gimplayer.c:750
 #: app/tools/tools-enums.c:73
 msgid "Transform Layer"
 msgstr "Transformovat vrstvu"
 
-#: app/core/gimpdrawable-transform.c:1061
+#: app/core/gimpdrawable-transform.c:1065
 msgid "Transformation"
 msgstr "Transformace"
 
@@ -1949,7 +1953,7 @@ msgstr "Povolit Rychlou masku"
 msgid "Disable QuickMask"
 msgstr "Zakázat Rychlou masku"
 
-#: app/core/gimpimage-undo-push.c:2847
+#: app/core/gimpimage-undo-push.c:2858
 #, c-format
 msgid "Can't undo %s"
 msgstr "Nelze vrátit %s"
@@ -2120,19 +2124,19 @@ msgstr "%d vrstvy(ev)"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Nemohu otevřít miniaturu '%s': %s"
 
-#: app/core/gimpitem.c:933
+#: app/core/gimpitem.c:944
 msgid "Attach Parasite to Item"
 msgstr "Připojení parazita k položce"
 
-#: app/core/gimpitem.c:972 app/core/gimpitem.c:979
+#: app/core/gimpitem.c:983 app/core/gimpitem.c:990
 msgid "Remove Parasite from Item"
 msgstr "Odstranění parazita z položky"
 
-#: app/core/gimplayer-floating-sel.c:123
+#: app/core/gimplayer-floating-sel.c:128
 msgid "Cannot anchor this layer because it is not a floating selection."
 msgstr "Nemohu pohltit tuto vrstvu, protože to není plovoucí výběr."
 
-#: app/core/gimplayer-floating-sel.c:205
+#: app/core/gimplayer-floating-sel.c:210
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -6151,7 +6155,7 @@ msgid "_Vertical:"
 msgstr "_Svisle:"
 
 #: app/gui/select-commands.c:149 app/gui/vectors-commands.c:181
-#: app/pdb/paths_cmds.c:1135 app/tools/gimpvectortool.c:1818
+#: app/pdb/paths_cmds.c:1135 app/tools/gimpvectortool.c:1819
 #: app/widgets/gimpvectorstreeview.c:289
 msgid "Path to Selection"
 msgstr "Cesta do výběru"
@@ -8750,71 +8754,71 @@ msgstr "Odstranit ukotvení"
 msgid "Delete Segment"
 msgstr "Odstranit segment"
 
-#: app/tools/gimpvectortool.c:811
+#: app/tools/gimpvectortool.c:812
 msgid "Move Anchors"
 msgstr "Přesunout ukotvení"
 
-#: app/tools/gimpvectortool.c:1157
+#: app/tools/gimpvectortool.c:1158
 msgid "Click to pick path to edit."
 msgstr "Kliknutím vyberete cestu, kterou upravit."
 
-#: app/tools/gimpvectortool.c:1160
+#: app/tools/gimpvectortool.c:1161
 msgid "Click to create a new path."
 msgstr "Kliknutím vytvoříte novou cestu."
 
-#: app/tools/gimpvectortool.c:1163
+#: app/tools/gimpvectortool.c:1164
 msgid "Click to create a new component of the path."
 msgstr "Kliknutím vytvoříte novou komponentu cesty."
 
-#: app/tools/gimpvectortool.c:1166
+#: app/tools/gimpvectortool.c:1167
 msgid "Click to create a new anchor. (try SHIFT)"
 msgstr "Kliknutím vytvoříte nové ukotvení. (zkuste SHIFT)"
 
-#: app/tools/gimpvectortool.c:1169
+#: app/tools/gimpvectortool.c:1170
 msgid "Click-Drag to move the anchor around."
 msgstr "Tažením s kliknutím přesunete ukotvení."
 
-#: app/tools/gimpvectortool.c:1172
+#: app/tools/gimpvectortool.c:1173
 msgid "Click-Drag to move the anchors around."
 msgstr "Tažením s kliknutím přesunete ukotvení."
 
-#: app/tools/gimpvectortool.c:1175
+#: app/tools/gimpvectortool.c:1176
 msgid "Click-Drag to move the handle around. (try SHIFT)"
 msgstr "Tažením s kliknutím přesunete řídicí bod. (zkuste SHIFT)"
 
-#: app/tools/gimpvectortool.c:1178
+#: app/tools/gimpvectortool.c:1179
 msgid "Click-Drag to change the shape of the curve. (SHIFT: symmetrical)"
 msgstr "Tažením s kliknutím změníte tvar křivky. (SHIFT: symetricky)"
 
-#: app/tools/gimpvectortool.c:1182
+#: app/tools/gimpvectortool.c:1183
 msgid "Click-Drag to move the component around. (try SHIFT)"
 msgstr "Tažením s kliknutím přesunete komponentu. (zkuste SHIFT)"
 
-#: app/tools/gimpvectortool.c:1186
+#: app/tools/gimpvectortool.c:1187
 msgid "Click-Drag to move the path around."
 msgstr "Tažením s kliknutím přesunete cestu."
 
-#: app/tools/gimpvectortool.c:1189
+#: app/tools/gimpvectortool.c:1190
 msgid "Click to insert an anchor on the path. (try SHIFT)"
 msgstr "Kliknutím vložíte ukotvení na cestu. (zkuste SHIFT)"
 
-#: app/tools/gimpvectortool.c:1192
+#: app/tools/gimpvectortool.c:1193
 msgid "Click to delete this anchor."
 msgstr "Kliknutím odstraníte toto ukotvení."
 
-#: app/tools/gimpvectortool.c:1195
+#: app/tools/gimpvectortool.c:1196
 msgid "Click to connect this anchor with the selected endpoint."
 msgstr "Kliknutím spojíte toto ukotvení s vybraným koncovým bodem."
 
-#: app/tools/gimpvectortool.c:1199
+#: app/tools/gimpvectortool.c:1200
 msgid "Click to open up the path."
 msgstr "Kliknutím otevřete cestu."
 
-#: app/tools/gimpvectortool.c:1202
+#: app/tools/gimpvectortool.c:1203
 msgid "Click to make this node angular."
 msgstr "Kliknutím změníte tento uzel na úhlový."
 
-#: app/tools/gimpvectortool.c:1843
+#: app/tools/gimpvectortool.c:1844
 msgid "There is no active layer or channel to stroke to"
 msgstr "Není žádná aktivní vrstva nebo kanál, kam vykreslovat"
 
