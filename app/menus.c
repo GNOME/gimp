@@ -135,6 +135,8 @@ static GtkMenuEntry menu_items[] =
   { "<Image>/Image/Colors/Desaturate", NULL, image_desaturate_cmd_callback, NULL },
   { "<Image>/Image/Channel Ops/Duplicate", "<control>D", channel_ops_duplicate_cmd_callback, NULL },
   { "<Image>/Image/Channel Ops/Offset", "<control><shift>O", channel_ops_offset_cmd_callback, NULL },
+ { "<Image>/Image/Alpha/Add Alpha Channel", NULL, layers_add_alpha_channel_cmd_callback, NULL },
+
   { "<Image>/Image/<separator>", NULL, NULL, NULL },
   { "<Image>/Image/RGB", NULL, image_convert_rgb_cmd_callback, NULL },
   { "<Image>/Image/Grayscale", NULL, image_convert_grayscale_cmd_callback, NULL },
@@ -154,6 +156,7 @@ static GtkMenuEntry menu_items[] =
   { "<Image>/Layers/Flatten Image", NULL, layers_flatten_cmd_callback, NULL },
   { "<Image>/Layers/Alpha To Selection", NULL, layers_alpha_select_cmd_callback, NULL },
   { "<Image>/Layers/Mask To Selection", NULL, layers_mask_select_cmd_callback, NULL },
+  { "<Image>/Layers/Add Alpha Channel", NULL, layers_add_alpha_channel_cmd_callback, NULL },
 
   { "<Image>/Tools/Rect Select", "R", tools_select_cmd_callback, (gpointer) RECT_SELECT },
   { "<Image>/Tools/Ellipse Select", "E", tools_select_cmd_callback, (gpointer) ELLIPSE_SELECT },

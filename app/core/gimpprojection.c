@@ -975,6 +975,7 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
   gint aux;
   gint lm;
   gint lp;
+  gint alpha = FALSE;
   GimpDrawable *drawable;
   gint base_type;
   gint type;
@@ -982,11 +983,12 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
   fs = (gimage_floating_sel (gdisp->gimage) != NULL);
   aux = (gimage_get_active_channel (gdisp->gimage) != NULL);
   if ((layer = gimage_get_active_layer (gdisp->gimage)) != NULL)
-    lm = (layer->mask) ? TRUE : FALSE;
+      lm = (layer->mask) ? TRUE : FALSE;
   else
     lm = FALSE;
   base_type = gimage_base_type (gdisp->gimage);
   lp = (gdisp->gimage->layers != NULL);
+  alpha = layer && layer_has_alpha (layer);
 
   type = -1;
   if (lp)
@@ -1002,6 +1004,7 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
   menus_set_sensitive ("<Image>/Layers/Flatten Image", !fs && !aux && lp);
   menus_set_sensitive ("<Image>/Layers/Alpha To Selection", !aux && lp);
   menus_set_sensitive ("<Image>/Layers/Mask To Selection", !aux && lm && lp);
+  menus_set_sensitive ("<Image>/Layers/Add Alpha Channel", !fs && !aux && lp && !lm && !alpha);
 
   menus_set_sensitive ("<Image>/Image/RGB", (base_type != RGB));
   menus_set_sensitive ("<Image>/Image/Grayscale", (base_type != GRAY));
@@ -1019,6 +1022,8 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
   menus_set_sensitive ("<Image>/Image/Colors/Levels", (base_type != INDEXED));
 
   menus_set_sensitive ("<Image>/Image/Colors/Desaturate", (base_type == RGB));
+
+  menus_set_sensitive ("<Image>/Image/Alpha/Add Alpha Channel", !fs && !aux && lp && !lm && !alpha);
 
   menus_set_sensitive ("<Image>/Select", lp);
   menus_set_sensitive ("<Image>/Edit/Cut", lp);

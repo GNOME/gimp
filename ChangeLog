@@ -1,3 +1,11 @@
+Fri Apr  3 13:49:38 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* app/menus.c
+	* app/gdisplay.c
+	* app/commands.[c|h]: Added a "Add Alpha Channel" menu-entry to
+	the Image-menu. Now it is possible to work on a single-layer image
+	without opening the Layers-dialog for adding an alpha channel.
+
 Fri Apr  3 12:22:40 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/Makefile.am

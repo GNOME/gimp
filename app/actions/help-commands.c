@@ -2283,6 +2283,18 @@ layers_mask_select_cmd_callback (GtkWidget *widget,
 }
 
 void
+layers_add_alpha_channel_cmd_callback (GtkWidget *widget,
+				       gpointer   client_data)
+{
+  GDisplay * gdisp;
+
+  gdisp = gdisplay_active ();
+
+  layer_add_alpha ( gdisp->gimage->active_layer);
+  gdisplays_flush ();
+}
+
+void
 tools_default_colors_cmd_callback (GtkWidget *widget,
 				   gpointer   client_data)
 {
