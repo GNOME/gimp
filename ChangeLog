@@ -1,3 +1,9 @@
+Mon Apr 13 23:48:31 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* app/histogram_tool.c: changed the Ok and Cancel buttons in the
+	histogram dialog to a simple Close, because that's what they were
+	actually doing
+
 Mon Apr 13 13:09:32 EDT 1998 Matthew Wilson <msw@gimp.org>
 
 	* app/commands.c: Fixed prefs to save stingy memory

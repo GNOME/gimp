@@ -71,8 +71,7 @@ static void   histogram_tool_cursor_update  (Tool *, GdkEventMotion *, gpointer)
 static void   histogram_tool_control        (Tool *, int, gpointer);
 
 static HistogramToolDialog *  histogram_tool_new_dialog       (void);
-static void                   histogram_tool_ok_callback      (GtkWidget *, gpointer);
-static void                   histogram_tool_cancel_callback  (GtkWidget *, gpointer);
+static void                   histogram_tool_close_callback   (GtkWidget *, gpointer);
 static gint                   histogram_tool_delete_callback  (GtkWidget *, GdkEvent *, gpointer);
 static void                   histogram_tool_value_callback   (GtkWidget *, gpointer);
 static void                   histogram_tool_red_callback     (GtkWidget *, gpointer);
@@ -331,7 +330,7 @@ histogram_tool_control (Tool     *tool,
       break;
     case HALT :
       if (histogram_tool_dialog)
-	histogram_tool_cancel_callback (NULL, (gpointer) histogram_tool_dialog);
+	histogram_tool_close_callback (NULL, (gpointer) histogram_tool_dialog);
       break;
     }
 }
@@ -374,7 +373,7 @@ tools_free_histogram_tool (Tool *tool)
 
   /*  Close the histogram dialog  */
   if (histogram_tool_dialog)
-    histogram_tool_cancel_callback (NULL, (gpointer) histogram_tool_dialog);
+    histogram_tool_close_callback (NULL, (gpointer) histogram_tool_dialog);
 
   g_free (hist);
 }
@@ -415,15 +414,14 @@ histogram_tool_initialize (void *gdisp_ptr)
 }
 
 
-/****************************/
-/*  Select by Color dialog  */
-/****************************/
+/***************************/
+/*  Histogram Tool dialog  */
+/***************************/
 
 /*  the action area structure  */
 static ActionAreaItem action_items[] =
 {
-  { "OK", histogram_tool_ok_callback, NULL, NULL },
-  { "Cancel", histogram_tool_cancel_callback, NULL, NULL }
+  { "Close", histogram_tool_close_callback, NULL, NULL }
 };
 
 static MenuItem color_option_items[] =
@@ -526,8 +524,7 @@ histogram_tool_new_dialog ()
 
   /*  The action area  */
   action_items[0].user_data = htd;
-  action_items[1].user_data = htd;
-  build_action_area (GTK_DIALOG (htd->shell), action_items, 2, 0);
+  build_action_area (GTK_DIALOG (htd->shell), action_items, 1, 0);
 
   gtk_widget_show (table);
   gtk_widget_show (vbox);
@@ -537,13 +534,12 @@ histogram_tool_new_dialog ()
 }
 
 static void
-histogram_tool_ok_callback (GtkWidget *widget,
+histogram_tool_close_callback (GtkWidget *widget,
 			    gpointer   client_data)
 {
   HistogramToolDialog *htd;
 
   htd = (HistogramToolDialog *) client_data;
-
   if (GTK_WIDGET_VISIBLE (htd->shell))
     gtk_widget_hide (htd->shell);
 }
@@ -553,20 +549,9 @@ histogram_tool_delete_callback (GtkWidget *widget,
 				GdkEvent *event,
 				gpointer client_data)
 {
-  histogram_tool_cancel_callback (widget, client_data);
+  histogram_tool_close_callback (widget, client_data);
 
   return TRUE;
-}
-
-static void
-histogram_tool_cancel_callback (GtkWidget *widget,
-				gpointer   client_data)
-{
-  HistogramToolDialog *htd;
-
-  htd = (HistogramToolDialog *) client_data;
-  if (GTK_WIDGET_VISIBLE (htd->shell))
-    gtk_widget_hide (htd->shell);
 }
 
 static void
