@@ -69,6 +69,24 @@ color selector module.
 @show_alpha: 
 
 
+<!-- ##### FUNCTION gimp_color_selector_set_toggles_visible ##### -->
+<para>
+
+</para>
+
+@selector: 
+@visible: 
+
+
+<!-- ##### FUNCTION gimp_color_selector_set_toggles_sensitive ##### -->
+<para>
+
+</para>
+
+@selector: 
+@sensitive: 
+
+
 <!-- ##### FUNCTION gimp_color_selector_set_show_alpha ##### -->
 <para>
 

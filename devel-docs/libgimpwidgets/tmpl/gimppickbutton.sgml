@@ -1,5 +1,5 @@
 <!-- ##### SECTION Title ##### -->
-GimpColorNotebook
+GimpPickButton
 
 <!-- ##### SECTION Short_Description ##### -->
 
@@ -14,20 +14,25 @@ GimpColorNotebook
 
 </para>
 
-<!-- ##### STRUCT GimpColorNotebook ##### -->
+<!-- ##### STRUCT GimpPickButton ##### -->
 <para>
 
 </para>
 
 
-<!-- ##### FUNCTION gimp_color_notebook_set_has_page ##### -->
+<!-- ##### FUNCTION gimp_pick_button_new ##### -->
 <para>
 
 </para>
 
-@notebook: 
-@page_type: 
-@has_page: 
 @Returns: 
 
+
+<!-- ##### SIGNAL GimpPickButton::color-picked ##### -->
+<para>
+
+</para>
+
+@gimppickbutton: the object which received the signal.
+@arg1: 
 

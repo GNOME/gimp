@@ -1,3 +1,15 @@
+2002-11-05  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/tmpl/gimppickbutton.sgml: added GimpPickButton.
+
+	* libgimpwidgets/libgimpwidgets-docs.sgml
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/libgimpwidgets.types
+	* libgimpwidgets/tmpl/gimpcolornotebook.sgml
+	* libgimpwidgets/tmpl/gimpcolorscales.sgml
+	* libgimpwidgets/tmpl/gimpcolorselector.sgml
+	* libgimpwidgets/tmpl/gimpstock.sgml: updated.
+
 2002-11-01  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpcolor/tmpl/gimpcolorspace.sgml: updated.

@@ -254,6 +254,7 @@ GIMP_STOCK_CHAR_PICKER
 GIMP_STOCK_COLOR_PICKER_BLACK
 GIMP_STOCK_COLOR_PICKER_GRAY
 GIMP_STOCK_COLOR_PICKER_WHITE
+GIMP_STOCK_COLOR_TRIANGLE
 GIMP_STOCK_CONVERT_GRAYSCALE
 GIMP_STOCK_CONVERT_INDEXED
 GIMP_STOCK_CONVERT_RGB
@@ -415,6 +416,8 @@ GIMP_COLOR_SELECTOR_SIZE
 GIMP_COLOR_SELECTOR_BAR_SIZE
 GimpColorSelectorChannel
 gimp_color_selector_new
+gimp_color_selector_set_toggles_visible
+gimp_color_selector_set_toggles_sensitive
 gimp_color_selector_set_show_alpha
 gimp_color_selector_set_color
 gimp_color_selector_set_channel
@@ -434,6 +437,7 @@ GIMP_COLOR_SELECTOR_GET_CLASS
 <FILE>gimpcolornotebook</FILE>
 <TITLE>GimpColorNotebook</TITLE>
 GimpColorNotebook
+gimp_color_notebook_set_has_page
 <SUBSECTION Standard>
 GIMP_COLOR_NOTEBOOK
 GIMP_IS_COLOR_NOTEBOOK
@@ -463,8 +467,8 @@ GIMP_COLOR_SCALE_GET_CLASS
 
 <SECTION>
 <FILE>gimpcolorscales</FILE>
+<TITLE>GimpColorScales</TITLE>
 GimpColorScales
-gimp_color_scales_set_toggles_sensitive
 <SUBSECTION Standard>
 GIMP_COLOR_SCALES
 GIMP_IS_COLOR_SCALES
@@ -483,3 +487,17 @@ GIMP_TYPE_COLOR_SELECT
 gimp_color_select_get_type
 </SECTION>
 
+<SECTION>
+<FILE>gimppickbutton</FILE>
+<TITLE>GimpPickButton</TITLE>
+GimpPickButton
+gimp_pick_button_new
+<SUBSECTION Standard>
+GIMP_PICK_BUTTON
+GIMP_IS_PICK_BUTTON
+GIMP_TYPE_PICK_BUTTON
+gimp_pick_button_get_type
+GIMP_PICK_BUTTON_CLASS
+GIMP_IS_PICK_BUTTON_CLASS
+GIMP_PICK_BUTTON_GET_CLASS
+</SECTION>

@@ -13,6 +13,7 @@
 <!entity GimpFileSelection SYSTEM "sgml/gimpfileselection.sgml">
 <!entity GimpHelpUI SYSTEM "sgml/gimphelpui.sgml">
 <!entity GimpPathEditor SYSTEM "sgml/gimppatheditor.sgml">
+<!entity GimpPickButton SYSTEM "sgml/gimppickbutton.sgml">
 <!entity GimpPixmap SYSTEM "sgml/gimppixmap.sgml">
 <!entity GimpQueryBox SYSTEM "sgml/gimpquerybox.sgml">
 <!entity GimpSizeEntry SYSTEM "sgml/gimpsizeentry.sgml">
@@ -50,6 +51,7 @@
       &GimpColorNotebook;
       &GimpColorScales;
       &GimpColorSelect;
+      &GimpPickButton;
     </chapter>
   </part>
 
