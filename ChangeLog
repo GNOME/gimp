@@ -1,3 +1,7 @@
+2003-08-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpnavigationview.c: forgot this one.
+
 2003-08-24  Seth Burgess <sjburges@gimp.org>
 
 	* plug-ins/rcm/rcm_callback.c: add in a call to 

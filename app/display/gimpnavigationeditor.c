@@ -35,6 +35,7 @@
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpnavigationpreview.h"
 #include "widgets/gimppreviewrenderer.h"
 
@@ -375,40 +376,40 @@ gimp_navigation_view_new_private (GimpDisplayShell  *shell,
 
       view->zoom_out_button =
         gimp_editor_add_button (GIMP_EDITOR (view),
-                                GTK_STOCK_ZOOM_OUT,
-                                _("Zoom out"), NULL,
+                                GTK_STOCK_ZOOM_OUT, _("Zoom out"),
+                                GIMP_HELP_VIEW_ZOOM_OUT,
                                 G_CALLBACK (gimp_navigation_view_zoom_out_clicked),
                                 NULL,
                                 view);
 
       view->zoom_in_button =
         gimp_editor_add_button (GIMP_EDITOR (view),
-                                GTK_STOCK_ZOOM_IN,
-                                _("Zoom in"), NULL,
+                                GTK_STOCK_ZOOM_IN, _("Zoom in"),
+                                GIMP_HELP_VIEW_ZOOM_IN,
                                 G_CALLBACK (gimp_navigation_view_zoom_in_clicked),
                                 NULL,
                                 view);
 
       view->zoom_100_button =
         gimp_editor_add_button (GIMP_EDITOR (view),
-                                GTK_STOCK_ZOOM_100,
-                                _("Zoom 1:1"), NULL,
+                                GTK_STOCK_ZOOM_100, _("Zoom 1:1"),
+                                GIMP_HELP_VIEW_ZOOM_100,
                                 G_CALLBACK (gimp_navigation_view_zoom_100_clicked),
                                 NULL,
                                 view);
 
       view->zoom_fit_button =
         gimp_editor_add_button (GIMP_EDITOR (view),
-                                GTK_STOCK_ZOOM_FIT,
-                                _("Zoom to fit window"), NULL,
+                                GTK_STOCK_ZOOM_FIT, _("Zoom to fit window"),
+                                GIMP_HELP_VIEW_ZOOM_FIT,
                                 G_CALLBACK (gimp_navigation_view_zoom_fit_clicked),
                                 NULL,
                                 view);
 
       view->shrink_wrap_button =
         gimp_editor_add_button (GIMP_EDITOR (view),
-                                GTK_STOCK_ZOOM_FIT,
-                                _("Shrink Wrap"), NULL,
+                                GTK_STOCK_ZOOM_FIT, _("Shrink Wrap"),
+                                GIMP_HELP_VIEW_SHRINK_WRAP,
                                 G_CALLBACK (gimp_navigation_view_shrink_clicked),
                                 NULL,
                                 view);
