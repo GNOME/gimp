@@ -163,9 +163,9 @@ indexed_Color_Enhance(gint32 image_ID)  /* a.d.m. */
 
   for (i=0;i<ncols;i++)
     {
-      double h, s, v;
+      gdouble h, s, v;
       gint c, m, y;
-      gdouble k;
+      gint k;
       guchar map[3];
       
       c = 255 - cmap[i*3+0];
@@ -186,7 +186,7 @@ indexed_Color_Enhance(gint32 image_ID)  /* a.d.m. */
     {
       gdouble h, s, v;
       gint c, m, y;
-      gdouble k;
+      gint k;
       guchar map[3];
       
       c = 255 - cmap[i*3+0];
@@ -257,7 +257,7 @@ Color_Enhance (GDrawable *drawable)
 		{
 		  gdouble h, z, v;
 		  gint c, m, y;
-		  gdouble k;
+		  gint k;
 		  guchar map[3];
 		  
 		  c = 255 - s[0];
@@ -304,7 +304,7 @@ Color_Enhance (GDrawable *drawable)
 	    {
 	      gdouble h, z, v;
 	      gint c, m, y;
-	      gdouble k;
+	      gint k;
 	      guchar map[3];
 	      
 	      c = 255 - s[0];

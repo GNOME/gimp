@@ -1,3 +1,9 @@
+Tue Jan 25 15:10:14 CET 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	* plug-ins/common/color_enhance.c: On request of
+	Martin Weber <martweb@gmx.net>. Improve types (double,
+	gdouble, gint).
+
 Mon Jan 24 22:28:00 CET 2000  Seth Burgess <sjburges@gimp.org>
 	
 	* app/gdisplay_ops.c: Added a minimum width for shrink wrap;
