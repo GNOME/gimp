@@ -256,7 +256,7 @@ gimp_rgb_parse_name (GimpRGB     *rgb,
  * @len: the length of @hex, in bytes. or -1 if @hex is nul-terminated
  *
  * Attempts to parse a string describing a color in RGB value in
- * hexadecimal notation (optionally prefixed with a '#'.
+ * hexadecimal notation (optionally prefixed with a '#').
  *
  * This funcion does not touch the alpha component of @rgb.
  *
