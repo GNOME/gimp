@@ -279,6 +279,12 @@ app_init (gint    gimp_argc,
     }
 }
 
+gboolean
+app_gui_init (gint    *argc,
+              gchar ***argv)
+{
+  return gui_libs_init (argc, argv);
+}
 
 /*  private functions  */
 

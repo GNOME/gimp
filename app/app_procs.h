@@ -19,6 +19,7 @@
 #ifndef __APP_PROCS_H__
 #define __APP_PROCS_H__
 
+
 #ifndef GIMP_APP_GLUE_COMPILATION
 #ifdef __GNUC__
 #warning FIXME: Dont #include "app_procs.h"
@@ -33,8 +34,11 @@
 extern Gimp *the_gimp;
 
 
-void   app_init (gint    gimp_argc,
-                 gchar **gimp_argv);
+void      app_init     (gint     gimp_argc,
+                        gchar  **gimp_argv);
+
+gboolean  app_gui_init (gint    *gimp_argc,
+                        gchar ***gimp_argv);
 
 
 #endif /* __APP_PROCS_H__ */

@@ -1240,7 +1240,7 @@ user_install_resolution (GimpRc *gimprc)
   gchar             *pixels_per_unit;
   gchar             *str;
 
-  gui_get_screen_resolution (&xres, &yres);
+  gui_get_screen_resolution (NULL, &xres, &yres);
 
   add_label (GTK_BOX (resolution_page),
 	     _("GIMP can obtain this information from the windowing system.\n"

@@ -369,7 +369,7 @@ prefs_res_source_callback (GtkWidget *widget,
 
   if (from_gdk)
     {
-      gui_get_screen_resolution (&xres, &yres);
+      gui_get_screen_resolution (NULL, &xres, &yres);
     }
   else
     {
@@ -1635,7 +1635,7 @@ prefs_dialog_new (Gimp    *gimp,
     gdouble  xres, yres;
     gchar   *str;
 
-    gui_get_screen_resolution (&xres, &yres);
+    gui_get_screen_resolution (NULL, &xres, &yres);
 
     str = g_strdup_printf (_("(Currently %d x %d dpi)"),
 			   ROUND (xres), ROUND (yres));

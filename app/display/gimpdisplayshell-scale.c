@@ -368,12 +368,10 @@ gimp_display_shell_scale_fit (GimpDisplayShell *shell)
 
   if (! shell->dot_for_dot)
     {
-      GimpDisplayConfig *config = GIMP_DISPLAY_CONFIG (gimage->gimp->config);
-
       image_width  = ROUND (image_width *
-                            config->monitor_xres / gimage->xresolution);
+                            shell->monitor_xres / gimage->xresolution);
       image_height = ROUND (image_height *
-                            config->monitor_yres / gimage->yresolution);
+                            shell->monitor_xres / gimage->yresolution);
     }
 
   zoom_factor = MIN ((gdouble) shell->disp_width  / (gdouble) image_width,

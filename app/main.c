@@ -44,8 +44,6 @@
 
 #include "core/core-types.h"
 
-#include "gui/gui.h"
-
 #include "appenv.h"
 #include "app_procs.h"
 #include "errors.h"
@@ -169,7 +167,7 @@ main (int    argc,
     }
   else
     {
-      if (! gui_libs_init (&argc, &argv))
+      if (! app_gui_init (&argc, &argv))
 	{
           const gchar *msg;
 

@@ -33,7 +33,8 @@ void          gui_restore               (Gimp      *gimp,
                                          gboolean   restore_session);
 void          gui_post_init             (Gimp      *gimp);
 
-void          gui_get_screen_resolution (gdouble   *xres,
+void          gui_get_screen_resolution (GdkScreen *screen,
+                                         gdouble   *xres,
                                          gdouble   *yres);
 
 

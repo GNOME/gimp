@@ -53,6 +53,7 @@
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpmenufactory.h"
 
+#include "gui/gui.h"
 #include "gui/info-window.h"
 
 #include "tools/tool_manager.h"
@@ -89,6 +90,7 @@ static void      gimp_display_shell_class_init    (GimpDisplayShellClass *klass)
 static void      gimp_display_shell_init          (GimpDisplayShell      *shell);
 
 static void      gimp_display_shell_destroy            (GtkObject        *object);
+static void      gimp_display_shell_realize            (GtkWidget        *widget);
 static gboolean  gimp_display_shell_delete_event       (GtkWidget        *widget,
 							GdkEventAny      *aevent);
 
@@ -174,6 +176,7 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
 
   object_class->destroy      = gimp_display_shell_destroy;
 
+  widget_class->realize      = gimp_display_shell_realize;
   widget_class->delete_event = gimp_display_shell_delete_event;
   widget_class->popup_menu   = gimp_display_shell_popup_menu;
 
@@ -395,6 +398,33 @@ gimp_display_shell_destroy (GtkObject *object)
   shell->gdisp = NULL;
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static void
+gimp_display_shell_realize (GtkWidget *widget)
+{
+  GimpDisplayShell  *shell;
+  GimpDisplayConfig *config;
+
+  GTK_WIDGET_CLASS (parent_class)->realize (widget);
+
+  shell = GIMP_DISPLAY_SHELL (widget);
+  config = GIMP_DISPLAY_CONFIG (shell->gdisp->gimage->gimp->config);
+
+  /*  We set the monitor resolution in the realize method so that
+   *  it is changed when the display shell is migrated to another screen.
+   */
+  if (GIMP_DISPLAY_CONFIG (config)->monitor_res_from_gdk)
+    {
+      gui_get_screen_resolution (gtk_widget_get_screen (widget),
+                                 &shell->monitor_xres,
+                                 &shell->monitor_yres);
+    }
+  else
+    {
+      shell->monitor_xres = GIMP_DISPLAY_CONFIG (config)->monitor_xres;
+      shell->monitor_yres = GIMP_DISPLAY_CONFIG (config)->monitor_yres;
+    }
 }
 
 static gboolean

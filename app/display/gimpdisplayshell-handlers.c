@@ -108,8 +108,6 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
 
   display_config = GIMP_DISPLAY_CONFIG (gimage->gimp->config);
 
-  shell->monitor_xres  = display_config->monitor_xres;
-  shell->monitor_yres  = display_config->monitor_yres;
   shell->padding_mode  = display_config->canvas_padding_mode;
   shell->padding_color = display_config->canvas_padding_color;
 
@@ -424,8 +422,17 @@ gimp_display_shell_monitor_res_notify_handler (GObject          *config,
                                                GParamSpec       *param_spec,
                                                GimpDisplayShell *shell)
 {
-  shell->monitor_xres = GIMP_DISPLAY_CONFIG (config)->monitor_xres;
-  shell->monitor_yres = GIMP_DISPLAY_CONFIG (config)->monitor_yres;
+  if (GIMP_DISPLAY_CONFIG (config)->monitor_res_from_gdk)
+    {
+      gui_get_screen_resolution (gtk_widget_get_screen (shell),
+                                 &shell->monitor_xres,
+                                 &shell->monitor_yres);
+    }
+  else
+    {
+      shell->monitor_xres = GIMP_DISPLAY_CONFIG (config)->monitor_xres;
+      shell->monitor_yres = GIMP_DISPLAY_CONFIG (config)->monitor_yres;
+    }
 
   if (! shell->dot_for_dot)
     {

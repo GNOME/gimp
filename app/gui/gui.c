@@ -281,7 +281,7 @@ gui_init (Gimp *gimp)
     {
       gdouble xres, yres;
       
-      gui_get_screen_resolution (&xres, &yres);
+      gui_get_screen_resolution (NULL, &xres, &yres);
 
       g_object_set (gimp->config,
 		    "monitor-xresolution",                      xres,
@@ -347,22 +347,27 @@ gui_post_init (Gimp *gimp)
 }
 
 void
-gui_get_screen_resolution (gdouble *xres,
-                           gdouble *yres)
+gui_get_screen_resolution (GdkScreen *screen,
+                           gdouble   *xres,
+                           gdouble   *yres)
 {
   gint    width, height;
   gint    width_mm, height_mm;
   gdouble x = 0.0;
   gdouble y = 0.0;
 
+  g_return_if_fail (screen == NULL || GDK_IS_SCREEN (screen));
   g_return_if_fail (xres != NULL);
   g_return_if_fail (yres != NULL);
 
-  width  = gdk_screen_width ();
-  height = gdk_screen_height ();
+  if (!screen)
+    screen = gdk_screen_get_default ();
 
-  width_mm  = gdk_screen_width_mm ();
-  height_mm = gdk_screen_height_mm ();
+  width  = gdk_screen_get_width (screen);
+  height = gdk_screen_get_height (screen);
+
+  width_mm  = gdk_screen_get_width_mm (screen);
+  height_mm = gdk_screen_get_height_mm (screen);
 
   /*
    * From xdpyinfo.c:
@@ -391,8 +396,8 @@ gui_get_screen_resolution (gdouble *xres,
     }
 
   /*  round the value to full integers to give more pleasant results  */
-  *xres = RINT (x);
-  *yres = RINT (y);
+  *xres = ROUND (x);
+  *yres = ROUND (y);
 }
 
 
