@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.2.3\n"
-"POT-Creation-Date: 2003-06-09 22:54+0200\n"
+"POT-Creation-Date: 2003-06-26 22:18+0200\n"
 "PO-Revision-Date: 2001-10-28 01:08+0200\n"
 "Last-Translator: Softcatalà <tradgnome@softcatala.org>\n"
 "Language-Team: Catalan\n"
@@ -31,98 +31,100 @@ msgstr "Sortida SIOD"
 msgid "Current Command"
 msgstr "Ordre actual"
 
-#: plug-ins/script-fu/script-fu-console.c:287
+#: plug-ins/script-fu/script-fu-console.c:286
 msgid "Browse..."
 msgstr "Navega..."
 
-#: plug-ins/script-fu/script-fu-console.c:583
+#: plug-ins/script-fu/script-fu-console.c:582
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "No es pot obrir un corrent en el conducte de sortida SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:589
+#: plug-ins/script-fu/script-fu-console.c:588
 #, fuzzy
 msgid "Unable to open the SIOD output pipe"
 msgstr "No es pot obrir el conducte de sortida SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:634
+#: plug-ins/script-fu/script-fu-console.c:633
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 "El mode d'avaluació de l'Script-Fu només permet la invocació no interactiva"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1164
-#: plug-ins/script-fu/script-fu-scripts.c:1166
+#: plug-ins/script-fu/script-fu-scripts.c:1112
+#: plug-ins/script-fu/script-fu-scripts.c:1114
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1174
+#: plug-ins/script-fu/script-fu-scripts.c:1122
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1208
+#: plug-ins/script-fu/script-fu-scripts.c:1156
 msgid "About"
 msgstr "Quant a..."
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1218
+#: plug-ins/script-fu/script-fu-scripts.c:1166
 msgid "Script Arguments"
 msgstr "Arguments de la seqüència"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1242
+#. we add a colon after the label;
+#. some languages want an extra space here
+#: plug-ins/script-fu/script-fu-scripts.c:1193
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1289
+#: plug-ins/script-fu/script-fu-scripts.c:1239
 msgid "Script-Fu Color Selection"
 msgstr "Selecció del color de l'Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1369
+#: plug-ins/script-fu/script-fu-scripts.c:1319
 msgid "Script-Fu File Selection"
 msgstr "Selecció del fitxer de l'Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1374
+#: plug-ins/script-fu/script-fu-scripts.c:1324
 #, fuzzy
 msgid "Script-Fu Folder Selection"
 msgstr "Selecció del fitxer de l'Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1391
+#: plug-ins/script-fu/script-fu-scripts.c:1341
 msgid "Script-Fu Font Selection"
 msgstr "Selecció de tipus de lletra de l'Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1399
+#: plug-ins/script-fu/script-fu-scripts.c:1349
 msgid "Script-fu Pattern Selection"
 msgstr "Selecció del patró de l'Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1406
+#: plug-ins/script-fu/script-fu-scripts.c:1356
 msgid "Script-Fu Gradient Selection"
 msgstr "Selecció de la gradació de l'Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1414
+#: plug-ins/script-fu/script-fu-scripts.c:1364
 msgid "Script-Fu Brush Selection"
 msgstr "Selecció del pinzell de l'Script-Fu"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:499
-#: plug-ins/script-fu/script-fu-scripts.c:1908
+#: plug-ins/dbbrowser/dbbrowser_utils.c:488
+#: plug-ins/script-fu/script-fu-scripts.c:1858
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:515
-#: plug-ins/script-fu/script-fu-scripts.c:1914
+#: plug-ins/dbbrowser/dbbrowser_utils.c:504
+#: plug-ins/script-fu/script-fu-scripts.c:1864
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:507
-#: plug-ins/script-fu/script-fu-scripts.c:1920
+#: plug-ins/dbbrowser/dbbrowser_utils.c:496
+#: plug-ins/script-fu/script-fu-scripts.c:1870
 msgid "Date:"
 msgstr "Data:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1928
+#: plug-ins/script-fu/script-fu-scripts.c:1878
 msgid "Image Types:"
 msgstr "Tipus d'imatge:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2051
+#: plug-ins/script-fu/script-fu-scripts.c:2001
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -133,92 +135,92 @@ msgstr ""
 " %s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:574
+#: plug-ins/script-fu/script-fu-server.c:601
 msgid "Script-Fu Server Options"
 msgstr "Opcions del servidor de l'Script-Fu"
 
-#: plug-ins/script-fu/script-fu-server.c:601
+#: plug-ins/script-fu/script-fu-server.c:629
 msgid "Server Port:"
 msgstr "Port del servidor:"
 
-#: plug-ins/script-fu/script-fu-server.c:607
+#: plug-ins/script-fu/script-fu-server.c:635
 msgid "Server Logfile:"
 msgstr "Fitxer de registre del servidor:"
 
-#: plug-ins/script-fu/script-fu.c:127
+#: plug-ins/script-fu/script-fu.c:122
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."
 msgstr "<Quadre d'eines>/Extensions/Script-Fu/Consola..."
 
-#: plug-ins/script-fu/script-fu.c:152
+#: plug-ins/script-fu/script-fu.c:147
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
 msgstr "<Quadre d'eines>/Extensions/Script-Fu/Servidor..."
 
-#: plug-ins/script-fu/script-fu.c:276 plug-ins/script-fu/script-fu.c:277
+#: plug-ins/script-fu/script-fu.c:271 plug-ins/script-fu/script-fu.c:272
 msgid "Re-read all available scripts"
 msgstr "Torna a llegir totes les seqüències disponibles"
 
-#: plug-ins/script-fu/script-fu.c:281
+#: plug-ins/script-fu/script-fu.c:276
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Quadre d'eines>/Extensions/Script-Fu/Refresca"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:129
-#: plug-ins/dbbrowser/dbbrowser_utils.c:148
+#: plug-ins/dbbrowser/dbbrowser_utils.c:118
+#: plug-ins/dbbrowser/dbbrowser_utils.c:137
 msgid "DB Browser"
 msgstr "Navegador de la base de dades"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:134
-#: plug-ins/dbbrowser/dbbrowser_utils.c:153
+#: plug-ins/dbbrowser/dbbrowser_utils.c:123
+#: plug-ins/dbbrowser/dbbrowser_utils.c:142
 #, fuzzy
 msgid "Search by _Name"
 msgstr "Cerca per nom"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:136
-#: plug-ins/dbbrowser/dbbrowser_utils.c:155
+#: plug-ins/dbbrowser/dbbrowser_utils.c:125
+#: plug-ins/dbbrowser/dbbrowser_utils.c:144
 #, fuzzy
 msgid "Search by _Blurb"
 msgstr "Cerca per anunci de portada"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:216
+#: plug-ins/dbbrowser/dbbrowser_utils.c:205
 #, fuzzy
 msgid "_Search:"
 msgstr "Cerca:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:358
+#: plug-ins/dbbrowser/dbbrowser_utils.c:347
 msgid "Name:"
 msgstr "Nom:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:367
+#: plug-ins/dbbrowser/dbbrowser_utils.c:356
 msgid "Blurb:"
 msgstr "Anunci de portada:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:379
+#: plug-ins/dbbrowser/dbbrowser_utils.c:368
 msgid "In:"
 msgstr "Entrada:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:427
+#: plug-ins/dbbrowser/dbbrowser_utils.c:416
 msgid "Out:"
 msgstr "Sortida:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:481
+#: plug-ins/dbbrowser/dbbrowser_utils.c:470
 msgid "Help:"
 msgstr "Ajuda:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:606
+#: plug-ins/dbbrowser/dbbrowser_utils.c:595
 #, fuzzy
 msgid "Searching by name - please wait"
 msgstr "Navegador de la base de dades (per nom; si us plau, espereu)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:629
+#: plug-ins/dbbrowser/dbbrowser_utils.c:618
 #, fuzzy
 msgid "Searching by blurb - please wait"
 msgstr ""
 "Navegador de la base de dades (per anunci de portada; si us plau, espereu)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:639
+#: plug-ins/dbbrowser/dbbrowser_utils.c:628
 msgid "Searching - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:675
+#: plug-ins/dbbrowser/dbbrowser_utils.c:665
 msgid "No matches"
 msgstr ""
 
@@ -866,6 +868,7 @@ msgstr "Transparenta el fons"
 #: plug-ins/script-fu/scripts/land.scm.h:3
 #: plug-ins/script-fu/scripts/lava.scm.h:2
 #: plug-ins/script-fu/scripts/rendermap.scm.h:4
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:8
 msgid "Gradient"
 msgstr "Degradat"
 
@@ -1279,6 +1282,7 @@ msgstr "Radi de difuminat"
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:4
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:5
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:5
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:4
 msgid "Color"
 msgstr "Color"
 
@@ -1641,16 +1645,17 @@ msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
 msgstr "<Quadre d'eines>/Extensions/Script-Fu/Útils/Gradient personalitzat..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:1
-msgid "<Image>/Script-Fu/Render/Make Grid System..."
-msgstr "<Imatge>/Script-Fu/Render/Fer un sistema de graella..."
+#, fuzzy
+msgid "<Image>/Script-Fu/Render/Grid..."
+msgstr "<Imatge>/Script-Fu/Render/Circuit..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:2
-msgid "Grids X"
-msgstr "Graelles en X"
+msgid "X Divisions"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:3
-msgid "Grids Y"
-msgstr "Graelles en Y"
+msgid "Y Divisions"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
 msgid "<Image>/Script-Fu/Utils/Draw HSV Graph..."
@@ -2146,6 +2151,143 @@ msgstr "Índex a n colors (0 = romà en RGB)"
 msgid "Turn from Left to Right"
 msgstr "Gira d'esquerra a dreta"
 
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:1
+msgid "Airbrush"
+msgstr "Esprai"
+
+#
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:2
+#, fuzzy
+msgid "Brush"
+msgstr "Utilitza el pinzell"
+
+#
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:3
+#, fuzzy
+msgid "Circle"
+msgstr "Mosaic"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:5
+#, fuzzy
+msgid "Color Method"
+msgstr "Paleta de color"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:6
+msgid "Epitrochoid"
+msgstr ""
+
+#
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
+#, fuzzy
+msgid "Frame"
+msgstr "Marcs"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:9
+#, fuzzy
+msgid "Gradient: Loop Sawtooth"
+msgstr "Encercla amb dents de serra"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:10
+#, fuzzy
+msgid "Gradient: Loop Triangle"
+msgstr "Encercla amb triangles"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:11
+#, fuzzy
+msgid "Hexagon"
+msgstr "Hexàgons"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:12
+#, fuzzy
+msgid "Hole Ratio"
+msgstr "Ràtio de l'escala:"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:13
+#, fuzzy
+msgid "Inner Teeth"
+msgstr "Encreua"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:14
+msgid "Lissajous"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:15
+#, fuzzy
+msgid "Margin (pixels)"
+msgstr "Radi (píxels)"
+
+#
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:16
+#, fuzzy
+msgid "Outer Teeth"
+msgstr "Contorn exterior"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:17
+msgid "Pencil"
+msgstr "Llapis"
+
+#
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:18
+#, fuzzy
+msgid "Pentagon"
+msgstr "Orientació"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:19
+msgid "Polygon: 10 sides"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:20
+msgid "Polygon: 7 sides"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:21
+msgid "Polygon: 8 sides"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:22
+msgid "Polygon: 9 sides"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:23
+msgid "Shape"
+msgstr "Ombra"
+
+#
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:24
+#, fuzzy
+msgid "Solid Color"
+msgstr "Omplenar de color"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:25
+msgid "Spyrograph"
+msgstr ""
+
+#
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:26
+#, fuzzy
+msgid "Square"
+msgstr "Quadrats"
+
+#
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:27
+#: plug-ins/script-fu/scripts/text-circle.scm.h:7
+msgid "Start Angle"
+msgstr "Angle inicial"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:28
+#, fuzzy
+msgid "Tool"
+msgstr "Caixa d'eines"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:29
+#, fuzzy
+msgid "Triangle"
+msgstr "Encercla amb triangles"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:30
+msgid "Type"
+msgstr "Tipus"
+
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Starburst..."
 msgstr "<Imatge>/Script-Fu/Alfa a logo/Llum d'estel..."
@@ -2252,11 +2394,6 @@ msgstr "Antialiasing"
 msgid "Fill Angle"
 msgstr "Emplena l'angle"
 
-#
-#: plug-ins/script-fu/scripts/text-circle.scm.h:7
-msgid "Start Angle"
-msgstr "Angle inicial"
-
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Textured..."
 msgstr "<Imatge>/Script-Fu/Alfa a logo/Texturitzat..."
@@ -2329,38 +2466,6 @@ msgstr "RLE"
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
 msgstr ""
 "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Capçalera de títol de web..."
-
-#
-#: plug-ins/script-fu/scripts/trochoid.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
-msgstr ""
-"<Quadre d'eines>/Extensions/Script-Fu/Patrons/corves de cercles girants..."
-
-#: plug-ins/script-fu/scripts/trochoid.scm.h:2
-msgid "Base Radius (pixels)"
-msgstr "Radi base (píxels)"
-
-#: plug-ins/script-fu/scripts/trochoid.scm.h:3
-msgid "Erase before Draw"
-msgstr "Esborra abans de dibuixar"
-
-#
-#: plug-ins/script-fu/scripts/trochoid.scm.h:4
-msgid "Hue Rate"
-msgstr "Velocitat del to de color"
-
-#: plug-ins/script-fu/scripts/trochoid.scm.h:5
-msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
-msgstr "Radi Llapis/Radi roda [0.0:1.0]"
-
-#
-#: plug-ins/script-fu/scripts/trochoid.scm.h:6
-msgid "Use Brush"
-msgstr "Utilitza el pinzell"
-
-#: plug-ins/script-fu/scripts/trochoid.scm.h:7
-msgid "Wheel Radius (hypo < 0 < epi)"
-msgstr "Radi del cercle (hipo < 0 < epi)"
 
 #
 #: plug-ins/script-fu/scripts/truchet.scm.h:1
@@ -2554,6 +2659,36 @@ msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 msgstr ""
 "<Quadre d'eines>/Extensions/Navegador web/Usuari de les preguntes més "
 "freqüents"
+
+#~ msgid "<Image>/Script-Fu/Render/Make Grid System..."
+#~ msgstr "<Imatge>/Script-Fu/Render/Fer un sistema de graella..."
+
+#~ msgid "Grids X"
+#~ msgstr "Graelles en X"
+
+#~ msgid "Grids Y"
+#~ msgstr "Graelles en Y"
+
+#
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
+#~ msgstr ""
+#~ "<Quadre d'eines>/Extensions/Script-Fu/Patrons/corves de cercles girants..."
+
+#~ msgid "Base Radius (pixels)"
+#~ msgstr "Radi base (píxels)"
+
+#~ msgid "Erase before Draw"
+#~ msgstr "Esborra abans de dibuixar"
+
+#
+#~ msgid "Hue Rate"
+#~ msgstr "Velocitat del to de color"
+
+#~ msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
+#~ msgstr "Radi Llapis/Radi roda [0.0:1.0]"
+
+#~ msgid "Wheel Radius (hypo < 0 < epi)"
+#~ msgstr "Radi del cercle (hipo < 0 < epi)"
 
 #~ msgid ""
 #~ "At least one font you've choosen is invalid.\n"
@@ -2833,9 +2968,6 @@ msgstr ""
 
 #~ msgid "Subtract"
 #~ msgstr "Resta"
-
-#~ msgid "Intersect"
-#~ msgstr "Encreua"
 
 #~ msgid "Fuzziness Threshold"
 #~ msgstr "Llindar del difuminat"
@@ -3180,9 +3312,6 @@ msgstr ""
 
 #~ msgid "Exposure:"
 #~ msgstr "Exposició:"
-
-#~ msgid "Type"
-#~ msgstr "Tipus"
 
 #~ msgid "Dodge"
 #~ msgstr "Esvair"
@@ -3998,9 +4127,6 @@ msgstr ""
 #~ msgid "Resolution:"
 #~ msgstr "Resolució:"
 
-#~ msgid "Scale Ratio:"
-#~ msgstr "Ràtio de l'escala:"
-
 #~ msgid "Display Type:"
 #~ msgstr "Tipus de visualització:"
 
@@ -4036,9 +4162,6 @@ msgstr ""
 
 #~ msgid "Tilt:"
 #~ msgstr "Inclinació:"
-
-#~ msgid "Shape"
-#~ msgstr "Ombra"
 
 #~ msgid ""
 #~ "Foreground & background colors.  The black and white squares reset "
@@ -5001,12 +5124,6 @@ msgstr ""
 #~ msgid "Once Backward"
 #~ msgstr "Endarrere un cop"
 
-#~ msgid "Loop Sawtooth"
-#~ msgstr "Encercla amb dents de serra"
-
-#~ msgid "Loop Triangle"
-#~ msgstr "Encercla amb triangles"
-
 #~ msgid ""
 #~ "Loading palette %s:\n"
 #~ "Corrupt palette:\n"
@@ -5083,9 +5200,6 @@ msgstr ""
 
 #~ msgid "Color Palette Edit"
 #~ msgstr "Edició de la paleta de color"
-
-#~ msgid "Color Palette"
-#~ msgstr "Paleta de color"
 
 #~ msgid "Select"
 #~ msgstr "Selecciona"
@@ -5354,9 +5468,6 @@ msgstr ""
 
 #~ msgid "Recent Documents List Size:"
 #~ msgstr "Mida de la llista de documents recents:"
-
-#~ msgid "Toolbox"
-#~ msgstr "Caixa d'eines"
 
 #~ msgid "Display Brush, Pattern and Gradient Indicators"
 #~ msgstr ""
@@ -5783,17 +5894,11 @@ msgstr ""
 #~ msgid "Blend Tool"
 #~ msgstr "Eina de mescla"
 
-#~ msgid "Pencil"
-#~ msgstr "Llapis"
-
 #~ msgid "Paintbrush"
 #~ msgstr "Pinzell"
 
 #~ msgid "Eraser"
 #~ msgstr "Goma d'esborrar"
-
-#~ msgid "Airbrush"
-#~ msgstr "Esprai"
 
 #~ msgid "Clone Tool"
 #~ msgstr "Eina de clonatge"

@@ -4,12 +4,13 @@
 
 
 GIMP 1.3 is the development branch of The GIMP. Here's where the
-development takes place on the road to the next stable release
-dubbed GIMP 1.4.
+development takes place on the road to the next stable release.
 
 
 Overview of Changes in GIMP 1.3.16
 ==================================
+- Vector tool improvements [Simon]
+- Import GDynText layers [Sven]
 - Save and load text layers to/from XCF files [Sven]
 - Added the ability to show a grid over the canvas [Brix]
 - Keep EXIF data in JPEG files using libexif [Bolsh]
@@ -24,7 +25,7 @@ Overview of Changes in GIMP 1.3.16
 - Lots of bug fixes
 
 Other contributors:
-  Yohei Honda, Elad Shahar
+  Yohei Honda, Elad Shahar, Dave Neary, Jakub Steiner
 
 
 Overview of Changes in GIMP 1.3.15

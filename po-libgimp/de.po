@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.15\n"
-"POT-Creation-Date: 2003-06-16 22:40+0200\n"
+"POT-Creation-Date: 2003-06-26 22:14+0200\n"
 "PO-Revision-Date: 2003-06-16 22:42+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: libgimp/gimpbrushmenu.c:318
+#: libgimp/gimpbrushmenu.c:321
 msgid "Brush Selection"
 msgstr "Pinselauswahl"
 
@@ -166,16 +166,16 @@ msgstr ""
 "Sie sichern einen Kanal (gesicherte Selektion) als %s.\n"
 "Die sichtbaren Ebenen werden dabei nicht gesichert."
 
-#: libgimp/gimpfontmenu.c:76
+#: libgimp/gimpfontmenu.c:80
 msgid "Font Selection"
 msgstr "Schriftenauswahl"
 
-#: libgimp/gimpgradientmenu.c:181
+#: libgimp/gimpgradientmenu.c:172
 msgid "Gradient Selection"
 msgstr "Gradientenauswahl"
 
-#: libgimp/gimpmenu.c:181 libgimp/gimpmenu.c:301 libgimp/gimpmenu.c:416
-#: libgimp/gimpmenu.c:598
+#: libgimp/gimpmenu.c:176 libgimp/gimpmenu.c:296 libgimp/gimpmenu.c:411
+#: libgimp/gimpmenu.c:593
 msgid "None"
 msgstr "Keine"
 
@@ -192,7 +192,7 @@ msgid ""
 "to your %s file."
 msgstr ""
 
-#: libgimp/gimppatternmenu.c:289
+#: libgimp/gimppatternmenu.c:321
 msgid "Pattern Selection"
 msgstr "Musterauswahl"
 
@@ -511,7 +511,7 @@ msgstr "Gamma Anzeigenfarbfilter"
 msgid "Gamma"
 msgstr "Gamma"
 
-#: modules/cdisplay_gamma.c:317
+#: modules/cdisplay_gamma.c:320
 msgid "Gamma:"
 msgstr "Gamma:"
 
@@ -523,7 +523,7 @@ msgstr "Hochkontrast Anzeigenfarbfilter"
 msgid "Contrast"
 msgstr "Kontrast"
 
-#: modules/cdisplay_highcontrast.c:315
+#: modules/cdisplay_highcontrast.c:318
 msgid "Contrast Cycles:"
 msgstr "Kontrastverstärkung:"
 

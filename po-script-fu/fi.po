@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: script-fu \n"
-"POT-Creation-Date: 2003-06-09 22:54+0200\n"
+"POT-Creation-Date: 2003-06-26 22:18+0200\n"
 "PO-Revision-Date: 2000-06-16 19:40+0300\n"
 "Last-Translator: Ville Hautamäki <villeh@cs.joensuu.fi>\n"
 "Language-Team: Finnish <fi@li.org>\n"
@@ -31,97 +31,99 @@ msgstr "SIOD-tuloste"
 msgid "Current Command"
 msgstr "Nykyinen komento"
 
-#: plug-ins/script-fu/script-fu-console.c:287
+#: plug-ins/script-fu/script-fu-console.c:286
 msgid "Browse..."
 msgstr "Selaa..."
 
-#: plug-ins/script-fu/script-fu-console.c:583
+#: plug-ins/script-fu/script-fu-console.c:582
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "SIODin tulostusputkea ei saatu avatuksi"
 
-#: plug-ins/script-fu/script-fu-console.c:589
+#: plug-ins/script-fu/script-fu-console.c:588
 #, fuzzy
 msgid "Unable to open the SIOD output pipe"
 msgstr "SIODin tulostusputkea ei saatu avatuksi"
 
-#: plug-ins/script-fu/script-fu-console.c:634
+#: plug-ins/script-fu/script-fu-console.c:633
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu:n evaluointitila sallii ainoastaan ei-interaktiivisen käytön"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1164
-#: plug-ins/script-fu/script-fu-scripts.c:1166
+#: plug-ins/script-fu/script-fu-scripts.c:1112
+#: plug-ins/script-fu/script-fu-scripts.c:1114
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1174
+#: plug-ins/script-fu/script-fu-scripts.c:1122
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1208
+#: plug-ins/script-fu/script-fu-scripts.c:1156
 msgid "About"
 msgstr "Tietoja"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1218
+#: plug-ins/script-fu/script-fu-scripts.c:1166
 msgid "Script Arguments"
 msgstr "Scriptin parametrit"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1242
+#. we add a colon after the label;
+#. some languages want an extra space here
+#: plug-ins/script-fu/script-fu-scripts.c:1193
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1289
+#: plug-ins/script-fu/script-fu-scripts.c:1239
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu värien selain"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1369
+#: plug-ins/script-fu/script-fu-scripts.c:1319
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu tiedostojen selain"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1374
+#: plug-ins/script-fu/script-fu-scripts.c:1324
 #, fuzzy
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu tiedostojen selain"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1391
+#: plug-ins/script-fu/script-fu-scripts.c:1341
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu merkistön valinta"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1399
+#: plug-ins/script-fu/script-fu-scripts.c:1349
 msgid "Script-fu Pattern Selection"
 msgstr "Script-fu kuvioiden selain"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1406
+#: plug-ins/script-fu/script-fu-scripts.c:1356
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu väriliukumien selain"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1414
+#: plug-ins/script-fu/script-fu-scripts.c:1364
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu siveltimien selain"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:499
-#: plug-ins/script-fu/script-fu-scripts.c:1908
+#: plug-ins/dbbrowser/dbbrowser_utils.c:488
+#: plug-ins/script-fu/script-fu-scripts.c:1858
 msgid "Author:"
 msgstr "Tekijä:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:515
-#: plug-ins/script-fu/script-fu-scripts.c:1914
+#: plug-ins/dbbrowser/dbbrowser_utils.c:504
+#: plug-ins/script-fu/script-fu-scripts.c:1864
 msgid "Copyright:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:507
-#: plug-ins/script-fu/script-fu-scripts.c:1920
+#: plug-ins/dbbrowser/dbbrowser_utils.c:496
+#: plug-ins/script-fu/script-fu-scripts.c:1870
 msgid "Date:"
 msgstr "Päiväys:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1928
+#: plug-ins/script-fu/script-fu-scripts.c:1878
 msgid "Image Types:"
 msgstr "Kuvatyypit:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2051
+#: plug-ins/script-fu/script-fu-scripts.c:2001
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -132,88 +134,88 @@ msgstr ""
 " %s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:574
+#: plug-ins/script-fu/script-fu-server.c:601
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu palvelimen valinnat"
 
-#: plug-ins/script-fu/script-fu-server.c:601
+#: plug-ins/script-fu/script-fu-server.c:629
 msgid "Server Port:"
 msgstr "Palvelimen portti:"
 
-#: plug-ins/script-fu/script-fu-server.c:607
+#: plug-ins/script-fu/script-fu-server.c:635
 msgid "Server Logfile:"
 msgstr "Palvelimen lokitiedosto:"
 
-#: plug-ins/script-fu/script-fu.c:127
+#: plug-ins/script-fu/script-fu.c:122
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."
 msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
-#: plug-ins/script-fu/script-fu.c:152
+#: plug-ins/script-fu/script-fu.c:147
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
 msgstr "<Toolbox>/Lisäykset/Script-Fu/Palvelin..."
 
-#: plug-ins/script-fu/script-fu.c:276 plug-ins/script-fu/script-fu.c:277
+#: plug-ins/script-fu/script-fu.c:271 plug-ins/script-fu/script-fu.c:272
 msgid "Re-read all available scripts"
 msgstr "Lue uudestaan kaikki skriptit"
 
-#: plug-ins/script-fu/script-fu.c:281
+#: plug-ins/script-fu/script-fu.c:276
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Lisäykset/Script-Fu/Virkistä"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:129
-#: plug-ins/dbbrowser/dbbrowser_utils.c:148
+#: plug-ins/dbbrowser/dbbrowser_utils.c:118
+#: plug-ins/dbbrowser/dbbrowser_utils.c:137
 #, fuzzy
 msgid "DB Browser"
 msgstr "Selaa..."
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:134
-#: plug-ins/dbbrowser/dbbrowser_utils.c:153
+#: plug-ins/dbbrowser/dbbrowser_utils.c:123
+#: plug-ins/dbbrowser/dbbrowser_utils.c:142
 msgid "Search by _Name"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:136
-#: plug-ins/dbbrowser/dbbrowser_utils.c:155
+#: plug-ins/dbbrowser/dbbrowser_utils.c:125
+#: plug-ins/dbbrowser/dbbrowser_utils.c:144
 msgid "Search by _Blurb"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:216
+#: plug-ins/dbbrowser/dbbrowser_utils.c:205
 msgid "_Search:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:358
+#: plug-ins/dbbrowser/dbbrowser_utils.c:347
 #, fuzzy
 msgid "Name:"
 msgstr "Päiväys:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:367
+#: plug-ins/dbbrowser/dbbrowser_utils.c:356
 msgid "Blurb:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:379
+#: plug-ins/dbbrowser/dbbrowser_utils.c:368
 msgid "In:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:427
+#: plug-ins/dbbrowser/dbbrowser_utils.c:416
 msgid "Out:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:481
+#: plug-ins/dbbrowser/dbbrowser_utils.c:470
 msgid "Help:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:606
+#: plug-ins/dbbrowser/dbbrowser_utils.c:595
 msgid "Searching by name - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:629
+#: plug-ins/dbbrowser/dbbrowser_utils.c:618
 msgid "Searching by blurb - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:639
+#: plug-ins/dbbrowser/dbbrowser_utils.c:628
 msgid "Searching - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:675
+#: plug-ins/dbbrowser/dbbrowser_utils.c:665
 msgid "No matches"
 msgstr ""
 
@@ -813,6 +815,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/land.scm.h:3
 #: plug-ins/script-fu/scripts/lava.scm.h:2
 #: plug-ins/script-fu/scripts/rendermap.scm.h:4
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:8
 msgid "Gradient"
 msgstr ""
 
@@ -1191,6 +1194,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:4
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:5
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:5
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:4
 #, fuzzy
 msgid "Color"
 msgstr "Sulje"
@@ -1511,15 +1515,16 @@ msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
 msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:1
-msgid "<Image>/Script-Fu/Render/Make Grid System..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Render/Grid..."
+msgstr "Script-Fu merkistön valinta"
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:2
-msgid "Grids X"
+msgid "X Divisions"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:3
-msgid "Grids Y"
+msgid "Y Divisions"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
@@ -1966,6 +1971,121 @@ msgstr ""
 msgid "Turn from Left to Right"
 msgstr ""
 
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:1
+msgid "Airbrush"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:2
+msgid "Brush"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:3
+msgid "Circle"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:5
+msgid "Color Method"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:6
+msgid "Epitrochoid"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
+#, fuzzy
+msgid "Frame"
+msgstr "Päiväys:"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:9
+msgid "Gradient: Loop Sawtooth"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:10
+msgid "Gradient: Loop Triangle"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:11
+msgid "Hexagon"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:12
+msgid "Hole Ratio"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:13
+msgid "Inner Teeth"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:14
+msgid "Lissajous"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:15
+msgid "Margin (pixels)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:16
+msgid "Outer Teeth"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:17
+msgid "Pencil"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:18
+msgid "Pentagon"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:19
+msgid "Polygon: 10 sides"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:20
+msgid "Polygon: 7 sides"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:21
+msgid "Polygon: 8 sides"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:22
+msgid "Polygon: 9 sides"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:23
+msgid "Shape"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:24
+#, fuzzy
+msgid "Solid Color"
+msgstr "Sulje"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:25
+msgid "Spyrograph"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:26
+msgid "Square"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:27
+#: plug-ins/script-fu/scripts/text-circle.scm.h:7
+msgid "Start Angle"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:28
+msgid "Tool"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:29
+msgid "Triangle"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:30
+msgid "Type"
+msgstr ""
+
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Starburst..."
 msgstr ""
@@ -2060,10 +2180,6 @@ msgstr ""
 msgid "Fill Angle"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/text-circle.scm.h:7
-msgid "Start Angle"
-msgstr ""
-
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Textured..."
 msgstr ""
@@ -2129,35 +2245,6 @@ msgstr ""
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
 msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
-
-#: plug-ins/script-fu/scripts/trochoid.scm.h:1
-#, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
-msgstr "<Toolbox>/Lisäykset/Script-Fu/Palvelin..."
-
-#: plug-ins/script-fu/scripts/trochoid.scm.h:2
-msgid "Base Radius (pixels)"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/trochoid.scm.h:3
-msgid "Erase before Draw"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/trochoid.scm.h:4
-msgid "Hue Rate"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/trochoid.scm.h:5
-msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/trochoid.scm.h:6
-msgid "Use Brush"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/trochoid.scm.h:7
-msgid "Wheel Radius (hypo < 0 < epi)"
-msgstr ""
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:1
 #, fuzzy
@@ -2331,6 +2418,10 @@ msgstr ""
 #: plug-ins/webbrowser/web-browser.scm.h:17
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 msgstr ""
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
+#~ msgstr "<Toolbox>/Lisäykset/Script-Fu/Palvelin..."
 
 #~ msgid ""
 #~ "At least one font you've choosen is invalid.\n"

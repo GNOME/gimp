@@ -68,7 +68,7 @@ sets how many processors GIMP should use simultaneously.  This is an integer
 value.
 
 .TP
-(tile-cache-size 32M)
+(tile-cache-size 64M)
 
 The tile cache is used to make sure the GIMP doesn't thrash tiles between
 memory and disk. Setting this value higher will cause the GIMP to use less
@@ -90,12 +90,6 @@ Possible values are none, linear and cubic.
 
 Sets the plug-in search path.  This is a colon-separated list of folders to
 search.
-
-.TP
-(tool-plug-in-path "${gimp_dir}/tool-plug-ins:${gimp_plug_in_dir}/tool-plug-ins")
-
-Sets the tool-plug-in search path.  This is a colon-separated list of folders
-to search.
 
 .TP
 (module-path "${gimp_dir}/modules:${gimp_plug_in_dir}/modules")
@@ -440,7 +434,7 @@ certain % character sequences are recognised and expanded as follows:
 .br
 
 .TP
-(show-menubar no)
+(show-menubar yes)
 
 When enabled, the menubar is visible by default. This can also be toggled with
 the "View->Show Menubar" command.  Possible values are yes and no.

@@ -85,6 +85,11 @@ recognizes. These are:
      support for TIFF, JPEG or PNG you need to explicitely disable
      them using the options given above.
  
+  --without-exif.  If libexif is available, the JPEG plug-in will use
+     it to keep EXIF data in your JPEG files intact.  If this is
+     causing any trouble at compile-time, you can build --without-exif.
+     Get libexif from http://www.sourceforge.net/projects/libexif.
+
   --enable-gtk-doc.  This option controls whether the libgimp API
      references will be created using gtk-doc. The HTML pages are 
      included in a standard tarball, so you will only need this if you

@@ -5,13 +5,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"POT-Creation-Date: 2003-06-09 16:03+0200\n"
+"POT-Creation-Date: 2003-06-26 22:14+0200\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
 "Language-Team: Românã <ro@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: libgimp/gimpbrushmenu.c:321
+msgid "Brush Selection"
+msgstr "Selecþie pensulã"
 
 #: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
 #, fuzzy, c-format
@@ -163,8 +167,17 @@ msgid ""
 "This will not save the visible layers."
 msgstr ""
 
-#: libgimp/gimpmenu.c:181 libgimp/gimpmenu.c:301 libgimp/gimpmenu.c:416
-#: libgimp/gimpmenu.c:598
+#: libgimp/gimpfontmenu.c:80
+#, fuzzy
+msgid "Font Selection"
+msgstr "Din selecþie"
+
+#: libgimp/gimpgradientmenu.c:172
+msgid "Gradient Selection"
+msgstr "Selectie Gradient"
+
+#: libgimp/gimpmenu.c:176 libgimp/gimpmenu.c:296 libgimp/gimpmenu.c:411
+#: libgimp/gimpmenu.c:593
 msgid "None"
 msgstr "Nimic"
 
@@ -180,6 +193,10 @@ msgid ""
 "(%s \"%s\")\n"
 "to your %s file."
 msgstr ""
+
+#: libgimp/gimppatternmenu.c:321
+msgid "Pattern Selection"
+msgstr "Selecþie model"
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
@@ -271,79 +288,79 @@ msgstr "Numai negru"
 msgid "/White"
 msgstr "Alb"
 
-#: libgimpwidgets/gimpcolorscales.c:141
+#: libgimpwidgets/gimpcolorscales.c:142
 #, fuzzy
 msgid "Scales"
 msgstr "Scalare"
 
-#: libgimpwidgets/gimpcolorscales.c:163 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:354
 #, fuzzy
 msgid "_H"
 msgstr "H"
 
-#: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:354
 #, fuzzy
 msgid "_S"
 msgstr "S"
 
-#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:354
 #, fuzzy
 msgid "_V"
 msgstr "V"
 
-#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:354
 #, fuzzy
 msgid "_R"
 msgstr "R"
 
-#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:354
 #, fuzzy
 msgid "_G"
 msgstr "G"
 
-#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:354
 #, fuzzy
 msgid "_B"
 msgstr "B"
 
-#: libgimpwidgets/gimpcolorscales.c:169
+#: libgimpwidgets/gimpcolorscales.c:170
 #, fuzzy
 msgid "_A"
 msgstr "A"
 
-#: libgimpwidgets/gimpcolorscales.c:173 libgimpwidgets/gimpcolorselect.c:357
+#: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:358
 msgid "Hue"
 msgstr "Nuanþã"
 
-#: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:358
+#: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:359
 msgid "Saturation"
 msgstr "Saturare"
 
-#: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:359
+#: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:360
 msgid "Value"
 msgstr "Valoare"
 
-#: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:360
+#: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:361
 msgid "Red"
 msgstr "Roºu"
 
-#: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:361
+#: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:362
 msgid "Green"
 msgstr "Verde"
 
-#: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:362
+#: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:363
 msgid "Blue"
 msgstr "Albastru"
 
-#: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:363
+#: libgimpwidgets/gimpcolorscales.c:180 libgimpwidgets/gimpcolorselect.c:364
 msgid "Alpha"
 msgstr "Alfa"
 
-#: libgimpwidgets/gimpcolorscales.c:253
+#: libgimpwidgets/gimpcolorscales.c:254
 msgid "Hexadecimal color notation as used in HTML"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:267
+#: libgimpwidgets/gimpcolorscales.c:268
 #, fuzzy
 msgid "He_x Triplet:"
 msgstr "Triplet hexazecimal:"
@@ -524,7 +541,7 @@ msgstr ""
 msgid "Gamma"
 msgstr ""
 
-#: modules/cdisplay_gamma.c:317
+#: modules/cdisplay_gamma.c:320
 msgid "Gamma:"
 msgstr ""
 
@@ -537,7 +554,7 @@ msgstr ""
 msgid "Contrast"
 msgstr "Contrast:"
 
-#: modules/cdisplay_highcontrast.c:315
+#: modules/cdisplay_highcontrast.c:318
 #, fuzzy
 msgid "Contrast Cycles:"
 msgstr "Contrast:"
@@ -694,9 +711,6 @@ msgstr "Presiune"
 
 #~ msgid "Angle:"
 #~ msgstr "Unghi:"
-
-#~ msgid "Brush Selection"
-#~ msgstr "Selecþie pensulã"
 
 #~ msgid "No Brushes available"
 #~ msgstr "Nu este disponibilã nici o pensulã"
@@ -1621,9 +1635,6 @@ msgstr "Presiune"
 
 #~ msgid "you want to replicate the selection"
 #~ msgstr "doriþi sã replicaþi selecþia"
-
-#~ msgid "Gradient Selection"
-#~ msgstr "Selectie Gradient"
 
 #~ msgid ""
 #~ "The active brush.\n"
@@ -2648,9 +2659,6 @@ msgstr "Presiune"
 
 #~ msgid "Store Path"
 #~ msgstr "Memoreazã traseul"
-
-#~ msgid "Pattern Selection"
-#~ msgstr "Selecþie model"
 
 #~ msgid "No Patterns available"
 #~ msgstr "Nu este disponibil nici un model"
@@ -4122,9 +4130,6 @@ msgstr "Presiune"
 
 #~ msgid "Origin X:"
 #~ msgstr "Originea pe X:"
-
-#~ msgid "From Selection"
-#~ msgstr "Din selecþie"
 
 #~ msgid "Auto Shrink"
 #~ msgstr "Micºorare automatã"

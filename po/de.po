@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.16\n"
-"POT-Creation-Date: 2003-06-25 20:48+0200\n"
+"POT-Creation-Date: 2003-06-26 22:13+0200\n"
 "PO-Revision-Date: 2003-06-25 20:53+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -1269,7 +1269,7 @@ msgstr "Ungültiger UTF-8 Text in Pinseldatei »%s«."
 #: app/core/gimpcontext.c:1302 app/core/gimpgradient.c:385
 #: app/core/gimpitem.c:382 app/core/gimppalette.c:438
 #: app/core/gimppattern.c:410 app/gui/templates-commands.c:126
-#: app/tools/gimpvectortool.c:329
+#: app/tools/gimpvectortool.c:276
 msgid "Unnamed"
 msgstr "Namenlos"
 
@@ -3144,7 +3144,7 @@ msgstr "Ein neues Bild erstellen"
 msgid "From _Template:"
 msgstr "Von _Vorlage:"
 
-#: app/gui/file-new-dialog.c:278
+#: app/gui/file-new-dialog.c:276
 #, c-format
 msgid ""
 "You are trying to create an image with\n"
@@ -3170,7 +3170,7 @@ msgstr ""
 "angezeigt wird, erhöhen Sie den Wert »Maximale Bildgröße«\n"
 "(zur Zeit %s) in den Einstellungen."
 
-#: app/gui/file-new-dialog.c:293
+#: app/gui/file-new-dialog.c:291
 msgid "Confirm Image Size"
 msgstr "Bildgröße bestätigen"
 
@@ -6242,9 +6242,10 @@ msgstr ""
 "GIMP-Benutzerinstallation zu starten."
 
 #: app/gui/user-install-dialog.c:742
+#, fuzzy
 msgid ""
 "The GIMP - GNU Image Manipulation Program\n"
-"Copyright (C) 1995-2002\n"
+"Copyright (C) 1995-2003\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team."
 msgstr ""
 "The GIMP - GNU Image Manipulation Program\n"
@@ -6938,11 +6939,9 @@ msgstr ""
 msgid "Add Text Layer"
 msgstr "Textebene hinzufügen"
 
-#: app/text/gimptext-parasite.c:162
-msgid ""
-"Can not convert GDynText layer because it contains text that is not UTF-8 "
-"encoded."
-msgstr ""
+#: app/text/gimptext-parasite.c:171 app/xcf/xcf-read.c:115
+msgid "(invalid UTF-8 string)"
+msgstr "(ungültige UTF-8-Zeichenkette)"
 
 #: app/text/gimptext.c:159
 msgid ""
@@ -8403,7 +8402,7 @@ msgid "Color Index:"
 msgstr "Farbindex:"
 
 #: app/widgets/gimpcontainergridview.c:201
-#: app/widgets/gimpcontainergridview.c:576
+#: app/widgets/gimpcontainergridview.c:581
 msgid "(None)"
 msgstr "(Keine)"
 
@@ -9042,10 +9041,6 @@ msgstr ""
 "XCF Warnung: Version 0 des XCF-Dateiformats\n"
 "hat indizierte Farbpaletten falsch gespeichert.\n"
 "Farben wurden durch Graustufen ersetzt."
-
-#: app/xcf/xcf-read.c:115
-msgid "(invalid UTF-8 string)"
-msgstr "(ungültige UTF-8-Zeichenkette)"
 
 #: app/xcf/xcf-save.c:146 app/xcf/xcf-save.c:156 app/xcf/xcf-save.c:166
 #: app/xcf/xcf-save.c:176 app/xcf/xcf-save.c:190 app/xcf/xcf.c:318

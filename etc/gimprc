@@ -50,7 +50,7 @@
 # or gigabytes. If no suffix is specified the size defaults to being
 # specified in kilobytes.
 #
-# (tile-cache-size 32M)
+# (tile-cache-size 64M)
 
 # Sets the level of interpolation used for scaling and other transformations.
 #  Possible values are none, linear and cubic.
@@ -61,11 +61,6 @@
 # search.
 #
 # (plug-in-path "${gimp_dir}/plug-ins:${gimp_plug_in_dir}/plug-ins")
-
-# Sets the tool-plug-in search path.  This is a colon-separated list of
-# folders to search.
-#
-# (tool-plug-in-path "${gimp_dir}/tool-plug-ins:${gimp_plug_in_dir}/tool-plug-ins")
 
 # Sets the module search path.  This is a colon-separated list of folders to
 # search.
@@ -330,7 +325,7 @@
 # When enabled, the menubar is visible by default. This can also be toggled
 # with the "View->Show Menubar" command.  Possible values are yes and no.
 #
-# (show-menubar no)
+# (show-menubar yes)
 
 # When enabled, the rulers are visible by default. This can also be toggled
 # with the "View->Show Rulers" command.  Possible values are yes and no.

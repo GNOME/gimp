@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
-"POT-Creation-Date: 2003-06-18 21:15+0200\n"
+"POT-Creation-Date: 2003-06-26 22:14+0200\n"
 "PO-Revision-Date: 2003-06-18 21:21+0200\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -175,8 +175,8 @@ msgstr "Typsnittsval"
 msgid "Gradient Selection"
 msgstr "Gradientval"
 
-#: libgimp/gimpmenu.c:181 libgimp/gimpmenu.c:301 libgimp/gimpmenu.c:416
-#: libgimp/gimpmenu.c:598
+#: libgimp/gimpmenu.c:176 libgimp/gimpmenu.c:296 libgimp/gimpmenu.c:411
+#: libgimp/gimpmenu.c:593
 msgid "None"
 msgstr "Ingen"
 
@@ -517,7 +517,7 @@ msgstr "Gammafärgvisningsfilter"
 msgid "Gamma"
 msgstr "Gamma"
 
-#: modules/cdisplay_gamma.c:317
+#: modules/cdisplay_gamma.c:320
 msgid "Gamma:"
 msgstr "Gamma:"
 
@@ -529,7 +529,7 @@ msgstr "Färgvisningsfilter, högkontrast"
 msgid "Contrast"
 msgstr "Kontrast"
 
-#: modules/cdisplay_highcontrast.c:315
+#: modules/cdisplay_highcontrast.c:318
 msgid "Contrast Cycles:"
 msgstr "Kontrastcykler:"
 

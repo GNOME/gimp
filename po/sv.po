@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2003-06-24 10:07+0200\n"
+"POT-Creation-Date: 2003-06-26 22:13+0200\n"
 "PO-Revision-Date: 2003-06-24 10:15+0200\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -260,8 +260,8 @@ msgstr "Mittentoner"
 msgid "Highlights"
 msgstr "Ljuspunkter"
 
-#: app/config/gimpconfig-deserialize.c:205 app/config/gimpconfig.c:351
-#: app/config/gimpconfig.c:364 app/config/gimpscanner.c:359
+#: app/config/gimpconfig-deserialize.c:205 app/config/gimpconfig.c:374
+#: app/config/gimpconfig.c:387 app/config/gimpscanner.c:388
 #: app/core/gimpunits.c:157 app/gui/session.c:176 app/plug-in/plug-in-rc.c:134
 msgid "fatal parse error"
 msgstr "ödesdigert tolkningsfel"
@@ -697,17 +697,17 @@ msgstr ""
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr "När aktiverad öppnar F1 hjälpläsasaren."
 
-#: app/config/gimpscanner.c:78 app/tools/gimpcurvestool.c:1291
+#: app/config/gimpscanner.c:88 app/tools/gimpcurvestool.c:1291
 #: app/tools/gimplevelstool.c:1489
 #, c-format
 msgid "Failed to open file: '%s': %s"
 msgstr "Misslyckades med att öppna filen: \"%s\": %s"
 
-#: app/config/gimpscanner.c:181
+#: app/config/gimpscanner.c:210
 msgid "invalid UTF-8 string"
 msgstr "ogiltig UTF-8-sträng"
 
-#: app/config/gimpscanner.c:387
+#: app/config/gimpscanner.c:416
 #, c-format
 msgid ""
 "Error while parsing '%s' in line %d:\n"
@@ -1339,7 +1339,7 @@ msgstr "Ogiltig UTF-8-sträng i penselfilen \"%s\"."
 #: app/core/gimpcontext.c:1302 app/core/gimpgradient.c:385
 #: app/core/gimpitem.c:382 app/core/gimppalette.c:438
 #: app/core/gimppattern.c:410 app/gui/templates-commands.c:126
-#: app/tools/gimpvectortool.c:313
+#: app/tools/gimpvectortool.c:276
 msgid "Unnamed"
 msgstr "Namnlös"
 
@@ -3110,7 +3110,7 @@ msgid "/Save Selection to File..."
 msgstr "/Spara markering till fil..."
 
 #: app/gui/file-commands.c:187 app/gui/file-open-dialog.c:703
-#: app/widgets/gimpdocumentview.c:451 app/widgets/gimpdnd.c:1005
+#: app/widgets/gimpdnd.c:1005 app/widgets/gimpdocumentview.c:451
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -3196,7 +3196,7 @@ msgstr "Skapa en ny bild"
 msgid "From _Template:"
 msgstr "Från _mall:"
 
-#: app/gui/file-new-dialog.c:278
+#: app/gui/file-new-dialog.c:276
 #, c-format
 msgid ""
 "You are trying to create an image with\n"
@@ -3223,7 +3223,7 @@ msgstr ""
 "inställningen (för tillfället %s) i\n"
 "inställningsdialogen."
 
-#: app/gui/file-new-dialog.c:293
+#: app/gui/file-new-dialog.c:291
 msgid "Confirm Image Size"
 msgstr "Bekräfta bildstorlek"
 
@@ -5751,7 +5751,6 @@ msgid "Resolution X:"
 msgstr "Upplösning X:"
 
 #: app/gui/resize-dialog.c:639 app/widgets/gimptemplateeditor.c:317
-#, c-format
 msgid "pixels/%a"
 msgstr "bildpunkter/%a"
 
@@ -6289,9 +6288,10 @@ msgid "Click \"Continue\" to enter the GIMP user installation."
 msgstr "Tryck på \"Fortsätt\" för att starta GIMPs användarinstallation."
 
 #: app/gui/user-install-dialog.c:742
+#, fuzzy
 msgid ""
 "The GIMP - GNU Image Manipulation Program\n"
-"Copyright (C) 1995-2002\n"
+"Copyright (C) 1995-2003\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team."
 msgstr ""
 "GIMP - GNU Image Manipulation Program\n"
@@ -6876,8 +6876,8 @@ msgstr "GIMP-tillägg"
 msgid "Temporary Procedure"
 msgstr "Temporär procedur"
 
-#: app/pdb/selection_tools_cmds.c:326 app/tools/tools-enums.c:98
-#: app/tools/gimpfreeselecttool.c:96
+#: app/pdb/selection_tools_cmds.c:326 app/tools/gimpfreeselecttool.c:96
+#: app/tools/tools-enums.c:98
 msgid "Free Select"
 msgstr "Fri markering"
 
@@ -6976,6 +6976,10 @@ msgstr ""
 msgid "Add Text Layer"
 msgstr "Lägg till textlager"
 
+#: app/text/gimptext-parasite.c:171 app/xcf/xcf-read.c:115
+msgid "(invalid UTF-8 string)"
+msgstr "(ogiltig UTF-8-sträng)"
+
 #: app/text/gimptext.c:159
 msgid ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
@@ -6999,11 +7003,11 @@ msgstr "Hur många bildpunkter kortare den första linjen skall vara"
 msgid "Additional line spacing (in pixels)"
 msgstr "Ytterligare radmellanrum ( i bildpunkter)"
 
-#: app/text/gimptextlayer.c:123
+#: app/text/gimptextlayer.c:124
 msgid "Text Layer"
 msgstr "Textlager"
 
-#: app/text/gimptextlayer.c:329
+#: app/text/gimptextlayer.c:409
 msgid "Empty Text Layer"
 msgstr "Tomt textlager"
 
@@ -8231,15 +8235,15 @@ msgstr ""
 "Transformationer fungerar inte på\n"
 "lager som innehåller lagermasker."
 
-#: app/tools/gimpvectortool.c:112
+#: app/tools/gimpvectortool.c:114
 msgid "Vectors"
 msgstr "Vektorer"
 
-#: app/tools/gimpvectortool.c:113
+#: app/tools/gimpvectortool.c:115
 msgid "the most promising path tool prototype... :-)"
 msgstr "den mest lovande slingverktygsprotypen... :-)"
 
-#: app/tools/gimpvectortool.c:114
+#: app/tools/gimpvectortool.c:116
 msgid "/Tools/Vectors"
 msgstr "/Verktyg/Vektorer"
 
@@ -8437,7 +8441,7 @@ msgid "Color Index:"
 msgstr "Färgindex:"
 
 #: app/widgets/gimpcontainergridview.c:201
-#: app/widgets/gimpcontainergridview.c:576
+#: app/widgets/gimpcontainergridview.c:581
 msgid "(None)"
 msgstr "(Ingen)"
 
@@ -9069,7 +9073,7 @@ msgstr "GIMP-meddelande"
 msgid "<%s>"
 msgstr "<%s>"
 
-#: app/xcf/xcf-load.c:258
+#: app/xcf/xcf-load.c:261
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -9079,12 +9083,8 @@ msgstr ""
 "sparade inte indexerade färgkartor rätt.\n"
 "Byter ut gråskalekartan."
 
-#: app/xcf/xcf-read.c:115
-msgid "(invalid UTF-8 string)"
-msgstr "(ogiltig UTF-8-sträng)"
-
-#: app/xcf/xcf-save.c:143 app/xcf/xcf-save.c:153 app/xcf/xcf-save.c:163
-#: app/xcf/xcf-save.c:173 app/xcf/xcf-save.c:187 app/xcf/xcf.c:318
+#: app/xcf/xcf-save.c:146 app/xcf/xcf-save.c:156 app/xcf/xcf-save.c:166
+#: app/xcf/xcf-save.c:176 app/xcf/xcf-save.c:190 app/xcf/xcf.c:318
 #, c-format
 msgid "Error saving XCF file: %s"
 msgstr "Fel vid sparande av XCF-fil: %s"

@@ -5,13 +5,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp VERSION\n"
-"POT-Creation-Date: 2003-06-09 16:03+0200\n"
+"POT-Creation-Date: 2003-06-26 22:14+0200\n"
 "PO-Revision-Date: 2000-12-18 23:30-0800\n"
 "Last-Translator: Nobody\n"
 "Language-Team: Irish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: libgimp/gimpbrushmenu.c:321
+msgid "Brush Selection"
+msgstr ""
 
 #: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
 #, c-format
@@ -153,8 +157,16 @@ msgid ""
 "This will not save the visible layers."
 msgstr ""
 
-#: libgimp/gimpmenu.c:181 libgimp/gimpmenu.c:301 libgimp/gimpmenu.c:416
-#: libgimp/gimpmenu.c:598
+#: libgimp/gimpfontmenu.c:80
+msgid "Font Selection"
+msgstr ""
+
+#: libgimp/gimpgradientmenu.c:172
+msgid "Gradient Selection"
+msgstr ""
+
+#: libgimp/gimpmenu.c:176 libgimp/gimpmenu.c:296 libgimp/gimpmenu.c:411
+#: libgimp/gimpmenu.c:593
 msgid "None"
 msgstr ""
 
@@ -169,6 +181,10 @@ msgid ""
 "You need to add an entry like\n"
 "(%s \"%s\")\n"
 "to your %s file."
+msgstr ""
+
+#: libgimp/gimppatternmenu.c:321
+msgid "Pattern Selection"
 msgstr ""
 
 #: libgimp/gimpunit.c:56
@@ -258,71 +274,71 @@ msgstr ""
 msgid "/White"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:141
+#: libgimpwidgets/gimpcolorscales.c:142
 msgid "Scales"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:163 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:354
 msgid "_H"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:354
 msgid "_S"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:354
 msgid "_V"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:354
 msgid "_R"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:354
 msgid "_G"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:354
 msgid "_B"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:169
+#: libgimpwidgets/gimpcolorscales.c:170
 msgid "_A"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:173 libgimpwidgets/gimpcolorselect.c:357
+#: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:358
 msgid "Hue"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:358
+#: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:359
 msgid "Saturation"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:359
+#: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:360
 msgid "Value"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:360
+#: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:361
 msgid "Red"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:361
+#: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:362
 msgid "Green"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:362
+#: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:363
 msgid "Blue"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:363
+#: libgimpwidgets/gimpcolorscales.c:180 libgimpwidgets/gimpcolorselect.c:364
 msgid "Alpha"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:253
+#: libgimpwidgets/gimpcolorscales.c:254
 msgid "Hexadecimal color notation as used in HTML"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:267
+#: libgimpwidgets/gimpcolorscales.c:268
 msgid "He_x Triplet:"
 msgstr ""
 
@@ -482,7 +498,7 @@ msgstr ""
 msgid "Gamma"
 msgstr ""
 
-#: modules/cdisplay_gamma.c:317
+#: modules/cdisplay_gamma.c:320
 msgid "Gamma:"
 msgstr ""
 
@@ -494,7 +510,7 @@ msgstr ""
 msgid "Contrast"
 msgstr ""
 
-#: modules/cdisplay_highcontrast.c:315
+#: modules/cdisplay_highcontrast.c:318
 msgid "Contrast Cycles:"
 msgstr ""
 

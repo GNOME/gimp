@@ -7,14 +7,19 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-06-14 12:44+0200\n"
+"POT-Creation-Date: 2003-06-26 22:14+0200\n"
 "PO-Revision-Date: 2003-06-14 16:11+0200\n"
 "Last-Translator: Miloslav Trmač <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
+
+#: libgimp/gimpbrushmenu.c:321
+#, fuzzy
+msgid "Brush Selection"
+msgstr "Výběr jednotek"
 
 #: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
 #, c-format
@@ -162,8 +167,18 @@ msgstr ""
 "Chcete zapsat kanál (uložený výběr) jako %s.\n"
 "To nezapíše viditelné vrstvy."
 
-#: libgimp/gimpmenu.c:181 libgimp/gimpmenu.c:301 libgimp/gimpmenu.c:416
-#: libgimp/gimpmenu.c:598
+#: libgimp/gimpfontmenu.c:80
+#, fuzzy
+msgid "Font Selection"
+msgstr "Výběr jednotek"
+
+#: libgimp/gimpgradientmenu.c:172
+#, fuzzy
+msgid "Gradient Selection"
+msgstr "Výběr jednotek"
+
+#: libgimp/gimpmenu.c:176 libgimp/gimpmenu.c:296 libgimp/gimpmenu.c:411
+#: libgimp/gimpmenu.c:593
 msgid "None"
 msgstr "Nic"
 
@@ -183,6 +198,11 @@ msgstr ""
 "Do svého souboru %4$s\n"
 "musíte přidat položku jako\n"
 "(%2$s \"%3$s\")."
+
+#: libgimp/gimppatternmenu.c:321
+#, fuzzy
+msgid "Pattern Selection"
+msgstr "Výběr jednotek"
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
@@ -499,7 +519,7 @@ msgstr "Zobrazovací filtr barvy gama"
 msgid "Gamma"
 msgstr "Gama"
 
-#: modules/cdisplay_gamma.c:317
+#: modules/cdisplay_gamma.c:320
 msgid "Gamma:"
 msgstr "Gama:"
 
@@ -511,7 +531,7 @@ msgstr "Zobrazovací filtr vysoce kontrastních barev"
 msgid "Contrast"
 msgstr "Kontrast"
 
-#: modules/cdisplay_highcontrast.c:315
+#: modules/cdisplay_highcontrast.c:318
 msgid "Contrast Cycles:"
 msgstr "Cykly kontrastu:"
 

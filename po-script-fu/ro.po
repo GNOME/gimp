@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
-"POT-Creation-Date: 2003-06-09 22:54+0200\n"
+"POT-Creation-Date: 2003-06-26 22:18+0200\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
 "Language-Team: Românã <ro@li.org>\n"
@@ -32,105 +32,107 @@ msgstr ""
 msgid "Current Command"
 msgstr "Lãþimea curentã:"
 
-#: plug-ins/script-fu/script-fu-console.c:287
+#: plug-ins/script-fu/script-fu-console.c:286
 msgid "Browse..."
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-console.c:583
+#: plug-ins/script-fu/script-fu-console.c:582
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-console.c:589
+#: plug-ins/script-fu/script-fu-console.c:588
 #, fuzzy
 msgid "Unable to open the SIOD output pipe"
 msgstr "Nu am putut deschide fiºierul %s"
 
-#: plug-ins/script-fu/script-fu-console.c:634
+#: plug-ins/script-fu/script-fu-console.c:633
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1164
-#: plug-ins/script-fu/script-fu-scripts.c:1166
+#: plug-ins/script-fu/script-fu-scripts.c:1112
+#: plug-ins/script-fu/script-fu-scripts.c:1114
 msgid "/Script-Fu/"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1174
+#: plug-ins/script-fu/script-fu-scripts.c:1122
 #, c-format
 msgid "Script-Fu: %s"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1208
+#: plug-ins/script-fu/script-fu-scripts.c:1156
 #, fuzzy
 msgid "About"
 msgstr "Automat"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1218
+#: plug-ins/script-fu/script-fu-scripts.c:1166
 msgid "Script Arguments"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1242
+#. we add a colon after the label;
+#. some languages want an extra space here
+#: plug-ins/script-fu/script-fu-scripts.c:1193
 #, c-format
 msgid "%s:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1289
+#: plug-ins/script-fu/script-fu-scripts.c:1239
 #, fuzzy
 msgid "Script-Fu Color Selection"
 msgstr "Selecþie culoare"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1369
+#: plug-ins/script-fu/script-fu-scripts.c:1319
 #, fuzzy
 msgid "Script-Fu File Selection"
 msgstr "Micºoreazã selecþia"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1374
+#: plug-ins/script-fu/script-fu-scripts.c:1324
 #, fuzzy
 msgid "Script-Fu Folder Selection"
 msgstr "Micºoreazã selecþia"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1391
+#: plug-ins/script-fu/script-fu-scripts.c:1341
 #, fuzzy
 msgid "Script-Fu Font Selection"
 msgstr "Micºoreazã selecþia"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1399
+#: plug-ins/script-fu/script-fu-scripts.c:1349
 #, fuzzy
 msgid "Script-fu Pattern Selection"
 msgstr "Selecþie model"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1406
+#: plug-ins/script-fu/script-fu-scripts.c:1356
 #, fuzzy
 msgid "Script-Fu Gradient Selection"
 msgstr "Selectie Gradient"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1414
+#: plug-ins/script-fu/script-fu-scripts.c:1364
 #, fuzzy
 msgid "Script-Fu Brush Selection"
 msgstr "Selecþie pensulã"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:499
-#: plug-ins/script-fu/script-fu-scripts.c:1908
+#: plug-ins/dbbrowser/dbbrowser_utils.c:488
+#: plug-ins/script-fu/script-fu-scripts.c:1858
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:515
-#: plug-ins/script-fu/script-fu-scripts.c:1914
+#: plug-ins/dbbrowser/dbbrowser_utils.c:504
+#: plug-ins/script-fu/script-fu-scripts.c:1864
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:507
-#: plug-ins/script-fu/script-fu-scripts.c:1920
+#: plug-ins/dbbrowser/dbbrowser_utils.c:496
+#: plug-ins/script-fu/script-fu-scripts.c:1870
 msgid "Date:"
 msgstr "Data:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1928
+#: plug-ins/script-fu/script-fu-scripts.c:1878
 #, fuzzy
 msgid "Image Types:"
 msgstr "Tip imagine"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2051
+#: plug-ins/script-fu/script-fu-scripts.c:2001
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -138,93 +140,93 @@ msgid ""
 "%s"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-server.c:574
+#: plug-ins/script-fu/script-fu-server.c:601
 #, fuzzy
 msgid "Script-Fu Server Options"
 msgstr "Opþiuni pentru simularea de nuanþe"
 
-#: plug-ins/script-fu/script-fu-server.c:601
+#: plug-ins/script-fu/script-fu-server.c:629
 msgid "Server Port:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-server.c:607
+#: plug-ins/script-fu/script-fu-server.c:635
 msgid "Server Logfile:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:127
+#: plug-ins/script-fu/script-fu.c:122
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:152
+#: plug-ins/script-fu/script-fu.c:147
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:276 plug-ins/script-fu/script-fu.c:277
+#: plug-ins/script-fu/script-fu.c:271 plug-ins/script-fu/script-fu.c:272
 msgid "Re-read all available scripts"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:281
+#: plug-ins/script-fu/script-fu.c:276
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:129
-#: plug-ins/dbbrowser/dbbrowser_utils.c:148
+#: plug-ins/dbbrowser/dbbrowser_utils.c:118
+#: plug-ins/dbbrowser/dbbrowser_utils.c:137
 #, fuzzy
 msgid "DB Browser"
 msgstr "Afiºare informaþii de ajutor"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:134
-#: plug-ins/dbbrowser/dbbrowser_utils.c:153
+#: plug-ins/dbbrowser/dbbrowser_utils.c:123
+#: plug-ins/dbbrowser/dbbrowser_utils.c:142
 msgid "Search by _Name"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:136
-#: plug-ins/dbbrowser/dbbrowser_utils.c:155
+#: plug-ins/dbbrowser/dbbrowser_utils.c:125
+#: plug-ins/dbbrowser/dbbrowser_utils.c:144
 msgid "Search by _Blurb"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:216
+#: plug-ins/dbbrowser/dbbrowser_utils.c:205
 #, fuzzy
 msgid "_Search:"
 msgstr "Decupare"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:358
+#: plug-ins/dbbrowser/dbbrowser_utils.c:347
 msgid "Name:"
 msgstr "Nume:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:367
+#: plug-ins/dbbrowser/dbbrowser_utils.c:356
 #, fuzzy
 msgid "Blurb:"
 msgstr "Claritate"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:379
+#: plug-ins/dbbrowser/dbbrowser_utils.c:368
 #, fuzzy
 msgid "In:"
 msgstr "Index:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:427
+#: plug-ins/dbbrowser/dbbrowser_utils.c:416
 #, fuzzy
 msgid "Out:"
 msgstr "Numar:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:481
+#: plug-ins/dbbrowser/dbbrowser_utils.c:470
 #, fuzzy
 msgid "Help:"
 msgstr "/_Ajutor"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:606
+#: plug-ins/dbbrowser/dbbrowser_utils.c:595
 msgid "Searching by name - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:629
+#: plug-ins/dbbrowser/dbbrowser_utils.c:618
 msgid "Searching by blurb - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:639
+#: plug-ins/dbbrowser/dbbrowser_utils.c:628
 msgid "Searching - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:675
+#: plug-ins/dbbrowser/dbbrowser_utils.c:665
 msgid "No matches"
 msgstr ""
 
@@ -856,6 +858,7 @@ msgstr "Transparent"
 #: plug-ins/script-fu/scripts/land.scm.h:3
 #: plug-ins/script-fu/scripts/lava.scm.h:2
 #: plug-ins/script-fu/scripts/rendermap.scm.h:4
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:8
 msgid "Gradient"
 msgstr "Gradient"
 
@@ -1277,6 +1280,7 @@ msgstr "Razã:"
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:4
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:5
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:5
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:4
 msgid "Color"
 msgstr "Culoare"
 
@@ -1630,15 +1634,15 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:1
 #, fuzzy
-msgid "<Image>/Script-Fu/Render/Make Grid System..."
+msgid "<Image>/Script-Fu/Render/Grid..."
 msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:2
-msgid "Grids X"
+msgid "X Divisions"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:3
-msgid "Grids Y"
+msgid "Y Divisions"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
@@ -2141,6 +2145,135 @@ msgstr ""
 msgid "Turn from Left to Right"
 msgstr ""
 
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:1
+msgid "Airbrush"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:2
+#, fuzzy
+msgid "Brush"
+msgstr "Pensule"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:3
+#, fuzzy
+msgid "Circle"
+msgstr "Triunghi"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:5
+#, fuzzy
+msgid "Color Method"
+msgstr "Paletã de culori"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:6
+msgid "Epitrochoid"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
+#, fuzzy
+msgid "Frame"
+msgstr "Elibereazã"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:9
+#, fuzzy
+msgid "Gradient: Loop Sawtooth"
+msgstr "Bucleazã dinte de fierastrãu"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:10
+#, fuzzy
+msgid "Gradient: Loop Triangle"
+msgstr "Bucleazã triunghi"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:11
+msgid "Hexagon"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:12
+#, fuzzy
+msgid "Hole Ratio"
+msgstr "Factorul de scarã:"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:13
+#, fuzzy
+msgid "Inner Teeth"
+msgstr "Intersecteazã"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:14
+msgid "Lissajous"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:15
+#, fuzzy
+msgid "Margin (pixels)"
+msgstr "Margine:"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:16
+#, fuzzy
+msgid "Outer Teeth"
+msgstr "Margine:"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:17
+msgid "Pencil"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:18
+#, fuzzy
+msgid "Pentagon"
+msgstr "Rotire"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:19
+msgid "Polygon: 10 sides"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:20
+msgid "Polygon: 7 sides"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:21
+msgid "Polygon: 8 sides"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:22
+msgid "Polygon: 9 sides"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:23
+msgid "Shape"
+msgstr "Formã"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:24
+#, fuzzy
+msgid "Solid Color"
+msgstr "Pseudo Culoare"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:25
+msgid "Spyrograph"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:26
+#, fuzzy
+msgid "Square"
+msgstr "Pãtrat"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:27
+#: plug-ins/script-fu/scripts/text-circle.scm.h:7
+#, fuzzy
+msgid "Start Angle"
+msgstr "Pornesc extensia: "
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:28
+#, fuzzy
+msgid "Tool"
+msgstr "Cutie de unelte"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:29
+#, fuzzy
+msgid "Triangle"
+msgstr "Bucleazã triunghi"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:30
+msgid "Type"
+msgstr "Tip"
+
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:1
 #, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Starburst..."
@@ -2241,11 +2374,6 @@ msgstr "Antialiasing"
 msgid "Fill Angle"
 msgstr "Tip umplere"
 
-#: plug-ins/script-fu/scripts/text-circle.scm.h:7
-#, fuzzy
-msgid "Start Angle"
-msgstr "Pornesc extensia: "
-
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:1
 #, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Textured..."
@@ -2316,35 +2444,6 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/title-header.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
-msgstr ""
-
-#: plug-ins/script-fu/scripts/trochoid.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
-msgstr ""
-
-#: plug-ins/script-fu/scripts/trochoid.scm.h:2
-msgid "Base Radius (pixels)"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/trochoid.scm.h:3
-msgid "Erase before Draw"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/trochoid.scm.h:4
-msgid "Hue Rate"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/trochoid.scm.h:5
-msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/trochoid.scm.h:6
-#, fuzzy
-msgid "Use Brush"
-msgstr "Pensule"
-
-#: plug-ins/script-fu/scripts/trochoid.scm.h:7
-msgid "Wheel Radius (hypo < 0 < epi)"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:1
@@ -2541,6 +2640,10 @@ msgstr ""
 #: plug-ins/webbrowser/web-browser.scm.h:17
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 msgstr ""
+
+#, fuzzy
+#~ msgid "<Image>/Script-Fu/Render/Make Grid System..."
+#~ msgstr "Micºoreazã selecþia"
 
 #, fuzzy
 #~ msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
@@ -3665,9 +3768,6 @@ msgstr ""
 #~ msgid "Resolution:"
 #~ msgstr "Rezoluþie:"
 
-#~ msgid "Scale Ratio:"
-#~ msgstr "Factorul de scarã:"
-
 #~ msgid "Display Type:"
 #~ msgstr "Tip Display:"
 
@@ -4503,9 +4603,6 @@ msgstr ""
 #~ msgid "Color Palette Edit"
 #~ msgstr "Modificare paleta de culori"
 
-#~ msgid "Color Palette"
-#~ msgstr "Paletã de culori"
-
 #~ msgid "Undefined"
 #~ msgstr "Nedefinit"
 
@@ -4772,9 +4869,6 @@ msgstr ""
 
 #~ msgid "Recent Documents List Size:"
 #~ msgstr "Dimensiune listã de documente recente:"
-
-#~ msgid "Toolbox"
-#~ msgstr "Cutie de unelte"
 
 #~ msgid "Display Brush, Pattern and Gradient Indicators"
 #~ msgstr "Aratã indicatorii de pensule, modele ºi gradienþi"
@@ -5878,9 +5972,6 @@ msgstr ""
 #~ msgid "Replace"
 #~ msgstr "Inlocuieºte"
 
-#~ msgid "Intersect"
-#~ msgstr "Intersecteazã"
-
 #~ msgid "All"
 #~ msgstr "Toate"
 
@@ -6004,9 +6095,6 @@ msgstr ""
 #~ msgid "Exposure:"
 #~ msgstr "Expunere:"
 
-#~ msgid "Type"
-#~ msgstr "Tip"
-
 #~ msgid "Mode"
 #~ msgstr "Mod"
 
@@ -6075,9 +6163,6 @@ msgstr ""
 
 #~ msgid "Sensitivity"
 #~ msgstr "Sensibilitate"
-
-#~ msgid "Shape"
-#~ msgstr "Formã"
 
 #~ msgid "Levels"
 #~ msgstr "Nivele"
@@ -6154,12 +6239,6 @@ msgstr ""
 
 #~ msgid "Once Backward"
 #~ msgstr "O datã inapoi"
-
-#~ msgid "Loop Sawtooth"
-#~ msgstr "Bucleazã dinte de fierastrãu"
-
-#~ msgid "Loop Triangle"
-#~ msgstr "Bucleazã triunghi"
 
 #~ msgid "Perspective Transform Information"
 #~ msgstr "Informaþii despre transformarea de perspectivã"

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
-"POT-Creation-Date: 2003-06-09 22:54+0200\n"
+"POT-Creation-Date: 2003-06-26 22:18+0200\n"
 "PO-Revision-Date: 2003-02-22 23:24+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -33,95 +33,97 @@ msgstr "Výstup SIOD"
 msgid "Current Command"
 msgstr "Aktuální příkaz"
 
-#: plug-ins/script-fu/script-fu-console.c:287
+#: plug-ins/script-fu/script-fu-console.c:286
 msgid "Browse..."
 msgstr "Procházet..."
 
-#: plug-ins/script-fu/script-fu-console.c:583
+#: plug-ins/script-fu/script-fu-console.c:582
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "Nepodařilo se otevřít proud na výstupní rouru SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:589
+#: plug-ins/script-fu/script-fu-console.c:588
 msgid "Unable to open the SIOD output pipe"
 msgstr "Nepodařilo se otevřít výstupní rouru SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:634
+#: plug-ins/script-fu/script-fu-console.c:633
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Pouze neinteraktivní spuštění umožňuje režim provádění Skript-fu"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1164
-#: plug-ins/script-fu/script-fu-scripts.c:1166
+#: plug-ins/script-fu/script-fu-scripts.c:1112
+#: plug-ins/script-fu/script-fu-scripts.c:1114
 msgid "/Script-Fu/"
 msgstr "/Skript-fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1174
+#: plug-ins/script-fu/script-fu-scripts.c:1122
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Skript-fu: %s"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1208
+#: plug-ins/script-fu/script-fu-scripts.c:1156
 msgid "About"
 msgstr "O programu"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1218
+#: plug-ins/script-fu/script-fu-scripts.c:1166
 msgid "Script Arguments"
 msgstr "Argumenty skriptu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1242
+#. we add a colon after the label;
+#. some languages want an extra space here
+#: plug-ins/script-fu/script-fu-scripts.c:1193
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1289
+#: plug-ins/script-fu/script-fu-scripts.c:1239
 msgid "Script-Fu Color Selection"
 msgstr "Skript-fu výběr barvy"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1369
+#: plug-ins/script-fu/script-fu-scripts.c:1319
 msgid "Script-Fu File Selection"
 msgstr "Skript-fu výběr souboru"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1374
+#: plug-ins/script-fu/script-fu-scripts.c:1324
 msgid "Script-Fu Folder Selection"
 msgstr "Skript-fu výběr adresáře"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1391
+#: plug-ins/script-fu/script-fu-scripts.c:1341
 msgid "Script-Fu Font Selection"
 msgstr "Výběr písma Skript-fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1399
+#: plug-ins/script-fu/script-fu-scripts.c:1349
 msgid "Script-fu Pattern Selection"
 msgstr "Skript-fu výběr vzorku"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1406
+#: plug-ins/script-fu/script-fu-scripts.c:1356
 msgid "Script-Fu Gradient Selection"
 msgstr "Skript-fu výběr přechodu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1414
+#: plug-ins/script-fu/script-fu-scripts.c:1364
 msgid "Script-Fu Brush Selection"
 msgstr "Skript-fu výběr stopy"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:499
-#: plug-ins/script-fu/script-fu-scripts.c:1908
+#: plug-ins/dbbrowser/dbbrowser_utils.c:488
+#: plug-ins/script-fu/script-fu-scripts.c:1858
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:515
-#: plug-ins/script-fu/script-fu-scripts.c:1914
+#: plug-ins/dbbrowser/dbbrowser_utils.c:504
+#: plug-ins/script-fu/script-fu-scripts.c:1864
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:507
-#: plug-ins/script-fu/script-fu-scripts.c:1920
+#: plug-ins/dbbrowser/dbbrowser_utils.c:496
+#: plug-ins/script-fu/script-fu-scripts.c:1870
 msgid "Date:"
 msgstr "Datum:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1928
+#: plug-ins/script-fu/script-fu-scripts.c:1878
 msgid "Image Types:"
 msgstr "Typy obrázku:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2051
+#: plug-ins/script-fu/script-fu-scripts.c:2001
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -132,86 +134,86 @@ msgstr ""
 " %s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:574
+#: plug-ins/script-fu/script-fu-server.c:601
 msgid "Script-Fu Server Options"
 msgstr "Volby serveru Skript-fu"
 
-#: plug-ins/script-fu/script-fu-server.c:601
+#: plug-ins/script-fu/script-fu-server.c:629
 msgid "Server Port:"
 msgstr "Port serveru:"
 
-#: plug-ins/script-fu/script-fu-server.c:607
+#: plug-ins/script-fu/script-fu-server.c:635
 msgid "Server Logfile:"
 msgstr "Žurnálový soubor serveru:"
 
-#: plug-ins/script-fu/script-fu.c:127
+#: plug-ins/script-fu/script-fu.c:122
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."
 msgstr "<Toolbox>/Rozš./Skript-fu/Konzole..."
 
-#: plug-ins/script-fu/script-fu.c:152
+#: plug-ins/script-fu/script-fu.c:147
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
 msgstr "<Toolbox>/Rozš./Skript-fu/Server..."
 
-#: plug-ins/script-fu/script-fu.c:276 plug-ins/script-fu/script-fu.c:277
+#: plug-ins/script-fu/script-fu.c:271 plug-ins/script-fu/script-fu.c:272
 msgid "Re-read all available scripts"
 msgstr "Znovu načíst všechny dostupné skripty"
 
-#: plug-ins/script-fu/script-fu.c:281
+#: plug-ins/script-fu/script-fu.c:276
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Rozš./Skript-fu/Zaktualizovat"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:129
-#: plug-ins/dbbrowser/dbbrowser_utils.c:148
+#: plug-ins/dbbrowser/dbbrowser_utils.c:118
+#: plug-ins/dbbrowser/dbbrowser_utils.c:137
 msgid "DB Browser"
 msgstr "Prohlížeč DB"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:134
-#: plug-ins/dbbrowser/dbbrowser_utils.c:153
+#: plug-ins/dbbrowser/dbbrowser_utils.c:123
+#: plug-ins/dbbrowser/dbbrowser_utils.c:142
 msgid "Search by _Name"
 msgstr "Hledat podle _názvu"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:136
-#: plug-ins/dbbrowser/dbbrowser_utils.c:155
+#: plug-ins/dbbrowser/dbbrowser_utils.c:125
+#: plug-ins/dbbrowser/dbbrowser_utils.c:144
 msgid "Search by _Blurb"
 msgstr "Hledat podle _popisu"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:216
+#: plug-ins/dbbrowser/dbbrowser_utils.c:205
 msgid "_Search:"
 msgstr "_Hledat:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:358
+#: plug-ins/dbbrowser/dbbrowser_utils.c:347
 msgid "Name:"
 msgstr "Název:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:367
+#: plug-ins/dbbrowser/dbbrowser_utils.c:356
 msgid "Blurb:"
 msgstr "Popis:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:379
+#: plug-ins/dbbrowser/dbbrowser_utils.c:368
 msgid "In:"
 msgstr "V:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:427
+#: plug-ins/dbbrowser/dbbrowser_utils.c:416
 msgid "Out:"
 msgstr "Ven:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:481
+#: plug-ins/dbbrowser/dbbrowser_utils.c:470
 msgid "Help:"
 msgstr "Nápověda:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:606
+#: plug-ins/dbbrowser/dbbrowser_utils.c:595
 msgid "Searching by name - please wait"
 msgstr "Vyhledává se podle názvu - prosím počkejte"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:629
+#: plug-ins/dbbrowser/dbbrowser_utils.c:618
 msgid "Searching by blurb - please wait"
 msgstr "Vyhledává se podle popisu - prosím počkejte"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:639
+#: plug-ins/dbbrowser/dbbrowser_utils.c:628
 msgid "Searching - please wait"
 msgstr "Vyhledává se - prosím počkejte"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:675
+#: plug-ins/dbbrowser/dbbrowser_utils.c:665
 msgid "No matches"
 msgstr "Nic nebylo nalezeno"
 
@@ -793,6 +795,7 @@ msgstr "Průhledné popředí"
 #: plug-ins/script-fu/scripts/land.scm.h:3
 #: plug-ins/script-fu/scripts/lava.scm.h:2
 #: plug-ins/script-fu/scripts/rendermap.scm.h:4
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:8
 msgid "Gradient"
 msgstr "Přechod"
 
@@ -1165,6 +1168,7 @@ msgstr "Poloměr rozostření"
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:4
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:5
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:5
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:4
 msgid "Color"
 msgstr "Barva"
 
@@ -1478,16 +1482,17 @@ msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
 msgstr "<Toolbox>/Rozš./Skript-fu/Pomůcky/Vlastní přechod..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:1
-msgid "<Image>/Script-Fu/Render/Make Grid System..."
-msgstr "<Image>/Skript-fu/Vyobrazení/Vytvořit systém mříží..."
+#, fuzzy
+msgid "<Image>/Script-Fu/Render/Grid..."
+msgstr "<Image>/Skript-fu/Vyobrazení/Okruh..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:2
-msgid "Grids X"
-msgstr "X mříž"
+msgid "X Divisions"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:3
-msgid "Grids Y"
-msgstr "Y mříž"
+msgid "Y Divisions"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
 msgid "<Image>/Script-Fu/Utils/Draw HSV Graph..."
@@ -1919,6 +1924,132 @@ msgstr "Indexovaný v n barvách (0 = nechat RGB)"
 msgid "Turn from Left to Right"
 msgstr "Točit zleva doprava"
 
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:1
+msgid "Airbrush"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:2
+#, fuzzy
+msgid "Brush"
+msgstr "Použít stopu"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:3
+#, fuzzy
+msgid "Circle"
+msgstr "Dlaždice"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:5
+#, fuzzy
+msgid "Color Method"
+msgstr "Barva 3"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:6
+msgid "Epitrochoid"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
+#, fuzzy
+msgid "Frame"
+msgstr "Počet políček"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:9
+msgid "Gradient: Loop Sawtooth"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:10
+msgid "Gradient: Loop Triangle"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:11
+#, fuzzy
+msgid "Hexagon"
+msgstr "Šestiúhelníky"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:12
+#, fuzzy
+msgid "Hole Ratio"
+msgstr "Četnost odstínů"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:13
+msgid "Inner Teeth"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:14
+msgid "Lissajous"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:15
+#, fuzzy
+msgid "Margin (pixels)"
+msgstr "Poloměr (pixely)"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:16
+#, fuzzy
+msgid "Outer Teeth"
+msgstr "Vnější hranice"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:17
+msgid "Pencil"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:18
+#, fuzzy
+msgid "Pentagon"
+msgstr "Orientace"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:19
+msgid "Polygon: 10 sides"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:20
+msgid "Polygon: 7 sides"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:21
+msgid "Polygon: 8 sides"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:22
+msgid "Polygon: 9 sides"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:23
+msgid "Shape"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:24
+#, fuzzy
+msgid "Solid Color"
+msgstr "Barva výplně"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:25
+msgid "Spyrograph"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:26
+#, fuzzy
+msgid "Square"
+msgstr "Čtverce"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:27
+#: plug-ins/script-fu/scripts/text-circle.scm.h:7
+msgid "Start Angle"
+msgstr "Počáteční úhel"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:28
+msgid "Tool"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:29
+#, fuzzy
+msgid "Triangle"
+msgstr "Dlaždice"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:30
+#, fuzzy
+msgid "Type"
+msgstr "Typ rozostření"
+
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Starburst..."
 msgstr "<Image>/Skript-fu/Alfa do loga/Pronikání hvězd..."
@@ -2007,10 +2138,6 @@ msgstr "Vyhlazování"
 msgid "Fill Angle"
 msgstr "Úhel vyplňování"
 
-#: plug-ins/script-fu/scripts/text-circle.scm.h:7
-msgid "Start Angle"
-msgstr "Počáteční úhel"
-
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Textured..."
 msgstr "<Image>/Skript-fu/Alfa do loga/Texturovat..."
@@ -2074,34 +2201,6 @@ msgstr "RLE"
 #: plug-ins/script-fu/scripts/title-header.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
 msgstr "<Toolbox>/Rozš./Skript-fu/Loga/Hlavička webového titulku..."
-
-#: plug-ins/script-fu/scripts/trochoid.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
-msgstr "<Toolbox>/Rozš./Skript-fu/Vzorky/Kotálnice..."
-
-#: plug-ins/script-fu/scripts/trochoid.scm.h:2
-msgid "Base Radius (pixels)"
-msgstr "Poloměr základny (pixely)"
-
-#: plug-ins/script-fu/scripts/trochoid.scm.h:3
-msgid "Erase before Draw"
-msgstr "Smazat před kreslením"
-
-#: plug-ins/script-fu/scripts/trochoid.scm.h:4
-msgid "Hue Rate"
-msgstr "Četnost odstínů"
-
-#: plug-ins/script-fu/scripts/trochoid.scm.h:5
-msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
-msgstr "Poloměr pera / kolečka [0,0:1,0]"
-
-#: plug-ins/script-fu/scripts/trochoid.scm.h:6
-msgid "Use Brush"
-msgstr "Použít stopu"
-
-#: plug-ins/script-fu/scripts/trochoid.scm.h:7
-msgid "Wheel Radius (hypo < 0 < epi)"
-msgstr "Poloměr kola (hypo < 0 < epi)"
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
@@ -2274,6 +2373,30 @@ msgstr "<Toolbox>/Rozš./Webový prohlížeč/Registr modulů"
 #: plug-ins/webbrowser/web-browser.scm.h:17
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 msgstr "<Toolbox>/Rozš./Webový prohlížeč/Otázky (FAQ) uživatelů"
+
+#~ msgid "<Image>/Script-Fu/Render/Make Grid System..."
+#~ msgstr "<Image>/Skript-fu/Vyobrazení/Vytvořit systém mříží..."
+
+#~ msgid "Grids X"
+#~ msgstr "X mříž"
+
+#~ msgid "Grids Y"
+#~ msgstr "Y mříž"
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
+#~ msgstr "<Toolbox>/Rozš./Skript-fu/Vzorky/Kotálnice..."
+
+#~ msgid "Base Radius (pixels)"
+#~ msgstr "Poloměr základny (pixely)"
+
+#~ msgid "Erase before Draw"
+#~ msgstr "Smazat před kreslením"
+
+#~ msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
+#~ msgstr "Poloměr pera / kolečka [0,0:1,0]"
+
+#~ msgid "Wheel Radius (hypo < 0 < epi)"
+#~ msgstr "Poloměr kola (hypo < 0 < epi)"
 
 #~ msgid ""
 #~ "At least one font you've choosen is invalid.\n"
