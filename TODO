@@ -24,6 +24,12 @@ fix the palette dialogs
 	Palettes should become a first-class core data structure (like
 	layers) with their own PDB interface.  (Goes with below.)  --sg
 
+	* User opinion: The menubox has one big advantage: it is 
+	_small_ in size. The problem with _lots_ of palette files is
+	known. But is it possible to make the menubox make
+	submenus if it gets longer than the screen? Isnt this more 
+	like a gtk-issue? * --tigert
+
 integrate palette saving into core
 
 	An option to save a current images pallete to a file is
@@ -35,6 +41,28 @@ more configurabilty (eek)
 	I would like to be able to let the user stick arbitrary
 	buttons into the toolbox and attach arbitrary functions to
 	them.  --sg
+
+	What about a second button-bar? We dont have icons  to add to the  
+	main toolbar  anyway,  so it would  be hard to  distinguish  what
+	button does  what (they are small -> text wont fit). 
+	Look at my mockup:
+		http://tigert.gimp.org/files/temp/wilber_palette.gif
+	It might work in such way that 
+	   1. you click add -> new button
+	   2. then right click  on it -> you would get the normal <Image>
+			-menu (like when clicking right mousebutton over an image) 
+		   from which  you could select  the plugin/tool  to assign to
+			this button. 
+ 	   3. To apply  the thing  to an  image you  first  click  on the 
+			button and the  statusbar would  show something like 'click 
+			on an image to  apply function xxxx' ->  click an  image to
+			assign the tool an image and apply it.
+	Now this is just an idea, but  it might solve the 'which image do
+	we want to apply things to? -problem.
+	Also  see http://www.home.unix-ag.org/simon/gimp/gimpbuttons.html
+	Simon Budig  has an experiment  similar  to this.  Maybe it would
+	make sense to implement something like this?
+																				--tigert 
 
 fix stuff so that the tile size could actually be changed eventually
 
@@ -55,8 +83,14 @@ file new dialog stuff   (i'm working on this...Adrian)
 	2. add units and resolution options
 	3. make x,y values have dropdowns for last 5 or so used sizes
 	4. maybe an estimate of how much ram the image will take?
-	5. maybe some "preset" common image sizes?
-	6. resoltuion/units need to be exported to the whole app
+	5. maybe some "preset" common image sizes? 
+		-> 
+			* 468x60 banner ad
+			* 88x31 banner ad (Netscape NOW! -button for example)
+			* A4, A5, A6, US Letter etc.. sizes so that they take 
+			  the chosen resolution into account ("Hm. I need to make
+			  an A4 sized pic in 300DPI...") --tigert
+	6. resolution/units need to be exported to the whole app
 	(probabaly in gimage.c) so size/scale, text tool, etc can
 	use them.
 
