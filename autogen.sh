@@ -23,7 +23,7 @@ DIE=0
 (automake --version) < /dev/null > /dev/null 2>&1 || {
 	echo
 	echo "You must have automake installed to compile $PROJECT."
-	echo "Get ftp://ftp.cygnus.com/pub/home/tromey/automake-1.2d.tar.gz"
+	echo "Get ftp://ftp.gnu.org/pub/gnu/automake/automake-1.4-p6.tar.gz"
 	echo "(or a newer version if it is available)"
 	DIE=1
 }
