@@ -1,3 +1,11 @@
+Tue Oct 17 03:55:44 CEST 2000  Marc Lehmann <pcg@goof.com>
+	Applied patch by Robert L Krawitz <rlk@alum.mit.edu>.
+
+        * gimp.m4: Don't barf if an old version of gimptool is used
+        that doesn't support GIMP_DATA_DIR and GIMP_PLUGIN_DIR and
+        Work correctly with versions of the Gimp that don't have the
+        GIMP_CHECK_VERSION macro (if any).
+
 Mon Oct 16 11:57:17 PDT 2000 Manish Singh <yosh@gimp.org>
 
 	* Made 1.1.28 release (1.2pre)
