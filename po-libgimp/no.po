@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.24\n"
-"POT-Creation-Date: 2000-08-19 09:13-0700\n"
+"POT-Creation-Date: 2000-08-22 11:56+0200\n"
 "PO-Revision-Date: 2000-07-16 01:44+02:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@online.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
