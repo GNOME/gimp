@@ -94,8 +94,10 @@ static void     project_channel                     (GimpImage      *gimage,
 void
 gimp_image_projection_allocate (GimpImage *gimage)
 {
-  if (gimage->projection)
-    gimp_image_projection_free (gimage);
+  GimpImageType proj_type  = 0;
+  gint          proj_bytes = 0;
+
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   /*  Find the number of bytes required for the projection.
    *  This includes the intensity channels and an alpha channel
@@ -105,23 +107,41 @@ gimp_image_projection_allocate (GimpImage *gimage)
     {
     case GIMP_RGB:
     case GIMP_INDEXED:
-      gimage->proj_bytes = 4;
-      gimage->proj_type = GIMP_RGBA_IMAGE;
+      proj_bytes = 4;
+      proj_type  = GIMP_RGBA_IMAGE;
       break;
+
     case GIMP_GRAY:
-      gimage->proj_bytes = 2;
-      gimage->proj_type = GIMP_GRAYA_IMAGE;
+      proj_bytes = 2;
+      proj_type  = GIMP_GRAYA_IMAGE;
       break;
+
     default:
       g_assert_not_reached ();
     }
 
-  /*  allocate the new projection  */
-  gimage->projection = tile_manager_new (gimage->width, gimage->height,
-					 gimage->proj_bytes);
-  tile_manager_set_user_data (gimage->projection, (void *) gimage);
-  tile_manager_set_validate_proc (gimage->projection,
-                                  gimp_image_projection_validate_tile);
+  if (gimage->projection)
+    {
+      if (proj_type      != gimage->proj_type                       ||
+          proj_bytes     != gimage->proj_bytes                      ||
+          gimage->width  != tile_manager_width (gimage->projection) ||
+          gimage->height != tile_manager_height (gimage->projection))
+        {
+          gimp_image_projection_free (gimage);
+        }
+    }
+
+  if (! gimage->projection)
+    {
+      gimage->proj_type  = proj_type;
+      gimage->proj_bytes = proj_bytes;
+
+      gimage->projection = tile_manager_new (gimage->width, gimage->height,
+                                             gimage->proj_bytes);
+      tile_manager_set_user_data (gimage->projection, gimage);
+      tile_manager_set_validate_proc (gimage->projection,
+                                      gimp_image_projection_validate_tile);
+    }
 }
 
 void

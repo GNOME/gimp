@@ -45,7 +45,6 @@
 #include "gimpimage-colormap.h"
 #include "gimpimage-grid.h"
 #include "gimpimage-guides.h"
-#include "gimpimage-projection.h"
 #include "gimpimage-undo.h"
 #include "gimpimage.h"
 #include "gimpitemundo.h"
@@ -444,7 +443,6 @@ undo_pop_image_size (GimpUndo            *undo,
   undo->gimage->width  = width;
   undo->gimage->height = height;
 
-  gimp_image_projection_allocate (undo->gimage);
   gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (gimp_image_get_mask (undo->gimage)));
 
   if (undo->gimage->width  != isu->width ||

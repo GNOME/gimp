@@ -25,7 +25,6 @@
 #include "gimp.h"
 #include "gimpimage.h"
 #include "gimpimage-guides.h"
-#include "gimpimage-projection.h"
 #include "gimpimage-scale.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
@@ -178,9 +177,6 @@ gimp_image_scale (GimpImage             *gimage,
           break;
 	}
     }
-
-  /*  Make sure the projection matches the gimage size  */
-  gimp_image_projection_allocate (gimage);
 
   /*  Rigor the floating selection  */
   if (floating_layer)

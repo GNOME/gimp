@@ -785,6 +785,8 @@ gimp_image_size_changed (GimpViewable *viewable)
     }
 
   gimp_viewable_size_changed (GIMP_VIEWABLE (gimp_image_get_mask (gimage)));
+
+  gimp_image_projection_allocate (gimage);
 }
 
 static gchar *

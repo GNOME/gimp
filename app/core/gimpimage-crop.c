@@ -249,9 +249,6 @@ gimp_image_crop (GimpImage *gimage,
             gimp_image_move_guide (gimage, guide, new_position, TRUE);
         }
 
-      /*  Make sure the projection matches the gimage size  */
-      gimp_image_projection_allocate (gimage);
-
       /*  rigor the floating layer  */
       if (floating_layer)
         floating_sel_rigor (floating_layer, TRUE);

@@ -24,7 +24,6 @@
 
 #include "gimp.h"
 #include "gimpimage.h"
-#include "gimpimage-projection.h"
 #include "gimpimage-rotate.h"
 #include "gimpimage-guides.h"
 #include "gimpimage-undo.h"
@@ -192,9 +191,6 @@ gimp_image_rotate (GimpImage        *gimage,
           gimage->xresolution = tmp;
         }
     }
-
-  /*  Make sure the projection matches the gimage size  */
-  gimp_image_projection_allocate (gimage);
 
   /*  Rigor the floating selection  */
   if (floating_layer)

@@ -1,5 +1,22 @@
 2003-12-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage-projection.c (gimp_image_projection_allocate):
+	optimized to reallocate the projection TileManager only if it does
+	not match the required width, height and depth.
+
+	* app/core/gimpimage.c (gimp_image_size_changed): call
+	gimp_image_projection_allocate().
+
+	* app/core/gimpimage-crop.c
+	* app/core/gimpimage-resize.c
+	* app/core/gimpimage-rotate.c
+	* app/core/gimpimage-scale.c
+	* app/core/gimpimage-undo-push.c: removed calls to
+	gimp_image_projection_allocate(), since "size_changed" does it
+	automatically now.
+
+2003-12-04  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/helpbrowser/dialog.c
 	* plug-ins/helpbrowser/domain.[ch]
 	* plug-ins/helpbrowser/uri.[ch]: cleanup & whitespace removal.
