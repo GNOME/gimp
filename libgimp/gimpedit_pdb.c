@@ -38,25 +38,26 @@
  * specified drawable will be removed and its contents stored in the
  * internal GIMP edit buffer.
  *
- * Returns: TRUE on success.
+ * Returns: TRUE if the cut was successful, FALSE if the selection contained only transparent pixels.
  */
 gboolean
 gimp_edit_cut (gint32 drawable_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gboolean success = TRUE;
+  gboolean non_empty = FALSE;
 
   return_vals = gimp_run_procedure ("gimp_edit_cut",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_END);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    non_empty = return_vals[1].data.d_int32;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return success;
+  return non_empty;
 }
 
 /**
@@ -72,25 +73,26 @@ gimp_edit_cut (gint32 drawable_ID)
  * specified drawable's contents will be stored in the internal GIMP
  * edit buffer.
  *
- * Returns: TRUE on success.
+ * Returns: TRUE if the copy was successful, FALSE if the selection contained only transparent pixels.
  */
 gboolean
 gimp_edit_copy (gint32 drawable_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gboolean success = TRUE;
+  gboolean non_empty = FALSE;
 
   return_vals = gimp_run_procedure ("gimp_edit_copy",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_END);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    non_empty = return_vals[1].data.d_int32;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return success;
+  return non_empty;
 }
 
 /**

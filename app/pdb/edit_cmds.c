@@ -66,7 +66,9 @@ edit_cut_invoker (Gimp     *gimp,
                   Argument *args)
 {
   gboolean success = TRUE;
+  Argument *return_args;
   GimpDrawable *drawable;
+  gboolean non_empty = FALSE;
   GimpImage *gimage;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
@@ -76,10 +78,15 @@ edit_cut_invoker (Gimp     *gimp,
   if (success)
     {
       gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-      success = gimp_edit_cut (gimage, drawable) != NULL;
+      non_empty = gimp_edit_cut (gimage, drawable) != NULL;
     }
 
-  return procedural_db_return_args (&edit_cut_proc, success);
+  return_args = procedural_db_return_args (&edit_cut_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = non_empty;
+
+  return return_args;
 }
 
 static ProcArg edit_cut_inargs[] =
@@ -88,6 +95,15 @@ static ProcArg edit_cut_inargs[] =
     GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable to cut from"
+  }
+};
+
+static ProcArg edit_cut_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "non_empty",
+    "TRUE if the cut was successful, FALSE if the selection contained only transparent pixels"
   }
 };
 
@@ -102,8 +118,8 @@ static ProcRecord edit_cut_proc =
   GIMP_INTERNAL,
   1,
   edit_cut_inargs,
-  0,
-  NULL,
+  1,
+  edit_cut_outargs,
   { { edit_cut_invoker } }
 };
 
@@ -112,7 +128,9 @@ edit_copy_invoker (Gimp     *gimp,
                    Argument *args)
 {
   gboolean success = TRUE;
+  Argument *return_args;
   GimpDrawable *drawable;
+  gboolean non_empty = FALSE;
   GimpImage *gimage;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
@@ -122,10 +140,15 @@ edit_copy_invoker (Gimp     *gimp,
   if (success)
     {
       gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-      success = gimp_edit_copy (gimage, drawable) != NULL;
+      non_empty = gimp_edit_copy (gimage, drawable) != NULL;
     }
 
-  return procedural_db_return_args (&edit_copy_proc, success);
+  return_args = procedural_db_return_args (&edit_copy_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = non_empty;
+
+  return return_args;
 }
 
 static ProcArg edit_copy_inargs[] =
@@ -134,6 +157,15 @@ static ProcArg edit_copy_inargs[] =
     GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable to copy from"
+  }
+};
+
+static ProcArg edit_copy_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "non_empty",
+    "TRUE if the copy was successful, FALSE if the selection contained only transparent pixels"
   }
 };
 
@@ -148,8 +180,8 @@ static ProcRecord edit_copy_proc =
   GIMP_INTERNAL,
   1,
   edit_copy_inargs,
-  0,
-  NULL,
+  1,
+  edit_copy_outargs,
   { { edit_copy_invoker } }
 };
 

@@ -25,6 +25,13 @@ sub inargs {
     );
 }
 
+sub outargs {
+    @outargs = (
+	{ name => 'non_empty', type => 'boolean', init => 1,
+	  desc => "TRUE if the @{[shift]} was successful, FALSE if the selection contained only transparent pixels" }
+    );
+}
+
 sub drawable_arg () {{
     name => 'drawable',
     type => 'drawable',
@@ -45,7 +52,7 @@ sub invoke {
 	code => <<CODE
 {
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-  success = @{[shift]};
+  @{[shift]};
 }
 CODE
     );
@@ -66,7 +73,8 @@ HELP
 
     &std_pdb_misc;
     &inargs('cut from');
-    &invoke('gimp_edit_cut (gimage, drawable) != NULL');
+    &outargs('cut');
+    &invoke('non_empty = gimp_edit_cut (gimage, drawable) != NULL');
 }
 
 sub edit_copy {
@@ -82,7 +90,8 @@ HELP
 
     &std_pdb_misc;
     &inargs('copy from');
-    &invoke('gimp_edit_copy (gimage, drawable) != NULL');
+    &outargs('copy');
+    &invoke('non_empty = gimp_edit_copy (gimage, drawable) != NULL');
 }
 
 sub edit_paste {
@@ -148,7 +157,7 @@ HELP
 
     &std_pdb_misc;
     &inargs('clear from');
-    &invoke('gimp_edit_clear (gimage, drawable)');
+    &invoke('success = gimp_edit_clear (gimage, drawable)');
 }
 
 sub edit_fill {
@@ -171,7 +180,7 @@ HELP
 	{ name => 'fill_type', type => 'enum GimpFillType',
 	  desc => 'The type of fill: %%desc%%' }
     );
-    &invoke('gimp_edit_fill (gimage, drawable, (GimpFillType) fill_type)');
+    &invoke('success = gimp_edit_fill (gimage, drawable, (GimpFillType) fill_type)');
 }
 
 sub edit_bucket_fill {
