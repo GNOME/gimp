@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 2.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-05 02:40+0200\n"
+"POT-Creation-Date: 2004-09-19 21:03+0200\n"
 "PO-Revision-Date: 2004-03-23 22:13+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -386,27 +386,27 @@ msgstr "/白(_W)"
 msgid "Scales"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:155 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:155 libgimpwidgets/gimpcolorselect.c:343
 msgid "_H"
 msgstr "色相(_H)"
 
-#: libgimpwidgets/gimpcolorscales.c:156 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:156 libgimpwidgets/gimpcolorselect.c:343
 msgid "_S"
 msgstr "彩度(_S)"
 
-#: libgimpwidgets/gimpcolorscales.c:157 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:157 libgimpwidgets/gimpcolorselect.c:343
 msgid "_V"
 msgstr "明度(_V)"
 
-#: libgimpwidgets/gimpcolorscales.c:158 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:158 libgimpwidgets/gimpcolorselect.c:343
 msgid "_R"
 msgstr "紅(_R)"
 
-#: libgimpwidgets/gimpcolorscales.c:159 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:159 libgimpwidgets/gimpcolorselect.c:343
 msgid "_G"
 msgstr "綠(_G)"
 
-#: libgimpwidgets/gimpcolorscales.c:160 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:160 libgimpwidgets/gimpcolorselect.c:343
 msgid "_B"
 msgstr "藍(_B)"
 
@@ -414,32 +414,32 @@ msgstr "藍(_B)"
 msgid "_A"
 msgstr "透明(_A)"
 
-#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:347
 msgid "Hue"
 msgstr "色相"
 
-#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:355
+#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:348
 #: modules/cdisplay_proof.c:49 modules/cdisplay_proof.c:444
 msgid "Saturation"
 msgstr "彩度"
 
-#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:356
+#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:349
 msgid "Value"
 msgstr "明度"
 
-#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:357
+#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:350
 msgid "Red"
 msgstr "紅"
 
-#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:358
+#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:351
 msgid "Green"
 msgstr "綠"
 
-#: libgimpwidgets/gimpcolorscales.c:170 libgimpwidgets/gimpcolorselect.c:359
+#: libgimpwidgets/gimpcolorscales.c:170 libgimpwidgets/gimpcolorselect.c:352
 msgid "Blue"
 msgstr "藍"
 
-#: libgimpwidgets/gimpcolorscales.c:171 libgimpwidgets/gimpcolorselect.c:360
+#: libgimpwidgets/gimpcolorscales.c:171 libgimpwidgets/gimpcolorselect.c:353
 msgid "Alpha"
 msgstr "透明"
 
@@ -494,16 +494,16 @@ msgid ""
 "that color."
 msgstr "按下滴管，然後在畫面中選取任何想要的顏色。"
 
-#: libgimpwidgets/gimppreviewarea.c:114
+#: libgimpwidgets/gimppreviewarea.c:126
 msgid "Check Size"
 msgstr ""
 
-#: libgimpwidgets/gimppreviewarea.c:121
+#: libgimpwidgets/gimppreviewarea.c:133
 msgid "Check Style"
 msgstr ""
 
-#. a toggle button to (des)activate the instant preview
-#: libgimpwidgets/gimppreview.c:246
+#. toggle button to (des)activate the instant preview
+#: libgimpwidgets/gimppreview.c:302
 msgid "_Preview"
 msgstr ""
 
@@ -587,22 +587,22 @@ msgstr "單位"
 msgid "Factor"
 msgstr "比例"
 
-#: libgimpwidgets/gimpwidgets.c:1000
+#: libgimpwidgets/gimpwidgets.c:1007
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
 "使用本數值作為隨機數產生程序的來源數字 ─ 這樣可重複地產生同一系列的「隨機」數"
 
-#: libgimpwidgets/gimpwidgets.c:1004
+#: libgimpwidgets/gimpwidgets.c:1011
 msgid "_New Seed"
 msgstr "產生隨機數(_N)"
 
-#: libgimpwidgets/gimpwidgets.c:1017
+#: libgimpwidgets/gimpwidgets.c:1024
 msgid "Seed random number generator with a generated random number"
 msgstr "使用產生出來的隨機數作為隨機數產生程序的來源數字"
 
-#: libgimpwidgets/gimpwidgets.c:1021
+#: libgimpwidgets/gimpwidgets.c:1028
 msgid "_Randomize"
 msgstr "隨機化(_R)"
 

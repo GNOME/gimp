@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-05 02:40+0200\n"
+"POT-Creation-Date: 2004-09-19 21:03+0200\n"
 "PO-Revision-Date: 2004-09-05 01:20+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -385,27 +385,27 @@ msgstr "/_Weiss"
 msgid "Scales"
 msgstr "Schieberegler"
 
-#: libgimpwidgets/gimpcolorscales.c:155 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:155 libgimpwidgets/gimpcolorselect.c:343
 msgid "_H"
 msgstr "_H"
 
-#: libgimpwidgets/gimpcolorscales.c:156 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:156 libgimpwidgets/gimpcolorselect.c:343
 msgid "_S"
 msgstr "_S"
 
-#: libgimpwidgets/gimpcolorscales.c:157 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:157 libgimpwidgets/gimpcolorselect.c:343
 msgid "_V"
 msgstr "_V"
 
-#: libgimpwidgets/gimpcolorscales.c:158 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:158 libgimpwidgets/gimpcolorselect.c:343
 msgid "_R"
 msgstr "_R"
 
-#: libgimpwidgets/gimpcolorscales.c:159 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:159 libgimpwidgets/gimpcolorselect.c:343
 msgid "_G"
 msgstr "_G"
 
-#: libgimpwidgets/gimpcolorscales.c:160 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:160 libgimpwidgets/gimpcolorselect.c:343
 msgid "_B"
 msgstr "_B"
 
@@ -413,32 +413,32 @@ msgstr "_B"
 msgid "_A"
 msgstr "_A"
 
-#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:347
 msgid "Hue"
 msgstr "Farbton"
 
-#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:355
+#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:348
 #: modules/cdisplay_proof.c:49 modules/cdisplay_proof.c:444
 msgid "Saturation"
 msgstr "Sättigung"
 
-#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:356
+#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:349
 msgid "Value"
 msgstr "Wert"
 
-#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:357
+#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:350
 msgid "Red"
 msgstr "Rot"
 
-#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:358
+#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:351
 msgid "Green"
 msgstr "Grün"
 
-#: libgimpwidgets/gimpcolorscales.c:170 libgimpwidgets/gimpcolorselect.c:359
+#: libgimpwidgets/gimpcolorscales.c:170 libgimpwidgets/gimpcolorselect.c:352
 msgid "Blue"
 msgstr "Blau"
 
-#: libgimpwidgets/gimpcolorscales.c:171 libgimpwidgets/gimpcolorselect.c:360
+#: libgimpwidgets/gimpcolorscales.c:171 libgimpwidgets/gimpcolorselect.c:353
 msgid "Alpha"
 msgstr "Deckkraft"
 
@@ -494,16 +494,16 @@ msgstr ""
 "Klicken Sie die Pipette und dann einen beliebigen Punkt auf dem Schirm um "
 "dessen Farbe auszuwählen."
 
-#: libgimpwidgets/gimppreviewarea.c:114
+#: libgimpwidgets/gimppreviewarea.c:126
 msgid "Check Size"
 msgstr "Schachbrett Größe"
 
-#: libgimpwidgets/gimppreviewarea.c:121
+#: libgimpwidgets/gimppreviewarea.c:133
 msgid "Check Style"
 msgstr "Schachbrett Muster"
 
-#. a toggle button to (des)activate the instant preview
-#: libgimpwidgets/gimppreview.c:246
+#. toggle button to (des)activate the instant preview
+#: libgimpwidgets/gimppreview.c:302
 msgid "_Preview"
 msgstr "_Vorschau"
 
@@ -587,7 +587,7 @@ msgstr "Einheit"
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:1000
+#: libgimpwidgets/gimpwidgets.c:1007
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -595,15 +595,15 @@ msgstr ""
 "Benutze diesen Wert für den Zufallsgenerator - dies ermgöglicht es "
 "\"zufällige\" Funktionen zu wiederholen"
 
-#: libgimpwidgets/gimpwidgets.c:1004
+#: libgimpwidgets/gimpwidgets.c:1011
 msgid "_New Seed"
 msgstr "_Neu Würfeln"
 
-#: libgimpwidgets/gimpwidgets.c:1017
+#: libgimpwidgets/gimpwidgets.c:1024
 msgid "Seed random number generator with a generated random number"
 msgstr "Initialisiere den Zufallsgenerator mit einer Zufallszahl"
 
-#: libgimpwidgets/gimpwidgets.c:1021
+#: libgimpwidgets/gimpwidgets.c:1028
 msgid "_Randomize"
 msgstr "_Zufällig"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-05 02:40+0200\n"
+"POT-Creation-Date: 2004-09-19 21:03+0200\n"
 "PO-Revision-Date: 2004-07-20 16:17+0530\n"
 "Last-Translator: Amanpreet Singh Alam <aalam@redhat.com>\n"
 "Language-Team: Punjabi <pa@li.org>\n"
@@ -386,27 +386,27 @@ msgstr "/ਸਫੈਦ"
 msgid "Scales"
 msgstr "ਪੈਮਾਨਾ"
 
-#: libgimpwidgets/gimpcolorscales.c:155 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:155 libgimpwidgets/gimpcolorselect.c:343
 msgid "_H"
 msgstr "_H"
 
-#: libgimpwidgets/gimpcolorscales.c:156 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:156 libgimpwidgets/gimpcolorselect.c:343
 msgid "_S"
 msgstr "_S"
 
-#: libgimpwidgets/gimpcolorscales.c:157 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:157 libgimpwidgets/gimpcolorselect.c:343
 msgid "_V"
 msgstr "_V"
 
-#: libgimpwidgets/gimpcolorscales.c:158 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:158 libgimpwidgets/gimpcolorselect.c:343
 msgid "_R"
 msgstr "_R"
 
-#: libgimpwidgets/gimpcolorscales.c:159 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:159 libgimpwidgets/gimpcolorselect.c:343
 msgid "_G"
 msgstr "_G"
 
-#: libgimpwidgets/gimpcolorscales.c:160 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:160 libgimpwidgets/gimpcolorselect.c:343
 msgid "_B"
 msgstr "_B"
 
@@ -414,32 +414,32 @@ msgstr "_B"
 msgid "_A"
 msgstr "_A"
 
-#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:347
 msgid "Hue"
 msgstr "ਰੰਗਤ"
 
-#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:355
+#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:348
 #: modules/cdisplay_proof.c:49 modules/cdisplay_proof.c:444
 msgid "Saturation"
 msgstr "ਸੰਤ੍ਰਿਪਤੀ"
 
-#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:356
+#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:349
 msgid "Value"
 msgstr "ਮੁੱਲ"
 
-#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:357
+#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:350
 msgid "Red"
 msgstr "ਲਾਲ"
 
-#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:358
+#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:351
 msgid "Green"
 msgstr "ਹਰਾ"
 
-#: libgimpwidgets/gimpcolorscales.c:170 libgimpwidgets/gimpcolorselect.c:359
+#: libgimpwidgets/gimpcolorscales.c:170 libgimpwidgets/gimpcolorselect.c:352
 msgid "Blue"
 msgstr "ਨੀਲਾ"
 
-#: libgimpwidgets/gimpcolorscales.c:171 libgimpwidgets/gimpcolorselect.c:360
+#: libgimpwidgets/gimpcolorscales.c:171 libgimpwidgets/gimpcolorselect.c:353
 msgid "Alpha"
 msgstr "ਐਲਫਾ"
 
@@ -494,16 +494,16 @@ msgid ""
 "that color."
 msgstr "ਆਈਡਰੌਪਰ ਦਬਾਓ, ਫਿਰ ਆਪਣੇ ਪਰਦੇ ਉੱਪਰ ਕਿਤੇ ਵੀ ਚੁਣਨ ਲਈ ਇੱਕ ਰੰਗ ਦਬਾਓ ।"
 
-#: libgimpwidgets/gimppreviewarea.c:114
+#: libgimpwidgets/gimppreviewarea.c:126
 msgid "Check Size"
 msgstr ""
 
-#: libgimpwidgets/gimppreviewarea.c:121
+#: libgimpwidgets/gimppreviewarea.c:133
 msgid "Check Style"
 msgstr ""
 
-#. a toggle button to (des)activate the instant preview
-#: libgimpwidgets/gimppreview.c:246
+#. toggle button to (des)activate the instant preview
+#: libgimpwidgets/gimppreview.c:302
 msgid "_Preview"
 msgstr ""
 
@@ -587,7 +587,7 @@ msgstr "ਇਕਾਈ"
 msgid "Factor"
 msgstr "ਗੁਣਾਂਕ"
 
-#: libgimpwidgets/gimpwidgets.c:1000
+#: libgimpwidgets/gimpwidgets.c:1007
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -595,15 +595,15 @@ msgstr ""
 "ਬੇਤਰਤੀਬੇ ਨੰਬਰ ਉਤਪਾਦਕ ਮੂਲ ਲਈ ਇਹ ਮੁੱਲ ਚੁਣੋ - ਇਸ ਨਾਲ ਤੁਸੀ ਦਰਸਾਏੲ \"ਬੇਤਰਤੀਬ\" ਕਿਰਿਆ ਦੁਹਰਾ "
 "ਸਕਦੇ ਹੋ"
 
-#: libgimpwidgets/gimpwidgets.c:1004
+#: libgimpwidgets/gimpwidgets.c:1011
 msgid "_New Seed"
 msgstr "ਨਵਾਂ ਮੂਲ"
 
-#: libgimpwidgets/gimpwidgets.c:1017
+#: libgimpwidgets/gimpwidgets.c:1024
 msgid "Seed random number generator with a generated random number"
 msgstr "ਉਪਜੇ ਬੇਤਰਤੀਬ ਨੰਬਰ ਸਮੇਤ ਮੂਲ ਬੇਤਰਤੀਬ ਨੰਬਰ ਉਤਪਾਦਕ"
 
-#: libgimpwidgets/gimpwidgets.c:1021
+#: libgimpwidgets/gimpwidgets.c:1028
 msgid "_Randomize"
 msgstr "ਬੇਤਰਤੀਬੀ"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-05 02:40+0200\n"
+"POT-Creation-Date: 2004-09-19 21:03+0200\n"
 "PO-Revision-Date: 2004-03-18 02:16+0200\n"
 "Last-Translator: Mikko Paananen <mikko at ipi.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
@@ -385,27 +385,27 @@ msgstr "/Valkoinen"
 msgid "Scales"
 msgstr "Asteikot"
 
-#: libgimpwidgets/gimpcolorscales.c:155 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:155 libgimpwidgets/gimpcolorselect.c:343
 msgid "_H"
 msgstr "_H"
 
-#: libgimpwidgets/gimpcolorscales.c:156 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:156 libgimpwidgets/gimpcolorselect.c:343
 msgid "_S"
 msgstr "_S"
 
-#: libgimpwidgets/gimpcolorscales.c:157 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:157 libgimpwidgets/gimpcolorselect.c:343
 msgid "_V"
 msgstr "_V"
 
-#: libgimpwidgets/gimpcolorscales.c:158 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:158 libgimpwidgets/gimpcolorselect.c:343
 msgid "_R"
 msgstr "_R"
 
-#: libgimpwidgets/gimpcolorscales.c:159 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:159 libgimpwidgets/gimpcolorselect.c:343
 msgid "_G"
 msgstr "_G"
 
-#: libgimpwidgets/gimpcolorscales.c:160 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:160 libgimpwidgets/gimpcolorselect.c:343
 msgid "_B"
 msgstr "_B"
 
@@ -413,32 +413,32 @@ msgstr "_B"
 msgid "_A"
 msgstr "_A"
 
-#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:347
 msgid "Hue"
 msgstr "Sävy"
 
-#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:355
+#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:348
 #: modules/cdisplay_proof.c:49 modules/cdisplay_proof.c:444
 msgid "Saturation"
 msgstr "Kylläisyys"
 
-#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:356
+#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:349
 msgid "Value"
 msgstr "Arvo"
 
-#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:357
+#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:350
 msgid "Red"
 msgstr "Punainen"
 
-#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:358
+#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:351
 msgid "Green"
 msgstr "Vihreä"
 
-#: libgimpwidgets/gimpcolorscales.c:170 libgimpwidgets/gimpcolorselect.c:359
+#: libgimpwidgets/gimpcolorscales.c:170 libgimpwidgets/gimpcolorselect.c:352
 msgid "Blue"
 msgstr "Sininen"
 
-#: libgimpwidgets/gimpcolorscales.c:171 libgimpwidgets/gimpcolorselect.c:360
+#: libgimpwidgets/gimpcolorscales.c:171 libgimpwidgets/gimpcolorselect.c:353
 msgid "Alpha"
 msgstr "Alfa"
 
@@ -495,16 +495,16 @@ msgstr ""
 "Napsauta värivalitsinta, sen jälkeen napsauta missä tahansa näytöllä "
 "valitaksesi värin."
 
-#: libgimpwidgets/gimppreviewarea.c:114
+#: libgimpwidgets/gimppreviewarea.c:126
 msgid "Check Size"
 msgstr ""
 
-#: libgimpwidgets/gimppreviewarea.c:121
+#: libgimpwidgets/gimppreviewarea.c:133
 msgid "Check Style"
 msgstr ""
 
-#. a toggle button to (des)activate the instant preview
-#: libgimpwidgets/gimppreview.c:246
+#. toggle button to (des)activate the instant preview
+#: libgimpwidgets/gimppreview.c:302
 msgid "_Preview"
 msgstr ""
 
@@ -588,7 +588,7 @@ msgstr "Mittayksikkö"
 msgid "Factor"
 msgstr "Kerroin"
 
-#: libgimpwidgets/gimpwidgets.c:1000
+#: libgimpwidgets/gimpwidgets.c:1007
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -596,15 +596,15 @@ msgstr ""
 "Käytetään tätä arvoa satunnaislukujen siemenenä. Tämä mahdollistaa "
 "näennäisesti satunnaisen toiminnon toiston samanlaisena."
 
-#: libgimpwidgets/gimpwidgets.c:1004
+#: libgimpwidgets/gimpwidgets.c:1011
 msgid "_New Seed"
 msgstr "_Siemenluku"
 
-#: libgimpwidgets/gimpwidgets.c:1017
+#: libgimpwidgets/gimpwidgets.c:1024
 msgid "Seed random number generator with a generated random number"
 msgstr "Alusta satunnaisluvut luodulla satunnaisluvulla."
 
-#: libgimpwidgets/gimpwidgets.c:1021
+#: libgimpwidgets/gimpwidgets.c:1028
 msgid "_Randomize"
 msgstr "S_atunnaista"
 

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-05 02:40+0200\n"
+"POT-Creation-Date: 2004-09-20 00:35+0200\n"
 "PO-Revision-Date: 2004-08-08 14:19+0200\n"
 "Last-Translator: Бранко Ивановић <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@bogus.example.com>\n"
@@ -306,8 +306,8 @@ msgstr "Косинус"
 #: plug-ins/FractalExplorer/Dialogs.c:1017
 #: plug-ins/FractalExplorer/Dialogs.c:1058 plug-ins/Lighting/lighting_ui.c:369
 #: plug-ins/common/CML_explorer.c:166 plug-ins/common/align_layers.c:417
-#: plug-ins/common/align_layers.c:448 plug-ins/common/postscript.c:2903
-#: plug-ins/common/postscript.c:2915 plug-ins/common/psp.c:420
+#: plug-ins/common/align_layers.c:448 plug-ins/common/postscript.c:2908
+#: plug-ins/common/postscript.c:2920 plug-ins/common/psp.c:420
 #: plug-ins/fits/fits.c:1016
 msgid "None"
 msgstr "Ништа"
@@ -407,14 +407,14 @@ msgstr "Фрактали"
 #: plug-ins/common/dicom.c:651 plug-ins/common/gbr.c:590
 #: plug-ins/common/gif.c:997 plug-ins/common/gih.c:1254
 #: plug-ins/common/gtm.c:228 plug-ins/common/gz.c:311 plug-ins/common/gz.c:420
-#: plug-ins/common/jpeg.c:1365 plug-ins/common/mng.c:557
+#: plug-ins/common/jpeg.c:1360 plug-ins/common/mng.c:557
 #: plug-ins/common/mng.c:941 plug-ins/common/pat.c:437
 #: plug-ins/common/pcx.c:589 plug-ins/common/pix.c:519
 #: plug-ins/common/png.c:1180 plug-ins/common/pnm.c:776
-#: plug-ins/common/postscript.c:1058 plug-ins/common/psd_save.c:1558
+#: plug-ins/common/postscript.c:1059 plug-ins/common/psd_save.c:1558
 #: plug-ins/common/spheredesigner.c:2088 plug-ins/common/sunras.c:516
 #: plug-ins/common/tga.c:1032 plug-ins/common/tiff.c:1809
-#: plug-ins/common/xbm.c:1000 plug-ins/common/xwd.c:538
+#: plug-ins/common/xbm.c:1000 plug-ins/common/xwd.c:581
 #: plug-ins/fits/fits.c:454 plug-ins/flame/flame.c:439
 #: plug-ins/gfig/gfig.c:782 plug-ins/gfli/gfli.c:718
 #: plug-ins/ifscompose/ifscompose.c:2541 plug-ins/winicon/icosave.c:238
@@ -446,15 +446,15 @@ msgstr "Сачувај параметре фрактала"
 #: plug-ins/common/channel_mixer.c:1108 plug-ins/common/curve_bend.c:914
 #: plug-ins/common/dicom.c:294 plug-ins/common/gbr.c:331
 #: plug-ins/common/gifload.c:298 plug-ins/common/gih.c:648
-#: plug-ins/common/jpeg.c:817 plug-ins/common/mng.c:1112
+#: plug-ins/common/jpeg.c:812 plug-ins/common/mng.c:1112
 #: plug-ins/common/pat.c:304 plug-ins/common/pcx.c:306
 #: plug-ins/common/pix.c:336 plug-ins/common/png.c:676
-#: plug-ins/common/pnm.c:399 plug-ins/common/postscript.c:935
+#: plug-ins/common/pnm.c:399 plug-ins/common/postscript.c:936
 #: plug-ins/common/psd.c:1770 plug-ins/common/psp.c:1461
 #: plug-ins/common/spheredesigner.c:1990 plug-ins/common/sunras.c:385
 #: plug-ins/common/svg.c:245 plug-ins/common/svg.c:628
 #: plug-ins/common/tga.c:417 plug-ins/common/tiff.c:513
-#: plug-ins/common/xbm.c:723 plug-ins/common/xwd.c:388
+#: plug-ins/common/xbm.c:723 plug-ins/common/xwd.c:426
 #: plug-ins/faxg3/faxg3.c:221 plug-ins/fits/fits.c:341
 #: plug-ins/flame/flame.c:408 plug-ins/gfig/gfig.c:430
 #: plug-ins/gfli/gfli.c:427 plug-ins/gfli/gfli.c:463
@@ -698,8 +698,8 @@ msgstr "Оригинални Интезитет"
 msgid "Position"
 msgstr "Позиција"
 
-#: plug-ins/Lighting/lighting_ui.c:426 plug-ins/common/flarefx.c:731
-#: plug-ins/common/mblur.c:864 plug-ins/common/nova.c:460
+#: plug-ins/Lighting/lighting_ui.c:426 plug-ins/common/flarefx.c:768
+#: plug-ins/common/mblur.c:1002 plug-ins/common/nova.c:497
 #: plug-ins/common/papertile.c:267 plug-ins/flame/flame.c:1203
 #: plug-ins/gflare/gflare.c:2645
 msgid "_X:"
@@ -709,8 +709,8 @@ msgstr "X:"
 msgid "Light source X position in XYZ space"
 msgstr "Позиција извора светла X у XYZ простору"
 
-#: plug-ins/Lighting/lighting_ui.c:439 plug-ins/common/flarefx.c:752
-#: plug-ins/common/mblur.c:870 plug-ins/common/nova.c:481
+#: plug-ins/Lighting/lighting_ui.c:439 plug-ins/common/flarefx.c:789
+#: plug-ins/common/mblur.c:1008 plug-ins/common/nova.c:518
 #: plug-ins/common/papertile.c:276 plug-ins/flame/flame.c:1217
 #: plug-ins/gflare/gflare.c:2649
 msgid "_Y:"
@@ -731,8 +731,8 @@ msgstr "Позиција извора свјетла Z у XYZ простору"
 #. *****************************************************
 #. radio buttons for choosing LEFT or RIGHT
 #. *************************************************
-#: plug-ins/Lighting/lighting_ui.c:461 plug-ins/common/struc.c:1274
-#: plug-ins/common/wind.c:930
+#: plug-ins/Lighting/lighting_ui.c:461 plug-ins/common/struc.c:1286
+#: plug-ins/common/wind.c:931
 msgid "Direction"
 msgstr "Смер"
 
@@ -845,7 +845,9 @@ msgstr "Укључи/искључи брдовити терен (дубина с
 msgid "Bumpm_ap image:"
 msgstr "Брдовита слика:"
 
-#: plug-ins/Lighting/lighting_ui.c:758 plug-ins/flame/flame.c:730
+#. Map type menu
+#: plug-ins/Lighting/lighting_ui.c:758 plug-ins/common/bumpmap.c:878
+#: plug-ins/flame/flame.c:730
 msgid "Linear"
 msgstr "Линеарно"
 
@@ -853,11 +855,13 @@ msgstr "Линеарно"
 msgid "Logarithmic"
 msgstr "Логаритамски"
 
-#: plug-ins/Lighting/lighting_ui.c:760 plug-ins/flame/flame.c:731
+#: plug-ins/Lighting/lighting_ui.c:760 plug-ins/common/bumpmap.c:880
+#: plug-ins/flame/flame.c:731
 msgid "Sinusoidal"
 msgstr "Синусно"
 
-#: plug-ins/Lighting/lighting_ui.c:761 plug-ins/flame/flame.c:732
+#: plug-ins/Lighting/lighting_ui.c:761 plug-ins/common/bumpmap.c:879
+#: plug-ins/flame/flame.c:732
 msgid "Spherical"
 msgstr "Сферично"
 
@@ -980,7 +984,7 @@ msgstr "Пројектуј на ваљак..."
 msgid "Map _Object..."
 msgstr "Мапирај у објект"
 
-#: plug-ins/MapObject/mapobject_main.c:206 plug-ins/common/bumpmap.c:369
+#: plug-ins/MapObject/mapobject_main.c:206 plug-ins/common/bumpmap.c:355
 #: plug-ins/common/displace.c:158 plug-ins/common/fractaltrace.c:133
 #: plug-ins/common/illusion.c:113 plug-ins/common/lic.c:791
 #: plug-ins/common/papertile.c:821 plug-ins/common/tile.c:120
@@ -1072,9 +1076,9 @@ msgstr "Укључи Умекшавање"
 msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr "Укључи/искључи уклањање назубљених рубова (омекшавање)"
 
-#: plug-ins/MapObject/mapobject_ui.c:602 plug-ins/common/bumpmap.c:1034
+#: plug-ins/MapObject/mapobject_ui.c:602 plug-ins/common/bumpmap.c:950
 #: plug-ins/common/emboss.c:546 plug-ins/common/fractaltrace.c:792
-#: plug-ins/common/struc.c:1294
+#: plug-ins/common/struc.c:1318
 msgid "_Depth:"
 msgstr "Дубина:"
 
@@ -1082,8 +1086,8 @@ msgstr "Дубина:"
 msgid "Antialiasing quality. Higher is better, but slower"
 msgstr "Квалитет умекшавања ивица. Више је боље, али спорије"
 
-#: plug-ins/MapObject/mapobject_ui.c:614 plug-ins/common/unsharp.c:721
-#: plug-ins/common/wind.c:983 plug-ins/imagemap/imap_preferences.c:538
+#: plug-ins/MapObject/mapobject_ui.c:614 plug-ins/common/unsharp.c:717
+#: plug-ins/common/wind.c:994 plug-ins/imagemap/imap_preferences.c:538
 msgid "_Threshold:"
 msgstr "_Праг:"
 
@@ -1172,7 +1176,7 @@ msgid "Object Z position in XYZ space"
 msgstr "Позиција извора светла Z у XYZ простору"
 
 #. Rotation
-#: plug-ins/MapObject/mapobject_ui.c:1070 plug-ins/common/postscript.c:3067
+#: plug-ins/MapObject/mapobject_ui.c:1070 plug-ins/common/postscript.c:3072
 msgid "Rotation"
 msgstr "Ротација"
 
@@ -1277,7 +1281,7 @@ msgid "Cylinder radius"
 msgstr "Полупречник цилиндра"
 
 #
-#: plug-ins/MapObject/mapobject_ui.c:1287 plug-ins/common/mblur.c:818
+#: plug-ins/MapObject/mapobject_ui.c:1287 plug-ins/common/mblur.c:942
 msgid "L_ength:"
 msgstr "Дужина:"
 
@@ -1339,14 +1343,14 @@ msgstr "Погрешна мапа боја"
 #: plug-ins/bmp/bmpread.c:158 plug-ins/common/CEL.c:314
 #: plug-ins/common/dicom.c:299 plug-ins/common/gbr.c:336
 #: plug-ins/common/gifload.c:303 plug-ins/common/gih.c:653
-#: plug-ins/common/jpeg.c:824 plug-ins/common/pat.c:309
+#: plug-ins/common/jpeg.c:819 plug-ins/common/pat.c:309
 #: plug-ins/common/pcx.c:311 plug-ins/common/pix.c:342
 #: plug-ins/common/png.c:683 plug-ins/common/pnm.c:404
-#: plug-ins/common/postscript.c:941 plug-ins/common/psd.c:1775
+#: plug-ins/common/postscript.c:942 plug-ins/common/psd.c:1775
 #: plug-ins/common/sunras.c:439 plug-ins/common/tga.c:422
 #: plug-ins/common/tiff.c:518 plug-ins/common/wmf.c:400
-#: plug-ins/common/xbm.c:728 plug-ins/common/xpm.c:334
-#: plug-ins/common/xwd.c:439 plug-ins/faxg3/faxg3.c:204
+#: plug-ins/common/xbm.c:728 plug-ins/common/xpm.c:346
+#: plug-ins/common/xwd.c:479 plug-ins/faxg3/faxg3.c:204
 #: plug-ins/gfli/gfli.c:468 plug-ins/sgi/sgi.c:327 plug-ins/xjt/xjt.c:3316
 #, c-format
 msgid "Opening '%s'..."
@@ -1379,11 +1383,11 @@ msgstr "Непрепознат или неисправан облик компр
 #: plug-ins/common/CEL.c:364 plug-ins/common/blinds.c:289
 #: plug-ins/common/compose.c:616 plug-ins/common/decompose.c:584
 #: plug-ins/common/dicom.c:446 plug-ins/common/film.c:950
-#: plug-ins/common/gifload.c:867 plug-ins/common/jpeg.c:984
+#: plug-ins/common/gifload.c:867 plug-ins/common/jpeg.c:979
 #: plug-ins/common/pcx.c:338 plug-ins/common/pcx.c:344
 #: plug-ins/common/pix.c:378 plug-ins/common/png.c:810
 #: plug-ins/common/pnm.c:484 plug-ins/common/psd.c:2184
-#: plug-ins/common/smooth_palette.c:256 plug-ins/common/sunras.c:928
+#: plug-ins/common/smooth_palette.c:257 plug-ins/common/sunras.c:928
 #: plug-ins/common/tga.c:931 plug-ins/common/tiff.c:836
 #: plug-ins/common/tile.c:267 plug-ins/common/winclipboard.c:579
 #: plug-ins/common/xbm.c:871 plug-ins/faxg3/faxg3.c:466
@@ -1400,7 +1404,7 @@ msgid "Cannot save images with alpha channel."
 msgstr "Не могу сачувати слику са алфа каналом."
 
 #: plug-ins/bmp/bmpwrite.c:182 plug-ins/common/dicom.c:636
-#: plug-ins/common/postscript.c:1049 plug-ins/common/xwd.c:529
+#: plug-ins/common/postscript.c:1050 plug-ins/common/xwd.c:572
 #: plug-ins/fits/fits.c:445 plug-ins/xjt/xjt.c:1681
 msgid "Cannot operate on unknown image types."
 msgstr "Не могу радити са непознатим типовима слика."
@@ -1411,13 +1415,13 @@ msgstr "Не могу радити са непознатим типовима с
 #: plug-ins/bmp/bmpwrite.c:209 plug-ins/common/CEL.c:586
 #: plug-ins/common/gbr.c:595 plug-ins/common/gif.c:1004
 #: plug-ins/common/gih.c:1259 plug-ins/common/gtm.c:248
-#: plug-ins/common/jpeg.c:1320 plug-ins/common/pat.c:442
+#: plug-ins/common/jpeg.c:1315 plug-ins/common/pat.c:442
 #: plug-ins/common/pcx.c:549 plug-ins/common/pix.c:525
 #: plug-ins/common/png.c:1187 plug-ins/common/pnm.c:781
-#: plug-ins/common/postscript.c:1063 plug-ins/common/psd_save.c:1563
+#: plug-ins/common/postscript.c:1064 plug-ins/common/psd_save.c:1563
 #: plug-ins/common/sunras.c:521 plug-ins/common/tga.c:1037
 #: plug-ins/common/tiff.c:1814 plug-ins/common/xbm.c:1005
-#: plug-ins/common/xpm.c:624 plug-ins/common/xwd.c:543
+#: plug-ins/common/xpm.c:636 plug-ins/common/xwd.c:586
 #: plug-ins/fits/fits.c:459 plug-ins/gfli/gfli.c:685 plug-ins/sgi/sgi.c:549
 #: plug-ins/xjt/xjt.c:1686
 #, c-format
@@ -2104,19 +2108,19 @@ msgstr "Позор: „%s“ је параметар датотека за но�
 msgid "Error: failed to load parameters"
 msgstr "Грешка у учитавању параметара"
 
-#: plug-ins/common/aa.c:100
+#: plug-ins/common/aa.c:94
 msgid "ASCII art"
 msgstr ""
 
 #. Create the actual window.
-#: plug-ins/common/aa.c:354
+#: plug-ins/common/aa.c:348
 msgid "Save as Text"
 msgstr "Сачувај као текст"
 
-#. file save type
-#: plug-ins/common/aa.c:364 plug-ins/common/sunras.c:1592
-msgid "Data Formatting"
-msgstr "Форматирање података"
+#: plug-ins/common/aa.c:363
+#, fuzzy
+msgid "_Format:"
+msgstr "Фонт:"
 
 #: plug-ins/common/align_layers.c:135
 #, fuzzy
@@ -2167,7 +2171,7 @@ msgid "Left edge"
 msgstr "Лева ивица"
 
 #: plug-ins/common/align_layers.c:435 plug-ins/common/align_layers.c:465
-#: plug-ins/common/mblur.c:840 plug-ins/gflare/gflare.c:2633
+#: plug-ins/gflare/gflare.c:2633
 msgid "Center"
 msgstr "Средина"
 
@@ -2403,7 +2407,7 @@ msgstr "Сепаратори"
 #: plug-ins/common/ripple.c:143 plug-ins/common/shift.c:116
 #: plug-ins/common/video.c:1824 plug-ins/common/vpropagate.c:274
 #: plug-ins/common/waves.c:135 plug-ins/common/whirlpinch.c:184
-#: plug-ins/common/wind.c:195 plug-ins/pagecurl/pagecurl.c:244
+#: plug-ins/common/wind.c:190 plug-ins/pagecurl/pagecurl.c:244
 #, fuzzy
 msgid "<Image>/Filters/Distorts"
 msgstr "<Image>/Филтери/Дисторзије/Ветар..."
@@ -2452,14 +2456,14 @@ msgid "_Blur"
 msgstr "Замути"
 
 #: plug-ins/common/blur.c:154 plug-ins/common/gauss.c:244
-#: plug-ins/common/mblur.c:164 plug-ins/common/pixelize.c:180
+#: plug-ins/common/mblur.c:183 plug-ins/common/pixelize.c:180
 #: plug-ins/common/sel_gauss.c:113
 #, fuzzy
 msgid "<Image>/Filters/Blur"
 msgstr "<Image>/Филтери/Замућење/Замућење..."
 
 #
-#: plug-ins/common/blur.c:192 plug-ins/common/unsharp.c:262
+#: plug-ins/common/blur.c:192 plug-ins/common/unsharp.c:263
 msgid "Blurring..."
 msgstr "Замућујем..."
 
@@ -2502,84 +2506,71 @@ msgid "_Bucket size:"
 msgstr "Величина канте:"
 
 #
-#: plug-ins/common/bumpmap.c:362
+#: plug-ins/common/bumpmap.c:348
 #, fuzzy
 msgid "_Bump Map..."
 msgstr "_Bump Map"
 
-#: plug-ins/common/bumpmap.c:517
+#: plug-ins/common/bumpmap.c:498
 msgid "Bump-mapping..."
 msgstr "Брдовити-терен..."
 
 #
-#: plug-ins/common/bumpmap.c:865
+#: plug-ins/common/bumpmap.c:838
 msgid "Bump Map"
 msgstr "Брдовити терен"
 
-#: plug-ins/common/bumpmap.c:954
-msgid "Map Type"
+#: plug-ins/common/bumpmap.c:875
+#, fuzzy
+msgid "_Bump map:"
+msgstr "_Брдовити терен:"
+
+#: plug-ins/common/bumpmap.c:890
+#, fuzzy
+msgid "_Map type:"
 msgstr "Врста мапе"
 
-#: plug-ins/common/bumpmap.c:958 plug-ins/common/mblur.c:795
-msgid "_Linear"
-msgstr "Линеарно"
-
-#: plug-ins/common/bumpmap.c:959
-#, fuzzy
-msgid "_Spherical"
-msgstr "Сферично"
-
-#: plug-ins/common/bumpmap.c:960
-#, fuzzy
-msgid "S_inusoidal"
-msgstr "Синусно"
-
 #. Compensate darkening
-#: plug-ins/common/bumpmap.c:967
+#: plug-ins/common/bumpmap.c:893
 #, fuzzy
 msgid "Co_mpensate for darkening"
 msgstr "Компензирај за замрачење"
 
 #. Invert bumpmap
-#: plug-ins/common/bumpmap.c:978
+#: plug-ins/common/bumpmap.c:904
 #, fuzzy
 msgid "I_nvert bumpmap"
 msgstr "Обратни брдовити терен"
 
 #. Tile bumpmap
-#: plug-ins/common/bumpmap.c:989
+#: plug-ins/common/bumpmap.c:915
 #, fuzzy
 msgid "_Tile bumpmap"
 msgstr "_Поплочани брдовити терен"
 
-#: plug-ins/common/bumpmap.c:1013
-#, fuzzy
-msgid "_Bump map:"
-msgstr "_Брдовити терен:"
-
-#: plug-ins/common/bumpmap.c:1016 plug-ins/common/emboss.c:528
+#: plug-ins/common/bumpmap.c:926 plug-ins/common/emboss.c:528
 msgid "_Azimuth:"
 msgstr "_Азимут:"
 
-#: plug-ins/common/bumpmap.c:1025
+#: plug-ins/common/bumpmap.c:938
 msgid "_Elevation:"
 msgstr "Елевација:"
 
-#: plug-ins/common/bumpmap.c:1045 plug-ins/common/postscript.c:3021
+#: plug-ins/common/bumpmap.c:964 plug-ins/common/postscript.c:3026
 #, fuzzy
 msgid "_X offset:"
 msgstr "_X померај:"
 
-#: plug-ins/common/bumpmap.c:1055 plug-ins/common/postscript.c:3030
+#: plug-ins/common/bumpmap.c:977 plug-ins/common/postscript.c:3035
 #, fuzzy
 msgid "_Y offset:"
 msgstr "_Y померај:"
 
-#: plug-ins/common/bumpmap.c:1065
+#: plug-ins/common/bumpmap.c:990
 msgid "_Waterlevel:"
 msgstr "Водена црта:"
 
-#: plug-ins/common/bumpmap.c:1074
+#: plug-ins/common/bumpmap.c:1002
 msgid "A_mbient:"
 msgstr "Амбијент:"
 
@@ -2608,27 +2599,27 @@ msgstr "Саморазвлачење контраста..."
 msgid "c_astretch: cmap was NULL!  Quitting...\n"
 msgstr ""
 
-#: plug-ins/common/cartoon.c:225 plug-ins/common/dog.c:275
+#: plug-ins/common/cartoon.c:228 plug-ins/common/dog.c:275
 #: plug-ins/common/gauss.c:431 plug-ins/common/neon.c:222
-#: plug-ins/common/photocopy.c:238 plug-ins/common/sel_gauss.c:203
+#: plug-ins/common/photocopy.c:241 plug-ins/common/sel_gauss.c:203
 #: plug-ins/common/softglow.c:220 plug-ins/gflare/gflare.c:979
 #: plug-ins/sgi/sgi.c:532 plug-ins/xjt/xjt.c:1677
 msgid "Cannot operate on indexed color images."
 msgstr "Не могу радити с индексираним сликама"
 
 #
-#: plug-ins/common/cartoon.c:754
+#: plug-ins/common/cartoon.c:808
 #, fuzzy
 msgid "Cartoon"
 msgstr "Хватање"
 
 #
-#: plug-ins/common/cartoon.c:773 plug-ins/common/photocopy.c:811
+#: plug-ins/common/cartoon.c:838 plug-ins/common/photocopy.c:866
 #, fuzzy
 msgid "_Mask radius:"
 msgstr "Величина Маске:"
 
-#: plug-ins/common/cartoon.c:784
+#: plug-ins/common/cartoon.c:852
 #, fuzzy
 msgid "_Percent black:"
 msgstr "Одсто"
@@ -2716,22 +2707,22 @@ msgstr "Излазни канал"
 
 #: plug-ins/common/channel_mixer.c:619 plug-ins/common/diffraction.c:498
 #: plug-ins/common/diffraction.c:536 plug-ins/common/diffraction.c:574
-#: plug-ins/common/exchange.c:426 plug-ins/common/noisify.c:432
-#: plug-ins/common/noisify.c:439
+#: plug-ins/common/exchange.c:426 plug-ins/common/noisify.c:431
+#: plug-ins/common/noisify.c:438
 msgid "_Red:"
 msgstr "Црвена:"
 
 #: plug-ins/common/channel_mixer.c:637 plug-ins/common/diffraction.c:507
 #: plug-ins/common/diffraction.c:545 plug-ins/common/diffraction.c:583
-#: plug-ins/common/exchange.c:480 plug-ins/common/noisify.c:433
-#: plug-ins/common/noisify.c:440
+#: plug-ins/common/exchange.c:480 plug-ins/common/noisify.c:432
+#: plug-ins/common/noisify.c:439
 msgid "_Green:"
 msgstr "Зелена:"
 
 #: plug-ins/common/channel_mixer.c:656 plug-ins/common/diffraction.c:516
 #: plug-ins/common/diffraction.c:554 plug-ins/common/diffraction.c:592
-#: plug-ins/common/exchange.c:534 plug-ins/common/noisify.c:434
-#: plug-ins/common/noisify.c:441
+#: plug-ins/common/exchange.c:534 plug-ins/common/noisify.c:433
+#: plug-ins/common/noisify.c:440
 msgid "_Blue:"
 msgstr "Плава:"
 
@@ -3042,7 +3033,7 @@ msgid "E_xtend"
 msgstr "Проширено"
 
 #: plug-ins/common/convmatrix.c:97 plug-ins/common/displace.c:358
-#: plug-ins/common/edge.c:719 plug-ins/common/ripple.c:492
+#: plug-ins/common/edge.c:717 plug-ins/common/ripple.c:492
 msgid "_Wrap"
 msgstr "Умотај"
 
@@ -3070,37 +3061,37 @@ msgstr "Матрица савијања не ради на слојевима м
 msgid "Applying convolution"
 msgstr "Прихвати свијање"
 
-#: plug-ins/common/convmatrix.c:877
+#: plug-ins/common/convmatrix.c:878
 msgid "Convolution Matrix"
 msgstr "Свијање Матрице"
 
-#: plug-ins/common/convmatrix.c:902
+#: plug-ins/common/convmatrix.c:903
 msgid "Matrix"
 msgstr "Матрица"
 
 #
-#: plug-ins/common/convmatrix.c:936
+#: plug-ins/common/convmatrix.c:937
 msgid "D_ivisor:"
 msgstr "Делитељ:"
 
 #
-#: plug-ins/common/convmatrix.c:957 plug-ins/common/depthmerge.c:749
+#: plug-ins/common/convmatrix.c:958 plug-ins/common/depthmerge.c:749
 msgid "O_ffset:"
 msgstr "Померај:"
 
-#: plug-ins/common/convmatrix.c:983
+#: plug-ins/common/convmatrix.c:984
 msgid "A_utomatic"
 msgstr "Аутоматски"
 
-#: plug-ins/common/convmatrix.c:992
+#: plug-ins/common/convmatrix.c:993
 msgid "A_lpha-weighting"
 msgstr "Алфа-тежина"
 
-#: plug-ins/common/convmatrix.c:1008
+#: plug-ins/common/convmatrix.c:1009
 msgid "Border"
 msgstr "Ивица"
 
-#: plug-ins/common/convmatrix.c:1032
+#: plug-ins/common/convmatrix.c:1033
 msgid "Channels"
 msgstr "Канали"
 
@@ -3174,8 +3165,8 @@ msgid "_Cubism..."
 msgstr "Кубизам"
 
 #
-#: plug-ins/common/cubism.c:153 plug-ins/common/oilify.c:113
-#: plug-ins/common/struc.c:1150 plug-ins/gimpressionist/gimp.c:86
+#: plug-ins/common/cubism.c:153 plug-ins/common/oilify.c:112
+#: plug-ins/common/struc.c:1152 plug-ins/gimpressionist/gimp.c:86
 #, fuzzy
 msgid "<Image>/Filters/Artistic"
 msgstr "<Image>/Филтери/Умјетнички/Кубизам..."
@@ -3542,7 +3533,7 @@ msgstr "Расплети..."
 #
 #: plug-ins/common/deinterlace.c:94 plug-ins/common/despeckle.c:152
 #: plug-ins/common/destripe.c:141 plug-ins/common/nlfilt.c:133
-#: plug-ins/common/sharpen.c:131 plug-ins/common/unsharp.c:153
+#: plug-ins/common/sharpen.c:131 plug-ins/common/unsharp.c:154
 #, fuzzy
 msgid "<Image>/Filters/Enhance"
 msgstr "<Image>/Филтери/Побољшај/Изоштравање... "
@@ -3658,7 +3649,7 @@ msgid "Despeckling..."
 msgstr "Деспецклинг..."
 
 #
-#: plug-ins/common/despeckle.c:579
+#: plug-ins/common/despeckle.c:578
 msgid "Despeckle"
 msgstr "Деспецкле..."
 
@@ -3666,34 +3657,34 @@ msgstr "Деспецкле..."
 #.
 #. * Filter type controls...
 #.
-#: plug-ins/common/despeckle.c:608 plug-ins/gimpressionist/orientmap.c:616
+#: plug-ins/common/despeckle.c:604 plug-ins/gimpressionist/orientmap.c:616
 msgid "Type"
 msgstr "Врста"
 
-#: plug-ins/common/despeckle.c:616
+#: plug-ins/common/despeckle.c:612
 msgid "_Adaptive"
 msgstr "Адаптивно"
 
 #
-#: plug-ins/common/despeckle.c:626
+#: plug-ins/common/despeckle.c:622
 msgid "R_ecursive"
 msgstr "Рекурзивно"
 
-#: plug-ins/common/despeckle.c:647 plug-ins/common/neon.c:722
-#: plug-ins/common/nlfilt.c:376 plug-ins/common/nova.c:362
-#: plug-ins/common/unsharp.c:695 plug-ins/common/whirlpinch.c:697
+#: plug-ins/common/despeckle.c:643 plug-ins/common/neon.c:717
+#: plug-ins/common/nlfilt.c:376 plug-ins/common/nova.c:399
+#: plug-ins/common/unsharp.c:691 plug-ins/common/whirlpinch.c:697
 #: plug-ins/gflare/gflare.c:2678 plug-ins/imagemap/imap_circle.c:279
 msgid "_Radius:"
 msgstr "Полупречник:"
 
 #
-#: plug-ins/common/despeckle.c:660
+#: plug-ins/common/despeckle.c:656
 #, fuzzy
 msgid "_Black level:"
 msgstr "Вредност црне:"
 
 #
-#: plug-ins/common/despeckle.c:673
+#: plug-ins/common/despeckle.c:669
 #, fuzzy
 msgid "_White level:"
 msgstr "Вредност беле:"
@@ -3712,8 +3703,8 @@ msgid "Destripe"
 msgstr "Дестрипе"
 
 #: plug-ins/common/destripe.c:585 plug-ins/common/gtm.c:581
-#: plug-ins/common/postscript.c:2844 plug-ins/common/postscript.c:3003
-#: plug-ins/common/smooth_palette.c:428 plug-ins/common/tile.c:418
+#: plug-ins/common/postscript.c:2849 plug-ins/common/postscript.c:3008
+#: plug-ins/common/smooth_palette.c:429 plug-ins/common/tile.c:418
 #: plug-ins/imagemap/imap_cmd_guides.c:165
 #: plug-ins/imagemap/imap_rectangle.c:404
 msgid "_Width:"
@@ -3771,7 +3762,7 @@ msgstr "Обриси"
 msgid "Sharp edges"
 msgstr "Изоштри ивице"
 
-#: plug-ins/common/diffraction.c:612 plug-ins/common/softglow.c:708
+#: plug-ins/common/diffraction.c:612 plug-ins/common/softglow.c:673
 #: plug-ins/flame/flame.c:1033
 msgid "_Brightness:"
 msgstr "Светло:"
@@ -3827,12 +3818,12 @@ msgstr "Y Измештање:"
 msgid "On Edges:"
 msgstr "На ивицама:"
 
-#: plug-ins/common/displace.c:360 plug-ins/common/edge.c:732
+#: plug-ins/common/displace.c:360 plug-ins/common/edge.c:730
 #: plug-ins/common/ripple.c:493 plug-ins/common/waves.c:328
 msgid "_Smear"
 msgstr "Размаз"
 
-#: plug-ins/common/displace.c:362 plug-ins/common/edge.c:745
+#: plug-ins/common/displace.c:362 plug-ins/common/edge.c:743
 #: plug-ins/common/fractaltrace.c:736 plug-ins/common/newsprint.c:407
 #: plug-ins/common/ripple.c:494
 msgid "_Black"
@@ -3845,7 +3836,7 @@ msgid "Difference of Gaussians..."
 msgstr "Селективно Гаусиан замућење..."
 
 #
-#: plug-ins/common/dog.c:174 plug-ins/common/edge.c:176
+#: plug-ins/common/dog.c:174 plug-ins/common/edge.c:169
 #: plug-ins/common/laplace.c:102 plug-ins/common/sobel.c:126
 #, fuzzy
 msgid "<Image>/Filters/Edge-Detect"
@@ -3889,60 +3880,60 @@ msgid "Source"
 msgstr "Извор 1:"
 
 #
-#: plug-ins/common/edge.c:169
+#: plug-ins/common/edge.c:162
 #, fuzzy
 msgid "_Edge..."
 msgstr "Ивице"
 
 #
-#: plug-ins/common/edge.c:241
+#: plug-ins/common/edge.c:235
 msgid "Edge Detection..."
 msgstr "Детекција Руба..."
 
 #
-#: plug-ins/common/edge.c:650
+#: plug-ins/common/edge.c:649
 msgid "Edge Detection"
 msgstr "Детекција Руба"
 
-#: plug-ins/common/edge.c:678
+#: plug-ins/common/edge.c:676
 #, fuzzy
 msgid "Sobel"
 msgstr "_Собел"
 
 # Ово и Собел ми изгледају као имена људи
-#: plug-ins/common/edge.c:679
+#: plug-ins/common/edge.c:677
 #, fuzzy
 msgid "Prewitt"
 msgstr "_Превит"
 
 #
-#: plug-ins/common/edge.c:680 plug-ins/common/sinus.c:898
+#: plug-ins/common/edge.c:678 plug-ins/common/sinus.c:898
 msgid "Gradient"
 msgstr "прелив"
 
-#: plug-ins/common/edge.c:681
+#: plug-ins/common/edge.c:679
 #, fuzzy
 msgid "Roberts"
 msgstr "Робертс"
 
-#: plug-ins/common/edge.c:682
+#: plug-ins/common/edge.c:680
 #, fuzzy
 msgid "Differential"
 msgstr "Razlika"
 
 # Ово је сигурно име чоека
-#: plug-ins/common/edge.c:683
+#: plug-ins/common/edge.c:681
 #, fuzzy
 msgid "Laplace"
 msgstr "_Лаплас"
 
-#: plug-ins/common/edge.c:692
+#: plug-ins/common/edge.c:690
 #, fuzzy
 msgid "_Algorithm:"
 msgstr "Алгоритам"
 
 #
-#: plug-ins/common/edge.c:700
+#: plug-ins/common/edge.c:698
 #, fuzzy
 msgid "A_mount:"
 msgstr "Вредност:"
@@ -3997,8 +3988,8 @@ msgid "Engrave"
 msgstr "Резбарење"
 
 #: plug-ins/common/engrave.c:221 plug-ins/common/film.c:1207
-#: plug-ins/common/gtm.c:597 plug-ins/common/postscript.c:2853
-#: plug-ins/common/postscript.c:3012 plug-ins/common/smooth_palette.c:433
+#: plug-ins/common/gtm.c:597 plug-ins/common/postscript.c:2858
+#: plug-ins/common/postscript.c:3017 plug-ins/common/smooth_palette.c:434
 #: plug-ins/common/tile.c:422 plug-ins/imagemap/imap_cmd_guides.c:175
 #: plug-ins/imagemap/imap_rectangle.c:411
 msgid "_Height:"
@@ -4131,7 +4122,7 @@ msgid "Select Film Color"
 msgstr "Одабери боју филма"
 
 #: plug-ins/common/film.c:1230 plug-ins/common/film.c:1281
-#: plug-ins/common/nova.c:349
+#: plug-ins/common/nova.c:386
 msgid "Co_lor:"
 msgstr "Боја:"
 
@@ -4234,20 +4225,20 @@ msgstr "Ефекти одсјаја"
 msgid "Render Flare..."
 msgstr "Исцртавање одсјаја..."
 
-#: plug-ins/common/flarefx.c:302
+#: plug-ins/common/flarefx.c:304
 msgid "FlareFX"
 msgstr "Ефекти одсјаја"
 
 #
 #. to avoid side effects while initialization
-#: plug-ins/common/flarefx.c:720
+#: plug-ins/common/flarefx.c:757
 #, fuzzy
 msgid "Center of Flare Effect"
 msgstr "Средина ефеката одсјаја"
 
 #
 #. show / hide cursor
-#: plug-ins/common/flarefx.c:799
+#: plug-ins/common/flarefx.c:815
 #, fuzzy
 msgid "_Show cursor"
 msgstr "Прикажи курсор"
@@ -4316,33 +4307,33 @@ msgstr "ИИР Гауссиан Замућење"
 
 #
 #. parameter settings
-#: plug-ins/common/gauss.c:488
+#: plug-ins/common/gauss.c:484
 msgid "Blur Radius"
 msgstr "Полумјер Замућења"
 
-#: plug-ins/common/gauss.c:502 plug-ins/common/jigsaw.c:2517
-#: plug-ins/common/spread.c:381
+#: plug-ins/common/gauss.c:498 plug-ins/common/jigsaw.c:2517
+#: plug-ins/common/spread.c:375
 msgid "_Horizontal:"
 msgstr "Хоризонтално:"
 
 #
-#: plug-ins/common/gauss.c:506 plug-ins/common/jigsaw.c:2534
-#: plug-ins/common/spread.c:385
+#: plug-ins/common/gauss.c:502 plug-ins/common/jigsaw.c:2534
+#: plug-ins/common/spread.c:379
 msgid "_Vertical:"
 msgstr "Вертикално:"
 
 #
-#: plug-ins/common/gauss.c:529
+#: plug-ins/common/gauss.c:525
 #, fuzzy
 msgid "Blur Method"
 msgstr "Врста Замућења"
 
-#: plug-ins/common/gauss.c:533
+#: plug-ins/common/gauss.c:529
 msgid "_IIR"
 msgstr ""
 
 #
-#: plug-ins/common/gauss.c:534
+#: plug-ins/common/gauss.c:530
 #, fuzzy
 msgid "_RLE"
 msgstr "РЛЕ"
@@ -4382,7 +4373,7 @@ msgstr "Сачувај као четку"
 
 #
 #. attach labels
-#: plug-ins/common/gbr.c:687 plug-ins/common/grid.c:775
+#: plug-ins/common/gbr.c:687 plug-ins/common/grid.c:769
 msgid "Spacing:"
 msgstr "Размак:"
 
@@ -4758,27 +4749,27 @@ msgstr "Водиље..."
 msgid "Drawing Grid..."
 msgstr "Цртам Мрежу..."
 
-#: plug-ins/common/grid.c:623 plug-ins/gfig/gfig-dialog.c:1350
+#: plug-ins/common/grid.c:621 plug-ins/gfig/gfig-dialog.c:1350
 #: plug-ins/imagemap/imap_menu.c:382 plug-ins/imagemap/imap_popup.c:153
 #: plug-ins/imagemap/imap_toolbar.c:164
 msgid "Grid"
 msgstr "Мрежа"
 
 #. attach labels
-#: plug-ins/common/grid.c:702
+#: plug-ins/common/grid.c:696
 msgid "Horizontal"
 msgstr "Хоризонтално"
 
-#: plug-ins/common/grid.c:704
+#: plug-ins/common/grid.c:698
 msgid "Vertical"
 msgstr "Вертикално"
 
-#: plug-ins/common/grid.c:706
+#: plug-ins/common/grid.c:700
 msgid "Intersection"
 msgstr "Пресјек"
 
 #. Width and Height
-#: plug-ins/common/grid.c:709 plug-ins/common/svg.c:695
+#: plug-ins/common/grid.c:703 plug-ins/common/svg.c:695
 #: plug-ins/print/gimp_main_window.c:992
 #: plug-ins/print/gimp_main_window.c:1199
 msgid "Width:"
@@ -4786,20 +4777,20 @@ msgstr "Ширина:"
 
 #
 #. attach labels
-#: plug-ins/common/grid.c:842
+#: plug-ins/common/grid.c:836
 msgid "Offset:"
 msgstr "Померај:"
 
 #. attach color selectors
-#: plug-ins/common/grid.c:881
+#: plug-ins/common/grid.c:875
 msgid "Horizontal Color"
 msgstr "Хоризонтална боја"
 
-#: plug-ins/common/grid.c:899
+#: plug-ins/common/grid.c:893
 msgid "Vertical Color"
 msgstr "Вертикална боја"
 
-#: plug-ins/common/grid.c:917
+#: plug-ins/common/grid.c:911
 msgid "Intersection Color"
 msgstr "Боја Пресјека"
 
@@ -5227,121 +5218,121 @@ msgid "Each piece has curved sides"
 msgstr "Сваки део има закривљене странице"
 
 #
-#: plug-ins/common/jpeg.c:333 plug-ins/common/jpeg.c:353
+#: plug-ins/common/jpeg.c:328 plug-ins/common/jpeg.c:348
 #, fuzzy
 msgid "JPEG image"
 msgstr "JPEG преглед"
 
 #
-#: plug-ins/common/jpeg.c:426
+#: plug-ins/common/jpeg.c:421
 msgid "Export Preview"
 msgstr "Извези Преглед"
 
-#: plug-ins/common/jpeg.c:763
+#: plug-ins/common/jpeg.c:758
 msgid "EXIF data will be ignored."
 msgstr "EXIF подаци ће бити занемарени."
 
 #
-#: plug-ins/common/jpeg.c:977
+#: plug-ins/common/jpeg.c:972
 msgid "JPEG preview"
 msgstr "JPEG преглед"
 
-#: plug-ins/common/jpeg.c:1239
+#: plug-ins/common/jpeg.c:1234
 #, fuzzy, c-format
 msgid "File size: %02.01f kB"
 msgstr "Величина: %ld бајтова (%02.01f kB)"
 
-#: plug-ins/common/jpeg.c:1673 plug-ins/common/jpeg.c:1771
+#: plug-ins/common/jpeg.c:1667 plug-ins/common/jpeg.c:1765
 #, fuzzy
 msgid "File size: unknown"
 msgstr "Величина: непозната"
 
 #
-#: plug-ins/common/jpeg.c:1737
+#: plug-ins/common/jpeg.c:1731
 msgid "Save as JPEG"
 msgstr "Сачувај као JPEG"
 
 #
-#: plug-ins/common/jpeg.c:1757
+#: plug-ins/common/jpeg.c:1751
 #, fuzzy
 msgid "_Quality:"
 msgstr "Квалитет:"
 
-#: plug-ins/common/jpeg.c:1761
+#: plug-ins/common/jpeg.c:1755
 #, fuzzy
 msgid "JPEG quality parameter"
 msgstr "Испуни параметром к"
 
-#: plug-ins/common/jpeg.c:1780
+#: plug-ins/common/jpeg.c:1774
 #, fuzzy
 msgid "Show _Preview in image window"
 msgstr "Преглед у прозору слике"
 
-#: plug-ins/common/jpeg.c:1793
+#: plug-ins/common/jpeg.c:1787
 #, fuzzy
 msgid "_Advanced Options"
 msgstr "Напредне Могућности Пакетног Филтера"
 
 #
-#: plug-ins/common/jpeg.c:1821
+#: plug-ins/common/jpeg.c:1815
 #, fuzzy
 msgid "_Smoothing:"
 msgstr "Углађивање:"
 
 #
-#: plug-ins/common/jpeg.c:1834
+#: plug-ins/common/jpeg.c:1828
 #, fuzzy
 msgid "Frequency (rows):"
 msgstr "Рестартај фреквенцију (линије)"
 
 #
-#: plug-ins/common/jpeg.c:1848
+#: plug-ins/common/jpeg.c:1842
 #, fuzzy
 msgid "Use restart markers"
 msgstr "Рестартај маркере"
 
-#: plug-ins/common/jpeg.c:1864 plug-ins/xjt/xjt.c:864
+#: plug-ins/common/jpeg.c:1857 plug-ins/xjt/xjt.c:864
 msgid "Optimize"
 msgstr "Оптимизирај"
 
-#: plug-ins/common/jpeg.c:1878
+#: plug-ins/common/jpeg.c:1871
 msgid "Progressive"
 msgstr "Прогресивно"
 
-#: plug-ins/common/jpeg.c:1897
+#: plug-ins/common/jpeg.c:1890
 msgid "Force baseline JPEG"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1913
+#: plug-ins/common/jpeg.c:1906
 msgid "Save EXIF data"
 msgstr "Сачувај EXIF податке"
 
 #
 #. Subsampling
-#: plug-ins/common/jpeg.c:1927
+#: plug-ins/common/jpeg.c:1922
 msgid "Subsampling:"
 msgstr "Субсемплирање:"
 
 #. DCT method
-#: plug-ins/common/jpeg.c:1951
+#: plug-ins/common/jpeg.c:1949
 msgid "DCT method:"
 msgstr ""
 
 #
-#: plug-ins/common/jpeg.c:1957
+#: plug-ins/common/jpeg.c:1955
 msgid "Fast Integer"
 msgstr "Брзи број"
 
 #
-#: plug-ins/common/jpeg.c:1958
+#: plug-ins/common/jpeg.c:1956
 msgid "Integer"
 msgstr "Број"
 
-#: plug-ins/common/jpeg.c:1959
+#: plug-ins/common/jpeg.c:1957
 msgid "Floating-Point"
 msgstr "Покретни зарез"
 
-#: plug-ins/common/jpeg.c:1970
+#: plug-ins/common/jpeg.c:1971
 msgid "Comment"
 msgstr "Коментар"
 
@@ -5605,41 +5596,50 @@ msgstr "Задржи максимум канала"
 msgid "Ho_ld the minimal channels"
 msgstr "Задржи минимум канала"
 
-#: plug-ins/common/mblur.c:157
+#: plug-ins/common/mblur.c:176
 #, fuzzy
 msgid "_Motion Blur..."
 msgstr "Замућење покрета..."
 
-#: plug-ins/common/mblur.c:698
+#: plug-ins/common/mblur.c:797
 msgid "Motion Blurring..."
 msgstr "Замућење покрета..."
 
-#: plug-ins/common/mblur.c:777
+#: plug-ins/common/mblur.c:894
 msgid "Motion Blur"
 msgstr "Замућење покрета"
 
 #
-#: plug-ins/common/mblur.c:791
+#: plug-ins/common/mblur.c:916
 msgid "Blur Type"
 msgstr "Врста Замућења"
 
-#: plug-ins/common/mblur.c:796
+#: plug-ins/common/mblur.c:920
+msgid "_Linear"
+msgstr "Линеарно"
+
+#: plug-ins/common/mblur.c:921
 msgid "_Radial"
 msgstr "Радиално"
 
 #
-#: plug-ins/common/mblur.c:797
+#: plug-ins/common/mblur.c:922
 msgid "_Zoom"
 msgstr "Увећање"
 
 #
-#: plug-ins/common/mblur.c:807
+#: plug-ins/common/mblur.c:931
 msgid "Blur Parameters"
 msgstr "Параметри замућења"
 
-#: plug-ins/common/mblur.c:830 plug-ins/common/newsprint.c:1011
+#: plug-ins/common/mblur.c:957 plug-ins/common/newsprint.c:1011
 msgid "_Angle:"
 msgstr "Угао:"
+
+#: plug-ins/common/mblur.c:970
+#, fuzzy
+msgid "Blur Center"
+msgstr "Средина"
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
@@ -5873,13 +5873,13 @@ msgid "Neon..."
 msgstr "Новински текст..."
 
 #
-#: plug-ins/common/neon.c:688
+#: plug-ins/common/neon.c:687
 #, fuzzy
 msgid "Neon Detection"
 msgstr "Детекција Руба"
 
 #
-#: plug-ins/common/neon.c:737 plug-ins/common/unsharp.c:708
+#: plug-ins/common/neon.c:732 plug-ins/common/unsharp.c:704
 msgid "_Amount:"
 msgstr "Вредност:"
 
@@ -6067,13 +6067,13 @@ msgstr "Алфа:"
 msgid "_Do preview"
 msgstr "Дај Преглед"
 
-#: plug-ins/common/noisify.c:133
+#: plug-ins/common/noisify.c:134
 #, fuzzy
 msgid "_Scatter RGB..."
 msgstr "Расипање HSV..."
 
 #
-#: plug-ins/common/noisify.c:140 plug-ins/common/randomize.c:274
+#: plug-ins/common/noisify.c:141 plug-ins/common/randomize.c:274
 #: plug-ins/common/randomize.c:275 plug-ins/common/randomize.c:276
 #: plug-ins/common/scatter_hsv.c:141 plug-ins/common/spread.c:106
 #, fuzzy
@@ -6081,7 +6081,7 @@ msgid "<Image>/Filters/Noise"
 msgstr "<Image>/Филтери/Шум/_Slur..."
 
 #
-#: plug-ins/common/noisify.c:215
+#: plug-ins/common/noisify.c:216
 msgid "Adding Noise..."
 msgstr "Додавам шум..."
 
@@ -6090,21 +6090,21 @@ msgstr "Додавам шум..."
 msgid "Scatter RGB"
 msgstr "Расипање HSV"
 
-#: plug-ins/common/noisify.c:399
+#: plug-ins/common/noisify.c:397
 #, fuzzy
 msgid "_Independent RGB"
 msgstr "Независно"
 
 #
-#: plug-ins/common/noisify.c:422 plug-ins/common/noisify.c:426
+#: plug-ins/common/noisify.c:421 plug-ins/common/noisify.c:425
 msgid "_Gray:"
 msgstr "Сива:"
 
-#: plug-ins/common/noisify.c:427 plug-ins/common/noisify.c:442
+#: plug-ins/common/noisify.c:426 plug-ins/common/noisify.c:441
 msgid "_Alpha:"
 msgstr "Алфа:"
 
-#: plug-ins/common/noisify.c:452
+#: plug-ins/common/noisify.c:451
 #, c-format
 msgid "Channel #%d:"
 msgstr "Канал #%d:"
@@ -6123,59 +6123,59 @@ msgstr "СуперНова"
 msgid "Rendering SuperNova..."
 msgstr "Исцртавам СуперНову.."
 
-#: plug-ins/common/nova.c:322
+#: plug-ins/common/nova.c:325
 msgid "SuperNova"
 msgstr "СуперНова"
 
 #
-#: plug-ins/common/nova.c:345
+#: plug-ins/common/nova.c:382
 msgid "SuperNova Color Picker"
 msgstr "Капаљка СуперНове"
 
 #
-#: plug-ins/common/nova.c:374
+#: plug-ins/common/nova.c:411
 msgid "_Spokes:"
 msgstr "Пречке:"
 
 #
-#: plug-ins/common/nova.c:389
+#: plug-ins/common/nova.c:426
 #, fuzzy
 msgid "R_andom hue:"
 msgstr "Насумична Нијанса:"
 
 #
 #. to avoid side effects while initialization
-#: plug-ins/common/nova.c:448
+#: plug-ins/common/nova.c:485
 msgid "Center of SuperNova"
 msgstr "Средина СуперНове"
 
 #
-#: plug-ins/common/nova.c:527
+#: plug-ins/common/nova.c:543
 #, fuzzy
 msgid "S_how cursor"
 msgstr "Прикажи Курсор"
 
-#: plug-ins/common/oilify.c:106
+#: plug-ins/common/oilify.c:105
 #, fuzzy
 msgid "Oili_fy..."
 msgstr "Сликање Уљем"
 
-#: plug-ins/common/oilify.c:184
+#: plug-ins/common/oilify.c:183
 msgid "Oil Painting..."
 msgstr "Сликање Уљем..."
 
-#: plug-ins/common/oilify.c:444
+#: plug-ins/common/oilify.c:418
 msgid "Oilify"
 msgstr "Сликање Уљем"
 
 #
-#: plug-ins/common/oilify.c:461
+#: plug-ins/common/oilify.c:435
 #, fuzzy
 msgid "_Mask size:"
 msgstr "Величина Маске:"
 
 #
-#: plug-ins/common/oilify.c:469
+#: plug-ins/common/oilify.c:443
 #, fuzzy
 msgid "_Use intensity algorithm"
 msgstr "Употријеби Алгоритам за Интезитет"
@@ -6313,26 +6313,26 @@ msgstr "„%s“ није PCX датотека"
 msgid "Unusual PCX flavour, giving up"
 msgstr "Неуобичајена PCX врста, одустајем"
 
-#: plug-ins/common/photocopy.c:155
+#: plug-ins/common/photocopy.c:158
 msgid "_Photocopy..."
 msgstr ""
 
-#: plug-ins/common/photocopy.c:793
+#: plug-ins/common/photocopy.c:836
 #, fuzzy
 msgid "Photocopy"
 msgstr "Фотографија"
 
-#: plug-ins/common/photocopy.c:822 plug-ins/common/sharpen.c:518
-#: plug-ins/common/softglow.c:722
+#: plug-ins/common/photocopy.c:880 plug-ins/common/sharpen.c:514
+#: plug-ins/common/softglow.c:687
 msgid "_Sharpness:"
 msgstr "Оштрина:"
 
-#: plug-ins/common/photocopy.c:833
+#: plug-ins/common/photocopy.c:894
 #, fuzzy
 msgid "Percent _black:"
 msgstr "Одсто"
 
-#: plug-ins/common/photocopy.c:844
+#: plug-ins/common/photocopy.c:908
 #, fuzzy
 msgid "Percent _white:"
 msgstr "Одсто"
@@ -6747,130 +6747,130 @@ msgstr ""
 "Ако није изабрано, слика ће бити кружно мапирана у правоугаоник. Ако је "
 "изабрано, слика ће бити мапирана у круг."
 
-#: plug-ins/common/postscript.c:565 plug-ins/common/postscript.c:637
+#: plug-ins/common/postscript.c:566 plug-ins/common/postscript.c:638
 #, fuzzy
 msgid "PostScript document"
 msgstr "Постскрипт ниво 2"
 
-#: plug-ins/common/postscript.c:585 plug-ins/common/postscript.c:655
+#: plug-ins/common/postscript.c:586 plug-ins/common/postscript.c:656
 #, fuzzy
 msgid "Encapsulated PostScript image"
 msgstr "Енкапсулирани Постскрипт"
 
-#: plug-ins/common/postscript.c:605
+#: plug-ins/common/postscript.c:606
 msgid "PDF document"
 msgstr ""
 
-#: plug-ins/common/postscript.c:950
+#: plug-ins/common/postscript.c:951
 #, c-format
 msgid "Could not interpret '%s'"
 msgstr "Нe могу превести „%s“"
 
-#: plug-ins/common/postscript.c:1038
+#: plug-ins/common/postscript.c:1039
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr "Постскрипт чување не ради на сликама са алфа каналима"
 
-#: plug-ins/common/postscript.c:1533 plug-ins/common/postscript.c:1563
+#: plug-ins/common/postscript.c:1538 plug-ins/common/postscript.c:1568
 #, c-format
 msgid "Error starting ghostscript (%s)"
 msgstr "Грешка при покретању ghostscript-а (%s)"
 
-#: plug-ins/common/postscript.c:2363 plug-ins/common/postscript.c:2495
-#: plug-ins/common/postscript.c:2645 plug-ins/common/postscript.c:2773
+#: plug-ins/common/postscript.c:2368 plug-ins/common/postscript.c:2500
+#: plug-ins/common/postscript.c:2650 plug-ins/common/postscript.c:2778
 #: plug-ins/common/sunras.c:1457 plug-ins/common/sunras.c:1565
 #: plug-ins/fits/fits.c:830 plug-ins/fits/fits.c:954
 msgid "Write error occurred"
 msgstr "Грешка при упису"
 
-#: plug-ins/common/postscript.c:2799
+#: plug-ins/common/postscript.c:2804
 msgid "Load PostScript"
 msgstr "Учитај Постскрипт"
 
 #. Rendering
-#: plug-ins/common/postscript.c:2819
+#: plug-ins/common/postscript.c:2824
 msgid "Rendering"
 msgstr "Исцртавам"
 
 #. Resolution
-#: plug-ins/common/postscript.c:2835 plug-ins/common/svg.c:816
+#: plug-ins/common/postscript.c:2840 plug-ins/common/svg.c:816
 #: plug-ins/print/gimp_main_window.c:1087
 msgid "Resolution:"
 msgstr "Разлучивост:"
 
-#: plug-ins/common/postscript.c:2863
+#: plug-ins/common/postscript.c:2868
 msgid "Pages:"
 msgstr "Странице:"
 
 #
-#: plug-ins/common/postscript.c:2869
+#: plug-ins/common/postscript.c:2874
 msgid "Try Bounding Box"
 msgstr "Покушај помоћу оквира"
 
 #
 #. Colouring
-#: plug-ins/common/postscript.c:2882
+#: plug-ins/common/postscript.c:2887
 msgid "Coloring"
 msgstr "Бојање"
 
 #
-#: plug-ins/common/postscript.c:2886
+#: plug-ins/common/postscript.c:2891
 msgid "B/W"
 msgstr "Б/W"
 
 #
-#: plug-ins/common/postscript.c:2887 plug-ins/rcm/rcm_dialog.c:441
+#: plug-ins/common/postscript.c:2892 plug-ins/rcm/rcm_dialog.c:441
 msgid "Gray"
 msgstr "Сива"
 
-#: plug-ins/common/postscript.c:2888 plug-ins/common/xpm.c:462
+#: plug-ins/common/postscript.c:2893 plug-ins/common/xpm.c:474
 #: plug-ins/gimpressionist/color.c:48 plug-ins/gimpressionist/general.c:151
 #: plug-ins/imagemap/imap_menu.c:305 plug-ins/print/gimp_main_window.c:1399
 msgid "Color"
 msgstr "Боја"
 
-#: plug-ins/common/postscript.c:2889 plug-ins/fits/fits.c:1004
+#: plug-ins/common/postscript.c:2894 plug-ins/fits/fits.c:1004
 msgid "Automatic"
 msgstr "Аутоматски"
 
 #
-#: plug-ins/common/postscript.c:2899
+#: plug-ins/common/postscript.c:2904
 #, fuzzy
 msgid "Text antialiasing"
 msgstr "Омекшавање текста"
 
 #
-#: plug-ins/common/postscript.c:2904 plug-ins/common/postscript.c:2916
+#: plug-ins/common/postscript.c:2909 plug-ins/common/postscript.c:2921
 msgid "Weak"
 msgstr "Слабо"
 
 #
-#: plug-ins/common/postscript.c:2905 plug-ins/common/postscript.c:2917
+#: plug-ins/common/postscript.c:2910 plug-ins/common/postscript.c:2922
 msgid "Strong"
 msgstr "Јако"
 
 #
-#: plug-ins/common/postscript.c:2911
+#: plug-ins/common/postscript.c:2916
 #, fuzzy
 msgid "Graphic antialiasing"
 msgstr "Омекшавање графике"
 
 #
-#: plug-ins/common/postscript.c:2963
+#: plug-ins/common/postscript.c:2968
 msgid "Save as PostScript"
 msgstr "Спреми као Постскрипт"
 
 #. Image Size
-#: plug-ins/common/postscript.c:2987
+#: plug-ins/common/postscript.c:2992
 msgid "Image Size"
 msgstr "Величина слике"
 
 #
-#: plug-ins/common/postscript.c:3036
+#: plug-ins/common/postscript.c:3041
 #, fuzzy
 msgid "_Keep aspect ratio"
 msgstr "Задржи размеру"
 
-#: plug-ins/common/postscript.c:3042
+#: plug-ins/common/postscript.c:3047
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -6879,38 +6879,38 @@ msgstr ""
 "мењања размера."
 
 #. Unit
-#: plug-ins/common/postscript.c:3051
+#: plug-ins/common/postscript.c:3056
 msgid "Unit"
 msgstr "Јединица"
 
-#: plug-ins/common/postscript.c:3055
+#: plug-ins/common/postscript.c:3060
 msgid "_Inch"
 msgstr "Инч"
 
-#: plug-ins/common/postscript.c:3056
+#: plug-ins/common/postscript.c:3061
 msgid "_Millimeter"
 msgstr "Милиметар"
 
 #. Format
-#: plug-ins/common/postscript.c:3082
+#: plug-ins/common/postscript.c:3087
 msgid "Output"
 msgstr "Излаз"
 
-#: plug-ins/common/postscript.c:3088
+#: plug-ins/common/postscript.c:3093
 #, fuzzy
 msgid "_PostScript level 2"
 msgstr "Постскрипт ниво 2"
 
-#: plug-ins/common/postscript.c:3097
+#: plug-ins/common/postscript.c:3102
 msgid "_Encapsulated PostScript"
 msgstr "Енкапсулирани Постскрипт"
 
-#: plug-ins/common/postscript.c:3106
+#: plug-ins/common/postscript.c:3111
 msgid "P_review"
 msgstr "Преглед"
 
 #
-#: plug-ins/common/postscript.c:3127
+#: plug-ins/common/postscript.c:3132
 #, fuzzy
 msgid "Preview _size:"
 msgstr "Величина прегледа:"
@@ -7273,18 +7273,18 @@ msgid "Selective Gaussian Blur..."
 msgstr "Селективно Гаусиан замућење..."
 
 #
-#: plug-ins/common/sel_gauss.c:225
+#: plug-ins/common/sel_gauss.c:224
 msgid "Selective Gaussian Blur"
 msgstr "Селективно Гауссиан замућење"
 
 #
-#: plug-ins/common/sel_gauss.c:260
+#: plug-ins/common/sel_gauss.c:256
 #, fuzzy
 msgid "_Blur radius:"
 msgstr "Полупречник Замућења:"
 
 #
-#: plug-ins/common/sel_gauss.c:270
+#: plug-ins/common/sel_gauss.c:266
 #, fuzzy
 msgid "_Max. delta:"
 msgstr "Макс. Делта:"
@@ -7312,7 +7312,7 @@ msgstr "Изоштравање..."
 msgid "Sharpening..."
 msgstr "Изоштравање..."
 
-#: plug-ins/common/sharpen.c:486
+#: plug-ins/common/sharpen.c:485
 msgid "Sharpen"
 msgstr "Изоштравање"
 
@@ -7509,12 +7509,12 @@ msgid "Deriving Smooth Palette..."
 msgstr "Изводим углађену палету..."
 
 #
-#: plug-ins/common/smooth_palette.c:411
+#: plug-ins/common/smooth_palette.c:412
 msgid "Smooth Palette"
 msgstr "Углађена палета"
 
 #
-#: plug-ins/common/smooth_palette.c:444
+#: plug-ins/common/smooth_palette.c:445
 #, fuzzy
 msgid "_Search depth:"
 msgstr "Дубина тражења:"
@@ -7568,26 +7568,26 @@ msgid "_Sobel..."
 msgstr "_Собел"
 
 #
-#: plug-ins/common/sobel.c:228
+#: plug-ins/common/sobel.c:227
 msgid "Sobel Edge Detection"
 msgstr "Собел детекција ивице"
 
 #
-#: plug-ins/common/sobel.c:256
+#: plug-ins/common/sobel.c:249
 msgid "Sobel _Horizontally"
 msgstr "Собел _хоризонтално"
 
 #
-#: plug-ins/common/sobel.c:268
+#: plug-ins/common/sobel.c:261
 msgid "Sobel _Vertically"
 msgstr "Собел _вертикално"
 
-#: plug-ins/common/sobel.c:280
+#: plug-ins/common/sobel.c:273
 #, fuzzy
 msgid "_Keep sign of result (one direction only)"
 msgstr "Задржи ознаку резултата (само један смер)"
 
-#: plug-ins/common/sobel.c:366
+#: plug-ins/common/sobel.c:359
 msgid "Sobel Edge Detecting..."
 msgstr "Собел детекција руба..."
 
@@ -7597,12 +7597,12 @@ msgstr "Собел детекција руба..."
 msgid "_Softglow..."
 msgstr "Помицање..."
 
-#: plug-ins/common/softglow.c:660
+#: plug-ins/common/softglow.c:629
 msgid "Softglow"
 msgstr ""
 
 #
-#: plug-ins/common/softglow.c:694
+#: plug-ins/common/softglow.c:659
 #, fuzzy
 msgid "_Glow radius:"
 msgstr "Полупречник Замућења:"
@@ -7914,43 +7914,43 @@ msgstr "Растезање..."
 msgid "Spreading..."
 msgstr "Растезање..."
 
-#: plug-ins/common/spread.c:343
+#: plug-ins/common/spread.c:342
 msgid "Spread"
 msgstr "Растегни"
 
-#: plug-ins/common/spread.c:366
+#: plug-ins/common/spread.c:360
 msgid "Spread Amount"
 msgstr "Вредност растезања"
 
-#: plug-ins/common/struc.c:1143
+#: plug-ins/common/struc.c:1145
 #, fuzzy
 msgid "_Apply Canvas..."
 msgstr "Прихваћам платно..."
 
-#: plug-ins/common/struc.c:1225
+#: plug-ins/common/struc.c:1227
 msgid "Applying Canvas..."
 msgstr "Прихваћам платно..."
 
-#: plug-ins/common/struc.c:1260
+#: plug-ins/common/struc.c:1264
 msgid "Apply Canvas"
 msgstr "Примени платно"
 
-#: plug-ins/common/struc.c:1278
+#: plug-ins/common/struc.c:1290
 #, fuzzy
 msgid "_Top-right"
 msgstr "Врх-Десно"
 
-#: plug-ins/common/struc.c:1279
+#: plug-ins/common/struc.c:1291
 #, fuzzy
 msgid "Top-_left"
 msgstr "Врх-Лево"
 
-#: plug-ins/common/struc.c:1280
+#: plug-ins/common/struc.c:1292
 #, fuzzy
 msgid "_Bottom-left"
 msgstr "Дно-Лево"
 
-#: plug-ins/common/struc.c:1281
+#: plug-ins/common/struc.c:1293
 #, fuzzy
 msgid "Bottom-_right"
 msgstr "Дно-Десно"
@@ -7991,15 +7991,20 @@ msgstr "Не могу радити са непознатим врстама сл
 
 #: plug-ins/common/sunras.c:1035 plug-ins/common/sunras.c:1126
 #: plug-ins/common/sunras.c:1207 plug-ins/common/sunras.c:1302
-#: plug-ins/common/xwd.c:1340 plug-ins/common/xwd.c:1502
-#: plug-ins/common/xwd.c:1699 plug-ins/common/xwd.c:1949
-#: plug-ins/fits/fits.c:677
+#: plug-ins/common/xwd.c:1317 plug-ins/common/xwd.c:1418
+#: plug-ins/common/xwd.c:1576 plug-ins/common/xwd.c:1776
+#: plug-ins/common/xwd.c:2033 plug-ins/fits/fits.c:677
 msgid "EOF encountered on reading"
 msgstr "Наишао на ЕОФ приликом читања"
 
 #: plug-ins/common/sunras.c:1582
 msgid "Save as SUNRAS"
 msgstr "Сачувај као SUNRAS"
+
+#. file save type
+#: plug-ins/common/sunras.c:1592
+msgid "Data Formatting"
+msgstr "Форматирање података"
 
 #: plug-ins/common/sunras.c:1596
 msgid "RunLength Encoded"
@@ -8429,12 +8434,12 @@ msgstr "Направи потпуно нову јединицу"
 msgid "Create a new unit with the currently selected unit as template."
 msgstr "Направи нову јединицу са тренутно изабраном јединицом као основом."
 
-#: plug-ins/common/unsharp.c:146
+#: plug-ins/common/unsharp.c:147
 #, fuzzy
 msgid "_Unsharp Mask..."
 msgstr "Скини оштрину маске"
 
-#: plug-ins/common/unsharp.c:372
+#: plug-ins/common/unsharp.c:373
 msgid "Merging..."
 msgstr "Спајање..."
 
@@ -8895,16 +8900,16 @@ msgstr "Убачено"
 msgid "Pasting..."
 msgstr "Убацујем..."
 
-#: plug-ins/common/wind.c:188
+#: plug-ins/common/wind.c:183
 #, fuzzy
 msgid "Wi_nd..."
 msgstr "Таласам..."
 
-#: plug-ins/common/wind.c:321
+#: plug-ins/common/wind.c:315
 msgid "Rendering Blast..."
 msgstr "Исцртавам експлозију..."
 
-#: plug-ins/common/wind.c:442
+#: plug-ins/common/wind.c:438
 msgid "Rendering Wind..."
 msgstr "Исцртавам ветар..."
 
@@ -8915,54 +8920,54 @@ msgstr "Ветар"
 #. ********************************************************
 #. radio buttons for choosing wind rendering algorithm
 #. *****************************************************
-#: plug-ins/common/wind.c:910
+#: plug-ins/common/wind.c:907
 msgid "Style"
 msgstr "Стил"
 
-#: plug-ins/common/wind.c:914
+#: plug-ins/common/wind.c:911
 msgid "_Wind"
 msgstr "Ветар"
 
-#: plug-ins/common/wind.c:915
+#: plug-ins/common/wind.c:912
 msgid "_Blast"
 msgstr "Експлозија"
 
-#: plug-ins/common/wind.c:934
+#: plug-ins/common/wind.c:935
 msgid "_Left"
 msgstr "Лево"
 
-#: plug-ins/common/wind.c:935
+#: plug-ins/common/wind.c:936
 msgid "_Right"
 msgstr "Десно"
 
 #. ****************************************************
 #. radio buttons for choosing BOTH, LEADING, TRAILING
 #. **************************************************
-#: plug-ins/common/wind.c:950
+#: plug-ins/common/wind.c:955
 msgid "Edge Affected"
 msgstr "Ивица промењена"
 
-#: plug-ins/common/wind.c:954
+#: plug-ins/common/wind.c:959
 msgid "L_eading"
 msgstr "Вођење"
 
-#: plug-ins/common/wind.c:955
+#: plug-ins/common/wind.c:960
 msgid "Tr_ailing"
 msgstr "Праћење"
 
-#: plug-ins/common/wind.c:956
+#: plug-ins/common/wind.c:961
 msgid "Bot_h"
 msgstr "Обоје"
 
-#: plug-ins/common/wind.c:987
+#: plug-ins/common/wind.c:998
 msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr "Веће вредности смањују ефекат на неколико подручја слике"
 
-#: plug-ins/common/wind.c:1002 plug-ins/gimpressionist/orientmap.c:669
+#: plug-ins/common/wind.c:1013 plug-ins/gimpressionist/orientmap.c:669
 msgid "_Strength:"
 msgstr "Ваљаност:"
 
-#: plug-ins/common/wind.c:1006
+#: plug-ins/common/wind.c:1017
 msgid "Higher values increase the magnitude of the effect"
 msgstr "Веће вредности повећавају снагу ефекта"
 
@@ -9171,72 +9176,66 @@ msgstr "Упиши еxтра маску у датотеку"
 msgid "_Mask file extension:"
 msgstr "Екстензија Маске:"
 
-#: plug-ins/common/xpm.c:164 plug-ins/common/xpm.c:184
+#: plug-ins/common/xpm.c:170 plug-ins/common/xpm.c:196
 msgid "X PixMap image"
 msgstr ""
 
-#: plug-ins/common/xpm.c:346
+#: plug-ins/common/xpm.c:358
 #, c-format
 msgid "Error opening file '%s'"
 msgstr "Грешка код отварања датотеке „%s“"
 
-#: plug-ins/common/xpm.c:351
+#: plug-ins/common/xpm.c:363
 msgid "XPM file invalid"
 msgstr "Неисправна XPM датотека"
 
 #
-#: plug-ins/common/xpm.c:777
+#: plug-ins/common/xpm.c:789
 msgid "Save as XPM"
 msgstr "Сачувај као XPM"
 
 #
-#: plug-ins/common/xpm.c:793
+#: plug-ins/common/xpm.c:805
 #, fuzzy
 msgid "_Alpha threshold:"
 msgstr "Алфа Праг:"
 
-#: plug-ins/common/xwd.c:241 plug-ins/common/xwd.c:262
+#: plug-ins/common/xwd.c:277 plug-ins/common/xwd.c:298
 msgid "X window dump"
 msgstr ""
 
-#: plug-ins/common/xwd.c:396
+#: plug-ins/common/xwd.c:434
 #, c-format
 msgid "Could not read XWD header from '%s'"
 msgstr "Не могу прочитати XWD заглавље из „%s“"
 
-#: plug-ins/common/xwd.c:432
-msgid "can't read color entries"
+#: plug-ins/common/xwd.c:472
+#, fuzzy
+msgid "Can't read color entries"
 msgstr "не могу прочитати улазе боја"
 
-#: plug-ins/common/xwd.c:490
-#, c-format
+#: plug-ins/common/xwd.c:531
+#, fuzzy, c-format
 msgid ""
-"load_image (xwd): XWD-file %s has format %d, depth %d\n"
+"XWD-file %s has format %d, depth %d\n"
 "and bits per pixel %d.\n"
-"Currently this is not supported.\n"
+"Currently this is not supported."
 msgstr ""
 "лоад_имаге (xwд): XWД-датотека %s је формата %d, дубина %d\n"
 "и битова по пикселу %d.\n"
 "Тренутно није подржана.\n"
 
 #
-#: plug-ins/common/xwd.c:518
+#: plug-ins/common/xwd.c:561
 msgid "Cannot save images with alpha channels."
 msgstr "Не могу чувати слике са алфа каналима."
 
-#: plug-ins/common/xwd.c:1242
-msgid "EOF encountered on "
-msgstr "EOF пронађен на "
-
-#: plug-ins/common/xwd.c:1388
-msgid "No memory for mapping colors"
-msgstr "Нема меморије за мапирање боја"
-
-#: plug-ins/common/xwd.c:2073
-msgid "Error during writing indexed/grey image"
+#: plug-ins/common/xwd.c:2164
+#, fuzzy
+msgid "Error during writing indexed/gray image"
 msgstr "Грешка током записивања индексиране/сиве слике"
 
-#: plug-ins/common/xwd.c:2162
+#: plug-ins/common/xwd.c:2262
 msgid "Error during writing rgb image"
 msgstr "Грешка током записивања rgb слике"
 
@@ -13091,6 +13090,20 @@ msgstr "Грешка: Не могу прочитати XЈТ датотеку �
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Грешка: XЈТ датотека %s је празна"
+
+#, fuzzy
+#~ msgid "_Spherical"
+#~ msgstr "Сферично"
+
+#, fuzzy
+#~ msgid "S_inusoidal"
+#~ msgstr "Синусно"
+
+#~ msgid "EOF encountered on "
+#~ msgstr "EOF пронађен на "
+
+#~ msgid "No memory for mapping colors"
+#~ msgstr "Нема меморије за мапирање боја"
 
 #
 #~ msgid "Zoom Options"

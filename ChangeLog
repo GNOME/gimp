@@ -1,3 +1,7 @@
+2004-09-20  Sven Neumann  <sven@gimp.org>
+
+	* Made 2.1.5 release.
+
 2004-09-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am (gimp_2_1_LDFLAGS): removed all -u hacks.

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-05 02:40+0200\n"
+"POT-Creation-Date: 2004-09-19 21:03+0200\n"
 "PO-Revision-Date: 2004-05-28 20:07+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
@@ -388,27 +388,27 @@ msgstr "/_Fehér"
 msgid "Scales"
 msgstr "Színskála"
 
-#: libgimpwidgets/gimpcolorscales.c:155 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:155 libgimpwidgets/gimpcolorselect.c:343
 msgid "_H"
 msgstr "_H"
 
-#: libgimpwidgets/gimpcolorscales.c:156 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:156 libgimpwidgets/gimpcolorselect.c:343
 msgid "_S"
 msgstr "_S"
 
-#: libgimpwidgets/gimpcolorscales.c:157 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:157 libgimpwidgets/gimpcolorselect.c:343
 msgid "_V"
 msgstr "_V"
 
-#: libgimpwidgets/gimpcolorscales.c:158 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:158 libgimpwidgets/gimpcolorselect.c:343
 msgid "_R"
 msgstr "_R"
 
-#: libgimpwidgets/gimpcolorscales.c:159 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:159 libgimpwidgets/gimpcolorselect.c:343
 msgid "_G"
 msgstr "_G"
 
-#: libgimpwidgets/gimpcolorscales.c:160 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:160 libgimpwidgets/gimpcolorselect.c:343
 msgid "_B"
 msgstr "_B"
 
@@ -416,32 +416,32 @@ msgstr "_B"
 msgid "_A"
 msgstr "_A"
 
-#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:347
 msgid "Hue"
 msgstr "Árnyalat"
 
-#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:355
+#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:348
 #: modules/cdisplay_proof.c:49 modules/cdisplay_proof.c:444
 msgid "Saturation"
 msgstr "Telítettség"
 
-#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:356
+#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:349
 msgid "Value"
 msgstr "Érték"
 
-#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:357
+#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:350
 msgid "Red"
 msgstr "Vörös"
 
-#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:358
+#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:351
 msgid "Green"
 msgstr "Zöld"
 
-#: libgimpwidgets/gimpcolorscales.c:170 libgimpwidgets/gimpcolorselect.c:359
+#: libgimpwidgets/gimpcolorscales.c:170 libgimpwidgets/gimpcolorselect.c:352
 msgid "Blue"
 msgstr "Kék"
 
-#: libgimpwidgets/gimpcolorscales.c:171 libgimpwidgets/gimpcolorselect.c:360
+#: libgimpwidgets/gimpcolorscales.c:171 libgimpwidgets/gimpcolorselect.c:353
 msgid "Alpha"
 msgstr "Alfa"
 
@@ -498,16 +498,16 @@ msgstr ""
 "Egy képernyőpont színének kiválasztásához kattintson a pipettára, majd a "
 "kívánt képernyőpontra."
 
-#: libgimpwidgets/gimppreviewarea.c:114
+#: libgimpwidgets/gimppreviewarea.c:126
 msgid "Check Size"
 msgstr ""
 
-#: libgimpwidgets/gimppreviewarea.c:121
+#: libgimpwidgets/gimppreviewarea.c:133
 msgid "Check Style"
 msgstr ""
 
-#. a toggle button to (des)activate the instant preview
-#: libgimpwidgets/gimppreview.c:246
+#. toggle button to (des)activate the instant preview
+#: libgimpwidgets/gimppreview.c:302
 msgid "_Preview"
 msgstr ""
 
@@ -591,7 +591,7 @@ msgstr "Mértékegység"
 msgid "Factor"
 msgstr "Szorzó"
 
-#: libgimpwidgets/gimpwidgets.c:1000
+#: libgimpwidgets/gimpwidgets.c:1007
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -599,17 +599,17 @@ msgstr ""
 "Ezt az értéket használja a véletlenszám-előállítás kiindulóértékeként - ez "
 "lehetővé teszi egy adott \"véletlen\" művelet megismétlését"
 
-#: libgimpwidgets/gimpwidgets.c:1004
+#: libgimpwidgets/gimpwidgets.c:1011
 msgid "_New Seed"
 msgstr "Ú_j kiindulóérték"
 
-#: libgimpwidgets/gimpwidgets.c:1017
+#: libgimpwidgets/gimpwidgets.c:1024
 msgid "Seed random number generator with a generated random number"
 msgstr ""
 "A véletlenszám-előállítás kiindulóértékének beállítása egy előállított "
 "véletlenszámmal"
 
-#: libgimpwidgets/gimpwidgets.c:1021
+#: libgimpwidgets/gimpwidgets.c:1028
 msgid "_Randomize"
 msgstr "_Véletlenszerűen"
 
