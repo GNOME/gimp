@@ -18,13 +18,18 @@
 #ifndef __COLOR_AREA_H__
 #define __COLOR_AREA_H__
 
+#include <gtk/gtk.h>
+
+#include "gdisplayF.h"
+
 #define FOREGROUND 0
 #define BACKGROUND 1
 
 /*
  *  Global variables
  */
-extern gint active_color;  /*  foreground (= 0) or background (= 1) */
+extern gint     active_color;     /* foreground (= 0) or background (= 1) */
+extern GDisplay color_area_gdisp; /* hack for color displays */
 
 /*
  *  Functions

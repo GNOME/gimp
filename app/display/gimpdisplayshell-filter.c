@@ -205,9 +205,11 @@ gdisplay_color_detach_destroy (GDisplay         *gdisp,
 void
 gdisplay_color_detach_all (GDisplay *gdisp)
 {
-  GList *list = gdisp->cd_list;
+  GList *list;
 
   g_return_if_fail (gdisp != NULL);
+
+  list = gdisp->cd_list;
 
   while (list)
     {

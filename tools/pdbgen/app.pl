@@ -140,7 +140,11 @@ sub declare_args {
 
 		$result .= ' ' x 2 . $type . &arg_vname($_);
 		if (!exists $_->{no_init} && exists $_->{init}) {
-		    $result .= $arg->{type} =~ /\*$/ ? ' = NULL' : ' = 0'
+		    for ($arg->{type}) {
+			/\*$/     && do { $result .= ' = NULL';  last };
+			/boolean/ && do { $result .= ' = FALSE'; last };
+					  $result .= ' = 0';
+		    }
 		}
 		$result .= ";\n";
 

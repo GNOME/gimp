@@ -21,6 +21,8 @@
 #include "color_area.h"
 #include "color_notebook.h"
 #include "colormaps.h"
+#include "gdisplay.h"
+#include "gdisplay_color.h"
 #include "gimpcontext.h"
 #include "gimpdnd.h"
 
@@ -43,6 +45,8 @@ static void color_area_color_changed (GimpContext *,
 
 /*  Global variables  */
 gint active_color = FOREGROUND;
+
+GDisplay color_area_gdisp;
 
 /*  Static variables  */
 static GdkGC          *color_area_gc = NULL;
@@ -110,8 +114,10 @@ color_area_draw_rect (GdkDrawable *drawable,
   static gint rowstride;
   gint xx, yy;
   guchar *bp;
+  GList *list;
 
   rowstride = 3 * ((width + 3) & -4);
+
   if (color_area_rgb_buf == NULL ||
       color_area_rgb_buf_size < height * rowstride)
     {
@@ -119,6 +125,7 @@ color_area_draw_rect (GdkDrawable *drawable,
 	g_free (color_area_rgb_buf);
       color_area_rgb_buf = g_malloc (color_area_rgb_buf_size = rowstride * height);
     }
+
   bp = color_area_rgb_buf;
   for (xx = 0; xx < width; xx++)
     {
@@ -126,12 +133,23 @@ color_area_draw_rect (GdkDrawable *drawable,
       *bp++ = g;
       *bp++ = b;
     }
+
   bp = color_area_rgb_buf;
+
+  list = color_area_gdisp.cd_list;
+  while (list)
+    {
+      ColorDisplayNode *node = (ColorDisplayNode *) list->data;
+      node->cd_convert (node->cd_ID, bp, width, 1, 3, rowstride);
+      list = list->next;
+    }
+
   for (yy = 1; yy < height; yy++)
     {
       bp += rowstride;
       memcpy (bp, color_area_rgb_buf, rowstride);
     }
+
   gdk_draw_rgb_image (drawable, gc, x, y, width, height,
 		      GDK_RGB_DITHER_MAX,
 		      color_area_rgb_buf,
@@ -423,6 +441,9 @@ color_area_create (gint       width,
 		      "background_changed",
 		      GTK_SIGNAL_FUNC (color_area_color_changed),
 		      color_area);
+
+  /* display filter dummy gdisplay */
+  color_area_gdisp.cd_list = NULL;
 
   return color_area;
 }

@@ -18,6 +18,8 @@
 #ifndef __GDISPLAY_H__
 #define __GDISPLAY_H__
 
+#include <glib.h>
+
 #include "gimage.h"
 #include "info_dialog.h"
 #include "selection.h"
@@ -212,9 +214,10 @@ int        gdisplays_dirty                 (void);
 void       gdisplays_delete                (void);
 void       gdisplays_flush                 (void);
 void       gdisplays_flush_now             (void);
-void       gdisplay_flush_displays_only (GDisplay *gdisp); /* no rerender! */
+void       gdisplay_flush_displays_only    (GDisplay *gdisp); /* no rerender! */
 void       gdisplays_nav_preview_resized   (void);
-
-
+void       gdisplays_foreach               (GFunc func, gpointer user_data);
+void       gdisplays_notify_add            (GFunc func, gpointer user_data);
+void       gdisplays_notify_remove         (GFunc func, gpointer user_data);
 
 #endif /*  __GDISPLAY_H__  */

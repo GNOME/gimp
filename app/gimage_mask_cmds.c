@@ -71,7 +71,7 @@ selection_bounds_invoker (Argument *args)
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
-  gboolean non_empty = 0;
+  gboolean non_empty = FALSE;
   gint32 x1;
   gint32 y1;
   gint32 x2;

@@ -1490,7 +1490,7 @@ nav_window_get_gdisp (void)
   GSList *list=NULL;
   GSList *listPtr=NULL;
   GimpImage *gimage  ;
-  GDisplay * gdisp;
+  GDisplay * gdisp = NULL;
 
   gimage_foreach (gimlist_cb, &list);
 

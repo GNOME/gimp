@@ -1,3 +1,22 @@
+Sat Jan  1 16:10:32 PST 2000 Manish Singh <yosh@gimp.org>
+
+	* Makefile.am: cosmetic fix
+
+	* libgimp/color_display.h
+	* modules/cdisplay_gamma.c: add clone method
+
+	* app/color_area.[ch]
+	* app/gdisplay.[ch]
+	* app/gdisplay_color.c
+	* app/gdisplay_color_ui.c: preliminary support for color_area filter
+	(really just a sync to home machine)
+
+	* app/nav_window.c: minor cleanup
+
+	* tools/pdbgen/app.pl: initialize gbooleans to FALSE, not 0
+
+	* tools/pdbgen/lib.pl: some more arg work
+
 Sat Jan  1 23:09:02 CET 2000  Marc Lehmann <pcg@goof.com>
 
         * app/fileops.c: Use strtoul for hex constants, and cast it back,

@@ -1918,7 +1918,7 @@ image_undo_is_enabled_invoker (Argument *args)
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
-  gboolean enabled;
+  gboolean enabled = FALSE;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
   if (gimage == NULL)

@@ -835,7 +835,7 @@ HELP
     @inargs = ( &std_image_arg );
 
     @outargs = (
-	{ name => 'enabled', type => 'boolean',
+	{ name => 'enabled', type => 'boolean', init => 1,
 	  desc => 'True if undo is enabled for this image' }
     );
 

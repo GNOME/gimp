@@ -40,6 +40,7 @@ struct _GammaContext
 };
 
 static gpointer   gamma_new                       (int           type);
+static gpointer   gamma_clone                     (gpointer      cd_ID);
 static void       gamma_create_lookup_table       (GammaContext *context);
 static void       gamma_destroy                   (gpointer      cd_ID);
 static void       gamma_convert                   (gpointer      cd_ID,
@@ -64,6 +65,7 @@ static void       gamma_configure_cancel          (gpointer      cd_ID);
 static GimpColorDisplayMethods methods = {
   NULL,
   gamma_new,
+  gamma_clone,
   gamma_convert,
   gamma_destroy,
   NULL,
@@ -117,6 +119,20 @@ gamma_new (int type)
 
   for (i = 0; i < 256; i++)
     context->lookup[i] = i;
+
+  return context;
+}
+
+static gpointer
+gamma_clone (gpointer cd_ID)
+{
+  GammaContext *context = NULL;
+  GammaContext *src_context = (GammaContext *) cd_ID;
+
+  context = gamma_new (0);
+  context->gamma = src_context->gamma;
+  
+  memcpy (context->lookup, src_context->lookup, sizeof(guchar) * 256);
 
   return context;
 }

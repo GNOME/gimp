@@ -25,6 +25,7 @@
 
 typedef void       (*GimpColorDisplayInit)            (void);
 typedef gpointer   (*GimpColorDisplayNew)             (int       type);
+typedef gpointer   (*GimpColorDisplayClone)           (gpointer  cd_ID);
 typedef void       (*GimpColorDisplayConvert)         (gpointer  cd_ID,
 						       guchar    *buf,
 						       int        width,
@@ -45,6 +46,7 @@ struct _GimpColorDisplayMethods
 {
   GimpColorDisplayInit            init;
   GimpColorDisplayNew             new;
+  GimpColorDisplayClone           clone;
   GimpColorDisplayConvert         convert;
   GimpColorDisplayDestroy         destroy;
   GimpColorDisplayFinalize        finalize;

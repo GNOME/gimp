@@ -33,9 +33,20 @@ sub generate {
     my %out;
 
     sub libtype {
-	my ($arg, $type) = @_;
-	$type =~ s/int32/int/ unless exists $arg->{keep_size};
-	$type;
+	my $arg = shift;
+	my ($type, $name) = &arg_parse($arg->{type});
+	my $argtype = $arg_types{$type};
+	
+	return 'gint32 ' if exists $argtype->{id_func};
+
+	if ($type eq 'enum') {
+	    $name = "Gimp$name" if $name !~ /^Gimp/;
+	    return "$name ";
+	}
+
+	my $rettype = $argtype->{type};
+	$rettype =~ s/int32/int/ unless exists $arg->{keep_size};
+	return $rettype;
     }
 
     foreach $name (@procs) {
@@ -70,11 +81,7 @@ sub generate {
 	if ($retarg) {
 	    my ($type) = &arg_parse($retarg->{type});
 	    if ($type ne 'color') {
-		my $arg = $arg_types{$type};
-		$rettype = do {
-		    if (exists $arg->{id_func}) { 'gint32 '                  }
-		    else                        { &libtype($_, $arg->{type}) }
-		};
+		$rettype = &libtype($retarg);
 		chop $rettype unless $rettype =~ /\*$/;
 	    }
 	    else {
@@ -100,11 +107,7 @@ sub generate {
 		$privatevars++;
 	    }
 	    elsif ($type ne 'color') {
-		$arglist .= do {
-		    if ($id) { 'gint32 '                  }
-		    else     { &libtype($_, $arg->{type}) }
-		};
-
+		$arglist .= &libtype($_);
 		$arglist .= $_->{name};
 		$arglist .= '_ID' if $id;
 		$arglist .= ', ';
@@ -164,10 +167,7 @@ CODE
 		}
 		elsif (exists $_->{retval} && $type ne 'color') {
 		    $return_args .= "\n" . ' ' x 2;
-		    $return_args .= do {
-			if ($id) { 'gint32 '                  }
-			else     { &libtype($_, $arg->{type}) }
-		    };
+		    $return_args .= &libtype($_);
 
 		    # The return value variable
 		    $var = $_->{name};
@@ -247,12 +247,7 @@ CODE
 
 		    unless (exists $_->{retval}) {
 			$var .= '*';
-
-			$arglist .= do {
-			    if ($id) { 'gint32 '                  }
-			    else     { &libtype($_, $arg->{type}) }
-			};
-
+			$arglist .= &libtype($_);
 			$arglist .= "*$_->{name}";
 			$arglist .= '_ID' if $id;
 			$arglist .= ', ';

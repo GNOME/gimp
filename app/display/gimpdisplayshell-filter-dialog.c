@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#include "color_area.h"
 #include "gdisplay.h"
 #include "gdisplay_color.h"
 #include "gdisplay_color_ui.h"
@@ -32,6 +33,8 @@ struct _ColorDisplayDialog
 
   GtkWidget *src;
   GtkWidget *dest;
+
+  GtkWidget *target_menu;
 
   gint src_row;
   gint dest_row;
@@ -164,6 +167,11 @@ make_dialog (void)
 		      GTK_SIGNAL_FUNC (select_dest),
 		      NULL);
 
+  /*
+  cdd.target_menu = gtk_option_menu_new ();
+  target_menu = create_target_menu ();
+  */
+
   for (i = 0; i < 5; i++)
     {
        GtkWidget *button;
@@ -177,6 +185,11 @@ make_dialog (void)
     }
 
   gtk_widget_show_all (hbox);
+}
+
+static void
+create_target_menu (void)
+{
 }
 
 static void
@@ -346,11 +359,11 @@ gdisplay_color_ui (GDisplay *gdisp)
   color_display_foreach (src_list_populate, cdd.src);
 
   if (gdisp)
-    {
-      cdd.old_nodes = gdisp->cd_list;
-      dest_list_populate (gdisp->cd_list);
-      gdisp->cd_list = g_list_copy (cdd.old_nodes);
-    }
+    gdisp = &color_area_gdisp;
+
+  cdd.old_nodes = gdisp->cd_list;
+  dest_list_populate (gdisp->cd_list);
+  gdisp->cd_list = g_list_copy (cdd.old_nodes);
 
   cdd.gdisp = gdisp;
 
