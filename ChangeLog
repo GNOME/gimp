@@ -1,3 +1,16 @@
+2002-05-15  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdocuments.c: misc small changes.
+
+	* app/core/gimpparasite.[ch]: reduced to a small set of wrappers
+	around gimp->parasites.
+
+	* app/core/gimpparasitelist.c: moved the code that reads and
+	writes parasite lists ala parasiterc to this file. Added a
+	GimpConfigInterface to GimpParasiteList.
+
+	* app/core/gimp.c: changed accordingly.
+
 2002-05-14  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/ps.c: reverted the last change and applied a patch

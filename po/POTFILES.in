@@ -41,6 +41,7 @@ app/core/gimpmoduleinfo.c
 app/core/gimpmodules.c
 app/core/gimppalette-import.c
 app/core/gimppalette.c
+app/core/gimpparasitelist.c
 app/core/gimppattern.c
 app/core/gimpunit.c
 app/core/gimpunits.c

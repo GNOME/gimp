@@ -117,11 +117,7 @@ gimp_documents_serialize (GObject *documents,
       gchar *escaped;
 
       escaped = g_strescape (GIMP_OBJECT (list->data)->name, NULL);
-
-      g_string_assign (str, "(document \"");
-      g_string_append (str, escaped);
-      g_string_append (str, "\")\n");
-
+      g_string_printf (str, "(document \"%s\")\n", escaped); 
       g_free (escaped);
 
       write (fd, str->str, str->len);
@@ -139,8 +135,7 @@ gimp_documents_deserialize (GObject  *documents,
 
   size = GPOINTER_TO_INT (g_object_get_data (documents, "thumbnail_size"));
 
-  g_scanner_scope_add_symbol (scanner, 0,
-                              "document", GINT_TO_POINTER (1));
+  g_scanner_scope_add_symbol (scanner, 0, "document", GINT_TO_POINTER (1));
 
   token = G_TOKEN_LEFT_PAREN;
 
@@ -195,7 +190,7 @@ gimp_documents_deserialize (GObject  *documents,
   if (token != G_TOKEN_LEFT_PAREN)
     {
       g_scanner_get_next_token (scanner);
-      g_scanner_unexp_token (scanner, token, NULL, NULL, NULL,
+      g_scanner_unexp_token (scanner, token, NULL, "`documents'", NULL,
                              _("fatal parse error"), TRUE);
       return FALSE;
     }

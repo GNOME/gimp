@@ -51,6 +51,7 @@
 #include "gimppalette.h"
 #include "gimppattern.h"
 #include "gimpparasite.h"
+#include "gimpparasitelist.h"
 #include "gimptoolinfo.h"
 #include "gimpunits.h"
 
@@ -139,7 +140,7 @@ gimp_init (Gimp *gimp)
 
   gimp_units_init (gimp);
 
-  gimp_parasites_init (gimp);
+  gimp->parasites               = gimp_parasite_list_new ();
 
   paint_init (gimp);
 
@@ -336,7 +337,10 @@ gimp_finalize (GObject *object)
   paint_exit (gimp);
 
   if (gimp->parasites)
-    gimp_parasites_exit (gimp);
+    {
+      g_object_unref (G_OBJECT (gimp->parasites));
+      gimp->parasites = NULL;
+    }
 
   if (gimp->user_units)
     gimp_units_exit (gimp);

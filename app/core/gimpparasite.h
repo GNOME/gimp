@@ -19,8 +19,7 @@
 #define __APP_GIMP_PARASITE_H__
 
 
-void            gimp_parasites_init  (Gimp         *gimp);
-void            gimp_parasites_exit  (Gimp         *gimp);
+/* some wrappers to access gimp->parasites, mainly for the PDB */
 
 void            gimp_parasite_attach (Gimp         *gimp,
 				      GimpParasite *parasite);
@@ -32,8 +31,8 @@ GimpParasite  * gimp_parasite_find   (Gimp         *gimp,
 gchar        ** gimp_parasite_list   (Gimp         *gimp,
 				      gint         *count);
 
-void            gimp_parasiterc_load (Gimp         *gimp);
-void            gimp_parasiterc_save (Gimp         *gimp);
+void            gimp_parasiterc_load (Gimp *gimp);
+void            gimp_parasiterc_save (Gimp *gimp);
 
 
 #endif  /*  __APP_GIMP_PARASITE_H__  */

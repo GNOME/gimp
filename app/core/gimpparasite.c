@@ -19,11 +19,6 @@
 
 #include <glib-object.h>
 
-#include <stdio.h>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
 #include "libgimpbase/gimpbase.h"
 
 #include "core-types.h"
@@ -32,33 +27,8 @@
 #include "gimpparasite.h"
 #include "gimpparasitelist.h"
 
-#include "config/gimpscanner.h"
+#include "config/gimpconfig.h"
 
-#include "libgimp/gimpintl.h"
-
-
-void
-gimp_parasites_init (Gimp *gimp)
-{
-  g_return_if_fail (gimp != NULL);
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (gimp->parasites == NULL);
-
-  gimp->parasites = gimp_parasite_list_new ();
-}
-
-void 
-gimp_parasites_exit (Gimp *gimp)
-{
-  g_return_if_fail (gimp != NULL);
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  if (gimp->parasites)
-    {
-      g_object_unref (G_OBJECT (gimp->parasites));
-      gimp->parasites = NULL;
-    }
-}
 
 void
 gimp_parasite_attach (Gimp         *gimp,
@@ -82,11 +52,11 @@ gimp_parasite_find (Gimp        *gimp,
 }
 
 static void 
-list_func (gchar          *key,
-	   GimpParasite   *p,
-	   gchar        ***cur)
+list_func (const gchar    *key,
+	   GimpParasite   *parasite,
+	   gchar        ***current)
 {
-  *(*cur)++ = (char *) g_strdup (key);
+  *(*current)++ = g_strdup (key);
 }
 
 gchar **
@@ -94,208 +64,54 @@ gimp_parasite_list (Gimp *gimp,
 		    gint *count)
 {
   gchar **list;
-  gchar **cur;
+  gchar **current;
 
   *count = gimp_parasite_list_length (gimp->parasites);
-  cur = list = g_new (gchar *, *count);
 
-  gimp_parasite_list_foreach (gimp->parasites, (GHFunc) list_func, &cur);
-  
+  list = current = g_new (gchar *, *count);
+
+  gimp_parasite_list_foreach (gimp->parasites, (GHFunc) list_func, &current);
+
   return list;
 }
 
 
 /*  parasiterc functions  **********/
 
-static void 
-save_func (gchar        *key,
-	   GimpParasite *parasite,
-	   FILE         *fp)
-{
-  if (gimp_parasite_is_persistent (parasite))
-    {
-      gchar   *s;
-      guint32  l;
-
-      fprintf (fp, "(parasite \"%s\" %lu \"",
-	       gimp_parasite_name (parasite),
-	       gimp_parasite_flags (parasite));
-
-      /*
-       * the current methodology is: never move the parasiterc from one
-       * system to another. If you want to do this you should probably
-       * write out parasites which contain any non-alphanumeric(+some)
-       * characters as \xHH sequences altogether.
-       */
-
-      for (s = (gchar *) gimp_parasite_data (parasite),
-	     l = gimp_parasite_data_size (parasite);
-           l;
-           l--, s++)
-        {
-          switch (*s)
-            {
-              case '\\': fputs ("\\\\", fp); break;
-              case '\0': fputs ("\\0", fp); break;
-              case '"' : fputs ("\\\"", fp); break;
-              /* disabled, not portable!  */
-/*              case '\n': fputs ("\\n", fp); break;*/
-/*              case '\r': fputs ("\\r", fp); break;*/
-              case 26  : fputs ("\\z", fp); break;
-              default  : fputc (*s, fp); break;
-            }
-        }
-
-      fputs ("\")\n\n", fp);
-    }
-}
-
-enum
-{
-  PARASITE = 1
-};
-
 void
 gimp_parasiterc_load (Gimp *gimp)
 {
-  gchar      *filename;
-  GScanner   *scanner;
-  GTokenType  token;
+  gchar  *filename;
+  GError *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   filename = gimp_personal_rc_file ("parasiterc");
-  scanner = gimp_scanner_new (filename);
+
+  if (! gimp_config_deserialize (G_OBJECT (gimp->parasites), filename, &error))
+    {
+      g_message (error->message);
+      g_error_free (error);
+    }
+
   g_free (filename);
-
-  if (! scanner)
-    return;
-
-  g_scanner_scope_add_symbol (scanner, 0,
-                              "parasite", GINT_TO_POINTER (PARASITE));
-
-  token = G_TOKEN_LEFT_PAREN;
-
-  do
-    {
-      if (g_scanner_peek_next_token (scanner) != token)
-        break;
-
-      token = g_scanner_get_next_token (scanner);
-
-      switch (token)
-        {
-        case G_TOKEN_LEFT_PAREN:
-          token = G_TOKEN_SYMBOL;
-          break;
-
-        case G_TOKEN_SYMBOL:
-          if (scanner->value.v_symbol == GINT_TO_POINTER (PARASITE))
-            {
-              gchar        *parasite_name  = NULL;
-              gint          parasite_flags = 0;
-              gchar        *parasite_data  = NULL;
-              GimpParasite *parasite;
-
-              token = G_TOKEN_STRING;
-
-              if (g_scanner_peek_next_token (scanner) != token)
-                break;
-
-              if (! gimp_scanner_parse_string (scanner, &parasite_name))
-                break;
-
-             token = G_TOKEN_INT;
-
-              if (g_scanner_peek_next_token (scanner) != token)
-                break;
-
-              if (! gimp_scanner_parse_int (scanner, &parasite_flags))
-                break;
-
-              token = G_TOKEN_STRING;
-
-              if (g_scanner_peek_next_token (scanner) != token)
-                break;
-
-              if (! gimp_scanner_parse_string (scanner, &parasite_data))
-                break;
-
-              parasite = gimp_parasite_new (parasite_name,
-                                            parasite_flags,
-                                            strlen (parasite_data),
-                                            parasite_data);
-              gimp_parasite_attach (gimp, parasite);  /* attaches a copy */
-              gimp_parasite_free (parasite);
-
-              token = G_TOKEN_RIGHT_PAREN;
-            }
-          break;
-
-        case G_TOKEN_RIGHT_PAREN:
-          token = G_TOKEN_LEFT_PAREN;
-          break;
-
-        default: /* do nothing */
-          break;
-        }
-    }
-  while (token != G_TOKEN_EOF);
-
-  if (token != G_TOKEN_LEFT_PAREN)
-    {
-      g_scanner_get_next_token (scanner);
-      g_scanner_unexp_token (scanner, token, NULL, NULL, NULL,
-                             _("fatal parse error"), TRUE);
-    }
-
-  gimp_scanner_destroy (scanner);
-
 }
 
 void
 gimp_parasiterc_save (Gimp *gimp)
 {
-  gchar *tmp_filename = NULL;
-  gchar *bak_filename = NULL;
-  gchar *rc_filename  = NULL;
-  FILE  *fp;
+  gchar  *filename;
+  GError *error = NULL;
 
-  tmp_filename = gimp_personal_rc_file ("#parasiterc.tmp~");
-  bak_filename = gimp_personal_rc_file ("parasiterc.bak");
-  rc_filename  = gimp_personal_rc_file ("parasiterc");
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  fp = fopen (tmp_filename, "w");
+  filename = gimp_personal_rc_file ("parasiterc");
 
-  if (!fp)
-    goto cleanup;
-
-  fprintf (fp,
-	   "# GIMP parasiterc\n"
-	   "# This file will be entirely rewritten every time you "
-	   "quit the gimp.\n\n");
-
-  gimp_parasite_list_foreach (gimp->parasites, (GHFunc) save_func, fp);
-
-  fclose (fp);
-
-#if defined(G_OS_WIN32) || defined(__EMX__)
-  /* First rename the old parasiterc out of the way */
-  unlink (bak_filename);
-  rename (rc_filename, bak_filename);
-#endif
-
-  if (rename (tmp_filename, rc_filename) != 0)
+  if (! gimp_config_serialize (G_OBJECT (gimp->parasites), filename, &error))
     {
-#if defined(G_OS_WIN32) || defined(__EMX__)
-      /* Rename the old parasiterc back */
-      rename (bak_filename, rc_filename);
-#endif
-      unlink (tmp_filename);
+      g_message (error->message);
+      g_error_free (error);
     }
 
- cleanup:
-  g_free (tmp_filename);
-  g_free (bak_filename);
-  g_free (rc_filename);
+  g_free (filename);
 }
