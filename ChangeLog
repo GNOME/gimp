@@ -1,5 +1,10 @@
 2002-11-06  Manish Singh  <yosh@gimp.org>
 
+	* acinclude.m4: third times the charm. Python support macros
+	moved here.
+
+2002-11-06  Manish Singh  <yosh@gimp.org>
+
 	* configure.in: remove automake 1.4 special casing here too
 
 2002-11-06  Manish Singh  <yosh@gimp.org>
