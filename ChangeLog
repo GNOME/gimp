@@ -1,3 +1,12 @@
+2002-05-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpcontainer.c: disabled debuggind output.
+
+	* app/core/gimpdrawable.c (gimp_drawable_init): no need to
+	initialize variables twice :)
+
+	* app/widgets/gimpnavigationpreview.c: removed debugging output.
+
 2002-05-08  Nathan Summers  <rock@gimp.org>
 
 	* Changelog: (2002-05-06) somehow the Changelog entry for my dbbrower

@@ -155,8 +155,6 @@ gimp_drawable_init (GimpDrawable *drawable)
   drawable->has_alpha     = FALSE;
   drawable->preview_cache = NULL;
   drawable->preview_valid = FALSE;
-  drawable->preview_cache = NULL;
-  drawable->preview_valid = FALSE;
 }
 
 static void

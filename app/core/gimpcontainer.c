@@ -31,6 +31,15 @@
 #include "gimpmarshal.h"
 
 
+/* #define DEBUG_CONTAINER */
+
+#ifdef DEBUG_CONTAINER
+#define DEBUG(...) g_print(...)
+#else
+#define DEBUG(...)
+#endif
+
+
 typedef struct _GimpContainerHandler
 {
   gchar     *signame;
@@ -672,7 +681,7 @@ gimp_container_add_handler (GimpContainer *container,
   handler->callback_data = callback_data;
   handler->quark         = g_quark_from_string (key);
 
-  g_print ("%s: key = %s, id = %d\n", G_GNUC_FUNCTION, key, handler->quark);
+  DEBUG ("%s: key = %s, id = %d\n", G_GNUC_FUNCTION, key, handler->quark);
 
   g_free (key);
 
@@ -728,7 +737,7 @@ gimp_container_remove_handler (GimpContainer *container,
       return;
     }
 
-  g_print ("%s: id = %d\n", G_GNUC_FUNCTION, handler->quark);
+  DEBUG ("%s: id = %d\n", G_GNUC_FUNCTION, handler->quark);
 
   gimp_container_foreach (container,
 			  (GFunc) gimp_container_remove_handler_foreach_func,

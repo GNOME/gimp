@@ -389,8 +389,6 @@ gimp_navigation_preview_scroll (GtkWidget      *widget,
 
   nav_preview = GIMP_NAVIGATION_PREVIEW (widget);
 
-  g_print ("gimp_navigation_preview_scroll(%d)\n", sevent->direction);
-
   if (sevent->state & GDK_SHIFT_MASK)
     {
       if (sevent->direction == GDK_SCROLL_UP)
