@@ -1,7 +1,11 @@
 2004-10-10  DindinX  <dindinx@gimp.org>
 
+	* plug-ins/common/vpropagate.c: added a preview.
+
+2004-10-10  DindinX  <dindinx@gimp.org>
+
 	* plug-ins/common/flarefx.c
-	* plug-ins/common/waves.c: cleanups and ported to GimpDrawablePreview.
+	* plug-ins/common/waves.c: cleanups and ported to GimpAspectPreview.
 
 2004-10-10  Sven Neumann  <sven@gimp.org>
 
