@@ -155,7 +155,7 @@ query ()
   static gint nargs = sizeof (args) / sizeof (args[0]);
   static gint nreturn_vals = 0;
   gchar *help_string =
-    _(" Perform edge detection on the contents of the specified drawable. It applies, I think, convolusion with 3x3 kernel. AMOUNT is an arbitrary constant, WRAPMODE is like displace plug-in (useful for tilable image).");
+    _(" Perform edge detection on the contents of the specified drawable. It applies, I think, convolution with 3x3 kernel. AMOUNT is an arbitrary constant, WRAPMODE is like displace plug-in (useful for tilable image).");
 
   INIT_I18N();
   gimp_install_procedure ("plug_in_edge",
@@ -544,7 +544,7 @@ edge( GDrawable *drawable )
 		       *    -- taka
 		       */
 #define PIX(X,Y)  src[ (Y-1)*(int)src_rgn.rowstride + (X-1)*(int)src_rgn.bpp + chan ]
-		      /* make convolusion */
+		      /* make convolution */
 		      sum1 = ( PIX(2,0) - PIX(0,0) ) +
 			 2 * ( PIX(2,1) - PIX(0,1) ) +
 			     ( PIX(2,2) - PIX(2,0) );
@@ -579,7 +579,7 @@ edge( GDrawable *drawable )
 	      
 		  for( chan = 0; chan < alpha; chan++ )
 		    {
-		      /* make convolusion */
+		      /* make convolution */
 		      sum1 = (pix20[chan] - pix00[chan] ) +
 			 2 * (pix21[chan] - pix01[chan] ) +
 			     (pix22[chan] - pix20[chan] );
