@@ -918,7 +918,7 @@ gimp_layer_scale_lowlevel (GimpLayer             *layer,
    */
   if (GIMP_IMAGE_TYPE_IS_INDEXED (GIMP_DRAWABLE (layer)->type))
     {
-      scale_region (&srcPR, &destPR, GIMP_NEAREST_NEIGHBOR_INTERPOLATION);
+      scale_region (&srcPR, &destPR, GIMP_INTERPOLATION_NONE);
     }
   else
     {

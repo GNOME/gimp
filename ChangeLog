@@ -1,7 +1,30 @@
+2002-02-12  Sven Neumann  <sven@gimp.org>
+
+	* app/base/base-enums.h: renamed GimpInterpolationType values to
+	something sane and unexported it from the PDB since it was never
+	used in any PDB calls.
+	
+	* app/gimprc.c
+	* app/config/gimpcoreconfig.c
+	* app/core/gimpcoreconfig.c
+	* app/core/gimpdrawable-transform.c
+	* app/core/gimplayer.c
+	* app/gui/preferences-dialog.c
+	* app/gui/resize-dialog.c
+	* app/paint-funcs/paint-funcs.c
+	* app/pdb/transform_tools_cmds.c
+	* app/tools/transform_options.c
+	* tools/pdbgen/pdb/transform_tools.pdb: changed accordingly.
+	
+	* libgimp/gimpenums.h
+	* plug-ins/script-fu/script-fu-constants.c
+	* tools/pdbgen/enums.pl: regenerated.
+
 2002-02-11  Nathan Summers  <rock@gimp.org>
 
         * app/plug-in/plug-in.[ch]
-        * libgimp/gimp.c: added support for the init function in plug-ins.
+        * libgimp/gimp.c: added support for the init function in plug-ins 
+	(fixes bug #66859).
 
 2002-02-12  Michael Natterer  <mitch@gimp.org>
 

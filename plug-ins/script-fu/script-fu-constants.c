@@ -115,10 +115,6 @@ init_generated_constants (void)
   setvar (cintern ("INDEXED-IMAGE"), flocons (4), NIL);
   setvar (cintern ("INDEXEDA-IMAGE"), flocons (5), NIL);
 
-  setvar (cintern ("LINEAR-INTERPOLATION"), flocons (0), NIL);
-  setvar (cintern ("CUBIC-INTERPOLATION"), flocons (1), NIL);
-  setvar (cintern ("NEAREST-NEIGHBOR-INTERPOLATION"), flocons (2), NIL);
-
   setvar (cintern ("NORMAL-MODE"), flocons (0), NIL);
   setvar (cintern ("DISSOLVE-MODE"), flocons (1), NIL);
   setvar (cintern ("BEHIND-MODE"), flocons (2), NIL);

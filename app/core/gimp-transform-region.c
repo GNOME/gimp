@@ -124,9 +124,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
 
   /*  turn interpolation off for simple transformations (e.g. rot90)  */
   if (gimp_matrix3_is_simple (matrix))
-    {
-      interpolation_type = GIMP_NEAREST_NEIGHBOR_INTERPOLATION;
-    }
+    interpolation_type = GIMP_INTERPOLATION_NONE;
 
   /*  Get the background color  */
   gimp_image_get_background (gimage, drawable, bg_col);
@@ -144,8 +142,8 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
     case GIMP_INDEXED:
       bg_col[ALPHA_I_PIX] = TRANSPARENT_OPACITY;
       alpha = ALPHA_I_PIX;
-      /*  If the gimage is indexed color, ignore smoothing value  */
-      interpolation_type = GIMP_NEAREST_NEIGHBOR_INTERPOLATION;
+      /*  If the gimage is indexed color, ignore interpolation value  */
+      interpolation_type = GIMP_INTERPOLATION_NONE;
       break;
     default:
       g_assert_not_reached ();
@@ -233,17 +231,17 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
   /* initialise the pixel_surround accessor */
   switch (interpolation_type)
     {
-    case GIMP_CUBIC_INTERPOLATION:
+    case GIMP_INTERPOLATION_NONE:
+      /* not actually useful, keeps the code cleaner */
+      pixel_surround_init (&surround, float_tiles, 1, 1, bg_col);
+      break;
+
+    case GIMP_INTERPOLATION_CUBIC:
       pixel_surround_init (&surround, float_tiles, 4, 4, bg_col);
       break;
 
-    case GIMP_LINEAR_INTERPOLATION:
+    case GIMP_INTERPOLATION_LINEAR:
       pixel_surround_init (&surround, float_tiles, 2, 2, bg_col);
-      break;
-
-    case GIMP_NEAREST_NEIGHBOR_INTERPOLATION:
-      /* not actually useful, keeps the code cleaner */
-      pixel_surround_init (&surround, float_tiles, 1, 1, bg_col);
       break;
     }
 
@@ -294,7 +292,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
 
           switch (interpolation_type)
             {
-            case GIMP_CUBIC_INTERPOLATION:
+            case GIMP_INTERPOLATION_CUBIC:
               /*  ttx & tty are the subpixel coordinates of the point in
                *  the original selection's floating buffer.
                *  We need the four integer pixel coords around them:
@@ -391,7 +389,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
                 }
               break;
 
-            case GIMP_LINEAR_INTERPOLATION:
+            case GIMP_INTERPOLATION_LINEAR:
               itx = floor (ttx);
               ity = floor (tty);
 
@@ -477,7 +475,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
                 }
               break;
 
-            case GIMP_NEAREST_NEIGHBOR_INTERPOLATION:
+            case GIMP_INTERPOLATION_NONE:
               itx = floor (ttx);
               ity = floor (tty);
 

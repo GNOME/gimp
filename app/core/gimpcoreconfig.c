@@ -33,7 +33,7 @@ gimp_core_config_init (Gimp *gimp)
 
   gimp->config = g_new0 (GimpCoreConfig, 1);
 
-  gimp->config->interpolation_type       = GIMP_LINEAR_INTERPOLATION;
+  gimp->config->interpolation_type       = GIMP_INTERPOLATION_LINEAR;
 
   gimp->config->tool_plug_in_path        = NULL;
   gimp->config->plug_in_path             = NULL;

@@ -2536,11 +2536,11 @@ preferences_dialog_create (Gimp *gimp)
 			   GINT_TO_POINTER (gimp->config->interpolation_type),
 
 			   _("Nearest Neighbor (Fastest)"),
-			   GINT_TO_POINTER (GIMP_NEAREST_NEIGHBOR_INTERPOLATION), NULL,
+			   GINT_TO_POINTER (GIMP_INTERPOLATION_NONE), NULL,
 			   _("Linear"),
-			   GINT_TO_POINTER (GIMP_LINEAR_INTERPOLATION), NULL,
+			   GINT_TO_POINTER (GIMP_INTERPOLATION_LINEAR), NULL,
 			   _("Cubic (Slowest & Best)"),
-			   GINT_TO_POINTER (GIMP_CUBIC_INTERPOLATION), NULL,
+			   GINT_TO_POINTER (GIMP_INTERPOLATION_CUBIC), NULL,
 
 			   NULL);
 

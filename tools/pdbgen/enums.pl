@@ -107,15 +107,6 @@ package Gimp::CodeGen::enums;
 		       GIMP_STACK_TRACE_QUERY => '1',
 		       GIMP_STACK_TRACE_ALWAYS => '2' }
 	},
-    GimpInterpolationType =>
-	{ contig => 1,
-	  header => 'base/base-enums.h',
-	  symbols => [ qw(GIMP_LINEAR_INTERPOLATION GIMP_CUBIC_INTERPOLATION
-			  GIMP_NEAREST_NEIGHBOR_INTERPOLATION) ],
-	  mapping => { GIMP_LINEAR_INTERPOLATION => '0',
-		       GIMP_CUBIC_INTERPOLATION => '1',
-		       GIMP_NEAREST_NEIGHBOR_INTERPOLATION => '2' }
-	},
     GimpLayerModeEffects =>
 	{ contig => 1,
 	  header => 'base/base-enums.h',

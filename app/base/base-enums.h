@@ -40,11 +40,11 @@
 
 GType gimp_interpolation_type_get_type (void) G_GNUC_CONST;
 
-typedef enum
+typedef enum  /*< pdb-skip >*/
 {
-  GIMP_LINEAR_INTERPOLATION,
-  GIMP_CUBIC_INTERPOLATION,
-  GIMP_NEAREST_NEIGHBOR_INTERPOLATION
+  GIMP_INTERPOLATION_NONE,
+  GIMP_INTERPOLATION_LINEAR,
+  GIMP_INTERPOLATION_CUBIC
 } GimpInterpolationType;
 
 

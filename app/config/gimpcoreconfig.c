@@ -123,7 +123,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_INTERPOLATION_TYPE,
                                  "interpolation-type",
                                  GIMP_TYPE_INTERPOLATION_TYPE, 
-                                 GIMP_LINEAR_INTERPOLATION);
+                                 GIMP_INTERPOLATION_LINEAR);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PLUG_IN_PATH,
                                  "plug-in-path",
                                  gimp_config_build_plug_in_path ("plug-ins"));

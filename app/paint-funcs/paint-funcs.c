@@ -2803,7 +2803,7 @@ expand_line (gdouble               *dest,
    each x */
   switch(interp)
   {
-    case GIMP_CUBIC_INTERPOLATION:
+    case GIMP_INTERPOLATION_CUBIC:
       for (x = 0; x < width; x++)
       {
 	src_col = ((int)((x) * ratio  + 2.0 - 0.5)) - 2;
@@ -2817,7 +2817,7 @@ expand_line (gdouble               *dest,
       }
       break;
 
-    case GIMP_LINEAR_INTERPOLATION:
+    case GIMP_INTERPOLATION_LINEAR:
       for (x = 0; x < width; x++)
       {
 	src_col = ((int)((x) * ratio + 2.0 - 0.5)) - 2;
@@ -2831,8 +2831,8 @@ expand_line (gdouble               *dest,
       }
       break;
 
-   case GIMP_NEAREST_NEIGHBOR_INTERPOLATION:
-     g_error("sampling_type can't be GIMP_NEAREST_NEIGHBOR_INTERPOLATION");
+   case GIMP_INTERPOLATION_NONE:
+     g_assert_not_reached ();
      break;
   }
 }
@@ -2942,7 +2942,7 @@ scale_region (PixelRegion           *srcPR,
   gint     old_y = -4, new_y;
   gint     x, y;
 
-  if (interpolation_type == GIMP_NEAREST_NEIGHBOR_INTERPOLATION)
+  if (interpolation_type == GIMP_INTERPOLATION_NONE)
     {
       scale_region_no_resample (srcPR, destPR);
       return;
@@ -3031,7 +3031,7 @@ scale_region (PixelRegion           *srcPR,
       }
       switch(interpolation_type)
       {
-       case GIMP_CUBIC_INTERPOLATION:
+       case GIMP_INTERPOLATION_CUBIC:
        {
 	 double p0, p1, p2, p3;
 	 double dy = ((y) * y_rat - .5) - new_y;
@@ -3044,7 +3044,7 @@ scale_region (PixelRegion           *srcPR,
 	     p2 * src[2][x] + p3 * src[3][x];
        } break;
 
-       case GIMP_LINEAR_INTERPOLATION:
+       case GIMP_INTERPOLATION_LINEAR:
        {
 	 double idy = ((y) * y_rat - 0.5) - new_y;
 	 double dy = 1.0 - idy;
@@ -3052,9 +3052,8 @@ scale_region (PixelRegion           *srcPR,
 	   accum[x] = dy * src[1][x] + idy * src[2][x];
        } break;
 
-       case GIMP_NEAREST_NEIGHBOR_INTERPOLATION:
-	 g_error ("sampling_type can't be "
-                  "GIMP_NEAREST_NEIGHBOR_INTERPOLATION");
+       case GIMP_INTERPOLATION_NONE:
+         g_assert_not_reached ();
          break;
       }
     }

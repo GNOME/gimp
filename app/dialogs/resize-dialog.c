@@ -674,15 +674,15 @@ resize_widget_new (GimpImage    *gimage,
                                GINT_TO_POINTER (resize->interpolation),
 
                                _("Nearest Neighbor (Fastest)"),
-                               GINT_TO_POINTER (GIMP_NEAREST_NEIGHBOR_INTERPOLATION),
+                               GINT_TO_POINTER (GIMP_INTERPOLATION_NONE),
                                NULL,
 
                                _("Linear"),
-                               GINT_TO_POINTER (GIMP_LINEAR_INTERPOLATION),
+                               GINT_TO_POINTER (GIMP_INTERPOLATION_LINEAR),
                                NULL,
 
                                _("Cubic (Slowest & Best)"),
-                               GINT_TO_POINTER (GIMP_CUBIC_INTERPOLATION),
+                               GINT_TO_POINTER (GIMP_INTERPOLATION_CUBIC),
                                NULL,
 
                                NULL);

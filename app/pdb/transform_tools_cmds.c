@@ -182,7 +182,7 @@ perspective_invoker (Gimp     *gimp,
       if (interpolation)
 	interpolation_type = gimp->config->interpolation_type;
       else
-	interpolation_type = GIMP_NEAREST_NEIGHBOR_INTERPOLATION;
+	interpolation_type = GIMP_INTERPOLATION_NONE;
     
       /* Perspective the selection */
       success = gimp_drawable_transform_affine (drawable,
@@ -313,7 +313,7 @@ rotate_invoker (Gimp     *gimp,
       if (interpolation)
 	interpolation_type = gimp->config->interpolation_type;
       else
-	interpolation_type = GIMP_NEAREST_NEIGHBOR_INTERPOLATION;
+	interpolation_type = GIMP_INTERPOLATION_NONE;
     
       /* Rotate the selection */
       success = gimp_drawable_transform_affine (drawable,
@@ -420,7 +420,7 @@ scale_invoker (Gimp     *gimp,
 	  if (interpolation)
 	    interpolation_type = gimp->config->interpolation_type;
 	  else
-	    interpolation_type = GIMP_NEAREST_NEIGHBOR_INTERPOLATION;
+	    interpolation_type = GIMP_INTERPOLATION_NONE;
     
 	  /* Scale the selection */
 	  success = gimp_drawable_transform_affine (drawable,
@@ -545,7 +545,7 @@ shear_invoker (Gimp     *gimp,
       if (interpolation)
 	interpolation_type = gimp->config->interpolation_type;
       else
-	interpolation_type = GIMP_NEAREST_NEIGHBOR_INTERPOLATION;
+	interpolation_type = GIMP_INTERPOLATION_NONE;
     
       /* Shear the selection */
       success = gimp_drawable_transform_affine (drawable,
@@ -662,7 +662,7 @@ transform_2d_invoker (Gimp     *gimp,
       if (interpolation)
 	interpolation_type = gimp->config->interpolation_type;
       else
-	interpolation_type = GIMP_NEAREST_NEIGHBOR_INTERPOLATION;
+	interpolation_type = GIMP_INTERPOLATION_NONE;
     
       /* Transform the selection */
       success = gimp_drawable_transform_affine (drawable,
