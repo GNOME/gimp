@@ -13,9 +13,10 @@ It does not need to concern users.
 ------------------------------------------------------------------
 *** PREFIXES:
 
-"tiff" : The standard GIMP TIFF plugin
-"jpeg" : The standard GIMP JPEG plugin
-"gimp" : For common and standard parasites
+"tiff"    : The standard GIMP TIFF plugin
+"jpeg"    : The standard GIMP JPEG plugin
+"gimp"    : For common and standard parasites
+"perl-fu" : Internal data by the Gimp-perl interface
 
 
 ------------------------------------------------------------------
@@ -24,16 +25,63 @@ It does not need to concern users.
 "gimp-comment"  : Standard GIF-style comments.  This parasite is
                   human-readable text in unspecified 8-bit ASCII.  It
                   includes a trailing \0 string terminator.  The size
-                  of the parasite data may not exceed 241 bytes.
-                  This parasite attaches to images only.  It is
-                  persistent, which means it is saved in XCF files.
+                  of the parasite data may not exceed 241 bytes.  This
+                  parasite attaches to images only.  It is persistent,
+                  which means it is saved in XCF files.
 
 "tiff-save-options" : The TiffSaveVals structure from the TIFF plugin.
-                      This parasite attaches to images only.  It is
-                      not persistent.
+                      This parasite attaches to images only.  It is not
+                      persistent.
 
-"jpeg-save-options" : The JpegSaveVals structure from the JPEG
-                      plugin.  This parasite attaches to images only.
-                      It is not persistent.
+"jpeg-save-options" : The JpegSaveVals structure from the JPEG plugin.
+                      This parasite attaches to images only.  It is not
+                      persistent.
+
+"perl-fu-last-vals-<plug-in>" : The Gimp::Fu module might store the
+                  arguments of the last plug-in invocation. It is usually
+                  attached to images, but might also be found globally. It
+                  might also be persistent. The data format is either
+                  pure character data (Data::Dumper) or a serialized data
+                  stream created by Storable::nfreeze.
+
 
 ------------------------------------------------------------------
+
+*** FORMAT:
+
+The parasite data format is not rigidly specified. For non-persistant
+parasites you are entirely free, as the parasite data does not survive the
+current gimp session. If you need persistant data, you basically have to
+choose between the following alternatives:
+
+- cook your own binary data format
+  
+  You can invent your own data format. This means that you will either
+  loose totally (consider endian-ness or version-ness issues) or you will
+  get yourself into deep trouble to get it "right" in all cases.
+
+- use character (string) data
+
+  Obvious to perl people but less so to C programmers: just sprintf your
+  data into a string (e.g. "SIZE 100x200 XRES 300 YRES 300") and store
+  that in the parasite, and later sscanf it again. This often solves most
+  of the problems you might encounter, makes for easier debugging and
+  more robustness (consider the case when you add more entries to your
+  persistant data: older plug-ins might be able to read the relevant
+  parts and your application can detect missing fields easily). The
+  drawback is that your data is likely to be larger than a compact binary
+  representation would be. Not much a problem for most applications,
+  though.
+
+- use the libgimp serialize functions
+
+  Look at the stuff in libgimp/gserialize.h. These functions allow for
+  relatively easy serializing/deserializing of structs. The advantages
+  are that the gimp-developers have already taken care of endian-ness
+  issues and other hazzles. The drawback is that you might encounter
+  problems when you want to extend your structures later, as you have to
+  be prepared for images saved with parasites form a very old version of
+  your plug-in, and the gserialize functions do not (yet) handle different
+  data formats nicely.
+
+

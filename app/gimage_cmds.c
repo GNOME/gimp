@@ -4673,8 +4673,8 @@ gimp_image_find_parasite_invoker (Argument *args)
 ProcArg gimp_image_parasite_list_in_args[] =
 {
   { PDB_IMAGE,
-    "drawable",
-    "the drawable"
+    "image",
+    "the image"
   }
 };
 

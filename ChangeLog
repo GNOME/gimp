@@ -1,3 +1,9 @@
+Sun Feb 14 02:33:42 CET 1999 Marc Lehmann <pcg@goof.com>
+
+	* app/gimage_cmds.c: Corrected argument name.
+        * docs/parasites.txt: Add some thoughts about parasite
+        data formats.
+
 1999-02-14  Jay Cox  <jaycox@earthlink.net>
 
 	* app/layers_dialog.c: applied Michael Natterer's fix for the
