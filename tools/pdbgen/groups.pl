@@ -17,6 +17,7 @@
     gradient
     gradient_select
     guides
+    interface
     layer
     misc
     palette
@@ -24,6 +25,7 @@
     paths
     pattern_select
     patterns
+    plug_in
     procedural_db
     text_tool
     tools
