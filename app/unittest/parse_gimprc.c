@@ -33,19 +33,7 @@ parse_show_tokens (GList *list)
       list = list->next;
     }
 }
-#if 0
-static GList *parse_add_directory_tokens (void)
-{
-  char *gimp_dir;
 
-  gimp_dir = gimp_directory ();
-  add_gimp_directory_token (gimp_dir);
-#ifdef __EMX__
-  add_x11root_token(getenv("X11ROOT"));
-#endif
-  return (unknown_tokens);
-}
-#endif
 
 static void global_parse_init(int showit)
 {
@@ -94,7 +82,7 @@ static void parse_get_alt_personal_gimprc(char *alternate, char *filename)
     parse_get_absolute_gimprc_file(filename);
 }
 
-
+#if 0
 gboolean
 parse_absolute_gimprc_file (char *filename)
 {
@@ -133,6 +121,7 @@ parse_absolute_gimprc_file (char *filename)
 
   return TRUE;
 }
+#endif
 
 int
 main (int argc, char **argv)
