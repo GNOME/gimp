@@ -93,6 +93,7 @@ struct _GDisplay
   GtkWidget *shell;               /*  shell widget for this gdisplay          */
   GtkWidget *canvas;              /*  canvas widget for this gdisplay         */
   GtkWidget *hsb, *vsb;           /*  widgets for scroll bars                 */
+  GtkWidget *qmaskoff, *qmaskon;  /*  widgets for qmask buttons               */
   GtkWidget *hrule, *vrule;       /*  widgets for rulers                      */
   GtkWidget *origin;              /*  widgets for rulers                      */
   GtkWidget *popup;               /*  widget for popup menu                   */
@@ -147,7 +148,7 @@ struct _GDisplay
   int cursor_y;			  /* software cursor Y value                  */
   short proximity;                /* is a device in proximity of gdisplay ?   */
   short have_cursor;		  /* is cursor currently drawn ?              */
-
+  
   IdleRenderStruct idle_render;   /* state of this gdisplay's render thread   */
 };
 

@@ -40,12 +40,14 @@
 #include "indicator_area.h"
 #include "interface.h"
 #include "menus.h"
-#include "dialog_handler.h"
+#include "qmask.h"
 #include "session.h"
 #include "tools.h"
 #include "libgimp/gimpsizeentry.h"
 
 #include "pixmaps.h"
+#include "pixmaps/qmasksel.xpm"
+#include "pixmaps/qmasknosel.xpm"
 
 #include "libgimp/gimpintl.h"
 
@@ -226,6 +228,38 @@ allocate_colors (GtkWidget *parent)
   gdk_color_alloc (colormap, &colors[11]);
 }
 
+#ifdef icky
+static void
+create_qmask_area (GtkWidget *parent)
+{
+  GtkWidget *frame;
+  GtkWidget *alignment;
+  GdkPixmap *default_pixmap;
+  GdkPixmap *swap_pixmap;
+
+  gtk_widget_realize (parent);
+
+  default_pixmap = create_pixmap (parent->window, NULL, default_bits,
+				  default_width, default_height);
+  swap_pixmap    = create_pixmap (parent->window, NULL, swap_bits,
+				  swap_width, swap_height);
+
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
+  gtk_box_pack_start (GTK_BOX (parent), frame, FALSE, FALSE, 0);
+  gtk_widget_realize (frame);
+
+  alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  gtk_container_set_border_width (GTK_CONTAINER (alignment), 3);
+  gtk_container_add (GTK_CONTAINER (frame), alignment);
+
+  gtk_container_add (GTK_CONTAINER (alignment), qmask_area);
+  gtk_widget_show (qmask_off);
+  gtk_widget_show (qmask_on);
+  gtk_widget_show (alignment);
+  gtk_widget_show (frame);
+}
+#endif /* icky */
 
 static void
 create_indicator_area (GtkWidget *parent)
@@ -572,8 +606,12 @@ create_toolbox ()
   create_color_area (vbox);
   if (show_indicators && (!no_data) )
       create_indicator_area (vbox);
+#ifdef icky
+  create_qmask_area (vbox);
+#endif /*icky */
   gtk_widget_show (window);
   gimp_set_drop_open (window);
+
 
   toolbox_shell = window;
 }
@@ -611,11 +649,17 @@ create_display_shell (GDisplay* gdisp,
 {
   static GtkWidget *image_popup_menu = NULL;
   static GtkAccelGroup *image_accel_group = NULL;
+  
   GtkWidget *vbox;
   GtkWidget *table;
   GtkWidget *table_inner;
+  GtkWidget *table_lower;
   GtkWidget *frame;
   GtkWidget *arrow;
+  GtkWidget *pixmap;
+
+  GSList *group = NULL;
+
   int n_width, n_height;
   int s_width, s_height;
   int scalesrc, scaledest;
@@ -693,6 +737,9 @@ create_display_shell (GDisplay* gdisp,
   gtk_table_set_col_spacing (GTK_TABLE (table_inner), 0, 1);
   gtk_table_set_row_spacing (GTK_TABLE (table_inner), 0, 1);
 
+  table_lower = gtk_table_new (1,3,FALSE);
+  gtk_table_set_col_spacing (GTK_TABLE (table_lower), 0, 1);
+ /*  gtk_table_set_row_spacing (GTK_TABLE (table_lower), 0, 1); */
 
   /* hbox for statusbar area */
   gdisp->statusarea = gtk_hbox_new (FALSE, 2);
@@ -736,6 +783,51 @@ create_display_shell (GDisplay* gdisp,
   gdisp->vsb = gtk_vscrollbar_new (gdisp->vsbdata);
   GTK_WIDGET_UNSET_FLAGS (gdisp->vsb, GTK_CAN_FOCUS);
 
+
+  gdisp->qmaskoff = gtk_radio_button_new(group);
+  group = gtk_radio_button_group (GTK_RADIO_BUTTON (gdisp->qmaskoff));
+  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (gdisp->qmaskoff), FALSE);
+  gtk_signal_connect (GTK_OBJECT (gdisp->qmaskoff), "toggled",
+                     (GtkSignalFunc) qmask_deactivate,
+                     gdisp);
+
+  gdisp->qmaskon = gtk_radio_button_new(group);
+  group = gtk_radio_button_group (GTK_RADIO_BUTTON (gdisp->qmaskon));
+  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (gdisp->qmaskon), FALSE);
+  gtk_signal_connect (GTK_OBJECT (gdisp->qmaskon), "toggled",
+                     (GtkSignalFunc) qmask_activate,
+                     gdisp);
+
+
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(gdisp->qmaskoff), TRUE);
+  gtk_widget_set_usize(GTK_WIDGET(gdisp->qmaskon), 15, 15);
+  gtk_widget_set_usize(GTK_WIDGET(gdisp->qmaskoff), 15, 15);
+  /* Draw pixmaps - note: you must realize the parent prior to doing the
+     rest! */  
+    {
+    GdkPixmap *pxmp;
+    GdkBitmap *mask;
+    GtkStyle *style;
+
+    style = gtk_widget_get_style(gdisp->shell);
+    gtk_widget_realize(gdisp->shell);
+   
+    pxmp = gdk_pixmap_create_from_xpm_d(gdisp->shell->window, &mask,
+                                        &style->bg[GTK_STATE_NORMAL],
+                                        qmasksel_xpm);   
+
+    pixmap = gtk_pixmap_new (pxmp, mask);
+    gtk_container_add (GTK_CONTAINER (gdisp->qmaskon), pixmap);
+    gtk_widget_show(pixmap);
+  
+    pxmp = gdk_pixmap_create_from_xpm_d(gdisp->shell->window, &mask,
+                                        &style->bg[GTK_STATE_NORMAL],
+                                        qmasknosel_xpm);   
+    pixmap = gtk_pixmap_new (pxmp, mask);
+    gtk_container_add (GTK_CONTAINER (gdisp->qmaskoff), pixmap);
+    gtk_widget_show(pixmap);
+    }
+ 
   gdisp->canvas = gtk_drawing_area_new ();
   gtk_drawing_area_size (GTK_DRAWING_AREA (gdisp->canvas), n_width, n_height);
   gtk_widget_set_events (gdisp->canvas, CANVAS_EVENT_MASK);
@@ -753,11 +845,22 @@ create_display_shell (GDisplay* gdisp,
 		      gdisp);
 
   /*  pack all the widgets  */
+
   gtk_table_attach (GTK_TABLE (table), table_inner, 0, 1, 0, 1,
 		    GTK_FILL | GTK_EXPAND | GTK_SHRINK,
 		    GTK_FILL | GTK_EXPAND | GTK_SHRINK, 0, 0);
-  gtk_table_attach (GTK_TABLE (table), gdisp->hsb, 0, 1, 1, 2,
-		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
+ /* sneak in an extra table here */
+  gtk_table_attach (GTK_TABLE (table_lower), gdisp->hsb, 2, 3, 0, 1,
+		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_table_attach (GTK_TABLE (table_lower), gdisp->qmaskoff, 0, 1, 0, 1,
+		    GTK_SHRINK, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
+
+  gtk_table_attach (GTK_TABLE (table_lower), gdisp->qmaskon, 1, 2, 0, 1,
+		    GTK_SHRINK, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
+
+  gtk_table_attach (GTK_TABLE (table), table_lower, 0, 1, 1, 2,
+		    GTK_FILL | GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
+
   gtk_table_attach (GTK_TABLE (table), gdisp->vsb, 1, 2, 0, 1,
 		    GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
 
@@ -809,13 +912,17 @@ create_display_shell (GDisplay* gdisp,
   gtk_box_pack_start (GTK_BOX (gdisp->statusarea), gdisp->cancelbutton, FALSE, TRUE, 0);
   gtk_widget_set_sensitive (gdisp->cancelbutton, FALSE);
 
-  /*  the popup menu  */
+ /*  the popup menu  */
   gdisp->popup = image_popup_menu;
 
   /*  the accelerator table for images  */
   gtk_window_add_accel_group (GTK_WINDOW (gdisp->shell), image_accel_group);
 
   gtk_widget_show (arrow);
+  gtk_widget_show (gdisp->qmaskon);
+  gtk_widget_show (gdisp->qmaskoff);
+
+
   gtk_widget_show (gdisp->hsb);
   gtk_widget_show (gdisp->vsb);
 
@@ -832,6 +939,8 @@ create_display_shell (GDisplay* gdisp,
   gtk_widget_show (gdisp->statusbar);
   gtk_widget_show (gdisp->progressbar);
   gtk_widget_show (gdisp->cancelbutton);
+  
+  gtk_widget_show (table_lower);
   gtk_widget_show (table_inner);
   gtk_widget_show (table);
   if (show_statusbar)
@@ -839,16 +948,17 @@ create_display_shell (GDisplay* gdisp,
       gtk_widget_show (gdisp->statusarea);
     }
   gtk_widget_show (vbox);
-  gtk_widget_show (gdisp->shell);
 
+  gtk_widget_show (gdisp->shell);
 #ifdef __GNUC__
 #warning DODGY?
-#endif
+#endif /*__GNUC__ */
   gtk_widget_realize (gdisp->canvas);
   gdk_window_set_back_pixmap(gdisp->canvas->window, NULL, 0);
 
   /*  set the focus to the canvas area  */
   gtk_widget_grab_focus (gdisp->canvas);
+
 }
 
 

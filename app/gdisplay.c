@@ -24,6 +24,7 @@
 #include "cursorutil.h"
 #include "disp_callbacks.h"
 #include "drawable.h"
+#include "draw_core.h"
 #include "gdisplay.h"
 #include "gdisplayP.h"
 #include "gdisplay_ops.h"
@@ -37,14 +38,15 @@
 #include "interface.h"
 #include "lc_dialog.h"
 #include "menus.h"
-#include "draw_core.h"
-#include "bezier_selectP.h"
 #include "plug_in.h"
+#include "qmask.h"
 #include "scale.h"
 #include "scroll.h"
 #include "tools.h"
 #include "undo.h"
-#include "layer_pvt.h"			/* ick. */
+
+#include "bezier_selectP.h"
+#include "layer_pvt.h"			/* ick. (not alone either) */
 
 #include "libgimp/gimpintl.h"
 
@@ -137,6 +139,9 @@ gdisplay_new (GimpImage    *gimage,
 
   /*  set the gdisplay colormap type and install the appropriate colormap  */
   gdisp->color_type = (gimage_base_type (gimage) == GRAY) ? GRAY : RGB;
+
+  /* set the qmask buttons */
+  qmask_buttons_update(gdisp);
 
   /*  set the user data  */
   if (!display_ht)
@@ -646,7 +651,9 @@ gdisplay_flush_whenever (GDisplay *gdisp, gboolean now)
   if (gdisp->window_info_dialog)
     info_window_update (gdisp->window_info_dialog,
 			(void *) gdisp);
-
+ 
+  /* update the gdisplay's qmask buttons */
+  qmask_buttons_update (gdisp);
   /*  ensure the consistency of the tear-off menus  */
   context = gimp_context_get_user ();
   if (gimp_context_get_display (context) == gdisp)

@@ -83,8 +83,7 @@ sub channel_set_prop_proc {
 	%invoke = (
 	    vars => [ 'int i' ],
 	    code => <<CODE
-for (i = 0; i < 3; i++)
-  channel->col[i] = $prop\[i];
+  channel_set_color(channel, $prop);
 CODE
 	);
     }
@@ -149,7 +148,7 @@ HELP
 	vars => [ 'int opacity' ],
 	code => <<'CODE'
 {
-  opacity = (int) ((opacity_arg * 255) / 100);
+  channel_set_opacity (channel, opacity);
   channel = channel_new (gimage, width, height, name, opacity, color);
   success = channel != NULL;
 }

@@ -1,3 +1,23 @@
+Tue Jul	 6 20:55 CST 1999 Seth Burgess <sjburges@gimp.org>
+	* pixmaps/qmasknosel.xpm 
+	* pixmaps/qmasksel.xpm: Ugly pixmaps that tigert promised to replace
+	
+ 	* app/channel.[ch]
+	* app/channel_cmds.c : made some of the private structures accessible
+	  through exported functions to keep things a bit clean
+	
+	* app/interface.c
+	* app/gdisplay.[ch]
+	* app/gimpimageP.h
+	* app/gimpimage.[ch]
+	* app/undo.[ch]: added qmasks
+	
+	* app/Makefile.am
+	* app/qmask.[ch]: added new files for qmask support
+
+	* tools/pdbgen/pdb: changed some channel stuff to keep things a bit
+          more private
+
 Wed Jul  7 03:54:54 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/script-fu/script-fu.c: Fixed typo. 

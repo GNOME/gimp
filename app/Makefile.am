@@ -329,6 +329,8 @@ gimp_SOURCES = \
 	procedural_db.c		\
 	procedural_db.h		\
 	procedural_db_cmds.c	\
+	qmask.c			\
+	qmask.h			\
 	rect_select.c		\
 	rect_select.h		\
 	rect_selectP.h		\

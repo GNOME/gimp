@@ -642,7 +642,7 @@ channel_set_opacity_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    channel->opacity = (int) ((opacity * 255) / 100);
+    channel_set_opacity (channel, opacity);
 
   return procedural_db_return_args (&channel_set_opacity_proc, success);
 }
@@ -754,8 +754,7 @@ channel_set_color_invoker (Argument *args)
   color = (guchar *) args[1].value.pdb_pointer;
 
   if (success)
-    for (i = 0; i < 3; i++)
-      channel->col[i] = color[i];
+    channel_set_color(channel, color);
 
   return procedural_db_return_args (&channel_set_color_proc, success);
 }

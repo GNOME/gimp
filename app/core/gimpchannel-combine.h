@@ -86,6 +86,9 @@ void   		channel_unref (Channel *);
 char *          channel_get_name (Channel *);
 void            channel_set_name (Channel *, char *);
 
+void		channel_set_opacity (Channel *, int );
+void 		channel_set_color   (Channel *, gchar *);
+
 Channel *       channel_get_ID (int);
 void            channel_delete (Channel *);
 void            channel_scale (Channel *, int, int);

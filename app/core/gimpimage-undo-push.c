@@ -79,6 +79,7 @@ int      undo_pop_fs_relax         (GImage *, int, int, void *);
 int      undo_pop_gimage_mod       (GImage *, int, int, void *);
 int      undo_pop_guide            (GImage *, int, int, void *);
 int      undo_pop_parasite         (GImage *, int, int, void *);
+int      undo_pop_qmask		   (GImage *, int, int, void *);
 
 /*  Free functions  */
 
@@ -98,7 +99,7 @@ void     undo_free_fs_relax        (int, void *);
 void     undo_free_gimage_mod      (int, void *);
 void     undo_free_guide           (int, void *);
 void     undo_free_parasite        (int, void *);
-
+void     undo_free_qmask           (int, void *);
 
 
 /*  Sizing functions  */
@@ -2011,6 +2012,87 @@ undo_free_gimage_mod (int   state,
   g_free (data_ptr);
 }
 
+/***********/
+/*  Qmask  */
+
+typedef struct _QmaskUndo QmaskUndo;
+
+struct _QmaskUndo
+{
+  GImage *gimage;
+  int qmask;
+  int orig;
+};
+
+
+int 
+undo_push_qmask (GImage *gimage, 
+                 int qmask)
+{
+  Undo *new;
+  QmaskUndo *data;
+  long size;
+
+  /*  increment the dirty flag for this gimage  */
+  gimage_dirty (gimage);
+
+  size = sizeof (QmaskUndo);
+
+  if ((new = undo_push (gimage, size, GIMAGE_MOD)))
+    {
+      data               = g_new (QmaskUndo, 1);
+      new->data          = data;
+      new->pop_func      = undo_pop_qmask;
+      new->free_func     = undo_free_qmask;
+
+      data->gimage = gimage;
+      data->qmask = qmask;
+      data->orig = data->qmask;
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+int
+undo_pop_qmask (GImage *gimage,
+		int     state,
+		int     type,
+		void   *data_ptr)
+{
+  QmaskUndo *data;
+  int tmp;
+  int tmp_ref;
+
+  data = data_ptr;
+  
+  tmp = data->qmask;
+  data->qmask = data->orig;
+  data->orig = tmp;
+
+  gimage->qmask_state = data->qmask;
+
+  switch (state)
+    {
+    case UNDO:
+      gimage_clean (gimage);
+      break;
+    case REDO:
+      gimage_dirty (gimage);
+      break;
+    }
+
+  return TRUE;
+}
+
+
+void
+undo_free_qmask (int   state,
+		 void *data_ptr)
+{
+  g_free (data_ptr);
+}
 
 /***********/
 /*  Guide  */
@@ -2023,7 +2105,6 @@ struct _GuideUndo
   Guide *guide;
   Guide orig;
 };
-
 int
 undo_push_guide (GImage *gimage,
 		 void   *guide)

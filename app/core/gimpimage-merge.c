@@ -1711,6 +1711,22 @@ gimp_image_get_channel_by_tattoo (GimpImage *gimage, Tattoo tattoo)
 }
 
 
+Channel *
+gimp_image_get_channel_by_name (GimpImage *gimage, char *name)
+{
+  Channel *channel;
+  GSList *channels = gimage->channels;
+
+  while (channels)
+  {
+    channel = (Channel *) channels->data;
+    if (! strcmp(channel_get_name(channel),name) )
+      return channel;
+    channels = g_slist_next (channels);
+  }
+
+  return NULL;
+}
 int
 gimp_image_get_component_active (GimpImage *gimage, ChannelType type)
 {

@@ -55,6 +55,7 @@
 #define      CROP_UNDO               31
 #define      LAYER_SCALE_UNDO        32
 #define      LAYER_RESIZE_UNDO       33
+#define      QMASK_UNDO		     34
 #define      MISC_UNDO               100
 
 /*  Undo interface functions  */
@@ -84,6 +85,7 @@ int      undo_push_drawable_parasite (GImage *, GimpDrawable *, void *);
 int      undo_push_image_parasite_remove    (GImage *, const char *);
 int      undo_push_drawable_parasite_remove (GImage *, GimpDrawable *,
 					     const char *);
+int      undo_push_qmask	     (GImage *, int);
 
 int      undo_pop                    (GImage *);
 int      undo_redo                   (GImage *);

@@ -178,6 +178,7 @@ Layer *         gimp_image_get_active_layer       (GimpImage *);
 Channel *       gimp_image_get_active_channel     (GimpImage *);
 Layer *         gimp_image_get_layer_by_tattoo    (GimpImage *, Tattoo);
 Channel *       gimp_image_get_channel_by_tattoo  (GimpImage *, Tattoo);
+Channel *       gimp_image_get_channel_by_name    (GimpImage *, char *);
 Channel *       gimp_image_get_mask               (GimpImage *);
 int             gimp_image_get_component_active   (GimpImage *, ChannelType);
 int             gimp_image_get_component_visible  (GimpImage *, ChannelType);

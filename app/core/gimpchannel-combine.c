@@ -236,6 +236,24 @@ channel_get_name (Channel *channel)
   return gimp_drawable_get_name(GIMP_DRAWABLE(channel));
 }
 
+void 
+channel_set_color (Channel *channel, gchar *color)
+{
+int i;
+  if (color)
+    {  
+    for (i = 0; i < 3; i++)
+      channel->col[i] = color[i];
+    }
+} 
+
+void 
+channel_set_opacity (Channel *channel, gint opacity)
+{
+  if (opacity >=0 && opacity <= 100)
+    channel->opacity = (int) (opacity*255)/100;
+}
+
 Channel *
 channel_get_ID (int ID)
 {
